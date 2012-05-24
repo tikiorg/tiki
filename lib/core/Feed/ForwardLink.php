@@ -174,7 +174,7 @@ JQ
 		}
 	}
 
-	static function editInterfaces($page, $questions, $keywords)
+	static function editInterfaces($page, $questions, $keywords, $scientificField, $minimumMathNeeded, $minimumStatisticsNeeded)
 	{
 		$perms = Perms::get();
 
@@ -236,11 +236,117 @@ JQ
 								$.modal();
 							});
 						}
+
+						function genericSingleTrackerItemInterface(type, item) {
+							var addButton = $('<span class="button"><a href="tiki-view_tracker.php?trackerId=' + $trackerId + '">' + tr("Edit ForwardLink " + type) + '</a></span>')
+								.click(function() {
+									var box = $('<table style="width: 100%;" />');
+
+									$.each(item, function() {
+										$('<tr>')
+											.append('<td>' + this.Value + '</td>')
+											.append('<td title="' + tr("Edit") + '"><a class="edit" data-itemid="' + this.itemId + '"><img src="img/icons/pencil.png" /></a></td>')
+											.append('<td title="' + tr("Delete") + '"><a class="delete" data-itemid="' + this.itemId + '"><img src="img/icons/cross.png" /></a></td>')
+											.appendTo(box);
+									});
+
+									box.find('a.edit').click(function() {
+										var me = $(this);
+										var itemId = me.data('itemid');
+										trackerForm($trackerId, itemId, 'tracker_update_item', type, function(frm) {
+
+											frm.find('span.trackerInput:not(.Value').hide();
+
+											var dialogSettings = {
+												title: tr('Editing ForwardLink ' + type),
+												modal: true,
+												buttons: {}
+											};
+
+											dialogSettings.buttons[tr('OK')] = function() {
+												frm.submit();
+											};
+
+											dialogSettings.buttons[tr('Cancel')] = function() {
+												questionDialog.dialog('close');
+											};
+
+											var questionDialog = $('<div />')
+												.append(frm)
+												.dialog(dialogSettings);
+										});
+
+										return false;
+									});
+
+									box.find('a.delete').click(function() {
+										if (!confirm(tr("Are you sure?"))) return false;
+
+										var me = $(this);
+										var itemId = me.data('itemid');
+										trackerForm($trackerId, itemId, 'tracker_remove_item', type, function(frm) {
+
+											frm.find('span.trackerInput:not(.Value)').hide();
+
+											frm.submit();
+										}, true);
+
+										return false;
+									});
+
+									box.options = {
+										title: tr("Edit ForwardLink " + type),
+											modal: true,
+											buttons: {}
+									};
+
+									if (item.length < 1) {
+										box.options.buttons[tr("New")] = function () {
+											trackerForm($trackerId, 0, 'tracker_insert_item', type, function(frm) {
+
+												frm.find('span.trackerInput:not(.Value)').hide();
+
+												var newFrmDialogSettings = {
+													buttons: {},
+													modal: true,
+													title: tr('New ' + type)
+												};
+
+												newFrmDialogSettings.buttons[tr('Save')] = function() {
+													frm.submit();
+												};
+
+												newFrmDialogSettings.buttons[tr('Cancel')] = function() {
+													questionDialog.dialog('close');
+												};
+
+												var questionDialog = $('<div />')
+													.append(frm)
+													.dialog(newFrmDialogSettings);
+											});
+										};
+									}
+									box.dialog(box.options);
+									return false;
+								})
+								.appendTo('#page-bar');
+						}
 JQ
 					);
 
 				self::editQuestionsInterface($page, $questions, $trackerId);
-				self::editKeywordsInterface($page, $keywords, $trackerId);
+
+				$keywords = json_encode($keywords);
+				TikiLib::lib('header')->add_jq_onready("genericSingleTrackerItemInterface('Keywords', $keywords);");
+
+				$scientificField = json_encode($scientificField);
+				TikiLib::lib('header')->add_jq_onready("genericSingleTrackerItemInterface('Scientific Field', $scientificField);");
+
+				$minimumMathNeeded = json_encode($minimumMathNeeded);
+				TikiLib::lib('header')->add_jq_onready("genericSingleTrackerItemInterface('Minimum Math Needed', $minimumMathNeeded);");
+
+				$minimumStatisticsNeeded = json_encode($minimumStatisticsNeeded);
+				TikiLib::lib('header')->add_jq_onready("genericSingleTrackerItemInterface('Minimum Statistics Needed', $minimumStatisticsNeeded);");
 			}
 		}
 	}
@@ -337,108 +443,6 @@ JQ
 							});
 						};
 						questionBox.dialog(questionBoxOptions);
-						return false;
-					})
-					.appendTo('#page-bar');
-JQ
-		);
-	}
-
-	static function editKeywordsInterface($page, $keywords, $trackerId)
-	{
-		$keywords = json_encode($keywords);
-
-		TikiLib::lib('header')
-			->add_jq_onready(<<<JQ
-				var addQuestionsButton = $('<span class="button"><a href="tiki-view_tracker.php?trackerId=' + $trackerId + '">' + tr("Edit ForwardLink Keywords") + '</a></span>')
-					.click(function() {
-						var keywordsBox = $('<table style="width: 100%;" />');
-						var keywords = $keywords;
-						$.each(keywords, function() {
-							$('<tr>')
-								.append('<td>' + this.Value + '</td>')
-								.append('<td title="' + tr("Edit") + '"><a class="edit" data-itemid="' + this.itemId + '"><img src="img/icons/pencil.png" /></a></td>')
-								.append('<td title="' + tr("Delete") + '"><a class="delete" data-itemid="' + this.itemId + '"><img src="img/icons/cross.png" /></a></td>')
-								.appendTo(keywordsBox);
-						});
-
-						keywordsBox.find('a.edit').click(function() {
-							var me = $(this);
-							var itemId = me.data('itemid');
-							trackerForm($trackerId, itemId, 'tracker_update_item', 'Keyword', function(frm) {
-
-								frm.find('span.trackerInput:not(.Value').hide();
-
-								var dialogSettings = {
-									title: tr('Editing ForwardLink Keywords'),
-									modal: true,
-									buttons: {}
-								};
-
-								dialogSettings.buttons[tr('OK')] = function() {
-									frm.submit();
-								};
-
-								dialogSettings.buttons[tr('Cancel')] = function() {
-									questionDialog.dialog('close');
-								};
-
-								var questionDialog = $('<div />')
-									.append(frm)
-									.dialog(dialogSettings);
-							});
-
-							return false;
-						});
-
-						keywordsBox.find('a.delete').click(function() {
-							if (!confirm(tr("Are you sure?"))) return false;
-
-							var me = $(this);
-							var itemId = me.data('itemid');
-							trackerForm($trackerId, itemId, 'tracker_remove_item', 'Keyword', function(frm) {
-
-								frm.find('span.trackerInput:not(.Value)').hide();
-
-								frm.submit();
-							}, true);
-
-							return false;
-						});
-
-						var keywordsBoxOptions = {
-							title: "Edit ForwardLink Keywords",
-								modal: true,
-								buttons: {}
-						};
-
-						if (keywords.length < 1) {
-							keywordsBoxOptions.buttons[tr("New")] = function () {
-								trackerForm($trackerId, 0, 'tracker_insert_item', 'Keyword', function(frm) {
-
-									frm.find('span.trackerInput:not(.Value)').hide();
-
-									var newFrmDialogSettings = {
-										buttons: {},
-										modal: true,
-										title: tr('New')
-									};
-
-									newFrmDialogSettings.buttons[tr('Save')] = function() {
-										frm.submit();
-									};
-
-									newFrmDialogSettings.buttons[tr('Cancel')] = function() {
-										questionDialog.dialog('close');
-									};
-
-									var questionDialog = $('<div />')
-										.append(frm)
-										.dialog(newFrmDialogSettings);
-								});
-							};
-						}
-						keywordsBox.dialog(keywordsBoxOptions);
 						return false;
 					})
 					.appendTo('#page-bar');
@@ -733,11 +737,29 @@ JQ
 
 		$keywords = Tracker_Query::tracker('Wiki Attributes')
 			->byName()
-			->filterFieldByValue('Type', 'Keyword')
+			->filterFieldByValue('Type', 'Keywords')
 			->filterFieldByValue('Page', $page)
 			->query();
 
-		self::editInterfaces($page, $questions, $keywords);
+		$scientificField = Tracker_Query::tracker('Wiki Attributes')
+			->byName()
+			->filterFieldByValue('Type', 'Scientific Field')
+			->filterFieldByValue('Page', $page)
+			->query();
+
+		$minimumMathNeeded = Tracker_Query::tracker('Wiki Attributes')
+			->byName()
+			->filterFieldByValue('Type', 'Scientific Field')
+			->filterFieldByValue('Page', $page)
+			->query();
+
+		$minimumStatisticsNeeded = Tracker_Query::tracker('Wiki Attributes')
+			->byName()
+			->filterFieldByValue('Type', 'Scientific Field')
+			->filterFieldByValue('Page', $page)
+			->query();
+
+		self::editInterfaces($page, $questions, $keywords, $scientificField, $minimumMathNeeded, $minimumStatisticsNeeded);
 
 		//Get language, which is the description of $lang
 		foreach(TikiLib::lib("tiki")->list_languages() as $listLanguage) {
