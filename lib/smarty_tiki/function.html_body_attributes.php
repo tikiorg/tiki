@@ -23,9 +23,11 @@ function smarty_function_html_body_attributes($params, $smarty)
 	if (isset($section) && $section == 'wiki page' && $prefs['user_dbl'] == 'y' and $dblclickedit == 'y' and $tiki_p_edit == 'y') {
 		$back .= ' ondblclick="location.href=\'tiki-editpage.php?page=' . rawurlencode($page) . '\';"';
 	}
+
+	$class .= 'tiki ';
 	
 	if (isset($section_class)) {
-		$class .= 'tiki '.$section_class;
+		$class .= $section_class;
 	}
 	
 	if ($prefs['feature_fixed_width'] == 'y') {
