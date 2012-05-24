@@ -98,6 +98,7 @@ function wikiplugin_convene($data, $params)
 	$votes = array();
 	foreach ($data['dates'] as $stamp => $date) {
 		foreach ($date as $vote) {
+			if (empty($votes[$stamp])) $votes[$stamp] = 0;
 			$votes[$stamp] += $vote;
 		}
 	}
@@ -107,7 +108,14 @@ function wikiplugin_convene($data, $params)
 	//start find top vote stamp
 	$topVoteStamp = 0;
 	foreach ($votes as $stamp => $vote) {
-		$topVoteStamp = (!isset($votes[$topVoteStamp]) || $vote > $votes[$topVoteStamp]) ? $stamp : $topVoteStamp;
+		if (
+			!isset($votes[$topVoteStamp]) || (
+				isset($votes[$topVoteStamp]) &&
+				$vote > $votes[$topVoteStamp]
+			)
+		) {
+			$topVoteStamp = $stamp;
+		}
 	}
 	//end find top vote stamp
 	
