@@ -1231,7 +1231,7 @@ class convertToTiki9
 		//<!--Start for converting pages
 	function convertPages()
 	{
-		$infos = TikiLib::fetchAll('
+		$infos = $this->parserlib->fetchAll('
 			SELECT data, page_id
 			FROM tiki_pages
 			LEFT JOIN tiki_db_status
@@ -1255,7 +1255,7 @@ class convertToTiki9
 		$status = $this->checkObjectStatus($id, 'tiki_pages');
 
 		if (empty($status)) {
-			TikiLib::query("UPDATE tiki_pages SET data = ? WHERE page_id = ?", array($data, $id));
+			$this->parserlib->query("UPDATE tiki_pages SET data = ? WHERE page_id = ?", array($data, $id));
 
 			$this->saveObjectStatus($id, 'tiki_pages', 'conv9.0');
 		}
@@ -1267,7 +1267,7 @@ class convertToTiki9
 		//<!--start for converting histories
 	function convertPageHistoryFromPageAndVersion($page, $version)
 	{
-		$infos = TikiLib::fetchAll('
+		$infos = $this->parserlib->fetchAll('
 			SELECT data, historyId
 			FROM tiki_history
 			LEFT JOIN tiki_db_status
@@ -1291,7 +1291,7 @@ class convertToTiki9
 
 	function convertPageHistories()
 	{
-		$infos = TikiLib::fetchAll('
+		$infos = $this->parserlib->fetchAll('
 			SELECT data, historyId
 			FROM tiki_history
 			LEFT JOIN tiki_db_status
@@ -1315,7 +1315,7 @@ class convertToTiki9
 		$status = $this->checkObjectStatus($id, 'tiki_history');
 
 		if (empty($status)) {
-			TikiLib::query("
+			$this->parserlib->query("
 				UPDATE tiki_history
 				SET data = ?
 				WHERE historyId = ?
@@ -1331,7 +1331,7 @@ class convertToTiki9
 		//<!--start for converting modules
 	function convertModules()
 	{
-		$infos = TikiLib::fetchAll('
+		$infos = $this->parserlib->fetchAll('
 			SELECT data, name
 			FROM tiki_user_modules
 			LEFT JOIN tiki_db_status
@@ -1355,7 +1355,7 @@ class convertToTiki9
 		$status = $this->checkObjectStatus($name, 'tiki_user_modules');
 
 		if (empty($status)) {
-			TikiLib::query('UPDATE tiki_user_modules SET data = ? WHERE name = ?', array($data, $name));
+			$this->parserlib->query('UPDATE tiki_user_modules SET data = ? WHERE name = ?', array($data, $name));
 
 			$this->saveObjectStatus($name, 'tiki_user_modules', 'conv9.0');
 		}
@@ -1368,11 +1368,11 @@ class convertToTiki9
 	//<!--below methods are used in tracking status of pages
 	function saveObjectStatus($objectId, $tableName, $status = 'new9.0+')
 	{
-		$currentStatus = TikiLib::getOne("SELECT status FROM tiki_db_status WHERE objectId = ? AND tableName = ?", array($objectId, $tableName));
+		$currentStatus = $this->parserlib->getOne("SELECT status FROM tiki_db_status WHERE objectId = ? AND tableName = ?", array($objectId, $tableName));
 
 		if (empty($currentStatus)) {
 			//Insert a status record if one doesn't exist
-			TikiLib::query("
+			$this->parserlib->query("
 				INSERT INTO tiki_db_status
 				        ( objectId,	tableName,	status )
 				 VALUES (?,			?,			?)
@@ -1381,7 +1381,7 @@ class convertToTiki9
 			));
 		} else {
 			//update a status record, it already exists
-			TikiLib::query("
+			$this->parserlib->query("
 				UPDATE tiki_db_status
 				SET status = ?
 				WHERE objectId = ? AND tableName = ?
@@ -1393,7 +1393,7 @@ class convertToTiki9
 
 	function checkObjectStatus($objectId, $tableName)
 	{
-		return TikiLib::getOne("
+		return $this->parserlib->getOne("
 			SELECT status
 			FROM tiki_db_status
 			WHERE objectId = ? AND tableName = ?
@@ -1409,10 +1409,10 @@ class convertToTiki9
 		for($i = 0; $i < count($fingerPrintsOld);$i++) {
 			if (!empty($fingerPrintsOld[$i]) && $fingerPrintsOld[$i] != $fingerPrintsNew[$i]) {
 				//Remove any that may conflict with the new fingerprint, not sure how to fix this yet
-				TikiLib::query("DELETE FROM tiki_plugin_security WHERE fingerprint = ?", array($fingerPrintsNew[$i]));
+				$this->parserlib->query("DELETE FROM tiki_plugin_security WHERE fingerprint = ?", array($fingerPrintsNew[$i]));
 
 				// Now update fingerprint (if it exists)
-				TikiLib::query("UPDATE tiki_plugin_security SET fingerprint = ? WHERE fingerprint = ?", array($fingerPrintsNew[$i], $fingerPrintsOld[$i]));
+				$this->parserlib->query("UPDATE tiki_plugin_security SET fingerprint = ? WHERE fingerprint = ?", array($fingerPrintsNew[$i], $fingerPrintsOld[$i]));
 			}
 		}
 	}
@@ -1446,16 +1446,16 @@ class convertToTiki9
 				$fingerPrint = $this->parserlib->plugin_fingerprint($name, $meta, $body, $args);
 
 				// so check the db for previously recorded plugins
-				if (!TikiLib::getOne('SELECT COUNT(*) FROM tiki_plugin_security WHERE fingerprint = ?', array($fingerPrint))) {
+				if (!$this->parserlib->getOne('SELECT COUNT(*) FROM tiki_plugin_security WHERE fingerprint = ?', array($fingerPrint))) {
 					// jb but v 7 & 8 fingerprints may be calculated differently, so check both fully decoded and partially
 					$body = htmlspecialchars_decode($body);
 					$fingerPrint = $this->parserlib->plugin_fingerprint($name, $meta, $body, $args);
 
-					if (!TikiLib::getOne('SELECT COUNT(*) FROM tiki_plugin_security WHERE fingerprint = ?', array($fingerPrint))) {
+					if (!$this->parserlib->getOne('SELECT COUNT(*) FROM tiki_plugin_security WHERE fingerprint = ?', array($fingerPrint))) {
 						$body = str_replace(array('<', '>'), array('&lt;', '&gt;'), $body);
 						$fingerPrint = $this->parserlib->plugin_fingerprint($name, $meta, $body, $args);
 
-						if (!TikiLib::getOne('SELECT COUNT(*) FROM tiki_plugin_security WHERE fingerprint = ?', array($fingerPrint))) {
+						if (!$this->parserlib->getOne('SELECT COUNT(*) FROM tiki_plugin_security WHERE fingerprint = ?', array($fingerPrint))) {
 							// old fingerprint not found - what to do? Might be worth trying &quot; chars too...
 							$fingerPrint = '';
 						}

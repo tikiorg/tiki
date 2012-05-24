@@ -76,9 +76,11 @@ function wikiplugin_convene($data, $params)
 	sort($lines);
 	foreach ($lines as $line) {
 		$line = trim($line);
-		
-		$parts = explode(':', $line);
-		$dataArray[trim($parts[0])] = trim($parts[1]);
+
+		if (!empty($line)) {
+			$parts = explode(':', $line);
+			$dataArray[trim($parts[0])] = trim($parts[1]);
+		}
 	}
 	
 	$data = TikiFilter_PrepareInput::delimiter('_')->prepare($dataArray);
@@ -96,6 +98,7 @@ function wikiplugin_convene($data, $params)
 	$votes = array();
 	foreach ($data['dates'] as $stamp => $date) {
 		foreach ($date as $vote) {
+			if (empty($votes[$stamp])) $votes[$stamp] = 0;
 			$votes[$stamp] += $vote;
 		}
 	}
@@ -105,7 +108,14 @@ function wikiplugin_convene($data, $params)
 	//start find top vote stamp
 	$topVoteStamp = 0;
 	foreach ($votes as $stamp => $vote) {
-		$topVoteStamp = ($vote > $votes[$topVoteStamp] ? $stamp : $topVoteStamp);
+		if (
+			!isset($votes[$topVoteStamp]) || (
+				isset($votes[$topVoteStamp]) &&
+				$vote > $votes[$topVoteStamp]
+			)
+		) {
+			$topVoteStamp = $stamp;
+		}
 	}
 	//end find top vote stamp
 	
@@ -128,11 +138,11 @@ function wikiplugin_convene($data, $params)
 	foreach ($votes as $stamp => $totals) {
 		if (!empty($dateformat) && $dateformat == "long") {
 			$dateHeader .= "<td class='conveneHeader'>". $tikilib->get_long_datetime($stamp) .
-				($tiki_p_edit == 'y' ? " <button class='conveneDeleteDate$i icon ui-widget-header ui-corner-all' data-date='$stamp'><img src='img/icons/delete.png' title='" . tr("Delete Date") . "'/></button>" : "").
+				($tiki_p_edit == 'y' ? " <button class='conveneDeleteDate$i icon ui-widget-header ui-corner-all' data-date='$stamp'><img src='img/icons/delete.png' class='icon' width='16' height='16' title='" . tr("Delete Date") . "'/></button>" : "").
 			"</td>";
 		} else {
 			$dateHeader .= "<td class='conveneHeader'>". $tikilib->get_short_datetime($stamp) .
-				($tiki_p_edit == 'y' ? " <button class='conveneDeleteDate$i icon ui-widget-header ui-corner-all' data-date='$stamp'><img src='img/icons/delete.png' title='" . tr("Delete Date") . "'/></button>" : "").
+				($tiki_p_edit == 'y' ? " <button class='conveneDeleteDate$i icon ui-widget-header ui-corner-all' data-date='$stamp'><img src='img/icons/delete.png' class='icon' width='16' height='16' title='" . tr("Delete Date") . "'/></button>" : "").
 			"</td>";
 		}
 	}
@@ -148,17 +158,17 @@ function wikiplugin_convene($data, $params)
 	$userList = "";
 	foreach ($rows as $user => $row) {
 		$userList .= "<tr class='conveneVotes conveneUserVotes$i'>";
-		$userList .= "<td>". ($tiki_p_edit == 'y' ? "<button class='conveneUpdateUser$i icon ui-widget-header ui-corner-all'><img src='img/icons/pencil.png' title='" . tr("Edit User/Save changes") . "' /></button><button data-user='$user' title='" . tr("Delete User") . "' class='conveneDeleteUser$i icon ui-widget-header ui-corner-all'><img src='img/icons/delete.png'/></button> " : "") . $user . "</td>";
+		$userList .= "<td>". ($tiki_p_edit == 'y' ? "<button class='conveneUpdateUser$i icon ui-widget-header ui-corner-all'><img src='img/icons/pencil.png' class='icon' width='16' height='16' title='" . tr("Edit User/Save changes") . "' /></button><button data-user='$user' title='" . tr("Delete User") . "' class='conveneDeleteUser$i icon ui-widget-header ui-corner-all'><img src='img/icons/delete.png' class='icon' width='16' height='16' /></button> " : "") . $user . "</td>";
 		foreach ($row as $stamp => $vote) {
 			if ($vote == 1) {
 				$class = 	"ui-state-default convene-ok";
-				$text = 	"<img src='img/icons/tick.png' alt='" . tr('Ok') . "' class='vote' />";
+				$text = 	"<img src='img/icons/tick.png' alt='" . tr('Ok') . "' class='vote icon' width='16' height='16' />";
 			} elseif ($vote == -1) {
 				$class = 	"ui-state-default convene-no";
-				$text = 	"<img src='img/icons/cross.png' alt='" . tr('Not ok') . "' class='vote' />";
+				$text = 	"<img src='img/icons/cross.png' alt='" . tr('Not ok') . "' class='vote icon' width='16' height='16' />";
 			} else {
 				$class = 	"ui-state-default convene-unconfirmed";
-				$text = 	"<img src='img/icons/grey_question.png' alt='" . tr('Unconfirmed') . "' class='vote' />";
+				$text = 	"<img src='img/icons/grey_question.png' alt='" . tr('Unconfirmed') . "' class='vote icon' width='16' height='16' />";
 			}
 			
 			$userList .= "<td class='$class'>". $text
@@ -190,9 +200,9 @@ function wikiplugin_convene($data, $params)
 	foreach ($votes as $stamp => $total) {
 		$pic = "";
 		if ($total == $votes[$topVoteStamp]) {
-			$pic .= ($tiki_p_edit != "y" ? "<img src='img/icons/tick.png' class='icon' title='" . tr("Selected Date") . "' />" : "");
+			$pic .= ($tiki_p_edit != "y" ? "<img src='img/icons/tick.png' class='icon' width='16' height='16' title='" . tr("Selected Date") . "' />" : "");
 			if ($tiki_p_edit == 'y') {
-				$pic .= "<button class='icon ui-widget-header ui-corner-all' onclick='document.location = $(this).find(\"a\").attr(\"href\"); return false;'><a href='tiki-calendar_edit_item.php?todate=$stamp&calendarId=$calendarid' title='" . tr("Add as Calendar Event") . "'><img src='img/icons/calendar_add.png' class='icon' /></a></button>";
+				$pic .= "<button class='icon ui-widget-header ui-corner-all' onclick='document.location = $(this).find(\"a\").attr(\"href\"); return false;'><a href='tiki-calendar_edit_item.php?todate=$stamp&calendarId=$calendarid' title='" . tr("Add as Calendar Event") . "'><img src='img/icons/calendar_add.png' class='icon' width='16' height='16' /></a></button>";
 			}
 		}
 		
@@ -204,7 +214,7 @@ function wikiplugin_convene($data, $params)
 		$tiki_p_edit == 'y'
 			?
 				"<button class='conveneAddDate$i icon ui-widget-header ui-corner-all' style='margin: 0px;'>
-					<img src='img/icons/calendar_add.png' title='".tr('Add Date')."' />
+					<img src='img/icons/calendar_add.png' title='".tr('Add Date')."' class='icon' width='16' height='16' />
 				</button>"
 			: ""
 	)."</td>";

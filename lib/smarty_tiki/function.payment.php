@@ -73,7 +73,10 @@ function smarty_function_payment( $params, $smarty )
 		}
 		$smarty->assign('payment_info', $info);
 		$smarty->assign('payment_detail', $tikilib->parse_data(htmlspecialchars($info['detail'])));
-		return $smarty->fetch('tiki-payment-single.tpl');
+
+		$smarty_cache_id = $smarty_compile_id = $prefs['language'] . md5('tiki-payment-single.tpl');
+		return $smarty->fetch('tiki-payment-single.tpl', $smarty_cache_id, $smarty_compile_id);
+
 	} else {
 		return tra('This invoice does not exist or is in limited access.');
 	}
