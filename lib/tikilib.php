@@ -4732,7 +4732,7 @@ class TikiLib extends TikiDb_Bridge
 		return $url_scheme;
 	}
 
-	function httpPrefix( $isUserSpecific = false )
+	static function httpPrefix( $isUserSpecific = false )
 	{
 		global $url_scheme, $url_host, $url_port, $prefs;
 
@@ -4745,7 +4745,7 @@ class TikiLib extends TikiDb_Bridge
 		return $scheme.'://'.$url_host.(($url_port!='')?":$url_port":'');    
 	}
 
-	function tikiUrl( $relative = "", $args = array() )
+	static function tikiUrl( $relative = "", $args = array() )
 	{
 		global $tikiroot;
 
