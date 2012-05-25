@@ -2175,4 +2175,8 @@ body.fixed_width #main {
 	margin-top: 0;
 }*/
 
+.fixed_width > .fixedwidth {
+    margin-top: 0px;
+}
+
 /* end of file */
