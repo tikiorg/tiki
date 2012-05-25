@@ -17,10 +17,12 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	var $blockStack = array();
 	var $olistLen = array();
 
+	var $npEntries = array();
+	var $npCount = 0;
+	var $pluginEntries = array();
+
 	function parse($input)
 	{
-		$result = "";
-
 		if ($this->parsing == true) {
 			$parser = end(self::$spareParsers);
 			if (!empty($parser) && $parser->parsing == false) {
@@ -31,11 +33,25 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 			}
 		} else {
 			$this->parsing = true;
+
+			$this->preParse($input);
 			$result = parent::parse($input);
+			$this->postParse($result);
+
 			$this->parsing = false;
 		}
 
 		return $result;
+	}
+
+	function preParse(&$input)
+	{
+		$input = preg_replace_callback('/~np~(.|\n)*?~\/np~/', array(&$this, 'removeNpEntities'), $input);
+	}
+
+	function postParse(&$input)
+	{
+		$this->restoreNpEntities($input);
 	}
 
 	// state & plugin handlers
@@ -109,6 +125,21 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		}
 
 		return false;
+	}
+
+	function removeNpEntities(&$matches)
+	{
+		$key = "§".md5($this->npCount)."§";
+		$this->npEntries[$key] = substr($matches[0], 4, -5);
+		$this->npCount++;
+		return $key;
+	}
+
+	function restoreNpEntities(&$input)
+	{
+		foreach($this->npEntries as $key => $entity) {
+			$input = str_replace($key, $entity, $input);
+		}
 	}
 
 	function SOL() //start of line
