@@ -3035,15 +3035,16 @@ class Comments extends TikiLib
 		if ($type == 'forum') {
 			$type = 'forum post';
 
-			if ($prefs['unified_forum_deepindexing'] != 'y') {
-				refresh_index($type, $threadId);
-			}
-
 			$root = $this->find_root($parentId ? $parentId : $threadId);
 			refresh_index($type, $root);
 
-			if ($parentId && $parentId != $root && $parentId != $threadId) {
-				refresh_index($type, $parentId);
+			if ($prefs['unified_forum_deepindexing'] != 'y') {
+				if ($threadId != $root) {
+					refresh_index($type, $threadId);
+				}
+				if ($parentId && $parentId != $root && $parentId != $threadId) {
+					refresh_index($type, $parentId);
+				}
 			}
 
 			return $type;
