@@ -3042,6 +3042,10 @@ class Comments extends TikiLib
 			$root = $this->find_root($parentId ? $parentId : $threadId);
 			refresh_index($type, $root);
 
+			if ($parentId && $parentId != $root && $parentId != $threadId) {
+				refresh_index($type, $parentId);
+			}
+
 			return $type;
 		} else {
 			refresh_index('comments', $threadId);
