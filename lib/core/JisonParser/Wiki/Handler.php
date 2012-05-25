@@ -12,6 +12,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 
 	var $npOn = false;
 	var $pluginStack = array();
+	var $pluginCount = 0;
 	var $blockLoc = array();
 	var $blockLast = '';
 	var $blockStack = array();
@@ -51,6 +52,8 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 
 	function postParse(&$input)
 	{
+		$this->addLineBreaks($input);
+		$this->restorePluginEntities($input);
 		$this->restoreNpEntities($input);
 	}
 
@@ -59,11 +62,16 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	{
 		$argParser = new WikiParser_PluginArgumentParser;
 
-		return $this->parse( $this->pluginExecute(
+		$this->pluginCount++;
+		$key = "§".md5('plugin:'.$this->pluginCount)."§";
+
+		$this->pluginEntries[$key] = $this->parse( $this->pluginExecute(
 			$pluginDetails['name'],
 			$argParser->parse($pluginDetails['args']),
 			$pluginDetails['body']
 		));
+
+		return $key;
 	}
 
 	function stackPlugin($yytext)
@@ -129,7 +137,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 
 	function removeNpEntities(&$matches)
 	{
-		$key = "§".md5($this->npCount)."§";
+		$key = "§".md5('np:'.$this->npCount)."§";
 		$this->npEntries[$key] = substr($matches[0], 4, -5);
 		$this->npCount++;
 		return $key;
@@ -140,6 +148,67 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		foreach($this->npEntries as $key => $entity) {
 			$input = str_replace($key, $entity, $input);
 		}
+	}
+
+	function restorePluginEntities(&$input)
+	{
+		foreach($this->pluginEntries as $key => $entity) {
+			$input = str_replace($key, $entity, $input);
+		}
+	}
+
+	function addLineBreaks(&$input)
+	{
+		$lines = explode("\n", $input);
+
+		$inTable = 0;
+		$inPre = 0;
+		$inComment = 0;
+		$inTOC = 0;
+		$inScript = 0;
+		$inDiv = 0;
+		$inHeader = 0;
+
+		foreach($lines as &$line) {
+			$lineInLowerCase = TikiLib::strtolower($line);
+
+			$inComment += substr_count($lineInLowerCase, "<!--");
+			$inComment -= substr_count($lineInLowerCase, "-->");
+
+			// check if we are inside a ~pre~ block and, if so, ignore
+			// monospaced and do not insert <br />
+			$inPre += substr_count($lineInLowerCase, "<pre");
+			$inPre -= substr_count($lineInLowerCase, "</pre");
+
+			// check if we are inside a table, if so, ignore monospaced and do
+			// not insert <br />
+
+			$inTable += substr_count($lineInLowerCase, "<table");
+			$inTable -= substr_count($lineInLowerCase, "</table");
+
+			// check if we are inside an ul TOC list, if so, ignore monospaced and do
+			// not insert <br />
+			$inTOC += substr_count($lineInLowerCase, "<ul class=\"toc");
+			$inTOC -= substr_count($lineInLowerCase, "</ul><!--toc-->");
+
+			// check if we are inside a script not insert <br />
+			$inScript += substr_count($lineInLowerCase, "<script ");
+			$inScript -= substr_count($lineInLowerCase, "</script>");
+
+			// check if we are inside a script not insert <br />
+			$inDiv += substr_count($lineInLowerCase, "<div ");
+			$inDiv -= substr_count($lineInLowerCase, "</div>");
+
+			// check if we are inside a script not insert <br />
+			$inHeader += substr_count($lineInLowerCase, "<h");
+			$inHeader -= substr_count($lineInLowerCase, "</h");
+
+			if ($inTable == 0 && $inPre == 0 && $inComment == 0 && $inTOC == 0 && $inScript == 0 && $inDiv == 0 && $inHeader == 0) {
+				$line .= '<br />';
+			}
+		}
+
+		$input = implode("\n", $lines);
 	}
 
 	function SOL() //start of line
