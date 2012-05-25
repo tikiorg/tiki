@@ -16,8 +16,8 @@
 			<div id="jtrack-bar">
 				<a href="#" class="jtrack-create">{tr}New task{/tr}</a> |
 				<a href="#" class="jtrack-remove-all">{tr}Delete all{/tr}</a> |
-				<input type="checkbox" name="jtrack-show-completed" id="jtrack-show-completed" value="1" title="Toggle completed" /> C
-				<input type="checkbox" name="jtrack-show-archived" id="jtrack-show-archived" value="1" title="Toggle archived" /> A
+				<input type="checkbox" name="jtrack-show-completed" id="jtrack-show-completed" value="1" title="{tr}Toggle completed{/tr}" /> C
+				<input type="checkbox" name="jtrack-show-archived" id="jtrack-show-archived" value="1" title="{tr}Toggle archived{/tr}" /> A
 			</div>
 			<div id="jtrack-content">
 				<div id="jtrack-form-list" class="jtrack-form"></div>
