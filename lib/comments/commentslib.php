@@ -1446,14 +1446,14 @@ class Comments extends TikiLib
 		return array('data' => $ret);
 	}
 
-	function count_comments_threads($objectId)
+	function count_comments_threads($objectId, $parentId = 0)
 	{
 		$object = explode(":", $objectId, 2);
 		return $this->table('tiki_comments')->fetchCount(
 						array(
 							'objectType' => $object[0],
 							'object' => $object[1],
-							'parentId' => 0,
+							'parentId' => $parentId,
 						)
 		);
 	}
