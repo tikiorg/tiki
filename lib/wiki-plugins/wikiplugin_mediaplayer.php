@@ -55,6 +55,13 @@ function wikiplugin_mediaplayer_info()
 				'filter' => 'url',
 				'default' => '',
 			),
+			// The type parameter is verified for QuickTime only. arildb
+			'type' => array(
+				'required' => false,
+				'name'=> tra('File type'),
+				'description' => tra('Filetype for source URL, e.g. mp4. Specify one of the supported filetypes when the URL file is missing the file extention. This is the case for File Gallery files.'),
+				'default' => '',
+			),
 			'width' => array(
 				'required' => false,
 				'name'=> tra('Width'),
