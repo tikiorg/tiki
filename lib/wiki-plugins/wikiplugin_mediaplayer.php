@@ -55,6 +55,18 @@ function wikiplugin_mediaplayer_info()
 				'filter' => 'url',
 				'default' => '',
 			),
+			'width' => array(
+				'required' => false,
+				'name'=> tra('Width'),
+				'description' => tra('Player width in px or %'),
+				'default' => '',
+				),
+			'height' => array(
+				'required' => false,
+				'name'=> tra('Height'),
+					'description' => tra('Player height in px or %'),
+				'default' => '',
+				),
 			'style' => array(
 				'required' => false,
 				'name' => tra('Style'),
@@ -156,7 +168,14 @@ function wikiplugin_mediaplayer($data, $params)
 			
 			$js .= "$param: $value,";
 		}
-		$js .= "} );";
+		// Force scaling (keeping the aspect ratio) of the QuickTime player
+		//	Tried with .mp4. Not sure how this will work with other formats, not using QuickTime.
+		// See: http://jquery.malsup.com/media/#players for default players for different formats. arildb
+		$js .= " params: { 
+				scale: 'aspect'
+				} 
+			} );";
+			
 		$headerlib->add_jq_onready($js);
 		return "<a href=\"".$params['src']."\" id=\"$id\"></a>";
 	}
