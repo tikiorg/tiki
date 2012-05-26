@@ -432,7 +432,7 @@ if (isset($_REQUEST['save']) && empty($errors)) {
 		$expireDate = $tikilib->now;
 	}
 
-	if (isset($_REQUEST['allowhtml']) && $_REQUEST['allowhtml'] == 'on') {
+	if (isset($_REQUEST['allowhtml']) && $_REQUEST['allowhtml'] == 'on' || $_SESSION['wysiwyg'] == 'y') {
 		$body = $_REQUEST['body'];
 
 		$heading = $_REQUEST['heading'];

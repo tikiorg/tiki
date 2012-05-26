@@ -301,7 +301,7 @@
 			</td>
 		</tr>
 
-		{if $tiki_p_use_HTML eq 'y'}
+		{if $tiki_p_use_HTML eq 'y' && $smarty.session.wysiwyg neq 'y'}
 			<tr>
 				<td>{tr}Allow full HTML{/tr} <em>({tr}Keep any HTML tag.{/tr})</em>
 				<br><em>{tr}If not enabled, Tiki will retain some HTML tags (a, p, pre, img, hr, b, i){/tr}.</em></td>
@@ -352,6 +352,7 @@
 		<input type="submit" class="wikiaction" name="save" value="{tr}Save{/tr}"  onclick="this.form.saving=true;needToConfirm=false;" />
 		{if $articleId}<input type="submit" class="wikiaction tips" title="{tr}Cancel{/tr}|{tr}Cancel the edit, you will lose your changes.{/tr}" name="cancel_edit" value="{tr}Cancel Edit{/tr}"  onclick="needToConfirm=false;" />{/if}
 	</div>
+{if $smarty.session.wysiwyg neq 'y'}
 	{jq}
 $("#editpageform").submit(function(evt) {
 	var isHtml = false;
@@ -369,6 +370,7 @@ $("#editpageform").submit(function(evt) {
 	return true;
 }).attr('saving', false);
 	{/jq}
+{/if}
 </form>
 
 <br />
