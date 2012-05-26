@@ -1,12 +1,6 @@
 {if $edit_features.field}
 {tikimodule error=$module_params.error title=$tpl_module_title name="map_edit_features" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}
-	<form class="map-edit-features" method="post" action="{service controller=tracker action=insert_item}" data-location="{$tracker_input.location|escape}">
-		{foreach from=$tracker_input.textInput key=token item=label}
-			<label>
-				{$label|escape}
-				<input type="text" name="forced~{$token|escape}"/>
-			</label>
-		{/foreach}
+	<form class="map-edit-features" method="post" action="{service controller=tracker action=insert_item}">
 		<div class="submit">
 			<input type="hidden" name="trackerId" value="{$edit_features.trackerId|escape}"/>
 			<input type="hidden" name="controller" value="tracker"/>
@@ -66,9 +60,6 @@
 				var format = new OpenLayers.Format.GeoJSON;
 				form.find('.feature-content').val(format.write(activeFeature));
 			}
-			modify = new OpenLayers.Control.ModifyFeature(vlayer, {
-				mode: OpenLayers.Control.ModifyFeature.DRAG | OpenLayers.Control.ModifyFeature.RESHAPE,
-			});
 			vlayer.events.on({
 				featureselected: function (event) {
 				},
@@ -92,13 +83,19 @@
 					}
 				}
 			});
-			toolbar = new OpenLayers.Control.EditingToolbar(vlayer);
-			toolbar.addControls([modify]);
 
-			map.modeManager.addMode({
-				name: 'Draw',
-				controls: [ toolbar ]
-			});
+			{{if $edit_features.standardControls}}
+				modify = new OpenLayers.Control.ModifyFeature(vlayer, {
+					mode: OpenLayers.Control.ModifyFeature.DRAG | OpenLayers.Control.ModifyFeature.RESHAPE,
+				});
+				toolbar = new OpenLayers.Control.EditingToolbar(vlayer);
+				toolbar.addControls([modify]);
+
+				map.modeManager.addMode({
+					name: 'Draw',
+					controls: [ toolbar ]
+				});
+			{{/if}}
 
 			form.bind('insert', function () {
 				$(map).trigger('changed');
