@@ -174,11 +174,10 @@ if (isset($_REQUEST["articleId"]) and $_REQUEST["articleId"] > 0) {
 	$heading = $article_data['heading'];
 	$smarty->assign('parsed_body', $tikilib->parse_data($body, array('is_html' => 'y')));
 	$smarty->assign('parsed_heading', $tikilib->parse_data($heading), array('is_html' => 'y'));
-} else {
-	if (isset($_REQUEST['translationOf'])) {
-		$translationOf = $_REQUEST['translationOf'];
-		$smarty->assign('translationOf', $translationOf);
-	}
+}
+if (!empty($_REQUEST['translationOf'])) {
+	$translationOf = $_REQUEST['translationOf'];
+	$smarty->assign('translationOf', $translationOf);
 }
 
 // Now check permissions to access this page
@@ -560,7 +559,7 @@ if (isset($_REQUEST['save']) && empty($errors)) {
 	include_once('categorize.php');
 	include_once ('freetag_apply.php');
 
-	if ($prefs['feature_multilingual'] == 'y' && isset($translationOf)) {	
+	if ($prefs['feature_multilingual'] == 'y' && !empty($translationOf)) {	
 		$translatedArticle = $artlib->get_article($translationOf);
 		// Quietly fail if translated article does not exist.
 		if (!empty($translatedArticle) && $translatedArticle['lang'] && $_REQUEST['lang'] != $translatedArticle['lang']) {
@@ -645,6 +644,13 @@ if ($prefs['feature_multilingual'] == 'y') {
 	$languages = array();
 	$languages = $tikilib->list_languages();
 	$smarty->assign_by_ref('languages', $languages);
+	// get translations
+	if ($articleId) {
+		$translations = $multilinguallib->getTranslations('article', $articleId);	
+	} else {
+		$translations = array();
+	}
+	$smarty->assign('translations', $translations);
 }
 
 if ( $prefs['geo_locate_article'] == 'y' ) {
