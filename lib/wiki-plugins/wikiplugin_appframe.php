@@ -363,10 +363,7 @@ function wikiplugin_appframe_mapcontrol($data, $params, $start)
 	case 'mode_enable':
 		$control = null;
 		$mode = $params->mode->text();
-
-		if (! $label = $params->label->text()) {
-			$label = $mode;
-		}
+		$label = $mode;
 
 		if (! $mode) {
 			return false;
@@ -398,6 +395,10 @@ function wikiplugin_appframe_mapcontrol($data, $params, $start)
 
 	if (! $icon = $params->icon->url()) {
 		$icon = 'mapcontrol_' . $name;
+	}
+
+	if ($specifiedLabel = $params->label->text()) {
+		$label = $specifiedLabel;
 	}
 
 	$smarty = TikiLib::lib('smarty');
