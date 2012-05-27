@@ -313,8 +313,8 @@ class HeaderLib
 						try {
 							$minified .= JSMin::minify($content);
 						} catch (JSMinException $e) {
-							TikiLib::lib('errorreport')->report($e->getMessage());
-							$minified .= "/* Error: Minify failed for file $f */\n";
+							$minified .= "\n/* Error: Minify failed for file $f (added as 'external'. Error: {$e->getMessage()})*/\n";
+							$external[] = $f;
 						}
 					} else {
 						$minified .= "\n// skipping minification for $f \n" . $content;
