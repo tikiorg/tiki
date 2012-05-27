@@ -30,7 +30,7 @@ if (isset($_REQUEST['looksetup'])) {
 $styles = $tikilib->list_styles();
 $smarty->assign_by_ref('styles', $styles);
 $smarty->assign('a_style', $a_style);
-$smarty->assign_by_ref('style_options', $tikilib->list_style_options($a_style));
+$smarty->assign('style_options', $tikilib->list_style_options($a_style));
 
 /**
  * @param $stl - style file name (e.g. thenews.css)
