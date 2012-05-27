@@ -165,7 +165,8 @@ if ($registrationlib->merged_prefs['userTracker'] == 'y') {
 			email: { email: "Invalid email", required: "This field is required"},
 			pass: { required: "This field is required"},
 			passAgain: { equalTo: "Passwords do not match"}
-		}
+		},
+		submitHandler: function(){process_submit(this.currentForm);}
 	});
 ';
 	$headerlib->add_jq_onready($js);
