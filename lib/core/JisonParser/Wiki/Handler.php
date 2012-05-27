@@ -21,6 +21,16 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	var $npEntries = array();
 	var $npCount = 0;
 	var $pluginEntries = array();
+	var $options = array();
+	var $addLineBreaksTracking = array(
+		'inTable' => 0,
+		'inPre' => 0,
+		'inComment' => 0,
+		'inTOC' => 0,
+		'inScript' => 0,
+		'inDiv' => 0,
+		'inHeader' => 0
+	);
 
 	function parse($input)
 	{
@@ -52,7 +62,16 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 
 	function postParse(&$input)
 	{
-		$this->addLineBreaks($input);
+		$lines = explode("\n", $input);
+
+		$ul = '';
+		$listbeg = array();
+		foreach($lines as &$line) {
+			$this->parseLists($line, $listbeg, $ul);
+			$this->addLineBreaks($line);
+		}
+		$input = implode("\n", $lines);
+
 		$this->restorePluginEntities($input);
 		$this->restoreNpEntities($input);
 	}
@@ -157,58 +176,129 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		}
 	}
 
-	function addLineBreaks(&$input)
+	function addLineBreaks(&$line)
 	{
-		$lines = explode("\n", $input);
+		$lineInLowerCase = TikiLib::strtolower($line);
 
-		$inTable = 0;
-		$inPre = 0;
-		$inComment = 0;
-		$inTOC = 0;
-		$inScript = 0;
-		$inDiv = 0;
-		$inHeader = 0;
+		$this->addLineBreaksTracking['inComment'] += substr_count($lineInLowerCase, "<!--");
+		$this->addLineBreaksTracking['inComment'] -= substr_count($lineInLowerCase, "-->");
 
-		foreach($lines as &$line) {
-			$lineInLowerCase = TikiLib::strtolower($line);
+		// check if we are inside a ~pre~ block and, if so, ignore
+		// monospaced and do not insert <br />
+		$this->addLineBreaksTracking['inPre'] += substr_count($lineInLowerCase, "<pre");
+		$this->addLineBreaksTracking['inPre'] -= substr_count($lineInLowerCase, "</pre");
 
-			$inComment += substr_count($lineInLowerCase, "<!--");
-			$inComment -= substr_count($lineInLowerCase, "-->");
+		// check if we are inside a table, if so, ignore monospaced and do
+		// not insert <br />
 
-			// check if we are inside a ~pre~ block and, if so, ignore
-			// monospaced and do not insert <br />
-			$inPre += substr_count($lineInLowerCase, "<pre");
-			$inPre -= substr_count($lineInLowerCase, "</pre");
+		$this->addLineBreaksTracking['inTable'] += substr_count($lineInLowerCase, "<table");
+		$this->addLineBreaksTracking['inTable'] -= substr_count($lineInLowerCase, "</table");
 
-			// check if we are inside a table, if so, ignore monospaced and do
-			// not insert <br />
+		// check if we are inside an ul TOC list, if so, ignore monospaced and do
+		// not insert <br />
+		$this->addLineBreaksTracking['inTOC'] += substr_count($lineInLowerCase, "<ul class=\"toc");
+		$this->addLineBreaksTracking['inTOC'] -= substr_count($lineInLowerCase, "</ul><!--toc-->");
 
-			$inTable += substr_count($lineInLowerCase, "<table");
-			$inTable -= substr_count($lineInLowerCase, "</table");
+		// check if we are inside a script not insert <br />
+		$this->addLineBreaksTracking['inScript'] += substr_count($lineInLowerCase, "<script ");
+		$this->addLineBreaksTracking['inScript'] -= substr_count($lineInLowerCase, "</script");
 
-			// check if we are inside an ul TOC list, if so, ignore monospaced and do
-			// not insert <br />
-			$inTOC += substr_count($lineInLowerCase, "<ul class=\"toc");
-			$inTOC -= substr_count($lineInLowerCase, "</ul><!--toc-->");
+		// check if we are inside a script not insert <br />
+		$this->addLineBreaksTracking['inDiv'] += substr_count($lineInLowerCase, "<div ");
+		$this->addLineBreaksTracking['inDiv'] -= substr_count($lineInLowerCase, "</div");
 
-			// check if we are inside a script not insert <br />
-			$inScript += substr_count($lineInLowerCase, "<script ");
-			$inScript -= substr_count($lineInLowerCase, "</script>");
+		// check if we are inside a script not insert <br />
+		$this->addLineBreaksTracking['inHeader'] += substr_count($lineInLowerCase, "<h");
+		$this->addLineBreaksTracking['inHeader'] -= substr_count($lineInLowerCase, "</h");
 
-			// check if we are inside a script not insert <br />
-			$inDiv += substr_count($lineInLowerCase, "<div ");
-			$inDiv -= substr_count($lineInLowerCase, "</div>");
+		if (
+			$this->addLineBreaksTracking['inTable'] == 0 &&
+			$this->addLineBreaksTracking['inPre'] == 0 &&
+			$this->addLineBreaksTracking['inComment'] == 0 &&
+			$this->addLineBreaksTracking['inTOC'] == 0 &&
+			$this->addLineBreaksTracking['inScript'] == 0 &&
+			$this->addLineBreaksTracking['inDiv'] == 0 &&
+			$this->addLineBreaksTracking['inHeader'] == 0
+		) {
+			$line .= '<br />';
+		}
+	}
 
-			// check if we are inside a script not insert <br />
-			$inHeader += substr_count($lineInLowerCase, "<h");
-			$inHeader -= substr_count($lineInLowerCase, "</h");
+	function parseLists(&$line = "", &$listbeg = array(), &$data = '')
+	{
+		$isStart = empty($data);
 
-			if ($inTable == 0 && $inPre == 0 && $inComment == 0 && $inTOC == 0 && $inScript == 0 && $inDiv == 0 && $inHeader == 0) {
-				$line .= '<br />';
+		$litype = substr($line, 0, 1);
+		if (($litype == '*' || $litype == '#') && !(strlen($line)-count($listbeg)>4 && preg_match('/^\*+$/', $line))) {
+			$listlevel = TikiLib::how_many_at_start($line, $litype);
+			$liclose = '</li>';
+			$addremove = 0;
+			if ($listlevel < count($listbeg)) {
+				while ($listlevel != count($listbeg)) $data .= array_shift($listbeg);
+				if (substr(current($listbeg), 0, 5) != '</li>') $liclose = '';
+			} elseif ($listlevel > count($listbeg)) {
+				$listyle = '';
+				while ($listlevel != count($listbeg)) {
+					array_unshift($listbeg, ($litype == '*' ? '</ul>' : '</ol>'));
+					if ($listlevel == count($listbeg)) {
+						$listate = substr($line, $listlevel, 1);
+						if (($listate == '+' || $listate == '-') && !($litype == '*' && !strstr(current($listbeg), '</ul>') || $litype == '#' && !strstr(current($listbeg), '</ol>'))) {
+							$thisid = 'id' . microtime() * 1000000;
+							if ( !$this->options['ck_editor'] ) {
+								$data .= '<br /><a id="flipper' . $thisid . '" class="link" href="javascript:flipWithSign(\'' . $thisid . '\')">[' . ($listate == '-' ? '+' : '-') . ']</a>';
+							}
+							$listyle = ' id="' . $thisid . '" style="display:' . ($listate == '+' || $this->options['ck_editor'] ? 'block' : 'none') . ';"';
+							$addremove = 1;
+						}
+					}
+					$data.=($litype=='*'?"<ul$listyle>":"<ol$listyle>");
+				}
+				$liclose='';
 			}
+			if ($litype == '*' && !strstr(current($listbeg), '</ul>') || $litype == '#' && !strstr(current($listbeg), '</ol>')) {
+				$data .= array_shift($listbeg);
+				$listyle = '';
+				$listate = substr($line, $listlevel, 1);
+				if (($listate == '+' || $listate == '-')) {
+					$thisid = 'id' . microtime() * 1000000;
+					if ( !$this->options['ck_editor'] ) {
+						$data .= '<br /><a id="flipper' . $thisid . '" class="link" href="javascript:flipWithSign(\'' . $thisid . '\')">[' . ($listate == '-' ? '+' : '-') . ']</a>';
+					}
+					$listyle = ' id="' . $thisid . '" style="display:' . ($listate == '+' || $this->options['ck_editor'] ? 'block' : 'none') . ';"';
+					$addremove = 1;
+				}
+				$data .= ($litype == '*' ? "<ul$listyle>" : "<ol$listyle>");
+				$liclose = '';
+				array_unshift($listbeg, ($litype == '*' ? '</li></ul>' : '</li></ol>'));
+			}
+			$line = $liclose . '<li>' . substr($line, $listlevel + $addremove);
+			if (substr(current($listbeg), 0, 5) != '</li>') array_unshift($listbeg, '</li>' . array_shift($listbeg));
+		} elseif ($litype == '+') {
+			$listlevel = TikiLib::how_many_at_start($line, $litype);
+			// Close lists down to requested level
+			while ($listlevel < count($listbeg)) $data .= array_shift($listbeg);
+
+			// Must append paragraph for list item of given depth...
+			$listlevel = TikiLib::how_many_at_start($line, $litype);
+			if (count($listbeg)) {
+				if (substr(current($listbeg), 0, 5) != '</li>') {
+					array_unshift($listbeg, '</li>' . array_shift($listbeg));
+					$liclose = '<li>';
+				} else $liclose = '<br />';
+			} else $liclose = '';
+			$line = $liclose . substr($line, count($listbeg));
+
+		} else {
+			//we are either at the end of a list, or in a regular line
+			$line = implode($listbeg) . $line;
+			$listbeg =  array();
 		}
 
-		$input = implode("\n", $lines);
+		if ($isStart) {
+			//We know we are at the start of an UL, so prepend it
+			$line = $data . $line;
+			$data = '';
+		}
 	}
 
 	function SOL() //start of line
@@ -286,7 +376,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 
 		$content = substr($content, $hNum - 1);
 		
-		return '<h' . $hNum . '>' . $content . '</h1>';
+		return '<h' . $hNum . '>' . $content . '</h' . $hNum . '>';
 	}
 
 	function hr()

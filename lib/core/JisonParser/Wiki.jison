@@ -8,7 +8,7 @@ PLUGIN_ID   					[A-Z]+
 INLINE_PLUGIN_ID				[a-z]+
 SMILE							[a-z]+
 
-%s plugin bold box center colortext italic header ulist olist link strikethrough table titlebar underscore wikilink
+%s plugin bold box center colortext italic header link strikethrough table titlebar underscore wikilink
 %options flex
 
 %%
@@ -270,67 +270,6 @@ SMILE							[a-z]+
 		//php return 'HEADER_START';
 	%}
 
-
-<ulist><<EOF>>
-	%{
-		if (parser.isPlugin()) return 'CONTENT'; //js
-        lexer.unput("\n"); //js
-
-		//php if ($this->isPlugin()) return 'CONTENT';
-        //php $this->unput("\n");
-    %}
-<ulist>[\n\r]
-	%{
-		if (parser.isPlugin()) return 'CONTENT'; //js
-		lexer.popState(); //js
-		lexer.unput("\n"); //js
-		return 'ULIST_END'; //js
-
-		//php if ($this->isPlugin()) return 'CONTENT';
-		//php $this->popState();
-		//php $this->unput("\n");
-		//php return 'ULIST_END';
-	%}
-[\n\r][*]
-	%{
-		if (parser.isPlugin()) return 'CONTENT'; //js
-		parser.beginBlock('ulist'); //js
-		return 'ULIST_START'; //js
-
-		//php if ($this->isPlugin()) return 'CONTENT';
-		//php $this->beginBlock('ulist');
-		//php return 'ULIST_START';
-	%}
-
-
-<olist><<EOF>>
-	%{
-		if (parser.isPlugin()) return 'CONTENT'; //js
-		lexer.unput("\n"); //js
-
-		//php if ($this->isPlugin()) return 'CONTENT';
-		//php $this->unput("\n");
-	%}
-<olist>[\n\r]
-	%{
-		if (parser.isPlugin()) return 'CONTENT'; //js
-		lexer.popState(); //js
-		return 'OLIST_END'; //js
-
-		//php if ($this->isPlugin()) return 'CONTENT';
-		//php $this->popState();
-		//php return 'OLIST_END';
-	%}
-[\n\r][#]
-	%{
-		if (parser.isPlugin()) return 'CONTENT'; //js
-		parser.beginBlock('olist'); //js
-		return 'OLIST_START'; //js
-
-		//php if ($this->isPlugin()) return 'CONTENT';
-		//php $this->beginBlock('olist');
-		//php return 'OLIST_START';
-	%}
 
 
 <italic><<EOF>>
@@ -595,18 +534,6 @@ content
 	{
 		$$ = parser.header($2); //js
 		//php $$ = $this->header($2);
-	}
- | ULIST_START ULIST_END
- | ULIST_START contents ULIST_END
-	{
-		$$ = parser.ulist($2); //js
-		//php $$ = $this->ulist($2);
-	}
- | OLIST_START OLIST_END
- | OLIST_START contents OLIST_END
-	{
-		$$ = parser.olist($2); //js
-		//php $$ = $this->olist($2);
 	}
  | BOLD_START BOLD_END
  | BOLD_START contents BOLD_END
