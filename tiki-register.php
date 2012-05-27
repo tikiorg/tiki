@@ -13,6 +13,9 @@ $inputConfiguration = array(
 		'passAgain' => 'text', 
 	) )
 );
+
+$auto_query_args = array();
+
 require_once ('tiki-setup.php');
 require_once ('lib/registration/registrationlib.php');
 if (is_a($registrationlib->merged_prefs, "RegistrationError")) register_error($registrationlib->merged_prefs->msg);
