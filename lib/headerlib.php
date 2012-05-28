@@ -313,8 +313,8 @@ class HeaderLib
 						try {
 							$minified .= JSMin::minify($content);
 						} catch (JSMinException $e) {
-							TikiLib::lib('errorreport')->report($e->getMessage());
-							$minified .= "/* Error: Minify failed for file $f */\n";
+							$minified .= "\n/* Error: Minify failed for file $f (added as 'external'. Error: {$e->getMessage()})*/\n";
+							$external[] = $f;
 						}
 					} else {
 						$minified .= "\n// skipping minification for $f \n" . $content;
@@ -756,7 +756,13 @@ class HeaderLib
 		*/
 
 		$this->add_jsfile('http://openlayers.org/api/2.11/OpenLayers.js', 'external');
-		$this->add_js('$(".map-container:not(.done)").addClass("done").createMap();');
+		$this->add_js(
+		    '$(".map-container:not(.done)")
+		        .addClass("done")
+		        .visible(function() {
+		            $(this).createMap();
+		    });'
+        );
 		
 		return $this;
 	}

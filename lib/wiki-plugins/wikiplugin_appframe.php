@@ -206,7 +206,7 @@ function wikiplugin_appframe_execute($plugin)
 	$body = $plugin->getBody();
 	$params = WikiParser_PluginArgumentParser::parse($plugin->getArguments());
 
-	if (! in_array($name, array('tab', 'column', 'page', 'module', 'cond', 'anchor', 'overlay', 'template', 'hidden'))) {
+	if (! in_array($name, array('tab', 'column', 'page', 'module', 'cond', 'anchor', 'overlay', 'template', 'hidden', 'mapcontrol'))) {
 		return null;
 	}
 
@@ -348,5 +348,68 @@ function wikiplugin_appframe_template($data, $params, $start)
 	$smarty = TikiLib::lib('smarty');
 	$file = $params->file->url();
 	return $smarty->fetch($file);
+}
+
+function wikiplugin_appframe_mapcontrol($data, $params, $start)
+{
+	static $counter = 0;
+
+	switch ($name = $params->type->word()) {
+	case 'pan_zoom':
+		$control = null;
+		$label = tr('Pan/Zoom');
+		$mode = tr('Default');
+		break;
+	case 'mode_enable':
+		$control = null;
+		$mode = $params->mode->text();
+		$label = $mode;
+
+		if (! $mode) {
+			return false;
+		}
+		break;
+	case 'select_feature':
+		$control = 'new OpenLayers.Control.SelectFeature(vlayer)';
+		$label = tr('Select');
+		$mode = null;
+		break;
+	case 'modify_feature':
+		$control = 'new OpenLayers.Control.ModifyFeature(vlayer, {mode: OpenLayers.Control.ModifyFeature.DRAG | OpenLayers.Control.ModifyFeature.RESHAPE})';
+		$label = tr('Select/Modify');
+		$mode = null;
+		break;
+	case 'draw_polygon':
+		$control = 'new OpenLayers.Control.DrawFeature(vlayer, OpenLayers.Handler.Polygon)';
+		$label = tr('Draw Polygon');
+		$mode = null;
+		break;
+	case 'draw_path':
+		$control = 'new OpenLayers.Control.DrawFeature(vlayer, OpenLayers.Handler.Path)';
+		$label = tr('Draw Path');
+		$mode = null;
+		break;
+	default:
+		return false;
+	}
+
+	if (! $icon = $params->icon->url()) {
+		$icon = 'mapcontrol_' . $name;
+	}
+
+	if ($specifiedLabel = $params->label->text()) {
+		$label = $specifiedLabel;
+	}
+
+	$smarty = TikiLib::lib('smarty');
+	$smarty->assign('mapcontrol', array(
+		'id' => 'mapcontrol-' . ++$counter,
+		'control' => $control,
+		'icon' => $icon,
+		'label' => $label,
+		'mode' => $mode,
+		'navigation' => $params->navigation->int(),
+	));
+	return $smarty->fetch('wiki-plugins/wikiplugin_appframe_mapcontrol.tpl');
 }
 

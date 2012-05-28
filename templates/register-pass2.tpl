@@ -9,11 +9,11 @@
 				{if $trackerEditFormId}&nbsp;<strong class='mandatory_star'>*</strong>&nbsp;{/if}
 			</td>
 			<td>
-				<input id='pass2' type="password" name="passAgain" onkeypress="regCapsLock(event)" onkeyup="{if 0 and $prefs.feature_ajax neq 'y' && !$userTrackerData}checkPasswordsMatch('#pass2', '#pass1', '#mypassword2_text');{elseif 0 && !$userTrackerData}check_pass();{/if}" />
+				<input id='pass2' type="password" name="passAgain" onkeypress="regCapsLock(event)" onkeyup="{if $prefs.feature_jquery_validation neq 'y' && !$userTrackerData}checkPasswordsMatch('#pass2', '#pass1', '#mypassword2_text');{/if}" />
 				<div style="float:right;margin-left:5px;">
 					<div id="mypassword2_text"></div>
 				</div>
-				{if 0 and $prefs.feature_ajax eq 'y'}<span id="checkpass"></span>{/if}{* AJAX_TODO *}
+				{if $prefs.feature_jquery_validation neq 'y' && !$userTrackerData}<span id="checkpass"></span>{/if}
 				{if $prefs.generate_password eq 'y'}
 					<p>
 						<input id='genepass' name="genepass" type="text" tabindex="0" style="display: none" />

@@ -26,6 +26,7 @@ function prefs_header_list()
 			'type' => 'textarea',
 			'size' => 5,
 			'default' => '',
+			'filter' => 'none',
 		),
 		'header_custom_js' => array(
 			'name' => tra('Custom JavaScript'),
@@ -34,6 +35,7 @@ function prefs_header_list()
 			'size' => 5,
 			'default' => '',
 			'hint' => tra('Do not include the <script> and </script> tags.'),
+			'filter' => 'none',
 		),
 	);	
 }

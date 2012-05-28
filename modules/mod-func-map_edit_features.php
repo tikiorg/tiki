@@ -29,6 +29,12 @@ function module_map_edit_features_info()
 				'description' => tr('Hidden values to be sent over to the dialog. fieldName(value)'),
 				'filter' => 'text',
 			),
+			'standard' => array(
+				'name' => tr('Standard controls'),
+				'description' => tr('Dispay the standard draw controls'),
+				'filter' => 'int',
+				'default' => 1,
+			),
 		),
 	);
 }
@@ -63,6 +69,7 @@ function module_map_edit_features($mod_reference, $module_params)
 						'definition' => $definition,
 						'field' => $targetField,
 						'hiddenInput' => $hidden,
+						'standardControls' => isset($module_params['standard']) ? intval($module_params['standard']) : 1,
 					)
 	);
 }

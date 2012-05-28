@@ -156,6 +156,13 @@ RewriteRule ^trackers$             tiki-list_trackers.php                   [L]
 RewriteRule ^users$                tiki-list_users.php                      [L]
 RewriteRule ^userinfo$          tiki-view_tracker_item.php?view=+user&cookietab=2 [L]
 
+# access a link to any user by providing its username (exact match) after u:
+#   (uncomment to enable)
+#RewriteRule ^u:([A-Za-z0-9]+)       tiki-view_tracker_item.php?user=$1&view=+user           [QSA,L]
+# alternative procedure to show a list of users with that string 
+#   (adapt with your user tracker id and user selector field id)
+#RewriteRule ^u:([A-Za-z0-9]+)       tiki-view_tracker.php?trackerId=1&filterfield=3&filtervalue\[3\]=$1           [QSA,L]
+
 # access any object by its numeric identifier
 RewriteRule ^article([0-9]+)\-.*(&comzone=.*)$  article$1$2
 RewriteRule ^article([0-9]+)\-.*$  article$1

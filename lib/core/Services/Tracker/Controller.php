@@ -515,7 +515,7 @@ class Services_Tracker_Controller
 		}
 
 		$itemId = 0;
-		if ( !empty($fields) ) {
+		if (! empty($fields) && $_SERVER['REQUEST_METHOD'] == 'POST') {
 			foreach ($forced as $key => $value) {
 				if ($itemObject->canModifyField($key)) {
 					$fields[$key] = $value;

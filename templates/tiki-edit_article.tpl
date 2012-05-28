@@ -42,7 +42,7 @@
 	<input type="hidden" name="image_type" value="{$image_type|escape}" />
 	<input type="hidden" name="image_name" value="{$image_name|escape}" />
 	<input type="hidden" name="image_size" value="{$image_size|escape}" />
-	{if isset($translationOf)}
+	{if !empty($translationOf)}
 		<input type="hidden" name="translationOf" value="{$translationOf|escape}" />
 	{/if}
 	<table class="formcolor">
@@ -85,6 +85,17 @@
 						{tr _0="tiki-edit_article.php?translationOf=$articleId"}To translate, do not change the language and the content.
 						Instead, <a href="%0">create a new translation</a> in the new language.{/tr}
 					{/if}
+					{if $translations}
+						<p>{tr}Edit Translations{/tr}:</p>
+						{section loop=$translations name=t}
+						{if $articleId != $translations[t].objId}
+								{$translations[t].lang|escape}: <a href="tiki-edit_article.php?articleId={$translations[t].objId|escape}">{$translations[t].objName|escape}</a><br />
+							{/if}
+						{/section}
+					{/if}
+					{if empty($translationOf)}
+						<p>{tr}Attach existing article ID as translation{/tr}: <input name="translationOf" type="text" size="4" /></p>
+					{/if}	
 				</td>
 			</tr>
 		{/if}
@@ -290,7 +301,7 @@
 			</td>
 		</tr>
 
-		{if $tiki_p_use_HTML eq 'y'}
+		{if $tiki_p_use_HTML eq 'y' && $smarty.session.wysiwyg neq 'y'}
 			<tr>
 				<td>{tr}Allow full HTML{/tr} <em>({tr}Keep any HTML tag.{/tr})</em>
 				<br><em>{tr}If not enabled, Tiki will retain some HTML tags (a, p, pre, img, hr, b, i){/tr}.</em></td>
@@ -341,6 +352,7 @@
 		<input type="submit" class="wikiaction" name="save" value="{tr}Save{/tr}"  onclick="this.form.saving=true;needToConfirm=false;" />
 		{if $articleId}<input type="submit" class="wikiaction tips" title="{tr}Cancel{/tr}|{tr}Cancel the edit, you will lose your changes.{/tr}" name="cancel_edit" value="{tr}Cancel Edit{/tr}"  onclick="needToConfirm=false;" />{/if}
 	</div>
+{if $smarty.session.wysiwyg neq 'y'}
 	{jq}
 $("#editpageform").submit(function(evt) {
 	var isHtml = false;
@@ -358,6 +370,7 @@ $("#editpageform").submit(function(evt) {
 	return true;
 }).attr('saving', false);
 	{/jq}
+{/if}
 </form>
 
 <br />

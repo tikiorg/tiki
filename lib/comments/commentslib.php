@@ -1446,14 +1446,14 @@ class Comments extends TikiLib
 		return array('data' => $ret);
 	}
 
-	function count_comments_threads($objectId)
+	function count_comments_threads($objectId, $parentId = 0)
 	{
 		$object = explode(":", $objectId, 2);
 		return $this->table('tiki_comments')->fetchCount(
 						array(
 							'objectType' => $object[0],
 							'object' => $object[1],
-							'parentId' => 0,
+							'parentId' => $parentId,
 						)
 		);
 	}
@@ -3035,12 +3035,17 @@ class Comments extends TikiLib
 		if ($type == 'forum') {
 			$type = 'forum post';
 
-			if ($prefs['unified_forum_deepindexing'] != 'y') {
-				refresh_index($type, $threadId);
-			}
-
 			$root = $this->find_root($parentId ? $parentId : $threadId);
 			refresh_index($type, $root);
+
+			if ($prefs['unified_forum_deepindexing'] != 'y') {
+				if ($threadId != $root) {
+					refresh_index($type, $threadId);
+				}
+				if ($parentId && $parentId != $root && $parentId != $threadId) {
+					refresh_index($type, $parentId);
+				}
+			}
 
 			return $type;
 		} else {

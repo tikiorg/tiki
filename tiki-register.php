@@ -13,6 +13,9 @@ $inputConfiguration = array(
 		'passAgain' => 'text', 
 	) )
 );
+
+$auto_query_args = array();
+
 require_once ('tiki-setup.php');
 require_once ('lib/registration/registrationlib.php');
 if (is_a($registrationlib->merged_prefs, "RegistrationError")) register_error($registrationlib->merged_prefs->msg);
@@ -103,6 +106,70 @@ if ($registrationlib->merged_prefs['userTracker'] == 'y') {
 		$user = ''; // reset $user for security reasons
 		$smarty->assign('userTrackerData', $userTrackerData);
 	}
+} else if ($prefs['feature_jquery_validation'] === 'y') {
+	$js = '
+	$("form[name=RegForm]").validate({
+		rules: {
+			name: {
+				required: true,
+				remote: {
+					url: "validate-ajax.php",
+					type: "post",
+					data: {
+						validator: "username",
+						input: function() { return $("#name").val(); }
+					}
+				}
+			},
+			email: {
+				required: true,
+				email: true
+			},
+			pass: {
+				required: true,
+				remote: {
+					url: "validate-ajax.php",
+					type: "post",
+					data: {
+						validator: "password",
+						input: function() { return $("#pass1").val(); }
+					}
+				}
+			},
+			passAgain: { equalTo: "#pass1" }';
+
+	if (extension_loaded('gd') && function_exists('imagepng') && function_exists('imageftbbox') && $prefs['feature_antibot'] == 'y' && empty($user) && $prefs['recaptcha_enabled'] != 'y') {
+		// antibot validation
+		$js .= ',
+	"captcha[input]": {
+		required: true,
+		remote: {
+			url: "validate-ajax.php",
+			type: "post",
+			data: {
+				validator: "captcha",
+				parameter: function() { return $jq("#captchaId").val(); },
+				input: function() { return $jq("#antibotcode").val(); }
+			}
+		}
+	}
+';
+		$js_m = ' "captcha[input]": { required: "' . tra('This field is required') . '"}, ';
+	} else {
+		$js_m = '';
+	}
+
+		$js .= '},
+		messages: {' . $js_m . '
+			name: { required: "This field is required"},
+			email: { email: "Invalid email", required: "This field is required"},
+			pass: { required: "This field is required"},
+			passAgain: { equalTo: "Passwords do not match"}
+		},
+		submitHandler: function(){process_submit(this.currentForm);}
+	});
+';
+	$headerlib->add_jq_onready($js);
 }
 
 $smarty->assign('email_valid', $email_valid);
