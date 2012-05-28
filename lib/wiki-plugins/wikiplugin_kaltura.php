@@ -54,6 +54,31 @@ function wikiplugin_kaltura_info()
 				'default' => 365,
 				'filter' => 'int',
 			),
+			'align' => array(
+				'required' => false,
+				'name' => tra('Align'),
+				'description' => tra('Alignment of the player'),
+				'default' => '',
+				'filter' => 'word',
+				'options' => array(
+					array('text' => tra('Not set'), 'value' => ''),
+					array('text' => tra('Left'), 'value' => 'left'),
+					array('text' => tra('Centre'), 'value' => 'center'),
+					array('text' => tra('Right'), 'value' => 'right'),
+				),
+			),
+			'float' => array(
+				'required' => false,
+				'name' => tra('Float'),
+				'description' => tra('Alignment of the player using CSS float'),
+				'default' => '',
+				'filter' => 'word',
+				'options' => array(
+					array('text' => tra('Not set'), 'value' => ''),
+					array('text' => tra('Left'), 'value' => 'left'),
+					array('text' => tra('Right'), 'value' => 'right'),
+				),
+			),
 		),
 	);
 }
@@ -109,5 +134,16 @@ function wikiplugin_kaltura($data, $params)
 					'<param name="wmode" value="opaque"/>' .
 				'</object>';
 
-     return '~np~'.$code.'~/np~';
+	$style = '';
+	if (!empty($params['align'])) {
+		$style .= "text-align:{$params['align']};";
+	}
+	if (!empty($params['float'])) {
+		$style .= "float:{$params['float']};";
+	}
+	if (!empty($style)) {
+		$code = "<div style=\"$style\">$code</div>";
+	}
+
+    return '~np~'.$code.'~/np~';
 }
