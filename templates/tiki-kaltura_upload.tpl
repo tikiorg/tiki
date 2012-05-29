@@ -27,10 +27,15 @@
 	{jq notonready=true}
 
 function afterAddEntry (entries) {
+
+	var $f = $("#kcw");
 	for( var i = 0; i < entries.length; i++) {
-		$("#kcw").append($('<input type="hidden" name="entryId[]" value="'+entries[i].entryId+'"/>'));
+		$f.append($('<input type="hidden" name="entryId[]" value="' + entries[i].entryId + '"/>'));
 	}
-	$("#kcw").submit();
+	if ($("input[name=from_plugin]", $f).length > 0 && entries.length) {
+		$f.append($('<input type="hidden" name="params[id]" value="' + entries[0].entryId + '"/>'));
+	}
+	$f.submit();
 }
 
 var params = {

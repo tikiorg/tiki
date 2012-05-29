@@ -27,9 +27,10 @@ function wikiplugin_kaltura_info()
 		'icon' => 'img/icons/film_edit.png',
 		'params' => array(
 			'id' => array(
-				'required' => true,
+				'required' => false,
 				'name' => tra('Kaltura Entry ID'),
-				'description' => tra('Kaltura entry ID of the video to be displayed'),
+				'description' => tra('Kaltura ID of the video to be displayed, or leave empty to show a button to allow users to add a new one.'),
+				'tags' => array('basic'),
 			),
 			'player_id' => array(
 				'name' => tra('Kaltura Video Player ID'),
@@ -79,16 +80,106 @@ function wikiplugin_kaltura_info()
 					array('text' => tra('Right'), 'value' => 'right'),
 				),
 			),
+			'add_button_label' => array(
+				'required' => false,
+				'name' => tra('Add Media Button Label'),
+				'description' => tra('Text to display on button for adding new media.'),
+				'default' => tra('Add media'),
+			),
 		),
 	);
 }
 
 function wikiplugin_kaltura($data, $params)
 {
-	global $prefs, $kalturalib;
+	global $prefs, $kalturalib, $tiki_p_upload_videos, $user, $page;
+
+	static $instance = 0;
+
+	$instance++;
+
+	$defaults = array();
+	$plugininfo = wikiplugin_kaltura_info();
+	foreach ($plugininfo['params'] as $key => $param) {
+		$defaults["$key"] = $param['default'];
+	}
 
 	if (empty($params['id'])) {
-		return '<span class="error">' . tra('Media id is required') . '</span>';
+
+		if ($tiki_p_upload_videos === 'y') {
+			$smarty = TikiLib::lib('smarty');
+			$smarty->loadPlugin('smarty_function_button');
+
+			TikiLib::lib('header')->add_jq_onready('
+$("#kaltura_upload_btn' . $instance . ' a").live("click", function() {
+	if (jqueryTiki.ui) {
+		var $d = $("<div id=\"kaltura_upload_dialog' . $instance . '\" style=\"display:none\"></div>")
+				.appendTo(document.body);
+
+		var spinner = $(this).modal(tr(" "));
+
+		var w = 720;
+		var h = 510;
+		if ($(document.body).width() < w) {
+			w = $(document.body).width() * 0.8;
+		}
+		if ($(document.body).height() < h) {
+			h = $(document.body).height() * 0.8;
+		}
+
+		$d.dialog({
+			width: w,
+			height: h,
+			title: tr("Upload Media"),
+			modal: false,
+			buttons: {
+//				Ok: function() {
+//					$(this).dialog("close");
+//				}
+			},
+			create: function(event, ui) {
+				$.get("tiki-kaltura_upload.php?full=n", function (data, status) {
+
+					if (data) {
+						$d.append(data);
+						$(".navbar .button:first", $d).remove();
+
+						$("#kcw")
+							.append($("<input type=\"hidden\" name=\"from_plugin\" value=\"1\" />" +
+								"<input type=\"hidden\" name=\"content\" value=\"\" />" +
+								"<input type=\"hidden\" name=\"type\" value=\"kaltura\" />" +
+								"<input type=\"hidden\" name=\"page\" value=\"'.$page.'\" />" +
+								"<input type=\"hidden\" name=\"index\" value=\"'.$instance.'\" />"))
+							.attr("action", "tiki-wikiplugin_edit.php");
+					}
+					ajaxLoadingHide();
+				});
+			},
+			open: function () {
+				ajaxLoadingShow($d);
+				spinner.modal();
+			},
+			close: function () {
+				spinner.modal();
+			}
+		});
+	}
+	return false;
+});
+			');
+
+			$html = smarty_function_button(array(	// default for add_button_label already tra but not merged yet
+					'_text' => !empty($params['add_button_label']) ? tra($params['add_button_label']) : $defaults['add_button_label'],
+					'_id' => 'kaltura_upload_btn' . $instance,
+				), $smarty);
+
+		} else if (!empty($user)) {
+			$html = '<span class="error">' . tra('Media id or permission to upload video is required') . '</span>';
+		} else {
+			$html = '<span class="error">' . tra('Log in to upload video') . '</span>';
+		}
+
+		return $html;
 	} else {
 		$id = $params['id'];
 	}
@@ -101,11 +192,6 @@ function wikiplugin_kaltura($data, $params)
 
 	global $kalturaadminlib; require_once 'lib/videogals/kalturalib.php';
 
-	$defaults = array();
-	$plugininfo = wikiplugin_kaltura_info();
-	foreach ($plugininfo['params'] as $key => $param) {
-		$defaults["$key"] = $param['default'];
-	}
 	if ($kalturaadminlib && $kalturaadminlib->session && (empty($params['width']) || empty($params['height']))) {
 		$player = $kalturaadminlib->getPlayersUiConf($playerId);
 		if (!empty($player)) {
