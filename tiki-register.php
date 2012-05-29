@@ -169,7 +169,7 @@ if ($registrationlib->merged_prefs['userTracker'] == 'y') {
 		submitHandler: function(){process_submit(this.currentForm);}
 	});
 ';
-	$headerlib->add_jq_onready($js);
+	TikiLib::lib('header')->add_jq_onready($js);
 }
 
 $smarty->assign('email_valid', $email_valid);
