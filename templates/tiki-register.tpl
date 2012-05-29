@@ -48,7 +48,9 @@
 {/if}
 
 {if $openid_associate eq 'n'}
-	{title admpage='login'}{tr}Registration{/tr}{/title}
+	{if !$reg_in_module}
+		{title admpage='login'}{tr}Registration{/tr}{/title}
+	{/if}
 {else}
 	<h1>{tr}Your OpenID identity is valid{/tr}</h1>
 	<p>{tr}However, no account is associated to the OpenID identifier.{/tr}</p>
@@ -62,15 +64,12 @@
 {/if}	
 <div class="simplebox highlight" id="divRegCapson" style="visibility:hidden">{icon _id=error style="vertical-align:middle"} {tr}CapsLock is on.{/tr}</div>
 
-{if 0 and $prefs.feature_ajax eq 'y'}{* AJAX_TODO *}
-		<script src="lib/registration/register_ajax.js" type="text/javascript"></script>
-{/if}
-
 {if $showmsg eq 'y'}
+	{if !$reg_in_module}
 		<div class="simplebox highlight">
-	{$msg|nl2br}
+			{$msg|nl2br}
 		</div>
-
+	{/if}
 {elseif $email_valid eq 'n' and $allowRegister eq 'y'}
 	<label for="email">{icon _id=error style="vertical-align:middle" align="left"} {tr}Your email could not be validated; make sure you email is correct and click register below.{/tr}</label>
  		<form action="tiki-register.php" method="post">
@@ -88,7 +87,7 @@
 {else}
 	{if $allowRegister eq 'y'}
 
-		<fieldset>{if !isset($userTrackerHasDescription)}<legend>{tr}Register as a new user{/tr}</legend>{/if}
+		{if !$reg_in_module}<fieldset>{if !isset($userTrackerHasDescription)}<legend>{tr}Register as a new user{/tr}</legend>{/if}{/if}
 		
 		{if $userTrackerData}
 			{$userTrackerData}
@@ -106,7 +105,7 @@
 			</form>
 		{/if}
 		
-		</fieldset>
+		{if !$reg_in_module}</fieldset>{/if}
 		
 		{remarksbox type="note"  title="{tr}Note{/tr}"}
 			{tr _0=$prefs.sender_email|default:"this domain"|escape}If you use an email filter, be sure to add %0 to your accepted list{/tr}
