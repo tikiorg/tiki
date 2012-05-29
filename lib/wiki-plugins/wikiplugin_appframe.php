@@ -28,7 +28,7 @@ function wikiplugin_appframe_info()
 				'required' => false,
 				'name' => tr('Maximal height'),
 				'description' => tr('Prevent the frame from becoming any higher than the specified size.'),
-				'default' => 300,
+				'default' => -1,
 				'filter' => 'int',
 			),
 			'hideleft' => array(
@@ -95,7 +95,7 @@ function wikiplugin_appframe_info()
 function wikiplugin_appframe($data, $params)
 {
 	$minHeight = isset($params['min']) ? (int) $params['min'] : 300;
-	$maxHeight = isset($params['max']) ? (int) $params['max'] : 300;
+	$maxHeight = isset($params['max']) ? (int) $params['max'] : -1;
 	$fullPage = 0;
 	if (isset($params['fullpage']) && $params['fullpage'] == 'y') {
 		$fullPage = 1;
@@ -153,7 +153,7 @@ $(window).resize(function () {
 		}
 
 		var max = $maxHeight;
-		if (target > max) {
+		if ((max != -1) && (target > max)) {
 			target = max;
 		}
 
