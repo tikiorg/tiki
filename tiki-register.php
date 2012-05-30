@@ -28,6 +28,13 @@ if ($prefs['allowRegister'] != 'y') {
 	die;
 }
 $smarty->assign('allowRegister', 'y'); // Used for OpenID associations
+$smarty->assign('openid_associate', 'n');
+
+if (empty($reg_in_module)) {	// set in mod-func-register.php module
+	$reg_in_module = false;
+}
+$smarty->assign_by_ref('reg_in_module', $reg_in_module);
+
 // NOTE that this is not a standard access check, it checks for the opposite of that, i.e. whether logged in already
 if (!empty($user)) {
 	$smarty->assign('msg', tra('You are already logged in'));
@@ -169,7 +176,7 @@ if ($registrationlib->merged_prefs['userTracker'] == 'y') {
 		submitHandler: function(){process_submit(this.currentForm);}
 	});
 ';
-	$headerlib->add_jq_onready($js);
+	TikiLib::lib('header')->add_jq_onready($js);
 }
 
 $smarty->assign('email_valid', $email_valid);
@@ -187,14 +194,6 @@ $smarty->assign('min_username_length', $registrationlib->merged_prefs['min_usern
 $smarty->assign('min_pass_length', $registrationlib->merged_prefs['min_pass_length']);
 // disallow robots to index page:
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
-// xajax
-
-
-//if ($prefs['feature_ajax'] == 'y') {	//AJAX_TODO
-//	$ajaxlib->registerFunction('chkRegName');
-//	$ajaxlib->registerFunction('chkRegEmail');
-//	$ajaxlib->registerTemplate('tiki-register.tpl');
-//}
 
 function register_error($msg)
 {
@@ -205,8 +204,7 @@ function register_error($msg)
 	die;
 }
 
-if (empty($module) || !$module) {
+if (!$reg_in_module) {
 	$smarty->assign('mid', 'tiki-register.tpl');
-	$smarty->assign('openid_associate', 'n');
 	$smarty->display('tiki.tpl');
 }

@@ -14,19 +14,22 @@
 					<div id="mypassword2_text"></div>
 				</div>
 				{if $prefs.feature_jquery_validation neq 'y' && !$userTrackerData}<span id="checkpass"></span>{/if}
-				{if $prefs.generate_password eq 'y'}
-					<p>
-						<input id='genepass' name="genepass" type="text" tabindex="0" style="display: none" />
-						<span id="genPass">
-							{if 0 and $prefs.feature_ajax eq 'y'}
-								{button href="#" _onclick="check_pass();" _text="{tr}Generate a password{/tr}"}
-							{else}
-								{button href="#" _onclick="" _text="{tr}Generate a password{/tr}"}
-							{/if}
-						</span>
-					</p>
-				{/if}
 			</td>
 		</tr>
+		{if $prefs.generate_password eq 'y'}
+			<tr>
+				{if !$reg_in_module}<td>&nbsp;</td>{/if}
+				<td{if $reg_in_module} colspan="2" {/if}>
+					<input id='genepass' name="genepass" type="text" tabindex="0" style="display: none" />
+					<span id="genPass">
+						{if 0 and $prefs.feature_ajax eq 'y'}
+							{button href="#" _onclick="check_pass();" _text="{tr}Generate a password{/tr}"}
+						{else}
+							{button href="#" _onclick="" _text="{tr}Generate a password{/tr}"}
+						{/if}
+					</span>
+				</td>
+			</tr>
+		{/if}
 	{/if}
 {/if}

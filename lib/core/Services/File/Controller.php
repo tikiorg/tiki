@@ -7,6 +7,8 @@
 
 class Services_File_Controller
 {
+	var $defaultGalleryId = 1;
+
 	function setUp()
 	{
 		global $prefs;
@@ -122,6 +124,8 @@ class Services_File_Controller
 	private function checkTargetGallery($input)
 	{
 		$galleryId = $input->galleryId->int();
+
+		if (empty($galleryId)) $galleryId = $this->defaultGalleryId;
 
 		if (! $gal_info = $this->getGallery($galleryId)) {
 			throw new Services_Exception(tr('Requested gallery does not exist.'), 404);

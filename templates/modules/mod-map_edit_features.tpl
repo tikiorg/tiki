@@ -61,8 +61,6 @@
 				form.find('.feature-content').val(format.write(activeFeature));
 			}
 			vlayer.events.on({
-				featureselected: function (event) {
-				},
 				featureadded: function (event) {
 					var format = new OpenLayers.Format.GeoJSON;
 					

@@ -364,7 +364,7 @@ function wikiplugin_appframe_overlay($data, $params, $start)
 	$position = implode(' ', $position);
 
 	return <<<OVERLAY
-<div class="overlay" style="position: absolute; z-index: 10000; $position">
+<div class="overlay" style="position: absolute; z-index: 999; $position">
 	$data
 </div>
 OVERLAY;
