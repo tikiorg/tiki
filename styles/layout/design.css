@@ -1153,10 +1153,12 @@ textarea.tshoutbox{
 
 .dirsitetrail {
 	font-size: 95%;
+	color: lightgray;
 }
 
 .dirsitecats {
 	font-size: 95%;
+	color: lightgray;
 }
 
 /***** User Tasks *****/
