@@ -10,17 +10,63 @@ class Feed_ForwardLink_Metadata
 {
 	var $page;
 	var $lang;
+	var $lastModif;
 
-	function __construct($page, $lang)
+	function __construct($page)
 	{
+		global $tikilib;
+
 		$this->page = $page;
-		$this->$lang = $lang;
+
+		$details = $tikilib->fetchAll("SELECT lang, lastModif FROM tiki_pages WHERE pageName = ?", $page);
+
+		$this->lang = $details['lang'];
+		$this->lastModif = $details['lastModif'];
 	}
 
-	static function page($page, $lang, $dateLastUpdated)
+	static function pageFromTextLink($page, $data, $hash)
 	{
-		global $prefs;
-		$me = new self($page, $lang);
+		global $prefs, $tikilib;
+
+		$me = new self($page);
+
+		//setup clipboard data
+		$page = urlencode($page);
+		$href = TikiLib::tikiUrl() . 'tiki-index.php?page=' . $page;
+		$websiteTitle = urlencode($prefs['browsertitle']);
+		$userData = $me->findAuthorData();
+		$moderatorData = $me->findModeratorData();
+		$phraser = new JisonParser_Phraser_Handler();
+		$id = implode("", $phraser->sanitizeToWords($data));
+
+		return array(
+			'websiteTitle'=>            $websiteTitle,
+			'websiteSubtitle'=>         $page,
+			'moderator'=>               (isset($moderatorData['Name']) ? $moderatorData['Name'] : ''),
+			'moderatorInstitution'=>    (isset($moderatorData['Business Name']) ? $moderatorData['Business Name'] : ''),
+			'moderatorProfession'=>     (isset($moderatorData['Profession']) ? $moderatorData['Profession'] : ''),
+			'hash'=>                    '', //hash isn't yet known
+			'author'=>                  (isset($userData['Name']) ? $userData['Name'] : ''),
+			'authorInstitution' =>      (isset($userData['Business Name']) ? $userData['Business Name'] : ''),
+			'authorProfession'=>        (isset($userData['Profession']) ? $userData['Profession'] : ''),
+			'href'=>                    $href,
+			'answers'=>                 $me->answers(),
+			'dateLastUpdated'=>         $me->lastModif(),
+			'dateLastUpdated'=>         $me->findDatePageOriginated($page),
+			'language'=>                $me->language(),
+			'count'=>                   $me->countAll(),
+			'keywords'=>                implode(JisonParser_Phraser_Handler::sanitizeToWords($me->keywords()), ','),
+			'categories'=>              $me->categories($page),
+			"text"=> 	                $data,
+			"href"=> 	                $tikilib->tikiUrl() . "tiki-index.php?page=$page#" . $id,
+			"id"=>		                $hash. "_" . $page . "_" . $id
+		);
+	}
+
+	static function pageFromForwardLink($page)
+	{
+		global $prefs, $tikilib;
+		$me = new self($page);
 
 		//setup clipboard data
 		$page = urlencode($page);
@@ -41,7 +87,7 @@ class Feed_ForwardLink_Metadata
 			'authorProfession'=>        (isset($userData['Profession']) ? $userData['Profession'] : ''),
 			'href'=>                    $href,
 			'answers'=>                 $me->answers(),
-			'dateLastUpdated'=>         $dateLastUpdated,
+			'dateLastUpdated'=>         $me->lastModif(),
 			'dateLastUpdated'=>         $me->findDatePageOriginated($page),
 			'language'=>                $me->language(),
 			'count'=>                   $me->countAll(),
@@ -197,5 +243,10 @@ class Feed_ForwardLink_Metadata
 				$language = $listLanguage['name'];
 			}
 		}
+	}
+
+	function lastModif()
+	{
+		return $this->lastModif;
 	}
 }

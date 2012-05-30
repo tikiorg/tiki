@@ -39,20 +39,18 @@ function wikiplugin_textlink($data, $params)
 	if (empty($clipboarddata)) return $data;
 	
 	$clipboarddata->href = urldecode($clipboarddata->href);
-	
+
 	$phraser = new JisonParser_Phraser_Handler();
 	$id = implode("", $phraser->sanitizeToWords($data));
-	
+
+	$textlinkMetadata = Feed_ForwardLink_Metadata::pageFromTextLink($page, $data, $clipboarddata->hash);
+
 	Feed_ForwardLink_Send::add(
-					array(
-						"page"=> $page,
-						"forwardlink"=> $clipboarddata,
-						"textlink"=> array(
-							"text"=> 	$data,
-							"href"=> 	$tikilib->tikiUrl() . "tiki-index.php?page=$page#" . $id,
-							"id"=>		$clipboarddata->hash. "_" . $page . "_" . $id
-						)
-					)
+		array(
+			"page"=> $page,
+			"forwardlink"=> $clipboarddata,
+			"textlink"=> $textlinkMetadata
+		)
 	);
 
 	$data = htmlspecialchars($data);

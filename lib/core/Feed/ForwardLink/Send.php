@@ -70,7 +70,7 @@ Class Feed_ForwardLink_Send extends Feed_Abstract
 			if ($info['lastModif'] > $lastModif)
 				$lastModif = $info['lastModif'];
 		}
-		
+
 		if (!empty($feed->feed->entry)) {
 			$client->setParameterGet(
 							array(
