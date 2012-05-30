@@ -31,4 +31,4 @@
 	</div>
 	
 	<div id="map">{$map}</div>
-</div>    
+</form>

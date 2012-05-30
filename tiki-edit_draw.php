@@ -13,7 +13,7 @@ $inputConfiguration = array(
 
 $section = "draw";
 require_once ('tiki-setup.php');
-global $drawFullscreen, $prefs;
+global $drawFullscreen, $prefs, $headerlib;
 
 include_once ('lib/filegals/filegallib.php');
 
@@ -144,55 +144,56 @@ $smarty->assign("height", $width);
 $smarty->assign("name", $name);
 $smarty->assign("archive", $archive);
 
+$jsTracking = "$.wikiTrackingDraw = {
+	index: '$index',
+	page: '$page',
+	label: '$label',
+	type: 'draw',
+	content: '',
+	params: {
+		width: '$width',
+		height: '$height',
+		id: '$fileId'
+	}
+};";
+
+$jsFunctionality =
+"$('#drawFullscreen')
+	.click(function() {
+		$('#tiki_draw').drawFullscreen();
+	})
+	.click();
+
+$('#tiki_draw')
+	.loadDraw({
+		fileId: $('#fileId').val(),
+		galleryId: $('#galleryId').val(),
+		name: $('#fileName').val(),
+		data: $('#fileData').val()
+	})
+	.bind('renamedDraw', function(e, name) {
+		$('#fileName').val(name);
+		$('.pagetitle').text(name);
+	});
+
+$('#drawBack').click(function() {
+	window.history.back();
+});";
+
 if (
 	isset($_REQUEST['index']) &&
 	isset($_REQUEST['page']) && 
 	isset($_REQUEST['label'])
 ) {
-	$headerlib->add_jq_onready(
-					"$.wikiTrackingDraw = {
-						index: '$index',
-						page: '$page',
-						label: '$label',
-						type: 'draw',
-						content: '',
-						params: {
-							width: '$width',
-							height: '$height',
-							id: '$fileId'
-						}
-					};"
-	);
+	$headerlib->add_jq_onready($jsTracking);
 }
 
-$headerlib->add_jq_onready(
-				"$('#drawFullscreen')
-					.click(function() {
-						$('#tiki_draw').drawFullscreen();
-					})
-					.click();
-				
-				$('#tiki_draw')
-					.loadDraw({
-						fileId: $('#fileId').val(),
-						galleryId: $('#galleryId').val(),
-						name: $('#fileName').val(),
-						data: $('#fileData').val()
-					})
-					.bind('renamedDraw', function(e, name) {
-						$('#fileName').val(name);
-						$('.pagetitle').text(name);
-					});
-				
-				$('#drawBack').click(function() {
-					window.history.back();
-				});"
-);
-
-if ($drawFullscreen == true) {
+if ($drawFullscreen == true || isset($_REQUEST['raw'])) {
+	echo $headerlib->output_js();
 	$smarty->assign('drawFullscreen', 'true');
-	$smarty->display('tiki-edit_draw.tpl');
+	echo $smarty->fetch('tiki-edit_draw.tpl');
 } else {
+	$headerlib->add_jq_onready($jsFunctionality);
 	// Display the template
 	$smarty->assign('mid', 'tiki-edit_draw.tpl');
 	// use tiki_full to include include CSS and JavaScript
