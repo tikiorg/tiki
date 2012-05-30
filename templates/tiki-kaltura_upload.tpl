@@ -32,8 +32,14 @@ function afterAddEntry (entries) {
 	for( var i = 0; i < entries.length; i++) {
 		$f.append($('<input type="hidden" name="entryId[]" value="' + entries[i].entryId + '"/>'));
 	}
-	if ($("input[name=from_plugin]", $f).length > 0 && entries.length) {
+	if ($("input[name=from]", $f).val() === "plugin" && entries.length) {
 		$f.append($('<input type="hidden" name="params[id]" value="' + entries[0].entryId + '"/>'));
+	} else if ($("input[name=from]", $f).val() === "picker") {
+		if (entries.length) {
+			$("#" + $("input[name=area]", $f).val()).val(entries[0].entryId).focus();
+		}
+		$f.parents(".ui-dialog").empty().dialog("close").dialog("destroy");	// doesn't seem to want to close ?
+		return true;
 	}
 	$f.submit();
 }

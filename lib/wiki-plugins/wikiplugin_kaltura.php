@@ -31,6 +31,9 @@ function wikiplugin_kaltura_info()
 				'name' => tra('Kaltura Entry ID'),
 				'description' => tra('Kaltura ID of the video to be displayed, or leave empty to show a button to allow users to add a new one.'),
 				'tags' => array('basic'),
+				'area' => 'kaltura_uploader_id',
+				'type' => 'kaltura',
+				'icon' => 'img/icons/film_add.png',
 			),
 			'player_id' => array(
 				'name' => tra('Kaltura Video Player ID'),
@@ -112,58 +115,12 @@ function wikiplugin_kaltura($data, $params)
 
 			TikiLib::lib('header')->add_jq_onready('
 $("#kaltura_upload_btn' . $instance . ' a").live("click", function() {
-	if (jqueryTiki.ui) {
-		var $d = $("<div id=\"kaltura_upload_dialog' . $instance . '\" style=\"display:none\"></div>")
-				.appendTo(document.body);
-
-		var spinner = $(this).modal(tr(" "));
-
-		var w = 720;
-		var h = 510;
-		if ($(document.body).width() < w) {
-			w = $(document.body).width() * 0.8;
-		}
-		if ($(document.body).height() < h) {
-			h = $(document.body).height() * 0.8;
-		}
-
-		$d.dialog({
-			width: w,
-			height: h,
-			title: tr("Upload Media"),
-			modal: false,
-			buttons: {
-//				Ok: function() {
-//					$(this).dialog("close");
-//				}
-			},
-			create: function(event, ui) {
-				$.get("tiki-kaltura_upload.php?full=n", function (data, status) {
-
-					if (data) {
-						$d.append(data);
-						$(".navbar .button:first", $d).remove();
-
-						$("#kcw")
-							.append($("<input type=\"hidden\" name=\"from_plugin\" value=\"1\" />" +
-								"<input type=\"hidden\" name=\"content\" value=\"\" />" +
-								"<input type=\"hidden\" name=\"type\" value=\"kaltura\" />" +
-								"<input type=\"hidden\" name=\"page\" value=\"'.$page.'\" />" +
-								"<input type=\"hidden\" name=\"index\" value=\"'.$instance.'\" />"))
-							.attr("action", "tiki-wikiplugin_edit.php");
-					}
-					ajaxLoadingHide();
-				});
-			},
-			open: function () {
-				ajaxLoadingShow($d);
-				spinner.modal();
-			},
-			close: function () {
-				spinner.modal();
-			}
-		});
-	}
+	openMediaUploader("<input type=\"hidden\" name=\"from\" value=\"plugin\" />" +
+					"<input type=\"hidden\" name=\"content\" value=\"\" />" +
+					"<input type=\"hidden\" name=\"type\" value=\"kaltura\" />" +
+					"<input type=\"hidden\" name=\"page\" value=\"'.$page.'\" />" +
+					"<input type=\"hidden\" name=\"index\" value=\"'.$instance.'\" />",
+				"tiki-wikiplugin_edit.php");
 	return false;
 });
 			');
