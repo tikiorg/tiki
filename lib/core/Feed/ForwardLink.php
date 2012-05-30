@@ -11,6 +11,7 @@ Class Feed_ForwardLink extends Feed_Abstract
 	var $version = '0.1';
 	var $isFileGal = true;
 	var $debug = false;
+	var $name = '';
 
 	public function name($name = "") //$name is not used, but is there for compatibility with abstract
 	{
@@ -24,7 +25,7 @@ Class Feed_ForwardLink extends Feed_Abstract
 		return $me;
 	}
 
-	private static function getTimeStamp()
+	private function getTimeStamp()
 	{
 		//May be used soon for encrypting forwardlinks
 		if (isset($_REQUEST['action'], $_REQUEST['hash']) && $_REQUEST['action'] == 'timestamp') {
@@ -37,7 +38,7 @@ Class Feed_ForwardLink extends Feed_Abstract
 		}
 	}
 
-	private static function goToPhraseExistence($phrase, $page, $version)
+	private function goToPhraseExistence($phrase, $version)
 	{
 		if (!isset($_SESSION)) {
 			session_start();
@@ -45,7 +46,7 @@ Class Feed_ForwardLink extends Feed_Abstract
 
 		if (!empty($phrase)) $_SESSION['phrase'] = $phrase; //prep for redirect if it happens;
 
-		if (!empty($phrase)) Feed_ForwardLink_Search::goToNewestWikiRevision($version, $phrase, $page);
+		if (!empty($phrase)) Feed_ForwardLink_Search::goToNewestWikiRevision($version, $phrase, $this->page);
 
 		if (!empty($_SESSION['phrase'])) { //recover from redirect if it happened
 			$phrase = $_SESSION['phrase'];
@@ -53,10 +54,10 @@ Class Feed_ForwardLink extends Feed_Abstract
 		}
 	}
 
-	private static function restorePhrasesInWikiPage($page, $phrase)
+	private function restorePhrasesInWikiPage($phrase)
 	{
 		global $smarty, $headerlib;
-		$items = self::forwardLink($page)->getItems();
+		$items = self::forwardLink($this->page)->getItems();
 		$phrases = array();
 
 		$phraseI = 0;
@@ -173,7 +174,7 @@ JQ
 		}
 	}
 
-	static function editInterfaces($page, $questions, $keywords, $scientificField, $minimumMathNeeded, $minimumStatisticsNeeded)
+	function editInterfaces($metadata)
 	{
 		$perms = Perms::get();
 
@@ -201,7 +202,7 @@ JQ
 								itemId: itemId,
 								byName: true,
 								defaults: {
-									Page: '$page',
+									Page: '$this->name',
 									Type: type
 								}
 							}, function(item) {
@@ -333,24 +334,24 @@ JQ
 JQ
 					);
 
-				self::editQuestionsInterface($page, $questions, $trackerId);
+				$this->editQuestionsInterface($metadata['questions'], $trackerId);
 
-				$keywords = json_encode($keywords);
+				$keywords = json_encode($metadata['keywords']);
 				TikiLib::lib('header')->add_jq_onready("genericSingleTrackerItemInterface('Keywords', $keywords);");
 
-				$scientificField = json_encode($scientificField);
+				$scientificField = json_encode($metadata['scientificField']);
 				TikiLib::lib('header')->add_jq_onready("genericSingleTrackerItemInterface('Scientific Field', $scientificField);");
 
-				$minimumMathNeeded = json_encode($minimumMathNeeded);
+				$minimumMathNeeded = json_encode($metadata['minimumMathNeeded']);
 				TikiLib::lib('header')->add_jq_onready("genericSingleTrackerItemInterface('Minimum Math Needed', $minimumMathNeeded);");
 
-				$minimumStatisticsNeeded = json_encode($minimumStatisticsNeeded);
+				$minimumStatisticsNeeded = json_encode($metadata['minimumStatisticsNeeded']);
 				TikiLib::lib('header')->add_jq_onready("genericSingleTrackerItemInterface('Minimum Statistics Needed', $minimumStatisticsNeeded);");
 			}
 		}
 	}
 
-	static function editQuestionsInterface($page, $questions, $trackerId)
+	function editQuestionsInterface($questions, $trackerId)
 	{
 		$questions = json_encode($questions);
 
@@ -449,52 +450,13 @@ JQ
 		);
 	}
 
-	static function createForwardLinksInterface($page, $questions, $keywords, $dateLastUpdated, $language)
+	function createForwardLinksInterface($metadata)
 	{
 		global $tikilib, $headerlib, $prefs, $user;
 
-		//setup clipboard data
-		$page = urlencode($page);
-		$href = TikiLib::tikiUrl() . 'tiki-index.php?page=' . $page;
-		$websiteTitle = urlencode($prefs['browsertitle']);
-		$dateOriginated = self::findDatePageOriginated($page);
+		$answers = json_encode($metadata['answers']);
 
-		$answers = array();
-		foreach ($questions as $question) {
-			$answers[] = array(
-				'question'=> strip_tags($question['Value']),
-				'answer'=> '',
-			);
-		}
-
-		$userData = self::findAuthorData($page);
-		$moderatorData = self::findModeratorData();
-
-		if (isset($keywords) && is_array($keywords)) {
-			$keywords = end($keywords);
-			$keywords = $keywords['Value'];
-		}
-
-		$clipboarddata = json_encode(array(
-			'websiteTitle'=>            $websiteTitle,
-			'websiteSubtitle'=>         $page,
-			'moderator'=>               (isset($moderatorData['Name']) ? $moderatorData['Name'] : ''),
-			'moderatorInstitution'=>    (isset($moderatorData['Business Name']) ? $moderatorData['Business Name'] : ''),
-			'moderatorProfession'=>     (isset($moderatorData['Profession']) ? $moderatorData['Profession'] : ''),
-			'hash'=>                    '', //hash isn't yet known
-			'author'=>                  (isset($userData['Name']) ? $userData['Name'] : ''),
-			'authorInstitution' =>      (isset($userData['Business Name']) ? $userData['Business Name'] : ''),
-			'authorProfession'=>        (isset($userData['Profession']) ? $userData['Profession'] : ''),
-			'href'=>                    $href,
-			'answers'=>                 $answers,
-			'dateLastUpdated'=>         $dateLastUpdated,
-			'dateLastUpdated'=>         $dateOriginated,
-			'language'=>                $language,
-			'count'=>                   self::countAll(),
-			'keywords'=>                implode(JisonParser_Phraser_Handler::sanitizeToWords($keywords), ',')
-		));
-
-		$answers = json_encode($answers);
+		$clipboarddata = json_encode($metadata);
 
 		$headerlib
 			->add_jsfile('lib/rangy/uncompressed/rangy-core.js')
@@ -513,7 +475,7 @@ JQ
 			->getOne();
 		$authorDetails = json_encode(end($authorDetails));
 
-		$page = urlencode($page);
+		$page = urlencode($this->page);
 		$href = TikiLib::tikiUrl() . 'tiki-index.php?page=' . $page;
 
 		$websiteTitle = addslashes(htmlspecialchars($prefs['browsertitle']));
@@ -717,55 +679,19 @@ JQ
 
 		$page = $args['object'];
 		$version = $args['version'];
-		$dateLastUpdated = $args['lastModif'];
-		$lang = $args['lang'];
 
+		$metadata = Feed_ForwardLink_Metadata::page($page, $args['lang'], $args['lastModif']);
 		$phrase = (!empty($_REQUEST['phrase']) ? addslashes(htmlspecialchars($_REQUEST['phrase'])) : '');
 
-		self::goToPhraseExistence($phrase, $page, $version);
+		$me = new self($page);
 
-		self::restorePhrasesInWikiPage($page, $phrase);
+		$me->goToPhraseExistence($phrase, $version);
 
-		$questions = Tracker_Query::tracker('Wiki Attributes')
-			->byName()
-			->filterFieldByValue('Type', 'Question')
-			->filterFieldByValue('Page', $page)
-			->query();
+		$me->restorePhrasesInWikiPage($phrase);
 
-		$keywords = Tracker_Query::tracker('Wiki Attributes')
-			->byName()
-			->filterFieldByValue('Type', 'Keywords')
-			->filterFieldByValue('Page', $page)
-			->query();
+		$me->editInterfaces($metadata);
 
-		$scientificField = Tracker_Query::tracker('Wiki Attributes')
-			->byName()
-			->filterFieldByValue('Type', 'Scientific Field')
-			->filterFieldByValue('Page', $page)
-			->query();
-
-		$minimumMathNeeded = Tracker_Query::tracker('Wiki Attributes')
-			->byName()
-			->filterFieldByValue('Type', 'Scientific Field')
-			->filterFieldByValue('Page', $page)
-			->query();
-
-		$minimumStatisticsNeeded = Tracker_Query::tracker('Wiki Attributes')
-			->byName()
-			->filterFieldByValue('Type', 'Scientific Field')
-			->filterFieldByValue('Page', $page)
-			->query();
-
-		self::editInterfaces($page, $questions, $keywords, $scientificField, $minimumMathNeeded, $minimumStatisticsNeeded);
-
-		//Get language, which is the description of $lang
-		foreach(TikiLib::lib("tiki")->list_languages() as $listLanguage) {
-			if ($listLanguage['value'] == $lang) {
-				$language = $listLanguage['name'];
-			}
-		}
-
-		self::createForwardLinksInterface($page, $questions, $keywords, $dateLastUpdated, $language);
+		$me->createForwardLinksInterface($metadata);
 	}
 	
 	static function wikiSave($args)
@@ -846,7 +772,7 @@ JQ
 				Tracker_Query::tracker('Wiki Attributes')
 					->byName()
 					->replaceItem(array(
-						'Page' => $this->name,
+						'Page' => $this->name(),
 						'Attribute' => $entryHash,
 						'Value' => $entryText,
 						'Type' => 'ForwardLink'
@@ -859,71 +785,5 @@ JQ
 		$groupPluginReturnAll = false;
 
 		return $replace;
-	}
-
-	static public function findAuthorData($page, $version = -1)
-	{
-		global $tikilib;
-
-		if ($version < 0) {
-			$user = TikiLib::lib('trk')->getOne("SELECT user FROM tiki_pages WHERE pageName = ?", array($page));
-		} else {
-			$user = TikiLib::lib('trk')->getOne("SELECT user FROM tiki_history WHERE pageName = ? AND version = ?", array($page, $version));
-		}
-
-		if (empty($user))  return array();
-
-		$authorData = Tracker_Query::tracker("Users")
-			->byName()
-			->filterFieldByValue('login', $user)
-			->getOne();
-		$authorData = end($authorData);
-
-		if (empty($authorData['Name'])) {
-			$authorData['Name'] = $tikilib->get_user_preference($user, "realName");
-		}
-
-
-		return $authorData;
-	}
-
-	static public function findModeratorData()
-	{
-		global $tikilib;
-
-		$moderatorData = Tracker_Query::tracker("Users")
-			->byName()
-			->filterFieldByValue('login', 'admin') //admin is un-deletable
-			->getOne();
-		$moderatorData = end($moderatorData);
-
-		if (empty($authorData['Name'])) {
-			$moderatorData['Name'] = $tikilib->get_user_preference('admin', "realName");
-		}
-
-		return $moderatorData;
-	}
-
-	static public function findDatePageOriginated($page)
-	{
-		$date = TikiLib::lib('trk')->getOne('SELECT lastModif FROM tiki_history WHERE pageName = ? ORDER BY lastModif DESC', array($page));
-
-		if (empty($date)) {
-			//page doesn't yet have history
-			$date = TikiLib::lib('trk')->getOne('SELECT lastModif FROM tiki_pages WHERE pageName = ?', array($page));
-		}
-
-		return $date;
-	}
-
-	static public function countAll()
-	{
-		return count(
-			Tracker_Query::tracker('Wiki Attributes')
-				->byName()
-				->filterFieldByValue('Type', 'ForwardLink')
-				->render(false)
-				->query()
-		);
 	}
 }
