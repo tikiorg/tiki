@@ -2074,4 +2074,8 @@ body.fixed_width #main[id] {
 	margin-bottom: 5px;
 }
 
+#role_main {
+	margin-top: -20px;
+}
+
 /* end of file */
