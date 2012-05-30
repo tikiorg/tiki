@@ -354,6 +354,8 @@ function wikiplugin_appframe_mapcontrol($data, $params, $start)
 {
 	static $counter = 0;
 
+	$smarty = TikiLib::lib('smarty');
+
 	switch ($name = $params->type->word()) {
 	case 'pan_zoom':
 		$control = null;
@@ -389,6 +391,17 @@ function wikiplugin_appframe_mapcontrol($data, $params, $start)
 		$label = tr('Draw Path');
 		$mode = null;
 		break;
+	case 'color_picker':
+		$headerlib = TikiLib::lib('header');
+		$headerlib->add_jsfile('lib/jquery/colorpicker/js/colorpicker.js');
+		$headerlib->add_cssfile('lib/jquery/colorpicker/css/colorpicker.css');
+		$smarty->assign('mapcontrol', array(
+			'id' => 'mapcontrol-' . ++$counter,
+			'icon' => $icon,
+			'label' => $label,
+		));
+		return $smarty->fetch('wiki-plugins/wikiplugin_appframe_mapcontrol_colorpicker.tpl');
+		break;
 	default:
 		return false;
 	}
@@ -401,7 +414,6 @@ function wikiplugin_appframe_mapcontrol($data, $params, $start)
 		$label = $specifiedLabel;
 	}
 
-	$smarty = TikiLib::lib('smarty');
 	$smarty->assign('mapcontrol', array(
 		'id' => 'mapcontrol-' . ++$counter,
 		'control' => $control,
