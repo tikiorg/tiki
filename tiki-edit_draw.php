@@ -165,6 +165,8 @@ if (
 	);
 }
 
+$prefs['feature_draw_hide_buttons'] = addslashes(htmlentities($prefs['feature_draw_hide_buttons']));
+
 $headerlib->add_jq_onready(
 				"$('#drawFullscreen')
 					.click(function() {
@@ -177,7 +179,8 @@ $headerlib->add_jq_onready(
 						fileId: $('#fileId').val(),
 						galleryId: $('#galleryId').val(),
 						name: $('#fileName').val(),
-						data: $('#fileData').val()
+						data: $('#fileData').val(),
+						removeButtons: '" . $prefs['feature_draw_hide_buttons'] . "'
 					})
 					.bind('renamedDraw', function(e, name) {
 						$('#fileName').val(name);

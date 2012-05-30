@@ -1040,6 +1040,18 @@ function prefs_feature_list($partial = false)
 			),
 			'tags' => array('experimental'),			
 		),
+		'feature_draw_hide_buttons' => array(
+			'name' => tra('Draw (SVG-edit) Hide Buttons'),
+			'description' => tra('Hide buttons found in Tiki Draw, html id, comma-delimited.  Example: "tool_select,tool_fhpath,tools_line_show,tools_rect_show,tools_ellipse_show,tool_path,tools_shapelib_show,tool_text,tool_image,tool_zoom,tool_eyedropper"'),
+			'help' => 'Draw',
+			'dependencies' => array(
+				'feature_draw',
+				'feature_file_galleries',
+			),
+			'tags' => array('experimental'),
+			'type' => 'text',
+			'default' => '',
+		),
 		'feature_docs' => array(
 			'name' => tra('Docs (WebODF)'),
 			'description' => tra('Docs gives you the ability to view/edit Open Document Format'),
