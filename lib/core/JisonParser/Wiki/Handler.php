@@ -8,6 +8,7 @@
 class JisonParser_Wiki_Handler extends JisonParser_Wiki
 {
 	var $parsing = false;
+	public static $hdrCount = 0;
 	public static $spareParsers = array();
 
 	var $npOn = false;
@@ -378,6 +379,8 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 
 	function header($content)
 	{
+		include_once('lib/smarty_tiki/function.icon.php');
+
 		$hNum = 1;
 		$headerLength = strlen($content);
 		for($i = 0; $i < $headerLength; $i++) {
@@ -389,8 +392,31 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		}
 
 		$content = substr($content, $hNum - 1);
-		
-		return '<h' . $hNum . '>' . $content . '</h' . $hNum . '>';
+
+
+
+		return '<h' . $hNum . '>' . $content . $this->headerButton() . '</h' . $hNum . '>';
+	}
+
+	function headerButton()
+	{
+		global $prefs, $smarty;
+		if ($prefs['wiki_edit_icons_toggle'] == 'y' && !isset($_COOKIE['wiki_plugin_edit_view'])) {
+			$iconDisplayStyle = ' style="display:none;"';
+		} else {
+			$iconDisplayStyle = '';
+		}
+		$button = '<div class="icon_edit_section"' . $iconDisplayStyle . '><a href="tiki-editpage.php?';
+
+		if (!empty($_REQUEST['page'])) {
+			$button .= 'page='.urlencode($_REQUEST['page']).'&amp;';
+		}
+
+		self::$hdrCount++;
+
+		$button .= 'hdr=' . self::$hdrCount . '">'.smarty_function_icon(array('_id'=>'page_edit_section', 'alt'=>tra('Edit Section')), $smarty).'</a></div>';
+
+		return $button;
 	}
 
 	function hr()
