@@ -12,14 +12,14 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 
 	var $npOn = false;
 	var $pluginStack = array();
-	var $pluginCount = 0;
+	public static $pluginCount = 0;
 	var $blockLoc = array();
 	var $blockLast = '';
 	var $blockStack = array();
 	var $olistLen = array();
 
 	var $npEntries = array();
-	var $npCount = 0;
+	public static $npCount = 0;
 	var $pluginEntries = array();
 	var $options = array();
 	var $addLineBreaksTracking = array(
@@ -31,6 +31,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		'inDiv' => 0,
 		'inHeader' => 0
 	);
+	var $emergency = false;
 
 	function parse($input)
 	{
@@ -72,8 +73,8 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		}
 		$input = implode("\n", $lines);
 
-		$this->restorePluginEntities($input);
 		$this->restoreNpEntities($input);
+		$this->restorePluginEntities($input);
 	}
 
 	// state & plugin handlers
@@ -81,14 +82,19 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	{
 		$argParser = new WikiParser_PluginArgumentParser;
 
-		$this->pluginCount++;
-		$key = "§".md5('plugin:'.$this->pluginCount)."§";
+		$key = '§' . md5('plugin:'.self::$pluginCount) . '§';
+		self::$pluginCount++;
 
 		$this->pluginEntries[$key] = $this->parse( $this->pluginExecute(
 			$pluginDetails['name'],
 			$argParser->parse($pluginDetails['args']),
 			$pluginDetails['body']
 		));
+
+		if (substr_count($key, "5e7029515cbd87efc06512e0fffd51ec") > 0) {
+			//print_r(array($this->pluginEntries, $pluginDetails['body'], $key, $pluginDetails['name'], $argParser->parse($pluginDetails['args'])));
+			$this->emergency = true;
+		}
 
 		return $key;
 	}
@@ -156,9 +162,9 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 
 	function removeNpEntities(&$matches)
 	{
-		$key = "§".md5('np:'.$this->npCount)."§";
+		$key = '§' . md5('np:'.self::$npCount) . '§';
 		$this->npEntries[$key] = substr($matches[0], 4, -5);
-		$this->npCount++;
+		self::$npCount++;
 		return $key;
 	}
 
@@ -166,13 +172,18 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	{
 		foreach($this->npEntries as $key => $entity) {
 			$input = str_replace($key, $entity, $input);
+			unset($this->npEntries[$key]);
 		}
+
+		$this->npEntries = array();
 	}
 
 	function restorePluginEntities(&$input)
 	{
-		foreach($this->pluginEntries as $key => $entity) {
+		//use of array_reverse, jison is a reverse bottom-up parser, if it doesn't reverse jison doesn't restore the plugins in the right order, leaving the some nested keys as a result
+		foreach(array_reverse($this->pluginEntries) as $key => $entity) {
 			$input = str_replace($key, $entity, $input);
+			unset($this->pluginEntries[$key]);
 		}
 	}
 
