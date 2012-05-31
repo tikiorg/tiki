@@ -52,7 +52,7 @@ class Feed_ForwardLink_Metadata
 			'dateOriginated'=>          $me->findDatePageOriginated(),
 			'language'=>                $me->language(),
 			'count'=>                   $me->countAll(),
-			'keywords'=>                implode(JisonParser_Phraser_Handler::sanitizeToWords($me->keywords()), ','),
+			'keywords'=>                $me->keywords(),
 			'categories'=>              $me->categories(),
 			"text"=> 	                $data,
 			"id"=>		                $hash. "_" . $me->page . "_" . $id //the id of the textlink is different than that of the href, this is sort of a unique identifier so that we can later find it without having an href
@@ -79,8 +79,9 @@ class Feed_ForwardLink_Metadata
 			'dateOriginated'=>          $me->findDatePageOriginated(),
 			'language'=>                $me->language(),
 			'count'=>                   $me->countAll(),
-			'keywords'=>                implode(JisonParser_Phraser_Handler::sanitizeToWords($me->keywords()), ','),
-			'categories'=>              $me->categories()
+			'keywords'=>                $me->keywords(),
+			'categories'=>              $me->categories(),
+			'text'=>                    '',//text isn't yet known
 		);
 	}
 
@@ -118,6 +119,8 @@ class Feed_ForwardLink_Metadata
 			$keywords = end($keywords);
 			$keywords = $keywords['Value'];
 		}
+
+		$keywords = implode(JisonParser_Phraser_Handler::sanitizeToWords($keywords), ',');
 
 		return $keywords;
 	}
