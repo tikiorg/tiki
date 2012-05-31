@@ -188,7 +188,7 @@ function wikiplugin_convene($data, $params)
 	$result .= "<td>".(
 		$tiki_p_edit == 'y'
 			?
-				"<input class='conveneAddUser$i' value='" . tr("Add User") . "' />"
+				"<input class='conveneAddUser$i' value='" . tr("Add User") . "' /><input type='button' value='" . tr('Add User') . "' class='conveneAddUserButton$i' />"
 			: ""
 		).
 	"</td>";
@@ -213,9 +213,7 @@ function wikiplugin_convene($data, $params)
 	$result .= "<td style='width: 20px;'>" . (
 		$tiki_p_edit == 'y'
 			?
-				"<button class='conveneAddDate$i icon ui-widget-header ui-corner-all' style='margin: 0px;'>
-					<img src='img/icons/calendar_add.png' title='".tr('Add Date')."' class='icon' width='16' height='16' />
-				</button>"
+				"<input type='button' class='conveneAddDate$i' value='" . tr('Add Date') . "'/>"
 			: ""
 	)."</td>";
 
@@ -509,6 +507,10 @@ FORM;
 			})
 			.autocomplete({
 				source: $existingUsers
+			});
+
+			$('.conveneAddUserButton$i').click(function() {
+				convene$i.addUser($('.conveneAddUser$i').val());
 			});
 		
 		$('#pluginConvene$i .icon').css('cursor', 'pointer');
