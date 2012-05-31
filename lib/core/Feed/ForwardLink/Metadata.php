@@ -11,10 +11,14 @@ class Feed_ForwardLink_Metadata
 	var $page;
 	var $lang;
 	var $lastModif;
+	var $href;
+	var $websiteTitle;
+	var $moderatorData;
+	var $authorData;
 
 	function __construct($page)
 	{
-		global $tikilib;
+		global $tikilib, $prefs;
 
 		$this->page = $page;
 
@@ -22,77 +26,61 @@ class Feed_ForwardLink_Metadata
 
 		$this->lang = $details['lang'];
 		$this->lastModif = $details['lastModif'];
+		$this->websiteTitle = $prefs['browsertitle'];
+		$this->href = TikiLib::tikiUrl() . 'tiki-index.php?page=' . $page;
 	}
 
 	static function pageFromTextLink($page, $data, $hash)
 	{
-		global $prefs, $tikilib;
-
 		$me = new self($page);
 
-		//setup clipboard data
-		$page = urlencode($page);
-		$href = TikiLib::tikiUrl() . 'tiki-index.php?page=' . $page;
-		$websiteTitle = urlencode($prefs['browsertitle']);
-		$userData = $me->findAuthorData();
-		$moderatorData = $me->findModeratorData();
 		$phraser = new JisonParser_Phraser_Handler();
 		$id = implode("", $phraser->sanitizeToWords($data));
 
 		return array(
-			'websiteTitle'=>            $websiteTitle,
-			'websiteSubtitle'=>         $page,
-			'moderator'=>               (isset($moderatorData['Name']) ? $moderatorData['Name'] : ''),
-			'moderatorInstitution'=>    (isset($moderatorData['Business Name']) ? $moderatorData['Business Name'] : ''),
-			'moderatorProfession'=>     (isset($moderatorData['Profession']) ? $moderatorData['Profession'] : ''),
-			'hash'=>                    '', //hash isn't yet known
-			'author'=>                  (isset($userData['Name']) ? $userData['Name'] : ''),
-			'authorInstitution' =>      (isset($userData['Business Name']) ? $userData['Business Name'] : ''),
-			'authorProfession'=>        (isset($userData['Profession']) ? $userData['Profession'] : ''),
-			'href'=>                    $href,
+			'websiteTitle'=>            $me->websiteTitle,
+			'websiteSubtitle'=>         $me->page,
+			'moderator'=>               $me->moderatorName(),
+			'moderatorInstitution'=>    $me->moderatorBusinessName(),
+			'moderatorProfession'=>     $me->moderatorProfession(),
+			'author'=>                  $me->authorName(),
+			'authorInstitution' =>      $me->authorBusinessName(),
+			'authorProfession'=>        $me->authorProfession(),
+			"href"=> 	                $me->href . "#" . $id, //the id is composed of the words of the data the textlink surrounds
 			'answers'=>                 $me->answers(),
 			'dateLastUpdated'=>         $me->lastModif(),
-			'dateLastUpdated'=>         $me->findDatePageOriginated($page),
+			'dateOriginated'=>          $me->findDatePageOriginated(),
 			'language'=>                $me->language(),
 			'count'=>                   $me->countAll(),
 			'keywords'=>                implode(JisonParser_Phraser_Handler::sanitizeToWords($me->keywords()), ','),
-			'categories'=>              $me->categories($page),
+			'categories'=>              $me->categories(),
 			"text"=> 	                $data,
-			"href"=> 	                $tikilib->tikiUrl() . "tiki-index.php?page=$page#" . $id,
-			"id"=>		                $hash. "_" . $page . "_" . $id
+			"id"=>		                $hash. "_" . $me->page . "_" . $id //the id of the textlink is different than that of the href, this is sort of a unique identifier so that we can later find it without having an href
 		);
 	}
 
 	static function pageFromForwardLink($page)
 	{
-		global $prefs, $tikilib;
 		$me = new self($page);
 
-		//setup clipboard data
-		$page = urlencode($page);
-		$href = TikiLib::tikiUrl() . 'tiki-index.php?page=' . $page;
-		$websiteTitle = urlencode($prefs['browsertitle']);
-		$userData = $me->findAuthorData();
-		$moderatorData = $me->findModeratorData();
-
 		return array(
-			'websiteTitle'=>            $websiteTitle,
-			'websiteSubtitle'=>         $page,
-			'moderator'=>               (isset($moderatorData['Name']) ? $moderatorData['Name'] : ''),
-			'moderatorInstitution'=>    (isset($moderatorData['Business Name']) ? $moderatorData['Business Name'] : ''),
-			'moderatorProfession'=>     (isset($moderatorData['Profession']) ? $moderatorData['Profession'] : ''),
+			'websiteTitle'=>            $me->websiteTitle,
+			'websiteSubtitle'=>         $me->page,
+			'moderator'=>               $me->moderatorName(),
+			'moderatorInstitution'=>    $me->moderatorBusinessName(),
+			'moderatorProfession'=>     $me->moderatorProfession(),
 			'hash'=>                    '', //hash isn't yet known
-			'author'=>                  (isset($userData['Name']) ? $userData['Name'] : ''),
-			'authorInstitution' =>      (isset($userData['Business Name']) ? $userData['Business Name'] : ''),
-			'authorProfession'=>        (isset($userData['Profession']) ? $userData['Profession'] : ''),
-			'href'=>                    $href,
+			'author'=>                  $me->authorName(),
+			'authorInstitution' =>      $me->authorBusinessName(),
+			'authorProfession'=>        $me->authorProfession(),
+			'href'=>                    $me->href,
 			'answers'=>                 $me->answers(),
 			'dateLastUpdated'=>         $me->lastModif(),
-			'dateLastUpdated'=>         $me->findDatePageOriginated($page),
+			'dateOriginated'=>          $me->findDatePageOriginated(),
 			'language'=>                $me->language(),
 			'count'=>                   $me->countAll(),
 			'keywords'=>                implode(JisonParser_Phraser_Handler::sanitizeToWords($me->keywords()), ','),
-			'categories'=>              $me->categories($page)
+			'categories'=>              $me->categories()
 		);
 	}
 
@@ -134,47 +122,90 @@ class Feed_ForwardLink_Metadata
 		return $keywords;
 	}
 
-	public function findAuthorData($version = -1)
+	public function author($version = -1)
 	{
 		global $tikilib;
 
-		if ($version < 0) {
-			$user = TikiLib::lib('trk')->getOne("SELECT user FROM tiki_pages WHERE pageName = ?", array($this->page));
-		} else {
-			$user = TikiLib::lib('trk')->getOne("SELECT user FROM tiki_history WHERE pageName = ? AND version = ?", array($this->page, $version));
+		if (empty($this->authorData)) {
+			if ($version < 0) {
+				$user = TikiLib::lib('trk')->getOne("SELECT user FROM tiki_pages WHERE pageName = ?", array($this->page));
+			} else {
+				$user = TikiLib::lib('trk')->getOne("SELECT user FROM tiki_history WHERE pageName = ? AND version = ?", array($this->page, $version));
+			}
+
+			if (empty($user))  return array();
+
+			$authorData = Tracker_Query::tracker("Users")
+				->byName()
+				->filterFieldByValue('login', $user)
+				->getOne();
+			$authorData = end($authorData);
+
+			if (empty($authorData['Name'])) {
+				$authorData['Name'] = $tikilib->get_user_preference($user, "realName");
+			}
+
+			$this->authorData = $authorData;
 		}
 
-		if (empty($user))  return array();
-
-		$authorData = Tracker_Query::tracker("Users")
-			->byName()
-			->filterFieldByValue('login', $user)
-			->getOne();
-		$authorData = end($authorData);
-
-		if (empty($authorData['Name'])) {
-			$authorData['Name'] = $tikilib->get_user_preference($user, "realName");
-		}
-
-
-		return $authorData;
+		return $this->authorData;
 	}
 
-	public function findModeratorData()
+	public function authorName()
+	{
+		$author = $this->author();
+		return (!empty($author['Name']) ? $author['Name'] : '');
+	}
+
+	public function authorBusinessName()
+	{
+		$author = $this->author();
+		return (!empty($author['Business Name']) ? $author['Business Name'] : '');
+	}
+
+	public function authorProfession()
+	{
+		$author = $this->author();
+		return (!empty($author['Profession']) ? $author['Profession'] : '');
+	}
+
+	public function moderator()
 	{
 		global $tikilib;
 
-		$moderatorData = Tracker_Query::tracker("Users")
-			->byName()
-			->filterFieldByValue('login', 'admin') //admin is un-deletable
-			->getOne();
-		$moderatorData = end($moderatorData);
+		if (empty($this->moderatorData)) {
+			$moderatorData = Tracker_Query::tracker("Users")
+				->byName()
+				->filterFieldByValue('login', 'admin') //admin is un-deletable
+				->getOne();
+			$moderatorData = end($moderatorData);
 
-		if (empty($authorData['Name'])) {
-			$moderatorData['Name'] = $tikilib->get_user_preference('admin', "realName");
+			if (empty($authorData['Name'])) {
+				$moderatorData['Name'] = $tikilib->get_user_preference('admin', "realName");
+			}
+
+			$this->moderatorData = $moderatorData;
 		}
 
-		return $moderatorData;
+		return $this->moderatorData;
+	}
+
+	public function moderatorName()
+	{
+		$moderator = $this->moderator();
+		return (!empty($moderator['Name']) ? $moderator['Name'] : '');
+	}
+
+	public function moderatorBusinessName()
+	{
+		$moderator = $this->moderator();
+		return (!empty($moderator['Business Name']) ? $moderator['Business Name'] : '');
+	}
+
+	public function moderatorProfession()
+	{
+		$moderator = $this->moderator();
+		return (!empty($moderator['Profession']) ? $moderator['Profession'] : '');
 	}
 
 	public function findDatePageOriginated()
