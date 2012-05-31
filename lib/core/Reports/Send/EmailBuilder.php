@@ -26,7 +26,7 @@ class Reports_Send_EmailBuilder
 	
 	public function emailBody($user_data, $report_preferences, $report_cache)
 	{
-		global $base_url;
+		$base_url = $report_cache[0]['data']['base_url']; 
 		
 		$smarty = TikiLib::lib('smarty');
 		
@@ -46,7 +46,7 @@ class Reports_Send_EmailBuilder
 		$userWatchesUrl = $base_url . 'tiki-user_watches.php';
 		
 		if ($report_preferences['type'] == 'html') {
-			$userWatchesUrl = "<a href=$userWatchesUrl>$userWatchesUrl</a>"; 
+			$userWatchesUrl = "<a href=\"{$userWatchesUrl}\">{$userWatchesUrl}</a>";
 		}
 		
 		$smarty->assign('userWatchesUrl', $userWatchesUrl);
@@ -97,15 +97,14 @@ class Reports_Send_EmailBuilder
 	 */
 	public function makeEmailBody(array $report_cache, array $report_preferences)
 	{
-		global $userlib, $base_url;
-		
-		$tikiUrl = rtrim($base_url, '/');
+		global $userlib;
 		
 		$change_array = $this->makeChangeArray($report_cache);
 		$body = '';
 
 		$morechanges = 0;
 		foreach ($change_array as $eventName => $changes) {
+
 			$eventObject = $this->factory->build($changes[0]['event']);
 
 			$body .= '<b>' . $eventObject->getTitle() . "</b><br />\n";

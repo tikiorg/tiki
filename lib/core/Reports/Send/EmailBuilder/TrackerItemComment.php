@@ -17,7 +17,7 @@ class Reports_Send_EmailBuilder_TrackerItemComment extends Reports_Send_EmailBui
 	
 	public function getOutput(array $change)
 	{
-		global $base_url;
+		$base_url = $change['data']['base_url'];
 		
 		$trackerId = $change['data']['trackerId'];
 		$itemId = $change['data']['itemId'];

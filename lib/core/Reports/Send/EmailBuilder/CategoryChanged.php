@@ -17,8 +17,8 @@ class Reports_Send_EmailBuilder_CategoryChanged extends Reports_Send_EmailBuilde
 	
 	public function getOutput(array $change)
 	{
-		global $base_url;
-
+		$base_url = $change['data']['base_url'];
+		
 		if ($change['data']['action'] == 'object entered category') {
 
 			$output = '<u>' . $change['data']['user'] . '</u> '. 

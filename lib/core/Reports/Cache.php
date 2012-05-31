@@ -79,6 +79,8 @@ class Reports_Cache
 	 */
 	public function add(&$watches, $data, $users)
 	{
+		$data["base_url"] = TikiLib::tikiURL();  //Store $base_url in the database. Use it to construct links in the email. 
+		
 		foreach ($watches as $key => $watch) {
 			// if user in the watch has enabled periodic reports
 			if (in_array($watch['user'], $users)) {

@@ -17,7 +17,7 @@ class Reports_Send_EmailBuilder_WikiPageChanged extends Reports_Send_EmailBuilde
 	
 	public function getOutput(array $change)
 	{
-		global $base_url;
+		$base_url = $change['data']['base_url'];
 		
 		$newVersion = $change['data']['oldVer'] + 1;
 		

@@ -17,7 +17,7 @@ class Reports_Send_EmailBuilder_FileGalleryChanged extends Reports_Send_EmailBui
 
 	public function getOutput(array $change)
 	{
-		global $base_url;
+		$base_url = $change['data']['base_url'];
 		
 		if (empty($change['data']['action'])) {
 			$output = tr(

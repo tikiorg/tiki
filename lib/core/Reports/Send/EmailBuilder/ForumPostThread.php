@@ -17,7 +17,8 @@ class Reports_Send_EmailBuilder_ForumPostThread extends Reports_Send_EmailBuilde
 	
 	public function getOutput(array $change)
 	{
-		global $base_url, $dbTiki;
+		global $dbTiki;
+		$base_url = $change['data']['base_url'];
 		
 		$commentslib = TikiLib::lib('comments');
 		$parent_topic = $commentslib->get_comment($change['data']['topicId']);

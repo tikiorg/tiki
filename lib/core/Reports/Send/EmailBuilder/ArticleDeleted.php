@@ -17,7 +17,7 @@ class Reports_Send_EmailBuilder_ArticleDeleted extends Reports_Send_EmailBuilder
 	
 	public function getOutput(array $change)
 	{
-		global $base_url;
+		$base_url = $change['data']['base_url'];
 
 		$output = '<u>' . $change['data']['user'] . '</u> ' . tra('removed the article') .
 							" <a href=\"{$base_url}tiki-read_article.php?articleId=" . $change['data']['articleId'] . "\">" . $change['data']['articleTitle'] . '</a>.';
