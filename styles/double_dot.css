@@ -579,6 +579,10 @@ a .sf-sub-indicator {
 	top: 14px;
 }
 
+.cssmenu_vert li a .sf-sub-indicator {
+	top: 9px ! important;
+}
+
 #tiki-top .cssmenu_horiz li a .sf-sub-indicator {top: 16px}
 
 #tiki-top .cssmenu_horiz li ul li  a .sf-sub-indicator {
