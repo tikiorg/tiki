@@ -86,6 +86,7 @@
 				{preference name=feature_forwardlinkprotocol}
 
 				{preference name=feature_reports}
+				{preference name=feature_jcapture}
 			</div>
 		</fieldset>
 

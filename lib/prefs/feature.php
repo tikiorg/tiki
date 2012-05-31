@@ -2549,5 +2549,14 @@ function prefs_feature_list($partial = false)
 			'warning' => tra('Experimental'),
 			'tags' => array('experimental'),
 		),
+		'feature_jcapture' => array(
+			'name' => tra('jCapture'),
+			'type' => 'flag',
+			'description' => tra('Use jCapture applet to create screencasts.'),
+			'help' => 'jCapture',
+			'default' => 'n',				// include UI lib for more effects
+			'warning' => tra('Experimental'),
+			'tags' => array('experimental'),
+		),
 	);
 }

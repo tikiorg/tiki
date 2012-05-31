@@ -26,6 +26,9 @@
 			{icon _id=plugin title="{tr}Plugin Approval{/tr}" href="tiki-plugins.php"}
 			{icon _id=book title="{tr}SysLogs{/tr}" href="tiki-syslog.php"}
 			{icon _id=module title="{tr}Modules{/tr}" href="tiki-admin_modules.php"}
-		</div>  
+			{if $prefs.feature_jcapture eq "y"}
+				{icon _id=camera title="{tr}Comments Moderation{/tr}" href="#" onclick="openJCaptureDialog();return false;"}
+			{/if}
+		</div>
 	{/if}
 {/tikimodule}

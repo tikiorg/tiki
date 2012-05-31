@@ -138,6 +138,7 @@ jqueryTiki.infoboxTypes = ' . json_encode(Services_Object_Controller::supported(
 jqueryTiki.googleStreetView = '.($prefs['geo_google_streetview'] == 'y' ? 'true' : 'false') . ';
 jqueryTiki.structurePageRepeat = '.($prefs['page_n_times_in_a_structure'] == 'y' ? 'true' : 'false') . ';
 jqueryTiki.mobile = '.($prefs['mobile_mode'] == 'y' ? 'true' : 'false') . ';
+jqueryTiki.jcapture = '.($prefs['feature_jcapture'] == 'y' ? 'true' : 'false') . ';
 ';	// NB replace "normal" speeds with int to workaround issue with jQuery 1.4.2
 
 	if ($prefs['mobile_feature'] === 'y' && $prefs['mobile_mode'] === 'y') {

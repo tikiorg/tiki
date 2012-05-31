@@ -389,6 +389,10 @@ if ($prefs['javascript_enabled'] != 'n') {
 		$headerlib->add_jsfile('lib/captcha/captchalib.js');
 	}
 
+	if ( $prefs['feature_jcapture'] === 'y' ) {
+		$headerlib->add_jsfile('lib/jcapture_tiki/tiki-jcapture.js');
+	}
+
 }	// end if $prefs['javascript_enabled'] != 'n'
 
 if ( ! empty( $prefs['header_custom_css'] ) ) {
