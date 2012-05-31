@@ -39,7 +39,10 @@ JQ
 	
 	static function findWikiRevision($phrase, $page, $findLast = false)
 	{
-		$page = end(TikiLib::fetchAll("SELECT * FROM tiki_pages WHERE pageName = ?", array($page)));
+		global $tikilib;
+
+		$pages = TikiLib::lib('tiki')->fetchAll("SELECT * FROM tiki_pages WHERE pageName = ?", array($page));
+		$page = end($pages);
 		
 		$page['data'] = TikiLib::lib("parser")->parse_data($page['data']);
 
@@ -48,7 +51,7 @@ JQ
 		$foundExistence = false;
 
 		if ($pageMatch['version'] < 0 || $findLast == true) {
-			foreach (TikiLib::fetchAll("SELECT * FROM tiki_history WHERE pageName = ? ORDER BY version DESC", array($page)) as $page) {
+			foreach (TikiLib::lib('tiki')->fetchAll("SELECT * FROM tiki_history WHERE pageName = ? ORDER BY version DESC", array($page)) as $page) {
 				$hasPhrase = JisonParser_Phraser_Handler::hasPhrase($page['data'], $phrase);
 
 				//In this case we are trying to find the first occurance of the phrase, useful for finding the phrase when it last existed (rev for redirect)

@@ -226,11 +226,12 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 
 	function parseLists(&$line = "", &$listbeg = array(), &$data = '')
 	{
+		global $tikilib;
 		$isStart = empty($data);
 
 		$litype = substr($line, 0, 1);
 		if (($litype == '*' || $litype == '#') && !(strlen($line)-count($listbeg)>4 && preg_match('/^\*+$/', $line))) {
-			$listlevel = TikiLib::how_many_at_start($line, $litype);
+			$listlevel = $tikilib->how_many_at_start($line, $litype);
 			$liclose = '</li>';
 			$addremove = 0;
 			if ($listlevel < count($listbeg)) {
@@ -314,8 +315,10 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 
 	function beginBlock($condition)
 	{
-		if ($condition != $this->blockLast)
+		if ($condition != $this->blockLast) {
+			if (empty($this->blockLoc[$condition])) $this->blockLoc[$condition] = 0;
 			$this->blockLoc[$condition]++;
+		}
 
 		$this->blockLast = $condition;
 

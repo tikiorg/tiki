@@ -15,6 +15,7 @@ class Feed_ForwardLink_Metadata
 	var $websiteTitle;
 	var $moderatorData;
 	var $authorData;
+	var $raw;
 
 	function __construct($page)
 	{
@@ -23,9 +24,10 @@ class Feed_ForwardLink_Metadata
 		$this->page = $page;
 
 		$details = $tikilib->fetchAll("SELECT lang, lastModif FROM tiki_pages WHERE pageName = ?", $page);
+		$detail = end($details);
 
-		$this->lang = $details['lang'];
-		$this->lastModif = $details['lastModif'];
+		$this->lang = $detail['lang'];
+		$this->lastModif = $detail['lastModif'];
 		$this->websiteTitle = $prefs['browsertitle'];
 		$this->href = TikiLib::tikiUrl() . 'tiki-index.php?page=' . $page;
 	}
@@ -37,7 +39,7 @@ class Feed_ForwardLink_Metadata
 		$phraser = new JisonParser_Phraser_Handler();
 		$id = implode("", $phraser->sanitizeToWords($data));
 
-		return array(
+		$me->raw = array(
 			'websiteTitle'=>            $me->websiteTitle,
 			'websiteSubtitle'=>         $me->page,
 			'moderator'=>               $me->moderatorName(),
@@ -48,22 +50,27 @@ class Feed_ForwardLink_Metadata
 			'authorProfession'=>        $me->authorProfession(),
 			"href"=> 	                $me->href . "#" . $id, //the id is composed of the words of the data the textlink surrounds
 			'answers'=>                 $me->answers(),
-			'dateLastUpdated'=>         $me->lastModif(),
+			'dateLastUpdated'=>         $me->lastModif,
 			'dateOriginated'=>          $me->findDatePageOriginated(),
 			'language'=>                $me->language(),
 			'count'=>                   $me->countAll(),
 			'keywords'=>                $me->keywords(),
 			'categories'=>              $me->categories(),
-			"text"=> 	                $data,
-			"id"=>		                $hash. "_" . $me->page . "_" . $id //the id of the textlink is different than that of the href, this is sort of a unique identifier so that we can later find it without having an href
+			'scientificField'=>         $me->scientificField(),
+			'minimumMathNeeded'=>       $me->minimumMathNeeded(),
+			'minimumStatisticsNeeded'=> $me->minimumStatisticsNeeded(),
+			'text'=> 	                $data,
+			'id'=>		                $hash. "_" . $me->page . "_" . $id //the id of the textlink is different than that of the href, this is sort of a unique identifier so that we can later find it without having an href
 		);
+
+		return $me;
 	}
 
 	static function pageForwardLink($page)
 	{
 		$me = new self($page);
 
-		return array(
+		$me->raw = array(
 			'websiteTitle'=>            $me->websiteTitle,
 			'websiteSubtitle'=>         $me->page,
 			'moderator'=>               $me->moderatorName(),
@@ -75,17 +82,22 @@ class Feed_ForwardLink_Metadata
 			'authorProfession'=>        $me->authorProfession(),
 			'href'=>                    $me->href,
 			'answers'=>                 $me->answers(),
-			'dateLastUpdated'=>         $me->lastModif(),
+			'dateLastUpdated'=>         $me->lastModif,
 			'dateOriginated'=>          $me->findDatePageOriginated(),
 			'language'=>                $me->language(),
 			'count'=>                   $me->countAll(),
 			'keywords'=>                $me->keywords(),
 			'categories'=>              $me->categories(),
+			'scientificField'=>         $me->scientificField(),
+			'minimumMathNeeded'=>       $me->minimumMathNeeded(),
+			'minimumStatisticsNeeded'=> $me->minimumStatisticsNeeded(),
 			'text'=>                    '',//text isn't yet known
 		);
+
+		return $me;
 	}
 
-	function answers()
+	public function answers()
 	{
 		$answers = array();
 		foreach ($this->questions() as $question) {
@@ -98,7 +110,7 @@ class Feed_ForwardLink_Metadata
 		return $answers;
 	}
 
-	function questions()
+	public function questions()
 	{
 		return Tracker_Query::tracker('Wiki Attributes')
 			->byName()
@@ -107,7 +119,7 @@ class Feed_ForwardLink_Metadata
 			->query();
 	}
 
-	function keywords()
+	public function keywords()
 	{
 		$keywords = Tracker_Query::tracker('Wiki Attributes')
 			->byName()
@@ -244,7 +256,7 @@ class Feed_ForwardLink_Metadata
 		return $categories;
 	}
 
-	function scientificField()
+	public function scientificField()
 	{
 		return Tracker_Query::tracker('Wiki Attributes')
 			->byName()
@@ -253,7 +265,7 @@ class Feed_ForwardLink_Metadata
 			->query();
 	}
 
-	function minimumMathNeeded()
+	public function minimumMathNeeded()
 	{
 		return Tracker_Query::tracker('Wiki Attributes')
 			->byName()
@@ -262,7 +274,7 @@ class Feed_ForwardLink_Metadata
 			->query();
 	}
 
-	function minimumStatisticsNeeded() {
+	public function minimumStatisticsNeeded() {
 		return Tracker_Query::tracker('Wiki Attributes')
 			->byName()
 			->filterFieldByValue('Type', 'Scientific Field')
@@ -270,17 +282,12 @@ class Feed_ForwardLink_Metadata
 			->query();
 	}
 
-	function language()
+	public function language()
 	{
 		foreach(TikiLib::lib("tiki")->list_languages() as $listLanguage) {
 			if ($listLanguage['value'] == $this->lang) {
 				$language = $listLanguage['name'];
 			}
 		}
-	}
-
-	function lastModif()
-	{
-		return $this->lastModif;
 	}
 }

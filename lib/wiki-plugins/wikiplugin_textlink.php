@@ -49,7 +49,7 @@ function wikiplugin_textlink($data, $params)
 		array(
 			"page"=> $page,
 			"forwardlink"=> $clipboarddata,
-			"textlink"=> $textlinkMetadata
+			"textlink"=> $textlinkMetadata->raw
 		)
 	);
 

@@ -46,7 +46,7 @@ Class Feed_ForwardLink extends Feed_Abstract
 
 		if (!empty($phrase)) $_SESSION['phrase'] = $phrase; //prep for redirect if it happens;
 
-		if (!empty($phrase)) Feed_ForwardLink_Search::goToNewestWikiRevision($version, $phrase, $this->page);
+		if (!empty($phrase)) Feed_ForwardLink_Search::goToNewestWikiRevision($version, $phrase, $this->name);
 
 		if (!empty($_SESSION['phrase'])) { //recover from redirect if it happened
 			$phrase = $_SESSION['phrase'];
@@ -57,7 +57,7 @@ Class Feed_ForwardLink extends Feed_Abstract
 	private function restorePhrasesInWikiPage($phrase)
 	{
 		global $smarty, $headerlib;
-		$items = self::forwardLink($this->page)->getItems();
+		$items = self::forwardLink($this->name)->getItems();
 		$phrases = array();
 
 		$phraseI = 0;
@@ -87,9 +87,10 @@ Class Feed_ForwardLink extends Feed_Abstract
 					$('#page-data')
 						.rangyRestoreSelection('$thisText', function(r) {
 							var phraseLink = $('<a>*</a>')
-								.attr('href', '$thisHref')
-								.attr('text', '$thisText')
-								.attr('linkedText', '$linkedText')
+								.data('href', '$thisHref')
+								.data('text', '$thisText')
+								.data('linkedText', '$linkedText')
+								.data('date', '$thisDate')
 								.addClass('forwardlink')
 								.insertBefore(r.selection[0]);
 
@@ -106,9 +107,10 @@ JQ
 
 				$headerlib->add_jq_onready(<<<JQ
 					var phraseLink = $('<a>*</a>')
-						.attr('href', '$thisHref')
-						.attr('text', '$thisText')
-						.attr('linkedText', '$linkedText')
+						.data('href', '$thisHref')
+						.data('text', '$thisText')
+						.data('linkedText', '$linkedText')
+						.data('date', '$thisDate')
 						.addClass('forwardlink')
 						.insertBefore('.phraseStart$phraseI');
 
@@ -128,9 +130,10 @@ JQ
 				$('.forwardlink')
 					.click(function() {
 						me = $(this);
-						var href = me.attr('href');
-						var text = me.attr('linkedText');
-						var linkedText = me.attr('linkedText');
+						var href = me.data('href');
+						var text = me.data('linkedText');
+						var linkedText = me.data('linkedText');
+						var date = me.data('date');
 
 						var table = $('<div>' +
 							'<table class="tablesorter">' +
@@ -142,7 +145,7 @@ JQ
 								'</thead>' +
 								'<tbody>' +
 									'<tr>' +
-										'<td>$thisDate</td>' +
+										'<td>' + date + '</td>' +
 										'<td><a href="' + href + '" class="read">Read</a></td>' +
 									'</tr>' +
 								'</tbody>' +
@@ -334,18 +337,18 @@ JQ
 JQ
 					);
 
-				$this->editQuestionsInterface($metadata['questions'], $trackerId);
+				$this->editQuestionsInterface($metadata->questions(), $trackerId);
 
-				$keywords = json_encode($metadata['keywords']);
+				$keywords = json_encode($metadata->raw['keywords']);
 				TikiLib::lib('header')->add_jq_onready("genericSingleTrackerItemInterface('Keywords', $keywords);");
 
-				$scientificField = json_encode($metadata['scientificField']);
+				$scientificField = json_encode($metadata->raw['scientificField']);
 				TikiLib::lib('header')->add_jq_onready("genericSingleTrackerItemInterface('Scientific Field', $scientificField);");
 
-				$minimumMathNeeded = json_encode($metadata['minimumMathNeeded']);
+				$minimumMathNeeded = json_encode($metadata->raw['minimumMathNeeded']);
 				TikiLib::lib('header')->add_jq_onready("genericSingleTrackerItemInterface('Minimum Math Needed', $minimumMathNeeded);");
 
-				$minimumStatisticsNeeded = json_encode($metadata['minimumStatisticsNeeded']);
+				$minimumStatisticsNeeded = json_encode($metadata->raw['minimumStatisticsNeeded']);
 				TikiLib::lib('header')->add_jq_onready("genericSingleTrackerItemInterface('Minimum Statistics Needed', $minimumStatisticsNeeded);");
 			}
 		}
@@ -454,9 +457,9 @@ JQ
 	{
 		global $tikilib, $headerlib, $prefs, $user;
 
-		$answers = json_encode($metadata['answers']);
+		$answers = json_encode($metadata->raw['answers']);
 
-		$clipboarddata = json_encode($metadata);
+		$clipboarddata = json_encode($metadata->raw);
 
 		$headerlib
 			->add_jsfile('lib/rangy/uncompressed/rangy-core.js')
@@ -467,18 +470,7 @@ JQ
 			->add_jsfile('lib/core/JisonParser/Phraser.js')
 			->add_jsfile('lib/jquery/md5.js');
 
-		$authorDetails = Tracker_Query::tracker('ForwardLink Author Details')
-			->byName()
-			->excludeDetails()
-			->filterFieldByValue('User', $user)
-			->render(false)
-			->getOne();
-		$authorDetails = json_encode(end($authorDetails));
-
-		$page = urlencode($this->page);
-		$href = TikiLib::tikiUrl() . 'tiki-index.php?page=' . $page;
-
-		$websiteTitle = addslashes(htmlspecialchars($prefs['browsertitle']));
+		$page = urlencode($this->name);
 
 		$headerlib->add_jq_onready(<<<JQ
 			var answers = $answers;
@@ -681,6 +673,7 @@ JQ
 		$version = $args['version'];
 
 		$metadata = Feed_ForwardLink_Metadata::pageForwardLink($page);
+
 		$phrase = (!empty($_REQUEST['phrase']) ? addslashes(htmlspecialchars($_REQUEST['phrase'])) : '');
 
 		$me = new self($page);
