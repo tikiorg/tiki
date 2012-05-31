@@ -157,28 +157,32 @@ $jsTracking = "$.wikiTrackingDraw = {
 	}
 };";
 
-$jsFunctionality =
-"$('#drawFullscreen')
-	.click(function() {
-		$('#tiki_draw').drawFullscreen();
-	})
-	.click();
+if (isset($_REQUEST['raw'])) {
+	$jsFunctionality = "";
+} else {
+	$jsFunctionality =
+	"$('#drawFullscreen')
+		.click(function() {
+			$('#tiki_draw').drawFullscreen();
+		})
+		.click();
 
-$('#tiki_draw')
-	.loadDraw({
-		fileId: $('#fileId').val(),
-		galleryId: $('#galleryId').val(),
-		name: $('#fileName').val(),
-		data: $('#fileData').val()
-	})
-	.bind('renamedDraw', function(e, name) {
-		$('#fileName').val(name);
-		$('.pagetitle').text(name);
-	});
+	$('#tiki_draw')
+		.loadDraw({
+			fileId: $('#fileId').val(),
+			galleryId: $('#galleryId').val(),
+			name: $('#fileName').val(),
+			data: $('#fileData').val()
+		})
+		.bind('renamedDraw', function(e, name) {
+			$('#fileName').val(name);
+			$('.pagetitle').text(name);
+		});
 
-$('#drawBack').click(function() {
-	window.history.back();
-});";
+	$('#drawBack').click(function() {
+		window.history.back();
+	});";
+}
 
 if (
 	isset($_REQUEST['index']) &&
