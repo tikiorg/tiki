@@ -24,7 +24,11 @@
 
 			baseLayers.change(function () {
 				if (map.map) {
-					map.map.setBaseLayer(map.map.layers[$(this).val()]);
+					var layer = map.map.layers[$(this).val()];
+					map.map.setBaseLayer(layer);
+					if (layer.isBlank) {
+						layer.setVisibility(false);
+					}
 				}
 			});
 

@@ -40,6 +40,7 @@ function prefs_geo_list()
 											'google_satellite',
 											'google_physical',
 											'google_hybrid',
+											'blank',
 											/* Needs additional testing
 											'visualearth_road',
 											'visualearth_aerial',
