@@ -239,8 +239,9 @@ FORM;
 						"data" => $dataString,
 					)
 	);
-	
-	$n = '\n\r';
+
+	$n = '\n';
+	$regexN = '/[\r\n]+/g';
 	
 	$headerlib->add_jsfile("lib/jquery/jquery-ui-timepicker-addon.js");
 	$headerlib->add_jq_onready(
@@ -315,22 +316,22 @@ FORM;
 			},
 			deleteDate: function(date) {
 				if (!date) return;
+				date += '';
 				var addedData = '';
 				
 				for(user in this.users) {
 					addedData += 'dates_' + date + '_' + this.users[user] + ' : 0$n';
 				}
-				
-				var lines = convene$i.data.split(/$n/);
+
+				var lines = convene$i.data.split($regexN);
 				var newData = [];
 				for(line in lines) {
 					if (!(lines[line] + '').match(date)) {
 						 newData.push(lines[line]);
 					}
 				}
-				
+
 				this.data = newData.join('$n');
-				
 				this.save();
 			},
 			save: function() {
