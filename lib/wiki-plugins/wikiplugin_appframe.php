@@ -353,15 +353,17 @@ function wikiplugin_appframe_template($data, $params, $start)
 function wikiplugin_appframe_mapcontrol($data, $params, $start)
 {
 	static $counter = 0;
+	$function = null;
+	$control = null;
+	$label = null;
+	$mode = null;
 
 	switch ($name = $params->type->word()) {
 	case 'pan_zoom':
-		$control = null;
 		$label = tr('Pan/Zoom');
 		$mode = tr('Default');
 		break;
 	case 'mode_enable':
-		$control = null;
 		$mode = $params->mode->text();
 		$label = $mode;
 
@@ -372,22 +374,22 @@ function wikiplugin_appframe_mapcontrol($data, $params, $start)
 	case 'select_feature':
 		$control = 'new OpenLayers.Control.SelectFeature(vlayer)';
 		$label = tr('Select');
-		$mode = null;
 		break;
 	case 'modify_feature':
 		$control = 'new OpenLayers.Control.ModifyFeature(vlayer, {mode: OpenLayers.Control.ModifyFeature.DRAG | OpenLayers.Control.ModifyFeature.RESHAPE})';
 		$label = tr('Select/Modify');
-		$mode = null;
 		break;
 	case 'draw_polygon':
 		$control = 'new OpenLayers.Control.DrawFeature(vlayer, OpenLayers.Handler.Polygon)';
 		$label = tr('Draw Polygon');
-		$mode = null;
 		break;
 	case 'draw_path':
 		$control = 'new OpenLayers.Control.DrawFeature(vlayer, OpenLayers.Handler.Path)';
 		$label = tr('Draw Path');
-		$mode = null;
+		break;
+	case 'reset_zoom':
+		$function = 'container.resetPosition();';
+		$label = tr('Reset Zoom');
 		break;
 	default:
 		return false;
@@ -408,6 +410,7 @@ function wikiplugin_appframe_mapcontrol($data, $params, $start)
 		'icon' => $icon,
 		'label' => $label,
 		'mode' => $mode,
+		'function' => $function,
 		'navigation' => $params->navigation->int(),
 	));
 	return $smarty->fetch('wiki-plugins/wikiplugin_appframe_mapcontrol.tpl');
