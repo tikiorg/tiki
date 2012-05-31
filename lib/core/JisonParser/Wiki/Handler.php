@@ -32,7 +32,6 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		'inDiv' => 0,
 		'inHeader' => 0
 	);
-	var $emergency = false;
 
 	function parse($input)
 	{
@@ -91,11 +90,6 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 			$argParser->parse($pluginDetails['args']),
 			$pluginDetails['body']
 		));
-
-		if (substr_count($key, "5e7029515cbd87efc06512e0fffd51ec") > 0) {
-			//print_r(array($this->pluginEntries, $pluginDetails['body'], $key, $pluginDetails['name'], $argParser->parse($pluginDetails['args'])));
-			$this->emergency = true;
-		}
 
 		return $key;
 	}
