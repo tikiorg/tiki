@@ -680,7 +680,7 @@ JQ
 		$page = $args['object'];
 		$version = $args['version'];
 
-		$metadata = Feed_ForwardLink_Metadata::pageFromForwardLink($page);
+		$metadata = Feed_ForwardLink_Metadata::pageForwardLink($page);
 		$phrase = (!empty($_REQUEST['phrase']) ? addslashes(htmlspecialchars($_REQUEST['phrase'])) : '');
 
 		$me = new self($page);

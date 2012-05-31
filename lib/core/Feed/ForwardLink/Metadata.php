@@ -30,7 +30,7 @@ class Feed_ForwardLink_Metadata
 		$this->href = TikiLib::tikiUrl() . 'tiki-index.php?page=' . $page;
 	}
 
-	static function pageFromTextLink($page, $data, $hash)
+	static function pageTextLink($page, $data, $hash)
 	{
 		$me = new self($page);
 
@@ -59,7 +59,7 @@ class Feed_ForwardLink_Metadata
 		);
 	}
 
-	static function pageFromForwardLink($page)
+	static function pageForwardLink($page)
 	{
 		$me = new self($page);
 

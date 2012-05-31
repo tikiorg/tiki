@@ -43,7 +43,7 @@ function wikiplugin_textlink($data, $params)
 	$phraser = new JisonParser_Phraser_Handler();
 	$id = implode("", $phraser->sanitizeToWords($data));
 
-	$textlinkMetadata = Feed_ForwardLink_Metadata::pageFromTextLink($page, $data, $clipboarddata->hash);
+	$textlinkMetadata = Feed_ForwardLink_Metadata::pageTextLink($page, $data, $clipboarddata->hash);
 
 	Feed_ForwardLink_Send::add(
 		array(
