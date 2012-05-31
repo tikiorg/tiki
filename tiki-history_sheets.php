@@ -5,7 +5,6 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-$section = 'sheet';
 $tiki_sheet_div_style = '';
 require_once ('tiki-setup.php');
 
