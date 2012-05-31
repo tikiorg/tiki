@@ -278,10 +278,18 @@ $("#$target").closest('.map-container').bind('initialized', function () {
 
 	vlayer.events.on({
 		featureselected: function (ev) {
+			var active = false;
+
 			feature = ev.feature;
 
-			$(dialog).ColorPickerSetColor(feature.attributes.color);
-			$(dialog).dialog('open');
+			$.each(container.map.getControlsByClass('OpenLayers.Control.ModifyFeature'), function (k, control) {
+				active = active || control.active;
+			});
+
+			if (active) {
+				$(dialog).ColorPickerSetColor(feature.attributes.color);
+				$(dialog).dialog('open');
+			}
 		},
 		featureunselected: function (ev) {
 			feature = null;
