@@ -64,11 +64,13 @@
 					</td>
 				</tr>
 				{include file='categorize.tpl'}
+				{if $tiki_p_admin_sheet eq "y"}
 				<tr>
 					<td>{tr}Creator:{/tr}</td><td>
 						{user_selector name="creator" editable=$tiki_p_admin_sheet user=$creator}
 					</td>
 				</tr>
+				{/if}
 				<tr>
 					<td>{tr}Parent Spreadsheet:{/tr}</td>
 					<td>

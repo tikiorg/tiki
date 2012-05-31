@@ -5,7 +5,6 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-$section = 'sheet';
 require_once ('tiki-setup.php');
 
 $sheetlib = TikiLib::lib("sheet");
@@ -25,14 +24,20 @@ if (!isset($_REQUEST["sheetId"])) {
 		$cookietab = 2;	
 	}
 	$info = $sheetlib->get_sheet_info($_REQUEST["sheetId"]);
-	if ($tiki_p_admin == 'y' || $tiki_p_admin_sheet == 'y' || $tikilib->user_has_perm_on_object($user, $_REQUEST['sheetId'], 'sheet', 'tiki_p_view_sheet')) $tiki_p_view_sheet = 'y';
-	else $tiki_p_view_sheet = 'n';
+	if ($tiki_p_admin == 'y' || $tiki_p_admin_sheet == 'y' || $tikilib->user_has_perm_on_object($user, $_REQUEST['sheetId'], 'sheet', 'tiki_p_view_sheet')) 
+		$tiki_p_view_sheet = 'y';
+	else 
+		$tiki_p_view_sheet = 'n';
 	$smarty->assign('tiki_p_view_sheet', $tiki_p_view_sheet);
-	if ($tiki_p_admin == 'y' || $tiki_p_admin_sheet == 'y' || ($user && $user == $info['author']) || $tikilib->user_has_perm_on_object($user, $_REQUEST['sheetId'], 'sheet', 'tiki_p_edit_sheet')) $tiki_p_edit_sheet = 'y';
-	else $tiki_p_edit_sheet = 'n';
+	if ($tiki_p_admin == 'y' || $tiki_p_admin_sheet == 'y' || ($user && $user == $info['author']) || $tikilib->user_has_perm_on_object($user, $_REQUEST['sheetId'], 'sheet', 'tiki_p_edit_sheet')) 
+		$tiki_p_edit_sheet = 'y';
+	else 
+		$tiki_p_edit_sheet = 'n';
 	$smarty->assign('tiki_p_edit_sheet', $tiki_p_edit_sheet);
-	if ($tiki_p_admin == 'y' || $tiki_p_admin_sheet == 'y' || ($user && $user == $info['author']) || $tikilib->user_has_perm_on_object($user, $_REQUEST['sheetId'], 'sheet', 'tiki_p_view_sheet_history')) $tiki_p_view_sheet_history = 'y';
-	else $tiki_p_view_sheet_history = 'n';
+	if ($tiki_p_admin == 'y' || $tiki_p_admin_sheet == 'y' || ($user && $user == $info['author']) || $tikilib->user_has_perm_on_object($user, $_REQUEST['sheetId'], 'sheet', 'tiki_p_view_sheet_history')) 
+		$tiki_p_view_sheet_history = 'y';
+	else 
+		$tiki_p_view_sheet_history = 'n';
 	$smarty->assign('tiki_p_view_sheet_history', $tiki_p_view_sheet_history);
 	$smarty->assign('headtitle', tra('Spreadsheet - ') . $info['title']);
 }
@@ -95,7 +100,13 @@ if (isset($_REQUEST["edit"])) {
 		$_REQUEST['parseValues'] = 'n';
 	}
 	$smarty->assign_by_ref('parseValues', $_REQUEST['parseValues']);
-	$gid = $sheetlib->replace_sheet($_REQUEST["sheetId"], $_REQUEST["title"], $_REQUEST["description"], $_REQUEST['creator'], $_REQUEST['parentSheetId']);
+	$gid = $sheetlib->replace_sheet(
+		$_REQUEST["sheetId"],
+		$_REQUEST["title"],
+		$_REQUEST["description"],
+		isset($_REQUEST['creator']) ? $_REQUEST['creator'] : $user,
+		$_REQUEST['parentSheetId']
+	);
 	$cat_objid = $gid;
 	$cat_desc = substr($_REQUEST["description"], 0, 200);
 	$cat_name = $_REQUEST["title"];
