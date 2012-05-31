@@ -303,7 +303,7 @@ FORM;
 					addedData += 'dates_' + date + '_' + this.users[user] + ' : 0$n';
 				}
 				
-				this.data = (this.data + '$n' + addedData).split(/$n/).sort();
+				this.data = (this.data + '$n' + addedData).split($regexN).sort();
 				
 				//remove empty lines
 				for(line in this.data) {
