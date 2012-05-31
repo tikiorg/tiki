@@ -75,6 +75,10 @@
 				{preference name='feature_webdav'}
 				
 				{preference name=feature_draw}
+				<div class="adminoptionboxchild" id="feature_draw_childcontainer">
+					{preference name=feature_draw_hide_buttons}
+				</div>
+
 				{preference name=feature_docs}				
 
 				{preference name='fgal_limit_hits_per_file'}
