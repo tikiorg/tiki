@@ -576,6 +576,42 @@ class Services_Tracker_Controller
 		);
 	}
 
+	function action_remove_item($input)
+	{
+		$processedFields = array();
+
+		$trackerId = $input->trackerId->int();
+		$definition = Tracker_Definition::get($trackerId);
+
+		if (! $definition) {
+			throw new Services_Exception_NotFound;
+		}
+
+		if (! $itemId = $input->itemId->int()) {
+			throw new Services_Exception_MissingValue('itemId');
+		}
+
+		$itemInfo = TikiLib::lib('trk')->get_tracker_item($itemId);
+		if (! $itemInfo || $itemInfo['trackerId'] != $trackerId) {
+			throw new Services_Exception_NotFound;
+		}
+
+		$itemObject = Tracker_Item::fromInfo($itemInfo);
+		if (! $itemObject->canRemove()) {
+			throw new Services_Exception(tr('Permission denied.'), 403);
+		}
+
+		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+			$this->utilities->removeItem($itemId);
+			TikiLib::lib('unifiedsearch')->processUpdateQueue();
+		}
+
+		return array(
+			'trackerId' => $trackerId,
+			'itemId' => $itemId,
+		);
+	}
+
 	function action_remove($input)
 	{
 		$trackerId = $input->trackerId->int();
