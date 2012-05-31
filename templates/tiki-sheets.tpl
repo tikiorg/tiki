@@ -23,6 +23,7 @@
 		<th>{self_link _sort_arg='sort_mode' _sort_field='user'}{tr}User{/tr}{/self_link}</th>
 		<th>{tr}Actions{/tr}</th>
 	</tr>
+	{cycle values="odd,even" print=false}
 	{foreach item=sheet from=$sheets}
 		{include name='base' file='tiki-sheets_listing.tpl' sheet=$sheet}
 		{foreach item=childSheet from=$sheet.children}

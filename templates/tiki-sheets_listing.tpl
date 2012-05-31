@@ -1,7 +1,5 @@
 {* $Id: tiki-sheets.tpl 35450 2011-07-17 19:03:36Z changi67 $ *}
 
-{cycle values="odd,even" print=false}
-
 <tr class="{cycle}">
 	<td class="text">
 		{if $sheet.parentSheetId}
