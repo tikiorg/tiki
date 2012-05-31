@@ -256,3 +256,57 @@ function wp_map_plugin_searchlayer($body, $args)
 OUT;
 }
 
+function wp_map_plugin_colorpicker($body, $args)
+{
+	static $counter = 0;
+
+	$headerlib = TikiLib::lib('header');
+	$headerlib->add_jsfile('lib/jquery/colorpicker/js/colorpicker.js');
+	$headerlib->add_cssfile('lib/jquery/colorpicker/css/colorpicker.css');
+
+	$target = 'map-colorpicker-' . ++$counter;
+
+	$full = <<<FULL
+$("#$target").closest('.map-container').bind('initialized', function () {
+	var container = this
+		, vlayer
+		, feature
+		, dialog = '#$target'
+		;
+
+	vlayer = container.vectors;
+
+	vlayer.events.on({
+		featureselected: function (ev) {
+			feature = ev.feature;
+
+			$(dialog).ColorPickerSetColor(feature.attributes.color);
+			$(dialog).dialog('open');
+		},
+		featureunselected: function (ev) {
+			feature = null;
+			$(dialog).dialog('close');
+		}
+	});
+
+	$(dialog)
+		.dialog({
+			autoOpen: false,
+			width: 400,
+			title: $(dialog).data('title')
+		})
+		.ColorPicker({
+			flat: true,
+			onChange: function (hsb, hex) {
+				feature.attributes.color = '#' + hex;
+			}
+		});
+});
+FULL;
+
+	$headerlib->add_js($full);
+
+	$title = tr('Color Picker');
+	return "<div id=\"$target\" data-title=\"$title\"></div>";
+}
+
