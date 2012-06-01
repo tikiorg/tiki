@@ -8,7 +8,7 @@
 	<param name = "dokuBase"	value = "{$doku_base}">
 	<param name = "sectok"		value = "{$sectok}">
 	<param name = "cookies"		value = "{$cookies}">
-	<param name = "host"		value = "{$base_host}">
+	<param name = "host"		value = "{$host}">
 	<param name = "pageName"	value = "{$page}">
 	<param name = "edid"		value = "{$edit_area}">
 	<param name = "authtok"		value = "{$authtok}">

@@ -21,7 +21,7 @@ class Services_JCapture_Controller
 
 	function action_capture($input)
 	{
-		global $page;
+		global $page, $base_host, $url_scheme, $url_path;
 		$smarty = TikiLib::lib('smarty');
 
 		$area = $input->data->area();
@@ -32,13 +32,13 @@ class Services_JCapture_Controller
 		}
 
 
-		$smarty->assign('doku_base', '');
-		$smarty->assign('sectok', '');
+		$smarty->assign('doku_base', bin2hex($url_path));
+		$smarty->assign('sectok', 'TODO');
 		$smarty->assign('cookies', $cookies);
-		//$smarty->assign('base_host', '');
+		$smarty->assign('host', $url_scheme === 'http' ? $base_host . ':80' : $base_host);
 		$smarty->assign('page', $page);
 		$smarty->assign('edit_area', $area);
-		$smarty->assign('authtok', '');
+		$smarty->assign('authtok', '');			// unused?
 
 		return array();
 	}
