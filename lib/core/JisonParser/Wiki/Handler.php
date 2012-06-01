@@ -13,14 +13,14 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 
 	var $npOn = false;
 	var $pluginStack = array();
-	public static $pluginCount = 0;
+	var $pluginCount = 0;
 	var $blockLoc = array();
 	var $blockLast = '';
 	var $blockStack = array();
 	var $olistLen = array();
 
 	var $npEntries = array();
-	public static $npCount = 0;
+	var $npCount = 0;
 	var $pluginEntries = array();
 
 	public static $option = array();
@@ -119,18 +119,17 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 			$status = true;
 		}
 
-		if ($status == true) {
-			$key = '§' . md5('plugin:'.self::$pluginCount) . '§';
-			self::$pluginCount++;
+		$key = '§' . md5('plugin:'.$this->pluginCount) . '§';
+		$this->pluginCount++;
 
+		if ($status === true) {
 			$this->pluginEntries[$key] = $this->parse( $this->pluginExecute(
 				$pluginDetails['name'],
 				$args,
 				$pluginDetails['body']
 			));
-
-			return $key;
 		} else {
+			$smarty->assign('plugin_fingerprint', $status);
 			$smarty->assign('plugin_name', $pluginDetails['name']);
 			$smarty->assign('plugin_index', 0);
 
@@ -152,8 +151,10 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 			$smarty->assign('plugin_body', $pluginDetails['body']);
 			$smarty->assign('plugin_args', $args);
 
-			return $smarty->fetch('tiki-plugin_blocked.tpl');
+			$this->pluginEntries[$key] = $smarty->fetch('tiki-plugin_blocked.tpl');
 		}
+
+		return $key;
 	}
 
 	function stackPlugin($yytext)
@@ -219,55 +220,57 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 
 	function pluginCanExecute( $name, $data = '', $args = array(), $dontModify = false )
 	{
-		global $prefs;
+		global $tikilib, $prefs, $page;
 
 		// If validation is disabled, anything can execute
-		if ( $prefs['wiki_validate_plugin'] != 'y' )
+		if ( $prefs['wiki_validate_plugin'] != 'y' ) {
 			return true;
+		}
 
 		$meta = $this->pluginInfo($name);
-		if ( ! isset( $meta['validate'] ) )
+
+		if ( ! isset( $meta['validate'] ) ) {
 			return true;
+		}
 
 		$fingerprint = $this->pluginFingerprint($name, $meta, $data, $args);
 
 		$val = $this->pluginFingerprintCheck($fingerprint, $dontModify);
 
-		if ( strpos($val, 'accept') === 0 )
-			return true;
-		elseif ( strpos($val, 'reject') === 0 )
-			return 'rejected';
-		else {
-			global $tiki_p_plugin_approve, $tiki_p_plugin_preview, $user;
-			if (
-				isset($_SERVER['REQUEST_METHOD'])
-				&& $_SERVER['REQUEST_METHOD'] == 'POST'
-				&& isset( $_POST['plugin_fingerprint'] )
-				&& $_POST['plugin_fingerprint'] == $fingerprint
-			) {
-				if ( $tiki_p_plugin_approve == 'y' ) {
-					if ( isset( $_POST['plugin_accept'] ) ) {
-						global $page;
-						$tikilib = TikiLib::lib('tiki');
-						$this->pluginFingerprintStore($fingerprint, 'accept');
-						$tikilib->invalidate_cache($page);
+		switch($val) {
+			case 'accept':
+				return true;
+				break;
+			case 'reject':
+				return 'rejected';
+				break;
+			default:
+				global $tiki_p_plugin_approve, $tiki_p_plugin_preview;
+				if (
+					isset($_SERVER['REQUEST_METHOD'])
+					&& $_SERVER['REQUEST_METHOD'] == 'POST'
+					&& isset( $_POST['plugin_fingerprint'] )
+					&& $_POST['plugin_fingerprint'] == $fingerprint
+				) {
+					if ( $tiki_p_plugin_approve == 'y' ) {
+						if ( isset( $_POST['plugin_accept'] ) ) {
+							$this->pluginFingerprintStore($fingerprint, 'accept');
+							$tikilib->invalidate_cache($page);
+							return true;
+						} elseif ( isset( $_POST['plugin_reject'] ) ) {
+							$this->pluginFingerprintStore($fingerprint, 'reject');
+							$tikilib->invalidate_cache($page);
+							return 'rejected';
+						}
+					}
+
+					if ( $tiki_p_plugin_preview == 'y'
+						&& isset( $_POST['plugin_preview'] ) ) {
 						return true;
-					} elseif ( isset( $_POST['plugin_reject'] ) ) {
-						global $page;
-						$tikilib = TikiLib::lib('tiki');
-						$this->pluginFingerprintStore($fingerprint, 'reject');
-						$tikilib->invalidate_cache($page);
-						return 'rejected';
 					}
 				}
 
-				if ( $tiki_p_plugin_preview == 'y'
-					&& isset( $_POST['plugin_preview'] ) ) {
-					return true;
-				}
-			}
-
-			return $fingerprint;
+				return $fingerprint;
 		}
 	}
 
@@ -359,8 +362,9 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 			if (empty($validateArgs)) {
 				$validateArgs = array( '' => '' );	// maintain compatibility with pre-Tiki 7 fingerprints
 			}
-		} else
+		} else {
 			$validateArgs = array();
+		}
 
 		$bodyLen = str_pad(strlen($validateBody), 6, '0', STR_PAD_RIGHT);
 		$serialized = serialize($validateArgs);
@@ -430,9 +434,9 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 
 	function removeNpEntities(&$matches)
 	{
-		$key = '§' . md5('np:'.self::$npCount) . '§';
+		$key = '§' . md5('np:'.$this->npCount) . '§';
 		$this->npEntries[$key] = substr($matches[0], 4, -5);
-		self::$npCount++;
+		$this->npCount++;
 		return $key;
 	}
 
