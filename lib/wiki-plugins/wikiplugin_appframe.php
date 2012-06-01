@@ -346,6 +346,9 @@ function wikiplugin_appframe_template($data, $params, $start)
 {
 	$smarty = TikiLib::lib('smarty');
 	$file = $params->file->url();
+
+	$params->setDefaultFilter('text');
+	$smarty->assign('input', $params->toArray());
 	return $smarty->fetch($file);
 }
 
