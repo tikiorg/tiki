@@ -982,19 +982,19 @@ if ( isset($_REQUEST['general_settings']) && $_REQUEST['general_settings'] == 'y
 	);
 
 	$query = "INSERT INTO `tiki_preferences` (`name`, `value`) VALUES"
-		. " ('browsertitle', '" . $_REQUEST['browsertitle'] . "'),"
-		. " ('sender_email', '" . $_REQUEST['sender_email'] . "'),"
-		. " ('https_login', '" . $_REQUEST['https_login'] . "'),"
-		. " ('https_port', '" . $_REQUEST['https_port'] . "'),"
-		. " ('error_reporting_level', '" . $_REQUEST['error_reporting_level'] . "'),"
+		. " ('browsertitle', ?),"
+		. " ('sender_email', ?),"
+		. " ('https_login', ?),"
+		. " ('https_port', ?),"
+		. " ('error_reporting_level', ?),"
 		. " ('error_reporting_adminonly', '" . (isset($_REQUEST['error_reporting_adminonly']) && $_REQUEST['error_reporting_adminonly'] == 'on' ? 'y' : 'n') . "'),"
 		. " ('smarty_notice_reporting', '" . (isset($_REQUEST['smarty_notice_reporting']) && $_REQUEST['smarty_notice_reporting'] == 'on' ? 'y' : 'n') . "'),"
 		. " ('log_tpl', '" . (isset( $_REQUEST['log_tpl']) && $_REQUEST['log_tpl'] == 'on' ? 'y' : 'n') . "'),"
 		. " ('feature_switch_ssl_mode', '$switch_ssl_mode'),"
 		. " ('feature_show_stay_in_ssl_mode', '$show_stay_in_ssl_mode'),"
-		. " ('language', '$language')";
+		. " ('language', ?)";
 
-	$installer->query($query);
+	$installer->query($query, array($_REQUEST['browsertitle'], $_REQUEST['sender_email'], $_REQUEST['https_login'], $_REQUEST['https_port'], $_REQUEST['error_reporting_level'], $language));
 	$installer->query("UPDATE `users_users` SET `email` = '".$_REQUEST['admin_email']."' WHERE `users_users`.`userId`=1");
 
 	if ( isset( $_REQUEST['admin_account'] ) && ! empty( $_REQUEST['admin_account'] ) ) {
