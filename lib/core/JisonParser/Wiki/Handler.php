@@ -23,6 +23,37 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	var $npCount = 0;
 	var $pluginEntries = array();
 
+	public static $headerStack = array();
+	public static $pluginsExecutedStack = array();
+
+	//This var is used in both protectSpecialChars and unprotectSpecialChars to simplify the html ouput process
+	var $specialChars = array(
+		'≤REAL_LT≥' => array(
+			'html'=>		'<',
+			'nonHtml'=>		'&lt;'
+		),
+		'≤REAL_GT≥' => array(
+			'html'=>		'>',
+			'nonHtml'=>		'&gt;'
+		),
+		'≤REAL_NBSP≥' => array(
+			'html'=>		'&nbsp;',
+			'nonHtml'=>		'&nbsp;'
+		),
+		/*on post back the page is parsed, which turns & into &amp;
+		this is done to prevent that from happening, we are just
+		protecting some chars from letting the parser nab them*/
+		'≤REAL_AMP≥' => array(
+			'html'=>		'& ',
+			'nonHtml'=>		'& '
+		),
+	);
+
+	var $tikilib;
+	var $user;
+	var $prefs;
+	var $page;
+
 	public static $option = array();
 	public function setOption($option = array())
 	{
@@ -45,7 +76,6 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 			'inside_pretty' => false,
 			'process_wiki_paragraphs' => true,
 			'min_one_paragraph' => false,
-			'skipvalidation' => false,
 		), $option);
 	}
 
@@ -58,6 +88,16 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		'inDiv' => 0,
 		'inHeader' => 0
 	);
+
+	function __construct()
+	{
+		global $tikilib, $page, $user, $prefs;
+		$this->tikilib = $tikilib;
+		$this->page = $page;
+		$this->user = (isset($user) ? $user : tra('Anonymous'));
+		$this->prefs = $prefs;
+		parent::__construct();
+	}
 
 	function parse($input)
 	{
@@ -72,7 +112,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		} else {
 			$this->parsing = true;
 
-			if (empty(self::$options)) $this->setOption();
+			if (empty(self::$option)) $this->setOption();
 
 			$this->preParse($input);
 			$result = parent::parse($input);
@@ -87,6 +127,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	function preParse(&$input)
 	{
 		$input = preg_replace_callback('/~np~(.|\n)*?~\/np~/', array(&$this, 'removeNpEntities'), $input);
+		$input = $this->protectSpecialChars($input);
 	}
 
 	function postParse(&$input)
@@ -94,15 +135,16 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		$lines = explode("\n", $input);
 
 		$ul = '';
-		$listbeg = array();
+		$listBeginnings = array();
 		foreach($lines as &$line) {
-			$this->parseLists($line, $listbeg, $ul);
+			$this->parseLists($line, $listBeginnings, $ul);
 			$this->addLineBreaks($line);
 		}
 		$input = implode("\n", $lines);
 
 		$this->restoreNpEntities($input);
 		$this->restorePluginEntities($input);
+		$input = $this->unprotectSpecialChars($input, $this->option['is_html']);
 	}
 
 	// state & plugin handlers
@@ -123,11 +165,17 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		$this->pluginCount++;
 
 		if ($status === true) {
+
 			$this->pluginEntries[$key] = $this->parse( $this->pluginExecute(
 				$pluginDetails['name'],
 				$args,
 				$pluginDetails['body']
-			));
+			))
+			. $this->pluginButton($pluginDetails['name'],
+				$args,
+				$pluginDetails['body']
+			);
+
 		} else {
 			$smarty->assign('plugin_fingerprint', $status);
 			$smarty->assign('plugin_name', $pluginDetails['name']);
@@ -140,11 +188,12 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 			$preview = $tiki_p_plugin_preview == 'y' && $details && ! self::$option['preview_mode'];
 			$approve = $tiki_p_plugin_approve == 'y' && $details && ! self::$option['preview_mode'];
 
-			if (!self::$option['inside_pretty']) {
-				$smarty->assign('plugin_details', $details);
-			} else {
+			if (self::$option['inside_pretty']) {
 				$smarty->assign('plugin_details', '');
+			} else {
+				$smarty->assign('plugin_details', $details);
 			}
+
 			$smarty->assign('plugin_preview', $preview);
 			$smarty->assign('plugin_approve', $approve);
 
@@ -188,11 +237,14 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 
 	function pluginExecute($name, $args = array(), $body = "")
 	{
+		if (!isset(self::$pluginsExecutedStack[$name])) self::$pluginsExecutedStack[$name] == 0;
+		self::$pluginsExecutedStack[$name]++;
+
 		$fnName = strtolower('wikiplugin_' .  $name);
 
 		if ( $this->pluginExists($name) && function_exists($fnName) ) {
 
-			$result = $fnName($body, $args);
+			$result = $fnName($this->unprotectSpecialChars($body, true), $args, self::$pluginsExecutedStack[$name], $this);
 
 			return $result;
 		}
@@ -220,10 +272,8 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 
 	function pluginCanExecute( $name, $data = '', $args = array(), $dontModify = false )
 	{
-		global $tikilib, $prefs, $page;
-
 		// If validation is disabled, anything can execute
-		if ( $prefs['wiki_validate_plugin'] != 'y' ) {
+		if ( $this->prefs['wiki_validate_plugin'] != 'y' ) {
 			return true;
 		}
 
@@ -255,11 +305,11 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 					if ( $tiki_p_plugin_approve == 'y' ) {
 						if ( isset( $_POST['plugin_accept'] ) ) {
 							$this->pluginFingerprintStore($fingerprint, 'accept');
-							$tikilib->invalidate_cache($page);
+							$this->tikilib->invalidate_cache($this->page);
 							return true;
 						} elseif ( isset( $_POST['plugin_reject'] ) ) {
 							$this->pluginFingerprintStore($fingerprint, 'reject');
-							$tikilib->invalidate_cache($page);
+							$this->tikilib->invalidate_cache($this->page);
 							return 'rejected';
 						}
 					}
@@ -276,21 +326,20 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 
 	function pluginFingerprintStore( $fingerprint, $type )
 	{
-		global $tikilib, $user, $page;
-		if ( $page ) {
+		if ( $this->page ) {
 			$objectType = 'wiki page';
-			$objectId = $page;
+			$objectId = $this->page;
 		} else {
 			$objectType = '';
 			$objectId = '';
 		}
 
-		$pluginSecurity = $tikilib->table('tiki_plugin_security');
+		$pluginSecurity = $this->tikilib->table('tiki_plugin_security');
 		$pluginSecurity->delete(array('fingerprint' => $fingerprint));
 		$pluginSecurity->insert(array(
 			'fingerprint' => $fingerprint,
 			'status' => $type,
-			'added_by' => $user,
+			'added_by' => $this->user,
 			'last_objectType' => $objectType,
 			'last_objectId' => $objectId
 		));
@@ -337,7 +386,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	{
 		$validate = (isset($meta['validate']) ? $meta['validate'] : '');
 
-		//$data = $this->unprotectSpecialChars($data, true);
+		$data = $this->unprotectSpecialChars($data, true);
 
 		if ( $validate == 'all' || $validate == 'body' )
 			$validateBody = str_replace('<x>', '', $data);	// de-sanitize plugin body to make fingerprint consistant with 5.x
@@ -378,10 +427,8 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 
 	function pluginFingerprintCheck( $fingerprint, $dontModify = false )
 	{
-		global $tikilib, $user;
-
 		$limit = date('Y-m-d H:i:s', time() - 15*24*3600);
-		$result = $tikilib->query("
+		$result = $this->tikilib->query("
 			SELECT status, if(status='pending' AND last_update < ?, 'old', '') flag
 			FROM tiki_plugin_security
 			WHERE fingerprint = ?
@@ -414,16 +461,13 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 				$objectId = '';
 			}
 
-			if (!$user) {
-				$user = tra('Anonymous');
-			}
 
-			$pluginSecurity = $tikilib->table('tiki_plugin_security');
+			$pluginSecurity = $this->tikilib->table('tiki_plugin_security');
 			$pluginSecurity->delete(array('fingerprint' => $fingerprint));
 			$pluginSecurity->insert(array(
 				'fingerprint' => $fingerprint,
 				'status' => 'pending',
-				'added_by' => $user,
+				'added_by' => $this->user,
 				'last_objectType' => $objectType,
 				'last_objectId' => $objectId
 			));
@@ -483,11 +527,11 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		$this->addLineBreaksTracking['inTOC'] -= substr_count($lineInLowerCase, "</ul><!--toc-->");
 
 		// check if we are inside a script not insert <br />
-		$this->addLineBreaksTracking['inScript'] += substr_count($lineInLowerCase, "<script ");
+		$this->addLineBreaksTracking['inScript'] += substr_count($lineInLowerCase, "<script");
 		$this->addLineBreaksTracking['inScript'] -= substr_count($lineInLowerCase, "</script");
 
 		// check if we are inside a script not insert <br />
-		$this->addLineBreaksTracking['inDiv'] += substr_count($lineInLowerCase, "<div ");
+		$this->addLineBreaksTracking['inDiv'] += substr_count($lineInLowerCase, "<div");
 		$this->addLineBreaksTracking['inDiv'] -= substr_count($lineInLowerCase, "</div");
 
 		// check if we are inside a script not insert <br />
@@ -507,75 +551,110 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		}
 	}
 
-	function parseLists(&$line = "", &$listbeg = array(), &$data = '')
+	function parseLists(&$line = "", &$listBeginnings = array(), &$data = '')
 	{
-		global $tikilib;
 		$isStart = empty($data);
 
-		$litype = substr($line, 0, 1);
-		if (($litype == '*' || $litype == '#') && !(strlen($line)-count($listbeg)>4 && preg_match('/^\*+$/', $line))) {
-			$listlevel = $tikilib->how_many_at_start($line, $litype);
-			$liclose = '</li>';
-			$addremove = 0;
-			if ($listlevel < count($listbeg)) {
-				while ($listlevel != count($listbeg)) $data .= array_shift($listbeg);
-				if (substr(current($listbeg), 0, 5) != '</li>') $liclose = '';
-			} elseif ($listlevel > count($listbeg)) {
-				$listyle = '';
-				while ($listlevel != count($listbeg)) {
-					array_unshift($listbeg, ($litype == '*' ? '</ul>' : '</ol>'));
-					if ($listlevel == count($listbeg)) {
-						$listate = substr($line, $listlevel, 1);
-						if (($listate == '+' || $listate == '-') && !($litype == '*' && !strstr(current($listbeg), '</ul>') || $litype == '#' && !strstr(current($listbeg), '</ol>'))) {
-							$thisid = 'id' . microtime() * 1000000;
-							if ( !self::$option['ck_editor'] ) {
-								$data .= '<br /><a id="flipper' . $thisid . '" class="link" href="javascript:flipWithSign(\'' . $thisid . '\')">[' . ($listate == '-' ? '+' : '-') . ']</a>';
-							}
-							$listyle = ' id="' . $thisid . '" style="display:' . ($listate == '+' || self::$option['ck_editor'] ? 'block' : 'none') . ';"';
-							$addremove = 1;
+		$liType = substr($line, 0, 1);
+
+		if (
+			($liType == '*' || $liType == '#') &&
+			!(strlen($line)-count($listBeginnings)>4 &&
+			preg_match('/^\*+$/', $line))
+		) {
+			$listLevel = $this->tikilib->how_many_at_start($line, $liType);
+			$liClose = '</li>';
+			$addRemove = 0;
+
+			if ($listLevel < count($listBeginnings)) {
+				while ($listLevel != count($listBeginnings)) {
+					$data .= array_shift($listBeginnings);
+				}
+
+				if (substr(current($listBeginnings), 0, 5) != '</li>') {
+					$liClose = '';
+				}
+
+			} elseif ($listLevel > count($listBeginnings)) {
+				$liStyle = '';
+
+				while ($listLevel != count($listBeginnings)) {
+					array_unshift($listBeginnings, ($liType == '*' ? '</ul>' : '</ol>'));
+
+					if ($listLevel == count($listBeginnings)) {
+						$liState = substr($line, $listLevel, 1);
+
+						if (
+							($liState == '+' || $liState == '-') &&
+							!(
+								$liType == '*' &&
+								!strstr(current($listBeginnings), '</ul>') ||
+								$liType == '#' &&
+								!strstr(current($listBeginnings), '</ol>')
+							)
+						) {
+							$thisId = 'id' . microtime() * 1000000;
+							$liStyle = ' id="' . $thisId . '" style="display:' . ($liState == '+' ? 'block' : 'none') . ';"';
+							$addRemove = 1;
 						}
 					}
-					$data.=($litype=='*'?"<ul$listyle>":"<ol$listyle>");
+
+					$data .= ( $liType=='*' ? "<ul$liStyle>" : "<ol$liStyle>" );
 				}
-				$liclose='';
+				$liClose='';
 			}
-			if ($litype == '*' && !strstr(current($listbeg), '</ul>') || $litype == '#' && !strstr(current($listbeg), '</ol>')) {
-				$data .= array_shift($listbeg);
-				$listyle = '';
-				$listate = substr($line, $listlevel, 1);
-				if (($listate == '+' || $listate == '-')) {
-					$thisid = 'id' . microtime() * 1000000;
-					if ( !self::$option['ck_editor'] ) {
-						$data .= '<br /><a id="flipper' . $thisid . '" class="link" href="javascript:flipWithSign(\'' . $thisid . '\')">[' . ($listate == '-' ? '+' : '-') . ']</a>';
-					}
-					$listyle = ' id="' . $thisid . '" style="display:' . ($listate == '+' || self::$option['ck_editor'] ? 'block' : 'none') . ';"';
-					$addremove = 1;
+
+			if (
+				$liType == '*' && !strstr(current($listBeginnings), '</ul>') ||
+				$liType == '#' && !strstr(current($listBeginnings), '</ol>')
+			) {
+				$data .= array_shift($listBeginnings);
+				$liStyle = '';
+				$liState = substr($line, $listLevel, 1);
+
+				if (($liState == '+' || $liState == '-')) {
+					$thisId = 'id' . microtime() * 1000000;
+					$liStyle = ' id="' . $thisId . '" style="display:' . ($liState == '+' ? 'block' : 'none') . ';"';
+					$addRemove = 1;
 				}
-				$data .= ($litype == '*' ? "<ul$listyle>" : "<ol$listyle>");
-				$liclose = '';
-				array_unshift($listbeg, ($litype == '*' ? '</li></ul>' : '</li></ol>'));
+
+				$data .= ( $liType == '*' ? "<ul$liStyle>" : "<ol$liStyle>" );
+				$liClose = '';
+				array_unshift($listBeginnings, ($liType == '*' ? '</li></ul>' : '</li></ol>'));
 			}
-			$line = $liclose . '<li>' . substr($line, $listlevel + $addremove);
-			if (substr(current($listbeg), 0, 5) != '</li>') array_unshift($listbeg, '</li>' . array_shift($listbeg));
-		} elseif ($litype == '+') {
-			$listlevel = TikiLib::how_many_at_start($line, $litype);
+
+			$line = $liClose . '<li>' . substr($line, $listLevel + $addRemove);
+
+			if (substr(current($listBeginnings), 0, 5) != '</li>') {
+				array_unshift($listBeginnings, '</li>' . array_shift($listBeginnings));
+			}
+
+		} elseif ($liType == '+') {
+			$listLevel = TikiLib::how_many_at_start($line, $liType);
 			// Close lists down to requested level
-			while ($listlevel < count($listbeg)) $data .= array_shift($listbeg);
+			while ($listLevel < count($listBeginnings)) {
+				$data .= array_shift($listBeginnings);
+			}
 
 			// Must append paragraph for list item of given depth...
-			$listlevel = TikiLib::how_many_at_start($line, $litype);
-			if (count($listbeg)) {
-				if (substr(current($listbeg), 0, 5) != '</li>') {
-					array_unshift($listbeg, '</li>' . array_shift($listbeg));
-					$liclose = '<li>';
-				} else $liclose = '<br />';
-			} else $liclose = '';
-			$line = $liclose . substr($line, count($listbeg));
+			$listLevel = TikiLib::how_many_at_start($line, $liType);
+			if (count($listBeginnings)) {
+				if (substr(current($listBeginnings), 0, 5) != '</li>') {
+					array_unshift($listBeginnings, '</li>' . array_shift($listBeginnings));
+					$liClose = '<li>';
+				} else {
+					$liClose = '<br />';
+				}
+			} else {
+				$liClose = '';
+			}
+
+			$line = $liClose . substr($line, count($listBeginnings));
 
 		} else {
 			//we are either at the end of a list, or in a regular line
-			$line = implode($listbeg) . $line;
-			$listbeg =  array();
+			$line = implode($listBeginnings) . $line;
+			$listBeginnings =  array();
 		}
 
 		if ($isStart) {
@@ -594,6 +673,41 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	{
 		$this->conditionStackCount = 0;
 		$this->conditionStack = array();
+	}
+
+	// This function handles the protection of html entities so that they are not mangled when
+	// parse_htmlchar runs, and as well so they can be properly seen, be it html or non-html
+	function protectSpecialChars($data)
+	{
+		if (
+			$this->isHtmlPurifying == true ||
+			$this->option['is_html'] != true
+		) {
+			foreach($this->specialChars as $key => $specialChar) {
+				$data = str_replace($specialChar['html'], $key, $data);
+			}
+		}
+
+		return $data;
+	}
+
+	// This function removed the protection of html entities so that they are rendered as expected by the viewer
+	function unprotectSpecialChars($data, $is_html = false)
+	{
+		if (
+			$is_html != false ||
+			$this->option['is_html']
+		) {
+			foreach($this->specialChars as $key => $specialChar) {
+				$data = str_replace($key, $specialChar['html'], $data);
+			}
+		} else {
+			foreach($this->specialChars as $key => $specialChar) {
+				$data = str_replace($key, $specialChar['nonHtml'], $data);
+			}
+		}
+
+		return $data;
 	}
 
 	function beginBlock($condition)
@@ -664,7 +778,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 
 		$content = substr($content, $hNum - 1);
 
-
+		self::$headerStack[] = $content;
 
 		return '<h' . $hNum . '>' . $content . $this->headerButton() . '</h' . $hNum . '>';
 	}
@@ -684,10 +798,59 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		}
 
 		self::$hdrCount++;
-
+		include_once('lib/smarty_tiki/function.icon.php');
 		$button .= 'hdr=' . self::$hdrCount . '">'.smarty_function_icon(array('_id'=>'page_edit_section', 'alt'=>tra('Edit Section')), $smarty).'</a></div>';
 
 		return $button;
+	}
+
+	function pluginButton($name, $args, $body)
+	{
+		global $headerlib, $smarty;
+
+		$name = strtolower($name);
+
+		if ((empty($this->option['preview_mode']) || !$this->option['preview_mode']) && empty($this->option['indexing']) && (empty($this->option['print']) || !$this->option['print']) && !$this->option['suppress_icons'] ) {
+			$id = 'plugin-edit-' . $name . self::$pluginsExecutedStack[$name];
+			$iconDisplayStyle = '';
+			if (
+				$this->prefs['wiki_edit_icons_toggle'] == 'y' &&
+				(
+					$this->prefs['wiki_edit_plugin'] == 'y' || $this->prefs['wiki_edit_section'] == 'y'
+				)
+			) {
+				if (!isset($_COOKIE['wiki_plugin_edit_view'])) {
+					$iconDisplayStyle = ' style="display:none;"';
+				}
+			}
+
+			$headerlib->add_jsfile('tiki-jsplugin.php?language='.$this->prefs['language'], 'dynamic');
+			if ($this->prefs['wikiplugin_module'] === 'y' && $this->prefs['wikiplugininline_module'] === 'n') {
+				$headerlib->add_jsfile('tiki-jsmodule.php?language='.$this->prefs['language'], 'dynamic');
+			}
+			$headerlib->add_jq_onready('
+$("#' . $id . '").click( function(event) {
+	popup_plugin_form('
+				. json_encode('editwiki')
+				. ', '
+				. json_encode($name)
+				. ', '
+				. json_encode(self::$pluginsExecutedStack[$name])
+				. ', '
+				. json_encode($this->option['page'])
+				. ', '
+				. json_encode($args)
+				. ', '
+				. json_encode($this->unprotectSpecialChars($body, true)) //we restore it back to html here so that it can be edited, we want no modification, ie, it is brought back to html
+				. ', event.target);
+	return false;
+});
+');
+			include_once('lib/smarty_tiki/function.icon.php');
+			return '<a id="' .$id. '" class="editplugin"'.$iconDisplayStyle.'>'.smarty_function_icon(array('_id'=>'wiki_plugin_edit', 'alt'=>tra('Edit Plugin').':'.$name), $smarty)."</a>";
+		}
+
+		return '';
 	}
 
 	function hr()
