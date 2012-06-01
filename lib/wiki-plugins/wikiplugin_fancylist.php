@@ -46,10 +46,10 @@ function wikiplugin_fancylist($data, $params)
 		extract($params, EXTR_SKIP);
 	}
 	if (isset($div)) {
-		$result = '<div class="fancylist'.($class ? " $class" : "").'">';
+		$result = '~np~<div class="fancylist'.($class ? " $class" : "").'">~/np~';
 		$count=1;
 	} else {
-			$result = '<ol class="fancylist'.(isset($class) ? " $class" : "").'">';
+			$result = '~np~<ol class="fancylist'.(isset($class) ? " $class" : "").'">~/np~';
 	}
 	// split data by lines (trimed whitespace from start and end)
 	$lines = preg_split("/\n/", trim($data));
@@ -57,16 +57,16 @@ function wikiplugin_fancylist($data, $params)
 		// replace all before and including the ")"
 		$part = preg_replace("/[\w]+\)(.*)/", "$1", $line);
 		if (isset($div)) {
-			$result .= '<div><span class='.count.'>'.$count.'</span><p>' . $part . '</p></div>';
+			$result .= '~np~<div><span class='.count.'>'.$count.'</span><p>~/np~' . $part . '~np~</p></div>~/np~';
 			$count++;
 		} else {
-			$result .= '<li><p>' . $part . '</p></li>';				
+			$result .= '~np~<li><p>~/np~' . $part . '~np~</p></li>~/np~';
 		}
 	}
 	if (isset($div)) {
-		$result .= '</div>';
+		$result .= '~np~</div>~/np~';
 	} else {
-	 	$result .= '</ol>';
+	 	$result .= '~np~</ol>~/np~';
 	}
 	return $result;
 }
