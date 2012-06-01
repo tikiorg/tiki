@@ -96,7 +96,7 @@ $js
 			var current = optionDropDown.val();
 			optionDropDown.empty().attr('disabled',false)
 					.append(\$('<option/>').attr('value',$none).text($none));
-			if (current) {
+			if (styleDropDown.val()) {
 				\$.each(ops[1], function(i, val) {
 					optionDropDown.append(\$('<option/>').attr('value',i).text(i.replace(/\.css\$/, '')));
 					none = false;
