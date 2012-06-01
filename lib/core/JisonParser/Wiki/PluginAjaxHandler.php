@@ -9,7 +9,12 @@ class JisonParser_Wiki_PluginAjaxHandler extends JisonParser_Wiki_Handler
 {
 	static public $pluginCount = 0;
 	static public $plugins = array();
-	var $usePrePostHandlers = false;
+	static public $pluginPreKeys = array();
+
+	var $parsePlugins = false;
+	var $parseNps = true;
+	var $parseLists = false;
+
 	var $inUse = false;
 
 	function parse($data)

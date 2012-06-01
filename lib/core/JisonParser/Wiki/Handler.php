@@ -8,11 +8,14 @@
 class JisonParser_Wiki_Handler extends JisonParser_Wiki
 {
 	var $parsing = false;
-	var $usePrePostHandlers = true;
+	var $parsePlugins = true;
+	var $parseNps = true;
+	var $parseLists = true;
 
 	var $origPluginBody = array();
 	public static $hdrCount = 0;
 	public static $spareParsers = array();
+	static public $pluginPreKeys = array();
 
 	var $npOn = false;
 	var $pluginStack = array();
@@ -117,15 +120,9 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 
 			if (empty(self::$option)) $this->setOption();
 
-			if ($this->usePrePostHandlers == true) {
-				$this->preParse($input);
-			}
-
+			$this->preParse($input);
 			$result = parent::parse($input);
-
-			if ($this->usePrePostHandlers == true) {
-				$this->postParse($result);
-			}
+			$this->postParse($result);
 
 			$this->parsing = false;
 		}
@@ -135,31 +132,40 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 
 	function parsePlugin($input)
 	{
-		$is_html = self::$option['is_html'];
-		$this->setOption(array('is_html'=> true));
-		$result = $this->parse($input);
-		$this->setOption(array('is_html'=> $is_html));
-		return $result;
+		if ($this->parsePlugins == true) {
+			$is_html = self::$option['is_html'];
+			$this->setOption(array('is_html'=> true));
+			$result = $this->parse($input);
+			$this->setOption(array('is_html'=> $is_html));
+			return $result;
+		} else {
+			return $input;
+		}
 	}
 
 	function preParse(&$input)
 	{
-		$input = preg_replace_callback('/~np~(.|\n)*?~\/np~/', array(&$this, 'removeNpEntities'), $input);
+		if ($this->parseNps == true) {
+			$input = preg_replace_callback('/~np~(.|\n)*?~\/np~/', array(&$this, 'removeNpEntities'), $input);
+		}
+
 		$input = $this->protectSpecialChars($input);
 	}
 
 	function postParse(&$input)
 	{
-		$lines = explode("\n", $input);
+		if ($this->parseLists == true) {
+			$lines = explode("\n", $input);
 
-		$ul = '';
-		$listBeginnings = array();
-		$listBeginnings = array();
-		foreach($lines as &$line) {
-			$this->parseLists($line, $listBeginnings, $ul);
-			$this->addLineBreaks($line);
+			$ul = '';
+			$listBeginnings = array();
+			$listBeginnings = array();
+			foreach($lines as &$line) {
+				$this->parseLists($line, $listBeginnings, $ul);
+				$this->addLineBreaks($line);
+			}
+			$input = implode("\n", $lines);
 		}
-		$input = implode("\n", $lines);
 
 		$this->restoreNpEntities($input);
 		$this->restorePluginEntities($input);
