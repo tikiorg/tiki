@@ -803,7 +803,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 
 	function colortext($content)
 	{
-		$text = $this->split(':', $content);
+		$text = explode(':', $content);
 		$color = $text[0];
 		$content = $text[1];
 
@@ -951,7 +951,7 @@ $("#' . $id . '").click( function(event) {
 
 	function link($content)
 	{
-		$link = $this->split('|', $content);
+		$link = explode('|', $content);
 		$href = (isset($link[0]) ? $link[0] : $content);
 		$text = (isset($link[1]) ? $link[1] : $href);
 
@@ -971,12 +971,12 @@ $("#' . $id . '").click( function(event) {
 	function tableParser($content)
 	{
 		$tableContents = '';
-		$rows = $this->split('<br />', $content);
+		$rows = explode("\n", $content);
 
 		for ($i = 0, $count_rows = count($rows); $i < $count_rows; $i++) {
 			$row = '';
 
-			$cells = $this->split('|', $rows[$i]);
+			$cells = explode('|', $rows[$i]);
 			for ($j = 0, $count_cells = count($cells); $j < $count_cells; $j++) {
 				$row .= $this->table_td($cells[$j]);
 			}
@@ -1021,7 +1021,7 @@ $("#' . $id . '").click( function(event) {
 
 	function wikilink($content)
 	{
-		$wikilink = $this->split('|', $content);
+		$wikilink = explode('|', $content);
 		$href = $content;
 
 		if ($this->match('/\|/', $content)) {
@@ -1059,11 +1059,6 @@ $("#' . $id . '").click( function(event) {
 	function replace($search, $replace, $subject)
 	{
 		return str_replace($search, $replace, $subject);
-	}
-
-	function split($delimiter, $string)
-	{
-		return explode($delimiter, $string);
 	}
 
 	function join()
