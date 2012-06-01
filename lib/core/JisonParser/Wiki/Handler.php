@@ -989,7 +989,7 @@ $("#' . $id . '").click( function(event) {
 			$tableContents .= $this->table_tr($row);
 		}
 
-		return '<table style="width: 100%;">' . $tableContents . '</table>';
+		return '<table class="wikitable">' . $tableContents . '</table>';
 	}
 
 	function table_tr($content)
@@ -999,7 +999,7 @@ $("#' . $id . '").click( function(event) {
 
 	function table_td($content)
 	{
-		return '<td>' . $content . '</td>';
+		return '<td class="wikicell">' . $content . '</td>';
 	}
 
 	function titlebar($content)
