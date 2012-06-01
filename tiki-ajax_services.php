@@ -33,6 +33,7 @@ $controllerMap = array(
 	'object' => 'Services_Object_Controller',
 	'wiki' => 'Services_Wiki_Controller',
 	'jcapture' => 'Services_JCapture_Controller',
+	'jison'=> 'Services_JisonParser_WikiPlugin'
 );
 
 $inputConfiguration = array(array(

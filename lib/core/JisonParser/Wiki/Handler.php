@@ -8,12 +8,15 @@
 class JisonParser_Wiki_Handler extends JisonParser_Wiki
 {
 	var $parsing = false;
+	var $usePrePostHandlers = true;
+
+	var $origPluginBody = array();
 	public static $hdrCount = 0;
 	public static $spareParsers = array();
 
 	var $npOn = false;
 	var $pluginStack = array();
-	var $pluginCount = 0;
+	public static $pluginCount = 0;
 	var $blockLoc = array();
 	var $blockLast = '';
 	var $blockStack = array();
@@ -114,9 +117,15 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 
 			if (empty(self::$option)) $this->setOption();
 
-			$this->preParse($input);
+			if ($this->usePrePostHandlers == true) {
+				$this->preParse($input);
+			}
+
 			$result = parent::parse($input);
-			$this->postParse($result);
+
+			if ($this->usePrePostHandlers == true) {
+				$this->postParse($result);
+			}
 
 			$this->parsing = false;
 		}
@@ -135,6 +144,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		$lines = explode("\n", $input);
 
 		$ul = '';
+		$listBeginnings = array();
 		$listBeginnings = array();
 		foreach($lines as &$line) {
 			$this->parseLists($line, $listBeginnings, $ul);
@@ -161,20 +171,20 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 			$status = true;
 		}
 
-		$key = '§' . md5('plugin:'.$this->pluginCount) . '§';
-		$this->pluginCount++;
+		$key = '§' . md5('plugin:'.self::$pluginCount) . '§';
+		self::$pluginCount++;
 
 		if ($status === true) {
+			$pluginDetails['body'] = $this->unprotectSpecialChars($pluginDetails['body'], true);
 
-			$this->pluginEntries[$key] = $this->parse( $this->pluginExecute(
+			$this->pluginEntries[$key] = $this->pluginExecute(
 				$pluginDetails['name'],
 				$args,
-				$pluginDetails['body']
-			))
-			. $this->pluginButton($pluginDetails['name'],
-				$args,
-				$pluginDetails['body']
+				$pluginDetails['body'],
+				$key
 			);
+
+			$this->pluginEntries[$key] = $this->parse( $this->pluginEntries[$key] );
 
 		} else {
 			$smarty->assign('plugin_fingerprint', $status);
@@ -235,16 +245,26 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		return (count($this->pluginStack) > 0);
 	}
 
-	function pluginExecute($name, $args = array(), $body = "")
+	function pluginExecute($name, $args = array(), $body = "", $key)
 	{
-		if (!isset(self::$pluginsExecutedStack[$name])) self::$pluginsExecutedStack[$name] == 0;
+		$name = strtolower($name);
+		if (!isset(self::$pluginsExecutedStack[$name])) {
+			self::$pluginsExecutedStack[$name] == 0;
+		}
 		self::$pluginsExecutedStack[$name]++;
 
 		$fnName = strtolower('wikiplugin_' .  $name);
 
 		if ( $this->pluginExists($name) && function_exists($fnName) ) {
 
-			$result = $fnName($this->unprotectSpecialChars($body, true), $args, self::$pluginsExecutedStack[$name], $this);
+			$result =
+				$fnName($body, $args, self::$pluginsExecutedStack[$name], $this).
+
+				$this->pluginButton(
+					$name,
+					$args,
+					$key
+				);
 
 			return $result;
 		}
@@ -322,6 +342,31 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 
 				return $fingerprint;
 		}
+	}
+
+	function pluginIsEditable( $name )
+	{
+		global $tiki_p_edit, $prefs, $section;
+		$info = $this->pluginInfo($name);
+		// note that for 3.0 the plugin editor only works in wiki pages, but could be extended later
+		return $section == 'wiki page' && $info && $tiki_p_edit == 'y' && $prefs['wiki_edit_plugin'] == 'y'
+			&& !$this->pluginIsInline($name);
+	}
+
+	function pluginIsInline( $name )
+	{
+		if ( ! $meta = $this->pluginInfo($name) )
+			return true; // Legacy plugins always inline
+
+		$inline = false;
+		if ( isset( $meta['inline'] ) && $meta['inline'] )
+			return true;
+
+		$inline_pref = 'wikiplugininline_' .  $name;
+		if ( isset( $this->prefs[ $inline_pref ] ) && $this->prefs[ $inline_pref ] == 'y' )
+			return true;
+
+		return false;
 	}
 
 	function pluginFingerprintStore( $fingerprint, $type )
@@ -484,22 +529,26 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		return $key;
 	}
 
-	function restoreNpEntities(&$input)
+	function restoreNpEntities(&$input, $keep = false)
 	{
 		foreach($this->npEntries as $key => $entity) {
 			$input = str_replace($key, $entity, $input);
-			unset($this->npEntries[$key]);
-		}
 
-		$this->npEntries = array();
+			if (!$keep) {
+				unset($this->npEntries[$key]);
+			}
+		}
 	}
 
-	function restorePluginEntities(&$input)
+	function restorePluginEntities(&$input, $keep = false)
 	{
 		//use of array_reverse, jison is a reverse bottom-up parser, if it doesn't reverse jison doesn't restore the plugins in the right order, leaving the some nested keys as a result
 		foreach(array_reverse($this->pluginEntries) as $key => $entity) {
 			$input = str_replace($key, $entity, $input);
-			unset($this->pluginEntries[$key]);
+
+			if (!$keep) {
+				unset($this->pluginEntries[$key]);
+			}
 		}
 	}
 
@@ -780,37 +829,65 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 
 		self::$headerStack[] = $content;
 
-		return '<h' . $hNum . '>' . $content . $this->headerButton() . '</h' . $hNum . '>';
+		return '<h' . $hNum . '>' . $content . $this->headerButton($hNum) . '</h' . $hNum . '>';
 	}
 
-	function headerButton()
+	function headerButton($hNum)
 	{
-		global $prefs, $smarty;
-		if ($prefs['wiki_edit_icons_toggle'] == 'y' && !isset($_COOKIE['wiki_plugin_edit_view'])) {
-			$iconDisplayStyle = ' style="display:none;"';
-		} else {
-			$iconDisplayStyle = '';
+		global $smarty, $tiki_p_edit, $section;
+		if (
+			$this->prefs['wiki_edit_section'] === 'y' &&
+			$section === 'wiki page' &&
+			$tiki_p_edit === 'y' &&
+			(
+				$this->prefs['wiki_edit_section_level'] == 0 ||
+				$hNum <= $this->prefs['wiki_edit_section_level']
+			) && (
+				empty($this->option['print']) ||
+				!$this->option['print']
+			) &&
+			!$this->option['suppress_icons']
+		) {
+
+
+			if ($this->prefs['wiki_edit_icons_toggle'] == 'y' && !isset($_COOKIE['wiki_plugin_edit_view'])) {
+				$iconDisplayStyle = ' style="display:none;"';
+			} else {
+				$iconDisplayStyle = '';
+			}
+			$button = '<div class="icon_edit_section"' . $iconDisplayStyle . '><a href="tiki-editpage.php?';
+
+			if (!empty($_REQUEST['page'])) {
+				$button .= 'page='.urlencode($_REQUEST['page']).'&amp;';
+			}
+
+			self::$hdrCount++;
+			include_once('lib/smarty_tiki/function.icon.php');
+			$button .= 'hdr=' . self::$hdrCount . '">'.smarty_function_icon(array('_id'=>'page_edit_section', 'alt'=>tra('Edit Section')), $smarty).'</a></div>';
+
+			return $button;
 		}
-		$button = '<div class="icon_edit_section"' . $iconDisplayStyle . '><a href="tiki-editpage.php?';
-
-		if (!empty($_REQUEST['page'])) {
-			$button .= 'page='.urlencode($_REQUEST['page']).'&amp;';
-		}
-
-		self::$hdrCount++;
-		include_once('lib/smarty_tiki/function.icon.php');
-		$button .= 'hdr=' . self::$hdrCount . '">'.smarty_function_icon(array('_id'=>'page_edit_section', 'alt'=>tra('Edit Section')), $smarty).'</a></div>';
-
-		return $button;
 	}
 
-	function pluginButton($name, $args, $body)
+	function pluginButton($name, $args, $key)
 	{
 		global $headerlib, $smarty;
 
 		$name = strtolower($name);
 
-		if ((empty($this->option['preview_mode']) || !$this->option['preview_mode']) && empty($this->option['indexing']) && (empty($this->option['print']) || !$this->option['print']) && !$this->option['suppress_icons'] ) {
+		if (
+			$this->pluginIsEditable($name) &&
+			(
+				empty($this->option['preview_mode']) ||
+				!$this->option['preview_mode']
+			) &&
+			empty($this->option['indexing']) &&
+			(
+				empty($this->option['print']) ||
+				!$this->option['print']
+			) &&
+			!$this->option['suppress_icons']
+		) {
 			$id = 'plugin-edit-' . $name . self::$pluginsExecutedStack[$name];
 			$iconDisplayStyle = '';
 			if (
@@ -830,24 +907,29 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 			}
 			$headerlib->add_jq_onready('
 $("#' . $id . '").click( function(event) {
-	popup_plugin_form('
-				. json_encode('editwiki')
-				. ', '
-				. json_encode($name)
-				. ', '
-				. json_encode(self::$pluginsExecutedStack[$name])
-				. ', '
-				. json_encode($this->option['page'])
-				. ', '
-				. json_encode($args)
-				. ', '
-				. json_encode($this->unprotectSpecialChars($body, true)) //we restore it back to html here so that it can be edited, we want no modification, ie, it is brought back to html
-				. ', event.target);
+	$.getJSON("tiki-ajax_services.php", {
+		page: "' .$this->page. '",
+		key: "' . $key . '",
+		controller: "jison",
+		action: "pluginbody"
+	}, function(o) {
+		popup_plugin_form('
+			. json_encode('editwiki')
+			. ', '
+			. json_encode($name)
+			. ', '
+			. json_encode(self::$pluginsExecutedStack[$name])
+			. ', '
+			. json_encode($this->option['page'])
+			. ', '
+			. json_encode($args)
+			. ', o.body, event.target);
+	});
 	return false;
 });
 ');
 			include_once('lib/smarty_tiki/function.icon.php');
-			return '<a id="' .$id. '" class="editplugin"'.$iconDisplayStyle.'>'.smarty_function_icon(array('_id'=>'wiki_plugin_edit', 'alt'=>tra('Edit Plugin').':'.$name), $smarty)."</a>";
+			return '~np~<a id="' .$id. '" class="editplugin"'.$iconDisplayStyle.'>'.smarty_function_icon(array('_id'=>'wiki_plugin_edit', 'alt'=>tra('Edit Plugin').':'.$name), $smarty)."</a>~/np~";
 		}
 
 		return '';
