@@ -133,6 +133,15 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		return $result;
 	}
 
+	function parsePlugin($input)
+	{
+		$is_html = self::$option['is_html'];
+		$this->setOption(array('is_html'=> true));
+		$result = $this->parse($input);
+		$this->setOption(array('is_html'=> $is_html));
+		return $result;
+	}
+
 	function preParse(&$input)
 	{
 		$input = preg_replace_callback('/~np~(.|\n)*?~\/np~/', array(&$this, 'removeNpEntities'), $input);
@@ -154,7 +163,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 
 		$this->restoreNpEntities($input);
 		$this->restorePluginEntities($input);
-		$input = $this->unprotectSpecialChars($input, $this->option['is_html']);
+		$input = $this->unprotectSpecialChars($input, self::$option['is_html']);
 	}
 
 	// state & plugin handlers
@@ -184,7 +193,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 				$key
 			);
 
-			$this->pluginEntries[$key] = $this->parse( $this->pluginEntries[$key] );
+			$this->pluginEntries[$key] = $this->parsePlugin( $this->pluginEntries[$key] );
 
 		} else {
 			$smarty->assign('plugin_fingerprint', $status);
@@ -730,7 +739,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	{
 		if (
 			$this->isHtmlPurifying == true ||
-			$this->option['is_html'] != true
+			self::$option['is_html'] != true
 		) {
 			foreach($this->specialChars as $key => $specialChar) {
 				$data = str_replace($specialChar['html'], $key, $data);
@@ -744,8 +753,8 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	function unprotectSpecialChars($data, $is_html = false)
 	{
 		if (
-			$is_html != false ||
-			$this->option['is_html']
+			$is_html == true ||
+			self::$option['is_html'] == true
 		) {
 			foreach($this->specialChars as $key => $specialChar) {
 				$data = str_replace($key, $specialChar['html'], $data);
@@ -843,10 +852,10 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 				$this->prefs['wiki_edit_section_level'] == 0 ||
 				$hNum <= $this->prefs['wiki_edit_section_level']
 			) && (
-				empty($this->option['print']) ||
-				!$this->option['print']
+				empty(self::$option['print']) ||
+				!self::$option['print']
 			) &&
-			!$this->option['suppress_icons']
+			!self::$option['suppress_icons']
 		) {
 
 
@@ -878,15 +887,15 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		if (
 			$this->pluginIsEditable($name) &&
 			(
-				empty($this->option['preview_mode']) ||
-				!$this->option['preview_mode']
+				empty(self::$option['preview_mode']) ||
+				!self::$option['preview_mode']
 			) &&
-			empty($this->option['indexing']) &&
+			empty(self::$option['indexing']) &&
 			(
-				empty($this->option['print']) ||
-				!$this->option['print']
+				empty(self::$option['print']) ||
+				!self::$option['print']
 			) &&
-			!$this->option['suppress_icons']
+			!self::$option['suppress_icons']
 		) {
 			$id = 'plugin-edit-' . $name . self::$pluginsExecutedStack[$name];
 			$iconDisplayStyle = '';
@@ -920,7 +929,7 @@ $("#' . $id . '").click( function(event) {
 			. ', '
 			. json_encode(self::$pluginsExecutedStack[$name])
 			. ', '
-			. json_encode($this->option['page'])
+			. json_encode(self::$option['page'])
 			. ', '
 			. json_encode($args)
 			. ', o.body, event.target);
