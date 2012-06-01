@@ -132,5 +132,5 @@ function wikiplugin_div($data, $params)
 	}
 	$begin .= " $c $id>";
 	$end = "</$t>";
-	return $begin . $data . $end;
+	return "~np~" . $begin . "~/np~" . $data . "~np~" . $end . "~/np~";
 }
