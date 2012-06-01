@@ -161,7 +161,6 @@ $('#appframe .accordion').parent().each(function () {
 });
 $('#appframe .anchor').wrapAll('<div/>').parent()
 	.addClass('anchor-container')
-	.width(350)
 	;
 
 $('#appframe .anchor').each(function () {
