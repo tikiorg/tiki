@@ -262,10 +262,13 @@ body.fixed_width .fixedwidth .fixedwidth {
 	margin-left: 20px;
 }
 
+#topbar_modules {
+	margin: 0 0 8px 0;	
+}
+
 #tiki-top {
 	background: #003371 url(business/header.png) repeat-x 0 0;
 	width: 100%;
-	margin-bottom: 8px;
 }
 
 #topbar_modules .box-search {
