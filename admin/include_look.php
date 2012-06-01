@@ -87,41 +87,49 @@ if ($prefs['feature_jquery'] == 'y') {
 $js
 
 \$(document).ready( function() {
-	var optionDropDown = \$('select[name=style_option]');
-	var styleDropDown = \$('select[name=style]');
-	// pick up theme drop-down change
-	styleDropDown.change( function() {
-		var ops = style_options[styleDropDown.val()];
-		var none = true;
-		var current = optionDropDown.val();
-		optionDropDown.empty().attr('disabled',false)
-			.append(\$('<option/>').attr('value',$none).text($none));
-		\$.each(ops[1], function(i, val) {
-			optionDropDown.append(\$('<option/>').attr('value',i).text(i.replace(/\.css\$/, '')));
-			none = false;
+
+	var setupStyleSelects = function (styleDropDown, optionDropDown, showPreview) {
+		// pick up theme drop-down change
+		styleDropDown.change( function() {
+			var ops = style_options[styleDropDown.val()];
+			var none = true;
+			var current = optionDropDown.val();
+			optionDropDown.empty().attr('disabled',false)
+					.append(\$('<option/>').attr('value',$none).text($none));
+			if (current) {
+				\$.each(ops[1], function(i, val) {
+					optionDropDown.append(\$('<option/>').attr('value',i).text(i.replace(/\.css\$/, '')));
+					none = false;
+				});
+			}
+			optionDropDown.val(current);
+			if (none) {
+				optionDropDown.attr('disabled',true);
+			}
+
+			optionDropDown.change();
+		}).change();
+		optionDropDown.change( function() {
+			if (showPreview !== undefined) {
+				var t = styleDropDown.val();
+				var o = optionDropDown.val();
+				var f = style_options[t][1][o];
+
+				if ( ! f ) {
+					f = style_options[t][0];
+				}
+
+				if (f) {
+					\$('#style_thumb').fadeOut('fast').attr('src', f).fadeIn('fast').animate({'opacity': 1}, 'fast');
+				} else {
+					\$('#style_thumb').animate({'opacity': 0.3}, 'fast');
+				}
+			}
 		});
-		optionDropDown.val(current);
-		if (none) {
-			optionDropDown.attr('disabled',true);
-		}
+	};
 
-		optionDropDown.change();
-	}).change();
-	optionDropDown.change( function() {
-		var t = styleDropDown.val();
-		var o = optionDropDown.val();
-		var f = style_options[t][1][o];
-
-		if ( ! f ) {
-			f = style_options[t][0];
-		}
-
-		if (f) {
-			\$('#style_thumb').fadeOut('fast').attr('src', f).fadeIn('fast').animate({'opacity': 1}, 'fast');
-		} else {
-			\$('#style_thumb').animate({'opacity': 0.3}, 'fast');
-		}
-	});
+	setupStyleSelects(\$('select[name=style]'), \$('select[name=style_option]'), true);
+	setupStyleSelects(\$('select[name=style_admin]'), \$('select[name=style_admin_option]'));
 });
 JS
 	);

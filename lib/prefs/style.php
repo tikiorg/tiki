@@ -9,10 +9,19 @@ function prefs_style_list($partial = false)
 {
 	global $tikilib, $prefs;
 
+	$all_styles = array();
+	$styles = array(
+		'' => tra('None'),
+	);
 	$style_options = array(
 		'' => tra('None'),
 	);
 	if (! $partial) {
+		$all_styles = $tikilib->list_styles();
+		foreach ($all_styles as $style) {
+			$styles[$style] = substr($style, 0, strripos($style, '.css'));
+		}
+
 		$list = $tikilib->list_style_options($prefs['site_style']);
 		if (!empty($list)) {
 			foreach ($list as $opt) {
@@ -40,5 +49,21 @@ function prefs_style_list($partial = false)
 			'default' => '',
 			'tags' => array('basic'),
 		),
-	);	
+		'style_admin' => array(
+			'name' => tra('Admin Theme'),
+			'type' => 'list',
+			'help' => 'Themes',
+			'description' => tra('Style of the admin pages.'),
+			'options' => $styles,
+			'default' => '',
+		),
+		'style_admin_option' => array(
+			'name' => tra('Admin Theme options'),
+			'type' => 'list',
+			'help' => 'Themes',
+			'description' => tra('Style options for admin pages'),
+			'options' => $style_options,
+			'default' => '',
+		),
+	);
 }

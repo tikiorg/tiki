@@ -17,6 +17,9 @@
 					{preference name=style}
 					{preference name=style_option}
 
+					{preference name=style_admin}
+					{preference name=style_admin_option}
+
 					{if $prefs.javascript_enabled eq 'n' or $prefs.feature_jquery eq 'n'}
 						<input type="submit" name="changestyle" value="{tr}Go{/tr}" />
 					{/if}
