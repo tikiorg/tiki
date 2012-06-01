@@ -263,14 +263,7 @@ function wp_map_plugin_colorpicker($body, $args)
 	static $counter = 0;
 
 	$args->setFilter('colors', 'word');
-	$colors = array_map(function ($color) {
-		$color = strtolower($color);
-		if (preg_match('/^[0-9a-f]{3}([0-9a-f]{3})?$/', $color)) {
-			return "#$color";
-		} else {
-			return $color;
-		}
-	}, $args->asArray('colors', ','));
+	$colors = array_map('wp_map_color_filter', $args->asArray('colors', ','));
 
 	if (count($colors)) {
 		$size = '25px';
@@ -370,3 +363,11 @@ FULL;
 	return "<div id=\"$target\" data-title=\"$title\"></div>";
 }
 
+function wp_map_color_filter ($color) {
+	$color = strtolower($color);
+	if (preg_match('/^[0-9a-f]{3}([0-9a-f]{3})?$/', $color)) {
+		return "#$color";
+	} else {
+		return $color;
+	}
+}
