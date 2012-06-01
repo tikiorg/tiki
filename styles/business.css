@@ -23,6 +23,7 @@ also styling of page layout divs) *****/
 #c1c2 {
 	text-align: left;
 	background: transparent;
+	margin-top: 8px;
 }
 
 #c1c2 #wrapper #col1 {
@@ -52,6 +53,7 @@ also styling of page layout divs) *****/
 
 #col3 {
 	width: 280px;
+	margin-top: 8px;
 	margin-left: -280px;
 	margin-bottom: 0;
 	font-size: 1em;
@@ -260,10 +262,6 @@ body.fixed_width .fixedwidth .fixedwidth {
 	font-style: italic;
 	font-size: 1em;
 	margin-left: 20px;
-}
-
-#topbar_modules {
-	margin: 0 0 8px 0;	
 }
 
 #tiki-top {
