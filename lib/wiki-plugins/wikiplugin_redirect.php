@@ -41,7 +41,7 @@ function wikiplugin_redirect_info()
 	);
 }
 
-function wikiplugin_redirect($data, $params, $offset, $options)
+function wikiplugin_redirect($data, $params)
 {
 	global $tikilib, $just_saved;
 	extract($params, EXTR_SKIP);
@@ -56,15 +56,15 @@ function wikiplugin_redirect($data, $params, $offset, $options)
 	$location = isset($page) ? $page : isset($url) ? $url : isset($perspective) ? tra('perspective ') . $perspective : tra('nowhere');
 	if ($just_saved) {
 		$areturn = sprintf(tra("REDIRECT plugin: The redirection to '%s' is disabled just after saving the page."), $location);
-	} else if ($options['indexing']) {
+	} else if (TikiLib::lib('parser')->option['indexing']) {
 		return;
-	} else if ($options['preview_mode']) {
+	} else if (TikiLib::lib('parser')->option['preview_mode']) {
 		$areturn = sprintf(tra("REDIRECT plugin: The redirection to '%s' is disabled in preview mode. "), $location);
 	} else if ((isset($_REQUEST['redirectpage']))) {
 		$areturn = tra("REDIRECT plugin: redirect loop detected!");
-	} else if (isset($options['print']) && $options['print'] == 'y') {
+	} else if (isset(TikiLib::lib('parser')->option['print']) && TikiLib::lib('parser')->option['print'] == 'y') {
 		$info = $tikilib->get_page_info($location);
-		return $tikilib->parse_data($info['data'], $options);
+		return $tikilib->parse_data($info['data'], TikiLib::lib('parser')->option);
 	} else {
 
 		if (isset($perspective)) {

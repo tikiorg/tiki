@@ -77,7 +77,7 @@ function wikiplugin_code_info()
 	);
 }
 
-function wikiplugin_code($data, $params, $offset, $options)
+function wikiplugin_code($data, $params)
 {
 	global $prefs;
 	static $code_count;
@@ -125,7 +125,7 @@ function wikiplugin_code($data, $params, $offset, $options)
 		. ' dir="'.( (isset($rtl) && $rtl == 1) ? 'rtl' : 'ltr') . '" '
 		. (isset($pre_style) ? ' style="'.$pre_style.'"' : '')
 		. $boxid.'>'
-		. ($options['ck_editor'] ? $out : htmlentities($out, ENT_QUOTES, 'UTF-8'))
+		. (TikiLib::lib('parser')->option['ck_editor'] ? $out : htmlentities($out, ENT_QUOTES, 'UTF-8'))
 		. '</pre>';
 
 	return $out;

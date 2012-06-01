@@ -32,7 +32,7 @@ function wikiplugin_exercise_info()
 	);
 }
 
-function wikiplugin_exercise($data, $params, $offset, $options)
+function wikiplugin_exercise($data, $params)
 {
 	static $nextId = 1;
 	$smarty = TikiLib::lib('smarty');
@@ -41,7 +41,7 @@ function wikiplugin_exercise($data, $params, $offset, $options)
 	$params = new JitFilter($params);
 	$answer = $params->answer->text();
 
-	if (isset($options['indexing']) && $options['indexing']) {
+	if (isset(TikiLib::lib('parser')->option['indexing']) && TikiLib::lib('parser')->option['indexing']) {
 		return "{$params->answer->text()} {$params->incorrect->text()}";
 	}
 

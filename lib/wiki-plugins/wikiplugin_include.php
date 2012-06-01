@@ -50,7 +50,7 @@ function wikiplugin_include_info()
 	);
 }
 
-function wikiplugin_include($dataIn, $params, $offset)
+function wikiplugin_include($dataIn, $params)
 {
 	global $tikilib,$userlib,$user, $killtoc;
     static $included_pages, $data;
@@ -142,7 +142,8 @@ function wikiplugin_include($dataIn, $params, $offset)
 	if (!empty($_REQUEST['page'])) {
 		$options['page'] = $_REQUEST['page'];
 	}
-	$parserlib->parse_wiki_argvariable($text, $options);
+	$parserlib->setOptions($options);
+	$parserlib->parse_wiki_argvariable($text);
 	// append an edit button
 	global $smarty;
 	if (isset($perms) && $perms['tiki_p_edit'] === 'y') {

@@ -41,7 +41,7 @@ function wikiplugin_cclite_info()
 	);
 }
 
-function wikiplugin_cclite( $data, $params, $offset )
+function wikiplugin_cclite( $data, $params )
 {
 	global $smarty, $userlib, $prefs, $user, $headerlib;
 	//global $paymentlib; require_once 'lib/payment/paymentlib.php';
