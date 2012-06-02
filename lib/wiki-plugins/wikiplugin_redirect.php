@@ -89,6 +89,22 @@ function wikiplugin_redirect($data, $params, $offset, $options)
 			exit;
 		}
 		if (isset($url)) {
+
+			global $base_url, $url_path;		// try to detect redirect loop to server root
+			if (
+				$url == $base_url ||			// whole site url
+				$url . '/' == $base_url ||		// optional trailing /
+				$url == $url_path ||			// just the path?
+				$url . '/' == $url_path ||
+				preg_match('/[\.]?\/$/', $url)	// either ./ or / current dir or root
+			) {
+
+				$hp = TikiLib::lib('wiki')->get_default_wiki_page();
+
+				if ($_REQUEST['page'] === $hp && !isset($_GET['page']) && !isset($_POST['page'])) {
+					return '';						// don't redirect if we've already been redirected to the "home page"
+				}
+			}
 			header("Location: $url");
 			exit;
 		}
