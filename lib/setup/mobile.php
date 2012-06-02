@@ -32,7 +32,6 @@ if ( !isset($_REQUEST['mobile_mode']) || $_REQUEST['mobile_mode'] === 'y' ) {
 		$prefs['feature_fullscreen'] = 'n';
 		$prefs['feature_syntax_highlighter'] = 'n';
 		$prefs['feature_layoutshadows'] = 'n';
-		$prefs['feature_sefurl'] = 'n';
 		$prefs['feature_wysiwyg'] = 'n';
 		$prefs['themegenerator_feature'] = 'n';
 		$prefs['ajax_autosave'] = 'n';
@@ -40,6 +39,7 @@ if ( !isset($_REQUEST['mobile_mode']) || $_REQUEST['mobile_mode'] === 'y' ) {
 		$prefs['feature_syntax_highlighter'] = 'n';
 		$prefs['jquery_ui_selectmenu'] = 'n';
 		$prefs['fgal_show_explorer'] = 'n';
+		$prefs['feature_fixed_width'] = 'n';
 
 		$headerlib->add_js('function sfHover() {alert("not working?");}', 100);	// try and override the css menu func
 
