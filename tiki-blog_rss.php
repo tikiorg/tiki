@@ -40,7 +40,6 @@ if ($output['data'] == 'EMPTY') {
 	$title.= $tmp['title'];
 	$desc.= $prefs['feed_' . $feed . '_desc'];
 	$desc.= $tmp['description'];
-	$descId = 'data';
 	$dateId = 'created';
 	$authorId = 'user';
 	$titleId = 'title';
@@ -49,8 +48,8 @@ if ($output['data'] == 'EMPTY') {
 	$tmp = array();
 	include_once ('tiki-sefurl.php');
 	foreach ($changes['data'] as $data) {
-		$data['$descId'] = $tikilib->parse_data(
-						$data[$descId],
+		$data['data'] = $tikilib->parse_data(
+						$data['data'],
 						array(
 							'print' => true,
 							'is_html' => true,
@@ -72,7 +71,7 @@ if ($output['data'] == 'EMPTY') {
 					$title,
 					$titleId,
 					$desc,
-					$descId,
+					'data',
 					$dateId,
 					$authorId,
 					false
