@@ -302,11 +302,11 @@ SMILE							[a-z]+
 
 <link><<EOF>>
 	%{
-		if (parser.isPlugin()) return 'CONTENT'; //js
-		lexer.unput(']'); //js
+		lexer.popState(); //js
+		return 'EOF'; //js
 
-		//php if ($this->isPlugin()) return 'CONTENT';
-        //php $this->unput(']');
+        //php $this->popState();
+        //php return 'EOF';
 	%}
 <link>("]")
 	%{
@@ -329,18 +329,15 @@ SMILE							[a-z]+
 		//php return 'LINK_START';
 	%}
 
-[-][-][ ]
-	%{
-		//this is a legal english
-		return 'CONTENT';
-	%}
+
+
 <strikethrough><<EOF>>
 	%{
-		if (parser.isPlugin()) return 'CONTENT'; //js
-		lexer.unput('--'); //js
+		lexer.popState(); //js
+		return 'EOF'; //js
 
-		//php if ($this->isPlugin()) return 'CONTENT';
-		//php $this->unput('--');
+		//php $this->popState();
+		//php return 'EOF';
 	%}
 <strikethrough>[-][-]
 	%{
@@ -497,7 +494,9 @@ SMILE							[a-z]+
 %%
 
 wiki
- : contents EOF
+ : contents
+ 	{return $1;}
+ | contents EOF
 	{return $1;}
  | EOF
     {return " ";}
@@ -573,12 +572,22 @@ content
 		$$ = parser.link($2); //js
 		//php $$ = $this->link($2);
 	}
+ | LINK_START contents EOF
+    {
+        $$ = $1 + $2; //js
+        //php $$ = $1 . $2;
+    }
  | STRIKETHROUGH_START STRIKETHROUGH_END
  | STRIKETHROUGH_START contents STRIKETHROUGH_END
 	{
 		$$ = parser.strikethrough($2); //js
 		//php $$ = $this->strikethrough($2);
 	}
+ | STRIKETHROUGH_START contents EOF
+    {
+        $$ = $1 + $2; //js
+        //php $$ = $1 . $2;
+    }
  | TABLE_START TABLE_END
  | TABLE_START contents TABLE_END
 	{
