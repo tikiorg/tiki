@@ -110,6 +110,7 @@
 				}).keyup();
 
 				$(form).bind('insert', function () {
+					$(map).removeMapSelection();
 					$(map).trigger('changed');
 				});
 				$(form).bind('cancel', function () {

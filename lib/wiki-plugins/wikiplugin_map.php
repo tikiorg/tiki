@@ -338,6 +338,10 @@ $("#$target").closest('.map-container').bind('initialized', function () {
 
 			feature = ev.feature;
 
+			if (feature.attributes.intent === 'marker') {
+				return false;
+			}
+
 			$.each(container.map.getControlsByClass('OpenLayers.Control.ModifyFeature'), function (k, control) {
 				active = active || control.active;
 			});

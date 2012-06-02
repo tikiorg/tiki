@@ -64,7 +64,7 @@
 				featureadded: function (event) {
 					var format = new OpenLayers.Format.GeoJSON;
 					
-					if (! event.feature.attributes.itemId) {
+					if (! event.feature.attributes.itemId && event.feature.attributes.intent !== 'marker') {
 						if (activeFeature) {
 							vlayer.removeFeatures([activeFeature]);
 							activeFeature = null;

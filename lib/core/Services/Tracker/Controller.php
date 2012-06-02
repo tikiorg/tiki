@@ -576,6 +576,58 @@ class Services_Tracker_Controller
 		);
 	}
 
+	function action_set_location($input)
+	{
+		$location = $input->location->text();
+
+		if (! $itemId = $input->itemId->int()) {
+			throw new Services_Exception_MissingValue('itemId');
+		}
+
+		$itemInfo = TikiLib::lib('trk')->get_tracker_item($itemId);
+		if (! $itemInfo) {
+			throw new Services_Exception_NotFound;
+		}
+
+		$trackerId = $itemInfo['trackerId'];
+		$definition = Tracker_Definition::get($trackerId);
+		if (! $definition) {
+			throw new Services_Exception_NotFound;
+		}
+
+		$itemObject = Tracker_Item::fromInfo($itemInfo);
+		if (! $itemObject->canModify()) {
+			throw new Services_Exception(tr('Permission denied.'), 403);
+		}
+
+		$field = $definition->getGeolocationField();
+		if (! $field) {
+			throw new Services_Exception_NotFound;
+		}
+
+		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+			$field = $definition->getField($field);
+
+			$this->utilities->updateItem(
+							$definition, 
+							array(
+								'itemId' => $itemId,
+								'status' => $itemInfo['status'],
+								'fields' => array(
+									$field['permName'] => $location,
+								),
+							)
+			);
+			TikiLib::lib('unifiedsearch')->processUpdateQueue();
+		}
+
+		return array(
+			'trackerId' => $trackerId,
+			'itemId' => $itemId,
+			'location' => $location,
+		);
+	}
+
 	function action_remove_item($input)
 	{
 		$processedFields = array();
