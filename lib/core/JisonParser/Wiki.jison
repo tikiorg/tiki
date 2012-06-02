@@ -242,21 +242,19 @@ SMILE							[a-z]+
 <header><<EOF>>
 	%{
 		if (parser.isPlugin()) return 'CONTENT'; //js
-		lexer.unput("\r"); //js
+		lexer.unput("\n"); //js
 
 		//php if ($this->isPlugin()) return 'CONTENT';
-        //php $this->unput("\r");
+        //php $this->unput("\n");
 	%}
 <header>[\n\r]
 	%{
 		if (parser.isPlugin()) return 'CONTENT'; //js
 		lexer.popState(); //js
-		lexer.unput("\n"); //js
 		return 'HEADER_END'; //js
 
 		//php if ($this->isPlugin()) return 'CONTENT';
 		//php $this->popState();
-		//php $this->unput("\n");
 		//php return 'HEADER_END';
 	%}
 [\n\r][!]
@@ -331,7 +329,11 @@ SMILE							[a-z]+
 		//php return 'LINK_START';
 	%}
 
-
+[-][-][ ]
+	%{
+		//this is a legal english
+		return 'CONTENT';
+	%}
 <strikethrough><<EOF>>
 	%{
 		if (parser.isPlugin()) return 'CONTENT'; //js

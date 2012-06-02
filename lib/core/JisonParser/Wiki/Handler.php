@@ -159,9 +159,10 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 
 			$ul = '';
 			$listBeginnings = array();
-			$listBeginnings = array();
 			foreach($lines as &$line) {
+
 				$this->parseLists($line, $listBeginnings, $ul);
+
 				$this->addLineBreaks($line);
 			}
 			$input = implode("\n", $lines);
@@ -599,8 +600,15 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		$this->addLineBreaksTracking['inDiv'] -= substr_count($lineInLowerCase, "</div");
 
 		// check if we are inside a script not insert <br />
-		$this->addLineBreaksTracking['inHeader'] += substr_count($lineInLowerCase, "<h");
-		$this->addLineBreaksTracking['inHeader'] -= substr_count($lineInLowerCase, "</h");
+		$inHeaderOpen = substr_count($lineInLowerCase, "<h");
+		$inHeaderClose = substr_count($lineInLowerCase, "</h");
+		$this->addLineBreaksTracking['inHeader'] += $inHeaderOpen;
+		$this->addLineBreaksTracking['inHeader'] -= $inHeaderClose;
+
+		if ($inHeaderClose > 0 && $this->addLineBreaksTracking['inHeader'] == 0) {
+			//we skip the line just after a header
+			return;
+		}
 
 		if (
 			$this->addLineBreaksTracking['inTable'] == 0 &&

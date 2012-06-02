@@ -27,8 +27,8 @@ class JisonParser_Wiki
 		$this->defaultActions = json_decode('{"3":[2,2],"24":[2,1]}', true);
 		
 		//lexer
-		$this->rules = 			array("/^(?:\\{ELSE\\})/","/^(?:\\{([a-z]+).*?\\})/","/^(?:\\{([A-Z]+)\\(.*?\\)\\})/","/^(?:$)/","/^(?:\\{([A-Z]+)\\})/","/^(?:---)/","/^(?:\\(:([a-z]+):\\))/","/^(?:\\[\\[.*?)/","/^(?:$)/","/^(?:[_][_])/","/^(?:[_][_])/","/^(?:$)/","/^(?:[\\^])/","/^(?:[\\^])/","/^(?:$)/","/^(?:[:][:])/","/^(?:[:][:])/","/^(?:$)/","/^(?:[\\~][\\~])/","/^(?:[\\~][\\~][#])/","/^(?:$)/","/^(?:[\\n\\r])/","/^(?:[\\n\\r][!])/","/^(?:$)/","/^(?:[']['])/","/^(?:[']['])/","/^(?:$)/","/^(?:(\\]))/","/^(?:(\\[))/","/^(?:$)/","/^(?:[-][-])/","/^(?:[-][-])/","/^(?:$)/","/^(?:[|][|])/","/^(?:[|][|])/","/^(?:$)/","/^(?:[=][-])/","/^(?:[-][=])/","/^(?:$)/","/^(?:[=][=][=])/","/^(?:[=][=][=])/","/^(?:$)/","/^(?:[)][)])/","/^(?:[(][(])/","/^(?:<(.|\\n)*?>)/","/^(?:[A-Za-z0-9]+)/","/^(?:(.))/","/^(?:(\\n))/","/^(?:(\\s))/","/^(?:$)/","/^(?:.)/");
-		$this->conditions = 	json_decode('{"plugin":{"rules":[0,1,2,3,4,5,6,7,10,13,16,19,22,25,28,31,34,37,40,43,44,45,46,47,48,49,50],"inclusive":true},"bold":{"rules":[0,1,2,5,6,7,8,9,10,13,16,19,22,25,28,31,34,37,40,43,44,45,46,47,48,49,50],"inclusive":true},"box":{"rules":[0,1,2,5,6,7,10,11,12,13,16,19,22,25,28,31,34,37,40,43,44,45,46,47,48,49,50],"inclusive":true},"center":{"rules":[0,1,2,5,6,7,10,13,14,15,16,19,22,25,28,31,34,37,40,43,44,45,46,47,48,49,50],"inclusive":true},"colortext":{"rules":[0,1,2,5,6,7,10,13,16,17,18,19,22,25,28,31,34,37,40,43,44,45,46,47,48,49,50],"inclusive":true},"italic":{"rules":[0,1,2,5,6,7,10,13,16,19,22,23,24,25,28,31,34,37,40,43,44,45,46,47,48,49,50],"inclusive":true},"header":{"rules":[0,1,2,5,6,7,10,13,16,19,20,21,22,25,28,31,34,37,40,43,44,45,46,47,48,49,50],"inclusive":true},"link":{"rules":[0,1,2,5,6,7,10,13,16,19,22,25,26,27,28,31,34,37,40,43,44,45,46,47,48,49,50],"inclusive":true},"strikethrough":{"rules":[0,1,2,5,6,7,10,13,16,19,22,25,28,29,30,31,34,37,40,43,44,45,46,47,48,49,50],"inclusive":true},"table":{"rules":[0,1,2,5,6,7,10,13,16,19,22,25,28,31,32,33,34,37,40,43,44,45,46,47,48,49,50],"inclusive":true},"titlebar":{"rules":[0,1,2,5,6,7,10,13,16,19,22,25,28,31,34,35,36,37,40,43,44,45,46,47,48,49,50],"inclusive":true},"underscore":{"rules":[0,1,2,5,6,7,10,13,16,19,22,25,28,31,34,37,38,39,40,43,44,45,46,47,48,49,50],"inclusive":true},"wikilink":{"rules":[0,1,2,5,6,7,10,13,16,19,22,25,28,31,34,37,40,41,42,43,44,45,46,47,48,49,50],"inclusive":true},"INITIAL":{"rules":[0,1,2,5,6,7,10,13,16,19,22,25,28,31,34,37,40,43,44,45,46,47,48,49,50],"inclusive":true}}', true);
+		$this->rules = 			array("/^(?:\\{ELSE\\})/","/^(?:\\{([a-z]+).*?\\})/","/^(?:\\{([A-Z]+)\\(.*?\\)\\})/","/^(?:$)/","/^(?:\\{([A-Z]+)\\})/","/^(?:---)/","/^(?:\\(:([a-z]+):\\))/","/^(?:\\[\\[.*?)/","/^(?:$)/","/^(?:[_][_])/","/^(?:[_][_])/","/^(?:$)/","/^(?:[\\^])/","/^(?:[\\^])/","/^(?:$)/","/^(?:[:][:])/","/^(?:[:][:])/","/^(?:$)/","/^(?:[\\~][\\~])/","/^(?:[\\~][\\~][#])/","/^(?:$)/","/^(?:[\\n\\r])/","/^(?:[\\n\\r][!])/","/^(?:$)/","/^(?:[']['])/","/^(?:[']['])/","/^(?:$)/","/^(?:(\\]))/","/^(?:(\\[))/","/^(?:[-][-][ ])/","/^(?:$)/","/^(?:[-][-])/","/^(?:[-][-])/","/^(?:$)/","/^(?:[|][|])/","/^(?:[|][|])/","/^(?:$)/","/^(?:[=][-])/","/^(?:[-][=])/","/^(?:$)/","/^(?:[=][=][=])/","/^(?:[=][=][=])/","/^(?:$)/","/^(?:[)][)])/","/^(?:[(][(])/","/^(?:<(.|\\n)*?>)/","/^(?:[A-Za-z0-9]+)/","/^(?:(.))/","/^(?:(\\n))/","/^(?:(\\s))/","/^(?:$)/","/^(?:.)/");
+		$this->conditions = 	json_decode('{"plugin":{"rules":[0,1,2,3,4,5,6,7,10,13,16,19,22,25,28,29,32,35,38,41,44,45,46,47,48,49,50,51],"inclusive":true},"bold":{"rules":[0,1,2,5,6,7,8,9,10,13,16,19,22,25,28,29,32,35,38,41,44,45,46,47,48,49,50,51],"inclusive":true},"box":{"rules":[0,1,2,5,6,7,10,11,12,13,16,19,22,25,28,29,32,35,38,41,44,45,46,47,48,49,50,51],"inclusive":true},"center":{"rules":[0,1,2,5,6,7,10,13,14,15,16,19,22,25,28,29,32,35,38,41,44,45,46,47,48,49,50,51],"inclusive":true},"colortext":{"rules":[0,1,2,5,6,7,10,13,16,17,18,19,22,25,28,29,32,35,38,41,44,45,46,47,48,49,50,51],"inclusive":true},"italic":{"rules":[0,1,2,5,6,7,10,13,16,19,22,23,24,25,28,29,32,35,38,41,44,45,46,47,48,49,50,51],"inclusive":true},"header":{"rules":[0,1,2,5,6,7,10,13,16,19,20,21,22,25,28,29,32,35,38,41,44,45,46,47,48,49,50,51],"inclusive":true},"link":{"rules":[0,1,2,5,6,7,10,13,16,19,22,25,26,27,28,29,32,35,38,41,44,45,46,47,48,49,50,51],"inclusive":true},"strikethrough":{"rules":[0,1,2,5,6,7,10,13,16,19,22,25,28,29,30,31,32,35,38,41,44,45,46,47,48,49,50,51],"inclusive":true},"table":{"rules":[0,1,2,5,6,7,10,13,16,19,22,25,28,29,32,33,34,35,38,41,44,45,46,47,48,49,50,51],"inclusive":true},"titlebar":{"rules":[0,1,2,5,6,7,10,13,16,19,22,25,28,29,32,35,36,37,38,41,44,45,46,47,48,49,50,51],"inclusive":true},"underscore":{"rules":[0,1,2,5,6,7,10,13,16,19,22,25,28,29,32,35,38,39,40,41,44,45,46,47,48,49,50,51],"inclusive":true},"wikilink":{"rules":[0,1,2,5,6,7,10,13,16,19,22,25,28,29,32,35,38,41,42,43,44,45,46,47,48,49,50,51],"inclusive":true},"INITIAL":{"rules":[0,1,2,5,6,7,10,13,16,19,22,25,28,29,32,35,38,41,44,45,46,47,48,49,50,51],"inclusive":true}}', true);
 		
 		$this->options =		"<@@OPTIONS@@>";
 	}
@@ -689,14 +689,13 @@ break;
 case 20:
 
 		if ($this->isPlugin()) return 'CONTENT';
-        $this->unput("\r");
+        $this->unput("\n");
 	
 break;
 case 21:
 
 		if ($this->isPlugin()) return 'CONTENT';
 		$this->popState();
-		$this->unput("\n");
 		return 'HEADER_END';
 	
 break;
@@ -748,108 +747,111 @@ case 28:
 	
 break;
 case 29:
+		//this is a legal english
+		return 7;
+	
+break;
+case 30:
 
 		if ($this->isPlugin()) return 'CONTENT';
 		$this->unput('--');
 	
 break;
-case 30:
+case 31:
 
 		if ($this->isPlugin()) return 'CONTENT';
 		$this->popState();
 		return 'STRIKETHROUGH_END';
 	
 break;
-case 31:
+case 32:
 
 		if ($this->isPlugin()) return 'CONTENT';
 		$this->begin('strikethrough');
 		return 'STRIKETHROUGH_START';
 	
 break;
-case 32:
+case 33:
 
 		if ($this->isPlugin()) return 'CONTENT';
         $this->unput('||');
 	
 break;
-case 33:
+case 34:
 
 		if ($this->isPlugin()) return 'CONTENT';
 		$this->popState();
 		return 'TABLE_END';
 	
 break;
-case 34:
+case 35:
 
 		if ($this->isPlugin()) return 'CONTENT';
 		$this->begin('table');
 		return 'TABLE_START';
 	
 break;
-case 35:
+case 36:
 
 		if ($this->isPlugin()) return 'CONTENT';
 		$this->unput('=-');
 	
 break;
-case 36:
+case 37:
 
 		if ($this->isPlugin()) return 'CONTENT';
 		$this->popState();
 		return 'TITLEBAR_END';
 	
 break;
-case 37:
+case 38:
 
 		if ($this->isPlugin()) return 'CONTENT';
 		$this->begin('titlebar');
 		return 'TITLEBAR_START';
 	
 break;
-case 38:
+case 39:
 
 		if ($this->isPlugin()) return 'CONTENT';
 		$this->unput('===');
 	
 break;
-case 39:
+case 40:
 
 		if ($this->isPlugin()) return 'CONTENT';
 		$this->popState();
 		return 'UNDERSCORE_END';
 	
 break;
-case 40:
+case 41:
 
 		if ($this->isPlugin()) return 'CONTENT';
 		$this->begin('underscore');
 		return 'UNDERSCORE_START';
 	
 break;
-case 41:
+case 42:
 
 		if ($this->isPlugin()) return 'CONTENT';
 		$this->unput('))');
 	
 break;
-case 42:
+case 43:
 
 		if ($this->isPlugin()) return 'CONTENT';
 		$this->popState();
 		return 'WIKILINK_END';
 	
 break;
-case 43:
+case 44:
 
 		if ($this->isPlugin()) return 'CONTENT';
 		$this->begin('wikilink');
 		return 'WIKILINK_START';
 	
 break;
-case 44:return 9;
-break;
-case 45:return 7;
+case 45:return 9;
 break;
 case 46:return 7;
 break;
@@ -857,9 +859,11 @@ case 47:return 7;
 break;
 case 48:return 7;
 break;
-case 49:return 5;
+case 49:return 7;
 break;
-case 50:($yy_->yytext);
+case 50:return 5;
+break;
+case 51:($yy_->yytext);
 break;
 }
 
