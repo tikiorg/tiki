@@ -6,9 +6,15 @@ $('#appframe .map-container').bind('initialized', function () {
 		, vlayer
 		, mode
 		, controls = []
+		, func
 		;
 	
-	{{if $mapcontrol.mode}}
+	{{if $mapcontrol.function}}
+		func = function () {
+			{{$mapcontrol.function}};
+			return false;
+		};
+	{{elseif $mapcontrol.mode}}
 		mode = {{$mapcontrol.mode|json_encode}};
 	{{else}}
 		vlayer = container.vectors;
@@ -33,9 +39,13 @@ $('#appframe .map-container').bind('initialized', function () {
 		});
 	{{/if}}
 
-	$(link).click(function () {
-		container.modeManager.switchTo(mode);
-		return false;
-	});
+	if (func) {
+		$(link).click(func);
+	} else {
+		$(link).click(function () {
+			container.modeManager.switchTo(mode);
+			return false;
+		});
+	}
 });
 {/jq}

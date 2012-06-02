@@ -46,7 +46,7 @@ class Reports_Send_EmailBuilder
 		$userWatchesUrl = $base_url . 'tiki-user_watches.php';
 		
 		if ($report_preferences['type'] == 'html') {
-			$userWatchesUrl = "<a href=$userWatchesUrl>$userWatchesUrl</a>"; 
+			$userWatchesUrl = "<a href=\"{$userWatchesUrl}\">{$userWatchesUrl}</a>";
 		}
 		
 		$smarty->assign('userWatchesUrl', $userWatchesUrl);

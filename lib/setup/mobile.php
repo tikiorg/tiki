@@ -32,7 +32,6 @@ if ( !isset($_REQUEST['mobile_mode']) || $_REQUEST['mobile_mode'] === 'y' ) {
 		$prefs['feature_fullscreen'] = 'n';
 		$prefs['feature_syntax_highlighter'] = 'n';
 		$prefs['feature_layoutshadows'] = 'n';
-		$prefs['feature_sefurl'] = 'n';
 		$prefs['feature_wysiwyg'] = 'n';
 		$prefs['themegenerator_feature'] = 'n';
 		$prefs['ajax_autosave'] = 'n';
@@ -40,6 +39,7 @@ if ( !isset($_REQUEST['mobile_mode']) || $_REQUEST['mobile_mode'] === 'y' ) {
 		$prefs['feature_syntax_highlighter'] = 'n';
 		$prefs['jquery_ui_selectmenu'] = 'n';
 		$prefs['fgal_show_explorer'] = 'n';
+		$prefs['feature_fixed_width'] = 'n';
 
 		$headerlib->add_js('function sfHover() {alert("not working?");}', 100);	// try and override the css menu func
 
@@ -58,10 +58,21 @@ if ( !isset($_REQUEST['mobile_mode']) || $_REQUEST['mobile_mode'] === 'y' ) {
 			$prefs['mobile_perspectives'] = unserialize($prefs['mobile_perspectives']);
 		}
 		if (count($prefs['mobile_perspectives']) > 0) {
-			global $perspectivelib; require_once 'lib/perspectivelib.php';
+			global $perspectivelib, $base_url; require_once 'lib/perspectivelib.php';
+			if (!in_array($perspectivelib->get_current_perspective($prefs), $prefs['mobile_perspectives'])) {	// change perspective
 
-			if (!in_array($perspectivelib->get_current_perspective($prefs), $prefs['mobile_perspectives'])) {
+				$hp = $prefs['wikiHomePage'];							// get default non mobile homepage
 				$_SESSION['current_perspective'] = $prefs['mobile_perspectives'][0];
+
+				if ($prefs['tikiIndex'] === 'tiki-index.php' && isset($_REQUEST['page'])) {
+
+					$pprefs = $perspectivelib->get_preferences($_SESSION['current_perspective']);
+					if (in_array('wikiHomePage', array_keys($pprefs))) {				// mobile persp has home page set (often the case)
+						if ($hp == $_REQUEST['page']) {
+							header('Location: ' . $base_url);							// so redirect to site root and try again
+						}
+					}
+				}
 			}
 		}
 	} else {

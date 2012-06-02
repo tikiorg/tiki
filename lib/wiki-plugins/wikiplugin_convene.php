@@ -188,7 +188,7 @@ function wikiplugin_convene($data, $params)
 	$result .= "<td>".(
 		$tiki_p_edit == 'y'
 			?
-				"<input class='conveneAddUser$i' value='" . tr("Add User") . "' />"
+				"<input class='conveneAddUser$i' value='" . tr("Add User") . "' /><input type='button' value='" . tr('Add User') . "' class='conveneAddUserButton$i' />"
 			: ""
 		).
 	"</td>";
@@ -213,9 +213,7 @@ function wikiplugin_convene($data, $params)
 	$result .= "<td style='width: 20px;'>" . (
 		$tiki_p_edit == 'y'
 			?
-				"<button class='conveneAddDate$i icon ui-widget-header ui-corner-all' style='margin: 0px;'>
-					<img src='img/icons/calendar_add.png' title='".tr('Add Date')."' class='icon' width='16' height='16' />
-				</button>"
+				"<input type='button' class='conveneAddDate$i' value='" . tr('Add Date') . "'/>"
 			: ""
 	)."</td>";
 
@@ -239,8 +237,9 @@ FORM;
 						"data" => $dataString,
 					)
 	);
-	
-	$n = '\n\r';
+
+	$n = '\n';
+	$regexN = '/[\r\n]+/g';
 	
 	$headerlib->add_jsfile("lib/jquery/jquery-ui-timepicker-addon.js");
 	$headerlib->add_jq_onready(
@@ -302,7 +301,7 @@ FORM;
 					addedData += 'dates_' + date + '_' + this.users[user] + ' : 0$n';
 				}
 				
-				this.data = (this.data + '$n' + addedData).split(/$n/).sort();
+				this.data = (this.data + '$n' + addedData).split($regexN).sort();
 				
 				//remove empty lines
 				for(line in this.data) {
@@ -315,22 +314,22 @@ FORM;
 			},
 			deleteDate: function(date) {
 				if (!date) return;
+				date += '';
 				var addedData = '';
 				
 				for(user in this.users) {
 					addedData += 'dates_' + date + '_' + this.users[user] + ' : 0$n';
 				}
-				
-				var lines = convene$i.data.split(/$n/);
+
+				var lines = convene$i.data.split($regexN);
 				var newData = [];
 				for(line in lines) {
 					if (!(lines[line] + '').match(date)) {
 						 newData.push(lines[line]);
 					}
 				}
-				
+
 				this.data = newData.join('$n');
-				
 				this.save();
 			},
 			save: function() {
@@ -508,6 +507,10 @@ FORM;
 			})
 			.autocomplete({
 				source: $existingUsers
+			});
+
+			$('.conveneAddUserButton$i').click(function() {
+				convene$i.addUser($('.conveneAddUser$i').val());
 			});
 		
 		$('#pluginConvene$i .icon').css('cursor', 'pointer');

@@ -23,6 +23,7 @@
 		<th>{self_link _sort_arg='sort_mode' _sort_field='user'}{tr}User{/tr}{/self_link}</th>
 		<th>{tr}Actions{/tr}</th>
 	</tr>
+	{cycle values="odd,even" print=false}
 	{foreach item=sheet from=$sheets}
 		{include name='base' file='tiki-sheets_listing.tpl' sheet=$sheet}
 		{foreach item=childSheet from=$sheet.children}
@@ -64,11 +65,13 @@
 					</td>
 				</tr>
 				{include file='categorize.tpl'}
+				{if $tiki_p_admin_sheet eq "y"}
 				<tr>
 					<td>{tr}Creator:{/tr}</td><td>
 						{user_selector name="creator" editable=$tiki_p_admin_sheet user=$creator}
 					</td>
 				</tr>
+				{/if}
 				<tr>
 					<td>{tr}Parent Spreadsheet:{/tr}</td>
 					<td>

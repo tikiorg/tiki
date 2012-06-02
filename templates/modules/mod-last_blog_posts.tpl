@@ -13,4 +13,7 @@
 		</li>
 	{/section}
 {/modules_list}
+{if ($tiki_p_blog_post eq 'y' or $tiki_p_blog_admin eq 'y')}
+	<p><a href="tiki-blog_post.php"><img src="img/icons/add.png" alt="" /> {tr}Add Post{/tr}</a></p>
+{/if}
 {/tikimodule}

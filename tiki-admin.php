@@ -293,7 +293,7 @@ $icons = array(
 		'title' => tr('Maps'),
 		'description' => tr('Settings and features for maps'),
 		'help' => 'Maps',
-		'disabled' => $prefs['feature_maps'] !== 'y',
+		'disabled' => false,
 	),
 	"performance" => array(
 		'position' => '-400px -115px;',

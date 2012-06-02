@@ -138,6 +138,7 @@ function wikiplugin_customsearch($data, $params)
 
 	$wikitpl = "tplwiki:" . $params['wiki'];
 	$wikicontent = TikiLib::lib('smarty')->fetch($wikitpl);
+	TikiLib::lib('parser')->parse_wiki_argvariable($wikicontent);
 
 	$matches = WikiParser_PluginMatcher::match($wikicontent);
 

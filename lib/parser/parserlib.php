@@ -1964,7 +1964,7 @@ if ( \$('#$id') ) {
 	function parse_wiki_argvariable(&$data)
 	{
 		global $prefs, $user;
-		if ( $prefs['feature_wiki_argvariable'] == 'y' ) {
+		if ( $prefs['feature_wiki_argvariable'] == 'y' && !$options['ck_editor'] ) {
 			if (preg_match_all("/\\{\\{((\w+)(\\|([^\\}]*))?)\\}\\}/", $data, $args, PREG_SET_ORDER)) {
 				$needles = array();
 				$replacements = array();

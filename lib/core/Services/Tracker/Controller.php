@@ -611,6 +611,8 @@ class Services_Tracker_Controller
 
 	function action_remove_item($input)
 	{
+		$processedFields = array();
+
 		$trackerId = $input->trackerId->int();
 		$definition = Tracker_Definition::get($trackerId);
 
@@ -627,14 +629,15 @@ class Services_Tracker_Controller
 			throw new Services_Exception_NotFound;
 		}
 
-		$item = Tracker_Item::fromInfo($itemInfo);
-		if (! $item->canModify()) {
+		$itemObject = Tracker_Item::fromInfo($itemInfo);
+		if (! $itemObject->canRemove()) {
 			throw new Services_Exception(tr('Permission denied.'), 403);
 		}
 
-		$this->utilities->removeItem($itemId);
-
-		TikiLib::lib('unifiedsearch')->processUpdateQueue();
+		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+			$this->utilities->removeItem($itemId);
+			TikiLib::lib('unifiedsearch')->processUpdateQueue();
+		}
 
 		return array(
 			'trackerId' => $trackerId,

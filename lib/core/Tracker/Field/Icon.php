@@ -126,5 +126,12 @@ class Tracker_Field_Icon extends Tracker_Field_Abstract
 			$attributelib->set_attribute($args['type'], $args['object'], 'tiki.icon.src', $value);
 		}
 	}
+
+	function getDocumentPart($baseKey, Search_Type_Factory_Interface $typeFactory)
+	{
+		return array(
+			$baseKey => $typeFactory->identifier($this->getValue()),
+		);
+	}
 }
 

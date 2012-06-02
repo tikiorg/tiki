@@ -63,11 +63,11 @@
 	{/if}
 {else}
 	{if $prefs.site_title_location eq 'before'}{$prefs.browsertitle|tr_if|escape} {$prefs.site_nav_seper} {/if}
-	{capture assign="page_description_title"}{strip}
+	{capture assign="page_description_title"}
 		{if ($prefs.feature_breadcrumbs eq 'y' or $prefs.site_title_breadcrumb eq "desc") && isset($trail)}
 			{breadcrumbs type=$prefs.site_title_breadcrumb loc="head" crumbs=$trail}
 		{/if}
-	{/strip}{/capture}
+	{/capture}
 	{if isset($structure) and $structure eq 'y'} {* get the alias name if item is a wiki page and it is in a structure *}
 		{section loop=$structure_path name=ix}
 		{assign var="aliasname" value={$structure_path[ix].page_alias}}

@@ -218,6 +218,7 @@ function wp_map_available_controls()
 		'scale',
 		'streetview',
 		'navigation',
+		'coordinates',
 	);
 }
 
@@ -256,3 +257,117 @@ function wp_map_plugin_searchlayer($body, $args)
 OUT;
 }
 
+function wp_map_plugin_colorpicker($body, $args)
+{
+	$headerlib = TikiLib::lib('header');
+	static $counter = 0;
+
+	$args->setFilter('colors', 'word');
+	$colors = array_map('wp_map_color_filter', $args->asArray('colors', ','));
+
+	if (count($colors)) {
+		$size = '25px';
+		$json = json_encode($colors);
+		$methods = <<<METHOD
+function setColor(color) {
+	$(dialog).find('.current')
+		.css('background', color);
+	feature.attributes.color = color;
+}
+function init() {
+	$(dialog)
+		.dialog({
+			autoOpen: false,
+			width: 200,
+			title: $(dialog).data('title')
+		})
+		.append($('<div class="current" style="height: $size;"/>'));
+	
+	$.each($json, function (k, color) {
+		$(dialog).append(
+			$('<div style="float: left; width: $size; height: $size;"/>')
+				.css('background', color)
+				.click(function () {
+					setColor(color);
+				})
+		);
+	});
+}
+METHOD;
+	} else {
+		$headerlib->add_jsfile('lib/jquery/colorpicker/js/colorpicker.js');
+		$headerlib->add_cssfile('lib/jquery/colorpicker/css/colorpicker.css');
+		$methods = <<<METHOD
+function setColor(color) {
+	$(dialog).ColorPickerSetColor(color);
+}
+function init() {
+	$(dialog)
+		.dialog({
+			autoOpen: false,
+			width: 400,
+			title: $(dialog).data('title')
+		})
+		.ColorPicker({
+			flat: true,
+			onChange: function (hsb, hex) {
+				feature.attributes.color = '#' + hex;
+			}
+		});
+}
+METHOD;
+	}
+
+	$target = 'map-colorpicker-' . ++$counter;
+
+	$full = <<<FULL
+$("#$target").closest('.map-container').bind('initialized', function () {
+	var container = this
+		, vlayer
+		, feature
+		, dialog = '#$target'
+		;
+
+	$methods
+
+	vlayer = container.vectors;
+
+	vlayer.events.on({
+		featureselected: function (ev) {
+			var active = false;
+
+			feature = ev.feature;
+
+			$.each(container.map.getControlsByClass('OpenLayers.Control.ModifyFeature'), function (k, control) {
+				active = active || control.active;
+			});
+
+			if (active) {
+				setColor(feature.attributes.color);
+				$(dialog).dialog('open');
+			}
+		},
+		featureunselected: function (ev) {
+			feature = null;
+			$(dialog).dialog('close');
+		}
+	});
+
+	init();
+});
+FULL;
+
+	$headerlib->add_js($full);
+
+	$title = tr('Color Picker');
+	return "<div id=\"$target\" data-title=\"$title\"></div>";
+}
+
+function wp_map_color_filter ($color) {
+	$color = strtolower($color);
+	if (preg_match('/^[0-9a-f]{3}([0-9a-f]{3})?$/', $color)) {
+		return "#$color";
+	} else {
+		return $color;
+	}
+}

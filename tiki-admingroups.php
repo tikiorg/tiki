@@ -89,7 +89,7 @@ if (isset($_REQUEST["newgroup"])) {
 	$logslib->add_log('admingroups', 'created group ' . $_REQUEST["group"]);
 }
 if (isset($_REQUEST['adduser'])) {
-	$access->check_authenticity(tra('Are you sure you want to add this user?.'));
+	$access->check_authenticity(tra('Are you sure you want to add this user?'));
 	$user = $_REQUEST['user'];
 	$group = $_REQUEST['group'];
 	if ($user && $group) {

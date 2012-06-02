@@ -16,7 +16,7 @@
 	 <input type="submit" name="Filter" value="{tr}Filter{/tr}" />
 	 </form>
 </div>
-
+<br/>
 <table class="normal">
 <tr>
 	<th>{tr}Version{/tr}</th>

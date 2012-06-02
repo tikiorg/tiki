@@ -1241,12 +1241,49 @@ class Tiki_Profile_InstallHandler_FileGallery extends Tiki_Profile_InstallHandle
 	}
 	function _install()
 	{
-		global $filegallib;
-		if ( ! $filegallib ) require_once 'lib/filegals/filegallib.php';
+		$filegallib = TikiLib::lib('filegal');
 
 		$input = $this->getData();
 
-		return $filegallib->replace_file_gallery($input);
+		$files = array();
+		if (! empty($input['init_files'])) {
+			$files = (array) $input['init_files'];
+			unset($input['init_files']);
+		}
+
+		$galleryId = $filegallib->replace_file_gallery($input);
+
+		if (empty($input['galleryId']) && count($files)) {
+			$gal_info = $filegallib->get_file_gallery_info($galleryId);
+
+			foreach ($files as $url) {
+				$this->upload($gal_info, $url);
+			}
+		}
+
+		return $galleryId;
+	}
+
+	function upload($gal_info, $url)
+	{
+		$filegallib = TikiLib::lib('filegal');
+		if ($filegallib->lookup_source($url)) {
+			return;
+		}
+		
+		$info = $filegallib->get_info_from_url($url);
+
+		if (! $info) {
+			return;
+		}
+
+		$fileId = $filegallib->upload_single_file($gal_info, $info['name'], $info['size'], $info['type'], $info['data']);
+
+		if ($fileId === false) {
+			return;
+		}
+
+		$filegallib->attach_file_source($fileId, $url, $info);
 	}
 } // }}}
 
