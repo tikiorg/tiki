@@ -559,44 +559,59 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		}
 	}
 
+	function addLineBrakesAndCheckToSkipLine(&$skipLine, &$lineInLowerCase, $key, $start, $stop, $skipBefore = false, $skipAfter = false)
+	{
+		// check if we are inside a script not insert <br />
+		$opens = substr_count($lineInLowerCase, $start);
+		$closes = substr_count($lineInLowerCase, $stop);
+
+		$this->addLineBreaksTracking[$key] += $opens;
+		$this->addLineBreaksTracking[$key] -= $closes;
+
+		if ($skipLine == true) { //if true, only one line, no need to check and set again
+			return;
+		}
+
+		if ($skipBefore == true && $opens > 0 && $this->addLineBreaksTracking[$key] == 0) {
+			$skipLine = true;
+		}
+
+		if ($skipAfter == true && $closes > 0 && $this->addLineBreaksTracking[$key] == 0) {
+			$skipLine = true;
+		}
+	}
+
 	function addLineBreaks(&$line)
 	{
 		$lineInLowerCase = TikiLib::strtolower($line);
 
-		$this->addLineBreaksTracking['inComment'] += substr_count($lineInLowerCase, "<!--");
-		$this->addLineBreaksTracking['inComment'] -= substr_count($lineInLowerCase, "-->");
+		$skipLine = false;
+
+		$this->addLineBrakesAndCheckToSkipLine($skipLine, $lineInLowerCase, 'inComment', "<!--", "-->");
 
 		// check if we are inside a ~pre~ block and, if so, ignore
 		// monospaced and do not insert <br />
-		$this->addLineBreaksTracking['inPre'] += substr_count($lineInLowerCase, "<pre");
-		$this->addLineBreaksTracking['inPre'] -= substr_count($lineInLowerCase, "</pre");
+		$this->addLineBrakesAndCheckToSkipLine($skipLine, $lineInLowerCase, 'inPre', "<pre", "</pre");
 
 		// check if we are inside a table, if so, ignore monospaced and do
 		// not insert <br />
-
-		$this->addLineBreaksTracking['inTable'] += substr_count($lineInLowerCase, "<table");
-		$this->addLineBreaksTracking['inTable'] -= substr_count($lineInLowerCase, "</table");
+		$this->addLineBrakesAndCheckToSkipLine($skipLine, $lineInLowerCase, 'inTable', "<table", "</table", true, true);
 
 		// check if we are inside an ul TOC list, if so, ignore monospaced and do
 		// not insert <br />
-		$this->addLineBreaksTracking['inTOC'] += substr_count($lineInLowerCase, "<ul class=\"toc");
-		$this->addLineBreaksTracking['inTOC'] -= substr_count($lineInLowerCase, "</ul><!--toc-->");
+		$this->addLineBrakesAndCheckToSkipLine($skipLine, $lineInLowerCase, 'inTOC', "<ul class=\"toc", "</ul><!--toc-->", true, true);
 
 		// check if we are inside a script not insert <br />
-		$this->addLineBreaksTracking['inScript'] += substr_count($lineInLowerCase, "<script");
-		$this->addLineBreaksTracking['inScript'] -= substr_count($lineInLowerCase, "</script");
+		$this->addLineBrakesAndCheckToSkipLine($skipLine, $lineInLowerCase, 'inScript', "<script", "</script");
 
 		// check if we are inside a script not insert <br />
-		$this->addLineBreaksTracking['inDiv'] += substr_count($lineInLowerCase, "<div");
-		$this->addLineBreaksTracking['inDiv'] -= substr_count($lineInLowerCase, "</div");
+		$this->addLineBrakesAndCheckToSkipLine($skipLine, $lineInLowerCase, 'inDiv', "<div", "</div", true, true);
 
 		// check if we are inside a script not insert <br />
-		$inHeaderOpen = substr_count($lineInLowerCase, "<h");
-		$inHeaderClose = substr_count($lineInLowerCase, "</h");
-		$this->addLineBreaksTracking['inHeader'] += $inHeaderOpen;
-		$this->addLineBreaksTracking['inHeader'] -= $inHeaderClose;
+		$this->addLineBrakesAndCheckToSkipLine($skipLine, $lineInLowerCase, 'inHeader', "<h", "</h", true, true);
 
-		if ($inHeaderClose > 0 && $this->addLineBreaksTracking['inHeader'] == 0) {
+
+		if ($skipLine == true) {
 			//we skip the line just after a header
 			return;
 		}
