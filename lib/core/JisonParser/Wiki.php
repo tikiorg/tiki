@@ -576,21 +576,24 @@ case 3:
 break;
 case 4:
 
-		$this->popState();
-		if (!empty($this->pluginStack)) {
-			if (
-				count($this->pluginStack) > 0 &&
-				$this->substring($yy_->yytext, 1, -1) == $this->pluginStack[count($this->pluginStack) - 1]['name']
-			) {
-				if (count($this->pluginStack) == 1) {
-					$yy_->yytext = $this->pluginStack[count($this->pluginStack) - 1];
-					array_pop($this->pluginStack);
-					return 'PLUGIN_END';
-				} else {
-					array_pop($this->pluginStack);
-					return 'CONTENT';
-				}
-			}
+		$plugin = end($this->pluginStack);
+		if (('{' . $plugin['name'] . '}') == $yy_->yytext) {
+		  $this->popState();
+		  if (!empty($this->pluginStack)) {
+			    if (
+				    count($this->pluginStack) > 0 &&
+				    $this->substring($yy_->yytext, 1, -1) == $this->pluginStack[count($this->pluginStack) - 1]['name']
+			    ) {
+				    if (count($this->pluginStack) == 1) {
+					    $yy_->yytext = $this->pluginStack[count($this->pluginStack) - 1];
+					    array_pop($this->pluginStack);
+					    return 'PLUGIN_END';
+				    } else {
+					    array_pop($this->pluginStack);
+					    return 'CONTENT';
+				    }
+			    }
+		  }
 		}
 		return 'CONTENT';
 	

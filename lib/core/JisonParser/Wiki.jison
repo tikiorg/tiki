@@ -52,39 +52,45 @@ SMILE							[a-z]+
 	%}
 <plugin>"{"{PLUGIN_ID}"}"
 	%{
-		lexer.popState(); //js
-		if (yy.pluginStack) { //js
-			if ( //js
-				parser.size(yy.pluginStack) > 0 && //js
-				parser.substring(yytext, 1, -1) == yy.pluginStack[parser.size(yy.pluginStack) - 1].name //js
-			) { //js
-				if (parser.size(yy.pluginStack) == 1) { //js
-					yytext = yy.pluginStack[parser.size(yy.pluginStack) - 1]; //js
-					yy.pluginStack = parser.pop(yy.pluginStack); //js
-					return 'PLUGIN_END'; //js
-				} else { //js
-					yy.pluginStack = parser.pop(yy.pluginStack); //js
-					return 'CONTENT'; //js
+		var plugin = yy.pluginStack[yy.pluginStack.length - 1]; //js
+		if (('{' + plugin.name + '}') == yytext) { //js
+			lexer.popState(); //js
+			if (yy.pluginStack) { //js
+				if ( //js
+					parser.size(yy.pluginStack) > 0 && //js
+					parser.substring(yytext, 1, -1) == yy.pluginStack[parser.size(yy.pluginStack) - 1].name //js
+				) { //js
+					if (parser.size(yy.pluginStack) == 1) { //js
+						yytext = yy.pluginStack[parser.size(yy.pluginStack) - 1]; //js
+						yy.pluginStack = parser.pop(yy.pluginStack); //js
+						return 'PLUGIN_END'; //js
+					} else { //js
+						yy.pluginStack = parser.pop(yy.pluginStack); //js
+						return 'CONTENT'; //js
+					} //js
 				} //js
 			} //js
 		} //js
 		return 'CONTENT'; //js
 
-		//php $this->popState();
-		//php if (!empty($this->pluginStack)) {
-		//php 	if (
-		//php 		count($this->pluginStack) > 0 &&
-		//php 		$this->substring($yytext, 1, -1) == $this->pluginStack[count($this->pluginStack) - 1]['name']
-		//php 	) {
-		//php 		if (count($this->pluginStack) == 1) {
-		//php 			$yytext = $this->pluginStack[count($this->pluginStack) - 1];
-		//php 			array_pop($this->pluginStack);
-		//php 			return 'PLUGIN_END';
-		//php 		} else {
-		//php 			array_pop($this->pluginStack);
-		//php 			return 'CONTENT';
-		//php 		}
-		//php 	}
+		//php $plugin = end($this->pluginStack);
+		//php if (('{' . $plugin['name'] . '}') == $yytext) {
+		//php   $this->popState();
+		//php   if (!empty($this->pluginStack)) {
+		//php 	    if (
+		//php 		    count($this->pluginStack) > 0 &&
+		//php 		    $this->substring($yytext, 1, -1) == $this->pluginStack[count($this->pluginStack) - 1]['name']
+		//php 	    ) {
+		//php 		    if (count($this->pluginStack) == 1) {
+		//php 			    $yytext = $this->pluginStack[count($this->pluginStack) - 1];
+		//php 			    array_pop($this->pluginStack);
+		//php 			    return 'PLUGIN_END';
+		//php 		    } else {
+		//php 			    array_pop($this->pluginStack);
+		//php 			    return 'CONTENT';
+		//php 		    }
+		//php 	    }
+		//php   }
 		//php }
 		//php return 'CONTENT';
 	%}

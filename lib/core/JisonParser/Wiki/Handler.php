@@ -121,7 +121,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 			if (empty(self::$option)) $this->setOption();
 
 			$this->preParse($input);
-			$result = parent::parse($input);
+			$result = parent::parse("\n" . $input . "\n"); //here we add 2 lines, so the parser doesn't have to do special things to track the first line and last, we remove these when we insert breaks
 			$this->postParse($result);
 
 			$this->parsing = false;
@@ -154,6 +154,8 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 
 	function postParse(&$input)
 	{
+		$input = rtrim(ltrim($input, "\n"), "\n"); //here we remove the fake line breaks added just before parse
+
 		if ($this->parseLists == true) {
 			$lines = explode("\n", $input);
 
