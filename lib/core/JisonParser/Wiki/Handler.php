@@ -173,7 +173,6 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		}
 
 		$this->restoreNpEntities($input);
-		$this->restorePluginEntities($input);
 		$input = $this->unprotectSpecialChars($input, self::$option['is_html']);
 	}
 
@@ -233,7 +232,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 			$this->pluginEntries[$key] = $smarty->fetch('tiki-plugin_blocked.tpl');
 		}
 
-		return $key;
+		return $this->pluginEntries[$key];
 	}
 
 	function stackPlugin($yytext)
@@ -560,18 +559,6 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		}
 	}
 
-	function restorePluginEntities(&$input, $keep = false)
-	{
-		//use of array_reverse, jison is a reverse bottom-up parser, if it doesn't reverse jison doesn't restore the plugins in the right order, leaving the some nested keys as a result
-		foreach(array_reverse($this->pluginEntries) as $key => $entity) {
-			$input = str_replace($key, $entity, $input);
-
-			if (!$keep) {
-				unset($this->pluginEntries[$key]);
-			}
-		}
-	}
-
 	function addLineBreaks(&$line)
 	{
 		$lineInLowerCase = TikiLib::strtolower($line);
@@ -840,8 +827,6 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 
 	function header($content)
 	{
-		include_once('lib/smarty_tiki/function.icon.php');
-
 		$hNum = 1;
 		$headerLength = strlen($content);
 		for($i = 0; $i < $headerLength; $i++) {

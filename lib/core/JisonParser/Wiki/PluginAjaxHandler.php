@@ -35,7 +35,7 @@ class JisonParser_Wiki_PluginAjaxHandler extends JisonParser_Wiki_Handler
 	{
 		$key = '§' . md5('plugin:'.self::$pluginCount) . '§';
 		self::$pluginCount++;
-		self::$plugins[$key] = $pluginDetails['body'];
+		self::$plugins[$key] = $this->unprotectSpecialChars($pluginDetails['body'], true);
 
 		return $this->parse( $pluginDetails['body'] );
 	}
