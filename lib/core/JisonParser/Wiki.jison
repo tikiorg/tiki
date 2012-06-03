@@ -336,7 +336,7 @@ SMILE							[a-z]+
 	%}
 
 
-
+"-- "               return 'CONTENT';
 <strikethrough><<EOF>>
 	%{
 		lexer.popState(); //js

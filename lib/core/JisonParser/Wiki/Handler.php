@@ -121,7 +121,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 			if (empty(self::$option)) $this->setOption();
 
 			$this->preParse($input);
-			$result = parent::parse("\n" . $input . "\n"); //here we add 2 lines, so the parser doesn't have to do special things to track the first line and last, we remove these when we insert breaks
+			$result = parent::parse($input);
 			$this->postParse($result);
 
 			$this->parsing = false;
@@ -145,6 +145,8 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 
 	function preParse(&$input)
 	{
+		$input = "\n" . $input . "\n"; //here we add 2 lines, so the parser doesn't have to do special things to track the first line and last, we remove these when we insert breaks
+
 		if ($this->parseNps == true) {
 			$input = preg_replace_callback('/~np~(.|\n)*?~\/np~/', array(&$this, 'removeNpEntities'), $input);
 		}
@@ -809,7 +811,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 
 	function box($content)
 	{
-		return'<div style="border: solid 1px black;">' . $content . '</div>';
+		return'<div class="simplebox">' . $content . '</div>';
 	}
 
 	function center($content)
