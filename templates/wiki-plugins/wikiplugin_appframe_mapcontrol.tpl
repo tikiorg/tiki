@@ -29,15 +29,16 @@ $('#appframe .map-container').bind('initialized', function () {
 		mode = {{$mapcontrol.label|json_encode}};
 		container.modeManager.addMode({
 			name: {{$mapcontrol.label|json_encode}},
-			controls: controls,
-			activate: function () {
-				$(link).addClass('active');
-			},
-			deactivate: function () {
-				$(link).removeClass('active');
-			}
+			controls: controls
 		});
 	{{/if}}
+
+	container.modeManager.register('activate', mode, function () {
+		$(link).addClass('active');
+	});
+	container.modeManager.register('deactivate', mode, function () {
+		$(link).removeClass('active');
+	});
 
 	if (func) {
 		$(link).click(func);
