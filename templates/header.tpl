@@ -2,6 +2,10 @@
 {if $base_uri and ($dir_level gt 0 or $prefs.feature_html_head_base_tag eq 'y')}
 	<base href="{$base_uri|escape}" />
 {/if}
+
+<!--Latest IE Compatibility-->
+<meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
+
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="Tiki Wiki CMS Groupware - http://tiki.org" />
 
