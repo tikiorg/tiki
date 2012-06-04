@@ -430,6 +430,10 @@ if ($prefs['feature_draw'] == 'y') {
 	$headerlib->add_cssfile("lib/svg-edit_tiki/draw.css");
 }
 
+if ($prefs['geo_always_load_openlayers'] == 'y') {
+	$headerlib->add_map();
+}
+
 if ($prefs['feature_sefurl'] != 'y') {
 	$headerlib->add_js(
 					'$.service = function (controller, action, query) {

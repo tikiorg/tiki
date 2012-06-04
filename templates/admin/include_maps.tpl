@@ -13,6 +13,8 @@
 		{preference name=geo_locate_article}
 		{preference name=wikiplugin_map}
 		{preference name=trackerfield_location}
+
+		{preference name=geo_always_load_openlayers}
 	</fieldset>
 	
 	<fieldset class="admin">			

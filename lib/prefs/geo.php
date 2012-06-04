@@ -60,10 +60,16 @@ function prefs_geo_list()
 		),
 		'geo_google_streetview' => array(
 			'name' => tr('Google Street View'),
-			'description' => array('Open up Google Street View in a window to see the visible coordinates.'),
+			'description' => tr('Open up Google Street View in a window to see the visible coordinates.'),
 			'type' => 'flag',
 			'default' => 'n',
 			'tags' => array('basic', 'experimental'),
+		),
+		'geo_always_load_openlayers' => array(
+			'name' => tr('Always load OpenLayers'),
+			'description' => tr('Load the OpenLayers library even if no map is explicitly included in the page'),
+			'type' => 'flag',
+			'default' => 'n',
 		),
 	);
 }
