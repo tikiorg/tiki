@@ -289,6 +289,7 @@ function init() {
 				.css('background', color)
 				.click(function () {
 					setColor(color);
+					vlayer.redraw();
 				})
 		);
 	});
@@ -312,6 +313,7 @@ function init() {
 			flat: true,
 			onChange: function (hsb, hex) {
 				feature.attributes.color = '#' + hex;
+				vlayer.redraw();
 			}
 		});
 }
