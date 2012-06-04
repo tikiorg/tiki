@@ -156,6 +156,8 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 
 	function postParse(&$input)
 	{
+		$input = $this->unprotectSpecialChars($input, self::$option['is_html']);
+
 		$input = rtrim(ltrim($input, "\n"), "\n"); //here we remove the fake line breaks added just before parse
 
 		if ($this->parseLists == true) {
@@ -173,7 +175,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		}
 
 		$this->restoreNpEntities($input);
-		$input = $this->unprotectSpecialChars($input, self::$option['is_html']);
+		$this->restorePluginEntities($input);
 	}
 
 	// state & plugin handlers
@@ -232,7 +234,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 			$this->pluginEntries[$key] = $smarty->fetch('tiki-plugin_blocked.tpl');
 		}
 
-		return $this->pluginEntries[$key];
+		return $key;
 	}
 
 	function stackPlugin($yytext)
@@ -559,6 +561,18 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		}
 	}
 
+	function restorePluginEntities(&$input, $keep = false)
+	{
+		//use of array_reverse, jison is a reverse bottom-up parser, if it doesn't reverse jison doesn't restore the plugins in the right order, leaving the some nested keys as a result
+		foreach(array_reverse($this->pluginEntries) as $key => $entity) {
+			$input = trim(str_replace($key, $entity, $input), "\n");
+
+			if (!$keep) {
+				unset($this->pluginEntries[$key]);
+			}
+		}
+	}
+
 	function addLineBrakesAndCheckToSkipLine(&$skipLine, &$lineInLowerCase, $key, $start, $stop, $skipBefore = false, $skipAfter = false)
 	{
 		// check if we are inside a script not insert <br />
@@ -617,9 +631,9 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		}
 
 		if (
-			$this->addLineBreaksTracking['inTable'] == 0 &&
-			$this->addLineBreaksTracking['inPre'] == 0 &&
 			$this->addLineBreaksTracking['inComment'] == 0 &&
+			$this->addLineBreaksTracking['inPre'] == 0 &&
+			$this->addLineBreaksTracking['inTable'] == 0 &&
 			$this->addLineBreaksTracking['inTOC'] == 0 &&
 			$this->addLineBreaksTracking['inScript'] == 0 &&
 			$this->addLineBreaksTracking['inDiv'] == 0 &&
@@ -813,7 +827,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 
 	function box($content)
 	{
-		return'<div class="simplebox">' . $content . '</div>';
+		return '<div class="simplebox">' . $content . '</div>';
 	}
 
 	function center($content)
@@ -856,7 +870,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 
 		self::$headerStack[] = $content;
 
-		return '<h' . $hNum . '>' . $content . $this->headerButton($hNum) . '</h' . $hNum . '>';
+		return $this->headerButton($hNum) . '<h' . $hNum . '>' . $content . '</h' . $hNum . '>';
 	}
 
 	function headerButton($hNum)
@@ -956,7 +970,7 @@ $("#' . $id . '").click( function(event) {
 });
 ');
 			include_once('lib/smarty_tiki/function.icon.php');
-			return '~np~<a id="' .$id. '" class="editplugin"'.$iconDisplayStyle.'>'.smarty_function_icon(array('_id'=>'wiki_plugin_edit', 'alt'=>tra('Edit Plugin').':'.$name), $smarty)."</a>~/np~";
+			return '~np~<div><a id="' .$id. '" class="editplugin"'.$iconDisplayStyle.'>'.smarty_function_icon(array('_id'=>'wiki_plugin_edit', 'alt'=>tra('Edit Plugin').':'.$name), $smarty)."</a>~/np~";
 		}
 
 		return '';
