@@ -990,9 +990,13 @@ function wikiplugin_img( $data, $params, $offset, $parseOptions='' )
 	include_once ('lib/mime/mimetypes.php');
 	global $mimetypes;
 
+	$tagName = '';
 	if (!empty($dbinfo['filetype'])  && !empty($mimetypes['svg']) && $dbinfo['filetype'] == $mimetypes['svg']) {
-		$replimg = '<embed type="image/svg+xml" src="' . $src . '"'; 
+		$tagName = 'div';
+		$repldata = $dbinfo['data'];
+		$replimg = '<div type="image/svg+xml" class="svgImage" ';
 	} else {
+		$tagName = 'img';
 		$replimg = '<img src="' . $src . '"';
 	}
 
@@ -1115,8 +1119,12 @@ function wikiplugin_img( $data, $params, $offset, $parseOptions='' )
 			$replimg .= $imgtitle;
 		}
 	}	
-	
-	$replimg .= ' />' . "\r";
+
+	if (empty($repldata)) {
+		$replimg .= ' />' . "\r";
+	} else {
+		$replimg .= '>' . $repldata . '</' . $tagName . '>';
+	}
 
 	////////////////////////////////////////// Create the HTML link ///////////////////////////////////////////
 	//Variable for identifying if javascript mouseover is set
