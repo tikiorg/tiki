@@ -14,7 +14,7 @@ function wikiplugin_copyright_info()
 		'documentation' => 'PluginCopyright',
 		'description' => tra('Insert copyright notices'),
 		'prefs' => array( 'wiki_feature_copyrights', 'wikiplugin_copyright' ),
-		'body' => tra('Pattern to display the copyright in. May contain ~title~, ~year~ and ~authors~.'),
+		'body' => tra('Pattern to display the copyright in. May contain ~title~, ~year~, ~authors~ and ~holder~.'),
 		'icon' => 'img/icons/shield.png',
 		'params' => array(
 		),
@@ -40,6 +40,7 @@ function wikiplugin_copyright($data, $params)
 
 		$notice = str_replace("~year~", $copyrights['data'][$i]['year'], $notice);
 		$notice = str_replace("~authors~", $copyrights['data'][$i]['authors'], $notice);
+		$notice = str_replace("~holder~", $copyrights['data'][$i]['holder'], $notice);
 		$result = $result . $notice;
 	}
 

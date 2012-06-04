@@ -29,7 +29,8 @@ if (isset($_REQUEST['addcopyright'])) {
 
 		$copyrightTitle = $_REQUEST['copyrightTitle'];
 		$copyrightAuthors = $_REQUEST['copyrightAuthors'];
-		$copyrightslib->add_copyright($page, $copyrightTitle, $copyrightYear, $copyrightAuthors, $user);
+		$copyrightHolder = $_REQUEST['copyrightHolder'];
+		$copyrightslib->add_copyright($page, $copyrightTitle, $copyrightYear, $copyrightAuthors, $copyrightHolder, $user);
 	} else {
 		$msg = tra("You must supply all the information, including title and year.");
 		$access->display_error(basename(__FILE__), $msg);
@@ -37,14 +38,15 @@ if (isset($_REQUEST['addcopyright'])) {
 }
 
 if (isset($_REQUEST['editcopyright'])) {
-	if ($prefs['wiki_feature_copyrights'] == 'y' && isset($_REQUEST['copyrightTitle']) && isset($_REQUEST['copyrightYear'])
+	if ($prefs['wiki_feature_copyrights'] == 'y' && isset($_REQUEST['copyrightTitle']) && isset($_REQUEST['copyrightYear']) && isset($_REQUEST['copyrightHolder'])
 		&& isset($_REQUEST['copyrightAuthors']) && !empty($_REQUEST['copyrightYear']) && !empty($_REQUEST['copyrightTitle'])) {
 		$copyrightId = $_REQUEST['copyrightId'];
 
 		$copyrightYear = $_REQUEST['copyrightYear'];
 		$copyrightTitle = $_REQUEST['copyrightTitle'];
 		$copyrightAuthors = $_REQUEST['copyrightAuthors'];
-		$copyrightslib->edit_copyright($copyrightId, $copyrightTitle, $copyrightYear, $copyrightAuthors, $user);
+		$copyrightHolder = $_REQUEST['copyrightHolder'];
+		$copyrightslib->edit_copyright($copyrightId, $copyrightTitle, $copyrightYear, $copyrightAuthors, $copyrightHolder, $user);
 	} else {
 		$msg = tra("You must supply all the information, including title and year.");
 		$access->display_error(basename(__FILE__), $msg);

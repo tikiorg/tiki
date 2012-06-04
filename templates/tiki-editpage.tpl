@@ -324,6 +324,10 @@ $("#allowhtml").change(function() {
 												<td><label for="copyrightAuthors">{tr}Authors:{/tr}</label></td>
 												<td><input size="40" class="wikiedit" id="copyrightAuthors" name="copyrightAuthors" type="text" value="{$copyrightAuthors|escape}" /></td>
 											</tr>
+											<tr>
+												<td><label for="copyrightHolder">{tr}Copyright Holder :{/tr}</label></td>
+												<td><input size="40" class="wikiedit" id="copyrightHolder" name="copyrightHolder" type="text" value="{$copyrightHolder|escape}" /></td>
+											</tr>
 										</table>
 									</fieldset>
 								{/if}

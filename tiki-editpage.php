@@ -659,6 +659,9 @@ if (isset($prefs['wiki_feature_copyrights']) && $prefs['wiki_feature_copyrights'
 	if (isset($_REQUEST['copyrightAuthors'])) {
 		$smarty->assign('copyrightAuthors', $_REQUEST["copyrightAuthors"]);
 	}
+	if (isset($_REQUEST['copyrightHolder'])) {
+		$smarty->assign('copyrightHolder', $_REQUEST["copyrightHolder"]);
+	}
 }
 
 /* Local reference handling */
@@ -1006,6 +1009,7 @@ if (
 		&& isset($_REQUEST['copyrightTitle'])
 		&& isset($_REQUEST['copyrightYear'])
 		&& isset($_REQUEST['copyrightAuthors'])
+		&& isset($_REQUEST['copyrightHolder'])
 		&& !empty($_REQUEST['copyrightYear'])
 		&& !empty($_REQUEST['copyrightTitle']) 
 	) {
@@ -1015,7 +1019,8 @@ if (
 		$copyrightYear = $_REQUEST['copyrightYear'];
 		$copyrightTitle = $_REQUEST['copyrightTitle'];
 		$copyrightAuthors = $_REQUEST['copyrightAuthors'];
-		$copyrightslib->add_copyright($page, $copyrightTitle, $copyrightYear, $copyrightAuthors, $user);
+		$copyrightHolder = $_REQUEST['copyrightHolder'];		
+		$copyrightslib->add_copyright($page,$copyrightTitle,$copyrightYear,$copyrightAuthors, $copyrightHolder, $user);
 	}
 
 	$exist = $tikilib->page_exists($_REQUEST['page']);

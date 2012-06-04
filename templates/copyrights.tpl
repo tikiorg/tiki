@@ -32,6 +32,14 @@
 								<input size="40" class="wikitext" type="text" name="copyrightAuthors" id="copyleft-authors" value="{$copyrights[i].authors|escape}" />
 							</td>
 						</tr>
+						<tr>
+							<td>
+								<label for="copyleft-holder">{tr}Copyright Holder:{/tr}</label>
+							</td>
+							<td>
+								<input size="40" class="wikitext" type="text" name="copyrightHolder" id="copyleft-holder" value="{$copyrights[i].holder|escape}" />
+							</td>
+						</tr>
 					</table>
 				</td>
 				<td align="right">
@@ -70,6 +78,14 @@
 							</td>
 							<td>
 								<input size="40" class="wikitext" type="text" name="copyrightAuthors" id="copyleft-auth" value="{$copyrights[i].authors|escape}" />
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<label for="copyleft-hold">{tr}Copyright Holder:{/tr}</label>
+							</td>
+							<td>
+								<input size="40" class="wikitext" type="text" name="copyrightHolder" id="copyleft-hold" value="{$copyrights[i].holder|escape}" />
 							</td>
 						</tr>
 						<tr>

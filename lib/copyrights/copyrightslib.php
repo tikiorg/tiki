@@ -43,19 +43,19 @@ class CopyrightsLib extends TikiLib
 		return $this->getOne($query, array($page, $title));
 	}
 
-	function add_copyright($page, $title, $year, $authors, $user)
+	function add_copyright($page, $title, $year, $authors, $copyrightHolder, $user) 
 	{
 		$top = $this->top_copyright_order($page);
 		$order = $top + 1;
-		$query = 'insert `tiki_copyrights` (`page`, `title`, `year`, `authors`, `copyright_order`, `userName`) values (?,?,?,?,?,?)';
-		$this->query($query, array($page, $title, $year, $authors, $order, $user));
+		$query = 'insert `tiki_copyrights` (`page`, `title`, `year`, `authors`, `holder`, `copyright_order`, `userName`) values (?,?,?,?,?,?,?)';
+		$this->query($query, array($page, $title, $year, $authors, $copyrightHolder, $order, $user));
 		return true;
 	}
 
-	function edit_copyright($id, $title, $year, $authors, $user)
+	function edit_copyright($id, $title, $year, $authors, $copyrightHolder, $user) 
 	{
-		$query = 'update `tiki_copyrights` SET `year`=?, `title`=?, `authors`=?, `userName`=? where `copyrightId`=?';
-		$this->query($query, array($year, $title, $authors, $user, (int)$id));
+		$query = 'update `tiki_copyrights` SET `year`=?, `title`=?, `authors`=?, `holder`=?, `userName`=? where `copyrightId`=?';
+		$this->query($query, array($year, $title, $authors, $copyrightHolder, $user, (int)$id));
 		return true;
 	}
 

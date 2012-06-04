@@ -593,6 +593,7 @@ CREATE TABLE `tiki_copyrights` (
   `title` varchar(200) default NULL,
   `year` int(11) default NULL,
   `authors` varchar(200) default NULL,
+  `holder` varchar(200) default NULL,  
   `copyright_order` int(11) default NULL,
   `userName` varchar(200) default '',
   PRIMARY KEY (`copyrightId`)
