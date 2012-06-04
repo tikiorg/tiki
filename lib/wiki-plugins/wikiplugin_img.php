@@ -986,9 +986,10 @@ function wikiplugin_img( $data, $params, $offset, $parseOptions='' )
 	////////////////////////////////////////// Create the HTML img tag //////////////////////////////////////////////
 	//Start tag with src and dimensions
 	$src = filter_out_sefurl(htmlentities($src));
-	
+
 	include_once ('lib/mime/mimetypes.php');
-	$replimg = '<img src="' . $src . '"';
+	global $mimetypes;
+
 	if (!empty($dbinfo['filetype'])  && !empty($mimetypes['svg']) && $dbinfo['filetype'] == $mimetypes['svg']) {
 		$replimg = '<embed type="image/svg+xml" src="' . $src . '"'; 
 	} else {

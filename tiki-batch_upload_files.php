@@ -167,6 +167,7 @@ if (isset($_REQUEST["batch_upload"]) and isset($_REQUEST['files']) and is_array(
 		$path_parts = pathinfo($filepath);
 		$ext = strtolower($path_parts["extension"]);
 		include_once ('lib/mime/mimetypes.php');
+		global $mimetypes;
 		$type = $mimetypes["$ext"];
 
 		$result = $filegallib->handle_batch_upload(

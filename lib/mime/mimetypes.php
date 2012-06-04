@@ -19,7 +19,8 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 // done
 // echo ");" >> mimetypes.php.new
 //
-static $mimetypes = array(
+global $mimetypes;
+$mimetypes = array(
 	"323" => "text/h323",
 	"3gp" => "video/3gpp",
 	"7z" => "application/x-7z-compressed",

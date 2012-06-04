@@ -709,6 +709,7 @@ if (!empty($_REQUEST['find_lastDownload']) && !empty($_REQUEST['find_lastDownloa
 }
 if (!empty($_REQUEST['find_fileType']) && !empty($_REQUEST['find_fileType']) ) {
 	include_once ('lib/mime/mimetypes.php');
+	global $mimetypes;
 	$find['fileType'] = $mimetypes[$_REQUEST['find_fileType']];
 }
 

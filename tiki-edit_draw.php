@@ -23,6 +23,7 @@ $access->check_feature('feature_file_galleries');
 include_once ("categorize_list.php");
 include_once ('tiki-section_options.php');
 include_once ('lib/mime/mimetypes.php');
+global $mimetypes;
 
 ask_ticket('draw');
 

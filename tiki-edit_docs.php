@@ -9,6 +9,7 @@ $section = 'docs';
 require_once ('tiki-setup.php');
 include_once ('lib/filegals/filegallib.php');
 include_once ('lib/mime/mimetypes.php');
+global $mimetypes;
 
 $auto_query_args = array(
 	'fileId',
