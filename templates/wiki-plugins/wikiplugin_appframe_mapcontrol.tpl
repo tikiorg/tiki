@@ -23,7 +23,7 @@ $('#appframe .map-container').bind('initialized', function () {
 		{{/if}}
 
 		{{if $mapcontrol.navigation}}
-			controls.push(new OpenLayers.Control.Navigation());
+			controls.push(new OpenLayers.Control.NavToolbar());
 		{{/if}}
 
 		mode = {{$mapcontrol.label|json_encode}};
