@@ -15,6 +15,8 @@
 		{preference name=trackerfield_location}
 
 		{preference name=geo_always_load_openlayers}
+
+		{preference name=gmap_key}
 	</fieldset>
 	
 	<fieldset class="admin">			
