@@ -176,7 +176,7 @@ class ParserLib extends TikiDb_Bridge
 	// This function removed the protection of html entities so that they are rendered as expected by the viewer
 	function unprotectSpecialChars($data, $is_html = false)
 	{
-		if (( $is_html != false || ( isset($$this->option['is_html']) && $this->option['is_html']))
+		if (( $is_html != false || ( isset($this->option['is_html']) && $this->option['is_html']))
 			|| (isset($this->option['ck_editor']) && $this->option['ck_editor'])) {
 			foreach($this->specialChars as $key => $specialChar) {
 				$data = str_replace($key, $specialChar['html'], $data);
@@ -1025,7 +1025,7 @@ if ( \$('#$id') ) {
 
 			$killtoc = false;
 
-			if ($pluginFormat === 'wiki' && $parseoption['preview_mode'] && $_SESSION['wysiwyg'] === 'y') {	// fix lost new lines in wysiwyg plugins data
+			if ($pluginFormat === 'wiki' && isset($parseoption['preview_mode']) && $parseoption['preview_mode'] === true && $_SESSION['wysiwyg'] === 'y') {	// fix lost new lines in wysiwyg plugins data
 				$data = nl2br($data);
 			}
 
