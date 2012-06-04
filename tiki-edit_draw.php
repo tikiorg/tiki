@@ -160,6 +160,8 @@ $jsTracking = "$.wikiTrackingDraw = {
 if (isset($_REQUEST['raw'])) {
 	$jsFunctionality = "";
 } else {
+	$prefs['feature_draw_hide_buttons'] = addslashes(htmlentities($prefs['feature_draw_hide_buttons']));
+
 	$jsFunctionality =
 	"$('#drawFullscreen')
 		.click(function() {
@@ -172,7 +174,8 @@ if (isset($_REQUEST['raw'])) {
 			fileId: $('#fileId').val(),
 			galleryId: $('#galleryId').val(),
 			name: $('#fileName').val(),
-			data: $('#fileData').val()
+			data: $('#fileData').val(),
+			removeButtons: '" . $prefs['feature_draw_hide_buttons'] . "'
 		})
 		.bind('renamedDraw', function(e, name) {
 			$('#fileName').val(name);
@@ -191,33 +194,6 @@ if (
 ) {
 	$headerlib->add_jq_onready($jsTracking);
 }
-
-$prefs['feature_draw_hide_buttons'] = addslashes(htmlentities($prefs['feature_draw_hide_buttons']));
-
-$headerlib->add_jq_onready(
-				"$('#drawFullscreen')
-					.click(function() {
-						$('#tiki_draw').drawFullscreen();
-					})
-					.click();
-				
-				$('#tiki_draw')
-					.loadDraw({
-						fileId: $('#fileId').val(),
-						galleryId: $('#galleryId').val(),
-						name: $('#fileName').val(),
-						data: $('#fileData').val(),
-						removeButtons: '" . $prefs['feature_draw_hide_buttons'] . "'
-					})
-					.bind('renamedDraw', function(e, name) {
-						$('#fileName').val(name);
-						$('.pagetitle').text(name);
-					});
-				
-				$('#drawBack').click(function() {
-					window.history.back();
-				});"
-);
 
 if ($drawFullscreen == true || isset($_REQUEST['raw'])) {
 	echo $headerlib->output_js();
