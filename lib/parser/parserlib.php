@@ -1462,7 +1462,9 @@ if ( \$('#$id') ) {
 		$wikilib = TikiLib::lib('wiki');
 
 		// Handle parsing options
-		$this->setOptions($option);
+		if (!empty($options)) {
+			$this->setOptions($option);
+		}
 
 
 		if (empty($this->option['ck_editor'])) $this->option['ck_editor'] = false;
