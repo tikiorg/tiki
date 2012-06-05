@@ -290,6 +290,9 @@ function init() {
 				.click(function () {
 					setColor(color);
 					vlayer.redraw();
+					if (feature.executor) {
+						feature.executor();
+					}
 				})
 		);
 	});
@@ -314,6 +317,9 @@ function init() {
 			onChange: function (hsb, hex) {
 				feature.attributes.color = '#' + hex;
 				vlayer.redraw();
+				if (feature.executor) {
+					feature.executor();
+				}
 			}
 		});
 }
