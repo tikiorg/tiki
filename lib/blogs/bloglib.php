@@ -574,6 +574,9 @@ class BlogLib extends TikiDb_Bridge
 				$res['excerpt'] = $parserlib->parse_data($res['excerpt'], array('is_html' => true));
 			}
 
+			if (isset($res['wysiwyg']) && $res['wysiwyg'] == 'n')
+				$res['data'] =  $parserlib->parse_data($res['data']);	
+
 			$ret[] = $res;
 		}
 
