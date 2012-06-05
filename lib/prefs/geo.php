@@ -65,6 +65,14 @@ function prefs_geo_list()
 			'default' => 'n',
 			'tags' => array('basic', 'experimental'),
 		),
+		'geo_google_streetview_overlay' => array(
+			'name' => tr('Google Street View Overlay'),
+			'description' => tr('Open up Google Street View in a window to see the visible coordinates.'),
+			'warning' => tr('This is not guarenteed to work.'),
+			'type' => 'flag',
+			'default' => 'n',
+			'tags' => array('basic', 'experimental'),
+		),
 		'geo_always_load_openlayers' => array(
 			'name' => tr('Always load OpenLayers'),
 			'description' => tr('Load the OpenLayers library even if no map is explicitly included in the page'),

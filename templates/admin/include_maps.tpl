@@ -7,6 +7,9 @@
 
 		{preference name=geo_tilesets}
 		{preference name=geo_google_streetview}
+		<div class="adminoptionboxchild" id="geo_google_streetview_childcontainer">
+			{preference name=geo_google_streetview_overlay}
+		</div>
 
 		{preference name=geo_locate_blogpost}
 		{preference name=geo_locate_wiki}
