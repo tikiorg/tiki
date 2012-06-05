@@ -174,8 +174,7 @@ if (isset($_REQUEST['raw'])) {
 			fileId: $('#fileId').val(),
 			galleryId: $('#galleryId').val(),
 			name: $('#fileName').val(),
-			data: $('#fileData').val(),
-			removeButtons: '" . $prefs['feature_draw_hide_buttons'] . "'
+			data: $('#fileData').val()
 		})
 		.bind('renamedDraw', function(e, name) {
 			$('#fileName').val(name);
