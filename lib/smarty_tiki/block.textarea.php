@@ -187,6 +187,7 @@ $("#' . $as_id . '").ckeditor(function() {
 	if (typeof ajaxLoadingHide == "function") { ajaxLoadingHide(); }
 	ckEditorInstances[ckEditorInstances.length] = this;
 	this.resetDirty();
+	$(this.element.$).hide();
 }, ' . $ckoptions . ');'
 		, 5);	// after dialog tools init (10)
 
