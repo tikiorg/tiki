@@ -297,7 +297,7 @@ if ($prefs['javascript_enabled'] != 'n') {
 			if ( $prefs['feature_jquery_autocomplete'] == 'y' ) {
 				$headerlib->add_css(
 								'.ui-autocomplete-loading { background: white url("lib/jquery/jquery-ui/themes/' .
-								'/base/images/ui-anim_basic_16x16.gif") right center no-repeat; }'
+								'base/images/ui-anim_basic_16x16.gif") right center no-repeat; }'
 				);
 			}
 			if ( $prefs['jquery_ui_selectmenu'] == 'y' ) {
