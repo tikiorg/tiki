@@ -219,6 +219,7 @@ function wp_map_available_controls()
 		'streetview',
 		'navigation',
 		'coordinates',
+		'overview',
 	);
 }
 
