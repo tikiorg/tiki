@@ -262,7 +262,7 @@ function wp_map_plugin_colorpicker($body, $args)
 	$headerlib = TikiLib::lib('header');
 	static $counter = 0;
 
-	$args->setFilter('colors', 'word');
+	$args->replaceFilter('colors', 'word');
 	$colors = array_map('wp_map_color_filter', $args->asArray('colors', ','));
 
 	if (count($colors)) {
