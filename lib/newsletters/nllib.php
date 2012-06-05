@@ -681,7 +681,7 @@ class NlLib extends TikiLib
 						}
 					}
 				} else {
-					$hasPerm = $res[$perm];
+					$hasPerm = $res[$perms];
 				}
 				if (!$hasPerm)
 					continue;
@@ -851,7 +851,7 @@ class NlLib extends TikiLib
 
 	function get_unsub_msg($nlId, $email, $lang, $code='', $user='')
 	{
-		global $smarty, $userlib, $tikilib;
+		global $smarty, $userlib, $tikilib, $prefs;
 		$pth = $tikilib->httpPrefix(true). substr($_SERVER["REQUEST_URI"], 0, strpos($_SERVER["REQUEST_URI"], 'tiki-'));
 		$foo = parse_url($_SERVER["REQUEST_URI"]);
 		 $smarty->assign('url', $pth);
@@ -1123,7 +1123,7 @@ class NlLib extends TikiLib
 					if (empty($news_css)) {
 						$news_css = $headerlib->get_all_css_content();
 					}
-					$news_head = "<html><head><base href=\"$base_url\" /><style type=\"text/css\">$news_css</style></head>";
+					$news_head = "<html><head><base href=\"$base_url\" /><style type=\"text/css\">{$news_css}</style></head>";
 					$html = str_ireplace('<html>', $news_head, $html);
 				} else {
 					$html = str_ireplace('<head>', "<head><base href=\"$base_url\" />", $html);
