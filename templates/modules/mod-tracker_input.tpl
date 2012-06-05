@@ -62,7 +62,7 @@
 				data.fields.itemId = data.itemId;
 				data.fields.status = data.status;
 				$.each(data.fields, function (k, v) {
-					url = url.replace('@' + k + '@', escape(v));
+					url = url.replace('@' + k + '@', encodeURIComponent(v));
 				});
 
 				document.location.href = url;
