@@ -94,8 +94,6 @@ if ($prefs['feature_categories'] == 'y') {
 	$cat_objid = $postId;
 	require_once('categorize_list.php');	
 }
-$bloglib->add_blog_post_hit($postId);
-$bloglib->add_blog_post_hit($postId);
 $smarty->assign('ownsblog', $ownsblog);
 $post_info['data'] = TikiLib::htmldecode($post_info['data']);
 $smarty->assign('postId', $postId);
