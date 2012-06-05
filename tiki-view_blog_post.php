@@ -36,8 +36,6 @@ if (!$post_info) {
 	$smarty->display("error.tpl");
 	die;
 } else {
-	//$smarty->assign('msg', tra("Post found"));
-	//$smarty->display("error.tpl");
 	$bloglib->add_blog_post_hit($postId);
 }
 $blogId = $post_info['blogId'];
