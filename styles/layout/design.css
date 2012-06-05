@@ -1665,13 +1665,21 @@ form.simple select
 	display:none;
 }
 
+.boxes, .boxes * {
+	z-index: 2147483646;
+}
+
 .boxes .dialog {
 	position:absolute;
 	width: auto;
 	height: auto;
 	font-weight: bold;
-	z-index: 9999;
+	z-index: 2147483647;
 	text-align: center;
+}
+
+.boxes img {
+	z-index: 2147483647;
 }
 
 .structuremenu .menuSection {
