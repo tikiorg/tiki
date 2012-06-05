@@ -117,6 +117,11 @@ function wikiplugin_bigbluebutton( $data, $params )
 			$smarty->assign('bbb_recordings', $bigbluebuttonlib->getRecordings($meeting));
 
 			return $smarty->fetch('wiki-plugins/wikiplugin_bigbluebutton.tpl');
+
+		} elseif ( $perms->bigbluebutton_view_rec ) { # Case for anonymous users with the perm to view recordings but not to join meetings
+			$smarty->assign('bbb_recordings', $bigbluebuttonlib->getRecordings($meeting));
+
+			return $smarty->fetch('wiki-plugins/wikiplugin_bigbluebutton_view_recordings.tpl');
 		}
 	} catch (Exception $e) {
 		return WikiParser_PluginOutput::internalError(tr('BigBlueButton misconfigured or unaccessible.'));
