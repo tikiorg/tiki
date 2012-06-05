@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -32,7 +32,7 @@ require_once( "lib/encoding/lib-encoding.php" );
 include_once 'lib/diff/Diff.php';
 include_once 'lib/diff/Renderer.php';
 // Constants {{{1
-	
+
 /*
 DATA:
 End values will be preserved.
@@ -44,7 +44,7 @@ CELL:
 The cell merging will be preserved.
 
 FORMAT:
-The display format of the data of the cell 
+The display format of the data of the cell
 */
 
 define( 'TIKISHEET_SAVE_DATA',		0x00010000 );
@@ -118,7 +118,7 @@ class TikiSheet
 	var $calcGrid;
 
 	/**
-	 * Two dimensional array, grid containing an associative arrays 
+	 * Two dimensional array, grid containing an associative arrays
 	 * with 'height' and 'width' values.
 	 */
 	var $cellInfo;
@@ -128,7 +128,7 @@ class TikiSheet
 	 */
 	var $rowCount;
 	var $columnCount;
-	
+
 	/**
 	 * Layout parameters.
 	 */
@@ -152,12 +152,12 @@ class TikiSheet
 
 	var $contributions;
 	var $id;
-	
+
 	var $rangeBeginRow = -1;
 	var $rangeEndRow   = -1;
 	var $rangeBeginCol = -1;
 	var $rangeEndCol = -1;
-	
+
 	function getRangeBeginRow()
 	{
 		return $this->rangeBeginRow > -1 ? $this->rangeBeginRow : 0;
@@ -177,14 +177,14 @@ class TikiSheet
 	{
 		return $this->rangeEndCol > -1 ? $this->rangeEndCol : $this->getColumnCount();
 	}
-	
+
 	// }}}2
-	
+
 	/** getHandlerList {{{2
 	 * Returns an array containing the list of all valid
 	 * handlers for general file import/export.
 	 * @return An array.
-	 * @static 
+	 * @static
 	 */
 	function getHandlerList()
 	{
@@ -195,7 +195,7 @@ class TikiSheet
 			//'TikiSheetExcelHandler'
 		);
 	}// }}}2
-	
+
 	/** TikiSheet {{{2
 	 * Initializes the data container.
 	 */
@@ -217,7 +217,7 @@ class TikiSheet
 		$this->parseValues = 'n';
 		$this->className = '';
 	}
-	
+
 	/** configureLayout {{{2
 	 * Assigns the different parameters for the output
 	 * @param $className	The class that will be assigned
@@ -239,7 +239,7 @@ class TikiSheet
 		$this->footerRow = $footerRow;
 		$this->parseValues = $parseValues;
 	}
-	
+
 	/** getColumnIndex {{{2
 	 * Returns the index of the column from a cell ID.
 	 * @param $id Cell ID in [A-Z]+[0-9]+ format.
@@ -303,7 +303,7 @@ class TikiSheet
 			&& $this->cellInfo[$rowIndex][$columnIndex]['style'] == $sheet->cellInfo[$rowIndex][$columnIndex]['style']
 			&& $this->cellInfo[$rowIndex][$columnIndex]['class'] == $sheet->cellInfo[$rowIndex][$columnIndex]['class'];
 	}
-	
+
 	/** export {{{2
 	 * Exports the content of the calculation sheet
 	 * to the given format handler.
@@ -314,7 +314,7 @@ class TikiSheet
 	{
 		return $handler->_save( $this );
 	}
-	
+
 	/**
 	 * @param bool $incsubs Include sub-sheets
 	 * @param timestamp $date Date (revision) to read sub-sheets from
@@ -322,16 +322,16 @@ class TikiSheet
 	function getTableHtml( $incsubs = true )
 	{
 		global $prefs, $sheetlib;
-		
+
 		$filegallib = TikiLib::lib("filegal");
 		$fileInfo = $filegallib->get_file_info( $fileId );
-		
+
 		$handler = new TikiSheetOutputHandler(null, ($this->parseValues == 'y' && $_REQUEST['parse'] != 'n'));
-		
+
 		$this->export($handler);
-		
+
 		$data = $handler->output;
-		
+
 		if ($incsubs == true) {
 			//get sheets from db first
 			foreach ($sheetlib->get_related_sheet_ids($this->id) as $childSheetId) {
@@ -343,29 +343,29 @@ class TikiSheet
 		}
 			foreach ($sheetlib->get_related_file_ids($this->id) as $childFileId) {
 				$fileInfo = $filegallib->get_file_info( $childFileId );
-				
+
 				switch ($fileInfo['filetype']) {
 					case 'text/csv':
 						$handler = new TikiSheetCSVHandler($fileInfo);
 						break;
 					default: $handler = false;
 				}
-				
+
 				if (!empty($handler)) {
 					$childSheet = new TikiSheet();
 					$childSheet->import($handler);
 					$data .= $childSheet->getTableHtml();
 				}
 			}
-			
+
 			foreach ($sheetlib->get_related_tracker_ids($this->id) as $childTrackerId) {
 				$handler = new TikiSheetTrackerHandler($childTrackerId);
 				$childSheet = new TikiSheet();
 				$childSheet->import($handler);
 				$data .= $childSheet->getTableHtml();
 			}
-		
-		
+
+
 		return $data;
 	}
 
@@ -381,7 +381,7 @@ class TikiSheet
 		$this->finalizeGrid( $this->dataGrid, $maxRow, $maxCol );
 		$this->finalizeGrid( $this->calcGrid, $maxRow, $maxCol );
 		$this->finalizeGrid( $this->cellInfo, $maxRow, $maxCol, true );
-		 
+
 		$this->rowCount = ($maxRow >= INITIAL_ROW_COUNT || $maxRow > 0 ? $maxRow : INITIAL_ROW_COUNT);
 		$this->columnCount = ($maxCol >= INITIAL_COL_COUNT || $maxCol > 0 ? $maxCol : INITIAL_COL_COUNT);
 
@@ -403,7 +403,7 @@ class TikiSheet
 				if ( !isset( $this->cellInfo[$y][$x] ) )
 					$this->cellInfo[$y][$x] = $base;
 
-				
+
 				$this->cellInfo[$y][$x] = array_merge( $base, $this->cellInfo[$y][$x] );
 			}
 		}
@@ -426,7 +426,7 @@ class TikiSheet
 		foreach( $grid as $key=>$row )
 			$this->finalizeRow( $row, $maxRow, $maxCol, $key, $addIndex );
 	}
- 
+
 	/** finalizeRow {{{2
 	 * Identifies the largest key in an array and set it as the
 	 * new maximum.
@@ -511,7 +511,7 @@ class TikiSheet
 		else
 			return false;
 	}
-	
+
 	/** setRange {{{2
 	 * Limits display (so far)
 	 * a given range (ex: A1:B9)
@@ -525,7 +525,7 @@ class TikiSheet
 			$this->rangeEndCol = $this->getColumnNumber( $parts[3] );
 		}
 	}
-	
+
 	/** getRowCount {{{2
 	 * Returns the row count.
 	 */
@@ -533,12 +533,12 @@ class TikiSheet
 	{
 		return $this->rowCount;
 	}
-	
+
 	function name()
 	{
 		return $this->name;
 	}
-	
+
 	/** import {{{2
 	 * Fills the content of the calculation sheet with
 	 * data from the given handler.
@@ -558,7 +558,7 @@ class TikiSheet
 		$this->calcGrid = array();
 		$this->cellInfo = array();
 		$this->errorFlag = false;
-		
+
 		set_error_handler( array( &$this, "error_handler" ) );
 		if ( !$handler->_load( $this ) || $this->errorFlag )
 		{
@@ -628,7 +628,7 @@ class TikiSheet
 			&& ( $this->cellInfo[$rowIndex][$columnIndex]['height'] == ''
 			||   $this->cellInfo[$rowIndex][$columnIndex]['height'] == 1 );
 	}
-	
+
 	/** setCalculation {{{2
 	 * Assigns a calculation to the currently initialized
 	 * cell.
@@ -649,7 +649,7 @@ class TikiSheet
 		if ( empty( $format ) || !method_exists( new TikiSheetDataFormat, $format ) ) $format = null;
 		$this->cellInfo[$this->usedRow][$this->usedCol]['format'] = $format;
 	}
-	
+
 	/** setSize {{{2
 	 * Sets the size of the last initialized cell.
 	 * @param $width The cell's column span.
@@ -657,14 +657,15 @@ class TikiSheet
 	 */
 	function setSize( $width, $height )
 	{
-		$this->cellInfo[$this->usedRow][$this->usedCol] = array( "width" => $width, "height" => $height, "style" => "", "class" => "");
+		$this->cellInfo[$this->usedRow][$this->usedCol]["width"] = $width;
+		$this->cellInfo[$this->usedRow][$this->usedCol]["height"] = $height;
 
 		for( $y = $this->usedRow; $this->usedRow + $height > $y; $y++ )
 			for( $x = $this->usedCol; $this->usedCol + $width > $x; $x++ )
 				if ( !($y == $this->usedRow && $x == $this->usedCol) )
 					$this->createDeadCell( $x, $y );
 	}
-	
+
 	/** setValue {{{2
 	 * Assigns a value to the currently initialized
 	 * cell.
@@ -674,7 +675,7 @@ class TikiSheet
 	{
 		$this->dataGrid[$this->usedRow][$this->usedCol] = $value;
 	}
-	
+
 	/** setStyle {{{2
 	 * Sets html style,if any, to the currently initialized
 	 * cell.
@@ -684,7 +685,7 @@ class TikiSheet
 	{
 		$this->cellInfo[$this->usedRow][$this->usedCol]['style'] = $style;
 	}
-	
+
 	/** setClass {{{2
 	 * Sets html class, if any, to the currently initialized
 	 * cell.
@@ -706,6 +707,17 @@ class TikiSheet
 		$this->cellInfo[$y][$x] = array( "width" => 0, "height" => 0, "format" => null, "style" => "", "class" => "" );
 	}
 
+	/** getClass {{{2
+	 * Returns the class of a the current cell if it exist.
+	 */
+	function getClass()
+	{
+		if( isset($this->cellInfo[$this->usedRow][$this->usedCol]['class']))
+			return $this->cellInfo[$this->usedRow][$this->usedCol]['class'];
+		else
+			return "";
+	}
+
 	/** getColumnNumber {{{2
 	 * Returns the column number from the letter-style.
 	 */
@@ -713,7 +725,7 @@ class TikiSheet
 	{
 		$val = 0;
 		$len = strlen( $letter );
-		
+
 		for( $i = 0; $len > $i; $i++ )
 		{
 			$pow = pow( 26, $len - $i - 1 );
@@ -723,7 +735,7 @@ class TikiSheet
 
 		return $val;
 	}
-	
+
 	/** error_handler {{{2
 	 * Callback error handler function. Used by import.
 	 * @see http://ca.php.net/set_error_handler
@@ -733,7 +745,7 @@ class TikiSheet
 		echo $errstr . ': ' .  $errfile . ' (' . $errline . ')';
 		$this->errorFlag = true;
 	}
-} // }}}1 
+} // }}}1
 
 /** TikiSheetDataHandler {{{1
  * Base data handler to link the sheet to the data
@@ -754,7 +766,7 @@ class TikiSheetDataHandler
 	var $maxrows = 300;
     var $maxcols = 26;
     var $output = "";
-	
+
 	function _load( &$sheet )
 	{
 		trigger_error( "Abstract method call. _load() not defined in " . get_class( $this ), E_USER_ERROR );
@@ -810,7 +822,7 @@ class TikiSheetDataHandler
 class TikiSheetSerializeHandler extends TikiSheetDataHandler
 {
 	var $file;
-	
+
 	/** Constructor {{{2
 	 * Initializes the the serializer on a file.
 	 * @param $file The file path to save or load from.
@@ -901,7 +913,7 @@ class TikiSheetCSVHandler extends TikiSheetDataHandler
 {
 	var $file = 'php://stdout';
 	var $lineLen;
-	
+
 	/** Constructor {{{2
 	 * Initializes the the serializer on a file.
 	 * @param $file The file path to save or load from.
@@ -922,10 +934,10 @@ class TikiSheetCSVHandler extends TikiSheetDataHandler
 		$rows = explode("\n", $this->data);
 		for($i = 0; $i < count($rows) && $i < $this->maxrows; $i++) {
 			$cols = str_getcsv($rows[$i]);
-			
+
 			for($j = 0; $j < count($cols) && $j < $this->maxcols; $j++) {
 				$sheet->initCell( $i, $j );
-				
+
 				if ( !empty($cols[$j]) ) {
 					if ($cols[$j][0] == '=' ) {
 						$sheet->setCalculation( substr($cols[$j], 1) );
@@ -935,13 +947,13 @@ class TikiSheetCSVHandler extends TikiSheetDataHandler
 				} else {
 					$sheet->setValue( "" );
 				}
-				
+
 				$sheet->setSize( 1, 1 );
 			}
 		}
-		
+
 		if ($i >= $this->maxrows || $j >= $this->maxcols) $this->truncated = true;
-		
+
 		return true;
 	}
 
@@ -989,7 +1001,7 @@ class TikiSheetCSVHandler extends TikiSheetDataHandler
 				return false;
 		}
 	}
-	
+
 	// name {{{2
 	function name()
 	{
@@ -1008,7 +1020,7 @@ class TikiSheetCSVHandler extends TikiSheetDataHandler
 		return "1.0";
 	}
  } // }}}1
- 
+
 
 /** TikiSheetTrackerHandler {{{1
  * Class that stores the sheet representation in a
@@ -1018,7 +1030,7 @@ class TikiSheetTrackerHandler extends TikiSheetDataHandler
 {
 	var $file;
 	var $lineLen;
-	
+
 	/** Constructor {{{2
 	 * Initializes the the serializer on a file.
 	 * @param $file The file path to save or load from.
@@ -1027,7 +1039,7 @@ class TikiSheetTrackerHandler extends TikiSheetDataHandler
 	{
 		global $tikilib;
 		$trklib = TikiLib::lib("trk");
-		
+
 		$this->id = $trackerId;
 		$this->def = Tracker_Definition::get($trackerId);
 		$this->info = $this->def->getInformation();
@@ -1038,7 +1050,7 @@ class TikiSheetTrackerHandler extends TikiSheetDataHandler
 	// _load {{{2
 	function _load( &$sheet ) {
 		global $tikilib;
-		
+
 		$i = 0;
 		$trackerName = $this->info['name'];
 		$tracker = Tracker_Query::tracker($trackerName)
@@ -1048,22 +1060,22 @@ class TikiSheetTrackerHandler extends TikiSheetDataHandler
 			->query();
 
 		foreach($tracker as $item) {
-			$j = 0;			
+			$j = 0;
 			foreach($item as $key => $field) {
 				$sheet->initCell( $i, $j );
-				
+
 				if (!empty($field[0]) && $field[0] == '=' ) {
 					$sheet->setCalculation( substr($field, 1) );
 				}
-				
+
 				$sheet->setValue( $i == 0 ? $key : $field );
-				
+
 				$sheet->setSize( 1, 1 );
 				$j++;
 			}
 			$i++;
 		}
-		
+
 		return true;
 	}
 
@@ -1072,7 +1084,7 @@ class TikiSheetTrackerHandler extends TikiSheetDataHandler
 	{
 		return false;
 	}
-	
+
 	// name {{{2
 	function name()
 	{
@@ -1100,9 +1112,9 @@ class TikiSheetTrackerHandler extends TikiSheetDataHandler
 class TikiSheetSimpleArrayHandler extends TikiSheetDataHandler
 {
 	var $values = array();
-	
+
 	function TikiSheetSimpleArrayHandler( $simpleArray = array() )
-	{		
+	{
 		$this->values = $simpleArray['values'];
 		$this->name = $simpleArray['name'];
 		$this->type = "simpleArray";
@@ -1114,14 +1126,14 @@ class TikiSheetSimpleArrayHandler extends TikiSheetDataHandler
 		$i = 0;
 
 		foreach($this->values as $row) {
-			$j = 0;	
+			$j = 0;
 			foreach($row as $key => $col) {
 				$sheet->initCell( $i, $j );
-				
+
 				if (!empty($col[0]) && $col[0] == '=' ) {
 					$sheet->setCalculation( substr($col, 1) );
 				}
-				
+
 				if (is_array($col)) {
 					foreach($col as $colKey => $val) {
 						if (empty($val)) {
@@ -1130,17 +1142,17 @@ class TikiSheetSimpleArrayHandler extends TikiSheetDataHandler
 					}
 					$col = implode(",", $col);
 				}
-				
+
 				$col = htmlspecialchars($col);
-				
+
 				$sheet->setValue( $i == 0 ? $key : $col );
-				
+
 				$sheet->setSize( 1, 1 );
 				$j++;
 			}
 			$i++;
 		}
-		
+
 		return true;
 	}
 
@@ -1149,7 +1161,7 @@ class TikiSheetSimpleArrayHandler extends TikiSheetDataHandler
 	{
 		return false;
 	}
-	
+
 	// name {{{2
 	function name()
 	{
@@ -1178,7 +1190,7 @@ class TikiSheetCSVExcelHandler extends TikiSheetDataHandler
 {
     var $file;
     var $lineLen;
-    
+
     /** Constructor {{{2
      * Initializes the the serializer on a file.
      * @param $file The file path to save or load from.
@@ -1197,11 +1209,11 @@ class TikiSheetCSVExcelHandler extends TikiSheetDataHandler
 		$rows = explode("\n", $this->data);
 		for($i = 0; $i < count($rows) && $i < $this->maxrows; $i++) {
 			$cols = preg_split("/[,;](?!(?:[^\\\",;]|[^\\\"],[^\\\"])+\\\")/", $rows[$i]);
-			
+
 			for($j = 0; $j < count($cols) && $j < $this->maxcols; $j++) {
 				$sheet->initCell( $i, $j );
 				$sheet->setValue( $cols[$j] );
-				
+
 				if ( isset($cols[$j]) ) {
 					if (strlen( $cols[$j] )) {
 						if ($cols[$j][0] == '=' ) {
@@ -1209,13 +1221,13 @@ class TikiSheetCSVExcelHandler extends TikiSheetDataHandler
 						}
 					}
 				}
-				
+
 				$sheet->setSize( 1, 1 );
 			}
 		}
-		
+
 		if ($i >= $this->maxrows || $j >= $this->maxcols) $this->truncated = true;
-		
+
 		return true;
 	}
 
@@ -1228,7 +1240,7 @@ class TikiSheetCSVExcelHandler extends TikiSheetDataHandler
         {
             $total[] = implode(';', $row);
         }
-        
+
         if ( is_array( $total ) )
             $total = implode( "\n", $total );
 
@@ -1241,7 +1253,7 @@ class TikiSheetCSVExcelHandler extends TikiSheetDataHandler
             header("Expires: 0");
             header("Cache-Control: must-revalidate, post-check=0,pre-check=0");
             header("Pragma: public");
-            
+
             $this->output = $total;
 
             return true;
@@ -1278,7 +1290,7 @@ class TikiSheetCSVExcelHandler extends TikiSheetDataHandler
     {
         return "1.0";
     }
-    
+
     private function fputcsvexcel( $row, $fd=';', $quot='"', $limit)
     {
        $str='';
@@ -1291,7 +1303,7 @@ class TikiSheetCSVExcelHandler extends TikiSheetDataHandler
 					Array($quot.$quot,  ''),
 	                $cell
 				);
-				
+
 				if (strchr($cell, $fd)) {
 					$str.=$quot.$cell.$quot.$fd;
 				} else {
@@ -1300,9 +1312,9 @@ class TikiSheetCSVExcelHandler extends TikiSheetDataHandler
        		}
 			$i++;
        }
-    
+
        return  $str;
-    }    
+    }
  } // }}}1
 
 /** TikiSheetDatabaseHandler {{{1
@@ -1334,12 +1346,12 @@ class TikiSheetDatabaseHandler extends TikiSheetDataHandler
 	function TikiSheetDatabaseHandler( $id , $date = null )
 	{
 		global $tikilib, $sheetlib;
-		
+
 		$this->id = $id;
 		$this->readDate = ( $date ? $date : time() );
-		
+
 		$info = $sheetlib->get_sheet_info( $this->id);
-		
+
 		$this->type = "sheet";
 		$this->name = $info['title'];
 	}
@@ -1348,14 +1360,14 @@ class TikiSheetDatabaseHandler extends TikiSheetDataHandler
 	function _load( &$sheet )
 	{
 		global $tikilib, $sheetlib;
-		
+
 		$result = $tikilib->query( "
 			SELECT `rowIndex`, `columnIndex`, `value`, `calculation`, `width`, `height`, `format`, `style`, `class`, `user`
 			FROM `tiki_sheet_values`
 			WHERE
-				`sheetId` = ? AND 
-				? >= `begin` AND 
-				( 
+				`sheetId` = ? AND
+				? >= `begin` AND
+				(
 					`end` IS NULL OR
 					`end` > ?
 				)
@@ -1378,8 +1390,8 @@ class TikiSheetDatabaseHandler extends TikiSheetDataHandler
 			SELECT `className`, `headerRow`, `footerRow`, `parseValues`
 			FROM `tiki_sheet_layout`
 			WHERE
-				`sheetId` = ? AND 
-				? >= `begin` AND 
+				`sheetId` = ? AND
+				? >= `begin` AND
 				( `end` IS NULL OR `end` > ? )
 		", array( $this->id, (int)$this->readDate, (int)$this->readDate ) );
 
@@ -1388,14 +1400,14 @@ class TikiSheetDatabaseHandler extends TikiSheetDataHandler
 			extract( $row );
 			$sheet->configureLayout( $className, $headerRow, $footerRow, $parseValues );
 		}
-		
+
 		return true;
 	}
 
 	function name() {
 		return $this->name;
 	}
-	
+
 	// _save {{{2
 	function _save( &$sheet )
 	{
@@ -1437,7 +1449,7 @@ class TikiSheetDatabaseHandler extends TikiSheetDataHandler
 				$format = $sheet->cellInfo[$row][$col]['format'];
 				$style = $sheet->cellInfo[$row][$col]['style'];
 				$class = $sheet->cellInfo[$row][$col]['class'];
-				
+
 				$updates[] = $row;
 				$updates[] = $col;
 
@@ -1462,7 +1474,7 @@ class TikiSheetDatabaseHandler extends TikiSheetDataHandler
 				$old[$row['rowIndex'].'-'.$row['columnIndex']]['class'] = $row['class'];
 			}
 		}
-			
+
 		$tikilib->query( "UPDATE `tiki_sheet_values` SET `end` = ?  WHERE `sheetId` = ? AND `end` IS NULL AND ( {$conditions}`rowIndex` >= ? OR `columnIndex` >= ? )", $updates );
 
 		if ( count( $inserts ) > 0 )
@@ -1483,7 +1495,7 @@ class TikiSheetDatabaseHandler extends TikiSheetDataHandler
 			if ($prefs['feature_contribution'] == 'y' && isset($_REQUEST['contributions'])) {
 				global $contributionlib; include_once('lib/contribution/contributionlib.php');
 				$contributionlib->assign_contributions($_REQUEST['contributions'], $this->id, 'sheet', '', '', '');
-			}			
+			}
 			if (isset($_REQUEST['contributions']))
 				$logslib->add_action('Updated', $this->id, 'sheet', "add=$add&amp;del=$del&amp;sheetId=".$this->id, '', '', '', '',  $_REQUEST['contributions']);
 			else
@@ -1494,17 +1506,17 @@ class TikiSheetDatabaseHandler extends TikiSheetDataHandler
 
 		return true;
 	}
-	
+
 	/** setReadDate {{{2
 	 * Modifies the instant at which the snapshot of the
-	 * database is taken. 
+	 * database is taken.
 	 * @param $timestamp A unix timestamp.
 	 */
 	function setReadDate( $timestamp )
 	{
 		$this->readDate = $timestamp;
 	}
-	
+
 	// supports {{{2
 	function supports( $type )
 	{
@@ -1553,14 +1565,14 @@ class TikiSheetExcelHandler extends TikiSheetDataHandler
 					foreach( $cols as $col=>$value )
 					{
 						$sheet->initCell( $row, $col );
-						
+
 						$info = $data['cellsInfo'][$row][$col];
 
 						if ( !isset( $info['rowspan'] ) )
 							$height = 1;
 						else
 							$height = $info['rowspan'];
-						
+
 						if ( !isset( $info['colspan'] ) )
 							$width = 1;
 						else
@@ -1568,7 +1580,7 @@ class TikiSheetExcelHandler extends TikiSheetDataHandler
 
 						$cellValue = $this->encoding->convert_encoding ( $value );
 						$sheet->setValue( $cellValue );
-	                	
+
 						if ( isset($cellValue) ) {
 							if (strlen( $cellValue )) {
 								if ($cellValue[0] == '=' ) {
@@ -1653,13 +1665,13 @@ class TikiSheetOpenOfficeHandler extends TikiSheetDataHandler
 	function TikiSheetOpenOfficeHandler( $file = "php://stdout" )
 	{
 	}
-	
+
 	// _save {{{2
 	function _save( &$sheet )
 	{
 		// Get rid of debug output
 		ob_start();
-		
+
 		APIC::import("org.apicnet.io.OOo.objOOo.OOoTable");
 		$OOoCalc = APIC::loadClass("org.apicnet.io.OOo.OOoDoc");
 
@@ -1667,16 +1679,16 @@ class TikiSheetOpenOfficeHandler extends TikiSheetDataHandler
 		$OOoCalc->setName("export.sxc");
 		$OOoCalc->meta->setCreator("TikiSheet");
 		$OOoCalc->meta->setTitle("TikiSheet Export");
-	
+
 		$OOoCalc->content->addFeuille();
-		
+
 		foreach( $sheet->dataGrid as $rowIndex=>$row )
 			foreach( $row as $columnIndex=>$value )
 				$OOoCalc->content->addcellData($rowIndex + 1, $columnIndex + 1, array("DATA" => $value));
 
 		$OOoCalc->save();
 		$OOoCalc->close();
-		ob_end_clean();	
+		ob_end_clean();
 
 		$OOoCalc->download();
 
@@ -1724,12 +1736,12 @@ class TikiSheetWikiTableHandler extends TikiSheetDataHandler
 	function _load( &$sheet )
 	{
 		global $tikilib;
-		
+
 		$result = $tikilib->query( "SELECT `data` FROM `tiki_pages` WHERE `pageName` = ?", array( $this->pageName ) );
 		if ( $row = $result->fetchRow() )
 		{
 			$tables = $this->getRawTables( $row['data'] );
-			
+
 			$row = 0;
 			foreach( $tables as $table )
 			{
@@ -1744,6 +1756,21 @@ class TikiSheetWikiTableHandler extends TikiSheetDataHandler
 						$sheet->initCell( $row, $col );
 						$sheet->setValue( $value );
 						if ( isset($value) ) {
+							if (preg_match("/^::(.*)::$/", $value, $matches)) {
+								$sheet->setClass($sheet->getClass()." styleCenter");
+								$value = $matches[1];
+								$sheet->setValue( $value );
+							}
+							if (preg_match("/^__(.*)__$/", $value, $matches)) {
+								$sheet->setClass($sheet->getClass()." styleBold");
+								$value = $matches[1];
+								$sheet->setValue( $value );
+							}
+							if (preg_match("/^''(.*)''$/", $value, $matches)) {
+								$sheet->setClass($sheet->getClass()." styleItalic");
+								$value = $matches[1];
+								$sheet->setValue( $value );
+							}
 							if (strlen( $value )) {
 								if ($value[0] == '=' ) {
 									$sheet->setCalculation( substr($value, 1) );
@@ -1778,7 +1805,7 @@ class TikiSheetWikiTableHandler extends TikiSheetDataHandler
 			$pos = $end + 2;
 
 			$content = substr( $data, $begin + 2, $end - $begin - 2 );
-			
+
 			if ( strpos( $content, '|' ) !== false )
 				$tables[] = $content;
 		}
@@ -1814,7 +1841,7 @@ class TikiSheetOutputHandler extends TikiSheetDataHandler
 {
 	var $heading;
 	var $parseOutput;
-	
+
 	/** Constructor {{{2
 	 * Identifies the caption of the table if it applies.
 	 * @param $heading 			The heading
@@ -1825,7 +1852,7 @@ class TikiSheetOutputHandler extends TikiSheetDataHandler
 		$this->heading = $heading;
 		$this->parseOutput = $parseOutput;
 	}
-	
+
 	// _save {{{2
 	function _save( &$sheet )
 	{
@@ -1851,29 +1878,29 @@ class TikiSheetOutputHandler extends TikiSheetDataHandler
 		$title = " title='" . htmlspecialchars($sheet->name(), ENT_QUOTES) . "'";
 		$sub = $sheet->isSubSheet ? ' style="display:none;"' : '';
 		$type = (!empty($sheet->type) ? ' data-type="'.$sheet->type.'" ' : '');
-		
+
 		$this->output = "<table{$class}{$id}{$sub}{$title}{$type}>\n";
 
 		if ( !is_null( $this->heading ) )
 			$this->output .= "	<caption>{$this->heading}</caption>\n";
-		
+
 		if ( $sheet->headerRow > 0 && $sheet->getRangeBeginRow() < 0 )
 		{
 			$this->output .= "	<thead>\n";
 			$this->drawRows( $sheet, 0, $sheet->headerRow );
 			$this->output .= "	</thead>\n";
 		}
-		
+
 		$this->output .= "	<colgroup>\n";
 		$this->drawCols( $sheet, $sheet->getRangeBeginCol() < 0 ? $sheet->headerRow : $sheet->getRangeBeginCol(),
 								 $sheet->getRangeEndCol() < 0 ? $sheet->getColCount() - $sheet->footerRow : $sheet->getRangeEndCol() );
 		$this->output .= "	</colgroup>\n";
-		
+
 		$this->output .= "	<tbody>\n";
 		$this->drawRows( $sheet, $sheet->getRangeBeginRow() < 0 ? $sheet->headerRow : $sheet->getRangeBeginRow(),
 								 $sheet->getRangeEndRow() < 0 ? $sheet->getRowCount() - $sheet->footerRow : $sheet->getRangeEndRow() );
 		$this->output .= "	</tbody>\n";
-		
+
 		if ( $sheet->footerRow > 0 && $sheet->getRangeBeginRow() < 0 )
 		{
 			$this->output .= "	<tfoot>\n";
@@ -1882,7 +1909,7 @@ class TikiSheetOutputHandler extends TikiSheetDataHandler
 		}
 
 		$this->output .= "</table>\n";
-		
+
 		return true;
 	}
 
@@ -1901,9 +1928,9 @@ class TikiSheetOutputHandler extends TikiSheetDataHandler
 			$trStyleHeight = "";
 			$trHeight = "20px";
 			$trHeightIsSet = false;
-			
+
 			$endCol = $sheet->getRangeEndCol() < 0 ? $sheet->getColumnCount() : $sheet->getRangeEndCol();
-			
+
 			for( $j = $sheet->getRangeBeginCol(); $endCol > $j; $j++ )
 			{
 				$width = $height = '';
@@ -1916,13 +1943,13 @@ class TikiSheetOutputHandler extends TikiSheetDataHandler
 					continue;
 
 				$append = ' id="cell_c'.($j+1).'_r'.($i+1).'"';
-					
+
 				if ( $width > 1 )
 					$append .= " colspan='{$width}'";
 
 				if ( $height > 1 )
 					$append .= " rowspan='{$height}'";
-				
+
 				if (!empty($sheet->calcGrid[$i][$j])) {
 					$append .= ' formula="='.str_replace('"', "'", $sheet->calcGrid[$i][$j]).'"';
 				}
@@ -1935,7 +1962,7 @@ class TikiSheetOutputHandler extends TikiSheetDataHandler
 				$format = $sheet->cellInfo[$i][$j]['format'];
 				if ( !empty( $format ) )
 					$data = TikiSheetDataFormat::$format( $data );
-				
+
 				$style = $sheet->cellInfo[$i][$j]['style'];
 				if ( !empty( $style ) ) {
 					//we have to sanitize the css style here
@@ -1943,32 +1970,32 @@ class TikiSheetOutputHandler extends TikiSheetDataHandler
 					$color = $sheetlib->get_attr_from_css_string($style, "color", "");
 					$bgColor = $sheetlib->get_attr_from_css_string($style, "background-color", "");
 					$tdHeight = '';
-					
+
 					if ($trHeightIsSet == false) {
 						$trHeight = $sheetlib->get_attr_from_css_string($style, "height", "20px");
 						$trHeightIsSet = true;
 					}
-					
+
 					if ($color) {
 						$tdStyle .= "color:$color;";
 					}
 					if ($bgColor) {
 						$tdStyle .= "background-color:$bgColor;";
 					}
-					
+
 					$tdHeight = $trHeight;
 					if ($tdHeight) {
 						$tdStyle .= "height:$tdHeight;";
 						$append .= " height='".str_replace("px", "", $tdHeight)."'";
 					}
-					
+
 					$append .= " style='$tdStyle'";
 				}
-				
+
 				$class = $sheet->cellInfo[$i][$j]['class'];
 				if ( !empty( $class ) )
 					$append .= ' class="'.$class.'"';
-				
+
 				if ($this->parseOutput && $sheet->parseValues == 'y') {
 					global $tikilib;
 					// only parse if we have non-alphanumeric or space chars
@@ -1984,7 +2011,7 @@ class TikiSheetOutputHandler extends TikiSheetDataHandler
 				}
 				$td .= "			<td$append>$data</td>\n";
 			}
-			
+
 			if (!empty($td)) {
 				$this->output .= "		<tr style='height: $trHeight;' height='".str_replace("px", "", $trHeight)."'>\n";
 				$this->output .= $td;
@@ -1992,7 +2019,7 @@ class TikiSheetOutputHandler extends TikiSheetDataHandler
 			}
 		}
 	}
-	
+
 	/** drawCols {{{2
 	 * Draws out a defined set of rows from the sheet.
 	 * @param $sheet The data container.
@@ -2010,7 +2037,7 @@ class TikiSheetOutputHandler extends TikiSheetDataHandler
 			$this->output .= "<col style='width: $width;' width='$width' />\n";
 		}
 	}
-	
+
 	// supports {{{2
 	function supports( $type )
 	{
@@ -2035,7 +2062,7 @@ class TikiSheetLabeledOutputHandler extends TikiSheetDataHandler
 	function TikiSheetLabeledOutputHandler()
 	{
 	}
-	
+
 	// _save {{{2
 	function _save( &$sheet )
 	{
@@ -2043,21 +2070,21 @@ class TikiSheetLabeledOutputHandler extends TikiSheetDataHandler
 
 		$this->output .= "	<thead>\n";
 		$this->output .= "		<tr><th></th>\n";
-		
+
 		$prev = 'A';
 		for( $j = 0; $sheet->getColumnCount() > $j; $j++ )
 		{
 			$this->output .= "			<th>$prev</th>\n";
 			$prev = $sheet->increment( $prev );
 		}
-			
+
 		$this->output .= "		</tr>\n";
 		$this->output .= "	</thead>\n";
-		
+
 		$this->output .= "	<tbody>\n";
 		$this->drawRows( $sheet, 0, $sheet->getRowCount() );
 		$this->output .= "	</tbody>\n";
-		
+
 		$this->output .= "</table>\n";
 
 		return true;
@@ -2072,7 +2099,7 @@ class TikiSheetLabeledOutputHandler extends TikiSheetDataHandler
 	function drawRows( &$sheet, $begin, $end )
 	{
 		global $sheetlib;
-		
+
 		for( $i = $begin; $end > $i; $i++ )
 		{
 			$trHeight = "20px";
@@ -2099,29 +2126,29 @@ class TikiSheetLabeledOutputHandler extends TikiSheetDataHandler
 				$format = $sheet->cellInfo[$i][$j]['format'];
 				if ( !empty( $format ) )
 					$data = TikiSheetDataFormat::$format( $data );
-					
+
 				$style = $sheet->cellInfo[$i][$j]['style'];
 				if ( !empty( $style ) ) {
 					$append .= " style='{$style}'";
-					
+
 					$trHeight = $sheetlib->get_attr_from_css_string($style, "height", "20px");
 				}
-					
+
 				$class = $sheet->cellInfo[$i][$j]['class'];
 				if ( !empty( $class ) )
 					$append .= " class='{$class}'";
-					
+
 				$td .= "			<td$append>$data</td>\n";
 			}
-			
+
 			$tr = "		<tr  style='height: $trHeight;' height='$trHeight'><th>" . ($i + 1) . "</th>\n";
 			$tr .= $td;
 			$tr .= "	</tr>\n";
-			
+
 			$this->output .= $tr;
 		}
 	}
-	
+
 	// supports {{{2
 	function supports( $type )
 	{
@@ -2143,7 +2170,7 @@ class TikiSheetHTMLTableHandler extends TikiSheetDataHandler
 {
 
 	var $data;
-	
+
 	/** Constructor {{{2
 	 * Initializes the the serializer on a wiki page
 	 * @param $file The name of the wiki page to perform actions on.
@@ -2158,10 +2185,10 @@ class TikiSheetHTMLTableHandler extends TikiSheetDataHandler
 	{
 
 		$d = $this->data;
-		
+
 		$rows = (int) $d->metadata->rows;
 		$cols = (int) $d->metadata->columns;
-		
+
 		for ($r = 0; $r < $rows; $r++) {
 			for ($c = 0; $c < $cols; $c++) {
 				$ri = 'r'.$r;
@@ -2171,7 +2198,7 @@ class TikiSheetHTMLTableHandler extends TikiSheetDataHandler
 				} else {
 					$val = '';
 				}
-				
+
 				$sheet->initCell( $r, $c );
 				if (isset($d->data->$ri->$ci->width) || isset($d->data->$ri->$ci->height)) {
 					$sheet->setSize( isset($d->data->$ri->$ci->width) ? $d->data->$ri->$ci->width : 1,  isset($d->data->$ri->$ci->height) ? $d->data->$ri->$ci->height : 1 );
@@ -2197,10 +2224,10 @@ class TikiSheetHTMLTableHandler extends TikiSheetDataHandler
 						$sheet->setClass($class);
 					}
 				}
-				
+
 			}
 		}
-		
+
 		return true;
 	}
 
