@@ -541,7 +541,7 @@ class HeaderLib
 	{
 		$files = $this->collect_css_files();
 		$minified = '';
-		foreach ( $files['screen'] as $file) {
+		foreach ( array_merge($files['screen'], $files['default']) as $file) {
 			$minified .= $this->minify_css($file);
 		}
 		$minified = $this->handle_css_imports($minified);
@@ -553,19 +553,20 @@ class HeaderLib
 	{
 		$files = $this->collect_css_files();
 
-		$back = $this->output_css_files_list($files['screen'], 'screen');
+		$back = $this->output_css_files_list($files['default'], '');
+		$back .= $this->output_css_files_list($files['screen'], 'screen');
 		$back .= $this->output_css_files_list($files['print'], 'print');
 		return $back;
 	}
 	
-	private function output_css_files_list( $files, $media )
+	private function output_css_files_list( $files, $media = '' )
 	{
 		global $prefs, $smarty;
 		$smarty->loadPlugin('smarty_modifier_escape');
 
 		$back = '';
 
-		if ( $prefs['tiki_minify_css'] == 'y' ) {
+		if ( $prefs['tiki_minify_css'] == 'y' && !empty($files)) {
 			if ( $prefs['tiki_minify_css_single_file'] == 'y' ) {
 				$files = $this->get_minified_css_single($files);
 			} else {
@@ -575,7 +576,11 @@ class HeaderLib
 
 		foreach ( $files as $file ) {
 			$file = $this->convert_cdn($file);
-			$back.= "<link rel=\"stylesheet\" href=\"" . smarty_modifier_escape($file) . "\" type=\"text/css\" media=\"" . smarty_modifier_escape($media) . "\" />\n";
+			$back .= "<link rel=\"stylesheet\" href=\"" . smarty_modifier_escape($file) . "\" type=\"text/css\"";
+			if (!empty($media)) {
+				$back .= " media=\"" . smarty_modifier_escape($media) . "\"";
+			}
+			$back .= " />\n";
 		}
 
 		return $back;
@@ -667,6 +672,7 @@ class HeaderLib
 		global $tikipath, $tikidomain, $style_base;
 
 		$files = array(
+			'default' => array(),
 			'screen' => array(),
 			'print' => array(),
 		);
@@ -680,8 +686,7 @@ class HeaderLib
 				}
 				$cfprint = str_replace('.css', '', $cf) . '-print.css';
 				if (!file_exists($tikipath . $cfprint)) {
-					$files['screen'][] = $cf;
-					$files['print'][] = $cf;
+					$files['default'][] = $cf;
 				} else {
 					$files['screen'][] = $cf;
 					$files['print'][] = $cfprint;
