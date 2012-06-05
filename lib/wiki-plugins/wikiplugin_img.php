@@ -994,10 +994,10 @@ function wikiplugin_img( $data, $params, $offset, $parseOptions='' )
 	if (!empty($dbinfo['filetype'])  && !empty($mimetypes['svg']) && $dbinfo['filetype'] == $mimetypes['svg']) {
 		$tagName = 'div';
 		$repldata = $dbinfo['data'];
-		$replimg = '<div type="image/svg+xml" class="svgImage" ';
+		$replimg = '<div type="image/svg+xml" class="svgImage pluginImg' . $imgdata['fileId'] . '" ';
 	} else {
 		$tagName = 'img';
-		$replimg = '<img src="' . $src . '"';
+		$replimg = '<img src="' . $src . '" class="regImage pluginImg' . $imgdata['fileId'] . '" ';
 	}
 
 	if (!empty($imgdata_dim)) $replimg .= $imgdata_dim;
@@ -1360,7 +1360,7 @@ function wikiplugin_img( $data, $params, $offset, $parseOptions='' )
 			$iconDisplayStyle = '';
 		}
 		$repl .= "<a href='tiki-edit_draw.php?fileId={$imgdata['fileId']}' onclick='return $(this).ajaxEditDraw();' title='".tr("Edit: Image") . " ".tr("(experimental)") . "'" .
-					" class='editplugin' data-fileid='{$imgdata['fileId']}' data-galleryid='{$imgdata['galleryId']}'{$iconDisplayStyle}>" .
+					" class='editplugin pluginImgEdit{$imgdata['fileId']}' data-fileid='{$imgdata['fileId']}' data-galleryid='{$imgdata['galleryId']}'{$iconDisplayStyle}>" .
 					"<img width='16' height='16' class='icon' alt='Edit' src='img/icons/page_edit.png' /></a>";
 	}
 	
