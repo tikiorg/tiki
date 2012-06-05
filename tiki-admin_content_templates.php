@@ -9,6 +9,7 @@ $section = 'admin';
 require_once ('tiki-setup.php');
 $access->check_feature(array('feature_wiki_templates','feature_cms_templates'), '', 'features', true);
 
+global $templateslib;
 include_once ('lib/templates/templateslib.php');
 
 $auto_query_args = array('templateId');

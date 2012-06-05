@@ -28,16 +28,17 @@
 		<tr>
 			<td>{tr}Use in:{/tr}</td>
 			<td>
+				{$toolbar_section='admin'}
 				{if $prefs.feature_cms_templates eq 'y'}
 					<input type="checkbox" name="section_cms" {if $info.section_cms eq 'y'}checked="checked"{/if} /> 
 					{tr}CMS{/tr} ({tr}Articles{/tr})
-					{$toolbar_section='cms'}
+					{if $info.section_cms eq 'y'}{$toolbar_section='cms'}{/if}
 					<br />
 				{/if}
 				{if $prefs.feature_wiki_templates eq 'y'}
 					<label><input type="checkbox" name="section_wiki" {if $info.section_wiki eq 'y'}checked="checked"{/if} />
 					{tr}Wiki{/tr}</label>
-					{$toolbar_section='wiki page'}
+					{if $info.section_wiki eq 'y'}{$toolbar_section='wiki page'}{/if}
 					<br />
 					<label style="margin-left: 2em;"><input type="checkbox" name="section_wiki_html" {if $info.section_wiki_html eq 'y'}checked="checked"{/if} />
 					{tr}Is HTML{/tr}</label>
@@ -45,25 +46,25 @@
 				{/if}
 				{if $prefs.feature_file_galleries_templates eq 'y'}
 					<label><input type="checkbox" name="section_file_galleries" {if $info.section_file_galleries eq 'y'}checked="checked"{/if} />
-					{$toolbar_section='admin'}
+					{if $info.section_file_galleries eq 'y'}{$toolbar_section='admin'}{/if}
 					{tr}File Galleries{/tr}</label>
 					<br />
 				{/if}
 				{if $prefs.feature_newsletters eq 'y'}
 					<label><input type="checkbox" name="section_newsletters" {if $info.section_newsletters eq 'y'}checked="checked"{/if} />
-					{$toolbar_section='newsletters'}
+					{if $info.section_newsletters eq 'y'}{$toolbar_section='newsletters'}{/if}
 					{tr}Newsletters{/tr}</label>
 					<br />
 				{/if}
 				{if $prefs.feature_events eq 'y'}
 					<label><input type="checkbox" name="section_events" {if $info.section_events eq 'y'}checked="checked"{/if} />
-					{$toolbar_section='calendar'}
+					{if $info.section_events eq 'y'}{$toolbar_section='calendar'}{/if}
 					{tr}Events{/tr}</label>
 					<br />
 				{/if}
 				{if $prefs.feature_html_pages eq 'y'}
 					<label><input type="checkbox" name="section_html" {if $info.section_html eq 'y'}checked="checked"{/if} />
-					{$toolbar_section='wiki page'}
+					{if $info.section_html eq 'y'}{$toolbar_section='wiki page'}{/if}
 					{tr}HTML Pages{/tr}</label>
 					<br />
 				{/if}
