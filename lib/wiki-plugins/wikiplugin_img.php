@@ -1352,8 +1352,17 @@ function wikiplugin_img( $data, $params, $offset, $parseOptions='' )
 		$repl = '{img src=' . $src . "\"}\n<p>" . $imgdata['desc'] . '</p>'; 
 	}
 
-	global $tiki_p_edit;
-	if ($prefs['feature_draw'] === 'y' && $tiki_p_upload_files === 'y' && $tiki_p_edit === 'y') {
+	global $tiki_p_edit, $fromTracker;
+	$globalperms = Perms::get(array( 'type' => 'file gallery', 'object' => $imgdata['galleryId'] ));
+
+	if (
+		$prefs['feature_draw'] == 'y' &&
+		$globalperms->upload_files == 'y' &&
+		(
+			$tiki_p_edit == 'y' ||
+			$fromTracker == true
+		)
+	) {
 		if ($prefs['wiki_edit_icons_toggle'] == 'y' && !isset($_COOKIE['wiki_plugin_edit_view'])) {
 			$iconDisplayStyle = " style='display:none;'";
 		} else {

@@ -89,11 +89,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_REQUEST['data'])) {
 		
 		if ($fileInfo['filetype'] != $mimetypes["svg"] && $prefs['fgal_keep_fileId'] == 'y') { // this is a conversion from an image other than svg
 			$newFileInfo = $filegallib->get_file_info($fileId);
-			
-			$archives = $filegallib->get_archives($fileInfo['fileId']);
-			$archive = end($archives['data']);
-			
-			$newFileInfo['data'] = str_replace('?fileId=' . $fileInfo['fileId'] . '#', '?fileId=' . $archive['fileId'] . '#', $newFileInfo['data']);
+
+			$archiveFileId = $tikilib->getOne("
+				SELECT fileId
+				FROM tiki_files
+				WHERE archiveId = ?
+				ORDER BY lastModif DESC
+			", array($fileId));
+
+			$newFileInfo['data'] = str_replace('?fileId=' . $fileInfo['fileId'] . '#', '?fileId=' . $archiveFileId . '#', $newFileInfo['data']);
 			$fileId = $filegallib->save_archive($newFileInfo["fileId"], $newFileInfo['galleryId'], 0, $newFileInfo['filename'], $newFileInfo['description'], $newFileInfo['name'].".svg", $newFileInfo['data'], strlen($newFileInfo['data']), $type, $newFileInfo['user'], null, null, $user);
 		}
 	} else {
@@ -108,7 +112,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_REQUEST['data'])) {
 if ($fileInfo['filetype'] == $mimetypes["svg"]) { 
 	$data = $fileInfo["data"];
 } else { //we already confirmed that this is an image, here we make it compatible with svg
-	$data = '<svg width="640" height="480" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+	$image = imagecreatefromstring($fileInfo["data"]);
+	$w = imagesx($image);
+	$h = imagesy($image);
+
+	$data = '<svg width="' . $w . '" height="' . $h . '" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 	<g>
 		<title>Layer 1</title>
 		<image x="1" y="1" width="100%" height="100%" id="svg_1" xlink:href="' . (empty($fileInfo['fileId']) ? '' : $tikilib->tikiUrl() . 'tiki-download_file.php?fileId=' . $fileInfo['fileId'] . '#image' ) . '"/>
@@ -161,6 +169,8 @@ $jsTracking = "$.wikiTrackingDraw = {
 if (isset($_REQUEST['raw'])) {
 	$jsFunctionality = "";
 } else {
+	$prefs['feature_draw_hide_buttons'] = addslashes(htmlentities($prefs['feature_draw_hide_buttons']));
+
 	$jsFunctionality =
 	"$('#drawFullscreen')
 		.click(function() {
