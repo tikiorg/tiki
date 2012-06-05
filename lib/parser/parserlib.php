@@ -63,7 +63,7 @@ class ParserLib extends TikiDb_Bridge
 	{
 		global $page;
 
-		$this->option = array_merge((empty($this->option) ? array(
+		$this->option = array_merge(array(
 			'is_html'=> false,
 			'absolute_links'=> false,
 			'language' => '',
@@ -80,7 +80,8 @@ class ParserLib extends TikiDb_Bridge
 			'process_wiki_paragraphs' => true,
 			'min_one_paragraph' => false,
 			'skipvalidation'=>  false,
-		) : $this->option), $option);
+			'ck_editor'=>   false,
+		), $option);
 	}
 
 	function __construct()
@@ -985,9 +986,13 @@ if ( \$('#$id') ) {
 	}
 
 	//*
-	function plugin_execute( $name, $data = '', $args = array(), $offset = 0, $validationPerformed = false  )
+	function plugin_execute( $name, $data = '', $args = array(), $offset = 0, $validationPerformed = false, $option = array()  )
 	{
 		global $prefs, $killtoc;
+
+		if (!empty($option)) {
+			$this->setOptions($option);
+		}
 
 		$data = $this->unprotectSpecialChars($data, true);					// We want to give plugins original
 		$args = preg_replace(array('/^&quot;/','/&quot;$/'),'',$args);		// Similarly remove the encoded " chars from the args
@@ -1448,7 +1453,7 @@ if ( \$('#$id') ) {
 	//PARSEDATA
 	// options defaults : is_html => false, absolute_links => false, language => ''
 	//*
-	function parse_data($data, $option = null)
+	function parse_data($data, $option = array())
 	{
 		global $tikilib;
 		// Don't bother if there's nothing...
@@ -1461,13 +1466,12 @@ if ( \$('#$id') ) {
 		global $page_regex, $slidemode, $prefs, $ownurl_father, $tiki_p_upload_picture, $page_ref_id, $user, $tikidomain, $tikiroot;
 		$wikilib = TikiLib::lib('wiki');
 
+		$this->setOptions(); //reset options;
+
 		// Handle parsing options
-		if (!empty($options)) {
+		if (!empty($option)) {
 			$this->setOptions($option);
 		}
-
-
-		if (empty($this->option['ck_editor'])) $this->option['ck_editor'] = false;
 
 		$old_wysiwyg_parsing = null;
 		if ($this->option['ck_editor']) {
@@ -1966,7 +1970,7 @@ if ( \$('#$id') ) {
 	function parse_wiki_argvariable(&$data)
 	{
 		global $prefs, $user;
-		if ( $prefs['feature_wiki_argvariable'] == 'y' && !$options['ck_editor'] ) {
+		if ( $prefs['feature_wiki_argvariable'] == 'y' && !$this->option['ck_editor'] ) {
 			if (preg_match_all("/\\{\\{((\w+)(\\|([^\\}]*))?)\\}\\}/", $data, $args, PREG_SET_ORDER)) {
 				$needles = array();
 				$replacements = array();
