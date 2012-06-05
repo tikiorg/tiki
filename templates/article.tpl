@@ -62,13 +62,11 @@
 						 {if $image_x > 0}{$style=$style|cat:"max-width:"|cat:$image_x|cat:"px;"}{/if}
 						 {if $image_y > 0}{$style=$style|cat:"max-height:"|cat:$image_y|cat:"px;"}{/if} style="{$style}" />
 				{elseif $topicId}
-					{if $useImage eq 'y'}
 						{if $topics[$topicId].image_size > 0}
 							<img 
 								 {if $big_image}class="cboxElement"{elseif $isfloat eq 'y'}style="margin-right:4px;float:left;"{else}class="articleimage"{/if}
 								 alt="{tr}{$topicName}{/tr}"
 								 src="article_image.php?image_type=topic&amp;id={$topicId}" />
-						{/if}
 					{else}
 						{tr}{$topics[$topicId].name|escape}{/tr}
 					{/if}
