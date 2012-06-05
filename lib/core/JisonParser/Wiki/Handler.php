@@ -7,30 +7,25 @@
 
 class JisonParser_Wiki_Handler extends JisonParser_Wiki
 {
+	/* parser tracking */
 	var $parsing = false;
-	var $parsePlugins = true;
-	var $parseNps = true;
-	var $parseLists = true;
-
-	var $origPluginBody = array();
-	public static $hdrCount = 0;
 	public static $spareParsers = array();
-	static public $pluginPreKeys = array();
 
-	var $npOn = false;
+	/* plugin tracking */
 	var $pluginStack = array();
 	public static $pluginCount = 0;
-	var $blockLoc = array();
-	var $blockLast = '';
-	var $blockStack = array();
-	var $olistLen = array();
+	var $pluginEntries = array();
+	public static $pluginsExecutedStack = array();
+	public static $plugins = array();
 
+	/* np tracking */
 	var $npEntries = array();
 	var $npCount = 0;
-	var $pluginEntries = array();
 
+	/* header tracking */
 	public static $headerStack = array();
-	public static $pluginsExecutedStack = array();
+	public static $hdrCount = 0;
+
 
 	//This var is used in both protectSpecialChars and unprotectSpecialChars to simplify the html ouput process
 	var $specialChars = array(
@@ -61,31 +56,39 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	var $page;
 
 	public static $option = array();
+
+	var $optionDefaults = array(
+		'skipvalidation'=>  false,
+		'is_html'=> false,
+		'absolute_links'=> false,
+		'language' => '',
+		'noparseplugins' => false,
+		'stripplugins' => false,
+		'noheaderinc' => false,
+		'page' => '',
+		'print' => false,
+		'parseimgonly' => false,
+		'preview_mode' => false,
+		'suppress_icons' => false,
+		'parsetoc' => true,
+		'inside_pretty' => false,
+		'process_wiki_paragraphs' => true,
+		'min_one_paragraph' => false,
+		'parseBreaks' => true,
+		'parseLists' =>   true,
+		'parseWiki' => true,
+		'parseNps' => true
+	);
+
 	public function setOption($option = array())
 	{
 		$page = $_REQUEST['page'];
+		self::$option['page'] = $page;
 
-		self::$option = array_merge(array(
-			'skipvalidation'=>  false,
-			'is_html'=> false,
-			'absolute_links'=> false,
-			'language' => '',
-			'noparseplugins' => false,
-			'stripplugins' => false,
-			'noheaderinc' => false,
-			'page' => $page,
-			'print' => false,
-			'parseimgonly' => false,
-			'preview_mode' => false,
-			'suppress_icons' => false,
-			'parsetoc' => true,
-			'inside_pretty' => false,
-			'process_wiki_paragraphs' => true,
-			'min_one_paragraph' => false,
-		), $option);
+		self::$option = array_merge($this->optionDefaults, $option);
 	}
 
-	var $addLineBreaksTracking = array(
+	var $parseBreaksTracking = array(
 		'inTable' => 0,
 		'inPre' => 0,
 		'inComment' => 0,
@@ -132,11 +135,18 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 
 	function parsePlugin($input)
 	{
-		if ($this->parsePlugins == true) {
+		if (self::$option['noparseplugins'] == false) {
+			$parseBreaks = self::$option['parseBreaks'];
 			$is_html = self::$option['is_html'];
+
+			$this->setOption(array('parseBreaks'=> false));
 			$this->setOption(array('is_html'=> true));
+
 			$result = $this->parse($input);
+
+			$this->setOption(array('parseBreaks'=> $parseBreaks));
 			$this->setOption(array('is_html'=> $is_html));
+
 			return $result;
 		} else {
 			return $input;
@@ -147,7 +157,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	{
 		$input = "\n" . $input . "\n"; //here we add 2 lines, so the parser doesn't have to do special things to track the first line and last, we remove these when we insert breaks
 
-		if ($this->parseNps == true) {
+		if (self::$option['parseNps'] == true) {
 			$input = preg_replace_callback('/~np~(.|\n)*?~\/np~/', array(&$this, 'removeNpEntities'), $input);
 		}
 
@@ -160,16 +170,19 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 
 		$input = rtrim(ltrim($input, "\n"), "\n"); //here we remove the fake line breaks added just before parse
 
-		if ($this->parseLists == true) {
+		if (self::$option['parseLists'] == true) {
 			$lines = explode("\n", $input);
 
 			$ul = '';
 			$listBeginnings = array();
 			foreach($lines as &$line) {
+				if (self::$option['parseLists'] == true) {
+					$this->parseLists($line, $listBeginnings, $ul);
+				}
 
-				$this->parseLists($line, $listBeginnings, $ul);
-
-				$this->addLineBreaks($line);
+				if (self::$option['parseBreaks'] == true) {
+					$this->parseBreaks($line);
+				}
 			}
 			$input = implode("\n", $lines);
 		}
@@ -207,6 +220,8 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 
 			$this->pluginEntries[$key] = $this->parsePlugin( $this->pluginEntries[$key] );
 
+			//$plugins is a bit different that pluginEntries, an entry will be popped later, $plugins is more for tracking, although their values may be the same for a time, the end result will be an empty entries, but $plugins will have all executed plugin in it
+			self::$plugins[$key] = $pluginDetails['body'];
 		} else {
 			$smarty->assign('plugin_fingerprint', $status);
 			$smarty->assign('plugin_name', $pluginDetails['name']);
@@ -565,7 +580,11 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	{
 		//use of array_reverse, jison is a reverse bottom-up parser, if it doesn't reverse jison doesn't restore the plugins in the right order, leaving the some nested keys as a result
 		foreach(array_reverse($this->pluginEntries) as $key => $entity) {
-			$input = trim(str_replace($key, $entity, $input), "\n");
+			if (self::$option['stripplugins'] == true) {
+				$input = str_replace($key, '', $input);
+			} else {
+				$input = str_replace($key, $entity, $input);
+			}
 
 			if (!$keep) {
 				unset($this->pluginEntries[$key]);
@@ -573,57 +592,59 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		}
 	}
 
-	function addLineBrakesAndCheckToSkipLine(&$skipLine, &$lineInLowerCase, $key, $start, $stop, $skipBefore = false, $skipAfter = false)
+	function checkToSkipLine(&$skipLine, &$lineInLowerCase, $key, $start, $stop, $skipBefore = false, $skipAfter = false)
 	{
 		// check if we are inside a script not insert <br />
 		$opens = substr_count($lineInLowerCase, $start);
 		$closes = substr_count($lineInLowerCase, $stop);
 
-		$this->addLineBreaksTracking[$key] += $opens;
-		$this->addLineBreaksTracking[$key] -= $closes;
+		$this->parseBreaksTracking[$key] += $opens;
+		$this->parseBreaksTracking[$key] -= $closes;
 
 		if ($skipLine == true) { //if true, only one line, no need to check and set again
 			return;
 		}
 
-		if ($skipBefore == true && $opens > 0 && $this->addLineBreaksTracking[$key] == 0) {
+		if ($skipBefore == true && $opens > 0 && $this->parseBreaksTracking[$key] == 0) {
 			$skipLine = true;
 		}
 
-		if ($skipAfter == true && $closes > 0 && $this->addLineBreaksTracking[$key] == 0) {
+		if ($skipAfter == true && $closes > 0 && $this->parseBreaksTracking[$key] == 0) {
 			$skipLine = true;
 		}
 	}
 
-	function addLineBreaks(&$line)
+	function parseBreaks(&$line)
 	{
 		$lineInLowerCase = TikiLib::strtolower($line);
 
 		$skipLine = false;
 
-		$this->addLineBrakesAndCheckToSkipLine($skipLine, $lineInLowerCase, 'inComment', "<!--", "-->");
+		$this->checkToSkipLine($skipLine, $lineInLowerCase, 'inComment', "<!--", "-->");
 
 		// check if we are inside a ~pre~ block and, if so, ignore
 		// monospaced and do not insert <br />
-		$this->addLineBrakesAndCheckToSkipLine($skipLine, $lineInLowerCase, 'inPre', "<pre", "</pre");
+		$this->checkToSkipLine($skipLine, $lineInLowerCase, 'inPre', "<pre", "</pre");
 
 		// check if we are inside a table, if so, ignore monospaced and do
 		// not insert <br />
-		$this->addLineBrakesAndCheckToSkipLine($skipLine, $lineInLowerCase, 'inTable', "<table", "</table", true, true);
+		$this->checkToSkipLine($skipLine, $lineInLowerCase, 'inTable', "<table", "</table", true, true);
 
 		// check if we are inside an ul TOC list, if so, ignore monospaced and do
 		// not insert <br />
-		$this->addLineBrakesAndCheckToSkipLine($skipLine, $lineInLowerCase, 'inTOC', "<ul class=\"toc", "</ul><!--toc-->", true, true);
+		$this->checkToSkipLine($skipLine, $lineInLowerCase, 'inTOC', "<ul class=\"toc", "</ul><!--toc-->", true, true);
 
 		// check if we are inside a script not insert <br />
-		$this->addLineBrakesAndCheckToSkipLine($skipLine, $lineInLowerCase, 'inScript', "<script", "</script");
+		$this->checkToSkipLine($skipLine, $lineInLowerCase, 'inScript', "<script", "</script");
 
 		// check if we are inside a script not insert <br />
-		$this->addLineBrakesAndCheckToSkipLine($skipLine, $lineInLowerCase, 'inDiv', "<div", "</div", true, true);
+		$this->checkToSkipLine($skipLine, $lineInLowerCase, 'inDiv', "<div", "</div", true, true);
 
 		// check if we are inside a script not insert <br />
-		$this->addLineBrakesAndCheckToSkipLine($skipLine, $lineInLowerCase, 'inHeader', "<h", "</h", true, true);
+		$this->checkToSkipLine($skipLine, $lineInLowerCase, 'inHeader', "<h", "</h", true, true);
 
+		// check if we are inside a script not insert <br />
+		$this->checkToSkipLine($skipLine, $lineInLowerCase, 'inHeader', "<br", "", true, true);
 
 		if ($skipLine == true) {
 			//we skip the line just after a header
@@ -631,15 +652,15 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		}
 
 		if (
-			$this->addLineBreaksTracking['inComment'] == 0 &&
-			$this->addLineBreaksTracking['inPre'] == 0 &&
-			$this->addLineBreaksTracking['inTable'] == 0 &&
-			$this->addLineBreaksTracking['inTOC'] == 0 &&
-			$this->addLineBreaksTracking['inScript'] == 0 &&
-			$this->addLineBreaksTracking['inDiv'] == 0 &&
-			$this->addLineBreaksTracking['inHeader'] == 0
+			$this->parseBreaksTracking['inComment'] == 0 &&
+			$this->parseBreaksTracking['inPre'] == 0 &&
+			$this->parseBreaksTracking['inTable'] == 0 &&
+			$this->parseBreaksTracking['inTOC'] == 0 &&
+			$this->parseBreaksTracking['inScript'] == 0 &&
+			$this->parseBreaksTracking['inDiv'] == 0 &&
+			$this->parseBreaksTracking['inHeader'] == 0
 		) {
-			$line .= '<br />';
+			$line = "<br />" . $line;
 		}
 	}
 
@@ -761,12 +782,6 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		return ($this->yyloc['first_column'] == 0 ? true : false);
 	}
 
-	function popAllStates()
-	{
-		$this->conditionStackCount = 0;
-		$this->conditionStack = array();
-	}
-
 	// This function handles the protection of html entities so that they are not mangled when
 	// parse_htmlchar runs, and as well so they can be properly seen, be it html or non-html
 	function protectSpecialChars($data)
@@ -802,41 +817,33 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		return $data;
 	}
 
-	function beginBlock($condition)
-	{
-		if ($condition != $this->blockLast) {
-			if (empty($this->blockLoc[$condition])) $this->blockLoc[$condition] = 0;
-			$this->blockLoc[$condition]++;
-		}
-
-		$this->blockLast = $condition;
-
-		return parent::begin($condition);
-	}
-
-	function newLine()
-	{
-		return '<br />';
-	}
 	//end state handlers
 	//Wiki Syntax Objects Parsing Start
-	function bold($content)
+	function bold($content) //__content__
 	{
+		if (self::$option['parseWiki'] == false) return "__" . $content . "__";
+
 		return '<strong>' . $content . '</strong>';
 	}
 
-	function box($content)
+	function box($content) //^content^
 	{
+		if (self::$option['parseWiki'] == false) return "^" . $content . "^";
+
 		return '<div class="simplebox">' . $content . '</div>';
 	}
 
-	function center($content)
+	function center($content) //::content::
 	{
+		if (self::$option['parseWiki'] == false) return "::" . $content . "::";
+
 		return '<center>' . $content . '</center>';
 	}
 
 	function colortext($content)
 	{
+		if (self::$option['parseWiki'] == false) return "" . $content . ""; //TODO:colortext syntax
+
 		$text = explode(':', $content);
 		$color = $text[0];
 		$content = $text[1];
@@ -844,17 +851,14 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		return '<span style="color: #' . $color . ';">' . $content . '</span>';
 	}
 
-	function content($content)
+	function italics($content) //''content''
 	{
-		return $content;
-	}
+		if (self::$option['parseWiki'] == false) return "''" . $content . "''";
 
-	function italics($content)
-	{
 		return '<i>' . $content . '</i>';
 	}
 
-	function header($content)
+	function header($content) //!content
 	{
 		$hNum = 1;
 		$headerLength = strlen($content);
@@ -869,6 +873,8 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		$content = substr($content, $hNum - 1);
 
 		self::$headerStack[] = $content;
+
+		if (self::$option['parseWiki'] == false) return "!" . $content; //TODO: add all the headers together
 
 		return $this->headerButton($hNum) . '<h' . $hNum . '>' . $content . '</h' . $hNum . '>';
 	}
@@ -976,13 +982,17 @@ $("#' . $id . '").click( function(event) {
 		return '';
 	}
 
-	function hr()
+	function hr() //---
 	{
+		if (self::$option['parseWiki'] == false) return "---";
+
 		return '<hr />';
 	}
 
-	function link($content)
+	function link($content) //[content|content]
 	{
+		if (self::$option['parseWiki'] == false) return "[" . $content . "]";
+
 		$link = explode('|', $content);
 		$href = (isset($link[0]) ? $link[0] : $content);
 		$text = (isset($link[1]) ? $link[1] : $href);
@@ -990,18 +1000,25 @@ $("#' . $id . '").click( function(event) {
 		return '<a href="' . $href . '">' . $text . '</a>';
 	}
 
-	function smile($smile)
-	{ //this needs more tlc too
-		return '<img src="img/smiles/icon_' . $smile . '.gif" alt="' . $smile . '" />';
+	function smile($content)
+	{
+		if (self::$option['parseWiki'] == false) return $content;//TODO: smile syntax
+
+		//this needs more tlc too
+		return '<img src="img/smiles/icon_' . $content . '.gif" alt="' . $content . '" />';
 	}
 
-	function strikethrough($content)
+	function strikethrough($content) //--content--
 	{
-		return '<span style="text-decoration: line-through;">' . $content . '</span>';
+		if (self::$option['parseWiki'] == false) return "--" . $content . "--";
+
+		return '<strike>' . $content . '</strike>';
 	}
 
-	function tableParser($content)
+	function tableParser($content) /*|| | \n | ||*/
 	{
+		if (self::$option['parseWiki'] == false) return "||" . $content . "||";
+
 		$tableContents = '';
 		$rows = explode("\n", $content);
 
@@ -1028,31 +1045,24 @@ $("#' . $id . '").click( function(event) {
 		return '<td class="wikicell">' . $content . '</td>';
 	}
 
-	function titlebar($content)
+	function titlebar($content) //-=content=-
 	{
+		if (self::$option['parseWiki'] == false) return "-=" . $content . "=-";
+
 		return '<div class="titlebar">' . $content . '</div>';
 	}
 
-	function olist($content)
+	function underscore($content) //===content===
 	{
-		$this->olistLen[$this->blockLoc['olist']]++;
-		$start =$this->olistLen[$this->blockLoc['olist']];
+		if (self::$option['parseWiki'] == false) return "===" . $content . "===";
 
-		return '<ol class="olgroup' . $this->blockLoc['olist'] . '" start="' . $start . '"><li>' . $content . '</li></ol>';
-	}
-
-	function ulist($content)
-	{
-		return '<ul><li>' . $content . '</li></ul>';
-	}
-
-	function underscore($content)
-	{
 		return '<u>' . $content . '</u>';
 	}
 
-	function wikilink($content)
+	function wikilink($content) //((content|content))
 	{
+		if (self::$option['parseWiki'] == false) return "((" . $content . "))";
+
 		$wikilink = explode('|', $content);
 		$href = $content;
 
@@ -1062,17 +1072,6 @@ $("#' . $id . '").click( function(event) {
 		}
 
 		return '<a href="' . $href . '">' . $content . '</a>';
-	}
-
-	function html($content)
-	{
-		return $content;
-	}
-
-	function formatContent($content)
-	{
-		//return nl2br($content);
-		return $content;
 	}
 
 	//unified functions used inside parser

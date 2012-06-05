@@ -18,13 +18,13 @@ class Services_JisonParser_WikiPlugin
 		$perms = $tikilib->get_perm_object($page, 'wiki page', $info, true);
 		if ($perms['tiki_p_edit'] !== 'y') return array();
 
-		$parser = new JisonParser_Wiki_PluginAjaxHandler();
+		$parser = new JisonParser_Wiki_Handler();
 		$data = TikiLib::lib('tiki')->getOne('SELECT data FROM tiki_pages WHERE pageName = ?', $page);
 
 		$parser->parse($data);
 
 		return array(
-			'body' => JisonParser_Wiki_PluginAjaxHandler::$plugins[$key]
+			'body' => JisonParser_Wiki_Handler::$plugins[$key]
 		);
 	}
 }

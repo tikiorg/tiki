@@ -266,11 +266,11 @@ SMILE							[a-z]+
 [\n\r][!]
 	%{
 		if (parser.isPlugin()) return 'CONTENT'; //js
-		parser.beginBlock('header'); //js
+		parser.begin('header'); //js
 		return 'HEADER_START'; //js
 
 		//php if ($this->isPlugin()) return 'CONTENT';
-		//php $this->beginBlock('header');
+		//php $this->begin('header');
 		//php return 'HEADER_START';
 	%}
 
@@ -489,7 +489,7 @@ SMILE							[a-z]+
 
 
 
-"<"(.|\n)*?">"								return 'HTML';
+"<"(.|\n)*?">"								return 'CONTENT';
 [A-Za-z0-9]+                                return 'CONTENT';
 (.)											return 'CONTENT';
 (\n)										return 'CONTENT';
@@ -522,16 +522,6 @@ contents
 content
  : CONTENT
 	{$$ = $1;}
- | NEW_LINE
-	{
-		$$ = parser.newLine($1); //js
-		//php $$ = $this->newLine($1);
-	}
- | HTML
-	{
-		$$ = parser.html($1); //js
-		//php $$ = $this->html($1);
-	}
  | HORIZONTAL_BAR
 	{$$ = $1;}
  | SMILE
