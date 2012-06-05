@@ -1,8 +1,9 @@
 
-<object type="application/x-java-applet;jpi-version=1.7.0" id="jCapture" height="387" width="482">
-	<param name = "code"		value = "lib/jcapture/lib/jcapture.jar" >
-	<param name = "name"		value = "jCapture" >
-	<param name = "codebase"	value = "http://java.sun.com/update/1.7.0/jinstall-1_7_0-windows-i586.cab#Version=7,0,0,0" >
+<object {$ie_applet_attrs}type="application/x-java-applet" id="jCapture" height="387" width="482">
+
+	{*<param name = "codebase"	value = "lib/jcapture/lib/" >*}
+	<param name = "archive"		value = "lib/jcapture/lib/jCapture.jar" >
+	<param name = "code"		value = "com.hammurapi.jcapture.JCaptureApplet" >
 	<param name = "scriptable"	value = "true">
 	<param name = "mayscript"	value = "true">
 	<param name = "dokuBase"	value = "{$doku_base}">
@@ -12,4 +13,5 @@
 	<param name = "pageName"	value = "{$page}">
 	<param name = "edid"		value = "{$edit_area}">
 	<param name = "authtok"		value = "{$authtok}">
+	{tr}Applet failed to run.  No Java plug-in was found.{/tr}
 </object>

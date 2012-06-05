@@ -31,6 +31,10 @@ class Services_JCapture_Controller
 			$cookies .= bin2hex($cookieName) . '=' . bin2hex($_COOKIE[$cookieName]) . ';';
 		}
 
+		if (0) {	// test for IE one day
+			$smarty->assign('ie_applet_attrs', 'classid="clsid:8AD9C840-044E-11D1-B3E9-00805F499D93" codebase="http://java.sun.com/update/1.6.0/jinstall-6u22-windows-i586.cab"');
+		}
+
 
 		$smarty->assign('doku_base', bin2hex($url_path));
 		$smarty->assign('sectok', 'TODO');
