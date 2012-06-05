@@ -103,11 +103,11 @@ class Tracker_Item
 	private function canModifyFromSpecialPermissions()
 	{
 		global $user;
-		if ($user && $this->owner && $user === $this->owner) {
+		if ($this->definition->getConfiguration('writerCanModify', 'n') == 'y' && $user && $this->owner && $user === $this->owner) {
 			return true;
 		}
 
-		if ($this->ownerGroup && in_array($this->ownerGroup, $this->perms->getGroups())) {
+		if ($this->definition->getConfiguration('writerGroupCanModify', 'n') == 'y' && $this->ownerGroup && in_array($this->ownerGroup, $this->perms->getGroups())) {
 			return true;
 		}
 
