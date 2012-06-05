@@ -570,7 +570,7 @@ class BlogLib extends TikiDb_Bridge
 			$res['pages'] = $this->get_number_of_pages($res['data']);
 			$res['avatar'] = $tikilib->get_user_avatar($res['user']);
 
-			if (isset($res['excerpt'])) {
+			if (isset($res['excerpt']) && $res['excerpt'] != NULL) {
 				$res['excerpt'] = $parserlib->parse_data($res['excerpt'], array('is_html' => true));
 			}
 
