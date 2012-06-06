@@ -1058,7 +1058,7 @@ if ( \$('#$id') ) {
 	}
 
 	//*
-	private function convert_plugin_for_ckeditor( $name, $args, $plugin_result, $data, $info = array() )
+	private function convert_plugin_for_ckeditor( $name, $args, $plugin_result, $data, $info = array() ) //TODO: needs a new handler in jison
 	{
 		$ck_editor_plugin = '{' . (empty($data) ? $name : TikiLib::strtoupper($name) . '(') . ' ';
 		$arg_str = '';		// not using http_build_query() as it converts spaces into +
@@ -1213,7 +1213,7 @@ if ( \$('#$id') ) {
 	}
 
 	//*
-	function plugin_replace_args( $content, $rules, $args )
+	function plugin_replace_args( $content, $rules, $args ) //TODO: needs put into jison
 	{
 		$patterns = array();
 		$replacements = array();
@@ -1286,7 +1286,7 @@ if ( \$('#$id') ) {
 
 	// Replace hotwords in given line
 	//*
-	function replace_hotwords($line, $words)
+	function replace_hotwords($line, $words) //TODO: needs put into jison
 	{
 		global $prefs;
 		$hotw_nw = ($prefs['feature_hotwords_nw'] == 'y') ? "target='_blank'" : '';
@@ -1308,7 +1308,7 @@ if ( \$('#$id') ) {
 
 	// Make plain text URIs in text into clickable hyperlinks
 	//*
-	function autolinks($text)
+	function autolinks($text) //TODO: needs put into jison
 	{
 		global $tikilib, $prefs, $smarty;
 		//	check to see if autolinks is enabled before calling this function
@@ -1668,7 +1668,7 @@ if ( \$('#$id') ) {
 	}
 
 	//*
-	private function parse_data_wikilinks( $data, $simple_wiki, $ck_editor = false )
+	private function parse_data_wikilinks( $data, $simple_wiki, $ck_editor = false ) //TODO: need a wikilink handler
 	{
 		global $page_regex, $prefs;
 
@@ -1967,7 +1967,7 @@ if ( \$('#$id') ) {
 	}
 
 	//*
-	function parse_wiki_argvariable(&$data)
+	function parse_wiki_argvariable(&$data) //TODO: needs put into jison
 	{
 		global $prefs, $user;
 		if ( $prefs['feature_wiki_argvariable'] == 'y' && !$this->option['ck_editor'] ) {
@@ -2001,7 +2001,7 @@ if ( \$('#$id') ) {
 	}
 	
 	//*
-	private function parse_data_dynamic_variables( $data, $lang = null )
+	private function parse_data_dynamic_variables( $data, $lang = null ) //TODO: needs put into jison
 	{
 		global $tiki_p_edit_dynvar, $prefs;
 
@@ -2050,7 +2050,7 @@ if ( \$('#$id') ) {
 	}
 
 	//*
-	private function get_dynamic_variable( $name, $lang = null )
+	private function get_dynamic_variable( $name, $lang = null ) //TODO: needs put into jison
 	{
 		global $tikilib;
 		$result = $tikilib->table('tiki_dynamic_variables')->fetchAll(array('data', 'lang'), array('name' => $name));
