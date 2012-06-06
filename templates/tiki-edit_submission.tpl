@@ -279,7 +279,7 @@
 		{/if}
 	</table>
 	
-	{if $tiki_p_use_HTML eq 'y'}
+	{if $tiki_p_use_HTML eq 'y' && $smarty.session.wysiwyg neq 'y'}
 		<div align="center">{tr}Allow HTML:{/tr} <input type="checkbox" name="allowhtml" {if $allowhtml eq 'y'}checked="checked"{/if}/></div>
 	{/if}
 

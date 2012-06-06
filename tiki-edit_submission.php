@@ -296,7 +296,7 @@ if (isset($_REQUEST['preview']) || !empty($errors)) {
 	$smarty->assign('heading', $_REQUEST['heading']);
 	$smarty->assign('edit_data', 'y');
 
-	if (isset($_REQUEST['allowhtml']) && $_REQUEST['allowhtml'] == 'on') {
+	if (isset($_REQUEST['allowhtml']) && $_REQUEST['allowhtml'] == 'on' || $_SESSION['wysiwyg'] == 'y') {
 		$body = $_REQUEST['body'];
 
 		$heading = $_REQUEST['heading'];
