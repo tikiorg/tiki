@@ -26,6 +26,7 @@
 			<p>
 			{tr}Interval in which you want to get the reports{/tr}
 			<select name="interval">
+					<option value="minute" {if $report_preferences.interval eq "minute"}selected{/if}>{tr}Every minute{/tr}</option>
 					<option value="hourly" {if $report_preferences.interval eq "hourly"}selected{/if}>{tr}Hourly{/tr}</option>
 					<option value="daily" {if $report_preferences.interval eq "daily"}selected{/if}>{tr}Daily{/tr}</option>
 					<option value="weekly" {if $report_preferences.interval eq "weekly"}selected{/if}>{tr}Weekly{/tr}</option>

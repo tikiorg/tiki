@@ -274,7 +274,8 @@ class TrackerLib extends TikiLib
 		if (!$notif) {
 			return $attId;
 		}
-
+		
+		$options["attachment"] = array("attId" => $attId, "filename" => $filename, "comment" => $comment); 
 		$watchers = $this->get_notification_emails($trackerId, $itemId, $options);
 		
 		if (count($watchers > 0)) {
@@ -3012,7 +3013,7 @@ class TrackerLib extends TikiLib
 			}
 		}
 
-		// use daily reports feature only if tracker item has been added or updated
+		// use daily reports feature if tracker item has been added or updated
 		if ($prefs['feature_daily_report_watches'] == 'y' && !empty($status)) {
 			$reportsManager = Reports_Factory::build('Reports_Manager');
 			$reportsManager->addToCache(
@@ -3022,6 +3023,19 @@ class TrackerLib extends TikiLib
 			$reportsManager->addToCache(
 							$watchers_item,
 							array('event' => 'tracker_item_modified', 'itemId' => $itemId, 'trackerId' => $trackerId, 'user' => $user)
+			);
+		}
+		
+		// use daily reports feature if a file was attached or removed from a tracker item
+		if ($prefs['feature_daily_report_watches'] == 'y' && isset($options["attachment"])) {
+			$reportsManager = Reports_Factory::build('Reports_Manager');
+			$reportsManager->addToCache(
+							$watchers_global,
+							array('event' => 'tracker_file_attachment', 'itemId' => $itemId, 'trackerId' => $trackerId, 'user' => $user, "attachment" => $options["attachment"])
+			);
+			$reportsManager->addToCache(
+							$watchers_item,
+							array('event' => 'tracker_file_attachment', 'itemId' => $itemId, 'trackerId' => $trackerId, 'user' => $user, "attachment" => $options["attachment"])
 			);
 		}
 

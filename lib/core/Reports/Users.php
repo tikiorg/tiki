@@ -122,6 +122,9 @@ class Reports_Users
 		$ret = array();
 		
 		foreach ($users as $user) {
+			if ($user['interval'] == "minute" && ($user['last_report'] + 60) <= $this->dt->format('U')) {
+				$ret[] = $user['user'];
+			}
 			if ($user['interval'] == "hourly" && ($user['last_report'] + 3600) <= $this->dt->format('U')) {
 				$ret[] = $user['user'];
 			}

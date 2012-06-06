@@ -69,7 +69,7 @@ if ($tikilib->query("SHOW TABLES LIKE 'tiki_preferences'")->numRows() == 0) {
 }
 $tikilib->get_preferences($needed_prefs, true, true);
 
-if ($prefs['session_protected'] == 'y' && ! isset($_SERVER['HTTPS'])) {
+if ($prefs['session_protected'] == 'y' && ! isset($_SERVER['HTTPS']) && php_sapi_name() != 'cli') {
 	header("Location: https://{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}");
 	exit;
 }
