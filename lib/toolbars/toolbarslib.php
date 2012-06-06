@@ -428,7 +428,7 @@ abstract class Toolbar
 			$label = $name;
 		}
 		$label = addcslashes($label, "'");
-		$headerlib->add_jq_onready(
+		$headerlib->add_js(
 <<< JS
 if (typeof window.CKEDITOR !== "undefined" && !window.CKEDITOR.plugins.get("{$name}")) {
 	window.CKEDITOR.config.extraPlugins += (window.CKEDITOR.config.extraPlugins ? ',{$name}' : '{$name}' );
@@ -1213,7 +1213,7 @@ class ToolbarDialog extends Toolbar
 			global $headerlib;
 			$headerlib->add_js("window.dialogData[$this->index] = " . json_encode($this->list) . ";", 1 + $this->index);
 			$label = addcslashes($this->label, "'");
-			$headerlib->add_jq_onready(
+			$headerlib->add_js(
 <<< JS
 if (typeof window.CKEDITOR !== "undefined" && !window.CKEDITOR.plugins.get("{$this->name}")) {
 	window.CKEDITOR.config.extraPlugins += (window.CKEDITOR.config.extraPlugins ? ',{$this->name}' : '{$this->name}' );
@@ -1341,7 +1341,7 @@ class ToolbarHelptool extends Toolbar
 
 		global $headerlib;
 		$label = addcslashes($this->label, "'");
-		$headerlib->add_jq_onready(
+		$headerlib->add_js(
 <<< JS
 if (typeof window.CKEDITOR !== "undefined" && !window.CKEDITOR.plugins.get("{$name}")) {
 	window.CKEDITOR.config.extraPlugins += (window.CKEDITOR.config.extraPlugins ? ',{$name}' : '{$name}' );
@@ -1475,7 +1475,7 @@ class ToolbarSwitchEditor extends Toolbar
 		if ($prefs['feature_wysiwyg'] == 'y' && $prefs['wysiwyg_optional'] == 'y') {
 			global $headerlib;
 			$label = addcslashes($this->label, "'");
-			$headerlib->add_jq_onready(
+			$headerlib->add_js(
 <<< JS
 if (typeof window.CKEDITOR !== "undefined" && !window.CKEDITOR.plugins.get("{$this->name}")) {
 	window.CKEDITOR.config.extraPlugins += (window.CKEDITOR.config.extraPlugins ? ',{$this->name}' : '{$this->name}' );

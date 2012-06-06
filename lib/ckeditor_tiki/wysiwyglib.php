@@ -22,18 +22,18 @@ class WYSIWYGLib
 				//->add_jsfile('lib/ckeditor/ckeditor_source.js');
 				->add_jsfile('lib/ckeditor/ckeditor.js', 0, true)
 				->add_jsfile('lib/ckeditor/adapters/jquery.js', 0, true)
-				->add_jq_onready('window.CKEDITOR.config._TikiRoot = "'.$tikiroot.'";');
+				->add_js('window.CKEDITOR.config._TikiRoot = "'.$tikiroot.'";', 1);
 
 		if ($full_page) {
 			$headerlib->add_jsfile('lib/ckeditor_tiki/tikilink_dialog.js');
-			$headerlib->add_jq_onready(
+			$headerlib->add_js(
 							'window.CKEDITOR.config.extraPlugins += (window.CKEDITOR.config.extraPlugins ? ",tikiplugin" : "tikiplugin" );
 							window.CKEDITOR.plugins.addExternal( "tikiplugin", "'.$tikiroot.'lib/ckeditor_tiki/plugins/tikiplugin/");',
 							5
 			);
 		}
 		if (!$is_html && $full_page) {
-			$headerlib->add_jq_onready(
+			$headerlib->add_js(
 							'window.CKEDITOR.config.extraPlugins += (window.CKEDITOR.config.extraPlugins ? ",tikiwiki" : "tikiwiki" );
 							window.CKEDITOR.plugins.addExternal( "tikiwiki", "'.$tikiroot.'lib/ckeditor_tiki/plugins/tikiwiki/");',
 							5
@@ -43,7 +43,7 @@ class WYSIWYGLib
 		if ($auto_save_referrer && $prefs['feature_ajax'] === 'y' &&
 				$prefs['ajax_autosave'] === 'y' && $params['autosave'] == 'y') {
 
-			$headerlib->add_jq_onready(
+			$headerlib->add_js(
 							'// --- config settings for the autosave plugin ---
 window.CKEDITOR.config.ajaxAutoSaveTargetUrl = "'.$tikiroot.'tiki-auto_save.php";	// URL to post to (also used for plugin processing)
 window.CKEDITOR.config.extraPlugins += (window.CKEDITOR.config.extraPlugins ? ",autosave" : "autosave" );
