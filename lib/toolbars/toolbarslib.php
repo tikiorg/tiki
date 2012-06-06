@@ -1594,9 +1594,9 @@ class ToolbarWikiplugin extends Toolbar
 						'qt-plugin'
 		);
 	} // }}}
-	function getWysiwygToken( $areaId ) // {{{
+	function getWysiwygToken( $areaId, $add_js = true ) // {{{
 	{
-		if (!empty($this->wysiwyg)) {
+		if (!empty($this->wysiwyg) && $add_js) {
 			if ($this->wysiwyg === 'Image') {	// cke's own image tool overrides this so set it up to use our filegal
 				global $headerlib,  $smarty, $prefs;
 				// can't do upload the cke way yet
@@ -1613,7 +1613,7 @@ class ToolbarWikiplugin extends Toolbar
 		return $this->wysiwyg;
 	} // }}}
 	
-	function getWysiwygWikiToken( $areaId ) // {{{ // wysiwyg_htmltowiki
+	function getWysiwygWikiToken( $areaId, $add_js = true ) // {{{ // wysiwyg_htmltowiki
 	{
 		switch ($this->pluginName) {
 			case 'img':
@@ -1622,7 +1622,7 @@ class ToolbarWikiplugin extends Toolbar
 			default:
 		}
 
-		return $this->getWysiwygToken($areaId);
+		return $this->getWysiwygToken($areaId, $add_js);
 	} // }}}
 
 }
