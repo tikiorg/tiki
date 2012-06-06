@@ -461,7 +461,7 @@ class LogsLib extends TikiLib
 			$query_cant = "select count(distinct actionId) from `tiki_actionlog` a ,`tiki_actionlog_conf` c where $mid";
 		}
 
-		$query .= " order by a." . $this->convertSortMode($sort_mode);
+		$query .= " order by " . $this->convertSortMode($sort_mode);
 		$result = $this->query($query, $bindvars, $maxRecords, $offset);
 		$cant = $this->getOne($query_cant, $bindvars);
 		$ret = array();
