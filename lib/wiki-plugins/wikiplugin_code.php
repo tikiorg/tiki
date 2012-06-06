@@ -125,7 +125,7 @@ function wikiplugin_code($data, $params, $offset, $options)
 		. ' dir="'.( (isset($rtl) && $rtl == 1) ? 'rtl' : 'ltr') . '" '
 		. (isset($pre_style) ? ' style="'.$pre_style.'"' : '')
 		. $boxid.'>'
-		. ($options['ck_editor'] ? $out : htmlentities($out, ENT_QUOTES, 'UTF-8'))
+		. (($options['ck_editor'] || $ishtml) ? $out : htmlentities($out, ENT_QUOTES, 'UTF-8'))
 		. '</pre>';
 
 	return $out;
