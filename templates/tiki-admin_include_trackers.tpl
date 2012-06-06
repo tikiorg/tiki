@@ -4,15 +4,10 @@
     <form action="tiki-admin.php?page=trackers" method="post">
 	{preference name=user_selector_threshold}
 	{preference name=user_selector_realnames_tracker}
-   	<div class="heading input_submit_container" style="text-align: right">
-	<input type="submit" name="trkset" value="{tr}Change preferences{/tr}" />
-	</div> 
-    </form>
 </fieldset>
 
 <fieldset class="admin">
   <legend>{tr}Tracker attachment preferences{/tr}</legend>
-    <form action="tiki-admin.php?page=trackers" method="post">
       <table class="admin">
         <tr>
           <td>
