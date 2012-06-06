@@ -194,6 +194,8 @@ class Tracker_Field_Files extends Tracker_Field_Abstract
 				}
 
 				include_once('lib/wiki-plugins/wikiplugin_img.php');
+				global $fromTracker;
+				$fromTracker = true;
 				$ret = wikiplugin_img('', $params, 0);
 				$ret = preg_replace('/~\/?np~/', '', $ret);
 			} else {
