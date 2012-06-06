@@ -260,6 +260,14 @@
 				</div>
 			</label>
 			<label>
+				<input type="checkbox" name="writerCanRemove" value="1"
+					{if $info.writerCanRemove eq 'y'}checked="checked"{/if}/>
+				{tr}Item creator can remove his items{/tr}
+				<div class="description">
+					{tr}The tracker needs a user field with the auto-assign activated{/tr}
+				</div>
+			</label>
+			<label>
 				<input type="checkbox" name="userCanTakeOwnership" value="1"
 					{if $info.userCanTakeOwnership eq 'y'}checked="checked"{/if}/>
 				{tr}User can take ownership of item created by anonymous{/tr}
@@ -276,6 +284,14 @@
 				<input type="checkbox" name="writerGroupCanModify" value="1"
 					{if $info.writerGroupCanModify eq 'y'}checked="checked"{/if}/>
 				{tr}Members of the creator group can modify items{/tr}
+				<div class="description">
+					{tr}The tracker needs a group field with the auto-assign activated{/tr}
+				</div>
+			</label>
+			<label>
+				<input type="checkbox" name="writerGroupCanRemove" value="1"
+					{if $info.writerGroupCanRemove eq 'y'}checked="checked"{/if}/>
+				{tr}Members of the creator group can remove items{/tr}
 				<div class="description">
 					{tr}The tracker needs a group field with the auto-assign activated{/tr}
 				</div>

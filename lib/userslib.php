@@ -2868,6 +2868,15 @@ class UsersLib extends TikiLib
 				'scope' => 'object',
 			),
 			array(
+				'name' => 'tiki_p_bigbluebutton_view_rec',
+				'description' => tra('Can view recordings from past meetings'),
+				'level' => 'basic',
+				'type' => 'bigbluebutton',
+				'admin' => false,
+				'prefs' => array('bigbluebutton_feature'),
+				'scope' => 'object',
+			),
+			array(
 				'name' => 'tiki_p_bigbluebutton_join',
 				'description' => tra('Can join a meeting'),
 				'level' => 'basic',

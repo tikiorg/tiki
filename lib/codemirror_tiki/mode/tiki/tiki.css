@@ -14,6 +14,10 @@
 	padding-left: 10px;
 }
 
+.cm-s-default span.cm-bracket {	/* list items too light by default - not sure why this selector is needed */
+	color: #9d8859;
+}
+
 .cm-tw-box {
 	border-top-width: 0px ! important;
 	border-style: solid;

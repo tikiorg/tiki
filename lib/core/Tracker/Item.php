@@ -47,7 +47,7 @@ class Tracker_Item
 			return true;
 		}
 
-		if ($this->canModifyFromSpecialPermissions()) {
+		if ($this->canFromSpecialPermissions('Modify')) {
 			return true;
 		}
 
@@ -68,7 +68,7 @@ class Tracker_Item
 			return $this->perms->create_tracker_items;
 		}
 
-		if ($this->canModifyFromSpecialPermissions()) {
+		if ($this->canFromSpecialPermissions('Modify')) {
 			return true;
 		}
 
@@ -89,6 +89,10 @@ class Tracker_Item
 			return false;
 		}
 
+		if ($this->canFromSpecialPermissions('Remove')) {
+			return true;
+		}
+
 		$status = $this->info['status'];
 
 		if ($status == 'c') {
@@ -100,14 +104,14 @@ class Tracker_Item
 		}
 	}
 
-	private function canModifyFromSpecialPermissions()
+	private function canFromSpecialPermissions($operation)
 	{
 		global $user;
-		if ($user && $this->owner && $user === $this->owner) {
+		if ($this->definition->getConfiguration('writerCan' . $operation, 'n') == 'y' && $user && $this->owner && $user === $this->owner) {
 			return true;
 		}
 
-		if ($this->ownerGroup && in_array($this->ownerGroup, $this->perms->getGroups())) {
+		if ($this->definition->getConfiguration('writerGroupCan' . $operation, 'n') == 'y' && $this->ownerGroup && in_array($this->ownerGroup, $this->perms->getGroups())) {
 			return true;
 		}
 
@@ -200,7 +204,7 @@ class Tracker_Item
 		$isHidden = $field['isHidden'];
 		$visibleBy = $field['visibleBy'];
 
-		if ($isHidden == 'c' && $this->canModifyFromSpecialPermissions()) {
+		if ($isHidden == 'c' && $this->canFromSpecialPermissions('Modify')) {
 			// Creator or creator group check when field can be modified by creator only
 			return true;
 		} elseif ($isHidden == 'y') {
@@ -243,7 +247,7 @@ class Tracker_Item
 
 		if ($isHidden == 'c') {
 			// Creator or creator group check when field can be modified by creator only
-			return $this->canModifyFromSpecialPermissions();
+			return $this->canFromSpecialPermissions('Modify');
 		} elseif ($isHidden == 'p') {
 			// Editable by administrator only
 			return false;

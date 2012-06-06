@@ -62,7 +62,7 @@
 				data.fields.itemId = data.itemId;
 				data.fields.status = data.status;
 				$.each(data.fields, function (k, v) {
-					url = url.replace('@' + k + '@', escape(v));
+					url = url.replace('@' + k + '@', encodeURIComponent(v));
 				});
 
 				document.location.href = url;
@@ -85,7 +85,7 @@
 					});
 					control.deactivate();
 
-					modeManager.addMode({name: newMode = "{{$tpl_module_title}}", controls: [control, new OpenLayers.Control.Navigation()]});
+					modeManager.addMode({name: newMode = "{{$tpl_module_title}}", controls: [control, new OpenLayers.Control.NavToolbar()]});
 				}
 
 				button = $('<input type="submit"/>')
@@ -110,6 +110,7 @@
 				}).keyup();
 
 				$(form).bind('insert', function () {
+					$(map).removeMapSelection();
 					$(map).trigger('changed');
 				});
 				$(form).bind('cancel', function () {

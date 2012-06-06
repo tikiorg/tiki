@@ -23,7 +23,7 @@ function module_register_info()
 
 function module_register($mod_reference, $module_params)
 {
-	global $prefs, $smarty, $tikilib, $userlib, $reg_in_module, $registrationlib;
+	global $prefs, $smarty, $tikilib, $userlib, $reg_in_module, $registrationlib, $https_mode;
 	$reg_in_module = true;
 	$smarty->assign_by_ref('reg_in_module', $reg_in_module);
 	include_once('tiki-register.php');

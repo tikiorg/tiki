@@ -219,6 +219,7 @@ function wp_map_available_controls()
 		'streetview',
 		'navigation',
 		'coordinates',
+		'overview',
 	);
 }
 
@@ -262,7 +263,7 @@ function wp_map_plugin_colorpicker($body, $args)
 	$headerlib = TikiLib::lib('header');
 	static $counter = 0;
 
-	$args->setFilter('colors', 'word');
+	$args->replaceFilter('colors', 'word');
 	$colors = array_map('wp_map_color_filter', $args->asArray('colors', ','));
 
 	if (count($colors)) {
@@ -289,6 +290,10 @@ function init() {
 				.css('background', color)
 				.click(function () {
 					setColor(color);
+					vlayer.redraw();
+					if (feature.executor) {
+						feature.executor();
+					}
 				})
 		);
 	});
@@ -312,6 +317,10 @@ function init() {
 			flat: true,
 			onChange: function (hsb, hex) {
 				feature.attributes.color = '#' + hex;
+				vlayer.redraw();
+				if (feature.executor) {
+					feature.executor();
+				}
 			}
 		});
 }
@@ -337,6 +346,10 @@ $("#$target").closest('.map-container').bind('initialized', function () {
 			var active = false;
 
 			feature = ev.feature;
+
+			if (feature.attributes.intent === 'marker') {
+				return false;
+			}
 
 			$.each(container.map.getControlsByClass('OpenLayers.Control.ModifyFeature'), function (k, control) {
 				active = active || control.active;

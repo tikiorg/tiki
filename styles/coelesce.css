@@ -214,7 +214,7 @@ label {
 }
 
 #topbar_modules {
-	margin-bottom: 20px;	
+	margin-bottom: 20px;
 }
 
 #c1c2 #wrapper .marginleft {
@@ -279,7 +279,7 @@ body.tiki_wiki_page.manage #c1c2 #wrapper #col1 #tiki-center {
 	background: url(coelesce/pagebg.jpg) repeat-x 0 100%;
 }
 
-/* Enable header and footer content to widen when middle has wide content. */ 
+/* Enable header and footer content to widen when middle has wide content. */
 body.fixed_width .fixedwidth .fixedwidth {
 	width: 100%;
 	padding: 0;
@@ -343,7 +343,7 @@ body.fixed_width .fixedwidth .fixedwidth {
 
 #top_modules .box-search {
 	bottom: 12px;
-	top: auto	
+	top: auto
 }
 
 #top_modules .box-search form,
@@ -557,10 +557,6 @@ small.date {
 .cssmenu_vert li.menuLevel1,
 .cssmenu_horiz li.menuLevel1 {
         z-index: 991;
-}
-
-.box-data .cssmenu_vert li {
-	background: #ccdceb !important;
 }
 
 .cssmenu_horiz ul li {
@@ -981,7 +977,7 @@ li.tabcontent {
 
 .statuson {
 	background: #ecf5ff;
-	border: 1px inset #ecf5ff;	
+	border: 1px inset #ecf5ff;
 }
 
 /*** Feature-specific selectors ***/
@@ -1247,14 +1243,14 @@ textarea.wikiedit {
 	padding-top: 10px;
 }
 
-	
+
 .articletitle h2 a:link,
 .articletitle h2 a:visited {
 	color: #000;
 	text-decoration: none;
 }
 
-	
+
 .articletitle h2 a:hover {
 	text-decoration: none;
 }
@@ -1338,7 +1334,7 @@ a.blogt:hover {
 	border-right: solid #EEFDFF;
 	border-top: solid 1px #C3D3E5;
 }
-	
+
 * html .post .postbody {font-size: 11px}
 
 .top_post .post .postbody {
@@ -1635,7 +1631,7 @@ a.freetag_7:hover {
 }
 
 /***** Trackers *****/
-	
+
 .multiselect {
 	width: 100%;
 	border: 1px solid #696969;
@@ -1744,7 +1740,7 @@ a.freetag_7:hover {
 	color: #00bd02;
 }
 
-	
+
 .calweb {
 	font-size: 90%;
 }

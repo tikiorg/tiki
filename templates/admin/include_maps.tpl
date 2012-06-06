@@ -7,12 +7,19 @@
 
 		{preference name=geo_tilesets}
 		{preference name=geo_google_streetview}
+		<div class="adminoptionboxchild" id="geo_google_streetview_childcontainer">
+			{preference name=geo_google_streetview_overlay}
+		</div>
 
 		{preference name=geo_locate_blogpost}
 		{preference name=geo_locate_wiki}
 		{preference name=geo_locate_article}
 		{preference name=wikiplugin_map}
 		{preference name=trackerfield_location}
+
+		{preference name=geo_always_load_openlayers}
+
+		{preference name=gmap_key}
 	</fieldset>
 	
 	<fieldset class="admin">			

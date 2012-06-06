@@ -36,8 +36,6 @@ if (!$post_info) {
 	$smarty->display("error.tpl");
 	die;
 } else {
-	//$smarty->assign('msg', tra("Post found"));
-	//$smarty->display("error.tpl");
 	$bloglib->add_blog_post_hit($postId);
 }
 $blogId = $post_info['blogId'];
@@ -129,8 +127,6 @@ if ($prefs['feature_categories'] == 'y') {
 	$cat_objid = $postId;
 	require_once('categorize_list.php');	
 }
-$bloglib->add_blog_post_hit($postId);
-$bloglib->add_blog_post_hit($postId);
 $smarty->assign('ownsblog', $ownsblog);
 $post_info['data'] = TikiLib::htmldecode($post_info['data']);
 $smarty->assign('postId', $postId);
@@ -147,7 +143,11 @@ $smarty->assign('find', $_REQUEST["find"]);
 $offset = $_REQUEST["offset"];
 $sort_mode = $_REQUEST["sort_mode"];
 $find = $_REQUEST["find"];
-$parsed_data = $tikilib->parse_data($post_info["data"], array('is_html' => true));
+if ($post_info['wysiwyg'] == "y")
+	$parsed_data = $tikilib->parse_data($post_info["data"], array('is_html' => true));
+else
+	$parsed_data = $tikilib->parse_data($post_info["data"]);
+
 if (!isset($_REQUEST['page'])) $_REQUEST['page'] = 1;
 $pages = $bloglib->get_number_of_pages($parsed_data);
 $post_info['parsed_data'] = $bloglib->get_page($parsed_data, $_REQUEST['page']);

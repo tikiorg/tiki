@@ -41,6 +41,7 @@ function prefs_wysiwyg_list()
 			'description' => tra('This also allows a mixture of wiki and HTML. Only some wiki syntax is parsed, such as plugins (not inline character styles etc).'),
 			'type' => 'flag',
 			'default' => 'n',
+			'warning' => tra('Neglected. This feature can have unpredicable results and may be removed in future versions.'),
 		),
 		'wysiwyg_toolbar_skin' => array(
 			'name' => tra('Wysiwyg editor skin'),

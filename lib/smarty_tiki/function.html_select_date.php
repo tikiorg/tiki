@@ -278,8 +278,8 @@ function smarty_function_html_select_date($params, $smarty)
 		$day_result .= $extra_attrs . '>'."\n";
 		$day_result .= smarty_function_html_options(
 						array(
-							'output'       => $days,
-							'values'       => $day_values,
+							'output'       => $day_values,
+							'values'       => $days,
 							'selected'     => $time[2],
 							'print_result' => false
 						),

@@ -180,15 +180,16 @@ function smarty_block_textarea($params, $content, $smarty, $repeat)
 		}
 		$html .= '>'.htmlspecialchars($content).'</textarea>';
 		
-		$headerlib->add_js('
+		$headerlib->add_jq_onready('
 var ckEditorInstances = new Array();
 
 $("#' . $as_id . '").ckeditor(function() {
 	if (typeof ajaxLoadingHide == "function") { ajaxLoadingHide(); }
 	ckEditorInstances[ckEditorInstances.length] = this;
 	this.resetDirty();
+	$(this.element.$).hide();
 }, ' . $ckoptions . ');'
-		, 5);	// after dialog tools init (10)
+		, 20);	// after dialog tools init (10)
 
 	} else {		// end of if ( $params['_wysiwyg'] == 'y' && $params['_simple'] == 'n')
 		

@@ -427,6 +427,7 @@ tr.diffheader {
 	font-variant: small-caps;
 	font-size: inherit;
 	color: #90ee90;
+	background: none;
 }
 
 .normal,
@@ -468,7 +469,8 @@ li.even,
 }
 
 .tabmark a,
-.tabmark a:visited {
+.tabmark a:visited,
+.days {
 	color: #00a000;
 }
 

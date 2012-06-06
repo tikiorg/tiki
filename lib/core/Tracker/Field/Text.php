@@ -63,6 +63,15 @@ class Tracker_Field_Text extends Tracker_Field_Abstract implements Tracker_Field
 							'y' => tr('Yes'),
 						),
 					),
+					'exact' => array(
+						'name' => tr('Index exact value'),
+						'description' => tr('In addition to indexing the content of the field, also index it as an identifier in tracker_field_{perm name}_exact. This option is not available for multilingual fields. Mostly for identifiers like product codes or ISBN numbers.'),
+						'filter' => 'alpha',
+						'options' => array(
+							'n' => tr('No'),
+							'y' => tr('Yes'),
+						),
+					),
 				),
 			),
 		);
@@ -224,9 +233,15 @@ class Tracker_Field_Text extends Tracker_Field_Abstract implements Tracker_Field
 
 			return $data;
 		} else {
-			return array(
+			$data = array(
 				$baseKey => $typeFactory->$fieldType($value),
 			);
+
+			if ($this->getOption('exact') == 'y') {
+				$data[$baseKey . '_exact'] = $typeFactory->identifier($value);
+			}
+
+			return $data;
 		}
 	}
 
@@ -240,6 +255,8 @@ class Tracker_Field_Text extends Tracker_Field_Abstract implements Tracker_Field
 			foreach ($prefs['available_languages'] as $lang) {
 				$data[] = $baseKey . '_' . $lang;
 			}
+		} elseif ($this->getOption('exact') == 'y') {
+			$data[] = $baseKey . '_exact';
 		}
 
 		return $data;

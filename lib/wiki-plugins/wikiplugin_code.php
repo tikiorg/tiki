@@ -125,7 +125,7 @@ function wikiplugin_code($data, $params)
 		. ' dir="'.( (isset($rtl) && $rtl == 1) ? 'rtl' : 'ltr') . '" '
 		. (isset($pre_style) ? ' style="'.$pre_style.'"' : '')
 		. $boxid.'>'
-		. (TikiLib::lib('parser')->option['ck_editor'] ? $out : htmlentities($out, ENT_QUOTES, 'UTF-8'))
+		. (TikiLib::lib('parser')->option['ck_editor'] || $ishtml ? $out : htmlentities($out, ENT_QUOTES, 'UTF-8'))
 		. '</pre>';
 
 	return $out;

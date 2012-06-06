@@ -986,13 +986,18 @@ function wikiplugin_img( $data, $params )
 	////////////////////////////////////////// Create the HTML img tag //////////////////////////////////////////////
 	//Start tag with src and dimensions
 	$src = filter_out_sefurl(htmlentities($src));
-	
+
 	include_once ('lib/mime/mimetypes.php');
-	$replimg = '<img src="' . $src . '"';
+	global $mimetypes;
+
+	$tagName = '';
 	if (!empty($dbinfo['filetype'])  && !empty($mimetypes['svg']) && $dbinfo['filetype'] == $mimetypes['svg']) {
-		$replimg = '<embed type="image/svg+xml" src="' . $src . '"'; 
+		$tagName = 'div';
+		$repldata = $dbinfo['data'];
+		$replimg = '<div type="image/svg+xml" class="svgImage pluginImg' . $imgdata['fileId'] . '" ';
 	} else {
-		$replimg = '<img src="' . $src . '"';
+		$tagName = 'img';
+		$replimg = '<img src="' . $src . '" class="regImage pluginImg' . $imgdata['fileId'] . '" ';
 	}
 
 	if (!empty($imgdata_dim)) $replimg .= $imgdata_dim;
@@ -1114,8 +1119,12 @@ function wikiplugin_img( $data, $params )
 			$replimg .= $imgtitle;
 		}
 	}	
-	
-	$replimg .= ' />' . "\r";
+
+	if (empty($repldata)) {
+		$replimg .= ' />' . "\r";
+	} else {
+		$replimg .= '>' . $repldata . '</' . $tagName . '>';
+	}
 
 	////////////////////////////////////////// Create the HTML link ///////////////////////////////////////////
 	//Variable for identifying if javascript mouseover is set
@@ -1343,15 +1352,24 @@ function wikiplugin_img( $data, $params )
 		$repl = '{img src=' . $src . "\"}\n<p>" . $imgdata['desc'] . '</p>'; 
 	}
 
-	global $tiki_p_edit;
-	if ($prefs['feature_draw'] === 'y' && $tiki_p_upload_files === 'y' && $tiki_p_edit === 'y') {
+	global $tiki_p_edit, $fromTracker;
+	$globalperms = Perms::get(array( 'type' => 'file gallery', 'object' => $imgdata['galleryId'] ));
+
+	if (
+		$prefs['feature_draw'] == 'y' &&
+		$globalperms->upload_files == 'y' &&
+		(
+			$tiki_p_edit == 'y' ||
+			$fromTracker == true
+		)
+	) {
 		if ($prefs['wiki_edit_icons_toggle'] == 'y' && !isset($_COOKIE['wiki_plugin_edit_view'])) {
 			$iconDisplayStyle = " style='display:none;'";
 		} else {
 			$iconDisplayStyle = '';
 		}
 		$repl .= "<a href='tiki-edit_draw.php?fileId={$imgdata['fileId']}' onclick='return $(this).ajaxEditDraw();' title='".tr("Edit: Image") . " ".tr("(experimental)") . "'" .
-					" class='editplugin' data-fileid='{$imgdata['fileId']}' data-galleryid='{$imgdata['galleryId']}'{$iconDisplayStyle}>" .
+					" class='editplugin pluginImgEdit{$imgdata['fileId']}' data-fileid='{$imgdata['fileId']}' data-galleryid='{$imgdata['galleryId']}'{$iconDisplayStyle}>" .
 					"<img width='16' height='16' class='icon' alt='Edit' src='img/icons/page_edit.png' /></a>";
 	}
 	

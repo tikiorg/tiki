@@ -428,7 +428,7 @@ abstract class Toolbar
 			$label = $name;
 		}
 		$label = addcslashes($label, "'");
-		$headerlib->add_jq_onready(
+		$headerlib->add_js(
 <<< JS
 if (typeof window.CKEDITOR !== "undefined" && !window.CKEDITOR.plugins.get("{$name}")) {
 	window.CKEDITOR.config.extraPlugins += (window.CKEDITOR.config.extraPlugins ? ',{$name}' : '{$name}' );
@@ -1219,7 +1219,7 @@ class ToolbarDialog extends Toolbar
 			global $headerlib;
 			$headerlib->add_js("window.dialogData[$this->index] = " . json_encode($this->list) . ";", 1 + $this->index);
 			$label = addcslashes($this->label, "'");
-			$headerlib->add_jq_onready(
+			$headerlib->add_js(
 <<< JS
 if (typeof window.CKEDITOR !== "undefined" && !window.CKEDITOR.plugins.get("{$this->name}")) {
 	window.CKEDITOR.config.extraPlugins += (window.CKEDITOR.config.extraPlugins ? ',{$this->name}' : '{$this->name}' );
@@ -1347,7 +1347,7 @@ class ToolbarHelptool extends Toolbar
 
 		global $headerlib;
 		$label = addcslashes($this->label, "'");
-		$headerlib->add_jq_onready(
+		$headerlib->add_js(
 <<< JS
 if (typeof window.CKEDITOR !== "undefined" && !window.CKEDITOR.plugins.get("{$name}")) {
 	window.CKEDITOR.config.extraPlugins += (window.CKEDITOR.config.extraPlugins ? ',{$name}' : '{$name}' );
@@ -1481,7 +1481,7 @@ class ToolbarSwitchEditor extends Toolbar
 		if ($prefs['feature_wysiwyg'] == 'y' && $prefs['wysiwyg_optional'] == 'y') {
 			global $headerlib;
 			$label = addcslashes($this->label, "'");
-			$headerlib->add_jq_onready(
+			$headerlib->add_js(
 <<< JS
 if (typeof window.CKEDITOR !== "undefined" && !window.CKEDITOR.plugins.get("{$this->name}")) {
 	window.CKEDITOR.config.extraPlugins += (window.CKEDITOR.config.extraPlugins ? ',{$this->name}' : '{$this->name}' );
@@ -1600,9 +1600,9 @@ class ToolbarWikiplugin extends Toolbar
 						'qt-plugin'
 		);
 	} // }}}
-	function getWysiwygToken( $areaId ) // {{{
+	function getWysiwygToken( $areaId, $add_js = true ) // {{{
 	{
-		if (!empty($this->wysiwyg)) {
+		if (!empty($this->wysiwyg) && $add_js) {
 			if ($this->wysiwyg === 'Image') {	// cke's own image tool overrides this so set it up to use our filegal
 				global $headerlib,  $smarty, $prefs;
 				// can't do upload the cke way yet
@@ -1619,7 +1619,7 @@ class ToolbarWikiplugin extends Toolbar
 		return $this->wysiwyg;
 	} // }}}
 	
-	function getWysiwygWikiToken( $areaId ) // {{{ // wysiwyg_htmltowiki
+	function getWysiwygWikiToken( $areaId, $add_js = true ) // {{{ // wysiwyg_htmltowiki
 	{
 		switch ($this->pluginName) {
 			case 'img':
@@ -1628,7 +1628,7 @@ class ToolbarWikiplugin extends Toolbar
 			default:
 		}
 
-		return $this->getWysiwygToken($areaId);
+		return $this->getWysiwygToken($areaId, $add_js);
 	} // }}}
 
 }

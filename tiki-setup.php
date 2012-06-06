@@ -298,7 +298,7 @@ if ($prefs['javascript_enabled'] != 'n') {
 			if ( $prefs['feature_jquery_autocomplete'] == 'y' ) {
 				$headerlib->add_css(
 								'.ui-autocomplete-loading { background: white url("lib/jquery/jquery-ui/themes/' .
-								'/base/images/ui-anim_basic_16x16.gif") right center no-repeat; }'
+								'base/images/ui-anim_basic_16x16.gif") right center no-repeat; }'
 				);
 			}
 			if ( $prefs['jquery_ui_selectmenu'] == 'y' ) {
@@ -433,6 +433,10 @@ if ($prefs['feature_draw'] == 'y') {
 	$headerlib->add_jsfile("lib/svg-edit/embedapi.js", "external");
 	$headerlib->add_jsfile("lib/svg-edit_tiki/draw.js");
 	$headerlib->add_cssfile("lib/svg-edit_tiki/draw.css");
+}
+
+if ($prefs['geo_always_load_openlayers'] == 'y') {
+	$headerlib->add_map();
 }
 
 if ($prefs['feature_sefurl'] != 'y') {

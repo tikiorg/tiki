@@ -21,7 +21,6 @@ require_once ('lib/registration/registrationlib.php');
 if (is_a($registrationlib->merged_prefs, "RegistrationError")) register_error($registrationlib->merged_prefs->msg);
 $smarty->assign_by_ref('merged_prefs', $registrationlib->merged_prefs);
 
-$smarty->assign('headtitle', tra('Register'));
 // Permission: needs p_register and not to be a slave
 if ($prefs['allowRegister'] != 'y') {
 	header("location: index.php");
@@ -32,6 +31,7 @@ $smarty->assign('openid_associate', 'n');
 
 if (empty($reg_in_module)) {	// set in mod-func-register.php module
 	$reg_in_module = false;
+	$smarty->assign('headtitle', tra('Register'));
 }
 $smarty->assign_by_ref('reg_in_module', $reg_in_module);
 
@@ -60,7 +60,7 @@ if (count($registrationlib->merged_prefs['choosable_groups'])) {
 }
 
 $email_valid='y';
-if (isset($_REQUEST['register'])) {
+if (isset($_REQUEST['register']) && $_SERVER['REQUEST_METHOD'] == 'POST') {
 	check_ticket('register');
 	$cookie_name = $prefs['session_cookie_name'];
 

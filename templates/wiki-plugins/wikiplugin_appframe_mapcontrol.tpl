@@ -1,4 +1,4 @@
-<a id="{$mapcontrol.id|escape}" href="#" title="{$mapcontrol.label|escape}">{icon _id=$mapcontrol.icon title=$mapcontrol.label}</a>
+<a id="{$mapcontrol.id|escape}" href="#" title="{$mapcontrol.label|escape}">{icon _id=$mapcontrol.icon title=$mapcontrol.label class=$mapcontrol.class}</a>
 {jq}
 $('#appframe .map-container').bind('initialized', function () {
 	var container = this
@@ -23,21 +23,22 @@ $('#appframe .map-container').bind('initialized', function () {
 		{{/if}}
 
 		{{if $mapcontrol.navigation}}
-			controls.push(new OpenLayers.Control.Navigation());
+			controls.push(new OpenLayers.Control.NavToolbar());
 		{{/if}}
 
 		mode = {{$mapcontrol.label|json_encode}};
 		container.modeManager.addMode({
 			name: {{$mapcontrol.label|json_encode}},
-			controls: controls,
-			activate: function () {
-				$(link).addClass('active');
-			},
-			deactivate: function () {
-				$(link).removeClass('active');
-			}
+			controls: controls
 		});
 	{{/if}}
+
+	container.modeManager.register('activate', mode, function () {
+		$(link).addClass('active');
+	});
+	container.modeManager.register('deactivate', mode, function () {
+		$(link).removeClass('active');
+	});
 
 	if (func) {
 		$(link).click(func);

@@ -454,6 +454,7 @@ function wikiplugin_appframe_mapcontrol($data, $params, $start)
 		'mode' => $mode,
 		'function' => $function,
 		'navigation' => $params->navigation->int(),
+		'class' => $params->class->text() ? $params->class->text() : 'icon',
 	));
 	return $smarty->fetch('wiki-plugins/wikiplugin_appframe_mapcontrol.tpl');
 }

@@ -48,12 +48,22 @@ function wikiplugin_redirect($data, $params)
 	$areturn = '';
 
 	if (!isset($page)) {
-		$areturn = "REDIRECT plugin: No page specified!";
+		$areturn = "REDIRECT plugin: No page specified!<br />";
 	}
 	if (!isset($url)) {
-		$areturn .= "REDIRECT plugin: No url specified!";
+		$areturn .= "REDIRECT plugin: No url specified!<br />";
 	}
-	$location = isset($page) ? $page : isset($url) ? $url : isset($perspective) ? tra('perspective ') . $perspective : tra('nowhere');
+	if (isset($page)) {
+		$location = $page;
+	} else if (isset($url)) {
+		$location = $url;
+	} else if (isset($perspective)) {
+		$location = tra('perspective ') . $perspective;
+	} else {
+		$location = tra('nowhere');
+		$areturn .= "REDIRECT plugin: No perspective specified!";
+	}
+
 	if ($just_saved) {
 		$areturn = sprintf(tra("REDIRECT plugin: The redirection to '%s' is disabled just after saving the page."), $location);
 	} else if (TikiLib::lib('parser')->option['indexing']) {

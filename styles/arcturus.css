@@ -37,11 +37,11 @@ body.fixed_width .fixedwidth .fixedwidth {
 }
 
 #c1c2	#wrapper	#col1.marginleft  {
-	margin-left: 180px;
+	margin-left: 190px;
 }
 
 #c1c2	#wrapper	#col1.marginright {
-	margin-right: 180px;
+	margin-right: 190px;
 }
 
 #c1c2	#wrapper	#col1	.content {
@@ -65,8 +65,8 @@ body.fixed_width .fixedwidth .fixedwidth {
 #c1c2 #col2 .content {margin-left: 4px}
 
 #col3 {
-	width: 180px;
-	margin-left: -180px;
+	width: 190px;
+	margin-left: -190px;
 	background: #ded6c6;
 }
 
@@ -502,8 +502,8 @@ h3.box-title,
 th,
 td.heading,
 tr.diffheader {
-	background: #5A4A39;
-	color: #fff;
+	background: #b5a58c;
+	color: #000;
 	font-size: 11px;
 	font-weight: bold;
 	padding-left: 2px;
@@ -776,6 +776,10 @@ body.tiki_cms h1 a.pagetitle:hover {border-bottom: 0}
 
 .calHeadingOn, .calHeadingOn a {
 	background: #f3e498;
+}
+
+.box-data .caltable {
+	margin-left: -3px;
 }
 
 /***** Admin *****/
