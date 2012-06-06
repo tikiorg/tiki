@@ -759,6 +759,9 @@ function wikiplugin_tracker($data, $params)
 							}
 						}
 					} else {
+						if ($registration == 'y' && $_SERVER['REQUEST_METHOD'] != 'POST') {
+							return false;
+						}
 						$rid = $trklib->replace_item($trackerId, $itemId, $ins_fields, $status, $ins_categs);
 						if (is_array($ins_categs)) {
 							if ($registration == 'y' && empty($item_info)) {

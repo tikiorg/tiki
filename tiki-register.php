@@ -60,7 +60,7 @@ if (count($registrationlib->merged_prefs['choosable_groups'])) {
 }
 
 $email_valid='y';
-if (isset($_REQUEST['register'])) {
+if (isset($_REQUEST['register']) && $_SERVER['REQUEST_METHOD'] == 'POST') {
 	check_ticket('register');
 	$cookie_name = $prefs['session_cookie_name'];
 
