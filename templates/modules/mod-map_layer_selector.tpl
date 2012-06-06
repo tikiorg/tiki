@@ -11,54 +11,54 @@
 		var realRefresh, map, refreshLayers = function () {
 			realRefresh();
 		};
-		$('.map-layer-selector').removeClass('map-layer-selector').each(function () {
-			map = $(this).closest('.tab, #appframe, body').find('.map-container:first')[0];
-			var baseLayers= $(this.baseLayers);
-			var optionalLayers= $('.optionalLayers', this);
+		$('.map-container').one('initialized', function () {
+			$('.map-layer-selector').removeClass('map-layer-selector').each(function () {
+				map = $(this).closest('.tab, #appframe, body').find('.map-container:first')[0];
+				var baseLayers= $(this.baseLayers);
+				var optionalLayers= $('.optionalLayers', this);
 
-			if (! map) {
-				return;
-			}
-
-			$(this).show();
-
-			baseLayers.change(function () {
-				if (map.map) {
-					var layer = map.map.layers[$(this).val()];
-					map.map.setBaseLayer(layer);
-					if (layer.isBlank) {
-						layer.setVisibility(false);
-					}
+				if (! map) {
+					return;
 				}
-			});
 
-			realRefresh = function () {
-				baseLayers.empty();
-				optionalLayers.empty();
-				$.each(map.map.layers, function (k, thisLayer) {
-					if (! thisLayer.displayInLayerSwitcher) {
-						return;
-					}
+				$(this).show();
 
-					if (thisLayer.isBaseLayer) {
-						baseLayers.append($('<option/>')
-							.attr('value', k)
-							.text(thisLayer.name)
-							.attr('selected', thisLayer === map.map.baseLayer));
-					} else {
-						var label, checkbox;
-						optionalLayers.append(label = $('<label/>').text(thisLayer.name).prepend(
-							checkbox = $('<input type="checkbox"/>')
-								.attr('checked', thisLayer.getVisibility())));
-						checkbox.change(function (e) {
-							thisLayer.setVisibility($(this).is(':checked'));
-						});
+				baseLayers.change(function () {
+					if (map.map) {
+						var layer = map.map.layers[$(this).val()];
+						map.map.setBaseLayer(layer);
+						if (layer.isBlank) {
+							layer.setVisibility(false);
+						}
 					}
 				});
-			};
-		});
 
-		$(map).one('initialized', function () {
+				realRefresh = function () {
+					baseLayers.empty();
+					optionalLayers.empty();
+					$.each(map.map.layers, function (k, thisLayer) {
+						if (! thisLayer.displayInLayerSwitcher) {
+							return;
+						}
+
+						if (thisLayer.isBaseLayer) {
+							baseLayers.append($('<option/>')
+								.attr('value', k)
+								.text(thisLayer.name)
+								.attr('selected', thisLayer === map.map.baseLayer));
+						} else {
+							var label, checkbox;
+							optionalLayers.append(label = $('<label/>').text(thisLayer.name).prepend(
+								checkbox = $('<input type="checkbox"/>')
+									.attr('checked', thisLayer.getVisibility())));
+							checkbox.change(function (e) {
+								thisLayer.setVisibility($(this).is(':checked'));
+							});
+						}
+					});
+				};
+			});
+
 			// Wait for OpenLayers to initialize
 			refreshLayers();
 			map.map.events.register('addlayer', {}, refreshLayers);
