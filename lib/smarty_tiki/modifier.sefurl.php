@@ -40,6 +40,9 @@ function smarty_modifier_sefurl($source, $type='wiki', $with_next = '', $all_lan
 		case 'blogpost':
 			$href = $sefurl ? "blogpost$source" : "tiki-view_blog_post.php?postId=$source";
 						break;
+		case 'calendar':
+			$href = $sefurl ? "cal$source" : "tiki-calendar.php?calIds[]=$source";
+						break;
 
 		case 'gallery':
 			$href = 'tiki-browse_gallery.php?galleryId='. $source;
