@@ -97,13 +97,13 @@ function wikiplugin_carousel_info()
 			'autoPilot' => array(
 				'required' => false,
 				'name' => tra('Start automatically'),
-				'description' => tra('Move the carousel automatically when the page loads (default false).'),
+				'description' => tra('Move the carousel automatically when the page loads (default Yes).'),
 				'filter' => 'digits',
 				'options' => array(
 					array('text' => tra('Yes'), 'value' => '1'),
 					array('text' => tra('No'), 'value' => '0'),
 				),
-				'default' => '0',
+				'default' => '1',
 			),
 			'displayThumbnails' => array(
 				'required' => false,
