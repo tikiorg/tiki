@@ -142,10 +142,7 @@ class AuthTokens
 
 		$this->db->query('UPDATE tiki_auth_tokens SET token = ' . self::SCHEME . ' WHERE tokenId = ?', array( $max ));
 
-		return $this->db->query(
-						'SELECT * FROM tiki_auth_tokens WHERE tokenId = ?',
-						array( $max )
-		)->fetchRow();
+		return $this->db->getOne('SELECT token FROM tiki_auth_tokens WHERE tokenId = ?', array( $max ));
 	}
 
 	function includeToken( $url, array $groups = array(), $email = '' )
@@ -160,7 +157,7 @@ class AuthTokens
 		}
 
 		$token = $this->createToken($data['path'], $args, $groups, array('email'=>$email));
-		$args['TOKEN'] = $token['token'];
+		$args['TOKEN'] = $token;
 
 		$query = '?' . http_build_query($args, '', '&');
 
@@ -184,7 +181,7 @@ class AuthTokens
 		}
 
 		$token = $this->createToken($data['path'], $args, $groups, array('email'=>$email));
-		$args['TOKEN'] = $token['token'];
+		$args['TOKEN'] = $token;
 
 		$query = '?' . http_build_query($args, '', '&');
 
