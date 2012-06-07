@@ -222,8 +222,10 @@ $channels = $templateslib->list_all_templates($offset, $maxRecords, $sort_mode, 
 $smarty->assign_by_ref('cant_pages', $channels["cant"]);
 
 // wysiwyg decision
-$info['is_html'] = $info['section_wiki_html'] === 'y' ? 1 : 0;
-$info['wysiwyg'] = $info['section_wiki_html'];
+if ($_REQUEST['templateId']) {
+	$info['is_html'] = $info['section_wiki_html'] === 'y' ? 1 : 0;
+	$info['wysiwyg'] = $info['section_wiki_html'];
+}
 include 'lib/setup/editmode.php';
 $info['section_wiki_html'] = $_SESSION['wysiwyg'];	//$info['is_html'] ? 'y' : 'n';
 
