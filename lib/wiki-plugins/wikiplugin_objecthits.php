@@ -32,7 +32,13 @@ function wikiplugin_objecthits_info()
 				'name' => tra('Days'),
 				'description' => tra('Show the number of hits over the past number of days indicated. Default is to show all hits.'),
 				'default' => 0,
-			)
+			),
+			'since' => array(
+				'required' => false,
+				'name' => tra('Since a date'),
+				'description' => tra('Date since the hits are collected in a format supported by strtotime'),
+				'default' => ''
+			),
 		)
 	);
 }
@@ -40,6 +46,8 @@ function wikiplugin_objecthits_info()
 function wikiplugin_objecthits($data, $params)
 {
 	global $tikilib;
+	$default = array('days' => 0, 'since' => '', 'type' => 'wiki');
+	$params = array_merge($default, $params);
 
 	global $statslib;
 	if (!is_object($statslib)) {
@@ -54,14 +62,9 @@ function wikiplugin_objecthits($data, $params)
 		$object = $page;
 		$type= "wiki";
 	}
-
-	if (!isset($days)) {
-		$days=0;
+	if (!empty($since)) {
+		$since = strtotime($since);
 	}
 	
-	if (!isset($type)) {
-		$type="wiki";
-	}
-	
-  return $statslib->object_hits($object, $type, $days);
+	return $statslib->object_hits($object, $type, $days, $since);
 }
