@@ -149,7 +149,11 @@ if (isset($_REQUEST["templateId"]) && $_REQUEST["templateId"] > 0 && (!isset($_R
 	global $templateslib; require_once 'lib/templates/templateslib.php';
 	$template_data = $templateslib->get_template($_REQUEST["templateId"]);
 	$_REQUEST["data"] = $template_data["content"];
-	if (isset($_SESSION['wysiwyg']) && $_SESSION['wysiwyg'] == 'y') {
+	if ($templateslib->template_is_in_section($_REQUEST['templateId'], 'wiki_html') ) {
+		$_REQUEST['is_html'] = 'on';
+		$_REQUEST['wysiwyg'] ='y';
+	}
+	if (isset($_SESSION['wysiwyg']) && $_SESSION['wysiwyg'] == 'y' || $_REQUEST['wysiwyg'] === 'y') {
 		$_REQUEST['data'] = $tikilib->parse_data($_REQUEST['data'], array('is_html'=>true, 'absolute_links' => true, 'suppress_icons' => true));
 	}
 	$_REQUEST["preview"] = 1;
