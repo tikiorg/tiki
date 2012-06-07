@@ -25,7 +25,8 @@
 		{/if}
 		{assign var='comma' value='n'}
 	{/if}
-{/strip}{* this line break is necessary to make data starts on the line after the headers *}
+{/strip}{* this empty line below is necessary to make data starts on the line after the headers *}
+
 {foreach from=$items item=item}
 {strip}{* DO NOT ident this strip - the line must not begin with space *}
 		{assign var='comma' value='n'}
@@ -59,5 +60,7 @@
 				{if !$smarty.foreach.list.last}{$separator}{/if}
 			{/foreach}
 		{/if}
-	{/strip}
+	{/strip}{* this empty line below is necessary to make separate rows *}
+
 {/foreach}
+

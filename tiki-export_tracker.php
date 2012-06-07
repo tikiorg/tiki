@@ -5,6 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
+// still used for export from trackerfilter (only - Tiki 9)
+
 require_once('tiki-setup.php');
 $access->check_feature('feature_trackers');
 if (!isset($_REQUEST['trackerId'])) {
@@ -206,6 +208,7 @@ if (isset($tracker_info['defaultOrderDir'])) {
 } else {
 		$sort_mode.= "_asc";
 }
+$heading = 'y';
 $smarty->assign_by_ref('heading', $heading);
 while (($items = $trklib->list_items($_REQUEST['trackerId'], $offset, $maxRecords, $sort_mode, $listfields, $filterFields, $values, $_REQUEST['status'], $_REQUEST['initial'], $exactValues)) && !empty($items['data'])) {
 	// still need to filter the fields that are view only by the admin and the item creator
