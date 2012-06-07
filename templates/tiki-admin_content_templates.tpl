@@ -40,9 +40,6 @@
 					{tr}Wiki{/tr}</label>
 					{if $info.section_wiki eq 'y'}{$toolbar_section='wiki page'}{/if}
 					<br />
-					<label style="margin-left: 2em;"><input type="checkbox" name="section_wiki_html" {if $info.section_wiki_html eq 'y'}checked="checked"{/if} />
-					{tr}Is HTML{/tr}</label>
-					<br />
 				{/if}
 				{if $prefs.feature_file_galleries_templates eq 'y'}
 					<label><input type="checkbox" name="section_file_galleries" {if $info.section_file_galleries eq 'y'}checked="checked"{/if} />
@@ -81,6 +78,15 @@
 					<option value="static"{if $info.template_type eq 'static'} selected="selected"{/if}>{tr}Text area{/tr}</option>
 					<option value="page"{if $info.template_type eq 'page'} selected="selected"{/if}>{tr}Wiki Page{/tr}</option>
 				</select>
+			</td>
+		</tr>
+
+		<tr class="type-cond for-static">
+			<td>
+				{tr}Is HTML{/tr}
+			</td>
+			<td>
+				<input type="checkbox" name="section_wiki_html" {if $info.section_wiki_html eq 'y'}checked="checked"{/if} />
 			</td>
 		</tr>
 		
