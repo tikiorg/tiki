@@ -52,6 +52,12 @@ function smarty_block_textarea($params, $content, $smarty, $repeat)
 			$params['_wysiwyg'] = 'n';
 		}
 	}
+	if ($is_html === null) { // sometimes $is_html has not been set, so take an educated guess
+		if ($params['_wysiwyg'] === 'y' && $prefs['wysiwyg_htmltowiki'] !== 'y') {
+			$is_html = true;
+		}
+	}
+
 	$params['_is_html'] = isset($params['_is_html']) ? $params['_is_html'] : $is_html;
 
 	$params['name'] = isset($params['name']) ? $params['name'] : 'edit';
