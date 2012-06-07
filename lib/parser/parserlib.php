@@ -1083,7 +1083,7 @@ if ( \$('#$id') ) {
 		}
 		if (!in_array($name, array('html'))) {		// remove <p> and <br>s from non-html
 			$data = str_replace(array('<p>', '</p>', "\t"), '', $data);
-			$data = str_replace(array('<br />', '<br>'), "\n", $data);
+			$data = str_replace('<br />', "\n", $data);
 		}
 
 		if ($this->contains_html_block($plugin_result)) {
