@@ -12,8 +12,18 @@
 	{include file='find.tpl'}
 {/if}
 
+{if $posts}
+	<form name="checkboxes_on" method="post" action="tiki-list_posts.php">
+	{query _type='form_input'}
+{/if}
+
 <table class="normal">
 	<tr>
+		{if $posts}
+			<th>
+				{select_all checkbox_names='checked[]'}
+			</th>
+		{/if}
 		<th>
 			<a href="tiki-list_posts.php?{if isset($blogId)}blogId={$blogId}&amp;{/if}offset={$offset}&amp;sort_mode={if $sort_mode eq 'title_asc'}title_desc{else}title_asc{/if}">
 				{tr}Post Title{/tr}
@@ -33,8 +43,9 @@
 	</tr>
 
 	{cycle values="odd,even" print=false}
-	{section name=changes loop=$posts}
+	{section name=changes loop=$posts}{assign var=id value=$posts[changes].postId}
 		<tr class="{cycle}">
+			<td class="checkbox"><input type="checkbox" name="checked[]" value="{$id}" /></td>
 			<td class="text">{object_link type="blog post" id=$posts[changes].postId title=$posts[changes].title}</td>
 			{if !isset($blogId)}
 				<td class="text">
@@ -53,5 +64,13 @@
 		{norecords _colspan=7}
 	{/section}
 </table>
+
+{if $posts and  $tiki_p_blog_admin eq 'y'}
+	<div class="formcolor">
+		{tr}Perform action with checked:{/tr}
+		{icon _id='cross' _tag='input_image' name='remove' value='y' alt="{tr}Delete{/tr}"}
+	</div>
+	</form>
+{/if}
 
 {pagination_links cant=$cant step=$maxRecords offset=$offset}{/pagination_links}
