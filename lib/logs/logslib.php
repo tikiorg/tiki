@@ -191,7 +191,14 @@ class LogsLib extends TikiLib
 		}
 
 		$actions = array();
-
+		$nottostore = array(
+			'auth_ldap_adminpass', 
+			'auth_ldap_group_adminpass', 
+			'shipping_fedex_password', 
+			'shipping_ups_password', 
+			'auth_phpbb_dbpasswd', 
+			'proxy_pass'
+		);
 		if ( $logObject ) {
 			$param = substr($param, 0, '200');
 			if ($logCateg && count($categs) > 0) {
@@ -204,7 +211,7 @@ class LogsLib extends TikiLib
 					$this->query($query, array($action, $object, (int)$date, $who, $ip, $param, $objectType, $categ, $client));
 					$actions[] = $this->lastInsertId();
 				}
-			} else {
+			} elseif ( ! in_array($object, $nottostore)) {
 				$query = "insert into `tiki_actionlog`" .
 								" (`action`, `object`, `lastModif`, `user`, `ip`, `comment`, `objectType`, `client`)" .
 								" values(?,?,?,?,?,?,?,?)"
