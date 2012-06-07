@@ -51,7 +51,7 @@
 			{foreach from=$line item=bit name=bit}
 				{foreach from=$bit item=tool name=tool}
 					{if !empty($qtelement[$tool].class)}
-						<li class="{$qtelement[$tool].class}" {if $smarty.foreach.bit.index eq 1}style="float:right;"{/if}>{$qtelement[$tool].html}</li>
+						<li class="{$qtelement[$tool].class}" {if $smarty.foreach.bit.index eq 1}style="float:right;"{/if}{if not $qtelement[$tool].visible} style="display:none"{/if}>{$qtelement[$tool].html}</li>
 					{/if}
 				{/foreach}
 			{/foreach}
