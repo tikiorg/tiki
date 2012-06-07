@@ -201,7 +201,7 @@ input[type="submit"]:hover {
 
 #top_modules .module.secondary_site_menu {
 	position: absolute;
-	top: 20px;
+	top: 0;
 	right: 30px;
 }
 
