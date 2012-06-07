@@ -1382,7 +1382,7 @@ function wikiplugin_trackerlist($data, $params)
 			$smarty->assign('urlquery', '');
 		}
 		if (!empty($export) && $export != 'n' && $tiki_p_export_tracker == 'y') {
-			$exportUrl = "tiki-view_tracker.php?trackerId=$trackerId&amp;cookietab=3";
+			$exportUrl = "tiki-tracker-export?trackerId=$trackerId";
 			if (!empty($fields)) {
 				$exportUrl .= '&amp;displayedFields='.(is_array($fields)? implode(':', $fields): $fields);
 			}
