@@ -1715,7 +1715,7 @@ function wikiplugin_trackerlist($data, $params)
 			*/
 			if (!$tracker) {
 				$smarty->assign('msg', tra("Error in tracker ID"));
-				return $smarty->fetch("error_simple.tpl");
+				return $smarty->fetch("error_raw.tpl");
 			} else {
 				$save_fc = null;
 				if (!empty($wiki) && $params['force_compile'] === 'y') { // some pretty trackers need to compile fresh for each item
@@ -1759,7 +1759,7 @@ function wikiplugin_trackerlist($data, $params)
 			}
 		} else {
 			$smarty->assign('msg', tra("No field indicated"));
-			return $smarty->fetch("error_simple.tpl");
+			return $smarty->fetch("error_raw.tpl");
 		}
 	}
 	return $back;
