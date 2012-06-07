@@ -76,6 +76,9 @@ if (isset($_REQUEST['templateId']) && $_REQUEST['templateId'] > 0) {
 
 	$_REQUEST['preview'] = 1;
 	$_REQUEST['body'] = $template_data['content'];
+	if ($templateslib->template_is_in_section($_REQUEST['templateId'], 'wiki_html')) {
+		$_REQUEST['allowhtml'] = 'on';
+	}
 }
 
 $smarty->assign('allowhtml', '');
