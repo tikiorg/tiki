@@ -176,7 +176,7 @@ var syntaxHighlighter = {
 ';
 	}
 
-	$headerlib->add_js($js, 100);
+	$headerlib->add_js($js);
 
 	if (strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE 6') !== false) {
 

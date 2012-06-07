@@ -301,14 +301,23 @@
 			</td>
 		</tr>
 
-		{if $tiki_p_use_HTML eq 'y' && $smarty.session.wysiwyg neq 'y'}
-			<tr>
-				<td>{tr}Allow full HTML{/tr} <em>({tr}Keep any HTML tag.{/tr})</em>
-				<br><em>{tr}If not enabled, Tiki will retain some HTML tags (a, p, pre, img, hr, b, i){/tr}.</em></td>
-				<td>
-					<input type="checkbox" name="allowhtml" {if $allowhtml eq 'y'}checked="checked"{/if}/>
-				</td>
-			</tr>
+		{if $tiki_p_use_HTML eq 'y'}
+			{if $smarty.session.wysiwyg neq 'y'}
+				<tr>
+					<td>{tr}Allow full HTML{/tr} <em>({tr}Keep any HTML tag.{/tr})</em>
+					<br><em>{tr}If not enabled, Tiki will retain some HTML tags (a, p, pre, img, hr, b, i){/tr}.</em></td>
+					<td>
+						<input type="checkbox" name="allowhtml" {if $allowhtml eq 'y'}checked="checked"{/if}/>
+					</td>
+				</tr>
+			{else}
+				<tr>
+					<td></td>
+					<td>
+						<input type="checkbox" name="allowhtml" checked="checked" style="display:none;"/>
+					</td>
+				</tr>
+			{/if}
 		{/if}
 		
 		{if $prefs.feature_cms_emails eq 'y' and $articleId eq 0}
