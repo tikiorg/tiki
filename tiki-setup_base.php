@@ -92,7 +92,7 @@ if (isset($prefs['session_storage']) && $prefs['session_storage'] == 'db') {
 	} elseif ($api_tiki == 'pdo') {
 		require_once ('lib/tikisession-pdo.php');
 	}
-} elseif ( isset($prefs['session_storage']) && $prefs['session_storage'] == 'memcache' && TikiLib::lib("memcach")->isEnabled() ) {
+} elseif ( isset($prefs['session_storage']) && $prefs['session_storage'] == 'memcache' && TikiLib::lib("memcache")->isEnabled() ) {
 	require_once ('lib/tikisession-memcache.php');
 }
 
