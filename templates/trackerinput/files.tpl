@@ -1,4 +1,5 @@
-<ol class="tracker-item-files" id="{$field.ins_id|escape}-files">
+<div class="files-field uninitialized">
+<ol class="tracker-item-files current-list">
 	{foreach from=$field.files item=info}
 		<li data-file-id="{$info.fileId|escape}">
 			{$info.name|escape}
@@ -6,7 +7,7 @@
 		</li>
 	{/foreach}
 </ol>
-<input id="{$field.ins_id|escape}-input" type="text" name="{$field.ins_id|escape}" value="{$field.value|escape}"/>
+<input class="input" type="text" name="{$field.ins_id|escape}" value="{$field.value|escape}"/>
 {if $field.canUpload}
 	<fieldset id="{$field.ins_id|escape}-drop" class="file-drop">
 		<legend>{tr}Upload files{/tr}</legend>
@@ -22,7 +23,7 @@
 {if $prefs.fgal_tracker_existing_search eq 'y'}
 	<fieldset>
 		<legend>{tr}Existing files{/tr}</legend>
-		<input type="text" id="{$field.ins_id|escape}-search" placeholder="{tr}Search query{/tr}"/>
+		<input type="text" class="search" placeholder="{tr}Search query{/tr}"/>
 		<ol class="results tracker-item-files">
 		</ol>
 	</fieldset>
@@ -30,16 +31,17 @@
 {if $prefs.fgal_upload_from_source eq 'y' and $field.canUpload}
 	<fieldset>
 		<legend>{tr}Upload from URL{/tr}</legend>
-		<label>{tr}URL:{/tr} <input id="{$field.ins_id|escape}-url" type="url"/></label>
+		<label>{tr}URL:{/tr} <input class="url" type="url"/></label>
 	</fieldset>
 {/if}
+</div>
 {jq}
-(function () {
-var $drop = $('#{{$field.ins_id|escape}}-drop');
-var $files = $('#{{$field.ins_id|escape}}-files');
-var $field = $('#{{$field.ins_id|escape}}-input');
-var $search = $('#{{$field.ins_id|escape}}-search');
-var $url = $('#{{$field.ins_id|escape}}-url');
+$('.files-field.uninitialized').removeClass('uninitialized').each(function () {
+var $drop = $('.file-drop', this);
+var $files = $('.current-list', this);
+var $field = $('.input', this);
+var $search = $('.search', this);
+var $url = $('.url', this);
 var $fileinput = $drop.find('input');
 
 $field.hide();
@@ -240,5 +242,5 @@ $search.keypress(function (e) {
 		return false;
 	}
 });
-}());
+});
 {/jq}
