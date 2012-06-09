@@ -15,7 +15,7 @@ if (isset($_REQUEST["remove"])) {
 	$bloglib->remove_post($_REQUEST["remove"]);
 }
 if (isset($_REQUEST['checked'])) {
-	check_ticket('list_comments');
+	check_ticket('list_posts');
 	$checked = is_array($_REQUEST['checked']) ? $_REQUEST['checked'] : array($_REQUEST['checked']);
 	// Delete post(s)
 	if (isset($_REQUEST['remove']) || isset($_REQUEST['remove_x'])) {
