@@ -4149,7 +4149,7 @@ class UsersLib extends TikiLib
 				'type' => 'sheet',
 				'admin' => true,
 				'prefs' => array('feature_sheet'),
-				'scope' => 'global',
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_edit_sheet',
