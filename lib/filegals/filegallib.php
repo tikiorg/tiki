@@ -3416,7 +3416,7 @@ class FileGalLib extends TikiLib
 		}
 	}
 
-	function attach_file_source($fileId, $url, $info)
+	function attach_file_source($fileId, $url, $info, $isReference = false)
 	{
 		$attributelib = TikiLib::lib('attribute');
 		$attributelib->set_attribute('file', $fileId, 'tiki.content.source', $url);
@@ -3425,6 +3425,10 @@ class FileGalLib extends TikiLib
 
 		if ($info['etag']) {
 			$attributelib->set_attribute('file', $fileId, 'tiki.content.etag', $info['etag']);
+		}
+
+		if ($isReference) {
+			$attributelib->set_attribute('file', $fileId, 'tiki.content.url', $url);
 		}
 	}
 

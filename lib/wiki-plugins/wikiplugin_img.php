@@ -663,7 +663,12 @@ function wikiplugin_img( $data, $params, $offset, $parseOptions='' )
 		if (!empty($imgdata['id'])) {
 			$src = $imagegalpath . $imgdata['id'];
 		} elseif (!empty($imgdata['fileId'])) {
-			$src = $filegalpath . $imgdata['fileId']; 
+			$smarty->loadPlugin('smarty_modifier_sefurl');
+			$src = smarty_modifier_sefurl($imgdata['fileId'], 'file');
+
+			if ($absolute_links) {
+				$src = TikiLib::tikiUrl($src);
+			}
 		} else {					//only attachments left
 			$src = $attachpath . $imgdata['attId']; 
 		}
