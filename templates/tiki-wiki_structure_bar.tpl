@@ -8,16 +8,14 @@
 
     {if $prev_info and $prev_info.page_ref_id}{if $prev_info.page_alias}{assign var=icon_title value=$prev_info.page_alias}{else}{assign var=icon_title value=$prev_info.pageName}{/if}
     	<a href="{sefurl page=$prev_info.pageName structure=$home_info.pageName page_ref_id=$prev_info.page_ref_id}">
-    		{icon _id='resultset_previous' alt="{tr}Previous page{/tr}" title=$icon_title}
-    	</a>
+    		{icon _id='resultset_previous' alt="{tr}Previous page{/tr}" title=$icon_title}</a>
     {else}
     	<img src="img/icons/8.gif" alt="" height="1" width="8" />
     {/if}
 
     {if $parent_info}{if $parent_info.page_alias}{assign var=icon_title value=$parent_info.page_alias}{else}{assign var=icon_title value=$parent_info.pageName}{/if}
     	<a href="{sefurl page=$parent_info.pageName structure=$home_info.pageName page_ref_id=$parent_info.page_ref_id}">
-    		{icon _id='resultset_up' alt="{tr}Parent page{/tr}" title=$icon_title}
-    	</a>
+    		{icon _id='resultset_up' alt="{tr}Parent page{/tr}" title=$icon_title}</a>
     {else}
     	<img src="img/icons/8.gif" alt="" height="1" width="8" />
     {/if}
