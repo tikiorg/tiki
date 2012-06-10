@@ -21,7 +21,7 @@
 // Note: the difference is invisible but " :" has an UTF-8 non-breaking-space, not a regular space, but the UTF-8 equivalent of the HTML &nbsp;.
 // This allows correctly displaying emails and JavaScript messages, not only web pages as would happen with &nbsp;.
 
-$lang = array(Enter
+$lang = array(
 // "You must specify a directory" => "You must specify a directory",
 "Creation Date" => "Fecha de Creación",
 "Name" => "Nombre",
