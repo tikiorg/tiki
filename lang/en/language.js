@@ -24,6 +24,10 @@ lang = {
 //	"Match" : "Match",
 //	"Do not match" : "Do not match",
 //	"Advanced options" : "Advanced options",
+//	"URL to open this file with WebDAV" : "URL to open this file with WebDAV",
+//	"To My Location" : "To My Location",
+//	"What address are you looking for?" : "What address are you looking for?",
+//	"Search Location" : "Search Location",
 //	"Pick a file." : "Pick a file."
 //	"Add Field" : "Add Field",
 //	"Edit Field" : "Edit Field",
