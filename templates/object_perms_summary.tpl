@@ -9,7 +9,7 @@
 		{elseif $permsType eq 'object'}
 			{icon _id='key' alt="{tr}Permissions{/tr}"}
 			</a>
-			{tr}There are individual permissions set for this tracker{/tr}
+			{tr}There are individual permissions set for this object{/tr}
 		{else}
 			{icon _id='key_active' alt="{tr}Active Perms{/tr}"}
 			</a>
