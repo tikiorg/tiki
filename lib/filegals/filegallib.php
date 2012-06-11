@@ -2076,7 +2076,7 @@ class FileGalLib extends TikiLib
 	function getWikiSyntax($galleryId=0)
 	{
 		if (isset($_REQUEST['insertion_syntax']) && $_REQUEST['insertion_syntax'] == 'file') {	// for use in 'Choose or Upload' toolbar item (tikifile)
-			return '{file type="gallery" fileId="%fileId%"}';
+			return '{file type="gallery" fileId="%fileId%" showicon="y"}';
 		}
 		if (isset($_REQUEST['filegals_manager'])) {		// for use in plugin edit popup
 			if ($_REQUEST['filegals_manager'] === 'fgal_picker_id') {
