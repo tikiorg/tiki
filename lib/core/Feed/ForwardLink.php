@@ -15,6 +15,7 @@ Class Feed_ForwardLink extends Feed_Abstract
 
 	public function name($name = "") //$name is not used, but is there for compatibility with abstract
 	{
+		$this->name = $name;
 		return $this->type . '_' . $this->name;
 	}
 
