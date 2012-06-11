@@ -59,7 +59,7 @@ function prefs_site_list()
 				'before' => tra('Before'),
 				'none' => tra('None'),
 			),
-			'default' => 'Before',
+			'default' => 'before',
 		),
 		'site_title_breadcrumb' => array(
 			'name' => tra('Browser title display mode'),
