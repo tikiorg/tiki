@@ -10,7 +10,7 @@ require_once ('tiki-setup.php');
 @ini_set('max_execution_time', 0); //will not work if safe_mode is on
 $prefs['feature_wiki_protect_email'] = 'n'; //not to alter the email
 include_once ('lib/newsletters/nllib.php');
-$auto_query_args = array('sort_mode', 'offset', 'find', 'nlId', 'cookietab');
+$auto_query_args = array('sort_mode', 'offset', 'find', 'nlId', 'cookietab', 'editionId');
 
 $access->check_feature('feature_newsletters');
 $access->check_permission('tiki_p_send_newsletters');
