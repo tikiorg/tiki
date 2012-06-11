@@ -19,6 +19,6 @@ function upgrade_20120429_fix_collation_tiki($installer)
 		foreach ( $results as $table ) 
 			$installer->query("ALTER TABLE ".$table['TABLE_NAME']." convert to character set DEFAULT COLLATE DEFAULT");
 	} else {
-		die('MySQL INFORMATION_SCHEMA not available. Your MySQL version is too old to perform this operation.');
+		die('MySQL INFORMATION_SCHEMA not available. Your MySQL version is too old to perform this operation. (upgrade_20120429_fix_collation_tiki)');
 	}
 }

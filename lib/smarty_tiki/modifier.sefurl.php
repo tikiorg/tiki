@@ -40,6 +40,9 @@ function smarty_modifier_sefurl($source, $type='wiki', $with_next = '', $all_lan
 		case 'blogpost':
 			$href = $sefurl ? "blogpost$source" : "tiki-view_blog_post.php?postId=$source";
 						break;
+		case 'calendar':
+			$href = $sefurl ? "cal$source" : "tiki-calendar.php?calIds[]=$source";
+						break;
 
 		case 'gallery':
 			$href = 'tiki-browse_gallery.php?galleryId='. $source;
@@ -54,19 +57,26 @@ function smarty_modifier_sefurl($source, $type='wiki', $with_next = '', $all_lan
 						break;
 
 		case 'file':
-			$href = $sefurl ? "dl$source" : "tiki-download_file.php?fileId=$source";
-						break;
-
 		case 'thumbnail':
-			$href = $sefurl ? "thumbnail$source" : "tiki-download_file.php?fileId=$source&amp;thumbnail";
-						break;
-
 		case 'display':
-			$href = $sefurl ? "display$source" : "tiki-download_file.php?fileId=$source&amp;display";
-						break;
-
 		case 'preview':
-			$href = $sefurl ? "preview$source" : "tiki-download_file.php?fileId=$source&amp;preview";
+			$attributelib = TikiLib::lib('attribute');
+			$attributes = $attributelib->get_attributes('file', $source);
+
+			if ($type == 'file') {
+				$prefix = 'dl';
+				$suffix = null;
+			} else {
+				$prefix = $type;
+				$suffix = '&amp;' . $type;
+			}
+
+			if (isset($attributes['tiki.content.url'])) {
+				$href = $attributes['tiki.content.url'];
+			} else {
+				$href = $sefurl ? "$prefix$source" : "tiki-download_file.php?fileId=$source$suffix";
+			}
+
 						break;
 
 		case 'draft':

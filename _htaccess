@@ -74,7 +74,7 @@ FileETag none
 #php_flag display_errors on
 
 # increase memory
-#php_value memory_limit 128M
+php_value memory_limit 256M
 
 # increase execution time (default value in apache use to be 30, and in some cases of long wiki pages with many plugins it may take longer)
 #php_value max_execution_time 90
@@ -106,7 +106,7 @@ RewriteRule ^(.*) - [E=HTTP_AUTHORIZATION:%1]
 
 
 # You may need to uncomment and fix the RewriteBase value below to suit your installation. e.g. if your Tiki is not installed directly in the web root.
-#RewriteBase   "/tiki"
+#RewriteBase   /tiki
 # And if you get errors like "The requested URL /absolutepath/tiki-index.php was not found on this server",
 # You may need to uncomment the following line.
 # RewriteBase   /
@@ -216,9 +216,9 @@ RewriteRule ^(lib/wiki3d/.+\.jar)$ $1                                       [L]
 # "Dirty URL"s will stop here.
 RewriteRule \.(css|gif|jpg|png|php|html|js|htm|shtml|cgi|sql|phtml|txt|ihtml)   -       [last]
 
-#Redirst addresses with bogus directories: e.g., yourdomain.com/bogus/.*
+#Redirect addresses with bogus directories: e.g., example.com/bogus/.*
 #Otherwise causes a broken page to load
-#RewriteRule ^.*/.*$ http://www.yourdomain.com/Page+Not+Found    [L]
+#RewriteRule ^.*/.*$ http://www.example.com/Page+Not+Found    [L]
 
 
 RewriteRule ^tiki-([a-z_]+)-([a-z_]+) tiki-ajax_services.php?controller=$1&action=$2		[QSA,L]

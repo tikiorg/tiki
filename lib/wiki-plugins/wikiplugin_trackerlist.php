@@ -1382,7 +1382,7 @@ function wikiplugin_trackerlist($data, $params)
 			$smarty->assign('urlquery', '');
 		}
 		if (!empty($export) && $export != 'n' && $tiki_p_export_tracker == 'y') {
-			$exportUrl = "tiki-view_tracker.php?trackerId=$trackerId&amp;cookietab=3";
+			$exportUrl = "tiki-tracker-export?trackerId=$trackerId";
 			if (!empty($fields)) {
 				$exportUrl .= '&amp;displayedFields='.(is_array($fields)? implode(':', $fields): $fields);
 			}
@@ -1715,7 +1715,7 @@ function wikiplugin_trackerlist($data, $params)
 			*/
 			if (!$tracker) {
 				$smarty->assign('msg', tra("Error in tracker ID"));
-				return "~np~".$smarty->fetch("error_simple.tpl")."~/np~";
+				return $smarty->fetch("error_raw.tpl");
 			} else {
 				$save_fc = null;
 				if (!empty($wiki) && $params['force_compile'] === 'y') { // some pretty trackers need to compile fresh for each item
@@ -1759,7 +1759,7 @@ function wikiplugin_trackerlist($data, $params)
 			}
 		} else {
 			$smarty->assign('msg', tra("No field indicated"));
-			return "~np~".$smarty->fetch("error_simple.tpl")."~/np~";
+			return $smarty->fetch("error_raw.tpl");
 		}
 	}
 	return $back;

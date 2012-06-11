@@ -126,7 +126,8 @@
 							dataType: 'json',
 							data: {
 								galleryId: "{{$tracker_input.galleryId|escape}}",
-								url: url
+								url: url,
+								reference: 1
 							},
 							success: function (data) {
 								var input = $('<input type="hidden" name="forced~' + streetview + '"/>')

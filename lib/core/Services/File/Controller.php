@@ -84,13 +84,17 @@ class Services_File_Controller
 			throw new Services_Exception(tr('Data could not be obtained.'), 412);
 		}
 
+		if ($input->reference->int()) {
+			$info['data'] = 'REFERENCE';
+		}
+
 		$fileId = $this->uploadFile($gal_info, $info['name'], $info['size'], $info['type'], $info['data']);
 
 		if ($fileId === false) {
 			throw new Services_Exception(tr('File could not be uploaded. Restrictions apply.'), 406);
 		}
 
-		$filegallib->attach_file_source($fileId, $url, $info);
+		$filegallib->attach_file_source($fileId, $url, $info, $input->reference->int());
 
 		return array(
 			'size' => $info['size'],

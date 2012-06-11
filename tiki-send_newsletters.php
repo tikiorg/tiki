@@ -10,7 +10,7 @@ require_once ('tiki-setup.php');
 @ini_set('max_execution_time', 0); //will not work if safe_mode is on
 $prefs['feature_wiki_protect_email'] = 'n'; //not to alter the email
 include_once ('lib/newsletters/nllib.php');
-$auto_query_args = array('sort_mode', 'offset', 'find', 'nlId', 'cookietab');
+$auto_query_args = array('sort_mode', 'offset', 'find', 'nlId', 'cookietab', 'editionId');
 
 $access->check_feature('feature_newsletters');
 $access->check_permission('tiki_p_send_newsletters');
@@ -145,11 +145,23 @@ if (isset($_REQUEST['mode_normal']) && $_REQUEST['mode_normal']=='y') {
 	$info["data"] = $editlib->parseToWysiwyg($_REQUEST["data"]);
 }
 
+if (isset($_REQUEST['is_html'])) {
+	$info['is_html'] = !empty($_REQUEST['is_html']);
+	$_REQUEST['is_html'] = 'on';
+} else {	// guess html based on wysiwyg mode
+	$info['is_html'] =  $info['wysiwyg'] === 'y' && $prefs['wysiwyg_htmltowiki'] !== 'y';
+	$_REQUEST['is_html'] = $info['is_html'] ? 'on' : '';
+}
+
 if (isset($_REQUEST["templateId"]) && $_REQUEST["templateId"] > 0 && (!isset($_REQUEST['previousTemplateId']) || $_REQUEST['previousTemplateId'] != $_REQUEST['templateId'])) {
 	global $templateslib; require_once 'lib/templates/templateslib.php';
 	$template_data = $templateslib->get_template($_REQUEST["templateId"]);
 	$_REQUEST["data"] = $template_data["content"];
-	if (isset($_SESSION['wysiwyg']) && $_SESSION['wysiwyg'] == 'y') {
+	if ($templateslib->template_is_in_section($_REQUEST['templateId'], 'wiki_html') ) {
+		$_REQUEST['is_html'] = 'on';
+		$_REQUEST['wysiwyg'] ='y';
+	}
+	if (isset($_SESSION['wysiwyg']) && $_SESSION['wysiwyg'] == 'y' || $_REQUEST['wysiwyg'] === 'y') {
 		$_REQUEST['data'] = $tikilib->parse_data($_REQUEST['data'], array('is_html'=>true, 'absolute_links' => true, 'suppress_icons' => true));
 	}
 	$_REQUEST["preview"] = 1;
@@ -223,7 +235,6 @@ if (isset($_REQUEST["preview"])) {
 	}
 	if (isset($_REQUEST['wikiparse']) && $_REQUEST['wikiparse'] == 'on') $info['wikiparse'] = 'y';
 	else $info['wikiparse'] = 'n';
-	$info['is_html'] = !empty($_REQUEST['is_html']);
 	if (!empty($_REQUEST["datatxt"])) {
 		$info["datatxt"] = $_REQUEST["datatxt"];
 		//For the hidden input
@@ -329,6 +340,7 @@ if (!empty($_REQUEST['resendEditionId'])) {
 		$_REQUEST['subject'] = $info['subject'];
 		$_REQUEST['datatxt'] = $info['datatxt'];
 		$_REQUEST['wysiwyg'] = $info['wysiwyg'];
+		$_REQUEST['is_html'] = $info['is_html'];
 		$_REQUEST['dataparsed'] = $info['data'];
 		$_REQUEST['editionId'] = $nllib->replace_edition($nl_info['nlId'], $info['subject'], $info['data'], 0, 0, false, $info['datatxt'], $info['files'], $info['wysiwyg']);
 		$resend = 'y';

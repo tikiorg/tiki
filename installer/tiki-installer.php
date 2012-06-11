@@ -508,7 +508,7 @@ function convert_database_to_utf8( $dbname )
 			$db->query("ALTER TABLE `{$row['TABLE_NAME']}` CONVERT TO CHARACTER SET utf8 COLLATE utf8_unicode_ci");
 		}
 	} else {
-		die('MySQL INFORMATION_SCHEMA not available. Your MySQL version is too old to perform this operation.');
+		die('MySQL INFORMATION_SCHEMA not available. Your MySQL version is too old to perform this operation. (convert_database_to_utf8)');
 	}
 }
 
@@ -523,7 +523,7 @@ function fix_double_encoding( $dbname, $previous )
 			$db->query("UPDATE `{$field['TABLE_NAME']}` SET `{$field['COLUMN_NAME']}` = CONVERT(CONVERT(CONVERT(CONVERT(`{$field['COLUMN_NAME']}` USING binary) USING utf8) USING $previous) USING binary)");
 		}
 	} else {
-		die('MySQL INFORMATION_SCHEMA not available. Your MySQL version is too old to perform this operation.');
+		die('MySQL INFORMATION_SCHEMA not available. Your MySQL version is too old to perform this operation. (fix_double_encoding)');
 	}
 }
 

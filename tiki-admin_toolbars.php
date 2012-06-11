@@ -168,6 +168,8 @@ foreach ( $current as &$line ) {
 
 $customqt = Toolbar::getCustomList();
 
+$view_mode = !empty($_REQUEST['view_mode']) ? $_REQUEST['view_mode'] : '';
+
 foreach ( $qtlist as $name ) {
 
 	$tag = Toolbar::getTag($name);
@@ -205,10 +207,24 @@ foreach ( $qtlist as $name ) {
 		$label .= '<input type="hidden" name="plugin" value="' . $tag->getPluginName() . '" />';
 	}
 
+	$visible = 	true;
+	if ($view_mode === 'both') {
+		$visible = (!empty($wys) || !empty($wiki));
+	} else if ($view_mode === 'wiki') {
+		$visible = !empty($wiki);
+	} else if ($view_mode === 'wysiwyg') {
+		$visible = !empty($wys);
+	} else if ($view_mode === 'wysiwyg_wiki') {
+		$visible = !empty($wyswik);
+	} else if ($view_mode === 'sheet') {
+		$visible = (strpos($wiki, 'qt-sheet') !== false);
+	}
+
 	$qtelement[$name] = array(
 					'name' => $name, 
 					'class' => "toolbar qt-$name $wys $wiki $wyswik $plug $cust $avail",
-					'html' => "$icon<span>$label</span>"
+					'html' => "$icon<span>$label</span>",
+					'visible' => $visible,
 	);
 }
 

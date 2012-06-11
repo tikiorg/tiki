@@ -2080,7 +2080,7 @@ class FileGalLib extends TikiLib
 	function getWikiSyntax($galleryId=0)
 	{
 		if (isset($_REQUEST['insertion_syntax']) && $_REQUEST['insertion_syntax'] == 'file') {	// for use in 'Choose or Upload' toolbar item (tikifile)
-			return '{file type="gallery" fileId="%fileId%"}';
+			return '{file type="gallery" fileId="%fileId%" showicon="y"}';
 		}
 		if (isset($_REQUEST['filegals_manager'])) {		// for use in plugin edit popup
 			if ($_REQUEST['filegals_manager'] === 'fgal_picker_id') {
@@ -3420,7 +3420,7 @@ class FileGalLib extends TikiLib
 		}
 	}
 
-	function attach_file_source($fileId, $url, $info)
+	function attach_file_source($fileId, $url, $info, $isReference = false)
 	{
 		$attributelib = TikiLib::lib('attribute');
 		$attributelib->set_attribute('file', $fileId, 'tiki.content.source', $url);
@@ -3429,6 +3429,10 @@ class FileGalLib extends TikiLib
 
 		if ($info['etag']) {
 			$attributelib->set_attribute('file', $fileId, 'tiki.content.etag', $info['etag']);
+		}
+
+		if ($isReference) {
+			$attributelib->set_attribute('file', $fileId, 'tiki.content.url', $url);
 		}
 	}
 
