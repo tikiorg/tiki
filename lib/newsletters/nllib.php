@@ -1099,8 +1099,15 @@ class NlLib extends TikiLib
 			// build the html
 			$beginHtml = '<body class="tiki_newsletters"><div id="tiki-center" class="clearfix content"><div class="wikitext">';
 			$endHtml = '</div></div></body>';
+			$is_html = $info['wysiwyg'] === 'y' && $prefs['wysiwyg_htmltowiki'] !== 'y';	// parse as html if wysiwyg and not htmltowiki
 			if (stristr($info['data'], '<body') === false) {
-				$html = "<html>$beginHtml" . $tikilib->parse_data($info['data'], array('absolute_links' => true, 'suppress_icons' => true)) . "$endHtml</html>";
+				$html = "<html>$beginHtml" . $tikilib->parse_data(
+					$info['data'], array(
+						'absolute_links' => true,
+						'suppress_icons' => true,
+						'is_html' => $is_html,
+					)
+				) . "$endHtml</html>";
 			} else {
 				$html = str_ireplace('<body>', $beginHtml, $info['data']);
 				$html = str_ireplace('</body>', $endHtml, $html);

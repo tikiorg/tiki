@@ -145,6 +145,14 @@ if (isset($_REQUEST['mode_normal']) && $_REQUEST['mode_normal']=='y') {
 	$info["data"] = $editlib->parseToWysiwyg($_REQUEST["data"]);
 }
 
+if (isset($_REQUEST['is_html'])) {
+	$info['is_html'] = !empty($_REQUEST['is_html']);
+	$_REQUEST['is_html'] = 'on';
+} else {	// guess html based on wysiwyg mode
+	$info['is_html'] =  $info['wysiwyg'] === 'y' && $prefs['wysiwyg_htmltowiki'] !== 'y';
+	$_REQUEST['is_html'] = $info['is_html'] ? 'on' : '';
+}
+
 if (isset($_REQUEST["templateId"]) && $_REQUEST["templateId"] > 0 && (!isset($_REQUEST['previousTemplateId']) || $_REQUEST['previousTemplateId'] != $_REQUEST['templateId'])) {
 	global $templateslib; require_once 'lib/templates/templateslib.php';
 	$template_data = $templateslib->get_template($_REQUEST["templateId"]);
@@ -227,7 +235,6 @@ if (isset($_REQUEST["preview"])) {
 	}
 	if (isset($_REQUEST['wikiparse']) && $_REQUEST['wikiparse'] == 'on') $info['wikiparse'] = 'y';
 	else $info['wikiparse'] = 'n';
-	$info['is_html'] = !empty($_REQUEST['is_html']);
 	if (!empty($_REQUEST["datatxt"])) {
 		$info["datatxt"] = $_REQUEST["datatxt"];
 		//For the hidden input
@@ -333,6 +340,7 @@ if (!empty($_REQUEST['resendEditionId'])) {
 		$_REQUEST['subject'] = $info['subject'];
 		$_REQUEST['datatxt'] = $info['datatxt'];
 		$_REQUEST['wysiwyg'] = $info['wysiwyg'];
+		$_REQUEST['is_html'] = $info['is_html'];
 		$_REQUEST['dataparsed'] = $info['data'];
 		$_REQUEST['editionId'] = $nllib->replace_edition($nl_info['nlId'], $info['subject'], $info['data'], 0, 0, false, $info['datatxt'], $info['files'], $info['wysiwyg']);
 		$resend = 'y';
