@@ -206,6 +206,11 @@ function takeGroupMail($destDiv = 'mod-webmail_inbox', $msgId = 1)
 		$objResponse->script('doRefreshWebmail();alert("Sorry, that mail has been taken by another operator. Refreshing list...");');
 		
 	} else {
+		$charset = $prefs['default_mail_charset'];
+		if(empty($charset)) {
+			$charset = 'UTF-8';
+		}
+		
 		$items['data'][0]['fieldId'] = $module_params['fromFId'];
 		$items['data'][0]['type'] = 't';
 		$items['data'][0]['value'] = $from;
@@ -220,7 +225,7 @@ function takeGroupMail($destDiv = 'mod-webmail_inbox', $msgId = 1)
 		$items['data'][3]['value'] = $realmsgid;
 		$items['data'][4]['fieldId'] = $module_params['contentFId'];
 		$items['data'][4]['type'] = 'a';
-		$items['data'][4]['value'] = htmlentities($cont['body'], ENT_QUOTES, 'UTF-8');
+		$items['data'][4]['value'] = htmlentities($cont['body'], ENT_QUOTES, $charset);
 		$items['data'][5]['fieldId'] = $module_params['accountFId'];
 		$items['data'][5]['type'] = 't';
 		$items['data'][5]['value'] = $acc['account'];
