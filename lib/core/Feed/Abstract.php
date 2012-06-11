@@ -18,11 +18,6 @@ abstract class Feed_Abstract
 	
 	function __construct($name = "")
 	{
-		$this->name($name);
-	}
-	
-	public function name($name = "")
-	{
 		if (empty($name)) {
 			$name = "http://" . $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF'];
 			$name = explode('/', $name);
@@ -33,10 +28,8 @@ abstract class Feed_Abstract
 			$name = str_replace("https://", "", $name);
 			$name = array_shift(explode('/', $name));
 		}
-		
-		$this->name = $name;
-		
-		return $this;
+
+		$this->name = $this->type . "_" . $name;
 	}
 	
 	public function getItems()

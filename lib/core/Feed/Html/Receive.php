@@ -17,6 +17,7 @@ class Feed_Html_Receive extends Feed_Abstract
 	function __construct($href)
 	{
 		$this->href = $href;
+		parent::__construct($href);
 	}
 	
 	public function getContents()

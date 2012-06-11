@@ -8,7 +8,6 @@
 Class Feed_ForwardLink_Receive extends Feed_Abstract
 {
 	var $type = "forwardlink";
-	var $name = "";
 	var $isFileGal = false;
 	var $version = "0.1";
 	var $showFailures = false;
@@ -17,7 +16,7 @@ Class Feed_ForwardLink_Receive extends Feed_Abstract
 	static function wikiView($args)
 	{
 		if (isset($_REQUEST['protocol'], $_REQUEST['contribution']) && $_REQUEST['protocol'] == 'forwardlink') {
-			$me = new self();
+			$me = new self($args['object']);
 			$forwardLink = Feed_ForwardLink::forwardLink($args['object']);
 
 			//here we do the confirmation that another wiki is trying to talk with this one
@@ -39,10 +38,5 @@ Class Feed_ForwardLink_Receive extends Feed_Abstract
 	{
 		$this->setEncoding($this->response);
 		return $this->response;
-	}
-
-	public function name($name = "") //$name not used, just there for compatibility with Abstract
-	{
-		return $this->type . "_" . $this->name;
 	}
 }

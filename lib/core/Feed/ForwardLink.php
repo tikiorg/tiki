@@ -11,18 +11,15 @@ Class Feed_ForwardLink extends Feed_Abstract
 	var $version = '0.1';
 	var $isFileGal = true;
 	var $debug = false;
-	var $name = '';
 
-	public function name($name = "") //$name is not used, but is there for compatibility with abstract
+	static function forwardLink($name, $nameIsSet = false)
 	{
-		$this->name = $name;
-		return $this->type . '_' . $this->name;
-	}
+		$me = new Feed_ForwardLink($name);
 
-	static function forwardLink($name)
-	{
-		$me = new self();
-		$me->name = $name;
+		if ($nameIsSet == true) {
+			$me->name = $name; //we override the name here because
+		}
+
 		return $me;
 	}
 
@@ -58,7 +55,7 @@ Class Feed_ForwardLink extends Feed_Abstract
 	private function restorePhrasesInWikiPage($phrase)
 	{
 		global $smarty, $headerlib;
-		$items = self::forwardLink($this->name)->getItems();
+		$items = Feed_ForwardLink::forwardLink($this->name, true)->getItems();
 		$phrases = array();
 
 		$phraseI = 0;
@@ -677,7 +674,7 @@ JQ
 
 		$phrase = (!empty($_REQUEST['phrase']) ? addslashes(htmlspecialchars($_REQUEST['phrase'])) : '');
 
-		$me = new self($page);
+		$me = new Feed_ForwardLink($page);
 
 		$me->goToPhraseExistence($phrase, $version);
 
@@ -766,7 +763,7 @@ JQ
 				Tracker_Query::tracker('Wiki Attributes')
 					->byName()
 					->replaceItem(array(
-						'Page' => $this->name(),
+						'Page' => $this->name,
 						'Attribute' => $entryHash,
 						'Value' => $entryText,
 						'Type' => 'ForwardLink'
