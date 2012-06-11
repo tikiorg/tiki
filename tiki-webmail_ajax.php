@@ -220,7 +220,7 @@ function takeGroupMail($destDiv = 'mod-webmail_inbox', $msgId = 1)
 		$items['data'][3]['value'] = $realmsgid;
 		$items['data'][4]['fieldId'] = $module_params['contentFId'];
 		$items['data'][4]['type'] = 'a';
-		$items['data'][4]['value'] = htmlentities($cont['body']);	// sigh - no option for non-wiki text :( - not ~pp~ wrapped anymore, made it worse :(
+		$items['data'][4]['value'] = htmlentities($cont['body'], ENT_QUOTES, 'UTF-8');
 		$items['data'][5]['fieldId'] = $module_params['accountFId'];
 		$items['data'][5]['type'] = 't';
 		$items['data'][5]['value'] = $acc['account'];
