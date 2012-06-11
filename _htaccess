@@ -216,9 +216,9 @@ RewriteRule ^(lib/wiki3d/.+\.jar)$ $1                                       [L]
 # "Dirty URL"s will stop here.
 RewriteRule \.(css|gif|jpg|png|php|html|js|htm|shtml|cgi|sql|phtml|txt|ihtml)   -       [last]
 
-#Redirst addresses with bogus directories: e.g., yourdomain.com/bogus/.*
+#Redirect addresses with bogus directories: e.g., example.com/bogus/.*
 #Otherwise causes a broken page to load
-#RewriteRule ^.*/.*$ http://www.yourdomain.com/Page+Not+Found    [L]
+#RewriteRule ^.*/.*$ http://www.example.com/Page+Not+Found    [L]
 
 
 RewriteRule ^tiki-([a-z_]+)-([a-z_]+) tiki-ajax_services.php?controller=$1&action=$2		[QSA,L]
