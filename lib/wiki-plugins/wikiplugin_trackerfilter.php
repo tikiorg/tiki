@@ -273,17 +273,20 @@ function wikiplugin_trackerfilter($data, $params)
 		$smarty->assign('export_modif', $export_modif == 'y' ? 'on' : '');
 		$smarty->assign('export_charset', $export_charset);
 		
-		if (empty($filters) && !empty($filterfield)) {	// convert param filters to export params
-			$f_fields = array();
-			for ($i = 0, $cfilterfield = count($filterfield); $i < $cfilterfield ; $i++) {
-				if (!empty($exactvalue[$i])) {
-					$f_fields['f_' . $filterfield[$i]] = $exactvalue[$i];
-				} else if (!empty($filtervalue[$i])) {
-					$f_fields['f_' . $filterfield[$i]] = $filtervalue[$i];
-					$f_fields['x_' . $filterfield[$i]] = 't';	// x_ is for not exact?
+		if (empty($params['filters'])) {
+			if (!empty($filterfield)) { 	// convert param filters to export params
+				$f_fields = array();
+				for ($i = 0, $cfilterfield = count($filterfield); $i < $cfilterfield ; $i++) {
+					if (!empty($exactvalue[$i])) {
+						$f_fields['f_' . $filterfield[$i]] = $exactvalue[$i];
+					} else if (!empty($filtervalue[$i])) {
+						$f_fields['f_' . $filterfield[$i]] = $filtervalue[$i];
+						$f_fields['x_' . $filterfield[$i]] = 't';	// x_ is for not exact?
+					}
 				}
+				$smarty->assign_by_ref('f_fields', $f_fields);
 			}
-			$smarty->assign_by_ref('f_fields', $f_fields);
+			$filters = array();	// clear out filters set up earlier which default to all fields if not exporting
 		}
 	}
 	if ($displayList == 'n' || !empty($_REQUEST['filter']) || $noflipflop == 'y' || $prefs['javascript_enabled'] != 'y' || (isset($_SESSION['tiki_cookie_jar']["show_trackerFilter$iTrackerFilter"]) && $_SESSION['tiki_cookie_jar']["show_trackerFilter$iTrackerFilter"] == 'y')) {
