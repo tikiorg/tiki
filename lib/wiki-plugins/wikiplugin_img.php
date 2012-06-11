@@ -1363,6 +1363,7 @@ function wikiplugin_img( $data, $params, $offset, $parseOptions='' )
 	if (
 		$prefs['feature_draw'] == 'y' &&
 		$globalperms->upload_files == 'y' &&
+		empty($src) == true &&
 		(
 			$tiki_p_edit == 'y' ||
 			$fromTracker == true
