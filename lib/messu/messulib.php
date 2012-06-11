@@ -108,6 +108,7 @@ class Messu extends TikiLib
 		$foo = parse_url($_SERVER['REQUEST_URI']);
 		$machine = $this->httpPrefix(true) . $foo['path'];
 		$machine = str_replace('messu-compose', 'messu-mailbox', $machine);
+		$machine = str_replace('messu-broadcast', 'messu-mailbox', $machine);
 
 		if ($this->get_user_preference($user, 'minPrio', 6) <= $priority) {
 			if (!isset($_SERVER['SERVER_NAME'])) {
