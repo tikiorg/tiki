@@ -11,15 +11,17 @@ Class Feed_ForwardLink extends Feed_Abstract
 	var $version = '0.1';
 	var $isFileGal = true;
 	var $debug = false;
+	var $page = '';
 
-	static function forwardLink($name, $nameIsSet = false)
+	function __construct($page)
+	{
+		$this->page = $page;
+		return parent::__construct($page);
+	}
+
+	static function forwardLink($name)
 	{
 		$me = new Feed_ForwardLink($name);
-
-		if ($nameIsSet == true) {
-			$me->name = $name; //we override the name here because
-		}
-
 		return $me;
 	}
 
@@ -44,7 +46,7 @@ Class Feed_ForwardLink extends Feed_Abstract
 
 		if (!empty($phrase)) $_SESSION['phrase'] = $phrase; //prep for redirect if it happens;
 
-		if (!empty($phrase)) Feed_ForwardLink_Search::goToNewestWikiRevision($version, $phrase, $this->name);
+		if (!empty($phrase)) Feed_ForwardLink_Search::goToNewestWikiRevision($version, $phrase, $this->page);
 
 		if (!empty($_SESSION['phrase'])) { //recover from redirect if it happened
 			$phrase = $_SESSION['phrase'];
@@ -55,7 +57,7 @@ Class Feed_ForwardLink extends Feed_Abstract
 	private function restorePhrasesInWikiPage($phrase)
 	{
 		global $smarty, $headerlib;
-		$items = Feed_ForwardLink::forwardLink($this->name, true)->getItems();
+		$items = Feed_ForwardLink::forwardLink($this->page, true)->getItems();
 		$phrases = array();
 
 		$phraseI = 0;
@@ -468,7 +470,7 @@ JQ
 			->add_jsfile('lib/core/JisonParser/Phraser.js')
 			->add_jsfile('lib/jquery/md5.js');
 
-		$page = urlencode($this->name);
+		$page = urlencode($this->page);
 
 		$headerlib->add_jq_onready(<<<JQ
 			var answers = $answers;

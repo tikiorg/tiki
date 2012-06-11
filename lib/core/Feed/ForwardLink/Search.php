@@ -9,6 +9,13 @@ class Feed_ForwardLink_Search
 {
 	var $type = "forwardlink";
 	var $version = "0.1";
+	var $page = '';
+
+	function __construct($page)
+	{
+		$this->page = $page;
+		parent::__construct($page);
+	}
 	
 	static function goToNewestWikiRevision($version, $phrase, $page)
 	{
