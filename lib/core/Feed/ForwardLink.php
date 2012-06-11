@@ -340,16 +340,16 @@ JQ
 
 				$this->editQuestionsInterface($metadata->questions(), $trackerId);
 
-				$keywords = json_encode($metadata->raw['keywords']);
+				$keywords = json_encode($metadata->keywords(false));
 				TikiLib::lib('header')->add_jq_onready("genericSingleTrackerItemInterface('Keywords', $keywords);");
 
-				$scientificField = json_encode($metadata->raw['scientificField']);
+				$scientificField = json_encode($metadata->scientificField(false));
 				TikiLib::lib('header')->add_jq_onready("genericSingleTrackerItemInterface('Scientific Field', $scientificField);");
 
-				$minimumMathNeeded = json_encode($metadata->raw['minimumMathNeeded']);
+				$minimumMathNeeded = json_encode($metadata->minimumMathNeeded(false));
 				TikiLib::lib('header')->add_jq_onready("genericSingleTrackerItemInterface('Minimum Math Needed', $minimumMathNeeded);");
 
-				$minimumStatisticsNeeded = json_encode($metadata->raw['minimumStatisticsNeeded']);
+				$minimumStatisticsNeeded = json_encode($metadata->minimumStatisticsNeeded(false));
 				TikiLib::lib('header')->add_jq_onready("genericSingleTrackerItemInterface('Minimum Statistics Needed', $minimumStatisticsNeeded);");
 			}
 		}

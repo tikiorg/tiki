@@ -17,6 +17,13 @@ class Feed_ForwardLink_Metadata
 	var $authorData;
 	var $raw;
 
+	var $minimumStatisticsNeeded;
+	var $minimumMathNeeded;
+	var $scientificField;
+	var $categories;
+	var $keywords;
+	var $questions;
+
 	function __construct($page)
 	{
 		global $tikilib, $prefs;
@@ -112,29 +119,46 @@ class Feed_ForwardLink_Metadata
 
 	public function questions()
 	{
-		return Tracker_Query::tracker('Wiki Attributes')
-			->byName()
-			->filterFieldByValue('Type', 'Question')
-			->filterFieldByValue('Page', $this->page)
-			->query();
-	}
-
-	public function keywords()
-	{
-		$keywords = Tracker_Query::tracker('Wiki Attributes')
-			->byName()
-			->filterFieldByValue('Type', 'Keywords')
-			->filterFieldByValue('Page', $this->page)
-			->query();
-
-		if (isset($keywords) && is_array($keywords)) {
-			$keywords = end($keywords);
-			$keywords = $keywords['Value'];
+		if (empty($this->questions)) {
+			$this->questions = Tracker_Query::tracker('Wiki Attributes')
+				->byName()
+				->filterFieldByValue('Type', 'Question')
+				->filterFieldByValue('Page', $this->page)
+				->query();
 		}
 
-		$keywords = implode(JisonParser_Phraser_Handler::sanitizeToWords($keywords), ',');
+		return $this->questions;
+	}
 
-		return $keywords;
+	private function endValue($item, $implodeOn = '')
+	{
+		if (isset($item) && is_array($item)) {
+			$item = end($item);
+			$item = $item['Value'];
+		}
+
+		if (!empty($implodeOn)) {
+			$item = implode(JisonParser_Phraser_Handler::sanitizeToWords($item), ',');
+		}
+
+		return $item;
+	}
+
+	public function keywords($out = true)
+	{
+		if (empty($this->keywords)) {
+			$this->keywords = Tracker_Query::tracker('Wiki Attributes')
+				->byName()
+				->filterFieldByValue('Type', 'Keywords')
+				->filterFieldByValue('Page', $this->page)
+				->query();
+		}
+
+		if ($out == true) {
+			return $this->endValue($this->keywords, true);
+		}
+
+		return $this->keywords;
 	}
 
 	public function author($version = -1)
@@ -256,30 +280,54 @@ class Feed_ForwardLink_Metadata
 		return $categories;
 	}
 
-	public function scientificField()
+	public function scientificField($out = true)
 	{
-		return Tracker_Query::tracker('Wiki Attributes')
-			->byName()
-			->filterFieldByValue('Type', 'Scientific Field')
-			->filterFieldByValue('Page', $this->page)
-			->query();
+		if (empty($this->scientificField)) {
+			$this->scientificField = Tracker_Query::tracker('Wiki Attributes')
+				->byName()
+				->filterFieldByValue('Type', 'Scientific Field')
+				->filterFieldByValue('Page', $this->page)
+				->query();
+		}
+
+		if ($out == true) {
+			return $this->endValue($this->scientificField, true);
+		}
+
+		return $this->scientificField;
 	}
 
-	public function minimumMathNeeded()
+	public function minimumMathNeeded($out = true)
 	{
-		return Tracker_Query::tracker('Wiki Attributes')
-			->byName()
-			->filterFieldByValue('Type', 'Scientific Field')
-			->filterFieldByValue('Page', $this->page)
-			->query();
+		if (empty($this->minimumMathNeeded)) {
+			$this->minimumMathNeeded = Tracker_Query::tracker('Wiki Attributes')
+				->byName()
+				->filterFieldByValue('Type', 'Minimum Math Needed')
+				->filterFieldByValue('Page', $this->page)
+				->query();
+		}
+
+		if ($out == true) {
+			return $this->endValue($this->minimumMathNeeded, true);
+		}
+
+		return $this->minimumMathNeeded;
 	}
 
-	public function minimumStatisticsNeeded() {
-		return Tracker_Query::tracker('Wiki Attributes')
-			->byName()
-			->filterFieldByValue('Type', 'Scientific Field')
-			->filterFieldByValue('Page', $this->page)
-			->query();
+	public function minimumStatisticsNeeded($out = true) {
+		if (empty($this->minimumStatisticsNeeded)) {
+			$this->minimumStatisticsNeeded = Tracker_Query::tracker('Wiki Attributes')
+				->byName()
+				->filterFieldByValue('Type', 'Minimum Statistics Needed')
+				->filterFieldByValue('Page', $this->page)
+				->query();
+		}
+
+		if ($out == true) {
+			return $this->endValue($this->minimumStatisticsNeeded, true);
+		}
+
+		return $this->minimumStatisticsNeeded;
 	}
 
 	public function language()
