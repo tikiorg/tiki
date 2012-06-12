@@ -1859,20 +1859,28 @@ class TikiSheetOutputHandler extends TikiSheetDataHandler
 //		if ( $sheet->headerRow + $sheet->footerRow > $sheet->getRowCount() )
 //			return false;
 
-		/*if ($sheet->getRangeBeginRow() > -1 &&
-			$sheet->getRangeBeginRow() == $sheet->getRangeEndRow() &&
-			$sheet->getRangeBeginCol() == $sheet->getRangeEndCol()) {
-				if ( isset( $sheet->dataGrid[$sheet->getRangeBeginRow()][$sheet->getRangeBeginCol()] ) ) {
-					$data =  $sheet->dataGrid[$sheet->getRangeBeginRow()][$sheet->getRangeBeginCol()];
-					if ($sheet->parseValues == 'y' && mb_ereg_match('[^A-Za-z0-9\s]', $data)) {	// needs to be multibyte regex here
-						global $tikilib;
-						$data = $tikilib->parse_data($data, array('suppress_icons' => true));
-					}
-					$this->output = $data;
-					return;
-				}
+		$beginRow = $sheet->getRangeBeginRow();
+		$endRow = $sheet->getRangeEndRow();
+
+		$beginCol = $sheet->getRangeBeginCol();
+		$endCol = $sheet->getRangeEndCol();
+
+		print_r(array($beginRow,$endRow, $beginCol,$endCol));
+		if ($beginRow > -1 &&
+			$beginRow == $endRow - 1 &&
+			$beginCol == $endCol - 1
+		) {
+			if ( isset( $sheet->dataGrid[$beginRow][$beginCol] ) ) {
+				$data =  $sheet->dataGrid[$beginRow][$beginCol];
+				//if ($sheet->parseValues == 'y' && mb_ereg_match('[^A-Za-z0-9\s]', $data)) {	// needs to be multibyte regex here
+					global $tikilib;
+					$data = $tikilib->parse_data($data, array('suppress_icons' => true));
+				//}
+				$this->output = $data;
+				return true;
 			}
-*/
+		}
+
 		$class = empty( $sheet->cssName ) ? "" : " class='{$sheet->cssName}'";
 		$id = empty( $sheet->id ) ? '' : " data-id='{$sheet->id}'";
 		$title = " title='" . htmlspecialchars($sheet->name(), ENT_QUOTES) . "'";
@@ -1884,7 +1892,7 @@ class TikiSheetOutputHandler extends TikiSheetDataHandler
 		if ( !is_null( $this->heading ) )
 			$this->output .= "	<caption>{$this->heading}</caption>\n";
 
-		if ( $sheet->headerRow > 0 && $sheet->getRangeBeginRow() < 0 )
+		if ( $sheet->headerRow > 0 && $beginRow < 0 )
 		{
 			$this->output .= "	<thead>\n";
 			$this->drawRows( $sheet );
@@ -1899,7 +1907,7 @@ class TikiSheetOutputHandler extends TikiSheetDataHandler
 		$this->drawRows( $sheet );
 		$this->output .= "	</tbody>\n";
 
-		if ( $sheet->footerRow > 0 && $sheet->getRangeBeginRow() < 0 )
+		if ( $sheet->footerRow > 0 && $beginRow < 0 )
 		{
 			$this->output .= "	<tfoot>\n";
 			$this->drawRows( $sheet );

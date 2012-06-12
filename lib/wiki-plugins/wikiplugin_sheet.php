@@ -244,7 +244,7 @@ EOF;
 						});'
 		);
 
-	} else if (preg_match('/^([A-Z]+[0-9]+):\1$/', strtoupper($range))) {
+	} else if (strpos($ret, '<table') < 0) {
 		return $ret;	// return a single cell raw
 	}
 
