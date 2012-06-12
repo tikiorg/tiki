@@ -605,6 +605,9 @@ if ( \$('#$id') ) {
 	//*
 	function plugin_exists( $name, $include = false )
 	{
+		$className = 'WikiPlugin_' . ucfirst($name);
+		if (class_exists($className)) return true;
+
 		$php_name = 'lib/wiki-plugins/wikiplugin_';
 		$php_name .= TikiLib::strtolower($name) . '.php';
 
@@ -1174,9 +1177,16 @@ if ( \$('#$id') ) {
 
 		// Make sure all arguments are declared
 		$params = $info['params'];
-
+		$argsCopy = $args;
 		if ( ! isset( $info['extraparams'] ) && is_array($params) ) {
 			$args = array_intersect_key($args, $params);
+		}
+
+		//This gives us the ability to extend plugins with a standardized style method, style-css-style="style" => css-style:style; to the wrapper
+		foreach($argsCopy as $possibleStyle => $possibleStyleSetting) {
+			if (isset(WikiPlugin_HtmlBase::$style[ltrim($possibleStyle, 'style-')])) {
+				$args[$possibleStyle] = $possibleStyleSetting;
+			}
 		}
 
 		// Apply filters on values individually

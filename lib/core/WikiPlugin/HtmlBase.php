@@ -23,7 +23,7 @@ abstract class WikiPlugin_HtmlBase
 
 	var $np = true;
 
-	var $style = array(
+	static $style = array(
 		'@keyframes' => '',
 		'animation' => '',
 		'animation-name' => '',
@@ -288,7 +288,7 @@ abstract class WikiPlugin_HtmlBase
 		$styles = '';
 		foreach($params as $style => $setting) {
 			$styleName = ltrim($style, 'style-');
-			if (!empty($styleName) && isset($this->style[$styleName])) {
+			if (!empty($styleName) && isset(self::$style[$styleName])) {
 				$styles .= $styleName . ':' . trim($setting , "'") . ';';
 			}
 		}
@@ -306,7 +306,7 @@ abstract class WikiPlugin_HtmlBase
 		$data = str_replace('<x>', '', $data);
 		$data = $this->output($data, $params, $index, $parser);
 
-		$box = '<div id="' . $this->type.$index . '" style="' . $style . '">' . $data  . '</div>';
+		$box = '<div id="' . $this->type . $index . '" style="' . $style . '">' . $data  . '</div>';
 
 		if ($this->np) {
 			return '~np~'.$box.'~/np~';
