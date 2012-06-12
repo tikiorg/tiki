@@ -24,6 +24,54 @@ class Feed_ForwardLink_Metadata
 	var $keywords;
 	var $questions;
 
+	var $textLinkAllowedKeys = array(
+		'websiteTitle',
+		'websiteSubtitle',
+		'moderator',
+		'moderatorInstitution',
+		'moderatorProfession',
+		'author',
+		'authorInstitution',
+		'authorProfession',
+		"href",
+		'answers',
+		'dateLastUpdated',
+		'dateOriginated',
+		'language',
+		'count',
+		'keywords',
+		'categories',
+		'scientificField',
+		'minimumMathNeeded',
+		'minimumStatisticsNeeded',
+		'text',
+		'id',
+	);
+
+	var $forwardLinkAllowedKeys = array(
+		'websiteTitle',
+		'websiteSubtitle',
+		'moderator',
+		'moderatorInstitution',
+		'moderatorProfession',
+		'hash',
+		'author',
+		'authorInstitution',
+		'authorProfession',
+		'href',
+		'answers',
+		'dateLastUpdated',
+		'dateOriginated',
+		'language',
+		'count',
+		'keywords',
+		'categories',
+		'scientificField',
+		'minimumMathNeeded',
+		'minimumStatisticsNeeded',
+		'text',
+	);
+
 	function __construct($page)
 	{
 		global $tikilib, $prefs;

@@ -192,6 +192,7 @@ JQ
 		} else {
 
 			$trackerPerms = Perms::get(array( 'type' => 'tracker', 'object' => $trackerId ));
+			$page = htmlspecialchars($this->page);
 
 			if ($trackerPerms->edit == true) {
 				TikiLib::lib('header')
@@ -205,7 +206,7 @@ JQ
 								itemId: itemId,
 								byName: true,
 								defaults: {
-									Page: '$this->name',
+									Page: '$page',
 									Type: type
 								}
 							}, function(item) {
@@ -689,7 +690,24 @@ JQ
 	
 	static function wikiSave($args)
 	{
-		//print_r($args);
+		global $prefs, $_REQUEST, $groupPluginReturnAll;
+		$groupPluginReturnAll = true;
+		$body = TikiLib::lib('tiki')->parse_data($args['data']);
+		$groupPluginReturnAll = false;
+
+		$page = $args['object'];
+		$version = $args['version'];
+
+		$body = JisonParser_Phraser_Handler::superSanitize($body);
+
+		Tracker_Query::tracker('Wiki Attributes')
+			->byName()
+			->replaceItem(array(
+				'Page' => $page,
+				'Attribute' => $version,
+				'Value' => $body,
+				'Type' => 'ForwardLink Revision'
+			));
 	}
 
 	function appendToContents(&$contents, $item)
@@ -698,7 +716,7 @@ JQ
 		$groupPluginReturnAll = true;
 		$replace = false;
 
-		//lets remove the newentry if it has already been accepted in the past
+		//lets remove the new entry if it has already been accepted in the past
 		foreach ($contents->entry as $i => $existingEntry) {
 			foreach ($item->feed->entry as $j => $newEntry) {
 				if (
@@ -756,21 +774,6 @@ JQ
 
 		if (count($item->feed->entry) > 0) {
 			$replace = true;
-
-			//these are new items, so we want to add them to the list
-			foreach($item->feed->entry as $entry) {
-				$entryText = JisonParser_Phraser_Handler::superSanitize($entry->forwardlink->text);
-				$entryHash = md5($entryText);
-
-				Tracker_Query::tracker('Wiki Attributes')
-					->byName()
-					->replaceItem(array(
-						'Page' => $this->name,
-						'Attribute' => $entryHash,
-						'Value' => $entryText,
-						'Type' => 'ForwardLink'
-					));
-			}
 
 			$contents->entry += $item->feed->entry;
 		}
