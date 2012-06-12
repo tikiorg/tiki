@@ -283,27 +283,30 @@ abstract class WikiPlugin_HtmlBase
 		$params = array_merge($defaults, $params);
 	}
 
+	protected function stylize(&$params)
+	{
+		$styles = '';
+		foreach($params as $style => $setting) {
+			$styleName = ltrim($style, 'style-');
+			if (!empty($styleName) && isset($this->style[$styleName])) {
+				$styles .= $styleName . ':' . trim($setting , "'") . ';';
+			}
+		}
+		return $styles;
+	}
+
 	abstract protected function output($data, $params, $index, $parser);
 
 	public function exec($data, $params, $index, $parser)
 	{
-		$style = '';
-		$box = '';
-
-		foreach($this->style as $style => $setting)
-		{
-			if (!empty($setting)) {
-				$style .= $style . ':' . $setting . ';';
-			}
-		}
-
 		$this->paramDefaults($params);
+		$style = $this->stylize($params);
 
 		// strip out sanitisation which may have occurred when using nested plugins
 		$data = str_replace('<x>', '', $data);
 		$data = $this->output($data, $params, $index, $parser);
 
-		$box = '<div id="' . $this->type.$index . '" style="' . $style . '"><script>alert("success");</script>' . $data  . '</div>';
+		$box = '<div id="' . $this->type.$index . '" style="' . $style . '">' . $data  . '</div>';
 
 		if ($this->np) {
 			return '~np~'.$box.'~/np~';
