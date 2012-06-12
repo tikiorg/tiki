@@ -306,7 +306,7 @@ abstract class WikiPlugin_HtmlBase
 		$data = str_replace('<x>', '', $data);
 		$data = $this->output($data, $params, $index, $parser);
 
-		$box = '<div id="' . $this->type . $index . '" style="' . $style . '">' . $data  . '</div>';
+		$box = '<div id="' . $this->type . $index . '" class="wikiplugin_' . $this->type . '" style="' . $style . '">' . $data  . '</div>';
 
 		if ($this->np) {
 			return '~np~'.$box.'~/np~';
