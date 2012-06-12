@@ -1015,6 +1015,15 @@ if ( \$('#$id') ) {
 			$trklib->replace_pretty_tracker_refs($args);
 		}
 
+		//This allows for new simplified plugin system, if object does exist, it will use it, if not it uses old plugins
+		$className = 'WikiPlugin_' . ucfirst($name);
+		if (class_exists($className)) {
+			$className = 'WikiPlugin_' . ucfirst($name);
+			$class = new $className;
+			return $class->exec($data, $args, $offset, $this);
+		}
+		//End of new simplified plugin system
+
 		$func_name = 'wikiplugin_' . $name;
 
 		if ( ! $validationPerformed ) {

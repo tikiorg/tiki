@@ -294,6 +294,13 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		}
 		self::$pluginsExecutedStack[$name]++;
 
+		$className = 'WikiPlugin_' . ucfirst($name);
+		if (class_exists($className)) {
+			$className = 'WikiPlugin_' . ucfirst($name);
+			$class = new $className;
+			return $class->exec($body, $args, self::$pluginsExecutedStack[$name], $this);
+		}
+
 		$fnName = strtolower('wikiplugin_' .  $name);
 
 		if ( $this->pluginExists($name) && function_exists($fnName) ) {
