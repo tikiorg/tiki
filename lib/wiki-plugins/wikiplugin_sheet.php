@@ -229,8 +229,10 @@ EOF;
 	} else {
 		$ret = ($sheet->getTableHtml($subsheets));
 	}
-	
-	
+
+	if (strpos($ret, '<table') < 1) {
+		return '~np~' . $ret . '~/np~';	// return a single cell raw
+	}
 	
 	if (!isset($simple) || $simple != 'y') {
 		global $headerlib;
@@ -244,8 +246,6 @@ EOF;
 						});'
 		);
 
-	} else if (strpos($ret, '<table') < 0) {
-		return $ret;	// return a single cell raw
 	}
 
 	$ret = '<div id="tiki_sheet' . $sheet->instance . '" class="tiki_sheet' . $class . '" style="overflow:hidden;' . $style . '">' . $ret . '</div>';

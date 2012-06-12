@@ -1865,7 +1865,6 @@ class TikiSheetOutputHandler extends TikiSheetDataHandler
 		$beginCol = $sheet->getRangeBeginCol();
 		$endCol = $sheet->getRangeEndCol();
 
-		print_r(array($beginRow,$endRow, $beginCol,$endCol));
 		if ($beginRow > -1 &&
 			$beginRow == $endRow - 1 &&
 			$beginCol == $endCol - 1
