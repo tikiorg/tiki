@@ -1015,14 +1015,8 @@ if ( \$('#$id') ) {
 			$trklib->replace_pretty_tracker_refs($args);
 		}
 
-		//This allows for new simplified plugin system, if object does exist, it will use it, if not it uses old plugins
+		//This is the class name for new simplified plugin system, if object does exist, it will use it, if not it uses old plugins
 		$className = 'WikiPlugin_' . ucfirst($name);
-		if (class_exists($className)) {
-			$className = 'WikiPlugin_' . ucfirst($name);
-			$class = new $className;
-			return $class->exec($data, $args, $offset, $this);
-		}
-		//End of new simplified plugin system
 
 		$func_name = 'wikiplugin_' . $name;
 
@@ -1030,7 +1024,7 @@ if ( \$('#$id') ) {
 			$this->plugin_apply_filters($name, $data, $args);
 		}
 
-		if ( function_exists($func_name) ) {
+		if ( function_exists($func_name) || class_exists($className)) {
 			$pluginFormat = 'wiki';
 			$info = $this->plugin_info($name);
 			if ( isset( $info['format'] ) ) {
@@ -1043,7 +1037,12 @@ if ( \$('#$id') ) {
 				$data = nl2br($data);
 			}
 
-			$output = $func_name($data, $args, $offset);
+			if (class_exists($className)) {
+				$class = new $className;
+				$output = $class->exec($data, $args, $offset, $this);
+			} else {
+				$output = $func_name($data, $args, $offset);
+			}
 
 			//This was added to remove the table of contents sometimes returned by other plugins, to use, simply have global $killtoc, and $killtoc = true;
 			if ($killtoc == true) {
