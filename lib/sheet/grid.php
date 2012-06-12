@@ -519,10 +519,10 @@ class TikiSheet
 	function setRange( $range )
 	{
 		if ( preg_match( '/^([A-Z]+)([0-9]+):([A-Z]+)([0-9]+)$/', strtoupper($range), $parts ) ) {
-			$this->rangeBeginRow = $parts[2] - 1;
-			$this->rangeEndRow = $parts[4] - 1;
+			$this->rangeBeginRow = (int)$parts[2] - 1;
+			$this->rangeEndRow = (int)$parts[4];
 			$this->rangeBeginCol = $this->getColumnNumber( $parts[1] );
-			$this->rangeEndCol = $this->getColumnNumber( $parts[3] );
+			$this->rangeEndCol = $this->getColumnNumber( $parts[3] ) + 1;
 		}
 	}
 
@@ -1859,7 +1859,7 @@ class TikiSheetOutputHandler extends TikiSheetDataHandler
 //		if ( $sheet->headerRow + $sheet->footerRow > $sheet->getRowCount() )
 //			return false;
 
-		if ($sheet->getRangeBeginRow() > -1 &&
+		/*if ($sheet->getRangeBeginRow() > -1 &&
 			$sheet->getRangeBeginRow() == $sheet->getRangeEndRow() &&
 			$sheet->getRangeBeginCol() == $sheet->getRangeEndCol()) {
 				if ( isset( $sheet->dataGrid[$sheet->getRangeBeginRow()][$sheet->getRangeBeginCol()] ) ) {
@@ -1872,14 +1872,14 @@ class TikiSheetOutputHandler extends TikiSheetDataHandler
 					return;
 				}
 			}
-
+*/
 		$class = empty( $sheet->cssName ) ? "" : " class='{$sheet->cssName}'";
 		$id = empty( $sheet->id ) ? '' : " data-id='{$sheet->id}'";
 		$title = " title='" . htmlspecialchars($sheet->name(), ENT_QUOTES) . "'";
 		$sub = $sheet->isSubSheet ? ' style="display:none;"' : '';
 		$type = (!empty($sheet->type) ? ' data-type="'.$sheet->type.'" ' : '');
 
-		$this->output = "<table{$class}{$id}{$sub}{$title}{$type}>\n";
+		$this->output = "<table" . $class . $id . $sub . $title . $type . ">\n";
 
 		if ( !is_null( $this->heading ) )
 			$this->output .= "	<caption>{$this->heading}</caption>\n";
@@ -1887,29 +1887,26 @@ class TikiSheetOutputHandler extends TikiSheetDataHandler
 		if ( $sheet->headerRow > 0 && $sheet->getRangeBeginRow() < 0 )
 		{
 			$this->output .= "	<thead>\n";
-			$this->drawRows( $sheet, 0, $sheet->headerRow );
+			$this->drawRows( $sheet );
 			$this->output .= "	</thead>\n";
 		}
 
 		$this->output .= "	<colgroup>\n";
-		$this->drawCols( $sheet, $sheet->getRangeBeginCol() < 0 ? $sheet->headerRow : $sheet->getRangeBeginCol(),
-								 $sheet->getRangeEndCol() < 0 ? $sheet->getColCount() - $sheet->footerRow : $sheet->getRangeEndCol() );
+		$this->drawCols( $sheet );
 		$this->output .= "	</colgroup>\n";
 
 		$this->output .= "	<tbody>\n";
-		$this->drawRows( $sheet, $sheet->getRangeBeginRow() < 0 ? $sheet->headerRow : $sheet->getRangeBeginRow(),
-								 $sheet->getRangeEndRow() < 0 ? $sheet->getRowCount() - $sheet->footerRow : $sheet->getRangeEndRow() );
+		$this->drawRows( $sheet );
 		$this->output .= "	</tbody>\n";
 
 		if ( $sheet->footerRow > 0 && $sheet->getRangeBeginRow() < 0 )
 		{
 			$this->output .= "	<tfoot>\n";
-			$this->drawRows( $sheet, $sheet->getRowCount() - $sheet->footerRow, $sheet->getRowCount() );
+			$this->drawRows( $sheet );
 			$this->output .= "	</tfoot>\n";
 		}
 
 		$this->output .= "</table>\n";
-
 		return true;
 	}
 
@@ -1919,28 +1916,29 @@ class TikiSheetOutputHandler extends TikiSheetDataHandler
 	 * @param $begin The index of the begining row. (included)
 	 * @param $end The index of the end row (excluded)
 	 */
-	function drawRows( &$sheet, $begin, $end )
+	function drawRows( &$sheet )
 	{
 		global $sheetlib;
-		for( $i = $begin; ($end) > $i; $i++ )
+
+		$beginRow = $sheet->getRangeBeginRow();
+		$endRow = $sheet->getRangeEndRow();
+
+		$beginCol = $sheet->getRangeBeginCol();
+		$endCol = $sheet->getRangeEndCol();
+
+		for( $i = $beginRow; $i < $endRow; $i++ )
 		{
 			$td = "";
 			$trStyleHeight = "";
 			$trHeight = "20px";
 			$trHeightIsSet = false;
 
-			$endCol = $sheet->getRangeEndCol() < 0 ? $sheet->getColumnCount() : $sheet->getRangeEndCol();
-
-			for( $j = $sheet->getRangeBeginCol(); $endCol > $j; $j++ )
+			for( $j = $beginCol; $j < $endCol; $j++ )
 			{
 				$width = $height = '';
 				if (!empty($sheet->cellInfo[$i][$j])) {
 					extract( $sheet->cellInfo[$i][$j] );
 				}
-				$append = '';
-
-				if ( empty( $width ) || empty( $height ) || $width == 0 || $height == 0 )
-					continue;
 
 				$append = ' id="cell_c'.($j+1).'_r'.($i+1).'"';
 
@@ -2009,7 +2007,7 @@ class TikiSheetOutputHandler extends TikiSheetDataHandler
 						}
 					}
 				}
-				$td .= "			<td$append>$data</td>\n";
+				$td .= "			<td".$append.">$data</td>\n";
 			}
 
 			if (!empty($td)) {
@@ -2026,13 +2024,14 @@ class TikiSheetOutputHandler extends TikiSheetDataHandler
 	 * @param $begin The index of the begining row. (included)
 	 * @param $end The index of the end row (excluded)
 	 */
-	function drawCols( &$sheet, $begin, $end )
+	function drawCols( &$sheet )
 	{
 		global $sheetlib;
-		$endCol = $sheet->getRangeEndCol() < 0 ? $sheet->getColumnCount() : $sheet->getRangeEndCol();
-		for( $j = $sheet->getRangeBeginCol(); $endCol > $j; $j++ )
+		$beginCol = $sheet->getRangeBeginCol();
+		$endCol = $sheet->getRangeEndCol();
+		for( $i = $beginCol; $i < $endCol; $i++ )
 		{
-			$style = $sheet->cellInfo[$begin][$j]['style'];
+			$style = $sheet->cellInfo[0][$i]['style'];
 			$width = $sheetlib->get_attr_from_css_string($style, "width", "118px");
 			$this->output .= "<col style='width: $width;' width='$width' />\n";
 		}
@@ -2082,7 +2081,7 @@ class TikiSheetLabeledOutputHandler extends TikiSheetDataHandler
 		$this->output .= "	</thead>\n";
 
 		$this->output .= "	<tbody>\n";
-		$this->drawRows( $sheet, 0, $sheet->getRowCount() );
+		$this->drawRows( $sheet );
 		$this->output .= "	</tbody>\n";
 
 		$this->output .= "</table>\n";
@@ -2096,14 +2095,21 @@ class TikiSheetLabeledOutputHandler extends TikiSheetDataHandler
 	 * @param $begin The index of the begining row. (included)
 	 * @param $end The index of the end row (excluded)
 	 */
-	function drawRows( &$sheet, $begin, $end )
+	function drawRows( &$sheet )
 	{
 		global $sheetlib;
 
-		for( $i = $begin; $end > $i; $i++ )
+		$beginRow = $sheet->getRangeBeginRow();
+		$endRow = $sheet->getRangeEndRow();
+
+		$beginCol = $sheet->getRangeBeginCol();
+		$endCol = $sheet->getRangeEndCol();
+
+		for( $i = $beginRow; $i <  $endRow; $i++ )
 		{
 			$trHeight = "20px";
-			for( $j = 0; $sheet->getColumnCount() > $j; $j++ )
+			$td = '';
+			for( $j = $beginCol; $j < $endCol; $j++ )
 			{
 				$width = $height = "";
 				extract( $sheet->cellInfo[$i][$j] );

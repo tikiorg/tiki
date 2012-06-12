@@ -196,16 +196,21 @@ EOF;
 	
 		// Build required objects
 		$db = new TikiSheetDatabaseHandler($id);
-		$out = new TikiSheetOutputHandler($data);
+		//$out = new TikiSheetOutputHandler($data);
 	
 		// Fetch sheet from database
 		$sheet->import($db);
 	
 	} else {
-		$r = $sheet->setRange($range);
 		if (!isset($simple)) {
 			$simple = 'y';
 		}
+	}
+
+	$calcOff = '';
+	if (!empty($range)) {
+		$sheet->setRange($range);
+		$calcOff = ',calcOff: true';
 	}
 	
 	// Grab sheet output
@@ -233,8 +238,9 @@ EOF;
 		$headerlib->add_jq_onready(
 						'$("div.tiki_sheet").each(function() {
 							$(this).sheet($.extend($.sheet.tikiOptions,{
-							editable:false
-							}));
+							editable:false'
+							. $calcOff .
+							'}));
 						});'
 		);
 
