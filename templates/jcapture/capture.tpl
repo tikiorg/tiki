@@ -20,6 +20,6 @@
 	<param name = "pageName"	value = "{$page}" />
 	<param name = "edid"		value = "{$edit_area}" />
 	<param name = "authtok"		value = "{$authtok}" />
-	<param name = "uploader"	value = "tiki-jcapture-upload" /> {* TODO non-sefurl url *}
+	<param name = "uploader"	value = "{$uploader}" />
 	{tr}Applet failed to run.  No Java plug-in was found.{/tr}
 </object>
