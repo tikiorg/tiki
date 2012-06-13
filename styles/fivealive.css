@@ -357,7 +357,6 @@ input[type="submit"]:hover,
 	border: 1px solid #11597e;
 	text-decoration: none;
 	font-weight: bold;
-	line-height: 1.2;
 	border-radius: 4px;
 	-moz-border-radius: 4px;
 	-webkit-border-radius: 4px;
@@ -399,7 +398,7 @@ input[type="reset"]:hover,
 input[type="submit"]:hover,
 button[type="submit"],
 button[type="submit"]:hover {
-	padding: .1em .8em;
+	padding: .2em .8em;
 }
 
 /*span.button {
