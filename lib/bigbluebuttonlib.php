@@ -280,6 +280,7 @@ class BigBlueButtonLib
 					'startTime' => floor(((string) $recording->startTime)/1000), 
 					'endTime' => ceil(((string) $recording->endTime)/1000), 
 					'playback' => array(),
+					'published' => (boolean) $recording->published,
 			);
 
 			foreach ($recording->playback as $playback) {
