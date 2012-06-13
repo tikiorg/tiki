@@ -47,5 +47,29 @@ class Services_JCapture_Controller
 		return array();
 	}
 
+	function action_upload($input) {
+		global $user, $tiki_p_upload_files;
+
+		if (!$user) {
+			//throw new Services_Exception_NotAvailable(print_r($input, true));
+			throw new Services_Exception_NotAvailable(tr('Not logged in'));
+		}
+
+		$fileController = new Services_File_Controller();
+		$ret = $fileController->action_upload($input);
+
+		return $ret;
+	}
+
 }
 
+/* some temporary debugging info (for java dev)
+
+	dokuBase: 2f74696b692f7472756e6b2f
+	host: http://localhost
+	sectok: 1234
+	cookies: 1234
+	page: HomePage
+	edid: editwiki
+
+ */
