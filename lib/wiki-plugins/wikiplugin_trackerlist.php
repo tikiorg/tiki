@@ -1617,7 +1617,7 @@ function wikiplugin_trackerlist($data, $params)
 				$smarty->assign('showpopup', 'n');
 				global $headerlib; include_once('lib/headerlib.php');
 				$headerlib->add_cssfile('css/calendar.css', 20);
-				return '~np~'.$smarty->fetch('modules/mod-calendar_new.tpl').'~/np~';
+				return $smarty->fetch('modules/mod-calendar_new.tpl');
 			}
 			if (!empty($wiki)) {
 				$tpl = "wiki:$wiki";
