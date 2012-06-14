@@ -1205,8 +1205,26 @@ ul.floatleft li {
 	height:auto !important;
 }
 
+#jtrack-content, #jtrack-form-list {
+  height:550px;
+}
+#timeSheetSaved, #timesheetSpreadsheet  {
+  height:600px !important;
+}
+#timeSheetTabs {
+  height:700px !important;
+}
+
 #right_modules #jtrack-bar, #left_modules #jtrack-bar, #right_modules .jtrack-item, #left_modules .jtrack-item {
 	font-size:76%;
+}
+
+#right_modules #jtrack-content, #left_modules  #jtrack-content  {
+  height:245px !important;
+}
+
+#right_modules #jtrack-form-list, #left_modules #jtrack-form-list {
+  height:245px !important;
 }
  
 /** Wiki tocs **/
