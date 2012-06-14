@@ -273,7 +273,7 @@
 						{tr}Don't send confirmation mails{/tr}
 					</td>
 					<td colspan="2">
-						<input type="checkbox" name="confirmEmail" />
+						<input type="checkbox" name="confirmEmail" checked="checked" />
 					</td>
 				</tr>
 			{/if}
@@ -303,7 +303,7 @@
 						{tr}Don't send confirmation mails{/tr}
 					</td>
 					<td colspan="2">
-						<input type="checkbox" name="confirmEmail" />
+						<input type="checkbox" name="confirmEmail" checked="checked" />
 					</td>
 				</tr>
 			{/if}
