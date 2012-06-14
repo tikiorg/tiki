@@ -21,6 +21,9 @@ abstract class WikiPlugin_HtmlBase
 	var $params = array(
 
 	);
+	var $htmlTagType = 'div';
+	var $hasHtmlBody = true;
+	var $htmlAttributes = array();
 
 	var $np = true;
 
@@ -318,12 +321,27 @@ abstract class WikiPlugin_HtmlBase
 		$data = str_replace('<x>', '', $data);
 		$data = $this->output($data, $params, $index, $parser);
 
-		$box = '<div id="' . $this->type . $index . '" class="wikiplugin_' . $this->type . '" style="' . $style . '">' . $data  . '</div>';
+		if ($this->hasHtmlBody == true) {
+			$output = '<' . $this->htmlTagType . ' ' .
+				'id="' . $this->type . $index . '" '.
+				'class="wikiplugin_' . $this->type . '" '.
+				'style="' . $style . '"';
+		}
+
+		foreach($this->htmlAttributes as $attribute => $value) {
+			$output .= ' ' . $attribute . '="' . addslashes($value) . '"';
+		}
+
+		if ($this->hasHtmlBody == true) {
+			$output .=  '>' . $data . '</' . $this->htmlTagType . '>';
+		} else {
+			$output .= ' />';
+		}
 
 		if ($this->np) {
-			return '~np~'.$box.'~/np~';
+			return '~np~'.$output.'~/np~';
 		} else {
-			return $box;
+			return $output;
 		}
 	}
 }
