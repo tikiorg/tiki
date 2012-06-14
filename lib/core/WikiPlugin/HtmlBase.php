@@ -302,9 +302,8 @@ abstract class WikiPlugin_HtmlBase
 	{
 		$styles = '';
 		foreach($params as $style => $setting) {
-			$styleName = ltrim($style, 'style-');
-			if (!empty($styleName) && isset(self::$style[$styleName])) {
-				$styles .= $styleName . ':' . trim($setting , "'") . ';';
+			if (!empty($style) && isset(self::$style[$style])) {
+				$styles .= $style . ':' . trim($setting , "'") . ';';
 			}
 		}
 		return $styles;
