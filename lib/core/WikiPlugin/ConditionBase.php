@@ -5,7 +5,7 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-abstract class WikiPlugin_OperatorBase
+abstract class WikiPlugin_ConditionBase
 {
 	var $name;
 	var $type;
