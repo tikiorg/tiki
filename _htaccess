@@ -73,8 +73,8 @@ FileETag none
 # to activate the error display, uncomment the following line
 #php_flag display_errors on
 
-# increase memory
-php_value memory_limit 256M
+# increase memory (default is 128M). Use this if you are getting blank pages and strange errors 
+# php_value memory_limit 256M
 
 # increase execution time (default value in apache use to be 30, and in some cases of long wiki pages with many plugins it may take longer)
 #php_value max_execution_time 90
@@ -96,8 +96,8 @@ RewriteEngine On
 # Rewrite rules to maintain any hard-coded URLs following http://dev.tiki.org/ImgDirectoryRevamp
 RewriteRule ^pics/large/(.*)$ img/icons/large/$1
 RewriteRule ^img/mytiki/(.*)$ img/icons/large/$1
-RewriteRule ^pics/(.*)$ img//$1
-RewriteRule ^images/(.*)$ img/icons//$1
+RewriteRule ^pics/(.*)$ img/$1
+RewriteRule ^images/(.*)$ img/icons/$1
 
 # Apache does not pass Authorization header to CGI scripts
 # Rewrite rules for passing authorisation in CGI or FGI mode

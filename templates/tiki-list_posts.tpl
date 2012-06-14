@@ -12,14 +12,14 @@
 	{include file='find.tpl'}
 {/if}
 
-{if $posts}
+{if $posts and  $tiki_p_blog_admin eq 'y'}
 	<form name="checkboxes_on" method="post" action="tiki-list_posts.php">
 	{query _type='form_input'}
 {/if}
 
 <table class="normal">
 	<tr>
-		{if $posts}
+		{if $posts and  $tiki_p_blog_admin eq 'y'}
 			<th>
 				{select_all checkbox_names='checked[]'}
 			</th>

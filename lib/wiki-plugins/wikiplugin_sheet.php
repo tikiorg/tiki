@@ -196,16 +196,21 @@ EOF;
 	
 		// Build required objects
 		$db = new TikiSheetDatabaseHandler($id);
-		$out = new TikiSheetOutputHandler($data);
+		//$out = new TikiSheetOutputHandler($data);
 	
 		// Fetch sheet from database
 		$sheet->import($db);
 	
 	} else {
-		$r = $sheet->setRange($range);
 		if (!isset($simple)) {
 			$simple = 'y';
 		}
+	}
+
+	$calcOff = '';
+	if (!empty($range)) {
+		$sheet->setRange($range);
+		$calcOff = ',calcOff: true';
 	}
 	
 	// Grab sheet output
@@ -224,8 +229,10 @@ EOF;
 	} else {
 		$ret = ($sheet->getTableHtml($subsheets));
 	}
-	
-	
+
+	if (strpos($ret, '<table') < 1) {
+		return '~np~' . $ret . '~/np~';	// return a single cell raw
+	}
 	
 	if (!isset($simple) || $simple != 'y') {
 		global $headerlib;
@@ -233,13 +240,12 @@ EOF;
 		$headerlib->add_jq_onready(
 						'$("div.tiki_sheet").each(function() {
 							$(this).sheet($.extend($.sheet.tikiOptions,{
-							editable:false
-							}));
+							editable:false'
+							. $calcOff .
+							'}));
 						});'
 		);
 
-	} else if (preg_match('/^([A-Z]+[0-9]+):\1$/', strtoupper($range))) {
-		return $ret;	// return a single cell raw
 	}
 
 	$ret = '<div id="tiki_sheet' . $sheet->instance . '" class="tiki_sheet' . $class . '" style="overflow:hidden;' . $style . '">' . $ret . '</div>';

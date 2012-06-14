@@ -643,7 +643,8 @@ function wikiplugin_trackerFilter_get_filters($trackerId=0, $listfields='', &$fo
 				$handler = $trklib->get_field_handler($field);
 				$add = $handler->getFieldData();
 				$selected = empty($_REQUEST['f_'.$fieldId])? '': $_REQUEST['f_'.$fieldId];
-				foreach ($add['list'] as $id => $option) {
+				$list = !empty($add['listdisplay']) ? 'listdisplay' : 'list';	// use listdisplay for labels if there
+				foreach ($add[$list] as $id => $option) {
 					$opts[] = array(
 						'id' => $id,
 						'name' => $option,

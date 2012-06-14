@@ -9,6 +9,7 @@
 		<p>{tr}Current recordings:{/tr}</p>
 		<ol>
 			{foreach from=$bbb_recordings item=recording}
+				{if $recording.published}
 				<li>
 					{tr _0=$recording.startTime|tiki_long_date _1=$recording.startTime|tiki_short_time _2=$recording.endTime|tiki_short_time}On %0 from %1 to %2{/tr}
 					<ul>
@@ -17,6 +18,7 @@
 						{/foreach}
 					</ul>
 				</li>
+				{/if}
 			{/foreach}
 		</ol>
 	{/if}

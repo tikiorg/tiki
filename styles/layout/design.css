@@ -101,7 +101,6 @@ input[type=submit]:hover {
 	margin: 0 0 4px 2px;
 	font-size: inherit;
 	font-family: inherit;
-	padding: 0;
 }
 
 input {
@@ -110,6 +109,7 @@ input {
 
 .button a {
 	padding: .1em 1em;
+	display: block;
 }
 
 /* highlight on interface text to draw attention; also

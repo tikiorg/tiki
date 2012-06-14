@@ -18,7 +18,6 @@ function wikiplugin_file_info()
 		'prefs' => array( 'wikiplugin_file' ),
 		'body' => tra('Label for the link to the file (ignored if the file is a wiki attachment)'),
 		'icon' => 'img/icons/file-manager.png',
-		'inline' => true,
 		'tags' => array( 'basic' ),		
 		'params' => array(
 			'type' => array(

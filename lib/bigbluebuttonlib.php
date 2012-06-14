@@ -275,11 +275,17 @@ class BigBlueButtonLib
 
 		foreach ($recordings as $recording) {
 			$recording = simplexml_import_dom($recording);
+			if ($recording->published == 'false') {
+				$published = false;
+			} else {
+				$published = true;
+			}
 			$info = array(
 					'recordID' => (string) $recording->recordID,
 					'startTime' => floor(((string) $recording->startTime)/1000), 
 					'endTime' => ceil(((string) $recording->endTime)/1000), 
 					'playback' => array(),
+					'published' => $published,
 			);
 
 			foreach ($recording->playback as $playback) {

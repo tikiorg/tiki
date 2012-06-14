@@ -11,7 +11,7 @@ function wikiplugin_report_info()
 		'name' => tra('Report'),
 		'documentation' => 'Report',
 		'description' => tra('Build a report, and store it in a wiki page'),
-		'prefs' => array( 'wikiplugin_report', 'feature_reports' ),
+		'prefs' => array( 'wikiplugin_report', 'feature_reports', 'feature_trackers' ),
 		'body' => tra('The wiki syntax report settings'),
 		'icon' => 'img/icons/mime/zip.png',
 		'params' => array(
@@ -94,7 +94,7 @@ function wikiplugin_report( $data, $params )
 			->add_js(
 							"
 			function editReport$reportI(me) {
-				var me = $(me);
+				var me = $(me).removeAttr('href');
 				me.serviceDialog({
 					title: me.attr('title'),
 					data: {
@@ -133,9 +133,9 @@ function wikiplugin_report( $data, $params )
 				<input type='hidden' name='params[name]' value='$name' />
 				<input type='hidden' name='params[view]' value='$view' />
 			</form>
-			<a href='#' title='".tr('Edit Report')."' onclick='return editReport$reportI(this);'>
+			<span title='".tr('Edit Report')."' style='cursor: pointer;' onclick='return editReport$reportI(this);'>
 				<img src='img/icons/page_edit.png' alt='$label' width='16' height='16' title='$label' class='icon' />
-			</a>";
+			</span>";
 	}
 	return "~np~" . $result . "~/np~"; 
 }
