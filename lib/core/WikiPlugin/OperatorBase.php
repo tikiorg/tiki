@@ -8,6 +8,7 @@
 abstract class WikiPlugin_OperatorBase
 {
 	var $name;
+	var $type;
 	var $documentation;
 	var $description;
 	var $prefs;
@@ -20,8 +21,34 @@ abstract class WikiPlugin_OperatorBase
 
 	);
 
-	function output($data, $params, $index, $parser)
-	{
+	var $np = true;
 
+	protected function paramDefaults(&$params)
+	{
+		$defaults = array();
+		foreach($this->params as $param => $setting) {
+			if (!empty($setting)) {
+				$defaults[$param] = $setting;
+			}
+		}
+
+		$params = array_merge($defaults, $params);
+	}
+
+	abstract protected function output($data, $params, $index, $parser);
+
+	public function exec($data, $params, $index, $parser)
+	{
+		$this->paramDefaults($params);
+
+		// strip out sanitisation which may have occurred when using nested plugins
+		$data = str_replace('<x>', '', $data);
+		$data = $this->output($data, $params, $index, $parser);
+
+		if ($this->np) {
+			return '~np~'.$data.'~/np~';
+		} else {
+			return $data;
+		}
 	}
 }
