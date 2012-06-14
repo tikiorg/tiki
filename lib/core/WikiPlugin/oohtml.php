@@ -5,9 +5,9 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id: wikiplugin_html.php 40030 2012-03-04 12:55:30Z gezzzan $
 
-class WikiPlugin_Html extends WikiPlugin_HtmlBase
+class WikiPlugin_oohtml extends WikiPlugin_HtmlBase
 {
-	var $type = 'html';
+	var $type = 'oohtml';
 	var $validate = 'all';
 	var $prefs = array('wikiplugin_html');
 	var $filter = 'rawhtml_unsafe';
@@ -16,7 +16,7 @@ class WikiPlugin_Html extends WikiPlugin_HtmlBase
 
 	function __constuct()
 	{
-		$this->name = tra('HTML');
+		$this->name = tra('Object oriented version of the html wiki plugin');
 		$this->documentation = 'PluginHTML';
 		$this->description = tra('Add HTML to a page');
 		$this->body = tra('HTML code');

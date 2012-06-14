@@ -605,7 +605,7 @@ if ( \$('#$id') ) {
 	//*
 	function plugin_exists( $name, $include = false )
 	{
-		$className = 'WikiPlugin_' . ucfirst($name);
+		$className = 'WikiPlugin_' . $name;
 		if (class_exists($className)) return true;
 
 		$php_name = 'lib/wiki-plugins/wikiplugin_';
@@ -633,6 +633,13 @@ if ( \$('#$id') ) {
 
 		if ( isset( $known[$name] ) ) {
 			return $known[$name];
+		}
+
+		$className = 'WikiPlugin_' . $name;
+		$classExists = class_exists($className);
+		if ($classExists == true) {
+			$class = new $className;
+			$known[$name] = $class->info();
 		}
 
 		if ( ! $this->plugin_exists($name, true) )
@@ -806,6 +813,7 @@ if ( \$('#$id') ) {
 			return true;
 
 		$meta = $this->plugin_info($name);
+
 		if ( ! isset( $meta['validate'] ) )
 			return true;
 
@@ -1019,7 +1027,11 @@ if ( \$('#$id') ) {
 		}
 
 		//This is the class name for new simplified plugin system, if object does exist, it will use it, if not it uses old plugins
-		$className = 'WikiPlugin_' . ucfirst($name);
+		$className = 'WikiPlugin_' . $name;
+		$classExists = class_exists($className);
+		if ($classExists == true) {
+			$class = new $className;
+		}
 
 		$func_name = 'wikiplugin_' . $name;
 
@@ -1027,8 +1039,9 @@ if ( \$('#$id') ) {
 			$this->plugin_apply_filters($name, $data, $args);
 		}
 
-		if ( function_exists($func_name) || class_exists($className)) {
+		if ( function_exists($func_name) || $classExists == true) {
 			$pluginFormat = 'wiki';
+
 			$info = $this->plugin_info($name);
 			if ( isset( $info['format'] ) ) {
 				$pluginFormat = $info['format'];
@@ -1040,8 +1053,7 @@ if ( \$('#$id') ) {
 				$data = nl2br($data);
 			}
 
-			if (class_exists($className)) {
-				$class = new $className;
+			if ($classExists == true) {
 				$output = $class->exec($data, $args, $offset, $this);
 			} else {
 				$output = $func_name($data, $args, $offset);
@@ -1157,6 +1169,7 @@ if ( \$('#$id') ) {
 		global $tikilib;
 
 		$info = $this->plugin_info($name);
+
 		$default = TikiFilter::get(isset( $info['defaultfilter'] ) ? $info['defaultfilter'] : 'xss');
 
 		// Apply filters on the body

@@ -11,6 +11,7 @@ abstract class WikiPlugin_OperatorBase
 	var $type;
 	var $documentation;
 	var $description;
+	var $format;
 	var $prefs;
 	var $body;
 	var $validate;
@@ -22,6 +23,17 @@ abstract class WikiPlugin_OperatorBase
 	);
 
 	var $np = true;
+
+	public function info()
+	{
+		$info = array();
+		foreach($this as $key => $param)
+		{
+			$info[$key] = $param;
+		}
+
+		return $info;
+	}
 
 	protected function paramDefaults(&$params)
 	{
