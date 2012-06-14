@@ -613,7 +613,16 @@ JQ
 
 									clipboarddata.text = encode((o.text + '').replace(/\\n/g, ''));
 
-									clipboarddata.hash = md5(rangy.superSanitize(clipboarddata.websiteTitle), rangy.superSanitize(clipboarddata.text));
+									clipboarddata.hash = md5(
+										rangy.superSanitize(
+											clipboarddata.author +
+											clipboarddata.authorInstitution +
+											clipboarddata.authorProfession +
+											clipboarddata.dateLastUpdated
+										)
+									,
+										rangy.superSanitize(clipboarddata.text)
+									);
 
 									me.data('rangyBusy', true);
 
@@ -734,7 +743,12 @@ JQ
 		foreach ($item->feed->entry as $i => $newEntry) {
 			$checks[$i] = array();
 
-			$checks[$i]["hashableHere"] = JisonParser_Phraser_Handler::superSanitize($prefs['browsertitle']);
+			$checks[$i]["hashableHere"] = JisonParser_Phraser_Handler::superSanitize(
+				$newEntry->forwardlink->author .
+				$newEntry->forwardlink->authorInstitution .
+				$newEntry->forwardlink->authorProfession .
+				$newEntry->forwardlink->dateLastUpdated
+			);
 			$checks[$i]["phraseThere"] =JisonParser_Phraser_Handler::superSanitize($newEntry->forwardlink->text);
 			$checks[$i]["parentHere"] = JisonParser_Phraser_Handler::superSanitize(TikiLib::lib("wiki")->get_parse($_REQUEST['page']));
 			$checks[$i]["hashHere"] = hash_hmac("md5", $checks[$i]["hashableHere"], $checks[$i]["phraseThere"]);
