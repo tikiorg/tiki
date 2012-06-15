@@ -72,15 +72,32 @@ class Tracker_Query
 	
 	public function filter($filter = array())
 	{
+		$filter = array_merge(array(
+			'field'=>'',
+			'type'=> 'and',
+			'value'=> ''
+		), $filter);
+
 		$this->fields[] = $filter['field'];
-		$this->filterType[] = (isset($filter['type']) ? $filter['type'] : 'and'); //really only things that should be accepted are "and" and "or"
-		$this->equals[] = $filter['value'];
+		$this->filterType[] = $filter['type']; //really only things that should be accepted are "and" and "or", woops, and "like"
+
+		if ($filter['type'] == 'like') {
+			$this->search[] = $filter['value'];
+		} else {
+			$this->equals[] = $filter['value'];
+		}
+
 		return $this;
 	}
 
 	public function filterFieldByValue($field, $value)
 	{
 		return $this->filter(array('field'=> $field, 'value'=>$value));
+	}
+
+	public function filterFieldByValueLike($field, $value)
+	{
+		return $this->filter(array('field'=> $field, 'value'=>$value, 'type'=> 'like'));
 	}
 	
 	public function equals($equals = array())
@@ -164,6 +181,14 @@ class Tracker_Query
 	public function getOne()
 	{
 		return $this
+			->limit(1)
+			->query();
+	}
+
+	public function getLast()
+	{
+		return $this
+			->desc(true)
 			->limit(1)
 			->query();
 	}
@@ -453,6 +478,8 @@ class Tracker_Query
 			$params[] = $this->itemId;
 		}
 
+
+		/*Get field ids from names*/
 		if ($this->byName == true && !empty($this->fields)) {
 			$fieldIds = array();
 			foreach ($this->fields as $field) {
