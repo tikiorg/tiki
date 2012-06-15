@@ -16,6 +16,7 @@ Class Feed_ForwardLink extends Feed_Abstract
 	function __construct($page)
 	{
 		$this->page = $page;
+		$this->metadata = Feed_ForwardLink_Metadata::pageForwardLink($page);
 		return parent::__construct($page);
 	}
 
@@ -38,146 +39,20 @@ Class Feed_ForwardLink extends Feed_Abstract
 		}
 	}
 
-	private function goToPhraseExistence($phrase, $version)
+	private function goToPhraseExistence($data, $phrase, $version)
 	{
-		if (!isset($_SESSION)) {
-			session_start();
-		}
+		if (!empty($phrase)) {
+			global $groupPluginReturnAll;
+			$groupPluginReturnAll = true;
+			$hasPhrase = JisonParser_Phraser_Handler::hasPhrase(TikiLib::lib('tiki')->parse_data($data), $phrase);
+			$groupPluginReturnAll = false;
+			if ($hasPhrase == true) return $phrase;
 
-		if (!empty($phrase)) $_SESSION['phrase'] = $phrase; //prep for redirect if it happens;
-
-		if (!empty($phrase)) Feed_ForwardLink_Search::goToNewestWikiRevision($version, $phrase, $this->page);
-
-		if (!empty($_SESSION['phrase'])) { //recover from redirect if it happened
-			$phrase = $_SESSION['phrase'];
-			unset($_SESSION['phrase']);
+			return Feed_ForwardLink_Search::goToNewestWikiRevision($version, $phrase);
 		}
 	}
 
-	private function restorePhrasesInWikiPage($phrase)
-	{
-		global $smarty, $headerlib;
-		$items = Feed_ForwardLink::forwardLink($this->page, true)->getItems();
-		$phrases = array();
-
-		$phraseI = 0;
-		foreach ($items as $item) {
-			$thisText = "";
-			$thisDate = "";
-			$thisHref = "";
-			$linkedText = "";
-
-			if (isset($item->forwardlink->text))
-				$thisText = addslashes(htmlspecialchars($item->forwardlink->text));
-
-			if(isset($item->forwardlink->date))
-				$thisDate = addslashes(htmlspecialchars($item->forwardlink->date));
-
-			if(isset($item->textlink->href))
-				$thisHref = addslashes(htmlspecialchars($item->textlink->href));
-
-			if(isset($item->textlink->text))
-				$linkedText = addslashes(htmlspecialchars($item->textlink->text));
-
-			$phrases[] = $thisText;
-
-			if ($thisText == $phrase) {
-				$headerlib->add_js(<<<JQ
-				$(function() {
-					$('#page-data')
-						.rangyRestoreSelection('$thisText', function(r) {
-							var phraseLink = $('<a>*</a>')
-								.data('href', '$thisHref')
-								.data('text', '$thisText')
-								.data('linkedText', '$linkedText')
-								.data('date', '$thisDate')
-								.addClass('forwardlink')
-								.insertBefore(r.selection[0]);
-
-							r.selection.addClass('ui-state-highlight');
-
-							$('body,html').animate({
-								scrollTop: r.start.offset().top
-							});
-						});
-				});
-JQ
-				);
-			} else {
-
-				$headerlib->add_jq_onready(<<<JQ
-					var phraseLink = $('<a>*</a>')
-						.data('href', '$thisHref')
-						.data('text', '$thisText')
-						.data('linkedText', '$linkedText')
-						.data('date', '$thisDate')
-						.addClass('forwardlink')
-						.insertBefore('.phraseStart$phraseI');
-
-					$('.phrase$phraseI').addClass('ui-state-highlight');
-JQ
-				);
-			}
-			$phraseI++;
-		}
-
-		$headerlib
-			->add_jsfile('lib/jquery/tablesorter/jquery.tablesorter.js')
-			->add_cssfile('lib/jquery_tiki/tablesorter/themes/tiki/style.css')
-			->add_jq_onready(<<<JQ
-				$('#page-data').trigger('rangyDone');
-
-				$('.forwardlink')
-					.click(function() {
-						me = $(this);
-						var href = me.data('href');
-						var text = me.data('linkedText');
-						var linkedText = me.data('linkedText');
-						var date = me.data('date');
-
-						var table = $('<div>' +
-							'<table class="tablesorter">' +
-								'<thead>' +
-									'<tr>' +
-										'<th>' + tr('Date') + '</th>' +
-										'<th>' + tr('Click below to read Citing blocks') + '</th>' +
-									'</tr>' +
-								'</thead>' +
-								'<tbody>' +
-									'<tr>' +
-										'<td>' + date + '</td>' +
-										'<td><a href="' + href + '" class="read">Read</a></td>' +
-									'</tr>' +
-								'</tbody>' +
-							'</table>' +
-						'</div>')
-							.dialog({
-								title: text,
-								modal: true
-							})
-							.tablesorter();
-
-						return false;
-					});
-JQ
-		);
-
-
-		$phraser = new JisonParser_Phraser_Handler();
-
-		$parsed = $smarty->getTemplateVars('parsed');
-		if (!empty($parsed)) {
-			$smarty->assign('parsed', $phraser->findPhrases($parsed, $phrases));
-		} else {
-			$previewd = $smarty->getTemplateVars('previewd');
-			if (!empty($previewd)) {
-				$previewd = $phraser->findPhrases($previewd, $phrases);
-				$smarty->assign('previewd', $previewd);
-			}
-		}
-	}
-
-	function editInterfaces($metadata)
+	function editInterfaces()
 	{
 		$perms = Perms::get();
 
@@ -338,18 +213,18 @@ JQ
 JQ
 					);
 
-				$this->editQuestionsInterface($metadata->questions(), $trackerId);
+				$this->editQuestionsInterface($this->metadata->questions(), $trackerId);
 
-				$keywords = json_encode($metadata->keywords(false));
+				$keywords = json_encode($this->metadata->keywords(false));
 				TikiLib::lib('header')->add_jq_onready("genericSingleTrackerItemInterface('Keywords', $keywords);");
 
-				$scientificField = json_encode($metadata->scientificField(false));
+				$scientificField = json_encode($this->metadata->scientificField(false));
 				TikiLib::lib('header')->add_jq_onready("genericSingleTrackerItemInterface('Scientific Field', $scientificField);");
 
-				$minimumMathNeeded = json_encode($metadata->minimumMathNeeded(false));
+				$minimumMathNeeded = json_encode($this->metadata->minimumMathNeeded(false));
 				TikiLib::lib('header')->add_jq_onready("genericSingleTrackerItemInterface('Minimum Math Needed', $minimumMathNeeded);");
 
-				$minimumStatisticsNeeded = json_encode($metadata->minimumStatisticsNeeded(false));
+				$minimumStatisticsNeeded = json_encode($this->metadata->minimumStatisticsNeeded(false));
 				TikiLib::lib('header')->add_jq_onready("genericSingleTrackerItemInterface('Minimum Statistics Needed', $minimumStatisticsNeeded);");
 			}
 		}
@@ -454,22 +329,13 @@ JQ
 		);
 	}
 
-	function createForwardLinksInterface($metadata)
+	function createForwardLinksInterface()
 	{
 		global $tikilib, $headerlib, $prefs, $user;
 
-		$answers = json_encode($metadata->raw['answers']);
+		$answers = json_encode($this->metadata->raw['answers']);
 
-		$clipboarddata = json_encode($metadata->raw);
-
-		$headerlib
-			->add_jsfile('lib/rangy/uncompressed/rangy-core.js')
-			->add_jsfile('lib/rangy/uncompressed/rangy-cssclassapplier.js')
-			->add_jsfile('lib/rangy/uncompressed/rangy-selectionsaverestore.js')
-			->add_jsfile('lib/rangy_tiki/rangy-phraser.js')
-			->add_jsfile('lib/ZeroClipboard.js')
-			->add_jsfile('lib/core/JisonParser/Phraser.js')
-			->add_jsfile('lib/jquery/md5.js');
+		$clipboarddata = json_encode($this->metadata->raw);
 
 		$page = urlencode($this->page);
 
@@ -681,20 +547,25 @@ JQ
 
 		$page = $args['object'];
 		$version = $args['version'];
+		$data = $args['data'];
 
-		$metadata = Feed_ForwardLink_Metadata::pageForwardLink($page);
-
-		$phrase = (!empty($_REQUEST['phrase']) ? addslashes(htmlspecialchars($_REQUEST['phrase'])) : '');
+		$headerlib
+			->add_jsfile('lib/rangy/uncompressed/rangy-core.js')
+			->add_jsfile('lib/rangy/uncompressed/rangy-cssclassapplier.js')
+			->add_jsfile('lib/rangy/uncompressed/rangy-selectionsaverestore.js')
+			->add_jsfile('lib/rangy_tiki/rangy-phraser.js')
+			->add_jsfile('lib/ZeroClipboard.js')
+			->add_jsfile('lib/core/JisonParser/Phraser.js')
+			->add_jsfile('lib/jquery/md5.js');
 
 		$me = new Feed_ForwardLink($page);
 
-		$me->goToPhraseExistence($phrase, $version);
+		$phrase = (!empty($_REQUEST['phrase']) ? addslashes(htmlspecialchars($_REQUEST['phrase'])) : '');
+		$me->goToPhraseExistence($data, $phrase, $version);
+		Feed_ForwardLink_Search::restoreForwardLinkPhrasesInWikiPage($me->getItems(), $phrase);
 
-		$me->restorePhrasesInWikiPage($phrase);
-
-		$me->editInterfaces($metadata);
-
-		$me->createForwardLinksInterface($metadata);
+		$me->editInterfaces();
+		$me->createForwardLinksInterface();
 	}
 	
 	static function wikiSave($args)
@@ -782,7 +653,7 @@ JQ
 			}
 		}
 
-		if ($this->debug) {
+		if ($this->debug == true) {
 			print_r($checks);
 		}
 

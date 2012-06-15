@@ -20,6 +20,7 @@ class Feed_ForwardLink_PageLookup extends Feed_Abstract
 
 	static function wikiView($args)
 	{
+		return;
 		global $tikilib, $headerlib;
 
 		 static $Feed_ForwardLink_PageLookup = 0;
@@ -43,7 +44,6 @@ class Feed_ForwardLink_PageLookup extends Feed_Abstract
 
 				$result = Feed_ForwardLink_Send::send(
 								array(
-									'page'=> $args['object'],
 									'forwardLink'=> $forwardLink,
 									'textlink'=> array(
 										'body'=> $args['data'],
@@ -53,20 +53,5 @@ class Feed_ForwardLink_PageLookup extends Feed_Abstract
 				);
 			}
 		}
-
-		$forwardLinks = json_encode($forwardLinks);
-
-		if (!empty($forwardLinks))
-		$headerlib->add_jq_onready(<<<JQ
-			var forwardLinks = $forwardLinks;
-			$.each(forwardLinks, function() {
-				if (this.href) {
-					$('<a>*</a>')
-						.attr('href', unescape(this.href))
-						.appendTo('#page-data');
-				}
-			});
-JQ
-);
 	}
 }

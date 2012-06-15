@@ -17,15 +17,30 @@ class Feed_ForwardLink_Search
 		parent::__construct($page);
 	}
 	
-	static function goToNewestWikiRevision($version, $phrase, $page)
+	static function goToNewestWikiRevision($version, $phrase)
 	{
-		$newestRevision = self::findWikiRevision($phrase, $page);
+		if (!isset($_SESSION)) {
+			session_start();
+		}
 
-		if ($newestRevision['version'] < 1) {
+		if (!empty($_SESSION['phrase'])) { //recover from redirect if it happened
+			$phrase = $_SESSION['phrase'];
+			unset($_SESSION['phrase']);
+			return $phrase;
+		}
+
+		if (!empty($phrase)) $_SESSION['phrase'] = $phrase; //prep for redirect if it happens;
+
+		$newestRevision = self::findWikiRevision($phrase);
+
+		echo $phrase;
+		print_r($newestRevision);
+
+		if ($newestRevision == false) {
 			TikiLib::lib("header")->add_jq_onready(<<<JQ
 				$('<div />')
 					.html(
-						tr('This can happen if the page you are linking to has changed since you obtained the forwardlink or if the page is not viewable by the public.') +
+						tr('This can happen if the page you are linking to has changed since you obtained the forwardlink or if the rights to see it are different that what you have set at the moment.') +
 						'&nbsp;&nbsp;' +
 						tr('If you are logged in, try loggin out and then recreate the forwardlink.')
 					)
@@ -39,44 +54,183 @@ JQ
 		}
 
 		if ($version != $newestRevision['version']) {
-			header('Location: ' . TikiLib::tikiUrl() . 'tiki-pagehistory.php?page=' . $page . '&preview=' . $newestRevision['version'] . '&nohistory');
-			exit();
+			//header('Location: ' . TikiLib::tikiUrl() . 'tiki-pagehistory.php?page=' . $newestRevision['page'] . '&preview=' . $newestRevision['version'] . '&nohistory');
+			//exit();
 		}
 	}
 	
-	static function findWikiRevision($phrase, $page, $findLast = false)
+	static function findWikiRevision($phrase)
 	{
 		global $tikilib;
 
-		$pages = TikiLib::lib('tiki')->fetchAll("SELECT * FROM tiki_pages WHERE pageName = ?", array($page));
-		$page = end($pages);
-		
-		$page['data'] = TikiLib::lib("parser")->parse_data($page['data']);
+		$query = Tracker_Query::tracker('Wiki Attributes')
+			->byName()
+			->filterFieldByValueLike('Value', $phrase)
+			->render(false)
+			->getLast();
 
-		$pageMatch = (JisonParser_Phraser_Handler::hasPhrase($page['data'], $phrase) == true ? $page : array("version" => -1));
+		if (empty($query)) return false; //couldn't find it
 
-		$foundExistence = false;
+		$query = end($query); //query has a key of itemId, we just need it's details
+		$version = $query['Attribute'];
+		$page = $query['Page'];
+		return array(
+			'page' => $page,
+			'version' => $version
+		);
+	}
 
-		if ($pageMatch['version'] < 0 || $findLast == true) {
-			foreach (TikiLib::lib('tiki')->fetchAll("SELECT * FROM tiki_history WHERE pageName = ? ORDER BY version DESC", array($page)) as $page) {
-				$hasPhrase = JisonParser_Phraser_Handler::hasPhrase($page['data'], $phrase);
 
-				//In this case we are trying to find the first occurance of the phrase, useful for finding the phrase when it last existed (rev for redirect)
-				if ($hasPhrase == true && $foundExistence == false) {
-					$foundExistence = true;
-					$pageMatch = $page;
-					break;
+	static function restoreForwardLinkPhrasesInWikiPage($items, $phrase = "")
+	{
+
+		global $headerlib;
+		$phrase = JisonParser_Phraser_Handler::superSanitize($phrase);
+		$phrases = array();
+		$phraseMatchIndex = -1;
+
+		foreach ($items as $i => $item) {
+			if (!empty($item->textlink->href)) {
+				if (JisonParser_Phraser_Handler::superSanitize($item->forwardlink->text) == $phrase) {
+					$phraseMatchIndex = $i;
 				}
 
-				//In this case we are trying to find the last occurance of the phrase, useful for finding the phrase when it first existed (author etc)
-				if ($hasPhrase == false && $foundExistence == true && $findLast == true) {
-					$pageMatch = $page;
-					break;
-				}
+				$phrases[] = $item->forwardlink->text;
 
+				$headerlib->add_jq_onready("
+					var phrase = $('span.forwardlinkMiddle".$i."')
+						.addClass('ui-state-highlight');
+
+					var phraseLink = $('<a>*</a>')
+						.data('metadataHere', " . json_encode($item->forwardlink) . ")
+						.data('metadataThere', " . json_encode($item->textlink) . ")
+						.addClass('forwardlinkA')
+						.insertBefore(phrase.first());
+				");
 			}
 		}
 
-		return $pageMatch;
+		$phraser = new JisonParser_Phraser_Handler();
+		$phraser->setCssWordClasses(array(
+			'start'=>'forwardlinkStart',
+			'middle'=>'forwardlinkMiddle',
+			'end'=>'forwardlinkEnd'
+		));
+
+		if ($phraseMatchIndex > -1) {
+			$headerlib->add_jq_onready("
+				var selection = $('span.forwardlinkStart$phraseMatchIndex,span.forwardlinkEnd$phraseMatchIndex').realHighlight();
+
+				$('body,html').animate({
+					scrollTop: selection.first().offset().top
+				});
+			");
+		}
+
+		self::restorePhrasesInWikiPage($phraser, $phrases);
+	}
+
+	static function restoreTextLinkPhrasesInWikiPage($items, $phrase = "")
+	{
+		global $headerlib;
+		$phrase = JisonParser_Phraser_Handler::superSanitize($phrase);
+		$phrases = array();
+		$phraseMatchIndex = -1;
+
+		foreach($items as $i => $item) {
+			if (!empty($item->forwardlink->href)) {
+				if (JisonParser_Phraser_Handler::superSanitize($item->textlink->text) == $phrase) {
+					$phraseMatchIndex = $i;
+				}
+
+				$phrases[] = $item->textlink->text;
+
+				$headerlib->add_jq_onready("
+					var phrase = $('span.textlinkMiddle$i')
+						.addClass('ui-state-highlight');
+
+					var phraseLink = $('<a>*</a>')
+						.data('metadataHere', " . json_encode($item->textlink) . ")
+						.data('metadataThere', " . json_encode($item->forwardlink) . ")
+						.addClass('textlinkA')
+						.insertAfter(phrase.last());
+				");
+			}
+		}
+
+		$phraser = new JisonParser_Phraser_Handler();
+
+		$phraser->setCssWordClasses(array(
+			'start'=>'textlinkStart',
+			'middle'=>'textlinkMiddle',
+			'end'=>'textlinkEnd'
+		));
+
+		if ($phraseMatchIndex > -1) {
+			$headerlib->add_jq_onready("
+				var selection = $('span.textlinkStart$phraseMatchIndex,span.textlinkEnd$phraseMatchIndex').realHighlight();
+
+				$('body,html').animate({
+					scrollTop: selection.first().offset().top
+				});
+			");
+		}
+
+		self::restorePhrasesInWikiPage($phraser, $phrases);
+	}
+
+	static function restorePhrasesInWikiPage(JisonParser_Phraser_Handler $phraser, $phrases)
+	{
+		global $headerlib, $smarty;
+
+		$headerlib
+			->add_jsfile('lib/jquery/tablesorter/jquery.tablesorter.js')
+			->add_cssfile('lib/jquery_tiki/tablesorter/themes/tiki/style.css')
+			->add_jq_onready(<<<JQ
+					$('a.forwardlinkA,a.textlinkA')
+						.click(function() {
+							var me = $(this),
+							metadataHere = me.data('metadataHere'),
+							metadataThere = me.data('metadataThere');
+
+							var table = $('<form method="POST">' +
+								'<input type="hidden" name="phrase" value="' + metadataThere.text + '" />' +
+								'<table class="tablesorter">' +
+									'<thead>' +
+										'<tr>' +
+											'<th>' + tr('Date') + '</th>' +
+											'<th>' + tr('Click below to read Citing blocks') + '</th>' +
+										'</tr>' +
+									'</thead>' +
+									'<tbody>' +
+										'<tr>' +
+											'<td>' + metadataThere.dateLastUpdated + '</td>' +
+											'<td><input type="submit" value="' + tr('Read') + '" /></td>' +
+										'</tr>' +
+									'</tbody>' +
+								'</table>' +
+							'</form>')
+								.attr('action', metadataThere.href)
+								.dialog({
+									title: metadataThere.text,
+									modal: true
+								})
+								.tablesorter();
+
+							return false;
+						});
+JQ
+			,100);
+
+		$parsed = $smarty->getTemplateVars('parsed');
+		if (!empty($parsed)) {
+			$smarty->assign('parsed', $phraser->findPhrases($parsed, $phrases));
+		} else {
+			$previewd = $smarty->getTemplateVars('previewd');
+			if (!empty($previewd)) {
+				$previewd = $phraser->findPhrases($previewd, $phrases);
+				$smarty->assign('previewd', $previewd);
+			}
+		}
 	}
 }

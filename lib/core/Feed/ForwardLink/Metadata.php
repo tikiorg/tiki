@@ -39,12 +39,9 @@ class Feed_ForwardLink_Metadata
 		$this->href = TikiLib::tikiUrl() . 'tiki-index.php?page=' . $page;
 	}
 
-	static function pageTextLink($page, $data, $hash)
+	static function pageTextLink($page, $data)
 	{
 		$me = new self($page);
-
-		$phraser = new JisonParser_Phraser_Handler();
-		$id = implode("", $phraser->sanitizeToWords($data));
 
 		$me->raw = array(
 			'websiteTitle'=>            $me->websiteTitle,
@@ -55,7 +52,7 @@ class Feed_ForwardLink_Metadata
 			'author'=>                  $me->authorName(),
 			'authorInstitution' =>      $me->authorBusinessName(),
 			'authorProfession'=>        $me->authorProfession(),
-			"href"=> 	                $me->href . "#" . $id, //the id is composed of the words of the data the textlink surrounds
+			"href"=> 	                $me->href,
 			'answers'=>                 $me->answers(),
 			'dateLastUpdated'=>         $me->lastModif,
 			'dateOriginated'=>          $me->findDatePageOriginated(),
@@ -66,8 +63,16 @@ class Feed_ForwardLink_Metadata
 			'scientificField'=>         $me->scientificField(),
 			'minimumMathNeeded'=>       $me->minimumMathNeeded(),
 			'minimumStatisticsNeeded'=> $me->minimumStatisticsNeeded(),
-			'text'=> 	                $data,
-			'id'=>		                $hash. "_" . $me->page . "_" . $id //the id of the textlink is different than that of the href, this is sort of a unique identifier so that we can later find it without having an href
+			'text'=> 	                $data
+		);
+
+		$me->raw['hash'] =  hash_hmac("md5",
+			JisonParser_Phraser_Handler::superSanitize($me->raw['author'] .
+				$me->raw['authorInstitution'] .
+				$me->raw['authorProfession'] .
+				$me->raw['dateLastUpdated']
+			),
+			JisonParser_Phraser_Handler::superSanitize($data)
 		);
 
 		return $me;

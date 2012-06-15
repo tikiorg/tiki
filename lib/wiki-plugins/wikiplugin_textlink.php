@@ -27,86 +27,21 @@ function wikiplugin_textlink_info()
 
 function wikiplugin_textlink($data, $params)
 {
-    global $tikilib, $headerlib, $caching, $page;
-    static $textlinkI = 0;
-	++$textlinkI;
-	$i = $textlinkI;
+    global $page;
 	
 	$params = array_merge(array("clipboarddata" => ""), $params);
 	extract($params, EXTR_SKIP);
 	
 	$clipboarddata = json_decode(stripslashes(trim(urldecode($clipboarddata))));
 	if (empty($clipboarddata)) return $data;
-	
-	$clipboarddata->href = urldecode($clipboarddata->href);
 
-	$phraser = new JisonParser_Phraser_Handler();
-	$id = implode("", $phraser->sanitizeToWords($data));
-
-	$textlinkMetadata = Feed_ForwardLink_Metadata::pageTextLink($page, $data, $clipboarddata->hash);
-
+	$textlinkMetadata = (object)Feed_ForwardLink_Metadata::pageTextLink($page, $data);
 	Feed_ForwardLink_Send::add(
-		array(
-			"page"=> $page,
+		(object)array(
 			"forwardlink"=> $clipboarddata,
-			"textlink"=> $textlinkMetadata->raw
+			"textlink"=> (object)$textlinkMetadata->raw
 		)
 	);
 
-	$data = htmlspecialchars($data);
-	$date = "";
-	
-	if (isset($clipboarddata->date)) {
-		$date = $tikilib->get_short_date($clipboarddata->date);
-	}
-
-	$clipboarddata->href = addslashes(htmlspecialchars($clipboarddata->href));
-	$clipboarddata->text = addslashes(htmlspecialchars($clipboarddata->text));
-
-	if (!empty($clipboarddata->href)) {
-		$headerlib
-			->add_jsfile("lib/jquery/tablesorter/jquery.tablesorter.js")
-			->add_cssfile("lib/jquery_tiki/tablesorter/themes/tiki/style.css")
-			->add_jq_onready("
-				$('#page-data').bind('rangyDone', function() {
-					$('#".$id."').click(function() {
-						var text = \"".$clipboarddata->text."\";
-
-						var table = $('<div><table class=\"tablesorter\">' +
-							'<thead>' + 
-								'<tr>' +
-									'<th>' + tr('Date') + '</th>' +
-									'<th>' + tr('Click below to read Citing blocks') + '</th>' +
-								'</tr>' +
-							'</thead>' +
-							'<tbody>' +
-								'<tr>' +
-									'<td>".$date."</td>' +
-									'<td><a href=\"".$clipboarddata->href."\" class=\"read\">Read</a></td>' +
-								'</tr>' +
-							'</tbody>' +
-						'</table></div>')
-							.dialog({
-								title: tr(\"ForwardLinks To: \") + text,
-								modal: true
-							})
-							.tablesorter();
-						
-						table.find('.read').click(function() {
-							$('<form action=\"".$clipboarddata->href."\" method=\"post\">' +
-								'<input type=\"hidden\" name=\"phrase\" value=\"' + text + '\" />' +
-							'</form>')
-								.appendTo('body')
-								.submit();
-							return false;
-						});
-						return false;
-					});
-				});
-			");
-		
-    	return "~np~<span class='textlink'>~/np~".$data."~np~</span><a href='" .$clipboarddata->href ."' id='" . $id . "'>*</a>~/np~";
-	} else {
-    	return $data;
-	}
+    return $data;
 }
