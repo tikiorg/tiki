@@ -1205,7 +1205,7 @@ ul.floatleft li {
 	height:auto !important;
 }
 
-#jtrack-content, #jtrack-form-list {
+#jtrack-content, #jtrack-form-list, #jtrack-form-update {
   height:550px;
 }
 #timeSheetSaved, #timesheetSpreadsheet  {
@@ -1219,11 +1219,7 @@ ul.floatleft li {
 	font-size:76%;
 }
 
-#right_modules #jtrack-content, #left_modules  #jtrack-content  {
-  height:245px !important;
-}
-
-#right_modules #jtrack-form-list, #left_modules #jtrack-form-list {
+#right_modules #jtrack-content, #left_modules  #jtrack-content, #right_modules #jtrack-form-list, #left_modules #jtrack-form-list, , #right_modules #jtrack-form-update, #left_modules #jtrack-form-update  {
   height:245px !important;
 }
  
