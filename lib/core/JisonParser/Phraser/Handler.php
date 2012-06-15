@@ -15,6 +15,25 @@ class JisonParser_Phraser_Handler extends JisonParser_Phraser
 	var $parsed = '';
 	var $cache = array();
 
+	var $cssClassStart = '';
+	var $cssClassMiddle = '';
+	var $cssClassEnd = '';
+
+	function setCssWordClasses($classes = array())
+	{
+		$classes = array_merge(array(
+			'start' => '',
+			'middle' => '',
+			'end' => ''
+		), $classes);
+
+		$this->cssClassStart = $classes['start'];
+		$this->cssClassMiddle = $classes['middle'];
+		$this->cssClassEnd = $classes['end'];
+
+		return $this;
+	}
+
 	function tagHandler($tag)
 	{
 		return $tag;
@@ -26,21 +45,24 @@ class JisonParser_Phraser_Handler extends JisonParser_Phraser
 		$this->words[] = $word;
 
 		foreach ($this->indexes as $i => $index) {
-			if ($this->currentWord >= $index['start'] 
-					&& $this->currentWord <= $index['end']
-			) {
-				$word = '<span class="phrase phrase' . $i . '" style="border: none;">' . $word . '</span>';
-			}
+			if (empty($this->indexes[$i]['ended'])) {
+				if ($this->currentWord >= $index['start']
+						&& $this->currentWord <= $index['end']
+				) {
+					$word = '<span class="phrase phrase' . $i . (!empty($this->cssClassMiddle) ? ' '  . $this->cssClassMiddle . ' ' . $this->cssClassMiddle . $i : '') . '" style="border: none;">' . $word . '</span>';
+				}
 
-			if ($this->currentWord == $index['start']) {
-				$word = '<span class="phraseStart phraseStart' . $i . '" style="border: none; font-weight: cold;"></span>' . $word;
-			}
+				if ($this->currentWord == $index['start']) {
+					$word = '<span class="phraseStart phraseStart' . $i . (!empty($this->cssClassStart) ? ' '  . $this->cssClassStart . ' ' . $this->cssClassStart . $i : '') . '" style="border: none; font-weight: bold;"></span>' . $word;
+				}
 
-			if ($this->currentWord == $index['end']) {
-				if (empty($this->wordsChars[$this->currentWord])) {
-					$word = $word . '<span class="phraseEnd phraseEnd' . $i . '" style="border: none;"></span>';
-				} else {
-					$word = '<span class="phrase phrase' . $i . '" style="border: none;">' . $word . '</span>';
+				if ($this->currentWord == $index['end']) {
+					if (empty($this->wordsChars[$this->currentWord])) {
+						$this->indexes[$i]['ended'] = true;
+						$word .= '<span class="phraseEnd phraseEnd' . $i . (!empty($this->cssClassEnd) ? ' '  . $this->cssClassEnd . ' ' . $this->cssClassEnd . $i : '') . '" style="border: none;"></span>';
+					} else {
+						$word = '<span class="phrase phrase' . $i . (!empty($this->cssClassMiddle) ? ' '  . $this->cssClassMiddle . ' ' . $this->cssClassMiddle . $i : '') . '" style="border: none;">' . $word . '</span>';
+					}
 				}
 			}
 		}
@@ -59,12 +81,15 @@ class JisonParser_Phraser_Handler extends JisonParser_Phraser
 		$this->chars[] = $char;
 
 		foreach ($this->indexes as $i => $index) {
-			if ($this->currentWord >= $index['start'] && $this->currentWord <= $index['end']) {
-				$char = '<span class="phrases phrase' . $i . '" style="border: none;">' . $char . '</span>';
+			if (empty($this->indexes[$i]['ended'])) {
+				if ($this->currentWord >= $index['start']) {
+					$char = '<span class="phrases phrase' . $i . (!empty($this->cssClassMiddle) ? ' '  . $this->cssClassMiddle . ' ' . $this->cssClassMiddle . $i : '') . '" style="border: none;">' . $char . '</span>';
 
-				if ($this->currentWord == $index['end']) {
-					if (!empty($this->wordsChars[$this->currentWord])) {
-						$char = $char . '<span class="phraseEnd phraseEnd' . $i . '" style="border: none;"></span>';
+					if ($this->currentWord == $index['end']) {
+						if (!empty($this->wordsChars[$this->currentWord])) {
+							$this->indexes[$i]['ended'] = true;
+							$char = $char . '<span class="phraseEnd phraseEnd' . $i . (!empty($this->cssClassEnd) ? ' '  . $this->cssClassEnd . ' ' . $this->cssClassEnd . $i : '') . '" style="border: none;"></span>';
+						}
 					}
 				}
 			}
@@ -99,7 +124,6 @@ class JisonParser_Phraser_Handler extends JisonParser_Phraser
 
 		foreach ($phrases as $phrase) {
 			$phraseWords = $this->sanitizeToWords($phrase);
-
 			$this->addIndexes($parentWords, $phraseWords);
 			$phrasesWords[] = $phraseWords;
 		}
