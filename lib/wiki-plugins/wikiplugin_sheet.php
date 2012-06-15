@@ -230,7 +230,7 @@ EOF;
 		$ret = ($sheet->getTableHtml($subsheets));
 	}
 
-	if (strpos($ret, '<table') < 1) {
+	if (strpos($ret, '<table ') === false) {
 		return '~np~' . $ret . '~/np~';	// return a single cell raw
 	}
 	
