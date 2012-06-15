@@ -1205,8 +1205,22 @@ ul.floatleft li {
 	height:auto !important;
 }
 
+#jtrack-content, #jtrack-form-list, #jtrack-form-update, #jtrack-form-remove, #jtrack-form-remove-all {
+  height:550px;
+}
+#timeSheetSaved, #timesheetSpreadsheet  {
+  height:600px !important;
+}
+#timeSheetTabs {
+  height:700px !important;
+}
+
 #right_modules #jtrack-bar, #left_modules #jtrack-bar, #right_modules .jtrack-item, #left_modules .jtrack-item {
 	font-size:76%;
+}
+
+#right_modules #jtrack-content, #left_modules  #jtrack-content, #right_modules #jtrack-form-list, #left_modules #jtrack-form-list, #right_modules #jtrack-form-update, #left_modules #jtrack-form-update, #right_modules #jtrack-form-remove, #left_modules #jtrack-form-remove, , #right_modules #jtrack-form-remove-all, #left_modules #jtrack-form-remove-all  {
+  height:245px !important;
 }
  
 /** Wiki tocs **/

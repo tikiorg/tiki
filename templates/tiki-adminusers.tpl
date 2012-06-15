@@ -524,9 +524,9 @@
 				<td>
 					<input type="file" id="csvlist" name="csvlist"/>
 					<br />
-					<label><input type="radio" name="overwrite" value="y" checked="checked" />&nbsp;{tr}Overwrite{/tr}</label>
+					<label><input type="radio" name="overwrite" value="y" />&nbsp;{tr}Overwrite{/tr}</label>
 					<br />
-					<label><input type="radio" name="overwrite" value="n" />&nbsp;{tr}Don't overwrite{/tr}</label>
+					<label><input type="radio" name="overwrite" value="n" checked="checked" />&nbsp;{tr}Don't overwrite{/tr}</label>
 					<br />
 					<label>{tr}Overwrite groups:{/tr} <input type="checkbox" name="overwriteGroup" /></label>
                     <br />

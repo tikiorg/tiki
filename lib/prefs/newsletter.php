@@ -13,6 +13,9 @@ function prefs_newsletter_list()
 			'description' => tra('Pause for a given amount of seconds before each batch to avoid overloading the mail server.'),
 			'type' => 'flag',
 			'default' => 'n',
+			'dependencies' => array(
+				'feature_newsletters',
+			),
 		),
 		'newsletter_pause_length' => array(
 			'name' => tra('Newsletter pause length'),

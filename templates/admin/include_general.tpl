@@ -77,6 +77,15 @@
 				</div>
 				{preference name=email_footer}
 			</fieldset>
+			<fieldset>
+				<legend>{tr}Newsletter{/tr}</legend>
+				{preference name=newsletter_throttle}
+				<div class="adminoptionboxchild" id="newsletter_throttle_childcontainer">
+					{preference name=newsletter_pause_length}
+					{preference name=newsletter_batch_size}
+				</div>
+				{preference name=newsletter_external_client}
+			</fieldset>
 
 			<fieldset>
 				<legend>{tr}Logging and Reporting{/tr}</legend>

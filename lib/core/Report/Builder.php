@@ -20,9 +20,10 @@ class Report_Builder
 		$me->type = ucwords($type);
 		
 		$class = "Report_Definition_{$me->type}";
-		$definition = new $class;
-		$me->input = $definition->input();
-		
+		if (class_exists($class) == true) {
+			$definition = new $class;
+			$me->input = $definition->input();
+		}
 		return $me;
 	}
 	
@@ -100,8 +101,11 @@ class Report_Builder
 	function outputArray()
 	{
 		$class = "Report_Definition_{$this->type}";
-		$definition = new $class;
-		return $definition->output($this->values);
+		if (class_exists($class) == true) {
+			$definition = new $class;
+			return $definition->output($this->values);
+		}
+		return array();
 	}
 	
 	function outputSheet($name = "")

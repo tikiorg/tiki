@@ -49,8 +49,8 @@ if ($_REQUEST["nlId"]) {
 		'allowAnySub' => 'n',
 		'unsubMsg' => 'y',
 		'validateAddr' => 'y',
-		'allowTxt' => 'y',
-		'allowArticleClip' => 'y',
+		'allowTxt' => 'n',
+		'allowArticleClip' => 'n',
 		'autoArticleClip' => 'n',
 		'articleClipRange' => $defaultArticleClipRange,
 		'articleClipRangeDays' => $defaultArticleClipRange / 3600 / 24,
@@ -136,7 +136,7 @@ if (isset($_REQUEST["save"])) {
 		'allowAnySub' => 'n',
 		'unsubMsg' => 'y',
 		'validateAddr' => 'y',
-		'allowTxt' => 'y'
+		'allowTxt' => 'n'
 	);
 	$smarty->assign('nlId', 0);
 	$smarty->assign('info', $info);

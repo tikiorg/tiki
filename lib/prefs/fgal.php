@@ -198,7 +198,7 @@ function prefs_fgal_list()
 		'fgal_enable_auto_indexing' => array(
 			'name' => tra('Automatic indexing of file content'),
 			'description' => tra('Uses command line tools to extract the information from the files based on their MIME types.'),
-			'default' => 'y',
+			'default' => 'n',
 			'type' => 'flag',
 		),
 		'fgal_upload_from_source' => array(
