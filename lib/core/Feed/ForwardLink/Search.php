@@ -33,9 +33,6 @@ class Feed_ForwardLink_Search
 
 		$newestRevision = self::findWikiRevision($phrase);
 
-		echo $phrase;
-		print_r($newestRevision);
-
 		if ($newestRevision == false) {
 			TikiLib::lib("header")->add_jq_onready(<<<JQ
 				$('<div />')
