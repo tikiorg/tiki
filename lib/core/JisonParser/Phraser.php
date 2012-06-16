@@ -27,7 +27,7 @@ class JisonParser_Phraser
 		$this->defaultActions = json_decode('{"7":[2,1]}', true);
 		
 		//lexer
-		$this->rules = 			array("/^(?:<(.|\\n)*?>)/","/^(?:(\\w|\\d)+)/","/^(?:(.|\\n|\\s))/","/^(?:$)/");
+		$this->rules = 			array("/^(?:<(.|\\n)*?>+)/","/^(?:(\\w|\\d)+)/","/^(?:(.|\\n|\\s))/","/^(?:$)/");
 		$this->conditions = 	json_decode('{"INITIAL":{"rules":[0,1,2,3],"inclusive":true}}', true);
 		
 		$this->options =		"<@@OPTIONS@@>";

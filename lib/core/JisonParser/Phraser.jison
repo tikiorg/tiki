@@ -5,7 +5,7 @@
 /* lexical grammar */
 %lex
 %%
-"<"(.|\n)*?">"						return 'TAG'
+"<"(.|\n)*?">"+ 					return 'TAG'
 (\w|\d)+							return 'WORD'
 (.|\n|\s)							return 'CHAR'
 <<EOF>>								return 'EOF'
