@@ -13,7 +13,7 @@ if ( ! isset( $_POST['page'], $_POST['content'], $_POST['index'], $_POST['type']
 $page = $_POST['page'];
 
 $plugin = strtolower(basename($_POST['type']));
-$type = strtoupper($plugin);
+$type = TikiLib::strtoupper($plugin);
 
 if (empty($parserlib)) {
 	$parserlib = TikiLib::lib('parser');

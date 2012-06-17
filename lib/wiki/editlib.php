@@ -194,7 +194,7 @@ class EditLib
 			$hex = str_pad(dechex($parts[1]), 2, '0', STR_PAD_LEFT)
 			     . str_pad(dechex($parts[2]), 2, '0', STR_PAD_LEFT)
 				 . str_pad(dechex($parts[3]), 2, '0', STR_PAD_LEFT);
-			$hex = '#' . strtoupper($hex);
+			$hex = '#' . TikiLib::strtoupper($hex);
 		} else {
 			$hex = $col;
 		}
