@@ -17,7 +17,7 @@ class Feed_ForwardLink_Search
 		parent::__construct($page);
 	}
 	
-	static function goToNewestWikiRevision($version, $phrase)
+	static function goToNewestWikiRevision($version, &$phrase)
 	{
 		if (!isset($_SESSION)) {
 			session_start();
@@ -26,10 +26,8 @@ class Feed_ForwardLink_Search
 		if (!empty($_SESSION['phrase'])) { //recover from redirect if it happened
 			$phrase = $_SESSION['phrase'];
 			unset($_SESSION['phrase']);
-			return $phrase;
+			return;
 		}
-
-		if (!empty($phrase)) $_SESSION['phrase'] = $phrase; //prep for redirect if it happens;
 
 		$newestRevision = self::findWikiRevision($phrase);
 
@@ -51,6 +49,8 @@ JQ
 		}
 
 		if ($version != $newestRevision['version']) {
+			$_SESSION['phrase'] = $phrase; //prep for redirect if it happens;
+
 			header('Location: ' . TikiLib::tikiUrl() . 'tiki-pagehistory.php?page=' . $newestRevision['page'] . '&preview=' . $newestRevision['version'] . '&nohistory');
 			exit();
 		}
@@ -60,7 +60,6 @@ JQ
 	{
 		$query = Tracker_Query::tracker('Wiki Attributes')
 			->byName()
-			->filterFieldByValue('Type', 'ForwardLink Revision')
 			->filterFieldByValueLike('Value', JisonParser_Phraser_Handler::superSanitize($phrase))
 			->render(false)
 			->getLast();
@@ -80,18 +79,29 @@ JQ
 	static function restoreForwardLinkPhrasesInWikiPage($items, $phrase = "")
 	{
 
-		global $headerlib;
+		global $headerlib, $smarty;
 		$phrase = JisonParser_Phraser_Handler::superSanitize($phrase);
 		$phrases = array();
 		$phraseMatchIndex = -1;
 
-		foreach ($items as $i => $item) {
+		$parsed = $smarty->getTemplateVars('parsed');
+		if (empty($parsed)) {
+			$parsed = $smarty->getTemplateVars('previewd');
+		}
+
+		foreach($items as $i => $item) {
 			if (!empty($item->textlink->href)) {
-				if (JisonParser_Phraser_Handler::superSanitize($item->forwardlink->text) == $phrase) {
-					$phraseMatchIndex = $i;
+				if (JisonParser_Phraser_Handler::hasPhrase($parsed, $item->forwardlink->text) != true) {
+					continue;
 				}
 
 				$phrases[] = $item->forwardlink->text;
+
+				$i = count($phrases) - 1;
+
+				if (JisonParser_Phraser_Handler::superSanitize($phrase) == JisonParser_Phraser_Handler::superSanitize($item->forwardlink->text)) {
+					$phraseMatchIndex = $i;
+				}
 
 				$headerlib->add_jq_onready("
 					var phrase = $('span.forwardlinkMiddle".$i."')
@@ -115,7 +125,7 @@ JQ
 
 		if ($phraseMatchIndex > -1) {
 			$headerlib->add_jq_onready("
-				var selection = $('span.forwardlinkStart$phraseMatchIndex,span.forwardlinkEnd$phraseMatchIndex').realHighlight();
+				var selection = $('span.forwardlinkStart". $phraseMatchIndex.",span.forwardlinkEnd".$phraseMatchIndex."').realHighlight();
 
 				$('body,html').animate({
 					scrollTop: selection.first().offset().top
@@ -128,21 +138,32 @@ JQ
 
 	static function restoreTextLinkPhrasesInWikiPage($items, $phrase = "")
 	{
-		global $headerlib;
+		global $headerlib, $smarty;
 		$phrase = JisonParser_Phraser_Handler::superSanitize($phrase);
 		$phrases = array();
 		$phraseMatchIndex = -1;
 
-		foreach($items as $i => $item) {
+		$parsed = $smarty->getTemplateVars('parsed');
+		if (empty($parsed)) {
+			$parsed = $smarty->getTemplateVars('previewd');
+		}
+
+		foreach($items as &$item) {
 			if (!empty($item->forwardlink->href)) {
-				if (JisonParser_Phraser_Handler::superSanitize($item->textlink->text) == $phrase) {
-					$phraseMatchIndex = $i;
+				if (JisonParser_Phraser_Handler::hasPhrase($parsed, $item->textlink->text) != true) {
+					continue;
 				}
 
 				$phrases[] = $item->textlink->text;
 
+				$i = count($phrases) - 1;
+
+				if (JisonParser_Phraser_Handler::superSanitize($phrase) == JisonParser_Phraser_Handler::superSanitize($item->textlink->text)) {
+					$phraseMatchIndex = $i;
+				}
+
 				$headerlib->add_jq_onready("
-					var phrase = $('span.textlinkMiddle$i')
+					var phrase = $('span.textlinkMiddle".$i."')
 						.addClass('ui-state-highlight');
 
 					var phraseLink = $('<a>*</a>')
@@ -164,7 +185,7 @@ JQ
 
 		if ($phraseMatchIndex > -1) {
 			$headerlib->add_jq_onready("
-				var selection = $('span.textlinkStart$phraseMatchIndex,span.textlinkEnd$phraseMatchIndex').realHighlight();
+				var selection = $('span.textlinkStart".$phraseMatchIndex.",span.textlinkEnd".$phraseMatchIndex."').realHighlight();
 
 				$('body,html').animate({
 					scrollTop: selection.first().offset().top

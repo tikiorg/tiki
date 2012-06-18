@@ -64,6 +64,7 @@ Class Feed_TextLink extends Feed_Abstract
 	static function wikiView()
 	{
 		$me = new self();
-		Feed_ForwardLink_Search::restoreTextLinkPhrasesInWikiPage($me->getItems(), $_REQUEST['phrase']);
+		$phrase = (!empty($_REQUEST['phrase']) ? $_REQUEST['phrase'] : '');
+		Feed_ForwardLink_Search::restoreTextLinkPhrasesInWikiPage($me->getItems(), $phrase);
 	}
 }

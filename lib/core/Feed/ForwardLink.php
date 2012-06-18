@@ -60,19 +60,6 @@ Class Feed_ForwardLink extends Feed_Abstract
 		return self::$parsedDatas[$data];
 	}
 
-	private function goToPhraseExistence($data, $phrase, $version)
-	{
-		if (!empty($phrase)) {
-			global $groupPluginReturnAll;
-			$groupPluginReturnAll = true;
-			$hasPhrase = JisonParser_Phraser_Handler::hasPhrase($this->getPageParsed($data), $phrase);
-			$groupPluginReturnAll = false;
-			if ($hasPhrase == true) return $phrase;
-
-			return Feed_ForwardLink_Search::goToNewestWikiRevision($version, $phrase);
-		}
-	}
-
 	function editInterfaces()
 	{
 		$perms = Perms::get();
@@ -564,11 +551,10 @@ JQ
 
 	static function wikiView($args)
 	{
-		global $prefs, $headerlib, $smarty, $_REQUEST, $user, $tikilib;
+		global $headerlib, $_REQUEST;
 
 		$page = $args['object'];
 		$version = $args['version'];
-		$data = $args['data'];
 
 		$headerlib
 			->add_jsfile('lib/rangy/uncompressed/rangy-core.js')
@@ -581,8 +567,8 @@ JQ
 
 		$me = new Feed_ForwardLink($page);
 
-		$phrase = (!empty($_REQUEST['phrase']) ? addslashes(htmlspecialchars($_REQUEST['phrase'])) : '');
-		$me->goToPhraseExistence($data, $phrase, $version);
+		$phrase = (!empty($_REQUEST['phrase']) ? $_REQUEST['phrase'] : '');
+		Feed_ForwardLink_Search::goToNewestWikiRevision($version, $phrase);
 		Feed_ForwardLink_Search::restoreForwardLinkPhrasesInWikiPage($me->getItems(), $phrase);
 
 		$me->editInterfaces();
@@ -591,7 +577,7 @@ JQ
 	
 	static function wikiSave($args)
 	{
-		global $prefs, $_REQUEST, $groupPluginReturnAll;
+		global $groupPluginReturnAll;
 		$groupPluginReturnAll = true;
 		$body = TikiLib::lib('tiki')->parse_data($args['data']);
 		$groupPluginReturnAll = false;
