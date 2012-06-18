@@ -79,7 +79,7 @@ JQ
 	static function restoreForwardLinkPhrasesInWikiPage($items, $phrase = "")
 	{
 
-		global $headerlib, $smarty;
+		global $tikilib, $headerlib, $smarty;
 		$phrase = JisonParser_Phraser_Handler::superSanitize($phrase);
 		$phrases = array();
 		$phraseMatchIndex = -1;
@@ -102,6 +102,11 @@ JQ
 				if (JisonParser_Phraser_Handler::superSanitize($phrase) == JisonParser_Phraser_Handler::superSanitize($item->forwardlink->text)) {
 					$phraseMatchIndex = $i;
 				}
+
+				$item->forwardlink->dateLastUpdated = $tikilib->get_short_datetime($item->forwardlink->dateLastUpdated);
+				$item->forwardlink->dateOriginated = $tikilib->get_short_datetime($item->forwardlink->dateOriginated);
+				$item->textlink->dateLastUpdated = $tikilib->get_short_datetime($item->textlink->dateLastUpdated);
+				$item->textlink->dateOriginated = $tikilib->get_short_datetime($item->textlink->dateOriginated);
 
 				$headerlib->add_jq_onready("
 					var phrase = $('span.forwardlinkMiddle".$i."')
@@ -138,7 +143,7 @@ JQ
 
 	static function restoreTextLinkPhrasesInWikiPage($items, $phrase = "")
 	{
-		global $headerlib, $smarty;
+		global $tikilib, $headerlib, $smarty;
 		$phrase = JisonParser_Phraser_Handler::superSanitize($phrase);
 		$phrases = array();
 		$phraseMatchIndex = -1;
@@ -161,6 +166,11 @@ JQ
 				if (JisonParser_Phraser_Handler::superSanitize($phrase) == JisonParser_Phraser_Handler::superSanitize($item->textlink->text)) {
 					$phraseMatchIndex = $i;
 				}
+
+				$item->forwardlink->dateLastUpdated = $tikilib->get_short_datetime($item->forwardlink->dateLastUpdated);
+				$item->forwardlink->dateOriginated = $tikilib->get_short_datetime($item->forwardlink->dateOriginated);
+				$item->textlink->dateLastUpdated = $tikilib->get_short_datetime($item->textlink->dateLastUpdated);
+				$item->textlink->dateOriginated = $tikilib->get_short_datetime($item->textlink->dateOriginated);
 
 				$headerlib->add_jq_onready("
 					var phrase = $('span.textlinkMiddle".$i."')
@@ -204,38 +214,40 @@ JQ
 			->add_jsfile('lib/jquery/tablesorter/jquery.tablesorter.js')
 			->add_cssfile('lib/jquery_tiki/tablesorter/themes/tiki/style.css')
 			->add_jq_onready(<<<JQ
-					$('a.forwardlinkA,a.textlinkA')
-						.click(function() {
-							var me = $(this),
-							metadataHere = me.data('metadataHere'),
-							metadataThere = me.data('metadataThere');
+				$('a.forwardlinkA,a.textlinkA')
+					.click(function() {
+						var me = $(this),
+						metadataHere = me.data('metadataHere'),
+						metadataThere = me.data('metadataThere');
 
-							var table = $('<form method="POST">' +
-								'<input type="hidden" name="phrase" value="' + metadataThere.text + '" />' +
-								'<table class="tablesorter">' +
-									'<thead>' +
-										'<tr>' +
-											'<th>' + tr('Date') + '</th>' +
-											'<th>' + tr('Click below to read Citing blocks') + '</th>' +
-										'</tr>' +
-									'</thead>' +
-									'<tbody>' +
-										'<tr>' +
-											'<td>' + metadataThere.dateLastUpdated + '</td>' +
-											'<td><input type="submit" value="' + tr('Read') + '" /></td>' +
-										'</tr>' +
-									'</tbody>' +
-								'</table>' +
-							'</form>')
-								.attr('action', metadataThere.href)
-								.dialog({
-									title: metadataThere.text,
-									modal: true
-								})
-								.tablesorter();
+						var table = $('<table class="tablesorter" style="width: 100%;"/>');
+						var thead = $('<thead><tr /></thead>').appendTo(table);
+						var tbody = $('<tbody><tr /></tbody>').appendTo(table);
 
-							return false;
-						});
+						function a(head, body) {
+							$('<th />').text(head).appendTo(thead.find('tr'));
+
+							$('<td />').html(body).appendTo(tbody.find('tr'));
+						}
+
+						a(tr('Sentence text'), metadataThere.text);
+						a(tr('Date Created'), metadataThere.dateOriginated);
+						a(tr('Date Updated Here'), metadataHere.dateLastUpdated);
+						a(tr('Date Updated There'), metadataThere.dateLastUpdated);
+						a(tr('Click below to read Citing blocks'), '<input type="submit" value="' + tr('Read') + '" />');
+
+						var form = $('<form method="POST" />')
+							.attr('action', metadataThere.href)
+							.append($('<input type="hidden" name="phrase" />').val(metadataThere.text))
+							.append(table)
+							.dialog({
+								title: tr('Linked to: ') + metadataHere.text,
+								modal: true,
+								width: $(window).width() * 0.8
+							});
+
+						return false;
+					});
 JQ
 			,100);
 
