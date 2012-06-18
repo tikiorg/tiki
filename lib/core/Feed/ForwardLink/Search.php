@@ -128,7 +128,7 @@ JQ
 				var selection = $('span.forwardlinkStart". $phraseMatchIndex.",span.forwardlinkEnd".$phraseMatchIndex."').realHighlight();
 
 				$('body,html').animate({
-					scrollTop: selection.first().offset().top
+					scrollTop: selection.first().offset().top - 10
 				});
 			");
 		}
@@ -188,7 +188,7 @@ JQ
 				var selection = $('span.textlinkStart".$phraseMatchIndex.",span.textlinkEnd".$phraseMatchIndex."').realHighlight();
 
 				$('body,html').animate({
-					scrollTop: selection.first().offset().top
+					scrollTop: selection.first().offset().top - 10
 				});
 			");
 		}
