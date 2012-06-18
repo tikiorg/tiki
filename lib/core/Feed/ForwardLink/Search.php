@@ -8,7 +8,7 @@
 class Feed_ForwardLink_Search
 {
 	var $type = "forwardlink";
-	var $version = "0.1";
+	var $version = 0.1;
 	var $page = '';
 
 	function __construct($page)
@@ -58,11 +58,10 @@ JQ
 	
 	static function findWikiRevision($phrase)
 	{
-		global $tikilib;
-
 		$query = Tracker_Query::tracker('Wiki Attributes')
 			->byName()
-			->filterFieldByValueLike('Value', $phrase)
+			->filterFieldByValue('Type', 'ForwardLink Revision')
+			->filterFieldByValueLike('Value', JisonParser_Phraser_Handler::superSanitize($phrase))
 			->render(false)
 			->getLast();
 
