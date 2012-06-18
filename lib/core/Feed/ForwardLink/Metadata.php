@@ -24,6 +24,30 @@ class Feed_ForwardLink_Metadata
 	var $keywords;
 	var $questions;
 
+	static $acceptableKeys = array(
+		'websiteTitle' =>               true,
+		'websiteSubtitle' =>            true,
+		'moderator' =>                  true,
+		'moderatorInstitution' =>       true,
+		'moderatorProfession' =>        true,
+		'hash' =>                       true,
+		'author' =>                     true,
+		'authorInstitution' =>          true,
+		'authorProfession' =>           true,
+		"href" =>                       true,
+		'answers' =>                    true,
+		'dateLastUpdated' =>            true,
+		'dateOriginated' =>             true,
+		'language' =>                   true,
+		'count' =>                      true,
+		'keywords' =>                   true,
+		'categories' =>                 true,
+		'scientificField' =>            true,
+		'minimumMathNeeded' =>          true,
+		'minimumStatisticsNeeded' =>    true,
+		'text' =>                       true
+	);
+
 	function __construct($page)
 	{
 		global $tikilib, $prefs;
@@ -49,6 +73,7 @@ class Feed_ForwardLink_Metadata
 			'moderator'=>               $me->moderatorName(),
 			'moderatorInstitution'=>    $me->moderatorBusinessName(),
 			'moderatorProfession'=>     $me->moderatorProfession(),
+			'hash'=>                    '', //hash isn't yet known
 			'author'=>                  $me->authorName(),
 			'authorInstitution' =>      $me->authorBusinessName(),
 			'authorProfession'=>        $me->authorProfession(),

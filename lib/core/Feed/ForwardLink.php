@@ -12,6 +12,8 @@ Class Feed_ForwardLink extends Feed_Abstract
 	var $isFileGal = true;
 	var $debug = false;
 	var $page = '';
+	static $pagesParsed = array();
+	static $parsedDatas = array();
 	var $metadata = array();
 
 	function __construct($page)
@@ -40,12 +42,30 @@ Class Feed_ForwardLink extends Feed_Abstract
 		}
 	}
 
+	private function getPageParsed($page)
+	{
+		if (isset(self::$pagesParsed[$page])) return self::$pagesParsed[$page];
+
+		self::$pagesParsed[$page] = TikiLib::lib('wiki')->get_parse($page);
+
+		return self::$pagesParsed[$page];
+	}
+
+	private function parseData($data)
+	{
+		if (isset(self::$parsedDatas[$data])) return self::$parsedDatas[$data];
+
+		self::$parsedDatas[$data] = TikiLib::lib('tiki')->parse_data($data);
+
+		return self::$parsedDatas[$data];
+	}
+
 	private function goToPhraseExistence($data, $phrase, $version)
 	{
 		if (!empty($phrase)) {
 			global $groupPluginReturnAll;
 			$groupPluginReturnAll = true;
-			$hasPhrase = JisonParser_Phraser_Handler::hasPhrase(TikiLib::lib('tiki')->parse_data($data), $phrase);
+			$hasPhrase = JisonParser_Phraser_Handler::hasPhrase($this->getPageParsed($data), $phrase);
 			$groupPluginReturnAll = false;
 			if ($hasPhrase == true) return $phrase;
 
@@ -597,6 +617,11 @@ JQ
 		$groupPluginReturnAll = true;
 		$replace = false;
 
+		if ($this->debug == true) {
+			ini_set('error_reporting', E_ALL);
+			ini_set('display_errors', 1);
+		}
+
 		//lets remove the new entry if it has already been accepted in the past
 		foreach ($contents->entry as $i => $existingEntry) {
 			foreach ($item->feed->entry as $j => $newEntry) {
@@ -622,35 +647,42 @@ JQ
 				$newEntry->forwardlink->dateLastUpdated
 			);
 			$checks[$i]["phraseThere"] =JisonParser_Phraser_Handler::superSanitize($newEntry->forwardlink->text);
-			$checks[$i]["parentHere"] = JisonParser_Phraser_Handler::superSanitize(TikiLib::lib("wiki")->get_parse($_REQUEST['page']));
+			$checks[$i]["parentHere"] = JisonParser_Phraser_Handler::superSanitize($this->getPageParsed($_REQUEST['page']));
 			$checks[$i]["hashHere"] = hash_hmac("md5", $checks[$i]["hashableHere"], $checks[$i]["phraseThere"]);
 			$checks[$i]["hashThere"] = $newEntry->forwardlink->hash;
-			$checks[$i]["reason"] = "";
+			$checks[$i]["reason"] = array();
 			$checks[$i]['exists'] = JisonParser_Phraser_Handler::hasPhrase(
-				TikiLib::lib('wiki')->get_parse($_REQUEST['page']),
+				$this->getPageParsed($_REQUEST['page']),
 				$newEntry->forwardlink->text
 			);
 
-			$checks[$i]['reason'] = '';
-
 			if ($checks[$i]['hashHere'] != $checks[$i]['hashThere']) {
-				$checks[$i]['reason'] .= '_hash_';
+				$checks[$i]['reason'][] = 'hash_tampering';
 				unset($item->feed->entry[$i]);
 			}
 
 			if ($newEntry->forwardlink->websiteTitle != $prefs['browsertitle']) {
-				$checks[$i]['reason'] .= '_title_';
+				$checks[$i]['reason'][] = 'title';
 				unset($item->feed->entry[$i]);
 			}
 
 			if (!$checks[$i]['exists']) {
 				if (empty($checks[$i]['reason'])) {
-					$checks[$i]['reason'] .= '_no_existence_hash_pass_';
+					$checks[$i]['reason'][] = 'no_existence_hash_pass';
 				} else {
-					$checks[$i]['reason'] .= '_no_existence_';
+					$checks[$i]['reason'][] = 'no_existence';
 				}
 
 				unset($item->feed->entry[$i]);
+			}
+
+			foreach($item->feed->entry[$i] as $key => $value) {
+				if (isset(Feed_ForwardLink_Metadata::$acceptableKeys[$key]) && Feed_ForwardLink_Metadata::$acceptableKeys[$key] == true) {
+					//all clear
+				} else {
+					$checks[$i]['reason'][] = 'metadata_tampering';
+					unset($item->feed->entry[$i]);
+				}
 			}
 		}
 

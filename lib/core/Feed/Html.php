@@ -9,7 +9,7 @@ class Feed_Html extends Feed_Abstract
 {
 	var $lastModif = 0;
 	var $type = "html_feed";
-	var $version = "0.1";
+	var $version = 0.1;
 	
 	public function replace()
 	{

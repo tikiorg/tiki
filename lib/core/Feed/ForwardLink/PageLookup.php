@@ -9,7 +9,7 @@ class Feed_ForwardLink_PageLookup extends Feed_Abstract
 {
 	var $type = 'forwardlink';
 	var $forwardLink = array();
-	var $version = "0.1";
+	var $version = 0.1;
 	
 	static function forwardLink($forwardLink = array())
 	{
