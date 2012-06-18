@@ -466,15 +466,15 @@ class Tracker_Query
 
 		$params[] = $trackerId;
 
-		if (!empty($this->start) && !$this->search) {
+		if (!empty($this->start) && empty($this->search)) {
 			$params[] = $this->start;
 		}
 
-		if (!empty($this->end) && !$this->search) {
+		if (!empty($this->end) && empty($this->search)) {
 			$params[] = $this->end;
 		}
 
-		if (!empty($this->itemId) && !$this->search) {
+		if (!empty($this->itemId) && empty($this->search)) {
 			$params[] = $this->itemId;
 		}
 
@@ -503,7 +503,9 @@ class Tracker_Query
 					if (strlen($this->equals[$i]) > 0) {
 						$fields_safe .= " AND search_item_fields.value = ? ";
 						$params[] = $this->equals[$i];
-					} elseif (strlen($this->search[$i]) > 0) {
+					}
+
+					if (strlen($this->search[$i]) > 0) {
 						$fields_safe .= " AND search_item_fields.value LIKE ? ";
 						$params[] = '%' . $this->search[$i] . '%';
 					}
@@ -590,21 +592,19 @@ class Tracker_Query
 				WHERE
 				tiki_trackers.trackerId = ?
 
-				". (!empty($this->start) && !$this->search ? " AND tiki_tracker_items.$dateUnit > ? " : "") . "
-				". (!empty($this->end) && !$this->search ? 	" AND tiki_tracker_items.$dateUnit < ? " : "") . "
-				". (!empty($this->itemId) && !$this->search ? " AND tiki_tracker_item_fields.itemId = ? " : "") . "
+				". (!empty($this->start) ? " AND tiki_tracker_items.".$dateUnit." > ? " : "") . "
+				". (!empty($this->end) ? 	" AND tiki_tracker_items.".$dateUnit." < ? " : "") . "
+				". (!empty($this->itemId) ? " AND tiki_tracker_item_fields.itemId = ? " : "") . "
 				". (!empty($fields_safe) ? $fields_safe : "") . "
 				". (!empty($status_safe) ? $status_safe : "") . "
 
 				GROUP BY
-				tiki_tracker_item_fields.itemId " . ($this->desc == true ? 'DESC' : 'ASC') . "
+				tiki_tracker_item_fields.itemId
 				" . ($isSearch == true ? ", search_item_fields.fieldId, search_item_fields.itemId " : "" ) . "
 				ORDER BY 
-				tiki_tracker_items.$dateUnit
-				" . (!empty($this->limit) ? 
-				" LIMIT " . (!empty($this->offset) ? $this->offset . ", " : "") . " " . $this->limit
-				: ""
-				);
+				tiki_tracker_items.".$dateUnit." " . ($this->desc == true ? 'DESC' : 'ASC') . "
+				" . (!empty($this->limit) ? " LIMIT " . $this->limit : "") . "
+				" . (!empty($this->offset) ? " OFFSET " . $this->offset : "");
 
 		if ($this->debug == true) {
 			$result = array($query, $params);
