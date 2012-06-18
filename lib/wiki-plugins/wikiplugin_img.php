@@ -999,10 +999,14 @@ function wikiplugin_img( $data, $params, $offset, $parseOptions='' )
 	if (!empty($dbinfo['filetype'])  && !empty($mimetypes['svg']) && $dbinfo['filetype'] == $mimetypes['svg']) {
 		$tagName = 'div';
 		$repldata = $dbinfo['data'];
-		$replimg = '<div type="image/svg+xml" class="svgImage pluginImg' . $imgdata['fileId'] . '" ';
+		$replimg = '<div type="image/svg+xml" ';
+		$imgdata['class'] .= ' svgImage pluginImg' . $imgdata['fileId'];
+		$imgdata['class'] = trim($imgdata['class']);
 	} else {
 		$tagName = 'img';
-		$replimg = '<img src="' . $src . '" class="regImage pluginImg' . $imgdata['fileId'] . '" ';
+		$replimg = '<img src="' . $src . '" ';
+		$imgdata['class'] .= ' regImage pluginImg' . $imgdata['fileId'];
+		$imgdata['class'] = trim($imgdata['class']);
 	}
 
 	if (!empty($imgdata_dim)) $replimg .= $imgdata_dim;
