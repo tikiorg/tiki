@@ -59,6 +59,8 @@ class ParserLib extends TikiDb_Bridge
 	/*options for parser lib, called 'option' because we was to remain forward compatible with jison parser when we migrate, and options was already taken as a way to configure the parser and not the handler*/
 	var $option = array();
 
+	static $jisonParser;
+
 	function setOptions($option = array())
 	{
 		global $page;
@@ -1514,8 +1516,8 @@ if ( \$('#$id') ) {
 		//The following will stop and return based off new parser
 		if ($prefs['feature_jison_wiki_parser'] == 'y') {
 			//Testing new parser ;)
-			$parser = new JisonParser_Wiki_Handler();
-			return $parser->parse($data);
+			if (!isset(self::$jisonParserInstance)) self::$jisonParser = new JisonParser_Wiki_Handler();
+			return self::$jisonParser->parse($data);
 		}
 
 		// if simple_wiki is true, disable some wiki syntax
