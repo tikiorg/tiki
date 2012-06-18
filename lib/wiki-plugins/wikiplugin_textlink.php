@@ -30,18 +30,12 @@ function wikiplugin_textlink($data, $params)
     global $page;
 	
 	$params = array_merge(array("clipboarddata" => ""), $params);
-	extract($params, EXTR_SKIP);
 	
-	$clipboarddata = json_decode(stripslashes(trim(urldecode($clipboarddata))));
+	$clipboarddata = json_decode(stripslashes(trim(urldecode($params['clipboarddata']))));
+
 	if (empty($clipboarddata)) return $data;
 
-	$textlinkMetadata = (object)Feed_ForwardLink_Metadata::pageTextLink($page, $data);
-	Feed_ForwardLink_Send::add(
-		(object)array(
-			"forwardlink"=> $clipboarddata,
-			"textlink"=> (object)$textlinkMetadata->raw
-		)
-	);
+	Feed_TextLink::add($clipboarddata, $page, $data);
 
     return $data;
 }

@@ -12,6 +12,7 @@ Class Feed_ForwardLink extends Feed_Abstract
 	var $isFileGal = true;
 	var $debug = false;
 	var $page = '';
+	var $metadata = array();
 
 	function __construct($page)
 	{

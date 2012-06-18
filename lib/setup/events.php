@@ -126,6 +126,7 @@ function tiki_wiki_view_forwardlink($args)
 	Feed_ForwardLink_Receive::wikiView($args);
 	Feed_ForwardLink_PageLookup::wikiView($args);
 	Feed_ForwardLink::wikiView($args);
+	Feed_TextLink::wikiView($args);
 	Feed_ForwardLink_Send::wikiView($args);
 }
 

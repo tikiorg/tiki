@@ -131,8 +131,12 @@ abstract class Feed_Abstract
 	}
 	
 	function appendToContents(&$contents, $items)
-	{	
-		$contents->entry[] = $items->feed->entry;
+	{
+		if (isset($items->feed->entry)) {
+			$contents->entry[] = $items->feed->entry;
+		} elseif (isset($items)) {
+			$contents->entry[] = $items;
+		}
 	}
 	
 	public function addItem($item)
@@ -149,10 +153,10 @@ abstract class Feed_Abstract
 		}
 		
 		$item = (object)$item;
-		
+
 		//this allows us to intercept the contents and do things like check the validity of the content being appended to the contents	
 		$this->appendToContents($contents, $item);
-		
+
 		$this->save($contents);
 		
 		return $this;
