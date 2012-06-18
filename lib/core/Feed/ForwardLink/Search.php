@@ -51,8 +51,8 @@ JQ
 		}
 
 		if ($version != $newestRevision['version']) {
-			//header('Location: ' . TikiLib::tikiUrl() . 'tiki-pagehistory.php?page=' . $newestRevision['page'] . '&preview=' . $newestRevision['version'] . '&nohistory');
-			//exit();
+			header('Location: ' . TikiLib::tikiUrl() . 'tiki-pagehistory.php?page=' . $newestRevision['page'] . '&preview=' . $newestRevision['version'] . '&nohistory');
+			exit();
 		}
 	}
 	
