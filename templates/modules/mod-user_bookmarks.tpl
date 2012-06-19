@@ -1,6 +1,8 @@
 {* $Id$ *}
 
 {if $user and $tiki_p_create_bookmarks eq 'y'}
+{tikimodule error=$module_params.error title=$tpl_module_title name="user_bookmark" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}
+
 {if !isset($tpl_module_title)}{assign var=tpl_module_title value="<a href=\"tiki-user_bookmarks.php\">{tr}Bookmarks{/tr}</a>"}{/if}
 
 <ul>
