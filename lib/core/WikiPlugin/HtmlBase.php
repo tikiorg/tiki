@@ -18,9 +18,7 @@ abstract class WikiPlugin_HtmlBase
 	var $filter = 'rawhtml_unsafe';
 	var $icon = 'img/icons/mime/html.png';
 	var $tags = array( 'basic' );
-	var $params = array(
-
-	);
+	var $params = array();
 	var $htmlTagType = 'div';
 	var $hasHtmlBody = true;
 	var $htmlAttributes = array();

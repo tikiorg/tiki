@@ -3,7 +3,7 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: wikiplugin_html.php 40030 2012-03-04 12:55:30Z gezzzan $
+// $Id$
 
 class WikiPlugin_oohtml extends WikiPlugin_HtmlBase
 {
