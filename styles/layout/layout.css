@@ -1206,13 +1206,13 @@ ul.floatleft li {
 }
 
 #col1  #jtrack-content, #col1 #jtrack-form-create, #col1 #jtrack-form-list, #col1  #jtrack-form-update, #col1  #jtrack-form-remove, #col1  #jtrack-form-remove-all {
-  height:550px;
+  height:450px;
 }
 #timeSheetSaved, #timesheetSpreadsheet  {
-  height:600px !important;
+  height:500px !important;
 }
 #timeSheetTabs {
-  height:700px !important;
+  height:600px !important;
 }
 
 #right_modules #jtrack-bar, #left_modules #jtrack-bar, #right_modules .jtrack-item, #left_modules .jtrack-item {
