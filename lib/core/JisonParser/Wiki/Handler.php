@@ -17,15 +17,17 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	var $pluginEntries = array();
 	public static $pluginsExecutedStack = array();
 	public static $plugins = array();
+	var $pluginsAwaitingExecution = array();
+	var $parserLevel;
 
 	/* np tracking */
 	var $npEntries = array();
 	var $npCount = 0;
 
 	/* header tracking */
-	public static $headerStack = array();
-	public static $hdrCount = 0;
-
+	var $headerStack = array();
+	var $headerCount = 0;
+	var $headerIdCount = 0;
 
 	//This var is used in both protectSpecialChars and unprotectSpecialChars to simplify the html ouput process
 	var $specialChars = array(
@@ -125,9 +127,10 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 			if (empty(self::$option)) $this->setOption();
 
 			$this->preParse($input);
-			$result = parent::parse($input);
-			$this->postParse($result);
 
+			$result = parent::parse($input);
+
+			$this->postParse($result);
 			$this->parsing = false;
 		}
 
@@ -297,7 +300,19 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		$className = 'WikiPlugin_' . $name;
 		if (class_exists($className)) {
 			$class = new $className;
-			return $class->exec($body, $args, self::$pluginsExecutedStack[$name], $this);
+			if (isset($class->parserLevel) && $class->parserLevel > $this->parserLevel) {
+				if(!isset($this->pluginsAwaitingExecution[$class->parserLevel])) $this->pluginsAwaitingExecution[$class->parserLevel] = array();
+				$this->pluginsAwaitingExecution[$class->parserLevel][] = array(
+					"name" => $name,
+					"args" => $args,
+					"body" => $body,
+					"key" => $key
+				);
+
+				return $key;
+			} else {
+				return $class->exec($body, $args, self::$pluginsExecutedStack[$name], $this);
+			}
 		}
 
 		$fnName = strtolower('wikiplugin_' .  $name);
@@ -604,6 +619,14 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 
 			if (!$keep) {
 				unset($this->pluginEntries[$key]);
+			}
+		}
+
+		sort($this->pluginsAwaitingExecution, SORT_NUMERIC);
+		foreach($this->pluginsAwaitingExecution as $level) {
+			$this->parserLevel = $level;
+			foreach($level as $pluginDetails) {
+				$input = str_replace($pluginDetails['key'], $this->parsePlugin($this->pluginExecute($pluginDetails['name'],$pluginDetails['args'],$pluginDetails['body'],$pluginDetails['key'])), $input);
 			}
 		}
 	}
@@ -935,11 +958,20 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 
 		$content = substr($content, $hNum - 1);
 
-		self::$headerStack[] = $content;
+		$id = implode('_', JisonParser_Phraser_Handler::sanitizeToWords($content));
+
+		if (isset($this->headerIdCount[$id])) {
+			$this->headerIdCount[$id]++;
+			$id .= $this->headerIdCount[$id];
+		} else {
+			$this->headerIdCount[$id] = 0;
+		}
+
+		$this->headerStack[$id] = $content;
 
 		if (self::$option['parseWiki'] == false) return str_repeat("!", $hNum) . $content;
 
-		return $this->headerButton($hNum) . '<h' . $hNum . '>' . $content . '</h' . $hNum . '>';
+		return $this->headerButton($hNum) . '<h' . $hNum . ' class="showhide_heading" id="' . $id . '">' . $content . '</h' . $hNum . '>';
 	}
 
 	function headerButton($hNum)
@@ -971,9 +1003,9 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 				$button .= 'page='.urlencode($_REQUEST['page']).'&amp;';
 			}
 
-			self::$hdrCount++;
+			$this->headerCount++;
 			include_once('lib/smarty_tiki/function.icon.php');
-			$button .= 'hdr=' . self::$hdrCount . '">'.smarty_function_icon(array('_id'=>'page_edit_section', 'alt'=>tra('Edit Section')), $smarty).'</a></div>';
+			$button .= 'hdr=' . $this->headerCount . '">'.smarty_function_icon(array('_id'=>'page_edit_section', 'alt'=>tra('Edit Section')), $smarty).'</a></div>';
 
 			return $button;
 		}

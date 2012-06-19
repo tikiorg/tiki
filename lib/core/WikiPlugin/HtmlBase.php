@@ -27,6 +27,8 @@ abstract class WikiPlugin_HtmlBase
 
 	var $np = true;
 
+	var $parserLevel = 0;
+
 	static $style = array(
 		'@keyframes' => '',
 		'animation' => '',
