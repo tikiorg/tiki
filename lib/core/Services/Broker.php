@@ -71,9 +71,13 @@ class Services_Broker
 			exit;
 		}
 
+		$smarty = TikiLib::lib('smarty');
+
 		$template = "$controller/$action.tpl";
 
-		$smarty = TikiLib::lib('smarty');
+		if ($smarty->templateExists($template) == false) return "";
+
+
 		$access = TikiLib::lib('access');
 		foreach ($output as $key => $value) {
 			$smarty->assign($key, $value);
