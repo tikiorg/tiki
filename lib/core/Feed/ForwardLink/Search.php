@@ -29,6 +29,8 @@ class Feed_ForwardLink_Search
 			return;
 		}
 
+		if (empty($phrase)) return;
+
 		$newestRevision = self::findWikiRevision($phrase);
 
 		if ($newestRevision == false) {
