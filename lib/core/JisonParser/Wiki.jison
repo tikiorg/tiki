@@ -314,7 +314,7 @@ SMILE							[a-z]+
         //php $this->popState();
         //php return 'EOF';
 	%}
-<link>("]")
+<link>"]"
 	%{
 		if (parser.isPlugin()) return 'CONTENT'; //js
 		lexer.popState(); //js
@@ -324,7 +324,7 @@ SMILE							[a-z]+
 		//php $this->popState();
 		//php return 'LINK_END';
 	%}
-("[")
+"["
 	%{
 		if (parser.isPlugin()) return 'CONTENT'; //js
 		lexer.begin('link'); //js
@@ -466,7 +466,7 @@ SMILE							[a-z]+
 		//php if ($this->isPlugin()) return 'CONTENT';
 		//php $this->unput('))');
 	%}
-<wikilink>[)][)]
+<wikilink>"))"
 	%{
 		if (parser.isPlugin()) return 'CONTENT'; //js
 		lexer.popState(); //js
@@ -476,7 +476,7 @@ SMILE							[a-z]+
 		//php $this->popState();
 		//php return 'WIKILINK_END';
 	%}
-[(][(]
+"(("
 	%{
 		if (parser.isPlugin()) return 'CONTENT'; //js
 		lexer.begin('wikilink'); //js

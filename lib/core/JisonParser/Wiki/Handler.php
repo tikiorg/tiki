@@ -1159,14 +1159,10 @@ $("#' . $id . '").click( function(event) {
 		if (self::$option['parseWiki'] == false) return "((" . $content . "))";
 
 		$wikilink = explode('|', $content);
-		$href = $content;
+		$href = (isset($wikilink[0]) ? $wikilink[0] : $content);
+		$text = (isset($wikilink[1]) ? $wikilink[1] : $href);
 
-		if ($this->match('/\|/', $content)) {
-			$href = $wikilink[0];
-			$content = $wikilink[1];
-		}
-
-		return '<a href="' . $href . '">' . $content . '</a>';
+		return '<a href="tiki-index.php?page=' . $href . '">' . $text . '</a>';
 	}
 
 	//unified functions used inside parser
