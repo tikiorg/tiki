@@ -995,7 +995,7 @@ class WikiLib extends TikiLib
 				$plugins = array();
 				foreach ($list as $name) {
 					$pinfo['help'] = $this->get_plugin_description($name, $enabled, $area_id);
-					$pinfo['name'] = strtoupper($name);
+					$pinfo['name'] = TikiLib::strtoupper($name);
 
 					if ( $enabled )
 						$plugins[] = $pinfo;
@@ -1062,7 +1062,7 @@ class WikiLib extends TikiLib
 
 			$smarty->assign('area_id', $area_id);
 			$smarty->assign('plugin', $ret);
-			$smarty->assign('plugin_name', strtoupper($name));
+			$smarty->assign('plugin_name', TikiLib::strtoupper($name));
 			return $smarty->fetch('tiki-plugin_help.tpl');
 		}
 	}

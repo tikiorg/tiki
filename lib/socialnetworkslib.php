@@ -387,7 +387,7 @@ class SocialNetworksLib extends LogsLib
 			$action .= "?$data";
 		}
 
-		$request = "$method $action HTTP/1.1\r\n".
+		$request = "$method /$action HTTP/1.1\r\n".
 			"Host: graph.facebook.com\r\n".
 			"Accept: */*\r\n".
 			"Expect: 100-continue\r\n".

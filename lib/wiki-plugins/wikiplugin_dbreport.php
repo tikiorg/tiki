@@ -1026,7 +1026,7 @@ function wikiplugin_dbreport_parse(&$code)
 							return $parse_report;
     						break;
 						case 'key':
-							switch(strtoupper($token->content)) {
+							switch(TikiLib::strtoupper($token->content)) {
 								case 'SQL':
 									$parse_state = 1;	// switch state
 									unset($next_token);	// consume the token
@@ -1152,7 +1152,7 @@ function wikiplugin_dbreport_parse(&$code)
 							unset($next_token);		// consume the token
     						break;
 						case 'key':
-							switch(strtoupper($token->content)) {
+							switch(TikiLib::strtoupper($token->content)) {
 								case '<':
 									unset($parse_link);
 									$parse_link = new WikipluginDBReportLink($token);	// create the link object
@@ -1183,7 +1183,7 @@ function wikiplugin_dbreport_parse(&$code)
 		 					unset($next_token);		// consume the token
 		    				break;
 						case 'key':
-							switch(strtoupper($token->content)) {
+							switch(TikiLib::strtoupper($token->content)) {
 								case 'HEADER':
 									unset($parse_line);
 									$parse_line = new WikipluginDBReportLine();
@@ -1255,7 +1255,7 @@ function wikiplugin_dbreport_parse(&$code)
 							unset($next_token);		// consume the token
 			    			break;
 						case 'key':
-							switch(strtoupper($token->content)) {
+							switch(TikiLib::strtoupper($token->content)) {
 								case '<':
 									return wikiplugin_dbreport_parse_error($token, "Unexpected '<' in Link. '>' expected.");
 								case '>':
@@ -1280,7 +1280,7 @@ function wikiplugin_dbreport_parse(&$code)
 							unset($next_token);		// consume the token
 		    				break;
 						case 'key':
-							switch(strtoupper($token->content)) {
+							switch(TikiLib::strtoupper($token->content)) {
 								case 'CELL':
 									unset($parse_cell);
 									$parse_cell = new WikipluginDBReportCell();
@@ -1332,7 +1332,7 @@ function wikiplugin_dbreport_parse(&$code)
 							unset($next_token);		// consume the token
 	    					break;
 						case 'key':
-							switch(strtoupper($token->content)) {
+							switch(TikiLib::strtoupper($token->content)) {
 								case '<':
 									unset($parse_link);
 									$parse_link = new WikipluginDBReportLink($token);	// create the link object
@@ -1399,7 +1399,7 @@ function wikiplugin_dbreport_parse(&$code)
  							unset($next_token);		// consume the token
     						break;
 						case 'key':
-							switch(strtoupper($token->content)) {
+							switch(TikiLib::strtoupper($token->content)) {
 								case '<':
 									unset($parse_link);
 									$parse_link = new WikipluginDBReportLink($token);	// create the link object
@@ -1438,7 +1438,7 @@ function wikiplugin_dbreport_parse(&$code)
 							unset($next_token);		// consume the token
 				    		break;
 						case 'key':
-							switch(strtoupper($token->content)) {
+							switch(TikiLib::strtoupper($token->content)) {
 								case '<':
 									unset($parse_link);
 									$parse_link = new WikipluginDBReportLink($token);	// create the link object

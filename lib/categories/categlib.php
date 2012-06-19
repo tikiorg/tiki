@@ -1612,8 +1612,8 @@ class CategLib extends ObjectLib
 
 	static function cmpcatname($a, $b)
 	{
-		$a = strtoupper(TikiLib::take_away_accent($a));
-		$b = strtoupper(TikiLib::take_away_accent($b));
+		$a = TikiLib::strtoupper(TikiLib::take_away_accent($a));
+		$b = TikiLib::strtoupper(TikiLib::take_away_accent($b));
 		return strcmp($a, $b);
 	}
 

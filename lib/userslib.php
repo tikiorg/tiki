@@ -205,7 +205,7 @@ class UsersLib extends TikiLib
 		static $rv = array();
 		if (!isset($rv[$user])) {
 			$query = 'select count(*) from `users_users` where upper(`login`) = ?';
-			$result = $this->getOne($query, array(strtoupper($user)));
+			$result = $this->getOne($query, array(TikiLib::strtoupper($user)));
 			$rv[$user] = $result;
 		}
 		return $rv[$user];
@@ -213,7 +213,7 @@ class UsersLib extends TikiLib
 	function get_user_real_case($user)
 	{
 		$query = 'select `login` from `users_users` where upper(`login`) = ?';
-		return $this->getOne($query, array(strtoupper($user)));
+		return $this->getOne($query, array(TikiLib::strtoupper($user)));
 	}
 
 	function group_exists($group)
@@ -553,8 +553,8 @@ class UsersLib extends TikiLib
 			$shibproviderid = $_SERVER['HTTP_SHIB_IDENTITY_PROVIDER'];
 
 			// Get the affiliation information to log in
-			$shibaffiliarray = preg_split('/;/', strtoupper($shibaffiliation));
-			$validaffiliarray = preg_split('/,/', strtoupper($prefs['shib_affiliation']));
+			$shibaffiliarray = preg_split('/;/', TikiLib::strtoupper($shibaffiliation));
+			$validaffiliarray = preg_split('/,/', TikiLib::strtoupper($prefs['shib_affiliation']));
 			$validafil = false;
 
 			foreach ($shibaffiliarray as $affil) {
@@ -1398,7 +1398,7 @@ class UsersLib extends TikiLib
 
 		if (!$result->numRows()) {
 			$query = 'select * from `users_users` where upper(`login`) = ?';
-			$result = $this->query($query, array(strtoupper($user)));
+			$result = $this->query($query, array(TikiLib::strtoupper($user)));
 
 			switch ($result->numRows()) {
 				case 0:
