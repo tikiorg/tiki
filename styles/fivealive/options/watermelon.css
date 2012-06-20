@@ -1,6 +1,6 @@
 /* $Id$ 
-	Watermelon theme option for FiveAlive theme for
-	TikiWiki CMS/Groupware.
+	Watermelon theme option for FiveAlive themes for
+	Tiki Wiki CMS Groupware.
 */
 
 a,
@@ -30,7 +30,7 @@ hr {
 	color: #c31e3b;
 }
 
-.header_outer {
+#main .header_outer {
 	background: url(watermelon/siteheadertile.png) 0 0 no-repeat;
 }
 
@@ -110,6 +110,11 @@ span#genPass .button a:hover,
 	background: #8c1832;
 }
 
+#tiki-top .cssmenu_horiz li a {
+	background: url(watermelon/siteheader.png) no-repeat -600px -40px;
+}
+
+#tiki-top .cssmenu_horiz li a:hover,
 .cssmenu_vert li ul a:hover,
 .cssmenu_horiz li ul a:hover,
 .header .cssmenu_horiz li ul a:hover,
@@ -176,6 +181,11 @@ tr.diffheader a:visited,
 
 .simplebox {
 	border: 2px solid #c31e3b;
+}
+
+h3.box-title,
+.postbody-title {
+	background: #e41e40 url(watermelon/siteheader.png) no-repeat -1000px -200px;
 }
 
 .adminanchors {
@@ -256,9 +266,24 @@ form.admin fieldset,
 	background: #e31e40 url(watermelon/siteheader.png) -550px -90px no-repeat;
 }
 
+.postbody-title > br {
+	display: none;
+}
+
 .post .author,
 .dirsite {
 	background: #f6cdd2;
+}
+
+.postbody-content {
+	border: 1px solid #e41e40;
+	border-top: none;
+}
+
+.post .author {
+	border: 1px solid #e41e40;
+	border-top: none;
+	border-bottom: none;
 }
 
 /* cluptip tooltips */

@@ -1,5 +1,5 @@
 /* $Id$ 
-	Plum theme option for FiveAlive theme of	Tiki Wiki CMS Groupware.
+	Plum theme option for FiveAlive themes for Tiki Wiki CMS Groupware.
 */
 
 a,
@@ -28,7 +28,7 @@ hr {
 	color: #7a04b5;
 }
 
-.header_outer {
+#main .header_outer {
 	background: url(plum/siteheadertile.png) 0 0 no-repeat;
 }
 
@@ -108,6 +108,11 @@ input[type="submit"]:hover,
 	background: #49006c;
 }
 
+#tiki-top .cssmenu_horiz li a {
+	background: url(plum/siteheader.jpg) no-repeat -600px -40px;
+}
+
+#tiki-top .cssmenu_horiz li a:hover,
 .cssmenu_vert li ul a:hover,
 .cssmenu_horiz li ul a:hover,
 .header .cssmenu_horiz li ul a:hover,
@@ -165,6 +170,11 @@ textarea,
 
 .simplebox {
 	border: 2px solid #c564f5;
+}
+
+h3.box-title,
+.postbody-title {
+	background: #1c0029 url(plum/siteheader.jpg) no-repeat -1000px -200px;
 }
 
 .adminanchors {
@@ -242,9 +252,24 @@ form.admin fieldset,
 	background: #320143 url(plum/siteheader.jpg) -550px -90px no-repeat;
 }
 
+.postbody-title > br {
+	display: none;
+}
+
 .post .author,
 .dirsite {
 	background: #efcaf5;
+}
+
+.postbody-content {
+	border: 1px solid #1c0029;
+	border-top: none;
+}
+
+.post .author {
+	border: 1px solid #1c0029;
+	border-top: none;
+	border-bottom: none;
 }
 
 /* cluptip tooltips */

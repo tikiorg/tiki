@@ -1,6 +1,5 @@
 /* $Id$
-	FiveAlive theme (fivealive.css) for Tiki Wiki CMS/Groupware.
-	Adapted for Tiki 7.x
+	FiveAlive theme (fivealive.css) for Tiki Wiki CMS Groupware.
 	Visit http://themes.tiki.org for more information.
 	*
 */
@@ -705,11 +704,10 @@ li.login_link ul li a {
 /* default and topbar dropdown typography (colors) and padding */
 .cssmenu_vert li ul a,
 .cssmenu_horiz li ul a,
-.cssmenu_horiz li ul a,
 .box-menu .cssmenu_horiz li ul a,
 .box-menu .cssmenu_horiz li:hover ul a,
-#topbar_modules .cssmenu_horiz li ul a,
-#topbar_modules .cssmenu_horiz li:hover ul a {
+#main #topbar_modules .cssmenu_horiz li ul a,
+#main #topbar_modules .cssmenu_horiz li:hover ul a {
 	background: #153c64;
 	font-weight: normal;
 	text-decoration: none;
@@ -752,13 +750,13 @@ li.login_link ul li a {
 	margin-left: -.5em;
 }
 
-#tiki-top .cssmenu_horiz li a {
+#main #tiki-top .cssmenu_horiz li a {
 	font-size: 13px;
 	padding: 17px 1em 15px;
 	background: url(fivealive/menu_divider.png) 100% 50% no-repeat;
 }
 
-#tiki-top .cssmenu_horiz li a:hover {
+#main #tiki-top .cssmenu_horiz li a:hover {
 	background: #1d1d1d;
 }
 
@@ -774,7 +772,7 @@ li.login_link ul li a {
 	top: 0;
 }
 
-#tiki-top .cssmenu_horiz li.menuSection a {
+#main #tiki-top .cssmenu_horiz li.menuSection a {
 	padding-right: 30px;
 }
 
@@ -870,6 +868,10 @@ img.icon {
 }
 
 /***** Boxes *****/
+#main h3.box-title {
+	background: none;
+}
+
 .cbox {
 	border: none;
 	background: #d6f3fa;
@@ -1164,16 +1166,18 @@ body.tiki_cms h1 a.pagetitle:hover {border-bottom: 0}
 	padding: 0;
 }
 
-.post .author,
+.post .postbody .author,
 .dirsite {
 	background: #c2eef8;
 	float: none;
 	margin: 0 0 6px;
 	text-align: left;
+	border: none;
 }
 
-.postbody-content {
+.postbody .postbody-content {
 	margin: 0;
+	border: none;
 }
 
 .post .postfooter {

@@ -1,5 +1,5 @@
 /* $Id$ 
-	Raspberry theme option for FiveAlive theme for
+	Raspberry theme option for FiveAlive themes for
 	Tiki Wiki CMS Groupware.
 */
 
@@ -30,7 +30,7 @@ hr {
 	background: #f6cae2;
 }
 
-.header_outer {
+#main .header_outer {
 	background: url(raspberry/siteheadertile.png) 900px 0 no-repeat;
 }
 
@@ -110,6 +110,11 @@ span#genPass span.button a:hover,
 	background: #771437;
 }
 
+#tiki-top .cssmenu_horiz li a {
+	background: url(raspberry/siteheader.png) no-repeat -600px -40px;
+}
+
+#tiki-top .cssmenu_horiz li a:hover,
 .cssmenu_vert li ul a:hover,
 .cssmenu_horiz li ul a:hover,
 .header .cssmenu_horiz li ul a:hover,
@@ -166,6 +171,11 @@ textarea,
 
 .simplebox {
 	border: 2px solid #d40b75; 
+}
+
+h3.box-title,
+.postbody-title {
+	background: #e10c7c url(raspberry/siteheader.png) no-repeat -1000px -200px;
 }
 
 .adminanchors {
@@ -244,14 +254,26 @@ form.admin fieldset,
 	border-left: 8px solid #f6cae2;
 }
 
-.postbody-title {
-	background: #df0c7a url(raspberry/header.png) -650px -90px;
+.postbody-title > br {
+	display: none;
 }
 
 .post .author,
 .dirsite {
 	background: #f6cae2;
 }
+
+.postbody-content {
+	border: 1px solid #df0c7a;
+	border-top: none;
+}
+
+.post .author {
+	border: 1px solid #df0c7a;
+	border-top: none;
+	border-bottom: none;
+}
+
 
 /* cluptip tooltips */
 

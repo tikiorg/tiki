@@ -1,6 +1,6 @@
 /* $Id$ 
-	Akebi theme option for Fivealive theme for
-	TikiWiki CMS/Groupware.
+	Akebi theme option for Fivealive themes for
+	Tiki Wiki CMS Groupware.
 */
 
 a,
@@ -30,7 +30,7 @@ hr {
 	background: #18a3bb;
 }
 
-.header_outer {
+#main .header_outer {
 	background: url(akebi/siteheadertile.jpg) 0 0 no-repeat;
 }
 
@@ -107,8 +107,14 @@ input[type="submit"]:hover,
 #topbar_modules .cssmenu_horiz li ul a,
 #topbar_modules .cssmenu_horiz li:hover ul a {
 	background: #005064;
+	color: #fff;
 }
 
+#tiki-top .cssmenu_horiz li a {
+	background: url(akebi/siteheader.png) no-repeat -600px -40px;
+}
+
+#tiki-top .cssmenu_horiz li a:hover,
 .cssmenu_vert li ul a:hover,
 .cssmenu_horiz li ul a:hover,
 .header .cssmenu_horiz li ul a:hover,
@@ -164,9 +170,13 @@ textarea,
 	border-bottom: 3px solid #18a3bb;
 }
 
-
 .simplebox {
 	border: 2px solid #18a3bb;
+}
+
+h3.box-title,
+.postbody-title {
+	background: #0f91a2 url(akebi/siteheader.png) no-repeat -700px -200px;
 }
 
 .adminanchors {
@@ -240,13 +250,24 @@ form.admin fieldset,
 	border-left: 8px solid #cbf4f6;
 }
 
-.postbody-title {
-	background: #169fb5 url(akebi/siteheader.png) -550px -90px no-repeat;
+.postbody-title > br {
+	display: none;
 }
 
 .post .author,
 .dirsite {
 	background: #77d6e5;
+}
+
+.postbody-content {
+	border: 1px solid #0f91a2;
+	border-top: none;
+}
+
+.post .author {
+	border: 1px solid #0f91a2;
+	border-top: none;
+	border-bottom: none;
 }
 
 /* cluptip tooltips */
