@@ -59,7 +59,7 @@ class Reports_Send
 		$this->mail->buildMessage();
 		$this->mail->send(array($userData['email']));
 		
-		//$prefs['language'] = $lgSave;  //Restore language settings
+		$prefs['language'] = $lgSave;  //Restore language settings
 	}
 		
 	protected function setSubject($reportCache)
