@@ -97,7 +97,7 @@ class Tracker_Field_UserSelector extends Tracker_Field_Abstract implements Track
 		
 		$value = $this->getConfiguration('value');
 		$autoassign = (int) $this->getOption(0);
-		if (empty($value) && ($autoassign == 1 || $autoassign == 2)) {
+		if ((empty($value) && $autoassign == 1) || $autoassign == 2) {	// always use $user for last mod autoassign
 			$value = $user;
 		}
 		if ($autoassign == 0 || $tiki_p_admin_trackers === 'y') {
