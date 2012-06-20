@@ -162,7 +162,11 @@ function smarty_function_html_select_time($params, $smarty)
 			$minutes[] = 59;
 		}
 
-		$minute = strftime('%M', $time);
+		if ($time !== '--') {
+			$minute = strftime('%M', $time);
+		} else {
+			$minute = '00';
+		}
 		if (in_array($minute, $minutes) == false) {
 			for ($i = 0, $for_max = count($minutes); $i < $for_max; $i++ ) {
 				if (
