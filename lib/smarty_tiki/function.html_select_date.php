@@ -252,8 +252,8 @@ function smarty_function_html_select_date($params, $smarty)
 		$field_separator_count++;
 		$days = array();
 		if (isset($day_empty)) {
-			$days[''] = $day_empty;
-			$day_values[''] = '';
+			$days[''] = '';
+			$day_values[''] = $day_empty;
 		}
 		for ($i = 1; $i <= 31; $i++) {
 			$days[] = sprintf($day_format, $i);
