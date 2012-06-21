@@ -2463,6 +2463,16 @@ div.aclabel, span.aclabel, label.aclabel {
 	width: 100% ! important;
 }
 
+.TextArea-fullscreen #editwiki {
+	width: 100% ! important;
+	height: inherit ! important;
+}
+
+.TextArea-fullscreen .ui-wrapper {
+	width: 100% ! important;
+	height: inherit ! important;
+}
+
 .TextArea-fullscreen  textarea {
 	width: inherit ! important;
 }
@@ -2478,7 +2488,7 @@ div.aclabel, span.aclabel, label.aclabel {
 	width: 100%;
 	top: 0px ! important;
 	left: 0px ! important;
-	position: fixed;
+	position: fixed ! important;
 	top: expression(eval(document.body.scrollTop + 15) + "px");
 	/*left: expression(eval(document.body.scrollLeft) + "px");*/
 	background-color: gray;
