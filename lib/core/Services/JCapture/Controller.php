@@ -23,7 +23,7 @@ class Services_JCapture_Controller
 
 	function action_capture($input)
 	{
-		global $base_host, $url_scheme, $url_path, $prefs, $user;
+		global $base_host, $url_scheme, $url_path, $prefs, $user, $tikiroot;
 		$smarty = TikiLib::lib('smarty');
 
 		$area = $input->area->text();
@@ -38,13 +38,16 @@ class Services_JCapture_Controller
 			$smarty->assign('ie_applet_attrs', 'classid="clsid:8AD9C840-044E-11D1-B3E9-00805F499D93" codebase="http://java.sun.com/update/1.6.0/jinstall-6u22-windows-i586.cab"');
 		}
 
-		$uploader = 'tiki-jcapture-upload';		// TODO handle non-sefurl url
+		$uploader = $tikiroot . 'tiki-ajax_services.php';
 
 		$tokenlib = AuthTokens::build($prefs);
 		$groups = TikiLib::lib('user')->get_user_groups($user);
-		$token = $tokenlib->createToken($uploader, array('user' => $user), $groups, array('hits' => 1));
+		$parameters = array('user' => $user, 'controller' => 'jcapture','action' => 'upload');
+		$token = $tokenlib->createToken($uploader, $parameters, $groups, array('hits' => 1));
+		$parameters['TOKEN'] = $token;
+		$uploader .= '?' . http_build_query($parameters, '', '&');
 
-		$smarty->assign('doku_base', bin2hex($url_path));
+		$smarty->assign('doku_base', '');
 		$smarty->assign('sectok', $token);
 		$smarty->assign('cookies', $cookies);
 		$smarty->assign('host', $url_scheme === 'http' ? $base_host . ':80' : $base_host);
@@ -57,17 +60,23 @@ class Services_JCapture_Controller
 	}
 
 	function action_upload($input) {
-		global $user, $tiki_p_upload_files, $prefs;
+		global $prefs, $is_token_access;
 
 		$tok = $input->sectok->text();
-		$_REQUEST['TOKEN'] = $tok;
 		$tokenlib = AuthTokens::build($prefs);
 		$token = $tokenlib->getToken($tok);
-		if (!$token) {
+		if (!$is_token_access) {
 			throw new Services_Exception_NotAvailable(tr('Not authorised: ') . $tok);
 		}
 
 		$fileController = new Services_File_Controller();
+
+		$input->offsetSet('size',  $_FILES['Filedata']['size']);
+		$input->offsetSet('name', $_FILES['Filedata']['name']);
+		$input->offsetSet('type', $_FILES['Filedata']['type']);
+		if (is_uploaded_file($_FILES['Filedata']['tmp_name'])) {
+			$input->offsetSet('data', base64_encode(file_get_contents($_FILES['Filedata']['tmp_name'])));
+		}
 		$ret = $fileController->action_upload($input);
 
 		return $ret;
