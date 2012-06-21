@@ -51,7 +51,7 @@ class Services_File_Controller
 			'name' => $name,
 			'type' => $type,
 			'fileId' => $fileId,
-			'galleryId' => $galleryId,
+			'galleryId' => $gal_info['galleryId'],
 			'md5sum' => md5($data),
 		);
 	}
