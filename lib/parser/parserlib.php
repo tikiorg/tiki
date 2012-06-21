@@ -609,7 +609,7 @@ if ( \$('#$id') ) {
 	{
 		if ($name != 'maketoc') {
 			$className = 'WikiPlugin_' . $name;
-			if (class_exists($className)) return true;
+			if (class_exists($className, false)) return true;
 		}
 		$php_name = 'lib/wiki-plugins/wikiplugin_';
 		$php_name .= TikiLib::strtolower($name) . '.php';
@@ -641,7 +641,7 @@ if ( \$('#$id') ) {
 		$className = false;
 		if ($name != 'maketoc') {
 			$className = 'WikiPlugin_' . $name;
-			$classExists = class_exists($className);
+			$classExists = class_exists($className, false);
 			if ($classExists == true) {
 				$class = new $className;
 				$known[$name] = $class->info();
@@ -1036,7 +1036,7 @@ if ( \$('#$id') ) {
 		$classExists = false;
 		if ($name != 'maketoc') {echo $name;
 			$className = 'WikiPlugin_' . $name;
-			$classExists = class_exists($className);
+			$classExists = class_exists($className, false);
 			if ($classExists == true) {
 				$class = new $className;
 			}
