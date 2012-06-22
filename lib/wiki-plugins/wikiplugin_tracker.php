@@ -498,7 +498,7 @@ function wikiplugin_tracker($data, $params)
 
 	if (!isset($_REQUEST["ok"]) || $_REQUEST["ok"]  == "n" || !$thisIsThePlugin || isset($_REQUEST['tr_preview'])) {
 		$field_errors = array('err_mandatory'=>array(), 'err_value'=>array());
-	
+
 			global $notificationlib; include_once('lib/notifications/notificationlib.php');
 			$tracker = $trklib->get_tracker($trackerId);
 			$tracker = array_merge($tracker, $trklib->get_tracker_options($trackerId));
@@ -589,12 +589,21 @@ function wikiplugin_tracker($data, $params)
 
 			// If we create multiple items, get field Ids, default values and separator
 			if (!empty($fieldsfill)) {
-				$fill_fields = preg_split('/ *: */', $fieldsfill);
+				$fill_fields = preg_split('/ *: */', $fieldsfill);	// Allow for superfluous spaces and ignore them
+				$fill_flds = array('data' => array());
 				$fill_defaults = array();
+				$fill_flds_defaults = array();	// May be different from fill_defaults if some fields are not editable
+				$fieldsfillnames = array();
 				if (trim($fieldsfilldefaults) != '') {
 					$fill_defaults = preg_split('/ *: */', $fieldsfilldefaults);
 				}
 				foreach ($fill_fields as $k=>$fieldId) {
+					if ($itemObject->canModifyField($fieldId)) {
+						$tmp = $definition->getField($fieldId);
+						$fill_flds['data'][] = $tmp;
+						if (isset($fill_defaults[$k])) {
+							$fill_flds_defaults[] = $fill_defaults[$k];
+						} else {
 					$fill_flds['data'][] = $definition->getField($fieldId);
 					if (!isset($fill_defaults[$k])) {
 						$fill_defaults[$k] = '';
@@ -742,7 +751,7 @@ function wikiplugin_tracker($data, $params)
 								if ($fill_line_item[$i] != '') {
 									$fill_item = trim($fill_line_item[$i]);
 								} else {
-									$fill_item = $fill_defaults[$i];
+									$fill_item = $fill_flds_defaults[$i];
 								}
 								$fill_rid = $trklib->modify_field($rid, $fill_flds['data'][$i]['fieldId'], $fill_item);
 							}
@@ -977,6 +986,7 @@ function wikiplugin_tracker($data, $params)
 				}
 			}
 
+			// Check that individual fields are in the tracker
 			if (!empty($fields)) {
 				$fl = preg_split('/:/', $fields);
 				if ($sort == 'y') {
@@ -991,13 +1001,29 @@ function wikiplugin_tracker($data, $params)
 						}
 					}
 					if (!$ok) {
-						$back .= tra('Incorrect fieldId:').' '.$l;
+						$back .= '<div class="error">' . tra('Incorrect fieldId:').' '.$l . '</div>';
 					}
 				}
 			} elseif (empty($fields) && empty($wiki) && empty($tpl)) {
 				// in this case outf still be blank and needs to be filled
 				foreach ($flds['data'] as $f) {
 					$outf[] = $f['fieldId'];
+				}
+			}
+
+			// Check that multiple fill fields are in the tracker
+			if (!empty($fieldsfill)) {
+				foreach ($fill_fields as $l) {	
+					$ok = false;
+					foreach ($fill_flds['data'] as $f) {
+						if ($f['fieldId'] == $l) {
+							$ok = true;
+							break;
+						}
+					}
+					if (!$ok) {
+						$back .= '<div class="error">' . tra('Incorrect fieldId:').' '.$l . '</div>';
+					}
 				}
 			}
 
@@ -1262,7 +1288,12 @@ function wikiplugin_tracker($data, $params)
 				}
 			}
 			if ( isset($params['fieldsfill']) && !empty($params['fieldsfill']) && empty($itemId) ) {
-				$back.= '<tr><td><label for="ins_fill">' . tra("Create multiple items (one per line).") . '</label>';
+				// $back.= '<tr><td><label for="ins_fill">' . tra("Create multiple items (one per line).") . '</label>';
+				$back.= '<tr><td><label for="ins_fill">' . tra("Insert one item per line:") 
+					. '<br />'
+					. '<br />'
+					. '<br />'
+					. '</label>';
 				$back.= <<<FILL
 </td><td>
 <input type="hidden" value="" name="mode_wysiwyg"/>
@@ -1272,10 +1303,11 @@ function wikiplugin_tracker($data, $params)
 </textarea >
 </div>
 <input type="hidden" value="n" name="wysiwyg"/>
-<div class="trackerplugindesc" >
+<div name="ins_fill_desc" class="trackerplugindesc" >
 FILL;
 				$back.= sprintf(tra('Each line is a list of %d field values separated with: %s'),$fill_line_cant,htmlspecialchars($fieldsfillseparator));
-				$back.= '</div></td></tr>';
+				$back .= '</div><div name="ins_fill_desc2" class="trackerplugindesc" >' . htmlspecialchars(implode($fieldsfillseparator,$fieldsfillnames)) ;
+				$back .= '</div></td></tr>';
 			}
 			if (!empty($tpl)) {
 				$smarty->security = true;
