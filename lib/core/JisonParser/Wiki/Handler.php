@@ -114,6 +114,8 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 
 	function parse($input)
 	{
+		if (empty($input)) return $input;
+
 		if ($this->parsing == true) {
 			$parser = end(self::$spareParsers);
 			if (!empty($parser) && $parser->parsing == false) {
@@ -141,16 +143,17 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	function parsePlugin($input)
 	{
 		if (self::$option['noparseplugins'] == false) {
-			$parseBreaks = self::$option['parseBreaks'];
 			$is_html = self::$option['is_html'];
 
-			$this->setOption(array('parseBreaks'=> false));
-			$this->setOption(array('is_html'=> true));
+			$this->setOption(array(
+				'is_html'=> true
+			));
 
 			$result = $this->parse($input);
 
-			$this->setOption(array('parseBreaks'=> $parseBreaks));
-			$this->setOption(array('is_html'=> $is_html));
+			$this->setOption(array(
+				'is_html'=> $is_html
+			));
 
 			return $result;
 		} else {
@@ -175,18 +178,19 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 
 		$input = rtrim(ltrim($input, "\n"), "\n"); //here we remove the fake line breaks added just before parse
 
-		if (self::$option['parseLists'] == true) {
+		if (self::$option['parseLists'] == true || strpos($input, "\n") !== false) {
 			$lines = explode("\n", $input);
 
 			$ul = '';
 			$listBeginnings = array();
+			$skipNext = true;
 			foreach($lines as &$line) {
 				if (self::$option['parseLists'] == true) {
 					$this->parseLists($line, $listBeginnings, $ul);
 				}
 
 				if (self::$option['parseBreaks'] == true) {
-					$this->parseBreaks($line);
+					$this->parseBreaks($line, $skipNext);
 				}
 			}
 			$input = implode("\n", $lines);
@@ -635,17 +639,15 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	function checkToSkipLine(&$skipLine, &$lineInLowerCase, $key, $start = "", $stop = "", $skipBefore = false, $skipAfter = false)
 	{
 		// check if we are inside a script not insert <br />
-		$opens = -1;
+		$opens = 0;
 		if (empty($start) == false) {
 			$opens = substr_count($lineInLowerCase, $start);
 		}
 
-		$closes = -1;
+		$closes = 0;
 		if (empty($stop) == false) {
 			$closes = substr_count($lineInLowerCase, $stop);
 		}
-
-		if ($opens < 0 && $closes < 0) return;
 
 		$this->parseBreaksTracking[$key] += $opens;
 		$this->parseBreaksTracking[$key] -= $closes;
@@ -663,7 +665,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		}
 	}
 
-	function parseBreaks(&$line)
+	function parseBreaks(&$line, &$skipNext)
 	{
 		$lineInLowerCase = TikiLib::strtolower($line);
 
@@ -687,15 +689,24 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		$this->checkToSkipLine($skipLine, $lineInLowerCase, 'inScript', "<script", "</script");
 
 		// check if we are inside a script not insert <br />
-		$this->checkToSkipLine($skipLine, $lineInLowerCase, 'inDiv', "<div", "</div", true, true);
+		$this->checkToSkipLine($skipLine, $lineInLowerCase, 'inDiv', "<div", "</div", false, false);
 
 		// check if we are inside a script not insert <br />
 		$this->checkToSkipLine($skipLine, $lineInLowerCase, 'inHeader', "<h", "</h", true, true);
 
 		// check if we are inside a script not insert <br />
-		$this->checkToSkipLine($skipLine, $lineInLowerCase, 'inHeader', "<br", "", true, true);
+		if (strpos($lineInLowerCase, "<h") !== false) $skipNext = true;
+
+		// check if we are inside a script not insert <br />
+		if (strpos($lineInLowerCase, "<br") !== false) $skipLine = true;
 
 		if ($skipLine == true) {
+			//we skip the line just after a header
+			return;
+		}
+
+		if ($skipNext == true) {
+			$skipNext = false;
 			//we skip the line just after a header
 			return;
 		}
@@ -1081,7 +1092,7 @@ $("#' . $id . '").click( function(event) {
 });
 ');
 			include_once('lib/smarty_tiki/function.icon.php');
-			return '~np~<div><a id="' .$id. '" class="editplugin"'.$iconDisplayStyle.'>'.smarty_function_icon(array('_id'=>'wiki_plugin_edit', 'alt'=>tra('Edit Plugin').':'.$name), $smarty)."</a>~/np~";
+			return '~np~<a id="' .$id. '" class="editplugin"'.$iconDisplayStyle.'>'.smarty_function_icon(array('_id'=>'wiki_plugin_edit', 'alt'=>tra('Edit Plugin').':'.$name), $smarty)."</a>~/np~";
 		}
 
 		return '';
