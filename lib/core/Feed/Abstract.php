@@ -26,7 +26,8 @@ abstract class Feed_Abstract
 		} else {
 			$name = str_replace("http://", "", $name);
 			$name = str_replace("https://", "", $name);
-			$name = array_shift(explode('/', $name));
+			$name = explode('/', $name);
+			$name = array_shift($name);
 		}
 
 		$this->name = $this->type . "_" . $name;
