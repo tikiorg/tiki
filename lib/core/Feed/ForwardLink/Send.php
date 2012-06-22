@@ -8,32 +8,36 @@
 Class Feed_ForwardLink_Send extends Feed_Abstract
 {
 	var $type = "forwardlink_protocol_send";
-	var $version = '0.1';
+	var $version = 0.1;
 	var $isFileGal = false;
-	var $debug = false;
+	var $debug = true;
 
 	static function wikiView()
 	{
 		$me = new self();
-		($me->send());
+		if ($me->debug == true) {
+			print_r($me->send());
+		} else {
+			$me->send();
+		}
 	}
 
-	public static function send()
+	public function send()
 	{
-		global $tikilib;
 		$me = new self("global");
 		$sent = array();
 		$textlink = new Feed_TextLink();
 		$feed = $textlink->feed();
+		$alreadyRanHrefs = array();
 
 		$items = array();
 		//we send something only if we have something to send
-		if (!empty($feed->feed->entry)) {
+		if (empty($feed->feed->entry) == false) {
 			foreach ($feed->feed->entry as &$item) {
 				if (empty($item->forwardlink->href) || isset($sent[$item->forwardlink->hash])) continue;
-				if ($me->isAlreadySent($item) == false) {
+				if ($me->isAlreadySent($item) == false && isset($alreadyRanHrefs[$item->forwardlink->href]) == false) {
 					$sent[$item->forwardlink->hash] = true;
-
+					$alreadyRanHrefs[$item->forwardlink->href] = true;
 					$client = new Zend_Http_Client($item->forwardlink->href, array('timeout' => 60));
 
 					if (!empty($feed->feed->entry)) {
@@ -60,14 +64,14 @@ Class Feed_ForwardLink_Send extends Feed_Abstract
 					            ));
 				            }
 
-				            $items[] = $result;
+				            $items[] = $resultJson;
 
 			            } catch(Exception $e) {}
 					}
 				}
 			}
 
-			return $items;
+			return $resultJson;
 		}
 	}
 
