@@ -9,6 +9,8 @@ require_once ('tiki-setup.php');
 require_once ('lib/tikilib.php');
 require_once ('lib/trackers/trackerlib.php');
 require_once ('lib/rss/rsslib.php');
+require_once ('lib/smarty_tiki/modifier.sefurl.php');
+
 if ($prefs['feed_tracker'] != 'y') {
 	$errmsg = tra("rss feed disabled");
 	require_once ('tiki-rss_error.php');
@@ -144,6 +146,7 @@ if ($output["data"] == "EMPTY") {
 		}
 		$data["id"] = $_REQUEST["$id"];
 		$data["field_values"] = null;
+		$data['sefurl'] = smarty_modifier_sefurl($data['itemId'], 'trackeritem');
 		$changes["data"][] = $data;
 		$data = null;
 	}
