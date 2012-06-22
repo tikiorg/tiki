@@ -500,12 +500,12 @@ class Tracker_Query
 					$fields_safe .= " ( search_item_fields.fieldId = ? ";
 					$params[] = $this->fields[$i];
 
-					if (strlen($this->equals[$i]) > 0) {
+					if (isset($this->equals[$i]) && strlen($this->equals[$i]) > 0) {
 						$fields_safe .= " AND search_item_fields.value = ? ";
 						$params[] = $this->equals[$i];
 					}
 
-					if (strlen($this->search[$i]) > 0) {
+					if (isset($this->search[$i]) && strlen($this->search[$i]) > 0) {
 						$fields_safe .= " AND search_item_fields.value LIKE ? ";
 						$params[] = '%' . $this->search[$i] . '%';
 					}
