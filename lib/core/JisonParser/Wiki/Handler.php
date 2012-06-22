@@ -27,7 +27,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	/* header tracking */
 	var $headerStack = array();
 	var $headerCount = 0;
-	var $headerIdCount = 0;
+	var $headerIdCount = array();
 
 	//This var is used in both protectSpecialChars and unprotectSpecialChars to simplify the html ouput process
 	var $specialChars = array(
@@ -57,6 +57,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	var $prefs;
 	var $page;
 
+	var $isHtmlPurifying = false;
 	public static $option = array();
 
 	var $optionDefaults = array(
@@ -292,13 +293,13 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	function pluginExecute($name, $args = array(), $body = "", $key)
 	{
 		$name = strtolower($name);
-		if (!isset(self::$pluginsExecutedStack[$name])) {
-			self::$pluginsExecutedStack[$name] == 0;
+		if (isset(self::$pluginsExecutedStack[$name]) == false) {
+			self::$pluginsExecutedStack[$name] = 0;
 		}
 		self::$pluginsExecutedStack[$name]++;
 
 		$className = 'WikiPlugin_' . $name;
-		if (class_exists($className)) {
+		if (@class_exists($className)) {
 			$class = new $className;
 			if (isset($class->parserLevel) && $class->parserLevel > $this->parserLevel) {
 				if(!isset($this->pluginsAwaitingExecution[$class->parserLevel])) $this->pluginsAwaitingExecution[$class->parserLevel] = array();
@@ -461,7 +462,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		}
 
 		$className = 'WikiPlugin_' . $name;
-		if (class_exists($className)) {
+		if (@class_exists($className)) {
 			$known[$name] = true;
 		}
 
@@ -631,11 +632,20 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		}
 	}
 
-	function checkToSkipLine(&$skipLine, &$lineInLowerCase, $key, $start, $stop, $skipBefore = false, $skipAfter = false)
+	function checkToSkipLine(&$skipLine, &$lineInLowerCase, $key, $start = "", $stop = "", $skipBefore = false, $skipAfter = false)
 	{
 		// check if we are inside a script not insert <br />
-		$opens = substr_count($lineInLowerCase, $start);
-		$closes = substr_count($lineInLowerCase, $stop);
+		$opens = -1;
+		if (empty($start) == false) {
+			$opens = substr_count($lineInLowerCase, $start);
+		}
+
+		$closes = -1;
+		if (empty($stop) == false) {
+			$closes = substr_count($lineInLowerCase, $stop);
+		}
+
+		if ($opens < 0 && $closes < 0) return;
 
 		$this->parseBreaksTracking[$key] += $opens;
 		$this->parseBreaksTracking[$key] -= $closes;
