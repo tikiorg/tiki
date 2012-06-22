@@ -57,7 +57,7 @@ class Feed_ForwardLink_Metadata
 		$details = $tikilib->fetchAll("SELECT lang, lastModif FROM tiki_pages WHERE pageName = ?", $page);
 		$detail = end($details);
 
-		$this->lang = $detail['lang'];
+		$this->lang = (empty($detail['lang']) ? $prefs['site_language'] : $detail['lang']);
 		$this->lastModif = $detail['lastModif'];
 		$this->websiteTitle = $prefs['browsertitle'];
 		$this->href = TikiLib::tikiUrl() . 'tiki-index.php?page=' . $page;
@@ -291,13 +291,11 @@ class Feed_ForwardLink_Metadata
 
 	public function countAll()
 	{
-		return count(
-			Tracker_Query::tracker('Wiki Attributes')
-				->byName()
-				->filterFieldByValue('Type', 'ForwardLink')
-				->render(false)
-				->query()
-		);
+		return count(Tracker_Query::tracker('Wiki Attributes')
+			->byName()
+			->filterFieldByValue('Type', 'ForwardLink Accepted')
+			->render(false)
+			->query());
 	}
 
 	public function categories()
@@ -362,6 +360,8 @@ class Feed_ForwardLink_Metadata
 
 	public function language()
 	{
+		$language = '';
+
 		foreach(TikiLib::lib("tiki")->list_languages() as $listLanguage) {
 			if ($listLanguage['value'] == $this->lang) {
 				$language = $listLanguage['name'];

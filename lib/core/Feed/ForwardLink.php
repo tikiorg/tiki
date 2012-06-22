@@ -679,6 +679,17 @@ JQ
 		if (count($item->feed->entry) > 0) {
 			$replace = true;
 
+			foreach($item->feed->entry as &$item) {
+				Tracker_Query::tracker('Wiki Attributes')
+					->byName()
+					->replaceItem(array(
+					'Page' => $this->page,
+					'Attribute' => '',
+					'Value' => $item->forwardlink->text,
+					'Type' => 'ForwardLink Accepted'
+				));
+			}
+
 			$contents->entry += $item->feed->entry;
 		}
 
