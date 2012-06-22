@@ -609,7 +609,7 @@ if ( \$('#$id') ) {
 	{
 		if ($name != 'maketoc') {
 			$className = 'WikiPlugin_' . $name;
-			if (class_exists($className, false)) return true;
+			if (@class_exists($className)) return true;
 		}
 		$php_name = 'lib/wiki-plugins/wikiplugin_';
 		$php_name .= TikiLib::strtolower($name) . '.php';
@@ -641,7 +641,7 @@ if ( \$('#$id') ) {
 		$className = false;
 		if ($name != 'maketoc') {
 			$className = 'WikiPlugin_' . $name;
-			$classExists = class_exists($className, false);
+			$classExists = @class_exists($className);
 			if ($classExists == true) {
 				$class = new $className;
 				$known[$name] = $class->info();
@@ -1034,9 +1034,9 @@ if ( \$('#$id') ) {
 
 		//This is the class name for new simplified plugin system, if object does exist, it will use it, if not it uses old plugins
 		$classExists = false;
-		if ($name != 'maketoc') {echo $name;
+		if ($name != 'maketoc') {
 			$className = 'WikiPlugin_' . $name;
-			$classExists = class_exists($className, false);
+			$classExists = @class_exists($className);
 			if ($classExists == true) {
 				$class = new $className;
 			}
