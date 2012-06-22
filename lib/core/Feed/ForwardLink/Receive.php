@@ -15,21 +15,30 @@ Class Feed_ForwardLink_Receive extends Feed_Abstract
 
 	static function wikiView($args)
 	{
-		if (isset($_POST['protocol']) && isset($_POST['contribution'])  == true && $_POST['protocol'] == 'forwardlink') {
+		if (isset($_GET['protocol'], $_GET['contribution']) == true && $_GET['protocol'] == 'forwardlink') {
 			$me = new self($args['object']);
 			$forwardLink = Feed_ForwardLink::forwardLink($args['object']);
 
 			//here we do the confirmation that another wiki is trying to talk with this one
-			$_POST['contribution'] = json_decode($_POST['contribution']);
-			$_POST['contribution']->origin = $_POST['REMOTE_ADDR'];
+			$_GET['contribution'] = json_decode($_GET['contribution']);
+			$_GET['contribution']->origin = $_GET['REMOTE_ADDR'];
 
-			if ($forwardLink->addItem($_POST['contribution']) == true ) {
+			if ($forwardLink->addItem($_GET['contribution']) == true) {
 				$me->response = 'success';
 			} else {
 				$me->response = 'failure';
 			}
 
-			echo json_encode($me->feed(TikiLib::tikiUrl() . 'tiki-index.php?page=' . $args['object']));
+			$feed = $me->feed(TikiLib::tikiUrl() . 'tiki-index.php?page=' . $args['object']);
+
+			if (
+				$me->response == 'failure' &&
+				$forwardLink == true
+			) {
+				$feed->reason = $forwardLink->verifications;
+			}
+
+			echo json_encode($feed);
 			exit();
 		}
 	}
