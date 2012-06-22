@@ -992,6 +992,8 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 
 		if (self::$option['parseWiki'] == false) return str_repeat("!", $hNum) . $content;
 
+		$hNum = min(6, $hNum); //html doesn't support 7+ header level
+
 		return $this->headerButton($hNum) . '<h' . $hNum . ' class="showhide_heading" id="' . $id . '">' . $content . '</h' . $hNum . '>';
 	}
 
