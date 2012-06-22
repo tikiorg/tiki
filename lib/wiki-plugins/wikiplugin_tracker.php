@@ -604,9 +604,9 @@ function wikiplugin_tracker($data, $params)
 						if (isset($fill_defaults[$k])) {
 							$fill_flds_defaults[] = $fill_defaults[$k];
 						} else {
-					$fill_flds['data'][] = $definition->getField($fieldId);
-					if (!isset($fill_defaults[$k])) {
-						$fill_defaults[$k] = '';
+							$fill_flds_defaults[] = '';
+						}
+						$fieldsfillnames[] = $tmp['name'];
 					}
 				}
 				$fill_line_cant = count($fill_flds['data']);
