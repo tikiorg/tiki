@@ -8,7 +8,7 @@
 Class Feed_TextLink extends Feed_Abstract
 {
 	var $type = 'textlink';
-	var $version = '0.1';
+	var $version = 0.1;
 	var $isFileGal = false;
 	var $debug = false;
 	var $page = '';
