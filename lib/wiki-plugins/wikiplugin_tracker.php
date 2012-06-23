@@ -657,8 +657,8 @@ function wikiplugin_tracker($data, $params)
 
 					if ($handler) {
 						$ins_fields['data'][$k] = array_merge($field, $handler->getFieldData($_REQUEST));
-						if (empty($itemId)) {												// add ins value into field if creating item
-							$flds['data'][$k]['value'] = $ins_fields['data'][$k]['value'];	// to keep user input in case of errors
+						if (isset($ins_fields['data'][$k]['value'])) {		// add ins value into field if creating or editing item
+							$flds['data'][$k] = $ins_fields['data'][$k];	// to keep user input in case of errors (not only value)
 						}
 					}
 				}
