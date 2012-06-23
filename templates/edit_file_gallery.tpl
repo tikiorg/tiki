@@ -251,11 +251,11 @@ $('#fgal_template').change( function() {
 									{/foreach}
 								</select>
 								<br />
-								<input type="radio" id="sortdirection1" name="sortdirection" value="desc" {if $sortdirection == 'desc'}checked="checked"{/if} />
-								<label for="sortdirection1">{tr}Descending{/tr}</label>
-								<br />
 								<input type="radio" id="sortdirection2" name="sortdirection" value="asc" {if $sortdirection == 'asc'}checked="checked"{/if} />
 								<label for="sortdirection2">{tr}Ascending{/tr}</label>
+								<br />
+								<input type="radio" id="sortdirection1" name="sortdirection" value="desc" {if $sortdirection == 'desc'}checked="checked"{/if} />
+								<label for="sortdirection1">{tr}Descending{/tr}</label>
 							</td>
 						</tr>
 						<tr>

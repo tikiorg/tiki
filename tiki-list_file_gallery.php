@@ -100,8 +100,8 @@ $smarty->assign('edit_mode', 'n');
 $smarty->assign('dup_mode', 'n');
 $smarty->assign('parentId', isset($_REQUEST['parentId']) ? (int)$_REQUEST['parentId'] : (isset($gal_info['parentId']) ? $gal_info['parentId'] : -1));
 $smarty->assign('creator', $user);
-$smarty->assign('sortorder', 'created');
-$smarty->assign('sortdirection', 'desc');
+$smarty->assign('sortorder', 'name');
+$smarty->assign('sortdirection', 'asc');
 if ( $_REQUEST['galleryId'] === "1")
 	$smarty->assign_by_ref('name', tra($gal_info['name'])); //get_strings tra('File Galleries')
 else
