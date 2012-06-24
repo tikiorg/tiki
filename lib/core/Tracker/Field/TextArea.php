@@ -112,7 +112,11 @@ class Tracker_Field_TextArea extends Tracker_Field_Text
 
 	protected function attemptParse($text)
 	{
-		return TikiLib::lib('tiki')->parse_data($text);
+		$parseOptions = array();
+		if ($this->getOption(7) === 'y') {
+			$parseOptions['is_html'] = true;
+		}
+		return TikiLib::lib('tiki')->parse_data($text, $parseOptions);
 	}
 
 	protected function getIndexableType()
