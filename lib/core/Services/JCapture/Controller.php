@@ -14,10 +14,13 @@ class Services_JCapture_Controller
 		global $prefs;
 
 		if ($prefs['feature_jcapture'] !== 'y') {
-			throw new Services_Exception(tr('Feature disabled'), 403);
+			throw new Services_Exception_Disabled(tr('feature_jcapture'));
 		}
 		if ($prefs['feature_file_galleries'] != 'y') {
 			throw new Services_Exception_Disabled('feature_file_galleries');
+		}
+		if ($prefs['auth_token_access'] !== 'y') {
+			throw new Services_Exception_Disabled(tr('auth_token_access'));
 		}
 	}
 

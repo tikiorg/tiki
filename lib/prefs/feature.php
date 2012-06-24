@@ -2557,6 +2557,9 @@ function prefs_feature_list($partial = false)
 			'default' => 'n',				// include UI lib for more effects
 			'warning' => tra('Experimental'),
 			'tags' => array('experimental'),
+			'dependencies' => array(
+				'auth_token_access',
+			),
 		),
 	);
 }
