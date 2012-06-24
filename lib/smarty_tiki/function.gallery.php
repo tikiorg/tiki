@@ -21,7 +21,7 @@ function smarty_function_gallery($params, $smarty)
 	// Param = id
 
 	if (empty($id)) {
-		$smarty->trigger_error("assign: missing 'id' parameter");
+		trigger_error("assign: missing 'id' parameter");
 		return;
 	}
 	$img = $imagegallib->get_random_image($id);

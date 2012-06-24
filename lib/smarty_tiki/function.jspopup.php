@@ -16,7 +16,7 @@ function smarty_function_jspopup($params, $smarty)
     extract($params);
     // Param = zone
     if (empty($href)) {
-        $smarty->trigger_error("assign: missing href parameter");
+        trigger_error("assign: missing href parameter");
         return;
     }
     if (!isset($scrollbars)) $scrollbars='yes';

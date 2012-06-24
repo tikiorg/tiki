@@ -14,7 +14,7 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 function smarty_function_categoryName($params, $smarty)
 {
     if ( ! isset( $params['id'] ) ) {
-        $smarty->trigger_error("categoryName: missing 'id' parameter");
+        trigger_error("categoryName: missing 'id' parameter");
         return;
     }
 
