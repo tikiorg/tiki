@@ -21,7 +21,7 @@ function smarty_function_rss($params, $smarty)
 	extract($params, EXTR_SKIP);
 	// Param = zone
 	if (empty($id)) {
-		$smarty->trigger_error("assign: missing id parameter");
+		trigger_error("assign: missing id parameter");
 		return;
 	}
 	if (empty($max)) {

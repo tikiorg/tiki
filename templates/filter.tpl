@@ -16,7 +16,7 @@
 			{/foreach}
 		</select>
 	</label>
-	{if $prefs.feature_categories eq 'y'}
+	{if $prefs.feature_categories eq 'y' and $tiki_p_view_category eq 'y'}
 		<fieldset>
 			<legend>{tr}Categories{/tr}</legend>
 
@@ -34,7 +34,7 @@
 			{$filter_category_picker}
 		</div>
 	{/if}
-	{if $prefs.feature_freetags eq 'y'}
+	{if $prefs.feature_freetags eq 'y' and $tiki_p_view_freetags eq 'y'}
 		<fieldset>
 			<legend>{tr}Tags{/tr}</legend>
 

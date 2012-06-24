@@ -21,7 +21,7 @@ function smarty_function_content($params, $smarty)
   } elseif ( isset($params['label']) ) {
     $data = $dcslib->get_actual_content_by_label($params['label']);
   } else {
-    $smarty->trigger_error("assign: missing 'id' or 'label' parameter");
+    trigger_error("assign: missing 'id' or 'label' parameter");
     return false;
   }
 

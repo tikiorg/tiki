@@ -43,9 +43,14 @@ abstract class Tracker_Field_Abstract implements Tracker_Field_Interface, Tracke
 			$classList = array('tablename');
 			$metadata = TikiLib::lib('object')->get_metadata('trackeritem', $itemId, $classList);
 
+			require_once ('lib/smarty_tiki/modifier.sefurl.php');
+			$href = smarty_modifier_sefurl($itemId, 'trackeritem');
+			$href = strpos($href, '?') === false ? $href . '?' : $href;
+			$href .= http_build_query($query, '', '&');
+
 			$arguments = array(
 				'class' => implode(' ', $classList),
-				'href' => 'tiki-view_tracker_item.php?' . http_build_query($query, '', '&'),
+				'href' => $href,
 			);
 			if (!empty($context['url']) && strpos($context['url'], 'itemId') !== false) {
 				$context['url'] = preg_replace('/([&|\?])itemId=?[^&]*/', '\\1itemId=' . $itemId, $context['url']);

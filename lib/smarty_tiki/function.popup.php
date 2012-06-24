@@ -106,12 +106,12 @@ function smarty_function_popup($params, $smarty)
 							break;
 
 			default:
-				$smarty->trigger_error("[popup] unknown parameter $_key", E_USER_WARNING);
+				trigger_error("[popup] unknown parameter $_key", E_USER_WARNING);
 		}
 	}
 
 	if (empty($text) && !isset($inarray) && empty($function)) {
-		$smarty->trigger_error("overlib: attribute 'text' or 'inarray' or 'function' required");
+		trigger_error("overlib: attribute 'text' or 'inarray' or 'function' required");
 		return false;
 	}
 

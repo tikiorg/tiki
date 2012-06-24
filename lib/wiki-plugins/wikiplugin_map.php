@@ -230,10 +230,14 @@ function wp_map_plugin_searchlayer($body, $args)
 	$suffix = $args->suffix->word();
 	$maxRecords = $args->maxRecords->digits();
 
+	$args->replaceFilter('fields', 'word');
+	$fields = $args->asArray('fields', ',');
+
 	unset($args['layer']);
 	unset($args['refresh']);
 	unset($args['suffix']);
 	unset($args['maxRecords']);
+	unset($args['fields']);
 
 	$args->setDefaultFilter('text');
 
@@ -248,11 +252,16 @@ function wp_map_plugin_searchlayer($body, $args)
 		$maxRecords = '<input type="hidden" name="maxRecords" value="' . intval($maxRecords) . '"/>';
 	}
 
+	$fieldList = '';
+	if (! empty($fields)) {
+		$fieldList = '<input type="hidden" name="fields" value="' . smarty_modifier_escape(implode(',', $fields)) . '"/>';
+	}
+
 	$escapedLayer = smarty_modifier_escape($layer);
 	$escapedSuffix = smarty_modifier_escape($suffix);
 	return <<<OUT
 <form method="post" action="tiki-searchindex.php" class="search-box onload" style="display: none" data-result-refresh="$refresh" data-result-layer="$escapedLayer" data-result-suffix="$escapedSuffix">
-	<p>$maxRecords$filters<input type="submit"/></p>
+	<p>$maxRecords$fieldList$filters<input type="submit"/></p>
 
 </form>
 OUT;

@@ -16,7 +16,7 @@ function smarty_function_redirect($params, $smarty)
 	extract($params, EXTR_SKIP);
 	// Param = url
 	if (empty($url)) {
-		$smarty->trigger_error("assign: missing parameter: url");
+		trigger_error("assign: missing parameter: url");
 	return;
 	}
 	header("Location: $url");

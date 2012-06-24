@@ -18,7 +18,7 @@ function smarty_function_ed($params, $smarty)
     // Param = zone
 
     if (empty($id)) {
-        $smarty->trigger_error("ed: missing 'id' parameter");
+        trigger_error("ed: missing 'id' parameter");
         return;
     }
 

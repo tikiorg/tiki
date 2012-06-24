@@ -15,7 +15,7 @@ function smarty_function_count($params, $smarty)
 {
     extract($params);
     if (empty($var)) {
-        $smarty->trigger_error("count: missing 'var' parameter");
+        trigger_error("count: missing 'var' parameter");
         return;
     }
     print(count($var));

@@ -1940,7 +1940,7 @@ class TrackerLib extends TikiLib
 			foreach ($ins_fields['data'] as $f) {
 
 			if ($f['type'] == 'f' && isset($f['error']) && $f['isMandatory'] != 'y') {
-				$mandatory_fields[] = $f;
+				$erroneous_values[] = $f;
 			}
 			if ($f['type'] != 'q' and isset($f['isMandatory']) && $f['isMandatory'] == 'y') {
 

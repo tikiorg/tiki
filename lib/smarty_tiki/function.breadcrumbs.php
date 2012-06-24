@@ -17,11 +17,11 @@ function smarty_function_breadcrumbs($params, $smarty)
     extract($params);
 	
     if (empty($crumbs)) {
-        $smarty->trigger_error("assign: missing 'crumbs' parameter");
+        trigger_error("assign: missing 'crumbs' parameter");
         return;
     }
     if (empty($loc)) {
-        $smarty->trigger_error("assign: missing 'loc' parameter");
+        trigger_error("assign: missing 'loc' parameter");
         return;
     }
     if ($type === 'pagetitle' && $prefs['site_title_breadcrumb'] === 'y') {

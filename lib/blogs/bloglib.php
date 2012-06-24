@@ -965,9 +965,11 @@ class BlogLib extends TikiDb_Bridge
 	{
 		global $tikilib, $prefs;
 
-		$data = TikiFilter::get('purifier')->filter($data);
-		$excerpt = TikiFilter::get('purifier')->filter($excerpt);
-		
+		if ($is_wysiwyg) {
+			$data = TikiFilter::get('purifier')->filter($data);
+			$excerpt = TikiFilter::get('purifier')->filter($excerpt);
+		}
+
 		$wysiwyg=$is_wysiwyg==TRUE?'y':'n';
 		if ($prefs['feature_blog_edit_publish_date'] == 'y') {
 			if (!$created) {

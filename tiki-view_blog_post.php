@@ -128,7 +128,9 @@ if ($prefs['feature_categories'] == 'y') {
 	require_once('categorize_list.php');	
 }
 $smarty->assign('ownsblog', $ownsblog);
-$post_info['data'] = TikiLib::htmldecode($post_info['data']);
+if ($post_info['wysiwyg'] !== 'y') {
+	$post_info['data'] = TikiLib::htmldecode($post_info['data']);
+}
 $smarty->assign('postId', $postId);
 $smarty->assign('blog_data', $blog_data);
 $smarty->assign('blogId', $blogId);

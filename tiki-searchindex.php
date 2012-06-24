@@ -43,9 +43,12 @@ if (count($filter)) {
 	$maxRecords = empty($_REQUEST['maxRecords'])?$prefs['maxRecords']: $_REQUEST['maxRecords'];
 
 	if ($access->is_serializable_request(true)) {
+		$jitRequest->replaceFilter('fields', 'word');
+		$fetchFields = array_merge(array('title', 'modification_date', 'url'), $jitRequest->asArray('fields', ','));;
+
 		$results = tiki_searchindex_get_results($filter, $offset, $maxRecords);
 		$dataSource = $unifiedsearchlib->getDataSource('formatting');
-		$results = $dataSource->getInformation($results, array('title', 'modification_date', 'url'));
+		$results = $dataSource->getInformation($results, $fetchFields);
 
 		require_once 'lib/smarty_tiki/function.object_link.php';
 		foreach ($results as &$res) {
