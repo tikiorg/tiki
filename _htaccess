@@ -57,9 +57,9 @@ FileETag none
 #AuthUserFile /etc/httpd/passwords
 #Require valid-user 
 
-# Handling errors catched by Apache with Tiki
-# Tiki can catch some errors and deal with them by redirecting to a similar page, sending you to the search, etc. However, some errors do not reach Tiki and are only catched by Apache (ex.: filenameThatDoesntExist.php). 
-# To make Tiki handle errors catched by Apache, uncomment some of the following lines and adapt the page names. You must create the pages before trying to use them. 
+# Handling in Tiki errors caught by Apache
+# Tiki can catch some errors and deal with them by redirecting to a similar page, sending you to the search, etc. However, some errors do not reach Tiki and are only caught by Apache (ex.: filenameThatDoesntExist.php). 
+# To make Tiki handle errors caught by Apache, uncomment some of the following lines and adapt the page names. You must create the pages before trying to use them. 
 #ErrorDocument 404 /tiki-index.php?page=File+not+found
 #ErrorDocument 500 /tiki-index.php?page=Server+error
 
