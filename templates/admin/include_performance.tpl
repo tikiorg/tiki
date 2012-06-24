@@ -19,7 +19,6 @@
 				{preference name=tiki_minify_css_single_file}
 			</div>
 			{preference name=feature_obzip}
-			{preference name=users_serve_avatar_static}
 			<div class="adminoptionboxchild">
 				{if $gzip_handler ne 'none'}
 					<div class="highlight" style="margin-left:30px;">
@@ -31,6 +30,7 @@
 			</div>
 			{preference name=tiki_cachecontrol_session}
 			{preference name=smarty_compilation}
+			{preference name=users_serve_avatar_static}
 		{/tab}
 		
 		{tab name="{tr}Bytecode Cache{/tr}"}
