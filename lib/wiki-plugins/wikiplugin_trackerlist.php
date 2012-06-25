@@ -780,6 +780,15 @@ function wikiplugin_trackerlist($data, $params)
 		$allfields = $trklib->list_tracker_fields($trackerId, 0, -1, 'position_asc', '', true, '', $trklib->flaten($limit));
 		if (!empty($fields)) {
 			$listfields = $fields;
+
+			//We must include the $calendarfielddate, even if they are not in the listfields
+			if (!empty($calendarfielddate)) {
+				foreach($calendarfielddate as $f) {
+					if (!in_array($f, $listfields)) {
+						$listfields[] = $f;
+					}
+				}
+			}
 			if ($sort == 'y') {
 				$allfields = $trklib->sort_fields($allfields, $listfields);
 			}
@@ -1523,7 +1532,21 @@ function wikiplugin_trackerlist($data, $params)
 				}
 			}
 			// End Optimization
-			$items = $trklib->list_items($trackerId, $tr_offset, $max, $tr_sort_mode, $passfields, $filterfield, $filtervalue, $tr_status, $tr_initial, $exactvalue, $filter, $allfields, $skip_status_perm_check);
+			$items = $trklib->list_items(
+				$trackerId,
+				$tr_offset,
+				$max,
+				$tr_sort_mode,
+				$passfields,
+				(!empty($calendarfielddate) ? null : $filterfield),
+				$filtervalue,
+				$tr_status,
+				$tr_initial,
+				$exactvalue,
+				$filter,
+				$allfields,
+				$skip_status_perm_check
+			);
 			if (isset($silent) && $silent == 'y' && empty($items['cant'])) {
 				return;
 			}
