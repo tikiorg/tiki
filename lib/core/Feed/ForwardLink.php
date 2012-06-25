@@ -8,13 +8,15 @@
 Class Feed_ForwardLink extends Feed_Abstract
 {
 	var $type = 'forwardlink';
-	var $version = '0.1';
+	var $version = 0.1;
 	var $isFileGal = true;
 	var $debug = false;
 	var $page = '';
 	static $pagesParsed = array();
 	static $parsedDatas = array();
 	var $metadata = array();
+	var $verifications = array();
+	var $itemsAdded = array();
 
 	function __construct($page)
 	{
@@ -40,24 +42,6 @@ Class Feed_ForwardLink extends Feed_Abstract
 			echo $response->getBody();
 			exit();
 		}
-	}
-
-	private function getPageParsed($page)
-	{
-		if (isset(self::$pagesParsed[$page])) return self::$pagesParsed[$page];
-
-		self::$pagesParsed[$page] = TikiLib::lib('wiki')->get_parse($page);
-
-		return self::$pagesParsed[$page];
-	}
-
-	private function parseData($data)
-	{
-		if (isset(self::$parsedDatas[$data])) return self::$parsedDatas[$data];
-
-		self::$parsedDatas[$data] = TikiLib::lib('tiki')->parse_data($data);
-
-		return self::$parsedDatas[$data];
 	}
 
 	function editInterfaces()
@@ -491,8 +475,7 @@ JQ
 										rangy.superSanitize(
 											clipboarddata.author +
 											clipboarddata.authorInstitution +
-											clipboarddata.authorProfession +
-											clipboarddata.dateLastUpdated
+											clipboarddata.authorProfession
 										)
 									,
 										rangy.superSanitize(clipboarddata.text)
@@ -597,104 +580,128 @@ JQ
 			));
 	}
 
+	function addItem($item)
+	{
+		parent::addItem($item);
+
+		$exists = array();
+		$verificationsCount = count($this->verifications);
+		foreach($this->verifications as &$verification) {
+			foreach($verification['reason'] as $reason) {
+				if ($reason == 'exists') {
+					$exists[] = true;
+				}
+			}
+		}
+
+		if (count($exists) == $verificationsCount) return true; //If they were not added, but the reason is that they already exist, we show that they were sent successfully
+
+		return $this->itemsAdded;
+	}
+
 	function appendToContents(&$contents, $item)
 	{
-		global $prefs, $_REQUEST, $groupPluginReturnAll;
-		$groupPluginReturnAll = true;
-		$replace = false;
+		global $prefs, $_REQUEST;
 
 		if ($this->debug == true) {
 			ini_set('error_reporting', E_ALL);
 			ini_set('display_errors', 1);
 		}
+		$this->itemsAdded = false;
 
-		//lets remove the new entry if it has already been accepted in the past
-		foreach ($contents->entry as $i => $existingEntry) {
-			foreach ($item->feed->entry as $j => $newEntry) {
+		foreach ($item->feed->entry as $i => $newEntry) {
+			$this->verifications[$i] = array();
+			$this->verifications[$i]["reason"] = array();
+
+			//lets remove the new entry if it has already been accepted in the past
+			foreach ($contents->entry as &$existingEntry) {
 				if (
 					$existingEntry->textlink->text == $newEntry->textlink->text &&
 					$existingEntry->textlink->href == $newEntry->textlink->href
 				) {
-					unset($item->feed->entry[$j]);
+					$this->verifications[$i]['reason'][] = 'exists';
+					unset($item->feed->entry[$i]);
 				}
 			}
-		}
 
-		//lets check if the hash is correct and that the phrase actually exists within the wiki page
-		$checks = array();
+			$revision = Feed_ForwardLink_Search::findWikiRevision($newEntry->forwardlink->text);
 
-		foreach ($item->feed->entry as $i => $newEntry) {
-			$checks[$i] = array();
-
-			$checks[$i]["hashableHere"] = JisonParser_Phraser_Handler::superSanitize(
+			$this->verifications[$i]["hashBy"] = JisonParser_Phraser_Handler::superSanitize(
 				$newEntry->forwardlink->author .
 				$newEntry->forwardlink->authorInstitution .
-				$newEntry->forwardlink->authorProfession .
-				$newEntry->forwardlink->dateLastUpdated
-			);
-			$checks[$i]["phraseThere"] =JisonParser_Phraser_Handler::superSanitize($newEntry->forwardlink->text);
-			$checks[$i]["parentHere"] = JisonParser_Phraser_Handler::superSanitize($this->getPageParsed($_REQUEST['page']));
-			$checks[$i]["hashHere"] = hash_hmac("md5", $checks[$i]["hashableHere"], $checks[$i]["phraseThere"]);
-			$checks[$i]["hashThere"] = $newEntry->forwardlink->hash;
-			$checks[$i]["reason"] = array();
-			$checks[$i]['exists'] = JisonParser_Phraser_Handler::hasPhrase(
-				$this->getPageParsed($_REQUEST['page']),
-				$newEntry->forwardlink->text
+				$newEntry->forwardlink->authorProfession
 			);
 
-			if ($checks[$i]['hashHere'] != $checks[$i]['hashThere']) {
-				$checks[$i]['reason'][] = 'hash_tampering';
+			$this->verifications[$i]['foundRevision'] = $revision;
+
+			$this->verifications[$i]["metadataHere"] = $this->metadata->raw;
+
+			$this->verifications[$i]["phraseThere"] =JisonParser_Phraser_Handler::superSanitize($newEntry->forwardlink->text);
+			$this->verifications[$i]["hashHere"] = hash_hmac("md5", $this->verifications[$i]["hashBy"], $this->verifications[$i]["phraseThere"]);
+			$this->verifications[$i]["hashThere"] = $newEntry->forwardlink->hash;
+			$this->verifications[$i]['exists'] = JisonParser_Phraser_Handler::hasPhrase(
+				$revision['data'],
+				$this->verifications[$i]["phraseThere"]
+			);
+
+			if ($this->verifications[$i]['hashHere'] != $this->verifications[$i]['hashThere']) {
+				$this->verifications[$i]['reason'][] = 'hash_tampering';
 				unset($item->feed->entry[$i]);
 			}
 
 			if ($newEntry->forwardlink->websiteTitle != $prefs['browsertitle']) {
-				$checks[$i]['reason'][] = 'title';
+				$this->verifications[$i]['reason'][] = 'title';
 				unset($item->feed->entry[$i]);
 			}
 
-			if (!$checks[$i]['exists']) {
-				if (empty($checks[$i]['reason'])) {
-					$checks[$i]['reason'][] = 'no_existence_hash_pass';
+			if ($this->verifications[$i]['exists'] == false) {
+				if (empty($this->verifications[$i]['reason'])) {
+					$this->verifications[$i]['reason'][] = 'no_existence_hash_pass';
 				} else {
-					$checks[$i]['reason'][] = 'no_existence';
+					$this->verifications[$i]['reason'][] = 'no_existence';
 				}
 
 				unset($item->feed->entry[$i]);
 			}
 
-			foreach($item->feed->entry[$i] as $key => $value) {
+			foreach($newEntry->forwardlink as $key => $value) {
 				if (isset(Feed_ForwardLink_Metadata::$acceptableKeys[$key]) && Feed_ForwardLink_Metadata::$acceptableKeys[$key] == true) {
 					//all clear
 				} else {
-					$checks[$i]['reason'][] = 'metadata_tampering';
+					$this->verifications[$i]['reason'][] = 'metadata_tampering' . ($this->debug == true ? $key : '');
+					unset($item->feed->entry[$i]);
+				}
+			}
+
+			foreach($newEntry->textlink as $key => $value) {
+				if (isset(Feed_ForwardLink_Metadata::$acceptableKeys[$key]) && Feed_ForwardLink_Metadata::$acceptableKeys[$key] == true) {
+					//all clear
+				} else {
+					$this->verifications[$i]['reason'][] = 'metadata_tampering' . ($this->debug == true ? $key : '');
 					unset($item->feed->entry[$i]);
 				}
 			}
 		}
 
-		if ($this->debug == true) {
-			print_r($checks);
-		}
+		if (empty($item->feed->entry) == false) {
+			$this->itemsAdded = true;
 
-		if (count($item->feed->entry) > 0) {
-			$replace = true;
-
-			foreach($item->feed->entry as &$item) {
+			foreach($item->feed->entry as &$entry) {
 				Tracker_Query::tracker('Wiki Attributes')
 					->byName()
 					->replaceItem(array(
-					'Page' => $this->page,
-					'Attribute' => '',
-					'Value' => $item->forwardlink->text,
-					'Type' => 'ForwardLink Accepted'
-				));
+						'Page' => $this->page,
+						'Attribute' => '',
+						'Value' => $entry->forwardlink->text,
+						'Type' => 'ForwardLink Accepted'
+					));
 			}
 
-			$contents->entry += $item->feed->entry;
+			if (empty($contents->entry) == true) {
+				$contents->entry = array();
+			}
+
+			$contents->entry = array_merge($contents->entry, $item->feed->entry);
 		}
-
-		$groupPluginReturnAll = false;
-
-		return $replace;
 	}
 }
