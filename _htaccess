@@ -83,6 +83,9 @@ FileETag none
 #php_value upload_max_filesize 10M
 #php_value post_max_size 11M
 
+# This sets the maximum time in seconds a script is allowed to parse input data, like POST and GET. 
+#php_value max_input_time 90
+
 # In some cases you may see open_basedir warnings about Smarty accessing php files that it shouldn't
 # The following line (uncommented) will reset the include path to use only Tiki's files which will solve this in most cases
 #php_value include_path "." 
