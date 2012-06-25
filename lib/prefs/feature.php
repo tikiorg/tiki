@@ -979,6 +979,7 @@ function prefs_feature_list($partial = false)
 			'description' => tra('Compress your pages on-the-fly, if the requesting browser supports this'),
 			'help' => 'Compression',
 			'type' => 'flag',
+			'tags' => array('basic'),
 			'perspective' => false,
 			'default' => 'n',
 		),
