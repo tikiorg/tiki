@@ -173,7 +173,7 @@ class JisonParser_Phraser_Handler extends JisonParser_Phraser
 		$parent = implode('|', $parent);
 		$phrase = implode('|', $phrase);
 
-		return (strpos($parent, $phrase) === false ? false : true);
+		return (strpos($parent, $phrase) !== false);
 	}
 
 	static $sanitizedWords;
