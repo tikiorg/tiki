@@ -103,20 +103,20 @@ input[type="submit"]:hover,
 .cssmenu_horiz li ul a,
 .header .cssmenu_horiz li ul a,
 .header .cssmenu_horiz li:hover ul a,
-#topbar_modules .cssmenu_horiz li ul a,
-#topbar_modules .cssmenu_horiz li:hover ul a  {
+#main #topbar_modules .cssmenu_horiz li ul a,
+#main #topbar_modules .cssmenu_horiz li:hover ul a  {
 	background: #49006c;
 }
 
 #tiki-top .cssmenu_horiz li a {
-	background: url(plum/siteheader.jpg) no-repeat -600px -40px;
+	background: #33014e url(plum/siteheader.jpg) no-repeat -600px -40px;
 }
 
 #tiki-top .cssmenu_horiz li a:hover,
 .cssmenu_vert li ul a:hover,
 .cssmenu_horiz li ul a:hover,
 .header .cssmenu_horiz li ul a:hover,
-#topbar_modules .cssmenu_horiz li ul a:hover  {
+#main #topbar_modules .cssmenu_horiz li ul a:hover  {
 	background: #300149;
 }
 
