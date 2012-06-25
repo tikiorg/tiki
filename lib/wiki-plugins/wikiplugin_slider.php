@@ -301,6 +301,14 @@ function wikiplugin_slider_info()
 					array('text' => tra('No'), 'value' => 'n')
 				)
 			),
+			'animationtime' => array(
+				'required' => false,
+				'name' => tra('Animation Time'),
+				'description' => tra('Milliseconds between slides'),
+				'filter' => 'striptags',
+				'accepted' => 'a number',
+				'default' => '600',
+			),
 		),
 	);
 }
@@ -336,6 +344,9 @@ function wikiplugin_slider($data, $params)
 	} else {
 		$theme = 'default';
 	}
+
+	$animationtime = (int)$animationtime;
+	$animationtime = (empty($animationtime) === false ? $animationtime : 600);
 	
 	$headerlib->add_jq_onready(
 					"function formatText(i, p) {
@@ -384,7 +395,7 @@ function wikiplugin_slider($data, $params)
 			// Times
 			delay               : 3000,
 			resumeDelay         : 15000,
-			animationTime       : 600,
+			animationTime       : $animationtime,
 
 			// Video
 			resumeOnVideoEnd    : ".makeBool($resumeonvideoend, true).",
