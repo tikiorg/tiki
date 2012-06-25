@@ -29,6 +29,7 @@ function wikiplugin_module_info()
 		'documentation' => 'PluginModule',
 		'description' => tra('Display a module'),
 		'prefs' => array( 'wikiplugin_module' ),
+		'validate' => 'all',
 		'icon' => 'img/icons/module.png',
 		'extraparams' =>true,
 		'tags' => array( 'basic' ),
