@@ -20,9 +20,12 @@ class Feed_ForwardLink_Metadata
 	var $minimumStatisticsNeeded;
 	var $minimumMathNeeded;
 	var $scientificField;
-	var $categories;
+	var $categories = array();
 	var $keywords;
 	var $questions;
+	var $datePageOriginated;
+	var $countAll;
+	var $language = '';
 
 	static $acceptableKeys = array(
 		'websiteTitle' =>               true,
@@ -92,10 +95,10 @@ class Feed_ForwardLink_Metadata
 		);
 
 		$me->raw['hash'] =  hash_hmac("md5",
-			JisonParser_Phraser_Handler::superSanitize($me->raw['author'] .
+			JisonParser_Phraser_Handler::superSanitize(
+				$me->raw['author'] .
 				$me->raw['authorInstitution'] .
-				$me->raw['authorProfession'] .
-				$me->raw['dateLastUpdated']
+				$me->raw['authorProfession']
 			),
 			JisonParser_Phraser_Handler::superSanitize($data)
 		);
@@ -154,6 +157,7 @@ class Feed_ForwardLink_Metadata
 				->byName()
 				->filterFieldByValue('Type', 'Question')
 				->filterFieldByValue('Page', $this->page)
+				->render(false)
 				->query();
 		}
 
@@ -181,6 +185,7 @@ class Feed_ForwardLink_Metadata
 				->byName()
 				->filterFieldByValue('Type', 'Keywords')
 				->filterFieldByValue('Page', $this->page)
+				->render(false)
 				->query();
 		}
 
@@ -207,6 +212,7 @@ class Feed_ForwardLink_Metadata
 			$authorData = Tracker_Query::tracker("Users")
 				->byName()
 				->filterFieldByValue('login', $user)
+				->render(false)
 				->getOne();
 			$authorData = end($authorData);
 
@@ -246,6 +252,7 @@ class Feed_ForwardLink_Metadata
 			$moderatorData = Tracker_Query::tracker("Users")
 				->byName()
 				->filterFieldByValue('login', 'admin') //admin is un-deletable
+				->render(false)
 				->getOne();
 			$moderatorData = end($moderatorData);
 
@@ -279,33 +286,38 @@ class Feed_ForwardLink_Metadata
 
 	public function findDatePageOriginated()
 	{
-		$date = TikiLib::lib('trk')->getOne('SELECT lastModif FROM tiki_history WHERE pageName = ? ORDER BY lastModif DESC', array($this->page));
+		if (empty($this->findDatePageOriginated)) {
+			$this->findDatePageOriginated = TikiLib::lib('trk')->getOne('SELECT lastModif FROM tiki_history WHERE pageName = ? ORDER BY lastModif DESC', array($this->page));
 
-		if (empty($date)) {
-			//page doesn't yet have history
-			$date = TikiLib::lib('trk')->getOne('SELECT lastModif FROM tiki_pages WHERE pageName = ?', array($this->page));
+			if (empty($date)) {
+				//page doesn't yet have history
+				$this->findDatePageOriginated = TikiLib::lib('trk')->getOne('SELECT lastModif FROM tiki_pages WHERE pageName = ?', array($this->page));
+			}
 		}
 
-		return $date;
+		return $this->findDatePageOriginated;
 	}
 
 	public function countAll()
 	{
-		return count(Tracker_Query::tracker('Wiki Attributes')
-			->byName()
-			->filterFieldByValue('Type', 'ForwardLink Accepted')
-			->render(false)
-			->query());
+		if (empty($this->countAll)) {
+			$this->countAll = count(Tracker_Query::tracker('Wiki Attributes')
+				->byName()
+				->filterFieldByValue('Type', 'ForwardLink Accepted')
+				->render(false)
+				->query());
+		}
 	}
 
 	public function categories()
 	{
-		$categories = array();
-		foreach(TikiLib::lib('categ')->get_object_categories('wiki page', $this->page) as $categoryId) {
-			$categories[] = TikiLib::lib('categ')->get_category_name($categoryId);
+		if (empty($this->categories)) {
+			foreach(TikiLib::lib('categ')->get_object_categories('wiki page', $this->page) as $categoryId) {
+				$this->categories[] = TikiLib::lib('categ')->get_category_name($categoryId);
+			}
 		}
 
-		return $categories;
+		return $this->categories;
 	}
 
 	public function scientificField($out = true)
@@ -315,6 +327,7 @@ class Feed_ForwardLink_Metadata
 				->byName()
 				->filterFieldByValue('Type', 'Scientific Field')
 				->filterFieldByValue('Page', $this->page)
+				->render(false)
 				->query();
 		}
 
@@ -332,6 +345,7 @@ class Feed_ForwardLink_Metadata
 				->byName()
 				->filterFieldByValue('Type', 'Minimum Math Needed')
 				->filterFieldByValue('Page', $this->page)
+				->render(false)
 				->query();
 		}
 
@@ -348,6 +362,7 @@ class Feed_ForwardLink_Metadata
 				->byName()
 				->filterFieldByValue('Type', 'Minimum Statistics Needed')
 				->filterFieldByValue('Page', $this->page)
+				->render(false)
 				->query();
 		}
 
@@ -360,14 +375,15 @@ class Feed_ForwardLink_Metadata
 
 	public function language()
 	{
-		$language = '';
-
-		foreach(TikiLib::lib("tiki")->list_languages() as $listLanguage) {
-			if ($listLanguage['value'] == $this->lang) {
-				$language = $listLanguage['name'];
+		if (empty($this->language)) {
+			foreach(TikiLib::lib("tiki")->list_languages() as $listLanguage) {
+				if ($listLanguage['value'] == $this->lang) {
+					$this->language = $listLanguage['name'];
+					break;
+				}
 			}
 		}
 
-		return $language;
+		return $this->language;
 	}
 }
