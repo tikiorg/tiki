@@ -5,7 +5,7 @@
 #
 # To use, ideally, create a symbolic link from .htaccess to _htaccess. This will keep the configuration up-to-date.
 # If you can't, do one of the following:
-# - Copy _htaccess to .htaccess.
+# - Copy _htaccess to .htaccess. Note : Do not move (rename) _htaccess, it is required for other uses (like SEFURL).
 # - Add the content of this file to your httpd.conf.
 # This should be repeated when the reference _htaccess file changes (when upgrading Tiki). 
 
