@@ -57,12 +57,16 @@ JQ
 			exit();
 		}
 	}
-	
+
 	static function findWikiRevision($phrase)
 	{
+		global $tikilib;
+
+		$phrase = JisonParser_Phraser_Handler::superSanitize($phrase);
+
 		$query = Tracker_Query::tracker('Wiki Attributes')
 			->byName()
-			->filterFieldByValueLike('Value', JisonParser_Phraser_Handler::superSanitize($phrase))
+			->filterFieldByValueLike('Value', $phrase)
 			->render(false)
 			->getLast();
 
@@ -71,9 +75,18 @@ JQ
 		$query = end($query); //query has a key of itemId, we just need it's details
 		$version = $query['Attribute'];
 		$page = $query['Page'];
+		$data = $query['Value'];
+
+		$date = $tikilib->getOne('SELECT lastModif FROM tiki_pages WHERE pageName = ? AND version = ?', array($page, $version));
+
+		if (empty($date) == true) $date = $tikilib->getOne('SELECT lastModif FROM tiki_history WHERE pageName = ? AND version = ?', array($page, $version));
+
 		return array(
 			'page' => $page,
-			'version' => $version
+			'version' => $version,
+			'data' => $data,
+			'date' => $date,
+			'phrase' => $phrase
 		);
 	}
 
