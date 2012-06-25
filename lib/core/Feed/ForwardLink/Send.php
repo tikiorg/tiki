@@ -10,7 +10,7 @@ Class Feed_ForwardLink_Send extends Feed_Abstract
 	var $type = "forwardlink_protocol_send";
 	var $version = 0.1;
 	var $isFileGal = false;
-	var $debug = true;
+	var $debug = false;
 
 	static function wikiView()
 	{
