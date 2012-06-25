@@ -50,11 +50,10 @@ class Reports_Send_EmailBuilder
 		}
 		
 		$smarty->assign('userWatchesUrl', $userWatchesUrl);
-		$userlang = $this->tikilib->get_user_preference($user_data['login'], "language");
-
-		$mail_data = $smarty->fetchLang($userlang, "mail/report.tpl");
 		
-		return $mail_data;	
+		$mail_data = $smarty->fetch("mail/report.tpl");
+
+		return $mail_data;
 	}
 	
 	/**
