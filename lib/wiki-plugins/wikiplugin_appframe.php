@@ -314,10 +314,12 @@ function wikiplugin_appframe_module($data, $params, $start)
 		$label = $info['name'];
 	}
 
-	$data = $modlib->execute_module(array(
-		'name' => $moduleName,
-		'params' => array_merge($params->none(), array('nobox' => 'y', 'notitle' => 'y')),
-	));
+	$data = $modlib->execute_module(
+		array(
+			'name' => $moduleName,
+			'params' => array_merge($params->none(), array('nobox' => 'y', 'notitle' => 'y')),
+		)
+	);
 
 	if (! $data) {
 		return null;
@@ -446,16 +448,17 @@ function wikiplugin_appframe_mapcontrol($data, $params, $start)
 	}
 
 	$smarty = TikiLib::lib('smarty');
-	$smarty->assign('mapcontrol', array(
-		'id' => 'mapcontrol-' . ++$counter,
-		'control' => $control,
-		'icon' => $icon,
-		'label' => $label,
-		'mode' => $mode,
-		'function' => $function,
-		'navigation' => $params->navigation->int(),
-		'class' => $params->class->text() ? $params->class->text() : 'icon',
-	));
+	$smarty->assign(
+		'mapcontrol', array(
+			'id' => 'mapcontrol-' . ++$counter,
+			'control' => $control,
+			'icon' => $icon,
+			'label' => $label,
+			'mode' => $mode,
+			'function' => $function,
+			'navigation' => $params->navigation->int(),
+			'class' => $params->class->text() ? $params->class->text() : 'icon',
+		)
+	);
 	return $smarty->fetch('wiki-plugins/wikiplugin_appframe_mapcontrol.tpl');
 }
-

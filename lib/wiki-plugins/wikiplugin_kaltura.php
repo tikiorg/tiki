@@ -12,11 +12,11 @@ function wikiplugin_kaltura_info()
 	$players = array(array('value' => '', 'text' => tra('Default')));
 	if (is_object($kalturaadminlib) && !empty($kalturaadminlib->session)) {
 		$players1 = $kalturaadminlib->getPlayersUiConfs();
-		foreach($players1 as & $pl) {
+		foreach ($players1 as & $pl) {
 			$players[] = array('value' => $pl['id'], 'text' => tra($pl['name']));
 		}
-		unset($players1)
-;	}
+		unset($players1);
+	}
 
 	return array(
 		'name' => tra('Kaltura Video'),

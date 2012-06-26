@@ -107,10 +107,11 @@ function wikiplugin_events($data,$params)
 	}
 	
 	// Pagination 
-	if (!isset($timespan)) { $timespan = "future"; }
+	if (!isset($timespan)) {
+		$timespan = "future";
+	}
 	
-	if ($usePagination == 'y')
-	{
+	if ($usePagination == 'y') {
 		if (!isset($_REQUEST["offset"])) {
 			$start = 0;
 		} else {
@@ -154,22 +155,40 @@ function wikiplugin_events($data,$params)
 	}
 	
 	// Pagination
-    if($timespan == "future") {
-	$events = $calendarlib->upcoming_events($max,
-		array_intersect($calIds, $viewable),
-		$maxdays,'start_asc', 1, 0, $start);
+	if($timespan == "future") {
+		$events = $calendarlib->upcoming_events(
+			$max,
+			array_intersect($calIds, $viewable),
+			$maxdays,
+			'start_asc',
+			1,
+			0,
+			$start
+		);
 	}
 	
-    if($timespan == "all") {
-	$events = $calendarlib->all_events($max,
-		array_intersect($calIds, $viewable),
-		$maxdays,'start_asc', 1, 0, $start);
+	if($timespan == "all") {
+		$events = $calendarlib->all_events(
+			$max,
+			array_intersect($calIds, $viewable),
+			$maxdays,
+			'start_asc',
+			1,
+			0,
+			$start
+		);
 	}
 	
-    if($timespan == "past"){
-	$events = $calendarlib->past_events($max,
-		array_intersect($calIds, $viewable),
-		$maxdays, 'start_desc', 0, -1, $start);  
+	if($timespan == "past"){
+		$events = $calendarlib->past_events(
+			$max,
+			array_intersect($calIds, $viewable),
+			$maxdays,
+			'start_desc',
+			0,
+			-1,
+			$start
+		);  
 	} 
 
 
@@ -183,7 +202,7 @@ function wikiplugin_events($data,$params)
 	$smarty->assign_by_ref('events', $events);
 	
 	// Pagination	
-	if ($usePagination == 'y'){
+	if ($usePagination == 'y') {
 	
 		$smarty->assign('maxEvents', $max);
 		$smarty->assign_by_ref('offset', $start);

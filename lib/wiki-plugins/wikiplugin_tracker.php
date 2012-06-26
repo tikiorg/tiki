@@ -748,7 +748,7 @@ function wikiplugin_tracker($data, $params)
 							if (trim($fill_line) == '') {	// Ignore blank lines
 								continue;
 							}
-							$fill_line_item = explode($fieldsfillseparator,$fill_line,$fill_line_cant);	// Extra fields are merged with the last field. this avoids data loss and permits a last text field with commas
+							$fill_line_item = explode($fieldsfillseparator, $fill_line, $fill_line_cant);	// Extra fields are merged with the last field. this avoids data loss and permits a last text field with commas
 							$rid = $trklib->replace_item($trackerId, $itemId, $ins_fields, $status, $ins_categs);
 							for ($i=0;$i<$fill_line_cant;$i++) {
 								if ($fill_line_item[$i] != '') {
@@ -1308,8 +1308,8 @@ function wikiplugin_tracker($data, $params)
 <input type="hidden" value="n" name="wysiwyg"/>
 <div name="ins_fill_desc" class="trackerplugindesc" >
 FILL;
-				$back.= sprintf(tra('Each line is a list of %d field values separated with: %s'),$fill_line_cant,htmlspecialchars($fieldsfillseparator));
-				$back .= '</div><div name="ins_fill_desc2" class="trackerplugindesc" >' . htmlspecialchars(implode($fieldsfillseparator,$fieldsfillnames)) ;
+				$back.= sprintf(tra('Each line is a list of %d field values separated with: %s'), $fill_line_cant, htmlspecialchars($fieldsfillseparator));
+				$back .= '</div><div name="ins_fill_desc2" class="trackerplugindesc" >' . htmlspecialchars(implode($fieldsfillseparator, $fieldsfillnames));
 				$back .= '</div></td></tr>';
 			}
 			if (!empty($tpl)) {
@@ -1365,8 +1365,8 @@ FILL;
 				$headerlib->add_js(' var ajaxTrackerFormInit_' . $params['_ajax_form_ins_id'] . ' = function() {' . $headerlib->output_js(false) . '}', 10);
 
 				// put back the pre-existing js
-				$headerlib->js = array_merge( $headerlib->js, $old_js['js']);
-				$headerlib->jq_onready = array_merge( $headerlib->jq_onready, $old_js['jq_onready']);
+				$headerlib->js = array_merge($headerlib->js, $old_js['js']);
+				$headerlib->jq_onready = array_merge($headerlib->jq_onready, $old_js['jq_onready']);
 			}
 
 			if (!empty($page))
