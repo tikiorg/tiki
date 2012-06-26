@@ -251,7 +251,17 @@ if (isset($_REQUEST["preview"])) {
 		}
 		$smarty->assign("usedTpl", $_REQUEST["usedTpl"]);
 	} else {
-		$info["dataparsed"] = "<html><body>" . (($info['wikiparse'] == 'y') ? $tikilib->parse_data($info["data"], array('absolute_links' => true, 'suppress_icons' => true,'is_html' => $info['is_html'])) : $info['data']) . "</body></html>";
+		$info['dataparsed'] = '<html><body>';
+		if ($info['wikiparse'] === 'y') {
+			$data = $info['data'];
+			$info['dataparsed'] .= $tikilib->parse_data($data, array('absolute_links' => true, 'suppress_icons' => true,'is_html' => $info['is_html']));
+			if (empty($info['data'])) {
+				$info['data'] = $data;		// somehow on massive pages this gets reset somewhere inside parse_data
+			}
+		} else {
+			$info['dataparsed'] .= $info['data'];
+		}
+		$info['dataparsed'] .= '</body></html>';
 	}
 	if (!empty($_REQUEST['replyto'])) {
 		$smarty->assign('replyto', $_REQUEST['replyto']);
