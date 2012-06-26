@@ -58,9 +58,11 @@ class Tracker_Field_UserGroups extends Tracker_Field_Abstract
 	function getDocumentPart($baseKey, Search_Type_Factory_Interface $typeFactory)
 	{
 		$data = $this->getFieldData();
+		$listtext = implode(' ', $data['value']);
 
 		return array(
 			$baseKey => $typeFactory->multivalue($data['value']),
+			"{$baseKey}_text" => $typeFactory->plaintext($listtext),
 		);
 	}
 

@@ -2759,7 +2759,7 @@ if ( \$('#$id') ) {
 							}
 						}
 
-						$maketoc = $this->parse_data($maketoc, array('noparseplugins' => true));
+						$maketoc = $this->parse_data($maketoc, array('noparseplugins' => true, 'is_html' => true));
 
 						if (preg_match("/^<ul>/", $maketoc)) {
 							$maketoc = preg_replace("/^<ul>/", '<ul class="toc">', $maketoc);
