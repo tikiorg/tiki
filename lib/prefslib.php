@@ -426,7 +426,7 @@ class PreferencesLib
 	{
 		$out = array();
 
-		foreach ( (array) $dependencies as $dep ) {
+		foreach ( (array) $dependencies as $key => $dep ) {
 			$info = $this->getPreference($dep, false);
 			if ( $info ) {
 				$out[] = array(
@@ -438,6 +438,18 @@ class PreferencesLib
 						( $info['type'] == 'flag' && $info['value'] == 'y' )
 						|| ( $info['type'] != 'flag' && ! empty( $info['value'] ) )
 				);
+			} elseif ($key == 'profiles') {
+				foreach($dep as $profile) {
+					$out[] = array(
+						'name' => $profile,
+						'label' => $profile,
+						'type' => 'profile',
+						'link' => 'tiki-admin.php?page=profiles&list=List&profile=' . urlencode($profile),
+						'met' =>
+						( $info['type'] == 'flag' && $info['value'] == 'y' )
+							|| ( $info['type'] != 'flag' && ! empty( $info['value'] ) )
+					);
+				}
 			}
 		}
 
