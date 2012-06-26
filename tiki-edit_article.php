@@ -649,6 +649,7 @@ if ($prefs['feature_multilingual'] == 'y') {
 	$smarty->assign_by_ref('languages', $languages);
 	// get translations
 	if ($articleId) {
+		include_once('lib/multilingual/multilinguallib.php');
 		$translations = $multilinguallib->getTranslations('article', $articleId);	
 	} else {
 		$translations = array();

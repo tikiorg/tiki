@@ -401,7 +401,7 @@ Nickname: changi67
 Name: Jean-FranÃ§ois  B.
 First Commit: 2009-04-23
 Last Commit: 2012-06-26
-Number of Commits: 1025
+Number of Commits: 1033
 SF Role: Packager (.rpm, .deb etc)
 
 Nickname: chealer
