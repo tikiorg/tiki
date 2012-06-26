@@ -108,7 +108,7 @@ class ParserLib extends TikiDb_Bridge
 	{
 		// cleaning some user input
 		// ckeditor parses several times and messes things up, we should only let it parse once
-		if ($this->isEditMode != true && $options['ck_editor']) {
+		if ($this->isEditMode != true && !$options['ck_editor']) {
 			$data = str_replace('&', '&amp;', $data);
 		}
 
