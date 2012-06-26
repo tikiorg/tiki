@@ -401,7 +401,7 @@ Nickname: changi67
 Name: Jean-FranÃ§ois  B.
 First Commit: 2009-04-23
 Last Commit: 2012-06-26
-Number of Commits: 1017
+Number of Commits: 1021
 SF Role: Packager (.rpm, .deb etc)
 
 Nickname: chealer
@@ -2215,7 +2215,7 @@ Nickname: robertplummer
 Name: Robert Plummer
 First Commit: 2010-06-30
 Last Commit: 2012-06-26
-Number of Commits: 1256
+Number of Commits: 1257
 
 Nickname: robferguson
 Name: Rob Ferguson
