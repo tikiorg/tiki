@@ -284,7 +284,7 @@ class Comments extends TikiLib
 		}
 	}
 
-	function process_inbound_mail($forumId)
+	function process_inbound_mail($forumId, $suppressErrors = false)
 	{
 		// require_once ("lib/webmail/pop3.php");
 		require_once ("lib/webmail/net_pop3.php");
@@ -466,19 +466,21 @@ class Comments extends TikiLib
 			// Process attachments
 			if (array_key_exists('parts', $output) && count($output['parts']) > 1) {
 				$forum_info = $this->get_forum($forumId);
-				$errors = array();
-				foreach ($output['parts'] as $part) {
-					if (array_key_exists('disposition', $part)) {
-						if ($part['disposition'] == 'attachment') {
-							if (strlen($part['d_parameters']['filename']) > 0) {
-								$part_name = $part['d_parameters']['filename'];
-							} else {
-								$part_name = "Unnamed File";
-							}
-							$this->add_thread_attachment($forum_info, $threadid, $errors,	$part_name, $part['type'], strlen($part['body']),	1, '', $part['body']);
-						} elseif ($part['disposition'] == 'inline') {
-							foreach ($part['parts'] as $p) {
-								$this->add_thread_attachment($forum_info, $threadid, $errors, '-', $p['type'], strlen($p['body']),	1, '', $p['body']);
+				if ($forum_info['att'] != 'att_no') {
+					$errors = array();
+					foreach ($output['parts'] as $part) {
+						if (array_key_exists('disposition', $part)) {
+							if ($part['disposition'] == 'attachment') {
+								if (strlen($part['d_parameters']['filename']) > 0) {
+									$part_name = $part['d_parameters']['filename'];
+								} else {
+									$part_name = "Unnamed File";
+								}
+								$this->add_thread_attachment($forum_info, $threadid, $errors,	$part_name, $part['type'], strlen($part['body']),	1, '', $part['body'], $suppressErrors);
+							} elseif ($part['disposition'] == 'inline') {
+								foreach ($part['parts'] as $p) {
+									$this->add_thread_attachment($forum_info, $threadid, $errors, '-', $p['type'], strlen($p['body']),	1, '', $p['body'], $suppressErrors);
+								}
 							}
 						}
 					}
