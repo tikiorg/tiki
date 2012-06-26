@@ -19,7 +19,6 @@
 				{preference name=tiki_minify_css_single_file}
 			</div>
 			{preference name=feature_obzip}
-			{preference name=users_serve_avatar_static}
 			<div class="adminoptionboxchild">
 				{if $gzip_handler ne 'none'}
 					<div class="highlight" style="margin-left:30px;">
@@ -31,6 +30,7 @@
 			</div>
 			{preference name=tiki_cachecontrol_session}
 			{preference name=smarty_compilation}
+			{preference name=users_serve_avatar_static}
 		{/tab}
 		
 		{tab name="{tr}Bytecode Cache{/tr}"}
@@ -55,11 +55,11 @@
 				{/if}
 
 				{if $opcode_stats.warning_starve}
-					<p>{tr}Little memory available. Thrashing likely to occur.{/tr}</p>
+					<p>{tr}Little memory available. Thrashing likely to occur.{/tr} {tr}The values to increase are apc.shm_size (for APC) or xcache.size (for XCache).{/tr}</p>
 				{/if}
 
 				{if $opcode_stats.warning_low}
-					<p>{tr _0=$opcode_cache}Small amount of memory allocated to %0. Verify the configuration.{/tr}</p>
+					<p>{tr _0=$opcode_cache}Small amount of memory allocated to %0. Verify the configuration.{/tr} {tr}The values to increase are apc.shm_size (for APC) or xcache.size (for XCache).{/tr}</p>
 				{/if}
 
 				{if $opcode_stats.warning_check}

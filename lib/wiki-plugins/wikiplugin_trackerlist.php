@@ -710,8 +710,19 @@ function wikiplugin_trackerlist($data, $params)
 	static $iTRACKERLIST = 0;
 	++$iTRACKERLIST;
 	$smarty->assign('iTRACKERLIST', $iTRACKERLIST);
-	$default = array('calendarfielddate' => '', 'wiki' => '', 'calendarviewmode' => 'month', 'calendarstickypopup' => 'n',
-				'calendarbeginmonth' => 'y', 'calendarviewnavbar' => 'y', 'calendartitle'=>'', 'calendardelta' => '', 'force_compile' => 'n');
+
+	$default = array(
+		'calendarfielddate' => '',
+		'wiki' => '',
+		'calendarviewmode' => 'month',
+		'calendarstickypopup' => 'n',
+		'calendarbeginmonth' => 'y',
+		'calendarviewnavbar' => 'y',
+		'calendartitle'=>'',
+		'calendardelta' => '',
+		'force_compile' => 'n'
+	);
+
 	$params = array_merge($default, $params);
 	
 	extract($params, EXTR_SKIP);
@@ -769,6 +780,15 @@ function wikiplugin_trackerlist($data, $params)
 		$allfields = $trklib->list_tracker_fields($trackerId, 0, -1, 'position_asc', '', true, '', $trklib->flaten($limit));
 		if (!empty($fields)) {
 			$listfields = $fields;
+
+			//We must include the $calendarfielddate, even if they are not in the listfields
+			if (!empty($calendarfielddate)) {
+				foreach($calendarfielddate as $f) {
+					if (!in_array($f, $listfields)) {
+						$listfields[] = $f;
+					}
+				}
+			}
 			if ($sort == 'y') {
 				$allfields = $trklib->sort_fields($allfields, $listfields);
 			}
@@ -1456,8 +1476,9 @@ function wikiplugin_trackerlist($data, $params)
 					$focus = $calendarlib->focusNext($focus, str_replace('+', '', $calendardelta));
 				}
 			}
-			$calendarlib->focusStartEnd($focus, $calendarViewMode['casedefault'], $calendarbeginmonth, $startPeriod, $startNextPeriod);
-			$cell = $calendarlib->getTableViewCells($startPeriod, $startNextPeriod, $calendarViewMode['casedefault'], $calendarlib->firstDayofWeek($user));
+
+			$calendarlib->focusStartEnd($focus, $calendarviewmode, $calendarbeginmonth, $startPeriod, $startNextPeriod);
+			$cell = $calendarlib->getTableViewCells($startPeriod, $startNextPeriod, $calendarviewmode, $calendarlib->firstDayofWeek($user));
 			$filterfield[] = $calendarfielddate[0];
 			$filtervalue[] = '';
 			$exactvalue[] = array('>=' => $startPeriod['date']);
@@ -1511,7 +1532,21 @@ function wikiplugin_trackerlist($data, $params)
 				}
 			}
 			// End Optimization
-			$items = $trklib->list_items($trackerId, $tr_offset, $max, $tr_sort_mode, $passfields, $filterfield, $filtervalue, $tr_status, $tr_initial, $exactvalue, $filter, $allfields, $skip_status_perm_check);
+			$items = $trklib->list_items(
+				$trackerId,
+				$tr_offset,
+				$max,
+				$tr_sort_mode,
+				$passfields,
+				(!empty($calendarfielddate) ? null : $filterfield),
+				$filtervalue,
+				$tr_status,
+				$tr_initial,
+				$exactvalue,
+				$filter,
+				$allfields,
+				$skip_status_perm_check
+			);
 			if (isset($silent) && $silent == 'y' && empty($items['cant'])) {
 				return;
 			}
@@ -1601,12 +1636,12 @@ function wikiplugin_trackerlist($data, $params)
 				$smarty->assign('module_params', array('viewmode'=>'n', 'showaction'=>'n', 'notitle'=>empty($calendartitle)?'y':'n', 'title'=>$calendartitle, 'viewnavbar' => $calendarviewnavbar, 'decorations'=> empty($calendartitle)?'n':'y'));
 				$smarty->assign('tpl_module_title', tra($calendartitle));
 				$smarty->assign('now', $tikilib->now);
-				$smarty->assign('calendarViewMode', $calendarViewMode['casedefault']);
-				$smarty->assign('viewmodelink', $calendarViewMode['casedefault']);
-				$smarty->assign('viewmode', $calendarViewMode['casedefault']);
-				$focus_prev = $calendarlib->focusPrevious($focus, $calendarViewMode['casedefault']);
+				$smarty->assign('calendarViewMode', $calendarviewmode);
+				$smarty->assign('viewmodelink', $calendarviewmode);
+				$smarty->assign('viewmode', $calendarviewmode);
+				$focus_prev = $calendarlib->focusPrevious($focus, $calendarviewmode);
 				$smarty->assign('focus_prev', $focus_prev['date']);
-				$focus_next = $calendarlib->focusNext($focus, $calendarViewMode['casedefault']);
+				$focus_next = $calendarlib->focusNext($focus, $calendarviewmode);
 				$smarty->assign('focus_next', $focus_next['date']);
 				$smarty->assign('daystart', $startPeriod['date']);
 				$dayend =  $calendarlib->infoDate($startNextPeriod['date']-1);

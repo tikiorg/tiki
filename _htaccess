@@ -5,7 +5,7 @@
 #
 # To use, ideally, create a symbolic link from .htaccess to _htaccess. This will keep the configuration up-to-date.
 # If you can't, do one of the following:
-# - Copy _htaccess to .htaccess.
+# - Copy _htaccess to .htaccess. Note : Do not move (rename) _htaccess, it is required for other uses (like SEFURL).
 # - Add the content of this file to your httpd.conf.
 # This should be repeated when the reference _htaccess file changes (when upgrading Tiki). 
 
@@ -82,6 +82,9 @@ FileETag none
 # increase the maximum file size for uploads allowed by php for Tiki (default value in apache use to be 2M which is usually too low for pdf or documents with some images, screenshots, etc)
 #php_value upload_max_filesize 10M
 #php_value post_max_size 11M
+
+# This sets the maximum time in seconds a script is allowed to parse input data, like POST and GET. 
+#php_value max_input_time 90
 
 # In some cases you may see open_basedir warnings about Smarty accessing php files that it shouldn't
 # The following line (uncommented) will reset the include path to use only Tiki's files which will solve this in most cases

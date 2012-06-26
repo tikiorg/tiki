@@ -1346,6 +1346,9 @@ class TrackerLib extends TikiLib
 		$old_values = $fil;
 
 		$tracker_definition = Tracker_Definition::get($trackerId);
+
+		if (method_exists($tracker_definition, 'getInformation') == false) return -1;
+
 		$tracker_info = $tracker_definition->getInformation();
 
 		if (!empty($itemId)) {
@@ -3643,9 +3646,12 @@ class TrackerLib extends TikiLib
 		if (empty($items)) {
 			return;
 		}
+		$iStart = -1;
+		$iEnd = -1;
 		foreach ($items[0]['field_values'] as $i => $field) {
 			if ($field['fieldId'] == $fieldIds[0]) {
 				$iStart = $i;
+				$iEnd = $i; //$end can be the same as start
 			} elseif (count($fieldIds) > 1 && $field['fieldId'] == $fieldIds[1]) {
 				$iEnd = $i;
 			}

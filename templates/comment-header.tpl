@@ -9,7 +9,7 @@
 
 	{if $thread_style != 'commentStyle_headers' and $this_is_locked eq 'n' and $comment.threadId > 0}
 	<div class="actions">
-		{if	$tiki_p_admin_forum eq 'y'
+		{if $tiki_p_admin_forum eq 'y'
 			|| ( $comment.userName == $user && $tiki_p_forum_edit_own_posts eq 'y' )}
 		<a title="{tr}Edit{/tr}"
 			{if $first eq 'y'}
@@ -34,7 +34,7 @@
 			{self_link report=$comment.threadId _icon='delete' _alt="{tr}Report this post{/tr}" _title="{tr}Report this post{/tr}"}{/self_link}
 		{/if}
 					
-	  	{if $user and $prefs.feature_notepad eq 'y' and $tiki_p_notepad eq 'y' and $forumId}
+		{if $user and $prefs.feature_notepad eq 'y' and $tiki_p_notepad eq 'y' and $forumId}
 			{self_link savenotepad=$comment.threadId _icon='disk' _alt="{tr}Save to notepad{/tr}" _title="{tr}Save to notepad{/tr}"}{/self_link}
 		{/if}
 	

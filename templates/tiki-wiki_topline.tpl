@@ -3,7 +3,7 @@
 		{if !isset($hide_page_header) or !$hide_page_header}
 			<div class="wikiinfo" style="float: left">
 				{if $prefs.wiki_page_name_above eq 'y' and $print_page ne 'y'}
-				    <a href="javascript:self.location=self.location;" class="titletop" title="{tr}refresh{/tr}">{$page|escape}</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{* The hard-coded spaces help selecting the page name for inclusion in a wiki link *}
+				    <a href="tiki-index.php?page={$page|escape:"url"}" class="titletop" title="{tr}refresh{/tr}">{$page|escape}</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{* The hard-coded spaces help selecting the page name for inclusion in a wiki link *}
 				{/if}
 				
 				{if $prefs.feature_wiki_pageid eq 'y' and $print_page ne 'y'}
