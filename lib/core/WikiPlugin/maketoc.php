@@ -34,18 +34,35 @@ class WikiPlugin_maketoc extends WikiPlugin_HtmlBase
 	function output($data, $params, $index, $parser)
 	{
 		if (!empty($parser->headerStack)) {
-			$list = '';
-			foreach($parser->headerStack as $id => $content) {
-				$list .= '<li><a class="link" href="#' .  $id . '">' . $content . '</a></li>';
-			}
 
-			$result = '<div id="toctitle">
-				<h3>' . tr('Table of contents') . '</h3></div>
-			<ul class="toc">'
-				. $list .
-			'</ul>';
+			$result = '<div id="toctitle"><h3>' .
+				tr('Table of contents') .
+			'</h3></div>' .
+			$this->toList($parser->headerStack, true);
 
 			return $result;
 		}
+	}
+
+	private function toList($array, $isBase = false) {
+		$result = '';
+
+		foreach($array as &$header){
+			if(empty($header['content']) == false){
+				$result .= '<li><a class="link" href="#' . $header['id'] . '">' . $header['content'] . '</a></li>';
+
+				if(empty($header['children']) == false) {
+					$result .= $this->toList($header['children']);
+				}
+
+				$result .= '</li>';
+
+			} elseif (empty($header['children']) == false) {
+
+				$result .= $this->toList($header['children']);
+			}
+		}
+
+		return '<ul' . ($isBase == true ? ' class = "toc" ' : '') . '>' . $result . '</ul>';
 	}
 }
