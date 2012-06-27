@@ -14,7 +14,7 @@ class WikiPlugin_oohtml extends WikiPlugin_HtmlBase
 	var $icon = 'img/icons/mime/html.png';
 	var $tags = array( 'basic' );
 
-	function __constuct()
+	function __construct()
 	{
 		$this->name = tra('Object oriented version of the html wiki plugin');
 		$this->documentation = 'PluginHTML';
