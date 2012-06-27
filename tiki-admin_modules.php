@@ -5,6 +5,14 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
+$inputConfiguration = array(
+		array(
+			'staticKeyFilters' => array(
+				'um_data' => 'none',
+			),
+		)
+);
+
 $section = 'admin';
 require_once ('tiki-setup.php');
 include_once ('lib/menubuilder/menulib.php');
