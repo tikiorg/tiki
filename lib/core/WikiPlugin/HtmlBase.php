@@ -311,7 +311,7 @@ abstract class WikiPlugin_HtmlBase
 
 	abstract protected function output($data, $params, $index, $parser);
 
-	public function exec($data, $params, $index, $parser)
+	public function exec($data, $params, $index, &$parser)
 	{
 		$this->paramDefaults($params);
 		$style = $this->stylize($params);
