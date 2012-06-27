@@ -583,6 +583,15 @@ if ( \$('#$id') ) {
 			$real[] = $plugin;
 		}
 
+		//Check for existence of Zend wiki plugins
+		foreach ( glob('lib/core/WikiPlugin/*.php') as $file ) {
+			$base = basename($file);
+			if (strtolower($base) == $base) { //the zend plugins all have lower case names
+				$plugin = substr($base, 0, -4);
+				$real[] = $plugin;
+			}
+		}
+
 		global $prefs;
 		if ( isset($prefs['pluginaliaslist']) ) {
 			$alias = @unserialize($prefs['pluginaliaslist']);
@@ -638,14 +647,11 @@ if ( \$('#$id') ) {
 			return $known[$name];
 		}
 
-		$className = false;
-		if ($name != 'maketoc') {
-			$className = 'WikiPlugin_' . $name;
-			$classExists = @class_exists($className);
-			if ($classExists == true) {
-				$class = new $className;
-				$known[$name] = $class->info();
-			}
+		$className = 'WikiPlugin_' . $name;
+		$classExists = @class_exists($className);
+		if ($classExists == true) {
+			$class = new $className;
+			return $known[$name] = $class->info();
 		}
 
 		if ( ! $this->plugin_exists($name, true) )
