@@ -10,25 +10,19 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	/* parser tracking */
 	var $parsing = false;
 	public static $spareParsers = array();
+	private $Parser;
 
 	/* plugin tracking */
 	var $pluginStack = array();
-	public static $pluginCount = 0;
 	var $pluginEntries = array();
-	public static $pluginsExecutedStack = array();
-	public static $plugins = array();
-	var $pluginsAwaitingExecution = array();
-	var $parserLevel;
-	var $Parser;
+	var $plugins = array();
 
 	/* np tracking */
 	var $npEntries = array();
 	var $npCount = 0;
 
 	/* header tracking */
-	var $headerStack = array();
-	var $headerCount = 0;
-	var $headerIdCount = array();
+	var $headerManager;
 
 	//This var is used in both protectSpecialChars and unprotectSpecialChars to simplify the html ouput process
 	var $specialChars = array(
@@ -106,11 +100,14 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	function __construct()
 	{
 		global $tikilib, $page, $user, $prefs;
+
 		$this->tikilib = $tikilib;
 		$this->page = $page;
 		$this->user = (isset($user) ? $user : tra('Anonymous'));
 		$this->prefs = $prefs;
 		$this->Parser = &$this;
+		$this->headerManager = new JisonParser_Wiki_HeaderManager();
+
 		parent::__construct();
 	}
 
@@ -137,8 +134,8 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 
 			$result = parent::parse($input);
 
-			$this->postParse($result);
 			$this->parsing = false;
+			$this->postParse($result);
 		}
 
 		return $result;
@@ -206,79 +203,34 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 
 		$this->restoreNpEntities($input);
 		$this->restorePluginEntities($input);
+		$this->executeAndRestoreAwaitingPlugins($input);
 	}
 
 	// state & plugin handlers
 	function plugin($pluginDetails)
 	{
-		global $smarty;
-
-		$argParser = new WikiParser_PluginArgumentParser;
-		$args = $argParser->parse($pluginDetails['args']);
+		$plugin = new WikiPlugin_ParserNegotiator($this, $pluginDetails, $this->page, $this->prefs, self::$option);
 
 		if (!self::$option['skipvalidation']) {
-			$status = $this->pluginCanExecute(strtolower($pluginDetails['name']), $pluginDetails['body'], $args);
+			$status = $plugin->canExecute();
 		} else {
 			$status = true;
 		}
 
-		$key = '§' . md5('plugin:'.self::$pluginCount) . '§';
-		self::$pluginCount++;
-
 		if ($status === true) {
-			$pluginDetails['body'] = $this->unprotectSpecialChars($pluginDetails['body'], true);
+			$plugin->body = $this->unprotectSpecialChars($plugin->body, true);
 
-			$this->pluginEntries[$key] = $this->pluginExecute(
-				$pluginDetails['name'],
-				$args,
-				$pluginDetails['body'],
-				$key
-			);
+			/*$plugins is a bit different that pluginEntries, an entry will be popped later, $plugins is more for
+			tracking, although their values may be the same for a time, the end result will be an empty entries, but
+			$plugins will have all executed plugin in it*/
+			$this->Parser->plugins[$plugin->key] = $plugin->body;
 
-			$this->pluginEntries[$key] = $this->parsePlugin( $this->pluginEntries[$key] );
-
-			//$plugins is a bit different that pluginEntries, an entry will be popped later, $plugins is more for tracking, although their values may be the same for a time, the end result will be an empty entries, but $plugins will have all executed plugin in it
-			self::$plugins[$key] = $pluginDetails['body'];
+			$this->pluginEntries[$plugin->key] = $this->parsePlugin( $plugin->execute(true) );
 		} else {
-			$smarty->assign('plugin_fingerprint', $status);
-			$smarty->assign('plugin_name', $pluginDetails['name']);
-			$smarty->assign('plugin_index', 0);
-
-			$smarty->assign('plugin_status', $status);
-
-			global $tiki_p_plugin_viewdetail, $tiki_p_plugin_preview, $tiki_p_plugin_approve;
-			$details = $tiki_p_plugin_viewdetail == 'y' && $status != 'rejected';
-			$preview = $tiki_p_plugin_preview == 'y' && $details && ! self::$option['preview_mode'];
-			$approve = $tiki_p_plugin_approve == 'y' && $details && ! self::$option['preview_mode'];
-
-			if (self::$option['inside_pretty']) {
-				$smarty->assign('plugin_details', '');
-			} else {
-				$smarty->assign('plugin_details', $details);
-			}
-
-			$smarty->assign('plugin_preview', $preview);
-			$smarty->assign('plugin_approve', $approve);
-
-			$smarty->assign('plugin_body', $pluginDetails['body']);
-			$smarty->assign('plugin_args', $args);
-
-			$this->pluginEntries[$key] = $smarty->fetch('tiki-plugin_blocked.tpl');
+			return $plugin->blockFromExecution($status);
 		}
 
-		return $key;
-	}
-
-	function stackPlugin($yytext)
-	{
-		$pluginName = $this->match('/^\{([A-Z]+)/', $yytext);
-		$pluginArgs = rtrim(str_replace('{' . $pluginName . '(', '', $yytext), ')}');
-
-		$this->pluginStack[] = array(
-			'name' => $pluginName,
-			'args' => $pluginArgs,
-			'body' => ''
-		);
+		return $plugin->key;
 	}
 
 	function inlinePlugin($yytext)
@@ -293,308 +245,28 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		);
 	}
 
+	function stackPlugin($yytext)
+	{
+		$pluginName = $this->match('/^\{([A-Z]+)/', $yytext);
+		$pluginArgs = rtrim(str_replace('{' . $pluginName . '(', '', $yytext), ')}');
+
+		$this->pluginStack[] = array(
+			'name' => $pluginName,
+			'args' => $pluginArgs,
+			'body' => ''
+		);
+	}
+
 	function isPlugin()
 	{
 		return (count($this->pluginStack) > 0);
 	}
 
-	function pluginExecute($name, $args = array(), $body = "", $key)
+	static function getUnparsedPluginBodies($data)
 	{
-		$name = strtolower($name);
-		if (isset(self::$pluginsExecutedStack[$name]) == false) {
-			self::$pluginsExecutedStack[$name] = 0;
-		}
-		self::$pluginsExecutedStack[$name]++;
-
-		$className = 'WikiPlugin_' . $name;
-		if (@class_exists($className)) {
-			$class = new $className;
-			if (isset($class->parserLevel) && $class->parserLevel > $this->parserLevel) {
-				if(!isset($this->pluginsAwaitingExecution[$class->parserLevel])) $this->pluginsAwaitingExecution[$class->parserLevel] = array();
-				$this->pluginsAwaitingExecution[$class->parserLevel][] = array(
-					"name" => $name,
-					"args" => $args,
-					"body" => $body,
-					"key" => $key
-				);
-
-				return $key;
-			} else {
-				return $class->exec($body, $args, self::$pluginsExecutedStack[$name], $this);
-			}
-		}
-
-		$fnName = strtolower('wikiplugin_' .  $name);
-
-		if ( $this->pluginExists($name) && function_exists($fnName) ) {
-
-			$result =
-				$fnName($body, $args, self::$pluginsExecutedStack[$name], $this).
-
-				$this->pluginButton(
-					$name,
-					$args,
-					$key
-				);
-
-			return $result;
-		}
-
-		return $body;
-	}
-
-	function pluginExists($name)
-	{
-		$phpName = 'lib/wiki-plugins/wikiplugin_';
-		$phpName .= strtolower($name) . '.php';
-
-		$exists = file_exists($phpName);
-
-		if ( $exists ) {
-			include_once $phpName;
-		}
-
-		if ( $exists ) {
-			return true;
-		}
-
-		return false;
-	}
-
-	function pluginCanExecute( $name, $data = '', $args = array(), $dontModify = false )
-	{
-		// If validation is disabled, anything can execute
-		if ( $this->prefs['wiki_validate_plugin'] != 'y' ) {
-			return true;
-		}
-
-		$meta = $this->pluginInfo($name);
-
-		if ( ! isset( $meta['validate'] ) ) {
-			return true;
-		}
-
-		$fingerprint = $this->pluginFingerprint($name, $meta, $data, $args);
-
-		$val = $this->pluginFingerprintCheck($fingerprint, $dontModify);
-
-		switch($val) {
-			case 'accept':
-				return true;
-				break;
-			case 'reject':
-				return 'rejected';
-				break;
-			default:
-				global $tiki_p_plugin_approve, $tiki_p_plugin_preview;
-				if (
-					isset($_SERVER['REQUEST_METHOD'])
-					&& $_SERVER['REQUEST_METHOD'] == 'POST'
-					&& isset( $_POST['plugin_fingerprint'] )
-					&& $_POST['plugin_fingerprint'] == $fingerprint
-				) {
-					if ( $tiki_p_plugin_approve == 'y' ) {
-						if ( isset( $_POST['plugin_accept'] ) ) {
-							$this->pluginFingerprintStore($fingerprint, 'accept');
-							$this->tikilib->invalidate_cache($this->page);
-							return true;
-						} elseif ( isset( $_POST['plugin_reject'] ) ) {
-							$this->pluginFingerprintStore($fingerprint, 'reject');
-							$this->tikilib->invalidate_cache($this->page);
-							return 'rejected';
-						}
-					}
-
-					if ( $tiki_p_plugin_preview == 'y'
-						&& isset( $_POST['plugin_preview'] ) ) {
-						return true;
-					}
-				}
-
-				return $fingerprint;
-		}
-	}
-
-	function pluginIsEditable( $name )
-	{
-		global $tiki_p_edit, $prefs, $section;
-		$info = $this->pluginInfo($name);
-		// note that for 3.0 the plugin editor only works in wiki pages, but could be extended later
-		return $section == 'wiki page' && $info && $tiki_p_edit == 'y' && $prefs['wiki_edit_plugin'] == 'y'
-			&& !$this->pluginIsInline($name);
-	}
-
-	function pluginIsInline( $name )
-	{
-		if ( ! $meta = $this->pluginInfo($name) )
-			return true; // Legacy plugins always inline
-
-		$inline = false;
-		if ( isset( $meta['inline'] ) && $meta['inline'] )
-			return true;
-
-		$inline_pref = 'wikiplugininline_' .  $name;
-		if ( isset( $this->prefs[ $inline_pref ] ) && $this->prefs[ $inline_pref ] == 'y' )
-			return true;
-
-		return false;
-	}
-
-	function pluginFingerprintStore( $fingerprint, $type )
-	{
-		if ( $this->page ) {
-			$objectType = 'wiki page';
-			$objectId = $this->page;
-		} else {
-			$objectType = '';
-			$objectId = '';
-		}
-
-		$pluginSecurity = $this->tikilib->table('tiki_plugin_security');
-		$pluginSecurity->delete(array('fingerprint' => $fingerprint));
-		$pluginSecurity->insert(array(
-			'fingerprint' => $fingerprint,
-			'status' => $type,
-			'added_by' => $this->user,
-			'last_objectType' => $objectType,
-			'last_objectId' => $objectId
-		));
-	}
-
-	function pluginInfo( $name )
-	{
-		static $known = array();
-
-		if ( isset( $known[$name] ) ) {
-			return $known[$name];
-		}
-
-		$className = 'WikiPlugin_' . $name;
-		if (@class_exists($className)) {
-			$known[$name] = true;
-		}
-
-		if ( ! $this->pluginExists($name, true) )
-			return $known[$name] = false;
-
-		$func_name_info = "wikiplugin_{$name}_info";
-
-		if ( ! function_exists($func_name_info) ) {
-			if ( $info = $this->pluginAliasInfo($name) )
-				return $known[$name] = $info['description'];
-			else
-				return $known[$name] = false;
-		}
-
-		return $known[$name] = $func_name_info();
-	}
-
-	function pluginAliasInfo( $name )
-	{
-		global $prefs;
-
-		if (empty($name)) return false;
-
-		$name = TikiLib::strtolower($name);
-		$prefName = "pluginalias_$name";
-
-		if ( ! isset( $prefs[$prefName] ) ) return false;
-
-		return @unserialize($prefs[$prefName]);
-	}
-
-	function pluginFingerprint( $name, $meta, $data, $args )
-	{
-		$validate = (isset($meta['validate']) ? $meta['validate'] : '');
-
-		$data = $this->unprotectSpecialChars($data, true);
-
-		if ( $validate == 'all' || $validate == 'body' )
-			$validateBody = str_replace('<x>', '', $data);	// de-sanitize plugin body to make fingerprint consistant with 5.x
-		else
-			$validateBody = '';
-
-		if ( $validate == 'all' || $validate == 'arguments' ) {
-			$validateArgs = $args;
-
-			// Remove arguments marked as safe from the fingerprint
-			foreach ( $meta['params'] as $key => $info ) {
-				if ( isset( $validateArgs[$key] )
-					&& isset( $info['safe'] )
-					&& $info['safe']
-				) {
-					unset($validateArgs[$key]);
-				}
-			}
-			// Parameter order needs to be stable
-			ksort($validateArgs);
-
-			if (empty($validateArgs)) {
-				$validateArgs = array( '' => '' );	// maintain compatibility with pre-Tiki 7 fingerprints
-			}
-		} else {
-			$validateArgs = array();
-		}
-
-		$bodyLen = str_pad(strlen($validateBody), 6, '0', STR_PAD_RIGHT);
-		$serialized = serialize($validateArgs);
-		$argsLen = str_pad(strlen($serialized), 6, '0', STR_PAD_RIGHT);
-
-		$bodyHash = md5($validateBody);
-		$argsHash = md5($serialized);
-
-		return "$name-$bodyHash-$argsHash-$bodyLen-$argsLen";
-	}
-
-	function pluginFingerprintCheck( $fingerprint, $dontModify = false )
-	{
-		$limit = date('Y-m-d H:i:s', time() - 15*24*3600);
-		$result = $this->tikilib->query("
-			SELECT status, if(status='pending' AND last_update < ?, 'old', '') flag
-			FROM tiki_plugin_security
-			WHERE fingerprint = ?
-		", array( $limit, $fingerprint ));
-
-		$needUpdate = false;
-
-		if ( $row = $result->fetchRow() ) {
-			$status = $row['status'];
-			$flag = $row['flag'];
-
-			if ( $status == 'accept' || $status == 'reject' ) {
-				return $status;
-			}
-
-			if ( $flag == 'old' ) {
-				$needUpdate = true;
-			}
-		} else {
-			$needUpdate = true;
-		}
-
-		if ( $needUpdate && !$dontModify ) {
-			global $page;
-			if ( $page ) {
-				$objectType = 'wiki page';
-				$objectId = $page;
-			} else {
-				$objectType = '';
-				$objectId = '';
-			}
-
-
-			$pluginSecurity = $this->tikilib->table('tiki_plugin_security');
-			$pluginSecurity->delete(array('fingerprint' => $fingerprint));
-			$pluginSecurity->insert(array(
-				'fingerprint' => $fingerprint,
-				'status' => 'pending',
-				'added_by' => $this->user,
-				'last_objectType' => $objectType,
-				'last_objectId' => $objectId
-			));
-		}
-
-		return '';
+		$me = new self();
+		$me->parse($data);
+		return $me->plugins;
 	}
 
 	function removeNpEntities(&$matches)
@@ -605,7 +277,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		return $key;
 	}
 
-	function deleteEntities(&$data)
+	static function deleteEntities(&$data)
 	{
 		$data = preg_replace('/§[a-z0-9]{32}§/','',$data);
 	}
@@ -635,21 +307,33 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 				unset($this->pluginEntries[$key]);
 			}
 		}
+	}
 
-		sort($this->pluginsAwaitingExecution, SORT_NUMERIC);
-		foreach($this->pluginsAwaitingExecution as &$level) {
-			$this->parserLevel = $level;
-			foreach($level as &$pluginDetails) {
-				if (!isset($pluginDetails['exec'])) {
-					$pluginDetails['exec'] = $this->parsePlugin($this->pluginExecute(
-						$pluginDetails['name'],
-						$pluginDetails['args'],
-						$pluginDetails['body'],
-						$pluginDetails['key'])
-					);
+	function executeAndRestoreAwaitingPlugins(&$input, $keep = false)
+	{
+		if ($this->Parser->parsing == false && WikiPlugin_ParserNegotiator::$currentParserLevel == 0) {
+			sort(WikiPlugin_ParserNegotiator::$parserLevels, SORT_NUMERIC);
+			array_unique(WikiPlugin_ParserNegotiator::$parserLevels);
+
+			foreach(WikiPlugin_ParserNegotiator::$parserLevels as &$level) {
+				WikiPlugin_ParserNegotiator::$currentParserLevel = $level;
+				foreach(WikiPlugin_ParserNegotiator::$pluginsAwaitingExecution as &$plugin) {
+					if (WikiPlugin_ParserNegotiator::$currentParserLevel == $level) {
+
+						if (empty($this->pluginEntries[$plugin->key]) == true) {
+							$this->Parser->plugins[$plugin->key] = $plugin->body;
+							$this->pluginEntries[$plugin->key] = $this->parsePlugin($plugin->execute());
+						}
+
+						$input = str_replace($plugin->key, $this->pluginEntries[$plugin->key], $input);
+
+						if (!$keep) {
+							unset($this->pluginEntries[$plugin->key]);
+						}
+
+						unset($plugin);
+					}
 				}
-				$input = str_replace($pluginDetails['key'],$pluginDetails['exec'], $input);
-				unset($pluginDetails);
 			}
 		}
 	}
@@ -997,50 +681,11 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 
 		$content = substr($content, $hNum - 1);
 		if (self::$option['parseWiki'] == false) return str_repeat("!", $hNum) . $content;
+
 		$hNum = min(6, $hNum); //html doesn't support 7+ header level
-
-		$cleanHeader = $content;
-		$this->deleteEntities($cleanHeader);
-		$id = implode('_', JisonParser_Phraser_Handler::sanitizeToWords($cleanHeader));
-
-		if (isset($this->Parser->headerIdCount[$id])) {
-			$this->Parser->headerIdCount[$id]++;
-			$id .= $this->Parser->headerIdCount[$id];
-		} else {
-			$this->Parser->headerIdCount[$id] = 0;
-		}
-
-		if ($hNum == 1) {
-			$this->Parser->headerStack[] = array('content' => $cleanHeader, 'id' => $id, 'children' => array());
-		} else {
-			$this->addToHeaderStack($this->Parser->headerStack, 1, $hNum, $cleanHeader, $id);
-		}
-
-		return $this->headerButton($hNum) . '<h' . $hNum . ' class="showhide_heading" id="' . $id . '">' . $content . '</h' . $hNum . '>';
-	}
-
-	private function addToHeaderStack(&$stack, $currentLevel, $neededLevel, $content, $id)
-	{
-		if ($currentLevel < $neededLevel && $currentLevel < 7) {
-			if (!isset($stack)) {
-				$stack = array();
-				$key = 0;
-			} else {
-				end($stack);
-				$key = key($stack);
-			}
-
-			$key = max(0, $key);
-
-			$this->addToHeaderStack($stack[$key]['children'], $currentLevel + 1, $neededLevel, $content, $id);
-		} else {
-			$stack[] = array('content' => $content, 'id' => $id);
-		}
-	}
-
-	function headerButton($hNum)
-	{
-		global $smarty, $tiki_p_edit, $section;
+		$id = $this->Parser->headerManager->stack($hNum, $content);
+		$button = '';
+		global $section, $tiki_p_edit;
 		if (
 			$this->prefs['wiki_edit_section'] === 'y' &&
 			$section === 'wiki page' &&
@@ -1054,91 +699,10 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 			) &&
 			!self::$option['suppress_icons']
 		) {
-
-
-			if ($this->prefs['wiki_edit_icons_toggle'] == 'y' && !isset($_COOKIE['wiki_plugin_edit_view'])) {
-				$iconDisplayStyle = ' style="display:none;"';
-			} else {
-				$iconDisplayStyle = '';
-			}
-			$button = '<div class="icon_edit_section"' . $iconDisplayStyle . '><a href="tiki-editpage.php?';
-
-			if (!empty($_REQUEST['page'])) {
-				$button .= 'page='.urlencode($_REQUEST['page']).'&amp;';
-			}
-
-			$this->headerCount++;
-			include_once('lib/smarty_tiki/function.icon.php');
-			$button .= 'hdr=' . $this->headerCount . '">'.smarty_function_icon(array('_id'=>'page_edit_section', 'alt'=>tra('Edit Section')), $smarty).'</a></div>';
-
-			return $button;
-		}
-	}
-
-	function pluginButton($name, $args, $key)
-	{
-		global $headerlib, $smarty;
-
-		$name = strtolower($name);
-
-		if (
-			$this->pluginIsEditable($name) &&
-			(
-				empty(self::$option['preview_mode']) ||
-				!self::$option['preview_mode']
-			) &&
-			empty(self::$option['indexing']) &&
-			(
-				empty(self::$option['print']) ||
-				!self::$option['print']
-			) &&
-			!self::$option['suppress_icons']
-		) {
-			$id = 'plugin-edit-' . $name . self::$pluginsExecutedStack[$name];
-			$iconDisplayStyle = '';
-			if (
-				$this->prefs['wiki_edit_icons_toggle'] == 'y' &&
-				(
-					$this->prefs['wiki_edit_plugin'] == 'y' || $this->prefs['wiki_edit_section'] == 'y'
-				)
-			) {
-				if (!isset($_COOKIE['wiki_plugin_edit_view'])) {
-					$iconDisplayStyle = ' style="display:none;"';
-				}
-			}
-
-			$headerlib->add_jsfile('tiki-jsplugin.php?language='.$this->prefs['language'], 'dynamic');
-			if ($this->prefs['wikiplugin_module'] === 'y' && $this->prefs['wikiplugininline_module'] === 'n') {
-				$headerlib->add_jsfile('tiki-jsmodule.php?language='.$this->prefs['language'], 'dynamic');
-			}
-			$headerlib->add_jq_onready('
-$("#' . $id . '").click( function(event) {
-	$.getJSON("tiki-ajax_services.php", {
-		page: "' .$this->page. '",
-		key: "' . $key . '",
-		controller: "jison",
-		action: "pluginbody"
-	}, function(o) {
-		popup_plugin_form('
-			. json_encode('editwiki')
-			. ', '
-			. json_encode($name)
-			. ', '
-			. json_encode(self::$pluginsExecutedStack[$name])
-			. ', '
-			. json_encode(self::$option['page'])
-			. ', '
-			. json_encode($args)
-			. ', o.body, event.target);
-	});
-	return false;
-});
-');
-			include_once('lib/smarty_tiki/function.icon.php');
-			return '~np~<a id="' .$id. '" class="editplugin"'.$iconDisplayStyle.'>'.smarty_function_icon(array('_id'=>'wiki_plugin_edit', 'alt'=>tra('Edit Plugin').':'.$name), $smarty)."</a>~/np~";
+			$button = $this->Parser->headerManager->button($this->prefs['wiki_edit_icons_toggle']);
 		}
 
-		return '';
+		return $button . '<h' . $hNum . ' class="showhide_heading" id="' . $id . '">' . $content . '</h' . $hNum . '>';
 	}
 
 	function hr() //---
