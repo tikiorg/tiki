@@ -35,6 +35,7 @@
 							{preference name="unified_lucene_max_buffered_docs"}
 							{preference name="unified_lucene_max_merge_docs"}
 							{preference name="unified_lucene_merge_factor"}
+							{preference name="unified_lucene_default_operator"}
 						</fieldset>
 					</div>
 
