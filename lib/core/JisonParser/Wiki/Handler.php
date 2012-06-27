@@ -19,6 +19,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	public static $plugins = array();
 	var $pluginsAwaitingExecution = array();
 	var $parserLevel;
+	var $Parser;
 
 	/* np tracking */
 	var $npEntries = array();
@@ -109,6 +110,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		$this->page = $page;
 		$this->user = (isset($user) ? $user : tra('Anonymous'));
 		$this->prefs = $prefs;
+		$this->Parser = &$this;
 		parent::__construct();
 	}
 
@@ -119,9 +121,11 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		if ($this->parsing == true) {
 			$parser = end(self::$spareParsers);
 			if (!empty($parser) && $parser->parsing == false) {
+				$parser->Parser = &$this->Parser;
 				$result = $parser->parse($input);
 			} else {
 				self::$spareParsers[] = $parser = new JisonParser_Wiki_Handler();
+				$parser->Parser = &$this->Parser;
 				$result = $parser->parse($input);
 			}
 		} else {
@@ -601,6 +605,11 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		return $key;
 	}
 
+	function deleteEntities(&$data)
+	{
+		$data = preg_replace('/§[a-z0-9]{32}§/','',$data);
+	}
+
 	function restoreNpEntities(&$input, $keep = false)
 	{
 		foreach($this->npEntries as $key => $entity) {
@@ -628,10 +637,19 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		}
 
 		sort($this->pluginsAwaitingExecution, SORT_NUMERIC);
-		foreach($this->pluginsAwaitingExecution as $level) {
+		foreach($this->pluginsAwaitingExecution as &$level) {
 			$this->parserLevel = $level;
-			foreach($level as $pluginDetails) {
-				$input = str_replace($pluginDetails['key'], $this->parsePlugin($this->pluginExecute($pluginDetails['name'],$pluginDetails['args'],$pluginDetails['body'],$pluginDetails['key'])), $input);
+			foreach($level as &$pluginDetails) {
+				if (!isset($pluginDetails['exec'])) {
+					$pluginDetails['exec'] = $this->parsePlugin($this->pluginExecute(
+						$pluginDetails['name'],
+						$pluginDetails['args'],
+						$pluginDetails['body'],
+						$pluginDetails['key'])
+					);
+				}
+				$input = str_replace($pluginDetails['key'],$pluginDetails['exec'], $input);
+				unset($pluginDetails);
 			}
 		}
 	}
@@ -978,23 +996,46 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		}
 
 		$content = substr($content, $hNum - 1);
-
-		$id = implode('_', JisonParser_Phraser_Handler::sanitizeToWords($content));
-
-		if (isset($this->headerIdCount[$id])) {
-			$this->headerIdCount[$id]++;
-			$id .= $this->headerIdCount[$id];
-		} else {
-			$this->headerIdCount[$id] = 0;
-		}
-
-		$this->headerStack[$id] = $content;
-
 		if (self::$option['parseWiki'] == false) return str_repeat("!", $hNum) . $content;
-
 		$hNum = min(6, $hNum); //html doesn't support 7+ header level
 
+		$cleanHeader = $content;
+		$this->deleteEntities($cleanHeader);
+		$id = implode('_', JisonParser_Phraser_Handler::sanitizeToWords($cleanHeader));
+
+		if (isset($this->Parser->headerIdCount[$id])) {
+			$this->Parser->headerIdCount[$id]++;
+			$id .= $this->Parser->headerIdCount[$id];
+		} else {
+			$this->Parser->headerIdCount[$id] = 0;
+		}
+
+		if ($hNum == 1) {
+			$this->Parser->headerStack[] = array('content' => $cleanHeader, 'id' => $id, 'children' => array());
+		} else {
+			$this->addToHeaderStack($this->Parser->headerStack, 1, $hNum, $cleanHeader, $id);
+		}
+
 		return $this->headerButton($hNum) . '<h' . $hNum . ' class="showhide_heading" id="' . $id . '">' . $content . '</h' . $hNum . '>';
+	}
+
+	private function addToHeaderStack(&$stack, $currentLevel, $neededLevel, $content, $id)
+	{
+		if ($currentLevel < $neededLevel && $currentLevel < 7) {
+			if (!isset($stack)) {
+				$stack = array();
+				$key = 0;
+			} else {
+				end($stack);
+				$key = key($stack);
+			}
+
+			$key = max(0, $key);
+
+			$this->addToHeaderStack($stack[$key]['children'], $currentLevel + 1, $neededLevel, $content, $id);
+		} else {
+			$stack[] = array('content' => $content, 'id' => $id);
+		}
 	}
 
 	function headerButton($hNum)
