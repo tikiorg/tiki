@@ -115,6 +115,7 @@ function prefs_unified_list()
 			'separator' => ',',
 			'filter' => 'word',
 			'default' => array('contents', 'title'),
+			'size' => 80,
 		),
 		'unified_tokenize_version_numbers' => array(
 			'name' => tra('Tokenize version numbers'),
