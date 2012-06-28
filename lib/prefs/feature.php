@@ -2563,6 +2563,7 @@ function prefs_feature_list($partial = false)
 			'tags' => array('experimental'),
 			'dependencies' => array(
 				'auth_token_access',
+				'feature_file_galleries',
 			),
 		),
 	);
