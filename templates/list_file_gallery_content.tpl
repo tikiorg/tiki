@@ -382,7 +382,7 @@
 			{/if}
 
 			{if ( $prefs.use_context_menu_icon neq 'y' and $prefs.use_context_menu_text neq 'y' ) or $gal_info.show_action eq 'y' or $prefs.javascript_enabled neq 'y'}
-				<td>{include file='fgal_context_menu.tpl'}</td>
+				<td>{include file='fgal_context_menu.tpl' changes=$smarty.section.changes.index}</td>
 			{/if}
 
 			{if ( $other_columns neq '' or $other_columns_selected neq '' ) and $prefs.javascript_enabled eq 'y'}
