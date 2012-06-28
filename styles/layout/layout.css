@@ -473,6 +473,11 @@ li#logout_link a {
 	display: inline;
 }
 
+.error.icon {
+	font-weight: bold;
+	color: #090;
+}
+
 /** off-screen **/
 ul.jumplinks {
 	font-size: 0.8em;

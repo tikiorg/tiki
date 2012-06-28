@@ -207,9 +207,7 @@ function smarty_function_icon($params, $smarty)
 					try {
 						$html = smarty_function_html_image($params, $smarty);
 					} catch (Exception $e) {
-						$params['file'] = 'img/icons/green_question.png';
-						$params['title'] = tra('Error:') . ' ' . $e->getMessage();
-						$html = smarty_function_html_image($params, $smarty);
+						$html = '<span class="icon error" title="' . tra('Error:') . ' ' . $e->getMessage() . '">?</span>';
 					}
 			}
 
