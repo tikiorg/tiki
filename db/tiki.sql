@@ -2692,8 +2692,7 @@ CREATE TABLE `users_users` (
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
 -- Administrator account
-INSERT INTO users_users(email,login,password,hash) VALUES ('','admin','admin',md5('adminadmin'));
-UPDATE users_users set `currentLogin`=`lastLogin`, `registrationDate`=`lastLogin`;
+INSERT INTO users_users(email,login,password,hash,created,registrationDate) VALUES ('','admin','admin',md5('adminadmin'),UNIX_TIMESTAMP(),UNIX_TIMESTAMP());
 INSERT INTO tiki_user_preferences (user,`prefName`,value) VALUES ('admin','realName','System Administrator');
 INSERT INTO users_usergroups (`userId`, `groupName`) VALUES(1,'Admins');
 INSERT INTO users_grouppermissions (`groupName`, `permName`) VALUES ('Admins','tiki_p_admin');
