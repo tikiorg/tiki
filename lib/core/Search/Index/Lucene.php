@@ -249,9 +249,6 @@ class Search_Index_Lucene implements Search_Index_Interface
 
 	private function buildQuery($expr)
 	{
-		global $prefs;
-		Zend_Search_Lucene_Search_QueryParser::setDefaultOperator($prefs['unified_lucene_default_operator']);	// use OR or AND (default OR)
-
 		$query = (string) $expr->walk(array($this, 'walkCallback'));
 		return Zend_Search_Lucene_Search_QueryParser::parse($query, 'UTF-8');
 	}
