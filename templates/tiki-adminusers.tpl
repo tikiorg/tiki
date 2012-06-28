@@ -133,8 +133,8 @@
 				{/if}
 				<th>{self_link _sort_arg='sort_mode' _sort_field='currentLogin'}{tr}Last login{/tr}{/self_link}</th>
 				<th>{self_link _sort_arg='sort_mode' _sort_field='created'}{tr}Registered{/tr}{/self_link}</th>
-				<th colspan="2">{tr}Groups{/tr}</th>
-				<th>{tr}Action{/tr}</th>
+				<th>{tr}Groups{/tr}</th>
+				<th>{tr}Actions{/tr}</th>
 			</tr>
 			{cycle print=false values="even,odd"}
 			{section name=user loop=$users}
@@ -182,21 +182,10 @@
 							{$users[user].registrationDate|tiki_short_datetime}
 						</td>
 
-						<td class="icon">
-							<a class="link" href="tiki-assignuser.php?assign_user={$users[user].user|escape:url}" title="{tr}Assign to group{/tr}">{capture assign=alt}{tr _0=$username}Assign %0 to groups{/tr}{/capture}{*FIXME*}{icon _id='group_key' alt=$alt}</a>
-						</td>
-	
 						<td class="text">
 							{foreach from=$users[user].groups key=grs item=what name=gr}
 								<div style="white-space:nowrap">
 									{if $grs != "Anonymous" and ($tiki_p_admin eq 'y' || in_array($grs, $all_groups))}
-										{if $what ne 'included' and $grs != "Registered"}
-											{capture assign=grse}{$grs|escape}{/capture}
-											{capture assign=title}{tr _0=$username _1=$grse}Remove %0 from %1{/tr}{/capture}{*FIXME*}
-											{self_link _class='link' user=$users[user].user action='removegroup' group=$grs _icon='cross' _title=$title}{/self_link}
-										{else}
-											{icon _id='bullet_white'}
-										{/if}
 										{if $what eq 'included'}<i>{/if}
 										{if $tiki_p_admin eq 'y'}
 											<a class="link" {$link_style} href="tiki-admingroups.php?group={$grs|escape:"url"}" title={if $what eq 'included'}"{tr}Edit Included Group{/tr}"{else}"{tr}Edit Group:{/tr} {$grs|escape}"{/if}>
@@ -207,6 +196,13 @@
 										{/if}									
 										{if $what eq 'included'}</i>{/if}
 										{if $grs eq $users[user].default_group}<small>({tr}default{/tr})</small>{/if}
+										{if $what ne 'included' and $grs != "Registered"}
+											{capture assign=grse}{$grs|escape}{/capture}
+											{capture assign=title}{tr _0=$username _1=$grse}Remove %0 from %1{/tr}{/capture}{*FIXME*}
+											{self_link _class='link' user=$users[user].user action='removegroup' group=$grs _icon='cross' _title=$title}{/self_link}
+										{else}
+											{icon _id='bullet_white'}
+										{/if}
 										{if !$smarty.foreach.gr.last}<br />{/if}
 									{/if}
 								</div>
@@ -214,6 +210,7 @@
 						</td>
 	
 						<td class="action">
+							<a class="link" href="tiki-assignuser.php?assign_user={$users[user].user|escape:url}" title="{tr}Assign to group{/tr}">{capture assign=alt}{tr _0=$username}Assign %0 to groups{/tr}{/capture}{*FIXME*}{icon _id='group_key' alt=$alt}</a>
 							{capture assign=title}{tr _0=$username}Edit Account Settings: %0{/tr}{/capture}{*FIXME*}
 							{self_link _class="link" user=$users[user].userId _icon="page_edit" _title=$title}{/self_link}
 							{if $prefs.feature_userPreferences eq 'y' || $user eq 'admin'}
