@@ -38,7 +38,12 @@ class Search_Expr_Parser
 		if (count($tokens) === 1) {
 			return reset($tokens);
 		} else {
-			return new Search_Expr_Or($tokens);
+			global $prefs;
+			if ($prefs['unified_lucene_default_operator'] == Zend_Search_Lucene_Search_QueryParser::B_AND) {
+				return new Search_Expr_And($tokens);
+			} else {
+				return new Search_Expr_Or($tokens);
+			}
 		}
 	}
 

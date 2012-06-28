@@ -73,6 +73,17 @@ function prefs_unified_list()
 			'default' => 0,
 			'size' => 8,
 		),
+		'unified_lucene_default_operator' => array(
+			'name' => tra('Lucene Default Boolean Operator'),
+			'description' => tra('Use OR (default) or AND as the default search operator.'),
+			'type' => 'list',
+			'filter' => 'int',
+			'default' => Zend_Search_Lucene_Search_QueryParser::B_OR,
+			'options' => array(
+				Zend_Search_Lucene_Search_QueryParser::B_OR => tra('OR'),
+				Zend_Search_Lucene_Search_QueryParser::B_AND => tra('AND'),
+			),
+		),
 		'unified_lucene_merge_factor' => array(
 			'name' => tra('Lucene Merge Factor'),
 			'description' => tra('How often segment indices are merged by addDocument(). With smaller values, less RAM is used while indexing, and searches on unoptimized indices are faster, but indexing speed is slower. With larger values, more RAM is used during indexing, and while searches on unoptimized indices are slower, indexing is faster. Thus larger values (> 10) are best for batch index creation, and smaller values (< 10) for indices that are interactively maintained.'),
@@ -104,6 +115,7 @@ function prefs_unified_list()
 			'separator' => ',',
 			'filter' => 'word',
 			'default' => array('contents', 'title'),
+			'size' => 80,
 		),
 		'unified_tokenize_version_numbers' => array(
 			'name' => tra('Tokenize version numbers'),
