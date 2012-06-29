@@ -65,9 +65,9 @@ function setCookieSection($name, $value, $section = '', $expire = null, $path = 
 		$name2 = '@' . $name . ':';
 		if ($valSection) {
 			if (preg_match('/' . preg_quote($name2) . '/', $valSection)) {
-				$valSection  = preg_replace('/' . preg_quote($name2) . '[^@;]*/', $name2 + $value, $valSection);
+				$valSection  = preg_replace('/' . preg_quote($name2) . '[^@;]*/', $name2 . $value, $valSection);
 			} else {
-				$valSection = $valSection + $name2 + $value;
+				$valSection = $valSection . $name2 . $value;
 			}
 			setCookieSection($section, $valSection, '', $expire, $path, $domain, $secure);
 		} else {

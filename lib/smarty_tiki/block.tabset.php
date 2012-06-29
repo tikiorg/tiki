@@ -141,7 +141,7 @@ if (ctab) {
 			);
 		}
 		if ($cookietab != getCookie($smarty_tabset_name, 'tabs', 1)) {	// has been changed by code but now too late to reset
-			$headerlib->add_jq_onready('setCookie("'.$smarty_tabset_name.'","tabs",'.$cookietab.');');
+			$headerlib->add_jq_onready('setCookie("'.$smarty_tabset_name.'",'.$cookietab.',"tabs");');
 		} else {
 			$headerlib->add_jq_onready('tikitabs(getCookie("'.$smarty_tabset_name.'","tabs",1), $("div[data-name='.$smarty_tabset_name.'] .tabmark:first"));');
 		}
