@@ -2671,7 +2671,7 @@ CREATE TABLE `users_users` (
   `challenge` varchar(32) default NULL,
   `pass_confirm` int(14) default NULL,
   `email_confirm` int(14) default NULL,
-  `hash` varchar(34) default NULL,
+  `hash` varchar(60) default NULL,
   `created` int(14) default NULL,
   `avatarName` varchar(80) default NULL,
   `avatarSize` int(14) default NULL,
