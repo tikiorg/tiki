@@ -41,6 +41,17 @@ function prefs_pass_list()
 			'description' => tra('Password must contain no consecutive repetition of the same character as 111 or aab.'),
 			'default' => 'n',
 		),
+		'pass_blowfish_cost' => array(
+			'name' => tra('Cost parameter, if using crypt-blowfish password hashing encryption method.'),
+			'type' => 'text',
+			'description' => tra('Default = 15.  Increase if your server can handle the load.  Decrease by 1 if password storing, changing, or validating is slow on your server.  Must be in range 04-31.  See https://dev.tiki.org/CRYPT_BLOWFISH'),
+			'size' => 2,
+			'default' => 15,
+			'keywords' => "password hash salt blowfish crypt cost algorithm encryption",
+			'tags' => array(
+				'advanced'
+			),
+		),
 		'pass_diff_username' => array(
 			'name' => tra('Password must be different from the user login'),
 			'type' => 'flag',

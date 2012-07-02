@@ -168,6 +168,7 @@ class TWVersion
 				'8.3',
 				'9.0alpha',
 				'9.0beta',
+				'9.0beta2',
 				'9.0',
 			);
 	}
