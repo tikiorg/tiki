@@ -61,7 +61,6 @@ class JisonParser_Wiki_List
 
 	public function toHtmlList()
 	{
-		print_r($this->stacks);
 		$lists = array();
 		foreach($this->stacks as $key => &$stack) {
 			$lists[$key] = $this->toHtmlListChildren($stack);
@@ -74,6 +73,7 @@ class JisonParser_Wiki_List
 		$result = '';
 		$style = '';
 		$html = '';
+		$listParentTagType = 'ul';
 		$id = 'id' . microtime() * 1000000;
 
 		foreach($stack as &$list){
@@ -90,6 +90,7 @@ class JisonParser_Wiki_List
 							break;
 						case '#':
 							$style = '';
+							$listParentTagType = 'ol';
 							break;
 						case '*':
 							$style = '';
@@ -116,7 +117,7 @@ class JisonParser_Wiki_List
 			}
 		}
 
-		return $html . '<ul id="' . $id . '" style="' . $style . '">' . $result . '</ul>';
+		return $html . '<' . $listParentTagType . ' id="' . $id . '" style="' . $style . '">' . $result . '</' . $listParentTagType . '>';
 	}
 
 	private function addToStack(&$stack, $currentLevel, &$neededLevel, &$content, &$type)
