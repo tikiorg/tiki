@@ -54,12 +54,44 @@ body.fixed_width .fixedwidth .fixedwidth {
 	background: #ebebeb;
 }
 
-.footerbgtrap {
+.footerbgtrap,
+.post .postbody,
+.postbody-title,
+.post .author_info,
+.forum_actions {
 	color: inherit;
 	background: none;
 	border: none;
 	margin: 0;
 	text-align: left;
+}
+
+.post .postbody {
+	background: #f7f7f7;
+	padding: 0;
+}
+
+.postbody-title {
+	padding: 0;
+	background: #f0f0f0;
+}
+
+.postbody-title h2 { 
+	margin: 0.2em 0 0;
+	padding-bottom: 0;
+}
+
+.postbody-title > br.clear {
+	font-size: 1px;
+}
+
+.post .author {
+	margin: 0;
+	background: #f0f0f0;
+}
+
+.post .avatar {
+	margin-bottom: 0;
 }
 
 #c1c2,
