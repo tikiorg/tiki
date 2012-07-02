@@ -8,7 +8,7 @@ PLUGIN_ID   					[A-Z]+
 INLINE_PLUGIN_ID				[a-z]+
 SMILE							[a-z]+
 
-%s plugin bold box center colortext italic header link strikethrough table titlebar underscore wikilink
+%s plugin bold box center colortext italic header list link strikethrough table titlebar underscore wikilink
 %options flex
 
 %%
@@ -276,6 +276,37 @@ SMILE							[a-z]+
 
 
 
+<list><<EOF>>
+	%{
+		if (parser.isPlugin()) return 'CONTENT'; //js
+		lexer.unput("\n"); //js
+
+		//php if ($this->isPlugin()) return 'CONTENT';
+        //php $this->unput("\n");
+	%}
+<list>[\n\r]
+	%{
+		if (parser.isPlugin()) return 'CONTENT'; //js
+		lexer.popState(); //js
+		return 'LIST_END'; //js
+
+		//php if ($this->isPlugin()) return 'CONTENT';
+		//php $this->popState();
+		//php return 'LIST_END';
+	%}
+[\n\r][*#+]
+	%{
+		if (parser.isPlugin()) return 'CONTENT'; //js
+		parser.begin('list'); //js
+		return 'LIST_START'; //js
+
+		//php if ($this->isPlugin()) return 'CONTENT';
+		//php $this->begin('list');
+		//php return 'LIST_START';
+	%}
+
+
+
 <italic><<EOF>>
 	%{
 		if (parser.isPlugin()) return 'CONTENT'; //js
@@ -526,12 +557,6 @@ content
 	{$$ = $1;}
  | SMILE
 	{$$ = $1;}
- | HEADER_START HEADER_END
- | HEADER_START contents HEADER_END
-	{
-		$$ = parser.header($2); //js
-		//php $$ = $this->header($2);
-	}
  | BOLD_START BOLD_END
  | BOLD_START contents BOLD_END
 	{
@@ -630,6 +655,18 @@ content
  		//php $3['body'] = $2;
  		//php $$ = $this->plugin($3);
  	}
+ | HEADER_START HEADER_END
+ | HEADER_START contents HEADER_END
+	{
+		$$ = parser.header($2); //js
+		//php $$ = $this->header($2);
+	}
+ | LIST_START LIST_END
+ | LIST_START contents LIST_END
+	{
+		$$ = parser.stackList($1 + $2); //js
+		//php $$ = $this->stackList($1 . $2);
+	}
  ;
 
 %% /* parser extensions */
