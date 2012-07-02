@@ -1529,7 +1529,7 @@ if ( \$('#$id') ) {
 		//The following will stop and return based off new parser
 		if ($prefs['feature_jison_wiki_parser'] == 'y') {
 			//Testing new parser ;)
-			if (!isset(self::$jisonParserInstance)) self::$jisonParser = new JisonParser_Wiki_Handler();
+			if (!isset(self::$jisonParser)) self::$jisonParser = new JisonParser_Wiki_Handler();
 			return self::$jisonParser->parse($data);
 		}
 
