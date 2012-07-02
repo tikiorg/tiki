@@ -1,6 +1,6 @@
 <?php
 
-class JisonParser_Wiki_HeaderManager
+class JisonParser_Wiki_Header
 {
 	var $stack = array();
 	var $count = 0;

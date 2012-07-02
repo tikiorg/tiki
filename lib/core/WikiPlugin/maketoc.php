@@ -35,7 +35,7 @@ class WikiPlugin_maketoc extends WikiPlugin_HtmlBase
 		$result = '<div id="toctitle"><h3>' .
 			tr('Table of contents') .
 		'</h3></div>' .
-			$parser->headerManager->toHtmlList('toc');
+			$parser->header->toHtmlList('toc');
 
 		return $result;
 	}

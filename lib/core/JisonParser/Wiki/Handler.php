@@ -22,7 +22,10 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	var $npCount = 0;
 
 	/* header tracking */
-	var $headerManager;
+	var $header;
+
+	/* list tracking and parser */
+	var $list;
 
 	//This var is used in both protectSpecialChars and unprotectSpecialChars to simplify the html ouput process
 	var $specialChars = array(
@@ -106,7 +109,14 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		$this->user = (isset($user) ? $user : tra('Anonymous'));
 		$this->prefs = $prefs;
 		$this->Parser = &$this;
-		$this->headerManager = new JisonParser_Wiki_HeaderManager();
+
+		if (isset($this->Parser->header) == false) {
+			$this->Parser->header = new JisonParser_Wiki_Header();
+		}
+
+		if (isset($this->Parser->list) == false) {
+			$this->Parser->list = new JisonParser_Wiki_List();
+		}
 
 		parent::__construct();
 	}
@@ -171,6 +181,8 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		}
 
 		$input = $this->protectSpecialChars($input);
+
+		$this->Parser->list->setup($input);
 	}
 
 	function postParse(&$input)
@@ -180,21 +192,10 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		$input = rtrim(ltrim($input, "\n"), "\n"); //here we remove the fake line breaks added just before parse
 
 		if (self::$option['parseLists'] == true || strpos($input, "\n") !== false) {
-			$lines = explode("\n", $input);
-
-			$ul = '';
-			$listBeginnings = array();
-			$skipNext = true;
-			foreach($lines as &$line) {
-				if (self::$option['parseLists'] == true) {
-					$this->parseLists($line, $listBeginnings, $ul);
-				}
-
-				if (self::$option['parseBreaks'] == true) {
-					$this->parseBreaks($line, $skipNext);
-				}
+			$lists = $this->Parser->list->toHtmlList();
+			foreach($lists as $key => &$list) {
+				$input = str_replace($key, $list, $input);
 			}
-			$input = implode("\n", $lines);
 		}
 
 		if (self::$option['parseSmileys']) {
@@ -426,119 +427,6 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		}
 	}
 
-	function parseLists(&$line = "", &$listBeginnings = array(), &$data = '')
-	{
-		$isStart = empty($data);
-
-		$liType = substr($line, 0, 1);
-
-		if (
-			($liType == '*' || $liType == '#') &&
-			!(strlen($line)-count($listBeginnings)>4 &&
-			preg_match('/^\*+$/', $line))
-		) {
-			$listLevel = $this->tikilib->how_many_at_start($line, $liType);
-			$liClose = '</li>';
-			$addRemove = 0;
-
-			if ($listLevel < count($listBeginnings)) {
-				while ($listLevel != count($listBeginnings)) {
-					$data .= array_shift($listBeginnings);
-				}
-
-				if (substr(current($listBeginnings), 0, 5) != '</li>') {
-					$liClose = '';
-				}
-
-			} elseif ($listLevel > count($listBeginnings)) {
-				$liStyle = '';
-
-				while ($listLevel != count($listBeginnings)) {
-					array_unshift($listBeginnings, ($liType == '*' ? '</ul>' : '</ol>'));
-
-					if ($listLevel == count($listBeginnings)) {
-						$liState = substr($line, $listLevel, 1);
-
-						if (
-							($liState == '+' || $liState == '-') &&
-							!(
-								$liType == '*' &&
-								!strstr(current($listBeginnings), '</ul>') ||
-								$liType == '#' &&
-								!strstr(current($listBeginnings), '</ol>')
-							)
-						) {
-							$thisId = 'id' . microtime() * 1000000;
-							$liStyle = ' id="' . $thisId . '" style="display:' . ($liState == '+' ? 'block' : 'none') . ';"';
-							$addRemove = 1;
-						}
-					}
-
-					$data .= ( $liType=='*' ? "<ul$liStyle>" : "<ol$liStyle>" );
-				}
-				$liClose='';
-			}
-
-			if (
-				$liType == '*' && !strstr(current($listBeginnings), '</ul>') ||
-				$liType == '#' && !strstr(current($listBeginnings), '</ol>')
-			) {
-				$data .= array_shift($listBeginnings);
-				$liStyle = '';
-				$liState = substr($line, $listLevel, 1);
-
-				if (($liState == '+' || $liState == '-')) {
-					$thisId = 'id' . microtime() * 1000000;
-					$liStyle = ' id="' . $thisId . '" style="display:' . ($liState == '+' ? 'block' : 'none') . ';"';
-					$addRemove = 1;
-				}
-
-				$data .= ( $liType == '*' ? "<ul$liStyle>" : "<ol$liStyle>" );
-				$liClose = '';
-				array_unshift($listBeginnings, ($liType == '*' ? '</li></ul>' : '</li></ol>'));
-			}
-
-			$line = $liClose . '<li>' . substr($line, $listLevel + $addRemove);
-
-			if (substr(current($listBeginnings), 0, 5) != '</li>') {
-				array_unshift($listBeginnings, '</li>' . array_shift($listBeginnings));
-			}
-
-		} elseif ($liType == '+') {
-			$listLevel = TikiLib::how_many_at_start($line, $liType);
-			// Close lists down to requested level
-			while ($listLevel < count($listBeginnings)) {
-				$data .= array_shift($listBeginnings);
-			}
-
-			// Must append paragraph for list item of given depth...
-			$listLevel = TikiLib::how_many_at_start($line, $liType);
-			if (count($listBeginnings)) {
-				if (substr(current($listBeginnings), 0, 5) != '</li>') {
-					array_unshift($listBeginnings, '</li>' . array_shift($listBeginnings));
-					$liClose = '<li>';
-				} else {
-					$liClose = '<br />';
-				}
-			} else {
-				$liClose = '';
-			}
-
-			$line = $liClose . substr($line, count($listBeginnings));
-
-		} else {
-			//we are either at the end of a list, or in a regular line
-			$line = implode($listBeginnings) . $line;
-			$listBeginnings =  array();
-		}
-
-		if ($isStart) {
-			//We know we are at the start of an UL, so prepend it
-			$line = $data . $line;
-			$data = '';
-		}
-	}
-
 	function parseSmileys(&$input)
 	{
 		global $prefs;
@@ -683,7 +571,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		if (self::$option['parseWiki'] == false) return str_repeat("!", $hNum) . $content;
 
 		$hNum = min(6, $hNum); //html doesn't support 7+ header level
-		$id = $this->Parser->headerManager->stack($hNum, $content);
+		$id = $this->Parser->header->stack($hNum, $content);
 		$button = '';
 		global $section, $tiki_p_edit;
 		if (
@@ -699,10 +587,45 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 			) &&
 			!self::$option['suppress_icons']
 		) {
-			$button = $this->Parser->headerManager->button($this->prefs['wiki_edit_icons_toggle']);
+			$button = $this->Parser->header->button($this->prefs['wiki_edit_icons_toggle']);
 		}
 
 		return $button . '<h' . $hNum . ' class="showhide_heading" id="' . $id . '">' . $content . '</h' . $hNum . '>';
+	}
+
+	function stackList($content)
+	{
+		if (self::$option['parseWiki'] == false) return $content;
+
+		$level = 0;
+		$headerLength = strlen($content);
+		$type = '';
+		$noiseLength = 0;
+
+		for($i = 0; $i < $headerLength; $i++) {
+			if ($content[$i] == "\n") {
+				$noiseLength++;
+				continue;
+			}
+
+			if (
+				$content[$i] == "*" ||
+				$content[$i] == "#" ||
+				$content[$i] == "+"
+			) {
+				$type = $content[$i];
+				$level++;
+			} elseif ($i > 0 && $content[$i] == '-') {
+				$type = $content[$i];
+				$noiseLength++;
+			} else {
+				break;
+			}
+		}
+
+		$content = substr($content, ($level + $noiseLength));
+
+		return $this->Parser->list->stack($level, $content, $type);
 	}
 
 	function hr() //---
