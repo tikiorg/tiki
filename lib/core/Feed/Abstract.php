@@ -184,7 +184,8 @@ abstract class Feed_Abstract
 		$archives = array();
 		
 		if ($this->isFileGal == true) {
-			foreach ($file->listArchives() as $archive) {
+			$file = FileGallery_File::filename($this->name);
+			foreach ($file->listArchives() as &$archive) {
 				$archive = $this->open();
 				$archives[$archive->feed->date] = $archive->feed->entry;
 			}
