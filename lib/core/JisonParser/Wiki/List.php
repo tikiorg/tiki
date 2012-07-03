@@ -99,7 +99,7 @@ class JisonParser_Wiki_List
 				if ($wrapInLi == true) {
 					$result .= '<li>' . $list['content'] . '</li>';
 				} else {
-					$result .= '<br />' . $list['content'];
+					$result .= '<div>' . $list['content'] . '</div>';
 				}
 
 				if(empty($list['children']) == false) {
