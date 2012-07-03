@@ -409,7 +409,12 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		$this->checkToSkipLine($skipLine, $lineInLowerCase, 'inHeader', "<h", "</h", true, true);
 
 		// check if we are inside a script not insert <br />
-		if (strpos($lineInLowerCase, "</h") !== false) {
+		if (
+			strpos($lineInLowerCase, "</h") !== false ||
+			strpos($lineInLowerCase, "</ul") !== false ||
+			strpos($lineInLowerCase, "<pre") !== false ||
+			strpos($lineInLowerCase, "</pre") !== false
+		) {
 			$skipLine = true;
 			$skipNext = true;
 		}
@@ -639,7 +644,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 
 		$content = substr($content, ($level + $noiseLength));
 
-		return $this->Parser->list->stack($level, $content, $type);
+		return $this->Parser->list->stack($level, $this->unprotectSpecialChars($content), $type);
 	}
 
 	function hr() //---
