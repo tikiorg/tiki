@@ -25,7 +25,14 @@ class JisonParser_Wiki_List
 		$lastLine = 0;
 
 		foreach($lines as $i => &$line) {
-			if ($line[0] == "*" || $line[0] == "#" || $line[0] == "+") {
+			if (
+				isset($line[0]) &&
+				(
+					$line[0] == "*" ||
+					$line[0] == "#" ||
+					$line[0] == "+"
+				)
+			) {
 				$this->lineTracking[] = $lastLine;
 				continue;
 			}

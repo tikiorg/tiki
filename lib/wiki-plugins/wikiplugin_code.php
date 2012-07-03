@@ -84,7 +84,8 @@ function wikiplugin_code($data, $params)
 	
 	$defaults = array(
 		'wrap' => '1',
-		'mediawiki' => '0'
+		'mediawiki' => '0',
+		'ishtml' => false
 	);
 	
 	$params = array_merge($defaults, $params);

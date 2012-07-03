@@ -83,7 +83,8 @@ class WikiPlugin_ParserNegotiator
 				} else {
 
 					$this->applyFilters();
-					$this->result = $this->class->exec($this->body, $this->args, $this->index, $this->parser, $this->button(false));
+					$button = $this->button(false);
+					$this->result = $this->class->exec($this->body, $this->args, $this->index, $this->parser, $button);
 					return $this->result;
 				}
 			}
@@ -299,7 +300,7 @@ class WikiPlugin_ParserNegotiator
 
 		if (isset($this->class)) {
 			$known[$this->name] = $this->class->info();
-			$known[$this->name]['perams'] = array_merge($known[$this->name]['perams'], $this->class->style());
+			$known[$this->name]['params'] = array_merge($known[$this->name]['params'], $this->class->style());
 		}
 
 		if ( ! $this->exists )
