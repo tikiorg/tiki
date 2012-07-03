@@ -1524,12 +1524,10 @@ if ( \$('#$id') ) {
 			$headerlib = TikiLib::lib('header');
 			$old_wysiwyg_parsing = $headerlib->wysiwyg_parsing;
 			$headerlib->wysiwyg_parsing = true;
-		}
-
-		//The following will stop and return based off new parser
-		if ($prefs['feature_jison_wiki_parser'] == 'y') {
+		} elseif ($prefs['feature_jison_wiki_parser'] == 'y') {//The following will stop and return based off new parser
 			//Testing new parser ;)
 			if (!isset(self::$jisonParser)) self::$jisonParser = new JisonParser_Wiki_Handler();
+			self::$jisonParser->setOption($option);
 			return self::$jisonParser->parse($data);
 		}
 

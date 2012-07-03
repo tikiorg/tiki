@@ -57,8 +57,8 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	var $page;
 
 	var $isHtmlPurifying = false;
-	public static $option = array();
 
+	var $option = array();
 	var $optionDefaults = array(
 		'skipvalidation'=>  false,
 		'is_html'=> false,
@@ -86,9 +86,14 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	public function setOption($option = array())
 	{
 		$page = $_REQUEST['page'];
-		self::$option['page'] = $page;
+		$this->Parser->option['page'] = $page;
 
-		self::$option = array_merge($this->optionDefaults, $option);
+		$this->Parser->option = array_merge($this->optionDefaults, $option);
+	}
+
+	public function setWikiPluginParserNegotiatorClass($class)
+	{
+		$this->Parser->wikiPluginParserNegotiatorClass = $class;
 	}
 
 	var $parseBreaksTracking = array(
@@ -139,7 +144,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		} else {
 			$this->parsing = true;
 
-			if (empty(self::$option)) $this->setOption();
+			if (empty($this->Parser->option)) $this->setOption();
 
 			$this->preParse($input);
 
@@ -154,18 +159,14 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 
 	function parsePlugin($input)
 	{
-		if (self::$option['noparseplugins'] == false) {
-			$is_html = self::$option['is_html'];
+		if ($this->Parser->option['noparseplugins'] == false) {
+			$is_html = $this->Parser->option['is_html'];
 
-			$this->setOption(array(
-				'is_html'=> true
-			));
+			$this->option['is_html'] = true;
 
 			$result = $this->parse($input);
 
-			$this->setOption(array(
-				'is_html'=> $is_html
-			));
+			$this->Parser->option['is_html'] = $is_html;
 
 			return $result;
 		} else {
@@ -177,7 +178,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	{
 		$input = "\n" . $input . "\n"; //here we add 2 lines, so the parser doesn't have to do special things to track the first line and last, we remove these when we insert breaks
 
-		if (self::$option['parseNps'] == true) {
+		if ($this->Parser->option['parseNps'] == true) {
 			$input = preg_replace_callback('/~np~(.|\n)*?~\/np~/', array(&$this, 'removeNpEntities'), $input);
 		}
 
@@ -188,11 +189,11 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 
 	function postParse(&$input)
 	{
-		$input = $this->unprotectSpecialChars($input, self::$option['is_html']);
+		$input = $this->unprotectSpecialChars($input, $this->Parser->option['is_html']);
 
 		$input = rtrim(ltrim($input, "\n"), "\n"); //here we remove the fake line breaks added just before parse
 
-		if (self::$option['parseBreaks'] == true) {
+		if ($this->Parser->option['parseBreaks'] == true) {
 			$lines = explode("\n", $input);
 			$skipNext = false;
 			foreach($lines as &$line) {
@@ -201,14 +202,14 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 			$input = implode("\n", $lines);
 		}
 
-		if (self::$option['parseLists'] == true || strpos($input, "\n") !== false) {
+		if ($this->Parser->option['parseLists'] == true || strpos($input, "\n") !== false) {
 			$lists = $this->Parser->list->toHtmlList();
 			foreach($lists as $key => &$list) {
 				$input = str_replace($key, $list, $input);
 			}
 		}
 
-		if (self::$option['parseSmileys']) {
+		if ($this->Parser->option['parseSmileys']) {
 			$this->parseSmileys($input);
 		}
 
@@ -220,9 +221,9 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	// state & plugin handlers
 	function plugin($pluginDetails)
 	{
-		$plugin = new $this->wikiPluginParserNegotiatorClass($this, $pluginDetails, $this->page, $this->prefs, self::$option);
+		$plugin = new $this->Parser->wikiPluginParserNegotiatorClass($this, $pluginDetails, $this->page, $this->prefs, $this->Parser->option);
 
-		if (!self::$option['skipvalidation']) {
+		if (!$this->Parser->option['skipvalidation']) {
 			$status = $plugin->canExecute();
 		} else {
 			$status = true;
@@ -308,7 +309,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	{
 		//use of array_reverse, jison is a reverse bottom-up parser, if it doesn't reverse jison doesn't restore the plugins in the right order, leaving the some nested keys as a result
 		foreach(array_reverse($this->pluginEntries) as $key => $entity) {
-			if (self::$option['stripplugins'] == true) {
+			if ($this->Parser->option['stripplugins'] == true) {
 				$input = str_replace($key, '', $input);
 			} else {
 				$input = str_replace($key, $entity, $input);
@@ -498,7 +499,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	{
 		if (
 			$this->isHtmlPurifying == true ||
-			self::$option['is_html'] != true
+			$this->Parser->option['is_html'] != true
 		) {
 			foreach($this->specialChars as $key => $specialChar) {
 				$data = str_replace($specialChar['html'], $key, $data);
@@ -513,7 +514,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	{
 		if (
 			$is_html == true ||
-			self::$option['is_html'] == true
+			$this->Parser->option['is_html'] == true
 		) {
 			foreach($this->specialChars as $key => $specialChar) {
 				$data = str_replace($key, $specialChar['html'], $data);
@@ -531,28 +532,28 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	//Wiki Syntax Objects Parsing Start
 	function bold($content) //__content__
 	{
-		if (self::$option['parseWiki'] == false) return "__" . $content . "__";
+		if ($this->Parser->option['parseWiki'] == false) return "__" . $content . "__";
 
 		return '<strong>' . $content . '</strong>';
 	}
 
 	function box($content) //^content^
 	{
-		if (self::$option['parseWiki'] == false) return "^" . $content . "^";
+		if ($this->Parser->option['parseWiki'] == false) return "^" . $content . "^";
 
 		return '<div class="simplebox">' . $content . '</div>';
 	}
 
 	function center($content) //::content::
 	{
-		if (self::$option['parseWiki'] == false) return "::" . $content . "::";
+		if ($this->Parser->option['parseWiki'] == false) return "::" . $content . "::";
 
 		return '<center>' . $content . '</center>';
 	}
 
 	function colortext($content)
 	{
-		if (self::$option['parseWiki'] == false) return "~~" . $content . "~~";
+		if ($this->Parser->option['parseWiki'] == false) return "~~" . $content . "~~";
 
 		$text = explode(':', $content);
 		$color = $text[0];
@@ -563,7 +564,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 
 	function italics($content) //''content''
 	{
-		if (self::$option['parseWiki'] == false) return "''" . $content . "''";
+		if ($this->Parser->option['parseWiki'] == false) return "''" . $content . "''";
 
 		return '<i>' . $content . '</i>';
 	}
@@ -581,7 +582,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		}
 
 		$content = substr($content, $hNum - 1);
-		if (self::$option['parseWiki'] == false) return str_repeat("!", $hNum) . $content;
+		if ($this->Parser->option['parseWiki'] == false) return str_repeat("!", $hNum) . $content;
 
 		$hNum = min(6, $hNum); //html doesn't support 7+ header level
 		$id = $this->Parser->header->stack($hNum, $content);
@@ -595,10 +596,10 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 				$this->prefs['wiki_edit_section_level'] == 0 ||
 				$hNum <= $this->prefs['wiki_edit_section_level']
 			) && (
-				empty(self::$option['print']) ||
-				!self::$option['print']
+				empty($this->Parser->option['print']) ||
+				!$this->Parser->option['print']
 			) &&
-			!self::$option['suppress_icons']
+			!$this->Parser->option['suppress_icons']
 		) {
 			$button = $this->Parser->header->button($this->prefs['wiki_edit_icons_toggle']);
 		}
@@ -608,7 +609,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 
 	function stackList($content)
 	{
-		if (self::$option['parseWiki'] == false) return $content;
+		if ($this->Parser->option['parseWiki'] == false) return $content;
 
 		$level = 0;
 		$headerLength = strlen($content);
@@ -643,14 +644,14 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 
 	function hr() //---
 	{
-		if (self::$option['parseWiki'] == false) return "---";
+		if ($this->Parser->option['parseWiki'] == false) return "---";
 
 		return '<hr />';
 	}
 
 	function link($content) //[content|content]
 	{
-		if (self::$option['parseWiki'] == false) return "[" . $content . "]";
+		if ($this->Parser->option['parseWiki'] == false) return "[" . $content . "]";
 
 		$link = explode('|', $content);
 		$href = (isset($link[0]) ? $link[0] : $content);
@@ -661,7 +662,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 
 	function smile($content)
 	{
-		if (self::$option['parseWiki'] == false) return "(:" . $content . ":)";
+		if ($this->Parser->option['parseWiki'] == false) return "(:" . $content . ":)";
 
 		//this needs more tlc too
 		return '<img src="img/smiles/icon_' . $content . '.gif" alt="' . $content . '" />';
@@ -669,14 +670,14 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 
 	function strikethrough($content) //--content--
 	{
-		if (self::$option['parseWiki'] == false) return "--" . $content . "--";
+		if ($this->Parser->option['parseWiki'] == false) return "--" . $content . "--";
 
 		return '<strike>' . $content . '</strike>';
 	}
 
 	function tableParser($content) /*|| | \n | ||*/
 	{
-		if (self::$option['parseWiki'] == false) return "||" . $content . "||";
+		if ($this->Parser->option['parseWiki'] == false) return "||" . $content . "||";
 
 		$tableContents = '';
 		$rows = explode("\n", $content);
@@ -706,21 +707,21 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 
 	function titlebar($content) //-=content=-
 	{
-		if (self::$option['parseWiki'] == false) return "-=" . $content . "=-";
+		if ($this->Parser->option['parseWiki'] == false) return "-=" . $content . "=-";
 
 		return '<div class="titlebar">' . $content . '</div>';
 	}
 
 	function underscore($content) //===content===
 	{
-		if (self::$option['parseWiki'] == false) return "===" . $content . "===";
+		if ($this->Parser->option['parseWiki'] == false) return "===" . $content . "===";
 
 		return '<u>' . $content . '</u>';
 	}
 
 	function wikilink($content) //((content|content))
 	{
-		if (self::$option['parseWiki'] == false) return "((" . $content . "))";
+		if ($this->Parser->option['parseWiki'] == false) return "((" . $content . "))";
 
 		$wikilink = explode('|', $content);
 		$href = (isset($wikilink[0]) ? $wikilink[0] : $content);
