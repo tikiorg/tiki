@@ -105,7 +105,6 @@ class WikiPlugin_ParserNegotiator
 	function toSyntax()
 	{
 		$source = '{' . (empty($this->body) ? $this->name : TikiLib::strtoupper($this->name) . '(') . ' ';
-		$args = '';		// not using http_build_query() as it converts spaces into +
 		if (!empty($this->args)) {
 			foreach ( $this->args as $argKey => $argValue ) {
 				if (is_array($argValue)) {
@@ -115,10 +114,8 @@ class WikiPlugin_ParserNegotiator
 						$sep = ',';
 					}
 					$source .= $argKey.'="'.implode($sep, $argValue).'" ';	// process array
-					$args .= $argKey.'='.implode($sep, $argValue).'&';
 				} else {
 					$source .= $argKey.'="'.$argValue.'" ';
-					$args .= $argKey.'='.$argValue.'&';
 				}
 			}
 		}
@@ -131,12 +128,30 @@ class WikiPlugin_ParserNegotiator
 			$source .= '}';
 		}
 
+		return $source;
+	}
+
+	function urlEncodeArgs()
+	{
+		$args = '';// not using http_build_query() as it converts spaces into +
+		if (!empty($this->args)) {
+			foreach ( $this->args as $argKey => $argValue ) {
+				if (is_array($argValue)) {
+					if (isset($this->info['params'][$argKey]['separator'])) {
+						$sep = $this->info['params'][$argKey]['separator'];
+					} else {
+						$sep = ',';
+					}
+					$args .= $argKey.'='.implode($sep, $argValue).'&';
+				} else {
+					$args .= $argKey.'='.$argValue.'&';
+				}
+			}
+		}
+
 		$args = rtrim($args, '&');
 
-		return array(
-			'plugin' => $source,
-			'args' => $args
-		);
+		return $args;
 	}
 
 	private function addWaitingPlugin()
