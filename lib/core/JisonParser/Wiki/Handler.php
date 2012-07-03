@@ -16,6 +16,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	var $pluginStack = array();
 	var $pluginEntries = array();
 	var $plugins = array();
+	var $wikiPluginParserNegotiatorClass = 'WikiPlugin_ParserNegotiator';
 
 	/* np tracking */
 	var $npEntries = array();
@@ -191,6 +192,15 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 
 		$input = rtrim(ltrim($input, "\n"), "\n"); //here we remove the fake line breaks added just before parse
 
+		if (self::$option['parseBreaks'] == true) {
+			$lines = explode("\n", $input);
+			$skipNext = false;
+			foreach($lines as &$line) {
+				$this->parseBreaks($line, $skipNext);
+			}
+			$input = implode("\n", $lines);
+		}
+
 		if (self::$option['parseLists'] == true || strpos($input, "\n") !== false) {
 			$lists = $this->Parser->list->toHtmlList();
 			foreach($lists as $key => &$list) {
@@ -210,7 +220,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	// state & plugin handlers
 	function plugin($pluginDetails)
 	{
-		$plugin = new WikiPlugin_ParserNegotiator($this, $pluginDetails, $this->page, $this->prefs, self::$option);
+		$plugin = new $this->wikiPluginParserNegotiatorClass($this, $pluginDetails, $this->page, $this->prefs, self::$option);
 
 		if (!self::$option['skipvalidation']) {
 			$status = $plugin->canExecute();
@@ -398,10 +408,13 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		$this->checkToSkipLine($skipLine, $lineInLowerCase, 'inHeader', "<h", "</h", true, true);
 
 		// check if we are inside a script not insert <br />
-		if (strpos($lineInLowerCase, "<h") !== false) $skipNext = true;
+		if (strpos($lineInLowerCase, "</h") !== false) {
+			$skipLine = true;
+			$skipNext = true;
+		}
 
 		// check if we are inside a script not insert <br />
-		if (strpos($lineInLowerCase, "<br") !== false) $skipLine = true;
+		if (strpos($lineInLowerCase, "<br") !== false || strpos($lineInLowerCase, "<div") !== false) {$skipLine = true;$skipNext = true;}
 
 		if ($skipLine == true) {
 			//we skip the line just after a header
