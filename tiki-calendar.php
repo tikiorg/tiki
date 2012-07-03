@@ -801,6 +801,10 @@ if (!empty($prefs['calendar_fullcalendar']) && $prefs['calendar_fullcalendar'] =
 	$headerlib->add_jsfile('lib/fullcalendar/fullcalendar.min.js');
 	$smarty->assign('minHourOfDay', $minHourOfDay);
 	$smarty->assign('maxHourOfDay', $maxHourOfDay);
+	if ($prefs['feature_wysiwyg'] == 'y' && $prefs['wysiwyg_default'] == 'y') {
+		include_once('lib/ckeditor_tiki/wysiwyglib.php');
+		$wysiwyglib->setUpEditor(false, 'editwiki');		// init ckeditor if default editor
+	}
 }
 
 $smarty->assign('uses_tabs', 'y');
