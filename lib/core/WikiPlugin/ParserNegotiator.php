@@ -101,6 +101,43 @@ class WikiPlugin_ParserNegotiator
 		return $this->body;
 	}
 
+	function toSyntax()
+	{
+		$source = '{' . (empty($this->body) ? $this->name : TikiLib::strtoupper($this->name) . '(') . ' ';
+		$args = '';		// not using http_build_query() as it converts spaces into +
+		if (!empty($this->args)) {
+			foreach ( $this->args as $argKey => $argValue ) {
+				if (is_array($argValue)) {
+					if (isset($this->info['params'][$argKey]['separator'])) {
+						$sep = $this->info['params'][$argKey]['separator'];
+					} else {
+						$sep = ',';
+					}
+					$source .= $argKey.'="'.implode($sep, $argValue).'" ';	// process array
+					$args .= $argKey.'='.implode($sep, $argValue).'&';
+				} else {
+					$source .= $argKey.'="'.$argValue.'" ';
+					$args .= $argKey.'='.$argValue.'&';
+				}
+			}
+		}
+		if (substr($source, -1) === ' ') {
+			$source = substr($source, 0, -1);
+		}
+		if (!empty($this->body)) {
+			$source .= ')}' . $this->body . '{' . TikiLib::strtoupper($this->name) . '}';
+		} else {
+			$source .= '}';
+		}
+
+		$args = rtrim($args, '&');
+
+		return array(
+			'plugin' => $source,
+			'args' => $args
+		);
+	}
+
 	private function addWaitingPlugin()
 	{
 		self::$parserLevels[] = $this->class->parserLevel;
