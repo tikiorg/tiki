@@ -32,6 +32,10 @@ class WikiPlugin_maketoc extends WikiPlugin_HtmlBase
 
 	function output($data, $params, $index, $parser)
 	{
+		global $tikilib;
+
+		if (isset($tikilib->is_slideshow) && $tikilib->is_slideshow == true) return '';
+
 		$result = '<div id="toctitle"><h3>' .
 			tr('Table of contents') .
 		'</h3></div>' .
