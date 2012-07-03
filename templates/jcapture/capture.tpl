@@ -13,13 +13,8 @@
 	<param name = "archive"		value = "jcapture.jar" valuetype="ref" />
 	<param name = "scriptable"	value = "true" />
 	<param name = "mayscript"	value = "true" />
-	<param name = "dokuBase"	value = "{$doku_base}" />
-	<param name = "sectok"		value = "{$sectok}" />
-	<param name = "cookies"		value = "{$cookies}" />
-	<param name = "host"		value = "{$host}" />
 	<param name = "pageName"	value = "{$page}" />
 	<param name = "edid"		value = "{$edit_area}" />
-	<param name = "authtok"		value = "{$authtok}" />
-	<param name = "uploader"	value = "{$uploader}" />
+	<param name = "uploadUrl"	value = "{$uploader}" />
 	{tr}Applet failed to run.  No Java plug-in was found.{/tr}
 </object>
