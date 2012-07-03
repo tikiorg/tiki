@@ -89,11 +89,9 @@ class JisonParser_Wiki_List
 							$wrapInLi = false;
 							break;
 						case '#':
-							$style = '';
 							$listParentTagType = 'ol';
 							break;
 						case '*':
-							$style = '';
 							break;
 					}
 				}
