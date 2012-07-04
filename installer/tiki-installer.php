@@ -96,9 +96,9 @@ function write_local_php($dbb_tiki, $host_tiki, $user_tiki, $pass_tiki, $dbs_tik
 		$user_tiki = addslashes($user_tiki);
 		$pass_tiki = addslashes($pass_tiki);
 		$dbs_tiki = addslashes($dbs_tiki);
-	        $systemSalt_tiki = $this->calc_system_salt() ;  //petjal 2012-06-29
-		$fw = fopen($local, 'w');  //petjal: move to above fwrite?
-		$filetowrite = "<?php\n"; //petjal: is this php tag ever closed? Do we care?
+	        $systemSalt_tiki = calc_system_salt();
+		$fw = fopen($local, 'w');
+		$filetowrite = "<?php\n";
 		$filetowrite .= "\$db_tiki='" . $db_tiki . "';\n";
 		if ($dbversion_tiki == 'current') {
 			require_once 'lib/setup/twversion.class.php';
@@ -125,7 +125,7 @@ function write_local_php($dbb_tiki, $host_tiki, $user_tiki, $pass_tiki, $dbs_tik
 		$filetowrite .= "// Want configurations managed at the system level or restrict some preferences? http://doc.tiki.org/System+Configuration\n";
 		$filetowrite .= "// \$system_configuration_file = '/etc/tiki.ini';\n";
 		$filetowrite .= "// \$system_configuration_identifier = 'example.com';\n\n";
-	        $filetowrite .= "\$systemSalt_tiki='" . $systemSalt_tiki . "';\n"; //petjal 2012-06-29
+	        $filetowrite .= "\$systemSalt_tiki='" . $systemSalt_tiki . "';\n";
 		fwrite($fw, $filetowrite);
 		fclose($fw);
 	}
