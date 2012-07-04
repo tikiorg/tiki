@@ -17,6 +17,8 @@
 // The two lines below are used to set PHP_AUTH_USER and PHP_AUTH_PW from
 // HTTP_AUTHORIZATION to allow Basic Authentication in Tiki WebDAV
 
+if(isset($_SERVER['REDIRECT_HTTP_AUTHORIZATION']))
+	$_SERVER['HTTP_AUTHORIZATION'] = $_SERVER['REDIRECT_HTTP_AUTHORIZATION'];
 if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
 	$ha = base64_decode(substr($_SERVER['HTTP_AUTHORIZATION'], 6));
 	list($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW']) = explode(':', $ha);
