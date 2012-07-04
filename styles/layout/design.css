@@ -966,7 +966,7 @@ p.norecords {
 	background: #f4f6f7;
 }
 
-.multiselect odd:hover {
+.multiselect .odd:hover {
 	background: #fff7e6;
 }
 
