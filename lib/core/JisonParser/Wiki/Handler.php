@@ -162,7 +162,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		if ($this->Parser->option['noparseplugins'] == false) {
 			$is_html = $this->Parser->option['is_html'];
 
-			$this->option['is_html'] = true;
+			$this->Parser->option['is_html'] = true;
 
 			$result = $this->parse($input);
 
@@ -238,7 +238,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 			$this->Parser->plugins[$plugin->key] = $plugin->body;
 
 
-			$this->pluginEntries[$plugin->key] = $plugin->execute(true);
+			$this->pluginEntries[$plugin->key] = $plugin->execute();
 
 			if ($plugin->needsParsed == true) {
 				$this->pluginEntries[$plugin->key] = $this->parsePlugin( $this->pluginEntries[$plugin->key] );
