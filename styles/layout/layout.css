@@ -1689,7 +1689,7 @@ when module used without decorations. */
 	padding-right: 2px;
 }
 
-opaque .box-title,
+.opaque .box-title,
 .opaque .box-data {
 	width: auto;
 }
