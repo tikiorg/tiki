@@ -23,6 +23,7 @@ class WikiPlugin_ParserNegotiator
 	var $parserOption;
 	var $index;
 	var $key;
+	var $needsParsed = true;
 	var $result;
 
 	static $pluginIndexes = array();

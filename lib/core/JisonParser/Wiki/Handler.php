@@ -237,7 +237,12 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 			$plugins will have all executed plugin in it*/
 			$this->Parser->plugins[$plugin->key] = $plugin->body;
 
-			$this->pluginEntries[$plugin->key] = $this->parsePlugin( $plugin->execute(true) );
+
+			$this->pluginEntries[$plugin->key] = $plugin->execute(true);
+
+			if ($plugin->needsParsed == true) {
+				$this->pluginEntries[$plugin->key] = $this->parsePlugin( $this->pluginEntries[$plugin->key] );
+			}
 		} else {
 			return $plugin->blockFromExecution($status);
 		}
