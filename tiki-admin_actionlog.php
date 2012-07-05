@@ -229,7 +229,7 @@ if (!empty($_REQUEST['actionId']) && $tiki_p_admin == 'y') {
 		}
 	}
 }
-if ($tiki_p_admin == 'y') {
+if ($tiki_p_list_users == 'y') {
 	$users = $userlib->list_all_users();
 	$groups = $userlib->list_all_groups();
 } else {

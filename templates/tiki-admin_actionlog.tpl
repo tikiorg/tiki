@@ -21,7 +21,7 @@
 				</tr>
 			</table>
 		</fieldset>
-				{if $tiki_p_admin eq 'y'}
+				{if $tiki_p_list_users eq 'y'}
 			<fieldset>
 				<legend>{tr}Users and Groups{/tr}</legend>
 				<table class="formcolor">
