@@ -481,11 +481,15 @@ if (isset($_SESSION["$user_cookie_site"])) {
 
 	if ( isset($prefs['login_http_basic']) && $prefs['login_http_basic'] === 'always' ||
 		(isset($prefs['login_http_basic']) && $prefs['login_http_basic'] === 'ssl' && isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on')) {
-
 		// Authenticate if the credentials are present, do nothing otherwise
+		if(isset($_SERVER['REDIRECT_HTTP_AUTHORIZATION']))
+			$_SERVER['HTTP_AUTHORIZATION'] = $_SERVER['REDIRECT_HTTP_AUTHORIZATION'];
+		if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
+			$ha = base64_decode(substr($_SERVER['HTTP_AUTHORIZATION'], 6));
+			list($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW']) = explode(':', $ha);
+		}
 		if (isset($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW'])) {
 			$validate = $userlib->validate_user($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW']);
-
 			if ($validate[0]) {
 				$user = $validate[1];
 				$userlib->confirm_user($user);

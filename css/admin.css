@@ -90,6 +90,11 @@ a.admbox.off img {
 	display: block;
 }
 
+.adminoptionbox > label {
+	min-width: 12em;
+	display: inline-block;
+}
+
 .adminoptionbox .checkbox, .adminoption {
 /*check box */
 	display: block;
