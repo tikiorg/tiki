@@ -1524,11 +1524,23 @@ if ( \$('#$id') ) {
 			$headerlib = TikiLib::lib('header');
 			$old_wysiwyg_parsing = $headerlib->wysiwyg_parsing;
 			$headerlib->wysiwyg_parsing = true;
-		} elseif ($prefs['feature_jison_wiki_parser'] == 'y') {//The following will stop and return based off new parser
+		}
+
+		if ($prefs['feature_jison_wiki_parser'] == 'y') {//The following will stop and return based off new parser
 			//Testing new parser ;)
 			if (!isset(self::$jisonParser)) self::$jisonParser = new JisonParser_Wiki_Handler();
 			self::$jisonParser->setOption($option);
-			return self::$jisonParser->parse($data);
+
+			if ($this->option['ck_editor']) {
+				self::$jisonParser->setWikiPluginParserNegotiatorClass('WikiPlugin_CKEditorNegotiator');
+			}
+			$data = self::$jisonParser->parse($data);
+
+			if ($old_wysiwyg_parsing !== null) {
+				$headerlib->wysiwyg_parsing = $old_wysiwyg_parsing;
+			}
+
+			return $data;
 		}
 
 		// if simple_wiki is true, disable some wiki syntax
