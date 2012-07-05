@@ -461,6 +461,9 @@ class MenuLib extends TikiLib
 					$lower = $option['type'];
 				}
 				$subMenu[$i]['type'] -= $lower;
+				if ($subMenu[$i]['type'] == 0) {
+					$subMenu[$i]['type'] = 's';		// section levels go: s, 1, 2, 3 etc
+				}
 			}
 		}
 		return $subMenu;
