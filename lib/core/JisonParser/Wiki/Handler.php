@@ -339,7 +339,12 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 
 						if (empty($this->pluginEntries[$plugin->key]) == true) {
 							$this->Parser->plugins[$plugin->key] = $plugin->body;
-							$this->pluginEntries[$plugin->key] = $this->parsePlugin($plugin->execute());
+
+							$this->pluginEntries[$plugin->key] = $plugin->execute();
+
+							if ($plugin->needsParsed == true) {
+								$this->pluginEntries[$plugin->key] = $this->parsePlugin( $this->pluginEntries[$plugin->key] );
+							}
 						}
 
 						$input = str_replace($plugin->key, $this->pluginEntries[$plugin->key], $input);
