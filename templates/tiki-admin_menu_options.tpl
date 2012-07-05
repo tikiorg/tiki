@@ -4,8 +4,10 @@
 <div class="navbar">
 	{button href="tiki-admin_menus.php" _text="{tr}List menus{/tr}"}
 	{button href="tiki-admin_menus.php?menuId=$menuId&cookietab=2" _text="{tr}Edit this menu{/tr}"}
-	{button href="#export" _text="{tr}Export{/tr}"}
-	{button href="#import" _text="{tr}Import{/tr}"}
+	{if $prefs.feature_tabs neq 'y'}
+		{button href="#export" _text="{tr}Export{/tr}"}
+		{button href="#import" _text="{tr}Import{/tr}"}
+	{/if}
 </div>
 
 {tabset name="admin_menu_options"}
