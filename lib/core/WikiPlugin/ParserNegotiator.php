@@ -32,7 +32,7 @@ class WikiPlugin_ParserNegotiator
 	static $currentParserLevel = 0;
 	static $pluginsAwaitingExecution = array();
 
-	function __construct(& $parser, & $pluginDetails, & $page, & $prefs, & $parserOption)
+	function __construct(& $parser, & $pluginDetails, & $page, & $prefs, $parserOption)
 	{
 		$this->parser = & $parser;
 		$this->name = strtolower($pluginDetails['name']);

@@ -160,14 +160,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	function parsePlugin($input)
 	{
 		if ($this->Parser->option['noparseplugins'] == false) {
-			$is_html = $this->Parser->option['is_html'];
-
-			$this->Parser->option['is_html'] = true;
-
 			$result = $this->parse($input);
-
-			$this->Parser->option['is_html'] = $is_html;
-
 			return $result;
 		} else {
 			return $input;
@@ -221,8 +214,14 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	// state & plugin handlers
 	function plugin($pluginDetails)
 	{
+		$is_html = $this->Parser->option['is_html'];
+
+		$this->Parser->option['is_html'] = true;
+
 		$plugin = new $this->Parser->wikiPluginParserNegotiatorClass($this, $pluginDetails, $this->page, $this->prefs, $this->Parser->option);
 
+		$this->Parser->option['is_html'] = $is_html;
+		
 		if (!$this->Parser->option['skipvalidation']) {
 			$status = $plugin->canExecute();
 		} else {
