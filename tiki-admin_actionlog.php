@@ -89,7 +89,7 @@ if (isset($_REQUEST['max'])) {
 	$maxRecords = $prefs['maxRecords'];
 }
 
-if ($tiki_p_admin == 'y') {
+if ($tiki_p_view_actionlog == 'y') {
 	if (isset($_REQUEST['save'])) {
 		foreach ($action_log_conf_selected as $index => $conf) {
 			if (isset($_REQUEST['v_' . $conf['code']]) && $_REQUEST['v_' . $conf['code']] == 'on') { //viewed and reported
