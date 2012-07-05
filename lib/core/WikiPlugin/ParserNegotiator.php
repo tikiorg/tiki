@@ -24,6 +24,7 @@ class WikiPlugin_ParserNegotiator
 	var $index;
 	var $key;
 	var $needsParsed = true;
+	var $isWaiting = false;
 	var $result;
 
 	static $pluginIndexes = array();
@@ -67,18 +68,20 @@ class WikiPlugin_ParserNegotiator
 
 	function execute()
 	{
+		if (isset($this->result)) return $this->result; //per instance, execution only happens once, even if the parser doesn't agree
+
 		$output = '';
 		if ($this->enabled($output) == false) {
-			return $output->toHtml();
+			$this->result = $output->toHtml();
+			return $this->result;
 		}
 
-		if (empty($this->result) == false) return $this->result;
 
 		if (isset($this->class)) {
 			if (isset($this->class->parserLevel)) {
 				$this->parserLevel = $this->class->parserLevel;
 
-				if($this->class->parserLevel > self::$currentParserLevel) {
+				if($this->parserLevel > self::$currentParserLevel) {
 					$this->addWaitingPlugin();
 					return $this->key;
 				} else {
@@ -94,13 +97,14 @@ class WikiPlugin_ParserNegotiator
 		$fnName = strtolower('wikiplugin_' .  $this->name);
 
 		if ( $this->exists && function_exists($fnName) ) {
-
 			$this->result = $fnName($this->body, $this->args, $this->index, $this) . $this->button();
 
 			return $this->result;
 		}
 
-		return $this->body;
+		$this->result = $this->body;
+
+		return $this->result;
 	}
 
 	function toSyntax()
@@ -157,8 +161,11 @@ class WikiPlugin_ParserNegotiator
 
 	private function addWaitingPlugin()
 	{
-		self::$parserLevels[] = $this->class->parserLevel;
-		self::$pluginsAwaitingExecution[$this->key] = $this;
+		if ($this->isWaiting == false) {
+			$this->isWaiting = true;
+			self::$parserLevels[] = $this->class->parserLevel;
+			self::$pluginsAwaitingExecution[$this->key] = $this;
+		}
 	}
 
 	private function exists()
