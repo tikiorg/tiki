@@ -450,7 +450,7 @@ class WikiPlugin_ParserNegotiator
 		$filter = isset($this->info['filter']) ? TikiFilter::get($this->info['filter']) : $default;
 		$this->body = $filter->filter($this->body);
 
-		if (isset($this->option) && (!empty($this->option['is_html']) && (!$this->option['is_html']))) {
+		if (isset($this->parserOption) && (!empty($this->parserOption['is_html']) && (!$this->parserOption['is_html']))) {
 			$noparsed = array('data' => array(), 'key' => array());
 			$this->strip_unparsed_block($this->body, $noparsed);
 			$body = str_replace(array('<', '>'), array('&lt;', '&gt;'), $this->body);
