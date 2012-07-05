@@ -36,15 +36,6 @@ class WikiPlugin_CKEditorNegotiator extends WikiPlugin_ParserNegotiator
 			// Tiki 7+ adds ~np~ to plugin output so remove them
 			$plugin_result = preg_replace('/~[\/]?np~/ms', '', $plugin_result);
 
-			$parser = new JisonParser_Wiki_Handler();
-			$parser->setOption(array(
-				'is_html' => false,
-				'suppress_icons' => true,
-				'ck_editor' => true,
-				'noparseplugins' => true
-			));
-			$plugin_result = $parser->parse($plugin_result);
-
 			// remove hrefs and onclicks
 			$plugin_result = preg_replace('/\shref\=/i', ' tiki_href=', $plugin_result);
 			$plugin_result = preg_replace('/\sonclick\=/i', ' tiki_onclick=', $plugin_result);
@@ -69,12 +60,12 @@ class WikiPlugin_CKEditorNegotiator extends WikiPlugin_ParserNegotiator
 			}
 		}
 
-		$ret = '~np~<'.$elem.' class="tiki_plugin" plugin="' . $this->name . '" style="' . $elem_style . '"' .
+		$ret = '<'.$elem.' class="tiki_plugin" plugin="' . $this->name . '" style="' . $elem_style . '"' .
 			' syntax="' . htmlentities( $syntax, ENT_QUOTES, 'UTF-8') . '"' .
 			' args="' . htmlentities($this->urlEncodeArgs(), ENT_QUOTES, 'UTF-8') . '"' .
 			' body="' . htmlentities($this->body, ENT_QUOTES, 'UTF-8') . '">'.	// not <!--{cke_protected}
 			'<img src="'.$icon.'" width="16" height="16" style="float:left;position:relative;z-index:10001" />' .
-			$plugin_result.'<!-- end tiki_plugin --></'.$elem.'>~/np~';
+			$plugin_result.'<!-- end tiki_plugin --></'.$elem.'>';
 
 		return 	$ret;
 	}
