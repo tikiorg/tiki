@@ -21,7 +21,7 @@ if ( !isset($_REQUEST['mobile_mode']) || $_REQUEST['mobile_mode'] === 'y' ) {
 						$uagent_info->DetectOperaMobile() ||
 						$uagent_info->DetectPalmWebOS();
 
-	if ((!isset($_COOKIE['mobile_mode']) && $supported_device) || $_COOKIE['mobile_mode'] === 'y') {		// supported by jquery.mobile
+	if ((!getCookie('mobile_mode') && $supported_device) || getCookie('mobile_mode') === 'y') {		// supported by jquery.mobile
 
 		//die(var_dump($prefs['mobile_mode'], $_REQUEST['mobile_mode'], $_COOKIE['mobile_mode']));
 		$prefs['mobile_mode'] = 'y';
@@ -82,4 +82,4 @@ if ( !isset($_REQUEST['mobile_mode']) || $_REQUEST['mobile_mode'] === 'y' ) {
 	$prefs['mobile_mode'] = 'n';
 }
 
-setcookie('mobile_mode', $prefs['mobile_mode']);
+setCookieSection('mobile_mode', $prefs['mobile_mode']);

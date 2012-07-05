@@ -83,17 +83,47 @@ if ( isset($domain_map[$host]) ) {
 if (isset($_REQUEST['PHPSESSID'])) $tikilib->setSessionId($_REQUEST['PHPSESSID']);
 elseif (function_exists('session_id')) $tikilib->setSessionId(session_id());
 
+if ($prefs['cookie_consent_feature'] === 'y' && empty($_COOKIE[$prefs['cookie_consent_name']])) {
+	$feature_no_cookie = true;
+} else {
+	$feature_no_cookie = false;
+}
+
+require_once ('lib/setup/cookies.php');
+
 if ($prefs['mobile_feature'] === 'y') {
-	require_once ('lib/setup/mobile.php');	// needs to be before js_detect
+	require_once ('lib/setup/mobile.php');	// needs to be before js_detect but after cookies
 } else {
 	$prefs['mobile_mode'] = '';
 }
 
-require_once ('lib/setup/cookies.php');
 require_once ('lib/setup/user_prefs.php');
 require_once ('lib/setup/language.php');
 require_once ('lib/setup/javascript.php');
 require_once ('lib/setup/wiki.php');
+
+/* Cookie consent setup, has to be after the JS decision and wiki setup */
+
+$cookie_consent_html = '';
+if ($prefs['cookie_consent_feature'] === 'y') {
+	if (!empty($_REQUEST['cookie_consent_checkbox'])) {			// js disabled
+		$feature_no_cookie = false;
+		setCookieSection($prefs['cookie_consent_name'], 'y');
+	}
+	$cookie_consent = getCookie($prefs['cookie_consent_name']);
+	if (empty($cookie_consent)) {
+		if ($prefs['javascript_enabled'] !== 'y') {
+			$prefs['cookie_consent_mode'] = '';
+		} else {
+			$headerlib->add_js('jqueryTiki.no_cookie = true; jqueryTiki.cookie_consent_alert = "' . addslashes($prefs['cookie_consent_alert']) . '";');
+		}
+		$cookie_consent_html = $smarty->fetch('cookie_consent.tpl');
+	} else {
+		$feature_no_cookie = false;
+	}
+}
+$smarty->assign('cookie_consent_html', $cookie_consent_html);
+
 if ($prefs['feature_polls'] == 'y') require_once ('lib/setup/polls.php');
 if ($prefs['feature_mailin'] == 'y') require_once ('lib/setup/mailin.php');
 require_once ('lib/setup/tikiIndex.php');

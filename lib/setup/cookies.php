@@ -26,16 +26,18 @@ if ( isset($_SESSION['tiki_cookie_jar']) ) {
 $smarty->assign_by_ref('cookie', $_SESSION['tiki_cookie_jar']);
 
 // fix margins for hidden columns - css (still) doesn't work as it needs to know the "normal" margins FIXME
-if (isset($_SESSION['tiki_cookie_jar']['show_col2']) and $_SESSION['tiki_cookie_jar']['show_col2'] == 'n') {
+if (getCookie('show_col2') == 'n') {
 	$headerlib->add_css('#c1c2 #wrapper #col1.marginleft { margin-left: 0; }', 100);
 }
-if (isset($_SESSION['tiki_cookie_jar']['show_col3']) and $_SESSION['tiki_cookie_jar']['show_col3'] == 'n') {
+if (getCookie('show_col3') == 'n') {
 	$headerlib->add_css('#c1c2 #wrapper #col1.marginright { margin-right: 0; }', 100);
 }
 
 function getCookie($name, $section = null, $default = null)
 {
-	if (isset($feature_no_cookie) && $feature_no_cookie == 'y') {
+	global $feature_no_cookie;
+
+	if ($feature_no_cookie) {
 		if (isset($_SESSION['tiki_cookie_jar'])) {// if cookie jar doesn't work
 			if (isset($_SESSION['tiki_cookie_jar'][$name]))
 				return $_SESSION['tiki_cookie_jar'][$name];
@@ -60,6 +62,8 @@ function getCookie($name, $section = null, $default = null)
 
 function setCookieSection($name, $value, $section = '', $expire = null, $path = '', $domain = '', $secure = '')
 {
+	global $feature_no_cookie;
+
 	if ($section) {
 		$valSection = getCookie($section);
 		$name2 = '@' . $name . ':';
@@ -75,7 +79,11 @@ function setCookieSection($name, $value, $section = '', $expire = null, $path = 
 			setCookieSection($section, $valSection, '', $expire, $path, $domain, $secure);
 		}
 	} else {
-		setcookie($name, $value, $expire, $path, $domain, $secure);
+		if ($feature_no_cookie) {
+			$_SESSION['tiki_cookie_jar'][$name] = $value;
+		} else {
+			setcookie($name, $value, $expire, $path, $domain, $secure);
+		}
 	}
 }
 

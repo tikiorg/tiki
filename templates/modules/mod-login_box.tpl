@@ -37,6 +37,13 @@ $("#loginbox-{{$module_logo_instance}}").submit( function () {
 		return false;
 	}
 });
+if (jqueryTiki.no_cookie) {
+	$('.box-login_box input').each(function(){
+		$(this).keyup(function() {
+			alert(jqueryTiki.cookie_consent_alert);
+		});
+	});
+}
 {/jq}
 {if !isset($tpl_module_title)}{assign var=tpl_module_title value="{tr}Log in{/tr}"}{/if}{* Left for performance, since tiki-login_scr.php includes this template directly. *}
 {if !isset($module_params)}{assign var=module_params value=' '}{/if}

@@ -8,7 +8,7 @@
 		<ul class="jumplinks" style="position:absolute;top:-9000px;left:-9000px;z-index:9;">
 			<li><a href="#tiki-center" title="{tr}Jump to Content{/tr}">{tr}Jump to Content{/tr}</a></li>
 		</ul>
-
+		{$cookie_consent_html}
 		{if $prefs.feature_fullscreen eq 'y' and $filegals_manager eq '' and $print_page ne 'y'}
 			<div id="fullscreenbutton">
 				{if $smarty.session.fullscreen eq 'n'}

@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -12,11 +12,13 @@ $access->check_script($_SERVER['SCRIPT_NAME'], basename(__FILE__));
 //   (to be able to generate non-javascript code if there is no javascript, when noscript tag is not useful enough)
 //   It uses cookies instead of session vars to keep the correct value after a session timeout
 
+$js_cookie = getCookie('javascript_enabled');
+
 if ($prefs['disableJavascript'] == 'y' ) {
 	$prefs['javascript_enabled'] = 'n';
-} elseif ( isset($_COOKIE['javascript_enabled']) ) {
+} elseif ($js_cookie) {
 	// Update the pref with the cookie value
-	$prefs['javascript_enabled'] = $_COOKIE['javascript_enabled'];
+	$prefs['javascript_enabled'] = $js_cookie;
 } else {
 	// Set the cookie to 'n', through PHP / HTTP headers
 	$prefs['javascript_enabled'] = 'n';
@@ -24,17 +26,19 @@ if ($prefs['disableJavascript'] == 'y' ) {
 
 if ( $prefs['javascript_enabled'] != 'y' && $prefs['disableJavascript'] != 'y' ) {
 	// Set the cookie to 'y', through javascript (will override the above cookie set to 'n' and sent by PHP / HTTP headers) - duration: approx. 1 year
-	$headerlib->add_js("var jsedate = new Date();\njsedate.setTime(" . ( 1000 * ( $tikilib->now + 365 * 24 * 3600 ) ) . ");\nsetCookieBrowser('javascript_enabled', 'y', null, jsedate);");
+	$headerlib->add_js("setCookie('javascript_enabled', 'y');", 1);
 
 	// the first and second time, we should not trust the absence of javascript_enabled cookie yet, as it could be a redirection and the js will not get a chance to run yet, so we wait until the third run, assuming that js is on before then
-	if ( !isset($_COOKIE['runs_before_js_detect']) ) {
+	$runs_before_js_detect = getCookie('runs_before_js_detect');
+	if ( $runs_before_js_detect === null ) {
 		$prefs['javascript_enabled'] = 'y';
-		setcookie('runs_before_js_detect', '2', $tikilib->now + 365 * 24 * 3600);
-	} elseif ( $_COOKIE['runs_before_js_detect'] > 0 ) {
+		setCookieSection('runs_before_js_detect', '1', null, $tikilib->now + 365 * 24 * 3600);
+	} elseif ( $runs_before_js_detect > 0 ) {
 		$prefs['javascript_enabled'] = 'y';
-		setcookie('runs_before_js_detect', $_COOKIE['runs_before_js_detect'] - 1, $tikilib->now + 365 * 24 * 3600);
+		setCookieSection('runs_before_js_detect', $runs_before_js_detect - 1, null, $tikilib->now + 365 * 24 * 3600);
 	}
 }
+
 if ($prefs['javascript_enabled'] == 'n') {
 	// disable js dependant features
 	$prefs['feature_tabs'] = 'n';
@@ -42,6 +46,7 @@ if ($prefs['javascript_enabled'] == 'n') {
 	$prefs['feature_shadowbox'] = 'n';
 	$prefs['feature_wysiwyg'] = 'n';
 	$prefs['feature_ajax'] = 'n';
+	$prefs['calendar_fullcalendar'] = 'n';
 }
 
 if ($prefs['javascript_enabled'] == 'y') {	// we have JavaScript
@@ -90,18 +95,17 @@ if (m) {
 	var hours = - now.getTimezoneOffset() / 60;
 	m = "GMT" + (hours > 0 ? "+" : "") + hours;
 }
-// Etc/GMT+ is equivalent to GMT- 
+// Etc/GMT+ is equivalent to GMT-
 if (m.substring(0,4) == "GMT+") {
 	m = "Etc/GMT-" + m.substring(4);
 }
 if (m.substring(0,4) == "GMT-") {
 	m = "Etc/GMT+" + m.substring(4);
-} 
+}
 if (inArray(m, allTimeZoneCodes)) {
 	setCookie("local_tz", m);
 }
-'
-);
+', 2);
 
 	$js = '
 // JS Object to hold prefs for jq
@@ -140,6 +144,7 @@ jqueryTiki.googleStreetViewOverlay = '.($prefs['geo_google_streetview_overlay'] 
 jqueryTiki.structurePageRepeat = '.($prefs['page_n_times_in_a_structure'] == 'y' ? 'true' : 'false') . ';
 jqueryTiki.mobile = '.($prefs['mobile_mode'] == 'y' ? 'true' : 'false') . ';
 jqueryTiki.jcapture = '.($prefs['feature_jcapture'] == 'y' ? 'true' : 'false') . ';
+jqueryTiki.no_cookie = false;
 ';	// NB replace "normal" speeds with int to workaround issue with jQuery 1.4.2
 
 	if ($prefs['mobile_feature'] === 'y' && $prefs['mobile_mode'] === 'y') {
@@ -185,9 +190,9 @@ var syntaxHighlighter = {
 		if ($prefs['feature_iepngfix'] == 'y') {
 			/**
 			 * \brief another attempt for PNG alpha transparency fix which seems to work best for IE6 and can be applied even on background positioned images
-			 * 
+			 *
 			 * is applied explicitly on defined CSS selectors or HTMLDomElement
-			 * 
+			 *
 			 */
 			if (($fixoncss = $prefs['iepngfix_selectors']) == '') {
 				$fixoncss = '#sitelogo a img';
