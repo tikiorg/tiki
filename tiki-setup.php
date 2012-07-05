@@ -117,6 +117,9 @@ if ($prefs['cookie_consent_feature'] === 'y') {
 		} else {
 			$headerlib->add_js('jqueryTiki.no_cookie = true; jqueryTiki.cookie_consent_alert = "' . addslashes($prefs['cookie_consent_alert']) . '";');
 		}
+		foreach($_COOKIE as $k => $v) {
+			setcookie($k, '', time() - 3600);		// unset any previously existing cookies
+		}
 		$cookie_consent_html = $smarty->fetch('cookie_consent.tpl');
 	} else {
 		$feature_no_cookie = false;

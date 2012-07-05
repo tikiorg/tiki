@@ -2519,6 +2519,8 @@ li.archivedate {
 	padding: 1em;
 	margin: 1em;
 	border: 1px solid #999;
+	color: #666;
+	background-color: #fff;
 }
 
 #cookie_consent_div.banner {
@@ -2526,7 +2528,6 @@ li.archivedate {
 	padding: 1em;
 	margin: 0;
 	border: 1px solid #999;
-	background-color: #fff;
 	width: 100%;
 	top: 0;
 	left: 0;

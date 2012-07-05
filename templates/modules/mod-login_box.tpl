@@ -39,8 +39,10 @@ $("#loginbox-{{$module_logo_instance}}").submit( function () {
 });
 if (jqueryTiki.no_cookie) {
 	$('.box-login_box input').each(function(){
-		$(this).keyup(function() {
-			alert(jqueryTiki.cookie_consent_alert);
+		$(this).change(function() {
+			if (jqueryTiki.no_cookie && $(this).val()) {
+				alert(jqueryTiki.cookie_consent_alert);
+			}
 		});
 	});
 }
