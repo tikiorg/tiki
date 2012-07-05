@@ -160,7 +160,14 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	function parsePlugin($input)
 	{
 		if ($this->Parser->option['noparseplugins'] == false) {
+
+			$is_html = $this->Parser->option['is_html'];
+
+			$this->Parser->option['is_html'] = true;
+
 			$result = $this->parse($input);
+
+			$this->Parser->option['is_html'] = $is_html;
 			return $result;
 		} else {
 			return $input;
