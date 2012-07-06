@@ -194,7 +194,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		$input = rtrim(ltrim($input, "\n"), "\n"); //here we remove the fake line breaks added just before parse
 
 		if ($this->Parser->option['parseLists'] == true || strpos($input, "\n") !== false) {
-			$lists = $this->Parser->list->toHtmlList();
+			$lists = $this->Parser->list->toHtml();
 			foreach($lists as $key => &$list) {
 				$input = str_replace($key, $list, $input);
 			}
