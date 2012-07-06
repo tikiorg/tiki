@@ -29,7 +29,7 @@ class WikiPlugin_outline extends WikiPlugin_HtmlBase
 	{
 		global $headerlib;
 
-		if (get_class($parser) != 'JisonParser_Wiki_Handler') return '';
+		if (get_class($parser) != 'JisonParser_Wiki_Handler') return TikiLib::lib('tiki')->parse_data($data, array('is_html' => true));
 
 		$parser->list->setOutput('outline');
 
