@@ -5,7 +5,7 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $$
 
-class WikiPlugin_outline extends WikiPlugin_HtmlBase
+class WikiPlugin_expandingoutline extends WikiPlugin_HtmlBase
 {
 	var $type = 'outline';
 	var $validate = 'all';
