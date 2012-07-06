@@ -195,8 +195,11 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 
 		if ($this->Parser->option['parseLists'] == true || strpos($input, "\n") !== false) {
 			$lists = $this->Parser->list->toHtml();
-			foreach($lists as $key => &$list) {
-				$input = str_replace($key, $list, $input);
+
+			if (!empty($lists)) {
+				foreach($lists as $key => &$list) {
+					$input = str_replace($key, $list, $input);
+				}
 			}
 		}
 
