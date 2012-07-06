@@ -1,5 +1,5 @@
 {if !isset($preview)}
-	<div class="articletrailer">
+	<div class="clearfix articletrailer">
 		<span>
 			{if $show_size eq 'y'}
 				({$size} {tr}bytes{/tr})
@@ -42,5 +42,4 @@
 		{/if}
 		</div>
 	</div>
-	<br class="clear" />
 {/if}

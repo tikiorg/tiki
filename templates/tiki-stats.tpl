@@ -2,7 +2,7 @@
 
 {title help="Stats"}{tr}Stats{/tr}{/title}
 
-<div class="navbar">
+<div class="clearfix navbar">
 	{button _anchor="site_stats" _text="{tr}Site{/tr}"}
 	{if $wiki_stats}{button _anchor="wiki_stats" _text="{tr}Wiki{/tr}"}{/if}
 	{if $igal_stats}{button _anchor="igal_stats" _text="{tr}Image galleries{/tr}"}{/if}
@@ -18,8 +18,6 @@
 	{if $best_objects_stats}{button _anchor="best_objects_stats" _text="{tr}Most viewed objects{/tr}"}{/if}
 	{if $best_objects_stats_lastweek}{button _anchor="best_objects_stats_lastweek" _text="{tr}Most viewed objects in the last 7 days{/tr}"}{/if}
 </div>
-
-<br class="clear" />
 
 <h2 id="site_stats">{tr}Site Stats{/tr}</h2>
 {cycle values="odd,even" print=false advance=false}
