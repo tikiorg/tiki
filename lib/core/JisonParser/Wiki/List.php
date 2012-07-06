@@ -14,6 +14,7 @@ class JisonParser_Wiki_List
 	var $isSetup = false;
 	var $listIds = array();
 
+	var $output = 'list';
 	var $setup = false;
 
 	public function setup($input = "")
@@ -66,6 +67,43 @@ class JisonParser_Wiki_List
 		return '';
 	}
 
+	private function addToStack(&$stack, $currentLevel, &$neededLevel, &$content, &$type)
+	{
+		if ($currentLevel < $neededLevel && $currentLevel < 7) {
+			if (!isset($stack)) {
+				$stack = array();
+				$key = 0;
+			} else {
+				end($stack);
+				$key = key($stack);
+			}
+
+			$key = max(0, $key);
+
+			$this->addToStack($stack[$key]['children'], $currentLevel + 1, $neededLevel, $content, $type);
+		} else {
+			$stack[] = array('content' => $content, 'type' => $type);
+		}
+	}
+
+	public function setOutput($output = 'list')
+	{
+		$this->output = $output;
+	}
+
+	public function toHtml()
+	{
+		if (empty($this->stacks)) return '';
+
+		if ($this->output == 'list') {
+			return $this->toHtmlList();
+		}
+
+		if ($this->output == 'outline') {
+			return $this->toHtmlOutline();
+		}
+	}
+
 	public function toHtmlList()
 	{
 		$lists = array();
@@ -104,13 +142,13 @@ class JisonParser_Wiki_List
 				}
 
 				if ($wrapInLi == true) {
-					$result .= '<li>' . $list['content'] . '</li>';
+					$result .= '<li class="tikiListItem">' . $list['content'];
 				} else {
-					$result .= '<div>' . $list['content'] . '</div>';
+					$result .= '<div class="tikiUnlistItem">' . $list['content'] . '</div>';
 				}
 
 				if(empty($list['children']) == false) {
-					$result .= $this->toHtmlListChildren($list['children'], $style, $html) . $html;
+					$result .= $this->toHtmlListChildren($list['children']) . $html;
 				}
 
 				if ($wrapInLi == true) {
@@ -118,29 +156,62 @@ class JisonParser_Wiki_List
 				}
 
 			} elseif (empty($list['children']) == false) {
-				$result .= $this->toHtmlListChildren($list['children'], $style, $html);
+				$result .= $this->toHtmlListChildren($list['children']);
 			}
 		}
 
-		return $html . '<' . $listParentTagType . ' id="' . $id . '" style="' . $style . '">' . $result . '</' . $listParentTagType . '>';
+		return $html . '<' . $listParentTagType . ' class="tikiList" id="' . $id . '" style="' . $style . '">' . $result . '</' . $listParentTagType . '>';
 	}
 
-	private function addToStack(&$stack, $currentLevel, &$neededLevel, &$content, &$type)
+	public function toHtmlOutline()
 	{
-		if ($currentLevel < $neededLevel && $currentLevel < 7) {
-			if (!isset($stack)) {
-				$stack = array();
-				$key = 0;
-			} else {
-				end($stack);
-				$key = key($stack);
+		$lists = array();
+		foreach($this->stacks as $key => &$stack) {
+			$lists[$key] = $this->toHtmlOutlineChildren($stack);
+		}
+
+		return $lists;
+	}
+
+	private function toHtmlOutlineChildren(&$stack, $prefix = '', $index = 1, $tier = 0) {
+		$result = '';
+		$id = 'id' . microtime() * 1000000;
+
+		$i = 0;
+		foreach($stack as &$list){
+			$hasLabel = true;
+			if (empty($style)) {
+				switch($list['type']) {
+					case '+':
+						$hasLabel = false;
+						break;
+				}
 			}
 
-			$key = max(0, $key);
+			$listIndex = ($index + $i);
+			$label = (!empty($prefix) ? $prefix . '.' . $listIndex : ($index + $i));
+			$class = 'tikiListTableLabel';
 
-			$this->addToStack($stack[$key]['children'], $currentLevel + 1, $neededLevel, $content, $type);
-		} else {
-			$stack[] = array('content' => $content, 'type' => $type);
+			if ($hasLabel == false) {
+				$label = '';
+				$class = 'tikiListTableBlank';
+			} else {
+				$i++;
+			}
+
+			if(empty($list['content']) == false){
+
+				$result .= '<tr><td class="' . $class . '">' . $label . '</td><td class="tikiListTableItem">' . $list['content'] . '</td></tr>';
+
+				if(empty($list['children']) == false) {
+					$result .= '<tr><td class="tikiUnlistTableItem" colspan="2">' . $this->toHtmlOutlineChildren($list['children'], $label, 1, $tier + 1) . '</td></tr>';
+				}
+
+			} elseif (empty($list['children']) == false) {
+				$result .= $this->toHtmlOutlineChildren($list['children'], $prefix, 1, $tier + 1);
+			}
 		}
+
+		return '<table class="tikiListTable" id="' . $id . '" data-tier=' . $tier . '><tbody>' . $result . '</tbody></table>';
 	}
 }
