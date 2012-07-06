@@ -47,7 +47,7 @@ abstract class WikiPlugin_ConditionBase
 		$params = array_merge($defaults, $params);
 	}
 
-	abstract protected function output($data, $params, $index, $parser);
+	abstract protected function output(&$data, &$params, &$index, &$parser);
 
 	public function exec($data, $params, $index, $parser)
 	{

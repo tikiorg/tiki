@@ -30,7 +30,7 @@ class WikiPlugin_maketoc extends WikiPlugin_HtmlBase
 		);
 	}
 
-	function output($data, $params, $index, $parser)
+	function output(&$data, &$params, &$index, &$parser)
 	{
 		global $tikilib, $killtoc;
 

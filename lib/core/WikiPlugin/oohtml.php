@@ -36,7 +36,7 @@ class WikiPlugin_oohtml extends WikiPlugin_HtmlBase
 		);
 	}
 
-	function output($data, $params, $index, $parser)
+	function output(&$data, &$params, &$index, &$parser)
 	{
 		// parse using is_html if wiki param set, or just decode html entities
 		if ( isset($params['wiki']) && $params['wiki'] === 1 ) {

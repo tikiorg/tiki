@@ -314,7 +314,12 @@ abstract class WikiPlugin_HtmlBase
 		return $styles;
 	}
 
-	abstract protected function output($data, $params, $index, $parser);
+	function id($index = 0)
+	{
+		return $this->type . $index;
+	}
+
+	abstract protected function output(&$data, &$params, &$index, &$parser);
 
 	public function exec($data, $params, $index, &$parser, &$button = '')
 	{
@@ -327,7 +332,7 @@ abstract class WikiPlugin_HtmlBase
 
 		if ($this->hasHtmlBody == true) {
 			$output = '<' . $this->htmlTagType . ' ' .
-				'id="' . $this->type . $index . '" '.
+				'id="' . $this->id($index) . '" '.
 				'class="wikiplugin_' . $this->type . '" '.
 				'style="' . $style . '"';
 		}
