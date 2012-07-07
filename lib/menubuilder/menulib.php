@@ -339,9 +339,10 @@ class MenuLib extends TikiLib
 			}
 			$channels = array('data'=>$this->lower($subMenu), 'cant'=>$cant);
 		}
+		$selecteds = array();
+		$optionLevel = 0;
 		if (is_numeric($sectionLevel)) { // must extract only the submenu level sectionLevel where the current url is
 			$findUrl = false;
-			$optionLevel = 0;
 			$cant = 0;
 			foreach ($channels['data'] as $position=>$option) {
 				if (is_numeric($option['type'])) {
@@ -365,6 +366,10 @@ class MenuLib extends TikiLib
 				if ($optionLevel >= $sectionLevel) {
 					$subMenu[] = $option;
 					++$cant;
+					if (empty($selectedPosition) && $option['type'] != 'o' && $option['type'] != '-') {
+						// not pretty but works - optionLevel will get "shifted up" by $sectionLevel later in lower()
+						$selecteds[$optionLevel - $sectionLevel] = $cant - 1;
+					}
 					if (!empty($option['url']) && $this->menuOptionMatchesUrl($option)) {
 						$findUrl = true;
 						$selectedPosition = $cant - 1;
@@ -383,8 +388,6 @@ class MenuLib extends TikiLib
 				$channels['cant'] = 0;
 			}
 		} else {
-			$selecteds = array();
-			$optionLevel = 0;
 			foreach ($channels['data'] as $position=>$option) {
 				if (is_numeric($option['type'])) {
 					$optionLevel = $option['type'];
@@ -404,14 +407,12 @@ class MenuLib extends TikiLib
 					++$optionLevel;
 				}
 			}
-			if (isset($selectedPosition)) {
-				for ($o = 0; $o < $optionLevel; ++$o) {
-					$channels['data'][$selecteds[$o]]['selectedAscendant'] = true;
-				}
-			}
 		}
 		if (isset($selectedPosition)) {
 			$channels['data'][$selectedPosition]['selected'] = true;
+			for ($o = 0; $o < $optionLevel; ++$o) {
+				$channels['data'][$selecteds[$o]]['selectedAscendant'] = true;
+			}
 		}
 		if (is_numeric($toLevel)) {
 			$subMenu = array();
@@ -435,7 +436,7 @@ class MenuLib extends TikiLib
 			$channels = array('data'=>$subMenu, 'cant'=>$cant);
 		}
 		// set sections open/close according to cookie
-			global $prefs;
+		global $prefs;
 		foreach ($channels['data'] as $position => &$option) {
 			$option['open'] = false;
 			if (!empty($params['menu_cookie']) && $params['menu_cookie'] == 'n') {

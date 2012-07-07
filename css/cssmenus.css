@@ -87,14 +87,16 @@
 }
 
 /* Suggested style */
-.cssmenu_horiz li.selected a,
-.cssmenu_vert li.selected a {
+.cssmenu_horiz li.selected > a,
+.cssmenu_vert li.selected > a {
 	font-style: italic;
 }
 
-.cssmenu_horiz li.selected ul li a,
-.cssmenu_vert li.selected ul li a {
-	font-style: normal;
+/* parents of the selected item */
+.cssmenu_horiz li.selectedAscendant > a,
+.cssmenu_vert li.selectedAscendant > a {
+	font-style: italic;
+	font-weight: bold !important;	/* temp important bold for testing */
 }
 
 /*** (demo skin removed) ***/
