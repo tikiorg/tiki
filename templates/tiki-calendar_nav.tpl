@@ -21,7 +21,7 @@
 				{else}
 					{button _auto_args="focus" _keepall=y _title="{tr}Today{/tr}" _text="{tr}Today{/tr}" _class="calbuttonoff" focus=$now todate=$now}
 				{/if}
-				<br class="clearfix" />
+				<br class="clear">
 			{/if}
 	{/if}
 
