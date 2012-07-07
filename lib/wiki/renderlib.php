@@ -117,7 +117,7 @@ class WikiRenderer
 		if ( ! $this->structureInfo )
 			return;
 
-		global $structlib, $tikilib;
+		global $structlib, $tikilib, $structure, $structure_path;
 
 		$structure = 'y';
 		$this->smartyassign('structure', $structure);
