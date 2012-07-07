@@ -80,5 +80,4 @@
 	{if $thread_style eq 'commentStyle_headers'}
 		{include file='comment-footer.tpl'  comment=$comments_coms[rep]}
 	{/if}
-	<br class="clear" />
 </div>
