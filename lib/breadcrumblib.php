@@ -207,6 +207,27 @@ function breadcrumb_buildStructureTrail($structure_path, $cnt, $loclass)
 	return $res;
 }
 
+function breadcrumb_buildMenuCrumbs($crumbs, $menuId) {
+
+	include_once('lib/smarty_tiki/function.menu.php');
+	list($menu_info, $menuOptions) = get_menu_with_selections(array('id' => $menuId));
+	$newCrumbs = array();
+	if (count($crumbs) > 0) {
+		$newCrumbs[] = $crumbs[0];
+	}
+
+	foreach($menuOptions['data'] as $option) {
+		if ($option['selectedAscendant']) {
+			$newCrumbs[] = new Breadcrumb($option['name'], '', $option['url']);
+		}
+	}
+
+	if (count($crumbs) > 1) {
+		$newCrumbs[] = $crumbs[1];
+	}
+	return $newCrumbs;
+}
+
 /**
  *  Returns the html-formatted page title, if appropriate
  *  @param crumbs array of breadcrumb instances

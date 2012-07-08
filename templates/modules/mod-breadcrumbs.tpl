@@ -4,7 +4,7 @@
 	{strip}
 	{if $prefs.feature_siteloc eq 'y' and $prefs.feature_breadcrumbs eq 'y'}
 		<div id="sitelocbar">
-			{if $prefs.feature_siteloclabel eq 'y'}{tr}Location : {/tr}{/if}
+			{if !empty($module_params.label)}{tr}{$module_params.label|escape:"html"}{/tr} {/if}
 			{if	$trail}
 				{breadcrumbs type="trail" loc="site" crumbs=$trail}
 				{breadcrumbs type="pagetitle" loc="site" crumbs=$trail}
