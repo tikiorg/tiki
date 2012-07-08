@@ -73,19 +73,19 @@ function breadcrumb_buildHeadTitle($crumbs)
  *  @param loc where the description will be used: {site|page} site header or page header
  */
 /* static */
-function breadcrumb_buildTrail($crumbs, $loc)
+function breadcrumb_buildTrail($crumbs, $loc, $showLinks = true)
 {
 	global $prefs, $info;
 	if ($prefs['feature_breadcrumbs'] == 'y') {
 		if ($loc == 'page' && ($prefs['feature_siteloc'] == 'page' || ($prefs['feature_page_title'] == 'y' && $info) ) ) {
-			return _breadcrumb_buildTrail($crumbs);
+			return _breadcrumb_buildTrail($crumbs, -1, -1, $showLinks);
 		} else if (($loc == 'site' || $loc == 'location') && $prefs['feature_siteloc'] == 'y') {
-			return _breadcrumb_buildTrail($crumbs);
+			return _breadcrumb_buildTrail($crumbs, -1, -1, $showLinks);
 		} else if ($loc != 'page' && $loc != 'site' && $loc != 'location' && $loc != 'admin') {
-			return _breadcrumb_buildTrail($crumbs);
+			return _breadcrumb_buildTrail($crumbs, -1, -1, $showLinks);
 		}
 	} else if ($loc == "admin" && $prefs['feature_breadcrumbs'] == 'y') {
-		return _breadcrumb_buildTrail($crumbs);
+		return _breadcrumb_buildTrail($crumbs, -1, -1, $showLinks);
 	}
 }
 
@@ -93,7 +93,7 @@ function breadcrumb_buildTrail($crumbs, $loc)
  *  @param crumbs array of breadcrumb instances
  */
 /* private static */
-function _breadcrumb_buildTrail($crumbs, $len=-1, $cnt=-1)
+function _breadcrumb_buildTrail($crumbs, $len=-1, $cnt=-1, $showLinks = true)
 {
 	global $structure, $structure_path, $prefs, $info;
 
@@ -132,22 +132,22 @@ function _breadcrumb_buildTrail($crumbs, $len=-1, $cnt=-1)
 		$ret = array();
 		if ( ($structure == 'y') && $info ) {
 			$cnt +=1;
-			$ret = breadcrumb_buildStructureTrail($structure_path, $cnt, $loclass);
+			$ret = breadcrumb_buildStructureTrail($structure_path, $cnt, $loclass, $showLinks);
 			// prepend the root crumb
-			array_unshift($ret, _breadcrumb_buildCrumb($crumbs[$cnt], $cnt, $loclass));
+			array_unshift($ret, _breadcrumb_buildCrumb($crumbs[$cnt], $cnt, $loclass, $showLinks));
 			if (count($crumbs) > 1) {
-				$ret[] = _breadcrumb_buildCrumb($crumbs[count($crumbs) - 1], count($ret) - 1, $loclass);
+				$ret[] = _breadcrumb_buildCrumb($crumbs[count($crumbs) - 1], count($ret) - 1, $loclass, $showLinks);
 			}
 		} else {
 			foreach ($crumbs as $crumb) {
 				$cnt += 1;
-				$ret[] = _breadcrumb_buildCrumb($crumb, $cnt, $loclass);
+				$ret[] = _breadcrumb_buildCrumb($crumb, $cnt, $loclass, $showLinks);
 			}
 		}
 		$ret = array_filter($ret);
 		return implode($seper, $ret);
 	} else {                         
-		return _breadcrumb_buildCrumb($crumbs, $cnt, $loclass);
+		return _breadcrumb_buildCrumb($crumbs, $cnt, $loclass, $showLinks);
 	}
 }
 
@@ -157,17 +157,24 @@ function _breadcrumb_buildTrail($crumbs, $len=-1, $cnt=-1)
  *  @param cnt the position of this crumb in the trail, starting at 1
  */
 /* static */
-function _breadcrumb_buildCrumb($crumb, $cnt, $loclass)
+function _breadcrumb_buildCrumb($crumb, $cnt, $loclass, $showLinks = true)
 {
 	if ($crumb->hidden) {
 		return '';
 	}
 	$cnt += 1;
-	$ret = '<a class="'.$loclass.'" title="';
-	$ret .= tra($crumb->description);
-	$ret .= '" accesskey="'.($cnt);
-	$ret .= '" href="'.$crumb->url.'">'.tra($crumb->title).'</a>';
-	$ret .= help_doclink(array('crumb'=>$crumb));
+	$ret = '';
+	if ($showLinks) {
+		$ret .= '<a class="'.$loclass.'" title="';
+		$ret .= tra($crumb->description);
+		$ret .= '" accesskey="'.($cnt);
+		$ret .= '" href="'.$crumb->url.'">';
+	}
+	$ret .= tra($crumb->title);
+	if ($showLinks) {
+		$ret .= '</a>';
+		$ret .= help_doclink(array('crumb'=>$crumb));
+	}
 	return $ret;
 }
 
@@ -178,7 +185,7 @@ function _breadcrumb_buildCrumb($crumb, $cnt, $loclass)
  *  @param loclass the css class
  */
 /* static */
-function breadcrumb_buildStructureTrail($structure_path, $cnt, $loclass)
+function breadcrumb_buildStructureTrail($structure_path, $cnt, $loclass, $showLinks = true)
 {
 	global $structure, $info, $page;
 	$len = count($structure_path) + $cnt;
@@ -194,7 +201,7 @@ function breadcrumb_buildStructureTrail($structure_path, $cnt, $loclass)
 		if ( $len!=$cnt ) {
 
 			$ret = '';
-			if ($crumb['pageName'] != $page || $crumb['page_alias'] != $page) {
+			if ($showLinks && ($crumb['pageName'] != $page || $crumb['page_alias'] != $page)) {
 				$ret .= '<a class="'.$loclass.'" accesskey="'.($cnt).'" href="tiki-index.php?page_ref_id='.$crumb['page_ref_id'].'">';
 			}
 			if ($crumb['page_alias']) {
@@ -202,7 +209,7 @@ function breadcrumb_buildStructureTrail($structure_path, $cnt, $loclass)
 			} else {
 				$ret .= $crumb['pageName'];
 			}
-			if ($crumb['pageName'] != $page || $crumb['page_alias'] != $page) {
+			if ($showLinks && ($crumb['pageName'] != $page || $crumb['page_alias'] != $page)) {
 				$ret .= '</a>';
 			}
 			$res[] = $ret;

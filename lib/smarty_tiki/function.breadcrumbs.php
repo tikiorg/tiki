@@ -27,6 +27,7 @@ function smarty_function_breadcrumbs($params, $smarty)
     if ($type === 'pagetitle' && $prefs['site_title_breadcrumb'] === 'y') {
     	$type = 'desc';
     }
+	$showLinks = empty($params['showLinks']) || $params['showLinks'] == 'y';
     $text_to_display = '';
     switch ($type) {
 		case 'invertfull':
@@ -43,7 +44,7 @@ function smarty_function_breadcrumbs($params, $smarty)
             break;
         case 'trail':
         default:
-			$text_to_display = breadcrumb_buildTrail($crumbs, $loc);
+			$text_to_display = breadcrumb_buildTrail($crumbs, $loc, $showLinks);
             break;
     }
     if (!empty($machine_translate)) {

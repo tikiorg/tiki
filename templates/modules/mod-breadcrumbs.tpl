@@ -6,7 +6,7 @@
 		<div id="sitelocbar">
 			{if !empty($module_params.label)}{tr}{$module_params.label|escape:"html"}{/tr} {/if}
 			{if	$trail}
-				{breadcrumbs type="trail" loc="site" crumbs=$trail}
+				{breadcrumbs type="trail" loc="site" crumbs=$trail showLinks=$module_params.showLinks}
 			{else}
 				<a title="{tr}{$crumbs[0]->description}{/tr}" href="{$crumbs[0]->url}" accesskey="1">{$crumbs[0]->title}</a>
 				{if $structure eq 'y'}
