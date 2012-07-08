@@ -232,7 +232,7 @@ function breadcrumb_buildMenuCrumbs($crumbs, $menuId, $startLevel = null, $stopL
 
 	$level = 0;
 	foreach($menuOptions['data'] as $option) {
-		if ($option['selectedAscendant']) {
+		if (!empty($option['selectedAscendant'])) {
 			if ($startLevel === null || $level >= $startLevel) {
 				if ($stopLevel === null || $level <= $stopLevel) {
 					$newCrumbs[] = new Breadcrumb($option['name'], '', $option['url']);
