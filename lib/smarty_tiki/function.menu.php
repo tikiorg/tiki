@@ -87,7 +87,7 @@ function compare_menu_options($a, $b)
 }
 
 function get_menu_with_selections($params) {
-	global $tikilib, $user;
+	global $tikilib, $user, $prefs;
 	global $menulib; include_once('lib/menubuilder/menulib.php');
 	global $cachelib; include_once('lib/cache/cachelib.php');
 	$cacheName = isset($prefs['mylevel']) ? $prefs['mylevel'] : 0;
