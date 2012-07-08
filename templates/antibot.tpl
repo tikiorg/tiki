@@ -1,4 +1,4 @@
-{if empty($user)}
+{if empty($user) || $user eq 'anonymous'}
 	{if $antibot_table ne 'y'}
 		<tr{if !empty($tr_style)} class="{$tr_style}"{/if}>
 		<td{if !empty($td_style)} class="{$td_style}"{/if}>
