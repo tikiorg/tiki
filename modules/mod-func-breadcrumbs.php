@@ -95,6 +95,15 @@ function module_breadcrumbs($mod_reference, $module_params)
 	if ($module_params['showLast'] === 'n' && ($module_params['showFirst'] === 'n' || count($crumbs) > 1)) {
 		$crumbs[count($crumbs) - 1]->hidden = true;
 	}
+
+	$hide = true;
+	foreach($crumbs as $crumb) {
+		if (!$crumb->hidden) {
+			$hide = false;
+		}
+	}
+	$smarty->assign('crumbs_all_hidden', $hide);
+
 	$smarty->assign_by_ref('trail', $crumbs);
 
 	$smarty->assign('module_params', $module_params);

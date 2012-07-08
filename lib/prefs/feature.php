@@ -1665,7 +1665,7 @@ function prefs_feature_list($partial = false)
 			'name' => tra('Site location bar'),
 			'type' => 'list',
 			'options' => array(
-				'y' => tra('Use breadcrambs module'),
+				'y' => tra('Use breadcrumbs module'),
 				'page' => tra('Top of center column (legacy mode)'),
 				'n' => tra('None'),
 			),

@@ -231,8 +231,11 @@ function breadcrumb_buildMenuCrumbs($crumbs, $menuId, $startLevel = null, $stopL
 	}
 
 	$level = 0;
+	$foundSelected = false;
+
 	foreach($menuOptions['data'] as $option) {
-		if (!empty($option['selectedAscendant'])) {
+		if (!empty($option['selectedAscendant']) || !empty($option['selected'])) {
+			$foundSelected = true;
 			if ($startLevel === null || $level >= $startLevel) {
 				if ($stopLevel === null || $level <= $stopLevel) {
 					$newCrumbs[] = new Breadcrumb($option['name'], '', $option['url']);
@@ -242,7 +245,7 @@ function breadcrumb_buildMenuCrumbs($crumbs, $menuId, $startLevel = null, $stopL
 		}
 	}
 
-	if (count($crumbs) > 1) {
+	if (!$foundSelected && count($crumbs) > 1) {
 		$newCrumbs[] = $crumbs[1];
 	}
 	return $newCrumbs;
