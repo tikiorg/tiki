@@ -37,6 +37,7 @@ class UsersLib extends TikiLib
 	var $groupinclude_cache;
 	var $userobjectperm_cache; // used to cache queries in object_has_one_permission()
 	var $get_object_permissions_for_user_cache;
+	static $cas_initialized = false;
 
 	function __construct()
 	{
@@ -879,14 +880,13 @@ class UsersLib extends TikiLib
 		// just make sure we're supposed to be here
 		if ($prefs['auth_method'] != 'cas') {
 			return false;
-		}
-
-		// import phpCAS lib
-		require_once('lib/phpcas/CAS.php');
-
-		// initialize phpCAS
-		if ( !isset($GLOBALS['PHPCAS_CLIENT']) ) {
+		} 
+		if ( self::$cas_initialized === false ){
+			// import phpCAS lib
+			require_once('lib/phpcas/CAS.php');
+			// initialize phpCAS
 			phpCAS::client($prefs['cas_version'], '' . $prefs['cas_hostname'], (int) $prefs['cas_port'], '' . $prefs['cas_path'], false);
+			self::$cas_initialized = true;
 		}
 
 		return true;
