@@ -157,7 +157,13 @@ what to answer, just press enter to each question (to use default value)"
 	echo " done."
 
 	echo -n "Fix special dirs ..."
-	if [ "$USER" = 'root' -o $(id -Gn $USER | grep -q " $AGROUP "; echo $?) = "0" ]; then
+	USERINAGROUP="no"
+	for grp in `id -Gn $USER`; do
+		if [ "$grp" = "$AGROUP" ]; then
+			USERINAGROUP = "yes"
+		fi
+	done
+	if [ "$USER" = 'root' -o "$USERINAGROUP" = "yes" ]; then
 		chmod -R g+w $DIRS
 	else
 		chmod -fR go+w $DIRS
