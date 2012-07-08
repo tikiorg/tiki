@@ -20,7 +20,7 @@ function module_breadcrumbs_info()
 		'params' => array(
 			'label' => array(
 				'name' => tra('Label'),
-				'description' => tra('Label preceding the crumbs. Default "Location : '),
+				'description' => tra('Label preceding the crumbs.'),
 				'filter' => 'text',
 				'default' => 'Location : ',
 			),
@@ -30,15 +30,33 @@ function module_breadcrumbs_info()
 				'filter' => 'int',
 				'default' => 0,
 			),
+			'menuStartLevel' => array(
+				'name' => tra('Menu Start Level'),
+				'description' => tra('Lowest level of the menu to display.'),
+				'filter' => 'int',
+				'default' => null,
+			),
+			'menuStopLevel' => array(
+				'name' => tra('Menu Stop Level'),
+				'description' => tra('Highest level of the menu to display.'),
+				'filter' => 'int',
+				'default' => null,
+			),
 			'showFirst' => array(
 				'name' => tra('Show Site Crumb'),
-				'description' => 'y|n ' . tra('Display the first crumb, usually the site, when using menu crubms.'),
+				'description' => tra('Display the first crumb, usually the site, when using menu crumbs.'),
 				'filter' => 'alpha',
 				'default' => 'y',
 			),
 			'showLast' => array(
 				'name' => tra('Show Page Crumb'),
-				'description' => 'y|n ' . tra('Display the last crumb, usually the page, when using menu crubms.'),
+				'description' => tra('Display the last crumb, usually the page, when using menu crumbs.'),
+				'filter' => 'alpha',
+				'default' => 'y',
+			),
+			'showLinks' => array(
+				'name' => tra('Show Crumb Links'),
+				'description' => tra('Display links on the crumbs.'),
 				'filter' => 'alpha',
 				'default' => 'y',
 			),
@@ -55,22 +73,29 @@ function module_breadcrumbs($mod_reference, $module_params)
 			$module_params['label'] = 'Location : ';
 		}
 	}
+	$binfo = module_breadcrumbs_info();
+	$defaults = array();
+	foreach ($binfo['params'] as $k => $v) {
+		$defaults[$k] = $v['default'];
+	}
+	$module_params = array_merge($defaults, $module_params);
 
 	if (!empty($module_params['menuId'])) {
 		include_once('lib/breadcrumblib.php');
 
-		$newCrumbs = breadcrumb_buildMenuCrumbs($crumbs, $module_params['menuId']);
+		$newCrumbs = breadcrumb_buildMenuCrumbs($crumbs, $module_params['menuId'], $module_params['menuStartLevel'], $module_params['menuStopLevel']);
 		if ($newCrumbs !== $crumbs) {
 			$crumbs = $newCrumbs;
-			if (!empty($module_params['showFirst']) && $module_params['showFirst'] === 'n') {
-				array_shift($crumbs);
-			}
-			if (!empty($module_params['showLast']) && $module_params['showLast'] === 'n') {
-				array_pop($crumbs);
-			}
-			$smarty->assign('trail', $crumbs);
 		}
 	}
+
+	if ($module_params['showFirst'] === 'n') {
+		$crumbs[0]->hidden = true;
+	}
+	if ($module_params['showLast'] === 'n' && ($module_params['showFirst'] === 'n' || count($crumbs) > 1)) {
+		$crumbs[count($crumbs) - 1]->hidden = true;
+	}
+	$smarty->assign_by_ref('trail', $crumbs);
 
 	$smarty->assign('module_params', $module_params);
 }

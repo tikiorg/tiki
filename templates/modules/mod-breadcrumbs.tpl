@@ -7,7 +7,6 @@
 			{if !empty($module_params.label)}{tr}{$module_params.label|escape:"html"}{/tr} {/if}
 			{if	$trail}
 				{breadcrumbs type="trail" loc="site" crumbs=$trail}
-				{breadcrumbs type="pagetitle" loc="site" crumbs=$trail}
 			{else}
 				<a title="{tr}{$crumbs[0]->description}{/tr}" href="{$crumbs[0]->url}" accesskey="1">{$crumbs[0]->title}</a>
 				{if $structure eq 'y'}
@@ -25,7 +24,7 @@
 							</a>
 						{/if}
 					{/section}
-				{else}
+				{elseif $module_params.showLast eq 'y'}
 					{if $page ne ''}{$prefs.site_crumb_seper|escape:"html"} {$page|escape}
 					{elseif $title ne ''}{$prefs.site_crumb_seper|escape:"html"} {$title}
 					{elseif $thread_info.title ne ''}{$prefs.site_crumb_seper|escape:"html"} {$thread_info.title}

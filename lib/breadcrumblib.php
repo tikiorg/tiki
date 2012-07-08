@@ -20,6 +20,7 @@ class Breadcrumb
 	var $url;
 	var $helpUrl;
 	var $helpDescription;
+	var $hidden;
 
 	function Breadcrumb($title, $desc='', $url='', $helpurl='', $helpdesc='')
 	{
@@ -32,6 +33,7 @@ class Breadcrumb
 		$this->url = $url;
 		$this->helpUrl = $helpurl;
 		$this->helpDescription = $helpdesc;
+		$this->hidden = false;
 	}
 	/* end of class */
 }
@@ -47,7 +49,9 @@ function breadcrumb_buildHeadTitle($crumbs)
 		if ( is_array($crumbs) ) {
 			$ret = array();
 			foreach ($crumbs as $crumb) {
-				$ret[] = breadcrumb_buildHeadTitle($crumb);
+				if ($crumb->title !== $prefs['browsertitle']) {
+					$ret[] = breadcrumb_buildHeadTitle($crumb);
+				}
 			}
 			return implode(" : ", $ret);
 		} elseif ($prefs['site_title_breadcrumb'] == 'desc') {
@@ -131,16 +135,16 @@ function _breadcrumb_buildTrail($crumbs, $len=-1, $cnt=-1)
 			$ret = breadcrumb_buildStructureTrail($structure_path, $cnt, $loclass);
 			// prepend the root crumb
 			array_unshift($ret, _breadcrumb_buildCrumb($crumbs[$cnt], $cnt, $loclass));
+			if (count($crumbs) > 1) {
+				$ret[] = _breadcrumb_buildCrumb($crumbs[count($crumbs) - 1], count($ret) - 1, $loclass);
+			}
 		} else {
 			foreach ($crumbs as $crumb) {
 				$cnt += 1;
-				if ( $len != $cnt+1 ) {
-					$ret[] = _breadcrumb_buildCrumb($crumb, $cnt, $loclass);
-				} else {
-					$ret[] = '';
-				}
+				$ret[] = _breadcrumb_buildCrumb($crumb, $cnt, $loclass);
 			}
 		}
+		$ret = array_filter($ret);
 		return implode($seper, $ret);
 	} else {                         
 		return _breadcrumb_buildCrumb($crumbs, $cnt, $loclass);
@@ -155,6 +159,9 @@ function _breadcrumb_buildTrail($crumbs, $len=-1, $cnt=-1)
 /* static */
 function _breadcrumb_buildCrumb($crumb, $cnt, $loclass)
 {
+	if ($crumb->hidden) {
+		return '';
+	}
 	$cnt += 1;
 	$ret = '<a class="'.$loclass.'" title="';
 	$ret .= tra($crumb->description);
@@ -207,7 +214,7 @@ function breadcrumb_buildStructureTrail($structure_path, $cnt, $loclass)
 	return $res;
 }
 
-function breadcrumb_buildMenuCrumbs($crumbs, $menuId) {
+function breadcrumb_buildMenuCrumbs($crumbs, $menuId, $startLevel = null, $stopLevel = null) {
 
 	include_once('lib/smarty_tiki/function.menu.php');
 	list($menu_info, $menuOptions) = get_menu_with_selections(array('id' => $menuId));
@@ -216,9 +223,15 @@ function breadcrumb_buildMenuCrumbs($crumbs, $menuId) {
 		$newCrumbs[] = $crumbs[0];
 	}
 
+	$level = 0;
 	foreach($menuOptions['data'] as $option) {
 		if ($option['selectedAscendant']) {
-			$newCrumbs[] = new Breadcrumb($option['name'], '', $option['url']);
+			if ($startLevel === null || $level >= $startLevel) {
+				if ($stopLevel === null || $level <= $stopLevel) {
+					$newCrumbs[] = new Breadcrumb($option['name'], '', $option['url']);
+				}
+			}
+			$level++;
 		}
 	}
 
