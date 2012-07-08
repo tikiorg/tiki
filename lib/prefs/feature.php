@@ -1521,13 +1521,13 @@ function prefs_feature_list($partial = false)
 			'name' => tra('Forum name search'),
 			'type' => 'flag',
 			'hint' => tra('When listing forums'),
-			'default' => 'y',
+			'default' => 'n',
 		),
 		'feature_forums_search' => array(
 			'name' => tra('Forum content search'),
 			'type' => 'flag',
 			'hint' => tra('When listing forums'),
-			'default' => 'n',
+			'default' => 'y',
 		),
 		'feature_forum_content_search' => array(
 			'name' => tra('Topic content search'),
