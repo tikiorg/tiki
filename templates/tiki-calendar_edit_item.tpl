@@ -733,7 +733,7 @@
 					{/if}
 				</td>
 			</tr>
-			{if !empty($calitem.parsed)}
+			{if $edit or !empty($calitem.parsed)}
 				<tr>
 					<td>
 						{tr}Description{/tr}
