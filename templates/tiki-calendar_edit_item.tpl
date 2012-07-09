@@ -591,11 +591,9 @@
 								<tr>
 									<td style="border:0;padding-top:2px;vertical-align:middle">
 										{if $prefs.feature_jscalendar neq 'y' or $prefs.javascript_enabled neq 'y'}
-											<span id="endtimehourplus" style="display: {if $calitem.allday}none{else}inline{/if}">
-												<a href="#" onclick="document.f.Time_Hour.selectedIndex=(document.f.Time_Hour.selectedIndex+1);return false;">
-													{icon _id='plus_small' align='left' width='11' height='8'}
-												</a>
-											</span>
+											<a href="#" onclick="document.f.Time_Hour.selectedIndex=(document.f.Time_Hour.selectedIndex+1);return false;">
+												{icon _id='plus_small' align='left' width='11' height='8'}
+											</a>
 										{/if}
 									</td>
 									<td rowspan="2" style="border:0;vertical-align:middle">
