@@ -33,6 +33,8 @@
 				{add_help show='y' title="{tr}Search Help{/tr}" id="advanced_search_help"}
 					{$smarty.capture.advanced_search_help}
 				{/add_help}
+
+				{if $prefs.feature_search_show_last_modification eq 'y'}
 				<label class="searchdate" for="date">
 					{tr}Date Search:{/tr}
 					<select id="date" name="date" onchange="javascript:submit()">
@@ -47,6 +49,8 @@
 						{/section}
 					</select>
 				</label>
+				{/if}
+
 				{if $prefs.feature_multilingual eq 'y' and ($where eq 'wikis' || $where eq 'articles')}
 					<label class="searchLang" for="searchLang">
 						   <select id="searchLang" name="searchLang">
