@@ -10,6 +10,10 @@
 	{if $tiki_p_admin eq 'y' or $tiki_p_admin_users eq 'y'}
 		{button href="tiki-adminusers.php" _text="{tr}Admin users{/tr}"}
 	{/if}
+
+	{button href="tiki-user_preferences.php?view_user=$assign_user" _text="{tr}User Preferences{/tr}"}
+	{button href="tiki-user_information.php?view_user=$assign_user" _text="{tr}User Information{/tr}"}
+
 </div>
 
 {if $prefs.feature_intertiki eq 'y' and $prefs.feature_intertiki_import_groups eq 'y'}

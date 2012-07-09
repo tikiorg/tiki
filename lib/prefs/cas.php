@@ -65,7 +65,7 @@ function prefs_cas_list()
 			'size' => 5,
 			'filter' => 'digits',
 			'perspective' => false,
-			'default' => '',
+			'default' => '443',
 			),
 		'cas_path' => array(
 			'name' => tra('Path'),

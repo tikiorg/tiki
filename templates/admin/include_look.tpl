@@ -39,15 +39,16 @@
 				{/if}	
 			</div>
 
-			{preference name=feature_fixed_width}
-			<div class="adminoptionboxchild" id="feature_fixed_width_childcontainer">
-				{preference name=layout_fixed_width}
-			</div>
 
 			{preference name=change_theme}
 			<div class="adminoptionboxchild" id="change_theme_childcontainer">
 				{tr}Restrict available themes{/tr}
 				{preference name=available_styles}
+			</div>
+
+			{preference name=feature_fixed_width}
+			<div class="adminoptionboxchild" id="feature_fixed_width_childcontainer">
+				{preference name=layout_fixed_width}
 			</div>
 
 			{preference name=useGroupTheme}

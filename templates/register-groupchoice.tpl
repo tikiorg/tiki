@@ -30,6 +30,14 @@
 	{/jq}
 	{if isset($theChoiceGroup)}
 		<input type="hidden" name="chosenGroup" value="{$theChoiceGroup|escape}" />
+		{jq}
+                        //var gr="Customer-Cisco SP";
+                        var gr='{{$theChoiceGroup}}';
+                        $.getJSON('group_tracker_ajax.php',{chosenGroup:gr}, function(data) {
+                        //console.debug(data);
+                        $("#registerTracker").html(data['res']);
+                        });
+                {/jq}
 	{elseif isset($listgroups)}
 		<tr>
 			<td>{tr}Group{/tr}</td>

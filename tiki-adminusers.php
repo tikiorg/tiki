@@ -361,7 +361,11 @@ if (isset($_REQUEST['batch']) && is_uploaded_file($_FILES['csvlist']['tmp_name']
 			$smarty->display('error.tpl');
 			die;
 		}
-		$access->check_authenticity(tra('Are you sure you want to remove this user from this group?'));
+		if ($_REQUEST['user'] === 'admin' && $_REQUEST['group'] === 'Admins') {
+			$access->check_authenticity(tra('Are you sure you want to remove the admin user from the Admins group? You may not be able to administer your Tiki any more if you do this!'));
+		} else {
+			$access->check_authenticity(tra('Are you sure you want to remove this user from this group?'));
+		}
 		$userlib->remove_user_from_group($_REQUEST['user'], $_REQUEST['group']);
 		$tikifeedback[] = array(
 			'num' => 0,

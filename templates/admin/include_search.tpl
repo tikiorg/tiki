@@ -6,6 +6,12 @@
 	{/remarksbox}
 {/if}
 
+{if $prefs.feature_file_galleries eq 'y'}
+	{remarksbox type="tip" title="{tr}Tip{/tr}"}
+		{tr}Also see the Search Indexing tab here:{/tr} <a class='rbox-link' target='tikihelp' href='tiki-admin.php?page=fgal'>{tr}File Gallery admin panel{/tr}</a>
+	{/remarksbox}
+{/if}
+
 
 <form action="tiki-admin.php?page=search" method="post">
 	<input type="hidden" name="searchprefs" />

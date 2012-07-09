@@ -20,6 +20,7 @@ class Breadcrumb
 	var $url;
 	var $helpUrl;
 	var $helpDescription;
+	var $hidden;
 
 	function Breadcrumb($title, $desc='', $url='', $helpurl='', $helpdesc='')
 	{
@@ -32,6 +33,7 @@ class Breadcrumb
 		$this->url = $url;
 		$this->helpUrl = $helpurl;
 		$this->helpDescription = $helpdesc;
+		$this->hidden = false;
 	}
 	/* end of class */
 }
@@ -47,7 +49,9 @@ function breadcrumb_buildHeadTitle($crumbs)
 		if ( is_array($crumbs) ) {
 			$ret = array();
 			foreach ($crumbs as $crumb) {
-				$ret[] = breadcrumb_buildHeadTitle($crumb);
+				if ($crumb->title !== $prefs['browsertitle']) {
+					$ret[] = breadcrumb_buildHeadTitle($crumb);
+				}
 			}
 			return implode(" : ", $ret);
 		} elseif ($prefs['site_title_breadcrumb'] == 'desc') {
@@ -69,19 +73,19 @@ function breadcrumb_buildHeadTitle($crumbs)
  *  @param loc where the description will be used: {site|page} site header or page header
  */
 /* static */
-function breadcrumb_buildTrail($crumbs, $loc)
+function breadcrumb_buildTrail($crumbs, $loc, $showLinks = true)
 {
 	global $prefs, $info;
 	if ($prefs['feature_breadcrumbs'] == 'y') {
 		if ($loc == 'page' && ($prefs['feature_siteloc'] == 'page' || ($prefs['feature_page_title'] == 'y' && $info) ) ) {
-			return _breadcrumb_buildTrail($crumbs);
+			return _breadcrumb_buildTrail($crumbs, -1, -1, $showLinks);
 		} else if (($loc == 'site' || $loc == 'location') && $prefs['feature_siteloc'] == 'y') {
-			return _breadcrumb_buildTrail($crumbs);
+			return _breadcrumb_buildTrail($crumbs, -1, -1, $showLinks);
 		} else if ($loc != 'page' && $loc != 'site' && $loc != 'location' && $loc != 'admin') {
-			return _breadcrumb_buildTrail($crumbs);
+			return _breadcrumb_buildTrail($crumbs, -1, -1, $showLinks);
 		}
 	} else if ($loc == "admin" && $prefs['feature_breadcrumbs'] == 'y') {
-		return _breadcrumb_buildTrail($crumbs);
+		return _breadcrumb_buildTrail($crumbs, -1, -1, $showLinks);
 	}
 }
 
@@ -89,7 +93,7 @@ function breadcrumb_buildTrail($crumbs, $loc)
  *  @param crumbs array of breadcrumb instances
  */
 /* private static */
-function _breadcrumb_buildTrail($crumbs, $len=-1, $cnt=-1)
+function _breadcrumb_buildTrail($crumbs, $len=-1, $cnt=-1, $showLinks = true)
 {
 	global $structure, $structure_path, $prefs, $info;
 
@@ -128,22 +132,22 @@ function _breadcrumb_buildTrail($crumbs, $len=-1, $cnt=-1)
 		$ret = array();
 		if ( ($structure == 'y') && $info ) {
 			$cnt +=1;
-			$ret = breadcrumb_buildStructureTrail($structure_path, $cnt, $loclass);
+			$ret = breadcrumb_buildStructureTrail($structure_path, $cnt, $loclass, $showLinks);
 			// prepend the root crumb
-			array_unshift($ret, _breadcrumb_buildCrumb($crumbs[$cnt], $cnt, $loclass));
+			array_unshift($ret, _breadcrumb_buildCrumb($crumbs[$cnt], $cnt, $loclass, $showLinks));
+			if (count($crumbs) > 1) {
+				$ret[] = _breadcrumb_buildCrumb($crumbs[count($crumbs) - 1], count($ret) - 1, $loclass, $showLinks);
+			}
 		} else {
 			foreach ($crumbs as $crumb) {
 				$cnt += 1;
-				if ( $len != $cnt+1 ) {
-					$ret[] = _breadcrumb_buildCrumb($crumb, $cnt, $loclass);
-				} else {
-					$ret[] = '';
-				}
+				$ret[] = _breadcrumb_buildCrumb($crumb, $cnt, $loclass, $showLinks);
 			}
 		}
+		$ret = array_filter($ret);
 		return implode($seper, $ret);
 	} else {                         
-		return _breadcrumb_buildCrumb($crumbs, $cnt, $loclass);
+		return _breadcrumb_buildCrumb($crumbs, $cnt, $loclass, $showLinks);
 	}
 }
 
@@ -153,14 +157,24 @@ function _breadcrumb_buildTrail($crumbs, $len=-1, $cnt=-1)
  *  @param cnt the position of this crumb in the trail, starting at 1
  */
 /* static */
-function _breadcrumb_buildCrumb($crumb, $cnt, $loclass)
+function _breadcrumb_buildCrumb($crumb, $cnt, $loclass, $showLinks = true)
 {
+	if ($crumb->hidden) {
+		return '';
+	}
 	$cnt += 1;
-	$ret = '<a class="'.$loclass.'" title="';
-	$ret .= tra($crumb->description);
-	$ret .= '" accesskey="'.($cnt);
-	$ret .= '" href="'.$crumb->url.'">'.tra($crumb->title).'</a>';
-	$ret .= help_doclink(array('crumb'=>$crumb));
+	$ret = '';
+	if ($showLinks) {
+		$ret .= '<a class="'.$loclass.'" title="';
+		$ret .= tra($crumb->description);
+		$ret .= '" accesskey="'.($cnt);
+		$ret .= '" href="'.$crumb->url.'">';
+	}
+	$ret .= tra($crumb->title);
+	if ($showLinks) {
+		$ret .= '</a>';
+		$ret .= help_doclink(array('crumb'=>$crumb));
+	}
 	return $ret;
 }
 
@@ -171,7 +185,7 @@ function _breadcrumb_buildCrumb($crumb, $cnt, $loclass)
  *  @param loclass the css class
  */
 /* static */
-function breadcrumb_buildStructureTrail($structure_path, $cnt, $loclass)
+function breadcrumb_buildStructureTrail($structure_path, $cnt, $loclass, $showLinks = true)
 {
 	global $structure, $info, $page;
 	$len = count($structure_path) + $cnt;
@@ -187,7 +201,7 @@ function breadcrumb_buildStructureTrail($structure_path, $cnt, $loclass)
 		if ( $len!=$cnt ) {
 
 			$ret = '';
-			if ($crumb['pageName'] != $page || $crumb['page_alias'] != $page) {
+			if ($showLinks && ($crumb['pageName'] != $page || $crumb['page_alias'] != $page)) {
 				$ret .= '<a class="'.$loclass.'" accesskey="'.($cnt).'" href="tiki-index.php?page_ref_id='.$crumb['page_ref_id'].'">';
 			}
 			if ($crumb['page_alias']) {
@@ -195,7 +209,7 @@ function breadcrumb_buildStructureTrail($structure_path, $cnt, $loclass)
 			} else {
 				$ret .= $crumb['pageName'];
 			}
-			if ($crumb['pageName'] != $page || $crumb['page_alias'] != $page) {
+			if ($showLinks && ($crumb['pageName'] != $page || $crumb['page_alias'] != $page)) {
 				$ret .= '</a>';
 			}
 			$res[] = $ret;
@@ -205,6 +219,36 @@ function breadcrumb_buildStructureTrail($structure_path, $cnt, $loclass)
 		}
 	}
 	return $res;
+}
+
+function breadcrumb_buildMenuCrumbs($crumbs, $menuId, $startLevel = null, $stopLevel = null) {
+
+	include_once('lib/smarty_tiki/function.menu.php');
+	list($menu_info, $menuOptions) = get_menu_with_selections(array('id' => $menuId));
+	$newCrumbs = array();
+	if (count($crumbs) > 0) {
+		$newCrumbs[] = $crumbs[0];
+	}
+
+	$level = 0;
+	$foundSelected = false;
+
+	foreach($menuOptions['data'] as $option) {
+		if (!empty($option['selectedAscendant']) || !empty($option['selected'])) {
+			$foundSelected = true;
+			if ($startLevel === null || $level >= $startLevel) {
+				if ($stopLevel === null || $level <= $stopLevel) {
+					$newCrumbs[] = new Breadcrumb($option['name'], '', $option['url']);
+				}
+			}
+			$level++;
+		}
+	}
+
+	if (!$foundSelected && count($crumbs) > 1) {
+		$newCrumbs[] = $crumbs[1];
+	}
+	return $newCrumbs;
 }
 
 /**
