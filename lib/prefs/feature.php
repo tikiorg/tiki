@@ -1373,7 +1373,6 @@ function prefs_feature_list($partial = false)
 			'name' => tra('Object filter'),
 			'type' => 'flag',
 			'default' => 'n',
-			'dbfeatures' => array('mysql_fulltext'),
 		),
 		'feature_search_show_search_box' => array(
 			'name' => tra('Search box'),

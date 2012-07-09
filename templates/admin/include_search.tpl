@@ -127,9 +127,11 @@ $("#log-rebuild").click(function(){
 		{/tab}
 
 		{tab name="{tr}Search Results{/tr}"}
+			{tr}Select the items to display on the search results page:{/tr}
 			{preference name=search_default_interface_language}
 			{preference name=search_default_where}
-			{tr}Select the items to display on the search results page:{/tr}
+			{preference name=search_show_category_filter}
+			{preference name=search_show_tag_filter}
 			{preference name=feature_search_show_object_filter}
 			{preference name=feature_search_show_search_box}
 			{tr}Select the information to display for each result:{/tr}

@@ -62,7 +62,7 @@
 					</label>
 				{/if}
 				
-				{if $prefs.feature_categories eq 'y' and !empty($categories) and $tiki_p_view_category eq 'y'}
+				{if $prefs.feature_categories eq 'y' and !empty($categories) and $tiki_p_view_category eq 'y' and $prefs.search_show_category_filter eq 'y'}
 					<div id="category_singleselect_find" style="display: {if $findSelectedCategoriesNumber > 1}none{else}block{/if};">
 						<label class="findcateg"> 
 							<select name="categId">
