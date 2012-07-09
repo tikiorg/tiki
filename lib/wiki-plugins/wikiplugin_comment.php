@@ -20,21 +20,27 @@ function wikiplugin_comment_info()
 				'name' => tra('Object Type'),
 				'description' => tra('Object Type'),
 				'filter' => 'text',
-				'default' => '',
+				'default' => tr('wiki page'),
 			),
 			'objectId' => array(
 				'required' => true,
 				'name' => tra('Object ID'),
 				'description' => tra('Object ID'),
 				'filter' => 'int',
-				'default' => '',
+				'default' => tr('The current wiki page you have added the plugin to'),
 			),
 		)
 	);
 }
 function wikiplugin_comment($data, $params)
 {
-	global $smarty;
+	global $smarty, $page;
+
+	$params = array_merge(array(
+		"objectId"=> $page,
+		"objectType"=> "wiki page"
+	),$params);
+
 	$smarty->assign('wikiplugin_comment_objectId', $params['objectId']);
 	$smarty->assign('wikiplugin_comment_objectType', $params['objectType']);	
 	$ret = $smarty->fetch('wiki-plugins/wikiplugin_comment.tpl');
