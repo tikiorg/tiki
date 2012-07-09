@@ -1359,7 +1359,7 @@ if (typeof window.CKEDITOR !== "undefined" && !window.CKEDITOR.plugins.get("{$na
 			var command = editor.addCommand( '{$name}', new window.CKEDITOR.command( editor , {
 				modes: { wysiwyg:1 },
 				exec: function(elem, editor, data) {
-					openEditHelp();
+					$.openEditHelp();
 					return false;
 				},
 				canUndo: false

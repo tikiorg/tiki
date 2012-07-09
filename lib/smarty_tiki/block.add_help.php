@@ -51,8 +51,8 @@ function smarty_block_add_help($params, $content, $smarty, &$repeat)
 		$self_link_params['_anchor'] = $section['id'];
 		$self_link_params['_title'] = $section['title'];
 		$self_link_params['_class'] = 'help';
-		
-		$self_link_params['_onclick'] = 'openEditHelp('.(count($help_sections)-1).');return false;';
+
+		$self_link_params['_onclick'] = '$.openEditHelp('.(count($help_sections)-1).');return false;';
 
 		return smarty_block_self_link($self_link_params, $section['title'].'&nbsp;'.smarty_function_icon(array('_id'=>'help'), $smarty), $smarty);
 	} else {
