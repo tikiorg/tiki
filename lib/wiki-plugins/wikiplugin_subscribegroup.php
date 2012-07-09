@@ -85,6 +85,13 @@ function wikiplugin_subscribegroup_info()
 				'description' => tra('Stop this being default group button label. Does not unsubscribe from the group.'),
 				'default' => tra('OK')
 			),
+			'undefgroup_group' => array(
+				'required' => false,
+				'name' => tra('Group To Set When Not Default'),
+				'description' => tra('Group name to set as default when user stops this group being it.'),
+				'filter' => 'groupname',
+				'default' => 'Registered'
+			),
 		),
 	);
 }
@@ -125,7 +132,11 @@ function wikiplugin_subscribegroup($data, $params)
 	if (!empty($_REQUEST['subscribeGroup']) && !empty($_REQUEST['iSubscribeGroup']) && $_REQUEST['iSubscribeGroup'] == $iSubscribeGroup && $_REQUEST['group'] == $group) {
 		if (isset($defgroup) || isset($defgroup_action) || isset($undefgroup) || isset($undefgroup_action)) {
 			if ($current_defgroup == $group) {
-				$userlib->set_default_group($user, 'Registered');
+				$new_group = !empty($undefgroup_group) ? $undefgroup_group : 'Registered';
+				if (!isset($groups[$new_group])) {
+					$userlib->assign_user_to_group($user, $new_group);
+				}
+				$userlib->set_default_group($user, $new_group);
 			} else {
 				if (!isset($groups[$group])) {
 					$userlib->assign_user_to_group($user, $group);
