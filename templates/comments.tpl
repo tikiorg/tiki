@@ -249,15 +249,7 @@
 							<label for="editpost2">{tr}Reply{/tr}</label>
 						</td>
 						<td>
-							{if $prefs.feature_syntax_highlighter eq 'y'}
-								{assign var=codemirror value="true"}
-								{assign var=syntax value="tiki"}
-							{else}
-								{assign var=codemirror value=""}
-								{assign var=syntax value=""}
-							{/if}
-							
-							{textarea id="editpost2" name="comments_data" comments="y" codemirror=$codemirror syntax=$syntax}{if ($prefs.feature_forum_replyempty ne 'y') || $edit_reply > 0 || $comment_preview eq 'y' || !empty($errors)}{$comment_data}{/if}{/textarea}
+							{textarea codemirror='true' syntax='tiki' id="editpost2" name="comments_data" comments="y"}{if ($prefs.feature_forum_replyempty ne 'y') || $edit_reply > 0 || $comment_preview eq 'y' || !empty($errors)}{$comment_data}{/if}{/textarea}
 
 							{if $user and $prefs.feature_user_watches eq 'y'}
 								<div id="watch_thread_on_reply">

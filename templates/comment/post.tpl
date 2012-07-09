@@ -26,7 +26,7 @@
 				<label>{tr}Title:{/tr} <input type="text" name="title" value="{$title|escape}"/></label>
 			{/if}
 			{capture name=rows}{if $type eq 'forum'}{$prefs.default_rows_textarea_forum}{else}{$prefs.default_rows_textarea_comment}{/if}{/capture}
-			<label class="clearfix">{tr}Comment:{/tr} {textarea name=data comments="y" _wysiwyg="n" rows=$smarty.capture.rows}{$data|escape}{/textarea}</label>
+			<label class="clearfix">{tr}Comment:{/tr} {textarea codemirror='true' syntax='tiki' name=data comments="y" _wysiwyg="n" rows=$smarty.capture.rows}{$data|escape}{/textarea}</label>
 
 			{if $prefs.feature_antibot eq 'y'}
 				{assign var='showmandatory' value='y'}
