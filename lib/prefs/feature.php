@@ -1558,14 +1558,12 @@ function prefs_feature_list($partial = false)
 			'name' => tra('Encryption method'),
 			'type' => 'list',
 			'options' => array(
-                                'crypt-blowfish' => 'crypt-blowfish', //petjal 2012-06-19
 				'crypt-md5' => 'crypt-md5',
 				'crypt-des' => 'crypt-des',
 				'tikihash' => tra('tikihash (old)'),
 			),
 			'perspective' => false,
-                        //'default' => (CRYPT_MD5 == 1)? 'crypt-md5': 'tikihash', //petjal 2012-06-19
-                        'default' => (CRYPT_BLOWFISH == 1)? 'crypt-blowfish': 'crypt-md5', //petjal 2012-06-29
+			'default' => (CRYPT_MD5 == 1)? 'crypt-md5': 'tikihash',
 		),
 		'feature_editcss' => array(
 			'name' => tra('Edit CSS'),
