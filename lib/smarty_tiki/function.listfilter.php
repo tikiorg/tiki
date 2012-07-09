@@ -80,7 +80,7 @@ function smarty_function_listfilter($params, $smarty)
 			$headerlib->add_jq_onready("
 				$(document).bind('editHelpOpened', function() {
 					var text = getTASelection('#".$editorId."'),
-					possiblePlugin = text.split(/[ \(]/)[0];
+					possiblePlugin = text.split(/[ \(}]/)[0];
 					if (possiblePlugin.charAt(0) == '{') { //we have a plugin here
 						possiblePlugin = possiblePlugin.substring(1);
 						$('#$id')
@@ -90,6 +90,11 @@ function smarty_function_listfilter($params, $smarty)
 						var parentTabId = '".$parentTabId."';
 						if (parentTabId) {
 							$('#help_sections a[href=#$parentTabId]').trigger('click');
+							var pluginTr = $('#plugins_help_table tr').not(':hidden');
+
+							if (pluginTr.length == 1) {
+								pluginTr.find('a:first').click();
+							}
 						}
 					}
 				});
