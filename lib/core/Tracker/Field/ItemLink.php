@@ -331,12 +331,13 @@ $("select[name=' . $this->getInsertId() . ']").change(function(e, val) {
 		$indexRemote = array_filter(explode('|', $this->getOption('indexRemote')));
 
 		if (count($indexRemote)) {
-			$definition = Tracker_Definition::get($trackerId);
-			foreach ($indexRemote as $fieldId) {
-				$field = $definition->getField($fieldId);
-				$permName = $field['permName'];
+			if ($definition = Tracker_Definition::get($trackerId)) {
+				foreach ($indexRemote as $fieldId) {
+					$field = $definition->getField($fieldId);
+					$permName = $field['permName'];
 
-				$fields[] = "{$baseKey}_{$permName}";
+					$fields[] = "{$baseKey}_{$permName}";
+				}
 			}
 		}
 

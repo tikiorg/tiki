@@ -264,10 +264,12 @@ abstract class Tracker_Field_Abstract implements Tracker_Field_Interface, Tracke
 	protected function getOption($number, $default = false)
 	{
 		if (! is_numeric($number)) {
-			$type = $this->getConfiguration('type');
-			$class = get_class($this);
+			$factory = new Tracker_Field_Factory($this->definition);
+			$types = $factory->getFieldTypes();
 
-			$info = call_user_func(array($class, 'getTypes'));
+			$type = $this->getConfiguration('type');
+
+			$info = $types[$type];
 			$params = array_keys($info[$type]['params']);
 
 			$number = array_search($number, $params);
