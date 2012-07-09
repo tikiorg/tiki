@@ -5621,7 +5621,6 @@ class UsersLib extends TikiLib
 	{
 		global $prefs;
 
-		//NEW passwords and CHANGED password will use this hash method
 		$hashmethod=$prefs['feature_crypt_passwords'];
 
 		if (!is_null($salt)) {
@@ -5632,8 +5631,6 @@ class UsersLib extends TikiLib
 				$hashmethod='crypt-md5';
 			} else if ($len == 32) { // md5()
 				$hashmethod='tikihash';
-			} else if ($len == 60) { // CRYPT_BLOWFISH, like: $2a$15$guigv9PXhH2KVettIHdWFO0pYlsYyACPZQNP/lVmj4710OKtw0wTS
-				$hashmethod='crypt-blowfish'; //petjal 2012-06-19 from: http://www.php.net/manual/en/function.crypt.php
 			} else if ($len == 0) { // password is disabled in tiki -> external authentification
 				$hashmethod='pass_disabled';
 			} else {
@@ -5670,68 +5667,6 @@ class UsersLib extends TikiLib
 					$salt .= '$';
 				}
 				return crypt($pass, $salt);
-
-			case 'crypt-blowfish':
-				//petjal 2012-06-19  from http://php.net/manual/en/function.crypt.php
-					//Current 9.x users_users MySQL table: hash, varchar(34), NULL. Changed to varchar(60) to accomodate larger hashes.
-				if (CRYPT_BLOWFISH != 1)
-					die('CRYPT_BLOWFISH not implemented on this system');
-				if (is_null($salt)) {
-					//No salt, so we are CREATING or CHANGING our password, so we need to calculate a new salt here.
-					//petjal 2012-06-27: TODO: maybe should put random number generation and hashing into separate tiki fuctions or library(ies)
-					$letters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789./';   //base64 except . not +
-					//petjal 2012-06-30 added pass_blowfish_cost,15 to tiki prefs
-					$bfCost = $prefs['pass_blowfish_cost'] ; //2^13 = 8192 "cost" iterations, is very fast; 2^15 is about 4 seconds
-					$salt = '$2a$' . $bfCost . '$';    // "$2a$ indicates blowfish
-					$numRandomBytes = 22;  //Must be 22 for blowfish; do not change.
-
-					//Taken by petjal 2012-06-19 from: http://www.php.net/manual/en/function.mt-rand.php#83655
-					//  get 128 pseudorandom bits in a string of 16 bytes
-					$pr_bits = '';
-					// Unix/Linux platform?
-					//from: https://en.wikipedia.org/wiki//dev/random : urandom is less secure than /dev/random, but latter blocks if not enough entropy
-					$fp = @fopen('/dev/random','rb'); //petjal changed from urandom to random, a little risk for blocking, but MUCH better entropy.
-					if ($fp !== FALSE) {
-						$pr_bits .= @fread($fp,$numRandomBytes); //we need to force into [a-zA-Z0-9./] below...
-						@fclose($fp);
-					}
-					// MS-Windows platform?
-					if (@class_exists('COM')) {
-						// http://msdn.microsoft.com/en-us/library/aa388176(VS.85).aspx
-						try {
-							$CAPI_Util = new COM('CAPICOM.Utilities.1');
-							$pr_bits .= $CAPI_Util->GetRandom($numRandomBytes,0);
-							// if we ask for binary data PHP munges it, so we
-							// request base64 return value.  We squeeze out the
-							// redundancy and useless ==CRLF by hashing...
-							if ($pr_bits) { $pr_bits = md5($pr_bits,TRUE); }
-						} catch (Exception $ex) {
-							// echo 'Exception: ' . $ex->getMessage();
-						}
-					}
-					if (strlen($pr_bits) < $numRandomBytes) {
-						// do something to warn system owner that pseudorandom generator is missing
-						//print_r("ERROR:  pr_bits < $numRandomBytes");
-						$errors[] = tra('No random number generator in lib/userslib.php');
-					}
-					/*other options for posterity for gathering random bytes for salt
-						//http://php.net/manual/en/function.openssl-random-pseudo-bytes.php
-							//$bytes = openssl_random_pseudo_bytes($numRandomBytes, $cstrong);
-							//$hex   = bin2hex($bytes);
-						//http://random.org
-					*/
-					$salt .= substr(base64_encode("$pr_bits"),0,$numRandomBytes); //to force into 22 chars from [azAZ09+/]
-					$salt = strtr($salt,"+",".");  //replace any + with . ; crypt_blowfish accepts only [azAZ09./]
-					$salt .= '$';   // length of salt = 3+4+22+1=30
-						//print_r("\$salt: " . $salt . " : " . strlen($salt) . "\n");
-				}
-
-				include('db/local.php'); //Get $systemSalt_tiki, ~60-100 bytes, base64 [azAZ09+/]
-				$pass .= $systemSalt_tiki; // petjal 2012-06-28 protects against db-only attacks (sqli, xss).
-       					 //return crypt($pass, $salt);   // length = 60
-				$ret = crypt($pass, $salt);   // length = 60
-					//print_r("\$ret: " . $ret . " : " . strlen($ret) . "\n");
-				return $ret ;   // length = 60
 
 			case 'pass_disabled': // md5(someting) is not empty string
 			case 'tikihash':

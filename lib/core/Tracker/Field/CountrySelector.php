@@ -79,7 +79,7 @@ class Tracker_Field_CountrySelector extends Tracker_Field_Abstract implements Tr
 				$out .= '<img src="img/flags/'.$current.'.gif" title="'.$label.'" alt="'.$label.'" />';
 			}
 			if ($this->getOption(0) == 0) {
-				$out .= '&nbsp;';
+				$out .= ' ';
 			}
 		}
 		if ($this->getOption(0) != 2) {

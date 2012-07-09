@@ -96,7 +96,6 @@ function write_local_php($dbb_tiki, $host_tiki, $user_tiki, $pass_tiki, $dbs_tik
 		$user_tiki = addslashes($user_tiki);
 		$pass_tiki = addslashes($pass_tiki);
 		$dbs_tiki = addslashes($dbs_tiki);
-	        $systemSalt_tiki = calc_system_salt();
 		$fw = fopen($local, 'w');
 		$filetowrite = "<?php\n";
 		$filetowrite .= "\$db_tiki='" . $db_tiki . "';\n";
@@ -125,7 +124,6 @@ function write_local_php($dbb_tiki, $host_tiki, $user_tiki, $pass_tiki, $dbs_tik
 		$filetowrite .= "// Want configurations managed at the system level or restrict some preferences? http://doc.tiki.org/System+Configuration\n";
 		$filetowrite .= "// \$system_configuration_file = '/etc/tiki.ini';\n";
 		$filetowrite .= "// \$system_configuration_identifier = 'example.com';\n\n";
-	        $filetowrite .= "\$systemSalt_tiki='" . $systemSalt_tiki . "';\n";
 		fwrite($fw, $filetowrite);
 		fclose($fw);
 	}
@@ -528,55 +526,6 @@ function fix_double_encoding( $dbname, $previous )
 		die('MySQL INFORMATION_SCHEMA not available. Your MySQL version is too old to perform this operation. (fix_double_encoding)');
 	}
 }
-
-function calc_system_salt() {   //petjal 2012-06-29
-        //puts a strong crypto random salt into db/local.php, for use in lib/userslib.php hash_pass()
-        //Do not put into the database; adding extra user password protection in case of sqli/xss db attacks (not server pwning).
-        //See similar code in lib/userslib.php.
-        //petjal 2012-06-27: TODO: maybe should put random number generation and hashing into separate tiki fuctions or library(ies)
-        $numRandomBytes = 100;  // should match crypt blowfish salt length, the larger the better
-
-        //Taken by petjal 2012-06-19 from: http://www.php.net/manual/en/function.mt-rand.php#83655
-        //  get 128 pseudorandom bits in a string of 16 bytes
-        $pr_bits = '';
-        // Unix/Linux platform?
-        //from: https://en.wikipedia.org/wiki//dev/random : urandom is less secure than /dev/random, but latter blocks if not enough entropy
-        $fp = @fopen('/dev/random','rb'); //petjal changed from urandom to random, a little risk for blocking, but MUCH better entropy.
-        if ($fp !== FALSE) {
-                $pr_bits .= @fread($fp,$numRandomBytes); //binary
-                @fclose($fp);
-        }
-        // MS-Windows platform?
-        if (@class_exists('COM')) {
-                // http://msdn.microsoft.com/en-us/library/aa388176(VS.85).aspx
-                try {
-                        $CAPI_Util = new COM('CAPICOM.Utilities.1');
-                        $pr_bits .= $CAPI_Util->GetRandom($numRandomBytes,0);
-                        // if we ask for binary data PHP munges it, so we
-                        // request base64 return value.  We squeeze out the
-                        // redundancy and useless ==CRLF by hashing...
-                        if ($pr_bits) { $pr_bits = md5($pr_bits,TRUE); }
-                } catch (Exception $ex) {
-                        // echo 'Exception: ' . $ex->getMessage();
-                }
-        }
-        if (strlen($pr_bits) < $numRandomBytes) {
-                // do something to warn system owner that pseudorandom generator is missing
-                //print_r("ERROR:  pr_bits < $numRandomBytes");
-                $errors[] = tra('No random number generator in installer/tiki-installer.php');
-        }
-        /*other options for posterity for gathering random bytes for salt
-                // /dev/urandom
-                //http://php.net/manual/en/function.openssl-random-pseudo-bytes.php
-                        //$bytes = openssl_random_pseudo_bytes($numRandomBytes, $cstrong);
-                                //$hex   = bin2hex($bytes);
-                        //http://random.org
-        */
-        $systemSalt = "";
-        $systemSalt .= substr(base64_encode("$pr_bits"),0,$numRandomBytes);  // [azAZ09+/]
-        return $systemSalt ;
-}
-
 
 // -----------------------------------------------------------------------------
 // end of functions .. now starts the processing

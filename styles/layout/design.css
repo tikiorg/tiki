@@ -1657,6 +1657,10 @@ form.simple select
 	width: 100%;
 }
 
+form.simple textarea.export {
+	height: 320px;
+}
+
 /* $.fn.modal */
 .mask {
 	position:absolute; 

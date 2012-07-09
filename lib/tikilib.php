@@ -2783,7 +2783,8 @@ class TikiLib extends TikiDb_Bridge
 				if (empty($f)) {//look for space...
 					$mid = " where LOWER(`pageName`) like LOWER('%$find%')";
 				} else {
-					$mid = " where LOWER(`pageName`) like ".implode(' or LOWER(`pageName`) like ', array_fill(0, count($f), 'LOWER(?)'));
+					$findop = $forListPages ? ' AND' : ' OR';
+					$mid = " where LOWER(`pageName`) like ".implode($findop . ' LOWER(`pageName`) like ', array_fill(0, count($f), 'LOWER(?)'));
 					$bindvars = $f;
 				}
 			} else {

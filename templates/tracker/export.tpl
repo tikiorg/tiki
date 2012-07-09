@@ -88,7 +88,7 @@
 	<form class="simple" action="" method="post">
 		<label>
 			{tr}Tracker Export{/tr}
-			<textarea>{$export|escape}</textarea>
+			<textarea class="export" >{$export|escape}</textarea>
 		</label>
 	</form>
 	<h4>{tr}Profile Export{/tr}</h4>

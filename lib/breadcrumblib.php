@@ -162,13 +162,16 @@ function _breadcrumb_buildCrumb($crumb, $cnt, $loclass, $showLinks = true)
 	if ($crumb->hidden) {
 		return '';
 	}
+	include_once('tiki-sefurl.php');
+	$url = filter_out_sefurl($crumb->url);
+
 	$cnt += 1;
 	$ret = '';
 	if ($showLinks) {
 		$ret .= '<a class="'.$loclass.'" title="';
 		$ret .= tra($crumb->description);
 		$ret .= '" accesskey="'.($cnt);
-		$ret .= '" href="'.$crumb->url.'">';
+		$ret .= '" href="'.$url.'">';
 	}
 	$ret .= tra($crumb->title);
 	if ($showLinks) {
@@ -189,6 +192,7 @@ function breadcrumb_buildStructureTrail($structure_path, $cnt, $loclass, $showLi
 {
 	global $structure, $info, $page;
 	$len = count($structure_path) + $cnt;
+	TikiLib::lib('smarty')->loadPlugin('smarty_function_sefurl');		// special sefurl only for structures - TODO merge with others
 
 	if ($structure != 'y' || !$info) {
 		return false;
@@ -202,7 +206,8 @@ function breadcrumb_buildStructureTrail($structure_path, $cnt, $loclass, $showLi
 
 			$ret = '';
 			if ($showLinks && ($crumb['pageName'] != $page || $crumb['page_alias'] != $page)) {
-				$ret .= '<a class="'.$loclass.'" accesskey="'.($cnt).'" href="tiki-index.php?page_ref_id='.$crumb['page_ref_id'].'">';
+				$url = smarty_function_sefurl(array('page' => $crumb['pageName'], 'structure' => $structure_path[0]['pageName']), TikiLib::lib('smarty'));
+				$ret .= '<a class="' . $loclass . '" accesskey="' . ($cnt) . '" href="' . $url . '">';
 			}
 			if ($crumb['page_alias']) {
 				$ret .= $crumb['page_alias'];
@@ -238,7 +243,7 @@ function breadcrumb_buildMenuCrumbs($crumbs, $menuId, $startLevel = null, $stopL
 			$foundSelected = true;
 			if ($startLevel === null || $level >= $startLevel) {
 				if ($stopLevel === null || $level <= $stopLevel) {
-					$newCrumbs[] = new Breadcrumb($option['name'], '', $option['url']);
+					$newCrumbs[] = new Breadcrumb($option['name'], '', $option['sefurl']);
 				}
 			}
 			$level++;

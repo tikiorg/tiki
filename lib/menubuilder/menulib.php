@@ -572,6 +572,7 @@ class MenuLib extends TikiLib
 	{
 		global $user, $tiki_p_admin, $prefs;
 		$wikilib = TikiLib::lib('wiki');
+		include_once('tiki-sefurl.php');
 
 		$options = $this->table('tiki_menu_options');
 		$conditions = array(
@@ -600,7 +601,7 @@ class MenuLib extends TikiLib
 					continue;
 				}
 			} else {
-				$res['sefurl'] = '';
+				$res['sefurl'] = filter_out_sefurl($res['url']);
 			}
 			if (!$full) {
 				$display = true;
