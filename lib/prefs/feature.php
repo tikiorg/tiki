@@ -1398,7 +1398,7 @@ function prefs_feature_list($partial = false)
 		'feature_search_show_last_modification' => array(
 			'name' => tra('Last modified date'),
 			'type' => 'flag',
-			'default' => 'y',
+			'default' => 'n',
 			'tags' => array('basic'),
 		),
 		'feature_blog_rankings' => array(
