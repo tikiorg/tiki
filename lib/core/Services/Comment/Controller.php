@@ -346,7 +346,7 @@ class Services_Comment_Controller
 
 	private function canView($type, $objectId)
 	{
-		$perms = Perms::get($type, $objectId);
+		$perms = $this->getApplicablePermissions($type, $objectId);
 
 		if (! ($perms->read_comments || $perms->post_comments || $perms->edit_comments)) {
 			return false;
@@ -364,7 +364,7 @@ class Services_Comment_Controller
 	{
 		global $prefs;
 
-		$perms = Perms::get($type, $objectId);
+		$perms = $this->getApplicablePermissions($type, $objectId);
 		if (! $perms->post_comments) {
 			return false;
 		}
@@ -442,7 +442,7 @@ class Services_Comment_Controller
 			return false;
 		}
 
-		$perms = Perms::get($type, $objectId);
+		$perms = $this->getApplicablePermissions($type, $objectId);
 
 		if (! $perms->lock_comments) {
 			return false;
@@ -460,7 +460,7 @@ class Services_Comment_Controller
 			return false;
 		}
 
-		$perms = Perms::get($type, $objectId);
+		$perms = $this->getApplicablePermissions($type, $objectId);
 
 		if (! $perms->lock_comments) {
 			return false;
@@ -478,14 +478,14 @@ class Services_Comment_Controller
 			return false;
 		}
 
-		$perms = Perms::get($type, $objectId);
+		$perms = $this->getApplicablePermissions($type, $objectId);
 
 		return $perms->admin_comments;
 	}
 
 	private function canRemove($type, $objectId)
 	{
-		$perms = Perms::get($type, $objectId);
+		$perms = $this->getApplicablePermissions($type, $objectId);
 		return $perms->remove_comments;
 	}
 
@@ -497,9 +497,20 @@ class Services_Comment_Controller
 			return false;
 		}
 
-		$perms = Perms::get($type, $objectId);
+		$perms = $this->getApplicablePermissions($type, $objectId);
 
 		return $perms->admin_comments;
+	}
+
+	private function getApplicablePermissions($type, $objectId)
+	{
+		switch ($type) {
+		case 'trackeritem':
+			$item = Tracker_Item::fromId($objectId);
+			return $item->getPerms();
+		default:
+			return Perms::get($type, $objectId);
+		}
 	}
 }
 

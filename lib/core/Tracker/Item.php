@@ -14,6 +14,15 @@ class Tracker_Item
 	private $ownerGroup;
 	private $perms;
 
+	public static function fromId($itemId)
+	{
+		$info = TikiLib::lib('trk')->get_tracker_item($itemId);
+
+		if ($info) {
+			return self::fromInfo($info);
+		}
+	}
+
 	public static function fromInfo($info)
 	{
 		$obj = new self;
@@ -322,6 +331,11 @@ class Tracker_Item
 	public function getPerm($permName)
 	{
 		return isset($this->perms->$permName) ? $this->perms->$permName : null;
+	}
+
+	public function getPerms()
+	{
+		return $this->perms;
 	}
 }
 
