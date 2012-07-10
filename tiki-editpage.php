@@ -670,7 +670,7 @@ if (isset($prefs['feature_references']) && $prefs['feature_references'] === 'y')
 	if ($prefs['wikiplugin_addreference'] == 'y') {
 		include_once("lib/references/referenceslib.php");
 		$referencesLib = new referencesLib();
-		$page_id = TikiLib::lib('tiki')->get_page_id_from_name($object['object']);
+		$page_id = TikiLib::lib('tiki')->get_page_id_from_name($page);
 		if ($page_id) {
 
 			$smarty->assign('showBiblioSection', '1');
@@ -694,7 +694,7 @@ if (isset($prefs['feature_references']) && $prefs['feature_references'] === 'y')
 
 			$assoc_references = $referencesLib->list_assoc_references($page_id);
 			
-			$page_info = TikiLib::lib('tiki')->get_page_info($object['object']);
+			$page_info = TikiLib::lib('tiki')->get_page_info($page);
 			$regex = "/{ADDREFERENCE\(?\ ?biblio_code=\"(.*)\"\)?}.*({ADDREFERENCE})?/siU";
 			preg_match_all($regex,$page_info['data'], $matches);
 			$matches[1] = array_unique($matches[1]);
@@ -1203,7 +1203,7 @@ if (
 					if (isset($info_new['page_id'])) {
 						$page_id = $info_new['page_id'];
 					} else {
-						$page_id = TikiLib::lib('tiki')->get_page_id_from_name($object['object']);
+						$page_id = TikiLib::lib('tiki')->get_page_id_from_name($page);
 					}
 					$referencesLib->add_reference($page_id, $_REQUEST['ref_biblio_code'], $_REQUEST['ref_author'], $_REQUEST['ref_title'], $_REQUEST['ref_part'], $_REQUEST['ref_uri'], $_REQUEST['ref_code'], $_REQUEST['ref_year'], $_REQUEST['ref_style']);
 				}

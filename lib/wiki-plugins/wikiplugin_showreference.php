@@ -93,17 +93,7 @@ function wikiplugin_showreference($data, $params)
 
 	if ($prefs['wikiplugin_showreference'] == 'y') {
 
-		if (strstr($_SERVER['SCRIPT_NAME'], 'tiki-print.php')) {
-			
-			$page = urldecode($_REQUEST['page']);
-			$page_id = TikiLib::lib('tiki')->get_page_id_from_name($page);
-
-		} else {
-			
-			$object = current_object();
-			$page_id = TikiLib::lib('tiki')->get_page_id_from_name($object['object']);
-		
-		}
+		$page_id = $GLOBALS['info']['page_id'];
 
 		$tags = array(
 				'~biblio_code~'=>'biblio_code',
@@ -189,10 +179,10 @@ function wikiplugin_showreference($data, $params)
 				}
 				$anchor = "<a name='" . $ref . "'>&nbsp;</a>";
 				if (strlen($text)) {
-					$htm .= "<li class='" . $cssClass . "'>" . $ref_no . ". " . $text . $anchor . '</li>';
+					$htm .= "<li class='" . $cssClass . "'>" . $anchor . $ref_no . ". " . $text . '</li>';
 				} else {
-					$htm .= "<li class='" . $cssClass . "' style='font-style:italic'>" .
-											$ref_no . '. missing bibliography definition' . $anchor .
+					$htm .= "<li class='" . $cssClass . "' style='font-style:italic'>" . $anchor .
+											$ref_no . '. missing bibliography definition' .
 											'</li>';
 				}
 			}

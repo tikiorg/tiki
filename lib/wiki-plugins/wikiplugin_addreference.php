@@ -88,10 +88,9 @@ function wikiplugin_addreference($data,$params)
 
 		$GLOBALS['referencesData'] = $curr_matches;
 		
-		$url = urlencode($page_info['pageName']) . "#" . $params['biblio_code'];
+		$url = $GLOBALS['base_uri'] . "#" . $params['biblio_code'];
 		
-		return $data . "<a href='" . $url . "' title='" . $params['biblio_code'] . 
-							"' nam><sup>" . $index . "</sup></a>";
+		return $data . "<a href='" . $url . "' title='" . $params['biblio_code'] . "'><sup>" . $index . "</sup></a>";
 
 	}
 }
