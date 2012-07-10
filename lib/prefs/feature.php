@@ -1540,11 +1540,17 @@ function prefs_feature_list($partial = false)
 			'name' => tra('Tiki-indexed search.'),
 			'type' => 'flag',
 			'default' => 'n',
+			'dependencies' => array(
+				'feature_search',
+			),
 		),
 		'feature_forum_local_search' => array(
 			'name' => tra('Use database (full-text) search.'),
 			'type' => 'flag',
 			'default' => 'n',
+			'dependencies' => array(
+				'feature_search_fulltext',
+			),
 		),
 		'feature_clear_passwords' => array(
 			'name' => tra('Store password as plain text'),
