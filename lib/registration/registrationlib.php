@@ -343,7 +343,7 @@ class RegistrationLib extends TikiLib
 			);
 
 			$logslib->add_log('register', 'created account ' . $registration['name']);
-			$result=tra('You will receive an email with the information needed to log into this site the first time.');
+			$result=$smarty->fetch('mail/user_validation_msg.tpl');
 		} else {
 			$userlib->add_user($registration['name'], $newPass, $registration['email'], '', false, NULL, $openid_url);
 			$logslib->add_log('register', 'created account ' . $registration['name']);
