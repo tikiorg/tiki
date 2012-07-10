@@ -124,6 +124,17 @@ $("#log-rebuild").click(function(){
 				{preference name=search_autocomplete}
 			</fieldset>
 
+			<fieldset>
+				<legend>{tr}Forum searches{/tr}</legend>
+				{preference name=feature_forums_name_search}
+				{preference name=feature_forums_search}
+				{preference name=feature_forum_content_search}
+				<div class="adminoptionboxchild" id="feature_forum_content_search_childcontainer">
+					{preference name=feature_forum_local_tiki_search}
+					{preference name=feature_forum_local_search}
+				</div>
+			</fieldset>
+
 		{/tab}
 
 		{tab name="{tr}Search Results{/tr}"}
