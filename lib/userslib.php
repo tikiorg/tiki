@@ -281,7 +281,7 @@ class UsersLib extends TikiLib
 			$url .= '?' . SID;
 
 		if ( $prefs['auth_method'] === 'cas' && $user !== 'admin' && $user !== '' && $prefs['cas_force_logout'] === 'y' ) {
-			phpCAS::logoutWithRedirectServiceAndUrl($url, $url);
+			phpCAS::logoutWithRedirectService($url);
 		}
 		unset($_SESSION['cas_validation_time']);
 		unset($_SESSION[$user_cookie_site]);
