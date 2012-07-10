@@ -1382,7 +1382,6 @@ function prefs_feature_list($partial = false)
 			'name' => tra('Object filter'),
 			'type' => 'flag',
 			'default' => 'n',
-			'dbfeatures' => array('mysql_fulltext'),
 		),
 		'feature_search_show_search_box' => array(
 			'name' => tra('Search box'),
@@ -1408,7 +1407,7 @@ function prefs_feature_list($partial = false)
 		'feature_search_show_last_modification' => array(
 			'name' => tra('Last modified date'),
 			'type' => 'flag',
-			'default' => 'y',
+			'default' => 'n',
 			'tags' => array('basic'),
 		),
 		'feature_blog_rankings' => array(
@@ -1550,11 +1549,17 @@ function prefs_feature_list($partial = false)
 			'name' => tra('Tiki-indexed search.'),
 			'type' => 'flag',
 			'default' => 'n',
+			'dependencies' => array(
+				'feature_search',
+			),
 		),
 		'feature_forum_local_search' => array(
 			'name' => tra('Use database (full-text) search.'),
 			'type' => 'flag',
 			'default' => 'n',
+			'dependencies' => array(
+				'feature_search_fulltext',
+			),
 		),
 		'feature_clear_passwords' => array(
 			'name' => tra('Store password as plain text'),

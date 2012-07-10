@@ -33,6 +33,8 @@
 				{add_help show='y' title="{tr}Search Help{/tr}" id="advanced_search_help"}
 					{$smarty.capture.advanced_search_help}
 				{/add_help}
+
+				{if $prefs.feature_search_show_last_modification eq 'y'}
 				<label class="searchdate" for="date">
 					{tr}Date Search:{/tr}
 					<select id="date" name="date" onchange="javascript:submit()">
@@ -47,6 +49,8 @@
 						{/section}
 					</select>
 				</label>
+				{/if}
+
 				{if $prefs.feature_multilingual eq 'y' and ($where eq 'wikis' || $where eq 'articles')}
 					<label class="searchLang" for="searchLang">
 						   <select id="searchLang" name="searchLang">
@@ -62,7 +66,7 @@
 					</label>
 				{/if}
 				
-				{if $prefs.feature_categories eq 'y' and !empty($categories) and $tiki_p_view_category eq 'y'}
+				{if $prefs.feature_categories eq 'y' and !empty($categories) and $tiki_p_view_category eq 'y' and $prefs.search_show_category_filter eq 'y'}
 					<div id="category_singleselect_find" style="display: {if $findSelectedCategoriesNumber > 1}none{else}block{/if};">
 						<label class="findcateg"> 
 							<select name="categId">

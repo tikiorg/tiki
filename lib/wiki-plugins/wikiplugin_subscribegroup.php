@@ -143,8 +143,8 @@ function wikiplugin_subscribegroup($data, $params)
 				}
 				$userlib->set_default_group($user, $group);
 			}
-			global $base_uri;
-			header('Location: ' . (empty($_SERVER['SCRIPT_URI']) ? $base_uri : $_SERVER['SCRIPT_URI']), true, 303);
+			include_once('lib/core/Zend/OpenId.php');	// contains useful redirect selfUrl functions
+			Zend_OpenId::redirect(Zend_OpenId::selfUrl());
 			die;
 		} else if (isset($groups[$group])) {
 			$userlib->remove_user_from_group($user, $group);

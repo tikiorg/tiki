@@ -125,12 +125,25 @@ $("#log-rebuild").click(function(){
 				{preference name=search_autocomplete}
 			</fieldset>
 
+			<fieldset>
+				<legend>{tr}Forum searches{/tr}</legend>
+				{preference name=feature_forums_name_search}
+				{preference name=feature_forums_search}
+				{preference name=feature_forum_content_search}
+				<div class="adminoptionboxchild" id="feature_forum_content_search_childcontainer">
+					{preference name=feature_forum_local_tiki_search}
+					{preference name=feature_forum_local_search}
+				</div>
+			</fieldset>
+
 		{/tab}
 
 		{tab name="{tr}Search Results{/tr}"}
+			{tr}Select the items to display on the search results page:{/tr}
 			{preference name=search_default_interface_language}
 			{preference name=search_default_where}
-			{tr}Select the items to display on the search results page:{/tr}
+			{preference name=search_show_category_filter}
+			{preference name=search_show_tag_filter}
 			{preference name=feature_search_show_object_filter}
 			{preference name=feature_search_show_search_box}
 			{tr}Select the information to display for each result:{/tr}

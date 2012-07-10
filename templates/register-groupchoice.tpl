@@ -38,6 +38,7 @@
                         $("#registerTracker").html(data['res']);
                         });
                 {/jq}
+		<tr><td colspan="2"><div id="registerTracker"></div></td></tr>
 	{elseif isset($listgroups)}
 		<tr>
 			<td>{tr}Group{/tr}</td>

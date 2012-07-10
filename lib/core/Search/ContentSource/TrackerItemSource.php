@@ -75,6 +75,12 @@ class Search_ContentSource_TrackerItemSource implements Search_ContentSource_Int
 
 	function getProvidedFields()
 	{
+		static $data;
+
+		if (is_array($data)) {
+			return $data;
+		}
+
 		$data = array(
 			'title',
 			'language',
@@ -98,6 +104,12 @@ class Search_ContentSource_TrackerItemSource implements Search_ContentSource_Int
 
 	function getGlobalFields()
 	{
+		static $data;
+
+		if (is_array($data)) {
+			return $data;
+		}
+
 		$data = array();
 
 		foreach ($this->getAllIndexableHandlers() as $baseKey => $handler) {

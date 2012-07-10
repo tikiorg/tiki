@@ -8,18 +8,18 @@
 //this script may only be included - so its better to die if called directly.
 $access->check_script($_SERVER['SCRIPT_NAME'], basename(__FILE__));
 
-$headerlib->add_js('var tiki_cookie_jar=new Array();');
-
 if ( isset($_SESSION['tiki_cookie_jar']) ) {
 	$cookielist = array();
 
-	$smarty->loadPlugin('smarty_modifier_escape');
-	foreach ( $_SESSION['tiki_cookie_jar'] as $nn => $vv ) {
-		$cookielist[] = "'" . smarty_modifier_escape($nn, 'javascript') . "': '" . smarty_modifier_escape($vv, 'javascript') . "'";
+	if (is_array($_SESSION['tiki_cookie_jar'])) {
+		$smarty->loadPlugin('smarty_modifier_escape');
+		foreach ( $_SESSION['tiki_cookie_jar'] as $nn => $vv ) {
+			$cookielist[] = "'" . smarty_modifier_escape($nn, 'javascript') . "': '" . smarty_modifier_escape($vv, 'javascript') . "'";
+		}
 	}
 
 	if ( count($cookielist) ) {		
-		$headerlib->add_js("tiki_cookie_jar={\n". implode(",\n\t", $cookielist)."\n};", 80);
+		$headerlib->add_js('tiki_cookie_jar={'. implode(',', $cookielist).'};');
 	}
 }
 
