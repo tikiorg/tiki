@@ -837,6 +837,7 @@ class Services_Tracker_Controller
 				'editItemPretty' => $input->editItemPretty->text(),
 				'autoCreateCategories' => $input->autoCreateCategories->int() ? 'y' : 'n',
 				'publishRSS' => $input->publishRSS->int() ? 'y' : 'n',
+				'sectionFormat' => $input->sectionFormat->word(),
 			);
 
 			$trackerId = $this->utilities->updateTracker($trackerId, $data);

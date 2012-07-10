@@ -21,7 +21,35 @@ function smarty_function_trackerfields($params, $smarty)
 		return tr('Missing or invalid tracker reference.');
 	}
 
-	$smarty->assign('fields', $params['fields']);
-	return $smarty->fetch('trackerinput/layout_flat.tpl');
+	$sectionFormat = $definition->getConfiguration('sectionFormat', 'flat');
+
+	switch ($sectionFormat) {
+	case 'tab':
+		$title = tr('General');
+		$sections = array();
+
+		foreach ($params['fields'] as $field) {
+			if ($field['type'] == 'h') {
+				$title = tr($field['name']);
+			} else {
+				$sections[$title][] = $field;
+			}
+		}
+
+		$out = array();
+		foreach ($sections as $title => $fields) {
+			$out[md5($title)] = array(
+				'heading' => $title,
+				'fields' => $fields,
+			);
+		}
+
+		$smarty->assign('sections', $out);
+		return $smarty->fetch('trackerinput/layout_tab.tpl');
+	case 'flat':
+	default:
+		$smarty->assign('fields', $params['fields']);
+		return $smarty->fetch('trackerinput/layout_flat.tpl');
+	}
 }
 

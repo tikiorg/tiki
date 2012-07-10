@@ -456,6 +456,7 @@ class Tiki_Profile_InstallHandler_Tracker extends Tiki_Profile_InstallHandler //
 			'restrict_end' =>  'end',
 			'hide_list_empty_fields' => 'doNotShowEmptyField',
 			'allow_one_item_per_user' => 'oneUserItem',
+			'section_format' => 'sectionFormat',
 		);
 	} // }}}
 
@@ -502,6 +503,7 @@ class Tiki_Profile_InstallHandler_Tracker extends Tiki_Profile_InstallHandler //
 		
 		// Check for unknown fields
 		$optionMap = $this->getOptionMap();
+
 		$remain = array_diff(array_keys($data), array_keys($optionMap));
 		if ( count($remain) ) {
 			throw (new Exception('Cannot map object options: "' . implode('","', $remain) . '" for tracker:' . $data['name']));

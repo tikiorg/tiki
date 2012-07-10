@@ -70,6 +70,16 @@
 		<h4>{tr}Display{/tr}</h4>
 		<div>
 			<label>
+				{tr}Section format{/tr}
+				<select name="sectionFormat">
+					<option value="flat"{if $info.sectionFormat eq 'flat'} selected="selected"{/if}>{tr}Title{/tr}</option>
+					<option value="tab"{if $info.sectionFormat eq 'tab'} selected="selected"{/if}>{tr}Tabs{/tr}</option>
+				</select>
+				<div class="description">
+					{tr}Determines how headers will be rendered when using header fields as form section dividers.{/tr}
+				</div>
+			</label>
+			<label>
 				<input type="checkbox" name="showStatus" value="1"
 					{if $info.showStatus eq 'y'} checked="checked"{/if}/>
 				{tr}Show status{/tr}
