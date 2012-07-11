@@ -220,7 +220,8 @@ else
 
 $smarty->assign('tikiMajorVersion', substr($TWV->version, 0, 2));
 
-global $prefslib, $modlib;
+global $modlib;
+include_once('lib/modules/modlib.php');
 $modified = $prefslib->getModifiedPrefsForExport(!empty($_REQUEST['export_show_added']) ? true : false);
 $smarty->assign('modified_list', $modified);
 
