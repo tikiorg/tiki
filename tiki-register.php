@@ -91,10 +91,11 @@ if ($prefs['user_register_prettytracker_output'] == 'y') {
 	$outputwiki=$prefs["user_register_prettytracker_outputwiki"];
 }
 
-
+$needs_validation_js = true;
 if ($registrationlib->merged_prefs['userTracker'] == 'y') {
 	$re = $userlib->get_group_info(isset($_REQUEST['chosenGroup']) ? $_REQUEST['chosenGroup'] : 'Registered');
 	if (!empty($re['usersTrackerId']) && !empty($re['registrationUsersFieldIds'])) {
+		$needs_validation_js = false;
 		include_once ('lib/wiki-plugins/wikiplugin_tracker.php');
 		if (isset($_REQUEST['name'])) $user = $_REQUEST['name']; // so that one can set user preferences at registration time
 		if ($registrationlib->merged_prefs["user_register_prettytracker"] == 'y' && !empty($registrationlib->merged_prefs["user_register_prettytracker_tpl"])) {
@@ -110,10 +111,18 @@ if ($registrationlib->merged_prefs['userTracker'] == 'y') {
 		if (!empty($tr['description'])) {
 			$smarty->assign('userTrackerHasDescription', true);
 		}
+		if ($_REQUEST['error'] === 'y') {
+			$result = null;
+			$smarty->assign('msg', '');
+			$smarty->assign('showmsg', 'n');
+		}
 		$user = ''; // reset $user for security reasons
 		$smarty->assign('userTrackerData', $userTrackerData);
 	}
-} else if ($prefs['feature_jquery_validation'] === 'y') {
+}
+
+if ($needs_validation_js && $prefs['feature_jquery_validation'] === 'y') {
+	$js_m = '';
 	$js = '
 	$("form[name=RegForm]").validate({
 		rules: {
@@ -145,6 +154,16 @@ if ($registrationlib->merged_prefs['userTracker'] == 'y') {
 			},
 			passAgain: { equalTo: "#pass1" }';
 
+	if ($prefs['user_must_choose_group'] === 'y') {
+		$choosable_groups = $registrationlib->merged_prefs['choosable_groups'];
+		$js .= ',
+			chosenGroup: {
+				required: true
+			}';
+		$js_m .= ' "chosenGroup": { required: "' . tra('One of these groups is required') . '"}, ';
+	}
+
+
 	if (extension_loaded('gd') && function_exists('imagepng') && function_exists('imageftbbox') && $prefs['feature_antibot'] == 'y' && empty($user) && $prefs['recaptcha_enabled'] != 'y') {
 		// antibot validation
 		$js .= ',
@@ -161,9 +180,7 @@ if ($registrationlib->merged_prefs['userTracker'] == 'y') {
 		}
 	}
 ';
-		$js_m = ' "captcha[input]": { required: "' . tra('This field is required') . '"}, ';
-	} else {
-		$js_m = '';
+		$js_m .= ' "captcha[input]": { required: "' . tra('This field is required') . '"}, ';
 	}
 
 		$js .= '},

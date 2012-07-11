@@ -512,7 +512,7 @@ class RegistrationLib extends TikiLib
 			// local groups
 			$this->local_prefs['choosable_groups']=array();
 			$listgroups = $userlib->get_groups(0, -1, 'groupName_asc', '', '', 'n');
-			$this->local_prefs['mandatoryChoiceGroups'] = true;
+			$this->local_prefs['mandatoryChoiceGroups'] = ($prefs['user_must_choose_group'] === 'y');
 
 			foreach ($listgroups['data'] as $gr) {
 				if ($gr['registrationChoice'] == 'y') {

@@ -76,6 +76,7 @@
 								{/foreach}
 							</select>
 						</div>
+						{preference name=user_must_choose_group}
 						{preference name=url_after_validation}
 					</div>
 				</div>
