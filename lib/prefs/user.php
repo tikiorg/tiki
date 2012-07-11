@@ -270,7 +270,7 @@ function prefs_user_list($partial = false)
 		),
 		'user_must_choose_group' => array(
 			'name' => tra('Users must choose a group at registration'),
-			'description' => tra('Users cannot register wihtout choosing one of the groups defined above.'),
+			'description' => tra('Users cannot register without choosing one of the groups defined above.'),
 			'type' => 'flag',
 			'default' => 'n',
 		),
