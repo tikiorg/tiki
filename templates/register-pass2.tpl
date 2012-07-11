@@ -9,7 +9,8 @@
 				{if $trackerEditFormId}&nbsp;<strong class='mandatory_star'>*</strong>&nbsp;{/if}
 			</td>
 			<td>
-				<input id='pass2' type="password" name="passAgain" onkeypress="regCapsLock(event)" onkeyup="{if $prefs.feature_jquery_validation neq 'y' && !$userTrackerData}checkPasswordsMatch('#pass2', '#pass1', '#mypassword2_text');{/if}" />
+				<input id='pass2' type="password" name="passAgain" onkeypress="regCapsLock(event)" value="{if !empty($smarty.post.passAgain)}{$smarty.post.passAgain}{/if}"
+					   onkeyup="{if $prefs.feature_jquery_validation neq 'y' && !$userTrackerData}checkPasswordsMatch('#pass2', '#pass1', '#mypassword2_text');{/if}" />
 				<div style="float:right;margin-left:5px;">
 					<div id="mypassword2_text"></div>
 				</div>

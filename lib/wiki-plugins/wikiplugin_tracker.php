@@ -1045,6 +1045,7 @@ function wikiplugin_tracker($data, $params)
 					// if in registration and creating a user tracker item for the new user
 					// remove the user if they did not complete the tracker correctly
 					$userlib->remove_user($userField['value']);
+					$user = '';		// needed to re-include the captcha inputs
 				}
 			}
 			if (isset($field_errors['err_antibot'])) {

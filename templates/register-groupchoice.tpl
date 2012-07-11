@@ -50,7 +50,8 @@ $.getJSON('group_tracker_ajax.php', {chosenGroup:'{{$theChoiceGroup}}'}, functio
 				{foreach item=gr from=$listgroups}
 					{if $gr.registrationChoice eq 'y'}
 						<div class="registergroup">
-							<input type="radio" name="chosenGroup" id="gr_{$gr.id}" value="{$gr.groupName|escape}" />
+							<input type="radio" name="chosenGroup" id="gr_{$gr.id}" value="{$gr.groupName|escape}"
+									{if !empty($smarty.post.chosenGroup) and $smarty.post.chosenGroup eq $gr.groupName|escape}checked="checked"{/if} />
 							<label for="gr_{$gr.id}">
 								{if $gr.groupDesc}
 									{tr}{$gr.groupDesc|escape}{/tr}
