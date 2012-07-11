@@ -1031,21 +1031,37 @@ function wikiplugin_tracker($data, $params)
 			}
 
 			// Display warnings when needed
-			
-			if (count($field_errors['err_mandatory']) > 0) {
-				$smarty->assign_by_ref('err_mandatory', $field_errors['err_mandatory']);
-			}
-			if (count($field_errors['err_value']) > 0) {
-				$smarty->assign_by_ref('err_value', $field_errors['err_value']);
-			}
+
 			if (count($field_errors['err_mandatory']) > 0 || count($field_errors['err_value']) > 0) {
 				$back .= $smarty->fetch('tracker_error.tpl');
 				$_REQUEST['error'] = 'y';
+
+				if (count($field_errors['err_mandatory']) > 0) {
+				$msg = tra('Following mandatory fields are missing');
+					foreach($field_errors['err_mandatory'] as $err) {
+						$msg .= '<br>&nbsp;&nbsp;&nbsp;&nbsp;' . $err['name'];
+					}
+					TikiLib::lib('errorreport')->report($msg);
+				}
+				if (count($field_errors['err_value']) > 0) {
+					$msg = tra('Following fields are incorrect');
+					foreach($field_errors['err_value'] as $err) {
+						$msg .= '<br>&nbsp;&nbsp;&nbsp;&nbsp;' . $err['name'];
+					}
+					TikiLib::lib('errorreport')->report($msg);
+				}
+
 				if ($registration && !empty($userField) && $_REQUEST['name'] === $userField['value'] && $_REQUEST['name'] === $user) {
 					// if in registration and creating a user tracker item for the new user
 					// remove the user if they did not complete the tracker correctly
 					$userlib->remove_user($userField['value']);
-					$user = '';		// needed to re-include the captcha inputs
+					$user = '';								// needed to re-include the captcha inputs
+					$hidden_fieldId = array();				// remove hidden user fields which are otherwise required
+					foreach($flds['data'] as $k => $v) {	// remove the login field otherwise it gets rendered in the form also required
+						if ($v['fieldId'] == $userField['fieldId']) {
+							unset($flds['data'][$k]);
+						}
+					}
 				}
 			}
 			if (isset($field_errors['err_antibot'])) {

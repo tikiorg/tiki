@@ -214,11 +214,7 @@ $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 
 function register_error($msg)
 {
-	global $smarty;
-	$smarty->assign('msg', $msg);
-	$smarty->assign('errortype', 0);
-	$smarty->display("error.tpl");
-	die;
+	TikiLib::lib('errorreport')->report($msg);
 }
 
 if (!$reg_in_module) {
