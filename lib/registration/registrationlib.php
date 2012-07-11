@@ -322,14 +322,16 @@ class RegistrationLib extends TikiLib
 		) {
 			$apass = md5($tikilib->genPass());
 
-			$userlib->send_validation_email(
-							$registration['name'], 
-							$apass, 
-							$registration['email'], 
-							'', 
-							'', 
-							isset($registration['chosenGroup']) ? $registration['chosenGroup'] : ''
-			);
+			if ($prefs['userTracker'] !== 'y') {	// don't send validation until user traker has been validated
+				$userlib->send_validation_email(
+								$registration['name'],
+								$apass,
+								$registration['email'],
+								'',
+								'',
+								isset($registration['chosenGroup']) ? $registration['chosenGroup'] : ''
+				);
+			}
 
 			$userlib->add_user(
 							$registration['name'], 

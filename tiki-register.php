@@ -115,6 +115,26 @@ if ($registrationlib->merged_prefs['userTracker'] == 'y') {
 			$result = null;
 			$smarty->assign('msg', '');
 			$smarty->assign('showmsg', 'n');
+
+		} else {		// user tracker saved ok
+
+			if ($registrationlib->merged_prefs['validateUsers'] == 'y'
+					|| (isset($registrationlib->merged_prefs['validateRegistration'])
+					&& $registrationlib->merged_prefs['validateRegistration'] == 'y')) {
+
+				$info = $userlib->get_user_info($_REQUEST['name']);
+
+				$userlib->send_validation_email(
+						$_REQUEST['name'],
+						$info['valid'],
+						$_REQUEST['email'],
+						'',
+						'',
+						isset($_REQUEST['chosenGroup']) ? $_REQUEST['chosenGroup'] : ''
+				);
+			}
+
+
 		}
 		$user = ''; // reset $user for security reasons
 		$smarty->assign('userTrackerData', $userTrackerData);
