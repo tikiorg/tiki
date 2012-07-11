@@ -223,26 +223,42 @@ $smarty->assign('tikiMajorVersion', substr($TWV->version, 0, 2));
 $modified = $prefslib->getModifiedPrefsForExport(!empty($_REQUEST['export_show_added']) ? true : false);
 $smarty->assign('modified_list', $modified);
 
+$assigned_modules_for_export = $modlib->getModulesForExport();
+$smarty->assign('modules_for_export', $assigned_modules_for_export);
+
 if (!isset($_REQUEST['export_type'])) {
 	$_REQUEST['export_type'] = 'prefs';
 }
 $smarty->assign('export_type', $_REQUEST['export_type']);
 
-if (isset($_REQUEST['export']) && $_REQUEST['export_type'] === 'prefs') {
-	$export_yaml = Horde_Yaml::dump(
-					array( 'preferences' => $_REQUEST['prefs_to_export'] ),
-					array('indent' => 1, 'wordwrap' => 0)
-	);
+if (isset($_REQUEST['export'])) {
+	if ($_REQUEST['export_type'] === 'prefs') {
+		$export_yaml = Horde_Yaml::dump(
+			array( 'preferences' => $_REQUEST['prefs_to_export'] ),
+			array('indent' => 1, 'wordwrap' => 0)
+		);
+	} else if ($_REQUEST['export_type'] === 'modules') {
+		$modules_to_export = array();
+		foreach ($_REQUEST['modules_to_export'] as $k => $v) {
+			$modules_to_export[] = $assigned_modules_for_export[$k];
+		}
+		$export_yaml = Horde_Yaml::dump(
+			array( 'objects' => $modules_to_export),
+			array('indent' => 1, 'wordwrap' => 0));
+	} else {
+		$export_yaml = '';		// something went wrong?
+	}
 
 	$export_yaml = preg_replace('/^---\n/', '', $export_yaml);
 	$export_yaml = "{CODE(caption=>YAML,wrap=>0)}\n" . $export_yaml . "{CODE}\n";
 
 	include_once 'lib/wiki-plugins/wikiplugin_code.php';
-	$export_yaml = wikiplugin_code($export_yaml, array('caption' => 'Wiki markup', 'colors' => 'tikiwiki' ));
+	$export_yaml = wikiplugin_code($export_yaml, array('caption' => 'Wiki markup', 'colors' => 'tikiwiki' ), null, array());
 	$export_yaml = preg_replace('/~[\/]?np~/', '', $export_yaml);
 
 	$smarty->assign('export_yaml', $export_yaml);
 	$smarty->assign('prefs_to_export', $_REQUEST['prefs_to_export']);
+	$smarty->assign('modules_to_export', $_REQUEST['modules_to_export']);
 }
 
 ask_ticket('admin-inc-profiles');
