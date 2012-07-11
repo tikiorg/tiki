@@ -55,7 +55,7 @@ function wikiplugin_fancylist($data, $params)
 	$lines = preg_split("/\n/", trim($data));
 	foreach ($lines as $line) {
 		// replace all before and including the ")"
-		$part = preg_replace("/[\w]+\)(.*)/", "$1", $line);
+		$part = preg_replace("/^[\w]+\)(.*)/", "$1", $line);
 		if (isset($div)) {
 			$result .= '<div><span class='.count.'>'.$count.'</span><p>' . $part . '</p></div>';
 			$count++;
