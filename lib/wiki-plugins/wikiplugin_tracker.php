@@ -1041,6 +1041,11 @@ function wikiplugin_tracker($data, $params)
 			if (count($field_errors['err_mandatory']) > 0 || count($field_errors['err_value']) > 0) {
 				$back .= $smarty->fetch('tracker_error.tpl');
 				$_REQUEST['error'] = 'y';
+				if ($registration && !empty($userField) && $_REQUEST['name'] === $userField['value'] && $_REQUEST['name'] === $user) {
+					// if in registration and creating a user tracker item for the new user
+					// remove the user if they did not complete the tracker correctly
+					$userlib->remove_user($userField['value']);
+				}
 			}
 			if (isset($field_errors['err_antibot'])) {
 				$back.= '<div class="simplebox highlight"><img src="img/icons/exclamation.png" alt=" '.tra('Error').'" style="vertical-align:middle" /> ';
