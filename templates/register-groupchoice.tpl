@@ -33,7 +33,7 @@ $("input[name='chosenGroup']").change(function() {
 			ajaxTrackerFormInit_group();
 		}
 	});
-});
+}){{if !empty($smarty.post.chosenGroup)}}.change(){{/if}};
 	{/jq}
 	{if isset($theChoiceGroup)}
 		<input type="hidden" name="chosenGroup" value="{$theChoiceGroup|escape}" />
