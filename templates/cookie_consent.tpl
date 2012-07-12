@@ -9,10 +9,10 @@
 	<div class="description">
 		{wiki}{tr}{$prefs.cookie_consent_description}{/tr}{/wiki}
 	</div>
-	<input type="checkbox" name="cookie_consent_checkbox">&nbsp;
 	<span class="question">
 		{wiki}{tr}{$prefs.cookie_consent_question}{/tr}{/wiki}
 	</span>
+	<input type="checkbox" name="cookie_consent_checkbox">&nbsp;
 	{if $prefs.javascript_enabled neq 'y'}
 			<input type="submit" name="cookie_consent_button" value="{tr}{$prefs.cookie_consent_button}{/tr}" />
 		</form>
