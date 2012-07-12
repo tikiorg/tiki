@@ -150,7 +150,12 @@ if ($needs_validation_js && $prefs['feature_jquery_validation'] === 'y') {
 	$("form[name=RegForm]").validate({
 		rules: {
 			name: {
-				required: true,
+				required: true,';
+	if ($prefs['login_is_email'] === 'y') {
+		$js .= '
+				email: true,';
+	}
+	$js .= '
 				remote: {
 					url: "validate-ajax.php",
 					type: "post",
