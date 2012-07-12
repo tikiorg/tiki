@@ -127,7 +127,7 @@ if ($registrationlib->merged_prefs['userTracker'] == 'y') {
 				$userlib->send_validation_email(
 						$_REQUEST['name'],
 						$info['valid'],
-						$_REQUEST['email'],
+						$prefs['login_is_email'] === 'y' ? $_REQUEST['name'] : $_REQUEST['email'],
 						'',
 						'',
 						isset($_REQUEST['chosenGroup']) ? $_REQUEST['chosenGroup'] : ''
