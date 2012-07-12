@@ -19,22 +19,6 @@
 	{/if}
 {else}
 	{* Groups *}
-	{jq}
-$("input[name='chosenGroup']").change(function() {
-	$("#registerTracker").modal("{tr}Loading...{/tr}");
-	var gr = $("input[name='chosenGroup']:checked").val();
-	$.getJSON('group_tracker_ajax.php',{chosenGroup:gr}, function(data) {
-		if ($("#registerTracker").children().length === 0) {
-			$(".trackerplugindesc").parents("tr").remove();
-		}
-		$("#registerTracker").html(data['res']).modal();
-		$("#registerTracker").parents('form').attr('id', '#editItemForm1');
-		if (typeof ajaxTrackerFormInit_group == 'function') {
-			ajaxTrackerFormInit_group();
-		}
-	});
-}){{if !empty($smarty.post.chosenGroup)}}.change(){{/if}};
-	{/jq}
 	{if isset($theChoiceGroup)}
 		<input type="hidden" name="chosenGroup" value="{$theChoiceGroup|escape}" />
 		{jq}
@@ -65,5 +49,25 @@ $.getJSON('group_tracker_ajax.php', {chosenGroup:'{{$theChoiceGroup}}'}, functio
 			</td>
 		</tr>
 		<tr><td colspan="2"><div id="registerTracker"></div></td></tr>
+		{jq}
+$("input[name='chosenGroup']").change(function() {
+	$("#registerTracker").modal("{tr}Loading...{/tr}");
+	var gr = $("input[name='chosenGroup']:checked").val();
+	$.getJSON('group_tracker_ajax.php',{chosenGroup:gr}, function(data) {
+		if ($("#registerTracker").children().length === 0) {
+			$(".trackerplugindesc").parents("tr").remove();
+		}
+		$("#registerTracker").html(data['res']).modal();
+		$("input[name^=captcha]").parents("tr").show();
+		if (data['validation']) {
+			var $v = $("#registerTracker").parents('form').validate();
+			$.extend( true, $v.settings, data['validation'] );
+		}
+		$("#registerTracker").parents("table:first").css({borderSpacing:"0 !important",borderCollapse:"collapse !important"});
+		$("tr td:first", "#registerTracker").width($("#registerTracker").parents('table:first').find("td:first").width());
+	});
+}){{if !empty($smarty.post.chosenGroup)}}.change(){{/if}};
+$("input[name^=captcha]").parents("tr").hide();
+		{/jq}
 	{/if}
 {/if}
