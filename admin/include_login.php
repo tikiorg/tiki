@@ -35,6 +35,6 @@ if (!empty($_REQUEST['refresh_email_group'])) {
 
 $smarty->assign('gd_lib_found', function_exists('gd_info') ? 'y' : 'n');
 
-$listgroups = $userlib->get_groups(0, -1, 'groupName_desc', '', '', 'n');
+$listgroups = $userlib->get_groups(0, -1, 'groupName_asc', '', '', 'n');
 $smarty->assign("listgroups", $listgroups['data']);
 ask_ticket('admin-inc-login');
