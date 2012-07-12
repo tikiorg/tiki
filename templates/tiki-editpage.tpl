@@ -158,7 +158,9 @@
 							{tr _0=$page_badchars_display|escape}The page name specified contains characters that may render the page hard to access. You may want to consider removing those: <strong>%0</strong>{/tr}
 						{/remarksbox}
 					{/if}
-					<p>{tr}Page name:{/tr} <input type="text" name="page" value="{$page|escape}" /></p>
+						<p>{tr}Page name:{/tr} <input type="text" name="page" value="{$page|escape}" />
+							<input type="submit" name="rename" value="{tr}Rename{/tr}" />
+						</p>
 				{else}
 					<input type="hidden" name="page" value="{$page|escape}" /> 
 					{* the above hidden field is needed for auto-save to work *}

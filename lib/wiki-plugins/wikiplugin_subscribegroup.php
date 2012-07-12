@@ -133,9 +133,6 @@ function wikiplugin_subscribegroup($data, $params)
 		if (isset($defgroup) || isset($defgroup_action) || isset($undefgroup) || isset($undefgroup_action)) {
 			if ($current_defgroup == $group) {
 				$new_group = !empty($undefgroup_group) ? $undefgroup_group : 'Registered';
-				if (!isset($groups[$new_group])) {
-					$userlib->assign_user_to_group($user, $new_group);
-				}
 				$userlib->set_default_group($user, $new_group);
 			} else {
 				if (!isset($groups[$group])) {

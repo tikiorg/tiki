@@ -322,14 +322,16 @@ class RegistrationLib extends TikiLib
 		) {
 			$apass = md5($tikilib->genPass());
 
-			$userlib->send_validation_email(
-							$registration['name'], 
-							$apass, 
-							$registration['email'], 
-							'', 
-							'', 
-							isset($registration['chosenGroup']) ? $registration['chosenGroup'] : ''
-			);
+			if ($prefs['userTracker'] !== 'y') {	// don't send validation until user traker has been validated
+				$userlib->send_validation_email(
+								$registration['name'],
+								$apass,
+								$registration['email'],
+								'',
+								'',
+								isset($registration['chosenGroup']) ? $registration['chosenGroup'] : ''
+				);
+			}
 
 			$userlib->add_user(
 							$registration['name'], 
@@ -343,7 +345,7 @@ class RegistrationLib extends TikiLib
 			);
 
 			$logslib->add_log('register', 'created account ' . $registration['name']);
-			$result=tra('You will receive an email with the information needed to log into this site the first time.');
+			$result=$smarty->fetch('mail/user_validation_msg.tpl');
 		} else {
 			$userlib->add_user($registration['name'], $newPass, $registration['email'], '', false, NULL, $openid_url);
 			$logslib->add_log('register', 'created account ' . $registration['name']);
@@ -512,7 +514,7 @@ class RegistrationLib extends TikiLib
 			// local groups
 			$this->local_prefs['choosable_groups']=array();
 			$listgroups = $userlib->get_groups(0, -1, 'groupName_asc', '', '', 'n');
-			$this->local_prefs['mandatoryChoiceGroups'] = true;
+			$this->local_prefs['mandatoryChoiceGroups'] = ($prefs['user_must_choose_group'] === 'y');
 
 			foreach ($listgroups['data'] as $gr) {
 				if ($gr['registrationChoice'] == 'y') {

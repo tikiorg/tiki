@@ -1146,6 +1146,33 @@ class ModLib extends TikiLib
 		return $return;
 	}
 
+	/**
+	 * @global TikiLib $tikilib
+	 * @param bool $added shows current prefs not in defaults
+	 * @return array (prefname => array( 'current' => current value, 'default' => default value ))
+	 */
+	function getModulesForExport()
+	{
+		$export = array();
+		$assigned_modules = $this->get_assigned_modules();
+
+		foreach ( $assigned_modules as $zone => $modules ) {
+			foreach ($modules as $pos => $module) {
+				$modtogo['type'] = 'module';
+				$modtogo['data'] = array();
+
+				$modtogo['data']['name'] = $module['name'];
+				TikiLib::parse_str($module['params'], $modtogo['data']['params']);
+				$modtogo['data']['groups'] = unserialize($module['groups']);
+				$modtogo['data']['order'] = $module['ord'];
+
+				$modtogo['data']['position'] = str_replace('_modules', '', $this->module_zones[$module['position']]);
+				$export[] = $modtogo;
+			}
+		}
+		return $export;
+	}
+
 
 	
 }

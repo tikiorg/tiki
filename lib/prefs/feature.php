@@ -839,6 +839,11 @@ function prefs_feature_list($partial = false)
 			'help' => 'Task',
 			'type' => 'flag',
 			'default' => 'n',
+			'module' => 'task',
+			'view' => 'tiki-user_tasks.php',
+			'permission' => array(
+				'textFilter' => 'task',
+			),
 		),
 		'feature_messages' => array(
 			'name' => tra('User Messages'),

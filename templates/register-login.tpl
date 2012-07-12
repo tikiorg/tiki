@@ -8,7 +8,7 @@
 			{if $trackerEditFormId}&nbsp;<strong class='mandatory_star'>*</strong>&nbsp;{/if}
 		</td>
 		<td>
-			<input type="text" name="name" id="name" />
+			<input type="text" name="name" id="name" value="{if !empty($smarty.post.name)}{$smarty.post.name}{/if}" />
 			{if $prefs.login_is_email eq 'y'}
 				<em>{tr}Use your email as login{/tr}</em>.
 			{else}

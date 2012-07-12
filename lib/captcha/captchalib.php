@@ -81,6 +81,7 @@ class Captcha
 		} else {		// implied $type==='dumb'
 			require_once('lib/core/Zend/Captcha/Dumb.php');
 			$this->captcha = new Zend_Captcha_Dumb;
+			$this->captcha->setWordlen($prefs['captcha_wordLen']);
 			$this->type = 'dumb';
 		}
 
