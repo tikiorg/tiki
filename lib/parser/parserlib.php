@@ -180,7 +180,7 @@ class ParserLib extends TikiDb_Bridge
 	function unprotectSpecialChars($data, $is_html = false)
 	{
 		if (( $is_html != false || ( isset($this->option['is_html']) && $this->option['is_html']))
-			|| (isset($this->option['ck_editor']) && $this->option['ck_editor'])) {
+			|| $this->option['ck_editor']) {
 			foreach($this->specialChars as $key => $specialChar) {
 				$data = str_replace($key, $specialChar['html'], $data);
 			}
@@ -1033,7 +1033,7 @@ if ( \$('#$id') ) {
 			return $this->convert_plugin_output($output, '', $outputFormat);
 		}
 
-		if (isset($parseoption['inside_pretty']) && $this->option['inside_pretty'] === true) {
+		if ($this->option['inside_pretty'] === true) {
 			$trklib = TikiLib::lib('trk');
 			$trklib->replace_pretty_tracker_refs($args);
 		}
@@ -1064,7 +1064,7 @@ if ( \$('#$id') ) {
 
 			$killtoc = false;
 
-			if ($pluginFormat === 'wiki' && isset($parseoption['preview_mode']) && $parseoption['preview_mode'] === true && $_SESSION['wysiwyg'] === 'y') {	// fix lost new lines in wysiwyg plugins data
+			if ($pluginFormat === 'wiki' && $this->option['preview_mode'] === true && $_SESSION['wysiwyg'] === 'y') {	// fix lost new lines in wysiwyg plugins data
 				$data = nl2br($data);
 			}
 
@@ -1085,7 +1085,7 @@ if ( \$('#$id') ) {
 			$killtoc = false;
 
 			$plugin_result =  $this->convert_plugin_output($output, $pluginFormat, $outputFormat);
-			if (isset($parseoption['ck_editor']) && $parseoption['ck_editor']) {
+			if ($this->option['ck_editor'] == true) {
 				return $this->convert_plugin_for_ckeditor($name, $args, $plugin_result, $data, $info);
 			} else {
 				return $plugin_result;
