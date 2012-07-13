@@ -437,7 +437,9 @@ class RegistrationLib extends TikiLib
 			$registration['email'] = $registration['name'];
 		}
 		$result=$this->local_check_registration($registration, $from_intertiki);
-		if ($result !== null) return $result;
+		if (!empty($result)) {
+			return $result;
+		}
 
 		if ($prefs['feature_invite'] == 'y') {
 			unset($registration['invitedid']);
