@@ -31,6 +31,10 @@ function module_forums_last_posts_info()
 				'name' => tra('Show date'),
 				'description' => tra('If set to "y", show post date directly instead of as tooltip.') . ' ' . tra('Default:') . ' n',
 			),
+			'time' => array(
+				'name' => tra('Show time'),
+				'description' => tra('Show times after dates.') . ' ' . tra('Default:') . ' y',
+			),
 			'author' => array(
 				'name' => tra('Show author'),
 				'description' => tra('If set to "y", show post author directly instead of as tooltip.') . ' ' . tra('Default:') . ' n',
