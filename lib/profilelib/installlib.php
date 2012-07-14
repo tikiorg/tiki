@@ -1341,7 +1341,7 @@ class Tiki_Profile_InstallHandler_Module extends Tiki_Profile_InstallHandler // 
 		$data['params'] = http_build_query($data['params'], '', '&');
 		
 		if ( $data['custom'] ) {
-			$modlib->replace_user_module($data['name'], $data['name'], (string) $data['custom']);
+			$modlib->replace_user_module($data['name'], $data['name'], (string) $data['custom'], $data['parse']);
 		}
 
 		if ( is_null($data['params']) ) {
