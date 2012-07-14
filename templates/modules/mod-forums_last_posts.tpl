@@ -6,7 +6,7 @@
 				<a class="linkmodule" href="{$modForumsLastPosts[ix].href}"
 					title="{if $date eq 'n'}{$modForumsLastPosts[ix].date|tiki_short_datetime}{/if}
 							{if $author eq 'n'}
-								{if $date eq 'n'}, {tr}by{/tr}{else}{tr}By{/tr}{/if}
+								{if $date eq 'n'}, {tr}by{/tr} {else}{tr}By{/tr} {/if}
 								{if $modForumsLastPosts[ix].user ne ''}{$modForumsLastPosts[ix].user}{else}{tr}Anonymous{/tr}{/if}
 							{/if}
 							{if !empty($modForumsLastPosts[ix].title) ne ''}
