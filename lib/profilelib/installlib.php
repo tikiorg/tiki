@@ -2894,11 +2894,11 @@ class Tiki_Profile_InstallHandler_Sheet extends Tiki_Profile_InstallHandler // {
 	function _install()
 	{
 		if ($this->canInstall()) {
-			global $user;
+			global $user, $sheetlib;
 			require_once ('lib/sheet/grid.php');
 			
 			//here we convert the array to that of what is acceptable to the sheet lib
-			$parentSheetId;
+			$parentSheetId = null;
 			$sheets = array();
 			$nbsheets = count($this->data);	
 			for ($sheetI = 0; $sheetI < $nbsheets; $sheetI++) {
