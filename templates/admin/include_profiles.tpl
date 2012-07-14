@@ -446,7 +446,8 @@ $("#repository, #categories").change(function(){
 					{cycle values="odd,even" print=false}
 					{foreach from=$modules_for_export  key="name" item="data"}
 						<li class="{cycle}">
-							<input type="checkbox" name="modules_to_export[{$name}]" value="{$data.name|escape}" id="modcheckbox_{$name}" />
+							<input type="checkbox" name="modules_to_export[{$name}]" value="{$data.name|escape}"
+								   id="modcheckbox_{$name}"{if isset($modules_to_export[$name])} checked="checked"{/if} />
 							<label for="modcheckbox_{$name}">
 								{$data.data.name|escape} :
 								<em>
