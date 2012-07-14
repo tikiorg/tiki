@@ -33,10 +33,19 @@ if ($prefs['feature_jquery_validation'] === 'y') {	// dig out the new rules for 
 	foreach($headerlib->js as $rank) {
 		foreach($rank as $js) {
 			if (strpos($js, 'ajaxTrackerFormInit_group') !== false) {
-				$json_data['res'] .= $headerlib->wrap_js($js);
+				if (preg_match('/validate\(([\s\S]*?\})\);/s', $js, $m)) {						// get the rules and messages from the js function
+					$m = preg_replace('/\s(?:ignore|submitHandler).*/', '', $m[1]);				// lose a couple of duplicate options
+					$m = preg_replace('/,\s*\}\s*$/m', '}', $m);								// a trailing comma
+					$o = preg_replace_callback('/(\w*):/', 'group_tracker_ajax_quote', $m);		// surround properties with double quotes
+					$json_data['validation']  = json_decode($o);
+				}
 			}
 		}
 	}
+}
+
+function group_tracker_ajax_quote($matches) {
+	return '"' . $matches[1] . '":';
 }
 
 header('Content-Type: application/json');

@@ -1,4 +1,4 @@
-<span class="tips"{if !empty($category_data.description)} title="{$category_data.description|escape}"{/if}>
+<span{if !empty($category_data.description)} class="tips" title="{$category_data.name|escape} | {$category_data.description|escape}"{/if}>
 	{if $category_data.canchange}
 		<input id="categ-{$category_data.categId|escape}" type="checkbox" name="cat_categories[]" value="{$category_data.categId|escape}" 
 			{if $category_data.incat eq 'y'}checked="checked"{/if}/>

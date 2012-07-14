@@ -427,7 +427,9 @@ a.flip:hover,
 	margin: 0.2em;
 }
 
-
+.box-forums_most_read_topics .hits {
+	font-style: italic;
+}
 
 /* Icons */
 a.icon,

@@ -29,7 +29,7 @@
 <P></P>
 
 <form  enctype="multipart/form-data" method="post" action="tiki-create_multilang_pages.php" id='create_multilang_pages_form' name='create_multilang_pages_form'>
-	<input type="hidden" name="create_pages" value=""></input>
+	<input type="hidden" name="create_pages" value=""/>
 	<b>{tr}Preferred languages{/tr}</b>
 	<P></P>
 	<table>
@@ -37,7 +37,7 @@
 		{foreach from=$user_languages key=index item=lang_id}
 			<tr>
 				<td>{$lang_id}:</td> <td>&nbsp;</td>
-				<td><input type="text" name="page_name_{$lang_id}"></input></td>
+				<td><input type="text" name="page_name_{$lang_id}"/></td>
 			</tr>
 		{/foreach}
 			
@@ -52,7 +52,7 @@
 		{foreach from=$other_languages key=index item=lang_id}
 			<tr>
 				<td>{$lang_id}:</td> <td>&nbsp;</td>
-				<td><input type="text" name="page_name_{$lang_id}"></input></td>
+				<td><input type="text" name="page_name_{$lang_id}"/></td>
 			</tr>
 		{/foreach}
 			

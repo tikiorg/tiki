@@ -70,11 +70,12 @@ if (isset($_REQUEST['register']) && $_SERVER['REQUEST_METHOD'] == 'POST') {
 	$smarty->assign('errortype', 'no_redirect_login');
 
 	$result=$registrationlib->register_new_user($_REQUEST);
-	if (is_a($result, "RegistrationError")) {
-		if ($result->field == 'email') // i'm not sure why email is a special case..
-			$email_valid='n';
-		else
-			register_error($result->msg);
+	if (is_array($result)) {
+		foreach ($result as $r) {
+			register_error($r->msg);
+		}
+	} else if (is_a($result, 'RegistrationError')) {
+		register_error($result->msg);
 	} else if (is_string($result)) {
 		$smarty->assign('msg', $result);
 		$smarty->assign('showmsg', 'y');
@@ -124,14 +125,16 @@ if ($registrationlib->merged_prefs['userTracker'] == 'y') {
 
 				$info = $userlib->get_user_info($_REQUEST['name']);
 
-				$userlib->send_validation_email(
-						$_REQUEST['name'],
-						$info['valid'],
-						$_REQUEST['email'],
-						'',
-						'',
-						isset($_REQUEST['chosenGroup']) ? $_REQUEST['chosenGroup'] : ''
-				);
+				if ($info) {
+					$userlib->send_validation_email(
+							$_REQUEST['name'],
+							$info['valid'],
+							$prefs['login_is_email'] === 'y' ? $_REQUEST['name'] : $_REQUEST['email'],
+							'',
+							'',
+							isset($_REQUEST['chosenGroup']) ? $_REQUEST['chosenGroup'] : ''
+					);
+				}
 			}
 
 
@@ -147,7 +150,12 @@ if ($needs_validation_js && $prefs['feature_jquery_validation'] === 'y') {
 	$("form[name=RegForm]").validate({
 		rules: {
 			name: {
-				required: true,
+				required: true,';
+	if ($prefs['login_is_email'] === 'y') {
+		$js .= '
+				email: true,';
+	}
+	$js .= '
 				remote: {
 					url: "validate-ajax.php",
 					type: "post",

@@ -92,6 +92,13 @@ function wikiplugin_subscribegroup_info()
 				'filter' => 'groupname',
 				'default' => 'Registered'
 			),
+			'defgroup_redirect_home' => array(
+				'required' => false,
+				'name' => tra('Go To Default Group Home'),
+				'description' => tra('Redirect to new home page after default group change. (Default y)'),
+				'filter' => 'alpha',
+				'default' => 'y',
+			),
 		),
 	);
 }
@@ -141,7 +148,12 @@ function wikiplugin_subscribegroup($data, $params)
 				$userlib->set_default_group($user, $group);
 			}
 			include_once('lib/core/Zend/OpenId.php');	// contains useful redirect selfUrl functions
-			Zend_OpenId::redirect(Zend_OpenId::selfUrl());
+			if (!empty($params['defgroup_url']) && $params['defgroup_url'] === 'n') {
+				Zend_OpenId::redirect(Zend_OpenId::selfUrl());
+			} else {
+				global $tikiroot;
+				Zend_OpenId::redirect($tikiroot);
+			}
 			die;
 		} else if (isset($groups[$group])) {
 			$userlib->remove_user_from_group($user, $group);
