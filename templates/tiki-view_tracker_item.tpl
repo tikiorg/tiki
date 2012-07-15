@@ -174,7 +174,7 @@
 				{/if}
 				{section name=ix loop=$fields}
 					{if !empty($fields[ix].value)}
-						<input type="hidden" name="{$fields[ix].id|escape}" value="{$fields[ix].value|escape}" />
+						<input type="hidden" name="{$fields[ix].name|escape}" value="{$fields[ix].value|escape}" />
 					{/if}
 				{/section}
 				{if $cant}
