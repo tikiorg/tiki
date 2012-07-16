@@ -1479,6 +1479,15 @@ function wikiplugin_trackerlist($data, $params)
 
 			$calendarlib->focusStartEnd($focus, $calendarviewmode, $calendarbeginmonth, $startPeriod, $startNextPeriod);
 			$cell = $calendarlib->getTableViewCells($startPeriod, $startNextPeriod, $calendarviewmode, $calendarlib->firstDayofWeek($user));
+
+			if (is_array($filterfield) == false) {
+				$filterfield = array($filterfield);
+			}
+
+			if (is_array($$filtervalue) == false) {
+				$filtervalue = array($filtervalue);
+			}
+
 			$filterfield[] = $calendarfielddate[0];
 			$filtervalue[] = '';
 			$exactvalue[] = array('>=' => $startPeriod['date']);
