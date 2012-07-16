@@ -22,6 +22,15 @@ class JisonParser_Wiki_List
 		if ($this->setup == true) return;
 		$this->setup = true;
 
+		if (
+			strpos($input, "\n*") < 0 &&
+			strpos($input, "\n#") < 0 &&
+			strpos($input, "\n+") < 0 &&
+			strpos($input, "\n-") < 0
+		) {
+			return;
+		}
+
 		$lines = explode("\n", $input);
 		$lastLine = 0;
 
@@ -208,7 +217,7 @@ class JisonParser_Wiki_List
 				}
 
 			} elseif (empty($list['children']) == false) {
-				$result .= $this->toHtmlOutlineChildren($list['children'], $prefix, 1, $tier + 1);
+				$result .= '<tr><td>' . $this->toHtmlOutlineChildren($list['children'], $prefix, 1, $tier + 1) . '</td></tr>';
 			}
 		}
 

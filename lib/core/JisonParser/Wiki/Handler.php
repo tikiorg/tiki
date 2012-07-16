@@ -106,7 +106,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		'inHeader' => 0
 	);
 
-	function __construct()
+	function __construct(JisonParser_Wiki_Handler &$Parser = null)
 	{
 		global $tikilib, $page, $user, $prefs;
 
@@ -114,7 +114,12 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		$this->page = $page;
 		$this->user = (isset($user) ? $user : tra('Anonymous'));
 		$this->prefs = $prefs;
-		$this->Parser = &$this;
+
+		if (empty($Parser)) {
+			$this->Parser = &$this;
+		} else {
+			$this->Parser = &$Parser;
+		}
 
 		if (isset($this->Parser->header) == false) {
 			$this->Parser->header = new JisonParser_Wiki_Header();
@@ -134,11 +139,9 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		if ($this->parsing == true) {
 			$parser = end(self::$spareParsers);
 			if (!empty($parser) && $parser->parsing == false) {
-				$parser->Parser = &$this->Parser;
 				$result = $parser->parse($input);
 			} else {
-				self::$spareParsers[] = $parser = new JisonParser_Wiki_Handler();
-				$parser->Parser = &$this->Parser;
+				self::$spareParsers[] = $parser = new JisonParser_Wiki_Handler($this->Parser);
 				$result = $parser->parse($input);
 			}
 		} else {
@@ -159,6 +162,8 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 
 	function parsePlugin($input)
 	{
+		if (empty($input)) return "";
+
 		if ($this->Parser->option['noparseplugins'] == false) {
 
 			$is_html = $this->Parser->option['is_html'];
