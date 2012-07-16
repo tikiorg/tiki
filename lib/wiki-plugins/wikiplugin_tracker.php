@@ -1170,8 +1170,12 @@ function wikiplugin_tracker($data, $params)
 				}
 				$validationjs = $validatorslib->generateTrackerValidateJS($flds['data'], $fields_prefix, $customvalidation, $customvalidation_m);
 
-				$smarty->assign('validationjs', $validationjs);
-				$back .= $smarty->fetch('tracker_validator.tpl');
+				if (!empty($params['_ajax_form_ins_id']) && $params['_ajax_form_ins_id'] === 'group') {
+					$headerlib->add_jq_onready("var ajaxTrackerValidation_group={validation:{" . $validationjs  . '};');		// return clean rules and messages object for ajax
+				} else {
+					$smarty->assign('validationjs', $validationjs);
+					$back .= $smarty->fetch('tracker_validator.tpl');
+				}
 			}
 			if ($params['formtag'] == 'y') {
 				$back .= '<form name="editItemForm' . $iTRACKER . '" id="editItemForm' . $iTRACKER . '" enctype="multipart/form-data" method="post"'.(isset($target)?' target="'.$target.'"':'').' action="'. $_SERVER['REQUEST_URI'] .'"><input type="hidden" name="trackit" value="'.$trackerId.'" />';

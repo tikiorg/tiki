@@ -483,6 +483,7 @@ customsearch_quiet_$id = false;
 				$label = '';
 			}
 			$option = $document->createElement('option', $label);
+			$option->setAttribute('value', '');
 			$element->appendChild($option);
 		} 
 		$script .= "$('#$fieldid').change(function() {"; 
@@ -547,6 +548,7 @@ function cs_design_select($id, $fieldname, $fieldid, $arguments, $default, &$scr
 			$label = '';
 		}
 		$option = $document->createElement('option', $label);
+		$option->setAttribute('value', '');
 		$element->appendChild($option);
 	}
 
