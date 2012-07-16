@@ -29,7 +29,7 @@ $.getJSON('group_tracker_ajax.php', {chosenGroup:'{{$theChoiceGroup}}'}, functio
 		<tr><td colspan="2"><div id="registerTracker"></div></td></tr>
 	{elseif isset($listgroups)}
 		<tr>
-			<td>{tr}Group{/tr}</td>
+			<td>{tr}Group{/tr}{if $prefs.user_must_choose_group eq 'y'}{if $trackerEditFormId}&nbsp;<strong class='mandatory_star'>*</strong>&nbsp;{/if}{/if}</td>
 			<td>
 				{foreach item=gr from=$listgroups}
 					{if $gr.registrationChoice eq 'y'}
@@ -59,6 +59,7 @@ $("input[name='chosenGroup']").change(function() {
 		}
 		$("#registerTracker").html(data['res']).modal();
 		$("input[name^=captcha]").parents("tr").show();
+		$("input[name=register]").prop("disabled", false);
 		if (data['validation']) {
 			var $v = $("#registerTracker").parents('form').validate();
 			$.extend( true, $v.settings, data['validation'] );
@@ -67,7 +68,10 @@ $("input[name='chosenGroup']").change(function() {
 		$("tr td:first", "#registerTracker").width($("#registerTracker").parents('table:first').find("td:first").width());
 	});
 }){{if !empty($smarty.post.chosenGroup)}}.change(){{/if}};
+{{if $prefs.user_must_choose_group eq 'y'}
 $("input[name^=captcha]").parents("tr").hide();
+$("input[name=register]").prop("disabled", true);
+{/if}}
 		{/jq}
 	{/if}
 {/if}
