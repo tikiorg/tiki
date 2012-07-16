@@ -288,6 +288,8 @@ class Services_Tracker_SearchController
 			if (!empty($config['_value'])) {
 				$value = $config['_value'];
 				return '{filter type="' . $value . '"}';
+			} elseif ($value) {
+				return '{filter type="' . $value . '"}';
 			} else {
 				return false;
 			}
