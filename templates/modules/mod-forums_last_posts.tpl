@@ -22,13 +22,13 @@
 							{/if}">
 					{$modForumsLastPosts[ix].name|escape}
 				</a>
-				{if $author eq 'y'} {tr}by{/tr} {$modForumsLastPosts[ix].user|username}{/if}
-				{if $date eq 'y'}<span class="comma">, </span>
-					{if empty($module_params.time) or $module_params.time eq 'y'}
+				{if $author eq 'y'}<span class="author"> {tr}by{/tr} {$modForumsLastPosts[ix].user|username}</span>{/if}
+				{if $date eq 'y'}{if $author eq 'y'}<span class="comma">, </span>{/if}
+					<span class="date">{if empty($module_params.time) or $module_params.time eq 'y'}
 						{$modForumsLastPosts[ix].date|tiki_short_datetime}
 					{else}
 						{$modForumsLastPosts[ix].date|tiki_short_date}
-					{/if}
+					{/if}</span>
 				{/if}
 			</li>
 		{/section}
