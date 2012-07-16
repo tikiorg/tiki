@@ -270,7 +270,7 @@ abstract class Tracker_Field_Abstract implements Tracker_Field_Interface, Tracke
 			$type = $this->getConfiguration('type');
 
 			$info = $types[$type];
-			$params = array_keys($info[$type]['params']);
+			$params = array_keys($info['params']);
 
 			$number = array_search($number, $params);
 
