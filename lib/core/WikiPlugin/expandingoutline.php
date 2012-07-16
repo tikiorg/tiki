@@ -31,8 +31,8 @@ class WikiPlugin_expandingoutline extends WikiPlugin_HtmlBase
 
 		if (get_class($parser) != 'JisonParser_Wiki_Handler') return TikiLib::lib('tiki')->parse_data($data, array('is_html' => true));
 
-		$parser->list->setOutput('outline');
-
+		$regularList = &$parser->list;
+		$parser->list = new WikiPlugin_expandingoutline_list($parser->list);
 		$id = $this->id($index);
 
 		$headerlib->add_jq_onready(<<<JQ
@@ -113,7 +113,7 @@ JQ
 		</style>" .
 			TikiLib::lib('tiki')->parse_data($data, array('is_html' => true));
 
-		$parser->list->setOutput('list');
+		$parser->list = $regularList;
 
 		return $result;
 	}
