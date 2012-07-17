@@ -13,6 +13,7 @@ function prefs_restrict_list()
 			'description' => tra('Limit the languages made available on the site.'),
 			'type' => 'flag',
 			'default' => 'n',
+			'tags' => array('basic'),
 		),
 	);
 }
