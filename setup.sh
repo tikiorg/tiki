@@ -160,7 +160,7 @@ what to answer, just press enter to each question (to use default value)"
 	USERINAGROUP="no"
 	for grp in `id -Gn $USER`; do
 		if [ "$grp" = "$AGROUP" ]; then
-			USERINAGROUP = "yes"
+			USERINAGROUP="yes"
 		fi
 	done
 	if [ "$USER" = 'root' -o "$USERINAGROUP" = "yes" ]; then
