@@ -7,22 +7,23 @@
 
 class WikiPlugin_expandingoutline extends WikiPlugin_HtmlBase
 {
-	var $type = 'outline';
-	var $validate = 'all';
-	var $prefs = array('wikiplugin_outline');
-	var $filter = 'rawhtml_unsafe';
-	var $icon = 'img/icons/mime/html.png';
-	var $tags = array( 'basic' );
+	public $type = 'expandingoutline';
+	public $documentation = 'PluginExpandingOutline';
+	public $prefs = array('wikiplugin_expandingoutline');
+
+	private $validate = 'all';
+	private $filter = 'rawhtml_unsafe';
+	private $icon = 'img/icons/mime/html.png';
+	private $tags = array( 'basic' );
 
 	function __construct()
 	{
-		$this->name = tra('Outline');
-		$this->documentation = 'PluginOutline';
-		$this->description = tra('Turns wiki syntax or html of list items into an expandable outline');
-		$this->body = tra('HTML code');
-		$this->params = array(
-
-		);
+		if (empty(self::$name)) {
+			self::$name = tra('Expanding Outline');
+			self::$description = tra('Turns wiki syntax or html of list items into an expandable outline');
+			self::$body = tra('HTML code');
+			self::$params = array();
+		}
 	}
 
 	function output(&$data, &$params, &$index, &$parser)

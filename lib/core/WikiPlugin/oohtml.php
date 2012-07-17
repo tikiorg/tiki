@@ -7,33 +7,36 @@
 
 class WikiPlugin_oohtml extends WikiPlugin_HtmlBase
 {
-	var $type = 'oohtml';
-	var $validate = 'all';
-	var $prefs = array('wikiplugin_html');
-	var $filter = 'rawhtml_unsafe';
-	var $icon = 'img/icons/mime/html.png';
-	var $tags = array( 'basic' );
+	public $type = 'oohtml';
+	public $documentation = 'PluginHTML';
+	public $prefs = array('wikiplugin_html');
+
+	private $validate = 'all';
+	private $filter = 'rawhtml_unsafe';
+	private $icon = 'img/icons/mime/html.png';
+	private $tags = array( 'basic' );
 
 	function __construct()
 	{
-		$this->name = tra('Object oriented version of the html wiki plugin');
-		$this->documentation = 'PluginHTML';
-		$this->description = tra('Add HTML to a page');
-		$this->body = tra('HTML code');
-		$this->params = array(
-			'wiki' => array(
-				'required' => false,
-				'name' => tra('Wiki Syntax'),
-				'description' => tra('Parse wiki syntax within the HTML code.'),
-				'options' => array(
-					array('text' => '', 'value' => ''),
-					array('text' => tra('No'), 'value' => 0),
-					array('text' => tra('Yes'), 'value' => 1),
+		if (empty(self::$name)) {
+			self::$name = tra('Object oriented version of the html wiki plugin');
+			self::$description = tra('Add HTML to a page');
+			self::$body = tra('HTML code');
+			self::$params = array(
+				'wiki' => array(
+					'required' => false,
+					'name' => tra('Wiki Syntax'),
+					'description' => tra('Parse wiki syntax within the HTML code.'),
+					'options' => array(
+						array('text' => '', 'value' => ''),
+						array('text' => tra('No'), 'value' => 0),
+						array('text' => tra('Yes'), 'value' => 1),
+					),
+					'filter' => 'int',
+					'default' => '0',
 				),
-				'filter' => 'int',
-				'default' => '0',
-			),
-		);
+			);
+		}
 	}
 
 	function output(&$data, &$params, &$index, &$parser)

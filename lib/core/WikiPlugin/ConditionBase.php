@@ -7,22 +7,22 @@
 
 abstract class WikiPlugin_ConditionBase
 {
-	var $name;
-	var $type;
-	var $documentation;
-	var $description;
-	var $format;
-	var $prefs;
-	var $body;
-	var $validate;
-	var $filter = 'rawhtml_unsafe';
-	var $icon = 'img/icons/mime/html.png';
-	var $tags = array( 'basic' );
-	var $params = array(
+	public static $name;
+	public static $description;
+	public static $body;
+	public static $params = array();
 
-	);
+	public $type;
+	public $documentation;
+	public $prefs = array();
+	public $parserLevel = 0;
 
-	var $np = true;
+	private $format;
+	private $validate;
+	private $filter = 'rawhtml_unsafe';
+	private $icon = 'img/icons/mime/html.png';
+	private $tags = array( 'basic' );
+	private $np = true;
 
 	public function info()
 	{
@@ -57,7 +57,7 @@ abstract class WikiPlugin_ConditionBase
 		$data = str_replace('<x>', '', $data);
 		$data = $this->output($data, $params, $index, $parser);
 
-		if ($this->np) {
+		if ($this->np == true) {
 			return '~np~'.$data.'~/np~';
 		} else {
 			return $data;

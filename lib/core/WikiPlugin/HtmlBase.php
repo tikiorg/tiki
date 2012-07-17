@@ -7,25 +7,25 @@
 
 abstract class WikiPlugin_HtmlBase
 {
-	var $name;
-	var $type;
-	var $documentation;
-	var $description;
-	var $format;
-	var $prefs = array();
-	var $body;
-	var $validate;
-	var $filter = 'rawhtml_unsafe';
-	var $icon = 'img/icons/mime/html.png';
-	var $tags = array( 'basic' );
-	var $params = array();
-	var $htmlTagType = 'div';
-	var $hasHtmlBody = true;
-	var $htmlAttributes = array();
+	public static $name;
+	public static $description;
+	public static $body;
+	public static $params = array();
 
-	var $np = true;
+	public $type;
+	public $documentation;
+	public $prefs = array();
+	public $parserLevel = 0;
 
-	var $parserLevel = 0;
+	private $format;
+	private $validate;
+	private $filter = 'rawhtml_unsafe';
+	private $icon = 'img/icons/mime/html.png';
+	private $tags = array( 'basic' );
+	private $htmlTagType = 'div';
+	private $hasHtmlBody = true;
+	private $htmlAttributes = array();
+	private $np = true;
 
 	static $style = array(
 		'@keyframes' => array('filter' => 'text', 'default' => ''),
@@ -347,7 +347,7 @@ abstract class WikiPlugin_HtmlBase
 			$output .= ' />';
 		}
 
-		if ($this->np) {
+		if ($this->np == true) {
 			return '~np~'.$output.'~/np~';
 		} else {
 			return $output;
