@@ -63,7 +63,7 @@
 					</th>
 				{/if}
 
-				{if !($galleryId eq 0 and $propname eq 'lockedby') and ($propname neq 'name' or ( $gal_info.show_name eq 'a' or $gal_info.show_name eq 'n' ))}
+				{if !($galleryId eq 0 and $propname eq 'lockedby') and ($propname neq 'name' or ( $gal_info.show_name eq 'a' or $gal_info.show_name eq 'n' )) and ($propname neq 'description' or $gal_info.show_name neq 'n')}
 					{assign var=nbCols value=$nbCols+1}
 					<th{$td_args}>
 							{self_link _sort_arg=$sort_arg _sort_field=$propname _title=$link_title}
@@ -295,6 +295,14 @@
 						{else}
 							{assign var=propval value="<a class='fgalname' $link>$propval</a>"}
 						{/if}
+						{if $propname eq 'name' and $gal_info.show_name eq 'n'}
+							{if $gal_info.max_desc gt 0}
+								{assign var=desc value=$files[changes].description|truncate:$gal_info.max_desc:"...":false|nl2br}
+							{else}
+								{assign var=desc value=$files[changes].description|nl2br}
+							{/if}
+							{assign var=propval value="$propval<br><span class=\"description\">`$desc`</span>"}
+						{/if}
 					{elseif $propname eq 'created' or $propname eq 'lastModif' or $propname eq 'lastDownload'}
 						{if empty($propval)}
 							{assign var=propval value=''}
@@ -368,7 +376,7 @@
 					{if $other_columns_selected neq '' and $propname eq $other_columns_selected}
 						{assign var=other_columns_selected_val value=$propval}
 					{else}
-						{if !($galleryId eq 0 and $propname eq 'lockedby') and ($propname neq 'name' or ( $gal_info.show_name eq 'a' or $gal_info.show_name eq 'n' ))}
+						{if !($galleryId eq 0 and $propname eq 'lockedby') and ($propname neq 'name' or ( $gal_info.show_name eq 'a' or $gal_info.show_name eq 'n' )) and ($propname neq 'description' or $gal_info.show_name neq 'n')}
 							<td>{$propval}</td>
 						{/if}
 					{/if}
