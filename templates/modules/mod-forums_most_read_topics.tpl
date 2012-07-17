@@ -8,7 +8,7 @@
 				{$modForumsMostReadTopics[ix].name|escape}
 			</a>
 			<span class="hits">
-				(<span>{$modForumsMostReadTopics[ix].hits} {tr}hits{/tr}</span>)
+				(<span>{$modForumsMostReadTopics[ix].hits}</span> {tr}hits{/tr})
 			</span>
 		</li>
 	{/section}
