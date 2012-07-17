@@ -136,15 +136,13 @@
 				{/capture}
 			{/if}
 
-			{capture name=over_preview}
-				{strip}
-					{if $files[changes].type|truncate:6:'':true eq 'image/'}
-						<div class='opaque'>
-							<img src="{$files[changes].id|sefurl:thumbnail}" />
-						</div>
-					{/if}
-				{/strip}
-			{/capture}
+			{capture name=over_preview}{strip}
+				{if $files[changes].type|truncate:6:'':true eq 'image/'}
+					<div class='opaque'>
+						<img src="{$files[changes].id|sefurl:thumbnail}" />
+					</div>
+				{/if}
+			{/strip}{/capture}
 
 			{assign var=nb_over_infos value=0}
 			{capture name=over_infos}
