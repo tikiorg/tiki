@@ -53,9 +53,11 @@ class Image extends ImageAbstract
 					$this->data = call_user_func('imagecreatefrom'.$this->format, $this->filename);
 					$this->loaded = true;
 				}
-			} elseif (!empty($this->data)) {
+			} elseif (!empty($this->data) && $this->data != 'REFERENCE') {
 				$this->data = imagecreatefromstring($this->data);
 				$this->loaded = true;
+			} else {
+				$this->data = null;
 			}
 		}
 	}
