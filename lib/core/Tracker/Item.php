@@ -14,6 +14,8 @@ class Tracker_Item
 	private $ownerGroup;
 	private $perms;
 
+	private $isNew = false;
+
 	public static function fromId($itemId)
 	{
 		$info = TikiLib::lib('trk')->get_tracker_item($itemId);
@@ -41,6 +43,7 @@ class Tracker_Item
 		$obj = new self;
 		$obj->info = array();
 		$obj->definition = Tracker_Definition::get($trackerId);
+		$obj->asNew();
 		$obj->initialize();
 
 		return $obj;
@@ -48,6 +51,12 @@ class Tracker_Item
 
 	private function __construct()
 	{
+	}
+
+	function asNew()
+	{
+		$this->isNew = true;
+		$this->info['itemId'] = null;
 	}
 
 	function canView()
@@ -171,6 +180,11 @@ class Tracker_Item
 		if (!is_object($this->definition)) {
 			return; // TODO: This is a temporary fix, we should be able to getItemOwner always
 		}
+
+		if ($this->isNew()) {
+			global $user;
+			return $user;
+		}
 		
 		$userField = $this->definition->getUserField();
 		if ($userField) {
@@ -286,7 +300,7 @@ class Tracker_Item
 
 	private function isNew()
 	{
-		return empty($this->info);
+		return $this->isNew;
 	}
 
 	public function prepareInput($input)
@@ -340,6 +354,41 @@ class Tracker_Item
 	public function getPerms()
 	{
 		return $this->perms;
+	}
+
+	public function getData($input = null)
+	{
+		$out = array();
+		if ($input) {
+			$fields = $this->prepareInput($input);
+
+			foreach ($fields as $field) {
+				$permName = $field['permName'];
+				$out[$permName] = $field['value'];
+			}
+		} else {
+			$factory = $this->definition->getFieldFactory();
+			$info = $this->info;
+
+			foreach ($this->definition->getFields() as $field) {
+				$handler = $factory->getHandler($field, $info);
+				$data = $handler->getFieldData();
+				
+				$permName = $field['permName'];
+				$out[$permName] = $data['value'];
+			}
+		}
+
+		return array(
+			'itemId' => $this->isNew() ? null : $this->getItemId(),
+			'status' => $this->isNew() ? 'o' : $this->data['status'],
+			'fields' => $out,
+		);
+	}
+
+	public function getDefinition()
+	{
+		return $this->definition;
 	}
 }
 

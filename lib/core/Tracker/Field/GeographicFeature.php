@@ -37,7 +37,9 @@ class Tracker_Field_GeographicFeature extends Tracker_Field_Abstract implements 
 			$value = $this->getValue();
 		}
 
-		return $value;
+		return array(
+			'value' => $value,
+		);
 	}
 
 	function renderInput($context = array())

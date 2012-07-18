@@ -466,6 +466,73 @@ class Services_Tracker_Controller
 		return $inputs;
 	}
 
+	function action_clone_item($input)
+	{
+		global $prefs;
+
+		if ($prefs['tracker_clone_item'] != 'y') {
+			throw new Services_Exception_Disabled('tracker_clone_item');
+		}
+
+		$trackerId = $input->trackerId->int();
+		$definition = Tracker_Definition::get($trackerId);
+
+		if (! $definition) {
+			throw new Services_Exception_NotFound;
+		}
+
+		$itemId = $input->itemId->int();
+		$item = $this->utilities->getItem($trackerId, $itemId);
+
+		$itemObject = Tracker_Item::fromId($itemId);
+
+		if (! $itemObject->canView()) {
+			throw new Services_Exception(tr('Item to clone not visible'), 403);
+		}
+
+		$newItem = Tracker_Item::newItem($trackerId);
+
+		if (! $newItem->canModify()) {
+			throw new Services_Exception(tr('Not allowed to create new items'), 403);
+		}
+
+		$itemObject->asNew();
+		$itemData = $itemObject->getData($input);
+
+		$id = 0;
+		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+			$transaction = TikiLib::lib('tiki')->begin();
+
+			$id = $this->utilities->insertItem($definition, $itemData);
+
+			$itemObject = Tracker_Item::fromId($id);
+
+			$trklib = TikiLib::lib('trk');
+			foreach ($trklib->get_child_items($itemId) as $info) {
+				$childItem = Tracker_Item::fromId($info['itemId']);
+
+				if ($childItem->canView()) {
+					$childItem->asNew();
+					$data = $childItem->getData();
+					$data['fields'][$info['field']] = $id;
+					var_dump($data);
+
+					$new = $this->utilities->insertItem($childItem->getDefinition(), $data);
+				}
+			}
+
+			$transaction->commit();
+		}
+
+		return array(
+			'trackerId' => $trackerId,
+			'itemId' => $itemId,
+			'created' => $id,
+			'data' => $itemData['fields'],
+			'fields' => $itemObject->prepareInput(new JitFilter(array())),
+		);
+	}
+
 	function action_insert_item($input)
 	{
 		$processedFields = array();

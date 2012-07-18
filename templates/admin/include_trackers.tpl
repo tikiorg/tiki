@@ -17,6 +17,7 @@
 		{preference name=feature_reports}
 		{preference name="tracker_remote_sync"}
 		{preference name="tracker_refresh_itemlink_detail"}
+		{preference name="tracker_clone_item"}
 	</fieldset>
 
 	<fieldset class="admin">

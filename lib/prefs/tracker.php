@@ -20,5 +20,11 @@ function prefs_tracker_list()
 			'type' => 'flag',
 			'default' => 'n',
 		),
+		'tracker_clone_item' => array(
+			'name' => tr('Clone tracker items'),
+			'description' => tr('Allow copying tracker item information into new tracker item.'),
+			'type' => 'flag',
+			'default' => 'n',
+		),
 	);
 }

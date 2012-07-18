@@ -83,6 +83,8 @@ class Tracker_Field_UserSelector extends Tracker_Field_Abstract implements Track
 					$data['value'] = '';
 				}
 			}
+		} elseif (! $this->getItemId() && $autoassign > 0) {
+			$data['value'] = $user;
 		} else {
 			$data['value'] = $this->getValue(false);
 		}

@@ -4305,6 +4305,11 @@ class TrackerLib extends TikiLib
 		}
 	}
 
+	function get_child_items($itemId)
+	{
+		return $this->fetchAll('SELECT permName as field, itemId FROM tiki_tracker_item_fields v INNER JOIN tiki_tracker_fields f ON v.fieldId = f.fieldId WHERE f.type = "r" AND v.value = ?', array($itemId));
+	}
+
 	function refresh_index_on_master_update($args)
 	{
 		// Event handler
