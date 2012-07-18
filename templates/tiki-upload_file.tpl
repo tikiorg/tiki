@@ -244,12 +244,12 @@
 					</td><td width="80%">
 						{user_selector id='user' name='user[]' select=$fileInfo.user editable=$tiki_p_admin_file_galleries}
 					</td></tr>
-	
 					{if $prefs.feature_file_galleries_author eq 'y'}
 						<tr><td>
-							<label for="author">{tr}Creator of file, if different from the 'Uploaded by' user:{/tr}</label>
+							<label for="author">{tr}Creator{/tr}</label>
 						</td><td width="80%">
-							<input type="text" id="author"name="author[]" value="{$fileInfo.author|escape}" />
+							<input type="text" id="author"name="author[]" value="{$fileInfo.author|escape}" /><br>
+							<span class="description">{tr}Creator of file, if different from the 'Uploaded by' user{/tr}</span>
 						</td></tr>
 					{/if}
 					{if !empty($groupforalert)}
@@ -269,6 +269,15 @@
 							</td></tr>
 						{/if}
 					{/if}
+					<tr><td>
+						<label for "filetype">File Type:</label>
+					</td><td width="80%">
+						<select id="filetype" name="filetype[]">
+							{foreach $mimetypes as $type}
+								<option value="{$type}"{if $fileInfo.filetype eq $type} selected="selected"{/if}>{$type|truncate:60} (*.{$type@key})</option>
+							{/foreach}
+						</select>
+					</td></tr>
 				</table>
 			</div>
 			<div class="fgal_file_c3">

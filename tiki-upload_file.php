@@ -59,6 +59,10 @@ if ( ! empty( $_REQUEST['fileId'] ) ) {
 		$smarty->display('error.tpl');
 		die;
 	}
+	include_once ('lib/mime/mimetypes.php');
+	global $mimetypes;
+	asort($mimetypes);
+	$smarty->assign_by_ref('mimetypes', $mimetypes);
 }
 
 if (isset($_REQUEST['galleryId'][0])) {
@@ -153,7 +157,8 @@ if ( $isUpload ) {
 		'deleteAfter_unit',
 		'hit_limit',
 		'listtoalert',
-		'insertion_syntax'
+		'insertion_syntax',
+		'filetype',
 	);
 
 	$uploadParams = array(
