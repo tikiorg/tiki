@@ -648,7 +648,7 @@ if ( \$('#$id') ) {
 		}
 
 		$className = 'WikiPlugin_' . $name;
-		$classExists = @class_exists($className);
+		$classExists = class_exists($className);
 		if ($classExists == true) {
 			$class = new $className;
 			return $known[$name] = $class->info();
