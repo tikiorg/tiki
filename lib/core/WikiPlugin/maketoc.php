@@ -14,7 +14,6 @@ class WikiPlugin_maketoc extends WikiPlugin_HtmlBase
 	private $filter = 'rawhtml_unsafe';
 	private $icon = 'img/icons/text_list_numbers.png';
 	private $tags = array( 'basic' );
-	private $parserLevel = 1; //0 is standard, we put this after the others
 
 	function __construct()
 	{
@@ -31,6 +30,7 @@ class WikiPlugin_maketoc extends WikiPlugin_HtmlBase
 				'levels'
 			);
 		}
+		$this->parserLevel = 1;
 	}
 
 	function output(&$data, &$params, &$index, &$parser)
