@@ -51,6 +51,17 @@ function wikiplugin_map_info()
 				'description' => tr('Center and zoom level of the map display.'),
 				'filter' => 'text',
 			),
+			'popupstyle' => array(
+				'required' => false,
+				'name' => tr('Popup style'),
+				'description' => tr('Alter the way the information is displayed when objects are loaded on the map.'),
+				'filter' => 'alpha',
+				'default' => 'bubble',
+				'options' => array(
+					array('text' => tr('Bubble'), 'value' => 'bubble'),
+					array('text' => tr('Dialog'), 'value' => 'dialog'),
+				),
+			),
 			'mapfile' => array(
 				'required' => false,
 				'name' => tra('MapServer File'),
@@ -105,6 +116,13 @@ function wikiplugin_map($data, $params)
 		$params['controls'] = explode(',', $params['controls']);
 	}
 
+	if (! isset($params['popupstyle'])) {
+		$params['popupstyle'] = 'bubble';
+	}
+
+	$popupStyle = smarty_modifier_escape($params['popupstyle']);
+
+	$controls = array_intersect($params['controls'], wp_map_available_controls());
 	$controls = array_intersect($params['controls'], wp_map_available_controls());
 	$controls = implode(',', $controls);
 
@@ -119,7 +137,7 @@ function wikiplugin_map($data, $params)
 	TikiLib::lib('header')->add_map();
 	$scope = smarty_modifier_escape(wp_map_getscope($params));
 
-	$output = "<div class=\"map-container\" data-marker-filter=\"$scope\" data-map-controls=\"{$controls}\" style=\"width: {$width}; height: {$height};\" $center>";
+	$output = "<div class=\"map-container\" data-marker-filter=\"$scope\" data-map-controls=\"{$controls}\" data-popup-style=\"$popupStyle\" style=\"width: {$width}; height: {$height};\" $center>";
 
 	$argumentParser = new WikiParser_PluginArgumentParser;
 	$matches = WikiParser_PluginMatcher::match($data);
