@@ -48,7 +48,7 @@ $.getJSON('group_tracker_ajax.php', {chosenGroup:'{{$theChoiceGroup}}'}, functio
 				{/foreach}
 			</td>
 		</tr>
-		<tr><td colspan="2"><div id="registerTracker"></div></td></tr>
+		<tr><td colspan="2"><div id="registerTracker"><em class='mandatory_note'>{if $trackerEditFormId}{tr}Fields marked with a * are mandatory.{/tr}{/if}</em></div></td></tr>
 		{jq}
 $("input[name='chosenGroup']").change(function() {
 	$("#registerTracker").modal("{tr}Loading...{/tr}");
