@@ -269,15 +269,17 @@
 							</td></tr>
 						{/if}
 					{/if}
-					<tr><td>
-						<label for "filetype">File Type:</label>
-					</td><td width="80%">
-						<select id="filetype" name="filetype[]">
-							{foreach $mimetypes as $type}
-								<option value="{$type}"{if $fileInfo.filetype eq $type} selected="selected"{/if}>{$type|truncate:60} (*.{$type@key})</option>
-							{/foreach}
-						</select>
-					</td></tr>
+					{if $editFileId}
+						<tr><td>
+							<label for "filetype">File Type:</label>
+						</td><td width="80%">
+							<select id="filetype" name="filetype[]">
+								{foreach $mimetypes as $type}
+									<option value="{$type}"{if $fileInfo.filetype eq $type} selected="selected"{/if}>{$type|truncate:60} (*.{$type@key})</option>
+								{/foreach}
+							</select>
+						</td></tr>
+					{/if}
 				</table>
 			</div>
 			<div class="fgal_file_c3">
