@@ -33,7 +33,7 @@
 	<div id="fixedwidth" class="fixedwidth"> {* enables fixed-width layouts *}
 		{if $prefs.feature_layoutshadows eq 'y'}<div id="main-shadow">{eval var=$prefs.main_shadow_start}{/if} 
 		<div id="main">
-				{if ($prefs.feature_fullscreen != 'y' or $smarty.session.fullscreen != 'y')}
+				{if ($prefs.feature_fullscreen != 'y' or $smarty.session.fullscreen != 'y') and ($prefs.layout_section ne 'y' or $prefs.feature_top_bar ne 'n')}
 					{if $prefs.module_zones_top eq 'fixed' or ($prefs.module_zones_top ne 'n' && $top_modules|@count > 0)}
 						{if $prefs.feature_layoutshadows eq 'y'}<div id="header-shadow">{eval var=$prefs.header_shadow_start}{/if}			
 	
@@ -85,18 +85,17 @@
 					<div class="clearfix" id="wrapper">
 						<div id="col1" class="{if $prefs.feature_left_column eq 'fixed' or ($prefs.feature_left_column ne 'n' && $left_modules|@count > 0 && $show_columns.left_modules ne 'n')}/*marginleft*/{/if}{if  $prefs.feature_right_column eq 'fixed' or ($prefs.feature_right_column ne 'n' && $right_modules|@count > 0 && $show_columns.right_modules ne 'n')} /*marginright*/{/if}"{if $prefs.feature_bidi eq 'y'} dir="rtl"{/if}>
 						{if $prefs.feature_layoutshadows eq 'y'}<div id="tiki-center-shadow">{eval var=$prefs.center_shadow_start}{/if}						
-
 							<div id="tiki-center" {*id needed for ajax editpage link*} class="clearfix content">
 							{if ($prefs.feature_fullscreen != 'y' or $smarty.session.fullscreen != 'y')}
 								{if $prefs.feature_left_column eq 'user' or $prefs.feature_right_column eq 'user'}
 									<div class="clearfix" id="showhide_columns">
 										{if  $prefs.feature_left_column eq 'fixed' or ($prefs.feature_left_column eq 'user' && $left_modules|@count > 0 && $show_columns.left_modules ne 'n')}
-											<div style="text-align:left;float:left;">
+														<div style="text-align:left;float:left;" id="showhide_left_column">
 												<a class="flip" title="{tr}Show/Hide Left Column{/tr}" href="#" onclick="toggleCols('col2','left'); return false">{icon _name=oleftcol _id="oleftcol" class="colflip" alt="[{tr}Show/Hide Left Column{/tr}]"}</a>
 											</div>
 										{/if}
 										{if  $prefs.feature_right_column eq 'fixed' or ($prefs.feature_right_column eq 'user'&& $right_modules|@count > 0 && $show_columns.right_modules ne 'n')}
-											<div class="clearfix" style="text-align:right;float:right">
+														<div class="clearfix" style="text-align:right;float:right" id="showhide_right_column">
 												<a class="flip" title="{tr}Show/Hide Right Column{/tr}" href="#" onclick="toggleCols('col3','right'); return false">{icon _name=orightcol _id="orightcol" class="colflip" alt="[{tr}Show/Hide Right Column{/tr}]"}</a>
 											</div>
 										{/if}
@@ -266,7 +265,7 @@
 	</div>{* -- END of fixedwidth -- *}
 
 		{include file='footer.tpl'}
-		{if $prefs.socialnetworks_user_firstlogin == 'y'}
+		{if isset($prefs.socialnetworks_user_firstlogin) && $prefs.socialnetworks_user_firstlogin == 'y'}
 			{include file='tiki-socialnetworks_firstlogin_launcher.tpl'}
 		{/if}
 
@@ -285,3 +284,6 @@
 
 	</body>
 </html>
+{if !empty($smarty.request.show_smarty_debug)}
+	{debug}
+{/if}
