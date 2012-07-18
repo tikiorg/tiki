@@ -769,7 +769,7 @@ class HeaderLib
 		}
 		*/
 
-		$this->add_jsfile('http://openlayers.org/api/2.11/OpenLayers.js', 'external');
+		$this->add_jsfile('http://openlayers.org/api/2.12/OpenLayers.js', 'external');
 		$this->add_js(
 		    '$(".map-container:not(.done)")
 		        .addClass("done")
