@@ -196,3 +196,6 @@
 		{/if}
 	</body>
 </html>
+{if !empty($smarty.request.show_smarty_debug)}
+	{debug}
+{/if}
