@@ -1,21 +1,24 @@
 {tikimodule error=$module_params.error title=$tpl_module_title name="map_layer_selector" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}
 	<form class="map-layer-selector" method="post" action="">
-		<select name="baseLayers">
-		</select>
-		<div class="optionalLayers">
-		</div>
+		{if $controls.baselayer}
+			<select name="baseLayers">
+			</select>
+		{/if}
+
+		{if $controls.optionallayers}
+			<div class="optionalLayers">
+			</div>
+		{/if}
 	</form>
 	{jq}
 	$('.map-layer-selector').hide();
 	$(function () {
-		var realRefresh, map, refreshLayers = function () {
-			realRefresh();
-		};
 		$('.map-container').one('initialized', function () {
 			$('.map-layer-selector').removeClass('map-layer-selector').each(function () {
-				map = $(this).closest('.tab, #appframe, body').find('.map-container:first')[0];
-				var baseLayers= $(this.baseLayers);
-				var optionalLayers= $('.optionalLayers', this);
+				var refreshLayers, map = $(this).closest('.tab, #appframe, body').find('.map-container:first')[0]
+					, baseLayers = $(this.baseLayers)
+					, optionalLayers = $('.optionalLayers', this)
+					;
 
 				if (! map) {
 					return;
@@ -33,7 +36,7 @@
 					}
 				});
 
-				realRefresh = function () {
+				refreshLayers = function () {
 					baseLayers.empty();
 					optionalLayers.empty();
 					$.each(map.map.layers, function (k, thisLayer) {
@@ -57,16 +60,15 @@
 						}
 					});
 				};
-			});
 
-			// Wait for OpenLayers to initialize
-			refreshLayers();
-			map.map.events.register('addlayer', {}, refreshLayers);
-			map.map.events.register('removelayer', {}, refreshLayers);
-			map.map.events.register('changelayer', {}, refreshLayers);
-			map.map.events.register('changebaselayer', {}, refreshLayers);
-			$.each(map.map.getControlsByClass('OpenLayers.Control.LayerSwitcher'), function (k, c) {
-				map.map.removeControl(c);
+				refreshLayers();
+				map.map.events.register('addlayer', {}, refreshLayers);
+				map.map.events.register('removelayer', {}, refreshLayers);
+				map.map.events.register('changelayer', {}, refreshLayers);
+				map.map.events.register('changebaselayer', {}, refreshLayers);
+				$.each(map.map.getControlsByClass('OpenLayers.Control.LayerSwitcher'), function (k, c) {
+					map.map.removeControl(c);
+				});
 			});
 		});
 	});

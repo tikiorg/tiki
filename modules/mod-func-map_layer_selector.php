@@ -18,11 +18,29 @@ function module_map_layer_selector_info()
 		'description' => tra("Replace the map's built-in layer controls."),
 		'prefs' => array(),
 		'params' => array(
+			'baselayer' => array(
+				'required' => false,
+				'name' => tr('Include base layer'),
+				'description' => tr('Include the drop list for the base layers.'),
+				'default' => 'y',
+			),
+			'optionallayers' => array(
+				'required' => false,
+				'name' => tr('Include optional layers'),
+				'description' => tr('Include the checkboxes for the optional layers.'),
+				'default' => 'y',
+			),
 		),
 	);
 }
 
 function module_map_layer_selector($mod_reference, $module_params)
 {
+	$smarty = TikiLib::lib('smarty');
+
+	$smarty->assign('controls', array(
+		'baselayer' => isset($module_params['baselayer']) ? $module_params['baselayer'] != 'n' : true,
+		'optionallayers' => isset($module_params['optionallayers']) ? $module_params['optionallayers'] != 'n' : true,
+	));
 }
 
