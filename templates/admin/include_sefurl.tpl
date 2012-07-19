@@ -42,6 +42,12 @@
 				{tr _0="<strong>$referenceFileName</strong>" _1="<strong>$enabledFileName</strong>"}To update this file, if it was not customized, copy the %0 file (located in the main directory of your Tiki installation) to %1, overwriting the latter.{/tr}
 				{/remarksbox}
 			{/if}
+			{if not empty($rewritebaseSetting)}
+				{remarksbox type="warning" title="{tr}Warning{/tr}"}
+					{tr}The RewriteBase directive seems not to be set up correctly. This is required for sefurl to function correctly.{/tr}<br>
+					{tr _0=$enabledFileName _1=$rewritebaseSetting _2=$url_path}The current value in %0 is %1 but the base url for this site is %2{/tr}
+				{/remarksbox}
+			{/if}
 		{/if}
 	</fieldset>		
 	
