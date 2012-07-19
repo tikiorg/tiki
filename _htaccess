@@ -34,6 +34,7 @@
 
 <IfModule mod_dir.c>
 	DirectoryIndex index.php
+	# set to: DirectoryIndex tiki-index.php   if using wiki as homepage feature to avoid the home page name being appended to the url
 </IfModule>
 
 <IfModule deflate_module>
