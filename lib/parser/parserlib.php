@@ -60,6 +60,7 @@ class ParserLib extends TikiDb_Bridge
 	var $option = array();
 
 	static $jisonParser;
+	static $pluginInstances = array();
 
 	function setOptions($option = array())
 	{
@@ -613,12 +614,20 @@ if ( \$('#$id') ) {
 		return $plugins;
 	}
 
+	function zend_plugin_exists($className)
+	{
+		if (isset(self::$pluginInstances[$this->className])) {
+			return true;
+		}
+
+		return file_exists(str_replace("_" , "/", "lib/core/" . $className . '.php')) == true && class_exists($className) == true;
+	}
 	//*
 	function plugin_exists( $name, $include = false )
 	{
 		if ($name != 'maketoc') {
 			$className = 'WikiPlugin_' . $name;
-			if (@class_exists($className)) return true;
+			if ($this->zend_plugin_exists($className)) return true;
 		}
 		$php_name = 'lib/wiki-plugins/wikiplugin_';
 		$php_name .= TikiLib::strtolower($name) . '.php';
@@ -648,7 +657,7 @@ if ( \$('#$id') ) {
 		}
 
 		$className = 'WikiPlugin_' . $name;
-		$classExists = class_exists($className);
+		$classExists = $this->zend_plugin_exists($className);
 		if ($classExists == true) {
 			$class = new $className;
 			return $known[$name] = $class->info();
@@ -1042,7 +1051,7 @@ if ( \$('#$id') ) {
 		$classExists = false;
 		if ($name != 'maketoc') {
 			$className = 'WikiPlugin_' . $name;
-			$classExists = @class_exists($className);
+			$classExists = $this->zend_plugin_exists($className);
 			if ($classExists == true) {
 				$class = new $className;
 			}
