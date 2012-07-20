@@ -9,11 +9,10 @@ class WikiPlugin_maketoc extends WikiPlugin_HtmlBase
 {
 	public $type = 'toc';
 	public $documentation = 'PluginMaketoc';
-
-	private $validate;
-	private $filter = 'rawhtml_unsafe';
-	private $icon = 'img/icons/text_list_numbers.png';
-	private $tags = array( 'basic' );
+	public $parserLevel = 1; //0 is standard, we put this after the others
+	public $filter = 'rawhtml_unsafe';
+	public $icon = 'img/icons/text_list_numbers.png';
+	public $tags = array( 'basic' );
 
 	function __construct()
 	{
