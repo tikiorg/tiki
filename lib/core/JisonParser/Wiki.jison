@@ -6,12 +6,20 @@
 
 PLUGIN_ID   					[A-Z]+
 INLINE_PLUGIN_ID				[a-z]+
+SYNTAX_START_CHARS              [\_\^:\~'\[-|=\(]
 SMILE							[a-z]+
 
 %s plugin bold box center colortext italic header list link strikethrough table titlebar underscore wikilink
 %options flex
 
 %%
+
+("§"[a-z0-9]{32}"§")                        return 'CONTENT';
+("≤"(.)+"≥")                                return 'CONTENT';
+("<"(.|\n)*?">")							return 'CONTENT';
+([A-Za-z0-9 ]+)                            return 'CONTENT';
+
+
 "{ELSE}"						return 'CONTENT';//For now let individual plugins handle else
 "{"{INLINE_PLUGIN_ID}.*?"}"
 	%{
@@ -520,10 +528,10 @@ SMILE							[a-z]+
 
 
 
-"<"(.|\n)*?">"								return 'CONTENT';
-[A-Za-z0-9]+                                return 'CONTENT';
+(.)+?/({SYNTAX_START_CHARS}|"{"{INLINE_PLUGIN_ID}|"{"{PLUGIN_ID})
+											return 'CONTENT'; //anything before a syntax or plugin
 (.)											return 'CONTENT';
-(\n)										return 'CONTENT';
+
 (\s)                                        return 'CONTENT';
 <<EOF>>										return 'EOF';
 /lex

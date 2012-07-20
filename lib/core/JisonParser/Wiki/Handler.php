@@ -8,28 +8,31 @@
 class JisonParser_Wiki_Handler extends JisonParser_Wiki
 {
 	/* parser tracking */
-	var $parsing = false;
-	public static $spareParsers = array();
+	private $parsing = false;
+	private static $spareParsers = array();
 	private $Parser;
+	private static $parseDepth = 0;
 
 	/* plugin tracking */
-	var $pluginStack = array();
-	var $pluginEntries = array();
-	var $plugins = array();
-	var $wikiPluginParserNegotiatorClass = 'WikiPlugin_ParserNegotiator';
+	public $pluginStack = array();
+	private $pluginEntries = array();
+	private $wikiPluginParserNegotiatorClass = 'WikiPlugin_ParserNegotiator';
+	public $plugins = array();
+	private static $pluginIndexes = array();
+	private $pluginNegotiators = array();
 
 	/* np tracking */
-	var $npEntries = array();
-	var $npCount = 0;
+	private $npEntries = array();
+	private $npCount = 0;
 
 	/* header tracking */
-	var $header;
+	public $header;
 
 	/* list tracking and parser */
-	var $list;
+	public $list;
 
 	//This var is used in both protectSpecialChars and unprotectSpecialChars to simplify the html ouput process
-	var $specialChars = array(
+	private $specialChars = array(
 		'≤REAL_LT≥' => array(
 			'html'=>		'<',
 			'nonHtml'=>		'&lt;'
@@ -49,6 +52,20 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 			'html'=>		'& ',
 			'nonHtml'=>		'& '
 		),
+	);
+
+	private $syntaxStatingChars = array(
+		"_",
+		"^",
+		":",
+		"~",
+		"[",
+		"-",
+		"|",
+		"=",
+		"(",
+		"\n!",
+		"{"
 	);
 
 	var $tikilib;
@@ -132,6 +149,23 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		parent::__construct();
 	}
 
+	function parser_performAction(&$thisS, $yytext, $yyleng, $yylineno, $yystate, $S, $_S, $O)
+	{
+		$result = parent::parser_performAction($thisS, $yytext, $yyleng, $yylineno, $yystate, $S, $_S, $O);
+
+		file_put_contents("temp/actions.log", $thisS . "\n");
+
+		return $result;
+	}
+
+	function hasWikiSyntax(&$input)
+	{
+		foreach($this->syntaxStatingChars as $char) {
+			if (strstr($input, $char)) return true;
+		}
+		return false;
+	}
+
 	function parse($input)
 	{
 		if (empty($input)) return $input;
@@ -151,7 +185,13 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 
 			$this->preParse($input);
 
-			$result = parent::parse($input);
+			if ($this->hasWikiSyntax($input) == true) {
+				self::$parseDepth++;
+				$result = parent::parse($input);
+				self::$parseDepth--;
+			} else {
+				$result = $input;
+			}
 
 			$this->parsing = false;
 			$this->postParse($result);
@@ -184,7 +224,9 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		$input = "\n" . $input . "\n"; //here we add 2 lines, so the parser doesn't have to do special things to track the first line and last, we remove these when we insert breaks
 
 		if ($this->Parser->option['parseNps'] == true) {
-			$input = preg_replace_callback('/~np~(.|\n)*?~\/np~/', array(&$this, 'removeNpEntities'), $input);
+			try {
+				$input = preg_replace_callback('/~np~(.|\n\r)*?~\/np~/', array($this, 'removeNpEntities'), $input);
+			} catch (Exception $e) {}
 		}
 
 		$input = $this->protectSpecialChars($input);
@@ -223,45 +265,47 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 
 		$this->restoreNpEntities($input);
 		$this->restorePluginEntities($input);
-		$this->executeAndRestoreAwaitingPlugins($input);
 	}
 
 	// state & plugin handlers
-	function plugin($pluginDetails)
+	function plugin(&$pluginDetails)
 	{
-		$is_html = $this->Parser->option['is_html'];
+		$negotiator = $this->getPluginNegotiator();
+		$negotiator->setDetails($pluginDetails);
 
-		$this->Parser->option['is_html'] = true;
-
-		$plugin = new $this->Parser->wikiPluginParserNegotiatorClass($this, $pluginDetails, $this->page, $this->prefs, $this->Parser->option);
-
-		$this->Parser->option['is_html'] = $is_html;
-		
-		if (!$this->Parser->option['skipvalidation']) {
-			$status = $plugin->canExecute();
+		if ($this->Parser->option['skipvalidation'] == false) {
+			$status = $negotiator->canExecute();
 		} else {
 			$status = true;
 		}
 
 		if ($status === true) {
-			$plugin->body = $this->unprotectSpecialChars($plugin->body, true);
-
 			/*$plugins is a bit different that pluginEntries, an entry will be popped later, $plugins is more for
 			tracking, although their values may be the same for a time, the end result will be an empty entries, but
 			$plugins will have all executed plugin in it*/
-			$this->Parser->plugins[$plugin->key] = $plugin->body;
+			$this->plugins[$negotiator->key] = $negotiator->body;
 
-
-			$this->pluginEntries[$plugin->key] = $plugin->execute();
-
-			if ($plugin->needsParsed == true) {
-				$this->pluginEntries[$plugin->key] = $this->parsePlugin( $this->pluginEntries[$plugin->key] );
-			}
+			$this->pluginEntries[$negotiator->key] = $this->parsePlugin($negotiator->execute());
+			return $negotiator->key;
 		} else {
-			return $plugin->blockFromExecution($status);
+			return $negotiator->blockFromExecution($status);
 		}
+	}
 
-		return $plugin->key;
+	private function incrementPluginIndex($name)
+	{
+		$name = strtolower($name);
+
+		if (isset(self::$pluginIndexes[$name]) == false) self::$pluginIndexes[$name] = 0;
+
+		self::$pluginIndexes[$name]++;
+
+		return self::$pluginIndexes[$name];
+	}
+
+	function pluginKey($name)
+	{
+		return '§' . md5('plugin:' . $name . '_' . $this->incrementPluginIndex($name)) . '§';
 	}
 
 	function inlinePlugin($yytext)
@@ -272,7 +316,8 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		return array(
 			'name' => $pluginName,
 			'args' => $pluginArgs,
-			'body' => ''
+			'body' => '',
+			'key' => $this->pluginKey($pluginName)
 		);
 	}
 
@@ -284,7 +329,8 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		$this->pluginStack[] = array(
 			'name' => $pluginName,
 			'args' => $pluginArgs,
-			'body' => ''
+			'body' => '',
+			'key' => $this->pluginKey($pluginName)
 		);
 	}
 
@@ -298,6 +344,15 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		$me = new self();
 		$me->parse($data);
 		return $me->plugins;
+	}
+
+	function getPluginNegotiator()
+	{
+		if (empty($this->pluginNegotiators[$this->wikiPluginParserNegotiatorClass])) {
+			$this->pluginNegotiators[$this->wikiPluginParserNegotiatorClass] = new $this->wikiPluginParserNegotiatorClass($this);
+		}
+
+		return $this->pluginNegotiators[$this->wikiPluginParserNegotiatorClass];
 	}
 
 	function removeNpEntities(&$matches)
@@ -338,39 +393,9 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 				unset($this->pluginEntries[$key]);
 			}
 		}
-	}
 
-	function executeAndRestoreAwaitingPlugins(&$input, $keep = false)
-	{
-		if ($this->Parser->parsing == false && WikiPlugin_ParserNegotiator::$currentParserLevel == 0) {
-			sort(WikiPlugin_ParserNegotiator::$parserLevels, SORT_NUMERIC);
-			array_unique(WikiPlugin_ParserNegotiator::$parserLevels);
-
-			foreach(WikiPlugin_ParserNegotiator::$parserLevels as &$level) {
-				WikiPlugin_ParserNegotiator::$currentParserLevel = $level;
-				foreach(WikiPlugin_ParserNegotiator::$pluginsAwaitingExecution as &$plugin) {
-					if (WikiPlugin_ParserNegotiator::$currentParserLevel == $level) {
-
-						if (empty($this->pluginEntries[$plugin->key]) == true) {
-							$this->Parser->plugins[$plugin->key] = $plugin->body;
-
-							$this->pluginEntries[$plugin->key] = $plugin->execute();
-
-							if ($plugin->needsParsed == true) {
-								$this->pluginEntries[$plugin->key] = $this->parsePlugin( $this->pluginEntries[$plugin->key] );
-							}
-						}
-
-						$input = str_replace($plugin->key, $this->pluginEntries[$plugin->key], $input);
-
-						if (!$keep) {
-							unset($this->pluginEntries[$plugin->key]);
-						}
-
-						unset($plugin);
-					}
-				}
-			}
+		if (self::$parseDepth == 0) {
+			$this->getPluginNegotiator()->executeAwaiting($input);
 		}
 	}
 
