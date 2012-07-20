@@ -9,12 +9,12 @@ class WikiPlugin_expandingoutline extends WikiPlugin_HtmlBase
 {
 	public $type = 'expandingoutline';
 	public $documentation = 'PluginExpandingOutline';
-	public $prefs = array('wikiplugin_expandingoutline');
-
-	private $validate = 'all';
-	private $filter = 'rawhtml_unsafe';
-	private $icon = 'img/icons/mime/html.png';
-	private $tags = array( 'basic' );
+	public $prefs = array('wikiplugin_expandingoutline, feature_jison_wiki_parser');
+	public $validate = 'all';
+	public $filter = 'rawhtml_unsafe';
+	public $icon = 'img/icons/mime/html.png';
+	public $tags = array( 'basic' );
+	public $np = false;
 
 	function __construct()
 	{
@@ -92,7 +92,7 @@ class WikiPlugin_expandingoutline extends WikiPlugin_HtmlBase
 JQ
 );
 
-		$result = "<style>
+		$result = "~np~<style>
 			#$id table {
 				width: 100%;
 				border-collapse:collapse;
@@ -111,8 +111,8 @@ JQ
 				white-space: nowrap;
 
 			}
-		</style>" .
-			TikiLib::lib('tiki')->parse_data($data, array('is_html' => true));
+		</style>~/np~" .
+			$parser->parsePlugin($data);
 
 		$parser->list = $regularList;
 

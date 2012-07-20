@@ -16,16 +16,15 @@ abstract class WikiPlugin_HtmlBase
 	public $documentation;
 	public $prefs = array();
 	public $parserLevel = 0;
-
-	private $format;
-	private $validate;
-	private $filter = 'rawhtml_unsafe';
-	private $icon = 'img/icons/mime/html.png';
-	private $tags = array( 'basic' );
-	private $htmlTagType = 'div';
-	private $hasHtmlBody = true;
-	private $htmlAttributes = array();
-	private $np = true;
+	public $format;
+	public $validate;
+	public $filter = 'rawhtml_unsafe';
+	public $icon = 'img/icons/mime/html.png';
+	public $tags = array( 'basic' );
+	public $htmlTagType = 'div';
+	public $hasHtmlBody = true;
+	public $htmlAttributes = array();
+	public $np = true;
 
 	static $style = array(
 		'@keyframes' => array('filter' => 'text', 'default' => ''),

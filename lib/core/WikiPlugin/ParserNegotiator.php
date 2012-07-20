@@ -7,54 +7,63 @@
 
 class WikiPlugin_ParserNegotiator
 {
-	var $parser;
-	var $name;
-	var $className;
-	var $class;
-	var $parserLevel = 0;
-	var $argParser;
-	var $args;
-	var $body;
-	var $info;
-	var $fingerprint;
-	var $page;
-	var $exists;
-	var $prefs;
-	var $parserOption;
-	var $index;
-	var $key;
-	var $needsParsed = true;
-	var $isWaiting = false;
-	var $result;
+	public $name;
+	public $args;
+	public $body;
+	public $info;
+	public $fingerprint;
+	public $exists;
+	public $index;
+	public $key;
+	public $needsParsed = true;
+
+	private $className;
+	private $class;
+	private $parserLevel = 0;
+	private $parser;
+	private $argParser;
+	private $page;
+	private $prefs;
+	private $parserOption;
 
 	static $pluginIndexes = array();
 	static $parserLevels = array();
 	static $currentParserLevel = 0;
 	static $pluginsAwaitingExecution = array();
+	static $pluginInstances = array();
+	static $pluginDetails = array();
 
-	function __construct(& $parser, & $pluginDetails, & $page, & $prefs, $parserOption)
+	function __construct(& $parser)
 	{
 		$this->parser = & $parser;
+		$this->page = & $parser->page;
+		$this->prefs = & $parser->prefs;
+		$this->parserOption = & $parser->option;
+		$this->argParser = new WikiParser_PluginArgumentParser;
+	}
+
+	public function setDetails(& $pluginDetails)
+	{
 		$this->name = strtolower($pluginDetails['name']);
 		$this->className = 'WikiPlugin_' . $this->name;
 
-		if (@class_exists($this->className)) {
-			$this->class = new $this->className;
+		if ($this->zendExists() == true) {
+			if (empty(self::$pluginInstances[$this->className])) self::$pluginInstances[$this->className] = new $this->className;
+			$this->class = self::$pluginInstances[$this->className];
+		} else {
+			$this->class = null;
 		}
 
-		$this->argParser = new WikiParser_PluginArgumentParser;
 		$this->args = $this->argParser->parse($pluginDetails['args']);
 		$this->body = & $pluginDetails['body'];
+		$this->key = $pluginDetails['key'];
+
 		$this->info = $this->info();
 		$this->fingerprint = $this->fingerprint();
-		$this->page = & $page;
 		$this->exists = $this->exists();
-		$this->prefs = & $prefs;
-		$this->parserOption = & $parserOption;
-
 		$this->index = $this->incrementIndex();
 
-		$this->key = '§' . md5('plugin:' . $this->name . '_' . $this->index) . '§';
+		self::$pluginDetails[$this->key] = &$pluginDetails;
 	}
 
 	private function incrementIndex()
@@ -68,12 +77,9 @@ class WikiPlugin_ParserNegotiator
 
 	function execute()
 	{
-		if (isset($this->result)) return $this->result; //per instance, execution only happens once, even if the parser doesn't agree
-
 		$output = '';
 		if ($this->enabled($output) == false) {
-			$this->result = $output->toHtml();
-			return $this->result;
+			return $output->toHtml();
 		}
 
 
@@ -86,10 +92,10 @@ class WikiPlugin_ParserNegotiator
 					return $this->key;
 				} else {
 
-					$this->applyFilters();
+					//$this->applyFilters();
 					$button = $this->button(false);
-					$this->result = $this->class->exec($this->body, $this->args, $this->index, $this->parser, $button);
-					return $this->result;
+					$result = $this->class->exec($this->body, $this->args, $this->index, $this->parser, $button);
+					return $result;
 				}
 			}
 		}
@@ -97,14 +103,10 @@ class WikiPlugin_ParserNegotiator
 		$fnName = strtolower('wikiplugin_' .  $this->name);
 
 		if ( $this->exists && function_exists($fnName) ) {
-			$this->result = $fnName($this->body, $this->args, $this->index, $this) . $this->button();
-
-			return $this->result;
+			return $fnName($this->body, $this->args, $this->index, $this) . $this->button();
 		}
 
-		$this->result = $this->body;
-
-		return $this->result;
+		return $this->body;
 	}
 
 	function toSyntax()
@@ -161,11 +163,17 @@ class WikiPlugin_ParserNegotiator
 
 	private function addWaitingPlugin()
 	{
-		if ($this->isWaiting == false) {
-			$this->isWaiting = true;
-			self::$parserLevels[] = $this->class->parserLevel;
-			self::$pluginsAwaitingExecution[$this->key] = $this;
+		self::$parserLevels[] = $this->class->parserLevel;
+		self::$pluginsAwaitingExecution[$this->key] = self::$pluginDetails[$this->key];
+	}
+
+	private function zendExists()
+	{
+		if (isset(self::$pluginInstances[$this->className])) {
+			return true;
 		}
+
+		return file_exists(str_replace("_" , "/", "lib/core/" . $this->className . '.php')) == true && class_exists($this->className) == true;
 	}
 
 	private function exists()
@@ -323,7 +331,9 @@ class WikiPlugin_ParserNegotiator
 
 		if (isset($this->class)) {
 			$known[$this->name] = $this->class->info();
-			$known[$this->name]['params'] = array_merge($known[$this->name]['params'], $this->class->style());
+			if (isset($known[$this->name]['params'])) {
+				$known[$this->name]['params'] = array_merge($known[$this->name]['params'], $this->class->style());
+			}
 		}
 
 		if ( ! $this->exists )
@@ -352,7 +362,7 @@ class WikiPlugin_ParserNegotiator
 
 		if ( ! isset( $prefs[$prefName] ) ) return false;
 
-		return @unserialize($prefs[$prefName]);
+		return unserialize($prefs[$prefName]);
 	}
 
 	private function fingerprint()
@@ -528,12 +538,7 @@ class WikiPlugin_ParserNegotiator
 			}
 			$headerlib->add_jq_onready('
 $("#' . $id . '").click( function(event) {
-	$.getJSON("tiki-ajax_services.php", {
-		page: "' .$this->page. '",
-		key: "' . $this->key . '",
-		controller: "jison",
-		action: "pluginbody"
-	}, function(o) {
+
 		popup_plugin_form('
 				. json_encode('editwiki')
 				. ', '
@@ -544,8 +549,9 @@ $("#' . $id . '").click( function(event) {
 				. json_encode($this->page)
 				. ', '
 				. json_encode($this->args)
-				. ', o.body, event.target);
-	});
+				. ', '
+				. json_encode($this->toSyntax())
+				. ' , event.target);
 	return false;
 });
 ');
@@ -587,5 +593,30 @@ $("#' . $id . '").click( function(event) {
 		$smarty->assign('plugin_args', $this->args);
 
 		return $smarty->fetch('tiki-plugin_blocked.tpl');
+	}
+
+	function executeAwaiting(&$input)
+	{
+		if(self::$currentParserLevel == 0) {
+			sort(self::$parserLevels, SORT_NUMERIC);
+			array_unique(self::$parserLevels);
+
+			foreach(self::$parserLevels as &$level) {
+				self::$currentParserLevel = $level;
+				foreach(self::$pluginsAwaitingExecution as &$pluginDetails) {
+					if (self::$currentParserLevel == $level) {
+						$this->setDetails($pluginDetails);
+
+						$this->parser->plugin[$this->key] = $this->body;
+
+						$result = $this->parser->parsePlugin( $this->execute() );
+
+						$input = str_replace($this->key, $result, $input);
+
+						unset($pluginDetails);
+					}
+				}
+			}
+		}
 	}
 }
