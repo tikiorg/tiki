@@ -89,7 +89,6 @@ $challenge = isset($_REQUEST['challenge']) ? $_REQUEST['challenge'] : false;
 $response = isset($_REQUEST['response']) ? $_REQUEST['response'] : false;
 $isvalid = false;
 $isdue = false;
-$isEmailDue = false;
 // admin is always local
 if ($requestedUser == 'admin') $prefs['feature_intertiki'] = 'n';
 // Determine the intertiki domain
@@ -124,7 +123,6 @@ if (isset($_REQUEST['intertiki']) and in_array($_REQUEST['intertiki'], array_key
 		} else {
 			$isvalid = true;
 			$isdue = false;
-			$isEmailDue = false;
 			$logslib->add_log('login', 'intertiki : ' . $requestedUser . '@' . $_REQUEST['intertiki']);
 			if (!empty($prefs['feature_intertiki_mymaster'])) {
 				// this is slave intertiki site
@@ -195,13 +193,25 @@ if (isset($_REQUEST['intertiki']) and in_array($_REQUEST['intertiki'], array_key
 	list($isvalid, $requestedUser, $error, $method) = $ret;
 	// If the password is valid but it is due then force the user to change the password by
 	// sending the user to the new password change screen without letting him use tiki
-	// The user must re-nter the old password so no security risk here
+	// The user must re-enter the old password so no security risk here
 	if ($isvalid) {
-		$user = $requestedUser;
-		$isdue = $userlib->is_due($user, $method);
-		if ($user != 'admin') { // admin has not necessarely an email
-			$isEmailDue = $userlib->is_email_due($user, 'email');
+		if ($requestedUser != 'admin') { // admin has not necessarely an email
+
+			if ($userlib->is_email_due($requestedUser, 'email')) {
+
+				$userlib->send_confirm_email($requestedUser);
+				$userlib->change_user_waiting($requestedUser, 'u');
+				$user = '';
+				$smarty->assign('user', '');
+				$msg = $smarty->fetch('tiki-login_confirm_email.tpl');
+				$smarty->assign_by_ref('msg', explode("\n", $msg));
+				$smarty->assign('mid', 'tiki-information.tpl');
+				$smarty->display("tiki.tpl");
+				die;
+			}
 		}
+		$isdue = $userlib->is_due($requestedUser, $method);
+		$user = $requestedUser;
 	}
 }
 if ($isvalid) {
@@ -233,15 +243,6 @@ if ($isvalid) {
 		// Note that the user is not logged in he's just validated to change his password
 		// The user must re-enter his old password so no security risk involved
 		$url = 'tiki-change_password.php?user=' . urlencode($user);
-	} elseif ($isEmailDue) {
-		$userlib->send_confirm_email($user);
-		$userlib->change_user_waiting($user, 'u');
-		$msg = $smarty->fetch('tiki-login_confirm_email.tpl');
-		$smarty->assign_by_ref('msg', explode("\n", $msg));
-		$user = '';
-		$smarty->assign('mid', 'tiki-information.tpl');
-		$smarty->display("tiki.tpl");
-		die;
 	} else {
 		// User is valid and not due to change pass.. start session
 		$userlib->update_expired_groups();
