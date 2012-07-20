@@ -27,9 +27,6 @@
 			{icon _id=book title="{tr}SysLogs{/tr}" href="tiki-syslog.php"}
 			{icon _id=module title="{tr}Modules{/tr}" href="tiki-admin_modules.php"}
 			{if $prefs.feature_debug_console}
-				{if !empty($smarty.request.show_smarty_debug)}
-					{debug}
-				{/if}
 				{icon _id=bug title="{tr}Open Smarty debug window{/tr}" href="{query _type='relative' show_smarty_debug=1}"}
 			{/if}
 			{if $prefs.feature_jcapture eq "y"}

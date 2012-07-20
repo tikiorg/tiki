@@ -33,6 +33,7 @@ function prefs_available_list($partial = false)
 			'dependencies' => array(
 				'feature_multilingual',
 			),
+			'tags' => array('basic'),
 			'options' => $map,
 			'default' => array(),
 		),

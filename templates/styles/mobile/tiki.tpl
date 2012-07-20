@@ -48,7 +48,7 @@
 				background: transparent url('img/loading-light.gif') no-repeat 50% 50%;">
 		{tr}Loading...{/tr}<br /><br /><br />
 		</div></div>{* inline loading div for page load for mobile *}
-		<div id="fixedwidth" style="display: none;"> {* enables fixed-width layouts *}
+		<div id="fixedwidth" class="fixedwidth" style="display: none;"> {* enables fixed-width layouts *}
 			{if $prefs.feature_layoutshadows eq 'y'}<div id="main-shadow">{eval var=$prefs.main_shadow_start}{/if}
 			<div id="main" data-role="page">{* mobile *}
 				{if ($prefs.feature_fullscreen != 'y' or $smarty.session.fullscreen != 'y') and ($prefs.layout_section ne 'y' or $prefs.feature_top_bar ne 'n')}
@@ -56,8 +56,8 @@
 						{if $prefs.feature_layoutshadows eq 'y'}<div id="header-shadow">{eval var=$prefs.header_shadow_start}{/if}
 							<div class="header_outer" data-role="header" data-theme="{$prefs.mobile_theme_header}">
 								<div class="header_container">
-									<div class="header_fixedwidth">
-										<header class="header clearfix" id="header"{if $prefs.feature_bidi eq 'y'} dir="rtl"{/if}>
+									<div class="fixedwidth header_fixedwidth">
+										<header class="clearfix header" id="header"{if $prefs.feature_bidi eq 'y'} dir="rtl"{/if}>
 											<div class="content clearfix modules" id="top_modules">
 												{section name=homeix loop=$top_modules}
 													{$top_modules[homeix].data}
@@ -72,7 +72,7 @@
 				{/if}
 				<div class="middle_outer" data-role="content" data-theme="{$prefs.mobile_theme_content}">
 					{if $prefs.feature_layoutshadows eq 'y'}<div id="middle-shadow">{eval var=$prefs.middle_shadow_start}{/if}
-						<div class="clearfix" id="middle">
+						<div class="clearfix fixedwidth middle" id="middle">
 							<div class="content clearfix modules" id="topbar_modules">
 								{section name=homeix loop=$topbar_modules}
 									{$topbar_modules[homeix].data}
@@ -87,12 +87,12 @@
 											{if $prefs.feature_left_column eq 'user' or $prefs.feature_right_column eq 'user'}
 												<div class="clearfix" id="showhide_columns">
 													{if  $prefs.feature_left_column eq 'fixed' or ($prefs.feature_left_column eq 'user' && $left_modules|@count > 0 && $show_columns.left_modules ne 'n')}
-														<div style="text-align:left;float:left;">
+														<div style="text-align:left;float:left;" id="showhide_left_column">
 															<a class="flip" title="{tr}Show/Hide Left Column{/tr}" href="#" onclick="toggleCols('col2','left'); return false">{icon _name=oleftcol _id="oleftcol" class="colflip" alt="[{tr}Show/Hide Left Column{/tr}]"}</a>
 														</div>
 													{/if}
 													{if  $prefs.feature_right_column eq 'fixed' or ($prefs.feature_right_column eq 'user'&& $right_modules|@count > 0 && $show_columns.right_modules ne 'n')}
-														<div class="clearfix" style="text-align:right;float:right">
+														<div class="clearfix" style="text-align:right;float:right" id="showhide_right_column">
 															<a class="flip" title="{tr}Show/Hide Right Column{/tr}" href="#" onclick="toggleCols('col3','right'); return false">{icon _name=orightcol _id="orightcol" class="colflip" alt="[{tr}Show/Hide Right Column{/tr}]"}</a>
 														</div>
 													{/if}
@@ -229,3 +229,6 @@ if (typeof $.mobile === "undefined") {
 		{/if}
 	</body>
 </html>
+{if !empty($smarty.request.show_smarty_debug)}
+	{debug}
+{/if}

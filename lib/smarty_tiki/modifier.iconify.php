@@ -25,8 +25,26 @@ function smarty_modifier_iconify($string, $filetype = null)
 	global $smarty;
 
 	$smarty->loadPlugin('smarty_function_icon');
+	$icon = '';
 	$ext = strtolower(substr($string, strrpos($string, '.') + 1));
-	$icon = file_exists("img/icons/mime/$ext.png") ? $ext : 'default';
+	if (file_exists("img/icons/mime/$ext.png")) {
+		$icon = $ext;
+	} else 	if (file_exists('img/icons/mime/' . substr($ext, 0, 3) . '.png')) {
+		$icon = substr($ext, 0, 3);
+	} else {
+		include_once ('lib/mime/mimetypes.php');
+		global $mimetypes;
+
+		$mimes = array_keys($mimetypes, $filetype);
+		foreach($mimes as $m) {
+			if (file_exists("img/icons/mime/$m.png")) {
+				$icon = $m;
+			}
+		}
+		if (empty($icon)) {
+			$icon = 'default';
+		}
+	}
 
 	return smarty_function_icon(
 					array(

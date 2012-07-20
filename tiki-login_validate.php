@@ -24,7 +24,7 @@ if (isset($_REQUEST["user"])) {
 			die;
 		} elseif (!empty($_SESSION['last_validation'])) {
 			if ($_SESSION['last_validation']['actpass'] == $_REQUEST["pass"] && $_SESSION['last_validation']['user'] == $_REQUEST["user"]) {
-				list($isvalid, $_REQUEST["user"], $error) = $userlib->validate_user($_REQUEST["user"], $_SESSION['last_validation']['pass'], '', '', true);
+				list($isvalid, $_REQUEST["user"], $error) = $userlib->validate_user($_REQUEST["user"], $_SESSION['last_validation']['actpass'], '', '', true);
 			} else {
 				$_SESSION['last_validation'] = null;
 			}
@@ -95,6 +95,7 @@ if ($isvalid) {
 	else if ($error == USER_NOT_FOUND) $error = tra("Invalid username");
 	else if ($error == ACCOUNT_DISABLED) $error = tra("Account disabled");
 	else if ($error == USER_AMBIGOUS) $error = tra("You must use the right case for your user name");
+	else if ($error == USER_PREVIOUSLY_VALIDATED) $error = tra('You have already validated your account. Please log in.');
 	else $error = tra('Invalid username or password');
 	$smarty->assign('errortype', 'no_redirect_login');
 	$smarty->assign('msg', $error);

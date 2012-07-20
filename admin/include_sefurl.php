@@ -49,6 +49,19 @@ if (isset($enabledFileName)) {
 			} else {
 				$configurationFile = 'outdated';
 			}
+			if ($httpd === 'Apache') {	// work out if RewriteBase is set up properly
+				global $url_path;
+				$rewritebase = '/';
+				while ($nextLine = fgets($enabledFile)) {
+					if (preg_match('/^RewriteBase\s*(.*)$/', $nextLine, $m)) {
+						$rewritebase = substr($m[1], -1) !== '/' ? $m[1] . '/' : $m[1];
+						break;
+					}
+				}
+				if ($url_path != $rewritebase) {
+					$smarty->assign('rewritebaseSetting', $rewritebase);
+				}
+			}
 			fclose($referenceFile);
 		} else {
 			$configurationFile = 'no reference';

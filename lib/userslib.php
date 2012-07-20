@@ -23,6 +23,7 @@ define('ACCOUNT_DISABLED', -6);
 define('ACCOUNT_WAITING_USER', -9);
 define('USER_AMBIGOUS', -7);
 define('USER_NOT_VALIDATED', -8);
+define('USER_PREVIOUSLY_VALIDATED', -10);
 
 //added for Auth v1.3 support
 define('AUTH_LOGIN_OK', 0);
@@ -1438,6 +1439,9 @@ class UsersLib extends TikiLib
 			if ($this->hash_pass($pass, $res['hash']) == $res['hash']) // new method (crypt-md5) and tikihash method (md5(pass))
 				return array(USER_VALID, $user);
 
+			if ($validate_phase && empty($res['waiting'])) {
+				return array(USER_PREVIOUSLY_VALIDATED, $user);
+			}
 			return array(PASSWORD_INCORRECT, $user);
 		} else {
 			// Use challenge-reponse method

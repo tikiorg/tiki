@@ -245,6 +245,12 @@ class MenuLib extends TikiLib
 	{
 		$query = "update `tiki_menu_options` set `url`=? where `url`=?";
 		$result = $this->query($query, array('(('.$newName.'))', '(('.$oldName.'))'));
+		$query = "select `menuId` from `tiki_menu_options` where `url`=?";
+		$result = $this->fetchAll($query, array('(('.$newName.'))'));
+		foreach ($result as $p) {
+			$this->empty_menu_cache($p['menuId']);
+		}
+
 		// try to change some tiki-index.php?page - very limitted: for another http://anothersite/tiki-index.php?page= must not be changed
 		$query = "select * from `tiki_menu_options` where `url` like ?";
 		$result = $this->query($query, array("%tiki-index.php?page=$oldName%"));

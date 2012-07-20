@@ -545,6 +545,7 @@
 			<div style="padding:5px;clear:both">	  
 				<label for="log_tpl">{tr}Add HTML comment at start and end of each Smarty template (TPL){/tr}.</label>
 				<input type="checkbox" id="log_tpl" name="log_tpl"{if $prefs.log_tpl eq 'y'} checked="checked"{/if}" />
+				<br /><em><img src="img/icons/error.png" alt="{tr}Alert{/tr}" style="vertical-align:middle" /> {tr}Use only for development, not in production because these warnings are added to emails as well, and visible to the users{/tr}.</em>
 			</div>
 		</div>
 	</div>

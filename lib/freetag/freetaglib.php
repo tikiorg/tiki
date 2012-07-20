@@ -1223,6 +1223,12 @@ class FreetagLib extends ObjectLib
 			$join_tiki_pages = 'INNER JOIN `tiki_pages` pa ON pa.`pageName` = oa.itemId'
 							. ' INNER JOIN `tiki_pages` pb ON pb.`pageName` = ob.`itemId`'
 							;
+		} elseif ($prefs['feature_multilingual'] == 'y' && $type == 'article' && $targetType == 'article') {
+			// make sure only sane lang articles are selected
+			$mid .= ' AND (ab.`lang` = aa.`lang` OR aa.`lang` IS NULL OR ab.`lang` IS NULL) ';
+			$join_tiki_pages = 'INNER JOIN `tiki_articles` aa ON aa.`articleId` = oa.itemId'
+							. ' INNER JOIN `tiki_articles` ab ON ab.`articleId` = ob.`itemId`'
+							;
 		} else {
 			$join_tiki_pages = '';
 		}

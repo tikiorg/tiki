@@ -57,6 +57,9 @@ if (count($registrationlib->merged_prefs['choosable_groups'])) {
     if (count($registrationlib->merged_prefs['choosable_groups']) == 1) {
         $smarty->assign_by_ref('theChoiceGroup', $registrationlib->merged_prefs['choosable_groups'][0]['groupName']);
     }
+	if ($registrationlib->merged_prefs['userTracker'] == 'y') {
+		$smarty->assign('trackerEditFormId', 1);	// switch on to make mandatory_star *'s appear even though the tracker form is loaded by ajax
+	}
 }
 
 $email_valid='y';

@@ -2838,6 +2838,7 @@ class FileGalLib extends TikiLib
 			if ( ! empty( $params['description'][0] ) ) $fileInfo['description'] = $params['description'][0];
 			if ( ! empty( $params['user'][0] ) ) $fileInfo['user'] = $params['user'][0];
 			if ( ! empty( $params['author'][0] ) ) $fileInfo['author'] = $params['author'][0];
+			if ( ! empty( $params['filetype'][0] ) ) $fileInfo['filetype'] = $params['filetype'][0];
 
 		} else {
 			$editFileId = 0;

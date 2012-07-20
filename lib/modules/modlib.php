@@ -1170,7 +1170,7 @@ class ModLib extends TikiLib
 
 				if ($this->is_user_module($module['name'])) {
 					$um = $this->get_user_module($module['name']);
-					if (preg_match("/^{(.+)}$/", trim($um['data']), $matches)) {	// start and end with { and } makes yaml parser think it's a serialized value
+					if (preg_match("/^\!*\{.*\}$/", trim($um['data']), $matches)) {	// start and end with { and } makes yaml parser think it's a serialized value
 						$um['data'] = $um['data'] . "\n";							// so force it to be a literal block
 					}
 					$modtogo['data']['custom'] = $um['data'];		// the yaml dumper copes with linefeeds etc as a literal block
