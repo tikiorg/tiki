@@ -150,6 +150,15 @@ function wikiplugin_carousel_info()
 				'default' => '.7em',
 				'advanced' => true,
 			),
+			'displaySize' => array(
+				'required' => false,
+				'name' => tra('Size of picture'),
+				'description' => tra('In case your picture is too large, you can specify a scale between 0 and 1 to reduce it'),
+				'filter' => 'text',
+				'default' => '1',
+				'accepted' => tra('real between 0 and 1'),
+				'advanced' => true,
+			),
 		),
 	);
 }
@@ -212,7 +221,11 @@ function wikiplugin_carousel( $body, $params )
 
 	$html = '<div id="'.$unique.'" class="clearfix carousel" style="width: 1px; height: 1px; overflow: hidden"><ul>';
 	foreach ($files['data'] as $file) {
-		$html .= '<li><img src="tiki-download_file.php?fileId='.$file['fileId'].'&amp;display" alt="'.htmlentities($file['description']).'" />';
+		$html .= '<li><img src="tiki-download_file.php?fileId='.$file['fileId'].'&amp;display';
+		if (!empty($params['displaySize']) && $params['displaySize'] != 1)
+			$html .= '&amp;scale='.$params['displaySize'];
+		$html .= ' alt="'.htmlentities($file['description']).'" />';
+			
 		$caption = '';
 		if (!empty($file['name'])) {
 			$caption .= '<strong>'.htmlentities($file['name']).'</strong>';
