@@ -19,7 +19,6 @@ body#fullscreen {
 }
 
 a,
-a:link,
 a:visited {
 	color: #4A6493;
 	text-decoration: none;
@@ -147,6 +146,11 @@ input[type=submit]:active,
 .highlight a:visited {
 	background: url(feb12/columnbg.jpg) 0 100%;
 	color: #000;
+}
+
+a.highlight {
+	color: #F5F5F5;
+	border-color: #fa8072;	
 }
 
 /* Needed for Opera (11) 
