@@ -1,5 +1,5 @@
 {* $Id$ *}
-<div class="clearfix postbody-title">
+<header class="clearfix postbody-title">
 	{if $prefs.feature_comments_locking neq 'y' or
 		( $comment.locked neq 'y' and $thread_is_locked neq 'y' )}
 		{assign var='this_is_locked' value='n'}
@@ -80,4 +80,4 @@
 	{if $thread_style eq 'commentStyle_headers'}
 		{include file='comment-footer.tpl'  comment=$comments_coms[rep]}
 	{/if}
-</div>
+</header>

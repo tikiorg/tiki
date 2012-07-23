@@ -1,5 +1,5 @@
 {* $Id$ *}
-<div class="clearfix postbody-title">
+<header class="clearfix postbody-title">
 	<div class="title">
 		{if $blog_post_context eq 'view_blog'}
 			<h2>{object_link type="blog post" id=$post_info.postId title=$post_info.title}</h2>
@@ -12,4 +12,4 @@
 	{else}
 		{include file='freetag_list.tpl' freetags=$post_info.freetags}
 	{/if}
-</div>
+</header>
