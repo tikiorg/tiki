@@ -553,6 +553,50 @@ class SocialNetworksLib extends LogsLib
 
 		return $shorturl;
 	}
+
+	/**
+	 * Get Timeline off Twitter 
+	 * @param  string	$user		Tiki username to get timeline for
+	 * @param  string	$timelineType	Timeline to get: public/friends - Default: public
+	 * @return string|int			-1 if the user did not authorize the site with twitter, a negative number corresponding to the HTTP response codes from twitter (https://dev.twitter.com/docs/streaming-api/response-codes) or the requested timeline (json encoded object)
+	 */
+	function getTwitterTimeline($user, $timelineType = 'public' ) {
+		global $prefs;
+		$token=$this->get_user_preference($user, 'twitter_token', '');
+		if ($token=='') {
+			$this->add_log('tweet','user not registered with twitter');
+			return -1; 
+		}
+
+		$token = unserialize($token);
+		$token= (object)$token;
+
+		$this->options['callbackUrl']=$this->getURL();
+		$this->options['consumerKey']=$prefs['socialnetworks_twitter_consumer_key'];
+		$this->options['consumerSecret']=$prefs['socialnetworks_twitter_consumer_secret'];
+		$client = $token->getHttpClient($this->options);
+		$clientconfig['timeout']=30;
+		$client->setConfig($clientconfig);		
+		$twitter = new Zend_Service_Twitter();
+		$twitter->setLocalHttpClient($client);
+		try {
+			if($timelineType=='friends') {
+				$response = $twitter->status->friendsTimeline();
+			} else {
+				$response = $twitter->status->userTimeline();
+			}
+		} catch (Zend_Http_Client_Exception $e) {
+			$this->add_log('tweet','twitter error '.$e->getMessage());
+			return -($e->getCode());
+		}                                        
+		$status=$response->getStatus();
+		if ($status!=200) {
+			$this->add_log('tweet','twitter response ' . $status);
+			return -$status;
+		} else {
+			return $response;
+		}
+	}
 }
 
 global $socialnetworkslib;
