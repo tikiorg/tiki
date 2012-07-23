@@ -1,4 +1,4 @@
-<div class="article">
+<article class="article">
 	{if $show_topline eq 'y' and $topline}
 		<div class="articletopline">{$topline|escape}</div>
 	{/if}
@@ -156,4 +156,4 @@
 			{$smarty.capture.copyright_section}
 		</footer>
 	{/if}
-</div>
+</article>

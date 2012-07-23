@@ -32,7 +32,7 @@
 				{/foreach}
 			</div>
 		{/if} 
-		<div class="article{if !empty($container_class)} {$container_class}{/if} article{$smarty.section.ix.index}">
+		<article class="article{if !empty($container_class)} {$container_class}{/if} article{$smarty.section.ix.index}">
 			{if $listpages[ix].show_topline eq 'y' and $listpages[ix].topline}<div class="articletopline">{$listpages[ix].topline|escape}</div>{/if}
 			<header class="articletitle">
 				<h2>{object_link type=article id=$listpages[ix].articleId url=$smarty.capture.href title=$listpages[ix].title}</h2>
@@ -173,7 +173,7 @@
 					</div>
 				{/if}
 			</div>
-		</div>
+		</article>
 	{/if}
 {sectionelse}
 	{if $quiet ne 'y'}{tr}No articles yet.{/tr}
