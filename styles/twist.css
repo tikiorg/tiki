@@ -632,12 +632,12 @@ ol.module {
 
 .rbox-data {padding: 2px}
 
-.rbox-title,
-.warning .rbox-title {
+.rbox-title {
 	font-size: 1em;
 	padding: 0 10px;
-	margin: 0;
-	font-weight: bold}
+	border-bottom: none !important;
+	margin-bottom: -.5em;
+}
 
 .rbox-data,
 .warning .rbox-data,
@@ -655,17 +655,13 @@ ol.module {
 .tip .rbox-title {
 	background: #ECECEF;
 	border: 1px solid #CCCCDD;
-	border-bottom: none;}
+}
 
 .comment .rbox-data,
 .tip .rbox-data {
 	background: #ECEFEC;
 	border: 1px solid #CCDDCC}
 	
-.rbox-title {
-	margin-bottom: -.35em !important;
-}
-
 .simplebox {
 	border: 1px solid #999;
 	padding: 2px;

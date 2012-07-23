@@ -883,13 +883,14 @@ img.icon {
 }
 .rbox-title, 
 .rbox-data {
-	border: #2098cd;
+	border-color: #2098cd;
 	background: #c2eef8;
 	color: #143c64;
 }
 
 .rbox-title {
-	margin-bottom: -.35em;
+	border-bottom: none !important;
+	margin-bottom: -.5em;
 	border-top-left-radius: 3px;
 	border-top-right-radius: 3px;
 	-moz-border-radius-topleft: 3px;

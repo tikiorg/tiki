@@ -886,12 +886,12 @@ img.flipmodimage:hover {
 
 .rbox-title {
 	text-align: left;
-	padding: 3px;
 	font-weight: bold;
 	color: #fffff0;
 	background: #000;
 	border: 1px solid #606060;
 	border-bottom: none;
+	margin-bottom: -.35em;
 }
 
 .rbox-data {

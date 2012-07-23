@@ -528,6 +528,10 @@ h3.box-title {
 	border-color: #506887;
 	background: #cecece;
 	color: #000}
+	
+.rbox-title {
+	margin-bottom: -.45em;
+}
 
 .simplebox {
 	border: 1px solid #e0e0e0;

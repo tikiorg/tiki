@@ -438,6 +438,7 @@ img.flipmodimage:hover {
 	
 .rbox-title {
 	border-bottom: none;
+	margin-bottom: -.35em;
 }
 	
 .simplebox {

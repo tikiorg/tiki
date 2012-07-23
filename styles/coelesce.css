@@ -806,7 +806,7 @@ img.flipmodimage:hover {
 }
 
 .rbox-title {
-	margin-bottom: -.35em;
+	margin-bottom: -.4em;
 	border: 1px solid #4a6a90;
 	border-bottom: transparent;
 }
@@ -1118,7 +1118,7 @@ h1.pagetitle {
 	float: none;
 }
 
-p.editdate {
+.editdate {
 	border-top: 1px solid #8CACBB;
 }
 

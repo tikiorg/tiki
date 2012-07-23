@@ -571,6 +571,10 @@ h3.box-title a:visited {
 	color: #fff;
 }
 
+.rbox-title {
+	margin-bottom: -.45em;	
+}
+
 .rbox-data {
 	color: #848484;
 	background: #fff;

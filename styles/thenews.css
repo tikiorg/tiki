@@ -671,6 +671,8 @@ img.flipmodimage:hover {
 	padding: 0.2em 0.8em;
 	line-height: 1.4em;
 	background: #f2cd5e;
+	margin-bottom: -.4em;
+	border-bottom: none;
 }
 
 .rbox-data {
