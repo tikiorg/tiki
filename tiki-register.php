@@ -135,7 +135,7 @@ if ($registrationlib->merged_prefs['userTracker'] == 'y') {
 							$prefs['login_is_email'] === 'y' ? $_REQUEST['name'] : $_REQUEST['email'],
 							'',
 							'',
-							isset($_REQUEST['chosenGroup']) ? $_REQUEST['chosenGroup'] : ''
+							isset($_REQUEST['chosenGroup']) ? $_REQUEST['chosenGroup'] : 'Registered'
 					);
 				}
 			}
