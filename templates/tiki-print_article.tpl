@@ -6,10 +6,10 @@
 	<body{html_body_attributes}>
 
 		<div id="tiki-clean">
-			<div class="articletitle">
+			<header class="articletitle">
 				<h2>{$title|escape}</h2>
 				<span class="titleb">{tr}Author:{/tr} {$authorName|escape} {$publishDate|tiki_short_datetime:'Published At:'} ({$reads} {tr}Reads{/tr})</span>
-			</div>
+			</header>
 	
 			<div class="articleheading">
 {if $useImage eq 'y'}

@@ -2,7 +2,7 @@
 	{if $show_topline eq 'y' and $topline}
 		<div class="articletopline">{$topline|escape}</div>
 	{/if}
-	<div class="articletitle">
+	<header class="articletitle">
 		<h2>
 			{object_link type=article id=$articleId title=$arttitle}
 		</h2>
@@ -17,7 +17,7 @@
 			{if $show_reads eq 'y'}({$reads} {tr}Reads{/tr}){/if}
 		</span>
 		<br />
-	</div>
+	</header>
 
 	{if $use_ratings eq 'y'}
 		<div class="articleheading">
