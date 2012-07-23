@@ -62,9 +62,13 @@ body.fixed_width .fixedwidth {
     margin-left: auto;
 }
 
-.header {	/* inner <header> element that gets .fixedwidth class applied */
+#header {	/* inner <header> element that gets .fixedwidth class applied */
 	background: url(fivealive/options/blueberry/siteheader.jpg) 0 0 no-repeat;
 /*	height: 220px;*/
+}
+
+#header #top_modules .module.secondary_site_menu {
+	background: none;
 }
 
 #tiki-top {
@@ -452,6 +456,7 @@ select {
 	position: absolute;
 	top: 0;
 	right: 30px;
+	background: none;
 }
 
 #top_modules #secondary_site_menu a,

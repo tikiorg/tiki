@@ -225,11 +225,11 @@ select {
 
 /***** Site Header & Identity *****/
 /* remove left-side white space */
-#header {
+#main #header {
 	background: none;
 }
 
-#main .header_outer {
+.header_outer {
 	background: url(fivealive/options/blueberry/headertile.png) no-repeat;
 }
 
@@ -252,8 +252,19 @@ select {
 
 #top_modules .module.secondary_site_menu {
 	position: absolute;
-	top: 0;
+	top: 5px;
 	right: 30px;
+	padding: 0 .5em;
+	border: 1px solid transparent;
+	font-weight: normal;
+	border-bottom-left-radius: 6px;
+	border-bottom-right-radius: 6px;
+	-webkit-border-bottom-left-radius: 6px;
+	-webkit-border-bottom-right-radius: 6px;
+	-moz-border-radius-bottomleft: 6px;
+	-moz-border-radius-bottomright: 6px;
+	color: #fff;
+	background: url(fivealive/options/blueberry/siteheader.jpg) no-repeat -260px -200px;
 }
 
 #top_modules .box-logo {
@@ -286,6 +297,10 @@ select {
 
 #topbar_modules {
 	margin-bottom: 1em;
+}
+
+#topbar_modules .box-search {
+	float: right;
 }
 
 /* Footer */
@@ -463,9 +478,9 @@ select {
 	color: #fff;
 }
 
-.header #secondary_site_menu .cssmenu_horiz li a {
-	font-weight: 400;
-	padding: 8px .7em;
+#secondary_site_menu .cssmenu_horiz li a {
+	font-weight: normal;
+	padding: 4px .7em;
 }
 
 #secondary_site_menu .cssmenu_horiz li.menuSection a {
@@ -474,6 +489,10 @@ select {
 
 #secondary_site_menu .cssmenu_horiz li.menuSection:last-child ul {
 	margin-left: -.5em;
+}
+
+#header #secondary_site_menu .cssmenu_horiz ul li a {
+	text-transform: none;
 }
 
 #tiki-top .cssmenu_horiz li a {
@@ -486,6 +505,12 @@ select {
 /*#tiki-top .cssmenu_horiz li a:hover {
 	background: #1d1d1d;
 }*/
+
+/* ul ul top compensation for padding */
+#secondary_site_menu .cssmenu_horiz li:hover ul,
+#secondary_site_menu .cssmenu_horiz li.sfHover ul {
+	top: 25px;
+}
 
 /* ul ul top compensation for padding */
 #tiki-top .cssmenu_horiz li:hover ul,
@@ -513,8 +538,8 @@ select {
 	text-decoration: none;
 }
 
-#secondary_site_menu .cssmenu_horiz li a > .sf-sub-indicator {top: 13px}
-#tiki-top .cssmenu_horiz li a > .sf-sub-indicator {top: 5px}
+#secondary_site_menu .cssmenu_horiz li a > .sf-sub-indicator {top: 8px}
+#tiki-top .cssmenu_horiz li a > .sf-sub-indicator {top: 8px}
 #tiki-top .cssmenu_horiz li li a > .sf-sub-indicator {top: 9px}
 #col2 .cssmenu_vert li a > .sf-sub-indicator {top: 5px}
 
@@ -977,6 +1002,12 @@ h3.box-title,
 	-webkit-border-top-right-radius: 4px;
 	-moz-border-radius-topleft: 4px;
 	-moz-border-radius-topright: 4px;
+}
+
+.box-login_box .tabmark {
+	border-radius: 4px;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
 }
 
 /* End of file */

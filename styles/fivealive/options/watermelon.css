@@ -34,7 +34,7 @@ hr {
 	background: url(watermelon/siteheadertile.png) 0 0 no-repeat;
 }
 
-.header {
+#header {
 	background: url(watermelon/siteheader.png) -250px 0 no-repeat;
 }
 
@@ -108,6 +108,7 @@ span#genPass .button a:hover,
 #main #topbar_modules .cssmenu_horiz li ul a,
 #main #topbar_modules .cssmenu_horiz li:hover ul a  {
 	background: #8c1832;
+	color: #fff;
 }
 
 #tiki-top .cssmenu_horiz li a {
@@ -184,7 +185,8 @@ tr.diffheader a:visited,
 }
 
 h3.box-title,
-.postbody-title {
+.postbody-title,
+#top_modules .module.secondary_site_menu {
 	background: #e41e40 url(watermelon/siteheader.png) no-repeat -1000px -200px;
 }
 

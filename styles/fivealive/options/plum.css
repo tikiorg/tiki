@@ -32,7 +32,7 @@ hr {
 	background: url(plum/siteheadertile.png) 0 0 no-repeat;
 }
 
-.header {
+#header {
 	background: url(plum/siteheader.jpg) -250px 0 no-repeat;
 }
 
@@ -106,6 +106,7 @@ input[type="submit"]:hover,
 #main #topbar_modules .cssmenu_horiz li ul a,
 #main #topbar_modules .cssmenu_horiz li:hover ul a  {
 	background: #49006c;
+	color: #fff;
 }
 
 #tiki-top .cssmenu_horiz li a {
@@ -173,7 +174,8 @@ textarea,
 }
 
 h3.box-title,
-.postbody-title {
+.postbody-title,
+#top_modules .module.secondary_site_menu {
 	background: #1c0029 url(plum/siteheader.jpg) no-repeat -1000px -200px;
 }
 

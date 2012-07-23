@@ -33,7 +33,7 @@ hr {
 	background: url(lemon/siteheadertile.png) 0 0 no-repeat;
 }
 
-.header {
+#header {
 	background: url(lemon/siteheader.png) -250px 0 no-repeat;
 }
 
@@ -108,6 +108,7 @@ span#genPass .button a:hover,
 #main #topbar_modules .cssmenu_horiz li ul a,
 #main #topbar_modules .cssmenu_horiz li:hover ul a  {
 	background: #c75a29;
+	color: #fff;
 }
 
 #tiki-top .cssmenu_horiz li a {
@@ -175,7 +176,8 @@ textarea,
 }
 
 h3.box-title,
-.postbody-title {
+.postbody-title,
+#top_modules .module.secondary_site_menu {
 	background: #fec107 url(lemon/siteheader.png) no-repeat -1000px -200px;
 	color: #c75a28;
 }

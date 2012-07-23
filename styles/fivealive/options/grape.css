@@ -34,7 +34,7 @@ hr {
 	background: url(grape/siteheadertile.png) 0 0 no-repeat;
 }
 
-.header {
+#header {
 	background: url(grape/siteheader.png) -250px 0 no-repeat;
 }
 
@@ -109,6 +109,7 @@ input[type="submit"]:hover,
 #main #topbar_modules .cssmenu_horiz li ul a,
 #main #topbar_modules .cssmenu_horiz li:hover ul a  {
 	background: #3b284a;
+	color: #fff;
 }
 
 #tiki-top .cssmenu_horiz li a {
@@ -184,7 +185,8 @@ tr.diffheader a:visited {
 }
 
 h3.box-title,
-.postbody-title {
+.postbody-title,
+#top_modules .module.secondary_site_menu {
 	background: #97286e url(grape/siteheader.png) no-repeat -1000px -200px;
 }
 

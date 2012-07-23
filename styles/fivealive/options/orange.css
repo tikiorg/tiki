@@ -33,7 +33,7 @@ hr {
 	background: url(orange/siteheadertile.png) 0 0 no-repeat;
 }
 
-.header {
+#header {
 	background: url(orange/siteheader.png) -250px 0 no-repeat;
 }
 
@@ -107,6 +107,7 @@ input[type="submit"]:hover,
 #main #topbar_modules .cssmenu_horiz li ul a,
 #main #topbar_modules .cssmenu_horiz li:hover ul a  {
 	background: #c44a23;
+	color: #fff;
 }
 
 .cssmenu_vert li ul a:hover,
@@ -173,7 +174,8 @@ textarea,
 }
 
 h3.box-title,
-.postbody-title {
+.postbody-title,
+#top_modules .module.secondary_site_menu {
 	background: #e85f23 url(orange/siteheader.png) no-repeat -1000px -200px;
 }
 

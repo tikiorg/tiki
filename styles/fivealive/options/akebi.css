@@ -34,7 +34,7 @@ hr {
 	background: url(akebi/siteheadertile.jpg) 0 0 no-repeat;
 }
 
-.header {
+#header {
 	background: url(akebi/siteheader.png) -250px 0 no-repeat;
 }
 
@@ -175,7 +175,8 @@ textarea,
 }
 
 h3.box-title,
-.postbody-title {
+.postbody-title,
+#top_modules .module.secondary_site_menu {
 	background: #0f91a2 url(akebi/siteheader.png) no-repeat -700px -200px;
 }
 

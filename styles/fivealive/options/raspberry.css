@@ -34,7 +34,7 @@ hr {
 	background: url(raspberry/siteheadertile.png) 900px 0 no-repeat;
 }
 
-.header {
+#header {
 	background: url(raspberry/siteheader.png) -250px 0 no-repeat;
 }
 
@@ -108,6 +108,7 @@ span#genPass span.button a:hover,
 #main #topbar_modules .cssmenu_horiz li ul a,
 #main #topbar_modules .cssmenu_horiz li:hover ul a  {
 	background: #771437;
+	color: #fff;
 }
 
 #tiki-top .cssmenu_horiz li a {
@@ -174,7 +175,8 @@ textarea,
 }
 
 h3.box-title,
-.postbody-title {
+.postbody-title,
+#top_modules .module.secondary_site_menu {
 	background: #e10c7c url(raspberry/siteheader.png) no-repeat -1000px -200px;
 }
 
