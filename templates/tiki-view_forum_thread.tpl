@@ -72,14 +72,14 @@
 	{assign var="postclass" value="forumpost"}
 {/if}
 
-<div class="top_post">
+<article class="top_post">
   {if $prefs.feature_freetags eq 'y' and $tiki_p_view_freetags eq 'y' and $prefs.freetags_show_middle eq 'y' and !$thread_info.topic.threadId}
 	{include file='freetag_list.tpl'}
 	<div style="text-align:right">{wikiplugin _name="addfreetag" object="forum post:$comments_parentId"}{/wikiplugin}</div>
   {/if}
 
   {include file='comment.tpl' first='y' comment=$thread_info thread_style='commentStyle_plain'}
-</div>
+</article>
 
 {include file='comments.tpl'}
 
