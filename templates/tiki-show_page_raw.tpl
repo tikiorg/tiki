@@ -2,7 +2,7 @@
 <div class="wikitext">{$parsed}</div>
 {if !isset($smarty.request.clean)}
   {if isset($prefs.wiki_authors_style) && $prefs.wiki_authors_style eq 'business'}
-  <p class="editdate">
+  <footer class="editdate">
     {tr}Last edited by{/tr} {$lastUser}
     {section name=author loop=$contributors}
     {if $smarty.section.author.first}, {tr}based on work by{/tr}
@@ -14,9 +14,9 @@
     {$contributors[author]}
     {/section}.<br />                                         
     {tr}Page last modified on{/tr} {$lastModif|tiki_long_datetime}.
-  </p>
+  </footer>
   {elseif isset($prefs.wiki_authors_style) &&  $prefs.wiki_authors_style eq 'collaborative'}
-  <p class="editdate">
+  <footer class="editdate">
     {tr}Contributors to this page:{/tr} {$lastUser}
     {section name=author loop=$contributors}
     {if !$smarty.section.author.last},
@@ -25,13 +25,13 @@
     {$contributors[author]}
     {/section}.<br />
     {tr}Page last modified on{/tr} {$lastModif|tiki_long_datetime}.
-  </p>
+  </footer>
   {elseif isset($prefs.wiki_authors_style) &&  $prefs.wiki_authors_style eq 'none'}
   {else}
-  <p class="editdate">
+  <footer class="editdate">
     {tr}Created by:{/tr} {$creator}
     {tr}Last Modification:{/tr} {$lastModif|tiki_long_datetime} {tr}by{/tr} {$lastUser|userlink}
-  </p>
+  </footer>
   {/if}
 
   {if (!$prefs.page_bar_position or $prefs.page_bar_position eq 'bottom' or $prefs.page_bar_position eq 'both') and $machine_translate_to_lang == ''}

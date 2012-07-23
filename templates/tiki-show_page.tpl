@@ -155,7 +155,7 @@
 	<div class="wikitext" id="wikifootnote">{$footnote}</div>
 {/if}
 
-<p class="editdate">
+<footer class="editdate">
 	{if isset($wiki_authors_style) && $wiki_authors_style neq 'none'}
 		{include file='wiki_authors.tpl'}
 	{/if}
@@ -167,7 +167,7 @@
 		{capture name=url}{$base_url}{$page|sefurl}{if !empty($smarty.request.itemId)}&amp;itemId={$smarty.request.itemId}{/if}{/capture}
 		{tr}The original document is available at{/tr} <a href="{$smarty.capture.url}">{$smarty.capture.url}</a>
 	{/if}
-</p>
+</footer>
 
 {if $is_categorized eq 'y' and $prefs.feature_categories eq 'y' and $prefs.feature_categoryobjects eq 'y'}
 	{$display_catobjects}

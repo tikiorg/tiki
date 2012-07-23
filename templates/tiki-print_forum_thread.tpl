@@ -8,7 +8,7 @@
   </div>
   {include file='comments.tpl'}
   <br />
-  <p class="editdate">
+  <footer class="editdate">
     {tr}The original document is available at{/tr} <a href="{$base_url}tiki-view_forum_thread.php?{query fullscreen=NULL display=NULL PHPSESSID=NULL}">{$base_url}tiki-view_forum_thread.php?{query fullscreen=NULL display=NULL PHPSESSID=NULL}</a>
-  </p>
+  </footer>
 </div>

@@ -125,9 +125,9 @@
 
 {* When copyright section is not empty show it *}
 {if $smarty.capture.copyright_section neq ''}
-	<p class="editdate">
+	<footer class="editdate">
 		{$smarty.capture.copyright_section}
-	</p>
+	</footer>
 {/if}
 
 {if $prefs.feature_faq_comments == 'y'
