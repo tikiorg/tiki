@@ -626,18 +626,15 @@ h3.box-title {
 }
 
 .rbox-title {
-	display: inline;
-	width: auto;
 	background: #794a93;
-	border-bottom-color: #794a93;
 	color: #f5f5f5;
-	padding: 3px 3px 0 3px;
+	padding: 3px;
+	margin-bottom: -.45em;
 }
 
 .rbox-data {
 	background: #794a93;
 	color: #f5f5f5;
-	overflow: hidden;
 }
 
 .rbox a,

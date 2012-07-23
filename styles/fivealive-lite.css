@@ -627,6 +627,11 @@ h3.box-title {
 	border: none;
 }
 
+.rbox-title {
+	border-bottom: none;
+	margin-bottom: -.425em;
+}
+
 .title h2 {
 	margin: 0;
 	font-size: 130%;
