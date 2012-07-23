@@ -16,10 +16,10 @@
 </div>
 
 
-<div class="blogpost post post_single">
+<article class="blogpost post post_single">
 	{include file='blog_wrapper.tpl' blog_post_context='view_blog_post'}
 	{include file='blog_post_related_content.tpl'}
-</div>
+</article>
 
 {if $prefs.feature_blogposts_comments == 'y' && $blog_data.allow_comments == 'y'
 		&& ($tiki_p_read_comments == 'y'
