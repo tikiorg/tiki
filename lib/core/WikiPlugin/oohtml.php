@@ -11,10 +11,10 @@ class WikiPlugin_oohtml extends WikiPlugin_HtmlBase
 	public $documentation = 'PluginHTML';
 	public $prefs = array('wikiplugin_html');
 
-	private $validate = 'all';
-	private $filter = 'rawhtml_unsafe';
-	private $icon = 'img/icons/mime/html.png';
-	private $tags = array( 'basic' );
+	public $validate = 'all';
+	public $filter = 'rawhtml_unsafe';
+	public $icon = 'img/icons/mime/html.png';
+	public $tags = array( 'basic' );
 
 	function __construct()
 	{
