@@ -1698,4 +1698,19 @@ form.simple textarea.export {
 	padding-left: 21px;
 }
 
+/* Twitter module styling */
+
+.TwitName {
+	font-weight: bold;
+}
+
+.TwitDate a {
+	font-size: 0.8em;
+	font-style: italic;
+	color: #848484;
+	text-align: right;
+	display: block;
+	padding-bottom: 8px;
+}
+
 /* End of file */

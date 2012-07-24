@@ -8,7 +8,6 @@
 				{if $module_params.showuser eq 'y'}<span class="TwitName">{$timeline[ix].screen_name}</span>{/if}
 				<span class="TwitText">{$timeline[ix].text}</span><br />
 				<span class="TwitDate"><a href="http://twitter.com/#!/{$timeline[ix].screen_name}/status/{$timeline[ix].id}">{$timeline[ix].created_at}</a></span>
-				</a>
 			</li>
 		{/section}
 	{/modules_list}
