@@ -6,18 +6,23 @@
 
 PLUGIN_ID   					[A-Z]+
 INLINE_PLUGIN_ID				[a-z]+
-SYNTAX_START_CHARS              [\_\^:\~'\[-|=\(]
+SYNTAX_CHARS                    [_\^:\~'-|=\(\)\{\}\[\]*#+\n\r]
+CONTENT                         (.|[\n\r])*?
+LINE_CONTENT                    (.+?)
 SMILE							[a-z]+
 
-%s plugin bold box center colortext italic header list link strikethrough table titlebar underscore wikilink
+%s plugin line bold box center colortext italic header list link strikethrough table titlebar underscore wikilink
 %options flex
 
 %%
+"~np~"{CONTENT}"~/np~"
+	%{
+		yytext = parser.np(yytext); //js
 
-("§"[a-z0-9]{32}"§")                        return 'CONTENT';
-("≤"(.)+"≥")                                return 'CONTENT';
-("<"(.|\n)*?">")							return 'CONTENT';
-([A-Za-z0-9 ]+)                            return 'CONTENT';
+		//php $yytext = $this->np($yytext);
+
+		return 'CONTENT';
+	%}
 
 
 "{ELSE}"						return 'CONTENT';//For now let individual plugins handle else
@@ -131,6 +136,7 @@ SMILE							[a-z]+
 
 		return 'CONTENT';
 	%}
+
 
 
 <bold><<EOF>>
@@ -528,11 +534,40 @@ SMILE							[a-z]+
 
 
 
-(.)+?/({SYNTAX_START_CHARS}|"{"{INLINE_PLUGIN_ID}|"{"{PLUGIN_ID})
-											return 'CONTENT'; //anything before a syntax or plugin
-(.)											return 'CONTENT';
+<line><<EOF>>
+	%{
+		lexer.popState(); //js
+		return 'EOF'; //js
 
-(\s)                                        return 'CONTENT';
+        //php $this->popState();
+        return 'EOF';
+	%}
+<line>[\n\r]
+	%{
+		if (parser.isPlugin()) return 'CONTENT'; //js
+		lexer.popState(); //js
+		return 'LINE_END'; //js
+
+		//php if ($this->isPlugin()) return 'CONTENT';
+		//php $this->popState();
+		//php return 'LINE_END';
+	%}
+[\n\r]
+	%{
+		if (parser.isPlugin()) return 'CONTENT'; //js
+		lexer.begin('line'); //js
+		return 'LINE_START'; //js
+
+		//php if ($this->isPlugin()) return 'CONTENT';
+		//php $this->begin('line');
+		//php return 'LINE_START';
+	%}
+
+("§"[a-z0-9]{32}"§")                        return 'CONTENT';
+("≤"(.)+"≥")                                return 'CONTENT';
+("<"(.|\n)*?">")							return 'CONTENT';
+{LINE_CONTENT}(?={SYNTAX_CHARS})            return 'CONTENT';
+(\s+)                                       return 'CONTENT';
 <<EOF>>										return 'EOF';
 /lex
 
@@ -665,6 +700,17 @@ content
 		$$ = parser.stackList($1 + $2); //js
 		//php $$ = $this->stackList($1 . $2);
 	}
+ | LINE_START LINE_END
+		//php $$ = "<br />";
+ | LINE_START contents LINE_END
+   	{
+        //php $$ = $2 . "<br />";
+	}
+ | LINE_START contents EOF
+    {
+        //php $$ = $2 . "<br />";
+    }
+ | LINE_START EOF
  ;
 
 %% /* parser extensions */

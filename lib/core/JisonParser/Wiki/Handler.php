@@ -21,10 +21,6 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	private static $pluginIndexes = array();
 	private $pluginNegotiators = array();
 
-	/* np tracking */
-	private $npEntries = array();
-	private $npCount = 0;
-
 	/* header tracking */
 	public $header;
 
@@ -55,16 +51,19 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	);
 
 	private $syntaxStatingChars = array(
-		"_",
+		"__",
 		"^",
-		":",
+		"::",
 		"~",
 		"[",
-		"-",
-		"|",
-		"=",
-		"(",
+		"--",
+		"||",
+		"==",
+		"((",
 		"\n!",
+		"\n*",
+		"\n#",
+		"\n+",
 		"{"
 	);
 
@@ -149,14 +148,16 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		parent::__construct();
 	}
 
+	/*
 	function parser_performAction(&$thisS, $yytext, $yyleng, $yylineno, $yystate, $S, $_S, $O)
 	{
+		//print_r(array($thisS));
 		$result = parent::parser_performAction($thisS, $yytext, $yyleng, $yylineno, $yystate, $S, $_S, $O);
-
-		file_put_contents("temp/actions.log", $thisS . "\n");
+		$this->actions++;
+		//file_put_contents("temp/actions.log", $thisS . "\n");
 
 		return $result;
-	}
+	}*/
 
 	function hasWikiSyntax(&$input)
 	{
@@ -223,12 +224,6 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	{
 		$input = "\n" . $input . "\n"; //here we add 2 lines, so the parser doesn't have to do special things to track the first line and last, we remove these when we insert breaks
 
-		if ($this->Parser->option['parseNps'] == true) {
-			try {
-				$input = preg_replace_callback('/~np~(.|\n\r)*?~\/np~/', array($this, 'removeNpEntities'), $input);
-			} catch (Exception $e) {}
-		}
-
 		$input = $this->protectSpecialChars($input);
 
 		$this->Parser->list->setup($input);
@@ -250,20 +245,10 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 			}
 		}
 
-		if ($this->Parser->option['parseBreaks'] == true) {
-			$lines = explode("\n", $input);
-			$skipNext = false;
-			foreach($lines as &$line) {
-				$this->parseBreaks($line, $skipNext);
-			}
-			$input = implode("\n", $lines);
-		}
-
 		if ($this->Parser->option['parseSmileys']) {
 			$this->parseSmileys($input);
 		}
 
-		$this->restoreNpEntities($input);
 		$this->restorePluginEntities($input);
 	}
 
@@ -355,29 +340,11 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		return $this->pluginNegotiators[$this->wikiPluginParserNegotiatorClass];
 	}
 
-	function removeNpEntities(&$matches)
-	{
-		$key = '§' . md5('np:'.$this->npCount) . '§';
-		$this->npEntries[$key] = substr($matches[0], 4, -5);
-		$this->npCount++;
-		return $key;
-	}
-
 	static function deleteEntities(&$data)
 	{
 		$data = preg_replace('/§[a-z0-9]{32}§/','',$data);
 	}
 
-	function restoreNpEntities(&$input, $keep = false)
-	{
-		foreach($this->npEntries as $key => $entity) {
-			$input = str_replace($key, $entity, $input);
-
-			if (!$keep) {
-				unset($this->npEntries[$key]);
-			}
-		}
-	}
 
 	function restorePluginEntities(&$input, $keep = false)
 	{
@@ -399,101 +366,6 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		}
 	}
 
-	function checkToSkipLine(&$skipLine, &$lineInLowerCase, $key, $start = "", $stop = "", $skipBefore = false, $skipAfter = false)
-	{
-		// check if we are inside a script not insert <br />
-		$opens = 0;
-		if (empty($start) == false) {
-			$opens = substr_count($lineInLowerCase, $start);
-		}
-
-		$closes = 0;
-		if (empty($stop) == false) {
-			$closes = substr_count($lineInLowerCase, $stop);
-		}
-
-		$this->parseBreaksTracking[$key] += $opens;
-		$this->parseBreaksTracking[$key] -= $closes;
-
-		if ($skipLine == true) { //if true, only one line, no need to check and set again
-			return;
-		}
-
-		if ($skipBefore == true && $opens > 0 && $this->parseBreaksTracking[$key] == 0) {
-			$skipLine = true;
-		}
-
-		if ($skipAfter == true && $closes > 0 && $this->parseBreaksTracking[$key] == 0) {
-			$skipLine = true;
-		}
-	}
-
-	function parseBreaks(&$line, &$skipNext)
-	{
-		$lineInLowerCase = TikiLib::strtolower($line);
-
-		$skipLine = false;
-
-		$this->checkToSkipLine($skipLine, $lineInLowerCase, 'inComment', "<!--", "-->");
-
-		// check if we are inside a ~pre~ block and, if so, ignore
-		// monospaced and do not insert <br />
-		$this->checkToSkipLine($skipLine, $lineInLowerCase, 'inPre', "<pre", "</pre");
-
-		// check if we are inside a table, if so, ignore monospaced and do
-		// not insert <br />
-		$this->checkToSkipLine($skipLine, $lineInLowerCase, 'inTable', "<table", "</table", true, true);
-
-		// check if we are inside an ul TOC list, if so, ignore monospaced and do
-		// not insert <br />
-		$this->checkToSkipLine($skipLine, $lineInLowerCase, 'inTOC', "<ul class=\"toc", "</ul><!--toc-->", true, true);
-
-		// check if we are inside a script not insert <br />
-		$this->checkToSkipLine($skipLine, $lineInLowerCase, 'inScript', "<script", "</script");
-
-		// check if we are inside a script not insert <br />
-		$this->checkToSkipLine($skipLine, $lineInLowerCase, 'inDiv', "<div", "</div", false, false);
-
-		// check if we are inside a script not insert <br />
-		$this->checkToSkipLine($skipLine, $lineInLowerCase, 'inHeader', "<h", "</h", true, true);
-
-		// check if we are inside a script not insert <br />
-		if (
-			strpos($lineInLowerCase, "</h") !== false ||
-			strpos($lineInLowerCase, "</ul") !== false ||
-			strpos($lineInLowerCase, "<pre") !== false ||
-			strpos($lineInLowerCase, "</pre") !== false
-		) {
-			$skipLine = true;
-			$skipNext = true;
-		}
-
-		// check if we are inside a script not insert <br />
-		if (strpos($lineInLowerCase, "<br") !== false || strpos($lineInLowerCase, "<div") !== false) {$skipLine = true;$skipNext = true;}
-
-		if ($skipLine == true) {
-			//we skip the line just after a header
-			return;
-		}
-
-		if ($skipNext == true) {
-			$skipNext = false;
-			//we skip the line just after a header
-			return;
-		}
-
-		if (
-			$this->parseBreaksTracking['inComment'] == 0 &&
-			$this->parseBreaksTracking['inPre'] == 0 &&
-			$this->parseBreaksTracking['inTable'] == 0 &&
-			$this->parseBreaksTracking['inTOC'] == 0 &&
-			$this->parseBreaksTracking['inScript'] == 0 &&
-			$this->parseBreaksTracking['inDiv'] == 0 &&
-			$this->parseBreaksTracking['inHeader'] == 0
-		) {
-			$line = "<br />" . $line;
-		}
-	}
 
 	function parseSmileys(&$input)
 	{
@@ -584,6 +456,15 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 
 	//end state handlers
 	//Wiki Syntax Objects Parsing Start
+	function np($content)
+	{
+		if ($this->Parser->option['parseNps'] == true) {
+			$content = substr($content, 4, -5);
+		}
+
+		return $content;
+	}
+
 	function bold($content) //__content__
 	{
 		if ($this->Parser->option['parseWiki'] == false) return "__" . $content . "__";
