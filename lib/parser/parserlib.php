@@ -30,11 +30,11 @@ class ParserLib extends TikiDb_Bridge
 	private $pos_handlers = array();
 	private $postedit_handlers = array();
 
-	var $isHtmlPurifying = false;
-	var $isEditMode = false;
+	public $isHtmlPurifying = false;
+	public $isEditMode = false;
 
 	//This var is used in both protectSpecialChars and unprotectSpecialChars to simplify the html ouput process
-	var $specialChars = array(
+	public $specialChars = array(
 		'≤REAL_LT≥' => array(
 			'html'=>		'<',
 			'nonHtml'=>		'&lt;'
@@ -57,7 +57,7 @@ class ParserLib extends TikiDb_Bridge
 	);
 
 	/*options for parser lib, called 'option' because we was to remain forward compatible with jison parser when we migrate, and options was already taken as a way to configure the parser and not the handler*/
-	var $option = array();
+	public $option = array();
 
 	static $jisonParser;
 	static $pluginInstances = array();
@@ -84,6 +84,7 @@ class ParserLib extends TikiDb_Bridge
 			'min_one_paragraph' => false,
 			'skipvalidation'=>  false,
 			'ck_editor'=>   false,
+			'namespace' => false,
 		), $option);
 	}
 
@@ -2870,10 +2871,14 @@ if ( \$('#$id') ) {
 
 		$link = new WikiParser_OutputLink;
 		$link->setIdentifier($pageLink);
+		$link->setNamespace($this->option['namespace'], $prefs['namespace_separator']);
 		$link->setQualifier($reltype);
 		$link->setDescription($description);
 		$link->setWikiLookup(array( $this, 'parser_helper_wiki_info_getter' ));
-		$link->setWikiLinkBuilder(array( $this, 'parser_helper_wiki_link_builder' ));
+		$link->setWikiLinkBuilder(function ($pageLink) {
+			$wikilib = TikiLib::lib('wiki');
+			return $wikilib->sefurl($pageLink);
+		});
 		$link->setExternals($externals);
 		$link->setHandlePlurals($processPlural);
 		$link->setAnchor($anchor);
@@ -2883,13 +2888,6 @@ if ( \$('#$id') ) {
 		}
 
 		return $link->getHtml($ck_editor);
-	}
-
-	//*
-	function parser_helper_wiki_link_builder( $pageLink )
-	{
-		$wikilib = TikiLib::lib('wiki');
-		return $wikilib->sefurl($pageLink);
 	}
 
 	//*

@@ -325,7 +325,7 @@ class WikiRenderer
 		} else {
 			$parse_options = array(
 				'is_html' => $this->info['is_html'],
-				'language' => $this->info['lang']
+				'language' => $this->info['lang'],
 			);
 
 			if ($this->raw) {

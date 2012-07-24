@@ -13,6 +13,9 @@ class WikiParser_OutputLink
 	private $qualifier;
 	private $anchor;
 
+	private $namespace;
+	private $namespaceSeparator;
+
 	private $externals = array();
 	private $handlePlurals = false;
 
@@ -22,6 +25,12 @@ class WikiParser_OutputLink
 	function setIdentifier( $identifier )
 	{
 		$this->identifier = $identifier;
+	}
+
+	function setNamespace( $namespace, $separator )
+	{
+		$this->namespace = $namespace;
+		$this->namespaceSeparator = $separator;
 	}
 
 	function setDescription( $description )
@@ -80,6 +89,24 @@ class WikiParser_OutputLink
 									'class' => $class,
 							)
 			);
+		} elseif ( $this->namespace && (($info = $this->findWikiPage("{$this->namespace}{$this->namespaceSeparator}$page")) || $ck_editor) ) {
+			// When currently displayed page is in a namespace, interpret links as within namespace as a priority
+			if (!empty($info['pageName'])) {
+				$page = $info['pageName'];
+			}
+			$title = $page;
+			if (!empty($info['description'])) {
+				$title = $info['description'];
+			}
+
+			return $this->outputLink(
+							$description, 
+							array(
+									'href' => call_user_func($this->wikiBuilder, $page) . $this->anchor,
+									'title' => $title,
+									'class' => 'wiki wiki_page',
+							) 
+			);
 		} elseif ( ($info = $this->findWikiPage($page)) || $ck_editor ) {
 			if (!empty($info['pageName'])) {
 				$page = $info['pageName'];
@@ -98,6 +125,7 @@ class WikiParser_OutputLink
 							) 
 			);
 		} else {
+			$page = $this->getTargetPage($page);
 			return $description . $this->outputLink(
 							'?', 
 							array(
@@ -189,6 +217,15 @@ class WikiParser_OutputLink
 
 		if ( $alternate != $page ) {
 			return $alternate;
+		}
+	}
+
+	private function getTargetPage($page)
+	{
+		if ($this->namespace) {
+			return "{$this->namespace}{$this->namespaceSeparator}$page";
+		} else {
+			return $page;
 		}
 	}
 }

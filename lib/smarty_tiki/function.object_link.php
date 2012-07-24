@@ -77,7 +77,14 @@ function smarty_function_object_link_default( $smarty, $object, $title = null, $
 		return '';
 	}
 
-	$escapedPage = smarty_modifier_escape($title ? $title : tra('No title specified'));
+	$text = $title;
+	$titleAttribute = null;
+	if ($type == 'wiki page') {
+		$titleAttribute = ' title="' . smarty_modifier_escape($title) . '"';
+		$text = TikiLib::lib('wiki')->get_without_namespace($title);
+	}
+
+	$escapedText = smarty_modifier_escape($text ? $text : tra('No title specified'));
 
 	if ($url) {
 		$escapedHref = smarty_modifier_escape($url);
@@ -96,7 +103,7 @@ function smarty_function_object_link_default( $smarty, $object, $title = null, $
 	$metadata = TikiLib::lib('object')->get_metadata($type, $object, $classList);
 	$class = ' class="' . implode(' ', $classList) . '"';
 
-	$html = '<a href="' . $base_url . $escapedHref . '"' . $class . $metadata . '>' . $escapedPage . '</a>';
+	$html = '<a href="' . $base_url . $escapedHref . '"' . $class . $titleAttribute . $metadata . '>' . $escapedText . '</a>';
 
 	$attributelib = TikiLib::lib('attribute');
 	$attributes = $attributelib->get_attributes($type, $object);

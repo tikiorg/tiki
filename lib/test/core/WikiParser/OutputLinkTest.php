@@ -20,10 +20,7 @@ class WikiParser_OutputLinkTest extends TikiTestCase
 		$link = new WikiParser_OutputLink;
 		$link->setIdentifier('Test');
 		
-		$this->assertXmlStringEqualsXmlString(
-						'<span>Test<a href="tiki-editpage.php?page=Test" title="Create page: Test" class="wiki wikinew">?</a></span>',
-						'<span>' . $link->getHtml() . '</span>'
-		);
+		$this->assertLinkIs('Test<a href="tiki-editpage.php?page=Test" title="Create page: Test" class="wiki wikinew">?</a>', $link->getHtml());
 	}
 
 	function testCreateLinkWithLanguage()
@@ -33,10 +30,7 @@ class WikiParser_OutputLinkTest extends TikiTestCase
 		$link->setIdentifier('Test');
 		$link->setLanguage('fr');
 		
-		$this->assertXmlStringEqualsXmlString(
-						'<span>Test<a href="tiki-editpage.php?page=Test&amp;lang=fr" title="Create page: Test" class="wiki wikinew">?</a></span>',
-						'<span>' . $link->getHtml() . '</span>'
-		);
+		$this->assertLinkIs('Test<a href="tiki-editpage.php?page=Test&amp;lang=fr" title="Create page: Test" class="wiki wikinew">?</a>', $link->getHtml());
 	}
 
 	function testCreateLinkWithDescription()
@@ -46,10 +40,7 @@ class WikiParser_OutputLinkTest extends TikiTestCase
 		$link->setIdentifier('Test');
 		$link->setDescription('Hello World');
 		
-		$this->assertXmlStringEqualsXmlString(
-						'<span>Hello World<a href="tiki-editpage.php?page=Test" title="Create page: Test" class="wiki wikinew">?</a></span>',
-						'<span>' . $link->getHtml() . '</span>'
-		);
+		$this->assertLinkIs('Hello World<a href="tiki-editpage.php?page=Test" title="Create page: Test" class="wiki wikinew">?</a>', $link->getHtml());
 	}
 
 	function testCreateLinkWithRelationType()
@@ -59,10 +50,7 @@ class WikiParser_OutputLinkTest extends TikiTestCase
 		$link->setIdentifier('Test');
 		$link->setQualifier('real');
 		
-		$this->assertXmlStringEqualsXmlString(
-						'<span>Test<a href="tiki-editpage.php?page=Test" title="Create page: Test" class="wiki wikinew real">?</a></span>',
-						'<span>' . $link->getHtml() . '</span>'
-		);
+		$this->assertLinkIs('Test<a href="tiki-editpage.php?page=Test" title="Create page: Test" class="wiki wikinew real">?</a>', $link->getHtml());
 	}
 
 	function testPageDoesExist()
@@ -78,10 +66,7 @@ class WikiParser_OutputLinkTest extends TikiTestCase
 		$link->setWikiLookup(array($this, 'getPageInfo'));
 		$link->setWikiLinkBuilder(array($this, 'getWikiLink'));
 		
-		$this->assertXmlStringEqualsXmlString(
-						'<a href="Test" title="Testing" class="wiki wiki_page">Test</a>',
-						$link->getHtml()
-		);
+		$this->assertLinkIs('<a href="Test" title="Testing" class="wiki wiki_page">Test</a>', $link->getHtml());
 	}
 
 	function testInfoFunctionProvidesAlias()
@@ -97,10 +82,7 @@ class WikiParser_OutputLinkTest extends TikiTestCase
 		$link->setWikiLookup(array($this, 'getPageInfo'));
 		$link->setWikiLinkBuilder(array($this, 'getWikiLink'));
 		
-		$this->assertXmlStringEqualsXmlString(
-						'<a href="Test1.2" title="Testing" class="wiki wiki_page">Test</a>',
-						$link->getHtml()
-		);
+		$this->assertLinkIs('<a href="Test1.2" title="Testing" class="wiki wiki_page">Test</a>', $link->getHtml());
 	}
 
 	function testExistsWithRelType()
@@ -117,10 +99,7 @@ class WikiParser_OutputLinkTest extends TikiTestCase
 		$link->setWikiLookup(array($this, 'getPageInfo'));
 		$link->setWikiLinkBuilder(array($this, 'getWikiLink'));
 		
-		$this->assertXmlStringEqualsXmlString(
-						'<a href="Test" title="Testing" class="wiki wiki_page abc">Test</a>',
-						$link->getHtml()
-		);
+		$this->assertLinkIs('<a href="Test" title="Testing" class="wiki wiki_page abc">Test</a>', $link->getHtml());
 	}
 
 	function testUndefinedExternalLink()
@@ -130,10 +109,7 @@ class WikiParser_OutputLinkTest extends TikiTestCase
 		$link->setWikiLookup(array($this, 'getPageInfo'));
 		$link->setWikiLinkBuilder(array($this, 'getWikiLink'));
 		
-		$this->assertXmlStringEqualsXmlString(
-						'<span>out:Test<a href="tiki-editpage.php?page=out%3ATest" title="Create page: out:Test" class="wiki wikinew">?</a></span>',
-						'<span>' . $link->getHtml() . '</span>'
-		);
+		$this->assertLinkIs('out:Test<a href="tiki-editpage.php?page=out%3ATest" title="Create page: out:Test" class="wiki wikinew">?</a>', $link->getHtml());
 	}
 
 	function testWithDefinedExternal()
@@ -147,10 +123,7 @@ class WikiParser_OutputLinkTest extends TikiTestCase
 						)
 		);
 		
-		$this->assertXmlStringEqualsXmlString(
-						'<a href="http://example.com/Test" class="wiki ext_page out">Test</a>',
-						$link->getHtml()
-		);
+		$this->assertLinkIs('<a href="http://example.com/Test" class="wiki ext_page out">Test</a>', $link->getHtml());
 	}
 
 	function testWithDefinedExternalAndDescription()
@@ -165,10 +138,7 @@ class WikiParser_OutputLinkTest extends TikiTestCase
 						)
 		);
 		
-		$this->assertXmlStringEqualsXmlString(
-						'<a href="http://example.com/Test" class="wiki ext_page out">ABC</a>',
-						$link->getHtml()
-		);
+		$this->assertLinkIs('<a href="http://example.com/Test" class="wiki ext_page out">ABC</a>', $link->getHtml());
 	}
 
 	function testHandlePlural()
@@ -186,10 +156,34 @@ class WikiParser_OutputLinkTest extends TikiTestCase
 		$link->setWikiLinkBuilder(array($this, 'getWikiLink'));
 		$link->setHandlePlurals(true);
 		
-		$this->assertXmlStringEqualsXmlString(
-						'<a href="Policy" title="Some Page" class="wiki wiki_page">Policies</a>',
-						$link->getHtml()
+		$this->assertLinkIs('<a href="Policy" title="Some Page" class="wiki wiki_page">Policies</a>', $link->getHtml());
+	}
+
+	function testRenderCreateLinkWithNamespace()
+	{
+		// ((Test)) within a page in HelloWorld namespace
+		$link = new WikiParser_OutputLink;
+		$link->setNamespace('HelloWorld', '::');
+		$link->setIdentifier('Test');
+		
+		$this->assertLinkIs('Test<a href="tiki-editpage.php?page=HelloWorld%3A%3ATest" title="Create page: HelloWorld::Test" class="wiki wikinew">?</a>', $link->getHtml());
+	}
+
+	function testRenderLinkWithinSameNamespace()
+	{
+		$this->info['HelloWorld::Test'] = array(
+			'pageName' => 'HelloWorld::Test',
+			'description' => '',
+			'lastModif' => 1234567890,
 		);
+
+		// ((Test)) within a page in HelloWorld namespace
+		$link = new WikiParser_OutputLink;
+		$link->setWikiLookup(array($this, 'getPageInfo'));
+		$link->setNamespace('HelloWorld', '::');
+		$link->setIdentifier('Test');
+		
+		$this->assertLinkIs('<a href="HelloWorld::Test" title="HelloWorld::Test" class="wiki wiki_page">Test</a>', $link->getHtml());
 	}
 
 	function getPageInfo($page)
@@ -202,6 +196,11 @@ class WikiParser_OutputLinkTest extends TikiTestCase
 	function getWikiLink($page)
 	{
 		return $page;
+	}
+
+	private function assertLinkIs($expect, $content)
+	{
+		$this->assertXmlStringEqualsXmlString("<span>$expect</span>", "<span>$content</span>");
 	}
 }
 
