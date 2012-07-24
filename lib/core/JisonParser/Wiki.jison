@@ -7,18 +7,20 @@
 PLUGIN_ID   					[A-Z]+
 INLINE_PLUGIN_ID				[a-z]+
 SYNTAX_CHARS                    [_\^:\~'-|=\(\)\{\}\[\]*#+\n\r]
-CONTENT                         (.|[\n\r])*?
-LINE_CONTENT                    (.+?)
+CONTENT                         (.|[\n\r])+?
+LINE_CONTENT                    (.)+?
 SMILE							[a-z]+
 
 %s plugin line bold box center colortext italic header list link strikethrough table titlebar underscore wikilink
 %options flex
 
 %%
-"~np~"{CONTENT}"~/np~"
+("~np~"){CONTENT}("~/np~")
 	%{
+		if (parser.isPlugin()) return 'CONTENT'; //js
 		yytext = parser.np(yytext); //js
 
+		//php if ($this->isPlugin()) return 'CONTENT'; //js
 		//php $yytext = $this->np($yytext);
 
 		return 'CONTENT';
@@ -566,8 +568,9 @@ SMILE							[a-z]+
 ("§"[a-z0-9]{32}"§")                        return 'CONTENT';
 ("≤"(.)+"≥")                                return 'CONTENT';
 ("<"(.|\n)*?">")							return 'CONTENT';
+[A-Za-z0-9 .,?;]+                           return 'CONTENT';
 {LINE_CONTENT}(?={SYNTAX_CHARS})            return 'CONTENT';
-(\s+)                                       return 'CONTENT';
+(\s)+                                       return 'CONTENT';
 <<EOF>>										return 'EOF';
 /lex
 

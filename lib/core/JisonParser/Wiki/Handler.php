@@ -148,17 +148,15 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		parent::__construct();
 	}
 
-	/*
+/*
 	function parser_performAction(&$thisS, $yytext, $yyleng, $yylineno, $yystate, $S, $_S, $O)
 	{
-		//print_r(array($thisS));
+		file_put_contents("temp/actions.log", $yytext . "{" . $yystate ."}" . "\n", FILE_APPEND);
+
 		$result = parent::parser_performAction($thisS, $yytext, $yyleng, $yylineno, $yystate, $S, $_S, $O);
-		$this->actions++;
-		//file_put_contents("temp/actions.log", $thisS . "\n");
-
 		return $result;
-	}*/
-
+	}
+*/
 	function hasWikiSyntax(&$input)
 	{
 		foreach($this->syntaxStatingChars as $char) {
@@ -574,7 +572,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 
 		$content = substr($content, ($level + $noiseLength));
 
-		return $this->Parser->list->stack($level, $this->unprotectSpecialChars($content), $type);
+		return $this->Parser->list->stack($level, $content, $type);
 	}
 
 	function hr() //---
