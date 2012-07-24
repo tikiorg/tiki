@@ -15,6 +15,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 
 	/* plugin tracking */
 	public $pluginStack = array();
+	public $pluginStackCount = 0;
 	private $pluginEntries = array();
 	private $wikiPluginParserNegotiatorClass = 'WikiPlugin_ParserNegotiator';
 	public $plugins = array();
@@ -220,6 +221,14 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 
 	function preParse(&$input)
 	{
+		/*
+		RP - php default is 100,000 which is just too much for this type of parser.  The reason for this code is the use of
+		preg_* functions using pcre library.  Some of the regex needed is just too much for php to handle, so by
+		limiting this for regex we speed up the parser and allow it to safely lex/parse a string
+		more here: http://stackoverflow.com/questions/7620910/regexp-in-preg-match-function-returning-browser-error
+		*/
+		ini_set("pcre.recursion_limit", "524");
+
 		$input = "\n" . $input . "\n"; //here we add 2 lines, so the parser doesn't have to do special things to track the first line and last, we remove these when we insert breaks
 
 		$input = $this->protectSpecialChars($input);
@@ -315,11 +324,12 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 			'body' => '',
 			'key' => $this->pluginKey($pluginName)
 		);
+		$this->pluginStackCount++;
 	}
 
 	function isPlugin()
 	{
-		return (count($this->pluginStack) > 0);
+		return ($this->pluginStackCount > 0);
 	}
 
 	static function getUnparsedPluginBodies($data)

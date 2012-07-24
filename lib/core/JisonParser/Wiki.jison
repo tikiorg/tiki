@@ -98,9 +98,11 @@ SMILE							[a-z]+
 		//php 	    ) {
 		//php 		    if (count($this->pluginStack) == 1) {
 		//php 			    $yytext = $this->pluginStack[count($this->pluginStack) - 1];
+		//php               $this->pluginStackCount--;
 		//php 			    array_pop($this->pluginStack);
 		//php 			    return 'PLUGIN_END';
 		//php 		    } else {
+		//php               $this->pluginStackCount--;
 		//php 			    array_pop($this->pluginStack);
 		//php 			    return 'CONTENT';
 		//php 		    }
@@ -570,7 +572,7 @@ SMILE							[a-z]+
 ("<"(.|\n)*?">")							return 'CONTENT';
 [A-Za-z0-9 .,?;]+                           return 'CONTENT';
 {LINE_CONTENT}(?={SYNTAX_CHARS})            return 'CONTENT';
-(\s)+                                       return 'CONTENT';
+(\s)                                        return 'CONTENT';
 <<EOF>>										return 'EOF';
 /lex
 
