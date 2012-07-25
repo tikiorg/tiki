@@ -62,9 +62,13 @@ body.fixed_width .fixedwidth {
     margin-left: auto;
 }
 
-.header {	/* inner <header> element that gets .fixedwidth class applied */
+#header {	/* inner <header> element that gets .fixedwidth class applied */
 	background: url(fivealive/options/blueberry/siteheader.jpg) 0 0 no-repeat;
 /*	height: 220px;*/
+}
+
+#header #top_modules .module.secondary_site_menu {
+	background: none;
 }
 
 #tiki-top {
@@ -1168,16 +1172,18 @@ body.tiki_cms h1 a.pagetitle:hover {border-bottom: 0}
 	padding: 0;
 }
 
-.post .author,
+.post .postbody .author,
 .dirsite {
 	background: #c2eef8;
 	float: none;
 	margin: 0 0 6px;
 	text-align: left;
+	border: none;
 }
 
-.postbody-content {
+.postbody .postbody-content {
 	margin: 0;
+	border: none;
 }
 
 .post .postfooter {
