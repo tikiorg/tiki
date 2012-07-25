@@ -612,5 +612,5 @@ class RegistrationError
 		$this->msg = $msg;
 	}
 }
-
-	$registrationlib = new RegistrationLib();
+global $registrationlib;
+$registrationlib = new RegistrationLib();
