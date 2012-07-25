@@ -26,7 +26,7 @@
 		{/if}
 	</p>
 	<p>
-		{tr}Number of periods:{/tr}
+		{tr}{$periodslabel}{/tr}
 		<input type="text" name="wp_member_periods" value="1"/>
 		<input type="submit" value="{tr}Continue{/tr}"/>
 	</p>
