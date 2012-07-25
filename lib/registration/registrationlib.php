@@ -239,7 +239,7 @@ class RegistrationLib extends TikiLib
 			$errors[] = new RegistrationError('name', tra('User already exists'));
 
 		if (!$from_intertiki && $prefs['feature_antibot'] == 'y') {
-			if (!$captchalib->validate())
+			if (!$captchalib->validate($registration))
 				$errors[] = new RegistrationError('antibotcode', $captchalib->getErrors());
 		}
 

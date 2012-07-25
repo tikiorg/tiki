@@ -32,5 +32,39 @@ class Services_User_Controller
 			'count' => $result['cant'],
 		);
 	}
+
+	function action_register($input)
+	{
+		$name = $input->name->string();
+		$pass = $input->pass->string();
+		$passAgain = $input->passAgain->string();
+		$captcha = $input->captcha->arra();
+		$antibotcode = $input->antibotcode->string();
+		$email = $input->email->string();
+
+		include_once('lib/registration/registrationlib.php');
+		$regResult = $registrationlib->register_new_user(array(
+			'name' => $name,
+			'pass' => $pass,
+			'passAgain' => $passAgain,
+			'captcha' => $captcha,
+			'antibotcode' => $antibotcode,
+			'email' => $email,
+		));
+
+		if (is_array($regResult)) {
+			foreach ($regResult as $r) {
+				register_error($r->msg);
+			}
+		} else if (is_a($regResult, 'RegistrationError')) {
+			register_error($regResult->msg);
+		} else if (is_string($regResult)) {
+			$result = $regResult;
+		} elseif (!empty($regResult['msg'])) {
+			$result = $regResult['msg'];
+		}
+
+		return array('result'=> $result);
+	}
 }
 
