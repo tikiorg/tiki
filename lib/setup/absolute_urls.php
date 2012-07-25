@@ -33,6 +33,8 @@ if ( $prefs['http_port'] == 80 )
 //    This is useful in certain cases.
 //    For example, this allow to have full HTTPS when using an entrance proxy that will use HTTPS connection with the client browser, but use an HTTP only connection to the server that hosts tikiwiki.
 //
+global $https_mode,$url_scheme,$url_host,$url_port,$url_path,$base_host,$base_url,$base_url_http,$base_url_https;
+
 $https_mode = false;
 if ( ( isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on' )
 	 || ( $prefs['https_port'] == '' && isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] == 443 )
