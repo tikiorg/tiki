@@ -1,6 +1,6 @@
 /* $Id$ 
 	Lemon theme option for FiveAlive theme for
-	TikiWiki CMS/Groupware.
+	Tiki Wiki CMS Groupware.
 */
 
 a,
@@ -29,11 +29,11 @@ hr {
 	background: #ffc506;
 }
 
-.header_outer {
+#main .header_outer {
 	background: url(lemon/siteheadertile.png) 0 0 no-repeat;
 }
 
-.header {
+#header {
 	background: url(lemon/siteheader.png) -250px 0 no-repeat;
 }
 
@@ -59,7 +59,6 @@ hr {
 #power a {
 	color: #ffc506;
 }
-
 
 .button a,
 .button a:visited,
@@ -106,15 +105,21 @@ span#genPass .button a:hover,
 .cssmenu_horiz li ul a,
 .header .cssmenu_horiz li ul a,
 .header .cssmenu_horiz li:hover ul a,
-#topbar_modules .cssmenu_horiz li ul a,
-#topbar_modules .cssmenu_horiz li:hover ul a  {
+#main #topbar_modules .cssmenu_horiz li ul a,
+#main #topbar_modules .cssmenu_horiz li:hover ul a  {
 	background: #c75a29;
+	color: #fff;
 }
 
+#tiki-top .cssmenu_horiz li a {
+	background: url(lemon/siteheader.png) no-repeat -600px -40px;
+}
+
+#tiki-top .cssmenu_horiz li a:hover,
 .cssmenu_vert li ul a:hover,
 .cssmenu_horiz li ul a:hover,
 .header .cssmenu_horiz li ul a:hover,
-#topbar_modules .cssmenu_horiz li ul a:hover  {
+#main #topbar_modules .cssmenu_horiz li ul a:hover  {
 	background: #f68c1a;
 }
 
@@ -168,6 +173,13 @@ textarea,
 
 .simplebox {
 	border: 2px solid #ffc506; 
+}
+
+h3.box-title,
+.postbody-title,
+#top_modules .module.secondary_site_menu {
+	background: #fec107 url(lemon/siteheader.png) no-repeat -1000px -200px;
+	color: #c75a28;
 }
 
 .adminanchors {
@@ -242,13 +254,20 @@ form.admin fieldset,
 	border-left: 8px solid #fcebbc;
 }
 
-.postbody-title {
-	background: #ffc506 url(lemon/siteheader.png) -550px -90px no-repeat;
-}
-
 .post .author,
 .dirsite {
 	background: #fcebbc;
+}
+
+.postbody-content {
+	border: 1px solid #d4cc1c;
+	border-top: none;
+}
+
+.post .author {
+	border: 1px solid #d4cc1c;
+	border-top: none;
+	border-bottom: none;
 }
 
 /* cluptip tooltips */

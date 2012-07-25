@@ -1,6 +1,6 @@
 /* $Id$ 
 	Kiwi theme option for FiveAlive theme for
-	TikiWiki CMS/Groupware.
+	Tiki Wiki CMS Groupware.
 */
 
 a,
@@ -34,7 +34,7 @@ hr {
 	background: url(kiwi/siteheadertile.png) 0 0 no-repeat;
 }
 
-.header {
+#header {
 	background: url(kiwi/siteheader.png) -250px 0 no-repeat;
 }
 
@@ -106,15 +106,21 @@ input[type="submit"]:hover,
 .cssmenu_horiz li ul a,
 .header .cssmenu_horiz li ul a,
 .header .cssmenu_horiz li:hover ul a,
-#topbar_modules .cssmenu_horiz li ul a,
-#topbar_modules .cssmenu_horiz li:hover ul a  {
+#main #topbar_modules .cssmenu_horiz li ul a,
+#main #topbar_modules .cssmenu_horiz li:hover ul a  {
 	background: #658838;
+	color: #fff;
 }
 
+#tiki-top .cssmenu_horiz li a {
+	background: url(kiwi/siteheader.png) no-repeat -600px -40px;
+}
+
+#tiki-top .cssmenu_horiz li a:hover,
 .cssmenu_vert li ul a:hover,
 .cssmenu_horiz li ul a:hover,
 .header .cssmenu_horiz li ul a:hover,
-#topbar_modules .cssmenu_horiz li ul a:hover  {
+#main #topbar_modules .cssmenu_horiz li ul a:hover  {
 	background: #e1d518;
 }
 
@@ -169,6 +175,12 @@ textarea,
 	border: 2px solid #bcb923;
 }
 
+h3.box-title,
+.postbody-title,
+#top_modules .module.secondary_site_menu {
+	background: #e1d518 url(kiwi/siteheader.png) no-repeat -1000px -200px;
+}
+
 .adminanchors {
 	background: #bcb923;
 }
@@ -203,7 +215,6 @@ th.header {
 .caleven {
 	background: #f8f9d4;
 }
-
 
 .tabmark {
 	border: 1px solid #f0e884;
@@ -241,13 +252,24 @@ form.admin fieldset,
 	border-left: 8px solid #f5f6c1;
 }
 
-.postbody-title {
-	background: #e1d518 url(kiwi/siteheader.png) -550px -90px no-repeat;
+.postbody-title > br {
+	display: none;
 }
 
 .post .author,
 .dirsite {
 	background: #f5f6c1;
+}
+
+.postbody-content {
+	border: 1px solid #d4cc1c;
+	border-top: none;
+}
+
+.post .author {
+	border: 1px solid #d4cc1c;
+	border-top: none;
+	border-bottom: none;
 }
 
 /* cluptip tooltips */

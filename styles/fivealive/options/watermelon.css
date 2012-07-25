@@ -1,6 +1,6 @@
 /* $Id$ 
 	Watermelon theme option for FiveAlive theme for
-	TikiWiki CMS/Groupware.
+	Tiki Wiki CMS Groupware.
 */
 
 a,
@@ -30,11 +30,11 @@ hr {
 	color: #c31e3b;
 }
 
-.header_outer {
+#main .header_outer {
 	background: url(watermelon/siteheadertile.png) 0 0 no-repeat;
 }
 
-.header {
+#header {
 	background: url(watermelon/siteheader.png) -250px 0 no-repeat;
 }
 
@@ -105,15 +105,21 @@ span#genPass .button a:hover,
 .cssmenu_horiz li ul a,
 .header .cssmenu_horiz li ul a,
 .header .cssmenu_horiz li:hover ul a,
-#topbar_modules .cssmenu_horiz li ul a,
-#topbar_modules .cssmenu_horiz li:hover ul a  {
+#main #topbar_modules .cssmenu_horiz li ul a,
+#main #topbar_modules .cssmenu_horiz li:hover ul a  {
 	background: #8c1832;
+	color: #fff;
 }
 
+#tiki-top .cssmenu_horiz li a {
+	background: #c61e3c url(watermelon/siteheader.png) no-repeat -600px -40px;
+}
+
+#tiki-top .cssmenu_horiz li a:hover,
 .cssmenu_vert li ul a:hover,
 .cssmenu_horiz li ul a:hover,
 .header .cssmenu_horiz li ul a:hover,
-#topbar_modules .cssmenu_horiz li ul a:hover  {
+#main #topbar_modules .cssmenu_horiz li ul a:hover  {
 	background: #fb999e;
 }
 
@@ -176,6 +182,12 @@ tr.diffheader a:visited,
 
 .simplebox {
 	border: 2px solid #c31e3b;
+}
+
+h3.box-title,
+.postbody-title,
+#top_modules .module.secondary_site_menu {
+	background: #e41e40 url(watermelon/siteheader.png) no-repeat -1000px -200px;
 }
 
 .adminanchors {
@@ -256,9 +268,24 @@ form.admin fieldset,
 	background: #e31e40 url(watermelon/siteheader.png) -550px -90px no-repeat;
 }
 
+.postbody-title > br {
+	display: none;
+}
+
 .post .author,
 .dirsite {
 	background: #f6cdd2;
+}
+
+.postbody-content {
+	border: 1px solid #e41e40;
+	border-top: none;
+}
+
+.post .author {
+	border: 1px solid #e41e40;
+	border-top: none;
+	border-bottom: none;
 }
 
 /* cluptip tooltips */
