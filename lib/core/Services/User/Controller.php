@@ -35,6 +35,7 @@ class Services_User_Controller
 
 	function action_register($input)
 	{
+		$result = array();
 		$name = $input->name->string();
 		$pass = $input->pass->string();
 		$passAgain = $input->passAgain->string();
@@ -54,17 +55,17 @@ class Services_User_Controller
 
 		if (is_array($regResult)) {
 			foreach ($regResult as $r) {
-				register_error($r->msg);
+				$result[] = $r->msg;
 			}
 		} else if (is_a($regResult, 'RegistrationError')) {
-			register_error($regResult->msg);
+			$result[] = $regResult->msg;
 		} else if (is_string($regResult)) {
-			$result = $regResult;
+			$result = trim($regResult, "\n");
 		} elseif (!empty($regResult['msg'])) {
-			$result = $regResult['msg'];
+			$result = trim($regResult['msg'], "\n");
 		}
 
-		return array('result'=> $result);
+		return array('result' => json_encode($result));
 	}
 }
 
