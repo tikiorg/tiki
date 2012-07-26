@@ -2116,6 +2116,10 @@ function prefs_feature_list($partial = false)
 			'help' => 'Attachments',
 			'description' => tra('Allow users to upload (attach) files to a page.'),
 			'default' => 'n',
+			'admin' => 'wikiatt',
+			'permission' => array(
+				'textFilter' => 'attach wiki',
+			),
 		),
 		'feature_dump' => array(
 			'name' => tra('Dumps'),

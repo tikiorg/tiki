@@ -128,12 +128,10 @@
 			
 			{preference name=feature_wiki_attachments}
 			<div class="adminoptionboxchild" id="feature_wiki_attachments_childcontainer">
-				<a class="link" href="tiki-objectpermissions.php?permType=wiki&amp;textFilter=attach&amp;show_disabled_features=y" title="{tr}Permission{/tr}">{icon _id="key" alt="{tr}Permission{/tr}"}</a>
 					{preference name=w_displayed_default}
 					{preference name=w_use_db}
 					<div class="adminoptionboxchild">
 						{preference name=w_use_dir}
-						{button href="tiki-admin.php?page=wikiatt" _text="{tr}Manage attachments{/tr}"}
 					</div>
 					{if !empty($prefs.w_use_dir)}
 						{tr}If you change storage, it is better to move all the files for easy backup...{/tr}
