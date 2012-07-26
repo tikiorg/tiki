@@ -27,6 +27,12 @@ if (isset($redirect) && !empty($redirect)) {
 
 // disallow robots to index page:
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
+
+if ($prefs['allowRegister'] != 'y') {
+	header("location: index.php");
+	die;
+}
+
 global $user;
 $smarty->assign('user_exists', TikiLib::lib('user')->user_exists($user));
 

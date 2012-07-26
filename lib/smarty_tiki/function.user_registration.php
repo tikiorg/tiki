@@ -1,4 +1,10 @@
 <?php
+// (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
+//
+// All Rights Reserved. See copyright.txt for details and a complete list of authors.
+// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+// $Id$
+
 function smarty_function_user_registration($params, $smarty)
 {
 	global $prefs, $userlib, $https_mode, $base_url_https, $registrationlib;
@@ -14,12 +20,6 @@ function smarty_function_user_registration($params, $smarty)
 	$smarty->assign('min_pass_length', $registrationlib->merged_prefs['min_pass_length']);
 	if (is_a($registrationlib->merged_prefs, "RegistrationError")) $errorreportlib->error($registrationlib->merged_prefs->msg);
 	$smarty->assignByRef('merged_prefs', $registrationlib->merged_prefs);
-
-// Permission: needs p_register and not to be a slave
-	if ($prefs['allowRegister'] != 'y') {
-		header("location: index.php");
-		die;
-	}
 	$smarty->assign('allowRegister', 'y'); // Used for OpenID associations
 	$smarty->assign('openid_associate', 'n');
 
@@ -27,7 +27,7 @@ function smarty_function_user_registration($params, $smarty)
 	if (!empty($user)) {
 		$smarty->assign('msg', tra('You are already logged in'));
 		$smarty->display('error.tpl');
-		die();
+		return;
 	}
 	$smarty->assign('showmsg', 'n');
 // ensure ssl
