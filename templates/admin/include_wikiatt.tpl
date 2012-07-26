@@ -22,7 +22,7 @@
 				{section name=x loop=$attachements}
 					<tr class={cycle}>
 						<td>{$attachements[x].user}</td>
-						<td><a href="tiki-index?page={$attachements[x].page}">{$attachements[x].page}</a></td>
+						<td><a href="tiki-index.php?page={$attachements[x].page}">{$attachements[x].page}</a></td>
 						<td>
 							<a href="tiki-download_wiki_attachment.php?attId={$attachements[x].attId}">{$attachements[x].filename}</a>
 						</td>
