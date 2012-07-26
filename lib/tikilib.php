@@ -3809,6 +3809,10 @@ class TikiLib extends TikiDb_Bridge
 			return false;
 		} else {
 			$row = $result->fetchRow();
+			$row['baseName'] = TikiLib::lib('wiki')->get_without_namespace($row['pageName']);
+			$row['prettyName'] = TikiLib::lib('wiki')->get_readable($row['pageName']);
+			$row['namespace'] = TikiLib::lib('wiki')->get_namespace($row['pageName']);
+			$row['namespace_parts'] = TikiLib::lib('wiki')->get_namespace_parts($row['pageName']);
 
 			// Be sure to have the correct character case (because DB is caseinsensitive)
 			$pageNameEncode = urlencode($row['pageName']);

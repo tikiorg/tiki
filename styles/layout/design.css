@@ -1713,4 +1713,28 @@ form.simple textarea.export {
 	padding-bottom: 8px;
 }
 
+/* Namespace styling */
+
+.wiki .namespace {
+	margin: 1px;
+	padding: 1px;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	background: #eee;
+	max-width: 30px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: inline-block;
+	vertical-align: bottom;
+}
+
+.wiki .namespace.first {
+	max-width: 130px;
+}
+
+.wiki .namespace.last {
+	max-width: 130px;
+}
+
 /* End of file */

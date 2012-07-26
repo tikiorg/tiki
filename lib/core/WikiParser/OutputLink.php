@@ -94,16 +94,12 @@ class WikiParser_OutputLink
 			if (!empty($info['pageName'])) {
 				$page = $info['pageName'];
 			}
-			$title = $page;
-			if (!empty($info['description'])) {
-				$title = $info['description'];
-			}
 
 			return $this->outputLink(
 							$description, 
 							array(
 									'href' => call_user_func($this->wikiBuilder, $page) . $this->anchor,
-									'title' => $title,
+									'title' => $this->getTitle($info),
 									'class' => 'wiki wiki_page',
 							) 
 			);
@@ -111,16 +107,16 @@ class WikiParser_OutputLink
 			if (!empty($info['pageName'])) {
 				$page = $info['pageName'];
 			}
-			$title = $page;
-			if (!empty($info['description'])) {
-				$title = $info['description'];
+
+			if ($description == $info['pageName']) {
+				$description = $this->renderPageName($info);
 			}
 
 			return $this->outputLink(
 							$description, 
 							array(
 									'href' => call_user_func($this->wikiBuilder, $page) . $this->anchor,
-									'title' => $title,
+									'title' => $this->getTitle($info),
 									'class' => 'wiki wiki_page',
 							) 
 			);
@@ -186,6 +182,29 @@ class WikiParser_OutputLink
 		}
 	}
 
+	private function renderPageName($info)
+	{
+		if (! isset($info['namespace_parts'])) {
+			return $info['pageName'];
+		}
+
+		$out = '';
+
+		$last = count($info['namespace_parts']) - 1;
+		foreach ($info['namespace_parts'] as $key => $part) {
+			$class = 'namespace';
+			if ($key === 0) {
+				$class .= ' first';
+			}
+			if ($key === $last) {
+				$class .= ' last';
+			}
+			$out .= "<span class=\"$class\">$part</span>";
+		}
+
+		return $out . $info['baseName'];
+	}
+
 	private function findWikiPage( $page )
 	{
 		if (! $this->wikiLookup) {
@@ -226,6 +245,17 @@ class WikiParser_OutputLink
 			return "{$this->namespace}{$this->namespaceSeparator}$page";
 		} else {
 			return $page;
+		}
+	}
+
+	private function getTitle($info)
+	{
+		if (!empty($info['description'])) {
+			return $info['description'];
+		} elseif (! empty($info['prettyName'])) {
+			return $info['prettyName'];
+		} else {
+			return $info['pageName'];
 		}
 	}
 }

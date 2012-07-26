@@ -421,7 +421,7 @@ class WikiLib extends TikiLib
 		$parse_options = array(
 			'is_html' => $info['is_html'],
 			'language' => $info['lang'],
-			'namespace' => $this->get_namespace($page),
+			'namespace' => $info['namespace'],
 		);
 
 		if ($suppress_icons || (!empty($info['lockedby']) && $info['lockedby'] != $user)) {
@@ -1242,6 +1242,28 @@ class WikiLib extends TikiLib
 		}
 
 		return false;
+	}
+
+	function get_readable($pageName)
+	{
+		global $prefs;
+
+		if ($pageName && $prefs['namespace_enabled'] == 'y' && $prefs['namespace_separator']) {
+			return str_replace($prefs['namespace_separator'], ' / ', $pageName);
+		}
+
+		return false;
+	}
+
+	function get_namespace_parts($pageName)
+	{
+		global $prefs;
+
+		if ($namespace = $this->get_namespace($pageName)) {
+			return explode($prefs['namespace_separator'], $namespace);
+		}
+
+		return array();
 	}
 }
 

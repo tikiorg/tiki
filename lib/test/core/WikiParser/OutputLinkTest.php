@@ -163,16 +163,20 @@ class WikiParser_OutputLinkTest extends TikiTestCase
 	{
 		// ((Test)) within a page in HelloWorld namespace
 		$link = new WikiParser_OutputLink;
-		$link->setNamespace('HelloWorld', '::');
+		$link->setNamespace('HelloWorld', '_');
 		$link->setIdentifier('Test');
 		
-		$this->assertLinkIs('Test<a href="tiki-editpage.php?page=HelloWorld%3A%3ATest" title="Create page: HelloWorld::Test" class="wiki wikinew">?</a>', $link->getHtml());
+		$this->assertLinkIs('Test<a href="tiki-editpage.php?page=HelloWorld_Test" title="Create page: HelloWorld_Test" class="wiki wikinew">?</a>', $link->getHtml());
 	}
 
 	function testRenderLinkWithinSameNamespace()
 	{
-		$this->info['HelloWorld::Test'] = array(
-			'pageName' => 'HelloWorld::Test',
+		$this->info['HelloWorld_Test'] = array(
+			'pageName' => 'HelloWorld_Test',
+			'prettyName' => 'HelloWorld / Test',
+			'namespace' => 'HelloWorld',
+			'namespace_parts' => array('HelloWorld'),
+			'baseName' => 'Test',
 			'description' => '',
 			'lastModif' => 1234567890,
 		);
@@ -180,10 +184,52 @@ class WikiParser_OutputLinkTest extends TikiTestCase
 		// ((Test)) within a page in HelloWorld namespace
 		$link = new WikiParser_OutputLink;
 		$link->setWikiLookup(array($this, 'getPageInfo'));
-		$link->setNamespace('HelloWorld', '::');
+		$link->setNamespace('HelloWorld', '_');
 		$link->setIdentifier('Test');
 		
-		$this->assertLinkIs('<a href="HelloWorld::Test" title="HelloWorld::Test" class="wiki wiki_page">Test</a>', $link->getHtml());
+		$this->assertLinkIs('<a href="HelloWorld_Test" title="HelloWorld / Test" class="wiki wiki_page">Test</a>', $link->getHtml());
+	}
+
+	function testRenderFromDifferentNamespace()
+	{
+		$this->info['HelloWorld_Test'] = array(
+			'pageName' => 'HelloWorld_Test',
+			'prettyName' => 'HelloWorld / Test',
+			'namespace' => 'HelloWorld',
+			'namespace_parts' => array('HelloWorld'),
+			'baseName' => 'Test',
+			'description' => '',
+			'lastModif' => 1234567890,
+		);
+
+		// ((Test)) within a page in HelloWorld namespace
+		$link = new WikiParser_OutputLink;
+		$link->setWikiLookup(array($this, 'getPageInfo'));
+		$link->setNamespace('Foobar', '_');
+		$link->setIdentifier('HelloWorld_Test');
+		
+		$this->assertLinkIs('<a href="HelloWorld_Test" title="HelloWorld / Test" class="wiki wiki_page"><span class="namespace first last">HelloWorld</span>Test</a>', $link->getHtml());
+	}
+
+	function testRenderFromDifferentNamespaceWithMultipleParts()
+	{
+		$this->info['Abc_Def_HelloWorld_Test'] = array(
+			'pageName' => 'Abc_Def_HelloWorld_Test',
+			'prettyName' => 'Abc / Def / HelloWorld / Test',
+			'namespace' => 'Abc_Def_HelloWorld',
+			'namespace_parts' => array('Abc', 'Def', 'HelloWorld'),
+			'baseName' => 'Test',
+			'description' => '',
+			'lastModif' => 1234567890,
+		);
+
+		// ((Test)) within a page in HelloWorld namespace
+		$link = new WikiParser_OutputLink;
+		$link->setWikiLookup(array($this, 'getPageInfo'));
+		$link->setNamespace('Foobar', '_');
+		$link->setIdentifier('Abc_Def_HelloWorld_Test');
+		
+		$this->assertLinkIs('<a href="Abc_Def_HelloWorld_Test" title="Abc / Def / HelloWorld / Test" class="wiki wiki_page"><span class="namespace first">Abc</span><span class="namespace">Def</span><span class="namespace last">HelloWorld</span>Test</a>', $link->getHtml());
 	}
 
 	function getPageInfo($page)
