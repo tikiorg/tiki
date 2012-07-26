@@ -35,6 +35,11 @@ class Services_User_Controller
 
 	function action_register($input)
 	{
+		global $https_mode, $prefs;
+		if (!$https_mode && $prefs['https_login'] == 'required') {
+			return array('result' => json_encode(array(tr("secure connection required"))));
+		}
+
 		$result = array();
 		$name = $input->name->string();
 		$pass = $input->pass->string();
