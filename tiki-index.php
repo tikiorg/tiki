@@ -36,6 +36,16 @@ $inputConfiguration = array(
 $section = 'wiki page';
 $isHomePage = (!isset($_REQUEST['page']));
 require_once('tiki-setup.php');
+
+// If attempting access a wiki page containing a / directly from the URL
+// Rewrite the URL to create a valid URL where all relative links won't be broken
+if (strpos($_SERVER['QUERY_STRING'], '/') !== false) {
+	if (! empty($_GET['page']) && (false !== strpos($_SERVER['QUERY_STRING'], $_GET['page']))) {
+		$relative = TikiLib::lib('wiki')->sefurl($_GET['page']);
+		$access->redirect(TikiLib::tikiUrl($relative), '', 301);
+	}
+}
+
 require_once('lib/multilingual/multilinguallib.php');
 
 if ( $prefs['feature_wiki_structure'] == 'y' ) {
