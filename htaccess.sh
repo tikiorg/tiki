@@ -18,15 +18,17 @@
 OLD=_htaccess
 NEW=.htaccess
 ACTION=activating
+COMMAND="cp"
  
 if [ "$1" = "off" ]; then
         OLD=.htaccess
         NEW=_htaccess
         ACTION=deactivating
+	COMMAND="mv"
 fi
  
 for i in $(find . -name ${OLD}); do
 	chmod 644 $i
 	echo "${ACTION} `dirname $i`/${NEW}"
-	mv $i `dirname $i`/${NEW}
+	$COMMAND $i `dirname $i`/${NEW}
 done
