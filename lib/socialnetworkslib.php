@@ -597,6 +597,74 @@ class SocialNetworksLib extends LogsLib
 			return $response;
 		}
 	}
+
+	/**
+	 *
+	 * get the public Facebook timeline of a user
+	 *
+	 * @param string	$user		Tiki username to get facebook wall for
+	 * @param bool		$addtoken	should the access token be added to the parameters if the calling function did not pass this parameter
+	 *
+	 * @return		string|bool	false on error, JSON encoded Facebook response on success
+	 */
+	function facebookGetWall($user, $addtoken=true) {
+		global $prefs;
+		if(!$this->facebookRegistered()) {
+			$this->add_log('facebookGraph','application not set up');
+			return false;
+		}
+		if ($addtoken) {
+			$token=$this->get_user_preference($user, 'facebook_token', '');
+			// expires will make the token fail
+			$token = preg_replace('/&expires=(\d)*/','',$token);
+			$token=urlencode($token);
+			$getdata='?'.urlencode('access_token').'='.$token;
+			if ($token=='') {
+				$this->add_log('facebookGraph','user not registered with facebook');
+				return -1; 
+			}
+		
+		}
+
+			$request="GET /me/feed".$getdata." HTTP/1.1\r\n".
+			 "Host: graph.facebook.com\r\n".
+			 "Accept:*/*\r\n".
+			 "Accept-Charset:ISO-8859-1,utf-8;q=0.7,*;q=0.3\r\n".
+			 "Expect: 100-continue\r\n".
+			 "Connection: close\r\n\r\n";
+
+  		$fp = fsockopen("ssl://graph.facebook.com", 443);
+  		if ($fp===false) {
+			$this->add_log('facebookGraph',"can't connect");
+			return false; 
+  		} else {
+			//stream_set_timeout($fp, 0, 5000); 
+	  		fputs($fp, $request);
+	  		$ret='';  		
+			while(!feof($fp)) {
+				$ret .= fgets($fp, 128);
+	  		}
+			fclose($fp);
+  		}
+		$ret=preg_split('/(\r\n\r\n|\r\r|\n\n)/',$ret,2);
+		$result=json_decode($ret[1]);
+		foreach($result->data as $key=>$value) {
+			if (isset($result->data[$key]->message)) {
+				$feed[$key]["message"]=$result->data[$key]->message;
+				$feed[$key]["type"]="message";
+			} else {
+				$feed[$key]["message"]=$result->data[$key]->story;
+				$feed[$key]["type"]="story";
+			}
+			$feed[$key]["fromName"]=$result->data[$key]->from->name;
+			$feed[$key]["fromId"]=$result->data[$key]->from->id;
+			$feed[$key]["created_time"]=$result->data[$key]->created_time;
+			$id=$result->data[$key]->id;
+			$id=str_replace("_", "/posts/", $id);
+			$feed[$key]["link"]="https://www.facebook.com/".$id;
+		}
+		return $feed;
+	}
 }
 
 global $socialnetworkslib;

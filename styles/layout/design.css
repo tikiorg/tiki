@@ -1707,10 +1707,27 @@ form.simple textarea.export {
 .TwitDate a {
 	font-size: 0.8em;
 	font-style: italic;
-	color: #848484;
 	text-align: right;
 	display: block;
 	padding-bottom: 8px;
+}
+
+/* Facebook module styling */
+.fb-story {
+	font-style: italic;
+}
+.fb-message {
+}
+.fb-date a {
+	font-size: 0.8em;
+	font-style: italic;
+	text-align: right;
+	display: block;
+	padding-bottom: 8px;
+}
+.fb-name {
+	font-weight: bold;
+	display: block;
 }
 
 /* Namespace styling */
