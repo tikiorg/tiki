@@ -150,7 +150,7 @@
 					<div class='opaque'>
 						<div class='box-title'>{tr}Properties{/tr}</div>
 						<div class='box-data'>
-							<div>
+							<table>
 								{foreach item=prop key=propname from=$fgal_listing_conf}
 									{if isset($prop.key)}
 										{assign var=propkey value=$item.key}
@@ -172,15 +172,16 @@
 										{assign var=propval value=$propval|kbsize:true}
 									{elseif $propname eq 'backlinks'}
 										{assign var=propval value=$files[changes].nbBacklinks}
+									{elseif $propname eq 'description'}
+							    	   {assign var=propval value=$propval|nl2br}
 									{/if}
 
 									{if isset($gal_info.$propkey) and $propval neq '' and ( $gal_info.$propkey eq 'a' or $gal_info.$propkey eq 'o' )}
-										<b>{$fgal_listing_conf.$propname.name}</b>: {$propval}
-										<br />
+										<tr><td><b>{$fgal_listing_conf.$propname.name}</b>:</td> <td>{$propval}</td></tr>
 										{assign var=nb_over_infos value=$nb_over_infos+1}
 									{/if}
 								{/foreach}
-							</div>
+							</table>
 						</div>
 					</div>
 				{/strip}
