@@ -138,7 +138,7 @@
             {assign var=key_name value="show_$propname"}
           {/if}
           {if isset($gal_info.$key_name) and ( $gal_info.$key_name eq 'y' or $gal_info.$key_name eq 'a' or $gal_info.$key_name eq 'i' or $propname eq 'name' )}
-            {assign var=propval value=$files[changes].$propname|truncate:$key_name_len|escape}
+            {assign var=propval value=$files[changes].$propname|escape}
         
             {* Format property values *}
             {if $propname eq 'id' or $propname eq 'name'}
@@ -156,7 +156,7 @@
             {elseif $propname eq 'size'}
               {assign var=propval value=$propval|kbsize:true}
             {elseif $propname eq 'description' and $gal_info.max_desc gt 0}
-              {assign var=propval value=$propval|truncate:$gal_info.max_desc:"...":false}
+              {assign var=propval value=$propval|truncate:$gal_info.max_desc:"...":false|nl2br}
             {elseif $propname eq 'lockedby' and $propval neq ''}
               {assign var=propval value=$propval|userlink}
             {/if}
@@ -174,12 +174,12 @@
             </div>
           </div>
 
-          <div class="thumbinfosothers"{if $show_details eq 'n'} style="display:none"{/if}>
+          <div class="thumbinfosothers">
 
             {elseif $propval neq '' and $propname neq 'name' and $propname neq 'type'}
 
-            <div class="thumbinfo{if $propname eq 'description'} thumbdescription{/if}">
-              <span class="thumbinfoname">{$item.name}:</span>
+            <div class="thumbinfo{if $propname eq 'description'} thumbdescription{/if}"{if $show_details eq 'n' and $propname neq 'description'} style="display:none"{/if}>
+				{if $propname neq 'description'}<span class="thumbinfoname">{$item.name}:</span>{/if}
               <span class="thumbinfoval"{if $propname neq 'description'} style="white-space: nowrap"{/if}>{$propval}</span>
             </div>
 

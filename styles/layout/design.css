@@ -961,6 +961,10 @@ p.norecords {
 	font-size: 95%;
 }
 
+.thumbdescription {
+	text-align: left;
+}
+
 /***** Trackers (etc.) *****/
 
 .multiselect .odd {
