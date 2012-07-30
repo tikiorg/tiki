@@ -18,7 +18,7 @@ function smarty_function_user_registration($params, $smarty)
 	$smarty->assign('_PROMPT_PASS', sprintf($_VALID, tra("password"), $registrationlib->merged_prefs['min_pass_length'], "0-9,a-z,A-Z"));
 	$smarty->assign('min_username_length', $registrationlib->merged_prefs['min_username_length']);
 	$smarty->assign('min_pass_length', $registrationlib->merged_prefs['min_pass_length']);
-	if (is_a($registrationlib->merged_prefs, "RegistrationError")) $errorreportlib->error($registrationlib->merged_prefs->msg);
+	if (is_a($registrationlib->merged_prefs, "RegistrationError")) $errorreportlib->report($registrationlib->merged_prefs->msg);
 	$smarty->assignByRef('merged_prefs', $registrationlib->merged_prefs);
 	$smarty->assign('allowRegister', 'y'); // Used for OpenID associations
 	$smarty->assign('openid_associate', 'n');
@@ -55,7 +55,7 @@ function smarty_function_user_registration($params, $smarty)
 		$cookie_name = $prefs['session_cookie_name'];
 
 		if ( ini_get('session.use_cookie') && ! isset( $_COOKIE[$cookie_name] ) )
-			$errorreportlib->error(tra("You have to enable cookies to be able to login to this site"));
+			$errorreportlib->report(tra("You have to enable cookies to be able to login to this site"));
 
 		$smarty->assign('errortype', 'no_redirect_login');
 
@@ -63,10 +63,10 @@ function smarty_function_user_registration($params, $smarty)
 
 		if (is_array($result)) {
 			foreach ($result as $r) {
-				$errorreportlib->error($r->msg);
+				$errorreportlib->report($r->msg);
 			}
 		} else if (is_a($result, 'RegistrationError')) {
-			TikiLib::lib('errorreport')->report($result->msg);
+			$errorreportlib->report($result->msg);
 		} else if (is_string($result)) {
 			return $result;
 		} elseif (!empty($result['msg'])) {
