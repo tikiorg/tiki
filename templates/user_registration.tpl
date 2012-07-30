@@ -42,7 +42,9 @@
 				});
 
 				$("#pass1, #pass2").change(function () {
-					setuppass").hide();
+					$('#mypassword_text, #mypassword2_text').show();
+					document.RegForm.genepass.value='';
+					$("#genepass").hide();
 				});
 			{/jq}
 		{/if}
