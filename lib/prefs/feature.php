@@ -2440,7 +2440,7 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_alternate_registration_page' => array(
 			'name' => tra('Alternate Registration Page'),
-			'description' => tra('Makes any access to tiki-registration.php redirect to an alternate page for registration.'),
+			'description' => tra('Makes any access to tiki-register.php redirect to an alternate page for registration.'),
 			'type' => 'text',
 			'default' => 'tiki-register.php',
 		),
