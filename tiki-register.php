@@ -33,7 +33,11 @@ if ($prefs['allowRegister'] != 'y') {
 	die;
 }
 
-global $user;
+global $user, $prefs;
+if (!empty($prefs['feature_alternate_registration_page'])) {
+	header("location: " . $prefs['feature_alternate_registration_page']);
+	die;
+}
 $smarty->assign('user_exists', TikiLib::lib('user')->user_exists($user));
 
 $re = $userlib->get_group_info(isset($_REQUEST['chosenGroup']) ? $_REQUEST['chosenGroup'] : 'Registered');
