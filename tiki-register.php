@@ -34,7 +34,7 @@ if ($prefs['allowRegister'] != 'y') {
 }
 
 global $user, $prefs;
-if (!empty($prefs['feature_alternate_registration_page'])) {
+if (!empty($prefs['feature_alternate_registration_page']) && $prefs['feature_alternate_registration_page'] !== 'tiki-register.php') {
 	header("location: " . $prefs['feature_alternate_registration_page']);
 	die;
 }
