@@ -2438,6 +2438,12 @@ function prefs_feature_list($partial = false)
 			'type' => 'flag',
 			'default' => 'n',
 		),
+		'feature_alternate_registration_page' => array(
+			'name' => tra('Alternate Registration Page'),
+			'description' => tra('Makes any access to tiki-registration.php redirect to an alternate page for registration.'),
+			'type' => 'text',
+			'default' => 'tiki-register.php',
+		),
         'feature_loadbalancer' => array(
             'name' => tra('Load Balancer'),
             'description' => tra('Enable this only if the server is behind a load balancer (or reverse proxy), this allow tiki to log the IP of the user, instead of the IP of the proxy server'),

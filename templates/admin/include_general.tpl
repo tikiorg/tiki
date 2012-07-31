@@ -239,6 +239,7 @@
 				</div>
 				{preference name='url_anonymous_page_not_found'}
 				{preference name='url_after_validation'}
+				{preference name='feature_alternate_registration_page'}
 			</fieldset>
 
 			<fieldset>
