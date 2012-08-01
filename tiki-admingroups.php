@@ -145,6 +145,7 @@ if (isset($_REQUEST["save"]) and isset($_REQUEST["olgroup"]) and !empty($_REQUES
 	}
 	$_REQUEST["group"] = $_REQUEST["name"];
 	$logslib->add_log('admingroups', 'modified group ' . $_REQUEST["olgroup"] . ' to ' . $_REQUEST["group"]);
+	$cookietab = 1;
 }
 // Process a form to remove a group
 if (isset($_REQUEST["action"])) {
@@ -277,7 +278,7 @@ if (!empty($_REQUEST["group"])) {
 	} else {
 		 $re['isWatching'] = false;
 	}
-	if ($cookietab == '1') $cookietab = "2";
+	if ($cookietab == '1' && !isset($_REQUEST["save"])) $cookietab = "2";
 } else {
 	$allgroups = $userlib->list_all_groups();
 	foreach ($allgroups as $rr) {
