@@ -46,7 +46,7 @@ function smarty_function_menu($params, $smarty)
 		$menu_cookie = 'y';
 	}
 	$smarty->assignByRef('menu_cookie', $menu_cookie);
-	if ($css !== 'n' && $prefs['feature_cssmenus'] == 'y') {
+	if ($css !== 'n' && $prefs['feature_cssmenus'] == 'y' && $drilldown != 'y') {
 		static $idCssmenu = 0;
 		if (empty($type)) {
 			$type = 'vert';
@@ -60,6 +60,8 @@ function smarty_function_menu($params, $smarty)
 		} else {
 			$smarty->assign('idCssmenu', $css_id);
 		}
+	} elseif ($drilldown == 'y') {
+		$tpl = 'tiki-user_drilldownmenu.tpl';
 	} else {
 		$tpl = 'tiki-user_menu.tpl';
 	}

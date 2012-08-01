@@ -2031,6 +2031,14 @@ function prefs_feature_list($partial = false)
 			'help' => 'Structure',
 			'default' => 'n',
 		),
+		'feature_wiki_structure_drilldownmenu' => array(
+			'name' => tra('Structures Drill Down Menu'),
+			'type' => 'flag',
+			'help' => 'Structure',
+			'keywords' => 'wiki ajax structure',
+			'description' => tra('Ajax style drill down menu for structures'),
+			'default' => 'n',
+		),
 		'feature_wiki_open_as_structure' => array(
 			'name' => tra('Open page as structure'),
 			'type' => 'flag',
