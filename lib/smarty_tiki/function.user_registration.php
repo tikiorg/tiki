@@ -7,7 +7,7 @@
 
 function smarty_function_user_registration($params, $smarty)
 {
-	global $prefs, $userlib, $https_mode, $base_url_https, $registrationlib;
+	global $prefs, $userlib, $https_mode, $base_url_https, $registrationlib, $user;
 
 	if ($prefs['allowRegister'] != 'y') {
 		return;
