@@ -71,9 +71,9 @@ function smarty_function_user_registration($params, $smarty)
 			}
 		} else if (is_a($result, 'RegistrationError')) {
 			$errorreportlib->report($result->msg);
-		} else if (is_string($result)) {
+		} else if (is_string($result) && $registrationlib->merged_prefs['userTracker'] !== 'y') {	// more to do for usertrackers
 			return $result;
-		} elseif (!empty($result['msg'])) {
+		} elseif (!empty($result['msg']) && $registrationlib->merged_prefs['userTracker'] !== 'y') {
 			return $result['msg'];
 		}
 
@@ -127,6 +127,8 @@ function smarty_function_user_registration($params, $smarty)
 							'',
 							isset($_REQUEST['chosenGroup']) ? $_REQUEST['chosenGroup'] : 'Registered'
 						);
+
+						return $smarty->getTemplateVars('msg');	// smarty var contains the send_validation_email feedback
 					}
 				}
 
