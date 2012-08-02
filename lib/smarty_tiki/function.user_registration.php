@@ -92,6 +92,7 @@ function smarty_function_user_registration($params, $smarty)
 			$needs_validation_js = false;
 			include_once ('lib/wiki-plugins/wikiplugin_tracker.php');
 			if (isset($_REQUEST['name'])) $user = $_REQUEST['name']; // so that one can set user preferences at registration time
+			$_REQUEST['iTRACKER'] = 1;	// only one tracker plugin on registration
 			if ($registrationlib->merged_prefs["user_register_prettytracker"] == 'y' && !empty($registrationlib->merged_prefs["user_register_prettytracker_tpl"])) {
 				if (substr($registrationlib->merged_prefs["user_register_prettytracker_tpl"], -4) == ".tpl") {
 					$userTrackerData = wikiplugin_tracker('', array('trackerId' => $re['usersTrackerId'], 'fields' => $re['registrationUsersFieldIds'], 'showdesc' => 'y', 'showmandatory' => 'y', 'embedded' => 'n', 'action' => tra('Register'), 'registration' => 'y', 'tpl' => $re["user_register_prettytracker_tpl"], 'userField' => $re['usersFieldId'], 'outputwiki' => $outputwiki, 'outputtowiki' => $outputtowiki));
