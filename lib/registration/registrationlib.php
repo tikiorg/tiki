@@ -512,7 +512,8 @@ class RegistrationLib extends TikiLib
 							'validateRegistration' => $prefs['validateRegistration'],
 							'userTracker' => $prefs['userTracker'],
 							'user_register_prettytracker' => $prefs['user_register_prettytracker'],
-							'user_register_prettytracker_tpl' => $prefs['user_register_prettytracker_tpl']
+							'user_register_prettytracker_tpl' => $prefs['user_register_prettytracker_tpl'],
+							'http_referer_registration_check' => $prefs['http_referer_registration_check'],
 			);
 
 			// local groups

@@ -58,8 +58,18 @@ function smarty_function_user_registration($params, $smarty)
 		check_ticket('register');
 		$cookie_name = $prefs['session_cookie_name'];
 
-		if ( ini_get('session.use_cookie') && ! isset( $_COOKIE[$cookie_name] ) )
+		if ( ini_get('session.use_cookie') && ! isset( $_COOKIE[$cookie_name] ) ) {
 			$errorreportlib->report(tra("You have to enable cookies to be able to login to this site"));
+			return '';
+		}
+
+		if ($registrationlib->merged_prefs['http_referer_registration_check'] === 'y') {
+			global $base_host;
+			if (!isset($_SERVER['HTTP_REFERER']) || strpos($_SERVER['HTTP_REFERER'], $base_host) === false) {
+				$errorreportlib->report(tra('Request not from this host.'));
+				return '';
+			}
+		}
 
 		$smarty->assign('errortype', 'no_redirect_login');
 

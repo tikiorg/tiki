@@ -22,5 +22,11 @@ function prefs_http_list()
 			'type' => 'flag',
 			'default' => 'n',
 		),
-	);	
+		'http_referer_registration_check' => array(
+			'name' => tra('Registration referrer check'),
+			'description' => tra('Use the HTTP referrer to check registration POST is sent from same host. (May not work on some setups.)'),
+			'type' => 'flag',
+			'default' => 'y',
+		),
+	);
 }

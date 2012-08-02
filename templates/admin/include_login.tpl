@@ -61,6 +61,7 @@
 						</div>
 					{/if}
 					{preference name=generate_password}
+					{preference name=http_referer_registration_check}
 					<div class="adminoptionbox">
 						<div class="adminoptionlabel">
 							<label for="registration_choices">{tr}Users can select a group to join at registration:{/tr}</label>
