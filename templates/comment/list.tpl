@@ -28,13 +28,13 @@
 						{/if}
 					</div>
 					{if $prefs.comments_notitle eq 'y'}
-						<h6>{tr _0=$comment.userName|userlink _1=$comment.commentDate|tiki_long_datetime}Comment posted by %0 on %1{/tr}</h6>
+						<h4>{tr _0=$comment.userName|userlink _1=$comment.commentDate|tiki_long_datetime}Comment posted by %0 on %1{/tr}</h4>
 					{else}
-						<h6 class="title">{$comment.title}</h6>
-						<span class="author_info">{tr _0=$comment.userName|userlink _1=$comment.commentDate|tiki_long_datetime}Comment posted by %0 on %1{/tr}</span>
+						<h4 class="title">{$comment.title}</h4>
+						<span class="avatar">{$comment.userName|avatarize}</span>
+						<div class="author_info">{tr _0=$comment.userName|userlink _1=$comment.commentDate|tiki_long_datetime}Comment posted by %0 on %1{/tr}</div>						
 					{/if}
 					<div class="body">
-						<span class="avatar">{$comment.userName|avatarize}</span>
 						{$comment.parsed}
 					</div>
 
