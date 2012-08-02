@@ -882,6 +882,12 @@ small.description {
 	padding: 5px 0px 15px 0px;
 }
 
+/* Comments (article, blogs) */
+
+#comment-container ol {
+	list-style: none;
+}
+
 /* Comment Annotations */
 
 dl.note-list {
