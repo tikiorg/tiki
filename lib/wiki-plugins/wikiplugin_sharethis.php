@@ -176,7 +176,7 @@ function wikiplugin_sharethis($data, $params)
 		$icons = explode('|', $multiple);
 		foreach ($icons as $icon) {
 			$iconcode .= '<a id="ck_' . $icon . '" class="stbar chicklet" href="javascript:void(0);">' 
-							. '<img src="http://w.sharethis.com/chicklets/' . $icon . '.gif" style="margin-right:3px;" />';
+							. '<img src="https://ws.sharethis.com/chicklets/' . $icon . '.gif" style="margin-right:3px;" />';
 			if ($icon == 'sharethis') {
 				$iconcode .= 'ShareThis';
 			}
@@ -228,7 +228,7 @@ function wikiplugin_sharethis($data, $params)
 	// put all the options together
 
 	$sharethiscode = "~hc~ ))ShareThis(( Bookmark Button BEGIN ~/hc~";
-	$sharethiscode .= '<script type="text/javascript" src="http://w.sharethis.com/button/sharethis.js#';
+	$sharethiscode .= '<script type="text/javascript" src="https://ws.sharethis.com/button/sharethis.js#';
 	$sharethiscode .= "type=".$sharethis_options['type'];
 	
 	if (!empty($sharethis_options['buttontext'])) $sharethiscode .= $sep."buttonText=".$sharethis_options['buttontext'];
