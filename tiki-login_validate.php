@@ -43,10 +43,12 @@ if (isset($_REQUEST["user"])) {
 // disallow robots to index page:
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 if ($isvalid) {
+	$wasAdminValidation = false;
 	$info = $userlib->get_user_info($_REQUEST['user']);
 	if ($info['waiting'] == 'a' && $prefs['validateUsers'] == 'y') { // admin validating -> need user email validation now
 		$userlib->send_validation_email($_REQUEST['user'], $info['valid'], $info['email'], '', 'y');
 		$userlib->change_user_waiting($_REQUEST['user'], 'u');
+		$wasAdminValidation = true;
 		$logslib->add_log('register', 'admin validation ' . $_REQUEST['user']);
 	} elseif ($info['waiting'] == 'a' && $prefs['validateRegistration'] == 'y') { //admin validating -> user can log in
 		$userlib->confirm_user($_REQUEST['user']);
@@ -82,7 +84,7 @@ if ($isvalid) {
 			$_SESSION["$user_cookie_site"] = $user;
 		}
 	}
-	if (!empty($prefs['url_after_validation'])) {
+	if (!empty($prefs['url_after_validation']) && !$wasAdminValidation) {
 		header('Location: '.$prefs['url_after_validation']);
 	} else {
 		$smarty->assign('msg', tra("Account validated successfully."));
