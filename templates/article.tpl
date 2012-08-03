@@ -16,7 +16,6 @@
 			{if $show_expdate eq 'y' && $expireDate}{tr}Expires At:{/tr} {$expireDate|tiki_short_datetime} {/if}
 			{if $show_reads eq 'y'}({$reads} {tr}Reads{/tr}){/if}
 		</span>
-		<br />
 	</header>
 
 	{if $use_ratings eq 'y'}
