@@ -9,14 +9,14 @@
 
 class TWVersion
 {
-	var $branch;		// Development cycle
-	var $version;		// This version
+	public $branch;		// Development cycle
+	public $version;		// This version
 	private $latestMinorRelease;		// Latest release in the same major version release series
-	var $latestRelease;		// Latest release
+	public $latestRelease;		// Latest release
 	private $isLatestMajorVersion; // Whether or not the current major version is the latest
-	var $releases;		// Array of all releases from website
-	var $star;			// Star being used for this version tree
-	var $svn;			// Is this a Subversion version or a package?
+	public $releases;		// Array of all releases from website
+	public $star;			// Star being used for this version tree
+	public $svn;			// Is this a Subversion version or a package?
 
 	function TWVersion()
 	{
