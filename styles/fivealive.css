@@ -1173,7 +1173,7 @@ body.tiki_cms h1 a.pagetitle:hover {border-bottom: 0}
 	padding: 0;
 }
 
-.post .postbody .author,
+.post .author,
 .dirsite {
 	background: #c2eef8;
 	float: none;
