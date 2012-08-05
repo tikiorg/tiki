@@ -275,6 +275,14 @@
 				</div>
 			</fieldset>
 
+			<fieldset>
+				<legend class="heading">{tr}Namespace{/tr}</legend>
+
+				{preference name=namespace_enabled}
+				<div class="adminoptionboxchild" id="namespace_enabled_childcontainer">
+					{preference name=namespace_separator}
+				</div>
+			</fieldset>
 
 		{/tab}
 

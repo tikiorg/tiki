@@ -12,7 +12,9 @@ function prefs_namespace_list()
 			'name' => tr('Namespace'),
 			'description' => tr('Enable namespaces for wiki pages.'),
 			'type' => 'flag',
-			'default' => 'y',
+			'default' => 'n',
+			'help' => 'Namespace',
+			'tags' => array('experimental'),
 		),
 		'namespace_separator' => array(
 			'name' => tr('Namespace separator'),
