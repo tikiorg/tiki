@@ -17,19 +17,39 @@ class Tiki_Version_Checker
 
 	function check($callback)
 	{
+		$upgrades = array();
+
 		$content = call_user_func($callback, "http://tiki.org/{$this->cycle}.cycle");
 		$versions = $this->getSupportedVersions($content);
 
+		$currentIsSupported = false;
+
 		foreach ($versions as $supported) {
 			if ($supported->getMajor() == $this->version->getMajor()) {
+				$currentIsSupported = true;
+
 				if ($supported->isUpgradeTo($this->version)) {
-					return new Tiki_Version_Upgrade($this->version, $supported);
-				} else {
-					return null;
+					$upgrades[] = new Tiki_Version_Upgrade($this->version, $supported, true);
 				}
 			}
 		}
 
+		$max = $this->getLatestVersion($versions);
+
+		if ($max->isUpgradeTo($this->version)) {
+			$upgrades[] = new Tiki_Version_Upgrade($this->version, $max, ! $currentIsSupported);
+		}
+
+		return $upgrades;
+	}
+
+	private function getSupportedVersions($content)
+	{
+		return array_filter(array_map(array('Tiki_Version_Version', 'get'), explode("\n", $content)));
+	}
+
+	private function getLatestVersion($versions)
+	{
 		$max = array_shift($versions);
 
 		foreach ($versions as $candidate) {
@@ -38,14 +58,7 @@ class Tiki_Version_Checker
 			}
 		}
 
-		if ($max->isUpgradeTo($this->version)) {
-			return new Tiki_Version_Upgrade($this->version, $max);
-		}
-	}
-
-	function getSupportedVersions($content)
-	{
-		return array_filter(array_map(array('Tiki_Version_Version', 'get'), explode("\n", $content)));
+		return $max;
 	}
 }
 

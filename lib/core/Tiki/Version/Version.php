@@ -54,5 +54,24 @@ class Tiki_Version_Version
 			return false;
 		}
 	}
+
+	function __toString()
+	{
+		$string = "{$this->major}.{$this->minor}";
+
+		if ($this->extra) {
+			$string .= ".{$this->extra}";
+		}
+
+		if ($this->sub) {
+			$string .= $this->sub;
+
+			if ($this->number) {
+				$string .= $this->number;
+			}
+		}
+		
+		return $string;
+	}
 }
 

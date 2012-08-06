@@ -21,6 +21,14 @@ class TikiVersionTest extends PHPUnit_Framework_TestCase
 		$this->assertEquals($version, Tiki_Version_Version::get($string));
 	}
 
+	/**
+	 * @dataProvider versions
+	 */
+	function testWriteVersions($string, $version)
+	{
+		$this->assertEquals($string, (string) $version);
+	}
+
 	function testVerifyLatestVersion()
 	{
 		$checker = new Tiki_Version_Checker;
@@ -37,10 +45,10 @@ O;
 		});
 
 		$this->assertEquals('http://tiki.org/regular.cycle', $out);
-		$this->assertNull($response);
+		$this->assertEquals(array(), $response);
 	}
 
-	function testVerifyPastSupportedVersionVersion()
+	function testVerifyPastSupportedVersion()
 	{
 		$checker = new Tiki_Version_Checker;
 		$checker->setCycle('regular');
@@ -55,7 +63,9 @@ O;
 O;
 		});
 
-		$this->assertNull($response);
+		$this->assertEquals(array(
+			new Tiki_Version_Upgrade('8.4', '9.0', false),
+		), $response);
 	}
 
 	function testVerifyMinorUpdate()
@@ -73,7 +83,10 @@ O;
 O;
 		});
 
-		$this->assertEquals(new Tiki_Version_Upgrade('8.2', '8.4'), $response);
+		$this->assertEquals(array(
+			new Tiki_Version_Upgrade('8.2', '8.4', true),
+			new Tiki_Version_Upgrade('8.2', '9.0', false),
+		), $response);
 	}
 
 	function testVerifyUpgradePrerelease()
@@ -91,7 +104,10 @@ O;
 O;
 		});
 
-		$this->assertEquals(new Tiki_Version_Upgrade('8.4beta3', '8.4'), $response);
+		$this->assertEquals(array(
+			new Tiki_Version_Upgrade('8.4beta3', '8.4', true),
+			new Tiki_Version_Upgrade('8.4beta3', '9.0', false),
+		), $response);
 	}
 
 	function testUpgradeFromUnsupportedVersion()
@@ -109,7 +125,9 @@ O;
 O;
 		});
 
-		$this->assertEquals(new Tiki_Version_Upgrade('4.3', '9.0'), $response);
+		$this->assertEquals(array(
+			new Tiki_Version_Upgrade('4.3', '9.0', true),
+		), $response);
 	}
 
 	function testCurrentVersionMoreRecent()
@@ -127,7 +145,24 @@ O;
 O;
 		});
 
-		$this->assertNull($response);
+		$this->assertEquals(array(), $response);
+	}
+
+	/**
+	 * @dataProvider upgradeMessages
+	 */
+	function testObtainMessages($string, $upgrade)
+	{
+		$this->assertEquals($string, $upgrade->getMessage());
+	}
+
+	function upgradeMessages()
+	{
+		return array(
+			array('Version 8.2 is no longer supported. A minor upgrade to 8.4 is required.', new Tiki_Version_Upgrade('8.2', '8.4', true)),
+			array('Version 4.3 is no longer supported. A major upgrade to 9.0 is required.', new Tiki_Version_Upgrade('4.3', '9.0', true)),
+			array('Version 8.4 is still supported. However, a major upgrade to 9.0 is available.', new Tiki_Version_Upgrade('8.4', '9.0', false)),
+		);
 	}
 }
 

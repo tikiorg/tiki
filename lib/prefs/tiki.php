@@ -23,6 +23,18 @@ function prefs_tiki_list()
 			'default' => 604800,
 			'tags' => array('basic'),
 		),
+		'tiki_release_cycle' => array(
+			'name' => tr('Upgrade cycle'),
+			'type' => 'list',
+			'default' => 'regular',
+			'dependencies' => array(
+				'feature_version_checks',
+			),
+			'options' => array(
+				'regular' => tr('Regular (6 months)'),
+				'longterm' => tr('Long Term Support'),
+			),
+		),
 		'tiki_minify_javascript' => array(
 			'name' => tra('Minify JavaScript'),
 			'description' => tra('Compress JavaScript files used in the page into a single file to be distributed statically. Changes to JavaScript files will require cache to be cleared. Uses http://code.google.com/p/minify/'),

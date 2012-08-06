@@ -103,6 +103,7 @@ $systemConfiguration = new Zend_Config(
 global $user_overrider_prefs;
 $user_overrider_prefs = array();
 require_once 'lib/setup/prefs.php';
+$prefs['language'] = 'en';
 
 ini_set('display_errors', 'on');
 error_reporting(CUSTOM_ERROR_LEVEL);
