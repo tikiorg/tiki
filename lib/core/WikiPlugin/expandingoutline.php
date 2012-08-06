@@ -14,7 +14,6 @@ class WikiPlugin_expandingoutline extends WikiPlugin_HtmlBase
 	public $filter = 'rawhtml_unsafe';
 	public $icon = 'img/icons/mime/html.png';
 	public $tags = array( 'basic' );
-	public $np = false;
 
 	function __construct()
 	{
@@ -92,7 +91,7 @@ class WikiPlugin_expandingoutline extends WikiPlugin_HtmlBase
 JQ
 );
 
-		$result = "~np~<style>
+		$result = "<style>
 			#$id table {
 				width: 100%;
 				border-collapse:collapse;
@@ -111,8 +110,7 @@ JQ
 				white-space: nowrap;
 
 			}
-		</style>~/np~" .
-			$parser->parsePlugin($data);
+		</style>" . $parser->parsePlugin($data);
 
 		$parser->list = $regularList;
 
