@@ -78,7 +78,7 @@ class MimeLib
 		if ($finfo = $this->get_finfo()) {
 			if (file_exists($path)) {
 				$type = $finfo->file($path);
-				return $this->clean($type);
+				return $type;
 			}
 		}
 	}
@@ -87,7 +87,7 @@ class MimeLib
 	{
 		if ($finfo = $this->get_finfo()) {
 			$type = $finfo->buffer($content);
-			return $this->clean($type);
+			return $type;
 		}
 	}
 
@@ -100,17 +100,11 @@ class MimeLib
 		}
 
 		if ($prefs['tiki_check_file_content'] == 'y' && class_exists('finfo')) {
-			$php53 = defined('FILEINFO_MIME_TYPE');
-			if ($finfo = new finfo($php53 ? FILEINFO_MIME_TYPE : FILEINFO_MIME)) {
+			if ($finfo = new finfo(FILEINFO_MIME_TYPE)) {
 				$this->finfo = $finfo;
 				return $finfo;
 			}
 		}
-	}
-
-	private function clean($type)
-	{
-		return defined('FILEINFO_MIME_TYPE') ? $type : reset(explode(';', $type));
 	}
 }
 
