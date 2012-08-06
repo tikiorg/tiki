@@ -585,25 +585,22 @@ if ( ( isset($prefs['tiki_allow_trust_input']) && $prefs['tiki_allow_trust_input
 	unset($tmp);
 }
 
-if ( isset($prefs['tiki_check_file_content']) && $prefs['tiki_check_file_content'] == 'y' && count($_FILES)) {
-	$php53 = defined('FILEINFO_MIME_TYPE');
-	if ($finfo = new finfo($php53 ? FILEINFO_MIME_TYPE : FILEINFO_MIME)) {
-		foreach ($_FILES as $key => & $upload_file_info) {
-			if (is_array($upload_file_info['tmp_name'])) {
-				foreach ($upload_file_info['tmp_name'] as $k => $tmp_name) {
-					if ($tmp_name) {
-						$type = $finfo->file($tmp_name);
-						$upload_file_info['type'][$k] = $php53 ? $type : reset(explode(';', $type));
-					}
+if (count($_FILES)) {
+	$mimelib = TikiLib::lib('mime');
+
+	foreach ($_FILES as $key => & $upload_file_info) {
+		if (is_array($upload_file_info['tmp_name'])) {
+			foreach ($upload_file_info['tmp_name'] as $k => $tmp_name) {
+				if ($tmp_name) {
+					$type = $mimelib->from_path($upload_file_info['name'][$k], $tmp_name);
+					$upload_file_info['type'][$k] = $type;
 				}
-			} elseif ($upload_file_info['tmp_name']) {
-				$type = $finfo->file($upload_file_info['tmp_name']);
-				$upload_file_info['type'] = $php53 ? $type : reset(explode(';', $type));
 			}
+		} elseif ($upload_file_info['tmp_name']) {
+			$type = $mimelib->from_path($upload_file_info['name'], $upload_file_info['tmp_name']);
+			$upload_file_info['type'] = $type;
 		}
 	}
-
-	unset($finfo);
 }
 
 // deal with old request globals (e.g. used by Smarty)

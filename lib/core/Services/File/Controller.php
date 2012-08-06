@@ -30,11 +30,8 @@ class Services_File_Controller
 
 		$data = base64_decode($data);
 
-		if (function_exists('finfo_buffer')) {
-			$php53 = defined('FILEINFO_MIME_TYPE');
-			$finfo = new finfo($php53 ? FILEINFO_MIME_TYPE : FILEINFO_MIME);
-			$type = $finfo->buffer($data);
-		}
+		$mimelib = TikiLib::lib('mime');
+		$type = $mimelib->from_content($name, $data);
 
 		if ($fileId) {
 			$this->updateFile($gal_info, $name, $size, $type, $data, $fileId);

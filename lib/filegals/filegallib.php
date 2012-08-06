@@ -695,7 +695,6 @@ class FileGalLib extends TikiLib
 	function process_batch_file_upload($galleryId, $file, $user, $description, &$errors)
 	{
 		include_once ('lib/pclzip/pclzip.lib.php');
-		include_once ('lib/mime/mimelib.php');
 		$extract_dir = 'temp/'.basename($file).'/';
 		mkdir($extract_dir);
 		$archive = new PclZip($file);
@@ -748,7 +747,7 @@ class FileGalLib extends TikiLib
 
 				$size = filesize($extract_dir.$file);
 				$name = $file;
-				$type = tiki_get_mime($extract_dir.$file);
+				$type = TikiLib::lib('mime')->from_path($file, $extract_dir.$file);
 				$fileId = $this->insert_file($galleryId, $name, $description, $name, $data, $size, $type, $user, $fhash);
 				unlink($extract_dir.$file);
 			}
@@ -3388,17 +3387,8 @@ class FileGalLib extends TikiLib
 				}
 			}
 
-			if (class_exists('finfo')) {
-				$php53 = defined('FILEINFO_MIME_TYPE');
-				$finfo = new finfo($php53 ? FILEINFO_MIME_TYPE : FILEINFO_MIME);
-				$type = $finfo->buffer($result);
-
-				if (! $php53) {
-					$type = reset(explode(';', $type));
-				}
-			} else {
-				$type = $response->getHeader('Content-Type');
-			}
+			$mimelib = TikiLib::lib('mime');
+			$type = $mimelib->from_content($name, $result);
 
 			$size = function_exists('mb_strlen') ? mb_strlen($result, '8bit') : strlen($result);
 
@@ -3567,7 +3557,7 @@ class FileGalLib extends TikiLib
 	{
 		global $user;
 		$tikilib = TikiLib::lib('tiki');
-		include_once('lib/mime/mimelib.php');
+		$mimelib = TikiLib::lib('mime');
 		$argumentParser = new WikiParser_PluginArgumentParser;
 		$files = array();
 		if (strpos($page_info['data'], 'img/wiki_up') === false) {
@@ -3587,7 +3577,7 @@ class FileGalLib extends TikiLib
 							continue;
 						}
 						$name = preg_replace('|.*/([^/]*)|', '$1', $val);
-						$fileId = $this->insert_file($fgalId, $name, 'Used in '.$page_info['pageName'], $name, $data, strlen($data), tiki_get_mime($name, 'application/octet-stream', $val), $user, '', 'wiki_up conversion');
+						$fileId = $this->insert_file($fgalId, $name, 'Used in '.$page_info['pageName'], $name, $data, strlen($data), $mimelib->from_path($name, $val), $user, '', 'wiki_up conversion');
 						if (empty($fileId)) {
 							$errors[] = tra('Cannot upload this file').' '.$val.' '.tra('Page:').' '.$page_info['pageName'];
 							continue;
@@ -3622,33 +3612,9 @@ class FileGalLib extends TikiLib
 		if ($fileData['filetype'] != "application/octet-stream") {
 			return $fileData['filetype'];
 		}
-		$suffix=strtolower(preg_replace('/.*\./', '', $fileData['filename']));
-		switch($suffix) {
-			case 'jpg' :
-			case 'jpeg' :	$filetype = 'image/jpeg';
-							break;
-			case 'gif' :	$filetype = 'image/gif';
-							break;
-			case 'png' :	$filetype = 'image/png';
-							break;
-			case 'tif' :
-			case 'tiff' :	$filetype = 'image/tiff';
-							break;
-			case 'svg' :	$filetype = 'image/svg+xml';
-							break;
-			case 'pdf' :	$filetype = 'application/pdf';
-							break;
-			case 'doc' :	$filetype = 'application/msword';
-							break;
-			case 'ppt' :	$filetype = 'application/vnd.ms-powerpoint';
-							break;
-			case 'xls' :	$filetype = 'application/vnd.ms-excel';
-							break;
-			case 'docx' :	$filetype = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
-							break;
-			default :		$filetype = 'application/octet-stream';
-		}
-		return $filetype;
+
+		$mimelib = TikiLib::lib('mime');
+		return $mimelib->from_filename($fileData['filename']);
 	}
 	
 }

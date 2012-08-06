@@ -2,7 +2,7 @@
 {$headerlib->add_jsfile('lib/jquery/jquery.dcdrilldown.1.2.js')}
 {$headerlib->add_cssfile('lib/jquery/dcdrilldown.css')}
 {jq}
-	$('.dropdownmenuparent a').each(function() {
+	$('.drilldownmenuparent a').each(function() {
 		var me = $(this);
 		if (me.next().find('a').length) {
 			me.append('<span class="sep">&nbsp;&raquo;</span>');
@@ -10,62 +10,60 @@
 		me.prepend('&nbsp;');
 	});
 
-	function hideOtherLists(list) {
-		var lists = $('li.drilldown')
-			.removeClass('active')
-			.not(list);
+	function toggleSiblings(li, visible) {
+		var siblings;
 
-		list.addClass('drilldown active');
+		if (li.find('li').length > 0) {
+			siblings = li.children('ul').children('li');
+			li = siblings.first();
+		} else {
+			siblings = li.siblings();
+		}
+
+		siblings.not(li)[visible ? 'show' : 'fadeOut']();
 	}
 
-	$('.dropdownmenuparent')
+	var ddmp = $('.drilldownmenuparent').data('i', 0);
+	ddmp
 		.bind('actionDrilldown', function(event, element, wrapper, obj) {
-			var list = $('> ul > li', element);
-
-			hideOtherLists(list);
-
-			list.filter('.active').parent().unbind('hover').hover(function() {
-				list.filter('.active').fadeIn();
-			}, function() {
-				list.filter('.active').first().siblings().hide();
-			});
-
-			list.filter('.active').first().siblings().hide();
-		})
-		.bind('resetDrilldown', function(event, obj, wrapper) {
-			var list = $('> li',this);
-
-			hideOtherLists(list);
-
-			list.filter('.active').parent().unbind('hover').hover(function() {
-				list.filter('.active').fadeIn();
-			}, function() {
-				list.filter('.active').first().siblings().hide();
-			});
-
-			list.filter('.active').first().siblings().hide();
+			ddmp.data('i', $('a', element).data('i'));
 		})
 		.dcDrilldown({
 			speed: 'fast',
 			linkType: 'breadcrumb',
 			headerTag: 'span',
 			showCount: false,
-			eventPreventDefault: true,
+			eventPreventDefault: false,
 			horizontal: true
+		})
+		.hover(function(e) {
+			var i = ddmp.data('i'),
+				li = lists.eq(i).parent();
+
+			toggleSiblings(li, true);
+		}, function() {
+			var i = ddmp.data('i'),
+				li = lists.eq(i).parent();
+
+			toggleSiblings(li, false);
 		});
+
+	var lists = ddmp.find('li a');
+	//console.log(lists);
+	ddmp.mouseleave();
 {/jq}
 <style>
 	.dd-header, .dd-header > *, .dd-header > ul > li {
 		display: block ! important;
 		float: left ! important;
 	}
-	.dropdownmenuparent
+	.drilldownmenuparent
 	{
 		position: absolute ! important;
 	}
 </style><br />
 <div class="dd_container">
-	<ul class="dropdownmenuparent">
+	<ul class="drilldownmenuparent">
 		<li>
 			<a href="">{$home_info.pageName}</a>
 			{include file="tiki-user_cssmenu.tpl" drilldownmenu='y'}

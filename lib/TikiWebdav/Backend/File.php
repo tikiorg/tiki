@@ -212,7 +212,6 @@ class TikiWebdav_Backends_File extends ezcWebdavSimpleBackend implements ezcWebd
 		if (empty($content)) $content = '';
 		$filesize = @strlen($content);
 
-		include_once('lib/mime/mimelib.php');
 		if ($prefs['fgal_use_db'] === 'n') {
 			$fhash = md5($name);
 			do {
@@ -223,11 +222,11 @@ class TikiWebdav_Backends_File extends ezcWebdavSimpleBackend implements ezcWebd
 				print_debug("createResource: ". $this->root . '/' . $fhash ." failed\n");	
 				return false;
 			}
-			$mime = tiki_get_mime($name, 'application/octet-stream', $this->root . '/' . $fhash);
+			$mime = TikiLib::lib('mime')->from_path($name, $this->root . '/' . $fhash);
 			$content = '';
 		} else {
 			$fhash = '';
-			$mime = tiki_get_mime_from_content($content, 'application/octet-stream', $name);
+			$mime = TikiLib::lib('mime')->from_content($name, $content);
 		}
 
 		$fileId = $filegallib->insert_file(
@@ -266,7 +265,6 @@ class TikiWebdav_Backends_File extends ezcWebdavSimpleBackend implements ezcWebd
 			return false;
 		}
 
-		include_once('lib/mime/mimelib.php');
 		$name = basename($path);
 		if (empty($content))
 			$content = '';
@@ -277,10 +275,10 @@ class TikiWebdav_Backends_File extends ezcWebdavSimpleBackend implements ezcWebd
 				$fhash = md5(uniqid($fhash));
 			} while (file_exists($this->root . '/' . $fhash));
 
-			$mime = tiki_get_mime($name, 'application/octet-stream', $this->root . '/' . $fhash);
+			$mime = TikiLib::lib('mime')->from_path($name, $this->root . '/' . $fhash);
 		} else {
 			$fhash = '';
-			$mime = tiki_get_mime_from_content($content, 'application/octet-stream', $name);
+			$mime = TikiLib::lib('mime')->from_content($name, $content);
 		}
 
 		print_debug("setResourceContents : $path/$fhash \n");

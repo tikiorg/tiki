@@ -23,8 +23,8 @@ $commentslib = new Comments($dbTiki);
 $info = $commentslib->get_thread_attachment($_REQUEST["attId"]);
 
 if ( empty($info['filetype']) || $info['filetype'] == 'application/x-octetstream' || $info['filetype'] == 'application/octet-stream' ) {
-	include_once('lib/mime/mimelib.php');
-	$info['filetype'] = tiki_get_mime($info['filename'], 'application/octet-stream');
+	$mimelib = TikiLib::lib('mime');
+	$info['filetype'] = $mimelib->from_filename($info['filename']);
 }
 $type = &$info["filetype"];
 $file = &$info["filename"];
