@@ -85,7 +85,7 @@ O;
 
 		$this->assertEquals(array(
 			new Tiki_Version_Upgrade('8.2', '8.4', true),
-			new Tiki_Version_Upgrade('8.2', '9.0', false),
+			new Tiki_Version_Upgrade('8.4', '9.0', false),
 		), $response);
 	}
 
@@ -106,7 +106,7 @@ O;
 
 		$this->assertEquals(array(
 			new Tiki_Version_Upgrade('8.4beta3', '8.4', true),
-			new Tiki_Version_Upgrade('8.4beta3', '9.0', false),
+			new Tiki_Version_Upgrade('8.4', '9.0', false),
 		), $response);
 	}
 

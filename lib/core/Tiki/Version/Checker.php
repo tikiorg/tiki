@@ -22,22 +22,16 @@ class Tiki_Version_Checker
 		$content = call_user_func($callback, "http://tiki.org/{$this->cycle}.cycle");
 		$versions = $this->getSupportedVersions($content);
 
-		$currentIsSupported = false;
-
-		foreach ($versions as $supported) {
-			if ($supported->getMajor() == $this->version->getMajor()) {
-				$currentIsSupported = true;
-
-				if ($supported->isUpgradeTo($this->version)) {
-					$upgrades[] = new Tiki_Version_Upgrade($this->version, $supported, true);
-				}
+		if ($supported = $this->findSupportedInBranch($versions)) {
+			if ($supported->isUpgradeTo($this->version)) {
+				$upgrades[] = new Tiki_Version_Upgrade($this->version, $supported, true);
 			}
 		}
 
 		$max = $this->getLatestVersion($versions);
 
 		if ($max->isUpgradeTo($this->version)) {
-			$upgrades[] = new Tiki_Version_Upgrade($this->version, $max, ! $currentIsSupported);
+			$upgrades[] = new Tiki_Version_Upgrade($supported ?: $this->version, $max, $supported === false);
 		}
 
 		return $upgrades;
@@ -46,6 +40,17 @@ class Tiki_Version_Checker
 	private function getSupportedVersions($content)
 	{
 		return array_filter(array_map(array('Tiki_Version_Version', 'get'), explode("\n", $content)));
+	}
+
+	private function findSupportedInBranch($versions)
+	{
+		foreach ($versions as $supported) {
+			if ($supported->getMajor() == $this->version->getMajor()) {
+				return $supported;
+			}
+		}
+
+		return false;
 	}
 
 	private function getLatestVersion($versions)
