@@ -132,8 +132,12 @@ Add a value in first check when you create a new admin page. *}
   <div class="simplebox adminanchors clearfix" >{include file='admin/include_anchors.tpl'}</div>
 {/if}
 
-{if $prefs.tiki_needs_upgrade eq 'y'}
-<div class="simplebox highlight">{tr}A new version of Tiki, <b>{$prefs.tiki_release}</b>, is available. You are currently running <b>{$tiki_version}</b>. Please visit <a href="http://tiki.org/Download">tiki.org/Download</a>.{/tr}</div>
+{if $upgrade_messages|count}
+	<div class="simplebox highlight">
+		{foreach from=$upgrade_messages item=um}
+			<p>{$um|escape}</p>
+		{/foreach}
+	</div>
 {/if}
 
 {if $tikifeedback}

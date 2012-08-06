@@ -88,8 +88,8 @@ class TikiLib extends TikiDb_Bridge
 			global $cachelib; include_once('lib/cache/cachelib.php');
 			return self::$libraries[$name] = $cachelib;
 		case 'memcache':
-				global $memcachelib; include_once('lib/cache/memcachelib.php');
-				return self::$libraries[$name] = $memcachelib;
+			global $memcachelib; include_once('lib/cache/memcachelib.php');
+			return self::$libraries[$name] = $memcachelib;
 		case 'userprefs':
 			global $userprefslib; include_once('lib/userprefs/userprefslib.php');
 			return self::$libraries[$name] = $userprefslib;

@@ -621,62 +621,33 @@ if (isset($admintitle) && isset($description)) {
 }
 
 // VERSION TRACKING
-// If the user elected to force a check.
-if (!empty($_GET['forcecheck'])) {
-	$smarty->assign('tiki_release', $TWV->getLatestMinorRelease());
-	if (!$TWV->isLatestMinorRelease()) {
-		$prefs['tiki_needs_upgrade'] = 'y';
-	} else {
-		$prefs['tiki_needs_upgrade'] = 'n';
-		add_feedback(null, tr('Current version is up to date : <b>%0</b>', $TWV->version), 3);
-	}
-	$smarty->assign('tiki_needs_upgrade', $prefs['tiki_needs_upgrade']);
-	// See if a major release is available.
-	if (!$TWV->isLatestMajorVersion()) {
-		add_feedback(null, tr('A new %0 major release branch is available.', $TWV->branch.'('.$TWV->latestRelease.')'), 3);
-	}
-	$tikilib->set_preference('tiki_needs_upgrade', $prefs['tiki_needs_upgrade']);
-	$tikilib->set_preference('tiki_release', $TWV->getLatestMinorRelease());
-}
+$forcecheck = ! empty($_GET['forcecheck']);
 
 // Versioning feature has been enabled, so if the time is right, do a live
 // check, otherwise display the stored data.
-if ($prefs['feature_version_checks'] == 'y') {
-	// Pull version check database settings
-	$tiki_version_last_check = $tikilib->get_preference('tiki_version_last_check', 0);
-	$tiki_version_check_frequency = $tikilib->get_preference('tiki_version_check_frequency', 0);
-	// Time for a version check!
-	if ($tikilib->now > ($prefs['tiki_version_last_check'] + $prefs['tiki_version_check_frequency'])) {
-		$tikilib->set_preference('tiki_version_last_check', $tikilib->now);
-		$smarty->assign('tiki_version', $TWV->version);
-		if (!$TWV->isLatestMinorRelease()) {
-			$prefs['tiki_needs_upgrade'] = 'y';
-			$tikilib->set_preference('tiki_release', $TWV->getLatestMinorRelease());
-			$smarty->assign('tiki_release', $TWV->getLatestMinorRelease());
-			if (!$TWV->isLatestMajorVersion()) {
-				add_feedback(null, tr('A new %0 major release branch is available.', $TWV->branch.'('.$TWV->latestRelease.')'), 3, 1);
-			}
-		} else {
-			$prefs['tiki_needs_upgrade'] = 'n';
-			$tikilib->set_preference('tiki_release', $TWV->version);
-			$smarty->assign('tiki_release', $TWV->version);
+if ($prefs['feature_version_checks'] == 'y' || $forcecheck) {
+	$checker = new Tiki_Version_Checker;
+	$checker->setVersion($TWV->version);
+	$checker->setCycle($prefs['tiki_release_cycle']);
+
+	$expiry = $tikilib->now - $prefs['tiki_version_check_frequency'];
+	$upgrades = $checker->check(function ($url) use ($expiry) {
+		$cachelib = TikiLib::lib('cache');
+		$tikilib = TikiLib::lib('tiki');
+
+		$content = $cachelib->getCached($url, 'http', $expiry);
+
+		if ($content === false) {
+			$content = $tikilib->httprequest($url);
+			$cachelib->cacheItem($url, $content, 'http');
 		}
-		$tikilib->set_preference('tiki_needs_upgrade', $prefs['tiki_needs_upgrade']);
-		$smarty->assign('tiki_needs_upgrade', $prefs['tiki_needs_upgrade']);
-	} else {
-		$tiki_needs_upgrade = $tikilib->get_preference('tiki_needs_upgrade', 'n');
-		$smarty->assign('tiki_needs_upgrade', $tiki_needs_upgrade);
-		$tiki_release = $tikilib->get_preference('tiki_release', $TWV->version);
-		$smarty->assign('tiki_release', $tiki_release);
-		// Normalize database if necessary.  Usually when an upgrade has
-		// actually been done, but for whatever reason the database has
-		// not had its version tracking info updated.
-		if ($tiki_needs_upgrade == 'y' && version_compare($TWV->version, $tiki_release, '>=')) {
-			$tiki_needs_upgrade = 'n';
-			$tikilib->set_preference('tiki_needs_upgrade', $tiki_needs_upgrade);
-			$smarty->assign('tiki_needs_upgrade', $tiki_needs_upgrade);
-		}
-	}
+
+		return $content;
+	});
+
+	$smarty->assign('upgrade_messages', array_map(function ($upgrade) {
+		return $upgrade->getMessage();
+	}, $upgrades));
 }
 
 foreach ($icons as &$icon) {
