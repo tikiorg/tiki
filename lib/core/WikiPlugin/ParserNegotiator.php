@@ -58,9 +58,9 @@ class WikiPlugin_ParserNegotiator
 		$this->body = & $pluginDetails['body'];
 		$this->key = $pluginDetails['key'];
 
+		$this->exists = $this->exists(true);
 		$this->info = $this->info();
 		$this->fingerprint = $this->fingerprint();
-		$this->exists = $this->exists();
 		$this->index = $this->incrementIndex();
 
 		self::$pluginDetails[$this->key] = &$pluginDetails;
@@ -176,14 +176,14 @@ class WikiPlugin_ParserNegotiator
 		return file_exists(str_replace("_" , "/", "lib/core/" . $this->className . '.php')) == true && class_exists($this->className) == true;
 	}
 
-	private function exists()
+	private function exists($include = false)
 	{
 		$phpName = 'lib/wiki-plugins/wikiplugin_';
 		$phpName .= strtolower($this->name) . '.php';
 
 		$exists = file_exists($phpName);
 
-		if ( $exists ) {
+		if ( $include && $exists ) {
 			include_once $phpName;
 		}
 
@@ -336,8 +336,9 @@ class WikiPlugin_ParserNegotiator
 			}
 		}
 
-		if ( ! $this->exists )
+		if ( ! $this->exists ) {
 			return $known[$this->name] = false;
+		}
 
 		$func_name_info = "wikiplugin_{$this->name}_info";
 
