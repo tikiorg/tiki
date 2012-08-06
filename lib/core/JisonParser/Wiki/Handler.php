@@ -267,6 +267,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	function plugin(&$pluginDetails)
 	{
 		$negotiator = $this->getPluginNegotiator();
+		$pluginDetails['body'] = $this->unprotectSpecialChars($pluginDetails['body'], true);
 		$negotiator->setDetails($pluginDetails);
 
 		if ($this->Parser->option['skipvalidation'] == false) {

@@ -551,7 +551,7 @@ $("#' . $id . '").click( function(event) {
 				. ', '
 				. json_encode($this->args)
 				. ', '
-				. json_encode($this->toSyntax())
+				. json_encode($this->body)
 				. ' , event.target);
 	return false;
 });
