@@ -92,7 +92,7 @@ class WikiPlugin_ParserNegotiator
 					return $this->key;
 				} else {
 
-					//$this->applyFilters();
+					$this->applyFilters();
 					$button = $this->button(false);
 					$result = $this->class->exec($this->body, $this->args, $this->index, $this->parser, $button);
 					return $result;
