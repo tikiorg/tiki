@@ -22,6 +22,9 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	private static $pluginIndexes = array();
 	private $pluginNegotiators = array();
 
+	/* np tracking */
+	public $npStack = false; //There can only be 1 active np stack
+
 	/* header tracking */
 	public $header;
 
@@ -161,7 +164,8 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	function hasWikiSyntax(&$input)
 	{
 		foreach($this->syntaxStatingChars as $char) {
-			if (strstr($input, $char)) return true;
+			$pos = strstr($input, $char);
+			if ($pos !== FALSE) return true;
 		}
 		return false;
 	}
@@ -327,9 +331,9 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		$this->pluginStackCount++;
 	}
 
-	function isPlugin()
+	function isContent()
 	{
-		return ($this->pluginStackCount > 0);
+		return ($this->pluginStackCount > 0 || $this->npStack == true ? true : null);
 	}
 
 	static function getUnparsedPluginBodies($data)
@@ -467,7 +471,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	function np($content)
 	{
 		if ($this->Parser->option['parseNps'] == true) {
-			$content = substr($content, 4, -5);
+			$content = $this->unprotectSpecialChars($content);
 		}
 
 		return $content;
