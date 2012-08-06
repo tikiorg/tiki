@@ -338,12 +338,12 @@ if ( isset($_GET['preview']) || isset($_GET['thumbnail']) || isset($_GET['displa
 	}
 }
 
-include_once('lib/mime/mimelib.php');
+$mimelib = TikiLib::lib('mime');
 if ( empty($info['filetype']) || $info['filetype'] == 'application/x-octetstream' || $info['filetype'] == 'application/octet-stream' ) {
-	$info['filetype'] = tiki_get_mime($info['filename'], 'application/octet-stream', $filepath);
+	$info['filetype'] = $mimelib->from_path($info['filename'], $filepath);
 
 } else if (isset($_GET['thumbnail']) && strpos($info['filetype'], 'image') === false) {	// use thumb format
-	$info['filetype'] = tiki_get_mime_from_content($content, $thumbnail_format);
+	$info['filetype'] = $mimelib->from_content($info['filename'], $content);
 }
 header('Content-type: '.$info['filetype']);
 
