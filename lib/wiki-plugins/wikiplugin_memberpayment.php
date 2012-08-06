@@ -75,6 +75,13 @@ function wikiplugin_memberpayment_info()
 				'filter' => 'int',
 				'default' => 0,
 			),
+			'periodslabel' => array(
+				'required' => false,
+				'name' => tra('Periods Label'),
+				'description' => tra('Give the period a label'),
+				'filter' => 'text',
+				'default' => 'Number of periods:',
+			),
 		),
 	);
 }
@@ -89,9 +96,9 @@ function wikiplugin_memberpayment( $data, $params, $offset )
 	$iPluginMemberpayment++;
 	$smarty->assign('iPluginMemberpayment', $iPluginMemberpayment);
 	$params['price'] = floatval($params['price']);
-	$default = array( 'currentuser'=>'n', 'inputtitle'=>'', 'howtitle' => '');
+	$default = array( 'currentuser'=>'n', 'inputtitle'=>'', 'howtitle' => '', 'periodslabel' => 'Number of periods:');
 	$params = array_merge($default, $params);
-
+	$smarty->assign('periodslabel', $params['periodslabel']);
 	if ( ( $info = $userlib->get_group_info($params['group']) ) && ( $info['expireAfter'] > 0 || $info['anniversary'] > '') ) {
 		$smarty->assign('wp_member_offset', $offset);
 		$smarty->assign('wp_member_price', $params['price']);

@@ -702,6 +702,10 @@ if (isset($_REQUEST['user']) and $_REQUEST['user']) {
 			}
 		}
 	}
+
+	if ($prefs['email_due'] > 0) {
+		$userinfo['daysSinceEmailConfirm'] =  floor(($userlib->now - $userinfo['email_confirm']) / (60 * 60 * 24));
+	}
 } else {
 	$userinfo['login'] = '';
 	$userinfo['email'] = '';

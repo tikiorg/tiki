@@ -4,7 +4,16 @@
 	{assign var=sep value=''}
 	{strip}
 
-	<ul id="cssmenu{$idCssmenu}" class="cssmenu{if $menu_type}_{$menu_type}{/if} menu{$menu_info.menuId}">
+
+	{if $drilldownmenu neq 'y'}
+		{assign var="menuId" value="cssmenu{$idCssmenu}"}
+		{assign var="menuClass" value="cssmenu{if $menu_type}_{$menu_type}{/if} menu{$menu_info.menuId}"}
+	{else}
+		{assign var="menuId" value="drilldownmenu{$idCssmenu}"}
+		{assign var="menuClass" value="drilldownmenu{if $menu_type}_{$menu_type}{/if} menu{$menu_info.menuId}"}
+	{/if}
+
+	<ul id="{$menuId}" class="{$menuClass}">
 
 	{foreach key=pos item=chdata from=$menu_channels}
 

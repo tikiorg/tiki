@@ -20,15 +20,15 @@ function wikiplugin_map_info()
 		'params' => array(
 			'scope' => array(
 				'required' => false,
-				'name' => tr('Scope'),
-				'description' => tr('Display the geolocated items represented in the page. (all, center, or custom as a CSS selector)'),
+				'name' => tra('Scope'),
+				'description' => tr('Display the geolocated items represented in the page (all, center, or custom as a CSS selector). Default: center'),
 				'filter' => 'striptags',
 				'default' => 'center',
 			),
 			'controls' => array(
 				'required' => false,
-				'name' => tr('Controls'),
-				'description' => tr('Allows to specify which map controls will be displayed on the map and around it.'),
+				'name' => tra('Controls'),
+				'description' => tr('Allows to specify which map controls will be displayed on the map and around it (controls,layers,search_location)'),
 				'filter' => 'word',
 				'separator' => ',',
 				'default' => wp_map_default_controls(),
@@ -47,8 +47,8 @@ function wikiplugin_map_info()
 			),
 			'center' => array(
 				'requied' => false,
-				'name' => tr('Center'),
-				'description' => tr('Center and zoom level of the map display.'),
+				'name' => tra('Center'),
+				'description' => tr('Format: x,y,zoom where x is the longitude, and y is the latitude. Zoom is between 0(view Earth) and 19.'),
 				'filter' => 'text',
 			),
 			'popupstyle' => array(

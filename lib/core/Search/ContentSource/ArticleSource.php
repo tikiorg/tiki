@@ -33,6 +33,7 @@ class Search_ContentSource_ArticleSource implements Search_ContentSource_Interfa
 			'description' => $typeFactory->plaintext($article['heading']),
 
 			'topic_id' => $typeFactory->identifier($article['topicId']),
+			'article_type' => $typeFactory->identifier($article['type']),
 			'article_content' => $typeFactory->wikitext($article['body']),
 			'article_topline' => $typeFactory->wikitext($article['topline']),
 			'article_subtitle' => $typeFactory->wikitext($article['subtitle']),
@@ -58,6 +59,7 @@ class Search_ContentSource_ArticleSource implements Search_ContentSource_Interfa
 
 			'topic_id',
 			'article_content',
+			'article_type',
 			'article_topline',
 			'article_subtitle',
 			'article_author',

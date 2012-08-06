@@ -239,7 +239,7 @@ class RegistrationLib extends TikiLib
 			$errors[] = new RegistrationError('name', tra('User already exists'));
 
 		if (!$from_intertiki && $prefs['feature_antibot'] == 'y') {
-			if (!$captchalib->validate())
+			if (!$captchalib->validate($registration))
 				$errors[] = new RegistrationError('antibotcode', $captchalib->getErrors());
 		}
 
@@ -512,7 +512,8 @@ class RegistrationLib extends TikiLib
 							'validateRegistration' => $prefs['validateRegistration'],
 							'userTracker' => $prefs['userTracker'],
 							'user_register_prettytracker' => $prefs['user_register_prettytracker'],
-							'user_register_prettytracker_tpl' => $prefs['user_register_prettytracker_tpl']
+							'user_register_prettytracker_tpl' => $prefs['user_register_prettytracker_tpl'],
+							'http_referer_registration_check' => $prefs['http_referer_registration_check'],
 			);
 
 			// local groups
@@ -612,5 +613,5 @@ class RegistrationError
 		$this->msg = $msg;
 	}
 }
-
-	$registrationlib = new RegistrationLib();
+global $registrationlib;
+$registrationlib = new RegistrationLib();

@@ -130,10 +130,10 @@ class PaymentLib extends TikiDb_Bridge
 						$this->fetchAll(
 										'SELECT tpr.*, uu.`login` as `user` FROM `tiki_payment_requests` tpr' .
 										' LEFT JOIN `users_users` uu ON (uu.`userId` = tpr.`userId`)' .
-										' WHERE `paymentRequestId` = ?', 
+										' WHERE `paymentRequestId` = ?',
 										array($id)
-						) 
-		);	
+						)
+		);
 
 		if ( $info ) {
 			$info['state'] = $this->find_state($info);
@@ -150,7 +150,7 @@ class PaymentLib extends TikiDb_Bridge
 			// Add token if feature is activated (need prefs
 			if ($prefs['auth_token_access'] == 'y' && 
 					(!$user || isset($_SESSION['forceanon']) && 
-					$_SESSION['forceanon'] = 'y' && 
+					$_SESSION['forceanon'] == 'y' &&
 					!Perms::get('payment', $info['paymentRequestId'])->manual_payment)
 			) {
 				require_once('lib/wiki-plugins/wikiplugin_getaccesstoken.php');

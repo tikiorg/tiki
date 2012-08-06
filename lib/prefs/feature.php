@@ -2040,6 +2040,14 @@ function prefs_feature_list($partial = false)
 			'help' => 'Structure',
 			'default' => 'n',
 		),
+		'feature_wiki_structure_drilldownmenu' => array(
+			'name' => tra('Structures Drill Down Menu'),
+			'type' => 'flag',
+			'help' => 'Structure',
+			'keywords' => 'wiki ajax structure',
+			'description' => tra('Ajax style drill down menu for structures'),
+			'default' => 'n',
+		),
 		'feature_wiki_open_as_structure' => array(
 			'name' => tra('Open page as structure'),
 			'type' => 'flag',
@@ -2125,6 +2133,10 @@ function prefs_feature_list($partial = false)
 			'help' => 'Attachments',
 			'description' => tra('Allow users to upload (attach) files to a page.'),
 			'default' => 'n',
+			'admin' => 'wikiatt',
+			'permission' => array(
+				'textFilter' => 'attach wiki',
+			),
 		),
 		'feature_dump' => array(
 			'name' => tra('Dumps'),
@@ -2442,6 +2454,12 @@ function prefs_feature_list($partial = false)
 			'description' => tra('Allow users to invite new users by mail to register on this tiki'),
 			'type' => 'flag',
 			'default' => 'n',
+		),
+		'feature_alternate_registration_page' => array(
+			'name' => tra('Alternate Registration Page'),
+			'description' => tra('Makes any access to tiki-register.php redirect to an alternate page for registration.'),
+			'type' => 'text',
+			'default' => 'tiki-register.php',
 		),
         'feature_loadbalancer' => array(
             'name' => tra('Load Balancer'),

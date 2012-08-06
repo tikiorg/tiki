@@ -90,14 +90,15 @@ if (isset($_REQUEST['view']) && $_REQUEST['view'] == 'admin') {
 	foreach ( $fgal_options as $k_gal => $v ) {
 		$k_prefs = 'fgal_'.$k_gal;
 
-		if ( $k_gal == 'default_view' ) {
-			$fgal_options[$k_gal]['value'] = ( isset($gal_info) && isset($gal_info[$k_gal]) ) ? $gal_info[$k_gal] : $prefs[$k_prefs];
-		} elseif ( !isset($_REQUEST['edit_mode']) ) {
+		if ( isset($_REQUEST['page']) && $_REQUEST['page'] === 'fgal' ) {
 			// We are in the file gallery admin panel
 			$fgal_options[$k_gal]['value'] = $prefs[$k_prefs];
-		} else {
+		} elseif ( isset($_REQUEST['edit_mode']) ) {
 			// We are in the edit file gallery page
 			$fgal_options[$k_gal]['value'] = $gal_info[$k_gal];
+		} else {
+			// normal gallery view
+			$fgal_options[$k_gal]['value'] = ( isset($gal_info) && isset($gal_info[$k_gal]) ) ? $gal_info[$k_gal] : $prefs[$k_prefs];
 		}
 	}
 }

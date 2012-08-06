@@ -34,7 +34,7 @@
     <div class='opaque'>
       <div class='box-title'>{tr}Properties{/tr}</div>
       <div class='box-data'>
-        <div>
+        <table>
         {foreach item=prop key=propname from=$fgal_listing_conf}
           {if isset($prop.key)}
             {assign var=propkey value=$item.key}
@@ -48,16 +48,18 @@
             {assign var=propval value=$propval|tiki_long_date}
           {elseif $propname eq 'last_user' or $propname eq 'author' or $propname eq 'creator'}
             {assign var=propval value=$propval|username}
-          {elseif $propname eq 'size'}
-            {assign var=propval value=$propval|kbsize:true}
+		  {elseif $propname eq 'size'}
+	       {assign var=propval value=$propval|kbsize:true}
+		  {elseif $propname eq 'description'}
+    	   {assign var=propval value=$propval|nl2br}
           {/if}
     
           {if isset($gal_info.$propkey) and $propval neq '' and $propname neq 'name' and ( $gal_info.$propkey eq 'a' or $gal_info.$propkey eq 'o' or ( $gal_info.$propkey eq 'y' and $show_details neq 'y' ) )}
-            <b>{$fgal_listing_conf.$propname.name}</b>: {$propval}<br />
+            <tr><td><b>{$fgal_listing_conf.$propname.name}</b>:</td> <td>{$propval}</td></tr>
             {assign var=nb_over_infos value=$nb_over_infos+1}
           {/if}
         {/foreach}
-        </div>
+        </table>
       </div>
     </div>
     {/strip}{/capture}
@@ -136,7 +138,7 @@
             {assign var=key_name value="show_$propname"}
           {/if}
           {if isset($gal_info.$key_name) and ( $gal_info.$key_name eq 'y' or $gal_info.$key_name eq 'a' or $gal_info.$key_name eq 'i' or $propname eq 'name' )}
-            {assign var=propval value=$files[changes].$propname|truncate:$key_name_len|escape}
+            {assign var=propval value=$files[changes].$propname|escape}
         
             {* Format property values *}
             {if $propname eq 'id' or $propname eq 'name'}
@@ -154,7 +156,7 @@
             {elseif $propname eq 'size'}
               {assign var=propval value=$propval|kbsize:true}
             {elseif $propname eq 'description' and $gal_info.max_desc gt 0}
-              {assign var=propval value=$propval|truncate:$gal_info.max_desc:"...":false}
+              {assign var=propval value=$propval|truncate:$gal_info.max_desc:"...":false|nl2br}
             {elseif $propname eq 'lockedby' and $propval neq ''}
               {assign var=propval value=$propval|userlink}
             {/if}
@@ -172,12 +174,12 @@
             </div>
           </div>
 
-          <div class="thumbinfosothers"{if $show_details eq 'n'} style="display:none"{/if}>
+          <div class="thumbinfosothers">
 
             {elseif $propval neq '' and $propname neq 'name' and $propname neq 'type'}
 
-            <div class="thumbinfo{if $propname eq 'description'} thumbdescription{/if}">
-              <span class="thumbinfoname">{$item.name}:</span>
+            <div class="thumbinfo{if $propname eq 'description'} thumbdescription{/if}"{if $show_details eq 'n' and $propname neq 'description'} style="display:none"{/if}>
+				{if $propname neq 'description'}<span class="thumbinfoname">{$item.name}:</span>{/if}
               <span class="thumbinfoval"{if $propname neq 'description'} style="white-space: nowrap"{/if}>{$propval}</span>
             </div>
 

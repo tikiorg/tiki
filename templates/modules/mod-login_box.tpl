@@ -49,7 +49,9 @@ if (jqueryTiki.no_cookie) {
 {/jq}
 {if !isset($tpl_module_title)}{assign var=tpl_module_title value="{tr}Log in{/tr}"}{/if}{* Left for performance, since tiki-login_scr.php includes this template directly. *}
 {if !isset($module_params)}{assign var=module_params value=' '}{/if}
-{tikimodule error=$module_params.error title=$tpl_module_title name="login_box" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}
+{if isset($nobox)}{$module_params.nobox = $nobox}{/if}
+{if isset($style)}{$module_params.style = $style}{/if}
+{tikimodule error=$module_params.error title=$tpl_module_title name="login_box" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle style=$module_params.style}
 	{if $mode eq "header"}<div class="siteloginbar{if $user} logged-in{/if}">{/if}
 	{if $user}
 		{if empty($mode) or $mode eq "module"}

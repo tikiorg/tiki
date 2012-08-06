@@ -230,7 +230,7 @@
 									<a class="link" href="tiki-confirm_user_email.php?user={$users[user].user|escape:url}&amp;pass={$users[user].provpass|md5|escape:url}" title="{tr _0=$users[user].user|username}Confirm user email: %0{/tr}">{capture assign=alt}{tr _0=$username}Confirm user email: %0{/tr}{/capture}{*FIXME*}{icon _id='email_go' alt=$alt}</a>
 								{/if}
 								{if $prefs.email_due > 0 and $users[user].waiting ne 'u' and $users[user].waiting ne 'a'}
-									<a class="link" href="tiki-adminusers.php?user={$users[user].user|escape:url}&amp;action=email_due" title="{tr}Invalid email{/tr}">{icon _id='email_cross' alt="{tr}Invalid email{/tr}"}</a>
+									<a class="link" href="tiki-adminusers.php?user={$users[user].user|escape:url}&amp;action=email_due" title="{tr}Invalidate email{/tr}">{icon _id='email_cross' alt="{tr}Invalidate email{/tr}"}</a>
 								{/if}
 							{/if}
 							{if !empty($users[user].openid_url)}
@@ -459,13 +459,43 @@
 					</tr>
 				{/if}
 				{if $userinfo.userId != 0}
-					<tr>
-						<td>{tr}Created:{/tr}</td>
-						<td>{$userinfo.created|tiki_long_datetime}</td>
-					</tr>
+					{if $userinfo.created neq $userinfo.registrationDate}
+						<tr>
+							<td>{tr}Created:{/tr}</td>
+							<td>{$userinfo.created|tiki_long_datetime}</td>
+						</tr>
+					{/if}
 					<tr>
 						<td>{tr}Registered:{/tr}</td>
 						<td>{if $userinfo.registrationDate}{$userinfo.registrationDate|tiki_long_datetime}{/if}</td>
+					</tr>
+					<tr>
+						<td>{tr}Pass confirmed:{/tr}</td>
+						<td>
+							{if $userinfo.pass_confirm}
+								{$userinfo.pass_confirm|tiki_long_datetime|default:'Never'}
+							{/if}
+						</td>
+					</tr>
+					{if $prefs.email_due > 0}
+						<tr>
+							<td style="white-space: nowrap;">{tr}Email confirmed:{/tr}</td>
+							<td>
+								{if $userinfo.email_confirm}
+									({tr _0=$userinfo.daysSinceEmailConfirm}%0 days ago{/tr})
+								{else}
+									{tr}Never{/tr}
+								{/if}
+							</td>
+						</tr>
+					{/if}
+					<tr>
+						<td>{tr}Current Login:{/tr}</td>
+						<td>
+							{if $userinfo.currentLogin}
+								{$userinfo.currentLogin|tiki_long_datetime|default:'Never'}
+							{/if}
+						</td>
 					</tr>
 					<tr>
 						<td>{tr}Last Login:{/tr}</td>

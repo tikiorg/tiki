@@ -32,5 +32,45 @@ class Services_User_Controller
 			'count' => $result['cant'],
 		);
 	}
+
+	function action_register($input)
+	{
+		global $https_mode, $prefs;
+		if (!$https_mode && $prefs['https_login'] == 'required') {
+			return array('result' => json_encode(array(tr("secure connection required"))));
+		}
+
+		$result = array();
+		$name = $input->name->string();
+		$pass = $input->pass->string();
+		$passAgain = $input->passAgain->string();
+		$captcha = $input->captcha->arra();
+		$antibotcode = $input->antibotcode->string();
+		$email = $input->email->string();
+
+		include_once('lib/registration/registrationlib.php');
+		$regResult = $registrationlib->register_new_user(array(
+			'name' => $name,
+			'pass' => $pass,
+			'passAgain' => $passAgain,
+			'captcha' => $captcha,
+			'antibotcode' => $antibotcode,
+			'email' => $email,
+		));
+
+		if (is_array($regResult)) {
+			foreach ($regResult as $r) {
+				$result[] = $r->msg;
+			}
+		} else if (is_a($regResult, 'RegistrationError')) {
+			$result[] = $regResult->msg;
+		} else if (is_string($regResult)) {
+			$result = trim($regResult, "\n");
+		} elseif (!empty($regResult['msg'])) {
+			$result = trim($regResult['msg'], "\n");
+		}
+
+		return array('result' => json_encode($result));
+	}
 }
 
