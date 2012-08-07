@@ -77,6 +77,14 @@ if ( $_SERVER['argv'][1] === 'process' ) {
 
 	$loggit = (isset($_SERVER['argv'][2]) && $_SERVER['argv'][2] === 'log');
 
+	if ($prefs['rating_advanced'] == 'y') {
+		$logger->debug('Recalculating advanced ratings...');
+		ob_flush();
+
+		$ratinglib = TikiLib::lib('rating');
+		$ratinglib->refresh_all();
+	}
+
 	$logger->debug('Started rebuilding index...');
 	ob_flush();
 	$unifiedsearchlib->rebuild($loggit);
