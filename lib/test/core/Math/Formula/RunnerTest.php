@@ -61,6 +61,24 @@ class Math_Formula_RunnerTest extends TikiTestCase
 		$this->assertEquals(3, $this->runner->evaluate());
 	}
 
+	function testMin()
+	{
+		$this->runner->setFormula('(min -10 0 20)');
+		$this->assertEquals(-10, $this->runner->evaluate());
+
+		$this->runner->setFormula('(min 10 20)');
+		$this->assertEquals(10, $this->runner->evaluate());
+	}
+
+	function testMax()
+	{
+		$this->runner->setFormula('(max -10 0 20)');
+		$this->assertEquals(20, $this->runner->evaluate());
+		
+		$this->runner->setFormula('(max -10 -5)');
+		$this->assertEquals(-5, $this->runner->evaluate());
+	}
+
 	function testWithVariables()
 	{
 		$this->runner->setFormula('(mul foobar 2)');
