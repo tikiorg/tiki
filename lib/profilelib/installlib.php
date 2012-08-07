@@ -41,6 +41,7 @@ class Tiki_Profile_Installer
 		'webmail_account' => 'Tiki_Profile_InstallHandler_WebmailAccount',
 		'webmail' => 'Tiki_Profile_InstallHandler_Webmail',
 		'sheet' => 'Tiki_Profile_InstallHandler_Sheet',
+		'rating_config' => 'Tiki_Profile_InstallHandler_RatingConfig',
 	);
 
 	private static $typeMap = array(
@@ -2945,5 +2946,46 @@ class Tiki_Profile_InstallHandler_Sheet extends Tiki_Profile_InstallHandler // {
 			
 			return $parentSheetId;
 		}
+	}
+} // }}}
+
+class Tiki_Profile_InstallHandler_RatingConfig extends Tiki_Profile_InstallHandler // {{{
+{
+	function getData()
+	{
+		if ( $this->data ) {
+			return $this->data;
+		}
+
+		$defaults = array('expiry' => 3600);
+		$data = array_merge($defaults, $this->obj->getData());
+
+		$data = Tiki_Profile::convertYesNo($data);
+
+		return $this->data = $data;
+	}
+
+	function canInstall()
+	{
+		$data = $this->getData();
+		if ( ! isset($data['name'], $data['formula']) ) {
+			return false;
+		}
+
+		return true;
+	}
+
+	function _install()
+	{
+		$ratingconfiglib = TikiLib::lib('ratingconfig');
+
+		$data = $this->getData();
+
+		$this->replaceReferences($data);
+
+		$id = $ratingconfiglib->create_configuration($data['name']);
+		$ratingconfiglib->update_configuration($id, $data['name'], $data['expiry'], $data['formula']);
+
+		return $id;
 	}
 } // }}}
