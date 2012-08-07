@@ -617,7 +617,7 @@ if ( \$('#$id') ) {
 
 	function zend_plugin_exists($className)
 	{
-		if (isset(self::$pluginInstances[$this->className])) {
+		if (isset(self::$pluginInstances[$className])) {
 			return true;
 		}
 
