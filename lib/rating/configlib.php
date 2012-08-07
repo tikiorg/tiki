@@ -49,7 +49,7 @@ class RatingConfigLib extends TikiDb_Bridge
 		if ( $prefs['feature_wiki'] == 'y' ) {
 			$this->query(
 							'INSERT IGNORE INTO `tiki_rating_obtained` ( `ratingConfigId`, `type`, `object`, `value`, `expire`)' .
-							' SELECT `ratingConfigId`, `wiki page`, `page_id`, 0, 0' .
+							' SELECT `ratingConfigId`, "wiki page", `page_id`, 0, 0' .
 							' FROM `tiki_pages`, `tiki_rating_configs`'
 			);
 		}
@@ -57,7 +57,7 @@ class RatingConfigLib extends TikiDb_Bridge
 		if ( $prefs['feature_wiki_comments'] == 'y' || $prefs['feature_forums'] == 'y' ) {
 			$this->query(
 							'INSERT IGNORE INTO `tiki_rating_obtained` ( `ratingConfigId`, `type`, `object`, `value`, `expire` )' .
-							' SELECT `ratingConfigId`, `comment`, `threadId`, 0, 0' .
+							' SELECT `ratingConfigId`, "comment", `threadId`, 0, 0' .
 							' FROM `tiki_comments`, `tiki_rating_configs`'
 			);
 		}
@@ -65,7 +65,7 @@ class RatingConfigLib extends TikiDb_Bridge
 		if ( $prefs['feature_articles'] == 'y' ) {
 			$this->query(
 							'INSERT IGNORE INTO `tiki_rating_obtained` ( `ratingConfigId`, `type`, `object`, `value`, `expire` )'.
-							' SELECT `ratingConfigId`, `article`, `articleId`, 0, 0' .
+							' SELECT `ratingConfigId`, "article", `articleId`, 0, 0' .
 							' FROM `tiki_articles`, `tiki_rating_configs`'
 			);
 		}
