@@ -237,5 +237,12 @@ class Search_Expr_ParserTest extends PHPUnit_Framework_TestCase
 
 		$this->assertEquals($this->parser->parse('hello and world'), $result);
 	}
+
+	function testNotWithNoValue()
+	{
+		$result = $this->parser->parse('hello and (not )');
+
+		$this->assertEquals($this->parser->parse('hello and ()'), $result);
+	}
 }
 
