@@ -10,7 +10,7 @@ function wikiplugin_insert_info()
 	return array(
 		'name' => tr('Insert Tracker Item'),
 		'description' => tr('Creates a tracker item when the plugin is inserted in the page. The plugin is removed and replaced by a link to the newly created item.'),
-		'prefs' => array('wikiplugin_insert', 'feature_trackers'),
+		'prefs' => array('wikiplugin_insert', 'feature_trackers', 'wikiplugin_objectlink'),
 		'tags' => array('basic'),
 		'extraparams' => true,
 		'defaultfilter' => 'text',
@@ -52,7 +52,7 @@ function wikiplugin_insert_rewrite($data, $params, $context)
 		if (false !== $id) {
 			$relationlib = TikiLib::lib('relation');
 			$relationlib->add_relation('tiki.source.creator', 'trackeritem', $id, $context['type'], $context['itemId']);
-			return "[item$id]";
+			return "{objectlink type=trackeritem id=$id}";
 		}
 	}
 

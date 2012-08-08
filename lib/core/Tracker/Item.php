@@ -390,5 +390,18 @@ class Tracker_Item
 	{
 		return $this->definition;
 	}
+
+	function getDisplayedStatus()
+	{
+		if ($this->definition->getConfiguration('showStatus', 'n') == 'y'
+			|| ($this->definition->getConfiguration('showStatusAdminOnly', 'n') == 'y' && $this->perms->admin_trackers)) {
+			
+			switch ($this->info['status']) {
+			case 'o': return 'open';
+			case 'p': return 'pending';
+			case 'c': return 'closed';
+			}
+		}
+	}
 }
 

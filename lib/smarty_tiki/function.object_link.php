@@ -53,6 +53,9 @@ function smarty_function_object_link( $params, $smarty )
 	case 'freetag':
 		$function = 'smarty_function_object_link_freetag';
 					break;
+	case 'trackeritem':
+		$function = 'smarty_function_object_link_trackeritem';
+					break;
 	default:
 		$function = 'smarty_function_object_link_default';
 					break;
@@ -137,6 +140,20 @@ function smarty_function_object_link_default( $smarty, $object, $title = null, $
 	}
 
 	return $html;
+}
+
+function smarty_function_object_link_trackeritem( $smarty, $object, $title = null, $type = 'wiki page', $url = null )
+{
+	$pre = null;
+
+	$item = Tracker_Item::fromId($object);
+	
+	if ($status = $item->getDisplayedStatus()) {
+		$alt = tr($status);
+		$pre = "<img src=\"img/icons/status_$status.gif\" alt=\"$status\"/>&nbsp;";
+	}
+
+	return $pre . smarty_function_object_link_default($smarty, $object, $title, $type, $url);
 }
 
 function smarty_function_object_link_user( $smarty, $user, $title = null )
