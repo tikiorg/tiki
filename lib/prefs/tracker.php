@@ -26,5 +26,13 @@ function prefs_tracker_list()
 			'type' => 'flag',
 			'default' => 'n',
 		),
+		'tracker_insert_allowed' => array(
+			'name' => tr('Trackers available for insertion from wiki pages'),
+			'description' => tr('List of tracker IDs made available when attempting to insert'),
+			'type' => 'text',
+			'filter' => 'int',
+			'separator' => ',',
+			'default' => array(),
+		),
 	);
 }

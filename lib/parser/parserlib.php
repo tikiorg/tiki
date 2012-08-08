@@ -1188,6 +1188,38 @@ if ( \$('#$id') ) {
 		return 	$ret;
 	}
 
+	function process_save_plugins($data, array $context)
+	{
+		$parserlib = TikiLib::lib('parser');
+
+		$argumentParser = new WikiParser_PluginArgumentParser;
+
+		$matches = WikiParser_PluginMatcher::match($data);
+
+		foreach ($matches as $match) {
+			$plugin_name = $match->getName();
+			$body = $match->getBody();
+			$arguments = $argumentParser->parse($match->getArguments());
+
+			$dummy_output = '';
+			if ($parserlib->plugin_enabled($plugin_name, $dummy_output)) {
+
+				$func_name = 'wikiplugin_' . $plugin_name . '_rewrite';
+
+				if ( function_exists($func_name) ) {
+					$parserlib->plugin_apply_filters($plugin_name, $data, $arguments);
+					$output = $func_name($body, $arguments, $context);
+
+					if ($output !== false) {
+						$match->replaceWith($output);
+					}
+				}
+			}
+		}
+
+		return $matches->getText();
+	}
+
 	//*
 	private function plugin_apply_filters( $name, & $data, & $args )
 	{

@@ -3604,8 +3604,14 @@ class TikiLib extends TikiDb_Bridge
 		if ($this->page_exists($name))
 			return false;
 
-		$html=$is_html?1:0;
 		$parserlib = TikiLib::lib('parser');
+		$data = $parserlib->process_save_plugins($data, array(
+			'type' => 'wiki page',
+			'itemId' => $name,
+			'user' => $user,
+		));
+
+		$html=$is_html?1:0;
 		if ($html && $prefs['feature_purifier'] != 'n') {
 			$parserlib->isHtmlPurifying = true;
 			$parserlib->isEditMode = true;
@@ -3975,6 +3981,12 @@ class TikiLib extends TikiDb_Bridge
 		}
 
 		$parserlib = TikiLib::lib('parser');
+		$edit_data = $parserlib->process_save_plugins($edit_data, array(
+			'type' => 'wiki page',
+			'itemId' => $pageName,
+			'user' => $user,
+		));
+
 		if ($html == 1 && $prefs['feature_purifier'] != 'n') {
 			$parserlib->isHtmlPurifying = true;
 			$parserlib->isEditMode = true;
