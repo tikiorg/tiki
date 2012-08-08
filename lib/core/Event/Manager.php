@@ -8,19 +8,45 @@
 class Event_Manager
 {
 	private $eventRegistry = array();
+	private $priorities = array();
+	private $currentPriority = false;
 
 	function reset()
 	{
 		$this->eventRegistry = array();
+		$this->priorities = array();
 	}
 
+	/**
+	 * Binds an event at normal priority and handles event chaining.
+	 */
 	function bind($eventName, $callback, array $arguments = array())
 	{
+		$priority = 0;
+
 		if (! is_callable($callback)) {
 			$callback = array(new Event_Chain($this, $callback), 'trigger');
+			$priority = false;
+		}
+
+		$this->bindPriority($priority, $eventName, $callback, $arguments);
+	}
+
+	/**
+	 * Bind the event at a specific priority. Allows some event to be forced to execute after others. For example,
+	 * normal priorities may alter data, but indexing should not happen until all data has been modified.
+	 *
+	 * Priorities are numeric, false indicates that the event executes at all levels. This is used for chaining
+	 * and happens transparently when using bind() with an event as the callback.
+	 */
+	function bindPriority($priority, $eventName, $callback, array $arguments = array())
+	{
+		if ($priority !== false) {
+			$this->priorities[] = $priority;
 		}
 
 		$this->eventRegistry[$eventName][] = array(
+			'priority' => $priority,
 			'callback' => $callback,
 			'arguments' => $arguments,
 		);
@@ -28,15 +54,36 @@ class Event_Manager
 
 	function trigger($eventName, array $arguments = array())
 	{
+		if ($this->currentPriority !== false) {
+			$this->internalTrigger($eventName, $arguments);
+			return;
+		}
+
+		$priorities = array_unique($this->priorities);
+		sort($priorities);
+		$this->priorities = $priorities;
+
+		foreach ($priorities as $p) {
+			$this->currentPriority = $p;
+			$this->internalTrigger($eventName, $arguments);
+		}
+
+		$this->currentPriority = false;
+	}
+
+	private function internalTrigger($eventName, array $arguments = array())
+	{
 		if (isset ($this->eventRegistry[$eventName])) {
 			foreach ($this->eventRegistry[$eventName] as $callback) {
-				call_user_func(
-								$callback['callback'], 
-								array_merge(
-												$callback['arguments'],
-												$arguments
-								)
-				);
+				if ($callback['priority'] === false || $callback['priority'] === $this->currentPriority) {
+					call_user_func(
+						$callback['callback'], 
+						array_merge(
+							$callback['arguments'],
+							$arguments
+						)
+					);
+				}
 			}
 		}
 	}

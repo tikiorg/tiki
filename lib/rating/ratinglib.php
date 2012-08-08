@@ -7,6 +7,8 @@
 
 class RatingLib extends TikiDb_Bridge
 {
+	private $configurations;
+
 	/**
 	 * Record a vote for the current user or anonymous visitor.
 	 */
@@ -33,14 +35,17 @@ class RatingLib extends TikiDb_Bridge
 		}
 	}
 
-	function obtain_ratings($type, $itemId)
+	function obtain_ratings($type, $itemId, $recalculate = false)
 	{
 		if ($type == 'wiki page') {
-			$query = "SELECT ratingConfigId, value FROM tiki_rating_obtained INNER JOIN tiki_pages ON tiki_rating_obtained.object = tiki_pages.page_id WHERE tiki_rating_obtained.type = ? AND tiki_pages.pageName = ?";
-		} else {
-			$query = "SELECT ratingConfigId, value FROM tiki_rating_obtained WHERE type = ? AND object = ?";
+			$itemId = TikiLib::lib('tiki')->get_page_id_from_name($itemId);
 		}
 
+		if ($recalculate) {
+			$this->refresh_rating($type, $itemId);
+		}
+
+		$query = "SELECT ratingConfigId, value FROM tiki_rating_obtained WHERE type = ? AND object = ?";
 		return $this->fetchMap($query, array($type, $itemId));
 	}
 
@@ -245,9 +250,7 @@ class RatingLib extends TikiDb_Bridge
 
 	function refresh_rating( $type, $object )
 	{
-		global $ratingconfiglib; require_once 'lib/rating/configlib.php';
-		$configurations = $ratingconfiglib->get_configurations();
-
+		$configurations = $this->get_initialized_configurations();
 		$runner = $this->get_runner();
 
 		$this->internal_refresh_rating($type, $object, $runner, $configurations);
@@ -268,17 +271,7 @@ class RatingLib extends TikiDb_Bridge
 
 	private function internal_refresh_list( $max )
 	{
-		global $ratingconfiglib; require_once 'lib/rating/configlib.php';
-
-		// Pre-parse formulas to avoid doing it multiple times
-		require_once 'Math/Formula/Parser.php';
-		$parser = new Math_Formula_Parser;
-		$configurations = array();
-		foreach ( $ratingconfiglib->get_configurations() as $config ) {
-			$config['formula'] = $parser->parse($config['formula']);
-			$configurations[] = $config;
-		}
-
+		$configurations = $this->get_initialized_configurations();
 		$runner = $this->get_runner();
 		
 		$list = $ratingconfiglib->get_expired_object_list($max);
@@ -316,6 +309,24 @@ class RatingLib extends TikiDb_Bridge
 							'Tiki_Formula_Function_' => dirname(__FILE__) . '/formula',
 						)
 		);
+	}
+
+	private function get_initialized_configurations()
+	{
+		if ($this->configurations) {
+			return $this->configurations;
+		}
+
+		$ratingconfiglib = TikiLib::lib('ratingconfig');
+
+		$parser = new Math_Formula_Parser;
+		$configurations = array();
+		foreach ( $ratingconfiglib->get_configurations() as $config ) {
+			$config['formula'] = $parser->parse($config['formula']);
+			$configurations[] = $config;
+		}
+
+		return $this->configurations = $configurations;
 	}
 }
 

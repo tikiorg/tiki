@@ -25,6 +25,7 @@ function prefs_rating_list()
 				'randomload' => tra('Randomly recalculate oldest ratings (on load)'),
 				'randomvote' => tra('Randomly recalculate oldest ratings (on vote)'),
 				'period' => tra('Cron job (must be set manually)'),
+				'indexing' => tr('Before any attempt to re-index the object'),
 			),
 			'default' => 'vote',
 		),

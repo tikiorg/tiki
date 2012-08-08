@@ -279,7 +279,7 @@ class UnifiedSearchLib
 		}
 
 		if ($prefs['rating_advanced'] == 'y' && $mode == 'indexing') {
-			$aggregator->addGlobalSource(new Search_GlobalSource_AdvancedRatingSource);
+			$aggregator->addGlobalSource(new Search_GlobalSource_AdvancedRatingSource($prefs['rating_recalculation'] == 'indexing'));
 		}
 
 		$aggregator->addGlobalSource(new Search_GlobalSource_Geolocation);

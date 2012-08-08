@@ -72,7 +72,7 @@ function tiki_setup_events()
 	}
 
 	if ($prefs['feature_search'] == 'y' && $prefs['unified_incremental_update'] == 'y') {
-		$events->bind('tiki.save', 'tiki_save_refresh_index');
+		$events->bindPriority(100, 'tiki.save', 'tiki_save_refresh_index');
 	}
 
 	if ($prefs['feature_file_galleries'] == 'y') {

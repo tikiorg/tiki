@@ -114,6 +114,22 @@ class Event_ManagerTest extends PHPUnit_Framework_TestCase
 		);
 	}
 
+	function testBindWithPriority()
+	{
+		$manager = new Event_Manager;
+
+		$manager->bind('tiki.wiki.update', 'tiki.wiki.save');
+		$manager->bind('tiki.wiki.save', 'tiki.save');
+
+		$manager->bindPriority(10, 'tiki.save', array($this, 'callbackAdd'));
+		$manager->bind('tiki.wiki.save', array($this, 'callbackMultiply'));
+		$manager->bind('tiki.wiki.update', array($this, 'callbackMultiply'));
+
+		$manager->trigger('tiki.wiki.update');
+
+		$this->assertEquals(1, $this->called);
+	}
+
 	function callbackAdd($arguments)
 	{
 		$this->called += isset($arguments['amount']) ? $arguments['amount'] : 1;
