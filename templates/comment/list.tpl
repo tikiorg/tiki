@@ -38,9 +38,36 @@
 						{$comment.parsed}
 					</div>
 
-					{if $allow_post && $comment.locked neq 'y'}
-						<div class="button comment-form">{self_link controller=comment action=post type=$type objectId=$objectId parentId=$comment.threadId}{tr}Reply{/tr}{/self_link}</div>
-					{/if}
+					<table>
+						<tr>
+							{if $allow_post && $comment.locked neq 'y'}
+							<td>
+								<div class="button comment-form">{self_link controller=comment action=post type=$type objectId=$objectId parentId=$comment.threadId}{tr}Reply{/tr}{/self_link}</div>
+							</td>
+							{/if}
+
+							{if $prefs.wiki_comments_simple_ratings eq 'y'}
+							<td>
+								<form class="commentRatingForm" method="post" action="" style="float: right;">
+									{rating type="comment" id=$comment.threadId}
+									<input type="hidden" name="id" value="{$comment.threadId}" />
+									<input type="hidden" name="type" value="comment" />
+								</form>
+								{jq}
+									var crf = $('form.commentRatingForm').submit(function() {
+										var vals = $(this).serialize();
+										$.modal(tr('Loading...'));
+										$.get('tiki-ajax_services.php?controller=rating&action=vote&' + vals, function() {
+											$.modal();
+											$.notify(tr('Thanks for rating!'));
+										});
+										return false;
+									});
+								{/jq}
+							</td>
+							{/if}
+						</tr>
+					</table>
 
 					{if $comment.replies_info.numReplies gt 0}
 						{include file='comment/list.tpl' comments=$comment.replies_info.replies cant=$comment.replies_info.numReplies parentId=$comment.threadId}

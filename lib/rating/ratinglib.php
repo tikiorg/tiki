@@ -185,12 +185,15 @@ class RatingLib extends TikiDb_Bridge
 		$pref = 'rating_default_options';
 
 		switch( $type ) {
-		case 'wiki page':
-			$pref = 'wiki_simple_ratings_options';
-    		break;
-		case 'article':
-			$pref = 'article_user_rating_options';
-    		break;
+			case 'wiki page':
+				$pref = 'wiki_simple_ratings_options';
+	            break;
+			case 'article':
+				$pref = 'article_user_rating_options';
+	            break;
+			case 'comment':
+				$pref = 'wiki_comments_simple_ratings_options';
+				break;
 		}
 
 		global $tikilib;

@@ -29,9 +29,10 @@ function smarty_function_rating( $params, $smarty )
 
 			// Handle type-specific actions
 			if ( $type == 'comment' ) {
-				global $commentslib, $user; require_once 'lib/comments/commentslib.php';
+				global $user; require_once 'lib/comments/commentslib.php';
 
 				if ( $user ) {
+					$commentslib = new Comments();
 					$commentslib->vote_comment($id, $user, $value);
 				}
 			}

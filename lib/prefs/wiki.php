@@ -272,6 +272,20 @@ function prefs_wiki_list($partial = false)
 			'options' => $comment_sort_orders,
 			'default' => 'points_desc',
 		),
+		'wiki_comments_simple_ratings' => array(
+			'name' => tra('Simple wiki comment ratings'),
+			'description' => tra('Enable users to rate comments based on a simple numeric scale.'),
+			'type' => 'flag',
+			'default' => 'n',
+		),
+		'wiki_comments_simple_ratings_options' => array(
+			'name' => tra('Wiki rating options'),
+			'description' => tra('List of options available for the rating of wiki comments.'),
+			'type' => 'text',
+			'separator' => ',',
+			'filter' => 'int',
+			'default' => range(1, 5),
+		),
 		'wiki_uses_slides' => array(
 			'name' => tra('Add a slideshow button on wiki pages'),
 			'type' => 'flag',
