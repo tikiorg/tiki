@@ -37,6 +37,11 @@
 	{
 		display: none;
 	}
+	.drillshow
+	{
+		position:absolute;
+		background:#ffffff;
+	}
 </style>
 <div class="drillshow"></div>
 <div class="drilldownmenucontainer">
