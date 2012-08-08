@@ -202,7 +202,7 @@
 				<td>{tr}Edit{/tr}
 				</td>
 				<td>					
-					{textarea id='editpost' name="comments_data" _simple="y" _toolbars=$prefs.feature_forum_parse}{$comment_data}{/textarea}
+					{textarea id='editpost' name="comments_data" _simple="y" codemirror="y" syntax="tiki" _toolbars=$prefs.feature_forum_parse}{$comment_data}{/textarea}
 				</td>
 			</tr>
 				{if ($forum_info.att eq 'att_all') or ($forum_info.att eq 'att_admin' and $tiki_p_admin_forum eq 'y') or ($forum_info.att eq 'att_perm' and $tiki_p_forum_attach eq 'y')}
