@@ -1,71 +1,48 @@
 {* $Id$ *}
-{$headerlib->add_jsfile('lib/jquery/jquery.dcdrilldown.1.2.js')}
-{$headerlib->add_cssfile('lib/jquery/dcdrilldown.css')}
 {jq}
-	$('.drilldownmenuparent a').each(function() {
-		var me = $(this);
-		if (me.next().find('a').length) {
-			me.append('<span class="sep">&nbsp;&raquo;</span>');
-		}
-		me.prepend('&nbsp;');
-	});
+	var drilldownactive = false;
+	var drilldowntimer = false;
+	$('div.tocnav a')
+		.mouseover(function(e) {
+			var href = $(e.target).attr('href');
+			var ul = $('ul.drilldownmenuparent').find('a[href="' + href + '"]').next(); //possible ul menu
+			var a = ul.children('li').children('a');
 
-	function toggleSiblings(li, visible) {
-		var siblings;
-
-		if (li.find('li').length > 0) {
-			siblings = li.children('ul').children('li');
-			li = siblings.first();
-		} else {
-			siblings = li.siblings();
-		}
-
-		siblings.not(li)[visible ? 'show' : 'fadeOut']();
-	}
-
-	var ddmp = $('.drilldownmenuparent').data('i', 0);
-	ddmp
-		.bind('actionDrilldown', function(event, element, wrapper, obj) {
-			ddmp.data('i', $('a', element).data('i'));
-		})
-		.dcDrilldown({
-			speed: 'fast',
-			linkType: 'breadcrumb',
-			headerTag: 'span',
-			showCount: false,
-			eventPreventDefault: false,
-			horizontal: true
-		})
-		.hover(function(e) {
-			var i = ddmp.data('i'),
-				li = lists.eq(i).parent();
-
-			toggleSiblings(li, true);
-		}, function() {
-			var i = ddmp.data('i'),
-				li = lists.eq(i).parent();
-
-			toggleSiblings(li, false);
+			var drillshow = $('div.drillshow').html('');
+			if (a.length < 1) return;
+			a.each(function(i) {
+				var newA = $(this).clone().appendTo(drillshow);
+				if (i < a.length - 1) {
+					$('<span> | </span>').insertAfter(newA);
+				}
+			});
+			drilldownactive = true;
 		});
 
-	var lists = ddmp.find('li a');
-	//console.log(lists);
-	ddmp.mouseleave();
+	$('div.tocnav').mouseout(function() {
+		drilldownactive = false;
+		if (drilldowntimer == false) {
+			drilldowntimer = true;
+			setTimeout(function() {
+				drilldowntimer = false;
+				if (drilldownactive == false) {
+					$('div.drillshow').html('');
+				}
+			}, 5000);
+		}
+	});
 {/jq}
 <style>
-	.dd-header, .dd-header > *, .dd-header > ul > li {
-		display: block ! important;
-		float: left ! important;
-	}
-	.drilldownmenuparent
+	.drilldownmenucontainer
 	{
-		position: absolute ! important;
+		display: none;
 	}
-</style><br />
-<div class="dd_container">
+</style>
+<div class="drillshow"></div>
+<div class="drilldownmenucontainer">
 	<ul class="drilldownmenuparent">
 		<li>
-			<a href="">{$home_info.pageName}</a>
+			<a href="tiki-index.php?page={$home_info.pageName|urlencode}&structure={$home_info.pageName|urlencode}">{$home_info.pageName}</a>
 			{include file="tiki-user_cssmenu.tpl" drilldownmenu='y'}
 		</li>
 	</ul>

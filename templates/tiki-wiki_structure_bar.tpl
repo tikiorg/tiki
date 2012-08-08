@@ -46,7 +46,6 @@
 {else}
 		</div>
 {/if}
-	{if $prefs.feature_wiki_structure_drilldownmenu neq 'y'}
 	    {section loop=$structure_path name=ix}
 	      {if $structure_path[ix].parent_id}&nbsp;{$prefs.site_crumb_seper}&nbsp;{/if}
 		  <a href="{sefurl page=$structure_path[ix].pageName structure=$home_info.pageName page_ref_id=$structure_path[ix].page_ref_id}">
@@ -57,7 +56,7 @@
 		  {/if}
 		  </a>
 		{/section}
-	{else}
+	{if $prefs.feature_wiki_structure_drilldownmenu eq 'y'}
 		{menu structureId=$page_info.structure_id page_id=$page_info.page_id page_name=$page_info.pageName drilldown='y'}
 	{/if}
 	</div>
