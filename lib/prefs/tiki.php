@@ -116,7 +116,7 @@ function prefs_tiki_list()
 			'description' => tra('Do not trust user input and open the files to verify their content.'),
 			'type' => 'flag',
 			'extensions' => array('fileinfo'),
-			'default' => 'n',
+			'default' => 'y',
 		),
 		'tiki_allow_trust_input' => array(
 			'name' => tra('Allow the tiki_p_trust_input permission.'),
