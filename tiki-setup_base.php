@@ -60,6 +60,7 @@ $needed_prefs = array(
 	'min_pass_length' => 5,
 	'pass_chr_special' => 'n',
 	'smarty_compilation' => 'modified',
+	'menus_item_names_raw' => 'n',
 );
 // check that tiki_preferences is there
 if ($tikilib->query("SHOW TABLES LIKE 'tiki_preferences'")->numRows() == 0) {
@@ -180,8 +181,12 @@ $patterns['stringlist'] = "/^[^<>\"#]*$/"; // to, cc, bcc (for string lists like
 $patterns['vars'] = "/^[-_a-zA-Z0-9]*$/"; // for variable keys
 $patterns['dotvars'] = "/^[-_a-zA-Z0-9\.]*$/"; // same pattern as a variable key, but that may contain a dot
 $patterns['hash'] = "/^[a-z0-9]*$/"; // for hash reqId in live support
-// needed for the htmlpage inclusion in tiki-editpage
-$patterns['url'] = "/^(https?:\/\/)?[^<>\"]*$/"; // needed for the htmlpage inclusion in tiki-editpage
+// allow quotes in url for additional tags if html pref is set
+if ($prefs['menus_item_names_raw'] == 'y') {
+$patterns['url'] = "/^(https?:\/\/)?[^<>]*$/"; 
+} else {
+$patterns['url'] = "/^(https?:\/\/)?[^<>\"]*$/"; 
+}
 // parameter type definitions. prepend a + if variable may not be empty, e.g. '+int'
 $vartype['id'] = '+int';
 $vartype['forumId'] = '+int';
