@@ -57,8 +57,8 @@ find lang/* -type d | grep -v "/$LANG_DEF" | grep -v \.svn | xargs -- rm -rf
 #find lib/pdflib/fonts -type f -name "*.afm" | grep -v php_Helvetica | grep -v php_Courier | xargs -- rm -f
 
 echo "Removing Styles except default..."
-find styles/* -type d | grep -v $THEME_DEF | grep -v \.svn | xargs -- rm -rf
-find styles/ -type f -name "*.css" | grep -v $THEME_DEF | xargs -- rm -f
+find styles/* -type d | grep -v $THEME_DEF | grep -v layout | grep -v lite | grep -v \.svn | xargs -- rm -rf
+find styles/ -type f -name "*.css" | grep -v $THEME_DEF | grep -v design | grep -v layout | grep -v lite | xargs -- rm -f
 find templates/styles/* -type d | grep -v $THEME_DEF | xargs -- rm -rf
 
 #echo "Removing SQL..."
