@@ -4324,7 +4324,7 @@ class TrackerLib extends TikiLib
 
 		$fields = $this->table('tiki_tracker_fields');
 		$list = $fields->fetchAll($fields->all(), array(
-			'type' => 'r',
+			'type' => $fields->exactly('r'),
 		));
 
 		$toConsider = array();
