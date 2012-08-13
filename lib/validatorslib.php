@@ -87,6 +87,8 @@ class Validators
 					$validationjs .= 'input: function() { ';
 					if ( $prefix == 'ins_' && $field_value['type'] == 'a') {
 						$validationjs .= 'return $("#area_'.$field_value['fieldId'].'").val(); ';
+					} elseif ( $prefix == 'ins_' && $field_value['type'] == 'k') {
+						$validationjs .= 'return $("#page_selector_'.$field_value['fieldId'].'").val(); ';
 					} else {
 						$validationjs .= 'return $("#'.$prefix.$field_value['fieldId'].'").val(); ';
 					}
