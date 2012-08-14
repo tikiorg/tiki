@@ -547,7 +547,9 @@ class ModLib extends TikiLib
 
 		$out = array_fill_keys(array_values($module_zones), array());
 
-		if ( $prefs['user_assigned_modules'] == 'y' 
+		if ( ! empty($prefs['module_file']) ) {
+			$out = array_merge($out, $this->read_module_file($prefs['module_file']));
+		} elseif ( $prefs['user_assigned_modules'] == 'y' 
 			&& $tiki_p_configure_modules == 'y' 
 			&& $user 
 			&& $usermoduleslib->user_has_assigned_modules($user) ) {
@@ -1183,7 +1185,29 @@ class ModLib extends TikiLib
 		return $export;
 	}
 
+	private function read_module_file($filename)
+	{
+		require_once 'lib/profilelib/profilelib.php';
+		require_once 'lib/profilelib/installlib.php';
+		$content = file_get_contents($filename);
 
+		$profile = Tiki_Profile::fromString("{CODE(caption=>YAML)}$content{CODE}");
+
+		$out = array_fill_keys(array_values($this->module_zones), array());
+		foreach ($profile->getObjects() as $object) {
+			if ($object->getType() == 'module') {
+				$handler = new Tiki_Profile_InstallHandler_Module($object, array());
+
+				$data = $handler->getData();
+				$data['groups'] = unserialize($data['groups']);
+				$position = $data['position'];
+				$zone = $this->module_zones[$position];
+				$out[$zone][] = $data;
+			}
+		}
+
+		return $out;
+	}
 	
 }
 global $modlib;

@@ -97,6 +97,7 @@
 					{preference name=module_zones_pagebottom}
 					{preference name=module_zones_bottom}			
 				</fieldset>
+				{preference name=module_file}
 			</div>
 			
 			<div class="adminoptionbox">

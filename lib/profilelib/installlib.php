@@ -1314,6 +1314,18 @@ class Tiki_Profile_InstallHandler_Module extends Tiki_Profile_InstallHandler // 
 		$data = Tiki_Profile::convertYesNo($data);
 		$data['params'] = Tiki_Profile::convertYesNo($data['params']);
 		
+		$modlib = TikiLib::lib('mod');
+		$module_zones = $modlib->module_zones;
+		$module_zones = array_map(array($this, 'processModuleZones'), $module_zones);
+		$module_zones = array_flip($module_zones);
+		$data['position'] = $module_zones[$data['position']];
+
+		$data['params'] = http_build_query($data['params'], '', '&');
+		if ( is_null($data['params']) ) {
+			// Needed on some versions of php to make sure null is not passed all the way to query as a parameter, since params field in db cannot be null
+			$data['params'] = '';
+		}
+
 		return $this->data = $data;
 	}
 
@@ -1328,28 +1340,12 @@ class Tiki_Profile_InstallHandler_Module extends Tiki_Profile_InstallHandler // 
 
 	function _install()
 	{
-		global $modlib;
-		if ( ! $modlib ) require_once 'lib/modules/modlib.php';
-
 		$data = $this->getData();
 		
-		include_once 'lib/modules/modlib.php';	// use zones from modlib
-		$module_zones = $modlib->module_zones;
-		$module_zones = array_map(array($this, 'processModuleZones'), $module_zones);
-		$module_zones = array_flip($module_zones);
-		$data['position'] = $module_zones[$data['position']];
-
 		$this->replaceReferences($data);
 
-		$data['params'] = http_build_query($data['params'], '', '&');
-		
 		if ( $data['custom'] ) {
 			$modlib->replace_user_module($data['name'], $data['name'], (string) $data['custom'], $data['parse']);
-		}
-
-		if ( is_null($data['params']) ) {
-			// Needed on some versions of php to make sure null is not passed all the way to query as a parameter, since params field in db cannot be null
-				$data['params'] = '';
 		}
 
 		return $modlib->assign_module(0, $data['name'], null, $data['position'], $data['order'], $data['cache'], $data['rows'], $data['groups'], $data['params']);
