@@ -21,6 +21,7 @@ function wikiplugin_sign_info()
 				'description' => tr('Auto-generated, the username.'),
 				'default' => '',
 				'filter' => 'text',
+				'advanced' => true,
 			),
 			'datetime' => array(
 				'required' => false,
@@ -28,6 +29,7 @@ function wikiplugin_sign_info()
 				'description' => tr('Auto-generated, the timestamp'),
 				'default' => '',
 				'filter' => 'text',
+				'advanced' => true,
 			),
 		),
 	);
