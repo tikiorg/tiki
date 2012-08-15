@@ -10,14 +10,11 @@
 
 	<fieldset class="admin">
 		<legend>{tr}Settings{/tr}</legend>
+		{preference name=userfiles_quota}
+		{preference name=userfiles_private}
+
 		<table class="admin">
-		
-			<tr>
-				<td>{tr}Quota (Mb){/tr}</td>
-				<td>
-					<input type="text" name="userfiles_quota" value="{$prefs.userfiles_quota|escape}" size="5" />
-				</td>
-			</tr>
+
 			<tr>
 				<td>{tr}Use database to store userfiles:{/tr}</td>
 				<td>

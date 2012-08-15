@@ -90,6 +90,12 @@ if (!$skip) {
 				$access->display_error('', tra('Permission denied'), 401);
 			}
 		}
+		if ($prefs['feature_use_fgal_for_user_files'] === 'y' && $tiki_p_admin_file_galleries !== 'y') {
+			$gal_info = $filegallib->get_file_gallery_info($info['galleryId']);
+			if ($gal_info['type'] === 'user' && $gal_info['visible'] !== 'y' && $gal_info['user'] !== $user ) {
+				$access->display_error('', tra('Permission denied'), 401);
+			}
+		}
 	}
 }
 
