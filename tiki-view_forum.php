@@ -212,6 +212,7 @@ if ($tiki_p_forum_post_topic == 'n'
 	$tiki_p_forum_post_topic = 'y';
 }
 
+//Here we either post to a forum or create a new thread
 if (isset($_REQUEST['comments_postComment'])) {
 	check_ticket('view-forum');
 	$errors = array();

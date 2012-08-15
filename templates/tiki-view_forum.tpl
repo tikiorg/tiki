@@ -13,9 +13,9 @@
 				{assign var=thisforum_info value=$forum_info.forumId}
 				{if ($tiki_p_forum_post_topic eq 'y' and ($prefs.feature_wiki_discuss ne 'y' or $prefs.$forumId ne $prefs.wiki_forum_id)) or $tiki_p_admin_forum eq 'y'}
 					{if !isset($comments_threadId) or $comments_threadId eq 0}
-						{button href="tiki-view_forum.php?openpost=1&amp;forumId=$thisforum_info&amp;comments_threadId=0&amp;comments_threshold=$comments_threshold&amp;comments_offset=$comments_offset&amp;thread_sort_mode=$thread_sort_mode&amp;comments_per_page=$comments_per_page" _onclick="javascript:show('forumpost');return false;" _text="{tr}New Topic{/tr}"}
+						{button href="tiki-view_forum.php?openpost=1&amp;forumId=$thisforum_info&amp;comments_threadId=0&amp;comments_threshold=$comments_threshold&amp;comments_offset=$comments_offset&amp;thread_sort_mode=$thread_sort_mode&amp;comments_per_page=$comments_per_page" _onclick="$('#forumpost').show();return false;" _text="{tr}New Topic{/tr}"}
 					{else}
-						{button href="tiki-view_forum.php?openpost=1&amp;forumId=$thisforum_info&amp;comments_threadId=0&amp;comments_threshold=$comments_threshold&amp;comments_offset=$comments_offset&amp;thread_sort_mode=$thread_sort_mode&amp;comments_per_page=$comments_per_page" _onclick="javascript:show('forumpost');return false;" _text="{tr}New Topic{/tr}"}
+						{button href="tiki-view_forum.php?openpost=1&amp;forumId=$thisforum_info&amp;comments_threadId=0&amp;comments_threshold=$comments_threshold&amp;comments_offset=$comments_offset&amp;thread_sort_mode=$thread_sort_mode&amp;comments_per_page=$comments_per_page" _onclick="$('#forumpost').show();return false;" _text="{tr}New Topic{/tr}"}
 					{/if}
 				{/if}
 				{if $tiki_p_admin_forum eq 'y' or !isset($all_forums) or $all_forums|@count > 1}
@@ -164,15 +164,16 @@
 						<td>{tr}Type{/tr}</td>
 						<td>
 							{if $tiki_p_admin_forum eq 'y'}
-								<select name="comment_topictype">
+								<select name="comment_topictype" class="comment_topictype">
 									<option value="n" {if $comment_topictype eq 'n'}selected="selected"{/if}>{tr}Normal{/tr}</option>
 									<option value="a" {if $comment_topictype eq 'a'}selected="selected"{/if}>{tr}Announce{/tr}</option>
 									<option value="h" {if $comment_topictype eq 'h'}selected="selected"{/if}>{tr}Hot{/tr}</option>
 									<option value="s" {if $comment_topictype eq 's'}selected="selected"{/if}>{tr}Sticky{/tr}</option>
+									<option value="d" {if $comment_topictype eq 'd'}selected="selected"{/if}>{tr}Deliberation{/tr}</option>
 								</select>
 							{/if}
 							{if $forum_info.topic_smileys eq 'y'}
-								<select name="comment_topicsmiley">
+								<select name="comment_topicsmiley" class="comment_topicsmiley">
 									<option value="" {if $comment_topicsmiley eq ''}selected="selected"{/if}>{tr}no feeling{/tr}</option>
 									<option value="icon_frown.gif" {if $comment_topicsmiley eq 'icon_frown.gif'}selected="selected"{/if}>{tr}frown{/tr}</option>
 									<option value="icon_exclaim.gif" {if $comment_topicsmiley eq 'icon_exclaim.gif'}selected="selected"{/if}>{tr}exclaim{/tr}</option>
@@ -217,6 +218,40 @@
 				{if $prefs.feature_contribution eq 'y'}
 					{include file='contribution.tpl'}
 				{/if}
+
+				{jq}
+					$('select.comment_topictype')
+						.change(function() {
+							if ($('select.comment_topictype').val() == 'd') {
+								$('tr.forum_deliberation').show();
+							} else {
+								$('tr.forum_deliberation').hide();
+							}
+						})
+						.change();
+
+					var opinionMaster;
+					$('.forum_deliberation_add_opinion').click(function() {
+						if (!opinionMaster) {
+							$.get('tiki-ajax_services', {controller: 'comment', action: "deliberation_opinion"}, function(opinionInput) {
+								opinionMaster = opinionInput;
+								$(opinionInput).insertBefore('div.forum_deliberation_opinions_toolbar');
+							});
+						} else {
+							var oM = $(opinionMaster)
+							oM.insertBefore('div.forum_deliberation_opinions_toolbar');
+						}
+						return false;
+					});
+				{/jq}
+				<tr class="forum_deliberation" style="display: none;">
+					<td>{tr}Deliberation{/tr}</td>
+					<td class="forum_deliberation_opinions">
+						<div class="forum_deliberation_opinions_toolbar">
+							{button href="#" _class="forum_deliberation_add_opinion" _text="Add Deliberation Opinion"}
+						</div>
+					</td>
+				</tr>
 
 				{if $prefs.feature_antibot eq 'y'}
 					{include file='antibot.tpl' tr_style="formcolor"}
@@ -414,6 +449,8 @@
 						{icon _id="sticky$nticon" alt="{tr}Sticky{/tr}$ntalt"}
 					{elseif $comments_coms[ix].type eq 'l'}
 						{icon _id="locked$nticon" alt="{tr}Locked{/tr}$ntalt"}
+					{elseif $comments_coms[ix].type eq 'd'}
+						{icon _id="user_comment" alt="{tr}Deliberation{/tr}$ntalt"}
 					{/if}
 
 					{if $comments_coms[ix].locked eq 'y'}

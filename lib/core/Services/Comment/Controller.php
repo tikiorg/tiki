@@ -346,6 +346,11 @@ class Services_Comment_Controller
 		);
 	}
 
+	function action_deliberation_opinion($input)
+	{
+		return array();
+	}
+
 	private function canView($type, $objectId)
 	{
 		$perms = $this->getApplicablePermissions($type, $objectId);

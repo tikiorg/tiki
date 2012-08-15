@@ -1316,6 +1316,10 @@ class Comments extends TikiLib
 			$this->add_comments_extras($res, $forum_info);
 		}
 
+		if (!empty($res['objectType']) && $res['objectType'] == 'forum') {
+			$res['deliberations'] = $this->get_forum_deliberations($res['threadId']);
+		}
+
 		return $res;
 	}
 
@@ -3009,6 +3013,12 @@ class Comments extends TikiLib
 					$errors[] = $this->uploaded_file_error($_FILES['userfile1']['error']);
 				}
 			} //END ATTACHMENT PROCESSING
+
+			//PROCESS FORUM DELIBERATIONS HERE
+			if (!empty($params['forum_deliberation_description'])) {
+				$this->add_forum_deliberations($threadId, $params['forum_deliberation_description'], $params['forum_deliberation_options']);
+			}
+			//END FORUM DELIBERATIONS HERE
 		}
 		if (!empty($errors)) {
 			return 0;
@@ -3017,6 +3027,28 @@ class Comments extends TikiLib
 		} else {
 			return $threadId;
 		}
+	}
+
+	function add_forum_deliberations($threadId, $opinions = array(), $options = array())
+	{
+		global $user;
+
+		foreach($opinions as $i => $opinion) {
+			$message_id = (isset($message_id) ? $message_id . $i : null);
+			$this->post_new_comment(
+				"forum_deliberation:$threadId",
+				0,
+				$user,
+				'',
+				$opinion,
+				$message_id
+			);
+		}
+	}
+
+	function get_forum_deliberations($threadId)
+	{
+		return $this->fetchAll('SELECT * from tiki_comments WHERE object = ? AND objectType = "forum_deliberation"', array($threadId));
 	}
 
 	function get_all_thread_attachments($threadId, $offset=0, $maxRecords=-1, $sort_mode='created_desc')
