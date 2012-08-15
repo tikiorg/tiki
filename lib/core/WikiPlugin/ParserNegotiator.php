@@ -16,10 +16,10 @@ class WikiPlugin_ParserNegotiator
 	public $index;
 	public $key;
 	public $needsParsed = true;
+	public $parserLevel = 0;
 
 	private $className;
 	private $class;
-	private $parserLevel = 0;
 	private $parser;
 	private $argParser;
 	private $page;
