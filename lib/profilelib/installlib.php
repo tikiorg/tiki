@@ -1309,11 +1309,16 @@ class Tiki_Profile_InstallHandler_Module extends Tiki_Profile_InstallHandler // 
 
 		$data = array_merge($defaults, $this->obj->getData());
 
-		$data['groups'] = serialize($data['groups']);
-
 		$data = Tiki_Profile::convertYesNo($data);
 		$data['params'] = Tiki_Profile::convertYesNo($data['params']);
 		
+		return $this->data = $data;
+	}
+
+	function formatData($data)
+	{
+		$data['groups'] = serialize($data['groups']);
+
 		$modlib = TikiLib::lib('mod');
 		$module_zones = $modlib->module_zones;
 		$module_zones = array_map(array($this, 'processModuleZones'), $module_zones);
@@ -1326,7 +1331,7 @@ class Tiki_Profile_InstallHandler_Module extends Tiki_Profile_InstallHandler // 
 			$data['params'] = '';
 		}
 
-		return $this->data = $data;
+		return $data;
 	}
 
 	function canInstall()
@@ -1344,6 +1349,7 @@ class Tiki_Profile_InstallHandler_Module extends Tiki_Profile_InstallHandler // 
 		
 		$modlib = TikiLib::lib('mod');
 		$this->replaceReferences($data);
+		$data = $this->formatData($data);
 
 		if ( $data['custom'] ) {
 			$modlib->replace_user_module($data['name'], $data['name'], (string) $data['custom'], $data['parse']);

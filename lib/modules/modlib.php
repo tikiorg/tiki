@@ -1187,6 +1187,13 @@ class ModLib extends TikiLib
 
 	private function read_module_file($filename)
 	{
+		$cachelib = TikiLib::lib('cache');
+
+		$expiry = filemtime($filename);
+		if ($modules = $cachelib->getSerialized($filename, 'modules', $expiry)) {
+			return $modules;
+		}
+
 		require_once 'lib/profilelib/profilelib.php';
 		require_once 'lib/profilelib/installlib.php';
 		$content = file_get_contents($filename);
@@ -1199,6 +1206,9 @@ class ModLib extends TikiLib
 				$handler = new Tiki_Profile_InstallHandler_Module($object, array());
 
 				$data = $handler->getData();
+				$object->replaceReferences($data);
+				$data = $handler->formatData($data);
+
 				$data['groups'] = unserialize($data['groups']);
 				$position = $data['position'];
 				$zone = $this->module_zones[$position];
@@ -1206,6 +1216,7 @@ class ModLib extends TikiLib
 			}
 		}
 
+		$cachelib->cacheItem($filename, serialize($out), 'modules');
 		return $out;
 	}
 	
