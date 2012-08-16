@@ -164,8 +164,6 @@ function wikiplugin_datachannel( $data, $params )
 		}
 	}
 	
-	require_once 'lib/profilelib/channellib.php';
-
 	$groups = Perms::get()->getGroups();
 
 	$config = Tiki_Profile_ChannelList::fromConfiguration($prefs['profile_channels']);

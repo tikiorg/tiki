@@ -12,7 +12,6 @@ $inputConfiguration = array(
 );
 
 require_once 'tiki-setup.php';
-require_once 'lib/profilelib/channellib.php';
 
 // This file will handle a second mode of authentication, don't limit it to permissions.
 // Only channels registered through the admin panel can be executed.
