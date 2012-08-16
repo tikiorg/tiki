@@ -31,6 +31,9 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	/* list tracking and parser */
 	public $list;
 
+	/* autoLink parser */
+	public $autoLink;
+
 	//This var is used in both protectSpecialChars and unprotectSpecialChars to simplify the html ouput process
 	private $specialChars = array(
 		'≤REAL_LT≥' => array(
@@ -116,16 +119,6 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		$this->Parser->wikiPluginParserNegotiatorClass = $class;
 	}
 
-	var $parseBreaksTracking = array(
-		'inTable' => 0,
-		'inPre' => 0,
-		'inComment' => 0,
-		'inTOC' => 0,
-		'inScript' => 0,
-		'inDiv' => 0,
-		'inHeader' => 0
-	);
-
 	function __construct(JisonParser_Wiki_Handler &$Parser = null)
 	{
 		global $tikilib, $page, $user, $prefs;
@@ -149,15 +142,24 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 			$this->Parser->list = new JisonParser_Wiki_List();
 		}
 
+		if (isset($this->Parser->autoLink) == false) {
+			$this->Parser->autoLink = new JisonParser_Wiki_AutoLink();
+		}
+
 		parent::__construct();
 	}
 
 /*
 	function parser_performAction(&$thisS, $yytext, $yyleng, $yylineno, $yystate, $S, $_S, $O)
 	{
-		file_put_contents("temp/actions.log", $yytext . "{" . $yystate ."}" . "\n", FILE_APPEND);
-
 		$result = parent::parser_performAction($thisS, $yytext, $yyleng, $yylineno, $yystate, $S, $_S, $O);
+		$thisS .= "{" . $yystate ."}";
+		return $result;
+	}
+
+	function lexer_performAction(&$yy, $yy_, $avoiding_name_collisions, $YY_START = null) {
+		$result = parent::lexer_performAction($yy, $yy_, $avoiding_name_collisions, $YY_START);
+		echo "{" . $result . ":" .$avoiding_name_collisions . "}" . $yy_->yytext . "\n";
 		return $result;
 	}
 */
@@ -244,8 +246,6 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	{
 		$input = $this->unprotectSpecialChars($input, $this->Parser->option['is_html']);
 
-		$input = rtrim(ltrim($input, "\n"), "\n"); //here we remove the fake line breaks added just before parse
-
 		if ($this->Parser->option['parseLists'] == true || strpos($input, "\n") !== false) {
 			$lists = $this->Parser->list->toHtml();
 
@@ -261,6 +261,10 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		}
 
 		$this->restorePluginEntities($input);
+
+		$this->Parser->autoLink->parse($input);
+
+		$input = rtrim(ltrim($input, "\n"), "\n"); //here we remove the fake line breaks added just before parse
 	}
 
 	// state & plugin handlers
@@ -669,43 +673,6 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		if ($this->Parser->option['parseWiki'] == false) return "===" . $content . "===";
 
 		return '<u>' . $content . '</u>';
-	}
-
-	function autoLink($content, $type = '')
-	{
-		global $prefs, $tikilib, $smarty;
-
-		$attrib = "";
-		if ($prefs['popupLinks'] == 'y') {
-			$attrib .= 'target="_blank" ';
-		}
-		if ($prefs['feature_wiki_ext_icon'] == 'y') {
-			$attrib .= 'class="wiki external" ';
-			include_once('lib/smarty_tiki/function.icon.php');
-			$ext_icon = smarty_function_icon(array('_id'=>'external_link', 'alt'=>tra('(external link)'), '_class' => 'externallink', '_extension' => 'gif', '_defaultdir' => 'img/icons', 'width' => 15, 'height' => 14), $smarty);
-		} else {
-			$attrib .= 'class="wiki" ';
-			$ext_icon = "";
-		}
-
-		switch ($type) {
-			case 'email':
-				if ($prefs['feature_wiki_protect_email'] == 'y') {
-					$address = explode('@', $content);
-					return $tikilib->protect_email($address[0], $address[1]);
-				} else {
-					$replacements[] = "<a class='wiki' href=\"mailto:" . $content. "\">" . $content . "</a>";
-				}
-				break;
-			case 'magnet':
-				return "<a class='wiki' href=\"" . $content . "\">" . $content . "</a>";
-				break;
-			case 'http':
-				return "<a class='wiki' href=\"" . $content . "\">" . $content . "</a>";
-				break;
-			default: //url
-				return "<a $attrib href=\"http://$content\">". $content . $ext_icon . "</a>";
-		}
 	}
 
 	function wikilink($content) //((content|content))

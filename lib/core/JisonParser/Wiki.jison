@@ -7,7 +7,6 @@
 PLUGIN_ID   					[A-Z]+
 INLINE_PLUGIN_ID				[a-z]+
 SYNTAX_CHARS                    [\n\r_\^:\~'-|=\(\)\{\}\[\]*#+]
-CONTENT                         (.|[\n\r])+?
 LINE_CONTENT                    (.+?)
 SMILE							[a-z]+
 
@@ -137,49 +136,6 @@ SMILE							[a-z]+
 		//php   }
 		//php }
 		//php return 'CONTENT';
-	%}
-
-
-
-([\n ])([a-z0-9]+?)"://"([^<, \n\r]+)
-	%{
-		if (parser.isContent()) return 'CONTENT'; //js
-		lexer.unput("\n"); //js
-
-		//php if ($this->isContent()) return 'CONTENT';
-		//php $this->unput("\n");
-
-		return 'HTTP_LINK';
-	%}
-([\n ])"www"\.([a-z0-9\-]+)\.([a-z0-9\-.\~]+)((?:/[^,< \n\r]*)?)
-	%{
-		if (parser.isContent()) return 'CONTENT'; //js
-		lexer.unput("\n"); //js
-
-		//php if ($this->isContent()) return 'CONTENT';
-		//php $this->unput("\n");
-
-		return 'URL_LINK';
-	%}
-([\n ])([a-z0-9\-_.]+?)@([\w\-]+\.([\w\-\.]+\.)*[\w]+)
-	%{
-		if (parser.isContent()) return 'CONTENT'; //js
-		lexer.unput("\n"); //js
-
-		//php if ($this->isContent()) return 'CONTENT';
-		//php $this->unput("\n");
-
-		return 'EMAIL_LINK';
-	%}
-([\n ])magnet\:\?([^,< \n\r]+)
-	%{
-		if (parser.isContent()) return 'CONTENT'; //js
-		lexer.unput("\n"); //js
-
-		//php if ($this->isContent()) return 'CONTENT';
-		//php $this->unput("\n");
-
-		return 'MAGNET_LINK';
 	%}
 
 
@@ -643,8 +599,8 @@ SMILE							[a-z]+
 ("≤"(.)+"≥")                                return 'CONTENT';
 ("<"(.|\n)*?">")							return 'CONTENT';
 [A-Za-z0-9 .,?;]+                           return 'CONTENT';
-{LINE_CONTENT}(?={SYNTAX_CHARS})            return 'CONTENT';
-(\s+?)                                      return 'CONTENT';
+({LINE_CONTENT})?(?={SYNTAX_CHARS})          return 'CONTENT';
+([ ]+?)                                      return 'CONTENT';
 <<EOF>>										return 'EOF';
 /lex
 
@@ -803,17 +759,11 @@ content
 		$$ = parser.stackList($1 + $2); //js
 		//php $$ = $this->stackList($1 . $2);
 	}
- | LINE_START LINE_END
-		//php $$ = "<br />";
- | LINE_START contents LINE_END
+ | LINE_START
+ | LINE_END
    	{
-        //php $$ = $2 . "<br />";
+        //php $$ = "<br />";
 	}
- | LINE_START contents EOF
-    {
-        //php $$ = $2 . "<br />";
-    }
- | LINE_START EOF
  ;
 
 %% /* parser extensions */
