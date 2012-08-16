@@ -144,6 +144,15 @@ class BigBlueButtonLib
 		}
 	}
 
+	public function removeRecording($recordingID)
+	{
+		if ($this->isRecordingSupported()) {
+			$this->performRequest('deleteRecordings', array(
+				'recordID' => $recordingID,
+			));
+		}
+	}
+
 	private function getAttendeeName()
 	{
 		global $user, $tikilib;

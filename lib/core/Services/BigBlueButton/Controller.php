@@ -52,5 +52,18 @@ class Services_BigBlueButton_Controller
 		$bigbluebuttonlib->createRoom($meetingName, $params);
 		$bigbluebuttonlib->joinMeeting($meetingName);
 	}
+
+	function action_delete_recording($input)
+	{
+		if (! Perms::get()->admin) {
+			throw new Services_Exception_Denied;
+		}
+
+		$bigbluebuttonlib = TikiLib::lib('bigbluebutton');
+		$bigbluebuttonlib->removeRecording($input->id->text());
+
+		return array(
+		);
+	}
 }
 
