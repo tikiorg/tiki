@@ -605,6 +605,10 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		$href = (isset($link[0]) ? $link[0] : $content);
 		$text = (isset($link[1]) ? $link[1] : $href);
 
+		if (!strpos($href, '://')) {
+			$href = 'http://' . $href;
+		}
+
 		return '<a href="' . $href . '">' . $text . '</a>';
 	}
 
@@ -665,6 +669,43 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		if ($this->Parser->option['parseWiki'] == false) return "===" . $content . "===";
 
 		return '<u>' . $content . '</u>';
+	}
+
+	function autoLink($content, $type = '')
+	{
+		global $prefs, $tikilib;
+
+		$attrib = "";
+		if ($prefs['popupLinks'] == 'y') {
+			$attrib .= 'target="_blank" ';
+		}
+		if ($prefs['feature_wiki_ext_icon'] == 'y') {
+			$attrib .= 'class="wiki external" ';
+			include_once('lib/smarty_tiki/function.icon.php');
+			$ext_icon = smarty_function_icon(array('_id'=>'external_link', 'alt'=>tra('(external link)'), '_class' => 'externallink', '_extension' => 'gif', '_defaultdir' => 'img/icons', 'width' => 15, 'height' => 14), $smarty);
+		} else {
+			$attrib .= 'class="wiki" ';
+			$ext_icon = "";
+		}
+
+		switch ($type) {
+			case 'email':
+				if ($prefs['feature_wiki_protect_email'] == 'y') {
+					$address = explode('@', $content);
+					return $tikilib->protect_email($address[0], $address[1]);
+				} else {
+					$replacements[] = "<a class='wiki' href=\"mailto:" . $content. "\">" . $content . "</a>";
+				}
+				break;
+			case 'magnet':
+				return "<a class='wiki' href=\"" . $content . "\">" . $content . "</a>";
+				break;
+			case 'http':
+				return "<a class='wiki' href=\"" . $content . "\">" . $content . "</a>";
+				break;
+			default: //url
+				return "<a $attrib href=\"http://$content\">". $content . $ext_icon . "</a>";
+		}
 	}
 
 	function wikilink($content) //((content|content))

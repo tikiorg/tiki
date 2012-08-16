@@ -1106,7 +1106,7 @@ if ( \$('#$id') ) {
 	}
 
 	//*
-	private function convert_plugin_for_ckeditor( $name, $args, $plugin_result, $data, $info = array() ) //TODO: needs a new handler in jison
+	private function convert_plugin_for_ckeditor( $name, $args, $plugin_result, $data, $info = array() )
 	{
 		$ck_editor_plugin = '{' . (empty($data) ? $name : TikiLib::strtoupper($name) . '(') . ' ';
 		$arg_str = '';		// not using http_build_query() as it converts spaces into +
@@ -1396,7 +1396,7 @@ if ( \$('#$id') ) {
 
 	// Make plain text URIs in text into clickable hyperlinks
 	//*
-	function autolinks($text) //TODO: needs put into jison
+	function autolinks($text)
 	{
 		global $tikilib, $prefs, $smarty;
 		//	check to see if autolinks is enabled before calling this function

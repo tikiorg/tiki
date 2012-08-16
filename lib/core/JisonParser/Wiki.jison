@@ -140,6 +140,50 @@ SMILE							[a-z]+
 	%}
 
 
+
+([\n ])([a-z0-9]+?)"://"([^<, \n\r]+)
+	%{
+		if (parser.isContent()) return 'CONTENT'; //js
+		lexer.unput("\n"); //js
+
+		//php if ($this->isContent()) return 'CONTENT';
+		//php $this->unput("\n");
+
+		return 'HTTP_LINK';
+	%}
+([\n ])"www"\.([a-z0-9\-]+)\.([a-z0-9\-.\~]+)((?:/[^,< \n\r]*)?)
+	%{
+		if (parser.isContent()) return 'CONTENT'; //js
+		lexer.unput("\n"); //js
+
+		//php if ($this->isContent()) return 'CONTENT';
+		//php $this->unput("\n");
+
+		return 'URL_LINK';
+	%}
+([\n ])([a-z0-9\-_.]+?)@([\w\-]+\.([\w\-\.]+\.)*[\w]+)
+	%{
+		if (parser.isContent()) return 'CONTENT'; //js
+		lexer.unput("\n"); //js
+
+		//php if ($this->isContent()) return 'CONTENT';
+		//php $this->unput("\n");
+
+		return 'EMAIL_LINK';
+	%}
+([\n ])magnet\:\?([^,< \n\r]+)
+	%{
+		if (parser.isContent()) return 'CONTENT'; //js
+		lexer.unput("\n"); //js
+
+		//php if ($this->isContent()) return 'CONTENT';
+		//php $this->unput("\n");
+
+		return 'MAGNET_LINK';
+	%}
+
+
+
 "---"
 	%{
 		yytext = parser.hr(); //js
@@ -594,6 +638,7 @@ SMILE							[a-z]+
 		//php return 'LINE_START';
 	%}
 
+
 ("§"[a-z0-9]{32}"§")                        return 'CONTENT';
 ("≤"(.)+"≥")                                return 'CONTENT';
 ("<"(.|\n)*?">")							return 'CONTENT';
@@ -633,6 +678,26 @@ content
     {
         $$ = parser.np($2); //js
         //php $$ = $this->np($2); //js
+    }
+ | HTTP_LINK
+    {
+        $$ = parser.autoLink($1, 'http'); //js
+        //php $$ = $this->autoLink($1, 'http');
+    }
+ | URL_LINK
+    {
+        $$ = parser.autoLink($1, 'url'); //js
+        //php $$ = $this->autoLink($1, 'url');
+    }
+ | EMAIL_LINK
+    {
+        $$ = parser.autoLink($1, 'email'); //js
+        //php $$ = $this->autoLink($1, 'email');
+    }
+ | MAGNET_LINK
+    {
+        $$ = parser.autoLink($1, 'magnet'); //js
+        //php $$ = $this->autoLink($1, 'magnet');
     }
  | HORIZONTAL_BAR
 	{$$ = $1;}
