@@ -19,6 +19,7 @@ $controllerMap = array(
 	'draw' => 'Services_Draw_Controller',
 	'file' => 'Services_File_Controller',
 	'auth_source' => 'Services_AuthSource_Controller',
+	'bigbluebutton' => 'Services_BigBlueButton_Controller',
 	'report' => 'Services_Report_Controller',
 	'tracker' => 'Services_Tracker_Controller',
 	'tracker_sync' => 'Services_Tracker_SyncController',

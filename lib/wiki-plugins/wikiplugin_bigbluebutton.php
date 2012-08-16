@@ -93,26 +93,9 @@ function wikiplugin_bigbluebutton( $data, $params )
 		}
 
 		$params = array_merge(array('prefix' => ''), $params);
+		$smarty->assign('bbb_params', Tiki_Security::get()->encode($params));
 
 		if ( $perms->bigbluebutton_join ) {
-			if ( isset($_POST['bbb']) && $_POST['bbb'] == $meeting ) {
-				if ( ! $user && isset($_POST['bbb_name']) && ! empty($_POST['bbb_name']) ) {
-					$_SESSION['bbb_name'] = $params['prefix'] . $_POST['bbb_name'];
-				}
-
-				// Attempt to create room made before joining as the BBB server has no persistency.
-				// Prior check ensures that the user has appropriate rights to create the room in the
-				// first place or that the room was already officially created and this is only a
-				// re-create if the BBB server restarted.
-				//
-				// This avoids the issue occuring when tiki cache thinks the room exist and it's gone
-				// on the other hand. It does not solve the issue if the room is lost on the BBB server
-				// and tiki cache gets flushed. To cover that one, create can be granted to everyone for
-				// the specific object.
-				$bigbluebuttonlib->createRoom($meeting, $params);
-				$bigbluebuttonlib->joinMeeting($meeting);
-			}
-
 			$smarty->assign('bbb_attendees', $bigbluebuttonlib->getAttendees($meeting));
 			$smarty->assign('bbb_recordings', $bigbluebuttonlib->getRecordings($meeting));
 
