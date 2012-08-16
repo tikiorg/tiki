@@ -43,7 +43,7 @@ if ($s >= 160 * 1024 * 1024) {
 	$php_properties['memory_limit'] = array(
 		'fitness' => tra('good') ,
 		'setting' => $memory_limit,
-		'message' => tra('Your memory_limit is at').' '.$memory_limit.'.'.tra('This is known to behave well even for bigger sites.')
+		'message' => tra('Your memory_limit is at').' '.$memory_limit.'. '.tra('This is known to behave well even for bigger sites.')
 	);
 } elseif ( $s < 160 * 1024 * 1024 && $s > 100 * 1024 * 1024 ) {
 	$php_properties['memory_limit'] = array(
@@ -97,7 +97,7 @@ if ( $s >= 45 ) {
 	$php_properties['max_execution_time'] = array(
 		'fitness' => tra('good') ,
 		'setting' => $s.'s',
-		'message' => tra('Your max_execution_time is at').' '.$s.'.'.tra('This is known to behave well even for bigger sites.')
+		'message' => tra('Your max_execution_time is at').' '.$s.'. '.tra('This is known to behave well even for bigger sites.')
 	);
 } elseif ( $s < 45 && $s >= 30 ) {
 	$php_properties['max_execution_time'] = array(
@@ -119,7 +119,7 @@ if ( $s >= 50 && $s <= 90  ) {
 	$php_properties['max_input_time'] = array(
 		'fitness' => tra('good') ,
 		'setting' => $s.'s',
-		'message' => tra('Your max_input_time is at').' '.$s.'.'.tra('This is a good value for production sites. If you experience timeouts (such as when performing Admin functions) you may need to increase this nevertheless.')
+		'message' => tra('Your max_input_time is at').' '.$s.'. '.tra('This is a good value for production sites. If you experience timeouts (such as when performing Admin functions) you may need to increase this nevertheless.')
 	);
 } elseif ( $s == -1 ) {
 	$php_properties['max_input_time'] = array(
@@ -131,7 +131,7 @@ if ( $s >= 50 && $s <= 90  ) {
 	$php_properties['max_input_time'] = array(
 		'fitness' => tra('ugly') ,
 		'setting' => $s.'s',
-		'message' => tra('Your max_input_time is at').' '.$s.'.'.tra('This is not necessarily bad, but it\'s a good idea to limit this time on productions servers in order to eliminate unexpectedly long running scripts.')
+		'message' => tra('Your max_input_time is at').' '.$s.'. '.tra('This is not necessarily bad, but it\'s a good idea to limit this time on productions servers in order to eliminate unexpectedly long running scripts.')
 	);
 } else {
 	$php_properties['max_input_time'] = array(
@@ -147,7 +147,7 @@ if ( $s >= 30 && $s <= 90  ) {
 	$php_properties['max_execution_time'] = array(
 		'fitness' => tra('good') ,
 		'setting' => $s.'s',
-		'message' => tra('Your max_execution_time is at').' '.$s.'.'.tra('This is a good value for production sites. If you experience timeouts (such as when performing Admin functions) you may need to increase this nevertheless.')
+		'message' => tra('Your max_execution_time is at').' '.$s.'. '.tra('This is a good value for production sites. If you experience timeouts (such as when performing Admin functions) you may need to increase this nevertheless.')
 	);
 } elseif ( $s == -1 ) {
 	$php_properties['max_execution_time'] = array(
@@ -159,7 +159,7 @@ if ( $s >= 30 && $s <= 90  ) {
 	$php_properties['max_execution_time'] = array(
 		'fitness' => tra('ugly') ,
 		'setting' => $s.'s',
-		'message' => tra('Your max_execution_time is at').' '.$s.'.'.tra('This is not necessarily bad, but it\'s a good idea to limit this time on productions servers in order to eliminate unexpectedly long running scripts.')
+		'message' => tra('Your max_execution_time is at').' '.$s.'. '.tra('This is not necessarily bad, but it\'s a good idea to limit this time on productions servers in order to eliminate unexpectedly long running scripts.')
 	);
 } else {
 	$php_properties['max_execution_time'] = array(
@@ -186,7 +186,7 @@ if ($s >= 8 * 1024 * 1024) {
 	$php_properties['upload_max_filesize'] = array(
 		'fitness' => tra('good'),
 		'setting' => $upload_max_filesize,
-		'message' => tra('Your upload_max_filesize is at').' '.$upload_max_filesize.'.'.tra('You can upload quite big files, but keep in mind to set your script timeouts accordingly.')
+		'message' => tra('Your upload_max_filesize is at').' '.$upload_max_filesize.'. '.tra('You can upload quite big files, but keep in mind to set your script timeouts accordingly.')
 	);
 } else {
 	$php_properties['upload_max_filesize'] = array(
@@ -213,7 +213,7 @@ if ($s >= 8 * 1024 * 1024) {
 	$php_properties['post_max_size'] = array(
 		'fitness' => tra('good'),
 		'setting' => $post_max_size,
-		'message' => tra('Your post_max_size is at').' '.$post_max_size.'.'.tra('You can upload quite big files, but keep in mind to set your script timeouts accordingly.')
+		'message' => tra('Your post_max_size is at').' '.$post_max_size.'. '.tra('You can upload quite big files, but keep in mind to set your script timeouts accordingly.')
 	);
 } else {
 	$php_properties['post_max_size'] = array(
@@ -242,17 +242,28 @@ if ($s) {
 
 // GD
 $s = extension_loaded('gd');
-if ($s) {
-	$php_properties['gd'] = array(
-		'fitness' => tra('good') ,
-		'setting' => 'Loaded',
-		'message' => tra('The GD extension is needed for manipulation of images, e.g. also for Captchas.')
-	);
+if ((extension_loaded('gd') && function_exists('gd_info'))) {
+	$gd_info = gd_info();
+	$im = @imagecreate(110, 20);
+	if ($im) {
+		$php_properties['gd'] = array(
+			'fitness' => tra('good') ,
+			'setting' => $gd_info['GD Version'],
+			'message' => tra('The GD extension is needed for manipulation of images, e.g. also for CAPTCHAs.')
+		);
+		imagedestroy($im);
+	} else {
+		$php_properties['gd'] = array(
+			'fitness' => tra('ugly') ,
+			'setting' => 'Dysfunctional',
+			'message' => tra('The GD extension is loaded, but Tiki is unable to create images. Please check your GD library configuration.')
+		);
+	}
 } else {
 	$php_properties['gd'] = array(
 		'fitness' => tra('bad') ,
 		'setting' => 'Not available',
-		'message' => tra('The GD extension is needed for manipulation of images, e.g. also for Captchas.')
+		'message' => tra('The GD extension is needed for manipulation of images, e.g. also for CAPTCHAs.')
 	);
 }
 
