@@ -1194,8 +1194,6 @@ class ModLib extends TikiLib
 			return $modules;
 		}
 
-		require_once 'lib/profilelib/profilelib.php';
-		require_once 'lib/profilelib/installlib.php';
 		$content = file_get_contents($filename);
 
 		$profile = Tiki_Profile::fromString("{CODE(caption=>YAML)}$content{CODE}");

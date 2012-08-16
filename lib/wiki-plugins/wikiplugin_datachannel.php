@@ -164,9 +164,7 @@ function wikiplugin_datachannel( $data, $params )
 		}
 	}
 	
-	require_once 'lib/profilelib/profilelib.php';
 	require_once 'lib/profilelib/channellib.php';
-	require_once 'lib/profilelib/installlib.php';
 
 	$groups = Perms::get()->getGroups();
 

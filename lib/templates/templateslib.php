@@ -88,9 +88,6 @@ class TemplatesLib extends TikiLib
 
 		switch ( $format ) {
 			case 'yaml':
-				require_once( 'lib/profilelib/profilelib.php' );
-				require_once( 'lib/profilelib/installlib.php' );
-
 				$content =
 				"{CODE(caption=>YAML)}objects:\n".
 				" -\n".

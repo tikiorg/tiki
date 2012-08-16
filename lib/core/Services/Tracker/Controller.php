@@ -1140,9 +1140,6 @@ class Services_Tracker_Controller
 
 		$trackerId = $input->trackerId->int();
 
-		include_once('lib/profilelib/installlib.php');
-		include_once('lib/profilelib/profilelib.php');
-
 		$profile = Tiki_Profile::fromString('dummy', '');
 		$data = array();
 		$profileObject = new Tiki_Profile_Object($data, $profile);

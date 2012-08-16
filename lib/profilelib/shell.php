@@ -26,9 +26,6 @@ $logger = new Zend_Log($writer);
 
 $logger->debug('Running search shell utility');
 
-require_once 'lib/profilelib/profilelib.php';
-require_once 'lib/profilelib/installlib.php';
-
 if ( $_SERVER['argv'][1] === 'install' ) {
 	$args = $_SERVER['argv'];
 	$script = array_shift($args);

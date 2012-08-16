@@ -718,8 +718,6 @@ class CartLib
 				}
 			} 
 		}
-		require_once 'lib/profilelib/installlib.php';
-		require_once 'lib/profilelib/profilelib.php';
 		// Handle anonymous user (not logged in) shopping that require only email 
 		if (!$user || isset($_SESSION['forceanon']) && $_SESSION['forceanon'] == 'y') {
 			if (!empty($_SESSION['shopperinfo'])) { // should also check for pref that this anonymous shopping feature is on

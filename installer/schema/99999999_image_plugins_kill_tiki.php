@@ -27,9 +27,6 @@ function upgrade_99999999_image_plugins_kill_tiki($installer)
 
 	$tikilib = new TikiLib;
 
-	include_once ('lib/profilelib/profilelib.php');
-	include_once ('lib/profilelib/installlib.php');
-
 	// ******************************** THUMB plugin
 	$plugstring = <<<PLUGINTEXT
 {CODE(caption=>YAML,wrap=1)}

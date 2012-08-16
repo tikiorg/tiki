@@ -12,8 +12,6 @@ $inputConfiguration = array(
 );
 
 require_once 'tiki-setup.php';
-require_once 'lib/profilelib/profilelib.php';
-require_once 'lib/profilelib/installlib.php';
 require_once 'lib/profilelib/channellib.php';
 
 // This file will handle a second mode of authentication, don't limit it to permissions.
