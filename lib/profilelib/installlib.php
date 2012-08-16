@@ -1342,6 +1342,7 @@ class Tiki_Profile_InstallHandler_Module extends Tiki_Profile_InstallHandler // 
 	{
 		$data = $this->getData();
 		
+		$modlib = TikiLib::lib('mod');
 		$this->replaceReferences($data);
 
 		if ( $data['custom'] ) {
