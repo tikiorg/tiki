@@ -673,7 +673,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 
 	function autoLink($content, $type = '')
 	{
-		global $prefs, $tikilib;
+		global $prefs, $tikilib, $smarty;
 
 		$attrib = "";
 		if ($prefs['popupLinks'] == 'y') {
