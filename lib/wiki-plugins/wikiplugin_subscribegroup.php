@@ -194,11 +194,13 @@ function wikiplugin_subscribegroup($data, $params)
 		if (!isset($unsubscribe_action)) {
 			$unsubscribe_action = tra('OK');
 		}
+		$smarty->assign('action', $unsubscribe_action);
 	} else {
 		$text = isset($subscribe)? $subscribe: tra('Subscribe') . '%s';
 		if (!isset($subscribe_action)) {
 			$subscribe_action = tra('OK');
 		}
+		$smarty->assign('action', $subscribe_action);
 	}
 	$smarty->assign('text', sprintf(tra($text), $group));
 	$smarty->assign('subscribeGroup', $group);
