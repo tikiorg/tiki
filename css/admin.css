@@ -359,7 +359,7 @@ a.admbox.off img {
 	display: none;
 }
 
-.modules {
+#role_main .modules {
 	min-height: 1em;
 }
 
