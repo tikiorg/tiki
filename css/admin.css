@@ -359,7 +359,7 @@ a.admbox.off img {
 	display: none;
 }
 
-.modules {
+#page_data .modules {
 	min-height: 1em;
 }
 
