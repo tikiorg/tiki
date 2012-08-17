@@ -359,7 +359,7 @@ a.admbox.off img {
 	display: none;
 }
 
-#role_main .modules {
+.ui-droppable {
 	min-height: 1em;
 }
 
