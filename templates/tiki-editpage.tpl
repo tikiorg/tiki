@@ -520,5 +520,3 @@ $("#allowhtml").change(function() {
 	</table>
 </form>
 {include file='tiki-page_bar.tpl'}
-{if $prefs.javascript_enabled eq "n"}{include file='tiki-edit_help.tpl'}{/if}
-{include file='tiki-edit_help_plugins.tpl' editorId="editwiki"}
