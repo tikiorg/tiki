@@ -1,5 +1,23 @@
 {title help="Server+Compatibility"}{tr}Server Compatibility{/tr}{/title}
 
+<h2>{tr}Server Information{/tr}</h2>
+<table class="normal">
+	<tr>
+		<th>{tr}Property{/tr}</th>
+		<th>{tr}Value{/tr}</th>
+	</tr>
+	{cycle values="even,odd" print=false}
+	{foreach from=$server_properties key=key item=item}
+		<tr class="{cycle}">
+			<td class="text">{$key}</td>
+			<td class="text">{$item.value}</td>
+		</tr>
+	{/foreach}
+	{if !server_properties}
+         {norecords _colspan=4}
+	{/if}
+</table>
+
 <h2>{tr}PHP{/tr}</h2>
 <table class="normal">
 	<tr>
