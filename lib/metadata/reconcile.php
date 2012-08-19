@@ -548,6 +548,8 @@ class ReconcileExifIptcXmp
 						$note = '  (' . strtoupper($typecheck) . '  ' . tra('duplicate fields do not match') . ')';
 						if (!isset($omni['all'][$type][$fnames[$type]]['suffix'])) {
 							$omni['all'][$type][$fnames[$type]]['suffix'] = $note;
+						} else {
+							$omni['all'][$type][$fnames[$type]]['suffix'] .= ' ' . $note;
 						}
 						break;
 					}
@@ -729,6 +731,9 @@ class ReconcileExifIptcXmp
 					$new = '0' . $val['rawval'];
 					$xmpcheckval = isset($xmpcheckval) ? $xmpcheckval . $new : $new;
 				}
+			} elseif ($exifkey == 'UndefinedTag:0xA432') {
+				$exifcheckval = implode(' ', $exifval);
+				$xmpcheckval = $xmpval;
 			}
 			//set EXIF value to check for all other cases
 			if (!isset($exifcheckval)) {
