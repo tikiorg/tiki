@@ -737,23 +737,6 @@ body.tiki_wiki #comments {
 	padding: 2px;
 }
 
-.wpimg-meta-col1 {
-	text-align: right;
-	font-weight: bold;
-	width: 225px;
-	margin-right: 5px;
-}
-
-.wpimg-meta-col2 {
-	width: 375px;
-}
-
-.wpimg-meta-section {
-	border-bottom: solid 1px #d3d3d3;
-	width: 600px;
-	margin-right: 5px;
-}
-
 /* wikiplugin_carousel v3 */
 
 .ic_button {
@@ -1766,4 +1749,23 @@ form.simple textarea.export {
 	max-width: 130px;
 }
 
+/* Metadata dialog box */
+.meta-col1 {
+	text-align: right;
+	font-weight: bold;
+	font-size: 14px;
+	width: 225px;
+	margin-right: 5px;
+}
+
+.meta-col2 {
+	font-size: 14px;
+	width: 375px;
+}
+
+.meta-section {
+	border-bottom: solid 1px #d3d3d3;
+	width: 600px;
+	font-style: italic;
+}
 /* End of file */

@@ -600,7 +600,6 @@ function wikiplugin_img( $data, $params )
 	$srcmash = $imgdata['fileId'] . $imgdata['id'] . $imgdata['attId'] . $imgdata['src'];
 	if (( strpos($srcmash, '|') !== false ) || (strpos($srcmash, ',') !== false ) || !empty($imgdata['fgalId'])) {
 		$separator = '';
-		$id = '';
 		if (!empty($imgdata['id'])) {
 			$id = 'id';
 		} elseif (!empty($imgdata['fileId'])) {
@@ -770,9 +769,9 @@ function wikiplugin_img( $data, $params )
 		if ($imgdata['desc'] == 'idesc' || $imgdata['desc'] == 'ititle' || $xmpview) {
 			$metadata = $imageObj->getMetadata(null, null, $xmpview)->typemeta;
 			//description from image iptc
-			$idesc = isset($metadata['iptc_raw']['2#120'][0]) ? $metadata['iptc_raw']['2#120'][0] : '';	
+			$idesc = isset($metadata['iptcraw']['iptc']['2#120'][0]) ? $metadata['iptcraw']['iptc']['2#120'][0] : '';
 			//title from image iptc	
-			$ititle = isset($metadata['iptc_raw']['2#005'][0]) ? $metadata['iptc_raw']['2#005'][0] : '';
+			$ititle = isset($metadata['iptcraw']['iptc']['2#005'][0]) ? $metadata['iptcraw']['iptc']['2#005'][0] : '';
 		}
 				
 		$fwidth = '';
@@ -1198,25 +1197,8 @@ function wikiplugin_img( $data, $params )
 		static $lastval = 0;
 		$id = 'imgdialog-' . ++$lastval;
 		$id_link = $id . '-link';
-		$dialog = $imageObj->metadata->dialogMetadata($imageObj->metadata, $id, $filename);
+		$dialog = $imageObj->metadata->dialogTabs($imageObj->metadata, $id, $id_link, $filename);
 		$repl .= $dialog;
-		$jq = '$(document).ready(function() {
-					$("#' . $id . '").css(\'z-index\', \'1005\').dialog({
-							autoOpen: false,
-							width: 700,
-							zIndex: 1005
-					});				
-						
-					$("#' . $id_link . '").click(function() {
-							$("#' . $id . '").accordion({
-								autoHeight: false,
-								collapsible: true
-							}).dialog(\'open\');
-							return false;
-					});
-				});';
-		global $headerlib;
-		$headerlib->add_jq_onready($jq);
 	}
 	//////////////////////  Create enlarge button, metadata icon, description and their divs////////////////////
 	//Start div that goes around button and description if these are set
@@ -1278,7 +1260,9 @@ function wikiplugin_img( $data, $params )
 		}
 		//Add metadata icon
 		if ($imgdata['metadata'] == 'view') {
-			$repl .= '<div style="float:right; margin-right:2px"><a href="#" id="' . $id_link . '"><img src="./img/icons/tag_blue.png" alt="' . tra('Metadata') . '" title="' . tra('Metadata') . '"/></a></div>';
+			$repl .= '<div style="float:right; margin-right:2px"><a href="#" id="' . $id_link
+				. '"><img src="./img/icons/tag_orange.png" alt="' . tra('Metadata') . '" title="'
+				. tra('Metadata') . '"/></a></div>';
 		}
 		//Add description based on user setting (use $desconly from above) and close divs
 		isset($desconly) ? $repl .= $desconly : '';

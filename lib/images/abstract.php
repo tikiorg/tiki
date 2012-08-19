@@ -240,7 +240,7 @@ class ImageAbstract
 		return $this->width;
 	}
 	
-	function getMetadata($filename = null, $ispath = true, $extended = true, $mwg_compliant = true)
+	function getMetadata($filename = null, $ispath = true, $extended = true)
 	{
 		include_once('lib/metadata/metadata.php');
 		if ($filename === null) {
@@ -253,7 +253,7 @@ class ImageAbstract
 			}
 		}
 		if (!is_object($this->metadata) || get_class($this->metadata) != 'FileMetadata') {
-			$this->metadata = new FileMetadata($filename, $ispath, $extended, $mwg_compliant);
+			$this->metadata = new FileMetadata($filename, $ispath, $extended);
 		}
 		return $this->metadata;
 	}
