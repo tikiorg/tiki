@@ -102,19 +102,19 @@
 					<input type="hidden" name="type" value="comment" />
 				</form>
 				<br /><br />
-				{jq}
-					var crf = $('form.forumDeliberationRatingForm').submit(function() {
-					var vals = $(this).serialize();
-					$.modal(tr('Loading...'));
-					$.get('tiki-ajax_services.php?controller=rating&action=vote&' + vals, function() {
-					$.modal();
-					$.notify(tr('Thanks for deliberating!'));
-					});
-					return false;
-					});
-				{/jq}
 			</div>
 
 		{/foreach}
+		{jq}
+			var crf = $('form.forumDeliberationRatingForm').submit(function() {
+				var vals = $(this).serialize();
+				$.modal(tr('Loading...'));
+				$.get('tiki-ajax_services.php?controller=rating&action=vote&' + vals, function() {
+					$.modal();
+					$.notify(tr('Thanks for deliberating!'));
+				});
+				return false;
+			});
+		{/jq}
 	</div>
 {/if}
