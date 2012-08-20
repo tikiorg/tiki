@@ -1216,7 +1216,7 @@ class WikiLib extends TikiLib
 	{
 		global $prefs;
 
-		if ($prefs['namespace_enabled'] == 'y' && $prefs['namespace_separator']) {
+		if ((isset($prefs['namespace_enabled']) && $prefs['namespace_enabled'] == 'y') && $prefs['namespace_separator']) {
 			$pos = strrpos($pageName, $prefs['namespace_separator']);
 
 			if (false !== $pos) {
@@ -1233,7 +1233,9 @@ class WikiLib extends TikiLib
 	{
 		global $prefs;
 
-		if ($pageName && $prefs['namespace_enabled'] == 'y' && $prefs['namespace_separator']) {
+		if ($pageName && (isset($prefs['namespace_enabled']) && $prefs['namespace_enabled'] == 'y')
+			&& $prefs['namespace_separator'])
+		{
 			$pos = strrpos($pageName, $prefs['namespace_separator']);
 
 			if (false !== $pos) {
@@ -1248,7 +1250,9 @@ class WikiLib extends TikiLib
 	{
 		global $prefs;
 
-		if ($pageName && $prefs['namespace_enabled'] == 'y' && $prefs['namespace_separator']) {
+		if ($pageName && (isset($prefs['namespace_enabled']) && $prefs['namespace_enabled'] == 'y')
+			&& $prefs['namespace_separator'])
+		{
 			return str_replace($prefs['namespace_separator'], ' / ', $pageName);
 		}
 
