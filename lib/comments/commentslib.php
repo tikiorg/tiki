@@ -2551,6 +2551,8 @@ class Comments extends TikiLib
 		}
 		global $prefs;
 
+		$this->delete_forum_deliberations($threadId);
+
 		$comments = $this->table('tiki_comments');
 		$threadOrParent = $comments->expr('`threadId` = ? OR `parentId` = ?', array((int) $threadId, (int) $threadId));
 		$result = $comments->fetchAll($comments->all(), array('threadId' => $threadOrParent));
@@ -3054,10 +3056,16 @@ class Comments extends TikiLib
 
 	function get_forum_deliberations($threadId)
 	{
-		global $ratinglib;
-		require_once("lib/rating/ratinglib.php");
 		$deliberations = $this->fetchAll('SELECT * from tiki_comments WHERE object = ? AND objectType = "forum_deliberation"', array($threadId));
 		return $deliberations;
+	}
+
+	function delete_forum_deliberations($threadId)
+	{
+		$this->table('tiki_comments')->deleteMultiple(array(
+			'object' => (int)$threadId,
+			'objectType' => 'forum_deliberation'
+		));
 	}
 
 	function get_all_thread_attachments($threadId, $offset=0, $maxRecords=-1, $sort_mode='created_desc')
