@@ -325,6 +325,7 @@ function wikiplugin_img( $data, $params )
 	$imgdata['id'] = '';
 	$imgdata['fileId'] = '';
 	$imgdata['randomGalleryId'] = '';
+	$imgdata['galleryId'] = '';
 	$imgdata['fgalId'] = '';
 	$imgdata['sort_mode'] = '';
 	$imgdata['attId'] = '';
