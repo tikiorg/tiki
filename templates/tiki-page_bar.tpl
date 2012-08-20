@@ -119,7 +119,7 @@
 						{/if}
 					{/strip}{/capture}
 					{if $atts|@count gt 0 || $editable}
-					{button href="#attachments" _flip_id="attzone$pagemd5" _class=$thisbuttonclass _text=$thistext _flip_default_open=$prefs.w_displayed_default}
+					{button href="#attachments" _flip_id="attzone{if isset($pagemd5)}{$pagemd5}{/if}" _class=$thisbuttonclass _text=$thistext _flip_default_open=$prefs.w_displayed_default}
 					{/if}
 				{/if}{* attachments *}
 
