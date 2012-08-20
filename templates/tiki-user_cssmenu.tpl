@@ -5,7 +5,7 @@
 	{strip}
 
 
-	{if $drilldownmenu neq 'y'}
+	{if !isset($drilldownmenu) or $drilldownmenu neq 'y'}
 		{assign var="menuId" value="cssmenu{$idCssmenu}"}
 		{assign var="menuClass" value="cssmenu{if $menu_type}_{$menu_type}{/if} menu{$menu_info.menuId}"}
 	{else}
