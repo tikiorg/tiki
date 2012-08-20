@@ -3016,7 +3016,7 @@ class Comments extends TikiLib
 
 			//PROCESS FORUM DELIBERATIONS HERE
 			if (!empty($params['forum_deliberation_description'])) {
-				$this->add_forum_deliberations($threadId, $params['forum_deliberation_description'], $params['forum_deliberation_options']);
+				$this->add_forum_deliberations($threadId, $params['forum_deliberation_description'], $params['forum_deliberation_options'], $params['rating_override']);
 			}
 			//END FORUM DELIBERATIONS HERE
 		}
@@ -3029,26 +3029,35 @@ class Comments extends TikiLib
 		}
 	}
 
-	function add_forum_deliberations($threadId, $opinions = array(), $options = array())
+	function add_forum_deliberations($threadId, $opinions = array(), $options = array(), $rating_override = array())
 	{
 		global $user;
 
 		foreach($opinions as $i => $opinion) {
 			$message_id = (isset($message_id) ? $message_id . $i : null);
-			$this->post_new_comment(
+			$deliberation_id = $this->post_new_comment(
 				"forum_deliberation:$threadId",
 				0,
 				$user,
-				'',
+				json_encode(array('opinion'=> $i,'thread'=> $threadId)),
 				$opinion,
 				$message_id
 			);
+
+			if (isset($rating_override[$i])) {
+				global $ratinglib;
+				$ratinglib->set_override('comment', $deliberation_id, $rating_override[$i]);
+			}
 		}
+
 	}
 
 	function get_forum_deliberations($threadId)
 	{
-		return $this->fetchAll('SELECT * from tiki_comments WHERE object = ? AND objectType = "forum_deliberation"', array($threadId));
+		global $ratinglib;
+		require_once("lib/rating/ratinglib.php");
+		$deliberations = $this->fetchAll('SELECT * from tiki_comments WHERE object = ? AND objectType = "forum_deliberation"', array($threadId));
+		return $deliberations;
 	}
 
 	function get_all_thread_attachments($threadId, $offset=0, $maxRecords=-1, $sort_mode='created_desc')
