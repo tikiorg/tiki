@@ -42,10 +42,11 @@ function smarty_function_rating( $params, $smarty )
 	}
 
 	$vote = $ratinglib->get_vote($type, $id);
+	$options = $ratinglib->get_options($type, $id);
 
 	$smarty->assign('rating_type', $type);
 	$smarty->assign('rating_id', $id);
-	$smarty->assign('rating_options', $ratinglib->get_options($type));
+	$smarty->assign('rating_options', $options);
 	$smarty->assign('current_rating', $vote);
 	return $smarty->fetch('rating.tpl');
 }
