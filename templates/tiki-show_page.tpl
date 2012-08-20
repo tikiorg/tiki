@@ -34,7 +34,7 @@
 	{remarksbox type="note" title="{tr}Note{/tr}"}{$saved_msg}{/remarksbox}
 {/if}
 
-{if $user and $prefs.feature_user_watches eq 'y' and $category_watched eq 'y'}
+{if $user and $prefs.feature_user_watches eq 'y' and (isset($category_watched) and $category_watched eq 'y')}
 	<div class="categbar" style="clear: both; text-align: right">
 		{tr}Watched by categories:{/tr}
 		{section name=i loop=$watching_categories}
