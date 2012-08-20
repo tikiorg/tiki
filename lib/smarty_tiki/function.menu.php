@@ -46,7 +46,7 @@ function smarty_function_menu($params, $smarty)
 		$menu_cookie = 'y';
 	}
 	$smarty->assignByRef('menu_cookie', $menu_cookie);
-	if ($css !== 'n' && $prefs['feature_cssmenus'] == 'y' && $drilldown != 'y') {
+	if ($css !== 'n' && $prefs['feature_cssmenus'] == 'y' && (!isset($drilldown) || $drilldown != 'y')) {
 		static $idCssmenu = 0;
 		if (empty($type)) {
 			$type = 'vert';
