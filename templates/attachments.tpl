@@ -4,7 +4,7 @@
 {if $tiki_p_wiki_view_attachments == 'y' || $tiki_p_wiki_admin_attachments == 'y' || $tiki_p_wiki_attach_files == 'y'}
 
 	<div
-		{if $pagemd5}
+		{if isset($pagemd5) && $pagemd5}
 			{assign var=cookie_key value="show_attzone$pagemd5"}
 			id="attzone{$pagemd5}"
 		{else}
@@ -22,26 +22,31 @@
 	{* Generate table if view permissions granted and if count of attached files > 0 *}
 
 	{if ($tiki_p_wiki_view_attachments == 'y' || $tiki_p_wiki_admin_attachments == 'y') && count($atts) > 0}
+		{if isset($offset)}
+			{$offsetparam = "offset={$offset}&amp;"}
+		{else}
+			{$offsetparam = ''}
+		{/if}
 		<table class="normal">
 			<caption> {tr}List of attached files{/tr} </caption>
 			<tr>
 				<th>
-					<a href="tiki-index.php?page={$page|escape:"url"}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'attId_desc'}attId_asc{else}attId_desc{/if}&amp;atts_show=y#attachments">{tr}ID{/tr}</a>
+					<a href="tiki-index.php?page={$page|escape:"url"}&amp;{$offsetparam}sort_mode={if $sort_mode eq 'attId_desc'}attId_asc{else}attId_desc{/if}&amp;atts_show=y#attachments">{tr}ID{/tr}</a>
 				</th>
 				<th>
-					<a href="tiki-index.php?page={$page|escape:"url"}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'filename_desc'}filename_asc{else}filename_desc{/if}&amp;atts_show=y#attachments">{tr}Name{/tr}</a>
+					<a href="tiki-index.php?page={$page|escape:"url"}&amp;{$offsetparam}sort_mode={if $sort_mode eq 'filename_desc'}filename_asc{else}filename_desc{/if}&amp;atts_show=y#attachments">{tr}Name{/tr}</a>
 				</th>
 				<th>
-					<a href="tiki-index.php?page={$page|escape:"url"}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'comment_desc'}comment_asc{else}comment_desc{/if}&amp;atts_show=y#attachments">{tr}desc{/tr}</a>
+					<a href="tiki-index.php?page={$page|escape:"url"}&amp;{$offsetparam}sort_mode={if $sort_mode eq 'comment_desc'}comment_asc{else}comment_desc{/if}&amp;atts_show=y#attachments">{tr}desc{/tr}</a>
 				</th>
 				<th>
-					<a href="tiki-index.php?page={$page|escape:"url"}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'created_desc'}created_asc{else}created_desc{/if}&amp;atts_show=y#attachments">{tr}uploaded{/tr}</a>
+					<a href="tiki-index.php?page={$page|escape:"url"}&amp;{$offsetparam}sort_mode={if $sort_mode eq 'created_desc'}created_asc{else}created_desc{/if}&amp;atts_show=y#attachments">{tr}uploaded{/tr}</a>
 				</th>
 				<th>
-					<a href="tiki-index.php?page={$page|escape:"url"}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'size_desc'}size_asc{else}size_desc{/if}&amp;atts_show=y#attachments">{tr}Size{/tr}</a>
+					<a href="tiki-index.php?page={$page|escape:"url"}&amp;{$offsetparam}sort_mode={if $sort_mode eq 'size_desc'}size_asc{else}size_desc{/if}&amp;atts_show=y#attachments">{tr}Size{/tr}</a>
 				</th>
 				<th>
-					<a href="tiki-index.php?page={$page|escape:"url"}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'hits_desc'}hits_asc{else}hits_desc{/if}&amp;atts_show=y#attachments">{tr}Downloads{/tr}</a>
+					<a href="tiki-index.php?page={$page|escape:"url"}&amp;{$offsetparam}sort_mode={if $sort_mode eq 'hits_desc'}hits_asc{else}hits_desc{/if}&amp;atts_show=y#attachments">{tr}Downloads{/tr}</a>
 				</th>
 				<th>{tr}Actions{/tr}</th>
 			</tr>
@@ -64,7 +69,7 @@
 						<a title="{tr}Download{/tr}" href="tiki-download_wiki_attachment.php?attId={$atts[ix].attId}&amp;download=y">{icon _id='disk' alt="{tr}Download{/tr}"}</a>
 						&nbsp;
 						{if ($tiki_p_wiki_admin_attachments eq 'y' or ($user and ($atts[ix].user eq $user))) and $editable}
-							<a title="{tr}Delete{/tr}" class="link" href="tiki-index.php?page={$page|escape:"url"}&amp;removeattach={$atts[ix].attId}&amp;offset={$offset}{if !empty($sort_mode)}&amp;sort_mode={$sort_mode}{/if}"{if !empty($target)} target="{$target}"{/if}>{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
+							<a title="{tr}Delete{/tr}" class="link" href="tiki-index.php?page={$page|escape:"url"}&amp;removeattach={$atts[ix].attId}&amp;{$offsetparam}{if !empty($sort_mode)}sort_mode={$sort_mode}{/if}"{if !empty($target)} target="{$target}"{/if}>{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
 						{/if}
 					</td>
 				</tr>
@@ -74,7 +79,8 @@
 
 	{* It is allow to attach files or current user have admin rights *}
 
-	{if ($tiki_p_wiki_attach_files eq 'y' or $tiki_p_wiki_admin_attachments eq 'y') and $attach_box ne 'n' and $editable}
+	{if ($tiki_p_wiki_attach_files eq 'y' or $tiki_p_wiki_admin_attachments eq 'y')
+		and (!isset($attach_box) or $attach_box ne 'n') and $editable}
 		<form enctype="multipart/form-data" action="tiki-index.php?page={$page|escape:"url"}" method="post">
 			{if $page_ref_id}
 				<input type="hidden" name="page_ref_id" value="{$page_ref_id}" />
