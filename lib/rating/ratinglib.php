@@ -137,7 +137,7 @@ class RatingLib extends TikiDb_Bridge
 	{
 		global $tikilib, $prefs;
 
-		if ( ! $this->is_valid($type, $score) ) {
+		if ( ! $this->is_valid($type, $score, $objectId) ) {
 			return false;
 		}
 
@@ -173,14 +173,14 @@ class RatingLib extends TikiDb_Bridge
 		return $this->record_user_vote($this->session_to_user($sessionId), $type, $objectId, $score, $time);
 	}
 
-	function is_valid( $type, $value )
+	function is_valid( $type, $value, $objectId )
 	{
-		$options = $this->get_options($type);
+		$options = $this->get_options($type, $objectId);
 
 		return in_array($value, $options);
 	}
 
-	function get_options( $type )
+	function get_options( $type, $objectId )
 	{
 		$pref = 'rating_default_options';
 
@@ -194,10 +194,70 @@ class RatingLib extends TikiDb_Bridge
 			case 'comment':
 				$pref = 'wiki_comments_simple_ratings_options';
 				break;
+			case 'forum':
+				$pref = 'wiki_comments_simple_ratings_options';
+				break;
 		}
 
 		global $tikilib;
+
+		$override = $this->get_override($type, $objectId);
+
+		if (!empty($override)) {
+			return $override;
+		}
+
 		return $tikilib->get_preference($pref, range(1, 5), true);
+	}
+
+	function set_override($type, $objectId, $value)
+	{
+		global $attributelib;
+		$options = $this->override_array($type);
+
+		$attributelib->set_attribute($type, $objectId, $type.".rating.override", $options[$value]);
+	}
+
+	function get_override($type, $objectId)
+	{
+		global $attributelib,$tikilib;
+
+		require_once('lib/attributes/attributelib.php');
+		$attrs = $attributelib->get_attributes($type, $objectId);
+		$attr = explode(',', $attrs[$type . '.rating.override']);
+		return $attr;
+	}
+
+	function override_array($type)
+	{
+		global $prefs;
+
+		$array = array();
+		$vals = array();
+		$options = array();
+
+		switch( $type ) {
+			case 'wiki page':
+				$pref = 'wiki_simple_ratings_options';
+				break;
+			case 'article':
+				$pref = 'article_user_rating_options';
+				break;
+			case 'comment':
+				$pref = 'wiki_comments_simple_ratings_options';
+				break;
+			case 'forum':
+				$pref = 'wiki_comments_simple_ratings_options';
+				break;
+		}
+
+		foreach($prefs[$pref] as $option) {
+			$options[] = $option;
+			$vals[] = $value = implode($options, ',');
+			$array[] = $value;
+		}
+
+		return $array;
 	}
 
 	function get_user_vote( $user, $type, $objectId )
