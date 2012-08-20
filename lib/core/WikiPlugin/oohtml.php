@@ -19,7 +19,7 @@ class WikiPlugin_oohtml extends WikiPlugin_HtmlBase
 	function __construct()
 	{
 		if (empty(self::$name)) {
-			self::$name = tra('Object oriented version of the html wiki plugin');
+			self::$name = tra('HTML (Object Oriented');
 			self::$description = tra('Add HTML to a page');
 			self::$body = tra('HTML code');
 			self::$params = array(
