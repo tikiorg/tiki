@@ -1,4 +1,4 @@
-{title help="Server+Compatibility"}{tr}Server Compatibility{/tr}{/title}
+{title help="Server+Check"}{tr}Server Check{/tr}{/title}
 
 <h2>{tr}Server Information{/tr}</h2>
 <table class="normal">
