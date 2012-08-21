@@ -11,4 +11,8 @@
 	{/foreach}
 	<input type="hidden" name="rating_prev[{$rating_type|escape}][{$rating_id|escape}]" value="{$current_rating|escape}" />
 	<input type="submit" value="{tr}Rate{/tr}"/>
+
+	{if $tiki_p_wiki_admin_ratings eq 'y'}
+		{rating_result id=$rating_id type=$rating_type}
+	{/if}
 </div>

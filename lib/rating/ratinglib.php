@@ -270,8 +270,12 @@ class RatingLib extends TikiDb_Bridge
 		return $array;
 	}
 
-	function deliberation_votings($threadId)
+	function votings($threadId, $type = 'comment')
 	{
+		switch($type) {
+			case 'wiki page': $type = 'wiki';
+		}
+
 		$user_votings = $this->fetchAll(
 			"SELECT *
 			FROM tiki_user_votings tuv1
@@ -281,7 +285,7 @@ class RatingLib extends TikiDb_Bridge
 				WHERE tuv2.user = tuv1.user AND tuv1.id = tuv2.id
 			)
 			GROUP BY user
-			ORDER BY time DESC", array('comment'.$threadId));
+			ORDER BY time DESC", array($type.$threadId));
 
 		$votings = array();
 		$percent = 100 / count($user_votings);

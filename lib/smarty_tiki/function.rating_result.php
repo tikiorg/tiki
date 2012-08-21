@@ -5,11 +5,11 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function smarty_function_rating_deliberation_result( $params, $smarty )
+function smarty_function_rating_result( $params, $smarty )
 {
 	global $prefs, $ratinglib;
 	require_once 'lib/rating/ratinglib.php';
-	$votings = $ratinglib->deliberation_votings($params['id']);
+	$votings = $ratinglib->votings($params['id'], $params['type']);
 	$smiles = $ratinglib->get_options_smiles($params['type'], $params['id']);
 	$tableBody = "";
 
