@@ -56,6 +56,7 @@ function sendForumEmailNotification($event, $object, $forum_info, $title, $data,
 		$mail->setText($mail_data);
 		$mail->setHeader("Reply-To", $my_sender);
 		$mail->setHeader("From", $my_sender);
+		$mail->setHeader("X-Tiki", 'yes');
 		$mail->setSubject($topicName);
 
 		if ($inReplyTo)	{
