@@ -45,6 +45,16 @@ function prefs_rating_list()
 			'filter' => 'digits',
 			'default' => '100',
 		),
+		'rating_smileys' => array(
+			'name' => tr('Smiley Ratings'),
+			'description' => tr('Displays a smiley face for simple ratings system. Only works with 0-11, depending on what you have set. An easier user-interface to use, like emoticons.'),
+			'type' => 'flag',
+			'options' => array(
+				'' => tr('Disabled'),
+				'y' => tr('Enabled'),
+			),
+			'default' => ''
+		),
 	);
 }
 
