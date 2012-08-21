@@ -321,6 +321,12 @@ class Comments extends TikiLib
 
 			$aux = $pop3->getParsedHeaders($i);
 
+			// If the mail came from Tiki, we don't need to add it again
+			if ( $aux['X-Tiki'] == 'yes' ) {
+				$pop3->deleteMsg( $i );
+				continue;
+			}
+
 			// If the connection is done, or the mail has an error, or whatever,
 			// we try to delete the current mail (because something is wrong with it)
 			// and continue on. --rlpowell
