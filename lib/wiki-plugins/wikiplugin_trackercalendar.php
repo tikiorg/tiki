@@ -100,6 +100,6 @@ function wikiplugin_trackercalendar_get_resources($field)
 {
 	$db = TikiDb::get();
 
-	return $db->fetchAll('SELECT DISTINCT value as id, value as name FROM tiki_tracker_item_fields WHERE fieldId = ? ORDER BY  value', $field['fieldId']);
+	return $db->fetchAll('SELECT DISTINCT LOWER(value) as id, value as name FROM tiki_tracker_item_fields WHERE fieldId = ? ORDER BY  value', $field['fieldId']);
 }
 
