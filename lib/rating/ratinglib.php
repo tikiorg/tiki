@@ -220,15 +220,18 @@ class RatingLib extends TikiDb_Bridge
 
 	function get_override($type, $objectId)
 	{
-		global $attributelib,$tikilib;
-
+		global $attributelib;
 		require_once('lib/attributes/attributelib.php');
 		$attrs = $attributelib->get_attributes($type, $objectId);
+		end($attrs);
+		$key = key($attrs);
+		if (empty($attrs) || empty($attrs[$key])) return;
+
 		$attr = explode(',', $attrs[$type . '.rating.override']);
 		return $attr;
 	}
 
-	function override_array($type)
+	function override_array($type, $maintainArray = false)
 	{
 		global $prefs;
 
@@ -253,11 +256,52 @@ class RatingLib extends TikiDb_Bridge
 
 		foreach($prefs[$pref] as $option) {
 			$options[] = $option;
-			$vals[] = $value = implode($options, ',');
-			$array[] = $value;
+			//Ensure there are at least 2 to choose from
+			if (count($options) > 1) {
+				if ($maintainArray == false) {
+					$vals[] = $value = implode($options, ',');
+				} else {
+					$vals[] = $value = $options;
+				}
+				$array[] = $value;
+			}
 		}
 
 		return $array;
+	}
+
+	function deliberation_votings($threadId)
+	{
+		$user_votings = $this->fetchAll(
+			"SELECT *
+			FROM tiki_user_votings tuv1
+			WHERE id=? AND time = (
+				SELECT max(time)
+				FROM tiki_user_votings tuv2
+				WHERE tuv2.user = tuv1.user AND tuv1.id = tuv2.id
+			)
+			GROUP BY user
+			ORDER BY time DESC", array('comment'.$threadId));
+
+		$votings = array();
+		$percent = 100 / count($user_votings);
+
+		foreach($user_votings as $user_voting) {
+			if (!isset($votings[$user_voting['optionId']])) $votings[$user_voting['optionId']] = 0;
+
+			$votings[$user_voting['optionId']]++;
+		}
+
+		foreach($votings as &$voting) {
+			$voting = array(
+				"voting" => $voting,
+				"percent" => round($percent * $voting)
+			);
+		}
+
+		ksort($votings);
+
+		return $votings;
 	}
 
 	function get_user_vote( $user, $type, $objectId )
@@ -330,6 +374,84 @@ class RatingLib extends TikiDb_Bridge
 	function refresh_all()
 	{
 		$this->internal_refresh_list(-1);
+	}
+
+	function get_options_smiles_backgrounds($type)
+	{
+		$overrides = $this->override_array($type, true);
+		$backgrounds = array();
+		foreach($overrides as $override) {
+			$backgrounds[] = 'img/rating_smiles/bg_' . count($override) . '.png';
+		}
+		return $backgrounds;
+	}
+
+	function get_options_smiles_colors()
+	{
+		return array(
+			0 => '#d2d2d2',
+			1 => '#ce4744',
+			2 => '#e84642',
+			3 => '#f26842',
+			4 => '#f58642',
+			5 => '#f6a141',
+			6 => '#fcc441',
+			7 => '#e5cd42',
+			8 => '#cbd244',
+			9 => '#b3db47',
+			10 => '9be549',
+			11 => '#90d047',
+		);
+	}
+
+	function get_options_smiles($type, $objectId = 0, $imageCount = 11)
+	{
+		$options = $this->get_options($type, $objectId);
+		$colors = $this->get_options_smiles_colors();
+
+		$optionsAsKeysSorted = array();
+		if (in_array('0',$options) == true) {
+			$sets = array(
+				2 => array(1,11),
+				3 => array(0,1,11),
+				4 => array(0,1,6,11),
+				5 => array(0,1,3,6,11),
+				6 => array(0,1,3,6,8,11),
+				7 => array(0,1,3,6,8,10,11),
+				8 => array(0,1,2,3,4,6,8,10,11),
+				9 => array(0,1,2,3,4,6,8,9,10,11),
+				10 => array(0,1,2,3,4,5,6,7,8,10,11),
+				11 => array(0,1,2,3,4,5,6,7,8,9,10,11),
+			);
+		} else {
+			$sets = array(
+				2 => array(1,11),
+				3 => array(1,6,11),
+				4 => array(1,3,6,11),
+				5 => array(1,3,6,8,11),
+				6 => array(1,3,6,8,10,11),
+				7 => array(1,2,3,4,6,8,10,11),
+				8 => array(1,2,3,4,6,8,9,10,11),
+				9 => array(1,2,3,4,5,6,7,8,10,11),
+				10 => array(1,2,3,4,5,6,7,8,9,10,11),
+			);
+		}
+
+		foreach($options as $option) {
+			$optionsAsKeysSorted[$option] = array();
+		}
+
+		ksort($optionsAsKeysSorted);
+		$set = $sets[count($optionsAsKeysSorted)];
+
+		foreach($optionsAsKeysSorted as $key => &$option) {
+			$option = array(
+				'img' => 'img/rating_smiles/' . $set[$key - 1] . '.png',
+				'color' => $colors[$set[$key - 1]]
+			);
+		}
+
+		return $optionsAsKeysSorted;
 	}
 
 	private function internal_refresh_list( $max )
