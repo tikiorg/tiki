@@ -84,7 +84,7 @@ if ($s >= 160 * 1024 * 1024) {
 		'setting' => $memory_limit,
 		'message' => tra('Your memory_limit is at').' '.$memory_limit.'. '.tra('This is known to behave well even for bigger sites.')
 	);
-} elseif ( $s < 160 * 1024 * 1024 && $s > 100 * 1024 * 1024 ) {
+} elseif ( $s < 160 * 1024 * 1024 && $s > 127 * 1024 * 1024 ) {
 	$php_properties['memory_limit'] = array(
 		'fitness' => tra('ugly') ,
 		'setting' => $memory_limit,
@@ -94,7 +94,7 @@ if ($s >= 160 * 1024 * 1024) {
 	$php_properties['memory_limit'] = array(
 		'fitness' => tra('bad'),
 		'setting' => $memory_limit,
-		'message' => tra('Your memory_limit is at').' '.$memory_limit.'. '.tra('This is known to cause issues! You should raise your memory_limit to at least 128M.')
+		'message' => tra('Your memory_limit is at').' '.$memory_limit.'. '.tra('This is known to cause issues! You should raise your memory_limit to at least 128M, which is the default of PHP.')
 	);
 }
 
