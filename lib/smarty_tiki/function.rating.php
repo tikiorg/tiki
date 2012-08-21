@@ -7,7 +7,7 @@
 
 function smarty_function_rating( $params, $smarty )
 {
-	global $ratinglib;
+	global $prefs, $ratinglib;
 	require_once 'lib/rating/ratinglib.php';
 
 	if ( ! isset($params['type'], $params['id']) ) {
@@ -43,6 +43,11 @@ function smarty_function_rating( $params, $smarty )
 
 	$vote = $ratinglib->get_vote($type, $id);
 	$options = $ratinglib->get_options($type, $id);
+
+	if ($prefs['rating_smileys'] == 'y') {
+		$smiles = $ratinglib->get_options_smiles($type, $id);
+		$smarty->assign('rating_smiles', $smiles);
+	}
 
 	$smarty->assign('rating_type', $type);
 	$smarty->assign('rating_id', $id);

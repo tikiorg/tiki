@@ -90,7 +90,7 @@
 </div>
 {/if}
 
-{if $comment.deliberations}
+{if $comment.deliberations and $tiki_p_forum_vote eq 'y'}
 	<div>
 		<div class="ui-widget-header">Deliberations</div>
 		{foreach from=$comment.deliberations item=deliberation}
@@ -102,8 +102,11 @@
 					<input type="hidden" name="type" value="comment" />
 				</form>
 				<br /><br />
+				{*This is where we display the results of the deliberation*}
+				{if $tiki_p_admin_forum eq 'y'}
+					{rating_deliberation_result id=$deliberation.threadId type='comment'}
+				{/if}
 			</div>
-
 		{/foreach}
 		{jq}
 			var crf = $('form.forumDeliberationRatingForm').submit(function() {
@@ -112,6 +115,7 @@
 				$.get('tiki-ajax_services.php?controller=rating&action=vote&' + vals, function() {
 					$.modal();
 					$.notify(tr('Thanks for deliberating!'));
+					if ($('div.ratingDeliberationResultTable').length) document.location = document.location + '';
 				});
 				return false;
 			});
