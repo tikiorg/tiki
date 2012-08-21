@@ -15,6 +15,7 @@ function prefs_rating_list()
 			'help' => 'Advanced+Rating',
 			'default' => 'n',
 			'admin' => 'rating',
+			'tags' => array('advanced'),
 		),
 		'rating_recalculation' => array(
 			'name' => tra('Rating recalculation mode'),
