@@ -116,17 +116,17 @@ class Search_Query
 			}
 		}
 
-		$this->expr->addPart(new Search_Expr_Range($from, $to, 'timestamp', $field));
+		$this->addPart(new Search_Expr_Range($from, $to), 'timestamp', $field);
 	}
 
 	function filterTextRange($from, $to, $field = 'title')
 	{
-		$this->expr->addPart(new Search_Expr_Range($from, $to, 'plaintext', $field));
+		$this->addPart(new Search_Expr_Range($from, $to), 'plaintext', $field);
 	}
 
 	function filterInitial($initial, $field = 'title')
 	{
-		$this->expr->addPart(new Search_Expr_Range($initial, substr($initial, 0, -1) . chr(ord(substr($initial, -1)) + 1), 'plaintext', $field));
+		$this->addPart(new Search_Expr_Range($initial, substr($initial, 0, -1) . chr(ord(substr($initial, -1)) + 1)), 'plaintext', $field);
 	}
 
 	function filterRelation($query, array $invertable = array())
@@ -202,6 +202,8 @@ class Search_Query
 		if (is_string($query)) {
 			$parser = new Search_Expr_Parser;
 			$query = $parser->parse($query);
+		} elseif ($query instanceof Search_Expr_Interface) {
+			$query = clone $query;
 		}
 
 		return $query;

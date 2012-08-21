@@ -468,6 +468,8 @@ if ($prefs['feature_draw'] == 'y') {
 	$headerlib->add_cssfile("lib/svg-edit_tiki/draw.css");
 }
 
+$headerlib->add_jsfile('lib/jquery/jquery-ui-timepicker-addon.js');
+
 if ($prefs['geo_always_load_openlayers'] == 'y') {
 	$headerlib->add_map();
 }

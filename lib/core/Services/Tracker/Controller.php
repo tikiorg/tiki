@@ -634,23 +634,22 @@ class Services_Tracker_Controller
 		if (! $itemObject->canModify()) {
 			throw new Services_Exception_Denied;
 		}
-		$fields = $input->fields->none();
-		if (empty($fields)) {
-			$processedFields = $itemObject->prepareInput($input);
 
-			$fields = array();
-			foreach ($processedFields as $k => $f) {
-				$permName = $f['permName'];
-				$fields[$permName] = $f['value'];
-			}
-		} else {
-			$out = array();
-			foreach ($fields as $key => $value) {
+		$processedFields = $itemObject->prepareInput($input);
+
+		$fields = array();
+		foreach ($processedFields as $k => $f) {
+			$permName = $f['permName'];
+			$fields[$permName] = $f['value'];
+		}
+
+		$userInput = $input->fields->none();
+		if (! empty($userInput)) {
+			foreach ($userInput as $key => $value) {
 				if ($itemObject->canModifyField($key)) {
-					$out[$key] = $value;
+					$fields[$key] = $value;
 				}
 			}
-			$fields = $out;
 		}
 
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {

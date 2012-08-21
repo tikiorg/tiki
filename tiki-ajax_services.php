@@ -22,6 +22,7 @@ $controllerMap = array(
 	'bigbluebutton' => 'Services_BigBlueButton_Controller',
 	'report' => 'Services_Report_Controller',
 	'tracker' => 'Services_Tracker_Controller',
+	'tracker_calendar' => 'Services_Tracker_CalendarController',
 	'tracker_sync' => 'Services_Tracker_SyncController',
 	'tracker_todo' => 'Services_Tracker_TodoController',
 	'tracker_search' => 'Services_Tracker_SearchController',
