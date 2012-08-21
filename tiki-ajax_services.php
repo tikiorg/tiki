@@ -28,6 +28,7 @@ $controllerMap = array(
 	'favorite' => 'Services_Favorite_Controller',
 	'translation' => 'Services_Language_TranslationController',
 	'user' => 'Services_User_Controller',
+	'calendar' => 'Services_Calendar_Controller',
 	'category' => 'Services_Category_Controller',
 	'connect' => 'Services_Connect_Client',
 	'connect_server' => 'Services_Connect_Server',
