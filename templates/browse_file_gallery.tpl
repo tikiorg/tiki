@@ -1,4 +1,6 @@
-{if $parentId gt 0}<div style="float:left;width:100%">{self_link galleryId=$parentId}{icon _id="arrow_left"} {tr}Parent Gallery{/tr}{/self_link}</div>{/if}
+{if $parentId gt 0 and $prefs.feature_use_fgal_for_user_files neq 'y' or $tiki_p_admin_file_galleries eq 'y' or $gal_info.type neq 'user'}
+	<div style="float:left;width:100%">{self_link galleryId=$parentId}{icon _id="arrow_left"} {tr}Parent Gallery{/tr}{/self_link}</div>
+{/if}
 <div id="thumbnails" style="float:left">
 
   {section name=changes loop=$files}
@@ -165,7 +167,11 @@
           <div class="thumbnamecontener">
             <div class="thumbname">
               <div class="thumbnamesub" style="width:{$thumbnail_size}px; overflow: hidden;">
-                {if $gal_info.show_name eq 'f' or ($gal_info.show_name eq 'a' and $files[changes].name eq '')}
+				{if $files[changes].isgal eq 1 and $files[changes].type eq 'user'}
+					<a class="fgalname" {$link}>
+						{if $files[changes].user eq $user}<strong>{tr}My Files{/tr}</strong>{else}{tr}Files of {$files[changes].user}{/tr}{/if}
+					</a>
+                {elseif $gal_info.show_name eq 'f' or ($gal_info.show_name eq 'a' and $files[changes].name eq '')}
                   <a class="fgalname" {$link} title="{$files[changes].filename}">{$files[changes].filename|truncate:$key_name_len}</a>
                 {else}
                   {$propval}

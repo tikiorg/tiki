@@ -89,6 +89,14 @@ if (($galleryId != 0 || $tiki_p_list_file_galleries != 'y') && ($galleryId == 0 
 	$smarty->display('error.tpl');
 	die;
 }
+if ($prefs['feature_use_fgal_for_user_files'] === 'y' && $gal_info['type'] === 'user' &&
+		$gal_info['visible'] !== 'y' && $gal_info['user'] !== $user && $tiki_p_admin_file_galleries !== 'y') {
+
+	$smarty->assign('errortype', 401);
+	$smarty->assign('msg', tra('You do not have permission to view this gallery'));
+	$smarty->display('error.tpl');
+	die;
+}
 
 // Init smarty variables to blank values
 $smarty->assign('fname', '');

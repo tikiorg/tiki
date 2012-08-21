@@ -69,8 +69,14 @@ $('#fgal_template').change( function() {
 							</td>
 							<td>
 								{if $galleryId eq $treeRootId}
-									{tr}System{/tr}
-									<input type="hidden" name="fgal_type" value="system" />
+									{if $gal_info.type eq 'system'}
+										{tr}System{/tr}
+									{elseif $gal_info.type eq 'user'}
+										{tr}User{/tr}
+									{else}
+										{tr _0=$gal_info.type}Other (%0){/tr}
+									{/if}
+									<input type="hidden" name="fgal_type" value="{$gal_info.type}" />
 								{else}
 									<select name="fgal_type" id="fgal_type">
 										<option value="default" {if $gal_info.type eq 'default'}selected="selected"{/if}>{tr}Any file{/tr}</option>

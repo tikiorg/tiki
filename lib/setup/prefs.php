@@ -173,7 +173,6 @@ function get_default_prefs()
 		'userbreadCrumb' => 4,
 		'uf_use_db' => 'y',
 		'uf_use_dir' => '',
-		'userfiles_quota' => 30,
 		'feature_community_friends_permission' => 'n',
 		'feature_community_friends_permission_dep' => '2',
 		'lowercase_username' => 'n',

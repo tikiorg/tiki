@@ -143,26 +143,44 @@ what to answer, just press enter to each question (to use default value)"
 		fi
 	done
 
-	echo -n "Fix global perms ..."
-	chown -fR $AUSER:$AGROUP .
-	echo -n " chowned ..."
-
-#	find . ! -regex '.*^\(devtools\).*' -type f -exec chmod 644 {} \;	
-#	echo -n " files perms fixed ..."
-#	find . -type d -exec chmod 755 {} \;
-#	echo " dirs perms fixed ... done"
-
-	chmod -fR u=rwX,go=rX .
-
-	echo " done."
-
-	echo -n "Fix special dirs ..."
+	# Check that the USER is in AGROUP
 	USERINAGROUP="no"
 	for grp in `id -Gn $USER`; do
 		if [ "$grp" = "$AGROUP" ]; then
 			USERINAGROUP="yes"
 		fi
 	done
+
+	echo "Fix global perms ..."
+	if [ "$USER" = 'root' ]; then
+		#chown -fR $AUSER:$AGROUP . || echo "Could not change ownership to $AUSER"
+		echo -n "Change user to $AUSER and group to $AGROUP..."
+		chown -fR $AUSER:$AGROUP .
+		echo " done."
+	else
+		if [ -n "$OPT_AUSER" ]; then
+			echo "You are not root. We will not try to change the file owners."
+		fi
+		if [ "$USERINAGROUP" = "yes" ]; then
+			echo -n "Change group to $AGROUP ..."
+			chgrp -Rf $AGROUP .
+			echo " done."
+		else
+			echo "You are not root and you are not in the group $AGROUP. We can't change the group ownership to $AGROUP."
+			echo "Special dirs permissions will be set accordingly."
+		fi
+	fi
+
+#	find . ! -regex '.*^\(devtools\).*' -type f -exec chmod 644 {} \;	
+#	echo -n " files perms fixed ..."
+#	find . -type d -exec chmod 755 {} \;
+#	echo " dirs perms fixed ... done"
+
+	echo -n "Fix normal dirs ..."
+	chmod -fR u=rwX,go=rX .
+	echo " done."
+
+	echo -n "Fix special dirs ..."
 	if [ "$USER" = 'root' -o "$USERINAGROUP" = "yes" ]; then
 		chmod -R g+w $DIRS
 	else

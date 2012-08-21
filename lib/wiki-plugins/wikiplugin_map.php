@@ -28,7 +28,7 @@ function wikiplugin_map_info()
 			'controls' => array(
 				'required' => false,
 				'name' => tra('Controls'),
-				'description' => tr('Allows to specify which map controls will be displayed on the map and around it (controls,layers,search_location)'),
+				'description' => tr('Allows to specify which map controls will be displayed on the map and around it (controls, layers, search_location, levels, current_location, scale, streetview, navigation, coordinates, overview)'),
 				'filter' => 'word',
 				'separator' => ',',
 				'default' => wp_map_default_controls(),
