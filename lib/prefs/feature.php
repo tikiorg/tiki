@@ -2582,9 +2582,9 @@ function prefs_feature_list($partial = false)
 			)
 		),
 		'feature_jcapture' => array(
-			'name' => tra('jCapture'),
+			'name' => tra('jCapture Screencast'),
 			'type' => 'flag',
-			'description' => tra('Use jCapture applet to create screencasts.'),
+			'description' => tra('Use jCapture applet to create screencasts and capture screenshots.'),
 			'help' => 'jCapture',
 			'default' => 'n',				// include UI lib for more effects
 			'warning' => tra('Experimental'),
