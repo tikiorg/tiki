@@ -21,6 +21,10 @@ class Services_Tracker_CalendarController
 		$start = 'tracker_field_' . $input->beginField->word();
 		$end = 'tracker_field_' . $input->endField->word();
 
+		if ($resource = $input->resourceField->word()) {
+			$resource = 'tracker_field_' . $resource;
+		}
+
 		$query = new Search_Query;
 		$query->filterRange($input->start->int(), $input->end->int(), array($start, $end));
 		$result = $query->search($index);
@@ -44,6 +48,7 @@ class Services_Tracker_CalendarController
 				'modifiable' => $item->canModify(),
 				'color' => '#',
 				'textcolor' => '#',
+				'resource' => ($resource && isset($row[$resource])) ? $row[$resource] : '',
 			);
 		}
 

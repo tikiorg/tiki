@@ -18,14 +18,16 @@
 			header: {
 				left: 'prev,next today',
 				center: 'title',
-				right: 'month,agendaWeek,agendaDay'
+				right: data.views
 			},
 			editable: true,
 			events: $.service('tracker_calendar', 'list', {
 				trackerId: data.trackerId,
 				beginField: data.begin,
-				endField: data.end
+				endField: data.end,
+				resourceField: data.resource
 			}),
+			resources: data.resourceList,
 			year: data.viewyear,
 			month: data.viewmonth-1,
 			day: data.viewday,
