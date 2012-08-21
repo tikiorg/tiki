@@ -14,6 +14,7 @@ function prefs_namespace_list()
 			'type' => 'flag',
 			'default' => 'n',
 			'help' => 'Namespace',
+			'keywords' => 'Namespaces',
 			'tags' => array('experimental'),
 		),
 		'namespace_separator' => array(
@@ -21,6 +22,7 @@ function prefs_namespace_list()
 			'size' => 5,
 			'type' => 'text',
 			'default' => '_',
+			'keywords' => 'Namespaces',
 		),
 	);	
 }

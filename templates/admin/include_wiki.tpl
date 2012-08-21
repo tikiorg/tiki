@@ -305,6 +305,11 @@
 		</div>
 		{preference name=wiki_keywords}
 		{preference name=geo_locate_wiki}
+
+		{preference name=namespace_enabled}
+		<div class="adminoptionboxchild" id="namespace_enabled_childcontainer">
+		{preference name=namespace_separator}
+		</div>
 	{/tab}
 
 	{tab name="{tr}Flagged Revision{/tr}"}
