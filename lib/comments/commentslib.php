@@ -284,7 +284,7 @@ class Comments extends TikiLib
 		}
 	}
 
-	function process_inbound_mail($forumId, $suppressErrors = false)
+	function process_inbound_mail($forumId)
 	{
 		// require_once ("lib/webmail/pop3.php");
 		require_once ("lib/webmail/net_pop3.php");
@@ -482,10 +482,10 @@ class Comments extends TikiLib
 								} else {
 									$part_name = "Unnamed File";
 								}
-								$this->add_thread_attachment($forum_info, $threadid, $errors,	$part_name, $part['type'], strlen($part['body']),	1, '', $part['body'], $suppressErrors);
+								$this->add_thread_attachment($forum_info, $threadid, $errors,	$part_name, $part['type'], strlen($part['body']),	1, '', '', $part['body'] );
 							} elseif ($part['disposition'] == 'inline') {
 								foreach ($part['parts'] as $p) {
-									$this->add_thread_attachment($forum_info, $threadid, $errors, '-', $p['type'], strlen($p['body']),	1, '', $p['body'], $suppressErrors);
+									$this->add_thread_attachment($forum_info, $threadid, $errors, '-', $p['type'], strlen($p['body']),	1, '', '', $p['body'] );
 								}
 							}
 						}
