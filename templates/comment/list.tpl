@@ -38,7 +38,7 @@
 						{$comment.parsed}
 					</div>
 
-					<table>
+					<table style="width: 100%;">
 						<tr>
 							{if $allow_post && $comment.locked neq 'y'}
 							<td>
