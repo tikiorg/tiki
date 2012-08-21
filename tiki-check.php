@@ -43,7 +43,7 @@ if ( $bytes < 200 * 1024 * 1024 ) {
 	$server_properties['Disk Space'] = array(
 		'fitness' => 'good',
 		'value' => $free_space,
-		'message' => tra('You have more than 500MB of free disk space. Tiki will run nicely, but you may run into issues when your site grows (e.g. file uploads)').' '.tra('When the disk runs full you will not be able to log into your tiki any more.')
+		'message' => tra('You have more than 251MB of free disk space. Tiki will run nicely, but you may run into issues when your site grows (e.g. file uploads)').' '.tra('When the disk runs full you will not be able to log into your tiki any more.')
 	);
 }
 
