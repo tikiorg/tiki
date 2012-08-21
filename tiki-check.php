@@ -9,17 +9,43 @@ require_once ('tiki-setup.php');
 $access->check_permission('tiki_p_admin');
 
 // Basic Server environment
-$server_properties['Operating System'] = array(
+$server_information['Operating System'] = array(
 	'value' => PHP_OS,
 );
 
-$server_properties['Web Server'] = array(
+$server_information['Web Server'] = array(
 	'value' => $_SERVER['SERVER_SOFTWARE']
 );
 
-$server_properties['Server Signature'] = array(
+$server_information['Server Signature'] = array(
 	'value' => $_SERVER['SERVER_SIGNATURE']
 );
+
+// Free disk space
+$bytes = disk_free_space('.');
+$si_prefix = array( 'B', 'KB', 'MB', 'GB', 'TB', 'EB', 'ZB', 'YB' );
+$base = 1024;
+$class = min((int)log($bytes , $base) , count($si_prefix) - 1);
+$free_space =  sprintf('%1.2f' , $bytes / pow($base,$class)) . ' ' . $si_prefix[$class];
+if ( $bytes < 200 * 1024 * 1024 ) {
+	$server_properties['Disk Space'] = array(
+		'fitness' => 'bad',
+		'value' => $free_space,
+		'message' => tra('You have less than 200M of free disk space. Tiki will not fit on this harddrive.')
+	);
+} elseif ( $bytes < 250 * 1024 * 1024 ) {
+	$server_properties['Disk Space'] = array(
+		'fitness' => 'ugly',
+		'value' => $free_space,
+		'message' => tra('You have less than 250M of free disk space. This is quite tight. Tiki needs disk space for compiling templates and for uploading files.').' '.tra('When the disk runs full you will not be able to log into your tiki any more.')
+	);
+} else {
+	$server_properties['Disk Space'] = array(
+		'fitness' => 'good',
+		'value' => $free_space,
+		'message' => tra('You have more than 500MB of free disk space. Tiki will run nicely, but you may run into issues when your site grows (e.g. file uploads)').' '.tra('When the disk runs full you will not be able to log into your tiki any more.')
+	);
+}
 
 // Get PHP properties and check them
 $php_properties = array();
@@ -312,20 +338,50 @@ if ((extension_loaded('gd') && function_exists('gd_info'))) {
 	);
 }
 
-// PDO
-$s = extension_loaded('pdo');
+// mysqli/mysql
+$s = extension_loaded('mysqli');
 if ($s) {
-	$php_properties['pdo'] = array(
+	$php_properties['DB Driver'] = array(
 		'fitness' => tra('good'),
-		'setting' => 'Loaded',
-		'message' => tra('The PDO extension is the suggested database abstraction layer.')
+		'setting' => 'MySQLi',
+		'message' => tra('MySQLi is the suggested DB driver to use.')
+	);
+} elseif ( extension_loaded('mysql') ) {
+	$php_properties['DB Driver'] = array(
+		'fitness' => tra('ugly'),
+		'setting' => 'MySQL',
+		'message' => tra('You do not have the suggested MySQLi extension loaded.').' '.tra('You will fall back to legacy MySQL though.')
 	);
 } else {
-	$php_properties['pdo'] = array(
-		'fitness' => tra('ugly'),
+	$php_properties['DB Driver'] = array(
+		'fitness' => tra('bad'),
 		'setting' => 'Not available',
-		'message' => tra('The PDO extension is the suggested database abstraction layer.').' '.tra('You can fall back to AdoDB though.')
+		'message' => tra('You do not have the suggested MySQLi extension loaded.').' '.tra('You also do not have the legacy MySQL extension. There is no DB driver available. Tiki will not work.')
 	);
+
+}
+
+// PDO/ADOdb
+$s = extension_loaded('pdo');
+if ($s) {
+	$php_properties['DB Abstraction'] = array(
+		'fitness' => tra('good'),
+		'setting' => 'PDO',
+		'message' => tra('The PDO extension is the suggested database abstraction layer.')
+	);
+} elseif ( extension_loaded('adodb') ) {
+	$php_properties['DB Abstraction'] = array(
+		'fitness' => tra('ugly'),
+		'setting' => 'ADOdb',
+		'message' => tra('You do not have the suggested PDO extension loaded.').' '.tra('You will fall back to legacy AdoDB though.')
+	);
+} else {
+	$php_properties['DB Abstraction'] = array(
+		'fitness' => tra('bad'),
+		'setting' => 'Not available',
+		'message' => tra('You do not have the suggested PDO extension loaded.').' '.tra('You also do not have the ADOdb extension. There is no database abstraction available. Tiki will not work.')
+	);
+
 }
 
 // mbstring
@@ -353,8 +409,115 @@ if ($s) {
 	);
 }
 
+// calendar
+$s = extension_loaded('calendar');
+if ($s) {
+	$php_properties['calendar'] = array(
+		'fitness' => tra('good'),
+		'setting' => 'Loaded',
+		'message' => tra('calendar extension is needed by Tiki.')
+	);
+} else {
+	$php_properties['calendar'] = array(
+		'fitness' => tra('bad'),
+		'setting' => 'Not available',
+		'message' => tra('calendar extension is needed by Tiki.').' '.tra('You will not be able to use the calendar feature of Tiki.')
+	);
+}
+
+// ctype
+$s = extension_loaded('ctype');
+if ($s) {
+	$php_properties['ctype'] = array(
+		'fitness' => tra('good'),
+		'setting' => 'Loaded',
+		'message' => tra('ctype extension is needed by Tiki.')
+	);
+} else {
+	$php_properties['ctype'] = array(
+		'fitness' => tra('bad'),
+		'setting' => 'Not available',
+		'message' => tra('ctype extension is needed by Tiki.')
+	);
+}
+
+// libxml
+$s = extension_loaded('libxml');
+if ($s) {
+	$php_properties['libxml'] = array(
+		'fitness' => tra('good'),
+		'setting' => 'Loaded',
+		'message' => tra('libxml extension is needed by Tiki.')
+	);
+} else {
+	$php_properties['libxml'] = array(
+		'fitness' => tra('bad'),
+		'setting' => 'Not available',
+		'message' => tra('libxml extension is needed by Tiki.')
+	);
+}
+
+$s = extension_loaded('ldap');
+if ($s) {
+	$php_properties['LDAP'] = array(
+		'fitness' => tra('good'),
+		'setting' => 'Loaded',
+		'message' => tra('This extension is needed to connect your Tiki to an LDAP server.')
+	);
+} else {
+	$php_properties['LDAP'] = array(
+		'fitness' => tra('ugly'),
+		'setting' => 'Not available',
+		'message' => tra('You will not be able to connect your Tiki to an LDAP server as the needed PHP extension is missing.')
+	);
+}
+
+// Check for existence of eval()
+// eval() is a language construct and not a function
+// so function_exists() doesn't work
+$s = eval('return 42;');
+if ( $s == 42 ) {
+	$php_properties['eval()'] = array(
+		'fitness' => tra('good'),
+		'setting' => 'Available',
+		'message' => tra('The eval() function is required by the Smarty templating engine.')
+	);
+} else {
+	$php_properties['eval()'] = array(
+		'fitness' => tra('bad'),
+		'setting' => 'Not available',
+		'message' => tra('The eval() function is required by the Smarty templating engine.').' '.tra('You will get "Please contact support about" messages instead of modules. eval() is most probably disabled via Suhosin.')
+	);
+}
+
+// Check error reporting level
+// TODO: Doesn't work.... always returns the same error reporting level....?!?
+$s = error_reporting();
+if ( $s == 0 || ini_get('display_errors') == 0 ) {
+	$php_properties['error_reporting'] = array(
+		'fitness' => tra('bad'),
+		'setting' => $s,
+		'message' => tra('You will get no errors reported. This might be the right thing for a production site, but in case of problems check your settings for display_errors and error_reporting in php.ini to get more information.')
+	);
+} elseif ( $s > 0 && $s < 32767 ) {
+	$php_properties['error_reporting'] = array(
+		'fitness' => tra('ugly'),
+		'setting' => $s,
+		'message' => tra('You will not get all errors reported. This is not necessarily a bad thing(and it might be just right for production sites) as you will still get critical errors reported, but sometimes it can be handy to get more information. Check your error_reporting level in php.ini in case of having issues.')
+	);
+} else {
+	$php_properties['error_reporting'] = array(
+		'fitness' => tra('good'),
+		'setting' => $s,
+		'message' => tra('You will get all errors reported. Way to go in case of problems!') 
+	);
+}
+
+
 // Check if ini_set works
-$s = ini_set('error_reporting', 'ALL') ;
+// This has to be after checking the error_reporting level or the error_reporting
+// level will always be 0 because of the ini_set in the following test
+$s = ini_set('error_reporting', 'E_ALL') ;
 if(empty($s) || (!$s))
 {
 	$php_properties['ini_set'] = array(
@@ -411,6 +574,7 @@ if ($s >= 8 * 1024 * 1024) {
 	);
 }
 
+$smarty->assign_by_ref('server_information', $server_information);
 $smarty->assign_by_ref('server_properties', $server_properties);
 $smarty->assign_by_ref('mysql_properties', $mysql_properties);
 $smarty->assign_by_ref('php_properties', $php_properties);
