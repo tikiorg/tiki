@@ -477,10 +477,10 @@ class Comments extends TikiLib
 							} else {
 								$part_name = "Unnamed File";
 							}
-							$this->add_thread_attachment($forum_info, $threadid, $errors,	$part_name, $part['type'], strlen( $part['body'] ),	1, '', $part['body'] );
+							$this->add_thread_attachment($forum_info, $threadid, $errors,	$part_name, $part['type'], strlen( $part['body'] ),	1, '', '', $part['body'] );
 						} elseif ($part['disposition'] == 'inline') {
 							foreach ($part['parts'] as $p) {
-								$this->add_thread_attachment($forum_info, $threadid, $errors, '-', $p['type'], strlen( $p['body'] ),	1, '', $p['body'] );
+								$this->add_thread_attachment($forum_info, $threadid, $errors, '-', $p['type'], strlen( $p['body'] ),	1, '', '', $p['body'] );
 							}
 						}
 					}
