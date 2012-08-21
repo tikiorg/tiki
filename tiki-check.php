@@ -31,7 +31,7 @@ if ( $bytes < 200 * 1024 * 1024 ) {
 	$server_properties['Disk Space'] = array(
 		'fitness' => 'bad',
 		'value' => $free_space,
-		'message' => tra('You have less than 200M of free disk space. Tiki will not fit on this harddrive.')
+		'message' => tra('You have less than 200M of free disk space. Tiki will not fit on this disk drive.')
 	);
 } elseif ( $bytes < 250 * 1024 * 1024 ) {
 	$server_properties['Disk Space'] = array(
@@ -503,7 +503,7 @@ if ( $s == 0 || ini_get('display_errors') == 0 ) {
 	$php_properties['error_reporting'] = array(
 		'fitness' => tra('ugly'),
 		'setting' => $s,
-		'message' => tra('You will not get all errors reported. This is not necessarily a bad thing(and it might be just right for production sites) as you will still get critical errors reported, but sometimes it can be handy to get more information. Check your error_reporting level in php.ini in case of having issues.')
+		'message' => tra('You will not get all errors reported. This is not necessarily a bad thing (and it might be just right for production sites) as you will still get critical errors reported, but sometimes it can be handy to get more information. Check your error_reporting level in php.ini in case of having issues.')
 	);
 } else {
 	$php_properties['error_reporting'] = array(
