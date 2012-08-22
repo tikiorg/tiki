@@ -436,6 +436,14 @@ $icons = array(
 		'description' => tr('Configure areas feature'),
 		'help' => 'areas',
 	),
+	"workspace" => array(
+		'icon' => 'img/icons/large/areas.png',
+		'position' => '-500px -715px;',
+		'title' => tr('Workspaces'),
+		'disabled' => $prefs['workspace_ui'] != 'y',
+		'description' => tr('Configure workspace feature'),
+		'help' => 'workspace',
+	),
 	"score" => array(
 		'icon' => 'img/icons/large/stock_about.png',
 		'position' => '-200px -415px;',
