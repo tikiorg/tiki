@@ -387,18 +387,24 @@ if ($s) {
 // mbstring
 $s = extension_loaded('mbstring');
 if ($s) {
-	$i = ini_get('mbstring.func_overload'); 
-	if ($i == 0) {
+	$func_overload = ini_get('mbstring.func_overload');
+	if ($func_overload == 0 && function_exists(mb_split)) {
 		$php_properties['mbstring'] = array(
 			'fitness' => tra('good'),
 			'setting' => 'Loaded',
 			'message' => tra('The mbstring extension is needed for an UTF-8 compatible lower case filter in the Admin search for example.')
 		);
-	} else {
+	} elseif ($func_overload != 0) {
 		$php_properties['mbstring'] = array(
 			'fitness' => tra('ugly'),
 			'setting' => 'Badly configured',
-			'message' => tra('The mbstring extension is loaded, but mbstring.func_overload = '.' '.$i.'.'.' '.'Tiki only works with mbsring.func_overload = 0. Please check your php.ini.')
+			'message' => tra('The mbstring extension is loaded, but mbstring.func_overload = '.' '.$func_overload.'.'.' '.'Tiki only works with mbsring.func_overload = 0. Please check your php.ini.')
+		);
+	} else {
+		$php_properties['mbstring'] = array(
+			'fitness' => tra('bad'),
+			'setting' => 'Badly installed',
+			'message' => tra('The mbstring extension is loaded, but missing important functions as for example mb_split(). You need to reinstall it with --enable-mbregex or ask your hoster do do it.')
 		);
 	}
 } else {
