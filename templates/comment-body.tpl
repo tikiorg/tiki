@@ -104,7 +104,7 @@
 				<br /><br />
 				{*This is where we display the results of the deliberation*}
 				{if $tiki_p_admin_forum eq 'y'}
-					{rating_deliberation_result id=$deliberation.threadId type='comment'}
+					{rating_result id=$deliberation.threadId type='comment'}
 				{/if}
 			</div>
 		{/foreach}
