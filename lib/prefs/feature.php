@@ -1241,6 +1241,10 @@ function prefs_feature_list($partial = false)
 			'type' => 'flag',
 			'perspective' => false,
 			'default' => 'n',
+			'module' => 'perspective',
+			'permission' => array(
+				'textFilter' => 'perspective',
+			),
 			'view' => 'tiki-edit_perspective.php',
 		),
 		'feature_wiki_replace' => array(
