@@ -49,6 +49,7 @@ class Services_Tracker_CalendarController
 			$item = Tracker_Item::fromId($row['object_id']);
 			$response[] = array(
 				'id' => $row['object_id'],
+				'trackerId' => isset($row['tracker_id']) ? $row['tracker_id'] : null,
 				'title' => $row['title'],
 				'description' => '',
 				'url' => smarty_modifier_sefurl($row['object_id'], $row['object_type']),

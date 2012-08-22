@@ -54,9 +54,9 @@
 				element.cluetip({arrows: true, splitTitle: '|', clickThrough: true});
 			},
 			eventClick: function(event) {
-				if (event.editable) {
+				if (event.editable && event.trackerId) {
 					var info = {
-						trackerId: data.trackerId,
+						trackerId: event.trackerId,
 						itemId: event.id
 					};
 					$('<a href="#"/>').attr('href', $.service('tracker', 'update_item', info)).serviceDialog({
