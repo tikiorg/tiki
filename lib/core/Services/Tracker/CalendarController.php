@@ -25,7 +25,7 @@ class Services_Tracker_CalendarController
 			$resource = 'tracker_field_' . $resource;
 		}
 
-		$query = new Search_Query;
+		$query = $unifiedsearchlib->buildQuery(array());
 		$query->filterRange($input->start->int(), $input->end->int(), array($start, $end));
 		$result = $query->search($index);
 
@@ -45,7 +45,7 @@ class Services_Tracker_CalendarController
 				'allDay' => false,
 				'start' => (int) $row[$start],
 				'end' => (int) $row[$end],
-				'modifiable' => $item->canModify(),
+				'editable' => $item->canModify(),
 				'color' => '#',
 				'textcolor' => '#',
 				'resource' => ($resource && isset($row[$resource])) ? $row[$resource] : '',

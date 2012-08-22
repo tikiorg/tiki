@@ -51,6 +51,7 @@ function wikiplugin_trackercalendar($data, $params)
 
 	$jit = new JitFilter($params);
 	$definition = Tracker_Definition::get($jit->trackerId->int());
+	$itemObject = Tracker_Item::newItem($jit->trackerId->int());
 
 	if (! $definition) {
 		return WikiParser_PluginOutput::userError(tr('Tracker not found.'));
@@ -92,6 +93,7 @@ function wikiplugin_trackercalendar($data, $params)
 		'minHourOfDay' => 7,
 		'maxHourOfDay' => 20,
 		'addTitle' => tr('Insert'),
+		'canInsert' => $itemObject->canModify(),
 	));
 	return $smarty->fetch('wiki-plugins/trackercalendar.tpl');
 }

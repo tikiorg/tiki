@@ -52,30 +52,36 @@
 				element.cluetip({arrows: true, splitTitle: '|', clickThrough: true});
 			},
 			eventClick: function(event) {
-				var info = {
-					trackerId: data.trackerId,
-					itemId: event.id
-				};
-				$('<a href="#"/>').attr('href', $.service('tracker', 'update_item', info)).serviceDialog({
-					title: event.title,
-					success: function () {
-						$(cal).fullCalendar('refetchEvents');
-					}
-				});
+				if (event.editable) {
+					var info = {
+						trackerId: data.trackerId,
+						itemId: event.id
+					};
+					$('<a href="#"/>').attr('href', $.service('tracker', 'update_item', info)).serviceDialog({
+						title: event.title,
+						success: function () {
+							$(cal).fullCalendar('refetchEvents');
+						}
+					});
+				}
+
 				return false;
 			},
 			dayClick: function(date, allDay, jsEvent, view) {
-				var info = {
-					trackerId: data.trackerId,
-				};
-				info[data.beginFieldName] = date.getTime() / 1000;
-				info[data.endFieldName] = date.getTime() / 1000 + 3600;
-				$('<a href="#"/>').attr('href', $.service('tracker', 'insert_item', info)).serviceDialog({
-					title: data.addTitle,
-					success: function () {
-						$(cal).fullCalendar('refetchEvents');
-					}
-				});
+				if (data.canInsert) {
+					var info = {
+						trackerId: data.trackerId,
+					};
+					info[data.beginFieldName] = date.getTime() / 1000;
+					info[data.endFieldName] = date.getTime() / 1000 + 3600;
+					$('<a href="#"/>').attr('href', $.service('tracker', 'insert_item', info)).serviceDialog({
+						title: data.addTitle,
+						success: function () {
+							$(cal).fullCalendar('refetchEvents');
+						}
+					});
+				}
+
 				return false;
 			},
 			eventResize: storeEvent,
