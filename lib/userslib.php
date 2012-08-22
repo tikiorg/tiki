@@ -1471,7 +1471,7 @@ class UsersLib extends TikiLib
 		global $prefs, $tikilib;
 		$ret = $this->update_lastlogin($user);
 
-		if (is_null($current)) {
+		if (empty($current)) {
 			// First time
 			$current = 0;
 		}
