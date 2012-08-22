@@ -25,7 +25,8 @@
 				trackerId: data.trackerId,
 				beginField: data.begin,
 				endField: data.end,
-				resourceField: data.resource
+				resourceField: data.resource,
+				coloringField: data.coloring
 			}),
 			resources: data.resourceList,
 			year: data.viewyear,

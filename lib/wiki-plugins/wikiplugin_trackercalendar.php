@@ -38,6 +38,12 @@ function wikiplugin_trackercalendar_info()
 				'required' => false,
 				'filter' => 'word',
 			),
+			'coloring' => array(
+				'name' => tr('Coloring discriminator field'),
+				'description' => tr('Permanent name of the field to use to segment the information into color schemes.'),
+				'required' => false,
+				'filter' => 'word',
+			),
 		),
 	);
 }
@@ -83,6 +89,7 @@ function wikiplugin_trackercalendar($data, $params)
 		'end' => $jit->end->word(),
 		'resource' => $resourceField,
 		'resourceList' => $resources,
+		'coloring' => $jit->coloring->word(),
 		'beginFieldName' => 'ins_' . $beginField['fieldId'],
 		'endFieldName' => 'ins_' . $endField['fieldId'],
 		'firstDayofWeek' => 0,

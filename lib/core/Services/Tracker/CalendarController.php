@@ -25,6 +25,10 @@ class Services_Tracker_CalendarController
 			$resource = 'tracker_field_' . $resource;
 		}
 
+		if ($coloring = $input->coloringField->word()) {
+			$coloring = 'tracker_field_' . $coloring;
+		}
+
 		$query = $unifiedsearchlib->buildQuery(array());
 		$query->filterRange($input->start->int(), $input->end->int(), array($start, $end));
 		$result = $query->search($index);
@@ -46,13 +50,27 @@ class Services_Tracker_CalendarController
 				'start' => (int) $row[$start],
 				'end' => (int) $row[$end],
 				'editable' => $item->canModify(),
-				'color' => '#',
-				'textcolor' => '#',
+				'color' => $this->getColor(isset($row[$coloring]) ? $row[$coloring] : ''),
+				'textcolor' => '#000',
 				'resource' => ($resource && isset($row[$resource])) ? $row[$resource] : '',
 			);
 		}
 
 		return $response;
+	}
+
+	private function getColor($value)
+	{
+		static $colors = array('#6cf', '#6fc', '#c6f', '#cf6', '#f6c', '#fc6');
+		static $map = array();
+
+		if (! isset($map[$value])) {
+			$color = array_shift($colors);
+			$colors[] = $color;
+			$map[$value] = $color;
+		}
+		
+		return $map[$value];
 	}
 }
 
