@@ -27,7 +27,7 @@ $exportUrl = 'tiki-calendar_export_ical.php';
 $iCalAdvParamsUrl = 'tiki-calendar_params_ical.php';
 $bufid = array();
 $bufdata = array();
-$modifiable = array();
+$editable = array();
 if (!isset($cookietab)) { 
 	$cookietab = '1';
 }
@@ -82,7 +82,7 @@ foreach ($rawcals["data"] as $cal_data) {
 	}
 	if ($cal_data["tiki_p_change_events"] == 'y') {
 		$modifTab = 1;
-		$modifiable[] = $cal_id;
+		$editable[] = $cal_id;
 		$visible[] = $cal_id;
 	}
 }
@@ -169,7 +169,7 @@ $viewend = $_REQUEST['end'];
 if ($_SESSION['CalendarViewGroups']) {
 	$listevents = $calendarlib->list_raw_items($_SESSION['CalendarViewGroups'], $user, $viewstart, $viewend, 0, -1);
 	for ($i = count($listevents) - 1; $i >= 0; --$i) {
-		$listevents[$i]['modifiable'] = in_array($listevents[$i]['calendarId'], $modifiable)? "y": "n";
+		$listevents[$i]['editable'] = in_array($listevents[$i]['calendarId'], $editable)? "y": "n";
 		$listevents[$i]['visible'] = in_array($listevents[$i]['calendarId'], $visible)? "y": "n";
 	}
 } else {
@@ -184,7 +184,7 @@ if ($prefs['feature_theme_control'] == 'y'	and isset($_REQUEST['calIds'])) {
 
 $events = array();
 foreach ($listevents as $event) {
-	if ($event['modifiable'] === 'y' and $cal_data["tiki_p_change_events"] == 'y') {
+	if ($event['editable'] === 'y' and $cal_data["tiki_p_change_events"] == 'y') {
 		$url = 'tiki-calendar_edit_item.php?fullcalendar=y&calitemId='.$event['calitemId']; 
 	} else {
 		$url = 'tiki-calendar_edit_item.php?viewcalitemId='.$event['calitemId']; // removed fullcalendar=y param to prevent display without tpl for anons in some setups
@@ -196,7 +196,7 @@ foreach ($listevents as $event) {
 											'allDay' => $event['allday'] != 0 ,
 											'start' => $event['date_start'],
 											'end' => $event['date_end'],
-											'modifiable' => $event['modifiable'] === 'y',
+											'editable' => $event['editable'] === 'y',
 											'color' => '#'.$cals_info['data'][$event['calendarId']]['custombgcolor'],
 											'textColor' => '#'.$cals_info['data'][$event['calendarId']]['customfgcolor']);
 }

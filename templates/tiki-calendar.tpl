@@ -182,7 +182,7 @@ $('#calendar').fullCalendar({
 				element.cluetip({arrows: true, splitTitle: '|', clickThrough: true});
 			},
 			eventClick: function(event) {
-        if (event.url && event.modifiable) {
+        if (event.url && event.editable) {
 			$.ajax({
 					dataType: 'html',
 					url: event.url,
