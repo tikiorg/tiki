@@ -21,7 +21,7 @@ function prefs_workspace_list()
 				'feature_categories',
 			),
 		),
-		'worspace_root_category' => array(
+		'workspace_root_category' => array(
 			'name' => tr('Workspace root category'),
 			'description' => tr('ID of the root category containing all workspaces.'),
 			'type' => 'text',
