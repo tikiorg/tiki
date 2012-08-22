@@ -150,7 +150,7 @@
 
 {if $user and $prefs.feature_user_watches eq 'y'}
 	<div class="categbar" align="right">
-		{if $category_watched eq 'y'}
+		{if isset($category_watched) && $category_watched eq 'y'}
 			{tr}Watched by categories:{/tr}
 			{section name=i loop=$watching_categories}
 				{button _keepall='y' _text=$watching_categories[i].name|escape href="tiki-browse_categories.php" parentId=$watching_categories[i].categId}
