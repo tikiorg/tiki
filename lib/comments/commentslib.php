@@ -3048,6 +3048,7 @@ class Comments extends TikiLib
 
 			if (isset($rating_override[$i])) {
 				global $ratinglib;
+				require_once('lib/rating/ratinglib.php');
 				$ratinglib->set_override('comment', $deliberation_id, $rating_override[$i]);
 			}
 		}
