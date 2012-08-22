@@ -12,10 +12,9 @@
 			<td class="text">{$key}</td>
 			<td class="text">{$item.value}</td>
 		</tr>
+	{foreachelse}
+		{norecords _colspan=2}
 	{/foreach}
-	{if !server_information}
-         {norecords _colspan=4}
-	{/if}
 </table>
 
 <h2>{tr}Server Properties{/tr}</h2>
@@ -45,10 +44,9 @@
 			</td>
 			<td class="text">{$item.message}</td>
 		</tr>
+	{foreachelse}
+		{norecords _colspan=4}
 	{/foreach}
-	{if !$server_properties}
-         {norecords _colspan=4}
-	{/if}
 </table>
 
 <h2>{tr}PHP{/tr}</h2>
@@ -78,10 +76,9 @@
 			</td>
 			<td class="text">{$item.message}</td>
 		</tr>
+	{foreachelse}
+		{norecords _colspan=4}
 	{/foreach}
-	{if !$php_properties}
-         {norecords _colspan=4}
-	{/if}
 </table>
 
 <h2>{tr}MySQL{/tr}</h2>
@@ -111,8 +108,7 @@
 			</td>
 			<td class="text">{$item.message}</td>
 		</tr>
+	{foreachelse}
+		{norecords _colspan=4}
 	{/foreach}
-	{if !$mysql_properties}
-         {norecords _colspan=4}
-	{/if}
 </table>
