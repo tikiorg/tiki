@@ -16,6 +16,7 @@ function prefs_namespace_list()
 			'help' => 'Namespace',
 			'keywords' => 'Namespaces',
 			'tags' => array('experimental'),
+			'perspective' => false,
 		),
 		'namespace_separator' => array(
 			'name' => tr('Namespace separator'),
@@ -23,6 +24,13 @@ function prefs_namespace_list()
 			'type' => 'text',
 			'default' => '_',
 			'keywords' => 'Namespaces',
+			'perspective' => false,
+		),
+		'namespace_default' => array(
+			'name' => tr('Default namespace'),
+			'description' => tr('Namespace to use when creating wiki pages. Should be defined within perspectives.'),
+			'type' => 'text',
+			'default' => '',
 		),
 	);	
 }
