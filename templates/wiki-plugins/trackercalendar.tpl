@@ -26,7 +26,8 @@
 				beginField: data.begin,
 				endField: data.end,
 				resourceField: data.resource,
-				coloringField: data.coloring
+				coloringField: data.coloring,
+				filters: data.body
 			}),
 			resources: data.resourceList,
 			year: data.viewyear,

@@ -31,6 +31,12 @@ class Services_Tracker_CalendarController
 
 		$query = $unifiedsearchlib->buildQuery(array());
 		$query->filterRange($input->start->int(), $input->end->int(), array($start, $end));
+
+		if ($body = $input->filters->none()) {
+			$builder = new Search_Query_WikiBuilder($query);
+			$builder->apply(WikiParser_PluginMatcher::match($body));
+		}
+
 		$result = $query->search($index);
 
 		$result = $dataSource->getInformation($result, array('title', $start, $end));

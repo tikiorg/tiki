@@ -101,6 +101,7 @@ function wikiplugin_trackercalendar($data, $params)
 		'maxHourOfDay' => 20,
 		'addTitle' => tr('Insert'),
 		'canInsert' => $itemObject->canModify(),
+		'body' => $data,
 	));
 	return $smarty->fetch('wiki-plugins/trackercalendar.tpl');
 }
