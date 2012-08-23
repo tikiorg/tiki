@@ -5,8 +5,60 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id: tiki-admin_security.php 40813 2012-04-07 17:32:37Z jonnybradley $
 
-require_once ('tiki-setup.php');
-$access->check_permission('tiki_p_admin');
+if (file_exists('./db/local.php')) {
+	$standalone = false;
+	require_once ('tiki-setup.php');
+	$access->check_permission('tiki_p_admin');
+} else {
+	$standalone = true;
+
+	function tra($string) {
+		return $string;
+	}
+
+	function render_table($var) {  
+		if(is_array($var)) {              
+			echo '<table style="border:2px solid grey;">';  
+			foreach($var as $key => $value) {  
+				echo '<tr style="border:1px solid">',  
+				'<td style="border:1px black;padding:5px;">',  
+				$key,  
+				"</td>";
+				foreach($var[$key] as $key2 => $value2) {
+					echo '<td style="border:1px solid"><span style="color:';
+					switch($value2) {
+						case good:
+							echo 'green';
+							break;
+						case ugly:
+							echo 'yellow';
+							break;
+						case bad:
+							echo 'red';
+							break;
+					}
+				echo '">'.$value2.'</span></td>';
+				}
+				echo "</tr>";               
+			}
+			echo '</table>';  
+		} else {  
+			echo 'Nothing to display.';  
+		}
+	} 
+
+	if ( empty($_POST["dbuser"]) || empty($_POST["dbpass"]) || !$connection = mysql_connect('localhost', $_POST["dbuser"], $_POST['dbpass']) ) {
+	print <<<DBC
+	<h2>Database credentials</h2>
+	Couldn't connect to database, please provide valid credentials.
+	<form method="post" action="{$_SERVER['REQUEST_URI']}">
+		<p><label for="dbuser">Database username</label>: <input type="text" id="dbuser" name="dbuser" /></p>
+		<p><label for="dbpass">Database password</label>: <input type="password" id="dbpass" name="dbpass" /></p>
+		<p><input type="submit" value=" Connect " /></p>
+	</form>
+DBC;
+	}
+}
 
 // Basic Server environment
 $server_information['Operating System'] = array(
@@ -388,7 +440,7 @@ if ($s) {
 $s = extension_loaded('mbstring');
 if ($s) {
 	$func_overload = ini_get('mbstring.func_overload');
-	if ($func_overload == 0 && function_exists(mb_split)) {
+	if ($func_overload == 0 && function_exists('mb_split')) {
 		$php_properties['mbstring'] = array(
 			'fitness' => tra('good'),
 			'setting' => 'Loaded',
@@ -561,9 +613,15 @@ if ( $s == 0 ) {
 }
 
 // max_allowed_packet
-$query = "SHOW VARIABLES where Variable_name='max_allowed_packet'";
-$result = $tikilib->query($query);
-$row = $result->fetchRow();
+if ($standalone) {
+	$query = "SHOW VARIABLES where Variable_name='max_allowed_packet'";
+	$result = mysql_query($query);
+	$row = mysql_fetch_array($result);
+} else {
+	$query = "SHOW VARIABLES where Variable_name='max_allowed_packet'";
+	$result = $tikilib->query($query);
+	$row = $result->fetchRow();
+}
 $s = $row['Value'];
 $max_allowed_packet = $s / 1024 / 1024;
 if ($s >= 8 * 1024 * 1024) {
@@ -580,11 +638,24 @@ if ($s >= 8 * 1024 * 1024) {
 	);
 }
 
-$smarty->assign_by_ref('server_information', $server_information);
-$smarty->assign_by_ref('server_properties', $server_properties);
-$smarty->assign_by_ref('mysql_properties', $mysql_properties);
-$smarty->assign_by_ref('php_properties', $php_properties);
-// disallow robots to index page:
-$smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
-$smarty->assign('mid', 'tiki-check.tpl');
-$smarty->display("tiki.tpl");
+if ($standalone) {
+echo '<h1>Tiki Server Compatibility</h1>',
+     '<h2>Server Information</h2>';
+render_table($server_information);
+echo '<h2>Server Properties</h2>';
+render_table($server_properties);
+echo '<h2>MySQL Properties</h2>';
+render_table($mysql_properties);
+echo '<h2>PHP Properties</h2>';
+render_table($php_properties);
+} else {
+	$smarty-> assign_by_ref('server_information', $server_information);
+	$smarty->assign_by_ref('server_properties', $server_properties);
+	$smarty->assign_by_ref('mysql_properties', $mysql_properties);
+	$smarty->assign_by_ref('php_properties', $php_properties);
+	// disallow robots to index page:
+	$smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
+	$smarty->assign('mid', 'tiki-check.tpl');
+	$smarty->display("tiki.tpl");
+}
+
