@@ -5318,6 +5318,15 @@ class UsersLib extends TikiLib
 				'prefs' => array('feature_references'),
 				'scope' => 'object',
 			),
+			array(
+				'name' => 'tiki_p_workspace_instanciate',
+				'description' => tra('Can create a new workspace for the given template'),
+				'level' => 'admin',
+				'type' => 'workspacetemplate',
+				'admin' => false,
+				'prefs' => array('workspace_ui'),
+				'scope' => 'object',
+			),
 		);
 
 		$cachelib->cacheItem('rawpermissions' . $prefs['language'], serialize($permissions));

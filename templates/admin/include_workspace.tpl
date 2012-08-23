@@ -11,23 +11,44 @@
 	</fieldset>
 
 	<fieldset class="admin">
-		<legend>{tr}Create a workspace{/tr}</legend>
-		<a href="{service controller=workspace action=create}">{tr}Create a workspace{/tr}</a>
+		<legend>{tr}Administration{/tr}</legend>
+		<a class="button service-dialog" href="{service controller=workspace action=create}">{tr}Create a workspace{/tr}</a>
+		
+		<div id="template-list">
+		</div>
+		<a class="button service-dialog reload" href="{service controller=workspace action=add_template}">{tr}Add a workspace template{/tr}</a>
 	</fieldset>
 
 	<fieldset class="admin">
-		<legend>{tr}Namespaces{/tr}</legend>
+		<legend>{tr}Dependencies{/tr}</legend>
 		{preference name=namespace_enabled}
 		{preference name=namespace_separator}
+		{preference name=feature_perspective}
+		{preference name=feature_categories}
+		{preference name=feature_wiki}
 	</fieldset>
 
 	<fieldset class="admin">
-		<legend>{tr}Perspective{/tr}</legend>
-		{preference name=feature_perspective}
-		{preference name=wikiplugin_perspective}
+		<legend>{tr}Related{/tr}</legend>
+		{preference name=feature_areas}
 	</fieldset>
 
 	<div class="heading input_submit_container" style="text-align: center">
 		<input type="submit" name="workspacesetprefs" value="{tr}Change preferences{/tr}" />
 	</div>
 </form>
+{jq}
+	$('.service-dialog').click(function () {
+		$(this).serviceDialog({
+			title: $(this).text(),
+			success: function () {
+				if ($(this).is('.reload')) {
+					$('#template-list').load($.service('workspace', 'list_templates'));
+				}
+			}
+		});
+
+		return false;
+	});
+	$('#template-list').load($.service('workspace', 'list_templates'));
+{/jq}

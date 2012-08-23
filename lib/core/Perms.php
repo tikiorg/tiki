@@ -226,6 +226,17 @@ class Perms
 		return $valid;
 	}
 
+	public static function simpleFilter($type, $key, $permission, array $data)
+	{
+		return self::filter(
+			array('type' => $type),
+			'object',
+			$data,
+			array('object' => $key),
+			$permission
+		);
+	}
+
 	private static function hasPerm($baseContext, $contextMap, $entry, $permission)
 	{
 		$context = $baseContext;

@@ -3722,3 +3722,10 @@ CREATE TABLE `tiki_mail_queue` (
   `attempts`  INT NOT NULL DEFAULT 0 ,
   PRIMARY KEY (`messageId`) 
 ) ENGINE=MyISAM AUTO_INCREMENT=1;
+
+DROP TABLE IF EXISTS `tiki_workspace_templates`;
+CREATE TABLE `tiki_workspace_templates` (
+	`templateId` INT PRIMARY KEY AUTO_INCREMENT,
+	`name` VARCHAR(50),
+	`definition` TEXT
+);
