@@ -22,7 +22,7 @@
 {if $prefs.metatag_author neq ''}
 	<meta name="author" content="{$prefs.metatag_author|escape}" />
 {/if}
-{if $section eq "blogs"}
+{if isset($section) and $section eq "blogs"}
 	{if $blog_data.title eq ''}
 	<meta name="description" content="Blog listing" />
 	{elseif $postId eq ''}
