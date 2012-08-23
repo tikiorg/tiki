@@ -12,7 +12,7 @@
 
 	<fieldset class="admin">
 		<legend>{tr}Create a workspace{/tr}</legend>
-		<a href"{service controller=workspace action=create}">{tr}Create a workspace{/tr}</a>
+		<a href="{service controller=workspace action=create}">{tr}Create a workspace{/tr}</a>
 	</fieldset>
 
 	<fieldset class="admin">
