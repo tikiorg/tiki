@@ -32,7 +32,7 @@ class Services_Workspace_Controller
 		$template = $input->template->int();
 
 		if ($template && $name) {
-			$perms = Perms::get('workspacetemplate', $template);
+			$perms = Perms::get('workspace', $template);
 
 			if (! $perms->workspace_instantiate) {
 				throw new Services_Exception_Denied;

@@ -5322,7 +5322,7 @@ class UsersLib extends TikiLib
 				'name' => 'tiki_p_workspace_instantiate',
 				'description' => tra('Can create a new workspace for the given template'),
 				'level' => 'admin',
-				'type' => 'workspacetemplate',
+				'type' => 'workspace',
 				'admin' => false,
 				'prefs' => array('workspace_ui'),
 				'scope' => 'object',
