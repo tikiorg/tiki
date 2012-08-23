@@ -7,9 +7,14 @@
 			var request = {
 				itemId: event.id,
 				trackerId: data.trackerId
-			};
+			}, end = event.end;
+
+			if (! end) {
+				end = event.start;
+			}
+
 			request['fields~' + data.begin] = event.start.getTime() / 1000;
-			request['fields~' + data.end] = event.end.getTime() / 1000;
+			request['fields~' + data.end] = end.getTime() / 1000;
 
 			$.post($.service('tracker', 'update_item'), request);
 		};
