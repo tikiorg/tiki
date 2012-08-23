@@ -5319,7 +5319,7 @@ class UsersLib extends TikiLib
 				'scope' => 'object',
 			),
 			array(
-				'name' => 'tiki_p_workspace_instanciate',
+				'name' => 'tiki_p_workspace_instantiate',
 				'description' => tra('Can create a new workspace for the given template'),
 				'level' => 'admin',
 				'type' => 'workspacetemplate',

@@ -8,7 +8,7 @@
 // To contain data services for ajax calls
 //
 // If controller and action are specified in the request, the controller class matching the
-// controller key in the $contollerMap registry will be instanciated. The method matching the
+// controller key in the $contollerMap registry will be instantiated. The method matching the
 // action name will be called. The input to the method is a JitFilter. The output of the method
 // will be serialized and sent to the browser.
 //

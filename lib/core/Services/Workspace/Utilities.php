@@ -135,7 +135,7 @@ class Services_Workspace_Utilities
 	function getTemplateList()
 	{
 		$list = $this->templates()->fetchAll(array('templateId', 'name'), array());
-		$list = Perms::simpleFilter('workspacetemplate', 'templateId', 'workspace_instanciate', $list);
+		$list = Perms::simpleFilter('workspacetemplate', 'templateId', 'workspace_instantiate', $list);
 		
 		return $list;
 	}
