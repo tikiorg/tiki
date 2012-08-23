@@ -4,7 +4,7 @@
 {jq}
 jQuery(document).ready(function(){
 	jQuery('#main').find('input[type="text"]').each(function(){
-		jQuery(this).keypress(function(){
+		jQuery(this).keydown(function(){
 			var id = jQuery(this).parents('form').attr('id');
 			var btn = jQuery('#save_'+id);
 			btn.removeAttr('disabled');
