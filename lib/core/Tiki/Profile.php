@@ -713,6 +713,19 @@ class Tiki_Profile
 				unset(self::$known[$obj]);
 	} // }}}
 
+	function setSymbol($type, $name, $value, $named = 'y') // {{{
+	{
+		$symbols = TikiDb::get()->table('tiki_profile_symbols');
+		$symbols->insert(array(
+			'domain' => $this->domain,
+			'profile' => $this->withPrefix($this->profile), 
+			'object' => $name,
+			'type' => $type,
+			'value' => $value,
+			'named' => $named,
+		));
+	} // }}}
+
 	function getProfileKey() // {{{
 	{
 		return self::getProfileKeyfor($this->domain, $this->withPrefix($this->profile));

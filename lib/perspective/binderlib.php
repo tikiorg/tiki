@@ -89,11 +89,17 @@ class AreasLib extends CategLib
 			$this->query("DELETE FROM tiki_areas");
 
 			foreach ($areas as $key=>$item) {
-				$result = $this->query("INSERT INTO tiki_areas (categId, perspectives) VALUES(?,?)", array($key, serialize($item)));
+				$this->bind_area($key, $item);
 			}
 		} else return tra("No category jail set in any perspective.");
 		return true;
 		} else return tra("Areas root category id")." ".tra("is invalid.");
+	}
+
+	function bind_area($categId, $perspectiveIds)
+	{
+		$perspectiveIds = (array) $perspectiveIds;
+		$this->query("INSERT INTO tiki_areas (categId, perspectives) VALUES(?,?)", array($categId, serialize($perspectiveIds)));
 	}
 } // class end
 $areaslib = new AreasLib();

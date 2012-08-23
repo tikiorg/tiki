@@ -243,6 +243,9 @@ class TikiLib extends TikiDb_Bridge
 		case 'quiz':
 			global $quizlib; require_once 'lib/quizzes/quizlib.php';
 			return self::$libraries[$name] = $quizlib;
+		case 'areas':
+			global $areaslib; require_once 'lib/perspective/binderlib.php';
+			return self::$libraries[$name] = $areaslib;
 		case 'mime':
 			require_once 'lib/mime/mimelib.php';
 			$mimelib = new MimeLib;

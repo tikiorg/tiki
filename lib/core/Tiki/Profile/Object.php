@@ -82,17 +82,7 @@ class Tiki_Profile_Object
 			$named = 'n';
 		}
 
-		$tikilib->query(
-						"INSERT INTO tiki_profile_symbols (domain, profile, object, type, value, named) VALUES(?, ?, ?, ?, ?, ?)", 
-						array( 
-							$this->profile->domain, 
-							$this->profile->withPrefix($this->profile->profile), 
-							$name, 
-							$this->getType(), 
-							$this->id, 
-							$named
-						)
-		);
+		$this->profile->setSymbol($this->getType(), $name, $this->id, $named);
 	} // }}}
 
 	function getInternalReferences() // {{{

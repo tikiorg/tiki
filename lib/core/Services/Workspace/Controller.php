@@ -54,6 +54,7 @@ class Services_Workspace_Controller
 			);
 
 			$this->utilities->initialize($values);
+			$this->utilities->applyTemplate($template, $values);
 
 			$transaction->commit();
 		}
@@ -78,13 +79,51 @@ class Services_Workspace_Controller
 
 		$id = null;
 		if ($input->name->text()) {
-			$id = $this->utilities->addTemplate(array(
+			$id = $this->utilities->replaceTemplate(0, array(
 				'name' => $input->name->text(),
 			));
 		}
 
 		return array(
 			'id' => $id,
+		);
+	}
+
+	function action_edit_template($input)
+	{
+		global $prefs;
+
+		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+			$builder = new Tiki_Profile_Builder;
+
+			if ($prefs['feature_areas'] == 'y' && $input->area->int()) {
+				$builder->addObject('area_binding', 'binding', array(
+					'category' => $builder->user('category'),
+					'perspective' => $builder->user('perspective'),
+				));
+			}
+
+			$this->utilities->replaceTemplate($input->id->int(), array(
+				'name' => $input->name->text(),
+				'definition' => $builder->getContent(),
+			));
+		}
+
+		$template = $this->utilities->getTemplate($input->id->int());
+		$profile = Tiki_Profile::fromString($template['definition']);
+		$analyser = new Tiki_Profile_Analyser($profile);
+		
+		$hasArea = $analyser->contains(array(
+			'type' => 'area_binding',
+			'ref' => 'binding',
+			'category' => $analyser->user('category'),
+			'perspective' => $analyser->user('perspective'),
+		)) ? 'y' : 'n';
+
+		return array(
+			'id' => $input->id->int(),
+			'name' => $template['name'],
+			'area' => ($prefs['feature_areas'] == 'y') ? $hasArea : null,
 		);
 	}
 }

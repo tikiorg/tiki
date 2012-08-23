@@ -100,6 +100,21 @@ class Services_Workspace_Utilities
 		$categlib->categorize_any('perspective', $data['perspective'], $data['category']);
 	}
 
+	function applyTemplate($templateId, array $data)
+	{
+		$template = $this->getTemplate($templateId);
+
+		$profile = Tiki_Profile::fromString($template['definition'], uniqid());
+
+		$installer = new Tiki_Profile_Installer;
+		$installer->setUserData($data);
+		$value = $installer->install($profile);
+
+		if (! $value) {
+			throw new Services_Exception('Profile could not be installed.');
+		}
+	}
+
 	private function getWorkspaceRoot()
 	{
 		global $prefs;
@@ -140,14 +155,24 @@ class Services_Workspace_Utilities
 		return $list;
 	}
 
-	function addTemplate(array $data)
+	function replaceTemplate($id, array $data)
 	{
 		if (empty($data['name'])) {
 			throw new Services_Exception;
 		}
 
-		return $this->templates()->insert(array(
+		return $this->templates()->insertOrUpdate(array(
 			'name' => $data['name'],
+			'definition' => empty($data['definition']) ? '' : $data['definition'],
+		), array(
+			'templateId' => $id,
+		));
+	}
+
+	function getTemplate($id)
+	{
+		return $this->templates()->fetchRow(array('templateId', 'name', 'definition'), array(
+			'templateId' => $id,
 		));
 	}
 

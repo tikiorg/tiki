@@ -41,6 +41,7 @@ class Tiki_Profile_Installer
 		'webmail_account' => 'Tiki_Profile_InstallHandler_WebmailAccount',
 		'sheet' => 'Tiki_Profile_InstallHandler_Sheet',
 		'rating_config' => 'Tiki_Profile_InstallHandler_RatingConfig',
+		'area_binding' => 'Tiki_Profile_InstallHandler_AreaBinding',
 	);
 
 	private static $typeMap = array(

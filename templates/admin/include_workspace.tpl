@@ -38,7 +38,7 @@
 	</div>
 </form>
 {jq}
-	$('.service-dialog').click(function () {
+	$('#tiki-center').on('click', '.service-dialog', function () {
 		$(this).serviceDialog({
 			title: $(this).text(),
 			success: function () {
