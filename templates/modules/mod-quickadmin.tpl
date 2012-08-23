@@ -23,7 +23,7 @@
 				{icon _id=comments title="{tr}Comments Moderation{/tr}" href="tiki-list_comments.php"}
 			{/if}
 			{icon _id=database_refresh title="{tr}Clear all Tiki caches{/tr}" href="tiki-admin_system.php?do=all"}
-			{icon _id=arrow_refresh title="{tr}Rebuild Search index{/tr}" href="tiki-admin.php?page=search&amp;rebuild=now"}
+			{icon _id=table_refresh title="{tr}Rebuild Search index{/tr}" href="tiki-admin.php?page=search&amp;rebuild=now"}
 			{icon _id=plugin title="{tr}Plugin Approval{/tr}" href="tiki-plugins.php"}
 			{icon _id=book title="{tr}SysLogs{/tr}" href="tiki-syslog.php"}
 			{icon _id=module title="{tr}Modules{/tr}" href="tiki-admin_modules.php"}
