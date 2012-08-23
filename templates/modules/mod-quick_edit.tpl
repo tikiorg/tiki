@@ -23,6 +23,14 @@
 			<input type="hidden" name="cat_categories[]" value="{$addcategId|escape}" />
 			<input type="hidden" name="cat_categorize" value="on" />
 		{/if}
+		{if $prefs.namespace_enabled == 'y' && $prefs.namespace_default}
+			<div>
+				<label>
+					<input type="checkbox" name="namespace" value="{$prefs.namespace_default|escape}" checked="checked" />
+					{tr _0=$prefs.namespace_default}Within %0{/tr}
+				</label>
+			</div>
+		{/if}
 		<input type="submit" name="qedit" value="{$submit|escape}" />
 	</div>
 </form>

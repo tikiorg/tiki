@@ -114,6 +114,11 @@ if (empty($_REQUEST["page"])) {
 }
 
 $page = $_REQUEST["page"];
+
+if ($prefs['namespace_enabled'] == 'y' && isset($_REQUEST['namespace'])) {
+	$page = $_REQUEST['namespace'] . $prefs['namespace_separator'] . $page;
+}
+
 $smarty->assign('page', $page);
 $info = $tikilib->get_page_info($page);
 
@@ -140,7 +145,7 @@ include 'lib/setup/editmode.php';
 
 $auto_query_args = array('wysiwyg','page_id','page', 'returnto', 'lang', 'hdr');
 
-$smarty->assign_by_ref('page', $_REQUEST["page"]);
+$smarty->assign('page', $page);
 // Permissions
 $tikilib->get_perm_object($page, 'wiki page', $info, true);
 if ($tiki_p_edit !== 'y') {
