@@ -120,6 +120,7 @@ class Services_Workspace_Utilities
 		global $prefs;
 
 		$root = (int) $prefs['workspace_root_category'];
+		$areaRoot = (int) $prefs['areas_root'];
 
 		if (! $root) {
 			$categlib = TikiLib::lib('categ');
@@ -128,6 +129,10 @@ class Services_Workspace_Utilities
 			$root = $categlib->add_category(0, tr('Workspaces'), '');
 
 			$tikilib->set_preference('workspace_root_category', $root);
+
+			if (! $areaRoot) {
+				$tikilib->set_preference('areas_root', $root);
+			}
 		}
 
 		if (! $root) {
