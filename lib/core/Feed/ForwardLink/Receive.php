@@ -15,15 +15,15 @@ Class Feed_ForwardLink_Receive extends Feed_Abstract
 
 	static function wikiView($args)
 	{
-		if (isset($_GET['protocol'], $_GET['contribution']) == true && $_GET['protocol'] == 'forwardlink') {
+		if (isset($_POST['protocol'], $_POST['contribution']) == true && $_POST['protocol'] == 'forwardlink') {
 			$me = new self($args['object']);
 			$forwardLink = Feed_ForwardLink::forwardLink($args['object']);
 
 			//here we do the confirmation that another wiki is trying to talk with this one
-			$_GET['contribution'] = json_decode($_GET['contribution']);
-			$_GET['contribution']->origin = $_GET['REMOTE_ADDR'];
+			$_POST['contribution'] = json_decode($_POST['contribution']);
+			$_POST['contribution']->origin = $_POST['REMOTE_ADDR'];
 
-			if ($forwardLink->addItem($_GET['contribution']) == true) {
+			if ($forwardLink->addItem($_POST['contribution']) == true) {
 				$me->response = 'success';
 			} else {
 				$me->response = 'failure';

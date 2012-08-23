@@ -41,7 +41,7 @@ Class Feed_ForwardLink_Send extends Feed_Abstract
 					$client = new Zend_Http_Client($item->forwardlink->href, array('timeout' => 60));
 
 					if (!empty($feed->feed->entry)) {
-						$client->setParameterGet(
+						$client->setParameterPost(
 							array(
 								'protocol'=> 'forwardlink',
 								'contribution'=> json_encode($feed)
