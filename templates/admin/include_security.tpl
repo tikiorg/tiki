@@ -72,7 +72,7 @@
 					{preference name=comments_akismet_apikey}
 					{preference name=comments_akismet_check_users}
 				</div>
-			
+			{preference name=http_referer_registration_check}			
 		{/tab}
 	
 		{tab name="{tr}Search results{/tr}"}
