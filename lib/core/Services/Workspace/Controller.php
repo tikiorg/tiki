@@ -52,6 +52,7 @@ class Services_Workspace_Controller
 				'page' => $this->utilities->createPage($name),
 				'group' => $this->utilities->createGroup($name),
 			);
+			$values['namespace'] = $values['page'];
 
 			$this->utilities->initialize($values);
 			$this->utilities->applyTemplate($template, $values);
@@ -91,7 +92,16 @@ class Services_Workspace_Controller
 
 	function action_edit_template($input)
 	{
+		if (! Perms::get()->admin) {
+			throw new Services_Exception_Denied;
+		}
+
 		global $prefs;
+
+		$template = $this->utilities->getTemplate($input->id->int());
+		if ($template['is_advanced'] == 'y') {
+			return array('FORWARD' => array('action' => 'advanced_edit', 'id' => $input->id->int()));
+		}
 
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			$builder = new Tiki_Profile_Builder;
@@ -124,6 +134,30 @@ class Services_Workspace_Controller
 			'id' => $input->id->int(),
 			'name' => $template['name'],
 			'area' => ($prefs['feature_areas'] == 'y') ? $hasArea : null,
+		);
+	}
+
+	function action_advanced_edit($input)
+	{
+		if (! Perms::get()->admin) {
+			throw new Services_Exception_Denied;
+		}
+
+		if ($definition = $input->edit->wikicontent()) {
+			$this->utilities->replaceTemplate($input->id->int(), array(
+				'name' => $input->name->text(),
+				'definition' => $definition,
+				'is_advanced' => 'y',
+			));
+		}
+
+		$template = $this->utilities->getTemplate($input->id->int());
+
+		return array(
+			'id' => $input->id->int(),
+			'name' => $template['name'],
+			'definition' => $template['definition'],
+			'is_advanced' => $template['is_advanced'],
 		);
 	}
 }

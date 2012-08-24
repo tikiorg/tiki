@@ -167,17 +167,23 @@ class Services_Workspace_Utilities
 			throw new Services_Exception;
 		}
 
-		return $this->templates()->insertOrUpdate(array(
+		$info = array(
 			'name' => $data['name'],
 			'definition' => empty($data['definition']) ? '' : $data['definition'],
-		), array(
+		);
+
+		if (isset($data['is_advanced'])) {
+			$info['is_advanced'] = $data['is_advanced'];
+		}
+
+		return $this->templates()->insertOrUpdate($info, array(
 			'templateId' => $id,
 		));
 	}
 
 	function getTemplate($id)
 	{
-		return $this->templates()->fetchRow(array('templateId', 'name', 'definition'), array(
+		return $this->templates()->fetchRow(array('templateId', 'name', 'definition', 'is_advanced'), array(
 			'templateId' => $id,
 		));
 	}

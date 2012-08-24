@@ -3727,5 +3727,6 @@ DROP TABLE IF EXISTS `tiki_workspace_templates`;
 CREATE TABLE `tiki_workspace_templates` (
 	`templateId` INT PRIMARY KEY AUTO_INCREMENT,
 	`name` VARCHAR(50),
-	`definition` TEXT
+	`definition` TEXT,
+	`is_advanced` CHAR(1) NOT NULL DEFAULT 'n'
 );

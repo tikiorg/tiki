@@ -5280,8 +5280,27 @@ JS;
 	{
 		if (is_array($delimiters) == false) $delimiters = array($delimiters);
 		
-	    $array = explode($delimiters[0], $string);
-	    array_shift($delimiters);
+		$delimiter = array_shift($delimiters);
+	    $temp = explode($delimiter, $string);
+		$array = array();
+		$keep = false;
+
+		foreach ($temp as $v) {
+			if (empty($v)) {
+				if (! $keep) {
+					$array[count($array) - 1] .= $delimiter;
+				}
+
+				$array[count($array) - 1] .= $delimiter;
+				$keep = true;
+			} elseif ($keep) {
+				$array[count($array) - 1] .= $v;
+				$keep = false;
+			} else {
+				$array[] = $v;
+			}
+		}
+
 	    if ($delimiters != NULL) {
 	        foreach ($array as $key => $val) {
 	             $array[$key] = $this->multi_explode($delimiters, $val);
