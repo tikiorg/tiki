@@ -1,5 +1,5 @@
 {* $Id$ *}
-{if $show_calendar_module eq 'y'}
+{if isset($show_calendar_module) and $show_calendar_module eq 'y'}
 {tikimodule error=$module_params.error title=$tpl_module_title name=$name flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}
 {if $viewlist eq 'list'}
 	{include file='tiki-calendar_listmode.tpl'}
