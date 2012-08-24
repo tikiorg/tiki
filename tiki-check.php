@@ -5,7 +5,7 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id: tiki-admin_security.php 40813 2012-04-07 17:32:37Z jonnybradley $
 
-if (file_exists('./db/local.php') && ! isset($_REQUEST['standalone']) ) {
+if (file_exists('./db/local.php')) {
 	$standalone = false;
 	require_once ('tiki-setup.php');
 	$access->check_permission('tiki_p_admin');
