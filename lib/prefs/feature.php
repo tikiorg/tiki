@@ -2274,9 +2274,10 @@ function prefs_feature_list($partial = false)
 			'default' => 'n',
 		),
 		'feature_use_three_colon_centertag' => array(
-			'name' => tra('Use three colons instead of two to center text. Avoids conflict with C++ resolution scope operator.'),
+			'name' => tra('Center text using ::: instead of ::'),
+			'description' => tr('Useful to avoid conflicts with C++ scope operators or default namespace separator.'),
 			'type' => 'flag',
-			'default' => 'n',
+			'default' => 'y',
 		),
 		'feature_simplebox_delim' => array(
 			'name' => tra('String to use to delimit simplebox'),

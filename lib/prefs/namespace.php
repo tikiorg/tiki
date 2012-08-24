@@ -17,12 +17,15 @@ function prefs_namespace_list()
 			'keywords' => 'Namespaces',
 			'tags' => array('experimental'),
 			'perspective' => false,
+			'dependencies' => array(
+				'feature_use_three_colon_centertag',
+			),
 		),
 		'namespace_separator' => array(
 			'name' => tr('Namespace separator'),
 			'size' => 5,
 			'type' => 'text',
-			'default' => ':',
+			'default' => '::',
 			'keywords' => 'Namespaces',
 			'perspective' => false,
 		),

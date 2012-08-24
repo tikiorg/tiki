@@ -1702,7 +1702,7 @@ if ( \$('#$id') ) {
 			// Underlined text
 			$data = preg_replace("/===(.+?)===/", "<u>$1</u>", $data);
 			// Center text
-			if ($prefs['feature_use_three_colon_centertag'] == 'y') {
+			if ($prefs['feature_use_three_colon_centertag'] == 'y' || ($prefs['namespace_enabled'] == 'y' && $prefs['namespace_separator'] == '::')) {
 				$data = preg_replace("/:::(.+?):::/", "<div style=\"text-align: center;\">$1</div>", $data);
 			} else {
 				$data = preg_replace("/::(.+?)::/", "<div style=\"text-align: center;\">$1</div>", $data);
