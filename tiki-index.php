@@ -52,6 +52,7 @@ $auto_query_args = array(
 				'no_bl',
 				'page_id',
 				'pagenum',
+				'fullscreen',
 				'page_ref_id',
 				'mode',
 				'sort_mode',
@@ -179,6 +180,14 @@ if (!empty($page_ref_id)) {
 
 $page = $_REQUEST['page'];
 $smarty->assign_by_ref('page', $page);
+
+#Propagate the fullscreen parameter to templates
+if ( isset($_REQUEST['fullscreen']) ) {
+	$fullscreen = $_REQUEST['fullscreen'];
+}else{
+	$fullscreen = 'n';
+}
+$smarty->assign('fullscreen', $fullscreen);
 
 if ( function_exists('utf8_encode') ) {
 	$pagename_utf8 = utf8_encode($page);

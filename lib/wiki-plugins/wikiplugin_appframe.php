@@ -287,6 +287,12 @@ function wikiplugin_appframe_page($data, $params, $start)
 		return null;
 	}
 
+	$perms = Perms::get('wiki page', $info['pageName']);
+
+	if (! $perms->view) {
+		return null;
+	}
+
 	$keys = array();
 	$replacements = array();
 	foreach ($params as $key => $value) {

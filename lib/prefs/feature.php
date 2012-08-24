@@ -1242,6 +1242,7 @@ function prefs_feature_list($partial = false)
 			'perspective' => false,
 			'default' => 'n',
 			'module' => 'perspective',
+			'plugin' => 'perspective',
 			'permission' => array(
 				'textFilter' => 'perspective',
 			),
