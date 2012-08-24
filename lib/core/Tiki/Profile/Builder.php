@@ -8,6 +8,9 @@
 class Tiki_Profile_Builder
 {
 	private $objects = array();
+	private $groups = array();
+	private $permissions = array();
+	private $managingGroup;
 
 	function ref($name)
 	{
@@ -28,9 +31,67 @@ class Tiki_Profile_Builder
 		);
 	}
 
+	function addGroup($internalName, $fullName)
+	{
+		$this->groups[$internalName] = $fullName;
+	}
+
+	function setPermissions($internalName, $type, $objectId, array $permissionList)
+	{
+		if (! isset($this->permissions[$internalName])) {
+			$this->permissions[$internalName] = array('objects' => array());
+		}
+
+		$this->permissions[$internalName]['objects'][] = array(
+			'type' => $type,
+			'id' => $objectId,
+			'allow' => $permissionList
+		);
+	}
+
+	function setManagingGroup($group)
+	{
+		$this->managingGroup = $group;
+	}
+
 	function getContent()
 	{
-		$yaml = Horde_Yaml::dump(array('objects' => $this->objects));
+		$builder = clone $this;
+
+		foreach (array_keys($this->groups) as $group) {
+			foreach (array_keys($this->groups) as $peer) {
+				if ($group == $this->managingGroup) {
+					$builder->setPermissions($group, 'group', $peer, array('group_view', 'group_view_members', 'group_add_member', 'group_remove_member'));
+				} else {
+					$builder->setPermissions($group, 'group', $peer, array('group_view', 'group_view_members'));
+				}
+			}
+		}
+
+		$data = array();
+		
+		if (count($builder->objects)) {
+			$data['objects'] = $builder->objects;
+		}
+
+		if ($builder->groups) {
+			$data['mappings'] = array();
+			$data['groups'] = array();
+			foreach ($builder->groups as $internal => $full) {
+				$groupDefinition = array(
+					'description' => $full,
+				);
+
+				if (isset($builder->permissions[$internal])) {
+					$groupDefinition['objects'] = $builder->permissions[$internal]['objects'];
+				}
+
+				$data['mappings'][$internal] = $full;
+				$data['groups'][$internal] = $groupDefinition;
+			}
+		}
+
+		$yaml = Horde_Yaml::dump($data);
 		return <<<SYNTAX
 
 ^The following profile was auto-generated. It may hurt your eyes when you try reading it.^

@@ -83,8 +83,52 @@ class Services_Workspace_Controller
 
 		$id = null;
 		if ($input->name->text()) {
+			$builder = new Tiki_Profile_Builder;
+			$builder->addGroup('Base', $builder->user('group'));
+			$builder->setManagingGroup('Base');
+			$builder->setPermissions('Base', 'category', $builder->user('category'), array(
+				'admin_cms',
+				'blog_admin',
+				'bigbluebutton_create',
+				'bigbluebutton_moderate',
+				'bigbluebutton_view_rec',
+				'bigbluebutton_join',
+				'admin_calendar',
+				'admin_categories',
+				'modify_object_categories',
+				'admin_comments',
+				'dsn_query',
+				'admin_faqs',
+				'admin_file_galleries',
+				'admin_forum',
+				'admin_freetags',
+				'group_view',
+				'group_view_members',
+				'group_add_member',
+				'group_remove_member',
+				'group_join',
+				'admin_galleries',
+				'admin_newsletters',
+				'payment_view',
+				'payment_manual',
+				'payment_request',
+				'perspective_view',
+				'vote_poll',
+				'view_poll_voters',
+				'admin_sheet',
+				'take_survey',
+				'view_survey_stats',
+				'admin_trackers',
+				'admin_wiki',
+				'detach_translation',
+				'site_report',
+				'modify_object_categories',
+				'use_references',
+				'edit_references',
+			));
 			$id = $this->utilities->replaceTemplate(0, array(
 				'name' => $input->name->text(),
+				'definition' => $builder->getContent(),
 			));
 		}
 
