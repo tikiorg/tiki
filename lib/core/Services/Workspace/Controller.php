@@ -32,11 +32,14 @@ class Services_Workspace_Controller
 		$template = $input->template->int();
 
 		if ($template && $name) {
+			$templateInfo = $this->utilities->getTemplate($template);
 			$perms = Perms::get('workspace', $template);
 
 			if (! $perms->workspace_instantiate) {
 				throw new Services_Exception_Denied;
 			}
+
+			$name = $templateInfo['name'] . $prefs['namespace_separator'] . $name;
 
 			$transaction = TikiDb::get()->begin();
 			$parts = explode($prefs['namespace_separator'], $name);
@@ -55,7 +58,7 @@ class Services_Workspace_Controller
 			$values['namespace'] = $values['page'];
 
 			$this->utilities->initialize($values);
-			$this->utilities->applyTemplate($template, $values);
+			$this->utilities->applyTemplate($templateInfo, $values);
 
 			$transaction->commit();
 		}

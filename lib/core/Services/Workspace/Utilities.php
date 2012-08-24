@@ -101,10 +101,8 @@ class Services_Workspace_Utilities
 		$categlib->categorize_any('perspective', $data['perspective'], $data['category']);
 	}
 
-	function applyTemplate($templateId, array $data)
+	function applyTemplate(array $template, array $data)
 	{
-		$template = $this->getTemplate($templateId);
-
 		$profile = Tiki_Profile::fromString($template['definition'], uniqid());
 
 		$installer = new Tiki_Profile_Installer;
