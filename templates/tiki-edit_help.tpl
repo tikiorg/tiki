@@ -42,7 +42,8 @@
 
 <tr class="{cycle}"><td><img src='img/icons/page.png' alt='' /> <strong>{tr}Horizontal rule{/tr}</strong> &nbsp;&nbsp;&nbsp; -<em></em>-<em></em>-<em></em>- </td></tr>
 <tr class="{cycle}"><td><img src='img/icons/box.png' alt='' /> <strong>{tr}Text box{/tr}</strong> &nbsp;&nbsp;&nbsp; ^{tr}Box content{/tr}^</td></tr>
-<tr class="{cycle}"><td><img src='img/icons/text_align_center.png' alt='' /> <strong>{tr}Centered text{/tr}</strong> &nbsp;&nbsp;&nbsp; ::{tr}text::{/tr}</td></tr>
+
+<tr class="{cycle}"><td><img src='img/icons/text_align_center.png' alt='' /> <strong>{tr}Centered text{/tr}</strong> &nbsp;&nbsp;&nbsp; {if $prefs.feature_use_three_colon_centertag eq 'y'}:::{tr}text{/tr}:::{else}::{tr}text{/tr}::{/if}</td></tr>
 
 {/if}{* wysiwyg *}
 <tr class="{cycle}"><td><strong><img src='img/icons/database_gear.png' alt='' /> {tr}Dynamic variables{/tr}</strong> <br/> %{tr}Name{/tr}% {tr}Inserts an editable variable{/tr}</td></tr>
