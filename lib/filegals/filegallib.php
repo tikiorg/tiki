@@ -2598,7 +2598,10 @@ class FileGalLib extends TikiLib
 					$res['share']['nb'] = count($share_result);
 				}
 			}
-				
+			if ($res['isgal']) {
+				$res['name'] = $this->getGalleryName($res);
+			}
+
 			$n++;
 			if ( ! $need_everything && $offset != -1 && $n < $offset ) continue;
 
@@ -2704,6 +2707,8 @@ class FileGalLib extends TikiLib
 				}
 			}
 		}
+
+		$res['name'] = $this->getGalleryName($res);
 
 		return $res;
 	}
