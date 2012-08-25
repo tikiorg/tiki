@@ -92,6 +92,32 @@ EXPECT;
 		$this->assertIs($expect, $builder->getContent());
 	}
 
+	function testReplaceSimpleSyntax()
+	{
+		$builder = new Tiki_Profile_Builder;
+		$builder->addGroup('Base', '{group}');
+		$builder->setManagingGroup('Base');
+		
+		$expect = <<<EXPECT
+---
+mappings: 
+  Base: \$profilerequest:group\$undefined\$
+permissions: 
+  Base: 
+    description: \$profilerequest:group\$undefined\$
+    objects: 
+      - 
+        type: group
+        id: Base
+        allow: 
+          - group_view
+          - group_view_members
+          - group_add_member
+          - group_remove_member
+EXPECT;
+		$this->assertIs($expect, $builder->getContent());
+	}
+
 	private function assertIs($expect, $content)
 	{
 		$matches = WikiParser_PluginMatcher::match($content);

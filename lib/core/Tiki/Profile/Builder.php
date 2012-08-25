@@ -33,7 +33,7 @@ class Tiki_Profile_Builder
 
 	function addGroup($internalName, $fullName)
 	{
-		$this->groups[$internalName] = $fullName;
+		$this->groups[$internalName] = str_replace('{group}', $this->user('group'), $fullName);
 	}
 
 	function setPermissions($internalName, $type, $objectId, array $permissionList)

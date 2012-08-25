@@ -53,5 +53,59 @@ class Tiki_Profile_Analyser
 
 		return count($objects) > 0;
 	}
+
+	/**
+	 * Provides group information using the permission details from a specific object.
+	 */
+	function getGroups($type, $object)
+	{
+		$out = array();
+
+		$groupMap = $this->profile->getGroupMap();
+		$permissions =  $this->profile->getPermissions();
+
+		foreach ($groupMap as $key => $name) {
+			$out[$key] = array(
+				'name' => $this->simplifyReference($name),
+				'managing' => false,
+				'permissions' => array(),
+			);
+
+			if (isset($permissions[$key])) {
+				$related = $permissions[$key];
+				$out[$key]['managing'] = $this->isManagingGroup($related['objects']);
+				$out[$key]['permissions'] = $this->getObjectPermissions($related['objects'], $type, $object);
+			}
+		}
+
+		return $out;
+	}
+
+	private function simplifyReference($name)
+	{
+		return preg_replace('/\$profilerequest:(\w+)\$[^\$]*\$/', '{$1}', $name);
+	}
+
+	private function isManagingGroup($objects)
+	{
+		foreach ($objects as $o) {
+			if ($o['type'] == 'group' && in_array('group_add_member', $o['allow'])) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	private function getObjectPermissions($objects, $type, $object)
+	{
+		foreach ($objects as $o) {
+			if ($o['type'] == $type && $o['id'] == $object) {
+				return $o['allow'];
+			}
+		}
+
+		return array();
+	}
 }
 

@@ -160,6 +160,14 @@ class Services_Workspace_Controller
 				));
 			}
 
+			foreach ($input->groups as $internal => $info) {
+				$permissions = array_filter(preg_split('/\W+/', $info->permissions->none()));
+				$builder->addGroup($internal, $info->name->text());
+				$builder->setPermissions($internal, 'category', $builder->user('category'), $permissions);
+			}
+
+			$builder->setManagingGroup($input->managingGroup->word());
+
 			$this->utilities->replaceTemplate($input->id->int(), array(
 				'name' => $input->name->text(),
 				'definition' => $builder->getContent(),
@@ -181,6 +189,7 @@ class Services_Workspace_Controller
 			'id' => $input->id->int(),
 			'name' => $template['name'],
 			'area' => ($prefs['feature_areas'] == 'y') ? $hasArea : null,
+			'groups' => $analyser->getGroups('category', $analyser->user('category')),
 		);
 	}
 
@@ -205,6 +214,32 @@ class Services_Workspace_Controller
 			'name' => $template['name'],
 			'definition' => $template['definition'],
 			'is_advanced' => $template['is_advanced'],
+		);
+	}
+
+	function action_select_permissions($input)
+	{
+		if (! Perms::get()->admin) {
+			throw new Services_Exception_Denied;
+		}
+
+		$permissions = array();
+
+		if ($raw = $input->permissions->none()) {
+			$permissions = array_map(function ($list) {
+				$list = preg_split('/\W+/', $list);
+				return array_filter($list);
+			}, $raw);
+		} elseif ($checkboxes = $input->check->word()) {
+			$permissions = $checkboxes;
+		}
+
+		$userlib = TikiLib::lib('user');
+
+		return array(
+			'groups' => array_keys($permissions),
+			'permissions' => $permissions,
+			'descriptions' => $userlib->get_permissions(0, -1, 'permName_asc', '', 'category', '', true),
 		);
 	}
 }

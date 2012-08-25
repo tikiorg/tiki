@@ -1,4 +1,4 @@
-<form method="post" action="{service controller=workspace action=edit_template id=$id}">
+<form class="workspace-ui" method="post" action="{service controller=workspace action=edit_template id=$id}">
 	{remarksbox type=info title="{tr}Not enough options?{/tr}"}
 		<p>{tr}This is the simple edition interface offering a subset of the available features. You can switch to the advanced mode and get more power.{/tr}</p>
 		<a class="ajax" href="{service controller=workspace action=advanced_edit id=$id}">{tr}Advanced Mode{/tr}</a>
@@ -13,6 +13,32 @@
 			{tr}Bind area{/tr}
 		</label>
 	{/if}
+
+	<h3>{tr}Groups{/tr}</h3>
+	<ul class="groups">
+		{foreach from=$groups item=group key=key}
+			<li>
+				<span class="key">{$key|escape}</span> (<span class="label">{$group.name|escape}</span>)
+				<ul style="display: none">
+					<li>
+						<input class="name" type="text" name="groups~{$key|escape}~name" value="{$group.name|escape}"/>
+						<input class="permissions" type="hidden" name="groups~{$key|escape}~permissions" value="{$group.permissions|implode:','}"/>
+					</li>
+					<li>
+						<label>
+							<input class="managingGroup" type="radio" name="managingGroup" value="{$key|escape}" {if $group.managing}checked="checked"{/if} />
+							{tr}Is managing group{/tr}
+						</label>
+					</li>
+				</ul>
+			</li>
+		{/foreach}
+		<li>
+			<a class="add-group" href="">{tr}Add group{/tr}</a>
+		</li>
+	</ul>
+
+	<a class="permission-select" href="{service controller=workspace action=select_permissions}">{tr}Select Permissions{/tr}</a>
 	
 	<div class="submit">
 		<input type="submit" value="{tr}Save{/tr}"/>

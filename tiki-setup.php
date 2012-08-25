@@ -474,6 +474,10 @@ if ($prefs['geo_always_load_openlayers'] == 'y') {
 	$headerlib->add_map();
 }
 
+if ($prefs['workspace_ui'] == 'y') {
+	$headerlib->add_jsfile('lib/jquery_tiki/tiki-workspace-ui.js');
+}
+
 if ($prefs['feature_sefurl'] != 'y') {
 	$headerlib->add_js(
 					'$.service = function (controller, action, query) {

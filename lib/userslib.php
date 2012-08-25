@@ -3080,7 +3080,7 @@ class UsersLib extends TikiLib
 			),
 			array(
 				'name' => 'tiki_p_assign_perm_category',
-				'description' => tra('Can assign perms to category)'),
+				'description' => tra('Can assign perms to category'),
 				'level' => 'admin',
 				'type' => 'category',
 				'admin' => false,
@@ -5389,6 +5389,7 @@ class UsersLib extends TikiLib
 
 	private function permission_compatibility($newFormat)
 	{
+		$newFormat['shortName'] = substr($newFormat['name'], strlen('tiki_p_'));
 		$newFormat['permName'] = $newFormat['name'];
 		$newFormat['permDesc'] = $newFormat['description'];
 		$newFormat['feature_checks'] = implode(',', $newFormat['prefs']);
