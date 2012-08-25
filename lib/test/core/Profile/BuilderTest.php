@@ -53,7 +53,7 @@ EXPECT;
 mappings: 
   Base: \$profilerequest:group\$undefined\$
   Viewer: \$profilerequest:group\$undefined\$ Viewer
-groups: 
+permissions: 
   Base: 
     description: \$profilerequest:group\$undefined\$
     objects: 
