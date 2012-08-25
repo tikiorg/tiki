@@ -226,7 +226,9 @@
 								<label for="galleryId">{tr}File gallery:{/tr}</label>
 							</td><td width="80%">
 								<select id="galleryId" name="galleryId[]">
-									<option value="{$treeRootId}" {if $treeRootId eq $galleryId}selected="selected"{/if} style="font-style:italic; border-bottom:1px dashed #666;">{tr}Root{/tr}</option>
+									{if $gal_info.type neq 'user'}
+										<option value="{$treeRootId}" {if $treeRootId eq $galleryId}selected="selected"{/if} style="font-style:italic; border-bottom:1px dashed #666;">{tr}Root{/tr}</option>
+									{/if}
 									{section name=idx loop=$galleries}
 										{if $galleries[idx].id neq $treeRootId and $galleries[idx].perms.tiki_p_upload_files eq 'y'}
 											<option value="{$galleries[idx].id|escape}" {if $galleries[idx].id eq $galleryId}selected="selected"{/if}>{$galleries[idx].name|escape}</option>
