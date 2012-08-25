@@ -466,59 +466,13 @@ class ModLib extends TikiLib
 			return false;
 		}
 
-		global $cat_type, $cat_objid;
 		if ( $prefs['feature_categories'] == 'y' ) {
-
-			if ( !empty( $params['category'])) {				// looking for a category to enable
-				if ( empty($cat_type) || empty($cat_objid)) {
-					return false;								// not a categorised object
-				}
-				$catIds = TikiLib::lib('categ')->get_object_categories($cat_type, $cat_objid);
-				if (empty($catIds)) {
-					return false;								// no categories on this object
-				}
-				$cats = array();
-				if (is_numeric($params['category'][0])) {
-					$cats = $catIds;
-				} else {
-					$allcats = TikiLib::lib('categ')->getCategories();	// gets all categories (cached)
-					foreach ($catIds as $c) {
-						$cats[] = $allcats[$c]['name'];
-					}
-				}
-
-				$ok = false;
-				foreach ((array) $params['category'] as $c) {
-					if (in_array($c, $cats)) {
-						$ok = true;
-						break;
-					}
-				}
-				if (!$ok) {
-					return false;
-				}
+			if ( $this->is_hidden_by_category($params)) {
+				return false;
 			}
 
-			if ( !empty( $params['nocategory'])) {				// looking for a category to disable
-				if ( !empty($cat_type) && !empty($cat_objid)) {
-					$catIds = TikiLib::lib('categ')->get_object_categories($cat_type, $cat_objid);
-					if (!empty($catIds)) {						// object has categories
-						$cats = array();
-						if (is_numeric($params['nocategory'][0])) {
-							$cats = $catIds;
-						} else {
-							$allcats = TikiLib::lib('categ')->getCategories();	// gets all categories (cached)
-							foreach ($catIds as $c) {
-								$cats[] = $allcats[$c]['name'];
-							}
-						}
-						foreach ((array) $params['nocategory'] as $c) {
-							if (in_array($c, $cats)) {
-								return false;
-							}
-						}
-					}
-				}
+			if ( $this->is_hidden_by_no_category($params)) {
+				return false;
 			}
 		}
 
@@ -539,6 +493,71 @@ class ModLib extends TikiLib
 		}
 
 		return true;
+	}
+
+	private function is_hidden_by_category($params)
+	{
+		global $cat_type, $cat_objid;
+		if ( empty( $params['category'])) {
+			return false;
+		}
+
+		if ( empty($cat_type) || empty($cat_objid)) {
+			return true;
+		}
+
+		$catIds = TikiLib::lib('categ')->get_object_categories($cat_type, $cat_objid);
+
+		if (empty($catIds)) {
+			return true;
+		}
+
+		$categories = (array) $params['category'];
+
+		return ! $this->matches_any_in_category_list($categories, $catIds);
+	}
+
+	private function is_hidden_by_no_category($params)
+	{
+		global $cat_type, $cat_objid;
+		if ( empty( $params['nocategory'])) {
+			return false;
+		}
+
+		if ( empty($cat_type) || empty($cat_objid)) {
+			return false;
+		}
+
+		$catIds = TikiLib::lib('categ')->get_object_categories($cat_type, $cat_objid);
+
+		if (empty($catIds)) {
+			return false;
+		}
+
+		$categories = (array) $params['nocategory'];
+
+		return $this->matches_any_in_category_list($categories, $catIds);
+	}
+
+	private function matches_any_in_category_list($desiredList, $categoryList)
+	{
+		$allcats = TikiLib::lib('categ')->getCategories();	// gets all categories (cached)
+
+		foreach ($desiredList as $category) {
+			if (is_numeric($category)) {
+				if (in_array($category, $categoryList)) {
+					return true;
+				}
+			} else {
+				foreach ($categoryList as $id) {
+					if (isset($allcats[$id]) && $allcats[$id]['name'] == $category) {
+						return true;
+					}
+				}
+			}
+		}
+
+		return false;
 	}
 
 	private function get_raw_module_list_for_user( $user, array $module_zones )
