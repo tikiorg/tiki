@@ -1448,7 +1448,7 @@ class FileGalLib extends TikiLib
 			$nodes[] = array(
 				'id' => $subGallery['id'],
 				'parent' => $subGallery['parentId'],
-				'data' => smarty_block_self_link($linkParameters, $icon . htmlspecialchars($this->getGalleryName($subGallery)), $smarty),
+				'data' => smarty_block_self_link($linkParameters, $icon . htmlspecialchars($subGallery['name']), $smarty),
 			);
 		}
 		$browseTreeMaker = new BrowseTreeMaker('Galleries');
