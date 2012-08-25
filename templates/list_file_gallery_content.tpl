@@ -12,7 +12,7 @@
 			<th style="width:1%">&nbsp;</th>
 		{/if}
 
-		{if $gal_info.show_parentName eq 'y'}
+		{if $show_parentName eq 'y'}
 			<th>
 				{self_link _sort_arg=$sort_arg _sort_field='parentName'}{tr}Gallery{/tr}{/self_link}
 			</th>
