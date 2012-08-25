@@ -941,6 +941,7 @@ class Services_Tracker_Controller
 		$showCreated = $input->showCreated->int();
 		$showLastModif = $input->showLastModif->int();
 		$keepItemlinkId = $input->keepItemlinkId->int();
+		$dateFormatUnixTimestamp = $input->dateFormatUnixTimestamp->int();
 
 		$encoding = $input->encoding->text();
 		if (! in_array($encoding, array('UTF-8', 'ISO-8859-1'))) {
@@ -992,13 +993,25 @@ class Services_Tracker_Controller
 				$toDisplay[] = $row['status'];
 			}
 			if ($showCreated) {
-				$toDisplay[] = smarty_modifier_tiki_short_datetime($row['created'], '', 'n');
+				if ($dateFormatUnixTimestamp) {
+					$toDisplay[] = $row['created'];
+				} else {
+					$toDisplay[] = smarty_modifier_tiki_short_datetime($row['created'], '', 'n');
+				}
 			}
 			if ($showLastModif) {
-				$toDisplay[] = smarty_modifier_tiki_short_datetime($row['lastModif'], '', 'n');
+				if ($dateFormatUnixTimestamp) {
+					$toDisplay[] = $row['lastModif'];
+				} else {
+					$toDisplay[] = smarty_modifier_tiki_short_datetime($row['lastModif'], '', 'n');
+				}
 			}
 			foreach ($row['field_values'] as $val) {
 				if ( ($keepItemlinkId) && ($val['type'] == 'r') ) {
+					$toDisplay[] = $val['value'];
+				} elseif ( ($dateFormatUnixTimestamp) && ($val['type'] == 'f') ) {
+					$toDisplay[] = $val['value'];
+				} elseif ( ($dateFormatUnixTimestamp) && ($val['type'] == 'j') ) {
 					$toDisplay[] = $val['value'];
 				} else {
 					$toDisplay[] = $trklib->get_field_handler($val)->renderOutput(array('list_mode' => 'csv'));
