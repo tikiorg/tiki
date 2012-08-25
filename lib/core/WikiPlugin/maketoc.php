@@ -17,7 +17,7 @@ class WikiPlugin_maketoc extends WikiPlugin_HtmlBase
 	function __construct()
 	{
 		if (empty(self::$name)) {
-			self::$name = tr('Table of contents for a page');
+			self::$name = tr('Table of Contents (Page)');
 			self::$description = tr('Add a table of contents to a page');
 			self::$params = array(
 				'type',
