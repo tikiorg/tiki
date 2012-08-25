@@ -12,14 +12,16 @@
 			<th style="width:1%">&nbsp;</th>
 		{/if}
 
-		{if $show_parentName eq 'y'}
+		{if !empty($show_parentName) and $show_parentName eq 'y'}{* assigned in wikiplugin_files *}
 			<th>
 				{self_link _sort_arg=$sort_arg _sort_field='parentName'}{tr}Gallery{/tr}{/self_link}
 			</th>
+			{assign var=nbCols value=$nbCols+1}
 		{/if}
-		{if !empty($show_thumb) and $show_thumb eq 'y'}
+		{if !empty($show_thumb) and $show_thumb eq 'y'}{* assigned in wikiplugin_files *}
 			<th>
 			</th>
+			{assign var=nbCols value=$nbCols+1}
 		{/if}
 
 		{foreach from=$fgal_listing_conf item=item key=propname}
@@ -234,12 +236,12 @@
 				</td>
 			{/if}
 
-			{if $show_parentName eq 'y'}
+			{if !empty($show_parentName) and $show_parentName eq 'y'}{* assigned in wikiplugin_files *}
 				<td>
 					<a href="tiki-list_file_gallery.php?galleryId={$files[changes].galleryId}">{$files[changes].parentName|escape}</a>
 				</td>
 			{/if}
-			{if $show_thumb eq 'y'}
+			{if !empty($show_thumb) and  $show_thumb eq 'y'}{* assigned in wikiplugin_files *}
 				<td>
 					{if $files[changes].isgal == 0}
 						<a href="{if $absurl == 'y'}{$base_url}{/if}tiki-download_file.php?fileId={$files[changes].fileId}&display"><img src="{if $absurl == 'y'}{$base_url}{/if}tiki-download_file.php?fileId={$files[changes].fileId}&thumbnail" /></a>
