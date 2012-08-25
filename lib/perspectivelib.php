@@ -263,13 +263,7 @@ class PerspectiveLib
 
 		$list = $db->fetchAll("SELECT perspectiveId, name FROM tiki_perspectives", array(), $maxRecords, $offset);
 
-		$list = Perms::filter(
-						array( 'type' => 'perspective' ),
-						'object',
-						$list,
-						array( 'object' => 'perspectiveId' ),
-						'perspective_view'
-		);
+		$list = Perms::simpleFilter('perspective', 'perspectiveId', 'perspective_view', $list);
 
 		foreach ( $list as & $info ) {
 			$perms = Perms::get(array( 'type' => 'perspective', 'object' => $info['perspectiveId'] ));
