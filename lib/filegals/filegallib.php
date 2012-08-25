@@ -1429,7 +1429,7 @@ class FileGalLib extends TikiLib
 	// If $galleryIdentifier is not given, default to the "default" / normal / "File Galleries" file galleries.
 	function getTreeHTML($galleryIdentifier = NULL)
 	{
-		global $prefs, $smarty, $user;
+		global $prefs, $smarty;
 		require_once ('lib/tree/BrowseTreeMaker.php');
 		$galleryIdentifier = is_null($galleryIdentifier) ? $prefs['fgal_root_id'] : $galleryIdentifier;
 		$subGalleries = $this->getSubGalleries($galleryIdentifier);
@@ -1448,7 +1448,7 @@ class FileGalLib extends TikiLib
 			$nodes[] = array(
 				'id' => $subGallery['id'],
 				'parent' => $subGallery['parentId'],
-				'data' => smarty_block_self_link($linkParameters, $icon . htmlspecialchars($this->getGalleryName($subGallery, $user)), $smarty),
+				'data' => smarty_block_self_link($linkParameters, $icon . htmlspecialchars($this->getGalleryName($subGallery)), $smarty),
 			);
 		}
 		$browseTreeMaker = new BrowseTreeMaker('Galleries');
@@ -1462,7 +1462,7 @@ class FileGalLib extends TikiLib
 	// HTML is a string of HTML code to display the path.
 	function getPath($galleryIdentifier)
 	{
-		global $prefs, $user;
+		global $prefs;
 		$rootIdentifier = $this->getGallerySpecialRoot($galleryIdentifier);
 		$root = $this->get_file_gallery_info($galleryIdentifier);
 		if ( !empty($user) && $prefs['feature_use_fgal_for_user_files'] == 'y' ) {
@@ -1472,7 +1472,7 @@ class FileGalLib extends TikiLib
 		}
 		$path = array();
 		for ($node = $this->get_file_gallery_info($galleryIdentifier); $node && $node['galleryId'] != $rootIdentifier; $node = $this->get_file_gallery_info($node['parentId'])) {
-			$path[$node['galleryId']] = $this->getGalleryName($node, $user);
+			$path[$node['galleryId']] = $this->getGalleryName($node);
 		}
 		if ($rootIdentifier == $prefs['fgal_root_user_id']) {
 			$path[$rootIdentifier] = tra('User File Galleries');
@@ -1499,13 +1499,17 @@ class FileGalLib extends TikiLib
 	 * Return the name of a gallery, handling individual names for user galleries
 	 *
 	 * @param array $gal_info	gallery definition
-	 * @param string $user			username
+	 * @param string $auser			username
 	 * @return string				gallery name
 	 */
-	function getGalleryName($gal_info, $user) {
+	function getGalleryName($gal_info, $auser = '') {
 
 		if ($gal_info['type'] === 'user') {
-			if (!empty($user) && $gal_info['user'] == $user) {
+			global $user;
+			if (empty($auser)) {
+				$auser = $user;
+			}
+			if (!empty($auser) && $gal_info['user'] == $auser) {
 				$name = tra('My Files');
 			} else {
 				$name = tra('Files of ') . ' ' . $gal_info['user'];
