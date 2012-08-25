@@ -114,6 +114,12 @@ class ObjectLib extends TikiLib
 						$href = 'tiki-browse_gallery.php?galleryId=' . $itemId;
 									break;
 
+					case 'perspective':
+						$perspective = TikiLib::lib('perspective')->get_perspective($itemId);
+						$name = $info['name'];
+						$href = 'tiki-switch_perspective.php?perspective=' . $itemId;
+									break;
+
 					case 'poll':
 						require_once('lib/polls/polllib_shared.php');
 						$info = $polllib->get_poll($itemId);
