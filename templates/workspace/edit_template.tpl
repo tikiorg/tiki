@@ -18,7 +18,7 @@
 	<ul class="groups">
 		{foreach from=$groups item=group key=key}
 			<li>
-				<span class="key">{$key|escape}</span> (<span class="label">{$group.name|escape}</span>)
+				<a href="#" class="key">{$key|escape}</a> (<span class="label">{$group.name|escape}</span>)
 				<ul style="display: none">
 					<li>
 						<input class="name" type="text" name="groups~{$key|escape}~name" value="{$group.name|escape}"/>
