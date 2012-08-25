@@ -406,6 +406,7 @@ class TikiAccessLib extends TikiLib
 			}
 		}
 
+		session_write_close();
 		if (headers_sent()) {
 			echo "<script>document.location.href='$url';</script>\n";
 		} else {
