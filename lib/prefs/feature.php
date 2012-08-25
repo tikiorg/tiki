@@ -39,6 +39,7 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_areas' => array(
 			'name' => tra('Areas'),
+			'warning' => tra('this feature mostlikely will be replaced - please contact the developer mailing list if you have any question'),
 			'description' => tra('Binding categories and perspectives to each other'),
 			'type' => 'flag',
 			'help' => 'Areas',
