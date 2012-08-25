@@ -103,20 +103,24 @@ class FileGalLib extends TikiLib
 		return $return;
 	}
 
-	function get_user_file_gallery()
+	function get_user_file_gallery($auser = '')
 	{
 		global $user, $prefs;
 		$tikilib = TikiLib::lib('tiki');
+
+		if (empty($auser)) {
+			$auser = $user;
+		}
 		
 		// Feature check + Anonymous don't have their own Users File Gallery
-		if ( $user == '' || $prefs['feature_use_fgal_for_user_files'] == 'n' || $prefs['feature_userfiles'] == 'n' || ( $userId = $tikilib->get_user_id($user) ) <= 0  ) {
+		if ( empty($auser) || $prefs['feature_use_fgal_for_user_files'] == 'n' || $prefs['feature_userfiles'] == 'n' || ( $userId = $tikilib->get_user_id($auser) ) <= 0  ) {
 			return false;
 		}
 
 		$conditions = array(
 			'type' => 'user',
 			'name' => $userId,
-			'user' => $user,
+			'user' => $auser,
 			'parentId' => $prefs['fgal_root_user_id']
 		);
 
