@@ -374,7 +374,7 @@ class AccountingLib extends LogsLib
 
 		if (count($errors) != 0) return $errors;
 
-		$query = 'INSERT INTO tiki_acct_accounti' . 
+		$query = 'INSERT INTO tiki_acct_account' . 
 						' SET accountBookId=?, accountId=?, accountName=?,' . 
 						' accountNotes=?, accountBudget=?, accountLocked=?, accountTax=?';
 
