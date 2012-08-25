@@ -36,6 +36,10 @@
 			<input type="text" name="CR" value="%%%" size="4" />
 		</label>
 		<label>
+			<input type="checkbox" name="dateFormatUnixTimestamp" value="1" />
+			{tr}Export dates as UNIX Timestamps to facilitate importing{/tr}
+		</label>
+		<label>
 			<input type="checkbox" name="keepItemlinkId" value="1" />
 			{tr}Export ItemLink type fields as the itemId of the linked item (to facilitate importing){/tr}
 		</label>
