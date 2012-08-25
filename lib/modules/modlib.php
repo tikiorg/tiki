@@ -514,7 +514,7 @@ class ModLib extends TikiLib
 
 		$categories = (array) $params['category'];
 
-		return ! $this->matches_any_in_category_list($categories, $catIds);
+		return ! $this->matches_any_in_category_list($categories, $catIds, ! empty($params['subtree']));
 	}
 
 	private function is_hidden_by_no_category($params)
@@ -536,11 +536,15 @@ class ModLib extends TikiLib
 
 		$categories = (array) $params['nocategory'];
 
-		return $this->matches_any_in_category_list($categories, $catIds);
+		return $this->matches_any_in_category_list($categories, $catIds, ! empty($params['subtree']));
 	}
 
-	private function matches_any_in_category_list($desiredList, $categoryList)
+	private function matches_any_in_category_list($desiredList, $categoryList, $deep = false)
 	{
+		if (empty($categoryList)) {
+			return false;
+		}
+
 		$allcats = TikiLib::lib('categ')->getCategories();	// gets all categories (cached)
 
 		foreach ($desiredList as $category) {
@@ -555,6 +559,17 @@ class ModLib extends TikiLib
 					}
 				}
 			}
+		}
+
+		if ($deep) {
+			$nextList = array();
+			foreach ($categoryList as $id) {
+				if (isset($allcats[$id]) && $allcats[$id]['parentId']) {
+					$nextList[] = $allcats[$id]['parentId'];
+				}
+			}
+
+			return $this->matches_any_in_category_list($desiredList, $nextList, $deep);
 		}
 
 		return false;
@@ -693,6 +708,12 @@ class ModLib extends TikiLib
 								'section' => 'visibility',
 								'separator' => ';',
 								'filter' => 'alnum',
+							),
+							'subtree' => array(
+								'name' => tra('Category subtrees'),
+								'description' => tra('Consider children categories of the categories listed in category and no category to be part of those categories. (0 or 1)'),
+								'section' => 'visibility',
+								'filter' => 'int',
 							),
 							'perspective' => array(
 								'name' => tra('Perspective'),
