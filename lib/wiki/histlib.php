@@ -43,7 +43,7 @@ class HistLib extends TikiLib
 		
 		// Store the current page in tiki_history before rolling back
 		if (strtolower($page) != 'sandbox') {
-			$info = $this->get_page_info($page);
+			$info = $this->get_hist_page_info($page);
 			$old_version = $this->get_page_latest_version($page) + 1;
 		    $lastModif = $info["lastModif"];
 		    $user = $info["user"];
@@ -80,7 +80,7 @@ class HistLib extends TikiLib
 		if ($prefs['feature_wysiwyg'] == 'y' && $prefs['wysiwyg_optional'] == 'y' && $prefs['wysiwyg_memo'] == 'y') {
 			if ($res['is_html'] == 1) {
 				// big hack: when you move to wysiwyg you do not come back usually -> wysiwyg should be a column in tiki_history
-				$info = $this->get_page_info($page);
+				$info = $this->get_hist_page_info($page);
 				$bindvars[] = $info['wysiwyg'];
 			} else {
 				$bindvars[] = 'n';
@@ -166,7 +166,7 @@ class HistLib extends TikiLib
 	}
 
 	// Get page info for a specified version
-	function get_page_info($pageName, $version)
+	function get_hist_page_info($pageName, $version)
 	{
 		$info = parent::get_page_info($pageName);
 
@@ -508,7 +508,7 @@ class Document
 		$this->startmarker=$startmarker;
 		$this->endmarker=$endmarker;
 
-		$this->_info=$histlib->get_page_info($page, true);
+		$this->_info=$histlib->get_hist_page_info($page, true);
 		if ($lastversion==0) {
 			$lastversion=$this->_info['version'];		
 		}
