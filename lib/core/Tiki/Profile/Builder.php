@@ -76,7 +76,7 @@ class Tiki_Profile_Builder
 
 		if ($builder->groups) {
 			$data['mappings'] = array();
-			$data['groups'] = array();
+			$data['permissions'] = array();
 			foreach ($builder->groups as $internal => $full) {
 				$groupDefinition = array(
 					'description' => $full,
@@ -87,7 +87,7 @@ class Tiki_Profile_Builder
 				}
 
 				$data['mappings'][$internal] = $full;
-				$data['groups'][$internal] = $groupDefinition;
+				$data['permissions'][$internal] = $groupDefinition;
 			}
 		}
 
