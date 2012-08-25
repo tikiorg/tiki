@@ -941,7 +941,11 @@ if ($prefs['fgal_show_explorer'] == 'y' || $prefs['fgal_show_path'] == 'y' || is
 		$path = $filegallib->getPath($galleryId);
 		$smarty->assign('gallery_path', $path['HTML']);
 	}
-	$smarty->assign('tree', $filegallib->getTreeHTML($galleryId));
+	if ($prefs['feature_use_fgal_for_user_files'] == 'y' && $gal_info['type'] === 'user') {	// get tree from root of user galleries always
+		$smarty->assign('tree', $filegallib->getTreeHTML($prefs['fgal_root_user_id']));		// for user galleries
+	} else {
+		$smarty->assign('tree', $filegallib->getTreeHTML($galleryId));
+	}
 }
 
 ask_ticket('fgal');

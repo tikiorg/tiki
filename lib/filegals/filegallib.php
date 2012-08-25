@@ -1430,7 +1430,7 @@ class FileGalLib extends TikiLib
 	// If $galleryIdentifier is not given, default to the "default" / normal / "File Galleries" file galleries.
 	function getTreeHTML($galleryIdentifier = NULL)
 	{
-		global $prefs, $smarty;
+		global $prefs, $smarty, $user;
 		require_once ('lib/tree/BrowseTreeMaker.php');
 		$galleryIdentifier = is_null($galleryIdentifier) ? $prefs['fgal_root_id'] : $galleryIdentifier;
 		$subGalleries = $this->getSubGalleries($galleryIdentifier);
@@ -1449,7 +1449,7 @@ class FileGalLib extends TikiLib
 			$nodes[] = array(
 				'id' => $subGallery['id'],
 				'parent' => $subGallery['parentId'],
-				'data' => smarty_block_self_link($linkParameters, $icon . htmlspecialchars($subGallery['name']), $smarty), 
+				'data' => smarty_block_self_link($linkParameters, $icon . htmlspecialchars($this->getGalleryName($subGallery, $user)), $smarty),
 			);
 		}
 		$browseTreeMaker = new BrowseTreeMaker('Galleries');
@@ -1466,17 +1466,16 @@ class FileGalLib extends TikiLib
 		global $prefs, $user;
 		$rootIdentifier = $this->getGallerySpecialRoot($galleryIdentifier);
 		$root = $this->get_file_gallery_info($galleryIdentifier);
-		if ( $user != '' && $prefs['feature_use_fgal_for_user_files'] == 'y' ) {
-			$userGallery = $this->get_user_file_gallery();
-			if ($userGallery == $prefs['fgal_root_user_id']) {
-				$rootIdentifier = $userGallery;
+		if ( !empty($user) && $prefs['feature_use_fgal_for_user_files'] == 'y' ) {
+			if ($root['type'] === 'user') {
+				$rootIdentifier = $prefs['fgal_root_user_id'];
 			}
 		}
 		$path = array();
 		for ($node = $this->get_file_gallery_info($galleryIdentifier); $node && $node['galleryId'] != $rootIdentifier; $node = $this->get_file_gallery_info($node['parentId'])) {
-			$path[$node['galleryId']] = $node['name'];
+			$path[$node['galleryId']] = $this->getGalleryName($node, $user);
 		}
-		if (isset($userGallery) && $rootIdentifier == $userGallery) {
+		if ($rootIdentifier == $prefs['fgal_root_user_id']) {
 			$path[$rootIdentifier] = tra('User File Galleries');
 		} elseif ($rootIdentifier == $prefs['fgal_root_wiki_attachments_id']) {
 			$path[$rootIdentifier] = tra('Wiki Attachment File Galleries');
@@ -1495,6 +1494,27 @@ class FileGalLib extends TikiLib
 			'HTML' => $pathHtml,
 			'Array' => $path
 		);
+	}
+
+	/**
+	 * Return the name of a gallery, handling individual names for user galleries
+	 *
+	 * @param array $gal_info	gallery definition
+	 * @param string $user			username
+	 * @return string				gallery name
+	 */
+	function getGalleryName($gal_info, $user) {
+
+		if ($gal_info['type'] === 'user') {
+			if (!empty($user) && $gal_info['user'] == $user) {
+				$name = tra('My Files');
+			} else {
+				$name = tra('Files of ') . ' ' . $gal_info['user'];
+			}
+		} else {
+			$name = $gal_info['name'];
+		}
+		return $name;
 	}
 
 	// get the size in k used in a fgal and its children
