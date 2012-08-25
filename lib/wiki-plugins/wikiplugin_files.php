@@ -430,7 +430,6 @@ function wikiplugin_files($data, $params)
 			$galleryId = array($galId);
 		}
 		$gal_info = $filegallib->get_file_gallery($galId);
-		$gal_info['name'] = $filegallib->getGalleryName($gal_info, $user);
 
 		if ($tiki_p_admin != 'y' && $tiki_p_admin_files_galleries != 'y' && $gal_info['user'] != $user) {
 			$p_view_file_gallery = $tikilib->user_has_perm_on_object($user, $galId, 'file gallery', 'tiki_p_view_file_gallery') ? 'y' : 'n';

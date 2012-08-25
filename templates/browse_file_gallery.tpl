@@ -167,11 +167,7 @@
           <div class="thumbnamecontener">
             <div class="thumbname">
               <div class="thumbnamesub" style="width:{$thumbnail_size}px; overflow: hidden;">
-				{if $files[changes].isgal eq 1 and $files[changes].type eq 'user'}
-					<a class="fgalname" {$link}>
-						{if $files[changes].user eq $user}<strong>{tr}My Files{/tr}</strong>{else}{tr}Files of {$files[changes].user}{/tr}{/if}
-					</a>
-                {elseif $gal_info.show_name eq 'f' or ($gal_info.show_name eq 'a' and $files[changes].name eq '')}
+				{if $gal_info.show_name eq 'f' or ($gal_info.show_name eq 'a' and $files[changes].name eq '')}
                   <a class="fgalname" {$link} title="{$files[changes].filename}">{$files[changes].filename|truncate:$key_name_len}</a>
                 {else}
                   {$propval}
