@@ -28,11 +28,6 @@
 		{preference name=feature_wiki}
 	</fieldset>
 
-	<fieldset class="admin">
-		<legend>{tr}Related{/tr}</legend>
-		{preference name=feature_areas}
-	</fieldset>
-
 	<div class="heading input_submit_container" style="text-align: center">
 		<input type="submit" name="workspacesetprefs" value="{tr}Change preferences{/tr}" />
 	</div>
