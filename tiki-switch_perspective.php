@@ -19,7 +19,7 @@ if ( isset($_REQUEST['perspective']) ) {
 if ( isset($_REQUEST['back']) && isset($_SERVER['HTTP_REFERER']) ) {
 	$access->redirect($_SERVER['HTTP_REFERER']);
 } else {
-	$access->redirect('index.php'));
+	$access->redirect('index.php');
 }
 
 // EOF
