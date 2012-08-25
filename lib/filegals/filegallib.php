@@ -1388,12 +1388,7 @@ class FileGalLib extends TikiLib
 				if ( $result = $this->getGallerySpecialRoot($galleryId, $subGalleryId, $childs) ) {
 					if ( is_integer($result) ) {
 						return $result;
-					} elseif ( $treeParentId == $prefs['fgal_root_user_id'] || $treeParentId == -1 ) {
-						//
-						// If the parent is :
-						//   - either the User File Gallery, stop here to keep only the user gallery instead of all users galleries
-						//   - or already the top root of all galleries, it means that the gallery is a special gallery root
-						//
+					} elseif ( $treeParentId == -1 ) {
 						return (int)$subGalleryId;
 					} else {
 						return true;
