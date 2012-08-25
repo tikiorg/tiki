@@ -36,7 +36,7 @@ class FileMetadata
 	 *
 	 * @return \FileMetadata FileMetadata object with properties for the various types of metadata
 	 */
-	function __construct($file, $ispath = true, $extended = true)
+	function getMetadata($file, $ispath = true, $extended = true)
 	{
 		//set contents and current name as well as type in some situations
 		if (!$ispath) {

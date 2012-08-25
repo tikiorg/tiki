@@ -253,7 +253,8 @@ class ImageAbstract
 			}
 		}
 		if (!is_object($this->metadata) || get_class($this->metadata) != 'FileMetadata') {
-			$this->metadata = new FileMetadata($filename, $ispath, $extended);
+			$metadata = new FileMetadata;
+			$this->metadata = $metadata->getMetadata($filename, $ispath, $extended);
 		}
 		return $this->metadata;
 	}
