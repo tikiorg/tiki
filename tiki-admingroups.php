@@ -156,6 +156,13 @@ if (isset($_REQUEST["action"])) {
 		unset($_REQUEST['group']);
 	}
 }
+// Unassign a list of members
+if (isset($_REQUEST['unassign_members']) && isset($_REQUEST['submit_mult_members']) && $_REQUEST['submit_mult_members'] == 'unassign' && isset($_REQUEST['group']) && !in_array($_REQUEST['group'], array('Registered', 'Anonymous'))) {
+	$access->check_authenticity(tra('Are you sure you want to unassign these users?'));
+	foreach ($_REQUEST['members'] as $m) {
+		$userlib->remove_user_from_group($userlib->get_user_login($m), $_REQUEST['group']);
+	}
+}
 if (!empty($_REQUEST['submit_mult']) && !empty($_REQUEST['checked'])) {
 	$access->check_authenticity(tra('Are you sure you want to delete these groups?'));
 	foreach ($_REQUEST['checked'] as $delete) {

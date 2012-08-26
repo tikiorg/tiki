@@ -358,8 +358,11 @@
 	{tab name="{tr}Members{/tr}"}
 	{* ----------------------- tab with memberlist --------------------------------------- *}
 		<h2>{tr}Members List:{/tr} {$groupname|escape}</h2>
+		<form name="checkform" method="post" action="{$smarty.server.PHP_SELF}">
+		<input type="hidden" name="group" value="{$group|escape}" />
 		<table class="normal">
 			<tr>
+				<th class="auto">{if $memberslist}{select_all checkbox_names='members[]'}{/if}</th>
 				<th>{self_link _sort_arg='sort_mode_member' _sort_field='login'}{tr}User{/tr}{/self_link}</th>
 				<th>{self_link _sort_arg='sort_mode_member' _sort_field='created'}{tr}Assign{/tr}{/self_link}</th>
 				<th>{self_link _sort_arg='sort_mode_member' _sort_field='expire'}{tr}Expire{/tr}{/self_link}</th>
@@ -369,6 +372,7 @@
 			<tr>
 				{foreach from=$memberslist item=member}
 					<tr class="{cycle}">
+					<td class="checkbox"><input type="checkbox" name="members[]" value="{$member.userId}" /></td>
 					<td class="username">{$member.login|userlink}</td>
 					<td class="date">{$member.created|tiki_short_datetime}</td>
 					<td class="date">{if !empty($member.expire)}{$member.expire|tiki_short_datetime}{/if}</td>
@@ -379,6 +383,14 @@
 					</tr>
 				{/foreach}
 		</table>
+		<label>{tr}Perform action with checked:{/tr}
+			<select name="submit_mult_members">
+				<option value="" />
+				<option value="unassign">{tr}Unassign{/tr}</option>
+			</select>
+		</label>
+		<input type="submit" name="unassign_members" value="{tr}OK{/tr}" />
+		</form>
 		{pagination_links cant=$membersCount step=$prefs.maxRecords offset=$membersOffset offset_arg='membersOffset'}{/pagination_links}
 
 		<div class="box">{$membersCount} {tr}users in group{/tr} {$groupname|escape}</div>
