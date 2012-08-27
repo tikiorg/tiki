@@ -261,6 +261,15 @@ JQ
 								width: $(window).width() * 0.8
 							});
 
+						form.find('input[type="submit"]').click(function() {
+							$.modal(tr('Loading...'));
+							$.post(document.location, {sendPhrase: metadataHere.text}, function() {
+								form.submit();
+							});
+
+							return false;
+						});
+
 						return false;
 					});
 JQ

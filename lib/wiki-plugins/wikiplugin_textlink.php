@@ -35,7 +35,17 @@ function wikiplugin_textlink($data, $params)
 
 	if (empty($clipboarddata)) return $data;
 
-	Feed_TextLink::add($clipboarddata, $page, $data);
+	if (isset($_REQUEST['sendPhrase'])) {
+		if (JisonParser_Phraser_Handler::superSanitize($_REQUEST['sendPhrase']) == JisonParser_Phraser_Handler::superSanitize($data)) {
+			Feed_TextLink::clearAll();
+			Feed_TextLink::add($clipboarddata, $page, $data);
+			$result = Feed_ForwardLink_Send::sendAll();
+			echo json_encode(array("status"=>"completed","result"=>$result));
+			exit();
+		}
+	} else {
+		Feed_TextLink::add($clipboarddata, $page, $data);
+	}
 
     return $data;
 }

@@ -48,6 +48,13 @@ Class Feed_TextLink extends Feed_Abstract
 		$item->forwardlink->href = str_replace(' ', '+', $item->forwardlink->href);
 
 		self::$contributions->entry[] = $item;
+
+		return count(self::$contributions->entry);
+	}
+
+	static function clearAll()
+	{
+		self::$contributions = (object)array();
 	}
 
 	public function getContents()
