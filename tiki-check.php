@@ -3,7 +3,7 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: tiki-admin_security.php 40813 2012-04-07 17:32:37Z jonnybradley $
+// $Id$
 
 if (file_exists('./db/local.php')) {
 	$standalone = false;

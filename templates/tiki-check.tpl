@@ -1,3 +1,4 @@
+{* $Id$ *}
 {title help="Server+Check"}{tr}Server Check{/tr}{/title}
 
 <h2>{tr}Server Information{/tr}</h2>
