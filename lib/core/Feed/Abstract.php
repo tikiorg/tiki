@@ -31,12 +31,11 @@ abstract class Feed_Abstract
 		} else {
 			$name = str_replace("http://", "", $name);
 			$name = str_replace("https://", "", $name);
-			$name = array_shift(explode('/', $name));
+			$name = explode('/', $name);
+			$name = array_shift($name);
 		}
-		
-		$this->name = $name;
-		
-		return $this;
+
+		$this->name = $this->type . "_" . $name;
 	}
 	
 	public function getItems()
@@ -137,8 +136,12 @@ abstract class Feed_Abstract
 	}
 	
 	function appendToContents(&$contents, $items)
-	{	
-		$contents->entry[] = $items->feed->entry;
+	{
+		if (isset($items->feed->entry)) {
+			$contents->entry[] = $items->feed->entry;
+		} elseif (isset($items)) {
+			$contents->entry[] = $items;
+		}
 	}
 	
 	public function addItem($item)
@@ -185,6 +188,7 @@ abstract class Feed_Abstract
 		$archives = array();
 		
 		if ($this->isFileGal == true) {
+			$file = FileGallery_File::filename($this->name);
 			foreach ($file->listArchives() as $archive) {
 				$archive = $this->open();
 				$archives[$archive->feed->date] = $archive->feed->entry;

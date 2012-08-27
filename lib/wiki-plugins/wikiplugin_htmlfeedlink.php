@@ -158,7 +158,7 @@ function wikiplugin_htmlfeedlink($data, $params)
 			});
 		});"
 	);
-	
+
 	$item = $htmlFeed->getItem($name);
 	$same = $date == $item->date;
 	
@@ -166,40 +166,6 @@ function wikiplugin_htmlfeedlink($data, $params)
 		$name = $item->name;
 		$date = $item->date;
 		switch($type) {
-			case "":
-			case "replace":
-				$data = "~np~" . $item->description . "~/np~";
-    			break;
-				//moderate isn't yet working
-				if ($moderate == 'y') {
-					if ($same == false) {
-						$data .= "~np~<img
-							src='img/icons/flag_blue.png'
-							class='revision'
-							title='Revision Available, click to see'
-							style='cursor: pointer;'
-							data-feed='".urlencode($feed)."'
-							data-name='".urlencode($name)."'
-							/>
-							<form id='form$htmlFeedLinkI' method='post' action='tiki-wikiplugin_edit.php' style='display: none;'>
-								<input type='hidden' name='page' value='$page'/>
-								<input type='hidden' name='index' value='$htmlFeedLinkI'/>
-								<input type='hidden' name='type' value='htmlfeedlink'/>
-								<input type='hidden' name='params[name]' value='".htmlspecialchars($name)."'/>
-								<input type='hidden' name='params[feed]' value='".htmlspecialchars($feed)."'/>
-								<input type='hidden' name='params[type]' value='".htmlspecialchars($type)."'/>
-								<input type='hidden' name='params[style]' value='".htmlspecialchars($style)."'/>
-								<input type='hidden' name='params[date]' value='".htmlspecialchars($date)."'/>
-								<input type='hidden' name='content' value='".htmlspecialchars($data)."'/>
-							</form>
-							~/np~";
-					} else {
-							$data = "~np~" . $item->description . "~/np~";
-					}
-				} else {
-					$data = $item->description;
-				}	
-    			break;
 			case "backlink":
 				$data = "<a href='$item->url'>" . $data . "</a>";
     			break;
@@ -211,6 +177,9 @@ function wikiplugin_htmlfeedlink($data, $params)
     			break;
 			case "hover":
     			break;
+			case "replace":
+				$data = $item->data;
+				break;
 		}
 		
 		$link = json_encode($link);
@@ -238,8 +207,8 @@ function wikiplugin_htmlfeedlink($data, $params)
 	}
 	
 	if (strlen($archives) > 0) {
-		$result .= "~np~<img src='img/icons/disk_multiple.png' id='viewArchives$htmlFeedLinkI' title='View Archives' name='".htmlspecialchars($archive->name)."' style='cursor: pointer;' />
-		<div id='archives$htmlFeedLinkI' style='display: none;' >" . $archives . "</div>~/np~";
+		$result .= "<img src='img/icons/disk_multiple.png' id='viewArchives$htmlFeedLinkI' title='View Archives' name='".htmlspecialchars($archive->name)."' style='cursor: pointer;' />
+		<div id='archives$htmlFeedLinkI' style='display: none;' >" . $archives . "</div>";
 		$headerlib->add_jq_onready(
 <<<JQ
 			$('#viewArchives$htmlFeedLinkI').click(function() {
@@ -258,5 +227,5 @@ JQ
 		);
 	}
 	
-	return  $result;
+	return  "~np~" . $result . "~/np~";
 }
