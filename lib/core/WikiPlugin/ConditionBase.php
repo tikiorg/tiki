@@ -7,11 +7,10 @@
 
 abstract class WikiPlugin_ConditionBase
 {
-	public static $name;
-	public static $description;
-	public static $body;
-	public static $params = array();
-
+	public $name;
+	public $description;
+	public $body;
+	public $params = array();
 	public $type;
 	public $documentation;
 	public $prefs = array();
@@ -31,10 +30,6 @@ abstract class WikiPlugin_ConditionBase
 		{
 			$info[$key] = $param;
 		}
-
-		$reflection = new ReflectionClass('WikiPlugin_HtmlBase');
-		$staticInfo = $reflection->getStaticProperties();
-		$info += $staticInfo;
 
 		return $info;
 	}

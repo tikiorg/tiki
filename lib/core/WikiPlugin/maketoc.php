@@ -7,7 +7,7 @@
 
 class WikiPlugin_maketoc extends WikiPlugin_HtmlBase
 {
-	public $type = 'toc';
+	public $type = 'maketoc';
 	public $documentation = 'PluginMaketoc';
 	public $parserLevel = 1; //0 is standard, we put this after the others
 	public $filter = 'rawhtml_unsafe';
@@ -16,20 +16,17 @@ class WikiPlugin_maketoc extends WikiPlugin_HtmlBase
 
 	function __construct()
 	{
-		if (empty(self::$name)) {
-			self::$name = tr('Table of Contents (Page)');
-			self::$description = tr('Add a table of contents to a page');
-			self::$params = array(
-				'type',
-				'maxdepth',
-				'title',
-				'showhide',
-				'nolinks',
-				'nums',
-				'levels'
-			);
-		}
-		$this->parserLevel = 1;
+		$this->name = tr('Table of Contents (Page)');
+		$this->description = tr('Add a table of contents to a page');
+		$this->params = array(
+			'type',
+			'maxdepth',
+			'title',
+			'showhide',
+			'nolinks',
+			'nums',
+			'levels'
+		);
 	}
 
 	function output(&$data, &$params, &$index, &$parser)

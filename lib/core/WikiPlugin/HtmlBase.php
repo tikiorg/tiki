@@ -7,11 +7,10 @@
 
 abstract class WikiPlugin_HtmlBase
 {
-	public static $name;
-	public static $description;
-	public static $body;
-	public static $params = array();
-
+	public $name;
+	public $description;
+	public $body;
+	public $params = array();
 	public $type;
 	public $documentation;
 	public $prefs = array();
@@ -286,11 +285,6 @@ abstract class WikiPlugin_HtmlBase
 		{
 			$info[$key] = $param;
 		}
-
-		$reflection = new ReflectionClass('WikiPlugin_HtmlBase');
-		$staticInfo = $reflection->getStaticProperties();
-		unset($staticInfo['style']);
-		$info += $staticInfo;
 
 		return $info;
 	}
