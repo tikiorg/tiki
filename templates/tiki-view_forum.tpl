@@ -219,13 +219,22 @@
 					{include file='contribution.tpl'}
 				{/if}
 				<script>
+					function showDeliberationItemRating(me, btn, input, ratings) {
+						btn.find('.deliberationConfigureItemRating').remove();
+						btn.append(me.find('div.deliberationConfigureItemRating[data-val="' + input.val() + '"]').clone());
+					}
+
 					function configureDeliberationItemRatings(me) {
-						me = $(me).find('.deliberationConfigureItemRatings');
-						me.click(function() {
-							var btn = $(this),
-									input = btn.next('input.deliberatioRatingOverrideSelector'),
-									dialog = btn.prev('div.deliberationItemRatings').clone(),
-									ratings = dialog.find('.deliberationConfigureItemRating');
+						me = $(me);
+						var btn = me.find('.deliberationConfigureItemRatings'),
+							input = btn.next('input.deliberatioRatingOverrideSelector'),
+							dialog = btn.prev('div.deliberationItemRatings').clone(),
+							ratings = dialog.find('.deliberationConfigureItemRating');
+
+						showDeliberationItemRating(me, btn, input, ratings);
+
+						btn.click(function() {
+
 
 							ratings
 								.hover(function() {
@@ -243,6 +252,7 @@
 							var btns = {};
 							btns[tr('Ok')] = function() {
 								input.val(dialog.find('div.deliberationConfigureItemRating.ui-state-highlight').data('val'));
+								showDeliberationItemRating(me, btn, input, ratings);
 								dialog.dialog('close');
 							};
 
@@ -255,6 +265,8 @@
 								title: tr('Configure Deliberation Item Ratings'),
 								buttons: btns
 							});
+
+							return false;
 						});
 					}
 				</script>

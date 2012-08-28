@@ -389,7 +389,7 @@ class RatingLib extends TikiDb_Bridge
 
 	function get_options_smiles_backgrounds($type)
 	{
-		$sets = $this->get_options_smiles_id_sets($type, true);
+		$sets = $this->get_options_smiles_id_sets();
 
 		$backgroundsSets = array();
 

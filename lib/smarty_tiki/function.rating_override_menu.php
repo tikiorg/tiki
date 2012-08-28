@@ -37,7 +37,7 @@ function smarty_function_rating_override_menu( $params, $smarty )
 
 	return
 		"<div class='deliberationItemRatings' style='display:none;'>$menu</div>
-		<input class='deliberationConfigureItemRatings' type='button' value='" . tr('Configure Ratings') . "'/>
+		<span class='deliberationConfigureItemRatings button' style='float:right;'><a href='#'>" . tr('Configure Ratings') . "</a></span>
 		<input class='deliberatioRatingOverrideSelector' type='hidden' name='rating_override[]' value='" . ($optionsLength) . "'/>";
 }
 
