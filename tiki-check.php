@@ -172,13 +172,13 @@ if ($s) {
 	$php_properties['magic_quotes_gpc'] = array(
 		'fitness' => tra('bad'),
 		'setting' => 'On',
-		'message' => tra('magic_quotes_gpc should be off by default. See the php manual for details.')
+		'message' => tra('magic_quotes_gpc is deprecated and should be off by default. See the php manual for details. You may experience weird behaviour of your Tiki.')
 	);
 } else {
 	$php_properties['magic_quotes_gpc'] = array(
 		'fitness' => tra('good'),
 		'setting' => 'Off',
-		'message' => tra('Well set!')
+		'message' => tra('Well set! And you are future proof also as magic_quotes_gpc is deprecated.')
 	);
 }
 
