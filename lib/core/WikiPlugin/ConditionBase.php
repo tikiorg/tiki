@@ -32,6 +32,10 @@ abstract class WikiPlugin_ConditionBase
 			$info[$key] = $param;
 		}
 
+		$reflection = new ReflectionClass('WikiPlugin_HtmlBase');
+		$staticInfo = $reflection->getStaticProperties();
+		$info += $staticInfo;
+
 		return $info;
 	}
 

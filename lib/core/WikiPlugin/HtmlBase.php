@@ -287,6 +287,11 @@ abstract class WikiPlugin_HtmlBase
 			$info[$key] = $param;
 		}
 
+		$reflection = new ReflectionClass('WikiPlugin_HtmlBase');
+		$staticInfo = $reflection->getStaticProperties();
+		unset($staticInfo['style']);
+		$info += $staticInfo;
+
 		return $info;
 	}
 
