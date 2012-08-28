@@ -340,6 +340,10 @@ class WikiLib extends TikiLib
 		global $tikilib;
 		global $smarty;
 		global $user;
+		if ($prefs['feature_use_fgal_for_wiki_attachments'] == 'y') {
+			$query = 'update `tiki_file_galleries` set `name`=? where `name`=?';
+			$this->query($query, array( $newName, $oldName ));
+		}
 
 		// first get all watches for this page ...
 		if ($prefs['feature_user_watches'] == 'y') {
