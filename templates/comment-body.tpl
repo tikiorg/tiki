@@ -92,7 +92,7 @@
 
 {if $comment.deliberations and $tiki_p_forum_vote eq 'y'}
 	<div>
-		<div class="ui-widget-header">Deliberations</div>
+		<div class="ui-widget-header">{tr}Deliberation Items{/tr}</div>
 		{foreach from=$comment.deliberations item=deliberation}
 			<div class="ui-widget-content">
 				{$deliberation.data}
@@ -101,11 +101,7 @@
 					<input type="hidden" name="id" value="{$deliberation.threadId}" />
 					<input type="hidden" name="type" value="comment" />
 				</form>
-				<br /><br />
-				{*This is where we display the results of the deliberation*}
-				{if $tiki_p_admin_forum eq 'y'}
-					{rating_result id=$deliberation.threadId type='comment'}
-				{/if}
+				<br /><br /><br /><br />
 			</div>
 		{/foreach}
 		{jq}

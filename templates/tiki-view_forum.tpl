@@ -218,7 +218,46 @@
 				{if $prefs.feature_contribution eq 'y'}
 					{include file='contribution.tpl'}
 				{/if}
+				<script>
+					function configureDeliberationItemRatings(me) {
+						me = $(me).find('.deliberationConfigureItemRatings');
+						me.click(function() {
+							var btn = $(this),
+									input = btn.next('input.deliberatioRatingOverrideSelector'),
+									dialog = btn.prev('div.deliberationItemRatings').clone(),
+									ratings = dialog.find('.deliberationConfigureItemRating');
 
+							ratings
+								.hover(function() {
+									$(this).addClass('ui-statue-hover');
+								},function() {
+									$(this).removeClass('ui-statue-hover');
+								})
+								.click(function() {
+									ratings.removeClass('ui-state-highlight');
+										$(this).addClass('ui-state-highlight');
+								});
+
+							ratings.filter('[data-val="'  + input.val() + '"]').addClass('ui-state-highlight');
+
+							var btns = {};
+							btns[tr('Ok')] = function() {
+								input.val(dialog.find('div.deliberationConfigureItemRating.ui-state-highlight').data('val'));
+								dialog.dialog('close');
+							};
+
+							btns[tr('Cancel')] = function() {
+								dialog.dialog('close');
+							};
+
+							dialog.dialog({
+								modal: true,
+								title: tr('Configure Deliberation Item Ratings'),
+								buttons: btns
+							});
+						});
+					}
+				</script>
 				{jq}
 					$('select.comment_topictype')
 						.change(function() {
@@ -230,25 +269,30 @@
 						})
 						.change();
 
-					var opinionMaster;
-					$('.forum_deliberation_add_opinion').click(function() {
-						if (!opinionMaster) {
-							$.get('tiki-ajax_services', {controller: 'comment', action: "deliberation_opinion"}, function(opinionInput) {
-								opinionMaster = opinionInput;
-								$(opinionInput).insertBefore('div.forum_deliberation_opinions_toolbar');
+					var itemMaster;
+					$('.forum_deliberation_add_item').click(function() {
+						var thisItem;
+						if (!itemMaster) {
+							$.modal(tr('Loading...'));
+							$.get('tiki-ajax_services', {controller: 'comment', action: "deliberation_item"}, function(itemInput) {
+								itemMaster = itemInput;
+								thisItem = $(itemMaster).insertBefore('div.forum_deliberation_items_toolbar');
+								configureDeliberationItemRatings(thisItem);
+								$.modal();
 							});
 						} else {
-							var oM = $(opinionMaster)
-							oM.insertBefore('div.forum_deliberation_opinions_toolbar');
+							thisItem = $(itemMaster).insertBefore('div.forum_deliberation_items_toolbar');
+							configureDeliberationItemRatings(thisItem);
 						}
+
 						return false;
 					});
 				{/jq}
 				<tr class="forum_deliberation" style="display: none;">
 					<td>{tr}Deliberation{/tr}</td>
-					<td class="forum_deliberation_opinions">
-						<div class="forum_deliberation_opinions_toolbar">
-							{button href="#" _class="forum_deliberation_add_opinion" _text="Add Deliberation Opinion"}
+					<td class="forum_deliberation_items">
+						<div class="forum_deliberation_items_toolbar">
+							{button href="#" _class="forum_deliberation_add_item" _text="{tr}Add Deliberation Item{/tr}"}
 						</div>
 					</td>
 				</tr>

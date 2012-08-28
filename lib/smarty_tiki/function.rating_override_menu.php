@@ -12,23 +12,32 @@ function smarty_function_rating_override_menu( $params, $smarty )
 
 	require_once('lib/comments/commentslib.php');
 	$menu = '';
-	$options = $ratinglib->override_array($params['type'], true);
+	$options = $ratinglib->override_array($params['type'], true, true);
 	$optionsLength = count($options);
-	$backgrounds = $ratinglib->get_options_smiles_backgrounds($params['type']);
+	$backgroundsSets = $ratinglib->get_options_smiles_backgrounds($params['type']);
 
 	foreach($options as $i => $option)
 	{
 		if ($prefs['rating_smileys'] == 'y') {
-			$style = 'background-image: url("' . $backgrounds[$i] . '");';
-			$text = count($option);
+			$images = '';
+
+			foreach($backgroundsSets[$i] as $i => $background) {
+				$images .= '<img src="' . $background . '"/>';
+			}
+
+			$html = count($option) . ' ' . $images;
 		} else {
-			$style = '';
-			$text = implode(',', $option);
+			$html = implode(',', $option);
 		}
 
-		$menu .= "<option style='" . $style . "' value='$i'" . ($i >= $optionsLength -1 ? ' selected'  : '') . ">" . $text . "</option>";
+		$menu .= "<div class='deliberationConfigureItemRating ui-widget ui-state-default ui-corner-all ui-button-text-only' data-val='$i'>" . $html . "</div>";
 	}
 
-	return "<select class='rating_override_selector' style='width: 250px;' name='rating_override[]'>" . $menu . "</select>";
+	//<select class='rating_override_selector' style='width: 250px;' name='rating_override[]'>" . $menu . "</select>";
+
+	return
+		"<div class='deliberationItemRatings' style='display:none;'>$menu</div>
+		<input class='deliberationConfigureItemRatings' type='button' value='" . tr('Configure Ratings') . "'/>
+		<input class='deliberatioRatingOverrideSelector' type='hidden' name='rating_override[]' value='" . ($optionsLength) . "'/>";
 }
 

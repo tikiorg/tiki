@@ -3037,18 +3037,18 @@ class Comments extends TikiLib
 		}
 	}
 
-	function add_forum_deliberations($threadId, $opinions = array(), $options = array(), $rating_override = array())
+	function add_forum_deliberations($threadId, $items = array(), $options = array(), $rating_override = array())
 	{
 		global $user;
 
-		foreach($opinions as $i => $opinion) {
+		foreach($items as $i => $item) {
 			$message_id = (isset($message_id) ? $message_id . $i : null);
 			$deliberation_id = $this->post_new_comment(
 				"forum_deliberation:$threadId",
 				0,
 				$user,
-				json_encode(array('opinion'=> $i,'thread'=> $threadId)),
-				$opinion,
+				json_encode(array('item'=> $i,'thread'=> $threadId)),
+				$item,
 				$message_id
 			);
 

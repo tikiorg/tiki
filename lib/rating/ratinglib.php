@@ -215,7 +215,7 @@ class RatingLib extends TikiDb_Bridge
 		global $attributelib;
 		$options = $this->override_array($type);
 
-		$attributelib->set_attribute($type, $objectId, $type.".rating.override", $options[$value]);
+		$attributelib->set_attribute($type, $objectId, $type.".rating.override", $options[$value - 1]);
 	}
 
 	function get_override($type, $objectId)
@@ -231,12 +231,12 @@ class RatingLib extends TikiDb_Bridge
 		return $attr;
 	}
 
-	function override_array($type, $maintainArray = false)
+
+	function override_array($type, $maintainArray = false, $sort = false)
 	{
 		global $prefs;
 
 		$array = array();
-		$vals = array();
 		$options = array();
 
 		switch( $type ) {
@@ -254,15 +254,22 @@ class RatingLib extends TikiDb_Bridge
 				break;
 		}
 
-		foreach($prefs[$pref] as $option) {
-			$options[] = $option;
+
+		$sortedPref = $prefs[$pref];
+		asort($sortedPref);
+
+		foreach($sortedPref as $i => $option) {
+			$options[$i] = $option;
 			//Ensure there are at least 2 to choose from
 			if (count($options) > 1) {
+				$value = $options;
+
+				if ($sort == false) ksort($value);
+
 				if ($maintainArray == false) {
-					$vals[] = $value = implode($options, ',');
-				} else {
-					$vals[] = $value = $options;
+					$value = implode($value, ',');
 				}
+
 				$array[] = $value;
 			}
 		}
@@ -296,10 +303,10 @@ class RatingLib extends TikiDb_Bridge
 			$votings[$user_voting['optionId']]++;
 		}
 
-		foreach($votings as &$voting) {
-			$voting = array(
-				"voting" => $voting,
-				"percent" => round($percent * $voting)
+		foreach($votings as &$votes) {
+			$votes = array(
+				"votes" => $votes,
+				"percent" => round($percent * $votes)
 			);
 		}
 
@@ -382,80 +389,90 @@ class RatingLib extends TikiDb_Bridge
 
 	function get_options_smiles_backgrounds($type)
 	{
-		$overrides = $this->override_array($type, true);
-		$backgrounds = array();
-		foreach($overrides as $override) {
-			$backgrounds[] = 'img/rating_smiles/bg_' . count($override) . '.png';
+		$sets = $this->get_options_smiles_id_sets($type, true);
+
+		$backgroundsSets = array();
+
+		foreach($sets as $set) {
+			$backgrounds = array();
+			foreach($set as $imageId) {
+				$backgrounds[] = 'img/rating_smiles/' . $imageId . '.png';
+			}
+			$backgroundsSets[] = $backgrounds;
 		}
-		return $backgrounds;
+
+		return $backgroundsSets;
 	}
 
 	function get_options_smiles_colors()
 	{
 		return array(
-			0 => '#d2d2d2',
-			1 => '#ce4744',
-			2 => '#e84642',
-			3 => '#f26842',
-			4 => '#f58642',
-			5 => '#f6a141',
-			6 => '#fcc441',
-			7 => '#e5cd42',
-			8 => '#cbd244',
-			9 => '#b3db47',
-			10 => '9be549',
-			11 => '#90d047',
+			1 => '#d2d2d2',
+			2 => '#ce4744',
+			3 => '#e84642',
+			4 => '#f26842',
+			5 => '#f58642',
+			6 => '#f6a141',
+			7 => '#fcc441',
+			8 => '#e5cd42',
+			9 => '#cbd244',
+			10 => '#b3db47',
+			11 => '#9be549',
+			12 => '#90d047',
 		);
 	}
 
-	function get_options_smiles($type, $objectId = 0, $imageCount = 11)
+	function get_options_smiles_id_sets()
+	{
+		return array(
+			2 => array( 1=>2, 2=>12),
+			3 => array( 1=>1, 2=>2, 3=>12),
+			4 => array( 1=>1, 2=>2, 3=>6, 4=>12),
+			5 => array( 1=>1, 2=>2, 3=>6, 4=>11, 5=>12),
+			6 => array( 1=>1, 2=>2, 3=>3, 4=>6,  5=>11, 6=>12),
+			7 => array( 1=>1, 2=>2, 3=>3, 4=>6,  5=>10, 6=>11, 7=>12),
+			8 => array( 1=>1, 2=>2, 3=>3, 4=>4,  5=>6,  6=>10, 7=>11, 8=>12),
+			9 => array( 1=>1, 2=>2, 3=>3, 4=>4,  5=>6,  6=>9,  7=>10, 8=>11, 9=>12),
+			10 => array(1=>1, 2=>2, 3=>3, 4=>4,  5=>5,  6=>6,  7=>9,  8=>10, 9=>11, 10=>12),
+			11 => array(1=>1, 2=>2, 3=>3, 4=>4,  5=>5,  6=>6,  7=>8,  8=>9,  9=>10, 10=>11, 11=>12),
+			12 => array(1=>1, 2=>2, 3=>3, 4=>4,  5=>5,  6=>6,  7=>7,  8=>8,  9=>9,  10=>10, 11=>11, 12=>12),
+		);
+	}
+
+	function get_options_smiles($type, $objectId = 0, $sort = false)
 	{
 		$options = $this->get_options($type, $objectId);
 		$colors = $this->get_options_smiles_colors();
 
 		$optionsAsKeysSorted = array();
-		if (in_array('0',$options) == true) {
-			$sets = array(
-				2 => array(1,11),
-				3 => array(0,1,11),
-				4 => array(0,1,6,11),
-				5 => array(0,1,3,6,11),
-				6 => array(0,1,3,6,8,11),
-				7 => array(0,1,3,6,8,10,11),
-				8 => array(0,1,2,3,4,6,8,10,11),
-				9 => array(0,1,2,3,4,6,8,9,10,11),
-				10 => array(0,1,2,3,4,5,6,7,8,10,11),
-				11 => array(0,1,2,3,4,5,6,7,8,9,10,11),
-			);
-		} else {
-			$sets = array(
-				2 => array(1,11),
-				3 => array(1,6,11),
-				4 => array(1,3,6,11),
-				5 => array(1,3,6,8,11),
-				6 => array(1,3,6,8,10,11),
-				7 => array(1,2,3,4,6,8,10,11),
-				8 => array(1,2,3,4,6,8,9,10,11),
-				9 => array(1,2,3,4,5,6,7,8,10,11),
-				10 => array(1,2,3,4,5,6,7,8,9,10,11),
-			);
-		}
+
 
 		foreach($options as $option) {
 			$optionsAsKeysSorted[$option] = array();
 		}
 
 		ksort($optionsAsKeysSorted);
-		$set = $sets[count($optionsAsKeysSorted)];
+
+		$sets = $this->get_options_smiles_id_sets();
+		$set = $sets[count($options)];
 
 		foreach($optionsAsKeysSorted as $key => &$option) {
 			$option = array(
-				'img' => 'img/rating_smiles/' . $set[$key - 1] . '.png',
-				'color' => $colors[$set[$key - 1]]
+				'img' => 'img/rating_smiles/' . $set[$key] . '.png',
+				'color' => $colors[$set[$key]]
 			);
 		}
 
-		return $optionsAsKeysSorted;
+		if ($sort == false) {
+			$result = array();
+			foreach($options as $key => &$option) {
+				$result[$key] = $optionsAsKeysSorted[$option];
+			}
+		} else {
+			$result = $optionsAsKeysSorted;
+		}
+
+		return $result;
 	}
 
 	private function internal_refresh_list( $max )

@@ -346,7 +346,7 @@ class Services_Comment_Controller
 		);
 	}
 
-	function action_deliberation_opinion($input)
+	function action_deliberation_item($input)
 	{
 		return array();
 	}
