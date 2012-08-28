@@ -34,6 +34,9 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	/* autoLink parser */
 	public $autoLink;
 
+	/*hotWords parser */
+	public $hotWords;
+
 	//This var is used in both protectSpecialChars and unprotectSpecialChars to simplify the html ouput process
 	private $specialChars = array(
 		'≤REAL_LT≥' => array(
@@ -144,6 +147,10 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 
 		if (isset($this->Parser->autoLink) == false) {
 			$this->Parser->autoLink = new JisonParser_Wiki_AutoLink();
+		}
+
+		if (isset($this->Parser->hotWords) == false) {
+			$this->Parser->hotWords = new JisonParser_Wiki_HotWords();
 		}
 
 		parent::__construct();
@@ -263,6 +270,8 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		$this->restorePluginEntities($input);
 
 		$this->Parser->autoLink->parse($input);
+
+		$this->Parser->hotWords->parse($input);
 
 		$input = rtrim(ltrim($input, "\n"), "\n"); //here we remove the fake line breaks added just before parse
 	}
