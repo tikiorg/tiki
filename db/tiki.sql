@@ -3731,4 +3731,4 @@ CREATE TABLE `tiki_workspace_templates` (
 	`name` VARCHAR(50),
 	`definition` TEXT,
 	`is_advanced` CHAR(1) NOT NULL DEFAULT 'n'
-);
+) ENGINE=MyISAM;
