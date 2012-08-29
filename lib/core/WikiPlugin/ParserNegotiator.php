@@ -79,7 +79,7 @@ class WikiPlugin_ParserNegotiator
 	{
 		$output = '';
 		if ($this->enabled($output) == false) {
-			return $output->toHtml();
+			return "~np~" . $output->toHtml() . "~/np~";
 		}
 
 
