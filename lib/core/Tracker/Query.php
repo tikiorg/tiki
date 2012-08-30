@@ -644,27 +644,29 @@ class Tracker_Query
 						}
 					}
 				}
-				//End "AND" style checking of results
-				if (!isset($this->itemsRaw[$row['itemId']])) {
-					$this->itemsRaw[$row['itemId']] = array();
-				}
-
-				$this->itemsRaw[$row['itemId']][$field] = $itemValues[$key];
 
 				if ($this->render == true) {
 					$value = $this->render_field_value($trackerFieldDefinition[$fieldId], $itemValues[$key]);
 				} else {
 					$value = $itemValues[$key];
 				}
+
+				//End "AND" style checking of results
+				if (!isset($this->itemsRaw[$row['itemId']])) {
+					$this->itemsRaw[$row['itemId']] = array();
+				}
 				
 				if (isset($newRow[$field])) {
 					if (is_array($newRow[$field]) == false) {
 						$newRow[$field] = array($newRow[$field]);
+						$this->itemsRaw[$row['itemId']][$field] = array($itemValues[$key]); //raw values
 					}
 
 					$newRow[$field][] = $value;
+					$this->itemsRaw[$row['itemId']][$field][] = $itemValues[$key]; //raw values
 				} else {
 					$newRow[$field] = $value;
+					$this->itemsRaw[$row['itemId']][$field] = $itemValues[$key]; //raw values
 				}
 
 			}
