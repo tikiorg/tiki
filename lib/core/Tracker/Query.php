@@ -417,7 +417,7 @@ class Tracker_Query
 		}
 	}
 	
-	private function trackerId()
+	public function trackerId()
 	{
 		if ($this->byName == true) {
 			$trackerId = TikiLib::lib('trk')->get_tracker_by_name($this->tracker);
