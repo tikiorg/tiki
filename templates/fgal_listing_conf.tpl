@@ -22,7 +22,7 @@
 			</tr>
 		{else}
 <tr>
-	<td><label for="fgal_{$key}{$fgal_ext}">{$item.name}:</label></td>
+	<td><label for="fgal_{$key}{if isset($fgal_ext)}{$fgal_ext}{/if}">{$item.name}:</label></td>
 	{assign var='pref_name' value="fgal_$key"}
 	<td><input type="checkbox" id="fgal_{$key}" name="fgal_{$key}" {if $item.value eq 'y'}checked="checked"{/if}{if $edit_mode eq 'y' and $prefs.$pref_name neq 'y'} disabled="disabled"{/if} />
 		{if $edit_mode eq 'y' and $prefs.$pref_name neq 'y'}
