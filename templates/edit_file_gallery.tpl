@@ -1,13 +1,15 @@
 {* $Id$ *}
 {if $tiki_p_create_file_galleries eq 'y'}
-	{if $individual eq 'y'}
+	{if isset($individual) and $individual eq 'y'}
 		<br />
-		<a class="fgallink" href="tiki-objectpermissions.php?objectName={$name|escape:"url"}&amp;objectType=file+gallery&amp;permType=file+galleries&amp;objectId={$galleryId}">{tr}There are individual permissions set for this file gallery{/tr}</a>
+		<a class="fgallink" href="tiki-objectpermissions.php?objectName={$name|escape:"url"}&amp;objectType=file+gallery&amp;permType=file+galleries&amp;objectId={$galleryId}">
+			{tr}There are individual permissions set for this file gallery{/tr}
+		</a>
 	{/if}
 	<div>
 		<form class="admin" action="{$smarty.server.PHP_SELF}?{query}" method="post">
 			<input type="hidden" name="galleryId" value="{$galleryId|escape}" />
-			<input type="hidden" name="filegals_manager" value="{$filegals_manager}" />
+			<input type="hidden" name="filegals_manager" {if isset($filegals_manager)}value="{$filegals_manager}"{/if} />
 
 			<div class="input_submit_container" style="text-align: right">
 				<input type="submit" value="{tr}Save{/tr}" name="edit" />
@@ -110,7 +112,8 @@ $('#fgal_template').change( function() {
 								<label for="public">{tr}Gallery is public{/tr}.</label>
 							</td>
 							<td>
-								<input type="checkbox" id="public" name="public" {if $gal_info.public eq 'y'}checked="checked"{/if}/>
+								<input type="checkbox" id="public" name="public" {if isset($gal_info.public)
+									and $gal_info.public eq 'y'}checked="checked"{/if}/>
 								<br />
 								<em>{tr}Any user with permission (not only the gallery owner) can upload files{/tr}.</em>
 							</td>
