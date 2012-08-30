@@ -126,14 +126,26 @@
 					<tr>
 						<td><label for="name">{tr}File title:{/tr}</label></td>
 						<td width="80%">
-							<input style="width:100%" type="text" id="name" name="name[]" {if isset($fileInfo) and $fileInfo.name}value="{$fileInfo.name|escape}"{/if} size="40" /> {if $gal_info.type eq "podcast" or $gal_info.type eq "vidcast"} ({tr}required field for podcasts{/tr}){/if}
+							<input style="width:100%" type="text" id="name" name="name[]"
+								{if isset($fileInfo) and $fileInfo.name}
+								   value="{$fileInfo.name|escape}"
+								{/if}
+								size="40"
+							/>
+							{if isset($gal_info.type) and ($gal_info.type eq "podcast" or $gal_info.type eq "vidcast")}
+								({tr}required field for podcasts{/tr})
+							{/if}
 						</td>
 					</tr>
 					<tr>
 						<td><label for="description">{tr}File description:{/tr}</label></td>
 						<td>
-							<textarea style="width:100%" rows="2" cols="40" id="description" name="description[]">{if isset($fileInfo) and $fileInfo.description}{$fileInfo.description|escape}{/if}</textarea>
-							{if $gal_info.type eq "podcast" or $gal_info.type eq "vidcast"}<br /><em>{tr}Required for podcasts{/tr}.</em>{/if}
+							<textarea style="width:100%" rows="2" cols="40" id="description" name="description[]">
+								{if isset($fileInfo) and $fileInfo.description}{$fileInfo.description|escape}{/if}
+							</textarea>
+							{if isset($gal_info.type) and ($gal_info.type eq "podcast" or $gal_info.type eq "vidcast")}
+								<br /><em>{tr}Required for podcasts{/tr}.</em>
+							{/if}
 						</td>
 					</tr>
 				{/if}
