@@ -46,6 +46,7 @@ class Tracker_Query
 	private $concat = true;
 	private $filterType = array();
 	private $inputDefaults = array();
+	public $itemsRaw = array();
 
 	public static function tracker($tracker)
 	{
@@ -644,7 +645,12 @@ class Tracker_Query
 					}
 				}
 				//End "AND" style checking of results
-				
+				if (!isset($this->itemsRaw[$row['itemId']])) {
+					$this->itemsRaw[$row['itemId']] = array();
+				}
+
+				$this->itemsRaw[$row['itemId']][$field] = $itemValues[$key];
+
 				if ($this->render == true) {
 					$value = $this->render_field_value($trackerFieldDefinition[$fieldId], $itemValues[$key]);
 				} else {
