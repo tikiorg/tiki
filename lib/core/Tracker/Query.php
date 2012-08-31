@@ -100,6 +100,11 @@ class Tracker_Query
 	{
 		return $this->filter(array('field'=> $field, 'value'=>$value, 'type'=> 'like'));
 	}
+
+	public function filterFieldByValueOr($field, $value)
+	{
+		return $this->filter(array('field'=> $field, 'value'=>$value, 'type'=> 'or'));
+	}
 	
 	public function equals($equals = array())
 	{

@@ -63,6 +63,12 @@ function wikiplugin_trackerquerytemplate_info()
 				'description' => tra('Filters for tracker query.'),
 				'default' => ''
 			),
+			'orfilters' => array(
+				'required' => false,
+				'name' => tra('Or Filters'),
+				'description' => tra('Filters for tracker query.'),
+				'default' => ''
+			),
 			'getlast' => array(
 				'required' => false,
 				'name' => tra('Get Last'),
@@ -133,6 +139,14 @@ function wikiplugin_trackerquerytemplate($data, $params)
 		foreach($andfilters as $andfilter) {
 			$filter = explode(':', $andfilter);
 			$query->filterFieldByValue($filter[0], $filter[1]);
+		}
+	}
+
+	if (!empty($params['orfilters'])) {
+		$andfilters = explode(';',$params['andfilters']);
+		foreach($andfilters as $andfilter) {
+			$filter = explode(':', $andfilter);
+			$query->filterFieldByValueOr($filter[0], $filter[1]);
 		}
 	}
 
