@@ -209,6 +209,16 @@ class Tracker_Query
 		return $this;
 	}
 
+	private function canView()
+	{
+		return Perms::get( array( 'type' => 'tracker', 'object' => $this->trackerId() ) )->view;
+	}
+
+	private function canEdit()
+	{
+		return Perms::get( array( 'type' => 'tracker', 'object' => $this->trackerId() ) )->edit;
+	}
+
 	/* In the construct we putself(); the field options for "items list" (type 'l') into a table to be joined upon, 
 	 * so instead of running a query for every row, we use simple joins to get the job done. We use a temporary
 	 * table so that it is removed once the connection is closed or after the page loads.
@@ -457,7 +467,7 @@ class Tracker_Query
 
 		$trackerId = $this->trackerId();
 
-		if (empty($trackerId)) {//if we can't find a tracker, then return
+		if (empty($trackerId) || $this->canView() == false) {//if we can't find a tracker, then return
 			return array();
 		}
 
@@ -644,6 +654,7 @@ class Tracker_Query
 						}
 					}
 				}
+				//End "AND" style checking of results
 
 				if ($this->render == true) {
 					$value = $this->render_field_value($trackerFieldDefinition[$fieldId], $itemValues[$key]);
@@ -651,7 +662,6 @@ class Tracker_Query
 					$value = $itemValues[$key];
 				}
 
-				//End "AND" style checking of results
 				if (!isset($this->itemsRaw[$row['itemId']])) {
 					$this->itemsRaw[$row['itemId']] = array();
 				}
@@ -692,7 +702,8 @@ class Tracker_Query
 
 		//if type is text, no need to render value
 		switch ($fieldDefinition['type']) {
-			case 't': 
+			case 't'://text
+			case 'S'://static text
 				return $value;
 		}
 
@@ -902,6 +913,10 @@ class Tracker_Query
 
 	public function queryInputs($includeJs = false)
 	{
+		if ($this->canEdit() == false) {
+			return array();
+		}
+
 		$query = $this->query();
 
 		$items = array();
