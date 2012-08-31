@@ -35,7 +35,7 @@
 		{/if}
 
 		{if $user and $prefs.feature_user_watches eq 'y'}
-			{if $user_watching_file_gallery eq 'n'}
+			{if !isset($user_watching_file_gallery) or $user_watching_file_gallery eq 'n'}
 				{self_link galleryName=$name watch_event='file_gallery_changed' watch_object=$galleryId watch_action='add'}{icon _id='eye' align='right' alt="{tr}Monitor this Gallery{/tr}" hspace="1"}{/self_link}
 			{else}
 				{self_link galleryName=$name watch_event='file_gallery_changed' watch_object=$galleryId watch_action='remove'}{icon _id='no_eye' align='right' alt="{tr}Stop Monitoring this Gallery{/tr}" hspace="1"}{/self_link}
@@ -139,7 +139,7 @@
 {if isset($fileChangedMessage) and $fileChangedMessage neq ''}
 	{remarksbox type="note" title="{tr}Note{/tr}"}
 		{$fileChangedMessage}
-		<form method="post" action="{$smarty.server.PHP_SELF}{if $filegals_manager neq ''}?filegals_manager={$filegals_manager|escape}{/if}">
+		<form method="post" action="{$smarty.server.PHP_SELF}{if !empty($filegals_manager) and $filegals_manager neq ''}?filegals_manager={$filegals_manager|escape}{/if}">
 			<input type="hidden" name="galleryId" value="{$galleryId|escape}" />
 			<input type="hidden" name="fileId" value="{$fileId|escape}" />
 			{tr}Your comment{/tr} ({tr}optional{/tr}): <input type="text" name="comment" size="40" />
