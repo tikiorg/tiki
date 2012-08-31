@@ -317,6 +317,11 @@ input[type="submit"]:hover {
 .cssmenu_vert li ul li:first-child {
 	border-top: 1px solid #000;
 }
+
+.iconmenutext {
+	color: #222;
+}
+
 /*
 #tiki-top .cssmenu_horiz {
 	position: absolute;
