@@ -374,7 +374,7 @@ class FileGalLib extends TikiLib
 
 		$fileDraftsTable = $this->table('tiki_file_drafts');
 		$galleriesTable = $this->table('tiki_file_galleries');
-		$filesTable = $this->table('tiki_file_galleries');
+		$filesTable = $this->table('tiki_files');
 
 		if ($prefs['feature_file_galleries_save_draft'] == 'y') {
 			if (! $draft = $fileDraftsTable->fetchFullRow(array('fileId' => (int) $fileId, 'user' => $user))) {
@@ -429,7 +429,10 @@ class FileGalLib extends TikiLib
 								)
 				);
 			} else {
-				$this->save_archive($fileId, $old_file['galleryId'], $archives, $old_file['name'], $old_file['description'], $draft['filename'], $draft['data'], $draft['filesize'], $draft['filetype'], $old_file['creator'], $draft['path'], $old_file['comment'], $old_file['created'], $draft['lockedby']);
+				$this->save_archive($fileId, $old_file['galleryId'], $archives, $old_file['name'],
+					$old_file['description'], $draft['filename'], $draft['data'], $draft['filesize'],
+					$draft['filetype'], $draft['user'], $draft['path'], $old_file['comment'],  $old_file['author'],
+					$old_file['created'], $draft['lockedby']);
 			}
 
 			$this->remove_draft($fileId, $user);
