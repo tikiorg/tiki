@@ -87,7 +87,7 @@ class WikiPlugin_ParserNegotiator
 			if (isset($this->class->parserLevel)) {
 				$this->parserLevel = $this->class->parserLevel;
 
-				if($this->parserLevel > self::$currentParserLevel) {
+				if ($this->parserLevel > self::$currentParserLevel) {
 					$this->addWaitingPlugin();
 					return $this->key;
 				} else {
@@ -166,14 +166,14 @@ class WikiPlugin_ParserNegotiator
 		self::$parserLevels[] = $this->class->parserLevel;
 		self::$pluginsAwaitingExecution[$this->key] = self::$pluginDetails[$this->key];
 	}
-
+ 
 	private function zendExists()
 	{
 		if (isset(self::$pluginInstances[$this->className])) {
 			return true;
 		}
 
-		return file_exists(str_replace("_" , "/", "lib/core/" . $this->className . '.php')) == true && class_exists($this->className) == true;
+		return file_exists(str_replace('_', '/', 'lib/core/' . $this->className . '.php')) == true && class_exists($this->className) == true;
 	}
 
 	private function exists($include = false)
@@ -211,10 +211,10 @@ class WikiPlugin_ParserNegotiator
 		switch($val) {
 			case 'accept':
 				return true;
-				break;
+							break;
 			case 'reject':
 				return 'rejected';
-				break;
+							break;
 			default:
 				global $tiki_p_plugin_approve, $tiki_p_plugin_preview;
 				if (
@@ -312,13 +312,15 @@ class WikiPlugin_ParserNegotiator
 
 		$pluginSecurity = $tikilib->table('tiki_plugin_security');
 		$pluginSecurity->delete(array('fingerprint' => $this->fingerprint));
-		$pluginSecurity->insert(array(
-			'fingerprint' => $this->fingerprint,
-			'status' => $type,
-			'added_by' => $this->user,
-			'last_objectType' => $objectType,
-			'last_objectId' => $objectId
-		));
+		$pluginSecurity->insert(
+						array(
+							'fingerprint' => $this->fingerprint,
+							'status' => $type,
+							'added_by' => $this->user,
+							'last_objectType' => $objectType,
+							'last_objectId' => $objectId
+						)
+		);
 	}
 
 	public function info()
@@ -411,11 +413,12 @@ class WikiPlugin_ParserNegotiator
 	{
 		global $tikilib;
 		$limit = date('Y-m-d H:i:s', time() - 15*24*3600);
-		$result = $tikilib->query("
-			SELECT status, if(status='pending' AND last_update < ?, 'old', '') flag
-			FROM tiki_plugin_security
-			WHERE fingerprint = ?
-		", array( $limit, $this->fingerprint ));
+		$result = $tikilib->query(
+						"SELECT status, if(status='pending' AND last_update < ?, 'old', '') flag
+						FROM tiki_plugin_security
+						WHERE fingerprint = ?",
+						array( $limit, $this->fingerprint )
+		);
 
 		$needUpdate = false;
 
@@ -446,13 +449,15 @@ class WikiPlugin_ParserNegotiator
 
 			$pluginSecurity = $tikilib->table('tiki_plugin_security');
 			$pluginSecurity->delete(array('fingerprint' => $this->fingerprint));
-			$pluginSecurity->insert(array(
-				'fingerprint' => $this->fingerprint,
-				'status' => 'pending',
-				'added_by' => $this->user,
-				'last_objectType' => $objectType,
-				'last_objectId' => $objectId
-			));
+			$pluginSecurity->insert(
+							array(
+								'fingerprint' => $this->fingerprint,
+								'status' => 'pending',
+								'added_by' => $this->user,
+								'last_objectType' => $objectType,
+								'last_objectId' => $objectId
+							)
+			);
 		}
 
 		return '';
@@ -537,28 +542,30 @@ class WikiPlugin_ParserNegotiator
 			if ($this->prefs['wikiplugin_module'] === 'y' && $this->prefs['wikiplugininline_module'] === 'n') {
 				$headerlib->add_jsfile('tiki-jsmodule.php?language='.$this->prefs['language'], 'dynamic');
 			}
-			$headerlib->add_jq_onready('
-$("#' . $id . '").click( function(event) {
-
-		popup_plugin_form('
-				. json_encode('editwiki')
-				. ', '
-				. json_encode($this->name)
-				. ', '
-				. json_encode($this->index)
-				. ', '
-				. json_encode($this->page)
-				. ', '
-				. json_encode($this->args)
-				. ', '
-				. json_encode($this->body)
-				. ' , event.target);
+			$headerlib->add_jq_onready(
+							'$("#' . $id . '").click( function(event) {
+				popup_plugin_form('
+							. json_encode('editwiki')
+							. ', '
+							. json_encode($this->name)
+							. ', '
+							. json_encode($this->index)
+							. ', '
+							. json_encode($this->page)
+							. ', '
+							. json_encode($this->args)
+							. ', '
+							. json_encode($this->body)
+							. ' , event.target);
 	return false;
-});
-');
+});'
+);
 			include_once('lib/smarty_tiki/function.icon.php');
 
-			$button = '<a id="' .$id. '" class="editplugin"'.$iconDisplayStyle.'>'.smarty_function_icon(array('_id'=>'wiki_plugin_edit', 'alt'=>tra('Edit Plugin').':'.$this->name), $smarty)."</a>";
+			$button = '<a id="' . $id . '" class="editplugin"' . $iconDisplayStyle . '>' . 
+								smarty_function_icon(array('_id'=>'wiki_plugin_edit', 'alt'=>tra('Edit Plugin') . ':' . $this->name), $smarty) . 
+								'</a>'
+			;
 
 			if ($wrapInNp == false) return $button;
 
@@ -598,19 +605,19 @@ $("#' . $id . '").click( function(event) {
 
 	function executeAwaiting(&$input)
 	{
-		if(self::$currentParserLevel == 0) {
+		if (self::$currentParserLevel == 0) {
 			sort(self::$parserLevels, SORT_NUMERIC);
 			array_unique(self::$parserLevels);
 
-			foreach(self::$parserLevels as &$level) {
+			foreach (self::$parserLevels as &$level) {
 				self::$currentParserLevel = $level;
-				foreach(self::$pluginsAwaitingExecution as &$pluginDetails) {
+				foreach (self::$pluginsAwaitingExecution as &$pluginDetails) {
 					if (self::$currentParserLevel == $level) {
 						$this->setDetails($pluginDetails);
 
 						$this->parser->plugin[$this->key] = $this->body;
 
-						$result = $this->parser->parsePlugin( $this->execute() );
+						$result = $this->parser->parsePlugin($this->execute());
 
 						$input = str_replace($this->key, $result, $input);
 

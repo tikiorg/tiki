@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -41,8 +41,8 @@ function wikiplugin_events_info()
 				'description' => tra('Show the time along with the date (shown by default)'),
 				'default' => 1,
 				'options' => array(
-					array('text' => '', 'value' => ''), 
-					array('text' => tra('Yes'), 'value' => 1), 
+					array('text' => '', 'value' => ''),
+					array('text' => tra('Yes'), 'value' => 1),
 					array('text' => tra('No'), 'value' => 0)
 				),
 			),
@@ -52,8 +52,8 @@ function wikiplugin_events_info()
 				'description' => tra('Show the description of the event (shown by default)'),
 				'default' => 1,
 				'options' => array(
-					array('text' => '', 'value' => ''), 
-					array('text' => tra('Yes'), 'value' => 1), 
+					array('text' => '', 'value' => ''),
+					array('text' => tra('Yes'), 'value' => 1),
 					array('text' => tra('No'), 'value' => 0)
 				),
 			),
@@ -70,8 +70,8 @@ function wikiplugin_events_info()
 				'filter' => 'alpha',
 				'default' => 'n',
 				'options' => array(
-					array('text' => '', 'value' => ''), 
-					array('text' => tra('Yes'), 'value' => 'y'), 
+					array('text' => '', 'value' => ''),
+					array('text' => tra('Yes'), 'value' => 'y'),
 					array('text' => tra('No'), 'value' => 'n')
 				),
 			),
@@ -95,14 +95,14 @@ function wikiplugin_events($data,$params)
 	if (!isset($max)) {
 		$max=10;
 	}
-	if (!isset($datetime)) { 
+	if (!isset($datetime)) {
 		$datetime=1;
 	}
 	if (!isset($desc)) {
 		$desc=1;
 	}
 	
-	// Pagination 
+	// Pagination
 	if (!isset($timespan)) {
 		$timespan = "future";
 	}
@@ -151,48 +151,48 @@ function wikiplugin_events($data,$params)
 	}
 	
 	// Pagination
-	if($timespan == "future") {
+	if ($timespan == 'future') {
 		$events = $calendarlib->upcoming_events(
-			$max,
-			array_intersect($calIds, $viewable),
-			$maxdays,
-			'start_asc',
-			1,
-			0,
-			$start
+						$max,
+						array_intersect($calIds, $viewable),
+						$maxdays,
+						'start_asc',
+						1,
+						0,
+						$start
 		);
 	}
 	
-	if($timespan == "all") {
+	if ($timespan == 'all') {
 		$events = $calendarlib->all_events(
-			$max,
-			array_intersect($calIds, $viewable),
-			$maxdays,
-			'start_asc',
-			1,
-			0,
-			$start
+						$max,
+						array_intersect($calIds, $viewable),
+						$maxdays,
+						'start_asc',
+						1,
+						0,
+						$start
 		);
 	}
 	
-	if($timespan == "past"){
+	if ($timespan == 'past') {
 		$events = $calendarlib->past_events(
-			$max,
-			array_intersect($calIds, $viewable),
-			$maxdays,
-			'start_desc',
-			0,
-			-1,
-			$start
-		);  
-	} 
+						$max,
+						array_intersect($calIds, $viewable),
+						$maxdays,
+						'start_desc',
+						0,
+						-1,
+						$start
+		);
+	}
 
 
 	if (isset($calendarid)) {
-		$calIds=explode("|", $calendarid);
+		$calIds=explode('|', $calendarid);
 	}
 	$events = $calendarlib->upcoming_events($max, array_intersect($calIds, $viewable), $maxdays);
- 
+
 	$smarty->assign_by_ref('datetime', $datetime);
 	$smarty->assign_by_ref('desc', $desc);
 	$smarty->assign_by_ref('events', $events);
@@ -221,7 +221,7 @@ function wikiplugin_events($data,$params)
 	for ($j = 0; $j < $max; $j++) {
 		if ($datetime!=1) {
 			$eventStart=str_replace(" ", "&nbsp;", strftime($tikilib->get_short_date_format(), $events[$j]["start"]));
-			$eventEnd=str_replace(" ", "&nbsp;", strftime($tikilib->get_short_date_format(), $events[$j]["end"]));	  
+			$eventEnd=str_replace(" ", "&nbsp;", strftime($tikilib->get_short_date_format(), $events[$j]["end"]));
 		} else {
 			$eventStart=str_replace(" ", "&nbsp;", strftime($tikilib->get_short_datetime_format(), $events[$j]["start"]));
 			$eventEnd=str_replace(" ", "&nbsp;", strftime($tikilib->get_short_datetime_format(), $events[$j]["end"]));

@@ -1,12 +1,12 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 //this script may only be included - so its better to die if called directly.
-if (strpos($_SERVER['SCRIPT_NAME'],basename(__FILE__)) !== false) {
+if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
 	header('location: index.php');
 	exit;
 }
@@ -265,9 +265,8 @@ class ReconcileExifIptcXmp
 	 */
 	function reconcileAllMeta($metadata)
 	{
-//		$types = array();
 		//check which metadata types exist
-		foreach($this->alltypes as $alltype => $val) {
+		foreach ($this->alltypes as $alltype => $val) {
 			if ($metadata[$alltype] !== false) {
 				$types[$alltype] = '';
 			}
@@ -281,7 +280,7 @@ class ReconcileExifIptcXmp
 		//more than one metadata type, so need to reconcile
 		} else {
 			//set main array with all data from all types
-			foreach($types as $type => $val) {
+			foreach ($types as $type => $val) {
 				$omni[$type]['flat'] = $this->flatten($metadata[$type]);
 			}
 			$omni = $this->addFakeFields($omni);
@@ -302,7 +301,7 @@ class ReconcileExifIptcXmp
 			}
 			//combine duplicated fields with unduplicated for final array
 			$omni['stats']['fields']['newval'] = 0;
-			foreach($types as $type => $val) {
+			foreach ($types as $type => $val) {
 				if (isset($omni[$type]['left']) && count($omni[$type]['left']) > 0) {
 					if (!isset($omni['all'][$type])) {
 						$omni['all'][$type] = $omni[$type]['left'];
@@ -317,7 +316,7 @@ class ReconcileExifIptcXmp
 		//Prepare stats
 		$stats = '';
 		if (isset($omni['stats'])) {
-			foreach($this->statspecs as $key => $array) {
+			foreach ($this->statspecs as $key => $array) {
 				if (isset($omni['stats'][$key])) {
 					$stats[$key] = $omni['stats'][$key];
 					$stats[$key]['label'] = $this->statspecs[$key]['label'];
@@ -333,9 +332,9 @@ class ReconcileExifIptcXmp
 
 		//extract basic information to display first
 		$basicinfo = '';
-		foreach($this->basicInfo as $infogroup => $fields) {
-			foreach($fields as $label => $infotypes) {
-				foreach($infotypes as $infotype => $fieldame) {
+		foreach ($this->basicInfo as $infogroup => $fields) {
+			foreach ($fields as $label => $infotypes) {
+				foreach ($infotypes as $infotype => $fieldame) {
 					if (isset($omni['all'][$infotype][$fieldame])) {
 						$basicinfo['Summary of Basic Information'][$infogroup][$label]
 							= $omni['all'][$infotype][$fieldame];
@@ -351,9 +350,9 @@ class ReconcileExifIptcXmp
 		}
 
 		//unflatten the file metadata arrays by restoring the group level
-		foreach($types as $type => $val) {
+		foreach ($types as $type => $val) {
 			if (isset($metadata[$type])) {
-				foreach($metadata[$type] as $group => $fields) {
+				foreach ($metadata[$type] as $group => $fields) {
 					$finalall[$type][$group] = array_intersect_key($omni['all'][$type], $fields);
 				}
 			}
@@ -452,7 +451,7 @@ class ReconcileExifIptcXmp
 		}
 		//start reconciling if there are duplicates
 		if (count($match) > 0) {
-			foreach($match as $name => $value) {
+			foreach ($match as $name => $value) {
 				//set type => fieldname pairs for all metadata types in the file
 				if (count($types) == 3) {
 					$fnames = array(
@@ -469,15 +468,19 @@ class ReconcileExifIptcXmp
 				//check to see if duplicate fields have equal values
 				//check exif vs iptc
 				if (array_key_exists('exif', $types) && array_key_exists('iptc', $types)) {
-					$check['exif-iptc'] = $this->compareIptcExifValues($fnames['exif'], $fnames['iptc'],
-						$omni['iptc']['left'][$fnames['iptc']]['rawval'],
-						$omni['exif']['left'][$fnames['exif']]['rawval']);
+					$check['exif-iptc'] = $this->compareIptcExifValues(
+									$fnames['exif'], $fnames['iptc'],
+									$omni['iptc']['left'][$fnames['iptc']]['rawval'],
+									$omni['exif']['left'][$fnames['exif']]['rawval']
+					);
 				}
 				//check exif vs xmp
 				if (array_key_exists('exif', $types) && array_key_exists('xmp', $types)) {
-					$check['exif-xmp'] = $this->compareExifXmpValues($fnames['exif'],
-						$omni['xmp']['left'][$fnames['xmp']]['rawval'],
-						$omni['exif']['left'][$fnames['exif']]['rawval']);
+					$check['exif-xmp'] = $this->compareExifXmpValues(
+									$fnames['exif'],
+									$omni['xmp']['left'][$fnames['xmp']]['rawval'],
+									$omni['exif']['left'][$fnames['exif']]['rawval']
+					);
 					//per MWG guidelines, prefer XMP time fields to EXIF if they match since XMP has the time zone
 					//offset and EXIF doesn't
 					if (array_key_exists($fnames['exif'], $this->xmpPreferred) && $check['exif-xmp'] == true) {
@@ -488,9 +491,12 @@ class ReconcileExifIptcXmp
 				}
 				//check iptc vs xmp
 				if (array_key_exists('iptc', $types) && array_key_exists('xmp', $types)) {
-					$check['iptc-xmp'] = $this->compareIptcXmpValues($fnames['xmp'], $fnames['iptc'],
-						$omni['iptc']['left'][$fnames['iptc']]['rawval'],
-						$omni['xmp']['left'][$fnames['xmp']]['rawval']);
+					$check['iptc-xmp'] = $this->compareIptcXmpValues(
+									$fnames['xmp'],
+									$fnames['iptc'],
+									$omni['iptc']['left'][$fnames['iptc']]['rawval'],
+									$omni['xmp']['left'][$fnames['xmp']]['rawval']
+					);
 				}
 				//now determine which of the duplicates will be displayed according to MWG guidelines
 				if (array_key_exists('iptc', $types)) {
@@ -536,7 +542,7 @@ class ReconcileExifIptcXmp
 					}
 				}
 				//collect stats on mismatches
-				foreach($check as $typecheck => $result) {
+				foreach ($check as $typecheck => $result) {
 					$omni['all'][$type][$fnames[$type]]['check'][$typecheck] = $result;
 					if ($result === false) {
 						$omni['mismatches'][$type][$fnames[$type]][$typecheck] = $result;
@@ -570,8 +576,10 @@ class ReconcileExifIptcXmp
 				$omni['xmp']['left'] = array_diff_key($omni['xmp']['left'], $matchx);
 			} else {
 				$omni[$type1]['left'] = array_diff_key($omni[$type1]['left'], $match);
-				$omni[$type2]['left'] = array_diff_key($omni[$type2]['left'],
-					isset($samekey) && $samekey ? $match : array_flip($match));
+				$omni[$type2]['left'] = array_diff_key(
+								$omni[$type2]['left'],
+								isset($samekey) && $samekey ? $match : array_flip($match)
+				);
 			}
 			//see if the data needs another pass
 			//files with all three metadata types need 5 passes in total
@@ -604,8 +612,7 @@ class ReconcileExifIptcXmp
 	private function checkIptcHash($iptcflat)
 	{
 		if (!isset($iptcflat['iptchashstored']['newval']) || (strlen($iptcflat['iptchashstored']['newval']) > 0
-			&& $iptcflat['iptchashstored']['newval'] == $iptcflat['iptchashcurrent']['newval']))
-		{
+			&& $iptcflat['iptchashstored']['newval'] == $iptcflat['iptchashcurrent']['newval'])) {
 			return true;
 		} else {
 			return false;
@@ -623,9 +630,7 @@ class ReconcileExifIptcXmp
 	private function compareIptcExifValues($exifkey, $iptckey, $iptcval, $exifval)
 	{
 		//handle special cases first
-		if (array_key_exists($exifkey, array('DateTimeDigitized' => '', 'DateTimeOriginal' => '',
-				'DateTimeDigitizedTime' => '', 'DateTimeOriginalTime' => '')))
-		{
+		if (array_key_exists($exifkey, array('DateTimeDigitized' => '', 'DateTimeOriginal' => '', 'DateTimeDigitizedTime' => '', 'DateTimeOriginalTime' => ''))) {
 			$exifdate = new DateTime($exifval);
 			$iptcdate = new DateTime($iptcval);
 			//time
@@ -671,9 +676,7 @@ class ReconcileExifIptcXmp
 			foreach ($xmpval as $val) {
 				$xmpcheckval .= $val['rawval'];
 			}
-		} elseif (array_key_exists($xmpkey, array('DateCreated' => '', 'CreateDate' => '',
-					'DateCreatedTime' => '', 'CreateDateTime' => '')))
-			{
+		} elseif (array_key_exists($xmpkey, array('DateCreated' => '', 'CreateDate' => '', 'DateCreatedTime' => '', 'CreateDateTime' => ''))) {
 			$xmpdate = new DateTime($xmpval);
 			$iptcdate = new DateTime($iptcval);
 			//time
@@ -713,13 +716,17 @@ class ReconcileExifIptcXmp
 	 *
 	 * @return 		bool						Return true or false depending on whether the fields matched or not
 	 */
-	private function compareExifXmpValues($exifkey, $xmpval, $exifval) {
+	private function compareExifXmpValues($exifkey, $xmpval, $exifval)
+	{
 		if (isset($xmpval)) {
 			 //handle special cases
 			 //XMP has the timezone offset for these fields whereas EXIF does not, so compare times without the offset
-			if ($exifkey == 'DateTimeOriginal' || $exifkey == 'DateTimeDigitized' || $exifkey == 'DateTime'
-					|| $exifkey == 'DateTimeOriginalTime' || $exifkey == 'DateTimeDigitizedTime')
-			{
+			if ($exifkey == 'DateTimeOriginal' ||
+					$exifkey == 'DateTimeDigitized' ||
+					$exifkey == 'DateTime' ||
+					$exifkey == 'DateTimeOriginalTime' ||
+					$exifkey == 'DateTimeDigitizedTime'
+			) {
 				$exifcheckval = strtotime($exifval);
 				$xmpcheckval = strtotime(substr($xmpval, 0, strlen($exifval)));
 			//XMP GPS Version raw field is already in final format whereas EXIF field is not

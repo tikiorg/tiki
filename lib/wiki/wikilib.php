@@ -68,8 +68,8 @@ class WikiLib extends TikiLib
 	}
 
 	/**
-	 *  Get the contributors for page
-	 *  the returned array does not contain the user $last (usually the current or last user)
+	 * Get the contributors for page
+	 * the returned array does not contain the user $last (usually the current or last user)
 	 */
 	function get_contributors($page, $last='')
 	{
@@ -89,7 +89,7 @@ class WikiLib extends TikiLib
 
 		$query = 'select `user`, MAX(`version`) as `vsn` from `tiki_history` where `pageName`=? group by `user` order by `vsn` desc';
 		// jb fixed 110115 - please check intended behaviour remains
-		// was: $query =  "select `user` from `tiki_history` where `pageName`=? group by `user` order by MAX(`version`) desc";
+		// was: $query = "select `user` from `tiki_history` where `pageName`=? group by `user` order by MAX(`version`) desc";
 		$result = $this->query($query, array($page));
 		$cache_page_contributors = array();
 		$cache_page_contributors['contributors'] = array();
@@ -169,15 +169,15 @@ class WikiLib extends TikiLib
 		}
 
 		return $tikilib->create_page(
-						$copyName, 
-						0, 
-						$info['data'], 
-						$tikilib->now, 
-						$info['comment'], 
-						$info['user'], 
-						$info['ip'], 
-						$info['description'], 
-						$info['lang'], 
+						$copyName,
+						0,
+						$info['data'],
+						$tikilib->now,
+						$info['comment'],
+						$info['user'],
+						$info['ip'],
+						$info['description'],
+						$info['lang'],
 						$info['is_html']
 		);
 	}
@@ -506,7 +506,7 @@ class WikiLib extends TikiLib
 	{
 		$comment = strip_tags($comment);
 		$now = empty($date)? $this->now: $date;
-		$query = 'insert into `tiki_wiki_attachments`' . 
+		$query = 'insert into `tiki_wiki_attachments`' .
 						' (`page`,`filename`,`filesize`,`filetype`,`data`,`created`,`hits`,`user`,`comment`,`path`)' .
 						' values(?,?,?,?,?,?,?,?,?,?)';
 		$result = $this->query($query, array($page, $name, (int)$size, $type, $data, (int)$now, 0, $user, $comment, $fhash));
@@ -734,12 +734,12 @@ class WikiLib extends TikiLib
 				$info = $tikilib->get_page_info($res['pageName']);
 
 				$contributionlib->change_assigned_contributions(
-								$res['historyId'], 
-								'history', 
-								$res['pageName'], 
-								'wiki page', 
-								$info['description'], 
-								$res['pageName'], 
+								$res['historyId'],
+								'history',
+								$res['pageName'],
+								'wiki page',
+								$info['description'],
+								$res['pageName'],
 								'tiki-index.php?page' . urlencode($res['pageName'])
 				);
 			}
@@ -754,12 +754,12 @@ class WikiLib extends TikiLib
 
 	/**
 	 * Return the page names for a page alias, if any.
-	 * 
+	 *
 	 * Unfortunately there is no mechanism to prevent two
-	 * different pages from sharing the same alias and that is 
+	 * different pages from sharing the same alias and that is
 	 * why this method return an array of page names instead of a
 	 * page name string.
-	 * 
+	 *
 	 * @param string $alias
 	 * @return array page names
 	 */
@@ -867,7 +867,7 @@ class WikiLib extends TikiLib
 		}
 
 		if ($prefs['feature_wiki_userpage'] == 'y'
-			&& !empty($user) 
+			&& !empty($user)
 			&& strcasecmp($prefs['feature_wiki_userpage_prefix'], substr($page, 0, strlen($prefs['feature_wiki_userpage_prefix']))) == 0
 		) {
 			if (strcasecmp($page, $prefs['feature_wiki_userpage_prefix'] . $user) == 0) {
@@ -875,8 +875,8 @@ class WikiLib extends TikiLib
 			}
 		}
 
-		if ($prefs['feature_wiki_userpage'] == 'y' 
-				&& strcasecmp(substr($page, 0, strlen($prefs['feature_wiki_userpage_prefix'])), $prefs['feature_wiki_userpage_prefix']) == 0 
+		if ($prefs['feature_wiki_userpage'] == 'y'
+				&& strcasecmp(substr($page, 0, strlen($prefs['feature_wiki_userpage_prefix'])), $prefs['feature_wiki_userpage_prefix']) == 0
 				and strcasecmp($page, $prefs['feature_wiki_userpage_prefix'] . $user) != 0
 		)
 			return false;
@@ -903,7 +903,7 @@ class WikiLib extends TikiLib
 			$query = 'insert into `tiki_history`(`pageName`, `version`, `lastModif`, `user`, `ip`, `comment`, `data`, `description`)' .
 								' values(?,?,?,?,?,?,?,?)';
 			$result = $this->query(
-							$query, 
+							$query,
 							array(
 								$page,
 								(int) $info['version'] + 1,
@@ -935,7 +935,7 @@ class WikiLib extends TikiLib
 
 			$query = "insert into `tiki_history`(`pageName`, `version`, `lastModif`, `user`, `ip`, `comment`, `data`, `description`) values(?,?,?,?,?,?,?,?)";
 			$result = $this->query(
-							$query, 
+							$query,
 							array(
 								$page,
 								(int) $info['version'] + 1,
@@ -1233,9 +1233,10 @@ class WikiLib extends TikiLib
 	{
 		global $prefs;
 
-		if ($pageName && (isset($prefs['namespace_enabled']) && $prefs['namespace_enabled'] == 'y')
-			&& $prefs['namespace_separator'])
-		{
+		if ($pageName
+					&& (isset($prefs['namespace_enabled']) && $prefs['namespace_enabled'] == 'y')
+					&& $prefs['namespace_separator']
+		) {
 			$pos = strrpos($pageName, $prefs['namespace_separator']);
 
 			if (false !== $pos) {
@@ -1250,9 +1251,10 @@ class WikiLib extends TikiLib
 	{
 		global $prefs;
 
-		if ($pageName && (isset($prefs['namespace_enabled']) && $prefs['namespace_enabled'] == 'y')
-			&& $prefs['namespace_separator'])
-		{
+		if ($pageName
+					&& (isset($prefs['namespace_enabled']) && $prefs['namespace_enabled'] == 'y')
+					&& $prefs['namespace_separator']
+		) {
 			return str_replace($prefs['namespace_separator'], ' / ', $pageName);
 		}
 
@@ -1291,15 +1293,14 @@ class convertToTiki9
 		//<!--Start for converting pages
 	function convertPages()
 	{
-		$infos = $this->parserlib->fetchAll('
-			SELECT data, page_id
-			FROM tiki_pages
-			LEFT JOIN tiki_db_status
-				ON tiki_db_status.objectId = tiki_pages.page_id
-			WHERE tiki_db_status.tableName = "tiki_pages" IS NULL
-		');
+		$infos = $this->parserlib->fetchAll(
+						'SELECT data, page_id' .
+						' FROM tiki_pages' .
+						' LEFT JOIN tiki_db_status ON tiki_db_status.objectId = tiki_pages.page_id' .
+						' WHERE tiki_db_status.tableName = "tiki_pages" IS NULL'
+		);
 
-		foreach($infos as $info) {
+		foreach ($infos as $info) {
 			if (!empty($info['data'])) {
 				$converted = $this->convertData($info['data']);
 
@@ -1320,24 +1321,23 @@ class convertToTiki9
 			$this->saveObjectStatus($id, 'tiki_pages', 'conv9.0');
 		}
 	}
-		//end for converting pages-->
+	//end for converting pages-->
 
 
-
-		//<!--start for converting histories
+	//<!--start for converting histories
 	function convertPageHistoryFromPageAndVersion($page, $version)
 	{
-		$infos = $this->parserlib->fetchAll('
-			SELECT data, historyId
-			FROM tiki_history
-			LEFT JOIN tiki_db_status
-				ON tiki_db_status.objectId = tiki_history.historyId
-			WHERE tiki_db_status.tableName = "tiki_history" IS NULL
-			AND pageName = ?
-			AND version = ?
-		', array($page, $version));
+		$infos = $this->parserlib->fetchAll(
+						'SELECT data, historyId' .
+						' FROM tiki_history' .
+						' LEFT JOIN tiki_db_status' .
+						' ON tiki_db_status.objectId = tiki_history.historyId' .
+						' WHERE tiki_db_status.tableName = "tiki_history" IS NULL' .
+						' AND pageName = ? AND version = ?',
+						array($page, $version)
+		);
 
-		foreach($infos as $info) {
+		foreach ($infos as $info) {
 			if (!empty($info['data'])) {
 				$converted = $this->convertData($info['data']);
 
@@ -1351,15 +1351,14 @@ class convertToTiki9
 
 	function convertPageHistories()
 	{
-		$infos = $this->parserlib->fetchAll('
-			SELECT data, historyId
-			FROM tiki_history
-			LEFT JOIN tiki_db_status
-				ON tiki_db_status.objectId = tiki_history.historyId
-			WHERE tiki_db_status.tableName = "tiki_history" IS NULL
-		');
+		$infos = $this->parserlib->fetchAll(
+						'SELECT data, historyId' .
+						' FROM tiki_history' .
+						' LEFT JOIN tiki_db_status ON tiki_db_status.objectId = tiki_history.historyId' .
+						' WHERE tiki_db_status.tableName = "tiki_history" IS NULL'
+		);
 
-		foreach($infos as $info) {
+		foreach ($infos as $info) {
 			if (!empty($info['data'])) {
 				$converted = $this->convertData($info['data']);
 
@@ -1375,11 +1374,12 @@ class convertToTiki9
 		$status = $this->checkObjectStatus($id, 'tiki_history');
 
 		if (empty($status)) {
-			$this->parserlib->query("
-				UPDATE tiki_history
-				SET data = ?
-				WHERE historyId = ?
-				", array($data, $id));
+			$this->parserlib->query(
+							'UPDATE tiki_history' .
+							' SET data = ?' .
+							' WHERE historyId = ?',
+							array($data, $id)
+			);
 
 			$this->saveObjectStatus($id, 'tiki_history', 'conv9.0');
 		}
@@ -1388,18 +1388,17 @@ class convertToTiki9
 
 
 
-		//<!--start for converting modules
+	//<!--start for converting modules
 	function convertModules()
 	{
-		$infos = $this->parserlib->fetchAll('
-			SELECT data, name
-			FROM tiki_user_modules
-			LEFT JOIN tiki_db_status
-				ON tiki_db_status.objectId = tiki_user_modules.name
-			WHERE tiki_db_status.tableName = "tiki_user_modules" IS NULL
-		');
+		$infos = $this->parserlib->fetchAll(
+						'SELECT data, name' .
+						' FROM tiki_user_modules' .
+						' LEFT JOIN tiki_db_status ON tiki_db_status.objectId = tiki_user_modules.name' .
+						' WHERE tiki_db_status.tableName = "tiki_user_modules" IS NULL'
+		);
 
-		foreach($infos as $info) {
+		foreach ($infos as $info) {
 			if (!empty($info['data'])) {
 				$converted = $this->convertData($info['data']);
 
@@ -1432,32 +1431,30 @@ class convertToTiki9
 
 		if (empty($currentStatus)) {
 			//Insert a status record if one doesn't exist
-			$this->parserlib->query("
-				INSERT INTO tiki_db_status
-				        ( objectId,	tableName,	status )
-				 VALUES (?,			?,			?)
-				", array(
-					$objectId, 	$tableName,	$status
-			));
+			$this->parserlib->query(
+							'INSERT INTO tiki_db_status ( objectId,	tableName,	status )' .
+							' VALUES (?, ?, ?)',
+							array($objectId, 	$tableName,	$status)
+			);
 		} else {
 			//update a status record, it already exists
-			$this->parserlib->query("
-				UPDATE tiki_db_status
-				SET status = ?
-				WHERE objectId = ? AND tableName = ?
-			", array(
-				$status, $objectId, $tableName
-			));
+			$this->parserlib->query(
+							'UPDATE tiki_db_status' .
+							' SET status = ?' .
+							' WHERE objectId = ? AND tableName = ?',
+							array($status, $objectId, $tableName)
+			);
 		}
 	}
 
 	function checkObjectStatus($objectId, $tableName)
 	{
-		return $this->parserlib->getOne("
-			SELECT status
-			FROM tiki_db_status
-			WHERE objectId = ? AND tableName = ?
-		",array($objectId, $tableName));
+		return $this->parserlib->getOne(
+						'SELECT status' .
+						' FROM tiki_db_status' .
+						' WHERE objectId = ? AND tableName = ?',
+						array($objectId, $tableName)
+		);
 	}
 	//end status methods-->
 
@@ -1466,7 +1463,7 @@ class convertToTiki9
 	function updatePlugins($fingerPrintsOld, $fingerPrintsNew)
 	{
 		//here we find the old fingerprint and replace it with the new one
-		for($i = 0; $i < count($fingerPrintsOld);$i++) {
+		for ($i = 0; $i < count($fingerPrintsOld); $i++) {
 			if (!empty($fingerPrintsOld[$i]) && $fingerPrintsOld[$i] != $fingerPrintsNew[$i]) {
 				//Remove any that may conflict with the new fingerprint, not sure how to fix this yet
 				$this->parserlib->query("DELETE FROM tiki_plugin_security WHERE fingerprint = ?", array($fingerPrintsNew[$i]));
@@ -1483,7 +1480,7 @@ class convertToTiki9
 		$oldMatches = WikiParser_PluginMatcher::match($data);
 
 		// HTML-decode pages
-		$data =  htmlspecialchars_decode($data);
+		$data = htmlspecialchars_decode($data);
 
 		// find the plugins
 		$matches = WikiParser_PluginMatcher::match($data);
