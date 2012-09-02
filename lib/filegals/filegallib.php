@@ -304,7 +304,11 @@ class FileGalLib extends TikiLib
 		$fileDraftsTable = $this->table('tiki_file_drafts');
 
 		if ($prefs['feature_file_galleries_save_draft'] == 'y') {
-			$oldData = $filesTable->fetchOne('data', array('fileId' => (int) $fileId));
+			if ($prefs['fgal_use_db'] == 'y') {
+				$oldData = $filesTable->fetchOne('data', array('fileId' => (int) $fileId));
+			} else {
+				$oldData = $filesTable->fetchOne('path', array('fileId' => (int) $fileId));
+			}
 
 			if (empty($oldData)) {
 				return $filesTable->update(
@@ -325,7 +329,7 @@ class FileGalLib extends TikiLib
 			} else {
 				$fileDraftsTable->delete(array('fileId' => (int) $fileId, 'user' => $creator));
 
-				return (bool) $fileDraftsTable->insert(
+				$fileDraftsTable->insert(
 								array(
 									'fileId' => $fileId,
 									'filename' => $filename,
@@ -339,6 +343,14 @@ class FileGalLib extends TikiLib
 									'lockedby' => $lockedby,
 								)
 				);
+				if ($prefs['fgal_use_db'] == 'y') {
+					$newData = $fileDraftsTable->fetchOne('data', array('fileId' => (int) $fileId));
+				} else {
+					$newData = $fileDraftsTable->fetchOne('path', array('fileId' => (int) $fileId));
+				}
+				if (empty($newData)) {
+					return false;
+				}
 			}
 		}
 
