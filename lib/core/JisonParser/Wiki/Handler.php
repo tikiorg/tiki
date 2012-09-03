@@ -25,6 +25,8 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	/* np tracking */
 	public $npStack = false; //There can only be 1 active np stack
 
+	public $skipNextBr = false; //used in block level items, should be set to true.  The next break sets it back to false;
+
 	/* header tracking */
 	public $header;
 

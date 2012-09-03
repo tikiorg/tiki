@@ -17,10 +17,7 @@ class JisonParser_Wiki_List
 		if ($this->setup == true) return;
 		$this->setup = true;
 
-		$totalLists = substr_count($input, "\n*");
-		$totalLists += substr_count($input, "\n#");
-		$totalLists += substr_count($input, "\n+");
-		$totalLists += substr_count($input, "\n-");
+		$totalLists = preg_match("/[\r\n][*#+-]/", $input, $matches);
 
 		if ($totalLists < 1) {
 			return;
