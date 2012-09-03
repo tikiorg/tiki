@@ -3226,7 +3226,13 @@ class TikiLib extends TikiDb_Bridge
 			$name = $result['name'];
 			$value = $result['value'];
 
-			if ( !isset($defaults[$name]) || (string) $defaults[$name] != (string) $value )
+			$strDef = "";
+			if(isset($defaults[$name]) && is_array($defaults[$name])) {
+				$strDef = implode(" ", $defaults[$name]);
+			} else {
+				$strDef = isset($defaults[$name]) ? $defaults[$name] : "";
+			}
+			if ( empty($strDef) || ($strDef != (string) $value) )
 				$modified[$name] = $value;
 		}
 		return $modified;
