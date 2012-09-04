@@ -161,8 +161,16 @@ class CategLib extends ObjectLib
 			$description = substr($description, 0, 250);
 		}
 
-		$query = "update `tiki_categories` set `name`=?, `parentId`=?, `description`=? where `categId`=?";
-		$result = $this->query($query, array($name,(int) $parentId, $description, (int) $categId));
+		$categs = TikiDb::get()->table('tiki_categories');
+		$categs->update(array(
+			'name' => $name,
+			'description' => $description,
+			'parentId' => (int) $parentId,
+			'rootId' => (int) $this->find_root($parentId),
+		), array(
+			'categId' => $categId,
+		));
+
 		$cachelib->empty_type_cache('allcategs');
 		$cachelib->empty_type_cache('fgals_perms');
 
@@ -187,10 +195,16 @@ class CategLib extends ObjectLib
 			$description = substr($description, 0, 250);
 		}
 
-		$query = "insert into `tiki_categories`(`name`,`description`,`parentId`,`hits`) values(?,?,?,?)";
-		$result = $this->query($query, array($name,$description,(int) $parentId, 0));
-		$query = "select `categId` from `tiki_categories` where `name`=? and `parentId`=? order by `categId` desc";
-		$id = $this->getOne($query, array($name,(int) $parentId));
+		$categs = TikiDb::get()->table('tiki_categories');
+
+		$id = $categs->insert(array(
+			'name' => $name,
+			'description' => $description,
+			'parentId' => (int) $parentId,
+			'rootId' => (int) $this->find_root($parentId),
+			'hits' => 0,
+		));
+
 		$cachelib->empty_type_cache('allcategs');
 		$cachelib->empty_type_cache('fgals_perms');
 		$values= array("categoryId"=>$id, "categoryName"=>$name, "categoryPath"=> $this->get_category_path_string_with_root($id),
@@ -198,6 +212,24 @@ class CategLib extends ObjectLib
 			"action"=>"category created");		
 		$this->notify($values);		 	
 		return $id;
+	}
+
+	private function find_root($parentId)
+	{
+		$root = 0;
+
+		if ($parentId) {
+			$categs = TikiDb::get()->table('tiki_categories');
+			$root = $categs->fetchOne('rootId', array(
+				'categId' => $parentId,
+			));
+
+			if (! $root) {
+				$root = $parentId;
+			}
+		}
+
+		return $root;
 	}
 
 	function is_categorized($type, $itemId)
