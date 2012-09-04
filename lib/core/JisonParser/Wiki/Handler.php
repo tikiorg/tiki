@@ -251,7 +251,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		*/
 		ini_set("pcre.recursion_limit", "524");
 
-		$input = "\n" . $input . "\n"; //here we add 2 lines, so the parser doesn't have to do special things to track the first line and last, we remove these when we insert breaks
+		$this->addTemporaryLineBreaks($input); //here we add 2 lines, so the parser doesn't have to do special things to track the first line and last, we remove these when we insert breaks
 
 		$input = $this->protectSpecialChars($input);
 	}
@@ -281,7 +281,29 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 
 		$this->Parser->hotWords->parse($input);
 
-		$input = rtrim(ltrim($input, "\n"), "\n"); //here we remove the fake line breaks added just before parse
+		$this->removeTemporaryLineBreaks($input);
+	}
+
+	private function addTemporaryLineBreaks(&$input)
+	{
+		$input = "\n" . $input . "\n";
+	}
+
+	private function removeTemporaryLineBreaks(&$input, $atEnd = false)
+	{
+		$i = 0;
+
+		if ($atEnd == true) {
+			$i = strlen($input) - 6;
+		} else {
+			$this->removeTemporaryLineBreaks($input, true);
+		}
+
+		if ($input{0 + $i} == '<' && $input{1 + $i} == 'b' && $input{2 + $i} == 'r' && $input{3 + $i} == ' ' && $input{4 + $i} == '/' && $input{5 + $i} == '>') {
+			$input{0 + $i} = $input{1 + $i} = $input{2 + $i} = $input{3 + $i} = $input{4 + $i} = $input{5 + $i} = ' ';
+		}
+
+		return $input;
 	}
 
 	// state & plugin handlers
@@ -361,7 +383,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	function getPluginNegotiator()
 	{
 		if (empty($this->pluginNegotiators[$this->wikiPluginParserNegotiatorClass])) {
-			$this->pluginNegotiators[$this->wikiPluginParserNegotiatorClass] = new $this->wikiPluginParserNegotiatorClass($this);
+			$this->pluginNegotiators[$this->wikiPluginParserNegotiatorClass] = new $this->wikiPluginParserNegotiatorClass($this->Parser);
 		}
 
 		return $this->pluginNegotiators[$this->wikiPluginParserNegotiatorClass];
@@ -512,7 +534,8 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 				empty($this->Parser->option['print']) ||
 				!$this->Parser->option['print']
 			) &&
-			!$this->Parser->option['suppress_icons']
+			!$this->Parser->option['suppress_icons'] &&
+			!$this->Parser->option['preview_mode']
 		) {
 			$button = $this->Parser->header->button($this->prefs['wiki_edit_icons_toggle']);
 		}
@@ -530,20 +553,20 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		$noiseLength = 0;
 
 		for($i = 0; $i < $headerLength; $i++) {
-			if ($content[$i] == "\n") {
+			if ($content{$i} == "\n" || $content{$i} == "\r" || $content{$i} == "") {
 				$noiseLength++;
 				continue;
 			}
 
 			if (
-				$content[$i] == "*" ||
-				$content[$i] == "#" ||
-				$content[$i] == "+"
+				$content{$i} == "*" ||
+				$content{$i} == "#" ||
+				$content{$i} == "+"
 			) {
-				$type = $content[$i];
+				$type = $content{$i};
 				$level++;
-			} elseif ($i > 0 && $content[$i] == '-') {
-				$type = $content[$i];
+			} elseif ($i > 0 && $content{$i} == '-') {
+				$type = $content{$i};
 				$noiseLength++;
 			} else {
 				break;
