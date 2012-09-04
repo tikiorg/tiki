@@ -9,7 +9,7 @@ INLINE_PLUGIN_ID				[a-z]+
 SYNTAX_CHARS                    [\n\r_\^:\~'-|=\(\)\{\}\[\]*#+]
 LINE_CONTENT                    (.+?)
 SMILE							[a-z]+
-LINE_END                        [\n\r]
+LINE_END                        (\n\r|\r\n|[\n\r])
 
 %s np plugin line bold box center colortext italic header list link strikethrough table titlebar underscore wikilink
 %options flex
@@ -599,33 +599,14 @@ LINE_END                        [\n\r]
 	%}
 
 
-<line><<EOF>>
-	%{
-		lexer.popState(); //js
-		return 'EOF'; //js
 
-        //php $this->popState();
-        return 'EOF';
-	%}
-<line>{LINE_END}
-	%{
-		lexer.popState(); //js
-		if (parser.isContent()) return 'CONTENT'; //js
-		return 'LINE_END'; //js
-
-		//php $this->popState();
-		//php if ($this->isContent()) return 'CONTENT';
-		//php return 'LINE_END';
-	%}
 {LINE_END}
 	%{
 		if (parser.isContent()) return 'CONTENT'; //js
-		lexer.begin('line'); //js
-		return 'LINE_START'; //js
+		return 'LINE_END'; //js
 
 		//php if ($this->isContent()) return 'CONTENT';
-		//php $this->begin('line');
-		//php return 'LINE_START';
+		//php return 'LINE_END';
 	%}
 
 
@@ -793,7 +774,6 @@ content
 		$$ = parser.stackList($1 + $2); //js
 		//php $$ = $this->stackList($1 . $2);
 	}
- | LINE_START
  | LINE_END
    	{
    	    //php if ($this->skipNextBr == false) {
