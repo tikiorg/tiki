@@ -7,62 +7,40 @@
 
 class JisonParser_Wiki_List
 {
-	var $stacks = array();
+	static $stacks = array();
 	var $index = 0;
-	var $lineTracking = array();
-	var $setup = false;
+	var $lineNumberLast = 0;
+	var $id;
+	var $key;
 
-	public function setup($input = "")
+	private function id()
 	{
-		if ($this->setup == true) return;
-		$this->setup = true;
-
-		$totalLists = preg_match("/[\r\n][*#+-]/", $input, $matches);
-
-		if ($totalLists < 1) {
-			return;
-		}
-
-		$lines = explode("\n", $input);
-		$lastLine = 0;
-
-		foreach($lines as $i => &$line) {
-			if (
-				isset($line[0]) &&
-				(
-					$line[0] == "*" ||
-					$line[0] == "#" ||
-					$line[0] == "+"
-				)
-			) {
-				$this->lineTracking[] = $lastLine;
-				continue;
-			}
-
-			$lastLine = $i;
-		}
+		return 'id' . microtime() * 1000000;
 	}
 
-	public function stack($level, $content, $type = '*')
+	public function stack($lineNumber, $level, $content, $type = '*')
 	{
-		$key = '§' . md5('list:' . $this->lineTracking[$this->index]) . '§';
-
 		$returnKey = false;
-		if (isset($this->stacks[$key]) == false) {
+
+		/*the line number is +2 rather than just 1 because we insert a \n at the end of the line after we detect the list item using unset, this is so we can detect the next line as well*/
+		if ($lineNumber != ($this->lineNumberLast + 2) || $this->lineNumberLast == 0) {
+			$this->index++;
+			$this->id = $this->id();
+			$this->key = '§' . md5('list(id:' . $this->id . ',index:' . $this->index . ')') . '§';
 			$returnKey = true;
-			$this->stacks[$key] = array();
+			$this->stacks[$this->key] = array();
 		}
 
 		if ($level == 1) {
-			$this->stacks[$key][] = array('content' => $content, 'type' => $type, 'children' => array());
+			$this->stacks[$this->key][] = array('content' => $content, 'type' => $type, 'children' => array());
 		} else {
-			$this->addToStack($this->stacks[$key], 1, $level, $content, $type);
+			$this->addToStack($this->stacks[$this->key], 1, $level, $content, $type);
 		}
 
-		$this->index++;
+		$this->lineNumberLast = $lineNumber;
 
 		if ($returnKey == true) {
-			return $key;
+			return $this->key;
 		}
 
 		return '';
@@ -105,7 +83,7 @@ class JisonParser_Wiki_List
 		$style = '';
 		$html = '';
 		$listParentTagType = 'ul';
-		$id = 'id' . microtime() * 1000000;
+		$id = $this->id();
 
 		foreach($stack as &$list){
 			$wrapInLi = true;

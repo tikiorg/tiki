@@ -254,8 +254,6 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		$input = "\n" . $input . "\n"; //here we add 2 lines, so the parser doesn't have to do special things to track the first line and last, we remove these when we insert breaks
 
 		$input = $this->protectSpecialChars($input);
-
-		$this->Parser->list->setup($input);
 	}
 
 	function postParse(&$input)
@@ -268,6 +266,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 			if (!empty($lists)) {
 				foreach($lists as $key => &$list) {
 					$input = str_replace($key, $list, $input);
+					unset($list);
 				}
 			}
 		}
@@ -553,7 +552,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 
 		$content = substr($content, ($level + $noiseLength));
 
-		return $this->Parser->list->stack($level, $content, $type);
+		return $this->Parser->list->stack($this->yylineno, $level, $content, $type);
 	}
 
 	function hr() //---
