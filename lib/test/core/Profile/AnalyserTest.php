@@ -6,7 +6,7 @@ class Profile_AnalyserTest extends PHPUnit_Framework_TestCase
 	{
 		$builder = new Tiki_Profile_Builder;
 		$builder->addGroup('Base', $builder->user('group'));
-		$builder->addGroup('World', $builder->user('group') . ' World');
+		$builder->addGroup('World', $builder->user('group') . ' World', true);
 		$builder->setManagingGroup('Base');
 		$builder->setPermissions('Base', 'category', $builder->user('category'), array(
 			'view',
@@ -23,11 +23,13 @@ class Profile_AnalyserTest extends PHPUnit_Framework_TestCase
 			'Base' => array(
 				'name' => '{group}',
 				'managing' => true,
+				'autojoin' => false,
 				'permissions' => array('view', 'edit'),
 			),
 			'World' => array(
 				'name' => '{group} World',
 				'managing' => false,
+				'autojoin' => true,
 				'permissions' => array('view'),
 			),
 		), $analyser->getGroups('category', $analyser->user('category')));

@@ -162,7 +162,7 @@ class Services_Workspace_Controller
 
 			foreach ($input->groups as $internal => $info) {
 				$permissions = array_filter(preg_split('/\W+/', $info->permissions->none()));
-				$builder->addGroup($internal, $info->name->text());
+				$builder->addGroup($internal, $info->name->text(), $info->autojoin->int() > 0);
 				$builder->setPermissions($internal, 'category', $builder->user('category'), $permissions);
 			}
 

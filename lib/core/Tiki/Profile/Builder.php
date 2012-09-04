@@ -9,6 +9,7 @@ class Tiki_Profile_Builder
 {
 	private $objects = array();
 	private $groups = array();
+	private $autojoin = array();
 	private $permissions = array();
 	private $managingGroup;
 
@@ -31,9 +32,10 @@ class Tiki_Profile_Builder
 		);
 	}
 
-	function addGroup($internalName, $fullName)
+	function addGroup($internalName, $fullName, $autojoin = false)
 	{
 		$this->groups[$internalName] = str_replace('{group}', $this->user('group'), $fullName);
+		$this->autojoin[$internalName] = $autojoin;
 	}
 
 	function setPermissions($internalName, $type, $objectId, array $permissionList)
@@ -81,6 +83,10 @@ class Tiki_Profile_Builder
 				$groupDefinition = array(
 					'description' => $full,
 				);
+
+				if ($this->autojoin[$internal]) {
+					$groupDefinition['autojoin'] = 'y';
+				}
 
 				if (isset($builder->permissions[$internal])) {
 					$groupDefinition['objects'] = $builder->permissions[$internal]['objects'];

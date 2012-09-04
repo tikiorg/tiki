@@ -68,12 +68,14 @@ class Tiki_Profile_Analyser
 			$out[$key] = array(
 				'name' => $this->simplifyReference($name),
 				'managing' => false,
+				'autojoin' => true,
 				'permissions' => array(),
 			);
 
 			if (isset($permissions[$key])) {
 				$related = $permissions[$key];
 				$out[$key]['managing'] = $this->isManagingGroup($related['objects']);
+				$out[$key]['autojoin'] = $this->isAutojoin($related['general']);
 				$out[$key]['permissions'] = $this->getObjectPermissions($related['objects'], $type, $object);
 			}
 		}
@@ -95,6 +97,15 @@ class Tiki_Profile_Analyser
 		}
 
 		return false;
+	}
+
+	private function isAutojoin($general)
+	{
+		if (! isset($general['autojoin']))  {
+			return false;
+		}
+
+		return $general['autojoin'] === true || $general['autojoin'] === 'y';
 	}
 
 	private function getObjectPermissions($objects, $type, $object)

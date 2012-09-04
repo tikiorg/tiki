@@ -45,7 +45,7 @@ EXPECT;
 	{
 		$builder = new Tiki_Profile_Builder;
 		$builder->addGroup('Base', $builder->user('group'));
-		$builder->addGroup('Viewer', $builder->user('group') . ' Viewer');
+		$builder->addGroup('Viewer', $builder->user('group') . ' Viewer', true);
 		$builder->setManagingGroup('Base');
 		
 		$expect = <<<EXPECT
@@ -75,6 +75,7 @@ permissions:
           - group_remove_member
   Viewer: 
     description: \$profilerequest:group\$undefined\$ Viewer
+    autojoin: y
     objects: 
       - 
         type: group

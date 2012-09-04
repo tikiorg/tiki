@@ -30,6 +30,12 @@
 							{tr}Is managing group{/tr}
 						</label>
 					</li>
+					<li>
+						<label>
+							<input class="autojoin" type="checkbox" name="groups~{$key|escape}~autojoin" value="1" {if $group.autojoin}checked="checked"{/if} />
+							{tr}Workspace creator joins this group{/tr}
+						</label>
+					</li>
 				</ul>
 			</li>
 		{/foreach}
