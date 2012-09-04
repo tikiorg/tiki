@@ -16,6 +16,14 @@ function prefs_category_list()
 			'filter' => 'int',
 			'default' => array(''), //empty string needed to keep preference from setting unexpectedly
 		),
+		'category_jail_root' => array(
+			'name' => tra('Category Jail Root'),
+			'description' => tra('Always display categories outside of the jail root, which would be for normal categorization.'),
+			'separator' => ',',
+			'type' => 'text',
+			'filter' => 'int',
+			'default' => array(0), //empty string needed to keep preference from setting unexpectedly
+		),
 		'category_defaults' => array(
 			'name' => tra('Category Defaults'),
 			'description' => tra('Force certain categories to be present. If none of the categories in a given set are provided, assign a category by default.').' '.tra('Use *7 to specify all the categories in the subtree of 7 + category 7.').' '.tra('Can do only this for objectname matching the regex (Example: /^RND_/ = name beginning by RND_)(Optional)').' '.tra('Can do for wiki only (optional).').' '.tra('Rename will only reassign the categories for wiki pages.'),

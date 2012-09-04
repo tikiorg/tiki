@@ -741,14 +741,22 @@ class CategLib extends ObjectLib
 		
 		if ($considerCategoryFilter) {
 			if ( $jail = $this->get_jail() ) {
-				$prefilter = $ret;
-				$ret = array();
-	
-				foreach ( $prefilter as $res ) {
-					if ( in_array($res['categId'], $jail)) {
-						$ret[$res['categId']] = $res;
+				$roots = array_filter((array) $prefs['category_jail_root']); // Skip 0 and other forms of empty
+
+				$ret = array_filter($ret, function ($category) use ($jail, $roots) {
+					if (in_array($category['categId'], $jail)) {
+						return true;
 					}
-				}
+
+					if ($category['rootId'] && ! in_array($category['rootId'], $roots)) {
+						return true;
+					} elseif (! $category['rootId'] && ! in_array($category['categId'], $roots)) {
+						return true;
+					}
+
+					return false;
+				});
+
 			}
 		}
 		
@@ -1383,7 +1391,6 @@ class CategLib extends ObjectLib
 			}
 		}
 
-		require_once 'lib/core/Category/Manipulator.php';
 		$manip = new Category_Manipulator($objType, $objId);
 		if ($override_perms) {
 			$manip->overrideChecks();
@@ -1557,7 +1564,9 @@ class CategLib extends ObjectLib
 	function get_jailed( $categories )
 	{
 		if ( $jail = $this->get_jail() ) {
-			return array_values(array_intersect($categories, $jail));
+			$existing = $this->getCategories();
+
+			return array_values(array_intersect($categories, array_keys($existing)));
 		} else {
 			return $categories;
 		}

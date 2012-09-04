@@ -93,6 +93,7 @@ class Services_Workspace_Utilities
 	{
 		$perspectivelib = TikiLib::lib('perspective');
 		$perspectivelib->set_preference($data['perspective'], 'category_jail', array($data['category']));
+		$perspectivelib->set_preference($data['perspective'], 'category_jail_root', array($this->getWorkspaceRoot()));
 		$perspectivelib->set_preference($data['perspective'], 'namespace_default', $data['page']);
 		$perspectivelib->set_preference($data['perspective'], 'wikiHomePage', $data['page']);
 

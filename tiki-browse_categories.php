@@ -134,14 +134,20 @@ $tree_nodes = array();
 foreach ($ctall as $c) {
 	$tree_nodes[] = array(
 		'id' => $c['categId'],
+		'categId' => $c['categId'],
 		'parent' => $c['parentId'],
+		'parentId' => $c['parentId'],
 		'data' => '<span class="object-count">' . $c['objects'] . '</span>' . 
 							$c['eyes'] . ' <a class="catname" href="tiki-browse_categories.php?parentId=' . $c['categId'] . 
 							'&amp;deep=' . $deep . '&amp;type='. urlencode($type) . '">' . htmlspecialchars($c['name']) .'</a> ',
 	);
 }
+$res  = '';
 $tm = new BrowseTreeMaker('categ');
-$res = $tm->make_tree($_REQUEST['parentId'], $tree_nodes);
+foreach ($categlib->findRoots($tree_nodes) as $node) {
+	$res .= $tm->make_tree($node, $tree_nodes);
+}
+
 $smarty->assign('tree', $res);
 
 $objects = $categlib->list_category_objects(
