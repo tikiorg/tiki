@@ -523,7 +523,8 @@ class WikiPlugin_ParserNegotiator
 				empty($this->parserOption['print']) ||
 				!$this->parserOption['print']
 			) &&
-			!$this->parserOption['suppress_icons']
+			!$this->parserOption['suppress_icons'] &&
+			!$this->parserOption['preview_mode']
 		) {
 			$id = 'plugin-edit-' . $this->name . $this->index;
 			$iconDisplayStyle = '';
@@ -542,24 +543,27 @@ class WikiPlugin_ParserNegotiator
 			if ($this->prefs['wikiplugin_module'] === 'y' && $this->prefs['wikiplugininline_module'] === 'n') {
 				$headerlib->add_jsfile('tiki-jsmodule.php?language='.$this->prefs['language'], 'dynamic');
 			}
+
 			$headerlib->add_jq_onready(
-							'$("#' . $id . '").click( function(event) {
-				popup_plugin_form('
-							. json_encode('editwiki')
-							. ', '
-							. json_encode($this->name)
-							. ', '
-							. json_encode($this->index)
-							. ', '
-							. json_encode($this->page)
-							. ', '
-							. json_encode($this->args)
-							. ', '
+				'$("#' . $id . '")
+					.click( function(event) {'
+						. 'popup_plugin_form('
+							. json_encode('editwiki') . ', '
+							. json_encode($this->name) . ', '
+							. json_encode($this->index) . ', '
+							. json_encode($this->page) . ', '
+							. json_encode($this->args) . ', '
 							. json_encode($this->body)
-							. ' , event.target);
-	return false;
-});'
-);
+							. ' , event.target'
+						. ');'
+						. 'return false;'
+					. '})'
+					. '.hover(function() {'
+						. ' $(this).prev().addClass("ui-state-highlight");'
+					. '}, function() { '
+						. '$(this).prev().removeClass("ui-state-highlight");'
+					. '});'
+			);
 			include_once('lib/smarty_tiki/function.icon.php');
 
 			$button = '<a id="' . $id . '" class="editplugin"' . $iconDisplayStyle . '>' . 
