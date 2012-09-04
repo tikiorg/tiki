@@ -1234,7 +1234,7 @@ class WikiLib extends TikiLib
 		global $prefs;
 
 		if ($pageName
-					&& (isset($prefs['namespace_enabled']) && $prefs['namespace_enabled'] == 'y')
+					&& $prefs['namespace_enabled'] == 'y'
 					&& $prefs['namespace_separator']
 		) {
 			$pos = strrpos($pageName, $prefs['namespace_separator']);
