@@ -186,7 +186,7 @@ class FileGalLib extends TikiLib
 		}
 
 		$gal_info = $this->get_file_gallery_info((int)$galleryId);
-		$this->transformImage($path, $data, $size, $gal_info, $type);
+		$this->transformImage($path, $data, $size, $gal_info, $type, $metadata);
 
 		$smarty = TikiLib::lib('smarty');
 		$filesTable = $this->table('tiki_files');
@@ -886,7 +886,7 @@ class FileGalLib extends TikiLib
 			return false;
 		}
 
-		$this->transformImage($path, $data, $size, $gal_info, $type);
+		$this->transformImage($path, $data, $size, $gal_info, $type, $metadata);
 
 		$filesTable = $this->table('tiki_files');
 		$fileDraftsTable = $this->table('tiki_file_drafts');
@@ -3137,7 +3137,7 @@ class FileGalLib extends TikiLib
 		return $fileInfo;
 	}
 
-	private function transformImage($path, & $data, & $size, $gal_info, $type)
+	private function transformImage($path, & $data, & $size, $gal_info, $type, & $metadata)
 	{
 		$imageReader = $this->getImageReader($type);
 		$imageWriter = $this->getImageWriter($type);
@@ -3191,12 +3191,15 @@ class FileGalLib extends TikiLib
 				$errors[] = tra('Cannot write the file:') . ' ' . $work_file;
 			}
 			$feedback_message = sprintf(tra('Image was reduced: %s x %s -> %s x %s'), $image_x, $image_y, (int)$image_new_x, (int)$image_new_y);
-			$size = filesize($resized_file);
+			$dataforsize = file_get_contents($work_file);
+			$size = function_exists('mb_strlen') ? mb_strlen($dataforsize, '8bit') : strlen($dataforsize);
 
 			if ($data) {
-				$data = file_get_contents($work_file);
-				unlink($work_file);
+				$data = $dataforsize;
 			}
+
+			$metadata = $this->extractMetadataJson($work_file);
+			unlink($work_file);
 		}
 	}
 
