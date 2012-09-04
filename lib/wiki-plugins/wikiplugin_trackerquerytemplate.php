@@ -202,6 +202,11 @@ class dataToFieldHandler
 	function parse($data)
 	{
 		$dataBefore = $data;
+
+		if (empty($this->fields)) {
+			return $data;
+		}
+
 		if ($this->pattern == 'name') {
 			foreach($this->fields as $key => $field) {
 				$data = str_replace('$' . $key . '$', $field, $data);
