@@ -1230,6 +1230,10 @@ if (
 		TikiLib::lib('geo')->set_coordinates('wiki page', $page, $_REQUEST['geolocation']);
 	}
 
+	if ($prefs['namespace_enabled'] == 'y' && isset($_REQUEST['explicit_namespace'])) {
+		$wikilib->set_explicit_namespace($page, $_REQUEST['explicit_namespace']);
+	}
+
 	if (!empty($_REQUEST['returnto'])) {	// came from wikiplugin_include.php edit button
 		if (isURL($_REQUEST['returnto'])) {
 			$url = $_REQUEST['returnto'];
@@ -1407,6 +1411,8 @@ if ( $prefs['feature_multilingual'] === 'y' ) {
 	$smarty->assign('trads', $trads);
 }
 
+$smarty->assign('explicit_namespace', $wikilib->get_explicit_namespace($page));
+
 // setup properties tab visibility
 if (($prefs['feature_wiki_templates'] === 'y' && $tiki_p_use_content_templates === 'y') ||
 	($prefs['feature_wiki_usrlock'] === 'y' && ($tiki_p_lock === 'y' || $tiki_p_admin_wiki === 'y')) ||
@@ -1428,6 +1434,7 @@ if (($prefs['feature_wiki_templates'] === 'y' && $tiki_p_use_content_templates =
 		$prefs['feature_wiki_footnotes'] === 'y' ||
 		($prefs['feature_wiki_ratings'] === 'y' && $tiki_p_wiki_admin_ratings ==='y') ||
 		$prefs['feature_multilingual'] === 'y' ||
+		$prefs['namespace_enabled'] === 'y' ||
 		! empty($prefs['geo_locate_wiki']) && $prefs['geo_locate_wiki'] === 'y') {
 	
 	$smarty->assign('showPropertiesTab', 'y');

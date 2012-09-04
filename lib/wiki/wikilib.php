@@ -1229,6 +1229,17 @@ class WikiLib extends TikiLib
 		}
 	}
 
+	function get_explicit_namespace($pageName)
+	{
+		$attributes = TikiLib::lib('attribute')->get_attributes('wiki page', $pageName);
+		return isset($attributes['tiki.wiki.namespace']) ? $attributes['tiki.wiki.namespace'] : '';
+	}
+
+	function set_explicit_namespace($pageName, $namespace)
+	{
+		TikiLib::lib('attribute')->set_attribute('wiki page', $pageName, 'tiki.wiki.namespace', $namespace);
+	}
+
 	function get_namespace($pageName)
 	{
 		global $prefs;
@@ -1237,6 +1248,12 @@ class WikiLib extends TikiLib
 					&& $prefs['namespace_enabled'] == 'y'
 					&& $prefs['namespace_separator']
 		) {
+			$explicit = $this->get_explicit_namespace($pageName);
+	
+			if ($explicit) {
+				return $explicit;
+			}
+
 			$pos = strrpos($pageName, $prefs['namespace_separator']);
 
 			if (false !== $pos) {
@@ -1252,7 +1269,7 @@ class WikiLib extends TikiLib
 		global $prefs;
 
 		if ($pageName
-					&& (isset($prefs['namespace_enabled']) && $prefs['namespace_enabled'] == 'y')
+					&& $prefs['namespace_enabled'] == 'y'
 					&& $prefs['namespace_separator']
 		) {
 			return str_replace($prefs['namespace_separator'], ' / ', $pageName);

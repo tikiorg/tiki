@@ -490,6 +490,18 @@ $("#allowhtml").change(function() {
 								<div class="map-container" data-target-field="geolocation" style="height: 250px; width: 250px;"></div>
 								<input type="hidden" name="geolocation" value="{$geolocation_string}" />
 							{/if}
+							{if $prefs.namespace_enabled eq 'y'}
+								<fieldset>
+									<legend>{tr}Namespace{/tr}</legend>
+									{remarksbox title="{tr}Advanced usage{/tr}"}
+										<p>{tr}The namespace for a page is guessed automatically from the page name. However, some exceptions may arise. This option allows to override the namespace.{/tr}</p>
+									{/remarksbox}
+									<label>
+										{tr}Explicit Namespace{/tr}
+										<input type="text" name="explicit_namespace" value="{$explicit_namespace|escape}" />
+									</label>
+								</fieldset>
+							{/if}
 							{if $tiki_p_admin_wiki eq "y"}
 								<a href="tiki-admin.php?page=wiki">{tr}Admin wiki preferences{/tr} {icon _id='wrench'}</a>
 							{/if}

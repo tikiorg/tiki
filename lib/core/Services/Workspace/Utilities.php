@@ -75,7 +75,9 @@ class Services_Workspace_Utilities
 	function createPage($name)
 	{
 		$tikilib = TikiLib::lib('tiki');
+		$wikilib = TikiLib::lib('wiki');
 		if ($tikilib->create_page($name, 0, '', $tikilib->now, '')) {
+			$wikilib->set_explicit_namespace($name, $name);
 			return $name;
 		}
 	}
