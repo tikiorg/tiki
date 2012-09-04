@@ -765,14 +765,17 @@ function wikiplugin_img( $data, $params )
 			$filename = $src;
 		}
 
-		//if we need iptc data
+		//if we need metadata
 		$xmpview = !empty($imgdata['metadata']) ? true : false;
 		if ($imgdata['desc'] == 'idesc' || $imgdata['desc'] == 'ititle' || $xmpview) {
-			$metadata = $imageObj->getMetadata(null, null, $xmpview)->typemeta;
-			//description from image iptc
-			$idesc = isset($metadata['iptcraw']['iptc']['2#120'][0]) ? $metadata['iptcraw']['iptc']['2#120'][0] : '';
-			//title from image iptc	
-			$ititle = isset($metadata['iptcraw']['iptc']['2#005'][0]) ? $metadata['iptcraw']['iptc']['2#005'][0] : '';
+			$dbinfoparam = isset($dbinfo) ? $dbinfo : false;
+			$metadata = getMetadataArray($imageObj, $dbinfoparam);
+			if ($imgdata['desc'] == 'idesc') {
+				$idesc = getMetaField($metadata, array('User Data' => 'Description'));
+			}
+			if ($imgdata['desc'] == 'ititle') {
+				$ititle = getMetaField($metadata, array('User Data' => 'Title'));
+			}
 		}
 				
 		$fwidth = '';
@@ -1196,9 +1199,12 @@ function wikiplugin_img( $data, $params )
 	if ($imgdata['metadata'] == 'view') {
 		//create unique id's in case of multiple pictures
 		static $lastval = 0;
-		$id = 'imgdialog-' . ++$lastval;
-		$id_link = $id . '-link';
-		$dialog = $imageObj->metadata->dialogTabs($imageObj->metadata, $id, $id_link, $filename);
+		$id_meta = 'imgdialog-' . ++$lastval;
+		$id_link = $id_meta . '-link';
+		//use metadata stored in file gallery db if available
+		include_once 'lib/metadata/metadata.php';
+		$meta = new FileMetadata;
+		$dialog = $meta->dialogTabs($metadata, $id_meta, $id_link, $filename);
 		$repl .= $dialog;
 	}
 	//////////////////////  Create enlarge button, metadata icon, description and their divs////////////////////
@@ -1369,4 +1375,40 @@ function wikiplugin_img( $data, $params )
 	}
 	
 	return '~np~' . $repl. "\r" . '~/np~';
+}
+
+function getMetadataArray($imageObj, $dbinfo = false)
+{
+	if ($dbinfo !== false) {
+		if (!empty($dbinfo['metadata'])) {
+			$metarray = json_decode($dbinfo['metadata'], true);
+		} elseif (isset($dbinfo['fileId'])) {
+			$filegallib = TikiLib::lib('filegal');
+			$metarray = $filegallib->getOrExtractMetadataArray($dbinfo['fileId']);
+		} else {
+			$metarray = $imageObj->getMetadata()->typemeta['best'];
+		}
+	} else {
+		$metarray = $imageObj->getMetadata()->typemeta['best'];
+	}
+	return $metarray;
+}
+
+function getMetaField($metarray, $labelarray) {
+	include_once 'lib/metadata/reconcile.php';
+	$rec = new ReconcileExifIptcXmp;
+	$labelmap = $rec->basicInfo[key($labelarray)][$labelarray[key($labelarray)]];
+	foreach($labelmap as $type => $fieldname) {
+		foreach($metarray as $subtype => $group) {
+			if ($type == $subtype) {
+				foreach($group as $groupname => $fields) {
+					if (array_key_exists($fieldname, $fields)) {
+						$ret = $fields[$fieldname]['newval'];
+						return $ret;
+					}
+				}
+				break;
+			}
+		}
+	}
 }

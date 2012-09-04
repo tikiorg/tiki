@@ -788,6 +788,7 @@ CREATE TABLE `tiki_files` (
   `is_reference` char(1) default NULL,
   `hash` varchar(32) default NULL,
   `search_data` longtext,
+  `metadata` longtext,
   `lastModif` integer(14) DEFAULT NULL,
   `lastModifUser` varchar(200) DEFAULT NULL,
   `lockedby` varchar(200) default '',
@@ -813,6 +814,7 @@ CREATE TABLE `tiki_file_drafts` (
   `user` varchar(200) default '',
   `path` varchar(255) default NULL,
   `hash` varchar(32) default NULL,
+  `metadata` longtext,
   `lastModif` integer(14) DEFAULT NULL,
   `lockedby` varchar(200) default '',
   PRIMARY KEY (`fileId`, `user`)

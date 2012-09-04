@@ -240,7 +240,7 @@ class ImageAbstract
 		return $this->width;
 	}
 	
-	function getMetadata($filename = null, $ispath = true, $extended = true)
+	function getMetadata($filename = null, $ispath = true, $extended = true, $bestarray = true)
 	{
 		include_once('lib/metadata/metadata.php');
 		if ($filename === null) {

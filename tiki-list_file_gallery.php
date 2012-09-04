@@ -638,7 +638,9 @@ if (!empty($_FILES)) {
 						true, //replace file
 						$fileInfo['author'],
 						$fileInfo['lastModif'],
-						$fileInfo['lockedby']
+						$fileInfo['lockedby'],
+						null,
+						$result['metadata']
 		);
 
 		if (!$fileId) {
@@ -650,6 +652,7 @@ if (!empty($_FILES)) {
 			$smarty->display('error.tpl');
 			die;
 		}
+		$smarty->assign('metarray', json_decode($result['metadata']));
 		$smarty->assign('fileId', $fileId);
 		$smarty->assign('fileChangedMessage', tra('File update was successful') . ': ' . $v['name']);
 		if (isset($_REQUEST['fast']) && $prefs['fgal_asynchronous_indexing'] == 'y') {

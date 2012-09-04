@@ -1773,4 +1773,18 @@ form.simple textarea.export {
 	width: 600px;
 	font-style: italic;
 }
+
+/* Metadata page tabs */
+.meta-tabs-col1 {
+	text-align: right;
+	font-weight : bold;
+	font-size: inherit;
+	width: 225px;
+	margin-right: 5px;
+}
+
+.meta-tabs-col2 {
+	font-size: inherit;
+	width: 375px;
+}
 /* End of file */

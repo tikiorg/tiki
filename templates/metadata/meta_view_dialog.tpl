@@ -1,27 +1,30 @@
+{* $Id$ *}
 <div id="{$id|escape}" title="{tr}Image Metadata for{/tr} {$filename|escape}" style="display:none">
 	{if $type eq 'data'}
-		{if $extended eq 'n'}
+		{if isset($metarray.basiconly) and $metarray.basiconly}
 			<span>
 				{tr}<em>Note: only basic metadata processed for this file type</em>{/tr}
 			</span>
 		{/if}
 		<ul>
 			{foreach $metarray as $subtypes}
-				<li>
-					<a href="#tabs-{$subtypes@iteration}">
-						{if $subtypes@key|count_words gt 1}
-							{tr}{$subtypes@key|escape}{/tr}
-						{else}
-							{$subtypes@key|upper|escape}
-						{/if}
-					</a>
-				</li>
+				{if $subtypes@key ne 'basiconly'}
+					<li>
+						<a href="#tabs-{$subtypes@iteration}">
+							{if $subtypes@key|count_words gt 1}
+								{tr}{$subtypes@key|escape}{/tr}
+							{else}
+								{$subtypes@key|upper|escape}
+							{/if}
+						</a>
+					</li>
+				{/if}
 			{/foreach}
 		</ul>
 		{foreach $metarray as $subtypes}
 			<table id="tabs-{$subtypes@iteration}">
 				{foreach $subtypes as $fields}
-					{if $fields|count gt 0}
+					{if $fields|count gt 0 and $subtypes@key ne 'basiconly'}
 						<tr>
 							<td colspan="2">
 								<div class="meta-section">
@@ -58,11 +61,7 @@
 			</table>
 		{/foreach}
 	{else}
-		{if !$error}
-			{tr}No metadata found{/tr}
-		{else}
-			{tr}$error{/tr}
-		{/if}
+		{tr}No metadata found{/tr}
 	{/if}
 </div>
 

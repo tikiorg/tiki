@@ -47,14 +47,14 @@
 
 
 {if $prefs.javascript_enabled eq 'y'}
-<div id='progress'>
-	<div id='progress_0'></div>
-</div>
-{if $prefs.fgal_upload_progressbar eq 'ajax_flash'}
-<div id="upload_progress">
-	<div id="upload_progress_ajax_0" name="upload_progress_0" height="1" width="1"></div>
-</div>
-{/if}
+	<div id='progress'>
+		<div id='progress_0'></div>
+	</div>
+	{if $prefs.fgal_upload_progressbar eq 'ajax_flash'}
+		<div id="upload_progress">
+			<div id="upload_progress_ajax_0" name="upload_progress_0" height="1" width="1"></div>
+		</div>
+	{/if}
 {/if}
 
 {if isset($uploads) and count($uploads) > 0}
@@ -401,6 +401,10 @@
 {/remarksbox}
 
 </div>
+
+{if isset($metarray) and $metarray|count gt 0}
+	{include file='metadata/meta_view_tabs.tpl'}
+{/if}
 
 {if ! $editFileId}
 	{if $prefs.feature_jquery_ui eq 'y'}

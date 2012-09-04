@@ -175,7 +175,8 @@ class FileGalLib extends TikiLib
 		return true;
 	}
 
-	function insert_file($galleryId, $name, $description, $filename, $data, $size, $type, $creator, $path, $comment='', $author=null, $created='', $lockedby=NULL, $deleteAfter=NULL, $id=0)
+	function insert_file($galleryId, $name, $description, $filename, $data, $size, $type, $creator, $path, $comment='',
+						 $author=null, $created='', $lockedby=NULL, $deleteAfter=NULL, $id=0, $metadata = null)
 	{
 		global $prefs, $user;
 
@@ -230,6 +231,7 @@ class FileGalLib extends TikiLib
 			'path' => $path,
 			'hash' => $checksum,
 			'search_data' => $search_data,
+			'metadata' => $metadata,
 			'lastModif' => $this->now,
 			'lastModifUser' => $user,
 			'comment' => $comment,
@@ -293,7 +295,7 @@ class FileGalLib extends TikiLib
 	 * @param string $checksum
 	 * @param string $lockedby
 	 */
-	function insert_draft($fileId,$filename,$size,$type,$data,$creator,$path,$checksum,$lockedby)
+	function insert_draft($fileId,$filename,$size,$type,$data,$creator,$path,$checksum,$lockedby, $metadata = null)
 	{
 		global $prefs;
 		$filesTable = $this->table('tiki_files');
@@ -317,6 +319,7 @@ class FileGalLib extends TikiLib
 									'user' => $creator,
 									'path' => $path,
 									'hash' => $checksum,
+									'metadata' => $metadata,
 									'lastModif' => $this->now,
 									'lockedby' => $lockedby,
 								),
@@ -335,6 +338,7 @@ class FileGalLib extends TikiLib
 									'user' => $creator,
 									'path' => $path,
 									'hash' => $checksum,
+									'metadata' => $metadata,
 									'lastModif' => $this->now,
 									'lockedby' => $lockedby,
 								)
@@ -407,7 +411,8 @@ class FileGalLib extends TikiLib
 					@rename($savedir . $draft['path'], $savedir . $newPath);
 				}
 			}
-
+			//if no archives allowed by user, then replace certain original file information with
+			//informtion from the validated draft
 			if ($archives == -1) {
 				$filesTable->update(
 								array(
@@ -419,6 +424,7 @@ class FileGalLib extends TikiLib
 									'user' => $draft['user'],
 									'path' => $draft['path'],
 									'hash' => $draft['hash'],
+									'metadata' => $draft['metadata'],
 									'lastModif' => $draft['lastModif'],
 									'lastModifUser' => $draft['user'],
 									'lockedby' => $draft['lockedby'],
@@ -436,18 +442,21 @@ class FileGalLib extends TikiLib
 									'filetype' => $draft['filetype'],
 								)
 				);
+			//if archives are allowed, the validated draft becomes an archive copy with some db info
+			//from the original file carried over
 			} else {
 				$this->save_archive($fileId, $old_file['galleryId'], $archives, $old_file['name'],
 					$old_file['description'], $draft['filename'], $draft['data'], $draft['filesize'],
 					$draft['filetype'], $draft['user'], $draft['path'], $old_file['comment'], $old_file['author'],
-					$old_file['created'], $draft['lockedby']);
+					$old_file['created'], $draft['lockedby'], $draft['metadata']);
 			}
 
 			$this->remove_draft($fileId, $user);
 		}
 	}
 
-	function save_archive($id, $galleryId, $count_archives, $name, $description, $filename, $data, $size, $type, $creator, $path, $comment = '', $author = null, $created = '', $lockedby = NULL)
+	function save_archive($id, $galleryId, $count_archives, $name, $description, $filename, $data, $size, $type,
+						  $creator, $path, $comment = '', $author = null, $created = '', $lockedby = null, $metadata = null)
 	{
 		global $prefs;
 
@@ -456,7 +465,8 @@ class FileGalLib extends TikiLib
 
 		// fgal_keep_fileId == n means that the archive will keep the same fileId and the latest version will have a new fileId
 		// fgal_keep_fileId = y the new version will keep the current fileId, the archive will have a new fileId
-		if ($prefs['fgal_keep_fileId'] == 'y') { // insert the old file with a new fileId
+		if ($prefs['fgal_keep_fileId'] == 'y') {
+			// create archive by inserting the old file with a new fileId and archivId field set to original fileId
 			$res = $filesTable->fetchFullRow(array('fileId' => $id));
 			$res['archiveId'] = $id;
 			$res['user'] = $creator;
@@ -466,8 +476,10 @@ class FileGalLib extends TikiLib
 			$filesTable->insert($res);
 		}
 
-		// Insert or update and index (for search) the new file 
-		$idNew = $this->insert_file($galleryId, $name, $description, $filename, $data, $size, $type, $creator, $path, $comment, $author, $created, $lockedby, NULL, $prefs['fgal_keep_fileId']=='y'?$id:false);
+		// Insert or update and index (for search) the new file
+		//for validated drafts, this will include the new information from the draft file
+		$idNew = $this->insert_file($galleryId, $name, $description, $filename, $data, $size, $type, $creator, $path,
+			$comment, $author, $created, $lockedby, null, $prefs['fgal_keep_fileId']=='y'?$id:false, $metadata);
 
 		if ($count_archives > 0) {
 			$archives = $this->get_archives($id, 0, -1, 'created_asc');
@@ -864,7 +876,9 @@ class FileGalLib extends TikiLib
 		return $result;
 	}
 
-	function replace_file($id, $name, $description, $filename, $data, $size, $type, $creator, $path, $comment='', $gal_info, $didFileReplace, $author='', $created='', $lockedby=NULL, $deleteAfter=NULL)
+	function replace_file($id, $name, $description, $filename, $data, $size, $type, $creator, $path, $comment='',
+						  $gal_info, $didFileReplace, $author='', $created='', $lockedby = null, $deleteAfter = null,
+						  $metadata = null)
 	{
 		global $prefs, $user;
 
@@ -885,7 +899,9 @@ class FileGalLib extends TikiLib
 		$description = strip_tags($description);
 
 		// User avatar full images are always using db and not file location (at the curent state of feature)
-		if (isset($prefs['user_store_file_gallery_picture']) && $prefs['user_store_file_gallery_picture'] == 'y' && $prefs["user_picture_gallery_id"] == $gal_info['galleryId']) {
+		if (isset($prefs['user_store_file_gallery_picture']) && $prefs['user_store_file_gallery_picture'] == 'y'
+			&& $prefs["user_picture_gallery_id"] == $gal_info['galleryId'])
+		{
 			$userPictureGallery = true;			
 		} else {
 			$userPictureGallery = false;
@@ -912,6 +928,7 @@ class FileGalLib extends TikiLib
 								array(
 									'name' => $name,
 									'description' => $description,
+									'metadata' => $metadata,
 									'lastModifUser' => $user,
 									'lastModif' => $this->now,
 									'author' => $author,
@@ -925,8 +942,9 @@ class FileGalLib extends TikiLib
 				}
 
 				if ($didFileReplace) {
-					$test = $this->insert_draft($id, $filename, $size, $type, $data, $user, $path, $checksum, $lockedby);
-					if (!$this->insert_draft($id, $filename, $size, $type, $data, $user, $path, $checksum, $lockedby)) {
+					if (!$this->insert_draft($id, $filename, $size, $type, $data, $user, $path, $checksum, $lockedby,
+						$metadata))
+					{
 						return false;
 					}
 				}
@@ -945,6 +963,7 @@ class FileGalLib extends TikiLib
 									'path' => $path,
 									'hash' => $checksum,
 									'search_data' => $search_data,
+									'metadata' => $metadata,
 									'author' => $author,
 									'user' => $creator,
 									'lockedby' => $lockedby,
@@ -977,9 +996,10 @@ class FileGalLib extends TikiLib
 
 		} else { //archive the old file : change archive_id, take away from indexation and categorization
 			if ($prefs['feature_file_galleries_save_draft'] == 'y') {
-				$this->insert_draft($id, $filename, $size, $type, $data, $user, $path, $checksum, $lockedby);
+				$this->insert_draft($id, $filename, $size, $type, $data, $user, $path, $checksum, $lockedby, $metadata);
 			} else {
-				$id = $this->save_archive($id, $gal_info['galleryId'], $gal_info['archives'], $name, $description, $filename, $data, $size, $type, $creator, $path, $comment, $author, $created, $lockedby);
+				$id = $this->save_archive($id, $gal_info['galleryId'], $gal_info['archives'], $name, $description,
+					$filename, $data, $size, $type, $creator, $path, $comment, $author, $created, $lockedby, $metadata);
 			}
 		}
 
@@ -2220,7 +2240,8 @@ class FileGalLib extends TikiLib
 
 	function get_file_by_name($galleryId, $name, $column='name')
 	{
-		$query = "select `fileId`,`path`,`galleryId`,`filename`,`filetype`,`data`,`filesize`,`name`,`description`, `created` from `tiki_files` where `galleryId`=? AND `$column`=? ORDER BY created DESC LIMIT 1";
+		$query = "select `fileId`,`path`,`galleryId`,`filename`,`filetype`,`data`,`filesize`,`name`,`description`,
+				`created` from `tiki_files` where `galleryId`=? AND `$column`=? ORDER BY created DESC LIMIT 1";
 		$result = $this->query($query, array((int) $galleryId, $name));
 		$res = $result->fetchRow();
 		return $res;
@@ -2946,9 +2967,12 @@ class FileGalLib extends TikiLib
 					if (false === $data = file_get_contents($tmp_dest)) {
 						$errors[] = tra('Cannot read the file:') . ' ' . $tmp_dest;
 					}
-	
+
+					//Add metadata
+					$filemeta = $this->extractMetadataJson($tmp_dest);
+
 					@unlink($tmp_dest);
-	
+
 					$fhash = '';
 					$extension = '';
 					if (false !== $savedir) {
@@ -3003,12 +3027,17 @@ class FileGalLib extends TikiLib
 					if (isset($data)) {
 						if ($editFile) {
 							$didFileReplace = true;
-							$fileId = $this->replace_file($editFileId, $params["name"][$key], $params["description"][$key], $name, $data, $size, $type, $params['user'][$key], $fhash . $extension, $params['comment'][$key], $gal_info, $didFileReplace, $params['author'][$key], $fileInfo['lastModif'], $fileInfo['lockedby'], $deleteAfter);
+							$fileId = $this->replace_file($editFileId, $params["name"][$key],
+								$params["description"][$key], $name, $data, $size, $type, $params['user'][$key],
+								$fhash . $extension, $params['comment'][$key], $gal_info, $didFileReplace,
+								$params['author'][$key], $fileInfo['lastModif'], $fileInfo['lockedby'], $deleteAfter);
 							if ($prefs['fgal_limit_hits_per_file'] == 'y') {
 								$this->set_download_limit($editFileId, $params['hit_limit'][$key]);
 							}
 						} else {
-							$fileId = $this->insert_file($params["galleryId"][$key], $params["name"][$key], $params["description"][$key], $name, $data, $size, $type, $params['user'][$key], $fhash . $extension, '', $params['author'][$key], '', '', $deleteAfter);
+							$fileId = $this->insert_file($params["galleryId"][$key], $params["name"][$key],
+								$params["description"][$key], $name, $data, $size, $type, $params['user'][$key],
+								$fhash . $extension, '', $params['author'][$key], '', '', $deleteAfter, '', $filemeta);
 						}
 						if (!$fileId) {
 							$errors[] = tra('Upload was not successful. Duplicate file content') . ': ' . $name;
@@ -3242,6 +3271,8 @@ class FileGalLib extends TikiLib
 			$fhash = $this->find_unique_name($savedir, $file['name']);
 			if ($prefs['feature_file_galleries_save_draft'] == 'y') {
 				$fhash .= '.' . $user . '.draft';
+				//Add metadata
+				$filemeta = $this->extractMetadataJson($file['tmp_name']);
 			}
 
 			if (! move_uploaded_file($file['tmp_name'], $savedir . $fhash)) {
@@ -3254,6 +3285,9 @@ class FileGalLib extends TikiLib
 			if (false === $data) {
 				@unlink($file['tmp_name']);
 				return array('error' => tra('Cannot read uploaded file.'));
+			} else {
+				//Add metadata
+				$filemeta = $this->extractMetadataJson($file['tmp_name']);
 			}
 		}
 
@@ -3263,6 +3297,7 @@ class FileGalLib extends TikiLib
 			'data' => $data,
 			'type' => preg_match('/.flv$/', $file['name']) ? 'video/x-flv' : $file['type'],
 			'size' => $file['size'],
+			'metadata' => isset($filemeta) && count($filemeta) > 0 ? $filemeta : null,
 		);
 	}
 
@@ -3631,6 +3666,60 @@ class FileGalLib extends TikiLib
 		$mimelib = TikiLib::lib('mime');
 		return $mimelib->from_filename($fileData['filename']);
 	}
-	
+
+	/**
+	 * Get basic and extended metadata included in the file itself and return as JSON string
+	 *
+	 * @param    string         $file              path to file or content of file
+	 * @param    bool           $ispath            indicates whether $file is a path (true) or the file contents (false)
+	 * @param    bool           $extended          indicates whether to retrieve extended metadata information
+	 *
+	 * @return   string         $filemeta          JSON string of metadata
+	 */
+	function extractMetadataJson($file, $ispath = true, $extended = true)
+	{
+		include_once 'lib/metadata/metadata.php';
+		$metadata = new FileMetadata;
+		$filemeta = json_encode($metadata->getMetadata($file, $ispath, $extended)->typemeta['best']);
+		return $filemeta;
+	}
+
+	/**
+	 * Get file metadata from database column or, if that is empty, extract metadata from the file and update
+	 * the database. Return an array of the data.
+	 *
+	 * @param 	numeric			$fileId				fileId of the file in the file gallery
+	 *
+	 * @return	array			$metadata			array of file metadata
+	 */
+	function getOrExtractMetadataArray($fileId)
+	{
+		//get the tiki_files table
+		$filesTable = $this->table('tiki_files');
+		//get metadata for the file from the database
+		$metacol = $filesTable->fetchColumn('metadata', array('fileId' => $fileId));
+		//if metadata field is empty extract from the file
+		if (empty($metacol[0])) {
+			//preparing parameters
+			$path = $filesTable->fetchColumn('path', array('fileId' => $fileId));
+			if (!empty($path[0])) {
+				global $prefs;
+				$file = $prefs['fgal_use_dir'] . $path[0];
+				$ispath = true;
+			} else {
+				$file = $filesTable->fetchColumn('data', array('fileId' => $fileId));
+				$file = $file[0];
+				$ispath = false;
+			}
+			//extract metadata
+			$metadata = $this->extractMetadataJson($file, $ispath);
+			//update database for newly extracted metadata
+			$filesTable->update(array('metadata' => $metadata), array('fileId' => $fileId));
+		} else {
+			$metadata = $metacol[0];
+		}
+		//return metadata as an array
+		return json_decode($metadata, true);
+	}
 }
 $filegallib = new FileGalLib;

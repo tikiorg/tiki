@@ -19,7 +19,8 @@ class FileMetadata
 {
 	var $currname = null;		//working file path used to access file, may not be the same as embedded in file metadata
 	var $content = null;		//file content
-	var $basicraw = null;	//for basic file information
+	var $basicraw = null;		//for basic file information
+	var $basicinfo = null;		//processed basic file information
 	var $typemeta = null;		//array used to store metadata beyond generic file data
 	var $error = null;			//error messages stored here
 	var $types = array (		//files types handled for extended metadata with values used for class and file name
@@ -38,8 +39,10 @@ class FileMetadata
 	 */
 	function getMetadata($file, $ispath = true, $extended = true)
 	{
+		if (empty($file)) {
+			return false;
 		//set contents and current name as well as type in some situations
-		if (!$ispath) {
+		} elseif (!$ispath) {
 			//when $file is actual file contents rather than a path - create a temporary file name
 			// needed for some php functions
 			$temppath = $this->temppathFromContent($file);
@@ -113,20 +116,30 @@ class FileMetadata
 			$typeObj = new $type($this);
 			$this->typemeta = $typeObj->getExtendedData($this);
 		}
+		$this->setBestMetadata();
 		if (!$leavelink) {
 			unlink($temppath);
 		}
 		return $this;
 	}
 
-	/*
-	 * Used to create a temporary path to a file when only the contents are available
-	 * Necessary because some php functions used to extract metadata require a file path
-	 * @param		string		$content		contents of a file
-	 * @return		string/bool					path to a temporary file in the temp directory or false if $content is
-	 * 												empty or file is not writeable
+	/**
+	 * Set the most complete and reconciled metadata array. Called by getMetadata.
 	 */
-	//Remember to unlink $tempfile after using this function
+	private function setBestMetadata()
+	{
+		if (isset($this->typemeta['reconciled']) && count($this->typemeta['reconciled']) > 0) {
+			$this->typemeta['best'] = $this->typemeta['reconciled'];
+		} elseif (isset($this->typemeta['combined']) && count($this->typemeta['combined']) > 0) {
+			$this->typemeta['best'] = $this->typemeta['combined'];
+		} elseif (isset($this->basicinfo) && count($this->basicinfo) > 0) {
+			$this->typemeta['best'] = array('basiconly' => true, 'Basic Information' =>
+				array ('File Data' => $this->basicinfo));
+		} else {
+			$this->typemeta['best'] = false;
+		}
+	}
+
 
 	/**
 	 * Used to create a temporary path to a file when only the contents are available
@@ -199,7 +212,7 @@ class FileMetadata
 	 * Creates a Jquery tabbed dialog window for metadata. Assumes a 3-level array: first level is type of data,
 	 * second represents categories or groupings for that type, and third is the fields
 	 *
-	 * @param      FileMetadata object		$metaObj		Object with necessary properties to be displayed set
+	 * @param      FileMetadata object		$metadata		Object or array with necessary properties to be displayed set
 	 * @param      string					$id				HTML id attribute to identify the table
 	 * @param      string					$id_link		HTML id attribute to identify the dialog table link
 	 * @param      string					$filename		Used in the title of the dialog box
@@ -209,28 +222,42 @@ class FileMetadata
 	 * Calls a smarty template to render the dialog box. The template will require a newval value for each field and
 	 * will check for label and suffix values
 	 */
-	function dialogTabs($metaObj, $id, $id_link, $filename, $mwg_compliant = true)
+	function dialogTabs($metadata, $id, $id_link, $filename)
 	{
 		global $smarty;
 		$smarty->assign('id', $id);
 		$smarty->assign('id_link', $id_link);
 		$smarty->assign('filename', $filename);
-		$smarty->assign('error', !empty($metaObj->error) ? $metaObj->error : false);
-		if (count($metaObj->typemeta['combined']) > 0 || count($metaObj->basicinfo) > 0) {
-			if ($mwg_compliant && isset($metaObj->typemeta['reconciled']) && count($metaObj->typemeta['reconciled']) > 0) {
-				$metarray = $metaObj->typemeta['reconciled'];
-			} elseif (count($metaObj->typemeta['combined']) > 0) {
-				 $metarray = $metaObj->typemeta['combined'];
-			} elseif (count($metaObj->basicinfo) > 0) {
-				$metarray = array('Basic Information' => array ( 'File Data' => $metaObj->basicinfo));
-			}
+		if (is_array($metadata) && count($metadata) > 0) {
+			$metarray = $metadata;
+		} elseif (!empty($metadata)) {
+			$metarray = json_decode($metadata, true);
+		}
+		if (is_array($metarray) && count($metarray) > 0) {
+			$smarty->assign('metarray', $metarray);
+			$smarty->assign('type', 'data');
+		} else {
+			$smarty->assign('type', 'nodata');
+		}
+		$smarty->display('metadata/meta_view_dialog.tpl');
+	}
+
+	function pageTabs($metadata)
+	{
+		global $smarty;
+		if (is_array($metadata) && count($metadata) > 0) {
+			$metarray = $metadata;
+		} elseif (!empty($metadata)) {
+			$metarray = json_decode($metadata, true);
+		}
+		if (is_array($metarray) && count($metarray) > 0) {
 			$smarty->assign('metarray', $metarray);
 			$smarty->assign('type', 'data');
 		} else {
 			$smarty->assign('type', 'nodata');
 		}
 		$smarty->assign('extended', $this->canProcessExtended() ? 'y' : 'n');
-		$smarty->display('metadata/meta_view_dialog.tpl');
+		$smarty->display('metadata/meta_view_tabs.tpl');
 	}
 
 } //end of class

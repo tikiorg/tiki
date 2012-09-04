@@ -202,6 +202,10 @@ if ( $prefs['fgal_limit_hits_per_file'] == 'y' ) {
 	$smarty->assign('hit_limit', $filegallib->get_download_limit($fileId));
 }
 
+if (!empty($fileInfo['fileId'])) {
+	$smarty->assign('metarray', $filegallib->getOrExtractMetadataArray($fileInfo['fileId']));
+}
+
 $cat_type = 'file';
 $cat_objid = (int) $fileId;
 include_once ('categorize_list.php');

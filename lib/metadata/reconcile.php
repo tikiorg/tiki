@@ -169,13 +169,13 @@ class ReconcileExifIptcXmp
 			'File Size'			=> array(
 				'exif'				=> 'FileSize',
 			),
-			'Height'			=> array(
-				'exif'				=> 'ExifImageLength',
-				'xmp'				=> 'PixelYDimension',
-			),
 			'Width'				=> array(
-				'exif'				=> 'ExifImageWidth',
+				'exif'				=> 'Width',
 				'xmp'				=> 'PixelXDimension',
+			),
+			'Height'			=> array(
+				'exif'				=> 'Height',
+				'xmp'				=> 'PixelYDimension',
 			),
 			'Resolution'		=> array(
 				'exif'				=> 'XResolution',
