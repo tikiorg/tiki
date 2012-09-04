@@ -119,7 +119,7 @@ function wikiplugin_datachannel( $data, $params )
 	global $prefs, $smarty, $headerlib;
 	$executionId = 'datachannel-exec-' . ++$execution;
 
-	if ($params['price'] == 0) {
+	if (isset($params['price']) && $params['price'] == 0) {
 		// Convert things like 0.00 to empty
 		unset($params['price']);
 	}
