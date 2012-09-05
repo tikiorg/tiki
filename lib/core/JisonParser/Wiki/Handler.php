@@ -42,6 +42,9 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	/* smiley parser */
 	public $smileys;
 
+	/* dynamic var parser */
+	public $dynamicVar;
+
 	//This var is used in both protectSpecialChars and unprotectSpecialChars to simplify the html ouput process
 	private $specialChars = array(
 		'≤REAL_LT≥' => array(
@@ -74,12 +77,13 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		"--",
 		"||",
 		"==",
-		"((",
+		"))",
 		"\n!",
 		"\n*",
 		"\n#",
 		"\n+",
-		"{"
+		"{",
+		"%"
 	);
 
 	var $tikilib;
@@ -162,6 +166,10 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 			$this->Parser->smileys = new JisonParser_Wiki_Smileys();
 		}
 
+		if (isset($this->Parser->dynamicVar) == false) {
+			$this->Parser->dynamicVar = new JisonParser_Wiki_DynamicVariables();
+		}
+
 		parent::__construct();
 	}
 
@@ -195,10 +203,10 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		if ($this->parsing == true) {
 			$parser = end(self::$spareParsers);
 			if (!empty($parser) && $parser->parsing == false) {
-				$result = $parser->parse($input);
+				$output = $parser->parse($input);
 			} else {
 				self::$spareParsers[] = $parser = new JisonParser_Wiki_Handler($this->Parser);
-				$result = $parser->parse($input);
+				$output = $parser->parse($input);
 			}
 		} else {
 			$this->parsing = true;
@@ -209,17 +217,17 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 
 			if ($this->hasWikiSyntax($input) == true) {
 				self::$parseDepth++;
-				$result = parent::parse($input);
+				$output = parent::parse($input);
 				self::$parseDepth--;
 			} else {
-				$result = $input;
+				$output = $input;
 			}
 
 			$this->parsing = false;
-			$this->postParse($result);
+			$this->postParse($output);
 		}
 
-		return $result;
+		return $output;
 	}
 
 	function parsePlugin($input)
@@ -256,32 +264,34 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		$input = $this->protectSpecialChars($input);
 	}
 
-	function postParse(&$input)
+	function postParse(&$output)
 	{
-		$input = $this->unprotectSpecialChars($input, $this->Parser->option['is_html']);
+		$output = $this->unprotectSpecialChars($output, $this->Parser->option['is_html']);
 
-		if ($this->Parser->option['parseLists'] == true || strpos($input, "\n") !== false) {
+		if ($this->Parser->option['parseLists'] == true || strpos($output, "\n") !== false) {
 			$lists = $this->Parser->list->toHtml();
 
 			if (!empty($lists)) {
 				foreach($lists as $key => &$list) {
-					$input = str_replace($key, $list, $input);
+					$output = str_replace($key, $list, $output);
 					unset($list);
 				}
 			}
 		}
 
 		if ($this->Parser->option['parseSmileys']) {
-			$this->Parser->smileys->parse($input);
+			$this->Parser->smileys->parse($output);
 		}
 
-		$this->restorePluginEntities($input);
+		$this->restorePluginEntities($output);
 
-		$this->Parser->autoLink->parse($input);
+		$this->Parser->autoLink->parse($output);
 
-		$this->Parser->hotWords->parse($input);
+		$this->Parser->hotWords->parse($output);
 
-		$this->removeTemporaryLineBreaks($input);
+		$this->removeTemporaryLineBreaks($output);
+
+		$this->Parser->dynamicVar->makeForum($output);
 	}
 
 	private function addTemporaryLineBreaks(&$input)
@@ -463,6 +473,30 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		}
 
 		return $content;
+	}
+
+	function doubleDynamicVar($content)
+	{
+		global $prefs;
+
+		if ( $prefs['wiki_dynvar_style'] != 'double') {
+			return $content;
+		}
+
+
+		return $this->Parser->dynamicVar->ui(substr($content, 2, 2), $this->Parser->option['language']);
+	}
+
+	function singleDynamicVar($content)
+	{
+		global $prefs;
+
+		if ( $prefs['wiki_dynvar_style'] != 'single') {
+			return $content;
+		}
+
+
+		return $this->Parser->dynamicVar->ui(substr($content, 1, 1), $this->Parser->option['language']);
 	}
 
 	function bold($content) //__content__
