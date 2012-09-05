@@ -6,13 +6,12 @@
 
 PLUGIN_ID   					[A-Z]+
 INLINE_PLUGIN_ID				[a-z]+
-SYNTAX_CHARS                    [\n\r_\^:\~'-|=\(\)\{\}\[\]*#+]
+SYNTAX_CHARS                    [\n\r_\^:\~'-|=\(\)\{\}\[\]*#+%]
 LINE_CONTENT                    (.+?)
 SMILE							[a-z]+
 LINE_END                        (\n\r|\r\n|[\n\r])
 
 %s np plugin line bold box center colortext italic header list link strikethrough table titlebar underscore wikilink
-%options flex
 
 %%
 <np><<EOF>>
@@ -43,12 +42,33 @@ LINE_END                        (\n\r|\r\n|[\n\r])
 		lexer.begin('np'); //js
 		lexer.npStack = true; //js
 
-		//php if ($this->isContent()) return 'CONTENT'; //js
+		//php if ($this->isContent()) return 'CONTENT';
 		//php $this->begin('np');
 		//php $this->npStack = true;
 
 		return 'NP_START';
 	%}
+
+
+
+[%][%]([0-9A-Za-z ]{3,})[%][%]
+	%{
+		if (parser.isContent()) return 'CONTENT'; //js
+
+        //php if ($this->isContent()) return 'CONTENT';
+
+		return 'DOUBLE_DYNAMIC_VAR';
+	%}
+[%]([0-9A-Za-z ]{3,})[%]
+	%{
+		if (parser.isContent()) return 'CONTENT'; //js
+
+        //php if ($this->isContent()) return 'CONTENT';
+
+		return 'SINGLE_DYNAMIC_VAR';
+	%}
+
+
 
 "{ELSE}"						return 'CONTENT';//For now let individual plugins handle else
 "{"{INLINE_PLUGIN_ID}.*?"}"
@@ -158,15 +178,6 @@ LINE_END                        (\n\r|\r\n|[\n\r])
 		//php $yytext = $this->smile($yytext);
 
 		return 'SMILE';
-	%}
-
-"[[".*?
-	%{
-		yytext = parser.substring(yytext, 2, -1); //js
-
-		//php $yytext = $this->substring($yytext, 2, -1);
-
-		return 'CONTENT';
 	%}
 
 
@@ -650,6 +661,16 @@ content
         $$ = parser.np($2); //js
         //php $$ = $this->np($2); //js
     }
+ | DOUBLE_DYNAMIC_VAR
+    {
+        $$ = parser.doubleDynamicVar($1); //js
+        //php $$ = $this->doubleDynamicVar($1); //js
+    }
+ | SINGLE_DYNAMIC_VAR
+     {
+        $$ = parser.singleDynamicVar($1); //js
+        //php $$ = $this->singleDynamicVar($1); //js
+     }
  | HTTP_LINK
     {
         $$ = parser.autoLink($1, 'http'); //js
