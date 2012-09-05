@@ -92,7 +92,7 @@ class JisonParser_Wiki_List
 					switch($list['type']) {
 						case '-':
 							$style = 'display: none;';
-							$html = "<a id='flipper$id' href='javascript:flipWithSign(\"". $id . "\");' class='link'>[+]</a>";
+							$html = '<a id="flipper' . $id . '" href="javascript:flipWithSign(\'' . $id . '\');" class="link">[+]</a>';
 							break;
 						case '+':
 							$wrapInLi = false;

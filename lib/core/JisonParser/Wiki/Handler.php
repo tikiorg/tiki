@@ -26,6 +26,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	public $npStack = false; //There can only be 1 active np stack
 
 	public $skipNextBr = false; //used in block level items, should be set to true.  The next break sets it back to false;
+	public $tableStack = array();
 
 	/* header tracking */
 	public $header;
@@ -83,7 +84,9 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		"\n#",
 		"\n+",
 		"{",
-		"%"
+		"%",
+		"''",
+		"\n"
 	);
 
 	var $tikilib;
@@ -120,7 +123,9 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 
 	public function setOption($option = array())
 	{
-		$page = $_REQUEST['page'];
+		global $prefs;
+		$page = (isset($_REQUEST['page']) ? $_REQUEST['page'] : $prefs['site_wikiHomePage']);
+
 		$this->Parser->option['page'] = $page;
 
 		$this->Parser->option = array_merge($this->optionDefaults, $option);
@@ -528,7 +533,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		$color = $text[0];
 		$content = $text[1];
 
-		return '<span style="color: #' . $color . ';">' . $content . '</span>';
+		return '<span style="color: ' . $color . ';">' . $content . '</span>';
 	}
 
 	function italics($content) //''content''
@@ -702,6 +707,11 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		$text = (isset($wikilink[1]) ? $wikilink[1] : $href);
 
 		return '<a href="tiki-index.php?page=' . $href . '">' . $text . '</a>';
+	}
+
+	function runningTest()
+	{
+
 	}
 
 	//unified functions used inside parser

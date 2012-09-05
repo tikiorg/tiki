@@ -50,6 +50,12 @@ LINE_END                        (\n\r|\r\n|[\n\r])
 	%}
 
 
+"~tc~"(.|\n)+"~/tc~"
+	%{
+		return '';
+	%}
+
+
 
 [%][%]([0-9A-Za-z ]{3,})[%][%]
 	%{
@@ -290,7 +296,7 @@ LINE_END                        (\n\r|\r\n|[\n\r])
 		//php if ($this->isContent()) return 'CONTENT';
 		//php return 'COLORTEXT_END';
 	%}
-[\~][\~][#]
+[\~][\~]
 	%{
 		if (parser.isContent()) return 'CONTENT'; //js
 		lexer.begin('colortext'); //js
@@ -471,10 +477,12 @@ LINE_END                        (\n\r|\r\n|[\n\r])
 <table>[|][|]
 	%{
 		lexer.popState(); //js
+		lexer.tableStack.pop(); //js
 		if (parser.isContent()) return 'CONTENT'; //js
 		return 'TABLE_END'; //js
 
 		//php $this->popState();
+		//php array_pop($this->tableStack);
 		//php if ($this->isContent()) return 'CONTENT';
 		//php return 'TABLE_END';
 	%}
@@ -482,10 +490,12 @@ LINE_END                        (\n\r|\r\n|[\n\r])
 	%{
 		if (parser.isContent()) return 'CONTENT'; //js
 		lexer.begin('table'); //js
+		lexer.tableStack.push(true); //js
 		return 'TABLE_START'; //js
 
 		//php if ($this->isContent()) return 'CONTENT';
 		//php $this->begin('table');
+		//php $this->tableStack[] = true;
 		//php return 'TABLE_START';
 	%}
 
@@ -797,7 +807,7 @@ content
 	}
  | LINE_END
    	{
-   	    //php if ($this->skipNextBr == false) {
+   	    //php if ($this->skipNextBr == false && empty($this->tableStack)) {
    	        //php $$ = "<br />";
    	    //php }
 
