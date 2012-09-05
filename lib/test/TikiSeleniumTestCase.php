@@ -21,7 +21,7 @@ class TikiSeleniumTestCase extends PHPUnit_Extensions_SeleniumTestCase
 			'admin' => 'tiki'
 			);
 
-	function __construct($name)
+	function __construct($name = '')
 	{
 		parent::__construct($name);
 		$this->configure();
