@@ -85,7 +85,7 @@ class ParserLib extends TikiDb_Bridge
 			'skipvalidation'=>  false,
 			'ck_editor'=>   false,
 			'namespace' => false,
-		), $option);
+		), (array)$option);
 	}
 
 	function __construct()
