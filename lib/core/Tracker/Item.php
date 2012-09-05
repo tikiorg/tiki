@@ -281,6 +281,8 @@ class Tracker_Item
 	{
 		if (isset($this->info[$fieldId])) {
 			return $this->info[$fieldId];
+		} elseif (isset($this->info['value'])) {
+			return $this->info['value'];
 		}
 	}
 
