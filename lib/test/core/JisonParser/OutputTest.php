@@ -11,22 +11,41 @@ class JisonParser_OutputTest extends TikiTestCase
 	private $parser;
 
 	private $syntaxSets = array(
-		'italic'            => array("''italic''", '<i>italic</i>'),
-		'bold'              => array('__bold__', '<strong>bold</strong>'),
-		'linethrough'       => array('--linethrough--', '<strike>linethrough</strike>'),
-		'horizontal line'   => array('---', '<hr />'),
-		'box'               => array('^box^', '<div class="simplebox">box</div>'),
-		'center'            => array('::center::', '<center>center</center>'),
-		'color text1'       => array('~~red:color text~~', '<span style="color: red;">color text</span>'),
-		'color text2'       => array('~~#ff00ff:color text2~~', '<span style="color: #ff00ff;">color text2</span>'),
-		'simple break'      => array("\nTest\n", "<br />Test<br />"),
+		//good syntax
+		'italic'            => array("''text''", '<i>text</i>'),
+		'bold'              => array('__text__', '<strong>text</strong>'),
+		'linethrough'       => array('--text--', '<strike>text</strike>'),
+		'box'               => array('^text^', '<div class="simplebox">text</div>'),
+		'center'            => array('::text::', '<center>text</center>'),
+		'underscore'        => array('===text===', '<u>text</u>'),
+		'titlebar'          => array("-=text=-", '<div class="titlebar">text</div>'),
+		'color text1'       => array('~~red:text~~', '<span style="color: red;">text</span>'),
+		'color text2'       => array('~~#ff00ff:text~~', '<span style="color: #ff00ff;">text</span>'),
 		'htmllink'          => array("[www.google.com|Google]", '<a href="http://www.google.com">Google</a>'),
 		'wikilink'          => array("((Wiki Page))", '<a href="tiki-index.php?page=Wiki Page">Wiki Page</a>'),
 		'table'             => array("||A1|B1|C1\nA2|B2|C2||", '<table class="wikitable"><tr><td class="wikicell">A1</td><td class="wikicell">B1</td><td class="wikicell">C1</td></tr><tr><td class="wikicell">A2</td><td class="wikicell">B2</td><td class="wikicell">C2</td></tr></table>'),
 
-		'np'                => array('~np~~np~--np--~/np~~/np~', '~np~--np--~/np~'),
-		'tc'                => array('~tc~Tiki Comment~/tc~', ''),
+		//error recovery syntax
+		'italic r'          => array("''text", '<i>text</i>'),
+		'bold r'            => array('__text', '<strong>text</strong>'),
+		'linethrough r'     => array('--text', '<strike>text</strike>'),
+		'box r'             => array('^text', '<div class="simplebox">text</div>'),
+		'center r'          => array('::text', '<center>text</center>'),
+		'underscore r'      => array('===text', '<u>text</u>'),
+		'titlebar r'        => array("-=text", '<div class="titlebar">text</div>'),
+		'color text1 r'     => array('~~red:text', '<span style="color: red;">text</span>'),
+		'color text2 r'     => array('~~#ff00ff:text', '<span style="color: #ff00ff;">text</span>'),
+		'htmllink r'        => array("[www.google.com|Google", '<a href="http://www.google.com">Google</a>'),
+		'wikilink r'        => array("((Wiki Page", '<a href="tiki-index.php?page=Wiki Page">Wiki Page</a>'),
+		'table r'           => array("||A1|B1|C1\nA2|B2|C2", '<table class="wikitable"><tr><td class="wikicell">A1</td><td class="wikicell">B1</td><td class="wikicell">C1</td></tr><tr><td class="wikicell">A2</td><td class="wikicell">B2</td><td class="wikicell">C2</td></tr></table>'),
 
+		//non-state-tracking syntax
+		'horizontal line'   => array('---', '<hr />'),
+		'simple break'      => array("\ntext\n", "<br />text<br />"),
+		'np'                => array('~np~~np~--np--~/np~~/np~', '~np~--np--~/np~'),
+		'tc'                => array('~tc~text~/tc~', ''),
+
+		//block level syntax
 		'header1'           => array('!header1', '<h1 class="showhide_heading" id="header1">header1</h1>'),
 		'header2'           => array('!!header2', '<h2 class="showhide_heading" id="header2">header2</h2>'),
 		'header3'           => array('!!!header3', '<h3 class="showhide_heading" id="header3">header3</h3>'),
@@ -61,17 +80,9 @@ class JisonParser_OutputTest extends TikiTestCase
 				$syntax = $customHandled['syntax'];
 			}
 
-			echo "\ntesting:\t\t" . $syntaxName . ",\t\t";
+			//$parsed = trim($parsed);
 
-			//echo "out:  " .$parsed;
-
-			$parsed = trim($parsed);
-			if ($parsed != $syntax[1]) {
-				echo "fail";
-				$this->fail("Syntax failure: " . $syntaxName . " \nExpected:" . $syntax[1] . "\nGot:" . $parsed);
-			} else {
-				echo "passed";
-			}
+			$this->assertEquals($syntax[1],$parsed);
 		}
 	}
 
