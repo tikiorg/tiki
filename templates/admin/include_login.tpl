@@ -44,7 +44,7 @@
 					{preference name=validateEmail}
 					{preference name=validateRegistration}
 					<div class="adminoptionboxchild" id="validateRegistration_childcontainer">
-						{preference name=validator_emails}
+						{preference name=validator_emails size="80"}
 					</div>
 
 					{preference name=useRegisterPasscode}

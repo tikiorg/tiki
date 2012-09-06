@@ -56,7 +56,10 @@ function smarty_function_preference( $params, $smarty )
 		if ( !isset($info['separator']) ) { 
 			$info['separator'] = array();
 		}
-		
+		if ( isset($params['size']) ) { 
+			$info['size'] = $params['size'];
+		}
+
 		$smarty->assign('p', $info);
 
 		if ( isset($params['mode']) && $params['mode'] == 'invert' ) {
