@@ -304,18 +304,24 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		$input = "\n" . $input . "\n";
 	}
 
-	private function removeTemporaryLineBreaks(&$input, $atEnd = false)
+	private function removeTemporaryLineBreaks(&$input)
 	{
-		$i = 0;
-
-		if ($atEnd == true) {
-			$i = strlen($input) - 6;
-		} else {
-			$this->removeTemporaryLineBreaks($input, true);
+		if ($input{0} == '<' && $input{1} == 'b' && $input{2} == 'r' && $input{3} == ' ' && $input{4} == '/' && $input{5} == '>') {
+			$input = substr($input, 6);
 		}
 
-		if ($input{0 + $i} == '<' && $input{1 + $i} == 'b' && $input{2 + $i} == 'r' && $input{3 + $i} == ' ' && $input{4 + $i} == '/' && $input{5 + $i} == '>') {
-			$input{0 + $i} = $input{1 + $i} = $input{2 + $i} = $input{3 + $i} = $input{4 + $i} = $input{5 + $i} = ' ';
+		if ($input{0} == "\n") {
+			$input = substr($input, 1);
+		}
+
+		$i = strlen($input);
+		if ($i > 5 && $input{$i - 6} == '<' && $input{$i - 5} == 'b' && $input{$i - 4} == 'r' && $input{$i - 3} == ' ' && $input{$i - 2} == '/' && $input{$i - 1} == '>') {
+			$input = substr($input, 0, -6);
+		}
+
+		$i = strlen($input);
+		if ($i > 0 && $input{$i - 1} == "\n") {
+			$input = substr($input, 0, -1);
 		}
 
 		return $input;
