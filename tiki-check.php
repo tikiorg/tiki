@@ -663,13 +663,13 @@ if ($connection || !$standalone) {
 }
 
 if ($standalone) {
-echo '<h1>Tiki Server Compatibility</h1>',
-     '<h2>Server Information</h2>';
+echo '<h1>Tiki Server Compatibility</h1>';
+echo '<h2>MySQL Properties</h2>';
+render_table($mysql_properties);
+echo '<h2>Server Information</h2>';
 render_table($server_information);
 echo '<h2>Server Properties</h2>';
 render_table($server_properties);
-echo '<h2>MySQL Properties</h2>';
-render_table($mysql_properties);
 echo '<h2>PHP Properties</h2>';
 render_table($php_properties);
 } else {
