@@ -426,13 +426,13 @@ if ($s) {
 	$php_properties['fileinfo'] = array(
 		'fitness' => tra('good'),
 		'setting' => 'Loaded',
-		'message' => tra('The fileinfo extension is needed for correct handling of uploaded files.')
+		'message' => tra("The fileinfo extension is needed for the 'Validate uploaded file content' preference.")
 	);
 } else {
 	$php_properties['fileinfo'] = array(
 		'fitness' => tra('bad'),
 		'setting' => 'Not available',
-		'message' => tra('The fileinfo extension is needed for correct handling of uploaded files.')
+		'message' => tra("The fileinfo extension is needed for the 'Validate uploaded file content' preference.")
 	);
 }
 
