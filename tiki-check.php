@@ -46,17 +46,93 @@ if (file_exists('./db/local.php') && file_exists('./templates/tiki-check.tpl')) 
 			echo 'Nothing to display.';  
 		}
 	} 
+}
 
-	if ( empty($_POST["dbuser"]) || empty($_POST["dbpass"]) || !$connection = mysql_connect('localhost', $_POST["dbuser"], $_POST['dbpass']) ) {
-	print <<<DBC
-	<h2>Database credentials</h2>
-	Couldn't connect to database, please provide valid credentials.
-	<form method="post" action="{$_SERVER['REQUEST_URI']}">
-		<p><label for="dbuser">Database username</label>: <input type="text" id="dbuser" name="dbuser" /></p>
-		<p><label for="dbpass">Database password</label>: <input type="password" id="dbpass" name="dbpass" /></p>
-		<p><input type="submit" value=" Connect " /></p>
-	</form>
+// Get PHP properties and check them
+$php_properties = array();
+
+// First things first
+// If we don't have a DB-connection, some tests don't run
+$s = extension_loaded('pdo_mysql');
+if ($s) {
+	$php_properties['DB Driver'] = array(
+		'fitness' => tra('good'),
+		'setting' => 'PDO',
+		'message' => tra('The PDO extension is the suggested database driver/abstraction layer.')
+	);
+} elseif ( $s = extension_loaded('mysqli') ) {
+	$php_properties['DB Driver'] = array(
+		'fitness' => tra('ugly'),
+		'setting' => 'MySQLi',
+		'message' => tra('You do not have the recommended PDO database driver/abstraction layer. You do have the MySQLi driver though, so we will to fall back to the AdoDB abstraction layer that is bundled with Tiki.')
+	);
+} elseif ( extension_loaded('mysql') ) {
+	$php_properties['DB Driver'] = array(
+		'fitness' => tra('ugly'),
+		'setting' => 'MySQL',
+		'message' => tra('You do not have the recommended PDO database driver/abstraction layer. You do have the MySQL driver though, so we will to fall back to the AdoDB abstraction layer that is bundled with Tiki.')
+	);
+} else {
+	$php_properties['DB Driver'] = array(
+		'fitness' => tra('bad'),
+		'setting' => 'Not available',
+		'message' => tra('You do not have any of the supported database drivers (PDO/mysqli/mysql) loaded. Tiki will not work.')
+	);
+
+}
+
+// Now connect to the DB and make all our connectivity methods work the same
+if ( $standalone ) {
+	if ( empty($_POST["dbuser"]) && empty($_POST["dbpass"]) && !($php_properties['DB Driver']['setting'] == 'Not available') ) {
+			print <<<DBC
+			<h2>Database credentials</h2>
+			Couldn't connect to database, please provide valid credentials.
+			<form method="post" action="{$_SERVER['REQUEST_URI']}">
+				<p><label for="dbuser">Database username</label>: <input type="text" id="dbuser" name="dbuser" /></p>
+				<p><label for="dbpass">Database password</label>: <input type="password" id="dbpass" name="dbpass" /></p>
+				<p><input type="submit" value=" Connect " /></p>
+			</form>
 DBC;
+	} else {
+		switch ($php_properties['DB Driver']['setting']) {
+			case "PDO":
+				$connection = new PDO('mysql:host=localhost;dbname=test', $_POST["dbuser"], $_POST['dbpass']);
+				function query($query, $connection) {
+					$result = $connection->query($query);
+					$return = $result->fetchAll(PDO::FETCH_ASSOC);
+					return($return);
+				}
+				break;
+			case "MySQLi":
+				$connection = new mysqli('localhost', $_POST["dbuser"], $_POST['dbpass']);
+				function query($query, $connection) {
+					$result = $connection->query($query);
+					while (	$row = $result->fetch_assoc() ) {
+						$return[] = $row;
+					}
+					return($return);
+				}
+				break;
+			case "MySQL":
+				$connection = mysql_connect('localhost', $_POST["dbuser"], $_POST['dbpass']);
+				function query($query, $connection = '') {
+					$result = mysql_query($query);
+					while (	$row = mysql_fetch_array($result) ) {
+						$return[] = $row;
+					}
+					return($return);
+				}
+				break;
+		}
+	}
+} else {
+	function query($query) {
+		global $tikilib;
+		$result = $tikilib->query($query);
+		while ( $row = $result->fetchRow() ) {
+			$return[] = $row;
+		}
+		return($return);
 	}
 }
 
@@ -99,9 +175,6 @@ if ( $bytes < 200 * 1024 * 1024 ) {
 	);
 }
 
-// Get PHP properties and check them
-$php_properties = array();
-
 // PHP Version
 if (version_compare(PHP_VERSION, '5.1.0', '<')) {
 	$php_properties['PHP version'] = array(
@@ -134,10 +207,6 @@ $memory_limit = ini_get('memory_limit');
 $s = trim($memory_limit);
 $last = strtolower($s{strlen($s)-1});
 switch ( $last ) {
-	// The following was borrowed from tiki-installer.php
-	// Is that correct ?!?
-	// Doesn't it always just multiply by 1024 ?!
-	// The 'G' modifier is available since PHP 5.1.0
 	case 'g': $s *= 1024;
 	case 'm': $s *= 1024;
 	case 'k': $s *= 1024;
@@ -309,10 +378,6 @@ $upload_max_filesize = ini_get('upload_max_filesize');
 $s = trim($upload_max_filesize);
 $last = strtolower($s{strlen($s)-1});
 switch ( $last ) {
-	// The 'G' modifier is available since PHP 5.1.0
-	// The following was borrowed from tiki-installer.php
-	// Is that correct ?!?
-	// Doesn't it always just multiply by 1024 ?!
 	case 'g': $s *= 1024;
 	case 'm': $s *= 1024;
 	case 'k': $s *= 1024;
@@ -336,10 +401,6 @@ $post_max_size = ini_get('post_max_size');
 $s = trim($post_max_size);
 $last = strtolower($s{strlen($s)-1});
 switch ( $last ) {
-	// The 'G' modifier is available since PHP 5.1.0
-	// The following was borrowed from tiki-installer.php
-	// Is that correct ?!?
-	// Doesn't it always just multiply by 1024 ?!
 	case 'g': $s *= 1024;
 	case 'm': $s *= 1024;
 	case 'k': $s *= 1024;
@@ -400,52 +461,6 @@ if ((extension_loaded('gd') && function_exists('gd_info'))) {
 		'setting' => 'Not available',
 		'message' => tra('The GD extension is needed for manipulation of images, e.g. also for CAPTCHAs.')
 	);
-}
-
-// mysqli/mysql
-$s = extension_loaded('mysqli');
-if ($s) {
-	$php_properties['DB Driver'] = array(
-		'fitness' => tra('good'),
-		'setting' => 'MySQLi',
-		'message' => tra('MySQLi is the suggested DB driver to use.')
-	);
-} elseif ( extension_loaded('mysql') ) {
-	$php_properties['DB Driver'] = array(
-		'fitness' => tra('ugly'),
-		'setting' => 'MySQL',
-		'message' => tra('You do not have the suggested MySQLi extension loaded.').' '.tra('You will fall back to legacy MySQL though.')
-	);
-} else {
-	$php_properties['DB Driver'] = array(
-		'fitness' => tra('bad'),
-		'setting' => 'Not available',
-		'message' => tra('You do not have the suggested MySQLi extension loaded.').' '.tra('You also do not have the legacy MySQL extension. There is no DB driver available. Tiki will not work.')
-	);
-
-}
-
-// PDO/ADOdb
-$s = extension_loaded('pdo');
-if ($s) {
-	$php_properties['DB Abstraction'] = array(
-		'fitness' => tra('good'),
-		'setting' => 'PDO',
-		'message' => tra('The PDO extension is the suggested database abstraction layer.')
-	);
-} elseif ( extension_loaded('adodb') ) {
-	$php_properties['DB Abstraction'] = array(
-		'fitness' => tra('ugly'),
-		'setting' => 'ADOdb',
-		'message' => tra('You do not have the suggested PDO extension loaded.').' '.tra('You will fall back to legacy AdoDB though.')
-	);
-} else {
-	$php_properties['DB Abstraction'] = array(
-		'fitness' => tra('bad'),
-		'setting' => 'Not available',
-		'message' => tra('You do not have the suggested PDO extension loaded.').' '.tra('You also do not have the ADOdb extension. There is no database abstraction available. Tiki will not work.')
-	);
-
 }
 
 // mbstring
@@ -605,49 +620,46 @@ if(empty($s) || (!$s))
 }
 
 // Get MySQL properties and check them
-$mysql_properties = array();
+if ($connection || !$standalone) {
+	$mysql_properties = array();
 
-// MySQL version
-$mysql_version = mysql_get_server_info();
-$s = substr_compare($mysql_version, '5.', 0, 2);
-if ( $s == 0 ) {
-	$mysql_properties['Version'] = array(
-		'fitness' => tra('good'),
-		'setting' => $mysql_version,
-		'message' => tra('Tiki requires MySQL >= 5.x.')
-	);
-} else {
-	$mysql_properties['Version'] = array(
-		'fitness' => tra('bad'),
-		'setting' => $mysql_version,
-		'message' => tra('Tiki requires MySQL >= 5.x.')
-	);
-}
+	// MySQL version
+	$query = "SELECT VERSION();";
+	$result = query($query, $connection);
+	$mysql_version = $result[0]['VERSION()'];
+	$s = version_compare($mysql_version, "5.0.2", ">=" );
+	if ( $s == true ) {
+		$mysql_properties['Version'] = array(
+			'fitness' => tra('good'),
+			'setting' => $mysqli_version,
+			'message' => tra('Tiki requires MySQL >= 5.x.')
+		);
+	} else {
+		$mysql_properties['Version'] = array(
+			'fitness' => tra('bad'),
+			'setting' => $mysqli_version,
+			'message' => tra('Tiki requires MySQL >= 5.x.')
+		);
+	}
 
-// max_allowed_packet
-if ($standalone) {
+	// max_allowed_packet
 	$query = "SHOW VARIABLES where Variable_name='max_allowed_packet'";
-	$result = mysql_query($query);
-	$row = mysql_fetch_array($result);
-} else {
-	$query = "SHOW VARIABLES where Variable_name='max_allowed_packet'";
-	$result = $tikilib->query($query);
-	$row = $result->fetchRow();
-}
-$s = $row['Value'];
-$max_allowed_packet = $s / 1024 / 1024;
-if ($s >= 8 * 1024 * 1024) {
-	$mysql_properties['max_allowed_packet'] = array(
-		'fitness' => tra('good'),
-		'setting' => $max_allowed_packet.'M',
-		'message' => tra('Your max_allowed_packet setting is at').' '.$max_allowed_packet.'M. '.tra('You can upload quite big files, but keep in mind to set your script timeouts accordingly.')
-	);
-} else {
-	$mysql_properties['max_allowed_packet'] = array(
-		'fitness' => tra('ugly'),
-		'setting' => $max_allowed_packet.'M',
-		'message' => tra('Your max_allowed_packet setting is at').' '.$max_allowed_packet.'M. '.tra('Nothing wrong with that, but some users might want to upload something bigger.')
-	);
+	$result = query($query, $connection);
+	$s = $result[0]['Value'];
+	$max_allowed_packet = $s / 1024 / 1024;
+	if ($s >= 8 * 1024 * 1024) {
+		$mysql_properties['max_allowed_packet'] = array(
+			'fitness' => tra('good'),
+			'setting' => $max_allowed_packet.'M',
+			'message' => tra('Your max_allowed_packet setting is at').' '.$max_allowed_packet.'M. '.tra('You can upload quite big files, but keep in mind to set your script timeouts accordingly.')
+		);
+	} else {
+		$mysql_properties['max_allowed_packet'] = array(
+			'fitness' => tra('ugly'),
+			'setting' => $max_allowed_packet.'M',
+			'message' => tra('Your max_allowed_packet setting is at').' '.$max_allowed_packet.'M. '.tra('Nothing wrong with that, but some users might want to upload something bigger.')
+		);
+	}
 }
 
 if ($standalone) {
