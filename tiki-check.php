@@ -664,13 +664,13 @@ if ($connection || !$standalone) {
 
 if ($standalone) {
 echo '<h1>Tiki Server Compatibility</h1>';
-echo '<h2>MySQL Properties</h2>';
+echo '<h2>MySQL Database Properties</h2>';
 render_table($mysql_properties);
 echo '<h2>Server Information</h2>';
 render_table($server_information);
 echo '<h2>Server Properties</h2>';
 render_table($server_properties);
-echo '<h2>PHP Properties</h2>';
+echo '<h2>PHP scripting language properties</h2>';
 render_table($php_properties);
 } else {
 	$smarty-> assign_by_ref('server_information', $server_information);
