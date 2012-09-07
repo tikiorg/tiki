@@ -631,13 +631,13 @@ if ($connection || !$standalone) {
 	if ( $s == true ) {
 		$mysql_properties['Version'] = array(
 			'fitness' => tra('good'),
-			'setting' => $mysqli_version,
+			'setting' => $mysql_version,
 			'message' => tra('Tiki requires MySQL >= 5.x.')
 		);
 	} else {
 		$mysql_properties['Version'] = array(
 			'fitness' => tra('bad'),
-			'setting' => $mysqli_version,
+			'setting' => $mysql_version,
 			'message' => tra('Tiki requires MySQL >= 5.x.')
 		);
 	}
