@@ -159,19 +159,19 @@ if ( $bytes < 200 * 1024 * 1024 ) {
 	$server_properties['Disk Space'] = array(
 		'fitness' => 'bad',
 		'value' => $free_space,
-		'message' => tra('You have less than 200M of free disk space. Tiki will not fit on this disk drive.')
+		'message' => tra('You have less than 200 megs of free disk space. Tiki will not fit on this disk drive.')
 	);
 } elseif ( $bytes < 250 * 1024 * 1024 ) {
 	$server_properties['Disk Space'] = array(
 		'fitness' => 'ugly',
 		'value' => $free_space,
-		'message' => tra('You have less than 250M of free disk space. This is quite tight. Tiki needs disk space for compiling templates and for uploading files.').' '.tra('When the disk runs full you will not be able to log into your tiki any more.')
+		'message' => tra('You have less than 250 megs of free disk space. This is quite tight. Tiki needs disk space for compiling templates and for uploading files.').' '.tra('When the disk runs full you will not be able to log into your Tiki any more.')
 	);
 } else {
 	$server_properties['Disk Space'] = array(
 		'fitness' => 'good',
 		'value' => $free_space,
-		'message' => tra('You have more than 251MB of free disk space. Tiki will run nicely, but you may run into issues when your site grows (e.g. file uploads)').' '.tra('When the disk runs full you will not be able to log into your tiki any more.')
+		'message' => tra('You have more than 251 megs of free disk space. Tiki will run nicely, but you may run into issues when your site grows (e.g. file uploads)').' '.tra('When the disk runs full you will not be able to log into your Tiki any more.')
 	);
 }
 
@@ -237,7 +237,7 @@ if ($s) {
 	$php_properties['register_globals'] = array(
 		'fitness' => tra('bad'),
 		'setting' => 'On',
-		'message' => tra('register_globals should be off by default. See the php manual for details.')
+		'message' => tra('register_globals should be off by default. See the PHP manual for details.')
 	);
 } else {
 	$php_properties['register_globals'] = array(
@@ -253,7 +253,7 @@ if ($s) {
 	$php_properties['magic_quotes_gpc'] = array(
 		'fitness' => tra('bad'),
 		'setting' => 'On',
-		'message' => tra('magic_quotes_gpc is deprecated and should be off by default. See the php manual for details. You may experience weird behaviour of your Tiki.')
+		'message' => tra('magic_quotes_gpc is deprecated and should be off by default. See the PHP manual for details. You may experience weird behaviour of your Tiki.')
 	);
 } else {
 	$php_properties['magic_quotes_gpc'] = array(
@@ -313,7 +313,7 @@ if ( $s >= 45 ) {
 	$php_properties['max_execution_time'] = array(
 		'fitness' => tra('bad'),
 		'setting' => $s.'s',
-		'message' => tra('Your max_execution_time is at').' '.$s.'. '.tra('This is known to cause issues! You should raise your max_execution_time to at least 30s.')
+		'message' => tra('Your max_execution_time is at').' '.$s.'. '.tra('This is known to cause issues! You should raise your max_execution_time to at least 30 seconds.')
 	);
 }
 
@@ -323,7 +323,7 @@ if ( $s >= 50 && $s <= 90  ) {
 	$php_properties['max_input_time'] = array(
 		'fitness' => tra('good'),
 		'setting' => $s.'s',
-		'message' => tra('Your max_input_time is at').' '.$s.'. '.tra('This is a good value for production sites. If you experience timeouts (such as when performing Admin functions) you may need to increase this nevertheless.')
+		'message' => tra('Your max_input_time is at').' '.$s.'. '.tra('This is a good value for production sites. If you experience timeouts (such as when performing admin functions) you may need to increase this nevertheless.')
 	);
 } elseif ( $s == -1 ) {
 	$php_properties['max_input_time'] = array(
@@ -341,7 +341,7 @@ if ( $s >= 50 && $s <= 90  ) {
 	$php_properties['max_input_time'] = array(
 		'fitness' => tra('bad'),
 		'setting' => $s.'s',
-		'message' => tra('Your max_input_time is at').' '.$s.'. '.tra('It is likely that some scripts, e.g. Admin functions will not finish in this time! You should raise your max_input_time to at least 30s.')
+		'message' => tra('Your max_input_time is at').' '.$s.'. '.tra('It is likely that some scripts, e.g. admin functions will not finish in this time! You should raise your max_input_time to at least 30 seconds.')
 	);
 }
 
@@ -351,7 +351,7 @@ if ( $s >= 30 && $s <= 90  ) {
 	$php_properties['max_execution_time'] = array(
 		'fitness' => tra('good'),
 		'setting' => $s.'s',
-		'message' => tra('Your max_execution_time is at').' '.$s.'. '.tra('This is a good value for production sites. If you experience timeouts (such as when performing Admin functions) you may need to increase this nevertheless.')
+		'message' => tra('Your max_execution_time is at').' '.$s.'. '.tra('This is a good value for production sites. If you experience timeouts (such as when performing admin functions) you may need to increase this nevertheless.')
 	);
 } elseif ( $s == -1 ) {
 	$php_properties['max_execution_time'] = array(
@@ -369,7 +369,7 @@ if ( $s >= 30 && $s <= 90  ) {
 	$php_properties['max_execution_time'] = array(
 		'fitness' => tra('bad'),
 		'setting' => $s.'s',
-		'message' => tra('Your max_execution_time is at').' '.$s.'. '.tra('It is likely that some scripts, e.g. Admin functions will not finish in this time! You should raise your max_execution_time to at least 30s.')
+		'message' => tra('Your max_execution_time is at').' '.$s.'. '.tra('It is likely that some scripts, e.g. admin functions will not finish in this time! You should raise your max_execution_time to at least 30s.')
 	);
 }
 
@@ -471,7 +471,7 @@ if ($s) {
 		$php_properties['mbstring'] = array(
 			'fitness' => tra('good'),
 			'setting' => 'Loaded',
-			'message' => tra('The mbstring extension is needed for an UTF-8 compatible lower case filter in the Admin search for example.')
+			'message' => tra('The mbstring extension is needed for an UTF-8 compatible lower case filter in the admin search for example.')
 		);
 	} elseif ($func_overload != 0) {
 		$php_properties['mbstring'] = array(
@@ -547,13 +547,13 @@ if ($s) {
 	$php_properties['LDAP'] = array(
 		'fitness' => tra('good'),
 		'setting' => 'Loaded',
-		'message' => tra('This extension is needed to connect your Tiki to an LDAP server.')
+		'message' => tra('This extension is needed to connect your Tiki to an LDAP server. More info at: http://doc.tiki.org/LDAP ')
 	);
 } else {
 	$php_properties['LDAP'] = array(
 		'fitness' => tra('ugly'),
 		'setting' => 'Not available',
-		'message' => tra('You will not be able to connect your Tiki to an LDAP server as the needed PHP extension is missing.')
+		'message' => tra('You will not be able to connect your Tiki to an LDAP server as the needed PHP extension is missing. More info at: http://doc.tiki.org/LDAP')
 	);
 }
 
@@ -594,7 +594,7 @@ if ( $s == 0 || ini_get('display_errors') == 0 ) {
 	$php_properties['error_reporting'] = array(
 		'fitness' => tra('good'),
 		'setting' => $s,
-		'message' => tra('You will get all errors reported. Way to go in case of problems!') 
+		'message' => tra('You will get all errors reported. Way to go in case of problems as the error reports usually contain some valuable hints!') 
 	);
 }
 
