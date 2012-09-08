@@ -142,6 +142,19 @@ $server_information['Operating System'] = array(
 	'value' => PHP_OS,
 );
 
+if ( PHP_OS == 'Linux' ) {
+	exec('lsb_release -d', $output, $retval);
+	if ( $retval == 0 ) {
+		$server_information['Release'] = array(
+			'value' => str_replace('Description:', '', $output[0])
+		);
+	} else {
+		$server_information['Release'] = array(
+			'value' => tra('N/A')
+		);
+	}
+}
+
 $server_information['Web Server'] = array(
 	'value' => $_SERVER['SERVER_SOFTWARE']
 );
