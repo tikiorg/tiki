@@ -83,11 +83,12 @@ if ($s) {
 
 // Now connect to the DB and make all our connectivity methods work the same
 if ( $standalone ) {
-	if ( empty($_POST["dbuser"]) && empty($_POST["dbpass"]) && !($php_properties['DB Driver']['setting'] == 'Not available') ) {
+	if ( empty($_POST["dbhost"]) && empty($_POST["dbuser"]) && !($php_properties['DB Driver']['setting'] == 'Not available') ) {
 			print <<<DBC
 			<h2>Database credentials</h2>
 			Couldn't connect to database, please provide valid credentials.
 			<form method="post" action="{$_SERVER['REQUEST_URI']}">
+				<p><label for="dbuser">Database host</label>: <input type="text" id="dbhost" name="dbhost" value="localhost" /></p>
 				<p><label for="dbuser">Database username</label>: <input type="text" id="dbuser" name="dbuser" /></p>
 				<p><label for="dbpass">Database password</label>: <input type="password" id="dbpass" name="dbpass" /></p>
 				<p><input type="submit" value=" Connect " /></p>
@@ -96,7 +97,7 @@ DBC;
 	} else {
 		switch ($php_properties['DB Driver']['setting']) {
 			case "PDO":
-				$connection = new PDO('mysql:host=localhost;dbname=test', $_POST["dbuser"], $_POST['dbpass']);
+				$connection = new PDO('mysql:host='.$_POST['dbhost'], $_POST['dbuser'], $_POST['dbpass']);
 				function query($query, $connection) {
 					$result = $connection->query($query);
 					$return = $result->fetchAll(PDO::FETCH_ASSOC);
@@ -104,7 +105,7 @@ DBC;
 				}
 				break;
 			case "MySQLi":
-				$connection = new mysqli('localhost', $_POST["dbuser"], $_POST['dbpass']);
+				$connection = new mysqli($_POST['dbhost'], $_POST['dbuser'], $_POST['dbpass']);
 				function query($query, $connection) {
 					$result = $connection->query($query);
 					while (	$row = $result->fetch_assoc() ) {
@@ -114,7 +115,7 @@ DBC;
 				}
 				break;
 			case "MySQL":
-				$connection = mysql_connect('localhost', $_POST["dbuser"], $_POST['dbpass']);
+				$connection = mysql_connect($_POST['dbhost'], $_POST['dbuser'], $_POST['dbpass']);
 				function query($query, $connection = '') {
 					$result = mysql_query($query);
 					while (	$row = mysql_fetch_array($result) ) {
