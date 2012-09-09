@@ -34,6 +34,7 @@ function prefs_tiki_list()
 				'regular' => tr('Regular (6 months)'),
 				'longterm' => tr('Long Term Support'),
 			),
+			'help' => 'Version+Lifecycle',
 		),
 		'tiki_minify_javascript' => array(
 			'name' => tra('Minify JavaScript'),
