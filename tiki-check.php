@@ -36,6 +36,9 @@ if (file_exists('./db/local.php') && file_exists('./templates/tiki-check.tpl')) 
 						case bad:
 							echo 'red';
 							break;
+						case information:
+							echo 'black';
+							break;
 					}
 				echo '">'.$value2.'</span></td>';
 				}
@@ -594,19 +597,19 @@ if ( $s == 42 ) {
 $s = error_reporting();
 if ( $s == 0 || ini_get('display_errors') == 0 ) {
 	$php_properties['error_reporting'] = array(
-		'fitness' => tra('bad'),
+		'fitness' => tra('information'),
 		'setting' => $s,
 		'message' => tra('You will get no errors reported. This might be the right thing for a production site, but in case of problems check your settings for display_errors and error_reporting in php.ini to get more information.')
 	);
 } elseif ( $s > 0 && $s < 32767 ) {
 	$php_properties['error_reporting'] = array(
-		'fitness' => tra('ugly'),
+		'fitness' => tra('information'),
 		'setting' => $s,
 		'message' => tra('You will not get all errors reported. This is not necessarily a bad thing (and it might be just right for production sites) as you will still get critical errors reported, but sometimes it can be handy to get more information. Check your error_reporting level in php.ini in case of having issues.')
 	);
 } else {
 	$php_properties['error_reporting'] = array(
-		'fitness' => tra('good'),
+		'fitness' => tra('information'),
 		'setting' => $s,
 		'message' => tra('You will get all errors reported. Way to go in case of problems as the error reports usually contain some valuable hints!') 
 	);
