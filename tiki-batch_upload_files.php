@@ -165,7 +165,7 @@ if (isset($_REQUEST["batch_upload"]) and isset($_REQUEST['files']) and is_array(
 		$filesize = @filesize($filepath);
 
 		//add meadata
-		$metadata - $filegallib->extractMetadataJson($filepath);
+		$metadata = $filegallib->extractMetadataJson($filepath);
 
 		$path_parts = pathinfo($filepath);
 		$ext = strtolower($path_parts["extension"]);
