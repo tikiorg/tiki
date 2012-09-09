@@ -276,7 +276,7 @@ class ReconcileExifIptcXmp
 			return false;
 		//return unaltered metadata if only one type exists
 		} elseif (count($types) == 1) {
-			return 	$metadata[key($types)];
+			return 	array(key($types) => $metadata[key($types)]);
 		//more than one metadata type, so need to reconcile
 		} else {
 			//set main array with all data from all types
