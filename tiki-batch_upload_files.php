@@ -164,6 +164,9 @@ if (isset($_REQUEST["batch_upload"]) and isset($_REQUEST['files']) and is_array(
 		$filepath = $filedir . $path . $file;
 		$filesize = @filesize($filepath);
 
+		//add meadata
+		$metadata - $filegallib->extractMetadataJson($filepath);
+
 		$path_parts = pathinfo($filepath);
 		$ext = strtolower($path_parts["extension"]);
 		include_once ('lib/mime/mimetypes.php');
@@ -200,7 +203,8 @@ if (isset($_REQUEST["batch_upload"]) and isset($_REQUEST['files']) and is_array(
 			if (isset($_REQUEST["removeExt"])) {
 				$name = substr($name, 0, strrpos($name, "."));
 			}
-			$fileId = $filegallib->insert_file($tmpGalId, $name, $tmpDesc, $file, $result['data'], $filesize, $type, $user, $result['fhash']);
+			$fileId = $filegallib->insert_file($tmpGalId, $name, $tmpDesc, $file, $result['data'], $filesize, $type,
+				$user, $result['fhash'], null, null, null, null, null, null, $metadata);
 			if ($fileId) {
 				$feedback[] = tra('Upload was successful') . ': ' . $name;
 				@unlink($filepath);	// seems to return false sometimes even if the file was deleted
@@ -241,6 +245,7 @@ for ($i = 0; $i < $temp_max; $i++) {
 	}
 }
 $smarty->assign_by_ref('galleries', $galleries["data"]);
+$smarty->assign('treeRootId', $prefs['fgal_root_id']);
 include_once ('tiki-section_options.php');
 // disallow robots to index page:
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');

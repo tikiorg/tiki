@@ -56,6 +56,7 @@
 			<td>{tr}Select a File Gallery{/tr}</td>
 			<td>
 				<select name="galleryId">
+					<option value="{$treeRootId}" {if $treeRootId eq $galleryId}selected="selected"{/if} style="font-style:italic; border-bottom:1px dashed #666;">{tr}Root{/tr}</option>
 					{section name=idx loop=$galleries}
 						{if ($galleries[idx].individual eq 'n') or ($galleries[idx].individual_tiki_p_batch_upload_file_dir eq 'y')}
 							<option value="{$galleries[idx].id}" {if $galleries[idx].id eq $galleryId}selected="selected"{/if}>{$galleries[idx].name}</option>
