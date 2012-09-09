@@ -40,7 +40,7 @@
 					<a href="tiki-forum_rss.php?forumId={$forumId}" title="{tr}RSS feed{/tr}">{icon _id="feed" alt="{tr}RSS feed{/tr}"}</a>
 				{/if}
 
-				{if $tiki_p_forum_lock eq 'y'}
+				{if !empty($tiki_p_forum_lock) and $tiki_p_forum_lock eq 'y'}
 					{if $forum_info.is_locked eq 'y'}
 						{self_link lock='n' _icon='lock_break' _alt="{tr}Unlock{/tr}"}{/self_link}
 					{else}
@@ -72,7 +72,7 @@
 
 				<div class="categbar" align="right" >
 					{if $user and $prefs.feature_user_watches eq 'y'}
-						{if $category_watched eq 'y'}
+						{if isset($category_watched) and $category_watched eq 'y'}
 							{tr}Watched by categories:{/tr}
 							{section name=i loop=$watching_categories}
 								<a href="tiki-browse_categories.php?parentId={$watching_categories[i].categId}">{$watching_categories[i].name|escape}</a>
@@ -138,7 +138,14 @@
 	{/if}
 
 
-	<div id="forumpost" style="display:{if $comments_threadId > 0 or $openpost eq 'y' or $warning eq 'y' or $comment_title neq '' or $smarty.request.comments_previewComment neq ''}block{else}none{/if};">
+	<div id="forumpost" style="display:
+		{if $comments_threadId > 0 or $openpost eq 'y' or $warning eq 'y'
+		or !empty($comment_title) or !empty($smarty.request.comments_previewComment)}
+				block
+			{else}
+				none
+		{/if}
+		;">
 		{if $comments_threadId > 0}
 			{tr}Editing:{/tr} {$comment_title|escape} (<a class="forumbutlink" href="tiki-view_forum.php?openpost=1&amp;forumId={$forum_info.forumId}&amp;comments_threadId=0&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;thread_sort_mode={$thread_sort_mode}&amp;comments_per_page={$comments_per_page}">{tr}Post New{/tr}</a>)
 		{/if}
@@ -407,7 +414,7 @@
 					<a class="link" href="tiki-forum_queue.php?forumId={$forumId}">{tr}Queued Messages:{/tr} {$queued}</a>
 				</td>
 			</tr>
-			{if $smarty.request.movesel_x} 
+			{if isset($smarty.request.movesel_x) and $smarty.request.movesel_x}
 				<tr class="odd">
 					<td colspan="18">
 						{tr}Move to:{/tr}
@@ -422,7 +429,7 @@
 					</td>
 				</tr>
 			{/if}
-			{if $smarty.request.splitsel_x} 
+			{if isset($smarty.request.splitsel_x) and $smarty.request.splitsel_x}
 				<tr class="odd">
 					<td colspan="18">
 						{tr}Merge into topic:{/tr}
@@ -710,8 +717,20 @@
 						</th>
 						<td>
 							<select id="filter_poster" name="poster">
-							<option value="" {if $smarty.request.poster eq ''}selected="selected"{/if}>{tr}All posts{/tr}</option>
-							<option value="_me" {if $smarty.request.poster eq '_me'}selected="selected"{/if}>{tr}Me{/tr}</option>
+							<option value=""
+								{if empty($smarty.request.poster)}
+									selected="selected"
+								{/if}
+							>
+								{tr}All posts{/tr}
+							</option>
+							<option value="_me"
+								{if isset($smarty.request.poster) and $smarty.request.poster eq '_me'}
+									selected="selected"
+								{/if}
+							>
+								{tr}Me{/tr}
+							</option>
 							</select>
 						</td>
 					</tr>
@@ -722,11 +741,37 @@
 					</th>
 					<td>
 						<select id="filter_type" name="filter_type">
-						<option value="" {if empty($smarty.request.filter_type)}selected="selected"{/if}>{tr}All posts{/tr}</option>
-						<option value="n" {if $smarty.request.filter_type eq 'n'}selected="selected"{/if}>{tr}normal{/tr}</option>
-						<option value="a" {if $smarty.request.filter_type eq 'a'}selected="selected"{/if}>{tr}announce{/tr}</option>
-						<option value="h" {if $smarty.request.filter_type eq 'h'}selected="selected"{/if}>{tr}hot{/tr}</option>
-						<option value="s" {if $smarty.request.filter_type eq 's'}selected="selected"{/if}>{tr}sticky{/tr}</option>
+						<option value=""
+							{if empty($smarty.request.filter_type)}selected="selected"{/if}>{tr}All posts{/tr}
+						</option>
+						<option value="n"
+							{if isset($smarty.request.filter_type) and $smarty.request.filter_type eq 'n'}
+								selected="selected"
+							{/if}
+						>
+							{tr}normal{/tr}
+						</option>
+						<option value="a"
+							{if isset($smarty.request.filter_type) and $smarty.request.filter_type eq 'a'}
+								selected="selected"
+							{/if}
+						>
+							{tr}announce{/tr}
+						</option>
+						<option value="h"
+							{if isset($smarty.request.filter_type) and $smarty.request.filter_type eq 'h'}
+								selected="selected"
+							{/if}
+						>
+							{tr}hot{/tr}
+						</option>
+						<option value="s"
+							{if isset($smarty.request.filter_type) and $smarty.request.filter_type eq 's'}
+								selected="selected"
+							{/if}
+						>
+							{tr}sticky{/tr}
+						</option>
 						</select>
 					</td>
 				</tr>
@@ -736,8 +781,20 @@
 					</th>
 					<td>
 						<select id="filter_replies" name="reply_state">
-						<option value="" {if $smarty.request.reply_state eq ''}selected="selected"{/if}>{tr}All posts{/tr}</option>
-						<option value="none" {if $smarty.request.reply_state eq 'none'}selected="selected"{/if}>{tr}Posts with no replies{/tr}</option>
+						<option value=""
+							{if empty($smarty.request.reply_state)}
+								selected="selected"
+							{/if}
+						>
+							{tr}All posts{/tr}
+						</option>
+						<option value="none"
+							{if isset($smarty.request.reply_state) and $smarty.request.reply_state eq 'none'}
+								selected="selected"
+							{/if}
+						>
+							{tr}Posts with no replies{/tr}
+						</option>
 						</select>
 					</td>
 				</tr>
