@@ -110,10 +110,12 @@ $smarty->assign('parentId', isset($_REQUEST['parentId']) ? (int)$_REQUEST['paren
 $smarty->assign('creator', $user);
 $smarty->assign('sortorder', 'name');
 $smarty->assign('sortdirection', 'asc');
-if ( $_REQUEST['galleryId'] === "1")
-	$smarty->assign_by_ref('name', tra($gal_info['name'])); //get_strings tra('File Galleries')
-else
+if ( $_REQUEST['galleryId'] === "1") {
+	$traname = tra($gal_info['name']);
+	$smarty->assign_by_ref('name', $traname); //get_strings tra('File Galleries')
+} else {
 	$smarty->assign_by_ref('name', $gal_info['name']);
+}
 $smarty->assign_by_ref('galleryId', $_REQUEST['galleryId']);
 $smarty->assign('reindex_file_id', -1);
 
