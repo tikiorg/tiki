@@ -63,7 +63,7 @@ class Jpeg extends ImageFile
 		//and to distinguish from digest key added later
 		$metadata['iptcraw']['iptc'] = !empty($this->otherinfo['APP13']) ? iptcparse($this->otherinfo['APP13']) : false;
 		//process raw iptc
-		if (is_array($metadata['iptcraw'])) {
+		if (is_array($metadata['iptcraw']['iptc'])) {
 			//first prepare for processing
 			foreach ($metadata['iptcraw']['iptc'] as $fieldname => $value) {
 				if (count($value) > 1) {
@@ -78,68 +78,68 @@ class Jpeg extends ImageFile
 			$metadata['iptc'] = $iptc->processRawData($metadata['iptcraw']);
 			//add IPTC to combined metadata array that is not reconciled
 			$metadata['combined']['iptc'] = $metadata['iptc'];
+
+			//check stored and create current hash
+			/*
+					 * add stored iptc hash if it exists
+					 * The IPTC block is within the APP13 (Photoshop) segment, which is at $this->otherinfo['APP13']
+					 * The stored checksum is at hex marker \x38\x42\x49\x4D\x04\x25\x00\x00\x00\x00 (resource ID 1061)
+					 */
+			$hashstored = $metaObj->getDataSegment($this->otherinfo['APP13'],
+				"\x38\x42\x49\x4D\x04\x25\x00\x00\x00\x00", 10, 2);
+			if (!empty($hashstored)) {
+				$metadata['iptc']['digest']['iptchashstored'] = array(
+					'newval'    => bin2hex($hashstored),
+					'label'     => 'Stored IPTC Hash'
+				);
+			}
+			/*
+		 * add calculated current hash of the IPTC block,
+		 * which starts at hex marker \x38\x42\x49\x4D\x04\x04\x00\x00\x00\x00 within the APP13 segment
+		 */
+			$iptcblock = $metaObj->getDataSegment($this->otherinfo['APP13'],
+				"\x38\x42\x49\x4D\x04\x04\x00\x00\x00\x00", 10, 2);
+			if (!empty($iptcblock)) {
+				$metadata['iptc']['digest']['iptchashcurrent'] = array(
+					'newval'    => md5($iptcblock),
+					'label'     => 'Computed IPTC Hash'
+				);
+			}
+
+			if (!isset($metadata['iptc']['digest']['iptchashstored']['newval']) ||
+				(strlen($metadata['iptc']['digest']['iptchashstored']['newval']) > 0
+					&& $metadata['iptc']['digest']['iptchashstored']['newval'] ==
+						$metadata['iptc']['digest']['iptchashcurrent']['newval']))
+			{
+				if (isset($metadata['iptc']['digest']['iptchashstored']['newval'])) {
+					$metadata['iptc']['digest']['match']['newval'] = '';
+					//place text in suffix so it can be translated
+					$metadata['iptc']['digest']['match']['suffix'] =
+						'IPTC stored and actual hash match - indication that metadata editors were compliant';
+					$metadata['iptc']['digest']['match']['label'] = 'Note';
+				}
+			} else {
+				$metadata['iptc']['digest']['mismatch']['newval'] = '';
+				$metadata['iptc']['digest']['mismatch']['suffix'] =
+					'Metadata has been edited by a noncompliant editor - IPTC stored and actual hash do not match';
+				$metadata['iptc']['digest']['mismatch']['label'] = 'Warning';
+			}
+
+			/*
+		  * In case we needed to get the individual APP13 records, below are a couple of examples
+		  * each record starts with the tag marker of hex 1c (13), followed by record number and dataset number
+		  *
+		  * Example: record number is 02 and dataset number is hex 74 (116), so this is IPTC field 2#116 (or 2:116)
+		  * $single = $metaObj->getDataSegment($this->otherinfo['APP13'], "\x1c\x02\x74", 3, 2);
+		  *
+		  * Example2: record number is 01 and dataset number is hex 5a (90), so this is IPTC field 1#090 (or 1:090)
+		  * $single2 = $metaObj->getDataSegment($this->otherinfo['APP13'], "\x1c\x01\x5a", 3, 2);
+		  *
+		  * next two bytes after the record and dataset number are the size of the dataset
+		 */
 		} else {
 			$metadata['iptc'] = false;
 		}
-		//check stored and create current hash
-		/*
-		 * add stored iptc hash if it exists
-		 * The IPTC block is within the APP13 (Photoshop) segment, which is at $this->otherinfo['APP13']
-		 * The stored checksum is at hex marker \x38\x42\x49\x4D\x04\x25\x00\x00\x00\x00 (resource ID 1061)
-		 */
-		$hashstored = $metaObj->getDataSegment($this->otherinfo['APP13'],
-						"\x38\x42\x49\x4D\x04\x25\x00\x00\x00\x00", 10, 2);
-		if (!empty($hashstored)) {
-			$metadata['iptc']['digest']['iptchashstored'] = array(
-				'newval'    => bin2hex($hashstored),
-				'label'     => 'Stored IPTC Hash'
-				);
-		}
-		/*
-		* add calculated current hash of the IPTC block,
-		* which starts at hex marker \x38\x42\x49\x4D\x04\x04\x00\x00\x00\x00 within the APP13 segment
-		*/
-		$iptcblock = $metaObj->getDataSegment($this->otherinfo['APP13'],
-						"\x38\x42\x49\x4D\x04\x04\x00\x00\x00\x00", 10, 2);
-		if (!empty($iptcblock)) {
-			$metadata['iptc']['digest']['iptchashcurrent'] = array(
-				'newval'    => md5($iptcblock),
-				'label'     => 'Computed IPTC Hash'
-			);
-		}
-
-		if (!isset($metadata['iptc']['digest']['iptchashstored']['newval']) ||
-			(strlen($metadata['iptc']['digest']['iptchashstored']['newval']) > 0
-			&& $metadata['iptc']['digest']['iptchashstored']['newval'] ==
-			$metadata['iptc']['digest']['iptchashcurrent']['newval']))
-		{
-			if (isset($metadata['iptc']['digest']['iptchashstored']['newval'])) {
-				$metadata['iptc']['digest']['match']['newval'] = '';
-				//place text in suffix so it can be translated
-				$metadata['iptc']['digest']['match']['suffix'] =
-					'IPTC stored and actual hash match - indication that metadata editors were compliant';
-				$metadata['iptc']['digest']['match']['label'] = 'Note';
-			}
-		} else {
-			$metadata['iptc']['digest']['mismatch']['newval'] = '';
-			$metadata['iptc']['digest']['mismatch']['suffix'] =
-				'Metadata has been edited by a noncompliant editor - IPTC stored and actual hash do not match';
-			$metadata['iptc']['digest']['mismatch']['label'] = 'Warning';
-		}
-
-
-		/*
-		 * In case we needed to get the individual APP13 records, below are a couple of examples
-		 * each record starts with the tag marker of hex 1c (13), followed by record number and dataset number
-		 *
-		 * Example: record number is 02 and dataset number is hex 74 (116), so this is IPTC field 2#116 (or 2:116)
-		 * $single = $metaObj->getDataSegment($this->otherinfo['APP13'], "\x1c\x02\x74", 3, 2);
-		 *
-		 * Example2: record number is 01 and dataset number is hex 5a (90), so this is IPTC field 1#090 (or 1:090)
-		 * $single2 = $metaObj->getDataSegment($this->otherinfo['APP13'], "\x1c\x01\x5a", 3, 2);
-		 *
-		 * next two bytes after the record and dataset number are the size of the dataset
-		*/
 
 		//XMP
 		//get raw xmp DOM, convert to an array add tags and interpret
@@ -168,10 +168,17 @@ class Jpeg extends ImageFile
 				if (isset($metadata['reconciled']['Summary of Basic Information']['File Data'])) {
 					array_merge($metadata['reconciled']['Summary of Basic Information']['File Data'], $metaObj->basicinfo);
 				} else {
+					$metadata['reconciled'] = array('Summary of Basic Information' =>
+													array('File Data' => $metaObj->basicinfo)) + $metadata['reconciled'];
 					$metadata['reconciled']['Summary of Basic Information']['File Data'] = $metaObj->basicinfo;
 				}
 			}
-			$metadata['combined']['Summary of Basic Information']['File Data'] = $metaObj->basicinfo;
+			if (is_array($metadata['combined'])) {
+				$metadata['combined'] = array('Summary of Basic Information' =>
+					array('File Data' => $metaObj->basicinfo)) + $metadata['combined'];
+			} else {
+				$metadata['combined']['Summary of Basic Information']['File Data'] = $metaObj->basicinfo;
+			}
 		}
 
 		return $metadata;
