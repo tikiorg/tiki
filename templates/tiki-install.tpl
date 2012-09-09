@@ -250,7 +250,7 @@
 		
 			<br /><em>{tr}Enter the name of the database that Tiki will use (if already created) or create (if permitted).{/tr}</em> 
 			<div style="margin-left:1em;display:none;" id="name_help">
-				<p>{tr}You can create the database using mysqladmin, phpMyAdmin, cPanel, or ask your hosting provider. If the database doesn't exist and the supplied username has permissions, the database will be created.{/tr}</p>
+				<p>{tr}You can create the database using Adminer, phpMyAdmin, cPanel, or ask your hosting provider. If the database doesn't exist and the supplied username has permissions, the database will be created.{/tr}</p>
 				<p>{tr}If you are using a database which is already being used for something else (not recommended), check db/tiki.sql to make sure the table names used by Tiki are not already used.{/tr}</p>
 			</div>
 			</div>
