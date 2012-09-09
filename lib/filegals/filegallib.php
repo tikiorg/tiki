@@ -263,7 +263,7 @@ class FileGalLib extends TikiLib
 			$logslib->add_action('Uploaded', $galleryId, 'file gallery', "fileId=$fileId&amp;add=$size");
 		}
 
-		if ($final_event) {
+		if (isset($final_event) && $final_event) {
 			TikiLib::events()->trigger(
 							$final_event,
 							array('type' => 'file', 'object' => $fileId, 'galleryId' => $galleryId, 'filetype' => $type)
