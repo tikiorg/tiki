@@ -113,3 +113,35 @@
 		{norecords _colspan=4}
 	{/foreach}
 </table>
+
+<h2>{tr}PHP security properties{/tr}</h2>
+<table class="normal">
+	<tr>
+		<th>{tr}Property{/tr}</th>
+		<th>{tr}Value{/tr}</th>
+		<th>{tr}Tiki Fitness{/tr}</th>
+		<th>{tr}Explanation{/tr}</th>
+	</tr>
+	{cycle values="even,odd" print=false}
+	{foreach from=$security key=key item=item}
+		<tr class="{cycle}">
+			<td class="text">{$key}</td>
+			<td class="text">{$item.setting}</td>
+			<td class="text">
+				{if $item.fitness eq 'good' or $item.fitness eq 'safe'}
+					{icon _id=accept alt="$item.fitness" style="vertical-align:middle"}
+				{elseif $item.fitness eq 'bad' or $item.fitness eq 'risky'}
+					{icon _id=exclamation alt="$item.fitness" style="vertical-align:middle"}
+				{elseif $item.fitness eq 'ugly'}
+					{icon _id=error alt="$item.fitness" style="vertical-align:middle"}
+				{elseif $item.fitness eq 'unknown'}
+					{icon _id=error alt="$item.fitness" style="vertical-align:middle"}
+				{/if}
+				{$item.fitness}
+			</td>
+			<td class="text">{$item.message}</td>
+		</tr>
+	{foreachelse}
+		{norecords _colspan=4}
+	{/foreach}
+</table>

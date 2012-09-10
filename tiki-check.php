@@ -28,12 +28,14 @@ if (file_exists('./db/local.php') && file_exists('./templates/tiki-check.tpl')) 
 					echo '<td style="border:1px solid"><span style="color:';
 					switch($value2) {
 						case good:
+						case safe:
 							echo 'green';
 							break;
 						case ugly:
 							echo 'yellow';
 							break;
 						case bad:
+						case risky:
 							echo 'red';
 							break;
 						case information:
@@ -632,7 +634,7 @@ if( $s == $e )
 	$php_properties['ini_set'] = array(
 		'fitness' => tra('ugly'),
 		'setting' => 'Disabled',
-		'message' => tra('ini_set is used in some places to accomodate for special needs of some Tiki features. Check disable_features in your php.ini.')
+		'message' => tra('ini_set is used in some places to accomodate for special needs of some Tiki features. Check disable_functions in your php.ini.')
 	);
 }
 
@@ -679,6 +681,135 @@ if ($connection || !$standalone) {
 	}
 }
 
+// Security Checks
+// get all dangerous php settings and check them
+$security = array();
+// register globals
+$s = ini_get('register_globals');
+if ($s) {
+	$security['register_globals'] = array(
+		'setting' => 'On',
+		'fitness' => tra('unsafe') ,
+		'message' => tra('register_globals should be off by default. See the php manual for details.')
+	);
+} else {
+	$security['register_globals'] = array(
+		'setting' => 'Off',
+		'fitness' => tra('safe') ,
+		'message' => tra('register_globals should be off by default. See the php manual for details.')
+	);
+}
+
+$fcts = array(
+		array (
+			'function' => 'exec',
+			'risky' => tra('Exec can potentially be used to execute arbitrary code on your server.').' '.tra('Tiki does not need it, you may want to disable it.'),
+			'safe' => tra('Exec can be potentially be used to execute arbitrary code on your server.').' '.tra('Tiki does not need it, you are wise to have it disabled.')
+		),
+		array (
+			'function' => 'passthru',
+			'risky' => tra('Passthru is similar to exec.').' '.tra('Tiki does not need it, you may want to disable it.'),
+			'safe' =>  tra('Passthru is similar to exec.').' '.tra('Tiki does not need it, you are wise to have it disabled.')
+		),
+		array (
+			'function' => 'shell_exec',
+			'risky' => tra('Shell_exec is similar to exec.').' '.tra('Tiki does not need it, you may want to disable it.'),
+			'safe' =>  tra('Shell_exec is similar to exec.').' '.tra('Tiki does not need it, you are wise to have it disabled.')
+		),
+		array (
+			'function' => 'system',
+			'risky' => tra('System is similar to exec.').' '.tra('Tiki does not need it, you may want to disable it.'),
+			'safe' =>  tra('System is similar to exec.').' '.tra('Tiki does not need it, you are wise to have it disabled.')
+		),
+		array (
+			'function' => 'proc_open',
+			'risky' => tra('Proc_open is similar to exec.').' '.tra('Tiki does not need it, you may want to disable it.'),
+			'safe' =>  tra('Proc_open is similar to exec.').' '.tra('Tiki does not need it, you are wise to have it disabled.')
+		),
+		array (
+			'function' => 'curl_exec',
+			'risky' => tra('Curl_exec can potentially be abused to write malicious code.').' '.tra('Tiki needs it to run features like Kaltura, CAS login, CClite and the myspace and sf wiki-plugins. If you need these and trust the other PHP software on your server, you should enable it.'),
+			'safe' => tra('Curl_exec can potentially be abused to write malicious code.').' '.tra('Tiki needs it to run features like Kaltura, CAS login, CClite and the myspace and sf wiki-plugins. If you need these and trust the other PHP software on your server, you should enable it.')
+		),
+		array (
+			'function' => 'curl_multi_exec',
+			'risky' => tra('Curl_multi_exec can potentially be abused to write malicious code.').' '.tra('Tiki needs it to run features like Kaltura, CAS login, CClite and the myspace and sf wiki-plugins. If you need these and trust the other PHP software on your server, you should enable it.'),
+			'safe' => tra('Curl_multi_exec can potentially be abused to write malicious code.').' '.tra('Tiki needs it to run features like Kaltura, CAS login, CClite and the myspace and sf wiki-plugins. If you need these and trust the other PHP software on your server, you should enable it.')
+		),
+		array (
+			'function' => 'parse_ini_file',
+			'risky' => tra('It is probably an urban myth that this is dangerous. Tiki team will reconsider this check, but be warned.'),
+			'safe' => tra('It is probably an urban myth that this is dangerous. Tiki team will reconsider this check, but be warned.'),
+		),
+		array (
+			'function' => 'show_source',
+			'risky' => tra('It is probably an urban myth that this is dangerous. Tiki team will reconsider this check, but be warned.'),
+			'safe' => tra('It is probably an urban myth that this is dangerous. Tiki team will reconsider this check, but be warned.'),
+		)
+	);
+
+foreach ($fcts as $fct) {
+	if (function_exists($fct['function'])) {
+		$security[$fct['function']] = array(
+			'setting' => tra('Enabled'),
+			'fitness' => tra('risky'),
+			'message' => $fct['risky']
+		);
+	} else {
+		$security[$fct['function']] = array(
+			'setting' => tra('Disabled'),
+			'fitness' => tra('safe'),
+			'message' => $fct['safe']
+		);
+	}
+}
+
+// trans_sid
+$s = ini_get('session.use_trans_sid');
+if ($s) {
+	$security['session.use_trans_sid'] = array(
+		'setting' => 'Enabled',
+		'fitness' => tra('unsafe'),
+		'message' => tra('session.use_trans_sid should be off by default. See the php manual for details.')
+	);
+} else {
+	$security['session.use_trans_sid'] = array(
+		'setting' => 'Disabled',
+		'fitness' => tra('safe'),
+		'message' => tra('session.use_trans_sid should be off by default. See the php manual for details.')
+	);
+}
+
+$s = ini_get('xbithack');
+if ($s == 1) {
+	$security['xbithack'] = array(
+		'setting' => 'Enabled',
+		'fitness' => tra('unsafe'),
+		'message' => tra('setting the xbithack option is unsafe. Depending on the file handling of your webserver and your tiki settings, it may be possible that an attacker can upload scripts to file gallery and execute them')
+	);
+} else {
+	$security['xbithack'] = array(
+		'setting' => 'Disabled',
+		'fitness' => tra('safe'),
+		'message' => tra('setting the xbithack option is unsafe. Depending on the file handling of your webserver and your tiki settings, it may be possible that an attacker can upload scripts to file gallery and execute them')
+	);
+}
+
+$s = ini_get('allow_url_fopen');
+if ($s == 1) {
+	$security['allow_url_fopen'] = array(
+		'setting' => 'Enabled',
+		'fitness' => tra('risky'),
+		'message' => tra('allow_url_fopen may potentially be used to upload remote data or scripts. If you dont use the blog feature, you can switch it off.')
+	);
+} else {
+	$security['allow_url_fopen'] = array(
+		'setting' => 'Disabled',
+		'fitness' => tra('safe'),
+		'message' => tra('allow_url_fopen may potentially be used to upload remote data or scripts. If you dont use the blog feature, you can switch it off.')
+	);
+}
+
 if ($standalone) {
 echo '<h1>Tiki Server Compatibility</h1>';
 echo '<h2>MySQL Database Properties</h2>';
@@ -689,11 +820,14 @@ echo '<h2>Server Properties</h2>';
 render_table($server_properties);
 echo '<h2>PHP scripting language properties</h2>';
 render_table($php_properties);
+echo '<h2>PHP security properties</h2>';
+render_table($security);
 } else {
 	$smarty-> assign_by_ref('server_information', $server_information);
 	$smarty->assign_by_ref('server_properties', $server_properties);
 	$smarty->assign_by_ref('mysql_properties', $mysql_properties);
 	$smarty->assign_by_ref('php_properties', $php_properties);
+	$smarty->assign_by_ref('security', $security);
 	// disallow robots to index page:
 	$smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 	$smarty->assign('mid', 'tiki-check.tpl');

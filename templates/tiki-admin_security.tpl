@@ -37,35 +37,6 @@
 	{/if}
 </table>
 
-<h2>{tr}PHP functions{/tr}</h2>
-<table class="normal">
-	<tr>
-		<th>{tr}Function{/tr}</th>
-		<th>{tr}Setting{/tr}</th>
-		<th>{tr}Risk Factor{/tr}</th>
-	</tr>
-	{foreach from=$phpfunctions key=key item=item}
-		<tr class="{cycle}">
-			<td class="text">{$key}</td>
-			<td class="text">{$item.setting}</td>
-			<td class="text">
-				{if $item.risk eq 'safe'}
-					{icon _id=accept alt="$item.risk" style="vertical-align:middle"}
-				{elseif $item.risk eq 'risky'}
-					{icon _id=exclamation alt="$item.risk" style="vertical-align:middle"}
-				{elseif $item.risk eq 'unsafe'}
-					{icon _id=exclamation alt="$item.risk" style="vertical-align:middle"}
-				{elseif $item.risk eq 'unknown'}
-					{icon _id=error alt="$item.risk" style="vertical-align:middle"}
-				{/if}
-				{$item.risk}
-			</td>
-		</tr>
-	{/foreach}
-</table>
-
-{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}To disallow a function, add a disable_functions=exec,passthru for instance in your php.ini{/tr}{/remarksbox}
-
 <br />
 
 <h2>{tr}Tiki settings{/tr}</h2>
