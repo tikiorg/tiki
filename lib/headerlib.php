@@ -52,8 +52,12 @@ class HeaderLib
 
 		$https_mode = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on';
 
-		$cdn_pref = $https_mode ? $prefs['tiki_cdn_ssl'] : $prefs['tiki_cdn'];
-	
+		if ($https_mode) {
+			$cdn_pref = $prefs['tiki_cdn_ssl'];
+		} elseif (isset($prefs['tiki_cdn'])) {
+			$cdn_pref = $prefs['tiki_cdn'];
+		}
+
 		if ( !empty($cdn_pref) && 'http' != substr($file, 0, 4) && $type !== 'dynamic' ) {
 			$file = $cdn_pref . $tikiroot . $file;
 		}
