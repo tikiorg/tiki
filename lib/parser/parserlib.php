@@ -1570,11 +1570,11 @@ if ( \$('#$id') ) {
 
 		if ($prefs['feature_jison_wiki_parser'] == 'y') {//The following will stop and return based off new parser
 			//Testing new parser ;)
-			if (!isset(self::$jisonParser)) self::$jisonParser = new JisonParser_Wiki_Handler();
-			self::$jisonParser->setOption($this->option);
-
 			if ($this->option['ck_editor']) {
-				self::$jisonParser->setWikiPluginParserNegotiatorClass('WikiPlugin_CKEditorNegotiator');
+				if (!isset(self::$jisonParser)) self::$jisonParser = new JisonParser_WikiCKEditor_Handler();
+			} else {
+				if (!isset(self::$jisonParser)) self::$jisonParser = new JisonParser_Wiki_Handler();
+				self::$jisonParser->setOption($this->option);
 			}
 			$data = self::$jisonParser->parse($data);
 
