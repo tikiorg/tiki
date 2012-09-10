@@ -282,17 +282,17 @@ if ($s) {
 
 // default_charset
 $s = ini_get('default_charset');
-if ($s) {
-	$php_properties['default_charset'] = array(
-		'fitness' => tra('bad'),
-		'setting' => $s,
-		'message' => tra('default_charset should be UTF-8. Please check your php.ini.')
-	);
-} else {
+if ( strtolower($s) == "utf-8" ) {
 	$php_properties['default_charset'] = array(
 		'fitness' => tra('good'),
 		'setting' => $s,
 		'message' => tra('Well set! Tiki is fully UTF-8 and so should your installation be.')
+	);
+} else {
+	$php_properties['default_charset'] = array(
+		'fitness' => tra('bad'),
+		'setting' => $s,
+		'message' => tra('default_charset should be UTF-8 as Tiki is fully UTF-8. Please check your php.ini.')
 	);
 }
 
