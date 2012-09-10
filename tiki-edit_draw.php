@@ -85,9 +85,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_REQUEST['data'])) {
 	$fileId = '';
 	if (empty($_REQUEST["fileId"]) == false && $_REQUEST["fileId"] > 0) {
 		//existing file
-		$fileId = $filegallib->save_archive($_REQUEST["fileId"], $fileInfo['galleryId'], 0, $_REQUEST['name'], $fileInfo['description'], $_REQUEST['name'].".svg", $_REQUEST['data'], strlen($_REQUEST['data']), $type, $fileInfo['user'], null, null, $user);
-		
-		if ($fileInfo['filetype'] != $mimetypes["svg"] && $prefs['fgal_keep_fileId'] == 'y') { // this is a conversion from an image other than svg
+		$fileId = $filegallib->save_archive($_REQUEST["fileId"], $fileInfo['galleryId'], 0, $_REQUEST['name'],
+			$fileInfo['description'], $_REQUEST['name'].".svg", $_REQUEST['data'], strlen($_REQUEST['data']), $type,
+			$fileInfo['user'], null, null, $user);
+		// this is a conversion from an image other than svg
+		if ($fileInfo['filetype'] != $mimetypes["svg"] && $prefs['fgal_keep_fileId'] == 'y') {
 			$newFileInfo = $filegallib->get_file_info($fileId);
 
 			$archiveFileId = $tikilib->getOne("
@@ -97,12 +99,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_REQUEST['data'])) {
 				ORDER BY lastModif DESC
 			", array($fileId));
 
-			$newFileInfo['data'] = str_replace('?fileId=' . $fileInfo['fileId'] . '#', '?fileId=' . $archiveFileId . '#', $newFileInfo['data']);
-			$fileId = $filegallib->save_archive($newFileInfo["fileId"], $newFileInfo['galleryId'], 0, $newFileInfo['filename'], $newFileInfo['description'], $newFileInfo['name'].".svg", $newFileInfo['data'], strlen($newFileInfo['data']), $type, $newFileInfo['user'], null, null, $user);
+			$newFileInfo['data'] = str_replace('?fileId=' . $fileInfo['fileId'] . '#', '?fileId='
+				. $archiveFileId . '#', $newFileInfo['data']);
+			$fileId = $filegallib->save_archive($newFileInfo["fileId"], $newFileInfo['galleryId'], 0,
+				$newFileInfo['filename'], $newFileInfo['description'], $newFileInfo['name'].".svg",
+				$newFileInfo['data'], strlen($newFileInfo['data']), $type, $newFileInfo['user'], null, null, $user);
 		}
 	} else {
 		//new file
-		$fileId = $filegallib->insert_file($_REQUEST["galleryId"], $_REQUEST['name'], $_REQUEST['description'], $_REQUEST['name'].".svg", $_REQUEST['data'], strlen($_REQUEST['data']), $type, $user);
+		$fileId = $filegallib->insert_file($_REQUEST["galleryId"], $_REQUEST['name'], $_REQUEST['description'],
+			$_REQUEST['name'].".svg", $_REQUEST['data'], strlen($_REQUEST['data']), $type, $user, null);
 	}
 	
 	echo $fileId;
@@ -116,10 +122,12 @@ if ($fileInfo['filetype'] == $mimetypes["svg"]) {
 	$w = imagesx($image);
 	$h = imagesy($image);
 
-	$data = '<svg width="' . $w . '" height="' . $h . '" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+	$data = '<svg width="' . $w . '" height="' . $h
+		. '" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 	<g>
 		<title>Layer 1</title>
-		<image x="1" y="1" width="100%" height="100%" id="svg_1" xlink:href="' . (empty($fileInfo['fileId']) ? '' : $tikilib->tikiUrl() . 'tiki-download_file.php?fileId=' . $fileInfo['fileId'] . '#image' ) . '"/>
+		<image x="1" y="1" width="100%" height="100%" id="svg_1" xlink:href="' . (empty($fileInfo['fileId']) ? ''
+			: $tikilib->tikiUrl() . 'tiki-download_file.php?fileId=' . $fileInfo['fileId'] . '#image' ) . '"/>
 	</g>
 </svg>';
 }
