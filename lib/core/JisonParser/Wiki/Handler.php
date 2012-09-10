@@ -108,7 +108,6 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		'min_one_paragraph' => false,
 		'parseBreaks' => true,
 		'parseLists' =>   true,
-		'parseWiki' => true,
 		'parseNps' => true,
 		'parseSmileys'=> true
 	);
@@ -520,36 +519,26 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 
 	function bold($content) //__content__
 	{
-		if ($this->Parser->option['parseWiki'] == false) return "__" . $content . "__";
-
 		return '<strong>' . $content . '</strong>';
 	}
 
 	function box($content) //^content^
 	{
-		if ($this->Parser->option['parseWiki'] == false) return "^" . $content . "^";
-
 		return '<div class="simplebox">' . $content . '</div>';
 	}
 
 	function center($content) //::content::
 	{
-		if ($this->Parser->option['parseWiki'] == false) return "::" . $content . "::";
-
 		return '<div style="text-align: center;">' . $content . '</div>';
 	}
 
 	function code($content)
 	{
-		if ($this->Parser->option['parseWiki'] == false) return "-+" . $content . "+-";
-
 		return "<code>" . $content . "</code>";
 	}
 
 	function color($content)
 	{
-		if ($this->Parser->option['parseWiki'] == false) return "~~" . $content . "~~";
-
 		$text = explode(':', $content);
 		$color = $text[0];
 		$content = $text[1];
@@ -559,15 +548,11 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 
 	function italics($content) //''content''
 	{
-		if ($this->Parser->option['parseWiki'] == false) return "''" . $content . "''";
-
 		return '<em>' . $content . '</em>';
 	}
 
 	function directional($direction, $content)
 	{
-		if ($this->Parser->option['parseWiki'] == false) return $direction . $content;
-
 		$dir = "";
 
 		$direction = trim($direction);
@@ -599,7 +584,6 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		}
 
 		$content = substr($content, $hNum - 1);
-		if ($this->Parser->option['parseWiki'] == false) return str_repeat("!", $hNum) . $content;
 
 		$hNum = min(6, $hNum); //html doesn't support 7+ header level
 		$id = $this->Parser->header->stack($hNum, $content);
@@ -629,8 +613,6 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 
 	function stackList($content)
 	{
-		if ($this->Parser->option['parseWiki'] == false) return $content;
-
 		$this->line++;
 		$level = 0;
 		$headerLength = strlen($content);
@@ -671,7 +653,6 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 
 	function hr() //---
 	{
-		if ($this->Parser->option['parseWiki'] == false) return "---";
 		$this->line++;
 		$this->skipBr = true;
 		return '<hr />';
@@ -679,8 +660,6 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 
 	function line()
 	{
-		if ($this->Parser->option['parseWiki'] == false) return "\n";
-
 		$this->line++;
 
 		//The first \n was inserted just before parse
@@ -710,15 +689,12 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 
 	function forcedLineEnd()
 	{
-		if ($this->Parser->option['parseWiki'] == false) return "%%%";
 		$this->line++;
 		return '<br />';
 	}
 
 	function unlink($content) //[content|content]
 	{
-		if ($this->Parser->option['parseWiki'] == false) return "[[" . $content . "]";
-
 		$contentLength = strlen($content);
 
 		if ($content[$contentLength - 3] == "@" &&
@@ -741,8 +717,6 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 
 	function link($content) //[content|content]
 	{
-		if ($this->Parser->option['parseWiki'] == false) return "[" . $content . "]";
-
 		$link = explode('|', $content);
 		$href = (isset($link[0]) ? $link[0] : $content);
 		$text = (isset($link[1]) ? $link[1] : $href);
@@ -756,23 +730,17 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 
 	function smile($content)
 	{
-		if ($this->Parser->option['parseWiki'] == false) return "(:" . $content . ":)";
-
 		//this needs more tlc too
 		return '<img src="img/smiles/icon_' . $content . '.gif" alt="' . $content . '" />';
 	}
 
 	function strike($content) //--content--
 	{
-		if ($this->Parser->option['parseWiki'] == false) return "--" . $content . "--";
-
 		return '<strike>' . $content . '</strike>';
 	}
 
 	function tableParser($content) /*|| | \n | ||*/
 	{
-		if ($this->Parser->option['parseWiki'] == false) return "||" . $content . "||";
-
 		$tableContents = '';
 		$rows = explode("\n", $content);
 
@@ -801,8 +769,6 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 
 	function titlebar($content) //-=content=-
 	{
-		if ($this->Parser->option['parseWiki'] == false) return "-=" . $content . "=-";
-
 		$this->skipBr = true;
 
 		return '<div class="titlebar">' . $content . '</div>';
@@ -810,15 +776,11 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 
 	function underscore($content) //===content===
 	{
-		if ($this->Parser->option['parseWiki'] == false) return "===" . $content . "===";
-
 		return '<u>' . $content . '</u>';
 	}
 
 	function wikilink($content) //((content|content))
 	{
-		if ($this->Parser->option['parseWiki'] == false) return "((" . $content . "))";
-
 		$wikilink = explode('|', $content);
 		$href = (isset($wikilink[0]) ? $wikilink[0] : $content);
 		$text = (isset($wikilink[1]) ? $wikilink[1] : $href);
