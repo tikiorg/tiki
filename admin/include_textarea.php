@@ -11,6 +11,9 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
 	exit;
 }
 
+// The plugins tab of tiki-admin.php?page=textarea tends to take a lot of memory, so this will avoid errors (will only work on hosts that accept ini_set of memory_limit)
+@ini_set('memory_limit', -1);
+
 $parserlib = TikiLib::lib('parser');
 
 $plugins = array();
