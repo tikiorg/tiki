@@ -12,19 +12,20 @@ class WikiPlugin_ParserNegotiator
 	public $body;
 	public $info;
 	public $fingerprint;
-	public $exists;
+	public $exists; //exists is set to true only for old style plugin
 	public $index;
 	public $key;
 	public $needsParsed = true;
 	public $parserLevel = 0;
+	public $dontModify = false;
+	public $parser;
+	public $parserOption;
 
 	private $className;
-	private $class;
-	private $parser;
+	private $class; //class exists for zend style and injected plugins
 	private $argParser;
 	private $page;
 	private $prefs;
-	private $parserOption;
 
 	static $pluginIndexes = array();
 	static $parserLevels = array();
@@ -42,6 +43,20 @@ class WikiPlugin_ParserNegotiator
 		$this->argParser = new WikiParser_PluginArgumentParser;
 	}
 
+	public function inject($plugin)
+	{
+		self::$pluginInstances[get_class($plugin)] = $plugin;
+	}
+
+	function injectedExists()
+	{
+		if (isset(self::$pluginInstances[$this->name]) && gettype(self::$pluginInstances[$this->name]) == 'object') {
+			return true;
+		}
+
+		return false;
+	}
+
 	public function setDetails(& $pluginDetails)
 	{
 		$this->name = strtolower($pluginDetails['name']);
@@ -50,6 +65,8 @@ class WikiPlugin_ParserNegotiator
 		if ($this->zendExists() == true) {
 			if (empty(self::$pluginInstances[$this->className])) self::$pluginInstances[$this->className] = new $this->className;
 			$this->class = self::$pluginInstances[$this->className];
+		} else if ($this->injectedExists() == true) {
+			$this->class = self::$pluginInstances[$this->name];
 		} else {
 			$this->class = null;
 		}
@@ -194,7 +211,7 @@ class WikiPlugin_ParserNegotiator
 		return false;
 	}
 
-	function canExecute( $dontModify = false )
+	function canExecute()
 	{
 		global $tikilib;
 		// If validation is disabled, anything can execute
@@ -206,7 +223,7 @@ class WikiPlugin_ParserNegotiator
 			return true;
 		}
 
-		$val = $this->fingerprintCheck($dontModify);
+		$val = $this->fingerprintCheck();
 
 		switch($val) {
 			case 'accept':
@@ -409,7 +426,7 @@ class WikiPlugin_ParserNegotiator
 		return "$this->name-$bodyHash-$argsHash-$bodyLen-$argsLen";
 	}
 
-	private function fingerprintCheck( $dontModify = false )
+	private function fingerprintCheck()
 	{
 		global $tikilib;
 		$limit = date('Y-m-d H:i:s', time() - 15*24*3600);
@@ -437,7 +454,7 @@ class WikiPlugin_ParserNegotiator
 			$needUpdate = true;
 		}
 
-		if ( $needUpdate && !$dontModify ) {
+		if ( $needUpdate && !$this->dontModify ) {
 			if ( $this->page ) {
 				$objectType = 'wiki page';
 				$objectId = $this->page;
