@@ -7,7 +7,8 @@
 
 class WikiPlugin_CKEditorNegotiator extends WikiPlugin_ParserNegotiator
 {
-	var $needsParsed = false;
+	public $needsParsed = false;
+	public $dontModify = false;
 
 	public function execute()
 	{
@@ -51,14 +52,17 @@ class WikiPlugin_CKEditorNegotiator extends WikiPlugin_ParserNegotiator
 			}
 		}
 
-		$this->result = '<'.$elem.' class="tiki_plugin" plugin="' . $this->name . '" style="' . $elem_style . '"' .
+		return '<'.$elem.' class="tiki_plugin" plugin="' . $this->name . '" style="' . $elem_style . '"' .
 			' syntax="' . htmlentities( $syntax, ENT_QUOTES, 'UTF-8') . '"' .
 			' args="' . htmlentities($this->urlEncodeArgs(), ENT_QUOTES, 'UTF-8') . '"' .
 			' body="' . htmlentities($this->body, ENT_QUOTES, 'UTF-8') . '">'.	// not <!--{cke_protected}
 			'<img src="'.$icon.'" width="16" height="16" style="float:left;position:absolute;z-index:10001" />' .
 			$result.'<!-- end tiki_plugin --></'.$elem.'>';
+	}
 
-		return $this->result;
+	function blockFromExecution($status = '')
+	{
+		return $this->execute();
 	}
 
 	private function containsHtmlBlock(& $string)
