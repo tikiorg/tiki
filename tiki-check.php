@@ -314,63 +314,13 @@ if ($s) {
 
 // max_execution_time
 $s = ini_get('max_execution_time');
-if ( $s >= 45 ) {
-	$php_properties['max_execution_time'] = array(
-		'fitness' => tra('good'),
-		'setting' => $s.'s',
-		'message' => tra('Your max_execution_time is at').' '.$s.'. '.tra('This is known to behave well even for bigger sites.')
-	);
-} elseif ( $s < 45 && $s >= 30 ) {
-	$php_properties['max_execution_time'] = array(
-		'fitness' => tra('ugly'),
-		'setting' => $s.'s',
-		'message' => tra('Your max_execution_time is at').' '.$s.'. '.tra('This will normally work, but you might run into problems when your site grows.')
-	);
-} else {
-	$php_properties['max_execution_time'] = array(
-		'fitness' => tra('bad'),
-		'setting' => $s.'s',
-		'message' => tra('Your max_execution_time is at').' '.$s.'. '.tra('This is known to cause issues! You should raise your max_execution_time to at least 30 seconds.')
-	);
-}
-
-// max_input_time
-$s = ini_get('max_input_time');
-if ( $s >= 50 && $s <= 90  ) {
-	$php_properties['max_input_time'] = array(
-		'fitness' => tra('good'),
-		'setting' => $s.'s',
-		'message' => tra('Your max_input_time is at').' '.$s.'. '.tra('This is a good value for production sites. If you experience timeouts (such as when performing admin functions) you may need to increase this nevertheless.')
-	);
-} elseif ( $s == -1 ) {
-	$php_properties['max_input_time'] = array(
-		'fitness' => tra('ugly'),
-		'setting' => $s.'s',
-		'message' => tra('Your max_input_time is unlimited.').' '.tra('This is not necessarily bad, but it\'s a good idea to limit this time on productions servers in order to eliminate unexpectedly long running scripts.')
-	);
-} elseif ( $s > 90 ) {
-	$php_properties['max_input_time'] = array(
-		'fitness' => tra('ugly'),
-		'setting' => $s.'s',
-		'message' => tra('Your max_input_time is at').' '.$s.'. '.tra('This is not necessarily bad, but it\'s a good idea to limit this time on productions servers in order to eliminate unexpectedly long running scripts.')
-	);
-} else {
-	$php_properties['max_input_time'] = array(
-		'fitness' => tra('bad'),
-		'setting' => $s.'s',
-		'message' => tra('Your max_input_time is at').' '.$s.'. '.tra('It is likely that some scripts, e.g. admin functions will not finish in this time! You should raise your max_input_time to at least 30 seconds.')
-	);
-}
-
-// max_execution_time
-$s = ini_get('max_execution_time');
 if ( $s >= 30 && $s <= 90  ) {
 	$php_properties['max_execution_time'] = array(
 		'fitness' => tra('good'),
 		'setting' => $s.'s',
 		'message' => tra('Your max_execution_time is at').' '.$s.'. '.tra('This is a good value for production sites. If you experience timeouts (such as when performing admin functions) you may need to increase this nevertheless.')
 	);
-} elseif ( $s == -1 ) {
+} elseif ( $s == -1 || $s == 0 ) {
 	$php_properties['max_execution_time'] = array(
 		'fitness' => tra('ugly'),
 		'setting' => $s.'s',
@@ -387,6 +337,34 @@ if ( $s >= 30 && $s <= 90  ) {
 		'fitness' => tra('bad'),
 		'setting' => $s.'s',
 		'message' => tra('Your max_execution_time is at').' '.$s.'. '.tra('It is likely that some scripts, e.g. admin functions will not finish in this time! You should raise your max_execution_time to at least 30s.')
+	);
+}
+
+// max_input_time
+$s = ini_get('max_input_time');
+if ( $s >= 50 && $s <= 90  ) {
+	$php_properties['max_input_time'] = array(
+		'fitness' => tra('good'),
+		'setting' => $s.'s',
+		'message' => tra('Your max_input_time is at').' '.$s.'. '.tra('This is a good value for production sites. If you experience timeouts (such as when performing admin functions) you may need to increase this nevertheless.')
+	);
+} elseif ( $s == -1 || $s == 0 ) {
+	$php_properties['max_input_time'] = array(
+		'fitness' => tra('ugly'),
+		'setting' => $s.'s',
+		'message' => tra('Your max_input_time is unlimited.').' '.tra('This is not necessarily bad, but it\'s a good idea to limit this time on productions servers in order to eliminate unexpectedly long running scripts.')
+	);
+} elseif ( $s > 90 ) {
+	$php_properties['max_input_time'] = array(
+		'fitness' => tra('ugly'),
+		'setting' => $s.'s',
+		'message' => tra('Your max_input_time is at').' '.$s.'. '.tra('This is not necessarily bad, but it\'s a good idea to limit this time on productions servers in order to eliminate unexpectedly long running scripts.')
+	);
+} else {
+	$php_properties['max_input_time'] = array(
+		'fitness' => tra('bad'),
+		'setting' => $s.'s',
+		'message' => tra('Your max_input_time is at').' '.$s.'. '.tra('It is likely that some scripts, e.g. admin functions will not finish in this time! You should raise your max_input_time to at least 30 seconds.')
 	);
 }
 
