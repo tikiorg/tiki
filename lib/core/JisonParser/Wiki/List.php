@@ -9,7 +9,8 @@ class JisonParser_Wiki_List
 {
 	static $stacks = array();
 	var $index = 0;
-	var $lineNumberLast = 0;
+	var $lineNumberLast;
+	var $levelLast = 0;
 	var $id;
 	var $key;
 
@@ -22,8 +23,10 @@ class JisonParser_Wiki_List
 	{
 		$returnKey = false;
 
-		/*the line number is +2 rather than just 1 because we insert a \n at the end of the line after we detect the list item using unset, this is so we can detect the next line as well*/
-		if ($lineNumber != ($this->lineNumberLast + 2) || $this->lineNumberLast == 0) {
+		if (
+			$lineNumber != ($this->lineNumberLast + 1) ||
+			!isset($this->lineNumberLast)
+		) {
 			$this->index++;
 			$this->id = $this->id();
 			$this->key = '§' . md5('list(id:' . $this->id . ',index:' . $this->index . ')') . '§';
@@ -38,6 +41,7 @@ class JisonParser_Wiki_List
 		}
 
 		$this->lineNumberLast = $lineNumber;
+		$this->levelLast = $level;
 
 		if ($returnKey == true) {
 			return $this->key;
@@ -48,7 +52,7 @@ class JisonParser_Wiki_List
 
 	private function addToStack(&$stack, $currentLevel, &$neededLevel, &$content, &$type)
 	{
-		if ($currentLevel < $neededLevel && $currentLevel < 7) {
+		if ($currentLevel < $neededLevel) {
 			if (!isset($stack)) {
 				$stack = array();
 				$key = 0;
@@ -78,54 +82,79 @@ class JisonParser_Wiki_List
 		return $lists;
 	}
 
-	private function toHtmlChildren(&$stack) {
+	private function toHtmlChildren(&$stack, $html = "") {
 		$result = '';
 		$style = '';
-		$html = '';
-		$listParentTagType = 'ul';
+		$parentTagType = 'ul';
 		$id = $this->id();
+		$lastListType = '';
 
-		foreach($stack as &$list){
-			$wrapInLi = true;
-			if(empty($list['content']) == false){
+		for($i = 0, $length = count($stack); $i < $length; $i++) {
+			if(isset($stack[$i]) && empty($stack[$i]['content']) == false) {
 				if (empty($style)) {
-					switch($list['type']) {
+					switch($stack[$i]['type']) {
 						case '-':
 							$style = 'display: none;';
 							$html = '<a id="flipper' . $id . '" href="javascript:flipWithSign(\'' . $id . '\');" class="link">[+]</a>';
-							break;
 						case '+':
-							$wrapInLi = false;
+							if ($lastListType == '') {
+								$lastListType = "*";
+								$stack[$i]['type'] = "*";
+							}
+						case '*':
+							$result .= '<li class="tikiListItem">' . $stack[$i]['content'];
+							if (!empty($stack[$i]['children'])) {
+								$result .= $this->toHtmlChildren($stack[$i]['children']);
+							}
+							$result .= $this->advanceUntilNotType($i, $stack);
+							$result .= '</li>' . "\n";
 							break;
 						case '#':
-							$listParentTagType = 'ol';
+							$parentTagType = 'ol';
+							$result .= '<li class="tikiListItem">' . $stack[$i]['content'];
+							if (!empty($stack[$i]['children'])) {
+								$result .= $this->toHtmlChildren($stack[$i]['children']);
+							}
+							$result .= $this->advanceUntilNotType($i, $stack);
+							$result .= '</li>' . "\n";
 							break;
-						case '*':
+						case ';':
+							$parentTagType = 'dl';
+							$parts = explode(':', $stack[$i]['content']);
+							$result .= '<dt>'  . $parts[0] . '</dt>';
+							if (isset($parts[1])) {
+								$result .= '<dd>'  . $parts[1] . '</dd>';
+							}
+							$result .= "\n";
 							break;
 					}
 				}
+			}
 
-				if ($wrapInLi == true) {
-					$result .= '<li class="tikiListItem">' . $list['content'];
-				} else {
-					$result .= '<div class="tikiUnlistItem">' . $list['content'] . '</div>';
-				}
-
-				if(empty($list['children']) == false) {
-					$result .= $this->toHtmlChildren($list['children']) . $html;
-				}
-
-				if ($wrapInLi == true) {
-					$result .= '</li>';
-				}
-
-			} elseif (empty($list['children']) == false) {
-				$result .= $this->toHtmlChildren($list['children']);
+			if (isset($stack[$i]['type'])) {
+				$lastListType = $stack[$i]['type'];
 			}
 		}
 
 		unset($stack);
 
-		return $html . '<' . $listParentTagType . ' class="tikiList" id="' . $id . '" style="' . $style . '">' . $result . '</' . $listParentTagType . '>';
+		return $html . '<' . $parentTagType . ' class="tikiList" id="' . $id . '" style="' . $style . '">' . $result . '</' . $parentTagType . '>' . "\n";
+	}
+
+	private function advanceUntilNotType(&$i, &$stack, $type = "+", $wrapping = array("<br />", "\n"))
+	{
+		$result = '';
+		$i++;
+		for($length = count($stack); $i <= $length; $i++) {
+			if (!isset($stack[$i]['type'])) break;
+			if ($stack[$i]['type'] == $type) {
+				$result .= $wrapping[0] . $stack[$i]['content'] . $wrapping[1];
+			} else {
+				$i--;
+				break;
+			}
+		}
+
+		return $result;
 	}
 }
