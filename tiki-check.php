@@ -571,47 +571,69 @@ if ( $s == 42 ) {
 }
 
 // Check error reporting level
-// TODO: Doesn't work.... always returns the same error reporting level....?!?
-$s = error_reporting();
-if ( $s == 0 || ini_get('display_errors') == 0 ) {
-	$php_properties['error_reporting'] = array(
-		'fitness' => tra('information'),
-		'setting' => $s,
-		'message' => tra('You will get no errors reported. This might be the right thing for a production site, but in case of problems check your settings for display_errors and error_reporting in php.ini to get more information.')
-	);
-} elseif ( $s > 0 && $s < 32767 ) {
-	$php_properties['error_reporting'] = array(
-		'fitness' => tra('information'),
-		'setting' => $s,
-		'message' => tra('You will not get all errors reported. This is not necessarily a bad thing (and it might be just right for production sites) as you will still get critical errors reported, but sometimes it can be handy to get more information. Check your error_reporting level in php.ini in case of having issues.')
-	);
+$e = error_reporting();
+$d = ini_get('display_errors');
+if ( $e == 0 ) {
+	if ( $d == 0 ) {
+		$php_properties['Error reporting'] = array(
+			'fitness' => tra('information'),
+			'setting' => 'Disabled',
+			'message' => tra('You will get no errors reported, because error_reporting and display_errors are both turned off. This might be the right thing for a production site, but in case of problems enable these in php.ini to get more information.')
+		);
+	} else {
+		$php_properties['Error reporting'] = array(
+			'fitness' => tra('information'),
+			'setting' => 'Disabled',
+			'message' => tra('You will get no errors reported although display_errors is On, because the error_reporting level is set to 0. This might be the right thing for a production site, but in case of problems raise the value in php.ini to get more information.')
+		);
+	}
+} elseif ( $e > 0 && $e < 32767) {
+	if ( $d == 0) {
+		$php_properties['Error reporting'] = array(
+			'fitness' => tra('information'),
+			'setting' => 'Disabled',
+			'message' => tra('You will get no errors reported, because display_errors is turned off. This might be the right thing for a production site, but in case of problems enable it in php.ini to get more information. Your error_reporting level is decent at '.$e.'.')
+		);
+	} else {
+		$php_properties['Error reporting'] = array(
+			'fitness' => tra('information'),
+			'setting' => 'Partly',
+			'message' => tra('You will not get all errors reported as your error_reporting level is at '.$e.'. '.'This is not necessarily a bad thing (and it might be just right for production sites) as you will still get critical errors reported, but sometimes it can be handy to get more information. Check your error_reporting level in php.ini in case of having issues.')
+		);
+	}
 } else {
-	$php_properties['error_reporting'] = array(
-		'fitness' => tra('information'),
-		'setting' => $s,
-		'message' => tra('You will get all errors reported. Way to go in case of problems as the error reports usually contain some valuable hints!') 
-	);
+	if ( $d == 0 ) {
+		$php_properties['Error reporting'] = array(
+			'fitness' => tra('information'),
+			'setting' => 'Disabled',
+			'message' => tra('You will get no errors reported although your error_reporting level is all the way up at '.$e.', but display_errors is off. This might be the right thing for a production site, but in case of problems enable it in php.ini to get more information.') 
+		);
+	} else {
+		$php_properties['Error reporting'] = array(
+			'fitness' => tra('information'),
+			'setting' => 'Full',
+			'message' => tra('You will get all errors reported as your error_reporting level is all the way up at '.$e.' and display_errors is on. Way to go in case of problems as the error reports usually contain some valuable hints!') 
+		);
+	}
 }
-
 
 // Check if ini_set works
 // This has to be after checking the error_reporting level or the error_reporting
 // level will always be 0 because of the ini_set in the following test
 $s = ini_set('error_reporting', 'E_ALL') ;
-if(empty($s) || (!$s))
+if( $s == $e )
 {
-	$php_properties['ini_set'] = array(
-		'fitness' => tra('ugly'),
-		'setting' => 'Disabled',
-		'message' => tra('ini_set is used in some places to accomodate for special needs of some features.')
-	);
-} else {
 	$php_properties['ini_set'] = array(
 		'fitness' => tra('good'),
 		'setting' => 'Enabled',
-		'message' => tra('ini_set is used in some places to accomodate for special needs of some features. Check disable_features in your php.ini.')
+		'message' => tra('ini_set is used in some places to accomodate for special needs of some Tiki features.')
 	);
-	
+} else {
+	$php_properties['ini_set'] = array(
+		'fitness' => tra('ugly'),
+		'setting' => 'Disabled',
+		'message' => tra('ini_set is used in some places to accomodate for special needs of some Tiki features. Check disable_features in your php.ini.')
+	);
 }
 
 // Get MySQL properties and check them
