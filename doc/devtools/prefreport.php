@@ -51,6 +51,7 @@ $fields = array(
 $stopWords = array('', 'in', 'and', 'a', 'to', 'be', 'of', 'on', 'the', 'for', 'as', 'it', 'or', 'with', 'by', 'is', 'an');
 
 $data = array();
+error_reporting(E_ALL);ini_set('display_errors', 'on');
 
 $data = collect_raw_data($fields);
 remove_fake_descriptions($data);
@@ -77,6 +78,10 @@ function collect_raw_data($fields)
 		$name = substr(basename($file), 0, -4);
 		$function = "prefs_{$name}_list";
 
+		if ($name == 'index') {
+			continue;
+		}
+
 		include $file;
 		$list = $function();
 
@@ -88,7 +93,7 @@ function collect_raw_data($fields)
 			$entry['description'] = isset($raw['description']) ? $raw['description'] : '';
 			$entry['filter'] = isset($raw['filter']) ? $raw['filter'] : '';
 			$entry['help'] = isset($raw['help']) ? $raw['help'] : '';
-			$entry['dependencies'] = isset($raw['dependencies']) ? implode(',', $raw['dependencies']) : '';
+			$entry['dependencies'] = !empty($raw['dependencies']) ? implode(',', (array) $raw['dependencies']) : '';
 			$entry['type'] = isset($raw['type']) ? $raw['type'] : '';
 			$entry['options'] = isset($raw['options']) ? implode(',', $raw['options']) : '';
 			$entry['admin'] = isset($raw['admin']) ? $raw['admin'] : '';
@@ -104,7 +109,7 @@ function collect_raw_data($fields)
 			$entry['hint'] = isset($raw['hint']) ? $raw['hint'] : '';
 			$entry['shorthint'] = isset($raw['shorthint']) ? $raw['shorthint'] : '';
 			$entry['perspective'] = isset($raw['perspective']) ? $raw['perspective'] ? 'true' : 'false' : '';
-                        $entry['separator'] = isset($raw['separator']) ? $raw['separator'] : '';
+			$entry['separator'] = isset($raw['separator']) ? $raw['separator'] : '';
 			$data[] = $entry;
 		}
 	}
@@ -124,7 +129,11 @@ function remove_fake_descriptions(& $data)
 function set_default_values(& $data, $prefs)
 {
 	foreach ($data as & $row) {
-		$row['default'] = $prefs[$row['preference']];
+		$row['default'] = isset($prefs[$row['preference']]) ? $prefs[$row['preference']] : '';
+
+		if (is_array($row['default'])) {
+			$row['default'] = implode($row['separator'], $row['default']);
+		}
 	}
 }
 

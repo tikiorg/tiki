@@ -8,3 +8,9 @@
 // Since the preference(s) once contained in this file were removed from Tiki, this file 
 // is purposely here and empty to make sure users which upgrade via FTP overwrite the file 
 // and avoid a Fatal error: Call to undefined method 
+
+function prefs_slide_list()
+{
+	return array();
+}
+
