@@ -157,7 +157,7 @@ $backLocation = ($page ? "tiki-index.php?page=$page" : "tiki-list_file_gallery.p
 $smarty->assign("fileId", $fileId);
 $smarty->assign("galleryId", $galleryId);
 $smarty->assign("width", $width);
-$smarty->assign("height", $width);
+$smarty->assign("height", $height);
 $smarty->assign("name", $name);
 $smarty->assign("archive", $archive);
 

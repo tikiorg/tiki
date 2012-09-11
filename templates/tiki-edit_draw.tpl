@@ -12,7 +12,7 @@
 	<input type="hidden" id="galleryId" value="{$galleryId}" />
 	<input type="hidden" id="fileName" value="{$name}" />
 	<input type="hidden" id="fileWidth" value="{$width}" />
-	<input type="hidden" id="fileHeight" value="{$hight}" />
+	<input type="hidden" id="fileHeight" value="{$height}" />
 	<input type="hidden" id="archive" value="{$archive}" />
 	<input type="hidden" name="action" value="replace" />
 	

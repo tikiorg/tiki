@@ -149,10 +149,10 @@ EOF;
 		if ($globalperms->view_file_gallery != 'y') return "";
 		
 		$label = tra('Edit SVG Image');
-		$ret = "<embed type='image/svg+xml' src='tiki-download_file.php?fileId=$id&display' style='".
+		$ret = '<div type="image/svg+xml" class="svgImage pluginImg' . $fileInfo['fileId'] . '" style="' .
 			(isset($height) ? "height: $height;" : "" ).
-			(isset($width) ? "width: $width;" : "" ).
-		"' />";
+			(isset($width) ? "width: $width;" : "" )
+		. '">' . $fileInfo['data'] . '</div>';
 	
 		if ($globalperms->upload_files == 'y') {
 			$ret .= "<a href='tiki-edit_draw.php?fileId=$id&page=$page&index=$drawIndex&label=$label" .
