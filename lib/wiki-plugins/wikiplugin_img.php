@@ -682,7 +682,7 @@ function wikiplugin_img( $data, $params )
 	}
 	
 	$browse_full_image = $src; 
-
+	$srcIsEditable = false;
 	///////////////////////////Get DB info for image size and metadata/////////////////////////////
 	if (!empty($imgdata['height']) || !empty($imgdata['width']) || !empty($imgdata['max']) 
 		|| !empty($imgdata['desc']) || strpos($imgdata['rel'], 'box') !== false 
@@ -945,6 +945,7 @@ function wikiplugin_img( $data, $params )
 		$imgdata_dim = '';
 		if (!empty($imgdata['fileId'])) {
 			if (empty($urldisp) && empty($urlthumb)) {
+				$srcIsEditable = true;
 				$src .= '&display';
 			}
 			if (!empty($scale) && empty($urlscale[0])) {
@@ -1358,8 +1359,10 @@ function wikiplugin_img( $data, $params )
 	if (
 		$prefs['feature_draw'] == 'y' &&
 		$globalperms->upload_files == 'y' &&
-		empty($src) == true &&
 		(
+			empty($src) == true ||
+			$srcIsEditable == true
+		) && (
 			$tiki_p_edit == 'y' ||
 			$fromTracker == true
 		)
