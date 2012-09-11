@@ -34,6 +34,7 @@ function prefs_namespace_list()
 			'description' => tr('Namespace to use when creating wiki pages. Should be defined within perspectives.'),
 			'type' => 'text',
 			'default' => '',
+			'detail' => tra('This should only be set for perspectives, and not globally.'),
 		),
 	);	
 }

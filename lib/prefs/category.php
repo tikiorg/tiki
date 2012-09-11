@@ -15,6 +15,7 @@ function prefs_category_list()
 			'type' => 'text',
 			'filter' => 'int',
 			'default' => array(''), //empty string needed to keep preference from setting unexpectedly
+			'detail' => tra('This should only be set for perspectives, and not globally.'),
 		),
 		'category_jail_root' => array(
 			'name' => tra('Category Jail Root'),
