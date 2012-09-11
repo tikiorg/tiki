@@ -95,7 +95,7 @@ class JisonParser_Wiki_List
 					switch($stack[$i]['type']) {
 						case '-':
 							$style = 'display: none;';
-							$html = '<a id="flipper' . $id . '" href="javascript:flipWithSign(\'' . $id . '\');" class="link">[+]</a>';
+							$html = '<br />' . "\n" . '<a id="flipper' . $id . '" href="javascript:flipWithSign(\'' . $id . '\');" class="link">[+]</a>';
 						case '+':
 							if ($lastListType == '') {
 								$lastListType = "*";

@@ -475,7 +475,8 @@ class JisonParser_OutputTest extends TikiTestCase
 			"**-line 4"
 		,
 			'<ul class="tikiList" id="" style="">' .
-				'<li class="tikiListItem">line 1<a id="fillerid" href="javascript:flipWithSign(' . "''" . ');" class="link">[+]</a>' .
+				'<li class="tikiListItem">line 1<br />' . "\n" .
+					'<a id="fillerid" href="javascript:flipWithSign(' . "''" . ');" class="link">[+]</a>' .
 					'<ol class="tikiList" id="" style="display: none;">' .
 						'<li class="tikiListItem">line 2</li>' . "\n" .
 						'<li class="tikiListItem">line 3</li>' . "\n" .
