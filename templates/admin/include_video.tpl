@@ -18,6 +18,11 @@
 </fieldset>
 
 <fieldset class="admin">
+<legend>{tr}Plugin to embed in pages{/tr}</legend>
+	{preference name=wikiplugin_kaltura}
+</fieldset>
+
+<fieldset class="admin">
 <legend>{tr}Kaltura / Tiki config{/tr}</legend>
 	{preference name=kaltura_kServiceUrl}
 </fieldset>
