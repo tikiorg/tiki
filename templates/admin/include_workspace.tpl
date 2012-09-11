@@ -8,6 +8,7 @@
 	<fieldset class="admin">
 		<legend>{tr}Activate the feature{/tr}</legend>
 		{preference name=workspace_ui visible="always"}
+		{preference name=workspace_root_category}
 	</fieldset>
 
 	<fieldset class="admin">
