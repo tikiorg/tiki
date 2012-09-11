@@ -391,7 +391,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	{
 		//use of array_reverse, jison is a reverse bottom-up parser, if it doesn't reverse jison doesn't restore the plugins in the right order, leaving the some nested keys as a result
 		foreach(array_reverse($this->pluginEntries) as $key => $entity) {
-			if ($this->Parser->option['stripplugins'] == true) {
+			if ($this->getOption('stripplugins') == true) {
 				$input = str_replace($key, '', $input);
 			} else {
 				$input = str_replace($key, $entity, $input);
