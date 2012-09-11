@@ -327,6 +327,11 @@ class TikiAccessLib extends TikiLib
 			default:
 				$errortype = (int) $errortype;
 				$title = strip_tags($detail['errortitle']);
+
+				if (! $errortype) {
+					$errortype = 403;
+					$title = 'Forbidden';
+				}
 				header("HTTP/1.0 $errortype $title");
 							break;
 		}
