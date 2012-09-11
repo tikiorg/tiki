@@ -721,15 +721,45 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 
 	function link($content) //[content|content]
 	{
-		$link = explode('|', $content);
-		$href = (isset($link[0]) ? $link[0] : $content);
-		$text = (isset($link[1]) ? $link[1] : $href);
+		global $tikilib, $prefs;
 
-		if (!strpos($href, '://')) {
-			$href = 'http://' . $href;
+		$parts = explode('|', $content);
+		$link = (isset($parts[0]) ? $parts[0] : $content);
+		$text = (isset($parts[1]) ? $parts[1] : $link);
+
+		$target = '';
+		$class = 'wiki';
+		$ext_icon = '';
+		$rel = '';
+		$cached = '';
+
+		if ($prefs['popupLinks'] == 'y') {
+			$target = '_blank"';
 		}
 
-		return '<a class="wiki" href="' . $href . '">' . $text . '</a>';
+		if (!strstr($link, '://')) {
+			$target = '';
+		} else {
+			$class .= ' external';
+			if ($prefs['feature_wiki_ext_icon'] == 'y' && !$this->getOption('suppress_icons')) {
+				$smarty = TikiLib::lib('smarty');
+				include_once('lib/smarty_tiki/function.icon.php');
+				$ext_icon = smarty_function_icon(array('_id'=>'external_link', 'alt'=>tra('(external link)'), '_class' => 'externallink', '_extension' => 'gif', '_defaultdir' => 'img/icons', 'width' => 15, 'height' => 14), $smarty);
+			}
+			$rel='external';
+			if ($prefs['feature_wiki_ext_rel_nofollow'] == 'y') {
+				$rel .= ' nofollow';
+			}
+		}
+
+		if ($prefs['cachepages'] == 'y' && $tikilib->is_cached($link)) {
+			$cached = " <a class=\"wikicache\" target=\"_blank\" href=\"tiki-view_cache.php?url=".urlencode($link)."\">(cache)</a>";
+		}
+
+		return '<a class="' . $class . '"' .
+			(!empty($target) ? ' target="' . $target . '"' : '') .
+			' href="' . $link .
+			(!empty($rel) ? '" rel="' . $rel : '') . '">' . $text . '</a>' . $ext_icon . $cached;
 	}
 
 	function smile($content)
