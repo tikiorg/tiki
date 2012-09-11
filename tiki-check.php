@@ -529,13 +529,13 @@ if ($s) {
 	$php_properties['libxml'] = array(
 		'fitness' => tra('good'),
 		'setting' => 'Loaded',
-		'message' => tra('libxml extension is needed by Tiki.')
+		'message' => tra('This extension is needed for WebDAV.')
 	);
 } else {
 	$php_properties['libxml'] = array(
 		'fitness' => tra('bad'),
 		'setting' => 'Not available',
-		'message' => tra('libxml extension is needed by Tiki.')
+		'message' => tra('This extension is needed for WebDAV.')
 	);
 }
 
