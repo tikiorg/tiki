@@ -153,6 +153,7 @@ class JisonParser_OutputTest extends TikiTestCase
 			'html_not_allowed'  => array(),
 			'html_allowed'  => array(),
 			'complex_state_tracking' => array(),
+			'no_line_skipping' => array(),
 		);
 	}
 
@@ -179,7 +180,8 @@ class JisonParser_OutputTest extends TikiTestCase
 	{
 		$syntax = array(
 			";foo1:bar1\n" .
-			";foo2:bar2",
+			";foo2:bar2"
+		,
 			'<dl class="tikiList" id="" style="">' .
 				'<dt>foo1</dt><dd>bar1</dd>' . "\n" .
 				'<dt>foo2</dt><dd>bar2</dd>' . "\n" .
@@ -196,7 +198,8 @@ class JisonParser_OutputTest extends TikiTestCase
 	{
 		$syntax = array(
 			"* foo\n" .
-			"* bar",
+			"* bar"
+		,
 			'<ul class="tikiList" id="" style="">' .
 				'<li class="tikiListItem"> foo' . '</li>' . "\n" .
 				'<li class="tikiListItem"> bar' . '</li>' . "\n" .
@@ -217,7 +220,8 @@ class JisonParser_OutputTest extends TikiTestCase
 			"* foo1\n" .
 			"** foo11\n" .
 			"**foo12\n" .
-			"* bar1\n",
+			"* bar1\n"
+		,
 			'<ul class="tikiList" id="" style="">' .
 				'<li class="tikiListItem"> foo1' .
 					'<ul class="tikiList" id="" style="">' .
@@ -241,7 +245,8 @@ class JisonParser_OutputTest extends TikiTestCase
 			"* foo\n" .
 			"+ Continuation1\n" .
 			"+Continuation2\n" .
-			"* bar\n",
+			"* bar\n"
+		,
 			'<ul class="tikiList" id="" style="">' .
 				'<li class="tikiListItem"> foo' .
 					"<br /> Continuation1\n" .
@@ -261,11 +266,13 @@ class JisonParser_OutputTest extends TikiTestCase
 	{
 		$syntax = array(
 			"# foo\n" .
-			"# bar\n",
+			"# bar\n"
+		,
 			'<ol class="tikiList" id="" style="">' .
 				'<li class="tikiListItem"> foo</li>' . "\n" .
 				'<li class="tikiListItem"> bar</li>' . "\n" .
-			"</ol>\n");
+			"</ol>\n"
+		);
 
 		$parsed = $this->parser->parse($syntax[0]);
 		$this->tryRemoveIdsFromHtmlList($parsed);
@@ -279,7 +286,8 @@ class JisonParser_OutputTest extends TikiTestCase
 			"# foo1\n" .
 			"## foo11\n" .
 			"##foo12\n" .
-			"# bar1\n",
+			"# bar1\n"
+		,
 			'<ol class="tikiList" id="" style="">' .
 				'<li class="tikiListItem"> foo1' .
 					'<ol class="tikiList" id="" style="">' .
@@ -288,7 +296,8 @@ class JisonParser_OutputTest extends TikiTestCase
 					'</ol>' . "\n" .
 				'</li>' . "\n" .
 				'<li class="tikiListItem"> bar1</li>' . "\n" .
-			'</ol>' . "\n");
+			'</ol>' . "\n"
+		);
 
 		$parsed = $this->parser->parse($syntax[0]);
 		$this->tryRemoveIdsFromHtmlList($parsed);
@@ -302,14 +311,16 @@ class JisonParser_OutputTest extends TikiTestCase
 			"# foo\n" .
 			"+ Continuation1\n" .
 			"+Continuation2\n" .
-			"# bar\n",
+			"# bar\n"
+		,
 			'<ol class="tikiList" id="" style="">' .
 				'<li class="tikiListItem"> foo' .
 					"<br /> Continuation1\n" .
 					"<br />Continuation2\n" .
 				"</li>\n" .
 				'<li class="tikiListItem"> bar</li>' . "\n" .
-			"</ol>\n");
+			"</ol>\n"
+		);
 
 		$parsed = $this->parser->parse($syntax[0]);
 		$this->tryRemoveIdsFromHtmlList($parsed);
@@ -321,9 +332,11 @@ class JisonParser_OutputTest extends TikiTestCase
 	{
 		$syntax = array(
 			"\n" .
-			"text\n",
+			"text\n"
+		,
 			"<br />\n" .
-			"text<br />\n"); //a block is open content close, or "\ncontent\n" so a single block should only have 1 br
+			"text<br />\n"
+		); //a block is open content close, or "\ncontent\n" so a single block should only have 1 br
 
 		$parsed = $this->parser->parse($syntax[0]);
 
@@ -335,7 +348,8 @@ class JisonParser_OutputTest extends TikiTestCase
 		$syntax = array(
 			"*line 1\n" .
 			"*line 2\n" .
-			"*line 3",
+			"*line 3"
+		,
 			'<ul class="tikiList" id="" style="">' .
 				'<li class="tikiListItem">line 1</li>' . "\n" .
 				'<li class="tikiListItem">line 2</li>' . "\n" .
@@ -354,7 +368,8 @@ class JisonParser_OutputTest extends TikiTestCase
 		$syntax = array(
 			"#line 1\n" .
 			"#line 2\n" .
-			"#line 3",
+			"#line 3"
+		,
 			'<ol class="tikiList" id="" style="">' .
 				'<li class="tikiListItem">line 1</li>' . "\n" .
 				'<li class="tikiListItem">line 2</li>' . "\n" .
@@ -373,7 +388,8 @@ class JisonParser_OutputTest extends TikiTestCase
 		$syntax = array(
 			"*line 1\n" .
 			"*line 2\n" .
-			"+line 3",
+			"+line 3"
+		,
 			'<ul class="tikiList" id="" style="">' .
 				'<li class="tikiListItem">line 1</li>' . "\n" .
 				'<li class="tikiListItem">line 2' .
@@ -393,7 +409,8 @@ class JisonParser_OutputTest extends TikiTestCase
 		$syntax = array(
 			"+line 1\n" .
 			"*line 2\n" .
-			"+line 3",
+			"+line 3"
+		,
 			'<ul class="tikiList" id="" style="">' .
 				'<li class="tikiListItem">line 1</li>' . "\n" .
 				'<li class="tikiListItem">line 2' .
@@ -419,7 +436,8 @@ class JisonParser_OutputTest extends TikiTestCase
 			"**line 6\n" .
 			"***line 7\n" .
 			"**line 8\n" .
-			"*line 9",
+			"*line 9"
+		,
 			'<ul class="tikiList" id="" style="">' .
 				'<li class="tikiListItem">line 1' .
 					'<ul class="tikiList" id="" style="">' .
@@ -457,7 +475,8 @@ class JisonParser_OutputTest extends TikiTestCase
 			"*line 1\n" .
 			"##line 2\n" .
 			"##line 3\n" .
-			"**-line 4",
+			"**-line 4"
+		,
 			'<ul class="tikiList" id="" style="">' .
 				'<li class="tikiListItem">line 1<a id="fillerid" href="javascript:flipWithSign(' . "''" . ');" class="link">[+]</a>' .
 					'<ol class="tikiList" id="" style="display: none;">' .
@@ -492,7 +511,8 @@ class JisonParser_OutputTest extends TikiTestCase
 			"</div>\n" . //we should get a break here, between block tags
 			"<script>\n" .
 			"</script>\n" .
-			"<span>give me a break</span>\n",
+			"<span>give me a break</span>\n"
+		,
 			"<br />\n" .
 			"&lt;div&gt;\n" .
 				"html not allowed\n" .
@@ -523,7 +543,8 @@ class JisonParser_OutputTest extends TikiTestCase
 			"\n" .
 			"<div>html allowed\n" .
 				"<script>\n\n\n</script>\n" .
-			"</div>\n\n",
+			"</div>\n\n"
+		,
 			"<br />\n" .
 			"<div>html allowed\n" .
 				"<script>\n\n\n</script>\n" .
@@ -558,7 +579,8 @@ class JisonParser_OutputTest extends TikiTestCase
 						"so that it is easy on the end user~~\n" .
 					"See how we can handle multi lines easily?\n" .
 				"::.\n" .
-				"This should be bold\n\n",
+				"This should be bold\n\n"
+			,
 				"<strong>Here<br />\n" .
 					"<em>we are test<br />\n" .
 						"<div class=" . '"' . "simplebox" . '"' . ">testing state</div><br />\n" .
@@ -573,13 +595,48 @@ class JisonParser_OutputTest extends TikiTestCase
 					"</div>.<br />\n" .
 					"This should be bold<br />\n" .
 					"<br />\n" .
-				"</strong>"); //this is detected as open and auto closed.
+				"</strong>"
+			); //this is detected as open and auto closed.
 
 		$parsed = $this->parser->parse($syntax[0]);
 
 		$result = array("parsed" => $parsed, "syntax" => $syntax);
 
 		$this->parser->setOption(array('is_html' => $is_html));
+
+		return $result;
+	}
+
+	private function no_line_skipping()
+	{
+		$syntax = array(
+			"&{DIV()}\n" .
+			"&{DIV()}\n" .
+			"&{DIV()}\n" .
+			"&{DIV()}\n" .
+			"&{DIV}{DIV}{DIV}{DIV}\n" .
+			";foo:foo definition\n" .
+			";foo2:foo2 definition\n" .
+			"[[__bold__]\n" .
+			"Test" .
+			"''Test Italics''\n"
+		,
+			"&amp;<br />\n" .
+			"&amp;<br />\n" .
+			"&amp;<br />\n" .
+			"&amp;<br />\n" .
+			'&amp;<dl class="tikiList" id="" style=""><dt>foo</dt><dd>foo definition</dd>' . "\n" .
+			"<dt>foo2</dt><dd>foo2 definition</dd>\n" .
+			"</dl>\n\n" .
+			"[<strong>bold</strong>]<br />\n" .
+			"Test<em>Test Italics</em><br />\n"
+		);
+
+
+		$parsed = $this->parser->parse($syntax[0]);
+		$this->tryRemoveIdsFromHtmlList($parsed);
+
+		$result = array("parsed" => $parsed, "syntax" => $syntax);
 
 		return $result;
 	}
