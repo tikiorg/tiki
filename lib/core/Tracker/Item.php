@@ -171,6 +171,11 @@ class Tracker_Item
 		if (!is_object($this->definition)) {
 			return; // TODO: This is a temporary fix, we should be able to getItemOwner always
 		}
+
+		if (isset($this->info['itemUser'])) {
+			// Used by TRACKERLIST - not all data is loaded, but this is loaded separately
+			return $this->info['itemUser'];
+		}
                 
 		$userField = $this->definition->getUserField();
 		if ($userField) {
@@ -281,8 +286,6 @@ class Tracker_Item
 	{
 		if (isset($this->info[$fieldId])) {
 			return $this->info[$fieldId];
-		} elseif (isset($this->info['value'])) {
-			return $this->info['value'];
 		}
 	}
 
