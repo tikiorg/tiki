@@ -518,7 +518,7 @@ class JisonParser_OutputTest extends TikiTestCase
 				"html not allowed\n" .
 				"&lt;script&gt;\n" .
 				"&lt;/script&gt;\n" .
-			"&lt;/div&gt;<br />\n" . //<-- note, break here
+			"&lt;/div&gt;\n" . //<-- note, break here
 			"&lt;script&gt;\n" .
 			"&lt;/script&gt;<br />\n" .
 			"&lt;span&gt;give me a break&lt;/span&gt;<br />\n"
@@ -548,7 +548,7 @@ class JisonParser_OutputTest extends TikiTestCase
 			"<br />\n" .
 			"<div>html allowed\n" .
 				"<script>\n\n\n</script>\n" .
-			"</div><br />\n" .
+			"</div>\n" .
 			"<br />\n"
 		);
 

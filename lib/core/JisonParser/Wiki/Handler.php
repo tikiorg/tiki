@@ -470,17 +470,19 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 
 		switch ($name) {
 			//start block level
-			case 'script':
-			case 'table':
 			case 'div':
+			case 'table':
+				$this->skipBr = true;
+			case 'script':
 				$this->Parser->nonBreakingTagDepth++;
 				$this->line++;
 				break;
 
 			//end block level
-			case '/script':
-			case '/table':
 			case '/div':
+			case '/table':
+				$this->skipBr = true;
+			case '/script':
 				$this->Parser->nonBreakingTagDepth--;
 				$this->Parser->nonBreakingTagDepth = max($this->Parser->nonBreakingTagDepth, 0);
 				$this->line++;
