@@ -550,7 +550,6 @@ LINE_END                        (\n\r|\r\n|[\n\r])
 	%}
 
 
-"-- "               return 'CONTENT';
 <strike><<EOF>>
 	%{
 		if (parser.isContent()) return 'CONTENT'; //js
@@ -569,7 +568,7 @@ LINE_END                        (\n\r|\r\n|[\n\r])
 		//php $this->popState();
 		//php return 'STRIKE_END';
 	%}
-[-][-]
+[-][-](?=[A-Za-z0-9])
 	%{
 		if (parser.isContent()) return 'CONTENT'; //js
 		lexer.begin('strike'); //js
