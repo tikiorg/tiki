@@ -68,6 +68,7 @@
 		{preference name=wikiplugin_prettytrackerviews}
 		{preference name=wikiplugin_trackerpasscode}
 		{preference name=wikiplugin_trackeritemcopy}
+		{preference name=wikiplugin_trackerquerytemplate}
 	</fieldset>
 	{/tab}
 	{tab name="{tr}Field Types{/tr}"}
