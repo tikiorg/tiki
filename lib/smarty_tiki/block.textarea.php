@@ -83,7 +83,7 @@ function smarty_block_textarea($params, $content, $smarty, $repeat)
 		global $section;
 		$params['section'] = $section ? $section: 'wiki page';
 	}
-	if ( ! isset($params['style']) ) $params['style'] = 'width:99%';
+	if ( ! isset($params['style']) && ! isset($params['cols']) ) $params['style'] = 'width:99%';
 	$html = '';
 	$html .= '<input type="hidden" name="mode_wysiwyg" value="" /><input type="hidden" name="mode_normal" value="" />';
 
