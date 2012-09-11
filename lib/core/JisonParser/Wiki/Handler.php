@@ -482,11 +482,13 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 			case '/table':
 			case '/div':
 				$this->Parser->nonBreakingTagDepth--;
+				$this->Parser->nonBreakingTagDepth = max($this->Parser->nonBreakingTagDepth, 0);
 				$this->line++;
 				break;
 
 			//skip next block level
 			case 'hr':
+				$this->skipBr = true;
 				break;
 		}
 
@@ -646,7 +648,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 
 		$content = substr($content, ($level + $noiseLength));
 
-		$this->skipBr = array(true, true);
+		$this->skipBr = true;
 
 		return $this->Parser->list->stack($this->line, $level, $content, $type);
 	}
