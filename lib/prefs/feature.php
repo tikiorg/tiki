@@ -2584,9 +2584,6 @@ function prefs_feature_list($partial = false)
 			'default' => 'n',
 			'warning' => tra('Experimental'),
 			'tags' => array('experimental'),
-			'dependencies' => array(
-				'profiles' => array('Simple Wiki Attribute')
-			)
 		),
 		'feature_jcapture' => array(
 			'name' => tra('jCapture Screencast'),
