@@ -257,7 +257,7 @@ function get_default_prefs()
 			undo, redo,-,find,replace,-, removeformat,specialchar,smiley|help,switcheditor,autosave/
 			templates, cut, copy, paste, pastetext, pasteword,-,h1,h2,h3, left,center,-,
 			blockquote,list,numlist,wikiplugin_mouseover,wikiplugin_module,wikiplugin_html,wikiplugin_wysiwyg,wikiplugin_draw, outdent, indent,-,
-			pagebreak,rule,-,table,-,wikiplugin_code, source, showblocks,nonparsed|fullscreen/
+			pagebreak,rule,-,table,-,wikiplugin_code,source,showblocks,nonparsed,screencapture|fullscreen/
 			format,style,-,fontname,fontsize/
 		',
 		'toolbar_global_comments' => '

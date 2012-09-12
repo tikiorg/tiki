@@ -1545,7 +1545,9 @@ class ToolbarCapture extends Toolbar
 		$this->setLabel(tra('Screen capture'))
 			->setIcon('img/icons/camera.png')
 			->setWysiwygToken('screencapture')
-			->setType('Capture');
+			->setType('Capture')
+			->addRequiredPreference('feature_jcapture');
+
 	} // }}}
 
 	function getWikiHtml( $areaId ) // {{{
