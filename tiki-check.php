@@ -339,6 +339,22 @@ if ( strtolower($s) == "utf-8" ) {
 	);
 }
 
+// date.timezone
+$s = ini_get('date.timezone');
+if ( empty($s) ) {
+	$php_properties['date.timezone'] = array(
+		'fitness' => tra('bad'),
+		'setting' => $s,
+		'message' => tra('You have no timezone set! Please check the value of date.timezone in php.ini.')
+	);
+} else {
+	$php_properties['date.timezone'] = array(
+		'fitness' => tra('good'),
+		'setting' => $s,
+		'message' => tra('Well done! Having a timezone set protects you from many weird errors.')
+	);
+}
+
 // file_uploads
 $s = ini_get('file_uploads');
 if ($s) {
