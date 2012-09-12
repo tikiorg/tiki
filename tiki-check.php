@@ -88,7 +88,7 @@ if ($s) {
 
 // Now connect to the DB and make all our connectivity methods work the same
 if ( $standalone ) {
-	if ( empty($_POST["dbhost"]) && empty($_POST["dbuser"]) && !($php_properties['DB Driver']['setting'] == 'Not available') ) {
+	if ( empty($_POST["dbhost"]) && !($php_properties['DB Driver']['setting'] == 'Not available') ) {
 			print <<<DBC
 			<h2>Database credentials</h2>
 			Couldn't connect to database, please provide valid credentials.
@@ -100,9 +100,15 @@ if ( $standalone ) {
 			</form>
 DBC;
 	} else {
+		$connection = false;
 		switch ($php_properties['DB Driver']['setting']) {
 			case "PDO":
-				$connection = new PDO('mysql:host='.$_POST['dbhost'], $_POST['dbuser'], $_POST['dbpass']);
+				try {
+					$connection = new PDO('mysql:host='.$_POST['dbhost'], $_POST['dbuser'], $_POST['dbpass']);
+				}
+				catch ( Exception $e ) {
+					echo 'Couldn\'t connect to database: '.$e->getMessage();
+				}					
 				function query($query, $connection) {
 					$result = $connection->query($query);
 					$return = $result->fetchAll(PDO::FETCH_ASSOC);
@@ -110,7 +116,18 @@ DBC;
 				}
 				break;
 			case "MySQLi":
-				$connection = new mysqli($_POST['dbhost'], $_POST['dbuser'], $_POST['dbpass']);
+				try {
+					$error = false;
+					$connection = new mysqli($_POST['dbhost'], $_POST['dbuser'], $_POST['dbpass']);
+					$error = mysqli_connect_error();
+					if ( !empty($error) ) {
+						$connection = false;
+						throw new Exception($error);
+					}
+				}
+				catch ( Exception $e ) {
+					echo 'Couldn\'t connect to database: '.$e->getMessage();
+				}
 				function query($query, $connection) {
 					$result = $connection->query($query);
 					while (	$row = $result->fetch_assoc() ) {
@@ -120,7 +137,15 @@ DBC;
 				}
 				break;
 			case "MySQL":
-				$connection = mysql_connect($_POST['dbhost'], $_POST['dbuser'], $_POST['dbpass']);
+				try {
+					$connection = mysql_connect($_POST['dbhost'], $_POST['dbuser'], $_POST['dbpass']);
+					if ( $connection === false ) {
+						throw new Exception('Cannot connect to MySQL. Wrong credentials?');
+					}
+				}
+				catch ( Exception $e ) {
+					echo $e->getMessage();
+				}
 				function query($query, $connection = '') {
 					$result = mysql_query($query);
 					while (	$row = mysql_fetch_array($result) ) {
