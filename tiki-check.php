@@ -172,7 +172,7 @@ $server_information['Operating System'] = array(
 	'value' => PHP_OS,
 );
 
-if ( PHP_OS == 'Linux' ) {
+if ( PHP_OS == 'Linux' && function_exists('exec') ) {
 	exec('lsb_release -d', $output, $retval);
 	if ( $retval == 0 ) {
 		$server_information['Release'] = array(
