@@ -7,7 +7,7 @@
 
 class JisonParser_Wiki_List
 {
-	static $stacks = array();
+	var $stacks = array();
 	var $index = 0;
 	var $lineNumberLast;
 	var $levelLast = 0;
