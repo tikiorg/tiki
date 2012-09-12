@@ -266,6 +266,22 @@ if ($s) {
 	);
 }
 
+// safe mode
+$s = ini_get('safe_mode');
+if ($s) {
+	$php_properties['safe_mode'] = array(
+		'fitness' => tra('bad'),
+		'setting' => 'On',
+		'message' => tra('safe_mode is deprecated and should be off by default. See the <a href="http://www.php.net/manual/de/features.safe-mode.php">PHP manual</a> for details.')
+	);
+} else {
+	$php_properties['safe_mode'] = array(
+		'fitness' => tra('good'),
+		'setting' => 'Off',
+		'message' => tra('Well set! And you are future proof also as safe_mode is deprecated.')
+	);
+}
+
 // magic_quotes_gpc
 $s = ini_get('magic_quotes_gpc');
 if ($s) {
@@ -811,15 +827,29 @@ if ($s == 1) {
 }
 
 if ($standalone) {
-echo '<h1>Tiki Server Compatibility</h1>';
-echo '<h2>MySQL Database Properties</h2>';
-render_table($mysql_properties);
-echo '<h2>Server Information</h2>';
-render_table($server_information);
-echo '<h2>Server Properties</h2>';
-render_table($server_properties);
-echo '<h2>PHP scripting language properties</h2>';
-render_table($php_properties);
+	echo '<style type="text/css">td, th { border: 1px solid #000000; vertical-align: baseline;}</style>';
+	echo '<h1>Tiki Server Compatibility</h1>';
+	echo '<h2>MySQL Database Properties</h2>';
+	render_table($mysql_properties);
+	echo '<h2>Server Information</h2>';
+	render_table($server_information);
+	echo '<h2>Server Properties</h2>';
+	render_table($server_properties);
+	echo '<h2>PHP scripting language properties</h2>';
+	render_table($php_properties);
+	echo '<h2>PHP security properties</h2>';
+	render_table($security);
+	echo '<h2>PHP Info</h2>';
+	if ( $_REQUEST['phpinfo'] == 'y' ) {
+		ob_start();                                                                                                        
+		phpinfo();                                                                                                         
+		$info = ob_get_contents();                                                                                         
+		ob_end_clean();                                                                                                    
+		$info = preg_replace('%^.*<body>(.*)</body>.*$%ms', '$1', $info); 
+		print($info);
+	} else {
+		echo '<a href="'.$_SERVER['REQUEST_URI'].'?phpinfo=y">Append phpinfo();</a>';
+	}
 echo '<h2>PHP security properties</h2>';
 render_table($security);
 } else {

@@ -145,3 +145,6 @@
 		{norecords _colspan=4}
 	{/foreach}
 </table>
+
+<h2>{tr}PHP Info{/tr}</h2>
+For more detailed information about your PHP installation see <a href="tiki-phpinfo.php">Admin->phpinfo</a>.
