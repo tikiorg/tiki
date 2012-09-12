@@ -850,8 +850,6 @@ if ($standalone) {
 	} else {
 		echo '<a href="'.$_SERVER['REQUEST_URI'].'?phpinfo=y">Append phpinfo();</a>';
 	}
-echo '<h2>PHP security properties</h2>';
-render_table($security);
 } else {
 	$smarty-> assign_by_ref('server_information', $server_information);
 	$smarty->assign_by_ref('server_properties', $server_properties);
