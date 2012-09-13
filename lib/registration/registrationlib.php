@@ -292,9 +292,11 @@ class RegistrationLib extends TikiLib
 
 		if (count($this->merged_prefs['choosable_groups']) > 0
 				&& $this->merged_prefs['mandatoryChoiceGroups']
-				&& empty($registration['chosenGroup'])
-		)
+				&& (empty($registration['chosenGroup']) ||
+					$userlib->get_registrationChoice($registration['chosenGroup']) !== 'y')
+		) {
 			$errors[] = new RegistrationError('chosenGroup', tra('You must choose a group'));
+		}
 
 		$email_valid = 'y';
 		if (!validate_email($registration['email'], $this->merged_prefs['validateEmail']))
