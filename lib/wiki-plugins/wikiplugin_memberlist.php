@@ -80,6 +80,19 @@ function wikiplugin_memberlist_info()
 					array('text' => tra('No'), 'value' => 'n')
 				),
 			),
+			'defaultGroup' => array(
+				'required' => false,
+				'name' => tra('Set as Default Group'),
+				'description' => tra('Adds possibility to set group as default group. This automatically adds the user to the group. "Forced" option will not propose simple addition in group.'),
+				'default' => 'n',
+				'filter' => 'alpha',
+				'options' => array(
+					array('text' => '', 'value' => ''),
+					array('text' => tra('Not suggested'), 'value' => 'n'),
+					array('text' => tra('Suggested'), 'value' => 'both'),
+					array('text' => tra('Forced'), 'value' => 'y')
+				),
+			),
 			'including' => array(
 				'required' => false,
 				'name' => tra('Including Group'),
@@ -173,6 +186,9 @@ function wikiplugin_memberlist( $data, $params )
 		if ( isset( $_POST['add'] ) ) {
 			wikiplugin_memberlist_add($validGroups, $_POST['add']);
 		}
+		if ( isset( $_POST['defgroup'] ) ) {
+			wikiplugin_memberlist_add($validGroups, $_POST['defgroup'], true);
+		}
 		header('Location: ' . $_SERVER['REQUEST_URI']);
 		exit;
 	}
@@ -208,10 +224,11 @@ function wikiplugin_memberlist( $data, $params )
 	global $smarty;
 	$smarty->assign('execution_key', $exec_key);
 	$smarty->assign('can_apply', $canApply);
+	$smarty->assign('defaultGroup', $params['defaultGroup']);
 	$smarty->assign('memberlist_groups', $validGroups);
 	$smarty->assign('displayMode', $params['displayMode']);
 
-	// seems conditonally adding tabs in the tpl doesn't work (unclosed {tabset} errors etc) - a Smarty 3 change?
+	// seems conditionally adding tabs in the tpl doesn't work (unclosed {tabset} errors etc) - a Smarty 3 change?
 	if (empty($params['displayMode']) && $prefs['feature_tabs'] === 'y') {
 		$oldTabs = $prefs['feature_tabs'];
 		$prefs['feature_tabs'] = 'n';
@@ -315,7 +332,7 @@ function wikiplugin_memberlist_leave( $groups, $leaves )
 	}
 }
 
-function wikiplugin_memberlist_add( $groups, $adds )
+function wikiplugin_memberlist_add( $groups, $adds, $asdefault=false )
 {
 	global $userlib;
 
@@ -328,7 +345,11 @@ function wikiplugin_memberlist_add( $groups, $adds )
 
 				foreach ( $members as $name ) {
 					if ( $userlib->user_exists($name) ) {
-						$userlib->assign_user_to_group($name, $group);
+						if ( $asdefault == true ) {
+							$userlib->set_default_group($name, $group);
+						} else {
+							$userlib->assign_user_to_group($name, $group);
+						}
 					}
 				}
 			}

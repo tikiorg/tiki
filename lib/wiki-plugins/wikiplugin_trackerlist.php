@@ -1606,7 +1606,7 @@ function wikiplugin_trackerlist($data, $params)
 							}
 						}
 					}						
-					eval('$value='.implode('+', $amount).';');
+					$value = array_sum($amount);
 					if ($oper == 'avg')
 						$value = round($value / count($amount));
 					$computedFields[$fieldId][] = array_merge(array('computedtype' => 'n', 'operator'=>$oper, 'value'=>$value), $passfields[$fieldId]);

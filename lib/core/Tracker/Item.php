@@ -186,6 +186,12 @@ class Tracker_Item
 			return $user;
 		}
 		
+
+		if (isset($this->info['itemUser'])) {
+			// Used by TRACKERLIST - not all data is loaded, but this is loaded separately
+			return $this->info['itemUser'];
+		}
+                
 		$userField = $this->definition->getUserField();
 		if ($userField) {
 			return $this->getValue($userField);

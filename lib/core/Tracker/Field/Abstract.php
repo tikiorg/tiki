@@ -133,12 +133,8 @@ abstract class Tracker_Field_Abstract implements Tracker_Field_Interface, Tracke
 		$status = $this->getData('status');
 
 		if ($this->getConfiguration('isMain', 'n') == 'y' 
-			&& ($itemObject->canViewField($this->definition['fieldId'])	|| $itemObject->getPerm('comment_tracker_items'))
-			// TODO : Re-introduce conditions, required information not available at this time.
-			// or ($tracker_info.writerCanModify eq 'y' and $user and $my eq $user)
-			// or ($tracker_info.writerGroupCanModify eq 'y' and $group and $ours eq $group))
+			&& ($itemObject->canView()	|| $itemObject->getPerm('comment_tracker_items'))
 			) {
-
 			return (bool) $this->getItemId();
 		}
 

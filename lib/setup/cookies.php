@@ -21,6 +21,8 @@ if ( isset($_SESSION['tiki_cookie_jar']) ) {
 	if ( count($cookielist) ) {		
 		$headerlib->add_js('tiki_cookie_jar={'. implode(',', $cookielist).'};');
 	}
+} else {
+	$headerlib->add_js('tiki_cookie_jar=new Object();');
 }
 
 $smarty->assign_by_ref('cookie', $_SESSION['tiki_cookie_jar']);

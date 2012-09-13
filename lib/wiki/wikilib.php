@@ -342,6 +342,10 @@ class WikiLib extends TikiLib
 		global $tikilib;
 		global $smarty;
 		global $user;
+		if ($prefs['feature_use_fgal_for_wiki_attachments'] == 'y') {
+			$query = 'update `tiki_file_galleries` set `name`=? where `name`=?';
+			$this->query($query, array( $newName, $oldName ));
+		}
 
 		// first get all watches for this page ...
 		if ($prefs['feature_user_watches'] == 'y') {
@@ -1106,13 +1110,16 @@ class WikiLib extends TikiLib
 	function sefurl($page, $with_next='', $all_langs='')
 	{
 		global $prefs, $smarty, $info;
-		if ( basename($_SERVER['PHP_SELF']) == 'tiki-all_languages.php' ) {
-			return 'tiki-all_languages.php?page='.urlencode($page);
-		}
-
 		$script_name = 'tiki-index.php';
-		if ($all_langs == 'y') {
-			$script_name = 'tiki-all_languages.php';
+
+		if ($prefs['feature_multilingual_one_page'] == 'y') {
+			if ( basename($_SERVER['PHP_SELF']) == 'tiki-all_languages.php' ) {
+				return 'tiki-all_languages.php?page='.urlencode($page);
+			}
+
+			if ($all_langs == 'y') {
+				$script_name = 'tiki-all_languages.php';
+			}
 		}
 
 		$href = "$script_name?page=" . urlencode($page);
