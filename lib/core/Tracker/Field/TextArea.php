@@ -107,6 +107,7 @@ class Tracker_Field_TextArea extends Tracker_Field_Text
 		} elseif ($this->getOption(3)) {
 			$data['keyup'] = "charCount({$this->getOption(3)}, this, 'cpt_{$this->getConfiguration('fieldId')}', '" . tr('Character Limit Exceeded') . "')";
 		}
+		$data['element_id'] = 'area_' . uniqid();
 		return $this->renderTemplate('trackerinput/textarea.tpl', $context, $data);
 	}
 
