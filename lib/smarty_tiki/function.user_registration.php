@@ -97,12 +97,24 @@ function smarty_function_user_registration($params, $smarty)
 
 	$needs_validation_js = true;
 	if ($registrationlib->merged_prefs['userTracker'] == 'y') {
-		$re = $userlib->get_group_info(isset($_REQUEST['chosenGroup']) ? $_REQUEST['chosenGroup'] : 'Registered');
+		$chosenGroup = 'Registered';
+		if (count($registrationlib->merged_prefs['choosable_groups']) > 0 && isset($_REQUEST['chosenGroup'])) {
+			$chosenGroup =  $_REQUEST['chosenGroup'];
+			if (!$userlib->group_exists($chosenGroup) || $userlib->get_registrationChoice($chosenGroup) !== 'y') {
+				$result = null;						// invalid group chosen
+				$smarty->assign('msg', '');
+				$smarty->assign('showmsg', 'n');
+				$chosenGroup = '';
+			}
+		}
+		$re = $userlib->get_group_info($chosenGroup);
 		if (!empty($re['usersTrackerId']) && !empty($re['registrationUsersFieldIds'])) {
 			$needs_validation_js = false;
 			include_once ('lib/wiki-plugins/wikiplugin_tracker.php');
-			if (isset($_REQUEST['name'])) $user = $_REQUEST['name']; // so that one can set user preferences at registration time
-			$_REQUEST['iTRACKER'] = 1;	// only one tracker plugin on registration
+			if (isset($_REQUEST['name'])) {
+				$user = $_REQUEST['name'];	// so that one can set user preferences at registration time
+				$_REQUEST['iTRACKER'] = 1;	// only one tracker plugin on registration
+			}
 			if ($registrationlib->merged_prefs["user_register_prettytracker"] == 'y' && !empty($registrationlib->merged_prefs["user_register_prettytracker_tpl"])) {
 				if (substr($registrationlib->merged_prefs["user_register_prettytracker_tpl"], -4) == ".tpl") {
 					$userTrackerData = wikiplugin_tracker('', array('trackerId' => $re['usersTrackerId'], 'fields' => $re['registrationUsersFieldIds'], 'showdesc' => 'y', 'showmandatory' => 'y', 'embedded' => 'n', 'action' => tra('Register'), 'registration' => 'y', 'tpl' => $re["user_register_prettytracker_tpl"], 'userField' => $re['usersFieldId'], 'outputwiki' => $outputwiki, 'outputtowiki' => $outputtowiki));
@@ -116,12 +128,12 @@ function smarty_function_user_registration($params, $smarty)
 			if (!empty($tr['description'])) {
 				$smarty->assign('userTrackerHasDescription', true);
 			}
-			if ($_REQUEST['error'] === 'y') {
+			if (isset($_REQUEST['error']) && $_REQUEST['error'] === 'y') {
 				$result = null;
 				$smarty->assign('msg', '');
 				$smarty->assign('showmsg', 'n');
 
-			} else {		// user tracker saved ok
+			} else if (isset($_REQUEST['name'])) {		// user tracker saved ok
 
 				if ($registrationlib->merged_prefs['validateUsers'] == 'y'
 					|| (isset($registrationlib->merged_prefs['validateRegistration'])

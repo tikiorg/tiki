@@ -674,7 +674,7 @@ function wikiplugin_tracker($data, $params)
 					$ins_fields["data"][] = array('fieldId' => $embeddedId, 'value' => $_REQUEST['page']);
 				}
 
-				if ($registration == 'y' && isset($params['userField'])) {
+				if ($registration == 'y' && isset($params['userField']) && isset($_REQUEST['name'])) {
 					$userField = $definition->getField($params['userField']);
 					$userField['value'] = $_REQUEST['name'];
 					$ins_fields['data'][] = $userField;
@@ -1051,7 +1051,7 @@ function wikiplugin_tracker($data, $params)
 					TikiLib::lib('errorreport')->report($msg);
 				}
 
-				if ($registration && !empty($userField) && $_REQUEST['name'] === $userField['value'] && $_REQUEST['name'] === $user) {
+				if ($registration && !empty($userField) && isset($_REQUEST['name']) && $_REQUEST['name'] === $userField['value'] && $_REQUEST['name'] === $user) {
 					// if in registration and creating a user tracker item for the new user
 					// remove the user if they did not complete the tracker correctly
 					$userlib->remove_user($userField['value']);
