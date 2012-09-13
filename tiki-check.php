@@ -719,6 +719,7 @@ if ( $e == 0 ) {
 	}
 }
 
+// Zip Archive class 
 $s = class_exists('ZipArchive');
 if ( $s ) {
 	$php_properties['ZipArchive class'] = array(
@@ -731,6 +732,22 @@ if ( $s ) {
 		'fitness' => tra('ugly'),
 		'setting' => 'Not Available',
 		'message' => tra('The ZipArchive class is needed for features such as XML Wiki Import/Export and PluginArchiveBuilder.')
+		);
+}
+
+// DateTime class 
+$s = class_exists('DateTime');
+if ( $s ) {
+	$php_properties['DateTime class'] = array(
+		'fitness' => tra('good'),
+		'setting' => 'Available',
+		'message' => tra('The DateTime class is needed for the WebDAV feature.')
+		);
+} else {
+	$php_properties['DateTime class'] = array(
+		'fitness' => tra('ugly'),
+		'setting' => 'Not Available',
+		'message' => tra('The DateTime class is needed for the WebDAV feature.')
 		);
 }
 
