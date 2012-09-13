@@ -16,8 +16,8 @@
 				   {literal}{img fileId={/literal}{$image.fileId}{literal} thumb=y link=""}{/literal}
 				</a>
 				<div class="caption">
-					<div class="image-title"></div>
-					<div class="image-desc"></div>
+					<div class="image-title">{$image.name}</div>
+					<div class="image-desc">{$image.description}</div>
 				</div>
 			</li>
 			{/foreach}

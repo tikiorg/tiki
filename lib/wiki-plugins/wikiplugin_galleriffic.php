@@ -139,6 +139,7 @@ $jq = <<<JQ
 	// We only want these styles applied when javascript is enabled
 \$('div.navigation').css({'width' : '$thumbsWidth', 'float' : 'left'});
 \$('div.gcontent').css('display', 'block');
+\$('.thumbs').show();
 
 	// Initially set opacity on thumbs and add
 	// additional styling for hover effect on thumbs
@@ -194,6 +195,12 @@ div.slideshow a.advance-link {
 	width: $imgWidth;
 	height: $imgHeight;
 	line-height: $imgHeight;
+}
+span.image-caption {
+	width: $imgWidth;
+}
+.thumbs {
+	display: none;
 }
 
 CSS;
