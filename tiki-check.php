@@ -246,6 +246,22 @@ if (version_compare(PHP_VERSION, '5.1.0', '<')) {
 	);
 }
 
+// PHP Server API (SAPI)
+$s = php_sapi_name();
+if (substr($s, 0, 3) == 'cgi') {
+	$php_properties['PHP Server API'] = array(
+		'fitness' => tra('information'),
+		'setting' => $s,
+		'message' => tra('You are running PHP as CGI. Feel free to use a threaded Apache MPM to increase performance.')
+	);
+} else {
+	$php_properties['PHP Server API'] = array(
+		'fitness' => tra('information'),
+		'setting' => $s,
+		'message' => tra('You are not running PHP as CGI. Be aware that PHP is not thread-safe and you should not use a threaded Apache MPM (like worker).')
+	);
+}
+
 // memory_limit
 $memory_limit = ini_get('memory_limit');
 $s = trim($memory_limit);
