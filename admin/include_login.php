@@ -13,20 +13,21 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
 if (isset($_REQUEST['loginprefs'])) {
 	check_ticket('admin-inc-login');
 
-	if (isset($_REQUEST['registration_choices'])) {
-		$listgroups = $userlib->get_groups(0, -1, 'groupName_asc', '', '', 'n');
-		$in = array();
-		$out = array();
-		foreach ($listgroups['data'] as $gr) {
-			if ($gr['groupName'] == 'Anonymous') continue;
-			if ($gr['registrationChoice'] == 'y' && !in_array($gr['groupName'], $_REQUEST['registration_choices'])) // deselect
-				$out[] = $gr['groupName'];
-			elseif ($gr['registrationChoice'] != 'y' && in_array($gr['groupName'], $_REQUEST['registration_choices'])) //select
-				$in[] = $gr['groupName'];
-		}
-		if (count($in)) $userlib->set_registrationChoice($in, 'y');
-		if (count($out)) $userlib->set_registrationChoice($out, NULL);
+	if (empty($_REQUEST['registration_choices'])) {
+		$_REQUEST['registration_choices'] = array();
 	}
+	$listgroups = $userlib->get_groups(0, -1, 'groupName_asc', '', '', 'n');
+	$in = array();
+	$out = array();
+	foreach ($listgroups['data'] as $gr) {
+		if ($gr['groupName'] == 'Anonymous') continue;
+		if ($gr['registrationChoice'] == 'y' && !in_array($gr['groupName'], $_REQUEST['registration_choices'])) // deselect
+			$out[] = $gr['groupName'];
+		elseif ($gr['registrationChoice'] != 'y' && in_array($gr['groupName'], $_REQUEST['registration_choices'])) //select
+			$in[] = $gr['groupName'];
+	}
+	if (count($in)) $userlib->set_registrationChoice($in, 'y');
+	if (count($out)) $userlib->set_registrationChoice($out, NULL);
 }
 if (!empty($_REQUEST['refresh_email_group'])) {
 	$nb = $userlib->refresh_set_email_group();
