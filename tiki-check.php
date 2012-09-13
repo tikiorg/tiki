@@ -508,7 +508,7 @@ if ($s) {
 
 // GD
 $s = extension_loaded('gd');
-if ((extension_loaded('gd') && function_exists('gd_info'))) {
+if ( $s && function_exists('gd_info') ) {
 	$gd_info = gd_info();
 	$im = @imagecreate(110, 20);
 	if ($im) {
@@ -690,6 +690,21 @@ if ( $e == 0 ) {
 			'message' => tra('You will get all errors reported as your error_reporting level is all the way up at '.$e.' and display_errors is on. Way to go in case of problems as the error reports usually contain some valuable hints!') 
 		);
 	}
+}
+
+$s = class_exists('ZipArchive');
+if ( $s ) {
+	$php_properties['ZipArchive class'] = array(
+		'fitness' => tra('good'),
+		'setting' => 'Available',
+		'message' => tra('The ZipArchive class is needed for features such as XML Wiki Import/Export and PluginArchiveBuilder.')
+		);
+} else {
+	$php_properties['ZipArchive class'] = array(
+		'fitness' => tra('ugly'),
+		'setting' => 'Not Available',
+		'message' => tra('The ZipArchive class is needed for features such as XML Wiki Import/Export and PluginArchiveBuilder.')
+		);
 }
 
 // Check if ini_set works
