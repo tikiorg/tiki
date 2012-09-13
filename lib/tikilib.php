@@ -5163,7 +5163,7 @@ class TikiLib extends TikiDb_Bridge
 		}
 		
 		if ( ((empty($javascript) && $prefs['javascript_enabled'] == 'y') || $javascript == 'y')) {
-			$myId = (!empty($params['id'])) ? ($params['id']) : 'wp-flash-' . md5($params['movie']);
+			$myId = (!empty($params['id'])) ? ($params['id']) : 'wp-flash-' . uniqid();
 			$movie = '"'.$params['movie'].'"';
 			$div = json_encode($myId);
 			$width = (int) $params['width'];
