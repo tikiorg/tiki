@@ -373,7 +373,9 @@ $("select[name=' . $this->getInsertId() . ']").change(function(e, val) {
 							false
 			);
 			if (!$this->getOption(11) || $this->getOption(11) != 'multi') {
-				$data['list'] = array_unique($data['list']);
+				// This silently modifies tracker items when an item name is used multiple times, which really isn't impossible.
+				// If you want it, make it optional.
+				//$data['list'] = array_unique($data['list']);
 			} elseif (array_unique($data['list']) != $data['list']) {
 				$newlist = array();
 				foreach ($data['list'] as $k => $dl) {
