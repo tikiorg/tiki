@@ -511,7 +511,6 @@ class Services_Tracker_Controller
 					$childItem->asNew();
 					$data = $childItem->getData();
 					$data['fields'][$info['field']] = $id;
-					var_dump($data);
 
 					$new = $this->utilities->insertItem($childItem->getDefinition(), $data);
 				}

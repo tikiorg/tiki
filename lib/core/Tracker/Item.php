@@ -321,7 +321,7 @@ class Tracker_Item
 
 			if ($this->canModifyField($fid)) {
 				$field['ins_id'] = "ins_$fid";
-
+				
 				$handler = $factory->getHandler($field, $this->info);
 				$output[] = array_merge($field, $handler->getFieldData($input));
 			}
@@ -371,6 +371,10 @@ class Tracker_Item
 			foreach ($fields as $field) {
 				$permName = $field['permName'];
 				$out[$permName] = $field['value'];
+
+				if (isset($input->fields[$permName])) {
+					$out[$permName] = $input->fields->$permName->none();
+				}
 			}
 		} else {
 			$factory = $this->definition->getFieldFactory();

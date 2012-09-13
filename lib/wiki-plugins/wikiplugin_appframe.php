@@ -392,8 +392,11 @@ function wikiplugin_appframe_template($data, $params, $start)
 	$file = $params->file->url();
 
 	try {
-		$params->setDefaultFilter('text');
-		$smarty->assign('input', $params->text());
+		$data = array_map(function ($value) {
+			return preg_replace('/\{\{\w+\}\}/', '', $value);
+		}, $params->text());
+
+		$smarty->assign('input', $data);
 		return $smarty->fetch($file);
 	} catch (SmartyException $e) {
 		return tr('Template file not found: ' . $file);
