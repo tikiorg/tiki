@@ -533,6 +533,33 @@ if ( $s && function_exists('gd_info') ) {
 	);
 }
 
+// Image Magick
+$s = class_exists('Imagick');
+if ( $s ) {
+	$image = new Imagick();
+	$image->newImage(100, 100, new ImagickPixel('red'));
+	if ( $image ) {
+		$php_properties['Image Magick'] = array(
+			'fitness' => tra('good'),
+			'setting' => 'Available',
+			'message' => tra('ImageMagick is used as a fallback in case that GD is not available.')
+		);
+		$image->destroy();
+	} else {
+		$php_properties['Image Magick'] = array(
+			'fitness' => tra('ugly'),
+			'setting' => 'Dysfunctional',
+			'message' => tra('ImageMagick is used as a fallback in case that GD is not available.').tra('ImageMagick is available, but unable to create images. Please check your ImageMagick configuration.')
+			);
+	}
+} else {
+	$php_properties['Image Magick'] = array(
+		'fitness' => tra('ugly'),
+		'setting' => 'Not Available',
+		'message' => tra('ImageMagick is used as a fallback in case that GD is not available.')
+		);
+}
+
 // mbstring
 $s = extension_loaded('mbstring');
 if ($s) {
