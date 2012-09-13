@@ -19,6 +19,8 @@ class Services_Broker
 		$access = TikiLib::lib('access');
 
 		try {
+			$this->preExecute();
+
 			$output = $this->attemptProcess($controller, $action, $request);
 
 			if (isset($output['FORWARD'])) {
@@ -62,6 +64,16 @@ class Services_Broker
 		}
 	}
 
+	private function preExecute()
+	{
+		$access = TikiLib::lib('access');
+
+		if ($access->is_xml_http_request() && ! $access->is_serializable_request()) {
+			$headerlib = TikiLib::lib('header');
+			$headerlib->clear_js(); // Only need the partials
+		}
+	}
+
 	private function render($controller, $action, $output)
 	{
 		if (isset($output['FORWARD'])) {
@@ -85,7 +97,6 @@ class Services_Broker
 
 		if ($access->is_xml_http_request()) {
 			$headerlib = TikiLib::lib('header');
-			$headerlib->clear_js(); // Only need the partials
 			$content = $smarty->fetch($template);
 			$content .= $headerlib->output_js();
 
