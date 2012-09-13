@@ -487,10 +487,6 @@ class ParserLib extends TikiDb_Bridge
 
 			if ( $this->plugin_is_editable($plugin_name) && (empty($this->option['preview_mode']) || !$this->option['preview_mode']) && empty($this->option['indexing']) && (empty($this->option['print']) || !$this->option['print']) && !$this->option['suppress_icons'] ) {
 				$headerlib = TikiLib::lib('header');
-				$headerlib->add_jsfile('tiki-jsplugin.php?language='.$prefs['language'], 'dynamic');
-				if ($prefs['wikiplugin_module'] === 'y' && $prefs['wikiplugininline_module'] === 'n') {
-					$headerlib->add_jsfile('tiki-jsmodule.php?language='.$prefs['language'], 'dynamic');
-				}
 				include_once('lib/smarty_tiki/function.icon.php');
 
 				$id = 'plugin-edit-' . $plugin_name . $current_index;

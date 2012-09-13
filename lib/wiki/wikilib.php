@@ -990,11 +990,7 @@ class WikiLib extends TikiLib
 		$parserlib = TikiLib::lib('parser');
 
 		if ($with_help) {
-			global $cachelib, $headerlib, $prefs;
-			$headerlib->add_jsfile('tiki-jsplugin.php?language='.$prefs['language'], 'dynamic');
-			if ($prefs['wikiplugin_module'] === 'y' && $prefs['wikiplugininline_module'] === 'n') {
-				$headerlib->add_jsfile('tiki-jsmodule.php?language='.$prefs['language'], 'dynamic');
-			}
+			global $cachelib, $prefs;
 			$cachetag = 'plugindesc' . $this->get_language() . $area_id . '_js=' . $prefs['javascript_enabled'];
 			if (! $plugins = $cachelib->getSerialized($cachetag) ) {
 				$list = $parserlib->plugin_get_list();

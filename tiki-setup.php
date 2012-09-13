@@ -497,6 +497,15 @@ if ($prefs['feature_sefurl'] != 'y') {
 	);
 }
 
+if (true) {
+	// Before being clever and moving this close to where you think it's needed (again),
+	// consider there are more places that you think.
+	$headerlib->add_jsfile('tiki-jsplugin.php?language='.$prefs['language'], 'dynamic');
+	if ($prefs['wikiplugin_module'] === 'y' && $prefs['wikiplugininline_module'] === 'n') {
+		$headerlib->add_jsfile('tiki-jsmodule.php?language='.$prefs['language'], 'dynamic');
+	}
+}
+
 if ( session_id() ) {
 	if ( $prefs['tiki_cachecontrol_session'] ) {
 		header('Cache-Control: ' . $prefs['tiki_cachecontrol_session']);
