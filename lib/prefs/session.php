@@ -28,7 +28,7 @@ function prefs_session_list()
 			'filter' => 'digits',
 			'perspective' => false,
 			'size' => '4',
-			'default' => 0,
+			'default' => 10080,
 		),
 		'session_silent' => array(
 			'name' => tra('Silent session'),
