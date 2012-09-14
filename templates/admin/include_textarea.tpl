@@ -313,7 +313,16 @@ if (window.location.href.indexOf('plugin_alias_new=true') > -1) {
 		<fieldset id="pluginalias_simple_args">
 			<legend>{tr}Simple Plugin Arguments{/tr}{icon _id="omodule"} {icon _id="add" id="pluginalias_simple_add"}</legend>
 			{jq}
-$('#pluginalias_simple_add').click(function() { $('#pluginalias_simple_new').toggle("fast"); return false; });
+$('#pluginalias_simple_add').click(function() {
+		var me = $('#pluginalias_simple_new'),
+			lastChild = me.children().last(),
+			clone = lastChild.clone();
+
+		clone.find(':input').val('');
+		clone.insertAfter(lastChild);
+
+	return false;
+});
 {{if $plugin_admin.params}}
 $('#pluginalias_doc legend').trigger('click'{{if isset($plugin_admin.description.params)}, true{/if}});
 $('#pluginalias_simple_new').hide();
