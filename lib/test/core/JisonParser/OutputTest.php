@@ -90,7 +90,7 @@ class JisonParser_OutputTest extends TikiTestCase
 			'color_text2'       => array('~~#ff00ff:text~~', '<span style="color: #ff00ff;">text</span>'),
 			'htmllink'          => array("[www.google.com]", '<a class="wiki" href="www.google.com">www.google.com</a>'),
 			'htmllink1'         => array("[www.google.com|Google]", '<a class="wiki" href="www.google.com">Google</a>'),
-			'wikilink'          => array("((Wiki Page))", '<a class="wiki" href="tiki-index.php?page=Wiki Page">Wiki Page</a>'),
+			'wikilink'          => array("((Wiki Page))", '<a class="wiki" title="Wiki Page" href="tiki-index.php?page=Wiki Page">Wiki Page</a>'),
 			'table'             => array("||A1|B1|C1\nA2|B2|C2||", '<table class="wikitable"><tr><td class="wikicell">A1</td><td class="wikicell">B1</td><td class="wikicell">C1</td></tr><tr><td class="wikicell">A2</td><td class="wikicell">B2</td><td class="wikicell">C2</td></tr></table>'),
 
 
@@ -105,8 +105,11 @@ class JisonParser_OutputTest extends TikiTestCase
 			'color_text1_r'     => array('~~red:text', '<span style="color: red;">text</span>'),
 			'color_text2_r'     => array('~~#ff00ff:text', '<span style="color: #ff00ff;">text</span>'),
 			'htmllink_r'        => array("[www.google.com|Google", '<a class="wiki" href="www.google.com">Google</a>'),
-			'wikilink_r'        => array("((Wiki Page", '<a class="wiki" href="tiki-index.php?page=Wiki Page">Wiki Page</a>'),
+			'wikilink_r'        => array("((Wiki Page", '<a class="wiki" title="Wiki Page" href="tiki-index.php?page=Wiki Page">Wiki Page</a>'),
 			'table_r'           => array("||A1|B1|C1\nA2|B2|C2", '<table class="wikitable"><tr><td class="wikicell">A1</td><td class="wikicell">B1</td><td class="wikicell">C1</td></tr><tr><td class="wikicell">A2</td><td class="wikicell">B2</td><td class="wikicell">C2</td></tr></table>'),
+
+			'wikilink_nested'   => array("(([Linked]))", '<a class="wiki" title="[Linked]" href="tiki-index.php?page=[Linked]">[Linked]</a>'),
+			'htmllink_nested'   => array("[((Linked))]", '<a class="wiki" href="((Linked))">((Linked))</a>'),
 
 			//non state tracking syntax
 			"forced_break"      => array('%%%', "<br />"),
