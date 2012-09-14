@@ -61,7 +61,7 @@
 				$files[$changes].type eq 'image/png' 		or
 				$files[$changes].type eq 'image/tiff'
 			}
-				<a class="draw dialog" data-name="{$files[$changes].filename}" title="{tr}Edit: {/tr}{$files[$changes].filename}" href="tiki-edit_draw.php?fileId={$files[$changes].id}&galleryId={$files[$changes].galleryId}" data-fileid='{$files[$changes].id}' data-galleryid='{$files[$changes].galleryId}' onclick='return $(this).ajaxEditDraw();' data-url='{$files[$changes].id|sefurl:display}'>
+				<a class="draw dialog" data-name="{$files[$changes].filename}" title="{tr}Edit: {/tr}{$files[$changes].filename}" href="tiki-edit_draw.php?fileId={$files[$changes].id}&galleryId={$files[$changes].galleryId}" data-fileid='{$files[$changes].id}' data-galleryid='{$files[$changes].galleryId}' onclick='return $(this).ajaxEditDraw();'>
 					{icon _id='page_edit' _menu_text=$menu_text _menu_icon=$menu_icon alt="{tr}Edit{/tr}"}
 				</a>
 			{/if}

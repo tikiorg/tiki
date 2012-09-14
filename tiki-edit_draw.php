@@ -122,16 +122,7 @@ if ($fileInfo['filetype'] == $mimetypes["svg"]) {
 	$w = imagesx($image);
 	$h = imagesy($image);
 
-	$src = '';
-	$attributelib = TikiLib::lib('attribute');
-	$attributes = $attributelib->get_attributes('file', $fileInfo['fileId']);
-
-	if (isset($attributes['tiki.content.url'])) {
-		$smarty->loadPlugin('smarty_modifier_sefurl');
-		$src = smarty_modifier_sefurl($fileInfo['fileId'], 'file');
-	} else {
-		$src = $tikilib->tikiUrl() . 'tiki-download_file.php?fileId=' . $fileInfo['fileId'];
-	}
+	$src = $tikilib->tikiUrl() . 'tiki-download_file.php?fileId=' . $fileInfo['fileId'];
 
 	$data = '<svg width="' . $w . '" height="' . $h
 		. '" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
