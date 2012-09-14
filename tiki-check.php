@@ -794,7 +794,7 @@ if ($connection || !$standalone) {
 	}
 
 	// max_allowed_packet
-	$query = "SHOW VARIABLES where Variable_name='max_allowed_packet'";
+	$query = "SHOW VARIABLES LIKE 'max_allowed_packet'";
 	$result = query($query, $connection);
 	$s = $result[0]['Value'];
 	$max_allowed_packet = $s / 1024 / 1024;
