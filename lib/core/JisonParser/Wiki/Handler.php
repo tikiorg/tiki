@@ -275,13 +275,14 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 
 		$output = $this->unprotectSpecialChars($output, $this->Parser->option['is_html']);
 
-		if ($this->Parser->option['parseLists'] == true || strpos($output, "\n") !== false) {
-			$lists = $this->Parser->list->toHtml();
-
+		if ($this->Parser->option['parseLists'] == true) {
+			$lists = array_reverse($this->Parser->list->toHtml());
 			if (!empty($lists)) {
 				foreach($lists as $key => &$list) {
-					$output = str_replace($key, $list, $output);
-					unset($list);
+					if (strpos($output, $key)) {
+						$output = str_replace($key, $list, $output);
+						unset($list);
+					}
 				}
 			}
 		}
