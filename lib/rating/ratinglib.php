@@ -295,7 +295,8 @@ class RatingLib extends TikiDb_Bridge
 			ORDER BY time DESC", array($type.$threadId));
 
 		$votings = array();
-		$percent = 100 / count($user_votings);
+		$voteCount = count($user_votings);
+		$percent = ( $voteCount > 0 ? 100 / $voteCount : 0 );
 
 		foreach($user_votings as $user_voting) {
 			if (!isset($votings[$user_voting['optionId']])) $votings[$user_voting['optionId']] = 0;
