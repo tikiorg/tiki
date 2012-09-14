@@ -276,13 +276,14 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		$output = $this->unprotectSpecialChars($output, $this->Parser->option['is_html']);
 
 		if ($this->Parser->option['parseLists'] == true) {
-			$lists = array_reverse($this->Parser->list->toHtml());
+			$lists = $this->Parser->list->toHtml();
 			if (!empty($lists)) {
+				$lists = array_reverse($lists);
 				foreach($lists as $key => &$list) {
-					if (strpos($output, $key)) {
+
 						$output = str_replace($key, $list, $output);
 						unset($list);
-					}
+
 				}
 			}
 		}
@@ -392,14 +393,16 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	{
 		//use of array_reverse, jison is a reverse bottom-up parser, if it doesn't reverse jison doesn't restore the plugins in the right order, leaving the some nested keys as a result
 		foreach(array_reverse($this->pluginEntries) as $key => $entity) {
-			if ($this->getOption('stripplugins') == true) {
-				$input = str_replace($key, '', $input);
-			} else {
-				$input = str_replace($key, $entity, $input);
-			}
+			if (strpos($input, $key)) {
+				if ($this->getOption('stripplugins') == true) {
+					$input = str_replace($key, '', $input);
+				} else {
+					$input = str_replace($key, $entity, $input);
+				}
 
-			if (!$keep) {
-				unset($this->pluginEntries[$key]);
+				if (!$keep) {
+					unset($this->pluginEntries[$key]);
+				}
 			}
 		}
 
@@ -772,6 +775,11 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	function strike($content) //--content--
 	{
 		return '<strike>' . $content . '</strike>';
+	}
+
+	function doubleDash()
+	{
+		return ' &mdash; ';
 	}
 
 	function tableParser($content) /*|| | \n | ||*/

@@ -13,6 +13,7 @@ class WikiPlugin_ParserNegotiator
 	public $info;
 	public $fingerprint;
 	public $exists; //exists is set to true only for old style plugin
+	public $aliasExists;
 	public $index;
 	public $key;
 	public $needsParsed = true;
@@ -359,9 +360,9 @@ class WikiPlugin_ParserNegotiator
 			return $known[$this->name] = false;
 		}
 
-		$func_name_info = "wikiplugin_{$this->name}_info";
+		$funcNameInfo = "wikiplugin_{$this->name}_info";
 
-		if ( ! function_exists($func_name_info) ) {
+		if ( ! function_exists($funcNameInfo) ) {
 			if ( $info = $this->aliasInfo() ) {
 				return $known[$this->name] = $info['description'];
 			} else {
@@ -369,18 +370,22 @@ class WikiPlugin_ParserNegotiator
 			}
 		}
 
-		return $known[$this->name] = $func_name_info();
+		return $known[$this->name] = $funcNameInfo();
 	}
 
 	function aliasInfo()
 	{
 		global $prefs;
 
-		if (empty($this->name)) return false;
+		if (empty($this->name)) {
+			return false;
+		}
 
 		$prefName = "pluginalias_" . $this->name;
 
-		if ( ! isset( $prefs[$prefName] ) ) return false;
+		if ( ! isset( $prefs[$prefName] ) ) {
+			return false;
+		}
 
 		return unserialize($prefs[$prefName]);
 	}
