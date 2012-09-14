@@ -161,6 +161,12 @@ if ($tiki_p_admin_file_galleries == 'y') {
 		}
 		unset($_REQUEST['view']);
 	}
+
+	if (isset($_REQUEST['refresh_metadata_x'])) {
+		foreach (array_values($_REQUEST['file']) as $file) {
+			$filegallib->metadataAction($file, 'refresh');
+		}
+	}
 }
 
 if (isset($_REQUEST['zipsel_x']) && $tiki_p_upload_files == 'y') {

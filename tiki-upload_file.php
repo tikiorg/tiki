@@ -124,6 +124,10 @@ if ( ! empty( $fileId ) ) {
 	}
 }
 
+if (isset($_REQUEST['action']) && $_REQUEST['action'] == 'refresh_metadata') {
+	$filegallib->metadataAction($_REQUEST['fileId'], 'refresh');
+}
+
 $smarty->assign('show', 'n');
 if (!empty($_REQUEST['galleryId'][0]) && $prefs['feature_groupalert'] == 'y') {
 	$groupforalert = $groupalertlib->GetGroup('file gallery', (int)$_REQUEST['galleryId'][0]);
@@ -203,7 +207,7 @@ if ( $prefs['fgal_limit_hits_per_file'] == 'y' ) {
 }
 
 if (!empty($fileInfo['fileId'])) {
-	$smarty->assign('metarray', $filegallib->getOrExtractMetadataArray($fileInfo['fileId']));
+	$smarty->assign('metarray', $filegallib->metadataAction($fileInfo['fileId']), 'get_array');
 }
 
 $cat_type = 'file';

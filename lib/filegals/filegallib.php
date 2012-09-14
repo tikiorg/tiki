@@ -2342,6 +2342,7 @@ class FileGalLib extends TikiLib
 				'tf.`is_reference`' => "'' as `is_reference`",
 				'tf.`hash`' => "'' as `hash`",
 				'tf.`search_data`' => 'tfg.`name` as `search_data`',
+				'tf.`metadata`' => "'' as `metadata`",
 				'tf.`lastModif` as `lastModif`' => 'tfg.`lastModif` as `lastModif`',
 				'tf.`lastModifUser` as `last_user`' => "'' as `last_user`",
 				'tf.`lockedby`' => "'' as `lockedby`",
@@ -3688,21 +3689,29 @@ class FileGalLib extends TikiLib
 	}
 
 	/**
-	 * Get file metadata from database column or, if that is empty, extract metadata from the file and update
-	 * the database. Return an array of the data.
+	 * Perform actions with file metadata stored in the database
 	 *
-	 * @param 	numeric			$fileId				fileId of the file in the file gallery
+	 * @param		numeric		$fileId					fileId of the file in the file gallery
+	 * @param		string		$action					action to perform regarding metadata
 	 *
-	 * @return	array			$metadata			array of file metadata
+	 * The following actions are handled:
+	 * 		'get_array'			Get file metadata from database column or, if that is empty, extract metadata from the
+	 * 							file, update the database and return an array of the data.
+	 *
+	 * 		'refresh'			Extract metadata from the file and update database - nothing is returned
+	 *
+	 * @return 		array		$metadata				array of metadata is returned is action is 'get_array'
 	 */
-	function getOrExtractMetadataArray($fileId)
+	function metadataAction($fileId, $action = 'get_array')
 	{
 		//get the tiki_files table
 		$filesTable = $this->table('tiki_files');
-		//get metadata for the file from the database
-		$metacol = $filesTable->fetchColumn('metadata', array('fileId' => $fileId));
-		//if metadata field is empty extract from the file
-		if (empty($metacol[0])) {
+		if ($action == 'get_array') {
+			//get metadata for the file from the database
+			$metacol = $filesTable->fetchColumn('metadata', array('fileId' => $fileId));
+		}
+		//if metadata field is empty, or if a refresh, extract from the file
+		if (($action == 'get_array' && empty($metacol[0])) || $action == 'refresh') {
 			//preparing parameters
 			$path = $filesTable->fetchColumn('path', array('fileId' => $fileId));
 			if (!empty($path[0])) {
@@ -3721,8 +3730,10 @@ class FileGalLib extends TikiLib
 		} else {
 			$metadata = $metacol[0];
 		}
-		//return metadata as an array
-		return json_decode($metadata, true);
+		if ($action == 'get_array') {
+			//return metadata as an array
+			return json_decode($metadata, true);
+		}
 	}
 }
 $filegallib = new FileGalLib;

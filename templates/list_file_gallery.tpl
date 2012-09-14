@@ -95,6 +95,8 @@
 								{icon _id='cross' _tag='input_image' _confirm="{tr}Are you sure you want to delete the selected files?{/tr}" name='delsel' alt="{tr}Delete{/tr}" style='vertical-align: middle;'}
 							{/if}
 
+							{icon _id='tag_green' _tag='input_image' name='refresh_metadata' alt="{tr}Refresh Metadata{/tr}" style='vertical-align: middle;'}
+
 							{if $tiki_p_admin_file_galleries eq 'y'}
 								{icon _id='arrow_refresh' _tag='input_image' _confirm="{tr}Are you sure you want to reset the default gallery list table settings?{/tr}" name='defaultsel' alt="{tr}Reset to default gallery list table settings{/tr}" style='vertical-align: middle;'}
 							{/if}
