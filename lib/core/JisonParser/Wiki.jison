@@ -531,20 +531,24 @@ LINE_END                        (\n\r|\r\n|[\n\r])
 <link>"]"
 	%{
 		if (parser.isContent()) return 'CONTENT'; //js
+		parser.linkStack = false; //js
 		lexer.popState(); //js
 		return 'LINK_END'; //js
 
 		//php if ($this->isContent()) return 'CONTENT';
+		//php $this->linkStack = false;
 		//php $this->popState();
 		//php return 'LINK_END';
 	%}
 "["
 	%{
-		if (parser.isContent()) return 'CONTENT'; //js
+		if (parser.isContent() || parser.linkStack == true) return 'CONTENT'; //js
+		parser.linkStack = true; //js
 		lexer.begin('link'); //js
 		return 'LINK_START'; //js
 
-		//php if ($this->isContent()) return 'CONTENT';
+		//php if ($this->isContent() || $this->linkStack == true) return 'CONTENT';
+		//php $this->linkStack = true;
 		//php $this->begin('link');
 		//php return 'LINK_START';
 	%}
@@ -689,31 +693,39 @@ LINE_END                        (\n\r|\r\n|[\n\r])
 <wikilink>"))"
 	%{
 		if (parser.isContent()) return 'CONTENT'; //js
+		parser.linkStack = false; //js
 		lexer.popState(); //js
 		return 'WIKILINK_END'; //js
 
 		//php if ($this->isContent()) return 'CONTENT';
+		//php $this->linkStack = false;
 		//php $this->popState();
 		//php return 'WIKILINK_END';
 	%}
 "(("
 	%{
-		if (parser.isContent()) return 'CONTENT'; //js
+		if (parser.isContent() || parser.linkStack == true) return 'CONTENT'; //js
+		parser.linkStack = true; //js
 		lexer.begin('wikilink'); //js
+		$yytext = $yytext.substring(1, $yytext.length - 1); //js
 		return 'WIKILINK_START'; //js
 
-		//php if ($this->isContent()) return 'CONTENT';
+		//php if ($this->isContent() || $this->linkStack == true) return 'CONTENT';
+		//php $this->linkStack = true;
 		//php $this->begin('wikilink');
 		//php $yytext = substr($yytext, 1, -1);
 		//php return 'WIKILINK_START';
 	%}
 "("([a-z0-9-]+)"("
 	%{
-		if (parser.isContent()) return 'CONTENT'; //js
+		if (parser.isContent() || parser.linkStack == true) return 'CONTENT'; //js
+		parser.linkStack = true; //js
 		lexer.begin('wikilink'); //js
+		$yytext = $yytext.substring(1, $yytext.length - 1); //js
 		return 'WIKILINK_START'; //js
 
-		//php if ($this->isContent()) return 'CONTENT';
+		//php if ($this->isContent() || $this->linkStack == true) return 'CONTENT';
+		//php $this->linkStack = true;
 		//php $this->begin('wikilink');
 		//php $yytext = substr($yytext, 1, -1);
 		//php return 'WIKILINK_START';

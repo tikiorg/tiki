@@ -27,6 +27,9 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	/* pp tracking */
 	public $ppStack = false; //There can only be 1 active np stack
 
+	/* link tracking*/
+	public $linkStack = false; //There can only be 1 active link stack
+
 	public $skipBr = false; //used in block level items, should be set to true.  The next break sets it back to false;
 	public $tableStack = array();
 
@@ -259,6 +262,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		$this->Parser->nonBreakingTagDepth = 0;
 		$this->npStack = false;
 		$this->ppStack = false;
+		$this->linkStack = false;
 
 		$input = "\n" . $input . "\n"; //here we add 2 lines, so the parser doesn't have to do special things to track the first line and last, we remove these when we insert breaks, these are dynamically removed later
 
@@ -828,7 +832,14 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		$href = (isset($wikilink[0]) ? $wikilink[0] : $content);
 		$text = (isset($wikilink[1]) ? $wikilink[1] : $href);
 
-		return '<a class="wiki" href="tiki-index.php?page=' . $href . '">' . $text . '</a>';
+		$type = strtolower($type);
+
+		if ($type == 'alias') {
+			return '<a class="wiki wiki_page alias" title="Tiki9" href="tiki-index.php?page=' . $href . '">' . $text . '</a>';
+		} else if (strlen($type)) {
+
+		}
+		return '<a class="wiki" title="' . $text . '" href="tiki-index.php?page=' . $href . '">' . $text . '</a>';
 	}
 
 	function comment($content)

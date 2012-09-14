@@ -975,13 +975,15 @@ break;
 case 47:
 
 		if ($this->isContent()) return 'CONTENT';
+		$this->linkStack = false;
 		$this->popState();
 		return 'LINK_END';
 	
 break;
 case 48:
 
-		if ($this->isContent()) return 'CONTENT';
+		if ($this->isContent() || $this->linkStack == true) return 'CONTENT';
+		$this->linkStack = true;
 		$this->begin('link');
 		return 'LINK_START';
 	
@@ -1081,13 +1083,15 @@ break;
 case 63:
 
 		if ($this->isContent()) return 'CONTENT';
+		$this->linkStack = false;
 		$this->popState();
 		return 'WIKILINK_END';
 	
 break;
 case 64:
 
-		if ($this->isContent()) return 'CONTENT';
+		if ($this->isContent() || $this->linkStack == true) return 'CONTENT';
+		$this->linkStack = true;
 		$this->begin('wikilink');
 		$yy_->yytext = substr($yy_->yytext, 1, -1);
 		return 'WIKILINK_START';
@@ -1095,7 +1099,8 @@ case 64:
 break;
 case 65:
 
-		if ($this->isContent()) return 'CONTENT';
+		if ($this->isContent() || $this->linkStack == true) return 'CONTENT';
+		$this->linkStack = true;
 		$this->begin('wikilink');
 		$yy_->yytext = substr($yy_->yytext, 1, -1);
 		return 'WIKILINK_START';
