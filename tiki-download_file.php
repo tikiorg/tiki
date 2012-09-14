@@ -99,6 +99,18 @@ if (!$skip) {
 	}
 }
 
+//if the file is remote, display, and don't cache
+$attributelib = TikiLib::lib('attribute');
+$attributes = $attributelib->get_attributes('file', $info['fileId']);
+
+if (isset($attributes['tiki.content.url'])) {
+	$smarty->loadPlugin('smarty_modifier_sefurl');
+	$src = smarty_modifier_sefurl($info['fileId'], 'file');
+	session_write_close();
+	echo file_get_contents($src);
+	exit();
+}
+
 // Add hits ( if download or display only ) + lock if set
 if ( ! isset($_GET['thumbnail']) && ! isset($_GET['icon']) ) {
 
