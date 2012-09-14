@@ -75,6 +75,9 @@ FileETag none
 # to activate the error display, uncomment the following line
 #php_flag display_errors on
 
+# to set the error_reporting level, uncomment the following line. Values are explained here: http://www.php.net/manual/en/errorfunc.constants.php
+# php_value error_reporting E_ALL
+
 # increase memory (default is 128M). Use this if you are getting blank pages and strange errors 
 # php_value memory_limit 256M
 
