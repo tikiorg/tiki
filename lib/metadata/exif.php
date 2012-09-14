@@ -762,18 +762,15 @@ class Exif
 		//file name is computed by PHP and is meaningless when file is stored in tiki,
 		//and dialog box has real name in title so not needed
 		unset($exif['FILE']['FileName']);
+		//file date is also computed by PHP and represents the time the metadata was extracted. This data is included
+		//elsewhere and is not needed here
+		unset($exif['FILE']['FileDateTime']);
 		//No processing of maker notes yet as specific code is needed for each manufacturer
 		//Blank out field since it is very long and will distort the dialog box
 		if (!empty($exif['EXIF']['MakerNote']['value']['display'])) {
 			$exif['EXIF']['MakerNote']['newval'] = '(Not processed)';
 		}
-		//PHP computed field (shows time data was extracted) returns 0 for external images so delete when so
-		if (isset($exif['FILE']['FileDateTime']['newval']) && $exif['FILE']['FileDateTime']['newval'] == 0) {
-			unset($exif['FILE']['FileDateTime']);
-		} elseif (!empty($exif['FILE']['FileDateTime']['newval'])) {
-			global $tikilib, $user;
-			$exif['FILE']['FileDateTime']['newval'] = $tikilib->get_long_datetime($exif['FILE']['FileDateTime']['newval'], $user);
-		}
+
 		//Interpret GPSVersion field
 		if (isset($exif['GPS']['GPSVersion'])) {
 			$exif['GPS']['GPSVersion']['newval'] = '';

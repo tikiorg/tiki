@@ -142,6 +142,55 @@ class FileMetadata
 
 
 	/**
+	 * Merge basic file information into the reconciled or combined metadata array. Also adds data extraction time
+	 *
+	 * @param		object		$metaObj			a FileMetadata object that has had metadata extracted and reconciled
+	 * @param		array		$metarray			the metadata array that is being built from the object
+	 *
+	 * @return		array		$metarray			metarray with merged basic file data and extraction time
+	 */
+	function mergeBasicInfo($metaObj, $metarray)
+	{
+		$sumtab		= 'Summary of Basic Information';
+		$timeheader = 'Metadata Extraction Time';
+		$bheader	= 'File Data';
+		//set time of data extraction as now
+		global $tikilib, $user;
+		$extracttime = $tikilib->get_long_datetime(null, $user);
+		$extractarray = array (
+			$timeheader => array(
+				'Extraction Time' => array(
+					'label' 	=> '',
+					'newval'	=> $extracttime,
+				)
+			)
+		);
+
+		if (isset($metaObj->basicinfo) && $metaObj->basicinfo !== false) {
+			if (isset($metarray['reconciled']) && $metarray['reconciled'] !== false) {
+				//if summary tab is already set
+				if (isset($metarray['reconciled'][$sumtab][$bheader])) {
+					//merge in basic info to file data section
+					array_merge($metarray['reconciled'][$sumtab][$bheader], $metaObj->basicinfo);
+				} else {
+					$metarray['reconciled'] =
+						array($sumtab => array($bheader => $metaObj->basicinfo)) + $metarray['reconciled'];
+					$metarray['reconciled'][$sumtab][$bheader] = $metaObj->basicinfo;
+				}
+				//add extraction time
+				$metarray['reconciled'][$sumtab] = $extractarray + $metarray['reconciled'][$sumtab];
+			}
+			if (is_array($metarray['combined'])) {
+				$metarray['combined'] = array($sumtab => array($bheader => $metaObj->basicinfo)) + $metarray['combined'];
+			} else {
+				$metarray['combined'][$sumtab][$bheader] = $metaObj->basicinfo;
+			}
+			$metarray['combined'][$sumtab] = $extractarray + $metarray['combined'][$sumtab];
+		}
+		return $metarray;
+	}
+
+	/**
 	 * Used to create a temporary path to a file when only the contents are available
 	 * Necessary because some php functions used to extract metadata require a file path
 	 * @param		string			$content		contents of a file

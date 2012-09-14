@@ -346,7 +346,7 @@ class ReconcileExifIptcXmp
 		}
 		//add stats
 		if (isset($stats)) {
-			$basicinfo['Summary of Basic Information']['Metadata Stats'] = $stats;
+			$basicinfo['Summary of Basic Information']['Metadata Reconciliation Stats'] = $stats;
 		}
 
 		//unflatten the file metadata arrays by restoring the group level

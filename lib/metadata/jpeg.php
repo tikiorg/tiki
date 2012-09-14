@@ -163,23 +163,7 @@ class Jpeg extends ImageFile
 		$metadata['reconciled'] = $rec->reconcileAllMeta($metadata);
 
 		//Add basic info
-		if (isset($metaObj->basicinfo) && $metaObj->basicinfo !== false) {
-			if (isset($metadata['reconciled']) && $metadata['reconciled'] !== false) {
-				if (isset($metadata['reconciled']['Summary of Basic Information']['File Data'])) {
-					array_merge($metadata['reconciled']['Summary of Basic Information']['File Data'], $metaObj->basicinfo);
-				} else {
-					$metadata['reconciled'] = array('Summary of Basic Information' =>
-													array('File Data' => $metaObj->basicinfo)) + $metadata['reconciled'];
-					$metadata['reconciled']['Summary of Basic Information']['File Data'] = $metaObj->basicinfo;
-				}
-			}
-			if (is_array($metadata['combined'])) {
-				$metadata['combined'] = array('Summary of Basic Information' =>
-					array('File Data' => $metaObj->basicinfo)) + $metadata['combined'];
-			} else {
-				$metadata['combined']['Summary of Basic Information']['File Data'] = $metaObj->basicinfo;
-			}
-		}
+		$metadata = $metaObj->mergeBasicInfo($metaObj, $metadata);
 
 		return $metadata;
 	}
