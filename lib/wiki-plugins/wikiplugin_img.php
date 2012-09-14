@@ -1372,9 +1372,9 @@ function wikiplugin_img( $data, $params )
 		} else {
 			$iconDisplayStyle = '';
 		}
-		$repl .= "<a href='tiki-edit_draw.php?fileId={$imgdata['fileId']}' onclick='return $(this).ajaxEditDraw();' title='".tr("Edit: Image") . " ".tr("(experimental)") . "'" .
+		$repl .= "<br /><a href='tiki-edit_draw.php?fileId={$imgdata['fileId']}' onclick='return $(this).ajaxEditDraw();' title='".tr("Edit: Image") . " ".tr("(experimental)") . "'" .
 					" class='editplugin pluginImgEdit{$imgdata['fileId']}' data-fileid='{$imgdata['fileId']}' data-galleryid='{$imgdata['galleryId']}'{$iconDisplayStyle} data-src='{$src}'>" .
-					"<br /><img width='16' height='16' class='icon' alt='Edit' src='img/icons/page_edit.png' /></a>";
+					"<img width='16' height='16' class='icon' alt='Edit' src='img/icons/page_edit.png' /></a>";
 	}
 	
 	return '~np~' . $repl. "\r" . '~/np~';
