@@ -137,8 +137,7 @@ if ($fileInfo['filetype'] == $mimetypes["svg"]) {
 		. '" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 	<g>
 		<title>Layer 1</title>
-		<image x="1" y="1" width="100%" height="100%" id="svg_1" xlink:href="' . (empty($fileInfo['fileId']) ? ''
-			: $src . '#image' ) . '"/>
+		<image x="1" y="1" width="100%" height="100%" id="svg_1" xlink:href="' . $src . '#image"/>
 	</g>
 </svg>';
 }
