@@ -124,7 +124,7 @@ if ($fileInfo['filetype'] == $mimetypes["svg"]) {
 
 	$src = '';
 	$attributelib = TikiLib::lib('attribute');
-	$attributes = $attributelib->get_attributes('file', $source);
+	$attributes = $attributelib->get_attributes('file', $fileInfo['fileId']);
 
 	if (isset($attributes['tiki.content.url'])) {
 		$smarty->loadPlugin('smarty_modifier_sefurl');
