@@ -822,7 +822,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		return '<u>' . $content . '</u>';
 	}
 
-	function wikilink($content) //((content|content))
+	function wikilink($type, $content) //((content|content))
 	{
 		$wikilink = explode('|', $content);
 		$href = (isset($wikilink[0]) ? $wikilink[0] : $content);

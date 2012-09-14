@@ -704,6 +704,18 @@ LINE_END                        (\n\r|\r\n|[\n\r])
 
 		//php if ($this->isContent()) return 'CONTENT';
 		//php $this->begin('wikilink');
+		//php $yytext = substr($yytext, 1, -1);
+		//php return 'WIKILINK_START';
+	%}
+"("([a-z0-9-]+)"("
+	%{
+		if (parser.isContent()) return 'CONTENT'; //js
+		lexer.begin('wikilink'); //js
+		return 'WIKILINK_START'; //js
+
+		//php if ($this->isContent()) return 'CONTENT';
+		//php $this->begin('wikilink');
+		//php $yytext = substr($yytext, 1, -1);
 		//php return 'WIKILINK_START';
 	%}
 
@@ -901,8 +913,8 @@ content
  | WIKILINK_START WIKILINK_END
  | WIKILINK_START contents WIKILINK_END
 	{
-		$$ = parser.wikilink($2); //js
-		//php $$ = $this->wikilink($2);
+		$$ = parser.wikilink($1, $2); //js
+		//php $$ = $this->wikilink($1, $2);
 	}
  | INLINE_PLUGIN
  	{
