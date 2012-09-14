@@ -22,15 +22,20 @@ class SheetLib extends TikiLib
 	{
 		$result = $this->query( "SELECT * FROM `tiki_sheets` WHERE `sheetId` = ?", array( $sheetId ) );
 		$result = $result->fetchRow();
-		$result['tiki_p_edit_sheet'] = $this->user_can_edit( $sheetId );
-		$result['parentSheetId'] = end($this->get_related_sheet_ids( $sheetId, true ));
-		$result['childSheetIds'] = $this->get_related_sheet_ids( $sheetId );
-		$result['childTrackerIds'] = $this->get_related_tracker_ids( $sheetId );
-		$result['childFileIds'] = $this->get_related_file_ids( $sheetId );
-		$result['created'] = $this->get_created($sheet['sheetId']);
-		$result['lastModif'] = $this->get_lastModif ($sheet['sheetId']);
-		
-		return $result;
+
+		if (!empty($result)) {
+			$result['tiki_p_edit_sheet'] = $this->user_can_edit( $sheetId );
+			$ids = $this->get_related_sheet_ids( $sheetId, true );
+			$lastId = end($ids);
+			$result['parentSheetId'] = $lastId;
+			$result['childSheetIds'] = $this->get_related_sheet_ids( $sheetId );
+			$result['childTrackerIds'] = $this->get_related_tracker_ids( $sheetId );
+			$result['childFileIds'] = $this->get_related_file_ids( $sheetId );
+			$result['created'] = $this->get_created($result['sheetId']);
+			$result['lastModif'] = $this->get_lastModif ($result['sheetId']);
+
+			return $result;
+		}
 	}
 
 	function get_sheet_layout( $sheetId ) // {{{2
