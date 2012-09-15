@@ -98,7 +98,7 @@
 	{/if}
 
 	{if $gal_info.archives gt -1}
-		{if $files[$changes].nbArchives gt 0}
+		{if isset($files[$changes].nbArchives) and $files[$changes].nbArchives gt 0}
 			{assign var=nb_archives value=$files[$changes].nbArchives}
 			<a href="tiki-file_archives.php?fileId={$files[$changes].fileId}{if !empty($filegals_manager)}&amp;filegals_manager={$filegals_manager|escape}{/if}">{icon _menu_text=$menu_text _menu_icon=$menu_icon _id='disk_multiple' alt="{tr}Archives{/tr} ($nb_archives)"}</a>
 		{else}
@@ -126,7 +126,9 @@
 				{self_link _icon='cross' _menu_text=$menu_text _menu_icon=$menu_icon draft=remove remove=$files[$changes].fileId galleryId=$files[$changes].galleryId}{tr}Delete your draft{/tr}{/self_link}
 			{/if}
 
-			{if $files[$changes].perms.tiki_p_admin_file_galleries eq 'y' or !$files[$changes].locked or ($files[$changes].locked and $files[$changes].lockedby eq $user) or $gal_info.lockable ne 'y'}
+			{if $files[$changes].perms.tiki_p_admin_file_galleries eq 'y' or empty($files[$changes].locked)
+				or (isset($files[$changes].locked) and $files[$changes].locked and $files[$changes].lockedby eq $user)
+				or $gal_info.lockable ne 'y'}
 				{if $prefs.javascript_enabled eq 'y'}
 					{* if javascript is available on client, add a menu item that will directly open a file selector, automatically upload the file after selection and that replace the current file with the uploaded one *}
 
