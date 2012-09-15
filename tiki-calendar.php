@@ -543,7 +543,8 @@ if ($calendarViewMode['casedefault'] == 'day') {
 	foreach (array_keys($hrows) as $anHour) {
 		for ($i=0, $tmp_count = count($hrows[$anHour]); $i < $tmp_count; $i++) {
 			// setting number of simulaneous events foreach event, so that we can figure out its width without overwriting
-			$hrows[$anHour][$i]['concurrences'] = $concurrencies[$hrows[$anHour][$i]['calitemId']]['value'];
+			$hrows[$anHour][$i]['concurrences'] = isset($concurrencies[$hrows[$anHour][$i]['calitemId']]['value']) ?
+				$concurrencies[$hrows[$anHour][$i]['calitemId']]['value'] : null;
 			// setting duration of the event within the day
 			$hrows[$anHour][$i]['duree'] = $eventHoraires[$eventIndexes[$hrows[$anHour][$i]['calitemId']]]['duree'] * 24;
 			$hrows[$anHour][$i]['left'] = .9 * $tmpVals[$hrows[$anHour][$i]['calitemId']]['offset'] + 10;
