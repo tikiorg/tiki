@@ -1,16 +1,26 @@
 {* $Id$ *}
-{if empty($sort_arg)}{assign var='sort_arg' value='sort_mode'}{/if}
+{if empty($sort_arg)}
+	{assign var='sort_arg' value='sort_mode'}
+{/if}
 <table class="normal">
 	<tr>
 		{if $gal_info.show_checked ne 'n' and ($tiki_p_admin_file_galleries eq 'y' or $tiki_p_upload_files eq 'y')}
 			{assign var=nbCols value=$nbCols+1}
-			<th class="checkbox">{select_all checkbox_names='file[],subgal[]'}</th>
+			<th class="checkbox">
+				{select_all checkbox_names='file[],subgal[]'}
+			</th>
 		{/if}
 
 		{if ( $prefs.use_context_menu_icon eq 'y' or $prefs.use_context_menu_text eq 'y' )
 			and (!isset($gal_info.show_action) or $gal_info.show_action eq 'y') and $prefs.javascript_enabled eq 'y'}
-			{assign var=nbCols value=$nbCols+1}
-			<th style="width:1%">&nbsp;</th>
+			{if isset($nbCols)}
+				{assign var=nbCols value=$nbCols+1}
+			{else}
+				{assign var=nbCols value=1}
+			{/if}
+			<th style="width:1%">
+				&nbsp;
+			</th>
 		{/if}
 
 		{if isset($gal_info.show_parentName) && $gal_info.show_parentName eq 'y'}
@@ -36,18 +46,22 @@
 					{assign var=other_columns_selected value=$propname}
 				{else}
 					{capture assign=other_columns}
-						{$other_columns}
+						{if isset($other_columns)}
+							{$other_columns}
+						{/if}
 						{self_link sort_mode=$propname|cat:'_asc'}{$fgal_listing_conf.$propname.name}{/self_link}<br />
 					{/capture}
 				{/if}
 			{/if}
 
-			{if isset($gal_info.$key_name) and ( $gal_info.$key_name eq 'y' or $gal_info.$key_name eq 'i' or $gal_info.$key_name eq 'a' or $propname eq 'name' )}
+			{if isset($gal_info.$key_name) and ( $gal_info.$key_name eq 'y' or $gal_info.$key_name eq 'i'
+				or $gal_info.$key_name eq 'a' or $propname eq 'name' )}
 				{assign var=propval value=$item.name}
 				{assign var=link_title value=''}
 				{assign var=td_args value=''}
 	
-				{if $gal_info.$key_name eq 'i' or $propname eq 'type' or ( $propname eq 'lockedby' and $gal_info.$key_name eq 'a')}
+				{if $gal_info.$key_name eq 'i' or $propname eq 'type' or ( $propname eq 'lockedby'
+					and $gal_info.$key_name eq 'a')}
 					{if isset($item.icon)}
 						{assign var=propicon value=$item.icon}
 					{else}
@@ -60,28 +74,36 @@
 				{if $propname eq 'name' and ( $gal_info.show_name eq 'a' or $gal_info.show_name eq 'f' )}
 					{assign var=nbCols value=$nbCols+1}
 					<th{$td_args}>
-						{self_link _sort_arg=$sort_arg _sort_field='filename'}{tr}Filename{/tr}{/self_link}
+						{self_link _sort_arg=$sort_arg _sort_field='filename'}
+							{tr}Filename{/tr}
+						{/self_link}
 					</th>
 				{/if}
 
-				{if !($galleryId eq 0 and $propname eq 'lockedby') and ($propname neq 'name' or ( $gal_info.show_name eq 'a' or $gal_info.show_name eq 'n' )) and ($propname neq 'description' or $gal_info.show_name neq 'n')}
+				{if !(empty($galleryId) and $propname eq 'lockedby') and ($propname neq 'name'
+					or ( $gal_info.show_name eq 'a' or $gal_info.show_name eq 'n' )) and ($propname neq 'description'
+					or $gal_info.show_name neq 'n')}
 					{assign var=nbCols value=$nbCols+1}
 					<th{$td_args}>
-							{self_link _sort_arg=$sort_arg _sort_field=$propname _title=$link_title}
-							{if !empty($propicon)}{icon _id=$propicon alt=$link_title}{else}{$propval}{/if}
+						{self_link _sort_arg=$sort_arg _sort_field=$propname _title=$link_title}
+							{if !empty($propicon)}
+								{icon _id=$propicon alt=$link_title}
+							{else}
+								{$propval}
+							{/if}
 						{/self_link}
 					</th>
 				{/if}
 			{/if}
 		{/foreach}
 
-		{if $other_columns neq ''}
+		{if !empty($other_columns)}
 			{capture name=over_other_columns}
 				{strip}
 					<div class='opaque'>
 						<div class='box-title'>{tr}Other Sorts{/tr}</div>
 						<div class='box-data'>
-							{if $other_columns_selected neq ''}
+							{if !empty($other_columns_selected)}
 								{self_link sort_mode='NULL'}{tr}No Additional Sort{/tr}{/self_link}
 								<hr />
 							{/if}
@@ -92,7 +114,7 @@
 			{/capture}
 		{/if}
 
-		{if $other_columns_selected neq ''}
+		{if !empty($other_columns_selected)}
 			{assign var=nbCols value=$nbCols+1}
 			<th>
 				{self_link _sort_arg=$sort_arg _sort_field=$other_columns_selected _title=$fgal_listing_conf.$other_columns_selected.name}
@@ -104,17 +126,19 @@
 		{if ( $prefs.use_context_menu_icon neq 'y' and $prefs.use_context_menu_text neq 'y' )
 			or (isset($gal_info.show_action) && $gal_info.show_action eq 'y') or $prefs.javascript_enabled neq 'y'}
 			{assign var=nbCols value=$nbCols+1}
-			<th>{tr}Actions{/tr}</th>
+			<th>
+				{tr}Actions{/tr}
+			</th>
 		{/if}
 
-		{if ( $other_columns neq '' or $other_columns_selected neq '' ) and $prefs.javascript_enabled eq 'y'}
+		{if ( !empty($other_columns) or !empty($other_columns_selected)) and $prefs.javascript_enabled eq 'y'}
 			{assign var=nbCols value=$nbCols+1}
 			<th style="width:1%">
-				{if $other_columns neq ''}
+				{if !empty($other_columns)}
 					<a href='#' {popup trigger="onClick" sticky=1 mouseoff=1 fullhtml="1" text=$smarty.capture.over_other_columns|escape:"javascript"|escape:"html"} title="{tr}Other Sorts{/tr}">
 				{/if}
 				{icon _id='timeline_marker' alt="{tr}Other Sorts{/tr}" title=''}
-				{if $other_columns neq ''}
+				{if !empty($other_columns)}
 					</a>
 				{/if}
 			</th>
@@ -164,7 +188,8 @@
 										{assign var=propval value=$files[changes].$propname}
 									{/if}
 									{* Format property values *}
-									{if isset($propname) and ($propname eq 'created' or $propname eq 'lastModif' or $propname eq 'lastDownload')}
+									{if isset($propname) and ($propname eq 'created' or $propname eq 'lastModif'
+										or $propname eq 'lastDownload')}
 										{if empty($propval)}
 											{assign var=propval value=''}
 										{else}
@@ -180,8 +205,16 @@
 							    	   {assign var=propval value=$propval|nl2br}
 									{/if}
 
-									{if isset($gal_info.$propkey) and $propval neq '' and ( $gal_info.$propkey eq 'a' or $gal_info.$propkey eq 'o' )}
-										<tr><td><b>{$fgal_listing_conf.$propname.name}</b>:</td> <td>{$propval}</td></tr>
+									{if isset($gal_info.$propkey) and $propval neq '' and ( $gal_info.$propkey eq 'a'
+										or $gal_info.$propkey eq 'o' )}
+										<tr>
+											<td>
+												<b>{$fgal_listing_conf.$propname.name}</b>:
+											</td>
+											<td>
+												{$propval}
+											</td>
+										</tr>
 										{assign var=nb_over_infos value=$nb_over_infos+1}
 									{/if}
 								{/foreach}
@@ -198,21 +231,25 @@
 			{/if}
 			
 			{assign var=nb_over_share value=0}
-			{capture name=over_share}{strip}
-			    <div class='opaque'>
-			      <div class='box-title'>{tr}Share with:{/tr}</div>
-			      <div class='box-data'>
-			        <div>
-						{if isset($files[changes].share.data)}
-							{foreach item=prop key=propname from=$files[changes].share.data}
-								<b>{$prop.email}</b>: {$prop.visit} / {$prop.maxhits}<br />
-								{assign var=nb_over_share value=$nb_over_share+1}
-							{/foreach}
-						{/if}
-			        </div>
-			      </div>
-			    </div>
-			{/strip}{/capture}
+			{capture name=over_share}
+				{strip}
+					<div class='opaque'>
+						<div class='box-title'>
+							{tr}Share with:{/tr}
+						</div>
+						<div class='box-data'>
+							<div>
+								{if isset($files[changes].share.data)}
+									{foreach item=prop key=propname from=$files[changes].share.data}
+										<b>{$prop.email}</b>: {$prop.visit} / {$prop.maxhits}<br />
+										{assign var=nb_over_share value=$nb_over_share+1}
+									{/foreach}
+								{/if}
+							</div>
+						</div>
+					</div>
+				{/strip}
+			{/capture}
 			
 			{if $nb_over_share gt 0}
 			    {assign var=over_share value=$smarty.capture.over_share}
@@ -231,8 +268,8 @@
 						{assign var='checkname' value='file'}
 					{/if}
 					<input type="checkbox" name="{$checkname}[]" value="{$files[changes].id|escape}"
-						  {if isset($smarty.request.$checkname) and $smarty.request.$checkname
-						  and in_array($files[changes].id,$smarty.request.$checkname)}checked="checked"{/if} />
+						{if isset($smarty.request.$checkname) and $smarty.request.$checkname
+							and in_array($files[changes].id,$smarty.request.$checkname)}checked="checked"{/if} />
 				</td>
 			{/if}
 
@@ -263,7 +300,9 @@
 					{assign var=key_name value="show_$propname"}
 				{/if}
 
-				{if isset($gal_info.$key_name) and ( $gal_info.$key_name eq 'y' or $gal_info.$key_name eq 'a' or $gal_info.$key_name eq 'i' or $propname eq 'name' or ( $other_columns_selected neq '' and $propname eq $other_columns_selected ) )}
+				{if isset($gal_info.$key_name) and ( $gal_info.$key_name eq 'y' or $gal_info.$key_name eq 'a'
+					or $gal_info.$key_name eq 'i' or $propname eq 'name'
+					or ( !empty($other_columns_selected) and $propname eq $other_columns_selected ) )}
 					{assign var=propval value=$files[changes].$propname|escape}
 
 					{* build link *}
@@ -390,18 +429,22 @@
 						</td>
 					{/if}
 	
-					{if $other_columns_selected neq '' and $propname eq $other_columns_selected}
+					{if !empty($other_columns_selected) and $propname eq $other_columns_selected}
 						{assign var=other_columns_selected_val value=$propval}
 					{else}
-						{if !($galleryId eq 0 and $propname eq 'lockedby') and ($propname neq 'name' or ( $gal_info.show_name eq 'a' or $gal_info.show_name eq 'n' )) and ($propname neq 'description' or $gal_info.show_name neq 'n')}
+						{if !(empty($galleryId) and $propname eq 'lockedby') and ($propname neq 'name'
+							or ( $gal_info.show_name eq 'a' or $gal_info.show_name eq 'n' ))
+							and ($propname neq 'description' or $gal_info.show_name neq 'n')}
 							<td>{$propval}</td>
 						{/if}
 					{/if}
 				{/if}
 			{/foreach}
 
-			{if $other_columns_selected neq ''}
-				<td>{$other_columns_selected_val}</td>
+			{if !empty($other_columns_selected_val)}
+				<td>
+					{$other_columns_selected_val}
+				</td>
 			{/if}
 
 			{if ( $prefs.use_context_menu_icon neq 'y' and $prefs.use_context_menu_text neq 'y' )
