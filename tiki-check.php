@@ -195,9 +195,7 @@ $server_information['Web Server'] = array(
 	'value' => $_SERVER['SERVER_SOFTWARE']
 );
 
-$server_information['Server Signature'] = array(
-	'value' => $_SERVER['SERVER_SIGNATURE']
-);
+$server_information['Server Signature']['value'] = !empty($_SERVER['SERVER_SIGNATURE']) ? $_SERVER['SERVER_SIGNATURE'] : 'off';
 
 // Free disk space
 $bytes = disk_free_space('.');
@@ -215,7 +213,7 @@ if ( $bytes < 200 * 1024 * 1024 ) {
 	$server_properties['Disk Space'] = array(
 		'fitness' => 'ugly',
 		'value' => $free_space,
-		'message' => tra('You have less than 250 megs of free disk space. This is quite tight. Tiki needs disk space for compiling templates and for uploading files.').' '.tra('When the disk runs full you will not be able to log into your Tiki any more.')
+		'message' => tra('You have less than 250 megs of free disk space. This is quite tight. Tiki needs disk space for compiling templates and for uploading files.').'. '.tra('When the disk runs full you will not be able to log into your Tiki any more.')
 	);
 } else {
 	$server_properties['Disk Space'] = array(
@@ -259,6 +257,12 @@ if (substr($s, 0, 3) == 'cgi') {
 		'fitness' => tra('information'),
 		'setting' => $s,
 		'message' => tra('You are running PHP as CGI. Feel free to use a threaded Apache MPM to increase performance.')
+	);
+} elseif (substr($s, 0, 3) == 'fpm') {
+	$php_properties['PHP Server API'] = array(
+		'fitness' => tra('information'),
+		'setting' => $s,
+		'message' => tra('You are running PHP using FPM (Fastcgi Process Manager). Feel free to use a threaded Apache MPM to increase performance.')
 	);
 } else {
 	$php_properties['PHP Server API'] = array(
