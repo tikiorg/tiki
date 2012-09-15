@@ -4,7 +4,7 @@
 {if $tiki_p_wiki_view_attachments == 'y' || $tiki_p_wiki_admin_attachments == 'y' || $tiki_p_wiki_attach_files == 'y'}
 
 	<div
-		{if $pagemd5}
+		{if isset($pagemd5) and $pagemd5}
 			{assign var=cookie_key value="show_attzone$pagemd5"}
 			id="attzone{$pagemd5}"
 		{else}
