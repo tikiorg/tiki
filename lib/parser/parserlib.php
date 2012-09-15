@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -66,26 +66,28 @@ class ParserLib extends TikiDb_Bridge
 	{
 		global $page;
 
-		$this->option = array_merge(array(
-			'is_html'=> false,
-			'absolute_links'=> false,
-			'language' => '',
-			'noparseplugins' => false,
-			'stripplugins' => false,
-			'noheaderinc' => false,
-			'page' => $page,
-			'print' => false,
-			'parseimgonly' => false,
-			'preview_mode' => false,
-			'suppress_icons' => false,
-			'parsetoc' => true,
-			'inside_pretty' => false,
-			'process_wiki_paragraphs' => true,
-			'min_one_paragraph' => false,
-			'skipvalidation'=>  false,
-			'ck_editor'=>   false,
-			'namespace' => false,
-		), (array)$option);
+		$this->option = array_merge(
+			array(
+				'is_html'=> false,
+				'absolute_links'=> false,
+				'language' => '',
+				'noparseplugins' => false,
+				'stripplugins' => false,
+				'noheaderinc' => false,
+				'page' => $page,
+				'print' => false,
+				'parseimgonly' => false,
+				'preview_mode' => false,
+				'suppress_icons' => false,
+				'parsetoc' => true,
+				'inside_pretty' => false,
+				'process_wiki_paragraphs' => true,
+				'min_one_paragraph' => false,
+				'skipvalidation'=>  false,
+				'ck_editor'=>   false,
+				'namespace' => false,
+			), (array)$option
+		);
 	}
 
 	function __construct()
@@ -171,7 +173,7 @@ class ParserLib extends TikiDb_Bridge
 	function protectSpecialChars($data, $is_html = false)
 	{
 		if (($this->isHtmlPurifying == true || (isset($this->option['is_html']) && $this->option['is_html'] != true)) || !empty($this->option['ck_editor'])) {
-			foreach($this->specialChars as $key => $specialChar) {
+			foreach ($this->specialChars as $key => $specialChar) {
 				$data = str_replace($specialChar['html'], $key, $data);
 			}
 		}
@@ -183,11 +185,11 @@ class ParserLib extends TikiDb_Bridge
 	{
 		if (( $is_html != false || ( isset($this->option['is_html']) && $this->option['is_html']))
 			|| $this->option['ck_editor']) {
-			foreach($this->specialChars as $key => $specialChar) {
+			foreach ($this->specialChars as $key => $specialChar) {
 				$data = str_replace($key, $specialChar['html'], $data);
 			}
 		} else {
-			foreach($this->specialChars as $key => $specialChar) {
+			foreach ($this->specialChars as $key => $specialChar) {
 				$data = str_replace($key, $specialChar['nonHtml'], $data);
 			}
 		}
@@ -225,7 +227,8 @@ class ParserLib extends TikiDb_Bridge
 	 * @param $noparsed array	output array
 	 */
 
-	function plugins_remove(&$data, &$noparsed) {
+	function plugins_remove(&$data, &$noparsed)
+	{
 
 		$matches = WikiParser_PluginMatcher::match($data);		// find the plugins
 
@@ -246,7 +249,8 @@ class ParserLib extends TikiDb_Bridge
 	 * @param $noparsed array	input array
 	 */
 
-	function plugins_replace(&$data, $noparsed, $is_html = false) {
+	function plugins_replace(&$data, $noparsed, $is_html = false)
+	{
 		$preparsed = array();	// unused
 		$noparsed['data'] = isset($noparsed['data']) ? str_replace('<x>', '', $noparsed['data']) : '';
 		$this->replace_preparse($data, $preparsed, $noparsed, $is_html);
@@ -492,22 +496,22 @@ class ParserLib extends TikiDb_Bridge
 				$id = 'plugin-edit-' . $plugin_name . $current_index;
 
 				$headerlib->add_js(
-								"\$(document).ready( function() {
+					"\$(document).ready( function() {
 if ( \$('#$id') ) {
 \$('#$id').click( function(event) {
 	popup_plugin_form("
-								. json_encode('editwiki')
-								. ', '
-								. json_encode($plugin_name)
-								. ', '
-								. json_encode($current_index)
-								. ', '
-								. json_encode($this->option['page'])
-								. ', '
-								. json_encode($arguments)
-								. ', '
-								. json_encode($this->unprotectSpecialChars($plugin_data, true)) //we restore it back to html here so that it can be edited, we want no modification, ie, it is brought back to html
-								. ", event.target);
+					. json_encode('editwiki')
+					. ', '
+					. json_encode($plugin_name)
+					. ', '
+					. json_encode($current_index)
+					. ', '
+					. json_encode($this->option['page'])
+					. ', '
+					. json_encode($arguments)
+					. ', '
+					. json_encode($this->unprotectSpecialChars($plugin_data, true)) //we restore it back to html here so that it can be edited, we want no modification, ie, it is brought back to html
+					. ", event.target);
 } );
 }
 } );
@@ -617,7 +621,7 @@ if ( \$('#$id') ) {
 			return true;
 		}
 
-		return file_exists(str_replace("_" , "/", "lib/core/" . $className . '.php')) == true && class_exists($className) == true;
+		return file_exists(str_replace("_", "/", "lib/core/" . $className . '.php')) == true && class_exists($className) == true;
 	}
 	//*
 	function plugin_exists( $name, $include = false )
@@ -912,7 +916,7 @@ if ( \$('#$id') ) {
 			$pluginSecurity = $tikilib->table('tiki_plugin_security');
 			$pluginSecurity->delete(array('fingerprint' => $fp));
 			$pluginSecurity->insert(
-							array('fingerprint' => $fp, 'status' => 'pending',	'added_by' => $user,	'last_objectType' => $objectType, 'last_objectId' => $objectId)
+				array('fingerprint' => $fp, 'status' => 'pending',	'added_by' => $user,	'last_objectType' => $objectType, 'last_objectId' => $objectId)
 			);
 		}
 
@@ -934,7 +938,7 @@ if ( \$('#$id') ) {
 		$pluginSecurity = $tikilib->table('tiki_plugin_security');
 		$pluginSecurity->delete(array('fingerprint' => $fp));
 		$pluginSecurity->insert(
-						array('fingerprint' => $fp,'status' => $type,'added_by' => $user,'last_objectType' => $objectType,'last_objectId' => $objectId)
+			array('fingerprint' => $fp,'status' => $type,'added_by' => $user,'last_objectType' => $objectType,'last_objectId' => $objectId)
 		);
 	}
 
@@ -1024,7 +1028,7 @@ if ( \$('#$id') ) {
 		}
 
 		$data = $this->unprotectSpecialChars($data, true);					// We want to give plugins original
-		$args = preg_replace(array('/^&quot;/','/&quot;$/'),'',$args);		// Similarly remove the encoded " chars from the args
+		$args = preg_replace(array('/^&quot;/', '/&quot;$/'), '', $args);		// Similarly remove the encoded " chars from the args
 
 		$outputFormat = 'wiki';
 		if ( isset($this->option['context_format']) ) {
@@ -1087,7 +1091,7 @@ if ( \$('#$id') ) {
 					$output = substr_replace($output, "", $maketoc_start, $maketoc_end - $maketoc_start + 1);
 				}
 			}
-			
+
 			$killtoc = false;
 
 			$plugin_result =  $this->convert_plugin_output($output, $pluginFormat, $outputFormat);
@@ -1249,7 +1253,7 @@ if ( \$('#$id') ) {
 		}
 
 		//This gives us the ability to extend plugins with a standardized style method, style-css-style="style" => css-style:style; to the wrapper
-		foreach($argsCopy as $possibleStyle => $possibleStyleSetting) {
+		foreach ($argsCopy as $possibleStyle => $possibleStyleSetting) {
 			if (isset(WikiPlugin_HtmlBase::$style[ltrim($possibleStyle, 'style-')])) {
 				$args[$possibleStyle] = $possibleStyleSetting;
 			}
@@ -1315,9 +1319,9 @@ if ( \$('#$id') ) {
 
 			switch( isset($info['encoding']) ? $info['encoding'] : 'none' ) {
 				case 'html': $replacements[] = htmlentities($value, ENT_QUOTES, 'UTF-8');
-							 break;
+					break;
 				case 'url': $replacements[] = rawurlencode($value);
-							 break;
+					break;
 				default: $replacements[] = $value;
 			}
 		}
@@ -1755,7 +1759,7 @@ if ( \$('#$id') ) {
 		}
 
 		$data = $this->parse_data_wikilinks($data, true);
-		$data = $this->parse_data_externallinks($data, true );
+		$data = $this->parse_data_externallinks($data, true);
 		$data = $this->parse_data_inline_syntax($data, $words);
 
 		return $data;
@@ -1946,7 +1950,7 @@ if ( \$('#$id') ) {
 		$line = preg_replace("/__(.*?)__/", "<strong>$1</strong>", $line);
 		// Replace italic text
 		$line = preg_replace("/\'\'(.*?)\'\'/", "<em>$1</em>", $line);
-		
+
 		if (!$ck_editor) {
 			// Replace definition lists
 			$line = preg_replace("/^;([^:]*):([^\/\/].*)/", "<dl><dt>$1</dt><dd>$2</dd></dl>", $line);
@@ -2075,25 +2079,25 @@ if ( \$('#$id') ) {
 					switch( $name ) {
 					case 'user':
 						$value = $user;
-									break;
+						break;
 					case 'page':
 						$value = $this->option['page'];
-									break;
+						break;
 					default:
 						if ( isset($_GET[$name]) )
 							$value = $_GET[$name];
-									break;
+						break;
 					}
 
 					$needles[] = $arg[0];
 					$replacements[] = $value;
-				
+
 				}
 				$data = str_replace($needles, $replacements, $data);
 			}
 		}
 	}
-	
+
 	//*
 	private function parse_data_dynamic_variables( $data, $lang = null ) //TODO: needs put into jison
 	{
@@ -2607,7 +2611,7 @@ if ( \$('#$id') ) {
 								// Don't put newlines at comments' end!
 								&& strpos($line, "-->") !== (strlen($line) - 3)
 								&& $this->option['process_wiki_paragraphs']) {
-							 	
+
 							$tline = trim(str_replace('&nbsp;', '', $this->unprotectSpecialChars($line, true)));
 
 							if ($prefs['feature_wiki_paragraph_formatting'] == 'y') {
@@ -2616,7 +2620,7 @@ if ( \$('#$id') ) {
 									$contains_br = $this->contains_html_br($tline);
 
 									if (!$contains_block) {	// check inside plugins etc for block elements
-										preg_match_all('/\xc2\xa7[^\xc2\xa7]+\xc2\xa7/', $tline, $m);	// noparse guid for plugins 
+										preg_match_all('/\xc2\xa7[^\xc2\xa7]+\xc2\xa7/', $tline, $m);	// noparse guid for plugins
 										if (count($m) > 0) {
 											$m_count = count($m[0]);
 											$nop_ix = false;
@@ -2638,7 +2642,7 @@ if ( \$('#$id') ) {
 											}
 										}
 									}
-									
+
 									if ($in_paragraph && ((empty($tline) && !$in_empty_paragraph) || $contains_block)) {
 										// If still in paragraph, on meeting first blank line or end of div or start of div created by plugins; close a paragraph
 										$this->close_blocks($data, $in_paragraph, $listbeg, $divdepth, 1, 0, 0);
@@ -2686,7 +2690,7 @@ if ( \$('#$id') ) {
 		 *    - title (replace the default title),
 		 *    - showhide (if set to y, add the Show/Hide link)
 		 *    - nolinks (if set to y, don't add links on toc entries)
-		 *    - nums : 
+		 *    - nums :
 		 *       * 'n' means 'no title autonumbering' in TOC,
 		 *       * 'force' means :
 		 *	    ~ same as 'y' if autonumbering is used in the page,
@@ -2757,13 +2761,13 @@ if ( \$('#$id') ) {
 
 					// Build maketoc
 					switch ( $maketoc_args['type'] ) {
-						case 'box': 
+						case 'box':
 							$maketoc_header = '';
 							$maketoc = "<table id='toc' class='toc'$maketoc_summary>\n<tr><td>$maketoc_title<ul>";
 							$maketoc_footer = "</ul></td></tr></table>\n";
 							$link_class = 'toclink';
-										break;
-						default: 
+							break;
+						default:
 							$maketoc = '';
 							$maketoc_header = "<div id='toc'>".$maketoc_title;
 							$maketoc_footer = '</div>';
@@ -2807,7 +2811,7 @@ if ( \$('#$id') ) {
 							switch ( $maketoc_args['type'] ) {
 								case 'box':
 									$maketoc .= "<li class='toclevel-".$shift."'>".$tocentry_title."</li>";
-												break;
+									break;
 								default:
 									$maketoc .= str_repeat('*', $shift).$tocentry_title;
 							}
@@ -2839,7 +2843,7 @@ if ( \$('#$id') ) {
 		// Add icon to edit the text before the first section (if there is some)
 		if ($prefs['wiki_edit_section'] === 'y' && isset($section) && $section === 'wiki page' && $tiki_p_edit === 'y' && (empty($this->option['print']) ||
 				!$this->option['print'])  && strpos($data, '<div class="icon_edit_section">') != 0 && !$this->option['suppress_icons']) {
-					
+
 			$smarty = TikiLib::lib('smarty');
 			include_once('lib/smarty_tiki/function.icon.php');
 			$button = '<div class="icon_edit_section"><a href="tiki-editpage.php?';
@@ -2850,7 +2854,7 @@ if ( \$('#$id') ) {
 			$data = $button.$data;
 		}
 	}
-	
+
 	//*
 	function contains_html_block($inHtml)
 	{
@@ -2877,7 +2881,7 @@ if ( \$('#$id') ) {
 		if ( false === $externals ) {
 			$externals = $tikilib->fetchMap('SELECT LOWER(`name`), `extwiki` FROM `tiki_extwiki`');
 		}
-		
+
 		$displayLink = $pageLink;
 
 		// HTML entities encoding breaks page lookup
@@ -2887,7 +2891,7 @@ if ( \$('#$id') ) {
 		$reltype = null;
 		$processPlural = false;
 		$anchor = null;
-		
+
 		if ( array_key_exists('description', $extra) )
 			$description = $extra['description'];
 		if ( array_key_exists('reltype', $extra) )
@@ -2903,10 +2907,13 @@ if ( \$('#$id') ) {
 		$link->setQualifier($reltype);
 		$link->setDescription($description);
 		$link->setWikiLookup(array( $this, 'parser_helper_wiki_info_getter' ));
-		$link->setWikiLinkBuilder(function ($pageLink) {
-			$wikilib = TikiLib::lib('wiki');
-			return $wikilib->sefurl($pageLink);
-		});
+		$link->setWikiLinkBuilder(
+			function ($pageLink)
+			{
+				$wikilib = TikiLib::lib('wiki');
+				return $wikilib->sefurl($pageLink);
+			}
+		);
 		$link->setExternals($externals);
 		$link->setHandlePlurals($processPlural);
 		$link->setAnchor($anchor);
@@ -2924,7 +2931,7 @@ if ( \$('#$id') ) {
 		global $prefs;
 		$tikilib = TikiLib::lib('tiki');
 		$page_info = $tikilib->get_page_info($pageName, false);
-		
+
 		if ( $page_info !== false ) {
 			return $page_info;
 		}
@@ -2934,8 +2941,8 @@ if ( \$('#$id') ) {
 			$semanticlib = TikiLib::lib('semantic');
 
 			$toPage = $pageName;
-			$tokens = explode(',', $prefs['wiki_pagealias_tokens']); 
-			
+			$tokens = explode(',', $prefs['wiki_pagealias_tokens']);
+
 			$prefixes = explode(',', $prefs["wiki_prefixalias_tokens"]);
 			foreach ($prefixes as $p) {
 				$p = trim($p);
@@ -2944,10 +2951,10 @@ if ( \$('#$id') ) {
 					$tokens = 'prefixalias';
 				}
 			}
-			 
+
 			$links = $semanticlib->getLinksUsing(
-							$tokens,
-							array( 'toPage' => $toPage )
+				$tokens,
+				array( 'toPage' => $toPage )
 			);
 
 			if ( count($links) > 1 ) {
@@ -2957,17 +2964,17 @@ if ( \$('#$id') ) {
 				// display an error page with the list of aliased pages in the "like pages" section.
 				// This allows the user to pick the appropriate alias.
 				// So, leave the $pageName to the alias.
-				// 
+				//
 				// If feature_likePages is not set, then the user will only see that the page does not
 				// exist. So it's better to just pick the first one.
-				//													
+				//
 				if ($prefs['feature_likePages'] == 'y' || $tokens == 'prefixalias') {
 					// Even if there is more then one match, if prefix is being redirected then better
 					// to fail than to show possibly wrong page
 					return true;
 				} else {
 					// If feature_likePages is NOT set, then trying to display the first one is fine
-					// $pageName is by ref so it does get replaced 
+					// $pageName is by ref so it does get replaced
 					$pageName = $links[0]['fromPage'];
 					return $tikilib->get_page_info($pageName);
 				}
@@ -2978,7 +2985,7 @@ if ( \$('#$id') ) {
 				} else {
 					$pageName = $links[0]['fromPage'];
 					return $tikilib->get_page_info($pageName);
-				} 
+				}
 			}
 		}
 	}
@@ -2996,7 +3003,7 @@ if ( \$('#$id') ) {
 					// (:biggrin:) (:confused:) (:cool:) (:cry:) (:eek:) (:evil:) (:exclaim:) (:frown:)
 					// (:idea:) (:lol:) (:mad:) (:mrgreen:) (:neutral:) (:question:) (:razz:) (:redface:)
 					// (:rolleyes:) (:sad:) (:smile:) (:surprised:) (:twisted:) (:wink:) (:arrow:) (:santa:)
-					
+
 					"/\(:([^:]+):\)/" => "<img alt=\"$1\" src=\"img/smiles/icon_$1.gif\" />",
 
 					// :) :-)
@@ -3069,25 +3076,25 @@ if ( \$('#$id') ) {
 			$pageList = array_merge($normal[2], $withDesc[2], $wikiLinks[2], $htmlLinks[1], $htmlWantedLinks[1]);
 			if ( $withReltype ) {
 				$relList = array_merge(
-								$normal[1], 
-								$withDesc[1], 
-								count($wikiLinks[2]) ? array_fill(0, count($wikiLinks[2]), null) : array(),
-								count($htmlLinks[1]) ? array_fill(0, count($htmlLinks[1]), null) : array(),
-								count($htmlWantedLinks[1]) ? array_fill(0, count($htmlWantedLinks[1]), null) : array()
+					$normal[1],
+					$withDesc[1],
+					count($wikiLinks[2]) ? array_fill(0, count($wikiLinks[2]), null) : array(),
+					count($htmlLinks[1]) ? array_fill(0, count($htmlLinks[1]), null) : array(),
+					count($htmlWantedLinks[1]) ? array_fill(0, count($htmlWantedLinks[1]), null) : array()
 				);
 			}
 		} else {
 			$pageList = array_merge($normal[2], $withDesc[2], $htmlLinks[1], $htmlWantedLinks[1]);
 			if ( $withReltype ) {
 				$relList = array_merge(
-								$normal[1], 
-								$withDesc[1],
-								count($htmlLinks[1]) ? array_fill(0, count($htmlLinks[1]), null) : array(),
-								count($htmlWantedLinks[1]) ? array_fill(0, count($htmlWantedLinks[1]), null) : array()
+					$normal[1],
+					$withDesc[1],
+					count($htmlLinks[1]) ? array_fill(0, count($htmlLinks[1]), null) : array(),
+					count($htmlWantedLinks[1]) ? array_fill(0, count($htmlWantedLinks[1]), null) : array()
 				);
 			}
 		}
-	
+
 		if ( $withReltype ) {
 			$complete = array();
 			foreach ( $pageList as $idx => $name ) {

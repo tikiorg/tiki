@@ -94,7 +94,8 @@ class Feed_ForwardLink_Metadata
 			'text'=> 	                $data
 		);
 
-		$me->raw['hash'] =  hash_hmac("md5",
+		$me->raw['hash'] =  hash_hmac(
+			"md5",
 			JisonParser_Phraser_Handler::superSanitize(
 				$me->raw['author'] .
 				$me->raw['authorInstitution'] .
@@ -301,18 +302,20 @@ class Feed_ForwardLink_Metadata
 	public function countAll()
 	{
 		if (empty($this->countAll)) {
-			$this->countAll = count(Tracker_Query::tracker('Wiki Attributes')
-				->byName()
-				->filterFieldByValue('Type', 'ForwardLink Accepted')
-				->render(false)
-				->query());
+			$this->countAll = count(
+				Tracker_Query::tracker('Wiki Attributes')
+					->byName()
+					->filterFieldByValue('Type', 'ForwardLink Accepted')
+					->render(false)
+					->query()
+			);
 		}
 	}
 
 	public function categories()
 	{
 		if (empty($this->categories)) {
-			foreach(TikiLib::lib('categ')->get_object_categories('wiki page', $this->page) as $categoryId) {
+			foreach (TikiLib::lib('categ')->get_object_categories('wiki page', $this->page) as $categoryId) {
 				$this->categories[] = TikiLib::lib('categ')->get_category_name($categoryId);
 			}
 		}
@@ -356,7 +359,8 @@ class Feed_ForwardLink_Metadata
 		return $this->minimumMathNeeded;
 	}
 
-	public function minimumStatisticsNeeded($out = true) {
+	public function minimumStatisticsNeeded($out = true)
+	{
 		if (empty($this->minimumStatisticsNeeded)) {
 			$this->minimumStatisticsNeeded = Tracker_Query::tracker('Wiki Attributes')
 				->byName()
@@ -376,7 +380,7 @@ class Feed_ForwardLink_Metadata
 	public function language()
 	{
 		if (empty($this->language)) {
-			foreach(TikiLib::lib("tiki")->list_languages() as $listLanguage) {
+			foreach (TikiLib::lib("tiki")->list_languages() as $listLanguage) {
 				if ($listLanguage['value'] == $this->lang) {
 					$this->language = $listLanguage['name'];
 					break;

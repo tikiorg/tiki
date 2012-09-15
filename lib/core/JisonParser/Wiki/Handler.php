@@ -283,7 +283,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 			$lists = $this->Parser->list->toHtml();
 			if (!empty($lists)) {
 				$lists = array_reverse($lists);
-				foreach($lists as $key => &$list) {
+				foreach ($lists as $key => &$list) {
 
 						$output = str_replace($key, $list, $output);
 						unset($list);
@@ -390,13 +390,13 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 
 	static function deleteEntities(&$data)
 	{
-		$data = preg_replace('/§[a-z0-9]{32}§/','',$data);
+		$data = preg_replace('/§[a-z0-9]{32}§/', '', $data);
 	}
 
 	function restorePluginEntities(&$input, $keep = false)
 	{
 		//use of array_reverse, jison is a reverse bottom-up parser, if it doesn't reverse jison doesn't restore the plugins in the right order, leaving the some nested keys as a result
-		foreach(array_reverse($this->pluginEntries) as $key => $entity) {
+		foreach (array_reverse($this->pluginEntries) as $key => $entity) {
 			if (strpos($input, $key)) {
 				if ($this->getOption('stripplugins') == true) {
 					$input = str_replace($key, '', $input);
@@ -428,7 +428,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 			$this->isHtmlPurifying == true ||
 			$this->Parser->option['is_html'] != true
 		) {
-			foreach($this->specialChars as $key => $specialChar) {
+			foreach ($this->specialChars as $key => $specialChar) {
 				$data = str_replace($specialChar['html'], $key, $data);
 			}
 		}
@@ -443,11 +443,11 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 			$is_html == true ||
 			$this->Parser->option['is_html'] == true
 		) {
-			foreach($this->specialChars as $key => $specialChar) {
+			foreach ($this->specialChars as $key => $specialChar) {
 				$data = str_replace($key, $specialChar['html'], $data);
 			}
 		} else {
-			foreach($this->specialChars as $key => $specialChar) {
+			foreach ($this->specialChars as $key => $specialChar) {
 				$data = str_replace($key, $specialChar['nonHtml'], $data);
 			}
 		}
@@ -587,7 +587,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 
 		$hNum = 1;
 		$headerLength = strlen($content);
-		for($i = 0; $i < $headerLength; $i++) {
+		for ($i = 0; $i < $headerLength; $i++) {
 			if ($content[$i] == '!') {
 				$hNum++;
 			} else {
@@ -631,7 +631,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		$type = '';
 		$noiseLength = 0;
 
-		for($i = 0; $i < $headerLength; $i++) {
+		for ($i = 0; $i < $headerLength; $i++) {
 			if ($content{$i} == "\n" || $content{$i} == "\r" || $content{$i} == "") {
 				$noiseLength++;
 				continue;

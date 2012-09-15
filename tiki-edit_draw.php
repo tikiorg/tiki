@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -41,7 +41,7 @@ if (!empty($fileInfo['archiveId']) && $fileInfo['archiveId'] > 0) {
 	$_REQUEST['fileId'] = $fileInfo['archiveId'];
 	$fileInfo = $filegallib->get_file_info($_REQUEST['fileId']);
 }
-	
+
 $gal_info = $filegallib->get_file_gallery($_REQUEST['galleryId']);
 
 if (
@@ -80,42 +80,78 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_REQUEST['data'])) {
 	$_REQUEST["galleryId"] = (int)$_REQUEST["galleryId"];
 	$_REQUEST["fileId"] = (int)$_REQUEST["fileId"];
 	$_REQUEST['description'] = htmlspecialchars(isset($_REQUEST['description']) ? $_REQUEST['description'] : $_REQUEST['name']);
-	
+
 	$type = $mimetypes["svg"];
 	$fileId = '';
 	if (empty($_REQUEST["fileId"]) == false && $_REQUEST["fileId"] > 0) {
 		//existing file
-		$fileId = $filegallib->save_archive($_REQUEST["fileId"], $fileInfo['galleryId'], 0, $_REQUEST['name'],
-			$fileInfo['description'], $_REQUEST['name'].".svg", $_REQUEST['data'], strlen($_REQUEST['data']), $type,
-			$fileInfo['user'], null, null, $user);
+		$fileId = $filegallib->save_archive(
+			$_REQUEST["fileId"],
+			$fileInfo['galleryId'],
+			0,
+			$_REQUEST['name'],
+			$fileInfo['description'],
+			$_REQUEST['name'].".svg",
+			$_REQUEST['data'],
+			strlen($_REQUEST['data']),
+			$type,
+			$fileInfo['user'],
+			null,
+			null,
+			$user
+		);
 		// this is a conversion from an image other than svg
 		if ($fileInfo['filetype'] != $mimetypes["svg"] && $prefs['fgal_keep_fileId'] == 'y') {
 			$newFileInfo = $filegallib->get_file_info($fileId);
 
-			$archiveFileId = $tikilib->getOne("
-				SELECT fileId
+			$archiveFileId = $tikilib->getOne(
+				'SELECT fileId
 				FROM tiki_files
 				WHERE archiveId = ?
-				ORDER BY lastModif DESC
-			", array($fileId));
+				ORDER BY lastModif DESC',
+				array($fileId)
+			);
 
-			$newFileInfo['data'] = str_replace('?fileId=' . $fileInfo['fileId'] . '#', '?fileId='
-				. $archiveFileId . '#', $newFileInfo['data']);
-			$fileId = $filegallib->save_archive($newFileInfo["fileId"], $newFileInfo['galleryId'], 0,
-				$newFileInfo['filename'], $newFileInfo['description'], $newFileInfo['name'].".svg",
-				$newFileInfo['data'], strlen($newFileInfo['data']), $type, $newFileInfo['user'], null, null, $user);
+			$newFileInfo['data'] = str_replace(
+				'?fileId=' . $fileInfo['fileId'] . '#',
+				'?fileId=' . $archiveFileId . '#',
+				$newFileInfo['data']
+			);
+			$fileId = $filegallib->save_archive(
+				$newFileInfo["fileId"],
+				$newFileInfo['galleryId'], 0,
+				$newFileInfo['filename'],
+				$newFileInfo['description'],
+				$newFileInfo['name'].".svg",
+				$newFileInfo['data'],
+				strlen($newFileInfo['data']),
+				$type,
+				$newFileInfo['user'],
+				null,
+				null,
+				$user
+			);
 		}
 	} else {
 		//new file
-		$fileId = $filegallib->insert_file($_REQUEST["galleryId"], $_REQUEST['name'], $_REQUEST['description'],
-			$_REQUEST['name'].".svg", $_REQUEST['data'], strlen($_REQUEST['data']), $type, $user, null);
+		$fileId = $filegallib->insert_file(
+			$_REQUEST["galleryId"],
+			$_REQUEST['name'],
+			$_REQUEST['description'],
+			$_REQUEST['name'].".svg",
+			$_REQUEST['data'],
+			strlen($_REQUEST['data']),
+			$type,
+			$user,
+			null
+		);
 	}
-	
+
 	echo $fileId;
 	die;
 }
 
-if ($fileInfo['filetype'] == $mimetypes["svg"]) { 
+if ($fileInfo['filetype'] == $mimetypes["svg"]) {
 	$data = $fileInfo["data"];
 } else { //we already confirmed that this is an image, here we make it compatible with svg
 	$image = imagecreatefromstring($fileInfo["data"]);
@@ -136,7 +172,7 @@ if ($fileInfo['filetype'] == $mimetypes["svg"]) {
 //echo $data;die;
 $smarty->assign("data", $data);
 //Obtain fileId, DO NOT LET ANYTHING OTHER THAN NUMBERS BY (for injection free code)
-if (is_numeric($_REQUEST['fileId']) == false) $_REQUEST['fileId'] = 0; 
+if (is_numeric($_REQUEST['fileId']) == false) $_REQUEST['fileId'] = 0;
 if (is_numeric($_REQUEST['galleryId']) == false) $_REQUEST['galleryId'] = 0;
 
 $fileId = htmlspecialchars($_REQUEST['fileId']);
@@ -206,7 +242,7 @@ if (isset($_REQUEST['raw'])) {
 
 if (
 	isset($_REQUEST['index']) &&
-	isset($_REQUEST['page']) && 
+	isset($_REQUEST['page']) &&
 	isset($_REQUEST['label'])
 ) {
 	$headerlib->add_jq_onready($jsTracking);
