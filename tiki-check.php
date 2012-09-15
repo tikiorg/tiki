@@ -19,14 +19,14 @@ if (file_exists('./db/local.php') && file_exists('./templates/tiki-check.tpl')) 
 
 	function render_table($var)
 	{
-		if(is_array($var)) {              
+		if (is_array($var)) {              
 			echo '<table style="border:2px solid grey;">';  
-			foreach($var as $key => $value) {
+			foreach ($var as $key => $value) {
 				echo '<tr style="border:1px solid">',  
 				'<td style="border:1px black;padding:5px;">',  
 				$key,  
 				"</td>";
-				foreach($var[$key] as $key2 => $value2) {
+				foreach ($var[$key] as $key2 => $value2) {
 					echo '<td style="border:1px solid"><span style="color:';
 					switch($value2) {
 						case good:
@@ -202,7 +202,7 @@ $bytes = disk_free_space('.');
 $si_prefix = array( 'B', 'KB', 'MB', 'GB', 'TB', 'EB', 'ZB', 'YB' );
 $base = 1024;
 $class = min((int)log($bytes, $base), count($si_prefix) - 1);
-$free_space =  sprintf('%1.2f', $bytes / pow($base,$class)) . ' ' . $si_prefix[$class];
+$free_space = sprintf('%1.2f', $bytes / pow($base, $class)) . ' ' . $si_prefix[$class];
 if ( $bytes < 200 * 1024 * 1024 ) {
 	$server_properties['Disk Space'] = array(
 		'fitness' => 'bad',
@@ -765,7 +765,7 @@ if ( $s ) {
 // This has to be after checking the error_reporting level or the error_reporting
 // level will always be 0 because of the ini_set in the following test
 $s = ini_set('error_reporting', 'E_ALL');
-if( $s == $e ) {
+if ( $s == $e ) {
 	$php_properties['ini_set'] = array(
 		'fitness' => tra('good'),
 		'setting' => 'Enabled',
