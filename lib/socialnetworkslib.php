@@ -105,8 +105,8 @@ class SocialNetworksLib extends LogsLib
 	{
 		global $prefs;
 
-		if ($prefs['socialnetworks_twitter_consumer_key'] == '' 
-				or $prefs['socialnetworks_twitter_consumer_secret'] == '' 
+		if ($prefs['socialnetworks_twitter_consumer_key'] == ''
+				or $prefs['socialnetworks_twitter_consumer_secret'] == ''
 				or !isset($_SESSION['TWITTER_REQUEST_TOKEN'])
 		) {
 			return false;
@@ -252,7 +252,7 @@ class SocialNetworksLib extends LogsLib
 				header('Location: tiki-index.php');
 				die;
 			} else {
-				$this->set_user_preference($user, 'facebook_id', $fb_profile->id);			
+				$this->set_user_preference($user, 'facebook_id', $fb_profile->id);
 				$this->set_user_preference($user, 'facebook_token', $access_token);
 			}
 			return true;
@@ -266,12 +266,12 @@ class SocialNetworksLib extends LogsLib
 	 *
 	 * @param string	$message	Message to send
 	 * @param string	$user		UserId of the user to send the message for
-	 * @param bool		$cutMessage	Should the message be cut if it is longer than 140 characters, 
+	 * @param bool		$cutMessage	Should the message be cut if it is longer than 140 characters,
 	 *								if set to false, an error will be returned if the message is longer than 140 characters
 	 *
-	 * @return int	-1 if the user did not authorize the site with twitter, 
-	 *							-2, if the message is longer than 140 characters, 
-	 *							a negative number corresponding to the HTTP response codes from twitter 
+	 * @return int	-1 if the user did not authorize the site with twitter,
+	 *							-2, if the message is longer than 140 characters,
+	 *							a negative number corresponding to the HTTP response codes from twitter
 	 *							(http://dev.twitter.com/pages/streaming_api_response_codes)
 	 *  							or a positive tweet id of the message
 	 */
@@ -299,7 +299,7 @@ class SocialNetworksLib extends LogsLib
 		$this->options['consumerSecret'] = $prefs['socialnetworks_twitter_consumer_secret'];
 		$client = $token->getHttpClient($this->options);
 		$clientconfig['timeout'] = 60; // allow a longer timeout for twitter makes sense
-		$client->setConfig($clientconfig);		
+		$client->setConfig($clientconfig);
 		$twitter = new Zend_Service_Twitter();
 		$twitter->setLocalHttpClient($client);
 
@@ -439,7 +439,7 @@ class SocialNetworksLib extends LogsLib
 				$params['name'] = $text;
 			}
 			if ($caption != '') {
-				$params['caption'] = $caption;	
+				$params['caption'] = $caption;
 			}
 			$params['description'] = $message;
 		} else {
@@ -511,7 +511,7 @@ class SocialNetworksLib extends LogsLib
 			return false;
 		}
 		return $response->getBody();
-	}	
+	}
 
 	/**
 	 * Asks bit.ly to shorten an url for us
@@ -529,7 +529,7 @@ class SocialNetworksLib extends LogsLib
 			if ($url == $data['longurl']) {
 				return $data['shorturl'];
 			}
-		}		
+		}
 
 		$params = array(
 				'version' => '2.0.1',
@@ -555,17 +555,18 @@ class SocialNetworksLib extends LogsLib
 	}
 
 	/**
-	 * Get Timeline off Twitter 
+	 * Get Timeline off Twitter
 	 * @param  string	$user		Tiki username to get timeline for
 	 * @param  string	$timelineType	Timeline to get: public/friends - Default: public
 	 * @return string|int			-1 if the user did not authorize the site with twitter, a negative number corresponding to the HTTP response codes from twitter (https://dev.twitter.com/docs/streaming-api/response-codes) or the requested timeline (json encoded object)
 	 */
-	function getTwitterTimeline($user, $timelineType = 'public' ) {
+	function getTwitterTimeline($user, $timelineType = 'public' )
+	{
 		global $prefs;
 		$token=$this->get_user_preference($user, 'twitter_token', '');
 		if ($token=='') {
-			$this->add_log('tweet','user not registered with twitter');
-			return -1; 
+			$this->add_log('tweet', 'user not registered with twitter');
+			return -1;
 		}
 
 		$token = unserialize($token);
@@ -576,22 +577,22 @@ class SocialNetworksLib extends LogsLib
 		$this->options['consumerSecret']=$prefs['socialnetworks_twitter_consumer_secret'];
 		$client = $token->getHttpClient($this->options);
 		$clientconfig['timeout']=30;
-		$client->setConfig($clientconfig);		
+		$client->setConfig($clientconfig);
 		$twitter = new Zend_Service_Twitter();
 		$twitter->setLocalHttpClient($client);
 		try {
-			if($timelineType=='friends') {
+			if ($timelineType=='friends') {
 				$response = $twitter->status->friendsTimeline();
 			} else {
 				$response = $twitter->status->userTimeline();
 			}
 		} catch (Zend_Http_Client_Exception $e) {
-			$this->add_log('tweet','twitter error '.$e->getMessage());
+			$this->add_log('tweet', 'twitter error '.$e->getMessage());
 			return -($e->getCode());
-		}                                        
+		}
 		$status=$response->getStatus();
 		if ($status!=200) {
-			$this->add_log('tweet','twitter response ' . $status);
+			$this->add_log('tweet', 'twitter response ' . $status);
 			return -$status;
 		} else {
 			return $response;
@@ -607,23 +608,24 @@ class SocialNetworksLib extends LogsLib
 	 *
 	 * @return		string|bool	false on error, JSON encoded Facebook response on success
 	 */
-	function facebookGetWall($user, $addtoken=true) {
+	function facebookGetWall($user, $addtoken=true)
+	{
 		global $prefs;
-		if(!$this->facebookRegistered()) {
-			$this->add_log('facebookGraph','application not set up');
+		if (!$this->facebookRegistered()) {
+			$this->add_log('facebookGraph', 'application not set up');
 			return false;
 		}
 		if ($addtoken) {
 			$token=$this->get_user_preference($user, 'facebook_token', '');
 			// expires will make the token fail
-			$token = preg_replace('/&expires=(\d)*/','',$token);
+			$token = preg_replace('/&expires=(\d)*/', '', $token);
 			$token=urlencode($token);
 			$getdata='?'.urlencode('access_token').'='.$token;
 			if ($token=='') {
-				$this->add_log('facebookGraph','user not registered with facebook');
-				return -1; 
+				$this->add_log('facebookGraph', 'user not registered with facebook');
+				return -1;
 			}
-		
+
 		}
 
 			$request="GET /me/feed".$getdata." HTTP/1.1\r\n".
@@ -635,20 +637,20 @@ class SocialNetworksLib extends LogsLib
 
   		$fp = fsockopen("ssl://graph.facebook.com", 443);
   		if ($fp===false) {
-			$this->add_log('facebookGraph',"can't connect");
-			return false; 
+			$this->add_log('facebookGraph', "can't connect");
+			return false;
   		} else {
-			//stream_set_timeout($fp, 0, 5000); 
+			//stream_set_timeout($fp, 0, 5000);
 	  		fputs($fp, $request);
-	  		$ret='';  		
-			while(!feof($fp)) {
+	  		$ret='';
+			while (!feof($fp)) {
 				$ret .= fgets($fp, 128);
 	  		}
 			fclose($fp);
   		}
-		$ret=preg_split('/(\r\n\r\n|\r\r|\n\n)/',$ret,2);
+		$ret=preg_split('/(\r\n\r\n|\r\r|\n\n)/', $ret, 2);
 		$result=json_decode($ret[1]);
-		foreach($result->data as $key=>$value) {
+		foreach ($result->data as $key=>$value) {
 			if (isset($result->data[$key]->message)) {
 				$feed[$key]["message"]=$result->data[$key]->message;
 				$feed[$key]["type"]="message";

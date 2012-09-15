@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -16,7 +16,7 @@ class Feed_ForwardLink_Search
 		$this->page = $page;
 		parent::__construct($page);
 	}
-	
+
 	static function goToNewestWikiRevision($version, &$phrase)
 	{
 		if (!isset($_SESSION)) {
@@ -34,7 +34,8 @@ class Feed_ForwardLink_Search
 		$newestRevision = self::findWikiRevision($phrase);
 
 		if ($newestRevision == false) {
-			TikiLib::lib("header")->add_jq_onready(<<<JQ
+			TikiLib::lib("header")->add_jq_onready(
+<<<JQ
 				$('<div />')
 					.html(
 						tr('This can happen if the page you are linking to has changed since you obtained the forwardlink or if the rights to see it are different that what you have set at the moment.') +
@@ -104,7 +105,7 @@ JQ
 			$parsed = $smarty->getTemplateVars('previewd');
 		}
 
-		foreach($items as $i => $item) {
+		foreach ($items as $i => $item) {
 			if (!empty($item->textlink->href)) {
 				if (JisonParser_Phraser_Handler::hasPhrase($parsed, $item->forwardlink->text) != true) {
 					continue;
@@ -123,34 +124,36 @@ JQ
 				$item->textlink->dateLastUpdated = $tikilib->get_short_datetime($item->textlink->dateLastUpdated);
 				$item->textlink->dateOriginated = $tikilib->get_short_datetime($item->textlink->dateOriginated);
 
-				$headerlib->add_jq_onready("
-					var phrase = $('span.forwardlinkMiddle".$i."')
+				$headerlib->add_jq_onready(
+					"var phrase = $('span.forwardlinkMiddle".$i."')
 						.addClass('ui-state-highlight');
 
 					var phraseLink = $('<a>*</a>')
 						.data('metadataHere', " . json_encode($item->forwardlink) . ")
 						.data('metadataThere', " . json_encode($item->textlink) . ")
 						.addClass('forwardlinkA')
-						.insertBefore(phrase.first());
-				");
+						.insertBefore(phrase.first());"
+				);
 			}
 		}
 
 		$phraser = new JisonParser_Phraser_Handler();
-		$phraser->setCssWordClasses(array(
-			'start'=>'forwardlinkStart',
-			'middle'=>'forwardlinkMiddle',
-			'end'=>'forwardlinkEnd'
-		));
+		$phraser->setCssWordClasses(
+			array(
+				'start'=>'forwardlinkStart',
+				'middle'=>'forwardlinkMiddle',
+				'end'=>'forwardlinkEnd'
+			)
+		);
 
 		if ($phraseMatchIndex > -1) {
-			$headerlib->add_jq_onready("
-				var selection = $('span.forwardlinkStart". $phraseMatchIndex.",span.forwardlinkEnd".$phraseMatchIndex."').realHighlight();
+			$headerlib->add_jq_onready(
+				"var selection = $('span.forwardlinkStart". $phraseMatchIndex.",span.forwardlinkEnd".$phraseMatchIndex."').realHighlight();
 
 				$('body,html').animate({
 					scrollTop: selection.first().offset().top - 10
-				});
-			");
+				});"
+			);
 		}
 
 		self::restorePhrasesInWikiPage($phraser, $phrases);
@@ -168,7 +171,7 @@ JQ
 			$parsed = $smarty->getTemplateVars('previewd');
 		}
 
-		foreach($items as &$item) {
+		foreach ($items as &$item) {
 			if (!empty($item->forwardlink->href)) {
 				if (JisonParser_Phraser_Handler::hasPhrase($parsed, $item->textlink->text) != true) {
 					continue;
@@ -187,35 +190,37 @@ JQ
 				$item->textlink->dateLastUpdated = $tikilib->get_short_datetime($item->textlink->dateLastUpdated);
 				$item->textlink->dateOriginated = $tikilib->get_short_datetime($item->textlink->dateOriginated);
 
-				$headerlib->add_jq_onready("
-					var phrase = $('span.textlinkMiddle".$i."')
+				$headerlib->add_jq_onready(
+					"var phrase = $('span.textlinkMiddle".$i."')
 						.addClass('ui-state-highlight');
 
 					var phraseLink = $('<a>*</a>')
 						.data('metadataHere', " . json_encode($item->textlink) . ")
 						.data('metadataThere', " . json_encode($item->forwardlink) . ")
 						.addClass('textlinkA')
-						.insertAfter(phrase.last());
-				");
+						.insertAfter(phrase.last());"
+				);
 			}
 		}
 
 		$phraser = new JisonParser_Phraser_Handler();
 
-		$phraser->setCssWordClasses(array(
-			'start'=>'textlinkStart',
-			'middle'=>'textlinkMiddle',
-			'end'=>'textlinkEnd'
-		));
+		$phraser->setCssWordClasses(
+			array(
+				'start'=>'textlinkStart',
+				'middle'=>'textlinkMiddle',
+				'end'=>'textlinkEnd'
+			)
+		);
 
 		if ($phraseMatchIndex > -1) {
-			$headerlib->add_jq_onready("
-				var selection = $('span.textlinkStart".$phraseMatchIndex.",span.textlinkEnd".$phraseMatchIndex."').realHighlight();
+			$headerlib->add_jq_onready(
+				"var selection = $('span.textlinkStart".$phraseMatchIndex.",span.textlinkEnd".$phraseMatchIndex."').realHighlight();
 
 				$('body,html').animate({
 					scrollTop: selection.first().offset().top - 10
-				});
-			");
+				});"
+			);
 		}
 
 		self::restorePhrasesInWikiPage($phraser, $phrases);
@@ -228,7 +233,8 @@ JQ
 		$headerlib
 			->add_jsfile('lib/jquery/tablesorter/jquery.tablesorter.js')
 			->add_cssfile('lib/jquery_tiki/tablesorter/themes/tiki/style.css')
-			->add_jq_onready(<<<JQ
+			->add_jq_onready(
+<<<JQ
 				$('a.forwardlinkA,a.textlinkA')
 					.click(function() {
 						var me = $(this),
@@ -273,7 +279,8 @@ JQ
 						return false;
 					});
 JQ
-			,100);
+				, 100
+			);
 
 		$parsed = $smarty->getTemplateVars('parsed');
 		if (!empty($parsed)) {

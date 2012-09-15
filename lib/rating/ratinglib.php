@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -60,7 +60,7 @@ class RatingLib extends TikiDb_Bridge
 	 *                      aggregate will be performed on the entire history, for all visitors
 	 *                      without limitations on voting frequency. Valid parameters are:
 	 *                      - range : Number of seconds to look back for
-	 *                      - ignore : 'anonymous' is the only valid value. 
+	 *                      - ignore : 'anonymous' is the only valid value.
 	 *                                 Will make sure only registered users are considered.
 	 *                      - keep : Only consider one vote per user. 'oldest' or 'latest'.
 	 *                      - revote : If the user is allowed to vote multiple times, contains the
@@ -153,8 +153,8 @@ class RatingLib extends TikiDb_Bridge
 		}
 
 		$this->query(
-						'INSERT INTO `tiki_user_votings` ( `user`, `ip`, `id`, `optionId`, `time` ) VALUES( ?, ?, ?, ?, ? )',
-						array( $user, $ip, $token, $score, $time )
+			'INSERT INTO `tiki_user_votings` ( `user`, `ip`, `id`, `optionId`, `time` ) VALUES( ?, ?, ?, ?, ? )',
+			array($user, $ip, $token, $score, $time)
 		);
 
 		if ( $prefs['rating_advanced'] == 'y' ) {
@@ -258,7 +258,7 @@ class RatingLib extends TikiDb_Bridge
 		$sortedPref = $prefs[$pref];
 		asort($sortedPref);
 
-		foreach($sortedPref as $i => $option) {
+		foreach ($sortedPref as $i => $option) {
 			$options[$i] = $option;
 			//Ensure there are at least 2 to choose from
 			if (count($options) > 1) {
@@ -292,19 +292,20 @@ class RatingLib extends TikiDb_Bridge
 				WHERE tuv2.user = tuv1.user AND tuv1.id = tuv2.id
 			)
 			GROUP BY user
-			ORDER BY time DESC", array($type.$threadId));
+			ORDER BY time DESC", array($type.$threadId)
+		);
 
 		$votings = array();
 		$voteCount = count($user_votings);
 		$percent = ( $voteCount > 0 ? 100 / $voteCount : 0 );
 
-		foreach($user_votings as $user_voting) {
+		foreach ($user_votings as $user_voting) {
 			if (!isset($votings[$user_voting['optionId']])) $votings[$user_voting['optionId']] = 0;
 
 			$votings[$user_voting['optionId']]++;
 		}
 
-		foreach($votings as &$votes) {
+		foreach ($votings as &$votes) {
 			$votes = array(
 				"votes" => $votes,
 				"percent" => round($percent * $votes)
@@ -319,8 +320,9 @@ class RatingLib extends TikiDb_Bridge
 	function get_user_vote( $user, $type, $objectId )
 	{
 		$result = $this->fetchAll(
-						'SELECT `optionId` FROM `tiki_user_votings` WHERE `user` = ? AND `id` = ? ORDER BY `time` DESC',
-						array( $user, $this->get_token($type, $objectId) ), 1
+			'SELECT `optionId` FROM `tiki_user_votings` WHERE `user` = ? AND `id` = ? ORDER BY `time` DESC',
+			array($user, $this->get_token($type, $objectId)),
+			1
 		);
 
 		if ( count($result) == 1 ) {
@@ -394,9 +396,9 @@ class RatingLib extends TikiDb_Bridge
 
 		$backgroundsSets = array();
 
-		foreach($sets as $set) {
+		foreach ($sets as $set) {
 			$backgrounds = array();
-			foreach($set as $imageId) {
+			foreach ($set as $imageId) {
 				$backgrounds[] = 'img/rating_smiles/' . $imageId . '.png';
 			}
 			$backgroundsSets[] = $backgrounds;
@@ -448,7 +450,7 @@ class RatingLib extends TikiDb_Bridge
 		$optionsAsKeysSorted = array();
 
 
-		foreach($options as $option) {
+		foreach ($options as $option) {
 			$optionsAsKeysSorted[$option] = array();
 		}
 
@@ -457,7 +459,7 @@ class RatingLib extends TikiDb_Bridge
 		$sets = $this->get_options_smiles_id_sets();
 		$set = $sets[count($options)];
 
-		foreach($optionsAsKeysSorted as $key => &$option) {
+		foreach ($optionsAsKeysSorted as $key => &$option) {
 			$option = array(
 				'img' => 'img/rating_smiles/' . $set[$key] . '.png',
 				'color' => $colors[$set[$key]]
@@ -466,7 +468,7 @@ class RatingLib extends TikiDb_Bridge
 
 		if ($sort == false) {
 			$result = array();
-			foreach($options as $key => &$option) {
+			foreach ($options as $key => &$option) {
 				$result[$key] = $optionsAsKeysSorted[$option];
 			}
 		} else {
@@ -480,7 +482,7 @@ class RatingLib extends TikiDb_Bridge
 	{
 		$configurations = $this->get_initialized_configurations();
 		$runner = $this->get_runner();
-		
+
 		$list = $ratingconfiglib->get_expired_object_list($max);
 
 		foreach ( $list as $object ) {
@@ -511,10 +513,10 @@ class RatingLib extends TikiDb_Bridge
 	{
 		require_once 'Math/Formula/Runner.php';
 		return new Math_Formula_Runner(
-						array(
-							'Math_Formula_Function_' => 'lib/core/Math/Formula/Function',
-							'Tiki_Formula_Function_' => dirname(__FILE__) . '/formula',
-						)
+			array(
+				'Math_Formula_Function_' => 'lib/core/Math/Formula/Function',
+				'Tiki_Formula_Function_' => dirname(__FILE__) . '/formula',
+			)
 		);
 	}
 

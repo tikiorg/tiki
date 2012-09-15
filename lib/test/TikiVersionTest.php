@@ -1,4 +1,10 @@
 <?php
+// (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
+//
+// All Rights Reserved. See copyright.txt for details and a complete list of authors.
+// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+// $Id$
+
 
 class TikiVersionTest extends PHPUnit_Framework_TestCase
 {
@@ -35,14 +41,17 @@ class TikiVersionTest extends PHPUnit_Framework_TestCase
 		$checker->setCycle('regular');
 		$checker->setVersion('9.0');
 
-		$response = $checker->check(function ($url) use (& $out) {
-			$out = $url;
-			return <<<O
+		$response = $checker->check(
+			function ($url) use (& $out)
+			{
+				$out = $url;
+				return <<<O
 9.0
 8.4
 6.7
 O;
-		});
+			}
+		);
 
 		$this->assertEquals('http://tiki.org/regular.cycle', $out);
 		$this->assertEquals(array(), $response);
@@ -54,18 +63,23 @@ O;
 		$checker->setCycle('regular');
 		$checker->setVersion('8.4');
 
-		$response = $checker->check(function ($url) use (& $out) {
-			$out = $url;
-			return <<<O
+		$response = $checker->check(
+			function ($url) use (& $out)
+			{
+				$out = $url;
+				return <<<O
 9.0
 8.4
 6.7
 O;
-		});
+			}
+		);
 
-		$this->assertEquals(array(
-			new Tiki_Version_Upgrade('8.4', '9.0', false),
-		), $response);
+		$this->assertEquals(
+			array(
+				new Tiki_Version_Upgrade('8.4', '9.0', false),
+			), $response
+		);
 	}
 
 	function testVerifyMinorUpdate()
@@ -74,19 +88,24 @@ O;
 		$checker->setCycle('regular');
 		$checker->setVersion('8.2');
 
-		$response = $checker->check(function ($url) use (& $out) {
-			$out = $url;
-			return <<<O
+		$response = $checker->check(
+			function ($url) use (& $out)
+			{
+				$out = $url;
+				return <<<O
 9.0
 8.4
 6.7
 O;
-		});
+			}
+		);
 
-		$this->assertEquals(array(
-			new Tiki_Version_Upgrade('8.2', '8.4', true),
-			new Tiki_Version_Upgrade('8.4', '9.0', false),
-		), $response);
+		$this->assertEquals(
+			array(
+				new Tiki_Version_Upgrade('8.2', '8.4', true),
+				new Tiki_Version_Upgrade('8.4', '9.0', false),
+			), $response
+		);
 	}
 
 	function testVerifyUpgradePrerelease()
@@ -95,19 +114,24 @@ O;
 		$checker->setCycle('regular');
 		$checker->setVersion('8.4beta3');
 
-		$response = $checker->check(function ($url) use (& $out) {
-			$out = $url;
-			return <<<O
+		$response = $checker->check(
+			function ($url) use (& $out)
+			{
+				$out = $url;
+				return <<<O
 9.0
 8.4
 6.7
 O;
-		});
+			}
+		);
 
-		$this->assertEquals(array(
-			new Tiki_Version_Upgrade('8.4beta3', '8.4', true),
-			new Tiki_Version_Upgrade('8.4', '9.0', false),
-		), $response);
+		$this->assertEquals(
+			array(
+				new Tiki_Version_Upgrade('8.4beta3', '8.4', true),
+				new Tiki_Version_Upgrade('8.4', '9.0', false),
+			), $response
+		);
 	}
 
 	function testUpgradeFromUnsupportedVersion()
@@ -116,18 +140,22 @@ O;
 		$checker->setCycle('regular');
 		$checker->setVersion('4.3');
 
-		$response = $checker->check(function ($url) use (& $out) {
-			$out = $url;
-			return <<<O
+		$response = $checker->check(
+			function ($url) use (& $out) {
+				$out = $url;
+				return <<<O
 8.4
 9.0
 6.7
 O;
-		});
+			}
+		);
 
-		$this->assertEquals(array(
-			new Tiki_Version_Upgrade('4.3', '9.0', true),
-		), $response);
+		$this->assertEquals(
+			array(
+				new Tiki_Version_Upgrade('4.3', '9.0', true),
+			), $response
+		);
 	}
 
 	function testCurrentVersionMoreRecent()
@@ -136,14 +164,17 @@ O;
 		$checker->setCycle('regular');
 		$checker->setVersion('10.0');
 
-		$response = $checker->check(function ($url) use (& $out) {
-			$out = $url;
-			return <<<O
+		$response = $checker->check(
+			function ($url) use (& $out)
+			{
+				$out = $url;
+				return <<<O
 8.4
 9.0
 6.7
 O;
-		});
+			}
+		);
 
 		$this->assertEquals(array(), $response);
 	}
