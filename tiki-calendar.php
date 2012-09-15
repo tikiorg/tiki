@@ -624,7 +624,7 @@ if ($calendarViewMode['casedefault'] == 'day') {
 		foreach ($tmpRes as $val) {
 			foreach ($val as $index=>$evtId) {
 				$concurrencies[$wd][$evtId]['value'] = $maxConcurrency;
-				$startNew = $eventHoraires[$wd][$evtId]['start'];
+				$startNew = isset($eventHoraires[$wd])? $eventHoraires[$wd][$evtId]['start'] : null;
 				foreach ($slots as $index=>$oldEvtId) {
 					if ($oldEvtId != $evtId) {
 						if ($oldEvtId > 0) {
@@ -652,7 +652,7 @@ if ($calendarViewMode['casedefault'] == 'day') {
 	foreach (array_keys($hrows) as $aDay) {
 		foreach (array_keys($hrows[$aDay]) as $anHour) {
 			for ($i=0, $tmp_count = count($hrows[$aDay][$anHour]); $i < $tmp_count; $i++) {
-				if (!$manyEvents[$aDay]['tooMany'] && $concurrencies[$aDay][$hrows[$aDay][$anHour][$i]['calitemId']]['value'] <= $maxSimultaneousWeekViewEvents) {
+				if (empty($manyEvents[$aDay]['tooMany']) && $concurrencies[$aDay][$hrows[$aDay][$anHour][$i]['calitemId']]['value'] <= $maxSimultaneousWeekViewEvents) {
 					$hrows[$aDay][$anHour][$i]['concurrences'] = $concurrencies[$aDay][$hrows[$aDay][$anHour][$i]['calitemId']]['value'];
 					$hrows[$aDay][$anHour][$i]['duree'] = $eventHoraires[$aDay][$hrows[$aDay][$anHour][$i]['calitemId']]['duree'] * 24;
 					$hrows[$aDay][$anHour][$i]['left'] = $hrows[$aDay][$anHour][$i]['left'] + $concurrencies[$aDay][$hrows[$aDay][$anHour][$i]['calitemId']]['offset'];
