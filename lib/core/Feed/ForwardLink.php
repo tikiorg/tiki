@@ -51,7 +51,8 @@ Class Feed_ForwardLink extends Feed_Abstract
 		//check if profile is created
 		$trackerId = TikiLib::lib('trk')->get_tracker_by_name('Wiki Attributes');
 		if ($trackerId < 1 && $perms->admin == 'y') {
-			TikiLib::lib('header')->add_jq_onready(<<<JQ
+			TikiLib::lib('header')->add_jq_onready(
+<<<JQ
 				var addQuestionsButton = $('<span class="button"><a href="tiki-admin.php?profile=Simple+Wiki+Attributes&repository=&page=profiles&list=List">' + tr('Apply Profile "Simple Wiki Attributes" To Add ForwardLink Questions') + '</a></span>')
 					.appendTo('#page-bar');
 JQ
@@ -64,7 +65,8 @@ JQ
 			if ($trackerPerms->edit == true) {
 				TikiLib::lib('header')
 					->add_jsfile('lib/jquery_tiki/tiki-trackers.js')
-					->add_jq_onready(<<<JQ
+					->add_jq_onready(
+<<<JQ
 						function trackerForm(trackerId, itemId, tracker_fn_name, type, fn) {
 							$.modal(tr("Loading..."));
 
@@ -227,7 +229,8 @@ JQ
 		$questions = json_encode($questions);
 
 		TikiLib::lib('header')
-			->add_jq_onready(<<<JQ
+			->add_jq_onready(
+<<<JQ
 				var addQuestionsButton = $('<span class="button"><a href="tiki-view_tracker.php?trackerId=' + $trackerId + '">' + tr("Edit ForwardLink Questions") + '</a></span>')
 					.click(function() {
 						var questionBox = $('<table style="width: 100%;" />');
@@ -311,14 +314,14 @@ JQ
 								var questionDialog = $('<div />')
 									.append(frm)
 									.dialog(newFrmDialogSettings);
-							});
-						};
+			 				});
+			 			};
 						questionBox.dialog(questionBoxOptions);
 						return false;
 					})
 					.appendTo('#page-bar');
 JQ
-		);
+			);
 	}
 
 	function createForwardLinksInterface()
@@ -331,7 +334,8 @@ JQ
 
 		$page = urlencode($this->page);
 
-		$headerlib->add_jq_onready(<<<JQ
+		$headerlib->add_jq_onready(
+<<<JQ
 			var answers = $answers;
 
 			$('<div />')
@@ -557,7 +561,7 @@ JQ
 		$me->editInterfaces();
 		$me->createForwardLinksInterface();
 	}
-	
+
 	static function wikiSave($args)
 	{
 		global $groupPluginReturnAll;
@@ -572,12 +576,14 @@ JQ
 
 		Tracker_Query::tracker('Wiki Attributes')
 			->byName()
-			->replaceItem(array(
-				'Page' => $page,
-				'Attribute' => $version,
-				'Value' => $body,
-				'Type' => 'ForwardLink Revision'
-			));
+			->replaceItem(
+				array(
+					'Page' => $page,
+					'Attribute' => $version,
+					'Value' => $body,
+					'Type' => 'ForwardLink Revision'
+				)
+			);
 	}
 
 	function addItem($item)
@@ -586,8 +592,8 @@ JQ
 
 		$exists = array();
 		$verificationsCount = count($this->verifications);
-		foreach($this->verifications as &$verification) {
-			foreach($verification['reason'] as $reason) {
+		foreach ($this->verifications as &$verification) {
+			foreach ($verification['reason'] as $reason) {
 				if ($reason == 'exists') {
 					$exists[] = true;
 				}
@@ -664,7 +670,7 @@ JQ
 				unset($item->feed->entry[$i]);
 			}
 
-			foreach($newEntry->forwardlink as $key => $value) {
+			foreach ($newEntry->forwardlink as $key => $value) {
 				if (isset(Feed_ForwardLink_Metadata::$acceptableKeys[$key]) && Feed_ForwardLink_Metadata::$acceptableKeys[$key] == true) {
 					//all clear
 				} else {
@@ -673,7 +679,7 @@ JQ
 				}
 			}
 
-			foreach($newEntry->textlink as $key => $value) {
+			foreach ($newEntry->textlink as $key => $value) {
 				if (isset(Feed_ForwardLink_Metadata::$acceptableKeys[$key]) && Feed_ForwardLink_Metadata::$acceptableKeys[$key] == true) {
 					//all clear
 				} else {
@@ -686,15 +692,17 @@ JQ
 		if (empty($item->feed->entry) == false) {
 			$this->itemsAdded = true;
 
-			foreach($item->feed->entry as &$entry) {
+			foreach ($item->feed->entry as &$entry) {
 				Tracker_Query::tracker('Wiki Attributes')
 					->byName()
-					->replaceItem(array(
-						'Page' => $this->page,
-						'Attribute' => '',
-						'Value' => $entry->forwardlink->text,
-						'Type' => 'ForwardLink Accepted'
-					));
+					->replaceItem(
+						array(
+							'Page' => $this->page,
+							'Attribute' => '',
+							'Value' => $entry->forwardlink->text,
+							'Type' => 'ForwardLink Accepted'
+						)
+					);
 			}
 
 			if (empty($contents->entry) == true) {
