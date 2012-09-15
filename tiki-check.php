@@ -12,14 +12,16 @@ if (file_exists('./db/local.php') && file_exists('./templates/tiki-check.tpl')) 
 } else {
 	$standalone = true;
 
-	function tra($string) {
+	function tra($string)
+	{
 		return $string;
 	}
 
-	function render_table($var) {  
+	function render_table($var)
+	{
 		if(is_array($var)) {              
 			echo '<table style="border:2px solid grey;">';  
-			foreach($var as $key => $value) {  
+			foreach($var as $key => $value) {
 				echo '<tr style="border:1px solid">',  
 				'<td style="border:1px black;padding:5px;">',  
 				$key,  
@@ -44,7 +46,7 @@ if (file_exists('./db/local.php') && file_exists('./templates/tiki-check.tpl')) 
 					}
 				echo '">'.$value2.'</span></td>';
 				}
-				echo "</tr>";               
+				echo '</tr>';               
 			}
 			echo '</table>';  
 		} else {  
@@ -88,7 +90,7 @@ if ($s) {
 
 // Now connect to the DB and make all our connectivity methods work the same
 if ( $standalone ) {
-	if ( empty($_POST["dbhost"]) && !($php_properties['DB Driver']['setting'] == 'Not available') ) {
+	if ( empty($_POST['dbhost']) && !($php_properties['DB Driver']['setting'] == 'Not available') ) {
 			print <<<DBC
 			<h2>Database credentials</h2>
 			Couldn't connect to database, please provide valid credentials.
@@ -102,20 +104,21 @@ DBC;
 	} else {
 		$connection = false;
 		switch ($php_properties['DB Driver']['setting']) {
-			case "PDO":
+			case 'PDO':
 				try {
 					$connection = new PDO('mysql:host='.$_POST['dbhost'], $_POST['dbuser'], $_POST['dbpass']);
 				}
 				catch ( Exception $e ) {
 					echo 'Couldn\'t connect to database: '.$e->getMessage();
 				}					
-				function query($query, $connection) {
+				function query($query, $connection)
+				{
 					$result = $connection->query($query);
 					$return = $result->fetchAll(PDO::FETCH_ASSOC);
 					return($return);
 				}
 				break;
-			case "MySQLi":
+			case 'MySQLi':
 				try {
 					$error = false;
 					$connection = new mysqli($_POST['dbhost'], $_POST['dbuser'], $_POST['dbpass']);
@@ -128,7 +131,8 @@ DBC;
 				catch ( Exception $e ) {
 					echo 'Couldn\'t connect to database: '.$e->getMessage();
 				}
-				function query($query, $connection) {
+				function query($query, $connection)
+				{
 					$result = $connection->query($query);
 					while (	$row = $result->fetch_assoc() ) {
 						$return[] = $row;
@@ -136,7 +140,7 @@ DBC;
 					return($return);
 				}
 				break;
-			case "MySQL":
+			case 'MySQL':
 				try {
 					$connection = mysql_connect($_POST['dbhost'], $_POST['dbuser'], $_POST['dbpass']);
 					if ( $connection === false ) {
@@ -146,7 +150,8 @@ DBC;
 				catch ( Exception $e ) {
 					echo $e->getMessage();
 				}
-				function query($query, $connection = '') {
+				function query($query, $connection = '')
+				{
 					$result = mysql_query($query);
 					while (	$row = mysql_fetch_array($result) ) {
 						$return[] = $row;
@@ -157,7 +162,8 @@ DBC;
 		}
 	}
 } else {
-	function query($query) {
+	function query($query)
+	{
 		global $tikilib;
 		$result = $tikilib->query($query);
 		while ( $row = $result->fetchRow() ) {
@@ -197,8 +203,8 @@ $server_information['Server Signature'] = array(
 $bytes = disk_free_space('.');
 $si_prefix = array( 'B', 'KB', 'MB', 'GB', 'TB', 'EB', 'ZB', 'YB' );
 $base = 1024;
-$class = min((int)log($bytes , $base) , count($si_prefix) - 1);
-$free_space =  sprintf('%1.2f' , $bytes / pow($base,$class)) . ' ' . $si_prefix[$class];
+$class = min((int)log($bytes, $base), count($si_prefix) - 1);
+$free_space =  sprintf('%1.2f', $bytes / pow($base,$class)) . ' ' . $si_prefix[$class];
 if ( $bytes < 200 * 1024 * 1024 ) {
 	$server_properties['Disk Space'] = array(
 		'fitness' => 'bad',
@@ -341,7 +347,7 @@ if ($s) {
 
 // default_charset
 $s = ini_get('default_charset');
-if ( strtolower($s) == "utf-8" ) {
+if ( strtolower($s) == 'utf-8' ) {
 	$php_properties['default_charset'] = array(
 		'fitness' => tra('good'),
 		'setting' => $s,
@@ -754,9 +760,8 @@ if ( $s ) {
 // Check if ini_set works
 // This has to be after checking the error_reporting level or the error_reporting
 // level will always be 0 because of the ini_set in the following test
-$s = ini_set('error_reporting', 'E_ALL') ;
-if( $s == $e )
-{
+$s = ini_set('error_reporting', 'E_ALL');
+if( $s == $e ) {
 	$php_properties['ini_set'] = array(
 		'fitness' => tra('good'),
 		'setting' => 'Enabled',
@@ -775,10 +780,10 @@ if ($connection || !$standalone) {
 	$mysql_properties = array();
 
 	// MySQL version
-	$query = "SELECT VERSION();";
+	$query = 'SELECT VERSION();';
 	$result = query($query, $connection);
 	$mysql_version = $result[0]['VERSION()'];
-	$s = version_compare($mysql_version, "5.0.2", ">=" );
+	$s = version_compare($mysql_version, '5.0.2', '>=');
 	if ( $s == true ) {
 		$mysql_properties['Version'] = array(
 			'fitness' => tra('good'),
@@ -975,6 +980,6 @@ if ($standalone) {
 	// disallow robots to index page:
 	$smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 	$smarty->assign('mid', 'tiki-check.tpl');
-	$smarty->display("tiki.tpl");
+	$smarty->display('tiki.tpl');
 }
 
