@@ -248,7 +248,7 @@ JQ
 							var itemId = me.data('itemid');
 							trackerForm($trackerId, itemId, 'tracker_update_item', 'Question', function(frm) {
 
-								frm.find('span.trackerInput:not(.Value').hide();
+								frm.find('span.trackerInput:not(.Value)').hide();
 
 								var dialogSettings = {
 									title: tr('Editing ForwardLink Question: ') + me.parent().parent().text(),
