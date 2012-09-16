@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -14,20 +14,20 @@ class Search_Formatter_DataSourceTest extends PHPUnit_Framework_TestCase
 	function setUp()
 	{
 		$this->wikiSource = new Search_ContentSource_Static(
-						array('Test' => array('description' => 'ABC'),), 
-						array('description' => 'sortable')
+			array('Test' => array('description' => 'ABC'),),
+			array('description' => 'sortable')
 		);
 
 		$this->categorySource = new Search_GlobalSource_Static(
-						array('wiki page:Test' => array('categories' => array(1, 2, 3)),), 
-						array('categories' => 'multivalue')
+			array('wiki page:Test' => array('categories' => array(1, 2, 3)),),
+			array('categories' => 'multivalue')
 		);
 
 		$this->permissionSource = new Search_GlobalSource_Static(
-						array(
-							'wiki page:Test' => array('allowed_groups' => array('Editors', 'Admins')),
-						), 
-						array('allowed_groups' => 'multivalue')
+			array(
+				'wiki page:Test' => array('allowed_groups' => array('Editors', 'Admins')),
+			),
+			array('allowed_groups' => 'multivalue')
 		);
 	}
 
@@ -37,14 +37,14 @@ class Search_Formatter_DataSourceTest extends PHPUnit_Framework_TestCase
 		$source->addContentSource('wiki page', $this->wikiSource);
 
 		$this->assertSetsEquals(
-						$source, 
-						array(
-							array('object_type' => 'wiki page', 'object_id' => 'Test', 'description' => 'ABC'),
-						), 
-						array(
-							array('object_type' => 'wiki page', 'object_id' => 'Test'),
-						), 
-						array('object_id', 'description')
+			$source,
+			array(
+				array('object_type' => 'wiki page', 'object_id' => 'Test', 'description' => 'ABC'),
+			),
+			array(
+				array('object_type' => 'wiki page', 'object_id' => 'Test'),
+			),
+			array('object_id', 'description')
 		);
 	}
 
@@ -54,12 +54,12 @@ class Search_Formatter_DataSourceTest extends PHPUnit_Framework_TestCase
 		$source->addContentSource('wiki page', $this->wikiSource);
 
 		$this->assertSetsEquals(
-						$source, 
-						array(array('object_type' => 'wiki page', 'object_id' => 'Test'),), 
-						array(
-							array('object_type' => 'wiki page', 'object_id' => 'Test'),
-						), 
-						array('object_id', 'title')
+			$source,
+			array(array('object_type' => 'wiki page', 'object_id' => 'Test'),),
+			array(
+				array('object_type' => 'wiki page', 'object_id' => 'Test'),
+			),
+			array('object_id', 'title')
 		);
 	}
 
@@ -70,19 +70,19 @@ class Search_Formatter_DataSourceTest extends PHPUnit_Framework_TestCase
 		$source->addGlobalSource($this->permissionSource);
 
 		$this->assertSetsEquals(
-						$source, 
-						array(
-							array(
-								'object_type' => 'wiki page', 
-								'object_id' => 'Test', 
-								'categories' => array(1, 2, 3), 
-								'allowed_groups' => array('Editors', 'Admins')
-							),
-						), 
-						array(
-							array('object_type' => 'wiki page', 'object_id' => 'Test'),
-						), 
-						array('object_id', 'description', 'categories', 'allowed_groups')
+			$source,
+			array(
+				array(
+					'object_type' => 'wiki page',
+					'object_id' => 'Test',
+					'categories' => array(1, 2, 3),
+					'allowed_groups' => array('Editors', 'Admins')
+				),
+			),
+			array(
+				array('object_type' => 'wiki page', 'object_id' => 'Test'),
+			),
+			array('object_id', 'description', 'categories', 'allowed_groups')
 		);
 	}
 
@@ -91,12 +91,12 @@ class Search_Formatter_DataSourceTest extends PHPUnit_Framework_TestCase
 		$source = new Search_Formatter_DataSource_Declarative;
 
 		$this->assertSetsEquals(
-						$source, 
-						array(
-							array('object_type' => 'wiki page', 'object_id' => 'Test'),
-						), 
-						array(array('object_type' => 'wiki page', 'object_id' => 'Test'),), 
-						array('object_id', 'description', 'categories', 'allowed_groups')
+			$source,
+			array(
+				array('object_type' => 'wiki page', 'object_id' => 'Test'),
+			),
+			array(array('object_type' => 'wiki page', 'object_id' => 'Test'),),
+			array('object_id', 'description', 'categories', 'allowed_groups')
 		);
 	}
 
@@ -107,17 +107,17 @@ class Search_Formatter_DataSourceTest extends PHPUnit_Framework_TestCase
 		$source->addGlobalSource($this->categorySource);
 
 		$this->assertSetsEquals(
-						$source, 
-						array(
-							array(
-								'object_type' => 'wiki page', 
-								'object_id' => 'Test', 
-								'description' => 'ABC', 
-								'categories' => array(1, 2, 3)
-							),
-						), 
-						array(array('object_type' => 'wiki page', 'object_id' => 'Test'),), 
-						array('object_id', 'description', 'categories', 'allowed_groups')
+			$source,
+			array(
+				array(
+					'object_type' => 'wiki page',
+					'object_id' => 'Test',
+					'description' => 'ABC',
+					'categories' => array(1, 2, 3)
+				),
+			),
+			array(array('object_type' => 'wiki page', 'object_id' => 'Test'),),
+			array('object_id', 'description', 'categories', 'allowed_groups')
 		);
 	}
 
@@ -128,26 +128,26 @@ class Search_Formatter_DataSourceTest extends PHPUnit_Framework_TestCase
 		$source->addGlobalSource($this->categorySource);
 
 		$in = new Search_ResultSet(
-						array(
-							array('object_type' => 'wiki page', 'object_id' => 'Test'),
-						), 
-						11, 
-						10, 
-						10
+			array(
+				array('object_type' => 'wiki page', 'object_id' => 'Test'),
+			),
+			11,
+			10,
+			10
 		);
 
 		$out = new Search_ResultSet(
-						array(
-							array(
-								'object_type' => 'wiki page', 
-								'object_id' => 'Test', 
-								'description' => 'ABC', 
-								'categories' => array(1, 2, 3)
-							),
-						), 
-						11, 
-						10, 
-						10
+			array(
+				array(
+					'object_type' => 'wiki page',
+					'object_id' => 'Test',
+					'description' => 'ABC',
+					'categories' => array(1, 2, 3)
+				),
+			),
+			11,
+			10,
+			10
 		);
 
 		$this->assertEquals($out, $source->getInformation($in, array('object_id', 'description', 'categories', 'allowed_groups')));
@@ -156,43 +156,43 @@ class Search_Formatter_DataSourceTest extends PHPUnit_Framework_TestCase
 	function testSourceFindsEntryWithMultipleSourceResults()
 	{
 		$wikiSource = new Search_ContentSource_Static(
-						array(
-							'Test' => array(
-									array('title' => 'Test', 'hash' => '3'),
-									array('title' => 'Test (latest)', 'hash' => '4'),
-							),
-						), 
-						array('title' => 'sortable', 'hash' => 'identifier')
+			array(
+				'Test' => array(
+						array('title' => 'Test', 'hash' => '3'),
+						array('title' => 'Test (latest)', 'hash' => '4'),
+				),
+			),
+			array('title' => 'sortable', 'hash' => 'identifier')
 		);
 
 		$source = new Search_Formatter_DataSource_Declarative;
 		$source->addContentSource('wiki page', $wikiSource);
 
 		$in = new Search_ResultSet(
-						array(
-							array(
-								'object_type' => 'wiki page', 
-								'object_id' => 'Test', 
-								'hash' => '4'
-							),
-						), 
-						11, 
-						10,
-						10
+			array(
+				array(
+					'object_type' => 'wiki page',
+					'object_id' => 'Test',
+					'hash' => '4'
+				),
+			),
+			11,
+			10,
+			10
 		);
 
 		$out = new Search_ResultSet(
-						array(
-							array(
-								'object_type' => 'wiki page', 
-								'object_id' => 'Test', 
-								'title' => 'Test (latest)', 
-								'hash' => '4'
-							),
-						), 
-						11, 
-						10, 
-						10
+			array(
+				array(
+					'object_type' => 'wiki page',
+					'object_id' => 'Test',
+					'title' => 'Test (latest)',
+					'hash' => '4'
+				),
+			),
+			11,
+			10,
+			10
 		);
 
 		$this->assertEquals($out, $source->getInformation($in, array('object_id', 'hash', 'title')));

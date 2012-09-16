@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -172,7 +172,7 @@ class ImageGalsLib extends TikiLib
 
 			$this->image = fread($fp, $size);
 			fclose($fp);
-			// convert to imagehandle to be able to check if its 
+			// convert to imagehandle to be able to check if its
 			// valid image data
 			$this->readimagefromstring();
 			// check if imagehandle is a image:
@@ -444,9 +444,9 @@ class ImageGalsLib extends TikiLib
 				}
 				//extract file
 				$archive->extractByIndex(
-								$zipfile["index"],
-								$prefs['tmpDir'], 
-								dirname($file)
+					$zipfile["index"],
+					$prefs['tmpDir'],
+					dirname($file)
 				); //extract and remove (dangerous) pathname
 
 				$file = basename($file);
@@ -481,21 +481,21 @@ class ImageGalsLib extends TikiLib
 					}
 
 					$imageId = $this->insert_image(
-									$galleryId, 
-									$file,
-									'', 
-									$file, 
-									$this->filetype, 
-									$this->image,
-									$this->filesize, 
-									$this->xsize, 
-									$this->ysize, 
-									$user, 
-									'', 
-									'', 
-									NULL, 
-									NULL, 
-									$gal_info
+						$galleryId,
+						$file,
+						'',
+						$file,
+						$this->filetype,
+						$this->image,
+						$this->filesize,
+						$this->xsize,
+						$this->ysize,
+						$user,
+						'',
+						'',
+						NULL,
+						NULL,
+						$gal_info
 					);
 
 					$numimages++;
@@ -594,18 +594,18 @@ class ImageGalsLib extends TikiLib
 				case 't':
 					$ext = ".thumb";
 
-								break;
+					break;
 
 				case 's':
 					$ext = ".scaled_" . $this->xsize . "x" . $this->ysize;
 
-								break;
+					break;
 
 				case 'b':
 					// for future use
 					$ext = ".backup";
 
-								break;
+					break;
 
 				default:
 					$ext = '';
@@ -638,7 +638,7 @@ class ImageGalsLib extends TikiLib
 
 			$query = "update `tiki_images_data` set `filetype`=?,
 				`filename`=?,`data`=?,
-				`filesize`=?,`xsize`=?, 
+				`filesize`=?,`xsize`=?,
 				`ysize`=?
 					where
 					`imageId`=? and `type`=? and
@@ -682,7 +682,7 @@ class ImageGalsLib extends TikiLib
 			} else {
 				$scaleinfo = $this->get_gallery_scale_info($galid);
 				while (list($num, $sci) = each($scaleinfo)) {
-					if ((($sci['scale'] == $xsize) && ($sci['scale'] >= $ysize)) || 
+					if ((($sci['scale'] == $xsize) && ($sci['scale'] >= $ysize)) ||
 							(($sci['scale'] == $ysize) && ($sci['scale'] >= $xsize))) {
 						$hasscale = true;
 						$newx = $sci['scale'];
@@ -763,7 +763,7 @@ class ImageGalsLib extends TikiLib
 
 	function rebuild_scales($galleryId, $imageId = -1)
 	{
-		// doesn't really rebuild, it deletes the scales and thumbs for 
+		// doesn't really rebuild, it deletes the scales and thumbs for
 		// automatic rebuild
 		// give either a galleryId for rebuild complete gallery or
 		// a imageId for a image rebuild
@@ -1065,7 +1065,7 @@ class ImageGalsLib extends TikiLib
 			g.`galleryimage`,g.`parentgallery`,count(i.`imageId`) as images
 				from `tiki_galleries` g, `tiki_images` i
 				where i.`galleryId`=g.`galleryId` and
-				`parentgallery`=? $mid group by 
+				`parentgallery`=? $mid group by
 				g.`galleryId`, g.`name`,g.`description`,
 			g.`created`,g.`lastModif`,g.`visible`,g.`theme`,g.`user`,
 			g.`hits`,g.`maxRows`,g.`rowImages`,g.`thumbSizeX`,
@@ -1105,12 +1105,12 @@ class ImageGalsLib extends TikiLib
 				// first uploaded
 				$query .= $this->convertSortMode('created_asc');
 				$imageId = $this->getOne($query, $bindvars);
-							break;
+				break;
 			case 'lastu':
 				// last uploaded
 				$query .= $this->convertSortMode('created_desc');
 				$imageId = $this->getOne($query, $bindvars);
-							break;
+				break;
 			case 'all':
 			case 'first':
 				if (!$sort_mode) {
@@ -1123,14 +1123,14 @@ class ImageGalsLib extends TikiLib
 				$query .= $this->convertSortMode($sort_mode);
 				if ($rule != 'all') {
 					$imageId = $this->getOne($query, $bindvars);
-							break;
+					break;
 				}
 				$result = $this->query($query, $bindvars);
 				$imageId = array();
 				while ($res = $result->fetchRow()) {
 					$imageId[] = reset($res);
 				}
-							break;
+				break;
 			case 'last':
 				if ($sort_mode) {
 					$invsor = explode('_', $sort_mode);
@@ -1149,18 +1149,18 @@ class ImageGalsLib extends TikiLib
 				}
 				$query .= $this->convertSortMode($sort_mode);
 				$imageId = $this->getOne($query, $bindvars);
-							break;
+				break;
 			case 'random':
 				//random image of gallery
 				$ret = $this->get_random_image($galleryId);
 				$imageId = $ret['imageId'];
-							break;
+				break;
 			case 'default':
 				//check gallery settings and re-run this function
 				$query = 'select `galleryimage` from `tiki_galleries` where `galleryId`=?';
 				$rule = $this->getOne($query, array($galleryId));
 				$imageId = $this->get_gallery_image($galleryId, $rule);
-							break;
+				break;
 			default:
 				// imageId is listed in gallery settings
 				if (is_numeric($rule)) {
@@ -1169,7 +1169,7 @@ class ImageGalsLib extends TikiLib
 					// unknown.
 					$imageId = -1;
 				}
-							break;
+				break;
 		}
 		return($imageId);
 	}
@@ -1535,7 +1535,7 @@ class ImageGalsLib extends TikiLib
 		if ($xsize != 0 && $ysize == 0) {
 			// bounding box
 			$ysize = $xsize;
-		} 
+		}
 
 		if ($xsize != 0 && $ysize != 0) {
 			$bindvars = array((int)$id, $itype, (int)$xsize, (int)$ysize);
@@ -1584,7 +1584,7 @@ class ImageGalsLib extends TikiLib
 			// first parameter (xsize) represents a scale
 			// so we select a bounding box
 			$ysize = $xsize;
-		} 
+		}
 
 		if ($xsize != 0 && $ysize != 0) {
 			if ($ysize == $xsize) {
@@ -1620,7 +1620,7 @@ class ImageGalsLib extends TikiLib
 			die;
 		}
 
-		$res = $result->fetchRow();		
+		$res = $result->fetchRow();
 
 		$this->imageId = $res["imageId"];
 		$this->galleryId = $res["galleryId"];
@@ -1658,18 +1658,18 @@ class ImageGalsLib extends TikiLib
 				case 't':
 					$ext = ".thumb";
 
-								break;
+					break;
 
 				case 's':
 					$ext = ".scaled_" . $res["xsize"] . "x" . $res["ysize"];
 
-								break;
+					break;
 
 				case 'b':
 					// for future use
 					$ext = ".backup";
 
-								break;
+					break;
 
 				default:
 					$ext = '';
@@ -1769,7 +1769,7 @@ class ImageGalsLib extends TikiLib
 
 		$bindvars=array($name);
 
-		$query = "select `imageId` from `tiki_images` 
+		$query = "select `imageId` from `tiki_images`
 			where `name` like ?";
 		if (!empty($galleryId)) {
 			$query .= ' and galleryId=?';
@@ -1777,7 +1777,7 @@ class ImageGalsLib extends TikiLib
 		}
 
 		$result = $this->query($query, $bindvars, 1);
-		$res = $result->fetchRow(); 
+		$res = $result->fetchRow();
 
 		return($res["imageId"]);
 
@@ -1816,7 +1816,7 @@ class ImageGalsLib extends TikiLib
 					$defaultscale = 'o',
 					$geographic = 'n',
 					$showcategories = 'n'
-					) 
+					)
 	{
 		global $prefs;
 
@@ -1830,7 +1830,7 @@ class ImageGalsLib extends TikiLib
 			$galleryId = $this->getOne("select `galleryId` from `tiki_galleries` where `name`=? and `parentgallery`=?", array($name, $parentgallery));
 
 		if ($galleryId > 0) {
-			$query = "update `tiki_galleries` set `name`=?,`visible`=?, `geographic`=?,`maxRows`=? , `rowImages`=?, 
+			$query = "update `tiki_galleries` set `name`=?,`visible`=?, `geographic`=?,`maxRows`=? , `rowImages`=?,
 							`thumbSizeX`=?, `thumbSizeY`=?, `description`=?, `theme`=?,
 							`lastModif`=?, `public`=?, `sortorder`=?, `sortdirection`=?, `galleryimage`=?,
 							`parentgallery`=?,`showname`=?,`showimageid`=?,`showdescription`=?,`showcategories`=?,
@@ -1839,42 +1839,42 @@ class ImageGalsLib extends TikiLib
 								where `galleryId`=?";
 
 			$result = $this->query(
-							$query,
-							array(
-									$name,
-									$visible,
-									$geographic,
-									(int)$maxRows,
-									(int)$rowImages,
-									(int)$thumbSizeX,
-									(int)$thumbSizeY,
-									$description,
-									$theme,
-									(int)$this->now,
-									$public,
-									$sortorder,
-									$sortdirection,
-									$galleryimage,
-									(int)$parentgallery,
-									$showname,
-									$showimageid,
-									$showdescription,
-									$showcategories,
-									$showcreated,
-									$showuser,
-									$showhits,
-									$showxysize,
-									$showfilesize,
-									$showfilename,
-									$defaultscale,
-									$user,
-									(int)$galleryId
-								)
+				$query,
+				array(
+						$name,
+						$visible,
+						$geographic,
+						(int)$maxRows,
+						(int)$rowImages,
+						(int)$thumbSizeX,
+						(int)$thumbSizeY,
+						$description,
+						$theme,
+						(int)$this->now,
+						$public,
+						$sortorder,
+						$sortdirection,
+						$galleryimage,
+						(int)$parentgallery,
+						$showname,
+						$showimageid,
+						$showdescription,
+						$showcategories,
+						$showcreated,
+						$showuser,
+						$showhits,
+						$showxysize,
+						$showfilesize,
+						$showfilename,
+						$defaultscale,
+						$user,
+						(int)$galleryId
+					)
 			);
 		} else {
 			// Create a new record
-			$query = "insert into 
-							`tiki_galleries`(`name`,`description`,`theme`,`created`,`user`,`lastModif`,`maxRows`,`rowImages`,`thumbSizeX`,`thumbSizeY`,`public`,`hits`,`visible`,`sortorder`,`sortdirection`,`galleryimage`,`parentgallery`,`showname`,`showimageid`,`showdescription`,`showcategories`,`showcreated`,`showuser`,`showhits`,`showxysize`,`showfilesize`,`showfilename`,`defaultscale`,`geographic`) 
+			$query = "insert into
+							`tiki_galleries`(`name`,`description`,`theme`,`created`,`user`,`lastModif`,`maxRows`,`rowImages`,`thumbSizeX`,`thumbSizeY`,`public`,`hits`,`visible`,`sortorder`,`sortdirection`,`galleryimage`,`parentgallery`,`showname`,`showimageid`,`showdescription`,`showcategories`,`showcreated`,`showuser`,`showhits`,`showxysize`,`showfilesize`,`showfilename`,`defaultscale`,`geographic`)
 							values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 			$bindvars = array(
 								$name,
@@ -1962,18 +1962,18 @@ class ImageGalsLib extends TikiLib
 					case 't':
 						$ext = ".thumb";
 
-									break;
+						break;
 
 					case 's':
 						$ext = ".scaled_" . $res2["xsize"] . "x" . $res2["ysize"];
 
-									break;
+						break;
 
 					case 'b':
 						// for future use
 						$ext = ".backup";
 
-									break;
+						break;
 
 					default:
 						$ext = '';
@@ -2255,7 +2255,7 @@ class ImageGalsLib extends TikiLib
 			// write image
 			$this->store_image_data(true);
 			if ($direction=='to_db') {
-				// remove image in fs 
+				// remove image in fs
 				if (!@unlink($prefs['gal_use_dir'].$this->path)) {
 					$errstr = tra("unlink failed");
 				}
@@ -2265,7 +2265,7 @@ class ImageGalsLib extends TikiLib
 
 		}
 		return(0);
-	} 
+	}
 
 	function move_gallery_store($galId, $direction='to_fs')
 	{
@@ -2294,7 +2294,7 @@ class ImageGalsLib extends TikiLib
 			if ($r !== false) {
 				$n += $r;
 			} else {
-				$errors++; 
+				$errors++;
 			}
 			if ($met-time()+$st < 3) { // avoid timeouts so that we dont end with broken images
 				$timeout = true;
@@ -2303,7 +2303,7 @@ class ImageGalsLib extends TikiLib
 		}
 		$resultarray = array('moved_images'=>$n, 'timeout'=>$timeout, 'errors'=>$errors);
 		return($resultarray);
-	} 
+	}
 
 	function clear_class_vars()
 	{ // function to clear loaded data. Usable for mass changes
@@ -2314,7 +2314,7 @@ class ImageGalsLib extends TikiLib
 		unset($this->lat);
 		unset($this->lon);
 		unset($this->created);
-		unset($this->user); 
+		unset($this->user);
 		unset($this->hits);
 		unset($this->path);
 		unset($this->xsize);

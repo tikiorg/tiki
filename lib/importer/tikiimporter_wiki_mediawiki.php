@@ -50,13 +50,13 @@ class TikiImporter_Wiki_Mediawiki extends TikiImporter_Wiki
 	{
 		$options = array(
 				array(
-						'name' => 'importAttachments', 
-						'type' => 'checkbox', 
+						'name' => 'importAttachments',
+						'type' => 'checkbox',
 						'label' => tra('Import images and attachments (see documentation for more information)')
 				),
 				array(
-						'name' => 'maketoc', 
-						'type' => 'checkbox', 
+						'name' => 'maketoc',
+						'type' => 'checkbox',
 						'label' => tra('Add a maketoc at the top of each page')
 				),
 		);
@@ -162,10 +162,10 @@ class TikiImporter_Wiki_Mediawiki extends TikiImporter_Wiki
 				case '0.4':
 				case '0.5':
 					$xmlDtdFile = dirname(__FILE__) . "/mediawiki_dump_v$xmlVersion.xsd";
-								break;
+					break;
 				default:
 					throw new DOMException(tr("Mediawiki XML file version %0 is not supported.", $xmlVersion));
-								break;
+					break;
 			}
 
 			if (@$this->dom->schemaValidate($xmlDtdFile)) {
@@ -193,26 +193,26 @@ class TikiImporter_Wiki_Mediawiki extends TikiImporter_Wiki
 
 		if (ini_get('allow_url_fopen') === false) {
 			$this->saveAndDisplayLog(
-							tra(
-											"ABORTING: you need to enable the PHP setting 'allow_url_fopen' to be able to import attachments. Fix the problem or try to import without the attachments."
-							) . '\n'
+				tra(
+					"ABORTING: you need to enable the PHP setting 'allow_url_fopen' to be able to import attachments. Fix the problem or try to import without the attachments."
+				) . '\n'
 			);
 			die;
 		}
 
 		if (!file_exists($this->attachmentsDestDir)) {
 			$this->saveAndDisplayLog(
-							tr(
-											'ABORTING: destination directory for attachments (%0) does no exist. Fix the problem or try to import without the attachments.',
-											$this->attachmentsDestDir
-							) . '\n'
+				tr(
+					'ABORTING: destination directory for attachments (%0) does no exist. Fix the problem or try to import without the attachments.',
+					$this->attachmentsDestDir
+				) . '\n'
 			);
 			die;
 		} elseif (!is_writable($this->attachmentsDestDir)) {
 			$this->saveAndDisplayLog(
-							tr(
-											'ABORTING: destination directory for attachments (%0) is not writable. Fix the problem or try to import without attachments.', $this->attachmentsDestDir
-							) . "\n"
+				tr(
+					'ABORTING: destination directory for attachments (%0) is not writable. Fix the problem or try to import without attachments.', $this->attachmentsDestDir
+				) . "\n"
 			);
 			die;
 		}
@@ -268,10 +268,10 @@ class TikiImporter_Wiki_Mediawiki extends TikiImporter_Wiki
 
 		if ($this->dom->getElementsByTagName('upload')->length == 0) {
 			$this->saveAndDisplayLog(
-							"\n\n". 
-							tra("No attachments found to import! Make sure you have created your XML file with the dumpDump.php script and with the option --uploads. This is the only way to import attachment.") . 
-							"\n",
-							true
+				"\n\n".
+				tra("No attachments found to import! Make sure you have created your XML file with the dumpDump.php script and with the option --uploads. This is the only way to import attachment.") .
+				"\n",
+				true
 			);
 			return;
 		}
@@ -290,12 +290,12 @@ class TikiImporter_Wiki_Mediawiki extends TikiImporter_Wiki
 
 				if (file_exists($this->attachmentsDestDir . $fileName)) {
 					$this->saveAndDisplayLog(
-									tr(
-													'NOT importing file %0 as there is already a file with the same name in the destination directory (%1)', 
-													$fileName, 
-													$this->attachmentsDestDir
-									) . "\n", 
-									true
+						tr(
+							'NOT importing file %0 as there is already a file with the same name in the destination directory (%1)',
+							$fileName,
+							$this->attachmentsDestDir
+						) . "\n",
+						true
 					);
 					continue;
 				}
@@ -342,11 +342,11 @@ class TikiImporter_Wiki_Mediawiki extends TikiImporter_Wiki
 				switch ($node->tagName)
 				{
 					case 'id':
-									break;
+						break;
 
 					case 'title':
 						$data['name'] = (string) $node->textContent;
-									break;
+						break;
 
 					case 'revision':
 						$i++;
@@ -355,16 +355,16 @@ class TikiImporter_Wiki_Mediawiki extends TikiImporter_Wiki
 								$data['revisions'][] = $this->extractRevision($node);
 							} catch (ImporterParserException $e) {
 								$this->saveAndDisplayLog(
-												tr(
-																'Error while parsing revision %0 of the page "%1". Or there is a problem on the page syntax or on the Text_Wiki parser (the parser used by the importer).',
-																$i,
-																$data['name']
-												) . "\n",
-												true
+									tr(
+										'Error while parsing revision %0 of the page "%1". Or there is a problem on the page syntax or on the Text_Wiki parser (the parser used by the importer).',
+										$i,
+										$data['name']
+									) . "\n",
+									true
 								);
 							}
 						}
-									break;
+						break;
 
 					default:
 						print "Unknown tag : {$node->tagName}\n";
@@ -375,10 +375,10 @@ class TikiImporter_Wiki_Mediawiki extends TikiImporter_Wiki
 		$countRevisions = count($data['revisions']);
 		if ($countRevisions > 0) {
 			$msg = tr(
-							'Page "%0" successfully parsed with %1 revisions (from a total of %2 revisions).', 
-							$data['name'], 
-							$countRevisions, 
-							$totalRevisions
+				'Page "%0" successfully parsed with %1 revisions (from a total of %2 revisions).',
+				$data['name'],
+				$countRevisions,
+				$totalRevisions
 			) . "\n";
 			$this->saveAndDisplayLog($msg);
 			return $data;
@@ -410,11 +410,11 @@ class TikiImporter_Wiki_Mediawiki extends TikiImporter_Wiki
 				switch ($node->tagName)
 				{
 					case 'id':
-									break;
+						break;
 
 					case 'comment':
 						$data['comment'] = $node->textContent;
-									break;
+						break;
 
 					case 'text':
 						$text = $this->convertMarkup($node->textContent);
@@ -426,19 +426,19 @@ class TikiImporter_Wiki_Mediawiki extends TikiImporter_Wiki
 								$this->extractCategories($data);
 							}
 						}
-									break;
+						break;
 
 					case 'timestamp':
 						$data['lastModif'] = strtotime($node->textContent);
-									break;
+						break;
 
 					case 'minor':
 						$data['minor'] = true;
-									break;
+						break;
 
 					case 'contributor':
 						$data = array_merge($data, $this->extractContributor($node));
-									break;
+						break;
 				}
 			}
 		}
@@ -474,13 +474,13 @@ class TikiImporter_Wiki_Mediawiki extends TikiImporter_Wiki
 			if ($node instanceof DOMElement) {
 				switch ($node->tagName) {
 					case 'id':
-									break;
+						break;
 					case 'ip':
 						$data[$node->tagName] = (string) $node->textContent;
-									break;
+						break;
 					case 'username':
 						$data['user'] = (string) $node->textContent;
-									break;
+						break;
 					default:
 						print "Unknown tag in contributor: {$node->tagName}\n";
 				}

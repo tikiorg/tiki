@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -40,7 +40,7 @@ $recurrence = array(
 	'startPeriod'		=> '',
 	'nbRecurrences'		=> '',
 	'endPeriod'			=> ''
-);	
+);
 $smarty->assign('recurrence', $recurrence);
 
 $caladd = array();
@@ -137,28 +137,28 @@ if (isset($_REQUEST['act']) || isset($_REQUEST['preview']) || isset($_REQUEST['c
 		$_REQUEST['end_date_Day'] = TikiLib::date_format("%d", $save['date_end']);
 		$_REQUEST['end_date_Year'] = TikiLib::date_format("%Y", $save['date_end']);
 	}
-	
+
 	$save['allday'] = (isset($_REQUEST['allday']) && $_REQUEST['allday'] == 'true') ? 1 : 0;
 	if (isset($_REQUEST['allday']) && $_REQUEST['allday'] == 'true') {
 		$save['start'] = $tikilib->make_time(
-						0,
-						0,
-						0,
-						$_REQUEST['start_date_Month'],
-						$_REQUEST['start_date_Day'],
-						$_REQUEST['start_date_Year']
+			0,
+			0,
+			0,
+			$_REQUEST['start_date_Month'],
+			$_REQUEST['start_date_Day'],
+			$_REQUEST['start_date_Year']
 		);
 		if ($save['end_or_duration'] == 'duration') {
 			$save['duration'] = 86399;
 			$save['end'] = $save['start'] + $save['duration'];
 		} else {
 			$save['end'] = $tikilib->make_time(
-							23,
-							59,
-							59,
-							$_REQUEST['end_date_Month'],
-							$_REQUEST['end_date_Day'],
-							$_REQUEST['end_date_Year']
+				23,
+				59,
+				59,
+				$_REQUEST['end_date_Month'],
+				$_REQUEST['end_date_Day'],
+				$_REQUEST['end_date_Year']
 			);
 			$save['duration'] = max(0, $save['end'] - $save['start']);
 		}
@@ -168,12 +168,12 @@ if (isset($_REQUEST['act']) || isset($_REQUEST['preview']) || isset($_REQUEST['c
 			$_REQUEST['start_Hour'] = date('H', strtotime($_REQUEST['start_Hour'] . ':00 ' . $_REQUEST['start_Meridian']));
 		}
 		$save['start'] = $tikilib->make_time(
-						$_REQUEST['start_Hour'],
-						$_REQUEST['start_Minute'],
-						0,
-						$_REQUEST['start_date_Month'],
-						$_REQUEST['start_date_Day'],
-						$_REQUEST['start_date_Year']
+			$_REQUEST['start_Hour'],
+			$_REQUEST['start_Minute'],
+			0,
+			$_REQUEST['start_date_Month'],
+			$_REQUEST['start_date_Day'],
+			$_REQUEST['start_date_Year']
 		);
 
 		if ($save['end_or_duration'] == 'duration') {
@@ -185,12 +185,12 @@ if (isset($_REQUEST['act']) || isset($_REQUEST['preview']) || isset($_REQUEST['c
 				$_REQUEST['end_Hour'] = date('H', strtotime($_REQUEST['end_Hour'] . ':00 ' . $_REQUEST['end_Meridian']));
 			}
 			$save['end'] = $tikilib->make_time(
-							$_REQUEST['end_Hour'],
-							$_REQUEST['end_Minute'],
-							0,
-							$_REQUEST['end_date_Month'],
-							$_REQUEST['end_date_Day'],
-							$_REQUEST['end_date_Year']
+				$_REQUEST['end_Hour'],
+				$_REQUEST['end_Minute'],
+				0,
+				$_REQUEST['end_date_Month'],
+				$_REQUEST['end_date_Day'],
+				$_REQUEST['end_date_Year']
 			);
 			$save['duration'] = max(0, $save['end'] - $save['start']);
 		}
@@ -224,7 +224,7 @@ if (isset($_POST['act'])) {
 				$save['status'] = $calendar['defaulteventstatus'];
 			}
 		}
-		
+
 		if (array_key_exists('recurrent', $_POST) && ($_POST['recurrent'] == 1) && $_POST['affect']!='event') {
 			$impossibleDates = false;
 			if ($_POST['end_Hour'] < $_POST['start_Hour']) {
@@ -254,19 +254,19 @@ if (isset($_POST['act'])) {
 						$calRecurrence->setWeekday($_POST['weekday']);
 						$calRecurrence->setMonthly(false);
 						$calRecurrence->setYearly(false);
-     				break;
+	     				break;
 					case "monthly":
 						$calRecurrence->setWeekly(false);
 						$calRecurrence->setMonthly(true);
 						$calRecurrence->setDayOfMonth($_POST['dayOfMonth']);
 						$calRecurrence->setYearly(false);
-     				break;
+						break;
 					case "yearly":
 						$calRecurrence->setWeekly(false);
 						$calRecurrence->setMonthly(false);
 						$calRecurrence->setYearly(true);
 						$calRecurrence->setDateOfYear(str_pad($_POST['dateOfYear_month'], 2, '0', STR_PAD_LEFT) . str_pad($_POST['dateOfYear_day'], 2, '0', STR_PAD_LEFT));
-     				break;
+     					break;
 				}
 				$calRecurrence->setStartPeriod($_POST['startPeriod']);
 				if ($_POST['endType'] == "dt")
@@ -277,10 +277,10 @@ if (isset($_POST['act'])) {
 				$calRecurrence->setUser($save['user']);
 				$calRecurrence->save($_POST['affect'] == 'all');
 				// Save the ip at the log for the addition of new calendar items when done by anonymous users
-				if (empty($user) && empty($save['calitemId']) && $caladd["$newcalid"]['tiki_p_add_events']) { 
+				if (empty($user) && empty($save['calitemId']) && $caladd["$newcalid"]['tiki_p_add_events']) {
 					$logslib->add_log('calendar', 'Recurrent calendar item starting on '.$_POST['startPeriod'].' added to calendar '.$save['calendarId']);
 				}
-				if (empty($user) && !empty($save['calitemId']) and $caladd["$newcalid"]['tiki_p_change_events']) { 
+				if (empty($user) && !empty($save['calitemId']) and $caladd["$newcalid"]['tiki_p_change_events']) {
 					$logslib->add_log('calendar', 'Recurrent calendar item starting on '.$_POST['startPeriod'].' changed in calendar '.$save['calendarId']);
 				}
 				header('Location: tiki-calendar.php?todate='.$save['start']);
@@ -294,10 +294,10 @@ if (isset($_POST['act'])) {
 				}
 				$calitemId = $calendarlib->set_item($user, $save['calitemId'], $save);
 				// Save the ip at the log for the addition of new calendar items when done by anonymous users
-				if (empty($user) && empty($save['calitemId']) && $caladd["$newcalid"]['tiki_p_add_events']) { 
+				if (empty($user) && empty($save['calitemId']) && $caladd["$newcalid"]['tiki_p_add_events']) {
 					$logslib->add_log('calendar', 'Calendar item '.$calitemId.' added to calendar '.$save['calendarId']);
 				}
-				if (empty($user) && !empty($save['calitemId']) and $caladd["$newcalid"]['tiki_p_change_events']) { 
+				if (empty($user) && !empty($save['calitemId']) and $caladd["$newcalid"]['tiki_p_change_events']) {
 					$logslib->add_log('calendar', 'Calendar item '.$calitemId.' changed in calendar '.$save['calendarId']);
 				}
 				if ($prefs['feature_groupalert'] == 'y') {
@@ -331,7 +331,7 @@ if (isset($_REQUEST["delete"]) and ($_REQUEST["delete"]) and isset($_REQUEST["ca
 	$access->check_authenticity();
 	$calitem = $calendarlib->get_item($_REQUEST['calitemId']);
 	$calendarlib->drop_item($user, $_REQUEST["calitemId"]);
-	if (empty($user)) { 
+	if (empty($user)) {
 		$logslib->add_log('calendar', 'Calendar item '.$_REQUEST['calitemId'].' deleted');
 	}
 	$_REQUEST["calitemId"] = 0;
@@ -341,7 +341,7 @@ if (isset($_REQUEST["delete"]) and ($_REQUEST["delete"]) and isset($_REQUEST["ca
 	// There is no check for valid antibot code if anonymous allowed to delete events since this comes from a JS button at the tpl and bots are not know to use JS
 	$calRec = new CalRecurrence($_REQUEST['recurrenceId']);
 	$calRec->delete();
-	if (empty($user)) { 
+	if (empty($user)) {
 		$logslib->add_log('calendar', 'Recurrent calendar items (recurrenceId = '.$_REQUEST["recurrenceId"].') deleted');
 	}
     $_REQUEST["recurrenceTypeId"] = 0;
@@ -357,7 +357,7 @@ if (isset($_REQUEST["delete"]) and ($_REQUEST["delete"]) and isset($_REQUEST["ca
   } else {
     $calendarlib->drop_item($user, $_REQUEST['drop']);
   }
-	if (empty($user)) { 
+	if (empty($user)) {
 		$logslib->add_log('calendar', 'Calendar item/s '.$_REQUEST['calitemId'].' droped');
 	}
 	header('Location: tiki-calendar.php');
@@ -401,12 +401,12 @@ if (isset($_REQUEST["delete"]) and ($_REQUEST["delete"]) and isset($_REQUEST["ca
 		'startPeriod' => isset($_POST['startPeriod']) ? $_POST['startPeriod'] : '',
 		'nbRecurrences' => isset($_POST['nbRecurrences']) ? $_POST['nbRecurrences'] : '',
 		'endPeriod' => isset($_POST['endPeriod']) ? $_POST['endPeriod'] : ''
-	);	
+	);
 	if ( isset($_POST['recurrent']) && $_POST['recurrent'] == 1 ) {
 		$smarty->assign('recurrent', $_POST['recurrent']);
 	}
 	$smarty->assign_by_ref('recurrence', $recurrence);
-	
+
 	$calendar = $calendarlib->get_calendar($calitem['calendarId']);
 	$smarty->assign('edit', true);
 } elseif (isset($_REQUEST['changeCal'])) {
@@ -439,26 +439,26 @@ if (isset($_REQUEST["delete"]) and ($_REQUEST["delete"]) and isset($_REQUEST["ca
 	}
 	//if current time of day is within the calendar day (between startday and endday), then use now as start, otherwise use beginning of calendar day
 	$now_start = $tikilib->make_time(
-					abs(ceil($calendar['startday']/(60*60))),
-					TikiLib::date_format('%M', $now),
-					TikiLib::date_format('%S', $now),
-					TikiLib::date_format('%m', $now),
-					TikiLib::date_format('%d', $now),
-					TikiLib::date_format('%Y', $now)
+		abs(ceil($calendar['startday']/(60*60))),
+		TikiLib::date_format('%M', $now),
+		TikiLib::date_format('%S', $now),
+		TikiLib::date_format('%m', $now),
+		TikiLib::date_format('%d', $now),
+		TikiLib::date_format('%Y', $now)
 	);
 	$now_end = $tikilib->make_time(
-					abs(ceil($calendar['endday']/(60*60))),
-					TikiLib::date_format('%M', $now),
-					TikiLib::date_format('%S', $now),
-					TikiLib::date_format('%m', $now),
-					TikiLib::date_format('%d', $now),
-					TikiLib::date_format('%Y', $now)
+		abs(ceil($calendar['endday']/(60*60))),
+		TikiLib::date_format('%M', $now),
+		TikiLib::date_format('%S', $now),
+		TikiLib::date_format('%m', $now),
+		TikiLib::date_format('%d', $now),
+		TikiLib::date_format('%Y', $now)
 	);
 	$now_start = ($now_start <= $now && ($now_start + (60*60)) < $now_end) ? $now : $now_start;
-	
+
 	//if $now_end is midnight, make it one second before
 	$now_end = TikiLib::date_format('%H%M%s', $now_start + (60*60)) == '000000' ? $now_start + (60*60) -1 : $now_start + (60*60);
-	
+
 	$calitem = array(
 		'calitemId'=>0,
 		'user'=>$user,
@@ -550,21 +550,21 @@ if (isset($calitem['recurrenceId']) && $calitem['recurrenceId'] > 0) {
 	$smarty->assign('recurrence', $cr->toArray());
 }
 $headerlib->add_js(
-				'function checkDateOfYear(day,month) {
-					var mName = new Array("-","'.tra('January').'","'.tra('February').'","'.tra('March').'","'.tra('April').'","'.tra('May').'","'.tra('June').'","'.tra('July').'","'.tra('August').'","'.tra('September').'","'.tra('October').'","'.tra('November').'","'.tra('December').'}");
-					var error = false;
-					if (month == 4 || month == 6 || month == 9 || month == 11)
-						if (day == 31)
-							error = true;
-					if (month == 2)
-						if (day > 29)
-							error = true;
-					if (error) {
-						document.getElementById("errorDateOfYear").innerHTML = "<em>'.tra('There\'s no such date as').' " + day + " '.tra('of').' " + mName[month] + "</em>";
-					} else {
-						document.getElementById("errorDateOfYear").innerHTML = "";
-					}
-				}'
+	'function checkDateOfYear(day,month) {
+		var mName = new Array("-","'.tra('January').'","'.tra('February').'","'.tra('March').'","'.tra('April').'","'.tra('May').'","'.tra('June').'","'.tra('July').'","'.tra('August').'","'.tra('September').'","'.tra('October').'","'.tra('November').'","'.tra('December').'}");
+		var error = false;
+		if (month == 4 || month == 6 || month == 9 || month == 11)
+			if (day == 31)
+				error = true;
+			if (month == 2)
+				if (day > 29)
+					error = true;
+			if (error) {
+				document.getElementById("errorDateOfYear").innerHTML = "<em>'.tra('There\'s no such date as').' " + day + " '.tra('of').' " + mName[month] + "</em>";
+			} else {
+				document.getElementById("errorDateOfYear").innerHTML = "";
+			}
+		}'
 );
 $smarty->assign('calitem', $calitem);
 $smarty->assign('calendar', $calendar);
