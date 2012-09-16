@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -40,11 +40,11 @@ class PaymentLib extends TikiDb_Bridge
 		return array(
 			'cant' => $this->getOne($count),
 			'data' => Perms::filter(
-							array( 'type' => 'payment' ), 
-							'object', 
-							$all, 
-							array( 'object' => 'paymentRequestId' ), 
-							'payment_view'
+				array( 'type' => 'payment' ),
+				'object',
+				$all,
+				array( 'object' => 'paymentRequestId' ),
+				'payment_view'
 			),
 		);
 	}
@@ -65,7 +65,7 @@ class PaymentLib extends TikiDb_Bridge
 			$conditions .= " AND uu.`login` = '$ofUser'";
 		}
 
-		$count = 'SELECT COUNT(*) FROM `tiki_payment_requests` tpr LEFT JOIN `users_users` uu ON (uu.`userId` = tpr.`userId`) WHERE ' . 
+		$count = 'SELECT COUNT(*) FROM `tiki_payment_requests` tpr LEFT JOIN `users_users` uu ON (uu.`userId` = tpr.`userId`) WHERE ' .
 							$conditions;
 
 		$data = 'SELECT tpr.*, uu.`login` as `user`, tp.`type`, tp.`payment_date`,' .
@@ -80,11 +80,11 @@ class PaymentLib extends TikiDb_Bridge
 		return array(
 			'cant' => $this->getOne($count),
 			'data' => Perms::filter(
-							array( 'type' => 'payment' ), 
-							'object', 
-							$all, 
-							array( 'object' => 'paymentRequestId' ), 
-							'payment_view' 
+				array( 'type' => 'payment' ),
+				'object',
+				$all,
+				array( 'object' => 'paymentRequestId' ),
+				'payment_view'
 			),
 		);
 	}
@@ -111,7 +111,7 @@ class PaymentLib extends TikiDb_Bridge
 	{
 		$this->query('UPDATE `tiki_payment_requests` SET `cancel_date` = NULL WHERE `paymentRequestId` = ?', array( $id ));
 	}
-	
+
 	function cancel_payment($id)
 	{
 		if ( $info = $this->get_payment($id) ) {
@@ -127,12 +127,12 @@ class PaymentLib extends TikiDb_Bridge
 	{
 		global $tikilib, $prefs;
 		$info = reset(
-						$this->fetchAll(
-										'SELECT tpr.*, uu.`login` as `user` FROM `tiki_payment_requests` tpr' .
-										' LEFT JOIN `users_users` uu ON (uu.`userId` = tpr.`userId`)' .
-										' WHERE `paymentRequestId` = ?',
-										array($id)
-						)
+			$this->fetchAll(
+				'SELECT tpr.*, uu.`login` as `user` FROM `tiki_payment_requests` tpr' .
+				' LEFT JOIN `users_users` uu ON (uu.`userId` = tpr.`userId`)' .
+				' WHERE `paymentRequestId` = ?',
+				array($id)
+			)
 		);
 
 		if ( $info ) {
@@ -141,45 +141,45 @@ class PaymentLib extends TikiDb_Bridge
 			$info['amount_remaining_raw'] = $info['amount'] - $info['amount_paid'];
 			$info['amount_remaining'] = number_format($info['amount_remaining_raw'], 2, '.', ',');
 			$info['url'] = $tikilib->tikiUrl(
-							'tiki-payment.php', 
-							array('invoice' => $info['paymentRequestId'],) 
+				'tiki-payment.php',
+				array('invoice' => $info['paymentRequestId'],)
 			);
 
 			$info['returnurl'] = $info['url'];
 
 			// Add token if feature is activated (need prefs
-			if ($prefs['auth_token_access'] == 'y' && 
-					(!$user || isset($_SESSION['forceanon']) && 
+			if ($prefs['auth_token_access'] == 'y' &&
+					(!$user || isset($_SESSION['forceanon']) &&
 					$_SESSION['forceanon'] == 'y' &&
 					!Perms::get('payment', $info['paymentRequestId'])->manual_payment)
 			) {
 				require_once('lib/wiki-plugins/wikiplugin_getaccesstoken.php');
 				$info['returnurl'] = $tikilib->tikiUrl(
-								'tiki-payment.php', 
-								array(
-									'invoice' => $info['paymentRequestId'],
-									'TOKEN' => wikiplugin_getaccesstoken(
-													'', 
-													array(
-														'entry' => 'tiki-payment.php', 
-														'keys' => array('invoice'), 
-														'values' => array($info['paymentRequestId'])
-													) 
-									),
-								)
+					'tiki-payment.php',
+					array(
+						'invoice' => $info['paymentRequestId'],
+						'TOKEN' => wikiplugin_getaccesstoken(
+							'',
+							array(
+								'entry' => 'tiki-payment.php',
+								'keys' => array('invoice'),
+								'values' => array($info['paymentRequestId'])
+							)
+						),
+					)
 				);
-			} 
+			}
 
 			$info['paypal_ipn'] = $tikilib->tikiUrl(
-							'tiki-payment.php', 
-							array('ipn' => 1,'invoice' => $info['paymentRequestId'],)
+				'tiki-payment.php',
+				array('ipn' => 1,'invoice' => $info['paymentRequestId'],)
 			);
 
 			$info['payments'] = array();
 
 			$payments = $this->fetchAll(
-							'SELECT * FROM `tiki_payment_received` WHERE `paymentRequestId` = ? ORDER BY `payment_date` DESC', 
-							array($id)
+				'SELECT * FROM `tiki_payment_received` WHERE `paymentRequestId` = ? ORDER BY `payment_date` DESC',
+				array($id)
 			);
 
 			foreach ( $payments as $payment ) {
@@ -239,19 +239,19 @@ class PaymentLib extends TikiDb_Bridge
 			}
 			$data = json_encode($data);
 			$this->query(
-							'INSERT INTO `tiki_payment_received` ( `paymentRequestId`, `payment_date`, `amount`, `type`, `details`, `userId` )' .
-							' VALUES( ?, NOW(), ?, ?, ?, ? )',
-							array(
-								$invoice,
-								$amount,
-								$type,
-								$data,
-								empty($user)? $info['userId']: $userlib->get_user_id($user)
-							)
+				'INSERT INTO `tiki_payment_received` ( `paymentRequestId`, `payment_date`, `amount`, `type`, `details`, `userId` )' .
+				' VALUES( ?, NOW(), ?, ?, ?, ? )',
+				array(
+					$invoice,
+					$amount,
+					$type,
+					$data,
+					empty($user)? $info['userId']: $userlib->get_user_id($user)
+				)
 			);
 			$this->query(
-							'UPDATE `tiki_payment_requests` SET `amount_paid` = `amount_paid` + ? WHERE `paymentRequestId` = ?', 
-							array( $amount, $invoice )
+				'UPDATE `tiki_payment_requests` SET `amount_paid` = `amount_paid` + ? WHERE `paymentRequestId` = ?',
+				array( $amount, $invoice )
 			);
 		}
 	}
@@ -271,8 +271,8 @@ class PaymentLib extends TikiDb_Bridge
 
 			$actions[$event][] = array( 'behavior' => $behavior, 'arguments' => $arguments );
 			$this->query(
-							'UPDATE `tiki_payment_requests` SET `actions` = ? WHERE `paymentRequestId` = ?', 
-							array(json_encode($actions), $invoice)
+				'UPDATE `tiki_payment_requests` SET `actions` = ? WHERE `paymentRequestId` = ?',
+				array(json_encode($actions), $invoice)
 			);
 		} else {
 			return false;

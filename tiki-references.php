@@ -49,7 +49,7 @@ $ref_template = $_REQUEST['ref_template'];
 
 if (isset($_REQUEST['addreference'])) {
 	$errors = array();
-	
+
 	if ($ref_biblio_code == '') {
 		$errors[] = 'Please enter Biblio Code.';
 	}
@@ -61,17 +61,17 @@ if (isset($_REQUEST['addreference'])) {
 
 	if (count($errors) < 1) {
 		$id = $referenceslib->add_lib_reference(
-						$ref_biblio_code,
-						$ref_author,
-						$ref_title,
-						$ref_part,
-						$ref_uri,
-						$ref_code,
-						$ref_year,
-						$ref_style,
-						$ref_template,
-						$ref_publisher,
-						$ref_location
+			$ref_biblio_code,
+			$ref_author,
+			$ref_title,
+			$ref_part,
+			$ref_uri,
+			$ref_code,
+			$ref_year,
+			$ref_style,
+			$ref_template,
+			$ref_publisher,
+			$ref_location
 		);
 	} else {
 		foreach ($errors as $error) {
@@ -94,18 +94,18 @@ if (isset($_REQUEST['editreference'])) {
 
 	if (count($errors) < 1) {
 		$referenceslib->edit_libReference(
-						$ref_id,
-						$ref_biblio_code,
-						$ref_author,
-						$ref_title,
-						$ref_part,
-						$ref_uri,
-						$ref_code,
-						$ref_year,
-						$ref_style,
-						$ref_template,
-						$ref_publisher,
-						$ref_location
+			$ref_id,
+			$ref_biblio_code,
+			$ref_author,
+			$ref_title,
+			$ref_part,
+			$ref_uri,
+			$ref_code,
+			$ref_year,
+			$ref_style,
+			$ref_template,
+			$ref_publisher,
+			$ref_location
 		);
 	} else {
 		foreach ($errors as $error) {

@@ -16,9 +16,9 @@ if ($tiki_p_admin_users != 'y') {
 
 if ( isset( $_REQUEST['use_credit'] ) && $use_credit_userid = $tikilib->get_user_id($_POST['userfilter']) ) {
 	$creditslib->useCredits(
-					$use_credit_userid,
-					$_POST['use_credit_type'],
-					$_POST['use_credit_amount']
+		$use_credit_userid,
+		$_POST['use_credit_type'],
+		$_POST['use_credit_amount']
 	);
 
 	header('Location: tiki-admin_credits.php?userfilter=' . urlencode($_REQUEST['userfilter']));
@@ -27,9 +27,9 @@ if ( isset( $_REQUEST['use_credit'] ) && $use_credit_userid = $tikilib->get_user
 
 if ( isset( $_REQUEST['restore_credit'] ) && $restore_credit_userid = $tikilib->get_user_id($_POST['userfilter']) ) {
 	$creditslib->restoreCredits(
-					$restore_credit_userid,
-					$_POST['restore_credit_type'],
-					$_POST['restore_credit_amount']
+		$restore_credit_userid,
+		$_POST['restore_credit_type'],
+		$_POST['restore_credit_amount']
 	);
 
 	header('Location: tiki-admin_credits.php?userfilter=' . urlencode($_REQUEST['userfilter']));
@@ -45,21 +45,21 @@ if ( isset( $_REQUEST['purge_credits'] ) ) {
 if ( isset( $_REQUEST['update_types'] ) ) {
 	foreach ( $_POST['credit_types'] as $key => $values ) {
 		$creditslib->updateCreditType(
-						$values['credit_type'],
-						$values['display_text'],
-						$values['unit_text'],
-						$values['is_static_level'],
-						$values['scaling_divisor']
+			$values['credit_type'],
+			$values['display_text'],
+			$values['unit_text'],
+			$values['is_static_level'],
+			$values['scaling_divisor']
 		);
 	}
 
 	if ( !empty($_POST['new_credit_type']) ) {
 		$creditslib->updateCreditType(
-						$_POST['new_credit_type'],
-						$_POST['display_text'],
-						$_POST['unit_text'],
-						$_POST['is_static_level'],
-						$_POST['scaling_divisor']
+			$_POST['new_credit_type'],
+			$_POST['display_text'],
+			$_POST['unit_text'],
+			$_POST['is_static_level'],
+			$_POST['scaling_divisor']
 		);
 	}
 }
@@ -92,13 +92,13 @@ if ( isset($_REQUEST['userfilter']) ) {
 		// date values
 		if (isset($_REQUEST['startDate_Year']) || isset($_REQUEST['endDate_Year'])) {
 			$smarty->assign(
-							'startDate', 
-							$tikilib->make_time(0, 0, 0, $_REQUEST['startDate_Month'], $_REQUEST['startDate_Day'], $_REQUEST['startDate_Year'])
+				'startDate',
+				$tikilib->make_time(0, 0, 0, $_REQUEST['startDate_Month'], $_REQUEST['startDate_Day'], $_REQUEST['startDate_Year'])
 			);
 
 			$smarty->assign(
-							'endDate', 
-							$tikilib->make_time(23, 59, 59, $_REQUEST['endDate_Month'], $_REQUEST['endDate_Day'], $_REQUEST['endDate_Year'])
+				'endDate',
+				$tikilib->make_time(23, 59, 59, $_REQUEST['endDate_Month'], $_REQUEST['endDate_Day'], $_REQUEST['endDate_Year'])
 			);
 
 			$start_date = $_REQUEST['startDate_Year'] . '-' . $_REQUEST['startDate_Month'] . '-' . $_REQUEST['startDate_Day'];
@@ -130,12 +130,12 @@ if ( isset($_REQUEST['userfilter']) ) {
 
 				if ( ! $same ) {
 					$creditslib->replaceCredit(
-									$key,
-									$values['credit_type'],
-									$values['used_amount'],
-									$values['total_amount'],
-									$values['creation_date'],
-									$values['expiration_date']
+						$key,
+						$values['credit_type'],
+						$values['used_amount'],
+						$values['total_amount'],
+						$values['creation_date'],
+						$values['expiration_date']
 					);
 				}
 			}
@@ -145,11 +145,11 @@ if ( isset($_REQUEST['userfilter']) ) {
 						&& in_array($_POST['credit_type'], array_keys($creditTypes))
 			) {
 				$creditslib->addCredits(
-								$editing['userId'],
-								$_POST['credit_type'],
-								$_POST['total_amount'],
-								$_POST['expiration_date'],
-								$_POST['creation_date']
+					$editing['userId'],
+					$_POST['credit_type'],
+					$_POST['total_amount'],
+					$_POST['expiration_date'],
+					$_POST['creation_date']
 				);
 			}
 
@@ -159,11 +159,11 @@ if ( isset($_REQUEST['userfilter']) ) {
 
 		if ( !empty($_POST['credit_type']) && !empty($_POST['total_amount']) ) {
 			$creditslib->addCredits(
-							$editing['userId'], 
-							$_POST['credit_type'], 
-							$_POST['total_amount'], 
-							$_POST['expiration_date'], 
-							$_POST['creation_date']
+				$editing['userId'],
+				$_POST['credit_type'],
+				$_POST['total_amount'],
+				$_POST['expiration_date'],
+				$_POST['creation_date']
 			);
 
 			header('Location: tiki-admin_credits.php?userfilter=' . urlencode($_REQUEST['userfilter']));

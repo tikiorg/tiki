@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -14,11 +14,11 @@ class CartLib
 		$this->init_cart();
 
 		$current = $this->get_quantity($code);
-		
+
 		if ($parentCode) {
 			$this->init_product($code, $info, $parentCode, $quantity, $childInputedPrice);
 			if ($prefs['payment_cart_inventory'] == 'y') {
-				$currentInventory = $this->get_inventory($code);	
+				$currentInventory = $this->get_inventory($code);
 				if ($currentInventory < $quantity) {
 					// Abort entire bundle if one of the child products is out of stock
 					$this->update_quantity($parentCode, 0, $info);
@@ -30,12 +30,12 @@ class CartLib
 		}
 
 		$current += $quantity;
-		
+
 		$this->add_bundle($code, $quantity, $info);
-		
+
 		$this->update_quantity($code, $current, $info);
 	}
-	
+
 	function get_product_info( $code )
 	{
 		// This function is used by several advanced cart features (e.g. bundled products, associated events)
@@ -43,31 +43,31 @@ class CartLib
 		if (empty($prefs['payment_cart_product_tracker_name'])) {
 			return array();
 		}
-	
+
 		$array = $this->get_tracker_values_custom($prefs['payment_cart_product_tracker_name'], $code);
-		
-		$info = array();		
+
+		$info = array();
 		$info['code'] = $code;
 		while ($result = current($array)) {
 			$key = key($array);
 			switch ($key) {
 				case $prefs['payment_cart_product_name_fieldname']: $key = "description";
-   	  		break;	
+					break;
 				case $prefs['payment_cart_associated_event_fieldname']: $key = "eventcode";
-   	  		break;	
+					break;
 				case $prefs['payment_cart_product_classid_fieldname']: $key = "productclass";
-   	  		break;	
+					break;
 				case $prefs['payment_cart_products_inbundle_fieldname']: $key = "productsinbundle";
-   	  		break;	
+					break;
 				case $prefs['payment_cart_product_price_fieldname']: $key = "price";
-   	  		break;	
+					break;
 			}
 			$info[$key] = $result;
 			next($array);
 		}
 		return $info;
 	}
-	
+
 	function add_bundle( $code, $quantity, $info )
 	{
 		global $prefs;
@@ -83,7 +83,7 @@ class CartLib
 					$p[1] = 1; // quantity
 					$p[2] = ''; // inputted price
 				} elseif (count($p) == 2) {
-					$p[2] = ''; // inputted price	
+					$p[2] = ''; // inputted price
 				}
 				list($productId, $productQuantity, $childInputedPrice) = $p;
 				if (is_numeric($productId)) {
@@ -107,119 +107,119 @@ class CartLib
 		global $tikilib;
 
 		$itemId = $tikilib->fetchAll(
-						"SELECT tiki_tracker_item_fields.itemId
-						FROM tiki_tracker_item_fields
-						LEFT JOIN tiki_tracker_fields ON tiki_tracker_fields.fieldId = tiki_tracker_item_fields.fieldId
-						LEFT JOIN tiki_trackers ON tiki_trackers.trackerId = tiki_tracker_fields.trackerId
-						LEFT JOIN tiki_tracker_items ON tiki_tracker_items.itemId = tiki_tracker_item_fields.itemId
-						WHERE tiki_trackers.name = ? AND
-						tiki_tracker_fields.name = ? AND
-						tiki_tracker_item_fields.value = ?",
-						array($trackerName, $fieldName, $value)
+			"SELECT tiki_tracker_item_fields.itemId
+			FROM tiki_tracker_item_fields
+			LEFT JOIN tiki_tracker_fields ON tiki_tracker_fields.fieldId = tiki_tracker_item_fields.fieldId
+			LEFT JOIN tiki_trackers ON tiki_trackers.trackerId = tiki_tracker_fields.trackerId
+			LEFT JOIN tiki_tracker_items ON tiki_tracker_items.itemId = tiki_tracker_item_fields.itemId
+			WHERE tiki_trackers.name = ? AND
+			tiki_tracker_fields.name = ? AND
+			tiki_tracker_item_fields.value = ?",
+			array($trackerName, $fieldName, $value)
 		);
-		
+
 		return $itemId;
 	}
-	
+
 	function get_tracker_item_id_custom( $trackerName, $fieldName, $value )
 	{
 		global $tikilib;
 
 		$itemId = $tikilib->getOne(
-						"SELECT tiki_tracker_item_fields.itemId
-						FROM tiki_tracker_item_fields
-						LEFT JOIN tiki_tracker_fields ON tiki_tracker_fields.fieldId = tiki_tracker_item_fields.fieldId
-						LEFT JOIN tiki_trackers ON tiki_trackers.trackerId = tiki_tracker_fields.trackerId
-						LEFT JOIN tiki_tracker_items ON tiki_tracker_items.itemId = tiki_tracker_item_fields.itemId
-						WHERE tiki_trackers.name = ? AND
-						tiki_tracker_fields.name = ? AND
-						tiki_tracker_item_fields.value = ?",
-						array($trackerName, $fieldName, $value)
+			"SELECT tiki_tracker_item_fields.itemId
+			FROM tiki_tracker_item_fields
+			LEFT JOIN tiki_tracker_fields ON tiki_tracker_fields.fieldId = tiki_tracker_item_fields.fieldId
+			LEFT JOIN tiki_trackers ON tiki_trackers.trackerId = tiki_tracker_fields.trackerId
+			LEFT JOIN tiki_tracker_items ON tiki_tracker_items.itemId = tiki_tracker_item_fields.itemId
+			WHERE tiki_trackers.name = ? AND
+			tiki_tracker_fields.name = ? AND
+			tiki_tracker_item_fields.value = ?",
+			array($trackerName, $fieldName, $value)
 		);
-		
+
 		return $itemId;
 	}
-	
+
 	function get_tracker_value_custom( $trackerName, $fieldName, $itemId )
 	{
 		global $tikilib;
 
 		$value = $tikilib->getOne(
-						"SELECT tiki_tracker_item_fields.value
-						FROM tiki_tracker_item_fields
-						LEFT JOIN tiki_tracker_fields ON tiki_tracker_fields.fieldId = tiki_tracker_item_fields.fieldId
-						LEFT JOIN tiki_trackers ON tiki_trackers.trackerId = tiki_tracker_fields.trackerId
-						LEFT JOIN tiki_tracker_items ON tiki_tracker_items.itemId = tiki_tracker_item_fields.itemId
-						WHERE tiki_trackers.name = ? AND
-						tiki_tracker_fields.name = ? AND
-						tiki_tracker_item_fields.itemId = ?",
-						array($trackerName, $fieldName, $itemId)
+			"SELECT tiki_tracker_item_fields.value
+			FROM tiki_tracker_item_fields
+			LEFT JOIN tiki_tracker_fields ON tiki_tracker_fields.fieldId = tiki_tracker_item_fields.fieldId
+			LEFT JOIN tiki_trackers ON tiki_trackers.trackerId = tiki_tracker_fields.trackerId
+			LEFT JOIN tiki_tracker_items ON tiki_tracker_items.itemId = tiki_tracker_item_fields.itemId
+			WHERE tiki_trackers.name = ? AND
+			tiki_tracker_fields.name = ? AND
+			tiki_tracker_item_fields.itemId = ?",
+			array($trackerName, $fieldName, $itemId)
 		);
-		
+
 		return $value;
 	}
-	
+
 	function get_tracker_values_custom( $trackerName, $itemId )
 	{
 		global $tikilib;
-		
+
 		$result = $tikilib->fetchAll(
-						"SELECT tiki_tracker_fields.name, tiki_tracker_item_fields.value
-						FROM tiki_tracker_item_fields
-						LEFT JOIN tiki_tracker_fields ON tiki_tracker_fields.fieldId = tiki_tracker_item_fields.fieldId
-						LEFT JOIN tiki_trackers ON tiki_trackers.trackerId = tiki_tracker_fields.trackerId
-						LEFT JOIN tiki_tracker_items ON tiki_tracker_items.itemId = tiki_tracker_item_fields.itemId
-						WHERE tiki_trackers.name = ? AND
-						tiki_tracker_item_fields.itemId = ? AND
-						tiki_tracker_item_fields.value <> ''",
-						array( $trackerName, $itemId )
+			"SELECT tiki_tracker_fields.name, tiki_tracker_item_fields.value
+			FROM tiki_tracker_item_fields
+			LEFT JOIN tiki_tracker_fields ON tiki_tracker_fields.fieldId = tiki_tracker_item_fields.fieldId
+			LEFT JOIN tiki_trackers ON tiki_trackers.trackerId = tiki_tracker_fields.trackerId
+			LEFT JOIN tiki_tracker_items ON tiki_tracker_items.itemId = tiki_tracker_item_fields.itemId
+			WHERE tiki_trackers.name = ? AND
+			tiki_tracker_item_fields.itemId = ? AND
+			tiki_tracker_item_fields.value <> ''",
+			array( $trackerName, $itemId )
 		);
-		
+
 		$item = array();
-		
+
 		foreach ($result as $row) {
 			$item[$row['name']] = $row['value'];
 		}
 		return $item;
 	}
-	
+
 	function set_tracker_value_custom( $trackerName, $fieldName, $itemId, $value )
 	{
 		global $tikilib;
 
 		$result = $tikilib->query(
-						"UPDATE tiki_tracker_item_fields 
-						LEFT JOIN tiki_tracker_fields ON tiki_tracker_fields.fieldId = tiki_tracker_item_fields.fieldId
-						LEFT JOIN tiki_trackers ON tiki_trackers.trackerId = tiki_tracker_fields.trackerId
-						LEFT JOIN tiki_tracker_items ON tiki_tracker_items.itemId = tiki_tracker_item_fields.itemId
-						
-						SET tiki_tracker_item_fields.value = ?
-						
-						WHERE tiki_trackers.name = ? AND
-						tiki_tracker_fields.name = ? AND
-						tiki_tracker_item_fields.itemId = ?",
-						array($value, $trackerName, $fieldName, $itemId)
+			"UPDATE tiki_tracker_item_fields
+			LEFT JOIN tiki_tracker_fields ON tiki_tracker_fields.fieldId = tiki_tracker_item_fields.fieldId
+			LEFT JOIN tiki_trackers ON tiki_trackers.trackerId = tiki_tracker_fields.trackerId
+			LEFT JOIN tiki_tracker_items ON tiki_tracker_items.itemId = tiki_tracker_item_fields.itemId
+
+			SET tiki_tracker_item_fields.value = ?
+
+			WHERE tiki_trackers.name = ? AND
+			tiki_tracker_fields.name = ? AND
+			tiki_tracker_item_fields.itemId = ?",
+			array($value, $trackerName, $fieldName, $itemId)
 		);
 	}
-	
+
 	function update_gift_certificate( $invoice )
 	{
 		global $prefs;
 		//if total is more than 0 the gift card is less than the order total, otherwise the giftcard is as much as the order total
 		$this->get_gift_certificate();
-		
+
 		if (!$this->gift_certificate_code) return false;
-		
+
 		$balanceCurrent = $this->gift_certificate_amount - $this->gift_certificate_discount;
-		
+
 		if ($this->gift_certificate_amount_original == 0) { //if original balance isn't set, go ahead and set it, it is just for reference
 			$this->set_tracker_value_custom($prefs['payment_cart_giftcert_tracker_name'], "Original Balance or Percentage", $this->gift_certificate_id, $this->gift_certificate_amount);
 		}
-		
+
 		if ($this->gift_certificate_mode == "Percentage" || $this->gift_certificate_mode == "Coupon Percentage" || $this->gift_certificate_mode == "Coupon") {
-			$balanceCurrent = 0;	
+			$balanceCurrent = 0;
 		}
-		
+
 		$this->set_tracker_value_custom($prefs['payment_cart_giftcert_tracker_name'], "Current Balance or Percentage", $this->gift_certificate_id, $balanceCurrent);
 
 		if (!$invoice) return false;
@@ -234,15 +234,15 @@ class CartLib
 		$giftCertificateTypeLink = $this->gift_certificate_type_link();
 		$products = array();
 		$actual_prices_paid = array();
-		
+
 		foreach ( $_SESSION['cart'] as $info ) {
 			if ( $info[$giftCertificateTypeLink] == $this->gift_certificate_type_reference || $giftCertificateTypeLink == '' && (!isset($info['is_gift_certificate']) || !$info['is_gift_certificate'])) {
 				$products[] = $info;
 				$productTotal += floatval($info['quantity']) * floatval($info['price']);
 				$giftCertificateApplies = true;
 			}
-		} 
-		
+		}
+
 		//We also need to record the item with the price
 		if ($giftCertificateApplies == true) {
 			if ($this->gift_certificate_mode == "Coupon Percentage" || $this->gift_certificate_mode == "Coupon") {
@@ -254,7 +254,7 @@ class CartLib
 						$cheapestProduct = $product;
 					}
 				}
-				
+
 				//if it applies, use the cheapest price
 				if ($cheapestPrice > 0) {
 					$productTotal = $cheapestPrice;
@@ -262,7 +262,7 @@ class CartLib
 			}
 
 			$this->discount_from_total($productTotal);
-                       	
+
 			$orderitems = $this->get_orderitems_of_order($orderId);
 			foreach ($orderitems as $o) {
 				if ($o['parentCode']) {
@@ -280,7 +280,7 @@ class CartLib
 					foreach ($cheapestProduct['bundledproducts'] as $q) {
 						$totalInputedBundle += $q['inputedprice'];
 					}
-				}					
+				}
 				$actual_prices_paid[$cheapestProduct['code']] = $cheapestPrice - $this->gift_certificate_discount / $cheapestProduct['quantity'];
 				if ($this->gift_certificate_mode == "Coupon Percentage" || $this->gift_certificate_mode == "Percentage") {
 					$inputed_giftcert_prices[$cheapestProduct['code']] = $this->get_gift_certificate_cost() / $cheapestProduct['quantity'];
@@ -299,28 +299,28 @@ class CartLib
 					if (!empty($p['bundledproducts'])) {
 						foreach ($p['bundledproducts'] as $q) {
 							$totalInputedBundle += $q['inputedprice'] * $q['quantity'];
-						} 
+						}
 					}
 					$actual_prices_paid[$p['code']] = $p['price'] - $p['price'] / $productTotal * $this->gift_certificate_discount;
 					if ($this->gift_certificate_mode == "Coupon Percentage" || $this->gift_certificate_mode == "Percentage") {
-						$inputed_giftcert_prices[$p['code']] = $this->get_gift_certificate_cost() * $p['price'] / $productTotal; 
+						$inputed_giftcert_prices[$p['code']] = $this->get_gift_certificate_cost() * $p['price'] / $productTotal;
 					} else {
 						$inputed_giftcert_prices[$p['code']] = $this->get_gift_certificate_cost() * $this->gift_certificate_discount / $this->gift_certificate_amount_original * $p['price'] / $productTotal;
 					}
 					if ($totalInputedBundle) {
 						foreach ($p['bundledproducts'] as $q) {
-							$t_code = $p['code'] . '-' . $q['code']; 
+							$t_code = $p['code'] . '-' . $q['code'];
 							$inputed_giftcert_prices[$t_code] = $q['inputedprice'] / $totalInputedBundle * $inputed_giftcert_prices[$p['code']];
 							$inputed_bundle_prices[$t_code] = $q['inputedprice'] / $totalInputedBundle * $actual_prices_paid[$p['code']];
 
 						}
 					}
-				} 
-			} 
+				}
+			}
 
 			// Now save Price Paid
 			foreach ($actual_prices_paid as $productId => $amountPaid) {
-				$this->set_tracker_value_custom($prefs['payment_cart_orderitems_tracker_name'], "Price paid", $order_product_itemIds[$productId], $amountPaid); 
+				$this->set_tracker_value_custom($prefs['payment_cart_orderitems_tracker_name'], "Price paid", $order_product_itemIds[$productId], $amountPaid);
 			}
 			foreach ($inputed_giftcert_prices as $productId => $amountInputed) {
 				$this->set_tracker_value_custom($prefs['payment_cart_orderitems_tracker_name'], "Inputed Price From Gift Cert", $order_product_itemIds[$productId], $amountInputed);
@@ -339,7 +339,7 @@ class CartLib
 		global $prefs;
 		$result = array();
 		$productItemIds = $this->get_tracker_item_ids_custom($prefs['payment_cart_orderitems_tracker_name'], "Order ID", $orderId);
-		
+
 		foreach ($productItemIds as $productItemId) {
 			$result[] = array(
 				"itemId" => $productItemId["itemId"],
@@ -347,64 +347,64 @@ class CartLib
 				"parentCode" => $this->get_tracker_value_custom($prefs['payment_cart_orderitems_tracker_name'], "Parent Code", $productItemId["itemId"])
 			);
 		}
-		
+
 		return $result;
 	}
-	
+
 	function get_gift_certificate_code( $code = null )
 	{
 		$code = ( $code ? $code : isset($_SESSION['cart']['tiki-gc']['code']) ? $_SESSION['cart']['tiki-gc']['code'] : null ); //TODO: needs to be a little less dirty
 		return $code;
 	}
-	
+
 	function get_gift_certificate( $code = null )
 	{
 		global $prefs;
 		$this->gift_certificate_code = $code = ( $code ? $code : $this->get_gift_certificate_code() );
 		if (!$code) return false;
-		
+
 		$this->gift_certificate_id = $this->get_tracker_item_id_custom($prefs['payment_cart_giftcert_tracker_name'], "Redeem Code", $code);
-		
+
 		$this->gift_certificate_amount = floatval(
-						$this->get_tracker_value_custom(
-										$prefs['payment_cart_giftcert_tracker_name'],
-										"Current Balance or Percentage",
-										$this->gift_certificate_id
-						)
+			$this->get_tracker_value_custom(
+				$prefs['payment_cart_giftcert_tracker_name'],
+				"Current Balance or Percentage",
+				$this->gift_certificate_id
+			)
 		);
-		
+
 		$this->gift_certificate_amount_original = floatval(
-						$this->get_tracker_value_custom(
-										$prefs['payment_cart_giftcert_tracker_name'],
-										"Original Balance or Percentage",
-										$this->gift_certificate_id
-						)
+			$this->get_tracker_value_custom(
+				$prefs['payment_cart_giftcert_tracker_name'],
+				"Original Balance or Percentage",
+				$this->gift_certificate_id
+			)
 		);
-		
+
 		$this->gift_certificate_type = $this->get_tracker_value_custom($prefs['payment_cart_giftcert_tracker_name'], "Type", $this->gift_certificate_id);
 		$this->gift_certificate_type_reference = $this->get_tracker_value_custom($prefs['payment_cart_giftcert_tracker_name'], "Type Reference", $this->gift_certificate_id);
 		$this->gift_certificate_name = $this->get_tracker_value_custom($prefs['payment_cart_giftcert_tracker_name'], "Name", $this->gift_certificate_id);
 		$this->gift_certificate_mode = $this->get_tracker_value_custom($prefs['payment_cart_giftcert_tracker_name'], "Mode", $this->gift_certificate_id);
-		
+
 		switch ( $this->gift_certificate_mode ) {
 			case "Percentage":
 			case "Coupon Percentage":
 				$this->gift_certificate_mode_symbol_after = '%';
-      	break;
+				break;
 		}
-		
+
 		return ( $this->gift_certificate_amount > 0 ? true : false );
 	}
-	
+
 	function remove_gift_certificate()
 	{
 		unset ($_SESSION['cart']['tiki-gc']);
 	}
-	
+
 	function add_gift_certificate( $code = null )
 	{
 		$this->get_gift_certificate($code);
-		
+
 		if ( $this->gift_certificate_amount > 0 ) {
 			if ( ! isset($_SESSION['cart']) ) return false;
 			$_SESSION['cart']['tiki-gc'] = array();
@@ -416,21 +416,21 @@ class CartLib
 			return false;
 		}
 	}
-	
+
 	function has_gift_certificate()
 	{
 		global $trklib, $prefs;
 		require_once('lib/trackers/trackerlib.php');
 		return ($trklib->get_tracker_by_name($prefs['payment_cart_giftcert_tracker_name']) ? true : false );
 	}
-	
+
 	function discount_from_total( $total )
 	{ //ensures that the discount being had isn't less that the total resulting in a negative value
 		switch ( $this->gift_certificate_mode ) {
 			case "Percentage":
 			case "Coupon Percentage":
 				$total = $total - (($total / 100) * $this->gift_certificate_amount);
-      	break;
+				break;
 			default:
 				if ( $this->gift_certificate_amount <= $total ) { //total is more or equal to cert
 					$total -= $this->gift_certificate_amount;
@@ -441,13 +441,13 @@ class CartLib
 
 		return $total;
 	}
-	
+
 	function product_reference_gift_certificate($total, $reference )
 	{
 		$productTotal = 0;
 		$giftCertificateApplies = false;
 		$products = array();
-		
+
 		foreach ( $_SESSION['cart'] as $info ) {
 			if ( $info[$reference] == $this->gift_certificate_type_reference ) {
 				$products[] = $info;
@@ -455,7 +455,7 @@ class CartLib
 				$giftCertificateApplies = true;
 			}
 		}
-		
+
 		if ($giftCertificateApplies) {
 			if ($this->gift_certificate_mode == "Coupon Percentage" || $this->gift_certificate_mode == "Coupon") {
 				$cheapestPrice = 0;
@@ -464,13 +464,13 @@ class CartLib
 						$cheapestPrice = $product['price'];
 					}
 				}
-				
+
 				//if it applies, use the cheapest price
 				if ($cheapestPrice > 0) {
 					$productTotal = $cheapestPrice;
 				}
 			}
-		
+
 			$total -= $productTotal;
 			$productTotal = $this->discount_from_total($productTotal);
 			$total += $productTotal;
@@ -479,7 +479,7 @@ class CartLib
 			global $access;
 			$access->redirect($_SERVER['REQUEST_URI'], tra('Gift card is not valid for products in cart'));
 		}
-		
+
 		return $total;
 	}
 
@@ -499,13 +499,13 @@ class CartLib
 					case "Product": //product can only be used with a single product
 						return 'code';
 			      break;
-					case "Cash": //cash can be used with any cart items 
+					case "Cash": //cash can be used with any cart items
 					default:
 						return;
 				}
 		}
 	}
-	
+
 	function get_total()
 	{
 		$this->init_cart();
@@ -516,7 +516,7 @@ class CartLib
 		foreach ( $_SESSION['cart'] as $info ) {
 			$total += floatval($info['quantity']) * floatval($info['price']);
 		}
-		
+
 		$this->total_no_discount = $total;
 
 		if ($this->gift_certificate_code) {
@@ -527,14 +527,14 @@ class CartLib
 				$total = $this->discount_from_total($total);
 			}
 		}
-		
+
 		$this->gift_certificate_discount = $this->total_no_discount - $total;
 
 		// CUSTOM feature not complete for group discount
 		if ($groupDiscount = $this->get_group_discount()) {
 			$total = (1 - $groupDiscount) * $total;
 		}
-		
+
 		return number_format($total, 2, '.', '');
 	}
 
@@ -563,7 +563,7 @@ class CartLib
 	function generate_item_description( $item, $parentCode = 0 )
 	{
 		$wiki = '';
-		
+
 		if ( $item['href'] ) {
 			$label = "[{$item['href']}|{$item['description']}]";
 		} else {
@@ -592,22 +592,22 @@ class CartLib
 		$price_label = tra('Unit Price');
 		$gift_certificate_label = tra("Gift Certificate: ");
 		$gift_certificate_amount_used_label = tra("Gift Certificate Amount Used: ");
-		
+
 		$wiki = "||__{$id_label}__|__{$product_label}__|__{$quantity_label}__|__{$price_label}__\n";
 
 		foreach ( $this->get_content() as $item ) {
 			if ( !isset($item['is_gift_certificate']) || !$item['is_gift_certificate'] ) {
 				$wiki .= $this->generate_item_description($item);
-				if ($bundledProducts = $this->get_bundled_products($item['code'])) { 
+				if ($bundledProducts = $this->get_bundled_products($item['code'])) {
 					foreach ($bundledProducts as $b) {
 						$wiki .= $this->generate_item_description($b, $item['code']);
 					}
-				} 
+				}
 			}
 		}
 
 		$wiki .= "||\n";
-		
+
 		if ( isset($this->gift_certificate_code) && isset($this->gift_certificate_discount) ) {
 			$wiki .= $gift_certificate_label . $this->gift_certificate_code . " " . $this->gift_certificate_name . "\n";
 			$wiki .= $gift_certificate_amount_used_label . $this->gift_certificate_discount;
@@ -616,19 +616,19 @@ class CartLib
 		if ( $groupDiscount = $this->get_group_discount() ) {
 			$wiki .= "\nSpecial Group Discount: " . $groupDiscount * 100 . "%";
 		}
-		
+
 		return $wiki;
 	}
-	
-	function product_in_cart( $code ) 
+
+	function product_in_cart( $code )
 	{
 		return isset( $_SESSION['cart'][$code] );
 	}
-	
+
  	//Used for adjusting already added items in the cart
 	function update_quantity( $code, $quantity, $info = array('exchangetoproductid' => 0, 'exchangeorderamount' => 0) )
-		{
-		global $prefs;		
+	{
+		global $prefs;
 		$currentQuantity = $this->get_quantity($code);
 		if ($prefs['payment_cart_inventory'] == 'y') {
 			// Prevent going below 0 inventory
@@ -638,16 +638,16 @@ class CartLib
 					unset( $_SESSION['cart'][ $code ] );
 				}
 				global $access;
-				
+
 				$access->redirect($_SERVER['REQUEST_URI'], tra('There is not enough inventory left for your request'));
 			}
-	
+
 			if ($currentQuantity > 0) {
 				if ($this->unhold_inventory($code, $currentQuantity)) {
 					$this->remove_from_onhold_list($code);
 				}
 				if ($info['exchangetoproductid'] && $info['exchangeorderamount']) {
-					if ($this->unhold_inventory($info['exchangetoproductid'], $info['exchangeorderamount'])) { 
+					if ($this->unhold_inventory($info['exchangetoproductid'], $info['exchangeorderamount'])) {
 						$this->remove_from_onhold_list('XC' . $info['exchangetoproductid']);
 					}
 				}
@@ -686,7 +686,7 @@ class CartLib
 //			$access = TikiLib::lib('access');
 //			$access->redirect( $_SERVER['REQUEST_URI'], tra('Anonymous shopping feature is not enabled. Please log in to shop.') );
 //		}
-				
+
 		$total = $this->get_total();
 
 		if ( $total > 0 || $this->total_no_discount ) {
@@ -701,7 +701,7 @@ class CartLib
 				}
 			} else {
 				$description = tra('Registration Check-Out') . " ($user)";
-			}	
+			}
 			$invoice = $paymentlib->request_payment($description, $total, $prefs['payment_default_delay'], $this->get_description());
 			foreach ( $this->get_behaviors() as $behavior ) {
 				$paymentlib->register_behavior($invoice, $behavior['event'], $behavior['behavior'], $behavior['arguments']);
@@ -716,9 +716,9 @@ class CartLib
 					require_once $file;
 					call_user_func_array($function, $behavior['arguments']);
 				}
-			} 
+			}
 		}
-		// Handle anonymous user (not logged in) shopping that require only email 
+		// Handle anonymous user (not logged in) shopping that require only email
 		if (!$user || isset($_SESSION['forceanon']) && $_SESSION['forceanon'] == 'y') {
 			if (!empty($_SESSION['shopperinfo'])) { // should also check for pref that this anonymous shopping feature is on
 				// First create shopper info in shopper tracker
@@ -744,12 +744,12 @@ class CartLib
 		} else {
 			$cartuser = $user;
 		}
-	
+
 		$userInput = array(
 			'user' => $cartuser,
 			'time' => $tikilib->now,
 			'total' => $total,
-			'invoice' => $invoice, 
+			'invoice' => $invoice,
 		);
 		if (!$user || isset($_SESSION['forceanon']) && $_SESSION['forceanon'] == 'y') {
 			$orderprofile = Tiki_Profile::fromDb($prefs['payment_cart_anonorders_profile']);
@@ -764,14 +764,14 @@ class CartLib
 			$profileinstaller->setUserData($userInput);
 		} else {
 			$profileinstaller = '';
-		}		
+		}
 		global $record_profile_items_created;
 		$record_profile_items_created = array();
 
 		if ($user && $prefs['payment_cart_orders'] == 'y' || !$user && $prefs['payment_cart_anonymous'] == 'y') {
 			$profileinstaller->install($orderprofile);
 		}
-		
+
 		$content = $this->get_content();
 
 		foreach ( $content as $info ) {
@@ -780,17 +780,17 @@ class CartLib
 			}
 		}
 		$email_template_ids = array();
-		
+
 		if (isset($process_info['product_classes']) && is_array($process_info['product_classes'])) {
 			$product_classes = array_unique($process_info['product_classes']);
 		} else {
 			$product_classes = array();
 		}
-		
+
 		foreach ($product_classes as $pc) {
 			if ($email_template_id = $this->get_tracker_value_custom($prefs['payment_cart_productclasses_tracker_name'], 'Email Template ID', $pc)) {
 				$email_template_ids[] = $email_template_id;
-			} 
+			}
 		}
 		if (!empty($record_profile_items_created)) {
 			if ($total > 0) {
@@ -816,7 +816,7 @@ class CartLib
 			require_once 'lib/auth/tokens.php';
 			$tokenlib = AuthTokens::build($prefs);
 			$shopperurl = $tokenlib->includeToken($shopperurl, array($prefs['payment_cart_anon_group'], 'Anonymous'));
-			
+
 			if ( !empty($_SESSION['shopperinfo']['email']) ) {
 				require_once('lib/webmail/tikimaillib.php');
 				global $smarty;
@@ -830,15 +830,15 @@ class CartLib
 					$mail->setText($mail_data);
 				} else {
 					$mail->setHtml($mail_data);
-				} 
+				}
 				$mail->setHeader("From", $prefs['sender_email']);
-				$mail->send($_SESSION['shopperinfo']['email']); // the field to use probably needs to be configurable as well 
-			} 
+				$mail->send($_SESSION['shopperinfo']['email']); // the field to use probably needs to be configurable as well
+			}
 		}
 		$this->update_gift_certificate($invoice);
 		$this->update_group_discount($invoice);
 
-		$this->empty_cart(); 
+		$this->empty_cart();
 		return $invoice;
 	}
 
@@ -863,7 +863,7 @@ class CartLib
 			$itemuser = $cartuser;
 		} else {
 			$itemuser = $user;
-		}	
+		}
 		$userInput = array(
 			'user' => $itemuser,
 			'quantity' => $info['quantity'],
@@ -876,14 +876,14 @@ class CartLib
 			'eventend' => $this->get_tracker_value_custom($prefs['payment_cart_event_tracker_name'], $prefs['payment_cart_eventend_fieldname'], $info['eventcode']),
 		);
 		if ($user && $prefs['payment_cart_orders'] == 'y' || !$user && $prefs['payment_cart_anonymous'] == 'y') {
-			$profileinstaller->setUserData($userInput);	
+			$profileinstaller->setUserData($userInput);
 			$profileinstaller->forget($orderitemprofile);
 			$profileinstaller->install($orderitemprofile);
 		}
 
 		$this->change_inventory($info['code'], -1 * $info['quantity'], false);
 		if ((isset($info['exchangetoproductid']) && $info['exchangetoproductid'])
-			&& (isset($info['exchangeorderamount']) && $info['exchangeorderamount'])) {	
+			&& (isset($info['exchangeorderamount']) && $info['exchangeorderamount'])) {
 			$this->change_inventory($info['exchangetoproductid'], -1 * $info['exchangeorderamount'], false);
 		}
 		if ($total > 0) {
@@ -905,16 +905,16 @@ class CartLib
 			} elseif (!empty($giftcert_email)) {
 				require_once('lib/payment/behavior/cart_gift_certificate_purchase.php');
 				payment_behavior_cart_gift_certificate_purchase($info['code'], $giftcert_email, $info['quantity'], $record_profile_items_created[0], end($record_profile_items_created));
-			}					
+			}
 		}
 		$ret = array('product_classes' => $product_classes);
 		return $ret;
 	}
-	
+
 	function empty_cart()
 	{
 		$this->clear_onhold_list();
-		$_SESSION['cart'] = array(); 
+		$_SESSION['cart'] = array();
 	}
 
 	private function get_behaviors()
@@ -937,20 +937,20 @@ class CartLib
 	private function init_cart()
 	{
 		if ( ! isset( $_SESSION['cart'] ) ) {
-			$_SESSION['cart'] = array(); 
+			$_SESSION['cart'] = array();
 		}
 	}
 
 	private function init_product( $code, $info, $parentCode = 0, $quantity = 0, $childInputedPrice = 0 )
 	{
-	
+
 		if ( ! isset( $_SESSION['cart'][ $code ] ) ||  ! isset( $_SESSION['cart'][ $parentCode ][ 'bundledproducts' ][ $code ] ) ) {
 			$info['hash'] = md5($code.time());
 			$info['code'] = $code;
 			$info['quantity'] = $quantity;
 			$info['price'] = number_format(abs($info['price']), 2, '.', '');
 			$info['inputedprice'] = number_format(abs($childInputedPrice), 2, '.', '');
-			
+
 			if ( ! isset( $info['href'] ) ) {
 				$info['href'] = null;
 			}
@@ -987,7 +987,7 @@ class CartLib
 		$inventoryTypeFieldId = $prefs['payment_cart_inventory_type_field'];
 		global $trklib;
 		require_once('lib/trackers/trackerlib.php');
-		return $trklib->get_item_value($productTrackerId, $productId, $inventoryTypeFieldId); 
+		return $trklib->get_item_value($productTrackerId, $productId, $inventoryTypeFieldId);
 	}
 
 	function get_inventory( $productId, $less_hold = true )
@@ -1012,7 +1012,7 @@ class CartLib
 		}
 		global $trklib;
 		require_once('lib/trackers/trackerlib.php');
-		return $trklib->get_item_value($productTrackerId, $productId, $inventoryFieldId); 
+		return $trklib->get_item_value($productTrackerId, $productId, $inventoryFieldId);
 	}
 
 	function change_inventory( $productId, $amount = 1, $changeLessHold = true)
@@ -1033,11 +1033,11 @@ class CartLib
 			$newLessHold = max(0, $currentLessHold + $amount);
 			$this->set_inventory($productId, $newLessHold, true);
 		}
-		return true; 
+		return true;
 	}
 
-	function hold_inventory( $productId, $amount = 1) 
-	{	
+	function hold_inventory( $productId, $amount = 1)
+	{
 		if ($bundledProducts = $this->get_bundled_products($productId) ) {
 			foreach ($bundledProducts as $b) {
 				$this->hold_inventory($b['code'], $amount * $b['quantity']);
@@ -1049,7 +1049,7 @@ class CartLib
 		}
 		$currentLessHold = $this->get_inventory($productId);
 		$newLessHold = max(0, $currentLessHold - $amount);
-		$this->set_inventory($productId, $newLessHold, true);	
+		$this->set_inventory($productId, $newLessHold, true);
 		return true;
 	}
 
@@ -1057,7 +1057,7 @@ class CartLib
 	{
 		if ($bundledProducts = $this->get_bundled_products($productId) ) {
 			foreach ($bundledProducts as $b) {
-				$this->unhold_inventory($b['code'], $amount * $b['quantity']);				
+				$this->unhold_inventory($b['code'], $amount * $b['quantity']);
 			}
 		}
 		$inventoryType = $this->get_inventory_type($productId);
@@ -1086,13 +1086,13 @@ class CartLib
 		$inventoryTotalFieldId = $prefs['payment_cart_inventory_total_field'];
 		$inventoryLessHoldFieldId = $prefs['payment_cart_inventory_lesshold_field'];
 		if ($less_hold) {
-			$inventoryFieldId = $inventoryLessHoldFieldId; 
+			$inventoryFieldId = $inventoryLessHoldFieldId;
 		} else {
 			$inventoryFieldId = $inventoryTotalFieldId;
 		}
 		$trackerFields = array();
 		$trackerFields[] = array('fieldId' => $inventoryFieldId, 'value' => $amount);
-               	$this->modify_tracker_item($productTrackerId, $productId, $trackerFields); 
+               	$this->modify_tracker_item($productTrackerId, $productId, $trackerFields);
 		return true;
 	}
 
@@ -1126,7 +1126,7 @@ class CartLib
 		}
 		if (empty($hashes)) {
 			return false;
-		}	
+		}
 		$mid = implode(',', array_fill(0, count($hashes), '?'));
 		$query = "delete from `tiki_cart_inventory_hold` where `hash` in ($mid)";
 		$tikilib->query($query, $hashes);
@@ -1147,18 +1147,18 @@ class CartLib
 		$quantity = $tikilib->getOne($query, $bindvars);
 		$query = "delete from `tiki_cart_inventory_hold` where `productId` = ? and `timeHeld` < ?";
 		if ($hash) {
-			$query .= " and `hash` != ?"; 
+			$query .= " and `hash` != ?";
 		}
 		$tikilib->query($query, $bindvars);
 		if ($quantity > 0) {
 			$this->unhold_inventory($productId, $quantity);
 		}
-		return true; 
+		return true;
 	}
 
 	function extend_onhold_list()
 	{
-		global $tikilib, $prefs; 
+		global $tikilib, $prefs;
 		$extend = $prefs['payment_cart_inventoryhold_expiry'] * 60;
 		$hashes = array();
 		foreach ( $this->get_content() as $item ) {
@@ -1172,17 +1172,17 @@ class CartLib
 		$earliest = $tikilib->getOne($query, $hashes);
 		if ($earliest > $tikilib->now - $extend) {
 			return false;
-		} 
+		}
 		$query = "update `tiki_cart_inventory_hold` set `timeHeld` = ? where `hash` in ($mid)";
 		$bindvars = array_merge(array($tikilib->now), $hashes);
 		$tikilib->query($query, $bindvars);
 		return true;
-	}	
-		
+	}
+
 	private function remove_from_onhold_list( $code )
 	{
 		global $tikilib;
-		$hash = $this->get_hash($code); 
+		$hash = $this->get_hash($code);
 		$query = "delete from `tiki_cart_inventory_hold` where `hash` = ?";
 		$tikilib->query($query, $hash);
 		return true;
@@ -1195,7 +1195,7 @@ class CartLib
 		$query = "insert into `tiki_cart_inventory_hold` (`productId`, `quantity`, `timeHeld`, `hash`) values (?,?,?,?)";
 		$bindvars = array($code, $quantity, $tikilib->now, $hash);
 		$tikilib->query($query, $bindvars);
-		return true;	
+		return true;
 	}
 
 	function get_missing_user_information_fields( $product_class_id, $type = 'required' )
@@ -1249,7 +1249,7 @@ class CartLib
 		} else {
 			return false;
 		}
-	} 
+	}
 
 	function get_group_discount()
 	{
@@ -1269,7 +1269,7 @@ class CartLib
 		// Now to take into account group discount as well
 		if (!$invoice) return false;
 		if ($groupDiscount = $this->get_group_discount()) {
-			$orderId = $this->get_tracker_item_id_custom($prefs['payment_cart_orders_tracker_name'], "Tiki Payment ID", $invoice); 
+			$orderId = $this->get_tracker_item_id_custom($prefs['payment_cart_orders_tracker_name'], "Tiki Payment ID", $invoice);
 			$orderitems = $this->get_orderitems_of_order($orderId);
 			foreach ($orderitems as $o) {
 				$order_product_itemIds[$o['productId']] = $o['itemId'];
@@ -1279,8 +1279,8 @@ class CartLib
 			foreach ($orig_prices_paid as $productId => $origPrice) {
 				$amountPaid = (1 - $groupDiscount) * $origPrice;
 				$this->set_tracker_value_custom($prefs['payment_cart_orderitems_tracker_name'], "Price paid", $order_product_itemIds[$productId], $amountPaid);
-			} 
-		} 
+			}
+		}
 	}
 
 	function get_gift_certificate_cost( $id = 0 )
@@ -1301,9 +1301,9 @@ class CartLib
 			$cost = $this->get_tracker_value_custom($prefs['payment_cart_orderitems_tracker_name'], 'Inputed Price From Bundle', $orderItemId);
 		} else {
 			$cost = $this->get_tracker_value_custom($prefs['payment_cart_orderitems_tracker_name'], 'Price paid', $orderItemId);
-		}	
+		}
 		return $cost;
-	} 
+	}
 }
 
 global $cartlib;

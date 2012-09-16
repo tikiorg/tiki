@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -308,39 +308,39 @@ if (isset($_REQUEST["save"]) || isset($_REQUEST["create_zone"])) {
 			$_REQUEST['HTMLData'] = serialize($params);
 		}
 		$bannerId = $bannerlib->replace_banner(
-						$_REQUEST["bannerId"], 
-						$_REQUEST["client"], 
-						$_REQUEST["url"], '',
-						'', 
-						$_REQUEST["use"], 
-						$_REQUEST["imageData"], 
-						$_REQUEST["imageType"], 
-						$_REQUEST["imageName"], 
-						$_REQUEST["HTMLData"],
-						$_REQUEST["fixedURLData"], 
-						$_REQUEST["textData"], 
-						$fromDate, 
-						$toDate, 
-						$useDates, 
-						$Dmon, 
-						$Dtue, 
-						$Dwed, 
-						$Dthu, 
-						$Dfri,
-						$Dsat, 
-						$Dsun, 
-						$fromTime, 
-						$toTime, 
-						$_REQUEST["maxImpressions"], 
-						$_REQUEST["maxClicks"], 
-						$_REQUEST["zone"], 
-						$_REQUEST["maxUserImpressions"],
-						$_REQUEST['onlyInURIs'], 
-						$_REQUEST['exceptInURIs']
+			$_REQUEST["bannerId"],
+			$_REQUEST["client"],
+			$_REQUEST["url"], '',
+			'',
+			$_REQUEST["use"],
+			$_REQUEST["imageData"],
+			$_REQUEST["imageType"],
+			$_REQUEST["imageName"],
+			$_REQUEST["HTMLData"],
+			$_REQUEST["fixedURLData"],
+			$_REQUEST["textData"],
+			$fromDate,
+			$toDate,
+			$useDates,
+			$Dmon,
+			$Dtue,
+			$Dwed,
+			$Dthu,
+			$Dfri,
+			$Dsat,
+			$Dsun,
+			$fromTime,
+			$toTime,
+			$_REQUEST["maxImpressions"],
+			$_REQUEST["maxClicks"],
+			$_REQUEST["zone"],
+			$_REQUEST["maxUserImpressions"],
+			$_REQUEST['onlyInURIs'],
+			$_REQUEST['exceptInURIs']
 		);
 
 		header("location:tiki-list_banners.php");
-		
+
 	}
 }
 

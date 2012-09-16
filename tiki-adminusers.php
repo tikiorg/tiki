@@ -63,7 +63,7 @@ function batchImportUsers()
 		$userrecs[] = $ar;
 	}
 	fclose($fhandle);
-	
+
 	if (empty($userrecs) or !is_array($userrecs)) {
 		$smarty->assign('msg', tra('No records were found. Check the file please!'));
 		$smarty->display('error.tpl');
@@ -86,9 +86,9 @@ function batchImportUsers()
 			} else { // pick up the info on the master
 
 				$info = $userlib->interGetUserInfo(
-								$prefs['interlist'][$prefs['feature_intertiki_mymaster']],
-								empty($u['login']) ? '' : $u['login'],
-								empty($u['email']) ? '' : $u['email']
+					$prefs['interlist'][$prefs['feature_intertiki_mymaster']],
+					empty($u['login']) ? '' : $u['login'],
+					empty($u['email']) ? '' : $u['email']
 				);
 
 				if (empty($info)) {
@@ -137,14 +137,14 @@ function batchImportUsers()
 			}
 
 			$userlib->add_user(
-							$u['login'],
-							$u['password'],
-							$u['email'],
-							$pass_first_login ? $u['password'] : '',
-							$pass_first_login,
-							$apass,
-							NULL,
-							(!empty($_REQUEST['notification']) ? 'u' : NULL)
+				$u['login'],
+				$u['password'],
+				$u['email'],
+				$pass_first_login ? $u['password'] : '',
+				$pass_first_login,
+				$apass,
+				NULL,
+				(!empty($_REQUEST['notification']) ? 'u' : NULL)
 			);
 
 			$logslib->add_log('users', sprintf(tra('Created account %s <%s>'), $u['login'], $u['email']));
@@ -224,7 +224,7 @@ if (isset($_REQUEST['batch']) && is_uploaded_file($_FILES['csvlist']['tmp_name']
 	$access->check_ticket();
 	batchImportUsers();
 	// Process the form to add a user here
-	
+
 } elseif (isset($_REQUEST['newuser'])) {
 	$AddUser= true;;
 	$access->check_authenticity(tra('Are you sure you want to add this new user?'));
@@ -298,14 +298,14 @@ if (isset($_REQUEST['batch']) && is_uploaded_file($_FILES['csvlist']['tmp_name']
 			}
 
 			if ($userlib->add_user(
-							$_REQUEST['login'],
-							$newPass,
-							$_REQUEST['email'],
-							$pass_first_login ? $newPass : '',
-							$pass_first_login,
-							$apass,
-							NULL,
-							($send_validation_email ? 'u' : NULL)
+				$_REQUEST['login'],
+				$newPass,
+				$_REQUEST['email'],
+				$pass_first_login ? $newPass : '',
+				$pass_first_login,
+				$apass,
+				NULL,
+				($send_validation_email ? 'u' : NULL)
 			)) {
 				$tikifeedback[] = array(
 					'num' => 0,
@@ -316,14 +316,14 @@ if (isset($_REQUEST['batch']) && is_uploaded_file($_FILES['csvlist']['tmp_name']
 					// No need to send credentials in mail if the user is forced to choose a new password after validation
 					$realpass = $pass_first_login ? '' : $newPass;
 					$userlib->send_validation_email(
-									$_REQUEST['login'],
-									$apass,
-									$_REQUEST['email'],
-									'',
-									'',
-									'',
-									'user_creation_validation_mail',
-									$realpass
+						$_REQUEST['login'],
+						$apass,
+						$_REQUEST['email'],
+						'',
+						'',
+						'',
+						'user_creation_validation_mail',
+						$realpass
 					);
 				}
 
@@ -620,8 +620,8 @@ if (isset($_REQUEST['user']) and $_REQUEST['user']) {
 					);
 
 					$logslib->add_log(
-									'adminusers',
-									'changed login for ' . $_POST['login'] . ' from ' . $userinfo['login'] . ' to ' . $_POST['login']
+						'adminusers',
+						'changed login for ' . $_POST['login'] . ' from ' . $userinfo['login'] . ' to ' . $_POST['login']
 					);
 
 					$userinfo['login'] = $_POST['login'];

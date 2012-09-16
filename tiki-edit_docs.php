@@ -72,44 +72,44 @@ $_REQUEST['name'] = htmlspecialchars(str_replace('.odt', '', $_REQUEST['name']))
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_REQUEST['data'])) {
 	$_REQUEST['galleryId'] = (int)$_REQUEST['galleryId'];
 	$_REQUEST['description'] = htmlspecialchars(isset($_REQUEST['description']) ? $_REQUEST['description'] : $_REQUEST['name']);
-	
+
 	//webodf has to send an encoded string so that all browsers can handle the post-back
 	$_REQUEST['data'] = base64_decode($_REQUEST['data']);
-	
+
 	$type = $mimetypes['odt'];
 	if (! empty($fileId)) {
 		//existing file
 		$fileId = $filegallib->save_archive(
-						$fileId,
-						$fileInfo['galleryId'],
-						0,
-						$_REQUEST['name'],
-						$fileInfo['description'],
-						$_REQUEST['name'] . '.odt',
-						$_REQUEST['data'],
-						strlen($_REQUEST['data']),
-						$type,
-						$fileInfo['user'],
-						null,
-						null,
-						$user,
-						date()
+			$fileId,
+			$fileInfo['galleryId'],
+			0,
+			$_REQUEST['name'],
+			$fileInfo['description'],
+			$_REQUEST['name'] . '.odt',
+			$_REQUEST['data'],
+			strlen($_REQUEST['data']),
+			$type,
+			$fileInfo['user'],
+			null,
+			null,
+			$user,
+			date()
 		);
 	} else {
 		//new file
 		$fileId = $filegallib->insert_file(
-						$_REQUEST['galleryId'],
-						$_REQUEST['name'],
-						$_REQUEST['description'],
-						$_REQUEST['name'] . '.odt',
-						$_REQUEST['data'],
-						strlen($_REQUEST['data']),
-						$type,
-						$user,
-						date()
+			$_REQUEST['galleryId'],
+			$_REQUEST['name'],
+			$_REQUEST['description'],
+			$_REQUEST['name'] . '.odt',
+			$_REQUEST['data'],
+			strlen($_REQUEST['data']),
+			$type,
+			$user,
+			date()
 		);
 	}
-	
+
 	echo $fileId;
 	die;
 }
@@ -127,16 +127,16 @@ $savingText = tr('Saving...');
 $headerlib->add_jq_onready(
     "window.odfcanvas = new odf.OdfCanvas($('#tiki_doc')[0]);
 	odfcanvas.load('tiki-download_file.php?fileId=' + $('#fileId').val());
-	
+
 	//make editable
 	$('.editButton').click(function() {
 		odfcanvas.setEditable();
-		
+
 		$('.editState,.viewState').toggle();
-		
+
 		return false;
 	});
-	
+
 	runtime.writeFile = function(path, data) {
 		$.modal('$savingText');
 		var base64 = new core.Base64();
@@ -149,7 +149,7 @@ $headerlib->add_jq_onready(
 				$('#fileId').val(id);
 		});
 	};
-	
+
 	$('.saveButton').click(function() {
 		odfcanvas.save();
 		return false;

@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -536,17 +536,17 @@ class ZipWriter
 			$attrib['file_comment'] = '';
 
 		$head = pack(
-						"vvvvvVVVvv", 
-						20, // Version needed to extract (FIXME: is this right?)
-						0, // Gen purp bit flag
-						$comp_type, 
-						$mod_time, 
-						$mod_date, 
-						$crc32, 
-						strlen($content), 
-						$size, 
-						strlen($filename), 
-						strlen($attrib['extra_field'])
+			"vvvvvVVVvv",
+			20, // Version needed to extract (FIXME: is this right?)
+			0, // Gen purp bit flag
+			$comp_type,
+			$mod_time,
+			$mod_date,
+			$crc32,
+			strlen($content),
+			$size,
+			strlen($filename),
+			strlen($attrib['extra_field'])
 		);
 
 		// Construct the "Local file header"
@@ -556,12 +556,12 @@ class ZipWriter
 		$this->dir .= pack("a4CC", ZIP_CENTHEAD_MAGIC, 23, $os_type);
 		$this->dir .= $head;
 		$this->dir .= pack(
-						"vvvVV", 
-						strlen($attrib['file_comment']), 
-						0, // Disk number start
-						$ati, // Internal file attributes
-						$atx, // External file attributes
-						$this->offset // Relative offset of local header
+			"vvvVV",
+			strlen($attrib['file_comment']),
+			0, // Disk number start
+			$ati, // Internal file attributes
+			$atx, // External file attributes
+			$this->offset // Relative offset of local header
 		);
 		$this->dir .= $filename . $attrib['extra_field'] . $attrib['file_comment'];
 
@@ -581,14 +581,14 @@ class ZipWriter
 		// Construct the "End of central directory record"
 		echo ZIP_ENDDIR_MAGIC;
 		echo pack(
-						"vvvvVVv", 
-						0, // Number of this disk.
-						0, // Number of disk with start of c dir
-						$this->nfiles, // Number entries on this disk
-						$this->nfiles, // Number entries
-						strlen($this->dir), // Size of central directory
-						$this->offset, // Offset of central directory
-						strlen($this->comment)
+			"vvvvVVv",
+			0, // Number of this disk.
+			0, // Number of disk with start of c dir
+			$this->nfiles, // Number entries on this disk
+			$this->nfiles, // Number entries
+			strlen($this->dir), // Size of central directory
+			$this->offset, // Offset of central directory
+			strlen($this->comment)
 		);
 		echo $this->comment;
 	}
@@ -642,13 +642,13 @@ class ZipReader
 		$head = $this->_read(30);
 
 		extract(
-						unpack(
-										'a4magic/vreq_version/vflags/vcomp_type' 
-										. '/vmod_time/vmod_date' 
-										. '/Vcrc32/Vcomp_size/Vuncomp_size' 
-										. '/vfilename_len/vextrafld_len', 
-										$head
-						)
+			unpack(
+				'a4magic/vreq_version/vflags/vcomp_type'
+				. '/vmod_time/vmod_date'
+				. '/Vcrc32/Vcomp_size/Vuncomp_size'
+				. '/vfilename_len/vextrafld_len',
+				$head
+			)
 		);
 
 		//FIXME: we should probably check $req_version.
@@ -794,7 +794,7 @@ function MimeMultipart($parts)
 function MimeifyPageRevision($page)
 {
 	//$page = $revision->getPage();
-	// FIXME: add 'hits' to $params 
+	// FIXME: add 'hits' to $params
 	$params = array(
 			'pagename' => $page['pageName'],
 			'flags' => '',
@@ -980,28 +980,28 @@ function ParseMimeifiedPages($data)
 			case 'pagename':
 			case 'version':
 				$page[$key] = $value;
-							break;
+				break;
 
 			case 'flags':
 				if (preg_match('/PAGE_LOCKED/', $value))
 					$pagedata['locked'] = 'yes';
-							break;
+				break;
 
 			case 'created':
 			case 'hits':
 				$pagedata[$key] = $value;
-							break;
+				break;
 
 			case 'lastmodified':
 				$versiondata['mtime'] = $value;
-							break;
+				break;
 
 			case 'author':
 			case 'author_id':
 			case 'summary':
 			case 'markup':
 				$versiondata[$key] = $value;
-							break;
+				break;
 		}
 	}
 
@@ -1035,4 +1035,4 @@ function ParseMimeifiedPages($data)
 // c-basic-offset: 4
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
-// End:   
+// End:

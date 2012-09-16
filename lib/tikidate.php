@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -79,7 +79,7 @@ class TikiDate
 	{
 
 		if (function_exists('date_default_timezone_set')) {			// function not available < PHP 5.1
-			
+
 			if (isset($_SERVER['TZ']) && !empty($_SERVER['TZ'])) {	// apache - can be set in .htaccess
 				$tz = $_SERVER['TZ'];
 			} else if (ini_get('date.timezone')) {					// set in php.ini
@@ -91,7 +91,7 @@ class TikiDate
 			}
 			date_default_timezone_set($tz);
 		}
-		
+
 		$this->date = new DateTime();	// was: DateTime(date("Y-m-d H:i:s Z"))
 										// the Z (timezone) param was causing an error
 										// DateTime constructor defaults to "now" anyway so unnecessary?
@@ -204,82 +204,82 @@ class TikiDate
 		}
 		$this->date->setTimezone($dtz);
 	}
-	
+
 	function convertMissingTimezone($tz_id)
 	{
 		switch ($tz_id) {		// Convert timezones not in PHP 5
 			case 'A':
 				$tz_id = 'Etc/GMT+1';		// military A to Z
-							break;
+				break;
 			case 'B':
 				$tz_id = 'Etc/GMT+2';
-							break;
+				break;
 			case 'C':
 				$tz_id = 'Etc/GMT+3';
-							break;
+				break;
 			case 'D':
 				$tz_id = 'Etc/GMT+4';
-							break;
+				break;
 			case 'E':
 				$tz_id = 'Etc/GMT+5';
-							break;
+				break;
 			case 'F':
 				$tz_id = 'Etc/GMT+6';
-							break;
+				break;
 			case 'G':
 				$tz_id = 'Etc/GMT+7';
-							break;
+				break;
 			case 'H':
 				$tz_id = 'Etc/GMT+8';
-							break;
+				break;
 			case 'I':
 				$tz_id = 'Etc/GMT+9';
-							break;
+				break;
 			case 'K':
 				$tz_id = 'Etc/GMT+10';
-							break;
+				break;
 			case 'L':
 				$tz_id = 'Etc/GMT+11';
-							break;
+				break;
 			case 'M':
 				$tz_id = 'Etc/GMT+12';
-							break;
+				break;
 			case 'N':
 				$tz_id = 'Etc/GMT-1';
-							break;
+				break;
 			case 'O':
 				$tz_id = 'Etc/GMT-2';
-							break;
+				break;
 			case 'P':
 				$tz_id = 'Etc/GMT-3';
-							break;
+				break;
 			case 'Q':
 				$tz_id = 'Etc/GMT-4';
-							break;
+				break;
 			case 'R':
 				$tz_id = 'Etc/GMT-5';
-							break;
+				break;
 			case 'S':
 				$tz_id = 'Etc/GMT-6';
-							break;
+				break;
 			case 'T':
 				$tz_id = 'Etc/GMT-7';
-							break;
+				break;
 			case 'U':
 				$tz_id = 'Etc/GMT-8';
-							break;
+				break;
 			case 'V':
 				$tz_id = 'Etc/GMT-9';
-							break;
+				break;
 			case 'W':
 				$tz_id = 'Etc/GMT-10';
-							break;
+				break;
 			case 'X':
 				$tz_id = 'Etc/GMT-11';
-							break;
+				break;
 			case 'Y':
 				$tz_id = 'Etc/GMT-12';
-							break;
+				break;
 			case 'Z':
 				$tz_id = 'Etc/GMT';
 
@@ -299,8 +299,8 @@ class TikiDate
 	}
 
 	/**
-	 * Checks that the string is either a timezone identifier or an abbreviation. 
-	 * display_timezone can be manually set to an identifier in preferences but 
+	 * Checks that the string is either a timezone identifier or an abbreviation.
+	 * display_timezone can be manually set to an identifier in preferences but
 	 * will be an [uppercase] abbreviation if auto-detected by JavaScript.
 	 */
 	static function TimezoneIsValidId($id)
@@ -323,5 +323,5 @@ class Date_Calc
 	{
 		return cal_days_in_month(CAL_GREGORIAN, $month, $year);
 	}
-	
+
 }
