@@ -169,16 +169,16 @@ class WikiLib extends TikiLib
 		}
 
 		return $tikilib->create_page(
-						$copyName,
-						0,
-						$info['data'],
-						$tikilib->now,
-						$info['comment'],
-						$info['user'],
-						$info['ip'],
-						$info['description'],
-						$info['lang'],
-						$info['is_html']
+			$copyName,
+			0,
+			$info['data'],
+			$tikilib->now,
+			$info['comment'],
+			$info['user'],
+			$info['ip'],
+			$info['description'],
+			$info['lang'],
+			$info['is_html']
 		);
 	}
 
@@ -738,13 +738,13 @@ class WikiLib extends TikiLib
 				$info = $tikilib->get_page_info($res['pageName']);
 
 				$contributionlib->change_assigned_contributions(
-								$res['historyId'],
-								'history',
-								$res['pageName'],
-								'wiki page',
-								$info['description'],
-								$res['pageName'],
-								'tiki-index.php?page' . urlencode($res['pageName'])
+					$res['historyId'],
+					'history',
+					$res['pageName'],
+					'wiki page',
+					$info['description'],
+					$res['pageName'],
+					'tiki-index.php?page' . urlencode($res['pageName'])
 				);
 			}
 			$histlib->remove_version($res['pageName'], $res['version']);
@@ -773,11 +773,11 @@ class WikiLib extends TikiLib
 		require_once 'lib/wiki/semanticlib.php';
 
 		$pages = array();
-		
+
 		if ($prefs['feature_wiki_pagealias'] == 'n' && empty($prefs["wiki_prefixalias_tokens"])) {
 			return $pages;
 		}
-		
+
 		$toPage = $alias;
 		$tokens = explode(',', $prefs['wiki_pagealias_tokens']);
 
@@ -791,16 +791,16 @@ class WikiLib extends TikiLib
 		}
 
 		$links = $semanticlib->getLinksUsing($tokens, array( 'toPage' => $toPage ));
-		
+
 		if ( count($links) > 0 ) {
 			foreach ( $links as $row ) {
 				$pages[] = $row['fromPage'];
 			}
 		}
-		
+
 		return $pages;
 	}
-	
+
 	// Like pages are pages that share a word in common with the current page
 	function get_like_pages($page)
 	{
@@ -907,17 +907,17 @@ class WikiLib extends TikiLib
 			$query = 'insert into `tiki_history`(`pageName`, `version`, `lastModif`, `user`, `ip`, `comment`, `data`, `description`)' .
 								' values(?,?,?,?,?,?,?,?)';
 			$result = $this->query(
-							$query,
-							array(
-								$page,
-								(int) $info['version'] + 1,
-								(int) $info['lastModif'],
-								$user,
-								$info['ip'],
-								tra('Page locked'),
-								$info['data'],
-								$info['description']
-							)
+				$query,
+				array(
+					$page,
+					(int) $info['version'] + 1,
+					(int) $info['lastModif'],
+					$user,
+					$info['ip'],
+					tra('Page locked'),
+					$info['data'],
+					$info['description']
+				)
 			);
 		}
 
@@ -939,17 +939,17 @@ class WikiLib extends TikiLib
 
 			$query = "insert into `tiki_history`(`pageName`, `version`, `lastModif`, `user`, `ip`, `comment`, `data`, `description`) values(?,?,?,?,?,?,?,?)";
 			$result = $this->query(
-							$query,
-							array(
-								$page,
-								(int) $info['version'] + 1,
-								(int) $info['lastModif'],
-								$user,
-								$info['ip'],
-								tra('Page unlocked'),
-								$info['data'],
-								$info['description']
-							)
+				$query,
+				array(
+					$page,
+					(int) $info['version'] + 1,
+					(int) $info['lastModif'],
+					$user,
+					$info['ip'],
+					tra('Page unlocked'),
+					$info['data'],
+					$info['description']
+				)
 			);
 		}
 
@@ -1252,7 +1252,7 @@ class WikiLib extends TikiLib
 					&& $prefs['namespace_separator']
 		) {
 			$explicit = $this->get_explicit_namespace($pageName);
-	
+
 			if ($explicit) {
 				return $explicit;
 			}
@@ -1314,10 +1314,10 @@ class convertToTiki9
 	function convertPages()
 	{
 		$infos = $this->parserlib->fetchAll(
-						'SELECT data, page_id' .
-						' FROM tiki_pages' .
-						' LEFT JOIN tiki_db_status ON tiki_db_status.objectId = tiki_pages.page_id' .
-						' WHERE tiki_db_status.tableName = "tiki_pages" IS NULL'
+			'SELECT data, page_id' .
+			' FROM tiki_pages' .
+			' LEFT JOIN tiki_db_status ON tiki_db_status.objectId = tiki_pages.page_id' .
+			' WHERE tiki_db_status.tableName = "tiki_pages" IS NULL'
 		);
 
 		foreach ($infos as $info) {
@@ -1348,13 +1348,13 @@ class convertToTiki9
 	function convertPageHistoryFromPageAndVersion($page, $version)
 	{
 		$infos = $this->parserlib->fetchAll(
-						'SELECT data, historyId' .
-						' FROM tiki_history' .
-						' LEFT JOIN tiki_db_status' .
-						' ON tiki_db_status.objectId = tiki_history.historyId' .
-						' WHERE tiki_db_status.tableName = "tiki_history" IS NULL' .
-						' AND pageName = ? AND version = ?',
-						array($page, $version)
+			'SELECT data, historyId' .
+			' FROM tiki_history' .
+			' LEFT JOIN tiki_db_status' .
+			' ON tiki_db_status.objectId = tiki_history.historyId' .
+			' WHERE tiki_db_status.tableName = "tiki_history" IS NULL' .
+			' AND pageName = ? AND version = ?',
+			array($page, $version)
 		);
 
 		foreach ($infos as $info) {
@@ -1372,10 +1372,10 @@ class convertToTiki9
 	function convertPageHistories()
 	{
 		$infos = $this->parserlib->fetchAll(
-						'SELECT data, historyId' .
-						' FROM tiki_history' .
-						' LEFT JOIN tiki_db_status ON tiki_db_status.objectId = tiki_history.historyId' .
-						' WHERE tiki_db_status.tableName = "tiki_history" IS NULL'
+			'SELECT data, historyId' .
+			' FROM tiki_history' .
+			' LEFT JOIN tiki_db_status ON tiki_db_status.objectId = tiki_history.historyId' .
+			' WHERE tiki_db_status.tableName = "tiki_history" IS NULL'
 		);
 
 		foreach ($infos as $info) {
@@ -1395,10 +1395,10 @@ class convertToTiki9
 
 		if (empty($status)) {
 			$this->parserlib->query(
-							'UPDATE tiki_history' .
-							' SET data = ?' .
-							' WHERE historyId = ?',
-							array($data, $id)
+				'UPDATE tiki_history' .
+				' SET data = ?' .
+				' WHERE historyId = ?',
+				array($data, $id)
 			);
 
 			$this->saveObjectStatus($id, 'tiki_history', 'conv9.0');
@@ -1412,10 +1412,10 @@ class convertToTiki9
 	function convertModules()
 	{
 		$infos = $this->parserlib->fetchAll(
-						'SELECT data, name' .
-						' FROM tiki_user_modules' .
-						' LEFT JOIN tiki_db_status ON tiki_db_status.objectId = tiki_user_modules.name' .
-						' WHERE tiki_db_status.tableName = "tiki_user_modules" IS NULL'
+			'SELECT data, name' .
+			' FROM tiki_user_modules' .
+			' LEFT JOIN tiki_db_status ON tiki_db_status.objectId = tiki_user_modules.name' .
+			' WHERE tiki_db_status.tableName = "tiki_user_modules" IS NULL'
 		);
 
 		foreach ($infos as $info) {
@@ -1452,17 +1452,17 @@ class convertToTiki9
 		if (empty($currentStatus)) {
 			//Insert a status record if one doesn't exist
 			$this->parserlib->query(
-							'INSERT INTO tiki_db_status ( objectId,	tableName,	status )' .
-							' VALUES (?, ?, ?)',
-							array($objectId, 	$tableName,	$status)
+				'INSERT INTO tiki_db_status ( objectId,	tableName,	status )' .
+				' VALUES (?, ?, ?)',
+				array($objectId, 	$tableName,	$status)
 			);
 		} else {
 			//update a status record, it already exists
 			$this->parserlib->query(
-							'UPDATE tiki_db_status' .
-							' SET status = ?' .
-							' WHERE objectId = ? AND tableName = ?',
-							array($status, $objectId, $tableName)
+				'UPDATE tiki_db_status' .
+				' SET status = ?' .
+				' WHERE objectId = ? AND tableName = ?',
+				array($status, $objectId, $tableName)
 			);
 		}
 	}
@@ -1470,10 +1470,10 @@ class convertToTiki9
 	function checkObjectStatus($objectId, $tableName)
 	{
 		return $this->parserlib->getOne(
-						'SELECT status' .
-						' FROM tiki_db_status' .
-						' WHERE objectId = ? AND tableName = ?',
-						array($objectId, $tableName)
+			'SELECT status' .
+			' FROM tiki_db_status' .
+			' WHERE objectId = ? AND tableName = ?',
+			array($objectId, $tableName)
 		);
 	}
 	//end status methods-->
@@ -1483,7 +1483,7 @@ class convertToTiki9
 	function updatePlugins($fingerPrintsOld, $fingerPrintsNew)
 	{
 		//here we find the old fingerprint and replace it with the new one
-		for ($i = 0; $i < count($fingerPrintsOld); $i++) {
+		for ($i = 0, $count_fingerPrintsOld = count($fingerPrintsOld); $i < $count_fingerPrintsOld; $i++) {
 			if (!empty($fingerPrintsOld[$i]) && $fingerPrintsOld[$i] != $fingerPrintsNew[$i]) {
 				//Remove any that may conflict with the new fingerprint, not sure how to fix this yet
 				$this->parserlib->query("DELETE FROM tiki_plugin_security WHERE fingerprint = ?", array($fingerPrintsNew[$i]));

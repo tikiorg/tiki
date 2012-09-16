@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -9,7 +9,7 @@
  * @group unit
  * @group MultilingualAlignerUpdatePages
  * @group slow
- * 
+ *
  */
 
 class  Multilingual_Aligner_UpdatePagesTest extends TikiTestCase
@@ -25,9 +25,9 @@ class  Multilingual_Aligner_UpdatePagesTest extends TikiTestCase
 				"Firefox supporte les caractères internationaux pour des langues tel que lindien.",
 				"Vous pouvez tester le support Firefox des scripts indiens sur BBC indien.",
 				"La plupart des sites qui ont besoin de polices supplémentaires vont avoir une page qui décrit ou vous pouvez obtenir la police."
-				); 
+				);
 	private $source_alignment="Firefox supports international characters for languages such as Hindi.<br/>You can test your Firefoxs support of Hindi scripts at BBC Hindi.<br/>Most sites that require additional fonts will have a page describing where you can get the font.";
-	private $target_alignment="Firefox supporte les caractères internationaux pour des langues tel que lindien.<br/>Vous pouvez tester le support Firefox des scripts indiens sur BBC indien.<br/>La plupart des sites qui ont besoin de polices supplémentaires vont avoir une page qui décrit ou vous pouvez obtenir la police.";	
+	private $target_alignment="Firefox supporte les caractères internationaux pour des langues tel que lindien.<br/>Vous pouvez tester le support Firefox des scripts indiens sur BBC indien.<br/>La plupart des sites qui ont besoin de polices supplémentaires vont avoir une page qui décrit ou vous pouvez obtenir la police.";
 
 	private $extra_source_sentence = "This sentence was added on the source side.";
 	private $mt_extra_source_sentence = "Cette phrase a été ajoutée du côté source.";
@@ -42,12 +42,12 @@ class  Multilingual_Aligner_UpdatePagesTest extends TikiTestCase
 		$this->updater->translator=new Multilingual_Aligner_MockMTWrapper();
 
 		$this->updater->translator->SetMT(
-						$this->extra_source_sentence . "<br/>" . $this->mt_extra_target_sentence, 
-						$this->mt_extra_source_sentence . "<br/>" . $this->extra_target_sentence,
-						'en', 
-						'fr'
+			$this->extra_source_sentence . "<br/>" . $this->mt_extra_target_sentence,
+			$this->mt_extra_source_sentence . "<br/>" . $this->extra_target_sentence,
+			'en',
+			'fr'
 		);
-	} 
+	}
 
 
 	public function ___test_reminder()
@@ -66,7 +66,7 @@ class  Multilingual_Aligner_UpdatePagesTest extends TikiTestCase
 	}
 
 	////////////////////////////////////////////////////////////////
-	// Note: In the rest of these tests, you can assume that 
+	// Note: In the rest of these tests, you can assume that
 	//       $this->updater is an instance of UpdatePages
 	//       created as above.
 	////////////////////////////////////////////////////////////////
@@ -86,14 +86,14 @@ class  Multilingual_Aligner_UpdatePagesTest extends TikiTestCase
 		$expected_content = $this->insertSentenceAtIndex(1, "Added_Source ".$this->mt_extra_source_sentence, $target_modified_array);
 
 		$this->do_test_basic_updating(
-						$source_lng,
-						$target_lng,
-						$source_original_array,
-						$source_modified_array,
-						$target_original_array, 
-						$target_modified_array, 
-						$expected_content, 
-						""
+			$source_lng,
+			$target_lng,
+			$source_original_array,
+			$source_modified_array,
+			$target_original_array,
+			$target_modified_array,
+			$expected_content,
+			""
 		);
 	}
 
@@ -113,15 +113,15 @@ class  Multilingual_Aligner_UpdatePagesTest extends TikiTestCase
 		$expected_content = $target_modified_array;
 
 		$this->do_test_basic_updating(
-						$source_lng,
-						$target_lng,
-						$source_original_array,
-						$source_modified_array,
-						$target_original_array, 
-						$target_modified_array, 
-						$expected_content, 
-						""
-		);		
+			$source_lng,
+			$target_lng,
+			$source_original_array,
+			$source_modified_array,
+			$target_original_array,
+			$target_modified_array,
+			$expected_content,
+			""
+		);
 	}
 
 
@@ -138,17 +138,17 @@ class  Multilingual_Aligner_UpdatePagesTest extends TikiTestCase
 		$target_modified_array = $target_original_array;
 
 		$expected_content = $target_modified_array;
-		$expected_content [1] = "Deleted_Source ".$expected_content [1]; 
+		$expected_content [1] = "Deleted_Source ".$expected_content [1];
 
 		$this->do_test_basic_updating(
-						$source_lng, 
-						$target_lng,
-						$source_original_array, 
-						$source_modified_array,
-						$target_original_array, 
-						$target_modified_array, 
-						$expected_content, 
-						""
+			$source_lng,
+			$target_lng,
+			$source_original_array,
+			$source_modified_array,
+			$target_original_array,
+			$target_modified_array,
+			$expected_content,
+			""
 		);
 	}
 
@@ -165,17 +165,17 @@ class  Multilingual_Aligner_UpdatePagesTest extends TikiTestCase
 		$target_modified_array = $this->removeSentenceAtIndex(1, $target_modified_array);
 
 		$expected_content = $target_original_array;
-		$expected_content [1] = "Deleted_Target ".$expected_content [1]; 
+		$expected_content [1] = "Deleted_Target ".$expected_content [1];
 
 		$this->do_test_basic_updating(
-						$source_lng,
-						$target_lng,
-						$source_original_array,
-						$source_modified_array,
-						$target_original_array, 
-						$target_modified_array, 
-						$expected_content, 
-						""
+			$source_lng,
+			$target_lng,
+			$source_original_array,
+			$source_modified_array,
+			$target_original_array,
+			$target_modified_array,
+			$expected_content,
+			""
 		);
 	}
 
@@ -197,14 +197,14 @@ class  Multilingual_Aligner_UpdatePagesTest extends TikiTestCase
 		$expected_content = $this->insertSentenceAtIndex(1, "Added_Source " . $this->mt_extra_source_sentence, $target_modified_array);
 
 		$this->do_test_basic_updating(
-						$source_lng,
-						$target_lng,
-						$source_original_array,
-						$source_modified_array,
-						$target_original_array, 
-						$target_modified_array, 
-						$expected_content, 
-						""
+			$source_lng,
+			$target_lng,
+			$source_original_array,
+			$source_modified_array,
+			$target_original_array,
+			$target_modified_array,
+			$expected_content,
+			""
 		);
 
 	}
@@ -225,18 +225,18 @@ class  Multilingual_Aligner_UpdatePagesTest extends TikiTestCase
 		$target_modified_array = $this->removeSentenceAtIndex(2, $target_modified_array);
 
 		$expected_content = $target_original_array;
-		$expected_content [1] = "Deleted_Source " . $expected_content [1]; 
-		$expected_content [2] = "Deleted_Target " . $expected_content [2]; 
+		$expected_content [1] = "Deleted_Source " . $expected_content [1];
+		$expected_content [2] = "Deleted_Target " . $expected_content [2];
 
 		$this->do_test_basic_updating(
-						$source_lng, 
-						$target_lng,
-						$source_original_array, 
-						$source_modified_array,
-						$target_original_array, 
-						$target_modified_array, 
-						$expected_content, 
-						""
+			$source_lng,
+			$target_lng,
+			$source_original_array,
+			$source_modified_array,
+			$target_original_array,
+			$target_modified_array,
+			$expected_content,
+			""
 		);
 	}
 
@@ -255,19 +255,19 @@ class  Multilingual_Aligner_UpdatePagesTest extends TikiTestCase
 		//		echo "<pre>-- UpdatePagesTest.do_test_basic_updating: \$expected_updated_target_array="; var_dump($expected_updated_target_array); echo "</pre>\n";
 
 		$orig_source = join(' ', $orig_source_array);
-		$modified_source = join(' ', $modified_source_array);			
+		$modified_source = join(' ', $modified_source_array);
 		$orig_target = join(' ', $orig_target_array);
 		$modified_target = join(' ', $modified_target_array);
 
 
 		$this->updater->SetAlignment($this->source_alignment, $this->target_alignment, $source_lng, $target_lng);
 		$final = $this->updater->UpdatingTargetPage(
-						$orig_source,
-						$modified_source,
-						$orig_target,
-						$modified_target,
-						$source_lng,
-						$target_lng
+			$orig_source,
+			$modified_source,
+			$orig_target,
+			$modified_target,
+			$source_lng,
+			$target_lng
 		);
 
 		//		echo "<pre>-- UpdatePagesTest.do_test_basic_updating: \$final="; var_dump($final); echo "</pre>\n";

@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -20,21 +20,30 @@ class WikipluginDBReportToken
 	function type_name()
 	{
 		switch($this->type) {
-			case 'key': return 'Keyword';
-			case 'txt': return 'Text';
-			case 'sty': return 'Style';
-			case 'fld': return 'Field';
-			case 'var': return 'Variable';
-			case 'str': return 'String';
-			case 'bra': return 'Brackets';
-			case 'eof': return 'End';
-			default: return $token->type;
+			case 'key':
+				return 'Keyword';
+			case 'txt':
+				return 'Text';
+			case 'sty':
+				return 'Style';
+			case 'fld':
+				return 'Field';
+			case 'var':
+				return 'Variable';
+			case 'str':
+				return 'String';
+			case 'bra':
+				return 'Brackets';
+			case 'eof':
+				return 'End';
+			default:
+				return $token->type;
 		}
 	}
 	function WikipluginDBReportToken($content=NULL)
 	{
 		$this->content = $content;
-	} 
+	}
 }
 
 class WikipluginDBReportField
@@ -52,7 +61,7 @@ class WikipluginDBReportField
 			// print("new variable $this->variable ");
 		} else {
 			// add to the list of parsed fields
-			// if ($wikiplugin_dbreport_fields_allowed) 
+			// if ($wikiplugin_dbreport_fields_allowed)
 			$wikiplugin_dbreport_fields[] =& $this;
 		}
 	}
@@ -120,7 +129,7 @@ class WikipluginDBReportString
 
 class WikipluginDBReportContent
 {
-	var $elements;  
+	var $elements;
 	function parse_text(&$text)
 	{
 		$parse_state = 0;
@@ -134,16 +143,16 @@ class WikipluginDBReportContent
 					switch($char) {
 						case '[':
 							$parse_state = 3;
-	   	   		break;
+							break;
 						case '\\':
 							$parse_state = 2;
 							$parse_text .= $char;
-		  	   		break;
+							break;
 						default:
 							$parse_state = 1;
 							$parse_text .= $char;
 					}
-	    	 	break;
+					break;
 				case 1: // text string
 					switch($char) {
 						case '[':
@@ -151,41 +160,41 @@ class WikipluginDBReportContent
 							$this->elements[] = new WikipluginDBReportString($parse_text);
 							$parse_text = '';
 							$parse_state = 3;
-	  	 		 		break;
+	  	 			 		break;
 						case '\\':
 							$parse_state = 2;
 							$parse_text .= $char;
-		  	 		 	break;
+		  	 			 	break;
 						default:
 							$parse_text .= $char;
 					}
-	    	 	break;
+					break;
 				case 2: // literal escape
 					$parse_text .= $char;
 					$parse_state = 1;
-	    	 	break;
+					break;
 				case 3: // field text
 					switch($char) {
 						case '[':
-	  	  				break;
+		  	  				break;
 						case ']':
 							unset($this->elements);
 							$this->elements[] = new WikipluginDBReportField($parse_text);
 							$parse_text = '';
 							$parse_state = 0;
-	  	  				break;
+	  		  				break;
 						case '\\':
 							$parse_state = 4;
 							$parse_text .= $char;
-	  	  				break;
+	  	  					break;
 						default:
 							$parse_text .= $char;
 					}
-	    	 	break;
+	    		 	break;
 				case 4: // field escape
 					$parse_text .= $char;
 					$parse_state = 3;
-	    	 	break;
+	    	 		break;
 			}
 		}
 		// hanging text is parsed as a string
@@ -218,13 +227,13 @@ class WikipluginDBReportContent
 		switch($token->type) {
 			case 'txt':
 				$this->parse_text($token->content);
- 	 	  	break;
+				break;
 			case 'fld':
 				$this->append_field($token->content);
- 	 	  	break;
+				break;
 			case 'var':
 				$this->append_variable($token->content);
- 	 	  	break;
+				break;
 		}
 	}
 	function text()
@@ -323,7 +332,7 @@ class WikipluginDBReportStyle
 	}
 	function html_start()
 	{
-		if (isset($this->class)) { 
+		if (isset($this->class)) {
 			$class = $this->class->html();
 			switch(strtolower($class)) {
 				case 'u':
@@ -337,13 +346,13 @@ class WikipluginDBReportStyle
 				case 'h6':
 					$this->tag = $class;
 					$html = '<' . $class;
-     			break;
+					break;
 				default:
-					$this->tag = 'span';				
+					$this->tag = 'span';
 					$html = '<span class="' . $class . '"';
 			}
 		} else {
-			$this->tag = 'span';				
+			$this->tag = 'span';
 			$html = '<span';
 		}
 		if (isset($this->style)) $html .= ' style="' . $this->style->html() . '"';
@@ -407,7 +416,7 @@ class WikipluginDBReportCell
 	var $link;
 	var $style;
 	var $colspan;
-	var $rowspan;	
+	var $rowspan;
 	var $contents;
 	function code($mode)
 	{
@@ -598,7 +607,7 @@ class WikipluginDBReportGroup
 		} else {
 			$html .= '<div>' . "\n";
 		}
-		if (isset($this->contents)) foreach ($this->contents as $content) $html.= $content->html(); 
+		if (isset($this->contents)) foreach ($this->contents as $content) $html.= $content->html();
 		return $html;
 	}
 	function end_html(&$row)
@@ -737,7 +746,7 @@ function wikiplugin_dbreport_next_token(&$code, $len, $pos)
 				wikiplugin_dbreport_parse_error($token, "Unclosed Field. ] expected.");
 				return $token;
 			}
-      break;
+			break;
 		case '{':
 			// brackets token
 			$token->type = 'bra';
@@ -750,35 +759,35 @@ function wikiplugin_dbreport_next_token(&$code, $len, $pos)
 				switch($state) {
 					case 0: // normal content
 						switch($c) {
-							case '}': $state = 4; 
-     						break;
+							case '}': $state = 4;
+     							break;
 							case '`': $state = 1; $token->content .= $c;
-     						break;
+     							break;
 							case "'": $state = 2; $token->content .= $c;
-     						break;
+     							break;
 							case '"': $state = 3; $token->content .= $c;
-     						break;
+     							break;
 							default:  $token->content .= $c;
 						}
-    					break;
+						break;
 					case 1: // backtick-quoted
 						switch($c) {
 							case '`': $state = 0;
 							default:  $token->content .= $c;
 						}
     					break;
-					case 2: // single-quoted 
+					case 2: // single-quoted
 						switch($c) {
 							case '\\': $token->content .= $c . $code[$pos++];
-     						break;
+								break;
 							case '\'': $state = 0;
 							default:  $token->content .= $c;
 						}
     					break;
-					case 3: // double-quoted 
+					case 3: // double-quoted
 						switch($c) {
 							case '\\': $token->content .= $c . $code[$pos++];
-     						break;
+								break;
 							case '"': $state = 0;
 							default:  $token->content .= $c;
 						}
@@ -788,24 +797,24 @@ function wikiplugin_dbreport_next_token(&$code, $len, $pos)
 			$token->after = $pos;
 			switch($state) {
 				case 0: // unclosed brackets
-						wikiplugin_dbreport_parse_error($token, "Unclosed brackets. } expected");
-						$token->type = 'eof'; 
-  						break;
+					wikiplugin_dbreport_parse_error($token, "Unclosed brackets. } expected");
+					$token->type = 'eof';
+					break;
 				case 1: // unclosed backtick-quoted content
-						wikiplugin_dbreport_parse_error($token, "Unclosed backtick-quoted content in brackets. ` then } expected");
-						$token->type = 'eof'; 
-  						break;
+					wikiplugin_dbreport_parse_error($token, "Unclosed backtick-quoted content in brackets. ` then } expected");
+					$token->type = 'eof';
+  					break;
 				case 2: // unclosed single-quoted content
-						wikiplugin_dbreport_parse_error($token, "Unclosed single-quoted content in brackets. ' then } expected");
-						$token->type = 'eof'; 
-  						break;
+					wikiplugin_dbreport_parse_error($token, "Unclosed single-quoted content in brackets. ' then } expected");
+					$token->type = 'eof';
+  					break;
 				case 3: // unclosed double-quoted content
-						wikiplugin_dbreport_parse_error($token, "Unclosed double-quoted content in brackets. \" then } expected");
-						$token->type = 'eof';  
-  						break;
+					wikiplugin_dbreport_parse_error($token, "Unclosed double-quoted content in brackets. \" then } expected");
+					$token->type = 'eof';
+  					break;
 			}
 			return $token;
-      break;		
+      break;
 		case ':':
 			// style token
 			$token->type = 'sty';
@@ -839,26 +848,26 @@ function wikiplugin_dbreport_next_token(&$code, $len, $pos)
 							case '>':
 							case '"':
 							case ' ': $state = 6; $class->after = $pos;
-     						break;
+								break;
 							case '{': $state = 1; $class->after = $pos; $style->start = $pos-1;
-      					break;
+								break;
 							case '[': $state = 2;
 							default:  $class->content .= $c;
 						}
-    					break;
+						break;
 					case 1: // inline style content
 						switch($tc) {
 							case '}': $state = 6; $style->after = $pos;
-      					break;
+								break;
 							case '[': $state = 3; $style->content .= $c;
-      					break;
+								break;
 							case "'": $state = 4; $style->content .= $c;
-      					break;
+								break;
 							case '"': $state = 5; $style->content .= $c;
-      					break;
+								break;
 							default:  $style->content .= $c;
 						}
-    					break;
+						break;
 					case 2: // class field
 						switch($tc) {
 							case ']': $state = 0;
@@ -871,13 +880,13 @@ function wikiplugin_dbreport_next_token(&$code, $len, $pos)
 							default:  $style->content .= $c;
 						}
     					break;
-					case 4: // single-quoted inline style 
+					case 4: // single-quoted inline style
 						switch($tc) {
 							case '\'': $state = 1;
 							default:  $style->content .= $c;
 						}
     					break;
-					case 5: // double-quoted inline style 
+					case 5: // double-quoted inline style
 						switch($tc) {
 							case '"': $state = 1;
 							default:  $style->content .= $c;
@@ -887,32 +896,32 @@ function wikiplugin_dbreport_next_token(&$code, $len, $pos)
 			}
 			switch($state) {
 				case 0: // end of file
-					$class->after = $pos; 
+					$class->after = $pos;
     				break;
 				case 1: // inline style content
-					$style->after = $pos; 
+					$style->after = $pos;
 					wikiplugin_dbreport_parse_error($style, "Unclosed style CSS. } expected");
-					$token->type = 'eof'; 
+					$token->type = 'eof';
     				break;
 				case 2: // class field
-					$class->after = $pos; 
+					$class->after = $pos;
 					wikiplugin_dbreport_parse_error($class, "Unclosed field in style class. ] expected");
-					$token->type = 'eof'; 
+					$token->type = 'eof';
     				break;
 				case 3: // inline style field
-					$style->after = $pos; 
+					$style->after = $pos;
 					wikiplugin_dbreport_parse_error($style, "Unclosed field in style CSS. ] then } expected");
-					$token->type = 'eof';  
+					$token->type = 'eof';
     				break;
-				case 4: // single-quoted inline style 
-					$style->after = $pos; 
+				case 4: // single-quoted inline style
+					$style->after = $pos;
 					wikiplugin_dbreport_parse_error($style, "Unclosed single-quoted content in style CSS. ' then } expected");
-					$token->type = 'eof'; 
+					$token->type = 'eof';
     				break;
-				case 5: // double-quoted inline style 
-					$style->after = $pos; 
+				case 5: // double-quoted inline style
+					$style->after = $pos;
 					wikiplugin_dbreport_parse_error($style, "Unclosed double-quoted content in style CSS. \" then } expected");
-					$token->type = 'eof';  
+					$token->type = 'eof';
     				break;
 			}
 			if ($class->content) $token->content['class'] = $class;
@@ -1020,9 +1029,10 @@ function wikiplugin_dbreport_parse(&$code)
 			$next_token = $token;
 			switch($parse_state) {
 				case 0: // next keyword
-					switch($token->type) {
+					switch ($token->type) {
 						case 'eof':
-							if (!isset($parse_report->sql)) return wikiplugin_dbreport_parse_error($token, "Unexpected End.");
+							if (!isset($parse_report->sql))
+								return wikiplugin_dbreport_parse_error($token, "Unexpected End.");
 							return $parse_report;
     						break;
 						case 'key':
@@ -1038,7 +1048,7 @@ function wikiplugin_dbreport_parse(&$code)
 									$parse_object = new WikipluginDBReportParameter($token);
 									$parse_report->params[] =& $parse_object;
 									$parse_state = 2;	// switch state
-									unset($next_token);	// consume the token	
+									unset($next_token);	// consume the token
 									$wikiplugin_dbreport_fields_allowed = false; // no fields in sql params
     								break;
 								case 'GROUP':
@@ -1048,7 +1058,7 @@ function wikiplugin_dbreport_parse(&$code)
 									$parse_report->groups[] =& $parse_object;
 									$parse_state = 3;	// switch state
 									unset($next_token);	// consume the token
-									$wikiplugin_dbreport_fields_allowed = true; // we can now parse fields						
+									$wikiplugin_dbreport_fields_allowed = true; // we can now parse fields
     								break;
 								case 'TABLE':
 									// create the table object
@@ -1276,7 +1286,7 @@ function wikiplugin_dbreport_parse(&$code)
 	    					break;
 						case 'sty':
 							unset($parse_link->styles);
-							$parse_line->styles[] = new WikipluginDBReportStyle($token);					
+							$parse_line->styles[] = new WikipluginDBReportStyle($token);
 							unset($next_token);		// consume the token
 		    				break;
 						case 'key':
@@ -1488,8 +1498,9 @@ function wikiplugin_dbreport_message_box($msg)
 	$return = '<table style="border-width:1px; border-style:dashed; border-color:silver; background:#E0E0FF;"><tr><td>';
 	switch(gettype($error)) {
 		case 'array':
-			foreach ($msg as $entry) $return .= $entry.'<br/>';
-      break;
+			foreach ($msg as $entry)
+				$return .= $entry.'<br/>';
+			break;
 		default:
 			$return .= (string)$msg;
 	}
@@ -1532,8 +1543,8 @@ function wikiplugin_dbreport_info()
 				'description' => tra('Parse wiki syntax within the report (not parsed by default)'),
 				'default' => '',
 				'options' => array(
-					array('text' => '', 'value' => ''), 
-					array('text' => tra('Yes'), 'value' => 1), 
+					array('text' => '', 'value' => ''),
+					array('text' => tra('Yes'), 'value' => 1),
 					array('text' => tra('No'), 'value' => 0)
 				),
 			),
@@ -1543,8 +1554,8 @@ function wikiplugin_dbreport_info()
 				'description' => tra('Display the parsed report definition (not displayed by default)'),
 				'default' => '',
 				'options' => array(
-					array('text' => '', 'value' => ''), 
-					array('text' => tra('Yes'), 'value' => 1), 
+					array('text' => '', 'value' => ''),
+					array('text' => tra('Yes'), 'value' => 1),
 					array('text' => tra('No'), 'value' => 0)
 				),
 			),
@@ -1552,7 +1563,7 @@ function wikiplugin_dbreport_info()
 	);
 }
 
-	
+
 function wikiplugin_dbreport($data, $params)
 {
 	// TikiWiki globals
@@ -1615,7 +1626,7 @@ function wikiplugin_dbreport($data, $params)
 		} else {
 			// execute sql query
 			$ado->SetFetchMode(ADODB_FETCH_NUM);
-			$query =& $ado->Execute($report->sql, $bindvars); 
+			$query =& $ado->Execute($report->sql, $bindvars);
 			$field_count = $query->FieldCount();
 			$fetchfield = 'FetchField';
 			if (!$query) {
@@ -1626,7 +1637,7 @@ function wikiplugin_dbreport($data, $params)
 	} else {
 		return (tra('No DSN connection string found!'));
 	}
-	// create an array of field names and their index	
+	// create an array of field names and their index
 	$field_index = array();
 //	$field_count = $query->FieldCount();
 	for ($index = 0; $index<$field_count; $index++) {
@@ -1675,7 +1686,7 @@ function wikiplugin_dbreport($data, $params)
 			// $style = 'heading';
 			// $cell->style = new WikipluginDBReportStyle($style);
 			$cell->contents[] =& $text;
-			$header->cells[] =& $cell; 
+			$header->cells[] =& $cell;
 			// create the rows cell
 			unset($cell);
 			$cell = new WikipluginDBReportCell();
@@ -1683,7 +1694,7 @@ function wikiplugin_dbreport($data, $params)
 			$field = new WikipluginDBReportField($column->name);
 			$field->index = $index;
 			$cell->contents[] =& $field;
-			$row->cells[] =& $cell; 
+			$row->cells[] =& $cell;
 		}
 	}
 	// are we debugging?

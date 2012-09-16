@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -54,27 +54,27 @@ class CommLib extends TikiLib
 
 				if ($parent_id)
 					$this->create_page(
-									$page['pageName'], 
-									0, 
-									$page['data'], 
-									$this->now,
-									$page['comment'], 
-									$page['receivedFromUser'], 
-									$page['receivedFromSite'], 
-									$page['description']
+						$page['pageName'],
+						0,
+						$page['data'],
+						$this->now,
+						$page['comment'],
+						$page['receivedFromUser'],
+						$page['receivedFromSite'],
+						$page['description']
 					);
 
 				$pages['data'][$key]['page_ref_id'] = $structlib->s_create_page($parent_id, $after_ref_id, $page['pageName'], $page['page_alias']);
 
 				if (!$parent_id)
 					$this->update_page(
-									$page['pageName'], 
-									$page['data'], 
-									$page['comment'], 
-									$page['receivedFromUser'],
-									$page['receivedFromSite'], 
-									$page['description'], 
-									true
+						$page['pageName'],
+						$page['data'],
+						$page['comment'],
+						$page['receivedFromUser'],
+						$page['receivedFromSite'],
+						$page['description'],
+						true
 					);
 			}
 			$query = "delete from `tiki_received_pages` where `structureName`=?";
@@ -83,14 +83,14 @@ class CommLib extends TikiLib
 			if ($this->page_exists($info["pageName"]))
 				return false;
 			$this->create_page(
-							$info["pageName"], 
-							0, 
-							$info["data"], 
-							$this->now, 
-							$info["comment"], 
-							$info["receivedFromUser"], 
-							$info["receivedFromSite"], 
-							$info["description"]
+				$info["pageName"],
+				0,
+				$info["data"],
+				$this->now,
+				$info["comment"],
+				$info["receivedFromUser"],
+				$info["receivedFromSite"],
+				$info["description"]
 			);
 			$query = "delete from `tiki_received_pages` where `receivedPageId`=?";
 			$this->query($query, array((int)$receivedPageId));
@@ -105,24 +105,24 @@ class CommLib extends TikiLib
 		$info = $this->get_received_article($receivedArticleId);
 
 		$artlib->replace_article(
-						$info["title"], 
-						$info["authorName"],
-						$topic, 
-						$info["useImage"], 
-						$info["image_name"], 
-						$info["image_size"], 
-						$info["image_type"], 
-						$info["image_data"],
-						$info["heading"], 
-						$info["body"], 
-						$info["publishDate"], 
-						$info["expireDate"], 
-						$info["author"],
-						0, 
-						$info["image_x"], 
-						$info["image_y"], 
-						$info["type"], 
-						$info["rating"]
+			$info["title"],
+			$info["authorName"],
+			$topic,
+			$info["useImage"],
+			$info["image_name"],
+			$info["image_size"],
+			$info["image_type"],
+			$info["image_data"],
+			$info["heading"],
+			$info["body"],
+			$info["publishDate"],
+			$info["expireDate"],
+			$info["author"],
+			0,
+			$info["image_x"],
+			$info["image_y"],
+			$info["type"],
+			$info["rating"]
 		);
 		$query = "delete from `tiki_received_articles` where `receivedArticleId`=?";
 		$result = $this->query($query, array((int)$receivedArticleId));
@@ -202,17 +202,17 @@ class CommLib extends TikiLib
 	}
 
 	function update_received_article(
-					$receivedArticleId, 
-					$title, 
-					$authorName, 
-					$useImage, 
-					$image_x, 
-					$image_y, 
-					$publishDate, 
-					$expireDate, 
-					$heading, 
-					$body, 
-					$type, 
+					$receivedArticleId,
+					$title,
+					$authorName,
+					$useImage,
+					$image_x,
+					$image_y,
+					$publishDate,
+					$expireDate,
+					$heading,
+					$body,
+					$type,
 					$rating
 		)
 	{
@@ -223,23 +223,23 @@ class CommLib extends TikiLib
 		$query.= " `image_y`=?, `publishDate`=?, `expireDate`=?, `type`=?, `rating`=?  where `receivedArticleId`=?";
 
 		$result = $this->query(
-						$query,
-						array(
-							$title,
-							$authorName,
-							$heading,
-							$body,
-							(int)$size,
-							$hash,
-							$useImage,
-							(int)$image_x,
-							(int)$image_y,
-							(int)$publishDate,
-							$expireDate,
-							$type,
-							(int)$rating,
-							(int)$receivedArticleId
-						)
+			$query,
+			array(
+				$title,
+				$authorName,
+				$heading,
+				$body,
+				(int)$size,
+				$hash,
+				$useImage,
+				(int)$image_x,
+				(int)$image_y,
+				(int)$publishDate,
+				$expireDate,
+				$type,
+				(int)$rating,
+				(int)$receivedArticleId
+			)
 		);
 	}
 
@@ -259,65 +259,65 @@ class CommLib extends TikiLib
 	}
 
 	function receive_article(
-				$site, 
-				$user, 
-				$title, 
-				$authorName, 
-				$size, 
-				$use_image, 
-				$image_name, 
-				$image_type, 
-				$image_size, 
+				$site,
+				$user,
+				$title,
+				$authorName,
+				$size,
+				$use_image,
+				$image_name,
+				$image_type,
+				$image_size,
 				$image_x,
-				$image_y, 
-				$image_data, 
-				$publishDate, 
-				$expireDate, 
-				$created, 
-				$heading, 
-				$body, 
-				$hash, 
-				$author, 
-				$type, 
+				$image_y,
+				$image_data,
+				$publishDate,
+				$expireDate,
+				$created,
+				$heading,
+				$body,
+				$hash,
+				$author,
+				$type,
 				$rating
-		) 
+		)
 	{
 		$query = "delete from `tiki_received_articles` where `title`=? and `receivedFromsite`=? and `receivedFromUser`=?";
 		$result = $this->query($query, array($title, $site, $user));
 
 		$query = "insert into `tiki_received_articles`(`receivedDate`,`receivedFromSite`," .
 							" `receivedFromUser`,`title`,`authorName`,`size`, `useImage`,`image_name`," .
-							" `image_type`,`image_size`,`image_x`,`image_y`,`image_data`,`publishDate`," . 
+							" `image_type`,`image_size`,`image_x`,`image_y`,`image_data`,`publishDate`," .
 							" `expireDate`,`created`,`heading`,`body`,`hash`,`author`,`type`,`rating`) "
 							;
     $query.= " values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
 		$result = $this->query(
-						$query, 
-						array(
-							(int)$this->now,
-							$site,
-							$user,
-							$title,
-							$authorName,
-							(int)$size,
-							$use_image,
-							$image_name,
-							$image_type,
-							$image_size,
-							$image_x,
-							$image_y,
-							$image_data,
-							(int)$publishDate,
-							(int)$expireDate,
-							(int)$created,
-							$heading,
-							$body,
-							$hash,
-							$author,
-							$type,
-							(int)$rating
-						)
+			$query,
+			array(
+				(int)$this->now,
+				$site,
+				$user,
+				$title,
+				$authorName,
+				(int)$size,
+				$use_image,
+				$image_name,
+				$image_type,
+				$image_size,
+				$image_x,
+				$image_y,
+				$image_data,
+				(int)$publishDate,
+				(int)$expireDate,
+				(int)$created,
+				$heading,
+				$body,
+				$hash,
+				$author,
+				$type,
+				(int)$rating
+			)
 		);
 	}
 
@@ -344,20 +344,20 @@ class CommLib extends TikiLib
 							" `receivedFromUser`, `receivedDate`,`description`,`structureName`, `parentName`," .
 							" `page_alias`, `pos`) values(?,?,?,?,?,?,?,?,?,?,?)";
 		$this->query(
-						$query, 
-						array(
-							$pageName, 
-							$data, 
-							$comment, 
-							$site, 
-							$user, 
-							(int)$tikilib->now, 
-							$description, 
-							$structureName, 
-							$parentName, 
-							$alias, 
-							$pos
-						)
+			$query,
+			array(
+				$pageName,
+				$data,
+				$comment,
+				$site,
+				$user,
+				(int)$tikilib->now,
+				$description,
+				$structureName,
+				$parentName,
+				$alias,
+				$pos
+			)
 		);
 	}
 
@@ -367,15 +367,15 @@ class CommLib extends TikiLib
 		$bindvars[] = $postfix;
 		$bindvars = array_merge($bindvars, $pages);
 
-		$query = 'update `tiki_received_pages` set `pageName`= concat(?,`pageName`,?) where `pageName` in (' . 
+		$query = 'update `tiki_received_pages` set `pageName`= concat(?,`pageName`,?) where `pageName` in (' .
 							implode(',', array_fill(0, count($pages), '?')) . ")";
 		$this->query($query, $bindvars);
 
-		$query = 'update `tiki_received_pages` set `parentName`= concat(?,`parentName`,?) where `parentName` in (' . 
+		$query = 'update `tiki_received_pages` set `parentName`= concat(?,`parentName`,?) where `parentName` in (' .
 							implode(',', array_fill(0, count($pages), '?')) . ")";
 		$this->query($query, $bindvars);
 
-		$query = 'update `tiki_received_pages` set `structureName`= concat(?,`structureName`,?) where `structureName` in (' . 
+		$query = 'update `tiki_received_pages` set `structureName`= concat(?,`structureName`,?) where `structureName` in (' .
 							implode(',', array_fill(0, count($pages), '?')) . ")";
 
 		$this->query($query, $bindvars);

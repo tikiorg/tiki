@@ -148,9 +148,9 @@ if (isset($_REQUEST['allowhtml'])) {
 	}
 }
 
-if ((isset($_REQUEST["save"]) || isset($_REQUEST["submit"])) 
-			&& empty($user) 
-			&& $prefs['feature_antibot'] == 'y' 
+if ((isset($_REQUEST["save"]) || isset($_REQUEST["submit"]))
+			&& empty($user)
+			&& $prefs['feature_antibot'] == 'y'
 			&& !$captchalib->validate()
 ) {
 	$errors[] = $captchalib->getErrors();
@@ -175,21 +175,21 @@ if (isset($_REQUEST['preview']) || !empty($errors)) {
 	}
 
 	$publishDate = $tikilib->make_time(
-					$_REQUEST['publish_Hour'], 
-					$_REQUEST['publish_Minute'], 
-					0, 
-					$_REQUEST['publish_Month'], 
-					$_REQUEST['publish_Day'], 
-					$_REQUEST['publish_Year']
+		$_REQUEST['publish_Hour'],
+		$_REQUEST['publish_Minute'],
+		0,
+		$_REQUEST['publish_Month'],
+		$_REQUEST['publish_Day'],
+		$_REQUEST['publish_Year']
 	);
 
 	$expireDate = $tikilib->make_time(
-					$_REQUEST['expire_Hour'], 
-					$_REQUEST['expire_Minute'], 
-					0, 
-					$_REQUEST['expire_Month'], 
-					$_REQUEST['expire_Day'], 
-					$_REQUEST['expire_Year']
+		$_REQUEST['expire_Hour'],
+		$_REQUEST['expire_Minute'],
+		0,
+		$_REQUEST['expire_Month'],
+		$_REQUEST['expire_Day'],
+		$_REQUEST['expire_Year']
 	);
 
 	$smarty->assign('reads', '0');
@@ -220,7 +220,7 @@ if (isset($_REQUEST['preview']) || !empty($errors)) {
 		$hasImage = 'y';
 	}
 
-	
+
 	$type = $artlib->get_type($_REQUEST['type']);
 
 	$smarty->assign('show_topline', $type["show_topline"]);
@@ -232,7 +232,7 @@ if (isset($_REQUEST['preview']) || !empty($errors)) {
 	$smarty->assign('show_expdate', $type["show_expdate"]);
 	$smarty->assign('show_linkto', $type["show_linkto"]);
 	$smarty->assign('use_ratings', $type["use_ratings"]);
-	
+
 	if (!isset($_REQUEST['topline'])) $_REQUEST['topline'] = '';
 	if (!isset($_REQUEST['subtitle'])) $_REQUEST['subtitle'] = '';
 	if (!isset($_REQUEST['linkto'])) $_REQUEST['linkto'] = '';
@@ -334,21 +334,21 @@ if ((isset($_REQUEST['save']) || isset($_REQUEST['submit'])) && empty($errors)) 
 	}
 
 	$publishDate = $tikilib->make_time(
-					$_REQUEST['publish_Hour'], 
-					$_REQUEST['publish_Minute'], 
-					0, 
-					$_REQUEST['publish_Month'], 
-					$_REQUEST['publish_Day'], 
-					$_REQUEST['publish_Year']
+		$_REQUEST['publish_Hour'],
+		$_REQUEST['publish_Minute'],
+		0,
+		$_REQUEST['publish_Month'],
+		$_REQUEST['publish_Day'],
+		$_REQUEST['publish_Year']
 	);
 
 	$expireDate = $tikilib->make_time(
-					$_REQUEST['expire_Hour'], 
-					$_REQUEST['expire_Minute'], 
-					0, 
-					$_REQUEST['expire_Month'], 
-					$_REQUEST['expire_Day'], 
-					$_REQUEST['expire_Year']
+		$_REQUEST['expire_Hour'],
+		$_REQUEST['expire_Minute'],
+		0,
+		$_REQUEST['expire_Month'],
+		$_REQUEST['expire_Day'],
+		$_REQUEST['expire_Year']
 	);
 
 	if (isset($_REQUEST['allowhtml']) && $_REQUEST['allowhtml'] == 'on') {
@@ -411,30 +411,30 @@ if ((isset($_REQUEST['save']) || isset($_REQUEST['submit'])) && empty($errors)) 
 	if (!isset($_REQUEST['lang'])) $_REQUEST['lang'] = '';
 
 	$subid = $artlib->replace_submission(
-					strip_tags($_REQUEST['title'], '<a><pre><p><img><hr><b><i>'),
-					$_REQUEST['authorName'],
-					$_REQUEST['topicId'],
-					$useImage,
-					$imgname,
-					$imgsize,
-					$imgtype,
-					$imgdata,
-					$heading,
-					$body,
-					$publishDate,
-					$expireDate,
-					$user,
-					$subId,
-					$_REQUEST['image_x'],
-					$_REQUEST['image_y'],
-					$_REQUEST['type'],
-					$_REQUEST['topline'],
-					$_REQUEST['subtitle'],
-					$_REQUEST['linkto'],
-					$_REQUEST['image_caption'],
-					$_REQUEST['lang'],
-					$_REQUEST['rating'],
-					$isfloat
+		strip_tags($_REQUEST['title'], '<a><pre><p><img><hr><b><i>'),
+		$_REQUEST['authorName'],
+		$_REQUEST['topicId'],
+		$useImage,
+		$imgname,
+		$imgsize,
+		$imgtype,
+		$imgdata,
+		$heading,
+		$body,
+		$publishDate,
+		$expireDate,
+		$user,
+		$subId,
+		$_REQUEST['image_x'],
+		$_REQUEST['image_y'],
+		$_REQUEST['type'],
+		$_REQUEST['topline'],
+		$_REQUEST['subtitle'],
+		$_REQUEST['linkto'],
+		$_REQUEST['image_caption'],
+		$_REQUEST['lang'],
+		$_REQUEST['rating'],
+		$isfloat
 	);
 
 	$cat_type = 'submission';
@@ -455,7 +455,7 @@ if ((isset($_REQUEST['save']) || isset($_REQUEST['submit'])) && empty($errors)) 
 			$toMatch = str_replace('.', '_', $att['itemId']);
 			if (isset($_REQUEST[$toMatch])) {
 				$attributeArray[$att['itemId']] = $_REQUEST[$toMatch];
-			}	
+			}
 		}
 		$artlib->set_article_attributes($subid, $attributeArray, true);
 	}
@@ -482,7 +482,7 @@ $_SESSION['thedate'] = $tikilib->now;
 $types = $artlib->list_types_byname();
 
 if ($prefs['article_custom_attributes'] == 'y') {
-	$article_attributes = $artlib->get_article_attributes($subId, true);	
+	$article_attributes = $artlib->get_article_attributes($subId, true);
 	$smarty->assign('article_attributes', $article_attributes);
 	$all_attributes = array();
 	$js_string = '';
@@ -497,7 +497,7 @@ if ($prefs['article_custom_attributes'] == 'y') {
 			$js_string .= "'$htmlid', 'y', ";
 		}
 	}
-	$smarty->assign('all_attributes', $all_attributes);	
+	$smarty->assign('all_attributes', $all_attributes);
 	$headerlib->add_js("articleCustomAttributes = new Array(); articleCustomAttributes = [$js_string];");
 }
 $smarty->assign_by_ref('types', $types);

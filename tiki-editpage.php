@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -40,18 +40,18 @@ function guess_new_page_attributes_from_parent_pages($page, $page_info)
 		// This is a new page being created. See if we can guess some of its attributes
 		// (ex: language) based on those of its parent pages.
 		//
-		$new_page_inherited_attributes = 
+		$new_page_inherited_attributes =
 			$editlib->get_new_page_attributes_from_parent_pages($page, $page_info);
 		if ($editlib->user_needs_to_specify_language_of_page_to_be_created($page, $page_info)
 		    && isset($new_page_inherited_attributes['lang'])) {
-		    // 
+		    //
 		    // Language is not set yet, but it COULD be guessed from parent pages.
 		    // So, set it.
 		    //
 		    $_REQUEST['lang'] = $new_page_inherited_attributes['lang'];
-		} 
+		}
 		if ($editlib->user_needs_to_specify_language_of_page_to_be_created($page, $page_info, $new_page_inherited_attributes)) {
-			// 
+			//
 			// Language of new page was not defined, and could not be guessed from the
 			// parent pages. User will have to specify it explicitly.
 			//
@@ -77,7 +77,7 @@ function translationsToThisPageAreInProgress($page_id)
 }
 
 function execute_module_translation()
-{ 
+{
 	global $smarty;
 // will show the language of the available translations. Chnage to 'n' to show the page name
 	$params['show_language'] = 'y';
@@ -89,7 +89,7 @@ function execute_module_translation()
 			'params' => array( 'show_language' => $params['show_language'], 'from_edit_page' => $params['from_edit_page'], 'nobox' => $params['nobox'] )
 	);
 
-	global $modlib; require_once 'lib/modules/modlib.php';	
+	global $modlib; require_once 'lib/modules/modlib.php';
 
 	$out = $modlib->execute_module($module_reference);
 	$smarty->assign('content_of_update_translation_section', $out);
@@ -107,7 +107,7 @@ $smarty->assign('translation_mode', $translation_mode);
 
 // If page is blank (from quickedit module or wherever) tell user -- instead of editing the default page
 // Dont get the page from default HomePage if not set (surely this would always be an error?)
-if (empty($_REQUEST["page"])) { 
+if (empty($_REQUEST["page"])) {
 	$smarty->assign('msg', tra("You must specify a page name, it will be created if it doesn't exist."));
 	$smarty->display("error.tpl");
 	die;
@@ -131,11 +131,11 @@ $editLockPageId = 'edit_lock_' . (isset($info['page_id']) ? (int) $info['page_id
  }
 $editlib->make_sure_page_to_be_created_is_not_an_alias($page, $info);
 guess_new_page_attributes_from_parent_pages($page, $info);
- 
+
 if ($translation_mode === 'n' && translationsToThisPageAreInProgress($info['page_id'])) {
 	$smarty->assign('prompt_for_edit_or_translate', 'y');
 	include_once('modules/mod-func-translation.php');
-	execute_module_translation();	
+	execute_module_translation();
 } else {
 	$smarty->assign('prompt_for_edit_or_translate', 'n');
 }
@@ -185,9 +185,9 @@ if (isset($_REQUEST["current_page_id"])) {
 	}
 
 	$structure_info = $structlib->s_get_structure_info($_REQUEST['current_page_id']);
-	if ( 
-				($tiki_p_edit != 'y' && !$tikilib->user_has_perm_on_object($user, $structure_info["pageName"], 'wiki page', 'tiki_p_edit')) 
-		|| (($tiki_p_edit_structures != 'y' && !$tikilib->user_has_perm_on_object($user, $structure_info["pageName"], 'wiki page', 'tiki_p_edit_structures'))) 
+	if (
+				($tiki_p_edit != 'y' && !$tikilib->user_has_perm_on_object($user, $structure_info["pageName"], 'wiki page', 'tiki_p_edit'))
+		|| (($tiki_p_edit_structures != 'y' && !$tikilib->user_has_perm_on_object($user, $structure_info["pageName"], 'wiki page', 'tiki_p_edit_structures')))
 	) {
 		$smarty->assign('errortype', 401);
 		$smarty->assign('msg', tra("You do not have permission to edit this page."));
@@ -211,7 +211,7 @@ function compare_import_versions($a1, $a2)
 
 if (isset($_REQUEST['cancel_edit'])) {
 	$tikilib->semaphore_unset($page, $_SESSION[$editLockPageId]);
-	if (!empty($_REQUEST['returnto'])) {	
+	if (!empty($_REQUEST['returnto'])) {
 		if (isURL($_REQUEST['returnto'])) {
 			$url = "location:".$_REQUEST['returnto'];
 		} else {
@@ -223,7 +223,7 @@ if (isset($_REQUEST['cancel_edit'])) {
 		if (!empty($_REQUEST['page_ref_id'])) {
 			$url .= '&page_ref_id='.$_REQUEST['page_ref_id'];
 		}
-	}	
+	}
 
 	if ($prefs['feature_multilingual'] === 'y' && $prefs['feature_best_language'] === 'y' && isset($info['lang']) && $info['lang'] !== $prefs['language']) {
 		$url .= '&no_bl=y';
@@ -654,7 +654,7 @@ $smarty->assign_by_ref('likepages', $likepages);
 if ($prefs['feature_likePages'] === 'y' and $edit_data === '' && !$tikilib->page_exists($page)) {
 	$likepages = $wikilib->get_like_pages($page);
 }
-	
+
 if (isset($prefs['wiki_feature_copyrights']) && $prefs['wiki_feature_copyrights'] === 'y') {
 	if (isset($_REQUEST['copyrightTitle'])) {
 		$smarty->assign('copyrightTitle', $_REQUEST["copyrightTitle"]);
@@ -698,14 +698,14 @@ if (isset($prefs['feature_references']) && $prefs['feature_references'] === 'y')
 			}
 
 			$assoc_references = $referencesLib->list_assoc_references($page_id);
-			
+
 			$page_info = TikiLib::lib('tiki')->get_page_info($page);
 			$regex = "/{ADDREFERENCE\(?\ ?biblio_code=\"(.*)\"\)?}.*({ADDREFERENCE})?/siU";
-			preg_match_all($regex,$page_info['data'], $matches);
+			preg_match_all($regex, $page_info['data'], $matches);
 			$matches[1] = array_unique($matches[1]);
-			
+
 			$key_exists = array();
-			foreach($matches[1] as $m) {
+			foreach ($matches[1] as $m) {
 				if (array_key_exists($m, $assoc_references['data'])) {
 					$key_exists[$m] = 1;
 				}
@@ -834,13 +834,13 @@ if ( !isset($_REQUEST['preview']) && !isset($_REQUEST['save']) ) {
 	if (isset($_REQUEST['mode_normal']) && $_REQUEST['mode_normal'] ==='y') {
 		// Parsing page data as first time seeing html page in normal editor
 		$smarty->assign('msg', "Parsing html to wiki");
-		
+
 		if (!$is_html) {
 			// we come from WYSIWYG-Wiki
-			$parsed = $edit_data; 
-		} else {			
+			$parsed = $edit_data;
+		} else {
 			// we come from WYSIWYG-HTML
-			$parsed = $editlib->parseToWiki($edit_data); 
+			$parsed = $editlib->parseToWiki($edit_data);
 		}
 		$is_html = false;
 		$info['is_html'] = false;
@@ -849,18 +849,18 @@ if ( !isset($_REQUEST['preview']) && !isset($_REQUEST['save']) ) {
 	} elseif (isset($_REQUEST['mode_wysiwyg']) && $_REQUEST['mode_wysiwyg'] === 'y') {
 		// Parsing page data as first time seeing wiki page in wysiwyg editor
 		$smarty->assign('msg', "Parsing wiki to html");
-		
+
 		if (!$is_html && $prefs['wysiwyg_htmltowiki'] === 'y') {
 			// we switch to WYSIWYG-Wiki
-			$parsed = $edit_data; 
+			$parsed = $edit_data;
 			$is_html = false;
 			$info['is_html'] = false;
 		} else {
 			// we switch to WYSIWYG-HTML
-			$parsed = $editlib->parseToWysiwyg($edit_data, true); 
+			$parsed = $editlib->parseToWysiwyg($edit_data, true);
 			$is_html = true;
 			$info['is_html'] = true;
-			$smarty->assign('allowhtml', 'y');	
+			$smarty->assign('allowhtml', 'y');
 		}
 		$info['wysiwyg'] = true;
 	} elseif ($_SESSION['wysiwyg'] === 'y') {
@@ -870,16 +870,16 @@ if ( !isset($_REQUEST['preview']) && !isset($_REQUEST['save']) ) {
 			}
 		} else {
 		 	$parsed = $tikilib->parse_data(
-								$edit_data, 
-								array(
-									'absolute_links'=>true, 
-									'noheaderinc'=>true, 
-									'suppress_icons' => true, 
-									'ck_editor' => true, 
-									'is_html' => true, 
-									'process_wiki_paragraphs' => false
-							)
-				);
+				$edit_data,
+				array(
+					'absolute_links'=>true,
+					'noheaderinc'=>true,
+					'suppress_icons' => true,
+					'ck_editor' => true,
+					'is_html' => true,
+					'process_wiki_paragraphs' => false
+				)
+			);
 		}
 	}
 }
@@ -893,7 +893,7 @@ $smarty->assign('pagedata', $parsed);
 if (isset($_REQUEST["preview"])) {
 	$parserlib = TikiLib::lib('parser');
 	$parsed = $parserlib->apply_postedit_handlers($parsed);
-	
+
 	if ($_SESSION['wysiwyg'] === 'y' && $prefs['wysiwyg_wiki_parsed'] === 'y') {
 		$parsed = $editlib->partialParseWysiwygToWiki($parsed);
 		$parsed = $tikilib->parse_data($parsed, array('absolute_links'=>true, 'noheaderinc'=>true, 'suppress_icons' => true, 'preview_mode'=>true, 'is_html' => $is_html));
@@ -934,9 +934,9 @@ $pageAlias = '';
 $cat_type='wiki page';
 $cat_objid = $_REQUEST["page"];
 if (
-			isset($_REQUEST['save']) 
-	 && $prefs['feature_contribution'] === 'y' 
-	 && $prefs['feature_contribution_mandatory'] === 'y' 
+			isset($_REQUEST['save'])
+	 && $prefs['feature_contribution'] === 'y'
+	 && $prefs['feature_contribution_mandatory'] === 'y'
 	 && (empty($_REQUEST['contributions']) || count($_REQUEST['contributions']) <= 0)
 ) {
 	$contribution_needed = true;
@@ -945,9 +945,9 @@ if (
 	$contribution_needed = false;
 }
 if (
-			isset($_REQUEST['save']) 
-	&& $prefs['feature_categories'] === 'y' 
-	&& $prefs['feature_wiki_mandatory_category'] >=0 
+			isset($_REQUEST['save'])
+	&& $prefs['feature_categories'] === 'y'
+	&& $prefs['feature_wiki_mandatory_category'] >=0
 	&& (empty($_REQUEST['cat_categories']) || count($_REQUEST['cat_categories']) <= 0)
 ) {
 	$category_needed = true;
@@ -963,22 +963,22 @@ if (isset($_REQUEST['save']) && $prefs['wiki_mandatory_edit_summary'] === 'y' &&
 }
 if ($prefs['wiki_mandatory_edit_summary'] === 'y') {
 	$headerlib->add_jq_onready(
-					'$("input[name=save],input[name=minor]").click(function(){
-						if (!$("#comment").val()) {
-							var s = prompt("'.tra('Describe the change you made').'");
-							if (!s) return false;
-							$("#comment").val(s);
-						}
-						return true;
-					})'
+		'$("input[name=save],input[name=minor]").click(function(){
+			if (!$("#comment").val()) {
+				var s = prompt("'.tra('Describe the change you made').'");
+				if (!s) return false;
+				$("#comment").val(s);
+			}
+			return true;
+		})'
 	);
 }
 
 if (
-				isset($_REQUEST["save"]) 
-		&& (strtolower($_REQUEST['page']) !== 'sandbox' || $tiki_p_admin === 'y') 
-		&& !$category_needed 
-		&& !$contribution_needed 
+				isset($_REQUEST["save"])
+		&& (strtolower($_REQUEST['page']) !== 'sandbox' || $tiki_p_admin === 'y')
+		&& !$category_needed
+		&& !$contribution_needed
 		&& ! $summary_needed
 ) {
 	check_ticket('edit-page');
@@ -1010,14 +1010,14 @@ if (
 
 	// add permisions here otherwise return error!
 	if (
-		isset($prefs['wiki_feature_copyrights']) 
+		isset($prefs['wiki_feature_copyrights'])
 		&& $prefs['wiki_feature_copyrights'] === 'y'
 		&& isset($_REQUEST['copyrightTitle'])
 		&& isset($_REQUEST['copyrightYear'])
 		&& isset($_REQUEST['copyrightAuthors'])
 		&& isset($_REQUEST['copyrightHolder'])
 		&& !empty($_REQUEST['copyrightYear'])
-		&& !empty($_REQUEST['copyrightTitle']) 
+		&& !empty($_REQUEST['copyrightTitle'])
 	) {
 
 		include_once("lib/copyrights/copyrightslib.php");
@@ -1025,8 +1025,8 @@ if (
 		$copyrightYear = $_REQUEST['copyrightYear'];
 		$copyrightTitle = $_REQUEST['copyrightTitle'];
 		$copyrightAuthors = $_REQUEST['copyrightAuthors'];
-		$copyrightHolder = $_REQUEST['copyrightHolder'];		
-		$copyrightslib->add_copyright($page,$copyrightTitle,$copyrightYear,$copyrightAuthors, $copyrightHolder, $user);
+		$copyrightHolder = $_REQUEST['copyrightHolder'];
+		$copyrightslib->add_copyright($page, $copyrightTitle, $copyrightYear, $copyrightAuthors, $copyrightHolder, $user);
 	}
 
 	$exist = $tikilib->page_exists($_REQUEST['page']);
@@ -1040,19 +1040,19 @@ if (
 		   $tikilib->cache_links($cachedlinks);
 		 */
 		$tikilib->create_page(
-						$_REQUEST["page"], 
-						0, 
-						$edit, 
-						$tikilib->now, 
-						$_REQUEST["comment"],
-						$user,
-						$tikilib->get_ip_address(),
-						$description, 
-						$pageLang, 
-						$is_html, 
-						$hash, 
-						$_REQUEST['wysiwyg'], 
-						$wiki_authors_style
+			$_REQUEST["page"],
+			0,
+			$edit,
+			$tikilib->now,
+			$_REQUEST["comment"],
+			$user,
+			$tikilib->get_ip_address(),
+			$description,
+			$pageLang,
+			$is_html,
+			$hash,
+			$_REQUEST['wysiwyg'],
+			$wiki_authors_style
 		);
 
 		$info_new = $tikilib->get_page_info($page);
@@ -1112,19 +1112,19 @@ if (
 			$edit = $editlib->partialParseWysiwygToWiki($edit);
 		}
 		$tikilib->update_page(
-						$_REQUEST["page"], 
-						$edit,
-						$_REQUEST["comment"],
-						$user,
-						$tikilib->get_ip_address(),
-						$description,
-						$minor,
-						$pageLang, 
-						$is_html, 
-						$hash, 
-						null, 
-						$_REQUEST['wysiwyg'], 
-						$wiki_authors_style
+			$_REQUEST["page"],
+			$edit,
+			$_REQUEST["comment"],
+			$user,
+			$tikilib->get_ip_address(),
+			$description,
+			$minor,
+			$pageLang,
+			$is_html,
+			$hash,
+			null,
+			$_REQUEST['wysiwyg'],
+			$wiki_authors_style
 		);
 		$info_new = $tikilib->get_page_info($page);
 
@@ -1152,13 +1152,13 @@ if (
 
 	include_once("categorize.php");
 	include_once("poll_categorize.php");
-	
+
 	/*RP NOTE: freetabs was causing larger site's pages to be lost when editing sections
 	 * this has to do with lucene indexing being refreshed.
 	 * this was traced to lib/core/Search/Index -> getGlobalContent();
 	 * This seems to divert it when sections are being edited, please either fix or leave
 	 * */
-	if(!isset($_REQUEST['hdr'])) {
+	if (!isset($_REQUEST['hdr'])) {
 		include_once("freetag_apply.php");
 	}
 
@@ -1181,13 +1181,13 @@ if (
 			$page_ref_id = $structlib->s_create_page($page_info["parent_id"], $_REQUEST['current_page_id'], $_REQUEST["page"], '', $page_info['structure_id']);
 		}
 		// Inherit direct object permissions for pages added to a structure, if the user can edit the structure and the page
-		if(!isset($prefs['feature_wiki_no_inherit_perms_structure']) || $prefs['feature_wiki_no_inherit_perms_structure'] === 'n') {
-			if ($tikilib->user_has_perm_on_object($user, $_REQUEST["page"],'wiki page', 'tiki_p_edit_structures', 'tiki_p_edit') ||
-				($tikilib->user_has_perm_on_object($user, $_REQUEST["page"],'wiki page', 'tiki_p_admin_wiki'))) {
-				 $userlib->copy_object_permissions($page_info["pageName"], $_REQUEST["page"],'wiki page');
+		if (!isset($prefs['feature_wiki_no_inherit_perms_structure']) || $prefs['feature_wiki_no_inherit_perms_structure'] === 'n') {
+			if ($tikilib->user_has_perm_on_object($user, $_REQUEST["page"], 'wiki page', 'tiki_p_edit_structures', 'tiki_p_edit') ||
+				($tikilib->user_has_perm_on_object($user, $_REQUEST["page"], 'wiki page', 'tiki_p_admin_wiki'))) {
+				 $userlib->copy_object_permissions($page_info["pageName"], $_REQUEST["page"], 'wiki page');
 			}
 		}
-	} 
+	}
 
 	/* Local reference handling */
 	if (isset($prefs['feature_references']) && $prefs['feature_references'] === 'y') {
@@ -1213,8 +1213,8 @@ if (
 					$referencesLib->add_reference($page_id, $_REQUEST['ref_biblio_code'], $_REQUEST['ref_author'], $_REQUEST['ref_title'], $_REQUEST['ref_part'], $_REQUEST['ref_uri'], $_REQUEST['ref_code'], $_REQUEST['ref_year'], $_REQUEST['ref_style']);
 				}
 			}
-		 }
-	 }
+		}
+	}
 	/* Local reference handling */
 
 	// If the watch state is not the same
@@ -1263,7 +1263,7 @@ if (
 		$tmp = $tikilib->parse_data($edit);			// fills $anch[] so page refreshes at the section being edited
 		$url .= "#".$anch[$_REQUEST['hdr']-1]['id'];
 	}
-	
+
 	if ($dieInsteadOfForwardingWithHeader) die ("-- tiki-editpage: Dying before third call to header(), so we can see traces. Forwarding to: '$url'");
 	header("location: $url");
 	die;
@@ -1301,8 +1301,8 @@ if ($prefs['feature_multilingual'] === 'y') {
 		if ($tikilib->page_exists($page)) {
 			// Display an error if the page already exists
 			$smarty->assign(
-							'msg',
-							tra("Page already exists. Go back and choose a different name.") . "<P>" . tra("Page name is") . ": '$page'"
+				'msg',
+				tra("Page already exists. Go back and choose a different name.") . "<P>" . tra("Page name is") . ": '$page'"
 			);
 			$smarty->display("error.tpl");
 			die;
@@ -1347,7 +1347,7 @@ if ($prefs['feature_freetags'] === 'y') {
 }
 if ($prefs['feature_categories'] === 'y') {
 	include_once ("categorize_list.php");
-	
+
 	if (isset($_REQUEST["current_page_id"]) && $prefs['feature_wiki_categorize_structure'] === 'y' && $categlib->is_categorized('wiki page', $structure_info["pageName"])) {
 		$categIds = $categlib->get_object_categories('wiki page', $structure_info["pageName"]);
 		$smarty->assign('categIds', $categIds);
@@ -1436,7 +1436,7 @@ if (($prefs['feature_wiki_templates'] === 'y' && $tiki_p_use_content_templates =
 		$prefs['feature_multilingual'] === 'y' ||
 		$prefs['namespace_enabled'] === 'y' ||
 		! empty($prefs['geo_locate_wiki']) && $prefs['geo_locate_wiki'] === 'y') {
-	
+
 	$smarty->assign('showPropertiesTab', 'y');
 }
 
@@ -1457,5 +1457,5 @@ $smarty->display("tiki.tpl");
 function isURL($chkURL)
 {
 	$rc = (false !== parse_url($chkURL));
-	return $rc;	
+	return $rc;
 }

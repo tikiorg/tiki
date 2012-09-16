@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -116,14 +116,14 @@ class StatsLib extends TikiLib
 		$stats = array();
 		$stats["forums"] = $this->getOne("select count(*) from `tiki_forums`", array());
 		$stats["topics"] = $this->getOne(
-						"select count(*) from `tiki_comments`,`tiki_forums`" .
-						" where `object`=`forumId` and `objectType`=? and `parentId`=?", 
-						array('forum',0)
+			"select count(*) from `tiki_comments`,`tiki_forums`" .
+			" where `object`=`forumId` and `objectType`=? and `parentId`=?",
+			array('forum',0)
 		);
 		$stats["threads"] = $this->getOne(
-						"select count(*) from `tiki_comments`,`tiki_forums`" . 
-						" where `object`=`forumId` and `objectType`=? and `parentId`<>?", 
-						array('forum',0)
+			"select count(*) from `tiki_comments`,`tiki_forums`" .
+			" where `object`=`forumId` and `objectType`=? and `parentId`<>?",
+			array('forum',0)
 		);
 		$stats["tpf"] = ($stats["forums"] ? $stats["topics"] / $stats["forums"] : 0);
 		$stats["tpt"] = ($stats["topics"] ? $stats["threads"] / $stats["topics"] : 0);
@@ -180,31 +180,31 @@ class StatsLib extends TikiLib
 			//get max pageview number
 			//sum by day as there are sometimes multiple unixstamps per day
 			$max = $this->fetchAll(
-							"SELECT SUM(`pageviews`) AS views, `day` AS unixtime" .
-							" FROM `tiki_pageviews`" .
-							" GROUP BY FROM_UNIXTIME(`day`, '%Y-%m-%d')" .
-							" ORDER BY views DESC" .
-							" LIMIT 1"
+				"SELECT SUM(`pageviews`) AS views, `day` AS unixtime" .
+				" FROM `tiki_pageviews`" .
+				" GROUP BY FROM_UNIXTIME(`day`, '%Y-%m-%d')" .
+				" ORDER BY views DESC" .
+				" LIMIT 1"
 			);
 			$maxvar = $max[0]['views'];
 
 			//get min pageview number
 			$min = $this->fetchAll(
-							"SELECT SUM(`pageviews`) AS views, `day` AS unixtime" .
-							" FROM `tiki_pageviews`" .
-							" GROUP BY FROM_UNIXTIME(`day`, '%Y-%m-%d')" .
-							" ORDER BY views ASC" .
-							" LIMIT 1"
+				"SELECT SUM(`pageviews`) AS views, `day` AS unixtime" .
+				" FROM `tiki_pageviews`" .
+				" GROUP BY FROM_UNIXTIME(`day`, '%Y-%m-%d')" .
+				" ORDER BY views ASC" .
+				" LIMIT 1"
 			);
 			$minvar = $min[0]['views'];
 
 			//pull all dates with max or min because there may be more than one for each
 			$views = $this->fetchAll(
-							"SELECT SUM(`pageviews`) AS views, FROM_UNIXTIME(`day`, '%Y-%m-%d') AS date, `day` AS unixtime" .
-							" FROM `tiki_pageviews`" .
-							" GROUP BY FROM_UNIXTIME(`day`, '%Y-%m-%d')" .
-							" HAVING views = '$maxvar' OR views = '$minvar'" .
-							" ORDER BY date ASC"
+				"SELECT SUM(`pageviews`) AS views, FROM_UNIXTIME(`day`, '%Y-%m-%d') AS date, `day` AS unixtime" .
+				" FROM `tiki_pageviews`" .
+				" GROUP BY FROM_UNIXTIME(`day`, '%Y-%m-%d')" .
+				" HAVING views = '$maxvar' OR views = '$minvar'" .
+				" ORDER BY date ASC"
 			);
 
 			$start = $this->getOne("select min(`day`) from `tiki_pageviews`", array());
@@ -220,7 +220,7 @@ class StatsLib extends TikiLib
 					$stats['bestday'] .= $tikilib->get_long_date($view['unixtime']) . ' (' . $maxvar . ' ' . tra('pvs') . ')<br />';
 					$b > 0 ? $stats['bestdesc'] = tra('Days with the most pageviews') : $stats['bestdesc'] = tra('Day with the most pageviews');
 					$b++;
-				} 
+				}
 				if ($view['views'] == $minvar) {
 					$stats['worstday'] .= $tikilib->get_long_date($view['unixtime']) . ' (' . $minvar . ' ' . tra('pvs') . ')<br />';
 					$w > 0 ? $stats['worstdesc'] = tra('Days with the least pageviews') : $stats['worstdesc'] = tra('Day with the least pageviews');
@@ -255,8 +255,8 @@ class StatsLib extends TikiLib
 		}
 
 		$cant = $this->getOne(
-						"select count(*) from `tiki_stats` where `object`=? and `type`=? and `day`=?", 
-						array($object, $type, (int)$dayzero)
+			"select count(*) from `tiki_stats` where `object`=? and `type`=? and `day`=?",
+			array($object, $type, (int)$dayzero)
 		);
 
 		if ( $cant ) {
@@ -275,12 +275,12 @@ class StatsLib extends TikiLib
 		if ($days != 0) {
 			$mid = "WHERE `day` >= ?";
 			$bindvars[] = $this->make_time(
-							0, 
-							0, 
-							0, 
-							$this->date_format("%m"), 
-							$this->date_format("%d") - $days, 
-							$this->date_format("%Y")
+				0,
+				0,
+				0,
+				$this->date_format("%m"),
+				$this->date_format("%d") - $days,
+				$this->date_format("%Y")
 			);
 		} else {
 			$mid = "WHERE `day` <> 'NULL' ";
@@ -315,12 +315,12 @@ class StatsLib extends TikiLib
 		if ($days != 0) {
 			$mid = "AND `day` >= ? ";
 			$bindvars[] = $this->make_time(
-							0, 
-							0, 
-							0, 
-							$this->date_format("%m"), 
-							$this->date_format("%d") - $days, 
-							$this->date_format("%Y")
+				0,
+				0,
+				0,
+				$this->date_format("%m"),
+				$this->date_format("%d") - $days,
+				$this->date_format("%Y")
 			);
 		} else {
 			$mid = '';
@@ -343,12 +343,12 @@ class StatsLib extends TikiLib
 		if ($days != 0) {
 			$mid = "WHERE `day` >= ? ";
 			$bindvars[] = $this->make_time(
-							0, 
-							0, 
-							0, 
-							$this->date_format("%m"), 
-							$this->date_format("%d") - $days, 
-							$this->date_format("%Y")
+				0,
+				0,
+				0,
+				$this->date_format("%m"),
+				$this->date_format("%d") - $days,
+				$this->date_format("%Y")
 			);
 		} else {
 			$mid = "";
@@ -367,7 +367,7 @@ class StatsLib extends TikiLib
 	}
 
 	/**
-	 * Transform a last period to a 2 dates 
+	 * Transform a last period to a 2 dates
 	 *
 	 */
 	function period2dates($when)
@@ -383,15 +383,15 @@ class StatsLib extends TikiLib
 		switch ($when) {
 			case 'lasthour':
 				$begin = $now - 60*60;
-							break;
+				break;
 
 			case 'day':
 				$begin = TikiLib::make_time(0, 0, 0, $month, $day, $year);
-							break;
+				break;
 
 			case 'lastday':
 				$begin = Tikilib::make_time($hour-24, $min, $sec, $month, $day, $year);
-							break;
+				break;
 
 			case 'week':
 				$iweek = TikiLib::date_format("%w", $now);// 0 for Sunday...
@@ -399,44 +399,44 @@ class StatsLib extends TikiLib
 					$firstDayofWeek = (int)tra('First day of week: Sunday (its ID is 0) - translators you need to localize this string!');
 					if ( $firstDayofWeek < 1 || $firstDayofWeek > 6 ) {
 						$firstDayofWeek = 0;
-					} 
+					}
 				} else {
 					$firstDayofWeek = $prefs['calendar_firstDayofWeek'];
 				}
 				$iweek -= $firstDayofWeek;
 				if ($iweek < 0) $iweek += 7;
 				$begin = TikiLib::make_time(0, 0, 0, $month, $day-($iweek ), $year);
-							break;
+				break;
 
 			case 'lastweek':
 				$begin = Tikilib::make_time($hour, $min, $sec, $month, $day-7, $year);
-							break;
+				break;
 
 			case 'month':
 				$begin = TikiLib::make_time(0, 0, 0, $month, 1, $year);
-							break;
+				break;
 
 			case 'lastmonth':
 				$begin = TikiLib::make_time($hour, $min, $sec, $month-1, $day, $year);
-							break;			
+				break;
 
 			case 'year':
 				$begin = TikiLib::make_time(0, 0, 0, 1, 1, $year);
-							break;
+				break;
 
 			case 'lastyear':
 				$begin = TikiLib::make_time($hour, $min, $sec, $month, $day, $year-1);
-							break;
+				break;
 
 			default :
 				$begin = $now;
-							break;
+				break;
 		}
 		return array((int)$begin, (int)$now);
 	}
 
 	/**
-	 * count the number of created or modified for this day, this month, this year 
+	 * count the number of created or modified for this day, this month, this year
 	 *
 	 */
 	function count_this_period($table = 'tiki_pages', $column ='created', $when='daily', $parentColumn ='', $parentId='')
@@ -453,7 +453,7 @@ class StatsLib extends TikiLib
 	}
 
 	/**
-	 *  count the number of viewed for this day, this month, this year 
+	 *  count the number of viewed for this day, this month, this year
 	 *
 	 */
 	function hit_this_period($type='wiki', $when='daily')
@@ -471,12 +471,12 @@ class StatsLib extends TikiLib
 	function add_pageview()
 	{
 		$dayzero = $this->make_time(
-						0, 
-						0, 
-						0, 
-						$this->date_format("%m", $this->now), 
-						$this->date_format("%d", $this->now), 
-						$this->date_format("%Y", $this->now)
+			0,
+			0,
+			0,
+			$this->date_format("%m", $this->now),
+			$this->date_format("%d", $this->now),
+			$this->date_format("%Y", $this->now)
 		);
 
 		$conditions = array('day' => (int) $dayzero,);

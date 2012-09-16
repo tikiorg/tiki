@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -16,7 +16,7 @@ class Payment_CartTest extends TikiTestCase
 		$this->obj = $this->getMock('CartLib', array('get_gift_certificate_code'));
 		$_SERVER['REQUEST_URI'] = '/tiki-index.php';
 	}
-	
+
 	function tearDown()
 	{
 		unset($_SESSION['cart']);
@@ -31,12 +31,12 @@ class Payment_CartTest extends TikiTestCase
 	function testAddToCart()
 	{
 		$this->obj->add_product(
-						'T-123', 
-						3, 
-						array(
-							'price' => '100.43',
-							'description' => 'Hello',
-						)
+			'T-123',
+			3,
+			array(
+				'price' => '100.43',
+				'description' => 'Hello',
+			)
 		);
 
 		$this->assertEquals(301.29, $this->obj->get_total());
@@ -45,12 +45,12 @@ class Payment_CartTest extends TikiTestCase
 	function testUpdateQuantity()
 	{
 		$this->obj->add_product(
-						'T-123', 
-						3, 
-						array(
-							'price' => '100.43',
-							'description' => 'Hello',
-						)
+			'T-123',
+			3,
+			array(
+				'price' => '100.43',
+				'description' => 'Hello',
+			)
 		);
 
 		$this->obj->update_quantity('T-123', 1);
@@ -61,20 +61,20 @@ class Payment_CartTest extends TikiTestCase
 	function testMultipleProducts()
 	{
 		$this->obj->add_product(
-						'T-123', 
-						2, 
-						array(
-							'price' => '100.43',
-							'description' => 'Hello',
-						)
+			'T-123',
+			2,
+			array(
+				'price' => '100.43',
+				'description' => 'Hello',
+			)
 		);
 		$this->obj->add_product(
-						'T-456', 
-						1, 
-						array(
-							'price' => '100.43',
-							'description' => 'World',
-						)
+			'T-456',
+			1,
+			array(
+				'price' => '100.43',
+				'description' => 'World',
+			)
 		);
 
 		$this->assertEquals(301.29, $this->obj->get_total());
@@ -83,20 +83,20 @@ class Payment_CartTest extends TikiTestCase
 	function testProductWithConflictingInformation()
 	{
 		$this->obj->add_product(
-						'T-123', 
-						2, 
-						array(
-							'price' => '100.43',
-							'description' => 'Hello',
-						)
+			'T-123',
+			2,
+			array(
+				'price' => '100.43',
+				'description' => 'Hello',
+			)
 		);
 		$this->obj->add_product(
-						'T-123', 
-						1, 
-						array(
-							'price' => '1000.00',
-							'description' => 'World',
-						)
+			'T-123',
+			1,
+			array(
+				'price' => '1000.00',
+				'description' => 'World',
+			)
 		);
 
 		$this->assertEquals(301.29, $this->obj->get_total());
@@ -112,12 +112,12 @@ class Payment_CartTest extends TikiTestCase
 	function testPrecision()
 	{
 		$this->obj->add_product(
-						'T-456', 
-						1, 
-						array(
-							'price' => '1.012',
-							'description' => 'World',
-						)
+			'T-456',
+			1,
+			array(
+				'price' => '1.012',
+				'description' => 'World',
+			)
 		);
 
 		$this->assertEquals(1.01, $this->obj->get_total());
@@ -126,12 +126,12 @@ class Payment_CartTest extends TikiTestCase
 	function testNegativeQuantity()
 	{
 		$this->obj->add_product(
-						'T-456', 
-						-1, 
-						array(
-							'price' => '1.01',
-							'description' => 'World',
-						)
+			'T-456',
+			-1,
+			array(
+				'price' => '1.01',
+				'description' => 'World',
+			)
 		);
 
 		$this->assertEquals(1.01, $this->obj->get_total());
@@ -140,12 +140,12 @@ class Payment_CartTest extends TikiTestCase
 	function testNegativePrice()
 	{
 		$this->obj->add_product(
-						'T-456', 
-						1, 
-						array(
-							'price' => '-1.01',
-							'description' => 'World',
-						)
+			'T-456',
+			1,
+			array(
+				'price' => '-1.01',
+				'description' => 'World',
+			)
 		);
 
 		$this->assertEquals(1.01, $this->obj->get_total());
@@ -154,12 +154,12 @@ class Payment_CartTest extends TikiTestCase
 	function testZeroQuantityRemovedLine()
 	{
 		$this->obj->add_product(
-						'T-123', 
-						2, 
-						array(
-							'price' => '100.43',
-							'description' => 'Hello',
-						) 
+			'T-123',
+			2,
+			array(
+				'price' => '100.43',
+				'description' => 'Hello',
+			)
 		);
 
 		$this->obj->update_quantity('T-123', 0);
@@ -170,12 +170,12 @@ class Payment_CartTest extends TikiTestCase
 	function testPricePadded()
 	{
 		$this->obj->add_product(
-						'T-123', 
-						2, 
-						array(
-							'price' => '100.4',
-							'description' => 'Hello',
-						)
+			'T-123',
+			2,
+			array(
+				'price' => '100.4',
+				'description' => 'Hello',
+			)
 		);
 
 		$content = $this->obj->get_content();
@@ -185,12 +185,12 @@ class Payment_CartTest extends TikiTestCase
 	function testTotalPadded()
 	{
 		$this->obj->add_product(
-						'T-123', 
-						2, 
-						array(
-							'price' => '100.4',
-							'description' => 'Hello',
-						)
+			'T-123',
+			2,
+			array(
+				'price' => '100.4',
+				'description' => 'Hello',
+			)
 		);
 
 		$this->assertSame('200.80', $this->obj->get_total());
@@ -200,16 +200,16 @@ class Payment_CartTest extends TikiTestCase
 	{
 		global $user;
 		$user = 'admin';
-		
+
 		$this->obj->add_product(
-						'T-123', 
-						2, 
-						array(
-							'price' => '100.4',
-							'description' => 'Hello',
-							'eventcode' => 123,
-							'producttype' => 'Any type'
-						) 
+			'T-123',
+			2,
+			array(
+				'price' => '100.4',
+				'description' => 'Hello',
+				'eventcode' => 123,
+				'producttype' => 'Any type'
+			)
 		);
 
 		$this->obj->request_payment();
@@ -225,30 +225,30 @@ class Payment_CartTest extends TikiTestCase
 	function testCollectDescription()
 	{
 		$this->obj->add_product(
-						'T-123', 
-						2, 
-						array(
-							'description' => 'Hello World',
-							'href' => 'product123',
-							'price' => 12.50,
-						)
+			'T-123',
+			2,
+			array(
+				'description' => 'Hello World',
+				'href' => 'product123',
+				'price' => 12.50,
+			)
 		);
 		$this->obj->add_product(
-						'T-456', 
-						1, 
-						array(
-							'description' => 'Foobar',
-							'price' => 120.50,
-						)
+			'T-456',
+			1,
+			array(
+				'description' => 'Foobar',
+				'price' => 120.50,
+			)
 		);
 
 		$this->assertEquals(
-						"||__ID__|__Product__|__Quantity__|__Unit Price__
+			"||__ID__|__Product__|__Quantity__|__Unit Price__
 T-123|[product123|Hello World]|2|12.50
 T-456|Foobar|1|120.50
 ||
-", 
-      $this->obj->get_description()
+",
+			$this->obj->get_description()
 		);
 	}
 
@@ -257,14 +257,14 @@ T-456|Foobar|1|120.50
 		global $paymentlib; require_once 'lib/payment/paymentlib.php';
 
 		$this->obj->add_product(
-						'123', 
-						2, 
-						array(
-							'price' => 123,
-							'description' => 'test',
-							'eventcode' => 123,
-							'producttype' => 'any type',
-						)
+			'123',
+			2,
+			array(
+				'price' => 123,
+				'description' => 'test',
+				'eventcode' => 123,
+				'producttype' => 'any type',
+			)
 		);
 
 		$id = $this->obj->request_payment();
@@ -284,48 +284,48 @@ T-456|Foobar|1|120.50
 		global $paymentlib; require_once 'lib/payment/paymentlib.php';
 
 		$this->obj->add_product(
-						'123', 
-						2, 
-						array(
-							'price' => 123,
-							'description' => 'test',
-							'eventcode' => 123,
-							'producttype' => 'any type',
-							'behaviors' => array(
-								array(
-									'event' => 'complete', 
-									'behavior' => 'sample', 
-									'arguments' => array('Done 123!')
-								),
-								array(
-									'event' => 'cancel', 
-									'behavior' => 'sample', 
-									'arguments' => array('No 123!')
-								),
-							),
-						)
+			'123',
+			2,
+			array(
+				'price' => 123,
+				'description' => 'test',
+				'eventcode' => 123,
+				'producttype' => 'any type',
+				'behaviors' => array(
+					array(
+						'event' => 'complete',
+						'behavior' => 'sample',
+						'arguments' => array('Done 123!')
+					),
+					array(
+						'event' => 'cancel',
+						'behavior' => 'sample',
+						'arguments' => array('No 123!')
+					),
+				),
+			)
 		);
 		$this->obj->add_product(
-						'456', 
-						1, 
-						array(
-							'price' => 456,
-							'description' => 'test',
-							'eventcode' => 123,
-							'producttype' => 'any type',
-							'behaviors' => array(
-								array(
-									'event' => 'complete', 
-									'behavior' => 'sample', 
-									'arguments' => array('Done 456!')
-								),
-								array(
-									'event' => 'cancel', 
-									'behavior' => 'sample', 
-									'arguments' => array('No 456!')
-								),
-							),
-						)
+			'456',
+			1,
+			array(
+				'price' => 456,
+				'description' => 'test',
+				'eventcode' => 123,
+				'producttype' => 'any type',
+				'behaviors' => array(
+					array(
+						'event' => 'complete',
+						'behavior' => 'sample',
+						'arguments' => array('Done 456!')
+					),
+					array(
+						'event' => 'cancel',
+						'behavior' => 'sample',
+						'arguments' => array('No 456!')
+					),
+				),
+			)
 		);
 
 		$id = $this->obj->request_payment();
@@ -337,38 +337,38 @@ T-456|Foobar|1|120.50
 		TikiDb::get()->query('DELETE FROM tiki_payment_requests WHERE paymentRequestId = ?', array($id));
 
 		$this->assertEquals(
-						array(
-							array('behavior' => 'sample', 'arguments' => array('Done 123!')),
-							array('behavior' => 'sample', 'arguments' => array('Done 123!')),
-							array('behavior' => 'sample', 'arguments' => array('Done 456!')),
-						), 
-						$payment['actions']['complete'] 
+			array(
+				array('behavior' => 'sample', 'arguments' => array('Done 123!')),
+				array('behavior' => 'sample', 'arguments' => array('Done 123!')),
+				array('behavior' => 'sample', 'arguments' => array('Done 456!')),
+			),
+			$payment['actions']['complete']
 		);
 
 		$this->assertEquals(
-						array(
-							array('behavior' => 'sample', 'arguments' => array('No 123!')),
-							array('behavior' => 'sample', 'arguments' => array('No 123!')),
-							array('behavior' => 'sample', 'arguments' => array('No 456!')),
-							array('behavior' => 'replace_inventory', 'arguments' => array(123, 2)),
-							array('behavior' => 'replace_inventory', 'arguments' => array(456, 1)),
-						), 
-						$payment['actions']['cancel']
+			array(
+				array('behavior' => 'sample', 'arguments' => array('No 123!')),
+				array('behavior' => 'sample', 'arguments' => array('No 123!')),
+				array('behavior' => 'sample', 'arguments' => array('No 456!')),
+				array('behavior' => 'replace_inventory', 'arguments' => array(123, 2)),
+				array('behavior' => 'replace_inventory', 'arguments' => array(456, 1)),
+			),
+			$payment['actions']['cancel']
 		);
 	}
-	
+
 	function testGetGiftCertificateCode_shouldReturnCodeIfNotNull()
 	{
 		$obj = new CartLib;
 		$code = 123;
 		$this->assertEquals($code, $obj->get_gift_certificate_code($code));
 	}
-	
+
 	function testGetGiftCertificateCode_shouldReturnValueStoreInSession()
 	{
 		$obj = new CartLib;
 		$code = null;
-		$_SESSION['cart']['tiki-gc']['code'] = 123; 
+		$_SESSION['cart']['tiki-gc']['code'] = 123;
 		$this->assertEquals(123, $obj->get_gift_certificate_code($code));
 	}
 }

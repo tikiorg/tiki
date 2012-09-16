@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -39,9 +39,9 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 
 	/**
 	 * List	of permanent links to pages and posts
-	 * in the blog. Used to identify in the posts and pages 
+	 * in the blog. Used to identify in the posts and pages
 	 * contents internal links that will be replaced after
-	 * the refered object is created in Tiki. 
+	 * the refered object is created in Tiki.
 	 * @var array
 	 */
 	public $permalinks = array();
@@ -53,18 +53,18 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 	{
 		$options = array(
 			array(
-					'name' => 'importAttachments', 
-					'type' => 'checkbox', 
+					'name' => 'importAttachments',
+					'type' => 'checkbox',
 					'label' => tra('Import images and other attachments')
 			),
 			array(
-					'name' => 'replaceInternalLinks', 
-					'type' => 'checkbox', 
+					'name' => 'replaceInternalLinks',
+					'type' => 'checkbox',
 					'label' => tra('Update internal links (experimental)')
 			),
 			array(
-					'name' => 'htaccessRules', 
-					'type' => 'checkbox', 
+					'name' => 'htaccessRules',
+					'type' => 'checkbox',
 					'label' => tra('Suggest .htaccess rules to redirect from old WP URLs to new Tiki URLs (experimental)')
 			)
 		);
@@ -74,10 +74,10 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 
 	/**
 	 * Check for DOMDocument.
-	 * 
+	 *
 	 * @see lib/importer/TikiImporter#checkRequirements()
 	 *
-	 * @return void 
+	 * @return void
 	 * @throws Exception if DOMDocument not available
 	 */
 	function checkRequirements()
@@ -108,11 +108,11 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 	 * Start the importing process by loading the XML file. And
 	 * calling wordpress specific import functions (like extractBlogInfo()
 	 * and downloadAttachments())
-	 * 
+	 *
 	 * @see lib/importer/TikiImporter_Blog#import()
 	 *
 	 * @param string $filePath path to the XML file
-	 * @return null 
+	 * @return null
 	 * @throws UnexpectedValueException if invalid file mime type
 	 */
 	function import($filePath)
@@ -191,7 +191,7 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 	 * items (pages, posts and attachments), categories and tags. Set
 	 * $this->parsedData with each key of this array containing
 	 * one set of data (items, categories and tags).
-	 * 
+	 *
 	 * @return null
 	 */
 	function parseData()
@@ -209,9 +209,9 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 	 * Get all the permalinks to posts and pages from
 	 * the XML document. This is used to give the user
 	 * a list of old WP URLs and their equivalent in Tiki
-	 * and to replace internal links in post and page 
+	 * and to replace internal links in post and page
 	 * content if the option is set.
-	 * 
+	 *
 	 * @return array permalinks
 	 */
 	function extractPermalinks()
@@ -230,7 +230,7 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 						switch ($node->tagName) {
 							case 'wp:post_id':
 								$id = $node->textContent;
-											break;
+								break;
 							case 'link':
 							case 'guid':
 								if (!in_array($node->textContent, $oldLinks)) {
@@ -242,9 +242,9 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 										$oldLinks[] = $relativePath;
 									}
 								}
-											break;
-							default:
-											break;
+								break;
+						default:
+							break;
 						}
 					}
 				}
@@ -260,7 +260,7 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 
 	/**
 	 * Extract pages, posts and attachments
-	 * 
+	 *
 	 * @return array all extract items (pages, posts and attachments)
 	 */
 	function extractItems()
@@ -291,7 +291,7 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 
 	/**
 	 * Return all tags present in the Wordpress XML file
-	 * 
+	 *
 	 * @return array tags
 	 */
 	function extractTags()
@@ -316,7 +316,7 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 	 * Apparently categories on Wordpress XML are always ordered with the parent
 	 * first and the childs right after. We trust in this order to create the categories
 	 * without organizing them hierarchically.
-	 * 
+	 *
 	 *  @return array categories
 	 */
 	function extractCategories()
@@ -387,8 +387,8 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 				$response = $client->request();
 			} catch (Zend_Http_Client_Adapter_Exception $e) {
 				$this->saveAndDisplayLog(
-								'Unable to download file ' . $attachment['fileName'] . '. Error message was: ' . $e->getMessage() . "\n",
-								true
+					'Unable to download file ' . $attachment['fileName'] . '. Error message was: ' . $e->getMessage() . "\n",
+					true
 				);
 				$feedback['error']++;
 				continue;
@@ -400,22 +400,22 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 
 			if ($response->isSuccessful()) {
 				$fileId = $filegallib->insert_file(
-								$galleryId, 
-								$attachment['name'], 
-								'', 
-								$attachment['fileName'], 
-								$data, 
-								$size, 
-								$mimeType, 
-								$attachment['author'], 
-								'', 
-								'', 
-								$attachment['author']
+					$galleryId,
+					$attachment['name'],
+					'',
+					$attachment['fileName'],
+					$data,
+					$size,
+					$mimeType,
+					$attachment['author'],
+					'',
+					'',
+					$attachment['author']
 				);
 
 				$this->newFiles[] = array(
-								'fileId' => $fileId, 
-								'oldUrl' => $attachment['link'], 
+								'fileId' => $fileId,
+								'oldUrl' => $attachment['link'],
 								'sizes' => isset($attachment['sizes']) ? $attachment['sizes'] : ''
 				);
 
@@ -423,13 +423,13 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 				$feedback['success']++;
 			} else {
 				$this->saveAndDisplayLog(
-								tr(
-												'Unable to download attachment %0. Error message was: %1 %2', 
-												$attachment['fileName'], 
-												$response->getStatus(), 
-												$response->getMessage()
-								) . "\n",
-								true
+					tr(
+						'Unable to download attachment %0. Error message was: %1 %2',
+						$attachment['fileName'],
+						$response->getStatus(),
+						$response->getMessage()
+					) . "\n",
+					true
 				);
 				$feedback['error']++;
 			}
@@ -444,9 +444,9 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 
 	/**
 	 * Create a file gallery to be used as a placeholder
-	 * for all imported attachments. Return the new 
+	 * for all imported attachments. Return the new
 	 * gallery id.
-	 * 
+	 *
 	 * @return int created gallery id
 	 */
 	function createFileGallery()
@@ -472,7 +472,7 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 	/**
 	 * Extract all the attachments from a XML Wordpress file
 	 * and return them.
-	 * 
+	 *
 	 * @return array all the attachments
 	 */
 	function extractAttachmentsInfo()
@@ -509,7 +509,7 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 									'height' => $size['height'],
 								);
 							}
-							$attachment['sizes'] = $sizes; 
+							$attachment['sizes'] = $sizes;
 						}
 					}
 				}
@@ -524,9 +524,9 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 	/**
 	 * Parse an DOM representation of a Wordpress item and return all the values
 	 * that will be imported (title, content, comments etc).
-	 *  
+	 *
 	 * @param DOMElement $item
-	 * @return array $data information for one item (page or post) 
+	 * @return array $data information for one item (page or post)
 	 * @throws ImporterParserException if fail to parse an item
 	 */
 	function extractInfo(DOMElement $item)
@@ -542,19 +542,19 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 				switch ($node->tagName)	{
 					case 'title':
 						$data['name'] = (string) $node->textContent;
-									break;
+						break;
 					case 'wp:post_id':
 						$data['wp_id'] = (int) $node->textContent;
-									break;
+						break;
 					case 'wp:post_type':
 						$data['type'] = (string) $node->textContent;
-									break;
+						break;
 					case 'wp:post_date':
 						$data['created'] = strtotime($node->textContent);
-									break;
+						break;
 					case 'dc:creator':
 						$data['author'] = (string) $node->textContent;
-									break;
+						break;
 					case 'category':
 						if ($node->hasAttribute('nicename')) {
 							if ($node->getAttribute('domain') == 'tag') {
@@ -563,21 +563,21 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 								$data['categories'][] = $node->textContent;
 							}
 						}
-									break;
+						break;
 					case 'content:encoded':
 						$data['content'] = (string) $this->parseContent($node->textContent);
-									break;
+						break;
 					case 'excerpt:encoded':
 						$data['excerpt'] = (string) $node->textContent;
-									break;
+						break;
 					case 'wp:comment':
 						$comment = $this->extractComment($node);
 						if ($comment) {
 							$data['comments'][] = $comment;
-						} 
-									break;
+						}
+						break;
 					default:
-									break;
+						break;
 				}
 			}
 		}
@@ -610,8 +610,8 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 	}
 
 	/**
-	 * Just call different parsing functions 
-	 * 
+	 * Just call different parsing functions
+	 *
 	 * @param string $content post or page content
 	 * @return string modified content
 	 */
@@ -624,10 +624,10 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 	}
 
 	/**
-	 * Parse the content of a page or post replacing old 
+	 * Parse the content of a page or post replacing old
 	 * attachments URLs with the new URLs of the attachments
-	 * already imported to Tiki file galleries 
-	 * 
+	 * already imported to Tiki file galleries
+	 *
 	 * @param string $content post or page content
 	 * @return string parsed content
 	 */
@@ -638,7 +638,7 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 		if (!empty($this->newFiles)) {
 			foreach ($this->newFiles as $file) {
 				$baseOldUrl = preg_replace('|(.+/).*|', '\\1', $file['oldUrl']);
-				$baseNewUrl = 'tiki-download_file.php?fileId=' . $file['fileId'] . '&display'; 
+				$baseNewUrl = 'tiki-download_file.php?fileId=' . $file['fileId'] . '&display';
 
 				$newUrls = array();
 				$oldUrls = array();
@@ -649,7 +649,7 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 				if (!empty($file['sizes'])) {
 					foreach ($file['sizes'] as $size) {
 						$newUrls[] = $baseNewUrl . '&x=' . $size['width'] . '&y=' . $size['height'];
-						$oldUrls[] = $baseOldUrl . $size['name']; 
+						$oldUrls[] = $baseOldUrl . $size['name'];
 					}
 				}
 
@@ -664,10 +664,10 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 	 * Identify in a page or post content Wordpress shortcodes and
 	 * add ~np~ so that Tiki output the shortcode directly without
 	 * trying to parse it.
-	 * 
+	 *
 	 * See matchWordpressShortcodes() documentation for more information
-	 * on the values of the $shortcodes array. 
-	 * 
+	 * on the values of the $shortcodes array.
+	 *
 	 * All the following are valid shortcodes syntax:
 	 * [my-shortcode]
 	 * [my-shortcode/]
@@ -675,7 +675,7 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 	 * [my-shortcode foo='bar'/]
 	 * [my-shortcode]content[/my-shortcode]
 	 * [my-shortcode foo='bar']content[/my-shortcode]
-	 * 
+	 *
 	 * @param string $content page or post content
 	 * @return string parsed content
 	 */
@@ -686,7 +686,7 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 		foreach ($sortcodes as $shortcode) {
 			// add ~np~~/np~ between shorcode opening tag and closing tag (if present)
 			$replacement = '~np~[' . $shortcode[1] . $shortcode[2] . ']~/np~';
-			$replacement .= isset($shortcode[3]) ? $shortcode[3] . '~np~[/' . $shortcode[1] . ']~/np~' : '';  
+			$replacement .= isset($shortcode[3]) ? $shortcode[3] . '~np~[/' . $shortcode[1] . ']~/np~' : '';
 
 			$content = str_replace($shortcode[0], $replacement, $content);
 		}
@@ -696,13 +696,13 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 
 	/**
 	 * Return a list of shortcodes matches from a post or page content
-	 * 
+	 *
 	 * Return a array of matches. Each match is a array with the following structure:
 	 * - 0 => the whole strings that matched (e.g. [my-shortcode foo='bar']content[/my-shortcode])
 	 * - 1 => shortcode name (e.g. my-shortcode)
 	 * - 2 => shortcode parameters if any
 	 * - 3 => shortcode contents if any
-	 * 
+	 *
 	 * @param string $content page or post content
 	 * @return array shortcode matches
 	 */
@@ -734,7 +734,7 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 	 * Comparison function to sort shortcodes array
 	 * with the biggest shortcode string first and the
 	 * smallest last.
-	 * 
+	 *
 	 * @param array $a
 	 * @param array $b
 	 * @return int
@@ -752,7 +752,7 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 	 * Extract information from a comment node and return it. Comments marked
 	 * as spam, trash or pingback are ignored by the importer. Pingbacks are
 	 * ignore because they are not supported by Tiki yet.
-	 * 
+	 *
 	 * @param DOMElement $commentNode
 	 * @return array|false $comment return false if comment is marked as spam
 	 */
@@ -773,30 +773,30 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 				switch ($node->tagName) {
 					case 'wp:comment_author':
 						$comment['author'] = $node->textContent;
-									break;
+						break;
 					case 'wp:comment_author_email':
 						$comment['author_email'] = $node->textContent;
-									break;
+						break;
 					case 'wp:comment_author_url':
 						$comment['author_url'] = ($node->textContent != 'http://') ? $node->textContent : '';
-									break;
+						break;
 					case 'wp:comment_author_IP':
 						$comment['author_ip'] = $node->textContent;
-									break;
+						break;
 					case 'wp:comment_date':
 						$comment['created'] = strtotime($node->textContent);
-									break;
+						break;
 					case 'wp:comment_content':
 						$comment['data'] = $node->textContent;
-									break;
+						break;
 					case 'wp:comment_approved':
 						$comment['approved'] = $node->textContent;
-									break;
+						break;
 					case 'wp:comment_type':
 						$comment['type'] = $node->textContent;
-									break;
+						break;
 					default:
-									break;
+						break;
 				}
 			}
 		}
@@ -808,7 +808,7 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 	 * Search a page or post content for internal links and
 	 * return true if a internal link is found, otherwise
 	 * return false.
-	 * 
+	 *
 	 * @param array $item a page or post data
 	 * @return bool wheter the item has or not internal links
 	 */
@@ -840,7 +840,7 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 
 		$created = $this->extractBlogCreatedDate();
 
-		if ($created > 0) { 
+		if ($created > 0) {
 			$this->blogInfo['created'] = $created;
 		}
 	}
@@ -848,7 +848,7 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 	/**
 	 * Calculate blog created date based on the date of
 	 * the oldest post present in the XML file.
-	 * 
+	 *
 	 * @return int blog created date (actually oldest post date)
 	 */
 	function extractBlogCreatedDate()
@@ -864,7 +864,7 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 
 		sort($dates);
 
-		if (!empty($dates)) { 
+		if (!empty($dates)) {
 			$created = $dates[0];
 		}
 
@@ -874,7 +874,7 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 	//TODO: check if a proxy is configured and than use Zend_Http_Client_Adapter_Proxy
 	/**
 	 * Set $this->httpClient property as an instance of Zend_Http_Client
-	 * 
+	 *
 	 * @return void
 	 */
 	function getHttpClient()
@@ -885,7 +885,7 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 	/**
 	 * Call $this->storeNewLink and leave the rest
 	 * with the parent method.
-	 * 
+	 *
 	 * @see lib/importer/TikiImporter_Blog#insertItem($item)
 	 */
 	function insertItem($item)
@@ -899,10 +899,10 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 
 	/**
 	 * Map the old WP link with the new Tiki link for a
-	 * given item. This information is stored in 
+	 * given item. This information is stored in
 	 * $this->permalinks and used later to replace internal
 	 * links in post and page content.
-	 * 
+	 *
 	 * @param int|string $objId int id when blog post or pageName when page
 	 * @param array $item
 	 * @return void
@@ -929,14 +929,14 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 				} else {
 					$this->permalinks[$item['wp_id']]['newLink'] = $base_url . 'tiki-view_blog_post.php?postId=' . $objId;
 				}
-			} 
+			}
 		}
 	}
 
 	/**
 	 * Call $this->replaceInternalLinks() and leave the
 	 * rest with the parent method.
-	 * 
+	 *
 	 * @see lib/importer/TikiImporter_Blog#insertData()
 	 */
 	function insertData()
@@ -954,7 +954,7 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 	/**
 	 * Replace old WP links with new Tiki links inside
 	 * post or page content directly in the database.
-	 * 
+	 *
 	 * @param array $items
 	 * @return void
 	 */
@@ -1001,7 +1001,7 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 	 * Format $this->permalinks and return a string
 	 * with suggested htaccess rules to redirect
 	 * from old WP URLs to new Tiki URLs.
-	 *  
+	 *
 	 * @return array
 	 */
 	function getHtaccessRules()

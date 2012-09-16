@@ -148,7 +148,7 @@ class FreetagLib extends ObjectLib
 		$query_cant = 'SELECT COUNT(*)';
 
 		$query_end =  ' FROM `tiki_objects` o, `tiki_freetagged_objects` fto, `tiki_freetags` t'
-								. ' WHERE fto.`tagId` = t.`tagId` AND o.`objectId` = fto.`objectId` AND `tag` = ? ' . $mid 
+								. ' WHERE fto.`tagId` = t.`tagId` AND o.`objectId` = fto.`objectId` AND `tag` = ? ' . $mid
 								. ' ORDER BY o.' . $this->convertSortMode($sort_mode);
 
 		$query      .= $query_end;
@@ -171,15 +171,15 @@ class FreetagLib extends ObjectLib
 	 *
 	 * Returns an array of object ID's that have all the tags passed in the
 	 * tagArray parameter. Use this to provide tag combo services to your users.
-	 * 
+	 *
 	 * @param mixed $tagArray: array of normalized form tags along to the function.
-	 * @param string $type 
+	 * @param string $type
 	 * @param string $thisUser: Restrict the result to objects tagged by a particular user
 	 * @param int $offset: The numerical offset to begin display at. Defaults to 0
 	 * @param int $maxRecords:  The number of results per page to show. Defaults to 100
-	 * @param string $sort_mode 
-	 * @param string $find 
-	 * @param string $broaden 
+	 * @param string $sort_mode
+	 * @param string $find
+	 * @param string $broaden
 	 * @access public
 	 * @return An array of Object ID numbers that reference your original objects
 	 *
@@ -197,7 +197,7 @@ class FreetagLib extends ObjectLib
 																		, $sort_mode = 'name_asc'
 																		, $find = ''
 																		, $broaden = 'n'
-																		) 
+																		)
 	{
 
 		global $tiki_p_admin, $user, $smarty, $prefs;
@@ -300,8 +300,8 @@ class FreetagLib extends ObjectLib
 
 		$query_end = ' FROM `tiki_objects` o, `tiki_freetagged_objects` fto, `tiki_freetags` t'
 								.	' WHERE fto.`tagId` = t.`tagId` AND o.`objectId` = fto.`objectId`'
-								.	' AND ' . $tag_sql 
-								. $mid 
+								.	' AND ' . $tag_sql
+								. $mid
 								.	' ORDER BY ' . $this->convertSortMode($sort_mode);
 		// note the original line was originally here to fix ambiguous 'created' column for default sort.
 		// Not a neat fix the o. prefix is ugly.	So changed default order instead.
@@ -405,15 +405,15 @@ class FreetagLib extends ObjectLib
 	}
 
 	/**
-	 * get_tags_on_object 
-	 * 
+	 * get_tags_on_object
+	 *
 	 * You can use this function to show the tags on an object. Since it supports both user-specific
 	 * and general modes with the $user parameter, you can use it twice on a page to make it work
 	 * similar to upcoming.org and flickr, where the page displays your own tags differently than
 	 * other users' tags.
 	 *
 	 * @param int $itemId The unique ID of the object in question
-	 * @param int $type 
+	 * @param int $type
 	 * @param int $offset The offset of tags to return
 	 * @param int $maxRecords The size of the tagset to return
 	 * @param int $user The unique ID of the person who tagged the object, if user-level tags only are preferred
@@ -466,17 +466,17 @@ class FreetagLib extends ObjectLib
 	 *
 	 */
 	/**
-	 * get_all_tags_on_object_for_language 
-	 * 
+	 * get_all_tags_on_object_for_language
+	 *
 	 * Derived from get_tags_on_object. The method extracts all tags for an object
 	 * and attempts to find a translation in a given language. If no translation
 	 * exists at this time, the original tag will be used.
 	 * This method is to be used when translating a page to create the initial set
 	 * of tags.
 	 *
-	 * @param mixed $itemId 
-	 * @param mixed $type 
-	 * @param mixed $lang 
+	 * @param mixed $itemId
+	 * @param mixed $type
+	 * @param mixed $lang
 	 * @access public
 	 * @return
 	 */
@@ -513,11 +513,11 @@ class FreetagLib extends ObjectLib
 	}
 
 	/**
-	 * find_or_create_tag 
-	 * 
-	 * @param mixed $tag 
-	 * @param mixed $lang 
-	 * @param mixed $anyLanguage 
+	 * find_or_create_tag
+	 *
+	 * @param mixed $tag
+	 * @param mixed $lang
+	 * @param mixed $anyLanguage
 	 * @access public
 	 * @return tagId
 	 */
@@ -684,7 +684,7 @@ class FreetagLib extends ObjectLib
 			$normalized_valid_chars = $this->_normalized_valid_chars;
 			$tag = preg_replace("/[^$normalized_valid_chars]/", '', $tag);
 		}
-		
+
 		return $this->_normalize_in_lowercase ? TikiLib::strtolower($tag, 'UTF-8') : $tag;
 	}
 
@@ -856,14 +856,14 @@ class FreetagLib extends ObjectLib
 	}
 
 	/**
-	 * update_tags 
-	 * 
-	 * @param mixed $user 
-	 * @param mixed $itemId 
-	 * @param mixed $type 
-	 * @param mixed $tag_string 
-	 * @param mixed $old_user 
-	 * @param mixed $lang 
+	 * update_tags
+	 *
+	 * @param mixed $user
+	 * @param mixed $itemId
+	 * @param mixed $type
+	 * @param mixed $tag_string
+	 * @param mixed $old_user
+	 * @param mixed $lang
 	 * @access public
 	 * @return void
 	 */
@@ -887,9 +887,9 @@ class FreetagLib extends ObjectLib
 	}
 
 	/**
-	 * _parse_tag 
-	 * 
-	 * @param mixed $tag_string 
+	 * _parse_tag
+	 *
+	 * @param mixed $tag_string
 	 * @access protected
 	 * @return
 	 */
@@ -920,13 +920,13 @@ class FreetagLib extends ObjectLib
 	}
 
 	/**
-	 * _tag_object_array 
-	 * 
-	 * @param mixed $user 
-	 * @param mixed $itemId 
-	 * @param mixed $type 
-	 * @param mixed $tagArray 
-	 * @param mixed $lang 
+	 * _tag_object_array
+	 *
+	 * @param mixed $user
+	 * @param mixed $itemId
+	 * @param mixed $type
+	 * @param mixed $tagArray
+	 * @param mixed $lang
 	 * @access protected
 	 * @return void
 	 */
@@ -941,7 +941,7 @@ class FreetagLib extends ObjectLib
 				$lang = null;
 			}
 		}
-		
+
 		foreach ($tagArray as $tag) {
 			$tag = trim($tag);
 			if ($tag != '') {
@@ -1246,7 +1246,7 @@ class FreetagLib extends ObjectLib
 							. ' HAVING cnt >= ?'
 							. ' ORDER BY cnt DESC, RAND()'
 							;
-						break;
+			break;
 		// }}}
 
 		case 'weighted': // {{{
@@ -1263,7 +1263,7 @@ class FreetagLib extends ObjectLib
 							. ' ORDER BY sort_cnt DESC, RAND()'
 							;
 			// Sort based on the global popularity of all tags in common
-						break;
+			break;
 		// }}}
 		}
 
@@ -1283,7 +1283,7 @@ class FreetagLib extends ObjectLib
 
 	/**
 	 * cleanup_tags Remove all tags that are orphaned (i.e. not used)
-	 * 
+	 *
 	 * @access public
 	 * @return true
 	 */
@@ -1291,30 +1291,30 @@ class FreetagLib extends ObjectLib
 	{
 		$this->query('DELETE FROM `tiki_freetagged_objects` WHERE `tagId` NOT IN(SELECT `tagId` FROM `tiki_freetags`)');
 		$this->query(
-						'DELETE tfo FROM `tiki_freetagged_objects` tfo'
-						.	' LEFT JOIN `tiki_objects` tob ON (tob.`objectId` = tfo.`objectId`) WHERE tob.`objectId` IS null'
+			'DELETE tfo FROM `tiki_freetagged_objects` tfo'
+			.	' LEFT JOIN `tiki_objects` tob ON (tob.`objectId` = tfo.`objectId`) WHERE tob.`objectId` IS null'
 		);
 
 		$this->query(
-						'DELETE FROM `tiki_freetags`'
-						. ' WHERE `tagId` NOT IN(SELECT `tagId` FROM `tiki_freetagged_objects`)'
-						. ' AND `tagId` NOT IN(SELECT `objId` FROM `tiki_translated_objects` WHERE type = \'freetag\')' 
+			'DELETE FROM `tiki_freetags`'
+			. ' WHERE `tagId` NOT IN(SELECT `tagId` FROM `tiki_freetagged_objects`)'
+			. ' AND `tagId` NOT IN(SELECT `objId` FROM `tiki_translated_objects` WHERE type = \'freetag\')'
 		);
 		return true;
 	}
 
 	/**
-	 * get_object_tags_multilingual 
-	 * 
-	 * @param mixed $type 
-	 * @param mixed $objectId 
-	 * @param mixed $accept_languages 
-	 * @param mixed $offset 
-	 * @param mixed $maxRecords 
+	 * get_object_tags_multilingual
+	 *
+	 * @param mixed $type
+	 * @param mixed $objectId
+	 * @param mixed $accept_languages
+	 * @param mixed $offset
+	 * @param mixed $maxRecords
 	 * @access public
 	 * @return
 	 */
-	function get_object_tags_multilingual( $type, $objectId, $accept_languages, $offset, $maxRecords ) 
+	function get_object_tags_multilingual( $type, $objectId, $accept_languages, $offset, $maxRecords )
 	{
 		$mid = '';
 		$bindvars = array();
@@ -1334,8 +1334,8 @@ class FreetagLib extends ObjectLib
 						. ' INNER JOIN tiki_freetags tag ON fo.tagId = tag.tagId'
 						. ' LEFT JOIN tiki_translated_objects `to` ON to.type = \'freetag\' AND to.objId = fo.tagId'
 						. ' WHERE ' . $mid
-						. ' AND (tag.lang IS NULL OR tag.lang IN(' 
-							. implode(',', array_fill(0, count($accept_languages), '?')) 
+						. ' AND (tag.lang IS NULL OR tag.lang IN('
+							. implode(',', array_fill(0, count($accept_languages), '?'))
 						. ') )'
 						;
 
@@ -1372,10 +1372,10 @@ class FreetagLib extends ObjectLib
 	}
 
 	/**
-	 * get_tag_translations 
-	 * 
-	 * @param mixed $sets 
-	 * @param mixed $languages 
+	 * get_tag_translations
+	 *
+	 * @param mixed $sets
+	 * @param mixed $languages
 	 * @access private
 	 * @return
 	 */
@@ -1386,14 +1386,14 @@ class FreetagLib extends ObjectLib
 		}
 
 		$result = $this->fetchAll(
-						'SELECT tag.tagId, tag.lang, tag.tag, traId'
-						. ' FROM tiki_freetags tag'
-						. ' INNER JOIN tiki_translated_objects `to` ON to.type = \'freetag\''
-						. ' AND tag.tagId = to.objId'
-						. ' WHERE'
-						. ' to.traId IN(' . implode(', ', $sets) . ' ) '
-						. ' AND tag.lang IN(' . implode(',', array_fill(0, count($languages), '?')) . ')',
-						$languages 
+			'SELECT tag.tagId, tag.lang, tag.tag, traId'
+			. ' FROM tiki_freetags tag'
+			. ' INNER JOIN tiki_translated_objects `to` ON to.type = \'freetag\''
+			. ' AND tag.tagId = to.objId'
+			. ' WHERE'
+			. ' to.traId IN(' . implode(', ', $sets) . ' ) '
+			. ' AND tag.lang IN(' . implode(',', array_fill(0, count($languages), '?')) . ')',
+			$languages
 		);
 
 		$ret = array_fill_keys($sets, array());
@@ -1405,10 +1405,10 @@ class FreetagLib extends ObjectLib
 	}
 
 	/**
-	 * set_tag_language 
-	 * 
-	 * @param mixed $tagId 
-	 * @param mixed $lang 
+	 * set_tag_language
+	 *
+	 * @param mixed $tagId
+	 * @param mixed $lang
 	 * @access public
 	 * @return
 	 */
@@ -1418,13 +1418,13 @@ class FreetagLib extends ObjectLib
 			return;
 
 		$result = $this->query(
-						'SELECT tagId'
-						. ' FROM tiki_freetags'
-						. ' WHERE'
-						. ' tag = (SELECT tag FROM tiki_freetags WHERE tagId = ?)'
-						. ' AND tagId <> ?'
-						. ' AND lang = ?',
-						array( $tagId, $tagId, $lang )
+			'SELECT tagId'
+			. ' FROM tiki_freetags'
+			. ' WHERE'
+			. ' tag = (SELECT tag FROM tiki_freetags WHERE tagId = ?)'
+			. ' AND tagId <> ?'
+			. ' AND lang = ?',
+			array( $tagId, $tagId, $lang )
 		);
 
 		$equiv = array();
@@ -1440,45 +1440,45 @@ class FreetagLib extends ObjectLib
 			// Clear potential duplicates.
 			$equivStr = implode(',', $equiv);
 			$result = $this->query(
-							'SELECT objectId'
-							. ' FROM tiki_freetagged_objects'
-							. ' WHERE tagId IN($equivStr) AND objectId IN(SELECT objectId'
-							. ' FROM tiki_freetagged_objects WHERE tagId = ?)',
-							array($master)
+				'SELECT objectId'
+				. ' FROM tiki_freetagged_objects'
+				. ' WHERE tagId IN($equivStr) AND objectId IN(SELECT objectId'
+				. ' FROM tiki_freetagged_objects WHERE tagId = ?)',
+				array($master)
 			);
 
 			while ( $row = $result->fetchRow() )
 				$this->query(
-								'DELETE FROM tiki_freetagged_objects'
-								. ' WHERE objectId = ? AND tagId IN(' . $equivStr . ')',
-								array( $row['objectId'] ) 
+					'DELETE FROM tiki_freetagged_objects'
+					. ' WHERE objectId = ? AND tagId IN(' . $equivStr . ')',
+					array( $row['objectId'] )
 				);
 
 			foreach ( $equiv as $clone ) {
 				$this->query(
-								'UPDATE tiki_freetagged_objects SET tagId = ? WHERE tagId = ?',
-								array($master, $clone)
+					'UPDATE tiki_freetagged_objects SET tagId = ? WHERE tagId = ?',
+					array($master, $clone)
 				);
 				$this->query(
-								'DELETE FROM tiki_freetags WHERE tagId = ?',
-								array($clone)
+					'DELETE FROM tiki_freetags WHERE tagId = ?',
+					array($clone)
 				);
 			}
 		} else {
 			$this->query(
-							'UPDATE tiki_freetags SET lang = ? WHERE tagId = ?',
-							array($lang, $tagId) 
+				'UPDATE tiki_freetags SET lang = ? WHERE tagId = ?',
+				array($lang, $tagId)
 			);
 		}
 	}
 
 	/**
-	 * translate_tag 
-	 * 
-	 * @param mixed $srcLang 
-	 * @param mixed $srcTagId 
-	 * @param mixed $dstLang 
-	 * @param mixed $content 
+	 * translate_tag
+	 *
+	 * @param mixed $srcLang
+	 * @param mixed $srcTagId
+	 * @param mixed $dstLang
+	 * @param mixed $content
 	 * @access public
 	 * @return void
 	 */
@@ -1498,25 +1498,25 @@ class FreetagLib extends ObjectLib
 
 		$multilinguallib->insertTranslation('freetag', $srcTagId, $srcLang, $tagId, $dstLang);
 		$this->query(
-						'UPDATE tiki_freetagged_objects'
-						. ' SET tagId = ?'
-						. ' WHERE tagId = ?'
-						. ' AND objectId IN ('
-						. ' SELECT objectId'
-						. ' FROM tiki_objects'
-						. ' INNER JOIN tiki_pages ON tiki_pages.pageName = tiki_objects.itemId'
-						. ' WHERE'
-						. ' tiki_objects.type = \'wiki page\''
-						. ' AND tiki_pages.lang = ?'
-						. ')', 
-						array($tagId, $srcTagId, $dstLang) 
+			'UPDATE tiki_freetagged_objects'
+			. ' SET tagId = ?'
+			. ' WHERE tagId = ?'
+			. ' AND objectId IN ('
+			. ' SELECT objectId'
+			. ' FROM tiki_objects'
+			. ' INNER JOIN tiki_pages ON tiki_pages.pageName = tiki_objects.itemId'
+			. ' WHERE'
+			. ' tiki_objects.type = \'wiki page\''
+			. ' AND tiki_pages.lang = ?'
+			. ')',
+			array($tagId, $srcTagId, $dstLang)
 		);
 	}
 
 	/**
-	 * clear_tag_language_from_id 
-	 * 
-	 * @param mixed $tagId 
+	 * clear_tag_language_from_id
+	 *
+	 * @param mixed $tagId
 	 * @access public
 	 * @return void
 	 */
@@ -1524,16 +1524,16 @@ class FreetagLib extends ObjectLib
 	{
 		$this->query('UPDATE tiki_freetags SET lang = NULL WHERE tagId = ?', array($tagId));
 		$this->query(
-						'DELETE FROM tiki_translated_objects WHERE type = \'freetag\' AND objId = ?',
-						array($tagId) 
+			'DELETE FROM tiki_translated_objects WHERE type = \'freetag\' AND objId = ?',
+			array($tagId)
 		);
 		$this->cleanup_tags();
 	}
 
 	/**
-	 * get_tags_containing 
-	 * 
-	 * @param mixed $tag 
+	 * get_tags_containing
+	 *
+	 * @param mixed $tag
 	 * @access public
 	 * @return
 	 */
@@ -1546,9 +1546,9 @@ class FreetagLib extends ObjectLib
 		}
 
 		$result = $this->fetchAll(
-						'SELECT `tag` FROM `tiki_freetags` WHERE `tag` LIKE ?',
-						array($tag . '%'),
-						10 
+			'SELECT `tag` FROM `tiki_freetags` WHERE `tag` LIKE ?',
+			array($tag . '%'),
+			10
 		);
 
 		$tags = array();
