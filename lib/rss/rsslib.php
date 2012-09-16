@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -85,13 +85,13 @@ class RSSLib extends TikiDb_Bridge
 		if (!$res) {
 			// nothing found, then insert empty row for this feed+rss_ver
 			$this->feeds->insert(
-							array(
-								'name' => $uniqueid,
-								'rssVer' => $rss_version,
-								'refresh' => (int) $prefs['feed_cache_time'],
-								'lastUpdated' => 1,
-								'cache' => '-',
-							)
+				array(
+					'name' => $uniqueid,
+					'rssVer' => $rss_version,
+					'refresh' => (int) $prefs['feed_cache_time'],
+					'lastUpdated' => 1,
+					'cache' => '-',
+				)
 			);
 		} else {
 			// entry found in db:
@@ -100,7 +100,7 @@ class RSSLib extends TikiDb_Bridge
 			$refresh = $prefs['feed_cache_time']; // global cache time currently
 			$lastUpdated = $res["lastUpdated"];
 			// up to date? if not, then set trigger to reload data:
-			if ($tikilib->now - $lastUpdated >= $refresh ) { 
+			if ($tikilib->now - $lastUpdated >= $refresh ) {
 				$output["data"]="EMPTY";
 			}
 		}
@@ -112,7 +112,7 @@ class RSSLib extends TikiDb_Bridge
 	function put_to_cache($uniqueid, $rss_version="9", $output)
 	{
 		global $user, $tikilib;
-		// caching rss data for anonymous users only		
+		// caching rss data for anonymous users only
 		if (isset($user) && $user<>"") return;
 		if ($output=="" || $output=="EMPTY") return;
 
@@ -121,14 +121,14 @@ class RSSLib extends TikiDb_Bridge
 		// update cache with new generated data if data not empty
 
 		$this->feeds->update(
-						array(
-							'cache' => $output,
-							'lastUpdated' => $tikilib->now,
-							), 
-						array(
-						'name' => $uniqueid,
-						'rssVer' => $rss_version,
-							)
+			array(
+				'cache' => $output,
+				'lastUpdated' => $tikilib->now,
+			),
+			array(
+				'name' => $uniqueid,
+				'rssVer' => $rss_version,
+			)
 		);
 	}
 
@@ -149,13 +149,13 @@ class RSSLib extends TikiDb_Bridge
 	 * @param string $dateId name of the key in the $changes array with the date of each item
 	 * @param string $authorId name of the key in the $changes array with the author of each item
 	 * @param bool $fromcache if true recover the feed from cache
-	 * 
+	 *
 	 * @return array the generated feed
 	 */
 	function generate_feed($section, $uniqueid, $feed_version, $changes, $itemurl
 			, $urlparam, $id, $title, $titleId, $desc, $descId, $dateId, $authorId
 			, $fromcache=false
-			) 
+			)
 	{
 		global $tikilib, $tiki_p_admin, $prefs, $userlib, $prefs, $smarty;
 
@@ -260,8 +260,8 @@ class RSSLib extends TikiDb_Bridge
 		}
 
 		foreach ($changes["data"] as $data) {
-			$item = $feed->createEntry(); 
-			$item->setTitle($data[$titleId]); 
+			$item = $feed->createEntry();
+			$item->setTitle($data[$titleId]);
 
 			if (isset($data['sefurl'])) {
 				$item->setLink($URLPrefix.$data['sefurl']);
@@ -272,18 +272,18 @@ class RSSLib extends TikiDb_Bridge
 			}
 
 			if (isset($data[$descId]) && $data[$descId] != '') {
-				$item->setDescription($data[$descId]); 
+				$item->setDescription($data[$descId]);
 			}
 
-			$item->setDateCreated($data[$dateId]); 
-			$item->setDateModified($data[$dateId]); 
+			$item->setDateCreated($data[$dateId]);
+			$item->setDateModified($data[$dateId]);
 
 			if ($authorId != '' && $prefs['feed_'.$section.'_showAuthor'] == 'y') {
 				$author = $this->process_item_author($data[$authorId]);
 				$item->addAuthor($author);
 			}
 
-			$feed->addEntry($item); 
+			$feed->addEntry($item);
 		}
 
 		$data = $feed->export($feed_format_name);
@@ -371,7 +371,7 @@ class RSSLib extends TikiDb_Bridge
 		}
 
 		if (!$noUpdate) {
-			// Updating is normally required, except for cases where we know it will be updated later (e.g. after article generation is set, so that articles are created immediately) 
+			// Updating is normally required, except for cases where we know it will be updated later (e.g. after article generation is set, so that articles are created immediately)
 			$this->update_feeds(array($rssId), true);
 		}
 		return $rssId;
@@ -432,11 +432,11 @@ class RSSLib extends TikiDb_Bridge
 		$this->update_feeds($feeds);
 
 		return $this->items->fetchAll(
-						$this->items->all(), 
-						array('rssId' => $this->items->in($feeds),), 
-						$count, 
-						0, 
-						array('publication_date' => 'DESC')
+			$this->items->all(),
+			array('rssId' => $this->items->in($feeds),),
+			$count,
+			0,
+			array('publication_date' => 'DESC')
 		);
 	}
 
@@ -463,13 +463,13 @@ class RSSLib extends TikiDb_Bridge
 
 		$filter = new DeclFilter;
 		$filter->addStaticKeyFilters(
-						array(
-							'url' => 'url',
-							'title' => 'striptags',
-							'author' => 'striptags',
-							'description' => 'striptags',
-							'content' => 'purifier',
-						)
+			array(
+				'url' => 'url',
+				'title' => 'striptags',
+				'author' => 'striptags',
+				'description' => 'striptags',
+				'content' => 'purifier',
+			)
 		);
 
 		$guidFilter = TikiFilter::get('url');
@@ -479,12 +479,12 @@ class RSSLib extends TikiDb_Bridge
 			$feed = Zend_Feed_Reader::importString($content);
 		} catch( Zend_Exception $e ) {
 			$this->modules->update(
-							array(
-								'lastUpdated' => $tikilib->now,
-								'sitetitle' => 'N/A',
-								'siteurl' => '#',
-								), 
-							array('rssId' => $rssId,)
+				array(
+					'lastUpdated' => $tikilib->now,
+					'sitetitle' => 'N/A',
+					'siteurl' => '#',
+					),
+				array('rssId' => $rssId,)
 			);
 			return;
 		}
@@ -492,12 +492,12 @@ class RSSLib extends TikiDb_Bridge
 		$siteUrl = TikiFilter::get('url')->filter($feed->getLink());
 
 		$this->modules->update(
-						array(
-							'lastUpdated' => $tikilib->now,
-							'sitetitle' => $siteTitle,
-							'siteurl' => $siteUrl,
-							), 
-						array('rssId' => $rssId,)
+			array(
+				'lastUpdated' => $tikilib->now,
+				'sitetitle' => $siteTitle,
+				'siteurl' => $siteUrl,
+				),
+			array('rssId' => $rssId,)
 		);
 
 		foreach ( $feed as $entry ) { // TODO: optimize. Atom entries have an 'updated' element which can be used to only update updated entries
@@ -506,13 +506,13 @@ class RSSLib extends TikiDb_Bridge
 			$authors = $entry->getAuthors();
 
 			$data = $filter->filter(
-							array(
-								'title' => $entry->getTitle(),
-								'url' => $entry->getLink(),
-								'description' => $entry->getDescription(),
-								'content' => $entry->getContent(),
-								'author' => $authors ? implode(', ', $authors->getValues()) : '', 
-							) 
+				array(
+					'title' => $entry->getTitle(),
+					'url' => $entry->getLink(),
+					'description' => $entry->getDescription(),
+					'content' => $entry->getContent(),
+					'author' => $authors ? implode(', ', $authors->getValues()) : '',
+				)
 			);
 
 			$data['guid'] = $guid;
@@ -535,16 +535,16 @@ class RSSLib extends TikiDb_Bridge
 	private function insert_item( $rssId, $data, $actions )
 	{
 		$this->items->insert(
-						array(
-							'rssId' => $rssId,
-							'guid' => $data['guid'],
-							'url' => $data['url'],
-							'publication_date' => $data['publication_date'],
-							'title' => $data['title'],
-							'author' => $data['author'],
-							'description' => $data['description'],
-							'content' => $data['content'],
-						)
+			array(
+				'rssId' => $rssId,
+				'guid' => $data['guid'],
+				'url' => $data['url'],
+				'publication_date' => $data['publication_date'],
+				'title' => $data['title'],
+				'author' => $data['author'],
+				'description' => $data['description'],
+				'content' => $data['content'],
+			)
 		);
 
 		$actions = json_decode($actions, true);
@@ -565,15 +565,15 @@ class RSSLib extends TikiDb_Bridge
 	{
 		// A feed may contain several entries with the same GUID... see http://framework.zend.com/issues/browse/ZF-10954. Assuming a single record would actually cause issues, see r37318.
 		$this->items->updateMultiple(
-						array('rssId' => $rssId, 'guid' => $guid,), 
-						array(
-							'url' => $data['url'],
-							'publication_date' => $data['publication_date'],
-							'title' => $data['title'],
-							'author' => $data['author'],
-							'description' => $data['description'],
-							'content' => $data['content'],
-						)
+			array('rssId' => $rssId, 'guid' => $guid,),
+			array(
+				'url' => $data['url'],
+				'publication_date' => $data['publication_date'],
+				'title' => $data['title'],
+				'author' => $data['author'],
+				'description' => $data['description'],
+				'content' => $data['content'],
+			)
 		);
 	}
 
@@ -596,29 +596,29 @@ class RSSLib extends TikiDb_Bridge
 
 		if ($configuration['submission'] == true) {
 			$subid = $artlib->replace_submission(
-							$data['title'], 
-							$data['author'], 
-							$configuration['topic'], 
-							'n', 
-							'', 
-							0, 
-							'', 
-							'', 
-							$data['description'], 
-							$data['content'], 
-							$publication, 
-							$expire, 
-							'admin', 
-							0, 
-							0, 
-							0, 
-							$configuration['atype'], 
-							'', 
-							'', 
-							$data['url'], 
-							'', 
-							'', 
-							$configuration['rating']
+				$data['title'],
+				$data['author'],
+				$configuration['topic'],
+				'n',
+				'',
+				0,
+				'',
+				'',
+				$data['description'],
+				$data['content'],
+				$publication,
+				$expire,
+				'admin',
+				0,
+				0,
+				0,
+				$configuration['atype'],
+				'',
+				'',
+				$data['url'],
+				'',
+				'',
+				$configuration['rating']
 			);
 
 			if (count($configuration['categories'])) {
@@ -631,29 +631,29 @@ class RSSLib extends TikiDb_Bridge
 			}
 		} else {
 			$id = $artlib->replace_article(
-							$data['title'], 
-							$data['author'], 
-							$configuration['topic'], 
-							'n', 
-							'', 
-							0, 
-							'', 
-							'', 
-							$data['description'], 
-							$data['content'], 
-							$publication, 
-							$expire, 
-							'admin', 
-							0, 
-							0, 
-							0, 
-							$configuration['atype'], 
-							'', 
-							'', 
-							$data['url'], 
-							'', 
-							'', 
-							$configuration['rating']
+				$data['title'],
+				$data['author'],
+				$configuration['topic'],
+				'n',
+				'',
+				0,
+				'',
+				'',
+				$data['description'],
+				$data['content'],
+				$publication,
+				$expire,
+				'admin',
+				0,
+				0,
+				0,
+				$configuration['atype'],
+				'',
+				'',
+				$data['url'],
+				'',
+				'',
+				$configuration['rating']
 			);
 
 			if (count($configuration['categories'])) {
@@ -689,8 +689,8 @@ class RSSLib extends TikiDb_Bridge
 		$out[] = $configuration;
 
 		$this->modules->update(
-						array('actions' => json_encode($out),), 
-						array('rssId' => $rssId,)
+			array('actions' => json_encode($out),),
+			array('rssId' => $rssId,)
 		);
 	}
 

@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -86,20 +86,31 @@ class GRenderer // {{{1
 	{
 		switch( $name )
 		{
-		case 'red':			return array( 'r' => 0xCC, 'g' => 0x00, 'b' => 0x00 );
-		case 'green':		return array( 'r' => 0x00, 'g' => 0xCC, 'b' => 0x00 );
-		case 'blue':		return array( 'r' => 0x00, 'g' => 0x00, 'b' => 0xCC );
-		case 'yellow':		return array( 'r' => 0xFF, 'g' => 0xFF, 'b' => 0x00 );
-		case 'orange':		return array( 'r' => 0xFF, 'g' => 0x99, 'b' => 0x00 );
-		case 'lightgreen':	return array( 'r' => 0x99, 'g' => 0xFF, 'b' => 0x99 );
-		case 'lightblue':	return array( 'r' => 0x66, 'g' => 0x99, 'b' => 0xFF );
-		
-		case 'black':		return array( 'r' => 0x00, 'g' => 0x00, 'b' => 0x00 );
-		case 'white':		return array( 'r' => 0xFF, 'g' => 0xFF, 'b' => 0xFF );
+			case 'red':
+				return array( 'r' => 0xCC, 'g' => 0x00, 'b' => 0x00 );
+			case 'green':
+				return array( 'r' => 0x00, 'g' => 0xCC, 'b' => 0x00 );
+			case 'blue':
+				return array( 'r' => 0x00, 'g' => 0x00, 'b' => 0xCC );
+			case 'yellow':
+				return array( 'r' => 0xFF, 'g' => 0xFF, 'b' => 0x00 );
+			case 'orange':
+				return array( 'r' => 0xFF, 'g' => 0x99, 'b' => 0x00 );
+			case 'lightgreen':
+				return array( 'r' => 0x99, 'g' => 0xFF, 'b' => 0x99 );
+			case 'lightblue':
+				return array( 'r' => 0x66, 'g' => 0x99, 'b' => 0xFF );
 
-		case 'gray':		return array( 'r' => 0xDD, 'g' => 0xDD, 'b' => 0xDD );
+			case 'black':
+				return array( 'r' => 0x00, 'g' => 0x00, 'b' => 0x00 );
+			case 'white':
+				return array( 'r' => 0xFF, 'g' => 0xFF, 'b' => 0xFF );
 
-		default:			return array( 'r' => 0x00, 'g' => 0x00, 'b' => 0x00 );
+			case 'gray':
+				return array( 'r' => 0xDD, 'g' => 0xDD, 'b' => 0xDD );
+
+			default:
+				return array( 'r' => 0x00, 'g' => 0x00, 'b' => 0x00 );
 		}
 	}
 } // }}}1
@@ -111,7 +122,7 @@ class Fake_GRenderer extends GRenderer // {{{1
 	var $top;
 	var $width;
 	var $height;
-	
+
 	function Fake_GRenderer( &$renderer, $left, $top, $right, $bottom )
 	{
 		$this->renderer = &$renderer;
@@ -120,61 +131,61 @@ class Fake_GRenderer extends GRenderer // {{{1
 		$this->width = $right - $left;
 		$this->height = $bottom - $top;
 	}
-	
+
 	function addLink( $target, $left, $top, $right, $bottom, $title = null ) // {{{2
 	{
 		$this->renderer->addLink(
-						$target,
-						$left * $this->width + $this->left,
-						$top * $this->height + $this->top,
-						$right * $this->width + $this->left,
-						$bottom * $this->height + $this->top,
-						$title
+			$target,
+			$left * $this->width + $this->left,
+			$top * $this->height + $this->top,
+			$right * $this->width + $this->left,
+			$bottom * $this->height + $this->top,
+			$title
 		);
 	}
 
 	function drawLine( $x1, $y1, $x2, $y2, $style ) // {{{2
 	{
 		$this->renderer->drawLine(
-						$x1 * $this->width + $this->left,
-						$y1 * $this->height + $this->top,
-						$x2 * $this->width + $this->left,
-						$y2 * $this->height + $this->top,
-						$style
+			$x1 * $this->width + $this->left,
+			$y1 * $this->height + $this->top,
+			$x2 * $this->width + $this->left,
+			$y2 * $this->height + $this->top,
+			$style
 		);
 	}
 
 	function drawRectangle( $left, $top, $right, $bottom, $style ) // {{{2
 	{
 		$this->renderer->drawRectangle(
-						$left * $this->width + $this->left,
-						$top * $this->height + $this->top,
-						$right * $this->width + $this->left,
-						$bottom * $this->height + $this->top,
-						$style
+			$left * $this->width + $this->left,
+			$top * $this->height + $this->top,
+			$right * $this->width + $this->left,
+			$bottom * $this->height + $this->top,
+			$style
 		);
 	}
 
 	function drawPie( $centerX, $centerY, $radius, $begin, $end, $style ) // {{{2
 	{
 		$this->renderer->drawPie(
-						$centerX * $this->width + $this->left,
-						$centerY * $this->height + $this->top,
-						$radius * $this->width,
-						$begin,
-						$end,
-						$style
+			$centerX * $this->width + $this->left,
+			$centerY * $this->height + $this->top,
+			$radius * $this->width,
+			$begin,
+			$end,
+			$style
 		);
 	}
 
 	function drawText( $text, $left, $right, $height, $style ) // {{{2
 	{
 		$this->renderer->drawText(
-						$text,
-						$left * $this->width + $this->left,
-						$right * $this->width + $this->left,
-						$height * $this->height + $this->top,
-						$style
+			$text,
+			$left * $this->width + $this->left,
+			$right * $this->width + $this->left,
+			$height * $this->height + $this->top,
+			$style
 		);
 	}
 
@@ -218,7 +229,7 @@ class DataHandler // {{{
 	 *
 	 * @param renderer		The renderer instance on which the rendering is performed.
 	 *						This instance may not be cached for other purposes.
-	 * @param positionData	Indicates the coordinate of the data to be rendered. 
+	 * @param positionData	Indicates the coordinate of the data to be rendered.
 	 *						Coordinates are renderer-specific. This value is provided
 	 *						as an associative array. (x,y) is provided for single-point
 	 *						data. (top,left,bottom,right) is provided for regions.
@@ -244,7 +255,7 @@ class Graphic // {{{1
 		$this->parameters = array();
 		$this->dataHandlers = array();
 	}
-	
+
 	function setTitle( $title ) // {{{2
 	{
 		$this->title = $title;
@@ -336,7 +347,7 @@ class Graphic // {{{1
 
 		return $colors[$index++ % count($colors)];
 	}
-	
+
 	function _drawLegend( &$renderer, &$left, &$top, &$right, &$bottom, $layout ) // {{{2
 	{
 		$box_size = $layout['legend-box-size'];
@@ -357,9 +368,9 @@ class Graphic // {{{1
 		switch( $layout['legend-orientation'] ) {
 		case 'horizontal':
 			$height = $single_height + 2 * $padding;
-			$width = 
+			$width =
 				array_sum($item_size) // text width
-				+ (1 + count($item_size) ) * $padding // padding between items 
+				+ (1 + count($item_size) ) * $padding // padding between items
 				+ ( $box_size + $padding ) * count($item_size); // box and box padding
     		break;
 		case 'vertical':
@@ -435,35 +446,35 @@ class Graphic // {{{1
 		foreach ( $this->legend as $key => $info ) {
 			list( $color, $value, $url ) = $info;
 			$this->_drawLegendBox(
-							new Fake_GRenderer(
-											$renderer, 
-											$x, 
-											$y + $box_offset, 
-											$x + $box_size, 
-											$y + $box_size + $box_offset
-							), 
-							$color
+				new Fake_GRenderer(
+					$renderer,
+					$x,
+					$y + $box_offset,
+					$x + $box_size,
+					$y + $box_size + $box_offset
+				),
+				$color
 			);
 
 			switch( $layout['legend-orientation'] )
 			{
 			case 'horizontal':
 				$renderer->drawText(
-								$value, 
-								$x + $box_size + $padding, 
-								$x + $box_size + $padding + $item_size[$key],
-								$y + $text_offset, 
-								$legend_font
+					$value,
+					$x + $box_size + $padding,
+					$x + $box_size + $padding + $item_size[$key],
+					$y + $text_offset,
+					$legend_font
 				);
-				
+
 				if ( ! empty( $url ) )
 					$renderer->addLink(
-									$url,
-									$x + $padding,
-									$y + $box_offset,
-									$x + $box_size + $padding + $item_size[$key],
-									$y + $box_offset + $box_size,
-									$value
+						$url,
+						$x + $padding,
+						$y + $box_offset,
+						$x + $box_size + $padding + $item_size[$key],
+						$y + $box_offset + $box_size,
+						$value
 					);
 
 				$x += $box_size + $padding * 2 + $item_size[$key];
@@ -471,21 +482,21 @@ class Graphic // {{{1
     			break;
 			case 'vertical':
 				$renderer->drawText(
-								$value, 
-								$x + $box_size + $padding, 
-								$x - $padding + $width, 
-								$y + $text_offset, 
-								$legend_font 
+					$value,
+					$x + $box_size + $padding,
+					$x - $padding + $width,
+					$y + $text_offset,
+					$legend_font
 				);
-				
+
 				if ( ! empty( $url ) )
 					$renderer->addLink(
-									$url,
-									$x,
-									$y + $box_offset,
-									$x + $width,
-									$y + $box_offset + $box_size,
-									$value
+						$url,
+						$x,
+						$y + $box_offset,
+						$x + $width,
+						$y + $box_offset + $box_size,
+						$value
 					);
 
 				$y += $padding + $single_height;
@@ -494,7 +505,7 @@ class Graphic // {{{1
 		}
 		// }}}3
 	}
-	
+
 	function _drawContent( &$renderer ) // {{{2
 	{
 		die( "Abstract Function Call" );
