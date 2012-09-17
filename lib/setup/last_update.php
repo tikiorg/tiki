@@ -10,8 +10,8 @@ $access->check_script($_SERVER['SCRIPT_NAME'], basename(__FILE__));
 
 if (is_file('.svn/entries')) {
 	$svn = File('.svn/entries');
-	$smarty->assign('svnrev', $svn[3]);
-	$smarty->assign('lastup', strtotime($svn[9]));
+	$smarty->assign('svnrev', isset($svn[3]) ? $svn[3] : '');
+	$smarty->assign('lastup', isset($svn[9]) ? strtotime($svn[9]) : '');
 }
 
 
