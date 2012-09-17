@@ -135,27 +135,16 @@ function smarty_function_user_registration($params, $smarty)
 
 			} else if (isset($_REQUEST['name'])) {		// user tracker saved ok
 
-				if ($registrationlib->merged_prefs['validateUsers'] == 'y'
-					|| (isset($registrationlib->merged_prefs['validateRegistration'])
-						&& $registrationlib->merged_prefs['validateRegistration'] == 'y')) {
-
-					$info = $userlib->get_user_info($_REQUEST['name']);
-
-					if ($info) {
-						$userlib->send_validation_email(
-							$_REQUEST['name'],
-							$info['valid'],
-							$prefs['login_is_email'] === 'y' ? $_REQUEST['name'] : $_REQUEST['email'],
-							'',
-							'',
-							isset($_REQUEST['chosenGroup']) ? $_REQUEST['chosenGroup'] : 'Registered'
-						);
-
-						return $smarty->getTemplateVars('msg');	// smarty var contains the send_validation_email feedback
+				$result = $registrationlib->register_new_user($_REQUEST);
+				if (is_array($result)) {
+					foreach ($result as $r) {
+						$errorreportlib->report($r->msg);
 					}
+				} else if (is_a($result, 'RegistrationError')) {
+					$errorreportlib->report($result->msg);
+				} else {
+					return $result;
 				}
-
-
 			}
 			$user = ''; // reset $user for security reasons
 			$smarty->assign('userTrackerData', $userTrackerData);
