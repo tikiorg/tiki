@@ -438,6 +438,7 @@ CREATE TABLE `tiki_categories` (
   `name` varchar(100) default NULL,
   `description` varchar(250) default NULL,
   `parentId` int(12) default NULL,
+  `rootId` int NOT NULL DEFAULT 0,
   `hits` int(8) default NULL,
   PRIMARY KEY (`categId`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
