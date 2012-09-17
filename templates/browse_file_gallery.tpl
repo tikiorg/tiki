@@ -78,11 +78,14 @@
 										{assign var=propval value=$propval|nl2br}
 									{/if}
 
-									{if isset($gal_info.$propkey) and $propval neq ''
+									{if isset($gal_info.$propkey)
+										and $propval neq ''
 										and ($propname neq 'name' or $view eq 'page')
-										and ( $gal_info.$propkey eq 'a' or $gal_info.$propkey eq 'o'
-										or ( $gal_info.$propkey eq 'y' and $show_details neq 'y' )
-										or ($view eq 'page') and $gal_info.$propkey neq 'n')}
+										and ($gal_info.$propkey eq 'a' or $gal_info.$propkey eq 'o'
+												or ($gal_info.$propkey eq 'y' and $show_details neq 'y')
+												or ($view eq 'page' and $gal_info.$propkey neq 'n')
+											)
+									}
 										<tr>
 											<td>
 												<b>{$fgal_listing_conf.$propname.name}</b>:
@@ -205,12 +208,14 @@
 								{/if}
 								{if isset($gal_info.$key_name)
 									and ( $gal_info.$key_name eq 'y'
-									or $gal_info.$key_name eq 'a'
-									or $gal_info.$key_name eq 'i'
-									or $propname eq 'name'
-								)}
-									{assign var=propval value=$files[changes].$propname|escape}
-
+										or $gal_info.$key_name eq 'a'
+										or $gal_info.$key_name eq 'i'
+										or $propname eq 'name'
+									)
+								}
+									{if isset($files[changes].$propname)}
+										{assign var=propval value=$files[changes].$propname|escape}
+									{/if}
 									{* Format property values *}
 									{if $propname eq 'id' or $propname eq 'name'}
 										{if $propname eq 'name' and $propval eq '' and $gal_info.show_name eq 'n'}
@@ -260,16 +265,16 @@
 
 									{elseif $propval neq '' and $propname neq 'name' and $propname neq 'type' and $view neq 'page'}
 
-										<div class="thumbinfo{if $propname eq 'description'} thumbdescription{/if}"{if $show_details eq 'n' and $propname neq 'description'} style="display:none"{/if}>
-											{if $propname neq 'description'}
-												<span class="thumbinfoname">
-													{$item.name}:
+											<div class="thumbinfo{if $propname eq 'description'} thumbdescription{/if}"{if $show_details eq 'n' and $propname neq 'description'} style="display:none"{/if}>
+												{if $propname neq 'description'}
+													<span class="thumbinfoname">
+														{$item.name}:
+													</span>
+												{/if}
+												<span class="thumbinfoval"{if $propname neq 'description'} style="white-space: nowrap"{/if}>
+													{$propval}
 												</span>
-											{/if}
-											<span class="thumbinfoval"{if $propname neq 'description'} style="white-space: nowrap"{/if}>
-												{$propval}
-											</span>
-										</div>
+											</div>
 									{/if}
 								{/if}
 							{/foreach}

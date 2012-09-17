@@ -406,13 +406,19 @@
 							{assign var=propval value=$limitdate|tiki_remaining_days_from_now:$prefs.short_date_format}
 						{/if}
 					{elseif $propname eq 'share'}
-						{assign var=share_string value=$files[changes].share.string}
-						{assign var=share_nb value=$files[changes].share.nb}
-						{capture assign=share_capture}{strip}
-							<a class='fgalname' href='#' {popup fullhtml=1 text=$over_share|escape:'javascript'|escape:'html' left=true} style='cursor:help'>{icon _id='group_link' class='' title=''}</a> ({$share_nb}) {$share_string}
-						{/strip}{/capture}
-						{assign var=propval value=$share_capture}
-					{elseif $propname eq 'hits'}
+						{if isset($files[changes].share)}
+							{assign var=share_string value=$files[changes].share.string}
+							{assign var=share_nb value=$files[changes].share.nb}
+							{capture assign=share_capture}
+								{strip}
+									<a class='fgalname' href='#' {popup fullhtml=1 text=$over_share|escape:'javascript'|escape:'html' left=true} style='cursor:help'>
+										{icon _id='group_link' class='' title=''}
+									</a> ({$share_nb}) {$share_string}
+								{/strip}
+							{/capture}
+							{assign var=propval value=$share_capture}
+						{/if}
+						{elseif $propname eq 'hits'}
 						{if $prefs.fgal_list_hits eq 'y'}
 							{if $prefs.fgal_list_ratio_hits eq 'y'}
 								{assign var=hits value=$files[changes].hits}

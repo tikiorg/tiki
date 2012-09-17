@@ -980,7 +980,9 @@ if ($prefs['fgal_show_explorer'] == 'y' || $prefs['fgal_show_path'] == 'y' || is
 }
 
 ask_ticket('fgal');
-if (isset($_REQUEST['view']) && ($_REQUEST['view'] == 'browse') or (isset($_REQUEST['view']) and $_REQUEST['view'] == 'page')) {
+if (isset($files['data']) and ((isset($_REQUEST['view']) && $_REQUEST['view'] == 'browse')
+	or (isset($_REQUEST['view']) and $_REQUEST['view'] == 'page')))
+{
 	foreach ($files['data'] as $file) {
 		$_SESSION['allowed'][$file['fileId']] = true;
 	}

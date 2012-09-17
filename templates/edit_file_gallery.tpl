@@ -41,7 +41,7 @@
 							</td>
 							<td>
 								<select name="fgal_template" id="fgal_template">
-									<option value=""{if $templateId eq ""} selected="selected"{/if}>{tr}None{/tr}</option>
+									<option value=""{if !isset($templateId) or $templateId eq ""} selected="selected"{/if}>{tr}None{/tr}</option>
 									{foreach from=$all_templates key=key item=item}
 										<option value="{$item.id}"{if $gal_info.template eq $item.id} selected="selected"{/if}>{$item.label|escape}</option>
 									{/foreach}
