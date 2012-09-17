@@ -116,7 +116,7 @@ class ReconcileExifIptcXmp
 	 *
 	 * @var array
 	 */
-	var $basicInfo = array(
+	var $basicSummary = array(
 		'User Data'			=> array(
 			'Title'				=> array(
 				'iptc'				=> '2#005',
@@ -274,9 +274,13 @@ class ReconcileExifIptcXmp
 		//return false if no metadata
 		if (count($types) == 0) {
 			return false;
-		//return unaltered metadata if only one type exists
+		//no need to reconcile with 1 type, just add summary info
 		} elseif (count($types) == 1) {
-			return 	array(key($types) => $metadata[key($types)]);
+			$omni['all'][key($types)] = $this->flatten($metadata[key($types)]);
+			$basicsum = $this->makeSummaryInfo($omni);
+			$metarray =	array(key($types) => $metadata[key($types)]);
+			$metarray = $basicsum + $metarray;
+			return $metarray;
 		//more than one metadata type, so need to reconcile
 		} else {
 			//set main array with all data from all types
@@ -330,23 +334,12 @@ class ReconcileExifIptcXmp
 			}
 		}
 
-		//extract basic information to display first
-		$basicinfo = '';
-		foreach ($this->basicInfo as $infogroup => $fields) {
-			foreach ($fields as $label => $infotypes) {
-				foreach ($infotypes as $infotype => $fieldame) {
-					if (isset($omni['all'][$infotype][$fieldame])) {
-						$basicinfo['Summary of Basic Information'][$infogroup][$label]
-							= $omni['all'][$infotype][$fieldame];
-						$basicinfo['Summary of Basic Information'][$infogroup][$label]['label']
-							= $label;
-					}
-				}
-			}
-		}
+		//summarize basic information to display first
+		$basicsum = $this->makeSummaryInfo($omni);
+
 		//add stats
 		if (isset($stats)) {
-			$basicinfo['Summary of Basic Information']['Metadata Reconciliation Stats'] = $stats;
+			$basicsum['Summary of Basic Information']['Metadata Reconciliation Stats'] = $stats;
 		}
 
 		//unflatten the file metadata arrays by restoring the group level
@@ -357,14 +350,16 @@ class ReconcileExifIptcXmp
 				}
 			}
 		}
-		$finalall = $basicinfo + $finalall;
+		$finalall = $basicsum + $finalall;
 		return $finalall;
 	}
 
 	/**
-	 * @param $multiArray
+	 * Remove second layer of multiple array. Used to ease array comparisons
 	 *
-	 * @return array
+	 * @param 		array		$multiArray			Minimum 3-level multiple array
+	 *
+	 * @return		array		$flat				flatted array
 	 */
 	function flatten($multiArray)
 	{
@@ -375,7 +370,14 @@ class ReconcileExifIptcXmp
 		return $flat;
 	}
 
-	function addFakeFields($omni)
+	/**
+	 * Add fake EXIF fields to reconcile with IPTC time which is separated into a different field
+	 *
+	 * @param 		array		$omni			Array where reconciliation results are collected
+	 *
+	 * @return 		array		$omni			Array with fake fields added
+	 */
+	private function addFakeFields($omni)
 	{
 		if (array_key_exists('2#060', $omni['iptc']['flat'])) {
 			if (array_key_exists('DateTimeOriginal', $omni['exif']['flat'])) {
@@ -394,6 +396,31 @@ class ReconcileExifIptcXmp
 			}
 		}
 		return $omni;
+	}
+
+	/**
+	 * Create array of a summary of key metadata information. The structure and fields of the summary are set by
+	 * $this->basicInfo
+	 *
+	 * @param $omni
+	 *
+	 * @return mixed
+	 */
+	private function makeSummaryInfo($omni)
+	{
+		foreach ($this->basicSummary as $infogroup => $fields) {
+			foreach ($fields as $label => $infotypes) {
+				foreach ($infotypes as $infotype => $fieldame) {
+					if (isset($omni['all'][$infotype][$fieldame])) {
+						$basicsum['Summary of Basic Information'][$infogroup][$label]
+							= $omni['all'][$infotype][$fieldame];
+						$basicsum['Summary of Basic Information'][$infogroup][$label]['label']
+							= $label;
+					}
+				}
+			}
+		}
+		return $basicsum;
 	}
 
 	/**

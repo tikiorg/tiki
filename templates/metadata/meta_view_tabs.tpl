@@ -1,7 +1,5 @@
 {* $Id$ *}
-<h3>
-	{tr}File Metadata{/tr}
-</h3>
+
 <em>{tr}Read-only metadata extracted from the file.{/tr}</em>
 {if isset($metarray.basiconly) and $metarray.basiconly}
 <span>

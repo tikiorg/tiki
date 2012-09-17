@@ -448,6 +448,10 @@ img.icon {
 	background: transparent;
 }
 
+div #metadata fieldset.tabcontent, div #metadata div.tabs {
+	background-color: transparent;
+}
+
 .admin #content1 .tabcontent .cbox {
 	background: transparent;
 }

@@ -300,11 +300,15 @@
 					{assign var=key_name value="show_$propname"}
 				{/if}
 
-				{if isset($gal_info.$key_name) and ( $gal_info.$key_name eq 'y' or $gal_info.$key_name eq 'a'
-					or $gal_info.$key_name eq 'i' or $propname eq 'name'
-					or ( !empty($other_columns_selected) and $propname eq $other_columns_selected ) )}
-					{assign var=propval value=$files[changes].$propname|escape}
-
+				{if isset($gal_info.$key_name)
+					and ( $gal_info.$key_name eq 'y' or $gal_info.$key_name eq 'a' or $gal_info.$key_name eq 'i' or $propname eq 'name'
+						or ( !empty($other_columns_selected) and $propname eq $other_columns_selected
+						)
+					)
+				}
+					{if isset($files[changes].$propname)}
+						{assign var=propval value=$files[changes].$propname|escape}
+					{/if}
 					{* build link *}
 					{capture assign=link}
 						{strip}
@@ -468,7 +472,8 @@
 	{sectionelse}
 		{norecords _colspan=$nbCols}
 	{/section}
-	{if $gal_info.show_checked ne 'n' and $tiki_p_admin_file_galleries eq 'y' and $prefs.javascript_enabled eq 'y'}
+	{if $gal_info.show_checked ne 'n' and $tiki_p_admin_file_galleries eq 'y' and $prefs.javascript_enabled eq 'y'
+		and $view neq 'page'}
 		<tr>
 			<td colspan="{$nbCols}">
 				{select_all checkbox_names='file[],subgal[]' label="{tr}Select All{/tr}"}

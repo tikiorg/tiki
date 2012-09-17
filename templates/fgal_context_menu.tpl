@@ -176,11 +176,14 @@
 					{/if}
 
 					{if $prefs.fgal_display_properties eq 'y'}
+						<a href="tiki-list_file_gallery.php?galleryId={$files[$changes].galleryId}&fileId={$files[$changes].id}&view=page">
+							{icon _menu_text=$menu_text _menu_icon=$menu_icon _id='table' alt="{tr}Page View{/tr}"}
+						</a>
 						<a href="tiki-upload_file.php?galleryId={$files[$changes].galleryId}&amp;fileId={$files[$changes].id}{if !empty($filegals_manager)}&amp;filegals_manager={$filegals_manager|escape}{/if}">
-							{icon _menu_text=$menu_text _menu_icon=$menu_icon _id='page_edit' alt="{tr}Properties{/tr}"}
+							{icon _menu_text=$menu_text _menu_icon=$menu_icon _id='page_edit' alt="{tr}Edit Properties{/tr}"}
 						</a>
 						{* using &amp; causes an error for some reason - therefore using plain & *}
-						<a href="tiki-upload_file.php?galleryId={$files[$changes].galleryId}&fileId={$files[$changes].id}&action=refresh_metadata">
+						<a href="tiki-list_file_gallery.php?galleryId={$files[$changes].galleryId}&fileId={$files[$changes].id}&action=refresh_metadata{if isset($view)}&view={$view}{/if}">
 							{icon _menu_text=$menu_text _menu_icon=$menu_icon _id='tag_green' alt="{tr}Refresh Metadata{/tr}"}
 						</a>
 					{/if}

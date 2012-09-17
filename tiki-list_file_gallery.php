@@ -118,6 +118,7 @@ if ( $_REQUEST['galleryId'] === "1") {
 }
 $smarty->assign_by_ref('galleryId', $_REQUEST['galleryId']);
 $smarty->assign('reindex_file_id', -1);
+$_REQUEST['view'] = isset($_REQUEST['view']) ? $_REQUEST['view'] : $gal_info['default_view'];
 
 // Execute batch actions
 if ($tiki_p_admin_file_galleries == 'y') {
@@ -274,6 +275,10 @@ if ( ! empty($_REQUEST['remove']) ) {
 			'draft' => ( ! empty($_REQUEST['draft']) )
 		)
 	);
+}
+
+if (isset($_REQUEST['action']) && $_REQUEST['action'] == 'refresh_metadata') {
+	$filegallib->metadataAction($_REQUEST['fileId'], 'refresh');
 }
 
 $foo = parse_url($_SERVER['REQUEST_URI']);
@@ -691,7 +696,9 @@ if (isset($_REQUEST['comment']) && $_REQUEST['comment'] != '' && isset($_REQUEST
 
 // Set display config
 if (!isset($_REQUEST['maxRecords']) || $_REQUEST['maxRecords'] <= 0) {
-	if (isset($gal_info['maxRows']) && $gal_info['maxRows'] > 0) {
+	if ($_REQUEST['view'] == 'page' && empty($_REQUEST['fileId'])) {
+		$_REQUEST['maxRecords'] = 1;
+	} elseif (isset($gal_info['maxRows']) && $gal_info['maxRows'] > 0) {
 		$_REQUEST['maxRecords'] = $gal_info['maxRows'];
 	} else {
 		$_REQUEST['maxRecords'] = $prefs['maxRecords'];
@@ -823,7 +830,7 @@ if (isset($_GET['slideshow'])) {
 } else {
 	if (!isset($_REQUEST["edit_mode"]) && !isset($_REQUEST["edit"])) {
 		$recursive = (isset($_REQUEST['view']) && $_REQUEST['view'] == 'admin') || $find_sub;
-		$with_subgals = !((isset($_REQUEST['view']) && $_REQUEST['view'] == 'admin') || $find_sub);
+		$with_subgals = !((isset($_REQUEST['view']) && ($_REQUEST['view'] == 'admin' || $_REQUEST['view'] == 'page')) || $find_sub);
 		if (!empty($_REQUEST['filegals_manager'])) {	// get wiki syntax if needed
 			$syntax = $filegallib->getWikiSyntax($_REQUEST['galleryId']);
 		} else {
@@ -852,6 +859,23 @@ if (isset($_GET['slideshow'])) {
 			$find,
 			$syntax
 		);
+		if (isset($_REQUEST['view']) and $_REQUEST['view'] == 'page') {
+			$smarty->assign('maxWidth', isset($_REQUEST['maxWidth']) ? $_REQUEST['maxWidth'] : '300px');
+			//need to convert fileId to an offset to bring up a specific file for page view
+			if (isset($_REQUEST['fileId'])) {
+				$filesrecords = array_values($files['data']);
+				foreach($filesrecords as $key => $file) {
+					if ($file['fileId'] == $_REQUEST['fileId']) {
+						$smarty->assign('offset', $key);
+						$files['data'] = array($file);
+						$smarty->assign('metarray', json_decode($files['data'][0]['metadata'], true));
+						break;
+					}
+				}
+			}
+			$smarty->assign('maxRecords', 1);
+			$smarty->assign('metarray', json_decode($files['data'][0]['metadata'], true));
+		}
 		$smarty->assign_by_ref('files', $files['data']);
 		$smarty->assign('cant', $files['cant']);
 	}
@@ -956,7 +980,7 @@ if ($prefs['fgal_show_explorer'] == 'y' || $prefs['fgal_show_path'] == 'y' || is
 }
 
 ask_ticket('fgal');
-if (isset($_REQUEST['view']) && $_REQUEST['view'] == 'browse') {
+if (isset($_REQUEST['view']) && ($_REQUEST['view'] == 'browse') or (isset($_REQUEST['view']) and $_REQUEST['view'] == 'page')) {
 	foreach ($files['data'] as $file) {
 		$_SESSION['allowed'][$file['fileId']] = true;
 	}

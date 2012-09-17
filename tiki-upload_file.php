@@ -124,10 +124,6 @@ if ( ! empty( $fileId ) ) {
 	}
 }
 
-if (isset($_REQUEST['action']) && $_REQUEST['action'] == 'refresh_metadata') {
-	$filegallib->metadataAction($_REQUEST['fileId'], 'refresh');
-}
-
 $smarty->assign('show', 'n');
 if (!empty($_REQUEST['galleryId'][0]) && $prefs['feature_groupalert'] == 'y') {
 	$groupforalert = $groupalertlib->GetGroup('file gallery', (int)$_REQUEST['galleryId'][0]);

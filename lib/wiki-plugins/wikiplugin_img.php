@@ -1401,7 +1401,7 @@ function getMetaField($metarray, $labelarray)
 {
 	include_once 'lib/metadata/reconcile.php';
 	$rec = new ReconcileExifIptcXmp;
-	$labelmap = $rec->basicInfo[key($labelarray)][$labelarray[key($labelarray)]];
+	$labelmap = $rec->basicSummary[key($labelarray)][$labelarray[key($labelarray)]];
 	foreach ($labelmap as $type => $fieldname) {
 		foreach ($metarray as $subtype => $group) {
 			if ($type == $subtype) {

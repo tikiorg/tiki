@@ -9,6 +9,7 @@
 		<select id="fgal_{$key}" name="fgal_{$key}">
 			<option value="list"{if $item.value eq 'list'} selected="selected"{/if}>{tr}List{/tr}</option>
 			<option value="browse"{if $item.value eq 'browse'} selected="selected"{/if}>{tr}Browse{/tr}</option>
+			<option value="page"{if $item.value eq 'page'} selected="selected"{/if}>{tr}Page{/tr}</option>
 		</select>
 	</td>
 </tr>

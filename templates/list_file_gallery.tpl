@@ -1,10 +1,17 @@
 {* $Id$ *}
 
-{if ( isset($tree) and count($tree) gt 0 && $tiki_p_list_file_galleries != 'n' && $fgal_options.show_explorer.value eq 'y' && $tiki_p_view_fgal_explorer eq 'y' ) or ( $gallery_path neq '' && $fgal_options.show_path.value eq 'y' && $tiki_p_view_fgal_path eq 'y' )}
+{if (isset($tree)
+	and count($tree) gt 0
+	&& $tiki_p_list_file_galleries != 'n'
+	&& $fgal_options.show_explorer.value eq 'y'
+	&& $tiki_p_view_fgal_explorer eq 'y' )
+	or ( !empty($gallery_path) && $fgal_options.show_path.value eq 'y' && $tiki_p_view_fgal_path eq 'y' )
+}
 
 	<div class="fgal_top_bar" style="height:16px; vertical-align:middle">
 
-		{if isset($tree) and count($tree) gt 0 && $tiki_p_list_file_galleries != 'n' && $fgal_options.show_explorer.value eq 'y' && $tiki_p_view_fgal_explorer eq 'y'}
+		{if isset($tree) and count($tree) gt 0 && $tiki_p_list_file_galleries != 'n'
+			&& $fgal_options.show_explorer.value eq 'y' && $tiki_p_view_fgal_explorer eq 'y'}
 			{if $prefs.javascript_enabled eq 'y'}
 				<div id="fgalexplorer_close" style="float:left; vertical-align:middle; display:{if ! isset($smarty.session.tiki_cookie_jar.show_fgalexplorer) or $smarty.session.tiki_cookie_jar.show_fgalexplorer eq 'y'}none{else}inline{/if};">
 					<a href="#" onclick="flip('fgalexplorer','');hide('fgalexplorer_close',false);show('fgalexplorer_open',false);return false;">{icon _id='application_side_tree' alt="{tr}Show Tree{/tr}"}</a>
@@ -34,7 +41,8 @@
 
 <table border="0" cellpadding="3" cellspacing="3" width="100%" style="clear: both">
 	<tr>
-		{if isset($tree) && count($tree) gt 0 && $tiki_p_list_file_galleries != 'n' && $fgal_options.show_explorer.value eq 'y' && $tiki_p_view_fgal_explorer eq 'y'}
+		{if isset($tree) && count($tree) gt 0 && $tiki_p_list_file_galleries != 'n'
+			&& $fgal_options.show_explorer.value eq 'y' && $tiki_p_view_fgal_explorer eq 'y' && $view neq 'page'}
 			<td width="25%" class="fgalexplorer" id="fgalexplorer" style="{if ( isset($smarty.session.tiki_cookie_jar.show_fgalexplorer) and $smarty.session.tiki_cookie_jar.show_fgalexplorer neq 'y') and ( ! isset($smarty.request.show_fgalexplorer) or $smarty.request.show_fgalexplorer neq 'y' )}display:none;{/if} width: 25%">
 				<div>
 					{$tree}
@@ -68,7 +76,7 @@
 				{assign var=other_columns value=''}
 				{assign var=other_columns_selected value=''}
 
-				{if $view eq 'browse'}
+				{if $view eq 'browse' or $view eq 'page'}
 					{assign var=show_infos value='y'}
 					{include file='browse_file_gallery.tpl'}
 				{else}
@@ -76,12 +84,22 @@
 					{include file='list_file_gallery_content.tpl'}
 				{/if}
 
-				{if $files and $gal_info.show_checked neq 'n' and $prefs.fgal_checked eq 'y' and
-						($tiki_p_admin_file_galleries eq 'y' or $tiki_p_upload_files eq 'y' or $tiki_p_assign_perm_file_gallery eq 'y')
-						and ($prefs.fgal_show_thumbactions eq 'y' or $show_details eq 'y' or $view neq 'browse')}
+				{if ($files
+					and $gal_info.show_checked neq 'n'
+					and $prefs.fgal_checked eq 'y'
+					and ($tiki_p_admin_file_galleries eq 'y' or $tiki_p_upload_files eq 'y' or $tiki_p_assign_perm_file_gallery eq 'y')
+					and ($prefs.fgal_show_thumbactions eq 'y' or $show_details eq 'y' or $view neq 'browse')
+					and $view neq 'page'
+				)}
 					<div id="sel">
 						<div>
-							{if $tiki_p_admin_file_galleries eq 'y' or $tiki_p_remove_files eq 'y' or !isset($file_info) or $tiki_p_admin_file_galleries eq 'y' or $prefs.fgal_display_zip_option eq 'y' or $tiki_p_assign_perm_file_gallery eq 'y'}
+							{if $tiki_p_admin_file_galleries eq 'y'
+								or $tiki_p_remove_files eq 'y'
+								or !isset($file_info)
+								or $tiki_p_admin_file_galleries eq 'y'
+								or $prefs.fgal_display_zip_option eq 'y'
+								or $tiki_p_assign_perm_file_gallery eq 'y'
+							}
 								{tr}Perform action with checked:{/tr}
 							{/if}
 							{if !isset($file_info)}
@@ -117,7 +135,9 @@
 								<select name="moveto">
 									{section name=ix loop=$all_galleries}
 										{if $all_galleries[ix].id ne $galleryId}
-											<option value="{$all_galleries[ix].id}">{$all_galleries[ix].label|escape}</option>
+											<option value="{$all_galleries[ix].id}">
+												{$all_galleries[ix].label|escape}
+											</option>
 										{/if}
 									{/section}
 								</select>
@@ -136,7 +156,9 @@
 							</select>
 							<select name="groups[]" multiple="multiple" size="5">
 								{section name=grp loop=$groups}
-									<option value="{$groups[grp].groupName|escape}" {if $groupName eq $groups[grp].groupName}selected="selected"{/if}>{$groups[grp].groupName|escape}</option>
+									<option value="{$groups[grp].groupName|escape}" {if $groupName eq $groups[grp].groupName}selected="selected"{/if}>
+										{$groups[grp].groupName|escape}
+									</option>
 								{/section}
 							</select>
 							<input type="submit" name="permsel" value="{tr}Assign{/tr}" />
@@ -148,7 +170,11 @@
 
 			{reindex_file_pixel id=$reindex_file_id}<br />
 
-			{pagination_links cant=$cant step=$maxRecords offset=$offset}{/pagination_links}
+			{pagination_links cant=$cant step=$maxRecords offset=$offset}
+				{if $view eq 'page'}
+					tiki-list_file_gallery.php?maxWidth={$maxWidth}&maxRecords={$maxRecords}&view={$view}
+				{/if}
+			{/pagination_links}
 			</div>
 		</td>
 	</tr>

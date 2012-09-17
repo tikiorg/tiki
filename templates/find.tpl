@@ -208,7 +208,7 @@
 {if !empty($show_find_orphans) and $show_find_orphans eq 'y'}
 	<label class="find_orphans" for="find_orphans">
 		   {tr}Orphans{/tr}
-		   <input type="checkbox" name="find_orphans" id="find_orphans" {if $find_orphans eq 'y'}checked="checked"{/if}/>
+		   <input type="checkbox" name="find_orphans" id="find_orphans" {if isset($find_orphans) and $find_orphans eq 'y'}checked="checked"{/if}/>
 	</label>
 {/if}
 

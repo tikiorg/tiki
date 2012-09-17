@@ -393,13 +393,14 @@
 	<span class="attention">{tr}The file is locked by {$fileInfo.lockedby}{/tr}</span>
 {/if}
 <br />
-{remarksbox type="note"}
-	{tr}Maximum file size is around:{/tr}
-	{if $tiki_p_admin eq 'y'}<a title="{$max_upload_size_comment}">{/if}
-		{$max_upload_size|kbsize:true:0}
-	{if $tiki_p_admin eq 'y'}</a>{/if}
-{/remarksbox}
-
+{if !$editFileId}
+	{remarksbox type="note"}
+		{tr}Maximum file size is around:{/tr}
+		{if $tiki_p_admin eq 'y'}<a title="{$max_upload_size_comment}">{/if}
+			{$max_upload_size|kbsize:true:0}
+		{if $tiki_p_admin eq 'y'}</a>{/if}
+	{/remarksbox}
+{/if}
 </div>
 
 {if isset($metarray) and $metarray|count gt 0}
