@@ -7,6 +7,7 @@
 
 require_once ('tiki-setup.php');
 include_once ('lib/search/searchstatslib.php');
+//get_strings tra('Search Stats')
 
 $access->check_feature('feature_search_stats');
 $access->check_permission('tiki_p_admin');

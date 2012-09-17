@@ -33,6 +33,7 @@ function prefs_session_list()
 		'session_silent' => array(
 			'name' => tra('Silent session'),
 			'description' => tra('Do not automatically start sessions.'),
+			'hint' => tra('Users will only have a session if they log in. So anonymous users will lose the capacity to have things like Switch Language (a session is needed for this)'),
 			'perspective' => false,
 			'type' => 'flag',
 			'default' => 'n',

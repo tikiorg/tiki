@@ -7,6 +7,7 @@
 
 require_once 'tiki-setup.php';
 require_once 'lib/credits/creditslib.php';
+//get_strings tra('Admin credits')
 
 if ($tiki_p_admin_users != 'y') {
 	$smarty->assign('msg', tra('You do not have permission to use this feature'));

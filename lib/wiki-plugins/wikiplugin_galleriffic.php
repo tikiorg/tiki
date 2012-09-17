@@ -32,7 +32,7 @@ function wikiplugin_galleriffic_info()
 			'thumbsWidth' => array(
 				'required' => false,
 				'name' => tra('Thumbs div width'),
-				'description' => tra('Width in pixels or percentage.'),
+				'description' => tra('Width in pixels or percentage. (e.g. "200px" or "100%")'),
 				'filter' => 'striptags',
 				'accepted' => 'Number of pixels followed by \'px\' or percent followed by % (e.g. "200px" or "100%").',
 				'default' => '300px',
@@ -40,7 +40,7 @@ function wikiplugin_galleriffic_info()
 			'imgWidth' => array(
 				'required' => false,
 				'name' => tra('Image slideshow width'),
-				'description' => tra('Width in pixels or percentage of the largest image.'),
+				'description' => tra('Width in pixels or percentage of the largest image. (e.g. "200px" or "100%")'),
 				'filter' => 'striptags',
 				'accepted' => 'Number of pixels followed by \'px\' or percent followed by % (e.g. "200px" or "100%").',
 				'default' => '550px',
@@ -48,10 +48,57 @@ function wikiplugin_galleriffic_info()
 			'imgHeight' => array(
 				'required' => false,
 				'name' => tra('Image slideshow height'),
-				'description' => tra('Height in pixels or percentage of the largest images.'),
+				'description' => tra('Height in pixels or percentage of the largest images. (e.g. "200px" or "100%")'),
 				'filter' => 'striptags',
 				'accepted' => 'Number of pixels followed by \'px\' or percent followed by % (e.g. "200px" or "100%").',
 				'default' => '502px',
+			),
+			'autoStart' => array(
+				'required' => false,
+				'name' => tra('Start Slideshow'),
+				'description' => tra('Automatically start the slideshow'),
+				'filter' => 'alpha',
+				'default' => 'n',
+				'options' => array(
+					array('text' => tra('No'), 'value' => 'n'),
+					array('text' => tra('Yes'), 'value' => 'y'),
+				),
+			),
+			'delay' => array(
+				'required' => false,
+				'name' => tra('Delay'),
+				'description' => tra('Delay in milliseconds between each transition'),
+				'filter' => 'int',
+				'default' => '2500',
+			),
+			'numThumbs' => array(
+				'required' => false,
+				'name' => tra('Number of Thumbnails'),
+				'description' => tra('The number of thumbnails to show per page'),
+				'filter' => 'int',
+				'default' => '15',
+			),
+			'topPager' => array(
+				'required' => false,
+				'name' => tra('Show top pager'),
+				'description' => tra('Display thumbnail pager at top'),
+				'filter' => 'alpha',
+				'default' => 'y',
+				'options' => array(
+					array('text' => tra('Yes'), 'value' => 'y'),
+					array('text' => tra('No'), 'value' => 'n'),
+				),
+			),
+			'bottomPager' => array(
+				'required' => false,
+				'name' => tra('Show bottom pager'),
+				'description' => tra('Display thumbnail pager at bottom'),
+				'filter' => 'alpha',
+				'default' => 'y',
+				'options' => array(
+					array('text' => tra('Yes'), 'value' => 'y'),
+					array('text' => tra('No'), 'value' => 'n'),
+				),
 			),
 		),
 	);
@@ -84,10 +131,15 @@ function wikiplugin_galleriffic($data, $params)
 	$nextLinkText = tra('Next Photo').' &rsaquo;';
 	$nextPageLinkText = tra('Next').' &rsaquo;';
 	$prevPageLinkText = '&lsaquo; '.tra('Prev');
+	$autoStart = $autoStart === n ? 'false' : 'true';
+	$topPager = $topPager === n ? 'false' : 'true';
+	$bottomPager = $bottomPager === n ? 'false' : 'true';
+
 $jq = <<<JQ
 	// We only want these styles applied when javascript is enabled
 \$('div.navigation').css({'width' : '$thumbsWidth', 'float' : 'left'});
 \$('div.gcontent').css('display', 'block');
+\$('.thumbs').show();
 
 	// Initially set opacity on thumbs and add
 	// additional styling for hover effect on thumbs
@@ -99,11 +151,11 @@ $jq = <<<JQ
 		exemptionSelector: '.selected'
 	});
     var gallery = \$('#thumbs').galleriffic({
-        delay:                     2500, // in milliseconds
-        numThumbs:                 15, // The number of thumbnails to show page
+        delay:                     $delay, // in milliseconds
+        numThumbs:                 $numThumbs, // The number of thumbnails to show page
         preloadAhead:              10, // Set to -1 to preload all images
-        enableTopPager:            true,
-        enableBottomPager:         true,
+        enableTopPager:            $topPager,
+        enableBottomPager:         $bottomPager,
         maxPagesToShow:            7,  // The maximum number of pages to display in either the top or bottom pager
         imageContainerSel:         '#slideshow', // The CSS selector for the element within which the main slideshow image should be rendered
         controlsContainerSel:      '#controls', // The CSS selector for the element within which the slideshow controls should be rendered
@@ -119,7 +171,7 @@ $jq = <<<JQ
 		prevPageLinkText:          '$prevPageLinkText',
         enableHistory:             false, // Specifies whether the url's hash and the browser's history cache should update when the current slideshow image changes
         enableKeyboardNavigation:  true, // Specifies whether keyboard navigation is enabled
-        autoStart:                 false, // Specifies whether the slideshow should be playing or paused when the page first loads
+        autoStart:                 $autoStart, // Specifies whether the slideshow should be playing or paused when the page first loads
         syncTransitions:           false, // Specifies whether the out and in transitions occur simultaneously or distinctly
         defaultTransitionDuration: 1000, // If using the default transitions, specifies the duration of the transitions
     });
@@ -131,7 +183,30 @@ $jq = <<<JQ
 JQ;
 
 	$headerlib->add_jq_onready($jq);
+$css = <<<CSS
+div.slideshow-container {
+	height: $imgHeight;
+}
+div.loader {
+	width: $imgWidth;
+	height: $imgHeight;
+}
+div.slideshow a.advance-link {
+	width: $imgWidth;
+	height: $imgHeight;
+	line-height: $imgHeight;
+}
+span.image-caption {
+	width: $imgWidth;
+}
+.thumbs {
+	display: none;
+}
+
+CSS;
+	$headerlib->add_css($css, 50);
+
 	$smarty->assign('images', $files['data']);
-	$smarty->assign('imgWidth', $imgWidth-50);// arbritary number to allow some padding
+	$smarty->assign('imgWidth', $imgWidth - 8);// arbritary number to allow some padding
 	return $smarty->fetch('wiki-plugins/wikiplugin_galleriffic.tpl');
 }

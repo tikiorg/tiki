@@ -17,7 +17,7 @@
 		</td>
 		<td width="100%">
 			<a class="linkmodule" href="tiki-calendar_edit_item.php?viewcalitemId={$event.calitemId}">{$event.name|escape}</a>
-			{if $desc}<br />{$event.description|escape}{/if}
+			{if $desc}<br />{$event.parsed}{/if}
 		</td>
 	</tr><!-- {cycle} -->
 {/foreach}

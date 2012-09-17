@@ -12,12 +12,12 @@
 		<ul class="thumbs noscript">
 			{foreach from=$images key=i item=image name=wpmosaicbig}
 			<li>
-				<a class="thumb" href="tiki-download_file.php?fileId={$image.fileId}&amp;display&amp;max={$imgWidth|replace:'px':''}" title="">
+				<a class="thumb" href="tiki-download_file.php?fileId={$image.fileId}&display&max={$imgWidth|replace:'px':''}" title="">
 				   {literal}{img fileId={/literal}{$image.fileId}{literal} thumb=y link=""}{/literal}
 				</a>
 				<div class="caption">
-					<div class="image-title"></div>
-					<div class="image-desc"></div>
+					<div class="image-title">{$image.name}</div>
+					<div class="image-desc">{$image.description}</div>
 				</div>
 			</li>
 			{/foreach}

@@ -320,13 +320,29 @@ class RegistrationLib extends TikiLib
 
 		$newPass = $registration['pass'] ? $registration['pass'] : $registration["genepass"];
 
+		$pending = false;
+		$confirmed = false;
+
+		if ($prefs['userTracker'] === 'y') {	// this gets called twice if there's a user tracker
+			if (!$userlib->get_user_real_case($registration['name'])) {
+				$pending = true;				// first time to just create the basic user record for the tracker to attach to
+			} else {
+				$confirmed = true;				// second time to send notifications, join groups etc
+			}
+		}
+
 		if ($this->merged_prefs['validateUsers'] == 'y'
 				|| (isset($this->merged_prefs['validateRegistration'])
 						&& $this->merged_prefs['validateRegistration'] == 'y')
 		) {
-			$apass = md5($tikilib->genPass());
+			if ($confirmed) {
+				$info = $userlib->get_user_info($registration['name']);
+				$apass = $info['valid'];
+			} else {
+				$apass = md5($tikilib->genPass());
+			}
 
-			if ($prefs['userTracker'] !== 'y') {	// don't send validation until user traker has been validated
+			if (!$pending) {	// don't send validation until user tracker has been validated
 				$userlib->send_validation_email(
 					$registration['name'],
 					$apass,
@@ -337,23 +353,35 @@ class RegistrationLib extends TikiLib
 				);
 			}
 
-			$userlib->add_user(
-				$registration['name'],
-				$newPass,
-				$registration["email"],
-				'',
-				false,
-				$apass,
-				$openid_url,
-				$this->merged_prefs['validateRegistration'] == 'y'?'a':'u'
-			);
+			if (!$confirmed) {
+				$userlib->add_user(
+					$registration['name'],
+					$newPass,
+					$registration["email"],
+					'',
+					false,
+					$apass,
+					$openid_url,
+					$this->merged_prefs['validateRegistration'] == 'y'?'a':'u'
+				);
+			}
 
-			$logslib->add_log('register', 'created account ' . $registration['name']);
-			$result=$smarty->fetch('mail/user_validation_msg.tpl');
+			if (!$pending) {
+				$logslib->add_log('register', 'created account ' . $registration['name']);
+				$result=$smarty->fetch('mail/user_validation_msg.tpl');
+			}
 		} else {
-			$userlib->add_user($registration['name'], $newPass, $registration['email'], '', false, NULL, $openid_url);
-			$logslib->add_log('register', 'created account ' . $registration['name']);
-			$result=$smarty->fetch('mail/user_welcome_msg.tpl');
+			if (!$confirmed) {
+				$userlib->add_user($registration['name'], $newPass, $registration['email'], '', false, NULL, $openid_url);
+			}
+			if (!$pending) {
+				$logslib->add_log('register', 'created account ' . $registration['name']);
+				$result=$smarty->fetch('mail/user_welcome_msg.tpl');
+			}
+		}
+
+		if ($pending) {
+			return '';
 		}
 
 		if (isset($registration['chosenGroup']) && $userlib->get_registrationChoice($registration['chosenGroup']) == 'y') {

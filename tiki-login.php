@@ -335,6 +335,9 @@ if ($isvalid) {
 	if (isset($_REQUEST['url'])) {
 		$smarty->assign('url', $_REQUEST['url']);
 	}
+	$module_params['show_forgot'] = ($prefs['forgotPass'] == 'y' && $prefs['change_password'] == 'y')? 'y': 'n';
+	$module_params['show_register'] = ($prefs['allowRegister'] === 'y')? 'y': 'n';
+	$smarty->assign('module_params', $module_params);
 	if ($error == PASSWORD_INCORRECT && ($prefs['unsuccessful_logins'] >= 0 || $prefs['unsuccessful_logins_invalid'] >= 0)) {
 		$nb_bad_logins = $userlib->unsuccessful_logins($requestedUser);
 		if ($prefs['unsuccessful_logins_invalid'] > 0 && ($nb_bad_logins >= $prefs['unsuccessful_logins_invalid'] - 1)) {
