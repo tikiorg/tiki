@@ -83,7 +83,7 @@ class Tiki_Profile_Analyser
 		return $this->simplify($out);
 	}
 
-	function getObjects($type)
+	function getObjects($type, $default = null)
 	{
 		$out = array();
 
@@ -91,6 +91,10 @@ class Tiki_Profile_Analyser
 			if ($object->getType() == $type) {
 				$out[] = $object->getData();
 			}
+		}
+
+		if (! count($out) && is_array($default)) {
+			$out[] = $default;
 		}
 
 		return $this->simplify($out);

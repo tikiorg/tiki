@@ -168,6 +168,15 @@ class Services_Workspace_Controller
 
 			$builder->setManagingGroup($input->managingGroup->word());
 
+			foreach ($input->pages as $page) {
+				$builder->addObject('wiki_page', uniqid(), array(
+					'name' => $page->name->pagename(),
+					'namespace' => $page->namespace->pagename(),
+					'content' => $page->content->wikicontent(),
+					'categories' => $builder->user('category'),
+				));
+			}
+
 			$this->utilities->replaceTemplate($input->id->int(), array(
 				'name' => $input->name->text(),
 				'definition' => $builder->getContent(),
@@ -186,10 +195,16 @@ class Services_Workspace_Controller
 		)) ? 'y' : 'n';
 
 		return array(
+			'title' => tr('Edit template %0', $template['name']),
 			'id' => $input->id->int(),
 			'name' => $template['name'],
 			'area' => ($prefs['feature_areas'] == 'y') ? $hasArea : null,
 			'groups' => $analyser->getGroups('category', $analyser->user('category')),
+			'pages' => $analyser->getObjects('wiki_page', array(
+				'name' => '{namespace}',
+				'namespace' => null,
+				'content' => '',
+			)),
 		);
 	}
 
@@ -240,6 +255,25 @@ class Services_Workspace_Controller
 			'groups' => array_keys($permissions),
 			'permissions' => $permissions,
 			'descriptions' => $userlib->get_permissions(0, -1, 'permName_asc', '', 'category', '', true),
+		);
+	}
+
+	function action_edit_content($input)
+	{
+		$text = $input->content->text();
+		$content = $input->content->wikicontent();
+
+		$prefix = 'wikicontent:';
+		if ($page = $input->page->pagename()) {
+			$content = null;
+		} elseif (substr($text, 0, strlen($prefix)) === $prefix) {
+			$page = substr($text, strlen($prefix));
+			$content = null;
+		}
+
+		return array(
+			'page' => $page,
+			'content' => $content,
 		);
 	}
 }

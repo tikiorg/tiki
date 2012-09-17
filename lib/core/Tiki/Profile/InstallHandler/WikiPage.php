@@ -68,7 +68,7 @@ class Tiki_Profile_InstallHandler_WikiPage extends Tiki_Profile_InstallHandler
 
 	private function convertMode()
 	{
-		global $tikilib, $prefs;
+		global $tikilib;
 
 		$name = $this->getPageName();
 
@@ -195,6 +195,8 @@ class Tiki_Profile_InstallHandler_WikiPage extends Tiki_Profile_InstallHandler
 
 	private function getPageName()
 	{
+		global $prefs;
+
 		$name = $this->name;
 
 		if ($this->namespace) {

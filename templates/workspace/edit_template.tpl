@@ -45,6 +45,34 @@
 	</ul>
 
 	<a class="permission-select" href="{service controller=workspace action=select_permissions}">{tr}Select Permissions{/tr}</a>
+
+	<h3>{tr}Wiki Pages{/tr}</h3>
+	<ul class="pages">
+		{foreach from=$pages item=page key=key}
+			<li>
+				<a href="#" class="key">
+					{if $page.name eq '{namespace}'}
+						{tr}Home{/tr}
+					{else}
+						{$page.name|escape}
+					{/if}
+				</a>
+				<ul style="display: none">
+					<li>
+						<input class="name" type="text" name="pages~{$key|escape}~name" value="{$page.name|escape}"/>
+						<input class="namespace" type="hidden" name="pages~{$key|escape}~namespace" value="{$page.namespace|escape}" />
+					</li>
+					<li>
+						<input class="content" type="hidden" name="pages~{$key|escape}~content" value="{$page.content|escape}"/>
+						<a class="edit-content" href="{service controller=workspace action=edit_content}">{tr}Edit content template{/tr}</a>
+					</li>
+				</ul>
+			</li>
+		{/foreach}
+		<li>
+			<a class="add-page" href="">{tr}Add page{/tr}</a>
+		</li>
+	</ul>
 	
 	<div class="submit">
 		<input type="submit" value="{tr}Save{/tr}"/>
