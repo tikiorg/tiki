@@ -48,6 +48,8 @@ function wikiplugin_mediaplayer_info()
 				'description' => tra('Complete URL to the flv to include.'),
 				'filter' => 'url'
 			),
+
+			// The following param needs an URL with an extension (ex.: example.wmv works but not tiki-download_file.php?fileId=4) --marclaporte
 			'src' => array(
 				'required' => false,
 				'name'=> tra('URL'),
@@ -55,6 +57,7 @@ function wikiplugin_mediaplayer_info()
 				'filter' => 'url',
 				'default' => '',
 			),
+
 			// The type parameter is verified for QuickTime only. arildb
 			'type' => array(
 				'required' => false,
