@@ -874,7 +874,8 @@ if (isset($_GET['slideshow'])) {
 				}
 			}
 			$smarty->assign('maxRecords', 1);
-			$smarty->assign('metarray', json_decode($files['data'][0]['metadata'], true));
+			$smarty->assign('metarray', isset($files['data'][0]['metadata']) ?
+				json_decode($files['data'][0]['metadata'], true) : '');
 		}
 		$smarty->assign_by_ref('files', $files['data']);
 		$smarty->assign('cant', $files['cant']);
