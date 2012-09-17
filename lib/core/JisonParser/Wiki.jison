@@ -6,11 +6,15 @@
 
 PLUGIN_ID   					[A-Z]+
 INLINE_PLUGIN_ID				[a-z]+
-SYNTAX_CHARS                    [{}\n\r_\^:\~'-|=\(\)\[\]*#+%<≤]
+VARIABLE_NAME                   ([0-9A-Za-z ]{3,})
+SYNTAX_CHARS                    [{}\n_\^:\~'-|=\(\)\[\]*#+%<≤]
 LINE_CONTENT                    (.?)
+LINES_CONTENT                   (.|\n)+
 LINE_END                        (\n\r|\r\n|[\n\r])
+BLOCK_START                     ([\!*#+;])
+WIKI_LINK_TYPE                  (([a-z0-9-]+))
 
-%s np pp plugin line bold box center code color directional italic header list unlink link strike table titlebar underscore wikilink
+%s np pp plugin line block bold box center code color italic unlink link strike table titlebar underscore wikilink
 
 %%
 <np><<EOF>>
@@ -85,10 +89,10 @@ LINE_END                        (\n\r|\r\n|[\n\r])
 	%}
 
 
-"~tc~"(.|\n)+"~/tc~"                    return 'COMMENT';
+"~tc~"{LINES_CONTENT}"~/tc~"                    return 'COMMENT';
 
 
-[%][%]([0-9A-Za-z ]{3,})[%][%]
+[%][%]{VARIABLE_NAME}[%][%]
 	%{
 		if (parser.isContent()) return 'CONTENT'; //js
 
@@ -96,7 +100,7 @@ LINE_END                        (\n\r|\r\n|[\n\r])
 
 		return 'DOUBLE_DYNAMIC_VAR';
 	%}
-[%]([0-9A-Za-z ]{3,})[%]
+[%]{VARIABLE_NAME}[%]
 	%{
 		if (parser.isContent()) return 'CONTENT'; //js
 
@@ -107,6 +111,16 @@ LINE_END                        (\n\r|\r\n|[\n\r])
 
 
 "{ELSE}"						return 'CONTENT';//For now let individual plugins handle else
+{LINE_END}("{r2l}"|"{l2r}")
+	%{
+		if (parser.isContent()) return 'CONTENT'; //js
+        lexer.begin('block'); //js
+        return 'BLOCK_START'; //js
+
+        //php if ($this->isContent()) return 'CONTENT';
+        //php $this->begin('block');
+        //php return 'BLOCK_START';
+	%}
 "{"{INLINE_PLUGIN_ID}.*?"}"
 	%{
 		yytext = parser.inlinePlugin(yytext); //js
@@ -360,104 +374,6 @@ LINE_END                        (\n\r|\r\n|[\n\r])
 	%}
 
 
-<header><<EOF>>
-	%{
-		if (parser.isContent()) return 'CONTENT'; //js
-		lexer.unput("\n"); //js
-
-		//php if ($this->isContent()) return 'CONTENT';
-		//php $this->unput("\n");
-	%}
-<header>{LINE_END}
-	%{
-		if (parser.isContent()) return 'CONTENT'; //js
-		lexer.popState(); //js
-		lexer.unput("\n"); //js
-		return 'HEADER_END'; //js
-
-		//php if ($this->isContent()) return 'CONTENT';
-		//php $this->popState();
-		//php $this->unput("\n");
-		//php return 'HEADER_END';
-	%}
-{LINE_END}[!]
-	%{
-		if (parser.isContent()) return 'CONTENT'; //js
-		lexer.begin('header'); //js
-		return 'HEADER_START'; //js
-
-		//php if ($this->isContent()) return 'CONTENT';
-		//php $this->begin('header');
-		//php return 'HEADER_START';
-	%}
-
-
-
-<directional><<EOF>>
-	%{
-		if (parser.isContent()) return 'CONTENT'; //js
-		lexer.unput("\n"); //js
-
-		//php if ($this->isContent()) return 'CONTENT';
-		//php $this->unput("\n");
-	%}
-<directional>{LINE_END}
-	%{
-		if (parser.isContent()) return 'CONTENT'; //js
-		lexer.popState(); //js
-		lexer.unput("\n"); //js
-		return 'DIRECTIONAL_END'; //js
-
-		//php if ($this->isContent()) return 'CONTENT';
-		//php $this->popState();
-		//php $this->unput("\n");
-		//php return 'DIRECTIONAL_END';
-	%}
-{LINE_END}[\{](r2l|l2r)[\}]
-	%{
-		if (parser.isContent()) return 'CONTENT'; //js
-		lexer.begin('directional'); //js
-		return 'DIRECTIONAL_START'; //js
-
-		//php if ($this->isContent()) return 'CONTENT';
-		//php $this->begin('directional');
-		//php return 'DIRECTIONAL_START';
-	%}
-
-
-
-<list><<EOF>>
-	%{
-		if (parser.isContent()) return 'CONTENT'; //js
-		lexer.unput("\n"); //js
-
-		//php if ($this->isContent()) return 'CONTENT';
-		//php $this->unput("\n");
-	%}
-<list>{LINE_END}
-	%{
-		if (parser.isContent()) return 'CONTENT'; //js
-		lexer.popState(); //js
-		lexer.unput("\n"); //js
-		return 'LIST_END'; //js
-
-		//php if ($this->isContent()) return 'CONTENT';
-		//php $this->popState();
-		//php $this->unput("\n");
-		//php return 'LIST_END';
-	%}
-{LINE_END}[*#+;]
-	%{
-		if (parser.isContent()) return 'CONTENT'; //js
-		lexer.begin('list'); //js
-		return 'LIST_START'; //js
-
-		//php if ($this->isContent()) return 'CONTENT';
-		//php $this->begin('list');
-		//php return 'LIST_START';
-	%}
-
-
 
 <italic><<EOF>>
 	%{
@@ -572,7 +488,7 @@ LINE_END                        (\n\r|\r\n|[\n\r])
 		//php $this->popState();
 		//php return 'STRIKE_END';
 	%}
-[-][-](?![ ])
+[-][-](?![ ]|<<EOF>>)
 	%{
 		if (parser.isContent()) return 'CONTENT'; //js
 		lexer.begin('strike'); //js
@@ -716,7 +632,7 @@ LINE_END                        (\n\r|\r\n|[\n\r])
 		//php $yytext = substr($yytext, 1, -1);
 		//php return 'WIKILINK_START';
 	%}
-"("([a-z0-9-]+)"("
+"("{WIKI_LINK_TYPE}"("
 	%{
 		if (parser.isContent() || parser.linkStack == true) return 'CONTENT'; //js
 		parser.linkStack = true; //js
@@ -760,10 +676,39 @@ LINE_END                        (\n\r|\r\n|[\n\r])
 		//php return 'WIKILINK_START';
 	%}
 
-[<](.|\n)*?[>]                      return 'HTML_TAG';
-"≤REAL_LT≥"(.|\n)*?"≤REAL_GT≥"    	return 'HTML_TAG';
 
 
+<block>(?={LINE_END})
+	%{
+		if (parser.isContent()) return 'CONTENT'; //js
+		lexer.popState(); //js
+		return 'BLOCK_END'; //js
+
+		//php if ($this->isContent()) return 'CONTENT';
+		//php $this->popState();
+		//php return 'BLOCK_END';
+	%}
+<block>{LINE_END}
+	%{
+		if (parser.isContent()) return 'CONTENT'; //js
+        lexer.begin('block'); //js
+        return 'BLOCK_END'; //js
+
+        //php if ($this->isContent()) return 'CONTENT';
+        //php $this->begin('block');
+        //php $this->unput("\n");
+        //php return 'BLOCK_END';
+	%}
+{LINE_END}(?={BLOCK_START})
+	%{
+		if (parser.isContent()) return 'CONTENT'; //js
+        lexer.begin('block'); //js
+        return 'BLOCK_START'; //js
+
+        //php if ($this->isContent()) return 'CONTENT';
+        //php $this->begin('block');
+        //php return 'BLOCK_START';
+	%}
 {LINE_END}
 	%{
 		if (parser.isContent()) return 'CONTENT'; //js
@@ -773,11 +718,13 @@ LINE_END                        (\n\r|\r\n|[\n\r])
 		//php return 'LINE_END';
 	%}
 
-
+[<](.|\n)*?[>]                              return 'HTML_TAG';
+"≤REAL_LT≥"(.|\n)*?"≤REAL_GT≥"    	        return 'HTML_TAG';
 ("§"[a-z0-9]{32}"§")                        return 'CONTENT';
 ("≤"(.)+"≥")                                return 'CONTENT';
-([A-Za-z0-9 .,?;]+)                             return 'CONTENT';
-(?!{SYNTAX_CHARS})({LINE_CONTENT})?(?={SYNTAX_CHARS})         return 'CONTENT';
+([A-Za-z0-9 .,?;]+)                         return 'CONTENT';
+(?!{SYNTAX_CHARS})({LINE_CONTENT})?(?={SYNTAX_CHARS})
+											return 'CONTENT';
 ([ ]+?)                                     return 'CONTENT';
 (.)                                         return 'CONTENT';
 <<EOF>>										return 'EOF';
@@ -786,12 +733,38 @@ LINE_END                        (\n\r|\r\n|[\n\r])
 %%
 
 wiki
- : contents
+ : lines
  	{return $1;}
- | contents EOF
+ | lines EOF
 	{return $1;}
  | EOF
     {return " ";}
+ ;
+
+
+lines
+ : line
+    {$$ = $1;}
+ | line lines
+    {
+        $$ = $1 + $2; //js
+        //php $$ = $1 . $2;
+    }
+ ;
+
+line
+ : contents
+    {$$ = $1;}
+ | BLOCK_START BLOCK_END
+    {
+	    $$ = $1 + $2; //js
+	    //php $$ = $1 . $2;
+	}
+ | BLOCK_START contents BLOCK_END
+    {
+        $$ = parser.block($1 + $2); //js
+        //php $$ = $this->block($1 . $2);
+    }
  ;
 
 contents
@@ -950,33 +923,20 @@ content
  		//php $3['body'] = $2;
  		//php $$ = $this->plugin($3);
  	}
- | DIRECTIONAL_START DIRECTIONAL_END
- | DIRECTIONAL_START contents DIRECTIONAL_END
- 	{
- 		$$ = parser.directional($1, $2); //js
- 		//php $$ = $this->directional($1, $2);
- 	}
- | HEADER_START HEADER_END
- | HEADER_START contents HEADER_END
-	{
-		$$ = parser.header($2); //js
-		//php $$ = $this->header($2);
-	}
- | LIST_START LIST_END
- | LIST_START contents LIST_END
-	{
-		$$ = parser.stackList($1 + $2); //js
-		//php $$ = $this->stackList($1 . $2);
-	}
  | LINE_END
-   	{
-   	    $$ = parser.line(); //js
-   	    //php $$ = $this->line();
-   	}
+    {
+        $$ = parser.line($1); //js
+        //php $$ = $this->line($1);
+    }
  | FORCED_LINE_END
     {
         $$ = parser.forcedLineEnd(); //js
         //php $$ = $this->forcedLineEnd();
+    }
+ | BLOCK_START contents BLOCK_END
+    {
+        $$ = parser.block($1 + $2); //js
+        //php $$ = $this->block($1 . $2);
     }
  ;
 

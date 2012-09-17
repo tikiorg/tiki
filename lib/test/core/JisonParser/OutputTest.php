@@ -7,6 +7,7 @@
 
 class JisonParser_OutputTest extends TikiTestCase
 {
+	public $verbose = false;
 	public $called;
 	public $parser;
 	public $syntaxSets = array();
@@ -167,8 +168,24 @@ class JisonParser_OutputTest extends TikiTestCase
 				$syntax = $customHandled['syntax'];
 			}
 
-			$this->assertEquals($syntax[1],$parsed);
+			if ($this->verbose == true) {
+				echo $syntaxName . ":\n";
+				echo '"' . $parsed . '"' . "\n\n\n\n";
+			}
+
+			$this->assertEquals($syntax[1],$parsed, $syntaxName, $syntax[0]);
 		}
+	}
+
+	static function assertEquals($expected, $actual, $syntaxName, $syntax)
+	{
+		if ($expected != $actual) {
+			echo "Failure on: " . $syntaxName . "\n";
+			echo 'Syntax: "' . $syntax . '"' . "\n";
+			echo 'Output: ' . $actual . "\n";
+		}
+
+		parent::assertEquals($expected, $actual);
 	}
 
 	private function tryRemoveIdsFromHtmlList(&$parsed)
@@ -185,7 +202,7 @@ class JisonParser_OutputTest extends TikiTestCase
 			'<dl class="tikiList" id="" style="">' .
 				'<dt>foo1</dt><dd>bar1</dd>' . "\n" .
 				'<dt>foo2</dt><dd>bar2</dd>' . "\n" .
-			'</dl>' . "\n"
+			'</dl>'
 		);
 
 		$parsed = $this->parser->parse($syntax[0]);
@@ -203,7 +220,7 @@ class JisonParser_OutputTest extends TikiTestCase
 			'<ul class="tikiList" id="" style="">' .
 				'<li class="tikiListItem"> foo' . '</li>' . "\n" .
 				'<li class="tikiListItem"> bar' . '</li>' . "\n" .
-			'</ul>' . "\n"
+			'</ul>'
 		);
 
 		$parsed = $this->parser->parse($syntax[0]);
@@ -214,8 +231,6 @@ class JisonParser_OutputTest extends TikiTestCase
 
 	private function old_bulleted_list2()
 	{
-		global $verbose;
-
 		$syntax = array(
 			"* foo1\n" .
 			"** foo11\n" .
@@ -227,10 +242,10 @@ class JisonParser_OutputTest extends TikiTestCase
 					'<ul class="tikiList" id="" style="">' .
 						'<li class="tikiListItem"> foo11</li>' . "\n" .
 						'<li class="tikiListItem">foo12</li>'. "\n" .
-					'</ul>' . "\n" .
+					'</ul>' .
 				'</li>'. "\n" .
 				'<li class="tikiListItem"> bar1</li>' . "\n" .
-			'</ul>' . "\n"
+			'</ul>'
 		);
 
 		$parsed = $this->parser->parse($syntax[0]);
@@ -253,7 +268,7 @@ class JisonParser_OutputTest extends TikiTestCase
 					"<br />Continuation2\n" .
 				"</li>\n" .
 				'<li class="tikiListItem"> bar</li>' . "\n" .
-			"</ul>\n"
+			"</ul>"
 		);
 
 		$parsed = $this->parser->parse($syntax[0]);
@@ -271,7 +286,7 @@ class JisonParser_OutputTest extends TikiTestCase
 			'<ol class="tikiList" id="" style="">' .
 				'<li class="tikiListItem"> foo</li>' . "\n" .
 				'<li class="tikiListItem"> bar</li>' . "\n" .
-			"</ol>\n"
+			"</ol>"
 		);
 
 		$parsed = $this->parser->parse($syntax[0]);
@@ -293,10 +308,10 @@ class JisonParser_OutputTest extends TikiTestCase
 					'<ol class="tikiList" id="" style="">' .
 						'<li class="tikiListItem"> foo11</li>' . "\n" .
 						'<li class="tikiListItem">foo12</li>' . "\n" .
-					'</ol>' . "\n" .
+					'</ol>' .
 				'</li>' . "\n" .
 				'<li class="tikiListItem"> bar1</li>' . "\n" .
-			'</ol>' . "\n"
+			'</ol>'
 		);
 
 		$parsed = $this->parser->parse($syntax[0]);
@@ -319,7 +334,7 @@ class JisonParser_OutputTest extends TikiTestCase
 					"<br />Continuation2\n" .
 				"</li>\n" .
 				'<li class="tikiListItem"> bar</li>' . "\n" .
-			"</ol>\n"
+			"</ol>"
 		);
 
 		$parsed = $this->parser->parse($syntax[0]);
@@ -354,7 +369,7 @@ class JisonParser_OutputTest extends TikiTestCase
 				'<li class="tikiListItem">line 1</li>' . "\n" .
 				'<li class="tikiListItem">line 2</li>' . "\n" .
 				'<li class="tikiListItem">line 3</li>' . "\n" .
-			'</ul>' . "\n"
+			'</ul>'
 		);
 
 		$parsed = $this->parser->parse($syntax[0]);
@@ -374,7 +389,7 @@ class JisonParser_OutputTest extends TikiTestCase
 				'<li class="tikiListItem">line 1</li>' . "\n" .
 				'<li class="tikiListItem">line 2</li>' . "\n" .
 				'<li class="tikiListItem">line 3</li>' . "\n" .
-			'</ol>' . "\n"
+			'</ol>'
 		);
 
 		$parsed = $this->parser->parse($syntax[0]);
@@ -395,7 +410,7 @@ class JisonParser_OutputTest extends TikiTestCase
 				'<li class="tikiListItem">line 2' .
 					'<br />line 3' . "\n" .
 				'</li>' . "\n" .
-			'</ul>' . "\n"
+			'</ul>'
 		);
 
 		$parsed = $this->parser->parse($syntax[0]);
@@ -416,7 +431,7 @@ class JisonParser_OutputTest extends TikiTestCase
 				'<li class="tikiListItem">line 2' .
 				'<br />line 3' . "\n" .
 				'</li>' . "\n" .
-			'</ul>' . "\n"
+			'</ul>'
 		);
 
 		$parsed = $this->parser->parse($syntax[0]);
@@ -444,23 +459,23 @@ class JisonParser_OutputTest extends TikiTestCase
 						'<li class="tikiListItem">line 2' .
 							'<ul class="tikiList" id="" style="">' .
 								'<li class="tikiListItem">line 3</li>' . "\n" .
-							'</ul>' . "\n" .
+							'</ul>' .
 						'</li>' . "\n" .
 						'<li class="tikiListItem">line 4</li>' . "\n" .
-					'</ul>' . "\n" .
+					'</ul>' .
 				'</li>' . "\n" .
 				'<li class="tikiListItem">line 5' .
 					'<ul class="tikiList" id="" style="">' .
 						'<li class="tikiListItem">line 6' .
 							'<ul class="tikiList" id="" style="">' .
 								'<li class="tikiListItem">line 7</li>' . "\n" .
-							'</ul>' . "\n" .
+							'</ul>' .
 						'</li>' . "\n" .
 						'<li class="tikiListItem">line 8</li>' . "\n" .
-					'</ul>' . "\n" .
+					'</ul>' .
 				'</li>' . "\n" .
 				'<li class="tikiListItem">line 9</li>' . "\n" .
-			'</ul>' . "\n"
+			'</ul>'
 		);
 
 		$parsed = $this->parser->parse($syntax[0]);
@@ -484,9 +499,9 @@ class JisonParser_OutputTest extends TikiTestCase
 						'<li class="tikiListItem">line 2</li>' . "\n" .
 						'<li class="tikiListItem">line 3</li>' . "\n" .
 						'<li class="tikiListItem">line 4</li>' . "\n" .
-					'</ol>' . "\n" .
+					'</ol>' .
 				'</li>' . "\n" .
-			'</ul>' . "\n"
+			'</ul>'
 		);
 
 		$parsed = $this->parser->parse($syntax[0]);
@@ -628,7 +643,7 @@ class JisonParser_OutputTest extends TikiTestCase
 			"&amp;<br />\n" .
 			'&amp;<dl class="tikiList" id="" style=""><dt>foo</dt><dd>foo definition</dd>' . "\n" .
 			"<dt>foo2</dt><dd>foo2 definition</dd>\n" .
-			"</dl>\n\n" .
+			"</dl>\n" .
 			"[<strong>bold</strong>]<br />\n" .
 			"Test<em>Test Italics</em><br />\n"
 		);

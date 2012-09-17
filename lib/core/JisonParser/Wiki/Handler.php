@@ -21,6 +21,8 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	public static $pluginIndexes = array();
 	public $pluginNegotiators = array();
 
+	public $headerStack = false;
+
 	/* np tracking */
 	public $npStack = false; //There can only be 1 active np stack
 
@@ -189,8 +191,13 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		echo "{" . $result . ":" .$avoiding_name_collisions . "}" . $yy_->yytext . "\n";
 		return $result;
 	}
-*/
 
+	function parseError($error, $info)
+	{
+		echo $error;
+		die;
+	}
+*/
 	function parse($input)
 	{
 		if (empty($input)) return $input;
@@ -275,7 +282,9 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		$output = str_replace("<!---->", "", $output);
 
 		//Replace the break we put at the beginning
-		$output = preg_replace("/([<]br [\/][>][\n]|[\n])$/", "", $output);
+		//$output = preg_replace("/^(([<]br [\/][>])?([\n][\r]|[\n\r]))/", "", $output);
+		$output = preg_replace("/(([<]br [\/][>])?([\n][\r]|[\r][\n]|[\n\r]))$/", "", $output);
+		//$output = trim($output, "\r");
 
 		$output = $this->unprotectSpecialChars($output, $this->Parser->option['is_html']);
 
@@ -413,11 +422,6 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		if (self::$parseDepth == 0) {
 			$this->getPluginNegotiator()->executeAwaiting($input);
 		}
-	}
-
-	function SOL() //start of line
-	{
-		return ($this->yyloc['first_column'] == 0 ? true : false);
 	}
 
 	// This function handles the protection of html entities so that they are not mangled when
@@ -563,29 +567,21 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		return '<em>' . $content . '</em>';
 	}
 
-	function directional($direction, $content)
+	function l2r($content)
 	{
-		$dir = "";
+		$content = substr($content, 5);
+		return "<div dir='ltr'>" . $content . "</div>";
+	}
 
-		$direction = trim($direction);
-
-		switch ($direction) {
-			case "{l2r}" :
-				$dir = 'ltr';
-				break;
-			case "{r2l}" :
-				$dir = 'rtl';
-				break;
-		}
-
-		return "<div dir='" . $dir . "'>" . $content . "</div>";
+	function r2l($content)
+	{
+		$content = substr($content, 5);
+		return "<div dir='rtl'>" . $content . "</div>";
 	}
 
 	function header($content) //!content
 	{
-		$this->line++;
-
-		$hNum = 1;
+		$hNum = 0;
 		$headerLength = strlen($content);
 		for ($i = 0; $i < $headerLength; $i++) {
 			if ($content[$i] == '!') {
@@ -595,10 +591,10 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 			}
 		}
 
-		$content = substr($content, $hNum - 1);
+		$content = substr($content, $hNum);
 
 		$hNum = min(6, $hNum); //html doesn't support 7+ header level
-		$id = $this->Parser->header->stack($hNum, $content);
+		$id = $this->Parser->header->stack($hNum - 2, $content);
 		$button = '';
 		global $section, $tiki_p_edit;
 		if (
@@ -620,12 +616,35 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 
 		$this->skipBr = true;
 
-		return $button . '<h' . $hNum . ' class="showhide_heading" id="' . $id . '">' . $content . '</h' . $hNum . '>';
+		//expanding headers
+		$expandingHeaderClose = '';
+		$expandingHeaderOpen = '';
+
+		if ($this->headerStack == true) {
+			$this->headerStack = false;
+			$expandingHeaderClose = '</div>';
+		}
+
+		if ($content{0} == '-') {
+			$content = substr($content, 1);
+			$this->headerStack = true;
+			$expandingHeaderOpen = '<a href="javascript:flipWithSign(\'flip' . $id .'\')" class="link" id="flipperflip' . $id .'">[+]</a>' .
+				'<div style="display: none;" class="showhide_heading" id="flip' . $id . '">';
+		}
+
+		$result =
+			$expandingHeaderClose .
+				$button .
+				'<h' . $hNum . ' class="showhide_heading" id="' . $id . '">' .
+					$content .
+				'</h' . $hNum . '>' .
+			$expandingHeaderOpen;
+
+		return $result;
 	}
 
 	function stackList($content)
 	{
-		$this->line++;
 		$level = 0;
 		$headerLength = strlen($content);
 		$type = '';
@@ -670,7 +689,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		return '<hr />';
 	}
 
-	function line()
+	function line($ch)
 	{
 		$this->line++;
 
@@ -680,10 +699,10 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 			return '';
 		}
 
-		$result = "\n";
+		$result = $ch;
 
 		if ($this->skipBr == false && empty($this->tableStack) && $this->Parser->nonBreakingTagDepth == 0) {
-			$result = "<br />\n";
+			$result = "<br />" . $ch;
 		}
 
 		if ($this->skipBr === true) {
@@ -701,7 +720,6 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 
 	function forcedLineEnd()
 	{
-		$this->line++;
 		return '<br />';
 	}
 
@@ -847,7 +865,38 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		return '<!---->';
 	}
 
-	//unified functions used inside parser
+	public $blocks = array(
+		"header" => array('!'),
+
+		"stackList" => array('*','#','+',';'),
+
+		"r2l" => array('{r2l}'),
+		"l2r" => array('{l2r}'),
+	);
+
+	function block($content)
+	{
+		$this->line++;
+
+		$content = ltrim($content, "\n\r");
+
+		foreach($this->blocks as $function => &$set) {
+			foreach($set as &$startsWith) {
+				if ($this->beginsWith($content, $startsWith)) {
+					return $this->$function($content);
+				}
+			}
+		}
+
+		return $content;
+	}
+
+	function beginsWith($string, $search)
+	{
+		return (strncmp($string, $search, strlen($search)) === 0);
+	}
+
+
 	function substring($val, $left, $right)
 	{
 		 return substr($val, $left, $right);

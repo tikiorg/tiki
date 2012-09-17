@@ -138,7 +138,7 @@ class JisonParser_Wiki_List
 
 		unset($stack);
 
-		return $html . '<' . $parentTagType . ' class="tikiList" id="' . $id . '" style="' . $style . '">' . $result . '</' . $parentTagType . '>' . "\n";
+		return $html . '<' . $parentTagType . ' class="tikiList" id="' . $id . '" style="' . $style . '">' . $result . '</' . $parentTagType . '>';
 	}
 
 	private function advanceUntilNotType(&$i, &$stack, $type = "+", $wrapping = array("<br />", "\n"))
