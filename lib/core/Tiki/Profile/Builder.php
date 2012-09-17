@@ -25,6 +25,20 @@ class Tiki_Profile_Builder
 	
 	function addObject($type, $ref, array $data)
 	{
+		if (isset($data['categories'])) {
+			$list = (array) $data['categories'];
+			unset($data['categories']);
+
+			$this->objects[] = array(
+				'type' => 'categorize',
+				'data' => array(
+					'type' => $type,
+					'object' => $this->ref($ref),
+					'categories' => $list,
+				),
+			);
+		}
+
 		$this->objects[] = array(
 			'type' => $type,
 			'ref' => $ref,
@@ -34,7 +48,7 @@ class Tiki_Profile_Builder
 
 	function addGroup($internalName, $fullName, $autojoin = false)
 	{
-		$this->groups[$internalName] = str_replace('{group}', $this->user('group'), $fullName);
+		$this->groups[$internalName] = $fullName;
 		$this->autojoin[$internalName] = $autojoin;
 	}
 
@@ -96,6 +110,15 @@ class Tiki_Profile_Builder
 				$data['permissions'][$internal] = $groupDefinition;
 			}
 		}
+
+		$self = $this;
+		array_walk_recursive($data, function (& $entry) use ($self) {
+			if (is_string($entry)) {
+				$entry = preg_replace_callback('/\{(\w+)\}/', function ($matches) use ($self) {
+					return $self->user($matches[1]);
+				}, $entry);
+			}
+		});
 
 		$yaml = Horde_Yaml::dump($data);
 		return <<<SYNTAX

@@ -66,7 +66,7 @@ class Tiki_Profile_Analyser
 
 		foreach ($groupMap as $key => $name) {
 			$out[$key] = array(
-				'name' => $this->simplifyReference($name),
+				'name' => $name,
 				'managing' => false,
 				'autojoin' => true,
 				'permissions' => array(),
@@ -80,12 +80,31 @@ class Tiki_Profile_Analyser
 			}
 		}
 
-		return $out;
+		return $this->simplify($out);
 	}
 
-	private function simplifyReference($name)
+	function getObjects($type)
 	{
-		return preg_replace('/\$profilerequest:(\w+)\$[^\$]*\$/', '{$1}', $name);
+		$out = array();
+
+		foreach ($this->profile->getObjects() as $object) {
+			if ($object->getType() == $type) {
+				$out[] = $object->getData();
+			}
+		}
+
+		return $this->simplify($out);
+	}
+
+	private function simplify($data)
+	{
+		array_walk_recursive($data, function (& $entry) {
+			if (is_string($entry)) {
+				$entry = preg_replace('/\$profilerequest:(\w+)\$[^\$]*\$/', '{$1}', $entry);
+			}
+		});
+
+		return $data;
 	}
 
 	private function isManagingGroup($objects)

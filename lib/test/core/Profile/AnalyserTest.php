@@ -34,5 +34,38 @@ class Profile_AnalyserTest extends PHPUnit_Framework_TestCase
 			),
 		), $analyser->getGroups('category', $analyser->user('category')));
 	}
+
+	function testGetObjects()
+	{
+		$builder = new Tiki_Profile_Builder;
+		$builder->addObject('wiki_page', 'foo', array(
+			'name' => 'Foo',
+			'namespace' => $builder->user('namespace'),
+			'content' => 'Hello',
+			'categories' => $builder->user('category'),
+		));
+		$builder->addObject('wiki_page', 'bar', array(
+			'name' => 'Bar',
+			'namespace' => $builder->user('namespace'),
+			'content' => 'World',
+			'categories' => $builder->user('category'),
+		));
+
+		$profile = Tiki_Profile::fromString($builder->getContent());
+		$analyser = new Tiki_Profile_Analyser($profile);
+		
+		$this->assertEquals(array(
+			array(
+				'name' => 'Foo',
+				'namespace' => '{namespace}',
+				'content' => 'Hello',
+			),
+			array(
+				'name' => 'Bar',
+				'namespace' => '{namespace}',
+				'content' => 'World',
+			),
+		), $analyser->getObjects('wiki_page'));
+	}
 }
 

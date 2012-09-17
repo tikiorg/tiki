@@ -14,6 +14,7 @@ class Tiki_Profile_Installer
 		'tracker_item' => 'Tiki_Profile_InstallHandler_TrackerItem',
 		'wiki_page' => 'Tiki_Profile_InstallHandler_WikiPage',
 		'category' => 'Tiki_Profile_InstallHandler_Category',
+		'categorize' => 'Tiki_Profile_InstallHandler_Categorize',
 		'file_gallery' => 'Tiki_Profile_InstallHandler_FileGallery',
 		'module' => 'Tiki_Profile_InstallHandler_Module',
 		'menu' => 'Tiki_Profile_InstallHandler_Menu',

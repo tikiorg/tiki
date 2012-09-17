@@ -9,6 +9,7 @@ class Tiki_Profile_InstallHandler_WikiPage extends Tiki_Profile_InstallHandler
 {
 	private $content;
 	private $description;
+	private $namespace;
 	private $name;
 	private $lang;
 	private $translations = array();
@@ -32,6 +33,8 @@ class Tiki_Profile_InstallHandler_WikiPage extends Tiki_Profile_InstallHandler
 
 		if ( array_key_exists('name', $data) )
 			$this->name = $data['name'];
+		if ( array_key_exists('namespace', $data) )
+			$this->namespace = $data['namespace'];
 		if ( array_key_exists('description', $data) )
 			$this->description = $data['description'];
 		if ( array_key_exists('lang', $data) )
@@ -65,20 +68,24 @@ class Tiki_Profile_InstallHandler_WikiPage extends Tiki_Profile_InstallHandler
 
 	private function convertMode()
 	{
-		global $tikilib;
+		global $tikilib, $prefs;
 
-		$this->exists = $tikilib->page_exists($this->name);
+		$name = $this->getPageName();
+
+		$this->exists = $tikilib->page_exists($name);
 
 		switch( $this->mode ) {
 		case 'create':
-			if ( $this->exists )
-				throw new Exception("Page {$this->name} already exists and profile does not allow update.");
-						break;
+			if ( $this->exists ) {
+				throw new Exception("Page {$name} already exists and profile does not allow update.");
+			}
+			break;
 		case 'update':
 		case 'append':
-			if ( ! $this->exists )
-				throw new Exception("Page {$this->name} does not exist and profile only allows update.");
-						break;
+			if ( ! $this->exists ) {
+				throw new Exception("Page {$name} does not exist and profile only allows update.");
+			}
+			break;
 		case 'create_or_update':
 			return $this->exists ? 'update' : 'create';
 		case 'create_or_append':
@@ -98,6 +105,7 @@ class Tiki_Profile_InstallHandler_WikiPage extends Tiki_Profile_InstallHandler
 		global $tikilib;
 		$this->fetchData();
 		$this->replaceReferences($this->name);
+		$this->replaceReferences($this->namespace);
 		$this->replaceReferences($this->description);
 		$this->replaceReferences($this->content);
 		$this->replaceReferences($this->lang);
@@ -114,6 +122,8 @@ class Tiki_Profile_InstallHandler_WikiPage extends Tiki_Profile_InstallHandler
 			$this->content = $this->obj->getProfile()->getPageContent($pageName);
 		}
 
+		$finalName = $this->getPageName();
+
 		if ( $this->mode == 'create' ) {
 			if ( $this->wysiwyg ) {
 				$this->wysiwyg = 'y';
@@ -125,10 +135,10 @@ class Tiki_Profile_InstallHandler_WikiPage extends Tiki_Profile_InstallHandler
 			if ( ! $this->message ) {
 				$this->message = tra('Created by profile installer');
 			}
-			if ( ! $tikilib->create_page($this->name, 0, $this->content, time(), $this->message, 'admin', '0.0.0.0', $this->description, $this->lang, $is_html, null, $this->wysiwyg, $this->wiki_authors_style))
+			if ( ! $tikilib->create_page($finalName, 0, $this->content, time(), $this->message, 'admin', '0.0.0.0', $this->description, $this->lang, $is_html, null, $this->wysiwyg, $this->wiki_authors_style))
 				return null;
 		} else {
-			$info = $tikilib->get_page_info($this->name, true, true);
+			$info = $tikilib->get_page_info($finalName, true, true);
 
 			if ( ! $this->wysiwyg ) {
 				if ( ! empty($info['wysiwyg']) ) { 
@@ -160,13 +170,13 @@ class Tiki_Profile_InstallHandler_WikiPage extends Tiki_Profile_InstallHandler
 				$this->message = tra('Page updated by profile installer');
 			}
 
-			$tikilib->update_page($this->name, $this->content, $this->message, 'admin', '0.0.0.0', $this->description, 0, $this->lang, $is_html, null, null, $this->wysiwyg, $this->wiki_authors_style);
+			$tikilib->update_page($finalName, $this->content, $this->message, 'admin', '0.0.0.0', $this->description, 0, $this->lang, $is_html, null, null, $this->wysiwyg, $this->wiki_authors_style);
 		}
 
 		global $multilinguallib;
 		require_once 'lib/multilingual/multilinguallib.php';
 
-		$current = $tikilib->get_page_id_from_name($this->name);
+		$current = $tikilib->get_page_id_from_name($finalName);
 		foreach ( $this->translations as $targetName ) {
 			$target = $tikilib->get_page_info($targetName);
 
@@ -177,9 +187,20 @@ class Tiki_Profile_InstallHandler_WikiPage extends Tiki_Profile_InstallHandler
 		
 		if (!empty($this->structure)) {
 			global $structlib; include_once 'lib/structures/structlib.php';
-			$structlib->s_create_page($this->structure, 0, $this->name, '', $this->structure);
+			$structlib->s_create_page($this->structure, 0, $finalName, '', $this->structure);
 		}
 
-		return $this->name;
+		return $finalName;
+	}
+
+	private function getPageName()
+	{
+		$name = $this->name;
+
+		if ($this->namespace) {
+			$name = "{$this->namespace}{$prefs['namespace_separator']}{$name}";
+		}
+
+		return $name;
 	}
 }

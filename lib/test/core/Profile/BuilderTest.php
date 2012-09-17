@@ -119,6 +119,35 @@ EXPECT;
 		$this->assertIs($expect, $builder->getContent());
 	}
 
+	function testAssignDefaultGroup()
+	{
+		$builder = new Tiki_Profile_Builder;
+		$builder->addObject('wiki_page', 'foo', array(
+			'name' => 'Foo',
+			'content' => 'Hello',
+			'categories' => $builder->user('category'),
+		));
+		
+		$expect = <<<EXPECT
+---
+objects: 
+  - 
+    type: categorize
+    data: 
+      type: wiki_page
+      object: \$foo
+      categories: 
+        - \$profilerequest:category\$undefined\$
+  - 
+    type: wiki_page
+    ref: foo
+    data: 
+      name: Foo
+      content: Hello
+EXPECT;
+		$this->assertIs($expect, $builder->getContent());
+	}
+
 	private function assertIs($expect, $content)
 	{
 		$matches = WikiParser_PluginMatcher::match($content);
