@@ -199,19 +199,17 @@ th.header {
 	color: #ddf8f9;
 }
 
-.calodd,
-.caleven,
+.caltable .odd,
+.caltable .even,
 .wikicell {
 	border: 2px solid #cbf4f6;
 }
 
-.odd,
-.calodd {
+.odd {
 	background: #cbf4f6;
 }
 
-.even,
-.caleven {
+.even {
 	background: #d3f9f9;
 }
 

@@ -569,9 +569,9 @@ a.blogt:hover {
 	color: #004354;
 }
 
-.calodd, .caleven {border: 1px solid #0B7698}
-.calodd {background: #94BBC4}
-.caleven {background: #87B5BE}
+.caltable .odd, .caltable .even {border: 1px solid #0B7698}
+.caltable .odd {background: #94BBC4}
+.caltable .even {background: #87B5BE}
 
 .caldark {
 	background: #7299A5;

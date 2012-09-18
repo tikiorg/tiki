@@ -29,6 +29,6 @@ td#main-header,
 .box-data ul {margin-left: 0}
 .galtable {width: 97%}
 
-.calodd,
-.caleven,
+.caltable .odd,
+.caltable .even,
 .caldark {padding: 0}

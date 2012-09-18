@@ -1045,23 +1045,23 @@ div.dirfooter {margin-top: 10px}
 	padding: 0;
 }
 
-.calodd, .caleven {
+.caltable .odd, .caltable .even {
 	border: 1px solid #a9a9a9;
 }
 
-.calodd {
+.caltable .odd {
 	background: #ececec;
 }
 
-* html .calodd {
+* html .caltable .odd {
 	padding: 0;
 }
 
-.caleven {
+.caltable .even {
 	background: #f5f5f5;
 }
 
-* html .caleven {
+* html .caltable .even {
 	padding: 0;
 }
 

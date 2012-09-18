@@ -1184,11 +1184,11 @@ Caltrack a:visited {color: #00BD02}
 	float: right;
 }
 * html .addevent {padding: 0}
-.calodd, .caleven {border: 1px solid #999}
-.calodd {background: #f7f9fa}
-* html .calodd {padding: 0}
-.caleven {background: #e7e9ea}
-* html .caleven {padding: 0}
+.caltable .odd, .caltable .even {border: 1px solid #999}
+.caltable .odd {background: #f7f9fa}
+* html .caltable .odd {padding: 0}
+.caltable .even {background: #e7e9ea}
+* html .caltable .even {padding: 0}
 .caldark {background: url(snow/flakesptn.jpg)}
 * html .caldark {padding: 0}
 .caldark .calfocus {background: url(snow/flakesptn.jpg)}

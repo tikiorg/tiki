@@ -333,24 +333,24 @@ li.even {
 	color:#333333;
 }
 
-.caleven,
-.calodd {
+.caltable .even,
+.caltable .odd {
 	background: #1484E6 url(../../../lib/jquery/jquery-ui/themes/excite-bike/images/ui-bg_diagonals-thick_22_1484e6_40x40.png) 50% 50%;
 	border:1px solid #fff;
 	color:#fff;
 	font-weight:bold;
 }
 
-.caleven:hover,
-.calodd:hover {
+.caltable .even:hover,
+.caltable .odd:hover {
 	background: url(../../../lib/jquery/jquery-ui/themes/excite-bike/images/ui-bg_diagonals-thick_26_2293f7_40x40.png) repeat scroll 50% 50%;
 	border: 1px solid #1484e6;
 }
 
-.caleven a:link,
-.caleven a:visited,
-.calodd a:link,
-.calodd a:visited  {
+.caltable .even a:link,
+.caltable .even a:visited,
+.caltable .odd a:link,
+.caltable .odd a:visited  {
 	color: #B8EC79;
 }
 

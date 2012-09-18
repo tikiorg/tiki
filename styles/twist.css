@@ -1283,10 +1283,10 @@ Caltrack a:visited {color: #00BD02}
 	padding: 0 5px;
 	float: right}
 
-.calodd,
-.caleven {border: 1px solid #999}
-.calodd {background: #efefef}
-.caleven {background: white}
+.caltable .odd,
+.caltable .even {border: 1px solid #999}
+.caltable .odd {background: #efefef}
+.caltable .even {background: white}
 .caldark {background: #002C5E}
 .caldark .calfocus {background: #002C5E}
 .calnavigation a:hover {background: #85c4ed}

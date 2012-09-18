@@ -1196,9 +1196,9 @@ td.dirfooter {font-size: .95em}
 	padding: 0 5px;
 	float: right}
 
-.calodd, .caleven {border: 1px solid #000}
-.calodd {background: #030511}
-.caleven {background: #313131}
+.caltable .odd, .caltable .even {border: 1px solid #000}
+.caltable .odd {background: #030511}
+.caltable .even {background: #313131}
 
 .caldark {
 	background: #000;

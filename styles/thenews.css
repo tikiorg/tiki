@@ -1272,11 +1272,11 @@ body.tiki_blogs .postfooter .actions {
 
 /***** Calendar *****/
 /* Overrides calendar.css. */
-.calodd {
+.caltable .odd {
 	background: #fff;
 }
 
-.caleven {
+.caltable .even {
 	background: #f9f9f9;
 }
 

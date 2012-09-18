@@ -1984,15 +1984,15 @@ body.tiki_blogs .post .author_actions {
 	float: right;
 }
 
-.calodd, .caleven {
+.caltable .odd, .caltable .even {
 	border: 1px solid #a9a9a9;
 }
 
-.calodd {
+.caltable .odd {
 	background: #f0f0f0;
 }
 
-.caleven {
+.caltable .even {
 	background: #dcdcdc;
 }
 

@@ -1900,15 +1900,15 @@ a.viewthisday:hover {
 	float: right;
 }
 
-.calodd, .caleven {
+.caltable .odd, .caltable .even {
 	border: 1px solid #a9a9a9;
 }
 
-.calodd {
+.caltable .odd {
 	background: #fbfbfb;
 }
 
-.caleven {
+.caltable .even {
 	background: #f0f0f0;
 }
 

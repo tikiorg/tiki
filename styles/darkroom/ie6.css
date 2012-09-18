@@ -85,11 +85,8 @@ body .galtable {
 	padding: 0;
 }
 
-.calodd {
-	padding: 0;
-}
-
-.caleven {
+.caltable .odd,
+.caltable .even {
 	padding: 0;
 }
 

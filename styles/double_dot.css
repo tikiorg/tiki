@@ -977,12 +977,12 @@ body.tiki_cms h1 a.pagetitle:hover {border-bottom: none}
 }
 
 .caldark .calfocus {background: none;}
-.calodd, .caleven {border-color: #aaa}
+.caltable .odd, .caltable .even {border-color: #aaa}
 /*.calodd .calfocus {background: }*/
-.calodd {
+.caltable .odd {
 	background: #e2e2e2;
 }
-.caleven {
+.caltable .even {
 	background: #cccccc;
 }
 

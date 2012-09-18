@@ -277,17 +277,17 @@ li.even {
 	color: #222;
 }
 	
-.caleven,
-.calodd {
+.caltable .even,
+.caltable .odd {
 	background: #0A0A0A url(../../../lib/jquery/jquery-ui/themes/trontastic/images/ui-bg_gloss-wave_55_000000_500x100.png) repeat-x scroll 50% 50%;
 	border:1px solid #1B1613;
 	color:#B8EC79;
 }
 
-.caleven a:link,
-.caleven a:visited,
-.calodd a:link,
-.calodd a:visited  {
+.caltable .even a:link,
+.caltable .even a:visited,
+.caltable .odd a:link,
+.caltable .odd a:visited  {
 	color: #B8EC79;
 }
 

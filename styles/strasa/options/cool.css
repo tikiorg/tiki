@@ -970,15 +970,16 @@ body.tiki_blogs .postbody-title,
 	color: #cce5ff;
 }
 
-.calodd, .caleven {
+.caltable .odd,
+.caltable .even {
 	border: 1px solid #a9a9a9;
 }
 
-.calodd {
+.caltable .odd {
 	background: #f0f0f0;
 }
 
-.caleven {
+.caltable .even {
 	background: #dcdcdc;
 }
 

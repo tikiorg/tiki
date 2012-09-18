@@ -843,11 +843,11 @@ body.tiki_blogs .postbody {
 	background: inherit !important;
 }
 
-.calodd {
+.caltable .odd {
 	background: #eeeeee;
 }
 
-.caleven {
+.caltable .even {
 	background: #f9f9f9;
 }
 

@@ -1955,8 +1955,8 @@ caltrack a:visited {
 	color: #f5f5f5;
 }
 
-.calodd .calfocuson,
-.caleven .calfocuson,
+.caltable .odd .calfocuson,
+.caltable .even .calfocuson,
 .calfocuson {
 	font-size: 90%;
 	background: #292929;
@@ -2051,15 +2051,15 @@ caltrack a:visited {
 	float: right;
 }
 
-.calodd, .caleven {
+.caltable .odd, .caltable .even {
 	border: none;
 }
 
-.calodd {
+.caltable .odd {
 	background: #474747;
 }
 
-.caleven {
+.caltable .even {
 	background: #3f3f3f;
 }
 

@@ -1137,10 +1137,10 @@ td.dirfooter {font-size: .95em}
 	float: right}
 
 * html .addevent {padding: 0}
-.calodd, .caleven {border: 1px solid #636f65}
-.calodd {background: #000 url(abse/menubg.jpg) repeat-y}
-* html .calodd {padding: 0}
-.caleven {background: #0e150e}
+.caltable .odd, .caltable .even {border: 1px solid #636f65}
+.caltable .odd {background: #000 url(abse/menubg.jpg) repeat-y}
+* html .caltable .odd {padding: 0}
+.caltable .even {background: #0e150e}
 * html .caleven {padding: 0}
 .caldark {background: #3f3f3f}
 * html .caldark {padding: 0}

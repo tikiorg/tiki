@@ -1205,11 +1205,11 @@ img.athumb {
 	
 .calnavigation a:hover {background: #FD9339 url(darkshine/hover_list.jpg) repeat-x; }
 * html .addevent {padding: 0}
-.calodd, .caleven {border: 1px solid #999}
-.calodd {background: #ececec}
-* html .calodd {padding: 0}
-.caleven {background: #f5f5f5}
-* html .caleven {padding: 0}
+.caltable .odd, .caltable .even {border: 1px solid #999}
+.caltable .odd {background: #ececec}
+* html .caltable .odd {padding: 0}
+.caltable .even {background: #f5f5f5}
+* html .caltable .even {padding: 0}
 .caldark {background: #dcdcdc}
 * html .caldark {padding: 0}
 .caldark .calfocus {background: #dcdcdc}

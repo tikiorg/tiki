@@ -48,7 +48,8 @@ td {
 
 .postbody table {font-size: 11px}
 body .galtable {width: 97%}
-.addevent {padding: 0}
-.calodd {padding: 0}
-.caleven {padding: 0}
+
+.addevent,
+.caltable .odd,
+.caltable .even,
 .caldark {padding: 0}
