@@ -21,8 +21,9 @@ class Tiki_Profile_InstallHandler_Tracker extends Tiki_Profile_InstallHandler
 		return $this->data = $data;
 	} // }}}
 
-	private function getOptionMap() // {{{
+	public static function getOptionMap() // {{{
 	{
+		// Also used by TrackerOption
 		return array(
 			'name' => '',
 			'description' => '',
@@ -53,6 +54,7 @@ class Tiki_Profile_InstallHandler_Tracker extends Tiki_Profile_InstallHandler
 			'hide_list_empty_fields' => 'doNotShowEmptyField',
 			'allow_one_item_per_user' => 'oneUserItem',
 			'section_format' => 'sectionFormat',
+			'popup_fields' => 'showPopup',
 		);
 	} // }}}
 
@@ -75,8 +77,9 @@ class Tiki_Profile_InstallHandler_Tracker extends Tiki_Profile_InstallHandler
 		return $defaults;
 	} // }}}
 	
-	private function getOptionConverters() // {{{
+	public function getOptionConverters() // {{{
 	{
+		// Also used by TrackerOption
 		return array(
 			'restrict_start' => new Tiki_Profile_DateConverter,
 			'restrict_end' => new Tiki_Profile_DateConverter,

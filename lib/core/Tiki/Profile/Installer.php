@@ -12,6 +12,7 @@ class Tiki_Profile_Installer
 		'tracker' => 'Tiki_Profile_InstallHandler_Tracker',
 		'tracker_field' => 'Tiki_Profile_InstallHandler_TrackerField',
 		'tracker_item' => 'Tiki_Profile_InstallHandler_TrackerItem',
+		'tracker_option' => 'Tiki_Profile_InstallHandler_TrackerOption',
 		'wiki_page' => 'Tiki_Profile_InstallHandler_WikiPage',
 		'category' => 'Tiki_Profile_InstallHandler_Category',
 		'categorize' => 'Tiki_Profile_InstallHandler_Categorize',

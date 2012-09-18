@@ -2279,7 +2279,7 @@ class TrackerLib extends TikiLib
 		$optionTable->deleteMultiple(array('trackerId' => (int) $trackerId));
 
 		foreach ($options as $kopt=>$opt) {
-			$optionTable->insert(array('trackerId' => $trackerId, 'name' => $kopt, 'value' => $opt));
+			$this->replace_tracker_option((int) $trackerId, $kopt, $opt);
 		}
 
 		$ratingId = $this->get_field_id_from_type($trackerId, 's', null, true, 'Rating');
@@ -2306,6 +2306,12 @@ class TrackerLib extends TikiLib
 		}
 
 		return $trackerId;
+	}
+
+	function replace_tracker_option($trackerId, $name, $value)
+	{
+		$optionTable = $this->options();
+		$optionTable->insertOrUpdate(array('value' => $value), array('trackerId' => $trackerId, 'name' => $name));
 	}
 
 	function clear_tracker_cache($trackerId)
