@@ -33,6 +33,24 @@
 	{/foreach}
 </table>
 
+<h2>MySQL crashed Tables</h2>
+{remarksbox type="note" title="{tr}Be careful{/tr}"}The following list is just a very quick look at SHOW TABLE STATUS that tells you, if tables have been marked as crashed. If you are experiencing database problems you should still run CHECK TABLE or myisamchk to make sure.{/remarksbox}
+<table class="normal">
+	<tr>
+		<th>{tr}Table{/tr}</th>
+		<th>{tr}Comment{/tr}</th>
+	</tr>
+	{cycle values="even,odd" print=false}
+	{foreach from=$mysql_crashed_tables key=key item=item}
+		<tr class="{cycle}">
+			<td class="text">{$key}</td>
+			<td class="text">{$item.Comment}</td>
+		</tr>
+	{foreachelse}
+		{norecords _colspan=2}
+	{/foreach}
+</table>
+
 <h2>{tr}Server Information{/tr}</h2>
 <table class="normal">
 	<tr>

@@ -849,6 +849,16 @@ if ($connection || !$standalone) {
 	foreach ( $result as $value) {
 		$mysql_variables[$value['Variable_name']] = array('value' => $value['Value']);
 	}
+
+	if (!$standalone) {
+		$mysql_crashed_tables = array();
+		// This should give all crashed tables (MyISAM at least) - does need testing though !!
+		$query = 'SHOW TABLE STATUS WHERE engine IS NULL AND comment <> "VIEW";';
+		$result = query($query, $connection);
+		foreach ( $result as $value ) {
+			$mysql_crashed_tables[$value['Name']] = array('Comment' => $value['Comment']);
+		}
+	}
 }
 
 // Security Checks
@@ -1013,6 +1023,7 @@ if ($standalone) {
 	$smarty->assign_by_ref('php_properties', $php_properties);
 	$smarty->assign_by_ref('security', $security);
 	$smarty->assign_by_ref('mysql_variables', $mysql_variables);
+	$smarty->assign_by_ref('mysql_crashed_tables', $mysql_crashed_tables);
 	// disallow robots to index page:
 	$smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 	$smarty->assign('mid', 'tiki-check.tpl');
