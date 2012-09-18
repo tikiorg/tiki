@@ -125,11 +125,6 @@ highlight on "button" links, e.g. if there are some comments it highlights the "
 	background: inherit;
 }
 
-ul.jumplinks a:active {
-	background: #ffe4e1;
-	color: #0000cd;
-}
-
 /* Highlight effect is just visual distinction, so no need for block element. */
 .highlight {
 	padding: 0 .3em;
