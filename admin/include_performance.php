@@ -45,10 +45,10 @@ if ( function_exists('apc_sma_info') && ini_get('apc.enabled') ) {
 		'hit_miss' => $cache['num_misses'] / $hit_total,
 		'hit_total' => $hit_total,
 	);
-} elseif ( function_exists('xcache_info') ) {
+} elseif ( function_exists('xcache_info') && ( ini_get('xcache.cacher') == '1' || ini_get('xcache.cacher') == 'On' ) ) {
 	$opcode_cache = 'XCache';
 
-	if ( ini_get('xcache.admin.enable_auth') ) {
+	if ( ini_get('xcache.admin.enable_auth') == '1' || ini_get('xcache.admin.enable_auth') == 'On' ) {
 		$opcode_stats['warning_xcache_blocked'] = true;
 	} else {
 		$stat_flag = 'xcache.stat';
