@@ -842,6 +842,29 @@ if ($connection || !$standalone) {
 		);
 	}
 
+	// UTF-8
+	$charset_types = "client connection database results server system";
+	foreach ( explode(' ', $charset_types) as $type ) {
+		$query = "SHOW VARIABLES LIKE 'character_set_".$type."';";
+		$result = query($query, $connection);
+		foreach ( $result as $value ) {
+			if ( $value['Value'] == 'utf8' ) {
+				$mysql_properties[$value['Variable_name']] = array(
+					'fitness' => tra('good'),
+					'setting' => $value['Value'],
+					'message' => tra('Tiki is fully UTF-8 and so should every part of your stack be.')
+				);
+			} else {
+				$mysql_properties[$value['Variable_name']] = array(
+					'fitness' => tra('bad'),
+					'setting' => $value['Value'],
+					'message' => tra('You should have everything set to UTF-8 to not run into any suprises.')
+				);
+			}
+
+		}
+	}
+
 	// MySQL Variables
 	$mysql_variables = array();
 	$query = "SHOW VARIABLES;";
