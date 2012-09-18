@@ -71,6 +71,15 @@
 	border-style: solid;
 }
 
+/* Table that contains the week view */
+.calendarweek {
+	border: none;
+	padding: 0;
+	margin: 0;
+	width: 100%;
+	border-collapse: collapse;
+	border-bottom: 1px solid #ccc;
+}
 .Cal {
 	font-weight: normal;
 	border-color: transparent;
