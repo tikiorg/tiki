@@ -842,13 +842,35 @@ if ($connection || !$standalone) {
 		);
 	}
 
-	// UTF-8
+	// UTF-8 Charset
 	$charset_types = "client connection database results server system";
 	foreach ( explode(' ', $charset_types) as $type ) {
 		$query = "SHOW VARIABLES LIKE 'character_set_".$type."';";
 		$result = query($query, $connection);
 		foreach ( $result as $value ) {
 			if ( $value['Value'] == 'utf8' ) {
+				$mysql_properties[$value['Variable_name']] = array(
+					'fitness' => tra('good'),
+					'setting' => $value['Value'],
+					'message' => tra('Tiki is fully UTF-8 and so should every part of your stack be.')
+				);
+			} else {
+				$mysql_properties[$value['Variable_name']] = array(
+					'fitness' => tra('ugly'),
+					'setting' => $value['Value'],
+					'message' => tra('On a fresh install you should have everything set to UTF-8 to not run into any suprises. For further information please see <a href="http://doc.tiki.org/Understanding+Encoding">Understanding Encoding</a>.')
+				);
+			}
+
+		}
+	}
+	// UTF-8 Collation
+	$collation_types = "connection database server";
+	foreach ( explode(' ', $charset_types) as $type ) {
+		$query = "SHOW VARIABLES LIKE 'collation_".$type."';";
+		$result = query($query, $connection);
+		foreach ( $result as $value ) {
+			if ( substr($value['Value'], 0, 4) == 'utf8' ) {
 				$mysql_properties[$value['Variable_name']] = array(
 					'fitness' => tra('good'),
 					'setting' => $value['Value'],
