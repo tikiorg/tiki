@@ -1,15 +1,15 @@
 {*$Id$*}
 <div style="position:relative;padding:0px">
-	<table border="0" cellpadding="0" cellspacing="0" style="width:100%;border-collapse:collapse;border-bottom:1px solid #ccc">
+	<table class="calendarweek">
 		<tr valign="middle" style="height:36px">
-			<td id="topLeft" class="calHeading" width="9%">
+			<td id="topLeft" class="calHeading heading" width="9%">
 				<strong>
 					{$viewstart|tiki_date_format:"%Y"}
 				</strong>
 			</td>
 			{section name=dn loop=$daysnames}
 				{if in_array($smarty.section.dn.index,$viewdays)}
-					<td id="top_{$smarty.section.dn.index}" class="calHeading{if $today eq $viewWeekDays[dn]}On{/if}" width="13%">
+					<td id="top_{$smarty.section.dn.index}" class="calHeading heading{if $today eq $viewWeekDays[dn]}On{/if}" width="13%">
 						<a href="{$myurl}?viewmode=day&amp;todate={$viewWeekDays[dn]}" title="{tr}View this Day{/tr}">
 							{$daysnames[dn]}
 						</a><br />
@@ -45,8 +45,8 @@
 				</td>
 				{section name=weekday loop=$weekdays}
 					{if isset($smarty.section.weekday.index) and in_array($smarty.section.weekday.index,$viewdays)}
-						<td id="row_{$h[0]}_{$smarty.section.weekday.index}" class="calWeek">
-							&nbsp;
+						<td id="row_{$h[0]}_{$smarty.section.weekday.index}" class="calWeek">&nbsp;
+							
 						</td>
 					{/if}
 				{/section}
