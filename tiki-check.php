@@ -856,9 +856,9 @@ if ($connection || !$standalone) {
 				);
 			} else {
 				$mysql_properties[$value['Variable_name']] = array(
-					'fitness' => tra('bad'),
+					'fitness' => tra('ugly'),
 					'setting' => $value['Value'],
-					'message' => tra('You should have everything set to UTF-8 to not run into any suprises.')
+					'message' => tra('On a fresh install you should have everything set to UTF-8 to not run into any suprises. For further information please see <a href="http://doc.tiki.org/Understanding+Encoding">Understanding Encoding</a>.')
 				);
 			}
 
