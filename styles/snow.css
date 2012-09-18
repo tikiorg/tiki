@@ -1056,12 +1056,7 @@ textarea.tshoutbox{
 /***** Messages *****/
 /***** TikiSheets *****/
 /***** Calendar *****/
-
-.Cal0, 
-.Cal1, 
-.Cal2 {font-size: 90%}
-	
-.calcontent a.linkmenu,
+calcontent a.linkmenu,
 .calcontent a.linkmenu:hover {
 	background: none;
 	padding: 0}

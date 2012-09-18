@@ -1280,14 +1280,6 @@ body.tiki_blogs .postfooter .actions {
 	background: #f9f9f9;
 }
 
-.cal,
-.cal0,
-.cal1,
-.cal2 {
-	color: #000;
-	font-size: 90%;
-}
-
 .calcontent a.linkmenu,
 .calcontent a.linkmenu:hover {
 	background: none;

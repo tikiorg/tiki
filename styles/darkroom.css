@@ -1763,29 +1763,6 @@ ul.catitems li {
 }
 
 /***** Calendar *****/
-.cal,
-.cal0, 
-.cal1, 
-.cal2 {
-	color: #fff;
-	font-size: 1em;
-}
-
-.cal0:before {
-	content: "? ";
-	background: #ff6347;
-}
- 
-.cal1:before {
-	content: "+ ";
-	background: #FFCC77;
-}
-
-.cal2:before {
-	content: "X ";
-	background: #3f3f3f;
-}
-
 .calcheckbox {
 	background: #3f3f3f;
 }

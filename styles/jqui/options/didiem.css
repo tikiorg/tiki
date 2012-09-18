@@ -626,21 +626,4 @@ td.heading {
 .caltable .focus {
 	border: none;
 }
-
-.Cal0,
-.Cal1,
-.Cal2 {
-	border-radius: 4px;
-	-moz-border-radius: 4px;
-	-webkit-border-radius: 4px;
-	opacity: 1;	
-}
-
-.Cal0 a,
-.Cal1 a,
-.Cal2 a { 
-	font-weight: normal;
-	color: #fff;
-}
-
 /* End of File */

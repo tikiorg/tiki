@@ -175,12 +175,6 @@ div.tabstoggle {float: left !important}
 .post .postbody .content, .post .author, .dirsite {text-align: right !important}
 
 /***** Calendar *****/
-/* text align in calendar cell */
-.Cal0, .Cal1, .Cal2 {
-	text-align: right !important;
-	direction:rtl !important
-}
-
 /* keep date in the calendar in the right direction */
 .calId1 {direction:rtl}
 

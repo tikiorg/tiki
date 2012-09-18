@@ -1077,12 +1077,6 @@ td.dirfooter {font-size: .95em}
 	background: #000}
 
 /***** Calendar *****/
-.Cal0, 
-.Cal1, 
-.Cal2 {
-	color: #000;
-	font-size: 90%}
-
 .calcontent a.linkmenu,
 .calcontent a.linkmenu:hover {
 	background: 0;

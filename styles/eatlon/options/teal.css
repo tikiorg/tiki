@@ -895,10 +895,6 @@ div.dirfooter {margin-top: 10px}
 .default td {border: solid 1px #a9a9a9}
 
 /***** Calendar *****/
-.Cal0,
-.Cal1,
-.Cal2 {font-size: 90%}
-
 .calcontent a.linkmenu,
 .calcontent a.linkmenu:hover {
 	background: none;

@@ -1676,12 +1676,6 @@ body.tiki_blogs .post .author_actions {
 
 /***** Calendar *****/
 /* Overrides calendar.css, etc. */
-.cal0, 
-.cal1, 
-.cal2 {
-	font-size: 90%;
-}
-
 .calfocus {
 	font-size: 90%;
 	background: #cce5ff;
