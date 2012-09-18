@@ -184,7 +184,7 @@ class WikiPlugin_ParserNegotiator
 		self::$parserLevels[] = $this->class->parserLevel;
 		self::$pluginsAwaitingExecution[$this->key] = self::$pluginDetails[$this->key];
 	}
- 
+
 	private function zendExists()
 	{
 		if (isset(self::$pluginInstances[$this->className])) {
@@ -331,13 +331,13 @@ class WikiPlugin_ParserNegotiator
 		$pluginSecurity = $tikilib->table('tiki_plugin_security');
 		$pluginSecurity->delete(array('fingerprint' => $this->fingerprint));
 		$pluginSecurity->insert(
-						array(
-							'fingerprint' => $this->fingerprint,
-							'status' => $type,
-							'added_by' => $this->user,
-							'last_objectType' => $objectType,
-							'last_objectId' => $objectId
-						)
+			array(
+				'fingerprint' => $this->fingerprint,
+				'status' => $type,
+				'added_by' => $this->user,
+				'last_objectType' => $objectType,
+				'last_objectId' => $objectId
+			)
 		);
 	}
 
@@ -436,10 +436,10 @@ class WikiPlugin_ParserNegotiator
 		global $tikilib;
 		$limit = date('Y-m-d H:i:s', time() - 15*24*3600);
 		$result = $tikilib->query(
-						"SELECT status, if(status='pending' AND last_update < ?, 'old', '') flag
-						FROM tiki_plugin_security
-						WHERE fingerprint = ?",
-						array( $limit, $this->fingerprint )
+			"SELECT status, if(status='pending' AND last_update < ?, 'old', '') flag
+			FROM tiki_plugin_security
+			WHERE fingerprint = ?",
+			array( $limit, $this->fingerprint )
 		);
 
 		$needUpdate = false;
@@ -472,13 +472,13 @@ class WikiPlugin_ParserNegotiator
 			$pluginSecurity = $tikilib->table('tiki_plugin_security');
 			$pluginSecurity->delete(array('fingerprint' => $this->fingerprint));
 			$pluginSecurity->insert(
-							array(
-								'fingerprint' => $this->fingerprint,
-								'status' => 'pending',
-								'added_by' => $this->user,
-								'last_objectType' => $objectType,
-								'last_objectId' => $objectId
-							)
+				array(
+					'fingerprint' => $this->fingerprint,
+					'status' => 'pending',
+					'added_by' => $this->user,
+					'last_objectType' => $objectType,
+					'last_objectId' => $objectId
+				)
 			);
 		}
 
@@ -588,8 +588,8 @@ class WikiPlugin_ParserNegotiator
 			);
 			include_once('lib/smarty_tiki/function.icon.php');
 
-			$button = '<a id="' . $id . '" class="editplugin"' . $iconDisplayStyle . '>' . 
-								smarty_function_icon(array('_id'=>'wiki_plugin_edit', 'alt'=>tra('Edit Plugin') . ':' . $this->name), $smarty) . 
+			$button = '<a id="' . $id . '" class="editplugin"' . $iconDisplayStyle . '>' .
+								smarty_function_icon(array('_id'=>'wiki_plugin_edit', 'alt'=>tra('Edit Plugin') . ':' . $this->name), $smarty) .
 								'</a>'
 			;
 

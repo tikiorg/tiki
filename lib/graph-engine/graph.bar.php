@@ -20,7 +20,7 @@ class BarBasedGraphic extends GridBasedGraphic // {{{1
 		$this->styleMap = array();
 		$this->columnMap = array();
 	}
-	
+
 	function getRequiredSeries() // {{{2
 	{
 		return array(
@@ -41,7 +41,7 @@ class BarBasedGraphic extends GridBasedGraphic // {{{1
 					$extremes[] = min($line);
 
 				$min = min($extremes);
-							break;
+				break;
 			case 'independant':
 				$min = min(array_keys($this->columns));
 		}
@@ -75,7 +75,7 @@ class BarBasedGraphic extends GridBasedGraphic // {{{1
 				return array_keys($this->columns);
 		}
 	}
-	
+
 	function _handleData( $data ) // {{{2
 	{
 		$columns = array();
@@ -99,9 +99,9 @@ class BarBasedGraphic extends GridBasedGraphic // {{{1
 		if ( isset( $data['label'] ) )
 			foreach ( $data['label'] as $key => $label )
 				$this->addLegend(
-								$data['color'][$key],
-								$label,
-								(isset($data['link']) && isset($data['link'][$key])) ? $data['link'][$key] : 0
+					$data['color'][$key],
+					$label,
+					(isset($data['link']) && isset($data['link'][$key])) ? $data['link'][$key] : 0
 				);
 
 		foreach ( $columns as $key => $line ) {
@@ -124,7 +124,7 @@ class BarBasedGraphic extends GridBasedGraphic // {{{1
 
 		return true;
 	}
-	
+
 	function _drawGridContent( &$renderer ) // {{{2
 	{
 		$layout = $this->_layout();
@@ -136,10 +136,10 @@ class BarBasedGraphic extends GridBasedGraphic // {{{1
 			switch ( $this->independant->orientation ) {
 				case 'vertical':
 					$ren = new Fake_GRenderer($renderer, 0, $range[0], 1, $range[1]);
-								break;
+					break;
 				case 'horizontal':
 					$ren = new Fake_GRenderer($renderer, $range[0], 0, $range[1], 1);
-								break;
+					break;
 			}
 
 			$positions = $this->_drawColumn($ren, $values, $zero);
@@ -166,10 +166,10 @@ class BarBasedGraphic extends GridBasedGraphic // {{{1
 		switch ( $this->independant->orientation ) {
 			case 'vertical':
 				$renderer->drawRectangle($bottom, $left, $top, $right, $style);
-							break;
+				break;
 			case 'horizontal':
 				$renderer->drawRectangle($left, $top, $right, $bottom, $style);
-							break;
+				break;
 		}
 	}
 
@@ -181,11 +181,11 @@ class BarBasedGraphic extends GridBasedGraphic // {{{1
 	function _default() // {{{2
 	{
 		return array_merge(
-						parent::_default(),
-						array(
-							'grid-independant-scale' => 'static',
-							'grid-independant-major-guide' => 'Thin-LineStroke-Black'
-						)
+			parent::_default(),
+			array(
+				'grid-independant-scale' => 'static',
+				'grid-independant-major-guide' => 'Thin-LineStroke-Black'
+			)
 		);
 	}
 } // }}}1
@@ -253,12 +253,12 @@ class BarStackGraphic extends BarBasedGraphic // {{{1
 			}
 
 			$this->_drawBox(
-							$renderer,
-							$begin,
-							$this->dependant->getLocation($top),
-							$end,
-							$this->dependant->getLocation($bottom),
-							$style
+				$renderer,
+				$begin,
+				$this->dependant->getLocation($top),
+				$end,
+				$this->dependant->getLocation($bottom),
+				$style
 			);
 		}
 	}
@@ -266,8 +266,8 @@ class BarStackGraphic extends BarBasedGraphic // {{{1
 	function _default() // {{{2
 	{
 		return array_merge(
-						parent::_default(),
-						array('stack-column-width' => 0.6)
+			parent::_default(),
+			array('stack-column-width' => 0.6)
 		);
 	}
 } // }}}1
@@ -291,7 +291,7 @@ class MultibarGraphic extends BarBasedGraphic // {{{1
 
 		foreach ( $values as $style=>$value ) {
 			$base = $pad + $width * $i++;
-			
+
 			if ( $value == 0 ) continue;
 
 			$bottom = $this->dependant->getLocation($value);
@@ -310,8 +310,8 @@ class MultibarGraphic extends BarBasedGraphic // {{{1
 	function _default() // {{{2
 	{
 		return array_merge(
-						parent::_default(),
-						array('multi-columns-width' => 0.8)
+			parent::_default(),
+			array('multi-columns-width' => 0.8)
 		);
 	}
 } // }}}1

@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -171,27 +171,27 @@ function sendArticle($params)
 	$body = base64_decode($body);
 
 	$commlib->receive_article(
-					$site,
-					$username,
-					$title, 
-					$authorName,
-					$size,
-					$use_image,
-					$image_name,
-					$image_type,
-					$image_size,
-					$image_x,
-					$image_y,
-					$image_data,
-					$publishDate,
-					$expireDate,
-					$created,
-					$heading,
-					$body,
-					$hash,
-					$author,
-					$type,
-					$rating	
+		$site,
+		$username,
+		$title,
+		$authorName,
+		$size,
+		$use_image,
+		$image_name,
+		$image_type,
+		$image_size,
+		$image_x,
+		$image_y,
+		$image_data,
+		$publishDate,
+		$expireDate,
+		$created,
+		$heading,
+		$body,
+		$hash,
+		$author,
+		$type,
+		$rating
 	);
 
 	return new XML_RPC_Response(new XML_RPC_Value(1, "boolean"));

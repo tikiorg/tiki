@@ -13,7 +13,7 @@ function wikiplugin_events_info()
 		'description' => tra('Display upcoming events from calendars'),
 		'prefs' => array( 'feature_calendar', 'wikiplugin_events' ),
 		'icon' => 'img/icons/calendar_view_day.png',
-		'tags' => array( 'basic' ),	
+		'tags' => array( 'basic' ),
 		'params' => array(
 			'calendarid' => array(
 				'required' => true,
@@ -101,12 +101,12 @@ function wikiplugin_events($data,$params)
 	if (!isset($desc)) {
 		$desc=1;
 	}
-	
+
 	// Pagination
 	if (!isset($timespan)) {
 		$timespan = "future";
 	}
-	
+
 	if ($usePagination == 'y') {
 		if (!isset($_REQUEST["offset"])) {
 			$start = 0;
@@ -114,8 +114,8 @@ function wikiplugin_events($data,$params)
 			$start = $_REQUEST["offset"];
 		}
 	}
-	
-	
+
+
 
 	$rawcals = $calendarlib->list_calendars();
 	$calIds = array();
@@ -137,7 +137,7 @@ function wikiplugin_events($data,$params)
 					$canView = 'y';
 				} else {
 					$canView = 'n';
-				}		
+				}
 				if ($userlib->object_has_permission($user, $cal_id, 'calendar', 'tiki_p_admin_calendar')) {
 					$canView = 'y';
 				}
@@ -149,41 +149,41 @@ function wikiplugin_events($data,$params)
 			$viewable[] = $cal_id;
 		}
 	}
-	
+
 	// Pagination
 	if ($timespan == 'future') {
 		$events = $calendarlib->upcoming_events(
-						$max,
-						array_intersect($calIds, $viewable),
-						$maxdays,
-						'start_asc',
-						1,
-						0,
-						$start
+			$max,
+			array_intersect($calIds, $viewable),
+			$maxdays,
+			'start_asc',
+			1,
+			0,
+			$start
 		);
 	}
-	
+
 	if ($timespan == 'all') {
 		$events = $calendarlib->all_events(
-						$max,
-						array_intersect($calIds, $viewable),
-						$maxdays,
-						'start_asc',
-						1,
-						0,
-						$start
+			$max,
+			array_intersect($calIds, $viewable),
+			$maxdays,
+			'start_asc',
+			1,
+			0,
+			$start
 		);
 	}
-	
+
 	if ($timespan == 'past') {
 		$events = $calendarlib->past_events(
-						$max,
-						array_intersect($calIds, $viewable),
-						$maxdays,
-						'start_desc',
-						0,
-						-1,
-						$start
+			$max,
+			array_intersect($calIds, $viewable),
+			$maxdays,
+			'start_desc',
+			0,
+			-1,
+			$start
 		);
 	}
 
@@ -196,24 +196,24 @@ function wikiplugin_events($data,$params)
 	$smarty->assign_by_ref('datetime', $datetime);
 	$smarty->assign_by_ref('desc', $desc);
 	$smarty->assign_by_ref('events', $events);
-	
-	// Pagination	
+
+	// Pagination
 	if ($usePagination == 'y') {
-	
+
 		$smarty->assign('maxEvents', $max);
 		$smarty->assign_by_ref('offset', $start);
 		$smarty->assign_by_ref('cant', $events['cant']);
-		
+
 	}
-	
+
 	$smarty->assign('usePagination', $usePagination);
 	$smarty->assign_by_ref('events', $events['data']);
 	$smarty->assign_by_ref('actions', $actions);
 
-	
+
 	return '~np~'.$smarty->fetch('wiki-plugins/wikiplugin_events.tpl').'~/np~';
 
-	$repl="";		
+	$repl="";
 	if (count($events)<$max) $max = count($events);
 
 	$repl .= '<table class="normal">';
