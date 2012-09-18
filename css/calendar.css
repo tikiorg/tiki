@@ -80,28 +80,6 @@
 	border-collapse: collapse;
 	border-bottom: 1px solid #ccc;
 }
-.Cal {
-	font-weight: normal;
-	border-color: transparent;
-}
-
-.Cal0,
-.Cal1,
-.Cal2 {
-	color: #425262;
-	font-size: 10px;
-	padding-right: 0;
-	font-weight: normal;
-	border-width: 1px;
-	border-style: solid;
-}
-
-.Cal0 a,
-.Cal1 a,
-.Cal2 a {
-	font-weight: normal;
-	text-decoration: none;
-}
 
 .caltitle {
 	font-weight: bold;
