@@ -2000,15 +2000,6 @@ div.dirfooter {
 }
 
 /***** Messages *****/
-.prio1,
-.prio2,
-.prio3,
-.prio4,
-.prio5 {
-	border: 1px solid #8cacbb;
-	padding-left: 2px;
-}
-
 .messureadflag {
 	background: #ccc;
 }

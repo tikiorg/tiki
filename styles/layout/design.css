@@ -1174,36 +1174,6 @@ textarea.tshoutbox{
 
 
 /***** Messages *****/
-
-.prio1,
-.prio2,
-.prio3,
-.prio4,
-.prio5 {
-	border: 1px solid #a9a9a9;
-	padding-left: 2px;
-}
-
-.prio1 {
-	background: #f7f9ca
-}
-
-.prio2 {
-	background: #f7f9ea;
-}
-
-.prio3 {
-	background: #f7f9fa;
-}
-
-.prio4 {
-	background: #f7f9fd;
-}
-
-.prio5 {
-	background: #f7f9ff;
-}
-
 .messureadflag {
 	background: #a9a9a9;
 	padding-left: 5px;

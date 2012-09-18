@@ -961,18 +961,6 @@ body.tiki_blogs .postbody-title,
 	font-size: 90%;
 }
 
-.calprio1 a,
-.calprio2 a,
-.calprio3 a,
-.calprio4 a,
-.calprio5 a,
-.calprio6 a,
-.calprio7 a,
-.calprio8 a,
-.calprio9 a {
-	color: #666666;
-}
-
 .opaque {
 	border: 1px solid #212121;
 	background: #dcdcdc;
@@ -1067,34 +1055,6 @@ body.tiki_blogs .postbody-title,
 
 
 /***** Messages *****/
-.prio1,
-.prio2,
-.prio3,
-.prio4,
-.prio5 {
-	border: 1px solid #a9a9a9;
-}
-
-.prio1 {
-	background: #F7F9CA;
-}
-
-.prio2 {
-	background: #F7F9EA;
-}
-
-.prio3 {
-	background: #F7F9FA;
-}
-
-.prio4 {
-	background: #F7F9FD;
-}
-
-.prio5 {
-	background: #F7F9FF;
-}
-
 .messureadflag {
 	background: #a9a9a9;
 }

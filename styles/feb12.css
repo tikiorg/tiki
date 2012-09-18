@@ -1355,54 +1355,6 @@ html>body .galtable {
 	color: #000000;
 }
 
-.calprio1 {
-	background: #DAE0E0;
-}
-
-.calprio2 {
-	background: #DADCDC;
-}
-
-.calprio3 {
-	background: #DAD0D0;
-}
-
-.calprio4 {
-	background: #DACACA;
-}
-
-.calprio5 {
-	background: #DAC0D0;
-}
-
-.calprio6 {
-	background: #DABABA;
-}
-
-.calprio7 {
-	background: #DAB0B0;
-}
-
-.calprio8 {
-	background: #DAAAAA;
-}
-
-.calprio9 {
-	background: #DA9A9A;
-}
-
-.calprio1 a,
-.calprio2 a,
-.calprio3 a,
-.calprio4 a,
-.calprio5 a,
-.calprio6 a,
-.calprio7 a,
-.calprio8 a,
-.calprio9 a {
-	color: #393E51;
-}
-
 .caltoggle {
 	font-size: 90%;
 }
@@ -1516,14 +1468,6 @@ div.dirfooter {
 }
 
 /***** Messages *****/
-.prio1,
-.prio2,
-.prio3,
-.prio4,
-.prio5 {
-	border: 1px solid #8CACBB;
-}
-
 .messureadflag {
 	background: #CCCCCC;
 }

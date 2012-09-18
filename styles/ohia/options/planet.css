@@ -513,14 +513,6 @@ a.blogt:hover {
 }
 
 /***** Messages *****/
-.prio1,
-.prio2,
-.prio3,
-.prio4,
-.prio5 {
-	border: 1px solid #777;
-}
-
 .messureadflag {
 	background: #989898;
 }

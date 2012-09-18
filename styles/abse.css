@@ -1059,12 +1059,6 @@ td.dirfooter {font-size: .95em}
 .dirfooter {margin-top: 10px}
 
 /***** Messages *****/
-.prio1,
-.prio2,
-.prio3,
-.prio4,
-.prio5 {border: 1px solid #8cacbb}
-
 .messureadflag {background: #ccc}
 .messureadhead {background: #dedede}
 .messureadbody {background: #dedede}
@@ -1097,17 +1091,6 @@ td.dirfooter {font-size: .95em}
 .calfocus {
 	font-size: 90%;
 	background: inherit}
-
-.calprio1 a,
-.calprio2 a,
-.calprio3 a,
-.calprio4 a,
-.calprio5 a,
-.calprio6 a,
-.calprio7 a,
-.calprio8 a,
-.calprio9 a {
-	color: #393e51}
 
 .caltitle {color: #fff}
 .caltoggle {font-size: 90%}

@@ -1826,18 +1826,6 @@ body.tiki_blogs .post .author_actions {
 	background: #cce5ff;
 }
 
-.calprio1 a,
-.calprio2 a,
-.calprio3 a,
-.calprio4 a,
-.calprio5 a,
-.calprio6 a,
-.calprio7 a,
-.calprio8 a,
-.calprio9 a {
-	color: #006699;
-}
-
 .caltoggle {
 	font-size: 90%;
 }

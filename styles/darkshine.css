@@ -1090,21 +1090,6 @@ img.athumb {
 	padding: 6px}
 
 /***** Messages *****/
-
-.prio1,
-.prio2,
-.prio3,
-.prio4,
-.prio5 {
-	border: 1px solid #8cacbb;
-	padding-left: 2px}
-
-.prio1 {background: #F7F9CA}
-.prio2 {background: #F7F9EA}
-.prio3 {background: #F7F9FA}
-.prio4 {background: #F7F9FD}
-.prio5 {background: #F7F9FF}
-
 .messureadflag {
 	background: #ccc;
 	padding-left: 5px}
@@ -1161,16 +1146,6 @@ img.athumb {
 	margin-left: 7px;
 	padding: 0 5px;
 	color: black}
-
-.calprio1 a,
-.calprio2 a,
-.calprio3 a,
-.calprio4 a,
-.calprio5 a,
-.calprio6 a,
-.calprio7 a,
-.calprio8 a,
-.calprio9 a {color: #393e51}
 
 .caltoggle {font-size: 90%}
 
