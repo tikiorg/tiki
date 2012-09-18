@@ -106,11 +106,12 @@ function wikiplugin_fancytable($data, $params)
 		//replace all tiki tags in the header with numbered strings while being processed
 		$head = preg_replace_callback($pattern, 'replace_head', $head);
 		//process header rows
-		$headrows = process_section($head, 'h', '>>', $tdhdr, '</th>', isset($colwidths) ? $colwidths : '', isset($headaligns) ? $headaligns : '', isset($headvaligns) ? $headvaligns : '');
+		$headrows = process_section($head, 'h', '>>', $tdhdr, '</th>', isset($colwidths) ? $colwidths : '',
+			isset($headaligns) ? $headaligns : '', isset($headvaligns) ? $headvaligns : '');
 		//bring the tiki tags back into the header. static veriable needed in case of multiple tables
 		static $hh = 0;
 		foreach ($head_matches[0] as $head_match) {
-			$headrows = str_replace('~~~head' . $hh . '~~~', $head_match, $headrows);
+			$headrows = str_replace('z~~head' . $hh . '~~z', $head_match, $headrows);
 			$hh++;
 		}
 		$wret .= '<thead>' . $headrows . "\r\t" . '</thead>' . "\r\t" . '<tbody>';
@@ -125,11 +126,12 @@ function wikiplugin_fancytable($data, $params)
 		$type = 'r';	//plain rows
 	}
 	//process table body rows
-	$bodyrows = process_section($data, $type, "\n", '', '</td>', isset($colwidths) ? $colwidths : '', isset($colaligns) ? $colaligns : '', isset($colvaligns) ? $colvaligns : '');
+	$bodyrows = process_section($data, $type, "\n", '', '</td>', isset($colwidths) ? $colwidths : '',
+		isset($colaligns) ? $colaligns : '', isset($colvaligns) ? $colvaligns : '');
 	//bring the tiki tags back into the body. static veriable needed in case of multiple tables
 	static $bb = 0;
 	foreach ($body_matches[0] as $body_match) {
-		$bodyrows = str_replace('~~~body' . $bb . '~~~', $body_match, $bodyrows);
+		$bodyrows = str_replace('z~~body' . $bb . '~~z', $body_match, $bodyrows);
 		$bb++;
 	}
 	$wret .= $bodyrows;
@@ -159,7 +161,7 @@ function wikiplugin_fancytable($data, $params)
 function replace_head($matches)
 {
 	static $h = 0;
-	$ret = '~~~head' . $h . '~~~';
+	$ret = 'z~~head' . $h . '~~z';
 	$h++;
 	return $ret;
 }
@@ -167,7 +169,7 @@ function replace_head($matches)
 function replace_body($matches)
 {
 	static $b = 0;
-	$ret = '~~~body' . $b . '~~~';
+	$ret = 'z~~body' . $b . '~~z';
 	$b++;
 	return $ret;
 }
