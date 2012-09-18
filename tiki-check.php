@@ -272,6 +272,27 @@ if (substr($s, 0, 3) == 'cgi') {
 	);
 }
 
+// ByteCode Cache
+if ( function_exists('apc_sma_info') && ini_get('apc.enabled') ) { 
+	$php_properties['ByteCode Cache'] = array(
+		'fitness' => tra('good'),
+		'setting' => 'APC',
+		'message' => tra('You are using APC as your ByteCode Cache which increases performance, if correctly configured. See Admin->Performance in your Tiki for more details.')
+	);
+} elseif ( function_exists('xcache_info') && ( ini_get('xcache.cacher') == '1' || ini_get('xcache.cacher') == 'On' ) ) {
+	$php_properties['ByteCode Cache'] = array(
+		'fitness' => tra('good'),
+		'setting' => 'xCache',
+		'message' => tra('You are using xCache as your ByteCode Cache which increases performance, if correctly configured. See Admin->Performance in your Tiki for more details.')
+	);
+} else {
+	$php_properties['ByteCode Cache'] = array(
+		'fitness' => tra('ugly'),
+		'setting' => 'N/A',
+		'message' => tra('You are using neither APC nor xCache as your ByteCode Cache which would increase performance, if correctly configured. See Admin->Performance in your Tiki for more details.')
+	);
+}
+
 // memory_limit
 $memory_limit = ini_get('memory_limit');
 $s = trim($memory_limit);
