@@ -146,5 +146,22 @@
 	{/foreach}
 </table>
 
+<h2>{tr}MySQL Variable Information{/tr}</h2>
+<table class="normal">
+	<tr>
+		<th>{tr}Property{/tr}</th>
+		<th>{tr}Value{/tr}</th>
+	</tr>
+	{cycle values="even,odd" print=false}
+	{foreach from=$mysql_variables key=key item=item}
+		<tr class="{cycle}">
+			<td class="text">{$key}</td>
+			<td class="text">{$item.value}</td>
+		</tr>
+	{foreachelse}
+		{norecords _colspan=2}
+	{/foreach}
+</table>
+
 <h2>{tr}PHP Info{/tr}</h2>
 For more detailed information about your PHP installation see <a href="tiki-phpinfo.php">Admin->phpinfo</a>.

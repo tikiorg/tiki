@@ -841,6 +841,14 @@ if ($connection || !$standalone) {
 			'message' => tra('Your max_allowed_packet setting is at').' '.$max_allowed_packet.'M. '.tra('Nothing wrong with that, but some users might want to upload something bigger.')
 		);
 	}
+
+	// MySQL Variables
+	$mysql_variables = array();
+	$query = "SHOW VARIABLES;";
+	$result = query($query, $connection);
+	foreach ( $result as $value) {
+		$mysql_variables[$value['Variable_name']] = array('value' => $value['Value']);
+	}
 }
 
 // Security Checks
@@ -985,6 +993,8 @@ if ($standalone) {
 	render_table($php_properties);
 	echo '<h2>PHP security properties</h2>';
 	render_table($security);
+	echo '<h2>MySQL Variables</h2>';
+	render_table($mysql_variables);
 	echo '<h2>PHP Info</h2>';
 	if ( $_REQUEST['phpinfo'] == 'y' ) {
 		ob_start();                                                                                                        
@@ -1002,6 +1012,7 @@ if ($standalone) {
 	$smarty->assign_by_ref('mysql_properties', $mysql_properties);
 	$smarty->assign_by_ref('php_properties', $php_properties);
 	$smarty->assign_by_ref('security', $security);
+	$smarty->assign_by_ref('mysql_variables', $mysql_variables);
 	// disallow robots to index page:
 	$smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 	$smarty->assign('mid', 'tiki-check.tpl');
