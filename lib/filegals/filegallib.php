@@ -488,7 +488,8 @@ class FileGalLib extends TikiLib
 			$res['lockedby'] = NULL;
 			unset($res['fileId']);
 
-			$filesTable->insert($res);
+			$oldFileId = $filesTable->insert($res);
+			$this->updateReference($id, $oldFileId);
 		}
 
 		// Insert or update and index (for search) the new file
@@ -552,6 +553,8 @@ class FileGalLib extends TikiLib
 				'filetype' => $type
 			)
 		);
+
+
 
 		return $idNew;
 	}
@@ -1057,6 +1060,22 @@ class FileGalLib extends TikiLib
 		}
 
 		return $id;
+	}
+
+	function updateReference($oldFileId, $newFileId)
+	{
+		global $prefs;
+		$attributelib = TikiLib::lib('attribute');
+
+		if ($prefs['fgal_keep_fileId'] == 'y') {
+			$attributes = $attributelib->get_attributes('file', $oldFileId);
+			$attributelib->set_attribute('file', $oldFileId, 'tiki.content.url', '');
+
+			if (isset($attributes['tiki.content.url'])) {
+				//we don't delete or update the attribute, so that it remains working if the user changes the fgal_keep_fileId
+				$attributelib->set_attribute('file', $newFileId, 'tiki.content.url', $attributes['tiki.content.url'] );
+			}
+		}
 	}
 
 	function change_file_handler($mime_type,$cmd)
