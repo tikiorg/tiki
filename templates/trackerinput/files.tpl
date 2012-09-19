@@ -31,7 +31,8 @@
 {if $prefs.fgal_upload_from_source eq 'y' and $field.canUpload}
 	<fieldset>
 		<legend>{tr}Upload from URL{/tr}</legend>
-		<label>{tr}URL:{/tr} <input class="url" type="url"/></label>
+		<label>{tr}URL:{/tr} <input class="url" name="url" placeholder="http://"/></label>
+		{tr}Type or paste the URL and press ENTER{/tr}
 	</fieldset>
 {/if}
 </div>
