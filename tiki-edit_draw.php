@@ -154,11 +154,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_REQUEST['data'])) {
 if ($fileInfo['filetype'] == $mimetypes["svg"]) {
 	$data = $fileInfo["data"];
 } else { //we already confirmed that this is an image, here we make it compatible with svg
-	$image = imagecreatefromstring($fileInfo["data"]);
+	$src = $tikilib->tikiUrl() . 'tiki-download_file.php?fileId=' . $fileInfo['fileId'];
 	$w = imagesx($image);
 	$h = imagesy($image);
 
-	$src = $tikilib->tikiUrl() . 'tiki-download_file.php?fileId=' . $fileInfo['fileId'];
+	if (empty($w) || empty($h)) { //go ahead and download the image, it may exist off-site, copywrited content
+		$image = imagecreatefromstring(file_get_contents($src));
+		$w = imagesx($image);
+		$h = imagesy($image);
+	}
 
 	$data = '<svg width="' . $w . '" height="' . $h
 		. '" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
