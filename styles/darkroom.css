@@ -1795,6 +1795,18 @@ ul.catitems li {
 	background: #292929;
 }
 
+.calprio1 a,
+.calprio2 a,
+.calprio3 a,
+.calprio4 a,
+.calprio5 a,
+.calprio6 a,
+.calprio7 a,
+.calprio8 a,
+.calprio9 a {
+	color: #393e51;
+}
+
 .caltitle {
 	font-weight: bold;
 	color: #f5f5f5;
@@ -1994,6 +2006,34 @@ div.dirfooter {
 }
 
 /***** Messages *****/
+.prio1,
+.prio2,
+.prio3,
+.prio4,
+.prio5 {
+	border: 1px solid #999;
+}
+
+.prio1 {
+	background: #696969;
+}
+
+.prio2 {
+	background: #3f3f3f;
+}
+
+.prio3 {
+	background: #474747;
+}
+
+.prio4 {
+	background: #292929;
+}
+
+.prio5 {
+	background: #000;
+}
+
 .messureadflag {
 	background: inherit;
 }

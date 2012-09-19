@@ -1095,6 +1095,20 @@ td.dirfooter {font-size: .95em}
 .dirfooter {margin-top: 10px}
 
 /***** Messages *****/
+.prio1,
+.prio2,
+.prio3,
+.prio4,
+.prio5 {
+	border: 1px solid #990000;
+	padding-left: 2px}
+
+.prio1 {background: #780101}
+.prio2 {background: #8d0101}
+.prio3 {background: #a20202}
+.prio4 {background: #b70202}
+.prio5 {background: #cc0202}
+
 .messureadflag {
 	background: #313131;
 	padding-left: 5px}
