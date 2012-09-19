@@ -8,7 +8,6 @@
 	<fieldset class="admin">
 		<legend>{tr}Activate the feature{/tr}</legend>
 		{preference name=workspace_ui visible="always"}
-		{preference name=workspace_root_category}
 	</fieldset>
 
 	<fieldset class="admin">
@@ -27,6 +26,11 @@
 		{preference name=feature_perspective}
 		{preference name=feature_categories}
 		{preference name=feature_wiki}
+	</fieldset>
+
+	<fieldset class="admin">
+		<legend>{tr}Advanced{/tr}</legend>
+		{preference name=workspace_root_category}
 	</fieldset>
 
 	<div class="heading input_submit_container" style="text-align: center">
