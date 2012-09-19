@@ -78,9 +78,9 @@ class Tracker_Field_Files extends Tracker_Field_Abstract
 
 	function getFieldData(array $requestData = array())
 	{
-		$galleryId = (int) $this->getOption(0);
-		$count = (int) $this->getOption(2);
-		$deepGallerySearch = (boolean) $this->getOption(6);
+		$galleryId = (int) $this->getOption('galleryId');
+		$count = (int) $this->getOption('count');
+		$deepGallerySearch = (boolean) $this->getOption('deepGallerySearch');
 
 		$value = '';
 		$ins_id = $this->getInsertId();
@@ -107,9 +107,9 @@ class Tracker_Field_Files extends Tracker_Field_Abstract
 			// Remove missed uploads
 			$fileIds = array_filter($fileIds);
 
-			// Keep only the first files if a limit is applied
+			// Keep only the last files if a limit is applied
 			if ($count) {
-				$fileIds = array_slice($fileIds, 0, $count);
+				$fileIds = array_slice($fileIds, -$count);
 			}
 
 			// Obtain the info for display and filter by type if specified
@@ -135,7 +135,7 @@ class Tracker_Field_Files extends Tracker_Field_Abstract
 			$gallery_list = $galleryId;
 		}
 
-		if ($this->getOption(3) == 'y' && $fileIds) {
+		if ($this->getOption('displayImages') == 'y' && $fileIds) {
 			$firstfile = $fileIds[0];
 		} else {
 			$firstfile = 0;
@@ -150,7 +150,7 @@ class Tracker_Field_Files extends Tracker_Field_Abstract
 			'files' => $fileInfo,
 			'firstfile' => $firstfile,
 			'value' => $value,
-			'filter' => $this->getOption(1),
+			'filter' => $this->getOption('filter'),
 			'gallerySearch' => $gallery_list,
 		);
 	}
@@ -177,7 +177,7 @@ class Tracker_Field_Files extends Tracker_Field_Abstract
 		
 		$ret = '';
 		if (!empty($value)) {
-			if ($this->getOption(3)) { // images
+			if ($this->getOption('displayImages')) { // images
 				$params = array(
 					'fileId' => $value,
 				);
@@ -265,7 +265,7 @@ class Tracker_Field_Files extends Tracker_Field_Abstract
 
 	function filterFile($info)
 	{
-		$filter = $this->getOption(1);
+		$filter = $this->getOption('filter');
 
 		if (! $filter) {
 			return true;
@@ -333,7 +333,7 @@ class Tracker_Field_Files extends Tracker_Field_Abstract
 
 		$fileIds = $this->getConfiguration('files');
 
-		if ($this->getOption(3) == 'y' && is_array($fileIds) && count($fileIds) > 0) {
+		if ($this->getOption('displayImages') == 'y' && is_array($fileIds) && count($fileIds) > 0) {
 			return $filegallib->update_single_file($gal_info, $file['name'], $file['size'], $file['type'], file_get_contents($file['tmp_name']), $fileIds[0]);
 		} else {
 			return $filegallib->upload_single_file($gal_info, $file['name'], $file['size'], $file['type'], file_get_contents($file['tmp_name']));
