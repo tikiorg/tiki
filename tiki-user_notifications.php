@@ -3,7 +3,7 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: tiki-user_preferences.php 39467 2012-01-12 19:47:28Z changi67 $
+// $Id$
 
 $section = 'mytiki';
 require_once ('tiki-setup.php');

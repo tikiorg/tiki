@@ -3,9 +3,9 @@
 //
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: mod-func-action_similarcontent.php 40116 2012-03-10 20:27:06Z lindonb $
+// $Id$
 
-function prefs_workspace_list()
+functio n prefs_workspace_list()
 {
 	return array(
 		'workspace_ui' => array(

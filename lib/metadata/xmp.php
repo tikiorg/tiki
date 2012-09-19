@@ -1,12 +1,12 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 //this script may only be included - so its better to die if called directly.
-if (strpos($_SERVER['SCRIPT_NAME'],basename(__FILE__)) !== false) {
+if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
 	header('location: index.php');
 	exit;
 }
@@ -87,7 +87,7 @@ class Xmp
 			//re-label Native Digest fields in tiff and exif sections to keep from overwriting when arrays are flattened
 			//in other functions
 			$sections = array('exif', 'tiff');
-			foreach($sections as $section) {
+			foreach ($sections as $section) {
 				if (isset($xmparray[$section]['NativeDigest'])) {
 					$temp = explode(',', $xmparray[$section]['NativeDigest']['rawval']);
 					$xmparray[$section]['NativeDigest']['rawval'] = implode(', ', $temp);
@@ -140,9 +140,16 @@ class Xmp
 						}
 					}
 					//convert dates
-					if (array_key_exists($name, array('ModifyDate' => '', 'DateCreated' => '', 'CreateDate' => '',
-							'MetadataDate' => '')))
-					{
+					if (array_key_exists(
+						$name,
+						array(
+							'ModifyDate' => '',
+							'DateCreated' => '',
+							'CreateDate' => '',
+							'MetadataDate' => ''
+						)
+					)
+					) {
 						$dateObj = new DateTime($xmparray[$group][$name]['newval']);
 						$date = $dateObj->format('Y-m-d  H:i:s  T');
 						$xmparray[$group][$name]['newval'] = $date;
@@ -176,7 +183,7 @@ class Xmp
 					//next two bytes after marker indicate the segment size
 					$size_raw	= substr($filecontent, $app1_hit + 2, 2);
 					$size		= unpack('nsize', $size_raw);
-					/*the segment APP1 marker is also used for other things (like EXIF data), 
+					/*the segment APP1 marker is also used for other things (like EXIF data),
 					so check that the segment starts with the right info
 					allowing for 2 bytes for the marker and 2 bytes for the size before segment data starts*/
 					$seg_data = substr($filecontent, $app1_hit + 4, $size['size']);
@@ -233,9 +240,9 @@ class Xmp
 						if ($child->nodeType == 1) {
 							//if $child has at least one child that is not a single DOMText field, then send back
 							//through to process children
-							if ($child->childNodes->length > 0 && !($child->childNodes->length == 1
-								&& $child->firstChild->nodeType != 1))
-							{
+							if ($child->childNodes->length > 0
+								&& !($child->childNodes->length == 1 && $child->firstChild->nodeType != 1)
+							) {
 								$xmparray[$child->prefix][$child->localName]['rawval']
 									= $this->xmpDomToArray($child->childNodes);
 							//this is where data from fields with single values (not multiple values) are picked up.
@@ -276,7 +283,7 @@ class Xmp
 												'key'			=> $listitem->prefix,
 												'label'			=> $listitem->localName,
 												'rawval'		=> $listitem->nodeValue,
-												'locator'		=> $listitem->getNodePath(), 
+												'locator'		=> $listitem->getNodePath(),
 											);
 										//multiple list (li) items go in an array here
 										} else {

@@ -6,7 +6,7 @@
 // $Id$
 
 //this script may only be included - so its better to die if called directly.
-if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
   header("location: index.php");
   exit;
 }
@@ -14,7 +14,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 // Module special params:
 // - user: Tiki username to show Twitter timeline of
 
-function module_twitter_info() {
+function module_twitter_info()
+{
 	return array(
 		'name' => tra('Tweets'),
 		'description' => tra('Shows the tweets from the Twitter timeline of a user'),
@@ -39,7 +40,8 @@ function module_twitter_info() {
 	);
 }
 
-function module_twitter( $mod_reference, $module_params ) {
+function module_twitter( $mod_reference, $module_params )
+{
 	global $tikilib, $smarty, $prefs;
 	global $socialnetworkslib; require_once ('lib/socialnetworkslib.php');
 	if ( !empty($module_params['user']) ) {
@@ -52,9 +54,9 @@ function module_twitter( $mod_reference, $module_params ) {
 		if ($response == -1) {
 			$timeline[0]['text'] = tra('user not registered with twitter').": $user";
 		}
-		for ($i = 0; $i < count($response->status); $i++)
+		for ($i = 0, $count_response_status = count($response->status); $i < $count_response_status); $i++)
 		{
-			
+
 			$timeline[$i]['text']=$response->status[$i]->text;
 			$timeline[$i]['id']=$response->status[$i]->id;
 			$timeline[$i]['created_at']=$response->status[$i]->created_at;
@@ -67,7 +69,7 @@ function module_twitter( $mod_reference, $module_params ) {
 		$timeline[$i]['screen_name'] = '';
 	}
 
-	$timeline=array_splice($timeline,0,$mod_reference['rows']?$mod_reference['rows']:10);
+	$timeline=array_splice($timeline, 0, $mod_reference['rows']?$mod_reference['rows']:10);
 
 	$smarty->assign('timeline', $timeline);
 }

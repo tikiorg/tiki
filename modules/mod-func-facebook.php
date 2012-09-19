@@ -3,16 +3,17 @@
 //
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: $
+// $Id$
 
 
 //this script may only be included - so its better to die if called directly.
-if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
   header("location: index.php");
   exit;
 }
 
-function module_facebook_info() {
+function module_facebook_info()
+{
 	return array(
 		'name' => tra('Facebook'),
 		'description' => tra('Shows the Wall of a user'),
@@ -32,7 +33,8 @@ function module_facebook_info() {
 	);
 }
 
-function module_facebook( $mod_reference, $module_params ) {
+function module_facebook( $mod_reference, $module_params )
+{
 	global $tikilib, $smarty, $prefs;
 	global $socialnetworkslib; require_once ('lib/socialnetworkslib.php');
 	if ( !empty($module_params['user']) ) {
@@ -52,7 +54,7 @@ function module_facebook( $mod_reference, $module_params ) {
 		$timeline[$i]['fromName'] = '';
 	}
 
-	$timeline=array_splice($timeline,0,$module_params['max']?$module_params['max']:10);
+	$timeline=array_splice($timeline, 0, $module_params['max']?$module_params['max']:10);
 
 	$smarty->assign('timeline', $timeline);
 

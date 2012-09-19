@@ -3,7 +3,7 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: shell.php 41306 2012-05-03 18:13:07Z jonnybradley $
+// $Id$
 
 if ( isset($_SERVER['REQUEST_METHOD']) ) die;
 

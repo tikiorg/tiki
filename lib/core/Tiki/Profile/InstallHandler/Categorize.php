@@ -3,7 +3,7 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: Category.php 42591 2012-08-16 14:10:13Z lphuberdeau $
+// $Id$
 
 class Tiki_Profile_InstallHandler_Categorize extends Tiki_Profile_InstallHandler
 {

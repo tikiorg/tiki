@@ -1,19 +1,19 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 //this script may only be included - so its better to die if called directly.
-if (strpos($_SERVER['SCRIPT_NAME'],basename(__FILE__)) !== false) {
+if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
 	header('location: index.php');
 	exit;
 }
 /*
  * Manipulates EXIF metadata included within a file
  */
-class Exif 
+class Exif
 {
 	/**
 	 * Legend, label, suffix and format information for each field
@@ -693,20 +693,20 @@ class Exif
 				if (isset($field)) {
 					//store raw value
 					$exif[$group][$name]['rawval'] = $field;
-					
+
 					//thumbnail and ifd0 groups share the same specifications
 					$groupmask = $group == 'THUMBNAIL' ? 'IFD0' : $group;
-					
+
 					//get tag data from $specs array
 					if (isset($this->specs[$groupmask][$name])) {
 						//shorten the variable
 						$specname = $this->specs[$groupmask][$name];
-						
+
 						//convert binary values
 						if (isset($specname['binary']) && $specname['binary']) {
 							$exif[$group][$name]['rawval'] = bin2hex($exif[$group][$name]['rawval']);
 						}
-						
+
 						//start processing rawval into newval
 						if (is_array($exif[$group][$name]['rawval'])) {
 							$exif[$group][$name]['newval'] = $this->processArray($exif[$group][$name]['rawval'], $name);
@@ -724,20 +724,20 @@ class Exif
 							if ($name == 'ComponentsConfiguration') {
 								$str = $exif[$group][$name]['newval'];
 								$opt = $specname['options'];
-								$disp = $opt[substr($str, 0, 2)] . ' ' . $opt[substr($str, 2, 2)] . ' ' 
+								$disp = $opt[substr($str, 0, 2)] . ' ' . $opt[substr($str, 2, 2)] . ' '
 										. $opt[substr($str, 4, 2)] . ' ' . $opt[substr($str, 6, 2)];
 								$exif[$group][$name]['newval'] = $disp;
-							} elseif($name == 'CFAPattern') {
+							} elseif ($name == 'CFAPattern') {
 								$str = $exif[$group][$name]['newval'];
 								$opt = $specname['options'];
-								$disp = '[' . $opt[substr($str, 8, 2)] . ', ' . $opt[substr($str, 10, 2)] . '] [' 
+								$disp = '[' . $opt[substr($str, 8, 2)] . ', ' . $opt[substr($str, 10, 2)] . '] ['
 										. $opt[substr($str, 12, 2)] . ', ' . $opt[substr($str, 14, 2)] . ']';
 								$exif[$group][$name]['newval'] =$disp;
 							} else {
 								$exif[$group][$name]['newval'] = $specname['options'][$exif[$group][$name]['newval']];
 							}
 						}
-						
+
 						//fix labels
 						if (isset($specname['label'])) {
 							$exif[$group][$name]['label'] = $specname['label'];
@@ -745,7 +745,7 @@ class Exif
 							//create reading-friendly labels from camel case tags
 							$exif[$group][$name]['label'] = $filter->filter($name);
 						}
-						
+
 						if (isset($specname['suffix']) && !is_array($exif[$group][$name]['newval'])) {
 							$exif[$group][$name]['suffix'] = $specname['suffix'];
 						}
@@ -792,7 +792,7 @@ class Exif
 			$exif['EXIF']['FNumber']['newval'] = $exif['COMPUTED']['ApertureFNumber']['rawval'];
 			unset($exif['COMPUTED']['ApertureFNumber']);
 		}
-		
+
 		return $exif;
 	}
 

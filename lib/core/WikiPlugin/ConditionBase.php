@@ -26,8 +26,7 @@ abstract class WikiPlugin_ConditionBase
 	public function info()
 	{
 		$info = array();
-		foreach($this as $key => $param)
-		{
+		foreach ($this as $key => $param) {
 			$info[$key] = $param;
 		}
 
@@ -37,7 +36,7 @@ abstract class WikiPlugin_ConditionBase
 	protected function paramDefaults(&$params)
 	{
 		$defaults = array();
-		foreach($this->params as $param => $setting) {
+		foreach ($this->params as $param => $setting) {
 			if (!empty($setting)) {
 				$defaults[$param] = $setting;
 			}

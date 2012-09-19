@@ -1,4 +1,9 @@
 <?php
+// (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
+//
+// All Rights Reserved. See copyright.txt for details and a complete list of authors.
+// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+// $Id$
 
 function prefs_kaltura_list()
 {
@@ -7,11 +12,11 @@ function prefs_kaltura_list()
 	$players = array();
 	if (is_object($kalturaadminlib) && !empty($kalturaadminlib->session)) {
 		$players1 = $kalturaadminlib->getPlayersUiConfs();
-		foreach($players1 as & $pl) {
+		foreach ($players1 as & $pl) {
 			$players[$pl['id']] = tra($pl['name']);
 		}
-		unset($players1)
-;	}
+		unset($players1);
+	}
 	return array(
 		'kaltura_partnerId' => array(
 			'name' => tra('Partner ID'),
