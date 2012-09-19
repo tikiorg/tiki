@@ -217,12 +217,17 @@ class Comments extends TikiLib
 		if (empty($res[0]))
 			return $res;
 
-		$res[0]['forum_info'] = $this->get_forum($res['forumId']);
+		$res[0]['forum_info'] = $this->get_forum($res[0]['forumId']);
 		return $res[0];
 	}
 
 	function remove_thread_attachment($attId)
 	{
+		$att = $this->get_thread_attachment($attId);
+		// Check if the attachment is stored in the filesystem and don't do anything by accident in root dir
+		if ( empty($att['data']) && !empty($att['path']) && !empty($att['forum_info']['att_store_dir']) ) {
+			unlink($att['forum_info']['att_store_dir'] . $att['path']);
+		}
 		$this->table('tiki_forum_attachments')->delete('forumId', array('attId' => $attId));
 	}
 
