@@ -342,6 +342,9 @@ class TikiAccessLib extends TikiLib
 			$errorreport->send_headers();
 
 			$this->output_serialized($detail);
+		} elseif ($this->is_xml_http_request()) {
+			$smarty->assign('detail', $detail);
+			$smarty->display('error-ajax.tpl');
 		} else {
 			if (($errortype == 401 || $errortype == 403) &&
 						empty($user) &&
