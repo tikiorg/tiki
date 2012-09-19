@@ -107,7 +107,11 @@ if (isset($attributes['tiki.content.url'])) {
 	$smarty->loadPlugin('smarty_modifier_sefurl');
 	$src = smarty_modifier_sefurl($info['fileId'], 'file');
 	session_write_close();
-	echo file_get_contents($src);
+
+	$client = $tikilib->get_http_client($src);
+	$response = $client->request();
+	header('Content-Type: ' . $response->getHeader('Content-Type'));
+	echo $response->getBody();
 	exit();
 }
 
