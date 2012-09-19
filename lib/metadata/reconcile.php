@@ -496,17 +496,17 @@ class ReconcileExifIptcXmp
 				//check exif vs iptc
 				if (array_key_exists('exif', $types) && array_key_exists('iptc', $types)) {
 					$check['exif-iptc'] = $this->compareIptcExifValues(
-									$fnames['exif'], $fnames['iptc'],
-									$omni['iptc']['left'][$fnames['iptc']]['rawval'],
-									$omni['exif']['left'][$fnames['exif']]['rawval']
+						$fnames['exif'], $fnames['iptc'],
+						$omni['iptc']['left'][$fnames['iptc']]['rawval'],
+						$omni['exif']['left'][$fnames['exif']]['rawval']
 					);
 				}
 				//check exif vs xmp
 				if (array_key_exists('exif', $types) && array_key_exists('xmp', $types)) {
 					$check['exif-xmp'] = $this->compareExifXmpValues(
-									$fnames['exif'],
-									$omni['xmp']['left'][$fnames['xmp']]['rawval'],
-									$omni['exif']['left'][$fnames['exif']]['rawval']
+						$fnames['exif'],
+						$omni['xmp']['left'][$fnames['xmp']]['rawval'],
+						$omni['exif']['left'][$fnames['exif']]['rawval']
 					);
 					//per MWG guidelines, prefer XMP time fields to EXIF if they match since XMP has the time zone
 					//offset and EXIF doesn't
@@ -519,10 +519,10 @@ class ReconcileExifIptcXmp
 				//check iptc vs xmp
 				if (array_key_exists('iptc', $types) && array_key_exists('xmp', $types)) {
 					$check['iptc-xmp'] = $this->compareIptcXmpValues(
-									$fnames['xmp'],
-									$fnames['iptc'],
-									$omni['iptc']['left'][$fnames['iptc']]['rawval'],
-									$omni['xmp']['left'][$fnames['xmp']]['rawval']
+						$fnames['xmp'],
+						$fnames['iptc'],
+						$omni['iptc']['left'][$fnames['iptc']]['rawval'],
+						$omni['xmp']['left'][$fnames['xmp']]['rawval']
 					);
 				}
 				//now determine which of the duplicates will be displayed according to MWG guidelines
@@ -604,8 +604,8 @@ class ReconcileExifIptcXmp
 			} else {
 				$omni[$type1]['left'] = array_diff_key($omni[$type1]['left'], $match);
 				$omni[$type2]['left'] = array_diff_key(
-								$omni[$type2]['left'],
-								isset($samekey) && $samekey ? $match : array_flip($match)
+					$omni[$type2]['left'],
+					isset($samekey) && $samekey ? $match : array_flip($match)
 				);
 			}
 			//see if the data needs another pass

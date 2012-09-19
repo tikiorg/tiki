@@ -36,29 +36,29 @@ function smarty_function_object_link( $params, $smarty )
 		if (! $title) {
 			$title = $object;
 		}
-					break;
+		break;
 	case 'user':
 		$function = 'smarty_function_object_link_user';
-					break;
+		break;
 	case 'external':
 	case 'external_extended':
 		$function = 'smarty_function_object_link_external';
-					break;
+		break;
 	case 'relation_source':
 		$function = 'smarty_function_object_link_relation_source';
-					break;
+		break;
 	case 'relation_target':
 		$function = 'smarty_function_object_link_relation_target';
-					break;
+		break;
 	case 'freetag':
 		$function = 'smarty_function_object_link_freetag';
-					break;
+		break;
 	case 'trackeritem':
 		$function = 'smarty_function_object_link_trackeritem';
-					break;
+		break;
 	default:
 		$function = 'smarty_function_object_link_default';
-					break;
+		break;
 	}
 
 	return $function($smarty, $object, $title, $type, $url);
@@ -67,7 +67,7 @@ function smarty_function_object_link( $params, $smarty )
 function smarty_function_object_link_default( $smarty, $object, $title = null, $type = 'wiki page', $url = null )
 {
 	global $base_url;
-	
+
 	$smarty->loadPlugin('smarty_modifier_sefurl');
 	$smarty->loadPlugin('smarty_modifier_escape');
 
@@ -96,7 +96,7 @@ function smarty_function_object_link_default( $smarty, $object, $title = null, $
 	}
 
 	$classList = array();
-	
+
 	if ( $type == "blog post" ) {
 		$classList[] = "link";
 	} elseif ( $type == "freetag" ) {
@@ -115,22 +115,22 @@ function smarty_function_object_link_default( $smarty, $object, $title = null, $
 	if (isset($attributes['tiki.content.source']) && $prefs['fgal_source_show_refresh'] == 'y') {
 		$smarty->loadPlugin('smarty_function_icon');
 		$smarty->loadPlugin('smarty_function_service');
-		$html .= '<a class="file-refresh" href="' . 
-						smarty_function_service(
-										array(
-											'controller' => 'file',
-											'action' => 'refresh',
-											'fileId' => intval($object),
-										), 
-										$smarty
-						) . '">' . 
-						smarty_function_icon(
-										array('_id' => 'arrow_refresh',), 
-										$smarty
-						) . '</a>';
+		$html .= '<a class="file-refresh" href="' .
+			smarty_function_service(
+				array(
+					'controller' => 'file',
+					'action' => 'refresh',
+					'fileId' => intval($object),
+				),
+				$smarty
+			) . '">' .
+			smarty_function_icon(
+				array('_id' => 'arrow_refresh',),
+				$smarty
+			) . '</a>';
 
 		TikiLib::lib('header')->add_js(
-						'
+			'
 			$(".file-refresh").removeClass("file-refresh").click(function () {
 			$.getJSON($(this).attr("href"));
 			$(this).remove();
@@ -147,7 +147,7 @@ function smarty_function_object_link_trackeritem( $smarty, $object, $title = nul
 	$pre = null;
 
 	$item = Tracker_Item::fromId($object);
-	
+
 	if ($status = $item->getDisplayedStatus()) {
 		$alt = tr($status);
 		$pre = "<img src=\"img/icons/status_$status.gif\" alt=\"$status\"/>&nbsp;";
@@ -237,12 +237,12 @@ function smarty_function_object_link_relation_end( $smarty, $end, $relationId, $
 			$object = $relation[$end . '_itemId'];
 
 			$out = smarty_function_object_link(
-							array(
-								'type' => $type,
-								'id' => $object,
-								'title' => $title,
-							), 
-							$smarty
+				array(
+					'type' => $type,
+					'id' => $object,
+					'title' => $title,
+				),
+				$smarty
 			);
 
 			$cachelib->cacheItem($cacheKey, $out, 'relation_link');

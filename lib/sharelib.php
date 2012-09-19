@@ -1,13 +1,13 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 /**
- * Tiki_ShareGroup 
- * 
+ * Tiki_ShareGroup
+ *
  */
 class Tiki_ShareGroup
 {
@@ -86,7 +86,7 @@ class Tiki_ShareGroup
 		// Remove redundant permissions
 		$permissions = array_diff($permissions, array_keys($this->groupPerm));
 		$permissions = array_diff($permissions, array_keys($this->categPerm));
-		
+
 		$this->objectPerm = array();
 		foreach ( $permissions as $p )
 			$this->objectPerm[$p] = 'y';
@@ -101,8 +101,8 @@ class Tiki_ShareGroup
 }
 
 /**
- * Tiki_ShareObject 
- * 
+ * Tiki_ShareObject
+ *
  */
 class Tiki_ShareObject
 {
@@ -123,7 +123,7 @@ class Tiki_ShareObject
 
 		$this->loadedPermission = array();
 		$this->validGroups = array();
-		
+
 		if ( $Tiki_ShareObject__groups == null )
 			$this->loadGroups();
 	}
@@ -152,15 +152,15 @@ class Tiki_ShareObject
 		}
 
 		$result = $tikilib->query(
-						"SELECT groupName, tiki_categories.name" .
-						" FROM" .
-						" tiki_objects" .
-						" INNER JOIN tiki_category_objects ON tiki_category_objects.catObjectId = tiki_objects.objectId" .
-						" INNER JOIN tiki_categories USING(categId)" .
-						" INNER JOIN users_objectpermissions ON objectType = 'category' AND users_objectpermissions.objectId = MD5( CONCAT('category', categId) )" .
-						" WHERE" .
-						" tiki_objects.type = ? AND tiki_objects.itemId = ? AND permName = ?",
-						array( $this->objectType, $this->objectId, $permissionName )
+			"SELECT groupName, tiki_categories.name" .
+			" FROM" .
+			" tiki_objects" .
+			" INNER JOIN tiki_category_objects ON tiki_category_objects.catObjectId = tiki_objects.objectId" .
+			" INNER JOIN tiki_categories USING(categId)" .
+			" INNER JOIN users_objectpermissions ON objectType = 'category' AND users_objectpermissions.objectId = MD5( CONCAT('category', categId) )" .
+			" WHERE" .
+			" tiki_objects.type = ? AND tiki_objects.itemId = ? AND permName = ?",
+			array( $this->objectType, $this->objectId, $permissionName )
 		);
 
 		while ( $row = $result->fetchRow() ) {
@@ -169,8 +169,8 @@ class Tiki_ShareObject
 		}
 
 		$result = $tikilib->query(
-						"SELECT groupName FROM users_objectpermissions WHERE permName = ? AND objectType = ? AND objectId = ?", 
-						array( $permissionName, $this->objectType, $this->objectHash )
+			"SELECT groupName FROM users_objectpermissions WHERE permName = ? AND objectType = ? AND objectId = ?",
+			array( $permissionName, $this->objectType, $this->objectHash )
 		);
 
 		while ( $row = $result->fetchRow() ) {
@@ -218,16 +218,16 @@ class Tiki_ShareObject
 
 		foreach ( $validPermission as $permission )
 			$tikilib->query(
-							"DELETE FROM users_objectpermissions WHERE objectType = ? AND objectId = ? AND permName = ?",
-							array($this->objectType, $this->objectHash, $permission)
+				"DELETE FROM users_objectpermissions WHERE objectType = ? AND objectId = ? AND permName = ?",
+				array($this->objectType, $this->objectHash, $permission)
 			);
 
 		foreach ( $this->validGroups as $group )
 			foreach ( $validPermission as $permission )
 				if ( $group->hasObjectPermission($permission) )
 					$tikilib->query(
-									"INSERT INTO users_objectpermissions ( groupName, permName, objectType, objectId ) VALUES( ?, ?, ?, ? )",
-									array($group->name, $permission, $this->objectType, $this->objectHash)
+						"INSERT INTO users_objectpermissions ( groupName, permName, objectType, objectId ) VALUES( ?, ?, ?, ? )",
+						array($group->name, $permission, $this->objectType, $this->objectHash)
 					);
 	}
 }

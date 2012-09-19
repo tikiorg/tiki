@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -40,29 +40,29 @@ if (isset($_REQUEST["add_type"])) {
 		if (!isset($_REQUEST["creator_edit"][$this_type]))							$_REQUEST["creator_edit"][$this_type] = 'n';
 
 		$artlib->edit_type(
-						$this_type, 
-						$_REQUEST["use_ratings"][$this_type], 
-						$_REQUEST["show_pre_publ"][$this_type], 
-						$_REQUEST["show_post_expire"][$this_type], 
-						$_REQUEST["heading_only"][$this_type], 
-						$_REQUEST["allow_comments"][$this_type], 
-						$_REQUEST["comment_can_rate_article"][$this_type], 
-						$_REQUEST["show_image"][$this_type], 
-						$_REQUEST["show_avatar"][$this_type], 
-						$_REQUEST["show_author"][$this_type], 
-						$_REQUEST["show_pubdate"][$this_type], 
-						$_REQUEST["show_expdate"][$this_type], 
-						$_REQUEST["show_reads"][$this_type], 
-						$_REQUEST["show_size"][$this_type], 
-						$_REQUEST["show_topline"][$this_type], 
-						$_REQUEST["show_subtitle"][$this_type], 
-						$_REQUEST["show_linkto"][$this_type], 
-						$_REQUEST["show_image_caption"][$this_type], 
-						$_REQUEST["creator_edit"][$this_type]
+			$this_type,
+			$_REQUEST["use_ratings"][$this_type],
+			$_REQUEST["show_pre_publ"][$this_type],
+			$_REQUEST["show_post_expire"][$this_type],
+			$_REQUEST["heading_only"][$this_type],
+			$_REQUEST["allow_comments"][$this_type],
+			$_REQUEST["comment_can_rate_article"][$this_type],
+			$_REQUEST["show_image"][$this_type],
+			$_REQUEST["show_avatar"][$this_type],
+			$_REQUEST["show_author"][$this_type],
+			$_REQUEST["show_pubdate"][$this_type],
+			$_REQUEST["show_expdate"][$this_type],
+			$_REQUEST["show_reads"][$this_type],
+			$_REQUEST["show_size"][$this_type],
+			$_REQUEST["show_topline"][$this_type],
+			$_REQUEST["show_subtitle"][$this_type],
+			$_REQUEST["show_linkto"][$this_type],
+			$_REQUEST["show_image_caption"][$this_type],
+			$_REQUEST["creator_edit"][$this_type]
 		);
-				
+
 		// Add custom attributes
-		if ($prefs["article_custom_attributes"] == 'y' && !empty($_REQUEST["new_attribute"][$this_type])) {			
+		if ($prefs["article_custom_attributes"] == 'y' && !empty($_REQUEST["new_attribute"][$this_type])) {
 			$ok = $artlib->add_article_type_attribute($this_type, $_REQUEST["new_attribute"][$this_type]);
 			if (!$ok) {
 				$smarty->assign('msg', tra("Failed to add attribute"));
@@ -81,7 +81,7 @@ if ($prefs["article_custom_attributes"] == 'y') {
 	}
 	foreach ($types as &$t) {
 		$t["attributes"] = $artlib->get_article_type_attributes($t["type"]);
-	}	
+	}
 }
 
 $smarty->assign('types', $types);

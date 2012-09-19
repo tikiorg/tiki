@@ -136,7 +136,7 @@ if (!function_exists('cal_days_in_month')) {
 	$smarty->assign('msg', tra('Your PHP installation does not have calendar enabled.'));
 	$smarty->display('error.tpl');
 	die;
-}	
+}
 $focus_prev = $calendarlib->focusPrevious($focus, $calendarViewMode['casedefault']);
 $focus_next = $calendarlib->focusNext($focus, $calendarViewMode['casedefault']);
 
@@ -177,8 +177,8 @@ $smarty->assign('viewyear', $focus_year);
 // calculate timespan for sql query
 if ($viewlist == 'list' && $prefs['calendar_list_begins_focus'] == 'y') {
 	$daystart = $focusdate;
-} elseif ($calendarViewMode['casedefault'] == 'month' 
-		|| $calendarViewMode['casedefault'] == 'quarter' 
+} elseif ($calendarViewMode['casedefault'] == 'month'
+		|| $calendarViewMode['casedefault'] == 'quarter'
 		|| $calendarViewMode['casedefault'] == 'semester'
 ) {
 	$daystart = $tikilib->make_time(0, 0, 0, $focus_month, 1, $focus_year);
@@ -253,10 +253,10 @@ if ( $calendarViewMode['casedefault'] == 'month' ||
 	if ( $viewlist != 'list' ) {
 		//$viewend += (6 - $TmpWeekday) * $d;
 		$viewend = $tikilib->make_time(
-						23, 59, 59,
-						TikiLib::date_format("%m", $viewend),
-						TikiLib::date_format("%d", $viewend) + ( 6 - $TmpWeekday ),
-						TikiLib::date_format("%Y", $viewend)
+			23, 59, 59,
+			TikiLib::date_format("%m", $viewend),
+			TikiLib::date_format("%d", $viewend) + ( 6 - $TmpWeekday ),
+			TikiLib::date_format("%Y", $viewend)
 		);
 	}
 
@@ -314,12 +314,12 @@ if ( $calendarViewMode['casedefault'] == 'month' ||
 	// then go to the end of the week for $viewend
 	// $viewend = $viewstart + (7 * $d) - 1;
 	$viewend = $tikilib->make_time(
-					0,
-					0,
-					0,
-					TikiLib::date_format("%m", $daystart),
-					TikiLib::date_format("%d", $daystart) + 7,
-					TikiLib::date_format("%Y", $daystart)
+		0,
+		0,
+		0,
+		TikiLib::date_format("%m", $daystart),
+		TikiLib::date_format("%d", $daystart) + 7,
+		TikiLib::date_format("%Y", $daystart)
 	) - 1;
 
 	$dayend = $viewend;
@@ -332,12 +332,12 @@ if ( $calendarViewMode['casedefault'] == 'month' ||
 
 	//	$viewend = $viewstart + ($d - 1);
 	$viewend = $tikilib->make_time(
-					0,
-					0,
-					0,
-					TikiLib::date_format("%m", $viewstart),
-					TikiLib::date_format("%d", $viewstart) + 1,
-					TikiLib::date_format("%Y", $viewstart)
+		0,
+		0,
+		0,
+		TikiLib::date_format("%m", $viewstart),
+		TikiLib::date_format("%d", $viewstart) + 1,
+		TikiLib::date_format("%Y", $viewstart)
 	) - 1;
 
 	$dayend = $daystart;

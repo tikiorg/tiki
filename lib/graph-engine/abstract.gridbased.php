@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -13,12 +13,12 @@ class GridBasedGraphic extends Graphic // {{{1
 	var $independant;
 	var $vertical;
 	var $horizontal;
-	
+
 	function GridBasedGraphic() // {{{2
 	{
 		Graphic::Graphic();
 	}
-	
+
 	function _getMinValue( $type ) // {{{2
 	{
 		// Type is 'dependant' or 'independant'
@@ -45,7 +45,7 @@ class GridBasedGraphic extends Graphic // {{{1
 		$right = 1;
 
 		$layout = $this->_layout();
-		
+
 		$this->_initScales($renderer, $layout, 'dependant');
 		$this->_initScales($renderer, $layout, 'independant');
 		$this->_drawScales($renderer, $layout, $left, $top, $right, $bottom);
@@ -57,10 +57,10 @@ class GridBasedGraphic extends Graphic // {{{1
 		switch( $layout["grid-$type-scale"] ) {
 		case 'linear':
 			$this->$type = new LinearGridScale($type, $layout, $this->_getMinValue($type), $this->_getMaxValue($type));
-      break;
+			break;
 		case 'static':
 			$this->$type = new StaticGridScale($type, $layout, $this->_getLabels($type));
-      break;
+			break;
 		}
 
 		// Setting the vertical or horizontal members to the same scale
@@ -82,10 +82,10 @@ class GridBasedGraphic extends Graphic // {{{1
 			{
 			case 'left':
 				$left = $size;
-      	break;
+				break;
 			case 'right':
 				$right = 1 - $size;
-      	break;
+				break;
 			}
 
 			$size = $this->horizontal->getSize($renderer, $right - $left);
@@ -93,10 +93,10 @@ class GridBasedGraphic extends Graphic // {{{1
 			{
 			case 'top':
 				$top = $size;
-      	break;
+				break;
 			case 'bottom':
 				$bottom = 1 - $size;
-      	break;
+				break;
 			}
 
 		} while ( $oleft != $left || $otop != $top || $oright != $right || $obottom != $bottom );
@@ -105,20 +105,20 @@ class GridBasedGraphic extends Graphic // {{{1
 		{
 		case 'left':
 			$this->vertical->drawScale(new Fake_GRenderer($renderer, 0, $top, $left, $bottom));
-      break;
+			break;
 		case 'right':
 			$this->vertical->drawScale(new Fake_GRenderer($renderer, $right, $top, 1, $bottom));
-      break;
+			break;
 		}
 
 		switch( $layout['grid-horizontal-position'] )
 		{
 		case 'top':
 			$this->horizontal->drawScale(new Fake_GRenderer($renderer, $left, 0, $right, $top));
-      break;
+			break;
 		case 'bottom':
 			$this->horizontal->drawScale(new Fake_GRenderer($renderer, $left, $bottom, $right, 1));
-      break;
+			break;
 		}
 	}
 
@@ -139,38 +139,38 @@ class GridBasedGraphic extends Graphic // {{{1
 	function _default() // {{{2
 	{
 		return array_merge(
-						parent::_default(),
-						array(
-							'grid-independant-location' => 'horizontal',
-							'grid-reverse' => false,
-							'grid-background' => 'FillStroke-Gray',
-							'grid-horizontal-position' => 'bottom',
-							'grid-vertical-position' => 'left',
+			parent::_default(),
+			array(
+				'grid-independant-location' => 'horizontal',
+				'grid-reverse' => false,
+				'grid-background' => 'FillStroke-Gray',
+				'grid-horizontal-position' => 'bottom',
+				'grid-vertical-position' => 'left',
 
-							'grid-independant-scale' => 'linear',
-							'grid-independant-linear-count' => 10,
-							'grid-independant-zero-style' => 'Bold-LineStroke-Black',
-							'grid-independant-minor-style' => 'Thin-LineStroke-Black',
-							'grid-independant-minor-size' => 0.01,
-							'grid-independant-minor-font' => false,
-							'grid-independant-minor-guide' => false,
-							'grid-independant-major-style' => 'LineStroke-Black',
-							'grid-independant-major-size' => 0.02,
-							'grid-independant-major-font' => 'Large-Text',
-							'grid-independant-major-guide' => false,
+				'grid-independant-scale' => 'linear',
+				'grid-independant-linear-count' => 10,
+				'grid-independant-zero-style' => 'Bold-LineStroke-Black',
+				'grid-independant-minor-style' => 'Thin-LineStroke-Black',
+				'grid-independant-minor-size' => 0.01,
+				'grid-independant-minor-font' => false,
+				'grid-independant-minor-guide' => false,
+				'grid-independant-major-style' => 'LineStroke-Black',
+				'grid-independant-major-size' => 0.02,
+				'grid-independant-major-font' => 'Large-Text',
+				'grid-independant-major-guide' => false,
 
-							'grid-dependant-scale' => 'linear',
-							'grid-dependant-linear-count' => 10,
-							'grid-dependant-zero-style' => 'Bold-LineStroke-Black',
-							'grid-dependant-minor-style' => 'Thin-LineStroke-Black',
-							'grid-dependant-minor-size' => 0.01,
-							'grid-dependant-minor-font' => false,
-							'grid-dependant-minor-guide' => false,
-							'grid-dependant-major-style' => 'LineStroke-Black',
-							'grid-dependant-major-size' => 0.02,
-							'grid-dependant-major-font' => 'Large-Text',
-							'grid-dependant-major-guide' => 'Thin-LineStroke-Black',
-						)
+				'grid-dependant-scale' => 'linear',
+				'grid-dependant-linear-count' => 10,
+				'grid-dependant-zero-style' => 'Bold-LineStroke-Black',
+				'grid-dependant-minor-style' => 'Thin-LineStroke-Black',
+				'grid-dependant-minor-size' => 0.01,
+				'grid-dependant-minor-font' => false,
+				'grid-dependant-minor-guide' => false,
+				'grid-dependant-major-style' => 'LineStroke-Black',
+				'grid-dependant-major-size' => 0.02,
+				'grid-dependant-major-font' => 'Large-Text',
+				'grid-dependant-major-guide' => 'Thin-LineStroke-Black',
+			)
 		);
 	}
 } // }}}1
@@ -180,12 +180,12 @@ class GridScale // {{{1
 	var $orientation;
 	var $type;
 	var $layout;
-	
+
 	function GridScale( $type, $layout ) // {{{2
 	{
 		$this->type = $type;
 		$this->layout = $layout;
-		
+
 		if ( $type == 'independant' )
 			$this->orientation = $layout['grid-independant-location'];
 		else
@@ -234,7 +234,7 @@ class LinearGridScale extends GridScale // {{{1
 
 	var $skip;
 	var $count;
-	
+
 	function LinearGridScale( $type, $layout, $min, $max ) // {{{2
 	{
 		parent::GridScale($type, $layout);
@@ -250,7 +250,7 @@ class LinearGridScale extends GridScale // {{{1
 	{
 		$max = $this->max;
 		$min = $this->min;
-		
+
 		$base = "grid-{$this->type}";
 		$default = $this->layout["$base-linear-count"];
 
@@ -259,16 +259,16 @@ class LinearGridScale extends GridScale // {{{1
 		{
 		case $max >= 0 && $min == 0:
 			$this->majorScaleCount = ceil($max / $maj);
-      break;
+			break;
 		case $max >= 0 && $min > 0:
 			$this->majorScaleCount = ceil(($max - $min) / $maj);
-      break;
+			break;
 		case $max >= 0 && $min < 0:
 			$this->majorScaleCount = ceil($max / $maj) + ceil(abs($min) / $maj);
-      break;
+			break;
 		case $max < 0:
 			$this->majorScaleCount = ceil((abs($min) - abs($max)) / $maj);
-      break;
+			break;
 		}
 
 		$this->majorScaleRound = 0; // Need to be changed.
@@ -279,17 +279,17 @@ class LinearGridScale extends GridScale // {{{1
 				break;
 			else
 				--$this->minorScaleCount;
-			
+
 		$this->minorScaleRound = 0;
 
 		$this->zero = $this->_getZeroLocation();
 		$this->value = $maj / (1 / $this->majorScaleCount);
 	}
-	
+
 	function drawGrid( &$renderer ) // {{{2
 	{
 		$base = "grid-{$this->type}";
-		
+
 		$major = null;
 		$minor = null;
 		if ( $this->layout["$base-major-guide"] !== false )
@@ -322,10 +322,10 @@ class LinearGridScale extends GridScale // {{{1
 		}
 	}
 
-	function drawScale( &$renderer ) // {{{2 
+	function drawScale( &$renderer ) // {{{2
 	{
 		$base = "grid-{$this->type}";
-		
+
 		$major_font = null;
 		$minor_font = null;
 		$major_style = null;
@@ -408,7 +408,7 @@ class LinearGridScale extends GridScale // {{{1
 					$renderer->drawText($value, $pos - $width, $pos + $width, $size, $font);
 				}
 			} else {
-				if ( !is_null($style) ) 
+				if ( !is_null($style) )
 					$renderer->drawLine($pos, 1 - $size, $pos, 1, $style);
 				if ( !is_null($font) ) {
 					$value = $this->_getValue($pos, $round);
@@ -449,8 +449,8 @@ class LinearGridScale extends GridScale // {{{1
 	function _getLargest( &$renderer, $font ) // {{{2
 	{
 		return  max(
-						$renderer->getTextWidth($this->min, $font),
-						$renderer->getTextWidth($this->max, $font)
+			$renderer->getTextWidth($this->min, $font),
+			$renderer->getTextWidth($this->max, $font)
 		);
 	}
 
@@ -463,7 +463,7 @@ class LinearGridScale extends GridScale // {{{1
 	{
 		return 1 / $this->majorScaleCount / $this->minorScaleCount;
 	}
-	
+
 	function _getZeroLocation() // {{{2
 	{
 		$loc = $this->max / ($this->max - $this->min);
@@ -518,7 +518,7 @@ class StaticGridScale extends GridScale // {{{1
 	var $width;
 	var $layers;
 	var $count;
-	
+
 	function StaticGridScale( $type, $layout, $labels ) // {{{2
 	{
 		parent::GridScale($type, $layout);
@@ -530,7 +530,7 @@ class StaticGridScale extends GridScale // {{{1
 	function drawGrid( &$renderer ) // {{{2
 	{
 		$base = "grid-{$this->type}";
-		
+
 		$major = null;
 		if ( $this->layout["$base-major-guide"] !== false )
 			$major = $renderer->getStyle($this->layout["$base-major-guide"]);
@@ -540,10 +540,10 @@ class StaticGridScale extends GridScale // {{{1
 				$this->_drawGridLine($renderer, $i, $major);
 	}
 
-	function drawScale( &$renderer ) // {{{2 
+	function drawScale( &$renderer ) // {{{2
 	{
 		$base = "grid-{$this->type}";
-		
+
 		$major_font = null;
 		$major_style = null;
 		if ( $this->layout["$base-major-font"] !== false )

@@ -93,7 +93,7 @@ class TodoLib
 					$this->$func($todo, $objects);
 				}
 				// echo '<pre>MAIL';print_r($objects); echo '</pre>';
-							break;
+				break;
 
 			default:
 				$objects = $this->listObjectsTodo($todo);
@@ -184,27 +184,27 @@ class TodoLib
 		switch ($todo['event']) {
 			case 'creation':
 				$filter = array('createdBefore' => $tikilib->now - $todo['after']);
-							break;
+				break;
 
 			case 'modification':
 				$filter = array('lastModifBefore' => $tikilib->now - $todo['after']);
-							break;
+				break;
 		}
 
 		$fieldId = $trklib->get_field_id_from_type($todo['objectId'], 'u', '1%');
 
 		$objects = $trklib->list_items(
-						$todo['objectId'],
-						0,
-						-1,
-						'created_asc',
-						array($fieldId=>$trklib->get_tracker_field($fieldId)),
-						'',
-						'',
-						$todo['from']['status'],
-						'',
-						'',
-						$filter
+			$todo['objectId'],
+			0,
+			-1,
+			'created_asc',
+			array($fieldId=>$trklib->get_tracker_field($fieldId)),
+			'',
+			'',
+			$todo['from']['status'],
+			'',
+			'',
+			$filter
 		);
 
 		// todo in list_items:

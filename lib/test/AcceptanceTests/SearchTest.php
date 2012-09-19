@@ -50,13 +50,13 @@ class AcceptanceTests_SearchTest extends TikiSeleniumTestCase
 		$this->_searchFor($query);
 
 		$this->_assertSearchResultsWere(
-						array(
-							0 => "HomePage",
-							1 => 'Multilingual Test Page 1',
-							2 => 'Another page containing the word feature'
-						),
-						$query,
-						""
+			array(
+				0 => "HomePage",
+				1 => 'Multilingual Test Page 1',
+				2 => 'Another page containing the word feature'
+			),
+			$query,
+			""
 		);
 	}
 
@@ -67,16 +67,16 @@ class AcceptanceTests_SearchTest extends TikiSeleniumTestCase
 	public function testSearchIsCaseInsensitive()
 	{
 		$this->openTikiPage('tiki-index.php');
-		$this->logInIfNecessaryAs('admin');	
+		$this->logInIfNecessaryAs('admin');
 		$query = 'hello';
 		$this->_searchFor($query);
 		$this->_assertSearchResultsWere(
-						array(
-							0 => "test page for search 1",
-							1 => 'test page for search 2'
-						),
-						$query,
-						"Bad list of search results for query '$query'. Search should have been case insensitive."
+			array(
+				0 => "test page for search 1",
+				1 => 'test page for search 2'
+			),
+			$query,
+			"Bad list of search results for query '$query'. Search should have been case insensitive."
 		);
 	}
 
@@ -90,13 +90,13 @@ class AcceptanceTests_SearchTest extends TikiSeleniumTestCase
 		$query = 'hello world';
 		$this->_searchFor($query);
 		$this->_assertSearchResultsWere(
-						array(
-							0 => "test page for search 1",
-							1 => "test page for search 2",
-							2 => 'test page for search 3'
-						),
-						$query,
-						"Bad list of search results for multi word query '$query'. Could be that the search engine did not use an OR to combine the search words."
+			array(
+				0 => "test page for search 1",
+				1 => "test page for search 2",
+				2 => 'test page for search 3'
+			),
+			$query,
+			"Bad list of search results for multi word query '$query'. Could be that the search engine did not use an OR to combine the search words."
 		);
 
 	}
@@ -116,31 +116,31 @@ class AcceptanceTests_SearchTest extends TikiSeleniumTestCase
 	{
 
 		$this->assertElementPresent(
-						"xpath=//form[@id='search-form']",
-						"Search form was not present"
+			"xpath=//form[@id='search-form']",
+			"Search form was not present"
 		);
 
 		$this->assertElementPresent(
-						"highlight",
-						"Search input field not present"
+			"highlight",
+			"Search input field not present"
 		);
 
 		$this->assertElementPresent(
-						"xpath=//div[@id='sitesearchbar']",
-						"Site search bar was not present"
+			"xpath=//div[@id='sitesearchbar']",
+			"Site search bar was not present"
 		);
 	}
 
 	private function _assertSearchResultsWere($listOfHits, $query, $message)
 	{
 		$this->assertElementPresent(
-						"xpath=//ul[@class='searchresults']",
-						"List of search results was absent for query '$query'"
+			"xpath=//ul[@class='searchresults']",
+			"List of search results was absent for query '$query'"
 		);
 		foreach ($listOfHits as $expectedHit) {
 			$this->assertElementPresent(
-							"link=$expectedHit",
-							"$message\nLink to expected hit '$expectedHit' was missing for query '$query'"
+				"link=$expectedHit",
+				"$message\nLink to expected hit '$expectedHit' was missing for query '$query'"
 			);
 		}
 	}

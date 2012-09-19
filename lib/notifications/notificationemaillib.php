@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -15,18 +15,18 @@
  */
 
 function sendForumEmailNotification(
-				$event, 
-				$object, 
-				$forum_info, 
-				$title, 
-				$data, 
-				$author, 
-				$topicName, 
-				$messageId = '', 
-				$inReplyTo = '', 
-				$threadId, 
-				$parentId, 
-				$contributions='', 
+				$event,
+				$object,
+				$forum_info,
+				$title,
+				$data,
+				$author,
+				$topicName,
+				$messageId = '',
+				$inReplyTo = '',
+				$threadId,
+				$parentId,
+				$contributions='',
 				$postId = '')
 {
 	global $tikilib, $prefs, $smarty, $userlib;
@@ -130,16 +130,16 @@ function sendForumEmailNotification(
 	if ($prefs['feature_user_watches'] == 'y' && $prefs['feature_daily_report_watches'] == 'y') {
 		$reportsManager = Reports_Factory::build('Reports_Manager');
 		$reportsManager->addToCache(
-						$nots, 
-						array(
-							"event"=>$event, 
-							"forumId"=>$forum_info['forumId'], 
-							"forumName"=>$forum_info['name'], 
-							"topicId"=>$threadId, 
-							"threadId"=>$postId, 
-							"threadName"=>$topicName, 
-							"user"=>$author
-						)
+			$nots,
+			array(
+				"event"=>$event,
+				"forumId"=>$forum_info['forumId'],
+				"forumName"=>$forum_info['name'],
+				"topicId"=>$threadId,
+				"threadId"=>$postId,
+				"threadName"=>$topicName,
+				"user"=>$author
+			)
 		);
 	}
 
@@ -191,25 +191,25 @@ function testEmailInList($nots, $email)
 	return false;
 }
 
-/** 
+/**
  *\brief send the email notifications dealing with wiki page  changes to
  * admin notification addresses + watching users addresses (except editor is configured)
  * \$event: 'wiki_page_created'|'wiki_page_changed'|wiki_page_deleted |wiki_file_attached
  *
  */
 function sendWikiEmailNotification(
-				$wikiEvent, 
-				$pageName, 
-				$edit_user, 
-				$edit_comment, 
-				$oldver, 
-				$edit_data, 
-				$machine = '', 
-				$diff = '', 
-				$minor = false, 
-				$contributions = '', 
-				$structure_parent_id = 0, 
-				$attId = 0, 
+				$wikiEvent,
+				$pageName,
+				$edit_user,
+				$edit_comment,
+				$oldver,
+				$edit_data,
+				$machine = '',
+				$diff = '',
+				$minor = false,
+				$contributions = '',
+				$structure_parent_id = 0,
+				$attId = 0,
 				$lang = ''
 	)
 {
@@ -226,7 +226,7 @@ function sendWikiEmailNotification(
 	if ($prefs['feature_user_watches'] == 'y') {
 		$nots = $tikilib->get_event_watches($event, $pageName);
 	}
-	
+
 	if ($prefs['feature_user_watches'] == 'y' && $event == 'wiki_page_changed') {
 		global $structlib; include_once('lib/structures/structlib.php');
 		$nots2 = $structlib->get_watches($pageName);
@@ -280,28 +280,28 @@ function sendWikiEmailNotification(
 		if ($wikiEvent == 'wiki_file_attached') {
 			$reportsManager = Reports_Factory::build('Reports_Manager');
 			$reportsManager->addToCache(
-							$nots, 
-							array(
-								"event" => $wikiEvent, 
-								"pageName" => $pageName, 
-								'attId' => $attId, 
-								"editUser" => $edit_user, 
-								"editComment" => $edit_comment, 
-								'filename' => $edit_data
-							)
+				$nots,
+				array(
+					"event" => $wikiEvent,
+					"pageName" => $pageName,
+					'attId' => $attId,
+					"editUser" => $edit_user,
+					"editComment" => $edit_comment,
+					'filename' => $edit_data
+				)
 			);
 		} else {
 			$reportsManager = Reports_Factory::build('Reports_Manager');
 			$reportsManager->addToCache(
-							$nots, 
-							array(
-								"event" => $wikiEvent, 
-								"pageName" => $pageName, 
-								"object" => $pageName, 
-								"editUser" => $edit_user, 
-								"editComment" => $edit_comment, 
-								"oldVer" => $oldver
-							)
+				$nots,
+				array(
+					"event" => $wikiEvent,
+					"pageName" => $pageName,
+					"object" => $pageName,
+					"editUser" => $edit_user,
+					"editComment" => $edit_comment,
+					"oldVer" => $oldver
+				)
 			);
 		}
 	}
@@ -366,7 +366,7 @@ function sendWikiEmailNotification(
 	}
 }
 
-/** 
+/**
  *\brief Send email notification to a list of emails or a list of (email, user) in a charset+language associated with each email
  * \param $watches : bidimensional array of watches. Each watch has user, language, email and watchId keys.
  * \param $dummy: unused
@@ -393,7 +393,7 @@ function sendEmailNotification($watches, $dummy, $subjectTpl, $subjectParam, $tx
 		unset ($parts[count($parts) - 1]);
 
 	$smarty->assign('mail_machine_raw', $tikilib->httpPrefix(true). implode('/', $parts));
-	// TODO: mail_machine_site may be required for some sef url with rewrite to sub-directory. To refine. (nkoth)  
+	// TODO: mail_machine_site may be required for some sef url with rewrite to sub-directory. To refine. (nkoth)
 	$smarty->assign('mail_machine_site', $tikilib->httpPrefix(true));
 
 	foreach ($watches as $watch) {
@@ -432,17 +432,17 @@ function sendErrorEmailNotification($errno, $errstr, $errfile='?', $errline= '?'
 		return;
 
 	switch($errno) {
-		case E_ERROR: 
+		case E_ERROR:
 			$err = 'FATAL';
-						break;
+			break;
 
-		case E_WARNING: 
+		case E_WARNING:
 			$err = 'ERROR';
-						break;
+			break;
 
-		case E_NOTICE: 
+		case E_NOTICE:
 			$err = 'WARNING';
-						break;
+			break;
 
 		default: $err = "";
 	}
@@ -450,9 +450,9 @@ function sendErrorEmailNotification($errno, $errstr, $errfile='?', $errline= '?'
 	$email = $tikilib->get_user_email('admin');
 
 	mail(
-					$email,
-					"PHP: $errfile, $errline",
-					"$errfile, Line $errline\n$err($errno)\n$errstr"
+		$email,
+		"PHP: $errfile, $errline",
+		"$errfile, Line $errline\n$err($errno)\n$errstr"
 	);
 }
 
@@ -473,17 +473,17 @@ function sendFileGalleryEmailNotification($event, $galleryId, $galleryName, $nam
 		if ($prefs['feature_daily_report_watches'] == 'y') {
 			$reportsManager = Reports_Factory::build('Reports_Manager');
 			$reportsManager->addToCache(
-							$nots, 
-							array(
-								"event" => $event, 
-								"name" => $name, 
-								"fileId" => $fileId, 
-								"fileName" => $filename, 
-								"galleryId" => $galleryId, 
-								"galleryName" => $galleryName, 
-								"action" => $action, 
-								"user" => $user
-							)
+				$nots,
+				array(
+					"event" => $event,
+					"name" => $name,
+					"fileId" => $fileId,
+					"fileName" => $filename,
+					"galleryId" => $galleryId,
+					"galleryName" => $galleryName,
+					"action" => $action,
+					"user" => $user
+				)
 			);
 		}
 	}
@@ -555,14 +555,14 @@ function sendCategoryEmailNotification($values)
 
 	// Users watching this gallery
 	if ($prefs['feature_user_watches'] == 'y') {
-		if ($action == 'category created') {                                
+		if ($action == 'category created') {
 			$nots = $tikilib->get_event_watches($event, $parentId);
-		} else if ($action == 'category removed') { 
+		} else if ($action == 'category removed') {
 			$nots = $tikilib->get_event_watches($event, $categoryId);
-			$nots = array_merge($nots, $nots = $tikilib->get_event_watches($event, $parentId));                
+			$nots = array_merge($nots, $nots = $tikilib->get_event_watches($event, $parentId));
 		} else {
 			$nots = $tikilib->get_event_watches($event, $categoryId);
-		} 
+		}
 
 		for ($i = count($nots) - 1; $i >=0; --$i) {
 			$nots[$i]['language'] = $tikilib->get_user_preference($nots[$i]['user'], "language", $defaultLanguage);
@@ -577,7 +577,7 @@ function sendCategoryEmailNotification($values)
 		}
 	}
 
-	if (count($nots)) {        		
+	if (count($nots)) {
 		include_once('lib/webmail/tikimaillib.php');
 		$mail = new TikiMail();
 
@@ -586,26 +586,26 @@ function sendCategoryEmailNotification($values)
 		$smarty->assign('categoryPath', $categoryPath);
 		$smarty->assign('description', $description);
 		$smarty->assign('parentId', $parentId);
-		$smarty->assign('parentName', $parentName);                
+		$smarty->assign('parentName', $parentName);
 		$smarty->assign('mail_date', date("U"));
-		$smarty->assign('author', $user);                
+		$smarty->assign('author', $user);
 
 		$foo = parse_url($_SERVER["REQUEST_URI"]);
 		$machine = $tikilib->httpPrefix(true) . dirname($foo["path"]);
 		$machine = preg_replace("!/$!", '', $machine); // just incase
 		$smarty->assign('mail_machine', $machine);
 
-		$nots_send = array(); 
+		$nots_send = array();
 
 		foreach ($nots as $not) {
 			if (!empty($nots_send[$not['user']])) {
-				break;               			
+				break;
 			}
 
 			$nots_send[$not['user']] = true;
 			$mail->setUser($not['user']);
 
-			if ($action == 'category created') {                                                        
+			if ($action == 'category created') {
 				$mail_subject = $smarty->fetchLang($not['language'], "mail/user_watch_category_created_subject.tpl");
 				$mail_data = $smarty->fetchLang($not['language'], "mail/user_watch_category_created.tpl");
 			} else if ($action == 'category removed') {
@@ -618,30 +618,30 @@ function sendCategoryEmailNotification($values)
 				$smarty->assign('oldCategoryPath', $oldCategoryPath);
 				$smarty->assign('oldDescription', $oldDescription);
 				$smarty->assign('oldParentId', $oldParentId);
-				$smarty->assign('oldParentName', $oldParentName);                									                        	
-				$mail_data = $smarty->fetchLang($not['language'], "mail/user_watch_category_updated.tpl");                         	                        	
+				$smarty->assign('oldParentName', $oldParentName);
+				$mail_data = $smarty->fetchLang($not['language'], "mail/user_watch_category_updated.tpl");
 			} else if ($action == 'object entered category') {
 				$mail_subject = $smarty->fetchLang($not['language'], "mail/user_watch_object_entered_category_subject.tpl");
 
 				$smarty->assign('objectName', $objectName);
-				$smarty->assign('objectType', $objectType);							
-				$smarty->assign('objectUrl', $objectUrl);                      
+				$smarty->assign('objectType', $objectType);
+				$smarty->assign('objectUrl', $objectUrl);
 				$mail_data = $smarty->fetchLang($not['language'], "mail/user_watch_object_entered_category.tpl");
 			} else if ($action == 'object leaved category') {
 				$mail_subject = $smarty->fetchLang($not['language'], "mail/user_watch_object_leaved_category_subject.tpl");
 
 				$smarty->assign('objectName', $objectName);
-				$smarty->assign('objectType', $objectType);							
-				$smarty->assign('objectUrl', $objectUrl);                      
+				$smarty->assign('objectType', $objectType);
+				$smarty->assign('objectUrl', $objectUrl);
 				$mail_data = $smarty->fetchLang($not['language'], "mail/user_watch_object_leaved_category.tpl");
-			}                        
+			}
 
-			$mail->setSubject($mail_subject);                        
+			$mail->setSubject($mail_subject);
 			$mail->setText($mail_data);
 			$mail->buildMessage();
 			$mail->send(array($not['email']));
 		}
-	}        
+	}
 }
 
 function sendStructureEmailNotification($params)
@@ -698,9 +698,9 @@ function sendCommentNotification($type, $id, $title, $content, $commentId=null)
 		$events = 'article_commented';
 	} elseif ($type == 'trackeritem') {
 		$events = 'trackeritem_commented';
-	// Blog comment mail	
-	} elseif($type == 'blog') { 
-		$events = 'blog_comment_changes'; 
+	// Blog comment mail
+	} elseif ($type == 'blog') {
+		$events = 'blog_comment_changes';
 	} else {
 		throw new Exception('Unknown type');
 	}
@@ -722,8 +722,8 @@ function sendCommentNotification($type, $id, $title, $content, $commentId=null)
 		$watches = array_merge($watches, $watches2);
 	}
 
-	if ( ($type != 'wiki' 
-	      || $prefs['wiki_watch_editor'] != 'y' 
+	if ( ($type != 'wiki'
+	      || $prefs['wiki_watch_editor'] != 'y'
 	      || $prefs['user_wiki_watch_editor'] != 'y'
 		 ) && $prefs['user_comment_watch_editor'] != "y") {
 		for ($i = count($watches) - 1; $i >=0; --$i)
@@ -732,7 +732,7 @@ function sendCommentNotification($type, $id, $title, $content, $commentId=null)
 				break;
 			}
 	}
-	
+
 	if (count($watches)) {
 		if ($type == 'wiki') {
 			$smarty->assign('mail_objectname', $id);
@@ -744,26 +744,26 @@ function sendCommentNotification($type, $id, $title, $content, $commentId=null)
 			if ($prefs['feature_daily_report_watches'] == 'y') {
 				$reportsManager = Reports_Factory::build('Reports_Manager');
 				$reportsManager->addToCache(
-								$watches,
-								array(
-									'event' => 'tracker_item_comment', 
-									'itemId' => $id, 
-									'trackerId' => $trackerId, 
-									'user' => $user, 
-									'threadId' => $commentId
-								)
+					$watches,
+					array(
+						'event' => 'tracker_item_comment',
+						'itemId' => $id,
+						'trackerId' => $trackerId,
+						'user' => $user,
+						'threadId' => $commentId
+					)
 				);
 			}
 
 			$tracker = $trklib->get_tracker($trackerId);
-			$smarty->assign('mail_objectid', $id);	
+			$smarty->assign('mail_objectid', $id);
 			$smarty->assign('mail_objectname', $tracker['name']);
-			$smarty->assign('mail_item_title', $trklib->get_isMain_value($trackerId, $id)); 
+			$smarty->assign('mail_item_title', $trklib->get_isMain_value($trackerId, $id));
 		}
-		
+
 		// Blog comment mail
 		$smarty->assign('mail_objectid', $id);
-		$smarty->assign('objecttype', $type);		
+		$smarty->assign('objecttype', $type);
 		$smarty->assign('mail_user', $user);
 		$smarty->assign('mail_title', $title);
 		$smarty->assign('mail_comment', $content);

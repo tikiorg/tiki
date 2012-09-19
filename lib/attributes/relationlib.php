@@ -1,20 +1,20 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 /**
- * RelationLib 
- * 
+ * RelationLib
+ *
  * @uses TikiDb_Bridge
  */
 class RelationLib extends TikiDb_Bridge
 {
 	/**
 	 * Obtains the list of relations with a given object as the source.
-	 * Optionally, the relation searched for can be specified. If the 
+	 * Optionally, the relation searched for can be specified. If the
 	 * relation ends with a dot, it will be used as a wildcard.
 	 */
 	function get_relations_from( $type, $object, $relation = null )
@@ -29,9 +29,9 @@ class RelationLib extends TikiDb_Bridge
 		$this->apply_relation_condition($relation, $cond, $vars);
 
 		return $this->fetchAll(
-						'SELECT `relationId`, `relation`, `target_type` `type`, `target_itemId` `itemId` FROM `tiki_object_relations` WHERE ' . 
-						implode(' AND ', $cond), 
-						$vars
+			'SELECT `relationId`, `relation`, `target_type` `type`, `target_itemId` `itemId` FROM `tiki_object_relations` WHERE ' .
+			implode(' AND ', $cond),
+			$vars
 		);
 	}
 
@@ -47,23 +47,23 @@ class RelationLib extends TikiDb_Bridge
 		$this->apply_relation_condition($relation, $cond, $vars);
 
 		return $this->fetchAll(
-						'SELECT `relationId`, `relation`, `source_type` `type`, `source_itemId` `itemId` FROM `tiki_object_relations` WHERE ' . 
-						implode(' AND ', $cond), 
-						$vars
+			'SELECT `relationId`, `relation`, `source_type` `type`, `source_itemId` `itemId` FROM `tiki_object_relations` WHERE ' .
+			implode(' AND ', $cond),
+			$vars
 		);
 	}
 
 	/**
 	 * The relation must contain at least two dots and only lowercase letters.
 	 */
-	
+
 	/**
 	 * NAMESPACE management and relation naming.
-	 * Please see http://dev.tiki.org/Object+Attributes+and+Relations for guidelines on 
+	 * Please see http://dev.tiki.org/Object+Attributes+and+Relations for guidelines on
 	 * relation naming, and document new tiki.*.* names that you add.
 	 * (also grep "add_relation" just in case there are undocumented names already used)
 	 */
-	
+
 	function add_relation( $relation, $src_type, $src_object, $target_type, $target_object )
 	{
 		$relation = TikiFilter::get('attribute_type')->filter($relation);
@@ -76,20 +76,20 @@ class RelationLib extends TikiDb_Bridge
 			$data = array($relation, $src_type, $src_object, $target_type, $target_object);
 
 			$this->query(
-							'DELETE FROM `tiki_object_relations`' .
-							' WHERE `relation` = ? AND `source_type` = ? AND `source_itemId` = ? AND `target_type` = ? AND `target_itemId` = ?', 
-							$data
+				'DELETE FROM `tiki_object_relations`' .
+				' WHERE `relation` = ? AND `source_type` = ? AND `source_itemId` = ? AND `target_type` = ? AND `target_itemId` = ?',
+				$data
 			);
 
 			$this->query(
-							'INSERT INTO `tiki_object_relations` (`relation`, `source_type`, `source_itemId`, `target_type`, `target_itemId`)' .
-							' VALUES(?,?,?,?,?)', 
-							$data
+				'INSERT INTO `tiki_object_relations` (`relation`, `source_type`, `source_itemId`, `target_type`, `target_itemId`)' .
+				' VALUES(?,?,?,?,?)',
+				$data
 			);
 
 			return $this->lastInsertId();
 		} else {
-			return 0;	
+			return 0;
 		}
 	}
 
@@ -106,9 +106,9 @@ class RelationLib extends TikiDb_Bridge
 			$data = array($relation, $src_type, $src_object, $target_type, $target_object);
 
 			$id = $this->getOne(
-							'SELECT `relationId` FROM `tiki_object_relations`' .
-							' WHERE `relation` = ? AND `source_type` = ? AND `source_itemId` = ? AND `target_type` = ? AND `target_itemId` = ?',
-							$data
+				'SELECT `relationId` FROM `tiki_object_relations`' .
+				' WHERE `relation` = ? AND `source_type` = ? AND `source_itemId` = ? AND `target_type` = ? AND `target_itemId` = ?',
+				$data
 			);
 		}
 		return $id;

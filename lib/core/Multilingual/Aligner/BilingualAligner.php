@@ -99,12 +99,12 @@ class Multilingual_Aligner_BilingualAligner
 		$l2_curr_sentence = $sentences_this_node[1];
 
 		$new_node = $this->_generate_node_ID(
-						$l1_curr_sentence,
-						'm',
-						$l1_n_matches,
-						$l2_curr_sentence,
-						'm',
-						$l2_n_matches
+			$l1_curr_sentence,
+			'm',
+			$l1_n_matches,
+			$l2_curr_sentence,
+			'm',
+			$l2_n_matches
 		);
 
 		if (strcmp($node_to_extend, $new_node) != 0 &&
@@ -133,12 +133,12 @@ class Multilingual_Aligner_BilingualAligner
 		$l2_curr_sentence = $sentences_this_node[1];
 
 		$new_node = $this->_generate_node_ID(
-						$l1_curr_sentence,
-						'm',
-						$l1_n_skips,
-						$l2_curr_sentence,
-						'm',
-						$l2_n_skips
+			$l1_curr_sentence,
+			'm',
+			$l1_n_skips,
+			$l2_curr_sentence,
+			'm',
+			$l2_n_skips
 		);
 
 		if (strcmp($node_to_extend, $new_node) != 0
@@ -254,15 +254,15 @@ class Multilingual_Aligner_BilingualAligner
 		$l2_prec_sentence = $preceding_sentences[1];
 
 		$l1_sentences = array_slice(
-						$this->l1_sentences,
-						$l1_prec_sentence,
-						$l1_end_sentence - $l1_prec_sentence
+			$this->l1_sentences,
+			$l1_prec_sentence,
+			$l1_end_sentence - $l1_prec_sentence
 		);
 
 		$l2_sentences = array_slice(
-						$this->l2_sentences,
-						$l2_prec_sentence,
-						$l2_end_sentence - $l2_prec_sentence
+			$this->l2_sentences,
+			$l2_prec_sentence,
+			$l2_end_sentence - $l2_prec_sentence
 		);
 
 		$l1_text = implode($l1_sentences);

@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -10,8 +10,8 @@ require_once 'soap/soaplib.php';
 require_once 'soap/wsdllib.php';
 
 /**
- * Tiki_Webservice 
- * 
+ * Tiki_Webservice
+ *
  */
 class Tiki_Webservice
 {
@@ -45,8 +45,8 @@ class Tiki_Webservice
 
 		global $tikilib;
 		$result = $tikilib->query(
-						"SELECT url, operation, wstype, body, schema_version, schema_documentation FROM tiki_webservice WHERE service = ?", 
-						array( $name ) 
+			"SELECT url, operation, wstype, body, schema_version, schema_documentation FROM tiki_webservice WHERE service = ?",
+			array( $name )
 		);
 
 		while ( $row = $result->fetchRow() ) {
@@ -88,16 +88,16 @@ class Tiki_Webservice
 		$tikilib->query("DELETE FROM tiki_webservice WHERE service = ?", array( $this->name ));
 
 		$tikilib->query(
-						"INSERT INTO tiki_webservice (service, url, operation, wstype, body, schema_version, schema_documentation) VALUES(?,?,?,?,?,?,?)",
-						array(
-							$this->name,
-							$this->url,
-							$this->operation,
-							$this->wstype,
-							$this->body,
-							$this->schemaVersion,
-							$this->schemaDocumentation,
-						) 
+			"INSERT INTO tiki_webservice (service, url, operation, wstype, body, schema_version, schema_documentation) VALUES(?,?,?,?,?,?,?)",
+			array(
+				$this->name,
+				$this->url,
+				$this->operation,
+				$this->wstype,
+				$this->body,
+				$this->schemaVersion,
+				$this->schemaDocumentation,
+			)
 		);
 	}
 
@@ -142,7 +142,7 @@ class Tiki_Webservice
 	}
 
 	/*
-	*	If fullResponse = true, "out" parameters from .NET calls are included in the response. 
+	*	If fullResponse = true, "out" parameters from .NET calls are included in the response.
 	*	If false, only the <request>Response part of the reply is included.
 	*	fullResponse has no effect for REST calls
 	*/
@@ -154,7 +154,7 @@ class Tiki_Webservice
 		$builtBody = $this->body;
 
 		$map = $this->getParameterMap($params);
-			
+
 		if ( $built ) {
 			switch ( $this->wstype ) {
 				case 'SOAP':
@@ -168,7 +168,7 @@ class Tiki_Webservice
 
 						$response = new OIntegrate_Response();
 						$soaplib->allowCookies = $this->allowCookies;
-						$response->data = $soaplib->performRequest( $built, $this->operation, $map, $options, $fullReponse );
+						$response->data = $soaplib->performRequest($built, $this->operation, $map, $options, $fullReponse);
 
 						return $response;
 					}
@@ -227,8 +227,8 @@ class Tiki_Webservice
 
 		global $tikilib;
 		$result = $tikilib->query(
-						"SELECT template, last_modif, engine, output, content FROM tiki_webservice_template WHERE service = ?", 
-						array( $this->name ) 
+			"SELECT template, last_modif, engine, output, content FROM tiki_webservice_template WHERE service = ?",
+			array( $this->name )
 		);
 
 		while ( $row = $result->fetchRow() ) {
@@ -255,8 +255,8 @@ class Tiki_Webservice
 		global $tikilib;
 
 		$result = $tikilib->query(
-						"SELECT last_modif, engine, output, content FROM tiki_webservice_template WHERE service = ? AND template = ?",
-						array( $this->name, $name ) 
+			"SELECT last_modif, engine, output, content FROM tiki_webservice_template WHERE service = ? AND template = ?",
+			array( $this->name, $name )
 		);
 
 		while ( $row = $result->fetchRow() ) {
@@ -281,8 +281,8 @@ class Tiki_Webservice
 
 
 /**
- * Tiki_Webservice_Template 
- * 
+ * Tiki_Webservice_Template
+ *
  */
 class Tiki_Webservice_Template
 {
@@ -298,20 +298,20 @@ class Tiki_Webservice_Template
 		global $tikilib;
 
 		$tikilib->query(
-						"DELETE FROM tiki_webservice_template WHERE service = ? AND template = ?", 
-						array( $this->webservice->getName(), $this->name )
+			"DELETE FROM tiki_webservice_template WHERE service = ? AND template = ?",
+			array( $this->webservice->getName(), $this->name )
 		);
 
 		$tikilib->query(
-						"INSERT INTO tiki_webservice_template (service, template, engine, output, content, last_modif) VALUES(?,?,?,?,?,?)",
-						array(
-							$this->webservice->getName(),
-							$this->name,
-							$this->engine,
-							$this->output,
-							$this->content,
-							time(),
-						)
+			"INSERT INTO tiki_webservice_template (service, template, engine, output, content, last_modif) VALUES(?,?,?,?,?,?)",
+			array(
+				$this->webservice->getName(),
+				$this->name,
+				$this->engine,
+				$this->output,
+				$this->content,
+				time(),
+			)
 		);
 	}
 

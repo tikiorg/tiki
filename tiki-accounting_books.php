@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -30,13 +30,13 @@ switch ($_REQUEST['action']) {
 			die;
 		}
 					$bookId=$accountinglib->createBook(
-									$_REQUEST['bookName'], 
-									$_REQUEST['bookStartDate'], $_REQUEST['bookEndDate'], 
-									$_REQUEST['bookCurrency'], $_REQUEST['bookCurrencyPos'],
-									$_REQUEST['bookDecimals'], $_REQUEST['bookDecPoint'],
-									$_REQUEST['bookThousand'], $_REQUEST['exportSeparator'],
-									$_REQUEST['exportEOL'], $_REQUEST['exportQuote'],
-									$_REQUEST['bookAutoTax'], false
+						$_REQUEST['bookName'],
+						$_REQUEST['bookStartDate'], $_REQUEST['bookEndDate'],
+						$_REQUEST['bookCurrency'], $_REQUEST['bookCurrencyPos'],
+						$_REQUEST['bookDecimals'], $_REQUEST['bookDecPoint'],
+						$_REQUEST['bookThousand'], $_REQUEST['exportSeparator'],
+						$_REQUEST['exportEOL'], $_REQUEST['exportQuote'],
+						$_REQUEST['bookAutoTax'], false
 					);
 					if (!is_numeric($bookId)) {
 						$errors[]=tra($bookId);
@@ -54,26 +54,26 @@ switch ($_REQUEST['action']) {
 						$smarty->assign('exportQuote', $_REQUEST['exportQuote']);
 						$smarty->assign('bookAutoTax', $_REQUEST['bookAutoTax']);
 					}
-					break;
-	case 'close'  : 
+		break;
+	case 'close'  :
 		if (!$globalperms->acct_create_book) {
 			$smarty->assign('msg', tra("You do not have permissions to close this book") . ": feature_accounting");
 			$smarty->display("error.tpl");
 			die;
 		}
 		$accountinglib->closeBook($_REQUEST['bookId']);
-					break;
+		break;
 	case 'view'   :
-					break;
+		break;
 	default ://list
 }
 $books=$accountinglib->listBooks();
 $filtered = Perms::filter(
-				array( 'type' => 'accounting book'), 
-				'object',
-				$books,
-				array( 'object' => 'bookName' ),
-				'acct_view'
+	array( 'type' => 'accounting book'),
+	'object',
+	$books,
+	array( 'object' => 'bookName' ),
+	'acct_view'
 );
 $smarty->assign('books', $books);
 $smarty->assign('canCreate', $globalperms->acct_create_book);

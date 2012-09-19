@@ -49,11 +49,11 @@ if ($output['data'] == 'EMPTY') {
 	include_once ('tiki-sefurl.php');
 	foreach ($changes['data'] as $data) {
 		$data['data'] = $tikilib->parse_data(
-						$data['data'],
-						array(
-							'print' => true,
-							'is_html' => true,
-						)
+			$data['data'],
+			array(
+				'print' => true,
+				'is_html' => true,
+			)
 		);
 		$data['sefurl'] = filter_out_sefurl(sprintf($readrepl, $data['postId']), 'blogpost', urlencode($data['title']));
 		$tmp[] = $data;
@@ -61,20 +61,20 @@ if ($output['data'] == 'EMPTY') {
 	$changes['data'] = $tmp;
 	$tmp = null;
 	$output = $rsslib->generate_feed(
-					$feed,
-					$uniqueid,
-					'',
-					$changes,
-					$readrepl,
-					'blogId',
-					'',
-					$title,
-					$titleId,
-					$desc,
-					'data',
-					$dateId,
-					$authorId,
-					false
+		$feed,
+		$uniqueid,
+		'',
+		$changes,
+		$readrepl,
+		'blogId',
+		'',
+		$title,
+		$titleId,
+		$desc,
+		'data',
+		$dateId,
+		$authorId,
+		false
 	);
 }
 header('Content-type: ' . $output['content-type']);

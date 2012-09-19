@@ -4,7 +4,7 @@
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
- 
+
 require_once('lib/core/Connect/Abstract.php');
 
 class Connect_Client extends Connect_Abstract
@@ -14,7 +14,7 @@ class Connect_Client extends Connect_Abstract
 
 	/**
 	 * Collects and returns Tiki Connect data
-	 * 
+	 *
 	 * @return array		containing: 'prefs', 'tables', 'votes', 'site' and 'server' info arrays
 	 * 						depending on connect prefs
 	 */
@@ -27,7 +27,7 @@ class Connect_Client extends Connect_Abstract
 		if ($prefs['connect_send_anonymous_info'] === 'y') {
 			$cachelib = TikiLib::lib('cache');
 			$cachelib->invalidate('global_preferences');
-			
+
 			$tikilib = TikiLib::lib('tiki');
 			$modifiedPrefs = $tikilib->getModifiedPreferences();
 
@@ -75,14 +75,14 @@ class Connect_Client extends Connect_Abstract
 	function getLastDataSent()
 	{
 		$res = $this->connectTable->fetchAll(
-						array('created', 'data'),
-						array(
-							'type' => 'sent',
-							'server' => 0,
-						),
-						1,
-						-1,
-						array('created' => 'DESC')
+			array('created', 'data'),
+			array(
+				'type' => 'sent',
+				'server' => 0,
+			),
+			1,
+			-1,
+			array('created' => 'DESC')
 		);
 
 		if (!empty($res[0]) && !empty($res[0]['data'])) {
@@ -126,8 +126,8 @@ class Connect_Client extends Connect_Abstract
 	function getPendingGuid()
 	{
 		$res = TikiDb::get()->getOne(
-						"SELECT `guid` FROM `tiki_connect` WHERE `type` = 'pending' AND " .
-						"`created` > NOW() - INTERVAL 1 MINUTE ORDER BY `created` DESC LIMIT 1;"
+			"SELECT `guid` FROM `tiki_connect` WHERE `type` = 'pending' AND " .
+			"`created` > NOW() - INTERVAL 1 MINUTE ORDER BY `created` DESC LIMIT 1;"
 		);
 		return empty($res) ? '' : $res;
 	}
@@ -138,15 +138,15 @@ class Connect_Client extends Connect_Abstract
 	 *
 	 * @return string guid
 	 */
-	
+
 	function getConfirmedGuid()
 	{
 		$res = $this->connectTable->fetchAll(
-						array('created', 'guid'),
-						array('type' => 'confirmed', 'server' => 0),
-						1,
-						-1,
-						array('created' => 'DESC')
+			array('created', 'guid'),
+			array('type' => 'confirmed', 'server' => 0),
+			1,
+			-1,
+			array('created' => 'DESC')
 		);
 
 		if (!empty($res[0])) {
@@ -209,35 +209,34 @@ class Connect_Client extends Connect_Abstract
 		}
 
 		$count = $this->connectTable->fetchCount(
-						array(
-							'server' => 0,
-							'guid' => $guid,
-							'type' => 'votes',
-						)
+			array(
+				'server' => 0,
+				'guid' => $guid,
+				'type' => 'votes',
+			)
 		);
 
 		if ($count) {
 			$this->connectTable->update(
-							array(
-								'type' => 'votes',
-								'data' => $votes,
-							),
-							array(
-								'server' => 0,
-								'guid' => $guid,
-								'type' => 'votes',
-							)
+				array(
+					'type' => 'votes',
+					'data' => $votes,
+				),
+				array(
+					'server' => 0,
+					'guid' => $guid,
+					'type' => 'votes',
+				)
 			);
 		} else {
 			$this->connectTable->insert(
-							array(
-								'type' => 'votes',
-								'data' => $votes,
-								'server' => 0,
-								'guid' => $guid,
-							)
+				array(
+					'type' => 'votes',
+					'data' => $votes,
+					'server' => 0,
+					'guid' => $guid,
+				)
 			);
 		}
 	}
-
 }

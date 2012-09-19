@@ -41,11 +41,11 @@ class TikiWebdav_Backends_Wiki extends ezcWebdavSimpleBackend
 		}
 
 		$this->options = new ezcWebdavFileBackendOptions(
-						array(
-							'lockFileName' => $this->root . '/.webdav_lock',
-							'waitForLock' => 200000,
-							'propertyStoragePath' => $this->root,
-							'noLock' => false )
+			array(
+				'lockFileName' => $this->root . '/.webdav_lock',
+				'waitForLock' => 200000,
+				'propertyStoragePath' => $this->root,
+				'noLock' => false )
 		);
 
 		$this->propertyStorage = new ezcWebdavBasicPropertyStorage();
@@ -75,7 +75,7 @@ class TikiWebdav_Backends_Wiki extends ezcWebdavSimpleBackend
 				}
 
 				$this->$name = $value;
-							break;
+				break;
 
 			default:
 				throw new ezcBasePropertyNotFoundException($name);
@@ -131,10 +131,10 @@ class TikiWebdav_Backends_Wiki extends ezcWebdavSimpleBackend
 		}
 
 		return $tikilib->update_page(
-						$this->get_page_name_from_virtual_path($path),
-						$content,
-						'Edited from WebDAV',
-						$user, $tikilib->get_ip_address()
+			$this->get_page_name_from_virtual_path($path),
+			$content,
+			'Edited from WebDAV',
+			$user, $tikilib->get_ip_address()
 		);
 	}
 
@@ -278,21 +278,21 @@ class TikiWebdav_Backends_Wiki extends ezcWebdavSimpleBackend
 		switch ($propertyName) {
 			case 'getcontentlength':
 				$property = new ezcWebdavGetContentLengthProperty(
-								$isCollection ?
-								ezcWebdavGetContentLengthProperty::COLLECTION :
-								$tikiInfo['page_size']
+					$isCollection ?
+					ezcWebdavGetContentLengthProperty::COLLECTION :
+					$tikiInfo['page_size']
 				);
 				return $property;
 
 			case 'getlastmodified':
 				$property = new ezcWebdavGetLastModifiedProperty(
-								new ezcWebdavDateTime('@' . (int)$tikiInfo['lastModif'])
+					new ezcWebdavDateTime('@' . (int)$tikiInfo['lastModif'])
 				);
 				return $property;
 
 			case 'creationdate':
 				$property = new ezcWebdavCreationDateProperty(
-								new ezcWebdavDateTime('@' . (int)$tikiInfo['created'])
+					new ezcWebdavDateTime('@' . (int)$tikiInfo['created'])
 				);
 				return $property;
 
@@ -302,9 +302,9 @@ class TikiWebdav_Backends_Wiki extends ezcWebdavSimpleBackend
 
 			case 'getcontenttype':
 				$property = new ezcWebdavGetContentTypeProperty(
-								$isCollection ?
-								'httpd/unix-directory' :
-								'application/octet-stream'
+					$isCollection ?
+					'httpd/unix-directory' :
+					'application/octet-stream'
 				);
 				return $property;
 
@@ -315,9 +315,9 @@ class TikiWebdav_Backends_Wiki extends ezcWebdavSimpleBackend
 
 			case 'resourcetype':
 				$property = new ezcWebdavResourceTypeProperty(
-								$isCollection ?
-								ezcWebdavResourceTypeProperty::TYPE_COLLECTION :
-								ezcWebdavResourceTypeProperty::TYPE_RESOURCE
+					$isCollection ?
+					ezcWebdavResourceTypeProperty::TYPE_COLLECTION :
+					ezcWebdavResourceTypeProperty::TYPE_RESOURCE
 				);
 
 				return $property;

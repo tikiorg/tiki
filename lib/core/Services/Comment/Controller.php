@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -91,7 +91,7 @@ class Services_Comment_Controller
 		}
 
 		if ($input->post->int()) {
-			// Validate 
+			// Validate
 
 			if (empty($user)) {
 				if (empty($anonymous_name)) {
@@ -115,11 +115,11 @@ class Services_Comment_Controller
 				$captchalib = TikiLib::lib('captcha');
 
 				if (! $captchalib->validate(
-								array(
-									'recaptcha_challenge_field' => $input->recaptcha_challenge_field->none(),
-									'recaptcha_response_field' => $input->recaptcha_response_field->none(),
-									'captcha' => $input->captcha->none(),
-								)
+					array(
+						'recaptcha_challenge_field' => $input->recaptcha_challenge_field->none(),
+						'recaptcha_response_field' => $input->recaptcha_response_field->none(),
+						'captcha' => $input->captcha->none(),
+					)
 				)
 				) {
 					$errors[] = $captchalib->getErrors();
@@ -127,27 +127,27 @@ class Services_Comment_Controller
 			}
 
 			if ($prefs['comments_notitle'] == 'y') {
-				$title = 'Untitled ' . TikiLib::lib('tiki')->get_long_datetime(TikiLib::lib('tikidate')->getTime()); 
+				$title = 'Untitled ' . TikiLib::lib('tiki')->get_long_datetime(TikiLib::lib('tikidate')->getTime());
 			}
 
 			if (count($errors) === 0) {
 				$message_id = ''; // By ref
 				$threadId = $commentslib->post_new_comment(
-								"$type:$objectId", 
-								$parentId, 
-								$user, 
-								$title, 
-								$data, 
-								$message_id, 
-								$parent ? $parent['message_id'] : '', 
-								'n', 
-								'', 
-								'', 
-								$contributions, 
-								$anonymous_name, 
-								'', 
-								$anonymous_email, 
-								$anonymous_website
+					"$type:$objectId",
+					$parentId,
+					$user,
+					$title,
+					$data,
+					$message_id,
+					$parent ? $parent['message_id'] : '',
+					'n',
+					'',
+					'',
+					$contributions,
+					$anonymous_name,
+					'',
+					$anonymous_email,
+					$anonymous_website
 				);
 
 				if ($threadId) {
@@ -157,8 +157,9 @@ class Services_Comment_Controller
 					} else if ($type == 'article') {
 						require_once('lib/notifications/notificationemaillib.php');
 						sendCommentNotification('article', $objectId, $title, $data);
-					} // Blog comment mail
-					elseif ($prefs['feature_blogs'] == 'y' && $type == 'blog post') { require_once('lib/notifications/notificationemaillib.php'); sendCommentNotification('blog', $objectId, $title, $data); 
+					} elseif ($prefs['feature_blogs'] == 'y' && $type == 'blog post') { // Blog comment mail
+						require_once('lib/notifications/notificationemaillib.php');
+						 sendCommentNotification('blog', $objectId, $title, $data);
 					} elseif ($type == 'trackeritem') {
 						require_once('lib/notifications/notificationemaillib.php');
 						sendCommentNotification('trackeritem', $objectId, $title, $data, $threadId);

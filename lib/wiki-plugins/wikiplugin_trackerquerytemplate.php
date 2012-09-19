@@ -87,16 +87,19 @@ function wikiplugin_trackerquerytemplate($data, $params)
 
 	$handler = new dataToFieldHandler();
 
-	$params = array_merge(array(
-		'tracker'=>'',
-		'byname'=>'y',
-		'render'=>'y',
-		'likefilters'=>'',
-		'andfilters'=>'',
-		'getlast'=>''
-	), $params);
+	$params = array_merge(
+		array(
+			'tracker'=>'',
+			'byname'=>'y',
+			'render'=>'y',
+			'likefilters'=>'',
+			'andfilters'=>'',
+			'getlast'=>''
+		),
+		$params
+	);
 
-	foreach($params as &$param) {//We parse the variables
+	foreach ($params as &$param) {//We parse the variables
 		$param = $handler->parseDetails($param);
 		$param = $handler->parse($param);
 	}
@@ -127,24 +130,24 @@ function wikiplugin_trackerquerytemplate($data, $params)
 	}
 
 	if (!empty($params['likefilters'])) {
-		$likefilters = explode(';',$params['likefilters']);
-		foreach($likefilters as $likefilter) {
+		$likefilters = explode(';', $params['likefilters']);
+		foreach ($likefilters as $likefilter) {
 			$filter = explode(':', $likefilter);
 			$query->filterFieldByValueLike($filter[0], $filter[1]);
 		}
 	}
 
 	if (!empty($params['andfilters'])) {
-		$andfilters = explode(';',$params['andfilters']);
-		foreach($andfilters as $andfilter) {
+		$andfilters = explode(';', $params['andfilters']);
+		foreach ($andfilters as $andfilter) {
 			$filter = explode(':', $andfilter);
 			$query->filterFieldByValue($filter[0], $filter[1]);
 		}
 	}
 
 	if (!empty($params['orfilters'])) {
-		$andfilters = explode(';',$params['andfilters']);
-		foreach($andfilters as $andfilter) {
+		$andfilters = explode(';', $params['andfilters']);
+		foreach ($andfilters as $andfilter) {
 			$filter = explode(':', $andfilter);
 			$query->filterFieldByValueOr($filter[0], $filter[1]);
 		}
@@ -158,7 +161,7 @@ function wikiplugin_trackerquerytemplate($data, $params)
 
 	$newData = '';
 
-	foreach($items as $itemId => $fields) {
+	foreach ($items as $itemId => $fields) {
 		$trackerId = $query->trackerId();
 		$handler->set($pattern, $fields, $query->itemsRaw[$itemId], $itemId, $trackerId);
 		$trackerquerytemplate_item_stack[] = array(
@@ -208,12 +211,12 @@ class dataToFieldHandler
 		}
 
 		if ($this->pattern == 'name') {
-			foreach($this->fields as $key => $field) {
+			foreach ($this->fields as $key => $field) {
 				$data = str_replace('$' . $key . '$', $field, $data);
 				$data = str_replace('$~' . $key . '$', $this->fieldsRaw[$key], $data);
 			}
 		} else {
-			foreach($this->fields as $key => $field) {
+			foreach ($this->fields as $key => $field) {
 				$data = str_replace('{$f_' . $key . '}', $field, $data);
 				$data = str_replace('{$~f_' . $key . '}', $this->fieldsRaw[$key], $data);
 			}
@@ -236,7 +239,7 @@ class dataToFieldHandler
 		$data = str_replace('$trackerId$', $last['trackerId'], $data);
 		$data = str_replace('$itemId$', $last['itemId'], $data);
 
-		if (strpos($data,'$created$')) {
+		if (strpos($data, '$created$')) {
 			$data = str_replace('$created$', $tikilib->get_short_date($tikilib->getOne("SELECT created FROM tiki_tracker_items WHERE itemId = ?", array($last['itemId']))), $data);
 		}
 

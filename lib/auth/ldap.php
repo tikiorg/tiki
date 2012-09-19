@@ -132,10 +132,10 @@ class TikiLdapLib
 				case 'one':
 				case 'base':
 					$this->options['scope'] = $options['scope'];
-								break;
+					break;
 
 				default:
-								break;
+					break;
 			}
 		}
 
@@ -147,10 +147,10 @@ class TikiLdapLib
 				case 'plain':
 				case 'explicit':
 					$this->options['bind_type'] = $options['bind_type'];
-								break;
+					break;
 
 				default:
-								break;
+					break;
 			}
 		}
 	}
@@ -195,28 +195,28 @@ class TikiLdapLib
 				}
 				// set referrals to 0 to avoid LDAP_OPERATIONS_ERROR
 				$this->options['options']['LDAP_OPT_REFERRALS'] = 0;
-							break;
+				break;
 
 			case 'plain': // plain username
 				$this->options['binddn'] = $user;
-							break;
+				break;
 
 			case 'full':
 				$this->options['binddn'] = $this->user_dn($user);
-							break;
+				break;
 
 			case 'ol': // openldap
 				$this->options['binddn'] = 'cn=' . $user . ',' . $prefs['auth_ldap_basedn'];
-							break;
+				break;
 
 			case 'default':
 				// Anonymous binding
 				$this->options['binddn'] = '';
 				$this->options['bindpw'] = '';
-							break;
+				break;
 
 			case 'explicit':
-							break;
+				break;
 
 			default:
 				$this->add_log('ldap', 'Error: Invalid "bind_type" value "' . $this->options['bind_type'] . '".');
@@ -224,8 +224,8 @@ class TikiLdapLib
 		}
 
 		$this->add_log(
-						'ldap',
-						'Connect Host: ' . implode($this->options['host']) . '. Binddn: '. $this->options['binddn'] . ' at line ' . __LINE__ . ' in ' . __FILE__
+			'ldap',
+			'Connect Host: ' . implode($this->options['host']) . '. Binddn: '. $this->options['binddn'] . ' at line ' . __LINE__ . ' in ' . __FILE__
 		);
 
 		//create options array to handle it to Net_LDAP2
@@ -409,9 +409,9 @@ class TikiLdapLib
 		}
 
 		$this->add_log(
-						'ldap', 
-						'Searching for group entries with filter: ' . $filter->asString() . ' base ' . 
-						$this->groupbase_dn() . ' at line ' . __LINE__ . ' in ' . __FILE__
+			'ldap',
+			'Searching for group entries with filter: ' . $filter->asString() . ' base ' .
+			$this->groupbase_dn() . ' at line ' . __LINE__ . ' in ' . __FILE__
 		);
 
 		$searchoptions = array('scope' => $this->options['scope']);

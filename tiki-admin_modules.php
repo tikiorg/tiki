@@ -308,16 +308,16 @@ if (isset($_REQUEST['assign'])) {
 	$smarty->assign('module_groups', $grps);
 	if (empty($missing_params)) {
 		$modlib->assign_module(
-						isset($_REQUEST['moduleId']) ? $_REQUEST['moduleId'] : 0,
-						$assign_name,
-						'',
-						$_REQUEST['assign_position'],
-						$_REQUEST['assign_order'],
-						$_REQUEST['assign_cache'],
-						$module_rows,
-						serialize($module_groups),
-						$_REQUEST['assign_params'],
-						$_REQUEST['assign_type']
+			isset($_REQUEST['moduleId']) ? $_REQUEST['moduleId'] : 0,
+			$assign_name,
+			'',
+			$_REQUEST['assign_position'],
+			$_REQUEST['assign_order'],
+			$_REQUEST['assign_cache'],
+			$module_rows,
+			serialize($module_groups),
+			$_REQUEST['assign_params'],
+			$_REQUEST['assign_type']
 		);
 		$logslib->add_log('adminmodules', 'assigned module ' . $assign_name);
 		$modlib->reorder_modules();
@@ -331,7 +331,7 @@ if (isset($_REQUEST['assign'])) {
 if (isset($_REQUEST['um_remove'])) {
 	$_REQUEST['um_remove'] = urldecode($_REQUEST['um_remove']);
 	$access->check_authenticity(
-					tra('Are you sure you want to delete this Custom Module?') . ' ("' . $_REQUEST['um_remove'] . '")'
+		tra('Are you sure you want to delete this Custom Module?') . ' ("' . $_REQUEST['um_remove'] . '")'
 	);
 	$modlib->remove_user_module($_REQUEST['um_remove']);
 	$logslib->add_log('adminmodules', 'removed custom module ' . $_REQUEST['um_remove']);
@@ -354,8 +354,8 @@ $all_modules = $modlib->get_all_modules();
 sort($all_modules);
 $smarty->assign_by_ref('all_modules', $all_modules);
 $all_modules_info = array_combine(
-				$all_modules,
-				array_map(array( $modlib, 'get_module_info' ), $all_modules)
+	$all_modules,
+	array_map(array( $modlib, 'get_module_info' ), $all_modules)
 );
 
 foreach ($all_modules_info as &$mod) {
@@ -453,10 +453,10 @@ $prefs['module_zones_pagebottom'] = 'fixed';
 $prefs['module_zones_bottom'] = 'fixed';
 
 $headerlib->add_css(
-				'.module:hover {' .
-				' cursor: move;' .
-				' background-color: #ffa;'.
-				' }'
+	'.module:hover {' .
+	' cursor: move;' .
+	' background-color: #ffa;'.
+	' }'
 );
 
 $headerlib->add_cssfile('css/admin.css');

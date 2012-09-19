@@ -73,12 +73,12 @@ function smarty_function_html_select_time($params, $smarty)
 	} else if (is_string($time) && strpos($time, ':') !== false) {
 		$e = explode(':', $time, 3);
 		$time = $tikilib->make_time(
-						isset($e[0]) ? $e[0] : 0, 
-						isset($e[1]) ? $e[1] : 0, 
-						isset($e[2]) ? $e[2] : 0, 
-						$tikilib->date_format('%m'), 
-						$tikilib->date_format('%d'), 
-						$tikilib->date_format('%Y')
+			isset($e[0]) ? $e[0] : 0,
+			isset($e[1]) ? $e[1] : 0,
+			isset($e[2]) ? $e[2] : 0,
+			$tikilib->date_format('%m'),
+			$tikilib->date_format('%d'),
+			$tikilib->date_format('%Y')
 		);
 	}
 	if (empty($hour_minmax) || !preg_match('/^[0-2]?[0-9]-[0-2]?[0-9]$/', $hour_minmax)) {
@@ -140,13 +140,13 @@ function smarty_function_html_select_time($params, $smarty)
 			$hours = array_merge(array($hour_empty==' '?'':$hour_empty), $hours);
 
 		$html_result .= smarty_function_html_options(
-						array(
-							'output'		=>	$hours,
-							'values'		=>	$hours,
-							'selected'		=>	$selected,
-							'print_result'	=>	false
-						),
-						$smarty
+			array(
+				'output'		=>	$hours,
+				'values'		=>	$hours,
+				'selected'		=>	$selected,
+				'print_result'	=>	false
+			),
+			$smarty
 		);
 
 		$html_result .= "</select>\n";
@@ -217,13 +217,13 @@ function smarty_function_html_select_time($params, $smarty)
 			$minutes = array_merge(array($minute_empty==' '?'':$minute_empty), $minutes);
 
 		$html_result .= smarty_function_html_options(
-						array(
-							'output'		=>	$minutes,
-							'values'		=>	$minutes,
-							'selected'		=>	$selected,
-							'print_result'	=>	false
-						),
-						$smarty
+			array(
+				'output'		=>	$minutes,
+				'values'		=>	$minutes,
+				'selected'		=>	$selected,
+				'print_result'	=>	false
+			),
+			$smarty
 		);
 		$html_result .= "</select>\n";
 	}
@@ -250,7 +250,7 @@ function smarty_function_html_select_time($params, $smarty)
 		} else {
 			$html_result .= '"' . $prefix . 'Second"';
 		}
-		
+
 		if (null !== $second_extra) {
 			$html_result .= ' ' . $second_extra;
 		}
@@ -261,17 +261,17 @@ function smarty_function_html_select_time($params, $smarty)
 
 		$html_result .= '>'."\n";
 
-		if (!empty($seconde_empty)) 
+		if (!empty($seconde_empty))
 			$secondes = array_merge(array($seconde_empty==' '?'':$seconde_empty), $secondes);
 
 		$html_result .= smarty_function_html_options(
-						array(
-							'output'		=>	$seconds,
-							'values'		=>	$seconds,
-							'selected'		=>	$selected,
-							'print_result'	=>	false
-						),
-						$smarty
+			array(
+				'output'		=>	$seconds,
+				'values'		=>	$seconds,
+				'selected'		=>	$selected,
+				'print_result'	=>	false
+			),
+			$smarty
 		);
 		$html_result .= "</select>\n";
 	}
@@ -283,7 +283,7 @@ function smarty_function_html_select_time($params, $smarty)
 		} else {
 			$html_result .= '"' . $prefix . 'Meridian"';
 		}
-		
+
 		if (null !== $meridian_extra) {
 			$html_result .= ' ' . $meridian_extra;
 		}
@@ -291,15 +291,15 @@ function smarty_function_html_select_time($params, $smarty)
 			$html_result .= ' ' . $all_extra;
 		}
 		$html_result .= '>'."\n";
-		
+
 		$html_result .= smarty_function_html_options(
-						array(
-							'output'		=>	array('AM', 'PM'),
-							'values'		=>	array('am', 'pm'),
-							'selected'		=>	TikiLib::date_format('%p', $time),
-							'print_result'	=>	false
-						),
-						$smarty
+			array(
+				'output'		=>	array('AM', 'PM'),
+				'values'		=>	array('am', 'pm'),
+				'selected'		=>	TikiLib::date_format('%p', $time),
+				'print_result'	=>	false
+			),
+			$smarty
 		);
 		$html_result .= "</select>\n";
 	}

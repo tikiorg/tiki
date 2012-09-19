@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -50,21 +50,21 @@ class Tiki_Profile_InstallHandler_Blog extends Tiki_Profile_InstallHandler
 		$this->replaceReferences($data);
 
 		$blogId = $bloglib->replace_blog(
-						$data['title'],
-						$data['description'],
-						$data['user'],
-						$data['public'],
-						$data['max_posts'],
-						0,
-						$data['heading'],
-						$data['use_author'],
-						$data['add_date'],
-						$data['use_find'],
-						$data['allow_comments'],
-						$data['show_avatar'],
-						$data['post_heading']
+			$data['title'],
+			$data['description'],
+			$data['user'],
+			$data['public'],
+			$data['max_posts'],
+			0,
+			$data['heading'],
+			$data['use_author'],
+			$data['add_date'],
+			$data['use_find'],
+			$data['allow_comments'],
+			$data['show_avatar'],
+			$data['post_heading']
 		);
-		
+
 		return $blogId;
 	}
 }

@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -8,25 +8,25 @@
 /****
  * Initially just a collection of the functions dotted around tiki-editpage.php for v4.0
  * Started in the edit_fixup experimental branch - jonnybradley Aug 2009
- * 
+ *
  */
 
 class EditLib
 {
 	private $tracesOn = false;
-	
+
 	// Fields for translation related methods.
 	public $sourcePageName = null;
 	public $targetPageName = null;
 	public $oldSourceVersion = null;
 	public $newSourceVersion = null;
-	
+
 	// Fields for handling links to external wiki pages
 	private $external_wikis = null;
-	
-	
+
+
 	// general
-		
+
 	function make_sure_page_to_be_created_is_not_an_alias($page, $page_info)
 	{
 		global $_REQUEST, $semanticlib, $access, $wikilib, $tikilib;
@@ -45,9 +45,9 @@ class EditLib
 			$error_msg .= ": <b>(alias($page))</b>";
 			require_once('lib/tikiaccesslib.php');
 			$access->display_error(page, $error_title, "", true, $error_msg);
-		}	
-	}	
-	
+		}
+	}
+
 	function user_needs_to_specify_language_of_page_to_be_created($page, $page_info, $new_page_inherited_attributes = null)
 	{
 		global $_REQUEST, $multilinguallib, $prefs, $tikilib;
@@ -56,33 +56,33 @@ class EditLib
 		}
 		if ($prefs['feature_multilingual'] == 'n') {
 			return false;
-		} 
+		}
 		if ($page_info && isset($page_info['lang']) && $page_info['lang'] != '') {
 			return false;
 		}
-		if (isset($_REQUEST['lang']) && $_REQUEST['lang'] != '') { 
+		if (isset($_REQUEST['lang']) && $_REQUEST['lang'] != '') {
 			return false;
 		}
-		if ($new_page_inherited_attributes != null && 
-			isset($new_page_inherited_attributes['lang']) && 
+		if ($new_page_inherited_attributes != null &&
+			isset($new_page_inherited_attributes['lang']) &&
 			$new_page_inherited_attributes['lang'] != '') {
 			return false;
 		}
 
 		return true;
-	}			
-	
+	}
+
 	// translation functions
-	
+
 	function isTranslationMode()
 	{
 		return $this->isUpdateTranslationMode() || $this->isNewTranslationMode();
 	}
-	
+
 	function isNewTranslationMode()
 	{
 		global $prefs;
-	
+
 		if ($prefs['feature_multilingual'] != 'y') {
 			return false;
 		}
@@ -94,8 +94,8 @@ class EditLib
 		if (isset( $_REQUEST['is_new_translation']  )
 			&& $_REQUEST['is_new_translation'] ==  'y') {
 			return true;
-		}	
-		return false;		
+		}
+		return false;
 	}
 
 	function isUpdateTranslationMode()
@@ -105,72 +105,72 @@ class EditLib
 			&& (!isset($_REQUEST['is_new_translation']) || $_REQUEST['is_new_translation'] == 'n')
 			&& isset( $_REQUEST['newver'] );
 	}
-	
+
 	function prepareTranslationData()
 	{
 		global $_REQUEST, $tikilib, $smarty;
-		$this->setTranslationSourceAndTargetPageNames();		
+		$this->setTranslationSourceAndTargetPageNames();
 		$this->setTranslationSourceAndTargetVersions();
 	}
-	
+
 	private function setTranslationSourceAndTargetPageNames()
 	{
 		global $_REQUEST, $smarty;
-		
+
 		if (!$this->isTranslationMode()) {
 			return;
 		}
-		
+
 		$this->targetPageName = null;
 		if (isset($_REQUEST['target_page'])) {
 			$this->targetPageName = $_REQUEST['target_page'];
 		} elseif (isset($_REQUEST['page'])) {
-			$this->targetPageName = $_REQUEST['page'];		
-		} 
+			$this->targetPageName = $_REQUEST['page'];
+		}
 		$smarty->assign('target_page', $this->targetPageName);
 
-		$this->sourcePageName = null;		
+		$this->sourcePageName = null;
 		if (isset($_REQUEST['translationOf']) && $_REQUEST['translationOf']) {
 			$this->sourcePageName = $_REQUEST['translationOf'];
 		} elseif (isset($_REQUEST['source_page'])) {
 			$this->sourcePageName = $_REQUEST['source_page'];
 		}
 		$smarty->assign('source_page', $this->sourcePageName);
-		
+
 		if ($this->isNewTranslationMode()) {
 			$smarty->assign('translationIsNew', 'y');
 		} else {
 			$smarty->assign('translationIsNew', 'n');
-			
+
 		}
 	}
-	
+
 	private function setTranslationSourceAndTargetVersions()
 	{
 		global $_REQUEST, $tikilib;
-		
+
 		if (isset($_REQUEST['oldver'])) {
 			$this->oldSourceVersion = $_REQUEST['oldver'];
 		} else {
 			// Note: -1 means a "virtual" empty version.
 			$this->oldsourceVersion = -1;
 		}
-		
+
 		if (isset($_REQUEST['newver'])) {
 			$this->newSourceVersion = $_REQUEST['newver'];
 		} else {
 			// Note: version number of 0 means the most recent version.
 			$this->newSourceVersion = 0;
 		}
-	}	
+	}
 
-	function aTranslationWasSavedAs($complete_or_partial) 
-	{	
+	function aTranslationWasSavedAs($complete_or_partial)
+	{
 		if (!$this->isTranslationMode() ||
 			!isset($_REQUEST['save'])) {
 			return false;
 		}
-		
+
 		// We are saving a translation. Is it partial or complete?
 		if ($complete_or_partial == 'complete' && isset($_REQUEST['partial_save'])) {
 			return false;
@@ -178,18 +178,18 @@ class EditLib
 			return false;
 		}
 		return true;
-	} 
-	
-	
+	}
+
+
 	/**
 	 * Convert rgb() color definiton to hex color definiton
-	 * 
+	 *
 	 * @param unknown_type $col
 	 * @return The hex representation
 	 */
 	function parseColor(&$col)
 	{
-		
+
 		if (preg_match("/^rgb\( *(\d+) *, *(\d+) *, *(\d+) *\)$/", $col, $parts) ) {
 			$hex = str_pad(dechex($parts[1]), 2, '0', STR_PAD_LEFT)
 			     . str_pad(dechex($parts[2]), 2, '0', STR_PAD_LEFT)
@@ -198,14 +198,14 @@ class EditLib
 		} else {
 			$hex = $col;
 		}
-		
+
 		return $hex;
 	}
-	
-	
+
+
 	/**
 	 * Utility for walk_and_parse to process links
-	 * 
+	 *
 	 * @param array $args the attributes of the link
 	 * @param array $text the link text
 	 * @param string $src output string
@@ -213,11 +213,11 @@ class EditLib
 	 */
 	private function parseLinkTag(&$args, &$text, &$src, &$p)
 	{
-		
+
 		$link = '';
 		$link_open = '';
 		$link_close = '';
-		
+
 		/*
 		 * parse the link classes
 		 */
@@ -226,34 +226,34 @@ class EditLib
 		$cl_ext_page = false; // external Wiki page
 		$cl_external = false; // external web page
 		$ext_wiki_name = '';
-		
+
 		if ( isset($args['class']) && isset($args['href']) ) {
 			$matches = array();
 			preg_match_all('/([^ ]+)/', $args['class']['value'], $matches);
 			$classes = $matches[0];
-			
-			for ($i=0, $count_classes = count($classes); $i< $count_classes; $i++) {				
+
+			for ($i=0, $count_classes = count($classes); $i< $count_classes; $i++) {
 				$cl = $classes[$i];
-							
+
 				switch ($cl) {
 					case 'wiki': $cl_wiki = true;
-     				break;
+						break;
  					case 'wiki_page': $cl_wiki_page = true;
-  	    			break;
+						break;
   					case 'ext_page': $cl_ext_page = true;
-         		break;
+						break;
  					case 'external': $cl_external = true;
-   		    	break;
+						break;
 					default:
-						// if the preceding class was 'ext_page', then we have the name of the external Wiki 
+						// if the preceding class was 'ext_page', then we have the name of the external Wiki
 						if ($i > 0 && $classes[$i-1] == 'ext_page') {
 							$ext_wiki_name = $cl;
 						}
-				}				
-			} 
+				}
+			}
 		}
-		
-		
+
+
 		/*
 		 * extract the target and the anchor from the href
 		 */
@@ -270,14 +270,14 @@ class EditLib
 		} else {
 			$target = '';
 			$anchor = '';
-		}	
-		
-		
+		}
+
+
 		/*
 		 * treat invalid external Wikis as web links
 		 */
 		if ( $cl_ext_page ) {
-			
+
 			// retrieve the definitions from the database
 			if ($this->external_wikis == null) {
 				global $tikilib;
@@ -291,8 +291,8 @@ class EditLib
 				$cl_wiki_page = false;
 			}
 		};
-		
-		
+
+
 		/*
 		 * construct the links according to the defined classes
 		 */
@@ -302,36 +302,36 @@ class EditLib
 			 * link to wiki page -> (( ))
 			 */
 			$link_open = '((';
-			$link_close = '))';				
-			
-			// remove the html part of the target 
+			$link_close = '))';
+
+			// remove the html part of the target
 			$target = preg_replace('/tiki\-index\.php\?page\=/', '', $target);
 
-			// construct the link				
+			// construct the link
 			$link = $target;
 			if ($anchor) {
 				$link .= '|' . $anchor;
 			}
-			
+
 		} else if ( $cl_ext_page ) {
-			
+
 			/*
 			 * link to external Wiki page ((:))
 			 */
 			$link_open = '((';
-			$link_close = '))';				
-			
+			$link_close = '))';
+
 			// remove the extwiki definition from the target
 			$def = preg_replace('/\$page/', '', $this->external_wikis[$ext_wiki_name]);
 			$def = preg_quote($def, '/');
 			$target = preg_replace('/^' . $def.'/', '', $target);
-			
+
 			// construct the link
 			$link = $ext_wiki_name . ':' . $target;
 			if ($anchor) {
 				$link .= '|' . $anchor;
 			}
-			
+
 		} else if ($cl_wiki && !$cl_external && !$target && strlen($anchor) > 0  && substr($anchor, 0, 1) == '#' ) {
 
 			/*
@@ -339,95 +339,95 @@ class EditLib
 			 */
 			$link_open = '[';
 			$link_close = ']';
-			
+
 			// construct the link
 			$link = $target = $anchor;
 			$anchor = '';
 
 		} else if ($cl_wiki && !$cl_external) {
-			
+
 			/*
 			 * other tiki resources []
 			 * -> articles, ...
 			 */
 			$link_open = '[';
-			$link_close = ']';		
+			$link_close = ']';
 
-			// construct the link			
+			// construct the link
 			$link = $target;
-			
+
 		} else if (!$cl_wiki && !$cl_external && !$text && isset($args['id']) && isset($args['id']['value']) ) {
-			
+
 			/*
 			 * anchor
 			 */
 			 $link_open = '{ANAME()}';
 			 $link_close = '{ANAME}';
 			 $link = $args['id']['value'];
-			
+
 		} else {
-			
+
 			/*
 			 * other links []
 			 */
 			$link_open = '[';
 			$link_close = ']';
-			
-			
+
+
 			/*
 			 * parse the rel attribute
 			 */
 			$box = '';
-			
+
 			if ( isset($args['class']) && isset($args['rel']) ) {
 				$matches = array();
 				preg_match_all('/([^ ]+)/', $args['rel']['value'], $matches);
 				$rels = $matches[0];
-				
-				for ($i=0, $count_rels = count($rels); $i< $count_rels; $i++) {				
+
+				for ($i=0, $count_rels = count($rels); $i< $count_rels; $i++) {
 					$r = $rels[$i];
-					
+
 					if (preg_match('/^box/', $r) ) {
 						$box = $r;
 					}
 				}
 			}
-			
+
 			// construct the link
-			$link = $target;	
+			$link = $target;
 			if ($anchor) {
 				$link .= $anchor;
-			}		
+			}
 			// the box must be appended to the text
 			if ($box) {
 				$text .= '|' . $box;
-			}				
-			
+			}
+
 		} // convert links
-		
-		
-	
+
+
+
 		/*
 		 * flush the constructed link
 		 */
 		if ($link_open && $link_close) {
 
 			$p['wiki_lbr']++; // force wiki line break mode
-			
+
 			// does the link text match the target?
 			if ($target == trim($text)) {
 				$text = '';	 // make sure walk_and_parse() does not append any text.
 			} else {
 				$link .= '|'; // the text will be appended by walk_and_parse()
 			}
-				
+
 			// process the tag and update the output
-			$this->processWikiTag('a', $src, $p, $link_open, $link_close, true); 				
+			$this->processWikiTag('a', $src, $p, $link_open, $link_close, true);
 			$src .= $link;
 		}
 	}
-	
-	
+
+
 	/**
 	 * Utility for walk_and_parse to process p and div tags
 	 *
@@ -440,7 +440,7 @@ class EditLib
 	{
 
 		global $prefs;
-		
+
 		if (isset($args['style']) || isset($args['align'])) {
 			$tag_name = $isPar ? 'p' : 'div'; // key for the $p[stack]
 			$type = $isPar ? 'type="p", ' : ''; // used for {DIV()}
@@ -485,28 +485,28 @@ class EditLib
 
 	/**
 	 * Utility for walk_and_parse to process span arguments
-	 * 
+	 *
 	 * @param array $args the attributes of the span
 	 * @param string $src output string
 	 * @param array $p ['stack'] = closing strings stack
 	 */
 	private function parseSpanTag(&$args, &$src, &$p)
 	{
-		
+
 		if (isset($args['style'])) {
 			$style = array();
 			$this->parseStyleAttribute($args['style']['value'], $style);
-			
+
 			$this->processWikiTag('span', $src, $p, '', '', true); // prepare the stacks, later we will append
-			
-			
+
+
 			/*
 			 * The colors need to be handeled separatly; two style definitions become
 			 * one single wiki markup.
 			 */
 			$fcol = '';
 			$bcol = '';
-			
+
 			if (isset($style['color'])) {
 				$fcol = $this->parseColor($style['color']);
 				unset($style['color']);
@@ -515,17 +515,17 @@ class EditLib
 				$bcol = $this->parseColor($style['background-color']);
 				unset($style['background-color']);
 			}
-			
+
 			if ($fcol || $bcol) {
 				$col  = "~~";
 				$col .= ($fcol ? $fcol : ' ');
 				$col .= ($bcol ? ','.$bcol : '');
 				$col .= ':';
-				
+
 				$this->processWikiTag('span', $src, $p, $col, '~~', true, true);
 			}
-			
-			
+
+
 			/*
 			 * Process the remaining format definitions
 			 */
@@ -533,10 +533,10 @@ class EditLib
 				switch ($format) {
 					case 'font-weight':
 						if ($style[$format] == 'bold') {
-							$this->processWikiTag('span', $src, $p, '__', '__', true, true); 
+							$this->processWikiTag('span', $src, $p, '__', '__', true, true);
 						}
     					break;
-					case 'font-style': 
+					case 'font-style':
 						if ($style[$format] == 'italic') {
 							$this->processWikiTag('span', $src, $p, '\'\'', '\'\'', true, true);
 						}
@@ -550,64 +550,64 @@ class EditLib
 			} // foreach style
 		} // style
 	}
-		
-	
+
+
 	/**
 	 * Parse a html style definition into an array
-	 * 
+	 *
 	 * This method tries to expand the shorthand definitions, such as 'background:',
-	 * to the correspoinding key/value paris. If a definition is unknown, it is kept. 
-	 * 
+	 * to the correspoinding key/value paris. If a definition is unknown, it is kept.
+	 *
 	 * @param string $style The value of the style attribute
 	 * @param array $parsed key/value pairs
-	 */	
+	 */
 	function parseStyleAttribute(&$style, &$parsed)
 	{
-		
+
 		$matches = array();
 		preg_match_all('/ *([^ :]+) *: *([^;]+) *;?/', $style, $matches);
-		
+
 		for ($i=0, $count_matches = count($matches[0]); $i<$count_matches; $i++) {
 			$key = $matches[1][$i];
 			$value = trim($matches[2][$i]);
-			
+
 			/*
 			 * shortand list 'background:'
 			 * - set 'background-color'
 			 */
 			if ($key == 'background') {
-				
+
 				$unprocessed = '';
 				$shorthand = array();
 				$this->parseStyleList($value, $shorthand);
-				
+
 				foreach ($shorthand as $s) {
 
 					switch ($s) {
 						case preg_match('/^#(\w{3,6})$/', $s) > 0:
 							$parsed['background-color'] = $s;
-    	 				break;
+							break;
 						case preg_match('/^rgb\(.*\)$/', $s) > 0:
 							$parsed['background-color'] = $s;
-    	 				break;
+							break;
 						default:
 							$unprocessed .= ' ' . $s;
 					}
 				} // foreach shorthand
-				
+
 				// keep unprocessed list entries
 				$value = trim($unprocessed);
-				
+
 			} // background:
-			
-			// save the result			
+
+			// save the result
 			if ($value) {
 				$parsed[$key] = $value;
 			}
 		} // style definitions
 	}
-	
-	
+
+
 	/**
 	 * Parse a space separated list of html styles
 	 *
@@ -618,24 +618,24 @@ class EditLib
 	 */
 	function parseStyleList(&$list, &$parsed)
 	{
-		
+
 		$matches = array();
 		preg_match_all('/(?:[[:graph:]]+\([^\)]*\))|(?:[^ ]+)/', $list, $matches);
 		$parsed = $matches[0];
 	}
-	
-	
+
+
 	/**
 	 * Utility of walk_and_parse to process a wiki tag
-	 * 
+	 *
 	 * Wiki tags need a special treatment: In html, a tag may contain
 	 * several line breaks. In Wiki however, line breaks are often not allowed
 	 * and sometimes additional line breaks are required.
-	 * 
-	 * This method saves Wiki tags an line break information in separate stacks. 
+	 *
+	 * This method saves Wiki tags an line break information in separate stacks.
 	 * These stackes are used in walk_and_parse to:
 	 * - Output the required markup before and after the linebreaks (<br />).
-	 * - To ensure that linebreaks are, if required, inserted at the correct place (\n). 
+	 * - To ensure that linebreaks are, if required, inserted at the correct place (\n).
 	 *
 	 * @param string $tag The name of the html tag
 	 * @param string $src Th Output string
@@ -648,60 +648,60 @@ class EditLib
 	private function processWikiTag($tag, &$src, &$p, $begin, $end, $is_inline, $append = false)
 	{
 
-		// append=false, create new entries on the stack		
+		// append=false, create new entries on the stack
 		if (!$append) {
 			$p['stack'][] = array('tag' => $tag, 'string' => '', 'wikitags' => 0 );
 			$p['wikistack'][] = array( 'begin' => array(), 'end' => array() );
 		};
-		
+
 		// get the entry points on the stacks
 		$key = end(array_keys($p['wikistack']));
-		$wiki = &$p['wikistack'][$key]; 
-		
+		$wiki = &$p['wikistack'][$key];
+
 		$key = end(array_keys($p['stack']));
 		$stack = &$p['stack'][$key];
 		$string = &$stack['string'];
-		
+
 		// append to the stacks
 		$wiki['begin'][] = $begin;
 		$wiki['end'][] = $end;
-		$string = $end . $string;			
+		$string = $end . $string;
 		$stack['wikitags']++;
-		
+
 		// update the output string
 		if (!$is_inline) {
 			$this->startNewLine($src);
 		}
 		$src .= $begin;
 	}
-	
-	
+
+
 	function saveCompleteTranslation()
 	{
 		global $multilinguallib, $tikilib;
-		
+
 		$sourceInfo = $tikilib->get_page_info($this->sourcePageName);
 		$targetInfo = $tikilib->get_page_info($this->targetPageName);
-				
+
 		$multilinguallib->propagateTranslationBits(
-						'wiki page',
-						$sourceInfo['page_id'],
-						$targetInfo['page_id'],
-						$sourceInfo['version'],
-						$targetInfo['version']
+			'wiki page',
+			$sourceInfo['page_id'],
+			$targetInfo['page_id'],
+			$sourceInfo['version'],
+			$targetInfo['version']
 		);
-		$multilinguallib->deleteTranslationInProgressFlags($targetInfo['page_id'], $sourceInfo['lang']);		
+		$multilinguallib->deleteTranslationInProgressFlags($targetInfo['page_id'], $sourceInfo['lang']);
 	}
-	
+
 	function savePartialTranslation()
 	{
 		global $multilinguallib, $tikilib;
 
 		$sourceInfo = $tikilib->get_page_info($this->sourcePageName);
 		$targetInfo = $tikilib->get_page_info($this->targetPageName);
-		
+
 		$multilinguallib->addTranslationInProgressFlags($targetInfo['page_id'], $sourceInfo['lang']);
-		
+
 	}
 
 	/**
@@ -715,11 +715,11 @@ class EditLib
 
 	function parseToWiki( $inData )
 	{
-		
+
 		global $prefs;
 
 		$parsed = $this->partialParseWysiwygToWiki($inData);	// remove cke type plugin wrappers
-		
+
 		$parsed = html_entity_decode($parsed, ENT_QUOTES, 'UTF-8');
 		$parsed = preg_replace('/\t/', '', $parsed); // remove all tabs inserted by the CKE
 
@@ -730,24 +730,25 @@ class EditLib
 		$parsed = preg_replace('/&nbsp;/m', ' ', $parsed);												// spaces
 		$parsed = preg_replace('/!(?:\d\.)+/', '!#', $parsed); // numbered headings
 		if ($prefs['feature_use_three_colon_centertag'] == 'y') { // numbered and centerd headings
-			$parsed = preg_replace('/!:::(?:\d\.)+ *(.*):::/', '!#:::\1:::', $parsed); 
+			$parsed = preg_replace('/!:::(?:\d\.)+ *(.*):::/', '!#:::\1:::', $parsed);
 		} else {
-			$parsed = preg_replace('/!::(?:\d\.)+ *(.*)::/', '!#::\1::', $parsed); 
+			$parsed = preg_replace('/!::(?:\d\.)+ *(.*)::/', '!#::\1::', $parsed);
 		}
 
 		// remove empty center tags
 		if ($prefs['feature_use_three_colon_centertag'] == 'y') { // numbered and centerd headings
 			$parsed = preg_replace('/::: *:::\n/', '', $parsed);
 		} else {
-			$parsed = preg_replace('/:: *::\n/', '', $parsed); 
+			$parsed = preg_replace('/:: *::\n/', '', $parsed);
 		}
-				
+
 		// Put back htmlentities as normal char
 		$parsed = htmlspecialchars_decode($parsed, ENT_QUOTES);
 		return $parsed;
 	}
 
-	function parseToWikiPlugin($matches) {
+	function parseToWikiPlugin($matches)
+	{
 		if (count($matches) > 1) {
 			return nl2br($matches[1]);
 		}
@@ -770,41 +771,41 @@ class EditLib
 		$inData = $this->partialParseWysiwygToWiki($inData);	// remove any wysiwyg plugins so they don't get double parsed
 		$parsed = preg_replace('/(!!*)[\+\-]/m', '$1', $inData);		// remove show/hide headings
 		$parsed = preg_replace('/&#039;/', '\'', $parsed);			// catch single quotes at html entities
-		
+
 		$parsed = $tikilib->parse_data(
-						$parsed, 
-						array(
-							'absolute_links'=>true,
-							'noheaderinc'=>true,
-							'suppress_icons' => true,
-							'ck_editor' => true,
-							'is_html' => ($isHtml && !$fromWiki),
-							'process_wiki_paragraphs' => (!$isHtml || $fromWiki),
-							'process_double_brackets' => 'n'
-						)
+			$parsed,
+			array(
+				'absolute_links'=>true,
+				'noheaderinc'=>true,
+				'suppress_icons' => true,
+				'ck_editor' => true,
+				'is_html' => ($isHtml && !$fromWiki),
+				'process_wiki_paragraphs' => (!$isHtml || $fromWiki),
+				'process_double_brackets' => 'n'
+			)
 		);
-		
+
 		if ($fromWiki) {
 			$parsed = preg_replace('/^\s*<p>&nbsp;[\s]*<\/p>\s*/iu', '', $parsed);						// remove added empty <p>
 		}
 		$parsed = preg_replace('/<span class=\"img\">(.*?)<\/span>/im', '$1', $parsed);					// remove spans round img's
-		// Workaround Wysiwyg Image Plugin Editor in IE7 erases image on insert http://dev.tiki.org/item3615 
+		// Workaround Wysiwyg Image Plugin Editor in IE7 erases image on insert http://dev.tiki.org/item3615
 		$parsed2 = preg_replace('/(<span class=\"tiki_plugin\".*?plugin=\"img\".*?><\/span>)<\/p>/is', '$1<span>&nbsp;</span></p>', $parsed);
 		if ($parsed2 !== null) {
 			$parsed = $parsed2;
 		}
 		// Fix IE7 wysiwyg editor always adding absolute path
-		$search = '/(<a[^>]+href=\")https?\:\/\/' . preg_quote($_SERVER['HTTP_HOST'].$tikiroot, '/') . '([^>]+_cke_saved_href)/i'; 
+		$search = '/(<a[^>]+href=\")https?\:\/\/' . preg_quote($_SERVER['HTTP_HOST'].$tikiroot, '/') . '([^>]+_cke_saved_href)/i';
 		$parsed = preg_replace($search, '$1$2', $parsed);
 
 		return $parsed;
 	}
-	
+
 	/**
 	 * Converts wysiwyg plugins into wiki.
 	 * Also processes headings by removing surrounding <p> (possibly for wysiwyg_wiki_semi_parsed but not tested)
 	 * Also used by ajax preview in tiki-auto_save.php
-	 * 
+	 *
 	 * @param string $inData	page data - mostly html but can have a bit of wiki in it
 	 * @return string			html with wiki plugins
 	 */
@@ -820,17 +821,17 @@ class EditLib
 		if (!$ret) {
 			$ret = $inData;
 		}
-		
+
 		// take away the <p> that f/ck introduces around wiki heading ! to have maketoc/edit section working
 		$ret = preg_replace('/<p>!(.*)<\/p>/iu', "!$1\n", $ret);
-		
+
 		// strip totally empty <p> tags generated in ckeditor 3.4
 		$ret = preg_replace('/\s*<p>[\s]*<\/p>\s*/iu', "$1\n", $ret);
 		return $ret;
 	}
-	
+
 	// parse HTML functions
-	
+
 	/**
 	 * \brief Parsed HTML tree walker (used by HTML sucker)
 	 *
@@ -852,7 +853,7 @@ class EditLib
 		if (!$c) {
 			return;
 		}
-		
+
 		for ($i=0; $i <= $c["contentpos"]; $i++) {
 			// If content type 'text' output it to destination...
 			if ($c[$i]["type"] == "text") {
@@ -867,7 +868,7 @@ class EditLib
 			} elseif ($c[$i]["type"] == "tag") {
 				if ($c[$i]["data"]["type"] == "open") {
 					// Open tag type
-					
+
 					// deal with plugins - could be either span of div so process before the switch statement
 					if (isset($c[$i]['pars']['plugin']) && isset($c[$i]['pars']['syntax'])) {	// handling for tiki plugins
 						$src .= html_entity_decode($c[$i]['pars']['syntax']['value']);
@@ -892,16 +893,16 @@ class EditLib
 							$j++;
 						}
 						$i = $j;	// skip everything that was inside this span
-						
+
 					}
-					
+
 					$isPar = false; // assuming "div" when calling parseParDivTag()
 
 					switch ($c[$i]["data"]["name"]) {
 						// Tags we don't want at all.
 						case "meta": $c[$i]["content"] = '';
-     					break;
-						
+							break;
+
 						// others we do want
 						case "br":
 							if ($p['wiki_lbr']) { // "%%%" or "\n" ?
@@ -914,12 +915,12 @@ class EditLib
 									}
 								}
 								$src .= "\n";
-								
+
 								// for lists, we must prepend '+' to keep the indentation
 								if ($p['listack']) {
 									$src .= str_repeat('+', count($p['listack']));
 								}
-								
+
 								// reopen all wikitags
 								foreach ( $p['wikistack'] as $wiki_arr ) {
 									foreach ( $wiki_arr['begin'] as $begin) {
@@ -927,11 +928,11 @@ class EditLib
 									}
 								}
 							}
-    						break;
+							break;
 						case "hr": $src .= $this->startNewLine($src) . '---';
-     					break;
+							break;
 						case "title": $src .= "\n!"; $p['stack'][] = array('tag' => 'title', 'string' => "\n");
-     					break;
+							break;
 						case "p":
 							$isPar = true;
 							if ($src && $prefs['feature_wiki_paragraph_formatting'] !== 'y') {
@@ -942,9 +943,9 @@ class EditLib
 								$this->parseParDivTag($isPar, $c[$i]['pars'], $src, $p);
 							} else {	// normal para or div
 								$src .= $this->startNewLine($src);
-								$p['stack'][] = array('tag' => $c[$i]['data']['name'], 'string' => "\n\n"); 
+								$p['stack'][] = array('tag' => $c[$i]['data']['name'], 'string' => "\n\n");
 							}
-    						break;
+							break;
 						case "span":
 							if ( isset($c[$i]['pars'])) {
 								$this->parseSpanTag($c[$i]['pars'], $src, $p);
@@ -979,7 +980,7 @@ class EditLib
     						break;
 						case "dt": $src .= ';'; $p['stack'][] = array('tag' => 'dt', 'string' => '');
     						break;
-						
+
 						case "h1":
 						case "h2":
 						case "h3":
@@ -1057,10 +1058,10 @@ class EditLib
 								// parse the link
 								$this->parseLinkTag($c[$i]['pars'], $text, $src, $p);
 							}
-							
+
 							// deactivated by mauriz, will be replaced by the routine above
 							// If href attribute present in <a> tag
-							/* 
+							/*
 							if (isset($c[$i]["pars"]["href"]["value"])) {
 								if ( strstr( $c[$i]["pars"]["href"]["value"], "http:" )) {
 									$src .= '['.$c[$i]["pars"]["href"]["value"].'|';
@@ -1073,8 +1074,8 @@ class EditLib
 								$src .= '{ANAME()}'.$c[$i]["pars"]["name"]["value"].'{ANAME}';
 							}
 							*/
-							
-							
+
+
     						break;
 					}	// end switch on tag name
 				} else {
@@ -1089,33 +1090,33 @@ class EditLib
 							if (end($p['listack']) == '#') array_pop($p['listack']);
 							if ( empty($p['listack']) )
 								$src .= "\n";
-     					break;
+							break;
 						default:
 							$e = end($p['stack']);
 							if ($c[$i]["data"]["name"] == $e['tag']) {
 								$src .= $e['string'];
 								array_pop($p['stack']);
 							}
-    						break;
+							break;
 					}
-					
+
 					// update the wiki stack
 					if (isset($e['wikitags']) && $e['wikitags']) {
 						for ( $i_wiki = 0; $i_wiki < $e['wikitags']; $i_wiki++ ) {
 							array_pop($p['wikistack']);
 						}
 					}
-					
+
 					// can we leave wiki line break mode ?
-					switch ($c[$i]["data"]["name"]) { 
+					switch ($c[$i]["data"]["name"]) {
 						case "a":
 						case "h1":
-						case "h2": 
+						case "h2":
 						case "h3":
 						case "h4":
 						case "h5":
 						case "h6": $p['wiki_lbr']--;
-     					break; 
+							break;
 					}
 				}
 			}
@@ -1129,11 +1130,11 @@ class EditLib
 			$src = substr($src, 0, -2);
 		}
 	}	// end walk_and_parse
-	
+
 	function startNewLine(&$str)
 	{
 		if (strlen($str) && substr($str, -1) != "\n") {
-			$str .=  "\n"; 
+			$str .=  "\n";
 		}
 	}
 	/**
@@ -1142,14 +1143,14 @@ class EditLib
 	 * \param &$c string -- HTML in
 	 * \param &$src string -- output string
 	 */
-	
-	
+
+
 	function parse_html(&$inHtml)
 	{
 		global $smarty;
 
 		include ('lib/htmlparser/htmlparser.inc');
-	
+
 		// Read compiled (serialized) grammar
 		$grammarfile = 'lib/htmlparser/htmlgrammar.cmp';
 		if (!$fp = @fopen($grammarfile, 'r')) {
@@ -1159,10 +1160,10 @@ class EditLib
 		}
 		$grammar = unserialize(fread($fp, filesize($grammarfile)));
 		fclose($fp);
-		
+
 		// process a few ckeditor artifacts
 		$inHtml = str_replace('<p></p>', '', $inHtml);	// empty p tags are invisible
-		
+
 		// create parser object, insert html code and parse it
 		$htmlparser = new HtmlParser($inHtml, $grammar, '', 0);
 		$htmlparser->Parse();
@@ -1172,15 +1173,15 @@ class EditLib
 		 * ['stack'] = array
 		 * Speacial keys introduced to convert to Wiki
 		 * - ['wikitags']     = the number of 'wikistack' entries produced by the html tag
-		 * 
+		 *
 		 * ['wikistack'] = array(), is used to save the wiki markup for the linebreak handling (1 array = 1 html tag)
-		 * Each array entry contains the following keys: 
+		 * Each array entry contains the following keys:
 		 * - ['begin']        = array() of begin markups (1 style definition = 1 array entry)
 		 * - ['end']          = array() of end markups
-		 * 
+		 *
 		 * wiki_lbr  = true if we must use '%%%' for linebreaks instead of '\n'
 		 */
-		$p = array('stack' => array(), 'listack' => array(), 'wikistack' => array(),  
+		$p = array('stack' => array(), 'listack' => array(), 'wikistack' => array(),
 			'wiki_lbr' => 0, 'first_td' => false, 'first_tr' => false);
 		$this->walk_and_parse($htmlparser->content, $out_data, $p, '');
 		// Is some tags still opened? (It can be if HTML not valid, but this is not reason
@@ -1200,11 +1201,11 @@ class EditLib
 		$out_data = preg_replace(",[\n]+,mU", "\n", $out_data);
 		// 4) remove nbsp's
 		$out_data = preg_replace(",&#160;,mU", " ", $out_data);
-		
+
 		return $out_data;
 	}	// end parse_html
-	
-	
+
+
 	function get_new_page_attributes_from_parent_pages($page, $page_info)
 	{
 		global $wikilib, $tikilib;
@@ -1218,7 +1219,7 @@ class EditLib
 		$new_page_attrs = $this->get_newpage_language_from_parent_page($page, $page_info, $parent_pages_info, $new_page_attrs);
 		// Note: in the future, may add some methods below to guess things like
 		//       categories, workspaces, etc...
-		
+
 		return $new_page_attrs;
 	}
 
@@ -1241,7 +1242,7 @@ class EditLib
 			if ($lang != null) {
 				$new_page_attrs['lang'] = $lang;
 			}
-		}	
+		}
 		return $new_page_attrs;
 	}
 }

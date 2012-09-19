@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -46,21 +46,21 @@ class QuizLib extends TikiLib
 
 			$quizStatsSum->delete(array('quizId' => (int) $quizId,));
 			$quizStatsSum->insert(
-							array(
-								'quizId' => (int) $quizId,
-								'quizName' => $quizName,
-								'timesTaken' => (int) $timesTaken,
-								'avgpoints' => (float) $avgpoints,
-								'avgtime' => $avgtime,
-								'avgavg' => $avgavg,
-							)
+				array(
+					'quizId' => (int) $quizId,
+					'quizName' => $quizName,
+					'timesTaken' => (int) $timesTaken,
+					'avgpoints' => (float) $avgpoints,
+					'avgtime' => $avgtime,
+					'avgavg' => $avgavg,
+				)
 			);
 		}
 	}
-	
+
 	function list_quizzes($offset, $maxRecords, $sort_mode = 'name_desc', $find = null)
 	{
-		
+
 		$quizzes = $this->table('tiki_quizzes');
 		$conditions = array();
 
@@ -87,9 +87,9 @@ class QuizLib extends TikiLib
 
 		if ($n > 0) {
 			$result = $quizzes->fetchAll(
-							$quizzes->all(),
-							array('quizId' => $quizzes->in($retids)),
-							-1, -1, $quizzes->expr($this->convertSortMode($sort_mode))
+				$quizzes->all(),
+				array('quizId' => $quizzes->in($retids)),
+				-1, -1, $quizzes->expr($this->convertSortMode($sort_mode))
 			);
 
 			$questions = $this->table('tiki_quiz_questions');
@@ -107,7 +107,7 @@ class QuizLib extends TikiLib
 			'cant' => $n,
 		);
 	}
-	
+
 	function get_user_quiz_result($userResultId)
 	{
 		$query = "select * from `tiki_user_quizzes` where `userResultId`=?";
@@ -136,8 +136,8 @@ class QuizLib extends TikiLib
 			$question = $this->getOne("select `question` from `tiki_quiz_questions` where `questionId`=?", array((int) $res["questionId"]));
 
 			$total_votes = $this->getOne(
-							"select sum(`votes`) from `tiki_quiz_stats` where `quizId`=? and `questionId`=?", 
-							array((int)$quizId, (int)$res["questionId"])
+				"select sum(`votes`) from `tiki_quiz_stats` where `quizId`=? and `questionId`=?",
+				array((int)$quizId, (int)$res["questionId"])
 			);
 			$query2 = "select tqq.`optionId`,`votes`,`optionText`"
 								. " from `tiki_quiz_stats` tqq,`tiki_quiz_question_options` tqo"
@@ -306,8 +306,8 @@ class QuizLib extends TikiLib
 			}
 
 			$hasDet = $this->getOne(
-							"select count(*) from `tiki_user_answers` where `userResultId`=?", 
-							array((int)$res["userResultId"])
+				"select count(*) from `tiki_user_answers` where `userResultId`=?",
+				array((int)$res["userResultId"])
 			);
 			if ($hasDet) {
 				$res["hasDetails"] = 'y';
@@ -341,8 +341,8 @@ class QuizLib extends TikiLib
 		);
 	}
 
-	
-	
+
+
 	// Takes a given uploaded answer and inserts it into the DB. - burley
 	function register_user_quiz_answer_upload($userResultId, $questionId, $filename, $filetype, $filesize,$tmp_name)
 	{
@@ -370,20 +370,20 @@ class QuizLib extends TikiLib
 
 		$query = "insert into `tiki_user_quizzes`(`user`,`quizId`,`timestamp`,`timeTaken`,`points`,`maxPoints`,`resultId`) values(?,?,?,?,?,?,?)";
 		$result = $this->query(
-						$query, 
-						array(
-							$user,
-							$quizId,
-							$this->now,
-							$timeTaken,
-							$points,
-							$maxPoints,
-							$resultId
-						)
+			$query,
+			array(
+				$user,
+				$quizId,
+				$this->now,
+				$timeTaken,
+				$points,
+				$maxPoints,
+				$resultId
+			)
 		);
 		$queryId = $this->getOne(
-						"select max(`userResultId`) from `tiki_user_quizzes` where `timestamp`=? and `quizId`=?",
-						array($this->now, (int)$quizId)
+			"select max(`userResultId`) from `tiki_user_quizzes` where `timestamp`=? and `quizId`=?",
+			array($this->now, (int)$quizId)
 		);
 		return $queryId;
 	}
@@ -391,8 +391,8 @@ class QuizLib extends TikiLib
 	function register_quiz_answer($quizId, $questionId, $optionId)
 	{
 		$cant = $this->getOne(
-						"select count(*) from `tiki_quiz_stats` where `quizId`=? and `questionId`=? and `optionId`=?",
-						array((int)$quizId, (int)$questionId, (int)$optionId)
+			"select count(*) from `tiki_quiz_stats` where `quizId`=? and `questionId`=? and `optionId`=?",
+			array((int)$quizId, (int)$questionId, (int)$optionId)
 		);
 
 		if ($cant) {
@@ -512,7 +512,7 @@ class QuizLib extends TikiLib
 			, $immediateFeedback, $showAnswers,	$shuffleQuestions, $shuffleAnswers
 			, $questionsPerPage, $timeLimited, $timeLimit, $publishDate, $expireDate
 			, $passingperct
-			) 
+			)
 	{
 		if ($quizId) {
 			// update an existing quiz
@@ -524,9 +524,9 @@ class QuizLib extends TikiLib
 								$description,
 								$canRepeat,
 								$storeResults,
-								$immediateFeedback, 
-								$showAnswers,	
-								$shuffleQuestions, 
+								$immediateFeedback,
+								$showAnswers,
+								$shuffleQuestions,
 								$shuffleAnswers,
 								$publishDate,
 								$expireDate,
@@ -551,13 +551,13 @@ class QuizLib extends TikiLib
 									$description,
 									$canRepeat,
 									$storeResults,
-									$immediateFeedback, 
-									$showAnswers,	
-									$shuffleQuestions, 
+									$immediateFeedback,
+									$showAnswers,
+									$shuffleQuestions,
 									$shuffleAnswers,
 									$publishDate,
 									$expireDate,
-									(int)$questionsPerPage, 
+									(int)$questionsPerPage,
 									$timeLimited,
 									(int) $timeLimit,
 									(int) $this->now,
@@ -634,7 +634,7 @@ class QuizLib extends TikiLib
 		return $res;
 	}
 
-	function list_quiz_questions($quizId, $offset, $maxRecords, $sort_mode, $find) 
+	function list_quiz_questions($quizId, $offset, $maxRecords, $sort_mode, $find)
 	{
 		if ($find) {
 			$findesc = '%' . $find . '%';
@@ -801,9 +801,9 @@ class QuizLib extends TikiLib
 							$description,
 							$canRepeat,
 							$storeResults,
-							$immediateFeedback, 
-							$showAnswers,	
-							$shuffleQuestions, 
+							$immediateFeedback,
+							$showAnswers,
+							$shuffleQuestions,
 							$shuffleAnswers,
 							$publishDate,
 							$expireDate,
@@ -825,13 +825,13 @@ class QuizLib extends TikiLib
 								$description,
 								$canRepeat,
 								$storeResults,
-								$immediateFeedback, 
-								$showAnswers,	
-								$shuffleQuestions, 
+								$immediateFeedback,
+								$showAnswers,
+								$shuffleQuestions,
 								$shuffleAnswers,
 								$publishDate,
 								$expireDate,
-								(int)$questionsPerPage, 
+								(int)$questionsPerPage,
 								$timeLimited,
 								(int) $timeLimit,
 								(int) $this->now,
@@ -906,9 +906,9 @@ function TextToQuestions($text)
 		$text[$i] = trim($text[$i]);
 		if ($text[$i] and !ctype_print($text[$i])) {
 			quizlib_error_exit(
-							"lib/quizzes/quizlib.php line "
-							. __LINE__
-							. ": Your text has invalid character(s) near line $i where it says:\n  $text[$i]"
+				"lib/quizzes/quizlib.php line "
+				. __LINE__
+				. ": Your text has invalid character(s) near line $i where it says:\n  $text[$i]"
 			);
 		}
 	}

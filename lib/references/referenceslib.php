@@ -160,21 +160,21 @@ class referencesLib extends TikiLib
 							' values (?,?,?,?,?,?,?,?,?,?,?,?)';
 
 		$this->query(
-						$query,
-						array(
-							$page,
-							$biblio_code,
-							$author,
-							$title,
-							$part,
-							$uri,
-							$code,
-							$year,
-							$style,
-							$template,
-							$publisher,
-							$location
-						)
+			$query,
+			array(
+				$page,
+				$biblio_code,
+				$author,
+				$title,
+				$part,
+				$uri,
+				$code,
+				$year,
+				$style,
+				$template,
+				$publisher,
+				$location
+			)
 		);
 
 		return true;
@@ -190,21 +190,21 @@ class referencesLib extends TikiLib
 							' values (?,?,?,?,?,?,?,?,?,?,?,?)';
 
 		$this->query(
-						$query,
-						array(
-							$page,
-							$biblio_code,
-							$author,
-							$title,
-							$part,
-							$uri,
-							$code,
-							$year,
-							$style,
-							$template,
-							$publisher,
-							$location
-						)
+			$query,
+			array(
+				$page,
+				$biblio_code,
+				$author,
+				$title,
+				$part,
+				$uri,
+				$code,
+				$year,
+				$style,
+				$template,
+				$publisher,
+				$location
+			)
 		);
 
 		return $this->lastInsertId();
@@ -220,21 +220,21 @@ class referencesLib extends TikiLib
 							' values (?,?,?,?,?,?,?,?,?,?,?,?)';
 
 		$this->query(
-						$query,
-						array(
-							NULL,
-							$biblio_code,
-							$author,
-							$title,
-							$part,
-							$uri,
-							$code,
-							$year,
-							$style,
-							$template,
-							$publisher,
-							$location
-						)
+			$query,
+			array(
+				NULL,
+				$biblio_code,
+				$author,
+				$title,
+				$part,
+				$uri,
+				$code,
+				$year,
+				$style,
+				$template,
+				$publisher,
+				$location
+			)
 		);
 
 		return $this->lastInsertId();
@@ -250,21 +250,21 @@ class referencesLib extends TikiLib
 							' values (?,?,?,?,?,?,?,?,?,?,?,?)';
 
 		$this->query(
-						$query,
-						array(
-							NULL,
-							$biblio_code,
-							$author,
-							$title,
-							$part,
-							$uri,
-							$code,
-							$year,
-							$style,
-							$template,
-							$publisher,
-							$location
-						)
+			$query,
+			array(
+				NULL,
+				$biblio_code,
+				$author,
+				$title,
+				$part,
+				$uri,
+				$code,
+				$year,
+				$style,
+				$template,
+				$publisher,
+				$location
+			)
 		);
 
 		return $this->lastInsertId();
@@ -275,7 +275,7 @@ class referencesLib extends TikiLib
 
 		$query = 'select * from `tiki_page_references` WHERE `ref_id`=?';
 		$result = $this->query($query, array($ref_id));
-		
+
 		$exists = $this->check_existence($page, $result->result[0]['biblio_code']);
 
 		if ($exists > 0) {
@@ -287,21 +287,21 @@ class referencesLib extends TikiLib
 								' values (?,?,?,?,?,?,?,?,?,?,?,?)';
 
 			$this->query(
-							$query,
-							array(
-								$page,
-								$result->result[0]['biblio_code'],
-								$result->result[0]['author'],
-								$result->result[0]['title'],
-								$result->result[0]['part'],
-								$result->result[0]['uri'],
-								$result->result[0]['code'],
-								$result->result[0]['year'],
-								$result->result[0]['style'],
-								$result->result[0]['template'],
-								$result->result[0]['publisher'],
-								$result->result[0]['location']
-							)
+				$query,
+				array(
+					$page,
+					$result->result[0]['biblio_code'],
+					$result->result[0]['author'],
+					$result->result[0]['title'],
+					$result->result[0]['part'],
+					$result->result[0]['uri'],
+					$result->result[0]['code'],
+					$result->result[0]['year'],
+					$result->result[0]['style'],
+					$result->result[0]['template'],
+					$result->result[0]['publisher'],
+					$result->result[0]['location']
+				)
 			);
 
 			return $this->lastInsertId();
@@ -317,20 +317,21 @@ class referencesLib extends TikiLib
 							' where `ref_id`=?';
 
 		$this->query(
-						$query,
-						array(
-								$biblio_code,
-								$author,
-								$title,
-								$part,
-								$uri,
-								$code,
-								$year,
-								$style,
-								$template,
-								$publisher,
-								$location,
-								(int)$ref_id)
+			$query,
+			array(
+					$biblio_code,
+					$author,
+					$title,
+					$part,
+					$uri,
+					$code,
+					$year,
+					$style,
+					$template,
+					$publisher,
+					$location,
+					(int)$ref_id
+			)
 		);
 
 		return true;
@@ -346,21 +347,21 @@ class referencesLib extends TikiLib
 								' where `ref_id`=?';
 
 		$this->query(
-						$query,
-						array(
-								$biblio_code,
-								$author,
-								$title,
-								$part,
-								$uri,
-								$code,
-								$year,
-								$style,
-								$template,
-								$publisher,
-								$location,
-								(int)$ref_id
-						)
+			$query,
+			array(
+					$biblio_code,
+					$author,
+					$title,
+					$part,
+					$uri,
+					$code,
+					$year,
+					$style,
+					$template,
+					$publisher,
+					$location,
+					(int)$ref_id
+			)
 		);
 
 		return true;
@@ -420,5 +421,5 @@ class referencesLib extends TikiLib
 
 		return ($result->numrows > 0) ? 'y' : 'n';
 	}
-	
+
 }

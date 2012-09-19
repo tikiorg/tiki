@@ -1,11 +1,11 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-/** 
+/**
  * Extension htmlMimeMail
  * set some default params (mainly utf8 as titi is utf8) + use the mailCharset pref from a user
  */
@@ -34,23 +34,23 @@ class TikiMail extends HtmlMimeMail
 		if ($prefs['zend_mail_handler'] == 'smtp') {
 			if ($prefs['zend_mail_smtp_auth'] == 'login') {
 				$this->setSMTPParams(
-								$prefs['zend_mail_smtp_server'], 
-								$prefs['zend_mail_smtp_port'], 
-								$prefs['zend_mail_smtp_helo'], 
-								true, 
-								$prefs['zend_mail_smtp_user'], 
-								$prefs['zend_mail_smtp_pass'], 
-								$prefs['zend_mail_smtp_security']
+					$prefs['zend_mail_smtp_server'],
+					$prefs['zend_mail_smtp_port'],
+					$prefs['zend_mail_smtp_helo'],
+					true,
+					$prefs['zend_mail_smtp_user'],
+					$prefs['zend_mail_smtp_pass'],
+					$prefs['zend_mail_smtp_security']
 				);
 			} else {
 				$this->setSMTPParams(
-								$prefs['zend_mail_smtp_server'], 
-								$prefs['zend_mail_smtp_port'], 
-								$prefs['zend_mail_smtp_helo'], 
-								false, 
-								null, 
-								null,
-								$prefs['zend_mail_smtp_security']
+					$prefs['zend_mail_smtp_server'],
+					$prefs['zend_mail_smtp_port'],
+					$prefs['zend_mail_smtp_helo'],
+					false,
+					null,
+					null,
+					$prefs['zend_mail_smtp_security']
 				);
 			}
 		}
@@ -97,9 +97,9 @@ class TikiMail extends HtmlMimeMail
 	{
 		if ($this->charset != "utf-8") {
 			parent::setHtml(
-							encodeString($this->encodeNonInCharset($html, true), $this->charset), 
-							encodeString($this->encodeNonInCharset($text, false), $this->charset), 
-							$images_dir
+				encodeString($this->encodeNonInCharset($html, true), $this->charset),
+				encodeString($this->encodeNonInCharset($text, false), $this->charset),
+				$images_dir
 			);
 		} else {
 			parent::setHtml($html, $text, $images_dir);
@@ -118,7 +118,7 @@ class TikiMail extends HtmlMimeMail
 			parent::setText($text);
 	}
 
-	/** 
+	/**
 	 * encode non existing charater is final charset
 	 */
 	function encodeNonInCharset($string, $toHtml=true)
@@ -127,7 +127,7 @@ class TikiMail extends HtmlMimeMail
 			$bad = array('€','‚', 'ƒ','„', '…', '†', '‡', 'ˆ', '‰', 'Š',
 					'‹', 'Œ', '‘', '’', '“', '”', '•', '–', '—', '˜', '™',
 					'š', '›', 'œ', 'ÿ');
-			$html = array('&euro;', '&sbquo;', '&fnof;', '&bdquo;', '&hellip;', '&dagger;', '&Dagger;', '&circ;', '&permil;', '&Scaron;', 
+			$html = array('&euro;', '&sbquo;', '&fnof;', '&bdquo;', '&hellip;', '&dagger;', '&Dagger;', '&circ;', '&permil;', '&Scaron;',
 					'&lsaquo;', '&OElig;', '&lsquo;', '&rsquo;', '&ldquo;', '&rdquo;', '&bull;', '&ndash;', '&mdash;', '&tilde;', '&trade;',
 					'&scaron;', '&rsaquo;', '&oelig;', '&Yuml;');
 			$text = array('euros', ',', 'f', ',,', '...', 'T','T', '^', '0/00', 'S',
@@ -154,7 +154,7 @@ class TikiMail extends HtmlMimeMail
 			}
 		return $result;
 	}
-}	
+}
 
 /**
  * encode a string
@@ -187,12 +187,12 @@ function decode_subject_utf8($string)
 		return mb_convert_encoding($str, "utf-8", $string[1]);
 	else
 		return $str;
-} 
+}
 
 /**
  * Format text, sender and date for a plain text email reply
  * - Split into 75 char long lines prepended with >
- * 
+ *
  * @param $text		email text to be quoted
  * @param $from		email from name/address to be quoted
  * @param $date		date of mail to be quoted
@@ -216,7 +216,7 @@ function format_email_reply(&$text, $from, $date)
  * Attempt to close any unclosed HTML tags
  * Needs to work with what's inside the BODY
  * originally from http://snipplr.com/view/3618/close-tags-in-a-htmlsnippet/
- * 
+ *
  * @param $html			html input
  * @return string		corrected html out
  */

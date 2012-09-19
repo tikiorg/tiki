@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -12,9 +12,9 @@ $access->check_script($_SERVER['SCRIPT_NAME'], basename(__FILE__));
 
 if ( $prefs['wiki_page_regex'] == 'strict' )
 	$page_regex = '([A-Za-z0-9_])([\.: A-Za-z0-9_\-])*([A-Za-z0-9_])';
-elseif ( $prefs['wiki_page_regex'] == 'full' ) 
+elseif ( $prefs['wiki_page_regex'] == 'full' )
 	$page_regex = '([A-Za-z0-9_]|[\x80-\xFF])([\.: A-Za-z0-9_\-]|[\x80-\xFF])*([A-Za-z0-9_]|[\x80-\xFF])';
-else 
+else
 	$page_regex = '([^\n|\(\)])((?!(\)\)|\||\n)).)*?';
 
 // Wiki dump
@@ -32,7 +32,7 @@ $smarty->assign('wiki_dump_exists', $wiki_dump_exists);
 
 // find out the page name if url=tiki-index_x.php (can be needed in module)
 if (strstr($_SERVER['SCRIPT_NAME'], 'tiki-index.php')
-		|| strstr($_SERVER['SCRIPT_NAME'], 'tiki-index_p.php') 
+		|| strstr($_SERVER['SCRIPT_NAME'], 'tiki-index_p.php')
 		|| strstr($_SERVER['SCRIPT_NAME'], 'tiki-index_raw.php')
 ) {
 	$check = false;
@@ -41,7 +41,7 @@ if (strstr($_SERVER['SCRIPT_NAME'], 'tiki-index.php')
 		$check = true;
 	}
 
-	if ( $prefs['feature_multilingual'] == 'y' 
+	if ( $prefs['feature_multilingual'] == 'y'
 			&& (isset($_REQUEST['page']) || isset($_REQUEST['page_ref_id']) || isset($_REQUEST['page_id']))
 	) { // perhaps we have to go to an another page
 
@@ -61,7 +61,7 @@ if (strstr($_SERVER['SCRIPT_NAME'], 'tiki-index.php')
 			if (!empty($_REQUEST['page_id'])) {
 				if ( $multilinguallib->useBestLanguage() ) {
 					$_REQUEST['page_id'] = $multilinguallib->selectLangObj('wiki page', $_REQUEST['page_id']);
-				} 
+				}
 				if (!empty($_REQUEST['page_id'])) {
 					$check = false;
 				}
@@ -144,19 +144,19 @@ if (strstr($_SERVER['SCRIPT_NAME'], 'tiki-index.php')
 		$homePageContent .= '{GROUP}';
 
 		$tikilib->create_page(
-						$_REQUEST['page'], 
-						0, 
-						$homePageContent, 
-						$tikilib->now, 
-						'Tiki initialization', 
-						'admin', 
-						'0.0.0.0', 
-						'', 
-						$homePageLang, 
-						false, 
-						null, 
-						'n', 
-						''
+			$_REQUEST['page'],
+			0,
+			$homePageContent,
+			$tikilib->now,
+			'Tiki initialization',
+			'admin',
+			'0.0.0.0',
+			'',
+			$homePageLang,
+			false,
+			null,
+			'n',
+			''
 		);
 
 		unset($homePageContent, $homePageLang);

@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -53,28 +53,28 @@ class Tiki_Profile_InstallHandler_Article extends Tiki_Profile_InstallHandler
 		$dateConverter = new Tiki_Profile_DateConverter;
 
 		$id = $artlib->replace_article(
-						$data['title'],
-						$data['author'],
-						$data['topic'],
-						'n',
-						null,
-						null,
-						null,
-						null,
-						$data['heading'],
-						$data['body'],
-						$dateConverter->convert($data['publication_date']),
-						$dateConverter->convert($data['expiration_date']),
-						'admin',
-						0,
-						0,
-						0,
-						$data['type'],
-						$data['topline'],
-						$data['subtitle'],
-						$data['link_to'],
-						null,
-						$data['language']
+			$data['title'],
+			$data['author'],
+			$data['topic'],
+			'n',
+			null,
+			null,
+			null,
+			null,
+			$data['heading'],
+			$data['body'],
+			$dateConverter->convert($data['publication_date']),
+			$dateConverter->convert($data['expiration_date']),
+			'admin',
+			0,
+			0,
+			0,
+			$data['type'],
+			$data['topline'],
+			$data['subtitle'],
+			$data['link_to'],
+			null,
+			$data['language']
 		);
 
 		return $id;

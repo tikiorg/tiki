@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -9,13 +9,13 @@
  ** TikiWiki Forum Import Tool v1.00                            12/01/2007 **
  ****************************************************************************
  ** Written by Mike Kerr (kerrnel22)
- ** 
+ **
  ** This script is for importing the contents of a TikiWiki forum:
  **    - from the same database
  **    - from a different database
  **    - from a different server
  **    - from an SQL dump
- **   
+ **
  ** You must have 'tiki_forum_admin' permissions to run this script, due to
  ** the sensitive and invasive nature of this activity.  Forum moderators do
  ** not count.
@@ -64,11 +64,11 @@ if (isset($_REQUEST["step4"])) {
 			$smarty->assign('failed', 'true');
 		} else {
 			$moo = $import->importSQLForum(
-							$_REQUEST["ftype"],
-							$_REQUEST["prefix"],
-							$_REQUEST["server"],
-							$_REQUEST["fForumid"], 
-							$_REQUEST["tForumid"]
+				$_REQUEST["ftype"],
+				$_REQUEST["prefix"],
+				$_REQUEST["server"],
+				$_REQUEST["fForumid"],
+				$_REQUEST["tForumid"]
 			);
 			$smarty->assign('failed', 'false');
 		}
@@ -91,9 +91,9 @@ if (isset($_REQUEST["step4"])) {
 	} else if ($_REQUEST["import"] == 'other') {	// Different db & server
 	} else if ($_REQUEST["import"] == 'sql') {		// Import from SQL file
 		$sqlForums = $import->parseForumList(
-						$_REQUEST["ftype"], 
-						$_REQUEST["prefix"],
-						$_REQUEST["server"]
+			$_REQUEST["ftype"],
+			$_REQUEST["prefix"],
+			$_REQUEST["server"]
 		);
 		$smarty->assign('fromForums', $sqlForums);
 		if (count($sqlForums) == 0) {
@@ -129,12 +129,12 @@ if (isset($_REQUEST["step4"])) {
 	} else if ($_REQUEST["import"] == 'other') {	// Different db & server
 	} else if ($_REQUEST["import"] == 'sql') {		// Import from SQL file
 
-		/* Import from the SQL file will only look in $tikiroot/$tmpDir or 
-		 * $tikiroot/img/wiki_up for the speficied file.  Any path is 
+		/* Import from the SQL file will only look in $tikiroot/$tmpDir or
+		 * $tikiroot/img/wiki_up for the speficied file.  Any path is
 		 * stripped off the filename input by the user.  $tmpDir overrides
-		 * the wiki_up directory.  If the file exists, it then gets 
-		 * parsed to strip out just the SQL needed for the type of system 
-		 * being imported.  The relevant data is stored in /tmp in two 
+		 * the wiki_up directory.  If the file exists, it then gets
+		 * parsed to strip out just the SQL needed for the type of system
+		 * being imported.  The relevant data is stored in /tmp in two
 		 * temporary flatfiles.
 		 */
 		if (!isset($_REQUEST["server"])) {

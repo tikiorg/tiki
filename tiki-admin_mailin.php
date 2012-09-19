@@ -37,22 +37,22 @@ if (isset($_REQUEST['new_acc'])) {
 	);
 	else {
 		$mailinlib->replace_mailin_account(
-						$_REQUEST['accountId'],
-						$_REQUEST['account'],
-						$_REQUEST['pop'],
-						$_REQUEST['port'],
-						$_REQUEST['username'],
-						$_REQUEST['pass'],
-						$_REQUEST['smtp'],
-						$_REQUEST['useAuth'],
-						$_REQUEST['smtpPort'],
-						$_REQUEST['type'],
-						$_REQUEST['active'],
-						$_REQUEST['anonymous'],
-						$_REQUEST['attachments'],
-						$_REQUEST['article_topicId'],
-						$_REQUEST['article_type'],
-						$_REQUEST['discard_after']
+			$_REQUEST['accountId'],
+			$_REQUEST['account'],
+			$_REQUEST['pop'],
+			$_REQUEST['port'],
+			$_REQUEST['username'],
+			$_REQUEST['pass'],
+			$_REQUEST['smtp'],
+			$_REQUEST['useAuth'],
+			$_REQUEST['smtpPort'],
+			$_REQUEST['type'],
+			$_REQUEST['active'],
+			$_REQUEST['anonymous'],
+			$_REQUEST['attachments'],
+			$_REQUEST['article_topicId'],
+			$_REQUEST['article_type'],
+			$_REQUEST['discard_after']
 		);
 
 		$tikifeedback[] = array(

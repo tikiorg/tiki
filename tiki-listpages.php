@@ -57,7 +57,7 @@ if ($prefs['feature_multilingual'] == 'y' && isset($_REQUEST['lang']) && isset($
 	include_once ('lib/multilingual/multilinguallib.php');
 	if (isset($_REQUEST['term_srch'])) {
 		$multilinguallib->storeCurrentTermSearchLanguageInSession($_REQUEST['lang']);
-	}	
+	}
 	$smarty->assign('template_name', $_REQUEST['create_new_pages_using_template_name']);
 }
 
@@ -90,7 +90,7 @@ if (!empty($_REQUEST['submit_mult']) && isset($_REQUEST['checked'])) {
 			$access->check_authenticity(tr('Are you sure you want to remove the %0 selected pages?', count($_REQUEST['checked'])));
 			foreach ($_REQUEST['checked'] as $check)
 				$tikilib->remove_all_versions($check);
-						break;
+			break;
 
 		case 'print_pages':
 			$access->check_feature('feature_wiki_multiprint');
@@ -107,7 +107,7 @@ if (!empty($_REQUEST['submit_mult']) && isset($_REQUEST['checked'])) {
 				$page_info['h'] = 1;
 				$multiprint_pages[] = $page_info;
 			}
-						break;
+			break;
 
 		case 'export_pdf':
 			$access->check_feature('feature_wiki_multiprint');
@@ -141,7 +141,7 @@ if (!empty($_REQUEST['submit_mult']) && isset($_REQUEST['checked'])) {
 					$wikilib->unlock_page($check);
 				}
 			}
-						break;
+			break;
 
 		case 'lock_pages':
 			$access->check_feature('feature_wiki_usrlock');
@@ -155,7 +155,7 @@ if (!empty($_REQUEST['submit_mult']) && isset($_REQUEST['checked'])) {
 					$wikilib->lock_page($check);
 				}
 			}
-						break;
+			break;
 
 		case 'zip':
 			if ($globalperms->admin == 'y') {
@@ -173,7 +173,7 @@ if (!empty($_REQUEST['submit_mult']) && isset($_REQUEST['checked'])) {
 					$smarty->assign('error', $xmllib->get_error());
 				}
 			}
-						break;
+			break;
 
 		case 'title':
 			if ($tiki_p_admin == 'y') {
@@ -185,7 +185,7 @@ if (!empty($_REQUEST['submit_mult']) && isset($_REQUEST['checked'])) {
 					$table->update(array('data' => $info['data']), array('page_id' => $info['page_id']));
 				}
 			}
-						break;
+			break;
 	}
 }
 
@@ -244,7 +244,7 @@ if (!empty($multiprint_pages)) {
 			$smarty->assign('find_langOrphan', $_REQUEST['langOrphan']);
 		}
 	}
-	
+
 	if ($prefs['feature_categories'] == 'y') {
 		if (!empty($_REQUEST['cat_categories'])) {
 			$filter['categId'] = $_REQUEST['cat_categories'];
@@ -334,16 +334,16 @@ if (!empty($multiprint_pages)) {
 		$listpages_orphans = false;
 	}
 	$listpages = $tikilib->list_pages(
-					$offset,
-					$maxRecords,
-					$sort_mode,
-					$find,
-					$initial,
-					$exact_match,
-					false,
-					true,
-					$listpages_orphans,
-					$filter
+		$offset,
+		$maxRecords,
+		$sort_mode,
+		$find,
+		$initial,
+		$exact_match,
+		false,
+		true,
+		$listpages_orphans,
+		$filter
 	);
 
 	possibly_look_for_page_aliases($find);
@@ -404,7 +404,7 @@ if (!empty($multiprint_pages)) {
 		$languages = $tikilib->list_languages(false, 'y');
 		$smarty->assign_by_ref('languages', $languages);
 	}
-	
+
 	if ($prefs['gmap_page_list'] == 'y') {
 		// Generate Google map plugin data
 		global $gmapobjectarray;
@@ -472,7 +472,7 @@ if (!empty($multiprint_pages)) {
 function setLangFilter($filter)
 {
 	global $smarty, $prefs, $multilinguallib;
-	include_once ('lib/multilingual/multilinguallib.php');	
+	include_once ('lib/multilingual/multilinguallib.php');
 	$lang = $multilinguallib->currentPageSearchLanguage();
 	if (isset($_REQUEST['listonly']) && $prefs['feature_jquery_autocomplete'] == 'y' && strlen($lang) > 2) {
 		$lang = substr($lang, 0, 2);		// for autocomplete - use only language filter, not culture as well

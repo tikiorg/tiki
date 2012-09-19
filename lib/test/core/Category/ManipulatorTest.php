@@ -1,13 +1,13 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 /**
  * @group unit
- * 
+ *
  */
 
 class Category_ManipulatorTest extends TikiTestCase
@@ -16,9 +16,9 @@ class Category_ManipulatorTest extends TikiTestCase
 	{
 		$perms = new Perms;
 		$perms->setResolverFactories(
-						array(
-							new Perms_ResolverFactory_StaticFactory('root', new Perms_Resolver_Default(true)),
-						)
+			array(
+				new Perms_ResolverFactory_StaticFactory('root', new Perms_Resolver_Default(true)),
+			)
 		);
 		Perms::set($perms);
 
@@ -32,13 +32,13 @@ class Category_ManipulatorTest extends TikiTestCase
 		$this->assertEquals(array(3, 7), $manip->getRemovedCategories());
 	}
 
-	function testManipulationWithoutSpecifyingManaged() 
+	function testManipulationWithoutSpecifyingManaged()
 	{
 		$perms = new Perms;
 		$perms->setResolverFactories(
-						array(
-							new Perms_ResolverFactory_StaticFactory('root', new Perms_Resolver_Default(true)),
-						)
+			array(
+				new Perms_ResolverFactory_StaticFactory('root', new Perms_Resolver_Default(true)),
+			)
 		);
 		Perms::set($perms);
 
@@ -51,13 +51,13 @@ class Category_ManipulatorTest extends TikiTestCase
 		$this->assertEquals(array(3, 7), $manip->getRemovedCategories());
 	}
 
-	function testLimitationOnRange() 
+	function testLimitationOnRange()
 	{
 		$perms = new Perms;
 		$perms->setResolverFactories(
-						array(
-							new Perms_ResolverFactory_StaticFactory('root', new Perms_Resolver_Default(true)),
-						)
+			array(
+				new Perms_ResolverFactory_StaticFactory('root', new Perms_Resolver_Default(true)),
+			)
 		);
 		Perms::set($perms);
 
@@ -71,17 +71,17 @@ class Category_ManipulatorTest extends TikiTestCase
 		$this->assertEquals(array(3), $manip->getRemovedCategories());
 	}
 
-	function testNotAllowedToModifyObject() 
+	function testNotAllowedToModifyObject()
 	{
 		$perms = new Perms;
 		$perms->setResolverFactories(
-						array(
-							new Perms_ResolverFactory_TestFactory(
-											array('type', 'object'), 
-											array('wiki page:Hello World' => new Perms_Resolver_Default(false),)
-							),
-							new Perms_ResolverFactory_StaticFactory('root', new Perms_Resolver_Default(true)),
-						)
+			array(
+				new Perms_ResolverFactory_TestFactory(
+					array('type', 'object'),
+					array('wiki page:Hello World' => new Perms_Resolver_Default(false),)
+				),
+				new Perms_ResolverFactory_StaticFactory('root', new Perms_Resolver_Default(true)),
+			)
 		);
 		Perms::set($perms);
 
@@ -95,17 +95,17 @@ class Category_ManipulatorTest extends TikiTestCase
 		$this->assertEquals(array(), $manip->getRemovedCategories());
 	}
 
-	function testCannotAddAny() 
+	function testCannotAddAny()
 	{
 		$perms = new Perms;
 		$perms->setResolverFactories(
-						array(
-							new Perms_ResolverFactory_TestFactory(
-											array('type', 'object'), 
-											array('category:4' => new Perms_Resolver_Default(false),)
-							),
-							new Perms_ResolverFactory_StaticFactory('root', new Perms_Resolver_Default(true)),
-						)
+			array(
+				new Perms_ResolverFactory_TestFactory(
+					array('type', 'object'),
+					array('category:4' => new Perms_Resolver_Default(false),)
+				),
+				new Perms_ResolverFactory_StaticFactory('root', new Perms_Resolver_Default(true)),
+			)
 		);
 		Perms::set($perms);
 
@@ -119,17 +119,17 @@ class Category_ManipulatorTest extends TikiTestCase
 		$this->assertEquals(array(3), $manip->getRemovedCategories());
 	}
 
-	function testCannotRemoveAny() 
+	function testCannotRemoveAny()
 	{
 		$perms = new Perms;
 		$perms->setResolverFactories(
-						array(
-							new Perms_ResolverFactory_TestFactory(
-											array('type', 'object'), 
-											array('category:3' => new Perms_Resolver_Default(false),)
-							),
-							new Perms_ResolverFactory_StaticFactory('root', new Perms_Resolver_Default(true)),
-						)
+			array(
+				new Perms_ResolverFactory_TestFactory(
+					array('type', 'object'),
+					array('category:3' => new Perms_Resolver_Default(false),)
+				),
+				new Perms_ResolverFactory_StaticFactory('root', new Perms_Resolver_Default(true)),
+			)
 		);
 		Perms::set($perms);
 
@@ -143,13 +143,13 @@ class Category_ManipulatorTest extends TikiTestCase
 		$this->assertEquals(array(), $manip->getRemovedCategories());
 	}
 
-	function testDefaultSet() 
+	function testDefaultSet()
 	{
 		$perms = new Perms;
 		$perms->setResolverFactories(
-						array(
-							new Perms_ResolverFactory_StaticFactory('root', new Perms_Resolver_Default(true)),
-						)
+			array(
+				new Perms_ResolverFactory_StaticFactory('root', new Perms_Resolver_Default(true)),
+			)
 		);
 		Perms::set($perms);
 
@@ -166,19 +166,19 @@ class Category_ManipulatorTest extends TikiTestCase
 		$this->assertEquals(array(3, 7), $manip->getRemovedCategories());
 	}
 
-	function testConstraintAppliesBeyondPermissions() 
+	function testConstraintAppliesBeyondPermissions()
 	{
 		$perms = new Perms;
 		$perms->setResolverFactories(
-						array(
-							new Perms_ResolverFactory_TestFactory(
-											array('type', 'object'), 
-											array(
-												'category:10' => new Perms_Resolver_Default(false),
-											)
-							),
-							new Perms_ResolverFactory_StaticFactory('root', new Perms_Resolver_Default(true)),
-						)
+			array(
+				new Perms_ResolverFactory_TestFactory(
+					array('type', 'object'),
+					array(
+						'category:10' => new Perms_Resolver_Default(false),
+					)
+				),
+				new Perms_ResolverFactory_StaticFactory('root', new Perms_Resolver_Default(true)),
+			)
 		);
 		Perms::set($perms);
 
@@ -195,13 +195,13 @@ class Category_ManipulatorTest extends TikiTestCase
 		$this->assertEquals(array(3, 7), $manip->getRemovedCategories());
 	}
 
-	function testUnmanagedFilter() 
+	function testUnmanagedFilter()
 	{
 		$perms = new Perms;
 		$perms->setResolverFactories(
-						array(
-							new Perms_ResolverFactory_StaticFactory('root', new Perms_Resolver_Default(true)),
-						)
+			array(
+				new Perms_ResolverFactory_StaticFactory('root', new Perms_Resolver_Default(true)),
+			)
 		);
 		Perms::set($perms);
 
@@ -215,13 +215,13 @@ class Category_ManipulatorTest extends TikiTestCase
 		$this->assertEquals(array(7), $manip->getRemovedCategories());
 	}
 
-	function testSkipPermissionChecks() 
+	function testSkipPermissionChecks()
 	{
 		$perms = new Perms;
 		$perms->setResolverFactories(
-						array(
-							new Perms_ResolverFactory_StaticFactory('root', new Perms_Resolver_Default(false)),
-						)
+			array(
+				new Perms_ResolverFactory_StaticFactory('root', new Perms_Resolver_Default(false)),
+			)
 		);
 		Perms::set($perms);
 

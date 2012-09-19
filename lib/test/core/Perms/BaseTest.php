@@ -1,13 +1,13 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-/** 
+/**
  * @group unit
- * 
+ *
  */
 
 class Perms_BaseTest extends TikiTestCase
@@ -57,26 +57,26 @@ class Perms_BaseTest extends TikiTestCase
 		$perms = new Perms;
 
 		$perms->setResolverFactories(
-						array(
-							new Perms_ResolverFactory_TestFactory(
-											array('object'), 
-											array(
-												'a' => $rA = new Perms_Resolver_Default(true),
-												'b' => $rB = new Perms_Resolver_Default(true),
-											)
-							),
-							new Perms_ResolverFactory_TestFactory(
-											array('category'), 
-											array(
-												'1' => $r1 = new Perms_Resolver_Default(true),
-												'2' => $r2 = new Perms_Resolver_Default(true),
-											)
-							),
-							new Perms_ResolverFactory_TestFactory(
-											array(), 
-											array('' => $rG = new Perms_Resolver_Default(true),)
-							),
-						)
+			array(
+				new Perms_ResolverFactory_TestFactory(
+					array('object'),
+					array(
+						'a' => $rA = new Perms_Resolver_Default(true),
+						'b' => $rB = new Perms_Resolver_Default(true),
+					)
+				),
+				new Perms_ResolverFactory_TestFactory(
+					array('category'),
+					array(
+						'1' => $r1 = new Perms_Resolver_Default(true),
+						'2' => $r2 = new Perms_Resolver_Default(true),
+					)
+				),
+				new Perms_ResolverFactory_TestFactory(
+					array(),
+					array('' => $rG = new Perms_Resolver_Default(true),)
+				),
+			)
 		);
 		Perms::set($perms);
 
@@ -111,7 +111,7 @@ class Perms_BaseTest extends TikiTestCase
 		$perms = new Perms;
 		$perms->setResolverFactories(array($mock,));
 		Perms::set($perms);
-		
+
 		Perms::get();
 		Perms::get();
 	}
@@ -131,7 +131,7 @@ class Perms_BaseTest extends TikiTestCase
 		$perms = new Perms;
 		$perms->setResolverFactories(array($mock,));
 		Perms::set($perms);
-		
+
 		Perms::get();
 		Perms::get();
 	}
@@ -179,18 +179,18 @@ class Perms_BaseTest extends TikiTestCase
 	{
 		$perms = new Perms;
 		$perms->setResolverFactories(
-						array(
-							new Perms_ResolverFactory_TestFactory(
-											array('object'), 
-											array(
-												'A' => new Perms_Resolver_Default(true),
-												'B' => new Perms_Resolver_Default(true),
-												'C' => new Perms_Resolver_Default(false),
-												'D' => new Perms_Resolver_Default(false),
-												'E' => new Perms_Resolver_Default(true),
-											)
-							),
-						)
+			array(
+				new Perms_ResolverFactory_TestFactory(
+					array('object'),
+					array(
+						'A' => new Perms_Resolver_Default(true),
+						'B' => new Perms_Resolver_Default(true),
+						'C' => new Perms_Resolver_Default(false),
+						'D' => new Perms_Resolver_Default(false),
+						'E' => new Perms_Resolver_Default(true),
+					)
+				),
+			)
 		);
 		Perms::set($perms);
 
@@ -203,11 +203,11 @@ class Perms_BaseTest extends TikiTestCase
 		);
 
 		$out = Perms::filter(
-						array('type' => 'wiki page'), 
-						'object', 
-						$data, 
-						array('object' => 'pageName', 'creator' => 'creator'), 
-						'view'
+			array('type' => 'wiki page'),
+			'object',
+			$data,
+			array('object' => 'pageName', 'creator' => 'creator'),
+			'view'
 		);
 
 		$expect = array(
@@ -223,7 +223,7 @@ class Perms_BaseTest extends TikiTestCase
 	{
 		$perms = new Perms;
 		$perms->setResolverFactories(
-						array($mock = $this->getMock('Perms_ResolverFactory'))
+			array($mock = $this->getMock('Perms_ResolverFactory'))
 		);
 		Perms::set($perms);
 
@@ -245,7 +245,7 @@ class Perms_BaseTest extends TikiTestCase
 	{
 		$perms = new Perms;
 		$perms->setResolverFactories(
-						array($mock = $this->getMock('Perms_ResolverFactory'))
+			array($mock = $this->getMock('Perms_ResolverFactory'))
 		);
 		Perms::set($perms);
 

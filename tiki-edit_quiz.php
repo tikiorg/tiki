@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -101,7 +101,7 @@ if (isset($_REQUEST["save"])) {
 	} else {
 		$_REQUEST["shuffleAnswers"] = 'n';
 	}*/
-	
+
 	if (isset($_REQUEST["timeLimited"]) && $_REQUEST["timeLimited"] == 'on') {
 		$_REQUEST["timeLimited"] = 'y';
 	} else {
@@ -110,21 +110,21 @@ if (isset($_REQUEST["save"])) {
 
 	// Pass dummy "n" for immediateFeedback, showAnswers, shuffleQuestions and shuffleAnswers, which are not implemented.
 	$qid = $quizlib->replace_quiz(
-					$_REQUEST["quizId"], 
-					$_REQUEST["name"],
-					$_REQUEST["description"],	
-					$_REQUEST["canRepeat"],
-					$_REQUEST["storeResults"],
-					'n',
-					'n', 
-					'n',
-					'n', 
-					$_REQUEST["questionsPerPage"],
-					$_REQUEST["timeLimited"], 
-					$_REQUEST["timeLimit"],
-					$publishDate, 
-					$expireDate, 
-					$_REQUEST["passingperct"]
+		$_REQUEST["quizId"],
+		$_REQUEST["name"],
+		$_REQUEST["description"],
+		$_REQUEST["canRepeat"],
+		$_REQUEST["storeResults"],
+		'n',
+		'n',
+		'n',
+		'n',
+		$_REQUEST["questionsPerPage"],
+		$_REQUEST["timeLimited"],
+		$_REQUEST["timeLimit"],
+		$publishDate,
+		$expireDate,
+		$_REQUEST["passingperct"]
 	);
 	$cat_type = 'quiz';
 	$cat_objid = $qid;

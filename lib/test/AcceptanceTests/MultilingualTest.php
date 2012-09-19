@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -25,7 +25,7 @@ class  AcceptanceTests_MultilingualTest extends TikiSeleniumTestCase
 
 	/**
 	 * @group gui
-	 */ 
+	 */
 	public function testHomePageIsMultilingual()
 	{
 		$this->openTikiPage('tiki-index.php');
@@ -36,19 +36,19 @@ class  AcceptanceTests_MultilingualTest extends TikiSeleniumTestCase
 
 	/**
 	 * @group gui
-	 */ 
+	 */
 	public function testMultilingualPageDisplaysLanguagePicklist()
 	{
 		$this->openTikiPage('tiki-index.php?page=Multilingual+Test+Page+1');
 		$this->logInIfNecessaryAs('admin');
 		$this->assertLanguagePicklistHasLanguages(
-						array('English' => 'Multilingual Test Page 1', 'Français' => 'Page de test multilingue 1')
-		); 
+			array('English' => 'Multilingual Test Page 1', 'Français' => 'Page de test multilingue 1')
+		);
 	}
 
 	/**
 	 * @group gui
-	 */ 
+	 */
 	public function testSwitchBetweenLanguages()
 	{
 		$this->openTikiPage('tiki-index.php?page=Multilingual+Test+Page+1');
@@ -60,7 +60,7 @@ class  AcceptanceTests_MultilingualTest extends TikiSeleniumTestCase
 
 	/**
 	 * @group gui
-	 */ 
+	 */
 	public function testLanguageLinkLeadsToTranslatedPageInThatLanguage()
 	{
 		$this->openTikiPage('tiki-index.php?page=Multilingual+Test+Page+1');
@@ -69,13 +69,13 @@ class  AcceptanceTests_MultilingualTest extends TikiSeleniumTestCase
 		$this->assertTrue(preg_match('/page=Page\+de\+test\+multilingue\+1/', $this->getLocation()) == 1);
 		$this->assertElementPresent("link=Page de test multilingue 1");
 		$this->assertLanguagePicklistHasLanguages(
-						array('Français' => 'Page de test multilingue 1', 'English' => 'Multilingual Test Page 1')
-		);	
+			array('Français' => 'Page de test multilingue 1', 'English' => 'Multilingual Test Page 1')
+		);
 	}
 
 	/**
 	 * @group gui
-	 */ 
+	 */
 	public function testTranslateOptionAppearsOnlyWhenLoggedIn()
 	{
 		$this->openTikiPage('tiki-index.php');
@@ -88,7 +88,7 @@ class  AcceptanceTests_MultilingualTest extends TikiSeleniumTestCase
 
 	/**
 	 * @group gui
-	 */ 
+	 */
 	public function testClickOnTranslateShowsTranslatePage()
 	{
 		$this->openTikiPage('tiki-index.php');
@@ -101,7 +101,7 @@ class  AcceptanceTests_MultilingualTest extends TikiSeleniumTestCase
 
 	/**
 	 * @group gui
-	 */ 
+	 */
 	public function testListOfLanguagesOnTranslatePageDoesNotContainAlreadyTranslatedLanguages()
 	{
 		$this->openTikiPage('tiki-index.php?page=Multilingual+Test+Page+1');
@@ -109,21 +109,21 @@ class  AcceptanceTests_MultilingualTest extends TikiSeleniumTestCase
 		$this->select("page", "label=Translate");
 		$this->waitForPageToLoad("30000");
 		$this->assertSelectElementDoesNotContainItems(
-						"xpath=id('tiki-center')/form[1]/p/select[@name='lang']",
-						array('English' => 'en'),
-						"English should not have been present in the list of languages."
+			"xpath=id('tiki-center')/form[1]/p/select[@name='lang']",
+			array('English' => 'en'),
+			"English should not have been present in the list of languages."
 		);
 	}
 
 	/**
 	 * @group gui
-	 */ 
+	 */
 	public function testCannotGiveATranslationTheNameOfAnExistingPage()
 	{
-		//NB. This is in fact wrong. If you have similar languages, say English and British English, 
+		//NB. This is in fact wrong. If you have similar languages, say English and British English,
 		//or Serbian (latin alphabet) and Croatian, the title of the page is bound to be the same. Here we force
 		//the translator to add a language tag to the title only to have the unique page name
-		//A multilingual system should add a language ID to the page name without the user's 
+		//A multilingual system should add a language ID to the page name without the user's
 		//intervention.
 		$this->openTikiPage('tiki-index.php?page=Multilingual+Test+Page+1');
 		$this->logInIfNecessaryAs('admin');
@@ -139,11 +139,11 @@ class  AcceptanceTests_MultilingualTest extends TikiSeleniumTestCase
 
 	/**
 	 * @group gui
-	 */ 
+	 */
 	public function testShouldNotChangeLanguageOfThePageInCaseCreateTranslationFails()
 	{
 		//In case when a page already exists create translation gives an error message which is ok.
-		//But it shouldn't change the language of the existing page to the language chosen for translation. 
+		//But it shouldn't change the language of the existing page to the language chosen for translation.
 		$this->openTikiPage('tiki-index.php?page=Multilingual+Test+Page+1');
 		$this->logInIfNecessaryAs('admin');
 		$this->doSwitchLanguageTo('Français');
@@ -156,15 +156,15 @@ class  AcceptanceTests_MultilingualTest extends TikiSeleniumTestCase
 		$this->clickAndWait("link=View Page");
 		//A bug: instead of English it shows English British although the page was not created
 		$this->assertLanguagePicklistHasLanguages(
-						array('Français' => 'Page de test multilingue 1', 'English' => 'Multilingual Test Page 1')
-		);                                                    
-		$this->assertLanguagePicklistDoesNotHaveLanguages(array('English British' => 'Multilingual Test Page 1'));                                                    
+			array('Français' => 'Page de test multilingue 1', 'English' => 'Multilingual Test Page 1')
+		);
+		$this->assertLanguagePicklistDoesNotHaveLanguages(array('English British' => 'Multilingual Test Page 1'));
 	}
 
 
 	/**
 	 * @group gui
-	 */ 
+	 */
 	public function testUpToDatenessIs100percentForTheCompletelyTranslatedPages()
 	{
 		$this->openTikiPage('tiki-index.php?page=Page+de+test+multilingue+1');
@@ -176,7 +176,7 @@ class  AcceptanceTests_MultilingualTest extends TikiSeleniumTestCase
 
 	/**
 	 * @group gui
-	 */ 
+	 */
 	public function testUponAddingNewContentTranslationsThatNeedImprovementAppears()
 	{
 		$this->openTikiPage('tiki-index.php?page=Multilingual+Test+Page+1');
@@ -195,7 +195,7 @@ class  AcceptanceTests_MultilingualTest extends TikiSeleniumTestCase
 
 	/**
 	 * @group gui
-	 */ 
+	 */
 	public function testCompleteTranslationBringsBackUpToDatenessTo100()
 	{
 		$this->openTikiPage('tiki-index.php?page=Multilingual+Test+Page+1');
@@ -215,7 +215,7 @@ class  AcceptanceTests_MultilingualTest extends TikiSeleniumTestCase
 
 	/**
 	 * @group gui
-	 */ 
+	 */
 	public function testPartialTranslationBringsUpUpToDatenessPourcentage()
 	{
 		$this->openTikiPage('tiki-index.php?page=Multilingual+Test+Page+1');
@@ -242,14 +242,14 @@ class  AcceptanceTests_MultilingualTest extends TikiSeleniumTestCase
 
 	/**
 	 * @group gui
-	 */ 
+	 */
 	public function testMachineTranslationOfAPageCausesErrorMessageIfNotEnabled()
 	{
 		$this->logInIfNecessaryAs('admin');
 		$this->_setMachineTranslationFeatureTo('n');
-		$this->openTikiPage('tiki-index.php?page=HomePage&machine_translate_to_lang=fr'); 
+		$this->openTikiPage('tiki-index.php?page=HomePage&machine_translate_to_lang=fr');
 		$this->assertTextPresent(
-						'Machine Translation feature is not enabled.', "System should have known that MT features are not enabled."
+			'Machine Translation feature is not enabled.', "System should have known that MT features are not enabled."
 		);
 
 	}
@@ -261,7 +261,7 @@ class  AcceptanceTests_MultilingualTest extends TikiSeleniumTestCase
 
 	protected function setUp()
 	{
-		$this->markTestSkipped("These tests are still too experimental, so skipping it.");    	    	
+		$this->markTestSkipped("These tests are still too experimental, so skipping it.");
 		$this->setBrowserUrl('http://localhost/');
 		$this->current_test_db = "multilingualTestDump.sql";
 		$this->restoreDBforThisTest();
@@ -270,43 +270,43 @@ class  AcceptanceTests_MultilingualTest extends TikiSeleniumTestCase
 	public function assertLanguagePicklistHasLanguages($expAvailableLanguages)
 	{
 		$this->assertSelectElementContainsItems(
-						"xpath=//select[@name='page' and @onchange='quick_switch_language( this )']",
-						$expAvailableLanguages, 
-						"Language picklist was wrong. It should have contained ".$this->implode_with_key(",", $expAvailableLanguages)." but didn't."
-		);           
+			"xpath=//select[@name='page' and @onchange='quick_switch_language( this )']",
+			$expAvailableLanguages,
+			"Language picklist was wrong. It should have contained ".$this->implode_with_key(",", $expAvailableLanguages)." but didn't."
+		);
 	}
 
 	public function doSwitchLanguageTo($language)
 	{
 		$this->select("page", "label=$language");
 		$this->waitForPageToLoad("30000");
-	} 
+	}
 
 	public function assertLanguagePicklistDoesNotHaveLanguages($expAvailableLanguages)
 	{
 		$this->assertSelectElementDoesNotContainItems(
-						"xpath=//select[@name='page' and @onchange='quick_switch_language( this )']",
-						$expAvailableLanguages, 
-						"Language picklist was wrong. It contained ".$this->implode_with_key(",", $expAvailableLanguages)." but shouldn't."
+			"xpath=//select[@name='page' and @onchange='quick_switch_language( this )']",
+			$expAvailableLanguages,
+			"Language picklist was wrong. It contained ".$this->implode_with_key(",", $expAvailableLanguages)." but shouldn't."
 		);
 	}
 
 	public function assertLanguagePicklistHasTranslateOption()
 	{
 		$this->assertElementPresent(
-						"xpath=//select[@name='page' and @onchange='quick_switch_language( this )']/option[@value='_translate_']",
-						"Translate option was not present."
-		);           
+			"xpath=//select[@name='page' and @onchange='quick_switch_language( this )']/option[@value='_translate_']",
+			"Translate option was not present."
+		);
 	}
 
 	public function assertLanguagePicklistHasNoTranslateOption()
 	{
 		$this->assertFalse(
-						$this->isElementPresent(
-										"xpath=//select[@name='page' and @onchange='quick_switch_language( this )']/option[@value='_translate_']",
-										"Translate option was present."
-						)
-		);          	 
+			$this->isElementPresent(
+				"xpath=//select[@name='page' and @onchange='quick_switch_language( this )']/option[@value='_translate_']",
+				"Translate option was present."
+			)
+		);
 	}
 
 	public function _setMachineTranslationFeatureTo($y_or_n)

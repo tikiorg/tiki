@@ -86,50 +86,58 @@ class Services_Workspace_Controller
 			$builder = new Tiki_Profile_Builder;
 			$builder->addGroup('Base', $builder->user('group'));
 			$builder->setManagingGroup('Base');
-			$builder->setPermissions('Base', 'category', $builder->user('category'), array(
-				'admin_cms',
-				'blog_admin',
-				'bigbluebutton_create',
-				'bigbluebutton_moderate',
-				'bigbluebutton_view_rec',
-				'bigbluebutton_join',
-				'admin_calendar',
-				'admin_categories',
-				'modify_object_categories',
-				'admin_comments',
-				'dsn_query',
-				'admin_faqs',
-				'admin_file_galleries',
-				'admin_forum',
-				'admin_freetags',
-				'group_view',
-				'group_view_members',
-				'group_add_member',
-				'group_remove_member',
-				'group_join',
-				'admin_galleries',
-				'admin_newsletters',
-				'payment_view',
-				'payment_manual',
-				'payment_request',
-				'perspective_view',
-				'vote_poll',
-				'view_poll_voters',
-				'admin_sheet',
-				'take_survey',
-				'view_survey_stats',
-				'admin_trackers',
-				'admin_wiki',
-				'detach_translation',
-				'site_report',
-				'modify_object_categories',
-				'use_references',
-				'edit_references',
-			));
-			$id = $this->utilities->replaceTemplate(0, array(
-				'name' => $input->name->text(),
-				'definition' => $builder->getContent(),
-			));
+			$builder->setPermissions(
+				'Base',
+				'category',
+				$builder->user('category'),
+				array(
+					'admin_cms',
+					'blog_admin',
+					'bigbluebutton_create',
+					'bigbluebutton_moderate',
+					'bigbluebutton_view_rec',
+					'bigbluebutton_join',
+					'admin_calendar',
+					'admin_categories',
+					'modify_object_categories',
+					'admin_comments',
+					'dsn_query',
+					'admin_faqs',
+					'admin_file_galleries',
+					'admin_forum',
+					'admin_freetags',
+					'group_view',
+					'group_view_members',
+					'group_add_member',
+					'group_remove_member',
+					'group_join',
+					'admin_galleries',
+					'admin_newsletters',
+					'payment_view',
+					'payment_manual',
+					'payment_request',
+					'perspective_view',
+					'vote_poll',
+					'view_poll_voters',
+					'admin_sheet',
+					'take_survey',
+					'view_survey_stats',
+					'admin_trackers',
+					'admin_wiki',
+					'detach_translation',
+					'site_report',
+					'modify_object_categories',
+					'use_references',
+					'edit_references',
+				)
+			);
+			$id = $this->utilities->replaceTemplate(
+				0,
+				array(
+					'name' => $input->name->text(),
+					'definition' => $builder->getContent(),
+				)
+			);
 		}
 
 		return array(
@@ -154,10 +162,14 @@ class Services_Workspace_Controller
 			$builder = new Tiki_Profile_Builder;
 
 			if ($prefs['feature_areas'] == 'y' && $input->area->int()) {
-				$builder->addObject('area_binding', 'binding', array(
-					'category' => $builder->user('category'),
-					'perspective' => $builder->user('perspective'),
-				));
+				$builder->addObject(
+					'area_binding',
+					'binding',
+					array(
+						'category' => $builder->user('category'),
+						'perspective' => $builder->user('perspective'),
+					)
+				);
 			}
 
 			foreach ($input->groups as $internal => $info) {
@@ -169,30 +181,39 @@ class Services_Workspace_Controller
 			$builder->setManagingGroup($input->managingGroup->word());
 
 			foreach ($input->pages as $page) {
-				$builder->addObject('wiki_page', uniqid(), array(
-					'name' => $page->name->pagename(),
-					'namespace' => $page->namespace->pagename(),
-					'content' => $page->content->wikicontent(),
-					'categories' => $builder->user('category'),
-				));
+				$builder->addObject(
+					'wiki_page',
+					uniqid(),
+					array(
+						'name' => $page->name->pagename(),
+						'namespace' => $page->namespace->pagename(),
+						'content' => $page->content->wikicontent(),
+						'categories' => $builder->user('category'),
+					)
+				);
 			}
 
-			$this->utilities->replaceTemplate($input->id->int(), array(
-				'name' => $input->name->text(),
-				'definition' => $builder->getContent(),
-			));
+			$this->utilities->replaceTemplate(
+				$input->id->int(),
+				array(
+					'name' => $input->name->text(),
+					'definition' => $builder->getContent(),
+				)
+			);
 		}
 
 		$template = $this->utilities->getTemplate($input->id->int());
 		$profile = Tiki_Profile::fromString($template['definition']);
 		$analyser = new Tiki_Profile_Analyser($profile);
-		
-		$hasArea = $analyser->contains(array(
-			'type' => 'area_binding',
-			'ref' => 'binding',
-			'category' => $analyser->user('category'),
-			'perspective' => $analyser->user('perspective'),
-		)) ? 'y' : 'n';
+
+		$hasArea = $analyser->contains(
+			array(
+				'type' => 'area_binding',
+				'ref' => 'binding',
+				'category' => $analyser->user('category'),
+				'perspective' => $analyser->user('perspective'),
+			)
+		) ? 'y' : 'n';
 
 		return array(
 			'title' => tr('Edit template %0', $template['name']),
@@ -200,11 +221,14 @@ class Services_Workspace_Controller
 			'name' => $template['name'],
 			'area' => ($prefs['feature_areas'] == 'y') ? $hasArea : null,
 			'groups' => $analyser->getGroups('category', $analyser->user('category')),
-			'pages' => $analyser->getObjects('wiki_page', array(
-				'name' => '{namespace}',
-				'namespace' => null,
-				'content' => '',
-			)),
+			'pages' => $analyser->getObjects(
+				'wiki_page',
+				array(
+					'name' => '{namespace}',
+					'namespace' => null,
+					'content' => '',
+				)
+			),
 		);
 	}
 
@@ -215,11 +239,14 @@ class Services_Workspace_Controller
 		}
 
 		if ($definition = $input->edit->wikicontent()) {
-			$this->utilities->replaceTemplate($input->id->int(), array(
-				'name' => $input->name->text(),
-				'definition' => $definition,
-				'is_advanced' => 'y',
-			));
+			$this->utilities->replaceTemplate(
+				$input->id->int(),
+				array(
+					'name' => $input->name->text(),
+					'definition' => $definition,
+					'is_advanced' => 'y',
+				)
+			);
 		}
 
 		$template = $this->utilities->getTemplate($input->id->int());
@@ -241,10 +268,14 @@ class Services_Workspace_Controller
 		$permissions = array();
 
 		if ($raw = $input->permissions->none()) {
-			$permissions = array_map(function ($list) {
-				$list = preg_split('/\W+/', $list);
-				return array_filter($list);
-			}, $raw);
+			$permissions = array_map(
+				function ($list)
+				{
+					$list = preg_split('/\W+/', $list);
+					return array_filter($list);
+				},
+				$raw
+			);
 		} elseif ($checkboxes = $input->check->word()) {
 			$permissions = $checkboxes;
 		}
