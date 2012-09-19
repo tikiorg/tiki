@@ -58,7 +58,7 @@ class Tiki_Profile_InstallHandler_WikiPage extends Tiki_Profile_InstallHandler
 	function canInstall()
 	{
 		$this->fetchData();
-		if ( empty( $this->name ) || empty( $this->content ) )
+		if ( empty( $this->name ) )
 			return false;
 
 		$this->convertMode();
