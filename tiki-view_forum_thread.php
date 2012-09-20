@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -46,10 +46,10 @@ $pageCache = Tiki_PageCache::create()
 	->addValue('role', 'forum-page-output')
 	->addKeys($_REQUEST, array( 'locale', 'forumId', 'comments_parentId' ))
 	->checkMeta(
-					'forum-page-output-meta-time', array(
-						'forumId'           => @$_REQUEST['forumId'],
-						'comments_parentId' => @$_REQUEST['comments_parentId']
-					)
+		'forum-page-output-meta-time', array(
+			'forumId'           => @$_REQUEST['forumId'],
+			'comments_parentId' => @$_REQUEST['comments_parentId']
+		)
 	)
 	->applyCache();
 
@@ -221,7 +221,7 @@ if (isset($forum_info["inbound_pop_server"]) && !empty($forum_info["inbound_pop_
 
 if (isset($_REQUEST['display']) && $_REQUEST['display'] == 'print_all') {
 	$_REQUEST['comments_per_page'] = 0; // unlimited
-	
+
 }
 $forum_mode = 'y';
 include_once ("comments.php");

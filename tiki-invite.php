@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -65,7 +65,7 @@ if (isset($_REQUEST['loadprevious']) && !empty($_REQUEST['loadprevious']) && iss
     $res=$tikilib->query("SELECT * FROM `tiki_invited` WHERE id_invite=?", array((int)$_REQUEST['loadprevious']));
     $prev_invited="";
     while(is_array($row = $res->fetchRow())) $prev_invited.=$row['lastname'].','.$row['firstname'].','.$row['email']."\n";
-	
+
     $_REQUEST['emailslist'] = $prev_invited;
     $_REQUEST['emailslist_format'] = 'csv';
     $_REQUEST['emailsubject'] = $prev['emailsubject'];
@@ -85,47 +85,49 @@ $smarty->assign("usergroups", $user_details['groups']);
 
 
 if (isset($_REQUEST['send'])) {
-    
+
     $_text=$_REQUEST["emailcontent"];
     $_text=str_replace("\r\n", "\n", $_text);
     $_text=str_replace("\n\r", "\n", $_text);
     $_text=str_replace("\r", "\n", $_text);
-    
+
     $mails=$_REQUEST["emailslist"];
-    
+
 	switch($_REQUEST['emailslist_format']) {
-		case 'all': $emails=parsemails_all($mails); 
-    		break;
-   	case 'csv': $emails=parsemails_csv($mails); 
-      		break;
+		case 'all':
+			$emails=parsemails_all($mails);
+			break;
+		case 'csv':
+			$emails=parsemails_csv($mails);
+			break;
 		default: $emails=array();
 	}
-    
+
     $igroups=$_REQUEST['invitegroups'];
-    
+
 	if (!empty($_REQUEST['confirm'])) {
 		$tikilib->query(
-						"INSERT INTO `tiki_invite` (inviter, groups, ts, emailsubject,emailcontent,wikicontent,wikipageafter) VALUES (?,?,?,?,?,?,?)",
-						array(
-							$user,
-							count($igroups) ? implode(',', $igroups) : null,
-							$tikilib->now,
-							$_REQUEST['emailsubject'],
-							$_REQUEST['emailcontent'],
-							$_REQUEST['wikicontent'],
-							empty($_REQUEST['wikipageafter']) ? NULL : $_REQUEST['wikipageafter']
-						)
+			"INSERT INTO `tiki_invite` (inviter, groups, ts, emailsubject,emailcontent,wikicontent,wikipageafter) VALUES (?,?,?,?,?,?,?)",
+			array(
+				$user,
+				count($igroups) ? implode(',', $igroups) : null,
+				$tikilib->now,
+				$_REQUEST['emailsubject'],
+				$_REQUEST['emailcontent'],
+				$_REQUEST['wikicontent'],
+				empty($_REQUEST['wikipageafter']) ? NULL : $_REQUEST['wikipageafter']
+			)
 		);
       $res=$tikilib->query("SELECT MAX(id) as `id` FROM `tiki_invite` WHERE `inviter`=? AND `ts`=?", array($user, $tikilib->now));
         $row=$res->fetchRow(); $id=$row['id'];
-        
-      foreach ($emails as $m)
-						$tikilib->query(
-										"INSERT INTO `tiki_invited` (id_invite, email, firstname, lastname, used) VALUES (?,?,?,?,?)",
-										array($id, $m['email'], $m['firstname'], $m['lastname'], "no")
-						);
 
-		  $_SERVER['SCRIPT_URI'] =  empty($_SERVER['SCRIPT_URI']) ? 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] : $_SERVER['SCRIPT_URI'];			        
+      foreach ($emails as $m)
+			$tikilib->query(
+				"INSERT INTO `tiki_invited` (id_invite, email, firstname, lastname, used) VALUES (?,?,?,?,?)",
+				array($id, $m['email'], $m['firstname'], $m['lastname'], "no")
+			);
+
+		  $_SERVER['SCRIPT_URI'] =  empty($_SERVER['SCRIPT_URI']) ? 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] : $_SERVER['SCRIPT_URI'];
         foreach ($emails as $m) {
             $mail = new TikiMail();
             $mail->setFrom($prefs['sender_email']);
@@ -141,7 +143,7 @@ if (isset($_REQUEST['send'])) {
             $mail->setText($text);
             $mail->send(array($m['email']));
         }
-		
+
         $smarty->assign('sentresult', true);
 	}
    $smarty->assign('emails', $emails);

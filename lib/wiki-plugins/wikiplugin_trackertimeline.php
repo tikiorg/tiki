@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -80,11 +80,11 @@ function wikiplugin_trackertimeline_info()
 				'filter' => 'alpha',
 				'default' => 'hour',
 				'options' => array(
-					array('text' => '', 'value' => ''), 
-					array('text' => tra('Hour'), 'value' => 'hour'), 
-					array('text' => tra('Day'), 'value' => 'day'), 
-					array('text' => tra('Week'), 'value' => 'week'), 
-					array('text' => tra('Month'), 'value' => 'month'), 
+					array('text' => '', 'value' => ''),
+					array('text' => tra('Hour'), 'value' => 'hour'),
+					array('text' => tra('Day'), 'value' => 'day'),
+					array('text' => tra('Week'), 'value' => 'week'),
+					array('text' => tra('Month'), 'value' => 'month'),
 					array('text' => tra('Year'), 'value' => 'year'),
 					array('text' => tra('Decade *'), 'value' => 'decade'),
 					array('text' => tra('Century *'), 'value' => 'century'),
@@ -97,11 +97,11 @@ function wikiplugin_trackertimeline_info()
 				'filter' => 'alpha',
 				'default' => '',
 				'options' => array(
-					array('text' => '', 'value' => ''), 
-					array('text' => tra('Hour'), 'value' => 'hour'), 
-					array('text' => tra('Day'), 'value' => 'day'), 
-					array('text' => tra('Week'), 'value' => 'week'), 
-					array('text' => tra('Month'), 'value' => 'month'), 
+					array('text' => '', 'value' => ''),
+					array('text' => tra('Hour'), 'value' => 'hour'),
+					array('text' => tra('Day'), 'value' => 'day'),
+					array('text' => tra('Week'), 'value' => 'week'),
+					array('text' => tra('Month'), 'value' => 'month'),
 					array('text' => tra('Year'), 'value' => 'year'),
 					array('text' => tra('Decade *'), 'value' => 'decade'),
 					array('text' => tra('Century *'), 'value' => 'century'),
@@ -351,14 +351,14 @@ function wp_ttl_sort_cb( $a, $b )
 function wp_ttl_genlayout( $start, $end, $full, $type )
 {
 	switch( $type ) {
-	case 'empty': 
+	case 'empty':
 	case '':
 		return;
-	case 'hour': 
+	case 'hour':
 		$size = 3600;
 		$pos = $start - ( $start + $size ) % $size;
     	break;
-	case 'day': 
+	case 'day':
 		$size = 86400;
 
 		if ( date('H:i:s', $start) == '00:00:00' ) {
@@ -412,15 +412,15 @@ function wp_ttl_genlayout( $start, $end, $full, $type )
 	for ( $i = $pos; $end > $i + $size; $i += $size ) {
 		switch( $type ) {
 			case 'hour': $layout['blocks'][] = date('H:i', $i);
-     		break;
+	     		break;
 			case 'day': $layout['blocks'][] = date('j', $i);
-     		break;
+				break;
 			case 'week': $layout['blocks'][] = date('j', $i);
-     		break;
+     			break;
 			case 'month': $layout['blocks'][] = date('M', $i);
-     		break;
+	     		break;
 			case 'year': $layout['blocks'][] = date('Y', $i);
-     		break;
+				break;
 		}
 
 		switch( $type ) {

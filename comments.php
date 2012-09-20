@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -18,11 +18,11 @@
 
 //this script may only be included - so its better to err & die if called directly.
 //smarty is not there - we need setup
-require_once('tiki-setup.php');  
+require_once('tiki-setup.php');
 global $access, $tikilib, $headerlib;
 $access->check_script($_SERVER["SCRIPT_NAME"], basename(__FILE__));
 
-/* 
+/*
  * Determine the settings used to display the thread
  */
 
@@ -68,8 +68,8 @@ if (isset($_REQUEST['comzone'])) {
 	$comzone_state = $_REQUEST['comzone'];
 	if ($comzone_state=='show'||$comzone_state=='o') {
 		$comments_show = 'y';
-		if (!isset($_COOKIE['comzone'])||$_COOKIE['comzone']=='c') setcookie('comzone', 'o');	
-	} 
+		if (!isset($_COOKIE['comzone'])||$_COOKIE['comzone']=='c') setcookie('comzone', 'o');
+	}
 	if ($comzone_state=='hide'||$comzone_state=='c') {
 		if (!isset($_COOKIE['comzone'])||$_COOKIE['comzone']=='o') setcookie('comzone', 'c');
 	}
@@ -81,7 +81,7 @@ $comments_first = 1;
 
 foreach ($comments_vars as $c_name) {
 	$comments_avar["name"] = $c_name;
-	
+
 	if (isset($_REQUEST[$c_name])) {
 		$comments_avar["value"] = $_REQUEST[$c_name];
 		$comments_aux[] = $comments_avar;
@@ -162,16 +162,16 @@ if ( isset($_REQUEST['comments_objectId']) && $_REQUEST['comments_objectId'] == 
 	$threadId = $commentslib->post_in_forum($forum_info, $_REQUEST, $feedbacks, $errors);
 	if (!empty($threadId) && empty($errors)) {
 		$url = "tiki-view_forum_thread.php?forumId=" . $_REQUEST['forumId'] . "&comments_parentId=" . $_REQUEST['comments_parentId'];
-		if (!empty($_REQUEST['comments_threshold'])) 
+		if (!empty($_REQUEST['comments_threshold']))
 			$url .= "&amp;comments_threshold=".$_REQUEST['comments_threshold'];
-		if (!empty($_REQUEST['comments_offset'])) 
+		if (!empty($_REQUEST['comments_offset']))
 			$url .= "&amp;comments_offset=".$_REQUEST['comments_offset'];
-		if (!empty($_REQUEST['comments_per_page'])) 
+		if (!empty($_REQUEST['comments_per_page']))
 			$url .= "&amp;comments_per_page=".$_REQUEST['comments_per_page'];
-		if (!empty($_REQUEST['thread_style'])) 
+		if (!empty($_REQUEST['thread_style']))
 			$url .= "&amp;thread_style=".$_REQUEST['thread_style'];
-		if (!empty($_REQUEST['thread_sort_mode'])) 
-			$url .= "&amp;thread_sort_mode=".$_REQUEST['thread_sort_mode'];			
+		if (!empty($_REQUEST['thread_sort_mode']))
+			$url .= "&amp;thread_sort_mode=".$_REQUEST['thread_sort_mode'];
 		if (!empty($feedbacks)) {
 			$_SESSION['feedbacks'] = $feedbacks;
 		}
@@ -213,7 +213,7 @@ if ($_REQUEST["comments_threadId"] > 0) {
 	$comment_info = $commentslib->get_comment($_REQUEST["comments_threadId"]);
 
 	$smarty->assign('comment_title', $comment_info["title"]);
-	$smarty->assign('comment_rating', $comment_info["comment_rating"]);	
+	$smarty->assign('comment_rating', $comment_info["comment_rating"]);
 	$smarty->assign('comment_data', $comment_info["data"]);
 } elseif ($_REQUEST["comments_reply_threadId"] > 0) {
 	// Replies to comments.
@@ -257,7 +257,7 @@ if ($_REQUEST["comments_threadId"] > 0) {
 	$smarty->assign('comments_reply_threadId', $_REQUEST["comments_reply_threadId"]);
 } else {
 	$smarty->assign('comment_title', '');
-	$smarty->assign('comment_rating', '');	
+	$smarty->assign('comment_rating', '');
 	$smarty->assign('comment_data', '');
 }
 
@@ -338,10 +338,10 @@ if (empty($thread_sort_mode)) {
 }
 
 $comments_coms = $commentslib->get_comments(
-				$comments_objectId,
-				$_REQUEST["comments_parentId"],
-				$comments_offset, $comments_per_page, $thread_sort_mode, $_REQUEST["comments_commentFind"],
-				$_REQUEST['comments_threshold'], $thread_style, $threadId_if_reply
+	$comments_objectId,
+	$_REQUEST["comments_parentId"],
+	$comments_offset, $comments_per_page, $thread_sort_mode, $_REQUEST["comments_commentFind"],
+	$_REQUEST['comments_threshold'], $thread_style, $threadId_if_reply
 );
 
 if ($comments_prefix_var == 'forum:') {

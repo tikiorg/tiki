@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -94,13 +94,13 @@ class Tracker_Field_Files extends Tracker_Field_Abstract
 			// Add manually uploaded files (non-HTML5 browsers only)
 			foreach (array_keys($_FILES[$ins_id]['name']) as $index) {
 				$fileIds[] = $this->handleUpload(
-								$galleryId, 
-								array(
-									'name' => $_FILES[$ins_id]['name'][$index],
-									'type' => $_FILES[$ins_id]['type'][$index],
-									'size' => $_FILES[$ins_id]['size'][$index],
-									'tmp_name' => $_FILES[$ins_id]['tmp_name'][$index],
-								)
+					$galleryId,
+					array(
+						'name' => $_FILES[$ins_id]['name'][$index],
+						'type' => $_FILES[$ins_id]['type'][$index],
+						'size' => $_FILES[$ins_id]['size'][$index],
+						'tmp_name' => $_FILES[$ins_id]['tmp_name'][$index],
+					)
 				);
 			}
 
@@ -124,7 +124,7 @@ class Tracker_Field_Files extends Tracker_Field_Abstract
 			// Obtain the information from the database for display
 			$fileIds = array_filter(explode(',', $value));
 			$fileInfo = $this->getFileInfo($fileIds);
-			
+
 		}
 
 		if ($deepGallerySearch) {
@@ -174,7 +174,7 @@ class Tracker_Field_Files extends Tracker_Field_Abstract
 		if ($context['list_mode'] === 'csv') {
 			return $value;
 		}
-		
+
 		$ret = '';
 		if (!empty($value)) {
 			if ($this->getOption('displayImages')) { // images
@@ -202,7 +202,7 @@ class Tracker_Field_Files extends Tracker_Field_Abstract
 				$smarty = TikiLib::lib('smarty');
 				$smarty->loadPlugin('smarty_function_object_link');
 				$ret = '<ol>';
-				
+
 				foreach ($this->getConfiguration('files') as $fileId => $file) {
 					$ret .= '<li>';
 					$ret .= smarty_function_object_link(array('type' => 'file', 'id' => $fileId, 'title' => $file['name']), $smarty);
@@ -222,7 +222,7 @@ class Tracker_Field_Files extends Tracker_Field_Abstract
 							<img width='16' height='16' class='icon' alt='Edit' src='img/icons/page_edit.png' />
 						</a>";
 					}
-					
+
 					$ret .= '</li>';
 				}
 				$ret .= '</ol>';
@@ -286,15 +286,15 @@ class Tracker_Field_Files extends Tracker_Field_Abstract
 		$table = $db->table('tiki_files');
 
 		$data = $table->fetchAll(
-						array(
-							'fileId', 
-							'name', 
-							'filetype', 
-							'archiveId'
-						), 
-						array(
-							'fileId' => $table->in($ids),
-						)
+			array(
+				'fileId',
+				'name',
+				'filetype',
+				'archiveId'
+			),
+			array(
+				'fileId' => $table->in($ids),
+			)
 		);
 
 		$out = array();

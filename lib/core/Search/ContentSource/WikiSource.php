@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -73,12 +73,12 @@ class Search_ContentSource_WikiSource implements Search_ContentSource_Interface
 			if (! $versionInfo || $versionInfo['version'] != $info['version']) {
 				// No approved version or approved version differs, latest content marked as such
 				$out[] = array_merge(
-								$data, 
-								array(
-									'title' => $typeFactory->sortable(tr('%0 (latest)', $info['pageName'])),
-									'view_permission' => $typeFactory->identifier('tiki_p_wiki_view_latest'),
-									'url' => $typeFactory->identifier($wikilib->sefurl($info['pageName'], true) . 'latest'),
-								)
+					$data,
+					array(
+						'title' => $typeFactory->sortable(tr('%0 (latest)', $info['pageName'])),
+						'view_permission' => $typeFactory->identifier('tiki_p_wiki_view_latest'),
+						'url' => $typeFactory->identifier($wikilib->sefurl($info['pageName'], true) . 'latest'),
+					)
 				);
 			}
 
@@ -86,11 +86,11 @@ class Search_ContentSource_WikiSource implements Search_ContentSource_Interface
 				// Approved version not latest, include approved version in index
 				// Also applies when versions are equal, data would be the same
 				$out[] = array_merge(
-								$data, 
-								array(
-									'wiki_content' => $typeFactory->wikitext($versionInfo['data']),
-									'hash' => $typeFactory->identifier($versionInfo['version']),
-								)
+					$data,
+					array(
+						'wiki_content' => $typeFactory->wikitext($versionInfo['data']),
+						'hash' => $typeFactory->identifier($versionInfo['version']),
+					)
 				);
 			}
 		}

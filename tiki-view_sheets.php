@@ -209,19 +209,19 @@ if (!empty($_REQUEST['parse']) && $_REQUEST['parse'] == 'edit') {
 }
 
 $headerlib->add_jq_onready(
-				'$.sheet.tikiOptions = $.extend($.sheet.tikiOptions, {
+	'$.sheet.tikiOptions = $.extend($.sheet.tikiOptions, {
 					menu: $("#sheetMenu").clone().html()
 				});
-			
+
 				jST = $("div.tiki_sheet")
 					.sheet($.sheet.tikiOptions);
-			
+
 				jST.id = "'.$_REQUEST['sheetId'].'";
 				jST.file = "'.$_REQUEST['file'].'";
-			
+
 				$.sheet.link.setupUI();
 				$.sheet.readyState();
-			
+
 				$(window).bind("beforeunload", function() {
 					$($.sheet.instance).each(function() {
 						if (this.isDirty) {
@@ -229,22 +229,22 @@ $headerlib->add_jq_onready(
 						}
 					});
 				});
-			
+
 				$("#edit_button a")
 					.click(function() {
 						$.sheet.manageState(true, "edit");
 						return false;
 					});
-			
+
 				$("#save_button a")
 					.click( function () {
 						$.sheet.saveSheet(function() {
 							$.sheet.manageState(true);
 						});
-			
+
 						return false;
 					});
-			
+
 				$("#cancel_button")
 					.click(function() {
 						$.sheet.manageState(true);

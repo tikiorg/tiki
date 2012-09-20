@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -11,11 +11,11 @@ class WikiRenderer
 	private $structureInfo;
 	private $user;
 	private $page;
-	
+
 	// If you want to render some wiki markup that is not actually contained
 	// in a page, then set this to the markup to be rendered.
 	private $content_to_render;
-	
+
 	private $pageNumber = 1;
 	private $sortMode = 'created_desc';
 	private $showAttachments = 'n';
@@ -129,29 +129,29 @@ class WikiRenderer
 		$this->smartyassign('home_info', $navigation_info['home']);
 		$structure_path = $structlib->get_structure_path($this->structureInfo['page_ref_id']);
 		$this->smartyassign('structure_path', $structure_path);
-		// Need to have showstructs when in more than one struct - for usability reasons 
+		// Need to have showstructs when in more than one struct - for usability reasons
 		$structs = $structlib->get_page_structures($this->page);
-		$structs_with_perm = array(); 
+		$structs_with_perm = array();
 		foreach ($structs as $t_structs) {
 			if ($tikilib->user_has_perm_on_object($this->user, $t_structs['pageName'], 'wiki page', 'tiki_p_view')) {
 				$structs_with_perm[] = $t_structs;
 			}
-		}    	
+		}
 		if ($tikilib->user_has_perm_on_object($this->user, $navigation_info['home']['pageName'], 'wiki page', 'tiki_p_edit', 'tiki_p_edit_structures'))
 			$this->smartyassign('struct_editable', 'y');
 		else
-			$this->smartyassign('struct_editable', 'n');	
-		// To show position    
+			$this->smartyassign('struct_editable', 'n');
+		// To show position
 		if (count($structure_path) > 1) {
 			$cur_pos = '';
 			for ($i = 1, $count_str_path = count($structure_path); $i < $count_str_path; $i++) {
 				$cur_pos .= $structure_path[$i]["pos"] . "." ;
 			}
-			$cur_pos = substr($cur_pos, 0, strlen($cur_pos)-1);      
+			$cur_pos = substr($cur_pos, 0, strlen($cur_pos)-1);
 		} else {
 			$cur_pos = tra("Top");
 		}
-		$this->smartyassign('cur_pos', $cur_pos);	
+		$this->smartyassign('cur_pos', $cur_pos);
 
 		$this->smartyassign('showstructs', $structs_with_perm);
 		$this->smartyassign('page_ref_id', $this->structureInfo['page_ref_id']);
@@ -189,24 +189,24 @@ class WikiRenderer
 
 		$tikilib = TikiLib::lib('tiki');
 		$multilinguallib = TikiLib::lib('multilingual');
-		
-		if ( !empty($this->info['lang'])) { 
+
+		if ( !empty($this->info['lang'])) {
 			$this->trads = $multilinguallib->getTranslations('wiki page', $this->info['page_id'], $this->page, $this->info['lang']);
 			$this->smartyassign('trads', $this->trads);
 			$this->smartyassign('translationsCount', count($this->trads));
 			$pageLang = $this->info['lang'];
 			$this->smartyassign('pageLang', $pageLang);
 		}
-		
+
 		if ($prefs['feature_machine_translation'] == 'y' && !empty($this->info['lang'])) {
 			require_once('lib/core/Multilingual/MachineTranslation/GoogleTranslateWrapper.php');
 			$translator = new Multilingual_MachineTranslation_GoogleTranslateWrapper($this->info['lang'], $this->info['lang']);
 			$langsCandidatesForMachineTranslation = $translator->getLangsCandidatesForMachineTranslation($this->trads);
 			$this->smartyassign('langsCandidatesForMachineTranslation', $langsCandidatesForMachineTranslation);
 		}
-				
+
 		$bits = $multilinguallib->getMissingTranslationBits('wiki page', $this->info['page_id'], 'critical', true);
-		
+
 		$alertData = array();
 		foreach ( $bits as $translationBit ) {
 			$alertData[] = $multilinguallib->getTranslationsWithBit($translationBit, $this->info['page_id']);
@@ -232,7 +232,7 @@ class WikiRenderer
 		// Verify lock status
 		if ( $prefs['feature_wiki_usrlock'] == 'y' ) {
 			if ( $wikilib->is_locked($this->page, $this->info) ) {
-				$this->smartyassign('lock', true);  
+				$this->smartyassign('lock', true);
 			} else {
 				$this->smartyassign('lock', false);
 			}
@@ -259,7 +259,7 @@ class WikiRenderer
 
 		//Let us check if slides exist in the wiki page
 		$slides = preg_split('/-=[^=]+=-|![^=]+|!![^=]+!!![^=]+/', $this->info['data']);
-		
+
 		if (count($slides)>1) {
 			$this->smartyassign('show_slideshow', 'y');
 		} else {
@@ -362,7 +362,7 @@ class WikiRenderer
 
 		$this->smartyassign('lastModif', $this->info["lastModif"]);
 		if (empty($this->info['user'])) {
-			$this->info['user']=tra('Anonymous');  
+			$this->info['user']=tra('Anonymous');
 		}
 		$this->smartyassign('lastUser', $this->info['user']);
 		$this->smartyassign('description', $this->info['description']);
@@ -426,19 +426,19 @@ class WikiRenderer
 				$this->smartyassign('user_watching_structure', 'y');
 			}
 		}
-		// Check, if the user is watching this page by a category.    
-		if ($prefs['feature_categories'] == 'y') {    
-			$watching_categories_temp=$categlib->get_watching_categories($this->page, "wiki page", $this->user);	    
+		// Check, if the user is watching this page by a category.
+		if ($prefs['feature_categories'] == 'y') {
+			$watching_categories_temp=$categlib->get_watching_categories($this->page, "wiki page", $this->user);
 			$this->smartyassign('category_watched', 'n');
 			if (count($watching_categories_temp) > 0) {
 				$this->smartyassign('category_watched', 'y');
-				$watching_categories=array();	 			 	
+				$watching_categories=array();
 				foreach ($watching_categories_temp as $wct ) {
 					$watching_categories[]=array("categId"=>$wct,"name"=>$categlib->get_category_name($wct));
-				}		 		 	
+				}
 				$this->smartyassign('watching_categories', $watching_categories);
-			}    
-		}    
+			}
+		}
 
 	} // }}}
 
@@ -458,12 +458,12 @@ class WikiRenderer
 				$category_related_objects = $freetaglib->get_similar('wiki page', $this->page, empty($prefs['category_morelikethis_mincommon_max'])?$prefs['maxRecords']: $prefs['category_morelikethis_mincommon_max'], null, 'category');
 				$this->smartyassign('category_related_objects', $category_related_objects);
 			}
-			if ($prefs['feature_categorypath'] == 'y') {	
+			if ($prefs['feature_categorypath'] == 'y') {
 				$display_catpath = $categlib->get_categorypath($cats);
 				$this->smartyassign('display_catpath', $display_catpath);
-			}    
-			// Display current category objects or not (like {category()})    
-			if ($prefs['feature_categoryobjects'] == 'y') {	    
+			}
+			// Display current category objects or not (like {category()})
+			if ($prefs['feature_categoryobjects'] == 'y') {
 				$display_catobjects = $categlib->get_categoryobjects($cats);
 				$this->smartyassign('display_catobjects', $display_catobjects);
 			}
@@ -495,11 +495,11 @@ class WikiRenderer
 		}
 		//global $description;
 		$crumbsLocal[] = new Breadcrumb(
-						isset($this->info['prettyName']) ? $this->info['prettyName'] : $crumbpage,
-						$this->info['description'],
-						TikiLib::lib('wiki')->sefurl($this->page),
-						'',
-						''
+			isset($this->info['prettyName']) ? $this->info['prettyName'] : $crumbpage,
+			$this->info['description'],
+			TikiLib::lib('wiki')->sefurl($this->page),
+			'',
+			''
 		);
 		$crumbs = array_merge($crumbs, $crumbsLocal);
 
@@ -549,7 +549,7 @@ class WikiRenderer
 		}
 
 		return $this->canUndo;
-		
+
 	} // }}}
 
 	function setInfos( $infos ) // {{{

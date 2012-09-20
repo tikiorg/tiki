@@ -57,14 +57,15 @@ class JisonParser_Wiki_Header
 		return $this->toHtmlListChildren($this->stack, $class);
 	}
 
-	private function toHtmlListChildren(&$stack, $class = '') {
+	private function toHtmlListChildren(&$stack, $class = '')
+	{
 		$result = '';
 
-		foreach($stack as &$header){
-			if(empty($header['content']) == false){
+		foreach ($stack as &$header) {
+			if (empty($header['content']) == false) {
 				$result .= '<li><a class="link" href="#' . $header['id'] . '">' . $header['content'] . '</a></li>';
 
-				if(empty($header['children']) == false) {
+				if (empty($header['children']) == false) {
 					$result .= $this->toHtmlListChildren($header['children']);
 				}
 

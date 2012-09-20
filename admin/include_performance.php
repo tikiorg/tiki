@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -87,21 +87,21 @@ if ( $stat_flag ) {
 
 if ( isset($opcode_stats['hit_total']) ) {
 	$opcode_stats = array_merge(
-					$opcode_stats, 
-					array(
-						'warning_fresh' => $opcode_stats['hit_total'] < 10000,
-						'warning_ratio' => $opcode_stats['hit_hit'] < 0.8,
-					) 
+		$opcode_stats,
+		array(
+			'warning_fresh' => $opcode_stats['hit_total'] < 10000,
+			'warning_ratio' => $opcode_stats['hit_hit'] < 0.8,
+		)
 	);
 }
 
 if ( isset($opcode_stats['memory_total']) ) {
 	$opcode_stats = array_merge(
-					$opcode_stats, 
-					array(
-						'warning_starve' => $opcode_stats['memory_avail'] < 0.2,
-						'warning_low' => $opcode_stats['memory_total'] < 60*1024*1024,
-					) 
+		$opcode_stats,
+		array(
+			'warning_starve' => $opcode_stats['memory_avail'] < 0.2,
+			'warning_low' => $opcode_stats['memory_total'] < 60*1024*1024,
+		)
 	);
 }
 

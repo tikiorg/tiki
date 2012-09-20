@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -112,11 +112,11 @@ if ($output["data"] == "EMPTY") {
 		foreach ($data["field_values"] as $data2) {
 			if (isset($data2["name"]) && !empty($data2['value']) || !$doNotShowEmptyField) {
 				$data2['value'] = $trklib->field_render_value(
-								array(
-									'field' => $data2,
-									'item' => $data,
-									'process' => 'y',
-								)
+					array(
+						'field' => $data2,
+						'item' => $data,
+						'process' => 'y',
+					)
 				);
 				if ($data2['value'] == '') {
 					$data2['value'] = '(' . tra('empty') . ')';

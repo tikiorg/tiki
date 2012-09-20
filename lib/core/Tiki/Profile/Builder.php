@@ -22,7 +22,7 @@ class Tiki_Profile_Builder
 	{
 		return '$profilerequest:' . $name . '$undefined$';
 	}
-	
+
 	function addObject($type, $ref, array $data)
 	{
 		if (isset($data['categories'])) {
@@ -85,7 +85,7 @@ class Tiki_Profile_Builder
 		}
 
 		$data = array();
-		
+
 		if (count($builder->objects)) {
 			$data['objects'] = $builder->objects;
 		}
@@ -112,13 +112,22 @@ class Tiki_Profile_Builder
 		}
 
 		$self = $this;
-		array_walk_recursive($data, function (& $entry) use ($self) {
-			if (is_string($entry)) {
-				$entry = preg_replace_callback('/\{(\w+)\}/', function ($matches) use ($self) {
-					return $self->user($matches[1]);
-				}, $entry);
+		array_walk_recursive(
+			$data,
+			function (& $entry) use ($self)
+			{
+				if (is_string($entry)) {
+	 				$entry = preg_replace_callback(
+						'/\{(\w+)\}/',
+						function ($matches) use ($self)
+						{
+							return $self->user($matches[1]);
+						},
+						$entry
+					);
+				}
 			}
-		});
+		);
 
 		$yaml = Horde_Yaml::dump($data);
 		return <<<SYNTAX

@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -14,7 +14,7 @@ function wikiplugin_fancytable_info()
 		'prefs' => array('wikiplugin_fancytable'),
 		'body' => tra('Rows separated by >> in the header; for the table body, one row per line. Cells separated by | in both cases.'),
 		'icon' => 'img/icons/table.png',
-		'tags' => array( 'basic' ),		
+		'tags' => array( 'basic' ),
 		'params' => array(
 			'head' => array(
 				'required' => false,
@@ -46,8 +46,8 @@ function wikiplugin_fancytable_info()
 				'description' => tra('Indicate whether columns are sortable or not (not sortable by default)'),
 				'default' => 'n',
 				'options' => array(
-					array('text' => '', 'value' => ''), 
-					array('text' => tra('Yes'), 'value' => 'y'), 
+					array('text' => '', 'value' => ''),
+					array('text' => tra('Yes'), 'value' => 'y'),
 					array('text' => tra('No'), 'value' => 'n')
 				),
 			),
@@ -89,8 +89,8 @@ function wikiplugin_fancytable($data, $params)
 
 	// Start the table
 	$wret = '<table class="normal'.($sortable=='y'? ' fancysort':'').'" id="fancytable_'.$iFancytable.'">' . "\r\t";
-	
-	//mask tiki tag content during processing and bring back at the end so that any pipes (| or ~|~) 
+
+	//mask tiki tag content during processing and bring back at the end so that any pipes (| or ~|~)
 	//inside of tags aren't mistaken for cell dividers
 	//pattern covers (( )), [ ], ~np~ ~/np~, ~tc~ ~/tc~, ~hc~ ~/hc~, { }
 	$pattern = '/(\(\([^\)\)]+\)\)|\[[^\]]+\]|~np~(?:(?!~\/np~).)*~\/np~|~tc~(?:(?!~\/tc~).)*~\/tc~'
@@ -106,8 +106,10 @@ function wikiplugin_fancytable($data, $params)
 		//replace all tiki tags in the header with numbered strings while being processed
 		$head = preg_replace_callback($pattern, 'replace_head', $head);
 		//process header rows
-		$headrows = process_section($head, 'h', '>>', $tdhdr, '</th>', isset($colwidths) ? $colwidths : '',
-			isset($headaligns) ? $headaligns : '', isset($headvaligns) ? $headvaligns : '');
+		$headrows = process_section(
+			$head, 'h', '>>', $tdhdr, '</th>', isset($colwidths) ? $colwidths : '',
+			isset($headaligns) ? $headaligns : '', isset($headvaligns) ? $headvaligns : ''
+		);
 		//bring the tiki tags back into the header. static veriable needed in case of multiple tables
 		static $hh = 0;
 		foreach ($head_matches[0] as $head_match) {
@@ -126,8 +128,10 @@ function wikiplugin_fancytable($data, $params)
 		$type = 'r';	//plain rows
 	}
 	//process table body rows
-	$bodyrows = process_section($data, $type, "\n", '', '</td>', isset($colwidths) ? $colwidths : '',
-		isset($colaligns) ? $colaligns : '', isset($colvaligns) ? $colvaligns : '');
+	$bodyrows = process_section(
+		$data, $type, "\n", '', '</td>', isset($colwidths) ? $colwidths : '',
+		isset($colaligns) ? $colaligns : '', isset($colvaligns) ? $colvaligns : ''
+	);
 	//bring the tiki tags back into the body. static veriable needed in case of multiple tables
 	static $bb = 0;
 	foreach ($body_matches[0] as $body_match) {
@@ -213,13 +217,13 @@ function process_section ($data, $type, $line_sep, $cellbeg, $cellend, $widths, 
 			$parts = explode($separator, $line);
 			//Each column within a row
 			foreach ($parts as $column) {
-				$colnum = 'col' . $c;				
+				$colnum = 'col' . $c;
 				$colspan = '';
 				$rowspan = '';
 				/*
 				 * Match / (colspan) or \ (rowspan) characters in whichever order at the beginning of the cell
 				 * $matches[0][0] shows entire match. There are 3 strings being matched in the preg_match_all, so $matches[1][0] shows the character
-				 * matched for the first string (\), $matches[2][0] the second character (/), and $matches[3][0] the third character (\) 
+				 * matched for the first string (\), $matches[2][0] the second character (/), and $matches[3][0] the third character (\)
 				*/
 				if (preg_match_all("/^(\\\\)*(\/)*(\\\\)*/", $column, $matches)) {
 					$column = substr($column, strlen($matches[0][0]));

@@ -518,9 +518,15 @@ class Tracker_Query
 
 					if ($i > 0) {
 						switch ($this->filterType[$i]) {
-							case "or":      $fields_safe .= " OR "; break;
-							case "and":     $fields_safe .= " AND "; break;
-							case "like":    $fields_safe .= " AND "; break;
+							case "or":
+								$fields_safe .= " OR ";
+								break;
+							case "and":
+								$fields_safe .= " AND ";
+								break;
+							case "like":
+								$fields_safe .= " AND ";
+								break;
 						}
 					}
 

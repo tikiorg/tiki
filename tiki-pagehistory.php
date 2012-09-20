@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -139,7 +139,7 @@ if (count($history) > 0) {
 	$lasttime = 0;		// secs
 	$idletime = 1800; 	// max gap between edits in sessions 30 mins? Maybe should use a pref?
 	for ($i = 0, $cnt = count($history); $i < $cnt; $i++) {
-		
+
 		if ($history[$i]['user'] != $lastuser || $lasttime - $history[$i]['lastModif'] > $idletime) {
 			$sessions[] = $history[$i];
 			//$history[$i]['session'] = $history[$i]['version'];
@@ -270,7 +270,7 @@ if (isset($_REQUEST['preview_idx'])) {
 	if (isset($_REQUEST['preview_date'])) {
 		$_REQUEST['preview'] = (int)$histlib->get_version_by_time($page, $_REQUEST["preview_date"]);
 	}
-	
+
 	if (isset($_REQUEST['preview'])) {
 		$preview = (int)$_REQUEST["preview"];
 		if ($_REQUEST['preview'] > 0) {
@@ -438,14 +438,14 @@ if (isset($_REQUEST['nohistory'])) {
 ask_ticket('page-history');
 
 TikiLib::events()->trigger(
-				'tiki.wiki.view',
-				array_merge(
-								array(
-									'type' => 'wiki',
-									'object' => $page,
-								),
-								$info
-				)
+	'tiki.wiki.view',
+	array_merge(
+		array(
+			'type' => 'wiki',
+			'object' => $page,
+		),
+		$info
+	)
 );
 
 // disallow robots to index page:

@@ -56,13 +56,13 @@ if (isset($_REQUEST['remove'])) {
 
 if (isset($_REQUEST['save'])) {
 	check_ticket('edit-quiz-question');
-	
+
 	$quizlib->replace_quiz_question(
-					$_REQUEST['questionId'],
-					$_REQUEST['question'],
-					$_REQUEST['questionType'],
-					$_REQUEST['quizId'],
-					$_REQUEST['position']
+		$_REQUEST['questionId'],
+		$_REQUEST['question'],
+		$_REQUEST['questionType'],
+		$_REQUEST['quizId'],
+		$_REQUEST['position']
 	);
 
 	$smarty->assign('question', '');

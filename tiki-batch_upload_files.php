@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -52,7 +52,7 @@ $disallowed_types = array(
 	'php~'
 ); // list of filetypes you DO NOT want to show
 // recursively get all files from all subdirectories
-function getDirContent($sub) 
+function getDirContent($sub)
 {
 	global $disallowed_types;
 	global $a_file;
@@ -85,7 +85,7 @@ function getDirContent($sub)
 	}
 }
 // build a complete list of all files on filesystem including all necessary file info
-function buildFileList() 
+function buildFileList()
 {
 
 	global $a_file;
@@ -174,14 +174,14 @@ if (isset($_REQUEST["batch_upload"]) and isset($_REQUEST['files']) and is_array(
 		$type = $mimetypes["$ext"];
 
 		$result = $filegallib->handle_batch_upload(
-						$_REQUEST['galleryId'],
-						array(
-							'source' => $filepath,
-							'size' => $filesize,
-							'type' => $type,
-							'name' => $path_parts['basename'],
-						),
-						$ext
+			$_REQUEST['galleryId'],
+			array(
+				'source' => $filepath,
+				'size' => $filesize,
+				'type' => $type,
+				'name' => $path_parts['basename'],
+			),
+			$ext
 		);
 
 		if (isset($result['error'])) {
@@ -203,8 +203,10 @@ if (isset($_REQUEST["batch_upload"]) and isset($_REQUEST['files']) and is_array(
 			if (isset($_REQUEST["removeExt"])) {
 				$name = substr($name, 0, strrpos($name, "."));
 			}
-			$fileId = $filegallib->insert_file($tmpGalId, $name, $tmpDesc, $file, $result['data'], $filesize, $type,
-				$user, $result['fhash'], null, null, null, null, null, null, $metadata);
+			$fileId = $filegallib->insert_file(
+				$tmpGalId, $name, $tmpDesc, $file, $result['data'], $filesize, $type,
+				$user, $result['fhash'], null, null, null, null, null, null, $metadata
+			);
 			if ($fileId) {
 				$feedback[] = tra('Upload was successful') . ': ' . $name;
 				@unlink($filepath);	// seems to return false sometimes even if the file was deleted

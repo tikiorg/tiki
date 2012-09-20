@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -16,7 +16,7 @@ class AdminLib extends TikiLib
 
 	function list_dsn($offset, $maxRecords, $sort_mode, $find)
 	{
-		
+
 		$bindvars=array();
 		if ($find) {
 			$findesc = '%' . $find . '%';
@@ -182,7 +182,7 @@ class AdminLib extends TikiLib
 					$pictures[] = $matches[2];
 				if (preg_match("/(src|file)=([^&\"\s,]+)/xis", $pic, $matches))
 					$pictures[] = $matches[2];
-				
+
 			}
 		}
 		$pictures = array_unique($pictures);
@@ -335,19 +335,20 @@ class AdminLib extends TikiLib
 			$query = "insert into `tiki_tags`(`tagName`,`pageName`,`hits`,`data`,`lastModif`,`comment`,`version`,`user`,`ip`,`flag`,`description`)" .
                " values(?,?,?,?,?,?,?,?,?,?,?)";
 			$result2 = $this->query(
-							$query,
-							array(
-								$tagname,
-								$pageName,
-								$res["hits"],
-								$data,
-								$res["lastModif"],
-								$res["comment"],
-								$res["version"],
-								$res["user"],
-								$res["ip"],
-								$res["flag"],
-								$description)
+				$query,
+				array(
+					$tagname,
+					$pageName,
+					$res["hits"],
+					$data,
+					$res["lastModif"],
+					$res["comment"],
+					$res["version"],
+					$res["user"],
+					$res["ip"],
+					$res["flag"],
+					$description
+				)
 			);
 		}
 
@@ -370,22 +371,22 @@ class AdminLib extends TikiLib
 		while ($res = $result->fetchRow()) {
 
 			$query = "update `tiki_pages`" .
-								" set `hits`=?,`data`=?,`lastModif`=?,`comment`=?,`version`=`version`+1,`user`=?,`ip`=?,`flag`=?,`description`=?" . 
+								" set `hits`=?,`data`=?,`lastModif`=?,`comment`=?,`version`=`version`+1,`user`=?,`ip`=?,`flag`=?,`description`=?" .
 								"  where `pageName`=?";
 
 			$result2 = $this->query(
-							$query,
-							array(
-								$res["hits"],
-								$res["data"],
-								$res["lastModif"],
-								$res["comment"],
-								$res["user"],
-								$res["ip"],
-								$res["flag"],
-								$res["description"],
-								$res["pageName"]
-							)
+				$query,
+				array(
+					$res["hits"],
+					$res["data"],
+					$res["lastModif"],
+					$res["comment"],
+					$res["user"],
+					$res["ip"],
+					$res["flag"],
+					$res["description"],
+					$res["pageName"]
+				)
 			);
 		}
 
@@ -396,11 +397,11 @@ class AdminLib extends TikiLib
 
 	// Dumps the database to dump/new.tar
 	// changed for virtualhost support
-	function dump() 
+	function dump()
 	{
 		global $tikidomain, $prefs;
 		$parserlib = TikiLib::lib('parser');
-		
+
 		$dump_path = "dump";
 		if ($tikidomain) {
 			$dump_path.= "/$tikidomain";
@@ -423,16 +424,16 @@ class AdminLib extends TikiLib
 			$dat = preg_replace("/tiki-editpage.php\?page=([^\'\"\$]+)/", "", $dat);
 			//preg_match_all("/tiki-index.php\?page=([^ ]+)/",$dat,$cosas);
 			//print_r($cosas);
-			$data = "<html><head><title>" . 
-							$res["pageName"] . 
-							"</title><link rel='StyleSheet' href='styles/" . 
-							$prefs['style']  . 
-							"' type='text/css'></head><body><a class='wiki' href='" . 
-							$prefs['wikiHomePage'] . 
-							".html'>home</a><br /><h1>" . 
-							$res["pageName"] . 
-							"</h1><div class='wikitext'>" . 
-							$dat . 
+			$data = "<html><head><title>" .
+							$res["pageName"] .
+							"</title><link rel='StyleSheet' href='styles/" .
+							$prefs['style']  .
+							"' type='text/css'></head><body><a class='wiki' href='" .
+							$prefs['wikiHomePage'] .
+							".html'>home</a><br /><h1>" .
+							$res["pageName"] .
+							"</h1><div class='wikitext'>" .
+							$dat .
 							'</div></body></html>';
 			$tar->addData($pageName, $data, $res["lastModif"]);
 		}

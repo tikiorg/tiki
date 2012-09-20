@@ -1,13 +1,13 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 /**
  * Handler class for UserSelector
- * 
+ *
  * Letter key: ~u~
  *
  */
@@ -59,11 +59,11 @@ class Tracker_Field_UserSelector extends Tracker_Field_Abstract implements Track
 	function getFieldData(array $requestData = array())
 	{
 		global $tiki_p_admin_trackers, $user;
-		
+
 		$ins_id = $this->getInsertId();
 
 		$data = array();
-		
+
 		$autoassign = (int) $this->getOption(0);
 
 		if ( isset($requestData[$ins_id])) {
@@ -88,15 +88,15 @@ class Tracker_Field_UserSelector extends Tracker_Field_Abstract implements Track
 		} else {
 			$data['value'] = $this->getValue(false);
 		}
-		
+
 		return $data;
 	}
-	
+
 	function renderInput($context = array())
 	{
 		global $tiki_p_admin_trackers, $user;
 		$smarty = TikiLib::lib('smarty');
-		
+
 		$value = $this->getConfiguration('value');
 		$autoassign = (int) $this->getOption(0);
 		if ((empty($value) && $autoassign == 1) || $autoassign == 2) {	// always use $user for last mod autoassign
@@ -107,16 +107,16 @@ class Tracker_Field_UserSelector extends Tracker_Field_Abstract implements Track
 
 			$smarty->loadPlugin('smarty_function_user_selector');
 			return smarty_function_user_selector(
-							array(
-								'user' => $value,
-								'id'  => 'user_selector_' . $this->getConfiguration('fieldId'),
-								'select' => $value,
-								'name' => $this->getConfiguration('ins_id'),
-								'editable' => 'y',
-								'allowNone' => $this->getConfiguration('isMandatory') === 'y' ? 'n' : 'y',
-								'groupIds' => $groupIds,
-							), 
-							$smarty
+				array(
+					'user' => $value,
+					'id'  => 'user_selector_' . $this->getConfiguration('fieldId'),
+					'select' => $value,
+					'name' => $this->getConfiguration('ins_id'),
+					'editable' => 'y',
+					'allowNone' => $this->getConfiguration('isMandatory') === 'y' ? 'n' : 'y',
+					'groupIds' => $groupIds,
+				),
+				$smarty
 			);
 		} else {
 			$smarty->loadPlugin('smarty_modifier_username');
@@ -153,10 +153,10 @@ class Tracker_Field_UserSelector extends Tracker_Field_Abstract implements Track
 
 		$controller = new Services_RemoteController($syncInfo['provider'], 'user');
 		$users = $controller->getResultLoader(
-						'list_users', 
-						array(
-							'groupIds' => $groupIds,
-						)
+			'list_users',
+			array(
+				'groupIds' => $groupIds,
+			)
 		);
 
 		$list = array();

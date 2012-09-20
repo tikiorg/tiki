@@ -50,11 +50,13 @@ Class Feed_ForwardLink_Send extends Feed_Abstract
 
 			            //Here we add the date last updated so that we don't have to send it if not needed, saving load time.
 			            if (!empty($resultJson->feed) && $resultJson->feed == "success") {
-				            $me->addItem(array(
-					            'dateLastUpdated'=> $item->textlink->dateLastUpdated,
-					            'textlinkHash'=> $item->textlink->hash,
-					            'forwardlinkHash'=> $item->forwardlink->hash
-				            ));
+				            $me->addItem(
+									array(
+						            'dateLastUpdated'=> $item->textlink->dateLastUpdated,
+						            'textlinkHash'=> $item->textlink->hash,
+						            'forwardlinkHash'=> $item->forwardlink->hash
+					            )
+								);
 			            }
 
 			            $items[] = $result;

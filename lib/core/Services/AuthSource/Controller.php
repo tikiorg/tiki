@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -38,21 +38,21 @@ class Services_AuthSource_Controller
 		}
 
 		return $this->sources()->insertOrUpdate(
-						array(
-							'scheme' => $info['scheme'],
-							'domain' => $info['host'],
-							'path' => $info['path'],
-							'method' => $method,
-							'arguments' => json_encode($arguments),
-						), 
-						array('identifier' => $identifier,)
+			array(
+				'scheme' => $info['scheme'],
+				'domain' => $info['host'],
+				'path' => $info['path'],
+				'method' => $method,
+				'arguments' => json_encode($arguments),
+			),
+			array('identifier' => $identifier,)
 		);
 	}
 
 	function action_fetch($input)
 	{
 		$data = $this->sources()->fetchFullRow(
-						array('identifier' => $input->identifier->text(),)
+			array('identifier' => $input->identifier->text(),)
 		);
 
 		$data['arguments'] = json_decode($data['arguments'], true);
@@ -64,7 +64,7 @@ class Services_AuthSource_Controller
 	function action_delete($input)
 	{
 		return $this->sources()->delete(
-						array('identifier' => $input->identifier->text(),)
+			array('identifier' => $input->identifier->text(),)
 		);
 	}
 }
