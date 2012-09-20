@@ -14,7 +14,7 @@ function smarty_function_error_report($params, $smarty)
 	$post = '</div>';
 
 	TikiLib::lib('header')->add_js(
-					'
+		'
 	$("#error_report").ajaxComplete(function (e, jqxhr) {
 		var error = jqxhr.getResponseHeader("X-Tiki-Error");
 		if (error) {
@@ -31,21 +31,21 @@ function smarty_function_error_report($params, $smarty)
 	});
 	'
 	);
-	
+
 	if (count($errors)) {
 		$smarty->loadPlugin('smarty_block_remarksbox');
 
 		$repeat = false;
 		return $pre . smarty_block_remarksbox(
-						array(
-							'type' => 'errors',
-							'title' => tra('Error(s)'),
-						),
-						'<a class="clear" style="float: right;" href="#">' .
-						tr('Clear errors') . '</a><ul><li>' .
-						implode('</li><li>', $errors) . '</li></ul>',
-						$smarty,
-						$repeat
+			array(
+				'type' => 'errors',
+				'title' => tra('Error(s)'),
+			),
+			'<a class="clear" style="float: right;" href="#">' .
+			tr('Clear errors') . '</a><ul><li>' .
+			implode('</li><li>', $errors) . '</li></ul>',
+			$smarty,
+			$repeat
 		) . $post;
 	} else {
 		return $pre . $post;

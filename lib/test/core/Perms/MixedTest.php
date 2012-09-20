@@ -1,13 +1,13 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-/** 
+/**
  * @group unit
- * 
+ *
  */
 
 class Perms_MixedTest extends TikiTestCase
@@ -16,10 +16,10 @@ class Perms_MixedTest extends TikiTestCase
 	{
 		$perms = new Perms;
 		$perms->setResolverFactories(
-						array(
-							$resolver = $this->getMock('Perms_ResolverFactory'),
-							new Perms_ResolverFactory_StaticFactory('global', new Perms_Resolver_Default(true)),
-						)
+			array(
+				$resolver = $this->getMock('Perms_ResolverFactory'),
+				new Perms_ResolverFactory_StaticFactory('global', new Perms_Resolver_Default(true)),
+			)
 		);
 		Perms::set($perms);
 
@@ -33,17 +33,17 @@ class Perms_MixedTest extends TikiTestCase
 			->method('bulk')
 			->will($this->returnValue(array()))
 			->with(
-							$this->equalTo(array('type' => 'wiki page')),
-							$this->equalTo('object'),
-							$this->equalTo(array('A', 'B'))
+				$this->equalTo(array('type' => 'wiki page')),
+				$this->equalTo('object'),
+				$this->equalTo(array('A', 'B'))
 			);
 		$resolver->expects($this->at(1))
 			->method('bulk')
 			->will($this->returnValue(array()))
 			->with(
-							$this->equalTo(array('type' => 'category')),
-							$this->equalTo('object'),
-							$this->equalTo(array(10))
+				$this->equalTo(array('type' => 'category')),
+				$this->equalTo('object'),
+				$this->equalTo(array(10))
 			);
 
 		$data = array(
@@ -54,20 +54,20 @@ class Perms_MixedTest extends TikiTestCase
 		);
 
 		$out = Perms::mixedFilter(
-						array(), 
-						'type', 
-						'object', 
-						$data, 
-						array(
-							'wiki page' => array('object' => 'object', 'type' => 'type', 'creator' => 'creator'),
-							'category' => array('object' => 'object', 'type' => 'type'),
-							'forumPost' => array('object' => 'object', 'type' => 'type', 'creator' => 'author'),
-						),
-						array(
-							'wiki page' => 'view',
-							'category' => 'view_categories',
-							'forumPost' => 'forum_post',
-						)
+			array(),
+			'type',
+			'object',
+			$data,
+			array(
+				'wiki page' => array('object' => 'object', 'type' => 'type', 'creator' => 'creator'),
+				'category' => array('object' => 'object', 'type' => 'type'),
+				'forumPost' => array('object' => 'object', 'type' => 'type', 'creator' => 'author'),
+			),
+			array(
+				'wiki page' => 'view',
+				'category' => 'view_categories',
+				'forumPost' => 'forum_post',
+			)
 		);
 
 		$this->assertEquals($data, $out);

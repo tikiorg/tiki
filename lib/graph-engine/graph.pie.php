@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -21,7 +21,7 @@ class PieChartGraphic extends Graphic
 		Graphic::Graphic();
 		$this->pie_data = array();
 	}
-	
+
 	function getRequiredSeries()
 	{
 		return array(
@@ -31,11 +31,11 @@ class PieChartGraphic extends Graphic
 			'style' => false
 		);
 	}
-	
+
 	function _handleData( $data )
 	{
 		$elements = count($data['value']);
-		
+
 		if ( !isset( $data['color'] ) ) {
 			$data['color'] = array();
 			for ( $i = 0; $elements > $i; ++$i )
@@ -57,25 +57,25 @@ class PieChartGraphic extends Graphic
 
 		return true;
 	}
-	
+
 	function _drawContent( &$renderer )
 	{
 		$layout = $this->_layout();
 		$centerX = $layout['pie-center-x'];
 		$centerY = $layout['pie-center-y'];
 		$radius = $layout['pie-radius'];
-		
+
 		$base = 0;
 
 		foreach ( $this->pie_data as $info ) {
 			list($style, $degree) = $info;
 			$renderer->drawPie(
-							$centerX,
-							$centerY,
-							$radius,
-							$base,
-							$base + $degree,
-							$renderer->getStyle($style)
+				$centerX,
+				$centerY,
+				$radius,
+				$base,
+				$base + $degree,
+				$renderer->getStyle($style)
 			);
 
 			$base += $degree;
@@ -90,12 +90,12 @@ class PieChartGraphic extends Graphic
 	function _default()
 	{
 		return array_merge(
-						parent::_default(),
-						array(
-							'pie-center-x' => 0.5,
-							'pie-center-y' => 0.5,
-							'pie-radius' => 0.4
-						)
+			parent::_default(),
+			array(
+				'pie-center-x' => 0.5,
+				'pie-center-y' => 0.5,
+				'pie-radius' => 0.4
+			)
 		);
 	}
 }

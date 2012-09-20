@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -17,45 +17,45 @@ function pre_20110727_tracker_multilingual_convert_tiki($installer)
 	$fields = $installer->table('tiki_tracker_fields');
 
 	$multilingualFields = $fields->fetchColumn(
-					'fieldId', 
-					array(
-						'isMultilingual' => 'y',
-						'type' => $fields->in(array('t', 'a')),
-					)
+		'fieldId',
+		array(
+			'isMultilingual' => 'y',
+			'type' => $fields->in(array('t', 'a')),
+		)
 	);
 
 	$unilingualFields = $fields->fetchColumn(
-					'fieldId', 
-					array(
-						'isMultilingual' => $fields->not('y'),
-						'type' => $fields->in(array('t', 'a')),
-					)
+		'fieldId',
+		array(
+			'isMultilingual' => $fields->not('y'),
+			'type' => $fields->in(array('t', 'a')),
+		)
 	);
 
 	$table = $installer->table('tiki_tracker_item_fields');
 
 	// Clean up data that does not match the field definition
 	$table->deleteMultiple(
-					array(
-						'fieldId' => $table->in($multilingualFields),
-						'lang' => '',
-					)
+		array(
+			'fieldId' => $table->in($multilingualFields),
+			'lang' => '',
+		)
 	);
 
 	$table->deleteMultiple(
-					array(
-						'fieldId' => $table->in($unilingualFields),
-						'lang' => $table->not(''),
-					)
+		array(
+			'fieldId' => $table->in($unilingualFields),
+			'lang' => $table->not(''),
+		)
 	);
 
 	// Collect the data stored in the multilingual fields
 	$result = $table->fetchAll(
-					$table->all(), 
-					array(
-						'lang' => $table->not(''),
-						'fieldId' => $table->in($multilingualFields),
-					)
+		$table->all(),
+		array(
+			'lang' => $table->not(''),
+			'fieldId' => $table->in($multilingualFields),
+		)
 	);
 
 	$multilingual_tracker_content = array();
@@ -72,10 +72,10 @@ function pre_20110727_tracker_multilingual_convert_tiki($installer)
 	foreach ($multilingual_tracker_content as $itemId => $fields) {
 		foreach ($fields as $fieldId => $data) {
 			$table->deleteMultiple(
-							array(
-								'itemId' => $itemId,
-								'fieldId' => $fieldId,
-							)
+				array(
+					'itemId' => $itemId,
+					'fieldId' => $fieldId,
+				)
 			);
 		}
 	}
@@ -108,11 +108,11 @@ function post_20110727_tracker_multilingual_convert_tiki($installer)
 	foreach ($multilingual_tracker_content as $itemId => $fields) {
 		foreach ($fields as $fieldId => $data) {
 			$table->insert(
-							array(
-								'itemId' => $itemId,
-								'fieldId' => $fieldId,
-								'value' => json_encode($data),
-							)
+				array(
+					'itemId' => $itemId,
+					'fieldId' => $fieldId,
+					'value' => json_encode($data),
+				)
 			);
 		}
 	}
@@ -122,12 +122,12 @@ function post_20110727_tracker_multilingual_convert_tiki($installer)
 		foreach ($versions as $version => $fields) {
 			foreach ($fields as $fieldId => $data) {
 				$table->insert(
-								array(
-									'version' => $version,
-									'itemId' => $itemId,
-									'fieldId' => $fieldId,
-									'value' => json_encode($data),
-								)
+					array(
+						'version' => $version,
+						'itemId' => $itemId,
+						'fieldId' => $fieldId,
+						'value' => json_encode($data),
+					)
 				);
 			}
 		}

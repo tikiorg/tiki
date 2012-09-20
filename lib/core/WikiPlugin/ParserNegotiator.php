@@ -569,22 +569,22 @@ class WikiPlugin_ParserNegotiator
 			$headerlib->add_jq_onready(
 				'$("#' . $id . '")
 					.click( function(event) {'
-						. 'popup_plugin_form('
-							. json_encode('editwiki') . ', '
-							. json_encode($this->name) . ', '
-							. json_encode($this->index) . ', '
-							. json_encode($this->page) . ', '
-							. json_encode($this->args) . ', '
-							. json_encode($this->body)
-							. ' , event.target'
-						. ');'
-						. 'return false;'
-					. '})'
-					. '.hover(function() {'
-						. ' $(this).prev().addClass("ui-state-highlight");'
-					. '}, function() { '
-						. '$(this).prev().removeClass("ui-state-highlight");'
-					. '});'
+				. '		popup_plugin_form('
+				. json_encode('editwiki') . ', '
+				. json_encode($this->name) . ', '
+				. json_encode($this->index) . ', '
+				. json_encode($this->page) . ', '
+				. json_encode($this->args) . ', '
+				. json_encode($this->body)
+				. ' 		, event.target'
+				. '	);'
+				. '	return false;'
+				. '})'
+				. '.hover(function() {'
+				. ' 	$(this).prev().addClass("ui-state-highlight");'
+				. '}, function() { '
+				. '	$(this).prev().removeClass("ui-state-highlight");'
+				. '});'
 			);
 			include_once('lib/smarty_tiki/function.icon.php');
 

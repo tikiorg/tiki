@@ -18,30 +18,30 @@ class Reports_Send_EmailBuilder_FileGalleryChanged extends Reports_Send_EmailBui
 	public function getOutput(array $change)
 	{
 		$base_url = $change['data']['base_url'];
-		
+
 		if (empty($change['data']['action'])) {
 			$output = tr(
-							'%0 edited the file gallery %1.',
-							"<u>{$change['data']['user']}</u>",
-							"<a href=\"{$base_url}tiki-list_file_gallery.php?galleryId={$change['data']['galleryId']}\">{$change['data']['galleryName']}</a>"
+				'%0 edited the file gallery %1.',
+				"<u>{$change['data']['user']}</u>",
+				"<a href=\"{$base_url}tiki-list_file_gallery.php?galleryId={$change['data']['galleryId']}\">{$change['data']['galleryName']}</a>"
 			);
 		} elseif ($change['data']['action'] == 'upload file') {
 			$output = tr(
-							'%0 uploaded the file %1.',
-							"<u>{$change['data']['user']}</u>",
-							"<a href=\"{$base_url}tiki-download_file.php?fileId=" . $change['data']['fileId'] . "\">" . $change['data']['fileName'] . "</a> " .
-							tra('onto') .
-							" <a href=\"{$base_url}tiki-list_file_gallery.php?galleryId={$change['data']['galleryId']}\">{$change['data']['galleryName']}</a>"
+				'%0 uploaded the file %1.',
+				"<u>{$change['data']['user']}</u>",
+				"<a href=\"{$base_url}tiki-download_file.php?fileId=" . $change['data']['fileId'] . "\">" . $change['data']['fileName'] . "</a> " .
+				tra('onto') .
+				" <a href=\"{$base_url}tiki-list_file_gallery.php?galleryId={$change['data']['galleryId']}\">{$change['data']['galleryName']}</a>"
 			);
 		} elseif ($change['data']['action'] == 'remove file') {
 			$output = tr(
-							'%0 removed the file %1 from %2.',
-							"<u>{$change['data']['user']}</u>",
-							"<a href=\"{$base_url}tiki-download_file.php?fileId={$change['data']['fileId']}\">{$change['data']['fileName']}</a>",
-							"<a href=\"{$base_url}tiki-list_file_gallery.php?galleryId={$change['data']['galleryId']}\">{$change['data']['galleryName']}</a>"
+				'%0 removed the file %1 from %2.',
+				"<u>{$change['data']['user']}</u>",
+				"<a href=\"{$base_url}tiki-download_file.php?fileId={$change['data']['fileId']}\">{$change['data']['fileName']}</a>",
+				"<a href=\"{$base_url}tiki-list_file_gallery.php?galleryId={$change['data']['galleryId']}\">{$change['data']['galleryName']}</a>"
 			);
 		}
-		
+
 		return $output;
 	}
 }

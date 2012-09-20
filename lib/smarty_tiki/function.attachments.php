@@ -43,7 +43,7 @@ function s_f_attachments_actionshandler( $params )
 					$pageRenderer->setShowAttachments( 'y' );
 				*/
 				$filegallib->actionHandler('removeFile', array( 'fileId' => $v ));
-							break;
+				break;
 
 			case 'upload':
 				if ( isset($objectperms) && ( $objectperms->wiki_admin_attachments || $objectperms->wiki_attach_files ) ) {
@@ -54,23 +54,23 @@ function s_f_attachments_actionshandler( $params )
 
 					$galleryId = $filegallib->get_attachment_gallery($params['page'], 'wiki page');
 					$filegallib->actionHandler(
-									'uploadFile', array(
-										'galleryId' => array($galleryId),
-										'comment' => $params['comment'],
-										'returnUrl' => smarty_function_query(
-														array(
-															'_type' => 'absolute_path',
-															's_f_attachments-upload' => 'NULL',
-															's_f_attachments-page' => 'NULL',
-															's_f_attachments-comment' => 'NULL'
-														), 
-														$smarty 
-										)
-									) 
+						'uploadFile', array(
+							'galleryId' => array($galleryId),
+							'comment' => $params['comment'],
+							'returnUrl' => smarty_function_query(
+								array(
+									'_type' => 'absolute_path',
+									's_f_attachments-upload' => 'NULL',
+									's_f_attachments-page' => 'NULL',
+									's_f_attachments-comment' => 'NULL'
+								),
+								$smarty
+							)
+						)
 					);
 				}
 
-							break;
+				break;
 		}
 	}
 
@@ -102,10 +102,10 @@ function smarty_function_attachments($params, $template)
 		$smarty->loadPlugin('smarty_block_remarksbox');
 		$repeat = false;
 		return smarty_block_remarksbox(
-						array('type' => 'errors', 'title' => tra('Wrong attachments gallery')),
-						tra('You are attempting to display a gallery that is not a valid attachment gallery') . ' (ID=' . $galleryId . ')',
-						$smarty,
-						$repeat
+			array('type' => 'errors', 'title' => tra('Wrong attachments gallery')),
+			tra('You are attempting to display a gallery that is not a valid attachment gallery') . ' (ID=' . $galleryId . ')',
+			$smarty,
+			$repeat
 		) . "\n";
 	}
 

@@ -19,7 +19,7 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
  *  - _type: type of URL to use (e.g. 'absolute_uri', 'absolute_path'). Defaults to a relative URL.
  *  - _tag: type of HTML tag to use (e.g. 'img', 'input_image'). Defaults to 'img' tag.
  *  - _notag: if set to 'y', will only return the URL (which also handles theme icons).
- *  - _menu_text: if set to 'y', will use the 'title' argument as text after the icon and place the whole 
+ *  - _menu_text: if set to 'y', will use the 'title' argument as text after the icon and place the whole
  *						content between div tags with a 'icon_menu' class (not compatible with '_notag' param set to 'y').
  *  - _menu_icon: if set to 'n', will not show icon image when _menu_text is 'y'.
  *  - _confirm: text to use in a popup requesting the user to confirm its action (yet only available with javascript)
@@ -40,7 +40,7 @@ function smarty_function_icon($params, $smarty)
 		$current_style = $tc_theme;
 		$current_style_option = !empty($tc_theme_option) ? $tc_theme_option : '';
 	}
-	
+
 	if (isset($params['_type'])) {
 		if ($params['_type'] === 'absolute_uri') {
 			$params['path_prefix'] = $base_url;
@@ -92,9 +92,9 @@ function smarty_function_icon($params, $smarty)
 			$icons_extension = substr($params['_id'], $pos);
 
 		$params['_id'] = preg_replace(
-						'/^' . str_replace('/', '\/', $icons_basedir) . '|' . $icons_extension . '$/', 
-						'', 
-						$params['_id']
+			'/^' . str_replace('/', '\/', $icons_basedir) . '|' . $icons_extension . '$/',
+			'',
+			$params['_id']
 		);
 	} else {
 		$icons_basedir = $basedirs[0].'/';
@@ -127,26 +127,26 @@ function smarty_function_icon($params, $smarty)
 					} else {
 						$params['file'] = $v;
 					}
-								break;
+					break;
 
 				case '_notag':
 					$notag = ($v == 'y');
-								break;
+					break;
 
 				case '_menu_text':
 					$menu_text = ($v == 'y');
 					$menu_icon = ( isset($params['_menu_icon']) && $params['_menu_icon'] == 'y' );
-								break;
+					break;
 
 				case '_tag':
 					$tag = $v;
-								break;
+					break;
 
 				case '_confirm':
 					if ( $prefs['javascript_enabled'] == 'y' ) {
 						$params['onclick'] = "return confirm('".str_replace("'", "\'", $v)."');";
 					}
-								break;
+					break;
 			}
 
 			unset($params[$k]);
@@ -215,7 +215,7 @@ function smarty_function_icon($params, $smarty)
 			$html = "<span>$html</span>";
 		}
 
-		if ( $menu_text )  {
+		if ( $menu_text ) {
 			if ( ! $menu_icon ) $html = '';
 			$html = '<div class="iconmenu">' . $html . '<span class="iconmenutext"> ' . $menu_text_val . '</span></div>';
 		}

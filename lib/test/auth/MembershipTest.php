@@ -1,10 +1,10 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
-/** 
+/**
  * @group integration
  */
 class MembershipTest extends TikiTestCase
@@ -32,7 +32,7 @@ class MembershipTest extends TikiTestCase
 
 		global $user_preferences;
 		$user_preferences = array();
-		
+
 		$this->userlib->add_user('membershiptest_a', 'abc', 'a@example.com');
 		$this->userlib->add_user('membershiptest_b', 'abc', 'a@example.com');
 		$this->userlib->add_user('membershiptest_c', 'abc', 'a@example.com');
@@ -59,18 +59,18 @@ class MembershipTest extends TikiTestCase
 		$expect = $this->userlib->now + 45 * 2 * (3600 * 24);
 
 		$this->assertEquals(
-						$expect, 
-						$this->userlib->getOne(
-										'SELECT `created` FROM `users_usergroups` WHERE `userId` = ? AND `groupName` = "MembershipTest"',
-										array($this->userlib->get_user_id('membershiptest_a'))
-						)
+			$expect,
+			$this->userlib->getOne(
+				'SELECT `created` FROM `users_usergroups` WHERE `userId` = ? AND `groupName` = "MembershipTest"',
+				array($this->userlib->get_user_id('membershiptest_a'))
+			)
 		);
 		$this->assertEquals(
-						$this->userlib->now, 
-						$this->userlib->getOne(
-										'SELECT `created` FROM `users_usergroups` WHERE `userId` = ? AND `groupName` = "MembershipTest"',
-										array($this->userlib->get_user_id('membershiptest_b'))
-						)
+			$this->userlib->now,
+			$this->userlib->getOne(
+				'SELECT `created` FROM `users_usergroups` WHERE `userId` = ? AND `groupName` = "MembershipTest"',
+				array($this->userlib->get_user_id('membershiptest_b'))
+			)
 		);
 	}
 
@@ -87,11 +87,11 @@ class MembershipTest extends TikiTestCase
 		$expect = $this->userlib->now + 45 * (3600 * 24);
 
 		$this->assertEquals(
-						$expect, 
-						$this->userlib->getOne(
-										'SELECT `created` FROM `users_usergroups` WHERE `userId` = ? AND `groupName` = "MembershipTest"',
-										array($this->userlib->get_user_id('membershiptest_b'))
-						)
+			$expect,
+			$this->userlib->getOne(
+				'SELECT `created` FROM `users_usergroups` WHERE `userId` = ? AND `groupName` = "MembershipTest"',
+				array($this->userlib->get_user_id('membershiptest_b'))
+			)
 		);
 	}
 }

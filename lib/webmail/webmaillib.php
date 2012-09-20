@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -177,24 +177,24 @@ class WebMailLib extends TikiLib
 	}
 
 	function replace_webmail_account(
-			$accountId, 
-			$user, 
-			$account, 
-			$pop, 
-			$port, 
-			$username, 
-			$pass, 
-			$msgs, 
-			$smtp, 
-			$useAuth, 
-			$smtpPort, 
-			$flagsPublic, 
-			$autoRefresh, 
-			$imap, 
+			$accountId,
+			$user,
+			$account,
+			$pop,
+			$port,
+			$username,
+			$pass,
+			$msgs,
+			$smtp,
+			$useAuth,
+			$smtpPort,
+			$flagsPublic,
+			$autoRefresh,
+			$imap,
 			$mbox,
-			$maildir, 
-			$useSSL, 
-			$fromEmail) 
+			$maildir,
+			$useSSL,
+			$fromEmail)
 	{
 
 		// Check the name
@@ -205,52 +205,52 @@ class WebMailLib extends TikiLib
 							" where `accountId`=? and `user`=?";
 
 			$bindvars = array(
-								$user, 
-								$account, 
-								$pop, 
-								(int)$port, 
-								(int)$smtpPort, 
-								$username, 
-								$pass, 
-								$smtp, 
-								$useAuth, 
-								$msgs, 
-								$flagsPublic, 
-								(int)$autoRefresh, 
-								$imap, 
-								$mbox, 
-								$maildir, 
-								$useSSL, 
-								$fromEmail, 
-								(int)$accountId, 
+								$user,
+								$account,
+								$pop,
+								(int)$port,
+								(int)$smtpPort,
+								$username,
+								$pass,
+								$smtp,
+								$useAuth,
+								$msgs,
+								$flagsPublic,
+								(int)$autoRefresh,
+								$imap,
+								$mbox,
+								$maildir,
+								$useSSL,
+								$fromEmail,
+								(int)$accountId,
 								$user
 			);
 			$result = $this->query($query, $bindvars);
 		} else {
 
-			$query = "insert into `tiki_user_mail_accounts`" . 
+			$query = "insert into `tiki_user_mail_accounts`" .
 				" (`user`,`account`,`pop`,`port`,`smtpPort`,`username`,`pass`," .
-				" `smtp`,`useAuth`,`msgs`,`flagsPublic`,`autoRefresh`, `imap`," . 
+				" `smtp`,`useAuth`,`msgs`,`flagsPublic`,`autoRefresh`, `imap`," .
 				" `mbox`, `maildir`, `useSSL`, `fromEmail`)" .
 				" values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
 			$bindvars = array(
-							$user, 
-							$account, 
-							$pop, 
-							$port, 
-							$smtpPort, 
-							$username, 
-							$pass, 
-							$smtp, 
-							$useAuth, 
-							$msgs, 
-							$flagsPublic, 
-							$autoRefresh, 
-							$imap, 
-							$mbox, 
-							$maildir, 
-							$useSSL, 
+							$user,
+							$account,
+							$pop,
+							$port,
+							$smtpPort,
+							$username,
+							$pass,
+							$smtp,
+							$useAuth,
+							$msgs,
+							$flagsPublic,
+							$autoRefresh,
+							$imap,
+							$mbox,
+							$maildir,
+							$useSSL,
 							$fromEmail
 			);
 			$result = $this->query($query, $bindvars);
@@ -263,23 +263,23 @@ class WebMailLib extends TikiLib
 	}
 
 	function new_webmail_account(
-			$user, 
-			$account, 
-			$pop, 
-			$port, 
-			$username, 
-			$pass, 
-			$msgs, 
-			$smtp, 
-			$useAuth, 
-			$smtpPort, 
-			$flagsPublic, 
-			$autoRefresh, 
-			$imap, 
-			$mbox, 
-			$maildir, 
+			$user,
+			$account,
+			$pop,
+			$port,
+			$username,
+			$pass,
+			$msgs,
+			$smtp,
+			$useAuth,
+			$smtpPort,
+			$flagsPublic,
+			$autoRefresh,
+			$imap,
+			$mbox,
+			$maildir,
 			$useSSL,
-			$fromEmail) 
+			$fromEmail)
 	{
 
 		$query = "insert into `tiki_user_mail_accounts`(`user`,`account`,`pop`,`port`," .
@@ -414,8 +414,8 @@ class WebMailLib extends TikiLib
 			$timeout = time() - $this->current_account['autoRefresh'];
 		}
 
-		$serialized_params = $this->current_account['accountId'] . ':' . 
-													$this->current_account['user'] . ':' . 
+		$serialized_params = $this->current_account['accountId'] . ':' .
+													$this->current_account['user'] . ':' .
 													$this->current_account['account'];
 
 		if (isset($_SESSION['webmailinbox'][$serialized_params]) && ((!isset($reload) || !$reload) && (isset($_SESSION['webmailinbox'][$serialized_params]['timestamp']) && $_SESSION['webmailinbox'][$serialized_params]['timestamp'] >  $timeout))) {
@@ -503,12 +503,12 @@ class WebMailLib extends TikiLib
 			// connecting with Imap
 			require_once('lib/core/Zend/Mail/Storage/Imap.php');
 			return new Zend_Mail_Storage_Imap(
-							array(
-								'host'     => $this->current_account["imap"],
-								'user'     => $this->current_account["username"],
-								'password' => $this->current_account["pass"],
-								'port'	 => $this->current_account["port"],
-								'ssl'		 => $this->current_account["useSSL"] == 'y' ? 'SSL' : false)
+				array(
+					'host'     => $this->current_account["imap"],
+					'user'     => $this->current_account["username"],
+					'password' => $this->current_account["pass"],
+					'port'	 => $this->current_account["port"],
+					'ssl'		 => $this->current_account["useSSL"] == 'y' ? 'SSL' : false)
 			);
 
 		} else if (!empty($this->current_account['mbox'])) {
@@ -516,7 +516,7 @@ class WebMailLib extends TikiLib
 			// connecting with Mbox locally
 			require_once('lib/core/Zend/Mail/Storage/Mbox.php');
 			return new Zend_Mail_Storage_Mbox(
-							array('filename' => $this->current_account["mbox"])
+				array('filename' => $this->current_account["mbox"])
 			);
 
 		} else if (!empty($this->current_account['maildir'])) {
@@ -524,7 +524,7 @@ class WebMailLib extends TikiLib
 			// connecting with Maildir locally
 			require_once('lib/core/Zend/Mail/Storage/Maildir.php');
 			return new Zend_Mail_Storage_Maildir(
-							array('dirname' => $this->current_account["mbox"])
+				array('dirname' => $this->current_account["mbox"])
 			);
 
 		} else if (!empty($this->current_account['pop'])) {
@@ -532,12 +532,12 @@ class WebMailLib extends TikiLib
 			// connecting with Pop3
 			require_once('lib/core/Zend/Mail/Storage/Pop3.php');
 			return new Zend_Mail_Storage_Pop3(
-							array(
-								'host'     => $this->current_account["pop"],
-								'user'     => $this->current_account["username"],
-								'password' => $this->current_account["pass"],
-								'port'	 => $this->current_account["port"],
-								'ssl'		 => $this->current_account["useSSL"] == 'y' ? 'SSL' : false)
+				array(
+					'host'     => $this->current_account["pop"],
+					'user'     => $this->current_account["username"],
+					'password' => $this->current_account["pass"],
+					'port'	 => $this->current_account["port"],
+					'ssl'		 => $this->current_account["useSSL"] == 'y' ? 'SSL' : false)
 			);
 		}
 		// not returned yet?
@@ -568,10 +568,10 @@ class WebMailLib extends TikiLib
 			switch ($enc) {
 				case 'quoted-printable':
 					$c = quoted_printable_decode($c);
-								break;
+					break;
 				case 'base64':
 					$c = base64_decode($c);
-								break;
+					break;
 				case '7bit':
 				case '8bit':
 				default:

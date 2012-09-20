@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -17,7 +17,7 @@ class ModLib extends TikiLib
 {
 
 	public $pref_errors = array();
-	
+
 	// additional module zones added to this array will be exposed to tiki.tpl
 	// TODO change modules user interface to enable additional zones
 	public $module_zones = array(
@@ -134,23 +134,23 @@ class ModLib extends TikiLib
 		$result = $this->query($query, array($moduleId));
 		return true;
 	}
-	
+
 	function module_left($moduleId)
 	{
 		$query = "update `tiki_modules` set `position`='l' where `moduleId`=?";
 		$result = $this->query($query, array($moduleId));
 		return true;
 	}
-	
+
 	function module_right($moduleId)
 	{
 		$query = "update `tiki_modules` set `position`='r' where `moduleId`=?";
 		$result = $this->query($query, array($moduleId));
 		return true;
 	}
-	
+
 	/**
-	 * Reset all module ord's according to supplied array or by displayed order 
+	 * Reset all module ord's according to supplied array or by displayed order
 	 * @param array $module_order[zone][moduleId] (optional)
 	 */
 	function reorder_modules($module_order = array())
@@ -215,7 +215,7 @@ class ModLib extends TikiLib
 
 		$query = "delete from `tiki_modules` where `name`=?";
 		$result = $this->query($query, array($name));
-		
+
 		$query = " delete from `tiki_user_modules` where `name`=?";
 		$result = $this->query($query, array($name));
 
@@ -286,18 +286,18 @@ class ModLib extends TikiLib
 					foreach ($module_groups as $mod_group) {
 						if (in_array($mod_group, $user_groups)) {
 							$pass = 'y';
-							break; 
+							break;
 						}
 					}
 				} else {
-					if (!$user) { 
+					if (!$user) {
 						if (in_array('Anonymous', $module_groups)) {
 							$pass = 'y';
 						}
-					} else { 
+					} else {
 						foreach ($module_groups as $mod_group) {
-							if ($mod_group === 'Anonymous') { 
-								continue; 
+							if ($mod_group === 'Anonymous') {
+								continue;
 							}
 							if (in_array($mod_group, $user_groups)) {
 								$pass = 'y';
@@ -461,7 +461,7 @@ class ModLib extends TikiLib
 				}
 			}
 		}
-		
+
 		if ($module['name'] == 'login_box' && (basename($_SERVER['SCRIPT_NAME']) == 'tiki-login_scr.php' || basename($_SERVER['SCRIPT_NAME']) == 'tiki-login_openid.php')) {
 			return false;
 		}
@@ -583,9 +583,9 @@ class ModLib extends TikiLib
 
 		if ( ! empty($prefs['module_file']) ) {
 			$out = array_merge($out, $this->read_module_file($prefs['module_file']));
-		} elseif ( $prefs['user_assigned_modules'] == 'y' 
-			&& $tiki_p_configure_modules == 'y' 
-			&& $user 
+		} elseif ( $prefs['user_assigned_modules'] == 'y'
+			&& $tiki_p_configure_modules == 'y'
+			&& $user
 			&& $usermoduleslib->user_has_assigned_modules($user) ) {
 
 			foreach ( $module_zones as $zone => $zone_name ) {
@@ -602,7 +602,7 @@ class ModLib extends TikiLib
 
 		return $out;
 	}
-	
+
 	function list_module_files()
 	{
 		$files = array();
@@ -671,126 +671,126 @@ class ModLib extends TikiLib
 		$info = array_merge($defaults, $info);
 
 		$info['params'] = array_merge(
-						$info['params'],
-						array(
-							'title' => array(
-								'name' => tra('Module Title'),
-								'description' => tra('Title to display at the top of the box.'),
-								'filter' => 'striptags',
-								'section' => 'appearance',
-							),
-							'nobox' => array(
-								'name' => tra('No Box'),
-								'description' => 'y|n '.tra('Show only the content'),
-								'section' => 'appearance',
-							),
-							'decorations' => array(
-								'name' => tra('Decorations'),
-								'description' => 'y|n '. tra('Show module decorations'),
-								'section' => 'appearance',
-							),
-							'notitle' => array(
-								'name' => tra('No Title'),
-								'description' => 'y|n '.tra('Show module title'),
-								'filter' => 'alpha',
-								'section' => 'appearance',
-							),
-							'category' => array(
-								'name' => tra('Category'),
-								'description' => tra('Module displayed depending on category. Multiple category ids or names can be separated by semi-colons.'),
-								'section' => 'visibility',
-								'separator' => ';',
-								'filter' => 'alnum',
-							),
-							'nocategory' => array(
-								'name' => tra('No Category'),
-								'description' => tra('Module hidden depending on category. Multiple category ids or names can be separated by semi-colons. This takes precedence over the category parameter above.'),
-								'section' => 'visibility',
-								'separator' => ';',
-								'filter' => 'alnum',
-							),
-							'subtree' => array(
-								'name' => tra('Category subtrees'),
-								'description' => tra('Consider children categories of the categories listed in category and no category to be part of those categories. (0 or 1)'),
-								'section' => 'visibility',
-								'filter' => 'int',
-							),
-							'perspective' => array(
-								'name' => tra('Perspective'),
-								'description' => tra('Only display the module if in one of the listed perspective IDs. Semi-colon separated.'),
-								'separator' => ';',
-								'filter' => 'digits',
-								'section' => 'visibility',
-							),
-							'lang' => array(
-								'name' => tra('Language'),
-								'description' => tra('Module only applicable for the specified languages. Languages are defined as two character language codes. Multiple values can be separated by semi-colons.'),
-								'separator' => ';',
-								'filter' => 'lang',
-								'section' => 'visibility',
-							),
-							'section' => array(
-								'name' => tra('Section'),
-								'description' => tra('Module only applicable for the specified sections. Multiple values can be separated by semi-colons.'),
-								'separator' => ';',
-								'filter' => 'striptags',
-								'section' => 'visibility',
-							),
-							'page' => array(
-								'name' => tra('Page Filter'),
-								'description' => tra('Module only applicable on the specified page names. Multiple values can be separated by semi-colons.'),
-								'separator' => ';',
-								'filter' => 'pagename',
-								'section' => 'visibility',
-							),
-							'nopage' => array(
-								'name' => tra('No Page'),
-								'description' => tra('Module not applicable on the specified page names. Multiple values can be separated by semi-colons.'),
-								'separator' => ';',
-								'filter' => 'pagename',
-								'section' => 'visibility',
-							),
-							'theme' => array(
-								'name' => tra('Theme'),
-								'description' => tra('Module enabled or disabled depending on the theme file name (e.g. "thenews.css"). Specified themes can be either included or excluded. Theme names prefixed by "!" are in the exclusion list. Multiple values can be separated by semi-colons.'),
-								'separator' => ';',
-								'filter' => 'themename',
-								'section' => 'visibility',
-							),
-							'creator' => array(
-								'name' => tra('Creator'),
-								'description' => tra('Module only available based on the relationship of the user with the wiki page. Either only creators (y) or only non-creators (n) will see the module.'),
-								'filter' => 'alpha',
-								'section' => 'visibility',
-							),
-							'contributor' => array(
-								'name' => tra('Contributor'),
-								'description' => tra('Module only available based on the relationship of the user with the wiki page. Either only contributors (y) or only non-contributors (n) will see the module.'),
-								'filter' => 'alpha',
-								'section' => 'visibility',
-							),
-							'flip' => array(
-								'name' => tra('Flip'),
-								'description' => tra('Users can shade module.'),
-								'filter' => 'alpha',
-								'section' => 'appearance',
-							),
-							'style' => array(
-								'name' => tra('Style'),
-								'description' => tra('CSS styling for positioning the module.'),
-								'section' => 'appearance',
-							),
-							'class' => array(
-								'name' => tra('Class'),
-								'description' => tra('Custom CSS class.'),
-								'section' => 'appearance',
-							),
-							'topclass' => array(
-								'name' => tra('Containing Class'),
-								'description' => tra('Custom CSS class around.'),
-								'section' => 'appearance',
-							),
-						)
+			$info['params'],
+			array(
+				'title' => array(
+					'name' => tra('Module Title'),
+					'description' => tra('Title to display at the top of the box.'),
+					'filter' => 'striptags',
+					'section' => 'appearance',
+				),
+				'nobox' => array(
+					'name' => tra('No Box'),
+					'description' => 'y|n '.tra('Show only the content'),
+					'section' => 'appearance',
+				),
+				'decorations' => array(
+					'name' => tra('Decorations'),
+					'description' => 'y|n '. tra('Show module decorations'),
+					'section' => 'appearance',
+				),
+				'notitle' => array(
+					'name' => tra('No Title'),
+					'description' => 'y|n '.tra('Show module title'),
+					'filter' => 'alpha',
+					'section' => 'appearance',
+				),
+				'category' => array(
+					'name' => tra('Category'),
+					'description' => tra('Module displayed depending on category. Multiple category ids or names can be separated by semi-colons.'),
+					'section' => 'visibility',
+					'separator' => ';',
+					'filter' => 'alnum',
+				),
+				'nocategory' => array(
+					'name' => tra('No Category'),
+					'description' => tra('Module hidden depending on category. Multiple category ids or names can be separated by semi-colons. This takes precedence over the category parameter above.'),
+					'section' => 'visibility',
+					'separator' => ';',
+					'filter' => 'alnum',
+				),
+				'subtree' => array(
+					'name' => tra('Category subtrees'),
+					'description' => tra('Consider children categories of the categories listed in category and no category to be part of those categories. (0 or 1)'),
+					'section' => 'visibility',
+					'filter' => 'int',
+				),
+				'perspective' => array(
+					'name' => tra('Perspective'),
+					'description' => tra('Only display the module if in one of the listed perspective IDs. Semi-colon separated.'),
+					'separator' => ';',
+					'filter' => 'digits',
+					'section' => 'visibility',
+				),
+				'lang' => array(
+					'name' => tra('Language'),
+					'description' => tra('Module only applicable for the specified languages. Languages are defined as two character language codes. Multiple values can be separated by semi-colons.'),
+					'separator' => ';',
+					'filter' => 'lang',
+					'section' => 'visibility',
+				),
+				'section' => array(
+					'name' => tra('Section'),
+					'description' => tra('Module only applicable for the specified sections. Multiple values can be separated by semi-colons.'),
+					'separator' => ';',
+					'filter' => 'striptags',
+					'section' => 'visibility',
+				),
+				'page' => array(
+					'name' => tra('Page Filter'),
+					'description' => tra('Module only applicable on the specified page names. Multiple values can be separated by semi-colons.'),
+					'separator' => ';',
+					'filter' => 'pagename',
+					'section' => 'visibility',
+				),
+				'nopage' => array(
+					'name' => tra('No Page'),
+					'description' => tra('Module not applicable on the specified page names. Multiple values can be separated by semi-colons.'),
+					'separator' => ';',
+					'filter' => 'pagename',
+					'section' => 'visibility',
+				),
+				'theme' => array(
+					'name' => tra('Theme'),
+					'description' => tra('Module enabled or disabled depending on the theme file name (e.g. "thenews.css"). Specified themes can be either included or excluded. Theme names prefixed by "!" are in the exclusion list. Multiple values can be separated by semi-colons.'),
+					'separator' => ';',
+					'filter' => 'themename',
+					'section' => 'visibility',
+				),
+				'creator' => array(
+					'name' => tra('Creator'),
+					'description' => tra('Module only available based on the relationship of the user with the wiki page. Either only creators (y) or only non-creators (n) will see the module.'),
+					'filter' => 'alpha',
+					'section' => 'visibility',
+				),
+				'contributor' => array(
+					'name' => tra('Contributor'),
+					'description' => tra('Module only available based on the relationship of the user with the wiki page. Either only contributors (y) or only non-contributors (n) will see the module.'),
+					'filter' => 'alpha',
+					'section' => 'visibility',
+				),
+				'flip' => array(
+					'name' => tra('Flip'),
+					'description' => tra('Users can shade module.'),
+					'filter' => 'alpha',
+					'section' => 'appearance',
+				),
+				'style' => array(
+					'name' => tra('Style'),
+					'description' => tra('CSS styling for positioning the module.'),
+					'section' => 'appearance',
+				),
+				'class' => array(
+					'name' => tra('Class'),
+					'description' => tra('Custom CSS class.'),
+					'section' => 'appearance',
+				),
+				'topclass' => array(
+					'name' => tra('Containing Class'),
+					'description' => tra('Custom CSS class around.'),
+					'section' => 'appearance',
+				),
+			)
 		);
 
 		if ($prefs['cookie_consent_feature'] === 'y') {
@@ -849,7 +849,7 @@ class ModLib extends TikiLib
 	function execute_module( $mod_reference )
 	{
 		global $smarty, $tikilib, $user, $prefs, $tiki_p_admin;
-			
+
 		try {
 			$defaults = array(
 				'style' => '',
@@ -866,7 +866,7 @@ class ModLib extends TikiLib
 			$cachefile = $this->get_cache_file($mod_reference, $info);
 
 			if ( ! $cachefile || $this->require_cache_build($mod_reference, $cachefile) || $this->is_admin_mode() ) {
-				
+
 				if ($this->is_admin_mode()) {
 					require_once ('lib/setup/timer.class.php');
 					$timer = new timer('module');
@@ -876,7 +876,7 @@ class ModLib extends TikiLib
 					$smarty->assign('tpl_module_title', tra($info['name']));
 
 				$smarty->assign('nonums', $module_params['nonums']);
-				
+
 				if ( $info['type'] == 'include' ) {
 					$phpfile = 'modules/mod-' . $mod_reference['name'] . '.php';
 
@@ -898,7 +898,7 @@ class ModLib extends TikiLib
 
 				$ck = getCookie('mod-'.$mod_reference['name'].$mod_reference['position'].$mod_reference['ord'], 'menu', 'o');
 				$smarty->assign('module_display', ($prefs['javascript_enabled'] == 'n' || $ck == 'o'));
-				
+
 				$smarty->assign_by_ref('module_rows', $mod_reference['rows']);
 				$smarty->assign_by_ref('module_params', $module_params); // module code can unassign this if it wants to hide params
 				$smarty->assign('module_ord', $mod_reference['ord']);
@@ -908,7 +908,7 @@ class ModLib extends TikiLib
 					$smarty->assign('tpl_module_title', tra($module_params['title']));
 				}
 				$smarty->assign('tpl_module_name', $mod_reference['name']);
-				
+
 				$tpl_module_style = empty($mod_reference['module_style']) ? '' : $mod_reference['module_style'];
 
 				if ($tiki_p_admin == 'y' && $this->is_admin_mode() && (!$this->filter_active_module($mod_reference) ||
@@ -919,7 +919,7 @@ class ModLib extends TikiLib
 					$tpl_module_style .= 'overflow:visible !important;';
 				}
 				$smarty->assign('tpl_module_style', $tpl_module_style);
-				
+
 				$template = 'modules/mod-' . $mod_reference['name'] . '.tpl';
 
 				if (file_exists('templates/'.$template)) {
@@ -931,12 +931,12 @@ class ModLib extends TikiLib
 				$smarty->clear_assign('tpl_module_title');
 				$smarty->clear_assign('tpl_module_name');
 				$smarty->clear_assign('tpl_module_style');
-				
+
 				if ($this->is_admin_mode() && $timer) {
 					$elapsed = round($timer->stop('module'), 3);
 					$data = preg_replace('/<div /', '<div title="Module Execution Time ' . $elapsed . 's" ', $data, 1);
 				}
-							
+
 				if (!empty($cachefile) && !$this->is_admin_mode()) {
 					file_put_contents($cachefile, $data);
 				}
@@ -954,13 +954,13 @@ class ModLib extends TikiLib
 			}
 			$repeat = false;
 			return smarty_block_remarksbox(
-							array(
-								'type' => 'warning',
-								'title' => tr('Failed to execute "%0" module', $mod_reference['name']),
-							),
-							$message,
-							$smarty,
-							$repeat
+				array(
+					'type' => 'warning',
+					'title' => tr('Failed to execute "%0" module', $mod_reference['name']),
+				),
+				$message,
+				$smarty,
+				$repeat
 			);
 		}
 	}
@@ -1085,7 +1085,7 @@ class ModLib extends TikiLib
 			if ( isset( $params[$name] ) && $params[$name] !== '' ) {
 				if ( isset( $def['separator'] ) && strpos($params[$name], $def['separator']) !== false ) {
 					$parts = explode($def['separator'], $params[$name]);
-					
+
 					if ( $filter ) {
 						foreach ( $parts as & $single ) {
 							$single = $filter->filter($single);
@@ -1108,20 +1108,20 @@ class ModLib extends TikiLib
 
 		return http_build_query($expanded, '', '&');
 	}
-	
+
 	function add_pref_error($module_name, $preference_name)
 	{
 		$this->pref_errors[] = array('mod_name' => $module_name, 'pref_name' => $preference_name);
 	}
 
-	
+
 	/* Returns all module assignations for a certain position, or all positions (by default). A module assignation
 	is represented by an array similar to a tiki_modules record. The groups field is unserialized in the module_groups key, a spaces-separated list of groups.
 	If asking for a specific position, returns an array of module assignations. If not, returns an array of arrays of modules assignations indexed by positions. For example: array("l" -> array("module assignation"))
 	TODO: Document $displayed's effect */
 	function get_assigned_modules($position = null, $displayed="n")
 	{
-		
+
 		$filter = '';
 		$bindvars = array();
 
@@ -1257,7 +1257,7 @@ class ModLib extends TikiLib
 		$cachelib->cacheItem($filename, serialize($out), 'modules');
 		return $out;
 	}
-	
+
 }
 global $modlib;
 $modlib = new ModLib;

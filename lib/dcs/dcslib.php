@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -12,8 +12,8 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 }
 
 /**
- * DCSLib 
- * 
+ * DCSLib
+ *
  * @uses TikiLib
  */
 class DCSLib extends TikiLib
@@ -114,20 +114,20 @@ class DCSLib extends TikiLib
 		$query_cant = "select count(*) from `tiki_content` $mid";
 
 		$result = $this->query(
-						$query, 
-						array_merge(
-										array(
-											$this->now,
-											$this->now, 
-											$this->now, 
-											$this->now, 
-											$this->now, 
-											$this->now
-										), 
-										$bindvars
-						), 
-						$maxRecords, 
-						$offset
+			$query,
+			array_merge(
+				array(
+					$this->now,
+					$this->now,
+					$this->now,
+					$this->now,
+					$this->now,
+					$this->now
+				),
+				$bindvars
+			),
+			$maxRecords,
+			$offset
 		);
 
 		$cant = $this->getOne($query_cant, $bindvars);
@@ -278,8 +278,8 @@ class DCSLib extends TikiLib
 
 			$result = $this->query($query, $bindvars);
 			$contentId = $this->getOne(
-							'select max(`contentId`) from `tiki_content` where `description` = ? and `contentLabel` = ?',
-							$bindvars
+				'select max(`contentId`) from `tiki_content` where `description` = ? and `contentLabel` = ?',
+				$bindvars
 			);
 		}
 

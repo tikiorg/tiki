@@ -43,15 +43,15 @@ $smarty->assign('accounts', $accounts);
 if (isset($_REQUEST['book'])) {
 	check_ticket('accounting');
 	$result = $accountinglib->book(
-					$bookId,
-					$_REQUEST['journalDate'],
-					$_REQUEST['journalDescription'],
-					$_REQUEST['debitAccount'],
-					$_REQUEST['creditAccount'],
-					$_REQUEST['debitAmount'],
-					$_REQUEST['creditAmount'],
-					$_REQUEST['debitText'],
-					$_REQUEST['creditText']
+		$bookId,
+		$_REQUEST['journalDate'],
+		$_REQUEST['journalDescription'],
+		$_REQUEST['debitAccount'],
+		$_REQUEST['creditAccount'],
+		$_REQUEST['debitAmount'],
+		$_REQUEST['creditAmount'],
+		$_REQUEST['debitText'],
+		$_REQUEST['creditText']
 	);
 	if (is_numeric($result)) {
 		if (isset($_REQUEST['statementId'])) {

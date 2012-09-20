@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -53,24 +53,24 @@ if (count($filter)) {
 		require_once 'lib/smarty_tiki/function.object_link.php';
 		foreach ($results as &$res) {
 			$res['link'] = smarty_function_object_link(
-							array(
-								'type' => $res['object_type'],
-								'id' => $res['object_id'],
-								'title' => $res['title'],
-							),
-							$smarty
+				array(
+					'type' => $res['object_type'],
+					'id' => $res['object_id'],
+					'title' => $res['title'],
+				),
+				$smarty
 			);
 		}
 		$access->output_serialized(
-						$results,
-						array(
-							'feedTitle' => tr('%0: Results for "%1"', $prefs['sitetitle'], $request['filter']['content']),
-							'feedDescription' => tr('Search Results'),
-							'entryTitleKey' => 'title',
-							'entryUrlKey' => 'url',
-							'entryModificationKey' => 'modification_date',
-							'entryObjectDescriptors' => array('object_type', 'object_id'),
-						)
+			$results,
+			array(
+				'feedTitle' => tr('%0: Results for "%1"', $prefs['sitetitle'], $request['filter']['content']),
+				'feedDescription' => tr('Search Results'),
+				'entryTitleKey' => 'title',
+				'entryUrlKey' => 'url',
+				'entryModificationKey' => 'modification_date',
+				'entryObjectDescriptors' => array('object_type', 'object_id'),
+			)
 		);
 		exit;
 	} else {
@@ -90,17 +90,17 @@ if (count($filter)) {
 
 			$plugin = new Search_Formatter_Plugin_SmartyTemplate(realpath('templates/searchresults-plain.tpl'));
 			$plugin->setData(
-							array(
-								'prefs' => $prefs,
-							)
+				array(
+					'prefs' => $prefs,
+				)
 			);
 			$plugin->setFields(
-							array(
-								'title' => null,
-								'url' => null,
-								'modification_date' => null,
-								'highlight' => null,
-							)
+				array(
+					'title' => null,
+					'url' => null,
+					'modification_date' => null,
+					'highlight' => null,
+				)
 			);
 
 			$formatter = new Search_Formatter($plugin);
@@ -108,10 +108,10 @@ if (count($filter)) {
 
 			$wiki = $formatter->format($results);
 			$html = $tikilib->parse_data(
-							$wiki,
-							array(
-								'is_html' => true,
-							)
+				$wiki,
+				array(
+					'is_html' => true,
+				)
 			);
 			if (!empty($prefs['unified_user_cache'])) {
 				$cachelib->cacheItem($cacheName, serialize(array($tikilib->now, $html)), $cacheType);

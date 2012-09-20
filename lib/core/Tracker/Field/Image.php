@@ -1,13 +1,13 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 /**
  * Handler class for Image
- * 
+ *
  * Letter key: ~i~
  *
  */
@@ -87,7 +87,7 @@ class Tracker_field_Image extends Tracker_Field_File
 	function getFieldData(array $requestData = array())
 	{
 		global $prefs, $smarty;
-		
+
 		$ins_id = $this->getInsertId();
 
 		if (!empty($prefs['fgal_match_regex']) && !empty($_FILES[$ins_id]['name'])) {
@@ -145,19 +145,19 @@ class Tracker_field_Image extends Tracker_Field_File
 			if ($list_mode != 'n') {
 				if ($this->getOption(0) || $this->getOption(1)) {
 					list( $params['width'], $params['height']) = $this->get_resize_dimensions(
-									$image_size_info[0],
-									$image_size_info[1],
-									$this->getOption(0),
-									$this->getOption(1)
+						$image_size_info[0],
+						$image_size_info[1],
+						$this->getOption(0),
+						$this->getOption(1)
 					);
 				}
 			} else {
 				if ($this->getOption(2) || $this->getOption(3)) {
 					list( $params['width'], $params['height']) = $this->get_resize_dimensions(
-									$image_size_info[0],
-									$image_size_info[1],
-									$this->getOption(2),
-									$this->getOption(3)
+						$image_size_info[0],
+						$image_size_info[1],
+						$this->getOption(2),
+						$this->getOption(3)
 					);
 				}
 			}
@@ -179,11 +179,11 @@ class Tracker_field_Image extends Tracker_Field_File
 	function renderInput($context = array())
 	{
 		return $this->renderTemplate(
-						'trackerinput/image.tpl',
-						$context,
-						array(
-							'image_tag' => $this->renderInnerOutput($context),
-						)
+			'trackerinput/image.tpl',
+			$context,
+			array(
+				'image_tag' => $this->renderInnerOutput($context),
+			)
 		);
 	}
 
@@ -241,15 +241,15 @@ class Tracker_field_Image extends Tracker_Field_File
 
 	/**
 	 * Calculate the size of a resized image
-	 * 
+	 *
 	 * TODO move to a lib (Images depends on Imagick or GD which this doesn't need)
-	 * 
+	 *
 	 * @param int $image_width (existing image width)
 	 * @param int $image_height	(existing image height)
 	 * @param int $max_width (max width to scale to)
 	 * @param int $max_height (optional max height)
 	 * @param bool $upscale (whether to make images larger - default = false)
-	 * 
+	 *
 	 * @return array(int $resized_width, int $resized_height)
 	 */
 	private function get_resize_dimensions( $image_width, $image_height, $max_width = null, $max_height = null, $upscale = false)

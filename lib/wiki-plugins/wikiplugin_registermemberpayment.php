@@ -18,15 +18,18 @@ function wikiplugin_registermemberpayment_info()
 		'prefs' => array( 'wikiplugin_registermemberpayment', 'payment_feature' ),
 		'body' => tra('NA'),
 		'icon' => 'img/icons/text_replace.png',
-		'params' => array_merge($infoFromParent['params'], array(
-			'fixedperiods' => array(
-				'required' => false,
-				'name' => tra('Fixed Periods'),
-				'description' => tra('Give specific periods that can be chosen with a dropdown list.  Example - "name:value;name:value;value;value;"'),
-				'filter' => 'text',
-				'default' => 'Number of periods:',
-			),
-		))
+		'params' => array_merge(
+			$infoFromParent['params'],
+			array(
+				'fixedperiods' => array(
+					'required' => false,
+					'name' => tra('Fixed Periods'),
+					'description' => tra('Give specific periods that can be chosen with a dropdown list.  Example - "name:value;name:value;value;value;"'),
+					'filter' => 'text',
+					'default' => 'Number of periods:',
+				),
+			)
+		)
 	);
 }
 
@@ -49,8 +52,8 @@ function wikiplugin_registermemberpayment($data, $params, $offset)
 	$periodslabel = (isset($params['periodslabel']) ? tr($params['periodslabel']) : 'Number of periods:');
 	$fixedperiodsDDL = '';
 
-	$fixedperiods = explode(';',isset($params['fixedperiods']) ? $params['fixedperiods'] : '');
-	foreach($fixedperiods as $fixedperiod) {
+	$fixedperiods = explode(';', isset($params['fixedperiods']) ? $params['fixedperiods'] : '');
+	foreach ($fixedperiods as $fixedperiod) {
 		if (!empty($fixedperiod)) {
 			$fixedperiod = explode(':', $fixedperiod);
 			$name = $fixedperiod[0];
@@ -65,7 +68,7 @@ function wikiplugin_registermemberpayment($data, $params, $offset)
 		$periods = '<select id="memberDuration' . $i . '" name="duration">' . $fixedperiodsDDL . '</select>';
 	}
 
-	$memberPayment = TikiLib::lib('parser')->parse_data(wikiplugin_memberpayment( $data, $params, $offset ), array('is_html' => true));
+	$memberPayment = TikiLib::lib('parser')->parse_data(wikiplugin_memberpayment($data, $params, $offset), array('is_html' => true));
 	if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 		if (isset($_POST['msg'])) {
 			$_POST['msg'] = addslashes(htmlspecialchars($_POST['msg']));
@@ -89,7 +92,8 @@ function wikiplugin_registermemberpayment($data, $params, $offset)
 
 	$group = $params['group'];
 
-	$headerlib->add_jq_onready(<<<JQ
+	$headerlib->add_jq_onready(
+<<<JQ
 		var reg = $('#memberRegister$i'),
 			pay = $('#memberPayment$i'),
 			user = "$user";

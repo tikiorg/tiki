@@ -1,13 +1,13 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 /**
- * PerspectiveLib 
- * 
+ * PerspectiveLib
+ *
  */
 class PerspectiveLib
 {
@@ -143,7 +143,7 @@ class PerspectiveLib
 			}
 			$_SESSION['current_perspective'] = $perspective;
 		} else {
-			$_SESSION['current_perspective'] = 0;	
+			$_SESSION['current_perspective'] = 0;
 		}
 
 	}
@@ -166,8 +166,8 @@ class PerspectiveLib
 	{
 		if ( $perspectiveId ) {
 			$this->perspectives->update(
-							array('name' => $name,),
-							array('perspectiveId' => $perspectiveId,)
+				array('name' => $name,),
+				array('perspectiveId' => $perspectiveId,)
 			);
 
 			return $perspectiveId;
@@ -211,11 +211,11 @@ class PerspectiveLib
 	function replace_preference ( $preference, $value, $newValue )
 	{
 		$this->perspectivePreferences->update(
-						array('value' => serialize($newValue),),
-						array(
-							'pref' => $preference,
-							'value' => serialize($value),
-						)
+			array('value' => serialize($newValue),),
+			array(
+				'pref' => $preference,
+				'value' => serialize($value),
+			)
 		);
 	}
 
@@ -226,18 +226,18 @@ class PerspectiveLib
 	function set_preference( $perspectiveId, $preference, $value )
 	{
 		$this->perspectivePreferences->delete(
-						array(
-							'perspectiveId' => $perspectiveId,
-							'pref' => $preference,
-						)
+			array(
+				'perspectiveId' => $perspectiveId,
+				'pref' => $preference,
+			)
 		);
 
 		$this->perspectivePreferences->insert(
-						array(
-							'perspectiveId' => $perspectiveId,
-							'pref' => $preference,
-							'value' => serialize($value),
-						)
+			array(
+				'perspectiveId' => $perspectiveId,
+				'pref' => $preference,
+				'value' => serialize($value),
+			)
 		);
 	}
 
@@ -250,8 +250,8 @@ class PerspectiveLib
 		$db = TikiDb::get();
 
 		$id = $db->getOne(
-						'SELECT perspectiveId FROM tiki_perspectives WHERE perspectiveId = ?',
-						array( $perspectiveId )
+			'SELECT perspectiveId FROM tiki_perspectives WHERE perspectiveId = ?',
+			array( $perspectiveId )
 		);
 
 		return ! empty( $id );

@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -83,11 +83,11 @@ class WikiParser_OutputLink
 
 		if ( $link = $this->handleExternal($page, $description, $class) ) {
 			return $this->outputLink(
-							$description, 
-							array(
-									'href' => $link . $this->anchor,
-									'class' => $class,
-							)
+				$description,
+				array(
+						'href' => $link . $this->anchor,
+						'class' => $class,
+				)
 			);
 		} elseif ( $this->namespace && (($info = $this->findWikiPage("{$this->namespace}{$this->namespaceSeparator}$page")) || $ck_editor) ) {
 			// When currently displayed page is in a namespace, interpret links as within namespace as a priority
@@ -96,12 +96,12 @@ class WikiParser_OutputLink
 			}
 
 			return $this->outputLink(
-							$description, 
-							array(
-									'href' => call_user_func($this->wikiBuilder, $page) . $this->anchor,
-									'title' => $this->getTitle($info),
-									'class' => 'wiki wiki_page',
-							) 
+				$description,
+				array(
+						'href' => call_user_func($this->wikiBuilder, $page) . $this->anchor,
+						'title' => $this->getTitle($info),
+						'class' => 'wiki wiki_page',
+				)
 			);
 		} elseif ( ($info = $this->findWikiPage($page)) || $ck_editor ) {
 			if (!empty($info['pageName'])) {
@@ -113,22 +113,22 @@ class WikiParser_OutputLink
 			}
 
 			return $this->outputLink(
-							$description, 
-							array(
-									'href' => call_user_func($this->wikiBuilder, $page) . $this->anchor,
-									'title' => $this->getTitle($info),
-									'class' => 'wiki wiki_page',
-							) 
+				$description,
+				array(
+					'href' => call_user_func($this->wikiBuilder, $page) . $this->anchor,
+					'title' => $this->getTitle($info),
+					'class' => 'wiki wiki_page',
+				)
 			);
 		} else {
 			$page = $this->getTargetPage($page);
 			return $description . $this->outputLink(
-							'?', 
-							array(
-									'href' => $this->getEditLink($page),
-									'title' => tra('Create page:') . ' ' . $page,
-									'class' => 'wiki wikinew',
-							)
+				'?',
+				array(
+					'href' => $this->getEditLink($page),
+					'title' => tra('Create page:') . ' ' . $page,
+					'class' => 'wiki wikinew',
+				)
 			);
 		}
 	}

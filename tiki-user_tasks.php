@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -562,15 +562,15 @@ if (isset($_REQUEST['save'])) {
 		$msg_body.= '^[tiki-user_tasks.php?taskId=' . $info['taskId'] . "|" . $info['title'] . "]^\n";
 		$msg_body.= $task_info_message . $msg_changes_head . '^' . $msg_changes . '^';
 		$messulib->post_message(
-						$msg_to, //user
-						$msg_from, //from
-						$msg_to, //to
-						'', //cc
-						$msg_title, //title
-						$msg_body, //body
-						$info['priority'] //priority
+			$msg_to, //user
+			$msg_from, //from
+			$msg_to, //to
+			'', //cc
+			$msg_title, //title
+			$msg_body, //body
+			$info['priority'] //priority
 		);
-		
+
 	}
 	if ($show_admin) $user_for_group_list = $info['creator'];
 	$show_form = false;

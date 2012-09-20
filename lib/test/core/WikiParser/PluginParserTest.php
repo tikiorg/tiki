@@ -1,13 +1,13 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-/** 
+/**
  * @group unit
- * 
+ *
  */
 
 
@@ -52,9 +52,9 @@ class WikiParser_PluginParserTest extends TikiTestCase
 			->expects($this->once())
 			->method('run')
 			->with(
-							$this->equalTo('test'),
-							$this->equalTo('Hello'),
-							$this->equalTo(array('hello' => 'world'))
+				$this->equalTo('test'),
+				$this->equalTo('Hello'),
+				$this->equalTo(array('hello' => 'world'))
 			)
 			->will($this->returnValue('test'));
 
@@ -72,9 +72,9 @@ class WikiParser_PluginParserTest extends TikiTestCase
 			->expects($this->once())
 			->method('run')
 			->with(
-							$this->equalTo('test'),
-							$this->equalTo(null),
-							$this->equalTo(array('hello' => 'world'))
+				$this->equalTo('test'),
+				$this->equalTo(null),
+				$this->equalTo(array('hello' => 'world'))
 			)
 			->will($this->returnValue('test'));
 
@@ -92,9 +92,9 @@ class WikiParser_PluginParserTest extends TikiTestCase
 			->expects($this->once())
 			->method('run')
 			->with(
-							$this->equalTo('test'),
-							$this->equalTo(null),
-							$this->equalTo(array())
+				$this->equalTo('test'),
+				$this->equalTo(null),
+				$this->equalTo(array())
 			)
 			->will($this->returnValue('test'));
 

@@ -22,25 +22,25 @@ class watershedLib
 		$tikilib->set_user_preference($u, 'watershed_sessionId_time', $tikilib->now);
 		return true;
 	}
-	
+
 	function getSessionId( $u )
 	{
 		global $tikilib, $userlib;
 		$userinfo = $userlib->get_user_info($u);
 		if ($tikilib->get_user_preference($u, 'watershed_sessionId_time', 0) > $userinfo['lastLogin']) {
 			$sessionId = $tikilib->get_user_preference($u, 'watershed_sessionId', '');
-			return $sessionId;	
+			return $sessionId;
 		} else {
 			return '';
 		}
 	}
-	
+
 	function getAllViewableChannels( $channelName = '', $brandId = '')
 	{
 		global $prefs;
 		global $trklib; include_once ('lib/trackers/trackerlib.php');
 		$channels = array();
-		
+
 		if ($channelName && $brandId) {
 			$filterfield = array($prefs['watershed_channel_fieldId'], $prefs['watershed_brand_fieldId']);
 			$exactvalue = array($channelName, $brandId);
@@ -74,16 +74,16 @@ class watershedLib
 			}
 			if ($brandId && $channelCode) {
 					$channels[] = array(
-									'itemId' => $i['itemId'], 
-									'status' => $i['status'], 
-									'brandId' => $brandId, 
+									'itemId' => $i['itemId'],
+									'status' => $i['status'],
+									'brandId' => $brandId,
 									'channelCode' => $channelCode
 					);
 			}
 		}
 		return $channels;
 	}
-	
+
 	function filterChannels( $channels, $mode = 'viewer' )
 	{
 		global $prefs, $tikilib;
@@ -98,7 +98,7 @@ class watershedLib
 		$ret = array();
 
 		if ($mode == 'broadcaster') {
-			foreach ( $channels as $c ) {		
+			foreach ( $channels as $c ) {
 				if ($perms['tiki_p_modify_tracker_items'] == 'y' && $c['status'] != 'p' && $c['status'] != 'c'
 				|| $perms['tiki_p_modify_tracker_items_pending'] == 'y' && $c['status'] == 'p'
 				|| $perms['tiki_p_modify_tracker_items_closed'] == 'y' && $c['status'] == 'c') {
@@ -106,7 +106,7 @@ class watershedLib
 				}
 			}
 		} else if ( $mode == 'viewer') {
-			foreach ( $channels as $c ) {		
+			foreach ( $channels as $c ) {
 				if ($perms['tiki_p_view_trackers'] == 'y' && $c['status'] != 'p' && $c['status'] != 'c'
 				|| $perms['tiki_p_view_trackers_pending'] == 'y' && $c['status'] == 'p'
 				|| $perms['tiki_p_view_trackers_closed'] == 'y' && $c['status'] == 'c') {
@@ -151,7 +151,7 @@ class watershedLib
 			return false;
 		}
 	}
-	
+
 	function storeArchive( $recording )
 	{
 		global $prefs;
@@ -165,23 +165,23 @@ class watershedLib
 			return false;
 		}
 		if (!empty($prefs['watershed_archive_fieldId'])) {
-			$fields[] = array('type' => 't', 'fieldId' => $prefs['watershed_archive_fieldId'], 'value' => $recording->videoId );	
+			$fields[] = array('type' => 't', 'fieldId' => $prefs['watershed_archive_fieldId'], 'value' => $recording->videoId );
 		} else {
 			return false;
 		}
 
 		// Check if already sent before
 		$items = $trklib->list_items(
-						$prefs['watershed_archive_trackerId'],
-						0,
-						-1,
-						'',
-						'',
-						$prefs['watershed_archive_fieldId'],
-						'',
-						'',
-						'',
-						$recording->videoId
+			$prefs['watershed_archive_trackerId'],
+			0,
+			-1,
+			'',
+			'',
+			$prefs['watershed_archive_fieldId'],
+			'',
+			'',
+			'',
+			$recording->videoId
 		);
 
 		if ($items['cant']) {
@@ -285,8 +285,8 @@ class watershedLib
 		return true;
 	}
 }
-	
-	
+
+
 // SOAP Types
 
 class Watershed_SoapServer_validateBroadcasterSession
@@ -426,14 +426,14 @@ class Watershed_SoapServer_registerRemainderStreamUserTime
 
 class Watershed_SoapServer_registerRemainderStreamUserTime2Response
 {
-	public $out;	
+	public $out;
 }
 
 class Watershed_SoapServer
 {
-	
+
 	private $user;
-	
+
 	public static function getClassMap()
 	{
 		return array(
@@ -461,25 +461,25 @@ class Watershed_SoapServer
 			'registerRemainderStreamUserTimeResponse' => 'Watershed_SoapServer_AcknowledgeResponse',
 		);
 	}
-	
+
 	private function loginBySession( $sessionId )
 	{
 		require ('db/local.php');
 		$watersheddb = mysql_connect($host_tiki, $user_tiki, $pass_tiki);
 		mysql_select_db($dbs_tiki, $watersheddb);
 		$query = "SELECT `user` FROM `tiki_user_preferences` WHERE prefName = 'watershed_sessionId' AND value = '$sessionId'";
-		$result = mysql_query($query, $watersheddb);			
+		$result = mysql_query($query, $watersheddb);
 		if (is_resource($result)) {
 			while ($res = mysql_fetch_assoc($result)) {
 				$u = $res['user'];
 			}
 		}
 		if (isset($u)) {
-			$this->user = $this->loginUser($u);	
+			$this->user = $this->loginUser($u);
 		} else {
 			$this->user = '';
 		}
-		return $this->user;	
+		return $this->user;
 	}
 
 	private function loginUser( $u )
@@ -488,7 +488,7 @@ class Watershed_SoapServer
 		$watersheddb = mysql_connect($host_tiki, $user_tiki, $pass_tiki);
 		mysql_select_db($dbs_tiki, $watersheddb);
 		$query = "SELECT `value` FROM `tiki_preferences` WHERE name = 'cookie_name'";
-		$result = mysql_query($query, $watersheddb);			
+		$result = mysql_query($query, $watersheddb);
 
 		if (is_resource($result)) {
 			while ($res = mysql_fetch_assoc($result)) {
@@ -508,7 +508,7 @@ class Watershed_SoapServer
 		$user = $u;
 		return $u;
 	}
-	
+
 	function initiateEnv()
 	{
 		global $prefs, $watershedlib, $tikilib, $smarty;
@@ -519,7 +519,7 @@ class Watershed_SoapServer
 		require_once ('lib/setup/language.php');
 
 		if ($prefs['feature_categories'] == 'y') {
-			require_once ('lib/setup/categories.php');	
+			require_once ('lib/setup/categories.php');
 		}
 
 		if ($prefs['feature_watershed'] == 'y') {
@@ -528,7 +528,7 @@ class Watershed_SoapServer
 			return false;
 		}
 	}
-	
+
 	function validateBroadcasterSession( Watershed_SoapServer_validateBroadcasterSession $session )
 	{
 		$this->loginBySession($session->sessionId);
@@ -537,11 +537,11 @@ class Watershed_SoapServer
 			$ret->authMessage = tra('Cannot connect with web service');
 			return $ret;
 		}
-		
+
 		global $prefs, $watershedlib;
-		
+
 		$ret = new Watershed_SoapServer_validateBroadcasterSessionResponse;
-		
+
 		$channels = $watershedlib->getAllViewableChannels();
 		if ($channels) {
 			$channels = $watershedlib->filterChannels($channels, 'broadcaster');
@@ -555,7 +555,7 @@ class Watershed_SoapServer
 					$ret->authMessage = tra('Broadcaster successfully authenticated');
 					break;
 				}
-			}				
+			}
 		} else {
 			$ret->authStatus = false;
 			$ret->authMessage = tra('No permission to broadcast to any channel');
@@ -566,7 +566,7 @@ class Watershed_SoapServer
 		}
 		return $ret;
 	}
-	
+
 	function notifySystemMessage( Watershed_SoapServer_notifySystemMessage $message )
 	{
 		$this->initiateEnv();
@@ -617,7 +617,7 @@ class Watershed_SoapServer
 		}
 		return $ret;
 	}
-	
+
 	function loginBroadcasterByChannelToken( Watershed_SoapServer_loginBroadcasterByChannelToken $token )
 	{
 		// This is used for Flash Media Encoder shared secret authentication only
@@ -635,9 +635,9 @@ class Watershed_SoapServer
 			global $logslib;
 			$logslib->add_log('watershed', $ret->authMessage);
 		}
-		return $ret;	
+		return $ret;
 	}
-	
+
 	function notifyChannelStatusChanged( Watershed_SoapServer_notifyChannelStatusChanged $status )
 	{
 		$this->initiateEnv();
@@ -649,7 +649,7 @@ class Watershed_SoapServer
 		}
 		return new Watershed_SoapServer_AcknowledgeResponse;
 	}
-	
+
 	function validateViewerSession( Watershed_SoapServer_validateViewerSession $session )
 	{
 		$this->loginBySession($session->sessionId);
@@ -660,14 +660,14 @@ class Watershed_SoapServer
 		}
 
 		global $prefs, $watershedlib;
-		
+
 		$ret = new Watershed_SoapServer_validateViewerSessionResponse;
-		
+
 		$channels = $watershedlib->getAllViewableChannels();
 		if ($channels) {
 			$channels = $watershedlib->filterChannels($channels, 'viewer');
 		}
-		
+
 		if ($channels) {
 			$ret->authStatus = false;
 			$ret->authMessage = tra('No permission to view channel');
@@ -677,7 +677,7 @@ class Watershed_SoapServer
 					$ret->authMessage = tra('Viewer successfully authenticated');
 					break;
 				}
-			}				
+			}
 		} else {
 			$ret->authStatus = false;
 			$ret->authMessage = tra('No permission to view any channel');
@@ -686,39 +686,39 @@ class Watershed_SoapServer
 			global $logslib;
 			$logslib->add_log('watershed', $ret->authMessage);
 		}
-		return $ret;		
+		return $ret;
 	}
-	
+
 	function notifyRecordingCompleted( Watershed_SoapServer_notifyRecordingCompleted $recording)
 	{
 		$this->initiateEnv();
 		global $prefs, $watershedlib;
-		
+
 		if ($watershedlib->storeArchive($recording)) {
 			$error = tra('Successfully stored archive in tracker');
 		} else {
 			$error = tra('Failed to stored archive in tracker');
 		}
-		
+
 		if ($prefs['watershed_log_errors'] == 'y') {
 			global $logslib;
 			$logslib->add_log('watershed', $error);
 		}
 		return new Watershed_SoapServer_AcknowledgeResponse;
 	}
-	
+
 	function checkStreamUserTimeLimit( Watershed_SoapServer_checkStreamUserTimeLimit $session )
 	{
 		// Not implemented because not documented but is here returning positive userTimeLeft in case called
 		return new Watershed_SoapServer_checkStreamUserTimeLimitResponse(9999999);
 	}
-	
+
 	function registerRemainderStreamUserTime ( Watershed_SoapServer_registerRemainderStreamUserTime $session )
 	{
 		// Not implemented because not documented but is here in case called
 		return new Watershed_SoapServer_AcknowledgeResponse;
 	}
-	
+
 }
 
 global $watershedlib;

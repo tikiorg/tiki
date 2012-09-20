@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -13,7 +13,7 @@ $inputConfiguration = array(
 							'pref' => 'striptags',
 							'section' => 'striptags',
 					),
-				) 
+				)
 );
 
 $auto_query_args = array('section', 'comments', 'autoreload', 'view_mode');
@@ -94,13 +94,13 @@ if ( isset($_REQUEST['reset_global']) && $section == 'global' ) {
 
 if ( !empty($_REQUEST['save_tool']) && !empty($_REQUEST['tool_name'])) {	// input from the tool edit form
 	Toolbar::saveTool(
-					$_REQUEST['tool_name'], 
-					$_REQUEST['tool_label'], 
-					$_REQUEST['tool_icon'], 
-					$_REQUEST['tool_token'], 
-					$_REQUEST['tool_syntax'], 
-					$_REQUEST['tool_type'], 
-					$_REQUEST['tool_plugin']
+		$_REQUEST['tool_name'],
+		$_REQUEST['tool_label'],
+		$_REQUEST['tool_icon'],
+		$_REQUEST['tool_token'],
+		$_REQUEST['tool_syntax'],
+		$_REQUEST['tool_type'],
+		$_REQUEST['tool_plugin']
 	);
 
 	$smarty->loadPlugin('smarty_function_query');
@@ -221,7 +221,7 @@ foreach ( $qtlist as $name ) {
 	}
 
 	$qtelement[$name] = array(
-					'name' => $name, 
+					'name' => $name,
 					'class' => "toolbar qt-$name $wys $wiki $wyswik $plug $cust $avail",
 					'html' => "$icon<span>$label</span>",
 					'visible' => $visible,
@@ -229,9 +229,9 @@ foreach ( $qtlist as $name ) {
 }
 
 $headerlib->add_js(
-				"var toolbarsadmin_rowStr = '" . substr(implode(",#row-", range(0, $rowCount)), 2) . "';" .
-				"var toolbarsadmin_fullStr = '#full-list-w,#full-list-p,#full-list-c';" .
-				"var toolbarsadmin_delete_text = '" . tra('Are you sure you want to delete this custom tool?') . "'\n"
+	"var toolbarsadmin_rowStr = '" . substr(implode(",#row-", range(0, $rowCount)), 2) . "';" .
+	"var toolbarsadmin_fullStr = '#full-list-w,#full-list-p,#full-list-c';" .
+	"var toolbarsadmin_delete_text = '" . tra('Are you sure you want to delete this custom tool?') . "'\n"
 );
 
 $headerlib->add_jsfile('lib/toolbars/tiki-admin_toolbars.js');

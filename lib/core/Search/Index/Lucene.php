@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -113,16 +113,16 @@ class Search_Index_Lucene implements Search_Index_Interface
 		$this->maxResults = (int) $max;
 	}
 
-	public function setResultSetLimit($resultSetLimit) 
+	public function setResultSetLimit($resultSetLimit)
 	{
 		$this->resultSetLimit = $resultSetLimit;
 	}
 
-	public function getResultSetLimit() 
+	public function getResultSetLimit()
 	{
 		return $this->resultSetLimit;
 	}
-	
+
 	private function internalFind(& $query, $sortOrder)
 	{
 		if ($this->cache) {
@@ -150,7 +150,7 @@ class Search_Index_Lucene implements Search_Index_Interface
 
 			$found = false;
 			if (!empty($res['object_id']) && !empty($res['object_type'])) {	// filter out duplicates here
-				foreach($result as $r) {
+				foreach ($result as $r) {
 					if ($r['object_id'] === $res['object_id'] && $r['object_type'] === $res['object_type']) {
 						$found = true;
 						break;
@@ -173,14 +173,14 @@ class Search_Index_Lucene implements Search_Index_Interface
 
 		if ($this->cache) {
 			$this->cache->cacheItem(
-							$cacheKey, 
-							serialize(
-											array(
-												'query' => $query,
-												'hits' => $return,
-											)
-							),
-							'searchresult'
+				$cacheKey,
+				serialize(
+					array(
+						'query' => $query,
+						'hits' => $return,
+					)
+				),
+				'searchresult'
 			);
 		}
 
@@ -276,9 +276,9 @@ class Search_Index_Lucene implements Search_Index_Interface
 			// Range search not supported for phrases, so revert to normal token matching
 			if (method_exists($from, 'getTerm')) {
 				$range = new Zend_Search_Lucene_Search_Query_Range(
-								$from->getTerm(),
-								$to->getTerm(),
-								true // inclusive
+					$from->getTerm(),
+					$to->getTerm(),
+					true // inclusive
 				);
 
 				$term = $range;

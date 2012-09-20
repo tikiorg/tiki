@@ -62,15 +62,15 @@ function getUserInfo($params)
 
 	if ($ok) {
 		$myStruct = new XML_RPC_Value(
-						array(
-							'nickname' => new XML_RPC_Value($username),
-							'firstname' => new XML_RPC_Value('none'),
-							'lastname' => new XML_RPC_Value('none'),
-							'email' => new XML_RPC_Value('none'),
-							'userid' => new XML_RPC_Value('$username'),
-							'url' => new XML_RPC_Value('none')
-						),
-						'struct'
+			array(
+				'nickname' => new XML_RPC_Value($username),
+				'firstname' => new XML_RPC_Value('none'),
+				'lastname' => new XML_RPC_Value('none'),
+				'email' => new XML_RPC_Value('none'),
+				'userid' => new XML_RPC_Value('$username'),
+				'url' => new XML_RPC_Value('none')
+			),
+			'struct'
 		);
 		return new XML_RPC_Response($myStruct);
 	} else {
@@ -290,14 +290,14 @@ function getPost($params)
 
 	// added dateTime type for blogger compliant xml tag Joerg Knobloch <joerg@happypenguins.net>
 	$myStruct=new XML_RPC_Value(
-					array(
-						'userid' => new XML_RPC_Value($username),
-						'dateCreated' => new XML_RPC_Value($dateCreated, 'dateTime.iso8601'),
-						// Fix for w.Bloggar
-						'content' => new XML_RPC_Value('<title>' . $post_data['title'] . '</title>' . $post_data['data']),
-						'postid' => new XML_RPC_Value($post_data['postId'])
-					),
-					'struct'
+		array(
+			'userid' => new XML_RPC_Value($username),
+			'dateCreated' => new XML_RPC_Value($dateCreated, 'dateTime.iso8601'),
+			// Fix for w.Bloggar
+			'content' => new XML_RPC_Value('<title>' . $post_data['title'] . '</title>' . $post_data['data']),
+			'postid' => new XML_RPC_Value($post_data['postId'])
+		),
+		'struct'
 	);
 
 	// User ok and can submit then submit an article
@@ -353,14 +353,14 @@ function getRecentPosts($params)
 		$dateCreated = $tikilib->get_iso8601_datetime($post['created']);
 
 		$myStruct = new XML_RPC_Value(
-						array(
-							'userid' => new XML_RPC_Value($username),
-							'dateCreated' => new XML_RPC_Value($dateCreated, 'dateTime.iso8601'),
-							// Fix for w.Bloggar
-							'content' => new XML_RPC_Value('<title>' . $post['title'] . '</title>' . $post['data']),
-							'postid' => new XML_RPC_Value($post['postId'])
-						),
-						'struct'
+			array(
+				'userid' => new XML_RPC_Value($username),
+				'dateCreated' => new XML_RPC_Value($dateCreated, 'dateTime.iso8601'),
+				// Fix for w.Bloggar
+				'content' => new XML_RPC_Value('<title>' . $post['title'] . '</title>' . $post['data']),
+				'postid' => new XML_RPC_Value($post['postId'])
+			),
+			'struct'
 		);
 
 		$arrayval[] = $myStruct;
@@ -396,12 +396,12 @@ function getUserBlogs($params)
 
 	foreach ($blogs as $blog) {
 		$myStruct = new XML_RPC_Value(
-						array(
-							'blogName' => new XML_RPC_Value($blog['title']),
-							'url' => new XML_RPC_Value($foo1 . '?blogId=' . $blog['blogId']),
-							'blogid' => new XML_RPC_Value($blog['blogId'])
-						),
-						'struct'
+			array(
+				'blogName' => new XML_RPC_Value($blog['title']),
+				'url' => new XML_RPC_Value($foo1 . '?blogId=' . $blog['blogId']),
+				'blogid' => new XML_RPC_Value($blog['blogId'])
+			),
+			'struct'
 		);
 		$arrayVal[] = $myStruct;
 	}

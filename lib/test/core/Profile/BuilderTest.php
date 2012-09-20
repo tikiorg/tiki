@@ -5,7 +5,7 @@ class Profile_BuilderTest extends PHPUnit_Framework_TestCase
 	function testBasicProfile()
 	{
 		$builder = new Tiki_Profile_Builder;
-		
+
 		$expect = <<<EXPECT
 ---
 EXPECT;
@@ -15,27 +15,35 @@ EXPECT;
 	function testAddObjects()
 	{
 		$builder = new Tiki_Profile_Builder;
-		$builder->addObject('wiki_page', 'foo', array(
-			'name' => 'Foo',
-			'content' => 'Hello',
-		));
-		$builder->addObject('trackerfield', 'date', array(
-			'tracker' => $builder->ref('tracker'),
-		));
-		
+		$builder->addObject(
+			'wiki_page',
+			'foo',
+			array(
+				'name' => 'Foo',
+				'content' => 'Hello',
+			)
+		);
+		$builder->addObject(
+			'trackerfield',
+			'date',
+			array(
+				'tracker' => $builder->ref('tracker'),
+			)
+		);
+
 		$expect = <<<EXPECT
 ---
-objects: 
-  - 
+objects:
+  -
     type: wiki_page
     ref: foo
-    data: 
+    data:
       name: Foo
       content: Hello
-  - 
+  -
     type: trackerfield
     ref: date
-    data: 
+    data:
       tracker: \$tracker
 EXPECT;
 		$this->assertIs($expect, $builder->getContent());
@@ -47,46 +55,46 @@ EXPECT;
 		$builder->addGroup('Base', $builder->user('group'));
 		$builder->addGroup('Viewer', $builder->user('group') . ' Viewer', true);
 		$builder->setManagingGroup('Base');
-		
+
 		$expect = <<<EXPECT
 ---
-mappings: 
+mappings:
   Base: \$profilerequest:group\$undefined\$
   Viewer: \$profilerequest:group\$undefined\$ Viewer
-permissions: 
-  Base: 
+permissions:
+  Base:
     description: \$profilerequest:group\$undefined\$
-    objects: 
-      - 
+    objects:
+      -
         type: group
         id: Base
-        allow: 
+        allow:
           - group_view
           - group_view_members
           - group_add_member
           - group_remove_member
-      - 
+      -
         type: group
         id: Viewer
-        allow: 
+        allow:
           - group_view
           - group_view_members
           - group_add_member
           - group_remove_member
-  Viewer: 
+  Viewer:
     description: \$profilerequest:group\$undefined\$ Viewer
     autojoin: y
-    objects: 
-      - 
+    objects:
+      -
         type: group
         id: Base
-        allow: 
+        allow:
           - group_view
           - group_view_members
-      - 
+      -
         type: group
         id: Viewer
-        allow: 
+        allow:
           - group_view
           - group_view_members
 EXPECT;
@@ -98,19 +106,19 @@ EXPECT;
 		$builder = new Tiki_Profile_Builder;
 		$builder->addGroup('Base', '{group}');
 		$builder->setManagingGroup('Base');
-		
+
 		$expect = <<<EXPECT
 ---
-mappings: 
+mappings:
   Base: \$profilerequest:group\$undefined\$
-permissions: 
-  Base: 
+permissions:
+  Base:
     description: \$profilerequest:group\$undefined\$
-    objects: 
-      - 
+    objects:
+      -
         type: group
         id: Base
-        allow: 
+        allow:
           - group_view
           - group_view_members
           - group_add_member
@@ -122,26 +130,30 @@ EXPECT;
 	function testAssignDefaultGroup()
 	{
 		$builder = new Tiki_Profile_Builder;
-		$builder->addObject('wiki_page', 'foo', array(
-			'name' => 'Foo',
-			'content' => 'Hello',
-			'categories' => $builder->user('category'),
-		));
-		
+		$builder->addObject(
+			'wiki_page',
+			'foo',
+			array(
+				'name' => 'Foo',
+				'content' => 'Hello',
+				'categories' => $builder->user('category'),
+			)
+		);
+
 		$expect = <<<EXPECT
 ---
-objects: 
-  - 
+objects:
+  -
     type: categorize
-    data: 
+    data:
       type: wiki_page
       object: \$foo
-      categories: 
+      categories:
         - \$profilerequest:category\$undefined\$
-  - 
+  -
     type: wiki_page
     ref: foo
-    data: 
+    data:
       name: Foo
       content: Hello
 EXPECT;

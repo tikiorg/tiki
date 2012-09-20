@@ -126,43 +126,43 @@ function module_since_last_visit_new($mod_reference, $params = null)
 				$perm = 'tiki_p_read_article';
 				$ret['items']['comments']['list'][$count]['href'] =
 							filter_out_sefurl($ret['items']['comments']['list'][$count]['href'], 'article', $res['title']);
-							break;
+				break;
 
 			case 'post':
 				$perm = 'tiki_p_read_blog';
 				$ret['items']['comments']['list'][$count]['href'] =
 							filter_out_sefurl($ret['items']['comments']['list'][$count]['href'], 'blogpost', $res['title']);
-							break;
+				break;
 
 			case 'blog':
 				$perm = 'tiki_p_read_blog';
 				$ret['items']['comments']['list'][$count]['href'] =
 							filter_out_sefurl($ret['items']['comments']['list'][$count]['href'], 'blog', $res['title']);
-							break;
+				break;
 
 			case 'faq':
 				$perm = 'tiki_p_view_faqs';
-							break;
+				break;
 
 			case 'file gallery':
 				$perm = 'tiki_p_view_file_gallery';
-							break;
+				break;
 
 			case 'image gallery':
 				$perm = 'tiki_p_view_image_gallery';
-							break;
+				break;
 
 			case 'poll':
 				// no perm check for viewing polls, only a perm for taking them
-							break;
+				break;
 
 			case 'wiki page':
 				$perm = 'tiki_p_view';
-							break;
+				break;
 
 			default:
 				$perm = 'tiki_p_read_comments';
-							break;
+				break;
 		}
 
 		if ($res['approved'] == 'n' || $res['archived'] == 'y') {
@@ -481,8 +481,8 @@ function module_since_last_visit_new($mod_reference, $params = null)
 				$ret['items']['trackers']['tid'][$res['trackerId']]['label'] = tra('in') . ' ' . tra($tracker_name[$res['trackerId']]);
 				$ret['items']['trackers']['tid'][$res['trackerId']]['cname'] = 'slvn_tracker' . $res['trackerId'] . '_menu';
 				$ret['items']['trackers']['tid'][$res['trackerId']]['list'][$counta[$res['trackerId']]]['href'] = filter_out_sefurl(
-								'tiki-view_tracker_item.php?itemId=' . $res['itemId'],
-								'trackeritem'
+					'tiki-view_tracker_item.php?itemId=' . $res['itemId'],
+					'trackeritem'
 				);
 				$ret['items']['trackers']['tid'][$res['trackerId']]['list'][$counta[$res['trackerId']]]['title'] = $tikilib->get_short_datetime($res['created']);
 

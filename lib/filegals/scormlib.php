@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -25,10 +25,10 @@ class ScormLib
 	{
 		if ($metadata = $this->getRequestMetadata($args)) {
 			$this->createItem(
-							$metadata, 
-							array(
-								'scormPackage' => $args['object'],
-							)
+				$metadata,
+				array(
+					'scormPackage' => $args['object'],
+				)
 			);
 		}
 	}
@@ -44,11 +44,11 @@ class ScormLib
 			foreach ($items as $item ) {
 				if ($item['type'] == 'trackeritem') {
 					$this->updateItem(
-									$item['itemId'], 
-									$metadata, 
-									array(
-										'scormPackage' => $args['object'],
-									)
+						$item['itemId'],
+						$metadata,
+						array(
+							'scormPackage' => $args['object'],
+						)
 					);
 				}
 			}
@@ -79,14 +79,14 @@ class ScormLib
 		if (! isset($args['filetype'])) {
 			return false;
 		}
-		
+
 		return in_array($args['filetype'], array('application/zip', 'application/x-zip', 'application/x-zip-compressed'));
 	}
 
 	private function getZipFile($fileId)
 	{
 		global $prefs;
-		
+
 		if (! class_exists('ZipArchive')) {
 			return null;
 		}
@@ -155,11 +155,11 @@ class ScormLib
 
 		$utilities = new Services_Tracker_Utilities;
 		$utilities->insertItem(
-						$definition, 
-						array(
-							'status' => 'o',
-							'fields' => $fields,
-						)
+			$definition,
+			array(
+				'status' => 'o',
+				'fields' => $fields,
+			)
 		);
 	}
 
@@ -170,12 +170,12 @@ class ScormLib
 
 		$utilities = new Services_Tracker_Utilities;
 		$utilities->updateItem(
-						$definition, 
-						array(
-							'itemId' => (int) $itemId,
-							'status' => 'o',
-							'fields' => $fields,
-						)
+			$definition,
+			array(
+				'itemId' => (int) $itemId,
+				'status' => 'o',
+				'fields' => $fields,
+			)
 		);
 	}
 

@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -8,8 +8,8 @@
 require_once 'Transition.php';
 
 /**
- * TransitionLib 
- * 
+ * TransitionLib
+ *
  */
 class TransitionLib
 {
@@ -26,11 +26,11 @@ class TransitionLib
 
 		$transitions = $this->getTransitionsFromStates($states);
 		$transitions = Perms::filter(
-						array('type' => 'transition'), 
-						'object', 
-						$transitions, 
-						array('object' => 'transitionId'),
-						'trigger_transition'
+			array('type' => 'transition'),
+			'object',
+			$transitions,
+			array('object' => 'transitionId'),
+			'trigger_transition'
 		);
 
 		foreach ( $transitions as & $tr ) {
@@ -105,8 +105,8 @@ class TransitionLib
 		}
 
 		$bindvars = array($this->transitionType);
-		$query = "SELECT `transitionId`, `preserve`, `name`, `from`, `to`, `guards` FROM `tiki_transitions` WHERE `type` = ? AND ( " . 
-						$db->in('from', $states, $bindvars) . 
+		$query = "SELECT `transitionId`, `preserve`, `name`, `from`, `to`, `guards` FROM `tiki_transitions` WHERE `type` = ? AND ( " .
+						$db->in('from', $states, $bindvars) .
 						' OR ' . $db->in('to', $states, $bindvars) . ')';
 
 		$result = $db->fetchAll($query, $bindvars);
@@ -121,8 +121,8 @@ class TransitionLib
 		$db = TikiDb::get();
 
 		$db->query(
-						"INSERT INTO `tiki_transitions` ( `type`, `from`, `to`, `name`, `preserve`, `guards`) VALUES( ?, ?, ?, ?, ?, ? )", 
-						array($this->transitionType, $from, $to, $name, (int) $preserve, json_encode($guards)) 
+			"INSERT INTO `tiki_transitions` ( `type`, `from`, `to`, `name`, `preserve`, `guards`) VALUES( ?, ?, ?, ?, ?, ? )",
+			array($this->transitionType, $from, $to, $name, (int) $preserve, json_encode($guards))
 		);
 
 		return $db->getOne('SELECT MAX(`transitionId`) FROM `tiki_transitions`');
@@ -132,8 +132,8 @@ class TransitionLib
 	{
 		$db = TikiDb::get();
 		$db->query(
-						'UPDATE `tiki_transitions` SET `name` = ?, `from` = ?, `to` = ?, `preserve` = ? WHERE `transitionId` = ?',
-						array($label, $from, $to, (int) $preserve, (int) $transitionId)
+			'UPDATE `tiki_transitions` SET `name` = ?, `from` = ?, `to` = ?, `preserve` = ? WHERE `transitionId` = ?',
+			array($label, $from, $to, (int) $preserve, (int) $transitionId)
 		);
 	}
 
@@ -141,8 +141,8 @@ class TransitionLib
 	{
 		$db = TikiDb::get();
 		$db->query(
-						'UPDATE `tiki_transitions` SET `guards` = ? WHERE `transitionId` = ?',
-						array(json_encode($guards), (int) $transitionId)
+			'UPDATE `tiki_transitions` SET `guards` = ? WHERE `transitionId` = ?',
+			array(json_encode($guards), (int) $transitionId)
 		);
 	}
 
@@ -162,8 +162,8 @@ class TransitionLib
 		}
 
 		$bindvars = array($this->transitionType);
-		$query = "SELECT `transitionId`, `preserve`, `name`, `from`, `to`, `guards` FROM `tiki_transitions` WHERE `type` = ? AND " . 
-						$db->in('from', $states, $bindvars) . ' AND NOT (' . 
+		$query = "SELECT `transitionId`, `preserve`, `name`, `from`, `to`, `guards` FROM `tiki_transitions` WHERE `type` = ? AND " .
+						$db->in('from', $states, $bindvars) . ' AND NOT (' .
 						$db->in('to', $states, $bindvars) . ')';
 
 		$result = $db->fetchAll($query, $bindvars);

@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -244,7 +244,7 @@ class Net_POP3
 	 * @param  string $user Username to use
 	 * @param  string $pass Password to use
 	 * @param  mixed $apop Whether to try APOP first, if used as string you can select the auth methd to use ( $pop3->login('validlogin', 'validpass', "CRAM-MD5");
-	 *          Valid methods are: 'DIGEST-MD5','CRAM-MD5','LOGIN','PLAIN','APOP','USER' 
+	 *          Valid methods are: 'DIGEST-MD5','CRAM-MD5','LOGIN','PLAIN','APOP','USER'
 	 * @return mixed  true on Success/ PEAR_ERROR on error
 	 */
 	function login($user, $pass, $apop = true)
@@ -291,7 +291,7 @@ class Net_POP3
 				switch ($capa) {
 					case 'implementation':
 						$this->_capability['implementation'] = $matches[1];
-									break;
+						break;
 
 					case 'sasl':
 						if (isset($matches[3])) {
@@ -299,11 +299,11 @@ class Net_POP3
 						} else {
 							$this->_capability['sasl'] = $matches[1];
 						}
-									break;
+						break;
 
 					default :
 						$this->_capability[$capa] = $matches[1];
-									break;
+						break;
 				}
 			}
 		}
@@ -369,8 +369,8 @@ class Net_POP3
 			$myMethods = implode(',', $this->supportedAuthMethods);
 
 			return $this->_raiseError(
-							"$method NOT supported authentication method!. This server " .
-							"supports these methods: $serverMethods, but I support $myMethods"
+				"$method NOT supported authentication method!. This server " .
+				"supports these methods: $serverMethods, but I support $myMethods"
 			);
 		} else {
 			return $this->_raiseError("This server don't support any Auth methods");
@@ -401,19 +401,19 @@ class Net_POP3
 		switch ($method) {
 			case 'DIGEST-MD5':
 				$result = $this->_authDigest_MD5($uid, $pwd);
-							break;
+				break;
 
 			case 'CRAM-MD5':
 				$result = $this->_authCRAM_MD5($uid, $pwd);
-							break;
+				break;
 
 			case 'LOGIN':
 				$result = $this->_authLOGIN($uid, $pwd);
-							break;
+				break;
 
 			case 'PLAIN':
 				$result = $this->_authPLAIN($uid, $pwd);
-							break;
+				break;
 
 			case 'APOP':
 				$result = $this->_cmdApop($uid, $pwd);
@@ -422,15 +422,15 @@ class Net_POP3
 					//echo "APOP FAILED!!!\n";
 					$result=$this->_authUSER($uid, $pwd);
 				}
-							break;
+				break;
 
 			case 'USER':
 				$result = $this->_authUSER($uid, $pwd);
-							break;
+				break;
 
 			default :
 				$result = $this->_raiseError("$method is not a supported authentication method");
-							break;
+				break;
 		}
 		return $result;
 	}
@@ -703,9 +703,9 @@ class Net_POP3
 				$value = ltrim(substr($value, $pos + 1));
 
 				// 21/09/08 MatWho Prevent capitalisation problems with Message-ID mail header
-				if (preg_match('/message-id/i', $name)) { 
+				if (preg_match('/message-id/i', $name)) {
 					$name  = "Message-ID";
-				} 
+				}
 				if (isset($headers[$name]) AND is_array($headers[$name])) {
 					$headers[$name][] = $value;
 				} elseif (isset($headers[$name])) {
@@ -911,7 +911,7 @@ class Net_POP3
 			if (!isset($msg_id)) {
 				if (!PEAR::isError($data = $this->_sendCmd('LIST'))) {
 					$data = $this->_getMultiline();
-					$data = explode("\r\n", $data);                    
+					$data = explode("\r\n", $data);
 					foreach ($data as $line) {
 						if ($line != '') {
 							sscanf($line, '%s %s', $msg_id, $size);
@@ -1123,7 +1123,7 @@ class Net_POP3
 	/**
 	 * Sets the bebug state
 	 *
-	 * @param  bool $debug 
+	 * @param  bool $debug
 	 * @access public
 	 * @return void
 	 */

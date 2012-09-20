@@ -1,13 +1,13 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-/** 
+/**
  * @group unit
- * 
+ *
  */
 
 class Transition_BasicTest extends PHPUnit_Framework_TestCase
@@ -49,8 +49,8 @@ class Transition_BasicTest extends PHPUnit_Framework_TestCase
 		$transition = new Transition('A', 'B');
 
 		$this->assertEquals(
-						array(array('class' => 'missing', 'count' => 1, 'set' => array('A')),), 
-						$transition->explain()
+			array(array('class' => 'missing', 'count' => 1, 'set' => array('A')),),
+			$transition->explain()
 		);
 	}
 
@@ -60,8 +60,8 @@ class Transition_BasicTest extends PHPUnit_Framework_TestCase
 		$transition->setStates(array('A', 'B'));
 
 		$this->assertEquals(
-						array(array('class' => 'extra', 'count' => 1, 'set' => array('B')),), 
-						$transition->explain()
+			array(array('class' => 'extra', 'count' => 1, 'set' => array('B')),),
+			$transition->explain()
 		);
 	}
 
@@ -72,8 +72,8 @@ class Transition_BasicTest extends PHPUnit_Framework_TestCase
 		$transition->addGuard('foobar', 5, array('D', 'E', 'F'));
 
 		$this->assertEquals(
-						array(array('class' => 'unknown', 'count' => 1, 'set' => array('foobar')),), 
-						$transition->explain()
+			array(array('class' => 'unknown', 'count' => 1, 'set' => array('foobar')),),
+			$transition->explain()
 		);
 	}
 
@@ -93,8 +93,8 @@ class Transition_BasicTest extends PHPUnit_Framework_TestCase
 		$transition->addGuard('exactly', 4, array('C', 'D', 'E', 'F', 'G'));
 
 		$this->assertEquals(
-						array(array('class' => 'missing', 'count' => 2, 'set' => array('D', 'E', 'G')),), 
-						$transition->explain()
+			array(array('class' => 'missing', 'count' => 2, 'set' => array('D', 'E', 'G')),),
+			$transition->explain()
 		);
 	}
 
@@ -105,8 +105,8 @@ class Transition_BasicTest extends PHPUnit_Framework_TestCase
 		$transition->addGuard('exactly', 4, array('C', 'D', 'E'));
 
 		$this->assertEquals(
-						array(array('class' => 'invalid', 'count' => 4, 'set' => array('C', 'D', 'E')),), 
-						$transition->explain()
+			array(array('class' => 'invalid', 'count' => 4, 'set' => array('C', 'D', 'E')),),
+			$transition->explain()
 		);
 	}
 }

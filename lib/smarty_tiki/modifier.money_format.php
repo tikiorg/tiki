@@ -34,7 +34,7 @@
 
 function smarty_modifier_money_format($number, $local, $currency, $format = '%(#10n', $display = 0)
 {
-		
+
 	if (!empty($local)) {
 		$ret = setlocale(LC_MONETARY, $local);
 		if ($ret===FALSE) {
@@ -42,13 +42,13 @@ function smarty_modifier_money_format($number, $local, $currency, $format = '%(#
 			return;
 		}
 	}
-	
+
 	$locale = localeconv();
-	
+
 	if (!empty($currency)) {
 		$locale['int_curr_symbol'] = $currency;
 	}
-	
+
 	//regex for format string
 	$regex = '/%((?:[\^!\-]|\+|\(|\=.)*)([0-9]+)?'.
 				'(?:#([0-9]+))?(?:\.([0-9]+))?([in%])/';
@@ -68,65 +68,65 @@ function smarty_modifier_money_format($number, $local, $currency, $format = '%(#
 		$left = trim($fmatch[3]) ? (int)$fmatch[3] : 0;
 		$right = trim($fmatch[4]) ? (int)$fmatch[4] : $locale['int_frac_digits'];
 		$conversion = $fmatch[5];
-	
+
 		$positive = true;
 		if ($value < 0) {
 			$positive = false;
 			$value *= -1;
 		}
 		$letter = $positive ? 'p' : 'n';
-	
+
 		$prefix = $suffix = $cprefix = $csuffix = $signal = '';
 		$signal = $positive ? $locale['positive_sign'] : $locale['negative_sign'];
 
 		switch (true) {
 			case $locale["{$letter}_sign_posn"] == 1 && $flags['usesignal'] == '+':
 				$prefix = $signal;
-							break;
+				break;
 			case $locale["{$letter}_sign_posn"] == 2 && $flags['usesignal'] == '+':
 				$suffix = $signal;
-							break;
+				break;
 			case $locale["{$letter}_sign_posn"] == 3 && $flags['usesignal'] == '+':
 				$cprefix = $signal;
-							break;
+				break;
 			case $locale["{$letter}_sign_posn"] == 4 && $flags['usesignal'] == '+':
 				$csuffix = $signal;
-							break;
+				break;
 			case $flags['usesignal'] == '(':
 			case $locale["{$letter}_sign_posn"] == 0:
 				if ($positive == false) {
 					$prefix = '(';
 					$suffix = ')';
 				}
-							break;
+				break;
 		}
-	
+
 		if (!$flags['nosimbol']) {
 			$currency = $cprefix . ($conversion == 'i' ? $locale['int_curr_symbol'] : $locale['currency_symbol']) . $csuffix;
 		} else {
 			$currency = '';
 		}
-		
+
 		if (!empty($currency) && $display == 0) {
 			$currency = '<span style="visibility:hidden">' . $currency .  '</span>';
 		}
-	
+
 		$space = $locale["{$letter}_sep_by_space"] && !empty($currency) && $display == 1 ? ' ' : '';
-	
+
 		$value = number_format(
-						$value, 
-						$right, 
-						$locale['mon_decimal_point'],
-						$flags['nogroup'] ? '' : $locale['mon_thousands_sep']
+			$value,
+			$right,
+			$locale['mon_decimal_point'],
+			$flags['nogroup'] ? '' : $locale['mon_thousands_sep']
 		);
 		$value = @explode($locale['mon_decimal_point'], $value);
-	
+
 		$n = strlen($prefix) + strlen($currency) + strlen($value[0]);
 		if ($left > 0 && $left > $n) {
 			$value[0] = str_repeat($flags['fillchar'], $left - $n) . $value[0];
 		}
 		$value = implode($locale['mon_decimal_point'], $value);
-	
+
 		if ($locale["{$letter}_cs_precedes"]) {
 			$value = $prefix . $currency . $space . $value . $suffix;
 			//create right pad for alignment
@@ -139,7 +139,7 @@ function smarty_modifier_money_format($number, $local, $currency, $format = '%(#
 			$rightpad .= ($locale['p_cs_precedes'] == false || $locale['n_cs_precedes'] == false) && empty($currency) ? $currpad : '';
 			$rightpad .= empty($suffix) && $flags['usesignal'] == '(' ? ')' : '';
 		}
-	
+
 		$format = str_replace($fmatch[0], $value, $format);
 		$format = !empty($rightpad) ? $format .= '<span style="visibility:hidden">' . $rightpad . '</span>' : $format;
 	}

@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -26,16 +26,18 @@ class OIntegrate
 		switch( $from )
 		{
 		case 'html':
-			if ( $to == 'tikiwiki' )
+			if ( $to == 'tikiwiki' ) {
 				return new OIntegrate_Converter_HtmlToTiki;
-			elseif ( $to == 'html' )
+			} elseif ( $to == 'html' ) {
 				return new OIntegrate_Converter_Direct;
-    		break;	
+			}
+    		break;
 		case 'tikiwiki':
-			if ( $to == 'html' )
+			if ( $to == 'html' ) {
 				return new OIntegrate_Converter_TikiToHtml;
-			elseif ( $to == 'tikiwiki' )
+			} elseif ( $to == 'tikiwiki' ) {
 				return new OIntegrate_Converter_EncodeHtml;
+			}
 		}
 	} // }}}
 
@@ -57,17 +59,17 @@ class OIntegrate
 		if ( empty($postBody) ) {
 			$method = 'GET';
 			$client->setHeaders(
-							array(
-								'Accept' => 'application/json,text/x-yaml',
-								'OIntegrate-Version' => '1.0',
-							)
+				array(
+					'Accept' => 'application/json,text/x-yaml',
+					'OIntegrate-Version' => '1.0',
+				)
 			);
 		} else {
 			$client->setHeaders(
-							array(
-								'Accept' => 'application/json,text/x-yaml',
-								'OIntegrate-Version' => '1.0',
-							)
+				array(
+					'Accept' => 'application/json,text/x-yaml',
+					'OIntegrate-Version' => '1.0',
+				)
 			);
 			$client->setRawData($postBody, 'application/x-www-form-urlencoded');
 		}
@@ -106,8 +108,8 @@ class OIntegrate
 			$expiry = time() + $parts[1];
 
 			$cachelib->cacheItem(
-							$url,
-							serialize(array('expires' => $expiry, 'data' => $response))
+				$url,
+				serialize(array('expires' => $expiry, 'data' => $response))
 			);
 		// Unless service specifies not to cache result, apply a default cache
 		} elseif ( false !== strpos($cacheControl, 'no-cache') && $prefs['webservice_consume_defaultcache'] > 0 ) {
@@ -132,8 +134,9 @@ class OIntegrate
 		{
 		case 'application/json':
 		case 'text/javascript':
-			if ( $out = json_decode($data, true) )
+			if ( $out = json_decode($data, true) ) {
 				return $out;
+			}
 
 			// Handle invalid JSON too...
 			$fixed = preg_replace('/(\w+):/', '"$1":', $data);
@@ -146,10 +149,12 @@ class OIntegrate
 			return Horde_Yaml::load($data);
 		default:
 			// Attempt anything...
-			if ( $out = $this->unserialize('application/json', $data) )
+			if ( $out = $this->unserialize('application/json', $data) ) {
 				return $out;
-			if ( $out = $this->unserialize('text/x-yaml', $data) )
+			}
+			if ( $out = $this->unserialize('text/x-yaml', $data) ) {
 				return $out;
+			}
 		}
 	} // }}}
 

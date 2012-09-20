@@ -57,7 +57,7 @@ class mime
 					case 'B':
 					case 'b':
 						$text = base64_decode($text);
-									break;
+						break;
 
 					case 'Q':
 					case 'q':
@@ -66,7 +66,7 @@ class mime
 						foreach ($matches[1] as $value) {
 							$text = str_replace('=' . $value, chr(hexdec($value)), $text);
 						}
-									break;
+						break;
 				}
 
 				if ($charset == 'iso-8859-1') {
@@ -117,7 +117,7 @@ class mime
 							$back['ctype_parameters'][$p_name] = $p_value;
 						}
 					}
-								break;
+					break;
 
 				case 'content-disposition':
 					$content_disposition = $it;
@@ -128,11 +128,11 @@ class mime
 							$back['d_parameters'][$p_name] = $p_value;
 						}
 					}
-								break;
+					break;
 
 				case 'content-transfer-encoding':
 					$content_transfer_encoding = $it;
-								break;
+					break;
 			}
 		}
 
@@ -165,7 +165,7 @@ class mime
 					} else {
 						$back[$type][] = $back['body'];
 					}
-								break;
+					break;
 
 				case 'multipart/signed':
 				case 'multipart/digest':
@@ -181,18 +181,18 @@ class mime
 					for ($i = 0, $icount_parts = count($parts); $i < $icount_parts; $i++) {
 						$back['parts'][] = mime::decode($parts[$i], $default_ctype);
 					}
-								break;
+					break;
 
 				case 'message/rfc822':
 					$back['parts'][] = mime::decode($body);
-								break;
+					break;
 
 				default:
 					if (!isset($content_transfer_encoding['value'])) {
 						$content_transfer_encoding['value'] = '7bit';
 					}
 					$back['body'] = mime::decodeBody($body, $content_transfer_encoding['value']);
-								break;
+					break;
 			}
 		} else {
 			$back['body'] = mime::decodeBody($body);

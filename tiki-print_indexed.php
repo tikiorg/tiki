@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -44,7 +44,7 @@ class ObjectList // {{{
 		if (! isset($dataIndex[$type])) {
 			$this->dataIndex[$type] = array();
 		}
-		
+
 		switch($type) {
 			case 'wiki page':
 				if (array_key_exists('languages', $options)) {
@@ -52,7 +52,7 @@ class ObjectList // {{{
 				} else {
 					$renderer = new ObjectRenderer_Wiki($type, $object, $options);
 				}
-			
+
 			    break;
 
 			default:
@@ -63,7 +63,7 @@ class ObjectList // {{{
 		if ($renderer && $renderer->isValid()) {
 			$index = ++$this->lastIndex;
 			$this->renderers[$index] = $renderer;
-			
+
 			foreach ($this->customIndexes as $key => & $data) {
 				if ($prop = $renderer->getIndexValue($key)) {
 					$prop = strtolower($prop);
@@ -154,7 +154,7 @@ class ObjectRenderer_TrackerItem extends ObjectRenderer // {{{
 		if (! isset(self::$trackers[$trackerId])) {
 			if (self::$trackers[$trackerId] = $trklib->get_tracker($trackerId)) {
 				$fields = $trklib->list_tracker_fields($trackerId);
-				
+
 				self::$trackers[$trackerId]['fields'] = $fields['data'];
 			} else {
 				$this->valid = false;
@@ -216,11 +216,11 @@ class ObjectRenderer_Wiki extends ObjectRenderer // {{{
 		$info = $tikilib->get_page_info($objectId);
 
 		$info['parsed'] = $tikilib->parse_data(
-						$info['data'], 
-						array(
-							'is_html' => $info['is_html'],
-							'print' => 'y',
-						)
+			$info['data'],
+			array(
+				'is_html' => $info['is_html'],
+				'print' => 'y',
+			)
 		);
 
 		$this->info = $info;
@@ -329,7 +329,7 @@ switch ($_GET['list']) {
 				$objectList->add($type, $item, array());
 			}
 		}
-					break;
+		break;
 
 	case 'glossary':
 		if ( isset( $_REQUEST['languages'] ) ) {
@@ -372,7 +372,7 @@ switch ($_GET['list']) {
 			$objectList->add('wiki page', $info['pageName'], array('languages' => $languages));
 		}
 
-					break;
+		break;
 }
 
 $objectList->finalize();
@@ -389,15 +389,15 @@ foreach ($indexPages as $page) {
 
 // Display all data
 $objectList->render(
-				$smarty, 
-				null, 
-				array(
-					'decorator' => 'indexed',
-					'display' => 'object',
-					'comments' => $_REQUEST['comments'] == 'y',
-				) 
+	$smarty,
+	null,
+	array(
+		'decorator' => 'indexed',
+		'display' => 'object',
+		'comments' => $_REQUEST['comments'] == 'y',
+	)
 );
- 
+
 $smarty->display('print/print-page_footer.tpl');
 $smarty->display('footer.tpl');
 

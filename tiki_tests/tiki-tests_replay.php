@@ -68,7 +68,7 @@ function verif_url($url, $use_tidy = TRUE)
 		switch (strtolower($url->getAttribute('method'))) {
 			case 'get':
 				$buffer = http_get($urlstr, $options, $info);
-							break;
+				break;
 			case 'post':
 				$buffer = http_post_fields($urlstr, $post, NULL, $options, $info);
 		}
@@ -103,7 +103,7 @@ function verif_url($url, $use_tidy = TRUE)
 		switch (strtolower($url->getAttribute('method'))) {
 			case 'get':
 				curl_setopt($curl, CURLOPT_HTTPGET, true);
-							break;
+				break;
 			case 'post':
 				curl_setopt($curl, CURLOPT_POST, true);
 				$post_string = '';
@@ -199,15 +199,15 @@ function verif_url($url, $use_tidy = TRUE)
 	$tmp = diff2($data, $buffer, "htmldiff");
 	if (trim($xpath) != '') {
 		$result['html'] = preg_replace(
-						array("/<html>/", "/<\/html>/"),
-						array("<div style='overflow: auto; width:500px; text-align: center'> ", "</div>"),
-						$tmp
+			array("/<html>/", "/<\/html>/"),
+			array("<div style='overflow: auto; width:500px; text-align: center'> ", "</div>"),
+			$tmp
 		);
 	} else {
 		$result['html'] = preg_replace(
-						array("/<html.*<body/U", "/<\/body><\/html>/U"),
-						array("<div style='overflow: auto; width:500px; text-align: center' ", "</div>"),
-						$tmp
+			array("/<html.*<body/U", "/<\/body><\/html>/U"),
+			array("<div style='overflow: auto; width:500px; text-align: center' ", "</div>"),
+			$tmp
 		);
 	}
 	$result['url'] = $urlstr;

@@ -34,8 +34,8 @@ class RelationTest extends TikiTestCase
 		$lib->add_relation('tiki.test.link', 'test wiki page', 'HomePage', 'test wiki page', 'SomePage');
 
 		$this->assertEquals(
-						array(array('relation' => 'tiki.test.link', 'type' => 'test wiki page', 'itemId' => 'SomePage')),
-						$this->removeId($lib->get_relations_from('test wiki page', 'HomePage'))
+			array(array('relation' => 'tiki.test.link', 'type' => 'test wiki page', 'itemId' => 'SomePage')),
+			$this->removeId($lib->get_relations_from('test wiki page', 'HomePage'))
 		);
 	}
 
@@ -46,8 +46,8 @@ class RelationTest extends TikiTestCase
 		$lib->add_relation('tiki.test.link', 'test wiki page', 'HomePage', 'test wiki page', 'SomePage');
 
 		$this->assertEquals(
-						array(array('relation' => 'tiki.test.link', 'type' => 'test wiki page', 'itemId' => 'SomePage')),
-						$this->removeId($lib->get_relations_from('test wiki page', 'HomePage'))
+			array(array('relation' => 'tiki.test.link', 'type' => 'test wiki page', 'itemId' => 'SomePage')),
+			$this->removeId($lib->get_relations_from('test wiki page', 'HomePage'))
 		);
 	}
 
@@ -75,8 +75,8 @@ class RelationTest extends TikiTestCase
 		$lib->add_relation('tiki.test.link', 'test tracker item', '23', 'test wiki page', 'SomePage');
 
 		$this->assertEquals(
-						array(array('relation' => 'tiki.test.something', 'type' => 'test tracker item', 'itemId' => '23'),),
-						$this->removeId($lib->get_relations_from('test wiki page', 'HomePage', 'tiki.test.something'))
+			array(array('relation' => 'tiki.test.something', 'type' => 'test tracker item', 'itemId' => '23'),),
+			$this->removeId($lib->get_relations_from('test wiki page', 'HomePage', 'tiki.test.something'))
 		);
 	}
 
@@ -87,8 +87,8 @@ class RelationTest extends TikiTestCase
 		$lib->add_relation('TIKI . test  . link  ', 'test wiki page', 'HomePage', 'test tracker item', '23');
 
 		$this->assertEquals(
-						array(array('relation' => 'tiki.test.link', 'type' => 'test tracker item', 'itemId' => '23'),),
-						$this->removeId($lib->get_relations_from('test wiki page', 'HomePage'))
+			array(array('relation' => 'tiki.test.link', 'type' => 'test tracker item', 'itemId' => '23'),),
+			$this->removeId($lib->get_relations_from('test wiki page', 'HomePage'))
 		);
 	}
 
@@ -116,8 +116,8 @@ class RelationTest extends TikiTestCase
 		$result = $this->removeId($lib->get_relations_to('test external', 'http://wikipedia.org', 'tiki.test.sem.'));
 
 		$this->assertEquals(
-						array(array('relation' => 'tiki.test.sem.source', 'type' => 'test wiki page', 'itemId' => 'HomePage')),
-						$result
+			array(array('relation' => 'tiki.test.sem.source', 'type' => 'test wiki page', 'itemId' => 'HomePage')),
+			$result
 		);
 	}
 

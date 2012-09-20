@@ -69,19 +69,19 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 function smarty_function_treetable($params, $smarty)
 {
 	global $headerlib, $tree_table_id, $prefs;
-	
+
 	extract($params);
-	
+
 	$_emptyDataMessage = empty($_emptyDataMessage) ? tra('No rows found') : $_emptyDataMessage;
 	if (empty($_data)) {
 		return $_emptyDataMessage;
 	}
-	
+
 	$_checkbox = empty($_checkbox) ? '' : $_checkbox;
 	$_checkboxTitles = empty($_checkboxTitles) ? '' : $_checkboxTitles;
 	$_openall = isset($_openall) ? $_openall : 'n';
 	$_showSelected = isset($_showSelected) ? $_showSelected : 'n';
-	
+
 	if (is_string($_checkbox) && strpos($_checkbox, ',') !== false) {
 		$_checkbox = preg_split('/,/', trim($_checkbox));
 	}
@@ -107,31 +107,31 @@ function smarty_function_treetable($params, $smarty)
 	}
 	$_checkboxColumnIndex = empty($_checkboxColumnIndex) ? 0 : $_checkboxColumnIndex;
 	$_valueColumnIndex = empty($_valueColumnIndex) ? 0 : $_valueColumnIndex;
-	
+
 	if (!empty($_checkbox) && !is_array($_checkbox)) {
 			$_checkbox = array($_checkbox);
 			$_checkboxColumnIndex = array($_checkboxColumnIndex);
 	}
-	
+
 	$_columnsContainHtml = isset($_columnsContainHtml) ? $_columnsContainHtml : 'n';
-	
+
 	$html = '';
 	$nl = "\n";
-	
+
 	// some defaults
 	$_listFilter = empty($_listFilter) ? 'y' : $_listFilter;
 	$_filterMinRows = empty($_filterMinRows) ? 12 : $_filterMinRows;
 	$_collapseMaxSections = empty($_collapseMaxSections) ? 4 : $_collapseMaxSections;
-	
+
 	$_rowClasses = !isset($_rowClasses) ? array('odd', 'even') :
 		(is_array($_rowClasses) ? $_rowClasses : array($_rowClasses));
-	
+
 	if (!empty($_rowClasses)) {
 		$rowCounter = 0;
 	} else {
 		$rowCounter = -1;
 	}
-	
+
 	// auto-increment val for unique id's etc
 	if (empty($id)) {
 		if (!isset($tree_table_id)) {
@@ -161,20 +161,20 @@ function smarty_function_treetable($params, $smarty)
 		}
 		unset($ar, $ar2);
 	}
-	
+
 	$_sortColumn = empty($_sortColumn) ? '' : $_sortColumn;
 	$_groupColumn = empty($_groupColumn) ? '' : $_groupColumn;
-	
+
 	if ($_sortColumn) {
 		sort2d($_data, $_sortColumn);
 	} elseif ($_groupColumn) {
 		sort2d($_data, $_groupColumn, false);
 		$_sortColumn = $_groupColumn;
 	}
-	
+
 	$class = empty($class) ? 'treeTable' : $class;	// treetable
 
-/*	
+/*
 	if ($prefs['feature_jquery_tablesorter'] == 'y' && strpos($class, 'sortable') === false) {
 		 //$class .= ' sortable';
 	}
@@ -183,32 +183,32 @@ function smarty_function_treetable($params, $smarty)
 	if ($_listFilter == 'y' && count($_data) > $_filterMinRows) {
 		$smarty->loadPlugin('smarty_function_listfilter');
 		$html .= smarty_function_listfilter(
-						array(
-							'id' => $id.'_filter',
-							'selectors' => "#$id tbody tr:not(.parent)",
-							'parentSelector' => "#$id tbody .parent",
-							'exclude' => ".subHeader"
-						), 
-						$smarty
+			array(
+				'id' => $id.'_filter',
+				'selectors' => "#$id tbody tr:not(.parent)",
+				'parentSelector' => "#$id tbody .parent",
+				'exclude' => ".subHeader"
+			),
+			$smarty
 		);
 	}
 
 	if ($_openall == 'y') {
 		$smarty->loadPlugin('smarty_function_icon');
 		$html .= '&nbsp;' . smarty_function_icon(
-						array(
-							'_id' => 'folder',
-							'id' => $id.'_openall',
-							'title' => tra('Toggle sections')
-						), 
-						$smarty
+			array(
+				'_id' => 'folder',
+				'id' => $id.'_openall',
+				'title' => tra('Toggle sections')
+			),
+			$smarty
 		) . ' ' . tra('Toggle sections');
-		
+
 		$headerlib->add_jq_onready(
-						'
+			'
 $("#'.$id.'_openall").click( function () {
 	if (this.src.indexOf("ofolder.png") > -1) {
-		
+
 		$(".expanded .expander").eachAsync({
 			delay: 20,
 			bulk: 0,
@@ -231,14 +231,14 @@ $("#'.$id.'_openall").click( function () {
 });'
 		);
 	}
-	
+
 	if ($_showSelected == 'y') {
 		$smarty->loadPlugin('smarty_function_icon');
 		$html .= ' <input type="checkbox" id="'.$id.'_showSelected" title="'.tra('Show only selected').'" />';
 		$html .= ' ' . tra('Show only selected');
-				
+
 		$headerlib->add_jq_onready(
-						'
+			'
 $("#'.$id.'_showSelected").click( function () {
 	if (!$(this).attr("checked")) {
 		$("#treetable_1 tr td.checkBoxCell input:checkbox").parent().parent().show()
@@ -249,10 +249,10 @@ $("#'.$id.'_showSelected").click( function () {
 });'
 		);
 	}
-	
+
 	// start writing the table
 	$html .= $nl . '<table id="' . $id . '" class="' . $class . '">' . $nl;
-	
+
 	// write the table header
 	$html .= '<thead><tr>';
 	if (!empty($_checkbox)) {
@@ -260,16 +260,16 @@ $("#'.$id.'_showSelected").click( function () {
 		for ($i = 0, $icount_checkbox = count($_checkbox); $i < $icount_checkbox; $i++) {
 			$html .= '<th class="checkBoxHeader">';
 			$html .= smarty_function_select_all(
-							array(
-								'checkbox_names'=>array($_checkbox[$i] . '[]'),
-								'label' => empty($_checkboxTitles) ? '' : htmlspecialchars($_checkboxTitles[$i])
-							), 
-							$smarty
+				array(
+					'checkbox_names'=>array($_checkbox[$i] . '[]'),
+					'label' => empty($_checkboxTitles) ? '' : htmlspecialchars($_checkboxTitles[$i])
+				),
+				$smarty
 			);
 			$html .= '</th>';
 		}
 	}
-	
+
 	foreach ($_columns as $column => $columnName) {
 		$html .= '<th>';
 		$html .= htmlspecialchars($columnName);
@@ -277,9 +277,9 @@ $("#'.$id.'_showSelected").click( function () {
 	}
 	$html .= '</tr></thead>'.$nl;
 	$html .= '<tbody>'.$nl;
-	
+
 	$treeSectionsAdded = array();
-	
+
 		// for each row
 	foreach ($_data as &$row) {
 		// set up tree hierarchy
@@ -307,24 +307,24 @@ $("#'.$id.'_showSelected").click( function () {
 				}
 				$treeSectionsAdded[] = $treeTypeId;
 				$rowId = ' id="' . $id . '_' . $treeTypeId . '"';
-				
+
 				//$childRowClass = ' child-of-'.$id.'_'.$treeTypeId;
 			} else {
 				$treeTypeId = preg_replace('/\s+/', '_', $treeType);
 				$childRowClass = ' child-of-' . $id . '_' . $treeTypeId;
 				$rowId = '';
-				
+
 				if (!empty($treeType) && !in_array($treeTypeId, $treeSectionsAdded)) {
 					$html .= '<tr id="' . $id . '_' . $treeTypeId . '"><td colspan="' . (count($_columns) + count($_checkbox)) . '">';
 					$html .= $treeType.'</td></tr>'.$nl;
-					
+
 					// Courtesy message to help category perms configurators
 					if ($treeType == 'category') {
 						$html .= '<tr class="subHeader' . $childRowClass . '"><td colspan="' . (count($_columns) + count($_checkbox)) . '">';
 						$html .= tra('You might want to also set the tiki_p_modify_object_categories permission under the tiki section') . '</td></tr>' . $nl;
 					}
 					$treeSectionsAdded[] = $treeTypeId;
-					
+
 					// write a sub-header
 					$html .= '<tr class="subHeader' . $childRowClass . '">';
 					if (!empty($_checkbox)) {
@@ -346,7 +346,7 @@ $("#'.$id.'_showSelected").click( function () {
 			$rowId = '';
 			$childRowClass = '';
 		}
-		
+
 		// work out row class (odd/even etc)
 		if ($rowCounter > -1) {
 			$rowClass = $_rowClasses[$rowCounter].$childRowClass;
@@ -357,7 +357,7 @@ $("#'.$id.'_showSelected").click( function () {
 		} else {
 			$rowClass = $childRowClass;
 		}
-		
+
 		$html .= '<tr class="' . $rowClass . '"' . $rowId.'>';
 		// add the checkbox
 		if (!empty($_checkbox)) {
@@ -375,7 +375,7 @@ $("#'.$id.'_showSelected").click( function () {
 				$html .= '</td>';
 			}
 		}
-		
+
 		foreach ($_columns as $column => $columnName) {
 			$html .= '<td>';
 			if ($_columnsContainHtml != 'y') {
@@ -385,10 +385,10 @@ $("#'.$id.'_showSelected").click( function () {
 			}
 			$html .= '</td>' . $nl;
 		}
-		$html .= '</tr>' . $nl;					
+		$html .= '</tr>' . $nl;
 	}
 	$html .= '</tbody></table>' . $nl;
-	
+
 	// add jq code to initial treeetable
 	$expanable = empty($_sortColumnDelimiter) ? 'true' : 'false';	// when nested, clickableNodeNames is really annoying
 	if (count($treeSectionsAdded) < $_collapseMaxSections) {
@@ -405,7 +405,7 @@ $("#'.$id.'_showSelected").click( function () {
 //	}
 //}
 //		});');
-		
+
 	return $html;
 
 }

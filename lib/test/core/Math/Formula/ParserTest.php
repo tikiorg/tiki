@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -29,8 +29,8 @@ class Math_Formula_ParserTest extends TikiTestCase
 		$parser = new Math_Formula_Parser;
 
 		$element = new Math_Formula_Element(
-						'score', 
-						array(new Math_Formula_Element('object', array('type', 'object')))
+			'score',
+			array(new Math_Formula_Element('object', array('type', 'object')))
 		);
 
 		$this->assertEquals($element, $parser->parse('(score (object type object))'));
@@ -41,11 +41,11 @@ class Math_Formula_ParserTest extends TikiTestCase
 		$parser = new Math_Formula_Parser;
 
 		$element = new Math_Formula_Element(
-						'score', 
-						array(
-							new Math_Formula_Element('object', array('type', 'object')),
-							new Math_Formula_Element('range', array(3600)),
-						)
+			'score',
+			array(
+				new Math_Formula_Element('object', array('type', 'object')),
+				new Math_Formula_Element('range', array(3600)),
+			)
 		);
 
 		$this->assertEquals($element, $parser->parse('(score (object type object) (range 3600))'));
@@ -56,14 +56,14 @@ class Math_Formula_ParserTest extends TikiTestCase
 		$parser = new Math_Formula_Parser;
 
 		$element = new Math_Formula_Element(
-						'score', 
-						array(
-							new Math_Formula_Element('object', array('type', 'object')),
-							new Math_Formula_Element(
-											'range', 
-											array(new Math_Formula_Element('mul', array(3600, 60)),)
-							),
-						)
+			'score',
+			array(
+				new Math_Formula_Element('object', array('type', 'object')),
+				new Math_Formula_Element(
+					'range',
+					array(new Math_Formula_Element('mul', array(3600, 60)),)
+				),
+			)
 		);
 
 		$this->assertEquals($element, $parser->parse('(score (object type object) (range (mul 3600 60)))'));
@@ -90,18 +90,21 @@ DOC;
 	{
 		$parser = new Math_Formula_Parser;
 		$element = new Math_Formula_Element(
-						'add', 
-						array(
-							new Math_Formula_Element('default', array(0)),
-							new Math_Formula_Element('attribute'),
-						)
+			'add',
+			array(
+				new Math_Formula_Element('default', array(0)),
+				new Math_Formula_Element('attribute'),
+			)
 		);
 
-		$this->assertEquals($element, $parser->parse('
-		(add
-			(default 0)
-			(attribute)
-		)')
+		$this->assertEquals(
+			$element,
+			$parser->parse(
+				'(add
+				(default 0)
+				(attribute)
+				)'
+			)
 		);
 	}
 

@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -15,7 +15,7 @@ class Rating_RegisterVoteTest extends TikiTestCase
 		parent::setUp();
 		TikiDb::get()->query('DELETE FROM `tiki_user_votings` WHERE `id` LIKE ?', array('test.%'));
 	}
-	
+
 	function tearDown()
 	{
 		global $user; $user = null;
@@ -57,22 +57,22 @@ class Rating_RegisterVoteTest extends TikiTestCase
 		$this->assertTrue($lib->record_user_vote('def', 'test', 112, 5));
 
 		$this->assertEquals(
-						array(
-							array('user' => 'abc', 'id' => 'test.111', 'optionId' => 2),
-							array('user' => 'abc', 'id' => 'test.111', 'optionId' => 3),
-							array('user' => 'abc', 'id' => 'test.112', 'optionId' => 4),
-							array('user' => 'def', 'id' => 'test.111', 'optionId' => 1),
-							array('user' => 'def', 'id' => 'test.112', 'optionId' => 5),
-							array('user' => 'def', 'id' => 'test.113', 'optionId' => 1),
-						), 
-						$this->getTestData()
+			array(
+				array('user' => 'abc', 'id' => 'test.111', 'optionId' => 2),
+				array('user' => 'abc', 'id' => 'test.111', 'optionId' => 3),
+				array('user' => 'abc', 'id' => 'test.112', 'optionId' => 4),
+				array('user' => 'def', 'id' => 'test.111', 'optionId' => 1),
+				array('user' => 'def', 'id' => 'test.112', 'optionId' => 5),
+				array('user' => 'def', 'id' => 'test.113', 'optionId' => 1),
+			),
+			$this->getTestData()
 		);
 	}
 
 	function testAnonymousVotes()
 	{
 		$lib = new RatingLib;
-		
+
 		$key1 = 'deadbeef01234567';
 		$key2 = 'deadbeef23456789';
 		$this->assertTrue($lib->record_anonymous_vote($key1, 'test', 111, 3));
@@ -83,15 +83,15 @@ class Rating_RegisterVoteTest extends TikiTestCase
 		$this->assertTrue($lib->record_anonymous_vote($key2, 'test', 112, 5));
 
 		$this->assertEquals(
-						array(
-							array('user' => "anonymous\0$key1", 'id' => 'test.111', 'optionId' => 2),
-							array('user' => "anonymous\0$key1", 'id' => 'test.111', 'optionId' => 3),
-							array('user' => "anonymous\0$key1", 'id' => 'test.112', 'optionId' => 4),
-							array('user' => "anonymous\0$key2", 'id' => 'test.111', 'optionId' => 1),
-							array('user' => "anonymous\0$key2", 'id' => 'test.112', 'optionId' => 5),
-							array('user' => "anonymous\0$key2", 'id' => 'test.113', 'optionId' => 1),
-						),
-						$this->getTestData()
+			array(
+				array('user' => "anonymous\0$key1", 'id' => 'test.111', 'optionId' => 2),
+				array('user' => "anonymous\0$key1", 'id' => 'test.111', 'optionId' => 3),
+				array('user' => "anonymous\0$key1", 'id' => 'test.112', 'optionId' => 4),
+				array('user' => "anonymous\0$key2", 'id' => 'test.111', 'optionId' => 1),
+				array('user' => "anonymous\0$key2", 'id' => 'test.112', 'optionId' => 5),
+				array('user' => "anonymous\0$key2", 'id' => 'test.113', 'optionId' => 1),
+			),
+			$this->getTestData()
 		);
 	}
 
@@ -102,8 +102,8 @@ class Rating_RegisterVoteTest extends TikiTestCase
 
 		$this->assertEquals(range(1, 5), $lib->get_options('test'));
 		$this->assertEquals(
-						array(),
-						$this->getTestData()
+			array(),
+			$this->getTestData()
 		);
 	}
 
@@ -162,10 +162,10 @@ class Rating_RegisterVoteTest extends TikiTestCase
 		$this->assertTrue($lib->record_vote('test', '123', 2));
 
 		$this->assertEquals(
-						array(
-							array('user' => "foobar", 'id' => 'test.123', 'optionId' => 2),
-						),
-						$this->getTestData()
+			array(
+				array('user' => "foobar", 'id' => 'test.123', 'optionId' => 2),
+			),
+			$this->getTestData()
 		);
 
 		$this->assertEquals(2.0, $lib->get_vote('test', '123'));
@@ -179,10 +179,10 @@ class Rating_RegisterVoteTest extends TikiTestCase
 		$this->assertTrue($lib->record_vote('test', '123', 2));
 
 		$this->assertEquals(
-						array(
-							array('user' => "anonymous\0deadbeef01234567", 'id' => 'test.123', 'optionId' => 2),
-						),
-						$this->getTestData()
+			array(
+				array('user' => "anonymous\0deadbeef01234567", 'id' => 'test.123', 'optionId' => 2),
+			),
+			$this->getTestData()
 		);
 
 		$this->assertEquals(2.0, $lib->get_vote('test', '123'));
@@ -194,8 +194,8 @@ class Rating_RegisterVoteTest extends TikiTestCase
 		$this->assertFalse($lib->record_user_vote('abc', 'foobar', 111, 4));
 
 		$this->assertEquals(
-						array(),
-						$this->getTestData()
+			array(),
+			$this->getTestData()
 		);
 	}
 

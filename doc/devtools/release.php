@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -140,9 +140,9 @@ $nbCommiters = 0;
 if (! $options['no-copyright-update'] && important_step("Update '" . COPYRIGHTS_FILENAME . "' file (using final version number '$version')")) {
 	if ($ucf = update_copyright_file($mainversion . '.0')) {
 		info(
-						"\r>> Copyrights updated: "
-						. ($ucf['newContributors'] == 0 ? 'No new contributor, ' : "+{$ucf['newContributors']} contributor(s), ")
-						. ($ucf['newCommits'] == 0 ? 'No new commit' : "+{$ucf['newCommits']} commit(s)")
+			"\r>> Copyrights updated: "
+			. ($ucf['newContributors'] == 0 ? 'No new contributor, ' : "+{$ucf['newContributors']} contributor(s), ")
+			. ($ucf['newCommits'] == 0 ? 'No new commit' : "+{$ucf['newCommits']} commit(s)")
 		);
 		important_step("Commit new " . COPYRIGHTS_FILENAME, true, "[REL] Update " . COPYRIGHTS_FILENAME . " for $secdbVersion");
 	} else error('Copyrights update failed.');
@@ -246,11 +246,11 @@ function md5_check_dir($root, $dir, $version, &$queries)
 				) {
 					global $phpCommand, $phpCommandArguments;
 					error(
-									"SecDB step failed because some filenames need escaping but no MySQL connection has been found."
-									. "\nTry this command line instead (replace HOST, USER and PASS by a valid MySQL host, user and password) :"
-									. "\n\n\t" . $phpCommand
-									. " -d mysql.default_host=HOST -d mysql.default_user=USER -d mysql.default_password=PASS "
-									. $phpCommandArguments . "\n"
+						"SecDB step failed because some filenames need escaping but no MySQL connection has been found."
+						. "\nTry this command line instead (replace HOST, USER and PASS by a valid MySQL host, user and password) :"
+						. "\n\n\t" . $phpCommand
+						. " -d mysql.default_host=HOST -d mysql.default_user=USER -d mysql.default_password=PASS "
+						. $phpCommandArguments . "\n"
 					);
 				}
 
@@ -273,7 +273,7 @@ function build_packages($releaseVersion, $svnRelativePath)
 		$debugflag = '';
 	}
 	$cmd = "/bin/sh ".$debugflag." ".$script." ".$releaseVersion." ".$svnRelativePath;
-	info("Running $cmd:\n"); 
+	info("Running $cmd:\n");
 	`$cmd`;
 	info(">> Packages files have been built in ~/tikipack/$releaseVersion :\n");
 	passthru("ls ~/tikipack/$releaseVersion");
@@ -380,15 +380,15 @@ function check_smarty_syntax2(&$error_msg)
 //		}
 
 	/* This is most odd (jonnyb aug 2010 tiki 5.1)
-	 * 
+	 *
 	 * There is an "error" in tiki-mods.tpl that causes an error that the existing code (pre r28273) couldn't trap
 	 * I added an Exception which works fine in the debugger but dies in the commend line (unless you supply all
 	 * the "skip" params --no-check-php --no-check-php-warnings etc), when it works as expected.
-	 * 
+	 *
 	 * Nasty fix now by not checking that file
 	 * Better fix (or TODO KIL mods) required so leaving commented code behond - excuse the mess ;)
 	 */
-		
+
 		if (! empty($compilation_output)) {
 			$error_msg = "\nError while compiling {$entries[$i]}."
 				. "\nThis may happen if one of the tiki smarty plugins (located in lib/smarty_tiki)"
@@ -499,12 +499,12 @@ function get_options()
 			} elseif (substr($arg, 2, 11) == 'http-proxy=') {
 				if (($proxy = substr($arg, 13)) != '') {
 					$options[substr($arg, 2, 10)] = stream_context_create(
-									array(
-										'http' => array(
-											'proxy' => 'tcp://' . $proxy,
-											'request_fulluri' => true
-										)
-									)
+						array(
+							'http' => array(
+								'proxy' => 'tcp://' . $proxy,
+								'request_fulluri' => true
+							)
+						)
 					);
 				} else $options[substr($arg, 2, 10)] = true;
 			} elseif (substr($arg, 2, 15) == 'svn-mirror-uri=') {
@@ -565,14 +565,14 @@ function important_step($msg, $increment_step = true, $commit_msg = false)
 		switch (strtolower($c)) {
 			case 'y': case '':
 				$do_step = true;
-							break;
+				break;
 			case 'n':
 				info(">> Skipping step $step.");
 				$do_step = false;
-							break;
+				break;
 			case 'q':
 				die;
-							break;
+				break;
 			default:
 				if ($c != '?') info(color(">> Unknown answer '$c'.", 'red'));
 				info(">> You have to type 'y' (Yes), 'n' (No) or 'q' (Quit) and press Enter.");
@@ -591,7 +591,7 @@ function update_changelog_file($newVersion)
 {
 	if (! is_readable(CHANGELOG) || ! is_writable(CHANGELOG) || ! ($handle = @fopen(CHANGELOG, "r")))
 		error('The changelog file "' . CHANGELOG . '" is not readable or writable.');
-	
+
 	$isNewMajorVersion = substr($newVersion, -1) == 0;
 	$releaseNotesURL = '<http://tiki.org/ReleaseNotes'.str_replace('.', '', $newVersion).'>';
 	$parseLogs = $sameFinalVersion = $skipBuffer = false;
@@ -601,12 +601,12 @@ function update_changelog_file($newVersion)
 	$versionMatches = array();
 	$newChangelog = '';
 	$newChangelogEnd = '';
-	
+
 	if ($handle) {
 		while (! feof($handle)) {
 			$buffer = fgets($handle);
 			if (empty($buffer)) continue;
-	
+
 			if (preg_match('/^Version (\d+)\.(\d+)/', $buffer, $versionMatches)) {
 				if ($versionMatches[1].'.'.$versionMatches[2] == $newVersion) {
 					// The changelog file already contains log for the same final version
@@ -703,8 +703,8 @@ Tiki Copyright
 The following list attempts to gather the copyright holders for Tiki
 as of version $newVersion.
 
-Accounts listed below with commits have contributed source code to CVS or SVN. 
-Please note that even more people contributed on various other aspects (documentation, 
+Accounts listed below with commits have contributed source code to CVS or SVN.
+Please note that even more people contributed on various other aspects (documentation,
 bug reporting, testing, etc.)
 
 This is how we implement the Tiki Social Contract.
@@ -720,8 +720,8 @@ from subversion repository by the following script:
   doc/devtools/release.php
 
 Counting the commits is not as trivial as it may sound. If your number of commits
-seems incorrect, it could be that the script is not detecting them all. This 
-has been reported especially for commits early on in the project. Nonetheless, 
+seems incorrect, it could be that the script is not detecting them all. This
+has been reported especially for commits early on in the project. Nonetheless,
 the list provides a general idea.
 
 ====================================================================
@@ -794,10 +794,10 @@ function get_contributors_data($path, &$contributors, $minRevision, $maxRevision
 	echo "\rRetrieving logs from revision $minByStep to $maxRevision ...\t\t\t";
 	$logs = get_logs($path, $minByStep, $maxRevision);
 	if (preg_match_all('/^r(\d+) \|\s([^\|]+)\s\|\s(\d+-\d+-\d+)\s.*\n\n(.*)\-+\n/Ums', $logs, $matches, PREG_SET_ORDER)) {
-		foreach ($matches as $logEntry) 
+		foreach ($matches as $logEntry)
 			$mycommits[$logEntry[1]] = array($logEntry[2],$logEntry[3]);
 		krsort($mycommits);
-		
+
 		foreach ($mycommits as $commitnum => $commitinfo) {
 			if ($lastLogRevision > 0 && $commitnum != $lastLogRevision - 1 && $lastLogRevision != $maxRevision) {
 				print "\nProblem with commit " . ($lastLogRevision - 1) . "\n (trying {$commitnum} after $lastLogRevision)";
@@ -824,10 +824,10 @@ function get_contributors_data($path, &$contributors, $minRevision, $maxRevision
 			}
 		}
 	}
-	
+
 	if ($lastLogRevision > $minRevision)
 		get_contributors_data($path, $contributors, $minRevision, $lastLogRevision - 1, $step);
-	
+
 	return $contributors;
 }
 

@@ -27,8 +27,8 @@ class Messu extends TikiLib
 		$hash = md5($subject . $body);
 
 		if ($this->getOne(
-						'select count(*) from `messu_sent` where `user`=? and `user_from`=? and `hash`=?',
-						array($user, $from, $hash)
+			'select count(*) from `messu_sent` where `user`=? and `user_from`=? and `hash`=?',
+			array($user, $from, $hash)
 		)
 		) {
 			return false;
@@ -39,22 +39,22 @@ class Messu extends TikiLib
 						' `isRead`, `isReplied`, `isFlagged`, `priority`, `hash`, `replyto_hash`)' .
 						' values(?,?,?,?,?,?,?,?,?,?,?,?,?)';
 		$this->query(
-						$query,
-						array(
-							$user, 
-							$from, 
-							$to, 
-							$cc, 
-							$subject, 
-							$body, 
-							(int) $this->now, 
-							'n', 
-							'n', 
-							'n', 
-							(int) $priority, 
-							$hash, 
-							$replyto_hash
-						)
+			$query,
+			array(
+				$user,
+				$from,
+				$to,
+				$cc,
+				$subject,
+				$body,
+				(int) $this->now,
+				'n',
+				'n',
+				'n',
+				(int) $priority,
+				$hash,
+				$replyto_hash
+			)
 		);
 
 		return true;
@@ -73,8 +73,8 @@ class Messu extends TikiLib
 		$hash = md5($subject . $body);
 
 		if ($this->getOne(
-						'select count(*) from `messu_messages` where `user`=? and `user_from`=? and `hash`=?', 
-						array($user, $from, $hash)
+			'select count(*) from `messu_messages` where `user`=? and `user_from`=? and `hash`=?',
+			array($user, $from, $hash)
 		)
 		) {
 			return false;
@@ -86,22 +86,22 @@ class Messu extends TikiLib
 					' values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
 
 		$this->query(
-						$query, 
-						array(
-							$user, 
-							$from, 
-							$to, 
-							$cc, 
-							$subject, 
-							$body, 
-							(int) $this->now, 
-							'n', 
-							'n', 
-							'n', 
-							(int) $priority, 
-							$hash, 
-							$replyto_hash
-						)
+			$query,
+			array(
+				$user,
+				$from,
+				$to,
+				$cc,
+				$subject,
+				$body,
+				(int) $this->now,
+				'n',
+				'n',
+				'n',
+				(int) $priority,
+				$hash,
+				$replyto_hash
+			)
 		);
 
 		// Now check if the user should be notified by email

@@ -63,36 +63,36 @@ function getHTMLPurifierTikiConfig()
 
 			// Add map tag
 			$map = $def->addElement(
-							'map', // name
-							'Block', // content set
-							'Flow', // allowed children
-							'Common', // attribute collection
-							array( // attributes
-								'name' => 'CDATA',
-								'id' => 'ID',
-								'title' => 'CDATA',
-							)
+				'map', // name
+				'Block', // content set
+				'Flow', // allowed children
+				'Common', // attribute collection
+				array( // attributes
+					'name' => 'CDATA',
+					'id' => 'ID',
+					'title' => 'CDATA',
+				)
 			);
 			$map->excludes = array('map' => true);
 
 			// Add area tag
 			$area = $def->addElement(
-							'area',	// name
-							'Block', // content set
-							'Empty', // don't allow children
-							'Common', // attribute collection
-							array( // attributes
-								'name' => 'CDATA',
-								'id' => 'ID',
-								'alt' => 'Text',
-								'coords' => 'CDATA',
-								'accesskey' => 'Character',
-								'nohref' => new HTMLPurifier_AttrDef_Enum(array('nohref')),
-								'href' => 'URI',
-								'shape' => new HTMLPurifier_AttrDef_Enum(array('rect','circle','poly','default')),
-								'tabindex' => 'Number',
-								'target' => new HTMLPurifier_AttrDef_Enum(array('_blank','_self','_target','_top'))
-							)
+				'area', // name
+				'Block', // content set
+				'Empty', // don't allow children
+				'Common', // attribute collection
+				array( // attributes
+					'name' => 'CDATA',
+					'id' => 'ID',
+					'alt' => 'Text',
+					'coords' => 'CDATA',
+					'accesskey' => 'Character',
+					'nohref' => new HTMLPurifier_AttrDef_Enum(array('nohref')),
+					'href' => 'URI',
+					'shape' => new HTMLPurifier_AttrDef_Enum(array('rect','circle','poly','default')),
+					'tabindex' => 'Number',
+					'target' => new HTMLPurifier_AttrDef_Enum(array('_blank','_self','_target','_top'))
+				)
 			);
 			$area->excludes = array('area' => true);
 		}

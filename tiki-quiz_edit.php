@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -82,22 +82,22 @@ function quiz_data_load()
 	if (!empty($_REQUEST['expire_Meridian'])) {
 		$_REQUEST['expire_Hour'] = date('H', strtotime($_REQUEST['expire_Hour'] . ':00 ' . $_REQUEST['expire_Meridian']));
 	}
-	
+
 	$quiz_data["datePub"] = TikiLib::make_time(
-					$quiz_data["publish_Hour"],
-					$quiz_data["publish_Minute"],
-					0,
-					$quiz_data["publish_Month"],
-					$quiz_data["publish_Day"],
-					$quiz_data["publish_Year"]
+		$quiz_data["publish_Hour"],
+		$quiz_data["publish_Minute"],
+		0,
+		$quiz_data["publish_Month"],
+		$quiz_data["publish_Day"],
+		$quiz_data["publish_Year"]
 	);
 	$quiz_data["dateExp"] = TikiLib::make_time(
-					$quiz_data["expire_Hour"],
-					$quiz_data["expire_Minute"],
-					0,
-					$quiz_data["expire_Month"],
-					$quiz_data["expire_Day"],
-					$quiz_data["expire_Year"]
+		$quiz_data["expire_Hour"],
+		$quiz_data["expire_Minute"],
+		0,
+		$quiz_data["expire_Month"],
+		$quiz_data["expire_Day"],
+		$quiz_data["expire_Year"]
 	);
 	$fields = array('nQuestion'
 								, 'shuffleAnswers'
@@ -112,7 +112,7 @@ function quiz_data_load()
 								);
 	foreach ($fields as $field) {
 		fetchYNOption($quiz_data, $quiz_data, $field);
-		
+
 	}
 	return $quiz_data;
 }
@@ -127,8 +127,8 @@ if (isset($_REQUEST["save"])) {
 	if ($quiz->id == 0 || ($quizNew != $quiz)) {
 		$quizlib->quiz_store($quizNew);
 		// tell user changes were stored (new quiz stored with id of x or quiz x modified), return to list of admin quizzes
-		
-	} 
+
+	}
 	die;
 	echo "line: " . __LINE__ . "<br>";
 	echo "Sorry, this is only a prototype at present.<br>";

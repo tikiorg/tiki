@@ -1,13 +1,13 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-/** 
+/**
  * @group unit
- * 
+ *
  */
 
 class Perms_Reflection_QuickTest extends TikiTestCase
@@ -17,11 +17,11 @@ class Perms_Reflection_QuickTest extends TikiTestCase
 		$quick = new Perms_Reflection_Quick;
 
 		$obtained = $quick->getPermissions(
-						new Perms_Reflection_PermissionSet, 
-						array(
-							'Anonymous' => 'basic',
-							'Registered' => 'editor',
-						)
+			new Perms_Reflection_PermissionSet,
+			array(
+				'Anonymous' => 'basic',
+				'Registered' => 'editor',
+			)
 		);
 		$this->assertEquals(new Perms_Reflection_PermissionSet, $obtained);
 	}
@@ -33,12 +33,12 @@ class Perms_Reflection_QuickTest extends TikiTestCase
 		$quick->configure('basic', array('view'));
 
 		$obtained = $quick->getPermissions(
-						new Perms_Reflection_PermissionSet, 
-						array(
-							'Anonymous' => 'basic',
-							'Registered' => 'editor',
-							'Tester' => 'tester',
-						)
+			new Perms_Reflection_PermissionSet,
+			array(
+				'Anonymous' => 'basic',
+				'Registered' => 'editor',
+				'Tester' => 'tester',
+			)
 		);
 
 		$expect = new Perms_Reflection_PermissionSet;
@@ -58,12 +58,12 @@ class Perms_Reflection_QuickTest extends TikiTestCase
 		$quick->configure('editors', array('remove'));
 
 		$obtained = $quick->getPermissions(
-						new Perms_Reflection_PermissionSet, 
-						array(
-							'Anonymous' => 'basic',
-							'Registered' => 'registered',
-							'Editor' => 'editors',
-						)
+			new Perms_Reflection_PermissionSet,
+			array(
+				'Anonymous' => 'basic',
+				'Registered' => 'registered',
+				'Editor' => 'editors',
+			)
 		);
 
 		$expect = new Perms_Reflection_PermissionSet;
@@ -84,10 +84,10 @@ class Perms_Reflection_QuickTest extends TikiTestCase
 		$current->add('Anonymous', 'view');
 
 		$obtained = $quick->getPermissions(
-						$current, 
-						array('Anonymous' => 'none',)
+			$current,
+			array('Anonymous' => 'none',)
 		);
-		
+
 		$expect = new Perms_Reflection_PermissionSet;
 
 		$this->assertEquals($expect, $obtained);
@@ -100,10 +100,10 @@ class Perms_Reflection_QuickTest extends TikiTestCase
 		$current->add('Anonymous', 'view');
 
 		$obtained = $quick->getPermissions(
-						$current, 
-						array('Anonymous' => 'userdefined',)
+			$current,
+			array('Anonymous' => 'userdefined',)
 		);
-		
+
 		$expect = new Perms_Reflection_PermissionSet;
 		$expect->add('Anonymous', 'view');
 

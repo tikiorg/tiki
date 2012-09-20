@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -40,10 +40,10 @@ class BannerLib extends TikiLib
 			$mid .= implode('or', $mids).')';
 		}
 
-			$query = "select `bannerId` from `tiki_banners` where `$dw` = ? and  `hourFrom`<=? and `hourTo`>=? and" . 
+			$query = "select `bannerId` from `tiki_banners` where `$dw` = ? and  `hourFrom`<=? and `hourTo`>=? and" .
 							" ( ((`useDates` = ?) and (`fromDate`<=? and `toDate`>=?)) or (`useDates` = ?) ) and" .
 							" (`impressions`<`maxImpressions`  or `maxImpressions`=?) and" .
-							"  (`clicks`<`maxClicks` or `maxClicks`=? or `maxClicks` is NULL)" . 
+							"  (`clicks`<`maxClicks` or `maxClicks`=? or `maxClicks` is NULL)" .
 							" and `zone`=? $mid and (`exceptInURIs` not like ? or `exceptInURIs` IS NULL)";
 
 			$bindvars[] = '%#'.$_SERVER['REQUEST_URI'].'#%';
@@ -93,24 +93,24 @@ class BannerLib extends TikiLib
 			case 'useHTML':
 				$raw = $res["HTMLData"];
 
-							break;
+				break;
 			case 'useFlash':
 				if ($prefs['javascript_enabled'] == 'y') {
 					global $headerlib; include_once('lib/headerlib.php');
 					$headerlib->add_jsfile('lib/swfobject/swfobject.js');
 				}
 				$raw = $tikilib->embed_flash(unserialize($res['HTMLData']));
-							break;
+				break;
 
 
 			case 'useImage':
 				$raw
-					= "<div class='banner $class'><a target='$target' href='banner_click.php?id=" 
+					= "<div class='banner $class'><a target='$target' href='banner_click.php?id="
 					. $res["bannerId"] . "&amp;url=" . urlencode($res["url"])
-					. "'><img alt='banner' border='0' src=\"banner_image.php?id=" 
+					. "'><img alt='banner' border='0' src=\"banner_image.php?id="
 					. $res["bannerId"] . "\" /></a></div>";
 
-							break;
+				break;
 
 			case 'useFixedURL':
 				@$fp = fopen($res["fixedURLData"], "r");
@@ -124,14 +124,14 @@ class BannerLib extends TikiLib
 					fclose($fp);
 				}
 
-							break;
+				break;
 
 			case 'useText':
-				$raw = "<a target='$target' class='bannertext' href='banner_click.php?id=" . $res["bannerId"] 
-					. "&amp;url=" . urlencode($res["url"]) . "'>" 
+				$raw = "<a target='$target' class='bannertext' href='banner_click.php?id=" . $res["bannerId"]
+					. "&amp;url=" . urlencode($res["url"]) . "'>"
 					. $res["textData"] . "</a>";
 
-							break;
+				break;
 		}
 
 		// Increment banner impressions done in select_banner_id()
@@ -140,10 +140,10 @@ class BannerLib extends TikiLib
 		$views = array();
 		if (isset($_COOKIE[$cookieName])) {
 			$views = TikiLib::tiki_unserialize($_COOKIE[$cookieName]);
-		} 
+		}
 		if ($res['maxUserImpressions'] > 0) {
 			$views[$res['bannerId']] = isset($views[$res['bannerId']]) ? $views[$res['bannerId']]+1: 1;
-			$expire = $res['useDates']? $res['toDate']: $tikilib->now+60*60*24*90; //90 days 
+			$expire = $res['useDates']? $res['toDate']: $tikilib->now+60*60*24*90; //90 days
 			setcookie($cookieName, serialize($views), $expire);
 		}
 
@@ -195,7 +195,7 @@ class BannerLib extends TikiLib
 		return $retval;
 	}
 
-	function list_zones() 
+	function list_zones()
 	{
 		$query = "select `zone` from `tiki_zones`";
 
@@ -235,37 +235,37 @@ class BannerLib extends TikiLib
 	}
 
 	function replace_banner(
-					$bannerId, 
-					$client, 
-					$url, 
-					$title = '', 
-					$alt = '', 
-					$use, 
-					$imageData, 
-					$imageType, 
-					$imageName, 
+					$bannerId,
+					$client,
+					$url,
+					$title = '',
+					$alt = '',
+					$use,
+					$imageData,
+					$imageType,
+					$imageName,
 					$HTMLData,
-					$fixedURLData, 
-					$textData, 
-					$fromDate, 
-					$toDate, 
-					$useDates, 
-					$mon, 
-					$tue, 
-					$wed, 
-					$thu, 
-					$fri, 
-					$sat, 
-					$sun, 
-					$hourFrom, 
+					$fixedURLData,
+					$textData,
+					$fromDate,
+					$toDate,
+					$useDates,
+					$mon,
+					$tue,
+					$wed,
+					$thu,
+					$fri,
+					$sat,
+					$sun,
+					$hourFrom,
 					$hourTo,
-					$maxImpressions, 
+					$maxImpressions,
 					$maxClicks,
 					$zone,
-					$maxUserImpressions = -1, 
-					$onlyInURIs = null, 
+					$maxUserImpressions = -1,
+					$onlyInURIs = null,
 					$exceptInURIs = null
-			)	
+			)
 	{
 		$imageData = urldecode($imageData);
 		//$imageData = '';
@@ -303,10 +303,10 @@ class BannerLib extends TikiLib
 								$imageType,
 								$imageName,
 								$HTMLData,
-								$fixedURLData, 
-								$textData, 
-								$fromDate, 
-								$toDate, 
+								$fixedURLData,
+								$textData,
+								$fromDate,
+								$toDate,
 								$useDates,
 								$this->now,
 								$zone,
@@ -322,8 +322,8 @@ class BannerLib extends TikiLib
 								$maxImpressions,
 								$maxUserImpressions,
 								$maxClicks,
-								$onlyInURIs, 
-								$exceptInURIs, 
+								$onlyInURIs,
+								$exceptInURIs,
 								$bannerId
 			);
 
@@ -332,15 +332,15 @@ class BannerLib extends TikiLib
 			/* invalid cache */
 			global $tikilib, $tikidomain, $prefs;
 			$bannercachefile = $prefs['tmpDir'];
-			if ($tikidomain) { 
-				$bannercachefile .= "/$tikidomain"; 
+			if ($tikidomain) {
+				$bannercachefile .= "/$tikidomain";
 			}
 			$bannercachefile.= "/banner.".(int)$bannerId;
 			unlink($bannercachefile);
 		} else {
 			$query = "insert into `tiki_banners`(`client`, `url`, `title`, `alt`, `which`, `imageData`, `imageType`, `HTMLData`," .
 							" `fixedURLData`, `textData`, `fromDate`, `toDate`, `useDates`, `mon`, `tue`, `wed`, `thu`, `fri`, `sat`, `sun`," .
-							" `hourFrom`, `hourTo`, `maxImpressions`,`maxUserImpressions`,`maxClicks`,`created`,`zone`,`imageName`," . 
+							" `hourFrom`, `hourTo`, `maxImpressions`,`maxUserImpressions`,`maxClicks`,`created`,`zone`,`imageName`," .
 							" `impressions`,`clicks`, `onlyInURIs`, `exceptInURIs`)" .
 							" values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
@@ -353,11 +353,11 @@ class BannerLib extends TikiLib
 									$imageData,
 									$imageType,
 									$HTMLData,
-									$fixedURLData, 
-									$textData, 
-									$fromDate, 
-									$toDate, 
-									$useDates, 
+									$fixedURLData,
+									$textData,
+									$fromDate,
+									$toDate,
+									$useDates,
 									$mon,
 									$tue,
 									$wed,
@@ -374,8 +374,8 @@ class BannerLib extends TikiLib
 									$zone,
 									$imageName,
 									0,
-									0, 
-									$onlyInURIs, 
+									0,
+									$onlyInURIs,
 									$exceptInURIs
 			);
 

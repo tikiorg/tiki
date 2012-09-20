@@ -25,30 +25,42 @@ class Tiki_Profile_Analyser
 	{
 		return $this->builder->user($name);
 	}
-	
+
 	function contains(array $conditions)
 	{
 		$objects = $this->profile->getObjects();
 
 		if (isset($conditions['type'])) {
-			$objects = array_filter($objects, function ($object) use ($conditions) {
-				return $conditions['type'] == $object->getType();
-			});
+			$objects = array_filter(
+				$objects,
+				function ($object) use ($conditions)
+				{
+					return $conditions['type'] == $object->getType();
+				}
+			);
 			unset($conditions['type']);
 		}
 
 		if (isset($conditions['ref'])) {
-			$objects = array_filter($objects, function ($object) use ($conditions) {
-				return $conditions['ref'] === $object->getRef();
-			});
+			$objects = array_filter(
+				$objects,
+				function ($object) use ($conditions)
+				{
+					return $conditions['ref'] === $object->getRef();
+				}
+			);
 			unset($conditions['ref']);
 		}
 
 		foreach ($conditions as $condition => $value) {
-			$objects = array_filter($objects, function ($object) use ($condition, $value) {
-				$data = $object->getData();
-				return isset($data[$condition]) && $data[$condition] === $value;
-			});
+			$objects = array_filter(
+				$objects,
+				function ($object) use ($condition, $value)
+				{
+					$data = $object->getData();
+					return isset($data[$condition]) && $data[$condition] === $value;
+				}
+			);
 		}
 
 		return count($objects) > 0;
@@ -102,11 +114,15 @@ class Tiki_Profile_Analyser
 
 	private function simplify($data)
 	{
-		array_walk_recursive($data, function (& $entry) {
-			if (is_string($entry)) {
-				$entry = preg_replace('/\$profilerequest:(\w+)\$[^\$]*\$/', '{$1}', $entry);
+		array_walk_recursive(
+			$data,
+			function (& $entry)
+			{
+				if (is_string($entry)) {
+					$entry = preg_replace('/\$profilerequest:(\w+)\$[^\$]*\$/', '{$1}', $entry);
+				}
 			}
-		});
+		);
 
 		return $data;
 	}
@@ -124,7 +140,7 @@ class Tiki_Profile_Analyser
 
 	private function isAutojoin($general)
 	{
-		if (! isset($general['autojoin']))  {
+		if (! isset($general['autojoin'])) {
 			return false;
 		}
 

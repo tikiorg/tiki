@@ -1,26 +1,26 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-/* 
+/*
  * Simple script to convert html anchors in smarty templates to self_links for ajax (tiki 6)
  * couldn't work out a clever enough regexp so trying in php
  *
  * *****                  INSTRUCTIONS                     ******
- * 
+ *
  * Move into root of your tiki and open in a browser
  * 		e.g. http://localhost/trunk/convert_tpl_ajax.php
- * 
+ *
  * Select a tpl from the drop down and check the "Show replacements" checkbox
  * Copy the resulting source into your favourite text editor and
  * compare with the original (and test lots, obviously) before committing
- * 
+ *
  * ***** N.B. 2: {if} statements inside anchor attributes  ******
  * ***** will be commented out for later manual correction ******
- * 
+ *
  * ***** N.B. 3: Nested quote marks in Smarty syntax       ******
  * I found one tpl (tiki-pagehistory.tpl) that had links with nested quotes in the hrefs (ik!)
  * e.g. <a href="tiki-rollback.php?page={$page|escape:"url"}&amp;version={$preview}" title="{tr}Rollback{/tr}">{tr}Rollback to this version{/tr}</a>
@@ -50,10 +50,10 @@ function replace_with_self_links($original, $template_base)
 	for ($j = 0; $j < $count_r; $j++) {
 		$ahref = $phplinks[0][$j];
 		preg_match_all('/([^=\s]*?)="([^"]*?)"/i', $ahref, $attrs);
-		
+
 		$str = '{self_link ';
 		for ($i = 0, $icount_attrs = count($attrs[1]); $i < $icount_attrs; $i++) {
-			
+
 			if (strtolower($attrs[1][$i]) == 'href') {
 				$query = parse_url(urldecode(str_replace('&amp;', '&', $attrs[2][$i])));
 				if ($query['path'] != $template_base . '.php') {
@@ -69,9 +69,9 @@ function replace_with_self_links($original, $template_base)
 				$str .= '_' . $attrs[1][$i] . '=' . process_value($attrs[2][$i]) . ' ';
 			}
 		}
-		$str = trim($str) . '}' . $phplinks[1][$j] . '{/self_link}';	
+		$str = trim($str) . '}' . $phplinks[1][$j] . '{/self_link}';
 		$replacements[] = $str;
-		
+
 	}
 	$replaced = str_replace($phplinks[0], $replacements, $original);
 	return $replaced;
@@ -87,9 +87,9 @@ function process_value ($var)
 	}
 	// comment out if's inside attributes for manual processing
 	$var = preg_replace(
-					array('/\{if\s([^\}]*)\}/i', '/\{else\}/i', '/\{\/if\}/i', '/\{elseif\s([^\}]*)\}/i'),
-					array('{*if $1*}',           '{*else*}',    '{*/if*}',     '/{*elseif $1*}/'), 
-					$var
+		array('/\{if\s([^\}]*)\}/i', '/\{else\}/i', '/\{\/if\}/i', '/\{elseif\s([^\}]*)\}/i'),
+		array('{*if $1*}',           '{*else*}',    '{*/if*}',     '/{*elseif $1*}/'),
+		$var
 	);
 	$var = "$q" . $var . "$q";
 	return $var;
@@ -116,16 +116,17 @@ $tpl_sel .= '</select>';
 
 // cheating - lazy ;)
 $form = str_replace(
-				"\n", 
-				'', 
-				"<form action='#'>
+	"\n",
+	'',
+	"<form action='#'>
 <label for='toggle'>" . (empty($_REQUEST['toggle']) ? 'Show replacements' : "Showing $count_r replacements") . ":</label>
 <input type='checkbox' id='toggle' name='toggle' onclick='this.form.submit();'$checked />
 $tpl_sel
 </form>"
 );
 
-$headerlib->add_jq_onready(<<<JS
+$headerlib->add_jq_onready(
+<<<JS
 \$('#page-bar, .navbar, .titletips, h2').hide();
 \$('a.pagetitle').text('$tpl (tpl)').parent().after(
 	\$("$form")

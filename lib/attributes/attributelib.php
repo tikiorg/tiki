@@ -1,13 +1,13 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 /**
- * AttributeLib 
- * 
+ * AttributeLib
+ *
  * @uses TikiDb_Bridge
  */
 class AttributeLib extends TikiDb_Bridge
@@ -22,20 +22,20 @@ class AttributeLib extends TikiDb_Bridge
 	function get_attributes( $type, $objectId )
 	{
 		return $this->attributes->fetchMap(
-						'attribute', 
-						'value', 
-						array('type' => $type,'itemId' => $objectId,)
+			'attribute',
+			'value',
+			array('type' => $type,'itemId' => $objectId,)
 		);
 	}
-	
+
 	/**
 	 * The attribute must contain at least two dots and only lowercase letters.
 	 */
 
 	/**
 	 * NAMESPACE management and attribute naming.
-	 * Please see http://dev.tiki.org/Object+Attributes+and+Relations for guidelines on 
-	 * attribute naming, and document new tiki.*.* names that you add 
+	 * Please see http://dev.tiki.org/Object+Attributes+and+Relations for guidelines on
+	 * attribute naming, and document new tiki.*.* names that you add
 	 * (also grep "set_attribute" just in case there are undocumented names already used)
 	 */
 	function set_attribute( $type, $objectId, $attribute, $value )
@@ -46,20 +46,20 @@ class AttributeLib extends TikiDb_Bridge
 
 		if ( $value == '' ) {
 			$this->attributes->delete(
-							array(
-								'type' => $type,
-								'itemId' => $objectId,
-								'attribute' => $name,
-							)
+				array(
+					'type' => $type,
+					'itemId' => $objectId,
+					'attribute' => $name,
+				)
 			);
 		} else {
 			$this->attributes->insertOrUpdate(
-							array('value' => $value), 
-							array(
-								'type' => $type,
-								'itemId' => $objectId,
-								'attribute' => $name,
-							)
+				array('value' => $value),
+				array(
+					'type' => $type,
+					'itemId' => $objectId,
+					'attribute' => $name,
+				)
 			);
 		}
 
@@ -77,8 +77,8 @@ class AttributeLib extends TikiDb_Bridge
 		$attribute = $this->get_valid($attribute);
 
 		return $this->attributes->fetchAll(
-						array('type', 'itemId'), 
-						array('attribute' => $attribute, 'value' => $value,)
+			array('type', 'itemId'),
+			array('attribute' => $attribute, 'value' => $value,)
 		);
 	}
 }

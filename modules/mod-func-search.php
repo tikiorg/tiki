@@ -191,7 +191,7 @@ function module_search($mod_reference, $smod_params) 	// modifies $smod_params s
 			$smod_params['input_size'] = isset($smod_params['size']) ? $smod_params['size'] : 15;
 			$smod_params['search_heading'] = isset($smod_params['mod_quickedit_heading']) ? $smod_params['mod_quickedit_heading'] : $smod_params['search_heading'];
 			$smod_params['title'] = tra('Quick Edit a Wiki Page');
-						break;
+			break;
 
 		case 'search':		// params from old search_box module
 			$smod_params['tiki_search'] = isset($smod_params['tiki']) ? $smod_params['tiki'] : 'n';
@@ -204,7 +204,7 @@ function module_search($mod_reference, $smod_params) 	// modifies $smod_params s
 			$smod_params['search_submit'] = tra('Go');
 			$smod_params['default_button'] = 'search';
 			$smod_params['show_object_filter'] = $prefs['feature_search_show_object_filter'];
-						break;
+			break;
 
 		case 'page':		// params from old search_wiki_page module
 			$smod_params['show_search_button'] = 'n';
@@ -213,26 +213,26 @@ function module_search($mod_reference, $smod_params) 	// modifies $smod_params s
 			$smod_params['go_submit'] = tra('Go');
 			$smod_params['default_button'] = 'go';
 			$smod_params['title'] = tra('Search for Wiki Page');
-						break;
+			break;
 
 		case '':
 		default:
-						break;
+			break;
 	}
 
 	switch ($smod_params['default_button']) {
 		case 'edit':
 			$smod_params['default_action'] = $smod_params['edit_action'];
-						break;
+			break;
 
 		case 'go':
 			$smod_params['default_action'] = $smod_params['go_action'];
-						break;
+			break;
 
 		case 'search':
 		default:
 			$smod_params['default_action'] = $smod_params['search_action'];
-						break;
+			break;
 	}
 
 	if (($smod_params['show_search_button'] == 'y' || $smod_params['default_action'] == $smod_params['search_action'])

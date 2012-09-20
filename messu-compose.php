@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -153,15 +153,15 @@ if (isset($_REQUEST['send'])) {
 	// Insert the message in the inboxes of each user
 	foreach ($users as $a_user) {
 		$result = $messulib->post_message(
-						$a_user,
-						$user,
-						$_REQUEST['to'],
-						$_REQUEST['cc'],
-						$_REQUEST['subject'],
-						$_REQUEST['body'],
-						$_REQUEST['priority'],
-						$_REQUEST['replyto_hash'],
-						isset($_REQUEST['replytome']) ? 'y' : '', isset($_REQUEST['bccme']) ? 'y' : ''
+			$a_user,
+			$user,
+			$_REQUEST['to'],
+			$_REQUEST['cc'],
+			$_REQUEST['subject'],
+			$_REQUEST['body'],
+			$_REQUEST['priority'],
+			$_REQUEST['replyto_hash'],
+			isset($_REQUEST['replytome']) ? 'y' : '', isset($_REQUEST['bccme']) ? 'y' : ''
 		);
 		if ($result) {
 			if ($prefs['feature_score'] == 'y') {

@@ -4,7 +4,7 @@
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
- 
+
 abstract class Connect_Abstract
 {
 
@@ -69,7 +69,7 @@ abstract class Connect_Abstract
 	);
 
 	// preferences that we should ask to collect
-	
+
 	protected $protectedPrefs = array(
 		'browsertitle',
 		'connect_server',
@@ -114,12 +114,12 @@ abstract class Connect_Abstract
 			$data = serialize($data);
 		}
 		$insertId = $this->connectTable->insert(
-						array(
-							'type' => $status,
-							'data' => $data,
-							'guid' => $guid,
-							'server' => $server ? 1 : 0,
-						)
+			array(
+				'type' => $status,
+				'data' => $data,
+				'guid' => $guid,
+				'server' => $server ? 1 : 0,
+			)
 		);
 
 		$created = $this->connectTable->fetchOne('created', array( 'id' => $insertId ));
@@ -143,15 +143,15 @@ abstract class Connect_Abstract
 	{
 		if (!empty($guid)) {
 			$res = $this->connectTable->fetchAll(
-							array('data'),
-							array(
-								'type' => 'votes',
-								'guid' => $guid,
-								'server' => $server ? 1 : 0
-							),
-							1,
-							-1,
-							array('created' => 'DESC')
+				array('data'),
+				array(
+					'type' => 'votes',
+					'guid' => $guid,
+					'server' => $server ? 1 : 0
+				),
+				1,
+				-1,
+				array('created' => 'DESC')
 			);
 		} else {
 			$res = array();
@@ -175,25 +175,25 @@ abstract class Connect_Abstract
 	function removeGuid( $guid, $server = false )
 	{
 		$this->connectTable->update(
-						array(
-							'type' => 'deleted_pending'
-						),
-						array(
-							'server' => $server ? 1 : 0,
-							'guid' => $guid,
-							'type' => 'pending',
-						)
+			array(
+				'type' => 'deleted_pending'
+			),
+			array(
+				'server' => $server ? 1 : 0,
+				'guid' => $guid,
+				'type' => 'pending',
+			)
 		);
 
 		$this->connectTable->update(
-						array(
-							'type' => 'deleted_confirmed'
-						),
-						array(
-							'server' => $server ? 1 : 0,
-							'guid' => $guid,
-							'type' => 'confirmed',
-						)
+			array(
+				'type' => 'deleted_confirmed'
+			),
+			array(
+				'server' => $server ? 1 : 0,
+				'guid' => $guid,
+				'type' => 'confirmed',
+			)
 		);
 	}
 

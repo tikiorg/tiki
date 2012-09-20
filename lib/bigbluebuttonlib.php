@@ -95,8 +95,8 @@ class BigBlueButtonLib
 		global $tikilib, $cachelib, $prefs;
 
 		$params = array_merge(
-						array('logout' => $tikilib->tikiUrl(''),),
-						$params
+			array('logout' => $tikilib->tikiUrl(''),),
+			$params
 		);
 
 		$request = array(
@@ -147,9 +147,10 @@ class BigBlueButtonLib
 	public function removeRecording($recordingID)
 	{
 		if ($this->isRecordingSupported()) {
-			$this->performRequest('deleteRecordings', array(
-				'recordID' => $recordingID,
-			));
+			$this->performRequest(
+				'deleteRecordings',
+				array('recordID' => $recordingID)
+			);
 		}
 	}
 
@@ -195,12 +196,12 @@ class BigBlueButtonLib
 	public function joinRawMeeting( $room, $name, $password )
 	{
 		$url = $this->buildUrl(
-						'join',
-						array(
-							'meetingID' => $room,
-							'fullName' => $name,
-							'password' => $password,
-						)
+			'join',
+			array(
+				'meetingID' => $room,
+				'fullName' => $name,
+				'password' => $password,
+			)
 		);
 
 		header('Location: ' . $url);
@@ -275,8 +276,8 @@ class BigBlueButtonLib
 		}
 
 		$result = $this->performRequest(
-						'getRecordings',
-						array('meetingID' => $room,)
+			'getRecordings',
+			array('meetingID' => $room,)
 		);
 
 		$data = array();
@@ -291,8 +292,8 @@ class BigBlueButtonLib
 			}
 			$info = array(
 					'recordID' => (string) $recording->recordID,
-					'startTime' => floor(((string) $recording->startTime)/1000), 
-					'endTime' => ceil(((string) $recording->endTime)/1000), 
+					'startTime' => floor(((string) $recording->startTime)/1000),
+					'endTime' => ceil(((string) $recording->endTime)/1000),
 					'playback' => array(),
 					'published' => $published,
 			);
@@ -308,7 +309,8 @@ class BigBlueButtonLib
 		return $data;
 	}
 
-	private static function cmpStartTime( $a, $b ) {
+	private static function cmpStartTime( $a, $b )
+	{
 		if ($a['startTime'] == $b['startTime']) {
 			return 0;
 		}

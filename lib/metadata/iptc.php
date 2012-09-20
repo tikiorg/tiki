@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -654,33 +654,31 @@ class Iptc
 					$iptc[$group][$name]['maxlen'] = $this->specs[$group][$name]['maxlen'];
 				}
 			}
-	}
+		}
 		//these options are more complex and will be handled singly
 		//label depends on another field for these next two
 		if (array_key_exists('1#022', $iptc['iptc']) && $iptc['iptc']['1#022']['newval']
-			!= '00' && array_key_exists('1#020', $iptc['iptc']))
-		{
+			!= '00' && array_key_exists('1#020', $iptc['iptc'])) {
 			//haven't tested
 			$iptc['iptc']['1#022']['newval'] =
 				$this->specs['iptc']['1#022']['options'][$iptc['iptc']['1#022']['newval']][$iptc['iptc']['1#020']['newval']];
 		}
 		if (array_key_exists('2#201', $iptc['iptc']) && $iptc['iptc']['2#201']['newval']
-			!= '00' && array_key_exists('2#200', $iptc['iptc']))
-		{
+			!= '00' && array_key_exists('2#200', $iptc['iptc'])) {
 			//haven't tested
 			$iptc['iptc']['2#201']['newval'] =
 				$this->specs['iptc']['2#201']['options'][$iptc['iptc']['2#201']['newval']][$iptc['iptc']['2#200']['newval']];
 		}
 		//individual characters need to be matched with these
 		if (array_key_exists('2#130', $iptc['iptc'])) {
-			$char1 = substr($iptc['iptc']['2#130']['newval'],0,1);
-			$char2 = substr($iptc['iptc']['2#130']['newval'],1,1);
+			$char1 = substr($iptc['iptc']['2#130']['newval'], 0, 1);
+			$char2 = substr($iptc['iptc']['2#130']['newval'], 1, 1);
 			$iptc['iptc']['2#130']['newval'] = $this->specs['iptc']['2#130']['options'][0][$char1] . '; '
 				. $this->specs['iptc']['2#130']['options'][0][$char2];
 		}
 		if (array_key_exists('2#150', $iptc)) {
-			$char1 = substr($iptc['iptc']['2#150']['newval'],0,1);
-			$char2 = substr($iptc['iptc']['2#150']['newval'],1,1);
+			$char1 = substr($iptc['iptc']['2#150']['newval'], 0, 1);
+			$char2 = substr($iptc['iptc']['2#150']['newval'], 1, 1);
 			$iptc['iptc']['2#150']['newval'] = $this->specs['iptc']['2#150']['options'][0][$char1] . '; '
 				. $this->specs['iptc']['2#150']['options'][0][$char2];
 		}
