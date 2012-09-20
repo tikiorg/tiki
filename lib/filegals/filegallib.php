@@ -1073,7 +1073,7 @@ class FileGalLib extends TikiLib
 
 			if (isset($attributes['tiki.content.url'])) {
 				//we don't delete or update the attribute, so that it remains working if the user changes the fgal_keep_fileId
-				$attributelib->set_attribute('file', $newFileId, 'tiki.content.url', $attributes['tiki.content.url'] );
+				$attributelib->set_attribute('file', $newFileId, 'tiki.content.url', $attributes['tiki.content.url']);
 			}
 		}
 	}
@@ -2080,8 +2080,9 @@ class FileGalLib extends TikiLib
 
 		switch( $type ) {
 			case 'filegal':
-				if ( $id == -1 )
+				if ( $id == -1 ) {
 					return '/';
+				}
 				$res = $this->table('tiki_file_galleries')->fetchRow(array('name', 'parentId'), array('galleryId' => (int) $id));
     			break;
 

@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -18,7 +18,7 @@ global $logslib; include_once('lib/logs/logslib.php');
 
 /**
  * Display feedback on prefs changed
- * 
+ *
  * @param $name		Name of feature
  * @param $message	Other message
  * @param $st		Type of change (0=disabled, 1=enabled, 2=changed, 3=info, 4=reset)
@@ -37,9 +37,9 @@ function add_feedback( $name, $message, $st, $num = null )
 }
 
 /**
- * simple_set_toggle 
- * 
- * @param mixed $feature 
+ * simple_set_toggle
+ *
+ * @param mixed $feature
  * @access public
  * @return void
  */
@@ -69,11 +69,11 @@ function simple_set_toggle($feature)
 }
 
 /**
- * simple_set_value 
- * 
- * @param mixed $feature 
- * @param string $pref 
- * @param mixed $isMultiple 
+ * simple_set_value
+ *
+ * @param mixed $feature
+ * @param string $pref
+ * @param mixed $isMultiple
  * @access public
  * @return void
  */
@@ -110,13 +110,13 @@ function simple_set_value($feature, $pref = '', $isMultiple = false)
 }
 
 /**
- * simple_set_int 
- * 
- * @param mixed $feature 
+ * simple_set_int
+ *
+ * @param mixed $feature
  * @access public
  * @return void
  */
-function simple_set_int($feature) 
+function simple_set_int($feature)
 {
 	global $_REQUEST, $tikilib, $prefs, $logslib;
 	if (isset($_REQUEST[$feature]) && is_numeric($_REQUEST[$feature])) {
@@ -130,10 +130,10 @@ function simple_set_int($feature)
 }
 
 /**
- * byref_set_value 
- * 
- * @param mixed $feature 
- * @param string $pref 
+ * byref_set_value
+ *
+ * @param mixed $feature
+ * @param string $pref
  * @access public
  * @return void
  */
@@ -161,7 +161,7 @@ $temp_filters = isset($_REQUEST['filters']) ? explode(' ', $_REQUEST['filters'])
 $smarty->assign('pref_filters', $prefslib->getFilters($temp_filters));
 
 if ( isset( $_REQUEST['lm_preference'] ) ) {
-	
+
 	$changes = $prefslib->applyChanges((array) $_REQUEST['lm_preference'], $_REQUEST);
 	foreach ( $changes as $pref => $val ) {
 		if ($val['type'] == 'reset') {
@@ -190,7 +190,7 @@ if ( isset( $_REQUEST['lm_preference'] ) ) {
 				$toolbars = array('wikiplugin_addreference', 'wikiplugin_showreference');
 				$t_action = ($value=='y') ? 'add' : 'remove';
 				$tikilib->saveEditorToolbars($toolbars, 'global', 'add', $t_action);
-			}			
+			}
 		}
 	}
 }
@@ -611,7 +611,7 @@ if (isset($_REQUEST['page'])) {
 		$helpUrl = isset($icon['help']) ? $icon['help'] : '';
 	}
 	$helpDescription = tr("Help on %0 Config", $admintitle);
-	
+
 } else {
 	$smarty->assign('admintitle', 'Admin Home');
 	$smarty->assign('description', 'Home Page for Administrators');
@@ -639,23 +639,33 @@ if ($prefs['feature_version_checks'] == 'y' || $forcecheck) {
 	$checker->setCycle($prefs['tiki_release_cycle']);
 
 	$expiry = $tikilib->now - $prefs['tiki_version_check_frequency'];
-	$upgrades = $checker->check(function ($url) use ($expiry) {
-		$cachelib = TikiLib::lib('cache');
-		$tikilib = TikiLib::lib('tiki');
+	$upgrades = $checker->check(
+		function ($url) use ($expiry)
+		{
+			$cachelib = TikiLib::lib('cache');
+			$tikilib = TikiLib::lib('tiki');
 
-		$content = $cachelib->getCached($url, 'http', $expiry);
+			$content = $cachelib->getCached($url, 'http', $expiry);
 
-		if ($content === false) {
-			$content = $tikilib->httprequest($url);
-			$cachelib->cacheItem($url, $content, 'http');
+			if ($content === false) {
+				$content = $tikilib->httprequest($url);
+				$cachelib->cacheItem($url, $content, 'http');
+			}
+
+			return $content;
 		}
+	);
 
-		return $content;
-	});
-
-	$smarty->assign('upgrade_messages', array_map(function ($upgrade) {
-		return $upgrade->getMessage();
-	}, $upgrades));
+	$smarty->assign(
+		'upgrade_messages',
+		array_map(
+			function ($upgrade)
+			{
+				return $upgrade->getMessage();
+			},
+			$upgrades
+		)
+	);
 }
 
 foreach ($icons as &$icon) {

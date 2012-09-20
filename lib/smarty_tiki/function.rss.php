@@ -30,11 +30,11 @@ function smarty_function_rss($params, $smarty)
 
 	global $tikilib;
 	return TikiLib::lib('parser')->plugin_execute(
-					'rss', 
-					'', 
-					array('id' => $id, 'max' => $max,), 
-					0, 
-					false, 
-					array('context_format' => 'html') 
+		'rss',
+		'',
+		array('id' => $id, 'max' => $max,),
+		0,
+		false,
+		array('context_format' => 'html')
 	);
 }

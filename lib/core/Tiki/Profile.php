@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -125,8 +125,8 @@ class Tiki_Profile
 		global $tikilib;
 
 		$result = $tikilib->query(
-						"SELECT value FROM tiki_profile_symbols WHERE domain = ? AND profile = ? AND object = ?",
-						array( $object['domain'], $object['profile'], $object['object'] )
+			"SELECT value FROM tiki_profile_symbols WHERE domain = ? AND profile = ? AND object = ?",
+			array( $object['domain'], $object['profile'], $object['object'] )
 		);
 
 		if ( $row = $result->fetchRow() )
@@ -177,13 +177,13 @@ class Tiki_Profile
 			return self::fromUrl($url);
 		}
 	} // }}}
-	
+
 	public static function fromDb( $pageName ) // {{{
 	{
 		global $tikilib, $wikilib;
 		require_once 'lib/wiki/wikilib.php';
 		$parserlib = TikiLib::lib('parser');
-		
+
 		$profile = new self;
 		$profile->domain = 'tiki://local';
 		$profile->profile = $pageName;
@@ -248,7 +248,7 @@ class Tiki_Profile
 
 		return true;
 	} // }}}
-	
+
 	public function refreshYaml() // {{{
 	{
 		$this->objects = null;
@@ -286,12 +286,12 @@ class Tiki_Profile
 		$this->fetchExternals();
 		$this->getObjects();
 	} // }}}
-	
+
 	private function fetchExternals() // {{{
 	{
 		$this->traverseForExternals($this->data);
 	} // }}}
-	
+
 	private function traverseForExternals( &$data ) // {{{
 	{
 		if ( is_array($data) ) {
@@ -327,10 +327,10 @@ class Tiki_Profile
 
 		if ( $begin !== false ) {
 			$content = substr($content, $begin + 2);
-			
+
 			// This allows compatibility with Tiki 8 and below, which export page content HTML-escaped. This should not be done for Tiki 9 and above and should be removed once only these are supported (after Tiki 6 reaches EOL).
 			$content = htmlspecialchars_decode($content);
-			 
+
 			return $content;
 		} else {
 			return null;
@@ -527,7 +527,7 @@ class Tiki_Profile
 					$needles[] = $full;
 					$replacements[] = $value;
 				}
-			
+
 			if ( count($needles) )
 				$data = str_replace($needles, $replacements, $data);
 
@@ -703,8 +703,8 @@ class Tiki_Profile
 	{
 		global $tikilib;
 		$tikilib->query(
-						"DELETE FROM tiki_profile_symbols WHERE domain = ? AND profile = ?",
-						array( $this->domain, self::withPrefix($this->profile) )
+			"DELETE FROM tiki_profile_symbols WHERE domain = ? AND profile = ?",
+			array( $this->domain, self::withPrefix($this->profile) )
 		);
 
 		$key = self::getProfileKeyfor($this->domain, self::withPrefix($this->profile));
@@ -716,14 +716,16 @@ class Tiki_Profile
 	function setSymbol($type, $name, $value, $named = 'y') // {{{
 	{
 		$symbols = TikiDb::get()->table('tiki_profile_symbols');
-		$symbols->insert(array(
-			'domain' => $this->domain,
-			'profile' => $this->withPrefix($this->profile), 
-			'object' => $name,
-			'type' => $type,
-			'value' => $value,
-			'named' => $named,
-		));
+		$symbols->insert(
+			array(
+				'domain' => $this->domain,
+				'profile' => $this->withPrefix($this->profile),
+				'object' => $name,
+				'type' => $type,
+				'value' => $value,
+				'named' => $named,
+			)
+		);
 	} // }}}
 
 	function getProfileKey() // {{{

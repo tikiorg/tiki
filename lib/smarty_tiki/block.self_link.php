@@ -91,15 +91,15 @@ function smarty_block_self_link($params, $content, $smarty, &$repeat = false)
 						$params['_template'] = '';
 					}
 					$ret = smarty_block_ajax_href(
-									array(
-										'template' => $params['_template'], 
-										'htmlelement' => $params['_htmlelement'], 
-										'_onclick' => $params['_onclick'], 
-										'_anchor'=> $anchor
-									),
-									$ret,
-									$smarty,
-									$tmp = false
+						array(
+							'template' => $params['_template'],
+							'htmlelement' => $params['_htmlelement'],
+							'_onclick' => $params['_onclick'],
+							'_anchor'=> $anchor
+						),
+						$ret,
+						$smarty,
+						$tmp = false
 					);
 				} else {
 					$ret = 'href="' . $ret . '"';
@@ -125,10 +125,10 @@ function smarty_block_self_link($params, $content, $smarty, &$repeat = false)
 				}
 				if ( isset($params['_menu_icon']) ) $icon_params['_menu_icon'] = $params['_menu_icon'];
 				if ( isset($params['_icon_class']) ) $icon_params['class'] = $params['_icon_class'];
-				
+
 				if ( isset($params['_width']) ) $icon_params['width'] = $params['_width'];
 				if ( isset($params['_height']) ) $icon_params['height'] = $params['_height'];
-				
+
 				$content = smarty_function_icon($icon_params, $smarty);
 			}
 
@@ -152,10 +152,10 @@ function smarty_block_self_link($params, $content, $smarty, &$repeat = false)
 
 			if ( !empty($params['_sort_field']) ) {
 				$smarty->loadPlugin('smarty_function_show_sort');
-				$ret = "<a $link style='text-decoration:none;'>" . $content . 
+				$ret = "<a $link style='text-decoration:none;'>" . $content .
 								smarty_function_show_sort(
-												array('sort' => $params['_sort_arg'], 'var' => $params['_sort_field']),
-												$smarty
+									array('sort' => $params['_sort_arg'], 'var' => $params['_sort_field']),
+									$smarty
 								) . '</a>';
 			}
 		}

@@ -1,13 +1,13 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 /**
  * Handler class for url fields:
- * 
+ *
  * - url key ~L~
  */
 class Tracker_Field_Url extends Tracker_Field_Abstract implements Tracker_Field_Synchronizable
@@ -26,7 +26,7 @@ class Tracker_Field_Url extends Tracker_Field_Abstract implements Tracker_Field_
 					'linkToURL' => array(
 						'name' => tr('Display'),
 						'description' => tr('How the URL should be rendered'),
-                                                'filter' => 'int',	
+                                                'filter' => 'int',
 						'options' => array(
 							0 => tr('URL as link'),
 							1 => tr('Plain text'),
@@ -49,23 +49,23 @@ class Tracker_Field_Url extends Tracker_Field_Abstract implements Tracker_Field_
 				: $this->getValue(),
 		);
 	}
-	
+
 	function renderOutput($context = array())
 	{
 		$smarty = TikiLib::lib('smarty');
 
 		$url = $this->getConfiguration('value');
-		
+
 		if (empty($url) || $context['list_mode'] == 'csv' || $this->getOption(0) == 1 ) {
 			return $url;
 		} elseif ($this->getOption(0) == 2) { // Site title as link
 			$smarty->loadPlugin('smarty_function_object_link');
 			return smarty_function_object_link(
-							array(
-								'type' => 'external',
-								'id' => $url,
-							),
-							$smarty
+				array(
+					'type' => 'external',
+					'id' => $url,
+				),
+				$smarty
 			);
 		} elseif (!$this->getOption(0)) { // URL as link
 			$parsedUrl = trim(str_replace('<br />', '', TikiLib::lib('tiki')->parse_data($url)));
@@ -74,21 +74,21 @@ class Tracker_Field_Url extends Tracker_Field_Abstract implements Tracker_Field_
 			}
 			$smarty->loadPlugin('smarty_function_object_link');
 			return smarty_function_object_link(
-							array(
-								'type' => 'external',
-								'id' => $url,
-								'title' => $url,
-							), 
-							$smarty
+				array(
+					'type' => 'external',
+					'id' => $url,
+					'title' => $url,
+				),
+				$smarty
 			);
 		} elseif ($this->getOption(0) == 3) { // URL + site title
 			$smarty->loadPlugin('smarty_function_object_link');
 			return smarty_function_object_link(
-							array(
-								'type' => 'external_extended',
-								'id' => $url,
-							),
-							$smarty
+				array(
+					'type' => 'external_extended',
+					'id' => $url,
+				),
+				$smarty
 			);
 		} else {
 			return $url;

@@ -55,11 +55,11 @@ class Captcha
 		if ($type === 'recaptcha') {
 			require_once('lib/core/Zend/Captcha/ReCaptcha.php');
 			$this->captcha = new Zend_Captcha_ReCaptcha(
-							array(
-								'privkey' => $prefs['recaptcha_privkey'],
-								'pubkey' => $prefs['recaptcha_pubkey'],
-								'theme' => 'clean'
-							)
+				array(
+					'privkey' => $prefs['recaptcha_privkey'],
+					'pubkey' => $prefs['recaptcha_pubkey'],
+					'theme' => 'clean'
+				)
 			);
 
 			$this->type = 'recaptcha';
@@ -67,15 +67,15 @@ class Captcha
 			$this->recaptchaCustomTranslations();
 		} else if ($type === 'default') {
 			$this->captcha = new Zend_Captcha_Image(
-							array(
-								'wordLen' => $prefs['captcha_wordLen'],
-								'timeout' => 600,
-								'font' => dirname(__FILE__) . '/DejaVuSansMono.ttf',
-								'imgdir' => 'temp/public/',
-								'suffix' => '.captcha.png',
-								'width' => $prefs['captcha_width'],
-								'dotNoiseLevel' => $prefs['captcha_noise'],
-							)
+				array(
+					'wordLen' => $prefs['captcha_wordLen'],
+					'timeout' => 600,
+					'font' => dirname(__FILE__) . '/DejaVuSansMono.ttf',
+					'imgdir' => 'temp/public/',
+					'suffix' => '.captcha.png',
+					'width' => $prefs['captcha_width'],
+					'dotNoiseLevel' => $prefs['captcha_noise'],
+				)
 			);
 			$this->type = 'default';
 		} else {		// implied $type==='dumb'
@@ -141,10 +141,10 @@ class Captcha
 		}
 		if ($this->type == 'recaptcha') {
 			return $this->captcha->isValid(
-							array(
-								'recaptcha_challenge_field' => $input['recaptcha_challenge_field'],
-								'recaptcha_response_field' => $input['recaptcha_response_field']
-							)
+				array(
+					'recaptcha_challenge_field' => $input['recaptcha_challenge_field'],
+					'recaptcha_response_field' => $input['recaptcha_response_field']
+				)
 			);
 		} else {
 			return $this->captcha->isValid($input['captcha']);
@@ -201,18 +201,18 @@ class Captcha
 	{
 		$recaptchaService = $this->captcha->getService();
 		$recaptchaService->setOption(
-						'custom_translations',
-						array(
-							'visual_challenge' => tra('Get a visual challenge'),
-							'audio_challenge' => tra('Get an audio challenge'),
-							'refresh_btn' => tra('Get a new challenge'),
-							'instructions_visual' => tra('Type the two words'),
-							'instructions_audio' => tra('Type what you hear'),
-							'help_btn' => tra('Help'),
-							'play_again' => tra('Play sound again'),
-							'cant_hear_this' => tra('Download sound as MP3'),
-							'incorrect_try_again' => tra('Incorrect. Try again.')
-						)
+			'custom_translations',
+			array(
+				'visual_challenge' => tra('Get a visual challenge'),
+				'audio_challenge' => tra('Get an audio challenge'),
+				'refresh_btn' => tra('Get a new challenge'),
+				'instructions_visual' => tra('Type the two words'),
+				'instructions_audio' => tra('Type what you hear'),
+				'help_btn' => tra('Help'),
+				'play_again' => tra('Play sound again'),
+				'cant_hear_this' => tra('Download sound as MP3'),
+				'incorrect_try_again' => tra('Incorrect. Try again.')
+			)
 		);
 	}
 }

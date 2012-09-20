@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -32,8 +32,8 @@ class Lslib extends TikiLib
 						' values(?,?,?,?,?,?,?,?,?,?,?,?,?)';
 
 		$this->query(
-						$query,
-						array($reqId, $user, $tiki_user, $email, $reason, $this->now, 'active', $this->now, '', 0, 0, '', '')
+			$query,
+			array($reqId, $user, $tiki_user, $email, $reason, $this->now, 'active', $this->now, '', 0, 0, '', '')
 		);
 		return $reqId;
 	}
@@ -53,7 +53,7 @@ class Lslib extends TikiLib
 		return $this->getOne('select max(`reqId`) from `tiki_live_support_requests` where `status`=?', array('active'));
 	}
 
-	// Remove active requests 
+	// Remove active requests
 	function purge_requests()
 	{
 		$min = $this->now - 60 * 2; // 1 minute = timeout.
@@ -170,16 +170,16 @@ class Lslib extends TikiLib
 	function get_last_event($reqId, $senderId)
 	{
 		return $this->getOne(
-						'select max(`seqId`) from `tiki_live_support_events` where `senderId`<>? and reqId=?',
-						array($senderId, $reqId)
+			'select max(`seqId`) from `tiki_live_support_events` where `senderId`<>? and reqId=?',
+			array($senderId, $reqId)
 		);
 	}
 
 	function get_event($reqId, $event, $senderId)
 	{
 		return $this->getOne(
-						'select `data` from `tiki_live_support_events` where `senderId`<>? and `reqId`=? and `seqId`=?',
-						array($senderId, $reqId, $event)
+			'select `data` from `tiki_live_support_events` where `senderId`<>? and `reqId`=? and `seqId`=?',
+			array($senderId, $reqId, $event)
 		);
 	}
 

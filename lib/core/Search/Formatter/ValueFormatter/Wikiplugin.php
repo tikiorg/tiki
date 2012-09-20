@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -13,7 +13,7 @@ class Search_Formatter_ValueFormatter_Wikiplugin extends Search_Formatter_ValueF
 	{
 		$this->arguments = $arguments;
 	}
-	
+
 	function render($name, $value, array $entry)
 	{
 		if (substr($name, 0, 11) !== 'wikiplugin_') {
@@ -36,15 +36,15 @@ class Search_Formatter_ValueFormatter_Wikiplugin extends Search_Formatter_ValueF
 
 		$parserlib = TikiLib::lib('parser');
 		$out = $parserlib->plugin_execute(
-						$name,
-						$content, 
-						$params, 
-						0, 
-						false, 
-						array(
-							'context_format' => 'html',
-							'ck_editor' => false,
-						)
+			$name,
+			$content,
+			$params,
+			0,
+			false,
+			array(
+				'context_format' => 'html',
+				'ck_editor' => false,
+			)
 		);
 
 		return '~np~' . $out . '~/np~';

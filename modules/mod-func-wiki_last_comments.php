@@ -49,7 +49,7 @@ function module_wiki_last_comments($mod_reference, $module_params)
 						$where = 'and `approved`!=?';
 						$bindvars[] = 'n';
 					}
-								break;
+					break;
 
 				case 'wiki page':
 					$join = '';
@@ -59,7 +59,7 @@ function module_wiki_last_comments($mod_reference, $module_params)
 						$where = 'and `approved`!=?';
 						$bindvars[] = 'n';
 					}
-								break;
+					break;
 			}
 
 			$query = "select tc.* $get from `tiki_comments` as tc $join where `objectType`=? $where order by `commentDate` desc";
@@ -70,11 +70,11 @@ function module_wiki_last_comments($mod_reference, $module_params)
 				switch ($type) {
 					case 'wiki page':
 						$perm = 'tiki_p_view';
-									break;
+						break;
 
 					case 'article':
 						$perm = 'tiki_p_read_article';
-									break;
+						break;
 
 					default:
 						return null;
@@ -90,18 +90,20 @@ function module_wiki_last_comments($mod_reference, $module_params)
 	if (!isset($module_params['type'])) $module_params['type'] = "wiki page";
 	switch ($module_params['type']) {
 		case 'cms': case 'article': case 'articles':
-			if (!$prefs['feature_articles']) 
+			if (!$prefs['feature_articles']) {
 				return;
+			}
 			$module_params['type'] = 'article';
 			$smarty->assign('tpl_module_title', tra('Last article comments'));
-						break;
+			break;
 
 		default:
-			if (!$prefs['feature_wiki'])
+			if (!$prefs['feature_wiki']) {
 				return;
+			}
 			$module_params['type'] = 'wiki page';
 			$smarty->assign('tpl_module_title', tra('Last wiki comments'));
-						break;
+			break;
 	}
 
 	$comments = module_last_comments($mod_reference['rows'], $module_params['type']);

@@ -64,8 +64,8 @@ function module_upcoming_events_info()
 			),
 			'date_format' => array(
 				'name' => tra('Date format'),
-				'description' => tra('Format to use for most dates. See <a href="http://www.php.net/manual/en/function.strftime.php">strftime() documentation</a>.') . 
-								" ". tra('Example value:') . ' %m/%e/%y %H:%M %Z. ' . tra('Default:') . ' ' . 
+				'description' => tra('Format to use for most dates. See <a href="http://www.php.net/manual/en/function.strftime.php">strftime() documentation</a>.') .
+								" ". tra('Example value:') . ' %m/%e/%y %H:%M %Z. ' . tra('Default:') . ' ' .
 								tra('site preference for short date format followed by site preference for short time format')
 			),
 			'maxlen' => array(
@@ -119,12 +119,12 @@ function module_upcoming_events($mod_reference, $module_params)
 
 	if (!empty($viewable))
 		$events = $calendarlib->upcoming_events(
-						$mod_reference['rows'],
-						array_intersect($calIds, $viewable),
-						-1,
-						'start_asc',
-						isset($module_params['priorDays']) ? (int) $module_params['priorDays'] : 0,
-						isset($module_params['maxDays']) ? (int) $module_params['maxDays'] : 365
+			$mod_reference['rows'],
+			array_intersect($calIds, $viewable),
+			-1,
+			'start_asc',
+			isset($module_params['priorDays']) ? (int) $module_params['priorDays'] : 0,
+			isset($module_params['maxDays']) ? (int) $module_params['maxDays'] : 365
 		);
 
 	$smarty->assign('modUpcomingEvents', $events);

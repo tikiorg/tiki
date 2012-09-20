@@ -148,17 +148,20 @@ class Services_Workspace_Utilities
 	{
 		$table = TikiDb::get()->table('tiki_categories');
 
-		return (int) $table->fetchOne('categId', array(
-			'parentId' => (int) $parent,
-			'name' => $name,
-		));
+		return (int) $table->fetchOne(
+			'categId',
+			array(
+				'parentId' => (int) $parent,
+				'name' => $name,
+			)
+		);
 	}
 
 	function getTemplateList()
 	{
 		$list = $this->templates()->fetchAll(array('templateId', 'name'), array());
 		$list = Perms::simpleFilter('workspace', 'templateId', 'workspace_instantiate', $list);
-		
+
 		return $list;
 	}
 
@@ -177,16 +180,18 @@ class Services_Workspace_Utilities
 			$info['is_advanced'] = $data['is_advanced'];
 		}
 
-		return $this->templates()->insertOrUpdate($info, array(
-			'templateId' => $id,
-		));
+		return $this->templates()->insertOrUpdate(
+			$info,
+			array('templateId' => $id)
+		);
 	}
 
 	function getTemplate($id)
 	{
-		return $this->templates()->fetchRow(array('templateId', 'name', 'definition', 'is_advanced'), array(
-			'templateId' => $id,
-		));
+		return $this->templates()->fetchRow(
+			array('templateId', 'name', 'definition', 'is_advanced'),
+			array('templateId' => $id)
+		);
 	}
 
 	private function templates()

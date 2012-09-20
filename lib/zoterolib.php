@@ -33,11 +33,11 @@ class ZoteroLib extends TikiDb_Bridge
 
 		$oauthlib = TikiLib::lib('oauth');
 		$response = $oauthlib->do_request(
-						'zotero',
-						array(
-							'url' => "https://api.zotero.org/groups/{$prefs['zotero_group_id']}$subset/items",
-							'get' => $arguments,
-						)
+			'zotero',
+			array(
+				'url' => "https://api.zotero.org/groups/{$prefs['zotero_group_id']}$subset/items",
+				'get' => $arguments,
+			)
 		);
 
 		if ($response && $response->isSuccessful()) {
@@ -82,11 +82,11 @@ class ZoteroLib extends TikiDb_Bridge
 
 		$oauthlib = TikiLib::lib('oauth');
 		$response = $oauthlib->do_request(
-						'zotero',
-						array(
-							'url' => "https://api.zotero.org/groups/{$prefs['zotero_group_id']}/items/" . urlencode($itemId),
-							'get' => $arguments,
-						)
+			'zotero',
+			array(
+				'url' => "https://api.zotero.org/groups/{$prefs['zotero_group_id']}/items/" . urlencode($itemId),
+				'get' => $arguments,
+			)
 		);
 
 		if ($response->isSuccessful()) {
@@ -128,11 +128,11 @@ class ZoteroLib extends TikiDb_Bridge
 
 		$oauthlib = TikiLib::lib('oauth');
 		$response = $oauthlib->do_request(
-						'zotero',
-						array(
-							'url' => "https://api.zotero.org/groups/{$prefs['zotero_group_id']}$subset/items",
-							'get' => $arguments,
-						)
+			'zotero',
+			array(
+				'url' => "https://api.zotero.org/groups/{$prefs['zotero_group_id']}$subset/items",
+				'get' => $arguments,
+			)
 		);
 
 		if ($response->isSuccessful()) {

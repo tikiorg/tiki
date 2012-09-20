@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -30,8 +30,8 @@
  */
 
 /**
- * Perms_ResolverFactory_CategoryFactory 
- * 
+ * Perms_ResolverFactory_CategoryFactory
+ *
  * @uses Perms_ResolverFactory
  */
 class Perms_ResolverFactory_CategoryFactory implements Perms_ResolverFactory
@@ -120,9 +120,9 @@ class Perms_ResolverFactory_CategoryFactory implements Perms_ResolverFactory
 		$db = TikiDb::get();
 		$bindvars = array($baseContext['type']);
 		$result = $db->fetchAll(
-						'SELECT `categId`, `itemId` FROM `tiki_category_objects` INNER JOIN `tiki_objects` ON `catObjectId` = `objectId` WHERE `type` = ? AND ' . 
-						$db->in('itemId', array_keys($objects), $bindvars) . ' ORDER BY `catObjectId`, `categId`', 
-						$bindvars
+			'SELECT `categId`, `itemId` FROM `tiki_category_objects` INNER JOIN `tiki_objects` ON `catObjectId` = `objectId` WHERE `type` = ? AND ' .
+			$db->in('itemId', array_keys($objects), $bindvars) . ' ORDER BY `catObjectId`, `categId`',
+			$bindvars
 		);
 
 		$categories = array();
@@ -131,7 +131,7 @@ class Perms_ResolverFactory_CategoryFactory implements Perms_ResolverFactory
 			$category = (int) $row['categId'];
 			$object = $this->cleanObject($row['itemId']);
 			$key = $objects[$object];
-			
+
 			$this->knownObjects[$key][] = $category;
 
 			if ( ! isset($this->knownCategories[$category]) ) {
@@ -155,9 +155,9 @@ class Perms_ResolverFactory_CategoryFactory implements Perms_ResolverFactory
 
 		$bindvars = array();
 		$result = $db->fetchAll(
-						'SELECT `objectId`, `groupName`, `permName` FROM `users_objectpermissions` WHERE `objectType` = \'category\' AND ' . 
-						$db->in('objectId', array_keys($objects), $bindvars),
-						$bindvars
+			'SELECT `objectId`, `groupName`, `permName` FROM `users_objectpermissions` WHERE `objectType` = \'category\' AND ' .
+			$db->in('objectId', array_keys($objects), $bindvars),
+			$bindvars
 		);
 
 		foreach ( $result as $row ) {
@@ -175,9 +175,9 @@ class Perms_ResolverFactory_CategoryFactory implements Perms_ResolverFactory
 		}
 	}
 
-	/** 
+	/**
 	 * Merges the permissions available on groups from all categories
-	 * that apply to the context. A permission granted on any of the 
+	 * that apply to the context. A permission granted on any of the
 	 * categories will be added to the pool.
 	 */
 	function getResolver( array $context )

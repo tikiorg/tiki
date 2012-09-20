@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -31,7 +31,7 @@ FIX LATER (FIXED < 7.1?)
  ./tiki-login_openid.php
 
 
-The following do actually have features, but the fix check checker 
+The following do actually have features, but the fix check checker
 needs to be changed to accept access->check_permissions() so that also that it loads tikisetup.php
  ./tiki-orphan_pages.php
  ./tiki-plugins.php
@@ -84,7 +84,7 @@ function get_content($filename)
 
 	if ($filename == $last)
 		return $content;
-	
+
 	$content = file_get_contents($last = $filename);
 
 	return $content;
@@ -181,7 +181,7 @@ function regex_match ($path, $regex_possibles)
 function analyse_file_path($path) // {{{
 {
 	global $thirdpartyLibs, $safePaths;
-	
+
 	$type = 'unknown';
 	$name = basename($path);
 	if (strpos($name, '.') !== false)
@@ -267,16 +267,16 @@ function perform_feature_check(&$file) // {{{
 	 An array of 3, with the zeroth element being a named element whose value is an array of one element.
 	 other elements being named, not numbered
 
-	 1array(3) { 
-	 2  ["feature_directory"]=> 
-	 3  array(1) { 
-	 4    [0]=> 
-	 5    string(28) "./tiki-directory_ranking.php" 
-	 6  } 
-	 7  [0]=> 
-	 8  string(18) "feature_html_pages" 
-	 9  [1]=> 
-	 10  string(21) "feature_theme_control" 
+	 1array(3) {
+	 2  ["feature_directory"]=>
+	 3  array(1) {
+	 4    [0]=>
+	 5    string(28) "./tiki-directory_ranking.php"
+	 6  }
+	 7  [0]=>
+	 8  string(18) "feature_html_pages"
+	 9  [1]=>
+	 10  string(21) "feature_theme_control"
 	 11}
 	*/
 	/*
@@ -301,17 +301,17 @@ function perform_feature_check(&$file) // {{{
 function perform_permission_check(&$file) // {{{
 {
 	$index = 0;
-	
+
 	$permission_pattern = permission_pattern($index);
 
 	preg_match_all($permission_pattern, get_content($file['path']), $parts);
 
 	$permissions = array_unique(
-					array_merge(
-									access_check_call($file['path'], 'check_permission'),
-									permission_check_accessors($file['path']),
-									$parts[$index]
-					)
+		array_merge(
+			access_check_call($file['path'], 'check_permission'),
+			permission_check_accessors($file['path']),
+			$parts[$index]
+		)
 	);
 
 	$file['permissions'] = $permissions;
@@ -420,7 +420,7 @@ function permission_check_accessors($file) // {{{
 			$perms = array_merge($perms, permission_check_condition($subset));
 		}
 	}
-	
+
 	return $perms;
 } // }}}
 
@@ -475,7 +475,7 @@ function permission_check_condition($tokens) // {{{
 
 /* Build Files structures */
 // a hash of filenames, each element is a hash of attributes of that file
-$filesHash = array(); 
+$filesHash = array();
 
 // a hash of features, each element is a hash of filenames that use that feature
 $features = array();
@@ -496,10 +496,10 @@ foreach ($files as $key=>$dummy) {
 		case 'wikiplugin':
 				perform_extract_skip_check($file);
 
-				if ($file['unsafeextract']) 
+				if ($file['unsafeextract'])
 					$unsafe[] = $file;
 
-						break;
+			break;
 		case 'public':
 		case 'include':
 		case 'script':
@@ -512,10 +512,10 @@ foreach ($files as $key=>$dummy) {
 				perform_noweb_check($file);
 				perform_tikisetup_check($file);
 
-				if (! $file['noweb'] && ! $file['includeonly'] && ! count($file['features']) && ! count($file['permissions'])) 
+				if (! $file['noweb'] && ! $file['includeonly'] && ! count($file['features']) && ! count($file['permissions']))
 					$unsafe[] = $file;
 
-						break;
+			break;
 	}
 }
 
@@ -538,7 +538,7 @@ usort($unsafe, 'sort_cb');
 To be safe, files must have either an include only check, block web access, have a feature check or have a permission check.
 </p>
 <ol>
-	<?php foreach ($unsafe as $unsafeUrlAndFile): 
+	<?php foreach ($unsafe as $unsafeUrlAndFile):
 	  $pathname = $unsafeUrlAndFile['path'];
 		$url = substr($unsafeUrlAndFile['path'], 2);
 		$fileRecord = $filesHash[$pathname];
@@ -561,7 +561,7 @@ To be safe, files must have either an include only check, block web access, have
 		</tr>
 	</thead>
 	<tbody>
-		<?php foreach ($files as $file) 
+		<?php foreach ($files as $file)
 			if (in_array($file['type'], array('script', 'module', 'include', 'public', 'lib', '3rdparty', 'wikiplugin'))): ?>
 		<tr>
 			<td><a href="<?php echo htmlentities(substr($file['path'], 2)) ?>"><?php echo htmlentities($file['path']) ?></a></td>
@@ -584,7 +584,7 @@ To be safe, files must have either an include only check, block web access, have
 	</tbody>
 </table>
 
-	<?php 
+	<?php
 		foreach ($features as $featureKey => $featureValue) {
 			print "$featureKey :\n";
 			foreach ($featureValue as $file) {

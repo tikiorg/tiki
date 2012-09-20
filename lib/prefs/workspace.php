@@ -5,7 +5,7 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-functio n prefs_workspace_list()
+function prefs_workspace_list()
 {
 	return array(
 		'workspace_ui' => array(

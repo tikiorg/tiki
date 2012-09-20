@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -132,7 +132,7 @@ if (isset($_SERVER["REQUEST_URI"])) {
 		$session_params = session_get_cookie_params();
 		session_set_cookie_params($session_params['lifetime'], $tikiroot);
 		unset($session_params);
-	
+
 		try {
 			require_once "Zend/Session.php";
 			Zend_Session::start();
@@ -241,9 +241,9 @@ $patterns['dotvars'] = "/^[-_a-zA-Z0-9\.]*$/"; // same pattern as a variable key
 $patterns['hash'] = "/^[a-z0-9]*$/"; // for hash reqId in live support
 // allow quotes in url for additional tag attributes if html allowed in menu options links
 if ($prefs['menus_item_names_raw'] == 'y' and strpos($_SERVER["SCRIPT_NAME"], 'tiki-admin_menu_options.php') !== false) {
-$patterns['url'] = "/^(https?:\/\/)?[^<>]*$/"; 
+$patterns['url'] = "/^(https?:\/\/)?[^<>]*$/";
 } else {
-$patterns['url'] = "/^(https?:\/\/)?[^<>\"]*$/"; 
+$patterns['url'] = "/^(https?:\/\/)?[^<>\"]*$/";
 }
 // parameter type definitions. prepend a + if variable may not be empty, e.g. '+int'
 $vartype['id'] = '+int';
@@ -340,7 +340,7 @@ function varcheck(&$array, $category)
 			// check if the variable name is allowed
 			if (!preg_match($patterns['vars'], $rq)) {
 				//die(tra("Invalid variable name : "). htmlspecialchars($rq));
-				
+
 			} elseif (isset($vartype["$rq"])) {
 				$has_sign = false;
 				// Variable allowed to be empty?
@@ -362,7 +362,7 @@ function varcheck(&$array, $category)
 					if (!preg_match($patterns[$pattern_key], $rv)) {
 						$return[] = tra("Notice: invalid variable value:") . ' $' . $category . '["' . $rq . '"] = <font color="red">' . htmlspecialchars($rv) . '</font>';
 						$array[$rq] = ''; // Clear content
-						
+
 					}
 				}
 			}
@@ -476,7 +476,7 @@ if (isset($_SESSION["$user_cookie_site"])) {
 		}
 	}
 	unset($user_details);
-	
+
 	// Generate anti-CSRF ticket
 	if ($prefs['feature_ticketlib2'] == 'y' && !isset($_SESSION['ticket'])) {
 		$_SESSION['ticket'] = md5(uniqid(rand()));
@@ -550,19 +550,19 @@ $jitCookie->setDefaultFilter('xss');
 if (!isset($inputConfiguration)) $inputConfiguration = array();
 
 array_unshift(
-			 $inputConfiguration, array(
-				'staticKeyFilters' => array(
-					'menu' => 'striptags',
-					'cat_categorize' => 'alpha',
-					'tab' => 'digits',
-					'javascript_enabled' => 'alpha',
-					'XDEBUG_PROFILE' => 'int',
-				),	
-				'staticKeyFiltersForArrays' => array(
-					'cat_managed' => 'digits',
-					'cat_categories' => 'digits',
-				),
-			)
+	$inputConfiguration, array(
+		'staticKeyFilters' => array(
+			'menu' => 'striptags',
+			'cat_categorize' => 'alpha',
+			'tab' => 'digits',
+			'javascript_enabled' => 'alpha',
+			'XDEBUG_PROFILE' => 'int',
+		),
+		'staticKeyFiltersForArrays' => array(
+			'cat_managed' => 'digits',
+			'cat_categories' => 'digits',
+		),
+	)
 );
 
 $inputFilter = DeclFilter::fromConfiguration($inputConfiguration, array('catchAllFilter'));

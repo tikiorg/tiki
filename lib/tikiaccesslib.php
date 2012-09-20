@@ -123,8 +123,8 @@ class TikiAccessLib extends TikiLib
 			}
 
 			$msg = tr(
-							'Required features: <b>%0</b>. If you do not have the privileges to activate these features, ask the site administrator.',
-							implode(', ', $features)
+				'Required features: <b>%0</b>. If you do not have the privileges to activate these features, ask the site administrator.',
+				implode(', ', $features)
 			);
 
 			$this->display_error('', $msg, 'no_redirect_login');
@@ -308,21 +308,21 @@ class TikiAccessLib extends TikiLib
 			$detail['message'] = $detail['errortitle'];
 		}
 
-		// Display the template	
+		// Display the template
 		switch ( $errortype ) {
 			case '404':
 				header("HTTP/1.0 404 Not Found");
 				$detail['page'] = $page;
 				$detail['message'] .= ' (404)';
-							break;
+				break;
 
 			case '403':
 				header("HTTP/1.0 403 Forbidden");
-							break;
+				break;
 
 			case '503':
 				header("HTTP/1.0 503 Service Unavailable");
-							break;
+				break;
 
 			default:
 				$errortype = (int) $errortype;
@@ -333,7 +333,7 @@ class TikiAccessLib extends TikiLib
 					$title = 'Forbidden';
 				}
 				header("HTTP/1.0 $errortype $title");
-							break;
+				break;
 		}
 
 		if ( $this->is_serializable_request() ) {

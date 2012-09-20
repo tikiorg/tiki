@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -12,7 +12,7 @@ class MemcacheSession
 	private $lib;
 
 	/**
-	 * Set up the session cache, hijacking handlers from ADODB_Session 
+	 * Set up the session cache, hijacking handlers from ADODB_Session
 	 * presumably already in place.
 	 */
 	function _init()
@@ -20,12 +20,12 @@ class MemcacheSession
 
 		session_module_name('user');
 		session_set_save_handler(
-						array( $this, 'open' ),
-						array( $this, 'close' ),
-						array( $this, 'read' ),
-						array( $this, 'write' ),
-						array( $this, 'destroy' ),
-						array( $this, 'gc' )
+			array( $this, 'open' ),
+			array( $this, 'close' ),
+			array( $this, 'read' ),
+			array( $this, 'write' ),
+			array( $this, 'destroy' ),
+			array( $this, 'gc' )
 		);
 
 		$this->enabled = TikiLib::lib("memcache")->isEnabled();
@@ -69,7 +69,7 @@ class MemcacheSession
 
 	function write( $key, $val )
 	{
-		global $prefs; 
+		global $prefs;
 
 		if ( $this->enabled ) {
 			$this->lib->set($this->_buildCacheKey($key), $val, 60 * $prefs['session_lifetime']);

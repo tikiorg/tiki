@@ -96,7 +96,7 @@ function smarty_function_button($params, $smarty)
 	} else {
 		$id = '';
 	}
-	
+
 	unset($params['_class']);
 
 
@@ -156,16 +156,16 @@ function smarty_function_button($params, $smarty)
 		}
 
 		$html = smarty_block_self_link(
-						$params,
-						$params['_text'],
-						$smarty
+			$params,
+			$params['_text'],
+			$smarty
 		);
 	} else {
 		$params['_disabled'] = 'y';
 		$html = smarty_block_self_link(
-						$params,
-						$params['_text'],
-						$smarty
+			$params,
+			$params['_text'],
+			$smarty
 		);
 	}
 

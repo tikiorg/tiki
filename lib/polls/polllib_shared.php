@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -12,8 +12,8 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 }
 
 /**
- * PollLibShared 
- * 
+ * PollLibShared
+ *
  * @uses TikiLib
  */
 class PollLibShared extends TikiLib
@@ -138,10 +138,10 @@ class PollLibShared extends TikiLib
 		$out = array();
 
 		$result = $this->fetchAll(
-						"select `pollId` from `tiki_poll_objects`" .
-						" INNER JOIN `tiki_objects` ON `tiki_objects`.`objectId` = `tiki_poll_objects`.`catObjectId`" .
-						" WHERE `tiki_objects`.`type`=? and `tiki_objects`.`itemId`=?",
-						array($cat_type,$cat_objid)
+			"select `pollId` from `tiki_poll_objects`" .
+			" INNER JOIN `tiki_objects` ON `tiki_objects`.`objectId` = `tiki_poll_objects`.`catObjectId`" .
+			" WHERE `tiki_objects`.`type`=? and `tiki_objects`.`itemId`=?",
+			array($cat_type,$cat_objid)
 		);
 
 		foreach ( $result as $row ) {
@@ -174,11 +174,11 @@ class PollLibShared extends TikiLib
 
 	private function pollnameclean($s, $page)
 	{
-		if (isset($s['title'])) 
-			$s['title'] = substr($s['title'], strlen($page)+2); 
+		if (isset($s['title']))
+			$s['title'] = substr($s['title'], strlen($page)+2);
 
 		return $s;
-	}	
+	}
 
 	function remove_poll($pollId)
 	{
@@ -255,8 +255,8 @@ class PollLibShared extends TikiLib
 			$result = $this->query($query, array($title, $active, $publishDate, 0, $voteConsiderationSpan));
 
 			$pollId = $this->getOne(
-							"select max(`pollId`) from `tiki_polls` where `title`=? and `publishDate`=?", 
-							array($title, $publishDate)
+				"select max(`pollId`) from `tiki_polls` where `title`=? and `publishDate`=?",
+				array($title, $publishDate)
 			);
 		}
 		return $pollId;
@@ -318,7 +318,7 @@ class PollLibShared extends TikiLib
 	}
 
 	/**
-	 *  compute percent of each option and nb of votes and pondarated total of poll 
+	 *  compute percent of each option and nb of votes and pondarated total of poll
 	 *
 	 */
 	function options_percent(&$poll_info, &$options)
@@ -330,7 +330,7 @@ class PollLibShared extends TikiLib
 		foreach ($options as $i => $option) {
 			$poll_info['votes'] += $option['votes']; // nb of votes
 		}
-	
+
 		foreach ($options as $i => $option) {
 			if ($option['votes'] == 0) {
 				$percent = 0;

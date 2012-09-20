@@ -77,11 +77,11 @@ class Session
 $session = new Session;
 ini_set('session.save_handler', 'user');
 session_set_save_handler(
-				array($session, 'open'),
-				array($session, 'close'),
-				array($session, 'read'),
-				array($session, 'write'),
-				array($session, 'destroy'),
-				array($session, 'gc')
+	array($session, 'open'),
+	array($session, 'close'),
+	array($session, 'read'),
+	array($session, 'write'),
+	array($session, 'destroy'),
+	array($session, 'gc')
 );
 

@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -38,24 +38,24 @@ if (is_array($invoice["Item Amounts"])) {
 $smarty->assign("invoice", $invoice);
 $smarty->assign("amount", $amount);
 $smarty->assign(
-				"client",
-				Tracker_Query::tracker("Invoice Clients")
-				->fields(array("Client Id"))->equals(array($invoice['Client Id']))
-				->byName()
-				->getOne()
+	"client",
+	Tracker_Query::tracker("Invoice Clients")
+	->fields(array("Client Id"))->equals(array($invoice['Client Id']))
+	->byName()
+	->getOne()
 );
 $smarty->assign(
-				"setting", 
-				Tracker_Query::tracker("Invoice Settings")
-				->byName()
-				->query()
+	"setting",
+	Tracker_Query::tracker("Invoice Settings")
+	->byName()
+	->query()
 );
 $smarty->assign(
-				"invoiceItems", 
-				Tracker_Query::tracker("Invoice Items")
-				->fields(array("Invoice Id"))->equals(array($_REQUEST['InvoiceId']))
-				->byName()
-				->query()
+	"invoiceItems",
+	Tracker_Query::tracker("Invoice Items")
+	->fields(array("Invoice Id"))->equals(array($_REQUEST['InvoiceId']))
+	->byName()
+	->query()
 );
 
 // Display the template
