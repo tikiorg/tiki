@@ -2593,7 +2593,11 @@ class Comments extends TikiLib
 		//TODO in a forum, when the reply to a post (not a topic) id deletd, the replies to this post are not deleted
 
 		$this->remove_reported($threadId);
-		$this->table('tiki_forum_attachments')->deleteMultiple(array('threadId' => (int) $threadId));
+
+		$atts = $this->table('tiki_forum_attachments')->fetchAll(array('attId'),array('threadId' => $threadId));
+		foreach ( $atts as $att ) {
+			$this->remove_thread_attachment($att['attId']);
+		}
 
 		// Update search index after deletion is done
 		foreach ($result as $res) {
