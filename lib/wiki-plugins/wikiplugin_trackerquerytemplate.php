@@ -23,6 +23,17 @@ function wikiplugin_trackerquerytemplate_info()
 				'description' => tra('Name of the tracker you want to query.'),
 				'default' => ''
 			),
+			'debug' => array(
+				'required' => false,
+				'name' => tra('Debug'),
+				'description' => tra('Turn tracker query debug on or off, default = "".'),
+				'default' => '',
+				'options' => array(
+					array('text' => '', 'value' => ''),
+					array('text' => tra('y'), 'value' => 'y'),
+					array('text' => tra('n'), 'value' => 'n'),
+				)
+			),
 			'byname' => array(
 				'required' => false,
 				'name' => tra('Tracker'),
@@ -81,15 +92,14 @@ function wikiplugin_trackerquerytemplate_info()
 
 function wikiplugin_trackerquerytemplate($data, $params)
 {
-	global $tikilib, $trackerquerytemplate_item_stack, $user;
-
-	if (!isset($trackerquerytemplate_item_stack)) $trackerquerytemplate_item_stack = array();
+	global $tikilib;
 
 	$handler = new dataToFieldHandler();
 
 	$params = array_merge(
 		array(
 			'tracker'=>'',
+			'debug'=>'',
 			'byname'=>'y',
 			'render'=>'y',
 			'likefilters'=>'',
@@ -99,13 +109,10 @@ function wikiplugin_trackerquerytemplate($data, $params)
 		$params
 	);
 
-	foreach ($params as &$param) {//We parse the variables
-		$param = $handler->parseDetails($param);
+	foreach($params as &$param) {//We parse the variables
 		$param = $handler->parse($param);
 	}
 
-	ini_set('error_reporting', E_ALL);
-	ini_set('display_errors', 1);
 
 	$query = Tracker_Query::tracker($params['tracker'])->excludeDetails();
 
@@ -146,11 +153,15 @@ function wikiplugin_trackerquerytemplate($data, $params)
 	}
 
 	if (!empty($params['orfilters'])) {
-		$andfilters = explode(';', $params['andfilters']);
-		foreach ($andfilters as $andfilter) {
-			$filter = explode(':', $andfilter);
+		$orfilters = explode(';', $params['orfilters']);
+		foreach ($orfilters as $orfilter) {
+			$filter = explode(':', $orfilter);
 			$query->filterFieldByValueOr($filter[0], $filter[1]);
 		}
+	}
+
+	if (!empty($params['debug']) && $params['debug'] == 'y') {
+		$query->debug();
 	}
 
 	if (!empty($params['getlast']) && $params['getlast'] == 'y') {
@@ -164,23 +175,11 @@ function wikiplugin_trackerquerytemplate($data, $params)
 	foreach ($items as $itemId => $fields) {
 		$trackerId = $query->trackerId();
 		$handler->set($pattern, $fields, $query->itemsRaw[$itemId], $itemId, $trackerId);
-		$trackerquerytemplate_item_stack[] = array(
-			"itemId" => $itemId,
-			"fields" => $fields,
-			"trackerId" => $trackerId,
-			"itemsRaw" => $query->itemsRaw[$itemId],
-		);
+
 		$newData .= $handler->parse($data);
 		$newData = "~np~" . $tikilib->parse_data($newData, array('is_html'=>true)) . "~/np~";
-		$newData = $handler->parseDetails($newData);
-		array_pop($trackerquerytemplate_item_stack);
-
-		if (count($trackerquerytemplate_item_stack) > 0) {
-			$newData = str_replace("\n<br />", "\n", $newData);
-		}
+		$handler->pop();
 	}
-
-	//if (empty($newData)) $newData = tra("No data from tracker:") . $params['tracker'];
 
 	return $newData;
 }
@@ -192,6 +191,16 @@ class dataToFieldHandler
 	private $itemId;
 	private $fields;
 	private $fieldsRaw;
+	public static $itemStack = array();
+
+	function __construct() //initially set it to the last called item from trackers if it exists
+	{
+		$last = end(self::$itemStack);
+
+		if (!empty($last)) {
+			$this->set($last['pattern'], $last['fields'], $last['fieldsRaw'], $last['itemId'], $last['trackerId']);
+		}
+	}
 
 	function set($pattern, $fields, $fieldsRaw, $itemId, $trackerId)
 	{
@@ -200,15 +209,32 @@ class dataToFieldHandler
 		$this->itemId = $itemId;
 		$this->fields = $fields;
 		$this->fieldsRaw = $fieldsRaw;
+
+		self::$itemStack[] = array(
+			"pattern" => $this->pattern,
+			"fields" => $this->fields,
+			"fieldsRaw" => $this->fieldsRaw,
+			"itemId" => $this->itemId,
+			"trackerId" => $this->trackerId,
+		);
+	}
+
+	function pop()
+	{
+		array_pop(self::$itemStack);
 	}
 
 	function parse($data)
 	{
-		$dataBefore = $data;
+		global $tikilib;
 
-		if (empty($this->fields)) {
+		$checkedData = trim($data);
+		if (empty($checkedData) || empty(self::$itemStack)) {
 			return $data;
 		}
+
+		$data = str_replace('$trackerId$', $this->trackerId, $data);
+		$data = str_replace('$itemId$', $this->itemId, $data);
 
 		if ($this->pattern == 'name') {
 			foreach ($this->fields as $key => $field) {
@@ -216,31 +242,23 @@ class dataToFieldHandler
 				$data = str_replace('$~' . $key . '$', $this->fieldsRaw[$key], $data);
 			}
 		} else {
+			preg_match_all('/[\{][$](.)+?[\}]/', $data, $matches);
+			if (!empty($matches[0])) {
+				foreach ($matches[0] as $match) {
+					$data = str_replace($match, "(" . substr($match, 1, -1) . ")", $data);
+				}
+			}
+
 			foreach ($this->fields as $key => $field) {
+				$data = str_replace('($f_' . $key . ')', $field, $data);
+				$data = str_replace('($~f_' . $key . ')', $this->fieldsRaw[$key], $data);
 				$data = str_replace('{$f_' . $key . '}', $field, $data);
 				$data = str_replace('{$~f_' . $key . '}', $this->fieldsRaw[$key], $data);
 			}
 		}
 
-		return $data;
-	}
-
-	function parseDetails($data)
-	{
-		global $tikilib;
-		$checkedData = trim($data);
-		if (empty($checkedData)) {
-			return $data;
-		}
-
-		global $trackerquerytemplate_item_stack;
-		$last = end($trackerquerytemplate_item_stack);
-
-		$data = str_replace('$trackerId$', $last['trackerId'], $data);
-		$data = str_replace('$itemId$', $last['itemId'], $data);
-
 		if (strpos($data, '$created$')) {
-			$data = str_replace('$created$', $tikilib->get_short_date($tikilib->getOne("SELECT created FROM tiki_tracker_items WHERE itemId = ?", array($last['itemId']))), $data);
+			$data = str_replace('$created$', $tikilib->get_short_date($tikilib->getOne("SELECT created FROM tiki_tracker_items WHERE itemId = ?", array($this->itemId))), $data);
 		}
 
 		return $data;
