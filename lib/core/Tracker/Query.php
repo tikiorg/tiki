@@ -515,23 +515,29 @@ class Tracker_Query
 		if (count($this->fields) > 0 && (count($this->equals) > 0 || count($this->search) > 0)) {
 			for ($i = 0, $count_fields = count($this->fields); $i < $count_fields; $i++) {
 				if (strlen($this->fields[$i]) > 0) {
+
+					if ($i > 0) {
+						switch ($this->filterType[$i]) {
+							case "or":      $fields_safe .= " OR "; break;
+							case "and":     $fields_safe .= " AND "; break;
+							case "like":    $fields_safe .= " AND "; break;
+						}
+					}
+
 					$fields_safe .= " ( search_item_fields.fieldId = ? ";
 					$params[] = $this->fields[$i];
 
-					if (isset($this->equals[$i]) && strlen($this->equals[$i]) > 0) {
+					if (isset($this->equals[$i])) {
 						$fields_safe .= " AND search_item_fields.value = ? ";
 						$params[] = $this->equals[$i];
 					}
 
-					if (isset($this->search[$i]) && strlen($this->search[$i]) > 0) {
+					if (isset($this->search[$i]) && strlen($this->search[$i]) > 0 && $this->filterType[$i] == "like") {
 						$fields_safe .= " AND search_item_fields.value LIKE ? ";
 						$params[] = '%' . $this->search[$i] . '%';
 					}
 
 					$fields_safe .= " ) ";
-
-
-					if ($i + 1 < count($this->fields) && count($this->fields) > 1) $fields_safe .= " OR ";
 				}
 			}
 
