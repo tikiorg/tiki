@@ -284,7 +284,7 @@ $icons = array(
 		'position' => '0px -115px;',
 		'icon' => 'img/icons/large/i18n.png',
 		'title' => tr('i18n'),
-		'description' => tr('Internationalization and localization - mulitlingual features'),
+		'description' => tr('Internationalization and localization - multilingual features'),
 		'help' => 'i18n',
 	),
 	"maps" => array(
