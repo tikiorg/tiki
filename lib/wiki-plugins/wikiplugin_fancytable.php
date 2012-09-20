@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-//
+// 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -46,8 +46,8 @@ function wikiplugin_fancytable_info()
 				'description' => tra('Indicate whether columns are sortable or not (not sortable by default)'),
 				'default' => 'n',
 				'options' => array(
-					array('text' => '', 'value' => ''),
-					array('text' => tra('Yes'), 'value' => 'y'),
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 'y'), 
 					array('text' => tra('No'), 'value' => 'n')
 				),
 			),
@@ -66,7 +66,7 @@ function wikiplugin_fancytable_info()
 			'colaligns' => array(
 				'required' => false,
 				'name' => tra('Cell Horizontal Align'),
-				'description' => tra('Table body column horizonatal alignments separated by |. Choices: left, right, center, justify.'),
+				'description' => tra('Table body column horizontal alignments separated by |. Choices: left, right, center, justify.'),
 				'default' => '',
 			),
 			'colvaligns' => array(
@@ -81,63 +81,55 @@ function wikiplugin_fancytable_info()
 
 function wikiplugin_fancytable($data, $params)
 {
-	global $tikilib, $prefs;
+	global $prefs;
+	$tagremove = array();
+	$pluginremove = array();
 	static $iFancytable = 0;
 	++$iFancytable;
 	extract($params, EXTR_SKIP);
 	if (empty($sortable)) $sortable = 'n';
 
-	// Start the table
+	//Start the table
 	$wret = '<table class="normal'.($sortable=='y'? ' fancysort':'').'" id="fancytable_'.$iFancytable.'">' . "\r\t";
 
-	//mask tiki tag content during processing and bring back at the end so that any pipes (| or ~|~)
-	//inside of tags aren't mistaken for cell dividers
-	//pattern covers (( )), [ ], ~np~ ~/np~, ~tc~ ~/tc~, ~hc~ ~/hc~, { }
-	$pattern = '/(\(\([^\)\)]+\)\)|\[[^\]]+\]|~np~(?:(?!~\/np~).)*~\/np~|~tc~(?:(?!~\/tc~).)*~\/tc~'
-				. '|~hc~(?:(?!~\/hc~).)*~\/hc~|\{(?:(?!\}).)*\})/';
-	//process header
+	//Header
 	if (isset($head)) {
 		if (!empty($headclass)) {
 			$tdhdr = "\r\t\t\t<th class=\"$headclass\"";
 		} else {
 			$tdhdr = "\r\t\t\t<th";
 		}
-		preg_match_all($pattern, $head, $head_matches);
-		//replace all tiki tags in the header with numbered strings while being processed
-		$head = preg_replace_callback($pattern, 'replace_head', $head);
-		//process header rows
-		$headrows = process_section(
-			$head, 'h', '>>', $tdhdr, '</th>', isset($colwidths) ? $colwidths : '',
-			isset($headaligns) ? $headaligns : '', isset($headvaligns) ? $headvaligns : ''
-		);
-		//bring the tiki tags back into the header. static veriable needed in case of multiple tables
-		static $hh = 0;
-		foreach ($head_matches[0] as $head_match) {
-			$headrows = str_replace('z~~head' . $hh . '~~z', $head_match, $headrows);
-			$hh++;
-		}
+		//replace tiki tags, plugins and other enclosing characters with hash strings before creating table so that any
+		//pipes (| or ~|~) inside aren't mistaken for cell dividers
+		preprocess_section($head, $tagremove, $pluginremove);
+
+		//now create header table rows
+		$headrows = process_section($head, 'h', '>>', $tdhdr, '</th>', isset($colwidths) ? $colwidths : '',
+			isset($headaligns) ? $headaligns : '', isset($headvaligns) ? $headvaligns : '');
+
+		//restore original tags and plugin syntax
+		postprocess_section($headrows, $tagremove, $pluginremove);
+
 		$wret .= '<thead>' . $headrows . "\r\t" . '</thead>' . "\r\t" . '<tbody>';
 	}
-	//process body
-	preg_match_all($pattern, $data, $body_matches);
-	//replace all tiki tags in the body with numbered strings while being processed
-	$data = preg_replace_callback($pattern, 'replace_body', $data);
+
+	//Body
+	//replace tiki tags, plugins and other enclosing characters with hash strings before creating table so that any
+	//pipes (| or ~|~) inside aren't mistaken for cell dividers
+	preprocess_section($data, $tagremove, $pluginremove);
+
 	if ($sortable == 'y' && $prefs['disableJavascript'] == 'n' && $prefs['feature_jquery_tablesorter'] == 'y') {
 		$type = 's';	//sortable rows - do not assign odd/even class to these since jquery will do it
 	} else {
 		$type = 'r';	//plain rows
 	}
-	//process table body rows
-	$bodyrows = process_section(
-		$data, $type, "\n", '', '</td>', isset($colwidths) ? $colwidths : '',
-		isset($colaligns) ? $colaligns : '', isset($colvaligns) ? $colvaligns : ''
-	);
-	//bring the tiki tags back into the body. static veriable needed in case of multiple tables
-	static $bb = 0;
-	foreach ($body_matches[0] as $body_match) {
-		$bodyrows = str_replace('z~~body' . $bb . '~~z', $body_match, $bodyrows);
-		$bb++;
-	}
+	//now create table body rows
+	$bodyrows = process_section($data, $type, "\n", '', '</td>', isset($colwidths) ? $colwidths : '',
+		isset($colaligns) ? $colaligns : '', isset($colvaligns) ? $colvaligns : '');
+
+	//restore original tags and plugin syntax
+	postprocess_section($bodyrows, $tagremove, $pluginremove);
+
 	$wret .= $bodyrows;
 
 	//end the table
@@ -160,24 +152,119 @@ function wikiplugin_fancytable($data, $params)
 	return $wret;
 }
 
-//preg_replace_callback functions to number replacements so they can be identified and undone later
-//for the header
-function replace_head($matches)
+/**
+ * To keep pipes (| or ~|~) inside other Tiki tags or plugins, or other "enclosing" characters from being mistaken as
+ * cell dividers, replace them with hash strings until after the table is created
+ *
+ * @param 		string			$data			Header or body text with tags and plugins removed
+ * @param 		array			$tagremove		Key => value pairs of Hash => data for tags or enclosing characters
+ * @param 		array			$pluginremove	Key => value pairs of Hash => data for plugins
+ */
+function preprocess_section (&$data, &$tagremove, &$pluginremove)
 {
-	static $h = 0;
-	$ret = 'z~~head' . $h . '~~z';
-	$h++;
-	return $ret;
+	$parserlib = TikiLib::lib('parser');
+	//first replace plugins with hash strings since they may contain pipe characters
+	$parserlib->plugins_remove($data, $pluginremove);
+
+	//then replace tags or other enclosing charcters that could enclose a pipe (| or ~|~) character with a hash string
+	$tikilib = TikiLib::lib('tiki');
+	$tags = array(
+		array(
+			'start' => '\(\(',		// (( ))
+			'end'	=> '\)\)',
+		),
+		array(
+			'start' => '\[',		// [ ]
+			'end'	=> '\]',
+		),
+		array(
+			'start' => '~np~',		// ~np~ ~/np~
+			'end'	=> '~\/np~',
+		),
+		array(
+			'start' => '~tc~',		// ~tc~ ~/tc~
+			'end'	=> '~\/tc~',
+		),
+		array(
+			'start' => '~hc~',		// ~hc~ ~/hc~
+			'end'	=> '~\/hc~',
+		),
+		array(
+			'start' => '\^',		// ^ ^
+			'end'	=> '\^',
+		),
+		array(
+			'start' => '__',		// __ __
+			'end'	=> '__',
+		),
+		array(
+			'start' => '\:\:',		// :: ::
+			'end'	=> '\:\:',
+		),
+		array(
+			'start' => '\:\:\:',		// ::: :::
+			'end'	=> '\:\:\:',
+		),
+		array(
+			'start' => '\'\'',		// '' ''
+			'end'	=> '\'\'',
+		),
+		array(
+			'start' => '-\+',		// -+ +-
+			'end'	=> '\+-',
+		),
+		array(
+			'start' => '-=',		// -= =-
+			'end'	=> '=-',
+		),
+		array(
+			'start' => '===',		// === ===
+			'end'	=> '===',
+		),
+		array(
+			'start' => '--',		// -- --
+			'end'	=> '--',
+		),
+	array(
+			'start' => '\(',		// ( )
+			'end'	=> '\)',
+		),
+	array(
+		'start' => '\"',		// " "
+		'end'	=> '\"',
+	),
+	);
+	$count = count($tags) - 1;
+	$pattern = '/(';
+	foreach ($tags as $key => $tag) {
+		$pattern .= $tag['start'] . '(?:(?!' . $tag['end'] . ').)*' . $tag['end'];
+		if ($key < $count) {
+			$pattern .= '|';
+		}
+	}
+	$pattern .= ')/';
+	preg_match_all($pattern, $data, $matches);
+	foreach ($matches[0] as $match) {
+		$tagremove['key'][] = '§' . md5($tikilib->genPass()) . '§';
+		$tagremove['data'][] = $match;
+		$data = isset($tagremove['data']) ? str_replace($tagremove['data'], $tagremove['key'], $data) : $data;
+	}
 }
-//for the body
-function replace_body($matches)
-{
-	static $b = 0;
-	$ret = 'z~~body' . $b . '~~z';
-	$b++;
-	return $ret;
-}
-//function to process header and body
+
+/**
+ * Process header or body string to convert to table rows
+ *
+ * @param 		string			$data		Header or body string to be broken down into table rows
+ * @param 		string			$type		Indicates whether rows are sortable or not, which impacts class assigned
+ * @param 		string			$line_sep	Row separator (>> for header and \n for body)
+ * @param 		string			$cellbeg	HTML <th or <td tag and appropriate class attribute
+ * @param 		string			$cellend	HTML </th> or </td> ending tags
+ * @param 		numeric			$widths		User input for column widths
+ * @param 		string			$aligns		User input for horizontal text alignment within cells
+ * @param 		string			$valigns	User input for vertical text alignment within cells
+ *
+ * @return 		string			$wret		HTML string for the header or body rows processed
+ */
 function process_section ($data, $type, $line_sep, $cellbeg, $cellend, $widths, $aligns, $valigns)
 {
 	$separator = strpos($data, '~|~') === false ? '|' : '~|~';
@@ -188,9 +275,6 @@ function process_section ($data, $type, $line_sep, $cellbeg, $cellend, $widths, 
 	$trbeg = "\r\t\t<tr>";
 	$trend = "\r\t\t</tr>";
 	$l = 0;
-	$keepc = '';
-	$keepl = '';
-	$rnum = '';
 	$rnum1 = '';
 	$rnum2 = '';
 	$wret = '';
@@ -217,13 +301,14 @@ function process_section ($data, $type, $line_sep, $cellbeg, $cellend, $widths, 
 			$parts = explode($separator, $line);
 			//Each column within a row
 			foreach ($parts as $column) {
-				$colnum = 'col' . $c;
+				$colnum = 'col' . $c;				
 				$colspan = '';
 				$rowspan = '';
 				/*
 				 * Match / (colspan) or \ (rowspan) characters in whichever order at the beginning of the cell
-				 * $matches[0][0] shows entire match. There are 3 strings being matched in the preg_match_all, so $matches[1][0] shows the character
-				 * matched for the first string (\), $matches[2][0] the second character (/), and $matches[3][0] the third character (\)
+				 * $matches[0][0] shows entire match. There are 3 strings being matched in the preg_match_all,
+				 * so $matches[1][0] shows the character matched for the first string (\), $matches[2][0] the
+				 * second character (/), and $matches[3][0] the third character (\)
 				*/
 				if (preg_match_all("/^(\\\\)*(\/)*(\\\\)*/", $column, $matches)) {
 					$column = substr($column, strlen($matches[0][0]));
@@ -267,4 +352,28 @@ function process_section ($data, $type, $line_sep, $cellbeg, $cellend, $widths, 
 		$l++;//increment row number
 		}
 	return $wret;
+}
+
+/**
+ * Replace hash strings with original tag and plugin content
+ *
+ * @param 		string		$data			Header or body text processed into table rows with hash strings replacing
+ * 												tags and plugins
+ * @param 		array		$tagremove		Tag hash => data pairs for tags that were replaced with hash strings
+ * @param 		array		$pluginremove	Plugin Hash => data pairs for plugins that were replaced with hash strings
+ */
+function postprocess_section (&$data, &$tagremove, &$pluginremove)
+{
+	//first restore tag strings
+	$parserlib = TikiLib::lib('parser');
+	if (isset($tagremove['key']) and count($tagremove['key'])
+		and count($tagremove['key']) == count($tagremove['data']))
+	{
+		$data = str_replace($tagremove['key'], $tagremove['data'], $data);
 	}
+	//then restore plugin strings
+	$parserlib->plugins_replace($data, $pluginremove);
+	//reset variables since this function is run for both the header and body
+	$tagremove = array();
+	$pluginremove = array();
+}
