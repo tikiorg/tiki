@@ -211,6 +211,7 @@ if ($tiki_p_admin_forum != 'y' && $thread_info['locked'] == 'y') {
 $smarty->assign_by_ref('thread_info', $thread_info);
 $comments_per_page = $forum_info['commentsPerPage'];
 $thread_sort_mode = $forum_info['threadOrdering'];
+$smarty->assign_by_ref('thread_sort_mode', $thread_sort_mode);
 $thread_style = $forum_info['threadStyle'];
 $comments_vars = array(
 	'forumId'
