@@ -436,10 +436,10 @@ abstract class Toolbar
 if (typeof window.CKEDITOR !== "undefined" && !window.CKEDITOR.plugins.get("{$name}")) {
 	window.CKEDITOR.config.extraPlugins += (window.CKEDITOR.config.extraPlugins ? ',{$name}' : '{$name}' );
 	window.CKEDITOR.plugins.add( '{$name}', {
-		init : function( editor ) {
+		init : function( ed itor ) {
 			var command = editor.addCommand( '{$name}', new window.CKEDITOR.command( editor , {
 				modes: { wysiwyg:1 },
-				exec: function(elem, editor, data) {
+				exec: function (elem, editor, data) {
 					{$js}
 				},
 				canUndo: false
@@ -453,7 +453,8 @@ if (typeof window.CKEDITOR !== "undefined" && !window.CKEDITOR.plugins.get("{$na
 	});
 }
 JS
-			, 10
+			,
+			10
 		);
 	}
 }
@@ -1246,7 +1247,8 @@ if (typeof window.CKEDITOR !== "undefined" && !window.CKEDITOR.plugins.get("{$th
 	});
 }
 JS
-				, 10
+				,
+				10
 			);
 
 		}
@@ -1375,7 +1377,8 @@ if (typeof window.CKEDITOR !== "undefined" && !window.CKEDITOR.plugins.get("{$na
 	});
 }
 JS
-			, 10
+,
+			10
 		);
 		return $name;
 	}

@@ -141,13 +141,13 @@ function module_shoutbox($mod_reference, $module_params)
 		$smarty->assign('waittext', isset($module_params['waittext']) ? $module_params['waittext'] : tra('Please wait...'));
 
 		$smarty->assign(
-						'tweet',
-						isset($module_params['tweet']) &&($tikilib->get_user_preference($user, 'twitter_token')!='') ? $module_params['tweet'] : '0'
+			'tweet',
+			isset($module_params['tweet']) &&($tikilib->get_user_preference($user, 'twitter_token')!='') ? $module_params['tweet'] : '0'
 		);
 
 		$smarty->assign(
-						'facebook',
-						isset($module_params['facebook']) && ($tikilib->get_user_preference($user, 'facebook_token')!='') ? $module_params['facebook'] : '0'
+			'facebook',
+			isset($module_params['facebook']) && ($tikilib->get_user_preference($user, 'facebook_token')!='') ? $module_params['facebook'] : '0'
 		);
 	}
 }

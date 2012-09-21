@@ -864,7 +864,7 @@ if (isset($_GET['slideshow'])) {
 			//need to convert fileId to an offset to bring up a specific file for page view
 			if (isset($_REQUEST['fileId'])) {
 				$filesrecords = array_values($files['data']);
-				foreach($filesrecords as $key => $file) {
+				foreach ($filesrecords as $key => $file) {
 					if ($file['fileId'] == $_REQUEST['fileId']) {
 						$smarty->assign('offset', $key);
 						$files['data'] = array($file);
@@ -874,8 +874,11 @@ if (isset($_GET['slideshow'])) {
 				}
 			}
 			$smarty->assign('maxRecords', 1);
-			$smarty->assign('metarray', isset($files['data'][0]['metadata']) ?
-				json_decode($files['data'][0]['metadata'], true) : '');
+			$smarty->assign(
+				'metarray',
+				isset($files['data'][0]['metadata']) ?
+				json_decode($files['data'][0]['metadata'], true) : ''
+			);
 		}
 		$smarty->assign_by_ref('files', $files['data']);
 		$smarty->assign('cant', $files['cant']);
@@ -982,8 +985,7 @@ if ($prefs['fgal_show_explorer'] == 'y' || $prefs['fgal_show_path'] == 'y' || is
 
 ask_ticket('fgal');
 if (isset($files['data']) and ((isset($_REQUEST['view']) && $_REQUEST['view'] == 'browse')
-	or (isset($_REQUEST['view']) and $_REQUEST['view'] == 'page')))
-{
+	or (isset($_REQUEST['view']) and $_REQUEST['view'] == 'page'))) {
 	foreach ($files['data'] as $file) {
 		$_SESSION['allowed'][$file['fileId']] = true;
 	}

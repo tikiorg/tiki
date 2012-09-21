@@ -90,13 +90,13 @@ if ( isset( $_POST['manual_amount'], $_POST['invoice'] ) && preg_match('/^\d+(\.
 
 	if ( $objectperms->payment_manual ) {
 		$paymentlib->enter_payment(
-						$_POST['invoice'],
-						$_POST['manual_amount'],
-						'user',
-						array(
-							'user' => $user,
-							'note' => $_POST['note'],
-						)
+			$_POST['invoice'],
+			$_POST['manual_amount'],
+			'user',
+			array(
+				'user' => $user,
+				'note' => $_POST['note'],
+			)
 		);
 
 		$access->redirect('tiki-payment.php?invoice=' . $_POST['invoice'], tra('Manual payment entered.'));

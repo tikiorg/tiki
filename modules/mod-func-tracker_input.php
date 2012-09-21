@@ -66,13 +66,13 @@ function module_tracker_input($mod_reference, $module_params)
 
 	if (! $itemObject->canModify()) {
 		$smarty->assign(
-						'tracker_input',
-						array(
-							'trackerId' => 0,
-							'textInput' => array(),
-							'hiddenInput' => array(),
-							'location' => null,
-						)
+			'tracker_input',
+			array(
+				'trackerId' => 0,
+				'textInput' => array(),
+				'hiddenInput' => array(),
+				'location' => null,
+			)
 		);
 		return;
 	}
@@ -125,21 +125,21 @@ function module_tracker_input($mod_reference, $module_params)
 	}
 
 	$smarty->assign(
-					'tracker_input',
-					array(
-						'trackerId' => $trackerId,
-						'textInput' => $text,
-						'hiddenInput' => $hidden,
-						'location' => $location,
-						'locationMode' => $locationMode,
-						'streetview' => $streetview,
-						'galleryId' => $galleryId,
-						'submit' => isset($module_params['submit']) ? $module_params['submit'] : tr('Create'),
-						'success' => array(
-							'operation' => $operation,
-							'argument' => $operationArgument,
-						),
-					)
+		'tracker_input',
+		array(
+			'trackerId' => $trackerId,
+			'textInput' => $text,
+			'hiddenInput' => $hidden,
+			'location' => $location,
+			'locationMode' => $locationMode,
+			'streetview' => $streetview,
+			'galleryId' => $galleryId,
+			'submit' => isset($module_params['submit']) ? $module_params['submit'] : tr('Create'),
+			'success' => array(
+				'operation' => $operation,
+				'argument' => $operationArgument,
+			),
+		)
 	);
 }
 

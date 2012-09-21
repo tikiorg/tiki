@@ -29,14 +29,14 @@ function smarty_modifier_iconify($string, $filetype = null)
 	$ext = strtolower(substr($string, strrpos($string, '.') + 1));
 	if (file_exists("img/icons/mime/$ext.png")) {
 		$icon = $ext;
-	} else 	if (file_exists('img/icons/mime/' . substr($ext, 0, 3) . '.png')) {
+	} elseif (file_exists('img/icons/mime/' . substr($ext, 0, 3) . '.png')) {
 		$icon = substr($ext, 0, 3);
 	} else {
 		include_once ('lib/mime/mimetypes.php');
 		global $mimetypes;
 
 		$mimes = array_keys($mimetypes, $filetype);
-		foreach($mimes as $m) {
+		foreach ($mimes as $m) {
 			if (file_exists("img/icons/mime/$m.png")) {
 				$icon = $m;
 			}
@@ -47,11 +47,11 @@ function smarty_modifier_iconify($string, $filetype = null)
 	}
 
 	return smarty_function_icon(
-					array(
-						'_id' => 'img/icons/mime/'.$icon.'.png',
-						'alt' => ( $filetype === null ? $icon : $filetype ),
-						'class' => ''
-					), 
-					$smarty
+		array(
+			'_id' => 'img/icons/mime/'.$icon.'.png',
+			'alt' => ( $filetype === null ? $icon : $filetype ),
+			'class' => ''
+		),
+		$smarty
 	);
 }

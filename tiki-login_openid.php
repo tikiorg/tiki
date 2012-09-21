@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -79,8 +79,8 @@ function displayRegisatrationForms($data, $messages) // {{{
 		register_error($registrationlib->merged_prefs->msg);
 	}
 	$smarty->assign_by_ref('merged_prefs', $registrationlib->merged_prefs);
-	
-	
+
+
 	// Default values for the registration form
 	$smarty->assign('username', $data['nickname']);
 	$smarty->assign('email', $data['email']);
@@ -143,7 +143,7 @@ function getStore()
 } // }}}
 function getConsumer()
 { // {{{
-	
+
 	/**
 	 * Create a consumer object using the store object created
 	 * earlier.
@@ -191,10 +191,10 @@ function runAuth()
 		displayError(tra("Authentication error; probably not a valid OpenID."));
 	}
 	$sreg_request = Auth_OpenID_SRegRequest::build(
-					// Required
-					array(),
-					// Optional
-					array('nickname', 'email')
+		// Required
+		array(),
+		// Optional
+		array('nickname', 'email')
 	);
 	if ($sreg_request) {
 		$auth_request->addExtension($sreg_request);

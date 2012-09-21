@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -39,7 +39,7 @@ class WikiParser_PluginOutput
 	public static function argumentError( $missingArguments )
 	{
 		$content = tra('Plugin argument(s) missing:');
-		
+
 		$content .= '<ul>';
 
 		foreach ($missingArguments as $arg) {
@@ -56,18 +56,18 @@ class WikiParser_PluginOutput
 		global $smarty;
 		$smarty->loadPlugin('smarty_block_remarksbox');
 		$repeat = false;
-		
+
 		return new self(
-					'html', 
+					'html',
 					smarty_block_remarksbox(
-									array(
-										'type' => 'error',
-										'title' => $label,
-									), 
-									$message, 
-									$smarty,
-									$repeat
-					) 
+						array(
+							'type' => 'error',
+							'title' => $label,
+						),
+						$message,
+						$smarty,
+						$repeat
+					)
 		);
 	}
 

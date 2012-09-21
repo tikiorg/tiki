@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -13,8 +13,8 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 
 /**
  * Simple central point for configuring and using memcache support.
- * 
- * This utility library is not a complete wrapper for PHP memcache functions, 
+ *
+ * This utility library is not a complete wrapper for PHP memcache functions,
  * and only provides a minimal set currently in use in SUMO.
  */
 class Memcachelib
@@ -54,9 +54,9 @@ class Memcachelib
 				}
 
 				$this->memcache->addServer(
-								$server['host'], (int) $server['port'], 
-								isset($server['persistent']) ? $server['persistent'] : FALSE, 
-								isset($server['weight']) ? (int)$server['weight'] : 1
+					$server['host'], (int) $server['port'],
+					isset($server['persistent']) ? $server['persistent'] : FALSE,
+					isset($server['weight']) ? (int)$server['weight'] : 1
 				);
 			}
 		}
@@ -117,7 +117,7 @@ class Memcachelib
 	/**
 	 * Get multiple keys from memcache at once.
 	 *
-	 * This differs from native memcache get() behavior in that all keys 
+	 * This differs from native memcache get() behavior in that all keys
 	 * passed in will result in a corresponding value returned.  If the
 	 * key was not found in the cache, the returned value will be NULL.
 	 *
@@ -156,9 +156,9 @@ class Memcachelib
 	function set($key, $value, $flags=FALSE, $expiration=FALSE)
 	{
 		$key = $this->buildKey($key);
-		$flags = ($flags) ? 
+		$flags = ($flags) ?
 			$flags : $this->getOption('flags', 0);
-		$expiration = ($expiration) ? 
+		$expiration = ($expiration) ?
 			$expiration : $this->getOption('expiration', 0);
 
 		if (isset($this->memcache) && method_exists($this->memcache, "set")) {
@@ -207,16 +207,16 @@ class Memcachelib
 			$parts = array();
 			foreach ($keys as $name) {
 				$val = $key[$name];
-				if ($val !== NULL) 
+				if ($val !== NULL)
 					$parts[] = $name . '=' . $val;
 			}
 
 			$str_key = join(':', $parts);
-			return $this->key_prefix . 
+			return $this->key_prefix .
 				( $use_md5 ? md5($str_key) : '['.$str_key.']' );
 
 		}
-	} 
+	}
 }
 
 global $prefs, $memcachelib;

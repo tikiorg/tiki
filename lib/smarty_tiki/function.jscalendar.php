@@ -14,10 +14,10 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 function smarty_function_jscalendar($params, $smarty)
 {
 	global $headerlib, $prefs, $tikilib;
-	
+
 	if ($prefs['feature_jquery_ui'] === 'y') {	// override jscalendar with jQuery UI datepicker
 		$uiCalendarInstance = uniqid();
-		
+
 		if (!isset($params['id'])) {
 			$params['id'] = 'uiCal_' . $uiCalendarInstance;
 		}
@@ -43,7 +43,7 @@ function smarty_function_jscalendar($params, $smarty)
 			if (!is_numeric($first) || !in_array($first, array(0, 1, 2, 3, 4, 5, 6))) {
 				$first = 0;
 			}
-			
+
 			$datepicker_options_common .= ', firstDay: '.$first;
 			$datepicker_options_common .= ", closeText: '" . smarty_function_jscalendar_tra('Done') . "'";
 			$datepicker_options_common .= ", prevText: '" . smarty_function_jscalendar_tra('Prev') . "'";
@@ -114,8 +114,8 @@ function smarty_function_jscalendar($params, $smarty)
 			$command = 'datepicker';
 			$js_val = empty($params['date']) ? '""' : '$.datepicker.formatDate( "yy-mm-dd", new Date('.$params['date'].'* 1000))';
 			$headerlib->add_jq_onready(
-							'$("#' . $params['id'] . '_dptxt").val(' . $js_val . ').tiki("' .
-							$command . '", "jscalendar", {altField: "#' . $params['id'] . '"});'
+				'$("#' . $params['id'] . '_dptxt").val(' . $js_val . ').tiki("' .
+				$command . '", "jscalendar", {altField: "#' . $params['id'] . '"});'
 			);
 
 		} else {		// datetime picker
@@ -124,7 +124,7 @@ function smarty_function_jscalendar($params, $smarty)
 
 			/* css for timepicker */
 			$headerlib->add_css(
-							'
+				'
 .ui-timepicker-div .ui-widget-header{ margin-bottom: 8px; }
 .ui-timepicker-div dl{ text-align: left; }
 .ui-timepicker-div dl dt{ height: 25px; }
@@ -138,12 +138,12 @@ var tm = { hour: dt.getHours(), minute: dt.getMinutes(), second: dt.getSeconds()
 ';
 			$js_val2 = empty($params['date']) ? '""' : '$.datepicker.formatDate( "yy-mm-dd", dt) + " " + $.timepicker._formatTime(tm)';
 			$headerlib->add_jq_onready(
-							$js_val1 . '$("#' . $params['id'] . '_dptxt").val(' . $js_val2 . ').tiki("' . 
-							$command . '", "jscalendar", {altField: "#' . $params['id'] . '",altFieldTimeOnly:false});'
+				$js_val1 . '$("#' . $params['id'] . '_dptxt").val(' . $js_val2 . ').tiki("' .
+				$command . '", "jscalendar", {altField: "#' . $params['id'] . '",altFieldTimeOnly:false});'
 			);
 		}
 		return $html;
-		
+
 	} else {
 		echo smarty_function_jscalendar_body($params, $smarty);
 	}
@@ -204,7 +204,7 @@ function smarty_function_jscalendar_body($params, $smarty)
 	} else {
 		$formatted_date = '';
 	}
-	
+
 	if (isset($params['id'])) {
 		$id =  preg_replace('/"/', '\"', $params['id']);
 	} else {

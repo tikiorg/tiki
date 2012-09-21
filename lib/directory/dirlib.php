@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -59,11 +59,11 @@ class DirLib extends TikiLib
 		$crumbs = array();
 		$info = $this->dir_get_category($categId);
 		if (isset($info["name"])) {
-			$crumbs[] = new Breadcrumb($info["name"], '', 'tiki-directory_browse.php?parent=' . $info["categId"],	'', '');
+			$crumbs[] = new Breadcrumb($info["name"], '', 'tiki-directory_browse.php?parent=' . $info["categId"], '', '');
 		}
 		while ($info["parent"] != 0) {
 			$info = $this->dir_get_category($info["parent"]);
-			$crumbs[] = new Breadcrumb($info["name"], '', 'tiki-directory_browse.php?parent=' . $info["categId"],	'', '');                    
+			$crumbs[] = new Breadcrumb($info["name"], '', 'tiki-directory_browse.php?parent=' . $info["categId"], '', '');
 		}
 		return empty($crumbs) ? null : array_reverse($crumbs);
 	}
@@ -350,7 +350,7 @@ class DirLib extends TikiLib
 		} else {
 			$mid = "";
 		}
-	
+
 		$query = "select * from `tiki_directory_categories` where `allowSites`=? $mid ";
 		$query_cant = "select count(*) from `tiki_directory_categories` where `allowSites`=? $mid";
 		$result = $this->query($query, $bindvars, $maxRecords, $offset);
@@ -633,9 +633,9 @@ class DirLib extends TikiLib
 		$query.= " tds.`created`, tds.`lastModif` from `tiki_directory_sites` tds, `tiki_category_sites` tcs, `tiki_directory_categories` tdc ";
 		$query.= " where tds.`siteId`=tcs.`siteId` and tcs.`categId`=tdc.`categId` and `isValid`=? and tdc.`categId`=? and $words order by ".$this->convertSortMode($sort_mode);
 		$cant = $this->getOne(
-						"select count(*) from `tiki_directory_sites` tds,`tiki_category_sites` tcs,`tiki_directory_categories` tdc 
-						where tds.`siteId`=tcs.`siteId` and tcs.`categId`=tdc.`categId` and `isValid`=? and tdc.`categId`=? and $words",
-						$bindvars
+			"select count(*) from `tiki_directory_sites` tds,`tiki_category_sites` tcs,`tiki_directory_categories` tdc
+			where tds.`siteId`=tcs.`siteId` and tcs.`categId`=tdc.`categId` and `isValid`=? and tdc.`categId`=? and $words",
+			$bindvars
 		);
 		$result = $this->query($query, $bindvars, $maxRecords, $offset);
 		$ret = array();

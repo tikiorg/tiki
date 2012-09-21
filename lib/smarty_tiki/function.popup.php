@@ -43,13 +43,13 @@ function smarty_function_popup($params, $smarty)
 				$$_key = (string)$_value;
 				if ($_key == 'function' || $_key == 'inarray')
 					$append .= ',\'' . strtoupper($_key) . "=$_value'";
-							break;
+				break;
 
 			case 'caption':
 			case 'closetext':
 			case 'status':
 				$append .= ',\'' . strtoupper($_key) . "=" . str_replace("'", "\'", $_value) . "'";
-							break;
+				break;
 
 			case 'fgcolor':
 			case 'bgcolor':
@@ -66,7 +66,7 @@ function smarty_function_popup($params, $smarty)
 			case 'background':
 			case 'frame':
 				$append .= ',\'' . strtoupper($_key) . "=$_value'";
-							break;
+				break;
 
 			case 'textsize':
 			case 'captionsize':
@@ -85,7 +85,7 @@ function smarty_function_popup($params, $smarty)
 			case 'timeout':
 			case 'delay':
 				$append .= ',\'' . strtoupper($_key) . "=$_value'";
-							break;
+				break;
 
 			case 'sticky':
 			case 'left':
@@ -103,7 +103,7 @@ function smarty_function_popup($params, $smarty)
 			case 'followmouse':
 			case 'closeclick':
 				if ($_value) $append .= ',\'' . strtoupper($_key) . '\'';
-							break;
+				break;
 
 			default:
 				trigger_error("[popup] unknown parameter $_key", E_USER_WARNING);

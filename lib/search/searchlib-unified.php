@@ -51,8 +51,8 @@ class UnifiedSearchLib
 				}
 
 				$errlib->report(
-								tr('Search index could not be updated. The site is misconfigured. Contact an administrator.') .
-								'<br />' . $e->getMessage()
+					tr('Search index could not be updated. The site is misconfigured. Contact an administrator.') .
+					'<br />' . $e->getMessage()
 				);
 			}
 		}
@@ -145,11 +145,11 @@ class UnifiedSearchLib
 	function invalidateObject($type, $objectId)
 	{
 		TikiLib::lib('queue')->push(
-						self::INCREMENT_QUEUE,
-						array(
-							'object_type' => $type,
-							'object_id' => $objectId
-						)
+			self::INCREMENT_QUEUE,
+			array(
+				'object_type' => $type,
+				'object_id' => $objectId
+			)
 		);
 	}
 

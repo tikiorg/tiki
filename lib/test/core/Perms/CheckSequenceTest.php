@@ -1,13 +1,13 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-/** 
+/**
  * @group unit
- * 
+ *
  */
 
 class Perms_CheckSequenceTest extends TikiTestCase
@@ -19,23 +19,23 @@ class Perms_CheckSequenceTest extends TikiTestCase
 	{
 		$perms = new Perms;
 		$perms->setResolverFactories(
-						array(
-							new Perms_ResolverFactory_StaticFactory(
-											'static',
-											new Perms_Resolver_Static(
-															array('Admins' => array('admin_wiki'),)
-											)
-							)
-						)
+			array(
+				new Perms_ResolverFactory_StaticFactory(
+					'static',
+					new Perms_Resolver_Static(
+						array('Admins' => array('admin_wiki'),)
+					)
+				)
+			)
 		);
 
 		$perms->setGroups(array('Admins'));
 		$perms->setCheckSequence(
-						array(
-							new Perms_Check_Direct,
-							$this->mockA = $this->getMock('Perms_Check'),
-							$this->mockB = $this->getMock('Perms_Check'),
-						)
+			array(
+				new Perms_Check_Direct,
+				$this->mockA = $this->getMock('Perms_Check'),
+				$this->mockB = $this->getMock('Perms_Check'),
+			)
 		);
 		Perms::set($perms);
 	}

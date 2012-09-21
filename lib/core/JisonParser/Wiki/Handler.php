@@ -880,8 +880,8 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 
 		$content = ltrim($content, "\n\r");
 
-		foreach($this->blocks as $function => &$set) {
-			foreach($set as &$startsWith) {
+		foreach ($this->blocks as $function => &$set) {
+			foreach ($set as &$startsWith) {
 				if ($this->beginsWith($content, $startsWith)) {
 					return $this->$function($content);
 				}

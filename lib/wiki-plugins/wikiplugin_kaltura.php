@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -113,7 +113,8 @@ function wikiplugin_kaltura($data, $params)
 			$smarty = TikiLib::lib('smarty');
 			$smarty->loadPlugin('smarty_function_button');
 
-			TikiLib::lib('header')->add_jq_onready('
+			TikiLib::lib('header')->add_jq_onready(
+				'
 $("#kaltura_upload_btn' . $instance . ' a").live("click", function() {
 	openMediaUploader("<input type=\"hidden\" name=\"from\" value=\"plugin\" />" +
 					"<input type=\"hidden\" name=\"content\" value=\"\" />" +
@@ -123,12 +124,16 @@ $("#kaltura_upload_btn' . $instance . ' a").live("click", function() {
 				"tiki-wikiplugin_edit.php");
 	return false;
 });
-			');
+			'
+			);
 
-			$html = smarty_function_button(array(	// default for add_button_label already tra but not merged yet
+			$html = smarty_function_button(
+				array(	// default for add_button_label already tra but not merged yet
 					'_text' => !empty($params['add_button_label']) ? tra($params['add_button_label']) : $defaults['add_button_label'],
 					'_id' => 'kaltura_upload_btn' . $instance,
-				), $smarty);
+				),
+				$smarty
+			);
 
 		} else if (!empty($user)) {
 			$html = '<span class="error">' . tra('Media id or permission to upload video is required') . '</span>';

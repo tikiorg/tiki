@@ -156,11 +156,11 @@ function smarty_function_query($params, $smarty)
 			if (isset($params['controller'], $params['action'])) {
 				$smarty->loadPlugin('smarty_function_service');
 				$php_self = smarty_function_service(
-								array(
-									'controller' => $params['controller'],
-									'action' => $params['action'],
-								), 
-								$smarty
+					array(
+						'controller' => $params['controller'],
+						'action' => $params['action'],
+					),
+					$smarty
 				);
 			} else {
 				$php_self = htmlspecialchars($_SERVER['PHP_SELF']);
@@ -176,13 +176,13 @@ function smarty_function_query($params, $smarty)
 		switch ( $params['_type'] ) {
 			case 'absolute_uri':
 				$ret = $base_host.$php_self.( $ret == '' ? '' : '?'.$ret );
-							break;
+				break;
 			case 'absolute_path':
 				$ret = $php_self.( $ret == '' ? '' : '?'.$ret );
-							break;
+				break;
 			case 'relative':
 				$ret = basename($php_self).( $ret == '' ? '' : '?'.$ret );
-							break;
+				break;
 			case 'form_input': case 'arguments': case 'anchor': /* default */
 		}
 	}

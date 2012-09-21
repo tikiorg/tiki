@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -24,13 +24,13 @@ $ctall = $categlib->getCategories();
 $tree_nodes = array();
 foreach ($ctall as $c) {
 	$url = htmlentities(
-					'tiki-edit_categories.php?' . http_build_query(
-									array(
-										'filter~categories' => $c['categId'],
-									)
-					),
-					ENT_QUOTES,
-					'UTF-8'
+		'tiki-edit_categories.php?' . http_build_query(
+			array(
+				'filter~categories' => $c['categId'],
+			)
+		),
+		ENT_QUOTES,
+		'UTF-8'
 	);
 	$name = htmlentities($c['name'], ENT_QUOTES, 'UTF-8');
 	$perms = Perms::get('category', $c['categId']);

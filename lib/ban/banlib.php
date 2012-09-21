@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -174,9 +174,9 @@ class BanLib extends TikiLib
 			$nb++;
 
 			$this->replace_rule(
-							$d['banId'], $d['mode'], $d['title'], $d['ip1'], $d['ip2'], $d['ip3'], $d['ip4'],
-							$d['user'], strtotime($d['date_from']), strtotime($d['date_to']), $d['use_dates'], $d['message'],
-							explode('|', $d['sections'])
+				$d['banId'], $d['mode'], $d['title'], $d['ip1'], $d['ip2'], $d['ip3'], $d['ip4'],
+				$d['user'], strtotime($d['date_from']), strtotime($d['date_to']), $d['use_dates'], $d['message'],
+				explode('|', $d['sections'])
 			);
 		}
 		fclose($fhandle);

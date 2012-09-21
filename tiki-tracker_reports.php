@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki/CMS/Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -12,25 +12,25 @@ if ($tiki_p_admin_trackers != 'y') {
 }
 
 $headerlib->add_jq_onready(
-				'
+	'
 	//manipulation objects
 	var elements = $("#trackerElements").hide();
 	var designer = $("#reportDesigner");
-	
+
 	var objFactory = {
 		designSet: function() {
 			var designSets = $(".designSet");
-			var designSet = $("<div class=\'designSet\'>" + 
+			var designSet = $("<div class=\'designSet\'>" +
 				"<h5>" + (designSets.length ? "|-Join " : "Base ") + "Tracker</h5>" +
 			"</div>")
 				.appendTo(designer);
-			
+
 			objFactory.trackerDDL(designSet);
-			
+
 			if (designSets.length) {
 				this.trackerFieldDDL(designSet);
 				this.trackerJoinTypeDDL(designSet);
-				
+
 				//UI stuff
 				designSet
 					.css("padding-left", "20px")
@@ -40,7 +40,7 @@ $headerlib->add_jq_onready(
 				designSet
 					.addClass("ui-widget-header");
 			}
-			
+
 		},
 		trackerDDL: function(set) {
 			elements.find(".trackerList").clone()
@@ -64,15 +64,15 @@ $headerlib->add_jq_onready(
 						trackerFieldDDL
 							.append(elements.find(".trackerFieldList > .tracker_option_" + $(this).val()).clone());
 					});
-					
+
 					trackerFieldDDL.val(val);
-					
+
 					objFactory.includedFieldsInReport(set);
 					objFactory.sortByFields(set);
 					objFactory.searchFor(set);
 				})
 				.appendTo(set);
-				
+
 				trackerFieldDDL.change();
 			return trackerFieldDDL;
 		},
@@ -83,14 +83,14 @@ $headerlib->add_jq_onready(
 		},
 		trackerStatusDDL: function() {
 			designer.find(".trackerStatusType").remove();
-			
+
 			elements.find(".trackerStatusType").clone()
 				.addClass("trackerStatusType_active")
 				.appendTo(designer);
 		},
 		includedFieldsInReport: function (designSet) {
 			var fieldPicker = designer.find(".fieldPicker").remove();
-			
+
 			var trackerFieldCheckboxList = elements.find(".trackerFieldCheckboxList").clone();
 			var fieldPicker = $("<div class=\'fieldPicker\'></div>");
 			designer.find(".trackerList_active").each(function() {
@@ -99,29 +99,29 @@ $headerlib->add_jq_onready(
 					fieldPicker
 						.append(input)
 						.append("<span> " + input.attr("name") + "</span><br />");
-				
+
 				});
 			});
-			
+
 			if (fieldPicker.children().length) {
 				fieldPicker.prepend("<h5>Include Fields <a href=\'#\' onclick=\'checkAll(this);return false;\'>all</a> <a href=\'#\' onclick=\'uncheckAll(this);return false;\'>none</a></h5>")
-				
+
 				this.trackerStatusDDL(designSet);
 			}
-			
+
 			fieldPicker.insertAfter(designer.children().last());
 		},
 		sortByFields: function () {
 			$(".fieldSortPicker").remove();
 			var trackerFieldSort = $("<div class=\'fieldSortPicker\'>" +
-				"<h5>Sort By</h5>" +	
+				"<h5>Sort By</h5>" +
 			"</div>").appendTo(designer);
-			
+
 			var trackerFieldSortDDL = elements.find(".trackerFieldList").clone()
 				.addClass("trackerFieldListSort_active")
 				.appendTo(trackerFieldSort)
 				.html("");
-				
+
 			$(".trackerList_active").each(function() {
 				trackerFieldSortDDL
 					.append(elements.find(".tracker_option_" + $(this).val() + ",:first").clone());
@@ -130,29 +130,29 @@ $headerlib->add_jq_onready(
 		searchFor: function(set) {
 			set.find(".fieldSearchPicker").remove();
 			var fieldSearchPicker = $("<div class=\'fieldSearchPicker\' />").appendTo(set);
-			
+
 			var trackerFieldSearchDDL = elements.find(".trackerFieldList").clone()
 				.addClass("trackerFieldListSearch_active")
 				.appendTo(fieldSearchPicker)
 				.html("<option value=\'\'>Search in field (optional)</option>");
-			
+
 			var trackerFieldSearch = $("<input type=\'text\' class=\'search_active\' />").appendTo(fieldSearchPicker);
-			
+
 			set.find(".trackerList_active").each(function() {
 				trackerFieldSearchDDL
 					.append(elements.find(".tracker_option_" + $(this).val()).clone());
 			});
 		}
 	};
-	
+
 	$(".add_tracker_button").click(function() {
 		objFactory.designSet();
 		return false;
 	});
-	
+
 	$(".view_button").click(function() {
 		var reportUrl = "";
-		
+
 		var type = "csv";
 		var csvFileName = "file.csv";
 		var status = "";
@@ -168,14 +168,14 @@ $headerlib->add_jq_onready(
 		var sortFieldNames = "";
 		var search = "";
 		var q = "";
-		
+
 		function valFromDesignerToUrl(o, param, fn, ch) {
 			var result = [];
-			
-			fn = (fn ? fn : function(v) {return v;}); 
-			
+
+			fn = (fn ? fn : function(v) {return v;});
+
 			var obj = designer.find(o)
-			
+
 			if (obj.length) {
 				obj.each(function(i) {
 					var v = $(this).val();
@@ -183,11 +183,11 @@ $headerlib->add_jq_onready(
 						result.push(fn(v, i));
 					}
 				});
-			
+
 				reportUrl += (reportUrl ? "&" : "?") + param + "=" + result.join(ch !== null ? ch : ",");
 			}
 		}
-		
+
 		valFromDesignerToUrl(".trackerList_active", "trackerIds");
 		valFromDesignerToUrl(".trackerFieldList_active", "itemIdFields", function(v, i) {
 			var trackerJoinType = designer.find(".trackerJoinType").eq(i).val();
@@ -202,16 +202,16 @@ $headerlib->add_jq_onready(
 		valFromDesignerToUrl(".trackerFieldListSort_active", "sortFieldIds");
 		valFromDesignerToUrl(".trackerFieldListSearch_active", "fields", null, "|");
 		valFromDesignerToUrl(".search_active", "q", null, "|");
-		
+
 		document.location = ("tiki-tracker_export_join.php" + reportUrl);
-		
+
 		return false;
 	});
-	
+
 	window.checkAll = function() {
 		designer.find(".fieldPicker").find("input").attr("checked", "true");
 	};
-	
+
 	window.uncheckAll = function() {
 		designer.find(".fieldPicker").find("input").removeAttr("checked");
 	};
@@ -220,12 +220,12 @@ $headerlib->add_jq_onready(
 
 $smarty->assign('trackers', $tikilib->fetchAll('select `trackerId`, `name` from `tiki_trackers`'));
 $smarty->assign(
-				'trackerFields',
-				$tikilib->fetchAll(
-								'select `tiki_tracker_fields`.`fieldId`, `tiki_tracker_fields`.`trackerId`, `tiki_tracker_fields`.`name` as fieldName, `tiki_trackers`.`name` as trackerName from `tiki_tracker_fields`
-				left join `tiki_trackers` on `tiki_trackers`.`trackerId` = `tiki_tracker_fields`.`trackerId`
-				order by `trackerId`, `position`'
-				)
+	'trackerFields',
+	$tikilib->fetchAll(
+		'select `tiki_tracker_fields`.`fieldId`, `tiki_tracker_fields`.`trackerId`, `tiki_tracker_fields`.`name` as fieldName, `tiki_trackers`.`name` as trackerName from `tiki_tracker_fields`
+		left join `tiki_trackers` on `tiki_trackers`.`trackerId` = `tiki_tracker_fields`.`trackerId`
+		order by `trackerId`, `position`'
+	)
 );
 
 // Display the template

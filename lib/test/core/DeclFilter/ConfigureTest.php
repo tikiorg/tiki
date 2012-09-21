@@ -1,13 +1,13 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 /**
  * @group unit
- * 
+ *
  */
 
 class DeclFilter_ConfigureTest extends TikiTestCase
@@ -28,15 +28,15 @@ class DeclFilter_ConfigureTest extends TikiTestCase
 		$filter = DeclFilter::fromConfiguration($configuration);
 
 		$data = $filter->filter(
-						array(
-							'hello' => '123abc',
-							'world' => '123abc',
-							'foo' => array(
-								'abc123',
-								'def456',
-							),
-							'bar' => 'undeclared',
-						)
+			array(
+				'hello' => '123abc',
+				'world' => '123abc',
+				'foo' => array(
+					'abc123',
+					'def456',
+				),
+				'bar' => 'undeclared',
+			)
 		);
 
 		$this->assertEquals($data['hello'], '123');
@@ -81,11 +81,11 @@ class DeclFilter_ConfigureTest extends TikiTestCase
 		$filter = DeclFilter::fromConfiguration($configuration);
 
 		$data = $filter->filter(
-						array(
-							'hello' => '123abc',
-							'world' => '123abc',
-							'bar' => 'undeclared',
-						)
+			array(
+				'hello' => '123abc',
+				'world' => '123abc',
+				'bar' => 'undeclared',
+			)
 		);
 
 		$this->assertFalse(isset($data['hello']));
@@ -106,11 +106,11 @@ class DeclFilter_ConfigureTest extends TikiTestCase
 		$filter = DeclFilter::fromConfiguration($configuration);
 
 		$data = $filter->filter(
-						array(
-							'hello' => '123abc',
-							'world' => '123abc',
-							'bar' => 'undeclared',
-						)
+			array(
+				'hello' => '123abc',
+				'world' => '123abc',
+				'bar' => 'undeclared',
+			)
 		);
 
 		$this->assertEquals($data['hello'], '123');
@@ -132,15 +132,15 @@ class DeclFilter_ConfigureTest extends TikiTestCase
 		$filter = DeclFilter::fromConfiguration($configuration);
 
 		$data = $filter->filter(
-						array(
-							'hello123' => '123abc',
-							'hello456' => '123abc',
-							'world' => '123abc',
-							'foo' => array(
-								'abc123',
-								'def456',
-							),
-						)
+			array(
+				'hello123' => '123abc',
+				'hello456' => '123abc',
+				'world' => '123abc',
+				'foo' => array(
+					'abc123',
+					'def456',
+				),
+			)
 		);
 
 		$this->assertEquals($data['hello123'], '123');
@@ -161,11 +161,11 @@ class DeclFilter_ConfigureTest extends TikiTestCase
 		$filter = DeclFilter::fromConfiguration($configuration);
 
 		$data = $filter->filter(
-						array(
-							'hello123' => '123abc',
-							'hello456' => '123abc',
-							'world' => '123abc',
-						)
+			array(
+				'hello123' => '123abc',
+				'hello456' => '123abc',
+				'world' => '123abc',
+			)
 		);
 
 		$this->assertFalse(isset($data['hello123']));

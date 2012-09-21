@@ -17,21 +17,21 @@ function smarty_function_favorite($params, $smarty)
 	$smarty->loadPlugin('smarty_function_button');
 	$smarty->loadPlugin('smarty_function_service');
 	return smarty_function_button(
-					array(
-						'_keepall' => 'y',
-						'_class' => 'favorite-toggle',
-						'href' => smarty_function_service(
-										array(
-											'controller' => 'favorite',
-											'action' => 'toggle',
-											'type' => $params['type'],
-											'object' => $params['object'],
-										), 
-										$smarty
-						),
-						'_text' => tr('Favorite'),
-					), 
-					$smarty
+		array(
+			'_keepall' => 'y',
+			'_class' => 'favorite-toggle',
+			'href' => smarty_function_service(
+				array(
+					'controller' => 'favorite',
+					'action' => 'toggle',
+					'type' => $params['type'],
+					'object' => $params['object'],
+				),
+				$smarty
+			),
+			'_text' => tr('Favorite'),
+		),
+		$smarty
 	);
 }
 

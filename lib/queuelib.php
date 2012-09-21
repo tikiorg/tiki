@@ -17,11 +17,11 @@ class QueueLib extends TikiDb_Bridge
 	function push($queue, array $message)
 	{
 		$this->queue->insert(
-						array(
-							'queue' => $queue,
-							'timestamp' => TikiLib::lib('tiki')->now,
-							'message' => json_encode($message),
-						)
+			array(
+				'queue' => $queue,
+				'timestamp' => TikiLib::lib('tiki')->now,
+				'message' => json_encode($message),
+			)
 		);
 	}
 
@@ -41,12 +41,12 @@ class QueueLib extends TikiDb_Bridge
 
 		// Mark entries as in processing
 		$this->queue->updateMultiple(
-						array('handler' => $handler),
-						array(
-							'queue' => $queue,
-							'handler' => null,
-						),
-						$count
+			array('handler' => $handler),
+			array(
+				'queue' => $queue,
+				'handler' => null,
+			),
+			$count
 		);
 
 		// Obtain the marked list

@@ -6,10 +6,13 @@
 require_once('tiki-setup.php');
 global $tikilib, $prefs;
 
-$_REQUEST = array_merge(array(
-	"page" => "HomePage",
-	"id" => ""
-), $_REQUEST);
+$_REQUEST = array_merge(
+	array(
+		"page" => "HomePage",
+		"id" => ""
+	),
+	$_REQUEST
+);
 
 $data = $tikilib->getOne('SELECT data FROM tiki_pages WHERE pageName = ? OR page_id = ?', array($_REQUEST['page'], $_REQUEST['id']));
 

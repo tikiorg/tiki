@@ -154,18 +154,18 @@ function module_translation($mod_reference, $module_params)
 			$numeric = $quantifylib->getCompleteness($transinfo['page_id']);
 			$smarty->assign('mod_translation_quantification', $numeric);
 			$smarty->assign(
-							'mod_translation_gauge',
-							wikiplugin_gauge(
-											'',
-											array(
-													'value' => $numeric,
-													'max' => 100,
-													'size' => '100%',
-													'color' => 'green',
-													'bgcolor' => 'gray',
-													'showvalue' => false,
-											)
-							)
+				'mod_translation_gauge',
+				wikiplugin_gauge(
+					'',
+					array(
+							'value' => $numeric,
+							'max' => 100,
+							'size' => '100%',
+							'color' => 'green',
+							'bgcolor' => 'gray',
+							'showvalue' => false,
+					)
+				)
 			);
 		}
 	}
