@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -17,7 +17,7 @@ include_once ('lib/tikilib.php');
 class TikiIntegrator
 {
     var $c_rep;                         //!< cached value for repository data
-    
+
     /// Repository management
     //\{
     /// List all
@@ -36,7 +36,7 @@ class TikiIntegrator
         while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) $ret[] = $res;
         return $ret;
     }
-		
+
 	/// Add/Update
 	function add_replace_repository($repID, $name, $path, $start, $css, $vis, $cacheable, $exp, $descr)
 	{
@@ -54,7 +54,7 @@ class TikiIntegrator
 			unset($this->c_rep);
 		}
 	}
-		
+
     /// Get one entry by ID
     function get_repository($repID)
     {
@@ -114,8 +114,8 @@ class TikiIntegrator
                       values(?,?,?,?,?,?,?,?,?)";
 				$qparms = array($repID, $ord, $srch, $repl, $type, $case, $rxmod, $en, $descr);
 		} else {
-	
-            $query = "update `tiki_integrator_rules` 
+
+            $query = "update `tiki_integrator_rules`
                       set `repID`=?,`ord`=?,`srch`=?,`repl`=?,`type`=?,`casesense`=?,
                       `rxmod`=?,`enabled`=?,`description`=? where `ruleID`=?";
 	    $qparms = array($repID, $ord, $srch, $repl, $type, $case, $rxmod, $en, $descr,(int) $ruleID);
@@ -191,7 +191,7 @@ class TikiIntegrator
 	{
 	    // Is repository path absolute? (start from www root ('/'))
 	    $p = '';
-	    if ((substr($rep["path"], 0, 7) == 'http://') 
+	    if ((substr($rep["path"], 0, 7) == 'http://')
 	     || (substr($rep["path"], 0, 8) == 'https://')) {
 	        // It is remote repository -- just copy configured path
 	        $p = $rep["path"];
@@ -204,7 +204,7 @@ class TikiIntegrator
 	        // note: little hack here -- assume that __this__ file placed exactly
 	        //       at 2nd dir level in Tiki base dir.
 	        $p = dirname(dirname(dirname(__FILE__))).'/'.$rep["path"];
-	
+
 	    return $p.'/'.((strlen($file) > 0) ? $file : $rep["start_page"]);
 	}
 	/// Return CSS file for given repository
@@ -212,22 +212,22 @@ class TikiIntegrator
 	{
 	    global $style;
 	    global $style_base;
-	
+
 	    // Return if no CSS file defined for repository
 	    $rep = $this->get_repository($repID);
 	    if (!isset($rep["css_file"]) || strlen($rep["css_file"]) == 0) return '';
-	    
+
 	    $tiki_root = $_SERVER['DOCUMENT_ROOT'].dirname($_SERVER['SCRIPT_NAME']);
 	    // Fill array of dirs to scan (local filesystem, and web based)
 	    $dirs = array();
 	    $dirs[] = array('fs' => $tiki_root."/styles/".$style_base, 'rel' => "styles/".$style_base);
 	    $dirs[] = array('fs' => $tiki_root."/styles/integrator", 'rel' => "styles/integrator");
 	    $dirs[] = array('fs' => $tiki_root."/".$rep['path'], 'rel' => "/".$rep['path']);
-	
+
 	    // Fill array of files to search
 	    $ts = preg_replace('|\.css|', '', $style);   // Tiki style w/o '.css' extension
 	    $is = preg_replace('|\.css|', '', $rep["css_file"]);
-	    
+
 	    $files = array();
 	    $files[] = $ts.'-'.$rep["css_file"];        // matrix-doxygen.css
 	    $files[] = $ts.'.'.$rep["css_file"];        // matrix.doxygen.css
@@ -236,12 +236,12 @@ class TikiIntegrator
 	    $files[] = $is.'.'.$style;                  // doxygen.matrix.css
 	    $files[] = $is.'_'.$style;                  // doxygen_matrix.css
 	    $files[] = $rep["css_file"];                // doxygen.css
-	
+
 	    // Make full list of files to search (combine all dirs with all files)
 	    $candidates = array();
 	    foreach ($dirs as $dir) foreach ($files as $file)
 	        $candidates[] = array('fs' => $dir['fs'].'/'.$file, 'rel' => $dir['rel'].'/'.$file);
-	
+
 	    // Search for CSS file
 	    foreach ($candidates as $candidate) {
 	      if (file_exists($candidate['fs'])) return $candidate['rel'];
@@ -272,9 +272,9 @@ class TikiIntegrator
 		$rules = $this->list_rules($srcID);
 		foreach ($rules as $rule)
 			$this->add_replace_rule(
-							$dstID, 0, $rule["ord"], $rule["srch"], $rule["repl"],
-							$rule["type"], $rule["casesense"], $rule["rxmod"],
-							$rule["enabled"], $rule["description"]
+				$dstID, 0, $rule["ord"], $rule["srch"], $rule["repl"],
+				$rule["type"], $rule["casesense"], $rule["rxmod"],
+				$rule["enabled"], $rule["description"]
 			);
 	}
 	/**
@@ -328,8 +328,8 @@ class TikiIntegrator
 		// name and 'repID' parameter equal to function arg...
 		$query = "delete from `tiki_link_cache` where `url` like ?";
 		$result = $tikilib->query(
-						$query,
-						array($tikilib->httpPrefix()."/%integrator%.php?%repID=".$repID."%")
+			$query,
+			array($tikilib->httpPrefix()."/%integrator%.php?%repID=".$repID."%")
 		);
 	}
 	/// Clear cache of given file for given repository
@@ -340,8 +340,8 @@ class TikiIntegrator
 		// name and 'repID' parameter equal to function arg...
 		$query = "delete from `tiki_link_cache` where `url` like ?";
 		$result = $tikilib->query(
-						$query,
-						array($tikilib->httpPrefix()."/%integrator%.php?repID=".$repID.(strlen($file) > 0 ? "&file=".$file : ''))
+			$query,
+			array($tikilib->httpPrefix()."/%integrator%.php?repID=".$repID.(strlen($file) > 0 ? "&file=".$file : ''))
 		);
 	}
 }

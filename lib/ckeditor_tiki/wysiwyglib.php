@@ -11,7 +11,7 @@
 
 class WYSIWYGLib
 {
-	function setUpEditor($is_html, $dom_id, $params = array(), $auto_save_referrer = '', $full_page = true) 
+	function setUpEditor($is_html, $dom_id, $params = array(), $auto_save_referrer = '', $full_page = true)
 	{
 
 		global $tikiroot, $prefs;
@@ -27,16 +27,16 @@ class WYSIWYGLib
 		if ($full_page) {
 			$headerlib->add_jsfile('lib/ckeditor_tiki/tikilink_dialog.js');
 			$headerlib->add_js(
-							'window.CKEDITOR.config.extraPlugins += (window.CKEDITOR.config.extraPlugins ? ",tikiplugin" : "tikiplugin" );
-							window.CKEDITOR.plugins.addExternal( "tikiplugin", "'.$tikiroot.'lib/ckeditor_tiki/plugins/tikiplugin/");',
-							5
+				'window.CKEDITOR.config.extraPlugins += (window.CKEDITOR.config.extraPlugins ? ",tikiplugin" : "tikiplugin" );
+				window.CKEDITOR.plugins.addExternal( "tikiplugin", "'.$tikiroot.'lib/ckeditor_tiki/plugins/tikiplugin/");',
+				5
 			);
 		}
 		if (!$is_html && $full_page) {
 			$headerlib->add_js(
-							'window.CKEDITOR.config.extraPlugins += (window.CKEDITOR.config.extraPlugins ? ",tikiwiki" : "tikiwiki" );
-							window.CKEDITOR.plugins.addExternal( "tikiwiki", "'.$tikiroot.'lib/ckeditor_tiki/plugins/tikiwiki/");',
-							5
+				'window.CKEDITOR.config.extraPlugins += (window.CKEDITOR.config.extraPlugins ? ",tikiwiki" : "tikiwiki" );
+				window.CKEDITOR.plugins.addExternal( "tikiwiki", "'.$tikiroot.'lib/ckeditor_tiki/plugins/tikiwiki/");',
+				5
 			);	// before dialog tools init (10)
 
 		}
@@ -44,7 +44,7 @@ class WYSIWYGLib
 				$prefs['ajax_autosave'] === 'y' && $params['autosave'] == 'y') {
 
 			$headerlib->add_js(
-							'// --- config settings for the autosave plugin ---
+				'// --- config settings for the autosave plugin ---
 window.CKEDITOR.config.ajaxAutoSaveTargetUrl = "'.$tikiroot.'tiki-auto_save.php";	// URL to post to (also used for plugin processing)
 window.CKEDITOR.config.extraPlugins += (window.CKEDITOR.config.extraPlugins ? ",autosave" : "autosave" );
 window.CKEDITOR.plugins.addExternal( "autosave", "'.$tikiroot.'lib/ckeditor_tiki/plugins/autosave/");

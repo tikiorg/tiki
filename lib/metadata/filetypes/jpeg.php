@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -20,7 +20,7 @@ require_once('lib/metadata/filetypes/imagefile.php');
  */
 class Jpeg extends ImageFile
 {
-	
+
 	/**
 	 * @param	object		$metaObj		Object from the FileMetadata class which calls this function
 	 *
@@ -36,7 +36,7 @@ class Jpeg extends ImageFile
 		$metadata['width'] = $this->width;
 		$metadata['height'] = $this->height;
 		$metadata['otherinfo'] = $this->otherinfo;
-		
+
 		/*
 		 * these following types of metadata are also common to other types of files but may need to be accessed
 		 * differently based on file type
@@ -85,8 +85,12 @@ class Jpeg extends ImageFile
 					 * The IPTC block is within the APP13 (Photoshop) segment, which is at $this->otherinfo['APP13']
 					 * The stored checksum is at hex marker \x38\x42\x49\x4D\x04\x25\x00\x00\x00\x00 (resource ID 1061)
 					 */
-			$hashstored = $metaObj->getDataSegment($this->otherinfo['APP13'],
-				"\x38\x42\x49\x4D\x04\x25\x00\x00\x00\x00", 10, 2);
+			$hashstored = $metaObj->getDataSegment(
+				$this->otherinfo['APP13'],
+				"\x38\x42\x49\x4D\x04\x25\x00\x00\x00\x00",
+				10,
+				2
+			);
 			if (!empty($hashstored)) {
 				$metadata['iptc']['digest']['iptchashstored'] = array(
 					'newval'    => bin2hex($hashstored),
@@ -97,8 +101,12 @@ class Jpeg extends ImageFile
 		 * add calculated current hash of the IPTC block,
 		 * which starts at hex marker \x38\x42\x49\x4D\x04\x04\x00\x00\x00\x00 within the APP13 segment
 		 */
-			$iptcblock = $metaObj->getDataSegment($this->otherinfo['APP13'],
-				"\x38\x42\x49\x4D\x04\x04\x00\x00\x00\x00", 10, 2);
+			$iptcblock = $metaObj->getDataSegment(
+				$this->otherinfo['APP13'],
+				"\x38\x42\x49\x4D\x04\x04\x00\x00\x00\x00",
+				10,
+				2
+			);
 			if (!empty($iptcblock)) {
 				$metadata['iptc']['digest']['iptchashcurrent'] = array(
 					'newval'    => md5($iptcblock),
@@ -109,8 +117,7 @@ class Jpeg extends ImageFile
 			if (!isset($metadata['iptc']['digest']['iptchashstored']['newval']) ||
 				(strlen($metadata['iptc']['digest']['iptchashstored']['newval']) > 0
 					&& $metadata['iptc']['digest']['iptchashstored']['newval'] ==
-						$metadata['iptc']['digest']['iptchashcurrent']['newval']))
-			{
+						$metadata['iptc']['digest']['iptchashcurrent']['newval'])) {
 				if (isset($metadata['iptc']['digest']['iptchashstored']['newval'])) {
 					$metadata['iptc']['digest']['match']['newval'] = '';
 					//place text in suffix so it can be translated

@@ -21,19 +21,20 @@ class WikiPlugin_expandingoutline_list extends JisonParser_Wiki_List
 
 		$lists = array();
 
-		foreach($this->stacks as $key => &$stack) {
+		foreach ($this->stacks as $key => &$stack) {
 			$lists[$key] = $this->toHtmlChildren($stack);
 		}
 
 		return $lists;
 	}
 
-	private function toHtmlChildren(&$stack, $prefix = '', $index = 1, $tier = 0) {
+	private function toHtmlChildren(&$stack, $prefix = '', $index = 1, $tier = 0)
+	{
 		$result = '';
 		$id = 'id' . microtime() * 1000000;
 
 		$i = 0;
-		foreach($stack as &$list) {
+		foreach ($stack as &$list) {
 			$hasLabel = true;
 			if (empty($style)) {
 				switch($list['type']) {
@@ -54,11 +55,11 @@ class WikiPlugin_expandingoutline_list extends JisonParser_Wiki_List
 				$i++;
 			}
 
-			if(empty($list['content']) == false){
+			if (empty($list['content']) == false) {
 
 				$result .= '<tr><td class="' . $class . '">' . $label . '</td><td class="tikiListTableItem">' . $list['content'] . '</td></tr>';
 
-				if(empty($list['children']) == false) {
+				if (empty($list['children']) == false) {
 					$result .= '<tr><td class="tikiUnlistTableItem" colspan="2">' . $this->toHtmlChildren($list['children'], $label, 1, $tier + 1) . '</td></tr>';
 				}
 

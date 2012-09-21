@@ -394,27 +394,32 @@ class TikiModDepend extends TikiMod
 		foreach ($this->tests as $test) {
 			switch($test['test']) {
 			case '=':
-				if (ModsLib::revision_compare($mod->revision, $test['revision']) != 0)
+				if (ModsLib::revision_compare($mod->revision, $test['revision']) != 0) {
 					return FALSE;
-	      	break;
+				}
+				break;
 			case '<':
-				if (ModsLib::revision_compare($mod->revision, $test['revision']) != -1)
+				if (ModsLib::revision_compare($mod->revision, $test['revision']) != -1) {
 					return FALSE;
-   	   	break;
+				}
+				break;
 			case '>':
-				if (ModsLib::revision_compare($mod->revision, $test['revision']) != 1)
+				if (ModsLib::revision_compare($mod->revision, $test['revision']) != 1) {
 					return FALSE;
-	      	break;
+				}
+				break;
 			case '<=':
 			case '=<':
-				if (ModsLib::revision_compare($mod->revision, $test['revision']) > 0)
+				if (ModsLib::revision_compare($mod->revision, $test['revision']) > 0) {
 					return FALSE;
-      	break;
+				}
+				break;
 			case '>=':
 			case '=>':
-				if (ModsLib::revision_compare($mod->revision, $test['revision']) < 0)
+				if (ModsLib::revision_compare($mod->revision, $test['revision']) < 0) {
 					return FALSE;
-  					break;
+				}
+				break;
 			}
 		}
 		return TRUE;

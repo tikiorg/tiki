@@ -110,10 +110,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		$toRefresh = (int)$_GET['refresh'];
 		if (isset($sources[$toRefresh])) {
 			echo json_encode(
-							array(
-								'status' => $list->refreshCache($sources[$toRefresh]['url']) ? 'open' : 'closed',
-								'lastupdate' => date('Y-m-d H:i:s') ,
-							)
+				array(
+					'status' => $list->refreshCache($sources[$toRefresh]['url']) ? 'open' : 'closed',
+					'lastupdate' => date('Y-m-d H:i:s') ,
+				)
 			);
 		} else echo '{}';
 		exit;
@@ -147,16 +147,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		$installed = $installer->isInstalled($profile);
 
 		echo json_encode(
-						array(
-							'dependencies' => $dependencies,
-							'userInput' => $userInput,
-							'installable' => $sequencable,
-							'error' => $error,
-							'content' => $parsed,
-							'already' => $installed,
-							'url' => $profile->url,
-							'feedback' => $profile->getFeedback(),
-						)
+			array(
+				'dependencies' => $dependencies,
+				'userInput' => $userInput,
+				'installable' => $sequencable,
+				'error' => $error,
+				'content' => $parsed,
+				'already' => $installed,
+				'url' => $profile->url,
+				'feedback' => $profile->getFeedback(),
+			)
 		);
 		exit;
 	} // }}}
@@ -165,12 +165,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 if (isset($_GET['list'])) { // {{{
 	$params = array_merge(
-					array(
-						'repository' => '',
-						'categories' => '',
-						'profile' => ''
-					),
-					$_GET
+		array(
+			'repository' => '',
+			'categories' => '',
+			'profile' => ''
+		),
+		$_GET
 	);
 
 	$smarty->assign('categories', $params['categories']);
@@ -243,7 +243,8 @@ if (isset($_REQUEST['export'])) {
 		}
 		$export_yaml = Horde_Yaml::dump(
 			array( 'objects' => $modules_to_export),
-			array('indent' => 1, 'wordwrap' => 0));
+			array('indent' => 1, 'wordwrap' => 0)
+		);
 	} else {
 		$export_yaml = '';		// something went wrong?
 	}

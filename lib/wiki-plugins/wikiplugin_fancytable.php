@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -46,8 +46,8 @@ function wikiplugin_fancytable_info()
 				'description' => tra('Indicate whether columns are sortable or not (not sortable by default)'),
 				'default' => 'n',
 				'options' => array(
-					array('text' => '', 'value' => ''), 
-					array('text' => tra('Yes'), 'value' => 'y'), 
+					array('text' => '', 'value' => ''),
+					array('text' => tra('Yes'), 'value' => 'y'),
 					array('text' => tra('No'), 'value' => 'n')
 				),
 			),
@@ -104,8 +104,10 @@ function wikiplugin_fancytable($data, $params)
 		preprocess_section($head, $tagremove, $pluginremove);
 
 		//now create header table rows
-		$headrows = process_section($head, 'h', '>>', $tdhdr, '</th>', isset($colwidths) ? $colwidths : '',
-			isset($headaligns) ? $headaligns : '', isset($headvaligns) ? $headvaligns : '');
+		$headrows = process_section(
+			$head, 'h', '>>', $tdhdr, '</th>', isset($colwidths) ? $colwidths : '',
+			isset($headaligns) ? $headaligns : '', isset($headvaligns) ? $headvaligns : ''
+		);
 
 		//restore original tags and plugin syntax
 		postprocess_section($headrows, $tagremove, $pluginremove);
@@ -124,8 +126,10 @@ function wikiplugin_fancytable($data, $params)
 		$type = 'r';	//plain rows
 	}
 	//now create table body rows
-	$bodyrows = process_section($data, $type, "\n", '', '</td>', isset($colwidths) ? $colwidths : '',
-		isset($colaligns) ? $colaligns : '', isset($colvaligns) ? $colvaligns : '');
+	$bodyrows = process_section(
+		$data, $type, "\n", '', '</td>', isset($colwidths) ? $colwidths : '',
+		isset($colaligns) ? $colaligns : '', isset($colvaligns) ? $colvaligns : ''
+	);
 
 	//restore original tags and plugin syntax
 	postprocess_section($bodyrows, $tagremove, $pluginremove);
@@ -301,7 +305,7 @@ function process_section ($data, $type, $line_sep, $cellbeg, $cellend, $widths, 
 			$parts = explode($separator, $line);
 			//Each column within a row
 			foreach ($parts as $column) {
-				$colnum = 'col' . $c;				
+				$colnum = 'col' . $c;
 				$colspan = '';
 				$rowspan = '';
 				/*
@@ -324,14 +328,16 @@ function process_section ($data, $type, $line_sep, $cellbeg, $cellend, $widths, 
 						$rowspan = ' rowspan="' . $rnum . '"';
 						//If there's another rowspan still in force, bump up the column number
 						if (isset(${$colnum}['col']) && ${$colnum}['col'] == $c) {
-							if ((${$colnum}['span'] - ($l - ${$colnum}['line'])) > 0) $c++;
+							if ((${$colnum}['span'] - ($l - ${$colnum}['line'])) > 0) {
+								$c++;
+							}
 						}
 						//Note the info for this new rowspan
-						${$colnum}['col'] = $c;
 						${$colnum}['line'] = $l;
+						${$colnum}['col'] = $c;
 						${$colnum}['span'] = $rnum;
-						}
 					}
+				}
 				$colstyle = '';
 				if (!empty($widths) || !empty($aligns) || !empty($valigns)) {
 					//If there's another rowspan still in force, bump up the column number
@@ -346,11 +352,11 @@ function process_section ($data, $type, $line_sep, $cellbeg, $cellend, $widths, 
 					$c++;//increment column number
 				}
 				$row .= $cellbeg . $colspan . $rowspan . $colstyle . '>' . $column . $cellend;
-				}
-			$wret .= $trbeg . $row . $trend;
 			}
-		$l++;//increment row number
+			$wret .= $trbeg . $row . $trend;
 		}
+		$l++;//increment row number
+	}
 	return $wret;
 }
 
@@ -367,8 +373,7 @@ function postprocess_section (&$data, &$tagremove, &$pluginremove)
 	//first restore tag strings
 	$parserlib = TikiLib::lib('parser');
 	if (isset($tagremove['key']) and count($tagremove['key'])
-		and count($tagremove['key']) == count($tagremove['data']))
-	{
+		and count($tagremove['key']) == count($tagremove['data'])) {
 		$data = str_replace($tagremove['key'], $tagremove['data'], $data);
 	}
 	//then restore plugin strings

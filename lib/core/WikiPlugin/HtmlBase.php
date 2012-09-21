@@ -281,8 +281,7 @@ abstract class WikiPlugin_HtmlBase
 	public function info()
 	{
 		$info = array();
-		foreach($this as $key => $param)
-		{
+		foreach ($this as $key => $param) {
 			$info[$key] = $param;
 		}
 
@@ -292,7 +291,7 @@ abstract class WikiPlugin_HtmlBase
 	protected function paramDefaults(&$params)
 	{
 		$defaults = array();
-		foreach($this->params as $param => $setting) {
+		foreach ($this->params as $param => $setting) {
 			if (!empty($setting)) {
 				$defaults[$param] = $setting;
 			}
@@ -304,9 +303,9 @@ abstract class WikiPlugin_HtmlBase
 	protected function stylize(&$params)
 	{
 		$styles = '';
-		foreach($params as $style => $setting) {
+		foreach ($params as $style => $setting) {
 			if (!empty($style) && isset(self::$style[$style])) {
-				$styles .= $style . ':' . trim($setting , "'") . ';';
+				$styles .= $style . ':' . trim($setting, "'") . ';';
 			}
 		}
 		return $styles;
@@ -335,7 +334,7 @@ abstract class WikiPlugin_HtmlBase
 				'style="' . $style . '"';
 		}
 
-		foreach($this->htmlAttributes as $attribute => $value) {
+		foreach ($this->htmlAttributes as $attribute => $value) {
 			$output .= ' ' . $attribute . '="' . addslashes($value) . '"';
 		}
 

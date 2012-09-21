@@ -75,22 +75,23 @@ class JisonParser_Wiki_List
 
 		$lists = array();
 
-		foreach($this->stacks as $key => &$stack) {
+		foreach ($this->stacks as $key => &$stack) {
 			$lists[$key] = $this->toHtmlChildren($stack);
 		}
 
 		return $lists;
 	}
 
-	private function toHtmlChildren(&$stack, $html = "") {
+	private function toHtmlChildren(&$stack, $html = "")
+	{
 		$result = '';
 		$style = '';
 		$parentTagType = 'ul';
 		$id = $this->id();
 		$lastListType = '';
 
-		for($i = 0, $length = count($stack); $i < $length; $i++) {
-			if(isset($stack[$i]) && empty($stack[$i]['content']) == false) {
+		for ($i = 0, $length = count($stack); $i < $length; $i++) {
+			if (isset($stack[$i]) && empty($stack[$i]['content']) == false) {
 				if (empty($style)) {
 					switch($stack[$i]['type']) {
 						case '-':
@@ -145,7 +146,7 @@ class JisonParser_Wiki_List
 	{
 		$result = '';
 		$i++;
-		for($length = count($stack); $i <= $length; $i++) {
+		for ($length = count($stack); $i <= $length; $i++) {
 			if (!isset($stack[$i]['type'])) break;
 			if ($stack[$i]['type'] == $type) {
 				$result .= $wrapping[0] . $stack[$i]['content'] . $wrapping[1];
