@@ -115,7 +115,8 @@ class Tracker_Field_DateTime extends Tracker_Field_Abstract implements Tracker_F
 	{
 		global $prefs;
 		$dformat = $prefs['short_date_format'].' '.$prefs['short_time_format'];
-		$old = TikiLib::lib('tiki')->date_format($dformat, (int)$old);
+		if ($old)
+			$old = TikiLib::lib('tiki')->date_format($dformat, (int)$old);
 		$new = TikiLib::lib('tiki')->date_format($dformat, (int)$new);
 
 		return parent::watchCompare($old, $new);

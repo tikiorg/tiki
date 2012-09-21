@@ -217,12 +217,17 @@ class Comments extends TikiLib
 		if (empty($res[0]))
 			return $res;
 
-		$res[0]['forum_info'] = $this->get_forum($res['forumId']);
+		$res[0]['forum_info'] = $this->get_forum($res[0]['forumId']);
 		return $res[0];
 	}
 
 	function remove_thread_attachment($attId)
 	{
+		$att = $this->get_thread_attachment($attId);
+		// Check if the attachment is stored in the filesystem and don't do anything by accident in root dir
+		if ( empty($att['data']) && !empty($att['path']) && !empty($att['forum_info']['att_store_dir']) ) {
+			unlink($att['forum_info']['att_store_dir'] . $att['path']);
+		}
 		$this->table('tiki_forum_attachments')->delete('forumId', array('attId' => $attId));
 	}
 
@@ -2594,7 +2599,11 @@ class Comments extends TikiLib
 		//TODO in a forum, when the reply to a post (not a topic) id deletd, the replies to this post are not deleted
 
 		$this->remove_reported($threadId);
-		$this->table('tiki_forum_attachments')->deleteMultiple(array('threadId' => (int) $threadId));
+
+		$atts = $this->table('tiki_forum_attachments')->fetchAll(array('attId'),array('threadId' => $threadId));
+		foreach ( $atts as $att ) {
+			$this->remove_thread_attachment($att['attId']);
+		}
 
 		// Update search index after deletion is done
 		foreach ($result as $res) {
