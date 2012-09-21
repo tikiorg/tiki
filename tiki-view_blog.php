@@ -121,7 +121,11 @@ $listpages = $bloglib->list_blog_posts($_REQUEST["blogId"], true, $offset, $blog
 $_SESSION['blogs_last_viewed_month'] = TikiLib::date_format("%Y-%m", $date_max);
 $temp_max = count($listpages["data"]);
 for ($i = 0; $i < $temp_max; $i++) {
-	$listpages["data"][$i]["parsed_data"] = $tikilib->parse_data($bloglib->get_page($listpages["data"][$i]["data"], 1), array('is_html' => true));
+	if ($listpages['data'][$i]['wysiwyg'] === 'n') {		// non-wysiwyg posts data get parsed in list_blog_posts
+		$listpages['data'][$i]['parsed_data'] = $listpages['data'][$i]['data'];
+	} else {
+		$listpages["data"][$i]["parsed_data"] = $tikilib->parse_data($bloglib->get_page($listpages["data"][$i]["data"], 1), array('is_html' => true));
+	}
 	if ($prefs['feature_freetags'] == 'y') { // And get the Tags for the posts
 		$listpages["data"][$i]["freetags"] = $freetaglib->get_tags_on_object($listpages["data"][$i]["postId"], "blog post");
 	}
