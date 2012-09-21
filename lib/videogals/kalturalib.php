@@ -15,27 +15,39 @@ class KalturaLib
 	var $session;
 	var $kconfig;
 	var $client;
+	var $initialized = false;
 	
 	function __construct($session_type)
 	{
 		global $prefs, $smarty;
+		$this->initialized = true;
+
 		if (!$this->testSetup()) {
 			return false;
 		}
 		$this->kconfig = new KalturaConfiguration($prefs['kaltura_partnerId']);
 		$this->kconfig->serviceUrl = $prefs['kaltura_kServiceUrl'];
 		$this->client = new KalturaClient($this->kconfig);
-		if ($session_type == SESSION_ADMIN) {
-			$error = $this->startAdminSession();
-		} else {
-			$error = $this->startUserSession();
+
+		// test that the service is still available (for this partner id etc)
+		try {
+			if ($session_type == SESSION_ADMIN) {
+				$this->startAdminSession();
+			} else {
+				$this->startUserSession();
+			}
+			$smarty->assign('kServiceUrl', $prefs['kaltura_kServiceUrl']);
+
+		} catch (KalturaException $e) {
+
+			$this->initialized = false;
+			TikiLib::lib('errorreport')->report($e->getMessage());
 		}
-		$smarty->assign('kServiceUrl', $prefs['kaltura_kServiceUrl']);
 	}
 
 	function testSetup() {
-		global $prefs, $smarty;
-		if (empty($prefs['kaltura_partnerId']) || !is_numeric($prefs['kaltura_partnerId']) || empty($prefs['kaltura_secret']) || empty($prefs['kaltura_adminSecret'])) {
+		global $prefs;
+		if (!$this->initialized || empty($prefs['kaltura_partnerId']) || !is_numeric($prefs['kaltura_partnerId']) || empty($prefs['kaltura_secret']) || empty($prefs['kaltura_adminSecret'])) {
 			return false;
 		} else {
 			return true;
@@ -43,45 +55,35 @@ class KalturaLib
 	}
 	
 	private function startAdminSession() {
-		global $prefs, $user, $smarty;
+		global $prefs, $user;
 		if (!$this->testSetup()) {
-			return false;
+			return;
 		}
 		if ($user) {
 			$kuser = $user;
 		} else {
 			$kuser = 'Anonymous';
 		}
-		try {
-			if (!is_object($this->session)) {
-				$this->session = $this->client->session->start($prefs['kaltura_adminSecret'], $kuser, SESSION_ADMIN, $prefs['kaltura_partnerId'], 86400, 'edit:*');	
-			}
-			$this->client->setKs($this->session);
-		} catch (Exception $e) {	
-			// silent return is important so that it can be handled gracefully above if needed 
+		if (!is_object($this->session)) {
+			$this->session = $this->client->session->start($prefs['kaltura_adminSecret'], $kuser, SESSION_ADMIN, $prefs['kaltura_partnerId'], 86400, 'edit:*');
 		}
-		return true;
+		$this->client->setKs($this->session);
 	}
 	
 	private function startUserSession() {
-		global $prefs, $user, $smarty;
+		global $prefs, $user;
 		if (!$this->testSetup()) {
-			return false;
+			return;
 		}
 		if ($user) {
 			$kuser = $user;
 		} else {
 			$kuser = 'Anonymous';
 		}
-		try {
-			if (!is_object($this->session)) {		
-				$this->session = $this->client->session->start($prefs['kaltura_secret'], $kuser, SESSION_USER, $prefs['kaltura_partnerId'], 86400, 'edit:*');
-			}
-			$this->client->setKs($this->session);
-		} catch (Exception $e) {	
-			// silent return is important so that it can be handled gracefully above if needed
+		if (!is_object($this->session)) {
+			$this->session = $this->client->session->start($prefs['kaltura_secret'], $kuser, SESSION_USER, $prefs['kaltura_partnerId'], 86400, 'edit:*');
 		}
-		return true;
+		$this->client->setKs($this->session);
 	}
 		
 	private function _getPlayersUiConfs()
@@ -104,6 +106,9 @@ class KalturaLib
 	}
 	
 	function getPlayersUiConfs() {
+		if (!$this->testSetup()) {
+			return null;
+		}
 		$obj = $this->_getPlayersUiConfs()->objects;
 		$arr = array();
 		foreach ($obj as $o) {
@@ -145,6 +150,9 @@ class KalturaLib
 	}
 
 	function updateStandardTikiKcw() {
+		if (!$this->testSetup()) {
+			return '';
+		}
 		// first check if there is an existing one
 		$pager = null;
 		$filter = new KalturaUiConfFilter();
@@ -191,4 +199,6 @@ class KalturaLib
 
 global $kalturalib, $kalturaadminlib;
 $kalturaadminlib = new KalturaLib(SESSION_ADMIN);
-$kalturalib = new KalturaLib(SESSION_USER);
+if ($kalturaadminlib->session) {	// only make user session if admin one worked
+	$kalturalib = new KalturaLib(SESSION_USER);
+}
