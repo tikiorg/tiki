@@ -3346,11 +3346,11 @@ class FileGalLib extends TikiLib
 		$data = '';
 		$fhash = '';
 		if ($prefs['fgal_use_db'] == 'n') {
+			//get metadata
+			$filemeta = $this->extractMetadataJson($file['tmp_name']);
 			$fhash = $this->find_unique_name($savedir, $file['name']);
 			if ($prefs['feature_file_galleries_save_draft'] == 'y') {
 				$fhash .= '.' . $user . '.draft';
-				//Add metadata
-				$filemeta = $this->extractMetadataJson($file['tmp_name']);
 			}
 
 			if (! move_uploaded_file($file['tmp_name'], $savedir . $fhash)) {
@@ -3756,7 +3756,7 @@ class FileGalLib extends TikiLib
 	 */
 	function extractMetadataJson($file, $ispath = true, $extended = true)
 	{
-		include_once 'lib/metadata/metadata.php';
+		include_once 'lib/metadata/metadatalib.php';
 		$metadata = new FileMetadata;
 		$filemeta = json_encode($metadata->getMetadata($file, $ispath, $extended)->typemeta['best']);
 		return $filemeta;

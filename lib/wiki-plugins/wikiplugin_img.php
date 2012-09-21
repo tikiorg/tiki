@@ -1203,7 +1203,7 @@ function wikiplugin_img( $data, $params )
 		$id_meta = 'imgdialog-' . ++$lastval;
 		$id_link = $id_meta . '-link';
 		//use metadata stored in file gallery db if available
-		include_once 'lib/metadata/metadata.php';
+		include_once 'lib/metadata/metadatalib.php';
 		$meta = new FileMetadata;
 		$dialog = $meta->dialogTabs($metadata, $id_meta, $id_link, $filename);
 		$repl .= $dialog;
@@ -1387,7 +1387,7 @@ function getMetadataArray($imageObj, $dbinfo = false)
 			$metarray = json_decode($dbinfo['metadata'], true);
 		} elseif (isset($dbinfo['fileId'])) {
 			$filegallib = TikiLib::lib('filegal');
-			$metarray = $filegallib->getOrExtractMetadataArray($dbinfo['fileId']);
+			$metarray = $filegallib->metadataAction($dbinfo['fileId']);
 		} else {
 			$metarray = $imageObj->getMetadata()->typemeta['best'];
 		}

@@ -242,7 +242,7 @@ class ImageAbstract
 	
 	function getMetadata($filename = null, $ispath = true, $extended = true, $bestarray = true)
 	{
-		include_once('lib/metadata/metadata.php');
+		include_once('lib/metadata/metadatalib.php');
 		if ($filename === null) {
 			if (!empty($this->filename)) {
 				$filename = $this->filename;

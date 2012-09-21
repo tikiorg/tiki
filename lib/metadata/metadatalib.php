@@ -110,7 +110,7 @@ class FileMetadata
 			//used for name of class and the file the class is in
 			$type = $this->types[$this->basicraw['type']];
 			//file must be named based on $type
-			include_once($type . '.php');
+			include_once('lib/metadata/filetypes/' . $type . '.php');
 			//class name is same as file name except first letter is capitalized
 			$type = ucfirst($type);
 			$typeObj = new $type($this);

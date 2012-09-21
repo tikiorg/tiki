@@ -11,7 +11,7 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
 	exit;
 }
 
-require_once('lib/metadata/imagefile.php');
+require_once('lib/metadata/filetypes/imagefile.php');
 
 /**
  * Reads JPEG-specific metadata from a JPEG file
