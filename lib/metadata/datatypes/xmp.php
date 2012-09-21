@@ -324,7 +324,7 @@ class Xmp
 	{
 		$ret = '';
 		if ($fieldname == 'ComponentsConfiguration' && isset($value)) {
-			include_once 'lib/metadata/exif.php';
+			include_once 'lib/metadata/datatypes/exif.php';
 			$exif = new Exif;
 			foreach ($value as $singleval) {
 				$ret .= $exif->specs['EXIF'][$fieldname]['options']['0' . $singleval['rawval']] . ' ';

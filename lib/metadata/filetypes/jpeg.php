@@ -48,7 +48,7 @@ class Jpeg extends ImageFile
 		$metadata['exifraw'] = function_exists('exif_read_data') ? exif_read_data($metaObj->currname, 0, true) : false;
 		//interpret and add tags
 		if ($metadata['exifraw']) {
-			require_once('lib/metadata/exif.php');
+			require_once('lib/metadata/datatypes/exif.php');
 			$exif = new Exif;
 			$metadata['exif'] = $exif->processRawData($metadata['exifraw']);
 			//add EXIF to combined metadata array that is not reconciled
@@ -73,7 +73,7 @@ class Jpeg extends ImageFile
 				}
 			}
 			//process raw data
-			require_once('lib/metadata/iptc.php');
+			require_once('lib/metadata/datatypes/iptc.php');
 			$iptc = new Iptc;
 			$metadata['iptc'] = $iptc->processRawData($metadata['iptcraw']);
 			//add IPTC to combined metadata array that is not reconciled
@@ -144,7 +144,7 @@ class Jpeg extends ImageFile
 		//XMP
 		//get raw xmp DOM, convert to an array add tags and interpret
 		if (isset($metaObj->content)) {
-			require_once('lib/metadata/xmp.php');
+			require_once('lib/metadata/datatypes/xmp.php');
 			$xmp = new Xmp;
 			$metadata['xmpraw'] = $xmp->getXmp($metaObj->content, $metaObj->basicraw['type']);
 			$metadata['xmp'] = $xmp->processRawData($metadata['xmpraw']);

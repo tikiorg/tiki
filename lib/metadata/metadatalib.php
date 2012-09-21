@@ -99,7 +99,7 @@ class FileMetadata
 
 		//process basic info
 		if (is_array($this->basicraw)) {
-			require_once('basicinfo.php');
+			require_once('lib/metadata/datatypes/basicinfo.php');
 			$basic = new BasicInfo;
 			$this->basicinfo = $basic->processRawData($this->basicraw);
 		}
