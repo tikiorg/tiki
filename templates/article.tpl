@@ -11,9 +11,9 @@
 		{/if}
 		
 		<span class="titleb">
-			{if $show_author eq 'y' && $authorName}{tr}Author:{/tr} {$authorName|escape} {/if}
-			{if $show_pubdate eq 'y' && $publishDate}{$publishDate|tiki_short_datetime:'Published At:'} {/if}
-			{if $show_expdate eq 'y' && $expireDate}{tr}Expires At:{/tr} {$expireDate|tiki_short_datetime} {/if}
+			{if $show_author eq 'y' && $authorName}{tr}Author:{/tr} {$authorName|escape} - {/if}
+			{if $show_pubdate eq 'y' && $publishDate}{$publishDate|tiki_short_datetime:'Published At:'} - {/if}
+			{if $show_expdate eq 'y' && $expireDate}{tr}Expires At:{/tr} {$expireDate|tiki_short_datetime} - {/if}
 			{if $show_reads eq 'y'}({$reads} {tr}Reads{/tr}){/if}
 		</span>
 	</header>

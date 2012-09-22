@@ -171,7 +171,7 @@ class UnifiedSearchLib
 		}
 
 		if ($prefs['feature_file_galleries'] == 'y') {
-			$types['file'] = 'file';
+			$types['file'] = tra('file');
 		}
 
 		if ($prefs['feature_forums'] == 'y') {

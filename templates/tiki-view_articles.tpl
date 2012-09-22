@@ -43,13 +43,13 @@
 				 or ($listpages[ix].show_reads eq 'y')}	
 					<span class="titleb">
 						{if $listpages[ix].show_author eq 'y'}	
-							<span class="author">{tr}Author:{/tr} {$listpages[ix].authorName|escape}&nbsp;</span>
+							<span class="author">{tr}Author:{/tr} {$listpages[ix].authorName|escape}&nbsp;- </span>
 						{/if}
 						{if $listpages[ix].show_pubdate eq 'y'}
-							<span class="pubdate">{tr}Published At:{/tr} {$listpages[ix].publishDate|tiki_short_datetime}&nbsp;</span>
+							<span class="pubdate">{tr}Published At:{/tr} {$listpages[ix].publishDate|tiki_short_datetime}&nbsp;- </span>
 						{/if}
 						{if $listpages[ix].show_expdate eq 'y'}
-							<span class="expdate">{tr}Expires At:{/tr} {$listpages[ix].expireDate|tiki_short_datetime}&nbsp;</span>
+							<span class="expdate">{tr}Expires At:{/tr} {$listpages[ix].expireDate|tiki_short_datetime}&nbsp;- </span>
 						{/if}
 						{if $listpages[ix].show_reads eq 'y'}
 							<span class="reads">({$listpages[ix].nbreads} {tr}Reads{/tr})</span>
