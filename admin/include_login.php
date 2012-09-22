@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -20,14 +20,23 @@ if (isset($_REQUEST['loginprefs'])) {
 	$in = array();
 	$out = array();
 	foreach ($listgroups['data'] as $gr) {
-		if ($gr['groupName'] == 'Anonymous') continue;
-		if ($gr['registrationChoice'] == 'y' && !in_array($gr['groupName'], $_REQUEST['registration_choices'])) // deselect
+		if ($gr['groupName'] == 'Anonymous') {
+			continue;
+		}
+		if ($gr['registrationChoice'] == 'y' && !in_array($gr['groupName'], $_REQUEST['registration_choices'])) {
+			// deselect
 			$out[] = $gr['groupName'];
-		elseif ($gr['registrationChoice'] != 'y' && in_array($gr['groupName'], $_REQUEST['registration_choices'])) //select
+		} elseif ($gr['registrationChoice'] != 'y' && in_array($gr['groupName'], $_REQUEST['registration_choices'])) {
+			//select
 			$in[] = $gr['groupName'];
+		}
 	}
-	if (count($in)) $userlib->set_registrationChoice($in, 'y');
-	if (count($out)) $userlib->set_registrationChoice($out, NULL);
+	if (count($in)) {
+		$userlib->set_registrationChoice($in, 'y');
+	}
+	if (count($out)) {
+		$userlib->set_registrationChoice($out, null);
+	}
 }
 if (!empty($_REQUEST['refresh_email_group'])) {
 	$nb = $userlib->refresh_set_email_group();

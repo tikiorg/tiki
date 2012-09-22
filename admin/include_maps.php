@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -27,22 +27,26 @@ if (isset($_REQUEST["map_path"])) {
 	}
 }
 if (isset($_REQUEST["gdaltindex"])) {
-	if (function_exists("is_executable")) { //linux
+	if (function_exists("is_executable")) {
+		//linux
 		if (! is_executable($_REQUEST["gdaltindex"])) {
 			$map_error = tra("No valid gdaltindex executable");
 		}
-	} else { //windows
+	} else {
+		//windows
 		if (! is_file($_REQUEST["gdaltindex"])) {
 			$map_error = tra("No valid gdaltindex executable");
 		}
 	}
 }
 if (isset($_REQUEST["ogr2ogr"])) {
-	if (function_exists("is_executable")) { //linux
+	if (function_exists("is_executable")) {
+		//linux
 		if (! is_executable($_REQUEST["ogr2ogr"])) {
 			$map_error = tra("No valid ogr2ogr executable");
 		}
-	} else { //windows
+	} else {
+		//windows
 		if (! is_file($_REQUEST["ogr2ogr"])) {
 			$map_error = tra("No valid ogr2ogr executable");
 		}

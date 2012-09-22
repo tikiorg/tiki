@@ -61,7 +61,7 @@ if ( function_exists('apc_sma_info') && ini_get('apc.enabled') ) {
 			'hit_total' => 0,
 		);
 
-		foreach ( range(0, xcache_count(XC_TYPE_PHP) - 1) as $index ) {
+		foreach (range(0, xcache_count(XC_TYPE_PHP) - 1) as $index) {
 			$info = xcache_info(XC_TYPE_PHP, $index);
 
 			$opcode_stats['hit_hit'] += $info['hits'];

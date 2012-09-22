@@ -17,12 +17,14 @@ if (isset($_REQUEST['looksetup'])) {
 	if (isset($_REQUEST['style'])) {
 		check_ticket('admin-inc-general');
 
-		if (!isset($_REQUEST['style_option']) || $_REQUEST['style_option'] == tra('None')) { // style has no options
+		if (!isset($_REQUEST['style_option']) || $_REQUEST['style_option'] == tra('None')) {
+			// style has no options
 			$_REQUEST['style_option'] = '';
 		}
 		check_ticket('admin-inc-general');
 	}
-} else { // just changed theme menu, so refill options
+} else {
+	// just changed theme menu, so refill options
 	if (isset($_REQUEST['style']) && $_REQUEST['style'] != '') {
 		$a_style = $_REQUEST['style'];
 	}
@@ -168,7 +170,8 @@ if (isset($_REQUEST['looksetup'])) {
 	for ($i = 0, $count_feedback = count($tikifeedback); $i < $count_feedback; $i++) {
 		if (substr($tikifeedback[$i]['name'], 0, 5) == 'style' ||			// if style or style_option
 				$tikifeedback[$i]['name'] === 'themegenerator_theme' ||		// or themegen theme changed
-				$tikifeedback[$i]['name'] === 'feature_jquery_ui_theme') {	// or jquery-ui theme
+				$tikifeedback[$i]['name'] === 'feature_jquery_ui_theme'	   // or jquery-ui theme
+			) {
 			// If the theme has changed, reload the page to use the new theme
 			$reload = true;
 		}

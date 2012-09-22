@@ -18,8 +18,9 @@ global $areaslib;
 if (isset($_REQUEST['update_areas'])) {
 	check_ticket('admin-inc-areas');
 	$pass = $areaslib->update_areas();
-	if ($pass !== true)
+	if ($pass !== true) {
 		$smarty->assign_by_ref('error', $pass);
+	}
 }
 
 // building overview
@@ -27,8 +28,9 @@ $areas_table = $areaslib->table('tiki_areas');
 $conditions = array();
 
 // if count zero, table probably not up-to-date
-if ($areas_table->fetchCount($conditions) == 0)
+if ($areas_table->fetchCount($conditions) == 0) {
 	$areaslib->update_areas();
+}
 
 $result = $areas_table->fetchAll(array('categId', 'perspectives'), $conditions);
 $areas = array();
@@ -39,8 +41,9 @@ foreach ($result as $item) {
 	$area['categId'] = $item['categId'];
 	$area['perspectives'] = array();
 	foreach (unserialize($item['perspectives']) as $pers) {
-		if (!array_key_exists($pers, $perspectives))
+		if (!array_key_exists($pers, $perspectives)) {
 			$perspectives[$pers] = $perspectivelib->get_perspective($pers);
+		}
 
 		$area['perspectives'][] = $perspectives[$pers];
 	}

@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -26,15 +26,15 @@ if (isset($_REQUEST['galfeatures'])) {
 	simple_set_toggle('preset_galleries_info');
 	// Check for last character being a / or a \
 	// My next commit is to create a clas to put this code into
-	if (substr($_REQUEST['gal_use_dir'], -1) != '\\' 
-			&& substr($_REQUEST['gal_use_dir'], -1) != '/' 
+	if (substr($_REQUEST['gal_use_dir'], -1) != '\\'
+			&& substr($_REQUEST['gal_use_dir'], -1) != '/'
 			&& $_REQUEST['gal_use_dir'] != ''
 	) {
 		$_REQUEST['gal_use_dir'] .= '/';
 	}
-	
-	if (substr($_REQUEST['gal_batch_dir'], -1) != '\\' 
-			&& substr($_REQUEST['gal_batch_dir'], -1) != '/' 
+
+	if (substr($_REQUEST['gal_batch_dir'], -1) != '\\'
+			&& substr($_REQUEST['gal_batch_dir'], -1) != '/'
 			&& $_REQUEST['gal_batch_dir'] != ''
 	) {
 		$_REQUEST['gal_batch_dir'] .= '/';
@@ -63,7 +63,7 @@ if (isset($_REQUEST['rmvorphimg'])) {
 
 if (isset($_REQUEST['mvimg']) && isset($_REQUEST['move_gallery'])) {
 	check_ticket('admin-inc-gal');
-	if (($_REQUEST['mvimg'] == 'to_fs' && $prefs['gal_use_db'] == 'n') 
+	if (($_REQUEST['mvimg'] == 'to_fs' && $prefs['gal_use_db'] == 'n')
 			|| ($_REQUEST['mvimg'] == 'to_db' && $prefs['gal_use_db'] == 'y')
 	) {
 		$mvresult = $imagegallib->move_gallery_store($_REQUEST['move_gallery'], $_REQUEST['mvimg']);
@@ -101,7 +101,7 @@ if (isset($_REQUEST['imagegalcomprefs'])) {
 
 if (isset($_REQUEST['mvimg']) && isset($_REQUEST['move_gallery'])) {
 	check_ticket('admin-inc-gal');
-	if (($_REQUEST['mvimg'] == 'to_fs' && $prefs['gal_use_db'] == 'n') 
+	if (($_REQUEST['mvimg'] == 'to_fs' && $prefs['gal_use_db'] == 'n')
 			|| ($_REQUEST['mvimg'] == 'to_db' && $prefs['gal_use_db'] == 'y')
 	) {
 		$mvresult = $imagegallib->move_gallery_store($_REQUEST['move_gallery'], $_REQUEST['mvimg']);
@@ -113,11 +113,21 @@ if (isset($_REQUEST['mvimg']) && isset($_REQUEST['move_gallery'])) {
 	}
 }
 
-if (!isset($_REQUEST['maxRows'])) $_REQUEST['maxRows'] = $prefs['maxRowsGalleries'];
-if (!isset($_REQUEST['rowImages'])) $_REQUEST['rowImages'] = $prefs['rowImagesGalleries'];
-if (!isset($_REQUEST['thumbSizeX'])) $_REQUEST['thumbSizeX'] = $prefs['thumbSizeXGalleries'];
-if (!isset($_REQUEST['thumbSizeY'])) $_REQUEST['thumbSizeY'] = $prefs['thumbSizeYGalleries'];
-if (!isset($_REQUEST['scaleSize'])) $_REQUEST['scaleSize'] = $prefs['scaleSizeGalleries'];
+if (!isset($_REQUEST['maxRows'])) {
+	$_REQUEST['maxRows'] = $prefs['maxRowsGalleries'];
+}
+if (!isset($_REQUEST['rowImages'])) {
+	$_REQUEST['rowImages'] = $prefs['rowImagesGalleries'];
+}
+if (!isset($_REQUEST['thumbSizeX'])) {
+	$_REQUEST['thumbSizeX'] = $prefs['thumbSizeXGalleries'];
+}
+if (!isset($_REQUEST['thumbSizeY'])) {
+	$_REQUEST['thumbSizeY'] = $prefs['thumbSizeYGalleries'];
+}
+if (!isset($_REQUEST['scaleSize'])) {
+	$_REQUEST['scaleSize'] = $prefs['scaleSizeGalleries'];
+}
 $tikilib->set_preference('maxRowsGalleries', $_REQUEST['maxRows']);
 $tikilib->set_preference('rowImagesGalleries', $_REQUEST['rowImages']);
 $tikilib->set_preference('thumbSizeXGalleries', $_REQUEST['thumbSizeX']);
@@ -146,7 +156,7 @@ $smarty->assign('imagicklib', $imagicklib);
 
 if ($prefs['feature_categories'] == 'y') {
 	include_once ('lib/categories/categlib.php');
-	$catree = $categlib->getCategories(NULL, true, false);
+	$catree = $categlib->getCategories(null, true, false);
 	$smarty->assign('catree', $catree);
 }
 

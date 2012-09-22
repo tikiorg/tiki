@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -36,12 +36,13 @@ if (isset($enabledFileName)) {
 	if ($enabledFile) {
 		$referenceFile = fopen($referenceFileName, "r");
 		if ($referenceFile) {
-			if ($httpd == 'IIS') { // On IIS, the Id line is the second line, rather than the first as in Apache. 
+			if ($httpd == 'IIS') {
+				// On IIS, the Id line is the second line, rather than the first as in Apache.
 				fgets($referenceFile);
 				fgets($enabledFile);
 			}
 			$referenceIdLine = fgets($referenceFile);
-			$enabledIdLine = fgets($enabledFile); 
+			$enabledIdLine = fgets($enabledFile);
 			if (!strstr($enabledIdLine, 'This line is used to check that this configuration file is up to date.')) {
 				$configurationFile = 'unexpected';
 			} elseif ($referenceIdLine == $enabledIdLine) { // Do not warn if the Id line of each file is identical. Id lines contain configuration file revision.
@@ -49,7 +50,8 @@ if (isset($enabledFileName)) {
 			} else {
 				$configurationFile = 'outdated';
 			}
-			if ($httpd === 'Apache') {	// work out if RewriteBase is set up properly
+			if ($httpd === 'Apache') {
+				// work out if RewriteBase is set up properly
 				global $url_path;
 				$rewritebase = '/';
 				while ($nextLine = fgets($enabledFile)) {

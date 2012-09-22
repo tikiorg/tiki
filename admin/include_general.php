@@ -15,16 +15,18 @@ if (isset($_REQUEST['new_prefs'])) {
 	$in = array();
 	$out = array();
 	foreach ($listgroups['data'] as $gr) {
-		if ($gr['groupName'] == 'Anonymous')
+		if ($gr['groupName'] == 'Anonymous') {
 			continue;
+		}
 
-		if ($gr['registrationChoice'] == 'y' 
-				&& isset($_REQUEST['registration_choices']) 
+		if ($gr['registrationChoice'] == 'y'
+				&& isset($_REQUEST['registration_choices'])
 				&& !in_array($gr['groupName'], $_REQUEST['registration_choices'])
-		) {// deselect
+		) {
+			// deselect
 			$out[] = $gr['groupName'];
-		} elseif ($gr['registrationChoice'] != 'y' 
-						&& isset($_REQUEST['registration_choices']) 
+		} elseif ($gr['registrationChoice'] != 'y'
+						&& isset($_REQUEST['registration_choices'])
 						&& in_array($gr['groupName'], $_REQUEST['registration_choices'])
 		) { //select
 			$in[] = $gr['groupName'];

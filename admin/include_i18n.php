@@ -31,14 +31,15 @@ if (!empty($_REQUEST['custom_save'])) {
 	} else {
 		$smarty->assign_by_ref('custom_lang', $_REQUEST['custom_lang']);
 		$custom_file = 'lang/' . $_REQUEST['custom_lang'] . '/';
-		if (!empty($tikidomain))
+		if (!empty($tikidomain)) {
 			$custom_file.= "$tikidomain/";
+		}
 
 		$custom_file.= 'custom.php';
 		$smarty->assign('custom_file', $custom_file);
 		$custom_code = "<?php\r\n\$lang_custom = array(\r\n";
 
-		foreach ($_REQUEST['from'] as $i=>$from) {
+		foreach ($_REQUEST['from'] as $i => $from) {
 			if (!empty($from)) {
 				$custom_code .= '"' . str_replace('"', '\\"', $from) . '" => "' . str_replace('"', '\\"', $_REQUEST['to'][$i]) . "\",\r\n";
 			}
@@ -68,8 +69,9 @@ if (!empty($_REQUEST['custom_save'])) {
 if (!empty($_REQUEST['custom_lang'])) {
 	ask_ticket('admin-inc-i18n');
 	$custom_file = 'lang/' . $_REQUEST['custom_lang'] . '/';
-	if (!empty($tikidomain))
+	if (!empty($tikidomain)) {
 		$custom_file .= "$tikidomain/";
+	}
 
 	$custom_file .= 'custom.php';
 

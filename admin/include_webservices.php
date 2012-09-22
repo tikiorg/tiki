@@ -50,8 +50,9 @@ if (isset($_REQUEST['name']) && $webservice = Tiki_Webservice::getService($_REQU
 	$storedTemplates = array();
 }
 
-if (!isset($_REQUEST['params']))
+if (!isset($_REQUEST['params'])) {
 	$_REQUEST['params'] = array();
+}
 
 if (!isset($_REQUEST['parse']) && $response = $webservice->performRequest($_REQUEST['params'])) {
 	$data = $response->data;
