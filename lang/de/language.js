@@ -6,15 +6,15 @@
  */
 
 lang = {
-"Very Secure" : "sehr sicher",
-"Secure" : "sicher",
-"Very Strong" : "sehr stark",
-"Strong" : "stark",
-"Average" : "durchschnittlich",
-"Weak" : "schwach",
-"Very Weak" : "sehr schwach",
+"Very Secure" : "Sehr sicher",
+"Secure" : "Sicher",
+"Very Strong" : "Sehr stark",
+"Strong" : "Stark",
+"Average" : "Durchschnittlich",
+"Weak" : "Schwach",
+"Very Weak" : "Sehr schwach",
 "Strength" : "Stärke",
-"Valid User Name" : "gültiger Benutzername",
+"Valid User Name" : "Gültiger Benutzername",
 "Passwords match" : "Paßwörter stimmen überein",
 "Valid Email" : "gültige Email",
 "Close" : "Schließen",
@@ -49,6 +49,8 @@ lang = {
 "Favorite" : "Favoriten",
 "Filter:" : "Filter:",
 "Please enter a page name" : "Bitte trage einen Seitennamen ein",
-"Are you sure you want to unassign this module?" : "Bist Du sicher, dass Du das Modul entfernen willst?"
+"Are you sure you want to unassign this module?" : "Bist Du sicher, dass Du das Modul entfernen willst?",
+"Change Highlighter" : "Ändere Hervorhebung",
+"Toogle Highlighter" : "Hervorhebung umschalten"
 // Achtung: der IE unterstützt kein Komma nach dem letzten Eintrag
 };
