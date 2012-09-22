@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -13,12 +13,12 @@ class Report_Builder
 	var $name = '';
 	var $description = '';
 	var $values = array();
-	
+
 	static function load($type)
 	{
 		$me = new self();
 		$me->type = ucwords($type);
-		
+
 		$class = "Report_Definition_{$me->type}";
 		if (class_exists($class) == true) {
 			$definition = new $class;
@@ -26,7 +26,7 @@ class Report_Builder
 		}
 		return $me;
 	}
-	
+
 	static function open($data)
 	{
 		$me = new self();
@@ -34,31 +34,31 @@ class Report_Builder
 		return (json_encode($data));
 		return $me;
 	}
-	
+
 	static function listDefinitions()
 	{
 		$files = array();
-		
+
 		foreach (scandir('lib/core/Report/Definition') as $fileName) {
 			if (preg_match('/[.]php/', $fileName) && $fileName != "index.php") {
                 $files[] = str_replace('.php', '', $fileName);
 			}
 		}
-		
+
 		return $files;
 	}
-	
+
 	function setValues($values = array())
 	{
 		$this->values = $values;
 		return $this;
 	}
-	
+
 	static function fromWikiSyntax($data = "")
 	{
 		if (empty($data)) throw new Exception("Failed to get body", 1);
 		$parsedValues = array();
-		
+
 		foreach (explode("\n", $data) as $values) {
 			$values = trim($values);
 			if (!empty($values)) {
@@ -66,23 +66,23 @@ class Report_Builder
 				$parsedValues[trim($value[0])] = trim($value[1]);
 			}
 		}
-		
+
 		return TikiFilter_PrepareInput::delimiter('_')->prepare($parsedValues);
 	}
-	
+
 	static function loadFromWikiSyntax($data = "")
 	{
 		$values = Report_Builder::fromWikiSyntax($data);
 		$me = Report_Builder::load($values['type']);
 		return $me->setValues($values);
 	}
-	
+
 	function setValuesFromRequest($values)
 	{
 		$parsedValues = array();
 		foreach ($values as $value) {
 			$value = (array)$value; //was having trouble with downloading csv
-			
+
 			if (preg_match('/\[\]/', $value['name'])) {
 				$value['name'] = str_replace('[]', '', $value['name']);
 				$parsedValues[$value['name']][] = array(
@@ -94,10 +94,10 @@ class Report_Builder
 				);
 			}
 		}
-		
+
 		return $this->setValues(TikiFilter_PrepareInput::delimiter('_')->prepare($parsedValues));
 	}
-	
+
 	function outputArray()
 	{
 		$class = "Report_Definition_{$this->type}";
@@ -107,34 +107,34 @@ class Report_Builder
 		}
 		return array();
 	}
-	
+
 	function outputSheet($name = "")
 	{
 		$sheetlib = TikiLib::lib("sheet");
-		
+
 		if (empty($name)) {
 			$name = $this->type;
 		}
-		
+
 		$handler = new TikiSheetSimpleArrayHandler(
-						array(
-							"values"=>$this->outputArray(),
-							"name"=>$name
-						)
+			array(
+				"values"=>$this->outputArray(),
+				"name"=>$name
+			)
 		);
-		
+
 		$grid = new TikiSheet();
 		$grid->import($handler);
-		
+
 		return $grid->getTableHtml();
 	}
-	
+
 	function outputCSV($auto = false)
 	{
 		$output = '';
-		
+
 		$header = false;
-		
+
 		foreach ($this->outputArray() as $row) {
 			if ($header == false) {
 				$header = true;
@@ -142,12 +142,12 @@ class Report_Builder
 				foreach ($row as $headerName=>$col) {
 					$headerNames[] = tr(ucwords($headerName));
 				}
-				
+
 				$output .= '"' . implode('","', $headerNames) . '"'. "\n";
 			}
 			$output .= '"' . implode('","', $row) . '"'. "\n";
 		}
-		
+
 		if ($auto == true) {
 			header("Content-type: application/csv");
 			header("Content-Disposition: attachment; filename=export.csv");
@@ -156,15 +156,15 @@ class Report_Builder
 			echo $output;
 			return '';
 		}
-		
+
 		return $output;
 	}
-	
+
 	function outputChart()
 	{
 		$output = $this->outputArray();
 	}
-	
+
 	function outputWikiData()
 	{
 		$result = "type : " . $this->type . "\n";
@@ -173,6 +173,6 @@ class Report_Builder
 				$result .= $key .' : '. $value . "\n";
 			}
 		}
-		return $result; 
+		return $result;
 	}
 }

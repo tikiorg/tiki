@@ -13,7 +13,7 @@ function smarty_function_rating_result( $params, $smarty )
 	$smiles = $ratinglib->get_options_smiles($params['type'], $params['id'], true);
 	$tableBody = "";
 
-	foreach($votings as $vote => $voting) {
+	foreach ($votings as $vote => $voting) {
 		$tableBody .= '<td style="width:' . $voting['percent'] . '%; text-align: center;">
 			<div class="ui-widget-content">' .
 				($prefs['rating_smileys'] == 'y' ? '<img src="' . $smiles[$vote]['img'] . '"/> ' : '<b>' . $vote . '</b> ') .

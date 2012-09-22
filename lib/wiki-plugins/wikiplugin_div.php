@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -15,7 +15,7 @@ function wikiplugin_div_info()
 		'body' => tra('text'),
 		'icon' => 'img/icons/script_code_red.png',
 		'filter' => 'wikicontent',
-		'tags' => array( 'basic' ),		
+		'tags' => array( 'basic' ),
 		'params' => array(
 			'type' => array(
 				'required' => false,
@@ -24,9 +24,9 @@ function wikiplugin_div_info()
 				'filter' => 'alpha',
 				'default' => 'div',
 				'options' => array(
-					array('text' => tra('None'), 'value' => ''), 
-					array('text' => tra('Div'), 'value' => 'div'), 
-					array('text' => tra('Span'), 'value' => 'span'), 
+					array('text' => tra('None'), 'value' => ''),
+					array('text' => tra('Div'), 'value' => 'div'),
+					array('text' => tra('Span'), 'value' => 'span'),
 					array('text' => tra('Pre'), 'value' => 'pre'),
 					array('text' => tra('Bold'), 'value' => 'b'),
 					array('text' => tra('Italic'), 'value' => 'i'),
@@ -56,27 +56,27 @@ function wikiplugin_div_info()
 				'filter' => 'alpha',
 				'default' => '',
 				'options' => array(
-					array('text' => '', 'value' => ''), 
-					array('text' => tra('Left'), 'value' => 'left'), 
-					array('text' => tra('Right'), 'value' => 'right'), 
-					array('text' => tra('Center'), 'value' => 'center'), 
-					array('text' => tra('Justify'), 'value' => 'justify'), 
+					array('text' => '', 'value' => ''),
+					array('text' => tra('Left'), 'value' => 'left'),
+					array('text' => tra('Right'), 'value' => 'right'),
+					array('text' => tra('Center'), 'value' => 'center'),
+					array('text' => tra('Justify'), 'value' => 'justify'),
 				),
 			),
 			'float' => array(
 				'required' => false,
 				'name' => tra('Float Position'),
 				'description' => tra(
-								'Set the alignment for the entire element. For elements with a width of less than 100%, other elements will wrap around it 
-								unless the clear parameter is appropriately set.)'
+					'Set the alignment for the entire element. For elements with a width of less than 100%, other elements will wrap around it
+					unless the clear parameter is appropriately set.)'
 				),
 				'filter' => 'alpha',
 				'default' => '',
 				'options' => array(
-					array('text' => '', 'value' => ''), 
-					array('text' => tra('Right'), 'value' => 'right'), 
-					array('text' => tra('Left'), 'value' => 'left'), 
-					array('text' => tra('None'), 'value' => 'none'), 
+					array('text' => '', 'value' => ''),
+					array('text' => tra('Right'), 'value' => 'right'),
+					array('text' => tra('Left'), 'value' => 'left'),
+					array('text' => tra('None'), 'value' => 'none'),
 				),
 			),
 			'clear' => array(
@@ -86,11 +86,11 @@ function wikiplugin_div_info()
 				'filter' => 'text',
 				'default' => '',
 				'options' => array(
-					array('text' => '', 'value' => ''), 
-					array('text' => tra('Right'), 'value' => 'right'), 
-					array('text' => tra('Left'), 'value' => 'left'), 
-					array('text' => tra('Both'), 'value' => 'both'), 
-					array('text' => tra('None'), 'value' => 'none'), 
+					array('text' => '', 'value' => ''),
+					array('text' => tra('Right'), 'value' => 'right'),
+					array('text' => tra('Left'), 'value' => 'left'),
+					array('text' => tra('Both'), 'value' => 'both'),
+					array('text' => tra('None'), 'value' => 'none'),
 				),
 			),
 			'class' => array(

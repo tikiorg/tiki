@@ -97,7 +97,7 @@ function module_breadcrumbs($mod_reference, $module_params)
 	}
 
 	$hide = true;
-	foreach($crumbs as $crumb) {
+	foreach ($crumbs as $crumb) {
 		if (!$crumb->hidden) {
 			$hide = false;
 		}

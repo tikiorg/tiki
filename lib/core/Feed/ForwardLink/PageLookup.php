@@ -10,7 +10,7 @@ class Feed_ForwardLink_PageLookup extends Feed_Abstract
 	var $type = 'forwardlink';
 	var $forwardLink = array();
 	var $version = 0.1;
-	
+
 	static function forwardLink($forwardLink = array())
 	{
 		$me = new self($forwardLink->href);
@@ -43,13 +43,13 @@ class Feed_ForwardLink_PageLookup extends Feed_Abstract
 				$forwardLink->href = urldecode($forwardLink->href);
 
 				$result = Feed_ForwardLink_Send::send(
-								array(
-									'forwardLink'=> $forwardLink,
-									'textlink'=> array(
-										'body'=> $args['data'],
-										'href'=> $tikilib->tikiUrl() . 'tiki-index.php?page=' . $args['object']
-									)
-								)
+					array(
+						'forwardLink'=> $forwardLink,
+						'textlink'=> array(
+							'body'=> $args['data'],
+							'href'=> $tikilib->tikiUrl() . 'tiki-index.php?page=' . $args['object']
+						)
+					)
 				);
 			}
 		}

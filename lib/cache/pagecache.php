@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -72,14 +72,14 @@ class Tiki_PageCache
 		if ( is_array($this->cacheData) ) {
 			$this->cacheData[$key] = $value;
 		}
-		
+
 		return $this;
 	}
 
 	function checkMeta( $role, $data )
 	{
 		$this->meta = array_merge(array( 'role' => $role ), $data);
-		
+
 		return $this;
 	}
 
@@ -93,10 +93,10 @@ class Tiki_PageCache
 
 				if ( $this->meta ) {
 					list($cachedOutput, $metaTime) = $memcachelib->getMulti(
-									array(
-										$this->key,
-										$this->meta,
-									)
+						array(
+							$this->key,
+							$this->meta,
+						)
 					);
 
 					if ( $cachedOutput && $metaTime && $metaTime > $cachedOutput['timestamp'] ) {
@@ -107,7 +107,7 @@ class Tiki_PageCache
 				}
 
 				if ( $cachedOutput && $cachedOutput['output'] ) {
-					echo $cachedOutput['output']; 
+					echo $cachedOutput['output'];
 					echo "\n<!-- memcache ".htmlspecialchars($this->key)."-->";
 					exit;
 				}

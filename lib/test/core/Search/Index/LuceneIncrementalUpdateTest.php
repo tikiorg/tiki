@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -68,12 +68,12 @@ class Search_Index_LuceneIncrementalUpdateTest extends PHPUnit_Framework_TestCas
 		$typeFactory = $index->getTypeFactory();
 
 		$index->addDocument(
-						array(
-							'object_type' => $typeFactory->identifier($type),
-							'object_id' => $typeFactory->identifier($id),
-							'wiki_content' => $typeFactory->wikitext($data),
-							'contents' => $typeFactory->wikitext($data),
-						)
+			array(
+				'object_type' => $typeFactory->identifier($type),
+				'object_id' => $typeFactory->identifier($id),
+				'wiki_content' => $typeFactory->wikitext($data),
+				'contents' => $typeFactory->wikitext($data),
+			)
 		);
 	}
 }

@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -17,10 +17,10 @@ if ( isset($_REQUEST['test']) && $access->is_machine_request() ) {
 	$message = $ratinglib->test_formula($_REQUEST['test'], array( 'type', 'object-id' ));
 
 	$access->output_serialized(
-					array(
-						'valid' => empty($message),
-						'message' => $message,
-					)
+		array(
+			'valid' => empty($message),
+			'message' => $message,
+		)
 	);
 	exit;
 }

@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -66,10 +66,10 @@ function upgrade_20110830_default_enable_in_use_tiki($installer)
 	$preferences = $installer->table('tiki_preferences');
 	foreach ($types as $code) {
 		$preferences->insert(
-						array(
-							'name' => $map[$code],
-							'value' => 'y',
-						)
+			array(
+				'name' => $map[$code],
+				'value' => 'y',
+			)
 		);
 	}
 }

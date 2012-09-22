@@ -1,13 +1,13 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 /**
  * Handler class for Category
- * 
+ *
  * Letter key: ~e~
  *
  */
@@ -19,7 +19,7 @@ class Tracker_Field_Category extends Tracker_Field_Abstract implements Tracker_F
 			'e' => array(
 				'name' => tr('Category'),
 				'description' => tr('Allows for one or multiple categories under the specified main category to be affected to the tracker item.'),
-				'help' => 'Category Tracker Field',					
+				'help' => 'Category Tracker Field',
 				'prefs' => array('trackerfield_category', 'feature_categories'),
 				'tags' => array('advanced'),
 				'default' => 'y',
@@ -153,8 +153,8 @@ class Tracker_Field_Category extends Tracker_Field_Abstract implements Tracker_F
 
 		return $output;
 	}
-	
-	private function describeCategoryList($categs) 
+
+	private function describeCategoryList($categs)
 	{
 	    $categlib = TikiLib::lib('categ');
 	    $res = '';

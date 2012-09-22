@@ -1,9 +1,9 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $$
+// $Id$
 
 class WikiPlugin_expandingoutline extends WikiPlugin_HtmlBase
 {
@@ -32,7 +32,8 @@ class WikiPlugin_expandingoutline extends WikiPlugin_HtmlBase
 		$parser->list = new WikiPlugin_expandingoutline_list($parser->list);
 		$id = $this->id($index);
 
-		$headerlib->add_jq_onready(<<<JQ
+		$headerlib->add_jq_onready(
+<<<JQ
 			var color = [
 				'rgb(255,37,6)',
 				'rgb(254,143,17)',
@@ -45,7 +46,7 @@ class WikiPlugin_expandingoutline extends WikiPlugin_HtmlBase
 				'rgb(255,214,188)',
 				'rgb(255,214,51)'
 			];
-        
+
 			var base = $('#$id');
 			base.find('table.tikiListTable:first table')
 				.parent().hide();

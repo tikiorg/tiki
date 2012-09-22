@@ -26,7 +26,7 @@ if ($prefs['feature_ajax'] != 'y' || ($prefs['ajax_autosave'] != 'y')) {
 
 require_once('lib/ajax/autosave.php');
 
-function send_ajax_response($command, $data ) 
+function send_ajax_response($command, $data )
 {
 	header('Content-Type:text/xml; charset=UTF-8');
 	echo '<?xml version="1.0" encoding="UTF-8"?>';
@@ -44,7 +44,7 @@ if (isset($_REQUEST['editor_id'])) {
 		if ($referer && count($referer) === 3 && $referer[1] === 'wiki_page') {
 			$page = rawurldecode($referer[2]);	// plugins use global $page for approval
 		}
-		
+
 		if ($_REQUEST['command'] == 'toWikiFormat') {
 			global $editlib; include_once 'lib/wiki/editlib.php';
 			$res = $editlib->parseToWiki(urldecode($_REQUEST['data']));
@@ -64,12 +64,12 @@ if (isset($_REQUEST['editor_id'])) {
 		}
 		send_ajax_response($_REQUEST['command'], $res);
 	} else if (isset($_REQUEST['autoSaveId'])) {	// wiki page previews
-		
+
 		$autoSaveIdParts = explode(':', $_REQUEST['autoSaveId']);	// user, section, object id
 		foreach ($autoSaveIdParts as & $part) {
 			$part = urldecode($part);
 		}
-		
+
 		$page = $autoSaveIdParts[2];	// plugins use global $page for approval
 		$info = $tikilib->get_page_info($page, false);
 		if (isset($_REQUEST['allowHtml']) || empty($info)) {
@@ -81,7 +81,7 @@ if (isset($_REQUEST['editor_id'])) {
 		$options = array('is_html' => ($info['is_html'] == 1), 'preview_mode' => true, 'process_wiki_paragraphs' => ($prefs['wysiwyg_htmltowiki'] === 'y' || $info['wysiwyg'] == 'n'), 'page' => $autoSaveIdParts[2]);
 
 		if (count($autoSaveIdParts) === 3 && !empty($user) && $user === $autoSaveIdParts[0] && $autoSaveIdParts[1] === 'wiki_page') {
-			
+
 			$editlib; include_once 'lib/wiki/editlib.php';
 			if (isset($_REQUEST['inPage'])) {
 				if (!isset($_REQUEST['diff_style'])) {	// use previously set diff_style
@@ -117,7 +117,7 @@ if (isset($_REQUEST['editor_id'])) {
 						}
 						$data = diff2($diffold, $diffnew, $_REQUEST["diff_style"]);
 						$smarty->assign_by_ref('diffdata', $data);
-						
+
 						$smarty->assign('translation_mode', 'y');
 						$data = $smarty->fetch('pagehistory.tpl');
 					}
@@ -125,10 +125,10 @@ if (isset($_REQUEST['editor_id'])) {
 					$data = $tikilib->parse_data($data, $options);
 				}
 				echo $data;
-				
+
 			} else {					// popup window
 				$headerlib->add_js(
-								'function get_new_preview() {
+					'function get_new_preview() {
 		$("body").css("opacity", 0.6);
 		location.replace("' . $tikiroot . 'tiki-auto_save.php?editor_id=' . $_REQUEST['editor_id'] . '&autoSaveId=' . $_REQUEST['autoSaveId'] . '");
 	}

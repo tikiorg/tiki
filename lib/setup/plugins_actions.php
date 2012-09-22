@@ -40,7 +40,7 @@ foreach ( $plugins_actions as $plugin_type => $v ) {
 					$smarty->display('error.tpl');
 					die;
 				}
-							break;
+				break;
 		}
 	}
 }

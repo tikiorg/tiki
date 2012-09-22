@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -21,7 +21,7 @@ class MultilineGraphic extends GridBasedGraphic
 		GridBasedGraphic::GridBasedGraphic();
 		$this->lines = array();
 	}
-	
+
 	function getRequiredSeries()
 	{
 		return array(
@@ -42,7 +42,7 @@ class MultilineGraphic extends GridBasedGraphic
 				$extremes[] = min($line);
 
 			$min = min($extremes);
-						break;
+			break;
 
 		case 'independant':
 			$extremes = array();
@@ -82,7 +82,7 @@ class MultilineGraphic extends GridBasedGraphic
 	{
 		return array();
 	}
-	
+
 	function _handleData( $data )
 	{
 		$lines = array();
@@ -119,7 +119,7 @@ class MultilineGraphic extends GridBasedGraphic
 
 		return true;
 	}
-	
+
 	function _drawGridContent( &$renderer )
 	{
 		$layout = $this->_layout();
@@ -127,7 +127,7 @@ class MultilineGraphic extends GridBasedGraphic
 		foreach ($this->lines as $style => $line) {
 			$previous = null;
 			$style = $renderer->getStyle($style);
-			
+
 			foreach ( $line as $x => $y )
 				if ($layout['grid-independant-location'] == 'horizontal') {
 					$xPos = $this->independant->getLocation($x);

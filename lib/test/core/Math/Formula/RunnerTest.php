@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -12,10 +12,10 @@ class Math_Formula_RunnerTest extends TikiTestCase
 	function setUp()
 	{
 		$this->runner = new Math_Formula_Runner(
-						array(
-							'Math_Formula_Function_' => realpath(dirname(__FILE__) . '/../../../../core/Math/Formula/Function'),
-							'Math_Formula_DummyFunction_' => realpath(dirname(__FILE__) . '/DummyFunction'),
-						)
+			array(
+				'Math_Formula_Function_' => realpath(dirname(__FILE__) . '/../../../../core/Math/Formula/Function'),
+				'Math_Formula_DummyFunction_' => realpath(dirname(__FILE__) . '/DummyFunction'),
+			)
 		);
 	}
 
@@ -74,7 +74,7 @@ class Math_Formula_RunnerTest extends TikiTestCase
 	{
 		$this->runner->setFormula('(max -10 0 20)');
 		$this->assertEquals(20, $this->runner->evaluate());
-		
+
 		$this->runner->setFormula('(max -10 -5)');
 		$this->assertEquals(-5, $this->runner->evaluate());
 	}

@@ -54,8 +54,7 @@ function module_twitter( $mod_reference, $module_params )
 		if ($response == -1) {
 			$timeline[0]['text'] = tra('user not registered with twitter').": $user";
 		}
-		for ($i = 0, $count_response_status = count($response->status); $i < $count_response_status; $i++)
-		{
+		for ($i = 0, $count_response_status = count($response->status); $i < $count_response_status; $i++) {
 
 			$timeline[$i]['text']=$response->status[$i]->text;
 			$timeline[$i]['id']=$response->status[$i]->id;

@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -74,7 +74,7 @@ class Services_File_Controller
 		if ($file = $filegallib->lookup_source($url)) {
 			return $file;
 		}
-		
+
 		$info = $filegallib->get_info_from_url($url);
 
 		if (! $info) {
@@ -126,7 +126,8 @@ class Services_File_Controller
 	 * @param $input	string "name" for the filename to find
 	 * @return array	file info for most recent file by that name
 	 */
-	function action_find($input) {
+	function action_find($input)
+	{
 
 		$filegallib = TikiLib::lib('filegal');
 		$gal_info = $this->checkTargetGallery($input);

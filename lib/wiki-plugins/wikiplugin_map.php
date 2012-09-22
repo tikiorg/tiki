@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -198,7 +198,7 @@ function wp_map_mapserver($params)
 			$extdata="minx=".$minx."&maxx=".$maxx."&miny=".$miny."&maxy=".$maxy."&zoom=1&";
 		}
 	}
-	
+
 	$sizedata="";
 	if (isset($size)) {
 		$sizedata="size=".intval($size)."&";
@@ -210,7 +210,7 @@ function wp_map_mapserver($params)
 	$heightdata="";
 	if (isset($height)) {
 		$heightdata='height="'.intval($height).'"';
-	}	
+	}
 	if (@$prefs['feature_maps'] != 'y') {
 		$map=tra("Feature disabled");
 	} else {
@@ -310,7 +310,7 @@ function init() {
 			title: $(dialog).data('title')
 		})
 		.append($('<div class="current" style="height: $size;"/>'));
-	
+
 	$.each($json, function (k, color) {
 		$(dialog).append(
 			$('<div style="float: left; width: $size; height: $size;"/>')
@@ -403,7 +403,8 @@ FULL;
 	return "<div id=\"$target\" data-title=\"$title\"></div>";
 }
 
-function wp_map_color_filter ($color) {
+function wp_map_color_filter ($color)
+{
 	$color = strtolower($color);
 	if (preg_match('/^[0-9a-f]{3}([0-9a-f]{3})?$/', $color)) {
 		return "#$color";

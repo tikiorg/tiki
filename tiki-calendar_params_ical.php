@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -29,7 +29,7 @@ if (isset($_SESSION['CalendarViewMode'])) {
 		case 'month':
 			$startTime = mktime(0, 0, 0, $now[0], 1, $now[2]);
 			$stopTime = mktime(0, 0, 0, $now[0]+1, 0, $now[2]);
-						break;
+			break;
 		default:
 			$startTime = mktime(0, 0, 0, $now[0], $now[1]-1, $now[2]);
 			$stopTime = mktime(0, 0, 0, $now[0], $now[1]+1, $now[2]);

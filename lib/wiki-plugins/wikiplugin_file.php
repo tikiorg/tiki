@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -18,7 +18,7 @@ function wikiplugin_file_info()
 		'prefs' => array( 'wikiplugin_file' ),
 		'body' => tra('Label for the link to the file (ignored if the file is a wiki attachment)'),
 		'icon' => 'img/icons/file-manager.png',
-		'tags' => array( 'basic' ),		
+		'tags' => array( 'basic' ),
 		'params' => array(
 			'type' => array(
 				'required' => true,
@@ -27,15 +27,15 @@ function wikiplugin_file_info()
 				'filter' => 'alpha',
 				'default' => '',
 				'options' => array(
-					array('text' => '', 'value' => ''), 
+					array('text' => '', 'value' => ''),
 				), //rest filled in below
 			),
 			'name' => array(
 				'required' => true,
 				'name' => tra('Name'),
 				'description' => tra(
-								'Identify an attachment by entering its file name, which will show as a link to the file.
-								 If the page parameter is empty, it must be a file name of an attachment to the page where the plugin is used.'
+					'Identify an attachment by entering its file name, which will show as a link to the file.
+					 If the page parameter is empty, it must be a file name of an attachment to the page where the plugin is used.'
 				),
 				'default' => '',
 				'parent' => array('name' => 'type', 'value' => 'attachment'),
@@ -61,8 +61,8 @@ function wikiplugin_file_info()
 				'name' => tra('Attachment Description'),
 				'description' => tra('Show the attachment description as the link label instead of the attachment file name.'),
 				'options' => array(
-					array('text' => '', 'value' => ''), 
-					array('text' => tra('Yes'), 'value' => 1),  
+					array('text' => '', 'value' => ''),
+					array('text' => tra('Yes'), 'value' => 1),
 					array('text' => tra('No'), 'value' => 0),
 				),
 				'parent' => array('name' => 'type', 'value' => 'attachment'),
@@ -77,8 +77,8 @@ function wikiplugin_file_info()
 				'advanced' => true,
 				'default' => '',
 				'options' => array(
-					array('text' => '', 'value' => ''), 
-					array('text' => tra('Yes'), 'value' => 1), 
+					array('text' => '', 'value' => ''),
+					array('text' => tra('Yes'), 'value' => 1),
 					array('text' => tra('No'), 'value' => 0)
 				),
 			),
@@ -108,8 +108,8 @@ function wikiplugin_file_info()
 				'parent' => array('name' => 'type', 'value' => 'gallery'),
 				'default' => '',
 				'options' => array(
-					array('text' => '', 'value' => ''), 
-					array('text' => tra('Yes'), 'value' => 'y'), 
+					array('text' => '', 'value' => ''),
+					array('text' => tra('Yes'), 'value' => 'y'),
 					array('text' => tra('No'), 'value' => 'n')
 				),
 				'advanced' => true,
@@ -165,7 +165,7 @@ function wikiplugin_file( $data, $params )
 				return tra('Incorrect parameter').' fileId';
 			}
 		}
-			
+
 		if (empty($data)) { // to avoid problem with parsing
 			$data = empty($info['name'])?$info['filename']: $info['name'];
 		}
@@ -178,7 +178,7 @@ function wikiplugin_file( $data, $params )
 
 	if ($prefs['feature_wiki_attachments'] != 'y') {
 		return "<span class='warn'>" . tra("Wiki attachments are disabled."). "</span>";
-	}	
+	}
 	$filedata = array();
 	$filedata["name"] = '';
 	$filedata["desc"] = '';

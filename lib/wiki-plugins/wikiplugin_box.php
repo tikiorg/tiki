@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -14,7 +14,7 @@ function wikiplugin_box_info()
 		'prefs' => array('wikiplugin_box'),
 		'body' => tra('text'),
 		'icon' => 'img/icons/layout_header.png',
-		'tags' => array( 'basic' ),		
+		'tags' => array( 'basic' ),
 		'params' => array(
 			'title' => array(
 				'required' => false,
@@ -39,24 +39,24 @@ function wikiplugin_box_info()
 				'filter' => 'alpha',
 				'default' => '',
 				'options' => array(
-					array('text' => '', 'value' => ''), 
-					array('text' => tra('Right'), 'value' => 'right'), 
-					array('text' => tra('Center'), 'value' => 'center'), 
+					array('text' => '', 'value' => ''),
+					array('text' => tra('Right'), 'value' => 'right'),
+					array('text' => tra('Center'), 'value' => 'center'),
 				),
 			),
 			'float' => array(
 				'required' => false,
 				'name' => tra('Float Position'),
 				'description' => tra(
-								'Set the alignment for the entire box. For elements with a width of less than 100%, other elements will wrap around it 
-								unless the clear parameter is appropriately set.)'
+					'Set the alignment for the entire box. For elements with a width of less than 100%, other elements will wrap around it
+					unless the clear parameter is appropriately set.)'
 				),
 				'filter' => 'alpha',
 				'default' => '',
 				'options' => array(
-					array('text' => '', 'value' => ''), 
-					array('text' => tra('Left'), 'value' => 'left'), 
-					array('text' => tra('Right'), 'value' => 'right'), 
+					array('text' => '', 'value' => ''),
+					array('text' => tra('Left'), 'value' => 'left'),
+					array('text' => tra('Right'), 'value' => 'right'),
 				),
 			),
 			'clear' => array(
@@ -66,8 +66,8 @@ function wikiplugin_box_info()
 				'filter' => 'text',
 				'default' => '',
 				'options' => array(
-					array('text' => '', 'value' => ''), 
-					array('text' => tra('Yes'), 'value' => 1), 
+					array('text' => '', 'value' => ''),
+					array('text' => tra('Yes'), 'value' => 1),
 					array('text' => tra('No'), 'value' => 0)
 				),
 			),
@@ -88,10 +88,10 @@ function wikiplugin_box_info()
 function wikiplugin_box($data, $params)
 {
 	global $tikilib;
-	
+
 	// Remove first <ENTER> if exists...
 	// if (substr($data, 0, 2) == "\r\n") $data = substr($data, 2);
-    
+
 	extract($params, EXTR_SKIP);
 	$bg   = (isset($bg))    ? " background:$bg" : "";
 	$id = (isset($id)) ? " id=\"$id\" ":'';
@@ -104,7 +104,7 @@ function wikiplugin_box($data, $params)
     } else {
 	$begin = "<div class='cbox$class' $id style='$bg;$f;margin:1em;margin-$float:0;$w;$c'>";
 	}
-    
+
 	if (isset($title)) {
 		$begin .= "<div class='cbox-title'>$title</div>";
 	}

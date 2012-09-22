@@ -251,7 +251,7 @@ class ThemeGenLib
 			die;
 		}
 
-		$this->currentTheme->initDone = true;		
+		$this->currentTheme->initDone = true;
 	}
 
 	private function findContexts( &$items, $haystack, $regexp)
@@ -388,7 +388,6 @@ class ThemeGenTheme extends SerializedList
 
 	public function __construct($name)
 	{
-
 		parent::__construct($name);
 	}
 

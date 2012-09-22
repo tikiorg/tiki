@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -16,14 +16,14 @@ class Tracker_Field_Factory
 	function __construct($trackerDefinition)
 	{
 		$this->trackerDefinition = $trackerDefinition;
-		
+
 		$fieldMap = $this->buildTypeMap(
-					array(
-						'lib/core/Tracker/Field' => 'Tracker_Field_',
-					)
+			array(
+				'lib/core/Tracker/Field' => 'Tracker_Field_',
+			)
 		);
 	}
-	
+
 	private function getPreCacheTypeMap()
 	{
 		if (!empty(self::$trackerFieldLocalCache)) {
@@ -34,7 +34,7 @@ class Tracker_Field_Factory
 
 		return false;
 	}
-	
+
 	private function setPreCacheTypeMap($data)
 	{
 		self::$trackerFieldLocalCache = array(
@@ -42,12 +42,12 @@ class Tracker_Field_Factory
 			'info' => $data['infoMap']
 		);
 	}
-	
+
 	private function buildTypeMap($paths)
 	{
 		global $prefs;
 		$cacheKey = 'fieldtypes.' . $prefs['language'];
-		
+
 		if ($this->getPreCacheTypeMap()) {
 			return;
 		}
@@ -56,7 +56,7 @@ class Tracker_Field_Factory
 		if ($data = $cachelib->getSerialized($cacheKey)) {
 			$this->typeMap = $data['typeMap'];
 			$this->infoMap = $data['infoMap'];
-			
+
 			$this->setPreCacheTypeMap($data);
 			return;
 		}
@@ -117,7 +117,7 @@ class Tracker_Field_Factory
 			}
 
 			if (class_exists($class) && is_callable(array($class, 'build'))) {
-				return call_user_func(array($class, 'build'), $type, $this->trackerDefinition, $field_info, $itemData); 
+				return call_user_func(array($class, 'build'), $type, $this->trackerDefinition, $field_info, $itemData);
 			} else {
 				return new $class($field_info, $itemData, $this->trackerDefinition);
 			}

@@ -83,7 +83,8 @@ if ($prefs['feature_jquery'] == 'y') {
 	// JS to handle theme/option changes client-side
 	// the var (style_options) has to be declared in the same block for AJAX call scope
 	$none = json_encode(tr('None'));
-	$headerlib->add_js(<<<JS
+	$headerlib->add_js(
+<<<JS
 $js
 
 \$(document).ready( function() {

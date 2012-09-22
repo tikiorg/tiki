@@ -14,43 +14,43 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 function smarty_function_breadcrumbs($params, $smarty)
 {
 	global $prefs;
-    extract($params);
-	
-    if (empty($crumbs)) {
-        trigger_error("assign: missing 'crumbs' parameter");
-        return;
-    }
-    if (empty($loc)) {
-        trigger_error("assign: missing 'loc' parameter");
-        return;
-    }
-    if ($type === 'pagetitle' && $prefs['site_title_breadcrumb'] === 'y') {
-    	$type = 'desc';
-    }
+	extract($params);
+
+	if (empty($crumbs)) {
+		trigger_error("assign: missing 'crumbs' parameter");
+		return;
+	}
+	if (empty($loc)) {
+		trigger_error("assign: missing 'loc' parameter");
+		return;
+	}
+	if ($type === 'pagetitle' && $prefs['site_title_breadcrumb'] === 'y') {
+		$type = 'desc';
+	}
 	$showLinks = empty($params['showLinks']) || $params['showLinks'] == 'y';
-    $text_to_display = '';
-    switch ($type) {
+	$text_to_display = '';
+	switch ($type) {
 		case 'invertfull':
 			$text_to_display = breadcrumb_buildHeadTitle(array_reverse($crumbs));
-      break;
-        case 'fulltrail':
+			break;
+		case 'fulltrail':
 			$text_to_display = breadcrumb_buildHeadTitle($crumbs);
-            break;
-        case 'pagetitle':
+			break;
+		case 'pagetitle':
 			$text_to_display = breadcrumb_getTitle($crumbs, $loc);
-            break;
-        case 'desc':
+			break;
+		case 'desc':
 			$text_to_display = breadcrumb_getDescription($crumbs, $loc);
-            break;
-        case 'trail':
-        default:
+			break;
+		case 'trail':
+		default:
 			$text_to_display = breadcrumb_buildTrail($crumbs, $loc, $showLinks);
-            break;
+			break;
     }
     if (!empty($machine_translate)) {
     	require_once('lib/core/Multilingual/MachineTranslation/GoogleTranslateWrapper.php');
 		$translator = new Multilingual_MachineTranslation_GoogleTranslateWrapper($source_lang, $target_lang);
-		$text_to_display = $translator->translateText($text_to_display);	
+		$text_to_display = $translator->translateText($text_to_display);
     }
     print($text_to_display);
 

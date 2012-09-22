@@ -109,7 +109,7 @@ function wikiplugin_trackerquerytemplate($data, $params)
 		$params
 	);
 
-	foreach($params as &$param) {//We parse the variables
+	foreach ($params as &$param) {//We parse the variables
 		$param = $handler->parse($param);
 	}
 

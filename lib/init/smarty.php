@@ -64,21 +64,21 @@ class Smarty_Tiki extends Smarty
 		$this->setTemplateDir(null);
 		if ( !empty($tikidomain) && $tikidomain !== '/' ) {
 			$this->addTemplateDir($this->main_template_dir.'/'.$tikidomain.'/styles/'.$style_base.'/');
-			$this->addTemplatedir($this->main_template_dir.'/'.$tikidomain.'/'); 
+			$this->addTemplatedir($this->main_template_dir.'/'.$tikidomain.'/');
 		}
-		$this->addTemplateDir($this->main_template_dir.'/styles/'.$style_base.'/'); 
-		$this->addTemplateDir($this->main_template_dir); 
-		
+		$this->addTemplateDir($this->main_template_dir.'/styles/'.$style_base.'/');
+		$this->addTemplateDir($this->main_template_dir);
+
 		$this->setCompileDir(realpath("templates_c/$tikidomain"));
 		$this->setConfigDir(null);
 		$this->compile_check = ( $prefs['smarty_compilation'] != 'never' );
 		$this->force_compile = ( $prefs['smarty_compilation'] == 'always' );
 		$this->assign('app_name', 'Tiki');
 		$this->setPluginsDir(
-						array(	// the directory order must be like this to overload a plugin
-							TIKI_SMARTY_DIR,
-							SMARTY_DIR.'plugins'
-						)
+			array(	// the directory order must be like this to overload a plugin
+				TIKI_SMARTY_DIR,
+				SMARTY_DIR.'plugins'
+			)
 		);
 
 		if ( $prefs['smarty_security'] == 'y' ) {

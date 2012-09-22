@@ -118,7 +118,7 @@ function smarty_block_tabset($params, $content, $smarty, &$repeat)
 			$ret .= '</ul></div>';
 
 		} else {	// notmal non-mobile rendering
-			
+
 			$ret .= '<div class="container' . $content_class . '">';
 			foreach ($smarty_tabset[$tabset_index]['tabs'] as $value) {
 				$ret .= '<span class="tabmark tab'.$count.' '.($count == $cookietab ? 'tabactive' : '').'">'.
@@ -133,7 +133,7 @@ function smarty_block_tabset($params, $content, $smarty, &$repeat)
 		// add some jq to initialize the tab, needed when page is cached
 		if ($tabset_index === 1) {		// override cookie with query cookietab
 			$headerlib->add_jq_onready(
-							'
+				'
 var ctab = location.search.match(/cookietab=(\d+)/);
 if (ctab) {
 	setCookie("'.$smarty_tabset_name.'", ctab[1],"tabs");

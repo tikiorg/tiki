@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -16,7 +16,7 @@ class Search_Formatter_ValueFormatter_Trackerrender extends Search_Formatter_Val
 			$this->list_mode = 'y';
 		}
 	}
-	
+
 	function render($name, $value, array $entry)
 	{
 		if (substr($name, 0, 14) !== 'tracker_field_') {
@@ -39,17 +39,17 @@ class Search_Formatter_ValueFormatter_Trackerrender extends Search_Formatter_Val
 
 		$trklib = TikiLib::lib('trk');
 		return '~np~' . $trklib->field_render_value(
-						array(
-							'item' => $item,
-							'field' => $field,
-							'process' => 'y',
-							'search_render' => 'y',
-							'list_mode' => $this->list_mode,
-						)
+			array(
+				'item' => $item,
+				'field' => $field,
+				'process' => 'y',
+				'search_render' => 'y',
+				'list_mode' => $this->list_mode,
+			)
 		) . '~/np~';
 	}
 
-	function canCache() 
+	function canCache()
 	{
 		if ($this->cancache === null) {
 			trigger_error('Search_Formatter_ValueFormatter_Trackerrender->canCache() called before field rendered, assuming "true"');

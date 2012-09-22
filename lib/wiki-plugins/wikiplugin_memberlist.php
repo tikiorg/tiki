@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -234,8 +234,8 @@ function wikiplugin_memberlist( $data, $params )
 		$prefs['feature_tabs'] = 'n';
 		// css workarounds for when in non tabs mode
 		TikiLib::lib('header')->add_css(
-						'.memberlist > fieldset { border: none; margin:  0; padding:  0; }
-						.memberlist > fieldset > legend { display: none; }'
+			'.memberlist > fieldset { border: none; margin:  0; padding:  0; }
+			.memberlist > fieldset > legend { display: none; }'
 		);
 	}
 	$out = '~np~' . $smarty->fetch('wiki-plugins/wikiplugin_memberlist.tpl') . '~/np~';
@@ -270,7 +270,7 @@ function wikiplugin_memberlist_get_group_details( $groups, $maxRecords = -1, $so
 		if ( ! $userlib->group_exists($groupName) ) {
 			continue;
 		}
-		
+
 		$perms = Perms::get(array( 'type' => 'group', 'object' => $groupName ));
 
 		if ( $perms->group_view ) {

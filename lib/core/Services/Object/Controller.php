@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
@@ -10,7 +10,7 @@ class Services_Object_Controller
 	{
 		global $prefs;
 		$supported = array();
-		
+
 		if ($prefs['feature_trackers'] == 'y') {
 			$supported[] = 'trackeritem';
 		}
@@ -71,7 +71,8 @@ class Services_Object_Controller
 	 *
 	 * @param $input jit filtered input object
 	 */
-	function action_report_error($input) {
+	function action_report_error($input)
+	{
 		TikiLib::lib('errorreport')->report($input->message->text());
 		TikiLib::lib('errorreport')->send_headers();
 	}

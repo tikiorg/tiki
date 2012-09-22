@@ -52,8 +52,8 @@ if ( ! $user && ! $config->canExecuteChannels($channels, $groups) ) {
 
 if ( ! $config->canExecuteChannels($channels, $groups) ) {
 	$access->display_error(
-					'tiki-channel.php',
-					tra('One of the requested channels cannot be requested. It does not exist or permission is denied.')
+		'tiki-channel.php',
+		tra('One of the requested channels cannot be requested. It does not exist or permission is denied.')
 	);
 }
 

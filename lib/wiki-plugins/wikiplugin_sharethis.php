@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -19,26 +19,26 @@ function wikiplugin_sharethis_info()
 				'required' => false,
 				'name' => tra('Send Services'),
 				'description' => tra('By default, email, aim and sms are available. Input one or two of the services separated by a | to limit the choice of send services.'),
-				'default' => '',	
-				'advanced' => true,		
+				'default' => '',
+				'advanced' => true,
 				'options' => array(
-					array('text' => '', 'value' => ''), 
-					array('text' => tra('Aim'), 'value' => 'aim'), 
-					array('text' => tra('Aim $ Email'), 'value' => 'aim|email'), 
-					array('text' => tra('Aim $ Sms'), 'value' => 'aim|sms'), 
-					array('text' => tra('Email'), 'value' => 'email'), 
-					array('text' => tra('Email $ Sms'), 'value' => 'email|sms'), 
+					array('text' => '', 'value' => ''),
+					array('text' => tra('Aim'), 'value' => 'aim'),
+					array('text' => tra('Aim $ Email'), 'value' => 'aim|email'),
+					array('text' => tra('Aim $ Sms'), 'value' => 'aim|sms'),
+					array('text' => tra('Email'), 'value' => 'email'),
+					array('text' => tra('Email $ Sms'), 'value' => 'email|sms'),
 				)
 			),
 			'style' => array(
 				'required' => false,
 				'name' => tra('Button Style'),
 				'description' => tra('Set button style: horizontal, vertical or rotate.'),
-				'default' => '',			
+				'default' => '',
 				'options' => array(
-					array('text' => tra(''), 'value' => ''), 
-					array('text' => tra('Horizontal'), 'value' => 'horizontal'), 
-					array('text' => tra('Vertical'), 'value' => 'vertical'), 
+					array('text' => tra(''), 'value' => ''),
+					array('text' => tra('Horizontal'), 'value' => 'horizontal'),
+					array('text' => tra('Vertical'), 'value' => 'vertical'),
 					array('text' => tra('Rotate'), 'value' => 'rotate')
 					)
 			),
@@ -48,8 +48,8 @@ function wikiplugin_sharethis_info()
 				'description' => tra('A value of y (Yes) will cause the button icon to rotate every 3 seconds between a few icons, cycling through twice before stopping.'),
 				'default' => '',
 				'options' => array(
-					array('text' => '', 'value' => ''), 
-					array('text' => tra('Yes'), 'value' => 'y'), 
+					array('text' => '', 'value' => ''),
+					array('text' => tra('Yes'), 'value' => 'y'),
 					array('text' => tra('No'), 'value' => 'n')
 				)
 			),
@@ -64,7 +64,7 @@ function wikiplugin_sharethis_info()
 				'name' => tra('First Services Shown'),
 				'description' => tra('Input a list of post services (like Facebook, Myspace, Digg, etc.) separated by a | to customize the services that are shown in the opening panel of the widget.'),
 				'filter' => 'alpha',
-				'advanced' => true,		
+				'advanced' => true,
 				'default' => '',
 			),
 			'buttontext' => array(
@@ -83,43 +83,43 @@ function wikiplugin_sharethis_info()
 				'required' => false,
 				'name' => tra('Header Background'),
 				'description' => tra('HTML color code (not color name) for the background color for the header if an optional header title is used.'),
-				'advanced' => true,		
+				'advanced' => true,
 				'default' => '',
 			),
 			'headertxtcolor' => array(
 				'required' => false,
 				'name' => tra('Header Text Color'),
 				'description' => tra('HTML color code (not color name) for the header text if an optional header title is used.'),
-				'advanced' => true,		
+				'advanced' => true,
 				'default' => '',
 			),
 			'linkfg' => array(
 				'required' => false,
 				'name' => tra('Link text color for services'),
 				'description' => tra('HTML color code (not color name) for the link text for all send and post services shown in the widget'),
-				'advanced' => true,		
+				'advanced' => true,
 				'default' => '',
 			),
 			'popup' => array(
 				'required' => false,
 				'name' => tra('Pop-up'),
 				'description' => tra('A value of true will cause the widget to show in a pop-up window.'),
-				'advanced' => true,		
-				'default' => '',		
+				'advanced' => true,
+				'default' => '',
 				'options' => array(
-					array('text' => '', 'value' => ''), 
-					array('text' => tra('True'), 'value' => 'true'), 
+					array('text' => '', 'value' => ''),
+					array('text' => tra('True'), 'value' => 'true'),
 				)
 			),
 			'embed' => array(
 				'required' => false,
 				'name' => tra('Embedded Elements'),
 				'description' => tra('A value of true will allow embedded elements (like flash) to be seen while iframe is loading.'),
-				'advanced' => true,		
-				'default' => '',		
+				'advanced' => true,
+				'default' => '',
 				'options' => array(
-					array('text' => '', 'value' => ''), 
-					array('text' => tra('True'), 'value' => 'true'), 
+					array('text' => '', 'value' => ''),
+					array('text' => tra('True'), 'value' => 'true'),
 				)
 			),
 		)
@@ -175,26 +175,26 @@ function wikiplugin_sharethis($data, $params)
 		$headerlib->add_css('a.stbar.chicklet {height:16px;line-height:16px;}');
 		$icons = explode('|', $multiple);
 		foreach ($icons as $icon) {
-			$iconcode .= '<a id="ck_' . $icon . '" class="stbar chicklet" href="javascript:void(0);">' 
+			$iconcode .= '<a id="ck_' . $icon . '" class="stbar chicklet" href="javascript:void(0);">'
 							. '<img src="https://ws.sharethis.com/chicklets/' . $icon . '.gif" style="margin-right:3px;" />';
 			if ($icon == 'sharethis') {
 				$iconcode .= 'ShareThis';
 			}
-			$iconcode .= '</a>'; 
+			$iconcode .= '</a>';
 		}
 		$headerlib->add_js(
-						'	var shared_object = SHARETHIS.addEntry({
+			'	var shared_object = SHARETHIS.addEntry({
 						title: document.title,
 						url: document.location.href
 					});
-					
+
 					shared_object.attachButton(document.getElementById("ck_sharethis"));
 					shared_object.attachChicklet("email", document.getElementById("ck_email"));
 					shared_object.attachChicklet("facebook", document.getElementById("ck_facebook"));
 					shared_object.attachChicklet("twitter", document.getElementById("ck_twitter"));'
 		);
 	}
-	
+
 	// set button text
 	if (!empty($buttontext)) {
 		$sharethis_options['buttontext'] = $buttontext;
@@ -230,24 +230,24 @@ function wikiplugin_sharethis($data, $params)
 	$sharethiscode = "~hc~ ))ShareThis(( Bookmark Button BEGIN ~/hc~";
 	$sharethiscode .= '<script type="text/javascript" src="https://ws.sharethis.com/button/sharethis.js#';
 	$sharethiscode .= "type=".$sharethis_options['type'];
-	
+
 	if (!empty($sharethis_options['buttontext'])) $sharethiscode .= $sep."buttonText=".$sharethis_options['buttontext'];
 	if (!empty($sharethis_options['popup'])) $sharethiscode .= $sep."popup=".$sharethis_options['popup'];
 	if (!empty($sharethis_options['embed'])) $sharethiscode .= $sep."embeds=".$sharethis_options['embed'];
 	if (!empty($sharethis_options['style'])) $sharethiscode .= $sep."style=".$sharethis_options['style'];
 	if (!empty($sharethis_options['sendsvcs'])) $sharethiscode .= $sep."send_services=".$sharethis_options['sendsvcs'];
 	if (!empty($sharethis_options['postfirst'])) $sharethiscode .= $sep."post_services=".$sharethis_options['postfirst'];
-	if (!empty($sharethis_options['headertxtcolor'])) $sharethiscode .= $sep."headerfg=".$lb.$sharethis_options['headertxtcolor'];	
-	if (!empty($sharethis_options['headerbg'])) $sharethiscode .= $sep."headerbg=".$lb.$sharethis_options['headerbg'];	
+	if (!empty($sharethis_options['headertxtcolor'])) $sharethiscode .= $sep."headerfg=".$lb.$sharethis_options['headertxtcolor'];
+	if (!empty($sharethis_options['headerbg'])) $sharethiscode .= $sep."headerbg=".$lb.$sharethis_options['headerbg'];
 	if (!empty($sharethis_options['linkfg'])) $sharethiscode .= $sep."linkfg=".$lb.$sharethis_options['linkfg'];
 	if (!empty($sharethis_options['headertitle'])) $sharethiscode .= $sep."headerTitle=".$sharethis_options['headertitle'];
 	if (!empty($iconcode)) $sharethiscode .= ';button=false';
 	$sharethiscode .= "\"></script>\n";
-	if (!empty($iconcode)) $sharethiscode .= $iconcode;	
+	if (!empty($iconcode)) $sharethiscode .= $iconcode;
 	$sharethiscode .= "~hc~ ))ShareThis(( Bookmark Button END ~/hc~";
 
 	$result = $sharethiscode;
-	
+
 	return $result;
 
 }

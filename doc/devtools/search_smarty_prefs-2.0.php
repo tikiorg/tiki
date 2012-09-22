@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -41,7 +41,7 @@ foreach ($elems as $filename) {
 			if ($count) {
 				foreach($matchs[1] as $v)
 					$gmatchs[] = $v;
-		 }
+			}
 		}
 		if (count($gmatchs)) {
 			//var_dump($matchs);

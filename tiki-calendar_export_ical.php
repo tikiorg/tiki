@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -21,7 +21,7 @@ include_once ('lib/calendar/calendarlib.php');
 if ( ! isset($calendarViewMode) ) {
 // ###trebly:B10111:[FIX-ADD-ENH]-> $calendarViewMode become an array, several bugs comes from confusion of global values and parameters by ref
 // for calendars : (main-)calendar, action_calendar, mod_calendar, mod_action_calendar the changes of values by url request is terrible
-// for the moment 01/11/2011:11:55 just one value is used with index 'default', but initialisation is done. 
+// for the moment 01/11/2011:11:55 just one value is used with index 'default', but initialisation is done.
 // The init is actually into two places, tiki-calendar_setup.php and tiki-calendar_export.php will be grouped for clean
 // $prefs would be added when need, $_SESSION, $PARAMS too this now generates not any change in the behavior.
 $calendarViewMode=array(casedefault=>'month',calgen=>'month',calaction=>'month',modcalgen=>'month',modcalaction=>'month',trackercal=>'month');
@@ -51,7 +51,7 @@ if ( isset($_SESSION['CalendarFocusDate']) ) {
 }
 
 if (isset($_REQUEST['start_date_Month'])) {
-	$startTime = TikiLib::make_time(0, 0, 0, $_REQUEST['start_date_Month'],	$_REQUEST['start_date_Day'], $_REQUEST['start_date_Year']);
+	$startTime = TikiLib::make_time(0, 0, 0, $_REQUEST['start_date_Month'], $_REQUEST['start_date_Day'], $_REQUEST['start_date_Year']);
 } elseif (isset($_REQUEST["tstart"])) {
 	$startTime = $_REQUEST["tstart"];
 }
@@ -72,7 +72,7 @@ if ($calendarViewMode['casedefault'] == 'month') {
 $stopTime = $endDate->getTime();
 
 if (isset($_REQUEST['stop_date_Month'])) {
-	$stopTime = TikiLib::make_time(0, 0, 0, $_REQUEST['stop_date_Month'],	$_REQUEST['stop_date_Day'], $_REQUEST['stop_date_Year']);
+	$stopTime = TikiLib::make_time(0, 0, 0, $_REQUEST['stop_date_Month'], $_REQUEST['stop_date_Day'], $_REQUEST['stop_date_Year']);
 } elseif (isset($_REQUEST["tstop"])) {
 	$stopTime = $_REQUEST["tstop"];
 }
@@ -101,7 +101,7 @@ $smarty->assign('calendars', $calendars["data"]);
 
 // export calendar //
 if ( ((is_array($calendarIds) && (count($calendarIds) > 0)) or isset($_REQUEST["calendarItem"]) ) && $_REQUEST["export"]=='y') {
-	// get calendar events 
+	// get calendar events
 	if ( !isset($_REQUEST["calendarItem"]) ) {
 		$events = $calendarlib->list_raw_items($calendarIds, $user, $startTime, $stopTime, -1, $maxRecords, $sort_mode = 'start_asc', $find = '');
 	} else {
@@ -146,7 +146,7 @@ if ( ((is_array($calendarIds) && (count($calendarIds) > 0)) or isset($_REQUEST["
 				$ea['Attendees']=$event['participants'];
 			}
 			$ea['LastModified']=$event['lastModif'];
-			// Second character of duration value must be a 'P' ?? 
+			// Second character of duration value must be a 'P' ??
 			$ea['Duration']=($event['end'] - $event['start']);
 			$ea['Contact']=array($event['user']);
 			$ea['organizer']=array($event['organizers']);
@@ -165,7 +165,7 @@ if ( ((is_array($calendarIds) && (count($calendarIds) > 0)) or isset($_REQUEST["
 		// These two lines fix pb with IE and HTTPS
 		header("Cache-Control: private");
 		header("Pragma: dummy=bogus");
-		// Outlook needs iso8859 encoding 
+		// Outlook needs iso8859 encoding
 		header("Content-Type:text/calendar; method=REQUEST; charset=iso-8859-15");
 		header("Content-Transfer-Encoding:quoted-printable");
 		$re_encode = stripos($_SERVER['HTTP_USER_AGENT'], 'windows');	// only re-encode to ISO-8859-15 if client on Windows

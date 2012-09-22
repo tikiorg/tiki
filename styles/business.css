@@ -188,7 +188,7 @@ hr {
 }
 
 /***** Site Header & Identity *****/
-/* Enable header and footer content to widen when middle has wide content. */ 
+/* Enable header and footer content to widen when middle has wide content. */
 body.fixed_width .fixedwidth .fixedwidth {
 	width: 100%;
 	padding: 0;
@@ -569,10 +569,7 @@ h3.box-title a:visited {
 .rbox-title {
 	background: #003371 url(business/header.png) repeat-x;
 	color: #fff;
-}
-
-.rbox-title {
-	margin-bottom: -.45em;	
+	margin-bottom: -.45em;
 }
 
 .rbox-data {
@@ -852,7 +849,7 @@ body.tiki_blogs .postbody {
 }
 
 .calfocuson {
-	font-size: 100%; 
+	font-size: 100%;
 	background: #f3e498;
 }
 

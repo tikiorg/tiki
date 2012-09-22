@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -25,13 +25,13 @@ $projectList = Tracker_Query::tracker("Project list")->byName()->query();
 
 if (isset($_REQUEST['all'])) { //all views all sheet items
 	$smarty->assign("all", true);
-	
+
 	$timeSheet = Tracker_Query::tracker("Time sheet")
 		->byName()
 		->query();
 } else {//views only your items
 	$smarty->assign("all", false);
-	
+
 	$timeSheet = Tracker_Query::tracker("Time sheet")
 		->byName()
 		->filter(array("field" => "Done by", "value" => $user))
@@ -58,17 +58,17 @@ $headerlib = TikiLib::lib("header")
 	->add_cssfile("lib/jquery/jtrack/css/jtrack.css")
 	->add_jsfile("lib/jquery/jtrack/js/domcached-0.1-jquery.js")
 	->add_jsfile("lib/jquery/jtrack/js/jtrack.js")
-	->add_jq_onready("
-	jTask.init();
-	
+	->add_jq_onready(
+		"jTask.init();
+
 	$.timesheetSpreadsheet = function() {
 		var table = $('<table title=/>').attr('title', tr('Local Cache (Not Committed)'));
 		table.append('<tr><td>Summary</td><td>Estimate</td><td>Time Spent</td></tr>');
-		
+
 		var rowI = 1;
 		for (var namespace in $.DOMCached.getStorage()) {
 			var row = $('<tr />').appendTo(table);
-			
+
 			row.append('<td>' + namespace + '</td>');
 			row.append('<td>' + $.DOMCached.get('estimate', namespace) + '</td>');
 			row.append('<td formula=\'ROUND(' + ($.DOMCached.get('timer', namespace) / 60) + ', 2)\'></td>');
@@ -78,9 +78,9 @@ $headerlib = TikiLib::lib("header")
 		row.append('<td>Totals</td>');
 		row.append('<td formula=\'ROUND(SUM(B2:B' + rowI + '), 2)\'/>');
 		row.append('<td formula=\'=ROUND(SUM(C2:C' + rowI + '), 2)\' />');
-		
+
 		$('#timesheetSpreadsheet').siblings().remove();
-		
+
 		var jS = $('#timesheetSpreadsheet').getSheet();
 		if (jS) {
 			$('#timesheetSpreadsheet')
@@ -88,7 +88,7 @@ $headerlib = TikiLib::lib("header")
 				.visible(function() {
 					jS.openSheet(table);
 				});
-		} else {		
+		} else {
 			$('#timesheetSpreadsheet')
 				.visible(function() {
 					$(this).sheet({
@@ -99,13 +99,13 @@ $headerlib = TikiLib::lib("header")
 				});
 		}
 	};
-	
+
 	$('.jtrack-create,.jtrack-update,.jtrack-remove,.jtrack-remove-all,.jtrack-cancel,.jtrack-power,#jtrack-button-remove,#jtrack-button-remove-all,#jtrack-button-create,#jtrack-button-update').live('click', function() {
 		$.timesheetSpreadsheet();
 	});
-	
+
 	$.timesheetSpreadsheet();
-	
+
 	$('#timeSheetSaved').visible(function() {
 		$(this).sheet({
 			buildSheet: true,
@@ -113,7 +113,7 @@ $headerlib = TikiLib::lib("header")
 			height: $('#jtrack-holder').height()
 		});
 	});
-	
+
 	$('#timeSheetCommit').click(function() {
 		$('#timeSheetTabs').modal(tr('Committing...'));
 		var stack = [];
@@ -166,11 +166,11 @@ $headerlib = TikiLib::lib("header")
 
 		return false;
 	});
-	
+
 	$('#timeSheetTabs')
 		.width($('#timeSheetTabs').parent().width())
-		.tabs();
-");
+		.tabs();"
+	);
 
 $smarty->assign('mid', 'tiki-timesheet.tpl');
 // use tiki_full to include include CSS and JavaScript

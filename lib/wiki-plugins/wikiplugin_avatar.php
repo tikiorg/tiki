@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -19,8 +19,8 @@ function wikiplugin_avatar_info()
 				'required' => false,
 				'name' => tra('Page'),
 				'description' => tra(
-								'The wiki page the avatar will link to. If empty and the user\'s information is public, 
-								then the avatar will link automatically the that user\'s user information page'
+					'The wiki page the avatar will link to. If empty and the user\'s information is public,
+					then the avatar will link automatically the that user\'s user information page'
 				),
 				'default' => ''
 			),
@@ -30,8 +30,8 @@ function wikiplugin_avatar_info()
 				'description' => tra('Align the avatar on the page'),
 				'filter' => 'word',
 				'options' => array(
-					array('text' => '', 'value' => ''), 
-					array('text' => tra('Right'), 'value' => 'right'), 
+					array('text' => '', 'value' => ''),
+					array('text' => tra('Right'), 'value' => 'right'),
 					array('text' => tra('Left'), 'value' => 'left')
 				),
 			),
@@ -60,11 +60,11 @@ function wikiplugin_avatar($data, $params)
 	else
 		$avatar = $tikilib->get_user_avatar($data);
 
-		
+
 	if (isset($fullsize) && $fullsize == 'y' && $prefs["user_store_file_gallery_picture"] == 'y') {
 		$avatar = '<img src="tiki-show_user_avatar.php?fullsize=y&user='. urlencode($data) . '"></img>';
 	}
-        
+
 	if (isset($page)) {
 		$avatar = "<a href='tiki-index.php?page=$page'>" . $avatar . '</a>';
 	} else if ($userlib->user_exists($data) && $tikilib->get_user_preference($data, 'user_information', 'public') == 'public') {

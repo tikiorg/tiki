@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -32,7 +32,7 @@ if (isset($_REQUEST["metric_submit"])) {
 	if (strlen($_REQUEST["metric_name"]) > $prefs['metrics_metric_name_length']) {
 	    $smarty->assign('msg', tr("Cannot create or update metric: Metric name must be under %0 characters in length.", $prefs['metrics_metric_name_length']));
 	    $smarty->display("error.tpl");
-	    die;	
+	    die;
 	}
 	if (empty($_REQUEST["metric_range"])) {
 	    $smarty->assign('msg', tra("Cannot create or update metric: You need to specify a range for the metric."));
@@ -49,9 +49,9 @@ if (isset($_REQUEST["metric_submit"])) {
 	    $smarty->display("error.tpl");
 	    die;
 	}
-	
+
 	check_ticket('admin-metrics');
-	
+
 	$smarty->assign('metric_name', $_REQUEST["metric_name"]);
 	$smarty->assign('metric_range', $_REQUEST["metric_range"]);
 	$smarty->assign('metric_datatype', $_REQUEST["metric_datatype"]);
@@ -80,21 +80,21 @@ if (isset($_REQUEST["tab_submit"])) {
 	if (strlen($_REQUEST["tab_name"]) > $prefs['metrics_tab_name_length']) {
 	    $smarty->assign('msg', tr("Cannot create or update tab: Tab name must be under %0 characters in length.", $prefs['metrics_tab_name_length']));
 	    $smarty->display("error.tpl");
-	    die;	
+	    die;
 	}
 	if (empty($_REQUEST["tab_order"]) || (!is_numeric($_REQUEST['tab_order']))) {
 	    $smarty->assign('msg', tra("Cannot create or update tab: You need to specify an integer range for the tab order."));
 	    $smarty->display("error.tpl");
 	    die;
 	}
-	
+
 	if (empty($_REQUEST["tab_content"])) {
 	    $smarty->assign('msg', tra("Cannot create or update tab: Tab content cannot be empty."));
 	    $smarty->display("error.tpl");
 	    die;
 	}
 	check_ticket('admin-metrics');
-	
+
 	$smarty->assign('tab_name', $_REQUEST["tab_name"]);
 	$smarty->assign('tab_order', $_REQUEST["tab_order"]);
 	$smarty->assign('tab_content', $_REQUEST["tab_content"]);
@@ -205,7 +205,7 @@ if (isset($_REQUEST["tab_clearcache"])) {
 		die;
 	}
 	$memcachelib->delete(
-					$memcachelib->buildKey(array('role' => 'metrics-tab-output', 'tab_id' => $_REQUEST["tab_clearcache"]))
+		$memcachelib->buildKey(array('role' => 'metrics-tab-output', 'tab_id' => $_REQUEST["tab_clearcache"]))
 	);
 	$logslib->add_log('adminmetrics', 'cleared cache for tab '.$_REQUEST["tab_clearcache"]);
 }

@@ -1031,8 +1031,9 @@ function wikiplugin_dbreport_parse(&$code)
 				case 0: // next keyword
 					switch ($token->type) {
 						case 'eof':
-							if (!isset($parse_report->sql))
+							if (!isset($parse_report->sql)) {
 								return wikiplugin_dbreport_parse_error($token, "Unexpected End.");
+							}
 							return $parse_report;
     						break;
 						case 'key':

@@ -2600,7 +2600,7 @@ class Comments extends TikiLib
 
 		$this->remove_reported($threadId);
 
-		$atts = $this->table('tiki_forum_attachments')->fetchAll(array('attId'),array('threadId' => $threadId));
+		$atts = $this->table('tiki_forum_attachments')->fetchAll(array('attId'), array('threadId' => $threadId));
 		foreach ( $atts as $att ) {
 			$this->remove_thread_attachment($att['attId']);
 		}

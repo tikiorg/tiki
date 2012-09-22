@@ -1,5 +1,5 @@
 /* $Id$
-	Didiem (dediem.css) theme option for the Jqui theme of Tiki Wiki CMS Groupware. 
+	Didiem (dediem.css) theme option for the Jqui theme of Tiki Wiki CMS Groupware.
 	Adapted with permission from a Doubledot Media Limited (http://www.doubledotmedia.com) design.
 	Visit http://themes.tiki.org for more information about this implementation for Tiki.
 	CSS3 background gradients created at http://www.colorzilla.com/gradient-editor/ .
@@ -25,7 +25,7 @@ body.fixed_width .fixedwidth {
 	margin: 0 auto;
 }
 
-/* Enable header and footer content to widen when middle has wide content. */ 
+/* Enable header and footer content to widen when middle has wide content. */
 body.fixed_width .fixedwidth .fixedwidth {
 	padding: 0;
 }
@@ -76,7 +76,7 @@ body.fixed_width .fixedwidth .fixedwidth {
 	background: #f0f0f0;
 }
 
-.postbody-title h2 { 
+.postbody-title h2 {
 	margin: 0.2em 0 0;
 	padding-bottom: 0;
 }
@@ -126,7 +126,7 @@ h1 {
 h1:hover {
 	background: url(didiem/h_bullet_hover.jpg) no-repeat 0 50%;
 }
-	
+
 h2 {
 	border: transparent 0 solid;
 	border-radius: 4px;
@@ -146,7 +146,7 @@ h2:hover {
 h3 {
 	font-size: 140%;
 }
-	
+
 h4 {
 	font-size: 120%;
 }
@@ -307,7 +307,7 @@ label {
 
 #topbar_modules {
 	min-height: 35px;
-} 
+}
 
 #tiki-top {
 	color: #3d3d3d;
@@ -399,10 +399,6 @@ label {
 	color: #000;
 }
 
-#tiki-top .cssmenu_horiz li:hover a {
-	text-decoration: none;
-}
-
 #tiki-top .cssmenu_horiz ul li a {
 	border-right: none;
 }
@@ -444,6 +440,7 @@ label {
 #tiki-top .cssmenu_horiz li:hover a {
 	color: #fff;
 	font-style: normal;
+	text-decoration: none;
 }
 
 #tiki-top .cssmenu_horiz li.selected {

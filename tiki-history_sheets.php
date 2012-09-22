@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -22,7 +22,7 @@ if (empty($info)) {
 	$smarty->assign('Incorrect parameter');
 	$smarty->display('error.tpl');
 	die;
-}	
+}
 
 $objectperms = Perms::get('sheet', $_REQUEST['sheetId']);
 if ($tiki_p_admin != 'y' && !$objectperms->view_sheet && !($user && $info['author'] == $user)) {
@@ -41,7 +41,7 @@ $smarty->assign_by_ref('history', $history);
 
 $sheetIndexes = array();
 if ( isset($_REQUEST['idx_0']) ) {
-	$sheetIndexes[0] = $_REQUEST['idx_0'];	
+	$sheetIndexes[0] = $_REQUEST['idx_0'];
 } else {
 	$sheetIndexes[0] = 1; //this sets defalut for initial page load
 }
@@ -59,18 +59,18 @@ $cookietab = 1;
 
 $sheetlib->setup_jquery_sheet();
 $headerlib->add_jq_onready(
-				"
+	"
 	$.sheet.tikiOptions = $.extend($.sheet.tikiOptions, {
 		editable: false
 	});
-	
+
 	jST = $('div.tiki_sheet')
 		.sheet($.sheet.tikiOptions)
 		.bind('paneScroll', $.sheet.paneScrollLocker)
 		.bind('switchSheet', $.sheet.switchSheetLocker);
-	
+
 	$.sheet.setValuesForCompareSheet('$sheetIndexes[0]', $('input.compareSheet1'), '$sheetIndexes[1]', $('input.compareSheet2'));
-	
+
 	$('#go_fullscreen').toggle(function() {
 		$.sheet.dualFullScreenHelper($('#tiki_sheet_container').parent());
 	}, function() {

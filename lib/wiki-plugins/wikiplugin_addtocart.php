@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -15,7 +15,7 @@ function wikiplugin_addtocart_info()
 		'filter' => 'wikicontent',
 		'format' => 'html',
 		'icon' => 'img/icons/cart_add.png',
-		'tags' => array( 'basic' ),		
+		'tags' => array( 'basic' ),
 		'params' => array(
 			'code' => array(
 				'required' => true,
@@ -122,12 +122,12 @@ function wikiplugin_addtocart_info()
 				'filter' => 'alpha',
 				'default' => 'n',
 				'options' => array(
-					array('text' => '', 'value' => ''), 
-					array('text' => tra('Yes'), 'value' => 'y'), 
+					array('text' => '', 'value' => ''),
+					array('text' => tra('Yes'), 'value' => 'y'),
 					array('text' => tra('No'), 'value' => 'n')
 				)
 			),
-			'exchangeorderitemid' => array( 
+			'exchangeorderitemid' => array(
 				'required' => false,
 				'name' => tra('Order Item ID to exchange product'),
 				'description' => tra('Used in conjunction with exchange feature'),
@@ -155,8 +155,8 @@ function wikiplugin_addtocart_info()
 				'filter' => 'alpha',
 				'default' => 'n',
 				'options' => array(
-					array('text' => '', 'value' => ''), 
-					array('text' => tra('Yes'), 'value' => 'y'), 
+					array('text' => '', 'value' => ''),
+					array('text' => tra('Yes'), 'value' => 'y'),
 					array('text' => tra('No'), 'value' => 'n')
 				)
 			),
@@ -168,10 +168,10 @@ function wikiplugin_addtocart( $data, $params )
 {
 	global $cartlib, $headerlib; require_once 'lib/payment/cartlib.php';
 	$headerlib->add_jsfile('lib/payment/cartlib.js');
-	
+
 	if ( ! session_id() ) {
 		return WikiParser_PluginOutput::internalError(tra('A session must be active to use the cart.'));
-	} 
+	}
 	if ( ! isset( $params['code'], $params['description'], $params['price'] ) ) {
 		return WikiParser_PluginOutput::argumentError(array_diff(array( 'code', 'description', 'price'), array_keys($params)));
 	}
@@ -186,10 +186,10 @@ function wikiplugin_addtocart( $data, $params )
 	}
 	// once forceanon is set it will have to affect the whole shopping cart otherwise it will be inconsistent
 	if ($params['forceanon'] == 'y') {
-		$_SESSION['forceanon'] = 'y'; 
+		$_SESSION['forceanon'] = 'y';
 	}
 	if (! isset($params['ajaxaddtocart'])) {
-		$params['ajaxaddtocart'] = 'y'; 
+		$params['ajaxaddtocart'] = 'y';
 	}
 	foreach ($params as &$p) {
 		$p = trim($p);			// remove some line ends picked up in pretty tracker
@@ -205,7 +205,7 @@ function wikiplugin_addtocart( $data, $params )
 	$price = preg_replace('/[^\d^\.^,]/', '', $params['price']);
 	$add_label = $params['label'];
 	$ajax_add_to_cart = $params['ajaxaddtocart'];
-	
+
 	global $smarty;
 	$smarty->assign('code', $code);
 	$smarty->assign('productclass', $product_class);
@@ -215,7 +215,7 @@ function wikiplugin_addtocart( $data, $params )
 
 	global $cartuserlist, $userlib, $globalperms;
 	if (!isset($cartuserlist)) {
-		$cartuserlist = $userlib->get_users_light();	
+		$cartuserlist = $userlib->get_users_light();
 	}
 	$smarty->assign('cartuserlist', $cartuserlist);
 
@@ -224,34 +224,34 @@ function wikiplugin_addtocart( $data, $params )
 	}
 
 	if (!empty($params['exchangeorderitemid']) && !empty($params['exchangetoproductid'])) {
-		$smarty->assign('exchangeorderitemid', $params['exchangeorderitemid']); 
-		$smarty->assign('exchangetoproductid', $params['exchangetoproductid']); 
+		$smarty->assign('exchangeorderitemid', $params['exchangeorderitemid']);
+		$smarty->assign('exchangetoproductid', $params['exchangetoproductid']);
 		$smarty->assign('hideamountfield', 'y');
 	} else {
 		$smarty->assign('hideamountfield', 'n');
 	}
-	
+
 	if ( is_numeric($product_class) ) {
 		$information_form = $cartlib->get_missing_user_information_form($product_class, 'required');
 		$missing_information = $cartlib->get_missing_user_information_fields($product_class, 'required');
-		$skip_information_form = $cartlib->skip_user_information_form_if_not_missing($product_class) && empty($missing_information); 
+		$skip_information_form = $cartlib->skip_user_information_form_if_not_missing($product_class) && empty($missing_information);
 		if ( $information_form && !$skip_information_form ) {
 			$headerlib->add_jq_onready(
-							"$('form.addProductToCartForm$product_class')
-								.cartProductClassMissingForm({
-								informationForm: '$information_form'
+				"$('form.addProductToCartForm$product_class')
+					.cartProductClassMissingForm({
+						informationForm: '$information_form'
 					});"
 			);
-		} 
+		}
 	}
-	
+
 	if ( $ajax_add_to_cart == 'y' ) {
 			$headerlib->add_jq_onready("$('form.addProduct').cartAjaxAdd();");
 	}
 
 	if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
-		global $jitPost, $access, $user; 
-		if (!empty($params['exchangeorderitemid']) && !empty($params['exchangetoproductid'])) {	
+		global $jitPost, $access, $user;
+		if (!empty($params['exchangeorderitemid']) && !empty($params['exchangetoproductid'])) {
 			if ( $jitPost->exchangeorderitemid->int() == $params['exchangeorderitemid'] && $jitPost->exchangetoproductid->int() == $params['exchangetoproductid'] ) {
 				$correct_exchange = true;
 			} else {
@@ -266,7 +266,7 @@ function wikiplugin_addtocart( $data, $params )
 			$behaviors = array();
 
 			if ($prefs['payment_cart_anonymous'] === 'y' && (!$user || $params['forceanon'] == 'y') && empty($_SESSION['shopperinfo'])) {
-				$access->redirect($_SERVER['REQUEST_URI'], tr('Please enter your shopper information first'));   
+				$access->redirect($_SERVER['REQUEST_URI'], tr('Please enter your shopper information first'));
 			} // There needs to be a shopperinfo plugin on the page
 
 			if ($globalperms->payment_admin && !empty($_POST['buyonbehalf']) && $userlib->user_exists($_POST['buyonbehalf'])) {
@@ -274,7 +274,7 @@ function wikiplugin_addtocart( $data, $params )
 			} else {
 				$onbehalf = '';
 			}
-			
+
 			$gift_certificate_error = tra("Invalid gift certificate: ");
 			if ( $_REQUEST['gift_certificate'] && isset($gift_certificate) ) {
 				if ( !$cartlib->add_gift_certificate($_REQUEST['gift_certificate']) ) {
@@ -299,7 +299,7 @@ function wikiplugin_addtocart( $data, $params )
 
 			// Generate behavior for exchanges
 			if (!empty($params['exchangeorderitemid']) && !empty($params['exchangetoproductid'])) {
-				$product_info['behaviors'][] = array('event' => 'complete', 'behavior' => 'cart_exchange_product', 'arguments' => array($params["exchangeorderitemid"], $params["exchangetoproductid"])); 
+				$product_info['behaviors'][] = array('event' => 'complete', 'behavior' => 'cart_exchange_product', 'arguments' => array($params["exchangeorderitemid"], $params["exchangetoproductid"]));
 				$product_info['exchangeorderitemid'] = $params["exchangeorderitemid"];
 				$product_info['exchangetoproductid'] = $params["exchangetoproductid"];
 				if (!isset($params['exchangeorderamount']) || !$params['exchangeorderamount']) {
@@ -318,7 +318,7 @@ function wikiplugin_addtocart( $data, $params )
 				} elseif ($user) {
 					$giftcert_email = $userlib->get_user_email($user);
 				}
-				$product_info['behaviors'][] = array('event' => 'complete', 'behavior' => 'cart_gift_certificate_purchase', 'arguments' => array($code, $giftcert_email)); 
+				$product_info['behaviors'][] = array('event' => 'complete', 'behavior' => 'cart_gift_certificate_purchase', 'arguments' => array($code, $giftcert_email));
 			}
 			// Now add product to cart
 			$previous_cart_content = $cartlib->get_content();
@@ -335,27 +335,27 @@ function wikiplugin_addtocart( $data, $params )
 						// and needs to depend on auth_token_access pref
 						require_once 'lib/auth/tokens.php';
 						$tokenlib = AuthTokens::build($prefs);
-						$tokenpaymenturl = $tokenlib->includeToken($paymenturl, array('Temporary Shopper','Anonymous')); 
-					} 
+						$tokenpaymenturl = $tokenlib->includeToken($paymenturl, array('Temporary Shopper','Anonymous'));
+					}
 					if ($globalperms->payment_admin || Perms::get('payment', $invoice)->manual_payment) {
 						// if able to do manual payment it means it is admin and don't need token
 						$access->redirect($paymenturl, tr('The order was recorded and is now awaiting payment. Reference number is %0.', $invoice));
 					} else {
 						$access->redirect($tokenpaymenturl, tr('The order was recorded and is now awaiting payment. Reference number is %0.', $invoice));
-					} 
+					}
 				} else {
 					if (!empty($params['forwardafterfree'])) {
 						$access->redirect($params['forwardafterfree'], tr('Your free order of %0 (%1) has been processed. An email has been sent to you for your records.', $params['description'], $quantity));
-					} else { 
-						$access->redirect($_SERVER['REQUEST_URI'], tr('Your free order of %0 (%1) has been processed', $params['description'], $quantity));	
+					} else {
+						$access->redirect($_SERVER['REQUEST_URI'], tr('Your free order of %0 (%1) has been processed', $params['description'], $quantity));
 					}
 				}
 				die;
 			}
 			$access->redirect($_SERVER['REQUEST_URI'], tr('%0 (%1) was added to your cart', $params['description'], $quantity));
-		} 
+		}
 	}
-	
+
 	return $smarty->fetch('wiki-plugins/wikiplugin_addtocart.tpl');
 }
 

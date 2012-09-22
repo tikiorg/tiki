@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -9,7 +9,7 @@ class Report_Definition_Tracker
 {
 	var $trackers = array();
 	var $trackerFields = array();
-	
+
 	function __construct()
 	{
 		global $tikilib;
@@ -20,7 +20,7 @@ class Report_Definition_Tracker
 				"value"=> $column['trackerId'],
 			);
 		}
-		
+
 		foreach ($tikilib->table('tiki_tracker_fields')->fetchAll(array('trackerId', 'fieldId', 'name')) as $column) {
 			$this->trackerFields[$column['fieldId']] = array(
 				"label"=> $column['name'] . ' - ' . $column['fieldId'],
@@ -30,8 +30,8 @@ class Report_Definition_Tracker
 			);
 		}
 	}
-	
-	function input() 
+
+	function input()
 	{
 		/*
 			type:
@@ -39,7 +39,7 @@ class Report_Definition_Tracker
 				multi (needs value, is checkbox)
 				date	(simple date range)
 				singeOneToOne (
-				
+
 		*/
 		return array(
 			"values"=> array(
@@ -118,7 +118,7 @@ class Report_Definition_Tracker
 			),
 		);
 	}
-	
+
 	private function innerJoin($leftTracker, $rightTracker, $leftSetting, $rightSetting)
 	{
 		foreach ($leftTracker as $key => $leftItem) {
@@ -137,73 +137,73 @@ class Report_Definition_Tracker
 	private function query($values = array())
 	{
 		$tracker = $values['tracker'];
-		
+
 		$qry = Tracker_Query::tracker($tracker['value'])
 			->start($tracker['start']['value'])
 			->end($tracker['end']['value'])
 			->itemId($tracker['itemId']['value'])
 			->excludeDetails();
-		
+
 		if (!empty($tracker['status'])) {
 			$allStatus = '';
 			foreach ($tracker['status'] as $status) {
 				if (!empty($status['value'])) $allStatus .= $status['value'];
 			}
-			
+
 			$qry->status($allStatus);
 		}
-		
+
 		if (!empty($tracker['search'])) {
 			for ($i = 0, $count_tracker_search = count($tracker['search']); $i < $count_tracker_search; $i++) {
 				if (!empty($tracker['search'][$i]['value']) && !empty($tracker['search'][$i + 1]['value'])) {
 					$qry->filter(
-									array(
-										"field"=> trim($tracker['search'][$i]['value']),
-										"value"=> trim($tracker['search'][$i + 1]['value'])
-									)
+						array(
+							"field"=> trim($tracker['search'][$i]['value']),
+							"value"=> trim($tracker['search'][$i + 1]['value'])
+						)
 					);
 				}
 				$i++; //searches are in groups of 2
 			}
 		}
-		
+
 		if (!empty($tracker['limit']['value'])) {
 			$qry->limit($tracker['limit']['value']);
 		}
-		
-		$result = $qry->query(); 
-		
+
+		$result = $qry->query();
+
 		if (!empty($tracker['fields'])) {
 			$newResult = array();
 			foreach ($result as $itemKey => $item) {
 				$newResult[$itemKey] = array();
 				foreach ($tracker['fields'] as $field) {
-					$newResult[$itemKey][$field['value']] = $result[$itemKey][$field['value']]; 
+					$newResult[$itemKey][$field['value']] = $result[$itemKey][$field['value']];
 				}
 			}
-			
+
 			$result = $newResult;
 			unset($newResult);
 		}
-		
+
 		foreach ($tracker['join'] as $join) {
 			$result = $this->innerJoin($result, $this->query($join), $join['left']['value'], $join['right']['value']);
 		}
-		
+
 		return $result;
 	}
 
 	function output($values = array())
 	{
 		$result = $this->query($values);
-		
+
 		foreach ($result as $itemKey => $item) {
 			foreach ($item as $fieldKey => $field) {
 				$result[$itemKey][$this->trackerFields[$fieldKey]['name'] . " - " . $fieldKey] = $field;
 				unset($result[$itemKey][$fieldKey]);
 			}
 		}
-		
+
 		return $result;
 	}
 }

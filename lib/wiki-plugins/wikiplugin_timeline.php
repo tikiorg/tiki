@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -103,9 +103,9 @@ function wikiplugin_timeline($data, $params)
 
 	$headerlib = TikiLib::lib('header');
 	$headerlib->add_jsfile('lib/simile_tiki/tiki-timeline.js');
-	
+
 	$headerlib->add_jq_onready(
-					'// TODO set up datasource - get data from {list} output or calendar events
+		'// TODO set up datasource - get data from {list} output or calendar events
 					var ttl_eventData = { events: [], dateTimeFormat: ""};
 					setTimeout( function(){
 						ttlInit("ttl_timeline", ttl_eventData,"' . $params['scale1'] . '","' . $params['scale2'] . '");

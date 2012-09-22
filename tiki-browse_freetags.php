@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -129,22 +129,22 @@ include_once ('tiki-section_options.php');
 ask_ticket('browse-freetags');
 
 $smarty->assign(
-				'objects_with_freetags',
-				array (
-					'wiki page',
-					'blog post',
-					'article',
-					'directory',
-					'faq',
-					'file gallery',
-					'image gallery',
-					'image',
-					'poll',
-					'quiz',
-					'survey',
-					'tracker',
-					'tracker %d'
-				)
+	'objects_with_freetags',
+	array (
+		'wiki page',
+		'blog post',
+		'article',
+		'directory',
+		'faq',
+		'file gallery',
+		'image gallery',
+		'image',
+		'poll',
+		'quiz',
+		'survey',
+		'tracker',
+		'tracker %d'
+	)
 );
 $smarty->assign('mid', 'tiki-browse_freetags.tpl');
 $smarty->display("tiki.tpl");

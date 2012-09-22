@@ -279,7 +279,8 @@ JQ
 						return false;
 					});
 JQ
-				, 100
+				,
+				100
 			);
 
 		$parsed = $smarty->getTemplateVars('parsed');

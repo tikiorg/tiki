@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -54,7 +54,7 @@ function init_language( $lg )
 
 		$lang = array();
 		include("lang/$lg/language.php");
-		
+
 		// include mods language files if any
 		$files = glob("lang/$lg/language_*.php");
 		if (is_array($files)) {
@@ -67,7 +67,7 @@ function init_language( $lg )
 		if (is_file("lang/$lg/custom.php")) {
 			include_once("lang/$lg/custom.php");
 		}
-		
+
 		if (!empty($tikidomain) && is_file("lang/$lg/$tikidomain/custom.php")) {
 			include_once("lang/$lg/$tikidomain/custom.php");
 		}
@@ -96,9 +96,9 @@ function tra_impl($content, $lg = '', $args = array())
 	if (empty($content)) {
 		return '';
 	}
-	
+
 	global ${"lang_$lg"};
-	
+
 	if ($lg and isset(${"lang_$lg"}[$content])) {
 		return tr_replace(${"lang_$lg"}[$content], $args);
 	} else {
@@ -112,9 +112,9 @@ function tra_impl($content, $lg = '', $args = array())
 			$new_content = substr($content, 0, -1);
 			if ( isset(${"lang_$lg"}[$new_content]) ) {
 				return tr_replace(
-								${"lang_$lg"}[$new_content] . ( isset(${"lang_$lg"}[$lastCharacter]) 
-								? ${"lang_$lg"}[$lastCharacter] 
-								: $lastCharacter ), $args 
+					${"lang_$lg"}[$new_content] . ( isset(${"lang_$lg"}[$lastCharacter])
+					? ${"lang_$lg"}[$lastCharacter]
+					: $lastCharacter ), $args
 				);
 			}
 		}
@@ -142,7 +142,7 @@ function tr_replace( $content, $args )
 
 		foreach ( array_keys($args) as $num )
 			$needles[] = "%$num";
-		
+
 		$out = str_replace($needles, $replacements, $content);
 	}
 

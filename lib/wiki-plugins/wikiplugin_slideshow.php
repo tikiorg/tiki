@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -23,7 +23,7 @@ function wikiplugin_slideshow_info()
 				'filter' => 'text',
 				'default' => tra('Tiki jQuery UI Theme'),
 				'since' => '7.0',
-				'options' => array(					
+				'options' => array(
 					array('text' => 'ui-lightness', 'value' => 'ui-lightness'),
 					array('text' => 'ui-darkness', 'value' => 'ui-darkness'),
 					array('text' => 'smoothness', 'value' => 'smoothness'),
@@ -136,8 +136,8 @@ function wikiplugin_slideshow_info()
 				'default' => tra('Left'),
 				'since' => '7.0',
 				'options' => array(
-					array('text' => tra('Left'), 'value' => 'left'), 
-					array('text' => tra('Right'), 'value' => 'right'), 
+					array('text' => tra('Left'), 'value' => 'left'),
+					array('text' => tra('Right'), 'value' => 'right'),
 				),
 			),
 		),
@@ -151,7 +151,7 @@ function wikiplugin_slideshow($data, $params)
 
 	$theme = (isset($theme) ? $theme : 'default');
 	$themeName = '';
-	
+
 	$backgroundcolor = (isset($backgroundcolor) ? $backgroundcolor : '');
 	$backgroundurl = (isset($backgroundurl) ? $backgroundurl : '');
 	$headerfontcolor = (isset($headerfontcolor) ? $headerfontcolor : '');
@@ -165,7 +165,7 @@ function wikiplugin_slideshow($data, $params)
 	}
 
 	$textside = (isset($textside) ? $textside : 'left');
-	
+
 	if ($theme) {
 		$theme = $tikilib->getSlideshowTheme($theme);
 		$backgroundcolor = ($backgroundcolor ? $backgroundcolor : $theme['backgroundColor']);
@@ -176,17 +176,17 @@ function wikiplugin_slideshow($data, $params)
 		$listitemhighlightcolor = ($listitemhighlightcolor ? $listitemhighlightcolor : $theme['listItemHighlightColor']);
 		$themeName = $theme['themeName'];
 	}
-	
+
 	$notes = explode("/////", ($data ? $data : ""));
 	$notesHtml = '';
 	foreach ( $notes as $note ) {
 		$notesHtml .= '<span class="s5-note">'.$note.'</span>';
 	}
-	
+
 	global $headerlib;
-	
+
 	$headerlib->add_js(
-					"window.slideshowSettings = {
+		"window.slideshowSettings = {
 			class: '$class',
 			backgroundurl: '$backgroundurl',
 			backgroundcolor: '$backgroundcolor',
@@ -198,7 +198,7 @@ function wikiplugin_slideshow($data, $params)
 			textside: '$textside',
 			theme: '$themeName'
 		};
-		
+
 		window.s5Settings = {
 			slideClass: '$class',
 			backgroundImage: '$backgroundurl',
@@ -213,6 +213,6 @@ function wikiplugin_slideshow($data, $params)
 			basePath: 'lib/jquery.s5/'
 		};"
 	);
-	
+
 	return "~np~<div id='' class='tiki_slideshow'>$notesHtml</div>~/np~";
 }

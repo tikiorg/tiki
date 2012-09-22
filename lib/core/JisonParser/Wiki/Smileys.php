@@ -7,7 +7,6 @@
 
 class JisonParser_Wiki_Smileys
 {
-//*
 	function parse(&$input)
 	{
 		global $prefs;

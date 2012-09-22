@@ -56,7 +56,7 @@ function smarty_function_menu($params, $smarty)
 		$tpl = 'tiki-user_cssmenu.tpl';
 		$smarty->assign('menu_type', $type);
 		if (! isset($css_id)) {//adding $css_id parameter to customize menu id and prevent automatic id renaming when a menu is removed
-			$smarty->assign('idCssmenu', $idCssmenu++);	
+			$smarty->assign('idCssmenu', $idCssmenu++);
 		} else {
 			$smarty->assign('idCssmenu', $css_id);
 		}
@@ -88,7 +88,8 @@ function compare_menu_options($a, $b)
 	return strcmp(tra($a['name']), tra($b['name']));
 }
 
-function get_menu_with_selections($params) {
+function get_menu_with_selections($params)
+{
 	global $tikilib, $user, $prefs;
 	global $menulib; include_once('lib/menubuilder/menulib.php');
 	global $cachelib; include_once('lib/cache/cachelib.php');
