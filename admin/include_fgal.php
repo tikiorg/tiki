@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -36,14 +36,14 @@ if (isset($_REQUEST["filegalfeatures"])) {
 	simple_set_value('fgal_quota_default');
 }
 if (!empty($_REQUEST['updateMime'])) {
-        $files = $filegallib->table('tiki_files');
-        $rows = $files->fetchAll(array('fileId', 'filename', 'filetype'), array('archiveId' => 0, 'filetype' => 'application/octet-stream'));
-        foreach ($rows as $row) {
-                $t = $filegallib->fixMime($row);
-                if ($t != 'application/octet-stream') {
-                        $files->update(array('filetype' => $t), array('fileId' => $row['fileId']));
-                }
-        }
+	$files = $filegallib->table('tiki_files');
+	$rows = $files->fetchAll(array('fileId', 'filename', 'filetype'), array('archiveId' => 0, 'filetype' => 'application/octet-stream'));
+	foreach ($rows as $row) {
+		$t = $filegallib->fixMime($row);
+		if ($t != 'application/octet-stream') {
+			$files->update(array('filetype' => $t), array('fileId' => $row['fileId']));
+		}
+	}
 }
 
 if (!empty($_REQUEST['move'])) {
@@ -122,10 +122,11 @@ if (isset($_REQUEST["filegalhandlers"])) {
 		$mimes = $_REQUEST['mimes'];
 		foreach ($mimes as $mime => $cmd) {
 			$mime = trim($mime);
-			if (empty($cmd))
+			if (empty($cmd)) {
 				$filegallib->delete_file_handler($mime);
-			else
+			} else {
 				$filegallib->change_file_handler($mime, $cmd);
+			}
 		}
 	}
 	if (!empty($_REQUEST['newMime']) && !empty($_REQUEST['newCmd'])) {

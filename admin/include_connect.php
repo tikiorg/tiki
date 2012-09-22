@@ -32,14 +32,16 @@ if (empty($prefs['connect_site_title'])) {
 	);
 
 	$headerlib->add_jq_onready(
-		'$("#connect_defaults_btn a").click(function(){
-	var connect_defaults = ' . $defaults . ';
-	for (el in connect_defaults) {
-		$("input[name=" + el + "]").val(connect_defaults[el]);
-	}
-	return false;
-});'
-);
+<<<JQ
+		$("#connect_defaults_btn a").click(function(){
+			var connect_defaults = ' . $defaults . ';
+			for (el in connect_defaults) {
+				$("input[name=" + el + "]").val(connect_defaults[el]);
+			}
+			return false;
+		});
+JQ
+	);
 }
 
 if ($prefs['connect_server_mode'] === 'y') {

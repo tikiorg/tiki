@@ -7,8 +7,8 @@
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
-  header('location: index.php');
-  exit;
+	header('location: index.php');
+	exit;
 }
 
 require_once('lib/init/initlib.php');
@@ -137,7 +137,9 @@ if ( $re === false ) {
 	}
 }
 
-if ( $dbversion_tiki == '1.10' ) $dbversion_tiki = '2.0';
+if ( $dbversion_tiki == '1.10' ) {
+	$dbversion_tiki = '2.0';
+}
 
 class TikiDb_LegacyErrorHandler implements TikiDb_ErrorHandler
 {
@@ -148,11 +150,15 @@ class TikiDb_LegacyErrorHandler implements TikiDb_ErrorHandler
 		$msg = $db->getErrorMessage();
 		$q=$query;
 		foreach ($values as $v) {
-			if (is_null($v)) $v='NULL';
-			else $v="'".addslashes($v)."'";
+			if (is_null($v)) {
+				$v='NULL';
+			} else {
+				$v="'".addslashes($v)."'";
+			}
 			$pos=strpos($q, '?');
-			if ($pos !== FALSE)
+			if ($pos !== false) {
 				$q=substr($q, 0, $pos)."$v".substr($q, $pos+1);
+			}
 		}
 
 		if (function_exists('xdebug_get_function_stack')) {
@@ -230,9 +236,11 @@ function init_connection( $db )
 	$db->setServerType($db_tiki);
 	$db->setErrorHandler(new TikiDb_LegacyErrorHandler);
 
-	if ( isset( $db_table_prefix ) )
+	if ( isset( $db_table_prefix ) ) {
 		$db->setTablePrefix($db_table_prefix);
+	}
 
-	if ( isset( $common_users_table_prefix ) )
+	if ( isset( $common_users_table_prefix ) ) {
 		$db->setUsersTablePrefix($common_users_table_prefix);
+	}
 }
