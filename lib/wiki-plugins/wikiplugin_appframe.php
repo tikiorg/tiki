@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -392,9 +392,13 @@ function wikiplugin_appframe_template($data, $params, $start)
 	$file = $params->file->url();
 
 	try {
-		$data = array_map(function ($value) {
-			return preg_replace('/\{\{\w+\}\}/', '', $value);
-		}, $params->text());
+		$data = array_map(
+			function ($value)
+			{
+				return preg_replace('/\{\{\w+\}\}/', '', $value);
+			},
+			$params->text()
+		);
 
 		$smarty->assign('input', $data);
 		return $smarty->fetch($file);

@@ -1,13 +1,13 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 /**
  * @group unit
- * 
+ *
  */
 
 class Perms_Reflection_PermissionSetTest extends TikiTestCase
@@ -27,11 +27,11 @@ class Perms_Reflection_PermissionSetTest extends TikiTestCase
 		$set->add('Anonymous', 'view');
 
 		$this->assertEquals(
-						array(
-							'Registered' => array('view', 'edit'),
-							'Anonymous' => array('view'),
-						), 
-						$set->getPermissionArray()
+			array(
+				'Registered' => array('view', 'edit'),
+				'Anonymous' => array('view'),
+			),
+			$set->getPermissionArray()
 		);
 	}
 
@@ -43,8 +43,8 @@ class Perms_Reflection_PermissionSetTest extends TikiTestCase
 		$set->add('Registered', 'view');
 
 		$this->assertEquals(
-						array('Registered' => array('view', 'edit'),), 
-						$set->getPermissionArray()
+			array('Registered' => array('view', 'edit'),),
+			$set->getPermissionArray()
 		);
 	}
 

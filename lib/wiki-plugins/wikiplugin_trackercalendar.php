@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -82,27 +82,30 @@ function wikiplugin_trackercalendar($data, $params)
 	}
 
 	$smarty = TikiLib::lib('smarty');
-	$smarty->assign('trackercalendar', array(
-		'id' => 'trackercalendar' . ++$id,
-		'trackerId' => $jit->trackerId->int(),
-		'begin' => $jit->begin->word(),
-		'end' => $jit->end->word(),
-		'resource' => $resourceField,
-		'resourceList' => $resources,
-		'coloring' => $jit->coloring->word(),
-		'beginFieldName' => 'ins_' . $beginField['fieldId'],
-		'endFieldName' => 'ins_' . $endField['fieldId'],
-		'firstDayofWeek' => 0,
-		'views' => implode(',', $views),
-		'viewyear' => (int) date('Y'),
-		'viewmonth' => (int) date('n'),
-		'viewday' => (int) date('j'),
-		'minHourOfDay' => 7,
-		'maxHourOfDay' => 20,
-		'addTitle' => tr('Insert'),
-		'canInsert' => $itemObject->canModify(),
-		'body' => $data,
-	));
+	$smarty->assign(
+		'trackercalendar',
+		array(
+			'id' => 'trackercalendar' . ++$id,
+			'trackerId' => $jit->trackerId->int(),
+			'begin' => $jit->begin->word(),
+			'end' => $jit->end->word(),
+			'resource' => $resourceField,
+			'resourceList' => $resources,
+			'coloring' => $jit->coloring->word(),
+			'beginFieldName' => 'ins_' . $beginField['fieldId'],
+			'endFieldName' => 'ins_' . $endField['fieldId'],
+			'firstDayofWeek' => 0,
+			'views' => implode(',', $views),
+			'viewyear' => (int) date('Y'),
+			'viewmonth' => (int) date('n'),
+			'viewday' => (int) date('j'),
+			'minHourOfDay' => 7,
+			'maxHourOfDay' => 20,
+			'addTitle' => tr('Insert'),
+			'canInsert' => $itemObject->canModify(),
+			'body' => $data,
+		)
+	);
 	return $smarty->fetch('wiki-plugins/trackercalendar.tpl');
 }
 

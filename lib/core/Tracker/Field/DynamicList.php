@@ -1,13 +1,13 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 /**
  * Handler class for DynamicList
- * 
+ *
  * Letter key: ~w~
  *
  */
@@ -20,7 +20,7 @@ class Tracker_Field_DynamicList extends Tracker_Field_Abstract
 			'w' => array(
 				'name' => tra('Dynamic Items List'),
 				'description' => tra('Dynamically updates a selection list based on linked data from another tracker.'),
-				'help' => 'Dynamic items list',				
+				'help' => 'Dynamic items list',
 				'prefs' => array('trackerfield_dynamiclist'),
 				'tags' => array('advanced'),
 				'default' => 'n',
@@ -77,8 +77,9 @@ class Tracker_Field_DynamicList extends Tracker_Field_Abstract
 	function renderInput($context = array())
 	{
 		// REFACTOR: can't use list-tracker_field_values_ajax.php yet as it doesn't seem to filter
-		
-		TikiLib::lib('header')->add_jq_onready('
+
+		TikiLib::lib('header')->add_jq_onready(
+			'
 $("select[name=ins_' . $this->getOption(2) . ']").change(function(e, val) {
 	$.getJSON(
 		"tiki-tracker_http_request.php",
@@ -108,10 +109,11 @@ $("select[name=ins_' . $this->getOption(2) . ']").change(function(e, val) {
 		}
 	);
 }).trigger("change", ["' . $this->getConfiguration('value') . '"]);
-		');
-		
+		'
+		);
+
 		return '<select name="' . $this->getInsertId() . '"></select>';
-	
+
 	}
 }
 

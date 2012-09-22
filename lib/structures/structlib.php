@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -101,7 +101,7 @@ class StructLib extends TikiLib
 		}
 		}
 	// Remove the space created by the removal
-	$page_info = $this->s_get_page_info($page_ref_id);		
+	$page_info = $this->s_get_page_info($page_ref_id);
 	if (isset($page_info["parent_id"])) {
 		$query = "update `tiki_structures` set `pos`=`pos`-1 where `pos`>? and `parent_id`=?";
 		$this->query($query, array((int)$page_info["pos"], (int)$page_info["parent_id"]));
@@ -150,7 +150,7 @@ class StructLib extends TikiLib
 			}
 			$query = 'update `tiki_structures` set `parent_id`=?, `pos`=(? + 1) where `page_ref_id`=?';
 			$this->query($query, array((int)$previous['page_ref_id'], (int)$pos, (int)$page_ref_id));
-			//Remove the space created by the demotion			
+			//Remove the space created by the demotion
 			$query = "update `tiki_structures` set `pos`=`pos`-1 where `pos`>? and `parent_id`=?";
 			$this->query($query, array((int)$page_info["pos"], (int)$page_info["parent_id"]));
 			global $prefs;
@@ -194,7 +194,7 @@ class StructLib extends TikiLib
 	 * @param $data array - from from nestedSortable('toHierarchy')
 	 */
 
-	function reorder_structure($data) 
+	function reorder_structure($data)
 	{
 		global $user;
 
@@ -224,8 +224,8 @@ class StructLib extends TikiLib
 						if ($node->item_id < 1000000) {
 							$conditions['page_ref_id'] = (int) $node->item_id;
 							$tiki_structures->update(
-											$fields,
-											$conditions
+								$fields,
+								$conditions
 							);
 						} else {		// new nodes with id > 1000000
 							$fields['page_id'] = TikiLib::lib('tiki')->get_page_id_from_name($node->page_name);
@@ -255,9 +255,9 @@ class StructLib extends TikiLib
 		global $prefs;
 		$ret = null;
 		// If the page doesn't exist then create a new wiki page!
-		$newpagebody = tra("Table of contents") . ":" . "{toc}"; 
+		$newpagebody = tra("Table of contents") . ":" . "{toc}";
 		$created = $this->create_page($name, 0, $newpagebody, $this->now, tra('created from structure'), 'system', '0.0.0.0', '', false, '', array('parent_id'=>$parent_id));
-		
+
 		if (!empty($parent_id) || $created || ! $this->page_is_in_structure($name)) { // if were not trying to add a duplicate structure head
 			$query = 'select `page_id` from `tiki_pages` where `pageName`=?';
 			$page_id = $this->getOne($query, array($name));
@@ -276,7 +276,7 @@ class StructLib extends TikiLib
 			} else if (!$created) {
 				$max = $this->getOne('select max(`pos`) from `tiki_structures` where `parent_id`=?', array((int)$parent_id));
 			}
-			// 	
+			//
             //Create a new structure entry
 			$max++;
 			$query = 'insert into `tiki_structures`(`parent_id`,`page_id`,`page_alias`,`pos`, `structure_id`) values(?,?,?,?,?)';
@@ -348,11 +348,11 @@ class StructLib extends TikiLib
       $aux["flag"]  = $res["flag"];
 	  $aux["user"]  = $res["user"];
 		global $user;
-		if ($this->user_has_perm_on_object($user, $res['pageName'], 'wiki page', 'tiki_p_edit')) {	
+		if ($this->user_has_perm_on_object($user, $res['pageName'], 'wiki page', 'tiki_p_edit')) {
       		$aux['editable'] = 'y';
       		$aux['viewable'] = 'y';
 		} else {
-			$aux['editable'] = 'n';			
+			$aux['editable'] = 'n';
 			if ($this->user_has_perm_on_object($user, $res['pageName'], 'wiki page', 'tiki_p_view')) {
 				$aux['viewable'] = 'y';
 			} else {
@@ -406,8 +406,8 @@ class StructLib extends TikiLib
 		$query .= " LEFT JOIN (
 			SELECT watchId, user, event, object, title, type, url, email FROM `tiki_user_watches`
 			UNION DISTINCT
-				SELECT watchId, uu.login as user, event, object, title, type, url, uu.email 
-				FROM 
+				SELECT watchId, uu.login as user, event, object, title, type, url, uu.email
+				FROM
 					`tiki_group_watches` tgw
 					INNER JOIN users_usergroups ug ON tgw.`group` = ug.groupName
 					INNER JOIN users_users uu ON ug.userId = uu.userId AND uu.email IS NOT NULL AND uu.email <> ''
@@ -477,7 +477,7 @@ class StructLib extends TikiLib
 	function build_language_order_clause( &$args, $pageTable = 'tp', $structTable = 'ts' )
 	{
 		$query = " CASE\n";
-		
+
 
 		// Languages in preferences go first
 		foreach ( $this->displayLanguageOrder as $key => $lang ) {
@@ -510,12 +510,12 @@ class StructLib extends TikiLib
 			$args = array( (int) $page_ref_id );
 
 			$query = "
-				SELECT 
-					`pos`, 
-					`page_ref_id`, 
-					`parent_id`, 
-					ts.`page_id`, 
-					`pageName`, 
+				SELECT
+					`pos`,
+					`page_ref_id`,
+					`parent_id`,
+					ts.`page_id`,
+					`pageName`,
 					`page_alias`,
 					`structure_id`
 				FROM
@@ -558,7 +558,7 @@ class StructLib extends TikiLib
 				SELECT
 					`page_ref_id`,
 					`pageName`,
-					`page_alias`, 
+					`page_alias`,
 					tp.`description`
 				FROM
 					`tiki_structures` ts
@@ -627,7 +627,7 @@ class StructLib extends TikiLib
 						'structurePageName' => $structurePageName
 					)
 				);
-				TikiLib::lib('smarty')->assign( 'json_params', $json_params);
+				TikiLib::lib('smarty')->assign('json_params', $json_params);
 
 			}
 		}
@@ -647,7 +647,7 @@ class StructLib extends TikiLib
 
 				$smarty->assign('toc_type', $type);
 				$ret.= $smarty->fetch('structures_toc-startul.tpl')."\n";
-				
+
 				foreach ($structure_tree as $leaf) {
 
 					if (is_numeric($page)) {
@@ -655,7 +655,7 @@ class StructLib extends TikiLib
 					} else {
 						$smarty->assign('hilite', $leaf["pageName"] == $page);
 					}
-					
+
 					if ($type === 'admin') {
 						if ($this->user_has_perm_on_object($user, $leaf["pageName"], 'wiki page', 'tiki_p_edit')) {
 							$leaf['editable'] = true;
@@ -678,8 +678,8 @@ class StructLib extends TikiLib
 						$ret.=$this->fetch_toc($leaf['sub'], $showdesc, $numbering, $type, $page, $maxdepth, $cur_depth+1, $structurePageName)."</li>\n";
 					} else {
 						$ret.=str_repeat("\t", ($cur_depth*2)+1)."</li>\n";
-					} 					
-				}	
+					}
+				}
 				$ret.=$smarty->fetch('structures_toc-endul.tpl')."\n";
 			}
 		}
@@ -708,8 +708,8 @@ class StructLib extends TikiLib
 			return null;
 
 		$query = "
-			SELECT 
-				page_ref_id 
+			SELECT
+				page_ref_id
 			FROM
 				tiki_structures ts
 				INNER JOIN tiki_translated_objects a ON ts.page_id = a.objId AND a.type = 'wiki page'
@@ -924,9 +924,9 @@ class StructLib extends TikiLib
 				$bindvars = $find;
 			} else {
 				$mid = ' where (`parent_id` is null or `parent_id`=0) and (tp.`pageName` like ?)';
-				$findesc = '%' . $find . '%';			
+				$findesc = '%' . $find . '%';
 				$bindvars=array($findesc);
-			}			
+			}
 		} else {
 			$mid = ' where (`parent_id` is null or `parent_id`=0) ';
 			$bindvars=array();
@@ -942,10 +942,10 @@ class StructLib extends TikiLib
 					$mid .= empty($mid)? ' where ': ' and ';
 					$mid .= '`lang`=? ';
 					$bindvars[] = $val;
-				} 
+				}
 			}
 		}
-		
+
 		if (!empty($join_bindvars)) {
 			$bindvars = empty($bindvars)? $join_bindvars : array_merge($join_bindvars, $bindvars);
 		}
@@ -960,7 +960,7 @@ class StructLib extends TikiLib
 		while ($res = $result->fetchRow()) {
 			global $user;
 	        if ( $this->user_has_perm_on_object($user, $res['pageName'], 'wiki page', 'tiki_p_view') ) {
-	        
+
 			if (file_exists('whelp/'.$res['pageName'].'/index.html')) {
 			  $res['webhelp']='y';
 			} else {
@@ -970,10 +970,10 @@ class StructLib extends TikiLib
 				$res['editable']='y';
 			} else {
 				$res['editable']='n';
-			}	
+			}
 			$ret[] = $res;
-			
-	        } // end check for perm if 
+
+	        } // end check for perm if
 		}
 		$retval = array();
 		$retval['data'] = $ret;
@@ -1071,7 +1071,7 @@ class StructLib extends TikiLib
 	  		$i++;
 		}
 		fclose($fw);
-	
+
 	// write the title page, using:
 	// Browser Title, Logo, Site Title, Site subtitle
 		$fw = fopen("$base/content.html", 'w+');
@@ -1189,11 +1189,11 @@ class StructLib extends TikiLib
 		  $option['sefurl'] = smarty_function_sefurl(array('page'=>$channel['pageName'], 'structure'=>$structure, 'page_ref_id'=>$channel['page_ref_id']), $smarty);
 		  $option['position'] = $cant + $cumul;
 		  $option['sectionLevel'] = $sectionLevel;
-		  
+
 		  $option['url'] = str_replace('&amp;', '&', $option['url']);			// as of Tiki 7 menu items get encoded later
 		  $option['sefurl'] = str_replace('&amp;', '&', $option['sefurl']);
 		  $option['optionId'] = $channel['page_ref_id'];
-		  
+
 		  ++$cant;
 		  $options[] = $option;
 		  if (!empty($channel['sub'])) {

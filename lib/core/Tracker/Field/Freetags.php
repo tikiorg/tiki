@@ -1,13 +1,13 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 /**
  * Handler class for Freetags
- * 
+ *
  * Letter key: ~F~
  *
  */
@@ -54,16 +54,16 @@ class Tracker_Field_Freetags extends Tracker_Field_Abstract implements Tracker_F
 	}
 
 	function getFieldData(array $requestData = array())
-	{	
+	{
 		$data = array();
-		
+
 		$ins_id = $this->getInsertId();
-		
+
 		if (isset($requestData[$ins_id])) {
 			$data['value'] = $requestData[$ins_id];
 		} else {
 			global $prefs;
-			
+
 			$data['value'] = $this->getValue();
 
 			$langutil = new Services_Language_Utilities;
@@ -78,12 +78,12 @@ class Tracker_Field_Freetags extends Tracker_Field_Abstract implements Tracker_F
 			$freetaglib = TikiLib::lib('freetag');
 			$data['freetags'] = $freetaglib->_parse_tag($data['value']);
 			$data['tag_suggestion'] = $freetaglib->get_tag_suggestion(
-							implode(' ', $data['freetags']),
-							$prefs['freetags_browse_amount_tags_suggestion'],
-							$itemLang
-			);	
+				implode(' ', $data['freetags']),
+				$prefs['freetags_browse_amount_tags_suggestion'],
+				$itemLang
+			);
 		}
-					
+
 		return $data;
 	}
 
@@ -91,7 +91,7 @@ class Tracker_Field_Freetags extends Tracker_Field_Abstract implements Tracker_F
 	{
 		return $this->renderTemplate('trackerinput/freetags.tpl', $context);
 	}
-	
+
 	function renderOutput($context = array())
 	{
 		return $this->renderTemplate('trackeroutput/freetags.tpl', $context);

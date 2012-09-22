@@ -1,13 +1,13 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-/** 
+/**
  * @group unit
- * 
+ *
  */
 
 class Perms_ResolverFactory_ObjectFactoryTest extends PHPUnit_Framework_TestCase
@@ -31,7 +31,7 @@ class Perms_ResolverFactory_ObjectFactoryTest extends PHPUnit_Framework_TestCase
 		$db = TikiDb::get();
 
 		$db->query('DELETE FROM users_objectpermissions');
-		
+
 		foreach ($this->tableData as $row) {
 			$db->query('INSERT INTO users_objectpermissions (groupName, permName, objectType, objectId) VALUES(?,?,?,?)', array_values($row));
 		}
@@ -40,7 +40,7 @@ class Perms_ResolverFactory_ObjectFactoryTest extends PHPUnit_Framework_TestCase
 	function testHash()
 	{
 		$factory = new Perms_ResolverFactory_ObjectFactory;
-		
+
 		$this->assertEquals('object:wiki page:homepage', $factory->getHash(array('type' => 'wiki page', 'object' => 'HomePage')));
 	}
 
@@ -72,13 +72,13 @@ class Perms_ResolverFactory_ObjectFactoryTest extends PHPUnit_Framework_TestCase
 		}
 
 		$factory = new Perms_ResolverFactory_ObjectFactory;
-		
+
 		$expect = new Perms_Resolver_Static(
-						array(
-							'Admins' => array('admin'),
-							'Anonymous' => array('edit', 'view'),
-						), 
-						'object'
+			array(
+				'Admins' => array('admin'),
+				'Anonymous' => array('edit', 'view'),
+			),
+			'object'
 		);
 
 		$this->assertEquals($expect, $factory->getResolver(array('type' => 'wiki page', 'object' => 'HomePage')));
@@ -100,14 +100,14 @@ class Perms_ResolverFactory_ObjectFactoryTest extends PHPUnit_Framework_TestCase
 		}
 
 		$factory = new Perms_ResolverFactory_ObjectFactory;
-		
+
 		$this->assertNull($factory->getResolver(array('type' => 'blog', 'object' => '234')));
 	}
 
 	function testObtainResolverIncompleteContext()
 	{
 		$factory = new Perms_ResolverFactory_ObjectFactory;
-		
+
 		$this->assertNull($factory->getResolver(array('type' => 'wiki page')));
 		$this->assertNull($factory->getResolver(array('object' => 'HomePage')));
 	}
@@ -130,7 +130,7 @@ class Perms_ResolverFactory_ObjectFactoryTest extends PHPUnit_Framework_TestCase
 
 		$factory = new Perms_ResolverFactory_ObjectFactory;
 		$out = $factory->bulk(array('type' => 'wiki page'), 'object', array('HomePage', 'UserPageFoobar', 'HelloWorld'));
-		
+
 		$this->assertEquals(array('HelloWorld'), $out);
 	}
 
@@ -138,7 +138,7 @@ class Perms_ResolverFactory_ObjectFactoryTest extends PHPUnit_Framework_TestCase
 	{
 		$factory = new Perms_ResolverFactory_ObjectFactory;
 		$out = $factory->bulk(array('type' => 'wiki page'), 'objectId', array('HomePage', 'UserPageFoobar', 'HelloWorld'));
-		
+
 		$this->assertEquals(array('HomePage', 'UserPageFoobar', 'HelloWorld'), $out);
 	}
 
@@ -146,7 +146,7 @@ class Perms_ResolverFactory_ObjectFactoryTest extends PHPUnit_Framework_TestCase
 	{
 		$factory = new Perms_ResolverFactory_ObjectFactory;
 		$out = $factory->bulk(array(), 'object', array('HomePage', 'UserPageFoobar', 'HelloWorld'));
-		
+
 		$this->assertEquals(array('HomePage', 'UserPageFoobar', 'HelloWorld'), $out);
 	}
 }

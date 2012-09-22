@@ -200,8 +200,8 @@ function smarty_function_metric($params, $smarty)
 			} else {
 				$class = "red";
 			}
-			$out .= ' <span class="trend trend-' . $class . '">' . 
-							$prefs['metrics_trend_prefix'] . number_format(round($trend_val, 2), 2) . $prefs['metrics_trend_suffix'] . 
+			$out .= ' <span class="trend trend-' . $class . '">' .
+							$prefs['metrics_trend_prefix'] . number_format(round($trend_val, 2), 2) . $prefs['metrics_trend_suffix'] .
 							'</span> ';
 		}
 	}
@@ -218,11 +218,11 @@ function smarty_function_metric($params, $smarty)
 		switch($_REQUEST['range']) {
 			case 'monthof':
 				$out .= tra('Month beginning');
-							break;
+				break;
 			case 'weekof':
 			case 'lastweek':
 				$out .= tra('Week beginning');
-							break;
+				break;
 			case 'custom':
 			default:
 				$out .= tra('Day');
@@ -248,7 +248,7 @@ function smarty_function_metric($params, $smarty)
 			}
 
 			$out .= ' <tr><td>' . $m[$name]['result'][$i][$date_field] . '</td>' .
-							'<td>' . metric_helper_number_format($m[$name]['result'][$i][$value], $m[$name]['datatype_id']) . $trend_val . 
+							'<td>' . metric_helper_number_format($m[$name]['result'][$i][$value], $m[$name]['datatype_id']) . $trend_val .
 							'</td></tr> ';
 		}
 		$out .= '</table> ';

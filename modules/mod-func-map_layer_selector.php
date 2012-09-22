@@ -38,9 +38,12 @@ function module_map_layer_selector($mod_reference, $module_params)
 {
 	$smarty = TikiLib::lib('smarty');
 
-	$smarty->assign('controls', array(
-		'baselayer' => isset($module_params['baselayer']) ? $module_params['baselayer'] != 'n' : true,
-		'optionallayers' => isset($module_params['optionallayers']) ? $module_params['optionallayers'] != 'n' : true,
-	));
+	$smarty->assign(
+		'controls',
+		array(
+			'baselayer' => isset($module_params['baselayer']) ? $module_params['baselayer'] != 'n' : true,
+			'optionallayers' => isset($module_params['optionallayers']) ? $module_params['optionallayers'] != 'n' : true,
+		)
+	);
 }
 

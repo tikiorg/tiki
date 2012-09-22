@@ -47,14 +47,14 @@ function smarty_function_object_selector( $params, $smarty )
 	}
 
 	$smarty->assign(
-					'object_selector', 
-					array(
-						'filter' => json_encode($params),
-						'id' => $id,
-						'name' => $name,
-						'class' => $class,
-						'value' => $value,
-					)
+		'object_selector',
+		array(
+			'filter' => json_encode($params),
+			'id' => $id,
+			'name' => $name,
+			'class' => $class,
+			'value' => $value,
+		)
 	);
 
 	return $smarty->fetch('object_selector.tpl');

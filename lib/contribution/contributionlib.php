@@ -188,8 +188,8 @@ class ContributionLib extends TikiLib
 			$query = 'select * from `tiki_history` where `pageName`=? and `lastModif` <=? and `lastModif` >= ? and `user`=?';
 
 			$result = $tikilib->query(
-							$query,
-							array($action['object'], $action['lastModif']+$delay, $action['lastModif'], $action['user'])
+				$query,
+				array($action['object'], $action['lastModif']+$delay, $action['lastModif'], $action['user'])
 			);
 
 			if (($nb = $result->numRows()) == 1) {

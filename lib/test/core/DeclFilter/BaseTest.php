@@ -1,13 +1,13 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 /**
  * @group unit
- * 
+ *
  */
 
 class DeclFilter_BaseTest extends TikiTestCase
@@ -21,10 +21,10 @@ class DeclFilter_BaseTest extends TikiTestCase
 
 		$filter = new DeclFilter;
 		$filter->addStaticKeyFilters(
-						array(
-							'numeric' => 'digits',
-							'alpha' => 'alpha',
-						)
+			array(
+				'numeric' => 'digits',
+				'alpha' => 'alpha',
+			)
 		);
 
 		$data = $filter->filter($data);
@@ -56,14 +56,14 @@ class DeclFilter_BaseTest extends TikiTestCase
 		$filter = new DeclFilter;
 		$filter->addStaticKeyFilters(array('hello' => 'digits',));
 		$filter->addCatchAllFilter('alpha');
-		
+
 		$data = $filter->filter(
-						array(
-							'hello' => '123abc',
-							'world' => '123abc',
-						)
+			array(
+				'hello' => '123abc',
+				'world' => '123abc',
+			)
 		);
-		
+
 		$this->assertEquals($data['world'], 'abc');
 		$this->assertEquals($data['hello'], '123');
 	}
@@ -72,14 +72,14 @@ class DeclFilter_BaseTest extends TikiTestCase
 	{
 		$filter = new DeclFilter;
 		$filter->addStaticKeyFilters(array('hello' => 'digits',));
-		
+
 		$data = $filter->filter(
-						array(
-							'hello' => '123abc',
-							'world' => '123abc',
-						)
+			array(
+				'hello' => '123abc',
+				'world' => '123abc',
+			)
 		);
-		
+
 		$this->assertEquals($data['world'], '123abc');
 		$this->assertEquals($data['hello'], '123');
 	}

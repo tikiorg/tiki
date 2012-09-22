@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -12,17 +12,17 @@ class Rating_AggregationTest extends TikiTestCase
 	function setUp()
 	{
 		global $user; $user = null;
-		
+
 		$tikilib = $this->getMock('TikiLib', array('get_ip_address'));
 		$tikilib->expects($this->any())->method('get_ip_address')->will($this->returnValue('127.0.0.1'));
-		
+
 		$testableTikiLib = new TestableTikiLib;
 		$testableTikiLib->overrideLibs(array('tiki' => $tikilib));
-		
+
 		parent::setUp();
 		TikiDb::get()->query('DELETE FROM `tiki_user_votings` WHERE `id` LIKE ?', array('test.%'));
 	}
-	
+
 	function tearDown()
 	{
 		global $user; $user = null;
@@ -140,10 +140,10 @@ class Rating_AggregationTest extends TikiTestCase
 		$this->assertEquals(10.0, $lib->collect('test', 111, 'sum', array('keep' => 'oldest', 'revote' => 2500)));
 
 		$this->assertEquals(
-						10 / 3,
-						$lib->collect('test', 111, 'avg', array('keep' => 'oldest', 'revote' => 2500)),
-						'',
-						1 / 1000
+			10 / 3,
+			$lib->collect('test', 111, 'avg', array('keep' => 'oldest', 'revote' => 2500)),
+			'',
+			1 / 1000
 		);
 	}
 }

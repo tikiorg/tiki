@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -38,8 +38,8 @@ $tikidomain		= '';
 /*
 SVN Developers: Do not change any of the above.
 Instead, create a file, called db/local.php, containing any of
-the variables listed above that are different for your 
-development environment.  This will protect you from 
+the variables listed above that are different for your
+development environment.  This will protect you from
 accidentally committing your username/password to SVN!
 
 example of db/local.php
@@ -64,7 +64,7 @@ or TIKI_VIRTUAL
 or SERVER_NAME
     From apache directive ServerName set for that virtualhost block
 or HTTP_HOST
-    From the real domain name called in the browser 
+    From the real domain name called in the browser
     (can be ServerAlias from apache conf)
 
 */
@@ -104,11 +104,11 @@ if ( file_exists($local_php) ) {
 
 global $systemConfiguration;
 $systemConfiguration = new Zend_Config(
-				array(
-					'preference' => array(),
-					'rules' => array(),
-				),
-				array('readOnly' => false)
+	array(
+		'preference' => array(),
+		'rules' => array(),
+	),
+	array('readOnly' => false)
 );
 if (isset ($system_configuration_file)) {
 	if (! is_readable($system_configuration_file)) {

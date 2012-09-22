@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -15,7 +15,7 @@ function wikiplugin_htmlfeedlink_info()
 		'body' => tra('Initial Value'),
 		'icon' => 'img/icons/page_white_code.png',
 		'filter' => 'rawhtml_unsafe',
-		'tags' => array( 'basic' ),	
+		'tags' => array( 'basic' ),
 		'params' => array(
 			'feed' => array(
 				'required' => false,
@@ -52,8 +52,8 @@ function wikiplugin_htmlfeedlink_info()
 				'name' => tra('Is the HTML feed moderated'),
 				'default' => 'n',
 				'options' => array(
-					array('text' => '', 'value' => ''), 
-					array('text' => tra('Yes'), 'value' => 'y'), 
+					array('text' => '', 'value' => ''),
+					array('text' => tra('Yes'), 'value' => 'y'),
 					array('text' => tra('No'), 'value' => 'n')
 				),
 			),
@@ -72,26 +72,26 @@ function wikiplugin_htmlfeedlink($data, $params)
 	global $tikilib, $headerlib, $page, $caching;
 	static $htmlFeedLinkI = 0;
 	++$htmlFeedLinkI;
-	
+
 	$params = array_merge(
-					array(
-						"feed" => "",
-						"name" => "",
-						"type" => "replace",
-						"moderate" => "y",
-						"style" => "",
-						"date" => ""
-					),
-					$params
+		array(
+			"feed" => "",
+			"name" => "",
+			"type" => "replace",
+			"moderate" => "y",
+			"style" => "",
+			"date" => ""
+		),
+		$params
 	);
-	
+
 	extract($params, EXTR_SKIP);
-	
+
 	if (empty($feed)) return $data;
 	if (isset($caching)) return $data; //caching is running, if no return, causes recursive parsing
-	
+
 	$htmlFeed = new Feed_Html_Receive($feed);
-	
+
 	$headerlib->add_jq_onready(
     	"if (!$.fn.htmlFeedPopup) {
 			$.fn.htmlFeedPopup = function(s) {
@@ -115,7 +115,7 @@ function wikiplugin_htmlfeedlink($data, $params)
 				return this;
 			};
 		}
-		
+
 		$(document)
 			.unbind('plugin_htmlfeedlink_ready')
 			.bind('plugin_htmlfeedlink_ready', function(e) {
@@ -126,9 +126,9 @@ function wikiplugin_htmlfeedlink($data, $params)
 					.change(function() {
 						name.val($(this).val()).change();
 					});
-				
+
 				var items = " . json_encode($htmlFeed->listItemNames()) . ";
-				
+
 				for(var i = 0; i < items.length; i++) {
 					$('<option />')
 						.val(items[i])
@@ -137,7 +137,7 @@ function wikiplugin_htmlfeedlink($data, $params)
 				}
 				nameSelect.val(name.val()).change();
 			});
-			
+
 		$('.revision').click(function() {
 			$.getJSON('tiki-html_feed.php', {
 				feed: $(this).data('feed'),
@@ -158,10 +158,10 @@ function wikiplugin_htmlfeedlink($data, $params)
 			});
 		});"
 	);
-	
+
 	$item = $htmlFeed->getItem($name);
 	$same = $date == $item->date;
-	
+
 	if (!empty($item->name)) {
 		$name = $item->name;
 		$date = $item->date;
@@ -198,7 +198,7 @@ function wikiplugin_htmlfeedlink($data, $params)
 					}
 				} else {
 					$data = $item->description;
-				}	
+				}
     			break;
 			case "backlink":
 				$data = "<a href='$item->url'>" . $data . "</a>";
@@ -212,12 +212,12 @@ function wikiplugin_htmlfeedlink($data, $params)
 			case "hover":
     			break;
 		}
-		
+
 		$link = json_encode($link);
 	}
-	
+
 	$result = "<span id='htmlFeedLink' title='$name'>". $data ."</span>";
-	
+
 	switch ($style) {
 		case "highlight":
 			$headerlib->add_jq_onready(
@@ -229,14 +229,14 @@ function wikiplugin_htmlfeedlink($data, $params)
 			$result = "<sup>*</sup>" . $result;
     		break;
 	}
-	
+
 	$archives = "";
 	foreach ($htmlFeed->getItemFromDates($item->name) as $archive) {
 		$archives .= "<a href='tiki-html_feed.php?feed=".$feed.
 			"&name=".urlencode($archive->name).
 			"&date=".urlencode($archive->date)."'>". htmlspecialchars($archive->name) ." ". htmlspecialchars($archive->date) . "</a><br />";
 	}
-	
+
 	if (strlen($archives) > 0) {
 		$result .= "~np~<img src='img/icons/disk_multiple.png' id='viewArchives$htmlFeedLinkI' title='View Archives' name='".htmlspecialchars($archive->name)."' style='cursor: pointer;' />
 		<div id='archives$htmlFeedLinkI' style='display: none;' >" . $archives . "</div>~/np~";
@@ -257,6 +257,6 @@ function wikiplugin_htmlfeedlink($data, $params)
 JQ
 		);
 	}
-	
+
 	return  $result;
 }

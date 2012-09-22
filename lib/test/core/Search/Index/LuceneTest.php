@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -22,25 +22,25 @@ class Search_Index_LuceneTest extends PHPUnit_Framework_TestCase
 		$index = new Search_Index_Lucene($this->dir);
 		$typeFactory = $index->getTypeFactory();
 		$index->addDocument(
-						array(
-							'object_type' => $typeFactory->identifier('wiki page'),
-							'object_id' => $typeFactory->identifier('HomePage'),
-							'title' => $typeFactory->sortable('HomePage'),
-							'language' => $typeFactory->identifier('en'),
-							'modification_date' => $typeFactory->timestamp(self::DOCUMENT_DATE),
-							'description' => $typeFactory->plaintext('a description for the page'),
-							'categories' => $typeFactory->multivalue(array(1, 2, 5, 6)),
-							'allowed_groups' => $typeFactory->multivalue(array('Project Lead', 'Editor', 'Admins')),
-							'contents' => $typeFactory->plaintext('a description for the page Hello world!'),
-							'relations' => $typeFactory->multivalue(
-											array(
-												Search_Query_Relation::token('tiki.content.link', 'wiki page', 'About'),
-												Search_Query_Relation::token('tiki.content.link', 'wiki page', 'Contact'),
-												Search_Query_Relation::token('tiki.content.link.invert', 'wiki page', 'Product'),
-												Search_Query_Relation::token('tiki.user.favorite.invert', 'user', 'bob'),
-											)
-							),
-						)
+			array(
+				'object_type' => $typeFactory->identifier('wiki page'),
+				'object_id' => $typeFactory->identifier('HomePage'),
+				'title' => $typeFactory->sortable('HomePage'),
+				'language' => $typeFactory->identifier('en'),
+				'modification_date' => $typeFactory->timestamp(self::DOCUMENT_DATE),
+				'description' => $typeFactory->plaintext('a description for the page'),
+				'categories' => $typeFactory->multivalue(array(1, 2, 5, 6)),
+				'allowed_groups' => $typeFactory->multivalue(array('Project Lead', 'Editor', 'Admins')),
+				'contents' => $typeFactory->plaintext('a description for the page Hello world!'),
+				'relations' => $typeFactory->multivalue(
+					array(
+						Search_Query_Relation::token('tiki.content.link', 'wiki page', 'About'),
+						Search_Query_Relation::token('tiki.content.link', 'wiki page', 'Contact'),
+						Search_Query_Relation::token('tiki.content.link.invert', 'wiki page', 'Product'),
+						Search_Query_Relation::token('tiki.user.favorite.invert', 'user', 'bob'),
+					)
+				),
+			)
 		);
 
 		$this->index = $index;
@@ -71,7 +71,7 @@ class Search_Index_LuceneTest extends PHPUnit_Framework_TestCase
 
 		return $out;
 	}
-	
+
 	function testFieldSpecificSearch()
 	{
 		$off = new Search_Query;

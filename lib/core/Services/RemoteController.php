@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -30,8 +30,8 @@ class Services_RemoteController
 	{
 		$client = $this->getClient($action, $arguments);
 		return new Services_ResultLoader(
-						array(new Services_ResultLoader_WebService($client, $offsetKey, $maxRecordsKey, $resultKey), '__invoke'),
-						$perPage
+			array(new Services_ResultLoader_WebService($client, $offsetKey, $maxRecordsKey, $resultKey), '__invoke'),
+			$perPage
 		);
 	}
 
@@ -40,10 +40,10 @@ class Services_RemoteController
 		$tikilib = TikiLib::lib('tiki');
 		$client = $tikilib->get_http_client($this->url . '/tiki-ajax_services.php');
 		$client->setParameterGet(
-						array(
-							'controller' => $this->controller,
-							'action' => $action,
-						)
+			array(
+				'controller' => $this->controller,
+				'action' => $action,
+			)
 		);
 		$client->setParameterPost($postArguments);
 

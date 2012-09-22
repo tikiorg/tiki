@@ -1,11 +1,11 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-/** 
+/**
  * @group integration
  */
 
@@ -14,31 +14,31 @@ require_once 'lib/auth/tokens.php';
 class AuthTokensTest extends TikiDatabaseTestCase
 {
 	private $db;
-	
+
 	private $dt;
-	
+
 	private $table;
-	
+
 	private $obj;
 
 	public function getDataSet()
 	{
 		return $this->createMySQLXMLDataSet(dirname(__FILE__) . '/fixtures/auth_tokens_dataset.xml');
 	}
-	
+
 	function setUp()
-	{	
+	{
 		$this->db = TikiDb::get();
-		
+
 		$this->dt = new DateTime;
 		$this->dt->setTimezone(new DateTimeZone('UTC'));
 		// 2012-02-03 15:25:07
 		$this->dt->setTimestamp('1328282707');
-		
+
 		$this->table = $this->db->table('tiki_auth_tokens');
-		
+
 		$this->obj = new AuthTokens($this->db, array(), $this->dt);
-		
+
 		parent::setUp();
 	}
 
@@ -52,12 +52,12 @@ class AuthTokensTest extends TikiDatabaseTestCase
 	function testCreateToken()
 	{
 		$expectedTable = $this->createMySQLXmlDataSet(dirname(__FILE__) . '/fixtures/auth_tokens_dataset_create.xml')
-			->getTable('tiki_auth_tokens');		
-				
+			->getTable('tiki_auth_tokens');
+
 		$token = $this->obj->createToken('tiki-index.php', array('page' => 'HomePage'), array('Registered'), array('timeout' => 5));
-		
+
 		$queryTable = $this->getConnection()->createQueryTable('tiki_auth_tokens', 'SELECT * FROM tiki_auth_tokens');
-		
+
 		$this->assertTablesEqual($expectedTable, $queryTable);
 	}
 
@@ -123,10 +123,10 @@ class AuthTokensTest extends TikiDatabaseTestCase
 	function testMaximumTimeout()
 	{
 		$lib = new AuthTokens(
-						$this->db, 
-						array(
-							'maxTimeout' => 10,
-						)
+			$this->db,
+			array(
+				'maxTimeout' => 10,
+			)
 		);
 		$token = $lib->createToken('tiki-index.php', array('page' => 'HomePage'), array('Registered'), array('timeout' => 3600));
 
@@ -155,10 +155,10 @@ class AuthTokensTest extends TikiDatabaseTestCase
 	function testLimitOnAccessCount()
 	{
 		$lib = new AuthTokens(
-						$this->db, 
-						array(
-							'maxHits' => 10,
-						)
+			$this->db,
+			array(
+				'maxHits' => 10,
+			)
 		);
 		$token = $lib->createToken('tiki-index.php', array('page' => 'HomePage'), array('Registered'), array('hits' => 3600));
 
@@ -191,79 +191,79 @@ class AuthTokensTest extends TikiDatabaseTestCase
 
 		$this->assertRegExp('/TOKEN=[a-z0-9]{32}#Test/i', $new);
 	}
-	
+
 	function testGetTokens_shouldReturnEmptyArrayIfNoToken()
 	{
 		$this->db->query('TRUNCATE tiki_auth_tokens');
 		$this->assertEquals(array(), $this->obj->getTokens());
 	}
-	
+
 	function testGetTokens_shouldReturnAllTokens()
 	{
 		$token1 = '91bba2f998b48fce0146016809886127';
 		$token2 = '823bde97a717c55b2cfbf9fbd6c81816';
 		$token3 = 'e2990f7983b7b6c46b3987536aa38d32';
-		
+
 		$tokens = $this->obj->getTokens();
-		
+
 		$this->assertEquals(3, count($tokens));
 		$this->assertEquals($token1, $tokens[0]['token']);
 		$this->assertEquals($token2, $tokens[1]['token']);
 		$this->assertEquals($token3, $tokens[2]['token']);
 	}
-	
+
 	function testDeleteToken()
 	{
 		$token = $this->obj->createToken('tiki-user_send_reports.php', array(), array('Registered'));
-		
+
 		$this->obj->deleteToken($token['tokenId']);
 
 		$this->assertEmpty($this->table->fetchRow(array('entry'), array('tokenId' => $token['tokenId'])));
 	}
-	
+
 	function testGetGroups_shouldDeleteExpiredTokens()
 	{
 		$expectedTable = $this->createMySQLXmlDataSet(dirname(__FILE__) . '/fixtures/auth_tokens_dataset_delete_timeout.xml')
 			->getTable('tiki_auth_tokens');
-			
+
 		$this->obj->getGroups('bcbcbf5a4fffa9cd734ec8aec6c66c2a', 'tiki-index.php', array());
-			
+
 		$queryTable = $this->getConnection()->createQueryTable('tiki_auth_tokens', 'SELECT * FROM tiki_auth_tokens');
-		
+
 		$this->assertTablesEqual($expectedTable, $queryTable);
 	}
-	
+
 	function testGetGroups_shouldDeleteTokensWithoutHitsLeft()
-	{	
+	{
 		// 2012-02-01 13:25:07
 		$this->dt->setTimestamp('1328109907');
-		
+
 		$this->db->query('UPDATE tiki_auth_tokens set maxHits = -1, hits = -1 WHERE tokenId = 1');
 		$this->db->query('UPDATE tiki_auth_tokens set maxHits = 10, hits = 0 WHERE tokenId = 2');
-		
+
 		$expectedTable = $this->createMySQLXmlDataSet(dirname(__FILE__) . '/fixtures/auth_tokens_dataset_delete_hits.xml')
 			->getTable('tiki_auth_tokens');
-			
+
 		$this->obj->getGroups('91bba2f998b48fce0146016809886127', 'tiki-index.php', array());
-			
+
 		$queryTable = $this->getConnection()->createQueryTable('tiki_auth_tokens', 'SELECT * FROM tiki_auth_tokens');
-		
+
 		$this->assertTablesEqual($expectedTable, $queryTable);
 	}
-	
+
 	function testGetGroups_shouldDecrementHits()
 	{
 		$this->obj->getGroups('91bba2f998b48fce0146016809886127', 'tiki-index.php', array());
-		
+
 		$this->assertEquals('9', $this->db->getOne('SELECT hits FROM tiki_auth_tokens WHERE tokenId = 2'));
 	}
-	
+
 	function testGetGroups_shouldDecrementIfUnlimitedHits()
 	{
 		$this->db->query('UPDATE tiki_auth_tokens set maxHits = -1, hits = -1 WHERE tokenId = 2');
-		
+
 		$this->obj->getGroups('91bba2f998b48fce0146016809886127', 'tiki-index.php', array());
-		
+
 		$this->assertEquals('-1', $this->db->getOne('SELECT hits FROM tiki_auth_tokens WHERE tokenId = 2'));
 	}
 }

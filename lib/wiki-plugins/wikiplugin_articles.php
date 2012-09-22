@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -13,7 +13,7 @@ function wikiplugin_articles_info()
 		'description' => tra('Display multiple articles'),
 		'prefs' => array( 'feature_articles', 'wikiplugin_articles' ),
 		'icon' => 'img/icons/table_multiple.png',
-		'tags' => array( 'basic' ),		
+		'tags' => array( 'basic' ),
 		'params' => array(
 			'usePagination' => array(
 				'required' => false,
@@ -22,8 +22,8 @@ function wikiplugin_articles_info()
 				'filter' => 'alpha',
 				'default' => 'n',
 				'options' => array(
-					array('text' => '', 'value' => ''), 
-					array('text' => tra('Yes'), 'value' => 'y'), 
+					array('text' => '', 'value' => ''),
+					array('text' => tra('Yes'), 'value' => 'y'),
 					array('text' => tra('No'), 'value' => 'n')
 				),
 			),
@@ -107,8 +107,8 @@ function wikiplugin_articles_info()
 				'filter' => 'alpha',
 				'default' => 'n',
 				'options' => array(
-					array('text' => '', 'value' => ''), 
-					array('text' => tra('Yes'), 'value' => 'y'), 
+					array('text' => '', 'value' => ''),
+					array('text' => tra('Yes'), 'value' => 'y'),
 					array('text' => tra('No'), 'value' => 'n')
 				),
 			),
@@ -119,8 +119,8 @@ function wikiplugin_articles_info()
 				'filter' => 'alpha',
 				'default' => '',
 				'options' => array(
-					array('text' => '', 'value' => ''), 
-					array('text' => tra('Yes'), 'value' => 'y'), 
+					array('text' => '', 'value' => ''),
+					array('text' => tra('Yes'), 'value' => 'y'),
 					array('text' => tra('No'), 'value' => 'n')
 				),
 			),
@@ -131,8 +131,8 @@ function wikiplugin_articles_info()
 				'filter' => 'alpha',
 				'default' => 'n',
 				'options' => array(
-					array('text' => '', 'value' => ''), 
-					array('text' => tra('Yes'), 'value' => 'y'), 
+					array('text' => '', 'value' => ''),
+					array('text' => tra('Yes'), 'value' => 'y'),
 					array('text' => tra('No'), 'value' => 'n')
 				),
 			),
@@ -170,7 +170,7 @@ function wikiplugin_articles_info()
 				'description' => tr('Time unit used with "Period quantity"'),
 				'filter' => 'word',
 				'options' => array(
-					array('text' => '', 'value' => ''), 
+					array('text' => '', 'value' => ''),
 					array('text' => tr('Hour'), 'value' => 'hour'),
 					array('text' => tr('Day'), 'value' => 'day'),
 					array('text' => tr('Week'), 'value' => 'week'),
@@ -184,8 +184,8 @@ function wikiplugin_articles_info()
 				'filter' => 'alpha',
 				'default' => 'n',
 				'options' => array(
-					array('text' => '', 'value' => ''), 
-					array('text' => tra('Yes'), 'value' => 'y'), 
+					array('text' => '', 'value' => ''),
+					array('text' => tra('Yes'), 'value' => 'y'),
 					array('text' => tra('No'), 'value' => 'n')
 				),
 			),
@@ -203,8 +203,8 @@ function wikiplugin_articles_info()
 				'filter' => 'alpha',
 				'default' => 'n',
 				'options' => array(
-					array('text' => '', 'value' => ''), 
-					array('text' => tra('Yes'), 'value' => 'y'), 
+					array('text' => '', 'value' => ''),
+					array('text' => tra('Yes'), 'value' => 'y'),
 					array('text' => tra('No'), 'value' => 'n')
 				),
 			),
@@ -255,7 +255,7 @@ function wikiplugin_articles($data, $params)
 		} else {
 			$start = $_REQUEST["offset"];
 		}
-		
+
 		//Default to 10 when pagination is used
 		if (($max == -1)) {
 			$countPagination = 10;
@@ -272,7 +272,7 @@ function wikiplugin_articles($data, $params)
 	$smarty->assign_by_ref('quiet', $quiet);
 	$smarty->assign_by_ref('urlparam', $urlparam);
 	$smarty->assign_by_ref('urlnext', $urlnext);
-	
+
 	if (!isset($containerClass)) {
 		$containerClass = 'wikiplugin_articles';
 	}
@@ -280,7 +280,7 @@ function wikiplugin_articles($data, $params)
 
 	$dateStartTS = 0;
 	$dateEndTS = 0;
-	
+
 	// if a period of time is set, date start and end are ignored
 	if (isset($periodQuantity)) {
 		switch ($periodUnit) {
@@ -299,7 +299,7 @@ function wikiplugin_articles($data, $params)
 			default:
     			break;
 		}
-		
+
 		if (is_int($periodUnit)) {
 			$dateStartTS = $tikilib->now - ($periodQuantity * $periodUnit);
 			$dateEndTS = $tikilib->now;
@@ -308,12 +308,12 @@ function wikiplugin_articles($data, $params)
 		if (isset($dateStart)) {
 			$dateStartTS = strtotime($dateStart);
 		}
-		
+
 		if (isset($dateEnd)) {
 			$dateEndTS = strtotime($dateEnd);
 		}
 	}
-	
+
 	if (isset($fullbody) && $fullbody == 'y') {
 		$smarty->assign('fullbody', 'y');
 	} else {
@@ -332,10 +332,10 @@ function wikiplugin_articles($data, $params)
 	if (!empty($notArticleId)) {
 		$filter['notArticleId'] = $notArticleId;
 	}
-	
+
 	include_once("lib/comments/commentslib.php");
 	$commentslib = new Comments($dbTiki);
-	
+
 	$listpages = $artlib->list_articles($start, $max, $sort, '', $dateStartTS, $dateEndTS, 'admin', $type, $topicId, 'y', $topic, $categId, '', '', $lang, '', '', ($overrideDates == 'y'), 'y', $filter);
 	if ($prefs['feature_multilingual'] == 'y' && empty($translationOrphan)) {
 		global $multilinguallib;
@@ -346,8 +346,13 @@ function wikiplugin_articles($data, $params)
 	for ($i = 0, $icount_listpages = count($listpages["data"]); $i < $icount_listpages; $i++) {
 		$listpages["data"][$i]["parsed_heading"] = $tikilib->parse_data($listpages["data"][$i]["heading"], array('min_one_paragraph' => true));
 		if ($fullbody == 'y') {
-			$listpages["data"][$i]["parsed_body"] = $tikilib->parse_data($listpages["data"][$i]["body"], array('min_one_paragraph' => true,	
-				'is_html' => isset($prefs['article_body_is_html']) && $prefs['article_body_is_html'] === 'y'));
+			$listpages["data"][$i]["parsed_body"] = $tikilib->parse_data(
+				$listpages["data"][$i]["body"],
+				array(
+					'min_one_paragraph' => true,
+					'is_html' => isset($prefs['article_body_is_html']) && $prefs['article_body_is_html'] === 'y'
+				)
+			);
 		}
 		$comments_prefix_var='article:';
 		$comments_object_var=$listpages["data"][$i]["articleId"];
@@ -374,7 +379,7 @@ function wikiplugin_articles($data, $params)
 	if (!empty($type) && !strstr($type, '!') && !strstr($type, '+')) {
 		$smarty->assign_by_ref('type', $type);
 	}
-	
+
 	if ($usePagination == 'y') {
 		$smarty->assign('maxArticles', $max);
 		$smarty->assign_by_ref('offset', $start);

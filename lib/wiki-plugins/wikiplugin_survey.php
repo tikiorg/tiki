@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -53,8 +53,8 @@ function wikiplugin_survey($data, $params)
 		if ( $tikilib->user_has_voted($user, 'survey'.$params['id']) ) {
 			include_once('lib/wiki-plugins/wikiplugin_remarksbox.php');
 			return wikiplugin_remarksbox(
-							'You cannot take this survey twice',
-							array('type' => 'comment')
+				'You cannot take this survey twice',
+				array('type' => 'comment')
 			);
 		}
 	}

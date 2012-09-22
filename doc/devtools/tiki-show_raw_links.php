@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -15,8 +15,8 @@ require_once('tiki-setup.php');
 // I would kindly ask a wizard to enlarge this. (filmil)
 if ($tiki_p_admin != 'y') {
 	$smarty->assign(
-					'msg', 
-					tra("This feature is for admins only") . ": show_raw_links"
+		'msg',
+		tra("This feature is for admins only") . ": show_raw_links"
 	);
 	$smarty->display("error.tpl");
 	die;

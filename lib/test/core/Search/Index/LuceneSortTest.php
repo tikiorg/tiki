@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -63,17 +63,17 @@ class Search_Index_LuceneSortTest extends PHPUnit_Framework_TestCase
 	{
 		$query = new Search_Query;
 		$query->setWeightCalculator(
-						new Search_Query_WeightCalculator_Field(
-										array(
-											'text_field' => 100,
-											'other_field' => 0.0001,
-										)
-						)
+			new Search_Query_WeightCalculator_Field(
+				array(
+					'text_field' => 100,
+					'other_field' => 0.0001,
+				)
+			)
 		);
 		$query->filterContent('foobar', array('text_field', 'other_field'));
 
 		$results = $query->search($this->index);
-		
+
 		$this->assertOrderIs('BA', $results);
 	}
 
@@ -83,7 +83,7 @@ class Search_Index_LuceneSortTest extends PHPUnit_Framework_TestCase
 		foreach ($results as $row) {
 			$str .= $row['object_id'];
 		}
-	
+
 		$this->assertEquals($expected, $str);
 	}
 
@@ -92,13 +92,13 @@ class Search_Index_LuceneSortTest extends PHPUnit_Framework_TestCase
 		$typeFactory = $index->getTypeFactory();
 
 		$index->addDocument(
-						array(
-							'object_type' => $typeFactory->identifier('wiki page'),
-							'object_id' => $typeFactory->identifier($page),
-							'numeric_field' => $typeFactory->sortable($numeric),
-							'text_field' => $typeFactory->sortable($text),
-							'other_field' => $typeFactory->sortable($text2),
-						)
+			array(
+				'object_type' => $typeFactory->identifier('wiki page'),
+				'object_id' => $typeFactory->identifier($page),
+				'numeric_field' => $typeFactory->sortable($numeric),
+				'text_field' => $typeFactory->sortable($text),
+				'other_field' => $typeFactory->sortable($text2),
+			)
 		);
 	}
 }

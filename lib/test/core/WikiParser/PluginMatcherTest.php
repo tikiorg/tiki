@@ -1,13 +1,13 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-/** 
+/**
  * @group unit
- * 
+ *
  */
 
 class WikiParser_PluginMatcherTest extends TikiTestCase
@@ -61,7 +61,7 @@ class WikiParser_PluginMatcherTest extends TikiTestCase
 	function testFullMatch()
 	{
 		$matches = $this->doMatch('{DIV(hello=>world)} foobar {DIV}', 1);
-		
+
 		$match = $matches[0];
 		$this->assertEquals('div', $match->getName());
 		$this->assertEquals('hello=>world', $match->getArguments());
@@ -73,14 +73,14 @@ class WikiParser_PluginMatcherTest extends TikiTestCase
 	function testNestedShortMatch()
 	{
 		$matches = $this->doMatch('{A(foo=>bar)} {a hello=world} {A}', 2);
-		
+
 		$match = $matches[0];
 		$this->assertEquals('a', $match->getName());
 		$this->assertEquals('foo=>bar', $match->getArguments());
 		$this->assertEquals(' {a hello=world} ', $match->getBody());
 		$this->assertEquals(0, $match->getStart());
 		$this->assertEquals(33, $match->getEnd());
-		
+
 		$match = $matches[1];
 		$this->assertEquals('a', $match->getName());
 		$this->assertEquals('hello=world', $match->getArguments());
@@ -97,7 +97,7 @@ class WikiParser_PluginMatcherTest extends TikiTestCase
 		$matches = $this->doMatch('{A(hello=world)} middle {A} between {A(bar=baz)} center {A}', 2);
 
 		// Make sure the matches found are those we expect
-		
+
 		$match = $matches[0];
 		$this->assertEquals('a', $match->getName());
 		$this->assertEquals('hello=world', $match->getArguments());
@@ -118,12 +118,12 @@ class WikiParser_PluginMatcherTest extends TikiTestCase
 		$matches = $this->doMatch('{A(foo=>bar)} {A(hello=world)} middle {A} between {A(bar=baz)} center {A} {A}', 3);
 
 		// Make sure the matches found are those we expect
-		
+
 		$match = $matches[0];
 		$this->assertEquals('a', $match->getName());
 		$this->assertEquals('foo=>bar', $match->getArguments());
 		$this->assertEquals(' {A(hello=world)} middle {A} between {A(bar=baz)} center {A} ', $match->getBody());
-		
+
 		$match = $matches[1];
 		$this->assertEquals('a', $match->getName());
 		$this->assertEquals('hello=world', $match->getArguments());
@@ -160,7 +160,7 @@ class WikiParser_PluginMatcherTest extends TikiTestCase
 	function testQuotesSkipInArguments()
 	{
 		$matches = $this->doMatch('{a foo=>"bar \" } {"}', 1);
-		
+
 		$match = $matches[0];
 		$this->assertEquals('a', $match->getName());
 		$this->assertEquals('foo=>"bar \" } {"', $match->getArguments());
@@ -236,7 +236,7 @@ class WikiParser_PluginMatcherTest extends TikiTestCase
 	{
 		$matches = $this->doMatch('{c} {A()} {b} {A} {b}', 4);
 		$this->assertEquals(4, count($matches));
-		
+
 		$lastMatch = $matches[3];
 		$innerMatch = $matches[2];
 
@@ -355,13 +355,13 @@ class WikiParser_PluginMatcherTest extends TikiTestCase
 
 		$this->assertEquals('012', $matches->getText());
 		$this->assertEquals(
-						array(
-							'a=1{a a=2}{A(a=3)/}',
-							'a=2',
-							'a=3',
-							'a=4Hello World',
-						),
-						$obtained
+			array(
+				'a=1{a a=2}{A(a=3)/}',
+				'a=2',
+				'a=3',
+				'a=4Hello World',
+			),
+			$obtained
 		);
 	}
 

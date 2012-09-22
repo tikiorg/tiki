@@ -34,8 +34,8 @@ function smarty_modifier_userlink($other_user, $class='link', $idletime='not_set
 {
 	global $tikilib, $userlib, $cachelib, $user, $prefs, $userprefslib, $smarty;
 
-	$show_mouseover = $popup != 'n' && 
-										$prefs['feature_community_mouseover'] == 'y' && 
+	$show_mouseover = $popup != 'n' &&
+										$prefs['feature_community_mouseover'] == 'y' &&
 										$userlib->get_user_preference($user, 'show_mouseover_user_info', 'y') == 'y';
 
 	$show_friends = $prefs['feature_friends'] == 'y' && $tikilib->verify_friendship($user, $other_user);
@@ -172,9 +172,9 @@ function smarty_modifier_userlink($other_user, $class='link', $idletime='not_set
 			}
 		} else {
 			$url = preg_replace(
-							array('/%userId%/', '/%user%/'), 
-							array($info['userId'], $info['login']), 
-							$prefs['urlOnUsername']
+				array('/%userId%/', '/%user%/'),
+				array($info['userId'], $info['login']),
+				$prefs['urlOnUsername']
 			);
 		}
 
@@ -185,7 +185,7 @@ function smarty_modifier_userlink($other_user, $class='link', $idletime='not_set
 		if ($lat || $lon) {
 			$class .= " geolocated";
 			$metadata .= " data-geo-lat='$lat' data-geo-lon='$lon'";
-			
+
 			if ($zoom) {
 				$metadata .= " data-geo-zoom='$zoom'";
 			}

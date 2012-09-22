@@ -45,12 +45,14 @@ function module_category_transition($mod_reference, $module_params)
 	} else if ($modlib->is_admin_mode(true)) {	// add a dummy transition to display on the module admin page
 
 		$smarty->assign(
-						'mod_transitions',
-						array(array(
-								'enabled' => true,
-								'transitionId' => 0,
-								'name' => tra('Example Transition')
-						))
+			'mod_transitions',
+			array(
+				array(
+					'enabled' => true,
+					'transitionId' => 0,
+					'name' => tra('Example Transition')
+				)
+			)
 		);
 	}
 }

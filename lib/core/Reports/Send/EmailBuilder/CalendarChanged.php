@@ -14,18 +14,18 @@ class Reports_Send_EmailBuilder_CalendarChanged extends Reports_Send_EmailBuilde
 	{
 		return tr('New calendar events:');
 	}
-	
+
 	public function getOutput(array $change)
 	{
 		$base_url = $change['data']['base_url'];
-		
+
 		$calendarlib = TikiLib::lib('calendar');
-		
+
 		$item = $calendarlib->get_item($change['data']['calitemId']);
 		$output = tr(
-						'%0 added or updated event %1',
-						"<u>{$change['data']['user']}</u>",
-						"<a href='{$base_url}tiki-calendar_edit_item.php?viewcalitemId={$change['data']['calitemId']}'>{$item['name']}</a>"
+			'%0 added or updated event %1',
+			"<u>{$change['data']['user']}</u>",
+			"<a href='{$base_url}tiki-calendar_edit_item.php?viewcalitemId={$change['data']['calitemId']}'>{$item['name']}</a>"
 		);
 		return $output;
 	}

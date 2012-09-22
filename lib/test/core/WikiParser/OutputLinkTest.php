@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -19,7 +19,7 @@ class WikiParser_OutputLinkTest extends TikiTestCase
 		// ((Test)) on missing page
 		$link = new WikiParser_OutputLink;
 		$link->setIdentifier('Test');
-		
+
 		$this->assertLinkIs('Test<a href="tiki-editpage.php?page=Test" title="Create page: Test" class="wiki wikinew">?</a>', $link->getHtml());
 	}
 
@@ -29,7 +29,7 @@ class WikiParser_OutputLinkTest extends TikiTestCase
 		$link = new WikiParser_OutputLink;
 		$link->setIdentifier('Test');
 		$link->setLanguage('fr');
-		
+
 		$this->assertLinkIs('Test<a href="tiki-editpage.php?page=Test&amp;lang=fr" title="Create page: Test" class="wiki wikinew">?</a>', $link->getHtml());
 	}
 
@@ -39,7 +39,7 @@ class WikiParser_OutputLinkTest extends TikiTestCase
 		$link = new WikiParser_OutputLink;
 		$link->setIdentifier('Test');
 		$link->setDescription('Hello World');
-		
+
 		$this->assertLinkIs('Hello World<a href="tiki-editpage.php?page=Test" title="Create page: Test" class="wiki wikinew">?</a>', $link->getHtml());
 	}
 
@@ -49,7 +49,7 @@ class WikiParser_OutputLinkTest extends TikiTestCase
 		$link = new WikiParser_OutputLink;
 		$link->setIdentifier('Test');
 		$link->setQualifier('real');
-		
+
 		$this->assertLinkIs('Test<a href="tiki-editpage.php?page=Test" title="Create page: Test" class="wiki wikinew real">?</a>', $link->getHtml());
 	}
 
@@ -65,7 +65,7 @@ class WikiParser_OutputLinkTest extends TikiTestCase
 		$link->setIdentifier('Test');
 		$link->setWikiLookup(array($this, 'getPageInfo'));
 		$link->setWikiLinkBuilder(array($this, 'getWikiLink'));
-		
+
 		$this->assertLinkIs('<a href="Test" title="Testing" class="wiki wiki_page">Test</a>', $link->getHtml());
 	}
 
@@ -81,7 +81,7 @@ class WikiParser_OutputLinkTest extends TikiTestCase
 		$link->setIdentifier('Test');
 		$link->setWikiLookup(array($this, 'getPageInfo'));
 		$link->setWikiLinkBuilder(array($this, 'getWikiLink'));
-		
+
 		$this->assertLinkIs('<a href="Test1.2" title="Testing" class="wiki wiki_page">Test</a>', $link->getHtml());
 	}
 
@@ -98,7 +98,7 @@ class WikiParser_OutputLinkTest extends TikiTestCase
 		$link->setQualifier('abc');
 		$link->setWikiLookup(array($this, 'getPageInfo'));
 		$link->setWikiLinkBuilder(array($this, 'getWikiLink'));
-		
+
 		$this->assertLinkIs('<a href="Test" title="Testing" class="wiki wiki_page abc">Test</a>', $link->getHtml());
 	}
 
@@ -108,7 +108,7 @@ class WikiParser_OutputLinkTest extends TikiTestCase
 		$link->setIdentifier('out:Test');
 		$link->setWikiLookup(array($this, 'getPageInfo'));
 		$link->setWikiLinkBuilder(array($this, 'getWikiLink'));
-		
+
 		$this->assertLinkIs('out:Test<a href="tiki-editpage.php?page=out%3ATest" title="Create page: out:Test" class="wiki wikinew">?</a>', $link->getHtml());
 	}
 
@@ -117,12 +117,12 @@ class WikiParser_OutputLinkTest extends TikiTestCase
 		$link = new WikiParser_OutputLink;
 		$link->setIdentifier('out:Test');
 		$link->setExternals(
-						array(
-							'out' => 'http://example.com/$page',
-							'other' => 'http://www.example.com/$page',
-						)
+			array(
+				'out' => 'http://example.com/$page',
+				'other' => 'http://www.example.com/$page',
+			)
 		);
-		
+
 		$this->assertLinkIs('<a href="http://example.com/Test" class="wiki ext_page out">Test</a>', $link->getHtml());
 	}
 
@@ -132,12 +132,12 @@ class WikiParser_OutputLinkTest extends TikiTestCase
 		$link->setIdentifier('out:Test');
 		$link->setDescription('ABC');
 		$link->setExternals(
-						array(
-							'out' => 'http://example.com/$page',
-							'other' => 'http://www.example.com/$page',
-						)
+			array(
+				'out' => 'http://example.com/$page',
+				'other' => 'http://www.example.com/$page',
+			)
 		);
-		
+
 		$this->assertLinkIs('<a href="http://example.com/Test" class="wiki ext_page out">ABC</a>', $link->getHtml());
 	}
 
@@ -155,7 +155,7 @@ class WikiParser_OutputLinkTest extends TikiTestCase
 		$link->setWikiLookup(array($this, 'getPageInfo'));
 		$link->setWikiLinkBuilder(array($this, 'getWikiLink'));
 		$link->setHandlePlurals(true);
-		
+
 		$this->assertLinkIs('<a href="Policy" title="Some Page" class="wiki wiki_page">Policies</a>', $link->getHtml());
 	}
 
@@ -165,7 +165,7 @@ class WikiParser_OutputLinkTest extends TikiTestCase
 		$link = new WikiParser_OutputLink;
 		$link->setNamespace('HelloWorld', '_');
 		$link->setIdentifier('Test');
-		
+
 		$this->assertLinkIs('Test<a href="tiki-editpage.php?page=HelloWorld_Test" title="Create page: HelloWorld_Test" class="wiki wikinew">?</a>', $link->getHtml());
 	}
 
@@ -186,7 +186,7 @@ class WikiParser_OutputLinkTest extends TikiTestCase
 		$link->setWikiLookup(array($this, 'getPageInfo'));
 		$link->setNamespace('HelloWorld', '_');
 		$link->setIdentifier('Test');
-		
+
 		$this->assertLinkIs('<a href="HelloWorld_Test" title="HelloWorld / Test" class="wiki wiki_page">Test</a>', $link->getHtml());
 	}
 
@@ -207,7 +207,7 @@ class WikiParser_OutputLinkTest extends TikiTestCase
 		$link->setWikiLookup(array($this, 'getPageInfo'));
 		$link->setNamespace('Foobar', '_');
 		$link->setIdentifier('HelloWorld_Test');
-		
+
 		$this->assertLinkIs('<a href="HelloWorld_Test" title="HelloWorld / Test" class="wiki wiki_page"><span class="namespace first last">HelloWorld</span>Test</a>', $link->getHtml());
 	}
 
@@ -228,7 +228,7 @@ class WikiParser_OutputLinkTest extends TikiTestCase
 		$link->setWikiLookup(array($this, 'getPageInfo'));
 		$link->setNamespace('Foobar', '_');
 		$link->setIdentifier('Abc_Def_HelloWorld_Test');
-		
+
 		$this->assertLinkIs('<a href="Abc_Def_HelloWorld_Test" title="Abc / Def / HelloWorld / Test" class="wiki wiki_page"><span class="namespace first">Abc</span><span class="namespace">Def</span><span class="namespace last">HelloWorld</span>Test</a>', $link->getHtml());
 	}
 

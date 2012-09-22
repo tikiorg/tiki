@@ -68,8 +68,7 @@ class TikiFilter_PrepareInput
 
 		$output = '';
 
-		foreach($flatArray as $key => $value)
-		{
+		foreach ($flatArray as $key => $value) {
 			$output .= urlencode($key) . ':' . urlencode($value) . "\n";
 		}
 
@@ -82,7 +81,7 @@ class TikiFilter_PrepareInput
 
 		$flatArray = array();
 
-		foreach($stringArray as $string) {
+		foreach ($stringArray as $string) {
 			$string = explode(":", $string);
 			if (isset($string[0], $string[1])) {
 				$flatArray[urldecode($string[0])] = urldecode($string[1]);

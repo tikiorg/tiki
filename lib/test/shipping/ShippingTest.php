@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
@@ -76,12 +76,12 @@ class ShippingTest extends TikiTestCase implements ShippingProvider
 		$lib->getRates(array('zip' => '12345678900X'), array('zip' => 'A1B 2C3'), array(array('weight' => 5, 'count' => 2), array('weight' => 10)));
 
 		$this->assertEquals(
-						array(
-							array('weight' => 5),
-							array('weight' => 5),
-							array('weight' => 10),
-						),
-						$this->packages
+			array(
+				array('weight' => 5),
+				array('weight' => 5),
+				array('weight' => 10),
+			),
+			$this->packages
 		);
 	}
 

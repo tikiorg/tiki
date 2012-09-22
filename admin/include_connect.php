@@ -22,17 +22,17 @@ $headerlib->add_jsfile('lib/jquery_tiki/tiki-connect.js');
 
 if (empty($prefs['connect_site_title'])) {
 	$defaults = json_encode(
-					array(
-						'connect_site_title' => $prefs['browsertitle'],
-						'connect_site_email' => $userlib->get_admin_email(),
-						'connect_site_url' => $base_url,
-						'connect_site_keywords' => $prefs['metatag_keywords'],
-						'connect_site_location' => $prefs['gmap_defaultx'] . ',' . $prefs['gmap_defaulty'] . ',' . $prefs['gmap_defaultz'],
-					)
+		array(
+			'connect_site_title' => $prefs['browsertitle'],
+			'connect_site_email' => $userlib->get_admin_email(),
+			'connect_site_url' => $base_url,
+			'connect_site_keywords' => $prefs['metatag_keywords'],
+			'connect_site_location' => $prefs['gmap_defaultx'] . ',' . $prefs['gmap_defaulty'] . ',' . $prefs['gmap_defaultz'],
+		)
 	);
 
 	$headerlib->add_jq_onready(
-     '$("#connect_defaults_btn a").click(function(){
+		'$("#connect_defaults_btn a").click(function(){
 	var connect_defaults = ' . $defaults . ';
 	for (el in connect_defaults) {
 		$("input[name=" + el + "]").val(connect_defaults[el]);

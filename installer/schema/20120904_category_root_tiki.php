@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -31,11 +31,13 @@ function post_20120904_category_root_tiki($installer)
 		$root = $findRoot($categId, $findRoot);
 
 		if ($root != $categId) {
-			$categs->update(array(
-				'rootId' => $root,
-			), array(
-				'categId' => $categId,
-			));
+			$categs->update(
+				array(
+					'rootId' => $root,
+				), array(
+					'categId' => $categId,
+				)
+			);
 		}
 	}
 }

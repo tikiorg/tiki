@@ -57,11 +57,11 @@ function smarty_outputfilter_highlight($source, $smarty)
 
 	$end = 0;
 
-	if ( $end = strrpos($source, 'id="col2"') ) 
+	if ( $end = strrpos($source, 'id="col2"') )
 		$stop_pattern = '(<div[^>]*\s+id="col2".*)';
-	elseif ( $end = strrpos($source, 'id="col3"') ) 
+	elseif ( $end = strrpos($source, 'id="col3"') )
 		$stop_pattern = '(<div[^>]*\s+id="col3".*)';
-	else 
+	else
 		$stop_pattern = '';
 
 	$result = false;
@@ -94,16 +94,16 @@ function smarty_outputfilter_highlight($source, $smarty)
 		$matches[3] = '';
 
 	// Avoid highlight parsing in unknown cases where $matches[2] is empty, which will result in an empty page.
-	if ( $matches[2] != '' ) 
+	if ( $matches[2] != '' )
 		$source = preg_replace_callback(
-						'~(?:<head>.*</head>                            # head blocks
+			'~(?:<head>.*</head>                            # head blocks
 		|<div[^>]*nohighlight.*</div><!--nohighlight--> # div with nohightlight
 		|<script[^>]+>.*</script>                       # script blocks
 		|<a[^>]*onmouseover.*onmouseout[^>]*>           # onmouseover (user popup)
 		|<[^>]*>                                        # all html tags
 		|(' . _enlightColor($highlight) . '))~xsiU',
-						'_enlightColor',
-						$matches[2]
+			'_enlightColor',
+			$matches[2]
 		);
 
 	return $matches[1].$source.$matches[3];

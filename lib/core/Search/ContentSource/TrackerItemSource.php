@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -55,19 +55,19 @@ class Search_ContentSource_TrackerItemSource implements Search_ContentSource_Int
 		}
 
 		$data = array_merge(
-						$data, 
-						array(
-							'title' => $typeFactory->sortable($this->trklib->get_isMain_value($item['trackerId'], $objectId)),
-							'modification_date' => $typeFactory->timestamp($item['lastModif']),
-							'contributors' => $typeFactory->multivalue(array_unique(array($item['createdBy'], $item['lastModifBy']))),
-				
-							'tracker_status' => $typeFactory->identifier($item['status']),
-							'tracker_id' => $typeFactory->identifier($item['trackerId']),
-			
-							'parent_object_type' => $typeFactory->identifier('tracker'),
-							'parent_object_id' => $typeFactory->identifier($item['trackerId']),
-							'parent_view_permission' => $typeFactory->identifier($permNeeded),
-						)
+			$data,
+			array(
+				'title' => $typeFactory->sortable($this->trklib->get_isMain_value($item['trackerId'], $objectId)),
+				'modification_date' => $typeFactory->timestamp($item['lastModif']),
+				'contributors' => $typeFactory->multivalue(array_unique(array($item['createdBy'], $item['lastModifBy']))),
+
+				'tracker_status' => $typeFactory->identifier($item['status']),
+				'tracker_id' => $typeFactory->identifier($item['trackerId']),
+
+				'parent_object_type' => $typeFactory->identifier('tracker'),
+				'parent_object_id' => $typeFactory->identifier($item['trackerId']),
+				'parent_view_permission' => $typeFactory->identifier($permNeeded),
+			)
 		);
 
 		return $data;

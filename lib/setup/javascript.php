@@ -74,7 +74,8 @@ if ($prefs['javascript_enabled'] == 'y') {	// we have JavaScript
 
 	// setup timezone array
 	$tz = array_keys(DateTimeZone::listAbbreviations());
-	$headerlib->add_js('
+	$headerlib->add_js(
+		'
 function inArray(item, array) {
     for (var i in array) {
         if (array[i] === item) {
@@ -107,7 +108,8 @@ if (m.substring(0,4) == "GMT-") {
 if (inArray(m, allTimeZoneCodes)) {
 	setCookie("local_tz", m);
 }
-', 2);
+', 2
+);
 
 	$js = '
 // JS Object to hold prefs for jq
@@ -204,7 +206,8 @@ var syntaxHighlighter = {
 			}
 			$scriptpath = 'lib/iepngfix/DD_belatedPNG-min.js';
 			$headerlib->add_jsfile($scriptpath, 200);
-			$headerlib->add_js(<<<JS
+			$headerlib->add_js(
+<<<JS
 DD_belatedPNG.fix('$fixoncss'); // list of CSS selectors to fix separated by commas (default is set to fix sitelogo)
 $fixondom
 JS

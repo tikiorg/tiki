@@ -1,13 +1,13 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 /**
  * @group unit
- * 
+ *
  */
 
 class DeclFilter_KeyPatternFilterTest extends TikiTestCase
@@ -15,10 +15,10 @@ class DeclFilter_KeyPatternFilterTest extends TikiTestCase
 	function testMatch()
 	{
 		$rule = new DeclFilter_KeyPatternFilterRule(
-						array(
-							'/^foo_\d+$/' => 'digits',
-							'/^bar_[a-z]+$/' => 'digits',
-						)
+			array(
+				'/^foo_\d+$/' => 'digits',
+				'/^bar_[a-z]+$/' => 'digits',
+			)
 		);
 
 		$this->assertTrue($rule->match('foo_123'));
@@ -30,10 +30,10 @@ class DeclFilter_KeyPatternFilterTest extends TikiTestCase
 	function testApply()
 	{
 		$rule = new DeclFilter_KeyPatternFilterRule(
-						array(
-							'/^foo_\d+$/' => 'digits',
-							'/^bar_[a-z]+$/' => 'alpha',
-						)
+			array(
+				'/^foo_\d+$/' => 'digits',
+				'/^bar_[a-z]+$/' => 'alpha',
+			)
 		);
 
 		$data = array(
@@ -53,9 +53,9 @@ class DeclFilter_KeyPatternFilterTest extends TikiTestCase
 	function testApplyOnElements()
 	{
 		$rule = new DeclFilter_KeyPatternFilterRule(
-						array(
-							'/^foo_\d+$/' => 'digits',
-						)
+			array(
+				'/^foo_\d+$/' => 'digits',
+			)
 		);
 		$rule->applyOnElements();
 

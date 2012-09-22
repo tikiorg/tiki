@@ -47,7 +47,7 @@ function smarty_function_listfilter($params, $smarty)
 		$exclude = isset($exclude) ? $exclude : '';
 
 		$input = "<label>";
-		
+
 		if (!isset($prefix)) {
 			$input .= tra("Filter:");
 		} else {
@@ -74,10 +74,11 @@ function smarty_function_listfilter($params, $smarty)
 		}
 		if (!empty($query) && !empty($_REQUEST[$query])) {
 			$input .= ' value="' . $_REQUEST[$query] . '"';
-		}elseif (!empty($editorId)) {
+		} elseif (!empty($editorId)) {
 			$parentTabId = (empty($parentTabId) ? "" : $parentTabId);
 
-			$headerlib->add_jq_onready("
+			$headerlib->add_jq_onready(
+				"
 				$(document).bind('editHelpOpened', function() {
 					var text = getTASelection('#".$editorId."'),
 					possiblePlugin = text.split(/[ \(}]/)[0];
@@ -98,7 +99,8 @@ function smarty_function_listfilter($params, $smarty)
 						}
 					}
 				});
-			");
+			"
+			);
 		}
 
 		$input .= " class='listfilter' />";
@@ -106,7 +108,7 @@ function smarty_function_listfilter($params, $smarty)
 		$input .= "</label>";
 
 		if (!isset($selectors)) $selectors = ".$id table tr";
-			
+
 		$content = "
 \$('#$id').keyup( function() {
 	var criterias = this.value.toLowerCase().split( /\s+/ );

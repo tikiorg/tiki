@@ -52,14 +52,14 @@ if (isset($_REQUEST['action'])) {
 				$smarty->assign('cacheable', $rep['cacheable']);
 				$smarty->assign('description', $rep['description']);
 			}
-						break;
+			break;
 
 		case 'rm':
 			if ($repID != 0) {
 				$access->check_authenticity();
 				$integrator->remove_repository($repID);
 			}
-						break;
+			break;
 
 		case 'clear':
 			if ($repID != 0) $integrator->clear_cache($repID);
@@ -70,7 +70,7 @@ if (isset($_REQUEST['action'])) {
 			$smarty->assign('msg', tra('Requested action is not supported on repository'));
 			$smarty->display('error.tpl');
 			die;
-						break;
+			break;
 	}
 }
 

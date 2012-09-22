@@ -160,7 +160,7 @@ class Services_Tracker_SearchController
 		return array('html' => $results);
 	}
 
-	private function cs_get_grouped($dataappend, $groups) 
+	private function cs_get_grouped($dataappend, $groups)
 	{
 		$grouped = array();
 		foreach ($dataappend as $fieldid => $data) {
@@ -171,7 +171,7 @@ class Services_Tracker_SearchController
 		return $grouped;
 	}
 
-	private function cs_process_group(&$dataappend, $grouped, $id, $grouping_keys, $min_match = 2, $max_match = 99, $checksimilar = true, $drop_if_no_match = false) 
+	private function cs_process_group(&$dataappend, $grouped, $id, $grouping_keys, $min_match = 2, $max_match = 99, $checksimilar = true, $drop_if_no_match = false)
 	{
 		$parser = new WikiParser_PluginArgumentParser;
 		$to_reconstruct = array();
@@ -221,7 +221,7 @@ class Services_Tracker_SearchController
 		return $to_reconstruct;
 	}
 
-	private function cs_reconstruct_group(&$dataappend, $to_reconstruct, $grouped, $id, $grouping_keys) 
+	private function cs_reconstruct_group(&$dataappend, $to_reconstruct, $grouped, $id, $grouping_keys)
 	{
 		foreach ($to_reconstruct as $group_id => $recon) {
 			$new_query_val = implode(' ', $recon['query_vals']);
@@ -243,7 +243,7 @@ class Services_Tracker_SearchController
 		}
 	}
 
-	private function cs_reconstruct_rangegroup(&$dataappend, $to_reconstruct, $grouped, $id, $grouping_keys, $mode = 'text') 
+	private function cs_reconstruct_rangegroup(&$dataappend, $to_reconstruct, $grouped, $id, $grouping_keys, $mode = 'text')
 	{
 		foreach ($to_reconstruct as $group_id => $recon) {
 			sort($recon['query_vals'], SORT_NUMERIC); // Lucene is a string only engine but date ranges are converted from timestamp ints
@@ -267,7 +267,7 @@ class Services_Tracker_SearchController
 		}
 	}
 
-	private function cs_dataappend_language($config, $value) 
+	private function cs_dataappend_language($config, $value)
 	{
 		if ($config['type'] != 'text') {
 			if (!empty($config['_value'])) {
@@ -282,7 +282,7 @@ class Services_Tracker_SearchController
 		return false;
 	}
 
-	private function cs_dataappend_type($config, $value) 
+	private function cs_dataappend_type($config, $value)
 	{
 		if ($config['type'] != 'text') {
 			if (!empty($config['_value'])) {
@@ -297,7 +297,7 @@ class Services_Tracker_SearchController
 		return false;
 	}
 
-	private function cs_dataappend_content($config, $value) 
+	private function cs_dataappend_content($config, $value)
 	{
 		if ($value) {
 			if ($config['type'] == 'checkbox') {
@@ -330,7 +330,7 @@ class Services_Tracker_SearchController
 		return false;
 	}
 
-	private function cs_dataappend_categories($config, $value) 
+	private function cs_dataappend_categories($config, $value)
 	{
 		if (isset($config['_filter']) && $config['_filter'] == 'categories' && $config['type'] != 'text') {
 			if (!empty($config['_value'])) {
@@ -349,8 +349,9 @@ class Services_Tracker_SearchController
 		return false;
 	}
 
-	function cs_dataappend_daterange($config, $value) {
-		if ($vals = split(',', $value)) {
+	function cs_dataappend_daterange($config, $value)
+	{
+		if ($vals = preg_split('/,/', $value)) {
 			if (count($vals) == 2) {
 				$from = $vals[0];
 				$to = $vals[1];

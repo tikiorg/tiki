@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -16,21 +16,21 @@ class Report_Definition_Logs
 				"value"=> $type,
 			);
 		}
-		
+
 		$actions = array(
 			array(
 				"label"=> tr("All"),
 				"value"=> ""
 			)
 		);
-		
+
 		foreach (TikiLib::lib('logsqry')->listActions() as $action) {
 			$actions[] = array(
 				"label"=> tr(ucwords($action)),
 				"value"=> $action,
 			);
 		}
-		
+
 		$fields = array();
 		foreach (TikiLib::fetchAll("SHOW COLUMNS FROM tiki_actionlog") as $column) {
 			$fields[] = array(
@@ -38,7 +38,7 @@ class Report_Definition_Logs
 				"value"=> $column['Field'],
 			);
 		}
-		
+
 		return array(
 			"values"=> array(
 				"logs"=> $logs,
@@ -145,21 +145,21 @@ class Report_Definition_Logs
 	function output($values = array())
 	{
 		global $tikilib,$user;
-		
+
 		$qry = TikiLib::lib("logsqry")
 			->type($values['logs']['value'])
 			->action($values['logs']['action']['value'])
 			->start(strtotime($values['logs']['start']['value']))
 			->end(strtotime($values['logs']['end']['value']));
-		
+
 		$usersItems = array();//user items need to be choosable as to what type
 		foreach ($tikilib->fetchAll(
-						"SELECT itemId FROM tiki_tracker_items WHERE createdBy = ?",
-						array($user)
+			"SELECT itemId FROM tiki_tracker_items WHERE createdBy = ?",
+			array($user)
 		) as $item) {
 			$usersItems[] = $item['itemId'];
 		}
-		
+
 		if (!empty($values['logs']['grouping'])) {
 			switch($values['logs']['grouping']['value']) {
 				case "count":
@@ -179,11 +179,11 @@ class Report_Definition_Logs
     				break;
 			}
 		}
-		
+
 		if (!empty($values['logs']['limit'])) {
 			$qry->limit($values['logs']['limit']['value']);
 		}
-		
+
 		if (!empty($values['logs']['sort'])) {
 			switch ($values['logs']['sort']['value']) {
 				case "asc":
@@ -194,12 +194,12 @@ class Report_Definition_Logs
     				break;
 			}
 		}
-		
+
 		$result = $qry->fetchAll();
-		
+
 		if (!empty($values['logs']['fields'])) {
 			$newResult = array();
-			
+
 			foreach ($result as $row) {
 				$newRow = array();
 				foreach ($values['logs']['fields'] as $field) {
@@ -207,17 +207,17 @@ class Report_Definition_Logs
 				}
 				$newResult[] = $newRow;
 			}
-			
+
 			$result = $newResult;
 		}
-		
-		
+
+
 		//date correction/format
 		foreach ($result as $key => $row) {
 			if (isset($result[$key]['lastModif']))
-				$result[$key]['lastModif'] = $tikilib->get_short_datetime($result[$key]['lastModif']); 
+				$result[$key]['lastModif'] = $tikilib->get_short_datetime($result[$key]['lastModif']);
 		}
-		
+
 		return $result;
 	}
 }

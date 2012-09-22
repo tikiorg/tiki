@@ -1,13 +1,13 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 /**
  * Handler class for ItemsList
- * 
+ *
  * Letter key: ~l~
  *
  */
@@ -82,13 +82,13 @@ class Tracker_Field_ItemsList extends Tracker_Field_Abstract
 			'items' => $list,
 		);
 	}
-	
+
 	function renderInput($context = array())
 	{
 		return tr('Read Only');
 	}
 
-	function renderOutput( $context = array() ) 
+	function renderOutput( $context = array() )
 	{
 		if ($context['list_mode'] === 'csv') {
 			return $this->getConfiguration('value');
@@ -101,15 +101,15 @@ class Tracker_Field_ItemsList extends Tracker_Field_Abstract
 
 			$list = $this->getItemLabels($items);
 			return $this->renderTemplate(
-							'trackeroutput/itemslist.tpl', 
-							$context, 
-							array(
-								'links' => (bool) $this->getOption(4),
-								'raw' => (bool) $this->getOption(3),
-								'itemIds' => implode(',', $items),
-								'items' => $list,
-								'num' => count($list),
-							)
+				'trackeroutput/itemslist.tpl',
+				$context,
+				array(
+					'links' => (bool) $this->getOption(4),
+					'raw' => (bool) $this->getOption(3),
+					'itemIds' => implode(',', $items),
+					'items' => $list,
+					'num' => count($list),
+				)
 			);
 		}
 	}

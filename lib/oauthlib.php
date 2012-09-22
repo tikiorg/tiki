@@ -119,8 +119,8 @@ class OAuthLib extends TikiDb_Bridge
 		case 'zotero':
 			return array(
 				'callbackUrl' => $tikilib->tikiUrl(
-								'tiki-ajax_services.php',
-								array('oauth_callback' => $provider_key,)
+					'tiki-ajax_services.php',
+					array('oauth_callback' => $provider_key,)
 				),
 				'siteUrl' => 'https://www.zotero.org/oauth',
 				'requestTokenUrl' => 'https://www.zotero.org/oauth/request',

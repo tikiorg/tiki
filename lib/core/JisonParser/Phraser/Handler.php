@@ -21,11 +21,14 @@ class JisonParser_Phraser_Handler extends JisonParser_Phraser
 
 	function setCssWordClasses($classes = array())
 	{
-		$classes = array_merge(array(
-			'start' => '',
-			'middle' => '',
-			'end' => ''
-		), $classes);
+		$classes = array_merge(
+			array(
+				'start' => '',
+				'middle' => '',
+				'end' => ''
+			),
+			$classes
+		);
 
 		$this->cssClassStart = $classes['start'];
 		$this->cssClassMiddle = $classes['middle'];

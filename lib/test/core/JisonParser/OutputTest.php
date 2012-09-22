@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -19,7 +19,8 @@ class JisonParser_OutputTest extends TikiTestCase
 		$this->provider();
 	}
 
-	function provider() {
+	function provider()
+	{
 		$this->syntaxSets = array(
 			'simple_break'      => array(),
 			//old syntax checks, somewhat modified
@@ -158,8 +159,9 @@ class JisonParser_OutputTest extends TikiTestCase
 		);
 	}
 
-	public function testOutput() {
-		foreach($this->syntaxSets as $syntaxName => $syntax) {
+	public function testOutput()
+	{
+		foreach ($this->syntaxSets as $syntaxName => $syntax) {
 			if (isset($syntax[0])) {
 				$parsed = $this->parser->parse($syntax[0]);
 			} else {
@@ -173,7 +175,7 @@ class JisonParser_OutputTest extends TikiTestCase
 				echo '"' . $parsed . '"' . "\n\n\n\n";
 			}
 
-			$this->assertEquals($syntax[1],$parsed, $syntaxName, $syntax[0]);
+			$this->assertEquals($syntax[1], $parsed, $syntaxName, $syntax[0]);
 		}
 	}
 

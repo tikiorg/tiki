@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -52,7 +52,8 @@ class Services_JCapture_Controller
 		return array();
 	}
 
-	function action_upload($input) {
+	function action_upload($input)
+	{
 		global $prefs, $is_token_access;
 
 		$tok = $input->sectok->text();
@@ -64,7 +65,7 @@ class Services_JCapture_Controller
 
 		$fileController = new Services_File_Controller();
 
-		$input->offsetSet('size',  $_FILES['Filedata']['size']);
+		$input->offsetSet('size', $_FILES['Filedata']['size']);
 		$input->offsetSet('name', $_FILES['Filedata']['name']);
 		$input->offsetSet('type', $_FILES['Filedata']['type']);
 		if (is_uploaded_file($_FILES['Filedata']['tmp_name'])) {

@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -25,16 +25,16 @@ function prefs_wiki_list($partial = false)
 	$advanced_columns = $prefslib->getExtraSortColumns();
 
 	$wiki_sort_columns = array_merge(
-					array(
-						'pageName' => tra('Name'),
-						'lastModif' => tra('LastModif'),
-						'created' => tra('Created'),
-						'creator' => tra('Creator'),
-						'hits' => tra('Hits'),
-						'user' => tra('Last editor'),
-						'page_size' => tra('Size'),
-					),
-					$advanced_columns
+		array(
+			'pageName' => tra('Name'),
+			'lastModif' => tra('LastModif'),
+			'created' => tra('Created'),
+			'creator' => tra('Creator'),
+			'hits' => tra('Hits'),
+			'user' => tra('Last editor'),
+			'page_size' => tra('Size'),
+		),
+		$advanced_columns
 	);
 
 	$comment_sort_orders = array(
@@ -670,6 +670,6 @@ function prefs_wiki_list($partial = false)
 				'feature_semantic', // this is needed at point of creation of semantic link otherwise link will not register
 			),
 			'default' => '',
-		),		
+		),
 	);
 }

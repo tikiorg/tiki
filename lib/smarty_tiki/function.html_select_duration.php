@@ -59,12 +59,12 @@ function smarty_function_html_select_duration($params, $smarty)
 	$html_result .= '<select name="'.$prefix.'">';
 
 	$html_result .= smarty_function_html_options(
-					array(
-						'values' => $values,
-						'output' => $output,
-						'selected' => $selected
-					), 
-					$smarty
+		array(
+			'values' => $values,
+			'output' => $output,
+			'selected' => $selected
+		),
+		$smarty
 	);
 
 	$html_result .= '</select>';

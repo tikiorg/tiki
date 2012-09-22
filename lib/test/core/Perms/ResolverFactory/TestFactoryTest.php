@@ -1,13 +1,13 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-/** 
+/**
  * @group unit
- * 
+ *
  */
 
 class Perms_ResolverFactory_TestFactoryTest extends TikiTestCase
@@ -33,24 +33,24 @@ class Perms_ResolverFactory_TestFactoryTest extends TikiTestCase
 			'ordering' => array(array('a', 'b'), array('b' => 1, 'a' => 2), '2:1'),
 		);
 	}
-	
+
 	function testFetchKnown()
 	{
 		$factory = new Perms_ResolverFactory_TestFactory(
-						array('a'), 
-						array('1' => $a = new Perms_Resolver_Default(true))
+			array('a'),
+			array('1' => $a = new Perms_Resolver_Default(true))
 		);
-		
+
 		$this->assertSame($a, $factory->getResolver(array('a' => 1)));
 	}
-	
+
 	function testFetchUnknown()
 	{
 		$factory = new Perms_ResolverFactory_TestFactory(
-						array('a'), 
-						array('1' => $a = new Perms_Resolver_Default(true))
+			array('a'),
+			array('1' => $a = new Perms_Resolver_Default(true))
 		);
-		
+
 		$this->assertNull($factory->getResolver(array('a' => 2)));
 	}
 }

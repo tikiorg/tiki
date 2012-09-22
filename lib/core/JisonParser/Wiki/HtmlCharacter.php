@@ -33,7 +33,7 @@ class JisonParser_Wiki_HtmlCharacter
 
 	function parse(&$content)
 	{
-		foreach($this->chars as &$char) {
+		foreach ($this->chars as &$char) {
 			$content = preg_replace($char['exp'], $char['output'], $content);
 		}
 	}

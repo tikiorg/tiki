@@ -18,9 +18,9 @@ if ( isset($_SESSION['try_style']) ) {
 
 if ($prefs['feature_fixed_width'] === 'y') {
 	$headerlib->add_css(
-					'.fixed_width .fixedwidth, .fixed_width .fixedwidth .fixedwidth { width:' . 
-					(!empty($prefs['layout_fixed_width']) ? $prefs['layout_fixed_width'] : '990px') . 
-					'; }'
+		'.fixed_width .fixedwidth, .fixed_width .fixedwidth .fixedwidth { width:' .
+		(!empty($prefs['layout_fixed_width']) ? $prefs['layout_fixed_width'] : '990px') .
+		'; }'
 	);
 }
 

@@ -44,14 +44,14 @@ if (isset($_REQUEST['save'])) {
 	$_REQUEST['menuId'] = 0;
 	$smarty->assign('menuId', 0);
 	$smarty->assign(
-					'info',
-					array(
-						'name' => '',
-						'description' => '',
-						'type' => 'd',
-						'icon' => null,
-						'use_items_icons' => 'n'
-					)
+		'info',
+		array(
+			'name' => '',
+			'description' => '',
+			'type' => 'd',
+			'icon' => null,
+			'use_items_icons' => 'n'
+		)
 	);
 }
 

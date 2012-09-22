@@ -63,14 +63,14 @@ function module_map_edit_features($mod_reference, $module_params)
 	}
 
 	$smarty->assign(
-					'edit_features', 
-					array(
-						'trackerId' => $module_params['trackerId'],
-						'definition' => $definition,
-						'field' => $targetField,
-						'hiddenInput' => $hidden,
-						'standardControls' => isset($module_params['standard']) ? intval($module_params['standard']) : 1,
-					)
+		'edit_features',
+		array(
+			'trackerId' => $module_params['trackerId'],
+			'definition' => $definition,
+			'field' => $targetField,
+			'hiddenInput' => $hidden,
+			'standardControls' => isset($module_params['standard']) ? intval($module_params['standard']) : 1,
+		)
 	);
 }
 

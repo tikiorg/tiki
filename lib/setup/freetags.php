@@ -67,8 +67,8 @@ if ( isset($section) and isset($sections[$section])) {
 
 		if ( $ft_multi && $object = current_object() ) {
 			$smarty->assign(
-							'freetags_mixed_lang',
-							'tiki-freetag_translate.php?objType=' . urlencode($object['type']) . '&objId=' . urlencode($object['object'])
+				'freetags_mixed_lang',
+				'tiki-freetag_translate.php?objType=' . urlencode($object['type']) . '&objId=' . urlencode($object['object'])
 			);
 		}
 	}

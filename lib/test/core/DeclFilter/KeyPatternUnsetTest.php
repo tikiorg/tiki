@@ -1,13 +1,13 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 /**
  * @group unit
- * 
+ *
  */
 
 class DeclFilter_KeyPatternUnsetTest extends TikiTestCase
@@ -15,10 +15,10 @@ class DeclFilter_KeyPatternUnsetTest extends TikiTestCase
 	function testMatch()
 	{
 		$rule = new DeclFilter_KeyPatternUnsetRule(
-						array(
-							'/^foo_\d+$/',
-							'/^bar_[a-z]+$/',
-						)
+			array(
+				'/^foo_\d+$/',
+				'/^bar_[a-z]+$/',
+			)
 		);
 
 		$this->assertTrue($rule->match('foo_123'));
@@ -30,10 +30,10 @@ class DeclFilter_KeyPatternUnsetTest extends TikiTestCase
 	function testApply()
 	{
 		$rule = new DeclFilter_KeyPatternUnsetRule(
-						array(
-							'/^foo_\d+$/',
-							'/^bar_[a-z]+$/',
-						)
+			array(
+				'/^foo_\d+$/',
+				'/^bar_[a-z]+$/',
+			)
 		);
 
 		$data = array(

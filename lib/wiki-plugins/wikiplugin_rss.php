@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -39,8 +39,8 @@ function wikiplugin_rss_info()
 				'description' => tra('Show date of each item (not shown by default)'),
 				'default' => 0,
 				'options' => array(
-					array('text' => '', 'value' => ''), 
-					array('text' => tra('Yes'), 'value' => 1), 
+					array('text' => '', 'value' => ''),
+					array('text' => tra('Yes'), 'value' => 1),
 					array('text' => tra('No'), 'value' => 0)
 				)
 			),
@@ -51,8 +51,8 @@ function wikiplugin_rss_info()
 				'description' => tra('Show feed descriptions (not shown by default)'),
 				'default' => 0,
 				'options' => array(
-					array('text' => '', 'value' => ''), 
-					array('text' => tra('Yes'), 'value' => 1), 
+					array('text' => '', 'value' => ''),
+					array('text' => tra('Yes'), 'value' => 1),
 					array('text' => tra('No'), 'value' => 0)
 				)
 			),
@@ -63,8 +63,8 @@ function wikiplugin_rss_info()
 				'description' => tra('Show authors (not shown by default)'),
 				'default' => 0,
 				'options' => array(
-					array('text' => '', 'value' => ''), 
-					array('text' => tra('Yes'), 'value' => 1), 
+					array('text' => '', 'value' => ''),
+					array('text' => tra('Yes'), 'value' => 1),
 					array('text' => tra('No'), 'value' => 0)
 				)
 			),
@@ -82,8 +82,8 @@ function wikiplugin_rss_info()
 				'description' => tra('Show the title of the feed (shown by default)'),
 				'default' => 1,
 				'options' => array(
-					array('text' => '', 'value' => ''), 
-					array('text' => tra('Yes'), 'value' => 1), 
+					array('text' => '', 'value' => ''),
+					array('text' => tra('Yes'), 'value' => 1),
 					array('text' => tra('No'), 'value' => 0)
 				)
 			),
@@ -97,15 +97,15 @@ function wikiplugin_rss($data,$params)
 	global $rsslib; require_once 'lib/rss/rsslib.php';
 
 	$params = array_merge(
-					array(
-						'max' => 10,
-						'date' => 0,
-						'desc' => 0,
-						'author' => 0,
-						'icon' => '',
-						'showtitle' => 1,
-					),
-					$params
+		array(
+			'max' => 10,
+			'date' => 0,
+			'desc' => 0,
+			'author' => 0,
+			'icon' => '',
+			'showtitle' => 1,
+		),
+		$params
 	);
 
 	if ( ! isset( $params['id'] ) ) {

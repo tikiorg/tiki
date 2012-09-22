@@ -1,13 +1,13 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 /**
  * @group unit
- * 
+ *
  */
 
 class Perms_Reflection_FactoryTest extends TikiTestCase
@@ -44,8 +44,8 @@ class Perms_Reflection_FactoryTest extends TikiTestCase
 		$factory->registerFallback('Perms_Reflection_Object');
 
 		$this->assertEquals(
-						new Perms_Reflection_Object($factory, 'wiki page', 'HomePage'),
-						$factory->get('wiki page', 'HomePage')
+			new Perms_Reflection_Object($factory, 'wiki page', 'HomePage'),
+			$factory->get('wiki page', 'HomePage')
 		);
 	}
 

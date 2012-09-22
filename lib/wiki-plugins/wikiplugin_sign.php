@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -61,11 +61,14 @@ function wikiplugin_sign($data, $params)
 	}
 
 	$smarty = TikiLib::lib('smarty');
-	$smarty->assign('sign', array(
-		'user' => $user,
-		'datetime' => $params['datetime'],
-		'time' => $time,
-	));
+	$smarty->assign(
+		'sign',
+		array(
+			'user' => $user,
+			'datetime' => $params['datetime'],
+			'time' => $time,
+		)
+	);
 	return $smarty->fetch('wiki-plugins/wikiplugin_sign.tpl');
 }
 

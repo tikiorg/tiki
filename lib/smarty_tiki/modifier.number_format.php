@@ -39,15 +39,15 @@ function separator($sep)
 		case 'c':
 		case ',':
 			$sep = ',';
-						break;
+			break;
 		case 'd':
 		case '.':
 			$sep = '.';
-						break;
+			break;
 		case 's':
 		case ' ':
 			$sep = ' ';
-						break;
+			break;
 	}
 	return $sep;
 }

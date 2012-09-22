@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -32,11 +32,11 @@ abstract class Tracker_Field_Abstract implements Tracker_Field_Interface, Tracke
 		if ($this->isLink($context)) {
 			$itemId = $this->getItemId();
 			$query = array_merge(
-							$_GET, 
-							array(
-								'itemId' => $itemId,
-								'show' => 'view',
-							)
+				$_GET,
+				array(
+					'itemId' => $itemId,
+					'show' => 'view',
+				)
 			);
 
 
@@ -132,7 +132,7 @@ abstract class Tracker_Field_Abstract implements Tracker_Field_Interface, Tracke
 
 		$status = $this->getData('status');
 
-		if ($this->getConfiguration('isMain', 'n') == 'y' 
+		if ($this->getConfiguration('isMain', 'n') == 'y'
 			&& ($itemObject->canView()	|| $itemObject->getPerm('comment_tracker_items'))
 			) {
 			return (bool) $this->getItemId();
@@ -155,7 +155,7 @@ abstract class Tracker_Field_Abstract implements Tracker_Field_Interface, Tracke
 
 		foreach ($fields as $id) {
 			$field = $this->trackerDefinition->getField($id);
-			
+
 			if (!isset($this->itemData[$field['fieldId']])) {
 				foreach ($this->itemData['field_values'] as $fieldVal) {
 					if ($fieldVal['fieldId'] == $id) {
@@ -200,7 +200,7 @@ abstract class Tracker_Field_Abstract implements Tracker_Field_Interface, Tracke
 	/**
 	 * Return the HTML id of input tag for this
 	 * field in the item form
-	 * 
+	 *
 	 * @return string
 	 */
 	protected function getInsertId()
@@ -220,14 +220,14 @@ abstract class Tracker_Field_Abstract implements Tracker_Field_Interface, Tracke
 
 	/**
 	 * Return the value for this item field
-	 * 
+	 *
 	 * @param mixed $default the field value used if none is set
 	 * @return mixed field value
 	 */
 	protected function getValue($default = '')
 	{
 		$key = $this->getConfiguration('fieldId');
-		
+
 		if (isset($this->itemData[$key])) {
 			$value = $this->itemData[$key];
 		} else if (isset($this->definition['value'])) {
@@ -251,8 +251,8 @@ abstract class Tracker_Field_Abstract implements Tracker_Field_Interface, Tracke
 
 	/**
 	 * Returns an option from the options array based on the numeric position.
-	 * For the list of options for a particular field check its getTypes() method. 
-	 * 
+	 * For the list of options for a particular field check its getTypes() method.
+	 *
 	 * @param int $number
 	 * @param bool $default
 	 * @return mixed

@@ -10,15 +10,15 @@ class Search_Index_LuceneNumericTest extends PHPUnit_Framework_TestCase
 		$index = new Search_Index_Lucene($this->dir);
 		$typeFactory = $index->getTypeFactory();
 		$index->addDocument(
-						array(
-							'object_type' => $typeFactory->identifier('wiki page'),
-							'object_id' => $typeFactory->identifier('HomePage'),
-							'contents' => $typeFactory->plaintext('module 7, 2.5.3')->filter(
-											array(
-												new Search_ContentFilter_VersionNumber,
-											)
-							),
-						)
+			array(
+				'object_type' => $typeFactory->identifier('wiki page'),
+				'object_id' => $typeFactory->identifier('HomePage'),
+				'contents' => $typeFactory->plaintext('module 7, 2.5.3')->filter(
+					array(
+						new Search_ContentFilter_VersionNumber,
+					)
+				),
+			)
 		);
 
 		$this->index = $index;

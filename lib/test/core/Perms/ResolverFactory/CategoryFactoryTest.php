@@ -1,13 +1,13 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-/** 
+/**
  * @group unit
- * 
+ *
  */
 
 class Perms_ResolverFactory_CategoryFactoryTest extends PHPUnit_Framework_TestCase
@@ -33,7 +33,7 @@ class Perms_ResolverFactory_CategoryFactoryTest extends PHPUnit_Framework_TestCa
 		$db = TikiDb::get();
 
 		$db->query('DELETE FROM ' . $name);
-		
+
 		foreach ($this->tableData[$name] as $row) {
 			$db->query('INSERT INTO ' . $name . ' VALUES(?' . str_repeat(',?', count($row)-1) . ')', array_values($row));
 		}
@@ -71,7 +71,7 @@ class Perms_ResolverFactory_CategoryFactoryTest extends PHPUnit_Framework_TestCa
 		$db->query($categQuery, array(3, 2));
 
 		$factory = new Perms_ResolverFactory_CategoryFactory;
-		
+
 		$this->assertEquals('category:1:3:4', $factory->getHash(array('type' => 'wiki page', 'object' => 'HomePage')));
 		$this->assertEquals('category:2:3', $factory->getHash(array('type' => 'wiki page', 'object' => 'Contact')));
 		$this->assertEquals('', $factory->getHash(array('type' => 'wiki page', 'object' => 'Hello World')));
@@ -144,20 +144,20 @@ class Perms_ResolverFactory_CategoryFactoryTest extends PHPUnit_Framework_TestCa
 		$db->query($permQuery, array('Hello', 'tiki_p_view', 2));
 
 		$factory = new Perms_ResolverFactory_CategoryFactory;
-		
+
 		$expect = new Perms_Resolver_Static(
-						array(
-							'Anonymous' => array('admin'),
-							'Registered' => array('edit', 'view'),
-						), 
-						'category'
+			array(
+				'Anonymous' => array('admin'),
+				'Registered' => array('edit', 'view'),
+			),
+			'category'
 		);
 
 		$this->assertEquals($expect, $factory->getResolver(array('type' => 'wiki page', 'object' => 'HomePage')));
 
 		$expect = new Perms_Resolver_Static(
-						array('Hello' => array('view'),), 
-						'category'
+			array('Hello' => array('view'),),
+			'category'
 		);
 
 		$this->assertEquals($expect, $factory->getResolver(array('type' => 'blog', 'object' => 4)));
@@ -183,7 +183,7 @@ class Perms_ResolverFactory_CategoryFactoryTest extends PHPUnit_Framework_TestCa
 		$db->query($permQuery, array('Hello', 'tiki_p_view', 2));
 
 		$factory = new Perms_ResolverFactory_CategoryFactory;
-		
+
 		$this->assertNull($factory->getResolver(array('type' => 'wiki page', 'object' => 'HomePage')));
 	}
 
@@ -209,14 +209,14 @@ class Perms_ResolverFactory_CategoryFactoryTest extends PHPUnit_Framework_TestCa
 		$db->query($permQuery, array('Anonymous', 'tiki_p_admin', 4));
 
 		$factory = new Perms_ResolverFactory_CategoryFactory;
-		
+
 		$this->assertNull($factory->getResolver(array('type' => 'wiki page', 'object' => 'Contact')));
 	}
 
 	function testObtainResolverIncompleteContext()
 	{
 		$factory = new Perms_ResolverFactory_CategoryFactory;
-		
+
 		$this->assertNull($factory->getResolver(array('type' => 'wiki page')));
 		$this->assertNull($factory->getResolver(array('object' => 'HomePage')));
 	}
@@ -247,7 +247,7 @@ class Perms_ResolverFactory_CategoryFactoryTest extends PHPUnit_Framework_TestCa
 
 		$factory = new Perms_ResolverFactory_CategoryFactory;
 		$out = $factory->bulk(array('type' => 'wiki page'), 'object', array('HomePage', 'UserPageFoobar', 'Hello World'));
-		
+
 		$this->assertEquals(array('UserPageFoobar'), $out);
 	}
 
@@ -255,7 +255,7 @@ class Perms_ResolverFactory_CategoryFactoryTest extends PHPUnit_Framework_TestCa
 	{
 		$factory = new Perms_ResolverFactory_CategoryFactory;
 		$out = $factory->bulk(array('type' => 'wiki page'), 'objectId', array('HomePage', 'UserPageFoobar', 'HelloWorld'));
-		
+
 		$this->assertEquals(array('HomePage', 'UserPageFoobar', 'HelloWorld'), $out);
 	}
 
@@ -263,7 +263,7 @@ class Perms_ResolverFactory_CategoryFactoryTest extends PHPUnit_Framework_TestCa
 	{
 		$factory = new Perms_ResolverFactory_CategoryFactory;
 		$out = $factory->bulk(array(), 'object', array('HomePage', 'UserPageFoobar', 'HelloWorld'));
-		
+
 		$this->assertEquals(array('HomePage', 'UserPageFoobar', 'HelloWorld'), $out);
 	}
 }

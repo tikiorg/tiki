@@ -1,13 +1,13 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 /**
  * Handler class for PageSelector
- * 
+ *
  * Letter key: ~k~
  * Possibly doesn't need "non-simple" handling apart from defaultvalue?
  *
@@ -77,7 +77,7 @@ class Tracker_Field_PageSelector extends Tracker_Field_Abstract
 	{
 		return $this->renderTemplate('trackerinput/pageselector.tpl', $context);
 	}
-	
+
 	function renderOutput($context = array())
 	{
 		$value = $this->getConfiguration('value');
@@ -88,11 +88,11 @@ class Tracker_Field_PageSelector extends Tracker_Field_Abstract
 				$smarty = TikiLib::lib('smarty');
 				$smarty->loadPlugin('smarty_function_object_link');
 				return smarty_function_object_link(
-								array(
-									'type' => 'wikipage',
-									'id' => $value,
-								),
-								$smarty
+					array(
+						'type' => 'wikipage',
+						'id' => $value,
+					),
+					$smarty
 				);
 			}
 		}

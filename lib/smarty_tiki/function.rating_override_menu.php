@@ -16,12 +16,11 @@ function smarty_function_rating_override_menu( $params, $smarty )
 	$optionsLength = count($options);
 	$backgroundsSets = $ratinglib->get_options_smiles_backgrounds($params['type']);
 
-	foreach($options as $i => $option)
-	{
+	foreach ($options as $i => $option) {
 		if ($prefs['rating_smileys'] == 'y') {
 			$images = '';
 
-			foreach($backgroundsSets[$i] as $i => $background) {
+			foreach ($backgroundsSets[$i] as $i => $background) {
 				$images .= '<img src="' . $background . '"/>';
 			}
 

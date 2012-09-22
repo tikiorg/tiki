@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -185,13 +185,13 @@ class Tracker_Item
 			global $user;
 			return $user;
 		}
-		
+
 
 		if (isset($this->info['itemUser'])) {
 			// Used by TRACKERLIST - not all data is loaded, but this is loaded separately
 			return $this->info['itemUser'];
 		}
-                
+
 		$userField = $this->definition->getUserField();
 		if ($userField) {
 			return $this->getValue($userField);
@@ -203,7 +203,7 @@ class Tracker_Item
 		if (!is_object($this->definition)) {
 			return; // TODO: This is a temporary fix, we should be able to getItemOwner always
 		}
-		
+
 		$groupField = $this->definition->getWriterGroupField();
 		if ($groupField) {
 			return $this->getValue($groupField);
@@ -225,7 +225,7 @@ class Tracker_Item
 		}
 
 		$field = $this->definition->getField($fieldId);
-		
+
 		if (! $field) {
 			return false;
 		}
@@ -266,7 +266,7 @@ class Tracker_Item
 		}
 
 		$field = $this->definition->getField($fieldId);
-		
+
 		if (! $field) {
 			return false;
 		}
@@ -321,12 +321,12 @@ class Tracker_Item
 
 			if ($this->canModifyField($fid)) {
 				$field['ins_id'] = "ins_$fid";
-				
+
 				$handler = $factory->getHandler($field, $this->info);
 				$output[] = array_merge($field, $handler->getFieldData($input));
 			}
 		}
-		
+
 		return $output;
 	}
 
@@ -344,11 +344,11 @@ class Tracker_Item
 
 		return $fieldId;
 	}
-	
+
 	/**
 	 * Getter method for the permissions of this
 	 * item.
-	 * 
+	 *
 	 * @param string $permName
 	 * @return bool|null
 	 */
@@ -383,7 +383,7 @@ class Tracker_Item
 			foreach ($this->definition->getFields() as $field) {
 				$handler = $factory->getHandler($field, $info);
 				$data = $handler->getFieldData();
-				
+
 				$permName = $field['permName'];
 				$out[$permName] = $data['value'];
 			}
@@ -405,11 +405,14 @@ class Tracker_Item
 	{
 		if ($this->definition->getConfiguration('showStatus', 'n') == 'y'
 			|| ($this->definition->getConfiguration('showStatusAdminOnly', 'n') == 'y' && $this->perms->admin_trackers)) {
-			
+
 			switch ($this->info['status']) {
-			case 'o': return 'open';
-			case 'p': return 'pending';
-			case 'c': return 'closed';
+				case 'o':
+					return 'open';
+				case 'p':
+					return 'pending';
+				case 'c':
+					return 'closed';
 			}
 		}
 	}
