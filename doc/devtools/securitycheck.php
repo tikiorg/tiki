@@ -16,7 +16,9 @@
 // Related script:  doc/devtools/prefreport.php
 //
 
-if (isset($_SERVER['REQUEST_METHOD'])) die;
+if (isset($_SERVER['REQUEST_METHOD'])) {
+	die;
+}
 
 // Add the imported libraries located in lib/
 $thirdpartyLibs = array(
@@ -64,14 +66,16 @@ $safePaths = array(
 	'\./tiki-testGD.php',
 );
 
-if (!file_exists('tiki-setup.php'))
+if (!file_exists('tiki-setup.php')) {
 	die("Please run this script from tiki root.\n");
+}
 
 include_once ('lib/setup/twversion.class.php');
 $TWV = new TWVersion();
 
-if (!$TWV->version)
+if (!$TWV->version) {
 	die("Could not find version information.\n");
+}
 
 $ver = explode('.', $TWV->version);
 $major = (count($ver) >= 1) ? $ver[0]:'?';
@@ -82,8 +86,9 @@ function get_content($filename)
 {
 	static $last, $content;
 
-	if ($filename == $last)
+	if ($filename == $last) {
 		return $content;
+	}
 
 	$content = file_get_contents($last = $filename);
 
@@ -140,7 +145,7 @@ function tikisetup_pattern() // {{{
 
 function scanfiles($folder, &$files) // {{{
 {
-  global $filesHash;
+	global $filesHash;
 	$handle = opendir($folder);
 	if (!$handle) {
 		printf("Could not open folder: %s\n", $folder);
@@ -149,17 +154,18 @@ function scanfiles($folder, &$files) // {{{
 
 	while (false !== $file = readdir($handle)) {
 		// Skip self and parent
-		if ($file{0} == '.' || $file{0} == '..')
+		if ($file{0} == '.' || $file{0} == '..') {
 			continue;
+		}
 
 		$path = "$folder/$file";
 
-		if (is_dir($path))
+		if (is_dir($path)) {
 			scanfiles($path, $files);
-		else {
-		  $analysis = analyse_file_path($path);
-		  $files[] = $analysis;
-		  $filesHash[$path] = $analysis;
+		} else {
+			$analysis = analyse_file_path($path);
+			$files[] = $analysis;
+			$filesHash[$path] = $analysis;
 		}
 	}
 } // }}}
@@ -184,36 +190,38 @@ function analyse_file_path($path) // {{{
 
 	$type = 'unknown';
 	$name = basename($path);
-	if (strpos($name, '.') !== false)
+	if (strpos($name, '.') !== false) {
 		$extension = substr($name, strrpos($name, '.') + 1);
-	else
+	} else {
 		$extension = false;
+	}
 
-	if (strpos($path, '/CVS/') !== false)
+	if (strpos($path, '/CVS/') !== false) {
 		$type = 'cvs';
-	elseif (strpos($path, './templates_c/') === 0)
+	} elseif (strpos($path, './templates_c/') === 0) {
 		$type = 'cache';
-	elseif (regex_match($path, $safePaths))
+	} elseif (regex_match($path, $safePaths)) {
 		$type = 'safe';
-	elseif ($extension == 'php' || $extension == 'inc') {
-		if ($name == 'index.php')
+	} elseif ($extension == 'php' || $extension == 'inc') {
+		if ($name == 'index.php') {
 			$type = 'blocker';
-		elseif ($name == 'language.php')
+		} elseif ($name == 'language.php') {
 			$type = 'lang';
-		elseif (strpos($path, './lib/wiki-plugins') === 0)
+		} elseif (strpos($path, './lib/wiki-plugins') === 0) {
 			$type = 'wikiplugin';
-		elseif (strpos($path, './lib/') === 0) {
-			if (regex_match($path, $thirdpartyLibs))
+		} elseif (strpos($path, './lib/') === 0) {
+			if (regex_match($path, $thirdpartyLibs)) {
 				$type = '3dparty';
-			else
+			} else {
 				$type = 'lib';
-		}
-		elseif (strpos($path, './tiki-') === 0)
+			}
+		} elseif (strpos($path, './tiki-') === 0) {
 			$type = 'public';
-		elseif (strpos($path, './modules/') === 0)
+		} elseif (strpos($path, './modules/') === 0) {
 			$type = 'module';
-		else
+		} else {
 			$type = "include";
+		}
 	}
 	elseif (in_array($extension, array('txt', 'png', 'jpg', 'html', 'css', 'sql', 'gif', 'afm', 'js')))
 		$type = 'static';
@@ -255,8 +263,9 @@ function perform_feature_check(&$file) // {{{
 	preg_match_all($feature_pattern, get_content($path), $parts);
 
 	$featuresInFile = array();
-	foreach ($index as $i)
+	foreach ($index as $i) {
 		$featuresInFile = array_merge($features, $parts[$i]);
+	}
 
 	$featuresInFile = array_merge($featuresInFile, access_check_call($path, 'check_feature'));
 	$featuresInFile = array_unique($featuresInFile);
@@ -360,9 +369,11 @@ function perform_extract_skip_check(&$file) // {{{
 
 	preg_match_all($pattern, get_content($file['path']), $parts);
 
-	foreach ($parts[0] as $extract)
-		if (strpos($extract, 'EXTR_SKIP') === false)
+	foreach ($parts[0] as $extract) {
+		if (strpos($extract, 'EXTR_SKIP') === false) {
 			$file['unsafeextract'] = true;
+		}
+	}
 
 } // }}}
 
@@ -489,15 +500,16 @@ error_reporting(E_ALL);
 
 /* Iterate each file, and perform checks */
 $unsafe = array();
-foreach ($files as $key=>$dummy) {
+foreach ($files as $key => $dummy) {
 	$file = &$files[$key];
 
 	switch ($file['type']) {
 		case 'wikiplugin':
-				perform_extract_skip_check($file);
+			perform_extract_skip_check($file);
 
-				if ($file['unsafeextract'])
-					$unsafe[] = $file;
+			if ($file['unsafeextract']) {
+				$unsafe[] = $file;
+			}
 
 			break;
 		case 'public':
@@ -506,14 +518,15 @@ foreach ($files as $key=>$dummy) {
 		case 'module':
 		case 'lib':
 		case '3rdparty':
-				perform_feature_check($file);
-				perform_permission_check($file);
-				perform_includeonly_check($file);
-				perform_noweb_check($file);
-				perform_tikisetup_check($file);
+			perform_feature_check($file);
+			perform_permission_check($file);
+			perform_includeonly_check($file);
+			perform_noweb_check($file);
+			perform_tikisetup_check($file);
 
-				if (! $file['noweb'] && ! $file['includeonly'] && ! count($file['features']) && ! count($file['permissions']))
-					$unsafe[] = $file;
+			if (! $file['noweb'] && ! $file['includeonly'] && ! count($file['features']) && ! count($file['permissions'])) {
+				$unsafe[] = $file;
+			}
 
 			break;
 	}

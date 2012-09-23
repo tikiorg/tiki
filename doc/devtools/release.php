@@ -36,30 +36,35 @@ chdir(ROOT .'/');
 require_once ROOT . '/lib/setup/third_party.php';
 require_once TOOLS . '/svntools.php';
 
-if (version_compare(PHP_VERSION, '5.0.0', '<'))
+if (version_compare(PHP_VERSION, '5.0.0', '<')) {
 	error("You need PHP version 5 or more to run this script\n");
-
+}
 $phpCommand = isset($_SERVER['_']) ? $_SERVER['_'] : 'php';
 $phpCommandArguments = implode(' ', $_SERVER['argv']);
 
-if (! ($options = get_options()) || $options['help'])
+if (! ($options = get_options()) || $options['help']) {
 	display_usage();
+}
 
-if ($options['howto'])
+if ($options['howto']) {
 	display_howto();
+}
 
-if (! check_svn_version())
+if (! check_svn_version()) {
 	error("You need the subversion 'svn' program at least at version " . SVN_MIN_VERSION . "\n");
+}
 
-if (! $options['no-check-svn'] && has_uncommited_changes('.'))
+if (! $options['no-check-svn'] && has_uncommited_changes('.')) {
 	error("Uncommited changes exist in the working folder.\n");
+}
 
 $script = $_SERVER['argv'][0];
 $version = isset($_SERVER['argv'][1]) ? $_SERVER['argv'][1] : '';
 $subrelease = isset($_SERVER['argv'][2]) ? $_SERVER['argv'][2] : '';
 
-if (! preg_match("/^\d+\.\d+$/", $version))
+if (! preg_match("/^\d+\.\d+$/", $version)) {
 	error("Version number should be in X.X format.\n");
+}
 
 $isPre = strpos($subrelease, 'pre') === 0;
 if ($isPre) {
@@ -78,16 +83,17 @@ if ($TWV->version != $check_version) {
 }
 
 echo color("\nTiki release process started for version '$version" . ($subrelease ? " $subrelease" : '') . "'\n", 'cyan');
-if ($isPre)
+if ($isPre) {
 	echo color("The script is running in 'pre-release' mode, which means that no subversion tag will be created.\n", 'yellow');
+}
 
 if (! $options['no-first-update'] && important_step('Update working copy to the last revision')) {
 	echo "Update in progress...";
 	update_working_copy('.');
 
-	if (! $options['no-check-svn'] && has_uncommited_changes('.'))
+	if (! $options['no-check-svn'] && has_uncommited_changes('.')) {
 		error("\rUncommited changes exist in the working folder.\n");
-
+	}
 	$revision = (int) get_info('.')->entry->commit['revision'];
 	info("\r>> Checkout updated to revision $revision.");
 }
@@ -96,8 +102,9 @@ if (empty($subrelease)) {
 	$branch = "branches/$mainversion.x";
 	$tag = "tags/$version";
 	$packageVersion = $version;
-	if (! empty($pre))
+	if (! empty($pre)) {
 		$packageVersion .= ".$pre";
+	}
 	$secdbVersion = $version;
 } else {
 	$branch = "branches/$mainversion.x";
@@ -115,7 +122,9 @@ if (! $options['no-readme-update'] && important_step("Update '" . README_FILENAM
 if (! $options['no-lang-update'] && important_step("Update language files")) {
 	passthru("$phpCommand get_strings.php");
 	$removeFiles = glob('lang/*/language.php.old');
-	foreach ($removeFiles as $rf) unlink($rf);
+	foreach ($removeFiles as $rf) {
+		unlink($rf);
+	}
 	unset($removeFiles);
 	info('>> Language files updated and temporary files removed.');
 	important_step('Commit updated language files', true, "[REL] Update language.php files for $secdbVersion");
@@ -132,7 +141,9 @@ if (! $options['no-changelog-update'] && important_step("Update '" . CHANGELOG_F
 			info(">> Changelog updated with {$ucf['nbCommits']} new commits (revision {$ucf['firstRevision']} to {$ucf['lastRevision']}), excluding duplicates, merges and release-related commits.");
 		}
 		important_step("Commit new " . CHANGELOG_FILENAME, true, "[REL] Update " . CHANGELOG_FILENAME . " for $secdbVersion");
-	} else error('Changelog update failed.');
+	} else {
+		error('Changelog update failed.');
+	}
 	unset($ucf);
 }
 
@@ -145,7 +156,9 @@ if (! $options['no-copyright-update'] && important_step("Update '" . COPYRIGHTS_
 			. ($ucf['newCommits'] == 0 ? 'No new commit' : "+{$ucf['newCommits']} commit(s)")
 		);
 		important_step("Commit new " . COPYRIGHTS_FILENAME, true, "[REL] Update " . COPYRIGHTS_FILENAME . " for $secdbVersion");
-	} else error('Copyrights update failed.');
+	} else {
+		error('Copyrights update failed.');
+	}
 }
 
 if (! $options['no-check-php'] && important_step("Check syntax of all PHP files")) {
@@ -170,7 +183,9 @@ if ($isPre) {
 	if (! $options['no-packaging'] && important_step("Build packages files (based on the branch)")) {
 		build_packages($packageVersion, $branch);
 		echo color("\nMake sure these tarballs are tested by at least 3 different people.\n\n", 'cyan');
-	} else echo color("This was the last step.\n", 'cyan');
+	} else {
+		echo color("This was the last step.\n", 'cyan');
+	}
 } else {
 
 	if (! $options['no-tagging']) {
@@ -197,7 +212,9 @@ if ($isPre) {
 	if (! $options['no-packaging'] && important_step("Build packages files (based on the '$tag' tag)")) {
 		build_packages($packageVersion, $tag);
 		echo color("\nUpload the files on SourceForge.\nInstructions can be found here: http://tinyurl.com/59uubv\n\n", 'cyan');
-	} else echo color("This was the last step.\n", 'cyan');
+	} else {
+		echo color("This was the last step.\n", 'cyan');
+	}
 }
 
 // Helper functions
@@ -212,8 +229,9 @@ function write_secdb($file, $root, $version)
 	if (! empty($queries)) {
 		sort($queries);
 		fwrite($fp, "DELETE FROM `tiki_secdb` WHERE `tiki_version` = '$version';\n\n");
-		foreach ($queries as $q)
+		foreach ($queries as $q) {
 			fwrite($fp, "$q\n");
+		}
 	}
 
 	fclose($fp);
@@ -287,7 +305,9 @@ function get_files_list($dir, &$entries, $regexp_pattern)
 		if (is_dir($entry)) {
 			// do not descend and no CVS/Subversion files
 			if ($e != '..' && $e != '.' && $e != 'CVS' && $e != '.svn' && $entry != './templates_c') {
-				if (! get_files_list($entry, $entries, $regexp_pattern)) return false;
+				if (! get_files_list($entry, $entries, $regexp_pattern)) {
+					return false;
+				}
 			}
 		} elseif (preg_match($regexp_pattern, $e) && realpath($entry) != __FILE__) {
 			$entries[] = $entry;
@@ -350,18 +370,19 @@ function check_smarty_syntax2(&$error_msg)
 
 	$templates_dir = $smarty->template_dir;
 	$templates_dir_length = strlen($templates_dir);
-	if ($templates_dir_length > 1 && $templates_dir{$templates_dir_length - 1} == '/')
+	if ($templates_dir_length > 1 && $templates_dir{$templates_dir_length - 1} == '/') {
 		$templates_dir = substr($templates_dir, 0, --$templates_dir_length);
+	}
 	$temp_compile_file = TEMP_DIR . 'smarty_compiled_content';
 
 	$entries = array();
 	get_files_list($templates_dir, $entries, '/\.tpl$/');
 
 	$nbEntries = count($entries);
-	for ($i = 0 ; $i < $nbEntries ; $i++) {
+	for ($i = 0; $i < $nbEntries; $i++) {
 		display_progress_percentage($i, $nbEntries, '%d%% of files passed the Smarty syntax check');
 
-	//		try {
+		//		try {
 		if (strpos($entries[$i], 'tiki-mods.tpl') === false) {
 			ob_start();
 			$template_file = substr($entries[$i], $templates_dir_length + 1);
@@ -370,24 +391,24 @@ function check_smarty_syntax2(&$error_msg)
 
 			unlink($temp_compile_file);
 		}
-//		} catch (Exception $e) {
-//			$msg = $e->getMessage();
-//			if (0 or strpos($msg, 'tiki-mods.tpl') !== false && strpos($msg, 'revision_compare') !== false) {
-//				print(color("\nNote: ignoring error in tiki-mods.tpl:\n        $msg", 'yellow'));
-//			} else {
-//				$compilation_output = "\n*** " . $e->getMessage();
-//			}
-//		}
+		//		} catch (Exception $e) {
+		//			$msg = $e->getMessage();
+		//			if (0 or strpos($msg, 'tiki-mods.tpl') !== false && strpos($msg, 'revision_compare') !== false) {
+		//				print(color("\nNote: ignoring error in tiki-mods.tpl:\n        $msg", 'yellow'));
+		//			} else {
+		//				$compilation_output = "\n*** " . $e->getMessage();
+		//			}
+		//		}
 
-	/* This is most odd (jonnyb aug 2010 tiki 5.1)
-	 *
-	 * There is an "error" in tiki-mods.tpl that causes an error that the existing code (pre r28273) couldn't trap
-	 * I added an Exception which works fine in the debugger but dies in the commend line (unless you supply all
-	 * the "skip" params --no-check-php --no-check-php-warnings etc), when it works as expected.
-	 *
-	 * Nasty fix now by not checking that file
-	 * Better fix (or TODO KIL mods) required so leaving commented code behond - excuse the mess ;)
-	 */
+		/* This is most odd (jonnyb aug 2010 tiki 5.1)
+		 *
+		 * There is an "error" in tiki-mods.tpl that causes an error that the existing code (pre r28273) couldn't trap
+		 * I added an Exception which works fine in the debugger but dies in the commend line (unless you supply all
+		 * the "skip" params --no-check-php --no-check-php-warnings etc), when it works as expected.
+		 *
+		 * Nasty fix now by not checking that file
+		 * Better fix (or TODO KIL mods) required so leaving commented code behond - excuse the mess ;)
+		 */
 
 		if (! empty($compilation_output)) {
 			$error_msg = "\nError while compiling {$entries[$i]}."
@@ -406,20 +427,20 @@ function check_smarty_syntax2(&$error_msg)
 
 function check_smarty_syntax_error_handler($errno, $errstr, $errfile = '', $errline = 0, $errcontext = array())
 {
-//	throw new Exception($errstr);
+	//	throw new Exception($errstr);
 	error($errstr);
 }
 
 function check_php_syntax(&$dir, &$error_msg, $hide_php_warnings, $retry = 10)
 {
 	global $phpCommand;
-	$checkPhpCommand = $phpCommand . (ERROR_REPORTING_LEVEL > 0 ? ' -d error_reporting=' . (int)ERROR_REPORTING_LEVEL : '');
+	$checkPhpCommand = $phpCommand . (ERROR_REPORTING_LEVEL > 0 ? ' -d error_reporting=' . (int) ERROR_REPORTING_LEVEL : '');
 
 	$entries = array();
 	get_files_list($dir, $entries, '/\.php$/');
 
 	$nbEntries = count($entries);
-	for ($i = 0 ; $i < $nbEntries ; $i++) {
+	for ($i = 0; $i < $nbEntries; $i++) {
 		display_progress_percentage($i, $nbEntries, '%d%% of files passed the PHP syntax check');
 		$return_var = 0;
 		$output = null;
@@ -442,7 +463,9 @@ function check_php_syntax(&$dir, &$error_msg, $hide_php_warnings, $retry = 10)
 			echo "\r";
 			foreach ($output as $k => $line) {
 				// Remove empty lines and last line (because in case of a simple warning, the last line simply says 'No syntax errors...')
-				if (trim($line) == '' || $k == $nb_lines - 1) continue;
+				if (trim($line) == '' || $k == $nb_lines - 1) {
+					continue;
+				}
 				echo color("$line\n", 'yellow');
 			}
 			display_progress_percentage($i, $nbEntries, '%d%% of files passed the PHP syntax check');
@@ -456,7 +479,9 @@ function check_php_syntax(&$dir, &$error_msg, $hide_php_warnings, $retry = 10)
 
 function get_options()
 {
-	if ($_SERVER['argc'] <= 1) return false;
+	if ($_SERVER['argc'] <= 1) {
+		return false;
+	}
 
 	$argv = array();
 	$options = array(
@@ -484,12 +509,12 @@ function get_options()
 	// Environment variables provide default values for parameter options. e.g. export TIKI_NO_SECDB=true
 	$prefix = "TIKI-";
 	foreach ($options as $option => $optValue) {
-	  $envOption = $prefix.$option;
-	  $envOption = str_replace("-", "_", $envOption);
-	  if (isset($_ENV[$envOption])) {
-	    $envValue = $_ENV[$envOption];
-	    $options[$option] = $envValue;
-	  }
+		$envOption = $prefix.$option;
+		$envOption = str_replace("-", "_", $envOption);
+		if (isset($_ENV[$envOption])) {
+			$envValue = $_ENV[$envOption];
+			$options[$option] = $envValue;
+		}
 	}
 
 	foreach ($_SERVER['argv'] as $arg) {
@@ -506,7 +531,9 @@ function get_options()
 							)
 						)
 					);
-				} else $options[substr($arg, 2, 10)] = true;
+				} else {
+					$options[substr($arg, 2, 10)] = true;
+				}
 			} elseif (substr($arg, 2, 15) == 'svn-mirror-uri=') {
 				if (($uri = substr($arg, 17)) != '') {
 					$options[substr($arg, 2, 14)] = $uri;
@@ -521,11 +548,13 @@ function get_options()
 	$_SERVER['argv'] = $argv;
 	unset($argv);
 
-	if ($options['http-proxy'] === true)
+	if ($options['http-proxy'] === true) {
 		error("The --http-proxy option need a value. Use it this way: --http-proxy=HOST_DOMAIN:PORT_NUMBER");
+	}
 
-	if ($_SERVER['argc'] == 2)
+	if ($_SERVER['argc'] == 2) {
 		$_SERVER['argv'][] = '';
+	}
 
 	return $options;
 }
@@ -536,14 +565,18 @@ function important_step($msg, $increment_step = true, $commit_msg = false)
 	static $step = 0;
 
 	// Auto-Skip the step if this is a commit step and if there is nothing to commit
-	if ($commit_msg && ! has_uncommited_changes('.')) return false;
+	if ($commit_msg && ! has_uncommited_changes('.')) {
+		return false;
+	}
 
 	// Increment step number if needed
-	if ($increment_step) $step++;
+	if ($increment_step) {
+		$step++;
+	}
 
 	if ($commit_msg && $options['no-commit']) {
-	  print "Skipping actual commit ('$commit_msg') because no-commit = true\n";
-	  return;
+		print "Skipping actual commit ('$commit_msg') because no-commit = true\n";
+		return;
 	}
 
 	$do_step = false;
@@ -574,7 +607,9 @@ function important_step($msg, $increment_step = true, $commit_msg = false)
 				die;
 				break;
 			default:
-				if ($c != '?') info(color(">> Unknown answer '$c'.", 'red'));
+				if ($c != '?') {
+					info(color(">> Unknown answer '$c'.", 'red'));
+				}
 				info(">> You have to type 'y' (Yes), 'n' (No) or 'q' (Quit) and press Enter.");
 				return important_step($msg, false);
 		}
@@ -589,8 +624,9 @@ function important_step($msg, $increment_step = true, $commit_msg = false)
 
 function update_changelog_file($newVersion)
 {
-	if (! is_readable(CHANGELOG) || ! is_writable(CHANGELOG) || ! ($handle = @fopen(CHANGELOG, "r")))
+	if (! is_readable(CHANGELOG) || ! is_writable(CHANGELOG) || ! ($handle = @fopen(CHANGELOG, "r"))) {
 		error('The changelog file "' . CHANGELOG . '" is not readable or writable.');
+	}
 
 	$isNewMajorVersion = substr($newVersion, -1) == 0;
 	$releaseNotesURL = '<http://tiki.org/ReleaseNotes'.str_replace('.', '', $newVersion).'>';
@@ -605,7 +641,9 @@ function update_changelog_file($newVersion)
 	if ($handle) {
 		while (! feof($handle)) {
 			$buffer = fgets($handle);
-			if (empty($buffer)) continue;
+			if (empty($buffer)) {
+				continue;
+			}
 
 			if (preg_match('/^Version (\d+)\.(\d+)/', $buffer, $versionMatches)) {
 				if ($versionMatches[1].'.'.$versionMatches[2] == $newVersion) {
@@ -620,9 +658,9 @@ function update_changelog_file($newVersion)
 				if (preg_match('/^r(\d+) \|/', $buffer, $matches)) {
 					$skipBuffer = false;
 					if ($minRevision == 0) {
-						$minRevision = (int)$matches[1];
+						$minRevision = (int) $matches[1];
 					}
-					$currentParsedRevision = (int)$matches[1];
+					$currentParsedRevision = (int) $matches[1];
 				} elseif (! $skipBuffer && $currentParsedRevision > 0 && $buffer[0] != '-') {
 					if (isset($lastReleaseLogs[$currentParsedRevision])) {
 						$lastReleaseLogs[$currentParsedRevision] .= $buffer;
@@ -659,14 +697,18 @@ EOS;
 
 				// Do not keep merges and release-related logs
 				$commitFlag = substr(trim($logEntry[2]), 0, 5);
-				if ($commitFlag == '[MRG]' || $commitFlag == '[REL]') continue;
+				if ($commitFlag == '[MRG]' || $commitFlag == '[REL]') {
+					continue;
+				}
 
 				// Add log entries only if they were not already listed (same revision number or same log message) in the previous version
 				if (! isset($lastReleaseLogs[$logEntry[1]]) && ! in_array("\n".$logEntry[2], $lastReleaseLogs)) {
 					$newChangelog .= $logEntry[0]."\n";
 
 					$lastReleaseLogs[] = "\n".$logEntry[2];
-					if ($return['nbCommits'] == 0) $return['firstRevision'] = $logEntry[1];
+					if ($return['nbCommits'] == 0) {
+						$return['firstRevision'] = $logEntry[1];
+					}
 					$return['lastRevision'] = $logEntry[1];
 					$return['nbCommits']++;
 				}
@@ -679,9 +721,9 @@ EOS;
 
 function update_copyright_file($newVersion)
 {
-	if (! is_readable(COPYRIGHTS) || ! is_writable(COPYRIGHTS))
+	if (! is_readable(COPYRIGHTS) || ! is_writable(COPYRIGHTS)) {
 		error('The copyright file "' . COPYRIGHTS . '" is not readable or writable.');
-
+	}
 	global $nbCommiters, $options;
 	$nbCommiters = 0;
 	$contributors = array();
@@ -690,7 +732,7 @@ function update_copyright_file($newVersion)
 	$repositoryInfo = get_info($repositoryUri);
 
 	$oldContributors = parse_copyrights();
-	get_contributors_data($repositoryUri, $contributors, 1, (int)$repositoryInfo->entry->commit['revision']);
+	get_contributors_data($repositoryUri, $contributors, 1, (int) $repositoryInfo->entry->commit['revision']);
 	ksort($contributors);
 
 	$totalContributors = count($contributors);
@@ -751,7 +793,9 @@ EOS;
 		$copyrights .= "\nNickname: $author";
 		$orderedKeys = array('Name', 'First Commit', 'Last Commit', 'Number of Commits', 'SF Role');
 		foreach ($orderedKeys as $k) {
-			if (empty($infos[$k]) || ($k == 'Name' && $infos[$k] == $author)) continue;
+			if (empty($infos[$k]) || ($k == 'Name' && $infos[$k] == $author)) {
+				continue;
+			}
 			$copyrights .= "\n$k: " . $infos[$k];
 		}
 		$copyrights .= "\n";
@@ -762,13 +806,17 @@ EOS;
 
 function parse_copyrights()
 {
-	if (! $copyrights = @file(COPYRIGHTS)) return false;
+	if (! $copyrights = @file(COPYRIGHTS)) {
+		return false;
+	}
 
 	$return = array();
 	$curNickname = '';
 
 	foreach ($copyrights as $line) {
-		if (empty($line)) continue;
+		if (empty($line)) {
+			continue;
+		}
 		if (substr($line, 0, 10) == 'Nickname: ') {
 			$curNickname = rtrim(substr($line, 10));
 			$return[$curNickname] = array();
@@ -794,8 +842,9 @@ function get_contributors_data($path, &$contributors, $minRevision, $maxRevision
 	echo "\rRetrieving logs from revision $minByStep to $maxRevision ...\t\t\t";
 	$logs = get_logs($path, $minByStep, $maxRevision);
 	if (preg_match_all('/^r(\d+) \|\s([^\|]+)\s\|\s(\d+-\d+-\d+)\s.*\n\n(.*)\-+\n/Ums', $logs, $matches, PREG_SET_ORDER)) {
-		foreach ($matches as $logEntry)
+		foreach ($matches as $logEntry) {
 			$mycommits[$logEntry[1]] = array($logEntry[2],$logEntry[3]);
+		}
 		krsort($mycommits);
 
 		foreach ($mycommits as $commitnum => $commitinfo) {
@@ -808,9 +857,13 @@ function get_contributors_data($path, &$contributors, $minRevision, $maxRevision
 			$author = strtolower($commitinfo[0]);
 
 			// Remove empty author or authors like (no author), which may be translated depending on server locales
-			if (empty($author) || $author{0} == '(') continue;
+			if (empty($author) || $author{0} == '(') {
+				continue;
+			}
 
-			if (!isset($contributors[$author])) $contributors[$author] = array();
+			if (!isset($contributors[$author])) {
+				$contributors[$author] = array();
+			}
 
 			$contributors[$author]['Author'] = $commitinfo[0];
 			$contributors[$author]['First Commit'] = $commitinfo[1];
@@ -825,8 +878,9 @@ function get_contributors_data($path, &$contributors, $minRevision, $maxRevision
 		}
 	}
 
-	if ($lastLogRevision > $minRevision)
+	if ($lastLogRevision > $minRevision) {
 		get_contributors_data($path, $contributors, $minRevision, $lastLogRevision - 1, $step);
+	}
 
 	return $contributors;
 }
@@ -838,8 +892,9 @@ function get_contributors_sf_data(&$contributors)
 	$matches = array();
 	$userParsedInfo = array();
 
-	if (! function_exists('iconv'))
+	if (! function_exists('iconv')) {
 		error("PHP 'iconv' function is not available on this system. Impossible to get SF.net data.");
+	}
 
 	$html = $options['http-proxy'] ? file_get_contents(SF_TW_MEMBERS_URL, 0, $options['http-proxy']) : file_get_contents(SF_TW_MEMBERS_URL);
 
@@ -849,7 +904,9 @@ function get_contributors_sf_data(&$contributors)
 			foreach ($usersInfo as $k => $userInfo) {
 				$userInfo = array_map('trim', array_map('strip_tags', $userInfo));
 				$user = strtolower($userInfo['2']);
-				if (empty($user)) continue;
+				if (empty($user)) {
+					continue;
+				}
 				$contributors[$user] = array(
 					'Name' => html_entity_decode(iconv("ISO-8859-15", "UTF-8", $userInfo['1']), ENT_COMPAT, 'UTF-8'),
 					'SF Role' => $userInfo['3']
@@ -912,7 +969,7 @@ Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See $license_file for deta
 Note to Tiki developers: update this text through release.php.
 EOF;
 
-	return (bool)file_put_contents(README, $readme);
+	return (bool) file_put_contents(README, $readme);
 }
 
 function display_usage()
