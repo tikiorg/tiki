@@ -1346,7 +1346,9 @@ class NlLib extends TikiLib
 		}
 		$txt = str_replace('&nbsp;', ' ', $txt);
 		$txt = strip_tags($txt);
-	
+		$txt = str_replace("\t", '', $txt);
+		$txt = str_replace("\n\n", "\n", $txt);		// convert from wysiwyg seems to double up linefeeds
+
 		$txt = html_entity_decode($txt);
 		return $txt;
 	}
