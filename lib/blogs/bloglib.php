@@ -146,7 +146,7 @@ class BlogLib extends TikiDb_Bridge
 	 * A blog is represented by an array like a tiki_blogs record.
 	 *
 	 * @param string $user
-	 * @param bool $include_public wheter or include public blogs (that belongs to other users)
+	 * @param bool $include_public whether or include public blogs (that belongs to other users)
 	 * @return array
 	 */
 	function list_user_blogs($user, $include_public = false)
@@ -865,7 +865,7 @@ class BlogLib extends TikiDb_Bridge
 	 *		Returns false if the post does not exist
 	 *
 	 * @param mixed $postId
-	 * @param bool $adjacent wheter to return or not adjacent posts
+	 * @param bool $adjacent whether to return or not adjacent posts
 	 * @access public
 	 * @return The post
 	 */

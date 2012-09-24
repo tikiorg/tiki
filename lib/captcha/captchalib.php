@@ -33,7 +33,7 @@ class Captcha
 	public $captcha = '';
 
 	/**
-	 * Class constructor: decides wheter to create an instance of
+	 * Class constructor: decides whether to create an instance of
 	 * Zend_Captcha_Image or Zend_Captcha_ReCaptcha
 	 *
 	 * @return null

@@ -810,7 +810,7 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 	 * return false.
 	 *
 	 * @param array $item a page or post data
-	 * @return bool wheter the item has or not internal links
+	 * @return bool whether the item has or not internal links
 	 */
 	function identifyInternalLinks($item)
 	{
