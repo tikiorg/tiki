@@ -85,8 +85,11 @@
 				{preference name=feature_htmlfeed}
 				{preference name=feature_forwardlinkprotocol}
 
-				{preference name=feature_reports}
 				{preference name=feature_jcapture}
+				<div class="adminoptionboxchild" id="feature_jcapture_childcontainer">
+					{preference name=fgal_for_jcapture}
+				</div>
+				{preference name=feature_reports}
 			</div>
 		</fieldset>
 

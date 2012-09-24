@@ -148,6 +148,7 @@ jqueryTiki.googleStreetViewOverlay = '.($prefs['geo_google_streetview_overlay'] 
 jqueryTiki.structurePageRepeat = '.($prefs['page_n_times_in_a_structure'] == 'y' ? 'true' : 'false') . ';
 jqueryTiki.mobile = '.($prefs['mobile_mode'] == 'y' ? 'true' : 'false') . ';
 jqueryTiki.jcapture = '.($prefs['feature_jcapture'] == 'y' ? 'true' : 'false') . ';
+jqueryTiki.jcaptureFgal = ' . $prefs['fgal_for_jcapture'] . ';
 jqueryTiki.no_cookie = false;
 ';	// NB replace "normal" speeds with int to workaround issue with jQuery 1.4.2
 

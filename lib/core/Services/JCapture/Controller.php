@@ -65,13 +65,17 @@ class Services_JCapture_Controller
 
 		$fileController = new Services_File_Controller();
 
-		$input->offsetSet('size', $_FILES['Filedata']['size']);
-		$input->offsetSet('name', $_FILES['Filedata']['name']);
-		$input->offsetSet('type', $_FILES['Filedata']['type']);
 		if (is_uploaded_file($_FILES['Filedata']['tmp_name'])) {
+			$input->offsetSet('size', $_FILES['Filedata']['size']);
+			$input->offsetSet('name', $_FILES['Filedata']['name']);
+			$input->offsetSet('type', $_FILES['Filedata']['type']);
+			$input->offsetSet('galleryId', $prefs['fgal_for_jcapture']);
 			$input->offsetSet('data', base64_encode(file_get_contents($_FILES['Filedata']['tmp_name'])));
+
+			$ret = $fileController->action_upload($input);
+		} else {
+			$ret = array();
 		}
-		$ret = $fileController->action_upload($input);
 
 		return $ret;
 	}
