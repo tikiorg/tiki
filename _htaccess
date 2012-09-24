@@ -137,6 +137,10 @@ RewriteRule (.*) - [L]
 #       and enable feature_wiki_export (as well as feature_wiki and feature_categories)
 #RewriteRule ^profiles$             tiki-browse_categories.php?find=&deep=on&type=wiki+page&parentId=1&sort_mode=name_asc&plain&maxRecords=1000000 [L]
 
+# Rule to make a short link to a list of object to export as a plain text sitemap
+# Set the parentId (here set as 2) to the id of a category containing the objects you wish to be crawled by search engines
+#
+#RewriteRule ^sitemap.txt$          tiki-browse_categories.php?find=&deep=on&type=wiki+page&parentId=2&sort_mode=name_asc&links&maxRecords=1000000 [L]
 
 # direct one-word access
 RewriteRule ^(img\/trackers\/.*)   $1                                       [L]

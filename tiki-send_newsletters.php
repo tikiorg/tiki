@@ -162,7 +162,7 @@ if (isset($_REQUEST["templateId"]) && $_REQUEST["templateId"] > 0 && (!isset($_R
 		$_REQUEST['wysiwyg'] ='y';
 	}
 	if (isset($_SESSION['wysiwyg']) && $_SESSION['wysiwyg'] == 'y' || $_REQUEST['wysiwyg'] === 'y') {
-		$_REQUEST['data'] = $tikilib->parse_data($_REQUEST['data'], array('is_html'=>true, 'absolute_links' => true, 'suppress_icons' => true));
+		$_REQUEST['data'] = $tikilib->parse_data($_REQUEST['data'], array('is_html'=>$info['is_html'], 'absolute_links' => true, 'suppress_icons' => true));
 	}
 	$_REQUEST["preview"] = 1;
 	$smarty->assign("templateId", $_REQUEST["templateId"]);
@@ -267,13 +267,14 @@ if (isset($_REQUEST["preview"])) {
 		$smarty->assign('replyto', $_REQUEST['replyto']);
 	}
 	$previewdata = $info['dataparsed'];
+	$parsed = $info['dataparsed'];
 	if ($nl_info["allowArticleClip"] == 'y' && $nl_info["autoArticleClip"] == 'y') {
 		$articleClip = $nllib->clip_articles($_REQUEST["nlId"]);
 		$txtArticleClip = $nllib->generateTxtVersion($articleClip);
 		$info['datatxt'] = str_replace("~~~articleclip~~~", $txtArticleClip, $info['datatxt']);
 		$previewdata = str_replace("~~~articleclip~~~", $articleClip, $previewdata);
 	}
-	$smarty->assign('info', $info);
+	$smarty->assign_by_ref('info', $info);
 	$smarty->assign('previewdata', $previewdata);
 }
 $smarty->assign('presend', 'n');
@@ -299,7 +300,7 @@ if (isset($_REQUEST["save"])) {
 		$smarty->assign('subject', $_REQUEST["subject"]);
 		$parsed = $smarty->fetch("newsletters/" . $_REQUEST["usedTpl"]);
 	} else {
-		$parsed = ($wikiparse == 'y') ? $tikilib->parse_data($_REQUEST["data"], array('is_html' => (isset($_REQUEST['wysiwyg']) && $_REQUEST['wysiwyg']=='y')||$info['is_html']? 1: 0, 'absolute_links' => true, 'suppress_icons' => true)) : $_REQUEST['data'];
+		$parsed = ($wikiparse == 'y') ? $tikilib->parse_data($_REQUEST["data"], array('is_html' => $info['is_html'], 'absolute_links' => true, 'suppress_icons' => true)) : $_REQUEST['data'];
 	}
 	if (empty($parsed) && !empty($_REQUEST['datatxt'])) {
 		$parsed = $_REQUEST['datatxt'];
@@ -321,7 +322,7 @@ if (isset($_REQUEST["save"])) {
 	$cant = count($subscribers);
 	$smarty->assign('subscribers', $cant);
 	$smarty->assign_by_ref('subscribers_list', $subscribers);
-	$smarty->assign('info', $info);
+	$smarty->assign_by_ref('info', $info);
 	if (!empty($_REQUEST['replyto'])) {
 		$smarty->assign('replyto', $_REQUEST['replyto']);
 	}
@@ -333,7 +334,7 @@ if (!empty($_REQUEST['datatxt'])) {
 if (empty($txt) && !empty($_REQUEST["data"])) {
 	//No txt message is explicitely provided -> Create one with the html Version & remove Wiki tags
 	$txt = $_REQUEST["data"];
-	$txt = $nllib->generateTxtVersion($txt);
+	$txt = $nllib->generateTxtVersion($txt, $parsed);
 	$info["datatxt"] = $txt;
 	$smarty->assign('datatxt', $txt);
 	if ($nl_info["allowArticleClip"] == 'y' && $nl_info["autoArticleClip"] == 'y') {
@@ -445,7 +446,7 @@ if (isset($_REQUEST["save_only"])) {
 		}
 	}
 	$info = $nllib->get_edition($editionId);
-	$smarty->assign('info', $info);
+	$smarty->assign_by_ref('info', $info);
 	$cookietab = 2;
 }
 if (!isset($_REQUEST['ed_sort_mode']) && !isset($_REQUEST['dr_sort_mode'])) {
