@@ -5,6 +5,12 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
+$inputConfiguration = array(
+	array( 'staticKeyFilters' => array(
+		'data' => 'none',
+	)),
+);
+
 include_once ("tiki-setup.php");
 include_once ("lib/csslib.php");
 
