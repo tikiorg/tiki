@@ -436,7 +436,7 @@ abstract class Toolbar
 if (typeof window.CKEDITOR !== "undefined" && !window.CKEDITOR.plugins.get("{$name}")) {
 	window.CKEDITOR.config.extraPlugins += (window.CKEDITOR.config.extraPlugins ? ',{$name}' : '{$name}' );
 	window.CKEDITOR.plugins.add( '{$name}', {
-		init : function( ed itor ) {
+		init : function( editor ) {
 			var command = editor.addCommand( '{$name}', new window.CKEDITOR.command( editor , {
 				modes: { wysiwyg:1 },
 				exec: function (elem, editor, data) {
