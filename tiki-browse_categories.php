@@ -170,9 +170,17 @@ ask_ticket('browse-categories');
 
 // disallow robots to index page:
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
-if (isset($_GET['plain'])) {
+if (isset($_GET['plain'])) {				// used by profile repositories to list available profiles (see _htaccess for more info)
 	header('Content-Type: text/plain');
 	foreach ($objects['data'] as $object) echo "{$object['categName']}\t{$object['type']}\t{$object['itemId']}\n";
+	exit;
+} else if (isset($_GET['links'])) {			// used to generate plain text sitemaps for submitting to search engines (see _htaccess for more info)
+	header('Content-Type: text/plain');
+	if ($prefs['feature_sefurl'] === 'y') {
+		foreach ($objects['data'] as $object) echo "$base_url{$object['sefurl']}\n";
+	} else {
+		foreach ($objects['data'] as $object) echo "$base_url{$object['href']}\n";
+	}
 	exit;
 } else {
 	// Display the template
