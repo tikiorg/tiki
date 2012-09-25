@@ -241,7 +241,7 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 	{
 		$smarty = TikiLib::lib('smarty');
 
-		$item = $this->getConfiguration('value');
+		$item = $this->getValue();
 
 		$dlist = $this->getConfiguration('listdisplay');
 		$list = $this->getConfiguration('list');
@@ -538,5 +538,24 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 
 		return count($intersect) > 0;
 	}
+
+	function watchCompare($old, $new)
+	{
+
+		$data = $this->getLinkData(array(), 0);		// get old and new values directly from the list(s)
+		$dlist = $data['listdisplay'];
+		$list = $data['list'];
+
+		if (!empty($dlist)) {
+			$o = isset($dlist[$old]) ? $dlist[$old] : '';
+			$n = isset($dlist[$new]) ? $dlist[$new] : '';
+		} else {
+			$o = isset($list[$old]) ? $list[$old] : '';
+			$n = isset($list[$new]) ? $list[$new] : '';
+		}
+
+		return parent::watchCompare($o, $n);	// then compare as text
+	}
+
 }
 
