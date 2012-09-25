@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -17,42 +17,42 @@ if (file_exists('./db/local.php') && file_exists('./templates/tiki-check.tpl')) 
 		return $string;
 	}
 
-	function render_table($var)
+	function renderTable($var)
 	{
-		if (is_array($var)) {              
-			echo '<table style="border:2px solid grey;">';  
+		if (is_array($var)) {
+			echo '<table style="border:2px solid grey;">';
 			foreach ($var as $key => $value) {
-				echo '<tr style="border:1px solid">',  
-				'<td style="border:1px black;padding:5px;">',  
-				$key,  
+				echo '<tr style="border:1px solid">',
+				'<td style="border:1px black;padding:5px;">',
+				$key,
 				"</td>";
 				foreach ($var[$key] as $key2 => $value2) {
 					echo '<td style="border:1px solid"><span style="color:';
 					switch($value2) {
-						case good:
-						case safe:
+						case 'good':
+						case 'safe':
 							echo 'green';
 							break;
-						case ugly:
+						case 'ugly':
 							echo 'yellow';
 							break;
-						case bad:
-						case risky:
+						case 'bad':
+						case 'risky':
 							echo 'red';
 							break;
-						case information:
+						case 'information':
 							echo 'black';
 							break;
 					}
-				echo '">'.$value2.'</span></td>';
+					echo '">'.$value2.'</span></td>';
 				}
-				echo '</tr>';               
+				echo '</tr>';
 			}
-			echo '</table>';  
-		} else {  
-			echo 'Nothing to display.';  
+			echo '</table>';
+		} else {
+			echo 'Nothing to display.';
 		}
-	} 
+	}
 }
 
 // Get PHP properties and check them
@@ -107,10 +107,9 @@ DBC;
 			case 'PDO':
 				try {
 					$connection = new PDO('mysql:host='.$_POST['dbhost'], $_POST['dbuser'], $_POST['dbpass']);
-				}
-				catch ( Exception $e ) {
+				} catch ( Exception $e ) {
 					echo 'Couldn\'t connect to database: '.$e->getMessage();
-				}					
+				}
 				function query($query, $connection)
 				{
 					$result = $connection->query($query);
@@ -127,8 +126,7 @@ DBC;
 						$connection = false;
 						throw new Exception($error);
 					}
-				}
-				catch ( Exception $e ) {
+				} catch ( Exception $e ) {
 					echo 'Couldn\'t connect to database: '.$e->getMessage();
 				}
 				function query($query, $connection)
@@ -146,8 +144,7 @@ DBC;
 					if ( $connection === false ) {
 						throw new Exception('Cannot connect to MySQL. Wrong credentials?');
 					}
-				}
-				catch ( Exception $e ) {
+				} catch ( Exception $e ) {
 					echo $e->getMessage();
 				}
 				function query($query, $connection = '')
@@ -201,7 +198,7 @@ $server_information['Server Signature']['value'] = !empty($_SERVER['SERVER_SIGNA
 $bytes = disk_free_space('.');
 $si_prefix = array( 'B', 'KB', 'MB', 'GB', 'TB', 'EB', 'ZB', 'YB' );
 $base = 1024;
-$class = min((int)log($bytes, $base), count($si_prefix) - 1);
+$class = min((int) log($bytes, $base), count($si_prefix) - 1);
 $free_space = sprintf('%1.2f', $bytes / pow($base, $class)) . ' ' . $si_prefix[$class];
 if ( $bytes < 200 * 1024 * 1024 ) {
 	$server_properties['Disk Space'] = array(
@@ -273,7 +270,7 @@ if (substr($s, 0, 3) == 'cgi') {
 }
 
 // ByteCode Cache
-if ( function_exists('apc_sma_info') && ini_get('apc.enabled') ) { 
+if ( function_exists('apc_sma_info') && ini_get('apc.enabled') ) {
 	$php_properties['ByteCode Cache'] = array(
 		'fitness' => tra('good'),
 		'setting' => 'APC',
@@ -739,18 +736,18 @@ if ( $e == 0 ) {
 		$php_properties['Error reporting'] = array(
 			'fitness' => tra('information'),
 			'setting' => 'Disabled',
-			'message' => tra('You will get no errors reported although your error_reporting level is all the way up at '.$e.', but display_errors is off. This might be the right thing for a production site, but in case of problems enable it in php.ini to get more information.') 
+			'message' => tra('You will get no errors reported although your error_reporting level is all the way up at '.$e.', but display_errors is off. This might be the right thing for a production site, but in case of problems enable it in php.ini to get more information.')
 		);
 	} else {
 		$php_properties['Error reporting'] = array(
 			'fitness' => tra('information'),
 			'setting' => 'Full',
-			'message' => tra('You will get all errors reported as your error_reporting level is all the way up at '.$e.' and display_errors is on. Way to go in case of problems as the error reports usually contain some valuable hints!') 
+			'message' => tra('You will get all errors reported as your error_reporting level is all the way up at '.$e.' and display_errors is on. Way to go in case of problems as the error reports usually contain some valuable hints!')
 		);
 	}
 }
 
-// Zip Archive class 
+// Zip Archive class
 $s = class_exists('ZipArchive');
 if ( $s ) {
 	$php_properties['ZipArchive class'] = array(
@@ -766,7 +763,7 @@ if ( $s ) {
 		);
 }
 
-// DateTime class 
+// DateTime class
 $s = class_exists('DateTime');
 if ( $s ) {
 	$php_properties['DateTime class'] = array(
@@ -844,10 +841,10 @@ if ($connection || !$standalone) {
 
 	// UTF-8 Charset
 	$charset_types = "client connection database results server system";
-	foreach ( explode(' ', $charset_types) as $type ) {
+	foreach (explode(' ', $charset_types) as $type) {
 		$query = "SHOW VARIABLES LIKE 'character_set_".$type."';";
 		$result = query($query, $connection);
-		foreach ( $result as $value ) {
+		foreach ($result as $value) {
 			if ( $value['Value'] == 'utf8' ) {
 				$mysql_properties[$value['Variable_name']] = array(
 					'fitness' => tra('good'),
@@ -866,10 +863,10 @@ if ($connection || !$standalone) {
 	}
 	// UTF-8 Collation
 	$collation_types = "connection database server";
-	foreach ( explode(' ', $charset_types) as $type ) {
+	foreach (explode(' ', $charset_types) as $type) {
 		$query = "SHOW VARIABLES LIKE 'collation_".$type."';";
 		$result = query($query, $connection);
-		foreach ( $result as $value ) {
+		foreach ($result as $value) {
 			if ( substr($value['Value'], 0, 4) == 'utf8' ) {
 				$mysql_properties[$value['Variable_name']] = array(
 					'fitness' => tra('good'),
@@ -891,7 +888,7 @@ if ($connection || !$standalone) {
 	$mysql_variables = array();
 	$query = "SHOW VARIABLES;";
 	$result = query($query, $connection);
-	foreach ( $result as $value) {
+	foreach ($result as $value) {
 		$mysql_variables[$value['Variable_name']] = array('value' => $value['Value']);
 	}
 
@@ -900,7 +897,7 @@ if ($connection || !$standalone) {
 		// This should give all crashed tables (MyISAM at least) - does need testing though !!
 		$query = 'SHOW TABLE STATUS WHERE engine IS NULL AND comment <> "VIEW";';
 		$result = query($query, $connection);
-		foreach ( $result as $value ) {
+		foreach ($result as $value) {
 			$mysql_crashed_tables[$value['Name']] = array('Comment' => $value['Comment']);
 		}
 	}
@@ -908,7 +905,7 @@ if ($connection || !$standalone) {
 
 // Apache properties
 
-if ( function_exists(apache_get_version)) {
+if ( function_exists('apache_get_version')) {
 	$apache_properties = array();
 
 	// Apache Modules
@@ -1099,13 +1096,13 @@ if ($standalone) {
 	echo '<style type="text/css">td, th { border: 1px solid #000000; vertical-align: baseline;}</style>';
 	echo '<h1>Tiki Server Compatibility</h1>';
 	echo '<h2>MySQL Database Properties</h2>';
-	render_table($mysql_properties);
+	renderTable($mysql_properties);
 	echo '<h2>Server Information</h2>';
-	render_table($server_information);
+	renderTable($server_information);
 	echo '<h2>Server Properties</h2>';
-	render_table($server_properties);
+	renderTable($server_properties);
 	echo '<h2>PHP scripting language properties</h2>';
-	render_table($php_properties);
+	renderTable($php_properties);
 	echo '<h2>Apache properties</h2>';
 	if ($apache_properties) {
 		render_table($apache_properties);
@@ -1113,16 +1110,16 @@ if ($standalone) {
 		echo 'You are either not running the preferred Apache web server or you are running PHP with a SAPI that does not allow checking Apache properties (e.g. CGI or FPM).';
 	}
 	echo '<h2>PHP security properties</h2>';
-	render_table($security);
+	renderTable($security);
 	echo '<h2>MySQL Variables</h2>';
-	render_table($mysql_variables);
+	renderTable($mysql_variables);
 	echo '<h2>PHP Info</h2>';
 	if ( $_REQUEST['phpinfo'] == 'y' ) {
-		ob_start();                                                                                                        
-		phpinfo();                                                                                                         
-		$info = ob_get_contents();                                                                                         
-		ob_end_clean();                                                                                                    
-		$info = preg_replace('%^.*<body>(.*)</body>.*$%ms', '$1', $info); 
+		ob_start();
+		phpinfo();
+		$info = ob_get_contents();
+		ob_end_clean();
+		$info = preg_replace('%^.*<body>(.*)</body>.*$%ms', '$1', $info);
 		print($info);
 	} else {
 		echo '<a href="'.$_SERVER['REQUEST_URI'].'?phpinfo=y">Append phpinfo();</a>';
