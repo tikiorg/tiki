@@ -554,9 +554,12 @@ array_unshift(
 		'staticKeyFilters' => array(
 			'menu' => 'striptags',
 			'cat_categorize' => 'alpha',
-			'tab' => 'digits',
+			'tabs' => 'striptags',
 			'javascript_enabled' => 'alpha',
-			'XDEBUG_PROFILE' => 'int',
+			$prefs['cookie_consent_name'] => 'alpha',
+			'mobile_mode' => 'alpha',
+			'categ' => 'striptags',
+			'local_tz' => 'text',
 		),
 		'staticKeyFiltersForArrays' => array(
 			'cat_managed' => 'digits',
