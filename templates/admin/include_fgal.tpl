@@ -79,6 +79,12 @@
 					{preference name=feature_draw_hide_buttons}
 				</div>
 
+				{preference name=feature_jcapture}
+				<div class="adminoptionboxchild" id="feature_jcapture_childcontainer">
+					{preference name=fgal_for_jcapture}
+				</div>
+
+
 				{preference name=feature_docs}				
 
 				{preference name='fgal_limit_hits_per_file'}
