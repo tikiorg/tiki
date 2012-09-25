@@ -5,20 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-class JisonParser_OutputTest extends TikiTestCase
+class JisonParser_OutputTest extends JisonParser_Abstract
 {
-	public $verbose = false;
-	public $called;
-	public $parser;
-	public $syntaxSets = array();
-
-	function setUp()
-	{
-		$this->called = 0;
-		$this->parser = new JisonParser_Wiki_Handler();
-		$this->provider();
-	}
-
 	function provider()
 	{
 		$this->syntaxSets = array(
@@ -159,43 +147,7 @@ class JisonParser_OutputTest extends TikiTestCase
 		);
 	}
 
-	public function testOutput()
-	{
-		foreach ($this->syntaxSets as $syntaxName => $syntax) {
-			if (isset($syntax[0])) {
-				$parsed = $this->parser->parse($syntax[0]);
-			} else {
-				$customHandled = $this->$syntaxName();
-				$parsed = $customHandled['parsed'];
-				$syntax = $customHandled['syntax'];
-			}
-
-			if ($this->verbose == true) {
-				echo $syntaxName . ":\n";
-				echo '"' . $parsed . '"' . "\n\n\n\n";
-			}
-
-			$this->assertEquals($syntax[1], $parsed, $syntaxName, $syntax[0]);
-		}
-	}
-
-	static function assertEquals($expected, $actual, $syntaxName, $syntax)
-	{
-		if ($expected != $actual) {
-			echo "Failure on: " . $syntaxName . "\n";
-			echo 'Syntax: "' . $syntax . '"' . "\n";
-			echo 'Output: ' . $actual . "\n";
-		}
-
-		parent::assertEquals($expected, $actual);
-	}
-
-	private function tryRemoveIdsFromHtmlList(&$parsed)
-	{
-		$parsed = preg_replace('/id="id[0-9]+"/', 'id=""', $parsed);
-	}
-
-	private function definition_list()
+	function definition_list()
 	{
 		$syntax = array(
 			";foo1:bar1\n" .
@@ -213,7 +165,7 @@ class JisonParser_OutputTest extends TikiTestCase
 		return array("parsed" => $parsed, "syntax" => $syntax);
 	}
 
-	private function old_bulleted_list1()
+	function old_bulleted_list1()
 	{
 		$syntax = array(
 			"* foo\n" .
@@ -231,7 +183,7 @@ class JisonParser_OutputTest extends TikiTestCase
 		return array("parsed" => $parsed, "syntax" => $syntax);
 	}
 
-	private function old_bulleted_list2()
+	function old_bulleted_list2()
 	{
 		$syntax = array(
 			"* foo1\n" .
@@ -256,7 +208,7 @@ class JisonParser_OutputTest extends TikiTestCase
 		return array("parsed" => $parsed, "syntax" => $syntax);
 	}
 
-	private function old_bulleted_list3()
+	function old_bulleted_list3()
 	{
 		$syntax = array(
 			"* foo\n" .
@@ -279,7 +231,7 @@ class JisonParser_OutputTest extends TikiTestCase
 		return array("parsed" => $parsed, "syntax" => $syntax);
 	}
 
-	private function old_numbered_list1()
+	function old_numbered_list1()
 	{
 		$syntax = array(
 			"# foo\n" .
@@ -297,7 +249,7 @@ class JisonParser_OutputTest extends TikiTestCase
 		return array("parsed" => $parsed, "syntax" => $syntax);
 	}
 
-	private function old_numbered_list2()
+	function old_numbered_list2()
 	{
 		$syntax = array(
 			"# foo1\n" .
@@ -322,7 +274,7 @@ class JisonParser_OutputTest extends TikiTestCase
 		return array("parsed" => $parsed, "syntax" => $syntax);
 	}
 
-	private function old_numbered_list3()
+	function old_numbered_list3()
 	{
 		$syntax = array(
 			"# foo\n" .
@@ -345,7 +297,7 @@ class JisonParser_OutputTest extends TikiTestCase
 		return array("parsed" => $parsed, "syntax" => $syntax);
 	}
 
-	private function simple_break()
+	function simple_break()
 	{
 		$syntax = array(
 			"\n" .
@@ -360,7 +312,7 @@ class JisonParser_OutputTest extends TikiTestCase
 		return array("parsed" => $parsed, "syntax" => $syntax);
 	}
 
-	private function list1()
+	function list1()
 	{
 		$syntax = array(
 			"*line 1\n" .
@@ -380,7 +332,7 @@ class JisonParser_OutputTest extends TikiTestCase
 		return array("parsed" => $parsed, "syntax" => $syntax);
 	}
 
-	private function list2()
+	function list2()
 	{
 		$syntax = array(
 			"#line 1\n" .
@@ -400,7 +352,7 @@ class JisonParser_OutputTest extends TikiTestCase
 		return array("parsed" => $parsed, "syntax" => $syntax);
 	}
 
-	private function list3()
+	function list3()
 	{
 		$syntax = array(
 			"*line 1\n" .
@@ -421,7 +373,7 @@ class JisonParser_OutputTest extends TikiTestCase
 		return array("parsed" => $parsed, "syntax" => $syntax);
 	}
 
-	private function list4()
+	function list4()
 	{
 		$syntax = array(
 			"+line 1\n" .
@@ -442,7 +394,7 @@ class JisonParser_OutputTest extends TikiTestCase
 		return array("parsed" => $parsed, "syntax" => $syntax);
 	}
 
-	private function listnested1()
+	function listnested1()
 	{
 		$syntax = array(
 			"*line 1\n" .
@@ -486,7 +438,7 @@ class JisonParser_OutputTest extends TikiTestCase
 		return array("parsed" => $parsed, "syntax" => $syntax);
 	}
 
-	private function listnested2()
+	function listnested2()
 	{
 		$syntax = array(
 			"*line 1\n" .
@@ -514,7 +466,7 @@ class JisonParser_OutputTest extends TikiTestCase
 		return array("parsed" => $parsed, "syntax" => $syntax);
 	}
 
-	private function html_not_allowed()
+	function html_not_allowed()
 	{
 
 		$is_html = $this->parser->getOption('is_html');
@@ -551,12 +503,10 @@ class JisonParser_OutputTest extends TikiTestCase
 		return $result;
 	}
 
-	private function html_allowed()
+	function html_allowed()
 	{
-
-		$is_html = $this->parser->getOption('is_html');
-
 		$this->parser->setOption(array('is_html' => true));
+
 		$syntax = array(
 			"\n" .
 			"<div>html allowed\n" .
@@ -574,16 +524,15 @@ class JisonParser_OutputTest extends TikiTestCase
 
 		$result = array("parsed" => $parsed, "syntax" => $syntax);
 
-		$this->parser->setOption(array('is_html' => $is_html));
+		$this->parser->resetOption();
 
 		return $result;
 	}
 
-	private function complex_state_tracking()
+	function complex_state_tracking()
 	{
-		$is_html = $this->parser->getOption('is_html');
-
 		$this->parser->setOption(array('is_html' => true));
+
 		$syntax = array(
 			"__Here\n" .
 				"''we are test\n" .
@@ -620,30 +569,33 @@ class JisonParser_OutputTest extends TikiTestCase
 
 		$result = array("parsed" => $parsed, "syntax" => $syntax);
 
-		$this->parser->setOption(array('is_html' => $is_html));
+		$this->parser->resetOption();
 
 		return $result;
 	}
 
-	private function no_line_skipping()
+	function no_line_skipping()
 	{
+		$this->parser->setOption(array('is_html' => true));
+
 		$syntax = array(
-			"&{DIV()}\n" .
-			"&{DIV()}\n" .
-			"&{DIV()}\n" .
-			"&{DIV()}\n" .
-			"&{DIV}{DIV}{DIV}{DIV}\n" .
+			"{DIV()}\n" .
+			"{DIV()}\n" .
+			"{DIV()}\n" .
+			"{DIV()}\n" .
+			"{DIV}{DIV}{DIV}{DIV}\n" .
 			";foo:foo definition\n" .
 			";foo2:foo2 definition\n" .
 			"[[__bold__]\n" .
 			"Test" .
 			"''Test Italics''\n"
 		,
-			"&amp;<br />\n" .
-			"&amp;<br />\n" .
-			"&amp;<br />\n" .
-			"&amp;<br />\n" .
-			'&amp;<dl class="tikiList" id="" style=""><dt>foo</dt><dd>foo definition</dd>' . "\n" .
+			"<div  >\n" .
+			"<div  >\n" .
+			"<div  >\n" .
+			"<div  >\n" .
+			"</div></div></div></div>" .
+			'<dl class="tikiList" id="" style=""><dt>foo</dt><dd>foo definition</dd>' . "\n" .
 			"<dt>foo2</dt><dd>foo2 definition</dd>\n" .
 			"</dl>\n" .
 			"[<strong>bold</strong>]<br />\n" .
@@ -652,9 +604,12 @@ class JisonParser_OutputTest extends TikiTestCase
 
 
 		$parsed = $this->parser->parse($syntax[0]);
+
 		$this->tryRemoveIdsFromHtmlList($parsed);
 
 		$result = array("parsed" => $parsed, "syntax" => $syntax);
+
+		$this->parser->resetOption();
 
 		return $result;
 	}
