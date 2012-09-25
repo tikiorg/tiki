@@ -7,8 +7,8 @@
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
-  header("location: index.php");
-  exit;
+	header("location: index.php");
+	exit;
 }
 
 function module_change_category_info()
@@ -76,12 +76,12 @@ function module_change_category_info()
 function module_change_category($mod_reference, $module_params)
 {
 	global $prefs, $tikilib, $smarty, $modlib;
-	
+
 	$smarty->assign('showmodule', false);
 	// temporary limitation to wiki pages
 	if (($GLOBALS['section'] == 'wiki page' && (!empty($_REQUEST['page']) || !empty($_REQUEST['page_ref_if']))) || $modlib->is_admin_mode(true)) {
 		global $categlib; require_once('lib/categories/categlib.php');
-		
+
 		if (empty($_REQUEST['page'])) {
 			global $structlib; include_once('lib/structures/structlib.php');
 			$page_info = $structlib->s_get_page_info($_REQUEST['page_ref_id']);
@@ -94,35 +94,35 @@ function module_change_category($mod_reference, $module_params)
 			$id = 0;
 			$cat_parent = '';
 		}
-	
+
 		if (!empty($module_params['shy']) && !$modlib->is_admin_mode(true)) {
 			$shy = $module_params['shy'] === 'y';
 		} else {
 			$shy = false;
 		}
-	
+
 		$detailed = isset($module_params['detail']) ? $module_params['detail'] : "n";
 		$smarty->assign('detailed', $detailed);
-	
+
 		$add = isset($module_params['add']) ? $module_params['add'] : "y";
 		$smarty->assign('add', $add);
-	
+
 		$multiple = isset($module_params['multiple']) ? $module_params['multiple'] : "y";
 		$smarty->assign('multiple', $multiple);
-	
-	
+
+
 		$cat_type = 'wiki page';
 		$cat_objid = $_REQUEST['page'];
-		
-		$categories = $categlib->getCategories($id ? array('identifier'=>$id, 'type'=>'descendants') : NULL);
-	
+
+		$categories = $categlib->getCategories($id ? array('identifier'=>$id, 'type'=>'descendants') : null);
+
 		if (!empty($module_params['group']) && $module_params['group'] == 'y') {
 			global $userlib, $user;
 			if (!$user) {
 				return;
 			}
 			$userGroups = $userlib->get_user_groups_inclusion($user);
-			foreach ($categories as $i=>$cat) {
+			foreach ($categories as $i => $cat) {
 				if (isset($userGroups[$cat['name']])) {
 					continue;
 				}
@@ -138,13 +138,14 @@ function module_change_category($mod_reference, $module_params)
 				}
 			}
 		}
-	
+
 		$managedCategories = array_keys($categories);
 		if (isset($_REQUEST['remove']) && (!isset($module_params['del']) || $module_params['del'] != 'n')) {
 			$originalCategories = $categlib->get_object_categories($cat_type, $cat_objid);
-			if (in_array($_REQUEST['remove'], $originalCategories) && in_array($_REQUEST['remove'], $managedCategories)) { // Check if the object is in the category to prevent infinite redirection.
+			// Check if the object is in the category to prevent infinite redirection.
+			if (in_array($_REQUEST['remove'], $originalCategories) && in_array($_REQUEST['remove'], $managedCategories)) {
 				$selectedCategories = array();
-				$managedCategories = array_intersect(array((int)$_REQUEST['remove']), $managedCategories);
+				$managedCategories = array_intersect(array((int) $_REQUEST['remove']), $managedCategories);
 			}
 		} elseif (isset($_REQUEST["modcatid"]) and $_REQUEST["modcatid"] == $id) {
 			if (!isset($_REQUEST['modcatchange'])) {
@@ -165,7 +166,7 @@ function module_change_category($mod_reference, $module_params)
 		if (isset($selectedCategories)) {
 			$objectperms = Perms::get(array('type' => $cat_type, 'object' => $cat_objid));
 			if ($objectperms->modify_object_categories) {
-				$categlib->update_object_categories($selectedCategories, $cat_objid, $cat_type, NULL, NULL, NULL, $managedCategories);
+				$categlib->update_object_categories($selectedCategories, $cat_objid, $cat_type, null, null, null, $managedCategories);
 			}
 			header('Location: '.$_SERVER['REQUEST_URI']);
 			die;
@@ -187,7 +188,7 @@ function module_change_category($mod_reference, $module_params)
 			unset($module_params['imgUrlNotIn']);
 			unset($module_params['imgUrlIn']);
 		}
-	
+
 		$smarty->assign('isInAllManagedCategories', $isInAllManagedCategories);
 		$smarty->assign('showmodule', !$shy);
 		if (empty($cat_parent)) {

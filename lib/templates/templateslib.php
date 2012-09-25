@@ -7,8 +7,8 @@
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
-  header("location: index.php");
-  exit;
+	header("location: index.php");
+	exit;
 }
 
 /**
@@ -18,7 +18,7 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
  */
 class TemplatesLib extends TikiLib
 {
-	function list_templates($section, $offset, $maxRecords, $sort_mode, $find)
+	public function list_templates($section, $offset, $maxRecords, $sort_mode, $find)
 	{
 		$bindvars = array($section);
 
@@ -41,7 +41,7 @@ class TemplatesLib extends TikiLib
 		while ($res = $result->fetchRow()) {
 			$query2 = "select `section`  from `tiki_content_templates_sections` where `templateId`=?";
 
-			$result2 = $this->query($query2, array((int)$res["templateId"]));
+			$result2 = $this->query($query2, array((int) $res["templateId"]));
 			$sections = array();
 			while ($res2 = $result2->fetchRow()) {
 				$sections[] = $res2["section"];
@@ -56,13 +56,14 @@ class TemplatesLib extends TikiLib
 		return $retval;
 	}
 
-	function get_template($templateId, $lang = null)
+	public function get_template($templateId, $lang = null)
 	{
 		$query = "select * from `tiki_content_templates` where `templateId`=?";
-		$result = $this->query($query, array((int)$templateId));
+		$result = $this->query($query, array((int) $templateId));
 
-		if (!$result->numRows())
+		if (!$result->numRows()) {
 			return false;
+		}
 
 		$res = $result->fetchRow();
 
@@ -78,7 +79,7 @@ class TemplatesLib extends TikiLib
 		return $res;
 	}
 
-	function get_parsed_template($templateId, $lang = null, $format = 'yaml')
+	public function get_parsed_template($templateId, $lang = null, $format = 'yaml')
 	{
 		$res = $this->get_template($templateId, $lang);
 
@@ -135,7 +136,7 @@ class TemplatesLib extends TikiLib
 		}
 	}
 
-	function list_all_templates($offset, $maxRecords, $sort_mode, $find)
+	public function list_all_templates($offset, $maxRecords, $sort_mode, $find)
 	{
 		$bindvars = array();
 		if ($find) {
@@ -156,7 +157,7 @@ class TemplatesLib extends TikiLib
 
 		while ($res = $result->fetchRow()) {
 			$query2 = "select `section` from `tiki_content_templates_sections` where `templateId`=?";
-			$result2 = $this->query($query2, array((int)$res["templateId"]));
+			$result2 = $this->query($query2, array((int) $res["templateId"]));
 			$sections = array();
 			while ($res2 = $result2->fetchRow()) {
 				$sections[] = $res2["section"];
@@ -171,9 +172,9 @@ class TemplatesLib extends TikiLib
 		return $retval;
 	}
 
-	function replace_template($templateId, $name, $content, $type = 'static')
+	public function replace_template($templateId, $name, $content, $type = 'static')
 	{
-		$bindvars = array($content, $name, (int)$this->now, $type);
+		$bindvars = array($content, $name, (int) $this->now, $type);
 		if ($templateId) {
 			$query = "update `tiki_content_templates` set `content`=?, `name`=?, `created`=?, `template_type`=? where `templateId`=?";
 			$bindvars[] = (int) $templateId;
@@ -186,50 +187,50 @@ class TemplatesLib extends TikiLib
 		$result = $this->query($query, $bindvars);
 		$id = $this->getOne(
 			"select max(`templateId`) from `tiki_content_templates` where `created`=? and `name`=?",
-			array((int)$this->now, $name)
+			array((int) $this->now, $name)
 		);
 
 		return $id;
 	}
 
-	function add_template_to_section($templateId, $section)
+	public function add_template_to_section($templateId, $section)
 	{
 		$this->query(
 			"delete from `tiki_content_templates_sections` where `templateId`=? and `section`=?",
-			array((int)$templateId, $section),
+			array((int) $templateId, $section),
 			-1,
 			-1,
 			false
 		);
 
 		$query = "insert into `tiki_content_templates_sections`(`templateId`,`section`) values(?,?)";
-		$result = $this->query($query, array((int)$templateId, $section));
+		$result = $this->query($query, array((int) $templateId, $section));
 	}
 
-	function remove_template_from_section($templateId, $section)
+	public function remove_template_from_section($templateId, $section)
 	{
 		$result = $this->query(
 			"delete from `tiki_content_templates_sections` where `templateId`=? and `section`=?",
-			array((int)$templateId, $section)
+			array((int) $templateId, $section)
 		);
 	}
 
-	function template_is_in_section($templateId, $section)
+	public function template_is_in_section($templateId, $section)
 	{
 		$cant = $this->getOne(
 			"select count(*) from `tiki_content_templates_sections` where `templateId`=? and `section`=?",
-			array((int)$templateId, $section)
+			array((int) $templateId, $section)
 		);
 
 		return $cant;
 	}
 
-	function remove_template($templateId)
+	public function remove_template($templateId)
 	{
 		$query = "delete from `tiki_content_templates` where `templateId`=?";
-		$result = $this->query($query, array((int)$templateId));
+		$result = $this->query($query, array((int) $templateId));
 		$query = "delete from `tiki_content_templates_sections` where `templateId`=?";
-		$result = $this->query($query, array((int)$templateId));
+		$result = $this->query($query, array((int) $templateId));
 		return true;
 	}
 }

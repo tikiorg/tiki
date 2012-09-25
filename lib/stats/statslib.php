@@ -15,12 +15,12 @@ class StatsLib extends TikiLib
 {
 	// obsolete, but keeped for compatibility purposes
 	// use Tikilib::list_pages() instead
-	function list_orphan_pages($offset = 0, $maxRecords = -1, $sort_mode = 'pageName_desc', $find = '', $onlyCant=false)
+	public function list_orphan_pages($offset = 0, $maxRecords = -1, $sort_mode = 'pageName_desc', $find = '', $onlyCant=false)
 	{
 		return $this->list_pages($offset, $maxRecords, $sort_mode, $find, '', true, true, true, true, false, '', $onlyCant);
 	}
 
-	function wiki_stats()
+	public function wiki_stats()
 	{
 		$stats = array();
 
@@ -53,7 +53,7 @@ class StatsLib extends TikiLib
 		return $stats;
 	}
 
-	function quiz_stats()
+	public function quiz_stats()
 	{
 		TikiLib::lib('quiz')->compute_quiz_stats();
 
@@ -71,7 +71,7 @@ class StatsLib extends TikiLib
 		return $stats;
 	}
 
-	function image_gal_stats()
+	public function image_gal_stats()
 	{
 		$stats = array();
 		$stats["galleries"] = $this->getOne("select count(*) from `tiki_galleries`", array());
@@ -84,7 +84,7 @@ class StatsLib extends TikiLib
 		return $stats;
 	}
 
-	function file_gal_stats()
+	public function file_gal_stats()
 	{
 		$stats = array();
 		$stats["galleries"] = $this->getOne("select count(*) from `tiki_file_galleries`", array());
@@ -98,7 +98,7 @@ class StatsLib extends TikiLib
 		return $stats;
 	}
 
-	function cms_stats()
+	public function cms_stats()
 	{
 		$stats = array();
 
@@ -111,7 +111,7 @@ class StatsLib extends TikiLib
 		return $stats;
 	}
 
-	function forum_stats()
+	public function forum_stats()
 	{
 		$stats = array();
 		$stats["forums"] = $this->getOne("select count(*) from `tiki_forums`", array());
@@ -131,7 +131,7 @@ class StatsLib extends TikiLib
 		return $stats;
 	}
 
-	function blog_stats()
+	public function blog_stats()
 	{
 		$stats = array();
 		$stats["blogs"] = $this->getOne("select count(*) from `tiki_blogs`", array());
@@ -143,7 +143,7 @@ class StatsLib extends TikiLib
 		return $stats;
 	}
 
-	function poll_stats()
+	public function poll_stats()
 	{
 		$stats = array();
 		$stats["polls"] = $this->getOne("select count(*) from `tiki_polls`", array());
@@ -152,7 +152,7 @@ class StatsLib extends TikiLib
 		return $stats;
 	}
 
-	function faq_stats()
+	public function faq_stats()
 	{
 		$stats = array();
 		$stats["faqs"] = $this->getOne("select count(*) from `tiki_faqs`", array());
@@ -161,7 +161,7 @@ class StatsLib extends TikiLib
 		return $stats;
 	}
 
-	function user_stats()
+	public function user_stats()
 	{
 		$stats = array();
 		$stats["users"] = $this->getOne("select count(*) from `users_users`", array());
@@ -170,7 +170,7 @@ class StatsLib extends TikiLib
 		return $stats;
 	}
 
-	function site_stats()
+	public function site_stats()
 	{
 		global $tikilib;
 		$stats = array();
@@ -240,7 +240,7 @@ class StatsLib extends TikiLib
 		return $stats;
 	}
 
-	function stats_hit($object, $type, $id = NULL)
+	public function stats_hit($object, $type, $id = null)
 	{
 		if ( is_null($object) || is_null($type) ) {
 			$result = false;
@@ -256,7 +256,7 @@ class StatsLib extends TikiLib
 
 		$cant = $this->getOne(
 			"select count(*) from `tiki_stats` where `object`=? and `type`=? and `day`=?",
-			array($object, $type, (int)$dayzero)
+			array($object, $type, (int) $dayzero)
 		);
 
 		if ( $cant ) {
@@ -265,10 +265,10 @@ class StatsLib extends TikiLib
 			$query = "insert into `tiki_stats` (`object`,`type`,`day`,`hits`) values(?,?,?,1)";
 		}
 
-		return $this->query($query, array($object, $type, (int)$dayzero), -1, -1, false);
+		return $this->query($query, array($object, $type, (int) $dayzero), -1, -1, false);
 	}
 
-	function best_overall_object_stats($max=20, $days=0, $startDate=0, $endDate=0 )
+	public function best_overall_object_stats($max=20, $days=0, $startDate=0, $endDate=0 )
 	{
 		$stats = array();
 		$bindvars = array();
@@ -286,8 +286,12 @@ class StatsLib extends TikiLib
 			$mid = "WHERE `day` <> 'NULL' ";
 		}
 
-		if ($startDate) $mid .= " and `day` > '" . $startDate . "' ";
-		if ($endDate) $mid .= " and `day` < '" . $endDate . "' ";
+		if ($startDate) {
+			$mid .= " and `day` > '" . $startDate . "' ";
+		}
+		if ($endDate) {
+			$mid .= " and `day` < '" . $endDate . "' ";
+		}
 
 		$query = "SELECT `object`, `type`, sum(`hits`) AS `hits` FROM `tiki_stats` " .
 							$mid .
@@ -309,7 +313,7 @@ class StatsLib extends TikiLib
 		return $stats;
 	}
 
-	function object_hits($object, $type, $days=0, $startDate=0, $endDate=0 )
+	public function object_hits($object, $type, $days=0, $startDate=0, $endDate=0 )
 	{
 		$bindvars = array($object, $type);
 		if ($days != 0) {
@@ -326,8 +330,12 @@ class StatsLib extends TikiLib
 			$mid = '';
 		}
 
-		if ($startDate) $mid .= " and `day` > '" . $startDate . "' ";
-		if ($endDate) $mid .= " and `day` < '" . $endDate . "' ";
+		if ($startDate) {
+			$mid .= " and `day` > '" . $startDate . "' ";
+		}
+		if ($endDate) {
+			$mid .= " and `day` < '" . $endDate . "' ";
+		}
 
 		$query_cant = "SELECT sum(`hits`) AS `hits` FROM `tiki_stats` WHERE `object`=? AND `type`=? " .
 										$mid .
@@ -336,7 +344,7 @@ class StatsLib extends TikiLib
 		return $cant;
 	}
 
-	function get_daily_usage_chart_data($days = 30)
+	public function get_daily_usage_chart_data($days = 30)
 	{
 		$bindvars = array();
 
@@ -370,7 +378,7 @@ class StatsLib extends TikiLib
 	 * Transform a last period to a 2 dates
 	 *
 	 */
-	function period2dates($when)
+	public function period2dates($when)
 	{
 		global $tikilib, $prefs;
 		$now = $tikilib->now;
@@ -396,7 +404,7 @@ class StatsLib extends TikiLib
 			case 'week':
 				$iweek = TikiLib::date_format("%w", $now);// 0 for Sunday...
 				if ($prefs['calendar_firstDayofWeek'] == 'user') {
-					$firstDayofWeek = (int)tra('First day of week: Sunday (its ID is 0) - translators you need to localize this string!');
+					$firstDayofWeek = (int) tra('First day of week: Sunday (its ID is 0) - translators you need to localize this string!');
 					if ( $firstDayofWeek < 1 || $firstDayofWeek > 6 ) {
 						$firstDayofWeek = 0;
 					}
@@ -404,7 +412,9 @@ class StatsLib extends TikiLib
 					$firstDayofWeek = $prefs['calendar_firstDayofWeek'];
 				}
 				$iweek -= $firstDayofWeek;
-				if ($iweek < 0) $iweek += 7;
+				if ($iweek < 0) {
+					$iweek += 7;
+				}
 				$begin = TikiLib::make_time(0, 0, 0, $month, $day-($iweek ), $year);
 				break;
 
@@ -432,20 +442,20 @@ class StatsLib extends TikiLib
 				$begin = $now;
 				break;
 		}
-		return array((int)$begin, (int)$now);
+		return array((int) $begin, (int) $now);
 	}
 
 	/**
 	 * count the number of created or modified for this day, this month, this year
 	 *
 	 */
-	function count_this_period($table = 'tiki_pages', $column ='created', $when='daily', $parentColumn ='', $parentId='')
+	public function count_this_period($table = 'tiki_pages', $column ='created', $when='daily', $parentColumn ='', $parentId='')
 	{
 		$bindvars = $this->period2dates($when);
 		$where = '';
 		if (!empty($parentColumn) && !empty($parentId)) {
 			$where = " and `$parentColumn` = ?";
-			$bindvars[] = (int)$parentId;
+			$bindvars[] = (int) $parentId;
 		}
 		$query = "select count(*) from `$table` where `$column` >= ? and `$column` <= ? $where";
 		$count = $this->getOne($query, $bindvars);
@@ -456,7 +466,7 @@ class StatsLib extends TikiLib
 	 *  count the number of viewed for this day, this month, this year
 	 *
 	 */
-	function hit_this_period($type='wiki', $when='daily')
+	public function hit_this_period($type='wiki', $when='daily')
 	{
 		$bindvars = $this->period2dates($when);
 		$bindvars[1] = $type;
@@ -468,7 +478,7 @@ class StatsLib extends TikiLib
 		return $count;
 	}
 
-	function add_pageview()
+	public function add_pageview()
 	{
 		$dayzero = $this->make_time(
 			0,
@@ -491,21 +501,23 @@ class StatsLib extends TikiLib
 		}
 	}
 
-	function get_pv_chart_data($days)
+	public function get_pv_chart_data($days)
 	{
 		$now = $this->make_time(0, 0, 0, $this->date_format("%m"), $this->date_format("%d"), $this->date_format("%Y"));
 		$dfrom = 0;
-		if ($days != 0) $dfrom = $now - ($days * 24 * 60 * 60);
+		if ($days != 0) {
+			$dfrom = $now - ($days * 24 * 60 * 60);
+		}
 
 		$query = "select `day`, `pageviews` from `tiki_pageviews` where `day`<=? and `day`>=?";
-		$result = $this->fetchAll($query, array((int)$now, (int)$dfrom));
+		$result = $this->fetchAll($query, array((int) $now, (int) $dfrom));
 		$ret = array();
 		$n = ceil(count($result) / 10);
 		$i = 0;
 		$xdata = array();
 		$ydata = array();
 
-		foreach ( $result as $res ) {
+		foreach ($result as $res) {
 			if ($i % $n == 0) {
 				$xdata[] = $this->date_format("%e %b", $res["day"]);
 			} else {

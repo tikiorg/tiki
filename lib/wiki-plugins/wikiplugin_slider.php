@@ -345,7 +345,7 @@ function wikiplugin_slider($data, $params)
 		$theme = 'default';
 	}
 
-	$animationtime = (int)$animationtime;
+	$animationtime = (int) $animationtime;
 	$animationtime = (empty($animationtime) === false ? $animationtime : 600);
 
 	$headerlib->add_jq_onready(

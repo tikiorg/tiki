@@ -25,34 +25,40 @@
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
-  header("location: index.php");
-  exit;
+	header("location: index.php");
+	exit;
 }
 
 function smarty_block_textarea($params, $content, $smarty, $repeat)
 {
 	global $prefs, $headerlib, $smarty, $is_html;
 
-	if ( $repeat ) return;
+	if ( $repeat ) {
+		return;
+	}
 
 	// some defaults
 	$params['_toolbars'] = isset($params['_toolbars']) ? $params['_toolbars'] : 'y';
 	if ($prefs['mobile_feature'] === 'y' && $prefs['mobile_mode'] === 'y') {
 		$params['_toolbars'] = 'n';
 	}
-	if ( $prefs['javascript_enabled'] != 'y') $params['_toolbars'] = 'n';
+	if ( $prefs['javascript_enabled'] != 'y') {
+		$params['_toolbars'] = 'n';
+	}
 
 	$params['_simple'] = isset($params['_simple']) ? $params['_simple'] : 'n';
 
 	if (!isset($params['_wysiwyg'])) {
-		if ($params['_simple'] === 'n') {	// should not be set usually(?)
+		if ($params['_simple'] === 'n') {
+			// should not be set usually(?)
 			include_once 'lib/setup/editmode.php';
 			$params['_wysiwyg'] = $_SESSION['wysiwyg'];
 		} else {
 			$params['_wysiwyg'] = 'n';
 		}
 	}
-	if ($is_html === null) { // sometimes $is_html has not been set, so take an educated guess
+	if ($is_html === null) {
+		// sometimes $is_html has not been set, so take an educated guess
 		if ($params['_wysiwyg'] === 'y' && $prefs['wysiwyg_htmltowiki'] !== 'y') {
 			$is_html = true;
 		}
@@ -83,7 +89,9 @@ function smarty_block_textarea($params, $content, $smarty, $repeat)
 		global $section;
 		$params['section'] = $section ? $section: 'wiki page';
 	}
-	if ( ! isset($params['style']) && ! isset($params['cols']) ) $params['style'] = 'width:99%';
+	if ( ! isset($params['style']) && ! isset($params['cols']) ) {
+		$params['style'] = 'width:99%';
+	}
 	$html = '';
 	$html .= '<input type="hidden" name="mode_wysiwyg" value="" /><input type="hidden" name="mode_normal" value="" />';
 
@@ -113,19 +121,22 @@ function smarty_block_textarea($params, $content, $smarty, $repeat)
 	$smarty->assign('switcheditor', isset($params['switcheditor']) ? $params['switcheditor'] : 'n');
 	$smarty->assign('toolbar_section', $params['section']);
 
-	if ($prefs['feature_ajax'] == 'y' && $prefs['ajax_autosave'] == 'y' && $params['_simple'] == 'n' && $params['autosave'] == 'y') {	// retrieve autosaved content
+	if ($prefs['feature_ajax'] == 'y' && $prefs['ajax_autosave'] == 'y' && $params['_simple'] == 'n' && $params['autosave'] == 'y') {
+		// retrieve autosaved content
 		require_once("lib/ajax/autosave.php");
 		$smarty->loadPlugin('smarty_block_self_link');
 		$auto_save_referrer = ensureReferrer();
 		if (empty($_REQUEST['autosave'])) {
 			$_REQUEST['autosave'] = 'n';
 		}
-		if (has_autosave($as_id, $auto_save_referrer)) {		//  and $params['preview'] == 0 -  why not?
+		if (has_autosave($as_id, $auto_save_referrer)) {
+			//  and $params['preview'] == 0 -  why not?
 			$auto_saved = str_replace("\n", "\r\n", get_autosave($as_id, $auto_save_referrer));
 			if ( strcmp($auto_saved, $content) === 0 ) {
 				$auto_saved = '';
 			}
-			if (empty($auto_saved) || (isset($_REQUEST['mode_wysiwyg']) && $_REQUEST['mode_wysiwyg'] === 'y')) {	// switching modes, ignore auto save
+			if (empty($auto_saved) || (isset($_REQUEST['mode_wysiwyg']) && $_REQUEST['mode_wysiwyg'] === 'y')) {
+				// switching modes, ignore auto save
 				remove_save($as_id, $auto_save_referrer);
 			} else {
 				$msg = '<div class="mandatory_star"><span class="autosave_message">'.tra('There is an autosaved draft of your recent edits, to use it instead of what is current displayed').'</span>&nbsp;' .
@@ -139,7 +150,8 @@ function smarty_block_textarea($params, $content, $smarty, $repeat)
 		$headerlib->add_js("var autoSaveId = '" . addcslashes($auto_save_referrer, "'") . "';");
 	}
 
-	if ( $params['_wysiwyg'] == 'y' && $params['_simple'] == 'n') {	// TODO cope with wysiwyg and simple
+	if ( $params['_wysiwyg'] == 'y' && $params['_simple'] == 'n') {
+		// TODO cope with wysiwyg and simple
 
 		// new ckeditor implementation 2010
 		if ($prefs['feature_ajax'] !== 'y' || $prefs['ajax_autosave'] !== 'y' ||
@@ -198,7 +210,8 @@ function smarty_block_textarea($params, $content, $smarty, $repeat)
 			20
 		);	// after dialog tools init (10)
 
-	} else {		// end of if ( $params['_wysiwyg'] == 'y' && $params['_simple'] == 'n')
+	} else {
+		// end of if ( $params['_wysiwyg'] == 'y' && $params['_simple'] == 'n')
 
 		// setup for wiki editor
 
@@ -206,7 +219,7 @@ function smarty_block_textarea($params, $content, $smarty, $repeat)
 		$params['cols'] = !empty($params['cols']) ? $params['cols'] : 80;
 
 		$textarea_attributes = '';
-		foreach ( $params as $k => $v ) {
+		foreach ($params as $k => $v) {
 			if ( $k[0] != '_' && ! in_array($k, array('comments', 'switcheditor', 'section', 'area_id', 'autosave'))) {
 				$textarea_attributes .= ' '.$k.'="'.$v.'"';
 			}
@@ -229,10 +242,10 @@ function smarty_block_textarea($params, $content, $smarty, $repeat)
 	$js_editlock = '';
 
 	if ($params['_simple'] == 'n' && $params['comments'] !== 'y') {
-// Display edit time out
+		// Display edit time out
 
 		$js_editlock .= "
-var editTimeoutSeconds = ".((int)ini_get('session.gc_maxlifetime')).";
+var editTimeoutSeconds = ".((int) ini_get('session.gc_maxlifetime')).";
 var editTimeElapsedSoFar = 0;
 var editTimeoutIntervalId;
 var editTimerWarnings = 0;
@@ -328,7 +341,8 @@ function switchEditor(mode, form) {
 }';
 		}
 
-		if ( $prefs['feature_jquery_ui'] == 'y' && $params['_wysiwyg'] != 'y') {	// show hidden parent before applying resizable
+		if ( $prefs['feature_jquery_ui'] == 'y' && $params['_wysiwyg'] != 'y') {
+			// show hidden parent before applying resizable
 			$js_editconfirm .= "
 	var hiddenParents = \$('#$as_id').parents('fieldset:hidden:last');
 
@@ -344,7 +358,7 @@ function switchEditor(mode, form) {
 		});
 	}";
 			}
-		$js_editconfirm .= "
+			$js_editconfirm .= "
 	if (hiddenParents.length) { hiddenParents.hide(); }
 ";
 		}

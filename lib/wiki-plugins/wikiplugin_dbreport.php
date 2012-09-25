@@ -12,12 +12,12 @@ $wikiplugin_dbreport_record;
 
 class WikipluginDBReportToken
 {
-	var $type; // key=keyword, fld=field, str=string, var=variable, sty=style, eof=end of file
-	var $content;
-	var $start;
-	var $after;
-	var $code;
-	function type_name()
+	public $type; // key=keyword, fld=field, str=string, var=variable, sty=style, eof=end of file
+	public $content;
+	public $start;
+	public $after;
+	public $code;
+	public function type_name()
 	{
 		switch($this->type) {
 			case 'key':
@@ -40,7 +40,7 @@ class WikipluginDBReportToken
 				return $token->type;
 		}
 	}
-	function WikipluginDBReportToken($content=NULL)
+	public function WikipluginDBReportToken($content=null)
 	{
 		$this->content = $content;
 	}
@@ -48,11 +48,11 @@ class WikipluginDBReportToken
 
 class WikipluginDBReportField
 {
-	var $name;
-	var $variable;
-	var $break;
-	var $index;
-	function WikipluginDBReportField($text)
+	public $name;
+	public $variable;
+	public $break;
+	public $index;
+	public function WikipluginDBReportField($text)
 	{
 		global $wikiplugin_dbreport_fields, $wikiplugin_dbreport_fields_allowed;
 		$this->name = stripcslashes($text);
@@ -65,26 +65,26 @@ class WikipluginDBReportField
 			$wikiplugin_dbreport_fields[] =& $this;
 		}
 	}
-	function text()
+	public function text()
 	{
 		global $wikiplugin_dbreport_record;
 		if (isset($this->index)) {
 			// indexed field
-			return (string)($wikiplugin_dbreport_record[$this->index]);
+			return (string) ($wikiplugin_dbreport_record[$this->index]);
 		} else if (isset($this->variable)) {
 			// PHP variable
 			if (isset($GLOBALS[$this->variable])) {
-				return (string)$GLOBALS[$this->variable];
-			} else if (isset($_SESSION[$this->variable])) {
-				return (string)$_SESSION[$this->variable];
+				return (string) $GLOBALS[$this->variable];
+			} elseif (isset($_SESSION[$this->variable])) {
+				return (string) $_SESSION[$this->variable];
 			} else if (isset($_REQUEST[$this->variable])) {
-				return (string)$_REQUEST[$this->variable];
+				return (string) $_REQUEST[$this->variable];
 			}
 		} else {
 			return "[$this->name]";
 		}
 	}
-	function code()
+	public function code()
 	{
 		if (isset($this->variable)) {
 			return '[$' . addcslashes($this->variable, "\0..\37[]$\\") . ']';
@@ -92,11 +92,11 @@ class WikipluginDBReportField
 			return '[' . addcslashes($this->name, "\0..\37[]$\\") . ']';
 		}
 	}
-	function html()
+	public function html()
 	{
 		return htmlentities($this->text());
 	}
-	function uri()
+	public function uri()
 	{
 		return urlencode($this->text());
 	}
@@ -104,24 +104,24 @@ class WikipluginDBReportField
 
 class WikipluginDBReportString
 {
-	var $literal;
-	function WikipluginDBReportString($text)
+	public $literal;
+	public function WikipluginDBReportString($text)
 	{
 		$this->literal = stripcslashes($text);
 	}
-	function text()
+	public function text()
 	{
 		return $this->literal;
 	}
-	function code()
+	public function code()
 	{
 		return addcslashes($this->literal, "\0..\37[]\\");
 	}
-	function html()
+	public function html()
 	{
 		return htmlentities($this->text());
 	}
-	function uri()
+	public function uri()
 	{
 		return $this->text();
 	}
@@ -129,8 +129,8 @@ class WikipluginDBReportString
 
 class WikipluginDBReportContent
 {
-	var $elements;
-	function parse_text(&$text)
+	public $elements;
+	public function parse_text(&$text)
 	{
 		$parse_state = 0;
 		$parse_text = '';
@@ -203,26 +203,26 @@ class WikipluginDBReportContent
 			$this->elements[] = new WikipluginDBReportString($parse_text);
 		}
 	}
-	function append_field($name)
+	public function append_field($name)
 	{
 		unset($this->elements);
 		$this->elements[] = new WikipluginDBReportField($name);
 	}
-	function append_variable($name)
+	public function append_variable($name)
 	{
 		unset($this->elements);
 		$this->elements[] = new WikipluginDBReportField('$'.$name);
 	}
-	function append_string($text)
+	public function append_string($text)
 	{
 		unset($this->elements);
 		$this->elements[] = new WikipluginDBReportString($text);
 	}
-	function append($text)
+	public function append($text)
 	{
 		$this->parse_text($text);
 	}
-	function WikipluginDBReportContent(&$token)
+	public function WikipluginDBReportContent(&$token)
 	{
 		switch($token->type) {
 			case 'txt':
@@ -236,44 +236,64 @@ class WikipluginDBReportContent
 				break;
 		}
 	}
-	function text()
+	public function text()
 	{
 		$result = '';
-		if (isset($this->elements)) foreach ($this->elements as $element) $result .= $element->text();
+		if (isset($this->elements)) {
+			foreach ($this->elements as $element) {
+				$result .= $element->text();
+			}
+		}
 		return $result;
 	}
-	function code()
+	public function code()
 	{
 		$result = '';
-		if (isset($this->elements)) foreach ($this->elements as $element) $result .= $element->code();
+		if (isset($this->elements)) {
+			foreach ($this->elements as $element) {
+				$result .= $element->code();
+			}
+		}
 		return $result;
 	}
-	function html()
+	public function html()
 	{
 		$result = '';
-		if (isset($this->elements)) foreach ($this->elements as $element) $result .= $element->html();
+		if (isset($this->elements)) {
+			foreach ($this->elements as $element) {
+				$result .= $element->html();
+			}
+		}
 		return $result;
 	}
-	function uri()
+	public function uri()
 	{
 		$result = '';
-		if (isset($this->elements)) foreach ($this->elements as $element) $result .= $element->uri();
+		if (isset($this->elements)) {
+			foreach ($this->elements as $element) {
+				$result .= $element->uri();
+			}
+		}
 		return $result;
 	}
 }
 
 class WikipluginDBReportText extends WikipluginDBReportContent
 {
-	var $link;
-	var $style;
-	function code()
+	public $link;
+	public $style;
+	public function code()
 	{
 		$result = '"' . addcslashes(parent::code(), '"') . '"';
-		if (isset($this->style)) $result .= $this->style->code();
-		if (isset($this->link)) $result .= ' '.$this->link->code();
+		if (isset($this->style)) {
+			$result .= $this->style->code();
+		}
+		if (isset($this->link)) {
+			$result .= ' '.$this->link->code();
+		}
 		return $result;
 	}
-	function html()
+	public function html()
 	{
 		$html = parent::html();
 		if (isset($this->style)) {
@@ -288,10 +308,10 @@ class WikipluginDBReportText extends WikipluginDBReportContent
 
 class WikipluginDBReportStyle
 {
-	var $tag;
-	var $class;
-	var $style;
-	function WikipluginDBReportStyle(&$token)
+	public $tag;
+	public $class;
+	public $style;
+	public function WikipluginDBReportStyle(&$token)
 	{
 		if (is_object($token)) {
 			if ($token->content['class']) {
@@ -312,7 +332,7 @@ class WikipluginDBReportStyle
 			$this->class = new WikipluginDBReportContent($subtoken);
 		}
 	}
-	function code()
+	public function code()
 	{
 		$code = ':';
 		if (isset($this->class)) {
@@ -321,16 +341,22 @@ class WikipluginDBReportStyle
 			$code .= $this->tag;
 		}
 		// if (isset($this->class)) $code .= $this->class->code();
-		if (isset($this->style)) $code .= "{" . $this->style->code() . "}";
+		if (isset($this->style)) {
+			$code .= "{" . $this->style->code() . "}";
+		}
 		return $code;
 	}
-	function attributes()
+	public function attributes()
 	{
-		if (isset($this->class)) $html .= ' class="' . $this->class->html() . '"';
-		if (isset($this->style)) $html .= ' style="' . $this->style->html() . '"';
+		if (isset($this->class)) {
+			$html .= ' class="' . $this->class->html() . '"';
+		}
+		if (isset($this->style)) {
+			$html .= ' style="' . $this->style->html() . '"';
+		}
 		return $html;
 	}
-	function html_start()
+	public function html_start()
 	{
 		if (isset($this->class)) {
 			$class = $this->class->html();
@@ -355,11 +381,13 @@ class WikipluginDBReportStyle
 			$this->tag = 'span';
 			$html = '<span';
 		}
-		if (isset($this->style)) $html .= ' style="' . $this->style->html() . '"';
+		if (isset($this->style)) {
+			$html .= ' style="' . $this->style->html() . '"';
+		}
 		$html .= '>';
 		return $html;
 	}
-	function html_end()
+	public function html_end()
 	{
 		return '</'.$this->tag.'>';
 	}
@@ -367,45 +395,53 @@ class WikipluginDBReportStyle
 
 class WikipluginDBReportLink
 {
-	var $style;
-	var $contents;
-	function code()
+	public $style;
+	public $contents;
+	public function code()
 	{
 		$result = '<';
-		if (isset($this->contents)) foreach ($this->contents as $content) {
-			if (is_a($content, 'WikipluginDBReportContent')) {
-				$result .= '"'.$content->code().'"';
-			} else if (is_a($content, 'WikipluginDBReportField')) {
-				$result .= $content->code();
+		if (isset($this->contents)) {
+			foreach ($this->contents as $content) {
+				if (is_a($content, 'WikipluginDBReportContent')) {
+					$result .= '"'.$content->code().'"';
+				} else if (is_a($content, 'WikipluginDBReportField')) {
+					$result .= $content->code();
+				}
 			}
 		}
-		if (isset($this->style)) $result .= $this->style->code();
+		if (isset($this->style)) {
+			$result .= $this->style->code();
+		}
 		$result .= '>';
 		return $result;
 	}
-	function uri()
+	public function uri()
 	{
-		if (isset($this->contents)) foreach ($this->contents as $content) {
-			if (is_a($content, 'WikipluginDBReportContent')) {
-				$uri .= $content->html();
-			} else if (is_a($content, 'WikipluginDBReportField')) {
-				$uri .= $content->uri();
+		if (isset($this->contents)) {
+			foreach ($this->contents as $content) {
+				if (is_a($content, 'WikipluginDBReportContent')) {
+					$uri .= $content->html();
+				} else if (is_a($content, 'WikipluginDBReportField')) {
+					$uri .= $content->uri();
+				}
 			}
 		}
 		return $uri;
 	}
-	function html_start()
+	public function html_start()
 	{
 		$html = '<a href="' . $this->uri() . '"';
-		if ($this->style) $html .= $this->style->attributes();
+		if ($this->style) {
+			$html .= $this->style->attributes();
+		}
 		$html .= '>';
 		return $html;
 	}
-	function html_end()
+	public function html_end()
 	{
 		return '</a>';
 	}
-	function html_onclick()
+	public function html_onclick()
 	{
 		return 'onclick="document.location.href=&quot;' . $this->uri() . '&quot;"';
 	}
@@ -413,48 +449,76 @@ class WikipluginDBReportLink
 
 class WikipluginDBReportCell
 {
-	var $link;
-	var $style;
-	var $colspan;
-	var $rowspan;
-	var $contents;
-	function code($mode)
+	public $link;
+	public $style;
+	public $colspan;
+	public $rowspan;
+	public $contents;
+	public function code($mode)
 	{
 		$result = 'CELL';
 		if (isset($this->colspan) && isset($this->rowspan)) {
-			if ($this->rowspan!=1) $result .= ' ROWSPAN '.$this->rowspan;
-			if ($this->colspan!=1) $result .= ' COLSPAN '.$this->colspan;
-		} else if (isset($this->colspan)) {
-			if ($this->colspan!=1) if ($mode=='ROW') {
-				$result .= ' SPAN '.$this->colspan;
-			} else {
+			if ($this->rowspan!=1) {
+				$result .= ' ROWSPAN '.$this->rowspan;
+			}
+			if ($this->colspan!=1) {
 				$result .= ' COLSPAN '.$this->colspan;
 			}
+		} else if (isset($this->colspan)) {
+			if ($this->colspan!=1) {
+				if ($mode=='ROW') {
+					$result .= ' SPAN '.$this->colspan;
+				} else {
+					$result .= ' COLSPAN '.$this->colspan;
+				}
+			}
 		} else if (isset($this->rowspan)) {
-			if ($this->rowspan!=1) if ($mode=='ROW') {
-				$result .= ' ROWSPAN '.$this->rowspan;
-			} else {
-				$result .= ' SPAN '.$this->rowspan;
+			if ($this->rowspan!=1) {
+				if ($mode=='ROW') {
+					$result .= ' ROWSPAN '.$this->rowspan;
+				} else {
+					$result .= ' SPAN '.$this->rowspan;
+				}
 			}
 		}
-		if (isset($this->style)) $result .= ' ' . $this->style->code();
-		if (isset($this->link)) $result .= ' ' . $this->link->code();
-		if (isset($this->contents)) foreach ($this->contents as $content) $result .= ' '.$content->code();
+		if (isset($this->style)) {
+			$result .= ' ' . $this->style->code();
+		}
+		if (isset($this->link)) {
+			$result .= ' ' . $this->link->code();
+		}
+		if (isset($this->contents)) {
+			foreach ($this->contents as $content) {
+				$result .= ' '.$content->code();
+			}
+		}
 		return $result;
 	}
-	function html($heading=false)
+	public function html($heading=false)
 	{
 		if ($heading) {
 			$html = '<th';
 		} else {
 			$html = '<td';
 		}
-		if (isset($this->style)) $html .= $this->style->attributes();
-		if (isset($this->rowspan)) $html .= ' rowspan="' . $this->rowspan . '"';
-		if (isset($this->colspan)) $html .= ' colspan="' . $this->colspan . '"';
-		if (isset($this->link)) $html .= ' ' . $this->link->html_onclick();
+		if (isset($this->style)) {
+			$html .= $this->style->attributes();
+		}
+		if (isset($this->rowspan)) {
+			$html .= ' rowspan="' . $this->rowspan . '"';
+		}
+		if (isset($this->colspan)) {
+			$html .= ' colspan="' . $this->colspan . '"';
+		}
+		if (isset($this->link)) {
+			$html .= ' ' . $this->link->html_onclick();
+		}
 		$html .= '>';
-		if (isset($this->contents)) foreach ($this->contents as $content) $html .= $content->html();
+		if (isset($this->contents)) {
+			foreach ($this->contents as $content) {
+				$html .= $content->html();
+			}
+		}
 		$html .= '</td>';
 		return $html;
 	}
@@ -462,29 +526,43 @@ class WikipluginDBReportCell
 
 class WikipluginDBReportLine
 {
-	var $link;
-	var $styles;
-	var $cells;
-	function code($indent='',$rtype='ROW',$cellmode='ROW')
+	public $link;
+	public $styles;
+	public $cells;
+	public function code($indent='',$rtype='ROW',$cellmode='ROW')
 	{
 		$result = $indent.$rtype;
-		if (isset($this->styles)) foreach ($this->styles as $style) $result .= ' '.$style->code();
-		if (isset($this->link)) $result .= ' '.$this->link->code();
+		if (isset($this->styles)) {
+			foreach ($this->styles as $style) {
+				$result .= ' '.$style->code();
+			}
+		}
+		if (isset($this->link)) {
+			$result .= ' '.$this->link->code();
+		}
 		$result .= "\n";
-		foreach ($this->cells as $cell) $result .= $indent.'  '.$cell->code($cellmode)."\n";
+		foreach ($this->cells as $cell) {
+			$result .= $indent.'  '.$cell->code($cellmode)."\n";
+		}
 		return $result;
 	}
-	function row_html($data,$style,$heading=false)
+	public function row_html($data,$style,$heading=false)
 	{
 		// set the global report row
 		global $wikiplugin_dbreport_record;
 		$wikiplugin_dbreport_record = $data;
 		// generate HTML
 		$html = '<tr';
-		if (isset($style)) $html .= $style->attributes();
-		if (isset($this->link)) $html .= ' ' . $this->link->html_onclick();
+		if (isset($style)) {
+			$html .= $style->attributes();
+		}
+		if (isset($this->link)) {
+			$html .= ' ' . $this->link->html_onclick();
+		}
 		$html .= '>';
-		foreach ($this->cells as $cell) $html .= $cell->html($heading);
+		foreach ($this->cells as $cell) {
+			$html .= $cell->html($heading);
+		}
 		$html .= '</tr>' . "\n";
 		return $html;
 	}
@@ -492,28 +570,36 @@ class WikipluginDBReportLine
 
 class WikipluginDBReportTable
 {
-	var $style;
-	var $headers;
-	var $rows;
-	var $footers;
-	var $style_index;
-	function code($indent='')
+	public $style;
+	public $headers;
+	public $rows;
+	public $footers;
+	public $style_index;
+	public function code($indent='')
 	{
 		$result = $indent.'TABLE';
-		if (isset($this->style)) $result .= ' '.$this->style->code();
+		if (isset($this->style)) {
+			$result .= ' '.$this->style->code();
+		}
 		$result .= "\n";
-		if (isset($this->headers)) foreach ($this->headers as $line) {
-			$result .= $line->code($indent.'  ', 'HEADER');
+		if (isset($this->headers)) {
+			foreach ($this->headers as $line) {
+				$result .= $line->code($indent.'  ', 'HEADER');
+			}
 		}
-		if (isset($this->rows)) foreach ($this->rows as $line) {
-		   $result .= $line->code($indent.'  ', 'ROW');
+		if (isset($this->rows)) {
+			foreach ($this->rows as $line) {
+				$result .= $line->code($indent.'  ', 'ROW');
+			}
 		}
-		if (isset($this->footers))  foreach ($this->footers as $line) {
-			$result .= $line->code($indent.'  ', 'FOOTER');
+		if (isset($this->footers)) {
+			foreach ($this->footers as $line) {
+				$result .= $line->code($indent.'  ', 'FOOTER');
+			}
 		}
 		return $result;
 	}
-	function line_row_html($list,$data,$heading=false)
+	public function line_row_html($list,$data,$heading=false)
 	{
 		$html = '';
 		foreach ($list as $line) {
@@ -526,7 +612,7 @@ class WikipluginDBReportTable
 		}
 		return $html;
 	}
-	function header_row_html($data)
+	public function header_row_html($data)
 	{
 		$html = '';
 		// generate a new table
@@ -537,22 +623,28 @@ class WikipluginDBReportTable
 		}
 		// write headers
 		$style_index = 0;
-		if (isset($this->headers)) $html .= $this->line_row_html($this->headers, $data, true);
+		if (isset($this->headers)) {
+			$html .= $this->line_row_html($this->headers, $data, true);
+		}
 		return $html;
 	}
-	function record_row_html($data)
+	public function record_row_html($data)
 	{
 		$html = '';
-		if (isset($this->rows)) $html .= $this->line_row_html($this->rows, $data);
+		if (isset($this->rows)) {
+			$html .= $this->line_row_html($this->rows, $data);
+		}
 		$this->style_index++;
 		return $html;
 	}
-	function footer_row_html($data)
+	public function footer_row_html($data)
 	{
 		$html = '';
 		// write footers
 		$this->style_index = 0;
-		if (isset($this->footers)) $html .= $this->line_row_html($this->footers, $data, true);
+		if (isset($this->footers)) {
+			$html .= $this->line_row_html($this->footers, $data, true);
+		}
 		// close the table
 		$html .= '</table>';
 		return $html;
@@ -561,28 +653,42 @@ class WikipluginDBReportTable
 
 class WikipluginDBReportGroup
 {
-	var $link;
-	var $style;
-	var $fields;
-	var $field_count;
-	var $contents;
-	function __toString()
+	public $link;
+	public $style;
+	public $fields;
+	public $field_count;
+	public $contents;
+	public function __toString()
 	{
 		$result = '';
-		foreach ($this->contents as $entry) $result .= $entry;
+		foreach ($this->contents as $entry) {
+			$result .= $entry;
+		}
 		return $result;
 	}
-	function code($indent='')
+	public function code($indent='')
 	{
 		$result = $indent.'GROUP';
-		if (isset($this->style)) $result .= ' '.$this->style->code();
-		if (isset($this->fields)) foreach ($this->fields as $field) $result .= ' '.$field->code();
-		if (isset($this->link)) $result .= ' '.$this->link->code();
-		if (isset($this->contents)) foreach ($this->contents as $content) $result .= ' '.$content->code();
+		if (isset($this->style)) {
+			$result .= ' '.$this->style->code();
+		}
+		if (isset($this->fields)) {
+			foreach ($this->fields as $field) {
+				$result .= ' '.$field->code();
+			}
+		}
+		if (isset($this->link)) {
+			$result .= ' '.$this->link->code();
+		}
+		if (isset($this->contents)) {
+			foreach ($this->contents as $content) {
+				$result .= ' '.$content->code();
+			}
+		}
 		$result .= "\n";
 		return $result;
 	}
-	function check_break(&$row)
+	public function check_break(&$row)
 	{
 		$ret = false;
 		// compare the field values against the break values
@@ -596,7 +702,7 @@ class WikipluginDBReportGroup
 		}
 		return $ret;
 	}
-	function start_html($row)
+	public function start_html($row)
 	{
 		global $wikiplugin_dbreport_record;
 		$wikiplugin_dbreport_record = $row;
@@ -607,10 +713,14 @@ class WikipluginDBReportGroup
 		} else {
 			$html .= '<div>' . "\n";
 		}
-		if (isset($this->contents)) foreach ($this->contents as $content) $html.= $content->html();
+		if (isset($this->contents)) {
+			foreach ($this->contents as $content) {
+				$html.= $content->html();
+			}
+		}
 		return $html;
 	}
-	function end_html(&$row)
+	public function end_html(&$row)
 	{
 		$html = '';
 		// close the <div>
@@ -621,12 +731,16 @@ class WikipluginDBReportGroup
 
 class WikipluginDBReportParameter extends WikipluginDBReportContent
 {
-	var $name;
-	function code($indent='')
+	public $name;
+	public function code($indent='')
 	{
 		$result = $indent.'PARAM';
 		// if (isset($this->name)) $result .= ' :'.$this->name;
-		if (isset($this->elements)) foreach ($this->elements as $element) $result .= ' ' . $element->code();
+		if (isset($this->elements)) {
+			foreach ($this->elements as $element) {
+				$result .= ' ' . $element->code();
+			}
+		}
 		$result .= "\n";
 		// $result .= ' "' . parent::code() . "\"\n";
 		return $result;
@@ -635,24 +749,40 @@ class WikipluginDBReportParameter extends WikipluginDBReportContent
 
 class WikipluginDBReportFail
 {
-	var $link;
-	var $style;
-	var $contents;
-	function code($mode)
+	public $link;
+	public $style;
+	public $contents;
+	public function code($mode)
 	{
 		$result = 'FAIL';
-		if (isset($this->style)) $result .= ' ' . $this->style->code();
-		if (isset($this->link)) $result .= ' ' . $this->link->code();
-		if (isset($this->contents)) foreach ($this->contents as $content) $result .= ' '.$content->code();
+		if (isset($this->style)) {
+			$result .= ' ' . $this->style->code();
+		}
+		if (isset($this->link)) {
+			$result .= ' ' . $this->link->code();
+		}
+		if (isset($this->contents)) {
+			foreach ($this->contents as $content) {
+				$result .= ' '.$content->code();
+			}
+		}
 		return $result;
 	}
-	function html($heading=false)
+	public function html($heading=false)
 	{
 		$html = '<div';
-		if (isset($this->style)) $html .= $this->style->attributes();
-		if (isset($this->link)) $html .= ' ' . $this->link->html_onclick();
+		if (isset($this->style)) {
+			$html .= $this->style->attributes();
+		}
+		if (isset($this->link)) {
+			$html .= ' ' . $this->link->html_onclick();
+		}
 		$html .= '>';
-		if (isset($this->contents)) foreach ($this->contents as $content) $html .= $content->html();
+		if (isset($this->contents)) {
+			foreach ($this->contents as $content) {
+				$html .= $content->html();
+			}
+		}
 		$html .= '</div>';
 		return $html;
 	}
@@ -660,20 +790,32 @@ class WikipluginDBReportFail
 
 class WikipluginDBReport
 {
-	var $sql;
-	var $params;
-	var $groups;
-	var $table;
-	var $columns;
-	var $fail;
-	function code($indent='')
+	public $sql;
+	public $params;
+	public $groups;
+	public $table;
+	public $columns;
+	public $fail;
+	public function code($indent='')
 	{
 		// write the report in cannonical form.
 		$result = $indent.'SQL {' . $this->sql . '}'."\n";
-		if (isset($this->params)) foreach ($this->params as $param) $result .= $param->code($indent.'  ');
-		if (isset($this->groups)) foreach ($this->groups as $group) $result .= $group->code($indent);
-		if (isset($this->table)) $result .= $this->table->code($indent);
-		if (isset($this->fail)) $result .= $this->fail->code($indent);
+		if (isset($this->params)) {
+			foreach ($this->params as $param) {
+				$result .= $param->code($indent.'  ');
+			}
+		}
+		if (isset($this->groups)) {
+			foreach ($this->groups as $group) {
+				$result .= $group->code($indent);
+			}
+		}
+		if (isset($this->table)) {
+			$result .= $this->table->code($indent);
+		}
+		if (isset($this->fail)) {
+			$result .= $this->fail->code($indent);
+		}
 		return $result;
 	}
 }
@@ -689,14 +831,18 @@ function wikiplugin_dbreport_parse_error(&$token, $msg)
 		// find the next line break
 		$line++;
 		$break = strpos($code, "\n", $pos);
-		if ($break===false) $break = $len;
+		if ($break===false) {
+			$break = $len;
+		}
 		// was the token in this line?
 		if ($token->start < $break) {
 			// format the line with the token highlighted
 			$err_line = '<i>line '.$line.'</i>: ';
 			$err_line .= substr($code, $pos, $token->start-$pos);
 			$err_line .= '<span style="font-weight:bold;color:DarkRed;">'.substr($code, $token->start, $token->after-$token->start).'</span>';
-			if ($token->after<$break) $err_line .= substr($code, $token->after, $break-$token->after);
+			if ($token->after<$break) {
+				$err_line .= substr($code, $token->after, $break-$token->after);
+			}
 			$wikiplugin_dbreport_errors[] = $err_line;
 			$pos = $len;
 		} else {
@@ -718,7 +864,9 @@ function wikiplugin_dbreport_next_token(&$code, $len, $pos)
 	$token = new WikipluginDBReportToken();
 	$token->code =& $code;
 	// find the next non-whitespace character in the code
-	while ( ($pos < $len) && (strpos($whitespace, $code[$pos])!==false) ) $pos++;
+	while ( ($pos < $len) && (strpos($whitespace, $code[$pos])!==false) ) {
+		$pos++;
+	}
 	if ( $pos >= $len ) {
 		$token->type = 'eof';
 		$token->start = $len - 1;
@@ -732,7 +880,9 @@ function wikiplugin_dbreport_next_token(&$code, $len, $pos)
 			$token->start = $pos;
 			// parse to closing ']'
 			while ( ($pos < $len) && ($code[$pos]!=']') ) {
-				if ($code[$pos]=='\\') $pos++;
+				if ($code[$pos]=='\\') {
+					$pos++;
+				}
 				$pos++;
 			}
 			if ($pos < $len) {
@@ -814,7 +964,7 @@ function wikiplugin_dbreport_next_token(&$code, $len, $pos)
   					break;
 			}
 			return $token;
-      break;
+			break;
 		case ':':
 			// style token
 			$token->type = 'sty';
@@ -924,11 +1074,15 @@ function wikiplugin_dbreport_next_token(&$code, $len, $pos)
 					$token->type = 'eof';
     				break;
 			}
-			if ($class->content) $token->content['class'] = $class;
-			if ($style->content) $token->content['style'] = $style;
+			if ($class->content) {
+				$token->content['class'] = $class;
+			}
+			if ($style->content) {
+				$token->content['style'] = $style;
+			}
 			$token->after = $pos;
 			return $token;
-      break;
+			break;
 		case '$':
 			// variable token
 			$token->type = 'var';
@@ -936,13 +1090,15 @@ function wikiplugin_dbreport_next_token(&$code, $len, $pos)
 			$pos++;
 			// parse to end of token
 			while ( ($pos < $len) && (strpos($tokenstop, $code[$pos])===false) ) {
-				if ($code[$pos]=='\\') $pos++;
+				if ($code[$pos]=='\\') {
+					$pos++;
+				}
 				$pos++;
 			}
 			$token->content = substr($code, $token->start+1, $pos-$token->start-1);
 			$token->after = $pos;
 			return $token;
-      break;
+			break;
 		case '"':
 			// string token
 			$token->type = 'txt';
@@ -979,7 +1135,7 @@ function wikiplugin_dbreport_next_token(&$code, $len, $pos)
 			wikiplugin_dbreport_parse_error($token, "Unterminated string. \" expected.");
 			$token->type = 'eof';
 			return $token;
-      break;
+			break;
 		case '<':
 		case '>':
 			// link keywords
@@ -988,12 +1144,14 @@ function wikiplugin_dbreport_next_token(&$code, $len, $pos)
 			$token->start = $pos;
 			$token->after = ++$pos;
 			return $token;
-      break;
+			break;
 		default:
 			// keyword token
 			$token->start = $pos;
 			// parse to end of token
-			while ( ($pos < $len) && (strpos($tokenstop, $code[$pos])===false) ) $pos++;
+			while ( ($pos < $len) && (strpos($tokenstop, $code[$pos])===false) ) {
+				$pos++;
+			}
 			$token->type = 'key';
 			$token->content = substr($code, $token->start, $pos - $token->start);
 			$token->after = $pos;
@@ -1387,8 +1545,8 @@ function wikiplugin_dbreport_parse(&$code)
 					switch($token->type) {
 						case 'key':
 							// try to parse the keyword as as number
-							$span = (int)$token->content;
-							if ((string)$span == $token->content) {
+							$span = (int) $token->content;
+							if ((string) $span == $token->content) {
 								if ($span_mode=='ROW') {
 									$parse_cell->rowspan = $span;
 								} else {
@@ -1481,11 +1639,13 @@ function wikiplugin_dbreport_error_box($error)
 	$return = '~np~<table style="border-width:1px; border-style:dashed; border-color:red; background:#FFE0E0;"><tr><td>';
 	switch(gettype($error)) {
 		case 'array':
-			foreach ($error as $entry) $return .= $entry.'<br/>';
+			foreach ($error as $entry) {
+				$return .= $entry.'<br/>';
+			}
     		break;
 		case 'string':
 		case 'object':
-			$return .= (string)$error;
+			$return .= (string) $error;
 	    	break;
 		default:
 			$return .= gettype($error).' ERROR!';
@@ -1499,11 +1659,12 @@ function wikiplugin_dbreport_message_box($msg)
 	$return = '<table style="border-width:1px; border-style:dashed; border-color:silver; background:#E0E0FF;"><tr><td>';
 	switch(gettype($error)) {
 		case 'array':
-			foreach ($msg as $entry)
+			foreach ($msg as $entry) {
 				$return .= $entry.'<br/>';
+			}
 			break;
 		default:
-			$return .= (string)$msg;
+			$return .= (string) $msg;
 	}
 	$return .= '</td></tr></table>';
 	return $return;
@@ -1600,11 +1761,13 @@ function wikiplugin_dbreport($data, $params)
 	}
 	// create the bind variables array
 	$bindvars = array();
-	if (isset($report->params)) foreach ($report->params as $param) {
-		if (isset($param->name)) {
-			$bindvars[$param->name] = $param->text();
-		} else {
-			$bindvars[] = $param->text();
+	if (isset($report->params)) {
+		foreach ($report->params as $param) {
+			if (isset($param->name)) {
+				$bindvars[$param->name] = $param->text();
+			} else {
+				$bindvars[] = $param->text();
+			}
 		}
 	}
 	// translate db name into dsn
@@ -1640,7 +1803,7 @@ function wikiplugin_dbreport($data, $params)
 	}
 	// create an array of field names and their index
 	$field_index = array();
-//	$field_count = $query->FieldCount();
+	//	$field_count = $query->FieldCount();
 	for ($index = 0; $index<$field_count; $index++) {
 		$column =& $query->$fetchfield($index);
 		$field_index[$column->name] = $index;
@@ -1699,9 +1862,13 @@ function wikiplugin_dbreport($data, $params)
 		}
 	}
 	// are we debugging?
-	if ($debug) $ret .= wikiplugin_dbreport_message_box("~np~<pre>".htmlspecialchars($report->code())."</pre>~/np~");
+	if ($debug) {
+		$ret .= wikiplugin_dbreport_message_box("~np~<pre>".htmlspecialchars($report->code())."</pre>~/np~");
+	}
 	// generate the report
-	if (!$wiki) $ret .= '~np~';
+	if (!$wiki) {
+		$ret .= '~np~';
+	}
 	if (!$query->EOF) {
 		// get the first row
 		$current_row = $query->FetchRow();
@@ -1717,7 +1884,9 @@ function wikiplugin_dbreport($data, $params)
 		// go through the rows
 		while ($current_row) {
 			// do we generate a table header?
-			if ($breaking) $ret .= $report->table->header_row_html($current_row);
+			if ($breaking) {
+				$ret .= $report->table->header_row_html($current_row);
+			}
 			// write the table row
 			$ret .= $report->table->record_row_html($current_row);
 			// get the next row
@@ -1733,10 +1902,14 @@ function wikiplugin_dbreport($data, $params)
 				$break_end = '';
 				$break_start = '';
 				foreach ($report->groups as $group) {
-					if (isset($next_row)) $breaking = ($group->check_break($next_row) || $breaking);
+					if (isset($next_row)) {
+						$breaking = ($group->check_break($next_row) || $breaking);
+					}
 					if ($breaking) {
 						$break_end = $group->end_html($current_row) . $break_end;
-						if (isset($next_row)) $break_start .= $group->start_html($next_row);
+						if (isset($next_row)) {
+							$break_start .= $group->start_html($next_row);
+						}
 					}
 				}
 			}
@@ -1750,9 +1923,13 @@ function wikiplugin_dbreport($data, $params)
 		}
 	} else {
 		// no records returned. output the fail message
-		if ($report->fail) $ret .= $report->fail->html();
+		if ($report->fail) {
+			$ret .= $report->fail->html();
+		}
 	}
-	if (!$wiki) $ret .= '~/np~';
+	if (!$wiki) {
+		$ret .= '~/np~';
+	}
 	// close the database connection
 	$query->Close();
 	$ado->Close();
