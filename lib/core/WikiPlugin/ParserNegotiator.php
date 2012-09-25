@@ -34,6 +34,7 @@ class WikiPlugin_ParserNegotiator
 	public static $standardRelativePath = 'lib/wiki-plugins/wikiplugin_';
 	public static $zendRelativePath = 'lib/core/';
 	static $pluginIndexes = array();
+	static $pluginInfo = array();
 	static $parserLevels = array();
 	static $currentParserLevel = 0;
 	static $pluginsAwaitingExecution = array();
@@ -56,7 +57,8 @@ class WikiPlugin_ParserNegotiator
 
 	public function eject($className)
 	{
-		unset($this->pluginInstances[$className]);
+		unset(self::$pluginInstances[$className]);
+		unset(self::$pluginInfo[$this->name]);
 	}
 
 	function injectedExists()
@@ -358,34 +360,33 @@ class WikiPlugin_ParserNegotiator
 
 	public function info()
 	{
-		static $known = array();
-
-		if ( isset( $known[$this->name] ) ) {
-			return $known[$this->name];
+		if ( isset( self::$pluginInfo[$this->name] ) ) {
+			return self::$pluginInfo[$this->name];
 		}
 
 		if (isset($this->class)) {
-			$known[$this->name] = $this->class->info();
-			if (isset($known[$this->name]['params'])) {
-				$known[$this->name]['params'] = array_merge($known[$this->name]['params'], $this->class->style());
+			self::$pluginInfo[$this->name] = $this->class->info();
+			if (isset(self::$pluginInfo[$this->name]['params'])) {
+				self::$pluginInfo[$this->name]['params'] = array_merge(self::$pluginInfo[$this->name]['params'], $this->class->style());
 			}
+			return self::$pluginInfo[$this->name];
 		}
 
 		if ( ! $this->exists ) {
-			return $known[$this->name] = false;
+			return self::$pluginInfo[$this->name] = false;
 		}
 
 		$funcNameInfo = "wikiplugin_{$this->name}_info";
 
 		if ( ! function_exists($funcNameInfo) ) {
 			if ( $info = $this->aliasInfo() ) {
-				return $known[$this->name] = $info['description'];
+				return self::$pluginInfo[$this->name] = $info['description'];
 			} else {
-				return $known[$this->name] = false;
+				return self::$pluginInfo[$this->name] = false;
 			}
 		}
 
-		return $known[$this->name] = $funcNameInfo();
+		return self::$pluginInfo[$this->name] = $funcNameInfo();
 	}
 
 	function aliasInfo()
@@ -512,7 +513,7 @@ class WikiPlugin_ParserNegotiator
 
 		if (!$this->parser->getOption('is_html')) {
 			$noparsed = array('data' => array(), 'key' => array());
-			$this->strip_unparsed_block($this->body, $noparsed);
+			//$this->striUnparsedBlock($this->body, $noparsed);
 			$body = str_replace(array('<', '>'), array('&lt;', '&gt;'), $this->body);
 			foreach ($noparsed['data'] as &$instance) {
 				$instance = '~np~' . $instance . '~/np~';
@@ -635,7 +636,7 @@ class WikiPlugin_ParserNegotiator
 		$smarty->assign('plugin_body', $this->body);
 		$smarty->assign('plugin_args', $this->args);
 
-		return $smarty->fetch('tiki-plugin_blocked.tpl');
+		return trim($smarty->fetch('tiki-plugin_blocked.tpl'));
 	}
 
 	function executeAwaiting(&$input)
