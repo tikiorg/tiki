@@ -108,7 +108,7 @@ function smarty_function_html_select_date($params, $smarty)
 	$year_empty      = null;
 	$extra_attrs     = '';
 
-	foreach ($params as $_key=>$_value) {
+	foreach ($params as $_key => $_value) {
 		switch ($_key) {
 			case 'prefix':
 			case 'time':
@@ -131,11 +131,11 @@ function smarty_function_html_select_date($params, $smarty)
 			case 'month_empty':
 			case 'day_empty':
 			case 'year_empty':
-				$$_key = (string)$_value;
+				$$_key = (string) $_value;
 				break;
 
 			case 'all_empty':
-				$$_key = (string)$_value;
+				$$_key = (string) $_value;
 				$day_empty = $month_empty = $year_empty = $all_empty;
 				break;
 
@@ -144,7 +144,7 @@ function smarty_function_html_select_date($params, $smarty)
 			case 'display_years':
 			case 'year_as_text':
 			case 'reverse_years':
-				$$_key = (bool)$_value;
+				$$_key = (bool) $_value;
 				break;
 
 			default:
@@ -240,7 +240,7 @@ function smarty_function_html_select_date($params, $smarty)
 			array(
 				'output'     => $month_names,
 				'values'     => $month_values,
-				'selected'   => (int)$time[1] ? strftime($month_value_format, mktime(0, 0, 0, (int)$time[1], 1, 2000)) : '',
+				'selected'   => (int) $time[1] ? strftime($month_value_format, mktime(0, 0, 0, (int) $time[1], 1, 2000)) : '',
 				'print_result' => false
 			),
 			$smarty
@@ -305,7 +305,7 @@ function smarty_function_html_select_date($params, $smarty)
 			}
 			$year_result .= ' />';
 		} else {
-			$years = range((int)$start_year, (int)$end_year);
+			$years = range((int) $start_year, (int) $end_year);
 			if ($reverse_years) {
 				rsort($years, SORT_NUMERIC);
 			} else {

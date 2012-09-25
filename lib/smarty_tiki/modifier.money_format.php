@@ -37,7 +37,7 @@ function smarty_modifier_money_format($number, $local, $currency, $format = '%(#
 
 	if (!empty($local)) {
 		$ret = setlocale(LC_MONETARY, $local);
-		if ($ret===FALSE) {
+		if ($ret===false) {
 			echo "'$local' is not supported by this system.\n";
 			return;
 		}
@@ -64,9 +64,9 @@ function smarty_modifier_money_format($number, $local, $currency, $format = '%(#
 			'nosimbol' => preg_match('/\!/', $fmatch[1]) > 0,
 			'isleft' => preg_match('/\-/', $fmatch[1]) > 0,
 		);
-		$width = trim($fmatch[2]) ? (int)$fmatch[2] : 0;
-		$left = trim($fmatch[3]) ? (int)$fmatch[3] : 0;
-		$right = trim($fmatch[4]) ? (int)$fmatch[4] : $locale['int_frac_digits'];
+		$width = trim($fmatch[2]) ? (int) $fmatch[2] : 0;
+		$left = trim($fmatch[3]) ? (int) $fmatch[3] : 0;
+		$right = trim($fmatch[4]) ? (int) $fmatch[4] : $locale['int_frac_digits'];
 		$conversion = $fmatch[5];
 
 		$positive = true;

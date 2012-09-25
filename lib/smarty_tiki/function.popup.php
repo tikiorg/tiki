@@ -34,15 +34,16 @@
 function smarty_function_popup($params, $smarty)
 {
 	$append = '';
-	foreach ($params as $_key=>$_value) {
+	foreach ($params as $_key => $_value) {
 		switch ($_key) {
 			case 'text':
 			case 'trigger':
 			case 'function':
 			case 'inarray':
-				$$_key = (string)$_value;
-				if ($_key == 'function' || $_key == 'inarray')
+				$$_key = (string) $_value;
+				if ($_key == 'function' || $_key == 'inarray') {
 					$append .= ',\'' . strtoupper($_key) . "=$_value'";
+				}
 				break;
 
 			case 'caption':
@@ -102,7 +103,9 @@ function smarty_function_popup($params, $smarty)
 			case 'mouseoff':
 			case 'followmouse':
 			case 'closeclick':
-				if ($_value) $append .= ',\'' . strtoupper($_key) . '\'';
+				if ($_value) {
+					$append .= ',\'' . strtoupper($_key) . '\'';
+				}
 				break;
 
 			default:

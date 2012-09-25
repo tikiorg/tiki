@@ -7,15 +7,16 @@
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
-  header("location: index.php");
-  exit;
+	header("location: index.php");
+	exit;
 }
 
 function smarty_function_jscalendar($params, $smarty)
 {
 	global $headerlib, $prefs, $tikilib;
 
-	if ($prefs['feature_jquery_ui'] === 'y') {	// override jscalendar with jQuery UI datepicker
+	if ($prefs['feature_jquery_ui'] === 'y') {
+		// override jscalendar with jQuery UI datepicker
 		$uiCalendarInstance = uniqid();
 
 		if (!isset($params['id'])) {
@@ -28,7 +29,8 @@ function smarty_function_jscalendar($params, $smarty)
 		} else {
 			$name = '';
 		}
-		if (!isset($params['date'])) {	// if date is provided empty then show a blank date (for filters)
+		if (!isset($params['date'])) {
+			// if date is provided empty then show a blank date (for filters)
 			$params['date'] = $tikilib->now;
 		}
 		$datepicker_options = '{ altField: "#' . $params['id'] . '"';
@@ -118,7 +120,8 @@ function smarty_function_jscalendar($params, $smarty)
 				$command . '", "jscalendar", {altField: "#' . $params['id'] . '"});'
 			);
 
-		} else {		// datetime picker
+		} else {
+			// datetime picker
 
 			$command = 'datetimepicker';
 
@@ -200,7 +203,7 @@ function smarty_function_jscalendar_body($params, $smarty)
 	}
 
 	if (!empty($date)) {
-		$formatted_date = $tikilib->date_format($format, (int)$date);
+		$formatted_date = $tikilib->date_format($format, (int) $date);
 	} else {
 		$formatted_date = '';
 	}
@@ -230,7 +233,9 @@ function smarty_function_jscalendar_body($params, $smarty)
 	}
 	if (isset($params['goto'])) {
 		$goto = $params['goto'];
-		if (!$fieldname) $fieldname = "gotoit";
+		if (!$fieldname) {
+			$fieldname = "gotoit";
+		}
 	} else {
 		$goto = false;
 	}

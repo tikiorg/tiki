@@ -7,8 +7,8 @@
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
-  header("location: index.php");
-  exit;
+	header("location: index.php");
+	exit;
 }
 
 /*
@@ -21,9 +21,11 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
  */
 function smarty_function_fileinfo($params, $smarty)
 {
-	if ( ! is_array($params) || ! isset($params['_id']) || ! isset($params['_field']) ) return;
+	if ( ! is_array($params) || ! isset($params['_id']) || ! isset($params['_field']) ) {
+		return;
+	}
 	$filegallib = TikiLib::lib('filegal');
-	$params['_id'] = (int)$params['_id'];
+	$params['_id'] = (int) $params['_id'];
 
 	$infos = $filegallib->get_file($params['_id']);
 

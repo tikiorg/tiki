@@ -7,8 +7,8 @@
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
-  header("location: index.php");
-  exit;
+	header("location: index.php");
+	exit;
 }
 
 /**
@@ -97,14 +97,15 @@ function smarty_function_html_select_time($params, $smarty)
 			$hours = range(($hour_min == 24 ? 0 : $hour_min), ($hour_max == 0 || $hour_max == 24 ? 23 : $hour_max));
 			$hour_fmt = '%H';
 			$latest = 23;
-		//12-hour clock
+			//12-hour clock
 		} else {
 			$hours = range(1, 12);
 			$hour_fmt = '%I';
 			$latest = 11;
 		}
-		for ($i = 0, $for_max = count($hours); $i < $for_max; $i++)
+		for ($i = 0, $for_max = count($hours); $i < $for_max; $i++) {
 			$hours[$i] = sprintf('%02d', $hours[$i]);
+		}
 
 		if ($prefix == 'end_' && ($time_hr24 == '000000')) {
 			$selected = $latest;
@@ -136,8 +137,9 @@ function smarty_function_html_select_time($params, $smarty)
 
 		$html_result .= '>'."\n";
 
-		if (!empty($hour_empty))
+		if (!empty($hour_empty)) {
 			$hours = array_merge(array($hour_empty==' '?'':$hour_empty), $hours);
+		}
 
 		$html_result .= smarty_function_html_options(
 			array(
@@ -168,11 +170,11 @@ function smarty_function_html_select_time($params, $smarty)
 			$minute = '00';
 		}
 		if (in_array($minute, $minutes) == false) {
-			for ($i = 0, $for_max = count($minutes); $i < $for_max; $i++ ) {
+			for ($i = 0, $for_max = count($minutes); $i < $for_max; $i++) {
 				if (
-					(int)$minute > (int)$minutes[$i] &&
+					(int) $minute > (int) $minutes[$i] &&
 					(
-						(int)$minute < (int)$minutes[$i + 1] ||
+						(int) $minute < (int) $minutes[$i + 1] ||
 						empty($minutes[$i + 1])
 					)
 				) {
@@ -213,8 +215,9 @@ function smarty_function_html_select_time($params, $smarty)
 		}
 		$html_result .= '>'."\n";
 
-		if (!empty($minute_empty))
+		if (!empty($minute_empty)) {
 			$minutes = array_merge(array($minute_empty==' '?'':$minute_empty), $minutes);
+		}
 
 		$html_result .= smarty_function_html_options(
 			array(
@@ -230,8 +233,9 @@ function smarty_function_html_select_time($params, $smarty)
 
 	if ($display_seconds) {
 		$all_seconds = range(0, 59);
-		for ($i = 0, $for_max = count($all_seconds); $i < $for_max; $i+= $second_interval)
+		for ($i = 0, $for_max = count($all_seconds); $i < $for_max; $i+= $second_interval) {
 			$seconds[] = sprintf('%02d', $all_seconds[$i]);
+		}
 
 		if ($second_interval > 1) {
 			$seconds[] = 59;
@@ -261,8 +265,9 @@ function smarty_function_html_select_time($params, $smarty)
 
 		$html_result .= '>'."\n";
 
-		if (!empty($seconde_empty))
+		if (!empty($seconde_empty)) {
 			$secondes = array_merge(array($seconde_empty==' '?'':$seconde_empty), $secondes);
+		}
 
 		$html_result .= smarty_function_html_options(
 			array(
