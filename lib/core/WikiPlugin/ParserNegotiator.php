@@ -10,6 +10,8 @@ class WikiPlugin_ParserNegotiator
 	public $name;
 	public $args;
 	public $body;
+	public $syntax;
+	public $closing;
 	public $info;
 	public $fingerprint;
 	public $exists; //exists is set to true only for old style plugin
@@ -21,6 +23,7 @@ class WikiPlugin_ParserNegotiator
 	public $dontModify = false;
 	public $parser;
 	public $parserOption;
+	public $ignored = false;
 
 	private $className;
 	private $class; //class exists for zend style and injected plugins
@@ -28,6 +31,8 @@ class WikiPlugin_ParserNegotiator
 	private $page;
 	private $prefs;
 
+	public static $standardRelativePath = 'lib/wiki-plugins/wikiplugin_';
+	public static $zendRelativePath = 'lib/core/';
 	static $pluginIndexes = array();
 	static $parserLevels = array();
 	static $currentParserLevel = 0;
@@ -47,6 +52,11 @@ class WikiPlugin_ParserNegotiator
 	public function inject($plugin)
 	{
 		self::$pluginInstances[get_class($plugin)] = $plugin;
+	}
+
+	public function eject($className)
+	{
+		unset($this->pluginInstances[$className]);
 	}
 
 	function injectedExists()
@@ -75,6 +85,9 @@ class WikiPlugin_ParserNegotiator
 		$this->args = $this->argParser->parse($pluginDetails['args']);
 		$this->body = & $pluginDetails['body'];
 		$this->key = $pluginDetails['key'];
+		$this->syntax = $pluginDetails['syntax'];
+		$this->closing = $pluginDetails['closing'];
+		$this->ignored = false;
 
 		$this->exists = $this->exists(true);
 		$this->info = $this->info();
@@ -97,7 +110,8 @@ class WikiPlugin_ParserNegotiator
 	{
 		$output = '';
 		if ($this->enabled($output) == false) {
-			return "~np~" . $output->toHtml() . "~/np~";
+			$this->ignored = true;
+			return $output->toHtml();
 		}
 
 
@@ -124,7 +138,9 @@ class WikiPlugin_ParserNegotiator
 			return $fnName($this->body, $this->args, $this->index, $this) . $this->button();
 		}
 
-		return $this->body;
+		//If we make it this far, it most likley is a smarty black that can't be executed
+		$this->ignored = true;
+		return $this->syntax . $this->body . $this->closing;
 	}
 
 	function toSyntax()
@@ -185,19 +201,18 @@ class WikiPlugin_ParserNegotiator
 		self::$pluginsAwaitingExecution[$this->key] = self::$pluginDetails[$this->key];
 	}
 
-	private function zendExists()
+	public function zendExists()
 	{
 		if (isset(self::$pluginInstances[$this->className])) {
 			return true;
 		}
 
-		return file_exists(str_replace('_', '/', 'lib/core/' . $this->className . '.php')) == true && class_exists($this->className) == true;
+		return file_exists(str_replace('_', '/', self::$zendRelativePath . $this->className . '.php')) == true && class_exists($this->className) == true;
 	}
 
 	private function exists($include = false)
 	{
-		$phpName = 'lib/wiki-plugins/wikiplugin_';
-		$phpName .= strtolower($this->name) . '.php';
+		$phpName = self::$standardRelativePath . strtolower($this->name) . '.php';
 
 		$exists = file_exists($phpName);
 
@@ -334,7 +349,7 @@ class WikiPlugin_ParserNegotiator
 			array(
 				'fingerprint' => $this->fingerprint,
 				'status' => $type,
-				'added_by' => $this->user,
+				'added_by' => $this->parser->user,
 				'last_objectType' => $objectType,
 				'last_objectId' => $objectId
 			)
@@ -475,7 +490,7 @@ class WikiPlugin_ParserNegotiator
 				array(
 					'fingerprint' => $this->fingerprint,
 					'status' => 'pending',
-					'added_by' => $this->user,
+					'added_by' => $this->parser->user,
 					'last_objectType' => $objectType,
 					'last_objectId' => $objectId
 				)
@@ -495,7 +510,7 @@ class WikiPlugin_ParserNegotiator
 		$filter = isset($this->info['filter']) ? TikiFilter::get($this->info['filter']) : $default;
 		$this->body = $filter->filter($this->body);
 
-		if (isset($this->parserOption) && (!empty($this->parserOption['is_html']) && (!$this->parserOption['is_html']))) {
+		if (!$this->parser->getOption('is_html')) {
 			$noparsed = array('data' => array(), 'key' => array());
 			$this->strip_unparsed_block($this->body, $noparsed);
 			$body = str_replace(array('<', '>'), array('&lt;', '&gt;'), $this->body);
@@ -536,17 +551,11 @@ class WikiPlugin_ParserNegotiator
 
 		if (
 			$this->isEditable() &&
-			(
-				empty($this->parserOption['preview_mode']) ||
-				!$this->parserOption['preview_mode']
-			) &&
-			empty($this->parserOption['indexing']) &&
-			(
-				empty($this->parserOption['print']) ||
-				!$this->parserOption['print']
-			) &&
-			!$this->parserOption['suppress_icons'] &&
-			!$this->parserOption['preview_mode']
+			!$this->parser->getOption('preview_mode') &&
+			!$this->parser->getOption('indexing') &&
+			!$this->parser->getOption('print') &&
+			!$this->parser->getOption('suppress_icons') &&
+			!$this->parser->getOption('preview_mode')
 		) {
 			$id = 'plugin-edit-' . $this->name . $this->index;
 			$iconDisplayStyle = '';
@@ -611,10 +620,10 @@ class WikiPlugin_ParserNegotiator
 
 		global $tiki_p_plugin_viewdetail, $tiki_p_plugin_preview, $tiki_p_plugin_approve;
 		$details = $tiki_p_plugin_viewdetail == 'y' && $status != 'rejected';
-		$preview = $tiki_p_plugin_preview == 'y' && $details && ! $this->parserOption['preview_mode'];
-		$approve = $tiki_p_plugin_approve == 'y' && $details && ! $this->parserOption['preview_mode'];
+		$preview = $tiki_p_plugin_preview == 'y' && $details && ! $this->parser->getOption('preview_mode');
+		$approve = $tiki_p_plugin_approve == 'y' && $details && ! $this->parser->getOption('preview_mode');
 
-		if ($this->parserOption['inside_pretty']) {
+		if ($this->parser->getOption('inside_pretty')) {
 			$smarty->assign('plugin_details', '');
 		} else {
 			$smarty->assign('plugin_details', $details);
@@ -638,7 +647,7 @@ class WikiPlugin_ParserNegotiator
 			foreach (self::$parserLevels as &$level) {
 				self::$currentParserLevel = $level;
 				foreach (self::$pluginsAwaitingExecution as &$pluginDetails) {
-					if (self::$currentParserLevel == $level) {
+					if (self::$currentParserLevel == $level && strstr($input, $this->key)) {
 						$this->setDetails($pluginDetails);
 
 						$this->parser->plugin[$this->key] = $this->body;
