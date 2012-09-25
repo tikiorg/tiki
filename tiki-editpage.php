@@ -673,18 +673,17 @@ if (isset($prefs['wiki_feature_copyrights']) && $prefs['wiki_feature_copyrights'
 /* Local reference handling */
 if (isset($prefs['feature_references']) && $prefs['feature_references'] === 'y') {
 	if ($prefs['wikiplugin_addreference'] == 'y') {
-		include_once("lib/references/referenceslib.php");
-		$referencesLib = new referencesLib();
+		$referenceslib = TikiLib::lib('references');
 		$page_id = TikiLib::lib('tiki')->get_page_id_from_name($page);
 		if ($page_id) {
 
 			$smarty->assign('showBiblioSection', '1');
 
-			$references = $referencesLib->list_references($page_id);
-			$lib_references = $referencesLib->list_lib_references();
+			$references = $referenceslib->list_references($page_id);
+			$lib_references = $referenceslib->list_lib_references();
 
-			$tiki_p_use_references = $referencesLib->get_permission('tiki_p_use_references');
-			$tiki_p_edit_references = $referencesLib->get_permission('tiki_p_edit_references');
+			$tiki_p_use_references = $referenceslib->get_permission('tiki_p_use_references');
+			$tiki_p_edit_references = $referenceslib->get_permission('tiki_p_edit_references');
 			if (isset($tiki_p_use_references) && $tiki_p_use_references=='y') {
 				$use_references = 1;
 			} else {
@@ -697,7 +696,7 @@ if (isset($prefs['feature_references']) && $prefs['feature_references'] === 'y')
 				$edit_references = 0;
 			}
 
-			$assoc_references = $referencesLib->list_assoc_references($page_id);
+			$assoc_references = $referenceslib->list_assoc_references($page_id);
 
 			$page_info = TikiLib::lib('tiki')->get_page_info($page);
 			$regex = "/{ADDREFERENCE\(?\ ?biblio_code=\"(.*)\"\)?}.*({ADDREFERENCE})?/siU";
@@ -1203,14 +1202,14 @@ if (
 				$ref_style = $_REQUEST['ref_style'];
 
 				if ($ref_biblio_code!='') {
-					include_once("lib/copyrights/referenceslib.php");
-					$referencesLib = new referencesLib();
+
+					$referenceslib = TikiLib::lib('references');
 					if (isset($info_new['page_id'])) {
 						$page_id = $info_new['page_id'];
 					} else {
 						$page_id = TikiLib::lib('tiki')->get_page_id_from_name($page);
 					}
-					$referencesLib->add_reference($page_id, $_REQUEST['ref_biblio_code'], $_REQUEST['ref_author'], $_REQUEST['ref_title'], $_REQUEST['ref_part'], $_REQUEST['ref_uri'], $_REQUEST['ref_code'], $_REQUEST['ref_year'], $_REQUEST['ref_style']);
+					$referenceslib->add_reference($page_id, $_REQUEST['ref_biblio_code'], $_REQUEST['ref_author'], $_REQUEST['ref_title'], $_REQUEST['ref_part'], $_REQUEST['ref_uri'], $_REQUEST['ref_code'], $_REQUEST['ref_year'], $_REQUEST['ref_style']);
 				}
 			}
 		}

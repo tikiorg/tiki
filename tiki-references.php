@@ -9,9 +9,8 @@ require_once ('tiki-setup.php');
 $access->check_feature('feature_references');
 $access->check_permission(array('tiki_p_edit_references'), tra('Edit Library References'));
 
-include_once ('lib/references/referenceslib.php');
 global $dbTiki;
-$referenceslib = new referencesLib;
+$referenceslib = TikiLib::lib('references');
 
 $tiki_p_use_references = $referenceslib->get_permission('tiki_p_use_references');
 $tiki_p_edit_references = $referenceslib->get_permission('tiki_p_edit_references');

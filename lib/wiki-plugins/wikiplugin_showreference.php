@@ -56,7 +56,7 @@ function wikiplugin_showreference($data, $params)
 {
 
 	global $prefs;
-	
+
 	$params['title'] = trim($params['title']);
 	$params['showtitle'] = trim($params['showtitle']);
 	$params['hlevel'] = trim($params['hlevel']);
@@ -109,11 +109,8 @@ function wikiplugin_showreference($data, $params)
 
 		$htm = '';
 
-		include_once ('lib/references/referenceslib.php');
-
-		$referencesLib = new referencesLib();
-
-		$references = $referencesLib->list_assoc_references($page_id);
+		$referenceslib = TikiLib::lib('references');
+		$references = $referenceslib->list_assoc_references($page_id);
 
 		$referencesData = array();
 		$is_global = 1;
@@ -128,11 +125,11 @@ function wikiplugin_showreference($data, $params)
 		}
 
 		if (is_array($referencesData)) {
-			
+
 			$referencesData = array_unique($referencesData);
-			
+
 			$htm .= '<div class="references">';
-			
+
 			if ($showtitle) {
 				$htm .= $hlevel_start . $title . $hlevel_end;
 			}
@@ -142,7 +139,7 @@ function wikiplugin_showreference($data, $params)
 			$htm .= '<ul style="list-style: none outside none;">';
 
 			if (count($referencesData)) {
-				$values = $referencesLib->get_reference_from_code_and_page($referencesData, $page_id);
+				$values = $referenceslib->get_reference_from_code_and_page($referencesData, $page_id);
 			} else {
 				$values = array();
 			}
@@ -160,13 +157,13 @@ function wikiplugin_showreference($data, $params)
 			}
 
 			foreach ($referencesData as $index=>$ref) {
-				
+
 				$ref_no = $index + 1;
 
 				$text = '';
 				$cssClass = '';
 				if (array_key_exists($ref, $values['data'])) {
-					
+
 					if ($values['data'][$ref]['style'] != '') {
 						$cssClass = $values['data'][$ref]['style'];
 					}
@@ -186,15 +183,15 @@ function wikiplugin_showreference($data, $params)
 											'</li>';
 				}
 			}
-			
+
 			$htm .= '</ul>';
 
 			$htm .= '<hr>';
 
 			$htm .= '</div>';
-			
+
 		}
-		
+
 		return $htm;
 	}
 }

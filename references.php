@@ -7,7 +7,6 @@
 
 require_once ('tiki-setup.php');
 
-include_once ('lib/references/referenceslib.php');
 global $dbTiki;
 
 if (!isset($prefs['feature_references']) && !$prefs['feature_references'] === 'y') {
@@ -15,7 +14,7 @@ if (!isset($prefs['feature_references']) && !$prefs['feature_references'] === 'y
 	exit;
 }
 
-$referenceslib = new referencesLib;
+$referenceslib = TikiLib::lib('references');
 
 if (!isset($_REQUEST['page'])) {
 	$smarty->assign('msg', tra('No page indicated'));

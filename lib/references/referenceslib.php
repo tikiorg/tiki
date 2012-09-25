@@ -11,7 +11,7 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
 	exit;
 }
 
-class referencesLib extends TikiLib
+class ReferencesLib extends TikiLib
 {
 	public function list_references($page)
 	{
@@ -423,3 +423,4 @@ class referencesLib extends TikiLib
 	}
 
 }
+$referenceslib = new ReferencesLib();

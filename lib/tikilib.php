@@ -250,6 +250,9 @@ class TikiLib extends TikiDb_Bridge
 				require_once 'lib/mime/mimelib.php';
 				$mimelib = new MimeLib;
 				return self::$libraries[$name] = $mimelib;
+			case 'references':
+				global $referenceslib; require_once 'lib/references/referenceslib.php';
+				return self::$libraries[$name] = $referenceslib;
 		}
 	}
 
