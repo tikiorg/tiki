@@ -26,7 +26,7 @@ class MimeLib
 
 	function from_content($filename, $content)
 	{
-		if ($type = $this->physical_check_from_content($path)) {
+		if ($type = $this->physical_check_from_content($content)) {
 			return $this->handle_physical_exceptions($type, $filename);
 		}
 
