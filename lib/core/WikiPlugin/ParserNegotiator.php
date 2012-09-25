@@ -229,9 +229,9 @@ class WikiPlugin_ParserNegotiator
 
 	function canExecute()
 	{
-		global $tikilib;
+		global $tikilib, $prefs;
 		// If validation is disabled, anything can execute
-		if ( $this->parser->prefs['wiki_validate_plugin'] != 'y' ) {
+		if ( $prefs['wiki_validate_plugin'] != 'y' ) {
 			return true;
 		}
 
