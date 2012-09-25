@@ -45,18 +45,6 @@ if ($_REQUEST["nlId"]) {
 	if (!isset($_REQUEST["editionId"])) $_REQUEST["editionId"] = 0;
 	$smarty->assign('allowTxt', $nl_info['allowTxt']);
 	$smarty->assign('allowArticleClip', $nl_info['allowArticleClip']);
-	if ($_REQUEST["editionId"]) {
-		$info = $nllib->get_edition($_REQUEST["editionId"]);
-	} else {
-		$info = array();
-		$info["data"] = '';
-		$info["datatxt"] = '';
-		$info["subject"] = '';
-		$info["editionId"] = 0;
-		$info["files"] = array();
-		$info['wysiwyg'] = 'n';
-	}
-	$smarty->assign_by_ref('info', $info);
 
 	if ($prefs['newsletter_external_client'] == 'y') {
 		$subscribers = $nllib->get_all_subscribers($_REQUEST["nlId"], "");
@@ -72,6 +60,20 @@ if ($_REQUEST["nlId"]) {
 	$smarty->assign('allowTxt', $newsletters['data'][0]['allowTxt']);
 	$smarty->assign('allowArticleClip', $newsletters['data'][0]['allowTxt']);
 }
+if ($_REQUEST["editionId"]) {
+	$info = $nllib->get_edition($_REQUEST["editionId"]);
+} else {
+	$info = array();
+	$info["data"] = '';
+	$info["datatxt"] = '';
+	$info["subject"] = '';
+	$info["editionId"] = 0;
+	$info["files"] = array();
+	$info['wysiwyg'] = $prefs['wysiwyg_default'];
+	$info['is_html'] = ($info['wysiwyg'] === 'y' && $prefs['wysiwyg_htmltowiki'] !== 'y');
+}
+$smarty->assign_by_ref('info', $info);
+
 // Display to newsletter txtarea or not depending on the preferences
 $showBoxCheck = "
 	<script type='text/javascript'>
@@ -126,8 +128,9 @@ if (isset($_REQUEST["remove"])) {
 	$nllib->remove_edition($_REQUEST["nlId"], $_REQUEST["remove"]);
 }
 
-// wysiwyg decision
 include_once ('lib/wiki/editlib.php');
+// wysiwyg decision
+include_once ('lib/setup/editmode.php');
 
 // Handles switching editor modes
 if (isset($_REQUEST['mode_normal']) && $_REQUEST['mode_normal']=='y') {
@@ -138,11 +141,19 @@ if (isset($_REQUEST['mode_normal']) && $_REQUEST['mode_normal']=='y') {
 	} else {
 		$info["data"] = $_REQUEST["data"];
 	}
-	
+	$info['wysiwyg'] = 'n';
+	$info['is_html'] = false;
+	unset($_REQUEST['is_html']);
+	$_REQUEST['preview'] = 'y';
+	$_REQUEST["data"] = $info["data"];
+
 } elseif (isset($_REQUEST['mode_wysiwyg']) && $_REQUEST['mode_wysiwyg']=='y') {
 	// Parsing page data as first time seeing wiki page in wysiwyg editor
 	$smarty->assign('msg', "Parsing wiki to html");
 	$info["data"] = $editlib->parseToWysiwyg($_REQUEST["data"]);
+	$info['wysiwyg'] = 'y';
+	$_REQUEST['preview'] = 'y';
+	$_REQUEST["data"] = $info["data"];
 }
 
 if (isset($_REQUEST['is_html'])) {

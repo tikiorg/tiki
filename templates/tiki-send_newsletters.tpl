@@ -241,7 +241,7 @@
 					<td colspan="2">
 						{textarea name='data' id='editwiki'}{$info.data}{/textarea}
 						<label>{tr}Must be wiki parsed:{/tr} <input type="checkbox" name="wikiparse" {if empty($info.wikiparse) or $info.wikiparse eq 'y'} checked="checked"{/if} /></label>
-						<label>{tr}Is HTML.{/tr} <input type="checkbox" name="is_html" {if !empty($info.is_html) && $info.is_html eq 'y'} checked="checked"{/if} /></label>
+						<label>{tr}Is HTML.{/tr} <input type="checkbox" name="is_html" {if $info.is_html} checked="checked"{/if} /></label>
 					</td>
 				</tr>
 
