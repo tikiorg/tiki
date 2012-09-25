@@ -11,7 +11,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	private $parsing = false;
 	private static $spareParsers = array();
 	public $Parser;
-	private static $parseDepth = 0;
+	public $parseDepth = 0;
 
 	/* plugin tracking */
 	public $pluginStack = array();
@@ -19,7 +19,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	public $pluginEntries = array();
 	public $plugins = array();
 	public static $pluginIndexes = array();
-	public $pluginNegotiators = array();
+	public $pluginNegotiator;
 
 	public $headerStack = false;
 
@@ -64,7 +64,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	private $line = 0;
 
 	//This var is used in both protectSpecialChars and unprotectSpecialChars to simplify the html ouput process
-	private $specialChars = array(
+	public $specialChars = array(
 		'≤REAL_LT≥' => array(
 			'html'=>		'<',
 			'nonHtml'=>		'&lt;'
@@ -86,15 +86,14 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		),
 	);
 
-	var $tikilib;
-	var $user;
-	var $prefs;
-	var $page;
+	public $user;
+	public $prefs;
+	public $page;
 
-	var $isHtmlPurifying = false;
+	public $isHtmlPurifying = false;
 
-	var $option = array();
-	var $optionDefaults = array(
+	public $option = array();
+	public $optionDefaults = array(
 		'skipvalidation'=>  false,
 		'is_html'=> false,
 		'absolute_links'=> false,
@@ -119,32 +118,52 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 
 	public function setOption($option = array())
 	{
-		global $prefs;
-		$page = (isset($_REQUEST['page']) ? $_REQUEST['page'] : $prefs['site_wikiHomePage']);
+		global $parserlib;
 
-		$this->Parser->option['page'] = $page;
+		if (!empty($this->Parser->option)) {
+			$this->Parser->option = array_merge($this->Parser->option, $option);
+		} else {
+			$this->resetOption();
+			$this->Parser->option = array_merge($this->optionDefaults, $option);
+		}
 
-		$this->Parser->option = array_merge($this->optionDefaults, $option);
+		$parserlib->option = $this->Parser->option;
 	}
 
 	public function getOption($name = '')
 	{
-		return $this->Parser->option[$name];
+		if (isset($this->Parser->option[$name])) {
+			return $this->Parser->option[$name];
+		} else {
+			return false;
+		}
+	}
+
+	public function resetOption()
+	{
+		global $prefs, $parserlib;
+		$page = (isset($_REQUEST['page']) ? $_REQUEST['page'] : $prefs['site_wikiHomePage']);
+
+		$this->Parser->option['page'] = $page;
+		$this->Parser->option = $this->optionDefaults;
+
+		$parserlib->option = $this->Parser->option;
 	}
 
 	function __construct(JisonParser_Wiki_Handler &$Parser = null)
 	{
-		global $tikilib, $page, $user, $prefs;
+		global $user;
 
-		$this->tikilib = $tikilib;
-		$this->page = $page;
 		$this->user = (isset($user) ? $user : tra('Anonymous'));
-		$this->prefs = $prefs;
 
 		if (empty($Parser)) {
 			$this->Parser = &$this;
 		} else {
 			$this->Parser = &$Parser;
+		}
+
+		if (isset($this->pluginNegotiator) == false) {
+			$this->pluginNegotiator = new WikiPlugin_ParserNegotiator($this->Parser);
 		}
 
 		if (isset($this->Parser->header) == false) {
@@ -175,6 +194,10 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 			$this->Parser->htmlCharacter = new JisonParser_Wiki_HtmlCharacter($this->Parser);
 		}
 
+		if (empty($this->Parser->option) == true) {
+			$this->resetOption();
+		}
+
 		parent::__construct();
 	}
 
@@ -203,24 +226,18 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		if (empty($input)) return $input;
 
 		if ($this->parsing == true) {
-			$parser = end(self::$spareParsers);
-			if (!empty($parser) && $parser->parsing == false) {
-				$output = $parser->parse($input);
-			} else {
-				$class = get_class($this->Parser);
-				self::$spareParsers[] = $parser = new $class($this->Parser);
-				$output = $parser->parse($input);
-			}
+			$class = get_class($this->Parser);
+			$parser = new $class($this->Parser);
+			$output = $parser->parse($input);
+			unset($parser);
 		} else {
 			$this->parsing = true;
 
-			if (empty($this->Parser->option)) $this->setOption();
-
 			$this->preParse($input);
 
-			self::$parseDepth++;
+			$this->Parser->parseDepth++;
 			$output = parent::parse($input);
-			self::$parseDepth--;
+			$this->Parser->parseDepth--;
 
 			$this->parsing = false;
 			$this->postParse($output);
@@ -237,10 +254,15 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 
 			$is_html = $this->getOption('is_html');
 
-			$this->setOption(array('is_html' => true));
+			if ($is_html == false) {
+				$this->setOption(array('is_html' => true));
+			}
 
 			$result = $this->parse($input);
-			$this->setOption(array('is_html' => $is_html));
+
+			if ($is_html == false) {
+				$this->setOption(array('is_html' => $is_html));
+			}
 
 			return $result;
 		} else {
@@ -258,7 +280,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		*/
 		ini_set("pcre.recursion_limit", "524");
 
-		if (self::$parseDepth == 0) {
+		if ($this->Parser->parseDepth == 0) {
 			$this->Parser->htmlCharacter->parse($input);
 		}
 
@@ -266,7 +288,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		$this->isFirstBr = false;
 		$this->skipBr = false;
 		$this->tableStack = array();
-		$this->Parser->nonBreakingTagDepth = 0;
+		$this->nonBreakingTagDepth = 0;
 		$this->npStack = false;
 		$this->ppStack = false;
 		$this->linkStack = false;
@@ -284,11 +306,10 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		//Replace the break we put at the beginning
 		//$output = preg_replace("/^(([<]br [\/][>])?([\n][\r]|[\n\r]))/", "", $output);
 		$output = preg_replace("/(([<]br [\/][>])?([\n][\r]|[\r][\n]|[\n\r]))$/", "", $output);
-		//$output = trim($output, "\r");
 
-		$output = $this->unprotectSpecialChars($output, $this->Parser->option['is_html']);
+		$output = $this->unprotectSpecialChars($output);
 
-		if ($this->Parser->option['parseLists'] == true) {
+		if ( $this->getOption('parseLists') == true) {
 			$lists = $this->Parser->list->toHtml();
 			if (!empty($lists)) {
 				$lists = array_reverse($lists);
@@ -301,7 +322,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 			}
 		}
 
-		if ($this->Parser->option['parseSmileys']) {
+		if ($this->getOption('parseSmileys')) {
 			$this->Parser->smileys->parse($output);
 		}
 
@@ -317,11 +338,12 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	// state & plugin handlers
 	function plugin(&$pluginDetails)
 	{
-		$negotiator = $this->getPluginNegotiator();
 		$pluginDetails['body'] = $this->unprotectSpecialChars($pluginDetails['body'], true);
+		$negotiator =& $this->pluginNegotiator;
+
 		$negotiator->setDetails($pluginDetails);
 
-		if ($this->Parser->option['skipvalidation'] == false) {
+		if ( $this->getOption('skipvalidation') == false) {
 			$status = $negotiator->canExecute();
 		} else {
 			$status = true;
@@ -333,8 +355,14 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 			$plugins will have all executed plugin in it*/
 			$this->plugins[$negotiator->key] = $negotiator->body;
 
-			$this->pluginEntries[$negotiator->key] = $this->parsePlugin($negotiator->execute());
-			return $negotiator->key;
+			$executed = $negotiator->execute();
+
+			if ($negotiator->ignored == true) {
+				return $executed;
+			} else {
+				$this->pluginEntries[$negotiator->key] = $this->parsePlugin( $executed );
+				return $negotiator->key;
+			}
 		} else {
 			return $negotiator->blockFromExecution($status);
 		}
@@ -365,7 +393,9 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 			'name' => $pluginName,
 			'args' => $pluginArgs,
 			'body' => '',
-			'key' => $this->pluginKey($pluginName)
+			'key' => $this->pluginKey($pluginName),
+			'syntax' => $yytext,
+			'closing' => ''
 		);
 	}
 
@@ -378,7 +408,9 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 			'name' => $pluginName,
 			'args' => $pluginArgs,
 			'body' => '',
-			'key' => $this->pluginKey($pluginName)
+			'key' => $this->pluginKey($pluginName),
+			'syntax' => $yytext,
+			'closing' => '{' . $pluginName . '}'
 		);
 		$this->pluginStackCount++;
 	}
@@ -386,15 +418,6 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	function isContent()
 	{
 		return ($this->pluginStackCount > 0 || $this->npStack == true || $this->ppStack == true ? true : null);
-	}
-
-	function getPluginNegotiator()
-	{
-		if (empty($this->pluginNegotiators['WikiPlugin_ParserNegotiator'])) {
-			$this->pluginNegotiators['WikiPlugin_ParserNegotiator'] = new WikiPlugin_ParserNegotiator($this->Parser);
-		}
-
-		return $this->pluginNegotiators['WikiPlugin_ParserNegotiator'];
 	}
 
 	static function deleteEntities(&$data)
@@ -419,8 +442,8 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 			}
 		}
 
-		if (self::$parseDepth == 0) {
-			$this->getPluginNegotiator()->executeAwaiting($input);
+		if ($this->Parser->parseDepth == 0) {
+			$this->pluginNegotiator->executeAwaiting($input);
 		}
 	}
 
@@ -430,7 +453,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	{
 		if (
 			$this->isHtmlPurifying == true ||
-			$this->Parser->option['is_html'] != true
+			$this->getOption('is_html') == false
 		) {
 			foreach ($this->specialChars as $key => $specialChar) {
 				$data = str_replace($specialChar['html'], $key, $data);
@@ -445,7 +468,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	{
 		if (
 			$is_html == true ||
-			$this->Parser->option['is_html'] == true
+			$this->getOption('is_html') == true
 		) {
 			foreach ($this->specialChars as $key => $specialChar) {
 				$data = str_replace($key, $specialChar['html'], $data);
@@ -463,7 +486,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	//Wiki Syntax Objects Parsing Start
 	function np($content)
 	{
-		if ($this->Parser->option['parseNps'] == true) {
+		if ( $this->getOption('parseNps') == true) {
 			$content = $this->unprotectSpecialChars($content);
 		}
 
@@ -482,26 +505,45 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 
 		switch ($name) {
 			//start block level
+			case 'h1':
+			case 'h2':
+			case 'h3':
+			case 'h4':
+			case 'h5':
+			case 'h6':
+			case 'pre':
+			case 'ul':
 			case 'div':
 			case 'table':
+			case 'p':
 				$this->skipBr = true;
 			case 'script':
-				$this->Parser->nonBreakingTagDepth++;
+				$this->nonBreakingTagDepth++;
 				$this->line++;
 				break;
 
 			//end block level
+			case '/h1':
+			case '/h2':
+			case '/h3':
+			case '/h4':
+			case '/h5':
+			case '/h6':
+			case '/pre':
+			case '/ul':
 			case '/div':
 			case '/table':
+			case '/p':
 				$this->skipBr = true;
 			case '/script':
-				$this->Parser->nonBreakingTagDepth--;
-				$this->Parser->nonBreakingTagDepth = max($this->Parser->nonBreakingTagDepth, 0);
+				$this->nonBreakingTagDepth--;
+				$this->nonBreakingTagDepth = max($this->nonBreakingTagDepth, 0);
 				$this->line++;
 				break;
 
 			//skip next block level
 			case 'hr':
+			case 'br':
 				$this->skipBr = true;
 				break;
 		}
@@ -518,7 +560,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		}
 
 
-		return $this->Parser->dynamicVar->ui(substr($content, 2, 2), $this->Parser->option['language']);
+		return $this->Parser->dynamicVar->ui(substr($content, 2, 2),  $this->getOption('language'));
 	}
 
 	function singleDynamicVar($content)
@@ -530,7 +572,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		}
 
 
-		return $this->Parser->dynamicVar->ui(substr($content, 1, 1), $this->Parser->option['language']);
+		return $this->Parser->dynamicVar->ui(substr($content, 1, 1),  $this->getOption('language'));
 	}
 
 	function bold($content) //__content__
@@ -581,6 +623,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 
 	function header($content) //!content
 	{
+		global $prefs;
 		$hNum = 0;
 		$headerLength = strlen($content);
 		for ($i = 0; $i < $headerLength; $i++) {
@@ -598,20 +641,18 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		$button = '';
 		global $section, $tiki_p_edit;
 		if (
-			$this->prefs['wiki_edit_section'] === 'y' &&
+			$prefs['wiki_edit_section'] === 'y' &&
 			$section === 'wiki page' &&
 			$tiki_p_edit === 'y' &&
 			(
-				$this->prefs['wiki_edit_section_level'] == 0 ||
-				$hNum <= $this->prefs['wiki_edit_section_level']
-			) && (
-				empty($this->Parser->option['print']) ||
-				!$this->Parser->option['print']
+				$prefs['wiki_edit_section_level'] == 0 ||
+				$hNum <= $prefs['wiki_edit_section_level']
 			) &&
-			!$this->Parser->option['suppress_icons'] &&
-			!$this->Parser->option['preview_mode']
+			! $this->getOption('print') &&
+			! $this->getOption('suppress_icons') &&
+			! $this->getOption('preview_mode')
 		) {
-			$button = $this->Parser->header->button($this->prefs['wiki_edit_icons_toggle']);
+			$button = $this->Parser->header->button($prefs['wiki_edit_icons_toggle']);
 		}
 
 		$this->skipBr = true;
@@ -701,7 +742,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 
 		$result = $ch;
 
-		if ($this->skipBr == false && empty($this->tableStack) && $this->Parser->nonBreakingTagDepth == 0) {
+		if ($this->skipBr == false && empty($this->tableStack) && $this->nonBreakingTagDepth == 0) {
 			$result = "<br />" . $ch;
 		}
 
