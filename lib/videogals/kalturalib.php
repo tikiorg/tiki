@@ -38,7 +38,7 @@ class KalturaLib
 			}
 			$smarty->assign('kServiceUrl', $prefs['kaltura_kServiceUrl']);
 
-		} catch (KalturaException $e) {
+		} catch (Exception $e) {
 
 			$this->initialized = false;
 			TikiLib::lib('errorreport')->report($e->getMessage());
