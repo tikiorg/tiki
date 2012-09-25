@@ -7,11 +7,6 @@
 
 class JisonParser_PluginTest extends JisonParser_Abstract
 {
-	public $verbose = false;
-	public $called;
-	public $parser;
-	public $syntaxSets = array();
-
 	function provider() {
 		$this->syntaxSets = array(
 			"html_plugin" => array(),
