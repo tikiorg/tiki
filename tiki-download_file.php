@@ -364,7 +364,7 @@ $mimelib = TikiLib::lib('mime');
 if ( empty($info['filetype']) || $info['filetype'] == 'application/x-octetstream' || $info['filetype'] == 'application/octet-stream' ) {
 	$info['filetype'] = $mimelib->from_path($info['filename'], $filepath);
 
-} else if (isset($_GET['thumbnail']) && strpos($info['filetype'], 'image') === false) {	// use thumb format
+} else if (isset($_GET['thumbnail']) && (strpos($info['filetype'], 'image') === false || $content_changed)) {	// use thumb format
 	$info['filetype'] = $mimelib->from_content($info['filename'], $content);
 }
 header('Content-type: '.$info['filetype']);
