@@ -8,6 +8,8 @@ class JisonParser_WikiCKEditor_Handler extends JisonParser_Wiki_Handler
 			$this->Parser->htmlCharacter = new JisonParser_WikiCKEditor_HtmlCharacter($this->Parser);
 		}
 
+		$this->pluginNegotiator = new WikiPlugin_CKEditorNegotiator($this->Parser);
+
 		parent::__construct();
 	}
 
@@ -16,14 +18,5 @@ class JisonParser_WikiCKEditor_Handler extends JisonParser_Wiki_Handler
 		$this->Parser->option['is_html'] = true;
 
 		parent::setOption($option);
-	}
-
-	function getPluginNegotiator()
-	{
-		if (empty($this->pluginNegotiators['WikiPlugin_CKEditorNegotiator'])) {
-			$this->pluginNegotiators['WikiPlugin_CKEditorNegotiator'] = new WikiPlugin_CKEditorNegotiator($this->Parser);
-		}
-
-		return $this->pluginNegotiators['WikiPlugin_CKEditorNegotiator'];
 	}
 }
