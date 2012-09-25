@@ -344,14 +344,16 @@
 		</tr>
 	{sectionelse}
 		{capture assign='find_htmlescaped'}{$find|escape}{/capture}
-		{if $find ne ''}	
-			{norecords _colspan=$cntcol _text="{tr}No pages found with:{/tr} &quot;$find_htmlescaped&quot;."}
-		{elseif $find ne '' && $initial ne ''}
-			{norecords _colspan=$cntcol _text="{tr}No pages found with:{/tr} &quot;$find_htmlescaped&quot; and starting with &quot; $initial &quote;."}
-		{elseif $find ne '' && $aliases_were_found == 'y'}
-			{norecords _colspan=$cntcol _text="{tr}No pages found with:{/tr} &quot;$find_htmlescaped&dquot;. <br/>However, some page aliases fitting the query were found (see Aliases section above)."}
+		{capture assign="intro"}{if $exact_match ne 'n'}{tr}No page:{/tr}{else}{tr}No pages found with:{/tr}{/if}{/capture}
+		{if $find ne '' && $aliases_were_found == 'y'}
+			{norecords _colspan=$cntcol _text="$intro &quot;$find_htmlescaped&dquot;. <br/>However, some page aliases fitting the query were found (see Aliases section above)."}
 		{elseif $find ne '' && $initial ne '' && $aliases_were_found == 'y'}
-			{norecords _colspan=$cntcol _text="{tr}No pages found with:{/tr} &quot;$find_htmlescaped&quot;and starting with &quot; $initial &quote;. <br/>However, some page aliases fitting the query were found (see Aliases section above)."}
+			{norecords _colspan=$cntcol _text="$intro &quot;$find_htmlescaped&quot;and starting with &quot; $initial &quote;. <br/>However, some page aliases fitting the query were found (see Aliases section above)."}
+                {elseif $find ne '' && $initial ne ''}
+                        {norecords _colspan=$cntcol _text="$intro &quot;$find_htmlescaped&quot; and starting with &quot; $initial &quot;."}
+                {elseif $find ne ''}
+                        {norecords _colspan=$cntcol _text="$intro &quot;$find_htmlescaped&quot;."}
+
 		{else}
 			{norecords _colspan=$cntcol _text="{tr}No pages found.{/tr}"}
 		{/if}
