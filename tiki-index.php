@@ -640,7 +640,7 @@ TikiLib::events()->trigger(
 	'tiki.wiki.view',
 	array_merge(
 		array('type' => 'wiki', 'object' => $page,),
-		$info
+		(is_array($info) ? $info : array())
 	)
 );
 
