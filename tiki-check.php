@@ -1105,7 +1105,7 @@ if ($standalone) {
 	renderTable($php_properties);
 	echo '<h2>Apache properties</h2>';
 	if ($apache_properties) {
-		render_table($apache_properties);
+		renderTable($apache_properties);
 	} else {
 		echo 'You are either not running the preferred Apache web server or you are running PHP with a SAPI that does not allow checking Apache properties (e.g. CGI or FPM).';
 	}
