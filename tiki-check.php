@@ -906,6 +906,66 @@ if ($connection || !$standalone) {
 	}
 }
 
+// Apache properties
+
+if ( function_exists(apache_get_version)) {
+	$apache_properties = array();
+
+	// Apache Modules
+	$apache_modules = apache_get_modules();
+
+	// mod_rewrite
+	$s = false;
+	$s = array_search('mod_rewrite', $apache_modules);
+	if ($s) {
+		$apache_properties['mod_rewrite'] = array(
+			'setting' => 'Loaded',
+			'fitness' => tra('good') ,
+			'message' => tra('Tiki needs this module for Search Engine Friendly URLs via .htaccess. We can\'t check though, if your web server respects configurations made in .htaccess. For further information go to Admin->SefURL in your Tiki.')
+		);
+	} else {
+		$apache_properties['mod_rewrite'] = array(
+			'setting' => 'Not available',
+			'fitness' => tra('ugly') ,
+			'message' => tra('Tiki needs this module for Search Engine Friendly URLs. For further information go to Admin->SefURL in your Tiki.')
+		);
+	}
+
+	// mod_expires
+	$s = false;
+	$s = array_search('mod_expires', $apache_modules);
+	if ($s) {
+		$apache_properties['mod_expires'] = array(
+			'setting' => 'Loaded',
+			'fitness' => tra('good') ,
+			'message' => tra('With this module you can set the HTTP Expires header and therefore increase performance. We can\'t check though, if mod_expires is configured correctly.')
+		);
+	} else {
+		$apache_properties['mod_expires'] = array(
+			'setting' => 'Not available',
+			'fitness' => tra('ugly') ,
+			'message' => tra('With this module you can set the HTTP Expires header and therefore increase performance. Once you install it, you still need to configure it correctly.')
+		);
+	}
+
+	// mod_deflate
+	$s = false;
+	$s = array_search('mod_deflate', $apache_modules);
+	if ($s) {
+		$apache_properties['mod_deflate'] = array(
+			'setting' => 'Loaded',
+			'fitness' => tra('good') ,
+			'message' => tra('With this module you can compress the data your webserver sends out and therefore decrease used bandwidth and increase performance. We can\'t check though, if mod_deflate is configured correctly.')
+		);
+	} else {
+		$apache_properties['mod_deflate'] = array(
+			'setting' => 'Not available',
+			'fitness' => tra('ugly') ,
+			'message' => tra('With this module you can compress the data your webserver sends out and therefore decrease used bandwidth and increase performance. Once you install it, you still need to configure it correctly.')
+		);
+	}
+}
+
 // Security Checks
 // get all dangerous php settings and check them
 $security = array();
@@ -1046,6 +1106,12 @@ if ($standalone) {
 	render_table($server_properties);
 	echo '<h2>PHP scripting language properties</h2>';
 	render_table($php_properties);
+	echo '<h2>Apache properties</h2>';
+	if ($apache_properties) {
+		render_table($apache_properties);
+	} else {
+		echo 'You are either not running the preferred Apache web server or you are running PHP with a SAPI that does not allow checking Apache properties (e.g. CGI or FPM).';
+	}
 	echo '<h2>PHP security properties</h2>';
 	render_table($security);
 	echo '<h2>MySQL Variables</h2>';
@@ -1062,10 +1128,15 @@ if ($standalone) {
 		echo '<a href="'.$_SERVER['REQUEST_URI'].'?phpinfo=y">Append phpinfo();</a>';
 	}
 } else {
-	$smarty-> assign_by_ref('server_information', $server_information);
+	$smarty->assign_by_ref('server_information', $server_information);
 	$smarty->assign_by_ref('server_properties', $server_properties);
 	$smarty->assign_by_ref('mysql_properties', $mysql_properties);
 	$smarty->assign_by_ref('php_properties', $php_properties);
+	if ($apache_properties) {
+		$smarty->assign_by_ref('apache_properties', $apache_properties);
+	} else {
+		$smarty->assign('no_apache_properties', 'You are either not running the preferred Apache web server or you are running PHP with a SAPI that does not allow checking Apache properties (e.g. CGI or FPM).');
+	}
 	$smarty->assign_by_ref('security', $security);
 	$smarty->assign_by_ref('mysql_variables', $mysql_variables);
 	$smarty->assign_by_ref('mysql_crashed_tables', $mysql_crashed_tables);
