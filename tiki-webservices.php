@@ -18,13 +18,13 @@ class Tiki_ComplexType
 	 * Param 1
 	 * @var string
 	 */
-	var $param1;
+	public $param1;
 
 	/**
 	 * Param 2
 	 * @var string
 	 */
-	var $param2;
+	public $param2;
 }
 
 /**
