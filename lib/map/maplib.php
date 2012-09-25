@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -12,8 +12,8 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 }
 
 /**
- * MapLib 
- * 
+ * MapLib
+ *
  */
 class MapLib
 {
@@ -34,16 +34,16 @@ class MapLib
 
 		closedir($h);
 		sort($files);
-		
+
 		return ($files);
 	}
-	
+
 	function listMapsWithRev($mappath)
 	{
 		if (!isset($mappath) or !$mappath or !is_dir($mappath)) {
 			return ("");
 		}
-	
+
 	  $files = array();
 		$h = opendir($mappath);
 
@@ -57,7 +57,7 @@ class MapLib
 		sort($files);
 		return ($files);
 	}
-	
+
 	function listKaMaps($mappath)
 	{
 		$files = $this->listMaps($mappath);
@@ -69,11 +69,11 @@ class MapLib
 				if (strncasecmp($key, "WEB", 3) == 0) {
 					//looking for METADATA before the END
 					while (strncasecmp($key, "END", 3) != 0) {
-						$i++;					
-						$key = trim($pagedata[$i]);					
+						$i++;
+						$key = trim($pagedata[$i]);
 						if (strncasecmp($key, "METADATA", 8) == 0) {
 							while (strncasecmp($key, "END", 3) != 0) {
-								$i++;					
+								$i++;
 								$key = trim($pagedata[$i]);
 								if (strncasecmp($key, "KAMAP", 5) == 0) {
 									$key = preg_replace('/#.*$/', '', $key);
@@ -88,7 +88,7 @@ class MapLib
 									$kmap["format"] = "PNG24";
 									$kamaps[substr($mapfile, 0, -4)] = $kmap;
 								}
-							}														
+							}
 						}
 					}
 				}
@@ -96,6 +96,6 @@ class MapLib
 		}
 		return ($kamaps);
 	}
-	
+
 }
 $maplib = new MapLib;

@@ -16,12 +16,12 @@ require_once('lib/graph-engine/core.php');
 
 class PDFLib_GRenderer extends GRenderer // {{{1
 {
-	var $pdf;
-	var $styles;
-	var $font;
+	public $pdf;
+	public $styles;
+	public $font;
 
-	var $width;
-	var $height;
+	public $width;
+	public $height;
 
 	function PDFLib_GRenderer( $format = null, $orientation = 'landscape' ) // {{{2
 	{

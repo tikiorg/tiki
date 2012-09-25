@@ -31,13 +31,13 @@ define('AUTH_LOGIN_OK', 0);
 class UsersLib extends TikiLib
 {
 	// change this to an email address to receive debug emails from the LDAP code
-	var $debug = false;
+	public $debug = false;
 
-	var $usergroups_cache;
-	var $groupperm_cache;
-	var $groupinclude_cache;
-	var $userobjectperm_cache; // used to cache queries in object_has_one_permission()
-	var $get_object_permissions_for_user_cache;
+	public $usergroups_cache;
+	public $groupperm_cache;
+	public $groupinclude_cache;
+	public $userobjectperm_cache; // used to cache queries in object_has_one_permission()
+	public $get_object_permissions_for_user_cache;
 	static $cas_initialized = false;
 
 	function __construct()

@@ -15,12 +15,12 @@ include_once("tikihelplib.php");
 
 class Breadcrumb
 {
-	var $title;
-	var $description;
-	var $url;
-	var $helpUrl;
-	var $helpDescription;
-	var $hidden;
+	public $title;
+	public $description;
+	public $url;
+	public $helpUrl;
+	public $helpDescription;
+	public $hidden;
 
 	function Breadcrumb($title, $desc='', $url='', $helpurl='', $helpdesc='')
 	{

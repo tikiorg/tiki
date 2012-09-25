@@ -8,24 +8,24 @@
 
 class Feed_ForwardLink_Metadata
 {
-	var $page;
-	var $lang;
-	var $lastModif;
-	var $href;
-	var $websiteTitle;
-	var $moderatorData;
-	var $authorData;
-	var $raw;
+	public $page;
+	public $lang;
+	public $lastModif;
+	public $href;
+	public $websiteTitle;
+	public $moderatorData;
+	public $authorData;
+	public $raw;
 
-	var $minimumStatisticsNeeded;
-	var $minimumMathNeeded;
-	var $scientificField;
-	var $categories = array();
-	var $keywords;
-	var $questions;
-	var $datePageOriginated;
-	var $countAll;
-	var $language = '';
+	public $minimumStatisticsNeeded;
+	public $minimumMathNeeded;
+	public $scientificField;
+	public $categories = array();
+	public $keywords;
+	public $questions;
+	public $datePageOriginated;
+	public $countAll;
+	public $language = '';
 
 	static $acceptableKeys = array(
 		'websiteTitle' =>               true,

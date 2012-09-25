@@ -55,30 +55,30 @@ class FreetagLib extends ObjectLib
 	/* @access private
 	 * @param string The regex-style set of characters that are valid for normalized tags.
 	 */
-	var $_normalized_valid_chars = 'a-zA-Z0-9';
+	public $_normalized_valid_chars = 'a-zA-Z0-9';
 	/**
 	 * @access private
 	 * @param string The regex-style set of characters that are valid for normalized tags.
 	 */
-	var $_normalize_in_lowercase = 1;
+	public $_normalize_in_lowercase = 1;
 	/**
 	 * @access private
 	 * @param string Whether to prevent multiple users from tagging the same object. By default, set to block (ala Upcoming.org)
 	 */
-	var $_block_multiuser_tag_on_object = 1;
+	public $_block_multiuser_tag_on_object = 1;
 
 	/**
 	 * @access private
 	 * @param int The maximum length of a tag.
 	 */
-	var $_MAX_TAG_LENGTH = 128;
+	public $_MAX_TAG_LENGTH = 128;
 	/**
 	 * @access public
 	 * @param int The number of size degrees for tags in cloud. There should be correspondent classes in css.
 	 */
-	var $max_cloud_text_size = 7;
+	public $max_cloud_text_size = 7;
 
-	var $multilingual = false;
+	public $multilingual = false;
 
 
 	/**

@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -49,7 +49,7 @@ class Cachelib
 	function getSerialized($key, $type = '', $lastModif = false)
 	{
 		$data = $this->getCached($key, $type, $lastModif);
-		
+
 		if ( $data ) {
 			return unserialize($data);
 		}
@@ -62,16 +62,16 @@ class Cachelib
 
 	/**
 	 * Empty one or more caches
-	 * 
+	 *
 	 * Checks for existance of libs because it's called from the installer
-	 * 
+	 *
 	 * @param mixed $dir_names		all|templates_c|temp_cache|temp_public|modules_cache|prefs (default all)
 	 * @param string $log_section	Type of log message. Default 'system'
 	 */
 	function empty_cache( $dir_names = array('all'), $log_section = 'system' )
 	{
 		global $tikidomain, $logslib, $tikilib;
-		
+
 		if (!is_array($dir_names)) {
 			$dir_names = array($dir_names);
 		}
@@ -101,7 +101,7 @@ class Cachelib
 		}
 		if (in_array('temp_public', $dir_names)) {
 			$this->erase_dir_content("temp/public/$tikidomain");
-			if (is_object($logslib)) { 
+			if (is_object($logslib)) {
 				$logslib->add_log($log_section, 'erased temp/public content');
 			}
 		}
@@ -124,15 +124,15 @@ class Cachelib
 	function count_cache_files($path, $begin=null)
 	{
 		global $tikidomain;
-		
-		if (!$path or !is_dir($path)) 
+
+		if (!$path or !is_dir($path))
 			return (array('total' => 0,'cant' =>0));
 
-		$total = 0; 
+		$total = 0;
 		$cant = 0;
 		$back = array();
 		$all = opendir($path);
-		
+
 		// If using multiple Tikis but flushing cache on default install...
 		if (empty($tikidomain) && is_file('db/virtuals.inc')) {
 			$virtuals = array_map('trim', file('db/virtuals.inc'));
@@ -142,14 +142,14 @@ class Cachelib
 
 		while ($file = readdir($all)) {
 			if (
-					substr($file, 0, 1) == "." or 
-					$file == 'CVS' or 
-					$file == '.svn' or 
-					$file == "index.php" or 
-					$file == "README" or 
-					$file == "web.config" or 
-					($virtuals && in_array($file, $virtuals)) 
-			) 
+					substr($file, 0, 1) == "." or
+					$file == 'CVS' or
+					$file == '.svn' or
+					$file == "index.php" or
+					$file == "README" or
+					$file == "web.config" or
+					($virtuals && in_array($file, $virtuals))
+			)
 				continue;
 
 			if (is_dir($path . '/' . $file) and $file <> ".." and $file <> "." and $file <> "CVS" and $file <> ".svn" ) {
@@ -157,7 +157,7 @@ class Cachelib
 				$total += $du['total'];
 				$cant += $du['cant'];
 				unset($file);
-			} elseif (!is_dir($path . '/' . $file)) { 
+			} elseif (!is_dir($path . '/' . $file)) {
 				if (isset($begin) && substr($file, 0, strlen($begin)) != $begin)
 					continue; // the file name doesn't begin with the good beginning
 				$stats = @stat($path . '/' . $file); // avoid the warning if safe mode on
@@ -201,13 +201,13 @@ class Cachelib
 
 			while (false !== ($file = readdir($dir))) {
 				if (
-							substr($file, 0, 1) == "." or 
-							$file == 'CVS' or 
-							$file == '.svn' or 
-							$file == "index.php" or 
-							$file == "README" or 
-							$file == "web.config" or 
-							($virtuals && in_array($file, $virtuals)) 
+							substr($file, 0, 1) == "." or
+							$file == 'CVS' or
+							$file == '.svn' or
+							$file == "index.php" or
+							$file == "README" or
+							$file == "web.config" or
+							($virtuals && in_array($file, $virtuals))
 				)
 					continue;
 
@@ -263,14 +263,14 @@ class Cachelib
 
 class CacheLibFileSystem
 {
-	var $folder;
+	public $folder;
 
 	function __construct()
 	{
 		global $tikidomain;
 		$this->folder = realpath("temp/cache");
-		if ($tikidomain) { 
-			$this->folder .= "/$tikidomain"; 
+		if ($tikidomain) {
+			$this->folder .= "/$tikidomain";
 		}
 		if (!is_dir($this->folder)) {
 			mkdir($this->folder);

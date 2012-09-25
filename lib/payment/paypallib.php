@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -65,7 +65,7 @@ class PaypalLib extends TikiDb_Bridge
 		$client = TikiLib::lib('tiki')->get_http_client();
 		$client->setUri($prefs['payment_paypal_environment']);
 
-		$base = array( 'cmd' => '_notify-validate' );  
+		$base = array( 'cmd' => '_notify-validate' );
 
 		$client->setParameterPost(array_merge($base, $ipn_data));
 		$response = $client->request('POST');

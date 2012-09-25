@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -17,13 +17,13 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
  */
 class FileMetadata
 {
-	var $currname = null;		//working file path used to access file, may not be the same as embedded in file metadata
-	var $content = null;		//file content
-	var $basicraw = null;		//for basic file information
-	var $basicinfo = null;		//processed basic file information
-	var $typemeta = null;		//array used to store metadata beyond generic file data
-	var $error = null;			//error messages stored here
-	var $types = array (		//files types handled for extended metadata with values used for class and file name
+	public $currname = null;		//working file path used to access file, may not be the same as embedded in file metadata
+	public $content = null;		//file content
+	public $basicraw = null;		//for basic file information
+	public $basicinfo = null;		//processed basic file information
+	public $typemeta = null;		//array used to store metadata beyond generic file data
+	public $error = null;			//error messages stored here
+	public $types = array (		//files types handled for extended metadata with values used for class and file name
 		'image/jpeg' => 'jpeg',
 		'image/jpg' => 'jpeg',
 	);
@@ -103,7 +103,7 @@ class FileMetadata
 			$basic = new BasicInfo;
 			$this->basicinfo = $basic->processRawData($this->basicraw);
 		}
-		
+
 		//from this point, additional metadata is obtained from classes specific to the file type in separate php files
 		//all results for this additional metadata go into the $this->typemeta array
 		if ($extended && $this->canProcessExtended()) {

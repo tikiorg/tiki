@@ -11,13 +11,13 @@
  */
 class Tiki_ShareGroup
 {
-	var $name;
+	public $name;
 
-	var $selectedValues;
+	public $selectedValues;
 
-	var $groupPerm;
-	var $categPerm;
-	var $objectPerm;
+	public $groupPerm;
+	public $categPerm;
+	public $objectPerm;
 
 	function Tiki_ShareGroup( $name )
 	{
@@ -106,12 +106,12 @@ class Tiki_ShareGroup
  */
 class Tiki_ShareObject
 {
-	var $objectHash;
-	var $objectId;
-	var $objectType;
+	public $objectHash;
+	public $objectId;
+	public $objectType;
 
-	var $loadedPermission;
-	var $validGroups;
+	public $loadedPermission;
+	public $validGroups;
 
 	function __construct( $objectType, $objectId )
 	{

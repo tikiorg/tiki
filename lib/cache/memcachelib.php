@@ -20,8 +20,8 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 class Memcachelib
 {
 
-	var $memcache;
-	var $options;
+	public $memcache;
+	public $options;
 
 	/**
 	 * Initialize this thing.

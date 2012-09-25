@@ -14,7 +14,7 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 // A library to handle comments on object (notes, articles, etc)
 class Comments extends TikiLib
 {
-	var $time_control = 0;
+	public $time_control = 0;
 
 	/* Functions for the forums */
 	function report_post($forumId, $parentId, $threadId, $user, $reason = '')

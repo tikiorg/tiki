@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -18,7 +18,7 @@ require_once ('lib/comments/commentslib.php');
  * A library to handle importing of forum posts from Tiki or from other forum
  *  software. This library will re-use functions contained in the CommentsLib
  * library, as those functions already directly access the forums.
- * 
+ *
  * @uses Comments
  * @license LGPL. Please, see licence.txt for mode details
  */
@@ -26,10 +26,10 @@ class Importer extends Comments
 {
 	// The types of forums are hard-coded into the library and displayed
 	// in the template. As support for more imports grows, add the type to
-	// the below two arrays, in addition to writing the functions to 
+	// the below two arrays, in addition to writing the functions to
 	// support them.
-	var $fi_types    = array('TikiWiki');
-	var $fi_prefixes = array('tiki_');
+	public $fi_types    = array('TikiWiki');
+	public $fi_prefixes = array('tiki_');
 
 
 	/*
@@ -44,12 +44,12 @@ class Importer extends Comments
 	 * importSQLForum importSQLForum will import the forum data from the specified SQL file and
 	 *  the specified forum ID, and append it to the end of the data in the
 	 *  destination forum. Datestamps will be retained.
-	 * 
-	 * @param string $dbType 
-	 * @param string $dbPrefix 
-	 * @param string $sqlFile 
+	 *
+	 * @param string $dbType
+	 * @param string $dbPrefix
+	 * @param string $sqlFile
 	 * @param string $fF SQL file
-	 * @param mixed $tF 
+	 * @param mixed $tF
 	 * @access public
 	 * @return int number of posts
 	 */
@@ -95,10 +95,10 @@ class Importer extends Comments
 								`userName`, `title`, `data`, `votes`, `points`, `hash`,
 								`parentId`, `average`, `hits`, `type`, `summary`, `user_ip`,
 								`message_id`, `in_reply_to`)
-								values ( 'forum', '$tF', " . $row["commentDate"] . 
-								", \"" . $row["userName"] . "\", \"" . $row["title"] . 
+								values ( 'forum', '$tF', " . $row["commentDate"] .
+								", \"" . $row["userName"] . "\", \"" . $row["title"] .
 								"\", \"" . $row["data"] . "\", " . (int) $row["votes"] .
-								", '" . $row["points"] . "', '" . $row["hash"] . 
+								", '" . $row["points"] . "', '" . $row["hash"] .
 								"', $pid, \"" . $row["average"] . "\", " .
 								(int) $row["hits"] . ", '" . $row["type"] . "', \"" .
 								$row["summary"] . "\", '" . $row["user_ip"] . "', \"" .
@@ -139,8 +139,8 @@ class Importer extends Comments
 	 * parseFields will take an entire record, as parsed out from an SQL file,
 	 * and pull out full fields (either text-based with '' or numeric).  What is
 	 * returned is an indexed array of the field data.
-	 * 
-	 * @param string $record 
+	 *
+	 * @param string $record
 	 * @access public
 	 * @return array: indexed array of the field data
 	 */
@@ -179,12 +179,12 @@ class Importer extends Comments
 	 * for the specified table, pulling out field names, and all of the
 	 * values from the associated insert actions. Returns an array of
 	 * associative arrays for each record and the fields within the record.
-	 * 
-	 * @param string $dbType 
+	 *
+	 * @param string $dbType
 	 * @param string $dbPrefix prefix of database tables
 	 * @param string $table table name to parse
 	 * @param string $sqlFile output file name
-	 * @param mixed $fId 
+	 * @param mixed $fId
 	 * @access public
 	 * @return array of associative arrays for each record and the fields within the records
 	 */
@@ -250,7 +250,7 @@ class Importer extends Comments
 						// value that manages to get through will simply parse
 						// all records without filter.
 						if ($dbType == 'TikiWiki') {
-							// Ignore records that come back that are not 
+							// Ignore records that come back that are not
 							// forum-related.
 							if ($fields[2] != 'forum' && $table == 'comments') {
 								// Do nothing... NEXT!
@@ -278,10 +278,10 @@ class Importer extends Comments
 	/**
 	 * parseForumList Parses an SQL file and returns an array consisting of all
 	 *  the forum ID number and name pairs that exist in the SQL file.
-	 * 
-	 * @param string $dbType 
-	 * @param string $dbPrefix 
-	 * @param string $sqlFile 
+	 *
+	 * @param string $dbType
+	 * @param string $dbPrefix
+	 * @param string $sqlFile
 	 * @access public
 	 * @return -1 if error. Else an array with all the forum Id numbers and name pairs that exist in the SQL file.
 	 */

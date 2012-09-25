@@ -20,15 +20,15 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 
 class TikiLib extends TikiDb_Bridge
 {
-	var $buffer;
-	var $flag;
-	var $usergroups_cache = array();
+	public $buffer;
+	public $flag;
+	public $usergroups_cache = array();
 
-	var $num_queries = 0;
-	var $now;
+	public $num_queries = 0;
+	public $now;
 
-	var $cache_page_info = array();
-	var $sessionId = null;
+	public $cache_page_info = array();
+	public $sessionId = null;
 
 	/**
 	 * Collection of Tiki libraries.

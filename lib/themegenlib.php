@@ -384,7 +384,7 @@ require_once 'lib/serializedlist.php';
 
 class ThemeGenTheme extends SerializedList
 {
-	var $initDone;
+	public $initDone;
 
 	public function __construct($name)
 	{

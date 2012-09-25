@@ -7,12 +7,12 @@
 
 Class Feed_TextLink extends Feed_Abstract
 {
-	var $type = 'textlink';
-	var $version = 0.1;
-	var $isFileGal = false;
-	var $debug = false;
-	var $page = '';
-	var $metadata = array();
+	public $type = 'textlink';
+	public $version = 0.1;
+	public $isFileGal = false;
+	public $debug = false;
+	public $page = '';
+	public $metadata = array();
 
 	static $contributions;
 	static $addedHashes;

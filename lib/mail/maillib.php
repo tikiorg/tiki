@@ -1,15 +1,15 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 /* Common shared mail functions */
-/* 
+/*
  * function encode_headers()
  *
- * Encode non-ASCII email headers for mail() function to display 
+ * Encode non-ASCII email headers for mail() function to display
  * them properly in email clients.
  * Original code by <gordon at kanazawa-gu dot ac dot jp>.
  * See 'User Contributed Notes' at

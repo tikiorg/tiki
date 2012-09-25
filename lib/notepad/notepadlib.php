@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -16,7 +16,7 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 */
 class NotepadLib extends TikiLib
 {
-	function get_note($user, $noteId) 
+	function get_note($user, $noteId)
 	{
 		$query = "select * from `tiki_user_notes` where `user`=? and `noteId`=?";
 		$result = $this->query($query, array($user,(int)$noteId));
@@ -24,20 +24,20 @@ class NotepadLib extends TikiLib
 		return $res;
 	}
 
-	function set_note_parsing($user, $noteId, $mode) 
+	function set_note_parsing($user, $noteId, $mode)
 	{
 		$query = "update `tiki_user_notes` set `parse_mode`=? where `user`=? and `noteId`=?";
 		$this->query($query, array($mode,$user,(int)$noteId));
 		return true;
 	}
 
-	function remove_note($user, $noteId) 
+	function remove_note($user, $noteId)
 	{
 		$query = "delete from `tiki_user_notes` where `user`=? and `noteId`=?";
 		$this->query($query, array($user,(int)$noteId));
 	}
 
-	function list_notes($user, $offset, $maxRecords, $sort_mode, $find) 
+	function list_notes($user, $offset, $maxRecords, $sort_mode, $find)
 	{
 
 		$bindvars = array($user);

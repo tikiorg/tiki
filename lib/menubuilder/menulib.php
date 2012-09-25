@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -103,7 +103,7 @@ class MenuLib extends TikiLib
 		if ($matches && count($matches[0])) {
 			$menuoptions = $this->table('tiki_menu_options');
 			$menuoptions->deleteMultiple(array( 'menuId' => 42 ));
-			
+
 			foreach ($matches[0] as $query) {
 				$this->query($query);
 			}
@@ -340,7 +340,7 @@ class MenuLib extends TikiLib
 				} elseif (!$in && $option['optionId'] == $params['subMenu']) {
 					$level = $optionLevel;
 					$in = true;
-				} 
+				}
 				if ($option['type'] != '-' && $option['type'] != 'o') {
 					++$optionLevel;
 				}
@@ -479,7 +479,7 @@ class MenuLib extends TikiLib
 		}
 		return $subMenu;
 	}
-	
+
 	// check if a option belongs to a menu
 	function check_menu_option($menuId, $optionId)
 	{
@@ -491,7 +491,7 @@ class MenuLib extends TikiLib
 			return false;
 		}
 	}
-	
+
 	function import_menu_options()
 	{
 		global $smarty;
@@ -529,7 +529,7 @@ class MenuLib extends TikiLib
 			}
 		}
 	}
-	
+
 	function export_menu_options()
 	{
 		$data = '"optionId","type","name","url","position","section","perm","groupname","userlevel","remove"' . "\r\n";
@@ -687,7 +687,7 @@ class MenuLib extends TikiLib
 				'cant' => $cant,
 				);
 	}
-	/* 
+	/*
 	 *gets result from list_menu_options and sorts "sorted section" sections.
 	 */
 	function sort_menu_options($channels)

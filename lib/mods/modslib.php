@@ -16,10 +16,10 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
  */
 class TikiMod
 {
-	var $modname;
-	var $name;
-	var $type;
-	var $revision;
+	public $modname;
+	public $name;
+	public $type;
+	public $revision;
 
 	/* use with $type and $name, or $type only as modname ("$type-$name") */
 	function TikiMod($type, $name=FALSE)
@@ -54,14 +54,14 @@ class TikiMod
  */
 class TikiModAvailable extends TikiMod
 {
-	var $repository;      /* string */
-	var $description;     /* array */
-	var $licence;         /* string */
-	var $version;         /* array */
-	var $md5;             /* string */
-	var $requires;        /* array */
-	var $suggests;        /* array */
-	var $conflicts;       /* array */
+	public $repository;      /* string */
+	public $description;     /* array */
+	public $licence;         /* string */
+	public $version;         /* array */
+	public $md5;             /* string */
+	public $requires;        /* array */
+	public $suggests;        /* array */
+	public $conflicts;       /* array */
 
 	function TikiModAvailable($type, $name=FALSE)
 	{
@@ -153,20 +153,20 @@ class TikiModAvailable extends TikiMod
  */
 class TikiModInfo extends TikiModAvailable
 {
-	var $configuration;         /* array */
-	var $configuration_help;    /* array */
-	var $files;                 /* array */
-	var $contributor;           /* array */
-	var $lastmodif;             /* string */
-	var $devurl;                /* array */
-	var $docurl;                /* array */
-	var $changelog;             /* array */
-	var $author;                /* array */
-	var $help;                  /* array */
-	var $url;                   /* array */
-	var $sql_upgrade;           /* array */
-	var $sql_install;           /* array */
-	var $sql_remove;            /* array */
+	public $configuration;         /* array */
+	public $configuration_help;    /* array */
+	public $files;                 /* array */
+	public $contributor;           /* array */
+	public $lastmodif;             /* string */
+	public $devurl;                /* array */
+	public $docurl;                /* array */
+	public $changelog;             /* array */
+	public $author;                /* array */
+	public $help;                  /* array */
+	public $url;                   /* array */
+	public $sql_upgrade;           /* array */
+	public $sql_install;           /* array */
+	public $sql_remove;            /* array */
 
 	function TikiModInfo($type, $name=FALSE)
 	{
@@ -368,7 +368,7 @@ class TikiModInfo extends TikiModAvailable
  */
 class TikiModDepend extends TikiMod
 {
-	var $tests;
+	public $tests;
 
 	function TikiModDepend($type, $name=FALSE)
 	{
@@ -432,9 +432,9 @@ class TikiModDepend extends TikiMod
 class ModsLib
 {
 
-	var $feedback_listeners;
-	var $types;
-	var $versions;
+	public $feedback_listeners;
+	public $types;
+	public $versions;
 
 	function __construct()
 	{
