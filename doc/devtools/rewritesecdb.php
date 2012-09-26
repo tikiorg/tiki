@@ -7,14 +7,14 @@
 
 $version = $_SERVER['argv'][1];
 
-rewrite_secdb('tiki-' . $version . '/db/tiki-secdb_'.$version.'_mysql.sql', 'tiki-' . $version, $version);
+rewriteSecdb('tiki-' . $version . '/db/tiki-secdb_'.$version.'_mysql.sql', 'tiki-' . $version, $version);
 
-function rewrite_secdb($file, $root, $version)
+function rewriteSecdb($file, $root, $version)
 {
 	$file_exists = @file_exists($file);
-	$fp = @fopen($file, 'w+') or error('The SecDB file "' . $file . '" is not writable or can\'t be created.');
+	$fp = @fopen($file, 'w+') or echo('The SecDB file "' . $file . '" is not writable or can\'t be created.\n');
 	$queries = array();
-	md5_check_dir($root, $root, $version, $queries);
+	md5CheckDir($root, $root, $version, $queries);
 
 	if (! empty($queries)) {
 		sort($queries);
@@ -26,15 +26,11 @@ function rewrite_secdb($file, $root, $version)
 	fclose($fp);
 
 	if ($file_exists) {
-		echo(">> Existing SecDB file '$file' has been updated.");
-		`svn add $file 2> /dev/null`;
-	} else {
-		echo(">> SecDB file '$file' has been created.");
-		`svn add $file`;
+		echo(">> Existing SecDB file '$file' has been updated.\n\n");
 	}
 }
 
-function md5_check_dir($root, $dir, $version, &$queries)
+function md5CheckDir($root, $dir, $version, &$queries)
 {
 	$d = dir($dir);
 	while (false !== ($e = $d->read())) {
@@ -42,7 +38,7 @@ function md5_check_dir($root, $dir, $version, &$queries)
 		if (is_dir($entry)) {
 			// do not descend and no CVS/Subversion files
 			if ($e != '..' && $e != '.' && $e != 'CVS' && $e != '.svn' && $entry!='./templates_c') {
-				md5_check_dir($root, $entry, $version, $queries);
+				md5CheckDir($root, $entry, $version, $queries);
 			}
 		} else {
 			if (substr($e, -4, 4) == ".php" && realpath($entry) != __FILE__ && $entry != './db/local.php') {
