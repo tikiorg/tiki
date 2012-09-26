@@ -58,7 +58,7 @@
 				</tr>
 				{if $tiki_p_admin_categories == 'y'}
 				<tr>
-					<td>{tr}Apply parent category{/tr}</td>
+					<td>{tr}Apply parent category permissions{/tr}</td>
 					<td><input type="checkbox" name="parentPerms" {if empty($categId)}checked="checked"{/if} /></td>
 				</tr>
 				{/if}
