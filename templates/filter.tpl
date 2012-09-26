@@ -66,6 +66,7 @@
 			</fieldset>
 		{else}
 			<input type="hidden" name="filter~language" value="{$prefs.language}">
+			<input type="hidden" name="filter~language_unspecified" value="1">
 		{/if}
 	{/if}
 	<input type="submit" value="{tr}Search{/tr}"/>

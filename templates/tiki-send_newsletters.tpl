@@ -241,7 +241,7 @@
 					<td colspan="2">
 						{textarea name='data' id='editwiki'}{$info.data}{/textarea}
 						<label>{tr}Must be wiki parsed:{/tr} <input type="checkbox" name="wikiparse" {if empty($info.wikiparse) or $info.wikiparse eq 'y'} checked="checked"{/if} /></label>
-						<label>{tr}Is HTML.{/tr} <input type="checkbox" name="is_html" {if !empty($info.is_html) && $info.is_html eq 'y'} checked="checked"{/if} /></label>
+						<label>{tr}Is HTML.{/tr} <input type="checkbox" name="is_html" {if $info.is_html} checked="checked"{/if} /></label>
 					</td>
 				</tr>
 
@@ -272,10 +272,10 @@
 				</tr>				
 				
 				<tr>
-					<td id="txtcol1">
+					<td>
 						{tr}Attached Files{/tr} :
 					</td>
-					<td id="txtcol2" >
+					<td>
 						<div style='display: none' id='newsletterfileshack'></div>
 						<div id='newsletterfiles'>
 							{foreach from=$info.files item=newsletterfile key=fileid}
@@ -291,8 +291,8 @@
 				</tr>
 
 				<tr>
-					<td id="txtcol1"><label for="replyto">{tr}Reply To Email{/tr}</label></td>
-					<td id="txtcol2" ><input type="text" name="replyto" id="replyto" value="{$replyto|escape}" /> {tr}if not:{/tr} {$prefs.sender_email|escape|default:"<em>{tr}Sender email not set{/tr}</em>"}</td>
+					<td><label for="replyto">{tr}Reply To Email{/tr}</label></td>
+					<td><input type="text" name="replyto" id="replyto" value="{$replyto|escape}" /> {tr}if not:{/tr} {$prefs.sender_email|escape|default:"<em>{tr}Sender email not set{/tr}</em>"}</td>
 				</tr>
 
 				<tr>

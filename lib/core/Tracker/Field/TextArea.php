@@ -1,13 +1,13 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 /**
  * Handler class for TextArea
- * 
+ *
  * Letter key: ~a~
  *
  */
@@ -19,7 +19,7 @@ class Tracker_Field_TextArea extends Tracker_Field_Text
 			'a' => array(
 				'name' => tr('Text Area'),
 				'description' => tr('Multi-line text input.'),
-				'help' => 'Textarea Tracker Field',				
+				'help' => 'Textarea Tracker Field',
 				'prefs' => array('trackerfield_textarea'),
 				'tags' => array('basic'),
 				'default' => 'y',
@@ -92,6 +92,8 @@ class Tracker_Field_TextArea extends Tracker_Field_Text
 
 	function renderInput($context = array())
 	{
+		static $firstTime = true;
+
 		$cols = $this->getOption(1);
 		$rows = $this->getOption(2);
 
@@ -108,7 +110,13 @@ class Tracker_Field_TextArea extends Tracker_Field_Text
 			$data['keyup'] = "charCount({$this->getOption(3)}, this, 'cpt_{$this->getConfiguration('fieldId')}', '" . tr('Character Limit Exceeded') . "')";
 		}
 		$data['element_id'] = 'area_' . uniqid();
-		return $this->renderTemplate('trackerinput/textarea.tpl', $context, $data);
+		if ($firstTime && $this->getOption(7) === 'y') {	// wysiwyg
+			$is_html = '<input type="hidden" id="allowhtml" value="1" />';
+			$firstTime = false;
+		} else {
+			$is_html = '';
+		}
+		return $this->renderTemplate('trackerinput/textarea.tpl', $context, $data) . $is_html;
 	}
 
 	protected function attemptParse($text)

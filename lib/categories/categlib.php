@@ -372,8 +372,8 @@ class CategLib extends ObjectLib
 			$where = " AND c.`categId` IN (".str_repeat("?,", count($bindWhere)-1)."?)";
 		} else {
 			if ($deep) {
-				$bindWhere = $this->get_category_descendants($categId);
-				$bindWhere[] = $categId;
+				$bindWhere = array_keys($this->get_category_descendants($categId));
+				$bindWhere[] = (int) $categId;
 				$bindWhere = $this->get_jailed($bindWhere);
 				$bindWhere[] = -1;
 				$where = " AND c.`categId` IN (".str_repeat("?,", count($bindWhere)-1)."?)";

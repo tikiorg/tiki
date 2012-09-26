@@ -36,6 +36,18 @@ function smarty_function_object_link( $params, $smarty )
 		if (! $title) {
 			$title = $object;
 		}
+		global $prefs;
+		if ($prefs['feature_wiki_structure'] === 'y') {
+			global $structlib;
+			include_once ('lib/structures/structlib.php');
+			$page_id = $structlib->get_struct_ref_id($title);
+			if ($page_id) {
+				$alias = $structlib->get_page_alias($page_id);
+				if ($alias) {
+					$title = $alias;
+				}
+			}
+		}
 		break;
 	case 'user':
 		$function = 'smarty_function_object_link_user';

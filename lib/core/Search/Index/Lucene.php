@@ -348,17 +348,18 @@ class Search_Index_Lucene implements Search_Index_Interface
 class Search_Index_Lucene_HighlightHelper implements Zend_Filter_Interface
 {
 	private $query;
+	private $snippetHelper;
 
 	function __construct($query)
 	{
 		$this->query = $query;
+		$this->snippetHelper = new Search_ResultSet_SnippetHelper;
 	}
 
 	function filter($content)
 	{
-		$snippetHelper = new Search_ResultSet_SnippetHelper;
-		$content = $snippetHelper->filter($content);
-		return trim(strip_tags($this->query->highlightMatches($content), '<b>'));
+		$content = $this->snippetHelper->filter($content);
+		return trim(strip_tags($this->query->highlightMatches($content), '<b><i><em><strong><pre><code><span>'));
 	}
 }
 
