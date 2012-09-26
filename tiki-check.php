@@ -56,7 +56,75 @@ if (file_exists('./db/local.php') && file_exists('./templates/tiki-check.tpl')) 
 }
 
 // Get PHP properties and check them
-$php_properties = array();
+$php_properties = false;
+
+// Check error reporting level
+$e = error_reporting();
+$d = ini_get('display_errors');
+if ( $e == 0 ) {
+	if ($d != 1) {
+		$php_properties['Error reporting'] = array(
+			'fitness' => tra('information'),
+			'setting' => 'Disabled',
+			'message' => tra('You will get no errors reported, because error_reporting and display_errors are both turned off. This might be the right thing for a production site, but in case of problems enable these in php.ini to get more information.')
+		);
+	} else {
+		$php_properties['Error reporting'] = array(
+			'fitness' => tra('information'),
+			'setting' => 'Disabled',
+			'message' => tra('You will get no errors reported although display_errors is On, because the error_reporting level is set to 0. This might be the right thing for a production site, but in case of problems raise the value in php.ini to get more information.')
+		);
+	}
+} elseif ( $e > 0 && $e < 32767) {
+	if ($d != 1) {
+		$php_properties['Error reporting'] = array(
+			'fitness' => tra('information'),
+			'setting' => 'Disabled',
+			'message' => tra('You will get no errors reported, because display_errors is turned off. This might be the right thing for a production site, but in case of problems enable it in php.ini to get more information. Your error_reporting level is decent at '.$e.'.')
+		);
+	} else {
+		$php_properties['Error reporting'] = array(
+			'fitness' => tra('information'),
+			'setting' => 'Partly',
+			'message' => tra('You will not get all errors reported as your error_reporting level is at '.$e.'. '.'This is not necessarily a bad thing (and it might be just right for production sites) as you will still get critical errors reported, but sometimes it can be handy to get more information. Check your error_reporting level in php.ini in case of having issues.')
+		);
+	}
+} else {
+	if ( $d != 1 ) {
+		$php_properties['Error reporting'] = array(
+			'fitness' => tra('information'),
+			'setting' => 'Disabled',
+			'message' => tra('You will get no errors reported although your error_reporting level is all the way up at '.$e.', but display_errors is off. This might be the right thing for a production site, but in case of problems enable it in php.ini to get more information.')
+		);
+	} else {
+		$php_properties['Error reporting'] = array(
+			'fitness' => tra('information'),
+			'setting' => 'Full',
+			'message' => tra('You will get all errors reported as your error_reporting level is all the way up at '.$e.' and display_errors is on. Way to go in case of problems as the error reports usually contain some valuable hints!')
+		);
+	}
+}
+
+// Now we can raise our error_reporting to make sure we get all errors
+// This is especially important as we can't use proper exception handling with PDO as we need to be PHP 4 compatible
+error_reporting(-1);
+
+// Check if ini_set works
+if (function_exists('ini_set')) {
+	$php_properties['ini_set'] = array(
+		'fitness' => tra('good'),
+		'setting' => 'Enabled',
+		'message' => tra('ini_set is used in some places to accomodate for special needs of some Tiki features.')
+	);
+	// As ini_set is available, use it for PDO error reporting
+	ini_set('display_errors', '1');
+} else {
+	$php_properties['ini_set'] = array(
+		'fitness' => tra('ugly'),
+		'setting' => 'Disabled',
+		'message' => tra('ini_set is used in some places to accomodate for special needs of some Tiki features. Check disable_functions in your php.ini.')
+	);
+}
 
 // First things first
 // If we don't have a DB-connection, some tests don't run
@@ -89,6 +157,7 @@ if ($s) {
 }
 
 // Now connect to the DB and make all our connectivity methods work the same
+$connection = false;
 if ( $standalone ) {
 	if ( empty($_POST['dbhost']) && !($php_properties['DB Driver']['setting'] == 'Not available') ) {
 			print <<<DBC
@@ -102,32 +171,24 @@ if ( $standalone ) {
 			</form>
 DBC;
 	} else {
-		$connection = false;
 		switch ($php_properties['DB Driver']['setting']) {
 			case 'PDO':
-				try {
-					$connection = new PDO('mysql:host='.$_POST['dbhost'], $_POST['dbuser'], $_POST['dbpass']);
-				} catch ( Exception $e ) {
-					echo 'Couldn\'t connect to database: '.$e->getMessage();
-				}
+				// We don't do exception handling here to be PHP 4 compatible
+				$connection = new PDO('mysql:host='.$_POST['dbhost'], $_POST['dbuser'], $_POST['dbpass']);
 				function query($query, $connection)
 				{
 					$result = $connection->query($query);
-					$return = $result->fetchAll(PDO::FETCH_ASSOC);
+					$return = $result->fetchAll();
 					return($return);
 				}
 				break;
 			case 'MySQLi':
-				try {
-					$error = false;
-					$connection = new mysqli($_POST['dbhost'], $_POST['dbuser'], $_POST['dbpass']);
-					$error = mysqli_connect_error();
-					if ( !empty($error) ) {
-						$connection = false;
-						throw new Exception($error);
-					}
-				} catch ( Exception $e ) {
-					echo 'Couldn\'t connect to database: '.$e->getMessage();
+				$error = false;
+				$connection = new mysqli($_POST['dbhost'], $_POST['dbuser'], $_POST['dbpass']);
+				$error = mysqli_connect_error();
+				if ( !empty($error) ) {
+					$connection = false;
+					echo 'Couldn\'t connect to database: '.$error;
 				}
 				function query($query, $connection)
 				{
@@ -139,13 +200,9 @@ DBC;
 				}
 				break;
 			case 'MySQL':
-				try {
-					$connection = mysql_connect($_POST['dbhost'], $_POST['dbuser'], $_POST['dbpass']);
-					if ( $connection === false ) {
-						throw new Exception('Cannot connect to MySQL. Wrong credentials?');
-					}
-				} catch ( Exception $e ) {
-					echo $e->getMessage();
+				$connection = mysql_connect($_POST['dbhost'], $_POST['dbuser'], $_POST['dbpass']);
+				if ( $connection === false ) {
+					echo 'Cannot connect to MySQL. Wrong credentials?';
 				}
 				function query($query, $connection = '')
 				{
@@ -700,53 +757,6 @@ if ( $s == 42 ) {
 	);
 }
 
-// Check error reporting level
-$e = error_reporting();
-$d = ini_get('display_errors');
-if ( $e == 0 ) {
-	if ( $d == 0 ) {
-		$php_properties['Error reporting'] = array(
-			'fitness' => tra('information'),
-			'setting' => 'Disabled',
-			'message' => tra('You will get no errors reported, because error_reporting and display_errors are both turned off. This might be the right thing for a production site, but in case of problems enable these in php.ini to get more information.')
-		);
-	} else {
-		$php_properties['Error reporting'] = array(
-			'fitness' => tra('information'),
-			'setting' => 'Disabled',
-			'message' => tra('You will get no errors reported although display_errors is On, because the error_reporting level is set to 0. This might be the right thing for a production site, but in case of problems raise the value in php.ini to get more information.')
-		);
-	}
-} elseif ( $e > 0 && $e < 32767) {
-	if ( $d == 0) {
-		$php_properties['Error reporting'] = array(
-			'fitness' => tra('information'),
-			'setting' => 'Disabled',
-			'message' => tra('You will get no errors reported, because display_errors is turned off. This might be the right thing for a production site, but in case of problems enable it in php.ini to get more information. Your error_reporting level is decent at '.$e.'.')
-		);
-	} else {
-		$php_properties['Error reporting'] = array(
-			'fitness' => tra('information'),
-			'setting' => 'Partly',
-			'message' => tra('You will not get all errors reported as your error_reporting level is at '.$e.'. '.'This is not necessarily a bad thing (and it might be just right for production sites) as you will still get critical errors reported, but sometimes it can be handy to get more information. Check your error_reporting level in php.ini in case of having issues.')
-		);
-	}
-} else {
-	if ( $d == 0 ) {
-		$php_properties['Error reporting'] = array(
-			'fitness' => tra('information'),
-			'setting' => 'Disabled',
-			'message' => tra('You will get no errors reported although your error_reporting level is all the way up at '.$e.', but display_errors is off. This might be the right thing for a production site, but in case of problems enable it in php.ini to get more information.')
-		);
-	} else {
-		$php_properties['Error reporting'] = array(
-			'fitness' => tra('information'),
-			'setting' => 'Full',
-			'message' => tra('You will get all errors reported as your error_reporting level is all the way up at '.$e.' and display_errors is on. Way to go in case of problems as the error reports usually contain some valuable hints!')
-		);
-	}
-}
-
 // Zip Archive class
 $s = class_exists('ZipArchive');
 if ( $s ) {
@@ -779,27 +789,10 @@ if ( $s ) {
 		);
 }
 
-// Check if ini_set works
-// This has to be after checking the error_reporting level or the error_reporting
-// level will always be 0 because of the ini_set in the following test
-$s = ini_set('error_reporting', 'E_ALL');
-if ( $s == $e ) {
-	$php_properties['ini_set'] = array(
-		'fitness' => tra('good'),
-		'setting' => 'Enabled',
-		'message' => tra('ini_set is used in some places to accomodate for special needs of some Tiki features.')
-	);
-} else {
-	$php_properties['ini_set'] = array(
-		'fitness' => tra('ugly'),
-		'setting' => 'Disabled',
-		'message' => tra('ini_set is used in some places to accomodate for special needs of some Tiki features. Check disable_functions in your php.ini.')
-	);
-}
-
 // Get MySQL properties and check them
+$mysql_properties = false;
+$mysql_variables = false;
 if ($connection || !$standalone) {
-	$mysql_properties = array();
 
 	// MySQL version
 	$query = 'SELECT VERSION();';
@@ -863,7 +856,7 @@ if ($connection || !$standalone) {
 	}
 	// UTF-8 Collation
 	$collation_types = "connection database server";
-	foreach (explode(' ', $charset_types) as $type) {
+	foreach (explode(' ', $collation_types) as $type) {
 		$query = "SHOW VARIABLES LIKE 'collation_".$type."';";
 		$result = query($query, $connection);
 		foreach ($result as $value) {
@@ -885,7 +878,6 @@ if ($connection || !$standalone) {
 	}
 
 	// MySQL Variables
-	$mysql_variables = array();
 	$query = "SHOW VARIABLES;";
 	$result = query($query, $connection);
 	foreach ($result as $value) {
@@ -905,8 +897,8 @@ if ($connection || !$standalone) {
 
 // Apache properties
 
+$apache_properties = false;
 if ( function_exists('apache_get_version')) {
-	$apache_properties = array();
 
 	// Apache Modules
 	$apache_modules = apache_get_modules();
@@ -965,7 +957,7 @@ if ( function_exists('apache_get_version')) {
 
 // Security Checks
 // get all dangerous php settings and check them
-$security = array();
+$security = false;
 // register globals
 $s = ini_get('register_globals');
 if ($s) {
@@ -1114,7 +1106,7 @@ if ($standalone) {
 	echo '<h2>MySQL Variables</h2>';
 	renderTable($mysql_variables);
 	echo '<h2>PHP Info</h2>';
-	if ( $_REQUEST['phpinfo'] == 'y' ) {
+	if ( isset($_REQUEST['phpinfo']) && $_REQUEST['phpinfo'] == 'y' ) {
 		ob_start();
 		phpinfo();
 		$info = ob_get_contents();
