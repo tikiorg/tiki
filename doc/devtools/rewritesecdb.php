@@ -41,7 +41,7 @@ function md5CheckDir($root, $dir, $version, &$queries)
 				md5CheckDir($root, $entry, $version, $queries);
 			}
 		} else {
-			if (preg_match('/\.(tpl|js|php)$/', $e) && realpath($entry) != __FILE__ && $entry != './db/local.php') {
+			if (preg_match('/\.(sql|css|tpl|js|php)$/', $e) && realpath($entry) != __FILE__ && $entry != './db/local.php') {
 				$file = '.' . substr($entry, strlen($root));
 				$hash = md5_file($entry);
 				$queries[] = "INSERT INTO `tiki_secdb` (`filename`, `md5_value`, `tiki_version`, `severity`) VALUES('$file', '$hash', '$version', 0);";

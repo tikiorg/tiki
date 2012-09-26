@@ -238,7 +238,7 @@ function md5_check_dir($root, $dir, $version, &$queries)
 				md5_check_dir($root, $entry, $version, $queries);
 			}
 		} else {
-			if (preg_match('/\.(css|tpl|js|php)$/', $e) && realpath($entry) != __FILE__ && $entry != './db/local.php') {
+			if (preg_match('/\.(sql|css|tpl|js|php)$/', $e) && realpath($entry) != __FILE__ && $entry != './db/local.php') {
 				$file = '.' . substr($entry, strlen($root));
 
 				if (! preg_match('/^[a-zA-Z0-9\/ _+.-]+$/', $file)
