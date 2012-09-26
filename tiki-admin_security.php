@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -246,7 +246,7 @@ $secdb_severity = array(
 	4000 => tra('File upload')
 );
 // dir walk & check functions
-function md5_check_dir($dir, &$result) 
+function md5_check_dir($dir, &$result)
 { // save all suspicious files in $result
 	global $tikilib;
 	global $tiki_versions;
@@ -259,7 +259,7 @@ function md5_check_dir($dir, &$result)
 			if ($e != '..' && $e != '.' && $entry != './templates_c') { // do not descend and no checking of templates_c since the file based md5 database would grow to big
 				md5_check_dir($entry, $result);
 			}
-		} else if (substr($e, -4, 4) == ".php") {
+		} else if (preg_match('/\.(sql|css|tpl|js|php)$/', $e)) {
 			if (!is_readable($entry)) {
 				$result[$entry] = tra('File is not readable. Unable to check.');
 			} else {
@@ -338,7 +338,7 @@ define('S_IROTH', '4');
 define('S_IWOTH', '2');
 define('S_IXOTH', '1');
 // Function to check Filesystem permissions
-function check_dir_perms($dir, &$result) 
+function check_dir_perms($dir, &$result)
 {
 	static $depth = 0;
 	$depth++;
