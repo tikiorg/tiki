@@ -96,7 +96,7 @@
 					<ul id="page_list_container">
 						{section name=list loop=$listpages}
 							<li class="ui-state-default">
-								{$listpages[list].pageName|truncate:40:"(...)":true}
+								{$listpages[list].pageName}
 							</li>
 						{/section}
 					</ul>
