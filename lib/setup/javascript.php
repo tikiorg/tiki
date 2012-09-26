@@ -30,7 +30,7 @@ if ( $prefs['javascript_enabled'] != 'y' && $prefs['disableJavascript'] != 'y' )
 
 	// the first and second time, we should not trust the absence of javascript_enabled cookie yet, as it could be a redirection and the js will not get a chance to run yet, so we wait until the third run, assuming that js is on before then
 	$runs_before_js_detect = getCookie('runs_before_js_detect');
-	if ( empty($runs_before_js_detect) ) {
+	if ( $runs_before_js_detect === null ) {
 		$prefs['javascript_enabled'] = 'y';
 		setCookieSection('runs_before_js_detect', '1', null, $tikilib->now + 365 * 24 * 3600);
 	} elseif ( $runs_before_js_detect > 0 ) {
