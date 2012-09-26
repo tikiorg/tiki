@@ -12,7 +12,7 @@ rewriteSecdb('tiki-' . $version . '/db/tiki-secdb_'.$version.'_mysql.sql', 'tiki
 function rewriteSecdb($file, $root, $version)
 {
 	$file_exists = @file_exists($file);
-	$fp = @fopen($file, 'w+') or echo('The SecDB file "' . $file . '" is not writable or can\'t be created.\n');
+	$fp = @fopen($file, 'w+') or print("The SecDB file $file is not writable or can't be created.");
 	$queries = array();
 	md5CheckDir($root, $root, $version, $queries);
 
@@ -41,7 +41,7 @@ function md5CheckDir($root, $dir, $version, &$queries)
 				md5CheckDir($root, $entry, $version, $queries);
 			}
 		} else {
-			if (substr($e, -4, 4) == ".php" && realpath($entry) != __FILE__ && $entry != './db/local.php') {
+			if (preg_match('/\.(tpl|js|php)$/', $e) && realpath($entry) != __FILE__ && $entry != './db/local.php') {
 				$file = '.' . substr($entry, strlen($root));
 				$hash = md5_file($entry);
 				$queries[] = "INSERT INTO `tiki_secdb` (`filename`, `md5_value`, `tiki_version`, `severity`) VALUES('$file', '$hash', '$version', 0);";
