@@ -150,6 +150,7 @@ $("#log-rebuild").click(function(){
 			{preference name=feature_search_show_pertinence}
 			{preference name=feature_search_show_object_type}
 			{preference name=feature_search_show_last_modification}
+			{preference name=search_parsed_snippet}
 		{/tab}
 	{/tabset}
 	<div class="heading input_submit_container" style="text-align: right">

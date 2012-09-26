@@ -14,7 +14,6 @@ function prefs_search_list()
 			'hint' => tra('May impact performance'),
 			'type' => 'flag',
 			'default' => 'y',
-			'dbfeatures' => array('mysql_fulltext'),
 		),
 		'search_default_where' => array(
 			'name' => tra('Default where'),
