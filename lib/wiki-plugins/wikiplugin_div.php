@@ -107,6 +107,13 @@ function wikiplugin_div_info()
 				'filter' => 'striptags',
 				'default' => '',
 			),
+			'title' => array(
+				'required' => false,
+				'name' => tra('Title attribute'),
+				'description' => tra('Title for the div, usually displayed as a tooltip.'),
+				'filter' => 'text',
+				'default' => '',
+			),
 		),
 	);
 }
@@ -125,7 +132,12 @@ function wikiplugin_div($data, $params)
 	$fl   = (isset($float) && ($float == 'left' || $float == 'right' || $float == 'none')) ? " float: $float;"  : '';
 	$cl   = (isset($clear) && ($clear == 'left' || $clear == 'right' || $clear == 'both' || $clear == 'none')) ? " clear: $clear;"  : '';
 
-	$begin  = "<$t";
+	if (!empty($title)) {
+		$title = " title=\"$title\"";
+	} else {
+		$title = '';
+	}
+	$begin  = "<{$t}{$title}";
 	$style = "$bg$al$w$fl$cl";
 	if (!empty($style)) {
 		$begin .= " style=\"$style\"";
