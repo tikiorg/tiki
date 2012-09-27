@@ -877,6 +877,24 @@ if ($connection || !$standalone) {
 		}
 	}
 
+	// slow_query_log
+	$query = "SHOW VARIABLES LIKE 'slow_query_log'";
+	$result = query($query, $connection);
+	$s = $result[0]['Value'];
+	if ($s == 'OFF') {
+		$mysql_properties['slow_query_log'] = array(
+			'fitness' => tra('information'),
+			'setting' => $s,
+			'message' => tra('Your MySQL doesn\'t log slow queries. If you have performance issues, you might want to enable this, but keep in mind that the logging itself slows MySQL down.')
+		);
+	} else {
+		$mysql_properties['slow_query_log'] = array(
+			'fitness' => tra('information'),
+			'setting' => $s,
+			'message' => tra('Your MySQL logs slow queries. If you don\'t have performance issues, you should disable this on a production site as it slows MySQL down.')
+		);
+	}
+
 	// MySQL Variables
 	$query = "SHOW VARIABLES;";
 	$result = query($query, $connection);
