@@ -605,10 +605,10 @@ class MenuLib extends TikiLib
 		$ret = array();
 		foreach ( $result as $res ) {
 			$res['canonic'] = $res['url'];
+			if ($menu['parse'] === 'y') {
+				$res['name'] = $wikilib->parse_data($res['name'], array('is_html' => ($prefs['menus_item_names_raw'] === 'y')));
+			}
 			if (preg_match('|^\(\((.+?)\)\)$|', $res['url'], $matches)) {
-				if ($menu['parse'] === 'y') {
-					$res['name'] = $wikilib->parse_data($res['name'], array('is_html' => ($prefs['menus_item_names_raw'] === 'y')));
-				}
 				$res['url'] = 'tiki-index.php?page=' . rawurlencode($matches[1]);
 				$res['sefurl'] = $wikilib->sefurl($matches[1]);
 				$perms = Perms::get(array('type'=>'wiki page', 'object'=>$matches[1]));
