@@ -267,13 +267,13 @@ if ( $bytes < 200 * 1024 * 1024 ) {
 	$server_properties['Disk Space'] = array(
 		'fitness' => 'ugly',
 		'value' => $free_space,
-		'message' => tra('You have less than 250 megs of free disk space. This is quite tight. Tiki needs disk space for compiling templates and for uploading files.').'. '.tra('When the disk runs full you will not be able to log into your Tiki any more.')
+		'message' => tra('You have less than 250 megs of free disk space. This is quite tight. Tiki needs disk space for compiling templates and for uploading files.').' '.tra('When the disk runs full you will not be able to log into your Tiki any more.').' '.tra('We can not reliably check for quotas, so be warned that if your server makes use of them you might have less disk space available.')
 	);
 } else {
 	$server_properties['Disk Space'] = array(
 		'fitness' => 'good',
 		'value' => $free_space,
-		'message' => tra('You have more than 251 megs of free disk space. Tiki will run nicely, but you may run into issues when your site grows (e.g. file uploads)').' '.tra('When the disk runs full you will not be able to log into your Tiki any more.')
+		'message' => tra('You have more than 251 megs of free disk space. Tiki will run nicely, but you may run into issues when your site grows (e.g. file uploads)').' '.tra('When the disk runs full you will not be able to log into your Tiki any more.').' '.tra('We can not reliably check for quotas, so be warned that if your server makes use of them you might have less disk space available.')
 	);
 }
 
