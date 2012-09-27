@@ -46,7 +46,10 @@ function smarty_function_menu($params, $smarty)
 		$menu_cookie = 'y';
 	}
 	$smarty->assignByRef('menu_cookie', $menu_cookie);
-	if ($css !== 'n' && $prefs['feature_cssmenus'] == 'y' && (!isset($drilldown) || $drilldown != 'y')) {
+	if (empty($drilldown)) {
+		$drilldown = 'n';
+	}
+	if ($css !== 'n' && $prefs['feature_cssmenus'] == 'y' && $drilldown != 'y') {
 		static $idCssmenu = 0;
 		if (empty($type)) {
 			$type = 'vert';
@@ -70,7 +73,7 @@ function smarty_function_menu($params, $smarty)
 
 	$smarty->assign('menu_channels', $channels['data']);
 	$smarty->assign('menu_info', $menu_info);
-	$smarty->assign('escape_menu_labels', ($prefs['menus_item_names_raw'] === 'n' && $menu_info['parse'] === 'n'));
+	$smarty->assign('escape_menu_labels', ($prefs['menus_item_names_raw'] === 'n' && isset($menu_info['parse']) && $menu_info['parse'] === 'n'));
 	$data = $smarty->fetch($tpl);
 	$data = preg_replace('/<ul>\s*<\/ul>/', '', $data);
 	$data = preg_replace('/<ol>\s*<\/ol>/', '', $data);

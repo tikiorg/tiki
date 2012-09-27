@@ -35,7 +35,7 @@
 						</span>
 						{if $chdata.url and $link_on_section eq 'y'}
 							<span class="separatoricon-url" style="display:none">
-								<a href="{if $prefs.feature_sefurl eq 'y' and !empty($chdata.sefurl)}{$chdata.sefurl|escape}{else}{if $escape_menu_labels}{$chdata.url|escape}{else}{$chdata.url}{/if}{/if}">
+								<a href="{if $prefs.feature_sefurl eq 'y' and !empty($chdata.sefurl)}{$chdata.sefurl|escape}{else}{if $prefs.menus_item_names_raw eq 'n'}{$chdata.url|escape}{else}{$chdata.url}{/if}{/if}">
 									{icon _id=$chdata.icon alt="{tr}Toggle{/tr}" _defaultdir=$prefs.menus_items_icons_path}
 								</a>
 							</span>
@@ -70,7 +70,7 @@
 					{/if}
 				{/if} 
 				{if $chdata.url and $link_on_section eq 'y'}
-					<a href="{if $prefs.feature_sefurl eq 'y' and !empty($chdata.sefurl)}{$chdata.sefurl|escape}{else}{if $escape_menu_labels}{$chdata.url|escape}{else}{$chdata.url}{/if}{/if}" class="separator">
+					<a href="{if $prefs.feature_sefurl eq 'y' and !empty($chdata.sefurl)}{$chdata.sefurl|escape}{else}{if $prefs.menus_item_names_raw eq 'n'}{$chdata.url|escape}{else}{$chdata.url}{/if}{/if}" class="separator">
 				{else}
 					<a href="javascript:icntoggle('menu{$cname}');" class="separator">
 				{/if}
@@ -96,7 +96,7 @@
 		{* ----------------------------- option *}
 		{elseif $chdata.type eq 'o'}
 			<div class="option{$chdata.optionId} option{$sep}{if isset($chdata.selected) and $chdata.selected} selected{/if}">
-				<a href="{if $prefs.feature_sefurl eq 'y' and !empty($chdata.sefurl)}{$chdata.sefurl|escape}{else}{if $escape_menu_labels}{$chdata.url|escape}{else}{$chdata.url}{/if}{/if}" class="linkmenu">
+				<a href="{if $prefs.feature_sefurl eq 'y' and !empty($chdata.sefurl)}{$chdata.sefurl|escape}{else}{if $prefs.menus_item_names_raw eq 'n'}{$chdata.url|escape}{else}{$chdata.url}{/if}{/if}" class="linkmenu">
 					{if $prefs.menus_items_icons eq 'y' and $menu_info.use_items_icons eq 'y' and ($opensec eq 0 or $chdata.icon neq '')}
 						{icon _id=$chdata.icon alt='' _defaultdir=$prefs.menus_items_icons_path}
 					{/if}

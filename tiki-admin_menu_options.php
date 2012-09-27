@@ -127,7 +127,7 @@ if (isset($_REQUEST['maxRecords'])) {
 }
 
 $smarty->assign('preview_type', isset($_REQUEST['preview_type']) && $_REQUEST['preview_type'] === 'horiz' ? 'horiz' : 'vert');
-$smarty->assign('preview_css', isset($_REQUEST['preview_css']) || $_REQUEST['preview_css'] === 'On' ? 'y' : 'n');
+$smarty->assign('preview_css', isset($_REQUEST['preview_css']) && $_REQUEST['preview_css'] === 'On' ? 'y' : 'n');
 
 $headerlib->add_js('var permNames = ' . json_encode(TikiLib::lib('user')->get_permission_names_for('all')) . ';');
 $feature_prefs = array();
@@ -151,7 +151,7 @@ if (isset($info['groupname']) && !is_array($info['groupname'])) $info['groupname
 $all_groups = $userlib->list_all_groups();
 if (is_array($all_groups)) foreach ($all_groups as $g) $option_groups[$g] = (is_array($info['groupname']) && in_array($g, $info['groupname'])) ? 'selected="selected"' : '';
 $smarty->assign_by_ref('option_groups', $option_groups);
-$smarty->assign('escape_menu_labels', ($prefs['menus_item_names_raw'] === 'n' || $info['parse'] === 'n'));
+$smarty->assign('escape_menu_labels', ($prefs['menus_item_names_raw'] === 'n' && $editable_menu_info['parse'] === 'n'));
 
 ask_ticket('admin-menu-options');
 // disallow robots to index page:
