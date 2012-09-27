@@ -127,7 +127,7 @@ if (isset($_REQUEST['maxRecords'])) {
 }
 
 $smarty->assign('preview_type', isset($_REQUEST['preview_type']) && $_REQUEST['preview_type'] === 'horiz' ? 'horiz' : 'vert');
-$smarty->assign('preview_css', isset($_REQUEST['preview_css']) || $_REQUEST['preview_css'] === 'On' ? 'y' : 'n');
+$smarty->assign('preview_css', isset($_REQUEST['preview_css']) && $_REQUEST['preview_css'] === 'On' ? 'y' : 'n');
 
 $headerlib->add_js('var permNames = ' . json_encode(TikiLib::lib('user')->get_permission_names_for('all')) . ';');
 $feature_prefs = array();
