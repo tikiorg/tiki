@@ -56,17 +56,17 @@ class MenuLib extends TikiLib
 		return $retval;
 	}
 
-	function replace_menu($menuId, $name, $description='', $type='d', $icon=null, $use_items_icons='n')
+	function replace_menu($menuId, $name, $description='', $type='d', $icon=null, $use_items_icons='n', $parse='n')
 	{
 		// Check the name
 		if (isset($menuId) and $menuId > 0) {
-			$query = "update `tiki_menus` set `name`=?,`description`=?,`type`=?, `icon`=?, `use_items_icons`=? where `menuId`=?";
-			$bindvars = array($name,$description,$type,$icon,$use_items_icons,(int)$menuId);
+			$query = "update `tiki_menus` set `name`=?,`description`=?,`type`=?, `icon`=?, `use_items_icons`=?, `parse`=? where `menuId`=?";
+			$bindvars = array($name,$description,$type,$icon,$use_items_icons,$parse,(int)$menuId);
 			$this->empty_menu_cache($menuId);
 		} else {
 			// was: replace into. probably we need a delete here
-			$query = "insert into `tiki_menus` (`name`,`description`,`type`,`icon`,`use_items_icons`) values(?,?,?,?,?)";
-			$bindvars = array($name,$description,$type,$icon,$use_items_icons);
+			$query = "insert into `tiki_menus` (`name`,`description`,`type`,`icon`,`use_items_icons`,`parse`) values(?,?,?,?,?,?)";
+			$bindvars = array($name,$description,$type,$icon,$use_items_icons,$parse);
 		}
 
 		$result = $this->query($query, $bindvars);
@@ -596,6 +596,8 @@ class MenuLib extends TikiLib
 			$conditions['userlevel'] = $options->lesserThan($level + 1);
 		}
 
+		$menu = $this->get_menu( $menuId );
+
 		$sort = $options->expr($this->convertSortMode($sort_mode));
 		$result = $options->fetchAll($options->all(), $conditions, $maxRecords, $offset, $sort);
 		$cant = $options->fetchCount($conditions);
@@ -604,6 +606,9 @@ class MenuLib extends TikiLib
 		foreach ( $result as $res ) {
 			$res['canonic'] = $res['url'];
 			if (preg_match('|^\(\((.+?)\)\)$|', $res['url'], $matches)) {
+				if ($menu['parse'] === 'y') {
+					$res['name'] = $wikilib->parse_data($res['name'], array('is_html' => ($prefs['menus_item_names_raw'] === 'y')));
+				}
 				$res['url'] = 'tiki-index.php?page=' . rawurlencode($matches[1]);
 				$res['sefurl'] = $wikilib->sefurl($matches[1]);
 				$perms = Perms::get(array('type'=>'wiki page', 'object'=>$matches[1]));

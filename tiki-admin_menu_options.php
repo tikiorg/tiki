@@ -151,6 +151,8 @@ if (isset($info['groupname']) && !is_array($info['groupname'])) $info['groupname
 $all_groups = $userlib->list_all_groups();
 if (is_array($all_groups)) foreach ($all_groups as $g) $option_groups[$g] = (is_array($info['groupname']) && in_array($g, $info['groupname'])) ? 'selected="selected"' : '';
 $smarty->assign_by_ref('option_groups', $option_groups);
+$smarty->assign('escape_menu_labels', ($prefs['menus_item_names_raw'] === 'n' || $info['parse'] === 'n'));
+
 ask_ticket('admin-menu-options');
 // disallow robots to index page:
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');

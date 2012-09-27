@@ -70,6 +70,7 @@ function smarty_function_menu($params, $smarty)
 
 	$smarty->assign('menu_channels', $channels['data']);
 	$smarty->assign('menu_info', $menu_info);
+	$smarty->assign('escape_menu_labels', ($prefs['menus_item_names_raw'] === 'n' && $menu_info['parse'] === 'n'));
 	$data = $smarty->fetch($tpl);
 	$data = preg_replace('/<ul>\s*<\/ul>/', '', $data);
 	$data = preg_replace('/<ol>\s*<\/ol>/', '', $data);

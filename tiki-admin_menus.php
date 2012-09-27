@@ -28,6 +28,7 @@ if ($_REQUEST['menuId']) {
 	$info['type'] = 'd';
 	$info['icon'] = null;
 	$info['use_items_icons'] = 'n';
+	$info['parse'] = 'n';
 }
 $smarty->assign_by_ref('info', $info);
 
@@ -40,7 +41,8 @@ if (isset($_REQUEST['save'])) {
 	$access->check_ticket();
 	if (!isset($_REQUEST['icon'])) $_REQUEST['icon'] = null;
 	$_REQUEST['use_items_icons'] = (isset($_REQUEST['use_items_icons']) && $_REQUEST['use_items_icons'] == 'on') ? 'y' : 'n';
-	$menulib->replace_menu($_REQUEST['menuId'], $_REQUEST['name'], $_REQUEST['description'], $_REQUEST['type'], $_REQUEST['icon'], $_REQUEST['use_items_icons']);
+	$_REQUEST['parse'] = (isset($_REQUEST['parse']) && $_REQUEST['parse'] == 'on') ? 'y' : 'n';
+	$menulib->replace_menu($_REQUEST['menuId'], $_REQUEST['name'], $_REQUEST['description'], $_REQUEST['type'], $_REQUEST['icon'], $_REQUEST['use_items_icons'], $_REQUEST['parse']);
 	$_REQUEST['menuId'] = 0;
 	$smarty->assign('menuId', 0);
 	$smarty->assign(
@@ -50,7 +52,8 @@ if (isset($_REQUEST['save'])) {
 			'description' => '',
 			'type' => 'd',
 			'icon' => null,
-			'use_items_icons' => 'n'
+			'use_items_icons' => 'n',
+			'parse' => 'n',
 		)
 	);
 }

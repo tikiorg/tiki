@@ -1480,10 +1480,11 @@ CREATE TABLE `tiki_menus` (
   `type` char(1) default NULL,
   `icon` varchar(200) default NULL,
   `use_items_icons` char(1) NOT NULL DEFAULT 'n',
+  `parse` char(1)  NOT NULL  DEFAULT 'n',
   PRIMARY KEY (`menuId`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
-INSERT INTO tiki_menus (`menuId`,name,description,type) VALUES ('42','Application menu','Main extensive navigation menu','d');
+INSERT INTO tiki_menus (`menuId`,`name`,`description`,`type`,`parse`) VALUES ('42','Application menu','Main extensive navigation menu','d','n');
 
 DROP TABLE IF EXISTS `tiki_minical_events`;
 CREATE TABLE `tiki_minical_events` (
