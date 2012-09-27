@@ -98,6 +98,13 @@
 						</select>
 					</td>
 				</tr>
+				<tr>
+					<td><label for="menus_parse">{tr}Wiki Parse:{/tr}</label></td>
+					<td>
+						<input type="checkbox" name="parse" id="menus_parse"{if $info.parse eq 'y'} checked="checked"{/if}/>
+						<em>{tr}Labels of all options will be wiki parsed.{/tr}</em>
+					</td>
+				</tr>
 				{if $prefs.feature_menusfolderstyle eq 'y'}
 					<tr>
 						<td rowspan="2"><label for="icon">{tr}Icons:{/tr}</label></td>
