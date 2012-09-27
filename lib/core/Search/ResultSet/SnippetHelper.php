@@ -18,7 +18,6 @@ class Search_ResultSet_SnippetHelper implements Zend_Filter_Interface
 
 	function filter($content)
 	{
-		global $prefs;
 		$snippet = $this->formatter->render('', $content, array());
 		return $snippet;
 	}
