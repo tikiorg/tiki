@@ -164,7 +164,7 @@ if ( $standalone ) {
 			<h2>Database credentials</h2>
 			Couldn't connect to database, please provide valid credentials.
 			<form method="post" action="{$_SERVER['REQUEST_URI']}">
-				<p><label for="dbuser">Database host</label>: <input type="text" id="dbhost" name="dbhost" value="localhost" /></p>
+				<p><label for="dbhost">Database host</label>: <input type="text" id="dbhost" name="dbhost" value="localhost" /></p>
 				<p><label for="dbuser">Database username</label>: <input type="text" id="dbuser" name="dbuser" /></p>
 				<p><label for="dbpass">Database password</label>: <input type="password" id="dbpass" name="dbpass" /></p>
 				<p><input type="submit" value=" Connect " /></p>
@@ -1107,6 +1107,48 @@ if ($standalone) {
 	echo '<h1>Tiki Server Compatibility</h1>';
 	echo '<h2>MySQL Database Properties</h2>';
 	renderTable($mysql_properties);
+	echo '<h2>Test sending e-mails</h2>';
+	if (isset($_REQUEST['email_test_to'])) {
+		$email_test_headers = 'From: noreply@tiki.org' . "\n";	// needs a valid sender
+		$email_test_headers .= 'Reply-to: '. $_POST['email_test_to'] . "\n";
+		$email_test_headers .= "Content-type: text/plain; charset=utf-8\n";
+		$email_test_headers .= 'X-Mailer: Tiki-Check - PHP/' . phpversion() . "\n";
+		$email_test_subject = tra('Test mail from Tiki Server Compatibility Test');
+		$email_test_body = tra("Congratulations!\n\nYour server can send emails.\n\n");
+		$email_test_body .= "\t".tra('Server:').' '.(empty($_SERVER['SERVER_NAME']) ? $_SERVER['SERVER_ADDR'] : $_SERVER['SERVER_NAME']) . "\n";
+		$email_test_body .= "\t".tra('Sent:').' '.date(DATE_RFC822) . "\n";
+
+		$sentmail = mail($_POST['email_test_to'], $email_test_subject, $email_test_body, $email_test_headers);
+		if ($sentmail) {
+			$mail['Sending mail'] = array(
+				'setting' => 'Accepted',
+				'fitness' => tra('good'),
+				'message' => tra('We were able to send an e-mail. This only means that a mail server accepted the mail for delivery. We don\'t know, if that server really delivers the mail. Please check the inbox of '.$_POST['email_test_to'].' to see, if the delivery really works.')
+			);
+		} else {
+			$mail['Sending mail'] = array(
+				'setting' => 'Not accepted',
+				'fitness' => tra('bad'),
+				'message' => tra('We were not able to send an e-mail. It may be that there is no mail server installed on this machine or that it is badly configured. If you absolutely can\'t get the local mail server to work, you can setup a regular mail account and set SMTP settings in tiki-admin.php.')
+			);
+		}
+		renderTable($mail);
+	} else {
+		echo '<form method="post" action="'.$_SERVER['REQUEST_URI'].'">';
+			echo '<p><label for="e-mail">e-mail address to send test mail to</label>: <input type="text" id="email_test_to" name="email_test_to" /></p>';
+			echo '<p><input type="submit" value=" Send e-mail " /></p>';
+			echo '<p><input type="hidden" id="dbhost" name="dbhost" value="';
+				if (isset($_POST['dbhost'])) { echo $_POST['dbhost']; };
+			echo '" /></p>';
+			echo '<p><input type="hidden" id="dbuser" name="dbuser" value="';
+				if (isset($_POST['dbuser'])) { echo $_POST['dbuser']; };
+			echo '"/></p>';
+			echo '<p><input type="hidden" id="dbpass" name="dbpass" value="';
+				if (isset($_POST['dbpass'])) { echo $_POST['dbpass']; };
+			echo '"/></p>';
+		echo '</form>';
+	}
+
 	echo '<h2>Server Information</h2>';
 	renderTable($server_information);
 	echo '<h2>Server Properties</h2>';

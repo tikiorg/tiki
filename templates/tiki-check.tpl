@@ -51,6 +51,9 @@
 	{/foreach}
 </table>
 
+<h2>Test sending e-mails</h2>
+To test if your installation is capable of sending emails please visit the <a href="tiki-install.php">Tiki Installer</a>.
+
 <h2>{tr}Server Information{/tr}</h2>
 <table class="normal">
 	<tr>
