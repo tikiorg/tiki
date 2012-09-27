@@ -1361,26 +1361,28 @@ function wikiplugin_img( $data, $params, $offset, $parseOptions='' )
 		$repl = '{img src=' . $src . "\"}\n<p>" . $imgdata['desc'] . '</p>'; 
 	}
 
-	global $tiki_p_edit, $fromTracker;
-	$globalperms = Perms::get(array( 'type' => 'file gallery', 'object' => $imgdata['galleryId'] ));
+	if (!empty($imgdata['galleryId'])) {
+		global $tiki_p_edit, $fromTracker;
+		$globalperms = Perms::get(array( 'type' => 'file gallery', 'object' => $imgdata['galleryId'] ));
 
-	if (
-		$prefs['feature_draw'] == 'y' &&
-		$globalperms->upload_files == 'y' &&
-		empty($src) == true &&
-		(
-			$tiki_p_edit == 'y' ||
-			$fromTracker == true
-		)
-	) {
-		if ($prefs['wiki_edit_icons_toggle'] == 'y' && !isset($_COOKIE['wiki_plugin_edit_view'])) {
-			$iconDisplayStyle = " style='display:none;'";
-		} else {
-			$iconDisplayStyle = '';
+		if (
+			$prefs['feature_draw'] == 'y' &&
+			$globalperms->upload_files == 'y' &&
+			empty($src) == true &&
+			(
+				$tiki_p_edit == 'y' ||
+				$fromTracker == true
+			)
+		) {
+			if ($prefs['wiki_edit_icons_toggle'] == 'y' && !isset($_COOKIE['wiki_plugin_edit_view'])) {
+				$iconDisplayStyle = " style='display:none;'";
+			} else {
+				$iconDisplayStyle = '';
+			}
+			$repl .= "<a href='tiki-edit_draw.php?fileId={$imgdata['fileId']}' onclick='return $(this).ajaxEditDraw();' title='".tr("Edit: Image") . " ".tr("(experimental)") . "'" .
+						" class='editplugin pluginImgEdit{$imgdata['fileId']}' data-fileid='{$imgdata['fileId']}' data-galleryid='{$imgdata['galleryId']}'{$iconDisplayStyle}>" .
+						"<img width='16' height='16' class='icon' alt='Edit' src='img/icons/page_edit.png' /></a>";
 		}
-		$repl .= "<a href='tiki-edit_draw.php?fileId={$imgdata['fileId']}' onclick='return $(this).ajaxEditDraw();' title='".tr("Edit: Image") . " ".tr("(experimental)") . "'" .
-					" class='editplugin pluginImgEdit{$imgdata['fileId']}' data-fileid='{$imgdata['fileId']}' data-galleryid='{$imgdata['galleryId']}'{$iconDisplayStyle}>" .
-					"<img width='16' height='16' class='icon' alt='Edit' src='img/icons/page_edit.png' /></a>";
 	}
 	
 	return '~np~' . $repl. "\r" . '~/np~';
