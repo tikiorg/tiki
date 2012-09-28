@@ -42,7 +42,7 @@ function smarty_block_filter($params, $content, $smarty, &$repeat)
 	$smarty->assign('filter_action', $params['action']);
 
 	$smarty->assign('filter_content', isset($filter['content']) ? $filter['content'] : '');
-	$smarty->assign('filter_type', isset($filter['type']) ? $filter['type'] : '');
+	$smarty->assign('filter_type', isset($filter['type']) ? $filter['type'] : $prefs['search_default_where']);
 	$smarty->assign('filter_types', $types);
 
 	// Categories
