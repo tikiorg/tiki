@@ -220,6 +220,7 @@ DBC;
 	{
 		global $tikilib;
 		$result = $tikilib->query($query);
+		$return = array();
 		while ( $row = $result->fetchRow() ) {
 			$return[] = $row;
 		}
