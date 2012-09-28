@@ -193,6 +193,7 @@ DBC;
 				function query($query, $connection)
 				{
 					$result = $connection->query($query);
+					$return = array();
 					while (	$row = $result->fetch_assoc() ) {
 						$return[] = $row;
 					}
@@ -207,6 +208,7 @@ DBC;
 				function query($query, $connection = '')
 				{
 					$result = mysql_query($query);
+					$return = array();
 					while (	$row = mysql_fetch_array($result) ) {
 						$return[] = $row;
 					}
