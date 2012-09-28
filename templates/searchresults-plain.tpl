@@ -13,6 +13,10 @@
 			<span class="itemrelevance">({tr}Relevance:{/tr} {$result.relevance|escape})</span>
 		{/if}
 
+		{if $prefs.feature_search_show_visit_count eq 'y' and $result.visits neq null}
+			<span class="itemhits">({tr}Hits:{/tr} {$result.visits|escape})</span>
+		{/if}
+
 		{if !empty($result.parent_object_id)} {tr}in{/tr} {object_link type=$result.parent_object_type id=$result.parent_object_id}{/if}
 		</strong>
 

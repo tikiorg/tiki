@@ -284,6 +284,10 @@ class UnifiedSearchLib
 
 		$aggregator->addGlobalSource(new Search_GlobalSource_Geolocation);
 
+		if ($prefs['feature_search_show_visit_count'] === 'y' && $mode != 'indexing') {
+			$aggregator->addGlobalSource(new Search_GlobalSource_VisitsSource);
+		}
+
 		if ($mode == 'indexing') {
 			$aggregator->addGlobalSource(new Search_GlobalSource_PermissionSource(Perms::getInstance()));
 			$aggregator->addGlobalSource(new Search_GlobalSource_RelationSource);
