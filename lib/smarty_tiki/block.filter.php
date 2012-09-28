@@ -56,6 +56,10 @@ function smarty_block_filter($params, $content, $smarty, &$repeat)
 		require_once 'lib/tree/BrowseTreeMaker.php';
 		$ctall = $categlib->getCategories();
 
+		if ($prefs['unified_excluded_categories'] === 'y') {		// remove those excluded categs
+			$ctall = array_diff_key($ctall, array_flip($prefs['unified_excluded_categories']));
+		}
+
 		$tree_nodes = array();
 		foreach ($ctall as $c) {
 			$name = htmlentities($c['name'], ENT_QUOTES, 'UTF-8');

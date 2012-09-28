@@ -156,6 +156,13 @@ function prefs_unified_list()
 				'fieldId' => tr('Field ID (Backward compatibility mode with Tiki 7 and 8)'),
 			),
 		),
+		'unified_excluded_categories' => array(
+			'name' => tra('Excluded categories'),
+			'description' => tra('List of category ids to exclude from the search index.'),
+			'type' => 'text',
+			'separator' => ',',
+			'default' => array(),
+		),
 	);
 }
 
