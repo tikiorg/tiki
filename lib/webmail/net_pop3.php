@@ -1107,7 +1107,7 @@ class Net_POP3
 	function _getMultiline()
 	{
 		$data = '';
-		while (!PEAR::isError($tmp = $this->_recvLn())) {
+		while (!is_a($tmp = $this->_recvLn(),'PEAR_Error')) {
 			if ($tmp == '.') {
 				return substr($data, 0, -2);
 			}
@@ -1166,7 +1166,7 @@ class Net_POP3
 	 */
 	function _recvLn()
 	{
-		if (PEAR::isError($lastline = $this->_socket->readLine(8192))) {
+		if (is_a($lastline = $this->_socket->readLine(8192), 'PEAR_Error')) {
 			return $this->_raiseError('Failed to write to socket: ' . $this->lastline->getMessage());
 		}
 		if ($this->_debug) {

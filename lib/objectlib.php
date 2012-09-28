@@ -55,7 +55,7 @@ class ObjectLib extends TikiLib
 						break;
 
 					case 'calendar':
-						require_once('lib/calendar/calendarlib.php');
+						global $calendarlib; require_once('lib/calendar/calendarlib.php');
 						$info = $calendarlib->get_calendar($itemId);
 
 						$description = $info['description'];
@@ -121,7 +121,7 @@ class ObjectLib extends TikiLib
 						break;
 
 					case 'poll':
-						require_once('lib/polls/polllib_shared.php');
+						global $polllib; require_once('lib/polls/polllib_shared.php');
 						$info = $polllib->get_poll($itemId);
 
 						$description = $info['title'];
@@ -143,7 +143,7 @@ class ObjectLib extends TikiLib
 
 						$description = $info['description'];
 						$name = $info['name'];
-						$href = 'tiki-view_tracker.php?trackerId=' . $itemIdId;
+						$href = 'tiki-view_tracker.php?trackerId=' . $itemId;
 						break;
 
 					case 'trackeritem':

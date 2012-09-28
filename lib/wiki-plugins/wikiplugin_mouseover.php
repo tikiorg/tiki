@@ -179,6 +179,14 @@ function wikiplugin_mouseover_info()
 				'default' => 0,
 				'advanced' => true,
 			),
+			'tag' => array(
+				'required' => false,
+				'name' => tra('Tag'),
+				'description' => tra('HTML tag to use for the label. Default "a"'),
+				'filter' => 'word',
+				'default' => 'a',
+				'advanced' => true,
+			),
 		),
 	);
 }
@@ -205,7 +213,8 @@ function wikiplugin_mouseover( $data, $params )
 	$effect = !isset( $params['effect'] ) || $params['effect'] == 'Default' ? '' : strtolower($params['effect']);
 	$speed = !isset( $params['speed'] ) ? 'normal' : strtolower($params['speed']);
 	$closeDelay = isset( $params['closeDelay'] ) ? (int) $params['closeDelay'] : 0;
-	
+	$tag = !empty( $params['tag'] ) ? $params['tag'] : 'a';
+
 	if (empty($params['label']) && empty($params['text'])) {
 		$label = tra('No label specified');
 	} else {
@@ -256,7 +265,7 @@ function wikiplugin_mouseover( $data, $params )
 	$textcolor =  isset($params['textcolor']) ? ("color:" . $params['textcolor'] . ';') : '';
 	$class     = !isset( $params['class'] )   ? 'class="plugin-mouseover"' : 'class="'.$params['class'].'"';
 	
-	$html = "~np~<a id=\"$id-link\" href=\"$url\">$label</a>".
+	$html = "~np~<$tag id=\"$id-link\" href=\"$url\">$label</$tag>".
 		"<span id=\"$id\" $class style=\"width: {$width}px; " . (isset($params['height']) ? "height: {$height}px; " : "") ."{$bgcolor} {$textcolor} {$padding} \">$text</span>~/np~";
 
 	return $html;

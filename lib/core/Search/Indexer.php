@@ -92,6 +92,15 @@ class Search_Indexer
 
 	private function addDocument($objectType, $objectId)
 	{
+		global $prefs;
+		if (!empty( $prefs['unified_excluded_categories'] )) {
+			$categs = TikiLib::lib('categ')->get_object_categories( $objectType, $objectId );
+			if (array_intersect($prefs['unified_excluded_categories'], $categs)) {
+				$this->log->info("addDocument skipped $objectType $objectId");
+				return 0;
+			}
+		}
+
 		$this->log->info("addDocument $objectType $objectId");
 
 		$typeFactory = $this->searchIndex->getTypeFactory();

@@ -17,6 +17,8 @@
 				{/foreach}
 			</select>
 		</label>
+	{else}
+		<input type="hidden" name="filter~type" value="{$filter_type}" />
 	{/if}
 	{if $prefs.feature_categories eq 'y' and $tiki_p_view_category eq 'y' and $prefs.search_show_category_filter eq 'y'}
 		<fieldset>

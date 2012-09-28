@@ -94,14 +94,16 @@ if (count($filter)) {
 					'prefs' => $prefs,
 				)
 			);
-			$plugin->setFields(
-				array(
-					'title' => null,
-					'url' => null,
-					'modification_date' => null,
-					'highlight' => null,
-				)
+			$fields = array(
+				'title' => null,
+				'url' => null,
+				'modification_date' => null,
+				'highlight' => null,
 			);
+			if ($prefs['feature_search_show_visit_count'] === 'y') {
+				$fields['visits'] = null;
+			}
+			$plugin->setFields($fields);
 
 			$formatter = new Search_Formatter($plugin);
 			$formatter->setDataSource($dataSource);
