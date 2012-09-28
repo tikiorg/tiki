@@ -10,25 +10,6 @@ require_once ('tiki-setup.php');
 require_once ('lib/admin/adminlib.php');
 $access->check_permission('tiki_p_admin');
 
-$phpsettings = array();
-// check file upload dir and compare it to tiki root dir
-$s = ini_get('upload_tmp_dir');
-$sn = substr($_SERVER['SCRIPT_NAME'], 0, -23);
-if ( $s != "" && strpos($sn, $s) !== FALSE) {
-	$phpsettings['upload_tmp_dir'] = array(
-		'risk' => tra('unsafe') ,
-		'setting' => $s,
-		'message' => tra('upload_tmp_dir is probably within your Tiki directory. There is a risk that someone can upload any file to this directory and access them via web browser')
-	);
-} else {
-	$phpsettings['upload_tmp_dir'] = array(
-		'risk' => tra('unknown') ,
-		'setting' => $s,
-		'message' => tra('cannot check if the upload_tmp_dir is accessible via web browser. To be sure you should check your webserver config.')
-	);
-}
-$smarty->assign_by_ref('phpsettings', $phpsettings);
-
 // tikiwiki preferences check
 // do we need to get the preferences or are they already loaded?
 $tikisettings = array();

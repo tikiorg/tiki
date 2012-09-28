@@ -377,6 +377,38 @@ if ($s >= 160 * 1024 * 1024) {
 	);
 }
 
+// session.save_handler
+$s = ini_get('session.save_handler');
+if ($s != 'files') {
+	$php_properties['session.save_handler'] = array(
+		'fitness' => tra('bad'),
+		'setting' => $s,
+		'message' => tra('Your session.save_handler must be set to \'files\'.')
+	);
+} else {
+	$php_properties['session.save_handler'] = array(
+		'fitness' => tra('good'),
+		'setting' => $s,
+		'message' => tra('Well set! the default setting of \'files\' is needed for Tiki.')
+	);
+}
+
+// zlib.output_compression
+$s = ini_get('zlib.output_compression');
+if ($s) {
+	$php_properties['zlib.output_compression'] = array(
+		'fitness' => tra('info'),
+		'setting' => 'On',
+		'message' => tra('You have zlib output compression turned on. This saves bandwidth. Turning it off would in turn reduce CPU usage. Choose your poison.')
+	);
+} else {
+	$php_properties['zlib.output_compression'] = array(
+		'fitness' => tra('info'),
+		'setting' => 'Off',
+		'message' => tra('You have zlib output compression turned off. This reduces CPU usage. Turning it on would in turn save bandwidth. Choose your poison.')
+	);
+}
+
 // register globals
 $s = ini_get('register_globals');
 if ($s) {
@@ -740,6 +772,21 @@ if ($s) {
 	);
 }
 
+$s = extension_loaded('memcache');
+if ($s) {
+	$php_properties['memcache'] = array(
+		'fitness' => tra('good'),
+		'setting' => 'Loaded',
+		'message' => tra('This extension can be used to speed up your Tiki by saving sessions as well as wiki and forum data on a memcached server.')
+	);
+} else {
+	$php_properties['memcache'] = array(
+		'fitness' => tra('ugly'),
+		'setting' => 'Not available',
+		'message' => tra('This extension can be used to speed up your Tiki by saving sessions as well as wiki and forum data on a memcached server.')
+	);
+}
+
 // Check for existence of eval()
 // eval() is a language construct and not a function
 // so function_exists() doesn't work
@@ -972,11 +1019,46 @@ if ( function_exists('apache_get_version')) {
 			'message' => tra('With this module you can compress the data your webserver sends out and therefore decrease used bandwidth and increase performance. Once you install it, you still need to configure it correctly.')
 		);
 	}
+
+	// mod_security
+	$s = false;
+	$s = array_search('mod_security', $apache_modules);
+	if ($s) {
+		$apache_properties['mod_security'] = array(
+			'setting' => 'Loaded',
+			'fitness' => tra('info') ,
+			'message' => tra('This module can increase security of your Tiki and therefore your server, but be warned that it is very tricky to configure it correctly. A misconfiguration can lead to failed page saves or other hard to trace bugs.')
+		);
+	} else {
+		$apache_properties['mod_security'] = array(
+			'setting' => 'Not available',
+			'fitness' => tra('info') ,
+			'message' => tra('This module can increase security of your Tiki and therefore your server, but be warned that it is very tricky to configure it correctly. A misconfiguration can lead to failed page saves or other hard to trace bugs.')
+		);
+	}
 }
 
 // Security Checks
 // get all dangerous php settings and check them
 $security = false;
+
+// check file upload dir and compare it to tiki root dir
+$s = ini_get('upload_tmp_dir');
+$sn = substr($_SERVER['SCRIPT_NAME'], 0, -14);
+if ( $s != "" && strpos($sn, $s) !== FALSE) {
+	$security['upload_tmp_dir'] = array(
+		'fitness' => tra('unsafe') ,
+		'setting' => $s,
+		'message' => tra('upload_tmp_dir is probably within your Tiki directory. There is a risk that someone can upload any file to this directory and access them via web browser')
+	);
+} else {
+	$security['upload_tmp_dir'] = array(
+		'fitness' => tra('unknown') ,
+		'setting' => $s,
+		'message' => tra('Can\'t reliably determine, if your upload_tmp_dir is accessible via a web browser. To make sure you should check your webserver config.')
+	);
+}
+
 // register globals
 $s = ini_get('register_globals');
 if ($s) {

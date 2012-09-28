@@ -4,41 +4,6 @@
 	{tr}To <a class="rbox-link" target="tikihelp" href="http://security.tiki.org/tiki-contact.php">report any security issues</a>.{/tr}
 {/remarksbox}
 
-<h2>{tr}PHP settings{/tr}</h2>
-<table class="normal">
-	<tr>
-		<th>{tr}PHP variable{/tr}</th>
-		<th>{tr}Setting{/tr}</th>
-		<th>{tr}Risk Factor{/tr}</th>
-		<th>{tr}Explanation{/tr}</th>
-	</tr>
-	{cycle values="even,odd" print=false}
-	{foreach from=$phpsettings key=key item=item}
-		<tr class="{cycle}">
-			<td class="text">{$key}</td>
-			<td class="text">{$item.setting}</td>
-			<td class="text">
-				{if $item.risk eq 'safe'}
-					{icon _id=accept alt="$item.risk" style="vertical-align:middle"}
-				{elseif $item.risk eq 'risky'}
-					{icon _id=exclamation alt="$item.risk" style="vertical-align:middle"}
-				{elseif $item.risk eq 'unsafe'}
-					{icon _id=exclamation alt="$item.risk" style="vertical-align:middle"}
-				{elseif $item.risk eq 'unknown'}
-					{icon _id=error alt="$item.risk" style="vertical-align:middle"}
-				{/if}
-				{$item.risk}
-			</td>
-			<td class="text">{$item.message}</td>
-		</tr>
-	{/foreach}
-	{if !$phpsettings}
-         {norecords _colspan=4}
-	{/if}
-</table>
-
-<br />
-
 <h2>{tr}Tiki settings{/tr}</h2>
 <table class="normal">
 	<tr>

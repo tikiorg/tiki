@@ -171,7 +171,8 @@ To test if your installation is capable of sending emails please visit the <a hr
 	{$no_apache_properties}
 {/if}
 
-<h2>{tr}PHP security properties{/tr}</h2>
+<h2>{tr}PHP Security properties{/tr}</h2>
+To check the file integrity of your Tiki installation, go to <a href="tiki-admin_security.php">Admin->Security</a>.
 <table class="normal">
 	<tr>
 		<th>{tr}Property{/tr}</th>
