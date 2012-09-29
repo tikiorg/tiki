@@ -35,7 +35,7 @@ function smarty_function_icon($params, $smarty)
 
 	if (empty($tc_theme)) {
 		$current_style = $prefs['style'];
-		$current_style_option = $prefs['style_option'];
+		$current_style_option = isset($prefs['style_option']) ? $prefs['style_option'] : '';
 	} else {
 		$current_style = $tc_theme;
 		$current_style_option = !empty($tc_theme_option) ? $tc_theme_option : '';
