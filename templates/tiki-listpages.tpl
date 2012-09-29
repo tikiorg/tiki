@@ -14,13 +14,13 @@
 	<input type="hidden" name="find" value="{$find|escape}" />
 	<input type="hidden" name="maxRecords" value="{$maxRecords|escape}" />
 </form>
-		{if $error}
+		{if isset($error) and $error}
 <div class="simplebox highlight">
 			{$error}
 </div>
 		{/if}
 
-{if $mapview}
+{if isset($mapview) and $mapview}
 {wikiplugin _name="googlemap" type="objectlist" width="400" height="400"}{/wikiplugin}
 {/if}
 
