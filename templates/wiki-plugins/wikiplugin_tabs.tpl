@@ -1,7 +1,7 @@
 {* $Id$ 
  * smarty template for tabs wiki plugin 
  *}
-{if $is_slideshow eq 'y'}
+{if isset($is_slideshow) and $is_slideshow eq 'y'}
 	{foreach from=$tabs key=i item=tab}
 		{$tabcontent[$i]}
 	{/foreach}
