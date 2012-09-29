@@ -111,8 +111,8 @@
         <!--Note that email validation will not work if tiki-register.php is rewritten. -->
 				<!--<rule name="Imported Rule 21bis" stopProcessing="true">
 				  <match url="^register$" ignoreCase="false" />
-				  <action type="Rewrite" url="tiki-register.php" />-->
-				</rule>
+				  <action type="Rewrite" url="tiki-register.php" />
+				</rule>-->
 				<rule name="Imported Rule 22" stopProcessing="true">
 				  <match url="^my$" ignoreCase="false" />
 				  <action type="Rewrite" url="tiki-my_tiki.php" />
