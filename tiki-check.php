@@ -449,13 +449,13 @@ if ($s) {
 	$php_properties['magic_quotes_gpc'] = array(
 		'fitness' => tra('bad'),
 		'setting' => 'On',
-		'message' => tra('magic_quotes_gpc is deprecated and should be off by default. See the PHP manual for details. You may experience weird behaviour of your Tiki.')
+		'message' => tra('Some features like assigning perms to a group with a name containing a quote will not work with this being on. magic_quotes_gpc is also deprecated and should be off by default. See the PHP manual for details. You may experience weird behaviour of your Tiki.')
 	);
 } else {
 	$php_properties['magic_quotes_gpc'] = array(
 		'fitness' => tra('good'),
 		'setting' => 'Off',
-		'message' => tra('Well set! And you are future proof also as magic_quotes_gpc is deprecated.')
+		'message' => tra('Well set! Some features like assigning perms to a group with a name containing a quote will not work with this being on. And you are future proof also as magic_quotes_gpc is deprecated.')
 	);
 }
 
@@ -1074,6 +1074,23 @@ if ( function_exists('apache_get_version')) {
 			'message' => tra('This module can increase security of your Tiki and therefore your server, but be warned that it is very tricky to configure it correctly. A misconfiguration can lead to failed page saves or other hard to trace bugs.')
 		);
 	}
+
+	// Get /server-info, if available
+	if (function_exists('curl_init')) {
+		$curl = curl_init();
+		curl_setopt($curl, CURLOPT_URL, 'http://localhost/server-info');
+		curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+		curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 5);
+		$apache_server_info = curl_exec($curl);
+		if (curl_getinfo($curl, CURLINFO_HTTP_CODE) == 200) {
+			$apache_server_info = preg_replace('%^.*<body>(.*)</body>.*$%ms', '$1', $apache_server_info);
+		} else {
+			$apache_server_info = false;
+		}
+		curl_close($curl);
+	} else {
+		$apache_server_info = 'nocurl';
+	}
 }
 
 // Security Checks
@@ -1316,6 +1333,17 @@ if ($standalone) {
 	echo '<h2>Apache properties</h2>';
 	if ($apache_properties) {
 		renderTable($apache_properties);
+		if ($apache_server_info != 'nocurl' && $apache_server_info != false) {
+			if (isset($_REQUEST['apacheinfo']) && $_REQUEST['apacheinfo'] == 'y') {
+				print $apache_server_info;
+			} else {
+				echo '<a href="'.$_SERVER['SCRIPT_NAME'].'?'.$_SERVER['QUERY_STRING'].'&apacheinfo=y">Append Apache /server-info;</a>';
+			}
+		} elseif ($apache_server_info == 'nocurl') {
+			echo 'You don\'t have the Curl extension in PHP, so we can\'t append Apache\'s server-info.';
+		} else {
+			echo 'Apparantly you have not enabled mod_info in your Apache, so we can\'t append more verbose information to this output.';
+		}
 	} else {
 		echo 'You are either not running the preferred Apache web server or you are running PHP with a SAPI that does not allow checking Apache properties (e.g. CGI or FPM).';
 	}
@@ -1332,7 +1360,7 @@ if ($standalone) {
 		$info = preg_replace('%^.*<body>(.*)</body>.*$%ms', '$1', $info);
 		print($info);
 	} else {
-		echo '<a href="'.$_SERVER['REQUEST_URI'].'?phpinfo=y">Append phpinfo();</a>';
+		echo '<a href="'.$_SERVER['SCRIPT_NAME'].'?'.$_SERVER['QUERY_STRING'].'&phpinfo=y">Append phpinfo();</a>';
 	}
 } else {
 	$smarty->assign_by_ref('server_information', $server_information);
