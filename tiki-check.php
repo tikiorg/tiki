@@ -988,6 +988,42 @@ if ( function_exists('apache_get_version')) {
 		);
 	}
 
+	if (!$standalone) {
+		// work out if RewriteBase is set up properly
+		global $url_path;
+		$enabledFileName = '.htaccess';
+		if (file_exists($enabledFileName)) {
+			$enabledFile = fopen($enabledFileName, "r");
+			$rewritebase = '/';
+			while ($nextLine = fgets($enabledFile)) {
+				if (preg_match('/^RewriteBase\s*(.*)$/', $nextLine, $m)) {
+					$rewritebase = substr($m[1], -1) !== '/' ? $m[1] . '/' : $m[1];
+					break;
+				}
+			}
+			if ($url_path == $rewritebase) {
+				$smarty->assign('rewritebaseSetting', $rewritebase);
+				$apache_properties['RewriteBase'] = array(
+					'setting' => $rewritebase,
+					'fitness' => tra('good') ,
+					'message' => tra('Your RewriteBase is set correctly in .htaccess. Search Engine Friendly URLs should work. Beware though that we can\'t check if Apache really loads .htaccess.')
+				);
+			} else {
+				$apache_properties['RewriteBase'] = array(
+					'setting' => $rewritebase,
+					'fitness' => tra('bad') ,
+					'message' => tra('Your RewriteBase is not set correctly in .htaccess. Search Engine Friendly URLs are not going to work like that. It should be set to "').substr($url_path, 0, -1).'".'
+				);
+			}
+		} else {
+			$apache_properties['RewriteBase'] = array(
+				'setting' => $rewritebase,
+				'fitness' => tra('info') ,
+				'message' => tra('You haven\'t activated .htaccess. So this check is useless. If you want to use Search Engine Friendly URLs, you will have to activate .htaccess by copying _htaccess into its place. Then come back to have a look at this check again.')
+			);
+		}
+	}
+
 	// mod_expires
 	$s = false;
 	$s = array_search('mod_expires', $apache_modules);
