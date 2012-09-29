@@ -3,10 +3,10 @@
 {title help="Forums" admpage="forums"}{tr}Admin Forums{/tr}{/title}
 
 <div class="navbar">
-	{if $tiki_p_admin_forum eq 'y' && $forumId > 0 or $dup_mode eq 'y'}
+	{if $tiki_p_admin_forum eq 'y' && $forumId > 0 or (isset($dup_mode) and $dup_mode eq 'y')}
 		{button href="?" _text="{tr}Create New Forum{/tr}"}
 	{/if}
-	{if $tiki_p_admin_forum eq 'y' && $dup_mode ne 'y'}
+	{if $tiki_p_admin_forum eq 'y' && (!isset($dup_mode) or $dup_mode ne 'y')}
 		{button href="tiki-admin_forums.php?dup_mode=y" _text="{tr}Duplicate Forum{/tr}"}
 	{/if}
 	{if $forumId > 0}
@@ -118,7 +118,7 @@
 
 {tab name="{tr}Create/Edit Forums{/tr}"}
 
-{if $dup_mode != 'y'}
+{if !isset($dup_mode) or $dup_mode != 'y'}
 	{if $forumId > 0}
 		<h2>{tr}Edit this Forum:{/tr} {$name|escape}</h2>
 		{include file='object_perms_summary.tpl' objectName=$name objectType='forum' objectId=$forumId permType=$permsType}
