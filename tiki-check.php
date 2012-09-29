@@ -1187,6 +1187,43 @@ if ($s == 1) {
 	);
 }
 
+if (!$standalone) {
+	// The following is borrowed from tiki-admin_system.php
+	if ($prefs['feature_forums'] == 'y') {
+		include_once ('lib/comments/commentslib.php');
+		$commentslib = new Comments($dbTiki);
+		$dirs = $commentslib->list_directories_to_save();
+	} else {
+		$dirs = array();
+	}
+	if ($prefs['feature_galleries'] == 'y' && !empty($prefs['gal_use_dir'])) {
+		$dirs[] = $prefs['gal_use_dir'];
+	}
+	if ($prefs['feature_file_galleries'] == 'y' && !empty($prefs['fgal_use_dir'])) {
+		$dirs[] = $prefs['fgal_use_dir'];
+	}
+	if ($prefs['feature_trackers'] == 'y') {
+		if (!empty($prefs['t_use_dir'])) $dirs[] = $prefs['t_use_dir'];
+		$dirs[] = 'img/trackers';
+	}
+	if ($prefs['feature_wiki'] == 'y') {
+		if (!empty($prefs['w_use_dir'])) $dirs[] = $prefs['w_use_dir'];
+		if ($prefs['feature_create_webhelp'] == 'y') $dirs[] = 'whelp';
+		$dirs[] = 'img/wiki';
+		$dirs[] = 'img/wiki_up';
+	}
+	if ($prefs['feature_maps'] && !empty($prefs['map_path'])) {
+		$dirs[] = $prefs['map_path'];
+	}
+	$dirs = array_unique($dirs);
+	$dirsExist = array();
+	foreach ($dirs as $i => $d) {
+		$dirsWritable[$i] = is_writable($d);
+	}
+	$smarty->assign_by_ref('dirs', $dirs);
+	$smarty->assign_by_ref('dirsWritable', $dirsWritable);
+}
+
 if ($standalone) {
 	echo '<style type="text/css">td, th { border: 1px solid #000000; vertical-align: baseline;}</style>';
 	echo '<h1>Tiki Server Compatibility</h1>';

@@ -204,6 +204,39 @@ To check the file integrity of your Tiki installation, go to <a href="tiki-admin
 	{/foreach}
 </table>
 
+<h2>Special directories</h2>
+To backup these directories go to <a href="tiki-admin_system.php">Admin->Tiki Cache/SysAdmin</a>.
+{if count($dirs)}
+	<table class="normal">
+		<tr>
+			<th>{tr}Directory{/tr}</th>
+			<th>{tr}Fitness{/tr}</th>
+			<th>{tr}Explanation{/tr}</th>
+		</tr>
+		{cycle values="even,odd" print=false}
+		{foreach from=$dirs item=d key=k}
+			<tr class="{cycle}">
+				<td class="text">{$d|escape}</td>
+				<td class="text">
+					{if $dirsWritable[$k]}
+						{icon _id=accept alt="$item.fitness" style="vertical-align:middle"}
+					{else}
+						{icon _id=exclamation alt="$item.fitness" style="vertical-align:middle"}
+					{/if}
+				</td>
+				<td>
+					{if $dirsWritable[$k]}
+						Directory is writeable.
+					{else}
+						Directory is not writeable!
+					{/if}
+				</td>
+			</tr>
+		{/foreach}
+	</table>
+{/if}
+
+
 <h2>{tr}MySQL Variable Information{/tr}</h2>
 <table class="normal">
 	<tr>
