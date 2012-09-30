@@ -25,14 +25,14 @@
 
 <a class="link" href="tiki-forums.php">{tr}Forums{/tr}</a> 
 {$prefs.site_crumb_seper} 
-<a class="link" href="tiki-view_forum.php?forumId={$forumId}">{$forum_info.name|escape}</a>{if $thread_info.topic.threadId} 
+<a class="link" href="tiki-view_forum.php?forumId={$forumId}">{$forum_info.name|escape}</a>{if isset($thread_info.topic.threadId) and $thread_info.topic.threadId}
 {$prefs.site_crumb_seper} 
-<a class="link" href="tiki-view_forum_thread.php?comments_parentId={$thread_info.topic.threadId}{if $smarty.request.topics_offset}&amp;topics_offset={$smarty.request.topics_offset}{/if}{$topics_sort_mode_param}{$topics_threshold_param}{$topics_find_param}">{$thread_info.topic.title}</a>{/if} 
+<a class="link" href="tiki-view_forum_thread.php?comments_parentId={$thread_info.topic.threadId}{if $smarty.request.topics_offset}&amp;topics_offset={$smarty.request.topics_offset}{/if}{$topics_sort_mode_param}{$topics_threshold_param}{$topics_find_param}">{$thread_info.topic.title}</a>{/if}
 {$prefs.site_crumb_seper} 
 {$thread_info.title|escape}
 
 <div style="text-align: right; margin-bottom: 15px;">
-{if !$thread_info.topic.threadId}
+{if empty($thread_info.topic.threadId)}
 	<span>
 	{if ($prev_topic and $prev_topic ne $comments_parentId) or $next_topic}[ {if $prev_topic and $prev_topic ne $comments_parentId}<a href="tiki-view_forum_thread.php?comments_parentId={$prev_topic}&amp;topics_offset={$topics_prev_offset}{$topics_sort_mode_param}{$topics_threshold_param}{$topics_find_param}{$comments_per_page_param}{$thread_style_param}{$thread_sort_mode_param}{$comments_threshold_param}" class="link">{tr}prev topic{/tr}</a>{if $next_topic} | {/if}{/if}
 	{if $next_topic}<a href="tiki-view_forum_thread.php?comments_parentId={$next_topic}&amp;topics_offset={$topics_next_offset}{$topics_sort_mode_param}{$topics_threshold_param}{$topics_find_param}{$comments_per_page_param}{$thread_style_param}{$thread_sort_mode_param}{$comments_threshold_param}" class="link">{tr}next topic{/tr}</a>{/if} ]{/if}
@@ -54,7 +54,7 @@
 			{/if}
 		{/if}
 
-		{if $tiki_p_forum_lock eq 'y'}
+		{if isset($tiki_p_forum_lock) and $tiki_p_forum_lock eq 'y'}
 			{if $thread_info.locked eq 'y'}
 				{self_link lock='n' _icon='lock_break' _alt="{tr}Unlock{/tr}"}{/self_link}
 			{else}

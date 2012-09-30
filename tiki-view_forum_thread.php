@@ -132,7 +132,7 @@ $smarty->assign('topics_next_offset', $_REQUEST['topics_offset'] + 1);
 $smarty->assign('topics_prev_offset', $_REQUEST['topics_offset'] - 1);
 
 $threads = $commentslib->get_forum_topics($_REQUEST['forumId'], max(0, $_REQUEST['topics_offset'] - 1), 3, $_REQUEST["topics_sort_mode"]);
-if ($threads[0]['threadId'] == $_REQUEST['comments_parentId'] && count($threads) >= 1) {
+if ($threads[0]['threadId'] == $_REQUEST['comments_parentId'] && count($threads) >= 1 && isset($threads[1])) {
 	$next_thread = $threads[1];
 	$smarty->assign('next_topic', $next_thread['threadId']);
 } elseif (count($threads) >= 2 && $threads[1]['threadId'] == $_REQUEST['comments_parentId']) {
@@ -190,8 +190,10 @@ if ($tiki_p_forums_report == 'y' && isset($_REQUEST['report'])) {
 	die;
 }
 //shows a "thanks for reporting" message
-if (isset($_REQUEST["post_reported"]) && $_REQUEST["post_reported"] == 'y') {
-	$smarty->assign('post_reported', 'y');
+if (isset($_REQUEST['post_reported'])) {
+	$smarty->assign('post_reported', $_REQUEST['post_reported']);
+} else {
+	$smarty->assign('post_reported', '');
 }
 $smarty->assign_by_ref('forum_info', $forum_info);
 $thread_info = $commentslib->get_comment($_REQUEST["comments_parentId"], null, $forum_info);
