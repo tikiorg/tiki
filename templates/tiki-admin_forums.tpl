@@ -59,7 +59,7 @@
 		{section name=user loop=$channels}
 			<tr class="{cycle}">
 				<td style="text-align:center">
-					<input type="checkbox" name="checked[]" value="{$channels[user].forumId|escape}" {if $smarty.request.checked and in_array($channels[user].forumId,$smarty.request.checked)}checked="checked"{/if} />
+					<input type="checkbox" name="checked[]" value="{$channels[user].forumId|escape}" {if isset($smarty.request.checked) and $smarty.request.checked and in_array($channels[user].forumId,$smarty.request.checked)}checked="checked"{/if} />
 				</td>
 				<td>
 					<a class="link" href="tiki-view_forum.php?forumId={$channels[user].forumId}" title="{tr}View{/tr}">{$channels[user].name|escape}</a>
@@ -73,7 +73,7 @@
 				<td class="action">
 					<a class="link" href="tiki-view_forum.php?forumId={$channels[user].forumId}" title="{tr}View{/tr}">{icon _id='table' alt="{tr}View{/tr}"}</a>
 
-{if $tiki_p_forum_lock eq 'y'}
+{if isset($tiki_p_forum_lock) and $tiki_p_forum_lock eq 'y'}
 	{if $channels[user].is_locked eq 'y'}
 		{self_link _icon='lock_break' _alt="{tr}Unlock{/tr}" lock='n' forumId=$channels[user].forumId}{/self_link}
 	{else}
@@ -81,10 +81,14 @@
 	{/if}
 {/if}
 
-{if ($tiki_p_admin eq 'y') or (($channels[user].individual eq 'n') and ($tiki_p_admin_forum eq 'y')) or ($channels[user].individual_tiki_p_admin_forum eq 'y')}
+{if ($tiki_p_admin eq 'y')
+	or ((isset($channels[user].individual) and $channels[user].individual eq 'n')
+	and ($tiki_p_admin_forum eq 'y'))
+	or ($channels[user].individual_tiki_p_admin_forum eq 'y')
+}
 			{self_link _icon='page_edit' cookietab='2' _anchor='anchor2' forumId=$channels[user].forumId}{tr}Edit{/tr}{/self_link}
 
-						{if $channels[user].individual eq 'y'}
+						{if isset($channels[user].individual) and $channels[user].individual eq 'y'}
 							<a class="link" href="tiki-objectpermissions.php?objectName=Forum+{$channels[user].name|escape}&amp;objectType=forum&amp;permType=forums&amp;objectId={$channels[user].forumId}" title="{tr}Active Perms{/tr}">{icon _id='key_active' alt="{tr}Active Perms{/tr}"}</a>
 						{else}
 							<a class="link" href="tiki-objectpermissions.php?objectName=Forum+{$channels[user].name|escape}&amp;objectType=forum&amp;permType=forums&amp;objectId={$channels[user].forumId}" title="{tr}Perms{/tr}">{icon _id='key' alt="{tr}Perms{/tr}"}</a>
