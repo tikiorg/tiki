@@ -50,6 +50,9 @@ $pollIds = array();
 if (!empty($_REQUEST['pollId'])) {
 	$pollIds[] = $_REQUEST['pollId'];
 	$smarty->assign_by_ref('pollId', $_REQUEST['pollId']);
+	$previous = $polllib->get_user_vote('poll' . $_REQUEST['pollId'], $user);
+	if (!empty($previous))
+		$smarty->assign('msg', 'You have voted');
 } else {
 	$polls = $polllib->list_active_polls(0, $_REQUEST['maxRecords'], 'votes_desc', $_REQUEST['find']);
 	foreach ($polls['data'] as $pId) {

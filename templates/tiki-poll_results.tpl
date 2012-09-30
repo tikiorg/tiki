@@ -58,6 +58,11 @@
 
 {section name=x loop=$poll_info_arr}
 <h2><a href="tiki-poll_results.php?pollId={$poll_info_arr[x].pollId}{if !empty($list_votes)}&amp;list=y{/if}">{$poll_info_arr[x].title|escape}</a></h2>
+{if !empty($msg)}
+        {remarksbox type="info"}
+                {$msg}
+        {/remarksbox}
+{/if}
 {if $poll_info_arr[x].from or $poll_info_arr[x].to}
 	<div class="description">
 	{if $poll_info_arr[x].from}{$poll_info_arr[x].from|tiki_short_date}{else}{$poll_info_arr[x].publishDate|tiki_short_date}{/if}

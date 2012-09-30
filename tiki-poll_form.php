@@ -14,12 +14,17 @@ if (!isset($polllib)) {
 }
 $access->check_feature('feature_polls');
 $access->check_permission('tiki_p_vote_poll');
-if (!isset($_REQUEST["pollId"])) {
+if (empty($_REQUEST["pollId"])) {
 	$smarty->assign('msg', tra("No poll indicated"));
 	$smarty->display("error.tpl");
 	die;
 }
 $poll_info = $polllib->get_poll($_REQUEST["pollId"]);
+if (empty($poll_info)) {
+        $smarty->assign('msg', tra("No poll indicated"));
+        $smarty->display("error.tpl");
+        die;
+}
 $options = $polllib->list_poll_options($_REQUEST["pollId"]);
 $smarty->assign_by_ref('menu_info', $poll_info);
 $smarty->assign_by_ref('channels', $options);
