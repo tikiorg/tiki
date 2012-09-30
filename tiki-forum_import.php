@@ -146,6 +146,8 @@ if (isset($_REQUEST["step4"])) {
 		$server = basename($_REQUEST["server"]);
 		if ($server == '') {
 			$smarty->assign('passed', 'false');
+			$smarty->assign('filecheck', '');
+			$smarty->assign('server', '');
 		} else if (file_exists($tmpDir . '/' . $server)) {
 			$smarty->assign('filecheck', $tmpDir);
 			$smarty->assign('passed', 'true');
