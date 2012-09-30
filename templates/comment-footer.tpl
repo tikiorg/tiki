@@ -26,7 +26,7 @@
 		</span>
 	{/if}
 	
-	{if $first eq 'y'}
+	{if isset($first) and $first eq 'y'}
                 <span class="post_reads"><b>{tr}Reads{/tr}</b>: {$comment.hits}</span>
 	{else}
 		<span class="back_to_top"><a href="#tiki-top" title="{tr}top of page{/tr}">{icon  _id='resultset_up' alt="{tr}top of page{/tr}"}</a></span>
@@ -34,7 +34,7 @@
 
 	</div>
 
-	{if $thread_style != 'commentStyle_headers' and $comment.approved eq 'y'}
+	{if $thread_style != 'commentStyle_headers' and isset($comment.approved) and $comment.approved eq 'y'}
 	<div class="actions">
 		{if ( $prefs.feature_comments_locking neq 'y' or $thread_is_locked neq 'y' ) and
 			( $tiki_p_forum_post eq 'y' and ( $forum_is_locked neq 'y' or $prefs.feature_comments_locking neq 'y' ) )}
