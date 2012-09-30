@@ -500,7 +500,7 @@ if (isset($_REQUEST['edit'])) {
 			'show_backlinks'=> $_REQUEST['fgal_list_backlinks'],
 			'wiki_syntax'	=> $_REQUEST['wiki_syntax'],
 			'show_source'	=> $_REQUEST['fgal_list_source'],
-			'icon_fileId'	=> $_REQUEST['fgal_icon_fileId'],
+			'icon_fileId'	=> !empty($_REQUEST['fgal_icon_fileId']) ? $_REQUEST['fgal_icon_fileId'] : null,
 		);
 
 		if ($prefs['feature_file_galleries_templates'] == 'y' && isset($_REQUEST['fgal_template']) && !empty($_REQUEST['fgal_template'])) {
