@@ -2028,7 +2028,7 @@ class TrackerLib extends TikiLib
 							if (!$validator->isValid($f['value'])) {
 								$erroneous_values[] = $f;
 							}
-   	 					break;
+							break;
 						// numeric
 						case 'n':
 							if (!is_numeric($f['value'])) {

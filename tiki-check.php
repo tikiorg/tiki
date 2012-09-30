@@ -1100,7 +1100,7 @@ $security = false;
 // check file upload dir and compare it to tiki root dir
 $s = ini_get('upload_tmp_dir');
 $sn = substr($_SERVER['SCRIPT_NAME'], 0, -14);
-if ( $s != "" && strpos($sn, $s) !== FALSE) {
+if ( $s != "" && strpos($sn, $s) !== false) {
 	$security['upload_tmp_dir'] = array(
 		'fitness' => tra('unsafe') ,
 		'setting' => $s,
@@ -1256,12 +1256,18 @@ if (!$standalone) {
 		$dirs[] = $prefs['fgal_use_dir'];
 	}
 	if ($prefs['feature_trackers'] == 'y') {
-		if (!empty($prefs['t_use_dir'])) $dirs[] = $prefs['t_use_dir'];
+		if (!empty($prefs['t_use_dir'])) {
+			$dirs[] = $prefs['t_use_dir'];
+		}
 		$dirs[] = 'img/trackers';
 	}
 	if ($prefs['feature_wiki'] == 'y') {
-		if (!empty($prefs['w_use_dir'])) $dirs[] = $prefs['w_use_dir'];
-		if ($prefs['feature_create_webhelp'] == 'y') $dirs[] = 'whelp';
+		if (!empty($prefs['w_use_dir'])) {
+			$dirs[] = $prefs['w_use_dir'];
+		}
+		if ($prefs['feature_create_webhelp'] == 'y') {
+			$dirs[] = 'whelp';
+		}
 		$dirs[] = 'img/wiki';
 		$dirs[] = 'img/wiki_up';
 	}

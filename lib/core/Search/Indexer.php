@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -18,9 +18,10 @@ class Search_Indexer
 
 	public $log = null;
 
-	function __construct(Search_Index_Interface $searchIndex, $loggit = false)
+	public function __construct(Search_Index_Interface $searchIndex, $loggit = false)
 	{
-		if ($loggit) {	// unused externally, set this to true here to enable logging
+		if ($loggit) {
+			// unused externally, set this to true here to enable logging
 			include_once 'lib/core/Zend/Log/Writer/Syslog.php';
 			global $prefs;
 			$writer = new Zend_Log_Writer_Stream($prefs['tmpDir'] . '/Search_Indexer.log', 'w');
@@ -32,17 +33,17 @@ class Search_Indexer
 		$this->searchIndex = $searchIndex;
 	}
 
-	function addContentSource($objectType, Search_ContentSource_Interface $contentSource)
+	public function addContentSource($objectType, Search_ContentSource_Interface $contentSource)
 	{
 		$this->contentSources[$objectType] = $contentSource;
 	}
 
-	function addGlobalSource(Search_GlobalSource_Interface $globalSource)
+	public function addGlobalSource(Search_GlobalSource_Interface $globalSource)
 	{
 		$this->globalSources[] = $globalSource;
 	}
 
-	function addContentFilter(Zend_Filter_Interface $filter)
+	public function addContentFilter(Zend_Filter_Interface $filter)
 	{
 		$this->contentFilters[] = $filter;
 	}
@@ -51,7 +52,7 @@ class Search_Indexer
 	 * Rebuild the entire index.
 	 * @return array
 	 */
-	function rebuild()
+	public function rebuild()
 	{
 		$this->log->info('Starting rebuild');
 		$stat = array_fill_keys(array_keys($this->contentSources), 0);
@@ -61,7 +62,7 @@ class Search_Indexer
 				$stat[$objectType] += $this->addDocument($objectType, $objectId);
 			}
 		}
-		
+
 		$this->log->info('Starting optimization');
 		$this->searchIndex->optimize();
 		$this->log->info('Finished optimization');
@@ -69,12 +70,12 @@ class Search_Indexer
 		return $stat;
 	}
 
-	function update($searchArgument)
+	public function update($searchArgument)
 	{
 		if (is_array($searchArgument)) {
 			$query = new Search_Query;
 			foreach ($searchArgument as $object) {
-				$obj2array=(array)$object;
+				$obj2array=(array) $object;
 				$query->addObject($obj2array['object_type'], $obj2array['object_id']);
 			}
 
@@ -85,7 +86,7 @@ class Search_Indexer
 		}
 
 		foreach ($objectList as $object) {
-			$obj2array=(array)$object;
+			$obj2array=(array) $object;
 			$this->addDocument($obj2array['object_type'], $obj2array['object_id']);
 		}
 	}
@@ -118,7 +119,7 @@ class Search_Indexer
 				foreach ($data as $entry) {
 					try {
 						$this->addDocumentFromContentData($objectType, $objectId, $entry, $typeFactory, $globalFields);
-					} catch(Exception $e) {
+					} catch (Exception $e) {
 						$msg = tr('Indexing failed while processing "%0" (type %1) with the error "%2"', $objectId, $objectType, $e->getMessage());
 						TikiLib::lib('errorreport')->report($msg);
 						$this->log->err($msg);

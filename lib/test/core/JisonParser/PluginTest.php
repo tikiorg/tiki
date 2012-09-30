@@ -7,7 +7,8 @@
 
 class JisonParser_PluginTest extends JisonParser_Abstract
 {
-	function provider() {
+	public function provider()
+	{
 		$this->syntaxSets = array(
 			"html_plugin" => array(),
 			"injected_plugin" => array(),
@@ -16,7 +17,7 @@ class JisonParser_PluginTest extends JisonParser_Abstract
 		);
 	}
 
-	function html_plugin()
+	public function html_plugin()
 	{
 		$this->parser->setOption(array(
 			'is_html' => true,
@@ -36,7 +37,7 @@ class JisonParser_PluginTest extends JisonParser_Abstract
 		return array("parsed" => $parsed, "syntax" => $syntax);
 	}
 
-	function injected_plugin()
+	public function injected_plugin()
 	{
 		$this->parser->setOption(array(
 			'is_html' => true,
@@ -62,7 +63,7 @@ class JisonParser_PluginTest extends JisonParser_Abstract
 		return array("parsed" => $parsed, "syntax" => $syntax);
 	}
 
-	function injected_plugin_blocked()
+	public function injected_plugin_blocked()
 	{
 		$plugin = new WikiPlugin_injected();
 		$plugin->validate = 'all';
@@ -96,7 +97,7 @@ class JisonParser_PluginTest extends JisonParser_Abstract
 		return array("parsed" => $parsed, "syntax" => $syntax);
 	}
 
-	function rejected_plugin_default_validation_behavior()
+	public function rejected_plugin_default_validation_behavior()
 	{
 		$syntax = array(
 			"{HTML()}<div>I shouldn't show up</div>{HTML}"
@@ -129,7 +130,7 @@ class WikiPlugin_injected extends WikiPlugin_HtmlBase
 	public $type = "injected";
 	public $np = false;
 
-	function output(&$data, &$params, &$index, &$parser)
+	public function output(&$data, &$params, &$index, &$parser)
 	{
 		return $data;
 	}

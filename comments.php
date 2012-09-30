@@ -38,11 +38,13 @@ if ( $prefs['forum_thread_user_settings'] == 'y' && $prefs['forum_thread_user_se
 	// ... we check session vars
 	//  !! Session var is not used when there is an explicit user request !!
 
-	foreach ( $handled_requests as $request_name )
-		if ( isset($_SESSION['forums_'.$request_name]) && ! isset($_REQUEST[$request_name]) )
+	foreach ($handled_requests as $request_name) {
+		if ( isset($_SESSION['forums_'.$request_name]) && ! isset($_REQUEST[$request_name]) ) {
 			$$request_name = $_SESSION['forums_'.$request_name];
+		}
+	}
 }
-foreach ( $handled_requests as $request_name ) {
+foreach ($handled_requests as $request_name) {
 	if ( empty($$request_name) && empty($_REQUEST[$request_name]) ) {
 		$$request_name = $prefs['forum_'.$request_name];
 	} elseif ( empty($$request_name) && !empty($_REQUEST[$request_name]) ) {
@@ -57,9 +59,13 @@ if ( $forum_info['is_flat'] == 'y' ) {
 }
 
 // Assign final values to smarty vars in order
-foreach ( $handled_requests as $request_name ) $smarty->assign($request_name, $$request_name);
+foreach ($handled_requests as $request_name) {
+	$smarty->assign($request_name, $$request_name);
+}
 
-if ( ! isset($_REQUEST["comment_rating"]) ) $_REQUEST["comment_rating"] = '';
+if ( ! isset($_REQUEST["comment_rating"]) ) {
+	$_REQUEST["comment_rating"] = '';
+}
 $comments_aux = array();
 
 // show/hide comments zone on request and store the status in a cookie (also works with javascript off)
@@ -68,10 +74,14 @@ if (isset($_REQUEST['comzone'])) {
 	$comzone_state = $_REQUEST['comzone'];
 	if ($comzone_state=='show'||$comzone_state=='o') {
 		$comments_show = 'y';
-		if (!isset($_COOKIE['comzone'])||$_COOKIE['comzone']=='c') setcookie('comzone', 'o');
+		if (!isset($_COOKIE['comzone'])||$_COOKIE['comzone']=='c') {
+			setcookie('comzone', 'o');
+		}
 	}
 	if ($comzone_state=='hide'||$comzone_state=='c') {
-		if (!isset($_COOKIE['comzone'])||$_COOKIE['comzone']=='o') setcookie('comzone', 'c');
+		if (!isset($_COOKIE['comzone'])||$_COOKIE['comzone']=='o') {
+			setcookie('comzone', 'c');
+		}
 	}
 } else {
 	$comments_show = 'n';
@@ -162,16 +172,21 @@ if ( isset($_REQUEST['comments_objectId']) && $_REQUEST['comments_objectId'] == 
 	$threadId = $commentslib->post_in_forum($forum_info, $_REQUEST, $feedbacks, $errors);
 	if (!empty($threadId) && empty($errors)) {
 		$url = "tiki-view_forum_thread.php?forumId=" . $_REQUEST['forumId'] . "&comments_parentId=" . $_REQUEST['comments_parentId'];
-		if (!empty($_REQUEST['comments_threshold']))
+		if (!empty($_REQUEST['comments_threshold'])) {
 			$url .= "&amp;comments_threshold=".$_REQUEST['comments_threshold'];
-		if (!empty($_REQUEST['comments_offset']))
+		}
+		if (!empty($_REQUEST['comments_offset'])) {
 			$url .= "&amp;comments_offset=".$_REQUEST['comments_offset'];
-		if (!empty($_REQUEST['comments_per_page']))
+		}
+		if (!empty($_REQUEST['comments_per_page'])) {
 			$url .= "&amp;comments_per_page=".$_REQUEST['comments_per_page'];
-		if (!empty($_REQUEST['thread_style']))
+		}
+		if (!empty($_REQUEST['thread_style'])) {
 			$url .= "&amp;thread_style=".$_REQUEST['thread_style'];
-		if (!empty($_REQUEST['thread_sort_mode']))
+		}
+		if (!empty($_REQUEST['thread_sort_mode'])) {
 			$url .= "&amp;thread_sort_mode=".$_REQUEST['thread_sort_mode'];
+		}
 		if (!empty($feedbacks)) {
 			$_SESSION['feedbacks'] = $feedbacks;
 		}
@@ -297,7 +312,11 @@ if ( isset($_REQUEST['comments_per_page']) || isset($_REQUEST['thread_style']) |
 	$comments_show = 'y';
 }
 
-if (!isset($_REQUEST["comments_commentFind"])) $_REQUEST["comments_commentFind"] = ''; else $comments_show = 'y';
+if (!isset($_REQUEST["comments_commentFind"])) {
+	$_REQUEST["comments_commentFind"] = '';
+} else {
+	$comments_show = 'y';
+}
 
 // Offset setting for the list of comments
 if (!isset($_REQUEST["comments_offset"])) {
@@ -323,10 +342,11 @@ if ($forum_check[0] == 'forum' ) {
 $smarty->assign('comments_grandParentId', isset($_REQUEST['comments_grandParentId'])
 	? $_REQUEST['comments_grandParentId'] : '');
 
-if (isset($_REQUEST["post_reply"]) && isset($_REQUEST["comments_reply_threadId"]))
+if (isset($_REQUEST["post_reply"]) && isset($_REQUEST["comments_reply_threadId"])) {
 	$threadId_if_reply = $_REQUEST["comments_reply_threadId"];
-else
+} else {
 	$threadId_if_reply = 0;
+}
 
 if (empty($thread_sort_mode)) {
 	if ( !empty($_REQUEST['thread_sort_mode'])) {

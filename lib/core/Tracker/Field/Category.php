@@ -73,7 +73,7 @@ class Tracker_Field_Category extends Tracker_Field_Abstract implements Tracker_F
 		);
 	}
 
-	function getFieldData(array $requestData = array())
+	public function getFieldData(array $requestData = array())
 	{
 		$key = 'ins_' . $this->getConfiguration('fieldId');
 		$parentId = $this->getOption(0);
@@ -99,12 +99,12 @@ class Tracker_Field_Category extends Tracker_Field_Abstract implements Tracker_F
 		return $data;
 	}
 
-	function renderInput($context = array())
+	public function renderInput($context = array())
 	{
 		return $this->renderTemplate('trackerinput/category.tpl', $context);
 	}
 
-	function renderInnerOutput($context = array())
+	public function renderInnerOutput($context = array())
 	{
 		$selected_categories = $this->getConfiguration('selected_categories');
 		$categories = $this->getConfiguration('list');
@@ -120,14 +120,14 @@ class Tracker_Field_Category extends Tracker_Field_Abstract implements Tracker_F
 		return implode('<br/>', $ret);
 	}
 
-	function handleSave($value, $oldValue)
+	public function handleSave($value, $oldValue)
 	{
 		return array(
 			'value' => $value,
 		);
 	}
 
-	function watchCompare($old, $new)
+	public function watchCompare($old, $new)
 	{
 		$old = array_filter(explode(',', $old));
 		$new = array_filter(explode(',', $new));
@@ -191,17 +191,17 @@ class Tracker_Field_Category extends Tracker_Field_Abstract implements Tracker_F
 		return TikiLib::lib('categ')->get_object_categories('trackeritem', $this->getItemId());
 	}
 
-	function importRemote($value)
+	public function importRemote($value)
 	{
 		return $value;
 	}
 
-	function exportRemote($value)
+	public function exportRemote($value)
 	{
 		return $value;
 	}
 
-	function importRemoteField(array $info, array $syncInfo)
+	public function importRemoteField(array $info, array $syncInfo)
 	{
 		$sourceOptions = explode(',', $info['options']);
 		$parentId = isset($sourceOptions[0]) ? (int) $sourceOptions[0] : 0;
@@ -223,10 +223,10 @@ class Tracker_Field_Category extends Tracker_Field_Abstract implements Tracker_F
 	{
 		$controller = new Services_RemoteController($syncInfo['provider'], 'category');
 		$categories = $controller->list_categories(
-						array(
-							'parentId' => $parentId,
-							'descends' => $descending,
-						)
+			array(
+				'parentId' => $parentId,
+				'descends' => $descending,
+			)
 		);
 
 		$parts = array();
