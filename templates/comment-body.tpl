@@ -4,8 +4,10 @@
 	<div class="clearfix author">
 
 	{if $thread_style != 'commentStyle_headers'}
-		{if $forum_info.ui_avatar eq 'y' and $comment.userName|avatarize}
-		<span class="avatar">{$comment.userName|avatarize}</span>
+		{if $forum_info.ui_avatar eq 'y' and isset($comment.userName) and $comment.userName|avatarize}
+			<span class="avatar">
+				{$comment.userName|avatarize}
+			</span>
 		{/if}
 	{/if}
 
@@ -14,7 +16,7 @@
 			<span class="author_post_info">
 				{if isset($comment.anonymous_name) and $comment.anonymous_name}
 					{tr}Posted by{/tr} <span class="author_post_info_by">{if $comment.website}<a href="{$comment.website}" target="_blank">{/if}{$comment.anonymous_name}{if $comment.website}</a>{/if}</span>
-				{elseif $comment.userName}
+				{elseif isset($comment.userName)}
 					{tr}Posted by{/tr} <span class="author_post_info_by">{$comment.userName|userlink}</span>
 				{/if}
 				{if $comment.commentDate > 0}
@@ -33,7 +35,7 @@
 			</span>
 			{/if}
 
-			{if $comment.userName}
+			{if isset($comment.userName)}
 			<span class="icons">
 			<span class="actions">
 			{if $prefs.feature_messages eq 'y' and $tiki_p_messages eq 'y'}   
@@ -70,7 +72,7 @@
 
 </div>
 
-{if $thread_style != 'commentStyle_headers' and count($comment.attachments) > 0}
+{if $thread_style != 'commentStyle_headers' and isset($comment.attachments) and count($comment.attachments) > 0}
 <div class="attachments">
 	{section name=ix loop=$comment.attachments}
 	<a class="link" href="tiki-download_forum_attachment.php?attId={$comment.attachments[ix].attId}">
@@ -90,7 +92,7 @@
 </div>
 {/if}
 
-{if $comment.deliberations and $tiki_p_forum_vote eq 'y'}
+{if isset($comment.deliberations) and $tiki_p_forum_vote eq 'y'}
 	<div>
 		<div class="ui-widget-header">{tr}Deliberation Items{/tr}</div>
 		{foreach from=$comment.deliberations item=deliberation}
