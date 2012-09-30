@@ -273,8 +273,8 @@ function wikiplugin_countdown($data, $params)
 		$show_months =  true;
 		$show_days = true;
 		$show_hours = true;
-		$show_minutes = true;
-		$show_seconds = true;
+		$show_minutes = false;
+		$show_seconds = false;
 	} else {
 		$show_years = (strpos($show, 'y') === false) ? false : true;
 		$show_months = (strpos($show, 'o') === false)  ? false : true;
@@ -407,10 +407,10 @@ function wikiplugin_countdown($data, $params)
 		}
 		//add text
 		if (!isset($text) || ($text && $text != 'silent')) {
-			if ($text == 'default' || strpos($text, '|') === false) {
+			$word = '';
+			if (isset($text) && ($text == 'default' || strpos($text, '|') === false)) {
 				//if $ret is empty here, it means the time before/after the event is shorter than the smallest unit of time being shown
 				if (empty($ret)) {
-					$word = '';
 					if ($diff['invert'] == 1) {
 						switch (substr($show, -1)) {
 							case 'y':
@@ -462,11 +462,10 @@ function wikiplugin_countdown($data, $params)
 						$word = tra('since');
 					}
 				}
-			} elseif (strpos($text, '|') !== false) {
+			} elseif (!empty($text) && strpos($text, '|') !== false) {
 				$custom = explode('|', $text);
 				//if $ret is empty here, it means the time before/after the event is shorter than the unit of time being shown
 				if (empty($ret)) {
-					$word = '';
 					if ($diff['invert'] == 1) {
 						//$custom[1] = text to display before event occurs
 						$data = $data . ' ' . $custom[1];
