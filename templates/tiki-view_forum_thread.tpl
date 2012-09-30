@@ -101,10 +101,10 @@
 
 			<small>{tr}Show posts:{/tr}</small>
 			<select name="time_control" onchange="javascript:document.getElementById('time_control').submit();">
-				<option value="" {if $smarty.request.time_control eq ''}selected="selected"{/if}>{tr}All posts{/tr}</option>
-				<option value="3600" {if $smarty.request.time_control eq 3600}selected="selected"{/if}>{tr}Last hour{/tr}</option>
-				<option value="86400" {if $smarty.request.time_control eq 86400}selected="selected"{/if}>{tr}Last 24 hours{/tr}</option>
-				<option value="172800" {if $smarty.request.time_control eq 172800}selected="selected"{/if}>{tr}Last 48 hours{/tr}</option>
+				<option value="" {if empty($smarty.request.time_control)}selected="selected"{/if}>{tr}All posts{/tr}</option>
+				<option value="3600" {if isset($smarty.request.time_control) and $smarty.request.time_control eq 3600}selected="selected"{/if}>{tr}Last hour{/tr}</option>
+				<option value="86400" {if isset($smarty.request.time_control) and $smarty.request.time_control eq 86400}selected="selected"{/if}>{tr}Last 24 hours{/tr}</option>
+				<option value="172800" {if isset($smarty.request.time_control) and $smarty.request.time_control eq 172800}selected="selected"{/if}>{tr}Last 48 hours{/tr}</option>
 			</select>
 		</form>
 	</td>
@@ -125,7 +125,7 @@
 		</td>
 </tr></table>
 
-{if $view_atts eq 'y'}
+{if isset($view_atts) and $view_atts eq 'y'}
 <h2 id="attachments">{tr}Attachments{/tr}</h2>
 <table class="normal">
 	<tr>
