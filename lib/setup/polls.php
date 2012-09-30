@@ -10,6 +10,7 @@ $access->check_script($_SERVER['SCRIPT_NAME'], basename(__FILE__));
 
 if ( isset($_REQUEST['pollVote']) && !empty($_REQUEST['polls_pollId']) ) {
 	$ok = true;
+	$voted = false;
 	if (empty($_REQUEST['polls_optionId'])) {
 		$ok = false;
 		$smarty->assign('msg_poll', tra('You must choose an option'));
