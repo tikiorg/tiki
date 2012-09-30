@@ -320,9 +320,8 @@ if ($forum_check[0] == 'forum' ) {
 	$smarty->assign('forumId', $forum_check[1]);
 }
 
-if ( isset( $_REQUEST["comments_grandParentId"] ) ) {
-	$smarty->assign('comments_grandParentId', $_REQUEST["comments_grandParentId"]);
-}
+$smarty->assign('comments_grandParentId', isset($_REQUEST['comments_grandParentId'])
+	? $_REQUEST['comments_grandParentId'] : '');
 
 if (isset($_REQUEST["post_reply"]) && isset($_REQUEST["comments_reply_threadId"]))
 	$threadId_if_reply = $_REQUEST["comments_reply_threadId"];
@@ -382,13 +381,14 @@ if ($comments_offset > 0) {
 $smarty->assign('comments_coms', $comments_coms["data"]);
 
 // Grab the parent comment to show.  -rlpowell
+$parent_com = '';
 if (isset($_REQUEST["comments_parentId"])
 		&& $_REQUEST["comments_parentId"] > 0
 		&& $tiki_p_forum_post == 'y'
 		&& (isset($_REQUEST['comments_previewComment']) || isset($_REQUEST['post_reply']))) {
-	$parent_com = $commentslib->get_comment($_REQUEST["comments_parentId"]);
-	$smarty->assign_by_ref('parent_com', $parent_com);
+	$parent_com = $commentslib->get_comment($_REQUEST['comments_parentId']);
 }
+$smarty->assign_by_ref('parent_com', $parent_com);
 
 // Get comments / forum lock status
 $thread_is_locked = ( ! empty($comments_objectId) && $commentslib->is_object_locked($comments_objectId) ) ? 'y' : 'n';
@@ -397,11 +397,8 @@ $thread_is_locked = $comment_info['locked'];
 $smarty->assign('forum_is_locked', $forum_is_locked);
 $smarty->assign('thread_is_locked', $thread_is_locked);
 
-if (!empty($_REQUEST['post_reply'])) {
-	$smarty->assign('post_reply', $_REQUEST['post_reply']);
-} elseif (!empty($_REQUEST['edit_reply'])) {
-	$smarty->assign('edit_reply', $_REQUEST['edit_reply']);
-}
+$smarty->assign('post_reply', !empty($_REQUEST['post_reply']) ? $_REQUEST['post_reply'] : '');
+$smarty->assign('edit_reply', !empty($_REQUEST['edit_reply']) ? $_REQUEST['edit_reply'] : '');
 
 if ($prefs['feature_contribution'] == 'y') {
 	$contributionItemId = $_REQUEST["comments_threadId"];

@@ -208,7 +208,7 @@
 				<input type="hidden" name="comments_threshold" value="{$comments_threshold|escape}" />
 				<input type="hidden" name="thread_sort_mode" value="{$thread_sort_mode|escape}" />
 				<input type="hidden" name="comments_objectId" value="{$comments_objectId|escape}" />
-				<input type="hidden" name="comments_title" value="{if $page}{$page|escape}{/if}" />
+				<input type="hidden" name="comments_title" value="{if isset($page) and $page}{$page|escape}{/if}" />
 
 				{* Traverse request variables that were set to this page adding them as hidden data *}
 				{section name=i loop=$comments_request_data}
@@ -280,7 +280,7 @@
 
 					<tr>
 						<td>
-							{if $parent_coms}
+							{if isset($parent_coms) and $parent_coms}
 								{tr}Reply to parent post{/tr}
 							{else}
 								{tr}Post new reply{/tr}
