@@ -7,7 +7,7 @@
 		{assign var='this_is_locked' value='y'}
 	{/if}
 
-	{if $thread_style != 'commentStyle_headers' and $this_is_locked eq 'n' and $comment.threadId > 0}
+	{if $thread_style != 'commentStyle_headers' and $this_is_locked eq 'n' and isset($comment.threadId) and $comment.threadId > 0}
 	<div class="actions">
 		{if $tiki_p_admin_forum eq 'y'
 			|| ( $comment.userName == $user && $tiki_p_forum_edit_own_posts eq 'y' )}
@@ -60,9 +60,9 @@
 	</div>
 	{/if}
 
-	{if $first neq 'y'}
+	{if !isset($first) or $first neq 'y'}
 	<div class="checkbox">
-		{if $tiki_p_admin_forum eq 'y' and $comment.threadId > 0}
+		{if $tiki_p_admin_forum eq 'y' and isset($comment.threadId) and $comment.threadId > 0}
 		<input type="checkbox" name="forumthread[]" value="{$comment.threadId|escape}" {if $smarty.request.forumthread and in_array($comment.threadId,$smarty.request.forumthread)}checked="checked"{/if} />
 		{/if}
 	</div>
@@ -70,7 +70,7 @@
 
 	{if $comment.title neq '' && $comment.title neq 'Untitled' && (!isset($page) or $comment.title neq $page)}
 	<div class="title">
-	{if $first eq 'y'}
+	{if isset($first) and $first eq 'y'}
 		<h2>{$comment.title|escape}</h2>
 	{/if}
 
