@@ -12,7 +12,7 @@
 		<span class="author_info">
 
 			<span class="author_post_info">
-				{if $comment.anonymous_name}
+				{if isset($comment.anonymous_name) and $comment.anonymous_name}
 					{tr}Posted by{/tr} <span class="author_post_info_by">{if $comment.website}<a href="{$comment.website}" target="_blank">{/if}{$comment.anonymous_name}{if $comment.website}</a>{/if}</span>
 				{elseif $comment.userName}
 					{tr}Posted by{/tr} <span class="author_post_info_by">{$comment.userName|userlink}</span>
