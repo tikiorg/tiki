@@ -107,7 +107,7 @@
 <tr>
 	<th>{self_link _sort_arg='sort_mode' _sort_field='user'}{tr}User{/tr}{/self_link}</th>
 	<th>{self_link _sort_arg='sort_mode' _sort_field='ip'}{tr}IP{/tr}{/self_link}</th>
-	<th>{self_link _sort_arg='sort_mode' _sort_field='title'}{tr}Option{/tr}{/self_link}</th>
+	{if $tiki_p_view_poll_choices eq 'y'}<th>{self_link _sort_arg='sort_mode' _sort_field='title'}{tr}Option{/tr}{/self_link}</th>{/if}
 	<th>{self_link _sort_arg='sort_mode' _sort_field='time'}{tr}Date{/tr}{/self_link}</th>
 	{if $tiki_p_admin eq 'y'}<th>{tr}Actions{/tr}</th>{/if}
 </tr>
@@ -116,7 +116,7 @@
 <tr class="{cycle}">
 	<td class="username">{$list_votes[ix].user|userlink}</td>
 	<td class="text">{$list_votes[ix].ip|escape}</td>
-	<td class="text">{$list_votes[ix].title|escape}</td>
+	{if $tiki_p_view_poll_choices eq 'y'}<td class="text">{$list_votes[ix].title|escape}</td>{/if}
 	<td class="date">{$list_votes[ix].time|tiki_short_date}</td>
 	{if $tiki_p_admin eq 'y'}<td class="action">{self_link deletevote=1 user=$list_votes[ix].user ip=$list_votes[ix].ip optionId=$list_votes[ix].optionId}{icon _id=cross}{/self_link}</td>{/if}
 </tr>

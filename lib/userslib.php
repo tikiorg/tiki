@@ -4084,6 +4084,15 @@ class UsersLib extends TikiLib
 				'scope' => 'global',
 			),
 			array(
+				'name' => 'tiki_p_view_poll_choices',
+				'description' => tra('Can view poll user choices'),
+				'level' => 'basic',
+				'type' => 'polls',
+				'admin' => false,
+				'prefs' => array('feature_polls'),
+				'scope' => 'object',
+			),
+			array(
 				'name' => 'tiki_p_vote_poll',
 				'description' => tra('Can vote polls'),
 				'level' => 'basic',
