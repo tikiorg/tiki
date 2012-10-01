@@ -7,21 +7,25 @@
 			{/foreach}
 		</tr>
 
-		{foreach from=$descriptions.data item=row}
+		{foreach from=$descriptions key=type item=block}
 			<tr>
-				<td>
-					{$row.description|escape}
-					<div class="description">
-						{$row.name|escape}
-						({$row.type|escape})
-					</div>
-				</td>
-				{foreach from=$permissions key=group item=perms}
-					<td>
-						<input type="checkbox" name="check[{$group|escape}][]" value="{$row.shortName|escape}" {if in_array($row.shortName, $perms)} checked="checked" {/if} />
-					</td>
-				{/foreach}
+				<th colspan="{$permissions|count + 1}">{$type|escape}</th>
 			</tr>
+			{foreach from=$block item=row}
+				<tr>
+					<td>
+						{$row.description|escape}
+						<div class="description">
+							{$row.name|escape}
+						</div>
+					</td>
+					{foreach from=$permissions key=group item=perms}
+						<td>
+							<input type="checkbox" name="check[{$group|escape}][]" value="{$row.shortName|escape}" {if in_array($row.shortName, $perms)} checked="checked" {/if} />
+						</td>
+					{/foreach}
+				</tr>
+			{/foreach}
 		{/foreach}
 	</table>
 </form>

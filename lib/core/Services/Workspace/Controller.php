@@ -282,10 +282,21 @@ class Services_Workspace_Controller
 
 		$userlib = TikiLib::lib('user');
 
+		$descriptions = array();
+		$rawList = $userlib->get_permissions(0, -1, 'permName_asc', '', 'category', '', true);
+		foreach ($rawList['data'] as $raw) {
+			$type = $raw['type'];
+			if (! isset($descriptions[$type])) {
+				$descriptions[$type] = array();
+			}
+
+			$descriptions[$type][] = $raw;
+		}
+
 		return array(
 			'groups' => array_keys($permissions),
 			'permissions' => $permissions,
-			'descriptions' => $userlib->get_permissions(0, -1, 'permName_asc', '', 'category', '', true),
+			'descriptions' => $descriptions,
 		);
 	}
 
