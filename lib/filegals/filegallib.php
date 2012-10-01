@@ -1096,6 +1096,31 @@ class FileGalLib extends TikiLib
 		return (bool) $handlers->delete(array('mime_type' => $mime_type));
 	}
 
+	function get_native_handler($type)
+	{
+		switch ($type) {
+		case 'text/plain':
+			return function (FileGallery_Wrapper $wrapper) {
+				return $wrapper->getContents();
+			};
+		case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
+			return function (FileGallery_Wrapper $wrapper) {
+				$document = Zend_Search_Lucene_Document_Docx::loadDocxFile($wrapper->getReadableFile(), true);
+				return $document->getField('body')->getUtf8Value();
+			};
+		case 'application/vnd.openxmlformats-officedocument.presentationml.presentation':
+			return function (FileGallery_Wrapper $wrapper) {
+				$document = Zend_Search_Lucene_Document_Pptx::loadPptxFile($wrapper->getReadableFile(), true);
+				return $document->getField('body')->getUtf8Value();
+			};
+		case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
+			return function (FileGallery_Wrapper $wrapper) {
+				$document = Zend_Search_Lucene_Document_Xlsx::loadXlsxFile($wrapper->getReadableFile(), true);
+				return $document->getField('body')->getUtf8Value();
+			};
+		}
+	}
+
 	function get_file_handlers($for_execution = false)
 	{
 		$cachelib = TikiLib::lib('cache');
@@ -1117,7 +1142,6 @@ class FileGalLib extends TikiLib
 				'application/x-troff-man' => array('man -l %1'),
 				'text/enriched' => array('col -b %1', 'strings %1'),
 				'text/html' => array('elinks -dump -no-home %1'),
-				'text/plain' => array('col -b %1', 'strings %1'),
 				'text/richtext' => array('col -b %1', 'strings %1'),
 				'text/sgml' => array('col -b %1', 'strings %1'),
 				'text/tab-separated-values' => array('col -b %1', 'strings %1'),
@@ -1175,23 +1199,56 @@ class FileGalLib extends TikiLib
 	{
 		static $fileParseApps;
 
-		if (! $fileParseApps) {
-			$fileParseApps = $this->get_file_handlers(true);
-		}
-
 		$partial = $type;
 
 		if (false !== $p = strpos($partial, ';')) {
 			$partial = substr($partial, 0, $p);
 		}
 
-		if (isset($fileParseApps[$type])) {
-			return $fileParseApps[$type];
-		} elseif (isset($fileParseApps[$partial])) {
-			return $fileParseApps[$partial];
-		} elseif (! $skipDefault && isset($fileParseApps['default'])) {
-			return $fileParseApps['default'];
+		if ($handler = $this->get_native_handler($type)) {
+			return $handler;
 		}
+
+		if ($handler = $this->get_native_handler($partial)) {
+			return $handler;
+		}
+
+		if (! $fileParseApps) {
+			$fileParseApps = $this->get_file_handlers(true);
+		}
+
+		if (isset($fileParseApps[$type])) {
+			return $this->shellExecuteCallback($fileParseApps[$type]);
+		} elseif (isset($fileParseApps[$partial])) {
+			return $this->shellExecuteCallback($fileParseApps[$partial]);
+		} elseif (! $skipDefault && isset($fileParseApps['default'])) {
+			return $this->shellExecuteCallback($fileParseApps['default']);
+		}
+	}
+
+	private function shellExecuteCallback($command)
+	{
+		if (! $command) {
+			return function () {
+				return '';
+			};
+		}
+
+		return function (FileGallery_Wrapper $wrapper) use ($command) {
+			$tmpfname = $wrapper->getReadableFile();
+
+			$cmd = str_replace('%1', escapeshellarg($tmpfname), $command);
+			$handle = popen($cmd, "r");
+
+			if ($handle !== false) {
+				$contents = stream_get_contents($handle);
+				fclose($handle);
+
+				return $contents;
+			}
+
+			return false;
+		};
 	}
 
 	function get_search_text_for_data($data,$path,$type, $galleryId)
@@ -1206,30 +1263,7 @@ class FileGalLib extends TikiLib
 		if (empty($parseApp))
 			return '';
 
-		if (empty($path)) {
-			$tmpfname = tempnam("/tmp", "wiki_");
-			if (false === $tmpFile = @file_put_contents($tmpfname, $data)) {
-				return false;
-			}
-		} else {
-			$savedir = $this->get_gallery_save_dir($galleryId);
-
-			$tmpfname = $savedir . $path;
-		}
-
-		$cmd = str_replace('%1', escapeshellarg($tmpfname), $parseApp);
-		$handle = popen("$cmd", "r");
-		if ($handle !== false) {
-			$contents = stream_get_contents($handle);
-			fclose($handle);
-		} else {
-			$contents = false;
-		}
-
-		if (empty($path))
-			@unlink($tmpfname);
-
-		return $contents;
+		return $parseApp(new FileGallery_Wrapper($data, $path, $galleryId));
 	}
 
 	function notify ($galleryId, $name, $filename, $description, $action, $user, $fileId=false)
