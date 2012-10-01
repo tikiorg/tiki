@@ -73,5 +73,7 @@ $("input[name^=captcha]").parents("tr").hide();
 $("input[name=register]").prop("disabled", true);
 {/if}}
 		{/jq}
+	{elseif $prefs.userTracker eq 'y'}
+		<input type="hidden" name="chosenGroup" value="Registered" />
 	{/if}
 {/if}
