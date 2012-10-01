@@ -716,7 +716,7 @@ class CalendarLib extends TikiLib
 		$query = "delete from `tiki_calendar_items` where ".implode(' and ', $mid);
 		$tikilib->query($query, $bindvars);
 	}
-	function firstDayofWeek($user)
+	function firstDayofWeek()
 	{
 		global $prefs;
 		if ($prefs['calendar_firstDayofWeek'] == 'user') {
@@ -726,7 +726,8 @@ class CalendarLib extends TikiLib
 			}
 		} else {
 			$firstDayofWeek = $prefs['calendar_firstDayofWeek'];
-		} 
+		}
+		return $firstDayofWeek;
 	}
 	// return detail on a date
 	function infoDate($focusDate)
