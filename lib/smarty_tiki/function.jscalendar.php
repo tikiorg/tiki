@@ -41,7 +41,9 @@ function smarty_function_jscalendar($params, $smarty)
 		static $datepicker_options_common;
 
 		if (! $datepicker_options_common) {
-			$first = $prefs['calendar_firstDayofWeek'] == 'user'? tra('First day of week: Sunday (its ID is 0) - translators you need to localize this string!'): $prefs['calendar_firstDayofWeek'];
+			global $calendarlib; include_once('lib/calendar/calendarlib.php');
+			$first = $calendarlib->firstDayofWeek();
+
 			if (!is_numeric($first) || !in_array($first, array(0, 1, 2, 3, 4, 5, 6))) {
 				$first = 0;
 			}
@@ -117,7 +119,7 @@ function smarty_function_jscalendar($params, $smarty)
 			$js_val = empty($params['date']) ? '""' : '$.datepicker.formatDate( "yy-mm-dd", new Date('.$params['date'].'* 1000))';
 			$headerlib->add_jq_onready(
 				'$("#' . $params['id'] . '_dptxt").val(' . $js_val . ').tiki("' .
-				$command . '", "jscalendar", {altField: "#' . $params['id'] . '"});'
+				$command . '", "jscalendar", ' . $datepicker_options . ');'
 			);
 
 		} else {
@@ -141,8 +143,8 @@ var tm = { hour: dt.getHours(), minute: dt.getMinutes(), second: dt.getSeconds()
 ';
 			$js_val2 = empty($params['date']) ? '""' : '$.datepicker.formatDate( "yy-mm-dd", dt) + " " + $.timepicker._formatTime(tm)';
 			$headerlib->add_jq_onready(
-				$js_val1 . '$("#' . $params['id'] . '_dptxt").val(' . $js_val2 . ').tiki("' .
-				$command . '", "jscalendar", {altField: "#' . $params['id'] . '",altFieldTimeOnly:false});'
+				$js_val1 . '$("#' . $params['id'] . '_dptxt").val(' . $js_val2 . ').tiki("' . 
+				$command . '", "jscalendar", ' . $datepicker_options . ');'
 			);
 		}
 		return $html;

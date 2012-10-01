@@ -170,6 +170,12 @@ jqueryTiki.tablesorter = false;
 		}
 	}
 
+	if ($prefs['feature_calendar'] === 'y') {
+		global $calendarlib; include_once('lib/calendar/calendarlib.php');
+		$firstDayofWeek = $calendarlib->firstDayofWeek();
+		$js .= "jqueryTiki.firstDayofWeek = $firstDayofWeek;\n";
+	}
+
 	if ($prefs['feature_syntax_highlighter'] !== 'y') {
 		// add a dummy syntaxHighlighter object as it seems to be used all over the place without checking for the feature
 		$js .= '

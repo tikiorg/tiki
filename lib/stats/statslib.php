@@ -403,14 +403,8 @@ class StatsLib extends TikiLib
 
 			case 'week':
 				$iweek = TikiLib::date_format("%w", $now);// 0 for Sunday...
-				if ($prefs['calendar_firstDayofWeek'] == 'user') {
-					$firstDayofWeek = (int) tra('First day of week: Sunday (its ID is 0) - translators you need to localize this string!');
-					if ( $firstDayofWeek < 1 || $firstDayofWeek > 6 ) {
-						$firstDayofWeek = 0;
-					}
-				} else {
-					$firstDayofWeek = $prefs['calendar_firstDayofWeek'];
-				}
+				global $calendarlib; include_once('lib/calendar/calendarlib.php');
+				$firstDayofWeek = $calendarlib->firstDayofWeek();
 				$iweek -= $firstDayofWeek;
 				if ($iweek < 0) {
 					$iweek += 7;
