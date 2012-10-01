@@ -990,7 +990,7 @@ function wikiplugin_img( $data, $params, $offset, $parseOptions='' )
 		
 	////////////////////////////////////////// Create the HTML img tag //////////////////////////////////////////////
 	//Start tag with src and dimensions
-	$src = filter_out_sefurl(htmlentities($src));
+	$src = filter_out_sefurl($src);
 
 	include_once ('lib/mime/mimetypes.php');
 	global $mimetypes;
@@ -1182,7 +1182,7 @@ function wikiplugin_img( $data, $params, $offset, $parseOptions='' )
 		// title
 		!empty($imgtitle) ? $linktitle = $imgtitle : $linktitle = '';
 		
-		$link = filter_out_sefurl(htmlentities($link));
+		$link = filter_out_sefurl($link);
 
 		//Final link string
 		$replimg = "\r\t" . '<a href="' . $link . '" class="internal"' . $linkrel . $imgtarget . $linktitle 
