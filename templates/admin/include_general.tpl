@@ -14,6 +14,11 @@
 	{tabset name="admin_general"}
 		{tab name="{tr}General Preferences{/tr}"}
 			<fieldset>
+				<legend>{tr}Server Fitness{/tr}</legend>
+				To check if your server meets the requirements for running Tiki please visit <a href="tiki-check.php">Tiki Server Compatibility Check</a>.
+			</fieldset>
+
+			<fieldset>
 				<legend>{tr}Release Check{/tr}</legend>
 				<div class="adminoptionbox">{tr}Tiki version:{/tr}
 					<strong>
