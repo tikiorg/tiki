@@ -150,7 +150,7 @@ jqueryTiki.mobile = '.($prefs['mobile_mode'] == 'y' ? 'true' : 'false') . ';
 jqueryTiki.jcapture = '.($prefs['feature_jcapture'] == 'y' ? 'true' : 'false') . ';
 //do not fix following line for notices -  appropriately throws off a notice when user has not
 //flushed prefs cache after upgrading - i.e. not running the updater
-jqueryTiki.jcaptureFgal = ' . $prefs['fgal_for_jcapture'] . ';
+jqueryTiki.jcaptureFgal = ' . ((int)$prefs['fgal_for_jcapture']) . ';
 jqueryTiki.no_cookie = false;
 ';	// NB replace "normal" speeds with int to workaround issue with jQuery 1.4.2
 
