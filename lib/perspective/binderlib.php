@@ -16,75 +16,107 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 
 require_once('lib/perspectivelib.php');
 require_once('lib/categories/categlib.php');
+include_once('lib/core/Zend/OpenId.php');	// contains useful redirect selfUrl functions
 
 class AreasLib extends CategLib
 {
 	private $areas;
+	private $areasArray;
 
-	function __construct() {
+	function __construct()
+	{
 		$this->areas = $this->table('tiki_areas');
+		$this->cacheAreas();
 	}
 
-	function HandleObjectCategories($objectCategoryIds) {
+	function HandleObjectCategories($objectCategoryIds)
+	{
 		global $prefs, $perspectivelib, $_SESSION;
+
+		$current_object = current_object();
+
+		if (!$current_object) {	// only used on tiki objects
+			return;
+		}
+
 		$descendants = $this->get_category_descendants($prefs['areas_root']);
 
+		$foundPerspective = NULL;
 		if (!empty($objectCategoryIds)) {
 			if (!isset($_SESSION['current_perspective'])) $_SESSION['current_perspective'] = 0;
 			foreach ($objectCategoryIds as $categId) {
 				// If category is inside $prefs['areas_root']
-				$foundPerspective = NULL;
 				if (in_array($categId, $descendants)) {
 					$area = $this->getAreaByCategId($categId);
 
 					if ($area) {
-						$foundPerspective = $area['perspectives'][0];	// use 1st persp
+						$foundPerspective = $area['perspectives'][0]; // use 1st persp
 						break;
 					}
 				}
 			}
 			if ($foundPerspective && $foundPerspective != $_SESSION['current_perspective']) {
 				$perspectivelib->set_perspective($foundPerspective);
-				header("Location: " . $_SERVER['REQUEST_URI']);
-				die;
-			} elseif (!$foundPerspective && $_SESSION['current_perspective']) {
-				$perspectivelib->set_perspective(0);
-				header("Location: " . $_SERVER['REQUEST_URI']);
-				die;
+				Zend_OpenId::redirect(Zend_OpenId::selfUrl());
+			}
+		}
+		if (!$foundPerspective && !empty($_SESSION['current_perspective'])) { // uncategorised objects
+
+			$area = $this->getAreaByPerspId($_SESSION['current_perspective']);
+			if ($area) {
+				if ( ! $area['share_common']) {
+					$perspectivelib->set_perspective(0);
+					Zend_OpenId::redirect(Zend_OpenId::selfUrl());
+				}
 			}
 		}
 	}
 
-	public function getAreaByCategId($categId) {
-		$area = $this->areas->fetchFullRow(array('categId' => $categId, 'enabled' => 'y'));
-		if ($area) {
-			$area['perspectives'] = unserialize($area['perspectives']);
+	public function getAreaByCategId($categId, $enabled = true)
+	{
+		$area = array();
+		foreach ($this->areasArray as $area) {
+			if ($area['enabled'] == $enabled && $categId == $area['categId']) {
+				break;
+			}
 		}
 		return $area;
 	}
 
-	/*
-  for the difference between should and is, first retrieve all perspectives given for any reason
-  and then choose one in the function below, namely the first.
- */
-	function get_perspectives_by_categid($categId) {
-		$result = $this->query("SELECT `categId`, `perspectives` FROM tiki_areas WHERE categId = ?", array($categId));
-		while ($row = $result->fetchRow()) return unserialize($row['perspectives']);
-		return false;
+	public function getAreaByPerspId($perspid, $enabled = true)
+	{
+		$area = array();
+		foreach ($this->areasArray as $area) {
+			if ($area['enabled'] == $enabled && in_array($perspid, $area['perspectives'])) {
+				break;
+			}
+		}
+		return $area;
 	}
 
-	/*
-  pick up the first or only perspective assigned to category with id categId
-  returns false if there is no entry for this category and returns 0 if it has no perspective
- */
-	function get_perspective_by_categid($categId) {
-		$persp = $this->get_perspectives_by_categid($categId);
-		if ($persp === false) return false;
-		if (count($persp) == 0) return 0;
-		return $persp[0];
+	/**
+	 * @param bool $reload	force reload from database
+	 *
+	 * Sets up a cached version of the table with proper arrays and bools
+	 */
+
+	private function cacheAreas($reload = false)
+	{
+		if ($reload || empty($this->areasArray)) {
+			$this->areasArray = array();
+			$res = $this->areas->fetchAll($this->areas->all());
+			foreach ($res as & $row) {
+				$row['perspectives'] = unserialize($row['perspectives']);
+				$row['enabled'] = ($row['enabled'] === 'y');
+				$row['exclusive'] = ($row['exclusive'] === 'y');
+				$row['share_common'] = ($row['share_common'] === 'y');
+			}
+			$this->areasArray = $res;
+		}
 	}
 
-	function update_areas() {
+	function update_areas()
+	{
 		global $prefs;
 		$areas = array();
 		$descendants = $this->get_category_descendants($prefs['areas_root']);
@@ -103,12 +135,12 @@ class AreasLib extends CategLib
 					}
 				}
 
-				foreach (array_filter($areas) as $key => $item) {	// don't bother with categs with no perspectives
+				foreach (array_filter($areas) as $key => $item) { // don't bother with categs with no perspectives
 					$data = array();
-					if (isset($_REQUEST['update_areas'])) {	// update checkboxes from form
+					if (isset($_REQUEST['update_areas'])) { // update checkboxes from form
 
-						$data['enabled']      = !empty($_REQUEST['enabled'][$key])      ? 'y' : 'n';
-						$data['exclusive']    = !empty($_REQUEST['exclusive'][$key])    ? 'y' : 'n';
+						$data['enabled'] = !empty($_REQUEST['enabled'][$key]) ? 'y' : 'n';
+						$data['exclusive'] = !empty($_REQUEST['exclusive'][$key]) ? 'y' : 'n';
 						$data['share_common'] = !empty($_REQUEST['share_common'][$key]) ? 'y' : 'n';
 					}
 					$this->bind_area($key, $item, $data);
@@ -116,13 +148,15 @@ class AreasLib extends CategLib
 			} else {
 				return tra("No category jail set in any perspective.");
 			}
+			$this->cacheAreas(true); // recache the whole table
 			return true;
 		} else {
 			return tra("Areas root category id") . " " . tra("is invalid.");
 		}
 	}
 
-	function bind_area($categId, $perspectiveIds, $data = array()) {
+	function bind_area($categId, $perspectiveIds, $data = array())
+	{
 		$perspectiveIds = (array)$perspectiveIds;
 		$conditions = array('categId' => $categId);
 		$data['perspectives'] = serialize($perspectiveIds);
