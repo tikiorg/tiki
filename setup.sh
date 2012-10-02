@@ -4,8 +4,8 @@
 # Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 # $Id$
 
-# This file is a replacement for setup.sh
-# in test in 1.9 version
+# This file sets permissions and creates relevant folders for Tiki.
+#
 
 DIRS="db dump img/wiki img/wiki_up img/trackers modules/cache temp temp/cache temp/public templates_c templates styles maps whelp mods files tiki_tests/tests temp/unified-index"
 
