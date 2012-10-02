@@ -19,6 +19,11 @@ require_once('lib/categories/categlib.php');
 
 class AreasLib extends CategLib
 {
+	private $areas;
+
+	function __construct() {
+		$this->areas = $this->table('tiki_areas');
+	}
 
 	function HandleObjectCategories($objectCategoryIds) {
 		global $prefs, $perspectivelib, $_SESSION;
@@ -30,7 +35,10 @@ class AreasLib extends CategLib
 				// If category is inside $prefs['areas_root']
 				$foundPerspective = NULL;
 				if (in_array($categId, $descendants)) {
-					if ($foundPerspective = $this->get_perspective_by_categid($categId)) {
+					$area = $this->getAreaByCategId($categId);
+
+					if ($area) {
+						$foundPerspective = $area['perspectives'][0];	// use 1st persp
 						break;
 					}
 				}
@@ -45,6 +53,14 @@ class AreasLib extends CategLib
 				die;
 			}
 		}
+	}
+
+	public function getAreaByCategId($categId) {
+		$area = $this->areas->fetchFullRow(array('categId' => $categId, 'enabled' => 'y'));
+		if ($area) {
+			$area['perspectives'] = unserialize($area['perspectives']);
+		}
+		return $area;
 	}
 
 	/*
@@ -87,20 +103,36 @@ class AreasLib extends CategLib
 					}
 				}
 
-				// to get rid off probably old data
-				$this->query("DELETE FROM tiki_areas");
+				foreach (array_filter($areas) as $key => $item) {	// don't bother with categs with no perspectives
+					$data = array();
+					if (isset($_REQUEST['update_areas'])) {	// update checkboxes from form
 
-				foreach ($areas as $key => $item) {
-					$this->bind_area($key, $item);
+						$data['enabled']      = !empty($_REQUEST['enabled'][$key])      ? 'y' : 'n';
+						$data['exclusive']    = !empty($_REQUEST['exclusive'][$key])    ? 'y' : 'n';
+						$data['share_common'] = !empty($_REQUEST['share_common'][$key]) ? 'y' : 'n';
+					}
+					$this->bind_area($key, $item, $data);
 				}
-			} else return tra("No category jail set in any perspective.");
+			} else {
+				return tra("No category jail set in any perspective.");
+			}
 			return true;
-		} else return tra("Areas root category id") . " " . tra("is invalid.");
+		} else {
+			return tra("Areas root category id") . " " . tra("is invalid.");
+		}
 	}
 
-	function bind_area($categId, $perspectiveIds) {
+	function bind_area($categId, $perspectiveIds, $data = array()) {
 		$perspectiveIds = (array)$perspectiveIds;
-		$this->query("INSERT INTO tiki_areas (categId, perspectives) VALUES(?,?)", array($categId, serialize($perspectiveIds)));
+		$conditions = array('categId' => $categId);
+		$data['perspectives'] = serialize($perspectiveIds);
+
+		if ($this->areas->fetchCount($conditions)) {
+
+			$this->areas->update($data, $conditions);
+		} else {
+			$this->areas->insert(array_merge($data, $conditions));
+		}
 	}
 } // class end
 $areaslib = new AreasLib();

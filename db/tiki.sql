@@ -3685,6 +3685,9 @@ DROP TABLE IF EXISTS `tiki_areas`;
 CREATE TABLE `tiki_areas` (
     `categId` int(11) NOT NULL,
     `perspectives` text,
+    `exclusive` char(1) NOT NULL DEFAULT 'n',
+    `share_common` char(1) NOT NULL DEFAULT 'y',
+    `enabled` char(1)  NOT NULL DEFAULT 'y',
     KEY `categId` (`categId`)
 ) ENGINE=MyISAM;
 

@@ -38,13 +38,16 @@ if ($prefs['feature_areas'] === 'y') {
 		$areaslib->update_areas();
 	}
 
-	$result = $areas_table->fetchAll(array('categId', 'perspectives'), $conditions);
+	$result = $areas_table->fetchAll(array('categId', 'perspectives', 'exclusive', 'share_common', 'enabled'), $conditions);
 	$areas = array();
 	$perspectives = array();
 
 	foreach ($result as $item) {
 		$area = array();
 		$area['categId'] = $item['categId'];
+		$area['exclusive'] = $item['exclusive'];
+		$area['share_common'] = $item['share_common'];
+		$area['enabled'] = $item['enabled'];
 		$area['perspectives'] = array();
 		foreach (unserialize($item['perspectives']) as $pers) {
 			if (!array_key_exists($pers, $perspectives)) {
