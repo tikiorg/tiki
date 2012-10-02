@@ -24,7 +24,7 @@ class Search_Type_WikiText implements Search_Type_Interface
 						)
 		);
 
-		return $out;
+		return strip_tags($out);
 	}
 
 	function filter(array $filters)
