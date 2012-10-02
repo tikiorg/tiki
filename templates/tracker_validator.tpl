@@ -4,7 +4,7 @@ $("#editItemForm{{$trackerEditFormId}}").validate({
 	{{$validationjs}},
 	ignore: '.ignore',
 	submitHandler: function(){
-		if( nosubmitItemForm{{$trackerEditFormId}} == true ) {
+		if( typeof nosubmitItemForm{{$trackerEditFormId}} !== "undefined" && nosubmitItemForm{{$trackerEditFormId}} == true ) {
 			return false;
 		} else {
 			process_submit(this.currentForm);

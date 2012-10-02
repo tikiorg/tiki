@@ -43,6 +43,12 @@ for ($index = 0, $count_arrayTrackerId = count($arrayTrackerId); $index < $count
 	}
 	if (!empty($_GET['item'])) { // we want the value of field filterfield for item 
 		$filtervalue = $trklib-> get_item_value($arrayTrackerId[$index], $arrayItem[$index], $arrayFilterfield[$index]);
+		if (!$filtervalue) {
+			$otherField = $trklib->get_tracker_field($arrayFilterfield[$index]);
+			if ($otherField['type'] == 'r') {		// filterFieldIdThere is itemlink, so get the filtervalue from what that links to
+				$filtervalue = $trklib-> get_item_value($otherField['options_array'][0], $arrayItem[$index], $otherField['options_array'][1]);
+			}
+		}
 	}
 	if ($filtervalue) {
 		$xfields = $trklib->list_tracker_fields($arrayTrackerId[$index], 0, -1, 'name_asc', '');
@@ -64,7 +70,7 @@ for ($index = 0, $count_arrayTrackerId = count($arrayTrackerId); $index < $count
 		$listfields[$fid]['isHidden'] = $xfields["data"][$dfid]["isHidden"];
 		$listfields[$fid]['isSearchable'] = $xfields["data"][$dfid]["isSearchable"];
 		$items = $trklib->list_items($arrayTrackerId[$index], 0, -1, $sort_mode, $listfields, $arrayFilterfield[$index], $filtervalue, $arrayStatus[$index]);
-		
+
 		$json_return = array();
 		if ($arrayMandatory[$index] != 'y') {
 			$json_return[] = "";		
