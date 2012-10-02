@@ -29,6 +29,11 @@ div#tiki-clean {direction: rtl !important}
 	margin-right:0px !important
 }
 
+#c1c2 #wrapper #col1.marginleft {
+    margin-left: 0px !important;
+    margin-right: 200px !important;
+}
+
 #col2 {float:right !important}
 
 #col3 {
@@ -45,7 +50,39 @@ ul li div.image {
 	margin-left:3px !important
 }
 
-/***** Header *****/
+/***** Header graphic adaptation - could be not portable *****/
+.header_container {
+	background: none !important;
+}
+
+#header {
+	background: none !important;
+}
+
+/*#header {
+        -moz-transform: scaleX(-1);
+        -o-transform: scaleX(-1);
+        -webkit-transform: scaleX(-1);
+        transform: scaleX(-1);
+        filter: FlipH;
+        -ms-filter: "FlipH"
+}*/
+
+/* Logo Box */
+#top_modules .box-logo {
+	float: right !important;
+	margin: 0 10px 0 0;
+}
+
+#sitelogo {
+	float: right !important;
+}
+
+#top_modules .siteloginbar_popup {
+	right: 800px !important;
+}
+
+
 /* site login popup content */
 #loginbox.forms fieldset label {
 	float: right !important;
@@ -63,8 +100,20 @@ ul li div.image {
 
 #siteloginbar_popup .pass a {
 	width: 100% !important;
-	text-align: center !important
+	text-align: center !important;
+	padding: 0 !important;
+	margin: 0 !important;
 }
+
+.siteloginbar_popup .pass {
+    float: none !important;
+    width: 100% !important;
+    text-align: right !important;
+}
+
+/*.cssmenu_horiz .pass a, .cssmenu_vert ul li .pass a {
+    padding: 0 !important;
+}*/
 
 /* Sitelogin Popup moved left Fivealive theme - could be not portable */
 #siteloginbar_popup {right: 865px !important}
@@ -97,7 +146,13 @@ ul.sf-shadow ul {background-image:none}
 /* Reseting the position for sub item without indicator  */
 #tiki-top .cssmenu_horiz li ul li a {padding-right: 0.5em !important}
 
+/* Repositionning sub-menu */
+.cssmenu_vert li ul {
+	right: 96.1333px !important;
+}
+
 /* Indicator reversing and repositioning*/
+.cssmenu_vert a > .sf-sub-indicator,
 .cssmenu_horiz li li a > .sf-sub-indicator {
 	right: 120px;
 	-moz-transform: scaleX(-1);
