@@ -60,7 +60,7 @@ class AreasLib extends CategLib
 				$area = $this->getAreaByPerspId($_SESSION['current_perspective']);
 				$objectArea = $this->getAreaByPerspId($objectPerspective);
 
-				if ( !$area['share_common'] || $objectArea['exclusive'] ) {
+				if (($area && !$area['share_common']) || ($objectArea && $objectArea['exclusive'])) {
 					$perspectivelib->set_perspective($objectPerspective);
 					Zend_OpenId::redirect(Zend_OpenId::selfUrl());
 				}
@@ -80,24 +80,22 @@ class AreasLib extends CategLib
 
 	public function getAreaByCategId($categId, $enabled = true)
 	{
-		$area = array();
 		foreach ($this->areasArray as $area) {
 			if ($area['enabled'] == $enabled && $categId == $area['categId']) {
-				break;
+				return $area;
 			}
 		}
-		return $area;
+		return array();
 	}
 
 	public function getAreaByPerspId($perspid, $enabled = true)
 	{
-		$area = array();
 		foreach ($this->areasArray as $area) {
 			if ($area['enabled'] == $enabled && in_array($perspid, $area['perspectives'])) {
-				break;
+				return $area;
 			}
 		}
-		return $area;
+		return array();
 	}
 
 	/**
