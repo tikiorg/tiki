@@ -44,7 +44,7 @@ function prefs_feature_list($partial = false)
 			'type' => 'flag',
 			'help' => 'Areas',
 			'default' => 'n',
-			'admin' => 'areas',
+			'admin' => 'workspace',
 			'tags' => array('experimental'),
 			'dependencies' => array(
 				'feature_categories',

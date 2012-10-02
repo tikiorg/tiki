@@ -15,3 +15,51 @@ if (isset($_REQUEST["workspace"])) {
 	check_ticket('admin-inc-workspace');
 }
 ask_ticket('admin-inc-workspace');
+
+if ($prefs['feature_areas'] === 'y') {
+	global $areaslib;
+	require_once('lib/perspective/binderlib.php');
+
+	// updating table tiki_areas
+	if (isset($_REQUEST['update_areas'])) {
+		check_ticket('admin-inc-workspace');
+		$pass = $areaslib->update_areas();
+		if ($pass !== true) {
+			$smarty->assign_by_ref('error', $pass);
+		}
+	}
+
+	// building overview
+	$areas_table = $areaslib->table('tiki_areas');
+	$conditions = array();
+
+	// if count zero, table probably not up-to-date
+	if ($areas_table->fetchCount($conditions) == 0) {
+		$areaslib->update_areas();
+	}
+
+	$result = $areas_table->fetchAll(array('categId', 'perspectives'), $conditions);
+	$areas = array();
+	$perspectives = array();
+
+	foreach ($result as $item) {
+		$area = array();
+		$area['categId'] = $item['categId'];
+		$area['perspectives'] = array();
+		foreach (unserialize($item['perspectives']) as $pers) {
+			if (!array_key_exists($pers, $perspectives)) {
+				$perspectives[$pers] = $perspectivelib->get_perspective($pers);
+			}
+
+			$area['perspectives'][] = $perspectives[$pers];
+		}
+		$area['categName'] = $areaslib->get_category_name($item['categId']);
+		$area['description'] = $areaslib->get_category_description($item['categId']);
+		$areas[] = $area;
+	}
+
+	$no_area = (count($areas)) ? 0 : 1;
+	$smarty->assign('no_area', $no_area);
+	$smarty->assign_by_ref('areas', $areas);
+
+}
