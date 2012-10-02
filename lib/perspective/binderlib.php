@@ -41,7 +41,7 @@ class AreasLib extends CategLib
 
 		$descendants = $this->get_category_descendants($prefs['areas_root']);
 
-		$foundPerspective = NULL;
+		$objectPerspective = 0;
 		if (!empty($objectCategoryIds)) {
 			if (!isset($_SESSION['current_perspective'])) $_SESSION['current_perspective'] = 0;
 			foreach ($objectCategoryIds as $categId) {
@@ -50,22 +50,28 @@ class AreasLib extends CategLib
 					$area = $this->getAreaByCategId($categId);
 
 					if ($area) {
-						$foundPerspective = $area['perspectives'][0]; // use 1st persp
+						$objectPerspective = $area['perspectives'][0]; // use 1st persp
 						break;
 					}
 				}
 			}
-			if ($foundPerspective && $foundPerspective != $_SESSION['current_perspective']) {
-				$perspectivelib->set_perspective($foundPerspective);
-				Zend_OpenId::redirect(Zend_OpenId::selfUrl());
+			if ($objectPerspective && $objectPerspective != $_SESSION['current_perspective']) {
+
+				$area = $this->getAreaByPerspId($_SESSION['current_perspective']);
+				$objectArea = $this->getAreaByPerspId($objectPerspective);
+
+				if ( !$area['share_common'] || $objectArea['exclusive'] ) {
+					$perspectivelib->set_perspective($objectPerspective);
+					Zend_OpenId::redirect(Zend_OpenId::selfUrl());
+				}
 			}
 		}
-		if (!$foundPerspective && !empty($_SESSION['current_perspective'])) { // uncategorised objects
+		if ($objectPerspective < 1 && !empty($_SESSION['current_perspective'])) { // uncategorised objects
 
 			$area = $this->getAreaByPerspId($_SESSION['current_perspective']);
 			if ($area) {
-				if ( ! $area['share_common']) {
-					$perspectivelib->set_perspective(0);
+				if ( !$area['share_common']) {
+					$perspectivelib->set_perspective($objectPerspective);
 					Zend_OpenId::redirect(Zend_OpenId::selfUrl());
 				}
 			}
