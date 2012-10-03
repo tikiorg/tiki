@@ -349,8 +349,8 @@ function wikiplugin_articles($data, $params)
 			$listpages["data"][$i]["parsed_body"] = $tikilib->parse_data(
 				$listpages["data"][$i]["body"],
 				array(
-					'min_one_paragraph' => true,
-					'is_html' => isset($prefs['article_body_is_html']) && $prefs['article_body_is_html'] === 'y'
+					'min_one_paragraph' => true,	
+					'is_html' => $prefs['feature_wysiwyg'] === 'y' && $prefs['wysiwyg_htmltowiki'] !== 'y'
 				)
 			);
 		}

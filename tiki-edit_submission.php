@@ -124,7 +124,7 @@ if (isset($_REQUEST['subId'])) {
 	$body = $article_data['body'];
 	$heading = $article_data['heading'];
 
-	$parsed_body = $tikilib->parse_data($body, array('is_html' => $prefs['article_body_is_html'] === 'y'));
+	$parsed_body = $tikilib->parse_data($body, array('is_html' => $_SESSION['wysiwyg'] === 'y' && $prefs['wysiwyg_htmltowiki'] !== 'y'));
 	$parsed_heading = $tikilib->parse_data($heading);
 
 	$smarty->assign('parsed_body', $parsed_body);
@@ -308,7 +308,7 @@ if (isset($_REQUEST['preview']) || !empty($errors)) {
 
 	$smarty->assign('size', strlen($body));
 
-	$parsed_body = $tikilib->parse_data($body, array('is_html' => $prefs['article_body_is_html'] === 'y'));
+	$parsed_body = $tikilib->parse_data($body, array('is_html' => $_SESSION['wysiwyg'] === 'y' && $prefs['wysiwyg_htmltowiki'] !== 'y'));
 	$parsed_heading = $tikilib->parse_data($heading);
 
 	$smarty->assign('parsed_body', $parsed_body);

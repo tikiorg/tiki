@@ -112,7 +112,7 @@ $smarty->assign('type', $info["type"]);
 $smarty->assign('rating', $info["rating"]);
 // Assign parsed
 $smarty->assign('parsed_heading', $tikilib->parse_data($info["heading"]));
-$smarty->assign('parsed_body', $tikilib->parse_data($info["body"], array('is_html' => $prefs['article_body_is_html'] === 'y')));
+$smarty->assign('parsed_body', $tikilib->parse_data($info["body"], array('is_html' => $prefs['feature_wysiwyg'] === 'y' && $prefs['wysiwyg_htmltowiki'] !== 'y')));
 if (isset($_REQUEST["remove"])) {
 	$access->check_authenticity();
 	$commlib->remove_received_article($_REQUEST["remove"]);

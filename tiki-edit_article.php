@@ -202,7 +202,7 @@ if (isset($_REQUEST['allowhtml'])) {
 	} else {
 		$smarty->assign('allowhtml', 'n');
 	}
-} else if (isset($prefs['article_body_is_html']) && $prefs['article_body_is_html'] === 'y') {
+} else if ($_SESSION['wysiwyg'] === 'y' && $prefs['wysiwyg_htmltowiki'] !== 'y') {
 	$smarty->assign('allowhtml', 'y');
 }
 
