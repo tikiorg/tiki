@@ -112,7 +112,7 @@
 		{/section}
 		{if $tiki_p_remove_submission eq 'y' or $tiki_p_approve_submission eq 'y'}
 			<tr>
-				<td colspan="{$numbercol}">
+				<td colspan="{$numbercol+1}">
 					{if $listpages}
 						<p align="left"> {*on the left to have it close to the checkboxes*}
 							{if $tiki_p_remove_submission eq 'y'}
