@@ -352,6 +352,9 @@ class Search_Index_Lucene_HighlightHelper implements Zend_Filter_Interface
 
 	function __construct($query)
 	{
+		$qstr = $query->__toString();									// query needs the object_type field removing for highlighting
+		$qstr = preg_replace('/\+?\(\(object_type.*?\)\)/', '', $qstr);	// this is the only way i can find to remove a term form a query
+		$query = Zend_Search_Lucene_Search_QueryParser::parse($qstr);	// rebuild
 		$this->query = $query;
 		$this->snippetHelper = new Search_ResultSet_SnippetHelper;
 	}
