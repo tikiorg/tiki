@@ -812,7 +812,7 @@ class CategLib extends ObjectLib
 	// maxRows related links with description
 	function get_related($categories,$maxRows=10)
 	{
-		global $tiki_p_admin;
+		global $tiki_p_admin, $user;
 		if (count($categories)==0) return (array());
 		$quarr=implode(",", array_fill(0, count($categories), '?'));
 		$query="select distinct o.`type`, o.`description`, o.`itemId`,o.`href` from `tiki_objects` o, `tiki_categorized_objects` cdo, `tiki_category_objects` co  where co.`categId` in (".$quarr.") and co.`catObjectId`=cdo.`catObjectId` and o.`objectId`=cdo.`catObjectId`";
