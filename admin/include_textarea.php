@@ -66,7 +66,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	if (isset($_POST['textareasetup'])
 			&& !in_array($_POST['plugin_alias'], $pluginsReal)
 			&& isset($_REQUEST['plugin_alias'])
-			&& (!isset($_COOKIE['tab']) || $_COOKIE['tab'] == 3)
+			&& (getCookie('admin_textarea', 'tabs') == 3)
 	) { // tab=3 is plugins alias tab (TODO improve)
 		$info = array(
 			'implementation' => $_POST['implementation'],
