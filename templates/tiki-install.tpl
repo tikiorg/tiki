@@ -78,7 +78,7 @@
 <div style="float:left;width:60px"><img src="img/webmail/compose.gif" alt="{tr}Review{/tr}" /></div>
 <div class="clearfix">
 	<p>{tr}Before installing Tiki, <a href="http://doc.tiki.org/Requirements" target="_blank">review the documentation</a> and confirm that your system meets the minimum requirements.{/tr}</p>
-	<p>{tr}This installer will perform some basic checks automatically.{/tr}</p>
+	<p>{tr}This installer will perform some basic checks automatically.{/tr} {tr}Please see: {/tr}<a href="tiki-check.php" target="_blank">{tr}a detailed report about your server.{/tr}</a></p>
 	<br />
 	<h2>{tr}Memory{/tr}</h2>
 {if $php_memory_limit <= 0}
