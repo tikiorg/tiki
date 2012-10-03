@@ -279,8 +279,12 @@
 		{/if}
 	</table>
 	
-	{if $tiki_p_use_HTML eq 'y' && $smarty.session.wysiwyg neq 'y'}
-		<div align="center">{tr}Allow HTML:{/tr} <input type="checkbox" name="allowhtml" {if $allowhtml eq 'y'}checked="checked"{/if}/></div>
+	{if $tiki_p_use_HTML eq 'y'}
+		{if $smarty.session.wysiwyg neq 'y'}
+			<div align="center">{tr}Allow HTML:{/tr} <input type="checkbox" name="allowhtml" {if $allowhtml eq 'y'}checked="checked"{/if}/></div>
+		{else}
+			<input type="checkbox" name="allowhtml" {if $allowhtml eq 'y'}checked="checked"{/if} style="display: none;"/>
+		{/if}
 	{/if}
 
 	<div align="center">
