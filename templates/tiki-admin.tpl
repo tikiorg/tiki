@@ -186,7 +186,6 @@ if $pagetop_msg}
 	<a href="tiki-admin_security.php">{tr}Security{/tr}</a> 
 	<a href="tiki-admin_system.php">{tr}TikiCache/System{/tr}</a> 
 	<a href="tiki-syslog.php">{tr}SysLogs{/tr}</a> 
-	<a href="tiki-phpinfo.php">{tr}phpinfo{/tr}</a> 
 	<a href="tiki-mods.php">{tr}Mods{/tr}</a>
 	<hr />
 
