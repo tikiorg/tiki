@@ -85,12 +85,12 @@
 	<div style="background: #c2eef8; border: 2px solid #2098cd; color:#000;">
 		<p align="center"><img src="img/icons/accept.png" alt="{tr}Success{/tr}" style="vertical-align:middle" /> {tr}Tiki has not detected your PHP memory_limit.{/tr} {tr}This probably means you have no set limit (all is well).{/tr} </p>
 	</div>	
-{elseif $php_memory_limit < 32 * 1024 * 1024}
+{elseif $php_memory_limit < 128 * 1024 * 1024}
 	<div style="background: #ffffcc; border: 2px solid #ff0000; color:#000;">
 		<p align="center"><img src="img/icons/delete.png" alt="{tr}Alert{/tr}" style="vertical-align:middle" /> {tr}Tiki has detected your PHP memory limit at:{/tr} {$php_memory_limit|kbsize:true:0}</p>
 	</div>
-	<p>{tr}Tiki requires <strong>at least</strong> 32MB of PHP memory for script execution.{/tr} {tr}Allocating too little memory will cause Tiki to display blank pages.{/tr}</p>
-	<p>{tr}To change the memory limit, use the <strong>memory_limit</strong> key in your <strong>php.ini </strong> file (for example: memory_limit = 32M) and restart your webserver.{/tr}</p>
+	<p>{tr}Tiki requires <strong>at least</strong> 128MB of PHP memory for script execution.{/tr} {tr}Allocating too little memory will cause Tiki to display blank pages.{/tr}</p>
+	<p>{tr}To change the memory limit, use the <strong>memory_limit</strong> key in your <strong>php.ini </strong> file (for example: memory_limit = 128M) and restart your webserver.{/tr}</p>
 
 {else}
 	<div style="background: #c2eef8; border: 2px solid #2098cd; color:#000;">
