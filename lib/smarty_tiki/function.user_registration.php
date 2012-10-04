@@ -143,6 +143,7 @@ function smarty_function_user_registration($params, $smarty)
 				} else if (is_a($result, 'RegistrationError')) {
 					$errorreportlib->report($result->msg);
 				} else {
+					$user = ''; // reset $user
 					return $result;
 				}
 			}

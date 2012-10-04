@@ -382,7 +382,7 @@ class RegistrationLib extends TikiLib
 					$registration['email'],
 					'',
 					'',
-					isset($registration['chosenGroup']) ? $registration['chosenGroup'] : ''
+					isset($registration['chosenGroup']) ? $registration['chosenGroup'] : 'Registered'
 				);
 			}
 
@@ -401,7 +401,11 @@ class RegistrationLib extends TikiLib
 
 			if (!$pending) {
 				$logslib->add_log('register', 'created account ' . $registration['name']);
-				$result=$smarty->fetch('mail/user_validation_msg.tpl');
+				if ($this->merged_prefs['validateRegistration'] == 'y') {
+					$result=$smarty->fetch('mail/user_validation_waiting_msg.tpl');
+				} else {
+					$result=$smarty->fetch('mail/user_validation_msg.tpl');
+				}
 			}
 		} else {
 			if (!$confirmed) {
