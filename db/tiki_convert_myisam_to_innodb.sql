@@ -263,3 +263,5 @@ ALTER TABLE `tiki_connect` ENGINE=InnoDB;
 ALTER TABLE `tiki_areas` ENGINE=InnoDB;
 ALTER TABLE `tiki_page_references` ENGINE=InnoDB;
 ALTER TABLE `tiki_db_status` ENGINE=InnoDB;
+ALTER TABLE `tiki_mail_queue` ENGINE=InnoDB;
+ALTER TABLE `tiki_workspace_templates` ENGINE=InnoDB;
