@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -27,7 +27,7 @@ class TWVersion
 		$this->branch 	= 'unstable';
 
 		// Set everything else, including defaults.
-		$this->version 	= 'SVN pre 9.2';	// needs to have no spaces for releases
+		$this->version 	= '9.2beta1';	// needs to have no spaces for releases
 		$this->star	= 'Herbig Haro';
 		$this->releases	= array();
 
@@ -42,13 +42,13 @@ class TWVersion
 		return $this->latestMinorRelease;
 	}
 
-	function getBaseVersion()
+ 	function getBaseVersion()
 	{
 		return preg_replace("/^(\d+\.\d+).*$/", '$1', $this->version);
 	}
 
 	// Returns an array of all used Tiki stars.
-	function tikiStars()
+ 	function tikiStars()
 	{
 		return array(
 				1=>'Spica',			// 0.9
@@ -75,7 +75,7 @@ class TWVersion
 	}
 
 	// Returns an array of all valid versions of Tiki.
-	function tikiVersions()
+ 	function tikiVersions()
 	{
 		// These are all the valid release versions of Tiki.
 		// Newest version goes at the end.
@@ -173,6 +173,7 @@ class TWVersion
 				'9.0beta2',
 				'9.0',
 				'9.1',
+				'9.2beta1',
 			);
 	}
 
