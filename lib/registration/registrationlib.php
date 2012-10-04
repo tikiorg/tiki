@@ -402,7 +402,7 @@ class RegistrationLib extends TikiLib
 			if (!$pending) {
 				$logslib->add_log('register', 'created account ' . $registration['name']);
 				if ($this->merged_prefs['validateRegistration'] == 'y') {
-					$result=$smarty->fetch('mail/user_validation_waiting_msg.tpl');
+					$result=nl2br($smarty->fetch('mail/user_validation_waiting_msg.tpl'));
 				} else {
 					$result=$smarty->fetch('mail/user_validation_msg.tpl');
 				}
