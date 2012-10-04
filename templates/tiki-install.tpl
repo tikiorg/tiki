@@ -240,6 +240,7 @@
 			<br /><em>{tr}Enter the host name or IP for your database.{/tr}</em>
 			<div style="display:none;" id="host_help">
 				<p>{tr}Use <strong>localhost</strong> if the database is running on the same machine as Tiki.{/tr}</p>
+				<p>{tr}For non-default port number use <strong>example.com;port=3307</strong>.{/tr}</p>
 			</div>
 			</div>
 		</div>
