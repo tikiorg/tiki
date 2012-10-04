@@ -1,10 +1,13 @@
 # $Id: tiki_2.0to3.0.sql 13749 2008-07-19 23:57:28Z m_stef $
 
-# ATTENTION:
-# This file is now obsolete. To modify the database, simply add a file to the installer/schema/
-# directory. For more information, see http://dev.tikiwiki.org/DatabaseSchemaUpgrade
-
-# The following script will update a tiki database from version 2.0 to 3.0
+#
+# If you are using Tiki 3.x or later, this script will automatically be run by the installer when it detects that your data is from pre 3.x
+#
+# This approach of making one .sql file per version is obsolete. The new system is explained at: http://dev.tiki.org/Database+Schema+Upgrade
+#
+#
+#
+# The following script will update a Tiki database from version 2.0 to 3.0
 #
 # To execute this file do the following:
 #
