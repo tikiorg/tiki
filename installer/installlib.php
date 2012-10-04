@@ -162,9 +162,6 @@ class Installer extends TikiDb_Bridge
 		foreach ($statements as $statement) {
 			if (trim($statement)) {
 				if (preg_match('/^\s*(?!-- )/m', $statement)) {// If statement is not commented
-					$display_errors = ini_get('display_errors');
-					ini_set('display_errors', 'Off');
-
 					if ($this->useInnoDB) {
 						// Convert all MyISAM statments to InnoDB
 						$statement = str_ireplace("MyISAM", "InnoDB", $statement);
@@ -173,7 +170,6 @@ class Installer extends TikiDb_Bridge
 					if ($this->query($statement, array(), -1, -1, true, $file) === false) {
 						$status = false;
 					}
-					ini_set('display_errors', $display_errors);
 				}
 			}
 		}
