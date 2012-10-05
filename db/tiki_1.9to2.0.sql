@@ -1,16 +1,23 @@
 # $Id$
 
-# The following script will update a tiki database from version 1.9 to 1.10
+#
+# If you are using Tiki 3.x or later, this script will automatically be run by the installer when it detects that your data is from pre 3.x
+#
+# This approach of making one .sql file per version is obsolete. The new system is explained at: http://dev.tiki.org/Database+Schema+Upgrade
+#
+#
+#
+# The following script will update a Tiki database from version 1.9 to 2.0 (which was previously named 1.10)
 # 
 # To execute this file do the following:
 #
-# $ mysql -f dbname < tiki_1.9to1.10.sql
+# $ mysql -f dbname < tiki_1.9to2.0.sql
 #
 # where dbname is the name of your tiki database.
 #
 # For example, if your tiki database is named tiki (not a bad choice), type:
 #
-# $ mysql -f tiki < tiki_1.9to1.10.sql
+# $ mysql -f tiki < tiki_1.9to2.0.sql
 # 
 # You may execute this command as often as you like, 
 # and may safely ignore any error messages that appear.

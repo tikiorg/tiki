@@ -1,5 +1,15 @@
 # $Id$
 
+#
+# IMPORTANT: If you are upgrading from 1.8.x, you first need to upgrade your data to 1.9.x before upgrading to 2.x and up.
+# You can do this either by 
+# - installing a Tiki 1.9.11 (which you can find at http://sourceforge.net/projects/tikiwiki/files/) and running the installer: http://doc.tiki.org/Upgrade+1.8.x+to+1.9.y
+# - or applying tiki_1.8to1.9.sql manually 
+#
+#
+# This approach of making one .sql file per version is obsolete. The new system is explained at: http://dev.tiki.org/Database+Schema+Upgrade
+#
+#
 # The following script will update a tiki database from version 1.8.x to 1.9.x
 # The following script will ALSO update from version 1.9.x to 1.9.y
 # 
