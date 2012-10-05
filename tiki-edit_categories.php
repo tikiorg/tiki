@@ -8,6 +8,7 @@
 $inputConfiguration = array(array(
 	'staticKeyFiltersForArrays' => array(
 		'filter' => 'text',
+		'sort_mode' => 'text',
 	),
 	'catchAllUnset' => null,
 ));
@@ -69,6 +70,9 @@ $smarty->assign('filter', $filter);
 if (count($filter)) {
 	$unifiedsearchlib = TikiLib::lib('unifiedsearch');
 	$query = $unifiedsearchlib->buildQuery($filter);
+	if (isset($_REQUEST['sort_mode']) && $order = Search_Query_Order::parse($_REQUEST['sort_mode'])) {
+		$query->setOrder($order);
+	}
 	$result = $query->search($unifiedsearchlib->getIndex());
 	$smarty->assign('result', $result);
 }
