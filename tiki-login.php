@@ -296,16 +296,17 @@ if ($isvalid) {
 				//   - referer url (e.g. http://example.com/tiki/tiki-index.php?page=Homepage ) is the homepage (tikiIndex),
 				//   - referer url complete path ( e.g. /tiki/tiki-index.php?page=Homepage ) is the homepage,
 				//   - referer url relative path ( e.g. tiki-index.php?page=Homepage ) is the homepage
+				//   - referer url SEF page ( e.g. /tiki/Homepage ) is the homepage
 				//   - one of the three cases listed above, but compared to anonymous page instead of global homepage
 				//
 				//   - last case ($tikiIndex_full != '') :
 				//       wiki homepage could have been saved as 'tiki-index.php' instead of 'tiki-index.php?page=Homepage'.
 				//       ... so we also need to check against : homepage + '?page=' + default wiki pagename
 				//
-				if ($prefs['limitedGoGroupHome'] == 'n' || $url == $prefs['site_tikiIndex'] || $url_path == $prefs['site_tikiIndex'] || basename($url_path) == $prefs['site_tikiIndex'] || ($anonymous_homepage != '' && ($url == $anonymous_homepage || $url_path == $anonymous_homepage || basename($url_path) == $anonymous_homepage)) || ($tikiIndex_full != '' && basename($url_path) == $tikiIndex_full)) {
+				include_once('tiki-sefurl.php');
+				if ($prefs['limitedGoGroupHome'] == 'n' || $url == $prefs['site_tikiIndex'] || $url_path == $prefs['site_tikiIndex'] || basename($url_path) == $prefs['site_tikiIndex'] || ($anonymous_homepage != '' && ($url == $anonymous_homepage || $url_path == $anonymous_homepage || basename($url_path) == $anonymous_homepage)) || filter_out_sefurl($anonymous_homepage) == basename($url_path) || ($tikiIndex_full != '' && basename($url_path) == $tikiIndex_full)) {
 					$groupHome = $userlib->get_user_default_homepage($user);
 					if ($groupHome != '') {
-						include_once('tiki-sefurl.php');
 						$url = (preg_match('/^(\/|https?:)/', $groupHome)) ? $groupHome : filter_out_sefurl('tiki-index.php?page=' . urlencode($groupHome));
 					}
 				}
