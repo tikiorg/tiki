@@ -194,7 +194,7 @@ if (isset($_REQUEST['intertiki']) and in_array($_REQUEST['intertiki'], array_key
 	// If the password is valid but it is due then force the user to change the password by
 	// sending the user to the new password change screen without letting him use tiki
 	// The user must re-enter the old password so no security risk here
-	if ($isvalid) {
+	if (!$isvalid && $error === ACCOUNT_WAITING_USER) {
 		if ($requestedUser != 'admin') { // admin has not necessarely an email
 
 			if ($userlib->is_email_due($requestedUser, 'email')) {
