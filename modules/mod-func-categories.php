@@ -107,11 +107,16 @@ function module_categories($mod_reference, &$module_params)
 		$tree_nodes[] = array(
 			"id" => $cat["categId"],
 			"parent" => $cat["parentId"],
+			'parentId' => $cat['parentId'],
+			'categId' => $cat['categId'],
 			"data" => '<a class="catname" href="'.$url.'">' . htmlspecialchars($cat['name']) . '</a><br />'
 		);
 	}
+	$res = '';
 	$tm = new BrowseTreeMaker('mod_categ' . $module_params['module_position'] . $module_params['module_ord']);
-	$res = $tm->make_tree($categId, $tree_nodes);
+	foreach ($categlib->findRoots($tree_nodes) as $node) {
+		$res .= $tm->make_tree($node, $tree_nodes);
+	}
 	$smarty->assign('tree', $res);
 
 }
