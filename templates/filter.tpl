@@ -7,6 +7,18 @@
 			{include file='unified_search_help.tpl'}
 		{/add_help}
 	</label>
+	{if $prefs.search_show_sort_order eq 'y'}
+		<label>
+			{tr}Sort By{/tr}
+			<select name="sort_mode">
+				{foreach from=$sort_modes key=k item=t}
+					<option value="{$k|escape}"{if $k eq $sort_mode} selected="selected"{/if}>{$t|escape}</option>
+				{/foreach}
+			</select>
+		</label>
+	{else}
+		<input type="hidden" name="sort_mode" value="{$sort_mode}" />
+	{/if}
 	{if $prefs.feature_search_show_object_filter eq 'y'}
 		<label>
 			{tr}Type{/tr}

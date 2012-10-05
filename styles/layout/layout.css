@@ -2253,6 +2253,10 @@ div.aclabel, span.aclabel, label.aclabel {
 	list-style: none;
 }
 
+.filter label {
+	display:inline-block;
+}
+
 /* Locator module */
 
 .minimap {

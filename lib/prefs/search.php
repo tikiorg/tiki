@@ -58,5 +58,10 @@ function prefs_search_list()
 			'type' => 'flag',
 			'default' => 'n',
 		),
+		'search_show_sort_order' => array(
+			'name' => tra('Sort Order'),
+			'type' => 'flag',
+			'default' => 'n',
+		),
 	);
 }

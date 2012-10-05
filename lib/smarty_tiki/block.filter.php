@@ -45,6 +45,16 @@ function smarty_block_filter($params, $content, $smarty, &$repeat)
 	$smarty->assign('filter_type', isset($filter['type']) ? $filter['type'] : $prefs['search_default_where']);
 	$smarty->assign('filter_types', $types);
 
+	$sort_mode = isset($_REQUEST['sort_mode']) ? $_REQUEST['sort_mode'] : 'score_ndesc';
+	$sort_modes = array(
+		'score_ndesc' => tra('Relevance'),
+		'object_type_asc' => tra('Type'),
+		'title_asc' => tra('Title'),
+		'modification_date_ndesc' => tra('Modified date'),
+	);
+	$smarty->assign('sort_mode', $sort_mode );
+	$smarty->assign('sort_modes', $sort_modes);
+
 	// Categories
 	if ($prefs['feature_categories'] == 'y') {
 		$smarty->assign('filter_deep', isset($filter['deep']));
