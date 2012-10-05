@@ -399,6 +399,7 @@ class UnifiedSearchLib
 		unset($filter['tags']);
 		unset($filter['content']);
 		unset($filter['language']);
+		unset($filter['language_unspecified']);
 		unset($filter['autocomplete']);
 
 		foreach ($filter as $key => $value) {
