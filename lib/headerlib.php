@@ -27,7 +27,7 @@ class HeaderLib
 
 	public $jquery_version = '1.7.2';
 	public $jqueryui_version = '1.8.21';
-	public $jquerymobile_version = '1.1.1';
+	public $jquerymobile_version = '1.2.0';
 
 
 	function __construct()
