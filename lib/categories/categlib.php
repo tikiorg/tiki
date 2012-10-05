@@ -747,14 +747,22 @@ class CategLib extends ObjectLib
 
 		if ($considerCategoryFilter) {
 			if ( $jail = $this->get_jail() ) {
+				$area = array();
+				if ($prefs['feature_areas'] === 'y') {
+					$areaslib = TikiLib::lib('areas');
+					$area = $areaslib->getAreaByPerspId($_SESSION['current_perspective']);
+				}
 				$roots = array_filter((array) $prefs['category_jail_root']); // Skip 0 and other forms of empty
 
 				$ret = array_filter(
 					$ret,
-					function ($category) use ($jail, $roots)
+					function ($category) use ($jail, $roots, $area)
 					{
 						if (in_array($category['categId'], $jail)) {
 							return true;
+						}
+						if ($area && !$area['share_common']) {
+							return false;
 						}
 
 						if ($category['rootId'] && ! in_array($category['rootId'], $roots)) {
