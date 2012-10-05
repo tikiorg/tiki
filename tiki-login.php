@@ -388,7 +388,7 @@ if ($isvalid) {
 			exit;
 
 		case ACCOUNT_DISABLED:
-			$error = tra('Account disabled');
+			$error = tra('Account requires administrator approval');
     		break;
 
 		case ACCOUNT_WAITING_USER:

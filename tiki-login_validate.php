@@ -96,7 +96,7 @@ if ($isvalid) {
 } else {
 	if ($error == PASSWORD_INCORRECT) $error = tra("Invalid password");
 	else if ($error == USER_NOT_FOUND) $error = tra("Invalid username");
-	else if ($error == ACCOUNT_DISABLED) $error = tra("Account disabled");
+	else if ($error == ACCOUNT_DISABLED) $error = tra("Account requires administrator approval");
 	else if ($error == USER_AMBIGOUS) $error = tra("You must use the right case for your user name");
 	else if ($error == USER_PREVIOUSLY_VALIDATED) $error = tra('You have already validated your account. Please log in.');
 	else $error = tra('Invalid username or password');
