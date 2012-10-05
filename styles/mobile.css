@@ -201,17 +201,6 @@ body {
 	background: #FEEAA1;
 }
 
-.normal .ui-checkbox input, .normal .ui-radio input {
-	position: inherit;
-	left: auto;
-	top: auto;
-	width: auto;
-	height: auto;
-	margin: inherit;
-	outline: 0 !important;
-	z-index: auto;
-}
-
 /* Generic find.tpl
 
 .find-div label,
