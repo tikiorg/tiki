@@ -423,4 +423,5 @@ class ReferencesLib extends TikiLib
 	}
 
 }
+global $referenceslib;
 $referenceslib = new ReferencesLib();
