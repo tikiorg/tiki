@@ -1422,7 +1422,7 @@ class UsersLib extends TikiLib
 			if (!empty($res['valid']) && $pass == $res['valid']) // used for validation of user account before activation
 				return array(USER_VALID, $user);
 
-			if ($validate_phase && $res['waiting'] == 'u')
+			if ($res['waiting'] == 'u')
 				return array(ACCOUNT_WAITING_USER, $user);
 			if ($res['waiting'] == 'a')
 				return array(ACCOUNT_DISABLED, $user);
