@@ -210,6 +210,7 @@ if (isset($_REQUEST['intertiki']) and in_array($_REQUEST['intertiki'], array_key
 				die;
 			}
 		}
+	} else if ($isvalid) {
 		$isdue = $userlib->is_due($requestedUser, $method);
 		$user = $requestedUser;
 	}
