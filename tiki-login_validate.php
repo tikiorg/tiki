@@ -82,6 +82,7 @@ if ($isvalid) {
 		} else {
 			$user = $_REQUEST['user'];
 			$_SESSION["$user_cookie_site"] = $user;
+			TikiLib::lib('menu')->empty_menu_cache();
 		}
 	}
 	if (!empty($prefs['url_after_validation']) && !$wasAdminValidation) {
