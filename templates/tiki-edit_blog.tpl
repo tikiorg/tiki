@@ -59,7 +59,7 @@
           <td><label for="blogs-allow_others">{tr}Allow other users to post in this blog{/tr}</label></td>
         </tr>	
         <tr class="editblogform">
-          <td class="checkbox"><input type="checkbox" name="alwaysOwner" id="blogs-always_owner" {if $alwaysOwner eq 'y'}checked='checked'{/if}/></td>
+          <td class="checkbox"><input type="checkbox" name="alwaysOwner" id="blogs-always_owner" {if isset($alwaysOwner) and $alwaysOwner eq 'y'}checked='checked'{/if}/></td>
           <td><label for="blogs-always_owner">{tr}If others post to blog, author should always be owner{/tr}</label></td>
         </tr>
         <tr class="editblogform">
