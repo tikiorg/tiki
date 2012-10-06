@@ -16,7 +16,7 @@
 	{/if}
 </div>
 
-{if $contribution_needed eq 'y'}
+{if isset($contribution_needed) and $contribution_needed eq 'y'}
 	{remarksbox type='Warning' title="{tr}Warning{/tr}"}
 		<div class="highlight"><em class='mandatory_note'>{tr}A contribution is mandatory{/tr}</em></div>
 	{/remarksbox}
@@ -62,7 +62,7 @@
 
 			<tr>
 				<td class="editblogform">{tr}Title:{/tr}</td><td class="editblogform">
-					<input type="text" size="80" maxlength="255" name="title" value="{$post_info.title|escape}" />
+					<input type="text" size="80" maxlength="255" name="title" {if isset($post_info.title)}value="{$post_info.title|escape}"{/if} />
 				</td>
 			</tr>
 
@@ -71,7 +71,9 @@
 					{tr}Body:{/tr}
 				</td>
 				<td class="editblogform">
-					{textarea id='blogedit' class="wikiedit" name="data"}{$data}{/textarea}
+					{if isset($data)}
+						{textarea id='blogedit' class="wikiedit" name="data"}{$data}{/textarea}
+					{/if}
 				</td>
 			</tr>
 
@@ -81,7 +83,9 @@
 						{tr}Excerpt:{/tr}
 					</td>
 					<td class="editblogform">
-						{textarea id='post_excerpt' class="wikiedit" name="excerpt"}{$post_info.excerpt}{/textarea}
+						{if isset($post_info.excerpt)}
+							{textarea id='post_excerpt' class="wikiedit" name="excerpt"}{$post_info.excerpt}{/textarea}
+						{/if}
 					</td>
 				</tr>
 			{/if}
@@ -131,8 +135,13 @@
 				<tr id='show_pubdate' class="editblogform">
 					<td>{tr}Publish Date{/tr}</td>
 					<td>
-						{html_select_date prefix="publish_" time=$post_info.created start_year="-5" end_year="+10" field_order=$prefs.display_field_order} {tr}at{/tr} 
-						{html_select_time prefix="publish_" time=$post_info.created display_seconds=false use_24_hours=$use_24hr_clock}
+						{if isset($post_info.created)}
+							{$created = $post_info.created}
+						{else}
+							{$created = ''}
+						{/if}
+						{html_select_date prefix="publish_" time=$created start_year="-5" end_year="+10" field_order=$prefs.display_field_order} {tr}at{/tr}
+						{html_select_time prefix="publish_" time=$created display_seconds=false use_24_hours=$use_24hr_clock}
 					</td>
 				</tr>
 			{/if}
