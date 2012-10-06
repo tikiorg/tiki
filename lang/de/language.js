@@ -38,7 +38,7 @@ lang = {
 "AJAX Error" : "AJAX Fehler",
 "It may not be possible to edit this page reliably in WYSIWYG mode in this browser." : "Es kann ggf. unmöglich sein, mit diesem Browser die Seite im WYSIWYG-Modus sicher zu bearbeiten",
 "The text you have selected is quite short. Select a longer piece to ensure the note is associated with the correct text." : "Der ausgewählte Text ist recht kurz. Wähle ein längeres Stück um sicherzustellen, dass der Hinweis mit dem richtigen Text verknüpft wird.",
-"Tip: Leave the first line as it is, starting with \";note:\". This is required" : "Tip: Lasse die erste Zeile, beginnend mit \";note:\" unverändert. Dies ist erforderlich",
+"Tip: Leave the first line as it is, starting with \";note:\". This is required" : "Tipp: Lasse die erste Zeile, beginnend mit \";note:\" unverändert. Dies ist erforderlich",
 "Theme Generator:" : "Theme-Generator:",
 "Edit module:" : "Bearbeite Modul:",
 "Edit module" : "Bearbeite Modul",
