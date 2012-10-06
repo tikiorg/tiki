@@ -10,12 +10,18 @@
 	{if $prefs.search_show_sort_order eq 'y'}
 		<label>
 			{tr}Sort By{/tr}
-			<select name="sort_mode">
+			<select name="sort_mode" class="sort_mode">
+				{$sort_found = false}
 				{foreach from=$sort_modes key=k item=t}
-					<option value="{$k|escape}"{if $k eq $sort_mode} selected="selected"{/if}>{$t|escape}</option>
+					<option value="{$k|escape}"{if $k eq $sort_mode} selected="selected"{$sort_found = true}{/if}>{$t|escape}</option>
 				{/foreach}
 			</select>
 		</label>
+		{if preg_match('/desc$/',$sort_mode)}
+			{icon _id='arrow_up' width='16' height='16' class='icon sort_invert' title='{tr}Sort direction{/tr}' href='#'}
+		{else}
+			{icon _id='arrow_down' width='16' height='16' class='icon sort_invert' title='{tr}Sort direction{/tr}' href='#'}
+		{/if}
 	{else}
 		<input type="hidden" name="sort_mode" value="{$sort_mode}" />
 	{/if}
@@ -162,5 +168,45 @@
 			return false;
 		});
 {{/if}}
+
+{{if $prefs.search_show_sort_order eq 'y'}}
+		var $invert = $(".sort_invert", this);
+		var $sort_mode = $(".sort_mode", this);
+{{if not $sort_found}}
+		var opts = $sort_mode.prop("options");
+		for (var o = 0; o < opts.length; o++) {	// sort_mode not in intially rendered list, so try and find the opposite direction
+			var tofind = "{{$sort_mode}}";
+			tofind = tofind.replace(/(:?asc|desc)$/, "");
+			if (opts[o].value.search(tofind) === 0) {
+				opts[o].value = "{{$sort_mode}}";
+				$sort_mode.prop("selectedIndex", o);
+				if (typeof $sort_mode.selectmenu == "function") {
+					$sort_mode.selectmenu();	// seems to need a prod
+				}
+				break;
+			}
+		}
+{{/if}}
+
+		$sort_mode.change(function () {		// update direction arrow
+			if ($(this).val().search(/desc$/) > -1) {
+				$invert.attr("src", $invert.attr("src").replace("down", "up"));
+			} else {
+				$invert.attr("src", $invert.attr("src").replace("up", "down"));
+			}
+		}).trigger("change");
+		$invert.parent().click(function () {	// change the value of the option to opposite direction
+			var v = $sort_mode.prop("options")[$sort_mode.prop("selectedIndex")].value;
+			if (v.search(/desc$/) > -1) {
+				$sort_mode.prop("options")[$sort_mode.prop("selectedIndex")].value = v.replace(/desc$/, "asc");
+				$invert.attr("src", $invert.attr("src").replace("up", "down"));
+			} else {
+				$sort_mode.prop("options")[$sort_mode.prop("selectedIndex")].value = v.replace(/asc$/, "desc");
+				$invert.attr("src", $invert.attr("src").replace("down", "up"));
+			}
+			return false;
+		});
+{{/if}}
+
 	});
 {/jq}
