@@ -25,7 +25,7 @@
 {if isset($section) and $section eq "blogs"}
 	{if empty($blog_data.title)}
 	<meta name="description" content="Blog listing" />
-	{elseif $postId eq ''}
+	{elseif empty($postId)}
 	<meta name="description" content="{$blog_data.title|escape}" />
 	{else} 
 	<meta name="description" content="{$post_info.title|escape} - {$blog_data.title|escape}" />
