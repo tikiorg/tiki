@@ -31,6 +31,23 @@ ini_set('session.use_only_cookies', 1);
 ini_set('magic_quotes_sybase', 'Off');
 ini_set('magic_quotes_runtime', 0);
 ini_set('allow_call_time_pass_reference', 'On');
+
+
+// Set memory_limit to at least 128M
+$memory_limit = ini_get('memory_limit');
+$s = trim($memory_limit);
+$last = strtolower($s{strlen($s)-1});
+switch ( $last ) {
+	case 'g': $s *= 1024;
+	case 'm': $s *= 1024;
+	case 'k': $s *= 1024;
+}
+
+if ( $s < 128 * 1024 * 1024 ) {
+ini_set('memory_limit','128M');
+};
+
+
 // ---------------------------------------------------------------------
 // inclusions of mandatory stuff and setup
 require_once ('lib/tikiticketlib.php');
