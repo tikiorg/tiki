@@ -46,7 +46,9 @@ foreach (array('en_US.utf8') as $UnicodeLocale) {
 	}
 }
 
-if ($prefs['feature_tikitests'] == 'y') require_once ('tiki_tests/tikitestslib.php');
+if ($prefs['feature_tikitests'] == 'y') {
+	require_once ('tiki_tests/tikitestslib.php');
+}
 $crumbs[] = new Breadcrumb($prefs['browsertitle'], '', $prefs['tikiIndex']);
 if ($prefs['site_closed'] == 'y') require_once ('lib/setup/site_closed.php');
 require_once ('lib/setup/error_reporting.php');
