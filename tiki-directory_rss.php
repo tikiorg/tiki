@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -39,9 +39,13 @@ if ($output["data"] == "EMPTY") {
 	$dateId = "created";
 	$readrepl = "tiki-directory_redirect.php?$id=%s";
 	$tmp = $prefs['feed_' . $feed . '_title'];
-	if ($tmp <> '') $title = $tmp;
+	if ($tmp <> '') {
+		$title = $tmp;
+	}
 	$tmp = $prefs['feed_' . $feed . '_desc'];
-	if ($desc <> '') $desc = $tmp;
+	if ($desc <> '') {
+		$desc = $tmp;
+	}
 	$changes = $dirlib->dir_list_sites($_REQUEST["parent"], 0, $prefs['feed_directories_max'], $dateId . '_desc', '', 'y');
 	$output = $rsslib->generate_feed($feed, $uniqueid, '', $changes, $readrepl, '', $id, $title, $titleId, $desc, $descId, $dateId, '');
 }

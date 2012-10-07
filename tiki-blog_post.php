@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -78,7 +78,7 @@ if (isset($_REQUEST["publish_Hour"])) {
 
 if ($prefs['feature_freetags'] == 'y') {
 	include_once ('lib/freetag/freetaglib.php');
-	
+
 	if ($prefs['feature_multilingual'] == 'y') {
 		$languages = array();
 		$languages = $tikilib->list_languages();
@@ -102,14 +102,16 @@ if (isset($_REQUEST['remove_image'])) {
 
 if ($prefs['feature_wysiwyg'] == 'y' && ($prefs['wysiwyg_default'] == 'y' && !isset($_REQUEST['wysiwyg'])) || (isset($_REQUEST['wysiwyg']) && $_REQUEST['wysiwyg'] == 'y')) {
 	$smarty->assign('wysiwyg', 'y');
-	$is_wysiwyg = TRUE;
+	$is_wysiwyg = true;
 } else {
 	$smarty->assign('wysiwyg', 'n');
-	$is_wysiwyg = FALSE;
+	$is_wysiwyg = false;
 }
 
 if ($postId > 0) {
-	if (empty($data["data"])) $data["data"] = '';
+	if (empty($data["data"])) {
+		$data["data"] = '';
+	}
 
 	$smarty->assign('post_info', $data);
 	$smarty->assign('data', $data['data']);
@@ -209,7 +211,7 @@ if (isset($_REQUEST['save']) && !$contribution_needed) {
 
 	$edit_data = $imagegallib->capture_images($edit_data);
 	$title = isset($_REQUEST['title']) ? $_REQUEST['title'] : '';
-	
+
 	if ($postId > 0) {
 		$bloglib->update_post($postId, $_REQUEST["blogId"], $edit_data, $_REQUEST['excerpt'], $data["user"], $title, isset($_REQUEST['contributions']) ? $_REQUEST['contributions'] : '', $blogpriv, $publishDate, $is_wysiwyg);
 	} else {
@@ -236,7 +238,7 @@ if (isset($_REQUEST['save']) && !$contribution_needed) {
 	include_once ("freetag_apply.php");
 	include_once ("categorize.php");
 
-	require_once('tiki-sefurl.php');	
+	require_once('tiki-sefurl.php');
 	$url = filter_out_sefurl("tiki-view_blog_post.php?postId=$postId", 'blogpost');
 	header("location: $url");
 	die;

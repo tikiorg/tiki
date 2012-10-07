@@ -49,9 +49,13 @@ if ($output["data"] == "EMPTY") {
 	$desc = $prefs['feed_tracker_desc'] . $tmp["description"];
 	$tmp = null;
 	$tmp = $prefs['feed_' . $feed . '_title'];
-	if ($tmp <> '') $title = $tmp;
+	if ($tmp <> '') {
+		$title = $tmp;
+	}
 	$tmp = $prefs['feed_' . $feed . '_desc'];
-	if ($desc <> '') $desc = $tmp;
+	if ($desc <> '') {
+		$desc = $tmp;
+	}
 	$titleId = "rss_subject";
 	$descId = "rss_description";
 	$authorId = ""; // "user";
@@ -61,7 +65,9 @@ if ($output["data"] == "EMPTY") {
 	$listfields = $trklib->list_tracker_fields($_REQUEST[$id]);
 	$fields = array();
 	foreach ($listfields['data'] as $f) {
-		if ($f['isHidden'] == 'y' || $f['isHidden'] == 'c') continue;
+		if ($f['isHidden'] == 'y' || $f['isHidden'] == 'c') {
+			continue;
+		}
 		$fields[$f['fieldId']] = $f;
 	}
 	if (isset($_REQUEST['filterfield'])) {

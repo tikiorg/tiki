@@ -44,7 +44,7 @@ switch ( $last ) {
 }
 
 if ( $s < 128 * 1024 * 1024 ) {
-ini_set('memory_limit','128M');
+	ini_set('memory_limit', '128M');
 };
 
 
@@ -258,9 +258,9 @@ $patterns['dotvars'] = "/^[-_a-zA-Z0-9\.]*$/"; // same pattern as a variable key
 $patterns['hash'] = "/^[a-z0-9]*$/"; // for hash reqId in live support
 // allow quotes in url for additional tag attributes if html allowed in menu options links
 if ($prefs['menus_item_names_raw'] == 'y' and strpos($_SERVER["SCRIPT_NAME"], 'tiki-admin_menu_options.php') !== false) {
-$patterns['url'] = "/^(https?:\/\/)?[^<>]*$/";
+	$patterns['url'] = "/^(https?:\/\/)?[^<>]*$/";
 } else {
-$patterns['url'] = "/^(https?:\/\/)?[^<>\"]*$/";
+	$patterns['url'] = "/^(https?:\/\/)?[^<>\"]*$/";
 }
 // parameter type definitions. prepend a + if variable may not be empty, e.g. '+int'
 $vartype['id'] = '+int';
@@ -389,7 +389,9 @@ function varcheck(&$array, $category)
 }
 unset($_COOKIE['offset']);
 if (!empty($_REQUEST['highlight'])) {
-	if (is_array($_REQUEST['highlight'])) $_REQUEST['highlight'] = '';
+	if (is_array($_REQUEST['highlight'])) {
+		$_REQUEST['highlight'] = '';
+	}
 	$_REQUEST['highlight'] = htmlspecialchars($_REQUEST['highlight']);
 	// Convert back sanitization tags into real tags to avoid them to be displayed
 	$_REQUEST['highlight'] = str_replace('&lt;x&gt;', '<x>', $_REQUEST['highlight']);
@@ -483,13 +485,13 @@ if (isset($_SESSION["$user_cookie_site"])) {
 	// or that has never used the login step in this tiki.
 	// Example : If using the same PHP SESSION cookies for more than one tiki.
 	$user_details = $userlib->get_user_details($user);
-	if (!is_array($user_details) || !is_array($user_details['info']) || (int)$user_details['info']['lastLogin'] <= 0) {
+	if (!is_array($user_details) || !is_array($user_details['info']) || (int) $user_details['info']['lastLogin'] <= 0) {
 		global $cachelib;
 		require_once ('lib/cache/cachelib.php');
 		$cachelib->invalidate('user_details_' . $user);
 		$user_details = $userlib->get_user_details($user);
 		if (!is_array($user_details) || !is_array($user_details['info'])) {
-			$user = NULL;
+			$user = null;
 		}
 	}
 	unset($user_details);
@@ -499,13 +501,14 @@ if (isset($_SESSION["$user_cookie_site"])) {
 		$_SESSION['ticket'] = md5(uniqid(rand()));
 	}
 } else {
-	$user = NULL;
+	$user = null;
 
 	if ( isset($prefs['login_http_basic']) && $prefs['login_http_basic'] === 'always' ||
 		(isset($prefs['login_http_basic']) && $prefs['login_http_basic'] === 'ssl' && isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on')) {
 		// Authenticate if the credentials are present, do nothing otherwise
-		if(isset($_SERVER['REDIRECT_HTTP_AUTHORIZATION']))
+		if (isset($_SERVER['REDIRECT_HTTP_AUTHORIZATION'])) {
 			$_SERVER['HTTP_AUTHORIZATION'] = $_SERVER['REDIRECT_HTTP_AUTHORIZATION'];
+		}
 		if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
 			$ha = base64_decode(substr($_SERVER['HTTP_AUTHORIZATION'], 6));
 			list($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW']) = explode(':', $ha);
@@ -533,7 +536,8 @@ require_once ('lib/setup/perms.php');
 if (ini_get('register_globals')) {
 	foreach (array($_ENV, $_GET, $_POST, $_COOKIE, $_SERVER) as $superglob) {
 		foreach ($superglob as $key => $val) {
-			if (isset($GLOBALS[$key]) && $GLOBALS[$key] == $val) { // if global has been set some other way
+			if (isset($GLOBALS[$key]) && $GLOBALS[$key] == $val) {
+				// if global has been set some other way
 				// that is OK (prevents munging of $_SERVER with ?_SERVER=rubbish etc.)
 				unset($GLOBALS[$key]);
 			}
@@ -564,7 +568,9 @@ $jitGet->setDefaultFilter('xss');
 $jitRequest->setDefaultFilter('xss');
 $jitCookie->setDefaultFilter('xss');
 // Apply configured filters to all other input
-if (!isset($inputConfiguration)) $inputConfiguration = array();
+if (!isset($inputConfiguration)) {
+	$inputConfiguration = array();
+}
 
 array_unshift(
 	$inputConfiguration, array(
@@ -601,9 +607,13 @@ if ( ( isset($prefs['tiki_allow_trust_input']) && $prefs['tiki_allow_trust_input
 	$varcheck_vars = array('_COOKIE', '_GET', '_POST', '_ENV', '_SERVER');
 	$varcheck_errors = '';
 	foreach ($varcheck_vars as $var) {
-		if (!isset($$var)) continue;
+		if (!isset($$var)) {
+			continue;
+		}
 		if (($tmp = varcheck($$var, $var)) != '') {
-			if ($varcheck_errors != '') $varcheck_errors.= '<br />';
+			if ($varcheck_errors != '') {
+				$varcheck_errors.= '<br />';
+			}
 			$varcheck_errors.= $tmp;
 		}
 	}
@@ -647,7 +657,9 @@ if (function_exists('mb_internal_encoding')) {
 }
 // --------------------------------------------------------------
 // Fix IIS servers not setting what they should set (ay ay IIS, ay ay)
-if (!isset($_SERVER['QUERY_STRING'])) $_SERVER['QUERY_STRING'] = '';
+if (!isset($_SERVER['QUERY_STRING'])) {
+	$_SERVER['QUERY_STRING'] = '';
+}
 if (!isset($_SERVER['REQUEST_URI']) || empty($_SERVER['REQUEST_URI'])) {
 	$_SERVER['REQUEST_URI'] = $_SERVER['PHP_SELF'] . '?' . $_SERVER['QUERY_STRING'];
 }

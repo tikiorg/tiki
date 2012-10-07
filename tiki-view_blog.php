@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -37,7 +37,7 @@ if (!isset($_REQUEST["blogId"])) {
 	$smarty->display("error.tpl");
 	die;
 }
-$tikilib->get_perm_object($_REQUEST["blogId"], 'blog'); 
+$tikilib->get_perm_object($_REQUEST["blogId"], 'blog');
 
 
 $access->check_permission('tiki_p_read_blog');
@@ -121,12 +121,14 @@ $listpages = $bloglib->list_blog_posts($_REQUEST["blogId"], true, $offset, $blog
 $_SESSION['blogs_last_viewed_month'] = TikiLib::date_format("%Y-%m", $date_max);
 $temp_max = count($listpages["data"]);
 for ($i = 0; $i < $temp_max; $i++) {
-	if ($listpages['data'][$i]['wysiwyg'] === 'n') {		// non-wysiwyg posts data get parsed in list_blog_posts
+	if ($listpages['data'][$i]['wysiwyg'] === 'n') {
+		// non-wysiwyg posts data get parsed in list_blog_posts
 		$listpages['data'][$i]['parsed_data'] = $listpages['data'][$i]['data'];
 	} else {
 		$listpages["data"][$i]["parsed_data"] = $tikilib->parse_data($bloglib->get_page($listpages["data"][$i]["data"], 1), array('is_html' => true));
 	}
-	if ($prefs['feature_freetags'] == 'y') { // And get the Tags for the posts
+	if ($prefs['feature_freetags'] == 'y') {
+		// And get the Tags for the posts
 		$listpages["data"][$i]["freetags"] = $freetaglib->get_tags_on_object($listpages["data"][$i]["postId"], "blog post");
 	}
 	if ($listpages["data"][$i]['priv'] == 'y') {

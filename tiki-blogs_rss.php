@@ -44,9 +44,13 @@ if ($output["data"] == "EMPTY") {
 	$authorId = "user";
 	$readrepl = "tiki-view_blog_post.php?postId=%s";
 	$tmp = $prefs['feed_' . $feed . '_title'];
-	if ($tmp <> '') $title = $tmp;
+	if ($tmp <> '') {
+		$title = $tmp;
+	}
 	$tmp = $prefs['feed_' . $feed . '_desc'];
-	if ($desc <> '') $desc = $tmp;
+	if ($desc <> '') {
+		$desc = $tmp;
+	}
 	$changes = $bloglib->list_all_blog_posts(0, $prefs['feed_blogs_max'], $dateId . '_desc', '', $now);
 	$tmp = array();
 	include_once ('tiki-sefurl.php');

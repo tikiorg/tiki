@@ -42,9 +42,13 @@ if ($output["data"] == "EMPTY") {
 	$dateId = "created";
 	$readrepl = "tiki-directory_redirect.php?$id=%s";
 	$tmp = $prefs['feed_' . $feed . '_title'];
-	if ($tmp <> '') $title = $tmp;
+	if ($tmp <> '') {
+		$title = $tmp;
+	}
 	$tmp = $prefs['feed_' . $feed . '_desc'];
-	if ($desc <> '') $desc = $tmp;
+	if ($desc <> '') {
+		$desc = $tmp;
+	}
 	$changes = $tikilib->dir_list_all_valid_sites2(0, $prefs['feed_directories_max'], $dateId . '_desc', '');
 	$output = $rsslib->generate_feed($feed, $uniqueid, '', $changes, $readrepl, '', $id, $title, $titleId, $desc, $descId, $dateId, '');
 }

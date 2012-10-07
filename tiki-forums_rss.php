@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -18,12 +18,12 @@ if ($prefs['feed_forums'] != 'y') {
 
 $res=$access->authorize_rss(array('tiki_p_admin_forum','tiki_p_forum_read'));
 if ($res) {
-   if ($res['header'] == 'y') {
-      header('WWW-Authenticate: Basic realm="'.$tikidomain.'"');
-      header('HTTP/1.0 401 Unauthorized');
-   }
-   $errmsg=$res['msg'];
-   require_once ('tiki-rss_error.php');
+	if ($res['header'] == 'y') {
+		header('WWW-Authenticate: Basic realm="'.$tikidomain.'"');
+		header('HTTP/1.0 401 Unauthorized');
+	}
+	$errmsg=$res['msg'];
+	require_once ('tiki-rss_error.php');
 }
 
 $feed = "forums";

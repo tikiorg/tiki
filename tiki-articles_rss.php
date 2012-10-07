@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -19,12 +19,12 @@ if ($prefs['feed_articles'] != 'y') {
 
 $res=$access->authorize_rss(array('tiki_p_read_article','tiki_p_admin_cms', 'tiki_p_articles_read_heading'));
 if ($res) {
-   if ($res['header'] == 'y') {
-      header('WWW-Authenticate: Basic realm="'.$tikidomain.'"');
-      header('HTTP/1.0 401 Unauthorized');
-   }
-   $errmsg=$res['msg'];
-   require_once ('tiki-rss_error.php');
+	if ($res['header'] == 'y') {
+		header('WWW-Authenticate: Basic realm="'.$tikidomain.'"');
+		header('HTTP/1.0 401 Unauthorized');
+	}
+	$errmsg=$res['msg'];
+	require_once ('tiki-rss_error.php');
 }
 
 $feed = "articles";
@@ -75,9 +75,13 @@ if ($output["data"]=="EMPTY") {
 	$readrepl = "tiki-read_article.php?$id=%s";
 
 	$tmp = $prefs['feed__'.$feed.'_title'];
-	if ($tmp<>'') $title = $tmp;
+	if ($tmp<>'') {
+		$title = $tmp;
+	}
 	$tmp = $prefs['feed_'.$feed.'_desc'];
-	if ($desc<>'') $desc = $tmp;
+	if ($desc<>'') {
+		$desc = $tmp;
+	}
 
 	$changes = $artlib -> list_articles(0, $prefs['feed_articles_max'], $dateId.'_desc', '', 0, $tikilib->now, $user, $type, $topic, 'y', '', '', '', '', $articleLang, '', '', false, 'y');
 	$tmp = array();

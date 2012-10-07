@@ -89,8 +89,9 @@ $activeWS = $perspectivelib->get_current_perspective(null);
 // If there's a WS active and the WS has a homepage, then load the WS homepage
 if ((!empty($activeWS)) and $isHomePage) {
 	$preferences = $perspectivelib->get_preferences($activeWS);
-	if (!empty($preferences['wsHomepage']))
+	if (!empty($preferences['wsHomepage'])) {
 		$_REQUEST['page'] = $preferences['wsHomepage'];
+	}
 }
 
 // If a page have been requested, then show the page.
@@ -224,8 +225,7 @@ if (!$info || isset($_REQUEST['date']) || isset($_REQUEST['version'])) {
 
 		try {
 			$info = $histlib->get_page_info($page, $_REQUEST['version']);
-		}
-		catch (Exception $e) {
+		} catch (Exception $e) {
 			// Unknown version
 			$msg = tra('This version does not exist');
 			$smarty->assign('msg', $msg);
@@ -256,10 +256,11 @@ if (empty($info) && !($user && $prefs['feature_wiki_userpage'] == 'y' && strcase
 
 	if ( $prefs['feature_wiki_userpage'] == 'y'
 				&& strcasecmp($prefs['feature_wiki_userpage_prefix'], substr($page, 0, strlen($prefs['feature_wiki_userpage_prefix']))) == 0
-	)
+	) {
 		$isUserPage = true;
-	else
+	} else {
 		$isUserPage = false;
+	}
 
 	$referencedPages = $wikilib->get_pages_by_alias($page);
 	$likepages = $wikilib->get_like_pages($page);
@@ -399,13 +400,14 @@ $pageCache = Tiki_PageCache::create()
 	->checkMeta('wiki-page-output-meta-timestamp', array('page' => $page,))
 	->applyCache();
 
-if ( $page_ref_id )
+if ( $page_ref_id ) {
 	$pageRenderer->setStructureInfo($page_info);
+}
 
-	// Now check permissions to access this page
-	if ( ! $pageRenderer->canView ) {
-		$access->display_error($page, tra('You do not have permission to view this page.'), '401');
-	}
+// Now check permissions to access this page
+if ( ! $pageRenderer->canView ) {
+	$access->display_error($page, tra('You do not have permission to view this page.'), '401');
+}
 
 // Convert page to structure
 if (isset($_REQUEST['convertstructure']) && isset($structs) && count($structs) == 0) {
@@ -571,10 +573,12 @@ if ( $prefs['feature_wiki_attachments'] == 'y' && $prefs['feature_use_fgal_for_w
 		}
 	}
 
-	if ( isset($_REQUEST['sort_mode']) )
+	if ( isset($_REQUEST['sort_mode']) ) {
 		$pageRenderer->setSortMode($_REQUEST['sort_mode']);
-	if ( isset( $_REQUEST['atts_show'] ) )
+	}
+	if ( isset( $_REQUEST['atts_show'] ) ) {
 		$pageRenderer->setShowAttachments($_REQUEST['atts_show']);
+	}
 }
 
 // Watches
@@ -608,8 +612,9 @@ if ($prefs['feature_user_watches'] == 'y') {
 		} else {
 			$tikilib->remove_user_watch($user, $_REQUEST['watch_event'], $_REQUEST['watch_object']);
 		}
-		if (!$ret)
+		if (!$ret) {
 			$access->display_error($page, 'Invalid Email');
+		}
 	}
 }
 

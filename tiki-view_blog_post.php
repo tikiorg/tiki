@@ -143,21 +143,29 @@ $smarty->assign('blog_data', $blog_data);
 $smarty->assign('blogId', $blogId);
 $smarty->assign('headtitle', $post_info['title'] . ' : ' . $blog_data['title']);
 $smarty->assign('title', $post_info['title'] . ' : ' . $blog_data['title']);
-if (!isset($_REQUEST['offset'])) $_REQUEST['offset'] = 0;
-if (!isset($_REQUEST['sort_mode'])) $_REQUEST['sort_mode'] = 'created_desc';
-if (!isset($_REQUEST['find'])) $_REQUEST['find'] = '';
+if (!isset($_REQUEST['offset'])) {
+	$_REQUEST['offset'] = 0;
+}
+if (!isset($_REQUEST['sort_mode'])) {
+	$_REQUEST['sort_mode'] = 'created_desc';
+}
+if (!isset($_REQUEST['find'])) {
+	$_REQUEST['find'] = '';
+}
 $smarty->assign('offset', $_REQUEST["offset"]);
 $smarty->assign('sort_mode', $_REQUEST["sort_mode"]);
 $smarty->assign('find', $_REQUEST["find"]);
 $offset = $_REQUEST["offset"];
 $sort_mode = $_REQUEST["sort_mode"];
 $find = $_REQUEST["find"];
-if ($post_info['wysiwyg'] == "y")
+if ($post_info['wysiwyg'] == "y") {
 	$parsed_data = $tikilib->parse_data($post_info["data"], array('is_html' => true));
-else
+} else {
 	$parsed_data = $tikilib->parse_data($post_info["data"]);
-
-if (!isset($_REQUEST['page'])) $_REQUEST['page'] = 1;
+}
+if (!isset($_REQUEST['page'])) {
+	$_REQUEST['page'] = 1;
+}
 $pages = $bloglib->get_number_of_pages($parsed_data);
 $post_info['parsed_data'] = $bloglib->get_page($parsed_data, $_REQUEST['page']);
 $post_info['pages'] = $pages;
