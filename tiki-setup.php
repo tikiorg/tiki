@@ -50,9 +50,13 @@ if ($prefs['feature_tikitests'] == 'y') {
 	require_once ('tiki_tests/tikitestslib.php');
 }
 $crumbs[] = new Breadcrumb($prefs['browsertitle'], '', $prefs['tikiIndex']);
-if ($prefs['site_closed'] == 'y') require_once ('lib/setup/site_closed.php');
+if ($prefs['site_closed'] == 'y') {
+	require_once ('lib/setup/site_closed.php');
+}
 require_once ('lib/setup/error_reporting.php');
-if ($prefs['use_load_threshold'] == 'y') require_once ('lib/setup/load_threshold.php');
+if ($prefs['use_load_threshold'] == 'y') {
+	require_once ('lib/setup/load_threshold.php');
+}
 require_once ('lib/setup/sections.php');
 require_once ('lib/headerlib.php');
 
@@ -75,7 +79,7 @@ if ( $prefs['tiki_domain_prefix'] == 'strip' && substr($host, 0, 4) == 'www.' ) 
 }
 
 if (strpos($prefs['tiki_domain_redirects'], ',') !== false) {
-	foreach ( explode("\n", $prefs['tiki_domain_redirects']) as $row ) {
+	foreach (explode("\n", $prefs['tiki_domain_redirects']) as $row) {
 		list($old, $new) = array_map('trim', explode(',', $row, 2));
 		$domain_map[$old] = $new;
 	}
@@ -90,7 +94,9 @@ if ( isset($domain_map[$host]) ) {
 	exit;
 }
 
-if (isset($_REQUEST['PHPSESSID'])) $tikilib->setSessionId($_REQUEST['PHPSESSID']);
+if (isset($_REQUEST['PHPSESSID'])) {
+	$tikilib->setSessionId($_REQUEST['PHPSESSID']);
+}
 elseif (function_exists('session_id')) $tikilib->setSessionId(session_id());
 
 if ($prefs['cookie_consent_feature'] === 'y' && empty($_COOKIE[$prefs['cookie_consent_name']])) {
@@ -116,7 +122,8 @@ require_once ('lib/setup/wiki.php');
 
 $cookie_consent_html = '';
 if ($prefs['cookie_consent_feature'] === 'y') {
-	if (!empty($_REQUEST['cookie_consent_checkbox'])) {			// js disabled
+	if (!empty($_REQUEST['cookie_consent_checkbox'])) {
+		// js disabled
 		$feature_no_cookie = false;
 		setCookieSection($prefs['cookie_consent_name'], 'y');
 	}
@@ -137,10 +144,16 @@ if ($prefs['cookie_consent_feature'] === 'y') {
 }
 $smarty->assign('cookie_consent_html', $cookie_consent_html);
 
-if ($prefs['feature_polls'] == 'y') require_once ('lib/setup/polls.php');
-if ($prefs['feature_mailin'] == 'y') require_once ('lib/setup/mailin.php');
+if ($prefs['feature_polls'] == 'y') {
+	require_once ('lib/setup/polls.php');
+}
+if ($prefs['feature_mailin'] == 'y') {
+	require_once ('lib/setup/mailin.php');
+}
 require_once ('lib/setup/tikiIndex.php');
-if ($prefs['useGroupHome'] == 'y') require_once ('lib/setup/default_homepage.php');
+if ($prefs['useGroupHome'] == 'y') {
+	require_once ('lib/setup/default_homepage.php');
+}
 
 // change $prefs['tikiIndex'] if feature_sefurl is enabled (e.g. tiki-index.php?page=HomePage becomes HomePage)
 if ($prefs['feature_sefurl'] == 'y') {
@@ -156,7 +169,9 @@ if ($prefs['feature_sefurl'] == 'y') {
 }
 
 require_once ('lib/setup/theme.php');
-if ($prefs['feature_babelfish'] == 'y' || $prefs['feature_babelfish_logo'] == 'y') require_once ('lib/setup/babelfish.php');
+if ($prefs['feature_babelfish'] == 'y' || $prefs['feature_babelfish_logo'] == 'y') {
+	require_once ('lib/setup/babelfish.php');
+}
 if (!empty($varcheck_errors)) {
 	$smarty->assign('msg', $varcheck_errors);
 	$smarty->display('error_raw.tpl');
@@ -165,32 +180,52 @@ if (!empty($varcheck_errors)) {
 if ($prefs['feature_challenge'] == 'y') {
 	require_once ('lib/setup/challenge.php');
 }
-if ($prefs['feature_usermenu'] == 'y') require_once ('lib/setup/usermenu.php');
-if ($prefs['feature_live_support'] == 'y') require_once ('lib/setup/live_support.php');
-if ($prefs['feature_referer_stats'] == 'y' || $prefs['feature_stats'] == 'y') require_once ('lib/setup/stats.php');
+if ($prefs['feature_usermenu'] == 'y') {
+	require_once ('lib/setup/usermenu.php');
+}
+if ($prefs['feature_live_support'] == 'y') {
+	require_once ('lib/setup/live_support.php');
+}
+if ($prefs['feature_referer_stats'] == 'y' || $prefs['feature_stats'] == 'y') {
+	require_once ('lib/setup/stats.php');
+}
 require_once ('lib/setup/dynamic_variables.php');
 require_once ('lib/setup/output_compression.php');
 if ($prefs['feature_debug_console'] == 'y') {
 	// Include debugger class declaration. So use loggin facility in php files become much easier :)
 	include_once ('lib/debug/debugger.php');
 }
-if ($prefs['feature_integrator'] == 'y') require_once ('lib/setup/integrator.php');
-if (isset($_REQUEST['comzone'])) require_once ('lib/setup/comments_zone.php');
-if ($prefs['feature_lastup'] == 'y') require_once ('lib/setup/last_update.php');
+if ($prefs['feature_integrator'] == 'y') {
+	require_once ('lib/setup/integrator.php');
+}
+if (isset($_REQUEST['comzone'])) {
+	require_once ('lib/setup/comments_zone.php');
+}
+if ($prefs['feature_lastup'] == 'y') {
+	require_once ('lib/setup/last_update.php');
+}
 if (!empty($_SESSION['interactive_translation_mode']) && ($_SESSION['interactive_translation_mode'] == 'on')) {
 	include_once ('lib/multilingual/multilinguallib.php');
 	$cachelib->empty_cache('templates_c');
 }
-if ($prefs['feature_freetags'] == 'y') require_once ('lib/setup/freetags.php');
+if ($prefs['feature_freetags'] == 'y') {
+	require_once ('lib/setup/freetags.php');
+}
 if ($prefs['feature_areas'] == 'y' && $prefs['feature_categories'] == 'y') {
 	global $areaslib; require_once('lib/perspective/binderlib.php');
 	require_once ('lib/setup/categories.php');
 	$areaslib->HandleObjectCategories($objectCategoryIdsNoJail);
 }
-if ($prefs['feature_userlevels'] == 'y') require_once ('lib/setup/userlevels.php');
-if ($prefs['auth_method'] == 'openid') require_once ('lib/setup/openid.php');
+if ($prefs['feature_userlevels'] == 'y') {
+	require_once ('lib/setup/userlevels.php');
+}
+if ($prefs['auth_method'] == 'openid') {
+	require_once ('lib/setup/openid.php');
+}
 if ($prefs['feature_wysiwyg'] == 'y') {
-	if (!isset($_SESSION['wysiwyg'])) $_SESSION['wysiwyg'] = 'n';
+	if (!isset($_SESSION['wysiwyg'])) {
+		$_SESSION['wysiwyg'] = 'n';
+	}
 	$smarty->assign_by_ref('wysiwyg', $_SESSION['wysiwyg']);
 }
 
