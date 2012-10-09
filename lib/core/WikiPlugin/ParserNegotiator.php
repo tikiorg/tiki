@@ -200,6 +200,8 @@ class WikiPlugin_ParserNegotiator
 	private function addWaitingPlugin()
 	{
 		self::$parserLevels[] = $this->class->parserLevel;
+		sort(self::$parserLevels, SORT_NUMERIC);
+		array_unique(self::$parserLevels);
 		self::$pluginsAwaitingExecution[$this->key] = self::$pluginDetails[$this->key];
 	}
 
@@ -641,24 +643,19 @@ class WikiPlugin_ParserNegotiator
 
 	function executeAwaiting(&$input)
 	{
-		if (self::$currentParserLevel == 0) {
-			sort(self::$parserLevels, SORT_NUMERIC);
-			array_unique(self::$parserLevels);
+		foreach (self::$parserLevels as &$level) {
+			self::$currentParserLevel = $level;
+			foreach (self::$pluginsAwaitingExecution as &$pluginDetails) {
+				$this->setDetails($pluginDetails);
 
-			foreach (self::$parserLevels as &$level) {
-				self::$currentParserLevel = $level;
-				foreach (self::$pluginsAwaitingExecution as &$pluginDetails) {
-					if (self::$currentParserLevel == $level && strstr($input, $this->key)) {
-						$this->setDetails($pluginDetails);
+				if (self::$currentParserLevel == $level && strstr($input, $this->key)) {
+					$this->parser->plugin[$this->key] = $this->body;
 
-						$this->parser->plugin[$this->key] = $this->body;
+					$result = $this->parser->parsePlugin($this->execute());
 
-						$result = $this->parser->parsePlugin($this->execute());
+					$input = str_replace($this->key, $result, $input);
 
-						$input = str_replace($this->key, $result, $input);
-
-						unset($pluginDetails);
-					}
+					unset($pluginDetails);
 				}
 			}
 		}
