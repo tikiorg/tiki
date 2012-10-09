@@ -127,7 +127,9 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 			$this->Parser->option = array_merge($this->optionDefaults, $option);
 		}
 
-		$parserlib->option = $this->Parser->option;
+		if (isset($parserlib->option)) {
+			$parserlib->option = $this->Parser->option;
+		}
 	}
 
 	public function getOption($name = '')
@@ -147,7 +149,9 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		$this->Parser->option['page'] = $page;
 		$this->Parser->option = $this->optionDefaults;
 
-		$parserlib->option = $this->Parser->option;
+		if (isset($parserlib->option)) {
+			$parserlib->option = $this->Parser->option;
+		}
 	}
 
 	function __construct(JisonParser_Wiki_Handler &$Parser = null)
@@ -428,7 +432,9 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	function restorePluginEntities(&$input, $keep = false)
 	{
 		//use of array_reverse, jison is a reverse bottom-up parser, if it doesn't reverse jison doesn't restore the plugins in the right order, leaving the some nested keys as a result
-		foreach (array_reverse($this->pluginEntries) as $key => $entity) {
+		array_reverse($this->pluginEntries);
+
+		foreach ($this->pluginEntries as $key => $entity) {
 			if (strstr($input, $key)) {
 				if ($this->getOption('stripplugins') == true) {
 					$input = str_replace($key, '', $input);
