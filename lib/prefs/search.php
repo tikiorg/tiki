@@ -18,7 +18,7 @@ function prefs_search_list()
 		'search_default_where' => array(
 			'name' => tra('Default where'),
 			'description' => tra('When object filter is not on, limit to search one type of object'),
-			'type' => 'list',
+			'type' => 'multicheckbox',
 			'options' => isset($prefs['feature_search_fulltext']) && $prefs['feature_search_fulltext'] === 'y' ?
 					array(
 						'' => tra('Entire site'),
@@ -34,7 +34,7 @@ function prefs_search_list()
 						'trackeritem' => tra('Tracker Items'),
 						'sheet' => tra('Spreadsheets'),
 					),
-			'default' => '',
+			'default' => array(),
 		),
 		'search_default_interface_language' => array(
 			'name' => tra('Restrict search language by default'),

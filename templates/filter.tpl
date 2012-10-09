@@ -36,7 +36,13 @@
 			</select>
 		</label>
 	{else}
-		<input type="hidden" name="filter~type" value="{$filter_type}" />
+		{if is_array($filter_type)}
+			{foreach from=$filter_type item=t}
+				<input type="hidden" name="filter~type[]" value="{$t|escape}" />
+			{/foreach}
+		{else}
+			<input type="hidden" name="filter~type" value="{$filter_type|escape}" />
+		{/if}
 	{/if}
 	{if $prefs.feature_categories eq 'y' and $tiki_p_view_category eq 'y' and $prefs.search_show_category_filter eq 'y'}
 		<fieldset>
