@@ -236,8 +236,10 @@ class Tracker_Query
 		$this->tracker = $tracker;
 
 		$tikilib->query(
-			"DROP TABLE IF EXISTS temp_tracker_field_options;
-			CREATE TEMPORARY TABLE temp_tracker_field_options (
+			"DROP TABLE IF EXISTS temp_tracker_field_options;"
+		);
+		$tikilib->query(
+			"CREATE TEMPORARY TABLE temp_tracker_field_options (
 				trackerIdHere INT,
 				trackerIdThere INT,
 				fieldIdThere INT,
@@ -247,9 +249,10 @@ class Tracker_Query
 				linkToItems INT,
 				type VARCHAR(1),
 				options VARCHAR(50)
-				);
-
-			INSERT INTO temp_tracker_field_options
+				);"
+		);
+		$tikilib->query(
+			"INSERT INTO temp_tracker_field_options
 			SELECT
 			tiki_tracker_fields.trackerId,
 			REPLACE(SUBSTRING(
@@ -281,9 +284,10 @@ class Tracker_Query
 			tiki_tracker_fields.type,
 			tiki_tracker_fields.options
 				FROM tiki_tracker_fields
-				WHERE tiki_tracker_fields.type = 'l';
-
-			SET group_concat_max_len = 4294967295;"
+				WHERE tiki_tracker_fields.type = 'l';"
+		);
+		$tikilib->query(
+			"SET group_concat_max_len = 4294967295;"
 		);
 
 		/*For any fields that have multi items, we use php to parse those out, there shouldn't be too many
