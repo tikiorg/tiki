@@ -199,8 +199,8 @@ function module_search($mod_reference, $smod_params) 	// modifies $smod_params s
 			$smod_params['show_go_button'] = 'n';
 			$smod_params['show_edit_button'] = 'n';
 			$smod_params['advanced_search'] = 'y';
-			$smod_params['advanced_search_option'] = 'y';
-			$smod_params['advanced_search_help'] = 'y';
+			$smod_params['advanced_search_option'] = $prefs['feature_search_fulltext'];
+			$smod_params['advanced_search_help'] = $prefs['feature_search_fulltext'];
 			$smod_params['search_submit'] = tra('Go');
 			$smod_params['default_button'] = 'search';
 			$smod_params['show_object_filter'] = $prefs['feature_search_show_object_filter'];
