@@ -53,7 +53,11 @@ class Image extends ImageAbstract
 					$this->data = call_user_func('imagecreatefrom'.$this->format, $this->filename);
 					$this->loaded = true;
 				}
-			} elseif (!empty($this->data) && $this->data != 'REFERENCE') {
+			} elseif (
+				!empty($this->data) &&
+				$this->data != 'REFERENCE' &&
+				preg_match('/^[<]svg/', $this->data) == false //In some cases, an svg will be recognized as an alternate picture type, here we simply check the beginning for "<svg" and if it is found, it is an svg
+			) {
 				$this->data = imagecreatefromstring($this->data);
 				$this->loaded = true;
 			} else {
