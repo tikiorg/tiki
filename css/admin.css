@@ -106,7 +106,22 @@ a.admbox.off img {
 /*sub options */
 	margin-left:3em;
 	clear:both;
-	}
+}
+
+.multicheckbox label,
+.multicheckbox ul,
+.multicheckbox > div {
+	float: left;
+}
+
+.multicheckbox ul {
+	margin: 0;
+	padding: 0 1em;
+}
+
+.multicheckbox li {
+	list-style-type: none;
+}
 
 .admin input.fullwidth {
 	width: 100%;
