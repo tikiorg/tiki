@@ -24,15 +24,17 @@ $login = '<form name="loginbox" action="tiki-login_scr.php" method="post"><table
 
 $back = '<p><a href="javascript:history.back()">' . tra('Go back') . '</a></p>';
 
-if (file_exists('styles/site_closed_local.html')) {
-	$html = file_get_contents('styles/site_closed_local.html');
+if (file_exists('templates/styles/site_closed_local.html')) {
+	$html = file_get_contents('templates/styles/site_closed_local.html');
 } else {
-	$html = file_get_contents('styles/site_closed.html');
+	$html = file_get_contents('templates/styles/site_closed.html');
 }
 
 $html = str_replace('{error}', $error, $html);
 $html = str_replace('{title}', $title, $html);
 $html = str_replace('{login}', $login, $html);
 $html = str_replace('{back}', $back, $html);
+
+header("HTTP/1.0 302 Moved Temporarily");
 
 echo $html;
