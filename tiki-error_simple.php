@@ -5,24 +5,34 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-echo '<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">';
+include_once('lib/init/tra.php');
 
-echo '<html><head><title>maintenance</title><meta http-equiv="Content-Type" content="text/html; charset=utf-8" /></head><body><pre><p>';
-if (isset($_REQUEST['error']) and !is_null($_REQUEST['error'])) {
-
-	$_REQUEST["error"] = substr($_REQUEST["error"], 0, 256);
-	echo htmlentities(strip_tags($_REQUEST["error"]), ENT_QUOTES, 'UTF-8');	
-
+if (!empty($_REQUEST['error'])) {
+	$error = substr($_REQUEST["error"], 0, 256);
 } else {
-	echo 'There was an unspecified error.  Please go back and try again.';
+	$error = tra('There was an unspecified error.  Please go back and try again.');
+}
+if (!empty($_REQUEST['title'])) {
+	$title = $_REQUEST['title'];
+} else {
+	$title = tra('Maintenance');
 }
 
-echo '</p>
-<form name="loginbox" action="tiki-login.php?page=tikiIndex" method="post">
-User: <input type="text" name="user"  size="20" /><br />
-Pass: <input type="password" name="pass" size="20" /><br />
-<input type="submit" name="login" value="login" /></form>';
+$login = '<form name="loginbox" action="tiki-login_scr.php" method="post"><table><tr><td>' .
+	tra('User:') . '</td><td><input type="text" name="user"  size="20" /></td></tr><tr><td>' .
+	tra('Pass:') . '</td><td><input type="password" name="pass" size="20" /></td></tr><tr><td align="center"><input type="submit" name="login" value="login" /></td></tr></table></form>';
 
-echo '<p><a href="javascript:history.back()">Go back</a></p></pre></body></html>';
+$back = '<p><a href="javascript:history.back()">' . tra('Go back') . '</a></p>';
+
+if (file_exists('styles/site_closed_local.html')) {
+	$html = file_get_contents('styles/site_closed_local.html');
+} else {
+	$html = file_get_contents('styles/site_closed.html');
+}
+
+$html = str_replace('{error}', $error, $html);
+$html = str_replace('{title}', $title, $html);
+$html = str_replace('{login}', $login, $html);
+$html = str_replace('{back}', $back, $html);
+
+echo $html;
