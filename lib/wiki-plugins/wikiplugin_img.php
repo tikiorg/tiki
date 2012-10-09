@@ -1361,9 +1361,9 @@ function wikiplugin_img( $data, $params, $offset, $parseOptions='' )
 		$repl = '{img src=' . $src . "\"}\n<p>" . $imgdata['desc'] . '</p>'; 
 	}
 
-	if (!empty($imgdata['galleryId'])) {
+	if (!empty($dbinfo['galleryId'])) {
 		global $tiki_p_edit, $fromTracker;
-		$globalperms = Perms::get(array( 'type' => 'file gallery', 'object' => $imgdata['galleryId'] ));
+		$globalperms = Perms::get(array( 'type' => 'file gallery', 'object' => $dbinfo['galleryId'] ));
 
 		if (
 			$prefs['feature_draw'] == 'y' &&
@@ -1379,8 +1379,8 @@ function wikiplugin_img( $data, $params, $offset, $parseOptions='' )
 			} else {
 				$iconDisplayStyle = '';
 			}
-			$repl .= "<a href='tiki-edit_draw.php?fileId={$imgdata['fileId']}' onclick='return $(this).ajaxEditDraw();' title='".tr("Edit: Image") . " ".tr("(experimental)") . "'" .
-						" class='editplugin pluginImgEdit{$imgdata['fileId']}' data-fileid='{$imgdata['fileId']}' data-galleryid='{$imgdata['galleryId']}'{$iconDisplayStyle}>" .
+			$repl .= "<br /><a href='tiki-edit_draw.php?fileId={$imgdata['fileId']}' onclick='return $(this).ajaxEditDraw();' title='".tr("Edit: Image") . " ".tr("(experimental)") . "'" .
+						" class='editplugin pluginImgEdit{$imgdata['fileId']}' data-fileid='{$imgdata['fileId']}' data-galleryid='{$dbinfo['galleryId']}'{$iconDisplayStyle}>" .
 						"<img width='16' height='16' class='icon' alt='Edit' src='img/icons/page_edit.png' /></a>";
 		}
 	}
