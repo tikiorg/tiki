@@ -676,7 +676,7 @@ class ToolbarInline extends Toolbar
 		return $this->syntax;
 	} // }}}
 
-	protected function setSyntax( $syntax ) // {{{
+	function setSyntax( $syntax ) // {{{
 	{
 		$this->syntax = $syntax;
 
