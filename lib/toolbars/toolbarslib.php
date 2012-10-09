@@ -1556,9 +1556,8 @@ class ToolbarCapture extends Toolbar
 
 	function getWikiHtml( $areaId ) // {{{
 	{
-		global $page;
 		return $this->getSelfLink(
-			'openJCaptureDialog(\''.$areaId.'\', \'' . $page . '\', event);return false;',
+			$this->getSyntax($areaId),
 			htmlentities($this->label, ENT_QUOTES, 'UTF-8'),
 			'qt-capture'
 		);
@@ -1580,6 +1579,12 @@ class ToolbarCapture extends Toolbar
 	{
 		return $this->getWysiwygToken($areaId);
 	} // }}}
+
+	function getSyntax( $areaId )
+	{
+		global $page;
+		return 'openJCaptureDialog(\''.$areaId.'\', \'' . $page . '\', event);return false;';
+	}
 
 }
 
