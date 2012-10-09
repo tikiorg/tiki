@@ -1293,7 +1293,7 @@ class WikiLib extends TikiLib
 			return str_replace($prefs['namespace_separator'], ' / ', $pageName);
 		}
 
-		return false;
+		return $pageName;
 	}
 
 	public function get_namespace_parts($pageName)
