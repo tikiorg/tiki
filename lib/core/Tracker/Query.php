@@ -951,13 +951,13 @@ class Tracker_Query
 		return $this->getInputsForItem($this->itemId, $includeJs);
 	}
 
-	public function delete()
+	public function delete($bulkMode = false)
 	{
 		global $trklib;
 
 		$results = $this->query();
 		foreach($results as $itemId => $result) {
-			$trklib->remove_tracker_item($itemId);
+			$trklib->remove_tracker_item($itemId, $bulkMode);
 		}
 	}
 }
