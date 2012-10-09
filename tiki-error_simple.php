@@ -18,7 +18,7 @@ if (!empty($_REQUEST['title'])) {
 	$title = tra('Maintenance');
 }
 
-$login = '<form name="loginbox" action="tiki-login_scr.php" method="post"><table><tr><td>' .
+$login = '<form name="loginbox" action="tiki-login.php?page=tikiIndex" method="post"><table><tr><td>' .
 	tra('User:') . '</td><td><input type="text" name="user"  size="20" /></td></tr><tr><td>' .
 	tra('Pass:') . '</td><td><input type="password" name="pass" size="20" /></td></tr><tr><td align="center"><input type="submit" name="login" value="login" /></td></tr></table></form>';
 
