@@ -102,6 +102,16 @@
 						&& ($prefs.wiki_comments_allow_per_page neq 'y' or $info.comments_enabled eq 'y')
 						&& $tiki_p_wiki_view_comments eq 'y'
 						&& $tiki_p_read_comments eq 'y'}
+						
+						{* Auto display comments if display by default preference is set *}
+						{if $prefs.wiki_comments_displayed_default eq 'y'}
+						{jq}{literal}
+							var id = '#comment-container';
+							$(id).comment_load('tiki-ajax_services.php?controller=comment&action=list&type=wiki+page&objectId={/literal}{$page|escape:url}{literal}#comment-container');
+							{/literal}
+						{/jq}
+						{/if}
+						
 						<span class="button">
 							<a id="comment-toggle" href="{service controller=comment action=list type="wiki page" objectId=$page}#comment-container">
 								{tr}Comments{/tr}
