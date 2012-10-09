@@ -1569,6 +1569,7 @@ class ToolbarCapture extends Toolbar
 		if (!empty($this->wysiwyg)) {
 			$this->name = $this->wysiwyg;	// temp
 			$exec_js = str_replace('&amp;', '&', $this->getSyntax($areaId));	// odd?
+			$exec_js = 'var event = {target: "#" + this.uiItems[0]._.id}; ' . $exec_js;
 
 			$this->setupCKEditorTool($exec_js, $this->name, $this->label, $this->icon);
 		}
