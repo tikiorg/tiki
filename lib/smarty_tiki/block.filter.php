@@ -51,6 +51,7 @@ function smarty_block_filter($params, $content, $smarty, &$repeat)
 		'object_type_asc' => tra('Type'),
 		'title_asc' => tra('Title'),
 		'modification_date_ndesc' => tra('Modified date'),
+		'visits_ndesc' => tra('Visits'),
 	);
 	$smarty->assign('sort_mode', $sort_mode );
 	$smarty->assign('sort_modes', $sort_modes);
