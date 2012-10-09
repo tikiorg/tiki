@@ -310,7 +310,7 @@
 			<tr>
 				<td width="30%">&nbsp;</td>
 				<td colspan="2">
-					<input type="submit" name="importPage" value="Add" width="30" />
+					<input type="submit" name="importPage" value="{tr}Add{/tr}" width="30" />
 				</td>
 			</tr>
 		</table>
@@ -406,7 +406,7 @@
 		<tr>
 			<td width="30%">&nbsp;</td>
 			<td colspan="2">
-				<input type="submit" name="addPage" value="Add" width="30" />
+				<input type="submit" name="addPage" value="{tr}Add{/tr}" width="30" />
 			</td>
 		</tr>
 	</table>
