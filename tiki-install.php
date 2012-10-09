@@ -10,6 +10,10 @@ if (!isset($title)) $title = 'Tiki Installer';
 if (!isset($content)) $content = 'No content specified. Something went wrong.<br/>Please tell your administrator.<br/>If you are the administrator, you may want to check for / file a bug report.';
 if (!isset($dberror)) $dberror = false;
 
+// Show all errors
+error_reporting(-1);
+ini_set('display_errors', 1);
+
 // Check that PHP version is sufficient
 
 if (version_compare(PHP_VERSION, '5.3.0', '<')) {
