@@ -1406,7 +1406,7 @@ function prefs_feature_list($partial = false)
 			'default' => 'n',
 		),
 		'feature_search_show_pertinence' => array(
-			'name' => tra('Pertinence'),
+			'name' => tra('Relevance'),
 			'type' => 'flag',
 			'default' => 'n',
 		),
