@@ -950,4 +950,14 @@ class Tracker_Query
 	{
 		return $this->getInputsForItem($this->itemId, $includeJs);
 	}
+
+	public function delete()
+	{
+		global $trklib;
+
+		$results = $this->query();
+		foreach($results as $itemId => $result) {
+			$trklib->remove_tracker_item($itemId);
+		}
+	}
 }
