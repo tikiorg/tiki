@@ -7,10 +7,10 @@
 
 class JisonParser_Wiki_Header
 {
-	var $stack = array();
-	var $count = 0;
-	var $idCount = array();
-	var $headerIds = array();
+	public $stack = array();
+	public $count = 0;
+	public $idCount = array();
+	public $headerIds = array();
 
 	public function stack($level, $content)
 	{
