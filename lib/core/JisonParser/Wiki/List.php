@@ -19,6 +19,14 @@ class JisonParser_Wiki_List
 		return 'id' . microtime() * 1000000;
 	}
 
+	public function reset()
+	{
+		$this->stacks = array();
+		$this->index = 0;
+		$this->lineNumberLast = null;
+		$this->levelLast = 0;
+	}
+
 	public function stack($lineNumber, $level, $content, $type = '*')
 	{
 		$returnKey = false;
