@@ -5,22 +5,20 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-include_once('lib/init/tra.php');
-
 if (!empty($_REQUEST['error'])) {
 	$error = substr($_REQUEST["error"], 0, 256);
 } else {
-	$error = tra('There was an unspecified error.  Please go back and try again.');
+	$error = 'There was an unspecified error.  Please go back and try again.';
 }
 if (!empty($_REQUEST['title'])) {
 	$title = $_REQUEST['title'];
 } else {
-	$title = tra('Maintenance');
+	$title = 'Maintenance';
 }
 
 $login = '<form name="loginbox" action="tiki-login.php?page=tikiIndex" method="post"><table><tr><td>' .
-	tra('User:') . '</td><td><input type="text" name="user"  size="20" /></td></tr><tr><td>' .
-	tra('Pass:') . '</td><td><input type="password" name="pass" size="20" /></td></tr><tr><td align="center"><input type="submit" name="login" value="login" /></td></tr></table></form>';
+	'User:</td><td><input type="text" name="user"  size="20" /></td></tr><tr><td>' .
+	'Pass:</td><td><input type="password" name="pass" size="20" /></td></tr><tr><td align="center"><input type="submit" name="login" value="login" /></td></tr></table></form>';
 
 $back = '<p><a href="javascript:history.back()">' . tra('Go back') . '</a></p>';
 
