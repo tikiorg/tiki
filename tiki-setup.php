@@ -122,7 +122,7 @@ require_once ('lib/setup/wiki.php');
 
 $cookie_consent_html = '';
 if ($prefs['cookie_consent_feature'] === 'y') {
-	if (!empty($_REQUEST['cookie_consent_checkbox'])) {
+	if (!empty($_REQUEST['cookie_consent_checkbox']) || $prefs['site_closed'] === 'y') {
 		// js disabled
 		$feature_no_cookie = false;
 		setCookieSection($prefs['cookie_consent_name'], 'y');
