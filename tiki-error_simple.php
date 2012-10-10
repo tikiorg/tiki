@@ -20,7 +20,7 @@ $login = '<form name="loginbox" action="tiki-login.php?page=tikiIndex" method="p
 	'User:</td><td><input type="text" name="user"  size="20" /></td></tr><tr><td>' .
 	'Pass:</td><td><input type="password" name="pass" size="20" /></td></tr><tr><td align="center"><input type="submit" name="login" value="login" /></td></tr></table></form>';
 
-$back = '<p><a href="javascript:history.back()">' . tra('Go back') . '</a></p>';
+$back = '<p><a href="javascript:history.back()">Go back</a></p>';
 
 if (file_exists('templates/styles/site_closed_local.html')) {
 	$html = file_get_contents('templates/styles/site_closed_local.html');
