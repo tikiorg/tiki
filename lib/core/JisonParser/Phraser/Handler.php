@@ -78,7 +78,7 @@ class JisonParser_Phraser_Handler extends JisonParser_Phraser
 		if (empty($this->wordsChars[$this->currentWord])) $this->wordsChars[$this->currentWord] = "";
 
 		//this line attempts to solve some character translation problems
-		$char = iconv('UTF-8', 'ISO-8859-1', $char);
+		$char = iconv('UTF-8', 'ISO-8859-1', utf8_encode($char));
 
 		$this->wordsChars[$this->currentWord] .= $char;
 		$this->chars[] = $char;
