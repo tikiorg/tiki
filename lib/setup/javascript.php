@@ -26,7 +26,7 @@ if ($prefs['disableJavascript'] == 'y' ) {
 
 if ( $prefs['javascript_enabled'] != 'y' && $prefs['disableJavascript'] != 'y' ) {
 	// Set the cookie to 'y', through javascript (will override the above cookie set to 'n' and sent by PHP / HTTP headers) - duration: approx. 1 year
-	$headerlib->add_js("setCookie('javascript_enabled', 'y');", 1);
+	$headerlib->add_js("setCookie('javascript_enabled', 'y');", 0);
 
 	// the first and second time, we should not trust the absence of javascript_enabled cookie yet, as it could be a redirection and the js will not get a chance to run yet, so we wait until the third run, assuming that js is on before then
 	$runs_before_js_detect = getCookie('runs_before_js_detect');
