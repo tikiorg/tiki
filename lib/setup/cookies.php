@@ -21,11 +21,12 @@ if ( isset($_SESSION['tiki_cookie_jar']) ) {
 	if ( count($cookielist) ) {		
 		$headerlib->add_js('tiki_cookie_jar={'. implode(',', $cookielist).'};');
 	}
+	$_COOKIE = array_merge($_SESSION['tiki_cookie_jar'], $_COOKIE);
 } else {
 	$headerlib->add_js('tiki_cookie_jar=new Object();');
 }
 
-$smarty->assign_by_ref('cookie', $_SESSION['tiki_cookie_jar']);
+$smarty->assign_by_ref('cookie', $_COOKIE);
 
 // fix margins for hidden columns - css (still) doesn't work as it needs to know the "normal" margins FIXME
 if (getCookie('show_col2') == 'n') {
