@@ -757,8 +757,8 @@ line
     {$$ = $1;}
  | BLOCK_START BLOCK_END
     {
-	    $$ = $1 + $2; //js
-	    //php $$ = $1 . $2;
+	    $$ = parser.block($1); //js
+	    //php $$ = $this->block($1);
 	}
  | BLOCK_START contents BLOCK_END
     {

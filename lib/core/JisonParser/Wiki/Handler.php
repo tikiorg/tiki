@@ -12,6 +12,8 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	private static $spareParsers = array();
 	public $Parser;
 	public $parseDepth = 0;
+	public $parserDebug = false;
+	public $lexerDebug = false;
 
 	/* plugin tracking */
 	public $pluginStack = array();
@@ -209,13 +211,17 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	function parser_performAction(&$thisS, $yytext, $yyleng, $yylineno, $yystate, $S, $_S, $O)
 	{
 		$result = parent::parser_performAction($thisS, $yytext, $yyleng, $yylineno, $yystate, $S, $_S, $O);
-		$thisS .= "{" . $yystate ."}";
+		if ($this->parserDebug == true) {
+			$thisS = "{" . $thisS . ":" . $yystate ."," . $this->skipBr . "}";
+		}
 		return $result;
 	}
 
 	function lexer_performAction(&$yy, $yy_, $avoiding_name_collisions, $YY_START = null) {
 		$result = parent::lexer_performAction($yy, $yy_, $avoiding_name_collisions, $YY_START);
-		echo "{" . $result . ":" .$avoiding_name_collisions . "}" . $yy_->yytext . "\n";
+		if ($this->lexerDebug == true) {
+			echo "{" . $result . ":" .$avoiding_name_collisions . "," . $this->skipBr . "}" . $yy_->yytext . "\n";
+		}
 		return $result;
 	}
 
@@ -285,6 +291,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		ini_set("pcre.recursion_limit", "524");
 
 		if ($this->Parser->parseDepth == 0) {
+			$this->Parser->list->reset();
 			$this->Parser->htmlCharacter->parse($input);
 		}
 
@@ -524,6 +531,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 			case 'h6':
 			case 'pre':
 			case 'ul':
+			case 'dl':
 			case 'div':
 			case 'table':
 			case 'p':
@@ -542,6 +550,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 			case '/h6':
 			case '/pre':
 			case '/ul':
+			case '/dl':
 			case '/div':
 			case '/table':
 			case '/p':
@@ -729,9 +738,13 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 
 		$content = substr($content, ($level + $noiseLength));
 
-		$this->skipBr = true;
+		$result = $this->Parser->list->stack($this->line, $level, $content, $type);
 
-		return $this->Parser->list->stack($this->line, $level, $content, $type);
+		if (isset($result)) {
+			$this->skipBr = true;
+			return $result;
+		}
+		return '';
 	}
 
 	function hr() //---
@@ -744,6 +757,8 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	function line($ch)
 	{
 		$this->line++;
+		$skipBr = $this->skipBr;
+		$this->skipBr = false; //skipBr must always must be false when done processing line
 
 		//The first \n was inserted just before parse
 		if ($this->isFirstBr == false) {
@@ -753,18 +768,8 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 
 		$result = $ch;
 
-		if ($this->skipBr == false && empty($this->tableStack) && $this->nonBreakingTagDepth == 0) {
+		if ($skipBr == false && empty($this->tableStack) && $this->nonBreakingTagDepth == 0) {
 			$result = "<br />" . $ch;
-		}
-
-		if ($this->skipBr === true) {
-			$this->skipBr = false;
-		} else if (is_array($this->skipBr) == true) {
-			if (count($this->skipBr) > 1) {
-				array_pop($this->skipBr);
-			} else {
-				$this->skipBr = true;
-			}
 		}
 
 		return $result;
@@ -929,6 +934,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	function block($content)
 	{
 		$this->line++;
+		$this->skipBr = false;
 
 		$content = ltrim($content, "\n\r");
 
