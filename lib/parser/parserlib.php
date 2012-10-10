@@ -1157,6 +1157,9 @@ if ( \$('#$id') ) {
 
 			$plugin_result = $this->parse_data($plugin_result, array('is_html' => false, 'suppress_icons' => true, 'ck_editor' => true, 'noparseplugins' => true));
 
+			// reset the noparseplugins option, to allow for proper display in CkEditor
+			$this->option['noparseplugins'] = false;
+
 			// remove hrefs and onclicks
 			$plugin_result = preg_replace('/\shref\=/i', ' tiki_href=', $plugin_result);
 			$plugin_result = preg_replace('/\sonclick\=/i', ' tiki_onclick=', $plugin_result);
