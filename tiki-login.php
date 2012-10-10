@@ -253,7 +253,8 @@ if ($isvalid) {
 		$logslib->add_log('login', 'logged from ' . $url);
 		// Special '?page=...' case. Accept only some values to avoid security problems
 		if ( isset($_REQUEST['page']) and $_REQUEST['page'] === 'tikiIndex') {
-			$url = ${$_REQUEST['page']};
+			global $base_url;
+			$url = $base_url . $prefs['tikiIndex'];
 		} else {
 			if (!empty($_REQUEST['url'])) {
 				global $cachelib; include_once('lib/cache/cachelib.php');
