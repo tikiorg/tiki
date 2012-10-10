@@ -169,7 +169,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		}
 
 		if (isset($this->pluginNegotiator) == false) {
-			$this->pluginNegotiator = new WikiPlugin_ParserNegotiator($this->Parser);
+			$this->pluginNegotiator = new WikiPlugin_Negotiator_Parser($this->Parser);
 		}
 
 		if (isset($this->Parser->header) == false) {
