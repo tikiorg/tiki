@@ -110,6 +110,17 @@ abstract class TreeMaker
 
 		return $result;
 	}
+
+	function node_cookie_state($id)
+	{
+		if (isset($_COOKIE[$this->prefix])) {
+			if (preg_match("/\@$id\:(\w)/", $_COOKIE[$this->prefix], $m)) {
+				return $m[1];
+			}
+		}
+		return '';
+	}
+
 	/**
 	 * To change behavior (xhtml layout :) of generated tree
 	 * it is enough to redefine following methods.

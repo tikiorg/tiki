@@ -93,7 +93,7 @@ class BrowseTreeMaker extends TreeMaker
 	function node_child_start_code($nodeinfo)
 	{
 		return '<ul class="tree" data-id="' . $nodeinfo['id'] .
-			   		'" data-prefix="' . $this->prefix . '">';
+			   	'" data-prefix="' . $this->prefix . '"' . ($this->node_cookie_state($nodeinfo['id']) != 'o' ? ' style="display:none;"' : '') . '>';
 	}
 
 	//
