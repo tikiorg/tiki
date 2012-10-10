@@ -144,6 +144,7 @@ class JisonParser_OutputTest extends JisonParser_Abstract
 			'html_allowed'  => array(),
 			'complex_state_tracking' => array(),
 			'no_line_skipping' => array(),
+			'line_skipping_mixed' => array(),
 		);
 	}
 
@@ -612,6 +613,59 @@ class JisonParser_OutputTest extends JisonParser_Abstract
 		$this->parser->resetOption();
 
 		return $result;
+	}
+
+	function line_skipping_mixed()
+	{
+		$syntax = array(
+			"!header\n" .
+			"test\n" .
+			"test\n" .
+			"test\n" .
+			"*test\n" .
+			"*test\n" .
+			"*test\n" .
+			"*test\n" .
+			"*test\n" .
+			"*test\n" .
+			"test\n" .
+			"test\n" .
+			"test\n" .
+			"!header\n" .
+			"!header\n" .
+			"!header\n" .
+			"!header\n" .
+			"test\n" .
+			"test\n"
+		,
+			'<h1 class="showhide_heading" id="header">header</h1>' .
+			'test<br />' . "\n" .
+			'test<br />' . "\n" .
+			'test' .
+			'<ul class="tikiList" id="" style="">' .
+			'<li class="tikiListItem">test</li>' . "\n" .
+			'<li class="tikiListItem">test</li>' . "\n" .
+			'<li class="tikiListItem">test</li>' . "\n" .
+			'<li class="tikiListItem">test</li>' . "\n" .
+			'<li class="tikiListItem">test</li>' . "\n" .
+			'<li class="tikiListItem">test</li>' . "\n" .
+			'</ul>' . "\n" .
+			'test<br />' . "\n" .
+			'test<br />' . "\n" .
+			'test' .
+			'<h1 class="showhide_heading" id="header1">header</h1>' .
+			'<h1 class="showhide_heading" id="header2">header</h1>' .
+			'<h1 class="showhide_heading" id="header3">header</h1>' .
+			'<h1 class="showhide_heading" id="header4">header</h1>' . "\n" .
+			'test<br />' . "\n" .
+			'test<br />' . "\n"
+
+		);
+
+		$parsed = $this->parser->parse($syntax[0]);
+		$this->tryRemoveIdsFromHtmlList($parsed);
+
+		return array("parsed" => $parsed, "syntax" => $syntax);
 	}
 }
 
