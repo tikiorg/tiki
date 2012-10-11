@@ -47,6 +47,7 @@ class Tracker_Query
 	private $filterType = array();
 	private $inputDefaults = array();
 	public $itemsRaw = array();
+	public $limitReached = false;
 
 	public static function tracker($tracker)
 	{
@@ -95,7 +96,7 @@ class Tracker_Query
 
 	public function filterFieldByValue($field, $value)
 	{
-		return $this->filter(array('field'=> $field, 'value'=>$value));
+		return $this->filter(array('field'=> $field, 'value'=>$value, 'type' => 'and'));
 	}
 
 	public function filterFieldByValueLike($field, $value)
@@ -526,7 +527,7 @@ class Tracker_Query
 								$fields_safe .= " OR ";
 								break;
 							case "and":
-								$fields_safe .= " AND ";
+								$fields_safe .= " OR "; //Even though this is OR, we do a check later to limit more values, so initially we may have more results than are given later on, simply because of how trackers are stored and how group_concat allows us to manipulate trackers
 								break;
 							case "like":
 								$fields_safe .= " AND ";
@@ -714,6 +715,8 @@ class Tracker_Query
 			}
 		}
 		unset($result);
+
+		$this->limitReached = (count($newResult) > $this->limit ? true : false);
 
 		return $newResult;
 	}
