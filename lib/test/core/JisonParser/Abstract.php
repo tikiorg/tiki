@@ -20,6 +20,7 @@ class JisonParser_Abstract extends TikiTestCase
 
 		WikiPlugin_Negotiator_Parser::$standardRelativePath = "../wiki-plugins/wikiplugin_";
 		WikiPlugin_Negotiator_Parser::$zendRelativePath = "../core/WikiPlugin/";
+		WikiPlugin_Negotiator_Parser::$checkZendPaths = false;
 	}
 
 	public function testOutput()
