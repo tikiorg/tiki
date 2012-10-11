@@ -76,9 +76,9 @@ function wikiplugin_trackercalendar($data, $params)
 	if ($resourceField = $jit->resource->word()) {
 		$field = $definition->getFieldFromPermName($resourceField);
 		$resources = wikiplugin_trackercalendar_get_resources($field);
-		$views[] = 'resourceDay';
-		$views[] = 'resourceWeek';
 		$views[] = 'resourceMonth';
+		$views[] = 'resourceWeek';
+		$views[] = 'resourceDay';
 	}
 
 	$smarty = TikiLib::lib('smarty');
