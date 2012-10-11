@@ -26,71 +26,49 @@ class WikiPlugin_expandingoutline extends WikiPlugin_HtmlBase
 	{
 		global $headerlib;
 
-		if (get_class($parser) != 'JisonParser_Wiki_Handler') return TikiLib::lib('tiki')->parse_data($data, array('is_html' => true));
-
 		$regularList = &$parser->list;
 		$parser->list = new WikiPlugin_expandingoutline_list($parser->list);
 		$id = $this->id($index);
 
 		$headerlib->add_jq_onready(
 <<<JQ
-			var color = [
-				'rgb(255,37,6)',
-				'rgb(254,143,17)',
-				'rgb(249,245,41)',
-				'rgb(111,244,81)',
-				'rgb(83,252,243)',
-				'rgb(138,158,251)',
-				'rgb(206,127,250)',
-				'rgb(250,167,251)',
-				'rgb(255,214,188)',
-				'rgb(255,214,51)'
-			];
-
 			var base = $('#$id');
-			base.find('table.tikiListTable:first table')
-				.parent().hide();
 
-			var tables = $('#$id').find('table.tikiListTable').each(function() {
-				var tier = $(this).data('tier');
-				$(this).find('td.tikiListTableLabel,td.tikiListTableBlank').each(function() {
-					$(this)
-						.css('background-color', color[tier]);
-				});
-			});
+			var labels = base.find('td.tikiListTableLabel');
 
-			base.find('td.tikiListTableLabel')
+			labels
 				.toggle(function(e) {
 				    if (e.shiftKey) {
-						tables.show();
+						labels.show();
 						return;
 				    }
 
-					var me = $(this).parent();
-					console.log(me.next().children('td'));
-					if (me.next().children('td').stop().fadeIn().length) {
-						me.find('img.listImg').attr('src', 'img/toggle-expand-dark.png');
+					var child = $('.parentTrail' + $(this).data('trail'));
+
+					if (child.stop().fadeIn().length) {
+						$(this).find('img.listImg').attr('src', 'img/toggle-collapse-dark.png');
+
 					}
 				}, function(e) {
 					if (e.shiftKey) {
-						tables.hide();
+						labels.hide();
 						return;
 				    }
 
-					var me = $(this).parent();
-					if (me.next().children('td').stop().fadeOut().length) {
-						me.find('img.listImg').attr('src', 'img/toggle-collapse-dark.png');
+					var child = $('.parentTrail' + $(this).data('trail'));
+
+					if (child.stop().fadeOut().length) {
+						$(this).find('img.listImg').attr('src', 'img/toggle-expand-dark.png');
 					}
-				})
-				.each(function() {
-					if ($(this).parent().next().html().match('table'))
-						$(this).prepend('<img class="listImg" src="img/toggle-collapse-dark.png" />');
 				});
+
+				base.find('td.tikiListTableLabel').prepend('<img class="listImg" src="img/toggle-expand-dark.png" />');
 JQ
 );
 
-		$result = "<style>
-			#$id table {
+
+		$headerlib->add_css(
+			"#$id table {
 				width: 100%;
 				border-collapse:collapse;
 			}
@@ -108,7 +86,44 @@ JQ
 				white-space: nowrap;
 
 			}
-		</style>" . $parser->parsePlugin($data);
+
+			.tikiListTableChild {
+				display: none;
+			}
+
+			.wikiplugin_expandingoutline .tier0 {
+				background-color: rgb(255,37,6) ! important;
+			}
+			.wikiplugin_expandingoutline .tier1 {
+				background-color: rgb(254,143,17) ! important;
+			}
+			.wikiplugin_expandingoutline .tier2 {
+				background-color: rgb(249,245,41) ! important;
+			}
+			.wikiplugin_expandingoutline .tier3 {
+				background-color: rgb(111,244,81) ! important;
+			}
+			.wikiplugin_expandingoutline .tier4 {
+				background-color: rgb(83,252,243) ! important;
+			}
+			.wikiplugin_expandingoutline .tier5 {
+				background-color: rgb(138,158,251) ! important;
+			}
+			.wikiplugin_expandingoutline .tier6 {
+				background-color: rgb(206,127,250) ! important;
+			}
+			.wikiplugin_expandingoutline .tier7 {
+				background-color: rgb(250,167,251) ! important;
+			}
+			.wikiplugin_expandingoutline .tier8 {
+				background-color: rgb(255,214,188) ! important;
+			}
+			.wikiplugin_expandingoutline .tier9 {
+				background-color: rgb(255,214,51) ! important;
+			}"
+		);
+
+		$result = $parser->parse($data);
 
 		$parser->list = $regularList;
 

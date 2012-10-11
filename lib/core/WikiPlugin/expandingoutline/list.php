@@ -7,12 +7,13 @@
 
 class WikiPlugin_expandingoutline_list extends JisonParser_Wiki_List
 {
+	public $labelTracker = array();
+	public $typeTracking = array();
+
 	function __construct(JisonParser_Wiki_List &$parserList)
 	{
-		$this->setup = $parserList->setup;
 		$this->stacks = $parserList->stacks;
 		$this->index = $parserList->index;
-		$this->lineTracking = $parserList->lineTracking;
 	}
 
 	public function toHtml()
@@ -22,54 +23,83 @@ class WikiPlugin_expandingoutline_list extends JisonParser_Wiki_List
 		$lists = array();
 
 		foreach ($this->stacks as $key => &$stack) {
-			$lists[$key] = $this->toHtmlChildren($stack);
+			$id = 'id' . microtime() * 1000000;
+
+			$lists[$key] = '<table class="tikiListTable" id="' . $id . '"><tbody>';
+			$this->labelTracker = array();
+			$lists[$key] .= $this->toHtmlChildren($stack);
+
+			$lists[$key] .= '</tbody></table>';
 		}
 
 		return $lists;
 	}
 
-	private function toHtmlChildren(&$stack, $prefix = '', $index = 1, $tier = 0)
+	private function toHtmlChildren(&$stack, $tier = 0)
 	{
 		$result = '';
-		$id = 'id' . microtime() * 1000000;
-
 		$i = 0;
 		foreach ($stack as &$list) {
-			$hasLabel = true;
-			if (empty($style)) {
-				switch($list['type']) {
-					case '+':
-						$hasLabel = false;
-						break;
-				}
+
+			switch($list['type']) {
+				case '*':
+					$class = 'tikiListTableLabel';
+					$i++;
+					break;
+				case '+':
+					$class = 'tikiListTableBlank';
+					break;
 			}
 
-			$listIndex = ($index + $i);
-			$label = (!empty($prefix) ? $prefix . '.' . $listIndex : ($index + $i));
-			$class = 'tikiListTableLabel';
+			$this->labelTracker[] = $i;
 
-			if ($hasLabel == false) {
-				$label = '';
-				$class = 'tikiListTableBlank';
-			} else {
-				$i++;
+			switch($list['type']) {
+				case '*':
+					$label = implode('.', $this->labelTracker);
+					break;
+				case '+':
+					$label = '';
+					break;
 			}
+
+			$trail = $this->labelTracker;
+			$trail = implode('_', $trail);
 
 			if (empty($list['content']) == false) {
 
-				$result .= '<tr><td class="' . $class . '">' . $label . '</td><td class="tikiListTableItem">' . $list['content'] . '</td></tr>';
+				$result .=
+					'<tr>' .
+						'<td>' .
+							'<table>' .
+				                '<tbody>' .
+									'<tr>' .
+										'<td id="" class="' . $class . ' tier' . $tier . '" data-trail="' . $trail . '" style="width:' . ((count($this->labelTracker) * 30) + 30) . 'px; text-align: right;">' . $label . '</td>' .
+										'<td class="tikiListTableItem">' . $list['content'] .'</td>' .
+									'</tr>';
 
 				if (empty($list['children']) == false) {
-					$result .= '<tr><td class="tikiUnlistTableItem" colspan="2">' . $this->toHtmlChildren($list['children'], $label, 1, $tier + 1) . '</td></tr>';
+					$result .= '<tr class="parentTrail' . $trail . ' tikiListTableChild"><td colspan="2"><table>';
+				}
+			}
+
+			$result .= $this->toHtmlChildren($list['children'], $tier + 1) . "\n";
+
+			if (empty($list['content']) == false) {
+
+				if (empty($list['children']) == false) {
+					$result .= '</table></td></tr>';
 				}
 
-			} elseif (empty($list['children']) == false) {
-				$result .= '<tr><td>' . $this->toHtmlChildren($list['children'], $prefix, 1, $tier + 1) . '</td></tr>';
+				$result .=
+								'</tbody>' .
+							'</table>' .
+						'</td>' .
+					'</tr>' . "\n";
 			}
+
+			array_pop($this->labelTracker);
 		}
 
-		unset($stack);
-
-		return '<table class="tikiListTable" id="' . $id . '" data-tier=' . $tier . '><tbody>' . $result . '</tbody></table>';
+		return $result;
 	}
 }
