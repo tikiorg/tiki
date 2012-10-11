@@ -7,12 +7,12 @@
 
 class JisonParser_Wiki_List
 {
-	var $stacks = array();
-	var $index = 0;
-	var $lineNumberLast;
-	var $levelLast = 0;
-	var $id;
-	var $key;
+	public $stacks = array();
+	public $index = 0;
+	public $lineNumberLast;
+	public $levelLast = 0;
+	public $id;
+	public $key;
 
 	private function id()
 	{
@@ -27,10 +27,8 @@ class JisonParser_Wiki_List
 		$this->levelLast = 0;
 	}
 
-	public function stack($lineNumber, $level, $content, $type = '*')
+	public function getEntity($lineNumber, $level)
 	{
-		$returnKey = false;
-
 		if (
 			$lineNumber != ($this->lineNumberLast + 1) ||
 			!isset($this->lineNumberLast)
@@ -38,9 +36,22 @@ class JisonParser_Wiki_List
 			$this->index++;
 			$this->id = $this->id();
 			$this->key = '§' . md5('list(id:' . $this->id . ',index:' . $this->index . ')') . '§';
-			$returnKey = true;
 			$this->stacks[$this->key] = array();
+
+			$entity = $this->key;
+		} else {
+			$entity = '';
 		}
+
+		$this->lineNumberLast = $lineNumber;
+		$this->levelLast = $level;
+
+		return $entity;
+	}
+
+	public function stack($lineNumber, $level, $content, $type = '*')
+	{
+		$entity = $this->getEntity($lineNumber, $level);
 
 		if ($level == 1) {
 			$this->stacks[$this->key][] = array('content' => $content, 'type' => $type, 'children' => array());
@@ -48,14 +59,7 @@ class JisonParser_Wiki_List
 			$this->addToStack($this->stacks[$this->key], 1, $level, $content, $type);
 		}
 
-		$this->lineNumberLast = $lineNumber;
-		$this->levelLast = $level;
-
-		if ($returnKey == true) {
-			return $this->key;
-		}
-
-		return '';
+		return $entity;
 	}
 
 	private function addToStack(&$stack, $currentLevel, &$neededLevel, &$content, &$type)
