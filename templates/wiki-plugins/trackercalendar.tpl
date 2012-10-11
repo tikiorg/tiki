@@ -21,7 +21,7 @@
 
 		$(this).fullCalendar({
 			header: {
-				left: 'prev,next today',
+				left: 'prevYear,prev,next,nextYear today',
 				center: 'title',
 				right: data.views
 			},
