@@ -182,13 +182,23 @@ class ObjectLib extends TikiLib
 
 	function insert_object($type, $itemId, $description = '', $name = '', $href = '')
 	{
-		$query = 'insert into `tiki_objects`(`type`,`itemId`,`description`,`name`,`href`,`created`,`hits`,`comments_locked`) values(?,?,?,?,?,?,?,?)';
-		$result = $this->query($query, array($type, (string) $itemId, $description, $name, $href, (int) $this->now, 0, 'n'));
+		if (! $itemId) {
+			// When called with a blank page name or any other empty value, no insertion should be made
+			return false;
+		}
 
-		$query = 'select `objectId` from `tiki_objects` where `created`=? and `type`=? and `itemId`=?';
-		$objectId = $this->getOne($query, array((int) $this->now, $type, (string) $itemId));
-
-		return $objectId;
+		$tikilib = TikiLib::lib('tiki');
+		$table = $this->table('tiki_objects');
+		return $table->insert(array(
+			'type' => $type,
+			'itemId' => (string) $itemId,
+			'description' => $description,
+			'name' => $name,
+			'href' => $href,
+			'created' => (int) $tikilib->now,
+			'hits' => 0,
+			'comments_locked' => 'n',
+		));
 	}
 
 	function get_object_id($type, $itemId)
