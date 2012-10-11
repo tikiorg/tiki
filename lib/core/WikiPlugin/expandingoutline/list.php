@@ -38,6 +38,11 @@ class WikiPlugin_expandingoutline_list extends JisonParser_Wiki_List
 	private function toHtmlChildren(&$stack, $tier = 0)
 	{
 		$result = '';
+
+		if (!isset($stack)) {
+			return $result;
+		}
+
 		$i = 0;
 		foreach ($stack as &$list) {
 
@@ -82,7 +87,7 @@ class WikiPlugin_expandingoutline_list extends JisonParser_Wiki_List
 				}
 			}
 
-			$result .= $this->toHtmlChildren($list['children'], $tier + 1) . "\n";
+			$result .= $this->toHtmlChildren($list['children'], $tier + 1);
 
 			if (empty($list['content']) == false) {
 
@@ -94,7 +99,7 @@ class WikiPlugin_expandingoutline_list extends JisonParser_Wiki_List
 								'</tbody>' .
 							'</table>' .
 						'</td>' .
-					'</tr>' . "\n";
+					'</tr>';
 			}
 
 			array_pop($this->labelTracker);
