@@ -132,4 +132,5 @@ function tiki_wiki_view_forwardlink($args)
 function tiki_wiki_save_forwardlink($args)
 {
 	Feed_ForwardLink::wikiSave($args);
+	Feed_TextLink::wikiSave($args);
 }

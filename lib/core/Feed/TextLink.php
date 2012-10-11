@@ -70,8 +70,52 @@ Class Feed_TextLink extends Feed_Abstract
 
 	static function wikiView()
 	{
+		global $page, $headerlib;
 		$me = new self();
 		$phrase = (!empty($_REQUEST['phrase']) ? $_REQUEST['phrase'] : '');
 		Feed_ForwardLink_Search::restoreTextLinkPhrasesInWikiPage($me->getItems(), $phrase);
+
+		//if we have an awaiting textlink that needs sent, we do so here
+		$result = Tracker_Query::tracker('Wiki Attributes')
+			->byName()
+			->render(false)
+			->filterFieldByValue('Page', $page)
+			->filterFieldByValue('Type', 'TextLink Send')
+			->query();
+
+		if (count($result) > 0) {
+			foreach(Feed_ForwardLink_Send::sendAll() as $text => $received) {
+				$received = json_decode($received);
+				if ($received->feed == 'success') {
+					Tracker_Query::tracker('Wiki Attributes')
+						->byName()
+						->render(false)
+						->filterFieldByValue('Page', $page)
+						->filterFieldByValue('Type', 'TextLink Send')
+						->filterFieldByValue('Attribute', $text)
+						->delete(true);
+
+					$headerlib->add_jq_onready("$.notify('" . tr("TextLink and ForwardLink created...") . "');");
+				}
+			}
+		}
+	}
+
+	static function wikiSave()
+	{
+		global $page;
+		//We add these to a stack that needs to be sent, rather than just sending all with the view event
+		$me = new self();
+
+		foreach($me->getItems() as $item) {
+			Tracker_Query::tracker('Wiki Attributes')
+				->byName()
+				->replaceItem(array(
+					'Page' => $page,
+					'Attribute' => $item->textlink->text,
+					'Value' => 'true',
+					'Type' => 'TextLink Send'
+				));
+		}
 	}
 }

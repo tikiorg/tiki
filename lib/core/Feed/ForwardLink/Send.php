@@ -58,7 +58,7 @@ Class Feed_ForwardLink_Send extends Feed_Abstract
 								);
 			            }
 
-			            $items[] = $result;
+			            $items[$item->textlink->text] = $result;
 
 						} catch(Exception $e) {
 						}
