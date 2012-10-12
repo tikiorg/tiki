@@ -958,7 +958,7 @@ class ModLib extends TikiLib
 					'type' => 'warning',
 					'title' => tr('Failed to execute "%0" module', $mod_reference['name']),
 				),
-				$message,
+				html_entity_decode($message),
 				$smarty,
 				$repeat
 			);
