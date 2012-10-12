@@ -595,6 +595,40 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		return $this->Parser->dynamicVar->ui(substr($content, 1, 1),  $this->getOption('language'));
 	}
 
+	function argumentVar($content)
+	{
+		$content = substr($content, 2, -2); //{{page}}
+
+		global $user, $page;
+		$parts = explode('|', $content);
+		$value = '';
+		$name = '';
+
+		if (isset($parts[0])) {
+			$name = $parts[0];
+		}
+
+		if (isset($parts[1])) {
+			$value = $parts[1];
+		}
+
+		switch( $name ) {
+			case 'user':
+				$value = $user;
+				break;
+			case 'page':
+				$value = $this->getOption('page');
+				break;
+			default:
+				if ( isset($_REQUEST[$name]) ) {
+					$value = $_REQUEST[$name];
+				}
+				break;
+		}
+
+		return $value;
+	}
+
 	function bold($content) //__content__
 	{
 		return '<strong>' . $content . '</strong>';

@@ -109,6 +109,14 @@ WIKI_LINK_TYPE                  (([a-z0-9-]+))
 		return 'SINGLE_DYNAMIC_VAR';
 	%}
 
+"{{"{VARIABLE_NAME}([|]{VARIABLE_NAME})?"}}"
+	%{
+        if (parser.isContent()) return 'CONTENT'; //js
+
+        //php if ($this->isContent()) return 'CONTENT';
+
+        return 'ARGUMENT_VAR';
+    %}
 
 "{ELSE}"						return 'CONTENT';//For now let individual plugins handle else
 {LINE_END}("{r2l}"|"{l2r}")
@@ -808,6 +816,11 @@ content
         $$ = parser.singleDynamicVar($1); //js
         //php $$ = $this->singleDynamicVar($1);
      }
+ | ARGUMENT_VAR
+    {
+        $$ = parser.argumentVar($1); //js
+        //php $$ = $this->argumentVar($1);
+    }
  | HTML_TAG
     {
         $$ = parser.htmlTag($1); //js
