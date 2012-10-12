@@ -37,6 +37,14 @@ class WikiPlugin_expandingoutline extends WikiPlugin_HtmlBase
 
 			var labels = base.find('td.tikiListTableLabel');
 
+			function switchImg(img) {
+				var newImg = img.data('altImg');
+				var oldImg = img.attr('src');
+				img
+					.attr('src', newImg)
+					.data('altIm', oldImg);
+			}
+
 			labels
 				.toggle(function(e) {
 				    if (e.shiftKey) {
@@ -47,8 +55,7 @@ class WikiPlugin_expandingoutline extends WikiPlugin_HtmlBase
 					var child = base.find('.parentTrail' + $(this).data('trail'));
 
 					if (child.stop().fadeIn().length) {
-						$(this).find('img.listImg').attr('src', 'img/toggle-collapse-dark.png');
-
+						switchImg($(this).find('img.listImg'));
 					}
 				}, function(e) {
 					if (e.shiftKey) {
@@ -59,11 +66,9 @@ class WikiPlugin_expandingoutline extends WikiPlugin_HtmlBase
 					var child = base.find('.parentTrail' + $(this).data('trail'));
 
 					if (child.stop().fadeOut().length) {
-						$(this).find('img.listImg').attr('src', 'img/toggle-expand-dark.png');
+						switchImg($(this).find('img.listImg'));
 					}
 				});
-
-				base.find('td.tikiListTableLabel').prepend('<img class="listImg" src="img/toggle-expand-dark.png" />');
 		})();
 JQ
 );

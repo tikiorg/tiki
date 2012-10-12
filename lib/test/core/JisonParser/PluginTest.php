@@ -157,7 +157,7 @@ class JisonParser_PluginTest extends JisonParser_Abstract
 			'<td>' .
 				'<table>' .
 					'<tr>' .
-						'<td id="" class="tikiListTableLabel tier0" data-trail="2" style="width:60px; text-align: right;">2</td>' .
+						'<td id="" class="tikiListTableLabel tier0" data-trail="2" style="width:60px; text-align: right;">2<img class="listImg" src="img/toggle-expand-dark.png" data-altImg="img/toggle-collapse-dark.png" /></td>' .
 						'<td class="tikiListTableItem">test</td>' .
 					'</tr>' .
 					'<tr class="parentTrail2 tikiListTableChild">' .
@@ -187,7 +187,7 @@ class JisonParser_PluginTest extends JisonParser_Abstract
 									'<td>' .
 										'<table>' .
 											'<tr>' .
-												'<td id="" class="tikiListTableLabel tier1" data-trail="2_3" style="width:90px; text-align: right;">2.3</td>'.
+												'<td id="" class="tikiListTableLabel tier1" data-trail="2_3" style="width:90px; text-align: right;">2.3<img class="listImg" src="img/toggle-expand-dark.png" data-altImg="img/toggle-collapse-dark.png" /></td>'.
 												'<td class="tikiListTableItem">test</td>' .
 											'</tr>' .
 											'<tr class="parentTrail2_3 tikiListTableChild">' .
@@ -197,7 +197,7 @@ class JisonParser_PluginTest extends JisonParser_Abstract
 															'<td>' .
 																'<table>'.
 																	'<tr>' .
-																		'<td id="" class="tikiListTableLabel tier2" data-trail="2_3_1" style="width:120px; text-align: right;">2.3.1</td>'.
+																		'<td id="" class="tikiListTableLabel tier2" data-trail="2_3_1" style="width:120px; text-align: right;">2.3.1<img class="listImg" src="img/toggle-expand-dark.png" data-altImg="img/toggle-collapse-dark.png" /></td>'.
 																		'<td class="tikiListTableItem">test</td>' .
 																	'</tr>' .
 																	'<tr class="parentTrail2_3_1 tikiListTableChild">'.
