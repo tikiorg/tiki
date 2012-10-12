@@ -75,26 +75,28 @@ JQ
 
 
 		$headerlib->add_css(
-			"#$id table {
+			".wikiplugin_expandingoutline table {
 				width: 100%;
 				border-collapse:collapse;
-			}
-			#$id * {
 				border-width: 0px;
 			}
-			#$id .tikiListTable td, #$id .tikiListTable {
+			.wikiplugin_expandingoutline * {
+				border-width: 0px;
+				padding: 0px;
+			}
+			.wikiplugin_expandingoutline .tikiListTable td, #$id .tikiListTable {
 				font-size: 14px;
 				background-color: white;
 				list-style-type: none;
 			}
-			#$id .tikiListTableLabel
+			.wikiplugin_expandingoutline .tikiListTableLabel
 			{
 				width: 1px;
 				white-space: nowrap;
 
 			}
 
-			.tikiListTableChild {
+			.wikiplugin_expandingoutline .tikiListTableChild {
 				display: none;
 			}
 

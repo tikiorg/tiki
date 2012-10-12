@@ -14,6 +14,8 @@ class WikiPlugin_expandingoutline_list extends JisonParser_Wiki_List
 	{
 		$this->stacks = $parserList->stacks;
 		$this->index = $parserList->index;
+		ini_set('error_reporting', E_ALL);
+		ini_set('display_errors', 1);
 	}
 
 	public function toHtml()
@@ -23,9 +25,8 @@ class WikiPlugin_expandingoutline_list extends JisonParser_Wiki_List
 		$lists = array();
 
 		foreach ($this->stacks as $key => &$stack) {
-			$id = 'id' . microtime() * 1000000;
+			$lists[$key] = '<table class="tikiListTable">';
 
-			$lists[$key] = '<table class="tikiListTable" id="' . $id . '">';
 			$this->labelTracker = array();
 			$lists[$key] .= $this->toHtmlChildren($stack);
 
@@ -44,7 +45,8 @@ class WikiPlugin_expandingoutline_list extends JisonParser_Wiki_List
 		}
 
 		$i = 0;
-		foreach ($stack as &$list) {
+		for ($j = 0, $max = count($stack); $j < $max; $j++) {
+			$list = $stack[$j];
 
 			switch($list['type']) {
 				case '*':
@@ -71,39 +73,43 @@ class WikiPlugin_expandingoutline_list extends JisonParser_Wiki_List
 			$trail = implode('_', $trail);
 
 			if (empty($list['content']) == false) {
+				$nonExpanding = $this->groupNonExpanding($stack, $j);
+				$children = $this->toHtmlChildren($stack[$j]['children'], $tier + 1);
 
-				$result .=
-					'<tr>' .
-						'<td>' .
-							'<table>' .
-								'<tr>' .
-									'<td id="" class="' . $class . ' tier' . $tier . '" data-trail="' . $trail . '" style="width:' . ((count($this->labelTracker) * 30) + 30) . 'px; text-align: right;">' .
-										(empty($list['children']) == false ? '<img class="listImg" src="img/toggle-expand-dark.png" data-altImg="img/toggle-collapse-dark.png" />' : '').
-										$label .
-									'</td>' .
-									'<td class="tikiListTableItem">' . $list['content'] .'</td>' .
-								'</tr>';
+				$item = '<tr>' .
+					'<td id="" class="' . $class . ' tier' . $tier . '" data-trail="' . $trail . '" style="width:' . ((count($this->labelTracker) * 30) + 30) . 'px; text-align: right;">' .
+						(empty($stack[$j]['children']) == false ? '<img class="listImg" src="img/toggle-expand-dark.png" data-altImg="img/toggle-collapse-dark.png" />' : '').
+						$label .
+					'</td>' .
+					'<td class="tikiListTableItem">' . $list['content'] .'</td>' .
+				'</tr>';
 
-				if (empty($list['children']) == false) {
-					$result .= '<tr class="parentTrail' . $trail . ' tikiListTableChild"><td colspan="2"><table>';
-				}
-			}
-
-			$result .= $this->toHtmlChildren($list['children'], $tier + 1);
-
-			if (empty($list['content']) == false) {
-
-				if (empty($list['children']) == false) {
-					$result .= '</table></td></tr>';
+				if (!empty($nonExpanding)) {
+					$item .= '<tr><td class="tier' . $tier . '"></td><td>' . $nonExpanding . '</td></tr>';
 				}
 
-				$result .=
-							'</table>' .
-						'</td>' .
-					'</tr>';
+				if (empty($children) == false) {
+					$item .= '<tr class="parentTrail' . $trail . ' tikiListTableChild"><td colspan="2"><table>' . $children . '</table></td></tr>';
+				}
+
+				$result .= '<tr><td><table>' . $item . '</table></td></tr>';
 			}
 
 			array_pop($this->labelTracker);
+		}
+
+		return $result;
+	}
+
+	private function groupNonExpanding(&$stack, &$j)
+	{
+		$result = '';
+
+		while (isset($stack[$j + 1]['type']) && $stack[$j + 1]['type'] == '+' && isset($stack[$j + 1]['content'])) {
+			$j++;
+			if (isset($stack[$j]['content'])) {
+				$result .= $stack[$j]['content'] . '<br />';
+			}
 		}
 
 		return $result;

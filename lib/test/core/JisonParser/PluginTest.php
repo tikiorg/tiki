@@ -142,7 +142,7 @@ class JisonParser_PluginTest extends JisonParser_Abstract
 *test{EXPANDINGOUTLINE}"
 		,
 '<div id="expandingoutline1" class="wikiplugin_expandingoutline" style="">' .
-	'<table class="tikiListTable" id="">' .
+	'<table class="tikiListTable">' .
 		'<tr>' .
 			'<td>' .
 				'<table>' .
