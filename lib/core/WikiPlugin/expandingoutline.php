@@ -43,7 +43,7 @@ class WikiPlugin_expandingoutline extends WikiPlugin_HtmlBase
 						return;
 				    }
 
-					var child = $('.parentTrail' + $(this).data('trail'));
+					var child = base.find('.parentTrail' + $(this).data('trail'));
 
 					if (child.stop().fadeIn().length) {
 						$(this).find('img.listImg').attr('src', 'img/toggle-collapse-dark.png');
@@ -55,7 +55,7 @@ class WikiPlugin_expandingoutline extends WikiPlugin_HtmlBase
 						return;
 				    }
 
-					var child = $('.parentTrail' + $(this).data('trail'));
+					var child = base.find('.parentTrail' + $(this).data('trail'));
 
 					if (child.stop().fadeOut().length) {
 						$(this).find('img.listImg').attr('src', 'img/toggle-expand-dark.png');

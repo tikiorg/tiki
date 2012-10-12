@@ -25,11 +25,11 @@ class WikiPlugin_expandingoutline_list extends JisonParser_Wiki_List
 		foreach ($this->stacks as $key => &$stack) {
 			$id = 'id' . microtime() * 1000000;
 
-			$lists[$key] = '<table class="tikiListTable" id="' . $id . '"><tbody>';
+			$lists[$key] = '<table class="tikiListTable" id="' . $id . '">';
 			$this->labelTracker = array();
 			$lists[$key] .= $this->toHtmlChildren($stack);
 
-			$lists[$key] .= '</tbody></table>';
+			$lists[$key] .= '</table>';
 		}
 
 		return $lists;
@@ -76,11 +76,10 @@ class WikiPlugin_expandingoutline_list extends JisonParser_Wiki_List
 					'<tr>' .
 						'<td>' .
 							'<table>' .
-				                '<tbody>' .
-									'<tr>' .
-										'<td id="" class="' . $class . ' tier' . $tier . '" data-trail="' . $trail . '" style="width:' . ((count($this->labelTracker) * 30) + 30) . 'px; text-align: right;">' . $label . '</td>' .
-										'<td class="tikiListTableItem">' . $list['content'] .'</td>' .
-									'</tr>';
+								'<tr>' .
+									'<td id="" class="' . $class . ' tier' . $tier . '" data-trail="' . $trail . '" style="width:' . ((count($this->labelTracker) * 30) + 30) . 'px; text-align: right;">' . $label . '</td>' .
+									'<td class="tikiListTableItem">' . $list['content'] .'</td>' .
+								'</tr>';
 
 				if (empty($list['children']) == false) {
 					$result .= '<tr class="parentTrail' . $trail . ' tikiListTableChild"><td colspan="2"><table>';
@@ -96,7 +95,6 @@ class WikiPlugin_expandingoutline_list extends JisonParser_Wiki_List
 				}
 
 				$result .=
-								'</tbody>' .
 							'</table>' .
 						'</td>' .
 					'</tr>';

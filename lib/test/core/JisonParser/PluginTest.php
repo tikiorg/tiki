@@ -142,160 +142,137 @@ class JisonParser_PluginTest extends JisonParser_Abstract
 *test{EXPANDINGOUTLINE}"
 		,
 '<div id="expandingoutline1" class="wikiplugin_expandingoutline" style="">' .
-	'<table class="tikiListTable" id=""><tbody>' .
+	'<table class="tikiListTable" id="">' .
 		'<tr>' .
 			'<td>' .
 				'<table>' .
-					'<tbody>' .
-						'<tr>' .
-							'<td id="" class="tikiListTableLabel tier0" data-trail="1" style="width:60px; text-align: right;">1</td>' .
-							'<td class="tikiListTableItem">test</td>' .
-						'</tr>' .
-					'</tbody>' .
+					'<tr>' .
+						'<td id="" class="tikiListTableLabel tier0" data-trail="1" style="width:60px; text-align: right;">1</td>' .
+						'<td class="tikiListTableItem">test</td>' .
+					'</tr>' .
 				'</table>' .
 			'</td>' .
 		'</tr>' .
 		'<tr>' .
 			'<td>' .
 				'<table>' .
-					'<tbody>' .
-						'<tr>' .
-							'<td id="" class="tikiListTableLabel tier0" data-trail="2" style="width:60px; text-align: right;">2</td>' .
-							'<td class="tikiListTableItem">test</td>' .
-						'</tr>' .
-						'<tr class="parentTrail2 tikiListTableChild">' .
-							'<td colspan="2">' .
-								'<table>' .
-									'<tr>' .
-										'<td>' .
-											'<table>'.
-												'<tbody>'.
-													'<tr>' .
-														'<td id="" class="tikiListTableLabel tier1" data-trail="2_1" style="width:90px; text-align: right;">2.1</td>' .
-														'<td class="tikiListTableItem">test</td>' .
-													'</tr>' .
-												'</tbody>' .
-											'</table>' .
-										'</td>' .
-									'</tr>' .
-									'<tr>'.
-										'<td>' .
-											'<table>' .
-												'<tbody>' .
-													'<tr>' .
-														'<td id="" class="tikiListTableLabel tier1" data-trail="2_2" style="width:90px; text-align: right;">2.2</td>' .
-														'<td class="tikiListTableItem">test</td>' .
-													'</tr>' .
-												'</tbody>' .
-											'</table>' .
-										'</td>' .
-									'</tr>' .
-									'<tr>' .
-										'<td>' .
-											'<table>' .
-												'<tbody>' .
-													'<tr>' .
-														'<td id="" class="tikiListTableLabel tier1" data-trail="2_3" style="width:90px; text-align: right;">2.3</td>'.
-														'<td class="tikiListTableItem">test</td>' .
-													'</tr>' .
-													'<tr class="parentTrail2_3 tikiListTableChild">' .
-														'<td colspan="2">' .
-															'<table>' .
-																'<tr>'.
-																	'<td>' .
-																		'<table>'.
-																			'<tbody>'.
-																				'<tr>' .
-																					'<td id="" class="tikiListTableLabel tier2" data-trail="2_3_1" style="width:120px; text-align: right;">2.3.1</td>'.
-																					'<td class="tikiListTableItem">test</td>' .
-																				'</tr>' .
-																				'<tr class="parentTrail2_3_1 tikiListTableChild">'.
-																					'<td colspan="2">' .
-																						'<table>' .
-																							'<tr>'.
-																								'<td>'.
-																									'<table>'.
-																										'<tbody>'.
-																											'<tr>' .
-																												'<td id="" class="tikiListTableLabel tier3" data-trail="2_3_1_1" style="width:150px; text-align: right;">2.3.1.1</td>'.
-																												'<td class="tikiListTableItem">test</td>' .
-																											'</tr>'.
-																										'</tbody>'.
-																									'</table>'.
-																								'</td>'.
-																							'</tr>' .
-																						'</table>' .
+					'<tr>' .
+						'<td id="" class="tikiListTableLabel tier0" data-trail="2" style="width:60px; text-align: right;">2</td>' .
+						'<td class="tikiListTableItem">test</td>' .
+					'</tr>' .
+					'<tr class="parentTrail2 tikiListTableChild">' .
+						'<td colspan="2">' .
+							'<table>' .
+								'<tr>' .
+									'<td>' .
+										'<table>'.
+											'<tr>' .
+												'<td id="" class="tikiListTableLabel tier1" data-trail="2_1" style="width:90px; text-align: right;">2.1</td>' .
+												'<td class="tikiListTableItem">test</td>' .
+											'</tr>' .
+										'</table>' .
+									'</td>' .
+								'</tr>' .
+								'<tr>'.
+									'<td>' .
+										'<table>' .
+											'<tr>' .
+												'<td id="" class="tikiListTableLabel tier1" data-trail="2_2" style="width:90px; text-align: right;">2.2</td>' .
+												'<td class="tikiListTableItem">test</td>' .
+											'</tr>' .
+										'</table>' .
+									'</td>' .
+								'</tr>' .
+								'<tr>' .
+									'<td>' .
+										'<table>' .
+											'<tr>' .
+												'<td id="" class="tikiListTableLabel tier1" data-trail="2_3" style="width:90px; text-align: right;">2.3</td>'.
+												'<td class="tikiListTableItem">test</td>' .
+											'</tr>' .
+											'<tr class="parentTrail2_3 tikiListTableChild">' .
+												'<td colspan="2">' .
+													'<table>' .
+														'<tr>'.
+															'<td>' .
+																'<table>'.
+																	'<tr>' .
+																		'<td id="" class="tikiListTableLabel tier2" data-trail="2_3_1" style="width:120px; text-align: right;">2.3.1</td>'.
+																		'<td class="tikiListTableItem">test</td>' .
+																	'</tr>' .
+																	'<tr class="parentTrail2_3_1 tikiListTableChild">'.
+																		'<td colspan="2">' .
+																			'<table>' .
+																				'<tr>'.
+																					'<td>'.
+																						'<table>'.
+																							'<tr>' .
+																								'<td id="" class="tikiListTableLabel tier3" data-trail="2_3_1_1" style="width:150px; text-align: right;">2.3.1.1</td>'.
+																								'<td class="tikiListTableItem">test</td>' .
+																							'</tr>'.
+																						'</table>'.
 																					'</td>'.
-																				'</tr>'.
-																			'</tbody>'.
-																		'</table>' .
-																	'</td>'.
-																'</tr>' .
-															'</table>' .
-														'</td>'.
-													'</tr>' .
-												'</tbody>'.
-											'</table>' .
+																				'</tr>' .
+																			'</table>' .
+																		'</td>'.
+																	'</tr>'.
+																'</table>' .
+															'</td>'.
+														'</tr>' .
+													'</table>' .
+												'</td>'.
+											'</tr>' .
+										'</table>' .
+									'</td>'.
+								'</tr>'.
+									'<tr>'.
+										'<td>'.
+											'<table>'.
+												'<tr>'.
+													'<td id="" class="tikiListTableLabel tier1" data-trail="2_4" style="width:90px; text-align: right;">2.4</td>'.
+													'<td class="tikiListTableItem">test</td>'.
+												'</tr>'.
+											'</table>'.
 										'</td>'.
 									'</tr>'.
-										'<tr>'.
-											'<td>'.
-												'<table>'.
-													'<tbody>'.
-														'<tr>'.
-															'<td id="" class="tikiListTableLabel tier1" data-trail="2_4" style="width:90px; text-align: right;">2.4</td>'.
-															'<td class="tikiListTableItem">test</td>'.
-														'</tr>'.
-													'</tbody>'.
-												'</table>'.
-											'</td>'.
-										'</tr>'.
-										'<tr>'.
-											'<td>'.
-												'<table>'.
-													'<tbody>'.
-														'<tr>'.
-															'<td id="" class="tikiListTableLabel tier1" data-trail="2_5" style="width:90px; text-align: right;">2.5</td>'.
-															'<td class="tikiListTableItem">test</td>'.
-														'</tr>'.
-													'</tbody>'.
-												'</table>'.
-											'</td>'.
-										'</tr>'.
-										'<tr>'.
-											'<td>'.
-												'<table>'.
-													'<tbody>'.
-														'<tr>'.
-															'<td id="" class="tikiListTableLabel tier1" data-trail="2_6" style="width:90px; text-align: right;">2.6</td>'.
-															'<td class="tikiListTableItem">test</td>'.
-														'</tr>'.
-													'</tbody>'.
-												'</table>'.
-											'</td>'.
-										'</tr>'.
-									'</table>'.
-								'</td>'.
-							'</tr>'.
-						'</tbody>'.
+									'<tr>'.
+										'<td>'.
+											'<table>'.
+												'<tr>'.
+													'<td id="" class="tikiListTableLabel tier1" data-trail="2_5" style="width:90px; text-align: right;">2.5</td>'.
+													'<td class="tikiListTableItem">test</td>'.
+												'</tr>'.
+											'</table>'.
+										'</td>'.
+									'</tr>'.
+									'<tr>'.
+										'<td>'.
+											'<table>'.
+												'<tr>'.
+													'<td id="" class="tikiListTableLabel tier1" data-trail="2_6" style="width:90px; text-align: right;">2.6</td>'.
+													'<td class="tikiListTableItem">test</td>'.
+												'</tr>'.
+											'</table>'.
+										'</td>'.
+									'</tr>'.
+								'</table>'.
+							'</td>'.
+						'</tr>'.
 					'</table>'.
 				'</td>'.
 			'</tr>'.
 			'<tr>'.
 				'<td>'.
 					'<table>'.
-						'<tbody>'.
-							'<tr>'.
-								'<td id="" class="tikiListTableLabel tier0" data-trail="3" style="width:60px; text-align: right;">3</td>'.
-								'<td class="tikiListTableItem">test</td>'.
-							'</tr>'.
-						'</tbody>'.
+						'<tr>'.
+							'<td id="" class="tikiListTableLabel tier0" data-trail="3" style="width:60px; text-align: right;">3</td>'.
+							'<td class="tikiListTableItem">test</td>'.
+						'</tr>'.
 					'</table>'.
 				'</td>'.
 			'</tr>'.
-		'</tbody>'.
-	'</table>'.
-'</div>');
+		'</table>'.
+	'</div>');
 
 		$parsed = $this->parser->parse($syntax[0]);
 
