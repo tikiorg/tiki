@@ -33,6 +33,6 @@ $html = str_replace('{title}', $title, $html);
 $html = str_replace('{login}', $login, $html);
 $html = str_replace('{back}', $back, $html);
 
-header("HTTP/1.0 302 Moved Temporarily");
+header("HTTP/1.0 503 Service Unavailable");
 
 echo $html;

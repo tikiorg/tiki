@@ -10,8 +10,9 @@ $access->check_script($_SERVER['SCRIPT_NAME'], basename(__FILE__));
 
 // Check to see if admin has closed the site
 if ( $tiki_p_access_closed_site != 'y' and ! isset($bypass_siteclose_check) ) {
-    $url = 'tiki-error_simple.php?error=' . urlencode('' . $prefs['site_closed_msg']);
-    header('location: ' . $url);
-    exit;
+	global $base_url;
+    $url = $base_url . 'tiki-error_simple.php?error=' . urlencode('' . $prefs['site_closed_msg']);
+	header('Location: ' . $url);
+	exit;
 }
 
