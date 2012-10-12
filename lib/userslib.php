@@ -1635,7 +1635,8 @@ class UsersLib extends TikiLib
 		return ($ret);
 	}
 
-	function get_users($offset = 0, $maxRecords = -1, $sort_mode = 'login_asc', $find = '', $initial = '', $inclusion=false, $group='', $email='')
+	function get_users($offset = 0, $maxRecords = -1, $sort_mode = 'login_asc', $find = '', $initial = '', $inclusion=false,
+					   $group='', $email='', $notconfirmed = false, $notvalidated = false, $neverloggedin = false)
 	{
 		$perms = Perms::get(array('type' => 'group', 'object' => $group));
 
@@ -1682,6 +1683,29 @@ class UsersLib extends TikiLib
 			$mbindvars = $bindvars;
 		}
 
+		if ( $notconfirmed && $notvalidated ) {
+			$mid.= $mid == '' ? ' where' : ' and';
+			$mid.= ' (uu.`waiting` = \'u\' or uu.`waiting` = \'a\')';
+			$mmid = $mid;
+		} else {
+			if ( $notconfirmed ) {
+				$mid.= $mid == '' ? ' where' : ' and';
+				$mid.= ' uu.`waiting` = \'u\'';
+				$mmid = $mid;
+			}
+
+			if ( $notvalidated ) {
+				$mid.= $mid == '' ? ' where' : ' and';
+				$mid.= ' uu.`waiting` = \'a\'';
+				$mmid = $mid;
+			}
+		}
+
+		if ( $neverloggedin ) {
+			$mid.= $mid == '' ? ' where' : ' and';
+			$mid.= ' (uu.`lastLogin` is null or uu.`lastLogin` = 0)';
+			$mmid = $mid;
+		}
 		$query = "select uu.* from `users_users` uu $mid order by " . $this->convertSortMode($sort_mode);
 		$query_cant = "select count(*) from `users_users` uu $mmid";
 		$ret = $this->fetchAll($query, $bindvars, $maxRecords, $offset);

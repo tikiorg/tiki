@@ -101,10 +101,18 @@
 							{/section}
 						</select>
 					</td>
+					<td><label for="filterEmailNotConfirmed">{tr}Email not confirmed{/tr}</label></td>
+					<td><input id="filterEmailNotConfirmed" name="filterEmailNotConfirmed" type="checkbox"{if !empty($smarty.request.filterEmailNotConfirmed)} checked="checked"{/if} /></td>
+					<td><label for="filterNeverLoggedIn">{tr}Never logged in{/tr}</label></td>
+					<td><input id="filterNeverLoggedIn" name="filterNeverLoggedIn" type="checkbox"{if !empty($smarty.request.filterNeverLoggedIn)} checked="checked"{/if}  /></td>
 				</tr>
 				<tr>
 					<td><label for="filterEmail">{tr}Email{/tr}</label></td>
 					<td><input type="text" id="filterEmail" name="filterEmail" value="{$filterEmail}" /></td>
+					<td><label for="filterNotValidated">{tr}User not validated{/tr}</label></td>
+					<td><input id="filterNotValidated" name="filterNotValidated" type="checkbox"{if !empty($smarty.request.filterNotValidated)} checked="checked"{/if}  /></td>
+					<td></td>
+					<td></td>
 				</tr>
 			</table>
 
