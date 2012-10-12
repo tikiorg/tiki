@@ -17,7 +17,12 @@
         </div>  
       {elseif $questions[ix].type eq 't'}
         <div class="quizoptions">
-          <input type="text" name="question_{$questions[ix].questionId}" />
+			{if $questions[ix].cols > 0}
+				{assign var='textcols' value=$questions[ix].cols}
+			{else}
+				{assign var='textcols' value=80}
+			{/if}
+			<input type="text" size="{$textcols}" name="question_{$questions[ix].questionId}" />
         </div>  
       {elseif $questions[ix].type eq 'x'}
         {assign var='area' value=$questions[ix].questionId}

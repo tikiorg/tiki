@@ -45,6 +45,7 @@
 					<br />{tr}For a rate, you can give the maximum value.{/tr}
 					<br />{tr}For the 'multiple choices of thumbnail from a file gallery' type, options are: Gallery ID. Example: 4{/tr}
 					<br />{tr}For the 'wiki textarea' type, options are: rows,columns. Example: 10,60{/tr}
+					<br />{tr}For the 'short text' type, options are: columns. Example: 60{/tr}
 				{/remarksbox}
 			</td>
 		</tr>

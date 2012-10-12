@@ -257,6 +257,8 @@ class SurveyLib extends TikiLib
 					$res['explode'] = $options;
 				} elseif (in_array($res['type'], array('r', 's')) ) {
 					$res['explode'] = array_fill(1, $res['options'], ' ');
+				} elseif (in_array($res['type'], array('t')) ) {
+					$res['cols'] = $res['options'];
 				}
 			}
 
