@@ -26,12 +26,13 @@ class WikiPlugin_expandingoutline extends WikiPlugin_HtmlBase
 	{
 		global $headerlib;
 
-		$regularList = &$parser->list;
-		$parser->list = new WikiPlugin_expandingoutline_list($parser->list);
+		$tempParser = new JisonParser_Wiki_Handler();
+		$tempParser->list = new WikiPlugin_expandingoutline_list($parser->list);
 		$id = $this->id($index);
 
 		$headerlib->add_jq_onready(
 <<<JQ
+		(function() {
 			var base = $('#$id');
 
 			var labels = base.find('td.tikiListTableLabel');
@@ -63,6 +64,7 @@ class WikiPlugin_expandingoutline extends WikiPlugin_HtmlBase
 				});
 
 				base.find('td.tikiListTableLabel').prepend('<img class="listImg" src="img/toggle-expand-dark.png" />');
+		})();
 JQ
 );
 
@@ -123,9 +125,8 @@ JQ
 			}"
 		);
 
-		$result = $parser->parse($data);
-
-		$parser->list = $regularList;
+		$result = $tempParser->parse($data);
+		unset($tempParser);
 
 		return $result;
 	}
