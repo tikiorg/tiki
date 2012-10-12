@@ -389,7 +389,7 @@ $("#'.$id.'_showSelected").click( function () {
 	}
 	$html .= '</tbody></table>' . $nl;
 
-	// add jq code to initial treeetable
+	// add jq code to initial treetable
 	$expanable = empty($_sortColumnDelimiter) ? 'true' : 'false';	// when nested, clickableNodeNames is really annoying
 	if (count($treeSectionsAdded) < $_collapseMaxSections) {
 		$headerlib->add_jq_onready('$("#' . $id . '").treeTable({clickableNodeNames:' . $expanable . ',initialState: "expanded"});');
