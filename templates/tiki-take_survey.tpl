@@ -41,7 +41,7 @@
               	&nbsp;
               </td>
               <td valign="top">
-                {toolbars area_id="question_$area" qtnum='2'}
+                {if $showToolBars}{toolbars area_id="question_$area" qtnum='2'}{/if}
                 <textarea id="question_{$questions[ix].questionId}" name="question_{$questions[ix].questionId}" rows="{$textrows}" cols="{$textcols}"></textarea>
               </td>
             </tr>

@@ -44,5 +44,11 @@ function prefs_poll_list()
 			'type' => 'flag',
 			'default' => 'n',
 		),
+		'poll_surveys_textarea_hidetoolbar' => array(
+			'name' => tra('Disable textarea toolbar'),
+			'description' => tra('Hide toolbar for textarea fields in surveys.'),
+			'type' => 'flag',
+			'default' => 'n',
+		),
 	);
 }
