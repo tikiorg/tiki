@@ -288,7 +288,7 @@ JQ
 						});
 
 						var questionBoxOptions = {
-							title: "Edit ForwardLink Questions",
+							title: tr("Edit ForwardLink Questions"),
 								modal: true,
 								buttons: {}
 						};
