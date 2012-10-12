@@ -143,36 +143,12 @@ class WikiPlugin_Negotiator_Parser
 
 		//If we make it this far, it most likley is a smarty black that can't be executed
 		$this->ignored = true;
-		return $this->syntax . $this->body . $this->closing;
+		return $this->toSyntax();
 	}
 
 	function toSyntax()
 	{
-		$source = '{' . (empty($this->body) ? $this->name : TikiLib::strtoupper($this->name) . '(') . ' ';
-		if (!empty($this->args)) {
-			foreach ( $this->args as $argKey => $argValue ) {
-				if (is_array($argValue)) {
-					if (isset($this->info['params'][$argKey]['separator'])) {
-						$sep = $this->info['params'][$argKey]['separator'];
-					} else {
-						$sep = ',';
-					}
-					$source .= $argKey.'="'.implode($sep, $argValue).'" ';	// process array
-				} else {
-					$source .= $argKey.'="'.$argValue.'" ';
-				}
-			}
-		}
-		if (substr($source, -1) === ' ') {
-			$source = substr($source, 0, -1);
-		}
-		if (!empty($this->body)) {
-			$source .= ')}' . $this->body . '{' . TikiLib::strtoupper($this->name) . '}';
-		} else {
-			$source .= '}';
-		}
-
-		return $source;
+		return $this->syntax . $this->body . $this->closing;
 	}
 
 	function urlEncodeArgs()
