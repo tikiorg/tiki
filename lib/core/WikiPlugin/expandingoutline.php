@@ -33,16 +33,31 @@ class WikiPlugin_expandingoutline extends WikiPlugin_HtmlBase
 		$headerlib->add_jq_onready(
 <<<JQ
 		(function() {
-			var base = $('#$id');
+			var base = $('#$id')
+				.click(function(e) {
+					if (e.shiftKey) {
+						var lists = base.find('.tikiListTableChild');
+						var imgs = base.find('.listImg');
+
+						if (lists.first().is(':visible')) {
+							lists.hide();
+							switchImg(imgs);
+						} else {
+							lists.show();
+							switchImg(imgs);
+						}
+					}
+				});
 
 			var labels = base.find('td.tikiListTableLabel');
 
 			function switchImg(img) {
-				var newImg = img.data('altImg');
-				var oldImg = img.attr('src');
+				var newImg = img.first().data('altimg');
+				var oldImg = img.first().attr('src');
+
 				img
 					.attr('src', newImg)
-					.data('altIm', oldImg);
+					.data('altimg', oldImg);
 			}
 
 			labels
@@ -93,7 +108,7 @@ JQ
 			{
 				width: 1px;
 				white-space: nowrap;
-
+				cursor: pointer;
 			}
 
 			.wikiplugin_expandingoutline .tikiListTableChild {

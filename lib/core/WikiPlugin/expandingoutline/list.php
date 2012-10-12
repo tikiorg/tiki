@@ -78,7 +78,7 @@ class WikiPlugin_expandingoutline_list extends JisonParser_Wiki_List
 
 				$item = '<tr>' .
 					'<td id="" class="' . $class . ' tier' . $tier . '" data-trail="' . $trail . '" style="width:' . ((count($this->labelTracker) * 30) + 30) . 'px; text-align: right;">' .
-						(empty($stack[$j]['children']) == false ? '<img class="listImg" src="img/toggle-expand-dark.png" data-altImg="img/toggle-collapse-dark.png" />' : '').
+						(empty($stack[$j]['children']) == false ? '<img class="listImg" src="img/toggle-expand-dark.png" data-altimg="img/toggle-collapse-dark.png" />' : '').
 						$label .
 					'</td>' .
 					'<td class="tikiListTableItem">' . $list['content'] .'</td>' .
