@@ -216,9 +216,16 @@ if (isset($prefs['ids_enabled']) && $prefs['ids_enabled'] == 'y') {
 		}
 		$_SESSION['ids_impact'] += $impact;
 
-		if ($impact > $prefs['ids_single_threshold'] || $_SESSION['ids_impact'] > $prefs['ids_session_threshold']) {
-			header('503 Service Unavailable');
-			echo tra('Request prevented');
+		if ($impact > $prefs['ids_single_threshold']) {
+			global $base_url;
+			$url = $base_url . 'tiki-ids_blocked.php?type=request';
+			header('Location: ' . $url);
+			exit;
+
+		} elseif ($_SESSION['ids_impact'] > $prefs['ids_session_threshold']) {
+			global $base_url;
+			$url = $base_url . 'tiki-ids_blocked.php?type=session';
+			header('Location: ' . $url);
 			exit;
 		}
 	} catch (Exception $e) {
