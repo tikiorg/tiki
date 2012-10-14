@@ -139,6 +139,10 @@ div.highlight {
 	padding: inherit;
 }
 
+.rbox > div.highlight {
+	display: block
+}
+
 input[type=checkbox],
 input[type=radio] {
 	border: 0;
