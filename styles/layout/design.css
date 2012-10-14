@@ -115,9 +115,14 @@ input {
 /* highlight on interface text to draw attention; also
 highlight on "button" links, e.g. if there are some comments it highlights the "button" link in #page-bar under the content of the wiki pages */
 .highlight,
-.button.highlight a {
+.button.highlight a,
+.button a.highlight {
 	background: #FC0;
 	color: #000;
+}
+
+.button a.highlight:hover {
+	background: #dfb300;
 }
 
 /* Since button background is actually applied to the link within the button, apply button highlight to same bg area as normal button state . */
@@ -126,7 +131,7 @@ highlight on "button" links, e.g. if there are some comments it highlights the "
 }
 
 /* Highlight effect is just visual distinction, so no need for block element. */
-.highlight {
+span.highlight {
 	padding: 0 .3em;
 }
 
