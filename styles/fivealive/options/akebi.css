@@ -91,7 +91,7 @@ input[type="submit"]:hover,
 
 .highlight,
 .highlight a {
-	border: #b9f2fb;
+	border: 1px solid #b9f2fb;
 	color: #0b8a98;
 }
 
@@ -156,7 +156,7 @@ textarea,
 .titlebar,
 .rbox-title, 
 .rbox-data {
-	border: #18a3bb;
+	border-color: #18a3bb;
 	background: #cbf4f6;
 	color: #005064;
 }

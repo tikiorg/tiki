@@ -92,7 +92,7 @@ input[type="submit"]:hover,
 .highlight,
 .button.highlight a,
 .calfocuson {
-	border: #e4afd3;
+	border-color: #e4afd3;
 	color: #8e286a;
 	background: #ddf4ef;
 }
@@ -166,7 +166,7 @@ tr.diffheader a:visited {
 .titlebar,
 .rbox-title, 
 .rbox-data {
-	border: #a82a76;
+	border-color: #a82a76;
 	background: #efcde5;
 	color: #8b1932;
 }

@@ -91,7 +91,7 @@ span#genPass .button a:hover,
 .highlight,
 .button.highlight a,
 .calfocuson {
-	border: #fee194;
+	border-color: #fee194;
 	color: #c74b23;
 	background: #f3fdd0;
 }
@@ -157,7 +157,7 @@ textarea,
 .titlebar,
 .rbox-title, 
 .rbox-data {
-	border: #ffc506;
+	border-color: #ffc506;
 	background: #fcebbc;
 	color: #c85a28;
 }

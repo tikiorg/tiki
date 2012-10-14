@@ -89,7 +89,7 @@ input[type="submit"]:hover,
 .highlight,
 .button.highlight a,
 .calfocuson {
-	border: #fac5b1;
+	border-color: #fac5b1;
 	color: #8e01d4;
 	background: #f1f8de;
 }
@@ -155,7 +155,7 @@ textarea,
 .titlebar,
 .rbox-title, 
 .rbox-data {
-	border: #c564f5;
+	border-color: #c564f5;
 	background: #e5caf5;
 	color: #881d98;
 }
