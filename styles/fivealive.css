@@ -371,7 +371,7 @@ input[type="submit"]:hover,
 	
 .highlight,
 .highlight a {
-	border: #9ae8fa;
+	border: 1px solid #9ae8fa;
 	color: #000;
 }
 
