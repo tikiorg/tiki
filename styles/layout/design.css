@@ -140,7 +140,8 @@ div.highlight {
 }
 
 .rbox > div.highlight {
-	display: block
+	display: block;
+	font-weight: bold;
 }
 
 input[type=checkbox],
