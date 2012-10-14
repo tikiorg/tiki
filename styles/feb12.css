@@ -126,7 +126,7 @@ input[type="submit"]:hover,
 .button input:hover,
 .calbuttonBox:hover
 #highlight,
-.highlight {
+.button a.highlight {
 	font: bold 1em Arial, sans-serif;
 	background: url(feb12/header.jpg) repeat-x 0 100%;
 	border: 1px solid #5aa5cf;
