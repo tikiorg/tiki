@@ -69,8 +69,6 @@ class JisonParser_Wiki_Header
 					$result .= $this->toHtmlListChildren($header['children']);
 				}
 
-				$result .= '</li>';
-
 			} elseif (empty($header['children']) == false) {
 
 				$result .= $this->toHtmlListChildren($header['children']);

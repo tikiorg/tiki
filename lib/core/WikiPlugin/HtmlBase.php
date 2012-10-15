@@ -332,7 +332,7 @@ abstract class WikiPlugin_HtmlBase
 			$this->htmlAttributes['class'] .= (empty($this->htmlAttributes['class']) ? '' : ' ' ) . 'wikiplugin_' . $this->type;
 			$this->htmlAttributes['style'] .= $style;
 
-			$output = '<' . $this->htmlTagType . ' ';
+			$output = '<' . $this->htmlTagType;
 		}
 
 		foreach ($this->htmlAttributes as $attribute => $value) {

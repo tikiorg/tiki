@@ -578,7 +578,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		}
 
 		if ($this->Parser->parseDepth == 0) {
-			$this->pluginNegotiator->executeAwaiting($input);
+			$this->pluginNegotiator->executeAwaiting($output);
 		}
 	}
 
@@ -931,7 +931,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		$content = substr($content, $hNum);
 
 		$hNum = min(6, $hNum); //html doesn't support 7+ header level
-		$id = $this->Parser->header->stack($hNum - 2, $content);
+		$id = $this->Parser->header->stack($hNum, $content);
 		$button = '';
 		global $section, $tiki_p_edit;
 		if (

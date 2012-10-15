@@ -15,6 +15,7 @@ class JisonParser_PluginTest extends JisonParser_Abstract
 			"injected_plugin_blocked" => array(),
 			"rejected_plugin_default_validation_behavior" => array(),
 			"expandingoutline_basic" => array(),
+			"parser_level_and_maketoc" => array(),
 		);
 	}
 
@@ -281,6 +282,45 @@ class JisonParser_PluginTest extends JisonParser_Abstract
 		$this->tryRemoveFingerprintId('html', $parsed);
 
 		return array("parsed" => $parsed, "syntax" => $syntax);
+	}
+
+	function parser_level_and_maketoc()
+	{
+		$syntax = array(
+			"{maketoc}
+
+!test
+!!!nested test
+!test"
+		,
+			'<div id="maketoc2" class="wikiplugin_maketoc" style="">' .
+				'<div id="toctitle"><h3>Table of contents</h3></div>'.
+				'<ul class = "toc">'.
+					'<li><a class="link" href="#test">test</a></li>' .
+					'<ul class = "">' .
+						'<ul class = "">' .
+							'<li><a class="link" href="#nested_test">nested test</a></li>' .
+						'</ul>'.
+					'</ul>'.
+					'<li><a class="link" href="#test1">test</a></li>' .
+				'</ul>' .
+			'</div>' .
+			"<br />\n" .
+			'<h1 class="showhide_heading" id="test">test</h1>'.
+			'<h3 class="showhide_heading" id="nested_test">nested test</h3>'.
+			'<h1 class="showhide_heading" id="test1">test</h1>'
+		);
+
+		$parsed = $this->parser->parse($syntax[0]);
+
+		$this->parser->resetOption();
+
+		$this->tryRemoveIdsFromHtmlList($parsed);
+
+		$this->tryRemoveFingerprintId('html', $parsed);
+
+		return array("parsed" => $parsed, "syntax" => $syntax);
+
 	}
 }
 
