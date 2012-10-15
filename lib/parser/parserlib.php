@@ -1304,7 +1304,7 @@ if ( \$('#$id') ) {
 	}
 
 	//*
-	function plugin_replace_args( $content, $rules, $args ) //TODO: needs put into jison
+	function plugin_replace_args( $content, $rules, $args )
 	{
 		$patterns = array();
 		$replacements = array();
@@ -2069,7 +2069,7 @@ if ( \$('#$id') ) {
 	}
 
 	//*
-	function parse_wiki_argvariable(&$data) //TODO: needs put into jison
+	function parse_wiki_argvariable(&$data)
 	{
 		global $prefs, $user;
 		if ( $prefs['feature_wiki_argvariable'] == 'y' && !$this->option['ck_editor'] ) {
@@ -2103,7 +2103,7 @@ if ( \$('#$id') ) {
 	}
 
 	//*
-	private function parse_data_dynamic_variables( $data, $lang = null ) //TODO: needs put into jison
+	private function parse_data_dynamic_variables( $data, $lang = null )
 	{
 		global $tiki_p_edit_dynvar, $prefs;
 
@@ -2152,7 +2152,7 @@ if ( \$('#$id') ) {
 	}
 
 	//*
-	private function get_dynamic_variable( $name, $lang = null ) //TODO: needs put into jison
+	private function get_dynamic_variable( $name, $lang = null )
 	{
 		global $tikilib;
 		$result = $tikilib->table('tiki_dynamic_variables')->fetchAll(array('data', 'lang'), array('name' => $name));
