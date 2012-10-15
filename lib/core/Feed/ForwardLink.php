@@ -336,18 +336,24 @@ JQ
 
 		$headerlib->add_jq_onready(
 <<<JQ
-			var answers = $answers;
+			var answers = $answers,
 
-			$('<div />')
-				.appendTo('body')
-				.text(tr('Create ForwardLink'))
-				.addClass('forwardLinkCreationButton')
-				.css('position', 'fixed')
-				.css('top', '0px')
-				.css('font-size', '10px')
-				.css('z-index', 99999)
-				.fadeTo(0, 0.85)
-				.button()
+			createForwardLinkButton = $('.forwardLinkCreationButton');
+
+			if (!createForwardLinkButton.length) {
+				$('<div />')
+					.appendTo('body')
+					.text(tr('Create ForwardLink'))
+					.addClass('forwardLinkCreationButton')
+					.css('position', 'fixed')
+					.css('top', '0px')
+					.css('font-size', '10px')
+					.css('z-index', 99999)
+					.fadeTo(0, 0.85)
+					.button();
+			}
+
+			createForwardLinkButton
 				.click(function() {
 					$(this).remove();
 					$.notify(tr('Highlight text to be linked'));
