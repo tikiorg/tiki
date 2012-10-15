@@ -47,10 +47,6 @@
 		{remarksbox type="warning" title="{tr}Important!{/tr}" highlight="y"}
 		<ul>
 			<li>
-				{tr}If you edit this (or any TPL) file via the built-in editor below, any JavaScript may be sanitized or completely stripped out 
-					by Tiki security filtering, which would cause certain functions to stop working (e.g. menus no longer collapse or expand){/tr}
-			</li>
-			<li>
 				{tr}You should only modify default header.tpl and other important files via a text code editor, through console, 
 					or SSH, or FTP edit commands--and only if you know what you are doing! ;-){/tr}
 			</li>
