@@ -8,16 +8,71 @@
 /**
  * Tracker Query Library
  *
- * \brief Functions to support reporting of the Trackers.
+ * A full featured, chainable, ORM for trackers
+ * <p>
+ * chainable became popular in jQuery $(this)->fn()->fn() and is more and more popular in php.  Tracker_Query uses them
+ * to make Trackers, which are somewhat complex, easy.
+ *
+ *
+ * Examples of usage (fake tracker called 'Event Tracker':
+ * //using id
+ * $results = Tracker_Query(1)
+ *              ->byName()
+ *              ->itemId(100)
+ *              ->query();
+ *
+ * //using by name
+ * $results = Tracker_Query('Event Tracker')
+ *              ->byName()
+ *              ->limit(1)
+ *              ->query();
+ *
+ *
+ *<p>
+ * The Output of tracker query is built as tracker(items(fields())) with the keys being the id (or name for fields if byName is called).
+ * Standard output example ($this->byName() not called):
+ * Array
+ *  (
+ *      [367] => Array //item repeats, key = itemId
+ *          (
+ *              [19] => 369 //item field values, key = fieldId
+ *              [20] => 366
+ *              [status5] => c
+ *              [trackerId] => 5
+ *              [itemId] => 367
+ *              [11] => internal
+ *              [162] => Array //items list associated to filedId 162
+ *                  (
+ *                      [0] => 176 // itemId
+ *                      [1] => Event Name // static name of an itemId
+ *                  )
+ *              )
+ *          )
+ *  )
+ *
+ * ByName output example ($this->byName() called):
+ * Array
+ *  (
+ *      [367] => Array //item repeats, key = itemId
+ *          (
+ *              [Minute End] => 369 //item field values, key = fieldId
+ *              [Minute Start] => 366
+ *              [status5] => c
+ *              [trackerId] => 5
+ *              [itemId] => 367
+ *              [Use Case] => internal
+ *              [Events] => Array //items list associated to filedId 162
+ *                  (
+ *                      [0] => 176 // itemId
+ *                      [1] => Event Name // static name of an itemId
+ *                  )
+ *              )
+ *          )
+ *  )
  *
  * @package		Tiki
- * @subpackage		Trackers
+ * @subpackage	Trackers
  * @author		Robert Plummer
- * @copyright		Copyright (c) 2002-2009, All Rights Reserved.
- * 			See copyright.txt for details and a complete list of authors.
- * @license		LGPL - See license.txt for details.
- * @version		SVN $Rev$
- * @filesource
  * @link		http://dev.tiki.org/Tracker_Query
  * @since		TIki 8
  */
@@ -36,7 +91,6 @@ class Tracker_Query
 	private $limit = 100; //added limit so default wouldn't crash system
 	private $offset = 0;
 	private $byName = false;
-	private $includeTrackerDetails = true;
 	private $desc = false;
 	private $render = true;
 	private $excludeDetails = false;
@@ -47,31 +101,82 @@ class Tracker_Query
 	private $filterType = array();
 	private $inputDefaults = array();
 	public $itemsRaw = array();
+	public $permissionsChecks = true;
 	public $limitReached = false;
 
+	/**
+	 * Instantiates a tracker query
+	 *
+	 * @access  public static
+	 * @param   mixed  $tracker id, (or name if called $this->byName() before query)
+	 * @return  new self
+	 */
 	public static function tracker($tracker)
 	{
 		return new self($tracker);
 	}
 
+	/**
+	 * Overrides permissions
+	 *
+	 * @access  public
+	 * @param   bool  $permissionsChecks, default true
+	 * @return  new self
+	 */
+	public function permissionsChecks($permissionsChecks = true)
+	{
+		$this->permissionsChecks = $permissionsChecks;
+
+		return $this;
+	}
+
+	/**
+	 * change the start date unit, needs called before $this->query()
+	 *
+	 * @access  public
+	 * @param   mixed  $start unix time stamp, int or string
+	 * @return  $this for chainability
+	 */
 	public function start($start)
 	{
 		$this->start = $start;
 		return $this;
 	}
 
+	/**
+	 * change the end date unit, needs called before $this->query()
+	 *
+	 * @access  public
+	 * @param   mixed  $end unix time stamp, int or string
+	 * @return  $this for chainability
+	 */
 	public function end($end)
 	{
 		$this->end = $end;
 		return $this;
 	}
 
+	/**
+	 * change the itemid, needs called before $this->query()
+	 *
+	 * @access  public
+	 * @param   int  $itemId to limit output to 1 item with this id
+	 * @return  $this for chainability
+	 */
 	public function itemId($itemId)
 	{
 		$this->itemId = (int)$itemId;
 		return $this;
 	}
 
+	/**
+	 * add a filter for refining results, needs called before $this->query()
+	 *
+	 * @access  public
+	 * @param   array  $filter an array with keys type (like, and, or), field (id or name), and value (value needed
+	 * from tracker file item to be returned as a result)
+	 * @return  $this for chainability
+	 */
 	public function filter($filter = array())
 	{
 		$filter = array_merge(
@@ -94,99 +199,225 @@ class Tracker_Query
 		return $this;
 	}
 
+	/**
+	 * filter results on a mysql level using 'and' type, needs called before $this->query()
+	 *
+	 * @access  public
+	 * @param   mixed  $field either id or name when $this->byName() is called
+	 * @param   string  $value
+	 * @return  $this for chainability
+	 */
 	public function filterFieldByValue($field, $value)
 	{
 		return $this->filter(array('field'=> $field, 'value'=>$value, 'type' => 'and'));
 	}
 
+	/**
+	 * filter results on a mysql level using 'like' + 'and' type, needs called before $this->query()
+	 *
+	 * @access  public
+	 * @param   mixed  $field either id or name when $this->byName() is called
+	 * @param   string  $value
+	 * @return  $this for chainability
+	 */
 	public function filterFieldByValueLike($field, $value)
 	{
 		return $this->filter(array('field'=> $field, 'value'=>$value, 'type'=> 'like'));
 	}
 
+	/**
+	 * filter results on a mysql level using 'or' type, needs called before $this->query()
+	 *
+	 * @access  public
+	 * @param   mixed  $field either id or name when $this->byName() is called
+	 * @param   string  $value
+	 * @return  $this for chainability
+	 */
 	public function filterFieldByValueOr($field, $value)
 	{
 		return $this->filter(array('field'=> $field, 'value'=>$value, 'type'=> 'or'));
 	}
 
+	/**
+	 * deprecated, filter results on a mysql level on field value, needs called before $this->query()
+	 *
+	 * @access  public
+	 * @param   array  $equals
+	 * @return  $this for chainability
+	 */
 	public function equals($equals = array())
 	{
+		trigger_error("Deprecated, use filter method instead");
+
 		$this->equals = $equals;
 		return $this;
 	}
 
+	/**
+	 * deprecated, filter results on a mysql level on field value, needs called before $this->query()
+	 *
+	 * @access  public
+	 * @param   array  $search either id or name when $this->byName() is called
+	 * @return  $this for chainability
+	 */
 	public function search($search)
 	{
+		trigger_error("Deprecated, use filter method instead");
+
 		$this->search = $search;
 		return $this;
 	}
 
+	/**
+	 * deprecated, filter results on a mysql level on field value, needs called before $this->query()
+	 *
+	 * @access  public
+	 * @param   array  $fields either id or name when $this->byName() is called
+	 * @return  $this for chainability
+	 */
 	public function fields($fields = array())
 	{
+		trigger_error("Deprecated, use filter method instead");
+
 		$this->fields = $fields;
 		return $this;
 	}
 
+	/**
+	 * Filter tracker items on status, needs called before $this->query()
+	 *
+	 * @access  public
+	 * @param   string  $status any of or any combination of the 3 characters 'opc'
+	 * @return  $this for chainability
+	 */
 	public function status($status)
 	{
 		$this->status = $status;
 		return $this;
 	}
 
+	/**
+	 * Not yet implemented
+	 *
+	 * @access  public
+	 * @param   string  $sort any of or any combination of the 3 characters 'opc'
+	 * @return  $this for chainability
+	 */
 	public function sort($sort)
 	{
 		$this->sort = $sort;
 		return $this;
 	}
 
+	/**
+	 * Change limit of items, danger with large numbers, needs called before $this->query()
+	 *
+	 * @access  public
+	 * @param   int  $limit amount of items to return, maximum
+	 * @return  $this for chainability
+	 */
 	public function limit($limit)
 	{
 		$this->limit = $limit;
 		return $this;
 	}
 
+	/**
+	 * Change offset, needs called before $this->query()
+	 *
+	 * @access  public
+	 * @param   int  $offset amount of items to offset
+	 * @return  $this for chainability
+	 */
 	public function offset($offset)
 	{
 		$this->offset = $offset;
 		return $this;
 	}
 
+	/**
+	 * Change tracker to use all, in tracker and fields, needs called before $this->query()
+	 *
+	 * @access  public
+	 * @param   bool  $byName default to true, optional
+	 * @return  $this for chainability
+	 */
 	public function byName($byName = true)
 	{
 		$this->byName = $byName;
 		return $this;
 	}
 
+	/**
+	 * order by lastModified, needs called before $this->query(), default to true, needs called before $this->query()
+	 *
+	 * @access  public
+	 * @return  $this for chainability
+	 */
 	public function lastModif ()
 	{
 		$this->lastModif = true;
 		return $this;
 	}
 
+	/**
+	 * order by created, needs called before $this->query(), default to false, needs called before $this->query()
+	 *
+	 * @access  public
+	 * @return  $this for chainability
+	 */
 	public function created()
 	{
 		$this->lastModif = false;
 		return $this;
 	}
 
+	/**
+	 * Remove details that come with each tracker item, status, itemId, trackerId, needs called before $this->query()
+	 * Default is to include details
+	 *
+	 * @access  public
+	 * @param   bool  $excludeDetails default to true, optional
+	 * @return  $this for chainability
+	 */
 	public function excludeDetails($excludeDetails = true)
 	{
 		$this->excludeDetails = $excludeDetails;
 		return $this;
 	}
 
-	public function desc($desc)
+	/**
+	 * Sort descending, default false, needs called before $this->query()
+	 *
+	 * @access  public
+	 * @param   bool  $desc default to true, optional
+	 * @return  $this for chainability
+	 */
+	public function desc($desc = true)
 	{
 		$this->desc = $desc;
 		return $this;
 	}
 
+	/**
+	 * Turn rendering for tracker item fields off, effective to make tracker interactions much MUCH faster, needs called before $this->query()
+	 *
+	 * @access  public
+	 * @param   bool  $render
+	 * @return  $this for chainability
+	 */
 	public function render($render)
 	{
 		$this->render = $render;
 		return $this;
 	}
 
+	/**
+	 * sets limit to 1 and calls $this->query()
+	 *
+	 * @access  public
+	 * @return  query
+	 */
 	public function getOne()
 	{
 		return $this
@@ -194,6 +425,12 @@ class Tracker_Query
 			->query();
 	}
 
+	/**
+	 * calls desc, sets limit to 1 and calls $this->query()
+	 *
+	 * @access  public
+	 * @return  query
+	 */
 	public function getLast()
 	{
 		return $this
@@ -202,6 +439,12 @@ class Tracker_Query
 			->query();
 	}
 
+	/**
+	 * calls getOne, and returns only the itemId
+	 *
+	 * @access  public
+	 * @return  int $key itemId
+	 */
 	public function getItemId()
 	{
 		$query = $this->getOne();
@@ -210,6 +453,14 @@ class Tracker_Query
 		return $key;
 	}
 
+	/**
+	 * turn debug on, if having problems, outputs the built mysql query and result set of the query, kills php
+	 *
+	 * @access  public
+	 * @param   bool  $debug, default = true
+	 * @param   bool  $concat, default = true
+	 * @return  $this for chainability
+	 */
 	public function debug($debug = true, $concat = true)
 	{
 		$this->debug = $debug;
@@ -217,19 +468,50 @@ class Tracker_Query
 		return $this;
 	}
 
-	private function canView()
+	/**
+	 * permission check on view
+	 *
+	 * @access  public
+	 * @return  bool view
+	 */
+	public function canView()
 	{
+		if ($this->permissionsChecks == false) return true;
+
 		return Perms::get(array( 'type' => 'tracker', 'object' => $this->trackerId() ))->view;
 	}
 
-	private function canEdit()
+	/**
+	 * permission check on edit
+	 *
+	 * @access  public
+	 * @return  bool edit
+	 */
+	public function canEdit()
 	{
+		if ($this->permissionsChecks == false) return true;
+
 		return Perms::get(array( 'type' => 'tracker', 'object' => $this->trackerId() ))->edit;
 	}
 
-	/* In the construct we putself(); the field options for "items list" (type 'l') into a table to be joined upon,
-	 * so instead of running a query for every row, we use simple joins to get the job done. We use a temporary
-	 * table so that it is removed once the connection is closed or after the page loads.
+	/**
+	 * permission check on delete
+	 *
+	 * @access  public
+	 * @return  bool delete
+	 */
+	public function canDelete()
+	{
+		if ($this->permissionsChecks == false) return true;
+
+		return Perms::get(array( 'type' => 'tracker', 'object' => $this->trackerId() ))->delete;
+	}
+
+	/**
+	 * Setup temporary table for joining trackers together
+	 *
+	 * @access  public
+	 * @param   mixed  $tracker, id or tracker name if $this->byName() called
 	 */
 	function __construct($tracker = '')
 	{
@@ -440,6 +722,12 @@ class Tracker_Query
 		}
 	}
 
+	/**
+	 * Get current tracker id
+	 *
+	 * @access  public
+	 * @return  int $trackerId
+	 */
 	public function trackerId()
 	{
 		if ($this->byName == true) {
@@ -454,13 +742,16 @@ class Tracker_Query
 
 		return $trackerId;
 	}
-	/*Queries & filters trackers from mysql, orders results in a way that is human understandable and can be manipulated easily
+
+	/**
+	 * Query, where the mysql command is built and executed, filtered, and rendered
+	 * Orders results in a way that is human understandable and can be manipulated easily
 	 * The end result is a very simple array setup as follows:
 	 * array( //tracker(s)
 	 * 		array( //items
 	 * 			[itemId] => array (
-	 * 				[fieldId] => value,
-	 * 				[fieldId] => array( //items list
+	 * 				[fieldId or FieldName] => value,
+	 * 				[fieldId or FieldName] => array( //items list
 	 * 					[0] => '',
 	 * 					[1] => ''
 	 * 				)
@@ -468,7 +759,6 @@ class Tracker_Query
 	 * 		)
 	 * )
 	 */
-
 	function query()
 	{
 		global $tikilib, $trklib;
@@ -721,6 +1011,14 @@ class Tracker_Query
 		return $newResult;
 	}
 
+	/**
+	 * renders the field value
+	 *
+	 * @access  private
+	 * @param   array  $fieldDefinition
+	 * @param   string  $value
+	 * @return  mixed $value rendered field value
+	 */
 	private function render_field_value($fieldDefinition, $value)
 	{
 		global $trklib;
@@ -743,8 +1041,12 @@ class Tracker_Query
 	}
 
 	/**
-	 * Removes fields from an array of items, can use either fields to show, or fields to remove, but not both
+	 * Removed fields from result
 	 *
+	 * @access  private
+	 * @param   array  $fieldDefinition
+	 * @param   string  $value
+	 * @return  mixed $value rendered field value
 	 */
 	static function filter_fields_from_tracker_query($tracker, $fieldIdsToRemove = array(), $fieldIdsToShow = array())
 	{
@@ -866,6 +1168,7 @@ class Tracker_Query
 	 * Does not check permissions
 	 *
 	 * @param array $data example array(fieldId=>'value', fieldId=>'value') or array('fieldName'=>'value', 'fieldName'=>'value')
+	 * @return int $itemId
 	 */
 	public function replaceItem($data = array())
 	{
@@ -885,7 +1188,14 @@ class Tracker_Query
 		return $itemId;
 	}
 
-	private function getInputsForItem($itemId = 0, $includeJs)
+	/**
+	 * Get inputs for tracker item, useful for building interface for interacting with trackers
+	 *
+	 * @param int  $itemId, 0 for new item
+	 * @param bool  $includeJs injects header js for item into field value
+	 * @return array $fields array of fields just like that found in query, but the value of each field being the input
+	 */
+	private function getInputsForItem($itemId = 0, $includeJs = true)
 	{
 		$headerlib = TikiLib::lib("header");
 		$itemId = (int)$itemId;
@@ -931,12 +1241,24 @@ class Tracker_Query
 		return $fields;
 	}
 
+	/**
+	 * Set input defaults, useful when inserting a new item and you want to set the default values
+	 *
+	 * @param array  $defaults, array of defaults, array(array(fieldKey=>defaultValue),array(fieldKey=>defaultValue))
+	 * @return $this for chainability
+	 */
 	public function inputDefaults($defaults = array())
 	{
 		$this->inputDefaults = $defaults;
 		return $this;
 	}
 
+	/**
+	 * A set of tracker items with inputs
+	 *
+	 * @param bool  $includeJs, default = false
+	 * @return $this for chainability
+	 */
 	public function queryInputs($includeJs = false)
 	{
 		if ($this->canEdit() == false) {
@@ -953,18 +1275,32 @@ class Tracker_Query
 		return $items;
 	}
 
+	/**
+	 * A single tracker item with inputs
+	 *
+	 * @param bool  $includeJs, default = false
+	 * @return $this for chainability
+	 */
 	public function queryInput($includeJs = false)
 	{
 		return $this->getInputsForItem($this->itemId, $includeJs);
 	}
 
+	/**
+	 * Delete a tracker item
+	 *
+	 * @param bool  $bulkMode, default = false
+	 * @return $this for chainability
+	 */
 	public function delete($bulkMode = false)
 	{
 		global $trklib;
 
-		$results = $this->query();
-		foreach($results as $itemId => $result) {
-			$trklib->remove_tracker_item($itemId, $bulkMode);
+		if ($this->canDelete()) {
+			$results = $this->query();
+			foreach($results as $itemId => $result) {
+				$trklib->remove_tracker_item($itemId, $bulkMode);
+			}
 		}
 	}
 }
