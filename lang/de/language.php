@@ -1472,7 +1472,7 @@ $lang = array(
 "A user deletes an article" => "Benutzer löscht einen Artikel",
 "An article is submitted, edited, deleted or commented on." => "Ein Artikel wurde eingereicht, bearbeitet, gelöscht oder kommentiert.",
 "A new blog post is published" => "Ein neuer Blog-Eintrag ist veröffentlicht",
-// "A comment in a blog page is posted or edited" => "A comment in a blog page is posted or edited",
+"A comment in a blog page is posted or edited" => "Ein Kommentar einer Blog-Seite wurde gepostet bzw. editiert",
 "A wiki page is created, deleted or edited, except for minor changes." => "Eine Wiki Seite wurde erstellt, gelöscht oder bearbeitet - mit Ausnahme von geringfügigen Änderungen.",
 "A wiki page is created, deleted or edited, even for minor changes." => "Eine Wiki Seite wurde erstellt, gelöscht oder bearbeitet (auch ggf. nur geringfügig)",
 "A comment in a wiki page is posted or edited" => "Kommentar zu einer Wikiseite wird erstellt oder geändert",
@@ -14490,4 +14490,6 @@ $lang = array(
 "TikiTest Replay" => "TikiTest Wiedergabe",
 "The page is empty" => "Die Seite ist leer",
 "You do not have permissions to view the maps" => "Keine Berechtigung zum Betrachten von Karten",
+"\t\t\t\tRemove from structure and remove page too" => "\t\t\t\tAus Struktur und die Seite selbst entfernen",
+"\t\t\tRemove only from structure" => "\t\t\tNur aus Struktur entfernen",
 );
