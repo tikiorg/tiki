@@ -341,7 +341,7 @@ JQ
 			createForwardLinkButton = $('.forwardLinkCreationButton');
 
 			if (!createForwardLinkButton.length) {
-				$('<div />')
+				createForwardLinkButton = $('<div />')
 					.appendTo('body')
 					.text(tr('Create ForwardLink'))
 					.addClass('forwardLinkCreationButton')
