@@ -616,7 +616,7 @@ class MenuLib extends TikiLib
 		$ret = array();
 		foreach ($result as $res) {
 			$res['canonic'] = $res['url'];
-			if ($menu['parse'] === 'y') {
+			if (isset($menu['parse']) && $menu['parse'] === 'y') {
 				$res['name'] = $wikilib->parse_data($res['name'], array('is_html' => ($prefs['menus_item_names_raw'] === 'y')));
 			}
 			if (preg_match('|^\(\((.+?)\)\)$|', $res['url'], $matches)) {
