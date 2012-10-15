@@ -1305,6 +1305,19 @@ class Services_Tracker_Controller
 		return array($result);
 	}
 
+	public function action_import_profile($input)
+	{
+		global $tikilib, $access;
+		$access->check_permission('tiki_p_admin');
+		$transaction = $tikilib->begin();
+		$installer = new Tiki_Profile_Installer;
+		$profile = Tiki_Profile::fromString($input->yaml->string());
+		$installer->install($profile);
+		$transaction->commit();
+
+		return array();
+	}
+
 	private function getSortFields($definition)
 	{
 		$sorts = array();
