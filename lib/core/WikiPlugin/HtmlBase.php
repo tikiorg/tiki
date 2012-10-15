@@ -22,7 +22,7 @@ abstract class WikiPlugin_HtmlBase
 	public $tags = array( 'basic' );
 	public $htmlTagType = 'div';
 	public $hasHtmlBody = true;
-	public $htmlAttributes = array();
+	public $htmlAttributes = array('id'=>'', 'class'=>'', 'style'=>'');
 	public $np = true;
 
 	static $style = array(
@@ -328,10 +328,11 @@ abstract class WikiPlugin_HtmlBase
 		$data = $this->output($data, $params, $index, $parser);
 
 		if ($this->hasHtmlBody == true) {
-			$output = '<' . $this->htmlTagType . ' ' .
-				'id="' . $this->id($index) . '" '.
-				'class="wikiplugin_' . $this->type . '" '.
-				'style="' . $style . '"';
+			$this->htmlAttributes['id'] = $this->id($index);
+			$this->htmlAttributes['class'] .= (empty($this->htmlAttributes['class']) ? '' : ' ' ) . 'wikiplugin_' . $this->type;
+			$this->htmlAttributes['style'] .= $style;
+
+			$output = '<' . $this->htmlTagType . ' ';
 		}
 
 		foreach ($this->htmlAttributes as $attribute => $value) {
