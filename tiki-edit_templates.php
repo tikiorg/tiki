@@ -5,6 +5,13 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
+$inputConfiguration = array(
+	array( 'staticKeyFilters' => array(
+	'data' => 'none',
+	)),
+);
+
+
 require_once ('tiki-setup.php');
 
 $access->check_feature('feature_view_tpl');
