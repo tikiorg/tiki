@@ -231,7 +231,7 @@
 				{$headerlib->add_jsfile('lib/jquery/brosho/jquery.brosho.js')}
 				{$headerlib->add_jsfile('lib/jquery_tiki/brosho/tiki_brosho.js')}
 
-				{preference name=feature_custom_html_head_content syntax="html"}
+				{preference name=feature_custom_html_head_content syntax="htmlmixed"}
 				{preference name=feature_endbody_code syntax="tiki"}
 				
 				{preference name="header_custom_js" syntax="javascript"}
