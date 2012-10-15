@@ -11,6 +11,7 @@ class TWVersion
 {
 	public $branch;		// Development cycle
 	public $version;		// This version
+	public $install_version;	// Installation specific version
 	private $latestMinorRelease;		// Latest release in the same major version release series
 	public $latestRelease;		// Latest release
 	private $isLatestMajorVersion; // Whether or not the current major version is the latest
@@ -30,6 +31,9 @@ class TWVersion
 		$this->version 	= '10.0pre';	// needs to have no spaces for releases
 		$this->star	= '';
 		$this->releases	= array();
+
+		// Custom installation version
+		$this->install_version = TWVersion::loadInstallVersion();
 
 		// Check for Subversion or not
 		$this->svn	= is_dir('.svn') ? 'y' : 'n';
@@ -234,5 +238,13 @@ class TWVersion
 	{
 		$this->pollVersion();
 		return $this->latestMinorRelease == $this->version || version_compare($this->version, $this->latestRelease) == 1;
+	}
+
+	static function loadInstallVersion()
+	{
+		@include_once('install_version.php');
+		if(!empty($CUSTOM_INSTALL_VERSION))
+			return $CUSTOM_INSTALL_VERSION;
+		return null;
 	}
 }
