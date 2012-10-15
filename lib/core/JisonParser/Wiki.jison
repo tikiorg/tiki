@@ -199,7 +199,7 @@ WIKI_LINK_TYPE                  (([a-z0-9-]+))
 		//php   if (!empty($this->pluginStack)) {
 		//php 	    if (
 		//php 		    count($this->pluginStack) > 0 &&
-		//php 		    $this->substring($yytext, 1, -1) == $this->pluginStack[count($this->pluginStack) - 1]['name']
+		//php 		    substr($yytext, 1, -1) == $this->pluginStack[count($this->pluginStack) - 1]['name']
 		//php 	    ) {
 		//php 		    if (count($this->pluginStack) == 1) {
 		//php 			    $yytext = $this->pluginStack[count($this->pluginStack) - 1];

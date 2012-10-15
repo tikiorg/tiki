@@ -763,7 +763,7 @@ case 15:
 		  if (!empty($this->pluginStack)) {
 			    if (
 				    count($this->pluginStack) > 0 &&
-				    $this->substring($yy_->yytext, 1, -1) == $this->pluginStack[count($this->pluginStack) - 1]['name']
+				    substr($yy_->yytext, 1, -1) == $this->pluginStack[count($this->pluginStack) - 1]['name']
 			    ) {
 				    if (count($this->pluginStack) == 1) {
 					    $yy_->yytext = $this->pluginStack[count($this->pluginStack) - 1];

@@ -5,13 +5,25 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
+/**
+ * Wiki Handler for the JisonParser_Wiki parser.
+ *
+ * @category    JisonParser_Wiki_Handler
+ * @author      Robert Plummer <robert@tiki.org>
+ * @version     CVS: $Id$
+ */
+
 class JisonParser_Wiki_Handler extends JisonParser_Wiki
 {
 	/* parser tracking */
 	private $parsing = false;
 	private static $spareParsers = array();
-	public $Parser;
 	public $parseDepth = 0;
+
+	/* the root parser, where many variables need to be tracked from, maintained on any hierarchy of children parsers */
+	public $Parser;
+
+	/* parser debug */
 	public $parserDebug = false;
 	public $lexerDebug = false;
 
@@ -23,8 +35,6 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	public static $pluginIndexes = array();
 	public $pluginNegotiator;
 
-	public $headerStack = false;
-
 	/* np tracking */
 	public $npStack = false; //There can only be 1 active np stack
 
@@ -34,11 +44,14 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	/* link tracking*/
 	public $linkStack = false; //There can only be 1 active link stack
 
-	public $skipBr = false; //used in block level items, should be set to true.  The next break sets it back to false;
+	/* used in block level items, should be set to true if the next line needs skipped of a <br />
+	The next break sets it back to false; */
+	public $skipBr = false;
 	public $tableStack = array();
 
 	/* header tracking */
 	public $header;
+	public $headerStack = false;
 
 	/* list tracking and parser */
 	public $list;
@@ -93,6 +106,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	public $page;
 
 	public $isHtmlPurifying = false;
+	private $pcreRecursionLimit;
 
 	public $option = array();
 	public $optionDefaults = array(
@@ -118,6 +132,12 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		'parseSmileys'=> true
 	);
 
+	/**
+	 * Change options
+	 *
+	 * @access  public
+	 * @param   array  $option an array of options, key being the option name and value being the value to be set
+	 */
 	public function setOption($option = array())
 	{
 		global $parserlib;
@@ -134,6 +154,13 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		}
 	}
 
+	/**
+	 * Access single option
+	 *
+	 * @access  public
+	 * @param   string  $name name/key of option
+	 * @return  mixed   value of option or false if not set
+	 */
 	public function getOption($name = '')
 	{
 		if (isset($this->Parser->option[$name])) {
@@ -143,6 +170,11 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		}
 	}
 
+	/**
+	 * Reset all options to default value
+	 *
+	 * @access  public
+	 */
 	public function resetOption()
 	{
 		global $prefs, $parserlib;
@@ -156,7 +188,13 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		}
 	}
 
-	function __construct(JisonParser_Wiki_Handler &$Parser = null)
+	/**
+	 * construct
+	 *
+	 * @access  public
+	 * @param   JisonParser_Wiki_Handler  $Parser Filename to be used
+	 */
+	public function __construct(JisonParser_Wiki_Handler &$Parser = null)
 	{
 		global $user;
 
@@ -231,6 +269,15 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		die;
 	}
 */
+
+	/**
+	 * Where a parse generally starts.  Can be self-called, as this is detected, and if nested, a new parser is instantiated
+	 *
+	 * @access  private
+	 * @param   string  $input Wiki syntax to be parsed
+	 * @return  string  $output Parsed wiki syntax
+	 */
+
 	function parse($input)
 	{
 		if (empty($input)) return $input;
@@ -256,7 +303,14 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		return $output;
 	}
 
-	function parsePlugin($input)
+	/**
+	 * Parse a plugin's body.  public so that negotiator can use.  option 'noparseplugins' makes this function return the body without parse.
+	 *
+	 * @access  public
+	 * @param   string  $input Plugin body
+	 * @return  string  $output Parsed plugin body or $input if not parsed
+	 */
+	public function parsePlugin($input)
 	{
 		if (empty($input)) return "";
 
@@ -268,29 +322,36 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 				$this->setOption(array('is_html' => true));
 			}
 
-			$result = $this->parse($input);
+			$output = $this->parse($input);
 
 			if ($is_html == false) {
 				$this->setOption(array('is_html' => $is_html));
 			}
 
-			return $result;
+			return $output;
 		} else {
 			return $input;
 		}
 	}
 
-	function preParse(&$input)
-	{
-		/*
-		RP - php default is 100,000 which is just too much for this type of parser.  The reason for this code is the use of
-		preg_* functions using pcre library.  Some of the regex needed is just too much for php to handle, so by
-		limiting this for regex we speed up the parser and allow it to safely lex/parse a string
-		more here: http://stackoverflow.com/questions/7620910/regexp-in-preg-match-function-returning-browser-error
-		*/
-		ini_set("pcre.recursion_limit", "524");
 
+	/**
+	 * Event just before JisonParser_Wiki->parse(), used to ready parser, ensuring defaults needed for parsing are set.
+	 * <p>
+	 * pcre.recursion_limit is temporarily changed here. php default is 100,000 which is just too much for this type of
+	 * parser. The reason for this code is the use of preg_* functions using pcre library.  Some of the regex needed is
+	 * just too much for php to handle, so by limiting this for regex we speed up the parser and allow it to safely
+	 * lex/parse a string more here: http://stackoverflow.com/questions/7620910/regexp-in-preg-match-function-returning-browser-error
+	 *
+	 * @access  private
+	 * @param   string  &$input input that will be parsed
+	 */
+	private function preParse(&$input)
+	{
 		if ($this->Parser->parseDepth == 0) {
+			$this->pcreRecursionLimit = ini_get("pcre.recursion_limit");
+			ini_set("pcre.recursion_limit", "524");
+
 			$this->Parser->list->reset();
 			$this->Parser->htmlCharacter->parse($input);
 		}
@@ -309,6 +370,14 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		$input = $this->protectSpecialChars($input);
 	}
 
+	/**
+	 * Event just after JisonParser_Wiki->parse(), used to ready parser, ensuring defaults needed for parsing are set.
+	 * <p>
+	 * pcre.recursion_limit is reset here if parser depth is 0 (ie, no nested parsing)
+	 *
+	 * @access  private
+	 * @param   string  &$output parsed output of wiki syntax
+	 */
 	function postParse(&$output)
 	{
 		//remove comment artifacts
@@ -344,9 +413,20 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		$this->Parser->hotWords->parse($output);
 
 		$this->Parser->dynamicVar->makeForum($output);
+
+		if ($this->Parser->parseDepth == 0) {
+			ini_set("pcre.recursion_limit", $this->pcreRecursionLimit);
+		}
 	}
 
-	// state & plugin handlers
+	/**
+	 * Handles plugins directly from the wiki parser.  A plugin can be on a different level of the current parser, and
+	 * if so, the execution is delayed until the parser reaches that level.
+	 *
+	 * @access  private
+	 * @param   array  &$pluginDetails plugins details in an array
+	 * @return  string  either returns $key or block from execution message
+	 */
 	function plugin(&$pluginDetails)
 	{
 		$pluginDetails['body'] = $this->unprotectSpecialChars($pluginDetails['body'], true);
@@ -379,6 +459,14 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		}
 	}
 
+	/**
+	 * Increments the plugin index, but on a plugin type by type basis, for example, html1, html2, div1, div2.  indexes
+	 * are static, so that all index are unique
+	 *
+	 * @access  private
+	 * @param   string  $name plugin name
+	 * @return  string  $index
+	 */
 	private function incrementPluginIndex($name)
 	{
 		$name = strtolower($name);
@@ -390,7 +478,16 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		return self::$pluginIndexes[$name];
 	}
 
-	function pluginKey($name)
+	/**
+	 * Key of the plugin, an md5 signature of  ('§' . $name . $index . '§').  This technique is used so that line breaks
+	 * can be inserted without distorting the content found in the plugin, and to limit what is parser, thus speeding
+	 * the parser up, less syntax to analyse
+	 *
+	 * @access  private
+	 * @param   string  $name plugin name
+	 * @return  string  $key
+	 */
+	private function pluginKey($name)
 	{
 		return '§' . md5('plugin:' . $name . '_' . $this->incrementPluginIndex($name)) . '§';
 	}
@@ -410,7 +507,14 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		);
 	}
 
-	function stackPlugin($yytext)
+	/**
+	 * Stacks plugins for execution, since plugins can be called within each other.  Public because called directly by
+	 * the lexer of the wiki parser
+	 *
+	 * @access  public
+	 * @param   string  $yytext The analysed text from the wiki parser
+	 */
+	public function stackPlugin($yytext)
 	{
 		$pluginName = $this->match('/^\{([A-Z]+)/', $yytext);
 		$pluginArgs = rtrim(str_replace('{' . $pluginName . '(', '', $yytext), ')}');
@@ -426,17 +530,34 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		$this->pluginStackCount++;
 	}
 
-	function isContent()
+	/**
+	 * Detects if we are in a state that we can call the lexed grammer 'content'.  Since the execution technique from
+	 * the parser is inside-out, this helps us reverse the execution from outside-in in some cases.
+	 *
+	 * @access  public
+	 */
+	public function isContent()
 	{
 		return ($this->pluginStackCount > 0 || $this->npStack == true || $this->ppStack == true ? true : null);
 	}
 
-	static function deleteEntities(&$data)
+	/**
+	 * Removed any entity (plugin, list, header) from an input
+	 *
+	 * @param   string  $input The analysed text from the wiki parser
+	 */
+	static function deleteEntities(&$input)
 	{
-		$data = preg_replace('/§[a-z0-9]{32}§/', '', $data);
+		$input = preg_replace('/§[a-z0-9]{32}§/', '', $input);
 	}
 
-	function restorePluginEntities(&$input, $keep = false)
+	/**
+	 * restores the plugins back into the string being parsed.
+	 *
+	 * @access  private
+	 * @param   string  $output Parsed syntax
+	 */
+	private function restorePluginEntities(&$output)
 	{
 		//use of array_reverse, jison is a reverse bottom-up parser, if it doesn't reverse jison doesn't restore the plugins in the right order, leaving the some nested keys as a result
 		array_reverse($this->pluginEntries);
@@ -446,15 +567,11 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		while (!empty($this->pluginEntries) && $iterations <= $limit) {
 			$iterations++;
 			foreach ($this->pluginEntries as $key => $entity) {
-				if (strstr($input, $key)) {
+				if (strstr($output, $key)) {
 					if ($this->getOption('stripplugins') == true) {
-						$input = str_replace($key, '', $input);
+						$output = str_replace($key, '', $output);
 					} else {
-						$input = str_replace($key, $entity, $input);
-					}
-
-					if (!$keep) {
-						unset($this->pluginEntries[$key]);
+						$output = str_replace($key, $entity, $output);
 					}
 				}
 			}
@@ -465,44 +582,65 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		}
 	}
 
-	// This function handles the protection of html entities so that they are not mangled when
-	// parse_htmlchar runs, and as well so they can be properly seen, be it html or non-html
-	function protectSpecialChars($data)
+	/**
+	 * used to protect special characters temporarily, so that they cannot be decoded or encoded.  Later we can
+	 * unprotect them to what they were or to an alternate character
+	 *
+	 * @access  public
+	 * @param   string  $input unparsed syntax
+	 * @return  string  $input protected
+	 */
+	public function protectSpecialChars($input)
 	{
 		if (
 			$this->isHtmlPurifying == true ||
 			$this->getOption('is_html') == false
 		) {
 			foreach ($this->specialChars as $key => $specialChar) {
-				$data = str_replace($specialChar['html'], $key, $data);
+				$input = str_replace($specialChar['html'], $key, $input);
 			}
 		}
 
-		return $data;
+		return $input;
 	}
 
-	// This function removed the protection of html entities so that they are rendered as expected by the viewer
-	function unprotectSpecialChars($data, $is_html = false)
+	/**
+	 * used to unprotect special characters possibly with an alternate character
+	 *
+	 * @access  public
+	 * @param   string  $input unparsed syntax
+	 * @param   bool  $is_html true for html context, false for non-html context
+	 * @return  string  $input protected
+	 */
+	public function unprotectSpecialChars($input, $is_html = false)
 	{
 		if (
 			$is_html == true ||
 			$this->getOption('is_html') == true
 		) {
 			foreach ($this->specialChars as $key => $specialChar) {
-				$data = str_replace($key, $specialChar['html'], $data);
+				$input = str_replace($key, $specialChar['html'], $input);
 			}
 		} else {
 			foreach ($this->specialChars as $key => $specialChar) {
-				$data = str_replace($key, $specialChar['nonHtml'], $data);
+				$input = str_replace($key, $specialChar['nonHtml'], $input);
 			}
 		}
 
-		return $data;
+		return $input;
 	}
+
 
 	//end state handlers
 	//Wiki Syntax Objects Parsing Start
-	function np($content)
+	/**
+	 * syntax handler: noparse, ~np~$content~/np~
+	 *
+	 * @access  public
+	 * @param   $content parsed string found inside detected syntax
+	 * @return  string  $content desired output from syntax
+	 */
+	public function np($content)
 	{
 		if ( $this->getOption('parseNps') == true) {
 			$content = $this->unprotectSpecialChars($content);
@@ -511,11 +649,27 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		return $content;
 	}
 
+	/**
+	 * syntax handler: pre, ~pp~$content~/pp~
+	 *
+	 * @access  public
+	 * @param   $content parsed string found inside detected syntax
+	 * @return  string  $content desired output from syntax
+	 */
 	function pp($content)
 	{
 		return "<pre>" . $content . "</pre>";
 	}
 
+	/**
+	 * syntax handler: generic html
+	 * <p>
+	 * Used in detecting if we need a break, and line number in some cases
+	 *
+	 * @access  public
+	 * @param   $content parsed string found inside detected syntax
+	 * @return  string  $content desired output from syntax
+	 */
 	function htmlTag($content)
 	{
 		$parts = preg_split("/[ >]/", substr($this->unprotectSpecialChars($content, true), 1)); //<tag> || <tag name="">
@@ -571,6 +725,13 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		return $content;
 	}
 
+	/**
+	 * syntax handler: double dynamic variable, %%$content%%
+	 *
+	 * @access  public
+	 * @param   $content parsed string found inside detected syntax
+	 * @return  string  $content desired output from syntax
+	 */
 	function doubleDynamicVar($content)
 	{
 		global $prefs;
@@ -583,6 +744,13 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		return $this->Parser->dynamicVar->ui(substr($content, 2, 2),  $this->getOption('language'));
 	}
 
+	/**
+	 * syntax handler: single dynamic variable, %$content%
+	 *
+	 * @access  public
+	 * @param   $content parsed string found inside detected syntax
+	 * @return  string  $content desired output from syntax
+	 */
 	function singleDynamicVar($content)
 	{
 		global $prefs;
@@ -595,6 +763,13 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		return $this->Parser->dynamicVar->ui(substr($content, 1, 1),  $this->getOption('language'));
 	}
 
+	/**
+	 * syntax handler: argument variable, {{$content}}
+	 *
+	 * @access  public
+	 * @param   $content parsed string found inside detected syntax
+	 * @return  string  $content desired output from syntax
+	 */
 	function argumentVar($content)
 	{
 		$content = substr($content, 2, -2); //{{page}}
@@ -629,26 +804,61 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		return $value;
 	}
 
+	/**
+	 * syntax handler: bold/strong, __$content__
+	 *
+	 * @access  public
+	 * @param   $content parsed string found inside detected syntax
+	 * @return  string  $content desired output from syntax
+	 */
 	function bold($content) //__content__
 	{
 		return '<strong>' . $content . '</strong>';
 	}
 
+	/**
+	 * syntax handler: simple box, ^$content^
+	 *
+	 * @access  public
+	 * @param   $content parsed string found inside detected syntax
+	 * @return  string  $content desired output from syntax
+	 */
 	function box($content) //^content^
 	{
 		return '<div class="simplebox">' . $content . '</div>';
 	}
 
+	/**
+	 * syntax handler: center, ::$content::
+	 *
+	 * @access  public
+	 * @param   $content parsed string found inside detected syntax
+	 * @return  string  $content desired output from syntax
+	 */
 	function center($content) //::content::
 	{
 		return '<div style="text-align: center;">' . $content . '</div>';
 	}
 
+	/**
+	 * syntax handler: code, -+$content+-
+	 *
+	 * @access  public
+	 * @param   $content parsed string found inside detected syntax
+	 * @return  string  $content desired output from syntax
+	 */
 	function code($content)
 	{
 		return "<code>" . $content . "</code>";
 	}
 
+	/**
+	 * syntax handler: text color, ~~$color:$content~~
+	 *
+	 * @access  public
+	 * @param   $content parsed string found inside detected syntax
+	 * @return  string  $content desired output from syntax
+	 */
 	function color($content)
 	{
 		$text = explode(':', $content);
@@ -658,23 +868,53 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		return '<span style="color: ' . $color . ';">' . $content . '</span>';
 	}
 
+	/**
+	 * syntax handler: italics/emphasis, ''$content''
+	 *
+	 * @access  public
+	 * @param   $content parsed string found inside detected syntax
+	 * @return  string  $content desired output from syntax
+	 */
 	function italics($content) //''content''
 	{
 		return '<em>' . $content . '</em>';
 	}
 
+	/**
+	 * syntax handler: left to right, {l2r}$content\n
+	 *
+	 * @access  public
+	 * @param   $content parsed string found inside detected syntax
+	 * @return  string  $content desired output from syntax
+	 */
 	function l2r($content)
 	{
 		$content = substr($content, 5);
 		return "<div dir='ltr'>" . $content . "</div>";
 	}
 
+	/**
+	 * syntax handler: right to left, {r2l}$content\n
+	 *
+	 * @access  public
+	 * @param   $content parsed string found inside detected syntax
+	 * @return  string  $content desired output from syntax
+	 */
 	function r2l($content)
 	{
 		$content = substr($content, 5);
 		return "<div dir='rtl'>" . $content . "</div>";
 	}
 
+	/**
+	 * syntax handler: header, !$content\n
+	 * <p>
+	 * Uses $this->Parser->header as a processor.  Is called from $this->block().
+	 *
+	 * @access  public
+	 * @param   $content parsed string found inside detected syntax
+	 * @return  string  $content desired output from syntax
+	 */
 	function header($content) //!content
 	{
 		global $prefs;
@@ -738,6 +978,17 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		return $result;
 	}
 
+	/**
+	 * syntax handler: list, *$content\n
+	 * <p>
+	 * List types: * (unordered), # (ordered), + (line break), - (expandable), ; (definition list)
+	 * <p>
+	 * Uses $this->Parser->list as a processor. Is called from $this->block().
+	 *
+	 * @access  public
+	 * @param   $content parsed string found inside detected syntax
+	 * @return  string  $content desired output from syntax
+	 */
 	function stackList($content)
 	{
 		$level = 0;
@@ -781,6 +1032,12 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		return '';
 	}
 
+	/**
+	 * syntax handler: horizontal row, ---
+	 *
+	 * @access  public
+	 * @return  string  html hr element
+	 */
 	function hr() //---
 	{
 		$this->line++;
@@ -788,6 +1045,16 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		return '<hr />';
 	}
 
+	/**
+	 * syntax handler: new line, \n
+	 * <p>
+	 * Detects if a line break is needed and returns it. If $this->skipBr is set to true, skips output of <br /> and
+	 * sets it back to false for the next line to process
+	 *
+	 * @access  public
+	 * @param   $ch line line character
+	 * @return  string  $result of line process
+	 */
 	function line($ch)
 	{
 		$this->line++;
@@ -809,12 +1076,27 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		return $result;
 	}
 
+	/**
+	 * syntax handler: forced line end, %%%
+	 * <p>
+	 * Note: does not affect line number
+	 *
+	 * @access  public
+	 * @return  string  html break, <br />
+	 */
 	function forcedLineEnd()
 	{
 		return '<br />';
 	}
 
-	function unlink($content) //[content|content]
+	/**
+	 * syntax handler: unlink, [[$content|$content]]
+	 *
+	 * @access  public
+	 * @param   $content parsed string found inside detected syntax
+	 * @return  string  $content desired output from syntax
+	 */
+	function unlink($content) //[[content|content]
 	{
 		$contentLength = strlen($content);
 
@@ -836,6 +1118,13 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		return $content;
 	}
 
+	/**
+	 * syntax handler: unlink, [$content|$content]
+	 *
+	 * @access  public
+	 * @param   $content parsed string found inside detected syntax
+	 * @return  string  $content desired output from syntax
+	 */
 	function link($content) //[content|content]
 	{
 		global $tikilib, $prefs;
@@ -879,22 +1168,49 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 			(!empty($rel) ? '" rel="' . $rel : '') . '">' . $text . '</a>' . $ext_icon . $cached;
 	}
 
+	/**
+	 * syntax handler: smile, :)
+	 *
+	 * @access  public
+	 * @param   $content parsed string found inside detected syntax
+	 * @return  string  $content desired output from syntax
+	 */
 	function smile($content)
 	{
 		//this needs more tlc too
 		return '<img src="img/smiles/icon_' . $content . '.gif" alt="' . $content . '" />';
 	}
 
+	/**
+	 * syntax handler: strike, --$content--
+	 *
+	 * @access  public
+	 * @param   $content parsed string found inside detected syntax
+	 * @return  string  $content desired output from syntax
+	 */
 	function strike($content) //--content--
 	{
 		return '<strike>' . $content . '</strike>';
 	}
 
+	/**
+	 * syntax handler: double dash, --
+	 *
+	 * @access  public
+	 * @return  dash characters
+	 */
 	function doubleDash()
 	{
 		return ' &mdash; ';
 	}
 
+	/**
+	 * syntax handler: table, ||$content|$content\n$content|$content||
+	 *
+	 * @access  public
+	 * @param   $content parsed string found inside detected syntax
+	 * @return  string  $content desired output from syntax
+	 */
 	function tableParser($content) /*|| | \n | ||*/
 	{
 		$tableContents = '';
@@ -913,16 +1229,37 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		return '<table class="wikitable">' . $tableContents . '</table>';
 	}
 
-	function table_tr($content)
+	/**
+	 * syntax handler table helper for tr
+	 *
+	 * @access  public
+	 * @param   $content parsed string found inside detected syntax
+	 * @return  string  $content desired output from syntax
+	 */
+	private function table_tr($content)
 	{
 		return '<tr>' . $content . '</tr>';
 	}
 
-	function table_td($content)
+	/**
+	 * syntax handler table helper for td
+	 *
+	 * @access  public
+	 * @param   $content parsed string found inside detected syntax
+	 * @return  string  $content desired output from syntax
+	 */
+	private function table_td($content)
 	{
 		return '<td class="wikicell">' . $content . '</td>';
 	}
 
+	/**
+	 * syntax handler: titlebar, -=$content=-
+	 *
+	 * @access  public
+	 * @param   $content parsed string found inside detected syntax
+	 * @return  string  $content desired output from syntax
+	 */
 	function titlebar($content) //-=content=-
 	{
 		$this->skipBr = true;
@@ -930,11 +1267,28 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		return '<div class="titlebar">' . $content . '</div>';
 	}
 
+	/**
+	 * syntax handler: underscore, ===$content===
+	 *
+	 * @access  public
+	 * @param   $content parsed string found inside detected syntax
+	 * @return  string  $content desired output from syntax
+	 */
 	function underscore($content) //===content===
 	{
 		return '<u>' . $content . '</u>';
 	}
 
+	/**
+	 * syntax handler: wiki link, (($content))
+	 * <p>
+	 * Alternate syntax: (($href|$text))
+	 * Alternate syntax: ($type($href|$text))
+	 *
+	 * @access  public
+	 * @param   $content parsed string found inside detected syntax
+	 * @return  string  $content desired output from syntax
+	 */
 	function wikilink($type, $content) //((content|content))
 	{
 		$wikilink = explode('|', $content);
@@ -951,6 +1305,13 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		return '<a class="wiki" title="' . $text . '" href="tiki-index.php?page=' . $href . '">' . $text . '</a>';
 	}
 
+	/**
+	 * syntax handler: tiki comment, ~tc~$content~/tc~
+	 *
+	 * @access  public
+	 * @param   $content parsed string found inside detected syntax
+	 * @return  string  $content desired output from syntax
+	 */
 	function comment($content)
 	{
 		return '<!---->';
@@ -965,6 +1326,13 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		"l2r" => array('{l2r}'),
 	);
 
+	/**
+	 * syntax handler: block, \n$content\n
+	 *
+	 * @access  public
+	 * @param   $content parsed string found inside detected syntax
+	 * @return  string  $content desired output from syntax
+	 */
 	function block($content)
 	{
 		$this->line++;
@@ -983,17 +1351,27 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		return $content;
 	}
 
-	function beginsWith($string, $search)
+	/**
+	 * helper function to detect what is at the beginning of a string
+	 *
+	 * @access  public
+	 * @param   $haystack
+	 * @param   $needle
+	 * @return  bool  true if found at beginning, false if not
+	 */
+	function beginsWith($haystack, $needle)
 	{
-		return (strncmp($string, $search, strlen($search)) === 0);
+		return (strncmp($haystack, $needle, strlen($needle)) === 0);
 	}
 
-
-	function substring($val, $left, $right)
-	{
-		 return substr($val, $left, $right);
-	}
-
+	/**
+	 * helper function to detect a match in string
+	 *
+	 * @access  public
+	 * @param   $pattern
+	 * @param   $subject
+	 * @return  bool  true if found at beginning, false if not
+	 */
 	function match($pattern, $subject)
 	{
 		preg_match($pattern, $subject, $match);
