@@ -85,8 +85,8 @@ Class Feed_TextLink extends Feed_Abstract
 
 		if (count($result) > 0) {
 			foreach(Feed_ForwardLink_Send::sendAll() as $text => $received) {
-				$received = json_decode($received);
-				if ($received->feed == 'success') {
+				$receivedJSON = json_decode($received);
+				if (isset($receivedJSON->feed) && $receivedJSON->feed == 'success') {
 					Tracker_Query::tracker('Wiki Attributes')
 						->byName()
 						->render(false)
