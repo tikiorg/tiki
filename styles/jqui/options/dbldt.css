@@ -1,0 +1,446 @@
+/* $Id$
+	Dbldt (dbldt.css) theme option for the jQui theme, for Tiki Wiki CMS/Groupware.
+	Visit http://themes.tiki.org for more information.
+*/
+
+/***** XHTML Elements (body tag here,
+			others follow Layout) *****/
+body {
+	font-family: sans-serif;
+	font-size: 120%;
+	line-height: normal;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+p {
+	font-size: 1.1em;
+}
+
+ /***** Layout (overrides layout.css;
+		also styling of page layout divs)  *****/
+		
+/* Enable header and footer content to widen when middle has wide content. */ 
+body.fixed_width .fixedwidth .fixedwidth {
+	padding: 0;
+}
+	 	 	 	
+.header_container,
+#col1 {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.middle_outer {
+	background-color: #ebebeb;
+	border: 1px solid #ebebeb;
+}
+
+#wrapper {
+	background-color: #ffffff;
+}
+
+#footer {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#footer .box-rsslist {
+	background-color: #EBEBEB;
+}
+#footer .box-poweredby {
+	background-color: #EBEBEB;
+}
+
+/***** XHTML Elements (other than body tag) ******/
+a,
+a:visited {
+	color: #6d9e26;
+	text-decoration: none;
+}
+
+a:active,
+a:hover {
+	color: #8bbb47;
+	text-decoration:underline;
+}
+
+h1, h2, h3, h4, h5 {
+	line-height: 1.1;
+}
+
+h1 {
+	font-size: 1.6em;
+	background: url(dbldt/h_arrow.png) no-repeat -0px 8px;
+	padding-left: 16px;
+}
+	
+h2 {
+	border-radius: 4px !important;
+	background-color: #f2f2f2 !important;
+	padding: .4em;
+	font-size: 1.3em !important;
+	background: url(dbldt/h_arrow.png) no-repeat -0px 12px;
+	background-position: 9px;
+	padding-left: 24px;
+}
+
+h3 {
+	font-size: 140%;
+}
+	
+h4 {
+	font-size: 120%;
+}
+
+h5 {
+	font-size: 110%;
+}
+
+#tiki-top,
+.box,
+.cbox,
+h3.box-title,
+.simplebox,
+.cbox-title,
+.post .postbody,
+body.tiki_admin .simplebox,
+a.admbox,
+a.admbox.off,
+.forum_actions {
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+}
+
+.footerbgtrap,
+.rbox-title,
+.tabs,
+.tabmark,
+.postbody-title {
+	border-top-left-radius: 4px;
+	border-top-right-radius: 4px;
+	-moz-border-radius-topleft: 4px;
+	-moz-border-radius-topright: 4px;
+	-webkit-border-top-left-radius: 4px;
+	-webkit-border-top-right-radius: 4px;
+}
+
+/***** Site Header & Identity *****/
+.header_outer {
+	left: 0;
+	background-color: #f5f5f5;
+	text-align: center;
+	margin: auto;
+}
+
+.header_container {
+	width: 98%;
+}
+
+
+#topbar_modules {
+	min-height: 35px;
+} 
+
+#topbar_modules .box-search {
+	position: absolute;
+	top: 0;
+	right: 100px;
+	padding-left: 10px;
+	padding-top: 0;
+	height: 36px;
+}
+
+#topbar_modules .box-search div {
+	background: url(dbldt/magnify.png) no-repeat;
+	margin-top: 5px;
+	width: 125px;
+}
+
+#topbar_modules .search_mod_magnifier {
+	opacity:0.01;
+	cursor: pointer;
+}
+
+#topbar_modules .search_mod_buttons {
+	display: none !important;
+}
+
+#topbar_modules .box-search input:first-of-type {
+	border: none;
+	padding-left: 2px;
+	padding-top: 0;
+	height: 20px;
+	width: 95px;
+	position: relative;
+	right: -2px;
+	top: -2px;
+	background-color: transparent !important;
+}
+
+#topbar_modules .box-search .wikiaction {
+	opacity:0.01;
+	font-size: 10px;
+	width: 25px;
+}
+
+.box-search .wikiaction {
+	display: none;
+}
+.box-search .button_default {
+	display: inline;
+}
+
+html > body #col3[id] {
+	position: absolute;
+	right: 0;
+	padding-top: 10px;
+	float: right;
+    margin-right: 0;
+}
+/****** Menus, Links ******/
+/** CSS (suckerfish) menus **/
+
+/* default and topbar dropdown typography (colors) and padding */
+.cssmenu_vert {
+	padding-right: 0 !important;
+}
+.cssmenu_vert li {
+	margin-left: 0;
+}
+
+#topbar_modules {
+	padding-left: 20px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#topbar_modules > div {
+	border-left: solid 1px #d8d8d8 !important;
+	line-height: 30px;
+}
+
+.cssmenu_vert .menuLevel0 {
+	border-top: solid 1px #d8d8d8 !important;
+	border-width: 1px;
+}
+
+.cssmenubox .box-data {
+	padding: 0;
+}
+
+#topbar_modules .module.box-menu li a {
+	height: 1.9em;
+	font-size: 1.15em;
+	line-height: 2em;
+	font-weight: bold;
+	background-color: #ebebeb;
+	color: #101010;
+	border-right: solid 1px #d8d8d8;
+	text-transform:uppercase;
+}
+
+#topbar_modules .module.box-login_box {
+	display: block;
+	width: 90px;
+	clear: none;
+	position: absolute;
+	top: 0;
+	right: 0;
+	height: 37px;
+	font-size: 1.1em;
+}
+
+#topbar_modules .module.box-login_box * {
+	color: #000000;
+	font-weight: bold !important;
+	text-transform: uppercase;
+}
+
+.siteloginbar_poppedup {
+	display: none !important;
+}
+
+#topbar_modules .module.box-login_box:hover {
+	background-color: #6d9e26;
+	color: #FFFFFF !important;
+	border-left: solid 1px #6d9e26;
+}
+
+#topbar_modules .module.box-login_box > div {
+	height: 38px;
+}
+
+#topbar_modules .module.box-login_box a {
+	background-image: none;
+	background-color: transparent;
+}
+
+#logout_link_1, #logout_link_1 a {
+	width: 50px !important;
+}
+
+#topbar_modules .module.box-login_box .login_link {
+	padding-top: 10px;
+}
+
+#topbar_modules .module.box-login_box .login_link:hover {
+	color: #FFFFFF;
+}
+
+#topbar_modules .module.box-login_box .login_link .sf-sub-indicator {
+	display: none;
+}
+
+#topbar_modules .module.box-login_box form {
+	padding-top: 2px;
+}
+
+#topbar_modules .module.box-menu li a:hover, #left_modules .module.box-menu li a:hover {
+	background-color: #6d9e26;
+	color: #ffffff;
+	border-right: solid 1px #6d9e26;
+}
+
+#role_main .module {
+	max-width: 250px;
+}
+
+#role_main {
+	min-height: 500px;
+}
+
+
+#col2 .cssmenu_vert,
+#col2 .cssmenu_vert li {
+	width: 100%;
+}
+
+/* offset from left column (matches above) */
+#col2 .cssmenu_vert li:hover ul,
+#col2 .cssmenu_vert li.sfHover ul {
+	left: 100%;
+}
+
+/* return ul ul ... to default */
+#col2 .cssmenu_vert li:hover ul,
+#col2 .cssmenu_vert li.sfHover ul,
+#col2 .cssmenu_vert li:hover ul li,
+#col2 .cssmenu_vert li.sfHover ul li {
+	width: 10em;
+}
+
+/* return ul ul ... to default */
+#col2 .cssmenu_vert li li:hover ul,
+#col2 .cssmenu_vert li li.sfHover ul {
+	left: 10em;
+}
+
+a .sf-sub-indicator {
+	top: 14px;
+}
+
+.cssmenu_vert li a .sf-sub-indicator {
+	top: 9px !important;
+}
+
+#tiki-top .cssmenu_horiz li a .sf-sub-indicator {top: 16px}
+
+#tiki-top .cssmenu_horiz li ul li  a .sf-sub-indicator {
+	top: 7px;
+}
+
+li.menuOption {
+	border-width: 0 !important;
+}
+
+.menuText {
+	height: 20px;
+}
+.secondary_site_menu a .sf-sub-indicator {
+	top: 8px;
+}
+
+/***** Boxes *****/
+/** Modules **/
+.box,
+.cbox {
+	border-radius: 0 !important;
+	padding: .2em;
+	margin: 0 .5em 10px;
+	background: #f2f2f2;
+	color: #363636;
+	border: none;
+}
+
+#col2 .box,
+#col3 .box {
+	margin-bottom: 10px;
+}
+
+h3.box-title,
+.cbox-title {
+	padding: .5em;
+	position: relative;
+	border: none;
+	background: #f2f2f2;
+	color: #363636;
+	font-weight: bold;
+	margin: 0;
+	font-size: 1.4em;
+}
+
+.box-data ul, .box-data ol {
+	overflow: visible !important;
+}
+
+
+
+/* menu in a module, use module bg colour */
+.box-menu .cssmenu_vert a {
+	background-color: inherit;
+}
+
+
+
+/***** Tables, Tabs *****/
+/** Tables **/
+
+.normal {
+	border: 1px solid #aaa;
+}
+
+table.wikitable {
+	border-width: thin;
+	border-spacing: 0;
+	border-style: solid;
+	border-color: #f2f2f2;
+	border-collapse: collapse;
+	background-color: white;
+}
+table.wikitable th {
+	border-width: 1px;
+	padding: 1px;
+	border-style: solid;
+	border-color: #f2f2f2;
+	background-color: white;
+	font-weight: bold;
+}
+table.wikitable td {
+	border-width: 1px;
+	padding: 1px;
+	border-style: solid;
+	border-color: #f2f2f2;
+	background-color: white;
+}
+
+
+.box-login_box .tabmark {
+	background-image: none;
+	background-color: transparent;
+	border-width: 0;
+}
+
+
+/* End of File */
