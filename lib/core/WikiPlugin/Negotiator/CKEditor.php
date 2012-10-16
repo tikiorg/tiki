@@ -5,7 +5,7 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-class WikiPlugin_Negotiator_CKEditor extends WikiPlugin_Negotiator_Parser
+class WikiPlugin_Negotiator_CKEditor extends WikiPlugin_Negotiator_Wiki
 {
 	public $needsParsed = false;
 	public $dontModify = false;

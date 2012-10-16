@@ -5,7 +5,7 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-class WikiPlugin_Negotiator_Parser
+class WikiPlugin_Negotiator_Wiki
 {
 	public $name;
 	public $args;
@@ -387,6 +387,85 @@ class WikiPlugin_Negotiator_Parser
 		}
 
 		return unserialize($prefs[$prefName]);
+	}
+
+
+	function aliasStore( $name, $data )
+	{
+		/*
+			Input data structure:
+
+			implementation: other plugin_name
+			description:
+				** Equivalent of plugin info function here **
+			body:
+				input: use|ignore
+				default: body content to use
+				params:
+					token_name:
+						input: token_name, default uses same name above
+						default: value to use if missing
+						encoding: none|html|url - default to none
+			params:
+				; Use input parameter directly
+				token_name: default value
+
+				; Custom input parameter replacement
+				token_name:
+					pattern: body content to use
+					params:
+						token_name:
+							input: token_name, default uses same name above
+							default: value to use if missing
+							encoding: none|html|url - default to none
+		*/
+		if (empty($name)) {
+			return;
+		}
+
+		$name = TikiLib::strtolower($name);
+		$data['plugin_name'] = $name;
+
+		$prefName = "pluginalias_$name";
+		$tikilib = TikiLib::lib('tiki');
+		$tikilib->set_preference($prefName, serialize($data));
+
+		global $prefs;
+		$list = array();
+		if ( isset($prefs['pluginaliaslist']) )
+			$list = unserialize($prefs['pluginaliaslist']);
+
+		if ( ! in_array($name, $list) ) {
+			$list[] = $name;
+			$tikilib->set_preference('pluginaliaslist', serialize($list));
+		}
+
+		foreach ( glob('temp/cache/wikiplugin_*') as $file )
+			unlink($file);
+
+		$cachelib = TikiLib::lib('cache');
+		$cachelib->invalidate('plugindesc');
+	}
+
+	//*
+	function aliasDelete()
+	{
+		$tikilib = TikiLib::lib('tiki');
+		$prefName = "pluginalias_" . $this->name;
+
+		// Remove from list
+		$list = $tikilib->get_preference('pluginaliaslist', array(), true);
+		$list = array_diff($list, array( $this->name ));
+		$this->set_preference('pluginaliaslist', serialize($list));
+
+		// Remove the definition
+		$tikilib->delete_preference($prefName);
+
+		// Clear cache
+		$cachelib = TikiLib::lib('cache');
+		$cachelib->invalidate('plugindesc');
+		foreach ( glob('temp/cache/wikiplugin_*') as $file )
+			unlink($file);
 	}
 
 	private function fingerprint()
