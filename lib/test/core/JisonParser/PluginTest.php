@@ -128,6 +128,9 @@ class JisonParser_PluginTest extends JisonParser_Abstract
 
 	public function expandingoutline_basic()
 	{
+		global $prefs;
+		$prefs['wikiplugin_expandingoutline'] = 'y';
+
 		$syntax = array(
 "{EXPANDINGOUTLINE()}
 *test
