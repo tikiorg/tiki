@@ -5093,6 +5093,15 @@ class TikiLib extends TikiDb_Bridge
 		return str_replace($accents, $convs, $str);
 	}
 
+	static function substituteSeparators($str)
+	{
+		$subst = explode(' ', '+ \' : ;');
+		$convs =   explode(' ', '_ _ _ _');
+		$ret = str_replace($subst, $convs, $str);
+		$ret = str_replace(' ', '_', $ret);
+		return $ret;
+	}
+
 	function urlencode_accent($str)
 	{
 		$convs = array();

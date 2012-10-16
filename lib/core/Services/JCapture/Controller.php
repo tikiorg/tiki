@@ -33,8 +33,8 @@ class Services_JCapture_Controller
 		$page = $input->page->text();
 		$page = TikiLib::lib('tiki')->take_away_accent($page);
 
-		/* Problems with : character in page name. Replace with spaces to make it go through */
-		$page = str_replace(":", "_", $page);
+		/* Perform suggested seperator substitutions. */
+		$page = TikiLib::lib('tiki')->substituteSeparators($page);
 
 		$uploader = $tikiroot . 'tiki-ajax_services.php';
 
