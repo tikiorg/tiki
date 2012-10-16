@@ -3,7 +3,7 @@
 //
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id$
+// $Id: Wiki.php 43477 2012-10-16 20:16:27Z robertplummer $
 
 class WikiPlugin_Negotiator_Wiki
 {
@@ -274,7 +274,7 @@ class WikiPlugin_Negotiator_Wiki
 
 		if ( isset( $this->info['prefs'] ) ) {
 			foreach ( $this->info['prefs'] as $pref ) {
-				if ( $prefs[$pref] != 'y' ) {
+				if ( isset($prefs[$pref]) && $prefs[$pref] != 'y' ) {
 					$missing[] = $pref;
 				}
 			}
