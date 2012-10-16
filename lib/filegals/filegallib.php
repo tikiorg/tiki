@@ -652,7 +652,7 @@ class FileGalLib extends TikiLib
 			'show_lastDownload' => 'n',
 			'description' => '',
 			'sort_mode' => $prefs['fgal_sort_mode'],
-			'maxRows' => $prefs['maxRowsGalleries'],
+			'maxRows' => intval($prefs['maxRowsGalleries']),
 			'max_desc' => 0,
 			'subgal_conf' => '',
 			'show_id' => $prefs['fgal_list_id'],
@@ -678,7 +678,7 @@ class FileGalLib extends TikiLib
 			'wiki_syntax' => '',
 			'default_view' => $prefs['fgal_default_view'],
 			'template' => null,
-			'icon_fileId' => isset($prefs['fgal_icon_fileId']) ? $prefs['fgal_icon_fileId'] : '',
+			'icon_fileId' => isset($prefs['fgal_icon_fileId']) ? $prefs['fgal_icon_fileId'] : null,
 		);
 	}
 	function replace_file_gallery($fgal_info)
