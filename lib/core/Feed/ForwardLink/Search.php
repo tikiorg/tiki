@@ -236,6 +236,7 @@ JQ
 			->add_jq_onready(
 <<<JQ
 				$('a.forwardlinkA,a.textlinkA')
+					.css('cursor', 'pointer')
 					.click(function() {
 						var me = $(this),
 						metadataHere = me.data('metadataHere'),
