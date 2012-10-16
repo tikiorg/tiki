@@ -84,7 +84,7 @@ CREATE TABLE `tiki_actionlog` (
   `objectType` varchar(32) NOT NULL default '',
   `user` varchar(200) default '',
   `ip` varchar(39) default NULL,
-  `comment` varchar(255) default NULL,
+  `comment` text default NULL,
   `categId` int(12) NOT NULL default '0',
     `client` VARCHAR( 200 ) NULL DEFAULT NULL,
   PRIMARY KEY (`actionId`),
