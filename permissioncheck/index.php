@@ -5,7 +5,8 @@
 <meta name="robots" content="noindex, nofollow" />
 <title>Tiki Installation Permission Check</title>
 <style type="text/css">
-.block {text-align: justify;}
+	.block		{text-align: justify;}
+	.truetype	{font-family: courier;}
 </style>
 </head>
 <body>
@@ -21,71 +22,21 @@
 		echo "PHP works";
 	?>
  </p>
- <p>permission check: <?php
+ <p>
+	permission check: <?php
+		//include "functions.inc";
+		require "functions.inc";
 		$filename="index.php";
-		$user=(posix_getpwuid(fileowner($filename)));
-		$group=posix_getgrgid(filegroup($filename));
+		$user=get_ownership_username($filename);
+		$group=get_ownership_groupname($filename);
+		$username=get_ownership_username($filename);
+		$groupname=get_ownership_groupname($filename);
 		$perms_oct=substr(sprintf('%o', fileperms($filename)), -3);
-
-$perms = fileperms($filename);
-
-if (($perms & 0xC000) == 0xC000) {
-    // Socket
-    $info = 's';
-} elseif (($perms & 0xA000) == 0xA000) {
-    // Symbolic Link
-    $info = 'l';
-} elseif (($perms & 0x8000) == 0x8000) {
-    // Regular
-    $info = '-';
-} elseif (($perms & 0x6000) == 0x6000) {
-    // Block special
-    $info = 'b';
-} elseif (($perms & 0x4000) == 0x4000) {
-    // Directory
-    $info = 'd';
-} elseif (($perms & 0x2000) == 0x2000) {
-    // Character special
-    $info = 'c';
-} elseif (($perms & 0x1000) == 0x1000) {
-    // FIFO pipe
-    $info = 'p';
-} else {
-    // Unknown
-    $info = 'u';
-}
-
-// Owner
-$info .= (($perms & 0x0100) ? 'r' : '-');
-$info .= (($perms & 0x0080) ? 'w' : '-');
-$info .= (($perms & 0x0040) ?
-            (($perms & 0x0800) ? 's' : 'x' ) :
-            (($perms & 0x0800) ? 'S' : '-'));
-
-// Group
-$info .= (($perms & 0x0020) ? 'r' : '-');
-$info .= (($perms & 0x0010) ? 'w' : '-');
-$info .= (($perms & 0x0008) ?
-            (($perms & 0x0400) ? 's' : 'x' ) :
-            (($perms & 0x0400) ? 'S' : '-'));
-
-// World
-$info .= (($perms & 0x0004) ? 'r' : '-');
-$info .= (($perms & 0x0002) ? 'w' : '-');
-$info .= (($perms & 0x0001) ?
-            (($perms & 0x0200) ? 't' : 'x' ) :
-            (($perms & 0x0200) ? 'T' : '-'));
-
-//echo $info;
-
-		//$perms_asc=substr(sprintf(fileperms($filename)), -3);
-		$perms_asc=$info;
-		echo "this file "."<strong>".$filename."</strong>"." owned by ";
-		echo "user "."<strong>".$user["name"]."</strong>"." and group "."<strong>".$group["name"]."</strong>"." has got access permissions ";
-		echo "<strong>".$perms_asc."</strong>"." which is "."<strong>".$perms_oct."</strong>"." octal.";
+		$perms_asc=get_perms_ascii($filename);
+		echo "\n\tthis file "."<strong>".$filename."</strong>"." owned by ";
+		echo "\n\tuser "."<strong>".$username."</strong>"." and group "."<strong>".$groupname."</strong>"." has got access permissions ";
+		echo "\n\t<strong>".$perms_asc."</strong>"." which is "."<strong>".$perms_oct."</strong>"." octal.";
 		echo "<br />\n";
-		//echo substr(sprintf('%o', fileperms($filename)), -3);
-		//echo "PHP works";
 	?>
  </p>
  <p class="block">
@@ -93,14 +44,35 @@ $info .= (($perms & 0x0001) ?
 	may modify permissions either by SSH access or by FTP access. TODO: List of
 	files and perms in permission/
  </p>
- <div class="block">
-	<div><a href="/permissioncheck/paranoia/" target="_blank">paranoia</a></div>
+ <div class="block"><table class="truetype"><?php
+	echo "\n  ";
+	//$file="permissioncheck/paranoia";
+	//$filename="../".$file;
+	$filename="paranoia";
+	get_perm_data($filename,$username,$groupname,$perms_asc,$perms_oct);
+	//echo $username." ".$groupname." ".$perms_asc." ".$perms_oct.' <a href="'.$filename.'" target="_blank">'.$filename."</a><br>\n";
+	echo "<tr>"."<td>".$username."</td><td>".$groupname."</td><td>".$perms_asc."</td><td>".$perms_oct.'</td><td><a href="'.$filename.'" target="_blank">'.$filename."</a></td></tr>\n  ";
+	$filename="paranoia-suphp";
+	get_perm_data($filename,$username,$groupname,$perms_asc,$perms_oct);
+	//echo $username." ".$groupname." ".$perms_asc." ".$perms_oct.' <a href="'.$filename.'" target="_blank">'.$filename."</a><br>\n";
+	echo "<tr>"."<td>".$username."</td><td>".$groupname."</td><td>".$perms_asc."</td><td>".$perms_oct.'</td><td><a href="'.$filename.'" target="_blank">'.$filename."</a></td></tr>\n  ";
+	$filename="mixed";
+	get_perm_data($filename,$username,$groupname,$perms_asc,$perms_oct);
+	//echo $username." ".$groupname." ".$perms_asc." ".$perms_oct.' <a href="'.$filename.'" target="_blank">'.$filename."</a><br>\n";
+	echo "<tr>"."<td>".$username."</td><td>".$groupname."</td><td>".$perms_asc."</td><td>".$perms_oct.'</td><td><a href="'.$filename.'" target="_blank">'.$filename."</a></td></tr>\n  ";
+	$filename="risky";
+	get_perm_data($filename,$username,$groupname,$perms_asc,$perms_oct);
+	//echo $username." ".$groupname." ".$perms_asc." ".$perms_oct.' <a href="'.$filename.'" target="_blank">'.$filename."</a><br>\n";
+	echo "<tr>"."<td>".$username."</td><td>".$groupname."</td><td>".$perms_asc."</td><td>".$perms_oct.'</td><td><a href="'.$filename.'" target="_blank">'.$filename."</a></td></tr>\n  ";
+?>
+<? /*	<div><a href="/permissioncheck/paranoia/" target="_blank">paranoia</a></div>
 	<div><a href="/permissioncheck/paranoia-suphp/" target="_blank">paranoia-suphp</a></div>
 	<div><a href="/permissioncheck/mixed/" target="_blank">mixed</a></div>
 	<div><a href="/permissioncheck/risky/" target="_blank">risky</a></div>
-	<?php //<div><a href="/permissioncheck/foo/" target="_blank">foo</a></div>?>
+*/ ?>	<?php //<div><a href="/permissioncheck/foo/" target="_blank">foo</a></div>?>
 	<?php //<div><a href="/permissioncheck/bar/" target="_blank">bar</a></div>?>
- </div>
+	<?php echo "<!-- table end -->\n"; ?>
+ </table></div>
  <p class="block">
 	Enjoy <a href="https://tiki.org/" target="_blank">Tiki</a> and
 	<a href="https://tiki.org/tiki-register.php" target="_blank">join the community</a>!
