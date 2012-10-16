@@ -26,6 +26,7 @@
 	permission check: <?php
 		//include "functions.inc";
 		require "functions.inc";
+		require "usecases.inc";
 		$filename="index.php";
 		$user=get_ownership_username($filename);
 		$group=get_ownership_groupname($filename);
@@ -41,29 +42,43 @@
  </p>
  <p class="block">
 	Please ensure correct permission settings of this permission test suite. You
-	may modify permissions either by SSH access or by FTP access. TODO: List of
-	files and perms in permission/
+	may modify permissions either by SSH access or by FTP access. The first column
+	(italic) shows assumed permissions (what they should be to run this test), next
+	is user (owner), group (owner), actual permissions ascii and octal) and the
+	subdirectory or filename which was checked.
  </p>
  <div class="block"><table class="truetype"><?php
 	echo "\n  ";
 	//$file="permissioncheck/paranoia";
 	//$filename="../".$file;
-	$filename="paranoia";
-	get_perm_data($filename,$username,$groupname,$perms_asc,$perms_oct);
-	//echo $username." ".$groupname." ".$perms_asc." ".$perms_oct.' <a href="'.$filename.'" target="_blank">'.$filename."</a><br>\n";
-	echo "<tr>"."<td>".$username."</td><td>".$groupname."</td><td>".$perms_asc."</td><td>".$perms_oct.'</td><td><a href="'.$filename.'" target="_blank">'.$filename."</a></td></tr>\n  ";
-	$filename="paranoia-suphp";
-	get_perm_data($filename,$username,$groupname,$perms_asc,$perms_oct);
-	//echo $username." ".$groupname." ".$perms_asc." ".$perms_oct.' <a href="'.$filename.'" target="_blank">'.$filename."</a><br>\n";
-	echo "<tr>"."<td>".$username."</td><td>".$groupname."</td><td>".$perms_asc."</td><td>".$perms_oct.'</td><td><a href="'.$filename.'" target="_blank">'.$filename."</a></td></tr>\n  ";
-	$filename="mixed";
-	get_perm_data($filename,$username,$groupname,$perms_asc,$perms_oct);
-	//echo $username." ".$groupname." ".$perms_asc." ".$perms_oct.' <a href="'.$filename.'" target="_blank">'.$filename."</a><br>\n";
-	echo "<tr>"."<td>".$username."</td><td>".$groupname."</td><td>".$perms_asc."</td><td>".$perms_oct.'</td><td><a href="'.$filename.'" target="_blank">'.$filename."</a></td></tr>\n  ";
-	$filename="risky";
-	get_perm_data($filename,$username,$groupname,$perms_asc,$perms_oct);
-	//echo $username." ".$groupname." ".$perms_asc." ".$perms_oct.' <a href="'.$filename.'" target="_blank">'.$filename."</a><br>\n";
-	echo "<tr>"."<td>".$username."</td><td>".$groupname."</td><td>".$perms_asc."</td><td>".$perms_oct.'</td><td><a href="'.$filename.'" target="_blank">'.$filename."</a></td></tr>\n  ";
+
+	foreach ($uc_perms_subdir as $usecase => $perms_subdir) {
+		$perms_file=$uc_perms_file[$usecase];
+		$filename=$usecase;
+		get_perm_data($filename,$username,$groupname,$perms_asc,$perms_oct);
+		echo "<tr>"."<td><em>".$perms_subdir."</em></td>"."<td>".$username."</td><td>".$groupname."</td><td>".$perms_asc."</td><td>".$perms_oct.'</td><td><a href="'.$filename.'" target="_blank">permissioncheck/'.$filename."</a></td></tr>\n  ";
+		$filename=$usecase."/".$default_file_name;
+		get_perm_data($filename,$username,$groupname,$perms_asc,$perms_oct);
+		echo "<tr>"."<td><em>".$perms_file."</em></td>"."<td>".$username."</td><td>".$groupname."</td><td>".$perms_asc."</td><td>".$perms_oct.'</td><td><a href="'.$filename.'" target="_blank">permissioncheck/'.$filename."</a></td></tr>\n  ";
+	}
+
+//	echo"<tr><td><br />\n..........<br /></td></tr>\n";
+//	$filename="paranoia";
+//	get_perm_data($filename,$username,$groupname,$perms_asc,$perms_oct);
+//	//echo $username." ".$groupname." ".$perms_asc." ".$perms_oct.' <a href="'.$filename.'" target="_blank">'.$filename."</a><br>\n";
+//	echo "<tr>"."<td>".$username."</td><td>".$groupname."</td><td>".$perms_asc."</td><td>".$perms_oct.'</td><td><a href="'.$filename.'" target="_blank">'.$filename."</a></td></tr>\n  ";
+//	$filename="paranoia-suphp";
+//	get_perm_data($filename,$username,$groupname,$perms_asc,$perms_oct);
+//	//echo $username." ".$groupname." ".$perms_asc." ".$perms_oct.' <a href="'.$filename.'" target="_blank">'.$filename."</a><br>\n";
+//	echo "<tr>"."<td>".$username."</td><td>".$groupname."</td><td>".$perms_asc."</td><td>".$perms_oct.'</td><td><a href="'.$filename.'" target="_blank">'.$filename."</a></td></tr>\n  ";
+//	$filename="mixed";
+//	get_perm_data($filename,$username,$groupname,$perms_asc,$perms_oct);
+//	//echo $username." ".$groupname." ".$perms_asc." ".$perms_oct.' <a href="'.$filename.'" target="_blank">'.$filename."</a><br>\n";
+//	echo "<tr>"."<td>".$username."</td><td>".$groupname."</td><td>".$perms_asc."</td><td>".$perms_oct.'</td><td><a href="'.$filename.'" target="_blank">'.$filename."</a></td></tr>\n  ";
+//	$filename="risky";
+//	get_perm_data($filename,$username,$groupname,$perms_asc,$perms_oct);
+//	//echo $username." ".$groupname." ".$perms_asc." ".$perms_oct.' <a href="'.$filename.'" target="_blank">'.$filename."</a><br>\n";
+//	echo "<tr>"."<td>".$username."</td><td>".$groupname."</td><td>".$perms_asc."</td><td>".$perms_oct.'</td><td><a href="'.$filename.'" target="_blank">'.$filename."</a></td></tr>\n  ";
 ?>
 <? /*	<div><a href="/permissioncheck/paranoia/" target="_blank">paranoia</a></div>
 	<div><a href="/permissioncheck/paranoia-suphp/" target="_blank">paranoia-suphp</a></div>
