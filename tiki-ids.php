@@ -6,6 +6,7 @@
 // $Id$
 
 require_once ('tiki-setup.php');
+$access->check_feature('ids_enabled');
 $access->check_permission('tiki_p_admin');
 
 $fp = fopen('temp/phpids_log.txt','r');
