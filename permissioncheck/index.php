@@ -30,16 +30,15 @@
 	<?php
 	include "permission_granted.php.inc";
 	if ($permission_granted=="yes\n") {
-		//echo "go<br />\n<br />\n";
-		$dummy=true;
-		echo '<span class="hint">disable permission check on production machines</span>'."<br />\n";
+		//$dummy=true;
+		echo '<span class="important">disable permission check on production machines</span>'."<br />\n";
 	} else {
 		echo "permission not granted<br />\n<br />\n";
 		echo "enable permission (setting: yes) in file:<br />\n";
 		echo '<span class="truetype">permissioncheck/permission_granted.txt</span>'."<br />\n";
 		echo "or run<br />\n".'<span class="truetype">prepare_permissioncheck.sh enable</span>'."<br />\n";
 		echo "in Tiki's document root (Not Implemented Yet)<br />\n<br />\n";
-		echo '<span class="important">disable permission check on production machines</span>'."<br />\n";
+		echo '<span class="hint">disable permission check on production machines</span>'."<br />\n";
 		echo "</p></body></html>";
 		die;
 	}
