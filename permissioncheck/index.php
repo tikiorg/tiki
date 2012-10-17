@@ -29,7 +29,9 @@
 	if ($permission_granted=='yes') {
 		echo "go";
 	} else {
-		echo "\npermission not granted";
+		echo "permission not granted<br />\n<br />\n";
+		echo "enable permission (setting: yes) in file:<br />\npermissioncheck/permission_granted.php.inc<br />\n";
+		echo "</p></body></html>";
 		die;
 	}
 	//echo "\n";
