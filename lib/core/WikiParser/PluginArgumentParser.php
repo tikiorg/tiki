@@ -13,7 +13,7 @@ class WikiParser_PluginArgumentParser
 		$data = TikiLib::lib("parser")->unprotectSpecialChars($data, true);	// need to get &quot; converted back to " etc
 
 		// Handle parameters one by one
-		while ( false !== $pos = strpos($data, '=') ) {
+		while (is_string($data) && false !== $pos = strpos($data, '=') ) {
 			$name = substr($data, 0, $pos);
 			$name = ltrim($name, ', ');
 			$name = trim($name);
