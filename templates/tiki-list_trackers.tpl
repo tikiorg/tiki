@@ -299,8 +299,16 @@
 	});
 	$('#forumImportFromProfile').submit(function() {
 		$.modal(tr('Loading...'));
-		$.post($(this).attr('action'), {yaml: $('#importFromProfileYaml').val()}, function() {
-			document.location = document.location + '';
+		$.post($(this).attr('action'), {yaml: $('#importFromProfileYaml').val()}, function(feedback) {
+			feedback = $.parseJSON(feedback);
+			if (feedback.length) {
+				$.modal();
+				for(i in feedback) {
+					$.notify(feedback[i]);
+				}
+			} else {
+				document.location = document.location + '';
+			}
 		});
 		return false;
 	});

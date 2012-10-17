@@ -268,7 +268,7 @@ class Tiki_Profile
 
 		foreach ($matches as $match) {
 			$arguments = $parser->parse($match->getArguments());
-			if ( ($match->getName() == 'code' && isset($arguments['caption']) && $arguments['caption'] == 'YAML')
+			if ( ($match->getName() == 'code' && isset($arguments['caption']) && strtoupper($arguments['caption']) == 'YAML' )
 				|| $match->getName() == 'profile' ) {
 				$yaml = $match->getBody();
 
