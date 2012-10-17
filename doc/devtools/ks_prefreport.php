@@ -69,7 +69,7 @@ $index = array(
 update_search_flag($data, $index, $stopWords);
 
 
-$ourFileHandle = fopen($ourFileName, 'r+') or die("can't open file");
+$ourFileHandle = fopen($ourFileName, 'w+') or die("can't open file");
 
 
 // Output results
