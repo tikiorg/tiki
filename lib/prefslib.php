@@ -456,6 +456,24 @@ class PreferencesLib
 		return $out;
 	}
 
+	public function rebuildIndex()
+	{
+		$index = Zend_Search_Lucene::create($this->file);
+
+		foreach ($this->getAvailableFiles() as $file) {
+			$data = $this->getFileData($file);
+
+			foreach ( $data as $pref => $info ) {
+				$info = $this->getPreference($pref);
+				$doc = $this->indexPreference($pref, $info);
+				$index->addDocument($doc);
+			}
+		}
+
+		$index->optimize();
+		return $index;
+	}
+
 	private function getIndex()
 	{
 		global $prefs;
@@ -463,21 +481,8 @@ class PreferencesLib
 			Zend_Search_Lucene_Analysis_Analyzer::setDefault(new StandardAnalyzer_Analyzer_Standard_English());
 		}
 
-		if ( $this->indexNeedsRebuilding() ) {
-			$index = Zend_Search_Lucene::create($this->file);
-
-			foreach ($this->getAvailableFiles() as $file) {
-				$data = $this->getFileData($file);
-
-				foreach ( $data as $pref => $info ) {
-					$info = $this->getPreference($pref);
-					$doc = $this->indexPreference($pref, $info);
-					$index->addDocument($doc);
-				}
-			}
-
-			$index->optimize();
-			return $index;
+		if ( $this->indexNeedsRebuilding()) {
+			return $this->rebuildIndex();
 		}
 
 		return Zend_Search_Lucene::open($this->file);

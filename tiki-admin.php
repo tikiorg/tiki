@@ -216,6 +216,10 @@ if ( isset( $_REQUEST['lm_criteria'] ) ) {
 
 $smarty->assign('indexNeedsRebuilding', $prefslib->indexNeedsRebuilding());
 
+if (isset($_REQUEST['rebuild'])) {
+	$prefslib->rebuildIndex();
+}
+
 $icons = array(
 	"general" => array(
 		'position' => '0px -15px;',
