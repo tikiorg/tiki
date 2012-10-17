@@ -9,7 +9,7 @@ function wikiplugin_trackerquerytemplate_info()
 {
 	return array(
 		'name' => tra('Tracker Query Template'),
-		'documentation' => '',
+		'documentation' => 'PluginTrackerQueryTemplate',
 		'description' => tra('Tracker Query and form generation. Supports nesting. When using byname="y" (default), variables are accessed "$field name$" (rendered) and "$~field name$ (unrendered). When using byname="n", variables are {$f_id} (rendered) and {$~f_id} (unrendered)'),
 		'prefs' => array('feature_trackers','wikiplugin_trackerquerytemplate'),
 		'body' => tra('Wiki Syntax, with variables from tracker query.'),
