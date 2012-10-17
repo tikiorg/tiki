@@ -6459,6 +6459,7 @@ $lang = array(
 "if y & the slideshow is active, the slideshow will pause on hover" => "bei ja und aktiver Diashow, wird die Diashow pausieren, wenn der Gleiter mit der Maus überfahren wird",
 "Stop At End" => "Stop am Ende",
 "if y & the slideshow is active, the slideshow will stop on the last page. This also stops the rewind effect when infiniteSlides is false" => "bei ja und bei aktiver Diashow, stopt sie auf der letzten Seite. Dies stopt auch ein Zurückspulen zum Anfang wenn infiniteSlides auf falsch gesetzt ist",
+"Time in milliseconds between slideshow transitions (in AutoPlay mode)" => "Zeit zwischen den Dias in Millisekunden (im AutoPlay Betrieb)",
 "Play Right To Left" => "Von rechts nach Link",
 "if y, the slideshow will move right-to-left" => "bei ja bewegt sich die Diashow von rechts nach links",
 "Resume On Video End" => "Fortsetzen nach Videoende",

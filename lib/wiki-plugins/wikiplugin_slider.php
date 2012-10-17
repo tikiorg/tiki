@@ -270,6 +270,14 @@ function wikiplugin_slider_info()
 					array('text' => tra('No'), 'value' => 'n')
 				)
 			),
+			'delay' => array(
+				'required' => false,
+				'name' => tra('Delay between slides'),
+				'description' => tra('Time in milliseconds between slideshow transitions (in AutoPlay mode).'),
+				'filter' => 'striptags',
+				'accepted' => 'a number',
+				'default' => '3000',
+			),
 			'playrtl' => array(
 				'required' => false,
 				'name' => tra('Play Right To Left'),
@@ -342,6 +350,8 @@ function wikiplugin_slider($data, $params)
 
 	$animationtime = (int) $animationtime;
 	$animationtime = (empty($animationtime) === false ? $animationtime : 600);
+	$delay = (int) $delay;
+	$delay = (empty($delay) === false ? $delay : 3000);
 	$showmultiple = (int) $showmultiple;
 	$showmultiple = (empty($showmultiple) === false ? $showmultiple : 1);
 
@@ -390,7 +400,7 @@ function wikiplugin_slider($data, $params)
 			playRtl             : ".makeBool($playrtl, false).",
 
 			// Times
-			delay               : 3000,
+			delay               : $delay,
 			resumeDelay         : 15000,
 			animationTime       : $animationtime,
 
