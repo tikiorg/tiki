@@ -7,6 +7,8 @@
 <style type="text/css">
 	.block		{text-align: justify;}
 	.truetype	{font-family: courier;}
+	.equal		{background-color: green;}
+	.notequal	{background-color: red;}
 </style>
 </head>
 <body>
@@ -25,9 +27,9 @@
  <p>
 	<?php
 	include "permission_granted.php.inc";
-	//echo $permission_granted ;
 	if ($permission_granted=='yes') {
-		echo "go<br />\n<br />\n";
+		//echo "go<br />\n<br />\n";
+		$dummy=true;
 	} else {
 		echo "permission not granted<br />\n<br />\n";
 		echo "enable permission (setting: yes) in file:<br />\npermissioncheck/permission_granted.php.inc<br />\n<br />\n";
@@ -35,25 +37,6 @@
 		echo "</p></body></html>";
 		die;
 	}
-	//echo "\n";
-
-	$file = fopen("usecases.txt", "r") or exit("Unable to open file!");
-	//Output a line of the file until the end is reached
-	while(!feof($file))
-	  {
-	  $line_of_file_orig=fgets($file);
-	  if ($line_of_file_orig=="") {
-	   $dummy=true;
-	  } else {
-	  //echo "Y".$line_of_file_orig."Y<br />\n";
-	  $line_of_file_mod=str_replace(":"," ",$line_of_file_orig);
-	  //echo $line_of_file_mod."<br />\n";
-	  list($fusecase,$fsubdirperm,$ffileperm)=sscanf($line_of_file_mod,"%s %d %d");
-	  echo $fusecase." / ".$fsubdirperm." / ".$ffileperm."<br />\n";
-	  //echo fgets($file). "<br />";
-	  } }
-	fclose($file);
-
 	?>
  </p>
  <p>
@@ -91,10 +74,20 @@
 		$perms_file=$uc_perms_file[$usecase];
 		$filename=$usecase;
 		get_perm_data($filename,$username,$groupname,$perms_asc,$perms_oct);
-		echo "<tr>"."<td><em>".$perms_subdir."</em></td>"."<td>".$username."</td><td>".$groupname."</td><td>".$perms_asc."</td><td>".$perms_oct.'</td><td><a href="'.$filename.'" target="_blank">permissioncheck/'.$filename."</a></td></tr>\n  ";
+		if ($perms_subdir==$perms_oct) {
+			$css_class="equal";
+		} else {
+			$css_class="notequal";
+		}
+		echo "<tr>".'<td><em class="'.$css_class.'">'.$perms_subdir."</em></td>"."<td>".$username."</td><td>".$groupname."</td><td>".$perms_asc."</td><td>".$perms_oct.'</td><td><a href="'.$filename.'" target="_blank">permissioncheck/'.$filename."</a></td></tr>\n  ";
 		$filename=$usecase."/".$default_file_name;
 		get_perm_data($filename,$username,$groupname,$perms_asc,$perms_oct);
-		echo "<tr>"."<td><em>".$perms_file."</em></td>"."<td>".$username."</td><td>".$groupname."</td><td>".$perms_asc."</td><td>".$perms_oct.'</td><td><a href="'.$filename.'" target="_blank">permissioncheck/'.$filename."</a></td></tr>\n  ";
+		if ($perms_file==$perms_oct) {
+			$css_class="equal";
+		} else {
+			$css_class="notequal";
+		}
+		echo "<tr>".'<td><em class="'.$css_class.'">'.$perms_file."</em></td>"."<td>".$username."</td><td>".$groupname."</td><td>".$perms_asc."</td><td>".$perms_oct.'</td><td><a href="'.$filename.'" target="_blank">permissioncheck/'.$filename."</a></td></tr>\n  ";
 	}
 ?>
  </table></div>
