@@ -1313,9 +1313,10 @@ class Services_Tracker_Controller
 		$installer = new Tiki_Profile_Installer;
 		$profile = Tiki_Profile::fromString($input->yaml->string());
 		$installer->install($profile);
+		$feedback = $installer->getFeedback();
 		$transaction->commit();
 
-		return array();
+		return array($feedback);
 	}
 
 	private function getSortFields($definition)
