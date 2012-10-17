@@ -1,0 +1,7 @@
+#
+AuthUserFile /PATH_TO_TIKI_DOCUMENT_ROOT_HERE/permissioncheck/.htpasswd
+AuthName "permissioncheck prepare password protection first"
+AuthType Basic
+<Limit GET POST PUT>
+require valid-user
+</Limit>

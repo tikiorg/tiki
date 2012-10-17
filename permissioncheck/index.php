@@ -24,9 +24,10 @@
  </p>
  <p>
 	permission check: <?php
-		//include "functions.inc";
-		require "functions.inc";
-		require "usecases.inc";
+		//include "functions.php.inc";
+		require "functions.php.inc";
+		//include "usecases.php.inc";
+		require "usecases.php.inc";
 		$filename="index.php";
 		$user=get_ownership_username($filename);
 		$group=get_ownership_groupname($filename);
@@ -61,32 +62,7 @@
 		get_perm_data($filename,$username,$groupname,$perms_asc,$perms_oct);
 		echo "<tr>"."<td><em>".$perms_file."</em></td>"."<td>".$username."</td><td>".$groupname."</td><td>".$perms_asc."</td><td>".$perms_oct.'</td><td><a href="'.$filename.'" target="_blank">permissioncheck/'.$filename."</a></td></tr>\n  ";
 	}
-
-//	echo"<tr><td><br />\n..........<br /></td></tr>\n";
-//	$filename="paranoia";
-//	get_perm_data($filename,$username,$groupname,$perms_asc,$perms_oct);
-//	//echo $username." ".$groupname." ".$perms_asc." ".$perms_oct.' <a href="'.$filename.'" target="_blank">'.$filename."</a><br>\n";
-//	echo "<tr>"."<td>".$username."</td><td>".$groupname."</td><td>".$perms_asc."</td><td>".$perms_oct.'</td><td><a href="'.$filename.'" target="_blank">'.$filename."</a></td></tr>\n  ";
-//	$filename="paranoia-suphp";
-//	get_perm_data($filename,$username,$groupname,$perms_asc,$perms_oct);
-//	//echo $username." ".$groupname." ".$perms_asc." ".$perms_oct.' <a href="'.$filename.'" target="_blank">'.$filename."</a><br>\n";
-//	echo "<tr>"."<td>".$username."</td><td>".$groupname."</td><td>".$perms_asc."</td><td>".$perms_oct.'</td><td><a href="'.$filename.'" target="_blank">'.$filename."</a></td></tr>\n  ";
-//	$filename="mixed";
-//	get_perm_data($filename,$username,$groupname,$perms_asc,$perms_oct);
-//	//echo $username." ".$groupname." ".$perms_asc." ".$perms_oct.' <a href="'.$filename.'" target="_blank">'.$filename."</a><br>\n";
-//	echo "<tr>"."<td>".$username."</td><td>".$groupname."</td><td>".$perms_asc."</td><td>".$perms_oct.'</td><td><a href="'.$filename.'" target="_blank">'.$filename."</a></td></tr>\n  ";
-//	$filename="risky";
-//	get_perm_data($filename,$username,$groupname,$perms_asc,$perms_oct);
-//	//echo $username." ".$groupname." ".$perms_asc." ".$perms_oct.' <a href="'.$filename.'" target="_blank">'.$filename."</a><br>\n";
-//	echo "<tr>"."<td>".$username."</td><td>".$groupname."</td><td>".$perms_asc."</td><td>".$perms_oct.'</td><td><a href="'.$filename.'" target="_blank">'.$filename."</a></td></tr>\n  ";
 ?>
-<? /*	<div><a href="/permissioncheck/paranoia/" target="_blank">paranoia</a></div>
-	<div><a href="/permissioncheck/paranoia-suphp/" target="_blank">paranoia-suphp</a></div>
-	<div><a href="/permissioncheck/mixed/" target="_blank">mixed</a></div>
-	<div><a href="/permissioncheck/risky/" target="_blank">risky</a></div>
-*/ ?>	<?php //<div><a href="/permissioncheck/foo/" target="_blank">foo</a></div>?>
-	<?php //<div><a href="/permissioncheck/bar/" target="_blank">bar</a></div>?>
-	<?php echo "<!-- table end -->\n"; ?>
  </table></div>
  <p class="block">
 	Enjoy <a href="https://tiki.org/" target="_blank">Tiki</a> and

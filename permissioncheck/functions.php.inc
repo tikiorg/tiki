@@ -22,7 +22,7 @@ function get_perm_data($filename,&$username,&$groupname,&$perms_asc,&$perms_oct)
 	$perms_oct=get_perms_octal($filename);
 }
 
-// permissions of fike
+// permissions of file
 function get_perms_ascii($filename) {
 
 $perms = fileperms($filename);
