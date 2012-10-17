@@ -15,7 +15,6 @@ class WikiPlugin_Negotiator_Wiki
 	public $info;
 	public $fingerprint;
 	public $exists; //exists is set to true only for old style plugin
-	public $aliasExists;
 	public $index;
 	public $key;
 	public $needsParsed = true;
@@ -30,6 +29,7 @@ class WikiPlugin_Negotiator_Wiki
 	private $argParser;
 	private $page;
 	private $prefs;
+	private $alias;
 
 	public static $standardRelativePath = 'lib/wiki-plugins/wikiplugin_';
 	public static $zendRelativePath = 'lib/core/';
@@ -49,6 +49,7 @@ class WikiPlugin_Negotiator_Wiki
 		$this->prefs = & $parser->prefs;
 		$this->parserOption = & $parser->option;
 		$this->argParser = new WikiParser_PluginArgumentParser;
+		$this->alias = new WikiPlugin_Negotiator_Wiki_Alias();
 	}
 
 	public function inject($plugin)
@@ -117,7 +118,8 @@ class WikiPlugin_Negotiator_Wiki
 			return $output->toHtml();
 		}
 
-
+		//Zend style plugins are classed based
+		//Start Zend
 		if (isset($this->class)) {
 			if (isset($this->class->parserLevel)) {
 				$this->parserLevel = $this->class->parserLevel;
@@ -134,16 +136,31 @@ class WikiPlugin_Negotiator_Wiki
 				}
 			}
 		}
+		//End Zend
 
+
+		//old style plugins start
 		$fnName = strtolower('wikiplugin_' .  $this->name);
 
 		if ( $this->exists && function_exists($fnName) ) {
 			return $fnName($this->body, $this->args, $this->index, $this) . $this->button();
 		}
+		//end old style
+
+
+		//alias start
+		$newDetails = $this->alias->getDetails(self::$pluginDetails[$this->key]);
+		if ($newDetails != false) {
+			$this->setDetails($newDetails);
+			return $this->execute();
+		}
+		//alias end
 
 		//If we make it this far, it most likley is a smarty black that can't be executed
+		//smarty or unrecognized start
 		$this->ignored = true;
 		return $this->toSyntax();
+		//smarty or unrecognized end
 	}
 
 	function toSyntax()
@@ -362,7 +379,7 @@ class WikiPlugin_Negotiator_Wiki
 		$funcNameInfo = "wikiplugin_{$this->name}_info";
 
 		if ( ! function_exists($funcNameInfo) ) {
-			if ( $info = $this->aliasInfo() ) {
+			if ( $info = WikiPlugin_Negotiator_Wiki_Alias::info( $this->name ) ) {
 				return self::$pluginInfo[$this->name] = $info['description'];
 			} else {
 				return self::$pluginInfo[$this->name] = false;
@@ -372,100 +389,41 @@ class WikiPlugin_Negotiator_Wiki
 		return self::$pluginInfo[$this->name] = $funcNameInfo();
 	}
 
-	function aliasInfo()
+
+	static public function getList( $includeReal = true, $includeAlias = true )
 	{
-		global $prefs;
+		$real = array();
+		$alias = array();
 
-		if (empty($this->name)) {
-			return false;
+		foreach ( glob('lib/wiki-plugins/wikiplugin_*.php') as $file ) {
+			$base = basename($file);
+			$plugin = substr($base, 11, -4);
+
+			$real[] = $plugin;
 		}
 
-		$prefName = "pluginalias_" . $this->name;
-
-		if ( ! isset( $prefs[$prefName] ) ) {
-			return false;
+		//Check for existence of Zend wiki plugins
+		foreach ( glob('lib/core/WikiPlugin/*.php') as $file ) {
+			$base = basename($file);
+			if (strtolower($base) == $base) { //the zend plugins all have lower case names
+				$plugin = substr($base, 0, -4);
+				$real[] = $plugin;
+			}
 		}
 
-		return unserialize($prefs[$prefName]);
-	}
-
-
-	function aliasStore( $name, $data )
-	{
-		/*
-			Input data structure:
-
-			implementation: other plugin_name
-			description:
-				** Equivalent of plugin info function here **
-			body:
-				input: use|ignore
-				default: body content to use
-				params:
-					token_name:
-						input: token_name, default uses same name above
-						default: value to use if missing
-						encoding: none|html|url - default to none
-			params:
-				; Use input parameter directly
-				token_name: default value
-
-				; Custom input parameter replacement
-				token_name:
-					pattern: body content to use
-					params:
-						token_name:
-							input: token_name, default uses same name above
-							default: value to use if missing
-							encoding: none|html|url - default to none
-		*/
-		if (empty($name)) {
-			return;
+		if ( $includeReal && $includeAlias ) {
+			$plugins = array_merge($real, WikiPlugin_Negotiator_Wiki_Alias::getList());
+		} elseif ( $includeReal ) {
+			$plugins = $real;
+		} elseif ( $includeAlias ) {
+			$plugins = WikiPlugin_Negotiator_Wiki_Alias::getList();
+		} else {
+			$plugins = array();
 		}
+		$plugins = array_filter($plugins);
+		sort($plugins);
 
-		$name = TikiLib::strtolower($name);
-		$data['plugin_name'] = $name;
-
-		$prefName = "pluginalias_$name";
-		$tikilib = TikiLib::lib('tiki');
-		$tikilib->set_preference($prefName, serialize($data));
-
-		global $prefs;
-		$list = array();
-		if ( isset($prefs['pluginaliaslist']) )
-			$list = unserialize($prefs['pluginaliaslist']);
-
-		if ( ! in_array($name, $list) ) {
-			$list[] = $name;
-			$tikilib->set_preference('pluginaliaslist', serialize($list));
-		}
-
-		foreach ( glob('temp/cache/wikiplugin_*') as $file )
-			unlink($file);
-
-		$cachelib = TikiLib::lib('cache');
-		$cachelib->invalidate('plugindesc');
-	}
-
-	//*
-	function aliasDelete()
-	{
-		$tikilib = TikiLib::lib('tiki');
-		$prefName = "pluginalias_" . $this->name;
-
-		// Remove from list
-		$list = $tikilib->get_preference('pluginaliaslist', array(), true);
-		$list = array_diff($list, array( $this->name ));
-		$this->set_preference('pluginaliaslist', serialize($list));
-
-		// Remove the definition
-		$tikilib->delete_preference($prefName);
-
-		// Clear cache
-		$cachelib = TikiLib::lib('cache');
-		$cachelib->invalidate('plugindesc');
-		foreach ( glob('temp/cache/wikiplugin_*') as $file )
-			unlink($file);
+		return $plugins;
 	}
 
 	private function fingerprint()
