@@ -4229,7 +4229,8 @@ class TikiLib extends TikiDb_Bridge
 					$this->plugin_pending_notification($plugin_name, $body, $arguments, $context);
 				}
 
-				$parserlib->plugin_find_implementation($plugin_name, $body, $arguments);
+				$alias = new WikiPlugin_Negotiator_Wiki_Alias();
+				$alias->findImplementation($plugin_name, $body, $arguments);
 
 				$func_name = 'wikiplugin_' . $plugin_name . '_save';
 
