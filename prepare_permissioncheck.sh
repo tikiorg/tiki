@@ -71,7 +71,7 @@ done
 
 # quick 'n dirty
 ${CHMOD} 444 permissioncheck/permission_print.php.inc
-${CHMOD} 444 permissioncheck/permission_granted.php.inc
+${CHMOD} 644 permissioncheck/permission_granted.php.inc
 
 #pwd
 PERMISSION_GRANTED=`$PHP permissioncheck/permission_print.php.inc`
