@@ -577,7 +577,7 @@ if ( \$('#$id') ) {
 	//*
 	function plugin_get_list( $includeReal = true, $includeAlias = true )
 	{
-		return WikiPlugin_Negotiator_Wiki_Alias::getList();
+		return WikiPlugin_Negotiator_Wiki::getList( $includeReal, $includeAlias );
 	}
 
 	function zend_plugin_exists($className)
