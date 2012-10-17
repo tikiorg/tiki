@@ -1311,7 +1311,11 @@ class Services_Tracker_Controller
 		$access->check_permission('tiki_p_admin');
 		$transaction = $tikilib->begin();
 		$installer = new Tiki_Profile_Installer;
-		$profile = Tiki_Profile::fromString($input->yaml->string());
+
+		$yaml = $input->yaml->string();
+		$name = "tracker_import:" . md5($yaml);
+		$profile = Tiki_Profile::fromString( '{CODE(caption="yaml")}' . "\n" . $yaml . "\n" . '{CODE}' , $name );
+
 		$installer->install($profile);
 		$feedback = $installer->getFeedback();
 		$transaction->commit();
