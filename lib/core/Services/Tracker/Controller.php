@@ -1316,11 +1316,18 @@ class Services_Tracker_Controller
 		$name = "tracker_import:" . md5($yaml);
 		$profile = Tiki_Profile::fromString( '{CODE(caption="yaml")}' . "\n" . $yaml . "\n" . '{CODE}' , $name );
 
-		$installer->install($profile);
-		$feedback = $installer->getFeedback();
-		$transaction->commit();
+		if ($installer->isInstallable($profile) == true) {
+			if ($installer->isInstalled($profile) == true) {
+				$installer->forget($profile);
+			}
 
-		return array($feedback);
+			$installer->install($profile);
+			$feedback = $installer->getFeedback();
+			$transaction->commit();
+			return $feedback;
+		} else {
+			return false;
+		}
 	}
 
 	private function getSortFields($definition)

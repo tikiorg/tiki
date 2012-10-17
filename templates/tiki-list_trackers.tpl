@@ -301,13 +301,15 @@
 		$.modal(tr('Loading...'));
 		$.post($(this).attr('action'), {yaml: $('#importFromProfileYaml').val()}, function(feedback) {
 			feedback = $.parseJSON(feedback);
+
+			$.modal();
 			if (feedback.length) {
-				$.modal();
 				for(i in feedback) {
 					$.notify(feedback[i]);
 				}
-			} else {
 				document.location = document.location + '';
+			} else {
+				$.notify(tr("Error, profile not applied"));
 			}
 		});
 		return false;
