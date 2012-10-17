@@ -36,7 +36,7 @@ $cookietab = 1;
 
 // from tiki-admin_include_textarea.php
 global $tikilib;
-$pluginsAlias = $parserlib->plugin_get_list(false, true);
+$pluginsAlias = WikiPlugin_Negotiator_Wiki_Alias::getList();
 $pluginsReal = $parserlib->plugin_get_list(true, false);
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	global $cachelib;
@@ -73,9 +73,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			$_POST['enabled'] = array();
 		}
 		foreach ($pluginsAlias as $name) {
-			$parserlib->plugin_alias_delete($name);
+			WikiPlugin_Negotiator_Wiki_Alias::delete($name);
 		}
-		$pluginsAlias = $parserlib->plugin_get_list(false, true);
+		$pluginsAlias = WikiPlugin_Negotiator_Wiki_Alias::getList();
 	}
 	if (isset($_POST['textareasetup'])
 			&& !in_array($_POST['plugin_alias'], $pluginsReal)
@@ -171,7 +171,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			}
 		}
 
-		$parserlib->plugin_alias_store($_POST['plugin_alias'], $info);
+		WikiPlugin_Negotiator_Wiki_Alias::store($_POST['plugin_alias'], $info);
 
 		if (!in_array($_POST['plugin_alias'], $pluginsAlias)) {
 			$pluginAlias[] = $_POST['plugins'];
@@ -181,11 +181,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			unlink($file);
 		}
 
-		$pluginsAlias = $parserlib->plugin_get_list(false, true);
+		$pluginsAlias = WikiPlugin_Negotiator_Wiki_Alias::getList();
 	}
 }
 
-if (isset($_REQUEST['plugin_alias']) && $pluginInfo = $parserlib->plugin_alias_info($_REQUEST['plugin_alias'])) {
+if (isset($_REQUEST['plugin_alias']) && $pluginInfo = WikiPlugin_Negotiator_Wiki_Alias::info($_REQUEST['plugin_alias'])) {
 	// Add an extra empty parameter to create new ones
 	$pluginInfo['description']['params']['__NEW__'] = array(
 		'name' => '',

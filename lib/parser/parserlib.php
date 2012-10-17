@@ -29,6 +29,7 @@ class ParserLib extends TikiDb_Bridge
 	private $pre_handlers = array();
 	private $pos_handlers = array();
 	private $postedit_handlers = array();
+	private $alias;
 
 	public $isHtmlPurifying = false;
 	public $isEditMode = false;
@@ -92,6 +93,7 @@ class ParserLib extends TikiDb_Bridge
 	function __construct()
 	{
 		$this->setOptions();
+		$this->alias = new WikiPlugin_Negotiator_Wiki_Alias();
 	}
 	//*
 	function parse_data_raw($data)
@@ -575,44 +577,7 @@ if ( \$('#$id') ) {
 	//*
 	function plugin_get_list( $includeReal = true, $includeAlias = true )
 	{
-		$real = array();
-		$alias = array();
-
-		foreach ( glob('lib/wiki-plugins/wikiplugin_*.php') as $file ) {
-			$base = basename($file);
-			$plugin = substr($base, 11, -4);
-
-			$real[] = $plugin;
-		}
-
-		//Check for existence of Zend wiki plugins
-		foreach ( glob('lib/core/WikiPlugin/*.php') as $file ) {
-			$base = basename($file);
-			if (strtolower($base) == $base) { //the zend plugins all have lower case names
-				$plugin = substr($base, 0, -4);
-				$real[] = $plugin;
-			}
-		}
-
-		global $prefs;
-		if ( isset($prefs['pluginaliaslist']) ) {
-			$alias = @unserialize($prefs['pluginaliaslist']);
-			$alias = array_filter($alias);
-		}
-
-		if ( $includeReal && $includeAlias )
-			$plugins = array_merge($real, $alias);
-		elseif ( $includeReal )
-			$plugins = $real;
-		elseif ( $includeAlias )
-			$plugins = $alias;
-		else
-			$plugins = array();
-
-		$plugins = array_filter($plugins);
-		sort($plugins);
-
-		return $plugins;
+		return WikiPlugin_Negotiator_Wiki_Alias::getList();
 	}
 
 	function zend_plugin_exists($className)
@@ -640,7 +605,7 @@ if ( \$('#$id') ) {
 
 		if ( $exists )
 			return true;
-		elseif ( $info = $this->plugin_alias_info($name) ) {
+		elseif ( $info = WikiPlugin_Negotiator_Wiki_Alias::info($name) ) {
 			// Make sure the underlying implementation exists
 
 			return $this->plugin_exists($info['implementation'], $include);
@@ -670,7 +635,7 @@ if ( \$('#$id') ) {
 		$func_name_info = "wikiplugin_{$name}_info";
 
 		if ( ! function_exists($func_name_info) ) {
-			if ( $info = $this->plugin_alias_info($name) )
+			if ( $info = WikiPlugin_Negotiator_Wiki_Alias::info($name) )
 				return $known[$name] = $info['description'];
 			else
 				return $known[$name] = false;
@@ -682,96 +647,19 @@ if ( \$('#$id') ) {
 	//*
 	function plugin_alias_info( $name )
 	{
-		global $prefs;
-		if (empty($name))
-			return false;
-		$name = TikiLib::strtolower($name);
-		$prefName = "pluginalias_$name";
-
-		if ( ! isset( $prefs[$prefName] ) )
-			return false;
-
-		return @unserialize($prefs[$prefName]);
+		return WikiPlugin_Negotiator_Wiki_Alias::info( $name );
 	}
 
 	//*
 	function plugin_alias_store( $name, $data )
 	{
-		/*
-			Input data structure:
-
-			implementation: other plugin_name
-			description:
-				** Equivalent of plugin info function here **
-			body:
-				input: use|ignore
-				default: body content to use
-				params:
-					token_name:
-						input: token_name, default uses same name above
-						default: value to use if missing
-						encoding: none|html|url - default to none
-			params:
-				; Use input parameter directly
-				token_name: default value
-
-				; Custom input parameter replacement
-				token_name:
-					pattern: body content to use
-					params:
-						token_name:
-							input: token_name, default uses same name above
-							default: value to use if missing
-							encoding: none|html|url - default to none
-		*/
-		if (empty($name)) {
-			return;
-		}
-
-		$name = TikiLib::strtolower($name);
-		$data['plugin_name'] = $name;
-
-		$prefName = "pluginalias_$name";
-		$tikilib = TikiLib::lib('tiki');
-		$tikilib->set_preference($prefName, serialize($data));
-
-		global $prefs;
-		$list = array();
-		if ( isset($prefs['pluginaliaslist']) )
-			$list = unserialize($prefs['pluginaliaslist']);
-
-		if ( ! in_array($name, $list) ) {
-			$list[] = $name;
-			$tikilib->set_preference('pluginaliaslist', serialize($list));
-		}
-
-		foreach ( glob('temp/cache/wikiplugin_*') as $file )
-			unlink($file);
-
-		$cachelib = TikiLib::lib('cache');
-		$cachelib->invalidate('plugindesc');
+		return WikiPlugin_Negotiator_Wiki_Alias::store( $name, $data );
 	}
 
 	//*
 	function plugin_alias_delete( $name )
 	{
-		$tikilib = TikiLib::lib('tiki');
-		$name = TikiLib::strtolower($name);
-		$prefName = "pluginalias_$name";
-
-		// Remove from list
-		$list = $tikilib->get_preference('pluginaliaslist', array(), true);
-		$list = array_diff($list, array( $name ));
-		$this->set_preference('pluginaliaslist', serialize($list));
-
-		// Remove the definition
-		$tikilib->delete_preference($prefName);
-
-		// Clear cache
-		$cachelib = TikiLib::lib('cache');
-		$cachelib->invalidate('plugindesc');
-		foreach ( glob('temp/cache/wikiplugin_*') as $file )
-			unlink($file);
+		return WikiPlugin_Negotiator_Wiki_Alias::delete( $name );
 	}
 
 	//*
@@ -1100,7 +988,7 @@ if ( \$('#$id') ) {
 			} else {
 				return $plugin_result;
 			}
-		} elseif ( $this->plugin_find_implementation($name, $data, $args) ) {
+		} elseif ( $this->alias->findImplementation($name, $data, $args) ) {
 			return $this->plugin_execute($name, $data, $args, $offset, $validationPerformed);
 		}
 	}
@@ -3112,50 +3000,6 @@ if ( \$('#$id') ) {
 		} else {
 			return array_unique($pageList);
 		}
-	}
-
-	function plugin_find_implementation( & $implementation, & $data, & $args )
-	{
-		if ( $info = $this->plugin_alias_info($implementation) ) {
-			$implementation = $info['implementation'];
-
-			// Do the body conversion
-			if ( isset($info['body']) ) {
-				if ( ( isset($info['body']['input']) && $info['body']['input'] == 'ignore' )
-					|| empty( $data ) )
-					$data = isset($info['body']['default']) ? $info['body']['default'] : '';
-
-				if ( isset($info['body']['params']) )
-					$data = $this->plugin_replace_args($data, $info['body']['params'], $args);
-			} else {
-				$data = '';
-			}
-
-			// Do parameter conversion
-			$params = array();
-			if ( isset($info['params']) ) {
-				foreach ( $info['params'] as $key => $value ) {
-					if ( is_array($value) && isset($value['pattern']) && isset($value['params']) ) {
-						$params[$key] = $this->plugin_replace_args($value['pattern'], $value['params'], $args);
-					} else {
-						// Handle simple values
-						if ( isset($args[$key]) )
-							$params[$key] = $args[$key];
-						else
-							$params[$key] = $value;
-					}
-				}
-			}
-
-			$args = $params;
-
-			// Attempt to find recursively
-			$this->plugin_find_implementation($implementation, $data, $args);
-
-			return true;
-		}
-
-		return false;
 	}
 
 	private function get_hotwords()
