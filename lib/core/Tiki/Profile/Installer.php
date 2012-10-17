@@ -212,11 +212,13 @@ class Tiki_Profile_Installer
 		require_once 'lib/cache/cachelib.php';
 
 		try {
-			if ( ! $profiles = $this->getInstallOrder($profile) )
+			if ( ! $profiles = $this->getInstallOrder($profile) ) {
 				return false;
+			}
 	
-			foreach ( $profiles as $p )
+			foreach ( $profiles as $p ) {
 				$this->doInstall($p);
+			}
 			
 			if (count($this->getFeedback()) == count($profiles)) {
 				$this->setFeedback(tra('Nothing was changed, please check profile for errors'));
