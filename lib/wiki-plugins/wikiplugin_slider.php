@@ -84,14 +84,9 @@ function wikiplugin_slider_info()
 				'required' => false,
 				'name' => tra('Show Multiple'),
 				'description' => tra('Set this value to a number and it will show that many slides at once'),
-				'filter' => 'alpha',
-				'accepted' => 'y or n',
-				'default' => 'n',
-				'options' => array(
-					array('text' => '', 'value' => ''),
-					array('text' => tra('Yes'), 'value' => 'y'),
-					array('text' => tra('No'), 'value' => 'n')
-				)
+				'filter' => 'striptags',
+				'accepted' => 'a number',
+				'default' => '1'
 			),
 			'buildarrows' => array(
 				'required' => false,
@@ -347,6 +342,8 @@ function wikiplugin_slider($data, $params)
 
 	$animationtime = (int) $animationtime;
 	$animationtime = (empty($animationtime) === false ? $animationtime : 600);
+	$showmultiple = (int) $showmultiple;
+	$showmultiple = (empty($showmultiple) === false ? $showmultiple : 1);
 
 	$headerlib->add_jq_onready(
 		"function formatText(i, p) {
@@ -358,7 +355,7 @@ function wikiplugin_slider($data, $params)
 			theme               : '$theme',
 			expand              : ".makeBool($expand, false).",
 			resizeContents      : ".makeBool($resizecontents, true).",
-			showMultiple        : false,
+			showMultiple        : $showmultiple,
 			easing              : 'swing',
 
 			buildArrows         : ".makeBool($buildarrows, true).",
