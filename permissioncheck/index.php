@@ -30,7 +30,8 @@
 		echo "go";
 	} else {
 		echo "permission not granted<br />\n<br />\n";
-		echo "enable permission (setting: yes) in file:<br />\npermissioncheck/permission_granted.php.inc<br />\n";
+		echo "enable permission (setting: yes) in file:<br />\npermissioncheck/permission_granted.php.inc<br />\n<br />\n";
+		echo "disable permission on production machines<br />\n";
 		echo "</p></body></html>";
 		die;
 	}

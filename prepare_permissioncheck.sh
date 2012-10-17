@@ -5,9 +5,11 @@
 
 # ensure the command "which" is available
 PATH="${PATH}:/bin:/usr/bin:/sbin:/usr/sbin:/usr/local/bin:/usr/local/sbin:/opt/bin:/opt/sbin:/opt/local/bin:/opt/local/sbin"
-echo ${PATH}
+#echo -e ${PATH} "\n"
 CHMOD=`which chmod`
-echo ${CHMOD}
+#echo -e ${CHMOD} "\n"
+PHP=`which php`
+#echo -e ${PHP} "\n"
 
 # compare with permissioncheck/usecases.php.inc
 
@@ -45,15 +47,36 @@ PERM_LIST_FILES[4]=664
 # increase this number if you add usecases
 MAX_USECASES=4
 
+if [ "a" = "b" ] ; then
 echo ${CHMOD} ${PERM_LIST_SUBDIRS[0]} "${NAME_LIST_SUBDIRS[0]}"
 echo ${CHMOD} ${PERM_LIST_FILES[0]} "${NAME_LIST_SUBDIRS[0]}/${INDEX_FILE}"
 
 for ((CASE_COUNTER=1; $CASE_COUNTER <= $MAX_USECASES; CASE_COUNTER++)) ; do
-	echo ${CASE_COUNTER}
+	#echo ${CASE_COUNTER}
 	echo ${CHMOD} ${PERM_LIST_SUBDIRS[${CASE_COUNTER}]} "${WORK_DIR}/${NAME_LIST_SUBDIRS[${CASE_COUNTER}]}"
 	echo ${CHMOD} ${PERM_LIST_FILES[${CASE_COUNTER}]} "${WORK_DIR}/${NAME_LIST_SUBDIRS[${CASE_COUNTER}]}/${DEFAULT_FILE_NAME}"
 done
+#else
+#	echo no
+fi
 
+${CHMOD} ${PERM_LIST_SUBDIRS[0]} "${NAME_LIST_SUBDIRS[0]}"
+${CHMOD} ${PERM_LIST_FILES[0]} "${NAME_LIST_SUBDIRS[0]}/${INDEX_FILE}"
 
+for ((CASE_COUNTER=1; $CASE_COUNTER <= $MAX_USECASES; CASE_COUNTER++)) ; do
+	#echo ${CASE_COUNTER}
+	${CHMOD} ${PERM_LIST_SUBDIRS[${CASE_COUNTER}]} "${WORK_DIR}/${NAME_LIST_SUBDIRS[${CASE_COUNTER}]}"
+	${CHMOD} ${PERM_LIST_FILES[${CASE_COUNTER}]} "${WORK_DIR}/${NAME_LIST_SUBDIRS[${CASE_COUNTER}]}/${DEFAULT_FILE_NAME}"
+done
+
+# quick 'n dirty
+${CHMOD} 444 permissioncheck/permission_print.php.inc
+${CHMOD} 444 permissioncheck/permission_granted.php.inc
+
+#pwd
+PERMISSION_GRANTED=`$PHP permissioncheck/permission_print.php.inc`
+echo
+echo permission to run permissioncheck: ${PERMISSION_GRANTED}
+echo
 
 # EOF
