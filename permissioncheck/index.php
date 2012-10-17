@@ -27,7 +27,7 @@
 	include "permission_granted.php.inc";
 	//echo $permission_granted ;
 	if ($permission_granted=='yes') {
-		echo "go";
+		echo "go<br />\n<br />\n";
 	} else {
 		echo "permission not granted<br />\n<br />\n";
 		echo "enable permission (setting: yes) in file:<br />\npermissioncheck/permission_granted.php.inc<br />\n<br />\n";
@@ -36,6 +36,24 @@
 		die;
 	}
 	//echo "\n";
+
+	$file = fopen("usecases.txt", "r") or exit("Unable to open file!");
+	//Output a line of the file until the end is reached
+	while(!feof($file))
+	  {
+	  $line_of_file_orig=fgets($file);
+	  if ($line_of_file_orig=="") {
+	   $dummy=true;
+	  } else {
+	  //echo "Y".$line_of_file_orig."Y<br />\n";
+	  $line_of_file_mod=str_replace(":"," ",$line_of_file_orig);
+	  //echo $line_of_file_mod."<br />\n";
+	  list($fusecase,$fsubdirperm,$ffileperm)=sscanf($line_of_file_mod,"%s %d %d");
+	  echo $fusecase." / ".$fsubdirperm." / ".$ffileperm."<br />\n";
+	  //echo fgets($file). "<br />";
+	  } }
+	fclose($file);
+
 	?>
  </p>
  <p>

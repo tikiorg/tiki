@@ -1,0 +1,4 @@
+paranoia:700:600
+paranoia-suphp:701:600
+mixed:770:660
+risky:775:664

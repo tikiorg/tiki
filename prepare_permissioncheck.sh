@@ -16,6 +16,7 @@ PHP=`which php`
 WORK_DIR="permissioncheck"
 INDEX_FILE="index.php"
 DEFAULT_FILE_NAME="check.php"
+USECASES_FILE="${WORK_DIR}/usecases.txt"
 
 set -a NAME_LIST_SUBDIRS
 set -a PERM_LIST_SUBDIRS
@@ -47,6 +48,7 @@ PERM_LIST_FILES[4]=664
 # increase this number if you add usecases
 MAX_USECASES=4
 
+# debug mode intended
 if [ "a" = "b" ] ; then
 echo ${CHMOD} ${PERM_LIST_SUBDIRS[0]} "${NAME_LIST_SUBDIRS[0]}"
 echo ${CHMOD} ${PERM_LIST_FILES[0]} "${NAME_LIST_SUBDIRS[0]}/${INDEX_FILE}"
@@ -78,5 +80,13 @@ PERMISSION_GRANTED=`$PHP permissioncheck/permission_print.php.inc`
 echo
 echo permission to run permissioncheck: ${PERMISSION_GRANTED}
 echo
+
+#value=0;
+while read line
+do
+echo $line
+#value=`expr $value + 1`;
+#echo $value;
+done < ${USECASES_FILE}
 
 # EOF
