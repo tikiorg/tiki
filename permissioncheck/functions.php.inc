@@ -88,6 +88,7 @@ function get_perms_octal($filename) {
 		$perms_oct=substr(sprintf('%o', fileperms($filename)), -3);
 	} else {
 		$perm_oct="999";
+	}
 	return $perms_oct;
 }
 ?>
