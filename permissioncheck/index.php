@@ -23,6 +23,19 @@
 	?>
  </p>
  <p>
+	<?php
+	include "permission_granted.php.inc";
+	//echo $permission_granted ;
+	if ($permission_granted=='yes') {
+		echo "go";
+	} else {
+		echo "\npermission not granted";
+		die;
+	}
+	//echo "\n";
+	?>
+ </p>
+ <p>
 	permission check: <?php
 		//include "functions.php.inc";
 		require "functions.php.inc";
