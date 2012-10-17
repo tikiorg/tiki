@@ -2,15 +2,23 @@
 
 // group/owner of file
 function get_ownership_groupname($filename) {
-	$group=posix_getgrgid(filegroup($filename));
-	$groupname=$group["name"];
+	if (file_exists($filename)) {
+		$group=posix_getgrgid(filegroup($filename));
+		$groupname=$group["name"];
+	} else {
+		$groupname="NO ACCESS";
+	}
 	return $groupname;
 }
 
 // user/owner of file
 function get_ownership_username($filename) {
-	$user=posix_getpwuid(fileowner($filename));
-	$username=$user["name"];
+	if (file_exists($filename)) {
+		$user=posix_getpwuid(fileowner($filename));
+		$username=$user["name"];
+	} else {
+		$username="NO ACCESS";
+	}
 	return $username;
 }
 
@@ -70,13 +78,16 @@ function get_perms_ascii($filename) {
         	    (($perms & 0x0200) ? 't' : 'x' ) :
         	    (($perms & 0x0200) ? 'T' : '-'));
 	} else {
-	$perm_string="no access";
+		$perm_string="no access";
 	}
 return $perm_string;
 }
 
 function get_perms_octal($filename) {
-	$perms_oct=substr(sprintf('%o', fileperms($filename)), -3);
+	if (file_exists($filename)) {
+		$perms_oct=substr(sprintf('%o', fileperms($filename)), -3);
+	} else {
+		$perm_oct="999";
 	return $perms_oct;
 }
 ?>
