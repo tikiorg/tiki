@@ -55,7 +55,8 @@
 		$group=get_ownership_groupname($filename);
 		$username=get_ownership_username($filename);
 		$groupname=get_ownership_groupname($filename);
-		$perms_oct=substr(sprintf('%o', fileperms($filename)), -3);
+		//$perms_oct=substr(sprintf('%o', fileperms($filename)), -3);
+		$perms_oct=get_perms_octal($filename);
 		$perms_asc=get_perms_ascii($filename);
 		echo "\n\tthis file "."<strong>".$filename."</strong>"." owned by ";
 		echo "\n\tuser "."<strong>".$username."</strong>"." and group "."<strong>".$groupname."</strong>"." has got access permissions ";
