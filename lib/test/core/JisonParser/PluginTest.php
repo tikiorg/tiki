@@ -16,6 +16,7 @@ class JisonParser_PluginTest extends JisonParser_Abstract
 			"rejected_plugin_default_validation_behavior" => array(),
 			"expandingoutline_basic" => array(),
 			"parser_level_and_maketoc" => array(),
+			"alias_plugin" => array(),
 		);
 	}
 
@@ -312,6 +313,48 @@ class JisonParser_PluginTest extends JisonParser_Abstract
 			'<h1 class="showhide_heading" id="test">test</h1>'.
 			'<h3 class="showhide_heading" id="nested_test">nested test</h3>'.
 			'<h1 class="showhide_heading" id="test1">test</h1>'
+		);
+
+		$parsed = $this->parser->parse($syntax[0]);
+
+		$this->parser->resetOption();
+
+		$this->tryRemoveIdsFromHtmlList($parsed);
+
+		$this->tryRemoveFingerprintId('html', $parsed);
+
+		return array("parsed" => $parsed, "syntax" => $syntax);
+
+	}
+
+	function alias_plugin()
+	{
+		global $prefs;
+		$prefs['pluginalias_fakeplugin'] = serialize(array(
+			"implementation" => "code",
+            "description" => array(
+				"name" => "Code Test",
+                "description" => "A twist on the code plugin",
+                "prefs" => array("wikiplugin_fakeplugin"),
+                "filter" => "xss",
+                "inline" => "",
+                "params" => array(),
+            ),
+	        "body" => array(
+	            "input" => "use",
+	            "default" => "$" . "test = 'test';",
+	            "params" => array()
+	        ),
+	        "params" => array(
+				"colors" => "php"
+			),
+            "plugin_name" => "fakeplugin"
+		));
+
+		$syntax = array(
+			"{fakeplugin}"
+		,
+			'<pre class="codelisting"  data-wrap="1"  dir="ltr"  style="white-space:pre-wrap; white-space:-moz-pre-wrap !important; white-space:-pre-wrap; white-space:-o-pre-wrap; word-wrap:break-word;" id="codebox1" >$test = &#039;test&#039;;</pre>'
 		);
 
 		$parsed = $this->parser->parse($syntax[0]);
