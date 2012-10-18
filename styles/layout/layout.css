@@ -24,7 +24,7 @@ html[dir=ltr]>body {
 }
 
 /* Make HTML 5 elements display block-level */  
-header, nav, article, footer, address {  
+header, nav, article, section, footer, address {  
     display: block;  
 } 
 
