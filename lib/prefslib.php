@@ -811,6 +811,55 @@ class PreferencesLib
 		$filters = '+(' . implode(' ', $positive) .') ' . implode(' ', $negative);
 		return "+($criteria) +($filters)";
 	}
+
+	/***
+	 * Store 10 most recently changed prefs for quickadmin module menu
+	 *
+	 * @param $name			preference name
+	 * @param null $auser	optional user
+	 */
+
+	public function addRecent($name, $auser = null)
+	{
+		global $user;
+
+		if (!$auser) {
+			$auser = $user;
+		}
+
+		$list = (array) $this->getRecent( $auser );
+		array_unshift( $list, $name );
+		$list = array_unique( $list );
+		$list = array_slice( $list, 0, 10 );
+
+		TikiLib::lib('tiki')->set_user_preference($auser, 'admin_recent_prefs', serialize($list));
+	}
+
+	/***
+	 * Get recent prefs list
+	 *
+	 * @param null $auser	option user
+	 * @return array		array of pref names
+	 */
+
+	public function getRecent($auser = null)
+	{
+		global $user;
+		$tikilib = TikiLib::lib('tiki');
+
+		if (!$auser) {
+			$auser = $user;
+		}
+
+		$recent = $tikilib->get_user_preference($auser, 'admin_recent_prefs');
+
+		if (empty($recent)) {
+			return array();
+		} else {
+			return $tikilib->tiki_unserialize($recent);
+		}
+
+	}
 }
 
 global $prefslib;

@@ -325,6 +325,19 @@ li#logout_link a {
 	padding: 0 .5em .2em 0;
 }
 
+.box-quickadmin li {
+	font-size: 0.9em;
+}
+
+.box-quickadmin .cssmenu_horiz a {
+	padding: 0 2.25em 0 0;
+}
+
+.box-quickadmin .cssmenu_horiz ul li {
+	padding-left: 1em;
+	background-color: #fff;
+}
+
 #bottom_modules .box-rsslist br {
 	display: none;
 }

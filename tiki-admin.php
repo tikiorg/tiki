@@ -28,6 +28,9 @@ global $logslib; include_once('lib/logs/logslib.php');
 function add_feedback( $name, $message, $st, $num = null )
 {
 	global $tikifeedback;
+
+	TikiLib::lib('prefs')->addRecent($name);
+
 	$tikifeedback[] = array(
 		'num' => $num,
 		'mes' => $message,

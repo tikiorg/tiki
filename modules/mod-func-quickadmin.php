@@ -36,4 +36,6 @@ function module_quickadmin($mod_reference, $module_params)
 		$themegenlib->setupEditor();
 	}
 
+	TikiLib::lib('smarty')->assign('recent_prefs', TikiLib::lib('prefs')->getRecent());
+
 }

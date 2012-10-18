@@ -2,7 +2,22 @@
 
 {tikimodule error=$module_params.error title=$tpl_module_title name="quickadmin" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}
 	{if $tiki_p_admin == "y"}
-		<div id="quickadmin" style="text-align: left; padding-left: 12px;"><small>{tr}Quick Admin{/tr}</small>:
+		<div id="quickadmin" style="text-align: left; padding-left: 12px;">
+			<ul class="cssmenu_horiz clearfix">
+				<li>
+					<a>{tr}Quick Admin{/tr}:</a>
+					<ul class="recent-prefs">
+						<li style="line-height: 2em;"><em>{tr}Recent:{/tr}</em></li>
+						{foreach $recent_prefs as $p}
+							<li>
+								<a href="tiki-admin.php?lm_criteria=%22{$p}%22">{$p|stringfix}</a>
+							</li>
+						{foreachelse}
+							<li>{tr}None{/tr}</li>
+						{/foreach}
+					</ul>
+				</li>
+			</ul>
 			{icon _id=house title="{tr}Admin home{/tr}" href="tiki-admin.php"} 
 			{icon _id=wrench title="{tr}Modify the look &amp; feel (logo, theme, etc.){/tr}" href="tiki-admin.php?page=look&amp;cookietab=2"} 
 			{icon _id=user title="{tr}Users{/tr}" href="tiki-adminusers.php"}
