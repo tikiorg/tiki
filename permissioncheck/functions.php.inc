@@ -6,7 +6,7 @@ function get_ownership_groupname($filename) {
 		$group=posix_getgrgid(filegroup($filename));
 		$groupname=$group["name"];
 	} else {
-		$groupname="NO ACCESS";
+		$groupname="no group";
 	}
 	return $groupname;
 }
@@ -17,7 +17,7 @@ function get_ownership_username($filename) {
 		$user=posix_getpwuid(fileowner($filename));
 		$username=$user["name"];
 	} else {
-		$username="NO ACCESS";
+		$username="no user";
 	}
 	return $username;
 }

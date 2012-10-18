@@ -1,7 +1,7 @@
-#!/bin/bash
+#!/bin/sh
 
-# we do _not_ use /bin/sh
-# /bin/sh is a symlink to /bin/dash on Debian, dash doesn't know arrays
+ACTION=$1
+#echo ${ACTION}
 
 # ensure the command "which" is available
 PATH="${PATH}:/bin:/usr/bin:/sbin:/usr/sbin:/usr/local/bin:/usr/local/sbin:/opt/bin:/opt/sbin:/opt/local/bin:/opt/local/sbin"
@@ -10,6 +10,7 @@ CHMOD=`which chmod`
 #echo -e ${CHMOD} "\n"
 PHP=`which php`
 #echo -e ${PHP} "\n"
+COPY=`which cp`
 
 # compare with permissioncheck/usecases.php.inc
 
@@ -17,76 +18,83 @@ WORK_DIR="permissioncheck"
 INDEX_FILE="index.php"
 DEFAULT_FILE_NAME="check.php"
 USECASES_FILE="${WORK_DIR}/usecases.txt"
-
-set -a NAME_LIST_SUBDIRS
-set -a PERM_LIST_SUBDIRS
-set -a PERM_LIST_FILES
-
-# special case
-NAME_LIST_SUBDIRS[0]="${WORK_DIR}"
-PERM_LIST_SUBDIRS[0]=755
-PERM_LIST_FILES[0]=644
-#echo ${NAME_LIST_SUBDIRS[0]}
-
-# the usecases
-NAME_LIST_SUBDIRS[1]="paranoia"
-PERM_LIST_SUBDIRS[1]=700
-PERM_LIST_FILES[1]=600
-
-NAME_LIST_SUBDIRS[2]="paranoia-suphp"
-PERM_LIST_SUBDIRS[2]=701
-PERM_LIST_FILES[2]=600
-
-NAME_LIST_SUBDIRS[3]="mixed"
-PERM_LIST_SUBDIRS[3]=770
-PERM_LIST_FILES[3]=660
-
-NAME_LIST_SUBDIRS[4]="risky"
-PERM_LIST_SUBDIRS[4]=775
-PERM_LIST_FILES[4]=664
-
-# increase this number if you add usecases
-MAX_USECASES=4
-
-# debug mode intended
-if [ "a" = "b" ] ; then
-echo ${CHMOD} ${PERM_LIST_SUBDIRS[0]} "${NAME_LIST_SUBDIRS[0]}"
-echo ${CHMOD} ${PERM_LIST_FILES[0]} "${NAME_LIST_SUBDIRS[0]}/${INDEX_FILE}"
-
-for ((CASE_COUNTER=1; $CASE_COUNTER <= $MAX_USECASES; CASE_COUNTER++)) ; do
-	#echo ${CASE_COUNTER}
-	echo ${CHMOD} ${PERM_LIST_SUBDIRS[${CASE_COUNTER}]} "${WORK_DIR}/${NAME_LIST_SUBDIRS[${CASE_COUNTER}]}"
-	echo ${CHMOD} ${PERM_LIST_FILES[${CASE_COUNTER}]} "${WORK_DIR}/${NAME_LIST_SUBDIRS[${CASE_COUNTER}]}/${DEFAULT_FILE_NAME}"
-done
-#else
-#	echo no
-fi
-
-${CHMOD} ${PERM_LIST_SUBDIRS[0]} "${NAME_LIST_SUBDIRS[0]}"
-${CHMOD} ${PERM_LIST_FILES[0]} "${NAME_LIST_SUBDIRS[0]}/${INDEX_FILE}"
-
-for ((CASE_COUNTER=1; $CASE_COUNTER <= $MAX_USECASES; CASE_COUNTER++)) ; do
-	#echo ${CASE_COUNTER}
-	${CHMOD} ${PERM_LIST_SUBDIRS[${CASE_COUNTER}]} "${WORK_DIR}/${NAME_LIST_SUBDIRS[${CASE_COUNTER}]}"
-	${CHMOD} ${PERM_LIST_FILES[${CASE_COUNTER}]} "${WORK_DIR}/${NAME_LIST_SUBDIRS[${CASE_COUNTER}]}/${DEFAULT_FILE_NAME}"
-done
+GRANT="${WORK_DIR}/permission_granted.txt"
+NO="${WORK_DIR}/no.txt"
+YES="${WORK_DIR}/yes.txt"
 
 # quick 'n dirty
-${CHMOD} 444 permissioncheck/permission_print.php.inc
-${CHMOD} 644 permissioncheck/permission_granted.php.inc
+# none of those permissions is critical
+#
+${CHMOD} 644 "${GRANT}"
+${CHMOD} 644 "${NO}"
+${CHMOD} 644 "${YES}"
+#
+${CHMOD} 755 "${WORK_DIR}/"
+${CHMOD} 644 "${WORK_DIR}/${DEFAULT_FILE_NAME}"
+${CHMOD} 644 "${WORK_DIR}/functions.php.inc"
+${CHMOD} 600 "${WORK_DIR}/_htaccess"
+${CHMOD} 600 "${WORK_DIR}/.htpasswd"
+${CHMOD} 644 "${WORK_DIR}/index.php"
+${CHMOD} 444 "${WORK_DIR}/permission_print.php.inc"
+${CHMOD} 644 "${WORK_DIR}/permission_granted.php.inc"
+${CHMOD} 644 "${WORK_DIR}/usecases.php.inc"
+${CHMOD} 644 "${WORK_DIR}/usecases.txt"
 
+phpcheck() {
 #pwd
-PERMISSION_GRANTED=`$PHP permissioncheck/permission_print.php.inc`
+PHP_PERMISSION_GRANTED=`$PHP ${WORK_DIR}/permission_print.php.inc`
 echo
-echo permission to run permissioncheck: ${PERMISSION_GRANTED}
+echo permission to run permissioncheck: ${PHP_PERMISSION_GRANTED}
 echo
+}
 
-#value=0;
-while read line
-do
-echo $line
-#value=`expr $value + 1`;
-#echo $value;
+disable_perm_check() {
+while read line_of_file_orig ; do
+	${COPY} ${NO} ${GRANT}
+	#echo $line_of_file_orig
+	usecase=`echo $line_of_file_orig | cut -d: -f1`
+	#echo $usecase
+	uc_perms_subdir=`echo $line_of_file_orig | cut -d: -f2`
+	#echo $uc_perms_subdir
+	uc_perms_file=`echo $line_of_file_orig | cut -d: -f3`
+	#echo $uc_perms_file
+	${CHMOD} 700 ${WORK_DIR}/${usecase}
+	#ls -ld ${WORK_DIR}/${usecase}
+	${CHMOD} 600 ${WORK_DIR}/${usecase}/${DEFAULT_FILE_NAME}
+	#ls -l ${WORK_DIR}/${usecase}/${DEFAULT_FILE_NAME}
+	#echo
 done < ${USECASES_FILE}
+}
+
+enable_perm_check() {
+while read line_of_file_orig ; do
+	${COPY} ${YES} ${GRANT}
+	#echo $line_of_file_orig
+	usecase=`echo $line_of_file_orig | cut -d: -f1`
+	#echo $usecase
+	uc_perms_subdir=`echo $line_of_file_orig | cut -d: -f2`
+	#echo $uc_perms_subdir
+	uc_perms_file=`echo $line_of_file_orig | cut -d: -f3`
+	#echo $uc_perms_file
+	${CHMOD} ${uc_perms_subdir} ${WORK_DIR}/${usecase}
+	#ls -ld ${WORK_DIR}/${usecase}
+	${CHMOD} ${uc_perms_file} ${WORK_DIR}/${usecase}/${DEFAULT_FILE_NAME}
+	#ls -l ${WORK_DIR}/${usecase}/${DEFAULT_FILE_NAME}
+	#echo
+done < ${USECASES_FILE}
+}
+
+
+case ${ACTION} in
+	disable)
+		disable_perm_check
+		;;
+	enable)
+		enable_perm_check
+		;;
+	*)
+		echo "Usage: sh prepare_permissioncheck.sh {disable|enable}"
+		;;
+esac
 
 # EOF
