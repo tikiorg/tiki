@@ -64,6 +64,7 @@
 					{preference name=feature_wiki_comments}
 					<div class="adminoptionboxchild" id="feature_wiki_comments_childcontainer">
 						{preference name=wiki_comments_displayed_default}
+						{preference name=wiki_comments_form_displayed_default}
 						{preference name=wiki_comments_per_page}
 						{preference name=wiki_comments_default_ordering}
 						{preference name=wiki_comments_allow_per_page}

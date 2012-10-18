@@ -260,6 +260,11 @@ function prefs_wiki_list($partial = false)
 			'type' => 'flag',
 			'default' => 'n',
 		),
+		'wiki_comments_form_displayed_default' => array(
+			'name' => tra('Display comments form by default'),
+			'type' => 'flag',
+			'default' => 'n',
+		),
 		'wiki_comments_per_page' => array(
 			'name' => tra('Default number per page'),
 			'type' => 'text',
