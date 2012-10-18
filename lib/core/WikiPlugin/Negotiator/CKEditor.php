@@ -15,7 +15,7 @@ class WikiPlugin_Negotiator_CKEditor extends WikiPlugin_Negotiator_Wiki
 		$result = parent::execute();
 
 		//This gives us access to the plugin levels
-		if ($this->parserLevel > WikiPlugin_ParserNegotiator::$currentParserLevel) return $result;
+		if ($this->parserLevel > WikiPlugin_Negotiator_Wiki::$currentParserLevel) return $result;
 
 		$syntax = $this->toSyntax();
 
