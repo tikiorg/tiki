@@ -697,7 +697,7 @@ function wikiplugin_tracker($data, $params)
 				/* ------------------------------------- Check field values for each type and presence of mandatory ones ------------------- */
 				$field_errors = $trklib->check_field_values($ins_fields, $categorized_fields, $trackerId, empty($itemId)?'':$itemId);
 
-				if (empty($user) && $prefs['feature_antibot'] == 'y' && $registration != 'y') {
+				if ((empty($user) || $user === $_REQUEST['name']) && $prefs['feature_antibot'] === 'y' && $registration === 'y') {
 					// in_tracker session var checking is for tiki-register.php
 					if (!$captchalib->validate()) {
 						$field_errors['err_antibot'] = 'y';
