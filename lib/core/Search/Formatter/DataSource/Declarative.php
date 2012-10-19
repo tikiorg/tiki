@@ -32,7 +32,11 @@ class Search_Formatter_DataSource_Declarative implements Search_Formatter_DataSo
 
 			$initial = $entry;
 			foreach ($this->globalSources as $globalSource) {
-				$entry = array_merge($entry, $this->obtainFromGlobalSource($globalSource, $type, $object, $missingFields, $initial));
+				$local = $this->obtainFromGlobalSource($globalSource, $type, $object, $missingFields, $initial);
+
+				if (false !== $local) {
+					$entry = array_merge($entry, $local);
+				}
 			}
 		}
 

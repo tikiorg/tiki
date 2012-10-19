@@ -274,6 +274,18 @@ function prefs_user_list($partial = false)
 			'type' => 'flag',
 			'default' => 'n',
 		),
+		'user_in_search_result' => array(
+			'name' => tr('Users available in search results'),
+			'description' => tr('Users available within search results. Content related to the user will be included in the index.'),
+			'type' => 'list',
+			'dependencies' => array('feature_search'),
+			'options' => array(
+				'none' => tr('None'),
+				'all' => tr('All'),
+				'public' => tr('Public'),
+			),
+			'default' => 'none',
+		),
 	);
 }
 

@@ -78,6 +78,7 @@
 
 		{tab name="{tr}General Settings{/tr}"}
 			{preference name=user_show_realnames}
+			{preference name=user_in_search_result}
 			{preference name=highlight_group}
 			{preference name=feature_display_my_to_others}
 			{preference name=user_tracker_infos}

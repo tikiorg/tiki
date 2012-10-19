@@ -2396,14 +2396,14 @@ class UsersLib extends TikiLib
 
 	// UNRELIABLE. In particular, lastLogin and currentLogin aren't properly maintained due to missing user_details_ cache invalidation
 	// refactoring to use new cachelib instead of global var in memory - batawata 2006-02-07
-	function get_user_details($login)
+	function get_user_details($login, $useCache = true)
 	{
 		global $cachelib;
 		require_once("lib/cache/cachelib.php");
 
 		$cacheKey = 'user_details_'.$login;
 
-		if ( ! $user_details = $cachelib->getSerialized($cacheKey)) {
+		if (! $useCache || ! $user_details = $cachelib->getSerialized($cacheKey)) {
 			$user_details = array();
 
 			$query = 'SELECT `userId`, `login`, `email`, `lastLogin`, `currentLogin`,' .

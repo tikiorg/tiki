@@ -195,6 +195,10 @@ class UnifiedSearchLib
 			$types['comment'] = tra('comment');
 		}
 
+		if (in_array($prefs['user_in_search_result'], array('all', 'public'))) {
+			$types['user'] = tra('user');
+		}
+
 		return $types;
 	}
 
@@ -267,6 +271,10 @@ class UnifiedSearchLib
 
 			$aggregator->addContentSource('comment', new Search_ContentSource_CommentSource($commentTypes));
 			$aggregator->addGlobalSource(new Search_GlobalSource_CommentSource);
+		}
+
+		if (isset($types['user'])) {
+			$aggregator->addContentSource('user', new Search_ContentSource_UserSource($prefs['user_in_search_result']));
 		}
 
 		// Global Sources

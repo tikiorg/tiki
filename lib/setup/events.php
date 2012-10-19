@@ -18,6 +18,17 @@ function tiki_setup_events()
 		if ( $prefs['quantify_changes'] == 'y' && $prefs['feature_multilingual'] == 'y' ) {
 			$events->bind('tiki.wiki.save', Event_Lib::defer('quantify', 'wiki_update'));
 		}
+
+		$prefix = $prefs['feature_wiki_userpage_prefix'];
+		if ($prefs['feature_wiki_userpage'] && ! empty($prefix)) {
+			$events->bind('tiki.wiki.save', function ($args) use ($events, $prefix) {
+				global $prefs;
+				if ($prefix == substr($args['object'], 0, strlen($prefix))) {
+					$user = substr($args['object'], strlen($prefix));
+					tiki_save_refresh_index(array('type' => 'user', 'object' => $user));
+				}
+			});
+		}
 	}
 
 	if ($prefs['feature_trackers'] == 'y') {
@@ -73,6 +84,9 @@ function tiki_setup_events()
 
 	if ($prefs['feature_search'] == 'y' && $prefs['unified_incremental_update'] == 'y') {
 		$events->bindPriority(100, 'tiki.save', 'tiki_save_refresh_index');
+		$events->bindPriority(100, 'tiki.user.save', function ($args) {
+			tiki_save_refresh_index(array('type' => 'user', 'object' => $args['user']));
+		});
 	}
 
 	if ($prefs['feature_file_galleries'] == 'y') {

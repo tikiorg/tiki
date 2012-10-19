@@ -138,7 +138,11 @@ class Search_Indexer
 		$initialData = $data;
 
 		foreach ($this->globalSources as $globalSource) {
-			$data = array_merge($data, $globalSource->getData($objectType, $objectId, $typeFactory, $initialData));
+			$local = $globalSource->getData($objectType, $objectId, $typeFactory, $initialData);
+
+			if (false !== $local) {
+				$data = array_merge($data, $local);
+			}
 		}
 
 		$base = array(
