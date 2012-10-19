@@ -50,7 +50,7 @@ class Search_ContentSource_TrackerItemSource implements Search_ContentSource_Int
 			return $data;
 		}
 
-		foreach ($this->getIndexableHandlers($definition, $item) as $baseKey => $handler) {
+		foreach (self::getIndexableHandlers($definition, $item) as $baseKey => $handler) {
 			$data = array_merge($data, $handler->getDocumentPart($baseKey, $typeFactory));
 		}
 
@@ -120,7 +120,7 @@ class Search_ContentSource_TrackerItemSource implements Search_ContentSource_Int
 		return $data;
 	}
 
-	private function getIndexableHandlers($definition, $item = array())
+	public static function getIndexableHandlers($definition, $item = array())
 	{
 		global $prefs;
 		$indexKey = $prefs['unified_trackerfield_keys'];
@@ -146,7 +146,7 @@ class Search_ContentSource_TrackerItemSource implements Search_ContentSource_Int
 		$handlers = array();
 		foreach ($trackers as $trackerId) {
 			$definition = Tracker_Definition::get($trackerId);
-			$handlers = array_merge($handlers, $this->getIndexableHandlers($definition));
+			$handlers = array_merge($handlers, self::getIndexableHandlers($definition));
 		}
 
 		return $handlers;

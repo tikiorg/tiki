@@ -248,7 +248,7 @@ if ($prefs['feature_userPreferences'] == 'y' && isset($_REQUEST["new_prefs"])) {
 		$userlib->interSendUserInfo($prefs['interlist'][$prefs['feature_intertiki_mymaster']], $userwatch);
 	}
 
-	TikiLib::events()->trigger('tiki.user.update', array('user' => $userwatch));
+	TikiLib::events()->trigger('tiki.user.update', array('type' => 'user', 'object' => $userwatch));
 }
 if ($prefs['auth_method'] == 'ldap' && $user == 'admin' && $prefs['ldap_skip_admin'] == 'y') {
 	$change_password = 'y';

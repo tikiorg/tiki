@@ -5818,7 +5818,7 @@ class UsersLib extends TikiLib
 
 		$cachelib->invalidate('userslist');
 
-		TikiLib::events()->trigger('tiki.user.create', array('user' => $user));
+		TikiLib::events()->trigger('tiki.user.create', array('type' => 'user', 'object' => $user));
 
 		return true;
 	}
@@ -5868,7 +5868,7 @@ class UsersLib extends TikiLib
 		$query = 'update `tiki_live_support_requests` set `email`=? where binary `user`=?';
 		$result = $this->query($query, array( $email, $user));
 
-		TikiLib::events()->trigger('tiki.user.update', array('user' => $user));
+		TikiLib::events()->trigger('tiki.user.update', array('type' => 'user', 'object' => $user));
 
 		return true;
 	}
@@ -6136,7 +6136,7 @@ class UsersLib extends TikiLib
 		global $cachelib; require_once('lib/cache/cachelib.php');
 		$cachelib->invalidate('user_details_'.$user);
 
-		TikiLib::events()->trigger('tiki.user.update', array('user' => $user));
+		TikiLib::events()->trigger('tiki.user.update', array('type' => 'user', 'object' => $user));
 
 		return true;
 	}

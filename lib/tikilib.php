@@ -4156,6 +4156,8 @@ class TikiLib extends TikiDb_Bridge
 
 		}
 
+		$tx = $this->begin();
+
 		TikiLib::events()->trigger(
 			'tiki.wiki.update',
 			array(
@@ -4167,6 +4169,8 @@ class TikiLib extends TikiDb_Bridge
 				'old_data' => $info['data'],
 			)
 		);
+
+		$tx->commit();
 	}
 
 	function object_post_save( $context, $data )

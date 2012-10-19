@@ -4446,6 +4446,24 @@ class TrackerLib extends TikiLib
 			$searchlib->invalidateObject('trackeritem', $itemId);
 		}
 	}
+
+	public function update_user_account($args)
+	{
+		// Try to find if the tracker is a user tracker, flag update to associated user
+
+		$fields = array_keys($args['values']);
+		$table = $this->table('users_groups');
+		$field = $table->fetchOne('usersFieldId', array(
+			'usersFieldId' => $table->in($fields),
+		));
+
+		if ($field && ! empty($args['values'][$field])) {
+			TikiLib::events()->trigger('tiki.user.update', array(
+				'type' => 'user',
+				'object' => $args['values'][$field],
+			));
+		}
+	}
 }
 
 global $trklib;

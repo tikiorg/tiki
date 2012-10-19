@@ -25,7 +25,7 @@ class Event_Manager
 		$priority = 0;
 
 		if (! is_callable($callback)) {
-			$callback = array(new Event_Chain($this, $callback), 'trigger');
+			$callback = new Event_Chain($this, $callback);
 			$priority = false;
 		}
 
@@ -54,34 +54,27 @@ class Event_Manager
 
 	function trigger($eventName, array $arguments = array())
 	{
-		if ($this->currentPriority !== false) {
-			$this->internalTrigger($eventName, $arguments);
-			return;
-		}
-
 		$priorities = array_unique($this->priorities);
 		sort($priorities);
 		$this->priorities = $priorities;
 
 		foreach ($priorities as $p) {
-			$this->currentPriority = $p;
-			$this->internalTrigger($eventName, $arguments);
+			$this->internalTrigger($eventName, $arguments, $p);
 		}
-
-		$this->currentPriority = false;
 	}
 
-	private function internalTrigger($eventName, array $arguments = array())
+	function internalTrigger($eventName, array $arguments, $priority)
 	{
 		if (isset ($this->eventRegistry[$eventName])) {
 			foreach ($this->eventRegistry[$eventName] as $callback) {
-				if ($callback['priority'] === false || $callback['priority'] === $this->currentPriority) {
+				if ($callback['priority'] === false || $callback['priority'] === $priority) {
 					call_user_func(
 						$callback['callback'], 
 						array_merge(
 							$callback['arguments'],
 							$arguments
-						)
+						),
+						$priority
 					);
 				}
 			}
@@ -95,8 +88,8 @@ class Event_Manager
 
 		foreach ($this->eventRegistry as $from => $callbackList) {
 			foreach ($callbackList as $callback) {
-				if (is_array($callback['callback']) && $callback['callback'][0] instanceof Event_Chain) {
-					$eventName = $callback['callback'][0]->getEventName();
+				if ($callback['callback'] instanceof Event_Chain) {
+					$eventName = $callback['callback']->getEventName();
 					$edges[] = array(
 						'from' => $from,
 						'to' => $eventName,

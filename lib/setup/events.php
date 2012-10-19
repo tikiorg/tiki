@@ -25,7 +25,7 @@ function tiki_setup_events()
 				global $prefs;
 				if ($prefix == substr($args['object'], 0, strlen($prefix))) {
 					$user = substr($args['object'], strlen($prefix));
-					tiki_save_refresh_index(array('type' => 'user', 'object' => $user));
+					$events->trigger('tiki.user.update', array('type' => 'user', 'object' => $user));
 				}
 			});
 		}
@@ -56,6 +56,10 @@ function tiki_setup_events()
 			$events->bind('tiki.trackeritem.create', Event_Lib::defer('trk', 'group_tracker_create'));
 		}
 
+		if ($prefs['userTracker'] == 'y') {
+			$events->bind('tiki.trackeritem.save', Event_Lib::defer('trk', 'update_user_account'));
+		}
+
 		if ($prefs['feature_freetags'] == 'y') {
 			$events->bind('tiki.trackeritem.save', Event_Lib::defer('trk', 'sync_freetags'));
 		}
@@ -84,9 +88,7 @@ function tiki_setup_events()
 
 	if ($prefs['feature_search'] == 'y' && $prefs['unified_incremental_update'] == 'y') {
 		$events->bindPriority(100, 'tiki.save', 'tiki_save_refresh_index');
-		$events->bindPriority(100, 'tiki.user.save', function ($args) {
-			tiki_save_refresh_index(array('type' => 'user', 'object' => $args['user']));
-		});
+		$events->bindPriority(100, 'tiki.user.save', 'tiki_save_refresh_index');
 	}
 
 	if ($prefs['feature_file_galleries'] == 'y') {
