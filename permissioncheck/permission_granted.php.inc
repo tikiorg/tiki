@@ -12,11 +12,11 @@
 //
 //$permission_granted="yes";
 //$permission_granted="no";
-$permission_txt_file="permission_granted.txt";
-$file = fopen($permission_txt_file, "r") or exit("Unable to open file ".$permission_txt_file."!");
-$permission_granted=fgets($file);
+$permission_txt_file = 'permission_granted.txt';
+$file = fopen($permission_txt_file, 'r') or exit('Unable to open file ' . $permission_txt_file . '!');
+$permission_granted = fgets($file);
+
 fclose($file);
 
 // quick and dirty: override here
 //$permission_granted="yes\n";
-?>

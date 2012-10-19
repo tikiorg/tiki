@@ -4,21 +4,23 @@
 // name of usecase equals name of subdirectory of permissioncheck/
 // $uc_perms_file refers always to check.php in the corresponding subdir
 
-$default_file_name="check.php";
+$default_file_name = 'check.php';
 
-$uc_txt_file="usecases.txt";
-$file = fopen($uc_txt_file, "r") or exit("Unable to open file ".$uc_txt_file."!");
+$uc_txt_file = 'usecases.txt';
+$file = fopen($uc_txt_file, 'r') or exit('Unable to open file ' . $uc_txt_file . '!');
+
 while(!feof($file)) {
-	$line_of_file_orig=fgets($file);
-	if ($line_of_file_orig=="") {
-		$dummy=true;
+	$line_of_file_orig = fgets($file);
+	if ($line_of_file_orig == '') {
+		$dummy = true;
 	} else {
-	$line_of_file_mod=str_replace(":"," ",$line_of_file_orig);
-	list($usecase,$def_subdir_perm,$def_file_perm)=sscanf($line_of_file_mod,"%s %d %d");
-	$uc_perms_subdir[$usecase]=$def_subdir_perm;
-	$uc_perms_file[$usecase]=$def_file_perm;
+	  $line_of_file_mod=str_replace(':', ' ', $line_of_file_orig);
+	  list($usecase, $def_subdir_perm, $def_file_perm) = sscanf($line_of_file_mod, '%s %d %d');
+	  $uc_perms_subdir[$usecase] = $def_subdir_perm;
+	  $uc_perms_file[$usecase] = $def_file_perm;
 	}
 }
+
 fclose($file);
 
 //$usecase="paranoia";
@@ -36,5 +38,3 @@ fclose($file);
 //$usecase="risky";
 //$uc_perms_subdir[$usecase]=775;
 //$uc_perms_file[$usecase]=664;
-
-?>

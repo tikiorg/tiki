@@ -1,37 +1,41 @@
 <?php
 
 // group/owner of file
-function get_ownership_groupname($filename) {
+function get_ownership_groupname($filename)
+{
 	if (file_exists($filename)) {
-		$group=posix_getgrgid(filegroup($filename));
-		$groupname=$group["name"];
+		$group = posix_getgrgid(filegroup($filename));
+		$groupname = $group['name'];
 	} else {
-		$groupname="no group";
+		$groupname = 'no group';
 	}
 	return $groupname;
 }
 
 // user/owner of file
-function get_ownership_username($filename) {
+function get_ownership_username($filename)
+{
 	if (file_exists($filename)) {
-		$user=posix_getpwuid(fileowner($filename));
-		$username=$user["name"];
+		$user = posix_getpwuid(fileowner($filename));
+		$username = $user['name'];
 	} else {
-		$username="no user";
+		$username = 'no user';
 	}
 	return $username;
 }
 
 // all permission data by reference
-function get_perm_data($filename,&$username,&$groupname,&$perms_asc,&$perms_oct) {
-	$username=get_ownership_username($filename);
-	$groupname=get_ownership_groupname($filename);
-	$perms_asc=get_perms_ascii($filename);
-	$perms_oct=get_perms_octal($filename);
+function get_perm_data($filename, &$username, &$groupname, &$perms_asc, &$perms_oct)
+{
+	$username = get_ownership_username($filename);
+	$groupname = get_ownership_groupname($filename);
+	$perms_asc = get_perms_ascii($filename);
+	$perms_oct = get_perms_octal($filename);
 }
 
 // permissions of file
-function get_perms_ascii($filename) {
+function get_perms_ascii($filename)
+{
 	if (file_exists($filename)) {
 		$perms = fileperms($filename);
 		if (($perms & 0xC000) == 0xC000) {
@@ -59,6 +63,7 @@ function get_perms_ascii($filename) {
 			// Unknown
 			$perm_string = 'u';
 		}
+
 		// Owner
 		$perm_string .= (($perms & 0x0100) ? 'r' : '-');
 		$perm_string .= (($perms & 0x0080) ? 'w' : '-');
@@ -80,15 +85,16 @@ function get_perms_ascii($filename) {
 	} else {
 		$perm_string="no access";
 	}
-return $perm_string;
+
+  return $perm_string;
 }
 
-function get_perms_octal($filename) {
+function get_perms_octal($filename)
+{
 	if (file_exists($filename)) {
 		$perms_oct=substr(sprintf('%o', fileperms($filename)), -3);
 	} else {
-		$perms_oct="999";
+		$perms_oct = '999';
 	}
 	return $perms_oct;
 }
-?>
