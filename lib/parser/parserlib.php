@@ -1465,8 +1465,8 @@ if ( \$('#$id') ) {
 				$parser = new JisonParser_WikiCKEditor_Handler();
 			} else {
 				$parser = new JisonParser_Wiki_Handler();
-				$parser->setOption($this->option);
 			}
+			$parser->setOption($this->option);
 			$data = $parser->parse($data);
 
 			if ($old_wysiwyg_parsing !== null) {
