@@ -74,7 +74,8 @@ class TWVersion
 				17=>'Rigel',		// 6.x
 				18=>'Electra',		// 7.x
 				19=>'Acubens',		// 8.x
-				20=>'Herbig Haro'	// 9.x
+				20=>'Herbig Haro',	// 9.x
+				21=>'Sun'		// 10.x
 		);
 	}
 
