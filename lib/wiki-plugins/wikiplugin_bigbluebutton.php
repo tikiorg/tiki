@@ -85,15 +85,15 @@ function wikiplugin_bigbluebutton( $data, $params )
 
 		$perms = Perms::get('bigbluebutton', $meeting);
 
+		$params = array_merge(array('prefix' => ''), $params);
+		$smarty->assign('bbb_params', Tiki_Security::get()->encode($params));
+
 		if ( ! $bigbluebuttonlib->roomExists($meeting) ) {
 			if ( ! isset($_POST['bbb']) || $_POST['bbb'] != $meeting || ! $perms->bigbluebutton_create ) {
 				$smarty->assign('bbb_recordings', $bigbluebuttonlib->getRecordings($meeting));
 				return $smarty->fetch('wiki-plugins/wikiplugin_bigbluebutton_create.tpl');
 			}
 		}
-
-		$params = array_merge(array('prefix' => ''), $params);
-		$smarty->assign('bbb_params', Tiki_Security::get()->encode($params));
 
 		if ( $perms->bigbluebutton_join ) {
 			$smarty->assign('bbb_attendees', $bigbluebuttonlib->getAttendees($meeting));
