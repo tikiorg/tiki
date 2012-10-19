@@ -667,6 +667,16 @@ if ($prefs['feature_version_checks'] == 'y' || $forcecheck) {
 	);
 }
 
+if (isset($_REQUEST['lm_criteria']) && isset($_REQUEST['exact'])) {
+	global $headerlib;
+	$headerlib->add_jq_onready(
+		"$('body,html')
+			.animate({scrollTop: $('." . htmlspecialchars($_REQUEST['lm_criteria']). "')
+					.addClass('ui-state-highlight')
+					.offset().top - 10}, 1);"
+	);
+}
+
 foreach ($icons as &$icon) {
 	$icon = array_merge(array( 'disabled' => false, 'description' => '', 'icon' => 'img/icons/large/green_question48x48.png'), $icon);
 }
