@@ -43,11 +43,9 @@
 						{if $tiki_p_broadcast_all eq 'y'}
 							<option value="all"{if $groupbr eq 'All'} selected="selected"{/if}>{tr}All users{/tr}</option>
 						{/if}
-						{section name=ix loop=$groups}
-							{if $groups[ix] ne "Anonymous"}
-								<option value="{$groups[ix]|escape}"{if $groupbr eq $groups[ix]} selected="selected"{/if}>{$groups[ix]}</option>
-							{/if}
-						{/section}
+						{foreach item=groupName from=$groups}
+							<option value="{$groupName|escape}"{if $groupbr eq $groupName} selected="selected"{/if}>{$groupName|escape}</option>
+						{/foreach}
 					</select>
 				</td>
 			</tr>

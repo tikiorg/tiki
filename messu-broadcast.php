@@ -10,7 +10,6 @@ require_once ('tiki-setup.php');
 include_once ('lib/messu/messulib.php');
 $access->check_user($user);
 $access->check_feature('feature_messages');
-$access->check_permission('tiki_p_broadcast');
 $auto_query_args = array('to', 'cc', 'bcc', 'subject', 'body', 'priority', 'replyto_hash', 'groupbr');
 if (!isset($_REQUEST['to'])) $_REQUEST['to'] = '';
 if (!isset($_REQUEST['cc'])) $_REQUEST['cc'] = '';
@@ -28,20 +27,19 @@ $smarty->assign('priority', $_REQUEST['priority']);
 $smarty->assign('replyto_hash', $_REQUEST['replyto_hash']);
 $smarty->assign('mid', 'messu-broadcast.tpl');
 $smarty->assign('sent', 0);
-if (isset($_REQUEST['groupbr'])) {
-	if ($_REQUEST['groupbr'] == 'all' && $tiki_p_broadcast_all == 'y') {
-		$a_all_users = $userlib->get_users(0, -1, 'login_desc', '');
-		$all_users = array();
-		foreach ($a_all_users['data'] as $a_user) {
-			$all_users[] = $a_user['user'];
-		}
-	} else {
-		$all_users = $userlib->get_group_users($_REQUEST['groupbr']);
-	}
-	$smarty->assign_by_ref('groupbr', $_REQUEST['groupbr']);
-}
 $groups = $userlib->list_all_groups();
-$smarty->assign_by_ref('groups', $groups);
+$groups = array_diff($groups, array('Anonymous'));
+$groups = array_filter($groups, function ($groupName) {
+	$perms = Perms::get('group', $groupName);
+	return $perms->broadcast;
+});
+
+if (empty($groups)) {
+	$access->display_error('', tra("You do not have permission to use this feature").": ". $permission, '403', false);
+	exit;
+}
+
+$smarty->assign('groups', $groups);
 
 if (isset($_REQUEST['send']) || isset($_REQUEST['preview'])) {
 	check_ticket('messu-broadcast');
@@ -54,6 +52,21 @@ if (isset($_REQUEST['send']) || isset($_REQUEST['preview'])) {
 		die;
 	}
 	// Remove invalid users from the to, cc and bcc fields
+	if (isset($_REQUEST['groupbr'])) {
+		if ($_REQUEST['groupbr'] == 'all' && $tiki_p_broadcast_all == 'y') {
+			$a_all_users = $userlib->get_users(0, -1, 'login_desc', '');
+			$all_users = array();
+			foreach ($a_all_users['data'] as $a_user) {
+				$all_users[] = $a_user['user'];
+			}
+		} elseif (in_array($_REQUEST['groupbr'], $groups)) {
+			$all_users = $userlib->get_group_users($_REQUEST['groupbr']);
+		} else {
+			$access->display_error('', tra("You do not have permission to use this feature").": ". $permission, '403', false);
+		}
+		$smarty->assign('groupbr', $_REQUEST['groupbr']);
+	}
+
 	$users = array();
 	foreach ($all_users as $a_user) {
 		if (!empty($a_user)) {
@@ -105,7 +118,7 @@ if (isset($_REQUEST['send']) || isset($_REQUEST['preview'])) {
 			$logslib->add_action('Posted', '', 'message', 'add=' . strlen($_REQUEST['body']));
 		}
 	} else {
-		$smarty->assign_by_ref('message', $message);
+		$smarty->assign('message', $message);
 		$smarty->assign('preview', 1);
 	}
 }

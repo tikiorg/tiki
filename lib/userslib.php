@@ -3940,10 +3940,10 @@ class UsersLib extends TikiLib
 				'name' => 'tiki_p_broadcast',
 				'description' => tra('Can broadcast messages to groups'),
 				'level' => 'admin',
-				'type' => 'messages',
+				'type' => 'group',
 				'admin' => false,
 				'prefs' => array('feature_messages'),
-				'scope' => 'global',
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_messages',
