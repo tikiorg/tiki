@@ -61,7 +61,7 @@ function wikiplugin_bigbluebutton_info()
 			'recording' => array(
 				'required' => false,
 				'name' => tra('Record meetings'),
-				'description' => tra('Requires BBB >= 0.8.'),
+				'description' => tra('The recording starts when the first person enters the room, and ends when the last person leaves. After a period of processing (which depends on the length of the meeting), the recording will be added to the list of all recordings for this room. Requires BBB >= 0.8.'),
 				'filter' => 'int',
 				'default' => 0,
 				'options' => array(
