@@ -49,20 +49,20 @@ function wikiplugin_mediaplayer_info()
 				'filter' => 'url'
 			),
 
-			// The following param needs an URL with an extension (ex.: example.wmv works but not tiki-download_file.php?fileId=4) --marclaporte
+			// The following param needs an URL with an extension (ex.: example.wmv works but not tiki-download_file.php?fileId=4&display)
 			'src' => array(
 				'required' => false,
 				'name'=> tra('URL'),
-				'description' => tra('Complete URL to the media to include.'). ' asx, asf, avi, mov, mpg, mpeg, mp4, qt, ra, smil, swf, wmv, 3g2, 3gp, aif, aac, au, gsm, mid, midi, mov, m4a, snd, ra, ram, rm, wav, wma, bmp, html, pdf, psd, qif, qtif, qti, tif, tiff, xaml',
+				'description' => tra("Complete URL to the media to include, which has the appropriate extension. If your URL doesn't have an extension, use the File type parameter below."). ' ' .'File extensions: asx, asf, avi, mov, mpg, mpeg, mp4, qt, ra, smil, swf, wmv, 3g2, 3gp, aif, aac, au, gsm, mid, midi, mov, m4a, snd, ra, ram, rm, wav, wma, bmp, html, pdf, psd, qif, qtif, qti, tif, tiff, xaml',
 				'filter' => 'url',
 				'default' => '',
 			),
 
-			// The type parameter is verified for QuickTime only. arildb
+			// The type parameter is verified for Quicktime, Windows Media Player, Real Player, iframe (PDF), but doesn't work for flv param of the plugin
 			'type' => array(
 				'required' => false,
 				'name'=> tra('File type'),
-				'description' => tra('Filetype for source URL, e.g. mp4. Specify one of the supported filetypes when the URL file is missing the file extention. This is the case for File Gallery files.'),
+				'description' => tra('File type for source URL, e.g. mp4. Specify one of the supported file types when the URL of the file is missing the file extension. This is the case for File Gallery files which have a URL such as tiki-download_file.php?fileId=4&display or display4 if you have Clean URLs enabled.'),
 				'default' => '',
 			),
 			'width' => array(
