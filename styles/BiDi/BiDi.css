@@ -317,20 +317,3 @@ table.normal th.auto {text-align: right}
 
 /* Toolbars items */
 .toolbars-admin ul#full-list-w.full, .toolbars-admin ul#full-list-p.full, .toolbars-admin ul#full-list-c.full {padding-right: 0px}
-
-/***** Specific nature.css *****/
-/* Moving left the action buttons */
-.wikitopline {float:left; position:relative; top:-28px}
-
-/* Homepage pictures display */
-#home_pictmask {right: -62px !important}
-#home_pict_box {right: -12px !important}
-
-/* Phonebook Trackerpluginfilter */
-.phonebook {padding-left: 0px !important; background: url(../nature/phonebook_rtl.jpg) no-repeat !important}
-.phonebook_listing {padding-right: 22px; padding-left: 0}
-.phonebook_item {margin-bottom: 0.045em !important; margin-top: 0.8em !important}
-.phonebook_cell, .phonebook_tel, .phonebook_name {float: right !important}
-
-/* Business Trackerpluginfilter */
-.business_type {position: relative; top:14px; right:15px; color: #bbb}
