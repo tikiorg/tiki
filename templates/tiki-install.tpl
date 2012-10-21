@@ -531,7 +531,7 @@
 			<option value="0" {if $prefs.error_reporting_level eq 0}selected="selected"{/if}>{tr}No error reporting{/tr}</option>
 			<option value="2047" {if $prefs.error_reporting_level eq 2047}selected="selected"{/if}>{tr}Report all PHP errors except strict{/tr}</option>
 			<option value="-1" {if $prefs.error_reporting_level eq -1}selected="selected"{/if}>{tr}Report all PHP errors{/tr}</option>
-			<option value="2039" {if $prefs.error_reporting_level eq 2039}selected="selected"{/if}>{tr}Report all errors except notices{/tr}</option>
+			<option value="2039" {if $prefs.error_reporting_level eq 2039 or $prefs.error_reporting_level eq ''}selected="selected"{/if}>{tr}Report all errors except notices{/tr}</option>
 			<option value="1" {if $prefs.error_reporting_level eq 1039}selected="selected"{/if}>{tr}According to PHP configuration{/tr}</option>
 		</select>
 		<div style="padding:5px;clear:both">
