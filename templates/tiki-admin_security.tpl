@@ -2,6 +2,7 @@
 
 {remarksbox type="tip" title="{tr}Tip{/tr}"}
 	{tr}To <a class="rbox-link" target="tikihelp" href="http://security.tiki.org/tiki-contact.php">report any security issues</a>.{/tr}
+	{tr}For additional security checks, please visit <a href="tiki-check.php">Tiki Server Compatibility Check</a>.{/tr}
 {/remarksbox}
 
 <h2>{tr}Tiki settings{/tr}</h2>
