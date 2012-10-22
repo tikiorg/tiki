@@ -16,6 +16,7 @@ USECASES_FILE="${WORK_DIR}/usecases.txt"
 GRANT="${WORK_DIR}/permission_granted.bin"
 NO="${WORK_DIR}/no.bin"
 YES="${WORK_DIR}/yes.bin"
+HTACCESS="${WORK_DIR}/.htaccess"
 
 # quick 'n dirty
 # none of those permissions are critical
@@ -28,6 +29,9 @@ ${CHMOD} 444 "${YES}"
 #
 ${CHMOD} 644 "${WORK_DIR}/${DEFAULT_FILE_NAME}"
 ${CHMOD} 644 "${WORK_DIR}/functions.php.inc"
+if [ -f ${HTACCESS} ] ; then
+	${CHMOD} 644 ${HTACCESS}
+fi
 ${CHMOD} 600 "${WORK_DIR}/_htaccess"
 ${CHMOD} 600 "${WORK_DIR}/.htpasswd"
 ${CHMOD} 644 "${WORK_DIR}/${INDEX_FILE}"
