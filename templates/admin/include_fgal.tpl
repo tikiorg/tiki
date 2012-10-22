@@ -123,6 +123,7 @@
 					{preference name='fgal_source_show_refresh'}
 				</div>
 				{preference name='tiki_check_file_content'}
+				{preference name='fgal_elfinder_feature'}
 			</fieldset>
 
 			<fieldset>

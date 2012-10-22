@@ -307,6 +307,12 @@ if ($prefs['javascript_enabled'] != 'n') {
 		}
 	}
 
+	if ( $prefs['fgal_elfinder_feature'] === 'y' ) {
+		$headerlib->add_jsfile("lib/jquery/elfinder/js/elfinder.min.js")
+				->add_cssfile("lib/jquery/elfinder/css/elfinder.min.css")
+				->add_jsfile("lib/jquery_tiki/elfinder/tiki-elfinder.js");
+	}
+
 	$headerlib->add_jsfile('lib/jquery_tiki/tiki-jquery.js');
 	$headerlib->add_jsfile('lib/jquery_tiki/tiki-maps.js');
 	$headerlib->add_jsfile('lib/jquery/jquery.json-2.3.js');

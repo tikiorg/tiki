@@ -24,6 +24,9 @@
 	<fieldset>
 		<legend>{tr}Existing files{/tr}</legend>
 		<input type="text" class="search" placeholder="{tr}Search query{/tr}"/>
+		{if $prefs.fgal_elfinder_feature eq 'y'}
+			{button href='tiki-list_file_gallery.php' _text="{tr}Browse files{/tr}" _onclick="return openElFinderDialog(this);" title="{tr}Browse files{/tr}"}
+		{/if}
 		<ol class="results tracker-item-files">
 		</ol>
 	</fieldset>

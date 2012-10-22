@@ -179,5 +179,46 @@ class Services_File_Controller
 		$filegallib = TikiLib::lib('filegal');
 		return $filegallib->update_single_file($gal_info, $name, $size, $type, $data, $fileId);
 	}
+
+	public function action_finder($input)
+	{
+		global $prefs;
+
+		if ($prefs['fgal_elfinder_feature'] != 'y') {
+			throw new Services_Exception_Disabled('fgal_elfinder_feature');
+		}
+
+		$headerlib = TikiLib::lib('header');
+		include_once "lib/jquery/elfinder/php/elFinderConnector.class.php";
+		include_once "lib/jquery/elfinder/php/elFinder.class.php";
+		include_once "lib/jquery/elfinder/php/elFinderVolumeDriver.class.php";
+
+		include_once 'lib/jquery_tiki/elfinder/elFinderVolumeTikiFiles.class.php';
+
+		$opts = array(
+			'debug' => true,
+			'roots' => array(
+				array(
+					'driver'        => 'TikiFiles',   // driver for accessing file system (REQUIRED)
+					'path'          => $this->defaultGalleryId,         // path to files (REQUIRED)
+
+//					'URL'           => // URL to files (seems not to be REQUIRED)
+//					'accessControl' => 'access'             // disable and hide dot starting files (OPTIONAL)
+				)
+			)
+		);
+
+		// run elFinder
+		$connector = new elFinderConnector(new elFinder($opts));
+
+		// elfinder needs "raw" $_GET
+		$_GET = $input->asArray();
+
+		$connector->run();
+		// deals with response
+
+		return array();
+
+	}
 }
 

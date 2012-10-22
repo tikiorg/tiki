@@ -257,5 +257,13 @@ function prefs_fgal_list()
 			'dependencies' => 'feature_jcapture',
 			'tags' => array('experimental'),
 		),
+		'fgal_elfinder_feature' => array(
+			'name' => tra('Use elFinder UI'),
+			'description' => tra('Modern file manager'),
+			'type' => 'flag',
+			'default' => 'n',
+			'tags' => array('experimental'),
+			'dependencies' => array('feature_jquery_ui'),
+		),
 	);
 }
