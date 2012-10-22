@@ -1319,6 +1319,8 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	 */
 	function wikilink($type = '', $content) //((content|content))
 	{
+		global $prefs;
+
 		$wikilink = explode('|', $content);
 
 		$href = (isset($wikilink[0]) ? $wikilink[0] : $content);
@@ -1326,8 +1328,15 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		$text = $content;
 
 		if (isset($wikilink[1])) {
-			$title = $wikilink[1];
-			$text = $this->parse($title); //NOTE: We parse the text, so we can be flexible with syntax
+			array_shift($wikilink); //get rid of the beginning, which is the wiki link
+
+			$title = implode('|', $wikilink); //prepare for parsing
+
+			$parser = new self();
+			$feature_wikiwords = $prefs['feature_wikiwords'];
+			$prefs['feature_wikiwords'] = 'n';
+			$text = $parser->parse($title); //NOTE: We parse the text, so we can be flexible with syntax
+			$prefs['feature_wikiwords'] = $feature_wikiwords;
 		}
 
 		$title = addslashes(htmlspecialchars($title));
@@ -1339,7 +1348,11 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		} else if ($type == 'np') {
 			return $title;
 		} else if ($type == 'word') {
-			return '<a class="wiki wiki_page word" title="' . $title . '" href="tiki-index.php?page=' . $href . '">' . $text . '</a>';
+			if ($prefs['feature_wikiwords'] == 'y') {
+				return '<a class="wiki wiki_page word" title="' . $title . '" href="tiki-index.php?page=' . $href . '">' . $text . '</a>';
+			} else {
+				return $text;
+			}
 		}
 
 		return '<a class="wiki" title="' . $title . '" href="tiki-index.php?page=' . $href . '">' . $text . '</a>';

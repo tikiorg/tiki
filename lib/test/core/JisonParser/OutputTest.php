@@ -81,9 +81,10 @@ class JisonParser_OutputTest extends JisonParser_Abstract
 			'htmllink'          => array("[www.google.com]", '<a class="wiki" href="www.google.com">www.google.com</a>'),
 			'htmllink1'         => array("[www.google.com|Google]", '<a class="wiki" href="www.google.com">Google</a>'),
 			'wikilink'          => array("((Wiki Page))", '<a class="wiki" title="Wiki Page" href="tiki-index.php?page=Wiki Page">Wiki Page</a>'),
-			'capitol_wikilink'  => array("WikiPage", '<a class="wiki wiki_page word" title="WikiPage" href="tiki-index.php?page=WikiPage">WikiPage</a>'),
-			'np_wikilink'       => array("))WikiPage((", 'WikiPage'),
-			'wikilink_w_wiki'   => array("((WikiPage|__Wiki Page__))", '<a class="wiki" title="__Wiki Page__" href="tiki-index.php?page=WikiPage"><strong>Wiki Page</strong></a>'),
+			'capitol_wikilink'  => array(),
+			'np_wikilink'       => array(),
+			'wikilink_w_wiki'   => array(),
+			'wikilink_w_table'  => array(),
 			'table'             => array("||A1|B1|C1\nA2|B2|C2||", '<table class="wikitable"><tr><td class="wikicell">A1</td><td class="wikicell">B1</td><td class="wikicell">C1</td></tr><tr><td class="wikicell">A2</td><td class="wikicell">B2</td><td class="wikicell">C2</td></tr></table>'),
 
 
@@ -312,6 +313,69 @@ class JisonParser_OutputTest extends JisonParser_Abstract
 		); //a block is open content close, or "\ncontent\n" so a single block should only have 1 br
 
 		$parsed = $this->parser->parse($syntax[0]);
+
+		return array("parsed" => $parsed, "syntax" => $syntax);
+	}
+
+	function capitol_wikilink()
+	{
+		global $prefs;
+		$prefs['feature_wikiwords'] = 'y';
+		$syntax = array(
+			"WikiPage", '<a class="wiki wiki_page word" title="WikiPage" href="tiki-index.php?page=WikiPage">WikiPage</a>'
+		);
+
+		$parsed = $this->parser->parse($syntax[0]);
+
+		$prefs['feature_wikiwords'] = 'n';
+
+		return array("parsed" => $parsed, "syntax" => $syntax);
+	}
+
+	function np_wikilink()
+	{
+		global $prefs;
+		$prefs['feature_wikiwords'] = 'y';
+		$syntax = array("))WikiPage((", 'WikiPage');
+
+		$parsed = $this->parser->parse($syntax[0]);
+
+		$prefs['feature_wikiwords'] = 'n';
+
+		return array("parsed" => $parsed, "syntax" => $syntax);
+	}
+
+	function wikilink_w_wiki()
+	{
+		global $prefs;
+		$prefs['feature_wikiwords'] = 'y';
+		$syntax = array(
+			"((WikiPage|__Wiki Page__))"
+		,
+			'<a class="wiki" title="__Wiki Page__" href="tiki-index.php?page=WikiPage"><strong>Wiki Page</strong></a>'
+		);
+
+		$parsed = $this->parser->parse($syntax[0]);
+
+		$prefs['feature_wikiwords'] = 'n';
+
+		return array("parsed" => $parsed, "syntax" => $syntax);
+	}
+
+
+	function wikilink_w_table() //this isn't really a real use case test, but rather to check flexibility with wiki link parsing
+	{
+		global $prefs;
+		$prefs['feature_wikiwords'] = 'y';
+		$syntax = array(
+			"((WikiPage|||table|table|table||))"
+		,
+			'<a class="wiki" title="||table|table|table||" href="tiki-index.php?page=WikiPage"><table class="wikitable"><tr><td class="wikicell">table</td><td class="wikicell">table</td><td class="wikicell">table</td></tr></table></a>'
+		);
+
+		$parsed = $this->parser->parse($syntax[0]);
+
+		$prefs['feature_wikiwords'] = 'n';
 
 		return array("parsed" => $parsed, "syntax" => $syntax);
 	}
