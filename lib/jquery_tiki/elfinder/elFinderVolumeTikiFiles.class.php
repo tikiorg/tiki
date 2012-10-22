@@ -216,7 +216,7 @@ class elFinderVolumeTikiFiles extends elFinderVolumeDriver {
 			$id = isset($row['id']) ? $row['id'] : $row['fileId'];
 			$id = 'f_' . $id;
 			$r['mime'] = $row['filetype'];
-			$r['size'] = $row['size'];
+			$r['size'] = $row['filesize'];
 			$row['parentId'] = $row['galleryId'];
 
 		}
