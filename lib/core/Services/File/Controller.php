@@ -216,7 +216,8 @@ class Services_File_Controller
 					'path'          => $this->defaultGalleryId,         // path to files (REQUIRED)
 
 //					'URL'           => 									// URL to files (seems not to be REQUIRED)
-					'accessControl' => array($this, 'elFinderAccess')   // obey tiki perms
+					'accessControl' => array($this, 'elFinderAccess'),   // obey tiki perms
+					'tmbURL'		=> 'temp/public/',
 				)
 			)
 		);
