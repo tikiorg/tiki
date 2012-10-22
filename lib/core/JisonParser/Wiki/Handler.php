@@ -535,10 +535,38 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	 * the parser is inside-out, this helps us reverse the execution from outside-in in some cases.
 	 *
 	 * @access  public
+	 * @param   array  $skipTypes List of different ignourable stack types found on $this, like npStack, ppStack, or lineStack
+	 * @return  string  true if content is current not parse-able
 	 */
-	public function isContent()
+	public function isContent($skipTypes = array())
 	{
-		return ($this->pluginStackCount > 0 || $this->npStack == true || $this->ppStack == true ? true : null);
+		//These types will be found in $this.  If any of these states are active, we should NOT parse wiki syntax
+		$types = array(
+			'npStack' => true,
+			'ppStack' => true,
+			'linkStack' => true
+		);
+
+		foreach($skipTypes as $skipType) {
+			if (isset($types[$skipType])) {
+				unset($types[$skipType]);
+			}
+		}
+
+		//first off, if in plugin
+		if ($this->pluginStackCount > 0) {
+			return true;
+		}
+
+		//second, if we are not in a plugin, check if we are in content, ie, non-parse-able wiki syntax
+		foreach($types as $type => $value) {
+			if ($this->$type == $value)	{
+				return true;
+			}
+		}
+
+		//lastly, if we are not in content, return null, which allows cases to continue lexing
+		return null;
 	}
 
 	/**
@@ -1119,7 +1147,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	}
 
 	/**
-	 * syntax handler: unlink, [$content|$content]
+	 * syntax handler: link, [$content|$content]
 	 *
 	 * @access  public
 	 * @param   $content parsed string found inside detected syntax
@@ -1280,7 +1308,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	}
 
 	/**
-	 * syntax handler: wiki link, (($content))
+	 * syntax handler: wiki link, (($content)) or ))$content(( or WordWord
 	 * <p>
 	 * Alternate syntax: (($href|$text))
 	 * Alternate syntax: ($type($href|$text))
@@ -1289,7 +1317,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	 * @param   $content parsed string found inside detected syntax
 	 * @return  string  $content desired output from syntax
 	 */
-	function wikilink($type, $content) //((content|content))
+	function wikilink($type = '', $content) //((content|content))
 	{
 		$wikilink = explode('|', $content);
 		$href = (isset($wikilink[0]) ? $wikilink[0] : $content);
@@ -1298,10 +1326,13 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		$type = strtolower($type);
 
 		if ($type == 'alias') {
-			return '<a class="wiki wiki_page alias" title="Tiki9" href="tiki-index.php?page=' . $href . '">' . $text . '</a>';
-		} else if (strlen($type)) {
-
+			return '<a class="wiki wiki_page alias" title="' . $text . '" href="tiki-index.php?page=' . $href . '">' . $text . '</a>';
+		} else if ($type == 'np') {
+			return $text;
+		} else if ($type == 'word') {
+			return '<a class="wiki wiki_page word" title="' . $text . '" href="tiki-index.php?page=' . $href . '">' . $text . '</a>';
 		}
+
 		return '<a class="wiki" title="' . $text . '" href="tiki-index.php?page=' . $href . '">' . $text . '</a>';
 	}
 

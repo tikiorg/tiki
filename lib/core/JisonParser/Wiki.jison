@@ -13,6 +13,7 @@ LINES_CONTENT                   (.|\n)+
 LINE_END                        (\n\r|\r\n|[\n\r])
 BLOCK_START                     ([\!*#+;])
 WIKI_LINK_TYPE                  (([a-z0-9-]+))
+CAPITOL_WORD                    ([A-Z]{1,}[a-z]{1,}){2,}
 
 %s np pp plugin line block bold box center code color italic unlink link strike table titlebar underscore wikilink
 
@@ -111,9 +112,9 @@ WIKI_LINK_TYPE                  (([a-z0-9-]+))
 
 "{{"{VARIABLE_NAME}([|]{VARIABLE_NAME})?"}}"
 	%{
-        if (parser.isContent()) return 'CONTENT'; //js
+        if (parser.isContent(['linkStack'])) return 'CONTENT'; //js
 
-        //php if ($this->isContent()) return 'CONTENT';
+        //php if ($this->isContent(array('linkStack'))) return 'CONTENT';
 
         return 'ARGUMENT_VAR';
     %}
@@ -415,19 +416,19 @@ WIKI_LINK_TYPE                  (([a-z0-9-]+))
 
 <unlink><<EOF>>
 	%{
-		if (parser.isContent()) return 'CONTENT'; //js
+		if (parser.isContent(['linkStack'])) return 'CONTENT'; //js
         lexer.unput("@np"); //js
 
-        //php if ($this->isContent()) return 'CONTENT';
+        //php if ($this->isContent(array('linkStack'))) return 'CONTENT';
         //php $this->unput("@np"); //js
 	%}
 <unlink>("@np"|"]]"|"]")
 	%{
-		if (parser.isContent()) return 'CONTENT'; //js
+		if (parser.isContent(['linkStack'])) return 'CONTENT'; //js
 		lexer.popState(); //js
 		return 'UNLINK_END'; //js
 
-		//php if ($this->isContent()) return 'CONTENT';
+		//php if ($this->isContent(array('linkStack'))) return 'CONTENT';
 		//php $this->popState();
 		//php return 'UNLINK_END';
 	%}
@@ -446,32 +447,32 @@ WIKI_LINK_TYPE                  (([a-z0-9-]+))
 
 <link><<EOF>>
 	%{
-		if (parser.isContent()) return 'CONTENT'; //js
+		if (parser.isContent(['linkStack'])) return 'CONTENT'; //js
         lexer.unput(']'); //js
 
-        //php if ($this->isContent()) return 'CONTENT';
+        //php if ($this->isContent(array('linkStack'))) return 'CONTENT';
         //php $this->unput(']');
 	%}
 <link>"]"
 	%{
-		if (parser.isContent()) return 'CONTENT'; //js
+		if (parser.isContent(['linkStack'])) return 'CONTENT'; //js
 		parser.linkStack = false; //js
 		lexer.popState(); //js
 		return 'LINK_END'; //js
 
-		//php if ($this->isContent()) return 'CONTENT';
+		//php if ($this->isContent(array('linkStack'))) return 'CONTENT';
 		//php $this->linkStack = false;
 		//php $this->popState();
 		//php return 'LINK_END';
 	%}
 "["
 	%{
-		if (parser.isContent() || parser.linkStack == true) return 'CONTENT'; //js
+		if (parser.isContent()) return 'CONTENT'; //js
 		parser.linkStack = true; //js
 		lexer.begin('link'); //js
 		return 'LINK_START'; //js
 
-		//php if ($this->isContent() || $this->linkStack == true) return 'CONTENT';
+		//php if ($this->isContent()) return 'CONTENT';
 		//php $this->linkStack = true;
 		//php $this->begin('link');
 		//php return 'LINK_START';
@@ -608,80 +609,73 @@ WIKI_LINK_TYPE                  (([a-z0-9-]+))
 
 <wikilink><<EOF>>
 	%{
-		if (parser.isContent()) return 'CONTENT'; //js
+		if (parser.isContent(['linkStack'])) return 'CONTENT'; //js
 		lexer.unput('))'); //js
 
-		//php if ($this->isContent()) return 'CONTENT';
+		//php if ($this->isContent(array('linkStack'))) return 'CONTENT';
 		//php $this->unput('))');
 	%}
-<wikilink>"))"
+<wikilink>"))"|"(("
 	%{
-		if (parser.isContent()) return 'CONTENT'; //js
+		if (parser.isContent(['linkStack'])) return 'CONTENT'; //js
 		parser.linkStack = false; //js
 		lexer.popState(); //js
 		return 'WIKILINK_END'; //js
 
-		//php if ($this->isContent()) return 'CONTENT';
+		//php if ($this->isContent(array('linkStack'))) return 'CONTENT';
 		//php $this->linkStack = false;
 		//php $this->popState();
 		//php return 'WIKILINK_END';
 	%}
 "(("
 	%{
-		if (parser.isContent() || parser.linkStack == true) return 'CONTENT'; //js
+		if (parser.isContent()) return 'CONTENT'; //js
 		parser.linkStack = true; //js
 		lexer.begin('wikilink'); //js
-		$yytext = $yytext.substring(1, $yytext.length - 1); //js
+		$yytext = ''; //js
 		return 'WIKILINK_START'; //js
 
-		//php if ($this->isContent() || $this->linkStack == true) return 'CONTENT';
+		//php if ($this->isContent()) return 'CONTENT';
 		//php $this->linkStack = true;
 		//php $this->begin('wikilink');
-		//php $yytext = substr($yytext, 1, -1);
+		//php $yytext = '';
+		//php return 'WIKILINK_START';
+	%}
+"))"
+	%{
+		if (parser.isContent()) return 'CONTENT'; //js
+		parser.linkStack = true; //js
+		lexer.begin('wikilink'); //js
+		$yytext = 'np'; //js
+		return 'WIKILINK_START'; //js
+
+		//php if ($this->isContent()) return 'CONTENT';
+		//php $this->linkStack = true;
+		//php $this->begin('wikilink');
+		//php $yytext = 'np';
 		//php return 'WIKILINK_START';
 	%}
 "("{WIKI_LINK_TYPE}"("
 	%{
-		if (parser.isContent() || parser.linkStack == true) return 'CONTENT'; //js
+		if (parser.isContent()) return 'CONTENT'; //js
 		parser.linkStack = true; //js
 		lexer.begin('wikilink'); //js
 		$yytext = $yytext.substring(1, $yytext.length - 1); //js
 		return 'WIKILINK_START'; //js
 
-		//php if ($this->isContent() || $this->linkStack == true) return 'CONTENT';
+		//php if ($this->isContent()) return 'CONTENT';
 		//php $this->linkStack = true;
 		//php $this->begin('wikilink');
 		//php $yytext = substr($yytext, 1, -1);
 		//php return 'WIKILINK_START';
 	%}
-
-<wikilink><<EOF>>
+{CAPITOL_WORD}
 	%{
 		if (parser.isContent()) return 'CONTENT'; //js
-		lexer.unput('))'); //js
+		return 'WIKILINK'; //js
 
 		//php if ($this->isContent()) return 'CONTENT';
-		//php $this->unput('))');
-	%}
-<wikilink>"))"
-	%{
-		if (parser.isContent()) return 'CONTENT'; //js
-		lexer.popState(); //js
-		return 'WIKILINK_END'; //js
-
-		//php if ($this->isContent()) return 'CONTENT';
-		//php $this->popState();
-		//php return 'WIKILINK_END';
-	%}
-"(("
-	%{
-		if (parser.isContent()) return 'CONTENT'; //js
-		lexer.begin('wikilink'); //js
-		return 'WIKILINK_START'; //js
-
-		//php if ($this->isContent()) return 'CONTENT';
-		//php $this->begin('wikilink');
-		//php return 'WIKILINK_START';
+		//php return 'WIKILINK';
 	%}
 
 
@@ -914,6 +908,11 @@ content
 		$$ = parser.wikilink($1, $2); //js
 		//php $$ = $this->wikilink($1, $2);
 	}
+ | WIKILINK
+    {
+        $$ = parser.wikilink('word', $1); //js
+        //php $$ = $this->wikilink('word', $1);
+    }
  | INLINE_PLUGIN
  	{
  		$$ = parser.plugin($1); //js
