@@ -181,54 +181,58 @@ class Tracker_Query
 		$trklib = TikiLib::lib('trk');
 
 		$tikilib->query(
-						"DROP TABLE IF EXISTS temp_tracker_field_options;
-						CREATE TEMPORARY TABLE temp_tracker_field_options (
-							trackerIdHere INT,
-							trackerIdThere INT,
-							fieldIdThere INT,
-							fieldIdHere INT,
-							displayFieldIdThere INT,
-							displayFieldIdHere INT,
-							linkToItems INT,
-							type VARCHAR(1),
-							options VARCHAR(50)
-							);
-		
-						INSERT INTO temp_tracker_field_options
-						SELECT
-						tiki_tracker_fields.trackerId,
-						REPLACE(SUBSTRING(
-								SUBSTRING_INDEX(tiki_tracker_fields.options, ',', 1),
-								LENGTH(SUBSTRING_INDEX(tiki_tracker_fields.options, ',', 1 -1)) + 1
-								),
-							',', ''),
-						REPLACE(SUBSTRING(
-									SUBSTRING_INDEX(tiki_tracker_fields.options, ',', 2),
-									LENGTH(SUBSTRING_INDEX(tiki_tracker_fields.options, ',', 2 -1)) + 1
-									),
-								',', ''),
-						REPLACE(SUBSTRING(
-									SUBSTRING_INDEX(tiki_tracker_fields.options, ',', 3),
-									LENGTH(SUBSTRING_INDEX(tiki_tracker_fields.options, ',', 3 -1)) + 1
-									),
-								',', ''),
-						REPLACE(SUBSTRING(
-									SUBSTRING_INDEX(tiki_tracker_fields.options, ',', 4),
-									LENGTH(SUBSTRING_INDEX(tiki_tracker_fields.options, ',', 4 -1)) + 1
-									),
-								',', ''),
-						tiki_tracker_fields.fieldId,
-						REPLACE(SUBSTRING(
-									SUBSTRING_INDEX(tiki_tracker_fields.options, ',', 5),
-									LENGTH(SUBSTRING_INDEX(tiki_tracker_fields.options, ',', 5 -1)) + 1
-									),
-								',', ''),
-						tiki_tracker_fields.type,
-						tiki_tracker_fields.options
-							FROM tiki_tracker_fields
-							WHERE tiki_tracker_fields.type = 'l';
-		
-				SET group_concat_max_len = 4294967295;"
+			"DROP TABLE IF EXISTS temp_tracker_field_options;"
+		);
+		$tikilib->query(
+			"CREATE TEMPORARY TABLE temp_tracker_field_options (
+				trackerIdHere INT,
+				trackerIdThere INT,
+				fieldIdThere INT,
+				fieldIdHere INT,
+				displayFieldIdThere INT,
+				displayFieldIdHere INT,
+				linkToItems INT,
+				type VARCHAR(1),
+				options VARCHAR(50)
+				);"
+		);
+		$tikilib->query(
+			"INSERT INTO temp_tracker_field_options
+			SELECT
+			tiki_tracker_fields.trackerId,
+			REPLACE(SUBSTRING(
+					SUBSTRING_INDEX(tiki_tracker_fields.options, ',', 1),
+					LENGTH(SUBSTRING_INDEX(tiki_tracker_fields.options, ',', 1 -1)) + 1
+					),
+				',', ''),
+			REPLACE(SUBSTRING(
+						SUBSTRING_INDEX(tiki_tracker_fields.options, ',', 2),
+						LENGTH(SUBSTRING_INDEX(tiki_tracker_fields.options, ',', 2 -1)) + 1
+						),
+					',', ''),
+			REPLACE(SUBSTRING(
+						SUBSTRING_INDEX(tiki_tracker_fields.options, ',', 3),
+						LENGTH(SUBSTRING_INDEX(tiki_tracker_fields.options, ',', 3 -1)) + 1
+						),
+					',', ''),
+			REPLACE(SUBSTRING(
+						SUBSTRING_INDEX(tiki_tracker_fields.options, ',', 4),
+						LENGTH(SUBSTRING_INDEX(tiki_tracker_fields.options, ',', 4 -1)) + 1
+						),
+					',', ''),
+			tiki_tracker_fields.fieldId,
+			REPLACE(SUBSTRING(
+						SUBSTRING_INDEX(tiki_tracker_fields.options, ',', 5),
+						LENGTH(SUBSTRING_INDEX(tiki_tracker_fields.options, ',', 5 -1)) + 1
+						),
+					',', ''),
+			tiki_tracker_fields.type,
+			tiki_tracker_fields.options
+				FROM tiki_tracker_fields
+				WHERE tiki_tracker_fields.type = 'l';"
+		);
+		$tikilib->query(
+			"SET group_concat_max_len = 4294967295;"
 		);
 
 		/*For any fields that have multi items, we use php to parse those out, there shouldn't be too many
