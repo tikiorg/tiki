@@ -181,6 +181,18 @@ class Services_File_Controller
 		return $filegallib->update_single_file($gal_info, $name, $size, $type, $data, $fileId);
 	}
 
+	/**********************
+	 * elFinder functions *
+	 *********************/
+
+	/***
+	 * Main "connector" to handle all requests from elfinder
+	 *
+	 * @param $input
+	 * @return array
+	 * @throws Services_Exception_Disabled
+	 */
+
 	public function action_finder($input)
 	{
 		global $prefs;
@@ -200,11 +212,11 @@ class Services_File_Controller
 			'debug' => true,
 			'roots' => array(
 				array(
-					'driver'        => 'TikiFiles',   // driver for accessing file system (REQUIRED)
+					'driver'        => 'TikiFiles',   					// driver for accessing file system (REQUIRED)
 					'path'          => $this->defaultGalleryId,         // path to files (REQUIRED)
 
-//					'URL'           => // URL to files (seems not to be REQUIRED)
-//					'accessControl' => 'access'             // disable and hide dot starting files (OPTIONAL)
+//					'URL'           => 									// URL to files (seems not to be REQUIRED)
+					'accessControl' => array($this, 'elFinderAccess')   // obey tiki perms
 				)
 			)
 		);
@@ -221,5 +233,46 @@ class Services_File_Controller
 		return array();
 
 	}
+
+	/**
+	 * "accessControl" callback.
+	 *
+	 * @param  string  $attr  attribute name (read|write|locked|hidden)
+	 * @param  string  $path  file path relative to volume root directory started with directory separator
+	 * @return bool|null
+	 **/
+	function elFinderAccess($attr, $path, $data, $volume) {
+
+		$ar = explode('_', $path);
+		if (count($ar) === 2) {
+			$isgal = $ar[0] === 'd';
+			$id = $ar[1];
+		} else {
+			$isgal = true;
+			$id = $path;
+		}
+
+		if ($isgal) {
+			$objectType = 'file gallery';
+		} else {
+			$objectType = 'file';
+		}
+
+		$perms = Perms::get(array( 'type' => $objectType, 'object' => $id ));
+
+		switch($attr) {
+			case 'read':
+				return $perms->download_files;
+			case 'write':
+				return $perms->edit_gallery_file;
+			case 'locked':
+			case 'hidden':
+			default:
+				return false;
+
+		}
+	}
+
+
 }
 
