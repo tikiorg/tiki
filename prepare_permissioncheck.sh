@@ -18,16 +18,19 @@ WORK_DIR="permissioncheck"
 INDEX_FILE="index.php"
 DEFAULT_FILE_NAME="check.php"
 USECASES_FILE="${WORK_DIR}/usecases.txt"
-GRANT="${WORK_DIR}/permission_granted.txt"
-NO="${WORK_DIR}/no.txt"
-YES="${WORK_DIR}/yes.txt"
+#GRANT="${WORK_DIR}/permission_granted.txt"
+GRANT="${WORK_DIR}/permission_granted.bin"
+#NO="${WORK_DIR}/no.txt"
+NO="${WORK_DIR}/no.bin"
+#YES="${WORK_DIR}/yes.txt"
+YES="${WORK_DIR}/yes.bin"
 
 # quick 'n dirty
 # none of those permissions is critical
 #
 ${CHMOD} 644 "${GRANT}"
-${CHMOD} 644 "${NO}"
-${CHMOD} 644 "${YES}"
+${CHMOD} 444 "${NO}"
+${CHMOD} 444 "${YES}"
 #
 ${CHMOD} 755 "${WORK_DIR}/"
 ${CHMOD} 644 "${WORK_DIR}/${DEFAULT_FILE_NAME}"
@@ -40,6 +43,7 @@ ${CHMOD} 644 "${WORK_DIR}/permission_granted.php.inc"
 ${CHMOD} 644 "${WORK_DIR}/usecases.php.inc"
 ${CHMOD} 644 "${WORK_DIR}/usecases.txt"
 
+# this is obsolete
 phpcheck() {
 #pwd
 PHP_PERMISSION_GRANTED=`$PHP ${WORK_DIR}/permission_print.php.inc`

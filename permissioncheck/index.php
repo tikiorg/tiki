@@ -29,19 +29,29 @@
  <p>
 	<?php
 	include "permission_granted.php.inc";
+	$html_and_ascii_linebreak = "<br />\n";
 	if ($permission_granted=="yes\n") {
 		//$dummy=true;
-		echo '<span class="important">disable permission check on production machines</span>'."<br />\n";
-		echo '<span class="truetype">sh prepare_permissioncheck.sh disable</span>'."<br />\n";
-		echo "(recommended) or disable permission (setting: no) in file:<br />\n";
-		echo '<span class="truetype">permissioncheck/permission_granted.txt</span>'."<br />\n";
+		echo '<span class="important">disable permission check on production machines</span>' . $html_and_ascii_linebreak;
+		echo '<span class="truetype">sh prepare_permissioncheck.sh disable</span>' . $html_and_ascii_linebreak;
+		echo '(recommended) or disable permission (setting: no) in file:' . $html_and_ascii_linebreak;
+		echo $html_and_ascii_linebreak ;
+		echo '<span class="truetype">permissioncheck/permission_granted.txt</span>' . $html_and_ascii_linebreak;
 	} else {
-		echo "permission not granted<br />\n<br />\n";
-		echo "enable permission (setting: yes) in file:<br />\n";
-		echo '<span class="truetype">permissioncheck/permission_granted.txt</span>'."<br />\n";
-		echo "or (recommended) run<br />\n".'<span class="truetype">sh prepare_permissioncheck.sh enable</span>'."<br />\n";
-		echo "in Tiki's document root<br />\n<br />\n";
-		echo '<span class="hint">disable permission check on production machines</span>'."<br />\n";
+		echo 'permission not granted' . $html_and_ascii_linebreak ;
+		echo $html_and_ascii_linebreak ;
+		echo 'enable permission by running' . $html_and_ascii_linebreak;
+		echo '<span class="truetype">sh prepare_permissioncheck.sh enable</span>' . $html_and_ascii_linebreak;
+		echo "in Tiki's document root" . $html_and_ascii_linebreak;
+		echo $html_and_ascii_linebreak ;
+		echo 'or (not recommended) enable permission (setting: yes) by copying file' . $html_and_ascii_linebreak;
+		echo '<span class="truetype">permissioncheck/yes.bin</span>' . $html_and_ascii_linebreak;
+		echo 'to file' . $html_and_ascii_linebreak;
+		echo '<span class="truetype">permissioncheck/permission_granted.bin</span>' . $html_and_ascii_linebreak;
+		echo $html_and_ascii_linebreak ;
+		echo 'Do not edit those files - different line ending conventions (Mac,Unix,Windows) matter' . $html_and_ascii_linebreak;
+		echo $html_and_ascii_linebreak ;
+		echo '<span class="hint">disable permission check on production machines</span>' . $html_and_ascii_linebreak;
 		echo "</p></body></html>";
 		die;
 	}
@@ -61,10 +71,10 @@
 		//$perms_oct=substr(sprintf('%o', fileperms($filename)), -3);
 		$perms_oct=get_perms_octal($filename);
 		$perms_asc=get_perms_ascii($filename);
-		echo "\n\tthis file "."<strong>".$filename."</strong>"." owned by ";
-		echo "\n\tuser "."<strong>".$username."</strong>"." and group "."<strong>".$groupname."</strong>"." has got access permissions ";
-		echo "\n\t<strong>".$perms_asc."</strong>"." which is "."<strong>".$perms_oct."</strong>"." octal.";
-		echo "<br />\n";
+		echo "\n\tthis file " . '<strong>' . $filename . '</strong>' . ' owned by ';
+		echo "\n\tuser " . '<strong>' . $username . '</strong>' . ' and group ' . '<strong>' . $groupname . '</strong>' . ' has got access permissions ';
+		echo "\n\t<strong>" . $perms_asc . '</strong>' . ' which is ' . '<strong>' . $perms_oct. '</strong>' . ' octal.';
+		echo $html_and_ascii_linebreak;
 	?>
  </p>
  <p class="block">
@@ -72,7 +82,14 @@
 	may modify permissions either by SSH access or by FTP access. The first column
 	(italic) shows assumed permissions (what they should be to run this test), next
 	is user (owner), group (owner), actual permissions ascii and octal) and the
-	subdirectory or filename which was checked.
+	subdirectory or filename which was checked.<br />
+	<br />
+	Permissions where "is" equals "should" are green, deviations are red. If permission
+	setting is correctly enabled but "is" shows 999 your webserver won't work with that
+	model. There's no access to username, groupname or permission setting. All other
+	versions of check.php may be checked. Choose the most restrictive model for security
+	reasons. Webservers with SuPHP enabled are known to restrict write permissions, but
+	make sure that you don't expose confidential information by sloppy read permissions.
  </p>
  <div class="block"><table class="truetype"><?php
 	echo "\n  ";
