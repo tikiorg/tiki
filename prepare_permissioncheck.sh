@@ -30,11 +30,12 @@ ${CHMOD} 644 "${WORK_DIR}/${DEFAULT_FILE_NAME}"
 ${CHMOD} 644 "${WORK_DIR}/functions.php.inc"
 ${CHMOD} 600 "${WORK_DIR}/_htaccess"
 ${CHMOD} 600 "${WORK_DIR}/.htpasswd"
-${CHMOD} 644 "${WORK_DIR}/index.php"
+${CHMOD} 644 "${WORK_DIR}/${INDEX_FILE}"
 ${CHMOD} 444 "${WORK_DIR}/permission_print.php.inc"
 ${CHMOD} 644 "${WORK_DIR}/permission_granted.php.inc"
 ${CHMOD} 644 "${WORK_DIR}/usecases.php.inc"
-${CHMOD} 644 "${WORK_DIR}/usecases.txt"
+#${CHMOD} 644 "${WORK_DIR}/usecases.txt"
+${CHMOD} 644 "${USECASES_FILE}"
 
 disable_perm_check() {
 while read line_of_file_orig ; do
