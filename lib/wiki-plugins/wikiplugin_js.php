@@ -25,12 +25,35 @@ function wikiplugin_js_info()
 				'filter' => 'url',
 				'default' => '',
 			),
+			'lateload' => array(
+				'required' => false,
+				'name' => tra('Late Load'),
+				'description' => tra('Late load, use headerlib'),
+				'options' => array(
+					array('text' => '', 'value' => ''),
+					array('text' => tra('Yes'), 'value' => 'y'),
+					array('text' => tra('No'), 'value' => 'n'),
+				),
+				'default' => '',
+				'advanced' => true,
+			),
 		),
 	);
 }
 function wikiplugin_js($data, $params)
 {
+	global $headerlib;
 	extract($params, EXTR_SKIP);
+
+	if (isset($lateload) && $lateload == 'y') {
+		if (isset($file)) {
+			$headerlib->add_jsfile($file);
+		} else if ($data) {
+			$headerlib->add_js($data);
+		}
+		return '';
+	}
+
 	if (isset($file)) {
 		$ret =  "~np~<script type=\"text/javascript\" src=\"$file\"></script> ~/np~";
 	} else {
