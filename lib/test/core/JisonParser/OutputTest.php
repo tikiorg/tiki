@@ -83,6 +83,7 @@ class JisonParser_OutputTest extends JisonParser_Abstract
 			'wikilink'          => array("((Wiki Page))", '<a class="wiki" title="Wiki Page" href="tiki-index.php?page=Wiki Page">Wiki Page</a>'),
 			'capitol_wikilink'  => array("WikiPage", '<a class="wiki wiki_page word" title="WikiPage" href="tiki-index.php?page=WikiPage">WikiPage</a>'),
 			'np_wikilink'       => array("))WikiPage((", 'WikiPage'),
+			'wikilink_w_wiki'   => array("((WikiPage|__Wiki Page__))", '<a class="wiki" title="__Wiki Page__" href="tiki-index.php?page=WikiPage"><strong>Wiki Page</strong></a>'),
 			'table'             => array("||A1|B1|C1\nA2|B2|C2||", '<table class="wikitable"><tr><td class="wikicell">A1</td><td class="wikicell">B1</td><td class="wikicell">C1</td></tr><tr><td class="wikicell">A2</td><td class="wikicell">B2</td><td class="wikicell">C2</td></tr></table>'),
 
 

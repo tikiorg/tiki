@@ -1308,7 +1308,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	}
 
 	/**
-	 * syntax handler: wiki link, (($content)) or ))$content(( or WordWord
+	 * syntax handler: wiki link, (($content)) or ))$content(( or WordWord, if surrounded by (()) or ))((, a pipe can be used at the text for the link
 	 * <p>
 	 * Alternate syntax: (($href|$text))
 	 * Alternate syntax: ($type($href|$text))
@@ -1320,20 +1320,29 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	function wikilink($type = '', $content) //((content|content))
 	{
 		$wikilink = explode('|', $content);
+
 		$href = (isset($wikilink[0]) ? $wikilink[0] : $content);
-		$text = (isset($wikilink[1]) ? $wikilink[1] : $href);
+		$title = $content;
+		$text = $content;
+
+		if (isset($wikilink[1])) {
+			$title = $wikilink[1];
+			$text = $this->parse($title); //NOTE: We parse the text, so we can be flexible with syntax
+		}
+
+		$title = addslashes(htmlspecialchars($title));
 
 		$type = strtolower($type);
 
 		if ($type == 'alias') {
-			return '<a class="wiki wiki_page alias" title="' . $text . '" href="tiki-index.php?page=' . $href . '">' . $text . '</a>';
+			return '<a class="wiki wiki_page alias" title="' . $title . '" href="tiki-index.php?page=' . $href . '">' . $text . '</a>';
 		} else if ($type == 'np') {
-			return $text;
+			return $title;
 		} else if ($type == 'word') {
-			return '<a class="wiki wiki_page word" title="' . $text . '" href="tiki-index.php?page=' . $href . '">' . $text . '</a>';
+			return '<a class="wiki wiki_page word" title="' . $title . '" href="tiki-index.php?page=' . $href . '">' . $text . '</a>';
 		}
 
-		return '<a class="wiki" title="' . $text . '" href="tiki-index.php?page=' . $href . '">' . $text . '</a>';
+		return '<a class="wiki" title="' . $title . '" href="tiki-index.php?page=' . $href . '">' . $text . '</a>';
 	}
 
 	/**
