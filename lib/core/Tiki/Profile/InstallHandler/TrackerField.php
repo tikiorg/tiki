@@ -107,6 +107,7 @@ class Tiki_Profile_InstallHandler_TrackerField extends Tiki_Profile_InstallHandl
 					'admin_only' => 'y',
 					'admin_editable' => 'p',
 					'creator_editable' => 'c',
+					'immutable' => 'i',
 				)
 			),
 		);
