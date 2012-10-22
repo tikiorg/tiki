@@ -16,7 +16,7 @@ class Services_Tracker_Utilities
 
 	function updateItem($definition, $item)
 	{
-		$this->replaceItem($definition, $item['itemId'], $item['status'], $item['fields']);
+		return $this->replaceItem($definition, $item['itemId'], $item['status'], $item['fields']);
 	}
 
 	private function replaceItem($definition, $itemId, $status, $fieldMap)
@@ -38,11 +38,19 @@ class Services_Tracker_Utilities
 			}
 		}
 
+		if ($itemId) {
+			$item = $this->getItem($definition->getConfiguration('trackerId'), $itemId);
+			$initialData = new JitFilter($item['fields']);
+		} else {
+			$initialData = new JitFilter(array());
+		}
+
 		// Add unspecified fields for the validation to work correctly
 		foreach ($definition->getFields() as $field) {
 			$fieldId = $field['fieldId'];
 			if (! isset($fields[$fieldId])) {
-				$field['value'] = '';
+				$permName = $field['permName'];
+				$field['value'] = $initialData->$permName->none();
 				$fields[$fieldId] = $field;
 			}
 		}

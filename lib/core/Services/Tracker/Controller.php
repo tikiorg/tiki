@@ -658,7 +658,7 @@ class Services_Tracker_Controller
 		}
 
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-			$this->utilities->updateItem(
+			$result = $this->utilities->updateItem(
 				$definition,
 				array(
 					'itemId' => $itemId,
@@ -666,6 +666,11 @@ class Services_Tracker_Controller
 					'fields' => $fields,
 				)
 			);
+
+			if (false === $result) {
+				throw new Services_Exception(tr('Validation error'), 406);
+			}
+
 			TikiLib::lib('unifiedsearch')->processUpdateQueue();
 		}
 
