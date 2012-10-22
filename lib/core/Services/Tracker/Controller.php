@@ -116,6 +116,11 @@ class Services_Tracker_Controller
 
 		$fields = $definition->getFields();
 		$types = $this->utilities->getFieldTypes();
+		$typesDisabled = array();
+
+		if ($perms->admin_trackers) {
+			$typesDisabled->utilities->getFieldTypesDisabled();
+		}
 
 		$missing = array();
 
@@ -131,6 +136,7 @@ class Services_Tracker_Controller
 		return array(
 			'fields' => $fields,
 			'types' => $types,
+			'typesDisabled' => $typesDisabled
 		);
 	}
 

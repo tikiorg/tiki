@@ -432,6 +432,23 @@ EXPORT;
 		return $out;
 	}
 
+	function getFieldTypesDisabled()
+	{
+		$factory = new Tracker_Field_Factory(false);
+		$completeList = $factory->getFieldTypes();
+
+		$list = array();
+
+		foreach ($completeList as $code => $info) {
+
+			if ($this->isEnabled($info) == false) {
+				$list[$code] = $info;
+			}
+		}
+
+		return $list;
+	}
+
 	function getFieldTypes()
 	{
 		$factory = new Tracker_Field_Factory(false);
