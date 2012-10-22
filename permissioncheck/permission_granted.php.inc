@@ -7,7 +7,7 @@
 // the recommended method is to run
 // prepare_permissioncheck.sh enable
 // or
-// prepare_permissioncheck.sh disnable
+// prepare_permissioncheck.sh disable
 // in Tiki's document root
 //
 //$permission_granted="yes";
