@@ -25,7 +25,9 @@
 		<legend>{tr}Existing files{/tr}</legend>
 		<input type="text" class="search" placeholder="{tr}Search query{/tr}"/>
 		{if $prefs.fgal_elfinder_feature eq 'y'}
-			{button href='tiki-list_file_gallery.php' _text="{tr}Browse files{/tr}" _onclick="return openElFinderDialog(this);" title="{tr}Browse files{/tr}"}
+			{button href='tiki-list_file_gallery.php' _text="{tr}Browse files{/tr}"
+				_onclick="return openElFinderDialog(this, {ldelim}getFileCallback:function(file,elfinder){ldelim}window.handleFinderFile(file,elfinder){rdelim}{rdelim});"
+				title="{tr}Browse files{/tr}"}
 		{/if}
 		<ol class="results tracker-item-files">
 		</ol>
@@ -246,5 +248,40 @@ $search.keypress(function (e) {
 		return false;
 	}
 });
+window.handleFinderFile = function (file, elfinder) {
+	var m = file.match(/target=([^&]*)/);
+	if (!m || m.length < 2) {
+		return false;	// error?
+	}
+	$.ajax({
+		type: 'GET',
+		url: $.service('file', 'finder'),
+		dataType: 'json',
+		data: {
+			cmd: "tikiFileFromHash",
+			hash: m[1]
+		},
+		success: function (data) {
+			var fileId = data.fileId, li = $('<li/>');
+			li.text(data.name);
+
+			$field.input_csv('add', ',', fileId);
+
+			li.append($('<label>{{icon _id=cross}}</label>'));
+			li.find('img').click(function () {
+				$field.input_csv('delete', ',', fileId);
+				$(this).closest('li').remove();
+			});
+			$files.append(li);
+		},
+		error: function (jqxhr) {
+		},
+		complete: function () {
+			$(window).data("elFinderDialog").dialog("close");
+			$(window).data("elFinderDialog", null);
+			return false;
+		}
+	});
+};
 });
 {/jq}

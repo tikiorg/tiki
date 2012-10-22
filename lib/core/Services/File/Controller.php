@@ -222,7 +222,14 @@ class Services_File_Controller
 		);
 
 		// run elFinder
-		$connector = new elFinderConnector(new elFinder($opts));
+		$elFinder = new elFinder($opts);
+		$connector = new elFinderConnector($elFinder);
+
+		if ($input->cmd->text() === 'tikiFileFromHash') {	// intercept tiki only commands
+			$fileId = $elFinder->realpath($input->hash->text());
+			$info = TikiLib::lib('filegal')->get_file(str_replace('f_', '', $fileId));
+			return $info;
+		}
 
 		// elfinder needs "raw" $_GET
 		$_GET = $input->asArray();
