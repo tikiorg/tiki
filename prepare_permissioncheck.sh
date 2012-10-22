@@ -20,11 +20,12 @@ YES="${WORK_DIR}/yes.bin"
 # quick 'n dirty
 # none of those permissions are critical
 #
+${CHMOD} 755 "${WORK_DIR}/"
+#
 ${CHMOD} 644 "${GRANT}"
 ${CHMOD} 444 "${NO}"
 ${CHMOD} 444 "${YES}"
 #
-${CHMOD} 755 "${WORK_DIR}/"
 ${CHMOD} 644 "${WORK_DIR}/${DEFAULT_FILE_NAME}"
 ${CHMOD} 644 "${WORK_DIR}/functions.php.inc"
 ${CHMOD} 600 "${WORK_DIR}/_htaccess"
