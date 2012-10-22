@@ -246,6 +246,8 @@ class WikiRenderer
 		if (!isset($this->info['is_html'])) {
 			$this->info['is_html'] = false;
 		}
+		
+		$this->setupComments();
 	} // }}}
 
 	private function setupSlideshow() // {{{
@@ -571,4 +573,13 @@ class WikiRenderer
 	{
 		$this->raw = true;
 	} // }}}
+
+	private function setupComments()
+	{
+		global $commentslib;
+		include_once('lib/comments/commentslib.php');
+		$commentslib = new Comments();
+		$count_comments = $commentslib->count_comments('wiki page:'.$this->page, 'n');
+		$this->smartyassign('count_comments', $count_comments);
+	}
 }

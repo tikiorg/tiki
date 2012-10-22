@@ -115,6 +115,9 @@
 						<span class="button">
 							<a id="comment-toggle" href="{service controller=comment action=list type="wiki page" objectId=$page}#comment-container">
 								{tr}Comments{/tr}
+								{if $count_comments}
+									&nbsp;(<span class="count_comments">{$count_comments}</span>)
+								{/if}
 							</a>
 						</span>
 						{jq}
