@@ -25,11 +25,11 @@ class TWVersion
 		//   stable   : Represents stable releases.
 		//   unstable : Represents candidate and test/development releases.
 		//   trunk     : Represents next generation development version.
-		$this->branch 	= 'trunk';
+		$this->branch 	= 'unstable';
 
 		// Set everything else, including defaults.
-		$this->version 	= '10.0pre';	// needs to have no spaces for releases
-		$this->star	= '';
+		$this->version 	= 'SVN pre 10.0';	// needs to have no spaces for releases
+		$this->star	= 'Sun';
 		$this->releases	= array();
 
 		// Custom installation version
@@ -75,7 +75,7 @@ class TWVersion
 				18=>'Electra',		// 7.x
 				19=>'Acubens',		// 8.x
 				20=>'Herbig Haro',	// 9.x
-				21=>'Sun'		// 10.x
+				21=>'Sun'			// 10.x
 		);
 	}
 
@@ -171,10 +171,13 @@ class TWVersion
 				'8.1',
 				'8.2',
 				'8.3',
+				'8.4',
+				'8.5',
 				'9.0alpha',
 				'9.0beta',
 				'9.0beta2',
 				'9.0',
+				'9.1',
 				'9.2beta1',
 			);
 	}
