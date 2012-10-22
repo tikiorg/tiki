@@ -23,9 +23,19 @@
 				}
 
 				var form = this;
-				$.post($(form).attr('action'), $(form).serialize())
-					.success(function () {
+				$.post($(form).attr('action'), $(form).serialize(), null, 'json')
+					.success(function (data) {
 						$(form).trigger('insert');
+						$('<a>').attr('href', $.service('tracker', 'update_item'))
+							.serviceDialog({
+								data: {
+									trackerId: $(form.trackerId).val(),
+									itemId: data.itemId
+								},
+								success: function () {
+									$(map).trigger('changed');
+								}
+							});
 					})
 					.error(function () {
 						$(this).serviceDialog({
