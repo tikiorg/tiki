@@ -16,6 +16,7 @@ class Services_File_Controller
 		if ($prefs['feature_file_galleries'] != 'y') {
 			throw new Services_Exception_Disabled('feature_file_galleries');
 		}
+		$this->defaultGalleryId = $prefs['fgal_root_id'];
 	}
 
 	function action_upload($input)
