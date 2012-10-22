@@ -27,10 +27,10 @@ function wikiplugin_userlink_info()
 
 function wikiplugin_userlink($data, $params)
 {
-	global $smarty;
+	global $smarty, $user;
 	$path = 'lib/smarty_tiki/modifier.userlink.php';
 	include_once($path);
 	$func = 'smarty_modifier_userlink';
-	$content = $func($params['user'], '', '', $data);
+	$content = $func(isset($params['user']) ? $params['user'] : $user, '', '', $data);
 	return '~np~'.$content.'~/np~';
 }
