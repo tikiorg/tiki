@@ -12,6 +12,7 @@
 //
 //$permission_granted="yes";
 //$permission_granted="no";
+$permission_granted="notdefinedyet";
 $permission_grant_control_file = 'permission_granted.bin';
 $file = fopen($permission_grant_control_file, 'r') or exit('Unable to open file ' . $permission_grant_control_file . '!');
 $permission_granted = fgets($file);

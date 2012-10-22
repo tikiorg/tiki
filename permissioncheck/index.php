@@ -33,10 +33,16 @@
 	if ($permission_granted=="yes\n") {
 		//$dummy=true;
 		echo '<span class="important">disable permission check on production machines</span>' . $html_and_ascii_linebreak;
-		echo '<span class="truetype">sh prepare_permissioncheck.sh disable</span>' . $html_and_ascii_linebreak;
-		echo '(recommended) or disable permission (setting: no) in file:' . $html_and_ascii_linebreak;
 		echo $html_and_ascii_linebreak ;
-		echo '<span class="truetype">permissioncheck/permission_granted.txt</span>' . $html_and_ascii_linebreak;
+		echo 'disable permission by running' . $html_and_ascii_linebreak;
+		echo '<span class="truetype">sh prepare_permissioncheck.sh disable</span>' . $html_and_ascii_linebreak;
+		echo "in Tiki's document root" . $html_and_ascii_linebreak;
+		echo $html_and_ascii_linebreak ;
+		echo 'or (not recommended) disable permission (setting: no) by copying file' . $html_and_ascii_linebreak;
+		echo '<span class="truetype">permissioncheck/no.bin</span>' . $html_and_ascii_linebreak;
+		echo 'to file' . $html_and_ascii_linebreak;
+		echo '<span class="truetype">permissioncheck/permission_granted.bin</span>' . $html_and_ascii_linebreak;
+		echo $html_and_ascii_linebreak ;
 	} else {
 		echo 'permission not granted' . $html_and_ascii_linebreak ;
 		echo $html_and_ascii_linebreak ;

@@ -1,15 +1,10 @@
 #!/bin/sh
 
 ACTION=$1
-#echo ${ACTION}
 
 # ensure the command "which" is available
 PATH="${PATH}:/bin:/usr/bin:/sbin:/usr/sbin:/usr/local/bin:/usr/local/sbin:/opt/bin:/opt/sbin:/opt/local/bin:/opt/local/sbin"
-#echo -e ${PATH} "\n"
 CHMOD=`which chmod`
-#echo -e ${CHMOD} "\n"
-PHP=`which php`
-#echo -e ${PHP} "\n"
 COPY=`which cp`
 
 # compare with permissioncheck/usecases.php.inc
@@ -18,15 +13,12 @@ WORK_DIR="permissioncheck"
 INDEX_FILE="index.php"
 DEFAULT_FILE_NAME="check.php"
 USECASES_FILE="${WORK_DIR}/usecases.txt"
-#GRANT="${WORK_DIR}/permission_granted.txt"
 GRANT="${WORK_DIR}/permission_granted.bin"
-#NO="${WORK_DIR}/no.txt"
 NO="${WORK_DIR}/no.bin"
-#YES="${WORK_DIR}/yes.txt"
 YES="${WORK_DIR}/yes.bin"
 
 # quick 'n dirty
-# none of those permissions is critical
+# none of those permissions are critical
 #
 ${CHMOD} 644 "${GRANT}"
 ${CHMOD} 444 "${NO}"
@@ -42,15 +34,6 @@ ${CHMOD} 444 "${WORK_DIR}/permission_print.php.inc"
 ${CHMOD} 644 "${WORK_DIR}/permission_granted.php.inc"
 ${CHMOD} 644 "${WORK_DIR}/usecases.php.inc"
 ${CHMOD} 644 "${WORK_DIR}/usecases.txt"
-
-# this is obsolete
-phpcheck() {
-#pwd
-PHP_PERMISSION_GRANTED=`$PHP ${WORK_DIR}/permission_print.php.inc`
-echo
-echo permission to run permissioncheck: ${PHP_PERMISSION_GRANTED}
-echo
-}
 
 disable_perm_check() {
 while read line_of_file_orig ; do
