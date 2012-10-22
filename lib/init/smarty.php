@@ -71,6 +71,9 @@ class Smarty_Tiki extends Smarty
 
 		$this->setCompileDir(realpath("templates_c/$tikidomain"));
 		$this->setConfigDir(null);
+		if (! isset($prefs['smarty_compilation'])) {
+			$prefs['smarty_compilation'] = '';
+		}
 		$this->compile_check = ( $prefs['smarty_compilation'] != 'never' );
 		$this->force_compile = ( $prefs['smarty_compilation'] == 'always' );
 		$this->assign('app_name', 'Tiki');
@@ -81,7 +84,7 @@ class Smarty_Tiki extends Smarty
 			)
 		);
 
-		if ( $prefs['smarty_security'] == 'y' ) {
+		if ( ! isset($prefs['smarty_security']) || $prefs['smarty_security'] == 'y' ) {
 			$this->enableSecurity('Tiki_Security_Policy');
 		} else {
 			$this->disableSecurity();
