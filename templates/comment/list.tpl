@@ -116,6 +116,11 @@ function comment_load(url) {
 						$.post(form.attr('action'), $(this).serialize(), function (data, st) {
 							if (data.threadId) {
 								$(comment_container).empty().comment_load(url);
+								$comm_counter = $('span.count_comments');
+								if ($comm_counter.length != 0) {
+									var comment_count = parseInt($comm_counter.text()) + 1;
+									$comm_counter.text(comment_count);
+								}
 							} else {
 								errors = $('ol.errors', form).empty();
 								if (! errors.length) {
@@ -145,6 +150,11 @@ function comment_load(url) {
 				success: function (data) { 
 					if (data.status === 'DONE') {
 						$(comment_container).empty().comment_load(url);
+						$comm_counter = $('span.count_comments');
+						if ($comm_counter.length != 0) {
+							var comment_count = parseInt($comm_counter.text()) - 1;
+							$comm_counter.text(comment_count);
+						}
 					}
 				}
 			});
@@ -163,6 +173,11 @@ $this.parent().empty().removeClass('button').load($this.attr('href'), function (
 		$.post(form.attr('action'), $(this).serialize(), function (data, st) {
 			if (data.threadId) {
 				$("#comment-container").empty().comment_load(url);
+				$comm_counter = $('span.count_comments');
+				if ($comm_counter.length != 0) {
+					var comment_count = parseInt($comm_counter.text()) + 1;
+					$comm_counter.text(comment_count);
+				}
 			} else {
 				errors = $('ol.errors', form).empty();
 				if (! errors.length) {
