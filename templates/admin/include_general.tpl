@@ -334,9 +334,111 @@
 				<p>{tr}Change the <strong>Admin</strong> password:{/tr} <a href="tiki-adminusers.php?find=admin">{tr}User administration{/tr}</a></p>
 			</div>
 		{/tab}
+		
+		{tab name="{tr}Import Local File{/tr}"}
+			<div style="padding:1em;" align="left">
+				{if !empty($f_errors)}
+					{remarksbox type='errors' title="{tr}Error{/tr}"}
+						{foreach item=f_error from=$f_errors}
+							{$f_error}<br />
+						{/foreach}
+					{/remarksbox}
+				{/if}
+				{if !empty($f_msgs)}
+					{remarksbox type='success' title="{tr}Message{/tr}"}
+						{foreach item=f_msg from=$f_msgs}
+							{$f_msg}<br />
+						{/foreach}
+					{/remarksbox}
+				{/if}
+				<input type="hidden" name="file_upload" value="y" />
+				<table>
+					<tr>
+						<td>{tr}Target{/tr}</td>
+						<td>
+							<input id="upl_gal" type="radio" name="upload_type" value="upl_gal" checked /><label for="upl_gal">{tr}Import to gallery{/tr}</label>
+							<input id="upl_att" type="radio" name="upload_type" value="upl_att" /><label for="upl_att">{tr}Import as attachment{/tr}</label>
+						</td>
+					<tr>
+						<td>File:</td>
+						<td>
+							<input type="text" name="file" size="80" />
+							<br /><small>{tr}Paste the full path of the file{/tr}. {tr}E.g. C:\www\inetpub\myfile.ppt{/tr}</small>
+						</td>
+					</tr>
+					<tr id="gal_tr">
+						<td>{tr}Gallery{/tr}:</td>
+						<td>
+							{if $prefs.fgal_use_db eq 'n'}
+								{if count($file_gals)}
+									<select name="file_gal">
+										{foreach from=$file_gals item=file_gal}
+									    	<option value="{$file_gal.id}">{$file_gal.name}</option>
+										{/foreach}
+									</select>
+								{/if}
+							{else}
+								{remarksbox type='errors' title="{tr}Error{/tr}"}
+									{tr}File gallery storage is not set to 'directory'{/tr}.
+								{/remarksbox}
+							{/if}
+						</td>
+					</tr>
+					<tr id="att_tr">
+						<td>{tr}Select page{/tr}:</td>
+						<td>
+							{if $prefs.w_use_db eq 'n'}
+								{if count($all_pages)}
+									<select name="page_name">
+										{foreach from=$all_pages item=page}
+									    	<option value="{$page.pageName|escape}">{$page.pageName}</option>
+										{/foreach}
+									</select>
+								{/if}
+							{else}
+								{remarksbox type='errors' title="{tr}Error{/tr}"}
+									{tr}Attachment storage is not set to 'directory'{/tr}.
+								{/remarksbox}
+							{/if}
+						</td>
+					</tr>
+					<tr>
+						<td colspan="2"><input type="submit" value="{tr}Import{/tr}" /></td>
+					</tr>
+				</table>
+			</div>
+		{/tab}
 	{/tabset}
 
 	<div class="heading input_submit_container" style="text-align: center;">
 		<input type="submit" value="{tr}Change preferences{/tr}" />
 	</div>
 </form>
+
+{jq}
+var  upload_type = $('input[name=upload_type]:checked').val();
+if (upload_type == 'upl_gal') {
+    $('#att_tr').hide();
+} else {
+    $('#att_tr').show();
+}
+if (upload_type == 'upl_att') {
+    $('#gal_tr').hide();
+} else {
+    $('#gal_tr').show();
+}
+
+$("input:radio[name=upload_type]").click(function() {
+    var value = $(this).val();
+    if (value == 'upl_gal') {
+	    $('#att_tr').hide();
+	} else {
+	    $('#att_tr').show();
+	}
+	if (value == 'upl_att') {
+	    $('#gal_tr').hide();
+	} else {
+	    $('#gal_tr').show();
+	}
+});
+{/jq}

@@ -10,6 +10,90 @@
 require_once ('tiki-setup.php');
 $access->check_script($_SERVER['SCRIPT_NAME'], basename(__FILE__));
 
+global $tikilib, $wikilib;
+require_once('lib/wiki/wikilib.php');
+
+require_once('lib/filegals/filegallib.php');
+$filegallib = new FileGalLib;
+if(isset($_REQUEST['file_upload']) && $_REQUEST['file_upload']==='y') {
+	global $prefs, $user;
+
+	$f_msgs = array();
+	$file = realpath(trim($_REQUEST['file']));
+	if (!file_exists($file)) {
+		$f_msgs[] = tra('File does not exist');
+	} else {
+		$file_info = pathinfo($file);
+		$size = filesize($file);
+		$type = get_mime_type($file);
+
+		if ($_REQUEST['upload_type'] === 'upl_gal') {
+			$gal_info = $filegallib->get_file_gallery_info($_REQUEST['file_gal']);
+			$savedir = $prefs['fgal_use_dir'];
+			if ($savedir) {
+				$data = null;
+				$fhash = find_unique_name($savedir, $gal_info['name']);
+				copy($file, $savedir . $fhash);
+				$filegallib->insert_file($gal_info['galleryId'], $file_info['basename'], '', $file_info['basename'], $data, $size, $type, $user, $fhash, '');
+				$f_msgs[] = tra('File successfully imported in gallery.');
+			}
+		} else if ($_REQUEST['upload_type'] === 'upl_att') {
+			if (!empty($_REQUEST['page_name'])) {
+				$fhash = $tikilib->get_attach_hash_file_name($file_info['basename']);
+				if ($fhash) {
+					copy($file, $prefs['w_use_dir'] . $fhash);
+					$wikilib->wiki_attach_file($_REQUEST['page_name'], $file_info['basename'], $type, $size, ($prefs['w_use_db'] === 'dir')?'': $ret['data'], $_REQUEST["attach_comment"], $user, $fhash);
+					$f_msgs[] = tra('File successfully attached to the page.');
+				}
+			}
+		}
+	}
+
+}
+
+function find_unique_name($directory, $start)
+{
+	$fhash = md5($start);
+
+	while (file_exists($directory . $fhash)) {
+		$fhash = md5(uniqid($fhash));
+	}
+
+	return $fhash;
+}
+function get_mime_type($file)
+{
+    $mime_types = array(
+        "pdf"=>"application/pdf"
+        ,"exe"=>"application/octet-stream"
+        ,"zip"=>"application/zip"
+        ,"docx"=>"application/msword"
+        ,"doc"=>"application/msword"
+        ,"xls"=>"application/vnd.ms-excel"
+        ,"ppt"=>"application/vnd.ms-powerpoint"
+        ,"gif"=>"image/gif"
+        ,"png"=>"image/png"
+        ,"jpeg"=>"image/jpg"
+        ,"jpg"=>"image/jpg"
+        ,"mp3"=>"audio/mpeg"
+        ,"wav"=>"audio/x-wav"
+        ,"mpeg"=>"video/mpeg"
+        ,"mpg"=>"video/mpeg"
+        ,"mpe"=>"video/mpeg"
+        ,"mov"=>"video/quicktime"
+        ,"avi"=>"video/x-msvideo"
+        ,"3gp"=>"video/3gpp"
+        ,"css"=>"text/css"
+        ,"jsc"=>"application/javascript"
+        ,"js"=>"application/javascript"
+        ,"php"=>"text/html"
+        ,"htm"=>"text/html"
+        ,"html"=>"text/html"
+    );
+    $extension = strtolower(end(explode('.',$file)));
+    return $mime_types[$extension];
+}
+
 if (isset($_REQUEST['new_prefs'])) {
 	$listgroups = $userlib->get_groups(0, -1, 'groupName_asc', '', '', 'n');
 	$in = array();
@@ -69,5 +153,11 @@ if (!empty($_REQUEST['testMail'])) {
 }
 $engine_type = getCurrentEngine();
 $smarty->assign('db_engine_type', $engine_type);
+
+$file_gals = $filegallib->list_file_galleries();
+$smarty->assign('file_gals', $file_gals['data']);
+$all_pages = $tikilib->get_all_pages();
+$smarty->assign('all_pages', $all_pages);
+$smarty->assign('f_msgs', $f_msgs);
 
 ask_ticket('admin-inc-general');
