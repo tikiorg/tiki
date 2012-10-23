@@ -130,15 +130,27 @@
 	$perms_unknown='???';
 	$css_class_unknown='unknown';
 	$html_empty_table_row='<tr><td>&nbsp;</td></tr>'."\n  ";
+	echo $html_empty_table_row ;
 	// special:
 	// php safe mode: check for /tmp
+	$tmpfile='/home';
+	$filename=$tmpfile;
+	$perms_file=$perms_unknown;
+	$css_class=$css_class_unknown;
+	get_perm_data($filename,$username,$groupname,$perms_asc,$perms_oct);
+	echo '<tr>' . '<td><em class="'.$css_class.'">' . $perms_file . '</em></td><td>' . $username . '</td><td>' . $groupname . '</td><td>' . $perms_asc . '</td><td>' . $perms_oct . '</td><td>' . $filename . '</td></tr>' . "\n  ";
 	$tmpfile='/tmp';
 	$filename=$tmpfile;
 	$perms_file=$perms_unknown;
 	$css_class=$css_class_unknown;
-	echo $html_empty_table_row ;
 	get_perm_data($filename,$username,$groupname,$perms_asc,$perms_oct);
-	echo "<tr>".'<td><em class="'.$css_class.'">'.$perms_file."</em></td>"."<td>".$username."</td><td>".$groupname."</td><td>".$perms_asc."</td><td>".$perms_oct.'</td><td>' . $filename . "</td></tr>\n  ";
+	echo '<tr>' . '<td><em class="'.$css_class.'">' . $perms_file . '</em></td><td>' . $username . '</td><td>' . $groupname . '</td><td>' . $perms_asc . '</td><td>' . $perms_oct . '</td><td>' . $filename . '</td></tr>' . "\n  ";
+	$tmpfile='/example_does_not_exist';
+	$filename=$tmpfile;
+	$perms_file=$perms_unknown;
+	$css_class=$css_class_unknown;
+	get_perm_data($filename,$username,$groupname,$perms_asc,$perms_oct);
+	echo '<tr>' . '<td><em class="'.$css_class.'">' . $perms_file . '</em></td><td>' . $username . '</td><td>' . $groupname . '</td><td>' . $perms_asc . '</td><td>' . $perms_oct . '</td><td>' . $filename . '</td></tr>' . "\n  ";
 ?>
  </table></div>
  <p class="block">
