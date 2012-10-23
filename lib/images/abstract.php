@@ -5,6 +5,9 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
+/**
+ *
+ */
 class ImageAbstract
 {
 	var $data = NULL;
@@ -16,8 +19,12 @@ class ImageAbstract
 	var $thumb = null;
 	var $loaded = false;
 	var $metadata = null;			//to hold metadata from the FileMetadata class
-	
-	function __construct($image, $isfile = false)
+
+    /**
+     * @param $image
+     * @param bool $isfile
+     */
+    function __construct($image, $isfile = false)
 	{
 		if ( ! empty($image) || $this->filename !== null ) {
 			if ( is_readable($this->filename) && function_exists('exif_thumbnail') && in_array(image_type_to_mime_type(exif_imagetype($this->filename)), array('image/jpeg', 'image/tiff'))) {
@@ -45,12 +52,19 @@ class ImageAbstract
 		}
 	}
 
-	function is_empty()
+    /**
+     * @return bool
+     */
+    function is_empty()
 	{
 		return empty($this->data) && empty($this->filename);
 	}
 
-	function get_from_file($filename)
+    /**
+     * @param $filename
+     * @return null|string
+     */
+    function get_from_file($filename)
 	{
 		$content = NULL;
 		if ( is_readable($filename) ) {
@@ -62,11 +76,19 @@ class ImageAbstract
 		return $content;
 	}
 
-	function _resize($x, $y)
+    /**
+     * @param $x
+     * @param $y
+     */
+    function _resize($x, $y)
 	{
 	}
 
-	function resize($x = 0, $y = 0)
+    /**
+     * @param int $x
+     * @param int $y
+     */
+    function resize($x = 0, $y = 0)
 	{
 		$this->_load_data();
 		if ($this->data) {
@@ -85,7 +107,10 @@ class ImageAbstract
 		}
 	}
 
-	function resizemax($max)
+    /**
+     * @param $max
+     */
+    function resizemax($max)
 	{
 		$this->_load_data();
 		if ($this->data) {
@@ -105,7 +130,10 @@ class ImageAbstract
 		$this->resizemax($prefs['fgal_thumb_max_size']);
 	}
 
-	function scale($r)
+    /**
+     * @param $r
+     */
+    function scale($r)
 	{
 		$this->_load_data();
 		$x0 = $this->get_width();
@@ -114,17 +142,26 @@ class ImageAbstract
 		$this->_resize($x0 * $r, $y0 * $r);
 	}
 
-	function get_mimetype()
+    /**
+     * @return string
+     */
+    function get_mimetype()
 	{
 		return 'image/'.strtolower($this->get_format());
 	}
 
-	function set_format($format)
+    /**
+     * @param $format
+     */
+    function set_format($format)
 	{
 		$this->format = $format;
 	}
 
-	function get_format()
+    /**
+     * @return string
+     */
+    function get_format()
 	{
 		if ( $this->format == '' ) {
 			$this->set_format('jpeg');
@@ -134,13 +171,20 @@ class ImageAbstract
 		}
 	}
 
-	function display()
+    /**
+     * @return null
+     */
+    function display()
 	{
 		$this->_load_data();
 		return $this->data;
 	}
 
-	function convert($format)
+    /**
+     * @param $format
+     * @return bool
+     */
+    function convert($format)
 	{
 		if ( $this->is_supported($format) ) {
 			$this->set_format($format);
@@ -150,31 +194,53 @@ class ImageAbstract
 		}
 	}
 
-	function rotate($angle)
+    /**
+     * @param $angle
+     */
+    function rotate($angle)
 	{
 	}
 
-	function is_supported($format)
+    /**
+     * @param $format
+     * @return bool
+     */
+    function is_supported($format)
 	{
 		return false;
 	}
 
-	function get_icon_default_format()
+    /**
+     * @return string
+     */
+    function get_icon_default_format()
 	{
 		return 'png';
 	}
 
-	function get_icon_default_x()
+    /**
+     * @return int
+     */
+    function get_icon_default_x()
 	{
 		return 16;
 	}
 
-	function get_icon_default_y()
+    /**
+     * @return int
+     */
+    function get_icon_default_y()
 	{
 		return 16;
 	}
 
-	function icon($extension, $x = 0, $y = 0)
+    /**
+     * @param $extension
+     * @param int $x
+     * @param int $y
+     * @return bool|null|string
+     */
+    function icon($extension, $x = 0, $y = 0)
 	{
 		$keep_original = ( $x == 0 && $y == 0 );
 
@@ -212,19 +278,28 @@ class ImageAbstract
 			return ImageAbstract::get_from_file($name);
 		}
 
-	} 
+	}
 
-	function _get_height() 
+    /**
+     * @return null
+     */
+    function _get_height()
 	{
 		return NULL;
 	}
 
-	function _get_width()
+    /**
+     * @return null
+     */
+    function _get_width()
 	{
 		return NULL;
 	}
 
-	function get_height()
+    /**
+     * @return null
+     */
+    function get_height()
 	{
 		if ( $this->height === NULL ) {
 			$this->height = $this->_get_height();
@@ -232,15 +307,25 @@ class ImageAbstract
 		return $this->height;
 	}
 
-	function get_width()
+    /**
+     * @return null
+     */
+    function get_width()
 	{
 		if ( $this->width === NULL ) {
 			$this->width = $this->_get_width();
 		}
 		return $this->width;
 	}
-	
-	function getMetadata($filename = null, $ispath = true, $extended = true, $bestarray = true)
+
+    /**
+     * @param null $filename
+     * @param bool $ispath
+     * @param bool $extended
+     * @param bool $bestarray
+     * @return FileMetadata|null
+     */
+    function getMetadata($filename = null, $ispath = true, $extended = true, $bestarray = true)
 	{
 		include_once('lib/metadata/metadatalib.php');
 		if ($filename === null) {

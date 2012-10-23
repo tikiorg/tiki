@@ -235,6 +235,9 @@ class TikiImporter
 	}
 }
 
+/**
+ *
+ */
 class ImporterParserException extends Exception
 {
 }

@@ -518,6 +518,9 @@ if (isset($_REQUEST['filegals_manager']) && $_REQUEST['filegals_manager'] != '')
 }
 
 
+/**
+ * @return mixed
+ */
 function get_assign_permissions()
 {
 	global $objectFactory;
@@ -553,6 +556,9 @@ function get_assign_permissions()
 	return $currentPermissions;
 }
 
+/**
+ * @return array
+ */
 function quickperms_get_data()
 {
 	if ($_REQUEST['permType']=='file galleries') {
@@ -562,6 +568,9 @@ function quickperms_get_data()
 	}
 }
 
+/**
+ * @return array
+ */
 function quickperms_get_filegal()
 {
 	return array(
@@ -617,6 +626,9 @@ function quickperms_get_filegal()
 	);
 }
 
+/**
+ * @return array
+ */
 function quickperms_get_generic()
 {
 	global $userlib;
@@ -669,6 +681,9 @@ function quickperms_get_generic()
 	return $perms;
 }
 
+/**
+ * @return array|bool
+ */
 function perms_get_restrictions()
 {
 	global $userlib;

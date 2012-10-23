@@ -15,12 +15,20 @@ class TransitionLib
 {
 	private $transitionType;
 
-	function __construct( $transitionType )
+    /**
+     * @param $transitionType
+     */
+    function __construct( $transitionType )
 	{
 		$this->transitionType = $transitionType;
 	}
 
-	function getAvailableTransitions( $object, $type = null )
+    /**
+     * @param $object
+     * @param null $type
+     * @return array
+     */
+    function getAvailableTransitions( $object, $type = null )
 	{
 		$states = $this->getCurrentStates($object, $type);
 
@@ -47,7 +55,13 @@ class TransitionLib
 		return $transitions;
 	}
 
-	function getAvailableTransitionsFromState( $state, $object, $type = null )
+    /**
+     * @param $state
+     * @param $object
+     * @param null $type
+     * @return array
+     */
+    function getAvailableTransitionsFromState( $state, $object, $type = null )
 	{
 		$transitions = $this->getAvailableTransitions($object, $type);
 
@@ -61,7 +75,13 @@ class TransitionLib
 		return $out;
 	}
 
-	function triggerTransition( $transitionId, $object, $type = null )
+    /**
+     * @param $transitionId
+     * @param $object
+     * @param null $type
+     * @return bool
+     */
+    function triggerTransition( $transitionId, $object, $type = null )
 	{
 		// Make sure the transition exists
 		if ( ! $transition = $this->getTransition($transitionId) ) {
@@ -96,7 +116,11 @@ class TransitionLib
 		return true;
 	}
 
-	function listTransitions( $states )
+    /**
+     * @param $states
+     * @return array
+     */
+    function listTransitions( $states )
 	{
 		$db = TikiDb::get();
 
@@ -116,7 +140,15 @@ class TransitionLib
 
 	// Database interaction
 
-	function addTransition( $from, $to, $name, $preserve = false, array $guards = array() )
+    /**
+     * @param $from
+     * @param $to
+     * @param $name
+     * @param bool $preserve
+     * @param array $guards
+     * @return mixed
+     */
+    function addTransition( $from, $to, $name, $preserve = false, array $guards = array() )
 	{
 		$db = TikiDb::get();
 
@@ -128,7 +160,14 @@ class TransitionLib
 		return $db->getOne('SELECT MAX(`transitionId`) FROM `tiki_transitions`');
 	}
 
-	function updateTransition( $transitionId, $from, $to, $label, $preserve )
+    /**
+     * @param $transitionId
+     * @param $from
+     * @param $to
+     * @param $label
+     * @param $preserve
+     */
+    function updateTransition( $transitionId, $from, $to, $label, $preserve )
 	{
 		$db = TikiDb::get();
 		$db->query(
@@ -137,7 +176,11 @@ class TransitionLib
 		);
 	}
 
-	function updateGuards( $transitionId, array $guards )
+    /**
+     * @param $transitionId
+     * @param array $guards
+     */
+    function updateGuards( $transitionId, array $guards )
 	{
 		$db = TikiDb::get();
 		$db->query(
@@ -146,14 +189,21 @@ class TransitionLib
 		);
 	}
 
-	function removeTransition( $transitionId )
+    /**
+     * @param $transitionId
+     */
+    function removeTransition( $transitionId )
 	{
 		$db = TikiDb::get();
 
 		$db->query('DELETE FROM `tiki_transitions` WHERE `transitionId` = ?', array($transitionId));
 	}
 
-	private function getTransitionsFromStates( $states )
+    /**
+     * @param $states
+     * @return array
+     */
+    private function getTransitionsFromStates( $states )
 	{
 		$db = TikiDb::get();
 
@@ -171,7 +221,11 @@ class TransitionLib
 		return array_map(array($this, 'expandGuards'), $result);
 	}
 
-	function getTransition( $transitionId )
+    /**
+     * @param $transitionId
+     * @return mixed
+     */
+    function getTransition( $transitionId )
 	{
 		$db = TikiDb::get();
 
@@ -183,7 +237,11 @@ class TransitionLib
 		return $this->expandGuards(reset($result));
 	}
 
-	private function expandGuards( $transition )
+    /**
+     * @param $transition
+     * @return mixed
+     */
+    private function expandGuards( $transition )
 	{
 		$transition['guards'] = json_decode($transition['guards'], true);
 		if ( ! $transition['guards'] ) {
@@ -195,7 +253,12 @@ class TransitionLib
 
 	// The following functions vary depending on the transition type
 
-	private function getCurrentStates( $object, $type )
+    /**
+     * @param $object
+     * @param $type
+     * @return array
+     */
+    private function getCurrentStates( $object, $type )
 	{
 		switch( $this->transitionType ) {
 			case 'group':
@@ -207,7 +270,12 @@ class TransitionLib
 		}
 	}
 
-	private function addState( $state, $object, $type )
+    /**
+     * @param $state
+     * @param $object
+     * @param $type
+     */
+    private function addState( $state, $object, $type )
 	{
 		switch ( $this->transitionType ) {
 		case 'group':
@@ -221,7 +289,12 @@ class TransitionLib
 		}
 	}
 
-	private function removeState( $state, $object, $type )
+    /**
+     * @param $state
+     * @param $object
+     * @param $type
+     */
+    private function removeState( $state, $object, $type )
 	{
 		switch ( $this->transitionType ) {
 		case 'group':

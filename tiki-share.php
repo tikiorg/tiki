@@ -516,6 +516,11 @@ function sendMessage($recipients, $subject)
 	return $ok;
 }
 
+/**
+ * @param $forumId
+ * @param $subject
+ * @return bool|int
+ */
 function postForum($forumId, $subject)
 {
 	global $errors, $prefs, $smarty, $user, $userlib, $tikilib, $_REQUEST;

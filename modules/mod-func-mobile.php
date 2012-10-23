@@ -11,6 +11,9 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
   exit;
 }
 
+/**
+ * @return array
+ */
 function module_mobile_info()
 {
 	return array(
@@ -38,6 +41,10 @@ function module_mobile_info()
 	);
 }
 
+/**
+ * @param $mod_reference
+ * @param $module_params
+ */
 function module_mobile($mod_reference, &$module_params)
 {
 	$module_params['to_label']  = !isset($module_params['to_label']) ? tra('Switch to mobile site') : $module_params['to_label'];

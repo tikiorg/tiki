@@ -11,6 +11,9 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
   exit;
 }
 
+/**
+ * @return array
+ */
 function module_comm_received_objects_info()
 {
 	return array(
@@ -22,6 +25,10 @@ function module_comm_received_objects_info()
 	);
 }
 
+/**
+ * @param $mod_reference
+ * @param $module_params
+ */
 function module_comm_received_objects($mod_reference, $module_params)
 {
 	global $tikilib, $smarty;

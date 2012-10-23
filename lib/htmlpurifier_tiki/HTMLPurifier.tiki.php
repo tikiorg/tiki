@@ -23,6 +23,11 @@
 
 require_once('lib/htmlpurifier/HTMLPurifier.auto.php');
 
+/**
+ * @param $html
+ * @param null $config
+ * @return mixed
+ */
 function HTMLPurifier($html, $config = null)
 {
 	static $purifier = false;
@@ -35,6 +40,9 @@ function HTMLPurifier($html, $config = null)
 	return $purifier->purify($html, $config);
 }
 
+/**
+ * @return mixed
+ */
 function getHTMLPurifierTikiConfig()
 {
 	global $tikipath, $prefs;

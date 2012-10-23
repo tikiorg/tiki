@@ -11,6 +11,9 @@ if (basename($_SERVER['SCRIPT_NAME']) == basename(__FILE__)) {
   exit;
 }
 
+/**
+ * @return array
+ */
 function module_semantic_links_info()
 {
 	return array(
@@ -21,6 +24,10 @@ function module_semantic_links_info()
 	);
 }
 
+/**
+ * @param $mod_reference
+ * @param $module_params
+ */
 function module_semantic_links($mod_reference, $module_params)
 {
 	global $page, $smarty;

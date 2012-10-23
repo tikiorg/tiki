@@ -14,10 +14,20 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
   exit;
 }
 
+/**
+ *
+ */
 class groupAlertLib extends TikiLib
 {
 
-	function AddGroup ($ObjectType, $ObjectNumber,$GroupName,$displayEachUser)
+    /**
+     * @param $ObjectType
+     * @param $ObjectNumber
+     * @param $GroupName
+     * @param $displayEachUser
+     * @return bool
+     */
+    function AddGroup ($ObjectType, $ObjectNumber,$GroupName,$displayEachUser)
 	{
 		if ( $displayEachUser == "on" ) $displayEachUser='y';
 		if ( $displayEachUser == "" ) $displayEachUser='n';
@@ -31,18 +41,33 @@ class groupAlertLib extends TikiLib
 	 return true;
 	}
 
-	function GetGroup ($ObjectType,$ObjectNumber)
+    /**
+     * @param $ObjectType
+     * @param $ObjectNumber
+     * @return mixed
+     */
+    function GetGroup ($ObjectType,$ObjectNumber)
 	{
 		$res= $this->getOne("select `groupName` from `tiki_groupalert` where ( `objectType` = ? and `objectId` = ? )", array($ObjectType,$ObjectNumber));
 		return $res ;
 	}
 
-	function GetShowEachUser($ObjectType,$ObjectNumber,$GroupName )
+    /**
+     * @param $ObjectType
+     * @param $ObjectNumber
+     * @param $GroupName
+     * @return mixed
+     */
+    function GetShowEachUser($ObjectType,$ObjectNumber,$GroupName )
 	{
 		return $this->getOne("select `displayEachuser` from `tiki_groupalert` where ( `objectType` = ? and `objectId` = ? and `groupName` =? )", array($ObjectType,$ObjectNumber,$GroupName));
 	}
 
-	function Notify ( $ListUserToAlert,$URI )
+    /**
+     * @param $ListUserToAlert
+     * @param $URI
+     */
+    function Notify ( $ListUserToAlert,$URI )
 	{
 		global $tikilib,$userlib ;
 		if (!is_array($ListUserToAlert)) {

@@ -81,6 +81,11 @@ foreach ($pollIds as $pK => $pId) { // iterate each poll
 	$poll_info_arr[$pK]['options'] = $options;
 } // end iterate each poll
 
+/**
+ * @param $a
+ * @param $b
+ * @return int
+ */
 function scoresort($a, $b)
 {
 	if (isset($_REQUEST['scoresort_asc'])) {

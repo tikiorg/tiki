@@ -14,6 +14,9 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 if (!defined('weekInSeconds')) define('weekInSeconds', 604800);
 if (!defined('dayInSeconds')) define('dayInSeconds', 86400);
 
+/**
+ *
+ */
 class CalRecurrence extends TikiLib
 {
 	private $id;
@@ -43,7 +46,10 @@ class CalRecurrence extends TikiLib
 	private $created;
 	private $lastModif;
 
-	public function CalRecurrence($param = -1)
+    /**
+     * @param $param
+     */
+    public function CalRecurrence($param = -1)
 	{
 		parent::__construct();
 		if ($param > 0)
@@ -143,7 +149,11 @@ class CalRecurrence extends TikiLib
 		return true;
 	}
 
-	public function delete($fromTime=null)
+    /**
+     * @param null $fromTime
+     * @return mixed
+     */
+    public function delete($fromTime=null)
 	{
 		if (is_null($fromTime))
 			$fromTime = time();
@@ -158,7 +168,10 @@ class CalRecurrence extends TikiLib
 		return $this->query($query, $bindvars);
 	}
 
-	private function create()
+    /**
+     * @return bool
+     */
+    private function create()
 	{
 		$query = "INSERT INTO tiki_calendar_recurrence (calendarId, start, end, allday, locationId, categoryId, nlId, priority, status, url, lang, name, description, "
 			   . "weekly, weekday, monthly, dayOfMonth,yearly, dateOfYear, nbRecurrences, startPeriod, endPeriod, user, created, lastModif) "
@@ -203,7 +216,11 @@ class CalRecurrence extends TikiLib
 		return false;
 	}
 
-	private function update($updateManuallyChangedEvents = false)
+    /**
+     * @param bool $updateManuallyChangedEvents
+     * @return bool
+     */
+    private function update($updateManuallyChangedEvents = false)
 	{
 		$query = "UPDATE tiki_calendar_recurrence SET calendarId = ?, start = ?, end = ?, allday = ?, locationId = ?, categoryId = ?, nlId = ?, priority = ?, status = ?, "
 			   . "url = ?, lang = ?, name = ?, description = ?, weekly = ?, weekday = ?, monthly = ?, dayOfMonth = ?, yearly = ?, dateOfYear = ?, nbRecurrences = ?, "
@@ -246,7 +263,10 @@ class CalRecurrence extends TikiLib
 		return false;
 	}
 
-	public function createEvents()
+    /**
+     * @return bool
+     */
+    public function createEvents()
 	{
 		// calculate the date of every events to create
 		$dates = array();
@@ -385,7 +405,11 @@ class CalRecurrence extends TikiLib
 		}
 	}
 
-	public function updateEvents($updateManuallyChangedEvents = false, $oldRec)
+    /**
+     * @param bool $updateManuallyChangedEvents
+     * @param $oldRec
+     */
+    public function updateEvents($updateManuallyChangedEvents = false, $oldRec)
 	{
 			// retrieve the yet-to-happen events of the recurrence rule (only the relevant fields)
 			$query = "SELECT calitemId,calendarId, start, end, allday, locationId, categoryId, nlId, priority, status, url, lang, name, description, "
@@ -568,7 +592,11 @@ class CalRecurrence extends TikiLib
 			}
 	}
 
-	public function compareFields($oldRec)
+    /**
+     * @param $oldRec
+     * @return array
+     */
+    public function compareFields($oldRec)
 	{
 		$result = array();
 		if ($this->getCalendarId() != $oldRec->getCalendarId())
@@ -606,7 +634,12 @@ class CalRecurrence extends TikiLib
 		return $result;
 	}
 
-	public function compareFieldsOfEvent($evt,$oldRec)
+    /**
+     * @param $evt
+     * @param $oldRec
+     * @return array
+     */
+    public function compareFieldsOfEvent($evt,$oldRec)
 	{
 		$result = array();
 		if ($evt['calendarId'] != $oldRec->getCalendarId())
@@ -653,7 +686,10 @@ class CalRecurrence extends TikiLib
 		return $result;
 	}
 
-	public function toArray()
+    /**
+     * @return array
+     */
+    public function toArray()
 	{
 		return array(
 		'id' => $this->getId(),
@@ -678,7 +714,11 @@ class CalRecurrence extends TikiLib
 	{
 		return $this->id;
 	}
-	public function setId($value)
+
+    /**
+     * @param $value
+     */
+    public function setId($value)
 	{
 		$this->id = $value;
 	}
@@ -687,7 +727,11 @@ class CalRecurrence extends TikiLib
 	{
 		return $this->calendarId;
 	}
-	public function setCalendarId($value)
+
+    /**
+     * @param $value
+     */
+    public function setCalendarId($value)
 	{
 		$this->calendarId = $value;
 	}
@@ -696,7 +740,11 @@ class CalRecurrence extends TikiLib
 	{
 		return $this->start;
 	}
-	public function setStart($value)
+
+    /**
+     * @param $value
+     */
+    public function setStart($value)
 	{
 		$this->start = $value;
 	}
@@ -705,7 +753,11 @@ class CalRecurrence extends TikiLib
 	{
 		return $this->end;
 	}
-	public function setEnd($value)
+
+    /**
+     * @param $value
+     */
+    public function setEnd($value)
 	{
 		$this->end = $value;
 	}
@@ -714,7 +766,11 @@ class CalRecurrence extends TikiLib
 	{
 		return $this->allday;
 	}
-	public function setAllday($value)
+
+    /**
+     * @param $value
+     */
+    public function setAllday($value)
 	{
 		$this->allday = $value;
 	}
@@ -723,7 +779,11 @@ class CalRecurrence extends TikiLib
 	{
 		return $this->locationId;
 	}
-	public function setLocationId($value)
+
+    /**
+     * @param $value
+     */
+    public function setLocationId($value)
 	{
 		$this->locationId = $value;
 	}
@@ -732,7 +792,11 @@ class CalRecurrence extends TikiLib
 	{
 		return $this->categoryId;
 	}
-	public function setCategoryId($value) 
+
+    /**
+     * @param $value
+     */
+    public function setCategoryId($value)
 	{
 		$this->categoryId = $value;
 	}
@@ -741,7 +805,11 @@ class CalRecurrence extends TikiLib
 	{
 		return $this->nlId;
 	}
-	public function setNlId($value)
+
+    /**
+     * @param $value
+     */
+    public function setNlId($value)
 	{
 		$this->nlId = $value;
 	}
@@ -750,7 +818,11 @@ class CalRecurrence extends TikiLib
 	{
 		return $this->priority;
 	}
-	public function setPriority($value)
+
+    /**
+     * @param $value
+     */
+    public function setPriority($value)
 	{
 		$this->priority = $value;
 	}
@@ -759,7 +831,11 @@ class CalRecurrence extends TikiLib
 	{
 		return $this->status;
 	}
-	public function setStatus($value)
+
+    /**
+     * @param $value
+     */
+    public function setStatus($value)
 	{
 		$this->status = $value;
 	}
@@ -768,7 +844,11 @@ class CalRecurrence extends TikiLib
 	{
 		return $this->url;
 	}
-	public function setUrl($value)
+
+    /**
+     * @param $value
+     */
+    public function setUrl($value)
 	{
 		$this->url = $value;
 	}
@@ -777,7 +857,11 @@ class CalRecurrence extends TikiLib
 	{
 		return $this->lang;
 	}
-	public function setLang($value)
+
+    /**
+     * @param $value
+     */
+    public function setLang($value)
 	{
 		$this->lang = $value;
 	}
@@ -786,7 +870,11 @@ class CalRecurrence extends TikiLib
 	{
 		return $this->name;
 	}
-	public function setName($value)
+
+    /**
+     * @param $value
+     */
+    public function setName($value)
 	{
 		$this->name = $value;
 	}
@@ -795,7 +883,11 @@ class CalRecurrence extends TikiLib
 	{
 		return $this->description;
 	}
-	public function setDescription($value)
+
+    /**
+     * @param $value
+     */
+    public function setDescription($value)
 	{
 		$this->description = $value;
 	}
@@ -804,7 +896,11 @@ class CalRecurrence extends TikiLib
 	{
 		return $this->weekly;
 	}
-	public function setWeekly($value)
+
+    /**
+     * @param $value
+     */
+    public function setWeekly($value)
 	{
 		$this->weekly = $value;
 	}
@@ -813,7 +909,11 @@ class CalRecurrence extends TikiLib
 	{
 		return $this->weekday;
 	}
-	public function setWeekday($value)
+
+    /**
+     * @param $value
+     */
+    public function setWeekday($value)
 	{
 		$this->weekday = $value;
 	}
@@ -822,7 +922,11 @@ class CalRecurrence extends TikiLib
 	{
 		return $this->monthly;
 	}
-	public function setMonthly($value)
+
+    /**
+     * @param $value
+     */
+    public function setMonthly($value)
 	{
 		$this->monthly = $value;
 	}
@@ -831,7 +935,11 @@ class CalRecurrence extends TikiLib
 	{
 		return $this->dayOfMonth;
 	}
-	public function setDayOfMonth($value)
+
+    /**
+     * @param $value
+     */
+    public function setDayOfMonth($value)
 	{
 		$this->dayOfMonth = $value;
 	}
@@ -840,7 +948,11 @@ class CalRecurrence extends TikiLib
 	{
 		return $this->yearly;
 	}
-	public function setYearly($value)
+
+    /**
+     * @param $value
+     */
+    public function setYearly($value)
 	{
 		$this->yearly = $value;
 	}
@@ -849,7 +961,11 @@ class CalRecurrence extends TikiLib
 	{
 		return $this->dateOfYear;
 	}
-	public function setDateOfYear($value)
+
+    /**
+     * @param $value
+     */
+    public function setDateOfYear($value)
 	{
 		$this->dateOfYear = $value;
 	}
@@ -858,7 +974,11 @@ class CalRecurrence extends TikiLib
 	{
 		return $this->nbRecurrences;
 	}
-	public function setNbRecurrences($value)
+
+    /**
+     * @param $value
+     */
+    public function setNbRecurrences($value)
 	{
 		$this->nbRecurrences = $value;
 	}
@@ -867,7 +987,11 @@ class CalRecurrence extends TikiLib
 	{
 		return $this->startPeriod;
 	}
-	public function setStartPeriod($value)
+
+    /**
+     * @param $value
+     */
+    public function setStartPeriod($value)
 	{
 		$this->startPeriod = $value;
 	}
@@ -876,7 +1000,11 @@ class CalRecurrence extends TikiLib
 	{
 		return $this->endPeriod;
 	}
-	public function setEndPeriod($value)
+
+    /**
+     * @param $value
+     */
+    public function setEndPeriod($value)
 	{
 		$this->endPeriod = $value;
 	}
@@ -885,7 +1013,11 @@ class CalRecurrence extends TikiLib
 	{
 		return $this->user;
 	}
-	public function setUser($value)
+
+    /**
+     * @param $value
+     */
+    public function setUser($value)
 	{
 		$this->user = $value;
 	}
@@ -894,7 +1026,11 @@ class CalRecurrence extends TikiLib
 	{
 		return $this->created;
 	}
-	public function setCreated($value)
+
+    /**
+     * @param $value
+     */
+    public function setCreated($value)
 	{
 		$this->created = $value;
 	}
@@ -903,7 +1039,11 @@ class CalRecurrence extends TikiLib
 	{
 		return $this->lastModif;
 	}
-	public function setLastModif ($value)
+
+    /**
+     * @param $value
+     */
+    public function setLastModif ($value)
 	{
 		$this->lastModif = $value;
 	}

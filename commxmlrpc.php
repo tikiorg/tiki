@@ -21,6 +21,10 @@ $map = array(
 
 $s = new XML_RPC_Server($map);
 
+/**
+ * @param $params
+ * @return XML_RPC_Response
+ */
 function sendStructurePage($params)
 {
 	global $tikilib, $userlib, $commlib, $prefs;
@@ -59,6 +63,10 @@ function sendStructurePage($params)
 }
 
 /* Validates the user and returns user information */
+/**
+ * @param $params
+ * @return XML_RPC_Response
+ */
 function sendPage($params)
 {
 	// Get the page and store it in received_pages
@@ -99,6 +107,10 @@ function sendPage($params)
 	return new XML_RPC_Response(new XML_RPC_Value(1, "boolean"));
 }
 
+/**
+ * @param $params
+ * @return XML_RPC_Response
+ */
 function sendArticle($params)
 {
 	// Get the page and store it in received_pages

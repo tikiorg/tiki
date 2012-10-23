@@ -8,7 +8,10 @@
 if (!defined("_ECHOSERVER_HTML_GRAMMARPARSER")) {
 define("_ECHOSERVER_HTML_GRAMMARPARSER",1);
 
-class HtmlGrammarParser {
+    /**
+     *
+     */
+    class HtmlGrammarParser {
   var $line,
       $column,
       $pos,

@@ -10,6 +10,9 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 	exit;
 }
 
+/**
+ * @param $installer
+ */
 function pre_20110727_tracker_multilingual_convert_tiki($installer)
 {
 	global $multilingual_tracker_content;
@@ -98,6 +101,9 @@ function pre_20110727_tracker_multilingual_convert_tiki($installer)
 	$table->deleteMultiple(array('lang' => $table->not(''),));
 }
 
+/**
+ * @param $installer
+ */
 function post_20110727_tracker_multilingual_convert_tiki($installer)
 {
 	global $multilingual_tracker_content;

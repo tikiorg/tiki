@@ -8,16 +8,29 @@
 define('SVN_MIN_VERSION', 1.3);
 define('TIKISVN', 'https://tikiwiki.svn.sourceforge.net/svnroot/tikiwiki');
 
+/**
+ * @param $relative
+ * @return string
+ */
 function full($relative)
 {
 	return TIKISVN . "/$relative";
 }
 
+/**
+ * @param $full
+ * @return string
+ */
 function short($full)
 {
 	return substr($full, strlen(TIKISVN) + 1);
 };
 
+/**
+ * @param $string
+ * @param $color
+ * @return string
+ */
 function color($string, $color)
 {
 	$avail = array(
@@ -33,26 +46,42 @@ function color($string, $color)
 	return "\033[{$avail[$color]}m$string\033[0m";
 }
 
+/**
+ * @param $message
+ */
 function error($message)
 { 
 	die(color($message, 'red') . "\n");
 }
 
+/**
+ * @param $message
+ */
 function info($message)
 {
 	echo $message . "\n";
 }
 
+/**
+ * @param $message
+ */
 function important($message)
 {
 	echo color($message, 'green') . "\n";
 }
 
+/**
+ * @return bool
+ */
 function check_svn_version()
 {
 	return (float)trim(`svn --version --quiet 2> /dev/null`) > SVN_MIN_VERSION;
 }
 
+/**
+ * @param $path
+ * @return object
+ */
 function get_info($path)
 {
 	$esc = escapeshellarg($path);
@@ -61,11 +90,20 @@ function get_info($path)
 	return $info;
 }
 
+/**
+ * @param $url
+ * @return bool
+ */
 function is_valid_merge_destination($url)
 {
 	return is_trunk($url) || is_experimental($url);
 }
 
+/**
+ * @param $destination
+ * @param $source
+ * @return bool
+ */
 function is_valid_merge_source($destination, $source)
 {
 	if (is_trunk($destination))
@@ -77,27 +115,47 @@ function is_valid_merge_source($destination, $source)
 	return false;
 }
 
+/**
+ * @param $branch
+ * @return bool
+ */
 function is_valid_branch($branch)
 {
 	return is_stable($branch) || is_experimental($branch);
 }
 
+/**
+ * @param $branch
+ * @return bool
+ */
 function is_stable($branch)
 {
 	return dirname($branch) == full('branches')
 		&& (preg_match("/^\d+\.[\dx]+$/", basename($branch)) || preg_match("/test$/", basename($branch)));
 }
 
+/**
+ * @param $branch
+ * @return bool
+ */
 function is_experimental($branch)
 {
 	return dirname($branch) == full('branches/experimental');
 }
 
+/**
+ * @param $branch
+ * @return bool
+ */
 function is_trunk($branch)
 {
 	return $branch == full('trunk');
 }
 
+/**
+ * @param $localPath
+ * @param bool $ignore_externals
+ */
 function update_working_copy($localPath, $ignore_externals = false)
 {
 	$localPath = escapeshellarg($localPath);
@@ -105,6 +163,10 @@ function update_working_copy($localPath, $ignore_externals = false)
 	`svn up $localPath$ignoreStr`;
 }
 
+/**
+ * @param $localPath
+ * @return bool
+ */
 function has_uncommited_changes($localPath)
 {
 	$localPath = escapeshellarg($localPath);
@@ -118,6 +180,10 @@ function has_uncommited_changes($localPath)
 	return $count->length > 0;
 }
 
+/**
+ * @param $localPath
+ * @return DOMNodeList
+ */
 function get_conflicts($localPath)
 {
 	$localPath = escapeshellarg($localPath);
@@ -131,6 +197,11 @@ function get_conflicts($localPath)
 	return $list;
 }
 
+/**
+ * @param $path
+ * @param $source
+ * @return int
+ */
 function find_last_merge($path, $source)
 {
 	$short = preg_quote(short($source), '/');
@@ -171,6 +242,12 @@ function find_last_merge($path, $source)
 	return $rev;
 }
 
+/**
+ * @param $localPath
+ * @param $source
+ * @param $from
+ * @param $to
+ */
 function merge($localPath, $source, $from, $to)
 {
 	$short = short($source);
@@ -183,6 +260,12 @@ function merge($localPath, $source, $from, $to)
 	file_put_contents('svn-commit.tmp', $message);
 }
 
+/**
+ * @param $msg
+ * @param bool $displaySuccess
+ * @param bool $dieOnRemainingChanges
+ * @return int
+ */
 function commit($msg, $displaySuccess = true, $dieOnRemainingChanges = true)
 {
 	$msg = escapeshellarg($msg);
@@ -194,6 +277,10 @@ function commit($msg, $displaySuccess = true, $dieOnRemainingChanges = true)
 	return (int) get_info('.')->entry->commit['revision'];
 }
 
+/**
+ * @param $working
+ * @param $source
+ */
 function incorporate($working, $source)
 {
 	$working = escapeshellarg($working);
@@ -202,6 +289,12 @@ function incorporate($working, $source)
 	passthru($command = "svn merge $working $source");
 }
 
+/**
+ * @param $source
+ * @param $branch
+ * @param $revision
+ * @return bool
+ */
 function branch($source, $branch, $revision)
 {
 	$short = short($branch);
@@ -217,6 +310,12 @@ function branch($source, $branch, $revision)
 	return isset($f->entry);
 }
 
+/**
+ * @param $localPath
+ * @param $minRevision
+ * @param string $maxRevision
+ * @return bool
+ */
 function get_logs($localPath, $minRevision, $maxRevision = 'HEAD')
 {
 	if (empty($minRevision) || empty($maxRevision)) return false;

@@ -24,6 +24,10 @@ $smarty->assign("tidy", extension_loaded("tidy"));
 $smarty->assign("http", extension_loaded("http"));
 $smarty->assign("curl", extension_loaded("curl"));
 
+/**
+ * @param $element
+ * @return array|null
+ */
 function get_from_dom($element)
 {
 	if ($element === NULL) return NULL;
@@ -35,6 +39,11 @@ function get_from_dom($element)
 	return $a;
 }
 
+/**
+ * @param $url
+ * @param bool $use_tidy
+ * @return array
+ */
 function get_url($url, $use_tidy = TRUE)
 {
 	global $smarty, $cookies;
@@ -68,6 +77,11 @@ function get_url($url, $use_tidy = TRUE)
 	return $result;
 }
 
+/**
+ * @param $urls
+ * @param $file
+ * @param $options
+ */
 function save_test($urls,$file,$options)
 {
 	$dom = new DOMDocument('1.0', 'UTF-8');

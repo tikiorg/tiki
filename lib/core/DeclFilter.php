@@ -19,7 +19,8 @@ class DeclFilter implements Zend_Filter_Interface
 	 *
 	 * @var array The configuration array
 	 * @var array The list of filtering rules that are disallowed
-	 * @see DeclFilter_ConfigureTest Unit tests contain samples of expected input
+     * @return \DeclFilter
+     * @see DeclFilter_ConfigureTest Unit tests contain samples of expected input
 	 */
 	public static function fromConfiguration(array $configuration, array $reject = array())
 	{

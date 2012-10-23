@@ -10,6 +10,9 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 	exit;
 }
 
+/**
+ * @param $installer
+ */
 function post_20120904_category_root_tiki($installer)
 {
 	// Finds the root category on all existing categories

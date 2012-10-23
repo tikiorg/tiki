@@ -70,6 +70,10 @@ foreach ($data as $values) {
 	fputcsv(STDOUT, array_values($values));
 }
 
+/**
+ * @param $fields
+ * @return array
+ */
 function collect_raw_data($fields)
 {
 	$data = array();
@@ -117,6 +121,9 @@ function collect_raw_data($fields)
 	return $data;
 }
 
+/**
+ * @param $data
+ */
 function remove_fake_descriptions(& $data)
 {
 	foreach ($data as & $row) {
@@ -126,6 +133,10 @@ function remove_fake_descriptions(& $data)
 	}
 }
 
+/**
+ * @param $data
+ * @param $prefs
+ */
 function set_default_values(& $data, $prefs)
 {
 	foreach ($data as & $row) {
@@ -137,6 +148,11 @@ function set_default_values(& $data, $prefs)
 	}
 }
 
+/**
+ * @param $data
+ * @param $field
+ * @return array
+ */
 function index_data($data, $field)
 {
 	$index = array();
@@ -154,6 +170,9 @@ function index_data($data, $field)
 	return $index;
 }
 
+/**
+ * @param $data
+ */
 function collect_locations(& $data)
 {
 	global $prefslib; require_once 'lib/prefslib.php';
@@ -167,6 +186,11 @@ function collect_locations(& $data)
 	}
 }
 
+/**
+ * @param $data
+ * @param $index
+ * @param $stopWords
+ */
 function update_search_flag(& $data, $index, $stopWords)
 {
 	foreach ($data as & $row) {

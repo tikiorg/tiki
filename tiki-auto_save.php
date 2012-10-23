@@ -26,6 +26,10 @@ if ($prefs['feature_ajax'] != 'y' || ($prefs['ajax_autosave'] != 'y')) {
 
 require_once('lib/ajax/autosave.php');
 
+/**
+ * @param $command
+ * @param $data
+ */
 function send_ajax_response($command, $data )
 {
 	header('Content-Type:text/xml; charset=UTF-8');

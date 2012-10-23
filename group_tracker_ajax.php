@@ -46,6 +46,10 @@ if ($prefs['feature_jquery_validation'] === 'y') {	// dig out the new rules for 
 	}
 }
 
+/**
+ * @param $matches
+ * @return string
+ */
 function group_tracker_ajax_quote($matches)
 {
 	return '"' . $matches[1] . '":';

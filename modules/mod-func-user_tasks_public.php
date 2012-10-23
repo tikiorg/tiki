@@ -11,6 +11,9 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
   exit;
 }
 
+/**
+ * @return array
+ */
 function module_user_tasks_public_info()
 {
 	return array(
@@ -21,6 +24,10 @@ function module_user_tasks_public_info()
 	);
 }
 
+/**
+ * @param $mod_reference
+ * @param $module_params
+ */
 function module_user_tasks_public($mod_reference, $module_params)
 {
 	global $user, $tikilib, $smarty, $tiki_p_tasks, $prefs;

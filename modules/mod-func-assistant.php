@@ -12,6 +12,9 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 }
 
 
+/**
+ * @return array
+ */
 function module_assistant_info()
 {
 	return array(

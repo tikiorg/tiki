@@ -10,6 +10,9 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
   exit;
 }
 
+/**
+ * @param $installer
+ */
 function upgrade_20110610_revert_poll_additions_tiki($installer)
 {
 	$installer->query("DROP TABLE IF EXISTS `tiki_poll_votes`");

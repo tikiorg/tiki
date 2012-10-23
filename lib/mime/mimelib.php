@@ -11,11 +11,19 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
   exit;
 }
 
+/**
+ *
+ */
 class MimeLib
 {
 	private $finfo;
 
-	function from_path($filename, $path)
+    /**
+     * @param $filename
+     * @param $path
+     * @return string
+     */
+    function from_path($filename, $path)
 	{
 		if ($type = $this->physical_check_from_path($path)) {
 			return $this->handle_physical_exceptions($type, $filename);
@@ -24,7 +32,12 @@ class MimeLib
 		return $this->from_file_extension($filename);
 	}
 
-	function from_content($filename, $content)
+    /**
+     * @param $filename
+     * @param $content
+     * @return string
+     */
+    function from_content($filename, $content)
 	{
 		if ($type = $this->physical_check_from_content($content)) {
 			return $this->handle_physical_exceptions($type, $filename);
@@ -33,12 +46,21 @@ class MimeLib
 		return $this->from_file_extension($filename);
 	}
 
-	function from_filename($filename)
+    /**
+     * @param $filename
+     * @return string
+     */
+    function from_filename($filename)
 	{
 		return $this->from_file_extension($filename);
 	}
 
-	private function handle_physical_exceptions($type, $filename)
+    /**
+     * @param $type
+     * @param $filename
+     * @return string
+     */
+    private function handle_physical_exceptions($type, $filename)
 	{
 		if ($type === 'application/zip') {
 			$extension = $this->get_extension($filename);
@@ -51,13 +73,21 @@ class MimeLib
 		return $type;
 	}
 
-	private function get_extension($filename)
+    /**
+     * @param $filename
+     * @return string
+     */
+    private function get_extension($filename)
 	{
 		$ext = pathinfo($filename);
 		return isset($ext['extension']) ? $ext['extension'] : '';
 	}
 
-	private function from_file_extension($filename)
+    /**
+     * @param $filename
+     * @return string
+     */
+    private function from_file_extension($filename)
 	{
 		global $mimetypes; include_once('lib/mime/mimetypes.php');
 
@@ -73,7 +103,11 @@ class MimeLib
         return "application/octet-stream";
 	}
 
-	private function physical_check_from_path($path)
+    /**
+     * @param $path
+     * @return string
+     */
+    private function physical_check_from_path($path)
 	{
 		if ($finfo = $this->get_finfo()) {
 			if (file_exists($path)) {
@@ -83,7 +117,11 @@ class MimeLib
 		}
 	}
 
-	private function physical_check_from_content($content)
+    /**
+     * @param $content
+     * @return string
+     */
+    private function physical_check_from_content($content)
 	{
 		if ($finfo = $this->get_finfo()) {
 			$type = $finfo->buffer($content);
@@ -91,7 +129,10 @@ class MimeLib
 		}
 	}
 
-	private function get_finfo()
+    /**
+     * @return finfo
+     */
+    private function get_finfo()
 	{
 		global $prefs;
 

@@ -14,6 +14,10 @@ require_once("lib/tikilib.php");
 require_once("lib/categories/categlib.php");
 require_once("lib/structures/structlib.php");
 
+/**
+ * @param $s
+ * @return mixed
+ */
 function tra($s)
 { 
 	return $s; 

@@ -10,6 +10,9 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
   exit;
 }
 
+/**
+ * @param $installer
+ */
 function upgrade_20110902_revert_rootCategId_addition_tiki($installer)
 {
 	$result = $installer->fetchAll("SHOW COLUMNS FROM `tiki_categories` WHERE `Field`='rootCategId'");

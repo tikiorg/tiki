@@ -10,6 +10,9 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
   exit;
 }
 
+/**
+ * @param $installer
+ */
 function upgrade_20091004_last_tracker_items_modules_merge_tiki($installer)
 {
 	$result = $installer->query("select moduleId, params from tiki_modules where name='last_modif_tracker_items'; ");

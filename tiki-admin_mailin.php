@@ -11,6 +11,12 @@ include_once ('lib/mailin/mailinlib.php');
 $access->check_feature('feature_mailin');
 $access->check_permission(array('tiki_p_admin_mailin'));
 
+/**
+ * @param $pop
+ * @param $user
+ * @param $pass
+ * @return bool
+ */
 function account_ok($pop, $user, $pass)
 {
 	include_once ('lib/webmail/net_pop3.php');

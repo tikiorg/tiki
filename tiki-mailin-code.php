@@ -12,7 +12,13 @@ require_once ("lib/webmail/net_pop3.php");
 include_once ("lib/mail/mimelib.php");
 include_once ("lib/webmail/tikimaillib.php");
 include_once ('lib/wiki/wikilib.php');
-function mailin_check_attachments(&$output, &$out, $page, $user) 
+/**
+ * @param $output
+ * @param $out
+ * @param $page
+ * @param $user
+ */
+function mailin_check_attachments(&$output, &$out, $page, $user)
 {
 	global $wikilib;
 	$cnt = 0;
@@ -33,7 +39,12 @@ function mailin_check_attachments(&$output, &$out, $page, $user)
 	$out.= $cnt;
 	$out.= " attachment(s) added<br />";
 }
-function mailin_get_body($output) 
+
+/**
+ * @param $output
+ * @return string
+ */
+function mailin_get_body($output)
 {
 	if (isset($output['text'][0])) $body = $output["text"][0];
 	elseif (isset($output['parts'][0]) && isset($output['parts'][0]["text"][0])) $body = $output['parts'][0]["text"][0];

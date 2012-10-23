@@ -18,7 +18,12 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
  */
 class DCSLib extends TikiLib
 {
-	private function convert_results( $result, $lang = null )
+    /**
+     * @param $result
+     * @param null $lang
+     * @return mixed
+     */
+    private function convert_results( $result, $lang = null )
 	{
 		foreach ( $result as &$row ) {
 			$row['page_name'] = '';
@@ -32,7 +37,12 @@ class DCSLib extends TikiLib
 		return $result;
 	}
 
-	private function get_content_from_page( $page, $lang = null )
+    /**
+     * @param $page
+     * @param null $lang
+     * @return string
+     */
+    private function get_content_from_page( $page, $lang = null )
 	{
 		global $prefs;
 		$info = $this->get_page_info($page);
@@ -54,7 +64,12 @@ class DCSLib extends TikiLib
 		}
 	}
 
-	private function first_data( $result, $lang = null )
+    /**
+     * @param $result
+     * @param null $lang
+     * @return mixed
+     */
+    private function first_data( $result, $lang = null )
 	{
 		$result = $this->convert_results($result, $lang);
 		if ( $first = reset($result) ) {
@@ -62,14 +77,24 @@ class DCSLib extends TikiLib
 		}
 	}
 
-	function get_actual_content($fieldvalue, $lang = null)
+    /**
+     * @param $fieldvalue
+     * @param null $lang
+     * @return mixed
+     */
+    function get_actual_content($fieldvalue, $lang = null)
 	{
 		$query = 'SELECT * FROM `tiki_programmed_content` WHERE `contentId`=? AND `publishDate`<=? ORDER BY `publishDate` DESC';
 		$result = $this->fetchAll($query, array((int)$fieldvalue, $this->now));
 		return $this->first_data($result, $lang);
 	}
 
-	function get_actual_content_by_label($fieldvalue, $lang = null)
+    /**
+     * @param $fieldvalue
+     * @param null $lang
+     * @return mixed
+     */
+    function get_actual_content_by_label($fieldvalue, $lang = null)
 	{
 		$query = 'SELECT tpc.*'
 			.' FROM `tiki_programmed_content` AS tpc, `tiki_content` AS tc'
@@ -78,7 +103,10 @@ class DCSLib extends TikiLib
 		return $this->first_data($result, $lang);
 	}
 
-	function remove_contents($contentId)
+    /**
+     * @param $contentId
+     */
+    function remove_contents($contentId)
 	{
 		$query = "delete from `tiki_programmed_content` where `contentId`=?";
 
@@ -87,7 +115,14 @@ class DCSLib extends TikiLib
 		$result = $this->query($query, array($contentId));
 	}
 
-	function list_content($offset = 0, $maxRecords = -1, $sort_mode = 'contentId_desc', $find = '')
+    /**
+     * @param int $offset
+     * @param $maxRecords
+     * @param string $sort_mode
+     * @param string $find
+     * @return array
+     */
+    function list_content($offset = 0, $maxRecords = -1, $sort_mode = 'contentId_desc', $find = '')
 	{
 		if ($find) {
 			$findesc = '%'.$find.'%';
@@ -143,14 +178,23 @@ class DCSLib extends TikiLib
 		return $retval;
 	}
 
-	function get_actual_content_date($contentId)
+    /**
+     * @param $contentId
+     * @return mixed
+     */
+    function get_actual_content_date($contentId)
 	{
 		$query = "select max(`publishDate`) from `tiki_programmed_content` where `contentId`=? and `publishDate`<=?";
 		$res = $this->getOne($query, array($contentId, $this->now));
 		return $res;
 	}
 
-	function get_random_content($contentId = 0, $lang = null)
+    /**
+     * @param int $contentId
+     * @param null $lang
+     * @return string
+     */
+    function get_random_content($contentId = 0, $lang = null)
 	{
 
 		$where = ' WHERE `publishDate`<=?';
@@ -175,14 +219,26 @@ class DCSLib extends TikiLib
 		return $this->first_data($result, $lang);
 	}
 
-	function get_next_content($contentId)
+    /**
+     * @param $contentId
+     * @return mixed
+     */
+    function get_next_content($contentId)
 	{
 		$query = "select min(`publishDate`) from `tiki_programmed_content` where `contentId`=? and `publishDate`>?";
 		$res = $this->getOne($query, array($contentId, $this->now));
 		return $res;
 	}
 
-	function list_programmed_content($contentId, $offset = 0, $maxRecords = -1, $sort_mode = 'publishDate_desc', $find = '')
+    /**
+     * @param $contentId
+     * @param int $offset
+     * @param $maxRecords
+     * @param string $sort_mode
+     * @param string $find
+     * @return array
+     */
+    function list_programmed_content($contentId, $offset = 0, $maxRecords = -1, $sort_mode = 'publishDate_desc', $find = '')
 	{
 		if ($find) {
 			$findesc = '%' . $find . '%';
@@ -206,7 +262,15 @@ class DCSLib extends TikiLib
 		return $retval;
 	}
 
-	function replace_programmed_content($pId, $contentId, $publishDate, $data, $content_type = 'static')
+    /**
+     * @param $pId
+     * @param $contentId
+     * @param $publishDate
+     * @param $data
+     * @param string $content_type
+     * @return mixed
+     */
+    function replace_programmed_content($pId, $contentId, $publishDate, $data, $content_type = 'static')
 	{
 		if (!$pId) {
 			// was replace into ...
@@ -226,7 +290,11 @@ class DCSLib extends TikiLib
 		return $id;
 	}
 
-	function remove_programmed_content($id)
+    /**
+     * @param $id
+     * @return bool
+     */
+    function remove_programmed_content($id)
 	{
 		$query = "delete from `tiki_programmed_content` where `pId`=?";
 
@@ -234,7 +302,12 @@ class DCSLib extends TikiLib
 		return true;
 	}
 
-	function get_content($fieldvalue, $fieldname = 'contentId')
+    /**
+     * @param $fieldvalue
+     * @param string $fieldname
+     * @return bool|mixed
+     */
+    function get_content($fieldvalue, $fieldname = 'contentId')
 	{
 		if ( $fieldname != 'contentId' && $fieldname != 'contentLabel' )
 			return false;
@@ -246,7 +319,11 @@ class DCSLib extends TikiLib
 		return reset($result);
 	}
 
-	function get_programmed_content($id)
+    /**
+     * @param $id
+     * @return mixed
+     */
+    function get_programmed_content($id)
 	{
 		$query = "select * from `tiki_programmed_content` where `pId`=?";
 
@@ -255,7 +332,13 @@ class DCSLib extends TikiLib
 		return reset($result);
 	}
 
-	function replace_content($contentId, $description, $label = null)
+    /**
+     * @param $contentId
+     * @param $description
+     * @param null $label
+     * @return mixed
+     */
+    function replace_content($contentId, $description, $label = null)
 	{
 		$bindvars = array($description);
 		if ( $label !== null ) {

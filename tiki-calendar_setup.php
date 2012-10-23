@@ -351,7 +351,11 @@ $weeks = array();
 $cell = array();
 
 if (!function_exists('correct_start_day')) {
-	function correct_start_day($d)
+    /**
+     * @param $d
+     * @return int
+     */
+    function correct_start_day($d)
 	{
 		global $prefs;
 

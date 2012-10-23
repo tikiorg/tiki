@@ -20,6 +20,9 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
  *  feature_sitesearch
  */
 
+/**
+ * @param $installer
+ */
 function upgrade_20101230_create_top_modules_tiki($installer)
 {
 

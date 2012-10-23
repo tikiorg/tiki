@@ -10,6 +10,9 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
   exit;
 }
 
+/**
+ * @param $installer
+ */
 function upgrade_20110609_unique_login_tiki($installer)
 {
 	$result = $installer->query("select count(*) nb from users_users group by login having count(*) > 1");

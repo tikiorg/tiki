@@ -12,12 +12,19 @@ if (file_exists('./db/local.php') && file_exists('./templates/tiki-check.tpl')) 
 } else {
 	$standalone = true;
 
-	function tra($string)
+    /**
+     * @param $string
+     * @return mixed
+     */
+    function tra($string)
 	{
 		return $string;
 	}
 
-	function renderTable($var)
+    /**
+     * @param $var
+     */
+    function renderTable($var)
 	{
 		if (is_array($var)) {
 			echo '<table style="border:2px solid grey;">';
@@ -175,7 +182,12 @@ DBC;
 			case 'PDO':
 				// We don't do exception handling here to be PHP 4 compatible
 				$connection = new PDO('mysql:host='.$_POST['dbhost'], $_POST['dbuser'], $_POST['dbpass']);
-				function query($query, $connection)
+                /**
+                 * @param $query
+                 * @param $connection
+                 * @return mixed
+                 */
+                function query($query, $connection)
 				{
 					$result = $connection->query($query);
 					$return = $result->fetchAll();
@@ -190,7 +202,12 @@ DBC;
 					$connection = false;
 					echo 'Couldn\'t connect to database: '.$error;
 				}
-				function query($query, $connection)
+                /**
+                 * @param $query
+                 * @param $connection
+                 * @return array
+                 */
+                function query($query, $connection)
 				{
 					$result = $connection->query($query);
 					$return = array();
@@ -205,7 +222,12 @@ DBC;
 				if ( $connection === false ) {
 					echo 'Cannot connect to MySQL. Wrong credentials?';
 				}
-				function query($query, $connection = '')
+                /**
+                 * @param $query
+                 * @param string $connection
+                 * @return array
+                 */
+                function query($query, $connection = '')
 				{
 					$result = mysql_query($query);
 					$return = array();
@@ -218,7 +240,11 @@ DBC;
 		}
 	}
 } else {
-	function query($query)
+    /**
+     * @param $query
+     * @return array
+     */
+    function query($query)
 	{
 		global $tikilib;
 		$result = $tikilib->query($query);

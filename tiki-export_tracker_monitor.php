@@ -21,6 +21,9 @@ if (!isset($_REQUEST['trackerId'])) {
 	die();
 }
 
+/**
+ * @param array $in_vals
+ */
 function saveStatus($in_vals = array())
 {
 	global $stat_array, $monitor_filename;

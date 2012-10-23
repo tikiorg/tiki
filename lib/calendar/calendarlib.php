@@ -14,9 +14,16 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 if (!defined('ROLE_ORGANIZER')) define('ROLE_ORGANIZER', '6');
 if (!defined('weekInSeconds')) define('weekInSeconds', 604800);
 
+/**
+ *
+ */
 class CalendarLib extends TikiLib
 {
-	function convertSortMode($sort_mode)
+    /**
+     * @param $sort_mode
+     * @return string
+     */
+    function convertSortMode($sort_mode)
 	{
 		$tmp = explode("_", $sort_mode);
 		if (count($tmp) == 2) {
@@ -26,7 +33,14 @@ class CalendarLib extends TikiLib
 		return parent::convertSortMode($sort_mode);
 	}
 
-	function list_calendars($offset = 0, $maxRecords = -1, $sort_mode = 'name_asc', $find = '')
+    /**
+     * @param int $offset
+     * @param $maxRecords
+     * @param string $sort_mode
+     * @param string $find
+     * @return mixed
+     */
+    function list_calendars($offset = 0, $maxRecords = -1, $sort_mode = 'name_asc', $find = '')
 	{
 		$mid = '';
 		$res = array();
@@ -63,13 +77,26 @@ class CalendarLib extends TikiLib
 		return $retval;
 	}
 
-	function get_calendarId_from_name($name)
+    /**
+     * @param $name
+     * @return mixed
+     */
+    function get_calendarId_from_name($name)
 	{
 		$query = 'select `calendarId` from `tiki_calendars` where `name`=?';
 		return $this->getOne($query, array($name));
 	}
 
-	function set_calendar($calendarId, $user, $name, $description, $customflags=array(), $options=array())
+    /**
+     * @param $calendarId
+     * @param $user
+     * @param $name
+     * @param $description
+     * @param array $customflags
+     * @param array $options
+     * @return mixed
+     */
+    function set_calendar($calendarId, $user, $name, $description, $customflags=array(), $options=array())
 	{
 		global $prefs;
 		$name = strip_tags($name);
@@ -119,7 +146,11 @@ class CalendarLib extends TikiLib
 		return $calendarId;
 	}
 
-	function get_calendar($calendarId)
+    /**
+     * @param $calendarId
+     * @return array
+     */
+    function get_calendar($calendarId)
 	{
 		global $prefs;
 		$res = $this->query("select * from `tiki_calendars` where `calendarId`=?", array((int)$calendarId));
@@ -141,12 +172,19 @@ class CalendarLib extends TikiLib
 		return $cal;
 	}
 
-	function get_calendarid($calitemId)
+    /**
+     * @param $calitemId
+     * @return mixed
+     */
+    function get_calendarid($calitemId)
 	{
 		return $this->getOne("select `calendarId` from `tiki_calendar_items` where `calitemId`=?", array((int)$calitemId));
 	}
 
-	function drop_calendar($calendarId)
+    /**
+     * @param $calendarId
+     */
+    function drop_calendar($calendarId)
 	{
 		// find and remove roles for all calendar items:
 		$query = "select `calitemId` from `tiki_calendar_items` where `calendarId`=?";
@@ -177,7 +215,19 @@ class CalendarLib extends TikiLib
 	}
 
 	/* tsart ans tstop are in user time - the data base is in server time */
-	function list_raw_items($calIds, $user, $tstart, $tstop, $offset, $maxRecords, $sort_mode='start_asc', $find='', $customs=array())
+    /**
+     * @param $calIds
+     * @param $user
+     * @param $tstart
+     * @param $tstop
+     * @param $offset
+     * @param $maxRecords
+     * @param string $sort_mode
+     * @param string $find
+     * @param array $customs
+     * @return array
+     */
+    function list_raw_items($calIds, $user, $tstart, $tstop, $offset, $maxRecords, $sort_mode='start_asc', $find='', $customs=array())
 	{
 
 		if (count($calIds) == 0) {
@@ -231,7 +281,19 @@ class CalendarLib extends TikiLib
 		return $ret;
 	}
 
-	function list_items($calIds, $user, $tstart, $tstop, $offset, $maxRecords, $sort_mode='start_asc', $find='', $customs=array())
+    /**
+     * @param $calIds
+     * @param $user
+     * @param $tstart
+     * @param $tstop
+     * @param $offset
+     * @param $maxRecords
+     * @param string $sort_mode
+     * @param string $find
+     * @param array $customs
+     * @return array
+     */
+    function list_items($calIds, $user, $tstart, $tstop, $offset, $maxRecords, $sort_mode='start_asc', $find='', $customs=array())
 	{
 		global $tiki_p_change_events, $prefs;
 		$ret = array();
@@ -284,7 +346,19 @@ class CalendarLib extends TikiLib
 		return $ret;
 	}
 
-	function list_items_by_day($calIds, $user, $tstart, $tstop, $offset, $maxRecords, $sort_mode='start_asc', $find='', $customs=array())
+    /**
+     * @param $calIds
+     * @param $user
+     * @param $tstart
+     * @param $tstop
+     * @param $offset
+     * @param $maxRecords
+     * @param string $sort_mode
+     * @param string $find
+     * @param array $customs
+     * @return array
+     */
+    function list_items_by_day($calIds, $user, $tstart, $tstop, $offset, $maxRecords, $sort_mode='start_asc', $find='', $customs=array())
 	{
 		global $prefs;
 		$ret = array();
@@ -331,7 +405,12 @@ class CalendarLib extends TikiLib
 		return $ret;
 	}
 
-	function get_item($calitemId, $customs=array())
+    /**
+     * @param $calitemId
+     * @param array $customs
+     * @return mixed
+     */
+    function get_item($calitemId, $customs=array())
 	{
 		global $user, $prefs;
 
@@ -374,7 +453,14 @@ class CalendarLib extends TikiLib
 		return $res;
 	}
 
-	function set_item($user, $calitemId, $data, $customs=array())
+    /**
+     * @param $user
+     * @param $calitemId
+     * @param $data
+     * @param array $customs
+     * @return bool
+     */
+    function set_item($user, $calitemId, $data, $customs=array())
 	{
 		global $prefs;
 		if (!isset($data['calendarId'])) {
@@ -529,7 +615,11 @@ class CalendarLib extends TikiLib
 		return $calitemId;
 	}
 
-	function watch($calitemId, $data)
+    /**
+     * @param $calitemId
+     * @param $data
+     */
+    function watch($calitemId, $data)
 	{
 		global $tikilib, $smarty, $prefs, $user;
 
@@ -571,7 +661,11 @@ class CalendarLib extends TikiLib
 		}
 	}
 
-	function drop_item($user, $calitemId)
+    /**
+     * @param $user
+     * @param $calitemId
+     */
+    function drop_item($user, $calitemId)
 	{
 		if ($calitemId) {
 			$query = "delete from `tiki_calendar_items` where `calitemId`=?";
@@ -579,7 +673,11 @@ class CalendarLib extends TikiLib
 		}
 	}
 
-	function move_item($calitemId,$delay = 0)
+    /**
+     * @param $calitemId
+     * @param int $delay
+     */
+    function move_item($calitemId,$delay = 0)
 	{
 		if ( $delay != 0 ) {
 			$query = 'UPDATE `tiki_calendar_items` set start = start + ?, end = end + ? WHERE `calitemId`=?';
@@ -587,7 +685,11 @@ class CalendarLib extends TikiLib
 		}
 	}
 
-	function resize_item($calitemId,$delay = 0)
+    /**
+     * @param $calitemId
+     * @param int $delay
+     */
+    function resize_item($calitemId,$delay = 0)
 	{
 		if ( $delay != 0 ) {
 			$query = 'UPDATE `tiki_calendar_items` set end = end + ? WHERE `calitemId`=?';
@@ -595,7 +697,11 @@ class CalendarLib extends TikiLib
 		}
 	}
 
-	function list_locations($calendarId)
+    /**
+     * @param $calendarId
+     * @return array
+     */
+    function list_locations($calendarId)
 	{
 		$res = array();
 		if ($calendarId > 0) {
@@ -605,7 +711,11 @@ class CalendarLib extends TikiLib
 		return $res;
 	}
 
-	function list_categories($calendarId)
+    /**
+     * @param $calendarId
+     * @return array
+     */
+    function list_categories($calendarId)
 	{
 		$res = array();
 		if ($calendarId > 0) {
@@ -617,7 +727,12 @@ class CalendarLib extends TikiLib
 
 	// Returns the last $maxrows of modified events for an
 	// optional $calendarId
-	function last_modif_events($maxrows = -1, $calendarId = 0)
+    /**
+     * @param $maxrows
+     * @param int $calendarId
+     * @return mixed
+     */
+    function last_modif_events($maxrows = -1, $calendarId = 0)
 	{
 
 		if ($calendarId > 0) {
@@ -633,7 +748,12 @@ class CalendarLib extends TikiLib
 		return $this->fetchAll($query, $bindvars, $maxrows, 0);
 	}
 
-	function importCSV($fname, $calendarId)
+    /**
+     * @param $fname
+     * @param $calendarId
+     * @return int
+     */
+    function importCSV($fname, $calendarId)
 	{
 		global $user, $smarty;
 		$fields = false;
@@ -769,7 +889,17 @@ class CalendarLib extends TikiLib
 		return $retval;
 	}
 
-	function all_events($maxrows = -1, $calendarId = null, $maxDaysEnd = -1, $order = 'start_asc', $priorDays = 0, $maxDaysStart = -1, $start = 0)
+    /**
+     * @param $maxrows
+     * @param null $calendarId
+     * @param $maxDaysEnd
+     * @param string $order
+     * @param int $priorDays
+     * @param $maxDaysStart
+     * @param int $start
+     * @return array
+     */
+    function all_events($maxrows = -1, $calendarId = null, $maxDaysEnd = -1, $order = 'start_asc', $priorDays = 0, $maxDaysStart = -1, $start = 0)
 	{
 		global $prefs;
 		$cond = '';
@@ -824,7 +954,17 @@ class CalendarLib extends TikiLib
 		return $retval;
 	}
 
-	function past_events($maxrows = -1, $calendarId = null, $maxDaysEnd = -1, $order = 'start_asc', $priorDays = 0, $maxDaysStart = -1, $start = 0)
+    /**
+     * @param $maxrows
+     * @param null $calendarId
+     * @param $maxDaysEnd
+     * @param string $order
+     * @param int $priorDays
+     * @param $maxDaysStart
+     * @param int $start
+     * @return array
+     */
+    function past_events($maxrows = -1, $calendarId = null, $maxDaysEnd = -1, $order = 'start_asc', $priorDays = 0, $maxDaysStart = -1, $start = 0)
 	{
 		global $prefs;
 		$cond = '';
@@ -877,7 +1017,11 @@ class CalendarLib extends TikiLib
 		return $retval;
 	}
 
-	function cleanEvents($calendarId, $days)
+    /**
+     * @param $calendarId
+     * @param $days
+     */
+    function cleanEvents($calendarId, $days)
 	{
 		global $tikilib;
 		$mid[] = " `end` < ? ";
@@ -889,7 +1033,11 @@ class CalendarLib extends TikiLib
 		$query = "delete from `tiki_calendar_items` where ".implode(' and ', $mid);
 		$tikilib->query($query, $bindvars);
 	}
-	function firstDayofWeek()
+
+    /**
+     * @return int
+     */
+    function firstDayofWeek()
 	{
 		global $prefs;
 		if ($prefs['calendar_firstDayofWeek'] == 'user') {
@@ -903,7 +1051,11 @@ class CalendarLib extends TikiLib
 		return $firstDayofWeek;
 	}
 	// return detail on a date
-	function infoDate($focusDate)
+    /**
+     * @param $focusDate
+     * @return array
+     */
+    function infoDate($focusDate)
 	{
 		$focus = array (
 			'day' => intval(TikiLib::date_format('%d', $focusDate)),
@@ -916,7 +1068,14 @@ class CalendarLib extends TikiLib
 		return $focus;
 	}
 	// Compute the start date (the 1 first of the month of the focus date or the day) and the next start date from the period around a focus date
-	function focusStartEnd($focus, $view='month', $beginMonth='y', &$start, &$startNext)
+    /**
+     * @param $focus
+     * @param string $view
+     * @param string $beginMonth
+     * @param $start
+     * @param $startNext
+     */
+    function focusStartEnd($focus, $view='month', $beginMonth='y', &$start, &$startNext)
 	{
 		$nbMonths = array('month' => 1, 'bimester' => 2, 'trimester' => 3, 'quarter' => 4, 'semester' => 6, 'year' => 12);
 		// start of the period
@@ -934,7 +1093,12 @@ class CalendarLib extends TikiLib
 		$startNext['weekDay'] = TikiLib::date_format('%w', $startNext['date']);
 	}
 	// Compute the date just $view from the focus
-	function focusPrevious($focus, $view='month')
+    /**
+     * @param $focus
+     * @param string $view
+     * @return array
+     */
+    function focusPrevious($focus, $view='month')
 	{
 		$nbMonths = array('day' => 0, 'week' => 0, 'month' => 1, 'bimester' => 2, 'trimester' => 3, 'quarter' => 4, 'semester' => 6, 'year' => 12);
 		$nbDays = array('day' => 1, 'week' => 7, 'month' => 0, 'bimester' => 0, 'trimester' => 0, 'quarter' => 0, 'semester' => 0, 'year' => 0);
@@ -956,7 +1120,12 @@ class CalendarLib extends TikiLib
 		return $previous;
 	}
 	// Compute the date just $view after the focus
-	function focusNext($focus, $view='month')
+    /**
+     * @param $focus
+     * @param string $view
+     * @return array
+     */
+    function focusNext($focus, $view='month')
 	{
 		$nbMonths = array('day' => 0, 'week' => 0, 'month' => 1, 'bimester' => 2, 'trimester' => 3, 'quarter' => 4, 'semester' => 6, 'year' => 12);
 		$nbDays = array('day' => 1, 'week' => 7, 'month' => 0, 'bimester' => 0, 'trimester' => 0, 'quarter' => 0, 'semester' => 0, 'year' => 0);
@@ -978,7 +1147,14 @@ class CalendarLib extends TikiLib
 	}
 	// Compute a table view of dates (one line per week)
 	// $firstWeekDay = 0 (Sunday), 1 (Monday)
-	function getTableViewCells($start, $startNext, $view='month', $firstWeekDay = 0)
+    /**
+     * @param $start
+     * @param $startNext
+     * @param string $view
+     * @param int $firstWeekDay
+     * @return array
+     */
+    function getTableViewCells($start, $startNext, $view='month', $firstWeekDay = 0)
 	{
 		// start of the view
 		$viewStart = $start;
@@ -1031,7 +1207,13 @@ class CalendarLib extends TikiLib
 		//echo '<pre>CELL'; print_r($cell); echo '</pre>';
 		return $cell;
 	}
-	function getDayNames($firstDayofWeek = 0, &$daysnames, &$daysnames_abr)
+
+    /**
+     * @param int $firstDayofWeek
+     * @param $daysnames
+     * @param $daysnames_abr
+     */
+    function getDayNames($firstDayofWeek = 0, &$daysnames, &$daysnames_abr)
 	{
 		$daysnames = array();
 		$daysnames_abr = array();
@@ -1232,7 +1414,13 @@ class CalendarLib extends TikiLib
 			'trunc' => $trunc
 		);
 	}
-	function update_participants($calitemId, $adds=null, $dels=null)
+
+    /**
+     * @param $calitemId
+     * @param null $adds
+     * @param null $dels
+     */
+    function update_participants($calitemId, $adds=null, $dels=null)
 	{
 		if (!empty($dels)) {
 			foreach ($dels as $del) {

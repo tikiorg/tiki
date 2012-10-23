@@ -15,13 +15,20 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 	exit;
 }
 
+/**
+ *
+ */
 class TikiRegistrationFields extends TikiLib
 {
 	function TikiRegistrationFields() 
 	{
 	}
 
-	function getVisibleFields2($user=false) 
+    /**
+     * @param bool $user
+     * @return array
+     */
+    function getVisibleFields2($user=false)
 	{
         global $tikilib;
 
@@ -39,7 +46,10 @@ class TikiRegistrationFields extends TikiLib
         return $ret;
 	}
 
-	function getHiddenFields() 
+    /**
+     * @return array
+     */
+    function getHiddenFields()
 	{
         global $tikilib;
 		$query = 'SELECT `field` FROM `tiki_registration_fields` WHERE `show`=?';

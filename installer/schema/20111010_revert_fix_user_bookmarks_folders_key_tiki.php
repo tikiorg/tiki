@@ -10,6 +10,9 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
   exit;
 }
 
+/**
+ * @param $installer
+ */
 function upgrade_20111010_revert_fix_user_bookmarks_folders_key_tiki($installer)
 {
 	$installer->query("ALTER TABLE `tiki_user_bookmarks_folders` MODIFY `folderId` int(12) NOT NULL, DROP PRIMARY KEY");

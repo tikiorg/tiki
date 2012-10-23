@@ -11,6 +11,9 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
 	exit;
 }
 
+/**
+ * @return array
+ */
 function module_share_info()
 {
 	return array(
@@ -191,6 +194,10 @@ function module_share_info()
 	);
 }
 
+/**
+ * @param $mod_reference
+ * @param $module_params
+ */
 function module_share($mod_reference, $module_params)
 {
 	static $share_mod_usage_counter = 0;

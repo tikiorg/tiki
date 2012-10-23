@@ -11,6 +11,9 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
   exit;
 }
 
+/**
+ * @return array
+ */
 function module_last_blog_posts_info()
 {
 	return array(
@@ -31,6 +34,10 @@ function module_last_blog_posts_info()
 	);
 }
 
+/**
+ * @param $mod_reference
+ * @param $module_params
+ */
 function module_last_blog_posts($mod_reference, $module_params)
 {
 	global $smarty, $tikilib;

@@ -10,6 +10,11 @@ require_once ('tiki-setup.php');
 $access->check_feature('wiki_keywords');
 $access->check_permission('tiki_p_admin_wiki');
 
+/**
+ * @param $page
+ * @param string $keywords
+ * @return bool
+ */
 function set_keywords( $page, $keywords="" )
 {
 	global $tikilib;
@@ -24,12 +29,22 @@ function set_keywords( $page, $keywords="" )
 	return true;
 }
 
+/**
+ * @param $page
+ * @return bool
+ */
 function get_keywords( $page )
 {
 	global $tikilib;
 	return $tikilib->get_page_info($page);
 }
 
+/**
+ * @param int $limit
+ * @param int $offset
+ * @param string $page
+ * @return array
+ */
 function get_all_keywords($limit=0, $offset=0, $page="")
 {
 	global $tikilib;

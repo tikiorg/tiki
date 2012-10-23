@@ -1,5 +1,8 @@
 <?php
 
+/**
+ *
+ */
 class JisonParser_WikiCKEditor_Handler extends JisonParser_Wiki_Handler
 {
 	function __construct()

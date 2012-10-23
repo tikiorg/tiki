@@ -194,6 +194,15 @@ if (isset($_GET['plain'])) {				// used by profile repositories to list availabl
 	$smarty->display('tiki.tpl');
 }
 
+/**
+ * @param $descendants
+ * @param $usercatwatches
+ * @param $requestid
+ * @param $categid
+ * @param $deep
+ * @param $user
+ * @return bool|string
+ */
 function add_watch_icons($descendants, $usercatwatches, $requestid, $categid, $deep, $user)
 {
 	global $prefs;

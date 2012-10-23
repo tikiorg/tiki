@@ -10,6 +10,9 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 	exit;
 }
 
+/**
+ * @param $installer
+ */
 function upgrade_20091103_upgrade_categperm_tiki($installer)
 {
 	// $view describes what was supposed to be given by tiki_p_view_categorized

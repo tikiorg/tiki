@@ -11,6 +11,9 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
   exit;
 }
 
+/**
+ * @return array
+ */
 function module_action_similarcontent_info()
 {
 	return array(
@@ -33,6 +36,10 @@ function module_action_similarcontent_info()
 	);
 }
 
+/**
+ * @param $mod_reference
+ * @param $module_params
+ */
 function module_action_similarcontent($mod_reference, $module_params)
 {
 	global $smarty, $freetaglib;

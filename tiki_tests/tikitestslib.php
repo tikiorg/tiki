@@ -38,6 +38,10 @@ if (isset($_COOKIE['tikitest_record'])) {
 	return;
 }
 
+/**
+ * @param $buffer
+ * @return mixed
+ */
 function test_callback($buffer)
 {
 	global $test_cookie, $test_post, $test_get, $test_url;

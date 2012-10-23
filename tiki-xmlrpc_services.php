@@ -27,6 +27,12 @@ $map = array(
 
 $s = new XML_RPC_Server($map);
 
+/**
+ * @param $user
+ * @param $blogid
+ * @param $permName
+ * @return bool
+ */
 function check_individual($user, $blogid, $permName)
 {
 	global $userlib;
@@ -49,6 +55,10 @@ function check_individual($user, $blogid, $permName)
 }
 
 /* Validates the user and returns user information */
+/**
+ * @param $params
+ * @return XML_RPC_Response
+ */
 function getUserInfo($params)
 {
 	global $tikilib, $userlib;
@@ -81,6 +91,10 @@ function getUserInfo($params)
 }
 
 /* Posts a new submission to the CMS */
+/**
+ * @param $params
+ * @return XML_RPC_Response
+ */
 function newPost($params)
 {
 	global $tikilib, $userlib, $bloglib;
@@ -132,6 +146,10 @@ function newPost($params)
 }
 
 // :TODO: editPost
+/**
+ * @param $params
+ * @return XML_RPC_Response
+ */
 function editPost($params)
 {
 	global $tikilib, $userlib, $bloglib;
@@ -185,6 +203,10 @@ function editPost($params)
 }
 
 // :TODO: deletePost
+/**
+ * @param $params
+ * @return XML_RPC_Response
+ */
 function deletePost($params)
 {
 	global $tikilib, $userlib, $bloglib;
@@ -228,6 +250,10 @@ function deletePost($params)
 // :TODO: setTemplate
 
 // :TODO: getPost
+/**
+ * @param $params
+ * @return XML_RPC_Response
+ */
 function getPost($params)
 {
 	global $tikilib, $userlib, $bloglib;
@@ -283,6 +309,10 @@ function getPost($params)
 }
 
 // :TODO: getRecentPosts
+/**
+ * @param $params
+ * @return XML_RPC_Response
+ */
 function getRecentPosts($params)
 {
 	global $tikilib, $userlib, $bloglib;
@@ -349,6 +379,10 @@ function getRecentPosts($params)
 // :TODO: tiki.tikiPost
 
 /* Get the topics where the user can post a new */
+/**
+ * @param $params
+ * @return XML_RPC_Response
+ */
 function getUserBlogs($params)
 {
 	global $tikilib, $userlib, $bloglib;

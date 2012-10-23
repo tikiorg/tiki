@@ -18,7 +18,15 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
  */
 class TemplatesLib extends TikiLib
 {
-	public function list_templates($section, $offset, $maxRecords, $sort_mode, $find)
+    /**
+     * @param $section
+     * @param $offset
+     * @param $maxRecords
+     * @param $sort_mode
+     * @param $find
+     * @return array
+     */
+    public function list_templates($section, $offset, $maxRecords, $sort_mode, $find)
 	{
 		$bindvars = array($section);
 
@@ -56,7 +64,12 @@ class TemplatesLib extends TikiLib
 		return $retval;
 	}
 
-	public function get_template($templateId, $lang = null)
+    /**
+     * @param $templateId
+     * @param null $lang
+     * @return bool
+     */
+    public function get_template($templateId, $lang = null)
 	{
 		$query = "select * from `tiki_content_templates` where `templateId`=?";
 		$result = $this->query($query, array((int) $templateId));
@@ -79,7 +92,13 @@ class TemplatesLib extends TikiLib
 		return $res;
 	}
 
-	public function get_parsed_template($templateId, $lang = null, $format = 'yaml')
+    /**
+     * @param $templateId
+     * @param null $lang
+     * @param string $format
+     * @return bool
+     */
+    public function get_parsed_template($templateId, $lang = null, $format = 'yaml')
 	{
 		$res = $this->get_template($templateId, $lang);
 
@@ -114,7 +133,12 @@ class TemplatesLib extends TikiLib
 		return $res;
 	}
 
-	private function get_template_from_page( $page, $lang )
+    /**
+     * @param $page
+     * @param $lang
+     * @return string
+     */
+    private function get_template_from_page( $page, $lang )
 	{
 		global $prefs;
 		$info = $this->get_page_info($page);
@@ -136,7 +160,14 @@ class TemplatesLib extends TikiLib
 		}
 	}
 
-	public function list_all_templates($offset, $maxRecords, $sort_mode, $find)
+    /**
+     * @param $offset
+     * @param $maxRecords
+     * @param $sort_mode
+     * @param $find
+     * @return array
+     */
+    public function list_all_templates($offset, $maxRecords, $sort_mode, $find)
 	{
 		$bindvars = array();
 		if ($find) {
@@ -172,7 +203,14 @@ class TemplatesLib extends TikiLib
 		return $retval;
 	}
 
-	public function replace_template($templateId, $name, $content, $type = 'static')
+    /**
+     * @param $templateId
+     * @param $name
+     * @param $content
+     * @param string $type
+     * @return mixed
+     */
+    public function replace_template($templateId, $name, $content, $type = 'static')
 	{
 		$bindvars = array($content, $name, (int) $this->now, $type);
 		if ($templateId) {
@@ -193,7 +231,11 @@ class TemplatesLib extends TikiLib
 		return $id;
 	}
 
-	public function add_template_to_section($templateId, $section)
+    /**
+     * @param $templateId
+     * @param $section
+     */
+    public function add_template_to_section($templateId, $section)
 	{
 		$this->query(
 			"delete from `tiki_content_templates_sections` where `templateId`=? and `section`=?",
@@ -207,7 +249,11 @@ class TemplatesLib extends TikiLib
 		$result = $this->query($query, array((int) $templateId, $section));
 	}
 
-	public function remove_template_from_section($templateId, $section)
+    /**
+     * @param $templateId
+     * @param $section
+     */
+    public function remove_template_from_section($templateId, $section)
 	{
 		$result = $this->query(
 			"delete from `tiki_content_templates_sections` where `templateId`=? and `section`=?",
@@ -215,7 +261,12 @@ class TemplatesLib extends TikiLib
 		);
 	}
 
-	public function template_is_in_section($templateId, $section)
+    /**
+     * @param $templateId
+     * @param $section
+     * @return mixed
+     */
+    public function template_is_in_section($templateId, $section)
 	{
 		$cant = $this->getOne(
 			"select count(*) from `tiki_content_templates_sections` where `templateId`=? and `section`=?",
@@ -225,7 +276,11 @@ class TemplatesLib extends TikiLib
 		return $cant;
 	}
 
-	public function remove_template($templateId)
+    /**
+     * @param $templateId
+     * @return bool
+     */
+    public function remove_template($templateId)
 	{
 		$query = "delete from `tiki_content_templates` where `templateId`=?";
 		$result = $this->query($query, array((int) $templateId));

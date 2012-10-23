@@ -11,6 +11,9 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
 	exit;
 }
 
+/**
+ * @return array
+ */
 function module_wiki_last_comments_info()
 {
 	return array(
@@ -32,10 +35,19 @@ function module_wiki_last_comments_info()
 	);
 }
 
+/**
+ * @param $mod_reference
+ * @param $module_params
+ */
 function module_wiki_last_comments($mod_reference, $module_params)
 {
 	if (!function_exists('module_last_comments')) {
-		function module_last_comments($limit, $type='wiki page')
+        /**
+         * @param $limit
+         * @param string $type
+         * @return array|null
+         */
+        function module_last_comments($limit, $type='wiki page')
 		{
 			global $tikilib, $user;
 			$bindvars = array($type);

@@ -11,6 +11,12 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
   exit;
 }
 
+/**
+ * @param $object_type
+ * @param null $object_id
+ * @param bool $process
+ * @return bool
+ */
 function refresh_index($object_type, $object_id = null, $process = true)
 {
 	global $prefs;
@@ -42,6 +48,10 @@ function refresh_index($object_type, $object_id = null, $process = true)
 	return true;
 }
 
+/**
+ * @param $object_type
+ * @return string
+ */
 function refresh_index_convert_type($object_type)
 {
 	switch ( $object_type ) {
@@ -130,6 +140,10 @@ function random_refresh_index_blogs()
 {
 	refresh_index('blogs', -1);
 }
+
+/**
+ * @param int $times
+ */
 function random_refresh_index_comments( $times = 1 )
 {
 	for( $i = 1; $i <= $times; $i ++ )
@@ -209,14 +223,25 @@ function refresh_index_wiki_all()
 	refresh_index('pages');
 }
 
+/**
+ * @param $threadId
+ */
 function refresh_index_comments($threadId)
 {
 	refresh_index('comments', $threadId);
 }
+
+/**
+ * @param $page
+ */
 function refresh_index_forum($page)
 {
 	refresh_index('forums', $page);
 }
+
+/**
+ * @param $page
+ */
 function refresh_index_wiki($page)
 {
 	refresh_index('pages', $page);

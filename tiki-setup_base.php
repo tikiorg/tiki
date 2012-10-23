@@ -244,6 +244,9 @@ $access = new TikiAccessLib;
 require_once ('lib/breadcrumblib.php');
 // ------------------------------------------------------
 // DEAL WITH XSS-TYPE ATTACKS AND OTHER REQUEST ISSUES
+/**
+ * @param $var
+ */
 function remove_gpc(&$var)
 {
 	if (is_array($var)) {
@@ -355,6 +358,11 @@ $vartype['parentId'] = 'intSign';
 $vartype['bannerId'] = 'int';
 $vartype['rssId'] = 'int';
 $vartype['page_ref_id'] = 'int';
+/**
+ * @param $array
+ * @param $category
+ * @return string
+ */
 function varcheck(&$array, $category)
 {
 	global $patterns, $vartype, $prefs;

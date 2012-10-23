@@ -25,6 +25,9 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
  *  feature_bot_bar
  */
 
+/**
+ * @param $installer
+ */
 function upgrade_20110115_create_bottom_modules_tiki($installer)
 {
 

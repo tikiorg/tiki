@@ -11,9 +11,18 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
   exit;
 }
 
+/**
+ *
+ */
 class RankLib extends TikiLib
 {
-	function wiki_ranking_top_pages($limit, $categ=array(), $lang=null)
+    /**
+     * @param $limit
+     * @param array $categ
+     * @param null $lang
+     * @return mixed
+     */
+    function wiki_ranking_top_pages($limit, $categ=array(), $lang=null)
 	{
 		global $user, $prefs;
 		$pagesAdded = array();
@@ -69,7 +78,12 @@ class RankLib extends TikiLib
 		return $retval;
 	}
 
-	function wiki_ranking_top_pagerank($limit, $categ=array())
+    /**
+     * @param $limit
+     * @param array $categ
+     * @return mixed
+     */
+    function wiki_ranking_top_pagerank($limit, $categ=array())
 	{
 		global $user, $prefs;
 
@@ -112,7 +126,12 @@ class RankLib extends TikiLib
 		return $retval;
 	}
 
-	function wiki_ranking_last_pages($limit, $categ=array())
+    /**
+     * @param $limit
+     * @param array $categ
+     * @return mixed
+     */
+    function wiki_ranking_last_pages($limit, $categ=array())
 	{
 		global $user, $prefs;
 		
@@ -150,13 +169,25 @@ class RankLib extends TikiLib
 		return $retval;
 	}
 
-	function forums_ranking_last_replied_topics($limit, $forumId='', $last_replied=true)
+    /**
+     * @param $limit
+     * @param string $forumId
+     * @param bool $last_replied
+     * @return mixed
+     */
+    function forums_ranking_last_replied_topics($limit, $forumId='', $last_replied=true)
 	{
 		$retval = $this->forums_ranking_last_topics($limit, $forumId, $last_replied);
 		return $retval;
 	}
-	
-	function forums_ranking_last_posts($limit, $toponly=false, $forumId='')
+
+    /**
+     * @param $limit
+     * @param bool $toponly
+     * @param string $forumId
+     * @return mixed
+     */
+    function forums_ranking_last_posts($limit, $toponly=false, $forumId='')
 	{
 		global $user;
 		$commentslib = TikiLib::lib('comments');
@@ -185,7 +216,12 @@ class RankLib extends TikiLib
 		return $retval;
 	}
 
-	function forums_ranking_most_read_topics($limit, $forumId='')
+    /**
+     * @param $limit
+     * @param string $forumId
+     * @return mixed
+     */
+    function forums_ranking_most_read_topics($limit, $forumId='')
 	{
 		global $commentslib;
 		if (! $commentslib) {
@@ -211,7 +247,11 @@ class RankLib extends TikiLib
 		return $retval;
 	}
 
-	function forums_top_posters($qty)
+    /**
+     * @param $qty
+     * @return mixed
+     */
+    function forums_top_posters($qty)
 	{
 		$query = "select `user`, `posts` from `tiki_user_postings` order by ".$this->convertSortMode("posts_desc");
 		$result = $this->query($query, array(), $qty);
@@ -227,7 +267,11 @@ class RankLib extends TikiLib
 		return $retval;
 	}
 
-	function forums_ranking_top_topics($limit)
+    /**
+     * @param $limit
+     * @return mixed
+     */
+    function forums_ranking_top_topics($limit)
 	{
 		global $commentslib;
 		if (! $commentslib) {
@@ -253,7 +297,11 @@ class RankLib extends TikiLib
 		return $retval;
 	}
 
-	function forums_ranking_most_visited_forums($limit)
+    /**
+     * @param $limit
+     * @return mixed
+     */
+    function forums_ranking_most_visited_forums($limit)
 	{
 		global $commentslib;
 		if (! $commentslib) {
@@ -278,7 +326,11 @@ class RankLib extends TikiLib
 		return $retval;
 	}
 
-	function forums_ranking_most_commented_forum($limit)
+    /**
+     * @param $limit
+     * @return mixed
+     */
+    function forums_ranking_most_commented_forum($limit)
 	{
 		global $commentslib;
 		if (! $commentslib) {
@@ -303,7 +355,11 @@ class RankLib extends TikiLib
 		return $retval;
 	}
 
-	function gal_ranking_top_galleries($limit)
+    /**
+     * @param $limit
+     * @return mixed
+     */
+    function gal_ranking_top_galleries($limit)
 	{
 		global $user;
 		$query = "select * from `tiki_galleries` where `visible`=? order by `hits` desc";
@@ -328,7 +384,11 @@ class RankLib extends TikiLib
 		return $retval;
 	}
 
-	function filegal_ranking_top_galleries($limit)
+    /**
+     * @param $limit
+     * @return mixed
+     */
+    function filegal_ranking_top_galleries($limit)
 	{
 		global $user;
 		$query = "select * from `tiki_file_galleries` where `visible`=? order by `hits` desc";
@@ -353,7 +413,11 @@ class RankLib extends TikiLib
 		return $retval;
 	}
 
-	function gal_ranking_top_images($limit)
+    /**
+     * @param $limit
+     * @return mixed
+     */
+    function gal_ranking_top_images($limit)
 	{
 		global $user;
 		$query = "select `imageId`, `name`, `hits`, `galleryId` from `tiki_images` order by `hits` desc";
@@ -377,7 +441,11 @@ class RankLib extends TikiLib
 		return $retval;
 	}
 
-	function filegal_ranking_top_files($limit)
+    /**
+     * @param $limit
+     * @return mixed
+     */
+    function filegal_ranking_top_files($limit)
 	{
 		global $user;
 		$query = "select `fileId`,`filename`,`hits`, `galleryId` from `tiki_files` order by `hits` desc";
@@ -401,7 +469,11 @@ class RankLib extends TikiLib
 		return $retval;
 	}
 
-	function gal_ranking_last_images($limit)
+    /**
+     * @param $limit
+     * @return mixed
+     */
+    function gal_ranking_last_images($limit)
 	{
 		global $user;
 		$query = "select `imageId`,`name`,`created`, `galleryId` from `tiki_images` order by `created` desc";
@@ -425,7 +497,11 @@ class RankLib extends TikiLib
 		return $retval;
 	}
 
-	function filegal_ranking_last_files($limit)
+    /**
+     * @param $limit
+     * @return mixed
+     */
+    function filegal_ranking_last_files($limit)
 	{
 		global $user;
 		$query = "select `fileId`,`filename`,`created`, `galleryId` from `tiki_files` order by `created` desc";
@@ -449,7 +525,11 @@ class RankLib extends TikiLib
 		return $retval;
 	}
 
-	function cms_ranking_top_articles($limit)
+    /**
+     * @param $limit
+     * @return mixed
+     */
+    function cms_ranking_top_articles($limit)
 	{
 		global $user;
 		$query = "select `tiki_articles`.*, `tiki_article_types`.`show_pre_publ` from `tiki_articles` inner join `tiki_article_types` on `tiki_articles`.`type` = `tiki_article_types`.`type` order by `nbreads` desc";
@@ -473,7 +553,11 @@ class RankLib extends TikiLib
 		return $retval;
 	}
 
-	function blog_ranking_top_blogs($limit)
+    /**
+     * @param $limit
+     * @return mixed
+     */
+    function blog_ranking_top_blogs($limit)
 	{
 		global $user;
 		$query = "select * from `tiki_blogs` order by `hits` desc";
@@ -497,7 +581,11 @@ class RankLib extends TikiLib
 		return $retval;
 	}
 
-	function blog_ranking_top_active_blogs($limit)
+    /**
+     * @param $limit
+     * @return mixed
+     */
+    function blog_ranking_top_active_blogs($limit)
 	{
 		global $user;
 		$query = "select * from `tiki_blogs` order by `activity` desc";
@@ -521,7 +609,11 @@ class RankLib extends TikiLib
 		return $retval;
 	}
 
-	function blog_ranking_last_posts($limit)
+    /**
+     * @param $limit
+     * @return mixed
+     */
+    function blog_ranking_last_posts($limit)
 	{
 		global $user;
 		$query = "select * from `tiki_blog_posts` order by `created` desc";
@@ -548,7 +640,12 @@ class RankLib extends TikiLib
 		return $retval;
 	}
 
-	function wiki_ranking_top_authors($limit, $categ=array())
+    /**
+     * @param $limit
+     * @param array $categ
+     * @return mixed
+     */
+    function wiki_ranking_top_authors($limit, $categ=array())
 	{
 		global $user;
 		
@@ -586,7 +683,11 @@ class RankLib extends TikiLib
 		return $retval;
 	}
 
-	function cms_ranking_top_authors($limit)
+    /**
+     * @param $limit
+     * @return mixed
+     */
+    function cms_ranking_top_authors($limit)
 	{
 		$query = "select distinct `author`, count(*) as `numb` from `tiki_articles` group by `author` order by ".$this->convertSortMode("numb_desc");
 

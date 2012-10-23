@@ -44,7 +44,11 @@ class _WikiDiffEngine
 	var $xv = array(), $yv = array();
 	var $xchanged, $ychanged;
 
-	function _WikiDiffEngine ($from_lines, $to_lines)
+    /**
+     * @param $from_lines
+     * @param $to_lines
+     */
+    function _WikiDiffEngine ($from_lines, $to_lines)
 	{
 		$n_from = count($from_lines);
 		$n_to = count($to_lines);
@@ -246,7 +250,11 @@ class _WikiDiffEngine
 		return array($this->lcs, $seps);
 	}
 
-	function _lcs_pos ($ypos)
+    /**
+     * @param $ypos
+     * @return mixed
+     */
+    function _lcs_pos ($ypos)
 	{
 		$end = $this->lcs;
 		if ($end == 0 || $ypos > $this->seq[$end]) {
@@ -284,7 +292,13 @@ class _WikiDiffEngine
 	 * Note that XLIM, YLIM are exclusive bounds.
 	 * All line numbers are origin-0 and discarded lines are not counted.
 	 */
-	function _compareseq ($xoff, $xlim, $yoff, $ylim)
+    /**
+     * @param $xoff
+     * @param $xlim
+     * @param $yoff
+     * @param $ylim
+     */
+    function _compareseq ($xoff, $xlim, $yoff, $ylim)
 	{
 		// Slide down the bottom initial diagonal.
 		while ($xoff < $xlim && $yoff < $ylim && $this->xv[$xoff] == $this->yv[$yoff]) {
@@ -762,7 +776,10 @@ class WikiDiffFormatter
 	var $do_reverse_diff;
 	var $context_prefix, $deletes_prefix, $adds_prefix;
 
-	function WikiDiffFormatter ($reverse = false)
+    /**
+     * @param bool $reverse
+     */
+    function WikiDiffFormatter ($reverse = false)
 	{
 		$this->do_reverse_diff = $reverse;
 		$this->context_lines = 0;
@@ -771,7 +788,12 @@ class WikiDiffFormatter
 		$this->adds_prefix = '&gt;&nbsp;';
 	}
 
-	function format ($diff, $from_lines)
+    /**
+     * @param $diff
+     * @param $from_lines
+     * @return string
+     */
+    function format ($diff, $from_lines)
 	{
 		$html = '<table style="background-color: black" ' .
 						'cellspacing="2" cellpadding="2" border="0">'
@@ -782,7 +804,12 @@ class WikiDiffFormatter
 		return $html;
 	}
 
-	function _format ($edits, $from_lines)
+    /**
+     * @param $edits
+     * @param $from_lines
+     * @return string
+     */
+    function _format ($edits, $from_lines)
 	{
 		$html = '';
 		$x = 0; $y = 0;
@@ -868,7 +895,13 @@ class WikiDiffFormatter
 		return $html;
 	}
 
-	function _emit_lines($lines, $prefix, $color)
+    /**
+     * @param $lines
+     * @param $prefix
+     * @param $color
+     * @return string
+     */
+    function _emit_lines($lines, $prefix, $color)
 	{
 		$html = '';
 		reset($lines);
@@ -880,7 +913,15 @@ class WikiDiffFormatter
 		return $html;
 	}
 
-	function _emit_diff ($xbeg, $xlen, $ybeg, $ylen, $hunks)
+    /**
+     * @param $xbeg
+     * @param $xlen
+     * @param $ybeg
+     * @param $ylen
+     * @param $hunks
+     * @return string
+     */
+    function _emit_diff ($xbeg, $xlen, $ybeg, $ylen, $hunks)
 	{
 		$html = '<tr><td><table style="background-color: white"'
 					. ' cellspacing="0" border="0" cellpadding="4">'
@@ -912,7 +953,14 @@ class WikiDiffFormatter
 		return $html;
 	}
 
-	function _diff_header ($xbeg, $xlen, $ybeg, $ylen)
+    /**
+     * @param $xbeg
+     * @param $xlen
+     * @param $ybeg
+     * @param $ylen
+     * @return string
+     */
+    function _diff_header ($xbeg, $xlen, $ybeg, $ylen)
 	{
 		$what = $xlen ? ($ylen ? 'c' : 'd') : 'a';
 		$xlen = $xlen > 1 ? ',' . ($xbeg + $xlen - 1) : '';
@@ -934,7 +982,11 @@ class WikiDiffFormatter
  */
 class WikiUnifiedDiffFormatter extends WikiDiffFormatter
 {
-	function WikiUnifiedDiffFormatter ($reverse = false, $context_lines = 3)
+    /**
+     * @param bool $reverse
+     * @param int $context_lines
+     */
+    function WikiUnifiedDiffFormatter ($reverse = false, $context_lines = 3)
 	{
 		$this->do_reverse_diff = $reverse;
 		$this->context_lines = $context_lines;
@@ -943,7 +995,14 @@ class WikiUnifiedDiffFormatter extends WikiDiffFormatter
 		$this->adds_prefix = '+';
 	}
 
-	function _diff_header ($xbeg, $xlen, $ybeg, $ylen)
+    /**
+     * @param $xbeg
+     * @param $xlen
+     * @param $ybeg
+     * @param $ylen
+     * @return string
+     */
+    function _diff_header ($xbeg, $xlen, $ybeg, $ylen)
 	{
 		$xlen = $xlen == 1 ? '' : ",$xlen";
 		$ylen = $ylen == 1 ? '' : ",$ylen";

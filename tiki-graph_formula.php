@@ -45,6 +45,10 @@ $valid = array(
 	'tanh'
 );
 
+/**
+ * @param $formula
+ * @return string
+ */
 function convert_formula( $formula )
 {
 	global $valid;

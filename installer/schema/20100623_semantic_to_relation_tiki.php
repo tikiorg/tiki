@@ -10,6 +10,9 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 	exit;
 }
 
+/**
+ * @param $installer
+ */
 function pre_20100623_semantic_to_relation_tiki($installer)
 {
 	$results = $installer->fetchAll('SELECT * FROM tiki_links WHERE reltype IS NOT NULL');

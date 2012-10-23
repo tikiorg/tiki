@@ -10,6 +10,9 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
   exit;
 }
 
+/**
+ * @param $installer
+ */
 function upgrade_20090923_mod_change_category_defaults_tiki($installer)
 {
 	$result = $installer->query("select moduleId, params from tiki_modules where name='change_category'; ");

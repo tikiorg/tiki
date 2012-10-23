@@ -28,18 +28,29 @@ if (! isset($_GET['list']) || ! in_array($_GET['list'], array('categorylist', 'g
 
 
 // Classes to be extracted at some later point {{{
+/**
+ *
+ */
 class ObjectList // {{{
 {
 	private $lastIndex = 0;
 	private $customIndexes = array();
 	private $renderers = array();
 
-	function addCustomIndex($indexKey)
+    /**
+     * @param $indexKey
+     */
+    function addCustomIndex($indexKey)
 	{
 		$this->customIndexes[ $indexKey ] = array();
 	}
 
-	function add( $type, $object, $options )
+    /**
+     * @param $type
+     * @param $object
+     * @param $options
+     */
+    function add( $type, $object, $options )
 	{
 		if (! isset($dataIndex[$type])) {
 			$this->dataIndex[$type] = array();
@@ -85,7 +96,12 @@ class ObjectList // {{{
 		}
 	}
 
-	function render($smarty, $key, $options)
+    /**
+     * @param $smarty
+     * @param $key
+     * @param $options
+     */
+    function render($smarty, $key, $options)
 	{
 		if (is_null($key)) {
 			foreach ($this->renderers as $index => $renderer) {
@@ -106,34 +122,60 @@ class ObjectList // {{{
 	}
 } // }}}
 
+/**
+ *
+ */
 abstract class ObjectRenderer // {{{
 {
 	protected $objectType;
 	protected $objectId;
 
-	function __construct($objectType, $objectId)
+    /**
+     * @param $objectType
+     * @param $objectId
+     */
+    function __construct($objectType, $objectId)
 	{
 		$this->objectType = $objectType;
 		$this->objectId = $objectId;
 	}
 
-	function render($smarty, $options)
+    /**
+     * @param $smarty
+     * @param $options
+     */
+    function render($smarty, $options)
 	{
 		$options['decorator_template'] = 'print/print-decorator_' . $options['decorator'] . '.tpl';
 		$smarty->assign('body', $this->_render($smarty, $options));
 		$smarty->display($options['decorator_template']);
 	}
 
-	function isValid()
+    /**
+     * @return bool
+     */
+    function isValid()
 	{
 		return true;
 	}
 
-	abstract function _render($smarty, $template);
+    /**
+     * @param $smarty
+     * @param $template
+     * @return mixed
+     */
+    abstract function _render($smarty, $template);
 
-	abstract function getIndexValue($key);
+    /**
+     * @param $key
+     * @return mixed
+     */
+    abstract function getIndexValue($key);
 } // }}}
 
+/**
+ *
+ */
 class ObjectRenderer_TrackerItem extends ObjectRenderer // {{{
 {
 	private static $trackers = array();
@@ -141,7 +183,12 @@ class ObjectRenderer_TrackerItem extends ObjectRenderer // {{{
 	private $tracker;
 	private $info;
 
-	function __construct($type, $object, $options = array())
+    /**
+     * @param $type
+     * @param $object
+     * @param array $options
+     */
+    function __construct($type, $object, $options = array())
 	{
 		parent::__construct($type, $object, $options);
 		global $trklib;
@@ -171,12 +218,20 @@ class ObjectRenderer_TrackerItem extends ObjectRenderer // {{{
 		}
 	}
 
-	function isValid()
+    /**
+     * @return bool
+     */
+    function isValid()
 	{
 		return $this->valid;
 	}
 
-	function _render($smarty, $options)
+    /**
+     * @param $smarty
+     * @param $options
+     * @return mixed
+     */
+    function _render($smarty, $options)
 	{
 		$smarty->assign('title', $this->getTitle());
 		$smarty->assign('tracker', $this->tracker);
@@ -186,7 +241,11 @@ class ObjectRenderer_TrackerItem extends ObjectRenderer // {{{
 		return $smarty->fetch($options['display_template']);
 	}
 
-	function getIndexValue($key)
+    /**
+     * @param $key
+     * @return mixed
+     */
+    function getIndexValue($key)
 	{
 		switch( $key ) {
 			case 'title':
@@ -194,7 +253,10 @@ class ObjectRenderer_TrackerItem extends ObjectRenderer // {{{
 		}
 	}
 
-	function getTitle()
+    /**
+     * @return mixed
+     */
+    function getTitle()
 	{
 		foreach ($this->tracker['fields'] as $field) {
 			if ($field['isMain'] == 'y') {
@@ -204,11 +266,18 @@ class ObjectRenderer_TrackerItem extends ObjectRenderer // {{{
 	}
 } // }}}
 
+/**
+ *
+ */
 class ObjectRenderer_Wiki extends ObjectRenderer // {{{
 {
 	private $info;
 
-	function __construct($objectType, $objectId)
+    /**
+     * @param $objectType
+     * @param $objectId
+     */
+    function __construct($objectType, $objectId)
 	{
 		parent::__construct($objectType, $objectId);
 		global $tikilib;
@@ -226,7 +295,12 @@ class ObjectRenderer_Wiki extends ObjectRenderer // {{{
 		$this->info = $info;
 	}
 
-	function _render($smarty, $options)
+    /**
+     * @param $smarty
+     * @param $options
+     * @return mixed
+     */
+    function _render($smarty, $options)
 	{
 		$options['display_template'] = 'print/print-' . $options['display'] . '_wiki.tpl';
 		$smarty->assign('info', $this->info);
@@ -234,7 +308,11 @@ class ObjectRenderer_Wiki extends ObjectRenderer // {{{
 		return $smarty->fetch($options['display_template']);
 	}
 
-	function getIndexValue($key)
+    /**
+     * @param $key
+     * @return mixed
+     */
+    function getIndexValue($key)
 	{
 		switch ($key) {
 			case 'title':
@@ -243,11 +321,19 @@ class ObjectRenderer_Wiki extends ObjectRenderer // {{{
 	}
 } // }}}
 
+/**
+ *
+ */
 class ObjectRenderer_MultilingualWiki extends ObjectRenderer // {{{
 {
 	private $renderers = array();
 
-	function __construct($type, $object, $options = array())
+    /**
+     * @param $type
+     * @param $object
+     * @param array $options
+     */
+    function __construct($type, $object, $options = array())
 	{
 		parent::__construct($type, $object, $options);
 		global $multilinguallib, $tikilib; require_once 'lib/multilingual/multilinguallib.php';
@@ -266,7 +352,12 @@ class ObjectRenderer_MultilingualWiki extends ObjectRenderer // {{{
 		}
 	}
 
-	function _render($smarty, $options)
+    /**
+     * @param $smarty
+     * @param $options
+     * @return string
+     */
+    function _render($smarty, $options)
 	{
 		$out = '';
 
@@ -284,7 +375,11 @@ class ObjectRenderer_MultilingualWiki extends ObjectRenderer // {{{
 		return $out;
 	}
 
-	function getIndexValue($key)
+    /**
+     * @param $key
+     * @return mixed
+     */
+    function getIndexValue($key)
 	{
 		if (strpos($key, 'lang_') === 0) {
 			list( $key, $lang ) = explode('_', substr($key, 5), 2);

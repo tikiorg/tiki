@@ -9,6 +9,11 @@ include_once ('tiki-setup.php');
 $access->check_permission('tiki_p_admin');
 $all_perms = $userlib->get_permissions();
 
+/**
+ * @param $permName
+ * @param $objectType
+ * @return bool
+ */
 function is_perm($permName, $objectType)
 {
 	global $all_perms, $tikilib;
@@ -20,6 +25,14 @@ function is_perm($permName, $objectType)
 	}
 	return false;
 }
+
+/**
+ * @param $objectId
+ * @param $objectType
+ * @param $objectName
+ * @param string $filterGroup
+ * @return array
+ */
 function list_perms($objectId, $objectType, $objectName, $filterGroup='')
 {
 	global $userlib, $prefs;

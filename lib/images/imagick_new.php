@@ -7,10 +7,18 @@
 
 require_once('lib/images/abstract.php');
 
+/**
+ *
+ */
 class Image extends ImageAbstract
 {
 
-	function __construct($image, $isfile = false, $format = 'jpeg')
+    /**
+     * @param $image
+     * @param bool $isfile
+     * @param string $format
+     */
+    function __construct($image, $isfile = false, $format = 'jpeg')
 	{
 		if ( $isfile ) {
 			$this->filename = $image;
@@ -47,7 +55,12 @@ class Image extends ImageAbstract
 		}
 	}
 
-	function _resize($x, $y)
+    /**
+     * @param $x
+     * @param $y
+     * @return mixed
+     */
+    function _resize($x, $y)
 	{
 		if ($this->data) {
 			return $this->data->scaleImage($x, $y);
@@ -74,7 +87,10 @@ class Image extends ImageAbstract
 		}
 	}
 
-	function set_format($format)
+    /**
+     * @param $format
+     */
+    function set_format($format)
 	{
 		$this->_load_data();
 		if ($this->data) {
@@ -83,12 +99,18 @@ class Image extends ImageAbstract
 		}
 	}
 
-	function get_format()
+    /**
+     * @return string
+     */
+    function get_format()
 	{
 		return $this->format;
 	}
 
-	function display()
+    /**
+     * @return mixed
+     */
+    function display()
 	{
 		$this->_load_data();
 		if ($this->data) {
@@ -96,7 +118,11 @@ class Image extends ImageAbstract
 		}
 	}
 
-	function rotate($angle)
+    /**
+     * @param $angle
+     * @return bool
+     */
+    function rotate($angle)
 	{
 		$this->_load_data();
 		if ($this->data) {
@@ -107,7 +133,11 @@ class Image extends ImageAbstract
 		}
 	}
 
-	function is_supported($format)
+    /**
+     * @param $format
+     * @return bool
+     */
+    function is_supported($format)
 	{
 		$image = new Imagick();
 		$format = strtoupper(trim($format));
@@ -122,14 +152,20 @@ class Image extends ImageAbstract
 		return in_array($format, $image->queryFormats());
 	}
 
-	function get_height()
+    /**
+     * @return mixed
+     */
+    function get_height()
 	{
 		$this->_load_data();
 		if ($this->data)
 			return $this->data->getImageHeight();
 	}
 
-	function get_width()
+    /**
+     * @return mixed
+     */
+    function get_width()
 	{
 		$this->_load_data();
 		if ($this->data)

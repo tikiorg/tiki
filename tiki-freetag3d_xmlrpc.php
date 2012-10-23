@@ -15,7 +15,11 @@ $map = array ("getSubGraph" => array( "function" => "getSubGraph" ) );
 
 $server = new XML_RPC_Server($map);
 
-function getSubGraph($params) 
+/**
+ * @param $params
+ * @return XML_RPC_Response
+ */
+function getSubGraph($params)
 {
     global $freetaglib, $dbTiki, $base_url, $prefs;
 

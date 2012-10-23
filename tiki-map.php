@@ -9,7 +9,10 @@ $_SERVER["SCRIPT_NAME"] = basename(__FILE__);
 require_once ('tiki-setup.php');
 
 // was lib/setup/menus.php but only used here
-function setDisplayMenu($name) 
+/**
+ * @param $name
+ */
+function setDisplayMenu($name)
 {
 	global $smarty;
 	if ( getCookie($name, 'menu', isset($_COOKIE['menu']) ? null : 'o') == 'o' ) {
@@ -90,7 +93,14 @@ if (!is_file($map_path . $mapfile) || preg_match("/(\/\.)/", $map_path . $mapfil
 	die;
 }
 // user defined error handling function to handle errors in loading mapfile
-function userErrorHandler($errno, $errmsg, $filename, $linenum, $vars) 
+/**
+ * @param $errno
+ * @param $errmsg
+ * @param $filename
+ * @param $linenum
+ * @param $vars
+ */
+function userErrorHandler($errno, $errmsg, $filename, $linenum, $vars)
 {
 	global $smarty;
 	global $style_base;

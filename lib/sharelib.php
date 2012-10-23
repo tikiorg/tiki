@@ -19,7 +19,10 @@ class Tiki_ShareGroup
 	public $categPerm;
 	public $objectPerm;
 
-	function Tiki_ShareGroup( $name )
+    /**
+     * @param $name
+     */
+    function Tiki_ShareGroup( $name )
 	{
 		$this->name = $name;
 		$this->groupPerm = array();
@@ -28,12 +31,19 @@ class Tiki_ShareGroup
 		$this->selectedValues = array();
 	}
 
-	function addGroupPermission( $permission )
+    /**
+     * @param $permission
+     */
+    function addGroupPermission( $permission )
 	{
 		$this->groupPerm[$permission] = 'y';
 	}
 
-	function addCategoryPermission( $source, $permission )
+    /**
+     * @param $source
+     * @param $permission
+     */
+    function addCategoryPermission( $source, $permission )
 	{
 		if ( ! array_key_exists($permission, $this->categPerm) )
 			$this->categPerm[$permission] = array();
@@ -41,13 +51,20 @@ class Tiki_ShareGroup
 		$this->categPerm[$permission][] = $source;
 	}
 
-	function addObjectPermission( $permission )
+    /**
+     * @param $permission
+     */
+    function addObjectPermission( $permission )
 	{
 		$this->objectPerm[$permission] = 'y';
 		$this->selectedValues[] = $permission;
 	}
 
-	function getSourceCategory( $permission )
+    /**
+     * @param $permission
+     * @return string
+     */
+    function getSourceCategory( $permission )
 	{
 		if ( array_key_exists($permission, $this->categPerm) )
 			return implode(', ', $this->categPerm[$permission]);
@@ -55,7 +72,11 @@ class Tiki_ShareGroup
 		return '';
 	}
 
-	function getLevel( $permission )
+    /**
+     * @param $permission
+     * @return string
+     */
+    function getLevel( $permission )
 	{
 		$ret = 'object';
 
@@ -67,17 +88,27 @@ class Tiki_ShareGroup
 		return $ret;
 	}
 
-	function isSelected( $permission )
+    /**
+     * @param $permission
+     * @return bool
+     */
+    function isSelected( $permission )
 	{
 		return in_array($permission, $this->selectedValues);
 	}
 
-	function hasSelection()
+    /**
+     * @return bool
+     */
+    function hasSelection()
 	{
 		return count($this->selectedValues) != 0;
 	}
 
-	function setObjectPermissions( $permissions )
+    /**
+     * @param $permissions
+     */
+    function setObjectPermissions( $permissions )
 	{
 		// Make sure view is present
 		if ( in_array('tiki_p_edit', $permissions) && ! in_array('tiki_p_view', $permissions) )
@@ -94,7 +125,11 @@ class Tiki_ShareGroup
 		$this->selectedValues = $permissions;
 	}
 
-	function hasObjectPermission( $name )
+    /**
+     * @param $name
+     * @return bool
+     */
+    function hasObjectPermission( $name )
 	{
 		return isset($this->objectPerm[$name]);
 	}
@@ -113,7 +148,11 @@ class Tiki_ShareObject
 	public $loadedPermission;
 	public $validGroups;
 
-	function __construct( $objectType, $objectId )
+    /**
+     * @param $objectType
+     * @param $objectId
+     */
+    function __construct( $objectType, $objectId )
 	{
 		global $Tiki_ShareObject__groups;
 
@@ -140,7 +179,10 @@ class Tiki_ShareObject
 			$Tiki_ShareObject__groups[] = $row['groupName'];
 	}
 
-	function loadPermission( $permissionName )
+    /**
+     * @param $permissionName
+     */
+    function loadPermission( $permissionName )
 	{
 		global $tikilib;
 
@@ -179,7 +221,11 @@ class Tiki_ShareObject
 		}
 	}
 
-	function getGroup( $name )
+    /**
+     * @param $name
+     * @return mixed
+     */
+    function getGroup( $name )
 	{
 		global $Tiki_ShareObject__groups;
 
@@ -193,26 +239,39 @@ class Tiki_ShareObject
 		return $this->validGroups[$name];
 	}
 
-	function getValidGroups()
+    /**
+     * @return array
+     */
+    function getValidGroups()
 	{
 		ksort($this->validGroups);
 
 		return array_values($this->validGroups);
 	}
 
-	function getOtherGroups()
+    /**
+     * @return array
+     */
+    function getOtherGroups()
 	{
 		global $Tiki_ShareObject__groups;
 
 		return array_diff($Tiki_ShareObject__groups, array_keys($this->validGroups));
 	}
 
-	function isValid( $name )
+    /**
+     * @param $name
+     * @return bool
+     */
+    function isValid( $name )
 	{
 		return array_key_exists($name, $this->validGroups);
 	}
 
-	function saveObjectPermissions( $validPermission )
+    /**
+     * @param $validPermission
+     */
+    function saveObjectPermissions( $validPermission )
 	{
 		global $tikilib;
 

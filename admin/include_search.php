@@ -13,6 +13,9 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
 if (isset($_REQUEST['searchprefs'])) {
 	check_ticket('admin-inc-search');
 }
+/**
+ * @return array
+ */
 function activated_features()
 {
 	global $prefs;

@@ -10,6 +10,9 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 	exit;
 }
 
+/**
+ * @param $installer
+ */
 function upgrade_20100207_repair_file_galleries_tiki($installer)
 {
 

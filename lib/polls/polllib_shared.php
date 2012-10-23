@@ -19,7 +19,11 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 class PollLibShared extends TikiLib
 {
 
-	function get_poll($pollId)
+    /**
+     * @param $pollId
+     * @return bool
+     */
+    function get_poll($pollId)
 	{
 		$query = "select * from `tiki_polls` where `pollId`=?";
 		$result = $this->query($query, array((int)$pollId));
@@ -28,7 +32,11 @@ class PollLibShared extends TikiLib
 		return $res;
 	}
 
-	function get_poll_voters( $optionId )
+    /**
+     * @param $optionId
+     * @return array
+     */
+    function get_poll_voters( $optionId )
 	{
 		$query = "select user from `tiki_user_votings` where `optionId`=?";
 		$result = $this->query($query, array((int)$optionId));
@@ -39,7 +47,13 @@ class PollLibShared extends TikiLib
 		return $ret;
 	}
 
-	function list_poll_options($pollId, $from = 0, $to = 0)
+    /**
+     * @param $pollId
+     * @param int $from
+     * @param int $to
+     * @return array
+     */
+    function list_poll_options($pollId, $from = 0, $to = 0)
 	{
 		if ( empty($from) && empty($to) ) {
 			$query = 'select * from `tiki_poll_options` where `pollId`=?';
@@ -62,7 +76,11 @@ class PollLibShared extends TikiLib
 		return $ret;
 	}
 
-	function get_random_poll($active="a")
+    /**
+     * @param string $active
+     * @return int
+     */
+    function get_random_poll($active="a")
 	{
 		$bindvars = array((int)$this->now, $active);
 
@@ -88,7 +106,14 @@ class PollLibShared extends TikiLib
 		}
 	}
 
-	function get_polls($type = 'a', $datestart = 0, $dateend = '', $find = '')
+    /**
+     * @param string $type
+     * @param int $datestart
+     * @param string $dateend
+     * @param string $find
+     * @return array
+     */
+    function get_polls($type = 'a', $datestart = 0, $dateend = '', $find = '')
 	{
 		if (!$dateend) $dateend = date('U');
 		$bindvars = array($type, (int)$datestart, (int)$dateend);
@@ -116,7 +141,13 @@ class PollLibShared extends TikiLib
 		return $retval;
 	}
 
-	function poll_vote($user, $pollId, $optionId, $previous_vote)
+    /**
+     * @param $user
+     * @param $pollId
+     * @param $optionId
+     * @param $previous_vote
+     */
+    function poll_vote($user, $pollId, $optionId, $previous_vote)
 	{
 		if (!$previous_vote || $previous_vote == 0) {
 			$query = "update `tiki_polls` set `votes`=`votes`+1 where `pollId`=?";
@@ -131,7 +162,13 @@ class PollLibShared extends TikiLib
 		}
 	}
 
-	function get_ratings( $cat_type, $cat_objid, $user = null )
+    /**
+     * @param $cat_type
+     * @param $cat_objid
+     * @param null $user
+     * @return array
+     */
+    function get_ratings( $cat_type, $cat_objid, $user = null )
 	{
 		global $tikilib, $prefs;
 
@@ -172,7 +209,12 @@ class PollLibShared extends TikiLib
 		return $out;
 	}
 
-	private function pollnameclean($s, $page)
+    /**
+     * @param $s
+     * @param $page
+     * @return mixed
+     */
+    private function pollnameclean($s, $page)
 	{
 		if (isset($s['title']))
 			$s['title'] = substr($s['title'], strlen($page)+2);
@@ -180,7 +222,11 @@ class PollLibShared extends TikiLib
 		return $s;
 	}
 
-	function remove_poll($pollId)
+    /**
+     * @param $pollId
+     * @return bool
+     */
+    function remove_poll($pollId)
 	{
 		$query = "delete from `tiki_poll_objects` where `pollId`=?";
 		$result = $this->query($query, array((int) $pollId));
@@ -196,18 +242,33 @@ class PollLibShared extends TikiLib
 		return true;
 	}
 
-	function get_catObjectId($cat_type,$cat_objid)
+    /**
+     * @param $cat_type
+     * @param $cat_objid
+     * @return mixed
+     */
+    function get_catObjectId($cat_type,$cat_objid)
 	{
 		return $this->getOne("select `objectId` from `tiki_objects` where `type`=? and `itemId`=?", array($cat_type, $cat_objid));
 	}
 
-	function has_object_polls($catObjectId)
+    /**
+     * @param $catObjectId
+     * @return mixed
+     */
+    function has_object_polls($catObjectId)
 	{
 		$query = "select count(*) from `tiki_poll_objects` where `catObjectId`=?";
 		return $this->getOne($query, array((int) $catObjectId));
 	}
 
-	function remove_object_poll($cat_type,$cat_objid, $pollId = null)
+    /**
+     * @param $cat_type
+     * @param $cat_objid
+     * @param null $pollId
+     * @return bool
+     */
+    function remove_object_poll($cat_type,$cat_objid, $pollId = null)
 	{
 		$catObjectId = $this->get_catObjectId($cat_type, $cat_objid);
 		$query = "delete from `tiki_poll_objects` where `catObjectId`=?";
@@ -222,7 +283,12 @@ class PollLibShared extends TikiLib
 		return true;
 	}
 
-	function create_poll($template_id,$title)
+    /**
+     * @param $template_id
+     * @param $title
+     * @return mixed
+     */
+    function create_poll($template_id,$title)
 	{
 		$pollid = $this->replace_poll(0, $title, "o", date('U'));
 		$options = $this->list_poll_options($template_id);
@@ -233,7 +299,14 @@ class PollLibShared extends TikiLib
 		return $pollid;
 	}
 
-	function replace_poll_option($pollId, $optionId, $title, $position)
+    /**
+     * @param $pollId
+     * @param $optionId
+     * @param $title
+     * @param $position
+     * @return bool
+     */
+    function replace_poll_option($pollId, $optionId, $title, $position)
 	{
 		if ($optionId) {
 			$query = "update `tiki_poll_options` set `title`=?,`position`=? where `optionId`=?";
@@ -245,7 +318,15 @@ class PollLibShared extends TikiLib
 		return true;
 	}
 
-	function replace_poll($pollId, $title, $active, $publishDate, $voteConsiderationSpan = 0)
+    /**
+     * @param $pollId
+     * @param $title
+     * @param $active
+     * @param $publishDate
+     * @param int $voteConsiderationSpan
+     * @return mixed
+     */
+    function replace_poll($pollId, $title, $active, $publishDate, $voteConsiderationSpan = 0)
 	{
 		if ($pollId) {
 			$query = "update `tiki_polls` set `title`=?,`active`=?,`publishDate`=?, `voteConsiderationSpan`=? where `pollId`=?";
@@ -262,7 +343,12 @@ class PollLibShared extends TikiLib
 		return $pollId;
 	}
 
-	function poll_categorize($catObjectId, $pollId, $title = '')
+    /**
+     * @param $catObjectId
+     * @param $pollId
+     * @param string $title
+     */
+    function poll_categorize($catObjectId, $pollId, $title = '')
 	{
 		$query = "delete from `tiki_poll_objects` where `catObjectId`=? and `pollId`=?";
 		$result = $this->query($query, array((int) $catObjectId, (int) $pollId), -1, -1, false);
@@ -270,7 +356,11 @@ class PollLibShared extends TikiLib
 		$result = $this->query($query, array((int) $catObjectId, (int) $pollId, $title));
 	}
 
-	function get_poll_categories($pollId)
+    /**
+     * @param $pollId
+     * @return array
+     */
+    function get_poll_categories($pollId)
 	{
 		global $categlib; include_once('lib/categories/categlib.php');
 
@@ -285,7 +375,11 @@ class PollLibShared extends TikiLib
 		return $ret;
 	}
 
-	function get_poll_objects($pollId)
+    /**
+     * @param $pollId
+     * @return array
+     */
+    function get_poll_objects($pollId)
 	{
 		$query = "select tob.* from `tiki_objects` tob, `tiki_poll_objects` tpo where tpo.`pollId`=? and tpo.`catObjectId`=tob.`objectId`";
 		$result = $this->query($query, array((int) $pollId));
@@ -298,7 +392,11 @@ class PollLibShared extends TikiLib
 	}
 
 
-	function clone_poll($pollId)
+    /**
+     * @param $pollId
+     * @return bool
+     */
+    function clone_poll($pollId)
 	{
 		$poll=$this->get_poll($pollId);
 		if (!is_array($poll)) return false;
@@ -353,7 +451,13 @@ class PollLibShared extends TikiLib
 		}
 	}
 
-	function delete_vote($pollId, $user, $ip, $optionId)
+    /**
+     * @param $pollId
+     * @param $user
+     * @param $ip
+     * @param $optionId
+     */
+    function delete_vote($pollId, $user, $ip, $optionId)
 	{
 		$query = 'delete from `tiki_user_votings` where `id`=? and `optionId`=? and ';
 		$bindvars = array('poll'.$pollId, $optionId);

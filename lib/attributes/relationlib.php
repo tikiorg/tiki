@@ -35,7 +35,13 @@ class RelationLib extends TikiDb_Bridge
 		);
 	}
 
-	function get_relations_to( $type, $object, $relation = null )
+    /**
+     * @param $type
+     * @param $object
+     * @param null $relation
+     * @return mixed
+     */
+    function get_relations_to( $type, $object, $relation = null )
 	{
 		if ( substr($relation, -7) === '.invert' ) {
 			return $this->get_relations_from($type, $object, substr($relation, 0, -7));
@@ -93,7 +99,15 @@ class RelationLib extends TikiDb_Bridge
 		}
 	}
 
-	function get_relation_id( $relation, $src_type, $src_object, $target_type, $target_object )
+    /**
+     * @param $relation
+     * @param $src_type
+     * @param $src_object
+     * @param $target_type
+     * @param $target_object
+     * @return int
+     */
+    function get_relation_id( $relation, $src_type, $src_object, $target_type, $target_object )
 	{
 		$relation = TikiFilter::get('attribute_type')->filter($relation);
 
@@ -114,19 +128,31 @@ class RelationLib extends TikiDb_Bridge
 		return $id;
 	}
 
-	function get_relation( $id )
+    /**
+     * @param $id
+     * @return mixed
+     */
+    function get_relation( $id )
 	{
 		$result = $this->fetchAll('SELECT * FROM `tiki_object_relations` WHERE `relationId` = ?', array( $id ));
 		return reset($result);
 	}
 
-	function remove_relation( $id )
+    /**
+     * @param $id
+     */
+    function remove_relation( $id )
 	{
 		$this->fetchAll('DELETE FROM `tiki_object_relations` WHERE `relationId` = ?', array( $id ));
 		$this->fetchAll('DELETE FROM `tiki_object_attributes` WHERE type = "relation" and `itemId` = ?', array( $id ));
 	}
 
-	private function apply_relation_condition( $relation, & $cond, & $vars )
+    /**
+     * @param $relation
+     * @param $cond
+     * @param $vars
+     */
+    private function apply_relation_condition( $relation, & $cond, & $vars )
 	{
 		$relation = TikiFilter::get('attribute_type')->filter($relation);
 

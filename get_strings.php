@@ -109,6 +109,10 @@ $getStrings->run();
 
 echo formatOutput("\nTotal time spent: " . $timer->stop() . " seconds\n");
 
+/**
+ * @param $string
+ * @return string
+ */
 function formatOutput($string)
 {
 	if (php_sapi_name() == 'cli') {

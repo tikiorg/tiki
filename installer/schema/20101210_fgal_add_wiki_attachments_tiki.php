@@ -10,6 +10,9 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 	exit;
 }
 
+/**
+ * @param $installer
+ */
 function upgrade_20101210_fgal_add_wiki_attachments_tiki($installer)
 {
 	global $dbs_tiki;

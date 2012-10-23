@@ -28,6 +28,10 @@ if ($tiki_p_admin != 'y') {
 }
 
 
+/**
+ * @param $dir
+ * @param $result
+ */
 function md5_check_dir($dir, &$result) // save all files in $result
 {
 	echo "opening $dir <br />\n";

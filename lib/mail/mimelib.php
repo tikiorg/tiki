@@ -11,6 +11,9 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
 	exit;
 }
 
+/**
+ *
+ */
 class mime
 {
 	function mime()
@@ -18,7 +21,13 @@ class mime
 
 	}
 
-	function decode($input,$default_ctype = 'text/plain', $crlf = "\r\n")
+    /**
+     * @param $input
+     * @param string $default_ctype
+     * @param string $crlf
+     * @return array|bool
+     */
+    function decode($input,$default_ctype = 'text/plain', $crlf = "\r\n")
 	{
 		$back = array();
 
@@ -204,7 +213,12 @@ class mime
 		return $back;
 	}
 
-	function decodeBody($input, $encoding = '7bit')
+    /**
+     * @param $input
+     * @param string $encoding
+     * @return mixed|string
+     */
+    function decodeBody($input, $encoding = '7bit')
 	{
 		switch ($encoding) {
 			case '7bit':
@@ -232,7 +246,11 @@ class mime
 		}
 	}
 
-	function get_bodies($output)
+    /**
+     * @param $output
+     * @return array
+     */
+    function get_bodies($output)
 	{
 			$bodies = array();	/* BUG: only one body for the moment */
 			if (isset($output['text'][0]))
@@ -247,7 +265,11 @@ class mime
 			return $bodies;
 	}
 
-	function get_attachments($output)
+    /**
+     * @param $output
+     * @return array
+     */
+    function get_attachments($output)
 	{
 		$cnt = 0;
 		$attachments = array();

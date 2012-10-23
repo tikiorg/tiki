@@ -18,6 +18,9 @@ require_once ('lib/mail/mimelib.php');
 include_once ('lib/webmail/tikimaillib.php');
 
 // AJAX_TODO
+/**
+ * @param $inUrl
+ */
 function handleWebmailRedirect($inUrl)
 {
 	header('location: tiki-webmail.php?'.$inUrl);

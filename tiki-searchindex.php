@@ -130,6 +130,12 @@ $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 $smarty->assign('mid', 'tiki-searchindex.tpl');
 $smarty->display("tiki.tpl");
 
+/**
+ * @param $filter
+ * @param $offset
+ * @param $maxRecords
+ * @return mixed
+ */
 function tiki_searchindex_get_results($filter, $offset, $maxRecords)
 {
 	global $unifiedsearchlib;

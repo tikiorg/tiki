@@ -5,12 +5,20 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
+/**
+ *
+ */
 class OIntegrate
 {
 	private $schemaVersion = array();
 	private $acceptTemplates = array();
 
-	public static function getEngine( $name, $engineOutput ) // {{{
+    /**
+     * @param $name
+     * @param $engineOutput
+     * @return OIntegrate_Engine_JavaScript|OIntegrate_Engine_Smarty
+     */
+    public static function getEngine( $name, $engineOutput ) // {{{
 	{
 		switch( $name )
 		{
@@ -21,7 +29,12 @@ class OIntegrate
 		}
 	} // }}}
 
-	public static function getConverter( $from, $to ) // {{{
+    /**
+     * @param $from
+     * @param $to
+     * @return OIntegrate_Converter_Direct|OIntegrate_Converter_EncodeHtml|OIntegrate_Converter_HtmlToTiki|OIntegrate_Converter_TikiToHtml
+     */
+    public static function getConverter( $from, $to ) // {{{
 	{
 		switch( $from )
 		{
@@ -41,7 +54,12 @@ class OIntegrate
 		}
 	} // }}}
 
-	function performRequest( $url, $postBody = null ) // {{{
+    /**
+     * @param $url
+     * @param null $postBody
+     * @return OIntegrate_Response
+     */
+    function performRequest( $url, $postBody = null ) // {{{
 	{
 		$cachelib = TikiLib::lib('cache');
 		$tikilib = TikiLib::lib('tiki');
@@ -121,7 +139,12 @@ class OIntegrate
 		return $response;
 	} // }}}
 
-	function unserialize( $type, $data ) // {{{
+    /**
+     * @param $type
+     * @param $data
+     * @return array|mixed|null
+     */
+    function unserialize( $type, $data ) // {{{
 	{
 		$parts = explode(';', $type);
 		$type = trim($parts[0]);
@@ -158,17 +181,27 @@ class OIntegrate
 		}
 	} // }}}
 
-	function addSchemaVersion( $version ) // {{{
+    /**
+     * @param $version
+     */
+    function addSchemaVersion( $version ) // {{{
 	{
 		$this->schemaVersion[] = $version;
 	} // }}}
 
-	function addAcceptTemplate( $engine, $output ) // {{{
+    /**
+     * @param $engine
+     * @param $output
+     */
+    function addAcceptTemplate( $engine, $output ) // {{{
 	{
 		$this->acceptTemplate[] = "$engine/$output";
 	} // }}}
 }
 
+/**
+ *
+ */
 class OIntegrate_Response
 {
 	public $version = null;
@@ -180,7 +213,13 @@ class OIntegrate_Response
 
 	private $errors = array();
 
-	public static function create( $data, $schemaVersion, $cacheLength = 300 ) // {{{
+    /**
+     * @param $data
+     * @param $schemaVersion
+     * @param int $cacheLength
+     * @return OIntegrate_Response
+     */
+    public static function create( $data, $schemaVersion, $cacheLength = 300 ) // {{{
 	{
 		$response = new self;
 		$response->version = '1.0';
@@ -195,7 +234,12 @@ class OIntegrate_Response
 		return $response;
 	} // }}}
 
-	function addTemplate( $engine, $output, $templateLocation ) // {{{
+    /**
+     * @param $engine
+     * @param $output
+     * @param $templateLocation
+     */
+    function addTemplate( $engine, $output, $templateLocation ) // {{{
 	{
 		if ( ! array_key_exists('_template', $this->data) )
 			$this->data['_template'] = array();
@@ -232,7 +276,14 @@ class OIntegrate_Response
 		exit;
 	} // }}}
 
-	function render( $engine, $engineOutput, $outputContext, $templateFile ) // {{{
+    /**
+     * @param $engine
+     * @param $engineOutput
+     * @param $outputContext
+     * @param $templateFile
+     * @return mixed|string
+     */
+    function render( $engine, $engineOutput, $outputContext, $templateFile ) // {{{
 	{
 		$engine = OIntegrate::getEngine($engine, $engineOutput);
 		if ( ! $output = OIntegrate::getConverter($engineOutput, $outputContext) ) {
@@ -249,7 +300,11 @@ class OIntegrate_Response
 		return $output->convert($raw);
 	} // }}}
 
-	function getTemplates( $supportedPairs = null ) // {{{
+    /**
+     * @param null $supportedPairs
+     * @return array
+     */
+    function getTemplates( $supportedPairs = null ) // {{{
 	{
 		if ( !is_array($this->data) || ! isset( $this->data['_template'] ) || ! is_array($this->data['_template']) )
 			return array();
@@ -279,19 +334,42 @@ class OIntegrate_Response
 	} // }}}
 }
 
+/**
+ *
+ */
 interface OIntegrate_Converter
 {
-	function convert( $content );
+    /**
+     * @param $content
+     * @return mixed
+     */
+    function convert( $content );
 }
 
+/**
+ *
+ */
 interface OIntegrate_Engine
 {
-	function process( $data, $templateFile );
+    /**
+     * @param $data
+     * @param $templateFile
+     * @return mixed
+     */
+    function process( $data, $templateFile );
 }
 
+/**
+ *
+ */
 class OIntegrate_Engine_JavaScript implements OIntegrate_Engine // {{{
 {
-	function process( $data, $templateFile )
+    /**
+     * @param $data
+     * @param $templateFile
+     * @return string
+     */
+    function process( $data, $templateFile )
 	{
 		$json = json_encode($data);
 
@@ -304,16 +382,27 @@ EOC
 	}
 } // }}}
 
+/**
+ *
+ */
 class OIntegrate_Engine_Smarty implements OIntegrate_Engine // {{{
 {
 	private $changeDelimiters;
 
-	function __construct( $changeDelimiters = false )
+    /**
+     * @param bool $changeDelimiters
+     */
+    function __construct( $changeDelimiters = false )
 	{
 		$this->changeDelimiters = $changeDelimiters;
 	}
 
-	function process( $data, $templateFile )
+    /**
+     * @param $data
+     * @param $templateFile
+     * @return mixed
+     */
+    function process( $data, $templateFile )
 	{
 		$smarty = new Smarty;
 		$smarty->security = true;
@@ -330,33 +419,61 @@ class OIntegrate_Engine_Smarty implements OIntegrate_Engine // {{{
 	}
 } // }}}
 
+/**
+ *
+ */
 class OIntegrate_Converter_Direct implements OIntegrate_Converter // {{{
 {
-	function convert( $content )
+    /**
+     * @param $content
+     * @return mixed
+     */
+    function convert( $content )
 	{
 		return $content;
 	}
 } // }}}
 
+/**
+ *
+ */
 class OIntegrate_Converter_EncodeHtml implements OIntegrate_Converter // {{{
 {
-	function convert( $content )
+    /**
+     * @param $content
+     * @return string
+     */
+    function convert( $content )
 	{
 		return htmlentities($content, ENT_QUOTES, 'UTF-8');
 	}
 } // }}}
 
+/**
+ *
+ */
 class OIntegrate_Converter_HtmlToTiki implements OIntegrate_Converter // {{{
 {
-	function convert( $content )
+    /**
+     * @param $content
+     * @return string
+     */
+    function convert( $content )
 	{
 		return '~np~' . $content . '~/np~';
 	}
 } // }}}
 
+/**
+ *
+ */
 class OIntegrate_Converter_TikiToHtml implements OIntegrate_Converter // {{{
 {
-	function convert( $content )
+    /**
+     * @param $content
+     * @return mixed|string
+     */
+    function convert( $content )
 	{
 		global $tikilib;
 		return $tikilib->parse_data(htmlentities($content, ENT_QUOTES, 'UTF-8'));

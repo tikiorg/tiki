@@ -11,10 +11,16 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
 	exit;
 }
 
+/**
+ *
+ */
 class UserMenuLib extends TikiLib
 {
 
-	function add_bk($user)
+    /**
+     * @param $user
+     */
+    function add_bk($user)
 	{
 		$query = 'select tubu.`name`,`url`' .
 						' from `tiki_user_bookmarks_urls` tubu, `tiki_user_bookmarks_folders` tubf' .
@@ -46,7 +52,15 @@ class UserMenuLib extends TikiLib
 		}
 	}
 
-	function list_usermenus($user, $offset, $maxRecords, $sort_mode, $find)
+    /**
+     * @param $user
+     * @param $offset
+     * @param $maxRecords
+     * @param $sort_mode
+     * @param $find
+     * @return array
+     */
+    function list_usermenus($user, $offset, $maxRecords, $sort_mode, $find)
 	{
 
 		if ($find) {
@@ -75,7 +89,12 @@ class UserMenuLib extends TikiLib
 		return $retval;
 	}
 
-	function get_usermenu($user, $menuId)
+    /**
+     * @param $user
+     * @param $menuId
+     * @return mixed
+     */
+    function get_usermenu($user, $menuId)
 	{
 		$query = 'select * from `tiki_user_menus` where `user`=? and `menuId`=?';
 
@@ -84,12 +103,25 @@ class UserMenuLib extends TikiLib
 		return $res;
 	}
 
-	function get_max_position($user)
+    /**
+     * @param $user
+     * @return mixed
+     */
+    function get_max_position($user)
 	{
 		return $this->getOne('select max(position) from `tiki_user_menus` where `user`=?', array($user));
 	}
 
-	function replace_usermenu($user, $menuId, $name, $url, $position, $mode)
+    /**
+     * @param $user
+     * @param $menuId
+     * @param $name
+     * @param $url
+     * @param $position
+     * @param $mode
+     * @return mixed
+     */
+    function replace_usermenu($user, $menuId, $name, $url, $position, $mode)
 	{
 
 		if ($menuId) {
@@ -106,7 +138,11 @@ class UserMenuLib extends TikiLib
 		}
 	}
 
-	function remove_usermenu($user, $menuId)
+    /**
+     * @param $user
+     * @param $menuId
+     */
+    function remove_usermenu($user, $menuId)
 	{
 		$query = 'delete from `tiki_user_menus` where `user`=? and `menuId`=?';
 

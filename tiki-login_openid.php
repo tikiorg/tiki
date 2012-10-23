@@ -42,6 +42,10 @@ function setupFromAddress() // {{{
 	}
 	if (strpos($_SESSION['loginfrom'], 'openid') !== false) $_SESSION['loginfrom'] = $base_url;
 } // }}}
+/**
+ * @param $identifier
+ * @return array
+ */
 function getAccountsMatchingIdentifier($identifier) // {{{
 {
 	global $tikilib;
@@ -50,6 +54,9 @@ function getAccountsMatchingIdentifier($identifier) // {{{
 	while ($row = $result->fetchRow()) $userlist[] = $row['login'];
 	return $userlist;
 } // }}}
+/**
+ * @param $identifier
+ */
 function loginUser($identifier) // {{{
 {
 	global $user_cookie_site, $userlib;
@@ -60,6 +67,10 @@ function loginUser($identifier) // {{{
 	unset($_SESSION['loginfrom']);
 	exit;
 } // }}}
+/**
+ * @param $data
+ * @param $messages
+ */
 function filterExistingInformation(&$data, &$messages) // {{{
 {
 	global $tikilib;
@@ -70,6 +81,10 @@ function filterExistingInformation(&$data, &$messages) // {{{
 		$messages[] = tra('Your default nickname is already in use. A new one has to be selected.');
 	}
 } // }}}
+/**
+ * @param $data
+ * @param $messages
+ */
 function displayRegisatrationForms($data, $messages) // {{{
 {
 	global $smarty, $userlib, $prefs;
@@ -116,6 +131,10 @@ function displayRegisatrationForms($data, $messages) // {{{
 	$smarty->display('tiki.tpl');
 	exit;
 } // }}}
+/**
+ * @param $data
+ * @param $messages
+ */
 function displaySelectionList($data, $messages) // {{{
 {
 	global $smarty;
@@ -124,6 +143,9 @@ function displaySelectionList($data, $messages) // {{{
 	$smarty->display('tiki.tpl');
 	exit;
 } // }}}
+/**
+ * @param $message
+ */
 function displayError($message)
 { // {{{
 	global $smarty;
@@ -132,6 +154,9 @@ function displayError($message)
 	$smarty->display("error.tpl");
 	die;
 } // }}}
+/**
+ * @return Auth_OpenID_FileStore
+ */
 function getStore()
 { // {{{
 	$store_path = "temp/openid_consumer";
@@ -141,6 +166,9 @@ function getStore()
 	}
 	return new Auth_OpenID_FileStore($store_path);
 } // }}}
+/**
+ * @return Auth_OpenID_Consumer
+ */
 function getConsumer()
 { // {{{
 
@@ -160,6 +188,9 @@ function getOpenIDURL()
 	}
 	return $_GET['openid_url'];
 } // }}}
+/**
+ * @return string
+ */
 function getScheme()
 { // {{{
 	$scheme = 'http';
@@ -168,6 +199,9 @@ function getScheme()
 	}
 	return $scheme;
 } // }}}
+/**
+ * @return string
+ */
 function getReturnTo()
 { // {{{
 	$path = str_replace('\\', '/', dirname($_SERVER['PHP_SELF']));
@@ -175,6 +209,9 @@ function getReturnTo()
 	if (isset($_GET['action']) && $_GET['action'] == 'force') $string.= '&force=true';
 	return $string;
 } // }}}
+/**
+ * @return string
+ */
 function getTrustRoot()
 { // {{{
 	return sprintf("%s://%s:%s%s", getScheme(), $_SERVER['SERVER_NAME'], $_SERVER['SERVER_PORT'], str_replace('\\', '/', dirname($_SERVER['PHP_SELF'])));

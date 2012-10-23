@@ -10,6 +10,9 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 	exit;
 }
 
+/**
+ * @param $installer
+ */
 function upgrade_20110905_multibyte_lc_fix_tiki($installer)
 {
 	if (function_exists('mb_strtolower')) {

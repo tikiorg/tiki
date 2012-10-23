@@ -17,6 +17,10 @@ if ($prefs['feature_intertiki'] != 'y' || $prefs['feature_intertiki_server'] != 
 	exit;
 }
 
+/**
+ * @param $file
+ * @param $line
+ */
 function lograw($file, $line)
 {
 	$fp = fopen($file, 'a+');
@@ -24,6 +28,13 @@ function lograw($file, $line)
 	fclose($fp);
 }
 
+/**
+ * @param $file
+ * @param $txt
+ * @param $user
+ * @param $code
+ * @param $from
+ */
 function logit($file, $txt, $user, $code, $from)
 {
 	global $tikilib;
@@ -48,6 +59,10 @@ $map = array(
 
 $s = new XML_RPC_Server($map);
 
+/**
+ * @param $params
+ * @return XML_RPC_Response
+ */
 function validate($params)
 {
 	global $tikilib, $userlib, $prefs, $logslib;
@@ -119,6 +134,10 @@ function validate($params)
 	}
 }
 
+/**
+ * @param $params
+ * @return XML_RPC_Response
+ */
 function set_user_info($params)
 {
 	global $tikilib, $userlib, $prefs;
@@ -145,6 +164,10 @@ function set_user_info($params)
 	return new XML_RPC_Response(new XML_RPC_Value(1, 'boolean'));
 }
 
+/**
+ * @param $params
+ * @return XML_RPC_Response
+ */
 function logout($params)
 {
 	global $tikilib, $userlib,$logslib,$prefs;
@@ -177,6 +200,10 @@ function logout($params)
 	return new XML_RPC_Response(new XML_RPC_Value(1, 'boolean'));
 }
 
+/**
+ * @param $params
+ * @return XML_RPC_Response
+ */
 function cookie_check($params)
 {
 	global $tikilib, $userlib,$prefs;
@@ -205,12 +232,20 @@ function cookie_check($params)
 	return new XML_RPC_Response(0, 101, $msg);
 }
 
+/**
+ * @param $params
+ * @return XML_RPC_Response
+ */
 function get_version($params)
 {
 	global $version;
 	return new XML_RPC_Response(new XML_RPC_Value($version, 'int'));
 }
 
+/**
+ * @param $params
+ * @return XML_RPC_Response
+ */
 function get_user_info($params)
 {
 	global $tikilib, $prefs, $userlib;
@@ -248,6 +283,10 @@ function get_user_info($params)
 	return new XML_RPC_Response(new XML_RPC_Value($ret, 'struct'));
 }
 
+/**
+ * @param $params
+ * @return XML_RPC_Response
+ */
 function get_registration_prefs($params)
 {
 	global $tikilib, $prefs, $registrationlib, $logslib;
@@ -275,6 +314,10 @@ function get_registration_prefs($params)
 	return new XML_RPC_Response(XML_RPC_encode($registrationlib->merged_prefs));
 }
 
+/**
+ * @param $params
+ * @return XML_RPC_Response
+ */
 function register_user($params)
 {
 	global $tikilib, $prefs, $registrationlib, $logslib;

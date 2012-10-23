@@ -47,29 +47,45 @@ abstract class SerializedList
 
 	abstract public function initPrefPrefix();	// to be declared to set $this->prefPrefix = 'your_pref_prefix_'
 	abstract public function initData();		// func to set $this->data as you need it
-	abstract public function setData($params);	// func to set the date
+    /**
+     * @param $params
+     * @return mixed
+     */
+    abstract public function setData($params);	// func to set the date
 
 	public function getData()
 	{
 		return $this->data;
 	}
 
-	public function getName()
+    /**
+     * @return string
+     */
+    public function getName()
 	{
 		return $this->name;
 	}
 
-	public function getPrefName()
+    /**
+     * @return string
+     */
+    public function getPrefName()
 	{
 		return $this->prefPrefix . $this->name;
 	}
 
-	public function getListName()
+    /**
+     * @return string
+     */
+    public function getListName()
 	{
 		return $this->prefPrefix . 'list';
 	}
 
-	public function getPrefList()
+    /**
+     * @return array|mixed
+     */
+    public function getPrefList()
 	{
 		global $prefs;
 
@@ -83,7 +99,10 @@ abstract class SerializedList
 		return $custom;
 	}
 
-	public function loadPref()
+    /**
+     * @return mixed
+     */
+    public function loadPref()
 	{
 		global $prefs, $tikilib;
 

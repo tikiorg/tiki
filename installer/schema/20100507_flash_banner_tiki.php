@@ -10,6 +10,9 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
   exit;
 }
 
+/**
+ * @param $installer
+ */
 function upgrade_20100507_flash_banner_tiki($installer)
 {
 	$result = $installer->query('select * from `tiki_banners` where `which` = ? and `HTMLData` like ?', array('useFlash', '%embedSWF%'));

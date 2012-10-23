@@ -11,10 +11,20 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
   exit;
 }
 
+/**
+ *
+ */
 class FlinksLib extends TikiLib
 {
 
-	function add_featured_link($url, $title, $description = '', $position = 0, $type = 'f')
+    /**
+     * @param $url
+     * @param $title
+     * @param string $description
+     * @param int $position
+     * @param string $type
+     */
+    function add_featured_link($url, $title, $description = '', $position = 0, $type = 'f')
 	{
 		$query = "delete from `tiki_featured_links` where `url`=?";
 		$result = $this->query($query, array($url), -1, -1, false);
@@ -22,20 +32,33 @@ class FlinksLib extends TikiLib
 		$result = $this->query($query, array($url,$title,$description,$position,0,$type));
 	}
 
-	function remove_featured_link($url)
+    /**
+     * @param $url
+     */
+    function remove_featured_link($url)
 	{
 		$query = "delete from `tiki_featured_links` where `url`=?";
 		$result = $this->query($query, array($url));
 	}
 
-	function update_featured_link($url, $title, $description, $position = 0, $type = 'f')
+    /**
+     * @param $url
+     * @param $title
+     * @param $description
+     * @param int $position
+     * @param string $type
+     */
+    function update_featured_link($url, $title, $description, $position = 0, $type = 'f')
 	{
 		$query = "update `tiki_featured_links` set `title`=?, `type`=?, `description`=?, `position`=? where `url`='$url'";
 
 		$result = $this->query($query, array($title,$type,$description,$position,$url));
 	}
 
-	function add_featured_link_hit($url)
+    /**
+     * @param $url
+     */
+    function add_featured_link_hit($url)
 	{
 		global $prefs, $user;
 
@@ -45,7 +68,11 @@ class FlinksLib extends TikiLib
 		}
 	}
 
-	function get_featured_link($url)
+    /**
+     * @param $url
+     * @return bool
+     */
+    function get_featured_link($url)
 	{
 		$query = "select * from `tiki_featured_links` where `url`=?";
 
@@ -58,7 +85,10 @@ class FlinksLib extends TikiLib
 		return $res;
 	}
 
-	function generate_featured_links_positions()
+    /**
+     * @return bool
+     */
+    function generate_featured_links_positions()
 	{
 		$query = "select `url` from `tiki_featured_links` order by `hits` desc";
 		$result = $this->query($query, array());

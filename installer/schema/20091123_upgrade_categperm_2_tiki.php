@@ -10,6 +10,9 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
   exit;
 }
 
+/**
+ * @param $installer
+ */
 function upgrade_20091123_upgrade_categperm_2_tiki($installer)
 {
 /* second pass at upgrading version 3 category perms to v4 (for 4.1)

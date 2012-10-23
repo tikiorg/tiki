@@ -8,7 +8,10 @@
 if (!defined("_ECHOSERVER_HTML_PARSER")) {
 define("_ECHOSERVER_HTML_PARSER",1);
 
-class HtmlParser {
+    /**
+     *
+     */
+    class HtmlParser {
   var $pos,
       $tagpos,
       $length,

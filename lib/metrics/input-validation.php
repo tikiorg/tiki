@@ -37,6 +37,13 @@
  * ***** END LICENSE BLOCK ***** */
 define('DEFAULT_DATE_FORMAT', "Y-m-d");
 
+/**
+ * @param $range
+ * @param string $date_from
+ * @param string $date_to
+ * @param string $date_field
+ * @return array
+ */
 function convert_date_range($range, $date_from = '', $date_to = '', $date_field = '') {
 	//will return this as an associative array
 	$ret = array();

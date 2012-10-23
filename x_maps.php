@@ -26,6 +26,24 @@ if ($tiki_p_map_view != 'y') {
 	return $objResponse;
 }
 
+/**
+ * @param $mapfile
+ * @param $corx
+ * @param $cory
+ * @param $minx
+ * @param $maxx
+ * @param $miny
+ * @param $maxy
+ * @param $xsize
+ * @param $ysize
+ * @param $layers
+ * @param $labels
+ * @param $zoom
+ * @param bool $changeleg
+ * @param int $corx2
+ * @param int $cory2
+ * @return xajaxResponse
+ */
 function map_redraw($mapfile, $corx, $cory, $minx, $maxx, $miny, $maxy,
 										$xsize, $ysize, $layers, $labels, $zoom, $changeleg = false,
 										$corx2 = 0, $cory2 = 0)

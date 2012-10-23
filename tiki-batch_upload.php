@@ -38,7 +38,10 @@ $allowed_types = array(
 	'.gif'
 ); // list of filetypes you want to show
 // recursively get all images from all subdirectories
-function getDirContent($sub) 
+/**
+ * @param $sub
+ */
+function getDirContent($sub)
 {
 	global $allowed_types;
 	global $a_img;

@@ -66,6 +66,9 @@ $AR_RANGE = array(
 		, '-' => tra('Weekly (-)')
 		);
 
+/**
+ *
+ */
 class MetricsLib extends TikiDb_Bridge
 {
 
@@ -373,7 +376,14 @@ class MetricsLib extends TikiDb_Bridge
 		return $res;
 	}
 
-	function getMetricsData( $tab_info, $range_type, $converted_range, $date_field = 'date_field' )
+    /**
+     * @param $tab_info
+     * @param $range_type
+     * @param $converted_range
+     * @param string $date_field
+     * @return array
+     */
+    function getMetricsData( $tab_info, $range_type, $converted_range, $date_field = 'date_field' )
 	{
 		global $prefs, $tikilib;
 

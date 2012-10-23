@@ -16,6 +16,10 @@ include_once('lib/wiki/wikilib.php');
 $map = array ("getSubGraph" => array( "function" => "getSubGraph" ) );
 $server = new XML_RPC_Server($map);
 
+/**
+ * @param $params
+ * @return XML_RPC_Response
+ */
 function getSubGraph($params)
 {
     global $wikilib, $dbTiki, $base_url, $prefs;

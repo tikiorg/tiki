@@ -11,6 +11,9 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
 	exit;
 }
 
+/**
+ * @return array
+ */
 function module_upcoming_events_info()
 {
 	return array(
@@ -83,6 +86,10 @@ function module_upcoming_events_info()
 	);
 }
 
+/**
+ * @param $mod_reference
+ * @param $module_params
+ */
 function module_upcoming_events($mod_reference, $module_params)
 {
 	global $calendarlib, $user, $globalperms, $smarty;

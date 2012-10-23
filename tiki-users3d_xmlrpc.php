@@ -12,6 +12,10 @@ if ($prefs['feature_xmlrpc'] != 'y' || $prefs['wiki_feature_3d'] != 'y') {
 require_once ("lib/pear/XML/Server.php");
 $map = array("getSubGraph" => array("function" => "getSubGraph"));
 $server = new XML_RPC_Server($map);
+/**
+ * @param $params
+ * @return XML_RPC_Response
+ */
 function getSubGraph($params)
 {
 	global $dbTiki, $base_url;

@@ -14,6 +14,9 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 /*!
 	\static
 */
+/**
+ *
+ */
 class Babelfish
 {
 	/*!
@@ -23,7 +26,10 @@ class Babelfish
 
 		\static
 	*/
-	function host()
+    /**
+     * @return bool|string
+     */
+    function host()
 	{
 		if (isset($_SERVER['HTTP_HOST'])) {
 			// HTTP_HOST already includes a ':port' if it is used
@@ -58,7 +64,12 @@ class Babelfish
 
 		\static
 	*/
-	function url($lang_from, $lang_to)
+    /**
+     * @param $lang_from
+     * @param $lang_to
+     * @return string
+     */
+    function url($lang_from, $lang_to)
 	{
 		$lang_from = substr($lang_from, 0, 2);
 		$lang_to = substr($lang_to, 0, 2);
@@ -95,7 +106,11 @@ class Babelfish
 
 		\static
 	*/
-	function links($lang_from = 'en')
+    /**
+     * @param string $lang_from
+     * @return array
+     */
+    function links($lang_from = 'en')
 	{
 		$lang_from = substr($lang_from, 0, 2);
 
@@ -160,7 +175,11 @@ class Babelfish
 		
 		\static
 	*/
-	function logo($lang = 'en')
+    /**
+     * @param string $lang
+     * @return string
+     */
+    function logo($lang = 'en')
 	{
  		$lang = substr($lang, 0, 2);
 

@@ -82,6 +82,10 @@ $major = (count($ver) >= 1) ? $ver[0]:'?';
 $minor = (count($ver) >= 2) ? $ver[1]: '?';
 $revision = (count($ver) >= 3) ?  $ver[2]: '?';
 
+/**
+ * @param $filename
+ * @return bool|string
+ */
 function get_content($filename)
 {
 	static $last, $content;
@@ -95,6 +99,10 @@ function get_content($filename)
 	return $content;
 }
 
+/**
+ * @param $featureNameIndex
+ * @return string
+ */
 function feature_pattern(&$featureNameIndex) // {{{
 {
 	global $major, $minor, $revision;
@@ -110,6 +118,10 @@ function feature_pattern(&$featureNameIndex) // {{{
 	}
 } // }}}
 
+/**
+ * @param $permissionNameIndex
+ * @return string
+ */
 function permission_pattern(&$permissionNameIndex) // {{{
 {
 	global $major, $minor, $revision;
@@ -117,32 +129,51 @@ function permission_pattern(&$permissionNameIndex) // {{{
 	return "/\\$(tiki_p_\w+)\s*(!=|==)=?\s*[\"'](y|n)[\"']/";
 } // }}}
 
+/**
+ * @return string
+ */
 function includeonly_pattern() // {{{
 {
 	return "/strpos\s*\(\s*\\\$_SERVER\s*\[\s*[\"']SCRIPT_NAME[\"']\s*\]\s*,\s*basename\s*\(\s*__FILE__\s*\)\s*\)\s*!==\s*(false|FALSE)/";
 } // }}}
 
+/**
+ * @return string
+ */
 function includeonly_pattern3() // {{{
 {
 	return "/basename\s*\(\s*\\\$_SERVER\s*\[\s*[\"']SCRIPT_NAME[\"']\s*\]\s*\)\s*==\s*basename\s*\(\s*__FILE__\s*\)\s*\)/";
 } // }}}
 
 
+/**
+ * @return string
+ */
 function includeonly_pattern2() // {{{
 {
 	return "/\\\$access\s*->\s*check_script\s*\(\s*\\\$_SERVER\s*\[\s*[\"']SCRIPT_NAME[\"']\s*\]\s*,\s*basename\s*\(\s*__FILE__\s*\)\s*\)/s";
 } // }}}
 
+/**
+ * @return string
+ */
 function noweb_pattern() // {{{
 {
 	return "/if\s*\(\s*isset\s*\(\s*\\\$_SERVER\[\s*[\"']REQUEST_METHOD[\"']\]\s*\)\s*\)\s*die/";
 } // }}}
 
+/**
+ * @return string
+ */
 function tikisetup_pattern() // {{{
 {
 	return "/(require(_once)?|include(_once)?)\s*\(?\s*['\"]tiki-setup.php['\"]/";
 } // }}}
 
+/**
+ * @param $folder
+ * @param $files
+ */
 function scanfiles($folder, &$files) // {{{
 {
 	global $filesHash;
@@ -171,6 +202,11 @@ function scanfiles($folder, &$files) // {{{
 } // }}}
 
 // TODO This is an inefficient function, but more flexible than in_array
+/**
+ * @param $path
+ * @param $regex_possibles
+ * @return bool
+ */
 function regex_match ($path, $regex_possibles)
 {
 	foreach ($regex_possibles as $possible) {
@@ -184,6 +220,10 @@ function regex_match ($path, $regex_possibles)
 	return false;
 }
 
+/**
+ * @param $path
+ * @return array
+ */
 function analyse_file_path($path) // {{{
 {
 	global $thirdpartyLibs, $safePaths;
@@ -252,6 +292,10 @@ function analyse_file_path($path) // {{{
 	);
 } // }}}
 
+/**
+ * @param $file
+ * @return array
+ */
 function perform_feature_check(&$file) // {{{
 {
 	global $features;
@@ -307,6 +351,9 @@ function perform_feature_check(&$file) // {{{
 	return $featuresInFile;
 } // }}}
 
+/**
+ * @param $file
+ */
 function perform_permission_check(&$file) // {{{
 {
 	$index = 0;
@@ -326,6 +373,9 @@ function perform_permission_check(&$file) // {{{
 	$file['permissions'] = $permissions;
 } // }}}
 
+/**
+ * @param $file
+ */
 function perform_includeonly_check(&$file) // {{{
 {
 	$index = 0;
@@ -342,6 +392,9 @@ function perform_includeonly_check(&$file) // {{{
 	$file['includeonly'] = count($parts[0]) > 0 || count($parts2[0]) > 0 || count($parts3[0]) > 0;
 } // }}}
 
+/**
+ * @param $file
+ */
 function perform_noweb_check(&$file) // {{{
 {
 	$index = 0;
@@ -352,6 +405,9 @@ function perform_noweb_check(&$file) // {{{
 	$file['noweb'] = count($parts[0]) > 0;
 } // }}}
 
+/**
+ * @param $file
+ */
 function perform_tikisetup_check(&$file) // {{{
 {
 	$index = 0;
@@ -363,6 +419,9 @@ function perform_tikisetup_check(&$file) // {{{
 	$file['tikisetup'] = count($parts[0]) > 0;
 } // }}}
 
+/**
+ * @param $file
+ */
 function perform_extract_skip_check(&$file) // {{{
 {
 	$pattern = "/extract\s*\([^\)]+\)/";
@@ -377,6 +436,11 @@ function perform_extract_skip_check(&$file) // {{{
 
 } // }}}
 
+/**
+ * @param $file
+ * @param $type
+ * @return array
+ */
 function access_check_call($file, $type) // {{{
 {
 	$content = get_content($file);
@@ -398,6 +462,11 @@ function access_check_call($file, $type) // {{{
 	return $checks;
 } // }}}
 
+/**
+ * @param $tokens
+ * @param $from
+ * @return array
+ */
 function access_checks($tokens, $from) // {{{
 {
 	$end = count($tokens);
@@ -419,6 +488,10 @@ function access_checks($tokens, $from) // {{{
 	return $features;
 } // }}}
 
+/**
+ * @param $file
+ * @return array
+ */
 function permission_check_accessors($file) // {{{
 {
 	$tokens = token_get_all(get_content($file));
@@ -435,6 +508,11 @@ function permission_check_accessors($file) // {{{
 	return $perms;
 } // }}}
 
+/**
+ * @param $tokens
+ * @param $from
+ * @return array
+ */
 function tokenizer_get_subset($tokens, $from) // {{{
 {
 	$out = array();
@@ -461,6 +539,10 @@ function tokenizer_get_subset($tokens, $from) // {{{
 	return $out;
 } // }}}
 
+/**
+ * @param $tokens
+ * @return array
+ */
 function permission_check_condition($tokens) // {{{
 {
 	$permissions = array();
@@ -532,6 +614,11 @@ foreach ($files as $key => $dummy) {
 	}
 }
 
+/**
+ * @param $a
+ * @param $b
+ * @return int
+ */
 function sort_cb($a, $b)
 {
 	return strcmp($a['path'], $b['path']);

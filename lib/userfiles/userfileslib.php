@@ -11,10 +11,17 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
   exit;
 }
 
+/**
+ *
+ */
 class UserFilesLib extends TikiLib
 {
 
-	function userfiles_quota($user) 
+    /**
+     * @param $user
+     * @return int
+     */
+    function userfiles_quota($user)
 	{
 		if ($user == 'admin') {
 			return 0;
@@ -25,14 +32,31 @@ class UserFilesLib extends TikiLib
 		return $part1 + $part2;
 	}
 
-	function upload_userfile($user, $name, $filename, $filetype, $filesize, $data, $path) 
+    /**
+     * @param $user
+     * @param $name
+     * @param $filename
+     * @param $filetype
+     * @param $filesize
+     * @param $data
+     * @param $path
+     */
+    function upload_userfile($user, $name, $filename, $filetype, $filesize, $data, $path)
 	{
 		$query = "insert into `tiki_userfiles`(`user`,`name`,`filename`,`filetype`,`filesize`,`data`,`created`,`hits`,`path`)
     values(?,?,?,?,?,?,?,?,?)";
 		$this->query($query, array($user,$name,$filename,$filetype,(int) $filesize,$data,(int) $this->now,0,$path));
 	}
 
-	function list_userfiles($user, $offset, $maxRecords, $sort_mode, $find) 
+    /**
+     * @param $user
+     * @param $offset
+     * @param $maxRecords
+     * @param $sort_mode
+     * @param $find
+     * @return array
+     */
+    function list_userfiles($user, $offset, $maxRecords, $sort_mode, $find)
 	{
 
 		if ($find) {
@@ -61,7 +85,12 @@ class UserFilesLib extends TikiLib
 		return $retval;
 	}
 
-	function get_userfile($user, $fileId) 
+    /**
+     * @param $user
+     * @param $fileId
+     * @return mixed
+     */
+    function get_userfile($user, $fileId)
 	{
 		$query = "select * from `tiki_userfiles` where `user`=? and `fileId`=?";
 
@@ -70,7 +99,11 @@ class UserFilesLib extends TikiLib
 		return $res;
 	}
 
-	function remove_userfile($user, $fileId) 
+    /**
+     * @param $user
+     * @param $fileId
+     */
+    function remove_userfile($user, $fileId)
 	{
 		global $prefs;
 

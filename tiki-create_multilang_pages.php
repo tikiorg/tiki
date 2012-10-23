@@ -41,6 +41,11 @@ function create_pages_if_necessary()
 	make_pages_translations_of_each_other($inexistant_page);
 }
 
+/**
+ * @param $page_name
+ * @param $lang
+ * @param null $template_name
+ */
 function create_page($page_name, $lang, $template_name=null)
 {
 	global $tikilib, $multilinguallib, $user;
@@ -54,6 +59,9 @@ function create_page($page_name, $lang, $template_name=null)
 	$tikilib->create_page($page_name, 0, $content, null, '', null, $user, '', $lang);
 }
 
+/**
+ * @param $pages
+ */
 function make_pages_translations_of_each_other($pages)
 {
 	global $tikilib, $multilinguallib;
@@ -71,6 +79,9 @@ function make_pages_translations_of_each_other($pages)
 	}
 }
 
+/**
+ * @return array
+ */
 function compute_relevant_languages()
 {
 	global $multilinguallib, $smarty, $_REQUEST, $prefs;
@@ -93,6 +104,9 @@ function compute_relevant_languages()
 	return $result;
 }
 
+/**
+ * @return array
+ */
 function get_pages_to_create()
 {
 	global $_REQUEST;
@@ -109,6 +123,10 @@ function get_pages_to_create()
 	return $pages_to_create;
 }
 
+/**
+ * @param $pages_to_create
+ * @return array
+ */
 function check_for_existence_of_pages($pages_to_create)
 {
 	global $tikilib, $semanticlib;
@@ -136,6 +154,9 @@ function check_for_existence_of_pages($pages_to_create)
 	return array($non_existant_pages, $existing_pages);
 }
 
+/**
+ * @param $page_names
+ */
 function set_smarty_page_links($page_names)
 {
 	global $wikilib, $smarty;
@@ -159,6 +180,10 @@ function display()
 	$smarty->display('tiki.tpl');
 }
 
+/**
+ * @param $lang_ids_with_country_code
+ * @return array
+ */
 function strip_country_code_from_lang_ids($lang_ids_with_country_code)
 {
 	$lang_ids = array();

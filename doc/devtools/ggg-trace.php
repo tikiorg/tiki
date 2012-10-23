@@ -25,11 +25,17 @@
 // YOUR PHP!
 //
 
+/**
+ *
+ */
 class ggg_trace
 {
 	var $fp;
 
-	function ggg_trace($nameStr = 'ggg-trace.out')
+    /**
+     * @param string $nameStr
+     */
+    function ggg_trace($nameStr = 'ggg-trace.out')
 	{
 		register_shutdown_function(array(&$this, '_ggg_trace')); // the & is important
 		$this->fp = fopen($nameStr, 'a');
@@ -40,17 +46,27 @@ class ggg_trace
 		// print date("Ymd G:i:s<br>",time()); // e.g. 20031231 17:00:20
 	}
 
-	function out($outStr = '')
+    /**
+     * @param string $outStr
+     */
+    function out($outStr = '')
 	{
 		fwrite($this->fp, "$outStr");
 	}
 
-	function outln($outStr = '')
+    /**
+     * @param string $outStr
+     */
+    function outln($outStr = '')
 	{
 		fwrite($this->fp, "$outStr\n");
 	}
 
-	function outvar($var, $indent = 0)
+    /**
+     * @param $var
+     * @param int $indent
+     */
+    function outvar($var, $indent = 0)
 	{
 		if ($indent > 8) {
 			fwrite($this->fp, "Too many levels of recursion! \n");

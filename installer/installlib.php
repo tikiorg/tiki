@@ -15,6 +15,9 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 require_once 'lib/setup/twversion.class.php';
 require_once('lib/core/TikiDb/Bridge.php');
 
+/**
+ *
+ */
 class Installer extends TikiDb_Bridge
 {
 	var $patches = array();
@@ -28,7 +31,10 @@ class Installer extends TikiDb_Bridge
 	
 	var $useInnoDB = false;
 
-	function __construct() // {{{
+    /**
+     *
+     */
+    function __construct() // {{{
 	{
 		$this->buildPatchList();
 		$this->buildScriptList();
@@ -94,7 +100,10 @@ class Installer extends TikiDb_Bridge
 			$this->runScript($script);
 	} // }}}
 
-	function installPatch( $patch ) // {{{
+    /**
+     * @param $patch
+     */
+    function installPatch( $patch ) // {{{
 	{
 		if ( ! in_array($patch, $this->patches) )
 			return;
@@ -128,7 +137,10 @@ class Installer extends TikiDb_Bridge
 		}
 	} // }}}
 
-	function runScript( $script ) // {{{
+    /**
+     * @param $script
+     */
+    function runScript( $script ) // {{{
 	{
 		$file = dirname(__FILE__) . "/script/$script.php";
 
@@ -142,13 +154,20 @@ class Installer extends TikiDb_Bridge
 		$this->executed[] = $script;
 	} // }}}
 
-	function recordPatch( $patch ) // {{{
+    /**
+     * @param $patch
+     */
+    function recordPatch( $patch ) // {{{
 	{
 		$this->query("INSERT INTO tiki_schema (patch_name, install_date) VALUES(?, NOW())", array($patch));
 		$this->patches = array_diff($this->patches, array($patch));
 	} // }}}
 
-	function runFile( $file ) // {{{
+    /**
+     * @param $file
+     * @return bool
+     */
+    function runFile( $file ) // {{{
 	{
 		if ( !is_file($file) || !$command = file_get_contents($file) ) {
 			print('Fatal: Cannot open '.$file);
@@ -177,7 +196,16 @@ class Installer extends TikiDb_Bridge
 		return $status;
 	} // }}}
 
-	function query( $query = null, $values = array(), $numrows = -1, $offset = -1, $reporterrors = true, $patch ='' ) // {{{
+    /**
+     * @param null $query
+     * @param array $values
+     * @param $numrows
+     * @param $offset
+     * @param bool $reporterrors
+     * @param string $patch
+     * @return bool
+     */
+    function query( $query = null, $values = array(), $numrows = -1, $offset = -1, $reporterrors = true, $patch ='' ) // {{{
 	{
 		$error = '';
 		$result = $this->queryError($query, $error, $values);
@@ -245,7 +273,11 @@ class Installer extends TikiDb_Bridge
 		}
 	} // }}}
 
-	function tableExists( $tableName ) // {{{
+    /**
+     * @param $tableName
+     * @return bool
+     */
+    function tableExists( $tableName ) // {{{
 	{
 		$result = $this->query("show tables");
 		$list = array();
@@ -255,7 +287,10 @@ class Installer extends TikiDb_Bridge
 		return in_array($tableName, $list);
 	} // }}}
 
-	function requiresUpdate() // {{{
+    /**
+     * @return bool
+     */
+    function requiresUpdate() // {{{
 	{
 		return count($this->patches) > 0 ;
 	} // }}}

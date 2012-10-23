@@ -30,6 +30,9 @@ require_once 'tiki-setup.php';
 $debug = false;
 $debug_file= '/tmp/tiki4log';
 
+/**
+ * @param $string
+ */
 function print_debug($string)
 {
 	global $debug, $debug_file;
@@ -42,6 +45,13 @@ function print_debug($string)
 	}
 }
 
+/**
+ * @param $errno
+ * @param $errmsg
+ * @param $filename
+ * @param $linenum
+ * @param $vars
+ */
 function error_handler($errno, $errmsg, $filename, $linenum, $vars)
 {
 	print_debug("\n=== ERROR ===\n");

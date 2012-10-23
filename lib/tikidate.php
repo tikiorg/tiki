@@ -99,7 +99,10 @@ class TikiDate
 		$this->replace = array_values($this->translation_array);
 	}
 
-	static function getTimeZoneList()
+    /**
+     * @return array
+     */
+    static function getTimeZoneList()
 	{
 		$tz = array();
 		$now = new DateTime('now', new DateTimeZone('GMT'));
@@ -114,7 +117,12 @@ class TikiDate
 		return $tz;
 	}
 
-	function format($format, $is_strftime_format = true)
+    /**
+     * @param $format
+     * @param bool $is_strftime_format
+     * @return string
+     */
+    function format($format, $is_strftime_format = true)
 	{
 		global $prefs;
 
@@ -151,7 +159,10 @@ class TikiDate
 		return $return;
 	}
 
-	function addDays($days)
+    /**
+     * @param $days
+     */
+    function addDays($days)
 	{
 		if ($days >= 0)
 			$this->date->modify("+$days day");
@@ -159,7 +170,10 @@ class TikiDate
 			$this->date->modify("$days day");
 	}
 
-	function addMonths($months)
+    /**
+     * @param $months
+     */
+    function addMonths($months)
 	{
 		if ($months >= 0)
 			$this->date->modify("+$months months");
@@ -167,17 +181,26 @@ class TikiDate
 			$this->date->modify("$months months");
 	}
 
-	function getTime()
+    /**
+     * @return int
+     */
+    function getTime()
 	{
 		return (int)$this->date->format('U');
 	}
 
-	function getWeekOfYear()
+    /**
+     * @return int
+     */
+    function getWeekOfYear()
 	{
 		return (int)$this->date->format('W');
 	}
 
-	function setDate($date)
+    /**
+     * @param $date
+     */
+    function setDate($date)
 	{
 		if (is_numeric($date)) {
 			$this->date = new DateTime(date('Y-m-d H:i:s', $date));
@@ -186,13 +209,25 @@ class TikiDate
 		}
 	}
 
-	function setLocalTime($day, $month, $year, $hour, $minute, $second, $partsecond )
+    /**
+     * @param $day
+     * @param $month
+     * @param $year
+     * @param $hour
+     * @param $minute
+     * @param $second
+     * @param $partsecond
+     */
+    function setLocalTime($day, $month, $year, $hour, $minute, $second, $partsecond )
 	{
 		$this->date->setDate($year, $month, $day);
 		$this->date->setTime($hour, $minute, $second);
 	}
 
-	function setTZbyID($tz_id)
+    /**
+     * @param $tz_id
+     */
+    function setTZbyID($tz_id)
 	{
 		$dtz = null;
 		while (!$dtz) {
@@ -205,7 +240,11 @@ class TikiDate
 		$this->date->setTimezone($dtz);
 	}
 
-	function convertMissingTimezone($tz_id)
+    /**
+     * @param $tz_id
+     * @return string
+     */
+    function convertMissingTimezone($tz_id)
 	{
 		switch ($tz_id) {		// Convert timezones not in PHP 5
 			case 'A':
@@ -289,7 +328,10 @@ class TikiDate
 		return $tz_id;
 	}
 
-	function getTimezoneId()
+    /**
+     * @return string
+     */
+    function getTimezoneId()
 	{
 		$tz = $this->date->format('e');
 		if ($tz === 'GMT') {
@@ -316,10 +358,18 @@ class TikiDate
 	}
 }
 
+/**
+ *
+ */
 class Date_Calc
 {
 
-	static public function daysInMonth($month,$year)
+    /**
+     * @param $month
+     * @param $year
+     * @return int
+     */
+    static public function daysInMonth($month,$year)
 	{
 		return cal_days_in_month(CAL_GREGORIAN, $month, $year);
 	}

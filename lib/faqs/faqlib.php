@@ -14,9 +14,19 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 /* Task properties:
    user, taskId, title, description, date, status, priority, completed, percentage
 */
+/**
+ *
+ */
 class FaqLib extends TikiLib
 {
-	function list_faqs($offset, $maxRecords, $sort_mode, $find)
+    /**
+     * @param $offset
+     * @param $maxRecords
+     * @param $sort_mode
+     * @param $find
+     * @return mixed
+     */
+    function list_faqs($offset, $maxRecords, $sort_mode, $find)
 	{
 		$mid = '';
 		if ( $find ) {
@@ -58,7 +68,11 @@ class FaqLib extends TikiLib
 		return $retval;
 	}
 
-	function get_faq($faqId)
+    /**
+     * @param $faqId
+     * @return bool
+     */
+    function get_faq($faqId)
 	{
 		$query = "select * from `tiki_faqs` where `faqId`=?";
 		$result = $this->query($query, array((int)$faqId));
@@ -66,8 +80,14 @@ class FaqLib extends TikiLib
 		$res = $result->fetchRow();
 		return $res;
 	}
-	
-	function add_suggested_faq_question($faqId, $question, $answer, $user)
+
+    /**
+     * @param $faqId
+     * @param $question
+     * @param $answer
+     * @param $user
+     */
+    function add_suggested_faq_question($faqId, $question, $answer, $user)
 	{
 		$question = strip_tags($question, '<a>');
 
@@ -77,7 +97,15 @@ class FaqLib extends TikiLib
 		$result = $this->query($query, array($faqId, $question, $answer, ($user===null) ? '' : $user, $this->now));
 	}
 
-	function list_suggested_questions($offset, $maxRecords, $sort_mode, $find, $faqId)
+    /**
+     * @param $offset
+     * @param $maxRecords
+     * @param $sort_mode
+     * @param $find
+     * @param $faqId
+     * @return array
+     */
+    function list_suggested_questions($offset, $maxRecords, $sort_mode, $find, $faqId)
 	{
 		$bindvars=array();
 		if ($find || $faqId) {
@@ -115,7 +143,14 @@ class FaqLib extends TikiLib
 		return $retval;
 	}
 
-	function list_all_faq_questions($offset, $maxRecords, $sort_mode, $find)
+    /**
+     * @param $offset
+     * @param $maxRecords
+     * @param $sort_mode
+     * @param $find
+     * @return array
+     */
+    function list_all_faq_questions($offset, $maxRecords, $sort_mode, $find)
 	{
 
 		$bindvars=array();
@@ -145,7 +180,11 @@ class FaqLib extends TikiLib
 		return $retval;
 	}
 
-	function remove_faq($faqId)
+    /**
+     * @param $faqId
+     * @return bool
+     */
+    function remove_faq($faqId)
 	{
 		$query = "delete from `tiki_faqs` where `faqId`=?";
 
@@ -157,14 +196,22 @@ class FaqLib extends TikiLib
 		return true;
 	}
 
-	function remove_faq_question($questionId)
+    /**
+     * @param $questionId
+     * @return bool
+     */
+    function remove_faq_question($questionId)
 	{
 		$faqId = $this->getOne('select `faqId` from `tiki_faq_questions` where `questionId`=?', array($questionId));
 		$result = $this->query('delete from `tiki_faq_questions` where `questionId`=?', array($questionId));
 		return true;
 	}
 
-	function get_faq_question($questionId)
+    /**
+     * @param $questionId
+     * @return bool
+     */
+    function get_faq_question($questionId)
 	{
 		$query = "select * from `tiki_faq_questions` where `questionId`=?";
 
@@ -177,7 +224,10 @@ class FaqLib extends TikiLib
 		return $res;
 	}
 
-	function add_faq_hit($faqId)
+    /**
+     * @param $faqId
+     */
+    function add_faq_hit($faqId)
 	{
 		global $prefs, $user;
 
@@ -188,7 +238,14 @@ class FaqLib extends TikiLib
 		}
 	}
 
-	function replace_faq_question($faqId, $questionId, $question, $answer)
+    /**
+     * @param $faqId
+     * @param $questionId
+     * @param $question
+     * @param $answer
+     * @return bool
+     */
+    function replace_faq_question($faqId, $questionId, $question, $answer)
 	{
 		// Check the name
 		if ( $questionId ) {
@@ -209,7 +266,14 @@ class FaqLib extends TikiLib
 		return true;
 	}
 
-	function replace_faq($faqId, $title, $description, $canSuggest)
+    /**
+     * @param $faqId
+     * @param $title
+     * @param $description
+     * @param $canSuggest
+     * @return mixed
+     */
+    function replace_faq($faqId, $title, $description, $canSuggest)
 	{
 		// Check the name
 		if ( $faqId ) {
@@ -229,7 +293,15 @@ class FaqLib extends TikiLib
 		return $faqId;
 	}
 
-	function list_faq_questions($faqId=0, $offset=0, $maxRecords=-1, $sort_mode='question_asc', $find='')
+    /**
+     * @param int $faqId
+     * @param int $offset
+     * @param $maxRecords
+     * @param string $sort_mode
+     * @param string $find
+     * @return array
+     */
+    function list_faq_questions($faqId=0, $offset=0, $maxRecords=-1, $sort_mode='question_asc', $find='')
 	{
 		if (!empty($faqId)) {
 			$mid = ' where `faqId`=? ';
@@ -263,14 +335,20 @@ class FaqLib extends TikiLib
 		return $retval;
 	}
 
-	function remove_suggested_question($sfqId)
+    /**
+     * @param $sfqId
+     */
+    function remove_suggested_question($sfqId)
 	{
 		$query = "delete from `tiki_suggested_faq_questions` where `sfqId`=?";
 
 		$result = $this->query($query, array((int) $sfqId));
 	}
 
-	function approve_suggested_question($sfqId)
+    /**
+     * @param $sfqId
+     */
+    function approve_suggested_question($sfqId)
 	{
 		$info = $this->get_suggested_question($sfqId);
 
@@ -278,7 +356,11 @@ class FaqLib extends TikiLib
 		$this->remove_suggested_question($sfqId);
 	}
 
-	function get_suggested_question($sfqId)
+    /**
+     * @param $sfqId
+     * @return bool
+     */
+    function get_suggested_question($sfqId)
 	{
 		$query = "select * from `tiki_suggested_faq_questions` where `sfqId`=?";
 		$result = $this->query($query, array($sfqId));

@@ -11,6 +11,9 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
 }
 
 
+/**
+ * @return array
+ */
 function module_map_edit_features_info()
 {
 	return array(
@@ -35,22 +38,14 @@ function module_map_edit_features_info()
 				'filter' => 'int',
 				'default' => 1,
 			),
-			'insertmode' => array(
-				'name' => tr('Mode change on insert'),
-				'description' => tr('Target mode to enter after successfully inserting an item'),
-				'filter' => 'text',
-				'default' => '',
-			),
-			'editdetail' => array(
-				'name' => tr('Edit details'),
-				'description' => tr("Edit the tracker item's details through a dialog after the initial item creation."),
-				'filter' => 'int',
-				'default' => 0,
-			),
 		),
 	);
 }
 
+/**
+ * @param $mod_reference
+ * @param $module_params
+ */
 function module_map_edit_features($mod_reference, $module_params)
 {
 	$targetField = null;
@@ -82,8 +77,6 @@ function module_map_edit_features($mod_reference, $module_params)
 			'field' => $targetField,
 			'hiddenInput' => $hidden,
 			'standardControls' => isset($module_params['standard']) ? intval($module_params['standard']) : 1,
-			'editDetails' => isset($module_params['editdetail']) ? intval($module_params['editdetail']) : 0,
-			'insertMode' => isset($module_params['insertmode']) ? $module_params['insertmode'] : '',
 		)
 	);
 }

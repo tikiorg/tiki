@@ -11,9 +11,16 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 	exit;
 }
 
+/**
+ *
+ */
 class QuizLib extends TikiLib
 {
-	public function get_quiz($quizId)
+    /**
+     * @param $quizId
+     * @return bool
+     */
+    public function get_quiz($quizId)
 	{
 		$query = "select * from `tiki_quizzes` where `quizId`=?";
 
@@ -59,7 +66,14 @@ class QuizLib extends TikiLib
 		}
 	}
 
-	public function list_quizzes($offset, $maxRecords, $sort_mode = 'name_desc', $find = null)
+    /**
+     * @param $offset
+     * @param $maxRecords
+     * @param string $sort_mode
+     * @param null $find
+     * @return array
+     */
+    public function list_quizzes($offset, $maxRecords, $sort_mode = 'name_desc', $find = null)
 	{
 
 		$quizzes = $this->table('tiki_quizzes');
@@ -109,7 +123,11 @@ class QuizLib extends TikiLib
 		);
 	}
 
-	public function get_user_quiz_result($userResultId)
+    /**
+     * @param $userResultId
+     * @return bool
+     */
+    public function get_user_quiz_result($userResultId)
 	{
 		$query = "select * from `tiki_user_quizzes` where `userResultId`=?";
 
@@ -123,7 +141,15 @@ class QuizLib extends TikiLib
 		return $res;
 	}
 
-	public function list_quiz_question_stats($quizId, $offset = 0, $maxRecords = -1, $sort_mode = 'position_asc', $find = '')
+    /**
+     * @param $quizId
+     * @param int $offset
+     * @param $maxRecords
+     * @param string $sort_mode
+     * @param string $find
+     * @return array
+     */
+    public function list_quiz_question_stats($quizId, $offset = 0, $maxRecords = -1, $sort_mode = 'position_asc', $find = '')
 	{
 
 		$query = "select distinct(tqs.`questionId`)"
@@ -166,7 +192,10 @@ class QuizLib extends TikiLib
 		return $ret;
 	}
 
-	public function download_answer($answerUploadId)
+    /**
+     * @param $answerUploadId
+     */
+    public function download_answer($answerUploadId)
 	{
 
 		$query = "SELECT `filecontent`, `filetype`, `filename`, `filesize` FROM `tiki_user_answers_uploads` WHERE `answerUploadId`=?";
@@ -192,7 +221,11 @@ class QuizLib extends TikiLib
 	}
 
 
-	public function get_user_quiz_questions($userResultId)
+    /**
+     * @param $userResultId
+     * @return array
+     */
+    public function get_user_quiz_questions($userResultId)
 	{
 		$query = "select distinct(tqs.`questionId`) from `tiki_user_answers` tqs,`tiki_quiz_questions` tqq"
 						. " where tqs.`questionId`=tqq.`questionId` and tqs.`userResultId` = ? order by `position` desc";
@@ -241,7 +274,10 @@ class QuizLib extends TikiLib
 		return $ret;
 	}
 
-	public function remove_quiz_stat($userResultId)
+    /**
+     * @param $userResultId
+     */
+    public function remove_quiz_stat($userResultId)
 	{
 		$query = "select `quizId`,`user` from `tiki_user_quizzes` where `userResultId`=?";
 		$bindvars=array((int) $userResultId);
@@ -260,7 +296,10 @@ class QuizLib extends TikiLib
 		$result = $this->query($query, $bindvars);
 	}
 
-	public function clear_quiz_stats($quizId)
+    /**
+     * @param $quizId
+     */
+    public function clear_quiz_stats($quizId)
 	{
 		$query = "delete from `tiki_user_taken_quizzes` where `quizId`=?";
 		$bindvars=array((int) $quizId);
@@ -280,7 +319,15 @@ class QuizLib extends TikiLib
 		$result = $this->query($query, $bindvars);
 	}
 
-	public function list_quiz_stats($quizId, $offset, $maxRecords, $sort_mode, $find)
+    /**
+     * @param $quizId
+     * @param $offset
+     * @param $maxRecords
+     * @param $sort_mode
+     * @param $find
+     * @return array
+     */
+    public function list_quiz_stats($quizId, $offset, $maxRecords, $sort_mode, $find)
 	{
 		$this->compute_quiz_stats();
 
@@ -326,7 +373,14 @@ class QuizLib extends TikiLib
 		return $retval;
 	}
 
-	public function list_quiz_sum_stats($offset, $maxRecords, $sort_mode, $find)
+    /**
+     * @param $offset
+     * @param $maxRecords
+     * @param $sort_mode
+     * @param $find
+     * @return array
+     */
+    public function list_quiz_sum_stats($offset, $maxRecords, $sort_mode, $find)
 	{
 		$this->compute_quiz_stats();
 
@@ -346,7 +400,15 @@ class QuizLib extends TikiLib
 
 
 	// Takes a given uploaded answer and inserts it into the DB. - burley
-	public function register_user_quiz_answer_upload($userResultId, $questionId, $filename, $filetype, $filesize,$tmp_name)
+    /**
+     * @param $userResultId
+     * @param $questionId
+     * @param $filename
+     * @param $filetype
+     * @param $filesize
+     * @param $tmp_name
+     */
+    public function register_user_quiz_answer_upload($userResultId, $questionId, $filename, $filetype, $filesize,$tmp_name)
 	{
 
 		$data = fread(fopen($tmp_name, "r"), filesize($tmp_name));
@@ -358,13 +420,28 @@ class QuizLib extends TikiLib
 	}
 
 
-	public function register_user_quiz_answer($userResultId, $quizId, $questionId, $optionId)
+    /**
+     * @param $userResultId
+     * @param $quizId
+     * @param $questionId
+     * @param $optionId
+     */
+    public function register_user_quiz_answer($userResultId, $quizId, $questionId, $optionId)
 	{
 		$query = "insert into `tiki_user_answers`(`userResultId`,`quizId`,`questionId`,`optionId`) values(?,?,?,?)";
 		$result = $this->query($query, array((int) $userResultId, (int) $quizId, (int) $questionId, (int) $optionId));
 	}
 
-	public function register_quiz_stats($quizId, $user, $timeTaken, $points, $maxPoints, $resultId)
+    /**
+     * @param $quizId
+     * @param $user
+     * @param $timeTaken
+     * @param $points
+     * @param $maxPoints
+     * @param $resultId
+     * @return mixed
+     */
+    public function register_quiz_stats($quizId, $user, $timeTaken, $points, $maxPoints, $resultId)
 	{
 		// Fix a bug if no result is indicated.
 		if (!$resultId) {
@@ -391,7 +468,13 @@ class QuizLib extends TikiLib
 		return $queryId;
 	}
 
-	public function register_quiz_answer($quizId, $questionId, $optionId)
+    /**
+     * @param $quizId
+     * @param $questionId
+     * @param $optionId
+     * @return bool
+     */
+    public function register_quiz_answer($quizId, $questionId, $optionId)
 	{
 		$cant = $this->getOne(
 			"select count(*) from `tiki_quiz_stats` where `quizId`=? and `questionId`=? and `optionId`=?",
@@ -411,7 +494,12 @@ class QuizLib extends TikiLib
 		return true;
 	}
 
-	public function calculate_quiz_result($quizId, $points)
+    /**
+     * @param $quizId
+     * @param $points
+     * @return int
+     */
+    public function calculate_quiz_result($quizId, $points)
 	{
 		$query = "select * from `tiki_quiz_results` where `fromPoints`<=? and `toPoints`>=? and `quizId`=?";
 
@@ -425,14 +513,23 @@ class QuizLib extends TikiLib
 		return $res;
 	}
 
-	public function user_has_taken_quiz($user, $quizId)
+    /**
+     * @param $user
+     * @param $quizId
+     * @return mixed
+     */
+    public function user_has_taken_quiz($user, $quizId)
 	{
 		$cant = $this->getOne("select count(*) from `tiki_user_taken_quizzes` where `user`=? and `quizId`=?", array($user, (int) $quizId));
 
 		return $cant;
 	}
 
-	public function user_takes_quiz($user, $quizId)
+    /**
+     * @param $user
+     * @param $quizId
+     */
+    public function user_takes_quiz($user, $quizId)
 	{
 		$query = "delete from `tiki_user_taken_quizzes` where `user`=? and `quizId`=?";
 		$bindvars=array($user,(int) $quizId);
@@ -441,7 +538,15 @@ class QuizLib extends TikiLib
 		$result = $this->query($query, $bindvars);
 	}
 
-	public function replace_quiz_result($resultId, $quizId, $fromPoints, $toPoints, $answer)
+    /**
+     * @param $resultId
+     * @param $quizId
+     * @param $fromPoints
+     * @param $toPoints
+     * @param $answer
+     * @return mixed
+     */
+    public function replace_quiz_result($resultId, $quizId, $fromPoints, $toPoints, $answer)
 	{
 		if ($resultId) {
 			// update an existing quiz
@@ -461,7 +566,11 @@ class QuizLib extends TikiLib
 		return $quizId;
 	}
 
-	public function get_quiz_result($resultId)
+    /**
+     * @param $resultId
+     * @return bool
+     */
+    public function get_quiz_result($resultId)
 	{
 		$query = "select * from `tiki_quiz_results` where `resultId`=?";
 
@@ -475,7 +584,11 @@ class QuizLib extends TikiLib
 		return $res;
 	}
 
-	public function remove_quiz_result($resultId)
+    /**
+     * @param $resultId
+     * @return bool
+     */
+    public function remove_quiz_result($resultId)
 	{
 		$query = "delete from `tiki_quiz_results` where `resultId`=?";
 
@@ -483,7 +596,15 @@ class QuizLib extends TikiLib
 		return true;
 	}
 
-	public function list_quiz_results($quizId, $offset, $maxRecords, $sort_mode, $find)
+    /**
+     * @param $quizId
+     * @param $offset
+     * @param $maxRecords
+     * @param $sort_mode
+     * @param $find
+     * @return array
+     */
+    public function list_quiz_results($quizId, $offset, $maxRecords, $sort_mode, $find)
 	{
 
 		if ($find) {
@@ -513,7 +634,25 @@ class QuizLib extends TikiLib
 	}
 
 	// called by tiki-edit_quiz.php
-	public function replace_quiz($quizId, $name, $description, $canRepeat, $storeResults
+    /**
+     * @param $quizId
+     * @param $name
+     * @param $description
+     * @param $canRepeat
+     * @param $storeResults
+     * @param $immediateFeedback
+     * @param $showAnswers
+     * @param $shuffleQuestions
+     * @param $shuffleAnswers
+     * @param $questionsPerPage
+     * @param $timeLimited
+     * @param $timeLimit
+     * @param $publishDate
+     * @param $expireDate
+     * @param $passingperct
+     * @return mixed
+     */
+    public function replace_quiz($quizId, $name, $description, $canRepeat, $storeResults
 			, $immediateFeedback, $showAnswers,	$shuffleQuestions, $shuffleAnswers
 			, $questionsPerPage, $timeLimited, $timeLimit, $publishDate, $expireDate
 			, $passingperct
@@ -577,7 +716,15 @@ class QuizLib extends TikiLib
 		return $quizId;
 	}
 
-	public function replace_quiz_question($questionId, $question, $type, $quizId, $position)
+    /**
+     * @param $questionId
+     * @param $question
+     * @param $type
+     * @param $quizId
+     * @param $position
+     * @return mixed
+     */
+    public function replace_quiz_question($questionId, $question, $type, $quizId, $position)
 	{
 		if ($questionId) {
 			// update an existing quiz
@@ -596,7 +743,14 @@ class QuizLib extends TikiLib
 		return $questionId;
 	}
 
-	public function replace_question_option($optionId, $option, $points, $questionId)
+    /**
+     * @param $optionId
+     * @param $option
+     * @param $points
+     * @param $questionId
+     * @return mixed
+     */
+    public function replace_question_option($optionId, $option, $points, $questionId)
 	{
 
 		// validating the points value
@@ -617,7 +771,11 @@ class QuizLib extends TikiLib
 		return $optionId;
 	}
 
-	public function get_quiz_question($questionId)
+    /**
+     * @param $questionId
+     * @return bool
+     */
+    public function get_quiz_question($questionId)
 	{
 		$query = "select * from `tiki_quiz_questions` where `questionId`=?";
 		$result = $this->query($query, array((int) $questionId));
@@ -628,7 +786,11 @@ class QuizLib extends TikiLib
 		return $res;
 	}
 
-	public function get_quiz_question_option($optionId)
+    /**
+     * @param $optionId
+     * @return bool
+     */
+    public function get_quiz_question_option($optionId)
 	{
 		$query = "select * from `tiki_quiz_question_options` where `optionId`=?";
 		$result = $this->query($query, array((int) $optionId));
@@ -639,7 +801,15 @@ class QuizLib extends TikiLib
 		return $res;
 	}
 
-	public function list_quiz_questions($quizId, $offset, $maxRecords, $sort_mode, $find)
+    /**
+     * @param $quizId
+     * @param $offset
+     * @param $maxRecords
+     * @param $sort_mode
+     * @param $find
+     * @return array
+     */
+    public function list_quiz_questions($quizId, $offset, $maxRecords, $sort_mode, $find)
 	{
 		if ($find) {
 			$findesc = '%' . $find . '%';
@@ -668,7 +838,14 @@ class QuizLib extends TikiLib
 		return $retval;
 	}
 
-	public function list_all_questions($offset, $maxRecords, $sort_mode="position_desc", $find)
+    /**
+     * @param $offset
+     * @param $maxRecords
+     * @param string $sort_mode
+     * @param $find
+     * @return array
+     */
+    public function list_all_questions($offset, $maxRecords, $sort_mode="position_desc", $find)
 	{
 		if ($find) {
 			$findesc = '%' . $find . '%';
@@ -699,7 +876,15 @@ class QuizLib extends TikiLib
 		return $retval;
 	}
 
-	public function list_quiz_question_options($questionId, $offset, $maxRecords, $sort_mode, $find)
+    /**
+     * @param $questionId
+     * @param $offset
+     * @param $maxRecords
+     * @param $sort_mode
+     * @param $find
+     * @return array
+     */
+    public function list_quiz_question_options($questionId, $offset, $maxRecords, $sort_mode, $find)
 	{
 		if ($find) {
 			$findesc = '%' . $find . '%';
@@ -727,7 +912,11 @@ class QuizLib extends TikiLib
 		return $retval;
 	}
 
-	public function remove_quiz_question($questionId)
+    /**
+     * @param $questionId
+     * @return bool
+     */
+    public function remove_quiz_question($questionId)
 	{
 		$query = "delete from `tiki_quiz_questions` where `questionId`=?";
 
@@ -738,7 +927,11 @@ class QuizLib extends TikiLib
 		return true;
 	}
 
-	public function remove_quiz_question_option($optionId)
+    /**
+     * @param $optionId
+     * @return bool
+     */
+    public function remove_quiz_question_option($optionId)
 	{
 		$query = "delete from `tiki_quiz_question_options` where `optionId`=?";
 
@@ -746,7 +939,11 @@ class QuizLib extends TikiLib
 		return true;
 	}
 
-	public function remove_quiz($quizId)
+    /**
+     * @param $quizId
+     * @return bool
+     */
+    public function remove_quiz($quizId)
 	{
 		$query = "delete from `tiki_quizzes` where `quizId`=?";
 
@@ -777,7 +974,11 @@ class QuizLib extends TikiLib
 		return true;
 	}
 
-	public function quiz_fetch($id)
+    /**
+     * @param $id
+     * @return Quiz
+     */
+    public function quiz_fetch($id)
 	{
 		if ($id == 0) {
 			$quiz = new Quiz;
@@ -788,7 +989,11 @@ class QuizLib extends TikiLib
 	}
 
 	// $quiz is a quiz object
-	public function quiz_store($quiz)
+    /**
+     * @param $quiz
+     * @return mixed
+     */
+    public function quiz_store($quiz)
 	{
 		echo __FILE__ . " line: " . __LINE__ . ": in quizlib->quiz_store<br />";
 		echo "Store stuff in the dbFields array.<br />";
@@ -850,7 +1055,10 @@ class QuizLib extends TikiLib
 		return $quizId;
 	}
 
-	public function get_upload_dir()
+    /**
+     * @return string
+     */
+    public function get_upload_dir()
 	{
 		return "quiz_uploads/";
 	}
@@ -859,6 +1067,10 @@ $quizlib = new QuizLib;
 
 
 // Find the next non-blank or return -1
+/**
+ * @param $text
+ * @return int
+ */
 function NextText($text)
 {
 	$found = -1;
@@ -872,6 +1084,10 @@ function NextText($text)
 }
 
 // Find the next blank or retrun the last element
+/**
+ * @param $text
+ * @return int
+ */
 function NextBlank($text)
 {
 	$found = 0;
@@ -884,6 +1100,9 @@ function NextBlank($text)
 	return $found;
 }
 
+/**
+ * @param $s
+ */
 function quizlib_error_exit($s)
 {
 	global $smarty;
@@ -895,6 +1114,10 @@ function quizlib_error_exit($s)
 
 // Called by tiki-edit_quiz_questions.php
 // Convert a block of text into an array of question objects.
+/**
+ * @param $text
+ * @return array
+ */
 function TextToQuestions($text)
 {
 	$text = preg_replace("/\r\n/", "\n", $text);
@@ -935,10 +1158,17 @@ function TextToQuestions($text)
 }
 
 // An abstract class
+/**
+ *
+ */
 class HW_QuizQuestion
 {
 	public $question;
-	public function from_text($lines)
+
+    /**
+     * @param $lines
+     */
+    public function from_text($lines)
 	{
 		// Set the question according to an array of text lines.
 	}
@@ -963,11 +1193,17 @@ class HW_QuizQuestion
 //                    Array('text'=>"Blue", 'correct'=>1),
 //                    Array('text'=>"Green",'correct'=>1));
 //   Any of the answers are correct in this example.
+/**
+ *
+ */
 class HW_QuizQuestionMultipleChoice extends HW_QuizQuestion
 {
 	public $choices  = Array();
 
-	public function HW_QuizQuestionMultipleChoice($lines)
+    /**
+     * @param $lines
+     */
+    public function HW_QuizQuestionMultipleChoice($lines)
 	{
 		$this->from_text($lines);
 	}
@@ -977,7 +1213,10 @@ class HW_QuizQuestionMultipleChoice extends HW_QuizQuestion
 	//   The 0th line is the question.
 	//   The rest of the lines are answers.
 	//   Correct answers start with a "*"
-	public function from_text($lines)
+    /**
+     * @param $lines
+     */
+    public function from_text($lines)
 	{
 		$this->question = $lines[0];
 		$this->choices  = Array();
@@ -994,7 +1233,11 @@ class HW_QuizQuestionMultipleChoice extends HW_QuizQuestion
 	}
 
 	// Export the question to an array of text lines.
-	public function to_text($show_answer = false)
+    /**
+     * @param bool $show_answer
+     * @return array
+     */
+    public function to_text($show_answer = false)
 	{
 		$lines = Array();
 		array_push($lines, $this->question);
@@ -1008,17 +1251,28 @@ class HW_QuizQuestionMultipleChoice extends HW_QuizQuestion
 		return $lines;
 	}
 
-	public function getChoiceCount()
+    /**
+     * @return int
+     */
+    public function getChoiceCount()
 	{
 		return count($this->choices);
 	}
 
-	public function getChoice($i)
+    /**
+     * @param $i
+     * @return mixed
+     */
+    public function getChoice($i)
 	{
 		return $this->choices[$i]['text'];
 	}
 
-	public function getCorrect($i)
+    /**
+     * @param $i
+     * @return mixed
+     */
+    public function getCorrect($i)
 	{
 		return $this->choices[$i]['correct'];
 	}
@@ -1042,12 +1296,18 @@ class HW_QuizQuestionMultipleChoice extends HW_QuizQuestion
 // e.g.
 //   $question = "Do you wiki?";
 //   $answer   = -1 (unknown), 0 (no), 1 (yes)
+/**
+ *
+ */
 class HW_QuizQuestionYesNo extends HW_QuizQuestion
 {
 	public $question;
 	public $answer  = -1;
 
-	public function HW_QuizQuestionYesNo($lines)
+    /**
+     * @param $lines
+     */
+    public function HW_QuizQuestionYesNo($lines)
 	{
 		$this->from_text($lines);
 	}
@@ -1056,7 +1316,10 @@ class HW_QuizQuestionYesNo extends HW_QuizQuestion
 	// $lines is in array of text items.
 	//   The 0th line is the question.
 	//   The first line is the answer.
-	public function from_text($lines)
+    /**
+     * @param $lines
+     */
+    public function from_text($lines)
 	{
 		$this->question = $lines[0];
 		if (preg_match("/^\s*[Yy][Ee][Ss]\s*$/", $lines[1])) {
@@ -1070,7 +1333,11 @@ class HW_QuizQuestionYesNo extends HW_QuizQuestion
 		}
 	}
 
-	public function to_text($show_answer = false)
+    /**
+     * @param bool $show_answer
+     * @return array
+     */
+    public function to_text($show_answer = false)
 	{
 		// Export the question to an array of text lines.
 		$lines = Array();
@@ -1092,6 +1359,9 @@ class HW_QuizQuestionYesNo extends HW_QuizQuestion
 	}
 }
 
+/**
+ *
+ */
 class Quiz
 {
 	public $id;
@@ -1199,7 +1469,10 @@ class Quiz
 	}
 
 	// dump as html text
-	public function show_html()
+    /**
+     * @return array
+     */
+    public function show_html()
 	{
 		global $userlib;
 		$lines = array();
@@ -1238,7 +1511,10 @@ class Quiz
 	}
 
 	// Use any data in the array to replace the instance data.
-	public function data_load($data)
+    /**
+     * @param $data
+     */
+    public function data_load($data)
 	{
 		foreach ($this as $key => $val) {
 			if (isset($data[$key]) && ($data[$key] != $val)) {
@@ -1247,7 +1523,10 @@ class Quiz
 		}
 	}
 
-	public function compare($quiz)
+    /**
+     * @param $quiz
+     */
+    public function compare($quiz)
 	{
 
 	}

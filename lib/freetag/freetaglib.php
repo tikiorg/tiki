@@ -48,6 +48,9 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
 
 require_once('lib/objectlib.php');
 
+/**
+ *
+ */
 class FreetagLib extends ObjectLib
 {
 	// The fields below should be tiki preferences
@@ -797,7 +800,11 @@ class FreetagLib extends ObjectLib
 		return $this->getOne($query, array($tag));
 	}
 
-	function get_tag_from_id($tagId)
+    /**
+     * @param $tagId
+     * @return mixed
+     */
+    function get_tag_from_id($tagId)
 	{
 		return $this->table('tiki_freetags')->fetchOne('tag', array('tagId' => $tagId));
 	}
@@ -1188,7 +1195,16 @@ class FreetagLib extends ObjectLib
 	 * Once you have enough tags, the results are quite good. It is very organic
 	 * as tagging is human-technology.
 	 */
-	function get_similar( $type, $objectId, $maxResults = 10, $targetType = null, $with = 'freetag', $minCommon=null )
+    /**
+     * @param $type
+     * @param $objectId
+     * @param int $maxResults
+     * @param null $targetType
+     * @param string $with
+     * @param null $minCommon
+     * @return array
+     */
+    function get_similar( $type, $objectId, $maxResults = 10, $targetType = null, $with = 'freetag', $minCommon=null )
 	{
 		global $prefs;
 		if ($with == 'category') {
@@ -1586,7 +1602,10 @@ class FreetagLib extends ObjectLib
 		return $tags;
 	}
 
-	function get_cloud()
+    /**
+     * @return Zend_Tag_Cloud
+     */
+    function get_cloud()
 	{
 		$query = "SELECT tag title, COUNT(*) weight, f.tagId FROM tiki_freetags f INNER JOIN tiki_freetagged_objects fo ON f.tagId = fo.tagId GROUP BY f.tagId";
 		$result = $this->fetchAll($query);

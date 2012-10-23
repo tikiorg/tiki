@@ -11,6 +11,9 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
 	exit;
 }
 
+/**
+ * @return array
+ */
 function module_switch_theme_info()
 {
 	return array(
@@ -21,6 +24,10 @@ function module_switch_theme_info()
 	);
 }
 
+/**
+ * @param $mod_reference
+ * @param $module_params
+ */
 function module_switch_theme($mod_reference, $module_params)
 {
 	global $prefs, $user, $tikilib, $smarty, $tc_theme, $tc_theme_option;

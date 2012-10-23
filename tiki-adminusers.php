@@ -21,6 +21,11 @@ if ($tiki_p_admin != 'y') {
 	$userGroups = array();
 }
 
+/**
+ * @param $u
+ * @param $reason
+ * @return mixed
+ */
 function discardUser($u, $reason)
 {
 	$u['reason'] = $reason;
@@ -770,6 +775,9 @@ $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 $smarty->assign('mid', 'tiki-adminusers.tpl');
 $smarty->display('tiki.tpl');
 
+/**
+ * @param $errors
+ */
 function exit_with_error_messages($errors)
 {
 	global $access;

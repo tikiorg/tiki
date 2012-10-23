@@ -5,12 +5,18 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
+/**
+ *
+ */
 class PdfGenerator
 {
 	private $mode;
 	private $location;
 
-	function __construct()
+    /**
+     *
+     */
+    function __construct()
 	{
 		global $prefs;
 		$this->mode = 'none';
@@ -29,7 +35,12 @@ class PdfGenerator
 		}
 	}
 
-	function getPdf( $file, array $params )
+    /**
+     * @param $file
+     * @param array $params
+     * @return mixed
+     */
+    function getPdf( $file, array $params )
 	{
 		global $prefs, $base_url, $tikiroot;
 
@@ -49,19 +60,31 @@ class PdfGenerator
 		return $this->{$this->mode}( $url );
 	}
 
-	private function none( $url )
+    /**
+     * @param $url
+     * @return null
+     */
+    private function none( $url )
 	{
 		return null;
 	}
 
-	private function webkit( $url )
+    /**
+     * @param $url
+     * @return mixed
+     */
+    private function webkit( $url )
 	{
 		$arg = escapeshellarg($url);
 
 		return `{$this->location} $arg -`;
 	}
 
-	private function webservice( $url )
+    /**
+     * @param $url
+     * @return bool
+     */
+    private function webservice( $url )
 	{
 		global $tikilib;
 

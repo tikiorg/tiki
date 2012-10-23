@@ -39,6 +39,11 @@ $count_r = 0;
 //	$access->display_error('', 'no tpl');
 //}
 
+/**
+ * @param $original
+ * @param $template_base
+ * @return mixed
+ */
 function replace_with_self_links($original, $template_base)
 {
 	global $count_r;
@@ -77,6 +82,10 @@ function replace_with_self_links($original, $template_base)
 	return $replaced;
 }
 
+/**
+ * @param $var
+ * @return string
+ */
 function process_value ($var)
 {
 	if (strpos($var, '{$') === 0) {

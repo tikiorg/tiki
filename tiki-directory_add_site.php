@@ -164,6 +164,11 @@ ask_ticket('dir-add-site');
 // Display the template
 $smarty->assign('mid', 'tiki-directory_add_site.tpl');
 $smarty->display("tiki.tpl");
+/**
+ * @param $a
+ * @param $b
+ * @return int
+ */
 function country_sort($a, $b)
 {
 	if ($a == 'None' || $b == 'Other') {

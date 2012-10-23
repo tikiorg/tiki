@@ -14,6 +14,9 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 // Module special params:
 // - user: Tiki username to show Twitter timeline of
 
+/**
+ * @return array
+ */
 function module_twitter_info()
 {
 	return array(
@@ -40,6 +43,10 @@ function module_twitter_info()
 	);
 }
 
+/**
+ * @param $mod_reference
+ * @param $module_params
+ */
 function module_twitter( $mod_reference, $module_params )
 {
 	global $tikilib, $smarty, $prefs;

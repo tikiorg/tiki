@@ -14,12 +14,20 @@ class AttributeLib extends TikiDb_Bridge
 {
 	private $attributes;
 
-	function __construct()
+    /**
+     *
+     */
+    function __construct()
 	{
 		$this->attributes = $this->table('tiki_object_attributes');
 	}
 
-	function get_attributes( $type, $objectId )
+    /**
+     * @param $type
+     * @param $objectId
+     * @return mixed
+     */
+    function get_attributes( $type, $objectId )
 	{
 		return $this->attributes->fetchMap(
 			'attribute',
@@ -66,13 +74,22 @@ class AttributeLib extends TikiDb_Bridge
 		return true;
 	}
 
-	private function get_valid( $name )
+    /**
+     * @param $name
+     * @return mixed
+     */
+    private function get_valid( $name )
 	{
 		$filter = TikiFilter::get('attribute_type');
 		return $filter->filter($name);
 	}
 
-	function find_objects_with($attribute, $value)
+    /**
+     * @param $attribute
+     * @param $value
+     * @return mixed
+     */
+    function find_objects_with($attribute, $value)
 	{
 		$attribute = $this->get_valid($attribute);
 

@@ -50,6 +50,11 @@ if (isset($_REQUEST["preview"]) || isset($_REQUEST["xmlview"]) || isset($_REQUES
 }
 $quiz = $quizlib->quiz_fetch($_REQUEST["quizId"]);
 
+/**
+ * @param $quiz
+ * @param $_REQUEST
+ * @param $option
+ */
 function fetchYNOption(&$quiz, $_REQUEST, $option)
 {
 	if (isset($_REQUEST[$option]) && $_REQUEST[$option] == 'on') {
@@ -60,6 +65,9 @@ function fetchYNOption(&$quiz, $_REQUEST, $option)
 }
 
 // Load the data from the
+/**
+ * @return array
+ */
 function quiz_data_load()
 {
 	global $_REQUEST;
@@ -144,6 +152,9 @@ if (isset($_REQUEST["save"])) {
 
 $smarty->assign('quiz', $quiz);
 
+/**
+ * @param $tpl
+ */
 function setup_options(&$tpl)
 {
 	global $tikilib;

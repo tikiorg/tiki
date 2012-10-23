@@ -19,6 +19,12 @@ if ( isset($_REQUEST['noautosave']) === true ) {
 	$smarty->assign('noautosave', $_REQUEST['noautosave'] === 'y');
 }
 
+/**
+ * @param $id
+ * @param string $referer
+ * @param bool $only_md5
+ * @return string
+ */
 function auto_save_name($id, $referer = '', $only_md5 = false)
 {
 	global $user;
@@ -26,6 +32,12 @@ function auto_save_name($id, $referer = '', $only_md5 = false)
 	$referer = rawurldecode($referer); // this is needed to ensure consistency whether coming from js or php
 	return ($only_md5 ? '' : 'temp/cache/auto_save-').md5("$user:$referer:$id");
 }
+
+/**
+ * @param $id
+ * @param string $referer
+ * @param string $action
+ */
 function auto_save_log($id, $referer = '', $action = '')
 {
 	global $user;
@@ -63,11 +75,21 @@ function remove_save($id, $referer = '')
 	return $result;
 }
 
+/**
+ * @param $id
+ * @param string $referer
+ * @return bool
+ */
 function has_autosave($id, $referer = '')
 {
 	return file_exists(auto_save_name($id, ensureReferrer($referer)));
 }
 
+/**
+ * @param $id
+ * @param string $referer
+ * @return bool|string
+ */
 function get_autosave($id, $referer = '')
 {
 	$file_name = auto_save_name($id, $referer);
@@ -78,6 +100,10 @@ function get_autosave($id, $referer = '')
 	}
 }
 
+/**
+ * @param string $referer
+ * @return string
+ */
 function ensureReferrer($referer = '')
 {
 	

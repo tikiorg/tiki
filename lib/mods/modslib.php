@@ -14,6 +14,9 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 /*
  * This class describe the main informations of a module
  */
+/**
+ *
+ */
 class TikiMod
 {
 	public $modname;
@@ -22,7 +25,11 @@ class TikiMod
 	public $revision;
 
 	/* use with $type and $name, or $type only as modname ("$type-$name") */
-	function TikiMod($type, $name=FALSE)
+    /**
+     * @param $type
+     * @param bool $name
+     */
+    function TikiMod($type, $name=FALSE)
 	{
 		if ($name === FALSE) { // $type is a modname
 			$this->modname=$type;
@@ -40,7 +47,11 @@ class TikiMod
 	 *  1 if $this is newer
 	 *  0 if same revision
 	 */
-	function isnewerthan($mod)
+    /**
+     * @param $mod
+     * @return bool
+     */
+    function isnewerthan($mod)
 	{
 		if (ModsLib::revision_compare($this->revision, $mod->revision) > 0)
 			return TRUE;
@@ -51,6 +62,9 @@ class TikiMod
 /*
  * This class describe the informations of a module that are available
  * from a 00_list.txt style file
+ */
+/**
+ *
  */
 class TikiModAvailable extends TikiMod
 {
@@ -63,13 +77,20 @@ class TikiModAvailable extends TikiMod
 	public $suggests;        /* array */
 	public $conflicts;       /* array */
 
-	function TikiModAvailable($type, $name=FALSE)
+    /**
+     * @param $type
+     * @param bool $name
+     */
+    function TikiModAvailable($type, $name=FALSE)
 	{
 		$this->TikiMod($type, $name);
 	}
 
 	/* convert $this mod as a line viewable in files like 00_list.txt */
-	function toline()
+    /**
+     * @return string
+     */
+    function toline()
 	{
 		$out='';
 
@@ -106,7 +127,11 @@ class TikiModAvailable extends TikiMod
 	}
 
 	/* used by readdeps_line and read_list for importing dependences */
-	function _decodedeps(&$array, $str)
+    /**
+     * @param $array
+     * @param $str
+     */
+    function _decodedeps(&$array, $str)
 	{
 		$str=str_replace(' ', '', $str);
 		$am=explode('&', $str);
@@ -125,7 +150,10 @@ class TikiModAvailable extends TikiMod
 	}
 
 	/* import from a dependences element string in 00_list.txt style file */
-	function readdeps_line($line)
+    /**
+     * @param $line
+     */
+    function readdeps_line($line)
 	{
 		$meat=explode(';', $line);
 		foreach ($meat as $m) {
@@ -151,6 +179,9 @@ class TikiModAvailable extends TikiMod
  * This class contain full information of a module,
  * like there are available in it's .info.txt file
  */
+/**
+ *
+ */
 class TikiModInfo extends TikiModAvailable
 {
 	public $configuration;         /* array */
@@ -168,13 +199,21 @@ class TikiModInfo extends TikiModAvailable
 	public $sql_install;           /* array */
 	public $sql_remove;            /* array */
 
-	function TikiModInfo($type, $name=FALSE)
+    /**
+     * @param $type
+     * @param bool $name
+     */
+    function TikiModInfo($type, $name=FALSE)
 	{
 		$this->TikiModAvailable($type, $name);
 	}
 
 	/* Import all datas from the .info.txt file */
-	function readinfo($file)
+    /**
+     * @param $file
+     * @return bool|string
+     */
+    function readinfo($file)
 	{
 		if (!is_file($file)) {
 			return sprintf(tra('File %s not found'), $file);
@@ -278,13 +317,20 @@ class TikiModInfo extends TikiModAvailable
 		return false;
 	}
 
-	function writeinfo($mods_path)
+    /**
+     * @param $mods_path
+     */
+    function writeinfo($mods_path)
 	{
 		die("not implemented");
 	}
 
 	/* read configuration file of this module */
-	function readconf($mods_path)
+    /**
+     * @param $mods_path
+     * @return array|bool
+     */
+    function readconf($mods_path)
 	{
 		if (!is_file($mods_path.'/Installed/'.$this->type.'-'.$this->name.'.conf.txt')) return false;
 		$fp = fopen($mods_path.'/Installed/'.$this->type.'-'.$this->name.'.conf.txt', "r");
@@ -312,7 +358,11 @@ class TikiModInfo extends TikiModAvailable
 	}
 
 	/* write configuration file of this module */
-	function writeconf($mods_path, $confs)
+    /**
+     * @param $mods_path
+     * @param $confs
+     */
+    function writeconf($mods_path, $confs)
 	{
 		$fp = fopen($mods_path.'/Installed/'.$this->type.'-'.$this->name.'.conf.txt', "w");
 		foreach ($confs as $k=>$v) {
@@ -322,7 +372,12 @@ class TikiModInfo extends TikiModAvailable
 	}
 
 	/* construct a package (.tar.gz) of this module from every it's files */
-	function package($mods_path, $info_file)
+    /**
+     * @param $mods_path
+     * @param $info_file
+     * @return bool|string
+     */
+    function package($mods_path, $info_file)
 	{
 		$oldir = getcwd();
 		if (chdir($mods_path) === FALSE) {
@@ -366,16 +421,26 @@ class TikiModInfo extends TikiModAvailable
 /*
  * This class represent one dependence for an another package
  */
+/**
+ *
+ */
 class TikiModDepend extends TikiMod
 {
 	public $tests;
 
-	function TikiModDepend($type, $name=FALSE)
+    /**
+     * @param $type
+     * @param bool $name
+     */
+    function TikiModDepend($type, $name=FALSE)
 	{
 		$this->TikiMod($type, $name);
 	}
 
-	function tostring()
+    /**
+     * @return string
+     */
+    function tostring()
 	{
 		$out=$this->modname;
 		foreach ($this->tests as $test) {
@@ -387,7 +452,11 @@ class TikiModDepend extends TikiMod
 	/*
 	 * Check if $mod is concerned by this depend
 	 */
-	function isitin($mod)
+    /**
+     * @param $mod
+     * @return bool
+     */
+    function isitin($mod)
 	{
 		if ($mod->modname != $this->modname) return FALSE;
 		if (!is_array($this->tests)) return TRUE;
@@ -429,6 +498,9 @@ class TikiModDepend extends TikiMod
 /*
  * This is the class that manage every modules
  */
+/**
+ *
+ */
 class ModsLib
 {
 
@@ -436,46 +508,70 @@ class ModsLib
 	public $types;
 	public $versions;
 
-	function __construct()
+    /**
+     *
+     */
+    function __construct()
 	{
 		$this->types = array();
 		$this->feedback_listeners = array();
 		$this->versions = array('Unspecified' => -1,'1.x' => 1.0,'1.9.x' => 1.9,'2.x' => 2.0,'3.x' => 3.0, '4.x' => 4.0, '5.x' => 5.0, '6.x' => 6.0, '7.x' => 7.0, '8.x' => 8.0);
 	}
 
-	function feedback_info($feedback)
+    /**
+     * @param $feedback
+     */
+    function feedback_info($feedback)
 	{
 		foreach ($this->feedback_listeners as $listener) {
 			$listener(-1, $feedback);
 		}
 	}
 
-	function feedback_warning($feedback)
+    /**
+     * @param $feedback
+     */
+    function feedback_warning($feedback)
 	{
 		foreach ($this->feedback_listeners as $listener) {
 			$listener(0, $feedback);
 		}
 	}
 
-	function feedback_error($feedback)
+    /**
+     * @param $feedback
+     */
+    function feedback_error($feedback)
 	{
 		foreach ($this->feedback_listeners as $listener) {
 			$listener(1, $feedback);
 		}
 	}
 
-	function add_feedback_listener($listener)
+    /**
+     * @param $listener
+     */
+    function add_feedback_listener($listener)
 	{
 		$this->feedback_listeners[]=$listener;
 	}
 
-	function prepare_dir($path)
+    /**
+     * @param $path
+     */
+    function prepare_dir($path)
 	{
 		if ($path and $path != '/' and !is_dir(dirname($path))) $this->prepare_dir(dirname($path));
 		if (!is_dir($path) and substr($path, 0, 1) != '.') mkdir($path, 02777);
 	}
 
-	function dl_remote($remote,$file,$local)
+    /**
+     * @param $remote
+     * @param $file
+     * @param $local
+     * @return bool
+     */
+    function dl_remote($remote,$file,$local)
 	{
 		$meat = $this->get_remote($remote."/Dist/".$file.".tgz");
 		if ($meat === FALSE) return FALSE;
@@ -500,7 +596,11 @@ class ModsLib
 		}
 	}
 
-	function get_remote($url)
+    /**
+     * @param $url
+     * @return bool
+     */
+    function get_remote($url)
 	{
 		global $tikilib;
 		$this->feedback_info("downloading '$url'...");
@@ -513,7 +613,12 @@ class ModsLib
 		return $buffer;
 	}
 
-	function refresh_remote($remote,$local)
+    /**
+     * @param $remote
+     * @param $local
+     * @return bool
+     */
+    function refresh_remote($remote,$local)
 	{
 		$buffer = $this->get_remote($remote);
 		if ( ! $buffer || $buffer{0} != "'" ) {
@@ -526,7 +631,13 @@ class ModsLib
 		return true;
 	}
 
-	function _publish($modpath,$public, $items,$add=true)
+    /**
+     * @param $modpath
+     * @param $public
+     * @param $items
+     * @param bool $add
+     */
+    function _publish($modpath,$public, $items,$add=true)
 	{
 		$fp = fopen($modpath.'/Packages/00_list.public.txt', "w");
 		foreach ($public as $meat) {
@@ -556,19 +667,31 @@ class ModsLib
 		fclose($fp);
 	}
 
-	function publish($modpath, $items)
+    /**
+     * @param $modpath
+     * @param $items
+     */
+    function publish($modpath, $items)
 	{
 		$public = $this->read_list($modpath."/Packages/00_list.public.txt", 'public');
 		$this->_publish($modpath, $public, $items, true);
 	}
 
-	function unpublish($modpath,$items)
+    /**
+     * @param $modpath
+     * @param $items
+     */
+    function unpublish($modpath,$items)
 	{
 		$public = $this->read_list($modpath."/Packages/00_list.public.txt", 'public');
 		$this->_publish($modpath, $public, $items, false);
 	}
 
-	function scan_dist($dir)
+    /**
+     * @param $dir
+     * @return array
+     */
+    function scan_dist($dir)
 	{
 		$back = array();
 		$h = opendir($dir);
@@ -592,7 +715,10 @@ class ModsLib
 		return $back;
 	}
 
-	function rebuild_list($dir)
+    /**
+     * @param $dir
+     */
+    function rebuild_list($dir)
 	{
 		$list = array();
 		$h = opendir($dir);
@@ -624,7 +750,15 @@ class ModsLib
 		fclose($fp);
 	}
 
-	function read_list($file,$reponame,$type='',$find='',$simplelist=false)
+    /**
+     * @param $file
+     * @param $reponame
+     * @param string $type
+     * @param string $find
+     * @param bool $simplelist
+     * @return array
+     */
+    function read_list($file,$reponame,$type='',$find='',$simplelist=false)
 	{
 		$out = array();
 		$fp = @ fopen($file, 'r');
@@ -684,7 +818,12 @@ class ModsLib
 	 *  -1 if $a < $b
 	 *   0 if $a == $b
 	 */
-	function revision_compare($a, $b)
+    /**
+     * @param $a
+     * @param $b
+     * @return int
+     */
+    function revision_compare($a, $b)
 	{
 		$ra=explode('.', $a);
 		$rb=explode('.', $b);
@@ -701,7 +840,13 @@ class ModsLib
 	 * Search in $list if the package is available, optionally by checking the revision
 	 * $list must be the result of read_list()
 	 */
-	function get_depend_available($moddep, $list, $check_revision=FALSE)
+    /**
+     * @param $moddep
+     * @param $list
+     * @param bool $check_revision
+     * @return null
+     */
+    function get_depend_available($moddep, $list, $check_revision=FALSE)
 	{
 		if (isset($list[$moddep->type]) && isset($list[$moddep->type][$moddep->name])) {
 			$mod=$list[$moddep->type][$moddep->name];
@@ -713,7 +858,12 @@ class ModsLib
 	/*
 	 * Search from every repos the latest version of a package.
 	 */
-	function find_last_version($repos, $moddep)
+    /**
+     * @param $repos
+     * @param $moddep
+     * @return null
+     */
+    function find_last_version($repos, $moddep)
 	{
 		$found=NULL;
 		foreach ($repos as $repo_name => $repo) {
@@ -727,7 +877,13 @@ class ModsLib
 		return $found;
 	}
 
-	function find_deps($modspath, $mods_server, $modnames)
+    /**
+     * @param $modspath
+     * @param $mods_server
+     * @param $modnames
+     * @return array
+     */
+    function find_deps($modspath, $mods_server, $modnames)
 	{
 		$deps=array("wanted" => array(),
 			    "toinstall" => array(),
@@ -829,7 +985,12 @@ class ModsLib
 		return $deps;
 	}
 
-	function _find_deps($repos, $querymod, &$deps)
+    /**
+     * @param $repos
+     * @param $querymod
+     * @param $deps
+     */
+    function _find_deps($repos, $querymod, &$deps)
 	{
 		if (is_array($querymod->requires)) {
 			foreach ($querymod->requires as $moddep) {
@@ -874,7 +1035,13 @@ class ModsLib
 		}
 	}
 
-	function find_deps_remove($modspath, $mods_server, $modnames)
+    /**
+     * @param $modspath
+     * @param $mods_server
+     * @param $modnames
+     * @return array
+     */
+    function find_deps_remove($modspath, $mods_server, $modnames)
 	{
 		$deps=array("wantedtoremove" => array(),
 			    "toremove" => array());
@@ -896,7 +1063,12 @@ class ModsLib
 		return $deps;
 	}
 
-	function _find_deps_remove($repos, $modtoremove, &$deps)
+    /**
+     * @param $repos
+     * @param $modtoremove
+     * @param $deps
+     */
+    function _find_deps_remove($repos, $modtoremove, &$deps)
 	{
 		$deps['toremove'][$modtoremove->modname]=$modtoremove;
 		foreach ($repos['installed'] as $meat) {
@@ -912,7 +1084,13 @@ class ModsLib
 		}
 	}
 
-	function install_with_deps($modspath, $mods_server, $deps)
+    /**
+     * @param $modspath
+     * @param $mods_server
+     * @param $deps
+     * @return bool
+     */
+    function install_with_deps($modspath, $mods_server, $deps)
 	{
 
 		/* download packages if necessary */
@@ -948,14 +1126,25 @@ class ModsLib
 
 	}
 
-	function remove_with_deps($modspath, $mods_server, $deps)
+    /**
+     * @param $modspath
+     * @param $mods_server
+     * @param $deps
+     */
+    function remove_with_deps($modspath, $mods_server, $deps)
 	{
 		foreach ($deps['toremove'] as $mod) {
 			$this->remove($modspath, $mod);
 		}
 	}
 
-	function install($path,$mod,$from=NULL,$upgrade=false)
+    /**
+     * @param $path
+     * @param $mod
+     * @param null $from
+     * @param bool $upgrade
+     */
+    function install($path,$mod,$from=NULL,$upgrade=false)
 	{
 		$this->feedback_info("installing ".$mod->modname." (".$mod->revision.") ...");
 		$file = $path.'/Packages/'.$mod->modname.'.info.txt';
@@ -1036,7 +1225,13 @@ class ModsLib
 		$this->rebuild_list($path.'/Installed/');
 	}
 
-	function remove($path,$mod,$upgrade=false)
+    /**
+     * @param $path
+     * @param $mod
+     * @param bool $upgrade
+     * @return bool
+     */
+    function remove($path,$mod,$upgrade=false)
 	{
 		$this->feedback_info("removing ".$mod->modname." (".$mod->revision.") ...");
 		$file = $path.'/Installed/'.$mod->modname.'.info.txt';
@@ -1073,6 +1268,11 @@ class ModsLib
 	}
 }
 
+/**
+ * @param $a
+ * @param $b
+ * @return int
+ */
 function newer($a,$b)
 {
 	$aa = explode('.', $a);

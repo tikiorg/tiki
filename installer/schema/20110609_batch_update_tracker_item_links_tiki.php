@@ -10,6 +10,9 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
   exit;
 }
 
+/**
+ * @param $installer
+ */
 function upgrade_20110609_batch_update_tracker_item_links_tiki($installer)
 {
 	$fields = $installer->fetchMap("SELECT fieldId, options FROM tiki_tracker_fields WHERE type = 'r'");

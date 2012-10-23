@@ -19,13 +19,21 @@ $timeout_inc = 1000;
 $lasttimeout = (int)$_REQUEST['lasttimeout'];
 if ($lasttimeout < $timeout_min) $lasttimeout = $timeout_min;
 $chans = explode(',', $_REQUEST['chans']);
-function escapechannel($channel) 
+/**
+ * @param $channel
+ * @return string
+ */
+function escapechannel($channel)
 {
 	$channel = preg_replace('/[^a-zA-Z0-9\-\_]/i', '', $channel);
 	$channel = substr($channel, 0, 30);
 	return '#' . $channel;
 }
-function initchannelssession($chans) 
+
+/**
+ * @param $chans
+ */
+function initchannelssession($chans)
 {
 	$_SESSION['minichat_channels'] = array();
 	foreach ($chans as $chan) {

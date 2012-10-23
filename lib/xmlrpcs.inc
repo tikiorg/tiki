@@ -42,6 +42,11 @@ $access->check_script($_SERVER["SCRIPT_NAME"], basename(__FILE__));
 // listMethods: either a string, or nothing
 $_xmlrpcs_listMethods_sig=array(array($xmlrpcArray, $xmlrpcString), array($xmlrpcArray));
 $_xmlrpcs_listMethods_doc='This method lists all the methods that the XML-RPC server knows how to dispatch';
+/**
+ * @param $server
+ * @param $m
+ * @return xmlrpcresp
+ */
 function _xmlrpcs_listMethods($server, $m)
 {
 	global $xmlrpcerr, $xmlrpcstr, $_xmlrpcs_dmap;
@@ -63,6 +68,11 @@ function _xmlrpcs_listMethods($server, $m)
 
 $_xmlrpcs_methodSignature_sig=array(array($xmlrpcArray, $xmlrpcString));
 $_xmlrpcs_methodSignature_doc='Returns an array of known signatures (an array of arrays) for the method name passed. If no signatures are known, returns a none-array (test for type != array to detect missing signature)';
+/**
+ * @param $server
+ * @param $m
+ * @return xmlrpcresp
+ */
 function _xmlrpcs_methodSignature($server, $m)
 {
 	global $xmlrpcerr, $xmlrpcstr, $_xmlrpcs_dmap;
@@ -110,6 +120,11 @@ function _xmlrpcs_methodSignature($server, $m)
 
 $_xmlrpcs_methodHelp_sig=array(array($xmlrpcString, $xmlrpcString));
 $_xmlrpcs_methodHelp_doc='Returns help text if defined for the method passed, otherwise returns an empty string';
+/**
+ * @param $server
+ * @param $m
+ * @return xmlrpcresp
+ */
 function _xmlrpcs_methodHelp($server, $m)
 {
 	global $xmlrpcerr, $xmlrpcstr, $_xmlrpcs_dmap;
@@ -146,6 +161,10 @@ function _xmlrpcs_methodHelp($server, $m)
 $_xmlrpcs_multicall_sig = array(array($xmlrpcArray, $xmlrpcArray));
 $_xmlrpcs_multicall_doc = 'Boxcar multiple RPC calls in one request. See http://www.xmlrpc.com/discuss/msgReader$1208 for details';
 
+/**
+ * @param $err
+ * @return xmlrpcval
+ */
 function _xmlrpcs_multicall_error($err)
 {
 	if (is_string($err))
@@ -164,6 +183,11 @@ function _xmlrpcs_multicall_error($err)
 	return new xmlrpcval($struct, 'struct');
 }
 
+/**
+ * @param $server
+ * @param $call
+ * @return xmlrpcval
+ */
 function _xmlrpcs_multicall_do_call($server, $call)
 {
 	if ($call->kindOf() != 'struct')
@@ -211,6 +235,11 @@ function _xmlrpcs_multicall_do_call($server, $call)
 	return new xmlrpcval(array($result->value()), 'array');
 }
 
+/**
+ * @param $server
+ * @param $m
+ * @return xmlrpcresp
+ */
 function _xmlrpcs_multicall($server, $m)
 {
 	$calls = $m->getParam(0);
@@ -247,17 +276,27 @@ $_xmlrpcs_dmap=array(
 );
 
 $_xmlrpc_debuginfo='';
+/**
+ * @param $m
+ */
 function xmlrpc_debugmsg($m)
 {
 	global $_xmlrpc_debuginfo;
 	$_xmlrpc_debuginfo=$_xmlrpc_debuginfo . $m . "\n";
 }
 
+/**
+ *
+ */
 class xmlrpc_server
 {
 	var $dmap=array();
 
-	function xmlrpc_server($dispMap='', $serviceNow=1)
+    /**
+     * @param string $dispMap
+     * @param int $serviceNow
+     */
+    function xmlrpc_server($dispMap='', $serviceNow=1)
 	{
 		global $HTTP_RAW_POST_DATA;
 		// dispMap is a dispatch array of methods
@@ -279,7 +318,10 @@ class xmlrpc_server
 		}
 	}
 
-	function serializeDebug()
+    /**
+     * @return string
+     */
+    function serializeDebug()
 	{
 		global $_xmlrpc_debuginfo;
 		if ($_xmlrpc_debuginfo!='')
@@ -309,7 +351,13 @@ class xmlrpc_server
 	/*
 	add a method to the dispatch map
 	*/
-	function add_to_map($methodname,$function,$sig,$doc)
+    /**
+     * @param $methodname
+     * @param $function
+     * @param $sig
+     * @param $doc
+     */
+    function add_to_map($methodname,$function,$sig,$doc)
 	{
 		$this->dmap[$methodname] = array(
 			'function'  => $function,
@@ -318,7 +366,12 @@ class xmlrpc_server
 		);
 	}
 
-	function verifySignature($in, $sig)
+    /**
+     * @param $in
+     * @param $sig
+     * @return array
+     */
+    function verifySignature($in, $sig)
 	{
 		for($i=0; $i<sizeof($sig); $i++)
 		{
@@ -359,7 +412,11 @@ class xmlrpc_server
 			return array(0, "No method signature matches number of parameters");
 	}
 
-	function parseRequest($data='')
+    /**
+     * @param string $data
+     * @return mixed|xmlrpcresp
+     */
+    function parseRequest($data='')
 	{
 		global $_xh,$HTTP_RAW_POST_DATA;
 		global $xmlrpcerr, $xmlrpcstr, $xmlrpcerrxml, $xmlrpc_defencoding,
@@ -435,7 +492,11 @@ class xmlrpc_server
 		return $r;
 	}
 
-	function execute ($m)
+    /**
+     * @param $m
+     * @return mixed|xmlrpcresp
+     */
+    function execute ($m)
 	{
 		global $xmlrpcerr, $xmlrpcstr, $_xmlrpcs_dmap;
 		// now to deal with the method

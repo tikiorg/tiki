@@ -223,6 +223,11 @@ if ($access->is_serializable_request() && isset($_REQUEST['listonly'])) {
 	$access->display_error(NULL, 'No AJAX service matches request parameters', 404);
 }
 
+/**
+ * @param $dir
+ * @param $icons
+ * @param $max
+ */
 function read_icon_dir($dir, &$icons, $max)
 {
 	$fp = opendir($dir);

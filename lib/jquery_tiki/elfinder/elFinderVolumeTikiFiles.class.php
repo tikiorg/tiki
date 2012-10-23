@@ -198,7 +198,11 @@ class elFinderVolumeTikiFiles extends elFinderVolumeDriver {
 		return $this->dirsCache[$path];
 	}
 
-	protected function processTikiFile($row)
+    /**
+     * @param $row
+     * @return array
+     */
+    protected function processTikiFile($row)
 	{
 		$r = array();
 		if ($row['isgal']) {

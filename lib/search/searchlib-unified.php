@@ -5,12 +5,18 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
+/**
+ *
+ */
 class UnifiedSearchLib
 {
 	const INCREMENT_QUEUE = 'search-increment';
 	private $batchToken;
 
-	function startBatch()
+    /**
+     * @return string
+     */
+    function startBatch()
 	{
 		if (! $this->batchToken) {
 			$this->batchToken = uniqid();
@@ -18,7 +24,11 @@ class UnifiedSearchLib
 		}
 	}
 
-	function endBatch($token, $count = 100)
+    /**
+     * @param $token
+     * @param int $count
+     */
+    function endBatch($token, $count = 100)
 	{
 		if ($token && $this->batchToken === $token) {
 			$this->batchToken = null;
@@ -26,7 +36,10 @@ class UnifiedSearchLib
 		}
 	}
 
-	function processUpdateQueue($count = 10)
+    /**
+     * @param int $count
+     */
+    function processUpdateQueue($count = 10)
 	{
 		if ($this->batchToken) {
 			return;
@@ -58,13 +71,19 @@ class UnifiedSearchLib
 		}
 	}
 
-	function getQueueCount()
+    /**
+     * @return array
+     */
+    function getQueueCount()
 	{
 		$queuelib = TikiLib::lib('queue');
 		return $queuelib->count(self::INCREMENT_QUEUE);
 	}
 
-	function rebuildInProgress()
+    /**
+     * @return bool
+     */
+    function rebuildInProgress()
 	{
 		$tempName = $this->getIndexLocation() . '-new';
 		$file_exists = file_exists($tempName);
@@ -82,7 +101,11 @@ class UnifiedSearchLib
 		return $file_exists;
 	}
 
-	function rebuild($loggit = false)
+    /**
+     * @param bool $loggit
+     * @return array
+     */
+    function rebuild($loggit = false)
 	{
 		global $prefs;
 		$index_location = $this->getIndexLocation();
@@ -142,7 +165,11 @@ class UnifiedSearchLib
 		return $loc;
 	}
 
-	function invalidateObject($type, $objectId)
+    /**
+     * @param $type
+     * @param $objectId
+     */
+    function invalidateObject($type, $objectId)
 	{
 		TikiLib::lib('queue')->push(
 			self::INCREMENT_QUEUE,
@@ -153,7 +180,10 @@ class UnifiedSearchLib
 		);
 	}
 
-	public function getSupportedTypes()
+    /**
+     * @return array
+     */
+    public function getSupportedTypes()
 	{
 		global $prefs;
 		$types = array();
@@ -202,7 +232,12 @@ class UnifiedSearchLib
 		return $types;
 	}
 
-	private function buildIndexer($index, $loggit = false)
+    /**
+     * @param $index
+     * @param bool $loggit
+     * @return Search_Indexer
+     */
+    private function buildIndexer($index, $loggit = false)
 	{
 		global $prefs;
 		$indexer = new Search_Indexer($index, $loggit);
@@ -215,7 +250,11 @@ class UnifiedSearchLib
 		return $indexer;
 	}
 
-	private function addSources($aggregator, $mode = 'indexing')
+    /**
+     * @param $aggregator
+     * @param string $mode
+     */
+    private function addSources($aggregator, $mode = 'indexing')
 	{
 		global $prefs;
 
@@ -302,7 +341,10 @@ class UnifiedSearchLib
 		}
 	}
 
-	function getIndex()
+    /**
+     * @return Search_Index_Lucene
+     */
+    function getIndex()
 	{
 		global $prefs;
 
@@ -317,7 +359,11 @@ class UnifiedSearchLib
 		}
 	}
 
-	function getDataSource($mode = 'indexing')
+    /**
+     * @param string $mode
+     * @return Search_Formatter_DataSource_Declarative
+     */
+    function getDataSource($mode = 'indexing')
 	{
 		$dataSource = new Search_Formatter_DataSource_Declarative;
 		$this->addSources($dataSource, $mode);
@@ -325,7 +371,10 @@ class UnifiedSearchLib
 		return $dataSource;
 	}
 
-	function getWeightCalculator()
+    /**
+     * @return Search_Query_WeightCalculator_Field
+     */
+    function getWeightCalculator()
 	{
 		global $prefs;
 
@@ -344,7 +393,11 @@ class UnifiedSearchLib
 		return new Search_Query_WeightCalculator_Field($weights);
 	}
 
-	function buildQuery(array $filter)
+    /**
+     * @param array $filter
+     * @return Search_Query
+     */
+    function buildQuery(array $filter)
 	{
 		$categlib = TikiLib::lib('categ');
 
@@ -419,7 +472,11 @@ class UnifiedSearchLib
 		return $query;
 	}
 
-	private function destroyDirectory($path)
+    /**
+     * @param $path
+     * @return int
+     */
+    private function destroyDirectory($path)
 	{
 		if (!$path or !is_dir($path)) return 0;
 

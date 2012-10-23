@@ -8,6 +8,11 @@
 require_once ('tiki-setup.php');
 include_once ('lib/structures/structlib.php');
 
+/**
+ * @param $source
+ * @param $dest
+ * @return int
+ */
 function copys($source,$dest)
 {
 	if (!is_dir($source))
@@ -31,6 +36,9 @@ function copys($source,$dest)
 	return 1;
 }
 
+/**
+ * @param $dir
+ */
 function deldirfiles($dir)
 {
 	$current_dir = opendir($dir);

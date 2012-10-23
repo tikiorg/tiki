@@ -41,6 +41,10 @@ $commands=array('help' => array(),
 // 		'republish' => array(),
 		);
 
+/**
+ * @param $num
+ * @param $err
+ */
 function tikimods_feedback_listener($num, $err)
 {
 	switch($num) {
@@ -57,6 +61,10 @@ function tikimods_feedback_listener($num, $err)
 }
 $modslib->add_feedback_listener('tikimods_feedback_listener');
 
+/**
+ * @param $str
+ * @return string
+ */
 function ask($str)
 {
 	echo $str;
@@ -64,11 +72,21 @@ function ask($str)
 	return trim($res);
 }
 
+/**
+ * @param $goption
+ * @param $coption
+ * @param $cparams
+ */
 function command_help($goption, $coption, $cparams)
 {
 	usage(0);
 }
 
+/**
+ * @param $goption
+ * @param $coption
+ * @param $cparams
+ */
 function command_install($goption, $coption, $cparams)
 {
 	global $modslib;
@@ -125,6 +143,11 @@ function command_install($goption, $coption, $cparams)
 	$modslib->install_with_deps($prefs['mods_dir'], $mods_server, $deps);
 }
 
+/**
+ * @param $goption
+ * @param $coption
+ * @param $cparams
+ */
 function command_remove($goption, $coption, $cparams)
 {
 	global $modslib;
@@ -157,6 +180,11 @@ function command_remove($goption, $coption, $cparams)
 	$modslib->remove_with_deps($prefs['mods_dir'], $mods_server, $deps);	
 }
 
+/**
+ * @param $goption
+ * @param $coption
+ * @param $cparams
+ */
 function command_list($goption, $coption, $cparams)
 {
 	global $repos;
@@ -195,6 +223,11 @@ function command_list($goption, $coption, $cparams)
 	}
 }
 
+/**
+ * @param $goption
+ * @param $coption
+ * @param $cparams
+ */
 function command_show($goption, $coption, $cparams)
 {
 	global $repos;
@@ -346,12 +379,18 @@ function command_show($goption, $coption, $cparams)
 
 }
 
+/**
+ * @param $errstr
+ */
 function failure($errstr)
 {
 	fprintf(STDERR, "%s\n", $errstr);
 	exit(1);
 }
 
+/**
+ * @param $err
+ */
 function usage($err)
 {
 	global $goptions;
@@ -376,6 +415,9 @@ function usage($err)
 	exit($err);
 }
 
+/**
+ * @param $argv
+ */
 function readargs($argv)
 {
 	global $goptions;

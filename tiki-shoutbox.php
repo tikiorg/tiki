@@ -74,6 +74,10 @@ if (isset($_REQUEST["get"])) {
 	$get=0;
 }
 /* additions for ajax (formerly shoutjax) */
+/**
+ * @param $formValues
+ * @param string $destDiv
+ */
 function processShout($formValues, $destDiv = 'mod-shoutbox')
 {	// AJAX_TODO
 	global $shoutboxlib, $user, $smarty, $prefs, $tiki_p_admin_shoutbox;

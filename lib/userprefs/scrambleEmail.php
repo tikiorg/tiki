@@ -20,6 +20,11 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
   exit;
 }
 
+/**
+ * @param $email
+ * @param string $method
+ * @return string
+ */
 function scrambleEmail($email, $method='unicode')
 {
 	switch ($method) {

@@ -141,9 +141,18 @@ if ( $dbversion_tiki == '1.10' ) {
 	$dbversion_tiki = '2.0';
 }
 
+/**
+ *
+ */
 class TikiDb_LegacyErrorHandler implements TikiDb_ErrorHandler
 {
-	function handle( TikiDb $db, $query, $values, $result ) // {{{
+    /**
+     * @param TikiDb $db
+     * @param $query
+     * @param $values
+     * @param $result
+     */
+    function handle( TikiDb $db, $query, $values, $result ) // {{{
 	{
 		global $smarty, $prefs;
 
@@ -162,7 +171,11 @@ class TikiDb_LegacyErrorHandler implements TikiDb_ErrorHandler
 		}
 
 		if (function_exists('xdebug_get_function_stack')) {
-			function mydumpstack($stack)
+            /**
+             * @param $stack
+             * @return string
+             */
+            function mydumpstack($stack)
 			{
 				$o='';
 				foreach ($stack as $line) {
@@ -193,7 +206,10 @@ class TikiDb_LegacyErrorHandler implements TikiDb_ErrorHandler
 		$this->log($msg.' - '.$q);
 		die;
 	} // }}}
-	function log($msg)
+    /**
+     * @param $msg
+     */
+    function log($msg)
 	{
 		global $user, $tikilib;
 		$query = 'insert into `tiki_actionlog` (`objectType`,`action`,`object`,`user`,`ip`,`lastModif`, `comment`, `client`) values (?,?,?,?,?,?,?,?)';
@@ -229,6 +245,9 @@ if ( isset( $shadow_host, $shadow_user, $shadow_pass, $shadow_dbs ) ) {
 
 unset($host_map, $db_tiki, $host_tiki, $user_tiki, $pass_tiki, $dbs_tiki, $shadow_user, $shadow_pass, $shadow_host, $shadow_dbs);
 
+/**
+ * @param $db
+ */
 function init_connection( $db )
 {
 	global $db_table_prefix, $common_users_table_prefix, $db_tiki;

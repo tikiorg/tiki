@@ -25,6 +25,9 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
 // Usage example :
 // {MODULE(module=>adsense,client=pub-xxxxxxxxxxxxxxxx,display=468*60_as,color_border=edeed5,color_bg=edeed5,color_link=0000CC,color_url=008000,color_text=000000)}{MODULE}
 
+/**
+ * @return array
+ */
 function module_adsense_info()
 {
 	return array(
@@ -77,6 +80,10 @@ function module_adsense_info()
 	);
 }
 
+/**
+ * @param $mod_reference
+ * @param $module_params
+ */
 function module_adsense($mod_reference, $module_params)
 {
 	global $smarty;
