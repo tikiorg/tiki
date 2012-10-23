@@ -9,7 +9,7 @@
 	.truetype	{font-family: courier;}
 	.equal		{background-color: green;}
 	.notequal	{background-color: red;}
-	.umknown	{background-color: yellow;}
+	.unknown	{background-color: yellow;}
 	.important	{background-color: black;	color:	red;}
 	.hint		{background-color: black;	color:	yellow;}
 </style>
