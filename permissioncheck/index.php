@@ -32,6 +32,8 @@
 	$html_and_ascii_linebreak = "<br />\n";
 	if ($permission_granted=="yes\n") {
 		//$dummy=true;
+		echo '<a href="https://doc.tiki.org/Permission+Check">https://doc.tiki.org/Permission+Check</a>' . $html_and_ascii_linebreak ;
+		echo $html_and_ascii_linebreak ;
 		echo '<span class="important">disable permission check on production machines</span>' . $html_and_ascii_linebreak;
 		echo $html_and_ascii_linebreak ;
 		echo 'disable permission by running' . $html_and_ascii_linebreak;
@@ -56,6 +58,8 @@
 		echo '<span class="truetype">permissioncheck/permission_granted.bin</span>' . $html_and_ascii_linebreak;
 		echo $html_and_ascii_linebreak ;
 		echo 'Do not edit those files - different line ending conventions (Mac,Unix,Windows) matter' . $html_and_ascii_linebreak;
+		echo $html_and_ascii_linebreak ;
+		echo '<a href="https://doc.tiki.org/Permission+Check">https://doc.tiki.org/Permission+Check</a>' . $html_and_ascii_linebreak ;
 		echo $html_and_ascii_linebreak ;
 		echo '<span class="hint">disable permission check on production machines</span>' . $html_and_ascii_linebreak;
 		echo "</p></body></html>";
