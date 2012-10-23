@@ -9,6 +9,7 @@
 	.truetype	{font-family: courier;}
 	.equal		{background-color: green;}
 	.notequal	{background-color: red;}
+	.umknown	{background-color: yellow;}
 	.important	{background-color: black;	color:	red;}
 	.hint		{background-color: black;	color:	yellow;}
 </style>
@@ -125,6 +126,19 @@
 		}
 		echo "<tr>".'<td><em class="'.$css_class.'">'.$perms_file."</em></td>"."<td>".$username."</td><td>".$groupname."</td><td>".$perms_asc."</td><td>".$perms_oct.'</td><td><a href="'.$filename.'" target="_blank">permissioncheck/'.$filename."</a></td></tr>\n  ";
 	}
+	// general data for special checks
+	$perms_unknown='???';
+	$css_class_unknown='unknown';
+	$html_empty_table_row='<tr><td>&nbsp;</td></tr>'."\n  ";
+	// special:
+	// php safe mode: check for /tmp
+	$tmpfile='/tmp';
+	$filename=$tmpfile;
+	$perms_file=$perms_unknown;
+	$css_class=$css_class_unknown;
+	echo $html_empty_table_row ;
+	get_perm_data($filename,$username,$groupname,$perms_asc,$perms_oct);
+	echo "<tr>".'<td><em class="'.$css_class.'">'.$perms_file."</em></td>"."<td>".$username."</td><td>".$groupname."</td><td>".$perms_asc."</td><td>".$perms_oct.'</td><td>' . $filename . "</td></tr>\n  ";
 ?>
  </table></div>
  <p class="block">
