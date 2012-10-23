@@ -265,7 +265,6 @@ $smarty->assign('tiki_version', $TWV->version);
 $smarty->assign('tiki_branch', $TWV->branch);
 $smarty->assign('tiki_star', $TWV->getStar());
 $smarty->assign('tiki_uses_svn', $TWV->svn);
-$smarty->assign('tiki_install_version', $TWV->install_version);
 
 if ( isset( $_GET['msg'] ) ) {
 	$smarty->assign('display_msg', $_GET['msg']);

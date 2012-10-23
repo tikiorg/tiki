@@ -20,14 +20,7 @@
 
 			<fieldset>
 				<legend>{tr}Release Check{/tr}</legend>
-				<div class="adminoptionbox">
-					{if isset($tiki_install_version)}
-						{tr}Installation:{/tr}
-						<strong>
-							{$tiki_install_version}
-						</strong>
-					{/if}
-					{tr}Tiki version:{/tr}
+				<div class="adminoptionbox">{tr}Tiki version:{/tr}
 					<strong>
 						{if !empty($lastup)}
 							{tr}Last update from SVN{/tr} ({$tiki_version}): {$lastup|tiki_long_datetime}
