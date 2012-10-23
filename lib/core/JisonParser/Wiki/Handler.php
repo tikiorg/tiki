@@ -392,8 +392,6 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		//$output = preg_replace("/^(([<]br [\/][>])?([\n][\r]|[\n\r]))/", "", $output);
 		$output = preg_replace("/(([<]br [\/][>])?([\n][\r]|[\r][\n]|[\n\r]))$/", "", $output);
 
-		$output = $this->unprotectSpecialChars($output);
-
 		if ( $this->getOption('parseLists') == true) {
 			$lists = $this->Parser->list->toHtml();
 			if (!empty($lists)) {
@@ -421,6 +419,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 
 		if ($this->Parser->parseDepth == 0) {
 			ini_set("pcre.recursion_limit", $this->pcreRecursionLimit);
+			$output = $this->unprotectSpecialChars($output);
 		}
 	}
 
@@ -1164,7 +1163,15 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 
 		$parts = explode('|', $content);
 		$page = (isset($parts[0]) ? $parts[0] : $content);
-		$description = (isset($parts[1]) ? $parts[1] : null);
+		array_shift($parts);
+		$description = implode('|', $parts);
+
+		if (!empty($description)) {
+			$feature_wikiwords = $prefs['feature_wikiwords'];
+			$prefs['feature_wikiwords'] = 'n';
+			$description = $this->parse($description);
+			$prefs['feature_wikiwords'] = $feature_wikiwords;
+		}
 
 		return JisonParser_Wiki_Link::page($page, $this->Parser)
 			->setNamespace($this->getOption('namespace'))

@@ -80,7 +80,8 @@ class JisonParser_OutputTest extends JisonParser_Abstract
 			'color_text2'       => array('~~#ff00ff:text~~', '<span style="color: #ff00ff;">text</span>'),
 			'htmllink'          => array("[www.google.com]", '<a class="wiki" href="www.google.com">www.google.com</a>'),
 			'htmllink1'         => array("[www.google.com|Google]", '<a class="wiki" href="www.google.com">Google</a>'),
-			'wikilink'          => array("((HomePage))", '<a class="wiki" title="HomePage" href="tiki-index.php?page=HomePage">HomePage</a>'),
+			'wikilink'          => array("((FakePage))", '<a href="tiki-index.php?page=FakePage" title="FakePage" class="wiki wiki_page">FakePage</a>'),
+			'wikilink_not_exist'=> array("((NoExist))", 'NoExist<a href="tiki-editpage.php?page=NoExist" title="Create page: NoExist" class="wiki wikinew">?</a>'),
 			'capitol_wikilink'  => array(),
 			'np_wikilink'       => array(),
 			'wikilink_w_wiki'   => array(),
@@ -99,10 +100,10 @@ class JisonParser_OutputTest extends JisonParser_Abstract
 			'color_text1_r'     => array('~~red:text', '<span style="color: red;">text</span>'),
 			'color_text2_r'     => array('~~#ff00ff:text', '<span style="color: #ff00ff;">text</span>'),
 			'htmllink_r'        => array("[www.google.com|Google", '<a class="wiki" href="www.google.com">Google</a>'),
-			'wikilink_r'        => array("((Wiki Page", '<a class="wiki" title="Wiki Page" href="tiki-index.php?page=Wiki Page">Wiki Page</a>'),
+			'wikilink_r'        => array("((FakePage", '<a href="tiki-index.php?page=FakePage" title="FakePage" class="wiki wiki_page">FakePage</a>'),
 			'table_r'           => array("||A1|B1|C1\nA2|B2|C2", '<table class="wikitable"><tr><td class="wikicell">A1</td><td class="wikicell">B1</td><td class="wikicell">C1</td></tr><tr><td class="wikicell">A2</td><td class="wikicell">B2</td><td class="wikicell">C2</td></tr></table>'),
 
-			'wikilink_nested'   => array("(([Linked]))", '<a class="wiki" title="[Linked]" href="tiki-index.php?page=[Linked]">[Linked]</a>'),
+			'wikilink_nested'   => array("(([FakePage]))", '<a href="tiki-index.php?page=%5BFakePage%5D" title="[FakePage]" class="wiki wiki_page">[FakePage]</a>'),
 			'htmllink_nested'   => array("[((Linked))]", '<a class="wiki" href="((Linked))">((Linked))</a>'),
 
 			//non state tracking syntax
@@ -158,7 +159,7 @@ class JisonParser_OutputTest extends JisonParser_Abstract
 			";foo1:bar1\n" .
 			";foo2:bar2"
 		,
-			'<dl class="tikiList" id="" style="">' .
+			'<dl class="tikiList" id="">' .
 				'<dt>foo1</dt><dd>bar1</dd>' . "\n" .
 				'<dt>foo2</dt><dd>bar2</dd>' . "\n" .
 			'</dl>'
@@ -176,7 +177,7 @@ class JisonParser_OutputTest extends JisonParser_Abstract
 			"* foo\n" .
 			"* bar"
 		,
-			'<ul class="tikiList" id="" style="">' .
+			'<ul class="tikiList" id="">' .
 				'<li class="tikiListItem"> foo' . '</li>' . "\n" .
 				'<li class="tikiListItem"> bar' . '</li>' . "\n" .
 			'</ul>'
@@ -196,9 +197,9 @@ class JisonParser_OutputTest extends JisonParser_Abstract
 			"**foo12\n" .
 			"* bar1\n"
 		,
-			'<ul class="tikiList" id="" style="">' .
+			'<ul class="tikiList" id="">' .
 				'<li class="tikiListItem"> foo1' .
-					'<ul class="tikiList" id="" style="">' .
+					'<ul class="tikiList" id="">' .
 						'<li class="tikiListItem"> foo11</li>' . "\n" .
 						'<li class="tikiListItem">foo12</li>'. "\n" .
 					'</ul>' .
@@ -221,7 +222,7 @@ class JisonParser_OutputTest extends JisonParser_Abstract
 			"+Continuation2\n" .
 			"* bar\n"
 		,
-			'<ul class="tikiList" id="" style="">' .
+			'<ul class="tikiList" id="">' .
 				'<li class="tikiListItem"> foo' .
 					"<br /> Continuation1\n" .
 					"<br />Continuation2\n" .
@@ -242,7 +243,7 @@ class JisonParser_OutputTest extends JisonParser_Abstract
 			"# foo\n" .
 			"# bar\n"
 		,
-			'<ol class="tikiList" id="" style="">' .
+			'<ol class="tikiList" id="">' .
 				'<li class="tikiListItem"> foo</li>' . "\n" .
 				'<li class="tikiListItem"> bar</li>' . "\n" .
 			"</ol>"
@@ -262,9 +263,9 @@ class JisonParser_OutputTest extends JisonParser_Abstract
 			"##foo12\n" .
 			"# bar1\n"
 		,
-			'<ol class="tikiList" id="" style="">' .
+			'<ol class="tikiList" id="">' .
 				'<li class="tikiListItem"> foo1' .
-					'<ol class="tikiList" id="" style="">' .
+					'<ol class="tikiList" id="">' .
 						'<li class="tikiListItem"> foo11</li>' . "\n" .
 						'<li class="tikiListItem">foo12</li>' . "\n" .
 					'</ol>' .
@@ -287,7 +288,7 @@ class JisonParser_OutputTest extends JisonParser_Abstract
 			"+Continuation2\n" .
 			"# bar\n"
 		,
-			'<ol class="tikiList" id="" style="">' .
+			'<ol class="tikiList" id="">' .
 				'<li class="tikiListItem"> foo' .
 					"<br /> Continuation1\n" .
 					"<br />Continuation2\n" .
@@ -322,7 +323,7 @@ class JisonParser_OutputTest extends JisonParser_Abstract
 		global $prefs;
 		$prefs['feature_wikiwords'] = 'y';
 		$syntax = array(
-			"WikiPage", '<a class="wiki wiki_page word" title="WikiPage" href="tiki-index.php?page=WikiPage">WikiPage</a>'
+			"FakePage", '<a href="tiki-index.php?page=FakePage" title="FakePage" class="wiki wiki_page">FakePage</a>'
 		);
 
 		$parsed = $this->parser->parse($syntax[0]);
@@ -336,7 +337,7 @@ class JisonParser_OutputTest extends JisonParser_Abstract
 	{
 		global $prefs;
 		$prefs['feature_wikiwords'] = 'y';
-		$syntax = array("))WikiPage((", 'WikiPage');
+		$syntax = array("))FakePage((", 'FakePage');
 
 		$parsed = $this->parser->parse($syntax[0]);
 
@@ -350,9 +351,9 @@ class JisonParser_OutputTest extends JisonParser_Abstract
 		global $prefs;
 		$prefs['feature_wikiwords'] = 'y';
 		$syntax = array(
-			"((WikiPage|__Wiki Page__))"
+			"((FakePage|__Fake Page__))"
 		,
-			'<a class="wiki" title="__Wiki Page__" href="tiki-index.php?page=WikiPage"><strong>Wiki Page</strong></a>'
+			'<a href="tiki-index.php?page=FakePage" title="FakePage" class="wiki wiki_page"><strong>Fake Page</strong></a>'
 		);
 
 		$parsed = $this->parser->parse($syntax[0]);
@@ -368,9 +369,9 @@ class JisonParser_OutputTest extends JisonParser_Abstract
 		global $prefs;
 		$prefs['feature_wikiwords'] = 'y';
 		$syntax = array(
-			"((WikiPage|||table|table|table||))"
+			"((FakePage|||table|table|table||))"
 		,
-			'<a class="wiki" title="||table|table|table||" href="tiki-index.php?page=WikiPage"><table class="wikitable"><tr><td class="wikicell">table</td><td class="wikicell">table</td><td class="wikicell">table</td></tr></table></a>'
+			'<a href="tiki-index.php?page=FakePage" title="FakePage" class="wiki wiki_page"><table class="wikitable"><tr><td class="wikicell">table</td><td class="wikicell">table</td><td class="wikicell">table</td></tr></table></a>'
 		);
 
 		$parsed = $this->parser->parse($syntax[0]);
@@ -387,7 +388,7 @@ class JisonParser_OutputTest extends JisonParser_Abstract
 			"*line 2\n" .
 			"*line 3"
 		,
-			'<ul class="tikiList" id="" style="">' .
+			'<ul class="tikiList" id="">' .
 				'<li class="tikiListItem">line 1</li>' . "\n" .
 				'<li class="tikiListItem">line 2</li>' . "\n" .
 				'<li class="tikiListItem">line 3</li>' . "\n" .
@@ -407,7 +408,7 @@ class JisonParser_OutputTest extends JisonParser_Abstract
 			"#line 2\n" .
 			"#line 3"
 		,
-			'<ol class="tikiList" id="" style="">' .
+			'<ol class="tikiList" id="">' .
 				'<li class="tikiListItem">line 1</li>' . "\n" .
 				'<li class="tikiListItem">line 2</li>' . "\n" .
 				'<li class="tikiListItem">line 3</li>' . "\n" .
@@ -427,7 +428,7 @@ class JisonParser_OutputTest extends JisonParser_Abstract
 			"*line 2\n" .
 			"+line 3"
 		,
-			'<ul class="tikiList" id="" style="">' .
+			'<ul class="tikiList" id="">' .
 				'<li class="tikiListItem">line 1</li>' . "\n" .
 				'<li class="tikiListItem">line 2' .
 					'<br />line 3' . "\n" .
@@ -448,7 +449,7 @@ class JisonParser_OutputTest extends JisonParser_Abstract
 			"*line 2\n" .
 			"+line 3"
 		,
-			'<ul class="tikiList" id="" style="">' .
+			'<ul class="tikiList" id="">' .
 				'<li class="tikiListItem">line 1</li>' . "\n" .
 				'<li class="tikiListItem">line 2' .
 				'<br />line 3' . "\n" .
@@ -475,11 +476,11 @@ class JisonParser_OutputTest extends JisonParser_Abstract
 			"**line 8\n" .
 			"*line 9"
 		,
-			'<ul class="tikiList" id="" style="">' .
+			'<ul class="tikiList" id="">' .
 				'<li class="tikiListItem">line 1' .
-					'<ul class="tikiList" id="" style="">' .
+					'<ul class="tikiList" id="">' .
 						'<li class="tikiListItem">line 2' .
-							'<ul class="tikiList" id="" style="">' .
+							'<ul class="tikiList" id="">' .
 								'<li class="tikiListItem">line 3</li>' . "\n" .
 							'</ul>' .
 						'</li>' . "\n" .
@@ -487,9 +488,9 @@ class JisonParser_OutputTest extends JisonParser_Abstract
 					'</ul>' .
 				'</li>' . "\n" .
 				'<li class="tikiListItem">line 5' .
-					'<ul class="tikiList" id="" style="">' .
+					'<ul class="tikiList" id="">' .
 						'<li class="tikiListItem">line 6' .
-							'<ul class="tikiList" id="" style="">' .
+							'<ul class="tikiList" id="">' .
 								'<li class="tikiListItem">line 7</li>' . "\n" .
 							'</ul>' .
 						'</li>' . "\n" .
@@ -514,14 +515,15 @@ class JisonParser_OutputTest extends JisonParser_Abstract
 			"##line 3\n" .
 			"**-line 4"
 		,
-			'<ul class="tikiList" id="" style="">' .
-				'<li class="tikiListItem">line 1<br />' . "\n" .
-					'<a id="fillerid" href="javascript:flipWithSign(' . "''" . ');" class="link">[+]</a>' .
-					'<ol class="tikiList" id="" style="display: none;">' .
+			'<ul class="tikiList" id="">' .
+				'<li class="tikiListItem">line 1' .
+					'<ol class="tikiList" id="">' .
 						'<li class="tikiListItem">line 2</li>' . "\n" .
 						'<li class="tikiListItem">line 3</li>' . "\n" .
-						'<li class="tikiListItem">line 4</li>' . "\n" .
 					'</ol>' .
+					'<br />' . "\n" . '<a id="fillerid" href="javascript:flipWithSign(\'\');" class="link">[+]</a><ul class="tikiList" id="">' .
+						'<li class="tikiListItem">line 4</li>' . "\n" .
+					'</ul>' .
 				'</li>' . "\n" .
 			'</ul>'
 		);
@@ -663,7 +665,7 @@ class JisonParser_OutputTest extends JisonParser_Abstract
 			"<div  >\n" .
 			"<div  >\n" .
 			"</div></div></div></div>" .
-			'<dl class="tikiList" id="" style=""><dt>foo</dt><dd>foo definition</dd>' . "\n" .
+			'<dl class="tikiList" id=""><dt>foo</dt><dd>foo definition</dd>' . "\n" .
 			"<dt>foo2</dt><dd>foo2 definition</dd>\n" .
 			"</dl>\n" .
 			"[<strong>bold</strong>]<br />\n" .
@@ -709,7 +711,7 @@ class JisonParser_OutputTest extends JisonParser_Abstract
 			'test<br />' . "\n" .
 			'test<br />' . "\n" .
 			'test' .
-			'<ul class="tikiList" id="" style="">' .
+			'<ul class="tikiList" id="">' .
 			'<li class="tikiListItem">test</li>' . "\n" .
 			'<li class="tikiListItem">test</li>' . "\n" .
 			'<li class="tikiListItem">test</li>' . "\n" .
