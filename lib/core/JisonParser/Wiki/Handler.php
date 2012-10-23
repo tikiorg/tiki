@@ -59,6 +59,9 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	/* autoLink parser */
 	public $autoLink;
 
+	/* wiki link parser */
+	public $link;
+
 	/*hotWords parser */
 	public $hotWords;
 
@@ -129,7 +132,9 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		'parseBreaks' => true,
 		'parseLists' =>   true,
 		'parseNps' => true,
-		'parseSmileys'=> true
+		'parseSmileys'=> true,
+		'namespace' => null,
+		'skipPageCache' => false,
 	);
 
 	/**
@@ -1153,47 +1158,21 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	 * @param   $content parsed string found inside detected syntax
 	 * @return  string  $content desired output from syntax
 	 */
-	function link($content) //[content|content]
+	function link($type, $content) //[content|content]
 	{
 		global $tikilib, $prefs;
 
 		$parts = explode('|', $content);
-		$link = (isset($parts[0]) ? $parts[0] : $content);
-		$text = (isset($parts[1]) ? $parts[1] : $link);
+		$page = (isset($parts[0]) ? $parts[0] : $content);
+		$description = (isset($parts[1]) ? $parts[1] : null);
 
-		$target = '';
-		$class = 'wiki';
-		$ext_icon = '';
-		$rel = '';
-		$cached = '';
-
-		if ($prefs['popupLinks'] == 'y') {
-			$target = '_blank"';
-		}
-
-		if (!strstr($link, '://')) {
-			$target = '';
-		} else {
-			$class .= ' external';
-			if ($prefs['feature_wiki_ext_icon'] == 'y' && !$this->getOption('suppress_icons')) {
-				$smarty = TikiLib::lib('smarty');
-				include_once('lib/smarty_tiki/function.icon.php');
-				$ext_icon = smarty_function_icon(array('_id'=>'external_link', 'alt'=>tra('(external link)'), '_class' => 'externallink', '_extension' => 'gif', '_defaultdir' => 'img/icons', 'width' => 15, 'height' => 14), $smarty);
-			}
-			$rel='external';
-			if ($prefs['feature_wiki_ext_rel_nofollow'] == 'y') {
-				$rel .= ' nofollow';
-			}
-		}
-
-		if ($prefs['cachepages'] == 'y' && $tikilib->is_cached($link)) {
-			$cached = " <a class=\"wikicache\" target=\"_blank\" href=\"tiki-view_cache.php?url=".urlencode($link)."\">(cache)</a>";
-		}
-
-		return '<a class="' . $class . '"' .
-			(!empty($target) ? ' target="' . $target . '"' : '') .
-			' href="' . $link .
-			(!empty($rel) ? '" rel="' . $rel : '') . '">' . $text . '</a>' . $ext_icon . $cached;
+		return JisonParser_Wiki_Link::page($page, $this->Parser)
+			->setNamespace($this->getOption('namespace'))
+			->setDescription($description)
+			->setType($type)
+			->setSuppressIcons($this->getOption('suppress_icons'))
+			->setSkipPageCache($this->getOption('skipPageCache'))
+			->parse();
 	}
 
 	/**
@@ -1320,10 +1299,11 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	function wikilink($type = '', $content) //((content|content))
 	{
 		global $prefs;
-
+		//DEPRICATED
+		/*
 		$wikilink = explode('|', $content);
 
-		$href = (isset($wikilink[0]) ? $wikilink[0] : $content);
+		$page = (isset($wikilink[0]) ? $wikilink[0] : $content);
 		$title = $content;
 		$text = $content;
 
@@ -1343,19 +1323,9 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 
 		$type = strtolower($type);
 
-		if ($type == 'alias') {
-			return '<a class="wiki wiki_page alias" title="' . $title . '" href="tiki-index.php?page=' . $href . '">' . $text . '</a>';
-		} else if ($type == 'np') {
-			return $title;
-		} else if ($type == 'word') {
-			if ($prefs['feature_wikiwords'] == 'y') {
-				return '<a class="wiki wiki_page word" title="' . $title . '" href="tiki-index.php?page=' . $href . '">' . $text . '</a>';
-			} else {
-				return $text;
-			}
-		}
-
-		return '<a class="wiki" title="' . $title . '" href="tiki-index.php?page=' . $href . '">' . $text . '</a>';
+		return JisonParser_Wiki_Link::page($page)
+			->setNameSpace($this->getOption('namespace'))
+			->setType($type);*/
 	}
 
 	/**

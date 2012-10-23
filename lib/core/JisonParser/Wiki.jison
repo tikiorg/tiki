@@ -470,11 +470,13 @@ CAPITOL_WORD                    ([A-Z]{1,}[a-z]{1,}){2,}
 		if (parser.isContent()) return 'CONTENT'; //js
 		parser.linkStack = true; //js
 		lexer.begin('link'); //js
+		$yytext = 'external'; //js
 		return 'LINK_START'; //js
 
 		//php if ($this->isContent()) return 'CONTENT';
 		//php $this->linkStack = true;
 		//php $this->begin('link');
+		//php $yytext = 'external';
 		//php return 'LINK_START';
 	%}
 
@@ -620,26 +622,26 @@ CAPITOL_WORD                    ([A-Z]{1,}[a-z]{1,}){2,}
 		if (parser.isContent(['linkStack'])) return 'CONTENT'; //js
 		parser.linkStack = false; //js
 		lexer.popState(); //js
-		return 'WIKILINK_END'; //js
+		return 'LINK_END'; //js
 
 		//php if ($this->isContent(array('linkStack'))) return 'CONTENT';
 		//php $this->linkStack = false;
 		//php $this->popState();
-		//php return 'WIKILINK_END';
+		//php return 'LINK_END';
 	%}
 "(("
 	%{
 		if (parser.isContent()) return 'CONTENT'; //js
 		parser.linkStack = true; //js
 		lexer.begin('wikilink'); //js
-		$yytext = ''; //js
-		return 'WIKILINK_START'; //js
+		$yytext = 'wiki'; //js
+		return 'LINK_START'; //js
 
 		//php if ($this->isContent()) return 'CONTENT';
 		//php $this->linkStack = true;
 		//php $this->begin('wikilink');
-		//php $yytext = '';
-		//php return 'WIKILINK_START';
+		//php $yytext = 'wiki';
+		//php return 'LINK_START';
 	%}
 "))"
 	%{
@@ -647,13 +649,13 @@ CAPITOL_WORD                    ([A-Z]{1,}[a-z]{1,}){2,}
 		parser.linkStack = true; //js
 		lexer.begin('wikilink'); //js
 		$yytext = 'np'; //js
-		return 'WIKILINK_START'; //js
+		return 'LINK_START'; //js
 
 		//php if ($this->isContent()) return 'CONTENT';
 		//php $this->linkStack = true;
 		//php $this->begin('wikilink');
 		//php $yytext = 'np';
-		//php return 'WIKILINK_START';
+		//php return 'LINK_START';
 	%}
 "("{WIKI_LINK_TYPE}"("
 	%{
@@ -661,13 +663,13 @@ CAPITOL_WORD                    ([A-Z]{1,}[a-z]{1,}){2,}
 		parser.linkStack = true; //js
 		lexer.begin('wikilink'); //js
 		$yytext = $yytext.substring(1, $yytext.length - 1); //js
-		return 'WIKILINK_START'; //js
+		return 'LINK_START'; //js
 
 		//php if ($this->isContent()) return 'CONTENT';
 		//php $this->linkStack = true;
 		//php $this->begin('wikilink');
 		//php $yytext = substr($yytext, 1, -1);
-		//php return 'WIKILINK_START';
+		//php return 'LINK_START';
 	%}
 {CAPITOL_WORD}
 	%{
@@ -870,9 +872,14 @@ content
  | LINK_START LINK_END
  | LINK_START contents LINK_END
 	{
-		$$ = parser.link($2); //js
-		//php $$ = $this->link($2);
+		$$ = parser.link($1, $2); //js
+		//php $$ = $this->link($1, $2);
 	}
+| LINK
+    {
+        $$ = parser.link('word', $1); //js
+        //php $$ = $this->link('word', $1);
+    }
  | STRIKE_START STRIKE_END
  | STRIKE_START contents STRIKE_END
 	{
@@ -902,17 +909,6 @@ content
 		$$ = parser.underscore($2); //js
 		//php $$ = $this->underscore($2);
 	}
- | WIKILINK_START WIKILINK_END
- | WIKILINK_START contents WIKILINK_END
-	{
-		$$ = parser.wikilink($1, $2); //js
-		//php $$ = $this->wikilink($1, $2);
-	}
- | WIKILINK
-    {
-        $$ = parser.wikilink('word', $1); //js
-        //php $$ = $this->wikilink('word', $1);
-    }
  | INLINE_PLUGIN
  	{
  		$$ = parser.plugin($1); //js

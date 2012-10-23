@@ -80,7 +80,7 @@ class JisonParser_OutputTest extends JisonParser_Abstract
 			'color_text2'       => array('~~#ff00ff:text~~', '<span style="color: #ff00ff;">text</span>'),
 			'htmllink'          => array("[www.google.com]", '<a class="wiki" href="www.google.com">www.google.com</a>'),
 			'htmllink1'         => array("[www.google.com|Google]", '<a class="wiki" href="www.google.com">Google</a>'),
-			'wikilink'          => array("((Wiki Page))", '<a class="wiki" title="Wiki Page" href="tiki-index.php?page=Wiki Page">Wiki Page</a>'),
+			'wikilink'          => array("((HomePage))", '<a class="wiki" title="HomePage" href="tiki-index.php?page=HomePage">HomePage</a>'),
 			'capitol_wikilink'  => array(),
 			'np_wikilink'       => array(),
 			'wikilink_w_wiki'   => array(),

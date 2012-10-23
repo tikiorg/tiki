@@ -17,6 +17,7 @@ class JisonParser_Abstract extends TikiTestCase
 		global $prefs;
 		$prefs['feature_jison_wiki_parser'] = 'y';
 		$this->parser = new JisonParser_Wiki_Handler();
+		$this->parser->setOption(array('skipPageCache' => true));
 		$this->called = 0;
 		$this->provider();
 
