@@ -8,8 +8,6 @@
 class JisonParser_Wiki_Link
 {
 	public $page;
-	public $externalLocation;
-	public $externalWikiName;
 	public $pageLink;
 	public $type;
 	public $namespace;
@@ -47,13 +45,6 @@ class JisonParser_Wiki_Link
 		}
 
 		return $link;
-	}
-
-	public function setExternalWikiName($externalWikiName)
-	{
-		$this->externalWikiName = $externalWikiName;
-
-		return $this;
 	}
 
 	public function setType($type)
@@ -108,26 +99,6 @@ class JisonParser_Wiki_Link
 		return $this;
 	}
 
-	function externalWikiHtml()
-	{
-		return '<a href="' . $this->externalWikiUrl() . '">' . (isset($this->description) ? $this->description : $this->page) . '</a>';
-	}
-
-	public function externalWikiUrl()
-	{
-		global $tikilib;
-
-		$url = $tikilib->getOne('SELECT extwiki FROM tiki_extwiki WHERE name = ?', array(strtolower($this->externalWikiName)));
-
-		$url = str_replace('$page', $this->page, $url);
-
-		if (strstr('://', $url) === false) {
-			$url = 'http://' . $url;
-		}
-
-		return $url;
-	}
-
 	function externalHtml()
 	{
 		global $tikilib, $prefs, $smarty;
@@ -179,9 +150,6 @@ class JisonParser_Wiki_Link
 				break;
 			case 'external':
 				return $this->externalHtml();
-				break;
-			case 'externalWiki':
-				return $this->externalWikiHtml();
 				break;
 		}
 

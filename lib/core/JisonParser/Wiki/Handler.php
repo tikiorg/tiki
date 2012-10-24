@@ -1166,15 +1166,6 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		array_shift($parts);
 		$description = implode('|', $parts);
 
-		$externalWiki = false;
-		$externalWikiName = '';
-		if (strpos($page,':') && $type == 'wiki') {
-			$externalWiki = true;
-			$parts = explode(':', $page);
-			$externalWikiName = array_shift($parts);
-			$page = implode(':', $parts);
-			$type = 'externalWiki';
-		}
 
 		if (!empty($description)) {
 			$feature_wikiwords = $prefs['feature_wikiwords'];
@@ -1183,18 +1174,13 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 			$prefs['feature_wikiwords'] = $feature_wikiwords;
 		}
 
-		$link = JisonParser_Wiki_Link::page($page)
+		return JisonParser_Wiki_Link::page($page)
 			->setNamespace($this->getOption('namespace'))
 			->setDescription($description)
 			->setType($type)
 			->setSuppressIcons($this->getOption('suppress_icons'))
-			->setSkipPageCache($this->getOption('skipPageCache'));
-
-		if ($externalWiki == true) {
-			$link->setExternalWikiName($externalWikiName);
-		}
-
-		return $link->getHtml();
+			->setSkipPageCache($this->getOption('skipPageCache'))
+			->getHtml();
 	}
 
 	/**
