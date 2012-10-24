@@ -171,7 +171,6 @@
 		}
 		//$filename = '../' . $usersubmittedfile;
 		$filename = $path_prefix . $usersubmittedfile;
-		echo "$filename = $path_prefix . $usersubmittedfile";
 		$perms_file = $perms_unknown;
 		$css_class = $css_class_user;
 		get_perm_data($filename,$username,$groupname,$perms_asc,$perms_oct);
