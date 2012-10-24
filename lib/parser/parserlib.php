@@ -86,7 +86,7 @@ class ParserLib extends TikiDb_Bridge
 				'skipvalidation'=>  false,
 				'ck_editor'=>   false,
 				'namespace' => false,
-			), (array)$option
+			), (array) $this->option, (array)$option
 		);
 	}
 
@@ -1037,7 +1037,7 @@ if ( \$('#$id') ) {
 		$icon = isset($info['icon']) ? $info['icon'] : 'img/icons/wiki_plugin_edit.png';
 
 		// some plugins are just too flakey to do wysiwyg, so show the "source" for them ;(
-		if (in_array($name, array('trackerlist', 'kaltura', 'toc', 'freetagged', 'draw', 'googlemap'))) {
+		if (in_array($name, array('trackerlist', 'kaltura', 'toc', 'freetagged', 'draw', 'googlemap', 'include'))) {
 			$plugin_result = '&nbsp;&nbsp;&nbsp;&nbsp;' . $ck_editor_plugin;
 		} else {
 			// Tiki 7+ adds ~np~ to plugin output so remove them
@@ -1445,6 +1445,7 @@ if ( \$('#$id') ) {
 		global $page_regex, $slidemode, $prefs, $ownurl_father, $tiki_p_upload_picture, $page_ref_id, $user, $tikidomain, $tikiroot;
 		$wikilib = TikiLib::lib('wiki');
 
+		$this->option = array();
 		$this->setOptions(); //reset options;
 
 		// Handle parsing options
