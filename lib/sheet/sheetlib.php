@@ -278,7 +278,7 @@ class SheetLib extends TikiLib
 		}
 	}
 
-	function replace_sheet( $sheetId, $title, $description, $author, $parentSheetId = 0 ) // {{{2
+	function replace_sheet( $sheetId, $title, $description, $author, $parentSheetId = 0, $layout = array() ) // {{{2
 	{
 		global $prefs;
 
@@ -297,8 +297,36 @@ class SheetLib extends TikiLib
 		else
 		{
 			$this->query( "UPDATE `tiki_sheets` SET `title` = ?, `description` = ?, `author` = ? WHERE `sheetId` = ?", array( $title, $description, $author, (int) $sheetId ) );
+
+			$this->query( "UPDATE `tiki_sheet_layout` SET `end` = ? WHERE `sheetId` = ?", array(time(), $sheetId) );
 		}
-		
+
+		$layoutDefault = array(
+			"sheetId" => $sheetId,
+			"begin"=> time(),
+			"headerRow" => 1,
+			"footerRow" => 1,
+			"className" => '',
+			"parseValues" => 'n',
+			"clonedSheetId" => 0
+		);
+
+		foreach($layoutDefault as $key => $value) {
+			if (empty($layout[$key])) {
+				$layout[$key] = $layoutDefault[$key];
+			}
+		}
+
+		$this->query( "INSERT INTO `tiki_sheet_layout` (`sheetId`, `begin`, `headerRow`, `footerRow`, `className`, `parseValues`, `clonedSheetId`) VALUES (?, ?, ?, ?, ?, ?, ?)", array(
+			$sheetId,
+			$layout["begin"],
+			$layout["headerRow"],
+			$layout["footerRow"],
+			$layout["className"],
+			$layout["parseValues"],
+			$layout["clonedSheetId"]
+		));
+
 		$this->add_related_sheet($parentSheetId, $sheetId);
 		
 		return $sheetId;
@@ -470,7 +498,7 @@ class SheetLib extends TikiLib
 		return true;
 	}
 	
-	function save_sheet($sheets, $sheetId, $type = 'db')
+	function save_sheet($sheets, $sheetId, $layout = array())
 	{
 		global $user, $sheetlib;
 		
@@ -497,7 +525,7 @@ class SheetLib extends TikiLib
 							} else {
 								$title = $info['title'] . ' subsheet'; 
 							}
-							$newId = $sheetlib->replace_sheet( 0, $title, '', $user, $sheetId );
+							$newId = $sheetlib->replace_sheet( 0, $title, '', $user, $sheetId, $layout );
 							$rc .= tra('new') . " (sheetId=$newId) ";
 							$sheet->metadata->sheetId = $newId;
 							$handler = new TikiSheetHTMLTableHandler($sheet);
