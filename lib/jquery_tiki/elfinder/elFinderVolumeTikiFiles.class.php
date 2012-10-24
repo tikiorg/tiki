@@ -22,7 +22,7 @@ class elFinderVolumeTikiFiles extends elFinderVolumeDriver {
 	 *
 	 * @var string
 	 **/
-	protected $driverId = 'm';
+	protected $driverId = 'f';
 
 	/**
 	 * Directory for tmp files
@@ -227,9 +227,10 @@ class elFinderVolumeTikiFiles extends elFinderVolumeDriver {
 				($row['parentId'] == $this->options['path'] ? '' : 'd_') . $row['parentId']
 			);
 		}
-		$r['locked'] = 1;
+		$r['locked'] = 0;	// these are set later
 		$r['read'] = 1;
 		$r['write'] = 0;
+
 		return array($r, $id);
 	}
 
