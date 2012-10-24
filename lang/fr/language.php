@@ -3,7 +3,7 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: get_strings.php 33020 2011-02-21 20:08:01Z sept_7 $
+// $Id: get_strings.php 43650 2012-10-24 16:09:26Z changi67 $
 // Parameters:
 
 // lang=xx    : only translates language 'xx',
@@ -6252,7 +6252,6 @@ $lang=Array(
 // "Vote range displayed" => "Vote range displayed",
 // "votes" => "votes",
 // "Popup preview" => "Popup preview",
-"If you use an email filter, be sure to add %0 to your accepted list" => "Si vous utilisez un filtre de courriel, vérifiez d'avoir ajouté %0 à votre liste d'autorisations",
 // "Clip Articles" => "Clip Articles",
 // "octets" => "octets",
 // "Use /commxmlrpc.php if your Tiki site is installed at the root, otherwise adapt /tiki to your need" => "Use /commxmlrpc.php if your Tiki site is installed at the root, otherwise adapt /tiki to your need",
@@ -14422,6 +14421,7 @@ $lang=Array(
 "However, no account is associated to the OpenID identifier." => "Cependant, aucun compte n'est associé avec l'identifiant.",
 "Your email could not be validated; make sure you email is correct and click register below." => "Votre adresse électronique ne peut pas être validée, vérifier qu'il est correct et cliquer sur S'inscrire.",
 "Register as a new user" => "S'inscrire comme nouvel utilisateur",
+"If you use an email filter, be sure to add %0 to your accepted list" => "Si vous utilisez un filtre de courriel, vérifiez d'avoir ajouté %0 à votre liste d'autorisations",
 "Associate OpenID with an existing Tikiwiki account" => "Associer l'OpenID avec un compte Tikiwiki existant",
 "Tiki site registered" => "Site Tiki enregistré",
 "The following site was added and validation by admin may be needed before appearing on the lists" => "Le site suivant a été ajouté, la validation de l'administrateur est peut être nécessaire",

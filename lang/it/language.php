@@ -3,7 +3,7 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: get_strings.php 33020 2011-02-21 20:08:01Z sept_7 $
+// $Id: get_strings.php 43650 2012-10-24 16:09:26Z changi67 $
 // Parameters:
 
 // lang=xx    : only translates language 'xx',
