@@ -3,9 +3,9 @@
 {tikimodule error=$module_params.error title=$tpl_module_title name="quickadmin" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}
 	{if $tiki_p_admin == "y"}
 		<div id="quickadmin" style="text-align: left; padding-left: 12px;">
-			<ul class="cssmenu_horiz clearfix">
+			<ul class="cssmenu_horiz clearfix" style="display: inline-block;line-height: 30px;">
 				<li>
-					<a>{tr}Quick Admin{/tr}:</a>
+					<a>&nbsp;</a>
 					<ul class="recent-prefs">
 						<li style="line-height: 2em;"><em>{tr}Recent:{/tr}</em></li>
 						{foreach $recent_prefs as $p}

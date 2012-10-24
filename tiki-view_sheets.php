@@ -93,7 +93,7 @@ if ($prefs['feature_contribution'] == 'y') {
 //Save
 if (isset($_REQUEST['s']) && !empty($_REQUEST['s']) ) { //save
 	if ( $_REQUEST['sheetId'] ) {
-		$result = $sheetlib->save_sheet($_REQUEST['s'], $_REQUEST['sheetId']);
+		$result = $sheetlib->save_sheet($_REQUEST['s'], $_REQUEST['sheetId'], $_REQUEST);
 	}
 	die($result);
 
@@ -176,7 +176,7 @@ if ( isset($_REQUEST['relate']) && isset($_REQUEST['trackerId']) ) {
 	$grid->import($handler);
 
 	//ensure that sheet isn't being edited, then parse values if needed
-	if ( $grid->parseValues && $_REQUEST['parse'] != 'edit' ) {
+	if ( $_REQUEST['parse'] != 'edit' ) {
 		$grid->parseValues = true;
 	} else {
 		$grid->parseValues = false;

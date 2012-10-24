@@ -94,64 +94,120 @@ class JisonParser_Wiki_List
 		return $lists;
 	}
 
-	private function toHtmlChildren(&$stack, $html = "")
+	private function toHtmlChildren(&$stack)
 	{
-		$result = '';
-		$style = '';
-		$parentTagType = 'ul';
-		$id = $this->id();
-		$lastListType = '';
+		global $headerlib;
+		$length = count($stack);
+		if ($length < 1) return ''; //if there isn't anything in this list, don't process it
+		$lastParentTagType = '';
+		$lastType = '';
+		$id = '';
+		$html = '';
 
-		for ($i = 0, $length = count($stack); $i < $length; $i++) {
+		for ($i = 0; $i < $length; $i++) {
 			if (isset($stack[$i]) && empty($stack[$i]['content']) == false) {
-				if (empty($style)) {
-					switch($stack[$i]['type']) {
-						case '-':
-							$style = 'display: none;';
-							$html = '<br />' . "\n" . '<a id="flipper' . $id . '" href="javascript:flipWithSign(\'' . $id . '\');" class="link">[+]</a>';
-						case '+':
-							if ($lastListType == '') {
-								$lastListType = "*";
-								$stack[$i]['type'] = "*";
-							}
-						case '*':
-							$result .= '<li class="tikiListItem">' . $stack[$i]['content'];
-							if (!empty($stack[$i]['children'])) {
-								$result .= $this->toHtmlChildren($stack[$i]['children']);
-							}
-							$result .= $this->advanceUntilNotType($i, $stack);
-							$result .= '</li>' . "\n";
-							break;
-						case '#':
-							$parentTagType = 'ol';
-							$result .= '<li class="tikiListItem">' . $stack[$i]['content'];
-							if (!empty($stack[$i]['children'])) {
-								$result .= $this->toHtmlChildren($stack[$i]['children']);
-							}
-							$result .= $this->advanceUntilNotType($i, $stack);
-							$result .= '</li>' . "\n";
-							break;
-						case ';':
-							$parentTagType = 'dl';
-							$parts = explode(':', $stack[$i]['content']);
-							$result .= '<dt>'  . $parts[0] . '</dt>';
-							if (isset($parts[1])) {
-								$result .= '<dd>'  . $parts[1] . '</dd>';
-							}
-							$result .= "\n";
-							break;
-					}
-				}
-			}
 
-			if (isset($stack[$i]['type'])) {
-				$lastListType = $stack[$i]['type'];
+				$html .= $this->writeParentStartTag($stack[$i]['type'], $lastType, $lastParentTagType, $id);
+
+				switch($stack[$i]['type']) {
+					case '-':
+						$headerlib->add_css("#" . $id . "{display: none;}");
+					case '+':
+					case '*':
+					$html .= '<li class="tikiListItem">' . $stack[$i]['content'];
+						if (!empty($stack[$i]['children'])) {
+							$html .= $this->toHtmlChildren($stack[$i]['children']);
+						}
+						$html .= $this->advanceUntilNotType($i, $stack);
+						$html .= '</li>' . "\n";
+						break;
+					case '#':
+						$html .= '<li class="tikiListItem">' . $stack[$i]['content'];
+						if (!empty($stack[$i]['children'])) {
+							$html .= $this->toHtmlChildren($stack[$i]['children']);
+						}
+						$html .= $this->advanceUntilNotType($i, $stack);
+						$html .= '</li>' . "\n";
+						break;
+					case ';':
+						$parts = explode(':', $stack[$i]['content']);
+						$html .= '<dt>'  . $parts[0] . '</dt>';
+						if (isset($parts[1])) {
+							$html .= '<dd>'  . $parts[1] . '</dd>';
+						}
+						$html .= "\n";
+						break;
+				}
 			}
 		}
 
 		unset($stack);
 
-		return $html . '<' . $parentTagType . ' class="tikiList" id="' . $id . '" style="' . $style . '">' . $result . '</' . $parentTagType . '>';
+		$html .= $this->writeParentEndTag($lastParentTagType);
+
+		return $html;
+	}
+
+	private function writeParentStartTag($listType, &$lastListType, &$parentTagType, &$id)
+	{
+		$result = '';
+		if ($listType != $lastListType && $this->lineCompatibility($listType, $lastListType) != true) {
+			$preTag = '';
+			if (empty($parentTagType) == false) {
+				$result .= $this->writeParentEndTag($parentTagType);
+			}
+
+			$parentTagType = $this->parentTagType($listType);
+
+			$id = $this->id();
+
+			if ($listType == "-") {
+				$preTag = '<br />' . "\n" . '<a id="flipper' . $id . '" href="javascript:flipWithSign(\'' . $id . '\');" class="link">[+]</a>';
+			}
+
+			$lastListType = $listType;
+			$result .= $preTag . '<' . $parentTagType . ' class="tikiList" id="' . $id . '">';
+		}
+
+		return $result;
+	}
+
+	private function lineCompatibility($thisListType = '', $lastListType = '')
+	{
+		if (
+			($lastListType == "*" && $thisListType == "+") ||
+			($lastListType == "+" && $thisListType == "*")
+		) {
+			return true;
+		}
+
+		if ($lastListType == $thisListType) {
+			return true;
+		}
+
+		return false;
+	}
+
+	private function writeParentEndTag($parentTagType)
+	{
+		return '</' . $parentTagType . '>';
+	}
+
+	private function parentTagType($listType = '')
+	{
+		switch ($listType) {
+			case '-':
+			case '+':
+			case '*':
+				return 'ul';
+				break;
+			case '#':
+				return 'ol';
+				break;
+			case ';':
+				return 'dl';
+				break;
+		}
 	}
 
 	private function advanceUntilNotType(&$i, &$stack, $type = "+", $wrapping = array("<br />", "\n"))

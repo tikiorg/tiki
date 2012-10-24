@@ -17,12 +17,32 @@ class JisonParser_Abstract extends TikiTestCase
 		global $prefs;
 		$prefs['feature_jison_wiki_parser'] = 'y';
 		$this->parser = new JisonParser_Wiki_Handler();
+		$this->parser->setOption(array('skipPageCache' => true));
 		$this->called = 0;
 		$this->provider();
 
 		WikiPlugin_Negotiator_Wiki::$standardRelativePath = "../wiki-plugins/wikiplugin_";
 		WikiPlugin_Negotiator_Wiki::$zendRelativePath = "../core/WikiPlugin/";
 		WikiPlugin_Negotiator_Wiki::$checkZendPaths = false;
+
+		$this->removeFakePage();
+		$this->createFakePage();
+	}
+
+	public function removeFakePage()
+	{
+		global $tikilib;
+		$tikilib->query('DELETE FROM `tiki_pages` WHERE `pageName` = ?', array("FakePage"));
+		$tikilib->query('DELETE FROM `tiki_pages` WHERE `pageName` = ?', array("[FakePage]"));
+	}
+
+	public function createFakePage()
+	{
+		global $wikilib;
+		$_SERVER["SERVER_NAME"] = 'localhost';
+		$_SERVER["REQUEST_URI"] = 'localhost';
+		$wikilib->create_page("FakePage",0,"",0,"Fake Tiki Page");
+		$wikilib->create_page("[FakePage]",0,"",0,"Fake Tiki Page");
 	}
 
 	public function testOutput()

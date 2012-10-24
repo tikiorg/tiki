@@ -1296,6 +1296,17 @@ class WikiLib extends TikiLib
 		return $pageName;
 	}
 
+	public function include_default_namespace($pageName)
+	{
+		global $prefs;
+
+		if ($prefs['namespace_enabled'] == 'y' && ! empty($prefs['namespace_default'])) {
+			return $prefs['namespace_default'] . $prefs['namespace_separator'] . $pageName;
+		} else {
+			return $pageName;
+		}
+	}
+
 	public function get_namespace_parts($pageName)
 	{
 		global $prefs;

@@ -136,7 +136,7 @@ case 35:
 	
 break;
 case 37:
-		$thisS = $this->link($S[$O-1]);
+		$thisS = $this->link($S[$O-2], $S[$O-1]);
 	
 break;
 case 39:
@@ -160,11 +160,11 @@ case 46:
 	
 break;
 case 48:
-		$thisS = $this->wikilink($S[$O-2], $S[$O-1]);
+		$thisS = $this->link($S[$O-2], $S[$O-1]);
 	
 break;
 case 49:
-        $thisS = $this->wikilink('word', $S[$O]);
+        $thisS = $this->link('word', $S[$O]);
     
 break;
 case 50:
@@ -786,11 +786,15 @@ case 15:
 	
 break;
 case 16:
-		return 21;
+
+        if ($this->isContent()) return 'CONTENT';
+        return 'HORIZONTAL_BAR';
 	
 break;
 case 17:
-		return 54;
+
+        if ($this->isContent()) return 'CONTENT';
+        return 'FORCED_LINE_END';
 	
 break;
 case 18:
@@ -952,6 +956,7 @@ case 41:
 		if ($this->isContent()) return 'CONTENT';
 		$this->linkStack = true;
 		$this->begin('link');
+		$yy_->yytext = 'external';
 		return 'LINK_START';
 	
 break;
@@ -1060,7 +1065,7 @@ case 57:
 		if ($this->isContent()) return 'CONTENT';
 		$this->linkStack = true;
 		$this->begin('wikilink');
-		$yy_->yytext = '';
+		$yy_->yytext = 'wiki';
 		return 'WIKILINK_START';
 	
 break;

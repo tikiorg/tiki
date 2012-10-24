@@ -743,6 +743,24 @@ li.login_link ul li a {
 	color: #fff;
 }
 
+.box-quickadmin .cssmenu_horiz a {
+	color: #128bc9;
+	padding: .75em 1em;
+}
+
+.box-quickadmin .cssmenu_horiz  .sf-sub-indicator {
+	background: url(fivealive/options/blueberry/arrows-1174a5.png) no-repeat 10px 0;
+}
+
+.box-quickadmin .cssmenu_horiz li a  .sf-sub-indicator {
+	top: 10px;
+	background-position: -10px -100px;
+}
+
+.box-quickadmin .cssmenu_horiz li ul a {
+	background-color: #fff;
+}
+
 .header #secondary_site_menu .cssmenu_horiz li a {
 	font-weight: 400;
 	padding: 8px .7em;

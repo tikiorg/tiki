@@ -75,16 +75,8 @@ function smarty_function_menu($params, $smarty)
 	$smarty->assign('menu_info', $menu_info);
 	$smarty->assign('escape_menu_labels', ($prefs['menus_item_names_raw'] === 'n' && isset($menu_info['parse']) && $menu_info['parse'] === 'n'));
 	$data = $smarty->fetch($tpl);
-	$data = preg_replace('/<ul>\s*<\/ul>/', '', $data);
-	$data = preg_replace('/<ol>\s*<\/ol>/', '', $data);
-	if ($prefs['mobile_feature'] !== 'y' || $prefs['mobile_mode'] !== 'y') {
-		return '<nav class="role_navigation">' . $data . '</nav>';
-	} else {
-		$data = preg_replace('/<ul ([^>]*)>/Umi', '<ul $1 data-role="listview" data-theme="'.$prefs['mobile_theme_menus'].'">', $data, 1);
-		// crude but effective hack for loading menu items via ajax - hopefully to be replaced by something more elegant soon
-		$data = preg_replace('/<a ([^>]*)>/Umi', '<a $1 rel="external">', $data);
-		return $data;
-	}
+	$menulib = TikiLib::lib('menu');
+	return $menulib->clean_menu_html($data);
 }
 
 function compare_menu_options($a, $b)
