@@ -10,6 +10,7 @@
 	.equal		{background-color: green;}
 	.notequal	{background-color: red;}
 	.unknown	{background-color: yellow;}
+	.user		{background-color: blue;}
 	.important	{background-color: black;	color:	red;}
 	.hint		{background-color: black;	color:	yellow;}
 </style>
@@ -129,39 +130,48 @@
 	// general data for special checks
 	$perms_unknown='???';
 	$css_class_unknown='unknown';
-	$html_empty_table_row='<tr><td>&nbsp;</td></tr>'."\n  ";
+	$css_class_user='user';
+	$html_empty_table_row='<tr><td>&nbsp;</td><td></td><td></td><td></td><td></td><td></td></tr>'."\n  ";
 	echo $html_empty_table_row ;
 	// special:
 	//
-	$homefile='/etc';
-	$filename=$homefile;
-	$perms_file=$perms_unknown;
-	$css_class=$css_class_unknown;
-	get_perm_data($filename,$username,$groupname,$perms_asc,$perms_oct);
-	echo '<tr>' . '<td><em class="'.$css_class.'">' . $perms_file . '</em></td><td>' . $username . '</td><td>' . $groupname . '</td><td>' . $perms_asc . '</td><td>' . $perms_oct . '</td><td>' . $filename . '</td></tr>' . "\n  ";
+//	$homefile='/etc';
+//	$filename=$homefile;
+//	$perms_file=$perms_unknown;
+//	$css_class=$css_class_unknown;
+//	get_perm_data($filename,$username,$groupname,$perms_asc,$perms_oct);
+//	echo '<tr>' . '<td><em class="'.$css_class.'">' . $perms_file . '</em></td><td>' . $username . '</td><td>' . $groupname . '</td><td>' . $perms_asc . '</td><td>' . $perms_oct . '</td><td>' . $filename . '</td></tr>' . "\n  ";
 	//
-	$homefile='/home';
-	$filename=$homefile;
-	$perms_file=$perms_unknown;
-	$css_class=$css_class_unknown;
-	get_perm_data($filename,$username,$groupname,$perms_asc,$perms_oct);
-	echo '<tr>' . '<td><em class="'.$css_class.'">' . $perms_file . '</em></td><td>' . $username . '</td><td>' . $groupname . '</td><td>' . $perms_asc . '</td><td>' . $perms_oct . '</td><td>' . $filename . '</td></tr>' . "\n  ";
+//	$homefile='/home';
+//	$filename=$homefile;
+//	$perms_file=$perms_unknown;
+//	$css_class=$css_class_unknown;
+//	get_perm_data($filename,$username,$groupname,$perms_asc,$perms_oct);
+//	echo '<tr>' . '<td><em class="'.$css_class.'">' . $perms_file . '</em></td><td>' . $username . '</td><td>' . $groupname . '</td><td>' . $perms_asc . '</td><td>' . $perms_oct . '</td><td>' . $filename . '</td></tr>' . "\n  ";
 	// php safe mode: check for /tmp
-	$tmpfile='/tmp';
-	$filename=$tmpfile;
-	$perms_file=$perms_unknown;
-	$css_class=$css_class_unknown;
+	$tmpfile = '/tmp';
+	$filename = $tmpfile;
+	$perms_file = $perms_unknown;
+	$css_class = $css_class_unknown;
 	get_perm_data($filename,$username,$groupname,$perms_asc,$perms_oct);
 	echo '<tr>' . '<td><em class="'.$css_class.'">' . $perms_file . '</em></td><td>' . $username . '</td><td>' . $groupname . '</td><td>' . $perms_asc . '</td><td>' . $perms_oct . '</td><td>' . $filename . '</td></tr>' . "\n  ";
 	//
-	$nosuchfile='/example_does_not_exist';
-	$filename=$nosuchfile;
-	$perms_file=$perms_unknown;
-	$css_class=$css_class_unknown;
-	get_perm_data($filename,$username,$groupname,$perms_asc,$perms_oct);
-	echo '<tr>' . '<td><em class="'.$css_class.'">' . $perms_file . '</em></td><td>' . $username . '</td><td>' . $groupname . '</td><td>' . $perms_asc . '</td><td>' . $perms_oct . '</td><td>' . $filename . '</td></tr>' . "\n  ";
+//	$nosuchfile='/example_does_not_exist';
+	$usersubmittedfile = $_POST['usersubmittedfile'];
+	//$sendfile = $_POST['sendfile'];
+	if ( $usersubmittedfile == "" ) {
+		$dummy="foo";
+	} else {
+		$filename = '../' . $usersubmittedfile;
+		$perms_file = $perms_unknown;
+		$css_class = $css_class_user;
+		get_perm_data($filename,$username,$groupname,$perms_asc,$perms_oct);
+		echo '<tr>' . '<td><em class="'.$css_class.'">' . $perms_file . '</em></td><td>' . $username . '</td><td>' . $groupname . '</td><td>' . $perms_asc . '</td><td>' . $perms_oct . '</td><td>' . $usersubmittedfile . '</td></tr>' . "\n  ";
+	}
 ?>
  </table></div>
+ <div>&nbsp;</div>
+ <form method="post"><input type="text" name="usersubmittedfile" size="42"> <input type="submit" name="sendfile" value="send path or file"></form>
  <p class="block">
 	Enjoy <a href="https://tiki.org/" target="_blank">Tiki</a> and
 	<a href="https://tiki.org/tiki-register.php" target="_blank">join the community</a>!
