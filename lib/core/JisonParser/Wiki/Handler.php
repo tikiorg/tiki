@@ -1294,47 +1294,6 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		return '<u>' . $content . '</u>';
 	}
 
-	/**
-	 * syntax handler: wiki link, (($content)) or ))$content(( or WordWord, if surrounded by (()) or ))((, a pipe can be used at the text for the link
-	 * <p>
-	 * Alternate syntax: (($href|$text))
-	 * Alternate syntax: ($type($href|$text))
-	 *
-	 * @access  public
-	 * @param   $content parsed string found inside detected syntax
-	 * @return  string  $content desired output from syntax
-	 */
-	function wikilink($type = '', $content) //((content|content))
-	{
-		global $prefs;
-		//DEPRICATED
-		/*
-		$wikilink = explode('|', $content);
-
-		$page = (isset($wikilink[0]) ? $wikilink[0] : $content);
-		$title = $content;
-		$text = $content;
-
-		if (isset($wikilink[1])) {
-			array_shift($wikilink); //get rid of the beginning, which is the wiki link
-
-			$title = implode('|', $wikilink); //prepare for parsing
-
-			$parser = new self();
-			$feature_wikiwords = $prefs['feature_wikiwords'];
-			$prefs['feature_wikiwords'] = 'n';
-			$text = $parser->parse($title); //NOTE: We parse the text, so we can be flexible with syntax
-			$prefs['feature_wikiwords'] = $feature_wikiwords;
-		}
-
-		$title = addslashes(htmlspecialchars($title));
-
-		$type = strtolower($type);
-
-		return JisonParser_Wiki_Link::page($page)
-			->setNameSpace($this->getOption('namespace'))
-			->setType($type);*/
-	}
 
 	/**
 	 * syntax handler: tiki comment, ~tc~$content~/tc~
