@@ -74,35 +74,15 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	/* html character */
 	public $htmlCharacter;
 
+	/* special character */
+	public $specialCharacter;
+
 	/* html tag tracking */
 	public $nonBreakingTagDepth = 0;
 
 	/* line tracking */
 	private $isFirstBr = false;
 	private $line = 0;
-
-	//This var is used in both protectSpecialChars and unprotectSpecialChars to simplify the html ouput process
-	public $specialChars = array(
-		'≤REAL_LT≥' => array(
-			'html'=>		'<',
-			'nonHtml'=>		'&lt;'
-		),
-		'≤REAL_GT≥' => array(
-			'html'=>		'>',
-			'nonHtml'=>		'&gt;'
-		),
-		'≤REAL_NBSP≥' => array(
-			'html'=>		'&nbsp;',
-			'nonHtml'=>		'&nbsp;'
-		),
-		/*on post back the page is parsed, which turns & into &amp;
-		this is done to prevent that from happening, we are just
-		protecting some chars from letting the parser nab them*/
-		'≤REAL_AMP≥' => array(
-			'html'=>		'& ',
-			'nonHtml'=>		'& '
-		),
-	);
 
 	public $user;
 	public $prefs;
@@ -243,6 +223,10 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 			$this->Parser->htmlCharacter = new JisonParser_Wiki_HtmlCharacter($this->Parser);
 		}
 
+		if (isset($this->Parser->specialCharacter) == false) {
+			$this->Parser->specialCharacter = new JisonParser_Wiki_SpecialChar();
+		}
+
 		if (empty($this->Parser->option) == true) {
 			$this->resetOption();
 		}
@@ -372,7 +356,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 
 		$input = "\n" . $input . "\n"; //here we add 2 lines, so the parser doesn't have to do special things to track the first line and last, we remove these when we insert breaks, these are dynamically removed later
 
-		$input = $this->protectSpecialChars($input);
+		$input = $this->specialCharacter->protect($input);
 	}
 
 	/**
@@ -419,7 +403,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 
 		if ($this->Parser->parseDepth == 0) {
 			ini_set("pcre.recursion_limit", $this->pcreRecursionLimit);
-			$output = $this->unprotectSpecialChars($output);
+			$output = $this->specialCharacter->unprotect($output);
 		}
 	}
 
@@ -433,7 +417,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	 */
 	function plugin(&$pluginDetails)
 	{
-		$pluginDetails['body'] = $this->unprotectSpecialChars($pluginDetails['body'], true);
+		$pluginDetails['body'] = $this->specialCharacter->unprotect($pluginDetails['body'], true);
 		$negotiator =& $this->pluginNegotiator;
 
 		$negotiator->setDetails($pluginDetails);
@@ -614,53 +598,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		}
 	}
 
-	/**
-	 * used to protect special characters temporarily, so that they cannot be decoded or encoded.  Later we can
-	 * unprotect them to what they were or to an alternate character
-	 *
-	 * @access  public
-	 * @param   string  $input unparsed syntax
-	 * @return  string  $input protected
-	 */
-	public function protectSpecialChars($input)
-	{
-		if (
-			$this->isHtmlPurifying == true ||
-			$this->getOption('is_html') == false
-		) {
-			foreach ($this->specialChars as $key => $specialChar) {
-				$input = str_replace($specialChar['html'], $key, $input);
-			}
-		}
 
-		return $input;
-	}
-
-	/**
-	 * used to unprotect special characters possibly with an alternate character
-	 *
-	 * @access  public
-	 * @param   string  $input unparsed syntax
-	 * @param   bool  $is_html true for html context, false for non-html context
-	 * @return  string  $input protected
-	 */
-	public function unprotectSpecialChars($input, $is_html = false)
-	{
-		if (
-			$is_html == true ||
-			$this->getOption('is_html') == true
-		) {
-			foreach ($this->specialChars as $key => $specialChar) {
-				$input = str_replace($key, $specialChar['html'], $input);
-			}
-		} else {
-			foreach ($this->specialChars as $key => $specialChar) {
-				$input = str_replace($key, $specialChar['nonHtml'], $input);
-			}
-		}
-
-		return $input;
-	}
 
 
 	//end state handlers
@@ -675,7 +613,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	public function np($content)
 	{
 		if ( $this->getOption('parseNps') == true) {
-			$content = $this->unprotectSpecialChars($content);
+			$content = $this->specialCharacter->unprotect($content);
 		}
 
 		return $content;
@@ -704,7 +642,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	 */
 	function htmlTag($content)
 	{
-		$parts = preg_split("/[ >]/", substr($this->unprotectSpecialChars($content, true), 1)); //<tag> || <tag name="">
+		$parts = preg_split("/[ >]/", substr($this->specialCharacter->unprotect($content, true), 1)); //<tag> || <tag name="">
 		$name = strtolower(trim($parts[0]));
 
 		switch ($name) {
