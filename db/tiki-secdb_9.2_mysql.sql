@@ -6699,7 +6699,7 @@ INSERT INTO `tiki_secdb` (`filename`, `md5_value`, `tiki_version`, `severity`) V
 INSERT INTO `tiki_secdb` (`filename`, `md5_value`, `tiki_version`, `severity`) VALUES('./lib/tikihelp/menu/menuNodes.js', '3a58a2fe95f389c6b620dbf8357bb3f5', '9.2', 0);
 INSERT INTO `tiki_secdb` (`filename`, `md5_value`, `tiki_version`, `severity`) VALUES('./lib/tikihelp/menu/ua.js', '11eb5f2d2ffdbc019cc4e7ec0e818e18', '9.2', 0);
 INSERT INTO `tiki_secdb` (`filename`, `md5_value`, `tiki_version`, `severity`) VALUES('./lib/tikihelplib.php', '8814277b5c01e21601723b57a46bbe15', '9.2', 0);
-INSERT INTO `tiki_secdb` (`filename`, `md5_value`, `tiki_version`, `severity`) VALUES('./lib/tikilib.php', 'fe0c6f055084ef6dd7b6f8ee6f2ce012', '9.2', 0);
+INSERT INTO `tiki_secdb` (`filename`, `md5_value`, `tiki_version`, `severity`) VALUES('./lib/tikilib.php', '448e93044e8976d83fb3862438f68aa7', '9.2', 0);
 INSERT INTO `tiki_secdb` (`filename`, `md5_value`, `tiki_version`, `severity`) VALUES('./lib/tikisession-adodb.php', '728dab85d8f415ce8435053fdc7dedd5', '9.2', 0);
 INSERT INTO `tiki_secdb` (`filename`, `md5_value`, `tiki_version`, `severity`) VALUES('./lib/tikisession-memcache.php', '6b0325effc9253909f320ec2a881278b', '9.2', 0);
 INSERT INTO `tiki_secdb` (`filename`, `md5_value`, `tiki_version`, `severity`) VALUES('./lib/tikisession-pdo.php', '6f22a625d6f0abecab0a46ffeaa31694', '9.2', 0);
