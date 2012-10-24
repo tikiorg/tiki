@@ -7,6 +7,12 @@
 
 class JisonParser_Wiki_SpecialChar
 {
+	public $parser;
+
+	function __construct(&$parser)
+	{
+		$this->parser = $parser;
+	}
 
 	//This var is used in both protectSpecialChars and unprotectSpecialChars to simplify the html ouput process
 	public $specialChars = array(
@@ -43,7 +49,7 @@ class JisonParser_Wiki_SpecialChar
 	{
 		if (
 			$this->isHtmlPurifying == true ||
-			$this->getOption('is_html') == false
+			$this->parser->getOption('is_html') == false
 		) {
 			foreach ($this->specialChars as $key => $specialChar) {
 				$input = str_replace($specialChar['html'], $key, $input);
@@ -65,7 +71,7 @@ class JisonParser_Wiki_SpecialChar
 	{
 		if (
 			$is_html == true ||
-			$this->getOption('is_html') == true
+			$this->parser->getOption('is_html') == true
 		) {
 			foreach ($this->specialChars as $key => $specialChar) {
 				$input = str_replace($key, $specialChar['html'], $input);

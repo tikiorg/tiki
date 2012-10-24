@@ -223,8 +223,8 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 			$this->Parser->htmlCharacter = new JisonParser_Wiki_HtmlCharacter($this->Parser);
 		}
 
-		if (isset($this->Parser->specialCharacter) == false) {
-			$this->Parser->specialCharacter = new JisonParser_Wiki_SpecialChar();
+		if (isset($this->specialCharacter) == false) {
+			$this->specialCharacter = new JisonParser_Wiki_SpecialChar($this->Parser);
 		}
 
 		if (empty($this->Parser->option) == true) {
