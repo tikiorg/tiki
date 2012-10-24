@@ -103,7 +103,6 @@
 					<input type="hidden" name="id" value="{$deliberation.threadId}" />
 					<input type="hidden" name="type" value="comment" />
 				</form>
-				<br /><br /><br /><br />
 			</div>
 		{/foreach}
 		{jq}

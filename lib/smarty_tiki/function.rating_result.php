@@ -23,6 +23,6 @@ function smarty_function_rating_result( $params, $smarty )
 		</td>';
 	}
 
-	return "<table class='ratingDeliberationResultTable' width='100%'><tr>" . $tableBody . "</tr></table>";
+	return "<table class='ratingDeliberationResultTable' style='width:100%;'><tr>" . $tableBody . "</tr></table>";
 }
 
