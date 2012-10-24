@@ -162,7 +162,16 @@
 	if ( $usersubmittedfile == "" ) {
 		$dummy="foo";
 	} else {
-		$filename = '../' . $usersubmittedfile;
+		$first_character = substr($usersubmittedfile,0,1);
+		if ($first_character == '/') {
+			//$path_prefix = '/';
+			$path_prefix = '';
+		} else {
+			$path_prefix = '../';
+		}
+		//$filename = '../' . $usersubmittedfile;
+		$filename = $path_prefix . $usersubmittedfile;
+		echo "$filename = $path_prefix . $usersubmittedfile";
 		$perms_file = $perms_unknown;
 		$css_class = $css_class_user;
 		get_perm_data($filename,$username,$groupname,$perms_asc,$perms_oct);
