@@ -25,6 +25,53 @@ When possible, it's also nice to indicate what feature is concerned by the chang
 Before 2.0, there was only [MOD] for both [ENH] and [MOD]:
 
 ----------------------------------------------------------------------
+Version 6.8
+<http://tiki.org/ReleaseNotes68>
+------------------
+
+----------------------------------------------
+r43640 | jonnybradley | 2012-10-24 15:51:33 +0200 (Wed, 24 Oct 2012) | 1 line
+
+[bp/r43638][SEC] unserialize: More complete check for objects in serialized data when it's not the first item
+----------------------------------------------
+r43270 | Jyhem | 2012-10-03 23:06:48 +0200 (Wed, 03 Oct 2012) | 1 line
+
+Correct and consistent translation of passcode (thanks Olaf)
+----------------------------------------------
+r42631 | amette | 2012-08-21 17:54:59 +0200 (Tue, 21 Aug 2012) | 2 lines
+
+[FIX] Don't die when synching a mailing list post with attachment into a Tiki forum
+
+----------------------------------------------
+r42630 | amette | 2012-08-21 15:31:30 +0200 (Tue, 21 Aug 2012) | 2 lines
+
+[FIX] No more duplication of posts when synchronizing a forum with a mailing list
+
+----------------------------------------------
+r41824 | marclaporte | 2012-06-06 20:40:23 +0200 (Wed, 06 Jun 2012) | 1 line
+
+[FIX] Not exact backport of 9.x because code changed, but reducing number of forms and buttons on the tracking admin page. It corrects the bug that if you change something in form no.1 it blanks out the values in form no.2  Since we are supposed to close proposals branch, I am committing here, and would like the QT to vote on it (and we revert if it's voted down). Thanks! 
+----------------------------------------------
+r41291 | marclaporte | 2012-05-02 23:05:44 +0200 (Wed, 02 May 2012) | 1 line
+
+[bp/r41183 and 41185] [FIX] Category permissions not checked for calendar RSS feed and Using the same validation as in tiki-calendar.php  Thank you Louis-Philippe Huberdeau and Philippe Dallaire Fixes http://dev.tiki.org/wish1372 reported by ibob
+----------------------------------------------
+r41263 | ricks99 | 2012-05-01 19:05:48 +0200 (Tue, 01 May 2012) | 1 line
+
+[FIX] incorrect URL link for calendar RSS from admin page
+----------------------------------------------
+r41199 | marclaporte | 2012-04-30 00:22:08 +0200 (Mon, 30 Apr 2012) | 1 line
+
+Next version is 6.8 :-)
+----------------------------------------------
+r41181 | lphuberdeau | 2012-04-29 20:23:34 +0200 (Sun, 29 Apr 2012) | 1 line
+
+[FIX] Backporting 41177 and 41179 to improve the provisional password generation
+----------------------------------------------
+r41168 | jonnybradley | 2012-04-29 15:36:56 +0200 (Sun, 29 Apr 2012) | 1 line
+
+[QT][bp/r41165][FIX] featured links: Check link exists
+----------------------------------------------
 Version 6.7
 <http://tiki.org/ReleaseNotes67>
 ------------------
