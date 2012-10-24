@@ -115,26 +115,17 @@ class JisonParser_Wiki_Link
 
 	public function externalWikiUrl()
 	{
-		switch (strtolower($this->externalWikiName)) {
-			case 'tw':
-				return 'http://tiki.org/' . $this->page;
-				break;
-			case 'dev':
-				return 'http://dev.tiki.org/' . $this->page;
-				break;
-			case 'wq':
-				return 'http://en.wikiquote.org/wiki/' . $this->page;
-				break;
-			case 'wd':
-				return 'http://en.wiktionary.org/wiki/' . $this->page;
-				break;
-			case 'lq':
-				return 'http://wiki.linuxquestions.org/wiki/' . $this->page;
-				break;
-			case 'wp':
-				return 'http://en.wikipedia.org/wiki/' . $this->page;
-				break;
+		global $tikilib;
+
+		$url = $tikilib->getOne('SELECT extwiki FROM tiki_extwiki WHERE name = ?', array(strtolower($this->externalWikiName)));
+
+		$url = str_replace('$page', $this->page, $url);
+
+		if (strstr('://', $url) === false) {
+			$url = 'http://' . $url;
 		}
+
+		return $url;
 	}
 
 	function externalHtml()
