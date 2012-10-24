@@ -92,7 +92,7 @@
 </div>
 {/if}
 
-{if isset($comment.deliberations) and $tiki_p_forum_vote eq 'y'}
+{if !empty($comment.deliberations) and $tiki_p_forum_vote eq 'y'}
 	<div>
 		<div class="ui-widget-header">{tr}Deliberation Items{/tr}</div>
 		{foreach from=$comment.deliberations item=deliberation}
