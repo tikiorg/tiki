@@ -277,7 +277,6 @@ abstract class WikiPlugin_HtmlBase extends WikiPlugin_ConditionBase
 
 	public function exec($data, $params, $index, &$parser, &$button = '')
 	{
-		print_r($params);
 		$this->paramDefaults($params);
 		$style = $this->stylize($params);
 
