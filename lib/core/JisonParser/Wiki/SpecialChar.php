@@ -48,7 +48,7 @@ class JisonParser_Wiki_SpecialChar
 	public function protect($input)
 	{
 		if (
-			$this->isHtmlPurifying == true ||
+			$this->parser->isHtmlPurifying == true ||
 			$this->parser->getOption('is_html') == false
 		) {
 			foreach ($this->specialChars as $key => $specialChar) {
