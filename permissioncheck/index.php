@@ -31,6 +31,7 @@
  <p>
 	<?php
 	include "permission_granted.inc.php";
+	$ascii_linebreak = "\n";
 	$html_and_ascii_linebreak = "<br />\n";
 	if ($permission_granted=="yes\n") {
 		//$dummy=true;
@@ -64,7 +65,13 @@
 		echo '<a href="https://doc.tiki.org/Permission+Check">https://doc.tiki.org/Permission+Check</a>' . $html_and_ascii_linebreak ;
 		echo $html_and_ascii_linebreak ;
 		echo '<span class="hint">disable permission check on production machines</span>' . $html_and_ascii_linebreak;
-		echo "</p></body></html>";
+		echo '</p>' . $ascii_linebreak;
+		echo ' <p><a href="./">permissioncheck</a></p>' . $ascii_linebreak;
+		echo ' <p class="block">' . $ascii_linebreak;
+		echo '	Enjoy <a href="https://tiki.org/" target="_blank">Tiki</a> and' . $ascii_linebreak;
+		echo '	<a href="https://tiki.org/tiki-register.php" target="_blank">join the community</a>!' . $ascii_linebreak;
+		echo ' </p>' . $ascii_linebreak;
+		echo '</body></html>';
 		die;
 	}
 	?>
@@ -180,6 +187,7 @@
  </table></div>
  <div>&nbsp;</div>
  <form method="post"><input type="text" name="usersubmittedfile" size="42"> <input type="submit" name="checkfile" value="check path or file"></form>
+ <p><a href="./">permissioncheck</a></p>
  <p class="block">
 	Enjoy <a href="https://tiki.org/" target="_blank">Tiki</a> and
 	<a href="https://tiki.org/tiki-register.php" target="_blank">join the community</a>!
