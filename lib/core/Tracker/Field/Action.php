@@ -20,23 +20,23 @@ class Tracker_Field_Action implements Tracker_Field_Interface
 				'params' => array(
 					'label' => array(
 						'name' => tr('Name'),
-						'description' => tr('Needs explanation'),
+						'description' => tr('The title of the button'),
 						'filter' => 'text',
 					),
 					'post' => array(
 						'name' => tr('Post'),
-						'description' => tr('Needs explanation'),
+						'description' => tr('The protocol to use at the form: either get or post'),
 						'filter' => 'text',
 					),
 					'script' => array(
 						'name' => tr('Script'),
-						'description' => tr('Needs explanation'),
+						'description' => tr('The arbitrary url of the destination of the form'),
 						'filter' => 'text',
 						'example' => 'tiki-index.php',
 					),
 					'parameters' => array(
 						'name' => tr('Parameters'),
-						'description' => tr('Needs explanation'),
+						'description' => tr('Here page:fieldname can be repeated several times, it specifies the variable names to pass in the form, as well as value taken from the current item from field named fieldname. highlight=test can also be repeated and is useful for fixed values as params to pass to the form.'),
 						'filter' => 'text',
 						'count' => '*',
 						'example' => 'page:fieldname',
