@@ -19,8 +19,8 @@
 <h1>Tiki Installation Permission Check</h1>
 <h3>create new_htaccess</h3>
  <div class="block">
-	A template for your <span class="truetype">.htaccess</span> is created
-	each time you view this page. It should already be there now:
+	A template for your <span class="truetype">permissioncheck/.htaccess</span>
+	is created each time you view this page. It should already be there now:
  </div>
  <p>PHP check: <?php
 		echo "PHP works\n";

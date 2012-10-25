@@ -17,12 +17,14 @@
 </head>
 <body>
 <h1>Tiki Installation Permission Check</h1>
+<h3>check required filesystem permissions for your webserver</h3>
  <div class="block">
 	This page should always be visible, independent from any installation problems
 	with Tiki. If the Tiki installer does not run properly, this effect may be
-	caused by some permission problems. There are many different usescases, thus
-	there is no default permission setting which works in all cases and provides
-	an appropriate security level.
+	caused by some permission problems (some problems may be caused by webserver
+	settings regarding htaccess or PHP settings regarding memory limit). There are
+	many different use cases, thus there is no default permission setting which
+	works in all cases and provides an appropriate security level.
  </div>
  <p>PHP check: <?php
 		echo "PHP works";
