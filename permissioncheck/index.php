@@ -79,17 +79,17 @@
  <p>
 	permission check: <?php
 		//include "functions.inc.php";
-		require "functions.inc.php";
+		require 'functions.inc.php';
 		//include "usecases,inc.php";
-		require "usecases.inc.php";
-		$filename="index.php";
-		$user=get_ownership_username($filename);
-		$group=get_ownership_groupname($filename);
-		$username=get_ownership_username($filename);
-		$groupname=get_ownership_groupname($filename);
-		//$perms_oct=substr(sprintf('%o', fileperms($filename)), -3);
-		$perms_oct=get_perms_octal($filename);
-		$perms_asc=get_perms_ascii($filename);
+		require 'usecases.inc.php';
+		$filename = 'index.php';
+		//$user = get_ownership_username($filename);
+		//$group = get_ownership_groupname($filename);
+		$username = get_ownership_username($filename);
+		$groupname = get_ownership_groupname($filename);
+		//$perms_oct = substr(sprintf('%o', fileperms($filename)), -3);
+		$perms_oct = get_perms_octal($filename);
+		$perms_asc = get_perms_ascii($filename);
 		echo "\n\tthis file " . '<strong>' . $filename . '</strong>' . ' owned by ';
 		echo "\n\tuser " . '<strong>' . $username . '</strong>' . ' and group ' . '<strong>' . $groupname . '</strong>' . ' has got access permissions ';
 		echo "\n\t<strong>" . $perms_asc . '</strong>' . ' which is ' . '<strong>' . $perms_oct. '</strong>' . ' octal.';
@@ -114,7 +114,7 @@
 	echo "\n  ";
 	//$file="permissioncheck/paranoia";
 	//$filename="../".$file;
-
+ //prepare_htaccess_password_protection('foofile');
 	foreach ($uc_perms_subdir as $usecase => $perms_subdir) {
 		$perms_file=$uc_perms_file[$usecase];
 		$filename=$usecase;
@@ -181,13 +181,15 @@
 		$perms_file = $perms_unknown;
 		$css_class = $css_class_user;
 		get_perm_data($filename,$username,$groupname,$perms_asc,$perms_oct);
-		echo '<tr>' . '<td><em class="'.$css_class.'">' . $perms_file . '</em></td><td>' . $username . '</td><td>' . $groupname . '</td><td>' . $perms_asc . '</td><td>' . $perms_oct . '</td><td>' . $usersubmittedfile . '</td></tr>' . "\n  ";
+		echo '<tr>' . '<td><em class="'.$css_class.'">' . $perms_file . '</em></td><td>' . $username . '</td><td>' . $groupname . '</td>';
+		echo '<td>' . $perms_asc . '</td><td>' . $perms_oct . '</td><td>' . $usersubmittedfile . '</td></tr>' . "\n  ";
 	}
 ?>
  </table></div>
  <div>&nbsp;</div>
  <form method="post"><input type="text" name="usersubmittedfile" size="42"> <input type="submit" name="checkfile" value="check path or file"></form>
  <p><a href="./">permissioncheck</a></p>
+ <p><a href="./create_new_htaccess.php">create new_htaccess</a></p>
  <p class="block">
 	Enjoy <a href="https://tiki.org/" target="_blank">Tiki</a> and
 	<a href="https://tiki.org/tiki-register.php" target="_blank">join the community</a>!

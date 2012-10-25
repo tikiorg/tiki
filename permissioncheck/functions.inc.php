@@ -85,8 +85,7 @@ function get_perms_ascii($filename)
 	} else {
 		$perm_string="no access";
 	}
-
-  return $perm_string;
+	return $perm_string;
 }
 
 function get_perms_octal($filename)
@@ -97,4 +96,37 @@ function get_perms_octal($filename)
 		$perms_oct = '999';
 	}
 	return $perms_oct;
+}
+
+function prepare_htaccess_password_protection($filename)
+{
+	$new_htaccess = $filename;
+	$new_htaccess = 'new_htaccess';
+//	if (file_exists($new_htaccess)) {
+		//$template_htaccess = '_htaccess';
+		$my_htpasswd = '.htpasswd';
+		$fileout = fopen($new_htaccess, 'w') or exit('Unable to open file ' . $new_htaccess . '!');
+		$my_document_root_path = $_SERVER['DOCUMENT_ROOT'];
+		$my_html_path = dirname($_SERVER['PHP_SELF']);
+		fwrite($fileout, 'AuthUserFile ');
+		fwrite($fileout, $my_document_root_path );
+		fwrite($fileout, $my_html_path );
+		fwrite($fileout, '/' . $my_htpasswd . "\n");
+	// early version - hardcoded output - intended to be read from template
+		fwrite($fileout, 'AuthName "permissioncheck password protection"' . "\n");
+		fwrite($fileout, 'AuthType Basic' . "\n");
+		fwrite($fileout, '<Limit GET POST PUT>' . "\n");
+		fwrite($fileout, 'require valid-user' . "\n");
+		fwrite($fileout, '</Limit>' . "\n");
+		//fwrite($fileout, '' . "\n");
+		fwrite($fileout, '<FilesMatch "\.(bak|inc|inc\.php|lib|sh|sql|tpl)$">' . "\n");
+		fwrite($fileout, 'order deny,allow' . "\n");
+		fwrite($fileout, 'deny from all' . "\n");
+		fwrite($fileout, '</FilesMatch>' . "\n");
+		fclose($fileout);
+		$success = false;
+//	} else {
+		$success = false;
+//	}
+	return $success;
 }
