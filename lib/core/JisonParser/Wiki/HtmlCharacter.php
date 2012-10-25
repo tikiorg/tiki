@@ -19,7 +19,6 @@ class JisonParser_Wiki_HtmlCharacter
 		'rsq'   => array('exp' => '/~rsq~/i',   'output' => '&rsquo;'),
 		'c'     => array('exp' => '/~c~/i',     'output' => '&copy;'),
 		'--'    => array('exp' => '/~--~/',     'output' => '&mdash;'),
-		'=>'    => array('exp' => '/=>/',       'output' => '=&gt;'),
 		'lt'    => array('exp' => '/~lt~/i',    'output' => '&lt;'),
 		'gt'    => array('exp' => '/~gt~/i',    'output' => '&gt;'),
 		'rm'    => array('exp' => '/[{]rm[}]/i','output' => '&rlm;'),

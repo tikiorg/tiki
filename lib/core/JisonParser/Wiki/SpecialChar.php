@@ -16,6 +16,10 @@ class JisonParser_Wiki_SpecialChar
 
 	//This var is used in both protectSpecialChars and unprotectSpecialChars to simplify the html ouput process
 	public $specialChars = array(
+		'=>' => array( //used in plugins and some smarty syntax
+			'html'=>		'=>',
+			'nonHtml'=>		'=>'
+		),
 		'≤REAL_LT≥' => array(
 			'html'=>		'<',
 			'nonHtml'=>		'&lt;'
