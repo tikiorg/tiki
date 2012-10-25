@@ -7,7 +7,7 @@ PATH="${PATH}:/bin:/usr/bin:/sbin:/usr/sbin:/usr/local/bin:/usr/local/sbin:/opt/
 CHMOD=`which chmod`
 COPY=`which cp`
 
-# compare with permissioncheck/usecases.php.inc
+# compare with permissioncheck/usecases.inc.php
 
 WORK_DIR="permissioncheck"
 INDEX_FILE="index.php"
@@ -28,16 +28,15 @@ ${CHMOD} 444 "${NO}"
 ${CHMOD} 444 "${YES}"
 #
 ${CHMOD} 644 "${WORK_DIR}/${DEFAULT_FILE_NAME}"
-${CHMOD} 644 "${WORK_DIR}/functions.php.inc"
+${CHMOD} 644 "${WORK_DIR}/functions.inc.php"
 if [ -f ${HTACCESS} ] ; then
 	${CHMOD} 644 ${HTACCESS}
 fi
 ${CHMOD} 600 "${WORK_DIR}/_htaccess"
 ${CHMOD} 600 "${WORK_DIR}/.htpasswd"
 ${CHMOD} 644 "${WORK_DIR}/${INDEX_FILE}"
-${CHMOD} 444 "${WORK_DIR}/permission_print.php.inc"
-${CHMOD} 644 "${WORK_DIR}/permission_granted.php.inc"
-${CHMOD} 644 "${WORK_DIR}/usecases.php.inc"
+${CHMOD} 644 "${WORK_DIR}/permission_granted.inc.php"
+${CHMOD} 644 "${WORK_DIR}/usecases.inc.php"
 #${CHMOD} 644 "${WORK_DIR}/usecases.txt"
 ${CHMOD} 644 "${USECASES_FILE}"
 

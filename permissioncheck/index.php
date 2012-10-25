@@ -30,7 +30,7 @@
  </p>
  <p>
 	<?php
-	include "permission_granted.php.inc";
+	include "permission_granted.inc.php";
 	$html_and_ascii_linebreak = "<br />\n";
 	if ($permission_granted=="yes\n") {
 		//$dummy=true;
@@ -71,10 +71,10 @@
  </p>
  <p>
 	permission check: <?php
-		//include "functions.php.inc";
-		require "functions.php.inc";
-		//include "usecases.php.inc";
-		require "usecases.php.inc";
+		//include "functions.inc.php";
+		require "functions.inc.php";
+		//include "usecases,inc.php";
+		require "usecases.inc.php";
 		$filename="index.php";
 		$user=get_ownership_username($filename);
 		$group=get_ownership_groupname($filename);
@@ -158,7 +158,7 @@
 	//
 //	$nosuchfile='/example_does_not_exist';
 	$usersubmittedfile = $_POST['usersubmittedfile'];
-	//$sendfile = $_POST['sendfile'];
+	//$checkfile = $_POST['checkfile'];
 	if ( $usersubmittedfile == "" ) {
 		$dummy="foo";
 	} else {
@@ -179,7 +179,7 @@
 ?>
  </table></div>
  <div>&nbsp;</div>
- <form method="post"><input type="text" name="usersubmittedfile" size="42"> <input type="submit" name="sendfile" value="send path or file"></form>
+ <form method="post"><input type="text" name="usersubmittedfile" size="42"> <input type="submit" name="checkfile" value="check path or file"></form>
  <p class="block">
 	Enjoy <a href="https://tiki.org/" target="_blank">Tiki</a> and
 	<a href="https://tiki.org/tiki-register.php" target="_blank">join the community</a>!

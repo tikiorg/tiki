@@ -5,3 +5,9 @@ AuthType Basic
 <Limit GET POST PUT>
 require valid-user
 </Limit>
+#
+<FilesMatch "\.(bak|inc|inc\.php|lib|sh|sql|tpl)$">
+        order deny,allow
+        deny from all
+</FilesMatch>
+#
