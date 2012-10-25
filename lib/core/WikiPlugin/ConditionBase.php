@@ -15,13 +15,12 @@ abstract class WikiPlugin_ConditionBase
 	public $documentation;
 	public $prefs = array();
 	public $parserLevel = 0;
-
-	private $format;
-	private $validate;
-	private $filter = 'rawhtml_unsafe';
-	private $icon = 'img/icons/mime/html.png';
-	private $tags = array( 'basic' );
-	private $np = true;
+	public $format;
+	public $validate;
+	public $filter = 'rawhtml_unsafe';
+	public $icon = 'img/icons/mime/html.png';
+	public $tags = array( 'basic' );
+	public $np = true;
 
 	public function info()
 	{
@@ -31,6 +30,13 @@ abstract class WikiPlugin_ConditionBase
 		}
 
 		return $info;
+	}
+
+	public function addParam($key, $param)
+	{
+		$this->params[$key] = $param;
+
+		return $this;
 	}
 
 	protected function paramDefaults(&$params)
@@ -60,5 +66,10 @@ abstract class WikiPlugin_ConditionBase
 		} else {
 			return $data;
 		}
+	}
+
+	function id($index = 0)
+	{
+		return $this->type . $index;
 	}
 }
