@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="robots" content="noindex, nofollow" />
-<title>Tiki Installation Permission Check | create new_htaccess</title>
+<title>Tiki Permission Check | create new_htaccess</title>
 <style type="text/css">
 	.block		{text-align: justify;}
 	.truetype	{font-family: courier;}
@@ -13,20 +13,19 @@
 	.user		{background-color: blue;}
 	.important	{background-color: black;	color:	red;}
 	.hint		{background-color: black;	color:	yellow;}
+	a:hover		{background-color: orange;}
 </style>
 </head>
 <body>
-<h1>Tiki Installation Permission Check</h1>
-<h3>create new_htaccess</h3>
+<h1>Tiki Permission Check</h1>
+<h3>Security Problems?</h3>
+<h4>create new_htaccess</h4>
  <div class="block">
 	A template for your <span class="truetype">permissioncheck/.htaccess</span>
 	is created each time you view this page. It should already be there now:
  </div>
- <p>PHP check: <?php
-		echo "PHP works\n";
-		?>
- </p>
- <div class="block"><table class="truetype"><tr><?php
+ <div>&nbsp;</div>
+ <table class="truetype"><tr><?php
 		require 'functions.inc.php';
 		$filename = 'new_htaccess';
 		prepare_htaccess_password_protection($filename);
@@ -41,8 +40,21 @@
 
 	?>
 </tr> 
- </table></div>
- <div>&nbsp;</div>
+ </table>
+ <p class="block">
+	To use password protection for Tiki Permission Check create a
+	<span class="truetype">permissioncheck/.htpasswd</span> with
+	your username and encrypted password. The default file has got
+	a preconfigured user <span class="truetype">foo</span> with
+	password <span class="truetype">bar</span>. Don't lock yourself
+	out. If you are sure your user/password settings work, copy
+	the new file <span class="truetype">permissioncheck/new_htpasswd</span>
+	to <span class="truetype">permissioncheck/.htpasswd</span>.
+	Password protection should be enabled immediately if your
+	webserver is configured to do so. Don't forget to reduce permissions
+	of <span class="truetype">permissioncheck/.htpasswd</span> to 444 read
+	only.
+ </p>
  <p><a href="./">permissioncheck</a></p>
  <p class="block">
 	Enjoy <a href="https://tiki.org/" target="_blank">Tiki</a> and

@@ -13,11 +13,13 @@
 	.user		{background-color: blue;}
 	.important	{background-color: black;	color:	red;}
 	.hint		{background-color: black;	color:	yellow;}
+	a:hover		{background-color: orange;}
 </style>
 </head>
 <body>
 <h1>Tiki Installation Permission Check</h1>
-<h3>check required filesystem permissions for your webserver</h3>
+<h3>Installation Problems?</h3>
+<h4>check required filesystem permissions for your webserver</h4>
  <div class="block">
 	This page should always be visible, independent from any installation problems
 	with Tiki. If the Tiki installer does not run properly, this effect may be
