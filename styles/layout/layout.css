@@ -1519,6 +1519,13 @@ body.tiki_forums .normal {
 	padding: 3px
 }
 
+.post .forumDeliberationRatingForm
+{
+	width: 100%;
+	float: none ! important;
+	text-align: right;
+}
+
 .postfooter-nav {
 	width: 100%;
 	display: block;

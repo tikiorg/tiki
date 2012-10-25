@@ -52,12 +52,14 @@ class WikiPlugin_Negotiator_CKEditor extends WikiPlugin_Negotiator_Wiki
 			}
 		}
 
-		return '<'.$elem.' class="tiki_plugin" plugin="' . $this->name . '" style="' . $elem_style . '"' .
+		$result = '<'.$elem.' class="tiki_plugin" plugin="' . $this->name . '" style="' . $elem_style . '"' .
 			' syntax="' . htmlentities($syntax, ENT_QUOTES, 'UTF-8') . '"' .
 			' args="' . htmlentities($this->urlEncodeArgs(), ENT_QUOTES, 'UTF-8') . '"' .
 			' body="' . htmlentities($this->body, ENT_QUOTES, 'UTF-8') . '">'.	// not <!--{cke_protected}
 			'<img src="'.$icon.'" width="16" height="16" style="float:left;position:absolute;z-index:10001" />' .
 			$result.'<!-- end tiki_plugin --></'.$elem.'>';
+
+		return $result;
 	}
 
 	function blockFromExecution($status = '')

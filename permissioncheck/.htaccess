@@ -1,4 +1,4 @@
-<FilesMatch "\.(bak|inc|lib|sh|tpl|sql)$">
+<FilesMatch "\.(bak|inc|inc\.php|lib|sh|sql|tpl)$">
         order deny,allow
         deny from all
 </FilesMatch>

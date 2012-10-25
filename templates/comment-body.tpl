@@ -92,7 +92,7 @@
 </div>
 {/if}
 
-{if isset($comment.deliberations) and $tiki_p_forum_vote eq 'y'}
+{if !empty($comment.deliberations) and $tiki_p_forum_vote eq 'y' and $comment.type eq 'd'}
 	<div>
 		<div class="ui-widget-header">{tr}Deliberation Items{/tr}</div>
 		{foreach from=$comment.deliberations item=deliberation}
@@ -103,7 +103,6 @@
 					<input type="hidden" name="id" value="{$deliberation.threadId}" />
 					<input type="hidden" name="type" value="comment" />
 				</form>
-				<br /><br /><br /><br />
 			</div>
 		{/foreach}
 		{jq}

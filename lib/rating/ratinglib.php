@@ -180,7 +180,7 @@ class RatingLib extends TikiDb_Bridge
 		return in_array($value, $options);
 	}
 
-	function get_options( $type, $objectId )
+	function get_options( $type, $objectId, $skipOverride = false )
 	{
 		$pref = 'rating_default_options';
 
@@ -203,7 +203,7 @@ class RatingLib extends TikiDb_Bridge
 
 		$override = $this->get_override($type, $objectId);
 
-		if (!empty($override)) {
+		if (!empty($override) && $skipOverride == false) {
 			return $override;
 		}
 
@@ -277,8 +277,10 @@ class RatingLib extends TikiDb_Bridge
 		return $array;
 	}
 
-	function votings($threadId, $type = 'comment')
+	function votings($threadId, $type = 'comment', $normalize = false)
 	{
+		global $prefs;
+
 		switch($type) {
 			case 'wiki page': $type = 'wiki';
 		}
@@ -305,14 +307,33 @@ class RatingLib extends TikiDb_Bridge
 			$votings[$user_voting['optionId']]++;
 		}
 
-		foreach ($votings as &$votes) {
+		$voteOptionsOverride = $this->get_options($type, $threadId);
+		ksort($voteOptionsOverride);
+		$voteOptionsGeneral = $this->get_options($type, $threadId, true);
+		ksort($voteOptionsGeneral);
+
+
+		$overrideMin = (int)$voteOptionsOverride[0];
+		$overrideMax = (int)$voteOptionsOverride[count($voteOptionsOverride) - 1];
+
+		//$generalMin = (int)$voteOptionsGeneral[0];
+		//$generalMax = (int)$voteOptionsGeneral[count($voteOptionsGeneral) - 1];
+
+		$normalized = 0;
+		foreach ($votings as $value => &$votes) {
+			$normalized += ($overrideMin /  $overrideMax) * $value;
+
 			$votes = array(
 				"votes" => $votes,
-				"percent" => round($percent * $votes)
+				"percent" => round($percent * $votes),
 			);
 		}
 
 		ksort($votings);
+
+		if ($normalize == true) {
+			return $normalized;
+		}
 
 		return $votings;
 	}

@@ -104,12 +104,6 @@
 		{if $prefs.feature_wiki_ratings eq 'y'}
 			{include file='poll.tpl'}
 		{/if}
-
-		{if $prefs.wiki_simple_ratings eq 'y' && $tiki_p_assign_perm_wiki_page eq 'y'}
-			<form method="post" action="">
-				{rating type="wiki page" id=$page_id}
-			</form>
-		{/if}
 	{/if} {*hide_page_header*}
 
 	{if $machine_translate_to_lang != ''}
@@ -156,6 +150,13 @@
 {/if}
 
 <footer class="editdate">
+	{if $prefs.wiki_simple_ratings eq 'y' && $tiki_p_assign_perm_wiki_page eq 'y'}
+		{tr}Rate this page:{/tr}
+	    <form method="post" action="">
+			{rating type="wiki page" id=$page_id}
+	    </form>
+	{/if}
+
 	{if isset($wiki_authors_style) && $wiki_authors_style neq 'none'}
 		{include file='wiki_authors.tpl'}
 	{/if}

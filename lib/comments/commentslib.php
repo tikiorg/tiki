@@ -3363,8 +3363,29 @@ class Comments extends TikiLib
      */
     function get_forum_deliberations($threadId)
 	{
+		global $ratinglib;
+		require_once 'lib/rating/ratinglib.php';
+
 		$deliberations = $this->fetchAll('SELECT * from tiki_comments WHERE object = ? AND objectType = "forum_deliberation"', array($threadId));
-		return $deliberations;
+
+		$votings = array();
+		$deliberationsUnsorted = array();
+		foreach($deliberations as &$deliberation) {
+			$votings[$deliberation['threadId']] = $ratinglib->votings($deliberation['threadId'], 'comment', true);
+			$deliberationsUnsorted[$deliberation['threadId']] = $deliberation;
+		}
+		unset($deliberations);
+
+		arsort($votings);
+
+		$deliberationsSorted = array();
+		foreach($votings as $threadId => $vote) {
+			$deliberationsSorted[] = $deliberationsUnsorted[$threadId];
+		}
+
+		unset($deliberationsUnsorted);
+
+		return $deliberationsSorted;
 	}
 
     /**
