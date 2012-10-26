@@ -67,8 +67,8 @@ class Tracker_Field_Header extends Tracker_Field_Abstract implements Tracker_Fie
 		$headerlib = TikiLib::lib('header');
 
 		$class = null;
-		$level = $this->getOption(0, 2);
-		if (! is_numeric($level)) {
+		$level = intval($this->getOption(0, 2));
+		if ($level <= 0) {
 			$level = 2;
 		}
 		$toggle = $this->getOption(1);
