@@ -2652,13 +2652,34 @@ class TikiLib extends TikiDb_Bridge
 		$logslib = TikiLib::lib('logs');
 
 		if ($user === false) $user = '';
-		$delay = 5*60; // 5 minutes
+		// If pref login_multiple_forbidden is set, length of tiki_sessions must match real session length to be up to date so we can detect concurrent logins of same user
+		if ( $prefs['login_multiple_forbidden'] == 'y' ) {
+			$delay = ini_get('session.gc_maxlifetime');
+		} else {	// Low value so as to guess who actually is in front of the computer
+			$delay = 5*60; // 5 minutes
+		}
 		$oldy = $this->now - $delay;
 		if ($user != '') { // was the user timeout?
 			$query = "select count(*) from `tiki_sessions` where `sessionId`=?";
 			$cant = $this->getOne($query, array($this->sessionId));
-			if ($cant == 0)
-				$logslib->add_log("login", "back", $user, '', '', $this->now);
+			if ($cant == 0) {
+				if ( $prefs['login_multiple_forbidden'] != 'y' || $user == 'admin' ) {
+					// Recover after timeout
+					$logslib->add_log("login", "back", $user, '', '', $this->now);
+				} else {
+					// Prevent multiple sessions for same user
+					$query = "SELECT count(*) FROM `tiki_sessions` WHERE `timestamp`<? AND user = ?";
+					$cant = $this->getOne($query, array($oldy,$user));
+					if ($cant == 0) {
+						// Recover after timeout (no other session)
+						$logslib->add_log("login", "back", $user, '', '', $this->now);
+					} else {
+						// User has an active session on another browser
+						$userlib = TikiLib::lib('user');
+						$userlib->user_logout($user, false, '');
+					}
+				}
+			}
 		}
 		$query = "select * from `tiki_sessions` where `timestamp`<?";
 		$result = $this->fetchAll($query, array($oldy));

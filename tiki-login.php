@@ -406,6 +406,10 @@ if ($isvalid) {
 			$error = tra('You are not yet validated');
     		break;
 
+		case USER_ALREADY_LOGGED:
+			$error = tra('You are already logged in');
+    		break;
+
 		default:
 			$error = tra('Invalid username or password');
 	}

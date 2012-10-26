@@ -105,6 +105,11 @@ if ($prefs['cookie_consent_feature'] === 'y' && empty($_COOKIE[$prefs['cookie_co
 	$feature_no_cookie = false;
 }
 
+// Session info needs to be kept up to date if pref login_multiple_forbidden is set
+if ( $prefs['login_multiple_forbidden'] == 'y' ) {
+	$tikilib->update_session();
+}
+
 require_once ('lib/setup/cookies.php');
 
 if ($prefs['mobile_feature'] === 'y') {
