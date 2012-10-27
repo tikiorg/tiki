@@ -137,7 +137,7 @@ function comment_load(url) {
 
 					//allow syntax highlighting
 					if ($.fn.flexibleSyntaxHighlighter) {
-						console.log(form.find('textarea.wikiedit'));
+						// console.log(form.find('textarea.wikiedit'));
 						form.find('textarea.wikiedit').flexibleSyntaxHighlighter();
 					}
 				});
@@ -194,7 +194,7 @@ $this.parent().empty().removeClass('button').load($this.attr('href'), function (
 
 	//allow syntax highlighting
 	if ($.fn.flexibleSyntaxHighlighter) {
-		console.log(form.find('textarea.wikiedit'));
+		// console.log(form.find('textarea.wikiedit'));
 		form.find('textarea.wikiedit').flexibleSyntaxHighlighter();
 	}
 });
