@@ -1288,6 +1288,23 @@ function wikiplugin_tracker($data, $params)
 						}
 					} else {
 						$back.= "<tr><td";
+						
+						// If type is has a samerow param and samerow is "No", show text on one line and the input field on the next
+						$isTextOnSameRow = true;
+						switch($f['type']) {
+						case 't':	// Text field
+						case 'n':	// Numeric field
+						case 'b':	// Currency
+							$isTextOnSameRow = ($f['options_array'][0] == 0) ? false : true;
+							break;
+						case 'a':	// Text area
+							$isTextOnSameRow = ($f['options_array'][6] == 0) ? false : true;
+							break;
+						}
+						if(!$isTextOnSameRow) {
+							 $back.= " colspan='2'";
+						}
+						
 						if (!empty($colwidth)) {
 							$back .= " width='".$colwidth."'";
 						}
@@ -1296,7 +1313,13 @@ function wikiplugin_tracker($data, $params)
 						if ($showmandatory == 'y' and $f['isMandatory'] == 'y') {
 							$back.= "&nbsp;<strong class='mandatory_star'>*</strong>&nbsp;";
 						}
-						$back.= '</td><td>';
+						// If use different lines, add a line break. 
+						// Otherwise a new column
+						if(!$isTextOnSameRow) {
+							$back.= "<br/>";
+						} else {
+							$back.= '</td><td>';
+						}
 
 						$back .= wikiplugin_tracker_render_input($f, $item);
 					}

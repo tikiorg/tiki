@@ -78,6 +78,17 @@ class Tracker_Field_TextArea extends Tracker_Field_Text
 							'y' => tr('Yes'),
 						),
 					),
+					'samerow' => array(
+						'name' => tr('Same Row'),
+						'description' => tr('Display the next field on the same row.'),
+						'deprecated' => false,
+						'filter' => 'int',
+						'default' => 1,
+						'options' => array(
+							0 => tr('No'),
+							1 => tr('Yes'),
+						),
+					),
 				),
 			),
 		);
