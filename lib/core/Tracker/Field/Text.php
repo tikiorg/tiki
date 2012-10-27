@@ -46,7 +46,7 @@ class Tracker_Field_Text extends Tracker_Field_Abstract implements Tracker_Field
 					),
 					'append' => array(
 						'name' => tr('Append'),
-						'description' => tr('Text to prepend when displaying the value.'),
+						'description' => tr('Text to append when displaying the value.'),
 						'filter' => 'text',
 					),
 					'max' => array(
