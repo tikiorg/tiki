@@ -1322,20 +1322,21 @@ function wikiplugin_tracker($data, $params)
 						}
 
 						$back .= wikiplugin_tracker_render_input($f, $item);
+						$back .= "</td></tr>";
 					}
 
 					if ($f['type'] != 'S') {
-						$back .= '<div class="trackerplugindesc">';
-					}
-					if ($f['type'] != 'S') {
+						$back .= '<tr><td>';
+						$back .= '<span class="trackerplugindesc">';
+
 						if ($f['descriptionIsParsed'] == 'y') {
 							$back .= $tikilib->parse_data($f['description']);
 						} else {
 							$back .= tra($f['description']);
 						}
-					}
-					if ($f['type'] != 'S') {
-						$back .= '</div>';
+
+						$back .= '</span>';
+						$back .= "</td></tr>";
 					}
 				}
 			}
@@ -1359,7 +1360,8 @@ function wikiplugin_tracker($data, $params)
 FILL;
 				$back.= sprintf(tra('Each line is a list of %d field values separated with: %s'), $fill_line_cant, htmlspecialchars($fieldsfillseparator));
 				$back .= '</div><div name="ins_fill_desc2" class="trackerplugindesc" >' . htmlspecialchars(implode($fieldsfillseparator, $fieldsfillnames));
-				$back .= '</div></td></tr>';
+				$back .= '</div>';
+				$back .= '</td></tr>';
 			}
 			if (!empty($tpl)) {
 				$smarty->security = true;
