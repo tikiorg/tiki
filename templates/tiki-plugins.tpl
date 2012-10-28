@@ -64,7 +64,7 @@
 	<noscript>
 		<input type="submit" value="{tr}OK{/tr}" />
 	</noscript>
-
+</form>
 {else}
 	<p>{tr}No plugins pending approval.{/tr}</p>
 {/if}
