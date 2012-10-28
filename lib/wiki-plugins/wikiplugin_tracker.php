@@ -1326,7 +1326,7 @@ function wikiplugin_tracker($data, $params)
 					}
 
 					if ($f['type'] != 'S') {
-						$back .= '<tr><td>';
+						$back .= '<tr><td colspan="2">';
 						$back .= '<span class="trackerplugindesc">';
 
 						if ($f['descriptionIsParsed'] == 'y') {
