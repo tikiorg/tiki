@@ -10,7 +10,7 @@
 		<p>{tr}If a plugin is no longer in use (for example, it has been removed from the wiki page), use <strong>Clear</strong> to remove it from this list.{/tr} {tr}The plugin will automatically be added if it is encountered.{/tr}
 		</p>
 		<p>{tr}Plugins can be individually previewed, approved, or rejected from the particular location that contains the plugin.{/tr} {tr}For security, you should review each plugin to ensure it is safe to approve.{/tr}</p>
-	<form method="post" action="">
+	<form method="post" action="#">
 {cycle values="even,odd" print=false}
 		
 		{listfilter selectors='#plugins_list tr.odd,#plugins_list tr.even'} 
