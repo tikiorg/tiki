@@ -25,7 +25,7 @@
 {foreach name=foo from=$plugin_list item=plugin}
 			<tr class="{cycle}">
 				<td class="checkbox"><input type="checkbox" name="clear[]" value="{$plugin.fingerprint|escape}" id="{$plugin.fingerprint|escape}"/></td>
-				<td class="text"><label for="{$plugin.fingerprint|escape}"><strong>{$plugin.fingerprint|substring:0:20|escape|replace:"-":"</strong> <br />{tr}Signature:{/tr} "}...</label>
+				<td class="text"><label for="{$plugin.fingerprint|escape}"><strong>{$plugin.fingerprint|substring:0:20|escape|replace:"-":"</strong> <br />{tr}Signature:{/tr} "}...</label></td>
 				<td class="text">{if $plugin.last_objectType eq 'wiki page'}
 					{tr _0=$plugin.last_objectId|sefurl:'wiki page' _1=$plugin.last_objectId|escape _2=$plugin.fingerprint}Wiki page: <a href="%0#%2" title="{tr}View this page.{/tr}">%1</a>{/tr}
 					{else}
@@ -41,7 +41,7 @@
 {tr _0=$plugin.last_objectId|sefurl:'wiki page' _1=$plugin.last_objectId|escape _2=$plugin.fingerprint}<a href="%0#%2" title="{tr}View this page.{/tr}">{icon _id='page'}</a>{/tr}	
 {/if}	
 {/foreach}
-			</tr>
+			</td></tr>
 		</table>
 		<p>
 		<label for="submit_mult">{tr}Perform action with checked:{/tr}</label>
