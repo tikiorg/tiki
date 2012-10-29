@@ -6417,7 +6417,7 @@ class TikiLib extends TikiDb_Bridge
 		if ( $options['ck_editor'] ) {
 			$need_maketoc = false ;
 		} else {
-			$need_maketoc = strpos($data, "{maketoc");
+			$need_maketoc = preg_match('/\{maketoc.*\}/', $data);
 		}
 		
 		// Wysiwyg {maketoc} handling when not in editor mode (i.e. viewing)
@@ -6928,7 +6928,7 @@ class TikiLib extends TikiDb_Bridge
 		 */
 		$new_data = '';
 		$search_start = 0;
-		if ( !$options['ck_editor']) {
+		if ($need_maketoc && !$options['ck_editor']) {
 			while ( ($maketoc_start = strpos($data, "{maketoc", $search_start)) !== false ) {
 				$maketoc_length = strpos($data, "}", $maketoc_start) + 1 - $maketoc_start;
 				$maketoc_string = substr($data, $maketoc_start, $maketoc_length);
