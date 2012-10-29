@@ -28,9 +28,9 @@ CAPITOL_WORD                    ([A-Z]{1,}[a-z_\-\x80-\xFF]{1,}){2,}
 	%}
 <np>"~/np~"
 	%{
-		if (this.npStack != true) return 'CONTENT'; //js
+		if (parser.npStack != true) return 'CONTENT'; //js
 		lexer.popState(); //js
-		lexer.npStack = false; //js
+		parser.npStack = false; //js
 		yytext = parser.np(yytext); //js
 
 		//php if ($this->npStack != true) return 'CONTENT';
@@ -44,7 +44,7 @@ CAPITOL_WORD                    ([A-Z]{1,}[a-z_\-\x80-\xFF]{1,}){2,}
 	%{
 		if (parser.isContent()) return 'CONTENT'; //js
 		lexer.begin('np'); //js
-		lexer.npStack = true; //js
+		parser.npStack = true; //js
 
 		//php if ($this->isContent()) return 'CONTENT';
 		//php $this->begin('np');
@@ -64,9 +64,9 @@ CAPITOL_WORD                    ([A-Z]{1,}[a-z_\-\x80-\xFF]{1,}){2,}
 	%}
 <pp>"~/pp~"
 	%{
-		if (this.ppStack != true) return 'CONTENT'; //js
+		if (parser.ppStack != true) return 'CONTENT'; //js
 		lexer.popState(); //js
-		lexer.ppStack = false; //js
+		parser.ppStack = false; //js
 		yytext = parser.pp(yytext); //js
 
 		//php if ($this->ppStack != true) return 'CONTENT';
@@ -80,7 +80,7 @@ CAPITOL_WORD                    ([A-Z]{1,}[a-z_\-\x80-\xFF]{1,}){2,}
 	%{
 		if (parser.isContent()) return 'CONTENT'; //js
 		lexer.begin('pp'); //js
-		lexer.ppStack = true; //js
+		parser.ppStack = true; //js
 
 		//php if ($this->isContent()) return 'CONTENT';
 		//php $this->begin('pp');
