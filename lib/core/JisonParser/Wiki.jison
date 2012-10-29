@@ -478,7 +478,7 @@ CAPITOL_WORD                    ([A-Z]{1,}[a-z_\-\x80-\xFF]{1,}){2,}
 		if (parser.isContent()) return 'CONTENT'; //js
 		parser.linkStack = true; //js
 		lexer.begin('link'); //js
-		$yytext = 'external'; //js
+		yytext = 'external'; //js
 		return 'LINK_START'; //js
 
 		//php if ($this->isContent()) return 'CONTENT';
@@ -534,7 +534,7 @@ CAPITOL_WORD                    ([A-Z]{1,}[a-z_\-\x80-\xFF]{1,}){2,}
 	%{
 		if (parser.isContent()) return 'CONTENT'; //js
 		lexer.popState(); //js
-        lexer.tableStack.pop(); //js
+        parser.tableStack.pop(); //js
 		return 'TABLE_END'; //js
 
 		//php if ($this->isContent()) return 'CONTENT';
@@ -546,7 +546,7 @@ CAPITOL_WORD                    ([A-Z]{1,}[a-z_\-\x80-\xFF]{1,}){2,}
 	%{
 		if (parser.isContent()) return 'CONTENT'; //js
 		lexer.begin('table'); //js
-		lexer.tableStack.push(true); //js
+		parser.tableStack.push(true); //js
 		return 'TABLE_START'; //js
 
 		//php if ($this->isContent()) return 'CONTENT';
@@ -642,7 +642,7 @@ CAPITOL_WORD                    ([A-Z]{1,}[a-z_\-\x80-\xFF]{1,}){2,}
 		if (parser.isContent()) return 'CONTENT'; //js
 		parser.linkStack = true; //js
 		lexer.begin('wikilink'); //js
-		$yytext = 'wiki'; //js
+		yytext = 'wiki'; //js
 		return 'WIKILINK_START'; //js
 
 		//php if ($this->isContent()) return 'CONTENT';
@@ -656,7 +656,7 @@ CAPITOL_WORD                    ([A-Z]{1,}[a-z_\-\x80-\xFF]{1,}){2,}
 		if (parser.isContent()) return 'CONTENT'; //js
 		parser.linkStack = true; //js
 		lexer.begin('wikilink'); //js
-		$yytext = 'np'; //js
+		yytext = 'np'; //js
 		return 'WIKILINK_START'; //js
 
 		//php if ($this->isContent()) return 'CONTENT';
@@ -670,7 +670,7 @@ CAPITOL_WORD                    ([A-Z]{1,}[a-z_\-\x80-\xFF]{1,}){2,}
 		if (parser.isContent()) return 'CONTENT'; //js
 		parser.linkStack = true; //js
 		lexer.begin('wikilink'); //js
-		$yytext = $yytext.substring(1, $yytext.length - 1); //js
+		yytext = yytext.substring(1, yytext.length - 1); //js
 		return 'WIKILINK_START'; //js
 
 		//php if ($this->isContent()) return 'CONTENT';
