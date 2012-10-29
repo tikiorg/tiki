@@ -13,7 +13,7 @@ LINES_CONTENT                   (.|\n)+
 LINE_END                        (\n\r|\r\n|[\n\r])
 BLOCK_START                     ([\!*#+;])
 WIKI_LINK_TYPE                  (([a-z0-9-]+))
-CAPITOL_WORD                    ([A-Z]{1,}[a-z]{1,}){2,}
+CAPITOL_WORD                    ([A-Z]{1,}[a-z_\-\x80-\xFF]{1,}){2,}
 
 %s np pp plugin line block bold box center code color italic unlink link strike table titlebar underscore wikilink
 
@@ -679,7 +679,7 @@ CAPITOL_WORD                    ([A-Z]{1,}[a-z]{1,}){2,}
 		//php $yytext = substr($yytext, 1, -1);
 		//php return 'WIKILINK_START';
 	%}
-{CAPITOL_WORD}
+(?:[ \n\t\r\,\;]|^){CAPITOL_WORD}(?=$|[ \n\t\r\,\;\.])
 	%{
 		if (parser.isContent()) return 'CONTENT'; //js
 		return 'WIKILINK'; //js
