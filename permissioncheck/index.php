@@ -9,6 +9,8 @@
 	.equal		{background-color: green;}
 	.hint		{background-color: black;	color:	yellow;}
 	.important	{background-color: black;	color:	red;}
+	.modelworksno	{background-color: red;}
+	.modelworksyes	{background-color: green;}
 	.notequal	{background-color: red;}
 <? /*
 	.readno	{background-color: red;}
@@ -140,6 +142,7 @@
  </p>
  <div class="block"><table class="truetype"><?php
 	echo "\n  ";
+	$html_almost_empty_table_row = '<tr><td>&nbsp;</td><td></td><td></td><td></td><td></td>';
 	$html_empty_table_row = '<tr><td>&nbsp;</td><td></td><td></td><td></td><td></td><td></td></tr>'."\n  ";
 	echo '<tr>'.'<td>should</td>'.'<td>user</td>'.'<td>group</td>'.'<td>ascii and <br />colored&nbsp;PHP<br />permissions';
 	echo '<br />read:<span class="readyes">yes</span>/<span class="readno">no</span>';
@@ -180,6 +183,18 @@
 		echo '<tr>'.'<td><em class="'.$css_class.'">'.$perms_file.'</em></td>'.'<td>'.$username.'</td><td>'.$groupname.'</td>';
 		echo '<td class="' . $css_class_writable . '">'.$perms_asc.'</td><td>'.$perms_oct.'</td>';
 		echo '<td><a href="'.$filename.'" target="_blank">permissioncheck/'.$filename."</a></td></tr>\n  ";
+		// include this file
+		echo $html_almost_empty_table_row;
+		
+		echo '<td>';
+		$check_if_model_works = false;
+		include $filename;
+		if ( $check_if_model_works ) {
+			$check_if_model_works_text = '<span class="modelworksyes">Read: this model works for you</span>';
+		} else {
+			$check_if_model_works_text = '<span class="modelworksno">Read: this model does not work for you!</span>';
+		}
+		echo $check_if_model_works_text . '</td>'."\n ";
 	}
 	// general data for special checks
 	$perms_unknown='???';
