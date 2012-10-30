@@ -1,5 +1,75 @@
 <?php
 
+function check_file($filename,$filecontent)
+{
+	$dummy = 'foo';
+}
+
+function check_file_delete($filename)
+{
+	$delete_permission = unlink($filename);
+	return $delete_permission;
+}
+
+function check_file_exists($filename)
+{
+	$exists_permission = file_exists($filename);
+	return $exists_permission;
+}
+
+function check_file_read($filename)
+{
+	$testname = $filename;
+	$read_permission = true;
+	$fileout = fopen($testname, 'r') or $read_permission = false;
+	if ( $read_permission ) {
+		$dummy = 'foo';
+		//$dummy = fgets($fileout);
+		fclose($fileout);
+	} else {
+		$dummy = 'bar';
+	}
+	return $read_permission;
+}
+
+function check_file_rename($oldfilename,$newfilename)
+{
+	$rename_permission = rename($oldfilename, $newfilename);
+	return $rename_permission;
+}
+
+function check_file_write($filename,$filecontent)
+{
+	$testname = $filename;
+	$testcontent = $filecontent;
+	$write_permission = true;
+	$fileout = fopen($testname, 'w') or $write_permission = false;
+	if ( $write_permission ) {
+		fwrite($fileout, $testcontent);
+		fclose($fileout);
+	} else {
+		$dummy = 'foobar';
+	}
+	return $write_permission;
+}
+
+function color_classes_perm_asc($filename,&$perms_asc,&$css_class_writable)
+{
+	if ( is_writable($filename) ) {
+		$perms_asc = str_replace('WPERM','writeyes',$perms_asc);
+		$css_class_writable = 'writeyes';
+	} else {
+		$perms_asc = str_replace('WPERM','writeno',$perms_asc);
+		$css_class_writable = 'writeno';
+	}
+	$css_class_writable = 'noclass';
+	if ( is_readable($filename) ) {
+		$perms_asc = str_replace('RPERM','readyes',$perms_asc);
+	} else {
+		$perms_asc = str_replace('RPERM','readno',$perms_asc);
+	}
+}
+
 // group/owner of file
 function get_ownership_groupname($filename)
 {
@@ -65,23 +135,23 @@ function get_perms_ascii($filename)
 		}
 
 		// Owner
-		$perm_string .= (($perms & 0x0100) ? 'r' : '-');
-		$perm_string .= (($perms & 0x0080) ? 'w' : '-');
-		$perm_string .= (($perms & 0x0040) ?
+		$perm_string .= '<span class="RPERM">' . (($perms & 0x0100) ? 'r' : '-') . '</span>';
+		$perm_string .= '<span class="WPERM">' . (($perms & 0x0080) ? 'w' : '-') . '</span>';
+		$perm_string .= '<span class="XPERM">' . (($perms & 0x0040) ?
 	            (($perms & 0x0800) ? 's' : 'x' ) :
-        	    (($perms & 0x0800) ? 'S' : '-'));
+        	    (($perms & 0x0800) ? 'S' : '-')) . '</span>';
 		// Group
-		$perm_string .= (($perms & 0x0020) ? 'r' : '-');
-		$perm_string .= (($perms & 0x0010) ? 'w' : '-');
-		$perm_string .= (($perms & 0x0008) ?
+		$perm_string .= '<span class="RPERM">' . (($perms & 0x0020) ? 'r' : '-') . '</span>';
+		$perm_string .= '<span class="WPERM">' . (($perms & 0x0010) ? 'w' : '-') . '</span>';
+		$perm_string .= '<span class="XPERM">' . (($perms & 0x0008) ?
 	            (($perms & 0x0400) ? 's' : 'x' ) :
-        	    (($perms & 0x0400) ? 'S' : '-'));
+        	    (($perms & 0x0400) ? 'S' : '-')) . '</span>';
 		// World
-		$perm_string .= (($perms & 0x0004) ? 'r' : '-');
-		$perm_string .= (($perms & 0x0002) ? 'w' : '-');
-		$perm_string .= (($perms & 0x0001) ?
+		$perm_string .= '<span class="RPERM">' . (($perms & 0x0004) ? 'r' : '-') . '</span>';
+		$perm_string .= '<span class="WPERM">' . (($perms & 0x0002) ? 'w' : '-') . '</span>';
+		$perm_string .= '<span class="XPERM">' . (($perms & 0x0001) ?
         	    (($perms & 0x0200) ? 't' : 'x' ) :
-        	    (($perms & 0x0200) ? 'T' : '-'));
+        	    (($perms & 0x0200) ? 'T' : '-')) . '</span>';
 	} else {
 		$perm_string="no access";
 	}

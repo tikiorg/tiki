@@ -6,13 +6,37 @@
 <title>Tiki Installation Permission Check</title>
 <style type="text/css">
 	.block		{text-align: justify;}
-	.truetype	{font-family: courier;}
 	.equal		{background-color: green;}
+	.hint		{background-color: black;	color:	yellow;}
+	.important	{background-color: black;	color:	red;}
 	.notequal	{background-color: red;}
+<? /*
+	.readno	{background-color: red;}
+	.readno	{background-color: orange;}
+	.readno	{background-color: #88FFCC;}
+ */ ?>
+	.readno	{background-color: red;}
+<? /*
+	.readyes	{background-color: green;}
+	.readyes	{background-color: yellow;}
+	.readyes	{background-color: #FF88CC;}
+ */ ?>
+	.readyes	{background-color: green;}
+	.truetype	{font-family: courier;		background-color: #888888;}
 	.unknown	{background-color: yellow;}
 	.user		{background-color: blue;}
-	.important	{background-color: black;	color:	red;}
-	.hint		{background-color: black;	color:	yellow;}
+<? /*
+	.writeno	{background-color: red;}
+	.writeno	{background-color: orange;}
+	.writeno	{background-color: #88FFCC;} */
+ ?>
+	.writeno	{background-color: #FF88CC;}
+<? /*
+	.writeyes	{background-color: green;}
+	.writeyes	{background-color: yellow;}
+	.writeyes	{background-color: #FF88CC;}
+ */ ?>
+	.writeyes	{background-color: #88FFCC;}
 	a:hover		{background-color: orange;}
 </style>
 </head>
@@ -128,7 +152,12 @@
 		} else {
 			$css_class="notequal";
 		}
-		echo "<tr>".'<td><em class="'.$css_class.'">'.$perms_subdir."</em></td>"."<td>".$username."</td><td>".$groupname."</td><td>".$perms_asc."</td><td>".$perms_oct.'</td><td><a href="'.$filename.'" target="_blank">permissioncheck/'.$filename."</a></td></tr>\n  ";
+//		$css_class_writable = 'noclass';
+//		color_classes_perm_asc($filename,$perms_asc);
+		color_classes_perm_asc($filename,$perms_asc,$css_class_writable);
+		echo '<tr>'.'<td><em class="'.$css_class.'">'.$perms_subdir.'</em></td>'.'<td>'.$username.'</td><td>'.$groupname.'</td>';
+		echo '<td class="' . $css_class_writable . '">'.$perms_asc.'</td><td>'.$perms_oct.'</td>';
+		echo '<td><a href="'.$filename.'" target="_blank">permissioncheck/'.$filename."</a></td></tr>\n  ";
 		$filename=$usecase."/".$default_file_name;
 		get_perm_data($filename,$username,$groupname,$perms_asc,$perms_oct);
 		if ($perms_file==$perms_oct) {
@@ -136,7 +165,16 @@
 		} else {
 			$css_class="notequal";
 		}
-		echo "<tr>".'<td><em class="'.$css_class.'">'.$perms_file."</em></td>"."<td>".$username."</td><td>".$groupname."</td><td>".$perms_asc."</td><td>".$perms_oct.'</td><td><a href="'.$filename.'" target="_blank">permissioncheck/'.$filename."</a></td></tr>\n  ";
+//		if ( is_writable($filename) ) {
+//			$css_class_writable = 'writeyes';
+//		} else {
+//			$css_class_writable = 'writeno';
+//		}
+//		$css_class_writable = 'noclass';
+		color_classes_perm_asc($filename,$perms_asc,$css_class_writable);
+		echo '<tr>'.'<td><em class="'.$css_class.'">'.$perms_file.'</em></td>'.'<td>'.$username.'</td><td>'.$groupname.'</td>';
+		echo '<td class="' . $css_class_writable . '">'.$perms_asc.'</td><td>'.$perms_oct.'</td>';
+		echo '<td><a href="'.$filename.'" target="_blank">permissioncheck/'.$filename."</a></td></tr>\n  ";
 	}
 	// general data for special checks
 	$perms_unknown='???';
@@ -165,7 +203,14 @@
 	$perms_file = $perms_unknown;
 	$css_class = $css_class_unknown;
 	get_perm_data($filename,$username,$groupname,$perms_asc,$perms_oct);
-	echo '<tr>' . '<td><em class="'.$css_class.'">' . $perms_file . '</em></td><td>' . $username . '</td><td>' . $groupname . '</td><td>' . $perms_asc . '</td><td>' . $perms_oct . '</td><td>' . $filename . '</td></tr>' . "\n  ";
+//	if ( is_writable($filename) ) {
+//		$css_class_writable = 'writeyes';
+//	} else {
+//		$css_class_writable = 'writeno';
+//	}
+	color_classes_perm_asc($filename,$perms_asc,$css_class_writable);
+	echo '<tr>' . '<td><em class="'.$css_class.'">' . $perms_file . '</em></td><td>' . $username . '</td><td>' . $groupname . '</td>';
+	echo '<td class="' . $css_class_writable . '">' . $perms_asc . '</td><td>' . $perms_oct . '</td><td>' . $filename . '</td></tr>' . "\n  ";
 	//
 //	$nosuchfile='/example_does_not_exist';
 	$usersubmittedfile = $_POST['usersubmittedfile'];
@@ -185,8 +230,14 @@
 		$perms_file = $perms_unknown;
 		$css_class = $css_class_user;
 		get_perm_data($filename,$username,$groupname,$perms_asc,$perms_oct);
+//		if ( is_writable($filename) ) {
+//			$css_class_writable = 'writeyes';
+//		} else {
+//			$css_class_writable = 'writeno';
+//		}
+		color_classes_perm_asc($filename,$perms_asc,$css_class_writable);
 		echo '<tr>' . '<td><em class="'.$css_class.'">' . $perms_file . '</em></td><td>' . $username . '</td><td>' . $groupname . '</td>';
-		echo '<td>' . $perms_asc . '</td><td>' . $perms_oct . '</td><td>' . $usersubmittedfile . '</td></tr>' . "\n  ";
+		echo '<td class="' . $css_class_writable . '">' . $perms_asc . '</td><td>' . $perms_oct . '</td><td>' . $usersubmittedfile . '</td></tr>' . "\n  ";
 	}
 ?>
  </table></div>
