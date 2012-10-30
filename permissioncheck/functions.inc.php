@@ -53,6 +53,7 @@ function check_file_write($filename,$filecontent)
 	return $write_permission;
 }
 
+// replace template names with CSS class names
 function color_classes_perm_asc($filename,&$perms_asc,&$css_class_writable)
 {
 	if ( is_writable($filename) ) {
