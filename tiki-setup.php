@@ -321,6 +321,7 @@ if ($prefs['javascript_enabled'] != 'n') {
 		$headerlib
 			->add_cssfile('lib/codemirror/lib/codemirror.css')
 			->add_jsfile_dependancy('lib/codemirror/lib/codemirror.js')
+			->add_jsfile_dependancy('lib/codemirror/lib/util/searchcursor.js')
 		//add tiki stuff
 			->add_cssfile('lib/codemirror_tiki/codemirror_tiki.css')
 			->add_jsfile_dependancy('lib/codemirror_tiki/codemirror_tiki.js');
