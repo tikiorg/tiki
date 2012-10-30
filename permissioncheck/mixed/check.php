@@ -4,6 +4,9 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) == false) {
 	//echo 'This model works';
 	$check_if_model_works = true;
 	return $check_if_model_works;
+} else {
+	echo 'Tiki Read Check: this model works';
+	return;
 }
 ?>
 <!DOCTYPE html>

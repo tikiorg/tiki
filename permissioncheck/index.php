@@ -183,18 +183,30 @@
 		echo '<tr>'.'<td><em class="'.$css_class.'">'.$perms_file.'</em></td>'.'<td>'.$username.'</td><td>'.$groupname.'</td>';
 		echo '<td class="' . $css_class_writable . '">'.$perms_asc.'</td><td>'.$perms_oct.'</td>';
 		echo '<td><a href="'.$filename.'" target="_blank">permissioncheck/'.$filename."</a></td></tr>\n  ";
-		// include this file
+		// include this file as external one via HTTP request
 		echo $html_almost_empty_table_row;
-		
 		echo '<td>';
-		$check_if_model_works = false;
-		include $filename;
-		if ( $check_if_model_works ) {
-			$check_if_model_works_text = '<span class="modelworksyes">Read: this model works for you</span>';
+	//	$check_if_model_works = false;
+	//	include $filename;
+	//	if ( $check_if_model_works ) {
+	//		$check_if_model_works_text = '<span class="modelworksyes">Read: this model works for you</span>';
+	//	} else {
+	//		$check_if_model_works_text = '<span class="modelworksno">Read: this model does not work for you!</span>';
+	//	}
+		$url_name = get_page_url($filename);
+		//print $url_name;
+		$http_request = 'foo';
+		$http_request = @file_get_contents($url_name);
+		if ($http_request === false) {
+			$http_output = '<span class="modelworksno">' . 'THIS DOES NOT WORK' . '</span>';
 		} else {
-			$check_if_model_works_text = '<span class="modelworksno">Read: this model does not work for you!</span>';
+			$http_output = '<span class="modelworksyes">' . $http_request . '</span>';
 		}
-		echo $check_if_model_works_text . '</td>'."\n ";
+		//print file_get_contents($url_name) or print 'THIS DOES NOT WORK';
+		echo $http_output;
+		//echo $check_if_model_works_text;
+		//echo $check_if_model_works_text . '</td>'."\n ";
+		echo '</td>'."\n ";
 	}
 	// general data for special checks
 	$perms_unknown='???';
