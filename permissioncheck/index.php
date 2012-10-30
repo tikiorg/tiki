@@ -199,6 +199,8 @@
 		$http_request = @file_get_contents($url_name);
 		if ($http_request === false) {
 			$http_output = '<span class="modelworksno">' . 'THIS DOES NOT WORK' . '</span>';
+		} elseif ((strpos($http_request,'arning') == true) or (strpos($http_request,'rror') == true)) {
+			$http_output = '<span class="modelworksno">' . 'THIS DOES NOT WORK' . '</span>';
 		} else {
 			$http_output = '<span class="modelworksyes">' . $http_request . '</span>';
 		}
