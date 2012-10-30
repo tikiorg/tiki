@@ -9,11 +9,13 @@ ACTION=$1
 PATH="${PATH}:/bin:/usr/bin:/sbin:/usr/sbin:/usr/local/bin:/usr/local/sbin:/opt/bin:/opt/sbin:/opt/local/bin:/opt/local/sbin"
 CHMOD=`which chmod`
 COPY=`which cp`
+MKDIR=`which mkdir`
 
 # compare with permissioncheck/usecases.inc.php
 
 WORK_DIR="permissioncheck"
 LIST_OF_FILES="${WORK_DIR}/list-of-files.txt"
+LIST_OF_SUBDIRS="${WORK_DIR}/list-of-subdirs.txt"
 #
 INDEX_FILE="index.php"
 DEFAULT_FILE_NAME="check.php"
@@ -36,6 +38,13 @@ if [ -f ${LIST_OF_FILES} ] ; then
 	${CHMOD} 644 "${LIST_OF_FILES}"
 else
 	echo "${LIST_OF_FILES} does not exist"
+	exit 1
+fi
+# the next may be redundant, because it could be done in ${LIST_OF_FILES}
+if [ -f ${LIST_OF_SUBDIRS} ] ; then
+	${CHMOD} 644 "${LIST_OF_SUBDIRS}"
+else
+	echo "${LIST_OF_SUBDIRS} does not exist"
 	exit 1
 fi
 
@@ -61,19 +70,44 @@ hardcoded_perms() {
 }
 hardcoded_perms
 
-dynamic_perms() {
+dynamic_perms_files() {
+echo ' dynamic_perms_files'
 while read line_of_file_orig ; do
 	static_file_name="permissioncheck/"`echo $line_of_file_orig | cut -d: -f1`
 	#echo $static_file_name
 	static_file_perm=`echo $line_of_file_orig | cut -d: -f2`
 	#echo $static_file_perm
 	if [ -f $static_file_name ] ; then
-		echo ${CHMOD} $static_file_perm $static_file_name
+		#echo ${CHMOD} $static_file_perm $static_file_name
+		${CHMOD} $static_file_perm $static_file_name
 	else
 		echo "$static_file_name $static_file_perm does not exist"
 		echo exit 1 recommended
 	fi
 done < ${LIST_OF_FILES}
+}
+
+dynamic_perms_subdirs() {
+echo ' dynamic_perms_subdirs'
+while read line_of_file_orig ; do
+	static_subdir_name="permissioncheck/"`echo $line_of_file_orig | cut -d: -f1`
+	#echo $static_file_name
+	static_subdir_perm=`echo $line_of_file_orig | cut -d: -f2`
+	#echo $static_file_perm
+	if [ -d $static_subdir_name ] ; then
+		#echo ${CHMOD} $static_subdir_perm $static_subdir_name
+		${CHMOD} $static_subdir_perm $static_subdir_name
+	else
+		echo "$static_subdir_name $static_subdir_perm does not exist"
+		echo ${MKDIR} $static_subdir_name '#' recommended
+		#echo exit 1 recommended
+	fi
+done < ${LIST_OF_SUBDIRS}
+}
+
+dynamic_perms() {
+	dynamic_perms_files
+	dynamic_perms_subdirs
 }
 
 disable_perm_check() {
