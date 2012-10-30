@@ -40,8 +40,9 @@
 {if $plugin.last_objectType eq 'wiki page'}
 {tr _0=$plugin.last_objectId|sefurl:'wiki page' _1=$plugin.last_objectId|escape _2=$plugin.fingerprint}<a href="%0#%2" title="{tr}View this page.{/tr}">{icon _id='page'}</a>{/tr}	
 {/if}	
+				</td>
+			</tr>
 {/foreach}
-			</td></tr>
 		</table>
 		<p>
 		<label for="submit_mult">{tr}Perform action with checked:{/tr}</label>
