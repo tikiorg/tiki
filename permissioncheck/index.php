@@ -140,7 +140,8 @@
  </p>
  <div class="block"><table class="truetype"><?php
 	echo "\n  ";
-	echo '<tr>'.'<td>should</td>'.'<td>user</td>'.'<td>group</td>'.'<td>ascii PHP<br />permissions';
+	$html_empty_table_row = '<tr><td>&nbsp;</td><td></td><td></td><td></td><td></td><td></td></tr>'."\n  ";
+	echo '<tr>'.'<td>should</td>'.'<td>user</td>'.'<td>group</td>'.'<td>ascii and <br />colored&nbsp;PHP<br />permissions';
 	echo '<br />read:<span class="readyes">yes</span>/<span class="readno">no</span>';
 	echo '<br />write:<span class="writeyes">yes</span>/<span class="writeno">no</span></td>';
 	echo '<td>octal</td>'.'<td>filename</td>'.'</td>';
@@ -148,6 +149,8 @@
 	//$filename="../".$file;
 	foreach ($uc_perms_subdir as $usecase => $perms_subdir) {
 		$perms_file=$uc_perms_file[$usecase];
+		echo $html_empty_table_row;
+		// subdir
 		$filename=$usecase;
 		get_perm_data($filename,$username,$groupname,$perms_asc,$perms_oct);
 		if ($perms_subdir==$perms_oct) {
@@ -155,12 +158,11 @@
 		} else {
 			$css_class="notequal";
 		}
-//		$css_class_writable = 'noclass';
-//		color_classes_perm_asc($filename,$perms_asc);
 		color_classes_perm_asc($filename,$perms_asc,$css_class_writable);
 		echo '<tr>'.'<td><em class="'.$css_class.'">'.$perms_subdir.'</em></td>'.'<td>'.$username.'</td><td>'.$groupname.'</td>';
 		echo '<td class="' . $css_class_writable . '">'.$perms_asc.'</td><td>'.$perms_oct.'</td>';
 		echo '<td><a href="'.$filename.'" target="_blank">permissioncheck/'.$filename."</a></td></tr>\n  ";
+		// file
 		$filename=$usecase."/".$default_file_name;
 		get_perm_data($filename,$username,$groupname,$perms_asc,$perms_oct);
 		if ($perms_file==$perms_oct) {
@@ -183,7 +185,6 @@
 	$perms_unknown='???';
 	$css_class_unknown='unknown';
 	$css_class_user='user';
-	$html_empty_table_row='<tr><td>&nbsp;</td><td></td><td></td><td></td><td></td><td></td></tr>'."\n  ";
 	echo $html_empty_table_row ;
 	// special:
 	//
