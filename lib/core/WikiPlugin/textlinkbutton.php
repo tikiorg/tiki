@@ -5,9 +5,9 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-class WikiPlugin_forwardlinkbutton extends WikiPlugin_HtmlBase
+class WikiPlugin_textlinkbutton extends WikiPlugin_HtmlBase
 {
-	public $type = 'forwardlinkbutton';
+	public $type = 'textlinkbutton';
 	public $documentation = '';
 	public $prefs = array('feature_wiki', 'wikiplugin_textlink', 'feature_forwardlinkprotocol');
 	public $filter = 'rawhtml_unsafe';
@@ -15,16 +15,15 @@ class WikiPlugin_forwardlinkbutton extends WikiPlugin_HtmlBase
 	public $tags = array( 'basic' );
 	public $htmlTagType = 'span';
 	public $htmlAttributes = array(
-		"class" => "forwardLinkCreationButton"
+		"class" => "textLinkCreationButton"
 	);
 
 	function __construct()
 	{
-		$this->name = tra('A ForwardLink Button');
-		$this->description = tra('A ForwardLink Button');
+		$this->name = tra('A TextLink Button');
+		$this->description = tra('A TextLink Button');
 		$this->body = tra('NA');
-		$this->params = array(
-		);
+		$this->params = array();
 	}
 
 	function output(&$data, &$params, &$index, &$parser)
@@ -32,7 +31,7 @@ class WikiPlugin_forwardlinkbutton extends WikiPlugin_HtmlBase
 		global $page;
 
 		if (isset($page)) {
-			return '<a href"#" onclick="return false;">' . tr('Create ForwardLink') . '</a>';
+			return '<a href"#" onclick="return false;">' . tr('Create TextLink') . '</a>';
 		}
 	}
 }

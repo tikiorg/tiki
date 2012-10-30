@@ -324,7 +324,7 @@ JQ
 			);
 	}
 
-	function createForwardLinksInterface()
+	function createTextLinksInterface()
 	{
 		global $tikilib, $headerlib, $prefs, $user;
 
@@ -338,13 +338,13 @@ JQ
 <<<JQ
 			var answers = $answers,
 
-			createForwardLinkButton = $('.forwardLinkCreationButton');
+			createTextLinkButton = $('.textLinkCreationButton');
 
-			if (!createForwardLinkButton.length) {
-				createForwardLinkButton = $('<div />')
+			if (!createTextLinkButton.length) {
+				createTextLinkButton = $('<div />')
 					.appendTo('body')
-					.text(tr('Create ForwardLink'))
-					.addClass('forwardLinkCreationButton')
+					.text(tr('Create TextLink'))
+					.addClass('textLinkCreationButton')
 					.css('position', 'fixed')
 					.css('top', '0px')
 					.css('font-size', '10px')
@@ -353,14 +353,14 @@ JQ
 					.button();
 			}
 
-			createForwardLinkButton
+			createTextLinkButton
 				.click(function() {
 					$(this).remove();
 					$.notify(tr('Highlight text to be linked'));
 
 					$(document).bind('mousedown', function() {
 						if (me.data('rangyBusy')) return;
-						$('div.forwardLinkCreate').remove();
+						$('div.textLinkCreate').remove();
 						$('embed[id*="ZeroClipboard"]').parent().remove();
 					});
 
@@ -368,9 +368,9 @@ JQ
 						if (me.data('rangyBusy')) return;
 						o.text = $.trim(o.text);
 
-						var forwardLinkCreate = $('<div>' + tr('Accept TextLink & ForwardLink') + '</div>')
+						var textLinkCreate = $('<div>' + tr('Accept TextLink') + '</div>')
 							.button()
-							.addClass('forwardLinkCreate')
+							.addClass('textLinkCreate')
 							.css('position', 'absolute')
 							.css('top', o.y + 'px')
 							.css('left', o.x + 'px')
@@ -493,16 +493,16 @@ JQ
 
 									me.data('rangyBusy', true);
 
-									var forwardLinkCopy = $('<div></div>');
-									var forwardLinkCopyButton = $('<div>' + tr('Copy To Clipboard') + '</div>')
+									var textLinkCopy = $('<div></div>');
+									var textLinkCopyButton = $('<div>' + tr('Click HERE to Copy to Clipboard') + '</div>')
 										.button()
-										.appendTo(forwardLinkCopy);
-									var forwardLinkCopyValue = $('<textarea style="width: 100%; height: 80%;"></textarea>')
+										.appendTo(textLinkCopy);
+									var textLinkCopyValue = $('<textarea style="width: 100%; height: 80%;"></textarea>')
 										.val(encodeURI(JSON.stringify(clipboarddata)))
-										.appendTo(forwardLinkCopy);
+										.appendTo(textLinkCopy);
 
-									forwardLinkCopy.dialog({
-										title: tr("Copy This"),
+									textLinkCopy.dialog({
+										title: tr("Copy text and Metadata"),
 										modal: true,
 										close: function() {
 											me.data('rangyBusy', false);
@@ -511,25 +511,25 @@ JQ
 										draggable: false
 									});
 
-									forwardLinkCopyValue.select().focus();
+									textLinkCopyValue.select().focus();
 
 									var clip = new ZeroClipboard.Client();
 									clip.setHandCursor( true );
 
 									clip.addEventListener('complete', function(client, text) {
-										forwardLinkCreate.remove();
-										forwardLinkCopy.dialog( "close" );
+										textLinkCreate.remove();
+										textLinkCopy.dialog( "close" );
 										clip.hide();
 										me.data('rangyBusy', false);
 
 
-										$.notify(tr('TextLink & ForwardLink data copied to your clipboard'));
+										$.notify(tr('Text and Metadata copied to Clipboard'));
 										return false;
 									});
 
-									clip.glue( forwardLinkCopyButton[0] );
+									clip.glue( textLinkCopyButton[0] );
 
-									clip.setText(forwardLinkCopyValue.val());
+									clip.setText(textLinkCopyValue.val());
 
 
 									$('embed[id*="ZeroClipboard"]').parent().css('z-index', '9999999999');
@@ -565,7 +565,7 @@ JQ
 		Feed_ForwardLink_Search::restoreForwardLinkPhrasesInWikiPage($me->getItems(), $phrase);
 
 		$me->editInterfaces();
-		$me->createForwardLinksInterface();
+		$me->createTextLinksInterface();
 	}
 
 	static function wikiSave($args)
