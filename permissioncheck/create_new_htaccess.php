@@ -49,11 +49,11 @@
 	password <span class="truetype">bar</span>. Don't lock yourself
 	out. If you are sure your user/password settings work, copy
 	the new file <span class="truetype">permissioncheck/new_htpasswd</span>
-	to <span class="truetype">permissioncheck/.htpasswd</span>.
-	Password protection should be enabled immediately if your
+	to <span class="truetype">permissioncheck/.htpasswd</span> and
+	password protection should be enabled immediately if your
 	webserver is configured to do so. Don't forget to reduce permissions
 	of <span class="truetype">permissioncheck/.htpasswd</span> to 444 read
-	only.
+	only (or even more restrictive, but you may lock yourself out).
  </p>
  <p><a href="./">permissioncheck</a></p>
  <p class="block">
