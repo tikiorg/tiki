@@ -3145,8 +3145,11 @@ class FileGalLib extends TikiLib
 								$this->set_download_limit($editFileId, $params['hit_limit'][$key]);
 							}
 						} else {
+							$title = preg_replace('/\.\w*$/', '', $params["name"][$key]);	// remove extension
+							$title = preg_replace('/[\-_]+/', ' ', $title);					// turn _ etc into spaces
+							$title = ucwords($title);
 							$fileId = $this->insert_file(
-								$params["galleryId"][$key], $params["name"][$key],
+								$params["galleryId"][$key], $title,
 								$params["description"][$key], $name, $data, $size, $type, $params['user'][$key],
 								$fhash . $extension, '', $params['author'][$key], '', '', $deleteAfter, '', $filemeta
 							);
