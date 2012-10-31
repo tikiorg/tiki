@@ -20,15 +20,15 @@ class JisonParser_Html
 		$end = 'end';
 		
 		//parser
-		$this->symbols_ = 		json_decode('{"error":2,"wiki":3,"lines":4,"EOF":5,"line":6,"contents":7,"BLOCK_START":8,"BLOCK_END":9,"content":10,"HTML_TAG":11,"CONTENT":12,"$accept":0,"$end":1}', true);
-		$this->terminals_ = 	json_decode('{"2":"error","5":"EOF","8":"BLOCK_START","9":"BLOCK_END","11":"HTML_TAG","12":"CONTENT"}', true);
-		$this->productions_ = 	json_decode('[0,[3,1],[3,2],[3,1],[4,1],[4,2],[6,1],[6,2],[6,3],[7,1],[7,2],[10,1],[10,1]]', true);
-		$this->table = 			json_decode('[{"3":1,"4":2,"5":[1,3],"6":4,"7":5,"8":[1,6],"10":7,"11":[1,8],"12":[1,9]},{"1":[3]},{"1":[2,1],"5":[1,10]},{"1":[2,3]},{"1":[2,4],"4":11,"5":[2,4],"6":4,"7":5,"8":[1,6],"10":7,"11":[1,8],"12":[1,9]},{"1":[2,6],"5":[2,6],"8":[2,6],"10":12,"11":[1,8],"12":[1,9]},{"7":14,"9":[1,13],"10":7,"11":[1,8],"12":[1,9]},{"1":[2,9],"5":[2,9],"8":[2,9],"9":[2,9],"11":[2,9],"12":[2,9]},{"1":[2,11],"5":[2,11],"8":[2,11],"9":[2,11],"11":[2,11],"12":[2,11]},{"1":[2,12],"5":[2,12],"8":[2,12],"9":[2,12],"11":[2,12],"12":[2,12]},{"1":[2,2]},{"1":[2,5],"5":[2,5]},{"1":[2,10],"5":[2,10],"8":[2,10],"9":[2,10],"11":[2,10],"12":[2,10]},{"1":[2,7],"5":[2,7],"8":[2,7],"11":[2,7],"12":[2,7]},{"9":[1,15],"10":12,"11":[1,8],"12":[1,9]},{"1":[2,8],"5":[2,8],"8":[2,8],"11":[2,8],"12":[2,8]}]', true);
-		$this->defaultActions = json_decode('{"3":[2,3],"10":[2,2]}', true);
+		$this->symbols_ = 		json_decode('{"error":2,"wiki":3,"contents":4,"EOF":5,"content":6,"HTML_TAG":7,"CONTENT":8,"CAPITOL_WORD":9,"LINE_END":10,"$accept":0,"$end":1}', true);
+		$this->terminals_ = 	json_decode('{"2":"error","5":"EOF","7":"HTML_TAG","8":"CONTENT","9":"CAPITOL_WORD","10":"LINE_END"}', true);
+		$this->productions_ = 	json_decode('[0,[3,1],[3,2],[3,1],[4,1],[4,2],[6,1],[6,1],[6,1],[6,1]]', true);
+		$this->table = 			json_decode('[{"3":1,"4":2,"5":[1,3],"6":4,"7":[1,5],"8":[1,6],"9":[1,7],"10":[1,8]},{"1":[3]},{"1":[2,1],"5":[1,9],"6":10,"7":[1,5],"8":[1,6],"9":[1,7],"10":[1,8]},{"1":[2,3]},{"1":[2,4],"5":[2,4],"7":[2,4],"8":[2,4],"9":[2,4],"10":[2,4]},{"1":[2,6],"5":[2,6],"7":[2,6],"8":[2,6],"9":[2,6],"10":[2,6]},{"1":[2,7],"5":[2,7],"7":[2,7],"8":[2,7],"9":[2,7],"10":[2,7]},{"1":[2,8],"5":[2,8],"7":[2,8],"8":[2,8],"9":[2,8],"10":[2,8]},{"1":[2,9],"5":[2,9],"7":[2,9],"8":[2,9],"9":[2,9],"10":[2,9]},{"1":[2,2]},{"1":[2,5],"5":[2,5],"7":[2,5],"8":[2,5],"9":[2,5],"10":[2,5]}]', true);
+		$this->defaultActions = json_decode('{"3":[2,3],"9":[2,2]}', true);
 		
 		//lexer
-		$this->rules = 			array("/^(?:(?=((\\n\\r|\\r\\n|[\\n\\r]))))/","/^(?:((\\n\\r|\\r\\n|[\\n\\r])))/","/^(?:((\\n\\r|\\r\\n|[\\n\\r]))(?=(([\\!*#+;]))))/","/^(?:((\\n\\r|\\r\\n|[\\n\\r])))/","/^(?:[<](.|\\n)*?[>])/","/^(?:≤REAL_LT≥(.|\\n)*?≤REAL_GT≥)/","/^(?:(§[a-z0-9]{32}§))/","/^(?:(≤(.)+≥))/","/^(?:([A-Za-z0-9 .,?;]+))/","/^(?:(?!([{}\\n_\\^:\\~'-|=\\(\\)\\[\\]*#+%<≤]))(((.?)))?(?=([{}\\n_\\^:\\~'-|=\\(\\)\\[\\]*#+%<≤])))/","/^(?:([ ]+?))/","/^(?:(.))/","/^(?:$)/");
-		$this->conditions = 	json_decode('{"np":{"rules":[2,3,4,5,6,7,8,9,10,11,12],"inclusive":true},"pp":{"rules":[2,3,4,5,6,7,8,9,10,11,12],"inclusive":true},"plugin":{"rules":[2,3,4,5,6,7,8,9,10,11,12],"inclusive":true},"line":{"rules":[2,3,4,5,6,7,8,9,10,11,12],"inclusive":true},"block":{"rules":[0,1,2,3,4,5,6,7,8,9,10,11,12],"inclusive":true},"bold":{"rules":[2,3,4,5,6,7,8,9,10,11,12],"inclusive":true},"box":{"rules":[2,3,4,5,6,7,8,9,10,11,12],"inclusive":true},"center":{"rules":[2,3,4,5,6,7,8,9,10,11,12],"inclusive":true},"code":{"rules":[2,3,4,5,6,7,8,9,10,11,12],"inclusive":true},"color":{"rules":[2,3,4,5,6,7,8,9,10,11,12],"inclusive":true},"italic":{"rules":[2,3,4,5,6,7,8,9,10,11,12],"inclusive":true},"unlink":{"rules":[2,3,4,5,6,7,8,9,10,11,12],"inclusive":true},"link":{"rules":[2,3,4,5,6,7,8,9,10,11,12],"inclusive":true},"strike":{"rules":[2,3,4,5,6,7,8,9,10,11,12],"inclusive":true},"table":{"rules":[2,3,4,5,6,7,8,9,10,11,12],"inclusive":true},"titlebar":{"rules":[2,3,4,5,6,7,8,9,10,11,12],"inclusive":true},"underscore":{"rules":[2,3,4,5,6,7,8,9,10,11,12],"inclusive":true},"wikilink":{"rules":[2,3,4,5,6,7,8,9,10,11,12],"inclusive":true},"INITIAL":{"rules":[2,3,4,5,6,7,8,9,10,11,12],"inclusive":true}}', true);
+		$this->rules = 			array("/^(?:(([A-Z]{1,}[a-z_\\-\\x80-\\xFF]{1,}){2,}))/","/^(?:[<](.|\\n)*?[>])/","/^(?:([A-Za-z0-9 .,?;]+))/","/^(?:([ ]))/","/^(?:((\\n\\r|\\r\\n|[\\n\\r])))/","/^(?:(.))/","/^(?:$)/");
+		$this->conditions = 	json_decode('{"INITIAL":{"rules":[0,1,2,3,4,5,6],"inclusive":true}}', true);
 		
 		$this->options =		json_decode('{}', true);
 	}
@@ -53,32 +53,24 @@ break;
 case 4:$thisS = $S[$O];
 break;
 case 5:
-        $thisS = $S[$O-1] . $S[$O];
-    
-break;
-case 6:$thisS = $S[$O];
-break;
-case 7:
-	    $thisS = $this->block($S[$O-1]);
-	
-break;
-case 8:
-        $thisS = $this->block($S[$O-2] . $S[$O-1]);
-    
-break;
-case 9:$thisS = $S[$O];
-break;
-case 10:
 
 		$thisS = $S[$O-1] . $S[$O];
 	
 break;
-case 11:
+case 6:
         $thisS = $this->htmlTag($S[$O]);
     
 break;
-case 12:
+case 7:
         $thisS = $this->content($S[$O]);
+    
+break;
+case 8:
+        $thisS = $this->capitolWord($S[$O]);
+    
+break;
+case 9:
+        $thisS = $this->lineEnd($S[$O]);
     
 break;
 }
@@ -154,7 +146,7 @@ break;
 						}
 					}
 					
-					$errStr = "Parse error on line " . ($yylineno + 1) . ":\n" . $this->showPosition() . "\nExpecting " . implode(", ", $expected) . ", got '" . (isset($this->terminals_[$symbol]) ? $this->terminals_[$symbol] : 'NOTHING') . "'";
+					$errStr = "Parse error on line " . ($this->yylineno + 1) . ":\n" . $this->showPosition() . "\nExpecting " . implode(", ", $expected) . ", got '" . (isset($this->terminals_[$symbol]) ? $this->terminals_[$symbol] : 'NOTHING') . "'";
 			
 					$this->parseError($errStr, array(
 						"text"=> $this->match,
@@ -533,51 +525,19 @@ break;
 
 
 switch($avoiding_name_collisions) {
-case 0:
-
-		if ($this->isContent()) return 'CONTENT';
-		$this->popState();
-		return 'BLOCK_END';
-	
+case 0:return 9;
 break;
-case 1:
-
-        if ($this->isContent()) return 'CONTENT';
-        $this->begin('block');
-        $this->unput("\n");
-        return 'BLOCK_END';
-	
+case 1:return 7;
 break;
-case 2:
-
-        if ($this->isContent()) return 'CONTENT';
-        $this->begin('block');
-        return 'BLOCK_START';
-	
+case 2:return 8;
 break;
-case 3:
-
-		if ($this->isContent()) return 'CONTENT';
-		return 'LINE_END';
-	
+case 3:return 8;
 break;
-case 4:return 11;
+case 4:return 10;
 break;
-case 5:return 11;
+case 5:return 8;
 break;
-case 6:return 12;
-break;
-case 7:return 12;
-break;
-case 8:return 12;
-break;
-case 9:return 12;
-break;
-case 10:return 12;
-break;
-case 11:return 12;
-break;
-case 12:return 5;
+case 6:return 5;
 break;
 }
 

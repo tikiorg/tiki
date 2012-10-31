@@ -4,108 +4,31 @@
 //Lexical Grammer
 %lex
 
-PLUGIN_ID   					[A-Z]+
-INLINE_PLUGIN_ID				[a-z]+
-VARIABLE_NAME                   ([0-9A-Za-z ]{3,})
-SYNTAX_CHARS                    [{}\n_\^:\~'-|=\(\)\[\]*#+%<≤]
-LINE_CONTENT                    (.?)
-LINES_CONTENT                   (.|\n)+
 LINE_END                        (\n\r|\r\n|[\n\r])
-BLOCK_START                     ([\!*#+;])
-WIKI_LINK_TYPE                  (([a-z0-9-]+))
 CAPITOL_WORD                    ([A-Z]{1,}[a-z_\-\x80-\xFF]{1,}){2,}
-
-%s np pp plugin line block bold box center code color italic unlink link strike table titlebar underscore wikilink
 
 %%
 
-<block>(?={LINE_END})
-	%{
-		if (parser.isContent()) return 'CONTENT'; //js
-		lexer.popState(); //js
-		return 'BLOCK_END'; //js
-
-		//php if ($this->isContent()) return 'CONTENT';
-		//php $this->popState();
-		//php return 'BLOCK_END';
-	%}
-<block>{LINE_END}
-	%{
-		if (parser.isContent()) return 'CONTENT'; //js
-        lexer.begin('block'); //js
-        return 'BLOCK_END'; //js
-
-        //php if ($this->isContent()) return 'CONTENT';
-        //php $this->begin('block');
-        //php $this->unput("\n");
-        //php return 'BLOCK_END';
-	%}
-{LINE_END}(?={BLOCK_START})
-	%{
-		if (parser.isContent()) return 'CONTENT'; //js
-        lexer.begin('block'); //js
-        return 'BLOCK_START'; //js
-
-        //php if ($this->isContent()) return 'CONTENT';
-        //php $this->begin('block');
-        //php return 'BLOCK_START';
-	%}
-{LINE_END}
-	%{
-		if (parser.isContent()) return 'CONTENT'; //js
-		return 'LINE_END'; //js
-
-		//php if ($this->isContent()) return 'CONTENT';
-		//php return 'LINE_END';
-	%}
-
+{CAPITOL_WORD}                              return 'CAPITOL_WORD';
 [<](.|\n)*?[>]                              return 'HTML_TAG';
-"≤REAL_LT≥"(.|\n)*?"≤REAL_GT≥"    	        return 'HTML_TAG';
-("§"[a-z0-9]{32}"§")                        return 'CONTENT';
-("≤"(.)+"≥")                                return 'CONTENT';
 ([A-Za-z0-9 .,?;]+)                         return 'CONTENT';
-(?!{SYNTAX_CHARS})({LINE_CONTENT})?(?={SYNTAX_CHARS})
-											return 'CONTENT';
-([ ]+?)                                     return 'CONTENT';
+([ ])                                       return 'CONTENT';
+{LINE_END}                                  return 'LINE_END';
 (.)                                         return 'CONTENT';
 <<EOF>>										return 'EOF';
+
 /lex
 
+//Parsing Grammer
 %%
 
 wiki
- : lines
+ : contents
  	{return $1;}
- | lines EOF
+ | contents EOF
 	{return $1;}
  | EOF
     {return " ";}
- ;
-
-
-lines
- : line
-    {$$ = $1;}
- | line lines
-    {
-        $$ = $1 + $2; //js
-        //php $$ = $1 . $2;
-    }
- ;
-
-line
- : contents
-    {$$ = $1;}
- | BLOCK_START BLOCK_END
-    {
-	    $$ = parser.block($1); //js
-	    //php $$ = $this->block($1);
-	}
- | BLOCK_START contents BLOCK_END
-    {
-        $$ = parser.block($1 + $2); //js
-        //php $$ = $this->block($1 . $2);
-    }
  ;
 
 contents
@@ -129,6 +52,16 @@ content
     {
         $$ = parser.content($1); //js
         //php $$ = $this->content($1);
+    }
+ | CAPITOL_WORD
+    {
+        $$ = parser.capitolWord($1); //js
+        //php $$ = $this->capitolWord($1);
+    }
+ | LINE_END
+    {
+        $$ = parser.lineEnd($1); //js
+        //php $$ = $this->lineEnd($1);
     }
  ;
 

@@ -63,7 +63,7 @@ class JisonParser_Abstract extends TikiTestCase
 
 			$this->called++;
 
-			$this->assertEquals($syntax[1], $parsed, $syntaxName, $syntax[0], $this->parser->list);
+			$this->assertEquals($syntax[1], $parsed, $syntaxName, $syntax[0]);
 		}
 	}
 
