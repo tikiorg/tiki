@@ -5,6 +5,12 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
+$inputConfiguration = array(
+	array( 'staticKeyFilters' => array(
+		'wiki_syntax' => 'wikicontent',
+	) ),
+);
+
 $section = 'file_galleries';
 require_once ('tiki-setup.php');
 $access->check_feature(array('feature_file_galleries', 'feature_jquery_tooltips'));
