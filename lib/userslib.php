@@ -384,9 +384,23 @@ class UsersLib extends TikiLib
 		} else {
 			$result = NULL;
 		}
+
+		// If preference login_multiple_forbidden is set, don't let user login if already logged in
+		if ($result == USER_VALID && $prefs['login_multiple_forbidden'] == 'y' && $user != 'admin' ) {
+			global $tikilib;
+			$tikilib->update_session() ;
+			if ( $tikilib->is_user_online($user) ) {
+				$result = USER_ALREADY_LOGGED;
+			}
+		}
+
 		switch ($result) {
 			case USER_VALID:
 				$userTiki = true;
+				$userTikiPresent = true;
+				break;
+
+			case USER_ALREADY_LOGGED:
 				$userTikiPresent = true;
 				break;
 
@@ -4838,11 +4852,10 @@ class UsersLib extends TikiLib
 			),
 			array(
 				'name' => 'tiki_p_use_as_template',
-				'description' => tra('Can use the page as a tracker template'),
+				'description' => tra('Can use the page as a template for tracker or unified search'),
 				'level' => 'basic',
 				'type' => 'wiki',
 				'admin' => false,
-				'prefs' => array('feature_trackers'),
 				'scope' => 'object',
 			),
 			array(

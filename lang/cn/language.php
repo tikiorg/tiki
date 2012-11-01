@@ -4417,6 +4417,7 @@ $lang = array(
 "Can rollback pages" => "可复原页面",
 "Can upload pictures to wiki pages" => "可上传图片到Wiki页面",
 // "Can use the page as a tracker template" => "Can use the page as a tracker template",
+// "Can use the page as a template for tracker or unified search" => "Can use the page as a tracker template",
 // "Can view in module and feed the wiki pages reference" => "Can view in module and feed the wiki pages reference",
 // "Can watch structure" => "Can watch structure",
 // "Can admin attachments on wiki pages" => "Can admin attachments on wiki pages",

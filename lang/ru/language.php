@@ -4417,6 +4417,7 @@ $lang = array(
 "Can rollback pages" => "Откат изменений на страницах",
 "Can upload pictures to wiki pages" => "Загружать изображения на страницы wiki",
 "Can use the page as a tracker template" => "Использовать страницу как шаблон для трекера",
+"Can use the page as a template for tracker or unified search" => "Использовать страницу как шаблон для трекера",
 // "Can view in module and feed the wiki pages reference" => "Can view in module and feed the wiki pages reference",
 "Can watch structure" => "Просмотр структуры",
 // "Can admin attachments on wiki pages" => "Can admin attachments on wiki pages",

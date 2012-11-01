@@ -4421,6 +4421,7 @@ $lang = array(
 "Can rollback pages" => "Kann Seiten zurückrollen",
 "Can upload pictures to wiki pages" => "Kann Bilder zu Wikiseiten hochladen",
 "Can use the page as a tracker template" => "Kann eine Seite als Trackervorlage verwenden",
+"Can use the page as a template for tracker or unified search" => "Kann eine Seite als Trackervorlage verwenden",
 "Can view in module and feed the wiki pages reference" => "Kann Wiki Seiten in Modulen sehen und die Wiki Seiten-Referenzen feeden",
 "Can watch structure" => "Kann Strukturen beobachten",
 "Can admin attachments on wiki pages" => "Kann Anhänge auf Wiki Seiten verwalten",

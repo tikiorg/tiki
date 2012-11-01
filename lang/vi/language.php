@@ -4417,6 +4417,7 @@ $lang = array(
 "Can rollback pages" => "Có thể lùi trang",
 "Can upload pictures to wiki pages" => "Có thể tải hình ảnh lên trang wiki",
 // "Can use the page as a tracker template" => "Can use the page as a tracker template",
+// "Can use the page as a template for tracker or unified search" => "Can use the page as a tracker template",
 // "Can view in module and feed the wiki pages reference" => "Can view in module and feed the wiki pages reference",
 "Can watch structure" => "Có thể xem cấu trúc",
 // "Can admin attachments on wiki pages" => "Can admin attachments on wiki pages",

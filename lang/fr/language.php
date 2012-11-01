@@ -4418,6 +4418,7 @@ $lang = array(
 "Can rollback pages" => "Droit de revenir vers des versions antérieures",
 "Can upload pictures to wiki pages" => "Droit d'envoyer des images vers des pages wiki",
 "Can use the page as a tracker template" => "Droit d'utiliser une page comme gabarit de formulaire",
+"Can use the page as a template for tracker or unified search" => "Droit d'utiliser une page comme gabarit de formulaire ou de recherche unifiée",
 "Can view in module and feed the wiki pages reference" => "Droit de voir les reference des pages wiki dans les modules et les flux",
 "Can watch structure" => "Droit de voir les structures",
 "Can admin attachments on wiki pages" => "Droit d'administrer les pièces jointes aux pages wiki",

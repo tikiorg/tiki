@@ -4422,6 +4422,7 @@ $lang = array(
 "Can rollback pages" => "Visszaállíthat oldalakat",
 "Can upload pictures to wiki pages" => "Képeket tölthet fel wiki oldalakhoz",
 "Can use the page as a tracker template" => "Használhatja az oldalt űrlap sablonként",
+"Can use the page as a template for tracker or unified search" => "Használhatja az oldalt űrlap sablonként",
 "Can view in module and feed the wiki pages reference" => "Megtekintheti modulban és feed-elheti a wiki oldalak hivatkozását",
 "Can watch structure" => "Figyelhet struktúrát",
 // "Can admin attachments on wiki pages" => "Can admin attachments on wiki pages",
