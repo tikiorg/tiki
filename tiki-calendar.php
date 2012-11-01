@@ -593,7 +593,7 @@ if ($calendarViewMode['casedefault'] == 'day') {
 
 				$dayitems['mins'] = substr($dayitems['time'], 2);
 				$dayitems['top'] = 24 * (($rawhour - $minHourOfDay) + $dayitems['mins'] / 60) + 35;
-				$dayitems['left'] = $zoom * ( 9 + 13 * array_search($wd, $viewdays2) );
+				$dayitems['left'] = $zoom * ( 9 + 13 * $wd) ; // [BUG FIX] hollmeer 2012-11-01: a bug here in original with searcing for day's index; original code was: " $zoom * ( 9 + 13 * array_search($wd,$viewdays2) ); " which does not fuction properly if week starting on monday; just take direct $wd index here in all cases as this is just setting the day-columns directly from left to right in all cases
 				$dayitems['width'] = 12 * $zoom;
 				$hrows[$wd]["$rawhour"][] = $dayitems;
 				$eventHoraires[$wd][$dayitems['calitemId']]['start'] = ($dayitems['time'] < $minHourOfDay . "00") ? str_pad($minHourOfDay . "00", 4, '0', STR_PAD_LEFT) : $dayitems['time'];
