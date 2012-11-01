@@ -974,22 +974,6 @@ class ModLib extends TikiLib
 			$info = $this->get_module_info($mod_reference);
 			$cachefile = $this->get_cache_file($mod_reference, $info);
 
-			foreach ((array) $info['prefs'] as $preference) {
-				if ($prefs[$preference] != 'y') {
-					$smarty->loadPlugin('smarty_block_remarksbox');
-
-					return smarty_block_remarksbox(
-						array(
-							'type' => 'warning',
-							'title' => tr('Failed to execute "%0" module', $mod_reference['name']),
-						),
-						tr('Missing dependencies'),
-						$smarty,
-						$repeat
-					);
-				}
-			}
-
 			if ( ! $cachefile || $this->require_cache_build($mod_reference, $cachefile) || $this->is_admin_mode() ) {
 
 				if ($this->is_admin_mode()) {

@@ -78,7 +78,7 @@ if ($tiki_p_admin_forum != 'y' && $user) {
 	}
 }
 
-$access->check_permission(array('tiki_p_forum_read'), '', 'forum', $_REQUEST['forumId']);
+$access->check_permission(array('tiki_p_forum_read'));
 
 $commentslib->forum_add_hit($_REQUEST["forumId"]);
 
