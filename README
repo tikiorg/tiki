@@ -1,16 +1,16 @@
 Tiki! The wiki with a lot of features!
-Version 9.2beta1
+Version 10.0alpha
 
 
 DOCUMENTATION
 
-* The documentation for 9.2 version is ever evolving at http://doc.tiki.org.
+* The documentation for 10.0 version is ever evolving at http://doc.tiki.org.
   You're encouraged to contribute.
 
 * It is highly recommended that you refer to the online documentation:
 * http://doc.tiki.org/Installation for a setup guide
 
-* Notes about this release are accessible from http://tiki.org/ReleaseNotes92
+* Notes about this release are accessible from http://tiki.org/ReleaseNotes100
 * Tikiwiki has an active IRC channel, #tikiwiki on irc.freenode.net
 
 INSTALLATION
