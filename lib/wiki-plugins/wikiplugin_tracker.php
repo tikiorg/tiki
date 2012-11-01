@@ -1288,6 +1288,23 @@ function wikiplugin_tracker($data, $params)
 						}
 					} else {
 						$back.= "<tr><td";
+						
+						// If type is has a samerow param and samerow is "No", show text on one line and the input field on the next
+						$isTextOnSameRow = true;
+						switch($f['type']) {
+						case 't':	// Text field
+						case 'n':	// Numeric field
+						case 'b':	// Currency
+							$isTextOnSameRow = ($f['options_array'][0] == 0) ? false : true;
+							break;
+						case 'a':	// Text area
+							$isTextOnSameRow = ($f['options_array'][8] == 0) ? false : true;
+							break;
+						}
+						if(!$isTextOnSameRow) {
+							 $back.= " colspan='2'";
+						}
+						
 						if (!empty($colwidth)) {
 							$back .= " width='".$colwidth."'";
 						}
@@ -1296,23 +1313,30 @@ function wikiplugin_tracker($data, $params)
 						if ($showmandatory == 'y' and $f['isMandatory'] == 'y') {
 							$back.= "&nbsp;<strong class='mandatory_star'>*</strong>&nbsp;";
 						}
-						$back.= '</td><td>';
+						// If use different lines, add a line break. 
+						// Otherwise a new column
+						if(!$isTextOnSameRow) {
+							$back.= "<br/>";
+						} else {
+							$back.= '</td><td>';
+						}
 
 						$back .= wikiplugin_tracker_render_input($f, $item);
+						$back .= "</td></tr>";
 					}
 
 					if ($f['type'] != 'S') {
-						$back .= '<div class="trackerplugindesc">';
-					}
-					if ($f['type'] != 'S') {
+						$back .= '<tr><td colspan="2">';
+						$back .= '<span class="trackerplugindesc">';
+
 						if ($f['descriptionIsParsed'] == 'y') {
 							$back .= $tikilib->parse_data($f['description']);
 						} else {
 							$back .= tra($f['description']);
 						}
-					}
-					if ($f['type'] != 'S') {
-						$back .= '</div>';
+
+						$back .= '</span>';
+						$back .= "</td></tr>";
 					}
 				}
 			}
@@ -1336,7 +1360,8 @@ function wikiplugin_tracker($data, $params)
 FILL;
 				$back.= sprintf(tra('Each line is a list of %d field values separated with: %s'), $fill_line_cant, htmlspecialchars($fieldsfillseparator));
 				$back .= '</div><div name="ins_fill_desc2" class="trackerplugindesc" >' . htmlspecialchars(implode($fieldsfillseparator, $fieldsfillnames));
-				$back .= '</div></td></tr>';
+				$back .= '</div>';
+				$back .= '</td></tr>';
 			}
 			if (!empty($tpl)) {
 				$smarty->security = true;

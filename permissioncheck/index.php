@@ -6,23 +6,53 @@
 <title>Tiki Installation Permission Check</title>
 <style type="text/css">
 	.block		{text-align: justify;}
-	.truetype	{font-family: courier;}
 	.equal		{background-color: green;}
+	.hint		{background-color: black;	color:	yellow;}
+	.important	{background-color: black;	color:	red;}
+	.modelworksno	{background-color: red;}
+	.modelworksyes	{background-color: green;}
 	.notequal	{background-color: red;}
+<? /*
+	.readno	{background-color: red;}
+	.readno	{background-color: orange;}
+	.readno	{background-color: #88FFCC;}
+ */ ?>
+	.readno	{background-color: red;}
+<? /*
+	.readyes	{background-color: green;}
+	.readyes	{background-color: yellow;}
+	.readyes	{background-color: #FF88CC;}
+ */ ?>
+	.readyes	{background-color: green;}
+	.truetype	{font-family: courier;		background-color: #888888;}
 	.unknown	{background-color: yellow;}
 	.user		{background-color: blue;}
-	.important	{background-color: black;	color:	red;}
-	.hint		{background-color: black;	color:	yellow;}
+<? /*
+	.writeno	{background-color: red;}
+	.writeno	{background-color: orange;}
+	.writeno	{background-color: #88FFCC;} */
+ ?>
+	.writeno	{background-color: #FF88CC;}
+<? /*
+	.writeyes	{background-color: green;}
+	.writeyes	{background-color: yellow;}
+	.writeyes	{background-color: #FF88CC;}
+ */ ?>
+	.writeyes	{background-color: #88FFCC;}
+	a:hover		{background-color: orange;}
 </style>
 </head>
 <body>
 <h1>Tiki Installation Permission Check</h1>
+<h3>Installation Problems?</h3>
+<h4>check required filesystem permissions for your webserver</h4>
  <div class="block">
 	This page should always be visible, independent from any installation problems
 	with Tiki. If the Tiki installer does not run properly, this effect may be
-	caused by some permission problems. There are many different usescases, thus
-	there is no default permission setting which works in all cases and provides
-	an appropriate security level.
+	caused by some permission problems (some problems may be caused by webserver
+	settings regarding htaccess or PHP settings regarding memory limit). There are
+	many different use cases, thus there is no default permission setting which
+	works in all cases and provides an appropriate security level.
  </div>
  <p>PHP check: <?php
 		echo "PHP works";
@@ -79,17 +109,17 @@
  <p>
 	permission check: <?php
 		//include "functions.inc.php";
-		require "functions.inc.php";
+		require 'functions.inc.php';
 		//include "usecases,inc.php";
-		require "usecases.inc.php";
-		$filename="index.php";
-		$user=get_ownership_username($filename);
-		$group=get_ownership_groupname($filename);
-		$username=get_ownership_username($filename);
-		$groupname=get_ownership_groupname($filename);
-		//$perms_oct=substr(sprintf('%o', fileperms($filename)), -3);
-		$perms_oct=get_perms_octal($filename);
-		$perms_asc=get_perms_ascii($filename);
+		require 'usecases.inc.php';
+		$filename = 'index.php';
+		//$user = get_ownership_username($filename);
+		//$group = get_ownership_groupname($filename);
+		$username = get_ownership_username($filename);
+		$groupname = get_ownership_groupname($filename);
+		//$perms_oct = substr(sprintf('%o', fileperms($filename)), -3);
+		$perms_oct = get_perms_octal($filename);
+		$perms_asc = get_perms_ascii($filename);
 		echo "\n\tthis file " . '<strong>' . $filename . '</strong>' . ' owned by ';
 		echo "\n\tuser " . '<strong>' . $username . '</strong>' . ' and group ' . '<strong>' . $groupname . '</strong>' . ' has got access permissions ';
 		echo "\n\t<strong>" . $perms_asc . '</strong>' . ' which is ' . '<strong>' . $perms_oct. '</strong>' . ' octal.';
@@ -112,11 +142,18 @@
  </p>
  <div class="block"><table class="truetype"><?php
 	echo "\n  ";
+	$html_almost_empty_table_row = '<tr><td>&nbsp;</td><td></td><td></td><td></td><td></td>';
+	$html_empty_table_row = '<tr><td>&nbsp;</td><td></td><td></td><td></td><td></td><td></td></tr>'."\n  ";
+	echo '<tr>'.'<td>should</td>'.'<td>user</td>'.'<td>group</td>'.'<td>ascii and <br />colored&nbsp;PHP<br />permissions';
+	echo '<br />read:<span class="readyes">yes</span>/<span class="readno">no</span>';
+	echo '<br />write:<span class="writeyes">yes</span>/<span class="writeno">no</span></td>';
+	echo '<td>octal</td>'.'<td>filename</td>'.'</td>';
 	//$file="permissioncheck/paranoia";
 	//$filename="../".$file;
-
 	foreach ($uc_perms_subdir as $usecase => $perms_subdir) {
 		$perms_file=$uc_perms_file[$usecase];
+		echo $html_empty_table_row;
+		// subdir
 		$filename=$usecase;
 		get_perm_data($filename,$username,$groupname,$perms_asc,$perms_oct);
 		if ($perms_subdir==$perms_oct) {
@@ -124,7 +161,11 @@
 		} else {
 			$css_class="notequal";
 		}
-		echo "<tr>".'<td><em class="'.$css_class.'">'.$perms_subdir."</em></td>"."<td>".$username."</td><td>".$groupname."</td><td>".$perms_asc."</td><td>".$perms_oct.'</td><td><a href="'.$filename.'" target="_blank">permissioncheck/'.$filename."</a></td></tr>\n  ";
+		color_classes_perm_asc($filename,$perms_asc,$css_class_writable);
+		echo '<tr>'.'<td><em class="'.$css_class.'">'.$perms_subdir.'</em></td>'.'<td>'.$username.'</td><td>'.$groupname.'</td>';
+		echo '<td class="' . $css_class_writable . '">'.$perms_asc.'</td><td>'.$perms_oct.'</td>';
+		echo '<td><a href="'.$filename.'" target="_blank">permissioncheck/'.$filename."</a></td></tr>\n  ";
+		// file
 		$filename=$usecase."/".$default_file_name;
 		get_perm_data($filename,$username,$groupname,$perms_asc,$perms_oct);
 		if ($perms_file==$perms_oct) {
@@ -132,13 +173,47 @@
 		} else {
 			$css_class="notequal";
 		}
-		echo "<tr>".'<td><em class="'.$css_class.'">'.$perms_file."</em></td>"."<td>".$username."</td><td>".$groupname."</td><td>".$perms_asc."</td><td>".$perms_oct.'</td><td><a href="'.$filename.'" target="_blank">permissioncheck/'.$filename."</a></td></tr>\n  ";
+//		if ( is_writable($filename) ) {
+//			$css_class_writable = 'writeyes';
+//		} else {
+//			$css_class_writable = 'writeno';
+//		}
+//		$css_class_writable = 'noclass';
+		color_classes_perm_asc($filename,$perms_asc,$css_class_writable);
+		echo '<tr>'.'<td><em class="'.$css_class.'">'.$perms_file.'</em></td>'.'<td>'.$username.'</td><td>'.$groupname.'</td>';
+		echo '<td class="' . $css_class_writable . '">'.$perms_asc.'</td><td>'.$perms_oct.'</td>';
+		echo '<td><a href="'.$filename.'" target="_blank">permissioncheck/'.$filename."</a></td></tr>\n  ";
+		// include this file as external one via HTTP request
+		echo $html_almost_empty_table_row;
+		echo '<td>';
+	//	$check_if_model_works = false;
+	//	include $filename;
+	//	if ( $check_if_model_works ) {
+	//		$check_if_model_works_text = '<span class="modelworksyes">Read: this model works for you</span>';
+	//	} else {
+	//		$check_if_model_works_text = '<span class="modelworksno">Read: this model does not work for you!</span>';
+	//	}
+		$url_name = get_page_url($filename);
+		//print $url_name;
+		$http_request = 'foo';
+		$http_request = @file_get_contents($url_name);
+		if ($http_request === false) {
+			$http_output = '<span class="modelworksno">' . 'THIS DOES NOT WORK' . '</span>';
+		} elseif ((strpos($http_request,'arning') == true) or (strpos($http_request,'rror') == true)) {
+			$http_output = '<span class="modelworksno">' . 'THIS DOES NOT WORK' . '</span>';
+		} else {
+			$http_output = '<span class="modelworksyes">' . $http_request . '</span>';
+		}
+		//print file_get_contents($url_name) or print 'THIS DOES NOT WORK';
+		echo $http_output;
+		//echo $check_if_model_works_text;
+		//echo $check_if_model_works_text . '</td>'."\n ";
+		echo '</td>'."\n ";
 	}
 	// general data for special checks
 	$perms_unknown='???';
 	$css_class_unknown='unknown';
 	$css_class_user='user';
-	$html_empty_table_row='<tr><td>&nbsp;</td><td></td><td></td><td></td><td></td><td></td></tr>'."\n  ";
 	echo $html_empty_table_row ;
 	// special:
 	//
@@ -161,7 +236,14 @@
 	$perms_file = $perms_unknown;
 	$css_class = $css_class_unknown;
 	get_perm_data($filename,$username,$groupname,$perms_asc,$perms_oct);
-	echo '<tr>' . '<td><em class="'.$css_class.'">' . $perms_file . '</em></td><td>' . $username . '</td><td>' . $groupname . '</td><td>' . $perms_asc . '</td><td>' . $perms_oct . '</td><td>' . $filename . '</td></tr>' . "\n  ";
+//	if ( is_writable($filename) ) {
+//		$css_class_writable = 'writeyes';
+//	} else {
+//		$css_class_writable = 'writeno';
+//	}
+	color_classes_perm_asc($filename,$perms_asc,$css_class_writable);
+	echo '<tr>' . '<td><em class="'.$css_class.'">' . $perms_file . '</em></td><td>' . $username . '</td><td>' . $groupname . '</td>';
+	echo '<td class="' . $css_class_writable . '">' . $perms_asc . '</td><td>' . $perms_oct . '</td><td>' . $filename . '</td></tr>' . "\n  ";
 	//
 //	$nosuchfile='/example_does_not_exist';
 	$usersubmittedfile = $_POST['usersubmittedfile'];
@@ -181,13 +263,21 @@
 		$perms_file = $perms_unknown;
 		$css_class = $css_class_user;
 		get_perm_data($filename,$username,$groupname,$perms_asc,$perms_oct);
-		echo '<tr>' . '<td><em class="'.$css_class.'">' . $perms_file . '</em></td><td>' . $username . '</td><td>' . $groupname . '</td><td>' . $perms_asc . '</td><td>' . $perms_oct . '</td><td>' . $usersubmittedfile . '</td></tr>' . "\n  ";
+//		if ( is_writable($filename) ) {
+//			$css_class_writable = 'writeyes';
+//		} else {
+//			$css_class_writable = 'writeno';
+//		}
+		color_classes_perm_asc($filename,$perms_asc,$css_class_writable);
+		echo '<tr>' . '<td><em class="'.$css_class.'">' . $perms_file . '</em></td><td>' . $username . '</td><td>' . $groupname . '</td>';
+		echo '<td class="' . $css_class_writable . '">' . $perms_asc . '</td><td>' . $perms_oct . '</td><td>' . $usersubmittedfile . '</td></tr>' . "\n  ";
 	}
 ?>
  </table></div>
  <div>&nbsp;</div>
  <form method="post"><input type="text" name="usersubmittedfile" size="42"> <input type="submit" name="checkfile" value="check path or file"></form>
  <p><a href="./">permissioncheck</a></p>
+ <p><a href="./create_new_htaccess.php">create new_htaccess</a></p>
  <p class="block">
 	Enjoy <a href="https://tiki.org/" target="_blank">Tiki</a> and
 	<a href="https://tiki.org/tiki-register.php" target="_blank">join the community</a>!

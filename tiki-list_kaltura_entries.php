@@ -35,7 +35,7 @@ if (!isset($_REQUEST['list'])) {
 
 try {
 
-if (!$kalturalib->testSetup()) {
+if (empty($kalturalib) || !$kalturalib->testSetup()) {
 	$smarty->assign('msg', tra("You need to set your Kaltura account details: ") . '<a href="tiki-admin.php?page=video">' . tra('here') . '</a>');
 	$smarty->display('error.tpl');
 	die;

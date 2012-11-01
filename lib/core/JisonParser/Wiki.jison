@@ -13,7 +13,7 @@ LINES_CONTENT                   (.|\n)+
 LINE_END                        (\n\r|\r\n|[\n\r])
 BLOCK_START                     ([\!*#+;])
 WIKI_LINK_TYPE                  (([a-z0-9-]+))
-CAPITOL_WORD                    ([A-Z]{1,}[a-z]{1,}){2,}
+CAPITOL_WORD                    ([A-Z]{1,}[a-z_\-\x80-\xFF]{1,}){2,}
 
 %s np pp plugin line block bold box center code color italic unlink link strike table titlebar underscore wikilink
 
@@ -28,9 +28,9 @@ CAPITOL_WORD                    ([A-Z]{1,}[a-z]{1,}){2,}
 	%}
 <np>"~/np~"
 	%{
-		if (this.npStack != true) return 'CONTENT'; //js
+		if (parser.npStack != true) return 'CONTENT'; //js
 		lexer.popState(); //js
-		lexer.npStack = false; //js
+		parser.npStack = false; //js
 		yytext = parser.np(yytext); //js
 
 		//php if ($this->npStack != true) return 'CONTENT';
@@ -44,7 +44,7 @@ CAPITOL_WORD                    ([A-Z]{1,}[a-z]{1,}){2,}
 	%{
 		if (parser.isContent()) return 'CONTENT'; //js
 		lexer.begin('np'); //js
-		lexer.npStack = true; //js
+		parser.npStack = true; //js
 
 		//php if ($this->isContent()) return 'CONTENT';
 		//php $this->begin('np');
@@ -64,9 +64,9 @@ CAPITOL_WORD                    ([A-Z]{1,}[a-z]{1,}){2,}
 	%}
 <pp>"~/pp~"
 	%{
-		if (this.ppStack != true) return 'CONTENT'; //js
+		if (parser.ppStack != true) return 'CONTENT'; //js
 		lexer.popState(); //js
-		lexer.ppStack = false; //js
+		parser.ppStack = false; //js
 		yytext = parser.pp(yytext); //js
 
 		//php if ($this->ppStack != true) return 'CONTENT';
@@ -80,7 +80,7 @@ CAPITOL_WORD                    ([A-Z]{1,}[a-z]{1,}){2,}
 	%{
 		if (parser.isContent()) return 'CONTENT'; //js
 		lexer.begin('pp'); //js
-		lexer.ppStack = true; //js
+		parser.ppStack = true; //js
 
 		//php if ($this->isContent()) return 'CONTENT';
 		//php $this->begin('pp');
@@ -478,7 +478,7 @@ CAPITOL_WORD                    ([A-Z]{1,}[a-z]{1,}){2,}
 		if (parser.isContent()) return 'CONTENT'; //js
 		parser.linkStack = true; //js
 		lexer.begin('link'); //js
-		$yytext = 'external'; //js
+		yytext = 'external'; //js
 		return 'LINK_START'; //js
 
 		//php if ($this->isContent()) return 'CONTENT';
@@ -534,7 +534,7 @@ CAPITOL_WORD                    ([A-Z]{1,}[a-z]{1,}){2,}
 	%{
 		if (parser.isContent()) return 'CONTENT'; //js
 		lexer.popState(); //js
-        lexer.tableStack.pop(); //js
+        parser.tableStack.pop(); //js
 		return 'TABLE_END'; //js
 
 		//php if ($this->isContent()) return 'CONTENT';
@@ -546,7 +546,7 @@ CAPITOL_WORD                    ([A-Z]{1,}[a-z]{1,}){2,}
 	%{
 		if (parser.isContent()) return 'CONTENT'; //js
 		lexer.begin('table'); //js
-		lexer.tableStack.push(true); //js
+		parser.tableStack.push(true); //js
 		return 'TABLE_START'; //js
 
 		//php if ($this->isContent()) return 'CONTENT';
@@ -642,7 +642,7 @@ CAPITOL_WORD                    ([A-Z]{1,}[a-z]{1,}){2,}
 		if (parser.isContent()) return 'CONTENT'; //js
 		parser.linkStack = true; //js
 		lexer.begin('wikilink'); //js
-		$yytext = 'wiki'; //js
+		yytext = 'wiki'; //js
 		return 'WIKILINK_START'; //js
 
 		//php if ($this->isContent()) return 'CONTENT';
@@ -656,7 +656,7 @@ CAPITOL_WORD                    ([A-Z]{1,}[a-z]{1,}){2,}
 		if (parser.isContent()) return 'CONTENT'; //js
 		parser.linkStack = true; //js
 		lexer.begin('wikilink'); //js
-		$yytext = 'np'; //js
+		yytext = 'np'; //js
 		return 'WIKILINK_START'; //js
 
 		//php if ($this->isContent()) return 'CONTENT';
@@ -670,7 +670,7 @@ CAPITOL_WORD                    ([A-Z]{1,}[a-z]{1,}){2,}
 		if (parser.isContent()) return 'CONTENT'; //js
 		parser.linkStack = true; //js
 		lexer.begin('wikilink'); //js
-		$yytext = $yytext.substring(1, $yytext.length - 1); //js
+		yytext = yytext.substring(1, yytext.length - 1); //js
 		return 'WIKILINK_START'; //js
 
 		//php if ($this->isContent()) return 'CONTENT';
@@ -679,7 +679,7 @@ CAPITOL_WORD                    ([A-Z]{1,}[a-z]{1,}){2,}
 		//php $yytext = substr($yytext, 1, -1);
 		//php return 'WIKILINK_START';
 	%}
-{CAPITOL_WORD}
+(?:[ \n\t\r\,\;]|^){CAPITOL_WORD}(?=$|[ \n\t\r\,\;\.])
 	%{
 		if (parser.isContent()) return 'CONTENT'; //js
 		return 'WIKILINK'; //js

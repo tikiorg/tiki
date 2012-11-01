@@ -10,7 +10,7 @@
 		<p>{tr}If a plugin is no longer in use (for example, it has been removed from the wiki page), use <strong>Clear</strong> to remove it from this list.{/tr} {tr}The plugin will automatically be added if it is encountered.{/tr}
 		</p>
 		<p>{tr}Plugins can be individually previewed, approved, or rejected from the particular location that contains the plugin.{/tr} {tr}For security, you should review each plugin to ensure it is safe to approve.{/tr}</p>
-	<form method="post" action="">
+	<form method="post" action="#">
 {cycle values="even,odd" print=false}
 		
 		{listfilter selectors='#plugins_list tr.odd,#plugins_list tr.even'} 
@@ -25,7 +25,7 @@
 {foreach name=foo from=$plugin_list item=plugin}
 			<tr class="{cycle}">
 				<td class="checkbox"><input type="checkbox" name="clear[]" value="{$plugin.fingerprint|escape}" id="{$plugin.fingerprint|escape}"/></td>
-				<td class="text"><label for="{$plugin.fingerprint|escape}"><strong>{$plugin.fingerprint|substring:0:20|escape|replace:"-":"</strong> <br />{tr}Signature:{/tr} "}...</label>
+				<td class="text"><label for="{$plugin.fingerprint|escape}"><strong>{$plugin.fingerprint|substring:0:20|escape|replace:"-":"</strong> <br />{tr}Signature:{/tr} "}...</label></td>
 				<td class="text">{if $plugin.last_objectType eq 'wiki page'}
 					{tr _0=$plugin.last_objectId|sefurl:'wiki page' _1=$plugin.last_objectId|escape _2=$plugin.fingerprint}Wiki page: <a href="%0#%2" title="{tr}View this page.{/tr}">%1</a>{/tr}
 					{else}
@@ -40,8 +40,9 @@
 {if $plugin.last_objectType eq 'wiki page'}
 {tr _0=$plugin.last_objectId|sefurl:'wiki page' _1=$plugin.last_objectId|escape _2=$plugin.fingerprint}<a href="%0#%2" title="{tr}View this page.{/tr}">{icon _id='page'}</a>{/tr}	
 {/if}	
-{/foreach}
+				</td>
 			</tr>
+{/foreach}
 		</table>
 		<p>
 		<label for="submit_mult">{tr}Perform action with checked:{/tr}</label>
@@ -64,7 +65,7 @@
 	<noscript>
 		<input type="submit" value="{tr}OK{/tr}" />
 	</noscript>
-
+</form>
 {else}
 	<p>{tr}No plugins pending approval.{/tr}</p>
 {/if}

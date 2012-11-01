@@ -19,13 +19,13 @@ class WikiPlugin_maketoc extends WikiPlugin_HtmlBase
 		$this->name = tr('Table of Contents (Page)');
 		$this->description = tr('Add a table of contents to a page');
 		$this->params = array(
-			'type',
-			'maxdepth',
-			'title',
-			'showhide',
-			'nolinks',
-			'nums',
-			'levels'
+			'type' => '',
+			'maxdepth' => '',
+			'title' => '',
+			'showhide' => '',
+			'nolinks' => '',
+			'nums' => '',
+			'levels' => ''
 		);
 	}
 

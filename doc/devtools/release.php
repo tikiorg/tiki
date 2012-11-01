@@ -73,7 +73,8 @@ if ($isPre) {
 } else {
 	$pre = '';
 }
-$mainversion = $version{0};
+$splitedversion = explode('.', $version);
+$mainversion = $splitedversion[0];
 
 include_once('lib/setup/twversion.class.php');
 $check_version = $version.$subrelease;

@@ -287,7 +287,7 @@
 					{if $info.oneUserItem eq 'y'}checked="checked"{/if}/>
 				{tr}Only one item per user or IP{/tr}
 				<div class="description">
-					{tr}The tracker needs a user or IP address field with the auto-assign activated{/tr}
+					{tr}The tracker needs a user or IP address field with the auto-assign set to Creator{/tr}
 				</div>
 			</label>
 			<label>

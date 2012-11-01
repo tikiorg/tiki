@@ -26,7 +26,7 @@
 		<input type="text" class="search" placeholder="{tr}Search query{/tr}"/>
 		{if $prefs.fgal_elfinder_feature eq 'y'}
 			{button href='tiki-list_file_gallery.php' _text="{tr}Browse files{/tr}"
-				_onclick="return openElFinderDialog(this, {ldelim}defaultGalleryId:{$field.options_array[0]|escape},deepGallerySearch:{$field.options_array[6]|escape},getFileCallback:function(file,elfinder){ldelim}window.handleFinderFile(file,elfinder){rdelim}{rdelim});"
+				_onclick="return openElFinderDialog(this, {ldelim}defaultGalleryId:{if empty($field.options_array[0])}0{else}{$field.options_array[0]|escape}{/if},deepGallerySearch:{if empty($field.options_array[6])}0{else}{$field.options_array[6]|escape}{/if},getFileCallback:function(file,elfinder){ldelim}window.handleFinderFile(file,elfinder){rdelim}{rdelim});"
 				title="{tr}Browse files{/tr}"}
 		{/if}
 		<ol class="results tracker-item-files">

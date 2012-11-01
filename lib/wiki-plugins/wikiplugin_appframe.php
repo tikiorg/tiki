@@ -201,6 +201,10 @@ $('#appframe .anchor').each(function () {
 		$('.anchor-content', anchor).toggle('fast');
 		return false;
 	});
+
+	if (location.hash == "#" + $("img", anchor).attr("alt")) {
+		setTimeout( function() { $('.anchor-toggle', anchor).click(); }, 2000);
+	}
 });
 
 if ($fullPage) {

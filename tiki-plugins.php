@@ -32,9 +32,20 @@ if (isset($_REQUEST['clearone'])) {
 
 if (isset($_REQUEST['refresh'])) {
 	$pages = $tikilib->list_pages();
-	foreach ($pages['data'] as $page) {
-		$parserlib->parse_first($page['data'], $pre, $no);
+
+	$temp = serialize($headerlib);	// cache headerlib so we can remove all js etc added by plugins
+
+	foreach ($pages['data'] as $apage) {
+		$page = $apage['pageName'];
+		$parserlib->setOptions(array(
+			'page' => $page,
+			'is_html' => $apage['is_html'],
+		));
+		$parserlib->parse_first($apage['data'], $pre, $no);
 	}
+
+	$headerlib = unserialize($temp);
+	unset($temp);
 }
 
 if (isset($_POST['approveall'])) {

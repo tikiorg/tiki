@@ -374,9 +374,21 @@ class WikiPlugin_injected extends WikiPlugin_HtmlBase
 {
 	public $type = "injected";
 	public $np = false;
+	public $outputOverride;
 
 	public function output(&$data, &$params, &$index, &$parser)
 	{
+		if (isset($this->outputOverride)) {
+			return $this->outputOverride($data, $params, $index, $parser);
+		}
 		return $data;
+	}
+
+	//This gives us the ability to add method on the fly to test different results
+	public function __call($method, $args) {
+		if (isset($this->$method) === true) {
+			$func = $this->$method;
+			return $func($args[0],$args[1],$args[2], $args[3]);
+		}
 	}
 }

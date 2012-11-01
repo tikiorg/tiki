@@ -5,25 +5,11 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-abstract class WikiPlugin_HtmlBase
+abstract class WikiPlugin_HtmlBase extends WikiPlugin_ConditionBase
 {
-	public $name;
-	public $description;
-	public $body;
-	public $params = array();
-	public $type;
-	public $documentation;
-	public $prefs = array();
-	public $parserLevel = 0;
-	public $format;
-	public $validate;
-	public $filter = 'rawhtml_unsafe';
-	public $icon = 'img/icons/mime/html.png';
-	public $tags = array( 'basic' );
 	public $htmlTagType = 'div';
 	public $hasHtmlBody = true;
 	public $htmlAttributes = array('id'=>'', 'class'=>'', 'style'=>'');
-	public $np = true;
 
 	static $style = array(
 		'@keyframes' => array('filter' => 'text', 'default' => ''),
@@ -278,28 +264,6 @@ abstract class WikiPlugin_HtmlBase
 		return self::$style;
 	}
 
-	public function info()
-	{
-		$info = array();
-		foreach ($this as $key => $param) {
-			$info[$key] = $param;
-		}
-
-		return $info;
-	}
-
-	protected function paramDefaults(&$params)
-	{
-		$defaults = array();
-		foreach ($this->params as $param => $setting) {
-			if (!empty($setting)) {
-				$defaults[$param] = $setting;
-			}
-		}
-
-		$params = array_merge($defaults, $params);
-	}
-
 	protected function stylize(&$params)
 	{
 		$styles = '';
@@ -310,13 +274,6 @@ abstract class WikiPlugin_HtmlBase
 		}
 		return $styles;
 	}
-
-	function id($index = 0)
-	{
-		return $this->type . $index;
-	}
-
-	abstract protected function output(&$data, &$params, &$index, &$parser);
 
 	public function exec($data, $params, $index, &$parser, &$button = '')
 	{

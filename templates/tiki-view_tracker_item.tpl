@@ -86,12 +86,24 @@
 							($cur_field.options_array[0] ne 'password')}
 					
 						<tr class="field{$cur_field.fieldId}">
-							<td class="formlabel" >
-								{$cur_field.name|escape}
-							</td>
-							<td class="formcontent">
-								{trackeroutput field=$cur_field item=$item_info showlinks=n list_mode=n inTable=y}
-							</td>
+							{* Make adjustments for line breaks *}
+							{if ($cur_field.type eq 't' and $cur_field.options_array[0] == 0) or
+								($cur_field.type eq 'a' and $cur_field.options_array[8] == 0) or
+								($cur_field.type eq 'n' and $cur_field.options_array[0] == 0) or
+								($cur_field.type eq 'b' and $cur_field.options_array[0] == 0) 
+							} 
+								<td>
+									<span class="formlabel">{$cur_field.name|escape}</span><br/>
+									<span class="formcontent">{trackeroutput field=$cur_field item=$item_info showlinks=n list_mode=n inTable=y}</span>
+								</td>
+							{else}
+								<td class="formlabel" >
+									{$cur_field.name|escape}
+								</td>
+								<td class="formcontent">
+									{trackeroutput field=$cur_field item=$item_info showlinks=n list_mode=n inTable=y}
+								</td>
+							{/if}
 						</tr>
 					{/if}
 				{/foreach}
