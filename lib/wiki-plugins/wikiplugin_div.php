@@ -120,6 +120,7 @@ function wikiplugin_div_info()
 
 function wikiplugin_div($data, $params)
 {
+	global $tikilib;
 
 	extract($params, EXTR_SKIP);
 	$possibletypes = array('div','span','pre','b','i','tt','p','blockquote');
@@ -144,5 +145,7 @@ function wikiplugin_div($data, $params)
 	}
 	$begin .= " $c $id>";
 	$end = "</$t>";
-	return $begin . $data . $end;
+
+	$data = $tikilib->parse_data($data);
+	return "~np~" . $begin . $data . $end . "~/np~";
 }
