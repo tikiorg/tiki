@@ -301,16 +301,8 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 
 	function getDocumentPart($baseKey, Search_Type_Factory_Interface $typeFactory)
 	{
-		$data = $this->getLinkData(array(), 0);
-		$item = $data['value'];
-		$dlist = $data['listdisplay'];
-		$list = $data['list'];
-
-		if (!empty($dlist)) {
-			$label = isset($dlist[$item]) ? $dlist[$item] : '';
-		} else {
-			$label = isset($list[$item]) ? $list[$item] : '';
-		}
+		$item = $this->getValue();
+		$label = TikiLib::lib('object')->get_title('trackeritem', $item);
 
 		$out = array(
 			$baseKey => $typeFactory->sortable($item),
