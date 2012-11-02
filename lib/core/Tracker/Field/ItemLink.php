@@ -234,7 +234,16 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 			$context['preselection'] = '';
 		}
 
+		$context['filter'] = $this->buildFilter();
+
 		return $this->renderTemplate('trackerinput/itemlink.tpl', $context);
+	}
+
+	private function buildFilter()
+	{
+		return array(
+			'tracker_id' => $this->getOption('trackerId'),
+		);
 	}
 
 	function renderOutput($context = array())
@@ -283,6 +292,8 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 			} else {
 				return smarty_function_object_link(array('type' => 'trackeritem',	'id' => $item,	'title' => $label), $smarty);
 			}
+		} elseif ($context['list_mode'] == 'csv' && $item) {
+			return $item;
 		} elseif ($label) {
 			return $label;
 		}
