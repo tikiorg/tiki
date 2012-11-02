@@ -132,6 +132,12 @@ if (isset($_REQUEST['full']) && $_REQUEST['full'] != 'n') {
 	$output = strip_tags($output);
 	$output = $tikilib->htmldecode($output);
 	echo $output;
+} else if (isset($_REQUEST['gtype']) && $_REQUEST['gtype'] == 'svg') { # this case is needed for mod PluginR to successfully produce svg versions of the png charts generated. 
+	$output = $smarty->fetch("tiki-show_page_raw.tpl");
+	$output = $tikilib->htmldecode($output);
+	preg_match('#(<\?xml.*</svg>)#sm', $output, $output);
+	echo $output[0];
+	echo ("\n");
 } else {
 	// otherwise just the contents of the page without body etc
 	$smarty->display("tiki-show_page_raw.tpl");
