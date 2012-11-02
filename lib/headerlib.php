@@ -230,6 +230,9 @@ class HeaderLib
 			$back .= '<link rel="stylesheet" href="'.smarty_modifier_escape($this->convert_cdn($style_ie8_css)).'" type="text/css" />'."\n";
 		}
 		$back .= "<![endif]-->\n";
+		$back .= "<!--[if IE 9]>\n"
+				.'<link rel="stylesheet" href="css/ie9.css" type="text/css" />'."\n";
+		$back .= "<![endif]-->\n";
 
 		if (count($this->rssfeeds)) {
 			foreach ($this->rssfeeds as $x=>$rssf) {
