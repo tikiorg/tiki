@@ -42,18 +42,20 @@ class Services_File_FinderController
 
 	public function action_finder($input)
 	{
-		static $galleriesParentIds = null;
+		global $prefs, $tikidomainslash;
 
-		if ($galleriesParentIds === null) {
+		static $parentIds = null;
+
+		if ($parentIds === null) {
 			$ids = TikiLib::lib('filegal')->getGalleriesParentIds();
-			$galleriesParentIds = array( 'galleries' => array(), 'files' => array() );
+			$parentIds = array( 'galleries' => array(), 'files' => array() );
 			foreach ($ids as $id) {
 				if ($id['parentId'] > 0) {
-					$galleriesParentIds['galleries'][(int) $id['galleryId']] = (int) $id['parentId'];
+					$parentIds['galleries'][(int) $id['galleryId']] = (int) $id['parentId'];
 				}
 			}
 			$tiki_files = TikiDb::get()->table('tiki_files');
-			$galleriesParentIds['files'] = $tiki_files->fetchMap('fileId', 'galleryId', array());
+			$parentIds['files'] = $tiki_files->fetchMap('fileId', 'galleryId', array());
 
 		}
 
@@ -70,19 +72,27 @@ class Services_File_FinderController
 
 //					'URL'           => 												// URL to files (seems not to be REQUIRED)
 					'accessControl' => array($this, 'elFinderAccess'),				// obey tiki perms
-					'tmbURL'		=> 'temp/public/',
 				)
 			)
 		);
 		if ($input->defaultGalleryId->int()) {
 			$opts['roots'][0]['startPath'] = "d_{$input->defaultGalleryId->int()}";	// needs to be the cached name in elfinder (with 'd_' in front)
-			$opts['roots'][0]['accessControlData'] = array('startPath' => $input->defaultGalleryId->int(), 'deepGallerySearch' => $input->deepGallerySearch->int(), 'galleryParentIds' => $galleriesParentIds);
+			$opts['roots'][0]['accessControlData'] = array('startPath' => $input->defaultGalleryId->int(), 'deepGallerySearch' => $input->deepGallerySearch->int(), 'parentIds' => $parentIds);
 		} else if (!$input->deepGallerySearch->int()) {
 			$opts['roots'][0]['startPath'] = $this->fileController->defaultGalleryId;	// root path just needs the id
-			$opts['roots'][0]['accessControlData'] = array('startPath' => $this->fileController->defaultGalleryId, 'deepGallerySearch' => $input->deepGallerySearch->int(), 'galleryParentIds' => $galleriesParentIds);
+			$opts['roots'][0]['accessControlData'] = array('startPath' => $this->fileController->defaultGalleryId, 'deepGallerySearch' => $input->deepGallerySearch->int(), 'parentIds' => $parentIds);
 		}
-		//$opts['roots'][0]['treeDeep'] = $input->deepGallerySearch->int();		// 0/1
 
+/* thumb size not working due to css issues - tried this in setup/javascript.php but needs extensive css overhaul to get looking right
+		if ($prefs['fgal_elfinder_feature'] === 'y') {
+			$tmbSize = (int) $prefs['fgal_thumb_max_size'] / 2;
+			TikiLib::lib('header')->add_css(".elfinder-cwd-icon {width:{$tmbSize}px; height:{$tmbSize}px;}");	// def 48
+			$tmbSize += 4;	// def 52
+			TikiLib::lib('header')->add_css(".elfinder-cwd-view-icons .elfinder-cwd-file-wrapper {width:{$tmbSize}px; height:{$tmbSize}px;}");
+			$tmbSize += 28; $tmbSizeW = $tmbSize + 40;	// def 120 x 80
+			TikiLib::lib('header')->add_css(".elfinder-cwd-view-icons .elfinder-cwd-file {width: {$tmbSizeW}px;height: {$tmbSize}px;}");
+		}
+*/
 		// run elFinder
 		$elFinder = new elFinder($opts);
 		$connector = new elFinderConnector($elFinder);
@@ -122,7 +132,7 @@ class Services_File_FinderController
 			if ($isgal) {
 				$visible = $this->isVisible($id, $data, $isgal);
 			} else {
-				$visible = $this->isVisible($data['galleryParentIds']['files'][$id], $data, $isgal);
+				$visible = $this->isVisible($data['parentIds']['files'][$id], $data, $isgal);
 			}
 		} else {
 			$isgal = true;
@@ -160,7 +170,7 @@ class Services_File_FinderController
 				$visible = true;
 				return $visible;
 			} else {
-				$isParentOf = $this->isParentOf($id, $data['startPath'], $data['galleryParentIds']['galleries']);
+				$isParentOf = $this->isParentOf($id, $data['startPath'], $data['parentIds']['galleries']);
 
 				if (isset($data['deepGallerySearch']) && $data['deepGallerySearch'] == 0) { // not startPath and not deep
 					if ($isParentOf && $isgal) {
@@ -176,13 +186,13 @@ class Services_File_FinderController
 					} else {
 						$visible = false;
 					}
-					$pid = $data['galleryParentIds']['galleries'][$id];
+					$pid = $data['parentIds']['galleries'][$id];
 					while ($pid) {
 						if ($pid == $data['startPath']) {
 							$visible = true;
 							break;
 						}
-						$pid = $data['galleryParentIds']['galleries'][$pid];
+						$pid = $data['parentIds']['galleries'][$pid];
 					}
 					return $visible;
 				}
