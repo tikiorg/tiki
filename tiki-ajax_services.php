@@ -18,6 +18,7 @@ $controllerMap = array(
 	'comment' => 'Services_Comment_Controller',
 	'draw' => 'Services_Draw_Controller',
 	'file' => 'Services_File_Controller',
+	'file_finder' => 'Services_File_FinderController',
 	'auth_source' => 'Services_AuthSource_Controller',
 	'bigbluebutton' => 'Services_BigBlueButton_Controller',
 	'report' => 'Services_Report_Controller',
