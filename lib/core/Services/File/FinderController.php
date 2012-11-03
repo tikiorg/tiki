@@ -46,12 +46,14 @@ class Services_File_FinderController
 
 		if ($galleriesParentIds === null) {
 			$ids = TikiLib::lib('filegal')->getGalleriesParentIds();
-			$galleriesParentIds = array();
+			$galleriesParentIds = array( 'galleries' => array(), 'files' => array() );
 			foreach ($ids as $id) {
 				if ($id['parentId'] > 0) {
-					$galleriesParentIds[(int) $id['galleryId']] = (int) $id['parentId'];
+					$galleriesParentIds['galleries'][(int) $id['galleryId']] = (int) $id['parentId'];
 				}
 			}
+			$tiki_files = TikiDb::get()->table('tiki_files');
+			$galleriesParentIds['files'] = $tiki_files->fetchMap('fileId', 'galleryId', array());
 
 		}
 
@@ -114,42 +116,13 @@ class Services_File_FinderController
 
 		$ar = explode('_', $path);
 		$visible = true;		// for now
-		$locked = false;
 		if (count($ar) === 2) {
 			$isgal = $ar[0] === 'd';
 			$id = $ar[1];
 			if ($isgal) {
-				if (!empty($data['startPath'])) {
-					if ($data['startPath'] == $id) {		// is startPath
-						$visible = true;
-					} else {
-						$isParentOf = $this->isParentOf($id, $data['startPath'], $data['galleryParentIds']);
-
-						if (isset($data['deepGallerySearch']) && $data['deepGallerySearch'] == 0) {	// not startPath and not deep
-							if ($isParentOf) {
-								$visible = true;
-								$locked = true;
-							} else {
-								$visible = false;
-							}
-						} else {
-							if ($isParentOf) {
-								$visible = true;
-								$locked = true;
-							} else {
-								$visible = false;
-							}
-						$pid = $data['galleryParentIds'][$id];
-						while($pid) {
-							if ($pid == $data['startPath']) {
-									$visible = true;
-								break;
-							}
-							$pid = $data['galleryParentIds'][$pid];
-							}
-						}
-					}
-				}
+				$visible = $this->isVisible($id, $data, $isgal);
+			} else {
+				$visible = $this->isVisible($data['galleryParentIds']['files'][$id], $data, $isgal);
 			}
 		} else {
 			$isgal = true;
@@ -170,13 +143,52 @@ class Services_File_FinderController
 			case 'write':
 				return $visible && $perms->edit_gallery_file;
 			case 'locked':
-				return $locked;
 			case 'hidden':
 				return !$visible;
 			default:
 				return false;
 
 		}
+	}
+
+	private function isVisible($id, $data, $isgal)
+	{
+		$visible = true;
+
+		if (!empty($data['startPath'])) {
+			if ($data['startPath'] == $id) { // is startPath
+				$visible = true;
+				return $visible;
+			} else {
+				$isParentOf = $this->isParentOf($id, $data['startPath'], $data['galleryParentIds']['galleries']);
+
+				if (isset($data['deepGallerySearch']) && $data['deepGallerySearch'] == 0) { // not startPath and not deep
+					if ($isParentOf && $isgal) {
+						$visible = true;
+						return $visible;
+					} else {
+						$visible = false;
+						return $visible;
+					}
+				} else {
+					if ($isParentOf && $isgal) {
+						$visible = true;
+					} else {
+						$visible = false;
+					}
+					$pid = $data['galleryParentIds']['galleries'][$id];
+					while ($pid) {
+						if ($pid == $data['startPath']) {
+							$visible = true;
+							break;
+						}
+						$pid = $data['galleryParentIds']['galleries'][$pid];
+					}
+					return $visible;
+				}
+			}
+		}
+		return $visible;
 	}
 
 	private function isParentOf( $id, $child, $parentIds) {
