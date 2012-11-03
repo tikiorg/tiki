@@ -66,8 +66,8 @@ class Services_File_FinderController
 					'path'          => "{$this->fileController->defaultGalleryId}",	// path to files (REQUIRED)
 					'disabled'		=> $disabled,
 
-//					'URL'           => 									// URL to files (seems not to be REQUIRED)
-					'accessControl' => array($this, 'elFinderAccess'),	// obey tiki perms
+//					'URL'           => 												// URL to files (seems not to be REQUIRED)
+					'accessControl' => array($this, 'elFinderAccess'),				// obey tiki perms
 					'tmbURL'		=> 'temp/public/',
 				)
 			)
@@ -113,25 +113,40 @@ class Services_File_FinderController
 	function elFinderAccess($attr, $path, $data, $volume) {
 
 		$ar = explode('_', $path);
-		$allowed = true;		// for now
+		$visible = true;		// for now
+		$locked = false;
 		if (count($ar) === 2) {
 			$isgal = $ar[0] === 'd';
 			$id = $ar[1];
 			if ($isgal) {
 				if (!empty($data['startPath'])) {
 					if ($data['startPath'] == $id) {		// is startPath
-						$allowed = true;
-					} else if (isset($data['deepGallerySearch']) && $data['deepGallerySearch'] === 0) {	// not startPath and not deep
-						$allowed = false;
+						$visible = true;
 					} else {
+						$isParentOf = $this->isParentOf($id, $data['startPath'], $data['galleryParentIds']);
+
+						if (isset($data['deepGallerySearch']) && $data['deepGallerySearch'] == 0) {	// not startPath and not deep
+							if ($isParentOf) {
+								$visible = true;
+								$locked = true;
+							} else {
+								$visible = false;
+							}
+						} else {
+							if ($isParentOf) {
+								$visible = true;
+								$locked = true;
+							} else {
+								$visible = false;
+							}
 						$pid = $data['galleryParentIds'][$id];
-						$allowed = false;
 						while($pid) {
 							if ($pid == $data['startPath']) {
-								$allowed = true;
+									$visible = true;
 								break;
 							}
 							$pid = $data['galleryParentIds'][$pid];
+							}
 						}
 					}
 				}
@@ -151,18 +166,28 @@ class Services_File_FinderController
 
 		switch($attr) {
 			case 'read':
-				return $allowed && $perms->download_files;
+				return $visible && $perms->download_files;
 			case 'write':
-				return $allowed && $perms->edit_gallery_file;
+				return $visible && $perms->edit_gallery_file;
 			case 'locked':
+				return $locked;
 			case 'hidden':
-				return !$allowed;
+				return !$visible;
 			default:
 				return false;
 
 		}
 	}
 
+	private function isParentOf( $id, $child, $parentIds) {
+		if (!isset($parentIds[$child])) {
+			return false;
+		} else if ($parentIds[$child] == $id) {
+			return true;
+		} else {
+			return $this->isParentOf($child, $parentIds[$child], $parentIds);
+		}
+	}
 
 }
 
