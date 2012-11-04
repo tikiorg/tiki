@@ -163,7 +163,7 @@
 		{/capture}
 			<div id="{$checkname}_{$files[changes].id}" class="clearfix thumbnailcontener{if $is_checked eq 'y'} thumbnailcontenerchecked{/if}{if $files[changes].isgal eq 1} subgallery{/if}" {if $view eq 'page'}style="float:left"{else}style="width:{$thumbnailcontener_size}px"{/if}>
 				<div class="thumbnail" style="float:left; {if $view neq 'page'}width:{$thumbnailcontener_size}px"{/if}>
-					<div class="" style="width:100%;height:{$thumbnailcontener_size}px{if $show_infos neq 'y'};margin-bottom:4px{/if}">
+					<div class="thumbnailcontener" style="width:100%;height:{$thumbnailcontener_size}px{if $show_infos neq 'y'};margin-bottom:4px{/if}">
 						<div class="thumbimage">
 							<div class="thumbimagesub">{assign var=key_type value=$files[changes].type}
 								{if $files[changes].isgal eq 1}
