@@ -64,7 +64,6 @@
 	$ascii_linebreak = "\n";
 	$html_and_ascii_linebreak = "<br />\n";
 	if ($permission_granted=="yes\n") {
-		//$dummy=true;
 		echo '<a href="https://doc.tiki.org/Permission+Check">https://doc.tiki.org/Permission+Check</a>' . $html_and_ascii_linebreak ;
 		echo $html_and_ascii_linebreak ;
 		echo '<span class="important">disable permission check on production machines</span>' . $html_and_ascii_linebreak;
@@ -113,11 +112,8 @@
 		//include "usecases,inc.php";
 		require 'usecases.inc.php';
 		$filename = 'index.php';
-		//$user = get_ownership_username($filename);
-		//$group = get_ownership_groupname($filename);
 		$username = get_ownership_username($filename);
 		$groupname = get_ownership_groupname($filename);
-		//$perms_oct = substr(sprintf('%o', fileperms($filename)), -3);
 		$perms_oct = get_perms_octal($filename);
 		$perms_asc = get_perms_ascii($filename);
 		echo "\n\tthis file " . '<strong>' . $filename . '</strong>' . ' owned by ';
@@ -148,8 +144,6 @@
 	echo '<br />read:<span class="readyes">yes</span>/<span class="readno">no</span>';
 	echo '<br />write:<span class="writeyes">yes</span>/<span class="writeno">no</span></td>';
 	echo '<td>octal</td>'.'<td>filename</td>'.'</td>';
-	//$file="permissioncheck/paranoia";
-	//$filename="../".$file;
 	foreach ($uc_perms_subdir as $usecase => $perms_subdir) {
 		$perms_file=$uc_perms_file[$usecase];
 		echo $html_empty_table_row;
@@ -211,25 +205,11 @@
 		echo '</td>'."\n ";
 	}
 	// general data for special checks
-	$perms_unknown='???';
-	$css_class_unknown='unknown';
-	$css_class_user='user';
+	$perms_unknown = '???';
+	$css_class_unknown = 'unknown';
+	$css_class_user = 'user';
 	echo $html_empty_table_row ;
 	// special:
-	//
-//	$homefile='/etc';
-//	$filename=$homefile;
-//	$perms_file=$perms_unknown;
-//	$css_class=$css_class_unknown;
-//	get_perm_data($filename,$username,$groupname,$perms_asc,$perms_oct);
-//	echo '<tr>' . '<td><em class="'.$css_class.'">' . $perms_file . '</em></td><td>' . $username . '</td><td>' . $groupname . '</td><td>' . $perms_asc . '</td><td>' . $perms_oct . '</td><td>' . $filename . '</td></tr>' . "\n  ";
-	//
-//	$homefile='/home';
-//	$filename=$homefile;
-//	$perms_file=$perms_unknown;
-//	$css_class=$css_class_unknown;
-//	get_perm_data($filename,$username,$groupname,$perms_asc,$perms_oct);
-//	echo '<tr>' . '<td><em class="'.$css_class.'">' . $perms_file . '</em></td><td>' . $username . '</td><td>' . $groupname . '</td><td>' . $perms_asc . '</td><td>' . $perms_oct . '</td><td>' . $filename . '</td></tr>' . "\n  ";
 	// php safe mode: check for /tmp
 	$tmpfile = '/tmp';
 	$filename = $tmpfile;
