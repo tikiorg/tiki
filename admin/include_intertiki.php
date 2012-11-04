@@ -60,6 +60,7 @@ if (isset($_REQUEST["intertikiserver"])) {
 	}
 	if (!empty($_REQUEST['known_hosts'])) {
 		foreach ($_REQUEST['known_hosts'] as $k => $v) {
+			if (isset($_REQUEST['known_hosts'][$k]['allowusersregister'])) $_REQUEST['known_hosts'][$k]['allowusersregister'] = 'y';
 			if (empty($_REQUEST['known_hosts'][$k]['name'])
 				&& empty($_REQUEST['known_hosts'][$k]['key'])
 				&& empty($_REQUEST['known_hosts'][$k]['ip'])

@@ -166,6 +166,7 @@
 									<td>{tr}Key{/tr}</td>
 									<td>{tr}IP{/tr}</td>
 									<td>{tr}Contact{/tr}</td>
+									<td>{tr}Can register{/tr}</td>
 								</tr>
 								{if $prefs.known_hosts}
 									{foreach key=k item=i from=$prefs.known_hosts}
@@ -185,6 +186,9 @@
 											<td>
 												<input type="text" name="known_hosts[{$k}][contact]" value="{$i.contact}" size="22" />
 											</td>
+											<td>
+												<input type="checkbox" name="known_hosts[{$k}][allowusersregister]" {if $i.allowusersregister eq 'y'}checked="checked"{/if} />
+											</td>
 										</tr>
 									{/foreach}
 								{/if}
@@ -194,6 +198,7 @@
 									<td><input type="text" name="newhost[key]" value="" size="32" /></td>
 									<td><input type="text" name="newhost[ip]" value="" size="12" /></td>
 									<td><input type="text" name="newhost[contact]" value="" size="22" /></td>
+									<td><input type="checkbox" name="newhost[allowusersregister]" /></td>
 								</tr>
 							</table>
 						</td>
