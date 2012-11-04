@@ -49,11 +49,13 @@ class elFinderVolumeTikiFiles extends elFinderVolumeDriver {
 	 * @author Dmitry (dio) Levashov
 	 **/
 	public function __construct() {
-		global $tikidomainslash;
+		global $tikidomainslash, $prefs;
 
 		$opts = array(
 			'tmbPath'       => 'temp/public/'.$tikidomainslash,
-			'tmpPath'       => 'temp/public/'.$tikidomainslash,
+			'tmpPath'       => 'temp/'.$tikidomainslash,
+			'tmbURL'		=> 'temp/public/'.$tikidomainslash,
+			//'tmbSize'		=> $prefs['fgal_thumb_max_size'],
 		);
 		$this->options = array_merge($this->options, $opts);
 		$this->options['mimeDetect'] = 'internal';
