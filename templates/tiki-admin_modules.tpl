@@ -285,46 +285,6 @@
 							</tr>
 						{/if}
 
-						{if $menus}
-							<tr>
-								<td>
-									<label for="list_menus">{tr}Default Tiki menus:{/tr}</label>
-								</td>
-								<td>
-									<select name="menus" id='list_menus'>
-										{section name=ix loop=$menus}
-											<option value="{literal}{{/literal}menu id={$menus[ix].menuId} css=n{literal}}{/literal}">{$menus[ix].name|escape}</option>
-										{/section}
-									</select>
-								</td>
-								<td>
-									<a class="link" href="javascript:setUserModuleFromCombo('list_menus', 'um_data');" title="{tr}Use Menu{/tr}">{icon _id='add' alt="{tr}Use{/tr}"}</a>
-								</td>
-								<td>
-									<a {popup text="Params:<br />id=<br />structureId=<br />css=<br />link_on_section=y <i>or</i> n<br />type=vert <i>or</i> horiz<br />translate=y <i>or</i> n<br />menu_cookie=y <i>or</i> n" width=120 center=true}>{icon _id='help'}</a>
-								</td>
-							</tr>
-							{if $prefs.feature_cssmenus eq "y"}
-								<tr>
-									<td>
-										<label for="list_cssmenus">{tr}CSS menus:{/tr}</label>
-									</td>
-									<td>
-										<select name="cssmenus" id='list_cssmenus'>
-											{section name=ix loop=$menus}
-												<option value="{literal}{{/literal}menu id={$menus[ix].menuId} type= {literal}}{/literal}">{$menus[ix].name|escape}</option>
-											{/section}
-										</select>
-									</td>
-									<td>
-										<a class="link" href="javascript:setUserModuleFromCombo('list_cssmenus', 'um_data');" title="{tr}Use CSS menu{/tr}">{icon _id='add' alt="{tr}Use{/tr}"}</a>
-									</td>
-									<td>
-										<a {popup text="Params:<br />id=<br />type=horiz <i>or</i> vert<br />sectionLevel=<br />toLevel= " width=100 center=true}>{icon _id='help'}</a>
-									</td>
-								</tr>
-							{/if}							
-						{/if}
 						{if $banners}
 							<tr>
 								<td>
@@ -345,6 +305,7 @@
 								</td>
 							</tr>
 						{/if}
+
 						{if $wikistructures}
 							<tr>
 								<td>
