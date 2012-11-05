@@ -385,12 +385,16 @@
 					<td class="date">{$member.created|tiki_short_datetime}</td>
 					<td class="date">{if !empty($member.expire)}{$member.expire|tiki_short_datetime}{/if}</td>
 					<td class="action">
+						{if $groupname neq 'Registered'}
 						<a href="tiki-adminusers.php?user={$member.login|escape:"url"}&amp;action=removegroup&amp;group={$groupname|escape:url}" class="link" title="{tr}Remove from Group{/tr}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
+						{/if}
 						<a href="tiki-adminusers.php?user={$member.userId|escape:"url"}&amp;cookietab=2{if $prefs.feature_tabs ne 'y'}#tab2{/if}" class="link" title="{tr}Edit{/tr}">{icon _id='page_edit'}</a>
 					</td>
 					</tr>
 				{/foreach}
 		</table>
+
+		{if $groupname neq 'Registered'}
 		<label>{tr}Perform action with checked:{/tr}
 			<select name="submit_mult_members">
 				<option value="" />
@@ -399,6 +403,8 @@
 		</label>
 		<input type="submit" name="unassign_members" value="{tr}OK{/tr}" />
 		</form>
+		{/if}
+
 		{pagination_links cant=$membersCount step=$prefs.maxRecords offset=$membersOffset offset_arg='membersOffset'}{/pagination_links}
 
 		<div class="box">{$membersCount} {tr}users in group{/tr} {$groupname|escape}</div>
