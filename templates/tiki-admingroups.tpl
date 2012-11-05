@@ -320,6 +320,7 @@
 		{/if}
 
 			{if $group ne ''}
+				{if $groupname neq 'Anonymous'}
 				<tr>
 					<td>
 						{tr}Assign group <em>management</em> permissions:{/tr}
@@ -330,6 +331,8 @@
 						{/self_link}
 					</td>
 				</tr>
+				{/if}
+
 				<tr>
 					<td>
 						&nbsp;
