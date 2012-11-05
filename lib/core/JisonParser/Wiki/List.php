@@ -13,6 +13,12 @@ class JisonParser_Wiki_List
 	public $levelLast = 0;
 	public $id;
 	public $key;
+	public $parser;
+
+	function __construct(&$parser)
+	{
+		$this->parser = &$parser;
+	}
 
 	private function id()
 	{
@@ -114,26 +120,21 @@ class JisonParser_Wiki_List
 						$headerlib->add_css("#" . $id . "{display: none;}");
 					case '+':
 					case '*':
-					$html .= '<li class="tikiListItem">' . $stack[$i]['content'];
-						if (!empty($stack[$i]['children'])) {
-							$html .= $this->toHtmlChildren($stack[$i]['children']);
-						}
-						$html .= $this->advanceUntilNotType($i, $stack);
-						$html .= '</li>' . "\n";
-						break;
 					case '#':
-						$html .= '<li class="tikiListItem">' . $stack[$i]['content'];
-						if (!empty($stack[$i]['children'])) {
-							$html .= $this->toHtmlChildren($stack[$i]['children']);
-						}
-						$html .= $this->advanceUntilNotType($i, $stack);
-						$html .= '</li>' . "\n";
+						$html .= $this->parser->createWikiTag(
+							"list",
+							"li",
+								$stack[$i]['content'] .
+								$this->toHtmlChildren($stack[$i]['children']) .
+								$this->advanceUntilNotType($i, $stack),
+							array("class" => "tikiListItem")
+						) . "\n";
 						break;
 					case ';':
 						$parts = explode(':', $stack[$i]['content']);
-						$html .= '<dt>'  . $parts[0] . '</dt>';
+						$html .= $this->parser->createWikiTag("list", "dt", $parts[0]);
 						if (isset($parts[1])) {
-							$html .= '<dd>'  . $parts[1] . '</dd>';
+							$html .= $this->parser->createWikiTag("list", "dd", $parts[1]);
 						}
 						$html .= "\n";
 						break;
@@ -162,11 +163,20 @@ class JisonParser_Wiki_List
 			$id = $this->id();
 
 			if ($listType == "-") {
-				$preTag = '<br />' . "\n" . '<a id="flipper' . $id . '" href="javascript:flipWithSign(\'' . $id . '\');" class="link">[+]</a>';
+				$preTag .= $this->parser->createWikiHelper("list", "br", "", array(), "inline");
+				$preTag .= $this->parser->createWikiHelper("list", "a", "[+]", array(
+					"id" => "flipper" . $id,
+					"href" => "javascript:flipWithSign(\"" . $id . "\");",
+					"class" => "link"
+				));
 			}
 
 			$lastListType = $listType;
-			$result .= $preTag . '<' . $parentTagType . ' class="tikiList" id="' . $id . '">';
+
+			$result .= $preTag . $this->parser->createWikiTag("list", $parentTagType, "", array(
+				"class" => "tikiList",
+				"id" => $id
+			), "open");
 		}
 
 		return $result;
@@ -190,7 +200,7 @@ class JisonParser_Wiki_List
 
 	private function writeParentEndTag($parentTagType)
 	{
-		return '</' . $parentTagType . '>';
+		return $this->parser->createWikiTag("list", $parentTagType, "", array(), "close");
 	}
 
 	private function parentTagType($listType = '')
@@ -210,14 +220,14 @@ class JisonParser_Wiki_List
 		}
 	}
 
-	private function advanceUntilNotType(&$i, &$stack, $type = "+", $wrapping = array("<br />", "\n"))
+	private function advanceUntilNotType(&$i, &$stack, $type = "+")
 	{
 		$result = '';
 		$i++;
 		for ($length = count($stack); $i <= $length; $i++) {
 			if (!isset($stack[$i]['type'])) break;
 			if ($stack[$i]['type'] == $type) {
-				$result .= $wrapping[0] . $stack[$i]['content'] . $wrapping[1];
+				$result .= $this->parser->createWikiHelper("list", "br", "", array(), "inline") . $stack[$i]['content'] . "\n";
 			} else {
 				$i--;
 				break;
