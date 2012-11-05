@@ -15,7 +15,7 @@ BLOCK_START                     ([\!*#+;])
 WIKI_LINK_TYPE                  (([a-z0-9-]+))
 CAPITOL_WORD                    ([A-Z]{1,}[a-z_\-\x80-\xFF]{1,}){2,}
 
-%s np pp plugin line block bold box center code color italic unlink link strike table titlebar underscore wikilink
+%s np pp plugin line block bold box center code color italic unlink link strike table titleBar underscore wikiLink
 
 %%
 <np><<EOF>>
@@ -31,14 +31,14 @@ CAPITOL_WORD                    ([A-Z]{1,}[a-z_\-\x80-\xFF]{1,}){2,}
 		if (parser.npStack != true) return 'CONTENT'; //js
 		lexer.popState(); //js
 		parser.npStack = false; //js
-		yytext = parser.np(yytext); //js
+		yytext = parser.noParse(yytext); //js
 
 		//php if ($this->npStack != true) return 'CONTENT';
 		//php $this->popState();
 		//php $this->npStack = false;
-		//php $yytext = $this->np($yytext);
+		//php $yytext = $this->noParse($yytext);
 
-		return 'NP_END';
+		return 'NO_PARSE_END';
 	%}
 "~np~"
 	%{
@@ -50,7 +50,7 @@ CAPITOL_WORD                    ([A-Z]{1,}[a-z_\-\x80-\xFF]{1,}){2,}
 		//php $this->begin('np');
 		//php $this->npStack = true;
 
-		return 'NP_START';
+		return 'NO_PARSE_START';
 	%}
 
 
@@ -67,14 +67,14 @@ CAPITOL_WORD                    ([A-Z]{1,}[a-z_\-\x80-\xFF]{1,}){2,}
 		if (parser.ppStack != true) return 'CONTENT'; //js
 		lexer.popState(); //js
 		parser.ppStack = false; //js
-		yytext = parser.pp(yytext); //js
+		yytext = parser.preFormattedText(yytext); //js
 
 		//php if ($this->ppStack != true) return 'CONTENT';
 		//php $this->popState();
 		//php $this->ppStack = false;
-		//php $yytext = $this->pp($yytext);
+		//php $yytext = $this->preFormattedText($yytext);
 
-		return 'PP_END';
+		return 'PRE_FORMATTED_TEXT_END';
 	%}
 "~pp~"
 	%{
@@ -86,7 +86,7 @@ CAPITOL_WORD                    ([A-Z]{1,}[a-z_\-\x80-\xFF]{1,}){2,}
 		//php $this->begin('pp');
 		//php $this->ppStack = true;
 
-		return 'PP_START';
+		return 'PRE_FORMATTED_TEXT_START';
 	%}
 
 
@@ -119,6 +119,7 @@ CAPITOL_WORD                    ([A-Z]{1,}[a-z_\-\x80-\xFF]{1,}){2,}
         return 'ARGUMENT_VAR';
     %}
 
+"{rm}"                                      return 'CHAR';
 "{ELSE}"						return 'CONTENT';//For now let individual plugins handle else
 {LINE_END}("{r2l}"|"{l2r}")
 	%{
@@ -556,7 +557,7 @@ CAPITOL_WORD                    ([A-Z]{1,}[a-z_\-\x80-\xFF]{1,}){2,}
 	%}
 
 
-<titlebar><<EOF>>
+<titleBar><<EOF>>
 	%{
 		if (parser.isContent()) return 'CONTENT'; //js
 		lexer.unput('=-'); //js
@@ -564,25 +565,25 @@ CAPITOL_WORD                    ([A-Z]{1,}[a-z_\-\x80-\xFF]{1,}){2,}
 		//php if ($this->isContent()) return 'CONTENT';
 		//php $this->unput('=-');
 	%}
-<titlebar>[=][-]
+<titleBar>[=][-]
 	%{
 		if (parser.isContent()) return 'CONTENT'; //js
 		lexer.popState(); //js
-		return 'TITLEBAR_END'; //js
+		return 'TITLE_BAR_END'; //js
 
 		//php if ($this->isContent()) return 'CONTENT';
 		//php $this->popState();
-		//php return 'TITLEBAR_END';
+		//php return 'TITLE_BAR_END';
 	%}
 [-][=]
 	%{
 		if (parser.isContent()) return 'CONTENT'; //js
-		lexer.begin('titlebar'); //js
-		return 'TITLEBAR_START'; //js
+		lexer.begin('titleBar'); //js
+		return 'TITLE_BAR_START'; //js
 
 		//php if ($this->isContent()) return 'CONTENT';
-		//php $this->begin('titlebar');
-		//php return 'TITLEBAR_START';
+		//php $this->begin('titleBar');
+		//php return 'TITLE_BAR_START';
 	%}
 
 
@@ -617,7 +618,7 @@ CAPITOL_WORD                    ([A-Z]{1,}[a-z_\-\x80-\xFF]{1,}){2,}
 	%}
 
 
-<wikilink><<EOF>>
+<wikiLink><<EOF>>
 	%{
 		if (parser.isContent(['linkStack'])) return 'CONTENT'; //js
 		lexer.unput('))'); //js
@@ -625,67 +626,67 @@ CAPITOL_WORD                    ([A-Z]{1,}[a-z_\-\x80-\xFF]{1,}){2,}
 		//php if ($this->isContent(array('linkStack'))) return 'CONTENT';
 		//php $this->unput('))');
 	%}
-<wikilink>"))"|"(("
+<wikiLink>"))"|"(("
 	%{
 		if (parser.isContent(['linkStack'])) return 'CONTENT'; //js
 		parser.linkStack = false; //js
 		lexer.popState(); //js
-		return 'WIKILINK_END'; //js
+		return 'WIKI_LINK_END'; //js
 
 		//php if ($this->isContent(array('linkStack'))) return 'CONTENT';
 		//php $this->linkStack = false;
 		//php $this->popState();
-		//php return 'WIKILINK_END';
+		//php return 'WIKI_LINK_END';
 	%}
 "(("
 	%{
 		if (parser.isContent()) return 'CONTENT'; //js
 		parser.linkStack = true; //js
-		lexer.begin('wikilink'); //js
+		lexer.begin('wikiLink'); //js
 		yytext = 'wiki'; //js
-		return 'WIKILINK_START'; //js
+		return 'WIKI_LINK_START'; //js
 
 		//php if ($this->isContent()) return 'CONTENT';
 		//php $this->linkStack = true;
-		//php $this->begin('wikilink');
+		//php $this->begin('wikiLink');
 		//php $yytext = 'wiki';
-		//php return 'WIKILINK_START';
+		//php return 'WIKI_LINK_START';
 	%}
 "))"
 	%{
 		if (parser.isContent()) return 'CONTENT'; //js
 		parser.linkStack = true; //js
-		lexer.begin('wikilink'); //js
+		lexer.begin('wikiLink'); //js
 		yytext = 'np'; //js
-		return 'WIKILINK_START'; //js
+		return 'WIKI_LINK_START'; //js
 
 		//php if ($this->isContent()) return 'CONTENT';
 		//php $this->linkStack = true;
-		//php $this->begin('wikilink');
+		//php $this->begin('wikiLink');
 		//php $yytext = 'np';
-		//php return 'WIKILINK_START';
+		//php return 'WIKI_LINK_START';
 	%}
 "("{WIKI_LINK_TYPE}"("
 	%{
 		if (parser.isContent()) return 'CONTENT'; //js
 		parser.linkStack = true; //js
-		lexer.begin('wikilink'); //js
+		lexer.begin('wikiLink'); //js
 		yytext = yytext.substring(1, yytext.length - 1); //js
-		return 'WIKILINK_START'; //js
+		return 'WIKI_LINK_START'; //js
 
 		//php if ($this->isContent()) return 'CONTENT';
 		//php $this->linkStack = true;
-		//php $this->begin('wikilink');
+		//php $this->begin('wikiLink');
 		//php $yytext = substr($yytext, 1, -1);
-		//php return 'WIKILINK_START';
+		//php return 'WIKI_LINK_START';
 	%}
 (?:[ \n\t\r\,\;]|^){CAPITOL_WORD}(?=$|[ \n\t\r\,\;\.])
 	%{
 		if (parser.isContent()) return 'CONTENT'; //js
-		return 'WIKILINK'; //js
+		return 'WIKI_LINK'; //js
 
 		//php if ($this->isContent()) return 'CONTENT';
-		//php return 'WIKILINK';
+		//php return 'WIKI_LINK';
 	%}
 
 
@@ -729,7 +730,7 @@ CAPITOL_WORD                    ([A-Z]{1,}[a-z_\-\x80-\xFF]{1,}){2,}
 		//php if ($this->isContent()) return 'CONTENT';
 		//php return 'LINE_END';
 	%}
-
+"&"                                         return 'CHAR';
 [<](.|\n)*?[>]                              return 'HTML_TAG';
 "≤REAL_LT≥"(.|\n)*?"≤REAL_GT≥"    	        return 'HTML_TAG';
 ("§"[a-z0-9]{32}"§")                        return 'CONTENT';
@@ -738,6 +739,19 @@ CAPITOL_WORD                    ([A-Z]{1,}[a-z_\-\x80-\xFF]{1,}){2,}
 (?!{SYNTAX_CHARS})({LINE_CONTENT})?(?={SYNTAX_CHARS})
 											return 'CONTENT';
 ([ ]+?)                                     return 'CONTENT';
+("~bs~"|"~BS~")                             return 'CHAR';
+("~hs~"|"~HS~")                             return 'CHAR';
+("~amp~"|"~amp~")                           return 'CHAR';
+("~ldq~"|"~LDQ~")                           return 'CHAR';
+("~rdq~"|"~RDQ~")                           return 'CHAR';
+("~lsq~"|"~LSQ~")                           return 'CHAR';
+("~rsq~"|"~RSQ~")                           return 'CHAR';
+("~c~"|"~C~")                               return 'CHAR';
+"~--~"                                      return 'CHAR';
+"=>"                                        return 'CHAR';
+("~lt~"|"~LT~")                             return 'CHAR';
+("~gt~"|"~GT~")                             return 'CHAR';
+"{"([0-9]+)"}"                              return 'CHAR';
 (.)                                         return 'CONTENT';
 <<EOF>>										return 'EOF';
 /lex
@@ -798,17 +812,17 @@ content
         $$ = parser.comment($1); //js
         //php $$ = $this->comment($1); //js
     }
- | NP_START NP_END
- | NP_START contents NP_END
+ | NO_PARSE_START NO_PARSE_END
+ | NO_PARSE_START contents NO_PARSE_END
     {
-        $$ = parser.np($2); //js
-        //php $$ = $this->np($2); //js
+        $$ = parser.noParse($2); //js
+        //php $$ = $this->noParse($2); //js
     }
- | PP_START PP_END
- | PP_START contents PP_END
+ | PRE_FORMATTED_TEXT_START PRE_FORMATTED_TEXT_END
+ | PRE_FORMATTED_TEXT_START contents PRE_FORMATTED_TEXT_END
     {
-        $$ = parser.pp($2); //js
-        //php $$ = $this->pp($2); //js
+        $$ = parser.preFormattedText($2); //js
+        //php $$ = $this->preFormattedText($2); //js
     }
  | DOUBLE_DYNAMIC_VAR
     {
@@ -900,11 +914,11 @@ content
 		$$ = parser.tableParser($2); //js
 		//php $$ = $this->tableParser($2);
 	}
- | TITLEBAR_START TITLEBAR_END
- | TITLEBAR_START contents TITLEBAR_END
+ | TITLE_BAR_START TITLE_BAR_END
+ | TITLE_BAR_START contents TITLE_BAR_END
 	{
-		$$ = parser.titlebar($2); //js
-		//php $$ = $this->titlebar($2);
+		$$ = parser.titleBar($2); //js
+		//php $$ = $this->titleBar($2);
 	}
  | UNDERSCORE_START UNDERSCORE_END
  | UNDERSCORE_START contents UNDERSCORE_END
@@ -912,13 +926,13 @@ content
 		$$ = parser.underscore($2); //js
 		//php $$ = $this->underscore($2);
 	}
- | WIKILINK_START WIKILINK_END
- | WIKILINK_START contents WIKILINK_END
+ | WIKI_LINK_START WIKI_LINK_END
+ | WIKI_LINK_START contents WIKI_LINK_END
 	{
 		$$ = parser.link($1, $2); //js
 		//php $$ = $this->link($1, $2);
 	}
- | WIKILINK
+ | WIKI_LINK
     {
         $$ = parser.link('word', $1); //js
         //php $$ = $this->link('word', $1);
@@ -959,6 +973,11 @@ content
     {
         $$ = parser.block($1 + $2); //js
         //php $$ = $this->block($1 . $2);
+    }
+ | CHAR
+    {
+        $$ = parser.char($1); //js
+        //php $$ = $this->char($1);
     }
  ;
 
