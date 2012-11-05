@@ -7,7 +7,13 @@
 
 class JisonParser_Wiki_DynamicVariables
 {
+	public $parser;
 	static $dynamicVariables = array();
+
+	function __construct(&$parser)
+	{
+		$this->parser = &$parser;
+	}
 
 	private function get( $name, $lang = null )
 	{
@@ -36,11 +42,12 @@ class JisonParser_Wiki_DynamicVariables
 		return $value;
 	}
 
-	function ui($name)
+	function ui($name, $lang, $isDouble = false)
 	{
 		global $tiki_p_edit_dynvar;
 
 		$value = $this->get($name);
+		$type = ($isDouble == true ? "doubleDynamicVar" : "singleDynamicVar");
 
 		if (isset($tiki_p_edit_dynvar) && $tiki_p_edit_dynvar == 'y') {
 			$span1 = "<span  style='display:inline;' id='dyn_".$name."_display'><a class='dynavar' onclick='javascript:toggle_dynamic_var(\"$name\");' title='".tra('Click to edit dynamic variable', '', true).": $name'>$value</a></span>";
@@ -50,7 +57,7 @@ class JisonParser_Wiki_DynamicVariables
 			$span2 = '';
 		}
 
-		return $span1 . $span2;
+		return $this->parser->createWikiHelper($type, "span", $span1 . $span2);
 	}
 
 	function makeForum(&$input)
