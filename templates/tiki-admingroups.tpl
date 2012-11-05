@@ -291,6 +291,7 @@
 				</tr>
 			{/if}
 
+		{if $groupname neq 'Anonymous' and $groupname neq 'Registered' and $groupname neq 'Admins'}
 			<tr>
 				<td>{tr}User can assign to the group himself{/tr}</td>
 				<td><input type="checkbox" name="userChoice"{if $userChoice eq 'y'} checked="checked"{/if}/></td>
@@ -316,6 +317,7 @@
 				<td>{tr}Users are automatically assigned at registration in the group if their emails match the pattern{/tr}</td>
 				<td><input type="text" size="40" name="emailPattern" value="{$group_info.emailPattern|escape}" /><br />{tr}Example: {/tr}/@tw\.org$/ <br />{tr}Example:{/tr} /@(tw.org$)|(tw\.com$)/</td>
 			</tr>
+		{/if}
 
 			{if $group ne ''}
 				<tr>
