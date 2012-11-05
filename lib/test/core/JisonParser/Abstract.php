@@ -81,6 +81,7 @@ class JisonParser_Abstract extends TikiTestCase
 	public function tryRemoveIdsFromHtmlList(&$parsed)
 	{
 		$parsed = preg_replace('/id="id[0-9]+"/', 'id=""', $parsed);
+		$parsed = preg_replace("/id='id[0-9]+'/", "id=''", $parsed);
 	}
 
 	public function tryRemoveFingerprintId($type, &$parsed)

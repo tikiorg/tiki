@@ -309,10 +309,10 @@ class JisonParser_PluginTest extends JisonParser_Abstract
 					'<li><a class="link" href="#test1">test</a></li>' .
 				'</ul>' .
 			'</div>' .
-			"<br />\n" .
-			'<h1 class="showhide_heading" id="test">test</h1>'.
-			'<h3 class="showhide_heading" id="nested_test">nested test</h3>'.
-			'<h1 class="showhide_heading" id="test1">test</h1>'
+			"<br/>\n" .
+			"<h1 id='test'>test</h1>".
+			"<h3 id='nested_test'>nested test</h3>".
+			"<h1 id='test1'>test</h1>"
 		);
 
 		$parsed = $this->parser->parse($syntax[0]);
