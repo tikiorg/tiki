@@ -110,6 +110,21 @@ function get_page_url($filename)
 	return $page_basename;
 }
 
+// page url without path starting at document root
+function get_page_url_clean($filename)
+{
+	$page_basename = 'http';
+	if ( $_SERVER["HTTPS"] == "on" ) {
+		$page_basename .= 's';
+	}
+	$page_basename .= '://';
+	$page_basename .= $_SERVER["SERVER_NAME"];
+	//$page_basename .= dirname($_SERVER['PHP_SELF']);
+	$page_basename .= '/' . $filename;
+
+	return $page_basename;
+}
+
 // all permission data by reference
 function get_perm_data($filename, &$username, &$groupname, &$perms_asc, &$perms_oct)
 {

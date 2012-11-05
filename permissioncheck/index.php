@@ -235,8 +235,11 @@
 		if ($first_character == '/') {
 			//$path_prefix = '/';
 			$path_prefix = '';
+			$display_name = $usersubmittedfile;
 		} else {
 			$path_prefix = '../';
+			$tmp_url = get_page_url_clean($usersubmittedfile);
+			$display_name = '<a href="' . $tmp_url . '">' . $tmp_url . '</a>';
 		}
 		//$filename = '../' . $usersubmittedfile;
 		$filename = $path_prefix . $usersubmittedfile;
@@ -250,7 +253,8 @@
 //		}
 		color_classes_perm_asc($filename,$perms_asc,$css_class_writable);
 		echo '<tr>' . '<td><em class="'.$css_class.'">' . $perms_file . '</em></td><td>' . $username . '</td><td>' . $groupname . '</td>';
-		echo '<td class="' . $css_class_writable . '">' . $perms_asc . '</td><td>' . $perms_oct . '</td><td>' . $usersubmittedfile . '</td></tr>' . "\n  ";
+		//echo '<td class="' . $css_class_writable . '">' . $perms_asc . '</td><td>' . $perms_oct . '</td><td>' . $usersubmittedfile . '</td></tr>' . "\n  ";
+		echo '<td class="' . $css_class_writable . '">' . $perms_asc . '</td><td>' . $perms_oct . '</td><td>' . $display_name . '</td></tr>' . "\n  ";
 	}
 ?>
  </table></div>
