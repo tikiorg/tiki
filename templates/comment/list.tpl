@@ -107,7 +107,9 @@ function comment_load(url) {
 				.closest('.comment')
 				.addnotes( $('#top') );
 
-			$('#top').noteeditor($('.comment-form:last a', comment_container), '#note-editor-comment');
+            if(jqueryTiki.useInlineComment) {
+				$('#top').noteeditor($('.comment-form:last a', comment_container), '#note-editor-comment');
+			} 
 
 			$('.comment-form a', this).click(function () {
 				$(this).parent().empty().removeClass('button').load($(this).attr('href'), function () {
