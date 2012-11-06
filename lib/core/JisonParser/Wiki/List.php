@@ -116,13 +116,21 @@ class JisonParser_Wiki_List
 				$html .= $this->writeParentStartTag($stack[$i]['type'], $lastType, $lastParentTagType, $id);
 
 				switch($stack[$i]['type']) {
+					case '-': $listType = "Toggle"; break;
+					case '+': $listType = "Break"; break;
+					case '*': $listType = "Unordered"; break;
+					case '#': $listType = "Ordered"; break;
+					case ';': $listType = "Definition"; break;
+				}
+
+				switch($stack[$i]['type']) {
 					case '-':
 						$headerlib->add_css("#" . $id . "{display: none;}");
 					case '+':
 					case '*':
 					case '#':
 						$html .= $this->parser->createWikiTag(
-							"list",
+							"list" . $listType,
 							"li",
 								$stack[$i]['content'] .
 								$this->toHtmlChildren($stack[$i]['children']) .
@@ -132,9 +140,9 @@ class JisonParser_Wiki_List
 						break;
 					case ';':
 						$parts = explode(':', $stack[$i]['content']);
-						$html .= $this->parser->createWikiTag("list", "dt", $parts[0]);
+						$html .= $this->parser->createWikiTag("list" . $listType, "dt", $parts[0]);
 						if (isset($parts[1])) {
-							$html .= $this->parser->createWikiTag("list", "dd", $parts[1]);
+							$html .= $this->parser->createWikiTag("list" . $listType . "Description", "dd", $parts[1]);
 						}
 						$html .= "\n";
 						break;
@@ -163,8 +171,8 @@ class JisonParser_Wiki_List
 			$id = $this->id();
 
 			if ($listType == "-") {
-				$preTag .= $this->parser->createWikiHelper("list", "br", "", array(), "inline");
-				$preTag .= $this->parser->createWikiHelper("list", "a", "[+]", array(
+				$preTag .= $this->parser->createWikiHelper("listBreak", "br", "", array(), "inline");
+				$preTag .= $this->parser->createWikiHelper("listButton", "a", "[+]", array(
 					"id" => "flipper" . $id,
 					"href" => "javascript:flipWithSign(\"" . $id . "\");",
 					"class" => "link"
@@ -173,7 +181,13 @@ class JisonParser_Wiki_List
 
 			$lastListType = $listType;
 
-			$result .= $preTag . $this->parser->createWikiTag("list", $parentTagType, "", array(
+			if ($listType == ";") {
+				$tagListType = "listDefinitionParent";
+			} else {
+				$tagListType = "listParent";
+			}
+
+			$result .= $preTag . $this->parser->createWikiTag($tagListType, $parentTagType, "", array(
 				"class" => "tikiList",
 				"id" => $id
 			), "open");
