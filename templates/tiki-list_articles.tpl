@@ -91,20 +91,15 @@
 				{assign var=numbercol value=$numbercol+1}
 				<th>{tr}Image{/tr}</th>
 			{/if}
-			<!--{if $tiki_p_admin eq 'y' or $tiki_p_admin_cms eq 'y'}
-			<th>{self_link _sort_arg='sort_mode' _sort_field='ispublished'}{tr}Published{/tr}{/self_link}</th> 
-			{/if}-->
-			
+			<th>{self_link _sort_arg='sort_mode' _sort_field='ispublished'}{tr}Published{/tr}{/self_link}</th>
 			{if $tiki_p_edit_article eq 'y' or $tiki_p_remove_article eq 'y' or isset($oneEditPage) or $tiki_p_read_article}
 				{assign var=numbercol value=$numbercol+1}
-				<th>{tr}Actions{/tr} </th>
+				<th>{tr}Actions{/tr}</th>
 			{/if}
-			
 		</tr>
 		{cycle values="odd,even" print=false}
 		{section name=changes loop=$listpages}
 			<tr class="{cycle}">
-					{if $listpages[changes].ispublished eq 'y'  or $tiki_p_approve_submission eq 'y' or ($listpages[changes].ispublished eq 'n' and $listpages[changes].authorName|escape eq $user)  }
 				<td class="checkbox">
 					<input type="checkbox" name="checked[]" value="{$listpages[changes].articleId|escape}" {if $listpages[changes].checked eq 'y'}checked="checked" {/if}/>
 				</td>
@@ -156,36 +151,22 @@
 				{if $prefs.art_list_img eq 'y'}
 					<td class="text">{tr}{$listpages[changes].hasImage}{/tr}/{tr}{$listpages[changes].useImage}{/tr}</td>
 				{/if}
-				<!--{if $tiki_p_admin eq 'y' or $tiki_p_admin_cms eq 'y' }
 				<td style="text-align:center;">{$listpages[changes].ispublished}</td>
-				{/if}-->
-				
 				<td class="action">
-					
 					{if $tiki_p_read_article eq 'y'}
 						<a href="{$listpages[changes].articleId|sefurl:article}" title="{$listpages[changes].title|escape}">{icon _id='magnifier' alt="{tr}View{/tr}"}</a>
 					{/if}
-					
-					{if $listpages[changes].authorName|escape eq $user and $listpages[changes].ispublished eq 'n' or $tiki_p_approve_submission eq 'y'}
-					{if $tiki_p_edit_article eq 'y'}
+					{if $tiki_p_edit_article eq 'y' or ($listpages[changes].author eq $user and $listpages[changes].creator_edit eq 'y')}
 						<a class="link" href="tiki-edit_article.php?articleId={$listpages[changes].articleId}">{icon _id='page_edit'}</a>
-					{/if}
-					{/if}
-					{if $listpages[changes].authorName|escape eq  $user and $listpages[changes].ispublished eq 'n' or $tiki_p_approve_submission eq 'y'}
-					{if $tiki_p_remove_article eq 'y'}
-						&nbsp;
-						<a class="link" href="tiki-list_articles.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$listpages[changes].articleId}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
-					{/if}
 					{/if}
 					{if $tiki_p_admin_cms eq 'y' or $tiki_p_assign_perm_cms eq 'y'}
 						<a class="link" href="tiki-objectpermissions.php?objectName={$listpages[changes].title|escape:'url'}&amp;objectType=article&amp;permType=cms&amp;objectId={$listpages[changes].articleId}">{icon _id='key' alt="{tr}Permissons{/tr}"}</a>
 					{/if}
+					{if $tiki_p_remove_article eq 'y'}
+						&nbsp;
+						<a class="link" href="tiki-list_articles.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$listpages[changes].articleId}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
 					{/if}
 				</td>
-				
-				{if ($listpages[changes].authorName|escape eq $user or $tiki_p_approve_submission eq 'y' )and $listpages[changes].ispublished eq 'n'  }
-				<td> Not publised </td>
-				{/if}
 			</tr>
 		{sectionelse}
 			{norecords _colspan=$numbercol}
@@ -197,12 +178,10 @@
 					<p align="left"> {*on the left to have it close to the checkboxes*}
 						{button _text="{tr}Select Duplicates{/tr}" _onclick="checkDuplicateRows(this,'td:not(:eq(2))'); return false;"}
 						<label>{tr}Perform action with checked:{/tr}
-							{if $tiki_p_approve_submission eq 'y'}
 							<select name="submit_mult">
 								<option value=""></option>
 								<option value="remove_articles" >{tr}Remove{/tr}</option>
 							</select>
-							{/if}
 						</label>
 						<input type="submit" value="{tr}OK{/tr}" />
 					</p>

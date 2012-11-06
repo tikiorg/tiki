@@ -6,7 +6,6 @@
 			{else}{tr}Articles{/tr}{/if}
 		{/title}
 	{/if}
-{/if}
 	<div class="clearfix" style="clear: both;">
 		<div style="float: right; padding-left:10px; white-space: nowrap">
 		{if $user and $prefs.feature_user_watches eq 'y'}
@@ -21,6 +20,7 @@
 		{/if}
 		</div>
 	</div>
+{/if}
 {section name=ix loop=$listpages}
 	{capture name=href}{if empty($urlparam)}{$listpages[ix].articleId|sefurl:article}{else}{$listpages[ix].articleId|sefurl:article:with_next}{$urlparam}{/if}{/capture}
 	{if $listpages[ix].disp_article eq 'y'}
@@ -43,13 +43,13 @@
 				 or ($listpages[ix].show_reads eq 'y')}	
 					<span class="titleb">
 						{if $listpages[ix].show_author eq 'y'}	
-							<span class="author">{tr}Author:{/tr} {$listpages[ix].authorName|escape}&nbsp;</span>
+							<span class="author">{tr}Author:{/tr} {$listpages[ix].authorName|escape}&nbsp;- </span>
 						{/if}
 						{if $listpages[ix].show_pubdate eq 'y'}
-							<span class="pubdate">{tr}Published At:{/tr} {$listpages[ix].publishDate|tiki_short_datetime}&nbsp;</span>
+							<span class="pubdate">{tr}Published At:{/tr} {$listpages[ix].publishDate|tiki_short_datetime}&nbsp;- </span>
 						{/if}
 						{if $listpages[ix].show_expdate eq 'y'}
-							<span class="expdate">{tr}Expires At:{/tr} {$listpages[ix].expireDate|tiki_short_datetime}&nbsp;</span>
+							<span class="expdate">{tr}Expires At:{/tr} {$listpages[ix].expireDate|tiki_short_datetime}&nbsp;- </span>
 						{/if}
 						{if $listpages[ix].show_reads eq 'y'}
 							<span class="reads">({$listpages[ix].nbreads} {tr}Reads{/tr})</span>
@@ -156,10 +156,8 @@
 				{/if}
 				{if !isset($actions) or $actions eq "y"}
 					<div class="actions">
-						{if $authorName|escape eq $user and $ispublished eq 'n' or $tiki_p_approve_submission eq 'y'}
 						{if $tiki_p_edit_article eq 'y' or ($listpages[ix].author eq $user and $listpages[ix].creator_edit eq 'y')}
 							<a class="icon" href="tiki-edit_article.php?articleId={$listpages[ix].articleId}">{icon _id='page_edit'}</a>
-						{/if}
 						{/if}
 						{if $prefs.feature_cms_print eq 'y'}
 							<a class="icon" href="tiki-print_article.php?articleId={$listpages[ix].articleId}">{icon _id='printer' alt="{tr}Print{/tr}"}</a>
@@ -169,10 +167,8 @@
 								{include file='translated-lang.tpl' object_type='article' trads=$listpages[ix].translations articleId=$listpages[ix].articleId}
 							</div>
 						{/if}
-						{if $authorName|escape eq $user and $ispublished eq 'n' or $tiki_p_approve_submission eq 'y'}
 						{if $tiki_p_remove_article eq 'y'}
 							<a class="icon" href="tiki-list_articles.php?remove={$listpages[ix].articleId}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
-						{/if}
 						{/if}
 					</div>
 				{/if}

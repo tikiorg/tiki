@@ -1,5 +1,5 @@
 {if !isset($preview)}
-	<div class="articletrailer">
+	<div class="clearfix articletrailer">
 		<span>
 			{if $show_size eq 'y'}
 				({$size} {tr}bytes{/tr})
@@ -11,10 +11,8 @@
 				{include file='translated-lang.tpl' object_type='article'}
 			</div>
 		{/if}
-		{if $authorName|escape eq $user and $ispublished eq 'n' or $tiki_p_approve_submission eq 'y'}
 		{if $tiki_p_edit_article eq 'y'}
 			<a class="icon" href="tiki-edit_article.php?articleId={$articleId}">{icon _id='page_edit'}</a>
-		{/if}
 		{/if}
 		{if $prefs.feature_cms_print eq 'y'}
 			<a class="icon" href="tiki-print_article.php?articleId={$articleId}">{icon _id='printer' alt="{tr}Print{/tr}"}</a>
@@ -32,19 +30,16 @@
 				},
 				{button:false});
 				//Output your customized button
-				document.write('<span class="share" id="share{/literal}{$articleId}{literal}"><a title="{/literal}{$smarty.capture.shared_link_title|replace:'\'':'\\\''}{literal}" href="javascript:void(0);"><img src="http://w.sharethis.com/images/share-icon-16x16.png?CXNID=1000014.0NXC" /></a></span>');
+				document.write('<span class="share" id="share{/literal}{$articleId}{literal}"><a title="{/literal}{$smarty.capture.shared_link_title|replace:'\'':'\\\''}{literal}" href="javascript:void(0);"><img src="https://ws.sharethis.com/images/share-icon-16x16.png?CXNID=1000014.0NXC" /></a></span>');
 				//Tie customized button to ShareThis button functionality.
 				var element{/literal}{$articleId}{literal} = document.getElementById("share{/literal}{$articleId}{literal}"); object{/literal}{$articleId}{literal}.attachButton(element{/literal}{$articleId}{literal}); </script>{/literal}
 		{/if}
 		{if $prefs.feature_tell_a_friend eq 'y' && $tiki_p_tell_a_friend eq 'y'}
 			<a title="{tr}Send a link{/tr}" href="tiki-tell_a_friend.php?url={$smarty.server.REQUEST_URI|escape:'url'}">{icon _id='email_link' alt="{tr}Send a link{/tr}"}</a>
 		{/if}
-		{if $authorName|escape eq $user and $ispublished eq 'n' or $tiki_p_approve_submission eq 'y'}
 		{if $tiki_p_remove_article eq 'y'}
 			<a class="icon" href="tiki-list_articles.php?remove={$articleId}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
 		{/if}
-		{/if}
 		</div>
 	</div>
-	<br class="clear" />
 {/if}
