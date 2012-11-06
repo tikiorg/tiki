@@ -19,7 +19,15 @@ class JisonParser_WikiCKEditor_Handler extends JisonParser_Wiki_Handler
 		"l2r" =>                        "l2r",
 		"r2l" =>                        "r2l",
 		"header" =>                     "hdr",
-		"list" =>                       "lst",
+		"horizontalRow" =>              "hr",
+		"listParent" =>                 "lp",
+		"listUnordered" =>              "lu",
+		"listOrdered" =>                "lh",
+		"listToggle" =>                 "lt",
+		"listBreak" =>                  "lb",
+		"listDefinitionParent" =>       "ldp",
+		"listDefinition" =>             "ld",
+		"listDefinitionDescription" =>  "ldd",
 		"line" =>                       "ln",
 		"forcedLineEnd" =>              "fln",
 		"unlink" =>                     "ul",
@@ -27,9 +35,9 @@ class JisonParser_WikiCKEditor_Handler extends JisonParser_Wiki_Handler
 		"wikiLink" =>                   "wl",
 		"strike" =>                     "stk",
 		"doubleDash" =>                 "dd",
-		"table" =>                      "tbl",
-		"tableRow" =>                   "tblr",
-		"tableData" =>                  "tbld",
+		"table" =>                      "t",
+		"tableRow" =>                   "tr",
+		"tableData" =>                  "td",
 		"titleBar" =>                   "tb",
 		"underscore" =>                 "u",
 
@@ -40,8 +48,6 @@ class JisonParser_WikiCKEditor_Handler extends JisonParser_Wiki_Handler
 		parent::__construct();
 
 		$this->Parser->specialCharacter = new JisonParser_WikiCKEditor_SpecialChar($this->Parser);
-
-		$this->Parser->htmlCharacter = new JisonParser_WikiCKEditor_HtmlCharacter($this->Parser);
 
 		$this->pluginNegotiator = new WikiPlugin_Negotiator_CKEditor($this->Parser);
 	}
@@ -91,6 +97,27 @@ class JisonParser_WikiCKEditor_Handler extends JisonParser_Wiki_Handler
 		return "%" . $content . "%";
 	}
 
+	/**
+	 * syntax handler: unlink, [[$content|$content]]
+	 *
+	 * @access  public
+	 * @param   $content parsed string found inside detected syntax
+	 * @return  string  $content desired output from syntax
+	 */
+	function unlink($content) //[[content|content]
+	{
+		$contentLength = strlen($content);
+
+		if ($content[$contentLength - 3] == "@" &&
+			$content[$contentLength - 2] == "n" &&
+			$content[$contentLength - 1] == "p"
+		) {
+			$content = substr($content, 0, -3);
+		}
+
+		return $this->createWikiTag("unlink", "span", $content);
+	}
+
 
 	/**
 	 * syntax handler: tiki comment, ~tc~$content~/tc~
@@ -129,12 +156,40 @@ class JisonParser_WikiCKEditor_Handler extends JisonParser_Wiki_Handler
 	 * Gets wiki syntax type symbol shorthand, cuts down on information needed to send to browser, used in translating html to wiki
 	 *
 	 * @access  private
-	 * @param   string  $name plugin name
+	 * @param   string  $name type name
 	 * @return  string  $index
 	 */
 	static public function typeShorthand($name)
 	{
 		return self::$typeShorthand[$name];
+	}
+
+	/**
+	 * Gets wiki syntax type name from shorthand, cuts down on information needed to send to browser, used in translating html to wiki
+	 *
+	 * @access  private
+	 * @param   string  $name type shorthand
+	 * @return  string  $index
+	 */
+	static public function typeFromShorthand($name)
+	{
+		$type = array_search($name, self::$typeShorthand);
+		if ($type === false) {
+			return "";
+		}
+		return $type;
+	}
+
+	/**
+	 * syntax handler: characters
+	 *
+	 * @access  public
+	 * @param   $content char handler, upper or lower case
+	 * @return  string output of char
+	 */
+	function char($content)
+	{
+		return $content;
 	}
 
 	/**

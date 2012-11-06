@@ -20,15 +20,15 @@ class JisonParser_Html
 		$end = 'end';
 		
 		//parser
-		$this->symbols_ = 		json_decode('{"error":2,"wiki":3,"contents":4,"EOF":5,"content":6,"HTML_TAG":7,"CONTENT":8,"CAPITOL_WORD":9,"LINE_END":10,"$accept":0,"$end":1}', true);
-		$this->terminals_ = 	json_decode('{"2":"error","5":"EOF","7":"HTML_TAG","8":"CONTENT","9":"CAPITOL_WORD","10":"LINE_END"}', true);
-		$this->productions_ = 	json_decode('[0,[3,1],[3,2],[3,1],[4,1],[4,2],[6,1],[6,1],[6,1],[6,1]]', true);
-		$this->table = 			json_decode('[{"3":1,"4":2,"5":[1,3],"6":4,"7":[1,5],"8":[1,6],"9":[1,7],"10":[1,8]},{"1":[3]},{"1":[2,1],"5":[1,9],"6":10,"7":[1,5],"8":[1,6],"9":[1,7],"10":[1,8]},{"1":[2,3]},{"1":[2,4],"5":[2,4],"7":[2,4],"8":[2,4],"9":[2,4],"10":[2,4]},{"1":[2,6],"5":[2,6],"7":[2,6],"8":[2,6],"9":[2,6],"10":[2,6]},{"1":[2,7],"5":[2,7],"7":[2,7],"8":[2,7],"9":[2,7],"10":[2,7]},{"1":[2,8],"5":[2,8],"7":[2,8],"8":[2,8],"9":[2,8],"10":[2,8]},{"1":[2,9],"5":[2,9],"7":[2,9],"8":[2,9],"9":[2,9],"10":[2,9]},{"1":[2,2]},{"1":[2,5],"5":[2,5],"7":[2,5],"8":[2,5],"9":[2,5],"10":[2,5]}]', true);
+		$this->symbols_ = 		json_decode('{"error":2,"wiki":3,"contents":4,"EOF":5,"content":6,"CONTENT":7,"LINE_END":8,"HTML_TAG_INLINE":9,"HTML_TAG_OPEN":10,"HTML_TAG_CLOSE":11,"$accept":0,"$end":1}', true);
+		$this->terminals_ = 	json_decode('{"2":"error","5":"EOF","7":"CONTENT","8":"LINE_END","9":"HTML_TAG_INLINE","10":"HTML_TAG_OPEN","11":"HTML_TAG_CLOSE"}', true);
+		$this->productions_ = 	json_decode('[0,[3,1],[3,2],[3,1],[4,1],[4,2],[6,1],[6,1],[6,1],[6,3],[6,2]]', true);
+		$this->table = 			json_decode('[{"3":1,"4":2,"5":[1,3],"6":4,"7":[1,5],"8":[1,6],"9":[1,7],"10":[1,8]},{"1":[3]},{"1":[2,1],"5":[1,9],"6":10,"7":[1,5],"8":[1,6],"9":[1,7],"10":[1,8]},{"1":[2,3]},{"1":[2,4],"5":[2,4],"7":[2,4],"8":[2,4],"9":[2,4],"10":[2,4],"11":[2,4]},{"1":[2,6],"5":[2,6],"7":[2,6],"8":[2,6],"9":[2,6],"10":[2,6],"11":[2,6]},{"1":[2,7],"5":[2,7],"7":[2,7],"8":[2,7],"9":[2,7],"10":[2,7],"11":[2,7]},{"1":[2,8],"5":[2,8],"7":[2,8],"8":[2,8],"9":[2,8],"10":[2,8],"11":[2,8]},{"4":11,"6":4,"7":[1,5],"8":[1,6],"9":[1,7],"10":[1,8],"11":[1,12]},{"1":[2,2]},{"1":[2,5],"5":[2,5],"7":[2,5],"8":[2,5],"9":[2,5],"10":[2,5],"11":[2,5]},{"6":10,"7":[1,5],"8":[1,6],"9":[1,7],"10":[1,8],"11":[1,13]},{"1":[2,10],"5":[2,10],"7":[2,10],"8":[2,10],"9":[2,10],"10":[2,10],"11":[2,10]},{"1":[2,9],"5":[2,9],"7":[2,9],"8":[2,9],"9":[2,9],"10":[2,9],"11":[2,9]}]', true);
 		$this->defaultActions = json_decode('{"3":[2,3],"9":[2,2]}', true);
 		
 		//lexer
-		$this->rules = 			array("/^(?:(([A-Z]{1,}[a-z_\\-\\x80-\\xFF]{1,}){2,}))/","/^(?:[<](.|\\n)*?[>])/","/^(?:([A-Za-z0-9 .,?;]+))/","/^(?:([ ]))/","/^(?:((\\n\\r|\\r\\n|[\\n\\r])))/","/^(?:(.))/","/^(?:$)/");
-		$this->conditions = 	json_decode('{"INITIAL":{"rules":[0,1,2,3,4,5,6],"inclusive":true}}', true);
+		$this->rules = 			array("/^(?:(<(.|\\n)*?\\/>))/","/^(?:$)/","/^(?:(<\\/(.|\\n)*?>))/","/^(?:(<(.|\\n)*?>))/","/^(?:([A-Za-z0-9 .,?;]+))/","/^(?:([ ]))/","/^(?:((\\n\\r|\\r\\n|[\\n\\r])))/","/^(?:(.))/","/^(?:$)/");
+		$this->conditions = 	json_decode('{"htmlElement":{"rules":[0,1,2,3,4,5,6,7,8],"inclusive":true},"INITIAL":{"rules":[0,3,4,5,6,7,8],"inclusive":true}}', true);
 		
 		$this->options =		json_decode('{}', true);
 	}
@@ -58,20 +58,24 @@ case 5:
 	
 break;
 case 6:
-        $thisS = $this->htmlTag($S[$O]);
-    
-break;
-case 7:
         $thisS = $this->content($S[$O]);
     
 break;
-case 8:
-        $thisS = $this->capitolWord($S[$O]);
-    
-break;
-case 9:
+case 7:
         $thisS = $this->lineEnd($S[$O]);
     
+break;
+case 8:
+	    $thisS = $this->toWiki($S[$O]);
+	
+break;
+case 9:
+	    $thisS = $this->toWiki($S[$O], $S[$O-1]);
+	
+break;
+case 10:
+	    $thisS = $this->toWiki($S[$O]);
+	
 break;
 }
 
@@ -525,19 +529,48 @@ break;
 
 
 switch($avoiding_name_collisions) {
-case 0:return 9;
+case 0:
+		$yy_->yytext = $this->inlineTag($yy_->yytext);
+		return "HTML_TAG_INLINE";
+	
 break;
-case 1:return 7;
+case 1:
+		$tag = $this->htmlElementStack[count($this->htmlElementStack) - 1];
+		$this->htmlElementStack[count($this->htmlElementStack) - 1]['state'] = 'repaired';
+		$this->unput('</' . $tag['name'] . '>');
+		return 7;
+	
 break;
-case 2:return 8;
+case 2:
+		if ($this->isLastInHtmlElementStack($yy_->yytext)) {
+		  $this->popState();
+		  $close = $yy_->yytext;
+		  $yy_->yytext = array_pop($this->htmlElementStack);
+		  $yy_->yytext['close'] = $close;
+		  if ($yy_->yytext['state'] == 'open') {
+		      $yy_->yytext['state'] = 'closed';
+		  }
+		  $this->htmlElementStackCount--;
+    	  return "HTML_TAG_CLOSE";
+    	}
+    	return 7;
+	
 break;
-case 3:return 8;
+case 3:
+		$this->stackHtmlElement($yy_->yytext);
+		$this->begin('htmlElement');
+    	return "HTML_TAG_OPEN";
+	
 break;
-case 4:return 10;
+case 4:return 7;
 break;
-case 5:return 8;
+case 5:return 7;
 break;
-case 6:return 5;
+case 6:return 8;
+break;
+case 7:return 7;
+break;
+case 8:return 5;
 break;
 }
 

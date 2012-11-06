@@ -1,16 +1,51 @@
 //phpOption parserClass:JisonParser_Html
-//phpOption lexerClass:JisonParser_Html_Lexer
 
 //Lexical Grammer
 %lex
 
 LINE_END                        (\n\r|\r\n|[\n\r])
-CAPITOL_WORD                    ([A-Z]{1,}[a-z_\-\x80-\xFF]{1,}){2,}
+HTML_TAG_INLINE                 "<"(.|\n)*?"/>"
+HTML_TAG_CLOSE                  "</"(.|\n)*?">"
+HTML_TAG_OPEN                   "<"(.|\n)*?">"
+
+%s htmlElement
 
 %%
+{HTML_TAG_INLINE}
+	%{
+		//php $yytext = $this->inlineTag($yytext);
+		//php return "HTML_TAG_INLINE";
+	%}
 
-{CAPITOL_WORD}                              return 'CAPITOL_WORD';
-[<](.|\n)*?[>]                              return 'HTML_TAG';
+
+<htmlElement><<EOF>>
+	%{
+		//php $tag = $this->htmlElementStack[count($this->htmlElementStack) - 1];
+		//php $this->htmlElementStack[count($this->htmlElementStack) - 1]['state'] = 'repaired';
+		//php $this->unput('</' . $tag['name'] . '>');
+		//php return 'CONTENT';
+	%}
+<htmlElement>{HTML_TAG_CLOSE}
+	%{
+		//php if ($this->isLastInHtmlElementStack($yytext)) {
+		//php   $this->popState();
+		//php   $close = $yytext;
+		//php   $yytext = array_pop($this->htmlElementStack);
+		//php   $yytext['close'] = $close;
+		//php   if ($yytext['state'] == 'open') {
+		//php       $yytext['state'] = 'closed';
+		//php   }
+		//php   $this->htmlElementStackCount--;
+    	//php   return "HTML_TAG_CLOSE";
+    	//php }
+    	//php return 'CONTENT';
+	%}
+{HTML_TAG_OPEN}
+	%{
+		//php $this->stackHtmlElement($yytext);
+		//php $this->begin('htmlElement');
+    	//php return "HTML_TAG_OPEN";
+	%}
 ([A-Za-z0-9 .,?;]+)                         return 'CONTENT';
 ([ ])                                       return 'CONTENT';
 {LINE_END}                                  return 'LINE_END';
@@ -43,44 +78,24 @@ contents
  ;
 
 content
- : HTML_TAG
+ : CONTENT
     {
-        $$ = parser.htmlTag($1); //js
-        //php $$ = $this->htmlTag($1);
-    }
- | CONTENT
-    {
-        $$ = parser.content($1); //js
         //php $$ = $this->content($1);
-    }
- | CAPITOL_WORD
-    {
-        $$ = parser.capitolWord($1); //js
-        //php $$ = $this->capitolWord($1);
     }
  | LINE_END
     {
-        $$ = parser.lineEnd($1); //js
         //php $$ = $this->lineEnd($1);
     }
+ | HTML_TAG_INLINE
+	{
+	    //php $$ = $this->toWiki($1);
+	}
+ | HTML_TAG_OPEN contents HTML_TAG_CLOSE
+	{
+	    //php $$ = $this->toWiki($3, $2);
+	}
+ | HTML_TAG_OPEN HTML_TAG_CLOSE
+	{
+	    //php $$ = $this->toWiki($2);
+	}
  ;
-
-%% /* parser extensions */
-
-// additional module code //js
-parser.extend = { //js
-	parser: function(extension) { //js
-        if (extension) { //js
-            for (var attr in extension) { //js
-                parser[attr] = extension[attr]; //js
-            } //js
-        } //js
-    }, //js
-    lexer: function() { //js
-		if (extension) { //js
-			for (var attr in extension) { //js
-				parser[attr] = extension[attr]; //js
-			} //js
-       	} //js
-	} //js
-}; //js
