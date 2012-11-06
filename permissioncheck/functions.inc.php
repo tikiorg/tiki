@@ -57,17 +57,17 @@ function check_file_write($filename,$filecontent)
 function color_classes_perm_asc($filename,&$perms_asc,&$css_class_writable)
 {
 	if ( is_writable($filename) ) {
-		$perms_asc = str_replace('WPERM','writeyes',$perms_asc);
+		$perms_asc = str_replace('WPERM', 'writeyes', $perms_asc);
 		$css_class_writable = 'writeyes';
 	} else {
-		$perms_asc = str_replace('WPERM','writeno',$perms_asc);
+		$perms_asc = str_replace('WPERM', 'writeno', $perms_asc);
 		$css_class_writable = 'writeno';
 	}
 	$css_class_writable = 'noclass';
 	if ( is_readable($filename) ) {
-		$perms_asc = str_replace('RPERM','readyes',$perms_asc);
+		$perms_asc = str_replace('RPERM', 'readyes', $perms_asc);
 	} else {
-		$perms_asc = str_replace('RPERM','readno',$perms_asc);
+		$perms_asc = str_replace('RPERM', 'readno', $perms_asc);
 	}
 }
 
@@ -210,8 +210,8 @@ function prepare_htaccess_password_protection($filename)
 		$my_document_root_path = $_SERVER['DOCUMENT_ROOT'];
 		$my_html_path = dirname($_SERVER['PHP_SELF']);
 		fwrite($fileout, 'AuthUserFile ');
-		fwrite($fileout, $my_document_root_path );
-		fwrite($fileout, $my_html_path );
+		fwrite($fileout, $my_document_root_path);
+		fwrite($fileout, $my_html_path);
 		fwrite($fileout, '/' . $my_htpasswd . "\n");
 	// early version - hardcoded output - intended to be read from template
 		fwrite($fileout, 'AuthName "permissioncheck password protection"' . "\n");
