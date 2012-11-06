@@ -6,7 +6,7 @@
 // $Id$
 
 /**
- * Update language.php files
+ * Update lang/xx/language.php files
  * 
  * Examples:
  * 		- http://localhost/pathToTiki/get_strings.php -> update all language.php files
@@ -24,6 +24,7 @@
  *
  *
  * If you want to know the translation progression for your language, just visit : http://i18n.tiki.org/status
+ * which is made with http://tikiwiki.svn.sourceforge.net/viewvc/tikiwiki/trunk/doc/devtools/get_translation_percentage.php?view=markup
  *
  */
 
