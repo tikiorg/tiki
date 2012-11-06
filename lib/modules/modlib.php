@@ -792,7 +792,7 @@ class ModLib extends TikiLib
 				),
 				'notitle' => array(
 					'name' => tra('No Title'),
-					'description' => 'y|n '.tra('Show module title'),
+					'description' => 'y|n '.tra('Hide module title'),
 					'filter' => 'alpha',
 					'section' => 'appearance',
 				),
