@@ -7,15 +7,19 @@
 
 class JisonParser_Wiki_AutoLink
 {
+	public $parser;
+
 	private $icon = '';
 	private $attr = '';
 	private $rules = array(
 
 	);
 
-	function __construct()
+	function __construct(&$parser)
 	{
 		global $smarty, $prefs;
+
+		$this->parser = &$parser;
 
 		if ($prefs['popupLinks'] == 'y')
 			$this->attr .= 'target="_blank" ';
@@ -28,7 +32,7 @@ class JisonParser_Wiki_AutoLink
 		}
 	}
 
-	public function parse(&$text)
+	public function parse(&$text) //TODO: needs to be handled with wiki tag creator
 	{
 		global $tikilib, $prefs;
 
