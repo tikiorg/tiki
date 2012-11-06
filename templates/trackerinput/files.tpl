@@ -255,7 +255,7 @@ window.handleFinderFile = function (file, elfinder) {
 	}
 	$.ajax({
 		type: 'GET',
-		url: $.service('file', 'finder'),
+		url: $.service('file_finder', 'finder'),
 		dataType: 'json',
 		data: {
 			cmd: "tikiFileFromHash",
