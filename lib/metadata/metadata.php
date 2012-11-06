@@ -18,7 +18,8 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
 class FileMetadata
 {
 	var $currname = null;		//working file path used to access file, may not be the same as embedded in file metadata
-	var $content = null;		//file content
+	var $content = null;		//file content. Set private to avoid having clients using metadata to access the file content
+	var $filesize = 0;			//file size in bytes
 	var $size = null;			//size of file
 	var $width = null;			//width of image
 	var $height = null;			//size of image
@@ -48,16 +49,21 @@ class FileMetadata
 				$this->error = tra('The file is empty');
 			} else {
 				$this->content = $file;
+				$this->filesize = function_exists('mb_strlen') ? mb_strlen($this->content, '8bit') : strlen($this->content);
 				$this->currname = $temppath;
 			}
 		} else {
 			//when $file is a path
 			if (is_readable($file)) {
 				$this->currname = $file;
-				$this->content = file_get_contents($file);
+				
+				// Do not load the file content. The size may be excessive, e.g. for video images
+				//	The filesize can be determined directly
+				$this->content = null; // file_get_contents($file);
+				$this->filesize = @filesize($file);				
 				$temppath = $file;
 				$leavelink = true;
-				if (empty($this->content)) {
+				if ($this->filesize <= 0) {
 					$this->error = tra('The file is empty');
 				}
 			//if not readable, see if it's an external file
@@ -71,6 +77,7 @@ class FileMetadata
 				} else {
 					$this->currname = $file;
 					$this->content = $externalinfo['data'];
+					$this->filesize = function_exists('mb_strlen') ? mb_strlen($this->content, '8bit') : strlen($this->content);
 					//set type here for external files
 					$this->type = $externalinfo['type'];
 				}
@@ -80,7 +87,8 @@ class FileMetadata
 			}
 		}
 		
-		$this->size = function_exists('mb_strlen') ? mb_strlen($this->content, '8bit') : strlen($this->content);
+		$this->basicraw['size'] = $this->filesize;
+		
 		if (class_exists('finfo') && is_readable($temppath)) {
 			$finfo = new finfo(FILEINFO_MIME);
 			$type_charset = $finfo->file($temppath);
