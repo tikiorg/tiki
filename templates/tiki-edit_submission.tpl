@@ -290,7 +290,7 @@
 	<div align="center">
 		{if $prefs.feature_antibot eq 'y'}<br /><div align="center">{include file='antibot.tpl' antibot_table='y'}</div><br />{/if}
 		<input type="submit" class="wikiaction" name="preview" value="{tr}Preview{/tr}" onclick="needToConfirm=false;" />
-		<input type="submit" class="wikiaction" name="submit" value="{tr}Submit Article{/tr}" onclick="needToConfirm=false;" />
+		<input type="submit" class="wikiaction" name="submitarticle" value="{tr}Submit Article{/tr}" onclick="needToConfirm=false;" />
 		{if $tiki_p_autoapprove_submission eq 'y'}
 			<input type="submit" class="wikiaction" name="save" value="{tr}Auto-Approve Article{/tr}" onclick="needToConfirm=false;" />
 		{/if}

@@ -43,7 +43,11 @@
 				<a href="tiki-admingroups.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'groupDesc_desc'}groupDesc_asc{else}groupDesc_desc{/if}">{tr}Description{/tr}</a>
 			</th>
 			<th>{tr}Inherits Permissions from{/tr}</th>
-			<th>{tr}Homepage{/tr}</th>			
+
+			{if $prefs.useGroupHome eq 'y'}
+			<th>{tr}Homepage{/tr}</th>
+			{/if}			
+
 			<th>{tr}User Choice{/tr}</th>
 			<th>{tr}Permissions{/tr}</th>
 			<th style="width: 20px;">&nbsp;</th>
@@ -69,9 +73,13 @@
 						<br />
 					{/section}
 				</td>
+
+				{if $prefs.useGroupHome eq 'y'}
 				<td class="text">
 					<a class="link" href="tiki-index.php?page={$users[user].groupHome|escape:"url"}" title="{tr}Group Homepage{/tr}">{tr}{$users[user].groupHome}{/tr}</a>
 				</td>
+				{/if}
+
 				<td class="text">{tr}{$users[user].userChoice}{/tr}</td>
 				<td class="text">
 					<a class="link" href="tiki-objectpermissions.php?group={$users[user].groupName|escape:"url"}" title="{tr}Permissions{/tr}">{icon _id='key' alt="{tr}Permissions{/tr}"} {$users[user].permcant}</a>
@@ -283,6 +291,7 @@
 				</tr>
 			{/if}
 
+		{if $groupname neq 'Anonymous' and $groupname neq 'Registered' and $groupname neq 'Admins'}
 			<tr>
 				<td>{tr}User can assign to the group himself{/tr}</td>
 				<td><input type="checkbox" name="userChoice"{if $userChoice eq 'y'} checked="checked"{/if}/></td>
@@ -308,8 +317,10 @@
 				<td>{tr}Users are automatically assigned at registration in the group if their emails match the pattern{/tr}</td>
 				<td><input type="text" size="40" name="emailPattern" value="{$group_info.emailPattern|escape}" /><br />{tr}Example: {/tr}/@tw\.org$/ <br />{tr}Example:{/tr} /@(tw.org$)|(tw\.com$)/</td>
 			</tr>
+		{/if}
 
 			{if $group ne ''}
+				{if $groupname neq 'Anonymous'}
 				<tr>
 					<td>
 						{tr}Assign group <em>management</em> permissions:{/tr}
@@ -320,6 +331,8 @@
 						{/self_link}
 					</td>
 				</tr>
+				{/if}
+
 				<tr>
 					<td>
 						&nbsp;
@@ -377,12 +390,16 @@
 					<td class="date">{$member.created|tiki_short_datetime}</td>
 					<td class="date">{if !empty($member.expire)}{$member.expire|tiki_short_datetime}{/if}</td>
 					<td class="action">
+						{if $groupname neq 'Registered'}
 						<a href="tiki-adminusers.php?user={$member.login|escape:"url"}&amp;action=removegroup&amp;group={$groupname|escape:url}" class="link" title="{tr}Remove from Group{/tr}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
+						{/if}
 						<a href="tiki-adminusers.php?user={$member.userId|escape:"url"}&amp;cookietab=2{if $prefs.feature_tabs ne 'y'}#tab2{/if}" class="link" title="{tr}Edit{/tr}">{icon _id='page_edit'}</a>
 					</td>
 					</tr>
 				{/foreach}
 		</table>
+
+		{if $groupname neq 'Registered'}
 		<label>{tr}Perform action with checked:{/tr}
 			<select name="submit_mult_members">
 				<option value="" />
@@ -391,6 +408,8 @@
 		</label>
 		<input type="submit" name="unassign_members" value="{tr}OK{/tr}" />
 		</form>
+		{/if}
+
 		{pagination_links cant=$membersCount step=$prefs.maxRecords offset=$membersOffset offset_arg='membersOffset'}{/pagination_links}
 
 		<div class="box">{$membersCount} {tr}users in group{/tr} {$groupname|escape}</div>

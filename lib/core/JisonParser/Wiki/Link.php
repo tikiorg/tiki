@@ -3,7 +3,7 @@
 //
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: Link.php 43612 2012-10-23 14:07:37Z robertplummer $
+// $Id$
 
 class JisonParser_Wiki_Link
 {

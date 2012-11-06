@@ -17,6 +17,8 @@ $access->check_feature('feature_submissions');
 $access->check_permission('tiki_p_submit_article');
 $errors = array();
 
+$auto_query_args = array('subId');
+
 if ($tiki_p_admin != 'y') {
 	if ($tiki_p_use_HTML != 'y') {
 		$_REQUEST['allowhtml'] = 'off';
@@ -148,7 +150,7 @@ if (isset($_REQUEST['allowhtml'])) {
 	}
 }
 
-if ((isset($_REQUEST["save"]) || isset($_REQUEST["submit"]))
+if ((isset($_REQUEST["save"]) || isset($_REQUEST["submitarticle"]))
 			&& empty($user)
 			&& $prefs['feature_antibot'] == 'y'
 			&& !$captchalib->validate()
@@ -319,7 +321,7 @@ if (isset($_REQUEST['preview']) || !empty($errors)) {
 }
 
 // Pro
-if ((isset($_REQUEST['save']) || isset($_REQUEST['submit'])) && empty($errors)) {
+if ((isset($_REQUEST['save']) || isset($_REQUEST['submitarticle'])) && empty($errors)) {
 	check_ticket('edit-submission');
 	include_once ('lib/imagegals/imagegallib.php');
 

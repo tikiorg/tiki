@@ -164,6 +164,7 @@ jqueryTiki.autocomplete = false;
 jqueryTiki.superfish = false;
 jqueryTiki.colorbox = false;
 jqueryTiki.tablesorter = false;
+jqueryTiki.useInlineComment = false;	// Inline comments do not seem to work, and an option is missing. Disable for now.
 ';
 		if ($prefs['feature_ajax'] !== 'y') {
 			$headerlib->add_js_config('var mobile_ajaxEnabled = false;');

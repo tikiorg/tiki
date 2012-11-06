@@ -3,18 +3,19 @@
 //
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: Controller.php 43091 2012-09-22 16:05:03Z changi67 $
+// $Id$
 
 /**
  * Started life as copy of elFinderVolumeMySQL.class.php
  * Initial convertion to work with Tiki filegals for Tiki 10
  *
- * $Id: $
+ * $Id$
  *
  **/
 
-class elFinderVolumeTikiFiles extends elFinderVolumeDriver {
-	
+class elFinderVolumeTikiFiles extends elFinderVolumeDriver
+{
+
 	/**
 	 * Driver id
 	 * Must be started from letter and contains [a-z0-9]
@@ -31,7 +32,7 @@ class elFinderVolumeTikiFiles extends elFinderVolumeDriver {
 	 * @var string
 	 **/
 	protected $tmpPath = '';
-	
+
 	/**
 	 * Last db error message
 	 *
@@ -48,7 +49,8 @@ class elFinderVolumeTikiFiles extends elFinderVolumeDriver {
 	 * @return void
 	 * @author Dmitry (dio) Levashov
 	 **/
-	public function __construct() {
+	public function __construct()
+	{
 		global $tikidomainslash, $prefs;
 
 		$opts = array(
@@ -62,11 +64,11 @@ class elFinderVolumeTikiFiles extends elFinderVolumeDriver {
 
 		$this->filegallib = TikiLib::lib('filegal');
 	}
-	
+
 	/*********************************************************************/
 	/*                        INIT AND CONFIGURE                         */
 	/*********************************************************************/
-	
+
 	/**
 	 * Prepare driver before mount volume.
 	 * Connect to db, check required tables and fetch root path
@@ -74,7 +76,8 @@ class elFinderVolumeTikiFiles extends elFinderVolumeDriver {
 	 * @return bool
 	 * @author Dmitry (dio) Levashov
 	 **/
-	protected function init() {
+	protected function init()
+	{
 
 		return true;
 	}
@@ -87,7 +90,8 @@ class elFinderVolumeTikiFiles extends elFinderVolumeDriver {
 	 * @return void
 	 * @author Dmitry (dio) Levashov
 	 **/
-	protected function configure() {
+	protected function configure()
+	{
 		parent::configure();
 
 		if (($tmp = $this->options['tmpPath'])) {
@@ -96,34 +100,36 @@ class elFinderVolumeTikiFiles extends elFinderVolumeDriver {
 					@chmod($tmp, $this->options['tmbPathMode']);
 				}
 			}
-			
+
 			$this->tmpPath = is_dir($tmp) && is_writable($tmp) ? $tmp : false;
 		}
-		
+
 		if (!$this->tmpPath && $this->tmbPath && $this->tmbPathWritable) {
 			$this->tmpPath = $this->tmbPath;
 		}
 
 		$this->mimeDetect = 'internal';
 	}
-	
+
 	/**
 	 * Close connection
 	 *
 	 * @return void
 	 * @author Dmitry (dio) Levashov
 	 **/
-	public function umount() {
+	public function umount()
+	{
 
 	}
-	
+
 	/**
 	 * Return debug info for client
 	 *
 	 * @return array
 	 * @author Dmitry (dio) Levashov
 	 **/
-	public function debug() {
+	public function debug()
+	{
 		$debug = parent::debug();
 		if ($this->dbError) {
 			$debug['dbError'] = $this->dbError;
@@ -140,7 +146,8 @@ class elFinderVolumeTikiFiles extends elFinderVolumeDriver {
 	 * @return bool
 	 * @author Dmitry (dio) Levashov
 	 **/
-	protected function make($path, $name, $mime) {
+	protected function make($path, $name, $mime)
+	{
 		return false;
 	}
 
@@ -151,7 +158,8 @@ class elFinderVolumeTikiFiles extends elFinderVolumeDriver {
 	 * @return string
 	 * @author Dmitry (dio) Levashov
 	 **/
-	protected function tmpname($path) {
+	protected function tmpname($path)
+	{
 		return $this->tmpPath.DIRECTORY_SEPARATOR.md5($path);
 	}
 
@@ -164,23 +172,25 @@ class elFinderVolumeTikiFiles extends elFinderVolumeDriver {
 	 * @param  bool     $crop    crop image
 	 * @return array|false
 	 **/
-	public function resize($hash, $width, $height, $x, $y, $mode = 'resize', $bg = '', $degree = 0) {
+	public function resize($hash, $width, $height, $x, $y, $mode = 'resize', $bg = '', $degree = 0)
+	{
 
    		return false;
 	}
-	
+
 
 	/*********************************************************************/
 	/*                               FS API                              */
 	/*********************************************************************/
-	
+
 	/**
 	 * Cache dir contents
 	 *
 	 * @param  string  $path  dir path
 	 * @return
 	 **/
-	protected function cacheDir($path) {
+	protected function cacheDir($path)
+	{
 		$this->dirsCache[$path] = array();
 
 		$res = $this->filegallib->get_files(0, -1, 'name_desc', '', str_replace('d_', '', $path), false, true);
@@ -190,13 +200,13 @@ class elFinderVolumeTikiFiles extends elFinderVolumeDriver {
 				// debug($row);
 				list($r, $id) = $this->processTikiFile($row);
 
-				
+
 				if (($stat = $this->updateCache($id, $r)) && empty($stat['hidden'])) {
 					$this->dirsCache[$path][] = $id;
 				}
 			}
 		}
-		
+
 		return $this->dirsCache[$path];
 	}
 
@@ -247,7 +257,8 @@ class elFinderVolumeTikiFiles extends elFinderVolumeDriver {
 	 * @return array
 	 * @author Dmitry (dio) Levashov
 	 **/
-	protected function getParents($path) {
+	protected function getParents($path)
+	{
 		$parents = array();
 
 		while ($path) {
@@ -256,7 +267,7 @@ class elFinderVolumeTikiFiles extends elFinderVolumeDriver {
 				$path = isset($file['phash']) ? $this->decode($file['phash']) : false;
 			}
 		}
-		
+
 		if (count($parents)) {
 			array_pop($parents);
 		}
@@ -270,7 +281,8 @@ class elFinderVolumeTikiFiles extends elFinderVolumeDriver {
 	 * @return string
 	 * @author Troex Nevelin
 	 **/
-	protected function loadFilePath($path) {
+	protected function loadFilePath($path)
+	{
 		$realPath = realpath($path);
 		if (DIRECTORY_SEPARATOR == '\\') { // windows
 			$realPath = str_replace('\\', '\\\\', $realPath);
@@ -279,7 +291,7 @@ class elFinderVolumeTikiFiles extends elFinderVolumeDriver {
 	}
 
 	/*********************** paths/urls *************************/
-	
+
 	/**
 	 * Return parent directory path
 	 *
@@ -287,7 +299,8 @@ class elFinderVolumeTikiFiles extends elFinderVolumeDriver {
 	 * @return string
 	 * @author Dmitry (dio) Levashov
 	 **/
-	protected function _dirname($path) {
+	protected function _dirname($path)
+	{
 		return ($stat = $this->stat($path)) ? ($stat['phash'] ? $this->decode($stat['phash']) : $this->root) : false;
 	}
 
@@ -298,7 +311,8 @@ class elFinderVolumeTikiFiles extends elFinderVolumeDriver {
 	 * @return string
 	 * @author Dmitry (dio) Levashov
 	 **/
-	protected function _basename($path) {
+	protected function _basename($path)
+	{
 		return ($stat = $this->stat($path)) ? $stat['name'] : false;
 	}
 
@@ -310,11 +324,12 @@ class elFinderVolumeTikiFiles extends elFinderVolumeDriver {
 	 * @return string
 	 * @author Dmitry (dio) Levashov
 	 **/
-	protected function _joinPath($dir, $name) {
+	protected function _joinPath($dir, $name)
+	{
 
 		return -1;
 	}
-	
+
 	/**
 	 * Return normalized path, this works the same as os.path.normpath() in Python
 	 *
@@ -322,10 +337,11 @@ class elFinderVolumeTikiFiles extends elFinderVolumeDriver {
 	 * @return string
 	 * @author Troex Nevelin
 	 **/
-	protected function _normpath($path) {
+	protected function _normpath($path)
+	{
 		return $path;
 	}
-	
+
 	/**
 	 * Return file path related to root dir
 	 *
@@ -333,10 +349,11 @@ class elFinderVolumeTikiFiles extends elFinderVolumeDriver {
 	 * @return string
 	 * @author Dmitry (dio) Levashov
 	 **/
-	protected function _relpath($path) {
+	protected function _relpath($path)
+	{
 		return $path;
 	}
-	
+
 	/**
 	 * Convert path related to root dir into real path
 	 *
@@ -344,10 +361,11 @@ class elFinderVolumeTikiFiles extends elFinderVolumeDriver {
 	 * @return string
 	 * @author Dmitry (dio) Levashov
 	 **/
-	protected function _abspath($path) {
+	protected function _abspath($path)
+	{
 		return $path;
 	}
-	
+
 	/**
 	 * Return fake path started from root dir
 	 *
@@ -355,11 +373,12 @@ class elFinderVolumeTikiFiles extends elFinderVolumeDriver {
 	 * @return string
 	 * @author Dmitry (dio) Levashov
 	 **/
-	protected function _path($path) {
+	protected function _path($path)
+	{
 		if (($file = $this->stat($path)) == false) {
 			return '';
 		}
-		
+
 		$parentsIds = $this->getParents($path);
 		$path = '';
 		foreach ($parentsIds as $id) {
@@ -368,7 +387,7 @@ class elFinderVolumeTikiFiles extends elFinderVolumeDriver {
 		}
 		return $path.$file['name'];
 	}
-	
+
 	/**
 	 * Return true if $path is children of $parent
 	 *
@@ -377,12 +396,13 @@ class elFinderVolumeTikiFiles extends elFinderVolumeDriver {
 	 * @return bool
 	 * @author Dmitry (dio) Levashov
 	 **/
-	protected function _inpath($path, $parent) {
+	protected function _inpath($path, $parent)
+	{
 		return $path == $parent
 			? true
 			: in_array($parent, $this->getParents($path));
 	}
-	
+
 	/***************** file stat ********************/
 	/**
 	 * Return stat for given path.
@@ -399,11 +419,12 @@ class elFinderVolumeTikiFiles extends elFinderVolumeDriver {
 	 *
 	 * If file does not exists - returns empty array or false.
 	 *
-	 * @param  string  $path    file path 
+	 * @param  string  $path    file path
 	 * @return array|false
 	 * @author Dmitry (dio) Levashov
 	 **/
-	protected function _stat($path) {
+	protected function _stat($path)
+	{
 
 		$ar = explode('_', $path);
 		if (count($ar) === 2) {
@@ -418,17 +439,17 @@ class elFinderVolumeTikiFiles extends elFinderVolumeDriver {
 			$res = $this->filegallib->get_file($path);
 		}
 
-		
+
 		if ($res) {
 			$res['isgal'] = $isgal;
 			list($stat, $id) = $this->processTikiFile($res);
 
 			return $stat;
-			
+
 		}
 		return array();
 	}
-	
+
 	/**
 	 * Return true if path is dir and has at least one childs directory
 	 *
@@ -436,10 +457,11 @@ class elFinderVolumeTikiFiles extends elFinderVolumeDriver {
 	 * @return bool
 	 * @author Dmitry (dio) Levashov
 	 **/
-	protected function _subdirs($path) {
+	protected function _subdirs($path)
+	{
 		return ($stat = $this->stat($path)) && isset($stat['dirs']) ? $stat['dirs'] : false;
 	}
-	
+
 	/**
 	 * Return object width and height
 	 * Usualy used for images, but can be realize for video etc...
@@ -449,12 +471,13 @@ class elFinderVolumeTikiFiles extends elFinderVolumeDriver {
 	 * @return string
 	 * @author Dmitry (dio) Levashov
 	 **/
-	protected function _dimensions($path, $mime) {
+	protected function _dimensions($path, $mime)
+	{
 		return ($stat = $this->stat($path)) && isset($stat['width']) && isset($stat['height']) ? $stat['width'].'x'.$stat['height'] : '';
 	}
-	
+
 	/******************** file/dir content *********************/
-		
+
 	/**
 	 * Return files list in directory.
 	 *
@@ -462,12 +485,13 @@ class elFinderVolumeTikiFiles extends elFinderVolumeDriver {
 	 * @return array
 	 * @author Dmitry (dio) Levashov
 	 **/
-	protected function _scandir($path) {
+	protected function _scandir($path)
+	{
 		return isset($this->dirsCache[$path])
 			? $this->dirsCache[$path]
 			: $this->cacheDir($path);
 	}
-		
+
 	/**
 	 * Open file and return file pointer
 	 *
@@ -476,7 +500,8 @@ class elFinderVolumeTikiFiles extends elFinderVolumeDriver {
 	 * @return resource|false
 	 * @author Dmitry (dio) Levashov
 	 **/
-	protected function _fopen($path, $mode='rb') {
+	protected function _fopen($path, $mode='rb')
+	{
 		global $prefs;
 
 		$fp = $this->tmbPath
@@ -500,10 +525,10 @@ class elFinderVolumeTikiFiles extends elFinderVolumeDriver {
 				$this->_fclose($fp, $path);
 			}
 		}
-		
+
 		return false;
 	}
-	
+
 	/**
 	 * Close opened file
 	 *
@@ -511,15 +536,16 @@ class elFinderVolumeTikiFiles extends elFinderVolumeDriver {
 	 * @return bool
 	 * @author Dmitry (dio) Levashov
 	 **/
-	protected function _fclose($fp, $path='') {
+	protected function _fclose($fp, $path='')
+	{
 		@fclose($fp);
 		if ($path) {
 			@unlink($this->tmpname($path));
 		}
 	}
-	
+
 	/********************  file/dir manipulations *************************/
-	
+
 	/**
 	 * Create dir and return created dir path or false on failed
 	 *
@@ -528,7 +554,8 @@ class elFinderVolumeTikiFiles extends elFinderVolumeDriver {
 	 * @return string|bool
 	 * @author Dmitry (dio) Levashov
 	 **/
-	protected function _mkdir($path, $name) {
+	protected function _mkdir($path, $name)
+	{
 	}
 
 	/**
@@ -539,7 +566,8 @@ class elFinderVolumeTikiFiles extends elFinderVolumeDriver {
 	 * @return string|bool
 	 * @author Dmitry (dio) Levashov
 	 **/
-	protected function _mkfile($path, $name) {
+	protected function _mkfile($path, $name)
+	{
 	}
 
 	/**
@@ -550,7 +578,8 @@ class elFinderVolumeTikiFiles extends elFinderVolumeDriver {
 	 * @return bool
 	 * @author Dmitry (dio) Levashov
 	 **/
-	protected function _symlink($target, $path, $name) {
+	protected function _symlink($target, $path, $name)
+	{
 		return false;
 	}
 
@@ -562,7 +591,8 @@ class elFinderVolumeTikiFiles extends elFinderVolumeDriver {
 	 * @param  string  $name       new file name
 	 * @return bool
 	 **/
-	protected function _copy($source, $targetDir, $name) {
+	protected function _copy($source, $targetDir, $name)
+	{
 		$this->clearcache();
 	}
 
@@ -575,7 +605,8 @@ class elFinderVolumeTikiFiles extends elFinderVolumeDriver {
 	 * @param  string  $name    file name
 	 * @return string|bool
 	 **/
-	protected function _move($source, $targetDir, $name) {
+	protected function _move($source, $targetDir, $name)
+	{
 	}
 
 	/**
@@ -584,7 +615,8 @@ class elFinderVolumeTikiFiles extends elFinderVolumeDriver {
 	 * @param  string  $path  file path
 	 * @return bool
 	 **/
-	protected function _unlink($path) {
+	protected function _unlink($path)
+	{
 	}
 
 	/**
@@ -593,7 +625,8 @@ class elFinderVolumeTikiFiles extends elFinderVolumeDriver {
 	 * @param  string  $path  dir path
 	 * @return bool
 	 **/
-	protected function _rmdir($path) {
+	protected function _rmdir($path)
+	{
 	}
 
 	/**
@@ -601,7 +634,8 @@ class elFinderVolumeTikiFiles extends elFinderVolumeDriver {
 	 *
 	 * @return void
 	 **/
-	protected function _setContent($path, $fp) {
+	protected function _setContent($path, $fp)
+	{
 		rewind($fp);
 		$fstat = fstat($fp);
 		$size = $fstat['size'];
@@ -618,7 +652,8 @@ class elFinderVolumeTikiFiles extends elFinderVolumeDriver {
 	 * @param  string    $name file name
 	 * @return bool|string
 	 **/
-	protected function _save($fp, $dir, $name, $mime, $w, $h) {
+	protected function _save($fp, $dir, $name, $mime, $w, $h)
+	{
 		$this->clearcache();
 
 		$id = $this->_joinPath($dir, $name);
@@ -650,7 +685,8 @@ class elFinderVolumeTikiFiles extends elFinderVolumeDriver {
 	 * @return string|false
 	 * @author Dmitry (dio) Levashov
 	 **/
-	protected function _getContents($path) {
+	protected function _getContents($path)
+	{
 	}
 
 	/**
@@ -661,7 +697,8 @@ class elFinderVolumeTikiFiles extends elFinderVolumeDriver {
 	 * @return bool
 	 * @author Dmitry (dio) Levashov
 	 **/
-	protected function _filePutContents($path, $content) {
+	protected function _filePutContents($path, $content)
+	{
 	}
 
 	/**
@@ -669,7 +706,8 @@ class elFinderVolumeTikiFiles extends elFinderVolumeDriver {
 	 *
 	 * @return void
 	 **/
-	protected function _checkArchivers() {
+	protected function _checkArchivers()
+	{
 		return;
 	}
 
@@ -682,7 +720,8 @@ class elFinderVolumeTikiFiles extends elFinderVolumeDriver {
 	 * @author Dmitry (dio) Levashov
 	 * @author Alexey Sukhotin
 	 **/
-	protected function _unpack($path, $arc) {
+	protected function _unpack($path, $arc)
+	{
 		return;
 	}
 
@@ -693,7 +732,8 @@ class elFinderVolumeTikiFiles extends elFinderVolumeDriver {
 	 * @return bool
 	 * @author Dmitry (dio) Levashov
 	 **/
-	protected function _findSymlinks($path) {
+	protected function _findSymlinks($path)
+	{
 		return false;
 	}
 
@@ -706,7 +746,8 @@ class elFinderVolumeTikiFiles extends elFinderVolumeDriver {
 	 * @author Dmitry (dio) Levashov,
 	 * @author Alexey Sukhotin
 	 **/
-	protected function _extract($path, $arc) {
+	protected function _extract($path, $arc)
+	{
 		return false;
 	}
 
@@ -721,8 +762,9 @@ class elFinderVolumeTikiFiles extends elFinderVolumeDriver {
 	 * @author Dmitry (dio) Levashov,
 	 * @author Alexey Sukhotin
 	 **/
-	protected function _archive($dir, $files, $name, $arc) {
+	protected function _archive($dir, $files, $name, $arc)
+	{
 		return false;
 	}
-	
-} // END class 
+
+} // END class

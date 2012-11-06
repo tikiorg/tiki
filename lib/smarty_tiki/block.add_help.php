@@ -43,7 +43,6 @@ function smarty_block_add_help($params, $content, $smarty, &$repeat)
 	$help_sections[$params['id']] = $section;
 
 	if (!isset($params['show']) or $params['show'] == 'y') {
-		global $headerlib;
 		$smarty->loadPlugin('smarty_block_self_link');
 		$smarty->loadPlugin('smarty_function_icon');
 		$self_link_params['_alt'] = tra('Click for Help');
@@ -54,7 +53,13 @@ function smarty_block_add_help($params, $content, $smarty, &$repeat)
 
 		$self_link_params['_onclick'] = '$.openEditHelp('.(count($help_sections)-1).');return false;';
 
-		return smarty_block_self_link($self_link_params, $section['title'].'&nbsp;'.smarty_function_icon(array('_id'=>'help'), $smarty), $smarty);
+		$link = '';
+		if (empty($params['icononly']) || $params['icononly'] === 'n') {
+			$link = $section['title'].'&nbsp;';
+		}
+		$link .= smarty_function_icon(array('_id' => 'help'), $smarty);
+
+		return smarty_block_self_link($self_link_params, $link, $smarty);
 	} else {
 		return ;
 	}
