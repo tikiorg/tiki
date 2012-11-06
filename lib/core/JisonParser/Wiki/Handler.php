@@ -71,9 +71,6 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	/* dynamic var parser */
 	public $dynamicVar;
 
-	/* html character */
-	public $htmlCharacter;
-
 	/* special character */
 	public $specialCharacter;
 
@@ -219,10 +216,6 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 			$this->Parser->dynamicVar = new JisonParser_Wiki_DynamicVariables($this->Parser);
 		}
 
-		if (isset($this->Parser->htmlCharacter) == false) {
-			$this->Parser->htmlCharacter = new JisonParser_Wiki_HtmlCharacter($this->Parser);
-		}
-
 		if (isset($this->specialCharacter) == false) {
 			$this->specialCharacter = new JisonParser_Wiki_SpecialChar($this->Parser);
 		}
@@ -342,7 +335,6 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 			ini_set("pcre.recursion_limit", "524");
 
 			$this->Parser->list->reset();
-			//$this->Parser->htmlCharacter->parse($input);
 		}
 
 		$this->totalPreParseLineCount = substr_count($input, "\n");
@@ -1026,7 +1018,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	{
 		$this->line++;
 		$this->skipBr = true;
-		return $this->createWikiTag("hr", "hr", "", array(), "inline");
+		return $this->createWikiTag("horizontalRow", "hr", "", array(), "inline");
 	}
 
 	/**
@@ -1099,7 +1091,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 			$content = substr($content, 1);
 		}
 
-		return $this->createWikiTag("unline", "span", $content);
+		return $this->createWikiTag("unlink", "span", $content);
 	}
 
 	/**
@@ -1179,7 +1171,13 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		return $this->createWikiTag("doubleDash", "span", " &mdash; ");
 	}
 
-
+	/**
+	 * syntax handler: characters
+	 *
+	 * @access  public
+	 * @param   $content char handler, upper or lower case
+	 * @return  string output of char
+	 */
 	function char($content)
 	{
 		if ($this->isContent() || $this->Parser->parseDepth > 1) return $content;
