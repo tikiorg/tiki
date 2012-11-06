@@ -142,8 +142,10 @@ class JisonParser_Wiki_Link
 			$params['class'] .= ' external';
 			if ($prefs['feature_wiki_ext_icon'] == 'y' && !$this->suppressIcons) {
 				include_once('lib/smarty_tiki/function.icon.php');
-				$ext_icon = $this->parser->createWikiHelper("linkExternal", "span",
-					smarty_function_icon(array('_id'=>'external_link', 'alt'=>tra('(external link)'), '_class' => 'externallink', '_extension' => 'gif', '_defaultdir' => 'img/icons', 'width' => 15, 'height' => 14), $smarty));
+				$ext_icon = $this->parser->createWikiHelper(
+					"linkExternal", "span",
+					smarty_function_icon(array('_id'=>'external_link', 'alt'=>tra('(external link)'), '_class' => 'externallink', '_extension' => 'gif', '_defaultdir' => 'img/icons', 'width' => 15, 'height' => 14), $smarty)
+				);
 			}
 			$params['rel'] ='external';
 			if ($prefs['feature_wiki_ext_rel_nofollow'] == 'y') {
@@ -152,11 +154,14 @@ class JisonParser_Wiki_Link
 		}
 
 		if ($prefs['cachepages'] == 'y' && $tikilib->is_cached($this->page)) {
-			$cached = $this->parser->createWikiHelper("linkExternal", "a", "(" . tra("cache") . ")", array(
-				"class"=>"wikicache",
-				"target"=>"_blank",
-				"href"=>"tiki-view_cache.php?url=".urlencode($this->pageLink)
-			));
+			$cached = $this->parser->createWikiHelper(
+				"linkExternal", "a", "(" . tra("cache") . ")",
+				array(
+					"class"=>"wikicache",
+					"target"=>"_blank",
+					"href"=>"tiki-view_cache.php?url=".urlencode($this->pageLink)
+				)
+			);
 		}
 
 		return $this->parser->createWikiTag("linkExternal", "a", $this->description, $params) . $ext_icon . $cached;
@@ -189,10 +194,13 @@ class JisonParser_Wiki_Link
 	{
 		if (isset($this->externals[$this->wikiExternal])) {
 			$page = str_replace('$page', rawurlencode($this->page), $this->externals[$this->wikiExternal]);
-			return $this->parser->createWikiTag("link", "a", $this->description, array(
-				"class" => 'wiki ext_page ' . $this->wikiExternal,
-				"href" => $page
-			));
+			return $this->parser->createWikiTag(
+				"link", "a", $this->description,
+				array(
+					"class" => 'wiki ext_page ' . $this->wikiExternal,
+					"href" => $page
+				)
+			);
 		}
 	}
 
@@ -201,18 +209,24 @@ class JisonParser_Wiki_Link
 		global $wikilink;
 
 		if ($this->info) {
-			return $this->parser->createWikiTag("link", "a", $this->description, array(
-				"href" => TikiLib::lib('wiki')->sefurl(trim($this->page)),
-				"title" => $this->getTitle(),
-				"class" => 'wiki wiki_page',
-			));
+			return $this->parser->createWikiTag(
+				"link", "a", $this->description,
+				array(
+					"href" => TikiLib::lib('wiki')->sefurl(trim($this->page)),
+					"title" => $this->getTitle(),
+					"class" => 'wiki wiki_page',
+				)
+			);
 		} else {
 			return $this->parser->createWikiHelper("link", "span", $this->description).
-			$this->parser->createWikiHelper("link", "a", "?", array(
-				"href" => $url = 'tiki-editpage.php?page=' . urlencode($this->page) . (empty($this->language) ? '' : '&lang=' . urlencode($this->language)),
-				"title" => tra('Create page:') . ' ' . $this->page,
-				"class" => 'wiki wikinew',
-			));
+			$this->parser->createWikiHelper(
+				"link", "a", "?",
+				array(
+					"href" => $url = 'tiki-editpage.php?page=' . urlencode($this->page) . (empty($this->language) ? '' : '&lang=' . urlencode($this->language)),
+					"title" => tra('Create page:') . ' ' . $this->page,
+					"class" => 'wiki wikinew',
+				)
+			);
 		}
 	}
 
@@ -313,9 +327,12 @@ class JisonParser_Wiki_Link
 			if ($key === $last) {
 				$class .= ' last';
 			}
-			$out .= $this->parser->createWikiHelper("link", "span", $part, array(
-				"class"=>$class
-			));
+			$out .= $this->parser->createWikiHelper(
+				"link", "span", $part,
+				array(
+					"class"=>$class
+				)
+			);
 		}
 
 		return $out . $this->info['baseName'];

@@ -1,4 +1,10 @@
 <?php
+// (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
+//
+// All Rights Reserved. See copyright.txt for details and a complete list of authors.
+// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+// $Id$
+
 class JisonParser_Html_Handler extends JisonParser_Html
 {
 	private $parserDebug = true;
@@ -101,7 +107,7 @@ class JisonParser_Html_Handler extends JisonParser_Html
 
 			//list
 			case "listParent":
-				foreach($this->unStash("listParent") as $list) {
+				foreach ($this->unStash("listParent") as $list) {
 					$result .= $this->newLine() . $list;
 				}
 				break;
@@ -125,7 +131,7 @@ class JisonParser_Html_Handler extends JisonParser_Html
 			//definition list
 			case "listDefinitionParent":
 				$stash = $this->unStash("listDefinitionParent");
-				foreach($stash as $list) {
+				foreach ($stash as $list) {
 					$result .= $this->newLine() . ";" . $list;
 				}
 				break;
@@ -164,7 +170,7 @@ class JisonParser_Html_Handler extends JisonParser_Html
 				$result .= "||" . implode("\n", $stash) . "||";
 				break;
 			case "tableRow":
-				foreach($this->unStash('tableRow') as $row) {
+				foreach ($this->unStash('tableRow') as $row) {
 					$this->stash(implode("|", $row), "table");
 				}
 				break;
@@ -289,8 +295,8 @@ class JisonParser_Html_Handler extends JisonParser_Html
 			}
 
 			$dom->loadHtml("<object " . $params . " />");
-			foreach($dom->getElementsByTagName("object") as $node) {
-				foreach($node->attributes as $attribute) {
+			foreach ($dom->getElementsByTagName("object") as $node) {
+				foreach ($node->attributes as $attribute) {
 					$parsedParams[trim(strtolower($attribute->name))] = trim($attribute->value);
 				}
 			}
@@ -299,7 +305,7 @@ class JisonParser_Html_Handler extends JisonParser_Html
 		if (isset($parsedParams['style'])) {
 			$styles = explode(';', $parsedParams['style']);
 			$parsedParams['style'] = array();
-			foreach($styles as &$style) {
+			foreach ($styles as &$style) {
 				$parts = explode(':', $style);
 				if (isset($parts[0]) && isset($parts[1])) {
 					$parsedParams['style'][trim($parts[0])] = trim($parts[1]);
@@ -385,7 +391,8 @@ class JisonParser_Html_Handler extends JisonParser_Html
 		return (isset($params[$param]) && strstr($params[$param], $contains) !== false);
 	}
 
-	public function stackHtmlElement($tag) {
+	public function stackHtmlElement($tag)
+	{
 		$tag = $this->tag($tag);
 		$this->htmlElementStack[] = $tag;
 		if (!empty($tag['type'])) {

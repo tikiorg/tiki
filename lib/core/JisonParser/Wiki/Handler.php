@@ -432,7 +432,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 			if ($negotiator->ignored == true) {
 				return $executed;
 			} else {
-				$this->pluginEntries[$negotiator->key] = $this->parsePlugin( $executed );
+				$this->pluginEntries[$negotiator->key] = $this->parsePlugin($executed);
 				return $negotiator->key;
 			}
 		} else {
@@ -528,7 +528,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 			'linkStack' => true
 		);
 
-		foreach($skipTypes as $skipType) {
+		foreach ($skipTypes as $skipType) {
 			if (isset($types[$skipType])) {
 				unset($types[$skipType]);
 			}
@@ -540,8 +540,8 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		}
 
 		//second, if we are not in a plugin, check if we are in content, ie, non-parse-able wiki syntax
-		foreach($types as $type => $value) {
-			if ($this->$type == $value)	{
+		foreach ($types as $type => $value) {
+			if ($this->$type == $value) {
 				return true;
 			}
 		}
@@ -702,7 +702,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		}
 
 
-		return $this->Parser->dynamicVar->ui(substr($content, 2, 2),  $this->getOption('language'), true);
+		return $this->Parser->dynamicVar->ui(substr($content, 2, 2), $this->getOption('language'), true);
 	}
 
 	/**
@@ -720,8 +720,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 			return $content;
 		}
 
-
-		return $this->Parser->dynamicVar->ui(substr($content, 1, 1),  $this->getOption('language'));
+		return $this->Parser->dynamicVar->ui(substr($content, 1, 1), $this->getOption('language'));
 	}
 
 	/**
@@ -798,9 +797,14 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	 */
 	function center($content) //::content::
 	{
-		return $this->createWikiTag("center", "div", $content, array(
-			"style" => "text-align: center;"
-		));
+		return $this->createWikiTag(
+			"center",
+			"div",
+			$content,
+			array(
+				"style" => "text-align: center;"
+			)
+		);
 	}
 
 	/**
@@ -828,9 +832,12 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		$color = $text[0];
 		$content = $text[1];
 
-		return $this->createWikiTag("color", "span", $content, array(
-			"style" => "color:" . $color .';'
-		));
+		return $this->createWikiTag(
+			"color", "span", $content,
+			array(
+				"style" => "color:" . $color .';'
+			)
+		);
 	}
 
 	/**
@@ -855,9 +862,12 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	function l2r($content)
 	{
 		$content = substr($content, 5);
-		return $this->createWikiTag("l2r", "div", $content, array(
-			"dir" => "ltr"
-		));
+		return $this->createWikiTag(
+			"l2r", "div", $content,
+			array(
+				"dir" => "ltr"
+			)
+		);
 	}
 
 	/**
@@ -870,9 +880,12 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	function r2l($content)
 	{
 		$content = substr($content, 5);
-		return $this->createWikiTag("l2r", "div", $content, array(
-			"dir" => "rtl"
-		));
+		return $this->createWikiTag(
+			"l2r", "div", $content,
+			array(
+				"dir" => "rtl"
+			)
+		);
 	}
 
 	/**
@@ -933,23 +946,32 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 			$content = substr($content, 1);
 			$this->headerStack = true;
 			$expandingHeaderOpen =
-				$this->createWikiHelper("header", "a", "[+]", array(
-					"id" => "flipperflip" . $id,
-					"href" => "javascript:flipWithSign(\'flip' . $id .'\')"
-				)) .
-				$this->createWikiHelper("header", "div", "", array(
-					"id" => "flip". $id,
-					"class" => "showhide_heading",
-				), "open");
+				$this->createWikiHelper(
+					"header", "a", "[+]",
+					array(
+						"id" => "flipperflip" . $id,
+						"href" => "javascript:flipWithSign(\'flip' . $id .'\')"
+					)
+				) .
+				$this->createWikiHelper(
+					"header", "div", "",
+					array(
+						"id" => "flip". $id,
+						"class" => "showhide_heading",
+					), "open"
+				);
 		}
 
 		$result =
 			$expandingHeaderClose .
 				$button .
-				$this->createWikiTag("header", 'h' . $hNum, $content, array(
-					"id" => $id
-				)) .
-			$expandingHeaderOpen;
+				$this->createWikiTag(
+					"header", 'h' . $hNum, $content,
+					array(
+						"id" => $id
+					)
+				) .
+				$expandingHeaderOpen;
 
 		return $result;
 	}
@@ -1183,20 +1205,48 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		if ($this->isContent() || $this->Parser->parseDepth > 1) return $content;
 
 		switch (strtolower($content)) {
-			case "&":       $result = '&amp;';break;
-			case "~bs~":    $result = '&#92;';break;
-			case "~hs~":    $result = '&nbsp;';break;
-			case "~amp~":   $result = '&amp;';break;
-			case "~ldq~":   $result = '&ldquo;';break;
-			case "~rdq~":   $result = '&rdquo;';break;
-			case "~lsq~":   $result = '&lsquo;';break;
-			case "~rsq~":   $result = '&rsquo;';break;
-			case "~c~":     $result = '&copy;';break;
-			case "~--~":    $result = '&mdash;';break;
-			case "=>":      $result = '=&gt;';break;
-			case "~lt~":    $result = '&lt;';break;
-			case "~gt~":    $result = '&gt;';break;
-			case "{rm}":    $result = '&rlm;';break;
+			case "&":
+				$result = '&amp;';
+				break;
+			case "~bs~":
+				$result = '&#92;';
+				break;
+			case "~hs~":
+				$result = '&nbsp;';
+				break;
+			case "~amp~":
+				$result = '&amp;';
+				break;
+			case "~ldq~":
+				$result = '&ldquo;';
+				break;
+			case "~rdq~":
+				$result = '&rdquo;';
+				break;
+			case "~lsq~":
+				$result = '&lsquo;';
+				break;
+			case "~rsq~":
+				$result = '&rsquo;';
+				break;
+			case "~c~":
+				$result = '&copy;';
+				break;
+			case "~--~":
+				$result = '&mdash;';
+				break;
+			case "=>":
+				$result = '=&gt;';
+				break;
+			case "~lt~":
+				$result = '&lt;';
+				break;
+			case "~gt~":
+				$result = '&gt;';
+				break;
+			case "{rm}":
+				$result = '&rlm;';
+				break;
 		}
 
 		//if it has not been caught, it is a number, ie ~([0-9]+)~
@@ -1233,9 +1283,12 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 			$tableContents .= $this->table_tr($row);
 		}
 
-		return $this->createWikiTag("table", "table", $tableContents, array(
-			"class" => "wikitable"
-		));
+		return $this->createWikiTag(
+			"table", "table", $tableContents,
+			array(
+				"class" => "wikitable"
+			)
+		);
 	}
 
 	/**
@@ -1259,9 +1312,12 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	 */
 	private function table_td($content)
 	{
-		return $this->createWikiTag("tableData", "td", $content, array(
-			"class" => "wikicell"
-		));
+		return $this->createWikiTag(
+			"tableData", "td", $content,
+			array(
+				"class" => "wikicell"
+			)
+		);
 	}
 
 	/**
@@ -1274,9 +1330,12 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	function titleBar($content) //-=content=-
 	{
 		$this->skipBr = true;
-		return $this->createWikiTag("titleBar", "div", $content, array(
-			"class" => "titlebar"
-		));
+		return $this->createWikiTag(
+			"titleBar", "div", $content,
+			array(
+				"class" => "titlebar"
+			)
+		);
 	}
 
 	/**
@@ -1354,7 +1413,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		$tag = "<" . $tagType;
 
 		if (!empty($params)) {
-			foreach($params as $param => $value) {
+			foreach ($params as $param => $value) {
 				$tag .= " " . $param . "='" . $value . "'";
 			}
 		}
@@ -1367,7 +1426,8 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 				break;
 			case "open": $tag .= ">";
 				break;
-			case "close": return '</' .$tagType . '>';
+			case "close":
+				return '</' .$tagType . '>';
 		}
 
 		return $tag;
@@ -1389,7 +1449,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		$tag = "<" . $tagType;
 
 		if (!empty($params)) {
-			foreach($params as $param => $value) {
+			foreach ($params as $param => $value) {
 				$tag .= " " . $param . "='" . $value . "'";
 			}
 		}
@@ -1402,7 +1462,8 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 				break;
 			case "open": $tag .= ">";
 				break;
-			case "close": return '</' .$tagType . '>';
+			case "close":
+				return '</' .$tagType . '>';
 		}
 
 		return $tag;
