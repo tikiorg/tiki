@@ -143,7 +143,7 @@
 	echo '<tr>'.'<td>should</td>'.'<td>user</td>'.'<td>group</td>'.'<td>ascii and <br />colored&nbsp;PHP<br />permissions';
 	echo '<br />read:<span class="readyes">yes</span>/<span class="readno">no</span>';
 	echo '<br />write:<span class="writeyes">yes</span>/<span class="writeno">no</span></td>';
-	echo '<td>octal</td>'.'<td>filename</td>'.'</td>';
+	echo '<td>octal</td>'.'<td>filename</td>'.'</tr>';
 	foreach ($uc_perms_subdir as $usecase => $perms_subdir) {
 		$perms_file=$uc_perms_file[$usecase];
 		echo $html_empty_table_row;
