@@ -114,7 +114,6 @@ $("#log-rebuild").click(function(){
 				{preference name=feature_search_fulltext}
 				<div class="adminoptionboxchild" id="feature_search_fulltext_childcontainer">				
 					{preference name=feature_referer_highlight}
-					{preference name=search_parsed_snippet}
 					{preference name=feature_search_stats}
 
 					{preference name=feature_search_show_forbidden_obj}
