@@ -7,6 +7,9 @@
 
 $section_class = 'tiki_login';	// This will be body class instead of $section
 include_once ("tiki-setup.php");
+if (isset($_REQUEST['clearmenucache'])) {
+	TikiLib::lib('menu')->empty_menu_cache();
+}
 if (isset($_REQUEST['user'])) {
 	if ($_REQUEST['user'] == 'admin' && (!isset($_SESSION["groups_are_emulated"]) || $_SESSION["groups_are_emulated"] != "y")) {
 		$smarty->assign('showloginboxes', 'y');
