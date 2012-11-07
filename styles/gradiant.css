@@ -1,0 +1,365 @@
+/* $Id$
+	Gradiant Theme (gradiant.css) by luci. Created exclusively for Tiki Wiki CMS Groupware (http://tiki.org).
+	No images were harmed during creation of this theme.
+	Lots of CSS3 going on here ! ;)
+*/
+@import url("lite/lite.css");
+@import url("layout/layout.css");
+@import url("layout/design.css");
+* {
+	vertical-align: middle !important;
+}
+* a, strong, em, span {
+	vertical-align: baseline !important;
+}
+a, input[type=text],
+input[type=radio],
+input[type=checkbox] {
+	-moz-transition: all .2s ease;
+	-o-transition: all .2s ease;
+	-webkit-transition: all .2s ease;
+	transition: all .2s ease;
+}
+:focus {
+	box-shadow: 0 0 .5em .5em rgba(255,200,55,.5);
+	outline: none;
+}
+a:focus, a:active		{
+	border-radius: 1em;
+	box-shadow: inset 0 0 1em 1em rgba(255,255,255,.25), 0 0 1em 1em rgba(255,255,255,.25);
+}
+body {
+	background: #f0f0f0;
+	font: 76%/1.8em 'Liberation Serif', Cambria, Georgia, serif;
+}
+a {
+	color: #333;
+	text-decoration: none; text-shadow: rgba(255,255,255,1) 0 1px 0;
+	font-weight: bold;
+}
+a:hover {
+	color: #666;
+	text-shadow: rgba(255,255,255,.7) 0 0 6px, rgba(255,255,255,.7) 3px 3px 6px, rgba(255,255,255,.7) -3px -3px 6px;
+}
+a:active {
+	color: #999;
+	text-shadow: rgba(255,255,255,1) 0 0 3px, rgba(255,255,255,1) 3px 3px 3px, rgba(255,255,255,1) -3px -3px 3px;
+	border-radius: 1em;
+	outline: none !important;
+}
+div,
+.rbox-data li {
+	border-radius: .5em;
+}
+div.rbox-title {
+	border-radius: .5em .5em 0 0;
+	bottom: -1px;
+	margin-bottom: 0;
+}
+div.rbox-data {
+	border-radius: 0 .5em .5em .5em;
+}
+fieldset {
+	border: solid 1px #ccc;
+}
+h1 {
+	padding: 0 .5em; font-size: 3em;
+}
+h1,
+h1 a {
+	color: #9f9f9f;
+	text-shadow: 0 0.07em 0.2em rgba(0, 0, 0, 0.1), -0.02em 0.05em 0.2em rgba(0, 0, 0, 0.1), 0.02em 0.05em 0.2em rgba(0, 0, 0, 0.1);
+}
+h2,
+h2 a {
+	color: #6f6f6f;
+}
+.menuLevel1 a {
+	background: rgba(255,255,255,.75);
+	line-height: 2em !important;
+}
+.menuLevel1 a:hover, .menuLevel1 a:focus, .menuLevel1 a:active {
+	background: transparent;
+	border-radius: none;
+	color: #fff;
+	text-shadow: none;
+}
+.cssmenu_horiz .menuLevel0 a {
+	line-height: 2em !important;
+}
+.cssmenu_horiz li.menuLevel0 a {
+	padding: 0 10px;
+}
+.cssmenu_horiz li.menuLevel0 a.sf-with-ul {
+	padding: 0 30px 0 10px;
+}
+.cssmenu_horiz li.menuLevel0 > ul {
+	border-radius: 0 0 .5em .5em;
+	display: block;
+	box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .1);
+	padding: 0 0 6px 0;
+}
+.cssmenu_horiz li.selected > a, .cssmenu_vert li.selected > a {
+	font-style: normal;
+}
+
+/* parents of the selected item */
+.cssmenu_horiz li.selectedAscendant > a,
+.cssmenu_vert li.selectedAscendant > a {
+	font-style: normal; font-weight: normal !important;
+}
+ul.sf-shadow ul {
+	background: rgba(0,0,0,.5);
+	box-shadow: 0 1px 5px 0 rgba(0, 0, 0, .25);
+	padding-right: 0;
+	padding-bottom: 0;
+}
+nav ul.cssmenu_horiz.sf-shadow ul li:first-child {
+	border-color: rgba(200,200,200,.5);
+	position: relative;
+}
+nav ul.cssmenu_horiz.sf-shadow ul li:first-child:before {
+	content: "";
+	position: absolute;
+	top: -10px;
+	left: 10px;
+	border-bottom: 10px solid rgba(0, 0, 0, 0.5);
+	border-bottom-color: inherit;
+	border-left: 10px solid transparent;
+	border-right: 10px solid transparent;
+}
+
+.siteloginbar_popup .tabmark {
+	background: transparent;
+	margin: 0;	
+}
+.tabmark a.login_link {
+	background: #fff;
+	border-radius: .75em .75em 0 0;
+	box-shadow: inset 0 1.2em .6em -1em rgba(0, 0, 0, .1), inset 0 -.6em .6em -1em rgba(0,0,0,0.2);
+	line-height: 2em;
+	padding: 0 1.75em !important; margin-right: 2px;
+}
+.tabmark a.login_link:hover {
+	box-shadow: inset 0 1.6em .6em -1em rgba(0, 0, 0, .1), inset 0 -1em .6em -1em rgba(0,0,0,0.2);
+}
+a.login_link .sf-sub-indicator {
+	display: none;
+	bottom: 7px;
+}
+.siteloginbar_poppedup {
+	background: rgba(139,139,139,0.8) !important;
+	border: solid 6px rgba(255,255,255,1);
+	border-radius: 0 0 10px 10px;
+	left: auto !important;
+	right: 0 !important;
+	top: auto !important;
+	padding: 5px !important; margin-top: 1px;
+	width: 22em !important;
+}
+.siteloginbar_poppedup * {line-height: 20px !important;}
+.siteloginbar_poppedup label {
+	color: #fff;
+	text-align: right;
+	width: 25%;
+}
+#login-user_1,
+#login-pass_1 {
+	width: 60%;
+}
+
+.siteloginbar_poppedup div.register,
+.siteloginbar_poppedup div.pass {
+	font-size: 10px;
+	line-height: 1em;
+	width: auto;
+}
+.siteloginbar_poppedup a {
+	color: #fff !important;
+	}
+.siteloginbar_poppedup input {
+	border: none;
+	border-top: solid 1px #999;
+	border-radius: 10px;
+	height: 20px; line-height: 20px;
+	padding: 0 10px;
+}
+.siteloginbar_poppedup input,
+.siteloginbar_poppedup .button:hover,
+.siteloginbar_poppedup button:hover,
+.siteloginbar_poppedup input[type=reset]:hover,
+.siteloginbar_poppedup input[type=submit]:hover {
+	margin: inherit;
+	padding: 0 10px;
+}
+
+.siteloginbar_poppedup .tabcontent {
+	background: transparent;
+	border: none;
+	padding: 0;
+}
+
+#loginbox-tiki-login fieldset {
+	padding: 1em;
+	min-width: 25em;
+}
+#loginbox-tiki-login fieldset * {
+	padding: .5em;
+}
+#loginbox-tiki-login label {
+	float: left;
+}
+#login-user_tiki-login,
+#login-pass_tiki-login {
+	width: 60%;
+	float: right;
+}
+#loginbox-tiki-login div {
+	clear: both;
+}
+textarea {
+	min-height: 270px;
+}
+tt, code, kbd, samp {
+	font-size: 1.4em;
+}
+#main {
+	background: #cfcfcf;
+	color: #000;
+	box-shadow: 0 .5em .8em rgba(200,200,200,.5);
+	padding: .1em;
+}
+#middle	{
+	background: -moz-linear-gradient(top, rgba(255,255,255,1) 0, rgba(200,200,200,1) 300px); color: #000; /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0,rgba(255,255,255,1)), color-stop(300px,rgba(200,200,200,1))); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top, rgba(255,255,255,1) 0,rgba(200,200,200,1) 300px); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top, rgba(255,255,255,1) 0,rgba(200,200,200,1) 300px); /* Opera11.10+ */
+	background: -ms-linear-gradient(top, rgba(255,255,255,1) 0,rgba(200,200,200,1) 300px); /* IE10+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#c0c0c0',GradientType=0 ); /* IE6-9 */
+	background: linear-gradient(top, rgba(255,255,255,1) 0,rgba(200,200,200,1) 300px); /* W3C */;
+}
+.header_outer {
+	box-shadow: inset 0 5em 5em -5em #fff;
+}
+.fixed_width > .fixedwidth {
+	margin-top: 2em;
+}
+#top_modules {
+	min-height: 10px;
+}
+#top_modules #quickadmin {
+	background: #f0f0f0;
+	border: solid 1px #ccc;
+	border-top: none;
+	border-radius: 0 0 1em 1em;
+	box-shadow: inset 0 .2em 1em #ccc, #999 0 .2em .3em -.8em;
+	padding: 5px 10px 7px 5px;
+}
+#top_modules .box-quickadmin {
+	top: 0;
+	right: 1em;
+	padding: 0;
+}
+#sitelogo {
+	display: block;
+	height: 15em;
+	position: relative;
+}
+#sitelogo a {
+	background: rgba(5,5,5,.05);
+	border-radius: 100em / 5em;
+	box-shadow: 0 0 .6em .4em rgba(5,5,5,.05);
+	display: block;
+	position: relative; left: 1em; top: 13em;
+	width: 18em; height: .6em;
+}
+#sitelogo img {
+	position: absolute; top: -13em; left: -1em;
+}
+#bottom_modules {
+	padding: .5em;
+}
+#role_main,
+#col2, #col3,
+.wikitext {
+	min-height: 300px;
+	padding: .5em;
+}
+.wikitext h1 {
+	font-family: "Segoe UI", "Lucida Grande", sans-serif;
+}
+.codelisting {
+	font: 1.4em/1.5em monospace !important;
+}
+.tabcontent {
+	background: #fff;
+	border: solid 1px #ccc;
+}
+.tabs {
+	border-radius: 0;
+	line-height: 1.2em;
+}
+.tabstoggle {
+	margin: 10px;
+}
+.tabs .tabstoggle {
+	margin: 2px;
+}
+.tabactive {
+	background: #fff;
+	border: solid 2px #ccc; border-width: 2px 1px 0;
+	font-weight: bold;
+	height: 100%;
+	white-space: nowrap;
+}
+.tabactive a {
+	color: #000;
+}
+.option {
+	padding-left: 20px;
+}
+#editwiki_toolbar div {
+	border-radius: 0;
+}
+#sitelogo {
+	padding-left: 10px;
+}
+#sitetitle a {
+	font: normal bold 4em "Segoe UI", "Lucida Grande", sans-serif;
+	padding: 0 .5em;
+	-webkit-background-clip: text;
+	-moz-background-clip: text;
+	background-clip: text;
+	color: rgba(55,55,55,.5);
+	text-shadow: #fff 0 0 3em, rgba(255,255,255,.7) .2em .2em .3em, #fff 0 -.1em .5em, rgba(255,255,255,.7) -.2em 0 .3em; line-height: 1.5em;
+	-moz-transition: all .5s ease;
+	-o-transition: all .5s ease;
+	-webkit-transition: all .5s ease;
+	transition: all .5s ease;
+}
+#sitetitle a:hover {
+	color: #fff;
+	text-shadow: #fff 0 0 6em, rgba(255,255,255,.7) .2em .2em .6em, #fff 0 -.1em 1em, rgba(255,255,255,.7) -.2em 0 .6em;
+}
+#sitesubtitle {
+	-webkit-background-clip: text;
+	-moz-background-clip: text;
+	background-clip: text;
+	color: rgba(255,255,255,1);
+	font: italic normal 2em "Segoe UI", "Lucida Grande", sans-serif;
+	margin: -1em 0 0 7em;
+	padding: 0 .5em;
+	text-shadow: rgba(100,100,100,.5) 3em 3em 3em, rgba(0,0,200,.7) .2em .2em .3em, rgba(100,200,0,.7) .1em .2em .3em, rgba(0,100,200,1) 0 -.1em .5em, rgba(100,200,255,.7) -.2em 0 .3em; line-height: 1.5em;
+}
+a.icon,
+a .icon {
+	opacity: .5;
+}
+a.icon:hover,
+a:hover .icon {
+	opacity: 1;
+}
+.wikipreview {
+	height: 400px;
+}
+
