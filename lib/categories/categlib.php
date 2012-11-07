@@ -780,6 +780,9 @@ class CategLib extends ObjectLib
 
 		if ($considerPermissions) {
 			$categoryIdentifiers = array_keys($ret);
+			if (is_null($categoryIdentifiers)) {
+				$categoryIdentifiers = array();
+			}
 			Perms::bulk(array( 'type' => 'category' ), 'object', $categoryIdentifiers);
 			foreach ($categoryIdentifiers as $categoryIdentifier) {
 				$permissions = Perms::get(array( 'type' => 'category', 'object' => $categoryIdentifier));
@@ -878,7 +881,16 @@ class CategLib extends ObjectLib
    	{
 		global $smarty, $prefs;
 
-		$excluded = preg_split('/,/', $prefs['categorypath_excluded']);
+		if(!isset($prefs['categorypath_excluded'])) {
+			return false;
+		}
+
+		$excluded = array();
+		if(is_array($prefs['categorypath_excluded'])) {
+			$excluded = $prefs['categorypath_excluded'];
+		} else {
+			$excluded = preg_split('/,/', $prefs['categorypath_excluded']);
+		}
 		$cats = array_diff($cats, $excluded);
 
 		$catpath = '';
@@ -1409,6 +1421,7 @@ class CategLib extends ObjectLib
 			}
 		}
 
+		require_once 'lib/core/Category/Manipulator.php';
 		$manip = new Category_Manipulator($objType, $objId);
 		if ($override_perms) {
 			$manip->overrideChecks();

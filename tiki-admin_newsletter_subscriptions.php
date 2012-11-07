@@ -148,6 +148,11 @@ if (isset($_REQUEST["addPage"]) && !empty($_REQUEST['wikiPageName'])) {
 	$nllib->add_page($_REQUEST["nlId"], $_REQUEST['wikiPageName'], empty($_REQUEST['noConfirmEmail']) ? 'y' : 'n', empty($_REQUEST['noSubscribeEmail']) ? 'y' : 'n');
 }
 
+if (isset($_REQUEST["addPage"]) || isset($_REQUEST["addPage"]) || isset($_REQUEST["addincluded"]) ||
+		isset($_REQUEST["addgroup"]) || isset($_REQUEST["addbatch"]) || isset($_REQUEST["add"])) {
+	$cookietab = 1;
+}
+
 if (isset($_REQUEST['export'])) {
 	check_ticket('admin-nl-subsriptions');
 	$users = $nllib->get_all_subscribers($_REQUEST['nlId'], 'y');

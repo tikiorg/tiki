@@ -140,6 +140,7 @@ if (isset($_REQUEST["save"])) {
 	);
 	$smarty->assign('nlId', 0);
 	$smarty->assign('info', $info);
+	$cookietab = 1;
 }
 if (!isset($_REQUEST["sort_mode"])) {
 	$sort_mode = 'created_desc';
