@@ -780,6 +780,9 @@ class CategLib extends ObjectLib
 
 		if ($considerPermissions) {
 			$categoryIdentifiers = array_keys($ret);
+			if (is_null($categoryIdentifiers)) {
+				$categoryIdentifiers = array();
+			}
 			Perms::bulk(array( 'type' => 'category' ), 'object', $categoryIdentifiers);
 			foreach ($categoryIdentifiers as $categoryIdentifier) {
 				$permissions = Perms::get(array( 'type' => 'category', 'object' => $categoryIdentifier));
