@@ -145,8 +145,7 @@ function wikiplugin_include($dataIn, $params)
 	$parserlib->setOptions($options);
 	$parserlib->parse_wiki_argvariable($text);
 	// append an edit button
-	global $smarty;
-	if (isset($perms) && $perms['tiki_p_edit'] === 'y') {
+	if (isset($perms) && $perms['tiki_p_edit'] === 'y' && strpos($_SERVER['PHP_SELF'], 'tiki-send_newsletters.php') === false) {
 		global $smarty;
 		$smarty->loadPlugin('smarty_block_ajax_href');
 		$smarty->loadPlugin('smarty_function_icon');
