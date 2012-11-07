@@ -53,7 +53,7 @@ class TikiInit
 	 * @param bool $is_file	default false for a dir
 	 * @return bool
 	 *
-	 * Copes with Windows premissions
+	 * Copes with Windows permissions
 	 */
 	static function is_writeable($path)
 	{
