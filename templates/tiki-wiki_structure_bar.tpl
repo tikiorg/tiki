@@ -52,7 +52,7 @@
 	      {if $structure_path[ix].page_alias}
 	        {$structure_path[ix].page_alias}
 		  {else}
-	        {$structure_path[ix].pageName|pagename}
+	        {$structure_path[ix].stripped_pageName|pagename}
 		  {/if}
 		  </a>
 		{/section}

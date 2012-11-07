@@ -388,12 +388,21 @@ class StructLib extends TikiLib
 	*/
 	public function get_structure_path($page_ref_id)
 	{
+		global $prefs;	
 		$structure_path = array();
 		$page_info = $this->s_get_page_info($page_ref_id);
 		if ($page_info['parent_id']) {
 			$structure_path = $this->get_structure_path($page_info['parent_id']);
 		}
 		$structure_path[] = $page_info;
+		foreach ($structure_path as $key => $value) {
+			if ($prefs['namespace_indicator_in_structure'] === 'y' && !empty($prefs['namespace_separator'])
+				&& strpos($value['pageName'], $prefs['namespace_separator']) !== false) {
+				$structure_path[$key]['stripped_pageName'] = end(explode($prefs['namespace_separator'], $value['pageName']));
+			} else {
+				$structure_path[$key]['stripped_pageName'] = $value['pageName'];
+			}
+		}
 		return $structure_path;
 	}
 	/* get all the users that watches a page or a page above */

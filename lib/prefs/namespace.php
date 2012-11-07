@@ -36,5 +36,11 @@ function prefs_namespace_list()
 			'default' => '',
 			'detail' => tra('This should only be set for perspectives, and not globally.'),
 		),
+		'namespace_indicator_in_structure' => array(
+			'name' => tra('Hide namespace indicator in structure path'),
+			'description' => tra('Hide namespace indicator in structure path.'),
+			'type' => 'flag',
+			'default' => 'n',
+		),
 	);	
 }

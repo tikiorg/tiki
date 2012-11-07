@@ -265,6 +265,7 @@
 			{preference name=feature_wiki_no_inherit_perms_structure}
 			{preference name=wiki_structure_bar_position}
 			{preference name=wikiplugin_toc}
+			{preference name=namespace_indicator_in_structure}
 		</div>
 
 		{preference name=feature_wiki_import_html}
