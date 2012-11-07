@@ -42,6 +42,7 @@ function prefs_wysiwyg_list()
 			'type' => 'flag',
 			'default' => 'n',
 			'warning' => tra('Neglected. This feature can have unpredicable results and may be removed in future versions.'),
+			'tags' => array('experimental'),
 		),
 		'wysiwyg_toolbar_skin' => array(
 			'name' => tra('Wysiwyg editor skin'),
@@ -55,12 +56,13 @@ function prefs_wysiwyg_list()
 		),
 		'wysiwyg_htmltowiki' => array(
 			'name' => tra('Use Wiki syntax in WYSIWYG'),
-			'description' => tra('Experimental, new : Allow to keep the wiki syntax with the WYSIWYG editor. WARNING: plugin edit is not working in that case in WYSIWYG mode, use the Source mode instead '),
+			'description' => tra('Allow to keep the wiki syntax with the WYSIWYG editor. Sometimes also known as "Visual Wiki".'),
 			'type' => 'flag',
 			'warning' => tra('Experimental. This feature is still under development.'),
 			'dependencies' => array(
 				'ajax_autosave',
 			),
+			'tags' => array('experimental'),
 			'default' => 'n',
 		),
 		'wysiwyg_fonts' => array(
