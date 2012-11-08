@@ -484,7 +484,9 @@ class Services_Tracker_Controller
 		}
 
 		$itemId = $input->itemId->int();
-		$item = $this->utilities->getItem($trackerId, $itemId);
+		if (! $itemId ) {
+			throw new Services_Exception_Denied(tr('No item to clone'));
+		}
 
 		$itemObject = Tracker_Item::fromId($itemId);
 
