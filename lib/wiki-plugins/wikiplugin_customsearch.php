@@ -184,7 +184,7 @@ $('#customsearch_$id').submit(function() {
 		$fieldid = "customsearch_{$id}_$k";
 		if ($name == 'sort' && !empty($arguments['mode']) && empty($sort_mode)) {
 			$sort_mode = $arguments['mode'];
-			$match->replaceWith('');
+			$match->replaceWith(str_pad(' ', $match->getEnd() - $match->getStart())); // need to pad with spaces to avoid keys getting messed up, thus breaking recalllastsearch feature which depends on field position as ID
 			continue;
 		}
 		if ($arguments['_filter'] == 'content' && !empty($arguments['_field'])) {
