@@ -110,7 +110,8 @@ function get_page_url($filename)
 	return $page_basename;
 }
 
-// page url without path starting at document root
+// file or path url without Tiki root path equal to document root necessarily
+// subdir 'permissioncheck' or $perm_check_subdir must be direct child of Tiki root
 function get_page_url_clean($filename)
 {
 	$page_basename = 'http';
@@ -119,8 +120,16 @@ function get_page_url_clean($filename)
 	}
 	$page_basename .= '://';
 	$page_basename .= $_SERVER["SERVER_NAME"];
-	//$page_basename .= dirname($_SERVER['PHP_SELF']);
-	$page_basename .= '/' . $filename;
+	$tmp_path .= dirname($_SERVER['PHP_SELF']);
+	$perm_check_subdir = 'permissioncheck';
+//	$tiki_path = str_replace("/$perm_check_subdir",'/',$tmp_path);
+	// previous one does not work in cases where 'permissioncheck' is already
+	// subdir in path to Tiki, e.g. /foo/permissioncheck/tiki/
+	//
+	$tiki_path = preg_replace("/\/$perm_check_subdir$/",'/',$tmp_path);
+	// quick 'n dirty, does not work if Tiki path != document root
+	//$tiki_path = '/'
+	$page_basename .= $tiki_path . $filename;
 
 	return $page_basename;
 }
