@@ -26,7 +26,6 @@ if (is_file('.svn/entries')) {
 				$result = $handle->query($query); 
 				$resx = $result->fetchArray(SQLITE3_ASSOC);
 				$svnrev = $resx['svnrev'];
-				var_dump($svnrev);
 				$smarty->assign('svnrev', $svnrev);
 				
 				// Assign lastup
