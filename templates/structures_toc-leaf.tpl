@@ -64,7 +64,7 @@
 				{if $structure_tree.page_alias and $toc_type neq 'admin'}
 					{$structure_tree.page_alias|escape}
 				{else}
-					{$structure_tree.pageName|escape}
+					{$structure_tree.short_pageName|escape}
 				{/if}
 				{if $hilite}</strong>{/if}
 			</a>
