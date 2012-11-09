@@ -22,6 +22,7 @@ class JisonParser_Wiki_Link
 	public $skipPageCache = false;
 	public $wikiExternal = '';
 	public $info;
+	public $includePageAsDataAttribute = false;
 
 	static $externals = false;
 
@@ -121,6 +122,13 @@ class JisonParser_Wiki_Link
 		return $this;
 	}
 
+	public function includePageAsDataAttribute($includePageAsDataAttribute)
+	{
+		$this->includePageAsDataAttribute = $includePageAsDataAttribute;
+
+		return $this;
+	}
+
 	function externalHtml()
 	{
 		global $tikilib, $prefs, $smarty;
@@ -171,7 +179,7 @@ class JisonParser_Wiki_Link
 	{
 		switch ($this->type) {
 			case 'np':
-				return $this->page;
+				return $this->parser->createWikiTag("linkNp", "span", $this->page);
 				break;
 			case 'external':
 				return $this->externalHtml();
@@ -208,23 +216,42 @@ class JisonParser_Wiki_Link
 	{
 		global $wikilink;
 
+		$tagType = ($this->type == "word" ? "linkWord" : "link");
+
 		if ($this->info) {
-			return $this->parser->createWikiTag(
-				"link", "a", $this->description,
-				array(
-					"href" => TikiLib::lib('wiki')->sefurl(trim($this->page)),
-					"title" => $this->getTitle(),
-					"class" => 'wiki wiki_page',
-				)
+			$params = array(
+				"href" => TikiLib::lib('wiki')->sefurl(trim($this->page)),
+				"title" => $this->getTitle(),
+				"class" => 'wiki wiki_page ' . $this->reltype,
 			);
+
+			if ($this->includePageAsDataAttribute == true) {
+				$params['data-page'] = trim($this->page);
+			}
+
+			if (!empty($this->reltype)) {
+				$params['data-reltype'] = $this->reltype;
+			}
+
+			return $this->parser->createWikiTag($tagType, "a", $this->description, $params);
 		} else {
-			return $this->parser->createWikiHelper("link", "span", $this->description).
+			$params = array();
+
+			if ($this->includePageAsDataAttribute == true) {
+				$params['data-page'] = trim($this->page);
+			}
+
+			if (!empty($this->reltype)) {
+				$params['data-reltype'] = $this->reltype;
+			}
+
+			return $this->parser->createWikiTag($tagType, "span", $this->description, $params).
 			$this->parser->createWikiHelper(
 				"link", "a", "?",
 				array(
 					"href" => $url = 'tiki-editpage.php?page=' . urlencode($this->page) . (empty($this->language) ? '' : '&lang=' . urlencode($this->language)),
 					"title" => tra('Create page:') . ' ' . $this->page,
-					"class" => 'wiki wikinew',
+					"class" => 'wiki wikinew' . $this->reltype,
 				)
 			);
 		}
