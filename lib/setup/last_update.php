@@ -29,14 +29,14 @@ if (is_file('.svn/entries')) {
 				$smarty->assign('svnrev', $svnrev);
 				
 				// Assign lastup
-				/* Must figure out how to convert changed_date(?) to a proper datetime
-				$query = "select max(changed_date) as lastup from nodes";
+				$query = "select max(changed_date)/1000000 as lastup from nodes";
 				$result = $handle->query($query); 
 				$resx = $result->fetchArray(SQLITE3_ASSOC);
-				$lastupTime = $resx['lastup'];
-				var_dump($lastupTime);
-				$smarty->assign('lastup', $lastupTime);
-				*/
+				$lastupTime = intval($resx['lastup']);
+				$dt = new DateTime();
+				$dt->setTimestamp($lastupTime);
+				$strDT = $dt->format(DateTime::ISO8601);
+				$smarty->assign('lastup', $strDT);
 			}
 		}
 	}
