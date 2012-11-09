@@ -1445,7 +1445,6 @@ if ( \$('#$id') ) {
 		global $page_regex, $slidemode, $prefs, $ownurl_father, $tiki_p_upload_picture, $page_ref_id, $user, $tikidomain, $tikiroot;
 		$wikilib = TikiLib::lib('wiki');
 
-		$this->option = array();
 		$this->setOptions(); //reset options;
 
 		// Handle parsing options
