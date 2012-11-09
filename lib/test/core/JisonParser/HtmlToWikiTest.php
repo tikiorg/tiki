@@ -16,8 +16,6 @@ class JisonParser_HtmlToWikiTest extends JisonParser_OutputTest
 
 	static function assertEquals($expected, $actual, $syntaxName, $syntax)
 	{
-		file_put_contents("/var/www/parsetest.log", $actual);
-
 		$actual = self::$htmlToWikiParser->parse($actual);
 		echo "\n\nReversal: '" . $actual . "'";
 		echo "\n\nExpected: '" . $syntax . "'";
