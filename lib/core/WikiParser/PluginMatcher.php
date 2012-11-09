@@ -320,12 +320,14 @@ class WikiParser_PluginMatcher_Match
 	private $matcher = false;
 	private $start = false;
 	private $end = false;
+	private $initialstart = false;
 	private $arguments = false;
 
 	function __construct($matcher, $start)
 	{
 		$this->matcher = $matcher;
 		$this->start = $start;
+		$this->initialstart = $start;
 	}
 
 	function findName($limit)
@@ -478,6 +480,11 @@ class WikiParser_PluginMatcher_Match
 	function getEnd()
 	{
 		return $this->end;
+	}
+
+	function getInitialStart()
+	{
+		return $this->initialstart;
 	}
 
 	function getBodyStart()

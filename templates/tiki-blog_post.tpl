@@ -67,10 +67,12 @@
 			</tr>
 
 			<tr>
-				<td class="editblogform">
+				<td colspan="2" class="editblogform">
 					{tr}Body:{/tr}
 				</td>
-				<td class="editblogform">
+            </tr>
+            <tr>
+				<td colspan="2" class="editblogform">
 					{if isset($data)}
 						{textarea id='blogedit' class="wikiedit" name="data"}{$data}{/textarea}
 					{/if}

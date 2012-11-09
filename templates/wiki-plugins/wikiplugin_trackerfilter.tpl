@@ -92,7 +92,7 @@ function tf_export_submit(fm) {
 			<label><input {if $filter.format eq "c"}type="checkbox"{else}type="radio"{/if}
 					name="f_{$filter.fieldId}{if $filter.format eq "c"}[]{/if}"
 					value=""{if !$filter.selected} checked="checked"{/if} />
-			{tr}Any{/tr}{if !isset($line) || $line ne 'y'}</label><br />{/if}
+			{tr}Any{/tr}</label>{if !isset($line) || $line ne 'y'}<br />{/if}
 			{section name=io loop=$filter.opts}
 				<label><input {if $filter.format eq "c"}type="checkbox"{else}type="radio"{/if}
 						name="f_{$filter.fieldId}{if $filter.format eq "c"}[]{/if}"

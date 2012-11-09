@@ -178,10 +178,11 @@ $('#customsearch_$id').submit(function() {
 });
 ";
 
-	foreach ($matches as $k => $match) {
+	foreach ($matches as $match) {
 		$name = $match->getName();
 		$arguments = $parser->parse($match->getArguments());
-		$fieldid = "customsearch_{$id}_$k";
+		$key = $match->getInitialStart();
+		$fieldid = "customsearch_{$id}_$key";
 		if ($name == 'sort' && !empty($arguments['mode']) && empty($sort_mode)) {
 			$sort_mode = $arguments['mode'];
 			$match->replaceWith('');

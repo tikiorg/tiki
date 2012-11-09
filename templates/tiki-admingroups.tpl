@@ -434,6 +434,7 @@
 				{/foreach}
 		</table>
 		{if ! empty($userslist)}
+			<h2>{tr}Add or Ban members to:{/tr} {$groupname|escape}</h2>
 			<form method="post" action="tiki-admingroups.php">
 				<p>
 					<input type="hidden" name="group" value="{$groupname|escape}"/>
