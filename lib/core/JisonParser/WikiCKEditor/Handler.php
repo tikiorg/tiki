@@ -10,12 +10,12 @@ class JisonParser_WikiCKEditor_Handler extends JisonParser_Wiki_Handler
 	static $typeShorthand = array(
 		"preFormattedText" =>           "pp",
 		"bold" =>                       "b",
-		"simpleBox" =>                  "sb",
+		"box" =>                        "bx",
 		"center" =>                     "c",
 		"noParse" =>                    "np",
 		"code" =>                       "cd",
 		"color" =>                      "clr",
-		"italics" =>                    "i",
+		"italic" =>                     "i",
 		"l2r" =>                        "l2r",
 		"r2l" =>                        "r2l",
 		"header" =>                     "hdr",
@@ -23,7 +23,8 @@ class JisonParser_WikiCKEditor_Handler extends JisonParser_Wiki_Handler
 		"listParent" =>                 "lp",
 		"listUnordered" =>              "lu",
 		"listOrdered" =>                "lh",
-		"listToggle" =>                 "lt",
+		"listToggleUnordered" =>        "ltu",
+		"listToggleOrdered" =>          "lto",
 		"listBreak" =>                  "lb",
 		"listDefinitionParent" =>       "ldp",
 		"listDefinition" =>             "ld",
@@ -31,7 +32,10 @@ class JisonParser_WikiCKEditor_Handler extends JisonParser_Wiki_Handler
 		"line" =>                       "ln",
 		"forcedLineEnd" =>              "fln",
 		"unlink" =>                     "ul",
-		"externalLink" =>               "el",
+		"link" =>                       "l",
+		"linkWord" =>                   "lw",
+		"linkNp" =>                     "lnp",
+		"linkExternal" =>               "el",
 		"wikiLink" =>                   "wl",
 		"strike" =>                     "stk",
 		"doubleDash" =>                 "dd",
@@ -40,7 +44,8 @@ class JisonParser_WikiCKEditor_Handler extends JisonParser_Wiki_Handler
 		"tableData" =>                  "td",
 		"titleBar" =>                   "tb",
 		"underscore" =>                 "u",
-
+		"comment" =>                    "cm",
+		"plugin" =>                     "pl",
 	);
 
 	function __construct()
@@ -70,6 +75,26 @@ class JisonParser_WikiCKEditor_Handler extends JisonParser_Wiki_Handler
 	{
 		return $this->createWikiTag("noParse", "span", parent::noParse($content), array(
 			"class" => "noParse"
+		));
+	}
+
+	/**
+	 * Handles plugins directly from the wiki parser.  A plugin can be on a different level of the current parser, and
+	 * if so, the execution is delayed until the parser reaches that level.
+	 *
+	 * @access  private
+	 * @param   array  &$pluginDetails plugins details in an array
+	 * @return  string  either returns $key or block from execution message
+	 */
+	public function plugin(&$pluginDetails)
+	{
+		$pluginDetails['body'] = $this->specialCharacter->unprotect($pluginDetails['body'], true);
+		$negotiator =& $this->pluginNegotiator;
+
+		$negotiator->setDetails($pluginDetails);
+
+		return $this->createWikiTag("plugin", "span", "Plugin:" . $negotiator->name, array(
+			"data-syntax" => urlencode($negotiator->toSyntax())
 		));
 	}
 
@@ -128,7 +153,7 @@ class JisonParser_WikiCKEditor_Handler extends JisonParser_Wiki_Handler
 	 */
 	function comment($content)
 	{
-		return $this->createWikiTag("comment", "span", $content, array(
+		return $this->createWikiTag("comment", "span", substr($content, 4, -5), array(
 			"class" => "wikiComment"
 		));
 	}
@@ -161,6 +186,10 @@ class JisonParser_WikiCKEditor_Handler extends JisonParser_Wiki_Handler
 	 */
 	static public function typeShorthand($name)
 	{
+		if (!isset(self::$typeShorthand[$name])) {
+			throw new Exception("Type Doesn't Exists");
+		}
+
 		return self::$typeShorthand[$name];
 	}
 
@@ -190,6 +219,23 @@ class JisonParser_WikiCKEditor_Handler extends JisonParser_Wiki_Handler
 	function char($content)
 	{
 		return $content;
+	}
+
+	/**
+	 * syntax handler: new line, \n
+	 * <p>
+	 * Detects if a line break is needed and returns it. If $this->skipBr is set to true, skips output of <br /> and
+	 * sets it back to false for the next line to process
+	 *
+	 * @access  public
+	 * @param   $ch line line character
+	 * @return  string  $result of line process
+	 */
+	function line($ch)
+	{
+		//TODO: We want to handle the items that we needed to select the br just after the syntax needing the br to go away and hide it using css because we need to maintain it when parsing back from html
+		$this->skipBr = false;
+		return parent::line($ch);
 	}
 
 	/**
@@ -229,16 +275,22 @@ class JisonParser_WikiCKEditor_Handler extends JisonParser_Wiki_Handler
 	 */
 	public function createWikiTag($syntaxType, $tagType, $content = "", $params = array(), $type = "standard")
 	{
-		$params['data-i'] = self::incrementTypeIndex($syntaxType);
-		$params['data-t'] = self::typeShorthand($syntaxType);
+		if ($type != "close") {
+			$params['data-i'] = self::incrementTypeIndex($syntaxType);
+			$params['data-t'] = self::typeShorthand($syntaxType);
 
-		if (!isset($params['class'])) {
-			$params['class'] = "";
+			if (!isset($params['class'])) {
+				$params['class'] = "";
+			}
+
+			$params['class'] .= " jpwc"; //Jison Parser Wiki CKEditor tag :)
+
+			$params['class'] = trim($params['class']);
 		}
 
-		$params['class'] .= " jpwc"; //Jison Parser Wiki CKEditor tag :)
-
-		$params['class'] = trim($params['class']);
+		if ($this->isRepairing($syntaxType) == true) {
+			$params['data-repair'] = true;
+		}
 
 		return parent::createWikiTag($syntaxType, $tagType, $content, $params, $type);
 	}

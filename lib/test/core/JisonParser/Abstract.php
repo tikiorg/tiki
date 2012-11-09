@@ -70,9 +70,9 @@ class JisonParser_Abstract extends TikiTestCase
 	static function assertEquals($expected, $actual, $syntaxName, $syntax)
 	{
 		if ($expected != $actual) {
-			echo "Failure on: " . $syntaxName . "\n";
-			echo 'Syntax: "' . $syntax . '"' . "\n";
-			echo 'Output: ' . $actual . "\n";
+			echo "\n\n\n\nFailure on: $syntaxName\n";
+			echo "Syntax: '$syntax'\n";
+			echo "Output: '$actual'\n";
 		}
 
 		parent::assertEquals($expected, $actual);

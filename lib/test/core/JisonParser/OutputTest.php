@@ -7,8 +7,6 @@
 
 class JisonParser_OutputTest extends JisonParser_Abstract
 {
-	public $verbose = true;
-
 	function provider()
 	{
 		$this->syntaxSets = array(
@@ -198,7 +196,7 @@ class JisonParser_OutputTest extends JisonParser_Abstract
 			"* foo1\n" .
 			"** foo11\n" .
 			"**foo12\n" .
-			"* bar1\n"
+			"* bar1"
 		,
 			'<ul class=\'tikiList\' id=\'\'>' .
 				'<li class=\'tikiListItem\'> foo1' .
@@ -223,12 +221,12 @@ class JisonParser_OutputTest extends JisonParser_Abstract
 			"* foo\n" .
 			"+ Continuation1\n" .
 			"+Continuation2\n" .
-			"* bar\n"
+			"* bar"
 		,
 			'<ul class=\'tikiList\' id=\'\'>' .
 				'<li class=\'tikiListItem\'> foo' .
-					"<br/> Continuation1\n" .
-					"<br/>Continuation2\n" .
+					"<div> Continuation1</div>\n" .
+					"<div>Continuation2</div>\n" .
 				"</li>\n" .
 				'<li class=\'tikiListItem\'> bar</li>' . "\n" .
 			"</ul>"
