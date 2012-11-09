@@ -97,7 +97,9 @@ function wikiplugin_bigbluebutton( $data, $params )
 
 		if ( $perms->bigbluebutton_join ) {
 			$smarty->assign('bbb_attendees', $bigbluebuttonlib->getAttendees($meeting));
-			$smarty->assign('bbb_recordings', $bigbluebuttonlib->getRecordings($meeting));
+			if($perms->bigbluebutton_view_rec) {
+				$smarty->assign('bbb_recordings', $bigbluebuttonlib->getRecordings($meeting));
+			}
 
 			return $smarty->fetch('wiki-plugins/wikiplugin_bigbluebutton.tpl');
 
