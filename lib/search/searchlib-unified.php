@@ -118,13 +118,13 @@ class UnifiedSearchLib
 			die('Unsupported');
 		}
 
-		@ini_set('max_execution_time', 0);
-		@ini_set('memory_limit', -1);
-
 		// Build in -new
 		TikiLib::lib('queue')->clear(self::INCREMENT_QUEUE);
+		$tikilib = TikiLib::lib('tiki');
 		$indexer = $this->buildIndexer($index, $loggit);
-		$stat = $indexer->rebuild();
+		$stat = $tikilib->allocate_extra('unified_rebuild', function () use ($indexer) {
+			return $indexer->rebuild();
+		});
 
 		// Force destruction to clear locks
 		unset($indexer);

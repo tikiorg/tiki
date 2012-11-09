@@ -328,6 +328,23 @@ class TikiLib extends TikiDb_Bridge
 		return $parserlib->get_pages($data, $withReltype);
 	}
 
+	function allocate_extra($type, $callback) {
+		global $prefs;
+
+		$memory_name = 'allocate_memory_' . $type;
+		$time_name = 'allocate_time_' . $type;
+
+		if (! empty($prefs[$memory_name])) {
+			$memory_limit = new Tiki_MemoryLimit($prefs[$memory_name]);
+		}
+
+		if (! empty($prefs[$time_name])) {
+			$time_limit = new Tiki_TimeLimit($prefs[$time_name]);
+		}
+
+		return call_user_func($callback);
+	}
+
     /**
      * @param bool $url
      * @return mixed|Zend_Http_Client

@@ -28,6 +28,9 @@
 
 				{preference name=feature_search visible="always"}
 				<div class="adminoptionboxchild" id="feature_search_childcontainer">				
+					{preference name="allocate_memory_unified_rebuild"}
+					{preference name="allocate_time_unified_rebuild"}
+
 					{preference name="unified_engine"}
 					<div class="adminoptionboxchild unified_engine_childcontainer lucene">
 						{preference name="unified_incremental_update"}
