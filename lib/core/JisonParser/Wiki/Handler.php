@@ -35,6 +35,9 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	public static $pluginIndexes = array();
 	public $pluginNegotiator;
 
+	/* track syntax that is broken */
+	public $repairingStack = array();
+
 	/* np tracking */
 	public $npStack = false; //There can only be 1 active np stack
 
@@ -78,8 +81,8 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	public $nonBreakingTagDepth = 0;
 
 	/* line tracking */
-	private $isFirstBr = false;
-	private $line = 0;
+	public $isFirstBr = false;
+	public $line = 0;
 
 	public $user;
 	public $prefs;
@@ -262,7 +265,9 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 
 	function parse($input)
 	{
-		if (empty($input)) return $input;
+		if (empty($input)) {
+			return $input;
+		}
 
 		if ($this->parsing == true) {
 			$class = get_class($this->Parser);
@@ -337,7 +342,6 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 			$this->Parser->list->reset();
 		}
 
-		$this->totalPreParseLineCount = substr_count($input, "\n");
 		$this->line = 0;
 		$this->isFirstBr = false;
 		$this->skipBr = false;
@@ -408,7 +412,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	 * @param   array  &$pluginDetails plugins details in an array
 	 * @return  string  either returns $key or block from execution message
 	 */
-	function plugin(&$pluginDetails)
+	public function plugin(&$pluginDetails)
 	{
 		$pluginDetails['body'] = $this->specialCharacter->unprotect($pluginDetails['body'], true);
 		$negotiator =& $this->pluginNegotiator;
@@ -841,19 +845,19 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	}
 
 	/**
-	 * syntax handler: italics/emphasis, ''$content''
+	 * syntax handler: italic/emphasis, ''$content''
 	 *
 	 * @access  public
 	 * @param   $content parsed string found inside detected syntax
 	 * @return  string  $content desired output from syntax
 	 */
-	function italics($content) //''content''
+	function italic($content) //''content''
 	{
-		return $this->createWikiTag("italics", "em", $content);
+		return $this->createWikiTag("italic", "em", $content);
 	}
 
 	/**
-	 * syntax handler: left to right, {l2r}$content\n
+	 * syntax handler: left to right, \n{l2r}$content
 	 *
 	 * @access  public
 	 * @param   $content parsed string found inside detected syntax
@@ -871,7 +875,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	}
 
 	/**
-	 * syntax handler: right to left, {r2l}$content\n
+	 * syntax handler: right to left, \n{r2l}$content
 	 *
 	 * @access  public
 	 * @param   $content parsed string found inside detected syntax
@@ -880,8 +884,9 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	function r2l($content)
 	{
 		$content = substr($content, 5);
+
 		return $this->createWikiTag(
-			"l2r", "div", $content,
+			"r2l", "div", $content,
 			array(
 				"dir" => "rtl"
 			)
@@ -889,7 +894,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	}
 
 	/**
-	 * syntax handler: header, !$content\n
+	 * syntax handler: header, \n!$content
 	 * <p>
 	 * Uses $this->Parser->header as a processor.  Is called from $this->block().
 	 *
@@ -897,22 +902,22 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	 * @param   $content parsed string found inside detected syntax
 	 * @return  string  $content desired output from syntax
 	 */
-	function header($content) //!content
+	function header($content, $trackExclamationCount = false) //!content
 	{
 		global $prefs;
-		$hNum = 0;
+		$exclamationCount = 0;
 		$headerLength = strlen($content);
 		for ($i = 0; $i < $headerLength; $i++) {
 			if ($content[$i] == '!') {
-				$hNum++;
+				$exclamationCount++;
 			} else {
 				break;
 			}
 		}
 
-		$content = substr($content, $hNum);
+		$content = substr($content, $exclamationCount);
 
-		$hNum = min(6, $hNum); //html doesn't support 7+ header level
+		$hNum = min(6, $exclamationCount); //html doesn't support 7+ header level
 		$id = $this->Parser->header->stack($hNum, $content);
 		$button = '';
 		global $section, $tiki_p_edit;
@@ -962,22 +967,27 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 				);
 		}
 
+		$params = array(
+			"id" => $id,
+		);
+
+		if ($trackExclamationCount) {
+			$params['data-count'] = $exclamationCount;
+		}
+
 		$result =
 			$expandingHeaderClose .
-				$button .
-				$this->createWikiTag(
-					"header", 'h' . $hNum, $content,
-					array(
-						"id" => $id
-					)
-				) .
-				$expandingHeaderOpen;
+			$button .
+			$this->createWikiTag(
+				"header", 'h' . $hNum, $content, $params
+			) .
+			$expandingHeaderOpen;
 
 		return $result;
 	}
 
 	/**
-	 * syntax handler: list, *$content\n
+	 * syntax handler: list, \n*$content
 	 * <p>
 	 * List types: * (unordered), # (ordered), + (line break), - (expandable), ; (definition list)
 	 * <p>
@@ -990,30 +1000,30 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	function stackList($content)
 	{
 		$level = 0;
-		$headerLength = strlen($content);
+		$listLength = strlen($content);
 		$type = '';
 		$noiseLength = 0;
 
-		for ($i = 0; $i < $headerLength; $i++) {
-			if ($content{$i} == "\n" || $content{$i} == "\r" || $content{$i} == "") {
-				$noiseLength++;
-				continue;
-			}
+		for ($i = 0; $i < $listLength; $i++) {
+			if (empty($type)) {
+				//This will be the start of the string
+				$type = $content{$i};
+				$level++;
 
-			if ($content{$i} == ";") {//definition list)
-				$type = ";";
-				$level = 1;
-				break;
+				//definitions are only 1 in depth
+				if ($type == ';') {
+					break;
+				}
 			} else if (
 				$content{$i} == "*" ||
 				$content{$i} == "#" ||
 				$content{$i} == "+"
 			) {
-				$type = $content{$i};
 				$level++;
-			} elseif ($i > 0 && $content{$i} == '-') {
-				$type = $content{$i};
+			} elseif ($content{$i} == '-') {
+				$type .= $content{$i};
 				$noiseLength++;
+				break;
 			} else {
 				break;
 			}
@@ -1065,13 +1075,13 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 			return '';
 		}
 
-		$result = $ch;
+		$result = '';
 
 		if ($skipBr == false && empty($this->tableStack) && $this->nonBreakingTagDepth == 0) {
-			$result = $this->createWikiTag("line", "br", "", array(), "inline"). $ch;
+			$result = $this->createWikiTag("line", "br", "", array(), "inline");
 		}
 
-		return $result;
+		return $result . $ch;
 	}
 
 	/**
@@ -1383,8 +1393,10 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	{
 		$this->line++;
 		$this->skipBr = false;
+		$this->isFirstBr = true;
 
-		$content = ltrim($content, "\n\r");
+		$newLine = $content{0};
+		$content = substr($content, 1);
 
 		foreach ($this->blocks as $function => &$set) {
 			foreach ($set as &$startsWith) {
@@ -1394,7 +1406,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 			}
 		}
 
-		return $content;
+		return $newLine . $content;
 	}
 
 	/**
@@ -1446,6 +1458,8 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	 */
 	public function createWikiTag($syntaxType, $tagType, $content = "", $params = array(), $type = "standard")
 	{
+		$this->isRepairing($syntaxType, true);
+
 		$tag = "<" . $tagType;
 
 		if (!empty($params)) {
@@ -1496,5 +1510,26 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		preg_match($pattern, $subject, $match);
 
 		return (!empty($match[1]) ? $match[1] : false);
+	}
+
+	function isRepairing($syntaxType, $pop = false)
+	{
+		$isRepairing = false;
+		end($this->repairingStack);
+		$key = key($this->repairingStack);
+
+
+		if (isset($this->repairingStack[$key])) {
+			$lastRepaired = $this->repairingStack[$key];
+
+			if ($lastRepaired == $syntaxType) {
+				$isRepairing = true;
+				if ($pop == true) {
+					array_pop($this->repairingStack);
+				}
+			}
+		}
+
+		return $isRepairing;
 	}
 }
