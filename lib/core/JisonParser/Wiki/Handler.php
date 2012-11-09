@@ -351,6 +351,10 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		$this->ppStack = false;
 		$this->linkStack = false;
 
+		if ($input{0} == "\n" && $this->isBlockStartSyntax($input{1})) {
+			$this->isFirstBr = true;
+		}
+
 		$input = "\n" . $input . "\n"; //here we add 2 lines, so the parser doesn't have to do special things to track the first line and last, we remove these when we insert breaks, these are dynamically removed later
 
 		$input = $this->specialCharacter->protect($input);
@@ -731,7 +735,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	 * syntax handler: argument variable, {{$content}}
 	 *
 	 * @access  public
-	 * @param   $content parsed string found inside detected syntax
+	 * @param   $content string parsed content  found inside detected syntax
 	 * @return  string  $content desired output from syntax
 	 */
 	function argumentVar($content)
@@ -772,7 +776,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	 * syntax handler: bold/strong, __$content__
 	 *
 	 * @access  public
-	 * @param   $content parsed string found inside detected syntax
+	 * @param   $content string parsed content  found inside detected syntax
 	 * @return  string  $content desired output from syntax
 	 */
 	function bold($content) //__content__
@@ -784,7 +788,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	 * syntax handler: simple box, ^$content^
 	 *
 	 * @access  public
-	 * @param   $content parsed string found inside detected syntax
+	 * @param   $content string parsed content  found inside detected syntax
 	 * @return  string  $content desired output from syntax
 	 */
 	function box($content) //^content^
@@ -796,7 +800,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	 * syntax handler: center, ::$content::
 	 *
 	 * @access  public
-	 * @param   $content parsed string found inside detected syntax
+	 * @param   $content string parsed content  found inside detected syntax
 	 * @return  string  $content desired output from syntax
 	 */
 	function center($content) //::content::
@@ -815,7 +819,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	 * syntax handler: code, -+$content+-
 	 *
 	 * @access  public
-	 * @param   $content parsed string found inside detected syntax
+	 * @param   $content string parsed content  found inside detected syntax
 	 * @return  string  $content desired output from syntax
 	 */
 	function code($content)
@@ -827,7 +831,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	 * syntax handler: text color, ~~$color:$content~~
 	 *
 	 * @access  public
-	 * @param   $content parsed string found inside detected syntax
+	 * @param   $content string parsed content  found inside detected syntax
 	 * @return  string  $content desired output from syntax
 	 */
 	function color($content)
@@ -848,7 +852,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	 * syntax handler: italic/emphasis, ''$content''
 	 *
 	 * @access  public
-	 * @param   $content parsed string found inside detected syntax
+	 * @param   $content string parsed content  found inside detected syntax
 	 * @return  string  $content desired output from syntax
 	 */
 	function italic($content) //''content''
@@ -860,7 +864,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	 * syntax handler: left to right, \n{l2r}$content
 	 *
 	 * @access  public
-	 * @param   $content parsed string found inside detected syntax
+	 * @param   $content string parsed content  found inside detected syntax
 	 * @return  string  $content desired output from syntax
 	 */
 	function l2r($content)
@@ -878,7 +882,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	 * syntax handler: right to left, \n{r2l}$content
 	 *
 	 * @access  public
-	 * @param   $content parsed string found inside detected syntax
+	 * @param   $content string parsed content  found inside detected syntax
 	 * @return  string  $content desired output from syntax
 	 */
 	function r2l($content)
@@ -899,7 +903,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	 * Uses $this->Parser->header as a processor.  Is called from $this->block().
 	 *
 	 * @access  public
-	 * @param   $content parsed string found inside detected syntax
+	 * @param   $content string parsed content  found inside detected syntax
 	 * @return  string  $content desired output from syntax
 	 */
 	function header($content, $trackExclamationCount = false) //!content
@@ -994,7 +998,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	 * Uses $this->Parser->list as a processor. Is called from $this->block().
 	 *
 	 * @access  public
-	 * @param   $content parsed string found inside detected syntax
+	 * @param   $content string parsed content  found inside detected syntax
 	 * @return  string  $content desired output from syntax
 	 */
 	function stackList($content)
@@ -1101,7 +1105,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	 * syntax handler: unlink, [[$content|$content]]
 	 *
 	 * @access  public
-	 * @param   $content parsed string found inside detected syntax
+	 * @param   $content string parsed content  found inside detected syntax
 	 * @return  string  $content desired output from syntax
 	 */
 	function unlink($content) //[[content|content]
@@ -1174,7 +1178,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	 * syntax handler: smile, :)
 	 *
 	 * @access  public
-	 * @param   $content parsed string found inside detected syntax
+	 * @param   $content string parsed content  found inside detected syntax
 	 * @return  string  $content desired output from syntax
 	 */
 	function smile($content) //TODO: add all smile handling in parser
@@ -1187,7 +1191,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	 * syntax handler: strike, --$content--
 	 *
 	 * @access  public
-	 * @param   $content parsed string found inside detected syntax
+	 * @param   $content string parsed content found inside detected syntax
 	 * @return  string  $content desired output from syntax
 	 */
 	function strike($content) //--content--
@@ -1278,7 +1282,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	 * syntax handler: table, ||$content|$content\n$content|$content||
 	 *
 	 * @access  public
-	 * @param   $content parsed string found inside detected syntax
+	 * @param   $content string parsed content  found inside detected syntax
 	 * @return  string  $content desired output from syntax
 	 */
 	function tableParser($content) /*|| | \n | ||*/
@@ -1308,7 +1312,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	 * syntax handler table helper for tr
 	 *
 	 * @access  public
-	 * @param   $content parsed string found inside detected syntax
+	 * @param   $content string parsed content  found inside detected syntax
 	 * @return  string  $content desired output from syntax
 	 */
 	private function table_tr($content)
@@ -1320,7 +1324,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	 * syntax handler table helper for td
 	 *
 	 * @access  public
-	 * @param   $content parsed string found inside detected syntax
+	 * @param   $content string parsed content  found inside detected syntax
 	 * @return  string  $content desired output from syntax
 	 */
 	private function table_td($content)
@@ -1337,7 +1341,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	 * syntax handler: titlebar, -=$content=-
 	 *
 	 * @access  public
-	 * @param   $content parsed string found inside detected syntax
+	 * @param   $content string parsed content  found inside detected syntax
 	 * @return  string  $content desired output from syntax
 	 */
 	function titleBar($content) //-=content=-
@@ -1355,7 +1359,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	 * syntax handler: underscore, ===$content===
 	 *
 	 * @access  public
-	 * @param   $content parsed string found inside detected syntax
+	 * @param   $content string parsed content  found inside detected syntax
 	 * @return  string  $content desired output from syntax
 	 */
 	function underscore($content) //===content===
@@ -1368,7 +1372,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	 * syntax handler: tiki comment, ~tc~$content~/tc~
 	 *
 	 * @access  public
-	 * @param   $content parsed string found inside detected syntax
+	 * @param   $content string parsed content  found inside detected syntax
 	 * @return  string  $content desired output from syntax
 	 */
 	function comment($content)
@@ -1389,7 +1393,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	 * syntax handler: block, \n$content\n
 	 *
 	 * @access  public
-	 * @param   $content parsed string found inside detected syntax
+	 * @param   $content string parsed content  found inside detected syntax
 	 * @return  string  $content desired output from syntax
 	 */
 	function block($content)
@@ -1534,5 +1538,18 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		}
 
 		return $isRepairing;
+	}
+
+	function isBlockStartSyntax($char)
+	{
+		if (
+			$char == "*" ||
+			$char == "#" ||
+			$char == "+" ||
+			$char == ";" ||
+			$char == "!"
+		) {
+			return true;
+		}
 	}
 }
