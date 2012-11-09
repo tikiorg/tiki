@@ -20,14 +20,14 @@ class JisonParser_Html
 		$end = 'end';
 		
 		//parser
-		$this->symbols_ = 		json_decode('{"error":2,"wiki":3,"contents":4,"EOF":5,"content":6,"CONTENT":7,"LINE_END":8,"HTML_TAG_INLINE":9,"HTML_TAG_OPEN":10,"HTML_TAG_CLOSE":11,"$accept":0,"$end":1}', true);
-		$this->terminals_ = 	json_decode('{"2":"error","5":"EOF","7":"CONTENT","8":"LINE_END","9":"HTML_TAG_INLINE","10":"HTML_TAG_OPEN","11":"HTML_TAG_CLOSE"}', true);
-		$this->productions_ = 	json_decode('[0,[3,1],[3,2],[3,1],[4,1],[4,2],[6,1],[6,1],[6,1],[6,3],[6,2]]', true);
-		$this->table = 			json_decode('[{"3":1,"4":2,"5":[1,3],"6":4,"7":[1,5],"8":[1,6],"9":[1,7],"10":[1,8]},{"1":[3]},{"1":[2,1],"5":[1,9],"6":10,"7":[1,5],"8":[1,6],"9":[1,7],"10":[1,8]},{"1":[2,3]},{"1":[2,4],"5":[2,4],"7":[2,4],"8":[2,4],"9":[2,4],"10":[2,4],"11":[2,4]},{"1":[2,6],"5":[2,6],"7":[2,6],"8":[2,6],"9":[2,6],"10":[2,6],"11":[2,6]},{"1":[2,7],"5":[2,7],"7":[2,7],"8":[2,7],"9":[2,7],"10":[2,7],"11":[2,7]},{"1":[2,8],"5":[2,8],"7":[2,8],"8":[2,8],"9":[2,8],"10":[2,8],"11":[2,8]},{"4":11,"6":4,"7":[1,5],"8":[1,6],"9":[1,7],"10":[1,8],"11":[1,12]},{"1":[2,2]},{"1":[2,5],"5":[2,5],"7":[2,5],"8":[2,5],"9":[2,5],"10":[2,5],"11":[2,5]},{"6":10,"7":[1,5],"8":[1,6],"9":[1,7],"10":[1,8],"11":[1,13]},{"1":[2,10],"5":[2,10],"7":[2,10],"8":[2,10],"9":[2,10],"10":[2,10],"11":[2,10]},{"1":[2,9],"5":[2,9],"7":[2,9],"8":[2,9],"9":[2,9],"10":[2,9],"11":[2,9]}]', true);
+		$this->symbols_ = 		json_decode('{"error":2,"wiki":3,"contents":4,"EOF":5,"content":6,"CONTENT":7,"LINE_END":8,"HTML_TAG_INLINE":9,"HTML_TAG_OPEN":10,"HTML_TAG_CLOSE":11,"HTML_TAG_CLOSE_IGNORED":12,"$accept":0,"$end":1}', true);
+		$this->terminals_ = 	json_decode('{"2":"error","5":"EOF","7":"CONTENT","8":"LINE_END","9":"HTML_TAG_INLINE","10":"HTML_TAG_OPEN","11":"HTML_TAG_CLOSE","12":"HTML_TAG_CLOSE_IGNORED"}', true);
+		$this->productions_ = 	json_decode('[0,[3,1],[3,2],[3,1],[4,1],[4,2],[6,1],[6,1],[6,1],[6,3],[6,3],[6,2]]', true);
+		$this->table = 			json_decode('[{"3":1,"4":2,"5":[1,3],"6":4,"7":[1,5],"8":[1,6],"9":[1,7],"10":[1,8]},{"1":[3]},{"1":[2,1],"5":[1,9],"6":10,"7":[1,5],"8":[1,6],"9":[1,7],"10":[1,8]},{"1":[2,3]},{"1":[2,4],"5":[2,4],"7":[2,4],"8":[2,4],"9":[2,4],"10":[2,4],"11":[2,4],"12":[2,4]},{"1":[2,6],"5":[2,6],"7":[2,6],"8":[2,6],"9":[2,6],"10":[2,6],"11":[2,6],"12":[2,6]},{"1":[2,7],"5":[2,7],"7":[2,7],"8":[2,7],"9":[2,7],"10":[2,7],"11":[2,7],"12":[2,7]},{"1":[2,8],"5":[2,8],"7":[2,8],"8":[2,8],"9":[2,8],"10":[2,8],"11":[2,8],"12":[2,8]},{"4":11,"6":4,"7":[1,5],"8":[1,6],"9":[1,7],"10":[1,8],"11":[1,12]},{"1":[2,2]},{"1":[2,5],"5":[2,5],"7":[2,5],"8":[2,5],"9":[2,5],"10":[2,5],"11":[2,5],"12":[2,5]},{"6":10,"7":[1,5],"8":[1,6],"9":[1,7],"10":[1,8],"11":[1,13],"12":[1,14]},{"1":[2,11],"5":[2,11],"7":[2,11],"8":[2,11],"9":[2,11],"10":[2,11],"11":[2,11],"12":[2,11]},{"1":[2,9],"5":[2,9],"7":[2,9],"8":[2,9],"9":[2,9],"10":[2,9],"11":[2,9],"12":[2,9]},{"1":[2,10],"5":[2,10],"7":[2,10],"8":[2,10],"9":[2,10],"10":[2,10],"11":[2,10],"12":[2,10]}]', true);
 		$this->defaultActions = json_decode('{"3":[2,3],"9":[2,2]}', true);
 		
 		//lexer
-		$this->rules = 			array("/^(?:(<(.|\\n)*?\\/>))/","/^(?:$)/","/^(?:(<\\/(.|\\n)*?>))/","/^(?:(<(.|\\n)*?>))/","/^(?:([A-Za-z0-9 .,?;]+))/","/^(?:([ ]))/","/^(?:((\\n\\r|\\r\\n|[\\n\\r])))/","/^(?:(.))/","/^(?:$)/");
+		$this->rules = 			array("/^(?:(<(.|\\n)[^>]*?\\/>))/","/^(?:$)/","/^(?:(<\\/(.|\\n)[^>]*?>))/","/^(?:(<(.|\\n)[^>]*?>))/","/^(?:([A-Za-z0-9 .,?;]+))/","/^(?:([ ]))/","/^(?:((\\n\\r|\\r\\n|[\\n\\r])))/","/^(?:(.))/","/^(?:$)/");
 		$this->conditions = 	json_decode('{"htmlElement":{"rules":[0,1,2,3,4,5,6,7,8],"inclusive":true},"INITIAL":{"rules":[0,3,4,5,6,7,8],"inclusive":true}}', true);
 		
 		$this->options =		json_decode('{}', true);
@@ -48,7 +48,7 @@ case 1:return $S[$O];
 break;
 case 2:return $S[$O-1];
 break;
-case 3:return " ";
+case 3:return "";
 break;
 case 4:$thisS = $S[$O];
 break;
@@ -74,6 +74,10 @@ case 9:
 	
 break;
 case 10:
+	    $thisS = $S[$O-2] . $S[$O-1] . $S[$O];
+	
+break;
+case 11:
 	    $thisS = $this->toWiki($S[$O]);
 	
 break;
@@ -252,7 +256,7 @@ break;
 					
 					$r = $this->parser_performAction($yyval->S, $yytext, $yyleng, $yylineno, $action[1], $vstack, $lstack, $vstackCount - 1);
 					
-					if (empty($r) == false) {
+					if (isset($r)) {
 						return $r;
 					}
 					
@@ -542,15 +546,10 @@ case 1:
 	
 break;
 case 2:
-		if ($this->isLastInHtmlElementStack($yy_->yytext)) {
+		$element = $this->unStackHtmlElement($yy_->yytext);
+		if ($this->compareElementClosingToYytext($element, $yy_->yytext) && $this->htmlElementStackCount == 0) {
+		  $yy_->yytext = $element;
 		  $this->popState();
-		  $close = $yy_->yytext;
-		  $yy_->yytext = array_pop($this->htmlElementStack);
-		  $yy_->yytext['close'] = $close;
-		  if ($yy_->yytext['state'] == 'open') {
-		      $yy_->yytext['state'] = 'closed';
-		  }
-		  $this->htmlElementStackCount--;
     	  return "HTML_TAG_CLOSE";
     	}
     	return 7;
@@ -558,8 +557,11 @@ case 2:
 break;
 case 3:
 		$this->stackHtmlElement($yy_->yytext);
-		$this->begin('htmlElement');
-    	return "HTML_TAG_OPEN";
+		if ($this->htmlElementStackCount == 1) {
+		  $this->begin('htmlElement');
+    	  return "HTML_TAG_OPEN";
+    	}
+    	return 7;
 	
 break;
 case 4:return 7;

@@ -1,30 +1,28 @@
 <?php
-// (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-//
-// All Rights Reserved. See copyright.txt for details and a complete list of authors.
-// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id$
-
 class JisonParser_Html_Handler extends JisonParser_Html
 {
+	public $parsing = false;
+	public $parseDepth = 0;
 	private $parserDebug = true;
 	private $lexerDebug = true;
 
 	/* html tag tracking */
-	public $nonBreakingTagDepth = 0;
 	public $typeIndex = array();
 	public $htmlElementStack = array();
 	public $htmlElementStackCount = 0;
 	public $typeStack = array();
-	public $typeStash = array();
+	public $stash = array();
 
-	/* table tracking */
-	public $tableRow = 0;
-	public $tableData = 0;
+	public $blockSyntax = array(
+		"\n!",
+		"\n*",
+		"\n#",
+		"\n+",
+		"\n;",
+		"\n{r2l}",
+		"\n{l2r}",
+	);
 
-	/* list tracking */
-	public $isFirstLine = true;
-	public $line = 0;
 
 /*
 	function parser_performAction(&$thisS, $yytext, $yyleng, $yylineno, $yystate, $S, $_S, $O)
@@ -51,214 +49,352 @@ class JisonParser_Html_Handler extends JisonParser_Html
 		die;
 	}
 */
+	public function __construct(JisonParser_Html &$Parser = null)
+	{
+		if (empty($Parser)) {
+			$this->Parser = &$this;
+		} else {
+			$this->Parser = &$Parser;
+		}
+
+		parent::__construct();
+	}
+
+	public function preParse(&$input)
+	{
+		if ($this->Parser->parseDepth == 0) {
+			$this->Parser->typeIndex = array();
+			$this->Parser->typeStack = array();
+			$this->Parser->type = array();
+		}
+
+		$this->htmlElementStack = array();
+		$this->htmlElementStackCount = 0;
+	}
 
 	public function parse($input)
 	{
-		$this->nonBreakingTagDepth = 0;
-		$this->typeIndex = array();
-		$this->tableRow = 0;
-		$this->tableData = 0;
+		if ($this->parsing == true) {
+			$class = get_class($this->Parser);
+			$parser = new $class($this->Parser);
+			$output = $parser->parse($input);
+			unset($parser);
+		} else {
+			$this->parsing = true;
 
-		//echo "parsing:" . $input;
+			$this->preParse($input);
 
-		$parsed = parent::parse($input);
+			$this->Parser->parseDepth++;
+			//echo "parsing:'{$input}'";
+			$output = parent::parse($input);
+			$this->Parser->parseDepth--;
 
-		/*if ($parsed{strlen($parsed) - 1} == "\n") {
-			$parsed = substr($parsed, 0, -1);
-		}*/
+			$this->parsing = false;
+			$this->postParse($output);
+		}
 
-		return $parsed;
+		return $output;
+	}
+
+	public function postParse(&$output)
+	{
+		/* While parsing we add a "\n" to the beginning of all block types, but if the input started with a block char,
+		 * it is also valid, but treated and restored as with "\n" just before it, here we remove that extra "\n" but
+		 * only if we are a block, which are determined from $this->blockChars
+		*/
+		if ($this->Parser->parseDepth == 0) {
+			foreach($this->blockSyntax as $syntax) {
+				if (strpos($output, $syntax) === 0) {
+					$output = substr($output, 1); //we only want to get rid of "\n", not the whole syntax
+				}
+			}
+		}
 	}
 
 	public function toWiki($tag, $contents = null)
 	{
-		switch($tag['state']) {
-			case "closed":
-				$element = $tag['open'] . $contents . $tag['close'];
-				break;
-			case "repaired":
-				$element = $tag['open'] . $contents;
-				break;
-			case "inline":
-				$element = $tag['open'];
-				break;
-		}
-
 		//helpers
-		if ($this->hasClass($tag['params'], "jpwch")) {
+		if ($this->hasClass($tag, "jpwch")) {
 			return "";
 		}
 
 		//non wiki tags are ignored
-		if (!$this->hasClass($tag['params'], "jpwc")) {
+		if (!$this->hasClass($tag, "jpwc")) {
+			switch($tag['state']) {
+				case "closed":
+					$element = $tag['open'] . $this->parse($contents) . $tag['close'];
+					break;
+				case "repaired":
+					$element = $tag['open'] . $this->parse($contents);
+					break;
+				case "inline":
+					$element = $tag['open'];
+					break;
+			}
+
 			return $element;
 		}
 
 		$result = '';
 
+		if (!isset($this->Parser->typeStack[$tag['type']])) {
+			$this->Parser->typeStack[$tag['type']] = 0;
+		}
+		$this->Parser->typeStack[$tag['type']]++;
+
+
+		if (!isset($this->Parser->typeIndex[$tag['type']])) {
+			$this->Parser->typeIndex[$tag['type']] = 0;
+		}
+		$this->Parser->typeIndex[$tag['type']]++;
+
 		switch($tag['type'])
 		{
+			//plugin
+			case "plugin":
+				$result = urldecode($this->param($tag, 'data-syntax'));
+				break;
+
+
+			//start block type
 			//header
 			case "header":
-				$hCount = (int)substr($tag['name'], 1);
-				$result = str_repeat("!", min($hCount, 6)) . $contents;
+				$hCount = $this->param($tag, 'data-count');
+				$hCount = (empty($hCount) == true ? (int)substr($tag['name'], 1) : $hCount);
+				$result = "\n" . str_repeat("!", $hCount) . $this->parse($contents);
 				break;
 
 
 			//list
 			case "listParent":
-				foreach ($this->unStash("listParent") as $list) {
-					$result .= $this->newLine() . $list;
+				$contents = $this->parse($contents);
+				$stash = $this->unStashStatic("listParent");
+				end($stash);
+				$lastKey = key($stash);
+				reset($stash);
+
+				foreach($stash as $key => $list) {
+					$result .= "\n" . $list['symbol'] . $this->parse($list['contents']);
 				}
+
 				break;
 			case "listUnordered":
 			case "listOrdered":
-			case "listToggle":
+			case "listToggleUnordered":
+			case "listToggleOrdered":
 			case "listBreak":
-				$symbol = array(
+				$symbols = array(
 					"listUnordered" => "*",
 					"listOrdered" => "#",
-					"listToggle" => "-",
+					"listToggleUnordered" => "*",
+					"listToggleOrdered" => "#",
 					"listBreak" => "+"
 				);
-
 				$depth = $this->typeDepth("listParent");
-				$lCount = str_repeat($symbol[$tag['type']], $depth);
-				$this->stash($lCount . $contents, "listParent");
+
+				$symbol = str_repeat($symbols[$tag['type']], $depth);
+
+				if (strstr($tag['type'], "Toggle") !== false) {
+					$symbol .= '-';
+				}
+
+				$this->stashStatic(array('symbol' => $symbol, 'contents' => ltrim($contents, "\n\r")), 'listParent');
 				break;
 
 
 			//definition list
 			case "listDefinitionParent":
+				$contents = $this->parse($contents);
 				$stash = $this->unStash("listDefinitionParent");
-				foreach ($stash as $list) {
-					$result .= $this->newLine() . ";" . $list;
+				foreach($stash as $list) {
+					if (isset($list[0])) {
+						$result .= "\n;" . $list[0] . (isset($list[1]) ? ":" . $list[1] : '');
+					}
 				}
 				break;
 			case "listDefinition":
-				$this->stash($contents, "listDefinitionParent");
+				$this->stash(array(ltrim($contents, "\n\r")), "listDefinitionParent");
 				break;
 			case "listDefinitionDescription":
 				$stash = $this->unStash("listDefinitionParent");
-				$stash[count($stash) - 1] .= ":" . $contents;
+				$stash[max(count($stash) - 1, 0)][] = $contents;
 				$this->replaceStash($stash, "listDefinitionParent");
-				break;
-
-
-			//noParse
-			case "noParse":
-				$result .= "~np~" . $contents . "~/np~";
-				break;
-
-
-			//bold
-			case "bold":
-				$result .= "__" . $contents . "__";
-				break;
-
-
-			//italics
-			case "italics":
-				$result .= "''" . $contents . "''";
-				break;
-
-
-			//table
-			case "table":
-				$stash = $this->unStash("table");
-				$this->line += count($stash);
-				$result .= "||" . implode("\n", $stash) . "||";
-				break;
-			case "tableRow":
-				foreach ($this->unStash('tableRow') as $row) {
-					$this->stash(implode("|", $row), "table");
-				}
-				break;
-			case "tableData":
-				$this->stash($contents, "tableRow", $this->typeIndex['tableRow']);
-				break;
-
-
-			//strike/del
-			case "strike":
-				$result .= "--" . $contents . "--";
-				break;
-
-
-			//center
-			case "center":
-				return "::" . $contents . "::";
-
-
-			//code
-			case "code":
-				$result .= "-+" . $contents . "+-";
-				break;
-
-
-			//horizontal row
-			case "horizontalRow":
-				$result .= "---";
-				break;
-
-
-			//underline
-			case "underscore":
-				$result .= "===" . $contents . "===";
-
-
-			//center
-			case "center":
-				$result .= "::" . $contents . "::"; //TODO: add in 3 ":::" if prefs need it
-
-
-			//line
-			case "line":
-				$result .= $this->newLine();
-				break;
-			case "forcedLineEnd":
-				$result .= "%%%";
-				break;
-
-
-			//simple box
-			case "simpleBox":
-				$result .= "^" . $contents . "^";
-				break;
-
-
-			//color
-			case "color":
-				$result .= "~~" . $this->style($tag['params'], "color") . ":" . $contents . "~~";
 				break;
 
 
 			//l2r
 			case "l2r":
-				$result .= "{l2r}" . $contents . $this->newLine();
+				$result = "\n{l2r}" . $this->parse($contents);
 				break;
 			//r2l
 			case "r2l":
-				$result .= "{r2l}" . $contents . $this->newLine();
+				$result = "\n{r2l}" . $this->parse($contents);
+				break;
+			//end block type
+
+
+			//noParse
+			case "noParse":
+				$result = $this->statedSyntax($tag, "~np~", $this->parse($contents) , "~/np~");
+				break;
+
+			//comment
+			case "comment":
+				$result = $this->statedSyntax($tag, "~tc~", $this->parse($contents) , "~/tc~");
+				break;
+
+			//doubleDash
+			case "doubleDash":
+				$result = " -- ";
 				break;
 
 
-
-			case "unlink":
-				$result .= "))" . $contents . "((";
+			//bold
+			case "bold":
+				$result = $this->statedSyntax($tag, "__", $this->parse($contents), "__");
 				break;
+
+
+			//italic
+			case "italic":
+				$result = $this->statedSyntax($tag, "''", $this->parse($contents), "''");
+				break;
+
+
+			//table
+			case "table":
+				$contents = $this->parse($contents);
+				$rows = $this->unStashStatic("table");
+				$result = $this->statedSyntax($tag, "||", implode("\n", $rows), "||");
+				break;
+			case "tableRow":
+				$contents = $this->parse($contents);
+				$columns = $this->unStashStatic('tableRow');
+				$this->stashStatic(implode("|", $columns), "table");
+				break;
+			case "tableData":
+				$contents = $this->parse($contents);
+				$this->stashStatic($contents, 'tableRow');
+				break;
+
+
+			//strike
+			case "strike":
+				$result = $this->statedSyntax($tag, "--", $this->parse($contents), "--");
+				break;
+
+
+			//center
+			case "center":
+				$result = $this->statedSyntax($tag, "::", $this->parse($contents), "::");
+				break;
+
+			//code
+			case "code":
+				$result = $this->statedSyntax($tag, "-+", $this->parse($contents), "+-");
+				break;
+
+
+			//horizontal row
+			case "horizontalRow":
+				$result = "---";
+				break;
+
+
+			//underline
+			case "underscore":
+				$result = $this->statedSyntax($tag, "===", $this->parse($contents), "===");
+				break;
+
+			//center
+			case "center":
+				$result = $this->statedSyntax($tag, "::", $this->parse($contents), "::"); //TODO: add in 3 ":::" if prefs need it
+				break;
+
+			//line
+			case "line":
+				$this->skipNewLine = true;
+				$result = $this->newLine();
+				break;
+			case "forcedLineEnd":
+				$result = "%%%";
+				break;
+
+
+			//box
+			case "box":
+				$result = $this->statedSyntax($tag, "^", $this->parse($contents), "^");
+				break;
+
+
+			//color
+			case "color":
+				$result = $this->statedSyntax($tag, "~~", $this->style($tag, "color") . ":" . $this->parse($contents), "~~");
+				break;
+
+			//pre
+			case "preFormattedText":
+				$result = $this->statedSyntax($tag, "~pp~", $this->parse($contents), "~/pp~");
+				break;
+
+			//titleBar
+			case "titleBar":
+				$result = $this->statedSyntax($tag, "-=", $this->parse($contents), "=-");
+				break;
+
+
 
 
 			//links
 			case "link": //TODO: finish implementation, need to handle alias description
-				$result .= "((" . $contents . "))";
+				$page = $this->param($tag, 'data-page');
+				$contents = $this->parse($contents);
+				if ($page != $contents) {
+					$page .= '|' . $contents;
+				}
+				$reltype = $this->param($tag, 'data-reltype');
+				$result = $this->statedSyntax($tag, "($reltype(", $page, "))");
+				break;
+			case "linkWord":
+				$result = trim($contents);
+				break;
+			case "linkNp":
+				$result = $this->statedSyntax($tag, "))", $this->parse($contents), "((");
 				break;
 			case "linkExternal":
-				$result .= "[" . $contents . "]";
+				$href = $this->param($tag, 'href');
+				$contents = $this->parse($contents);
+				if (!empty($href) && $href != $contents) {
+					$href .= '|';
+				} else {
+					$href = '';
+				}
+
+				$result = $this->statedSyntax($tag, "[" , $href . $contents , "]");
 				break;
+
+			//unlink
+			case "unlink":
+				$result = $this->parse($contents);
+				break;
+
+			//unhandled
+			default:
+				throw new Exception("Unhandled type:" . $tag['type']);
 		}
 
-		array_pop($this->typeStack);
+		$this->Parser->typeStack[$tag['type']]--;
+
+		return $result;
+	}
+
+	private function statedSyntax($tag, $open, $contents, $close)
+	{
+		if ($this->param($tag, 'data-repair')) {
+			$result = $open . $contents;
+		} else {
+			$result = $open . $contents . $close;
+		}
 
 		return $result;
 	}
@@ -270,19 +406,17 @@ class JisonParser_Html_Handler extends JisonParser_Html
 
 	public function lineEnd($line)
 	{
-		return "";
+		return $line;
 	}
 
 	public function newLine()
 	{
-		$this->line++;
-
-		if ($this->isFirstLine == false) {
-			$this->isFirstLine = true;
-			return "";
+		if ($this->skipNewLine == false) {
+			return "\n";
 		}
 
-		return "\n";
+		$this->skipNewLine = false;
+		return "";
 	}
 
 	private function parseElementParameters($params)
@@ -321,89 +455,111 @@ class JisonParser_Html_Handler extends JisonParser_Html
 		return $parsedParams;
 	}
 
-	public function stash($whatToStash, $type, $index = -1)
+	public function stashStatic($whatToStash, $id)
 	{
-		$depth = $this->typeDepth($type);
-
-		if (!isset($this->typeStash[$type . $depth])) {
-			$this->typeStash[$type . $depth] = array();
+		if (!isset($this->Parser->stash[$id])) {
+			$this->Parser->stash[$id] = array();
 		}
 
-		if ($index > -1) {
-			if (!isset($this->typeStash[$type . $depth][$index])) {
-				$this->typeStash[$type . $depth][$index] = array();
-			}
-			$this->typeStash[$type . $depth][$index][] = $whatToStash;
-		} else {
-			$this->typeStash[$type . $depth][] = $whatToStash;
+		$this->Parser->stash[$id][] = $whatToStash;
+	}
+
+	public function replaceStashStatic($array = array(), $id)
+	{
+		$this->Parser->stash[$id] = $array;
+	}
+
+	public function unStashStatic($id)
+	{
+		$stash = array();
+
+		if (isset($this->Parser->stash[$id])) {
+			$stash = $this->Parser->stash[$id];
+			unset($this->Parser->stash[$id]);
 		}
+
+		return (isset($stash) ? $stash : array());
+	}
+
+	public function stash($whatToStash, $type)
+	{
+		$this->stashStatic($whatToStash, $type . $this->typeDepth($type));
 	}
 
 	public function replaceStash($array = array(), $type)
 	{
-		$this->typeStash[$type . $this->typeDepth($type)] = $array;
+		$this->replaceStashStatic($array, $type . $this->typeDepth($type));
 	}
 
 	public function unStash($type)
 	{
-		$depth = $this->typeDepth($type);
-		$stash = $this->typeStash[$type . $depth];
-		unset($this->typeStash[$type . $depth]);
-		return (isset($stash) ? $stash : array());
+		return $this->unStashStatic($type . $this->typeDepth($type));
 	}
 
 	public function typeDepth($type)
 	{
-		$types = array_count_values($this->typeStack);
-		return (isset($types[$type]) ? $types[$type] : 0);
+		return (isset($this->Parser->typeStack[$type]) ? $this->Parser->typeStack[$type] : -1);
 	}
 
-	public function hasClass(&$params, $class)
+	public function hasClass(&$tag, $class)
 	{
-		return (isset($params['class']) && in_array($class, $params['class']));
+		return (isset($tag['params']['class']) && in_array($class, $tag['params']['class']));
 	}
 
-	public function paramEquals(&$params, $param, $equals)
+	public function paramEquals(&$tag, &$param, $equals)
 	{
-		return (isset($params[$param]) && strtolower($params[$param]) == strtolower($equals));
+		return (isset($tag['params'][$param]) && strtolower($tag['params'][$param]) == strtolower($equals));
 	}
 
-	public function styleEquals(&$params, $style, $equals)
+	public function param(&$tag, $param)
 	{
-		return (isset($params['style'][$style]) && strtolower($params['style'][$style]) == strtolower($equals));
+		return (isset($tag['params'][$param]) ? $tag['params'][$param] : '');
 	}
 
-	public function style(&$params, $style)
+	public function styleEquals(&$tag, $style, $equals)
 	{
-		if (isset($params['style'][$style])) {
-			return $params['style'][$style];
+		return (isset($tag['params']['style'][$style]) && strtolower($tag['params']['style'][$style]) == strtolower($equals));
+	}
+
+	public function style(&$tag, $style)
+	{
+		if (isset($tag['params']['style'][$style])) {
+			return $tag['params']['style'][$style];
 		}
 		return '';
 	}
 
-	public function hasStyle(&$params, $style)
+	public function hasStyle(&$tag, $style)
 	{
-		return isset($params['style'][$style]);
+		return isset($tag['params']['style'][$style]);
 	}
 
-	public function paramContains(&$params, $param, $contains)
+	public function paramContains(&$tag, $param, $contains)
 	{
-		return (isset($params[$param]) && strstr($params[$param], $contains) !== false);
+		return (isset($tag['params'][$param]) && strstr($tag['params'][$param], $contains) !== false);
 	}
 
 	public function stackHtmlElement($tag)
 	{
 		$tag = $this->tag($tag);
 		$this->htmlElementStack[] = $tag;
-		if (!empty($tag['type'])) {
-			$this->typeStack[] = $tag['type'];
-			if (!isset($this->typeIndex[$tag['type']])) {
-				$this->typeIndex[$tag['type']] = 0;
-			} else {
-				$this->typeIndex[$tag['type']]++;
-			}
-		}
 		$this->htmlElementStackCount++;
+	}
+
+	public function unStackHtmlElement($ending = '')
+	{
+		$this->htmlElementStackCount--;
+		$element = array_pop($this->htmlElementStack);
+		$element['close'] = $ending;
+		if ($element['state'] == 'open') {
+			$element['state'] = 'closed';
+		}
+
+		if (!empty($element['type'])) {
+			array_pop($this->Parser->typeIndex);
+		}
+
+		return $element;
 	}
 
 	public function tag($tag)
@@ -414,8 +570,11 @@ class JisonParser_Html_Handler extends JisonParser_Html
 		$end = array_pop($parts);
 		$params = implode(" ", $parts);
 		$params = $this->parseElementParameters($params);
+		$type = "";
 
-		$type = JisonParser_WikiCKEditor_Handler::typeFromShorthand(strtolower($params['data-t']));
+		if (isset($params['data-t'])) {
+			$type = JisonParser_WikiCKEditor_Handler::typeFromShorthand(strtolower($params['data-t']));
+		}
 
 		return array(
 			"name" => $name,
@@ -433,11 +592,10 @@ class JisonParser_Html_Handler extends JisonParser_Html
 		return $tag;
 	}
 
-	public function isLastInHtmlElementStack($yytext)
+	public function compareElementClosingToYytext($tag, $yytext)
 	{
-		$htmlElement = end($this->htmlElementStack);
 		$yytext = strtolower(str_replace(' ', '', $yytext));
-		if ($yytext == strtolower("</" . $htmlElement['name'] . ">")) {
+		if ($yytext == strtolower("</" . $tag['name'] . ">")) {
 			return true;
 		}
 	}
