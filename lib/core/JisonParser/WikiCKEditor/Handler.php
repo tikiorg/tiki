@@ -158,6 +158,21 @@ class JisonParser_WikiCKEditor_Handler extends JisonParser_Wiki_Handler
 		));
 	}
 
+
+	/**
+	 * syntax handler: header, \n!$content
+	 * <p>
+	 * Uses $this->Parser->header as a processor.  Is called from $this->block().
+	 *
+	 * @access  public
+	 * @param   $content parsed string found inside detected syntax
+	 * @return  string  $content desired output from syntax
+	 */
+	function header($content) //!content
+	{
+		parent::header($content, true);
+	}
+
 	/**
 	 * Increments the html tag
 	 * are static, so that all index are unique
