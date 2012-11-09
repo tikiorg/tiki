@@ -29,6 +29,7 @@ class JisonParser_WikiCKEditor_Handler extends JisonParser_Wiki_Handler
 		"listDefinitionParent" =>       "ldp",
 		"listDefinition" =>             "ld",
 		"listDefinitionDescription" =>  "ldd",
+		"listEmpty" =>                  "le",
 		"line" =>                       "ln",
 		"forcedLineEnd" =>              "fln",
 		"unlink" =>                     "ul",

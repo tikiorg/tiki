@@ -167,7 +167,7 @@ class JisonParser_Html_Handler extends JisonParser_Html
 
 			//list
 			case "listParent":
-				$contents = $this->parse($contents);
+				$result .= $this->parse($contents);
 				$stash = $this->unStashStatic("listParent");
 				end($stash);
 				$lastKey = key($stash);
@@ -177,6 +177,9 @@ class JisonParser_Html_Handler extends JisonParser_Html
 					$result .= "\n" . $list['symbol'] . $this->parse($list['contents']);
 				}
 
+				break;
+			case "listEmpty":
+				$result .= $this->parse($contents);
 				break;
 			case "listUnordered":
 			case "listOrdered":
@@ -188,7 +191,8 @@ class JisonParser_Html_Handler extends JisonParser_Html
 					"listOrdered" => "#",
 					"listToggleUnordered" => "*",
 					"listToggleOrdered" => "#",
-					"listBreak" => "+"
+					"listBreak" => "+",
+					"listEmpty" =>  ""
 				);
 				$depth = $this->typeDepth("listParent");
 
