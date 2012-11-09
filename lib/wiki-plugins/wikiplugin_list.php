@@ -191,7 +191,7 @@ function wp_list_findfields($data)
 	// Heuristic based: only lowecase letters, digits and underscore
 	$fields = array();
 	foreach ($data as $candidate) {
-		if (preg_match("/^[a-z0-9_]+$/", $candidate)) {
+		if (preg_match("/^[a-z0-9_]+$/", $candidate) || substr($candidate, 0, strlen('tracker_field_')) === 'tracker_field_') {
 			$fields[] = $candidate;
 		}
 	}
