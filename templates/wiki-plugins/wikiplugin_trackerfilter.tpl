@@ -88,15 +88,15 @@ function tf_export_submit(fm) {
 			</select>
 {*------checkbox, radio *}
 		{else}
-			<input {if $filter.format eq "c"}type="checkbox"{else}type="radio"{/if}
+			<label><input {if $filter.format eq "c"}type="checkbox"{else}type="radio"{/if}
 					name="f_{$filter.fieldId}{if $filter.format eq "c"}[]{/if}"
 					value=""{if !$filter.selected} checked="checked"{/if} />
-			{tr}Any{/tr}{if $line ne 'y'}<br />{/if}
+			{tr}Any{/tr}</label>{if $line ne 'y'}<br />{/if}
 			{section name=io loop=$filter.opts}
-				<input {if $filter.format eq "c"}type="checkbox"{else}type="radio"{/if}
+				<label><input {if $filter.format eq "c"}type="checkbox"{else}type="radio"{/if}
 						name="f_{$filter.fieldId}{if $filter.format eq "c"}[]{/if}"
 						value="{$filter.opts[io].id|escape:url}"
-						{if $filter.opts[io].selected eq "y"} checked="checked"{/if} />
+						{if $filter.opts[io].selected eq "y"} checked="checked"{/if} /></label>
 				{$filter.opts[io].name|tr_if}
 				{if $line ne 'y'}<br />{/if}
 			{/section}
