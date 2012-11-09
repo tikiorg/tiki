@@ -145,6 +145,20 @@ class JisonParser_WikiCKEditor_Handler extends JisonParser_Wiki_Handler
 
 
 	/**
+	 * syntax handler: link, [$content|$content], ((Page)), ((Page|$content)), (type(Page)), (type(Page|$content)), ((external:Page)), ((external:Page|$content))
+	 *
+	 * @access  public
+	 * @param   $type string type, np, wiki, alias (or whatever is "(here(", word
+	 * @param   $content string found inside detected syntax
+	 * @return  string  $content desired output from syntax
+	 */
+	function link($type, $content) //[content|content]
+	{
+		return parent::link($type, $content, true);
+	}
+
+
+	/**
 	 * syntax handler: tiki comment, ~tc~$content~/tc~
 	 *
 	 * @access  public
@@ -170,7 +184,7 @@ class JisonParser_WikiCKEditor_Handler extends JisonParser_Wiki_Handler
 	 */
 	function header($content) //!content
 	{
-		parent::header($content, true);
+		return parent::header($content, true);
 	}
 
 	/**

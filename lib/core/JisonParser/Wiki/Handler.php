@@ -1130,10 +1130,12 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	 * syntax handler: link, [$content|$content], ((Page)), ((Page|$content)), (type(Page)), (type(Page|$content)), ((external:Page)), ((external:Page|$content))
 	 *
 	 * @access  public
-	 * @param   $content parsed string found inside detected syntax
+	 * @param   $type string type, np, wiki, alias (or whatever is "(here(", word
+	 * @param   $content string found inside detected syntax
+	 * @param   $includePageAsDataAttribute bool includes the page as an attribute in the link "data-page"
 	 * @return  string  $content desired output from syntax
 	 */
-	function link($type, $content) //[content|content]
+	function link($type, $content, $includePageAsDataAttribute = false) //[content|content]
 	{
 		global $tikilib, $prefs;
 
@@ -1164,6 +1166,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 			->setSuppressIcons($this->getOption('suppress_icons'))
 			->setSkipPageCache($this->getOption('skipPageCache'))
 			->setWikiExternal($wikiExternal)
+			->includePageAsDataAttribute($includePageAsDataAttribute)
 			->getHtml();
 	}
 
