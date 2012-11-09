@@ -145,6 +145,8 @@ class JisonParser_OutputTest extends JisonParser_Abstract
 			'listnested1'       => array(),
 			'listnested2'       => array(),
 
+			'list_start_nested' => array("\n**test\n*test\n**test\n*test\n***test\n****test\n*test\n", ''),
+
 			//html output
 			'html_not_allowed'  => array(),
 			'html_allowed'  => array(),
