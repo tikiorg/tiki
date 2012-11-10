@@ -40,7 +40,7 @@ usage: $0 [<switches>] open|fix
 -h           show help
 -u user      owner of files (default: $AUSER)
 -g group     group of files (default: $AGROUP)
--v virtuals  list of virtuals (for multitiki, exemple: "www1 www2")
+-v virtuals  list of virtuals (for multitiki, example: "www1 www2")
 -n           not interactive mode
 EOF
 }
