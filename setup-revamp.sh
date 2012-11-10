@@ -13,14 +13,15 @@
 # ---------------------------
 #
 # This version is supposed to act almost the same way as setup.sh revision 43875
-# if this script runs in production mode. Minor changes are:
+# if this script runs in production mode with commands 'fix' and 'open'. Minor changes
+# are:
 # - default is to do nothing
 # - debugging mode for further improvements
 #   and adaption of permission check data
 #   including a debugging option
 # - PATH
-# - it should be possible to run this script as executable
 # - order of commands changed
+# - it should be possible to run this script as executable
 # - command blocks are encapsulated in functions
 #
 # further plan for smooth transition: at some time move actual
@@ -30,22 +31,104 @@
 # part 0 - choose production mode or verbose debugging mode
 # ---------------------------------------------------------
 
-#DEBUG=0 # production mode
-DEBUG=1 # debugging mode
-
+DEBUG=0 # production mode
+#DEBUG=1 # debugging mode
+DEBUG_PATH=0 # production mode
+#DEBUG_PATH=1 # debugging mode
+DEBUG_UNIX=0 # production mode
+#DEBUG_UNIX=1 # debugging mode
+DEBUG_PREFIX='D>'
 ECHOFLAG=1 # one empty line before printing used options in debugging mode
 
 # part 1 - preliminaries
 # ----------------------
 
 PERMISSIONCHECK_DIR="permissioncheck"
+SEARCHPATH="/bin /usr/bin /sbin /usr/sbin /usr/local/bin /usr/local/sbin /opt/bin /opt/sbin /opt/local/bin /opt/local/sbin"
 #USE_CASES_FILE="usecases.txt"
 USE_CASES_FILE="usecases.bin"
 USE_CASES_PATH=${PERMISSIONCHECK_DIR}
 USE_CASES_NAME=${USE_CASES_PATH}/${USE_CASES_FILE}
 
+define_path() {
+# define PATH for executable mode
+if [ ${DEBUG_PATH} = '1' ] ; then
+	echo ${DEBUG_PREFIX}
+	echo ${DEBUG_PREFIX} old path: ${PATH}
+	echo ${DEBUG_PREFIX}
+fi
+#PATH="${PATH}:/bin:/usr/bin:/sbin:/usr/sbin:/usr/local/bin:/usr/local/sbin:/opt/bin:/opt/sbin:/opt/local/bin:/opt/local/sbin"
+#for ADDPATH in `echo /bin /usr/bin /sbin /usr/sbin /usr/local/bin /usr/local/sbin /opt/bin /opt/sbin /opt/local/bin /opt/local/sbin` ; do
+for ADDPATH in ${SEARCHPATH} ; do
+	if [ -d ${ADDPATH} ] ; then
+		PATH="${PATH}:${ADDPATH}"
+		if [ ${DEBUG_PATH} = '1' ] ; then
+			 echo ${DEBUG_PREFIX} ${ADDPATH} exists
+		fi
+	else
+		if [ ${DEBUG_PATH} = '1' ] ; then
+			echo ${DEBUG_PREFIX} ${ADDPATH} does not exist
+		fi
+	fi
+done
+if [ ${DEBUG_PATH} = '1' ] ; then
+	echo ${DEBUG_PREFIX}
+	echo ${DEBUG_PREFIX} new path: ${PATH}
+fi
+}
+
+define_path
+
+# set used commands
+if [ ${DEBUG_UNIX} = '1' ] ; then
+	echo ${DEBUG_PREFIX}
+	echo ${DEBUG_PREFIX} before:
+	echo ${DEBUG_PREFIX} CAT=${CAT}
+	echo ${DEBUG_PREFIX} CHGRP=${CHGRP}
+	echo ${DEBUG_PREFIX} CHMOD=${CHMOD}
+	echo ${DEBUG_PREFIX} CHOWN=${CHOWN}
+	echo ${DEBUG_PREFIX} FIND=${FIND}
+	echo ${DEBUG_PREFIX} ID=${ID}
+	echo ${DEBUG_PREFIX} MKDIR=${MKDIR}
+	echo ${DEBUG_PREFIX} MV=${MV}
+	echo ${DEBUG_PREFIX} RM=${RM}
+	echo ${DEBUG_PREFIX} SORT=${SORT}
+	echo ${DEBUG_PREFIX} TOUCH=${TOUCH}
+	echo ${DEBUG_PREFIX} UNIQ=${UNIQ}
+fi
+# list of commands
+CAT=`which cat`
+CHGRP=`which chgrp`
+CHMOD=`which chmod`
+CHOWN=`which chown`
+FIND=`which find`
+ID=`which id`
+MKDIR=`which mkdir`
+MV=`which mv`
+RM=`which rm`
+SORT=`which sort`
+TOUCH=`which touch`
+UNIQ=`which uniq`
+if [ ${DEBUG_UNIX} = '1' ] ; then
+	echo ${DEBUG_PREFIX}
+	echo ${DEBUG_PREFIX} after:
+	echo ${DEBUG_PREFIX} CAT=${CAT}
+	echo ${DEBUG_PREFIX} CHGRP=${CHGRP}
+	echo ${DEBUG_PREFIX} CHMOD=${CHMOD}
+	echo ${DEBUG_PREFIX} CHOWN=${CHOWN}
+	echo ${DEBUG_PREFIX} FIND=${FIND}
+	echo ${DEBUG_PREFIX} ID=${ID}
+	echo ${DEBUG_PREFIX} MKDIR=${MKDIR}
+	echo ${DEBUG_PREFIX} MV=${MV}
+	echo ${DEBUG_PREFIX} RM=${RM}
+	echo ${DEBUG_PREFIX} SORT=${SORT}
+	echo ${DEBUG_PREFIX} TOUCH=${TOUCH}
+	echo ${DEBUG_PREFIX} UNIQ=${UNIQ}
+fi
+
 # hint for users
-POSSIBLE_COMMANDS='open|fix|nothing'
+#POSSIBLE_COMMANDS='open|fix|nothing'
+POSSIBLE_COMMANDS="fix|insane|mixed|morepain|moreworry|nothing|open|pain|paranoia|paranoia-suphp|risky|worry"
 #HINT_FOR_USER="Type 'fix', 'nothing' or 'open' as command argument."
 HINT_FOR_USER="\nType 'fix', 'nothing' or 'open' as command argument.
 \nIf you used Tiki Permission Check via PHP, you know which of the following commands will probably work:
@@ -53,7 +136,10 @@ HINT_FOR_USER="\nType 'fix', 'nothing' or 'open' as command argument.
 
 usage() {
 #usage: $0 [<switches>] open|fix
-	cat <<EOF
+	#cat <<EOF
+	${CAT} <<EOF
+usage: sh `basename $0` [<switches>] ${POSSIBLE_COMMANDS}
+or if executable
 usage: $0 [<switches>] ${POSSIBLE_COMMANDS}
 -h           show help
 -u user      owner of files (default: $AUSER)
@@ -91,13 +177,13 @@ while getopts "hu:g:v:nd:" OPTION; do
 	if [ ${DEBUG} = '1' ] ; then
 		if [ ${ECHOFLAG} = '1' ] ; then
 			ECHOFLAG=0
-			echo
+			echo ${DEBUG_PREFIX}
 		fi
 		OUTPUT="option: -${OPTION}"
 		if [ -n ${OPTARG} ] ; then
 			OUTPUT="${OUTPUT} ${OPTARG}"
 		fi
-		echo ${OUTPUT}
+		echo ${DEBUG_PREFIX} ${OUTPUT}
 	fi
 done
 shift $(($OPTIND - 1))
@@ -106,94 +192,22 @@ shift $(($OPTIND - 1))
 # default: do nothing
 if [ -z $1 ]; then
 	#COMMAND=fix
-	COMMAND=nothing
+	COMMAND="nothing"
 else
 	COMMAND=$1
 fi
 
 if [ ${DEBUG} = '1' ] ; then
-	echo
-	echo COMMAND: ${COMMAND}
+	echo ${DEBUG_PREFIX}
+	echo ${DEBUG_PREFIX} COMMAND: ${COMMAND}
 fi
 
 if [ ${DEBUG} = '1' ] ; then
-	echo
-	#echo usage output: begin
+	echo ${DEBUG_PREFIX}
+	echo ${DEBUG_PREFIX} usage output: begin
 	usage
-	#echo usage output: end
-fi
-
-define_path() {
-# define PATH for executable mode
-if [ ${DEBUG} = '1' ] ; then
-	echo
-	echo old path: ${PATH}
-fi
-#PATH="${PATH}:/bin:/usr/bin:/sbin:/usr/sbin:/usr/local/bin:/usr/local/sbin:/opt/bin:/opt/sbin:/opt/local/bin:/opt/local/sbin"
-for ADDPATH in `echo /bin /usr/bin /sbin /usr/sbin /usr/local/bin /usr/local/sbin /opt/bin /opt/sbin /opt/local/bin /opt/local/sbin` ; do
-	if [ -d ${ADDPATH} ] ; then
-		PATH="${PATH}:${ADDPATH}"
-		if [ ${DEBUG} = '1' ] ; then
-			 echo ${ADDPATH} exists
-		fi
-	else
-		if [ ${DEBUG} = '1' ] ; then
-			echo ${ADDPATH} does not exist
-		fi
-	fi
-done
-if [ ${DEBUG} = '1' ] ; then
-	echo new path: ${PATH}
-fi
-}
-
-define_path
-
-# set used commands
-if [ ${DEBUG} = '1' ] ; then
-	echo
-	echo before:
-	echo CAT=${CAT}
-	echo CHGRP=${CHGRP}
-	echo CHMOD=${CHMOD}
-	echo CHOWN=${CHOWN}
-	echo FIND=${FIND}
-	echo ID=${ID}
-	echo MKDIR=${MKDIR}
-	echo MV=${MV}
-	echo RM=${RM}
-	echo SORT=${SORT}
-	echo TOUCH=${TOUCH}
-	echo UNIQ=${UNIQ}
-fi
-# list of commands
-CAT=`which cat`
-CHGRP=`which chgrp`
-CHMOD=`which chmod`
-CHOWN=`which chown`
-FIND=`which find`
-ID=`which id`
-MKDIR=`which mkdir`
-MV=`which mv`
-RM=`which rm`
-SORT=`which sort`
-TOUCH=`which touch`
-UNIQ=`which uniq`
-if [ ${DEBUG} = '1' ] ; then
-	echo
-	echo after:
-	echo CAT=${CAT}
-	echo CHGRP=${CHGRP}
-	echo CHMOD=${CHMOD}
-	echo CHOWN=${CHOWN}
-	echo FIND=${FIND}
-	echo ID=${ID}
-	echo MKDIR=${MKDIR}
-	echo MV=${MV}
-	echo RM=${RM}
-	echo SORT=${SORT}
-	echo TOUCH=${TOUCH}
-	echo UNIQ=${UNIQ}
+	echo ${DEBUG_PREFIX} usage output: end
+	#echo ${DEBUG_PREFIX} 
 fi
 
 # part 2 - distribution check
@@ -257,10 +271,9 @@ fi
 
 get_permission_data() {
 	if [ ${DEBUG} = '1' ] ; then
-		echo
-		echo permissioncheck subdir: ${PERMISSIONCHECK_DIR}
+		echo ${DEBUG_PREFIX}
+		echo ${DEBUG_PREFIX} permissioncheck subdir: ${PERMISSIONCHECK_DIR}
 	fi
-	#USE____CASES_FILE="${WORK_DIR}/usecases.txt"
 	if [ -d ${USE_CASES_PATH} ] ; then
 		if [ -f ${USE_CASES_NAME} ] ; then
 			NO_MATCH=999
@@ -276,12 +289,12 @@ get_permission_data() {
 					MODEL_PERMS_WRITE_SUBDIRS=`echo ${ONE_USE_CASE_PER_LINE} | cut -d: -f4`
 					MODEL_PERMS_WRITE_FILES=`echo ${ONE_USE_CASE_PER_LINE} | cut -d: -f5`
 					if [ ${DEBUG} = '1' ] ; then
-						echo
-						echo MODEL_NAME=${MODEL_NAME}
-						echo MODEL_PERMS_SUBDIRS=${MODEL_PERMS_SUBDIRS}
-						echo MODEL_PERMS_FILES=${MODEL_PERMS_FILES}
-						echo MODEL_PERMS_WRITE_SUBDIRS=${MODEL_PERMS_WRITE_SUBDIRS}
-						echo MODEL_PERMS_WRITE_FILES=${MODEL_PERMS_WRITE_FILES}
+						echo ${DEBUG_PREFIX}
+						echo ${DEBUG_PREFIX} MODEL_NAME=${MODEL_NAME}
+						echo ${DEBUG_PREFIX} MODEL_PERMS_SUBDIRS=${MODEL_PERMS_SUBDIRS}
+						echo ${DEBUG_PREFIX} MODEL_PERMS_FILES=${MODEL_PERMS_FILES}
+						echo ${DEBUG_PREFIX} MODEL_PERMS_WRITE_SUBDIRS=${MODEL_PERMS_WRITE_SUBDIRS}
+						echo ${DEBUG_PREFIX} MODEL_PERMS_WRITE_FILES=${MODEL_PERMS_WRITE_FILES}
 					fi
 				fi
 			done < ${USE_CASES_NAME}
@@ -301,19 +314,19 @@ get_permission_data() {
 
 set_permission_data() {
 	if [ ${DEBUG} = '1' ] ; then
-		echo
-		echo ${FIND} . -type d -exec ${CHMOD} ${MODEL_PERMS_SUBDIRS} {} \;
-		echo ${FIND} . -type f -exec ${CHMOD} ${MODEL_PERMS_FILES} {} \;
+		echo ${DEBUG_PREFIX}
+		echo ${DEBUG_PREFIX} ${FIND} . -type d -exec ${CHMOD} ${MODEL_PERMS_SUBDIRS} {} \;
+		echo ${DEBUG_PREFIX} ${FIND} . -type f -exec ${CHMOD} ${MODEL_PERMS_FILES} {} \;
 	fi
-	#debug_breakpoint
+	debug_breakpoint
 	${FIND} . -type d -exec ${CHMOD} ${MODEL_PERMS_SUBDIRS} {} \;
 	${FIND} . -type f -exec ${CHMOD} ${MODEL_PERMS_FILES} {} \;
 	for WRITABLE in $DIRS ; do
 		if [ -d ${WRITABLE} ] ; then
 			if [ ${DEBUG} = '1' ] ; then
-				echo
-				echo ${FIND} ${WRITABLE} -type d -exec echo ${CHMOD} ${MODEL_PERMS_WRITE_SUBDIRS} {} \;
-				echo ${FIND} ${WRITABLE} -type f -exec echo ${CHMOD} ${MODEL_PERMS_WRITE_FILES} {} \;
+				echo ${DEBUG_PREFIX}
+				echo ${DEBUG_PREFIX} ${FIND} ${WRITABLE} -type d -exec echo ${CHMOD} ${MODEL_PERMS_WRITE_SUBDIRS} {} \;
+				echo ${DEBUG_PREFIX} ${FIND} ${WRITABLE} -type f -exec echo ${CHMOD} ${MODEL_PERMS_WRITE_FILES} {} \;
 			fi
 			${FIND} ${WRITABLE} -type d -exec echo ${CHMOD} ${MODEL_PERMS_WRITE_SUBDIRS} {} \;
 			${FIND} ${WRITABLE} -type f -exec echo ${CHMOD} ${MODEL_PERMS_WRITE_FILES} {} \;
@@ -510,7 +523,7 @@ case ${COMMAND} in
 	php)		permission_via_php_check ;;
 	risky)		permission_via_php_check ;;
 	worry)		permission_via_php_check ;;
-	foo) echo foo ;;
+	foo)		echo foo ;;
 	*)		echo -e ${HINT_FOR_USER} ;;
 esac
 
