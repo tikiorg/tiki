@@ -823,6 +823,27 @@ if ($s) {
 	);
 }
 
+/* 
+*	If TortoiseSVN 1.7 is used, it uses an sqlite database to store the SVN info. sqlite3 extention needed to read svn info. 
+*/
+if (is_file('.svn/wc.db')) {
+	// It's an TortoiseSVN 1.7+ installation
+	$s = extension_loaded('sqlite3');
+	if ($s) {
+		$php_properties['sqlite3'] = array(
+			'fitness' => tra('good'),
+			'setting' => 'Loaded',
+			'message' => tra('This extension is used to interpret SVN information for TortoiseSVN 1.7 or higher.')
+			);
+	} else {
+		$php_properties['sqlite3'] = array(
+			'fitness' => tra('ugly'),
+			'setting' => 'Not available',
+			'message' => tra('This extension is used to interpret SVN information for TortoiseSVN 1.7 or higher.')
+			);
+	}
+}
+
 // Check for existence of eval()
 // eval() is a language construct and not a function
 // so function_exists() doesn't work
