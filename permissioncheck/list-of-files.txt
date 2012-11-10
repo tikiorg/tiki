@@ -9,5 +9,6 @@ no.bin:444
 permission_granted.bin:644
 permission_granted.inc.php:644
 usecases.inc.php:644
+usecases.bin:644
 usecases.txt:644
 yes.bin:444

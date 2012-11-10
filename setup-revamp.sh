@@ -39,7 +39,8 @@ ECHOFLAG=1 # one empty line before printing used options in debugging mode
 # ----------------------
 
 PERMISSIONCHECK_DIR="permissioncheck"
-USE_CASES_FILE="usecases.txt"
+#USE_CASES_FILE="usecases.txt"
+USE_CASES_FILE="usecases.bin"
 USE_CASES_PATH=${PERMISSIONCHECK_DIR}
 USE_CASES_NAME=${USE_CASES_PATH}/${USE_CASES_FILE}
 
@@ -235,6 +236,7 @@ DIRS="db dump img/wiki img/wiki_up img/trackers modules/cache temp temp/cache te
 
 get_permission_data() {
 	if [ ${DEBUG} = '1' ] ; then
+		echo
 		echo permissioncheck subdir: ${PERMISSIONCHECK_DIR}
 	fi
 	#USE____CASES_FILE="${WORK_DIR}/usecases.txt"
@@ -250,10 +252,15 @@ get_permission_data() {
 					MODEL_NAME=${USE_CASE}
 					MODEL_PERMS_SUBDIRS=`echo ${ONE_USE_CASE_PER_LINE} | cut -d: -f2`
 					MODEL_PERMS_FILES=`echo ${ONE_USE_CASE_PER_LINE} | cut -d: -f3`
+					MODEL_PERMS_WRITE_SUBDIRS=`echo ${ONE_USE_CASE_PER_LINE} | cut -d: -f4`
+					MODEL_PERMS_WRITE_FILES=`echo ${ONE_USE_CASE_PER_LINE} | cut -d: -f5`
 					if [ ${DEBUG} = '1' ] ; then
+						echo
 						echo MODEL_NAME=${MODEL_NAME}
 						echo MODEL_PERMS_SUBDIRS=${MODEL_PERMS_SUBDIRS}
 						echo MODEL_PERMS_FILES=${MODEL_PERMS_FILES}
+						echo MODEL_PERMS_WRITE_SUBDIRS=${MODEL_PERMS_WRITE_SUBDIRS}
+						echo MODEL_PERMS_WRITE_FILES=${MODEL_PERMS_WRITE_FILES}
 					fi
 				fi
 			done < ${USE_CASES_NAME}
@@ -281,9 +288,27 @@ permission_exceptions() {
 
 permission_via_php_check() {
 	get_permission_data
-	# set permissions here
-	echo STOP - DEBUG MODE
-	exit 1
+ # set permissions here
+ #echo "\nSTOP - DEBUG MODE"
+ #exit 1
+	if [ ${DEBUG} = '2' ] ; then
+		echo
+		find . -type d -exec echo ${CHMOD} ${MODEL_PERMS_SUBDIRS} {} \;
+		find . -type f -exec echo ${CHMOD} ${MODEL_PERMS_FILES} {} \;
+	fi
+	E=echo
+	$E find . -type d -exec ${CHMOD} ${MODEL_PERMS_SUBDIRS} {} \;
+	$E find . -type f -exec ${CHMOD} ${MODEL_PERMS_FILES} {} \;
+ #echo
+	for WRITABLE in $DIRS ; do
+ #echo ${WRITABLE}
+		if [ -d ${WRITABLE} ] ; then
+			$E find ${WRITABLE} -type d -exec echo ${CHMOD} ${MODEL_PERMS_WRITE_SUBDIRS} {} \;
+			$E find ${WRITABLE} -type f -exec echo ${CHMOD} ${MODEL_PERMS_WRITE_FILES} {} \;
+		fi
+	done
+ #echo "\nSTOP - DEBUG MODE"
+ #exit 1
 }
 
 # part 4.2 - several command options as fix, open, ...
@@ -437,12 +462,14 @@ command_open() {
 }
 
 # debug exit
+debug_exit() {
 if [ ${DEBUG} = '1' ] ; then
 	echo
 	echo "Exiting... for execution mode use option '-d off' or set DEBUG=0 at the beginning of this script"
 	echo
 	exit 1
 fi
+}
 
 # part 5 - main program
 # ---------------------
