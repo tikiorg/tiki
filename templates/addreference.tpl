@@ -59,10 +59,10 @@ jQuery(document).ready(function(){
 				jQuery('#ref_list').find('li#'+ref_id).remove();
 				var htm = '<li id="'+ref_id+'" style="border-bottom: 1px dotted #161C17;font-weight:bold;">';
 				htm += ref_biblio_code + '&nbsp;&nbsp;';
-				htm += '<a class="edit_ref" onclick="edit_ref('+ref_id+',\''+ref_biblio_code+'\', \''+ref_author+'\', \''+ref_title+'\', \''+ref_year+'\', \''+ref_part+'\', \''+ref_uri+'\', \''+ref_code+'\', \''+ref_style+'\', \''+ref_template+'\', \''+ref_publisher+'\', \''+ref_location+'\')" href="javascript:;" title="Edit" alt="Edit">' + '<img width="16" height="16" class="icon" title="Edit" alt="Edit" src="pics/icons/pencil.png"></a>';
-				htm += '<a onclick="delete_ref('+ref_id+')" title="Delete"><img width="16" height="16" class="icon" title="Remove" alt="Remove" src="pics/icons/cross.png"></a>';
+				htm += '<a class="edit_ref" onclick="edit_ref('+ref_id+',\''+ref_biblio_code+'\', \''+ref_author+'\', \''+ref_title+'\', \''+ref_year+'\', \''+ref_part+'\', \''+ref_uri+'\', \''+ref_code+'\', \''+ref_style+'\', \''+ref_template+'\', \''+ref_publisher+'\', \''+ref_location+'\')" href="javascript:;" title="Edit" alt="Edit">' + '<img width="16" height="16" class="icon" title="Edit" alt="Edit" src="img/icons/pencil.png"></a>';
+				htm += '<a onclick="delete_ref('+ref_id+')" title="Delete"><img width="16" height="16" class="icon" title="Remove" alt="Remove" src="img/icons/cross.png"></a>';
 				if(data['is_library'] < 1 && use_references == '1' && edit_references == '1'){
-					htm += '<a class="add_lib_btn" onclick="add_lib('+ref_id+',\''+ref_biblio_code+'\', \''+ref_author+'\', \''+ref_title+'\', \''+ref_year+'\', \''+ref_part+'\', \''+ref_uri+'\', \''+ref_code+'\', \''+ref_style+'\', \''+ref_template+'\', \''+ref_publisher+'\', \''+ref_location+'\')" href="javascript:;" title="Add to library" alt="Add to library">' + '<img width="16" height="16" class="icon" title="Add to library" alt="Add to library" src="pics/icons/world_add.png"></a>';
+					htm += '<a class="add_lib_btn" onclick="add_lib('+ref_id+',\''+ref_biblio_code+'\', \''+ref_author+'\', \''+ref_title+'\', \''+ref_year+'\', \''+ref_part+'\', \''+ref_uri+'\', \''+ref_code+'\', \''+ref_style+'\', \''+ref_template+'\', \''+ref_publisher+'\', \''+ref_location+'\')" href="javascript:;" title="Add to library" alt="Add to library">' + '<img width="16" height="16" class="icon" title="Add to library" alt="Add to library" src="img/icons/world_add.png"></a>';
 				}
 				htm += '</li>';
 				jQuery('#e_status').html(data['message']);
@@ -132,10 +132,10 @@ jQuery(document).ready(function(){
 				var ref_id = data["id"];
 				var htm = '<li id="'+ref_id+'" style="border-bottom: 1px dotted #161C17;">';
 				htm += ref_biblio_code + '&nbsp;&nbsp;';
-				htm += '<a class="edit_ref" onclick="edit_ref('+ref_id+',\''+ref_biblio_code+'\', \''+ref_author+'\', \''+ref_title+'\', \''+ref_year+'\', \''+ref_part+'\', \''+ref_uri+'\', \''+ref_code+'\', \''+ref_style+'\', \''+ref_template+'\', \''+ref_publisher+'\', \''+ref_location+'\')" href="javascript:;" title="Edit" alt="Edit">' + '<img width="16" height="16" class="icon" title="Edit" alt="Edit" src="pics/icons/pencil.png"></a>';
-				htm += '<a onclick="delete_ref('+ref_id+')" title="Delete"><img width="16" height="16" class="icon" title="Remove" alt="Remove" src="pics/icons/cross.png"></a>';
+				htm += '<a class="edit_ref" onclick="edit_ref('+ref_id+',\''+ref_biblio_code+'\', \''+ref_author+'\', \''+ref_title+'\', \''+ref_year+'\', \''+ref_part+'\', \''+ref_uri+'\', \''+ref_code+'\', \''+ref_style+'\', \''+ref_template+'\', \''+ref_publisher+'\', \''+ref_location+'\')" href="javascript:;" title="Edit" alt="Edit">' + '<img width="16" height="16" class="icon" title="Edit" alt="Edit" src="img/icons/pencil.png"></a>';
+				htm += '<a onclick="delete_ref('+ref_id+')" title="Delete"><img width="16" height="16" class="icon" title="Remove" alt="Remove" src="img/icons/cross.png"></a>';
 				if(data['is_library'] < 1 && use_references == '1' && edit_references == '1'){
-					htm += '<a class="add_lib_btn" onclick="add_lib('+ref_id+',\''+ref_biblio_code+'\', \''+ref_author+'\', \''+ref_title+'\', \''+ref_year+'\', \''+ref_part+'\', \''+ref_uri+'\', \''+ref_code+'\', \''+ref_style+'\', \''+ref_template+'\', \''+ref_publisher+'\', \''+ref_location+'\')" href="javascript:;" title="Add to library" alt="Add to library">' + '<img width="16" height="16" class="icon" title="Add to library" alt="Add to library" src="pics/icons/world_add.png"></a>';
+					htm += '<a class="add_lib_btn" onclick="add_lib('+ref_id+',\''+ref_biblio_code+'\', \''+ref_author+'\', \''+ref_title+'\', \''+ref_year+'\', \''+ref_part+'\', \''+ref_uri+'\', \''+ref_code+'\', \''+ref_style+'\', \''+ref_template+'\', \''+ref_publisher+'\', \''+ref_location+'\')" href="javascript:;" title="Add to library" alt="Add to library">' + '<img width="16" height="16" class="icon" title="Add to library" alt="Add to library" src="img/icons/world_add.png"></a>';
 				}
 				htm += '</li>';
 				jQuery('#ref_list').find('ul').append(htm);
@@ -193,8 +193,8 @@ jQuery(document).ready(function(){
 				
 				var htm = '<li id="'+ref_id+'" style="border-bottom: 1px dotted #161C17;">';
 				htm += ref_biblio_code + '&nbsp;&nbsp;';
-				htm += '<a class="edit_ref" onclick="edit_ref('+ref_id+',\''+ref_biblio_code+'\', \''+ref_author+'\', \''+ref_title+'\', \''+ref_year+'\', \''+ref_part+'\', \''+ref_uri+'\', \''+ref_code+'\', \''+ref_style+'\', \''+ref_template+'\', \''+ref_publisher+'\', \''+ref_location+'\')" href="javascript:;" title="Edit" alt="Edit">' + '<img width="16" height="16" class="icon" title="Edit" alt="Edit" src="pics/icons/pencil.png"></a>';
-				htm += '<a onclick="delete_ref('+ref_id+')" title="Delete"><img width="16" height="16" class="icon" title="Remove" alt="Remove" src="pics/icons/cross.png"></a>';
+				htm += '<a class="edit_ref" onclick="edit_ref('+ref_id+',\''+ref_biblio_code+'\', \''+ref_author+'\', \''+ref_title+'\', \''+ref_year+'\', \''+ref_part+'\', \''+ref_uri+'\', \''+ref_code+'\', \''+ref_style+'\', \''+ref_template+'\', \''+ref_publisher+'\', \''+ref_location+'\')" href="javascript:;" title="Edit" alt="Edit">' + '<img width="16" height="16" class="icon" title="Edit" alt="Edit" src="img/icons/pencil.png"></a>';
+				htm += '<a onclick="delete_ref('+ref_id+')" title="Delete"><img width="16" height="16" class="icon" title="Remove" alt="Remove" src="img/icons/cross.png"></a>';
 				htm += '</li>';
 				jQuery('#ref_list').find('ul').append(htm);
 			}else if('failure'==data['result']){
