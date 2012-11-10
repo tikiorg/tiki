@@ -157,6 +157,7 @@ if [ ${DEBUG} = '1' ] ; then
 	echo CHGRP=${CHGRP}
 	echo CHMOD=${CHMOD}
 	echo CHOWN=${CHOWN}
+	echo FIND=${FIND}
 	echo ID=${ID}
 	echo MKDIR=${MKDIR}
 	echo MV=${MV}
@@ -170,6 +171,7 @@ CAT=`which cat`
 CHGRP=`which chgrp`
 CHMOD=`which chmod`
 CHOWN=`which chown`
+FIND=`which find`
 ID=`which id`
 MKDIR=`which mkdir`
 MV=`which mv`
@@ -178,11 +180,13 @@ SORT=`which sort`
 TOUCH=`which touch`
 UNIQ=`which uniq`
 if [ ${DEBUG} = '1' ] ; then
+	echo
 	echo after:
 	echo CAT=${CAT}
 	echo CHGRP=${CHGRP}
 	echo CHMOD=${CHMOD}
 	echo CHOWN=${CHOWN}
+	echo FIND=${FIND}
 	echo ID=${ID}
 	echo MKDIR=${MKDIR}
 	echo MV=${MV}
@@ -232,7 +236,24 @@ DIRS="db dump img/wiki img/wiki_up img/trackers modules/cache temp temp/cache te
 # part 4 - several functions
 # --------------------------
 
-# part 4.1 - several permission settings for different usecases
+# part 4.1 - several functions as permission settings for different usecases
+
+debug_breakpoint() {
+	echo
+	echo "debug breakpoint"
+	exit 1
+
+}
+
+# debug exit
+debug_exit() {
+if [ ${DEBUG} = '1' ] ; then
+	echo
+	echo "Exiting... for execution mode use option '-d off' or set DEBUG=0 at the beginning of this script"
+	echo
+	exit 1
+fi
+}
 
 get_permission_data() {
 	if [ ${DEBUG} = '1' ] ; then
@@ -278,37 +299,34 @@ get_permission_data() {
 	fi
 }
 
-permission_default() {
+set_permission_data() {
+	if [ ${DEBUG} = '1' ] ; then
+		echo
+		echo ${FIND} . -type d -exec ${CHMOD} ${MODEL_PERMS_SUBDIRS} {} \;
+		echo ${FIND} . -type f -exec ${CHMOD} ${MODEL_PERMS_FILES} {} \;
+	fi
+	#debug_breakpoint
+	${FIND} . -type d -exec ${CHMOD} ${MODEL_PERMS_SUBDIRS} {} \;
+	${FIND} . -type f -exec ${CHMOD} ${MODEL_PERMS_FILES} {} \;
+	for WRITABLE in $DIRS ; do
+		if [ -d ${WRITABLE} ] ; then
+			if [ ${DEBUG} = '1' ] ; then
+				echo
+				echo ${FIND} ${WRITABLE} -type d -exec echo ${CHMOD} ${MODEL_PERMS_WRITE_SUBDIRS} {} \;
+				echo ${FIND} ${WRITABLE} -type f -exec echo ${CHMOD} ${MODEL_PERMS_WRITE_FILES} {} \;
+			fi
+			${FIND} ${WRITABLE} -type d -exec echo ${CHMOD} ${MODEL_PERMS_WRITE_SUBDIRS} {} \;
+			${FIND} ${WRITABLE} -type f -exec echo ${CHMOD} ${MODEL_PERMS_WRITE_FILES} {} \;
+		fi
+	done
+}
+
+yet_unused_permission_default() {
 	${CHMOD} -fR u=rwX,go=rX .
 }
 
-permission_exceptions() {
+yet_unused_permission_exceptions() {
 	${CHMOD} o-rwx db/local.php
-}
-
-permission_via_php_check() {
-	get_permission_data
- # set permissions here
- #echo "\nSTOP - DEBUG MODE"
- #exit 1
-	if [ ${DEBUG} = '2' ] ; then
-		echo
-		find . -type d -exec echo ${CHMOD} ${MODEL_PERMS_SUBDIRS} {} \;
-		find . -type f -exec echo ${CHMOD} ${MODEL_PERMS_FILES} {} \;
-	fi
-	E=echo
-	$E find . -type d -exec ${CHMOD} ${MODEL_PERMS_SUBDIRS} {} \;
-	$E find . -type f -exec ${CHMOD} ${MODEL_PERMS_FILES} {} \;
- #echo
-	for WRITABLE in $DIRS ; do
- #echo ${WRITABLE}
-		if [ -d ${WRITABLE} ] ; then
-			$E find ${WRITABLE} -type d -exec echo ${CHMOD} ${MODEL_PERMS_WRITE_SUBDIRS} {} \;
-			$E find ${WRITABLE} -type f -exec echo ${CHMOD} ${MODEL_PERMS_WRITE_FILES} {} \;
-		fi
-	done
- #echo "\nSTOP - DEBUG MODE"
- #exit 1
 }
 
 # part 4.2 - several command options as fix, open, ...
@@ -461,14 +479,16 @@ command_open() {
 	echo " done"
 }
 
-# debug exit
-debug_exit() {
-if [ ${DEBUG} = '1' ] ; then
-	echo
-	echo "Exiting... for execution mode use option '-d off' or set DEBUG=0 at the beginning of this script"
-	echo
-	exit 1
-fi
+permission_via_php_check() {
+	# model was chosen by Tiki Permission Check (TPC)
+	get_permission_data
+	# set permissions
+#	if [ ${DEBUG} = '2' ] ; then
+#		echo
+#		${FIND} . -type d -exec echo ${CHMOD} ${MODEL_PERMS_SUBDIRS} {} \;
+#		${FIND} . -type f -exec echo ${CHMOD} ${MODEL_PERMS_FILES} {} \;
+#	fi
+	set_permission_data
 }
 
 # part 5 - main program
@@ -491,7 +511,7 @@ case ${COMMAND} in
 	risky)		permission_via_php_check ;;
 	worry)		permission_via_php_check ;;
 	foo) echo foo ;;
-	*)		echo ${HINT_FOR_USER} ;;
+	*)		echo -e ${HINT_FOR_USER} ;;
 esac
 
 exit 0
