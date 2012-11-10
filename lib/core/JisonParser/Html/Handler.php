@@ -23,9 +23,11 @@ class JisonParser_Html_Handler extends JisonParser_Html
 		"\n{l2r}",
 	);
 
-	public $lastSyntaxWasFrom = '';
+	public $lastBlockWasFrom = '';
 	public $firstLineType = '';
 	public $isStaticTag = false;
+	public $firstLineHandled = false;
+	public $processedTypeStack = '';
 
 /*
 	function parser_performAction(&$thisS, $yytext, $yyleng, $yylineno, $yystate, $S, $_S, $O)
@@ -69,8 +71,10 @@ class JisonParser_Html_Handler extends JisonParser_Html
 			$this->Parser->typeIndex = array();
 			$this->Parser->typeStack = array();
 			$this->Parser->type = array();
-			$this->Parser->lastSyntaxWasFrom = '';
+			$this->Parser->lastBlockWasFrom = '';
 			$this->Parser->firstLineType = '';
+			$this->Parser->firstLineHandled = false;
+			$this->Parser->processedTypeStack = array();
 		}
 
 		$this->htmlElementStack = array();
@@ -90,7 +94,6 @@ class JisonParser_Html_Handler extends JisonParser_Html
 			$this->preParse($input);
 
 			$this->Parser->parseDepth++;
-			//echo "parsing:'{$input}'";
 			$output = parent::parse($input);
 			$this->Parser->parseDepth--;
 
@@ -107,10 +110,15 @@ class JisonParser_Html_Handler extends JisonParser_Html
 		 * it is also valid, but treated and restored as with "\n" just before it, here we remove that extra "\n" but
 		 * only if we are a block, which are determined from $this->blockChars
 		*/
-		if ($this->Parser->parseDepth == 0 && $this->Parser->firstLineType == 'block' && $this->isStaticTag == false) {
-			foreach($this->blockSyntax as $syntax) {
-				if (strpos($output, $syntax) === 0) {
-					$output = substr($output, 1); //we only want to get rid of "\n", not the whole syntax
+		if ($this->Parser->parseDepth == 0) {
+			$output = str_replace('~REAL_BLOCK~', "\n", $output);
+			$output = str_replace('~REAL_NEW_LINE~', "\n", $output);
+
+			if ($this->Parser->firstLineType == 'block' && $this->isStaticTag == false) {
+				foreach($this->blockSyntax as $syntax) {
+					if (strpos($output, $syntax) === 0) {
+						$output = substr($output, 1); //we only want to get rid of "\n", not the whole syntax
+					}
 				}
 			}
 		}
@@ -130,22 +138,7 @@ class JisonParser_Html_Handler extends JisonParser_Html
 
 		//non wiki tags are ignored
 		if (!$this->hasClass($tag, "jpwc")) {
-			$parser = new JisonParser_Html_Handler();
-			$parser->isStaticTag(true);
-			switch($tag['state']) {
-				case "closed":
-					$element = $tag['open'] . $parser->parse($contents) . $tag['close'];
-					break;
-				case "repaired":
-					$element = $tag['open'] . $parser->parse($contents);
-					break;
-				case "inline":
-					$element = $tag['open'];
-					break;
-			}
-			unset($parser);
-
-			return $element;
+			return $this->elementFromTag($tag, $contents, true);
 		}
 
 		$result = '';
@@ -174,22 +167,32 @@ class JisonParser_Html_Handler extends JisonParser_Html
 			case "header":
 				$hCount = $this->param($tag, 'data-count');
 				$hCount = (empty($hCount) == true ? (int)substr($tag['name'], 1) : $hCount);
-				$result = $this->blockSyntax($tag, str_repeat("!", $hCount) . $this->parse($contents));
+				$result = $this->blockStart() . $this->blockSyntax($tag, str_repeat("!", $hCount), $contents);
 				break;
 
 
 			//list
 			case "listParent":
+				$firstBlockStart = $this->blockStart();
+
 				$result .= $this->parse($contents);
 
-				foreach($this->unStashStatic("listParent") as $list) {
-					$result .= $this->blockSyntax($tag, $list['symbol'] . $this->parse($list['contents']));
+				if (empty($firstBlockStart) && strpos($result, "~REAL_BLOCK~") == 0 && $this->lastParsedType() == 'listEmpty') {
+					$result = substr($result, 12);
 				}
-				$this->Parser->lastSyntaxWasFrom = 'block';
+
+				$stash = $this->unStashStatic("listParent");
+
+				foreach($stash as $key => $list) {
+					if ($key > 0) {
+						$firstBlockStart = $this->blockStart();
+					}
+					$result .= $firstBlockStart . $this->blockSyntax($tag, $list['symbol'], $list['contents']);
+				}
 
 				break;
 			case "listEmpty":
-				$result .= $this->parse($contents);
+				$result .= $this->syntax($tag, $this->parse($contents));
 				break;
 			case "listUnordered":
 			case "listOrdered":
@@ -212,7 +215,7 @@ class JisonParser_Html_Handler extends JisonParser_Html
 					$symbol .= '-';
 				}
 
-				$this->stashStatic(array('symbol' => $symbol, 'contents' => ltrim($contents, "\n\r")), 'listParent');
+				$this->stashStatic(array('symbol' => $symbol, 'contents' => $contents), 'listParent');
 				break;
 
 
@@ -222,13 +225,13 @@ class JisonParser_Html_Handler extends JisonParser_Html
 				$stash = $this->unStash("listDefinitionParent");
 				foreach($stash as $list) {
 					if (isset($list[0])) {
-						$result .= $this->blockSyntax($tag, ";" . $list[0] . (isset($list[1]) ? ":" . $list[1] : ''));
+						$result .= $this->blockStart() . $this->blockSyntax($tag, ";", $list[0] . (isset($list[1]) ? ":" . $list[1] : ''));
 					}
 				}
 
 				break;
 			case "listDefinition":
-				$this->stash(array(ltrim($contents, "\n\r")), "listDefinitionParent");
+				$this->stash(array($contents), "listDefinitionParent");
 				break;
 			case "listDefinitionDescription":
 				$stash = $this->unStash("listDefinitionParent");
@@ -239,23 +242,23 @@ class JisonParser_Html_Handler extends JisonParser_Html
 
 			//l2r
 			case "l2r":
-				$result = $this->blockSyntax($tag, "{l2r}" . $this->parse($contents));
+				$result = $this->blockStart() . $this->blockSyntax($tag, "{l2r}", $contents);
 				break;
 			//r2l
 			case "r2l":
-				$result = $this->blockSyntax($tag, "{r2l}" . $this->parse($contents));
+				$result = $this->blockStart() . $this->blockSyntax($tag, "{r2l}", $contents);
 				break;
 			//end block type
 
 
 			//noParse
 			case "noParse":
-				$result = $this->statedSyntax($tag, "~np~", $this->parse($contents) , "~/np~");
+				$result = $this->statedSyntax($tag, "~np~", $contents, "~/np~");
 				break;
 
 			//comment
 			case "comment":
-				$result = $this->statedSyntax($tag, "~tc~", $this->parse($contents) , "~/tc~");
+				$result = $this->statedSyntax($tag, "~tc~", $contents, "~/tc~");
 				break;
 
 			//doubleDash
@@ -266,13 +269,13 @@ class JisonParser_Html_Handler extends JisonParser_Html
 
 			//bold
 			case "bold":
-				$result = $this->statedSyntax($tag, "__", $this->parse($contents), "__");
+				$result = $this->statedSyntax($tag, "__", $contents, "__");
 				break;
 
 
 			//italic
 			case "italic":
-				$result = $this->statedSyntax($tag, "''", $this->parse($contents), "''");
+				$result = $this->statedSyntax($tag, "''", $contents, "''");
 				break;
 
 
@@ -280,7 +283,7 @@ class JisonParser_Html_Handler extends JisonParser_Html
 			case "table":
 				$contents = $this->parse($contents);
 				$rows = $this->unStashStatic("table");
-				$result = $this->statedSyntax($tag, "||", implode("\n", $rows), "||");
+				$result = $this->statedSyntax($tag, "||", implode("~REAL_NEW_LINE~", $rows), "||");
 				break;
 			case "tableRow":
 				$contents = $this->parse($contents);
@@ -295,18 +298,13 @@ class JisonParser_Html_Handler extends JisonParser_Html
 
 			//strike
 			case "strike":
-				$result = $this->statedSyntax($tag, "--", $this->parse($contents), "--");
+				$result = $this->statedSyntax($tag, "--", $contents, "--");
 				break;
 
-
-			//center
-			case "center":
-				$result = $this->statedSyntax($tag, "::", $this->parse($contents), "::");
-				break;
 
 			//code
 			case "code":
-				$result = $this->statedSyntax($tag, "-+", $this->parse($contents), "+-");
+				$result = $this->statedSyntax($tag, "-+", $contents, "+-");
 				break;
 
 
@@ -318,17 +316,21 @@ class JisonParser_Html_Handler extends JisonParser_Html
 
 			//underline
 			case "underscore":
-				$result = $this->statedSyntax($tag, "===", $this->parse($contents), "===");
+				$result = $this->statedSyntax($tag, "===", $contents, "===");
 				break;
 
 			//center
 			case "center":
-				$result = $this->statedSyntax($tag, "::", $this->parse($contents), "::"); //TODO: add in 3 ":::" if prefs need it
+				$result = $this->statedSyntax($tag, "::", $contents, "::"); //TODO: add in 3 ":::" if prefs need it
 				break;
 
 			//line
 			case "line":
-				$result = $this->newLine();
+				if ($this->Parser->htmlElementStackCount == 0) {
+					$result = $this->newLine();
+				} else {
+					$result = $this->elementFromTag($tag);
+				}
 				break;
 			case "forcedLineEnd":
 				$result = $this->syntax($tag, "%%%");
@@ -337,23 +339,23 @@ class JisonParser_Html_Handler extends JisonParser_Html
 
 			//box
 			case "box":
-				$result = $this->statedSyntax($tag, "^", $this->parse($contents), "^");
+				$result = $this->statedSyntax($tag, "^", $contents, "^");
 				break;
 
 
 			//color
 			case "color":
-				$result = $this->statedSyntax($tag, "~~", $this->style($tag, "color") . ":" . $this->parse($contents), "~~");
+				$result = $this->statedSyntax($tag, "~~" . $this->style($tag, "color") . ":", $contents, "~~");
 				break;
 
 			//pre
 			case "preFormattedText":
-				$result = $this->statedSyntax($tag, "~pp~", $this->parse($contents), "~/pp~");
+				$result = $this->statedSyntax($tag, "~pp~", $contents, "~/pp~");
 				break;
 
 			//titleBar
 			case "titleBar":
-				$result = $this->statedSyntax($tag, "-=", $this->parse($contents), "=-");
+				$result = $this->statedSyntax($tag, "-=", $contents, "=-");
 				break;
 
 
@@ -367,13 +369,13 @@ class JisonParser_Html_Handler extends JisonParser_Html
 					$page .= '|' . $contents;
 				}
 				$reltype = $this->param($tag, 'data-reltype');
-				$result = $this->statedSyntax($tag, "($reltype(", $page, "))");
+				$result = $this->statedSyntax($tag, "($reltype(", $page, "))", false);
 				break;
 			case "linkWord":
 				$result = trim($contents);
 				break;
 			case "linkNp":
-				$result = $this->statedSyntax($tag, "))", $this->parse($contents), "((");
+				$result = $this->statedSyntax($tag, "))", $contents, "((", false);
 				break;
 			case "linkExternal":
 				$href = $this->param($tag, 'href');
@@ -384,7 +386,7 @@ class JisonParser_Html_Handler extends JisonParser_Html
 					$href = '';
 				}
 
-				$result = $this->statedSyntax($tag, "[" , $href . $contents , "]");
+				$result = $this->statedSyntax($tag, "[" , $href . $contents , "]", false);
 				break;
 
 			//unlink
@@ -404,11 +406,19 @@ class JisonParser_Html_Handler extends JisonParser_Html
 
 	private function syntax($tag, $contents)
 	{
+		$this->Parser->processedTypeStack[] = $tag['type'];
+		$this->Parser->firstLineHandled = true;
 		return $this->preNonBlock() . $contents;
 	}
 
-	private function statedSyntax($tag, $open, $contents, $close)
+	private function statedSyntax($tag, $open, $contents, $close, $parse = true)
 	{
+		$this->Parser->processedTypeStack[] = $tag['type'];
+		$this->Parser->firstLineHandled = true;
+		if ($parse == true) {
+			$contents = $this->parse($contents);
+		}
+
 		if ($this->param($tag, 'data-repair')) {
 			$result = $open . $contents;
 		} else {
@@ -418,20 +428,15 @@ class JisonParser_Html_Handler extends JisonParser_Html
 		return $this->preNonBlock() . $result;
 	}
 
-	private function blockSyntax($tag, $contents)
+	private function blockSyntax($tag, $open, $contents, $parse = true)
 	{
-		$char = "\n";
-
-		if (empty($this->Parser->firstLineType)) {
-			$this->Parser->firstLineType = 'block';
+		$this->Parser->processedTypeStack[] = $tag['type'];
+		$this->Parser->firstLineHandled = true;
+		if ($parse == true) {
+			$contents = $this->parse($contents);
 		}
 
-		if ($this->Parser->lastSyntaxWasFrom == 'newLine') {
-			$char = '';
-		}
-
-		$this->Parser->lastSyntaxWasFrom = 'block';
-		return $char . $contents;
+		return $open . $contents;
 	}
 
 	public function content($content)
@@ -454,14 +459,20 @@ class JisonParser_Html_Handler extends JisonParser_Html
 			$this->Parser->firstLineType = 'newLine';
 		}
 
-		$this->Parser->lastSyntaxWasFrom = 'newLine';
-		return "\n";
+		$this->Parser->lastBlockWasFrom = 'newLine';
+		$this->Parser->firstLineHandled = true;
+		return "~REAL_NEW_LINE~";
 	}
 
 	public function preNonBlock()
 	{
-		if ($this->Parser->lastSyntaxWasFrom == 'block') {
-			$this->Parser->lastSyntaxWasFrom = '';
+		$lastParsedType = $this->lastParsedType();
+		if ($lastParsedType == 'listEmpty') {
+			return '';
+		}
+
+		if ($this->Parser->lastBlockWasFrom == 'block') {
+			$this->Parser->lastBlockWasFrom = '';
 			return "\n";
 		}
 		return "";
@@ -646,5 +657,64 @@ class JisonParser_Html_Handler extends JisonParser_Html
 		if ($yytext == strtolower("</" . $tag['name'] . ">")) {
 			return true;
 		}
+	}
+
+	public function elementFromTag($tag, $contents = null, $parse = false)
+	{
+		if ($parse == true) {
+			$parser = new JisonParser_Html_Handler();
+			$parser->isStaticTag(true);
+			$contents = $parser->parse($contents);
+			unset($parser);
+		}
+
+		switch($tag['state']) {
+			case "closed":
+				$element = $tag['open'] . $contents . $tag['close'];
+				break;
+			case "repaired":
+				$element = $tag['open'] . $contents;
+				break;
+			case "inline":
+				$element = $tag['open'];
+				break;
+		}
+
+		return $element;
+	}
+
+	public function blockStart()
+	{
+		if (
+			$this->Parser->lastBlockWasFrom == 'newLine' &&
+			$this->lastParsedType() == ''
+		) {
+			$this->Parser->lastBlockWasFrom = 'block';
+			$this->Parser->firstLineHandled = true;
+			return '';
+		}
+
+		if (empty($this->Parser->firstLineType)) {
+			$this->Parser->firstLineType = 'block';
+		}
+
+		if (
+			(
+				$this->Parser->parseDepth == 1 &&
+				$this->Parser->firstLineHandled == false
+			)
+		) {
+			$this->Parser->firstLineHandled = true;
+			return '';
+		}
+		return "~REAL_BLOCK~";
+	}
+
+	public function lastParsedType()
+	{
+		if (isset($this->Parser->processedTypeStack[count($this->Parser->processedTypeStack) - 1])) {
+			return $this->Parser->processedTypeStack[count($this->Parser->processedTypeStack) - 1];
+		}
+		return '';
 	}
 }

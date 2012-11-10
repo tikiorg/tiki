@@ -48,7 +48,7 @@ HTML_TAG_OPEN                   "<"(.|\n)[^>]*?">"
 ([ ])                                       return 'CONTENT';
 {LINE_END}
 	%{
-		//php if ($this->htmlElementStackCount == 0) {
+		//php if ($this->htmlElementStackCount == 0 || $this->isStaticTag == true) {
 		//php   return 'LINE_END';
 		//php }
 		//php return 'CONTENT';

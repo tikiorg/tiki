@@ -569,7 +569,7 @@ break;
 case 5:return 7;
 break;
 case 6:
-		if ($this->htmlElementStackCount == 0) {
+		if ($this->htmlElementStackCount == 0 || $this->isStaticTag == true) {
 		  return 8;
 		}
 		return 'CONTENT';
