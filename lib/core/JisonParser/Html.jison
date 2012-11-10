@@ -46,7 +46,13 @@ HTML_TAG_OPEN                   "<"(.|\n)[^>]*?">"
 	%}
 ([A-Za-z0-9 .,?;]+)                         return 'CONTENT';
 ([ ])                                       return 'CONTENT';
-{LINE_END}                                  return 'LINE_END';
+{LINE_END}
+	%{
+		//php if ($this->htmlElementStackCount == 0) {
+		//php   return 'LINE_END';
+		//php }
+		//php return 'CONTENT';
+	%}
 (.)                                         return 'CONTENT';
 <<EOF>>										return 'EOF';
 

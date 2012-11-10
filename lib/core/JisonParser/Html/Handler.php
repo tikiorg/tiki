@@ -116,6 +116,11 @@ class JisonParser_Html_Handler extends JisonParser_Html
 		}
 	}
 
+	function isStaticTag($isStaticTag)
+	{
+		$this->isStaticTag = $isStaticTag;
+	}
+
 	public function toWiki($tag, $contents = null)
 	{
 		//helpers
@@ -126,7 +131,7 @@ class JisonParser_Html_Handler extends JisonParser_Html
 		//non wiki tags are ignored
 		if (!$this->hasClass($tag, "jpwc")) {
 			$parser = new JisonParser_Html_Handler();
-			$parser->isStaticTag = true;
+			$parser->isStaticTag(true);
 			switch($tag['state']) {
 				case "closed":
 					$element = $tag['open'] . $parser->parse($contents) . $tag['close'];
@@ -436,11 +441,11 @@ class JisonParser_Html_Handler extends JisonParser_Html
 
 	public function lineEnd($line)
 	{
-		if ($this->isStaticTag == false && $this->Parser->htmlElementStackCount < 1) {
-			return "";
+		if ($this->isStaticTag == true) {
+			return "\n";
 		}
 
-		return "\n";
+		return "";
 	}
 
 	public function newLine()

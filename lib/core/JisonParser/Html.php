@@ -568,7 +568,12 @@ case 4:return 7;
 break;
 case 5:return 7;
 break;
-case 6:return 8;
+case 6:
+		if ($this->htmlElementStackCount == 0) {
+		  return 8;
+		}
+		return 'CONTENT';
+	
 break;
 case 7:return 7;
 break;
