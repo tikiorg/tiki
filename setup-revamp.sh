@@ -38,9 +38,17 @@ ECHOFLAG=1 # one empty line before printing used options in debugging mode
 # part 1 - preliminaries
 # ----------------------
 
+PERMISSIONCHECK_DIR="permissioncheck"
+USE_CASES_FILE="usecases.txt"
+USE_CASES_PATH=${PERMISSIONCHECK_DIR}
+USE_CASES_NAME=${USE_CASES_PATH}/${USE_CASES_FILE}
+
 # hint for users
 POSSIBLE_COMMANDS='open|fix|nothing'
-HINT_FOR_USER="Type 'fix', 'nothing' or 'open' as command argument."
+#HINT_FOR_USER="Type 'fix', 'nothing' or 'open' as command argument."
+HINT_FOR_USER="\nType 'fix', 'nothing' or 'open' as command argument.
+\nIf you used Tiki Permission Check via PHP, you know which of the following commands will probably work:
+\ninsane mixed morepain moreworry pain paranoia paranoia-suphp risky worry\n"
 
 usage() {
 #usage: $0 [<switches>] open|fix
@@ -144,10 +152,14 @@ define_path
 if [ ${DEBUG} = '1' ] ; then
 	echo
 	echo before:
+	echo CAT=${CAT}
 	echo CHGRP=${CHGRP}
 	echo CHMOD=${CHMOD}
 	echo CHOWN=${CHOWN}
+	echo ID=${ID}
 	echo MKDIR=${MKDIR}
+	echo MV=${MV}
+	echo RM=${RM}
 	echo SORT=${SORT}
 	echo TOUCH=${TOUCH}
 	echo UNIQ=${UNIQ}
@@ -157,16 +169,23 @@ CAT=`which cat`
 CHGRP=`which chgrp`
 CHMOD=`which chmod`
 CHOWN=`which chown`
+ID=`which id`
 MKDIR=`which mkdir`
+MV=`which mv`
+RM=`which rm`
 SORT=`which sort`
 TOUCH=`which touch`
 UNIQ=`which uniq`
 if [ ${DEBUG} = '1' ] ; then
 	echo after:
+	echo CAT=${CAT}
 	echo CHGRP=${CHGRP}
 	echo CHMOD=${CHMOD}
 	echo CHOWN=${CHOWN}
+	echo ID=${ID}
 	echo MKDIR=${MKDIR}
+	echo MV=${MV}
+	echo RM=${RM}
 	echo SORT=${SORT}
 	echo TOUCH=${TOUCH}
 	echo UNIQ=${UNIQ}
@@ -214,12 +233,57 @@ DIRS="db dump img/wiki img/wiki_up img/trackers modules/cache temp temp/cache te
 
 # part 4.1 - several permission settings for different usecases
 
+get_permission_data() {
+	if [ ${DEBUG} = '1' ] ; then
+		echo permissioncheck subdir: ${PERMISSIONCHECK_DIR}
+	fi
+	#USE____CASES_FILE="${WORK_DIR}/usecases.txt"
+	if [ -d ${USE_CASES_PATH} ] ; then
+		if [ -f ${USE_CASES_NAME} ] ; then
+			NO_MATCH=999
+			MODEL_NAME=${NO_MATCH}
+			MODEL_PERMS_SUBDIRS=${NO_MATCH}
+			MODEL_PERMS_FILES=${NO_MATCH}
+			while read ONE_USE_CASE_PER_LINE ; do
+				USE_CASE=`echo ${ONE_USE_CASE_PER_LINE} | cut -d: -f1`
+				if [ ${USE_CASE} = ${COMMAND} ] ; then
+					MODEL_NAME=${USE_CASE}
+					MODEL_PERMS_SUBDIRS=`echo ${ONE_USE_CASE_PER_LINE} | cut -d: -f2`
+					MODEL_PERMS_FILES=`echo ${ONE_USE_CASE_PER_LINE} | cut -d: -f3`
+					if [ ${DEBUG} = '1' ] ; then
+						echo MODEL_NAME=${MODEL_NAME}
+						echo MODEL_PERMS_SUBDIRS=${MODEL_PERMS_SUBDIRS}
+						echo MODEL_PERMS_FILES=${MODEL_PERMS_FILES}
+					fi
+				fi
+			done < ${USE_CASES_NAME}
+			if [ ${MODEL_NAME} = ${NO_MATCH} ] ; then
+					echo no matching use case found
+					exit 1
+			fi
+		else
+			echo ${USE_CASES_NAME} does not exist
+			exit 1
+		fi
+	else
+		echo ${USE_CASES_PATH} does not exist
+		exit 1
+	fi
+}
+
 permission_default() {
-	chmod -fR u=rwX,go=rX .
+	${CHMOD} -fR u=rwX,go=rX .
 }
 
 permission_exceptions() {
-	chmod o-rwx db/local.php
+	${CHMOD} o-rwx db/local.php
+}
+
+permission_via_php_check() {
+	get_permission_data
+	# set permissions here
+	echo STOP - DEBUG MODE
+	exit 1
 }
 
 # part 4.2 - several command options as fix, open, ...
@@ -375,7 +439,7 @@ command_open() {
 # debug exit
 if [ ${DEBUG} = '1' ] ; then
 	echo
-	echo "Exiting... for execution mode use '-d off' or set DEBUG=0 at the beginning of this script"
+	echo "Exiting... for execution mode use option '-d off' or set DEBUG=0 at the beginning of this script"
 	echo
 	exit 1
 fi
@@ -383,19 +447,22 @@ fi
 # part 5 - main program
 # ---------------------
 
-###if [ "$COMMAND" = 'fix' ]; then
-###	command_fix
-###elif [ "$COMMAND" = 'open' ]; then
-###	command_open
-###else
-###	#echo "Type 'fix' or 'open' as command argument."
-###	echo ${HINT_FOR_USER}
-###fi
-
 case ${COMMAND} in
+	# free defined
 	fix)		command_fix ;;
 	nothing)	command_nothing ;;
 	open)		command_open ;;
+	# Tiki Permission Check (via PHP)
+	insane)		permission_via_php_check ;;
+	mixed)		permission_via_php_check ;;
+	morepain)	permission_via_php_check ;;
+	moreworry)	permission_via_php_check ;;
+	pain)		permission_via_php_check ;;
+	paranoia)	permission_via_php_check ;;
+	paranoia-suphp)	permission_via_php_check ;;
+	php)		permission_via_php_check ;;
+	risky)		permission_via_php_check ;;
+	worry)		permission_via_php_check ;;
 	foo) echo foo ;;
 	*)		echo ${HINT_FOR_USER} ;;
 esac
