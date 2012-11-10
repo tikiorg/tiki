@@ -12,10 +12,12 @@
 # part -1 - developer comment
 # ---------------------------
 #
-# This version is supposed to act exactly the same way as setup.sh revision 43875
+# This version is supposed to act almost the same way as setup.sh revision 43875
 # if this script runs in production mode. Minor changes are:
+# - default is to do nothing
 # - debugging mode for further improvements
 #   and adaption of permission check data
+#   including a debugging option
 # - PATH
 # - it should be possible to run this script as executable
 # - order of commands changed
@@ -31,10 +33,91 @@
 #DEBUG=0 # production mode
 DEBUG=1 # debugging mode
 
+ECHOFLAG=1 # one empty line before printing used options in debugging mode
+
 # part 1 - preliminaries
 # ----------------------
 
+# hint for users
+POSSIBLE_COMMANDS='open|fix|nothing'
+HINT_FOR_USER="Type 'fix', 'nothing' or 'open' as command argument."
+
+usage() {
+#usage: $0 [<switches>] open|fix
+	cat <<EOF
+usage: $0 [<switches>] ${POSSIBLE_COMMANDS}
+-h           show help
+-u user      owner of files (default: $AUSER)
+-g group     group of files (default: $AGROUP)
+-v virtuals  list of virtuals (for multitiki, example: "www1 www2")
+-n           not interactive mode
+-d off|on    disable|enable debugging mode (override script default)
+EOF
+}
+
+# evaluate command line options (cannot be done inside a function)
+set_debug() {
+	case ${OPTARG} in
+		off) DEBUG=0 ;;
+		on) DEBUG=1 ;;
+		*) DUMMY="no override, default remains active" ;;
+	esac
+}
+
+OPT_AUSER=
+OPT_AGROUP=
+OPT_VIRTUALS=
+OPT_NOTINTERACTIVE=
+
+while getopts "hu:g:v:nd:" OPTION; do
+	case $OPTION in
+		h) usage ; exit 0 ;;
+		u) OPT_AUSER=$OPTARG ;;
+		g) OPT_AGROUP=$OPTARG ;;
+		v) OPT_VIRTUALS=$OPTARG ;;
+		n) OPT_NOTINTERACTIVE=1 ;;
+		d) set_debug ;;
+		?) usage ; exit 1 ;;
+	esac
+	if [ ${DEBUG} = '1' ] ; then
+		if [ ${ECHOFLAG} = '1' ] ; then
+			ECHOFLAG=0
+			echo
+		fi
+		OUTPUT="option: -${OPTION}"
+		if [ -n ${OPTARG} ] ; then
+			OUTPUT="${OUTPUT} ${OPTARG}"
+		fi
+		echo ${OUTPUT}
+	fi
+done
+shift $(($OPTIND - 1))
+
+# define command to execute for main program
+# default: do nothing
+if [ -z $1 ]; then
+	#COMMAND=fix
+	COMMAND=nothing
+else
+	COMMAND=$1
+fi
+
 if [ ${DEBUG} = '1' ] ; then
+	echo
+	echo COMMAND: ${COMMAND}
+fi
+
+if [ ${DEBUG} = '1' ] ; then
+	echo
+	#echo usage output: begin
+	usage
+	#echo usage output: end
+fi
+
+define_path() {
+# define PATH for executable mode
+if [ ${DEBUG} = '1' ] ; then
+	echo
 	echo old path: ${PATH}
 fi
 #PATH="${PATH}:/bin:/usr/bin:/sbin:/usr/sbin:/usr/local/bin:/usr/local/sbin:/opt/bin:/opt/sbin:/opt/local/bin:/opt/local/sbin"
@@ -53,54 +136,40 @@ done
 if [ ${DEBUG} = '1' ] ; then
 	echo new path: ${PATH}
 fi
-
-# hint for users
-usage() {
-	cat <<EOF
-usage: $0 [<switches>] open|fix
--h           show help
--u user      owner of files (default: $AUSER)
--g group     group of files (default: $AGROUP)
--v virtuals  list of virtuals (for multitiki, example: "www1 www2")
--n           not interactive mode
-EOF
 }
 
+define_path
+
+# set used commands
 if [ ${DEBUG} = '1' ] ; then
-	echo usage output: begin
-	usage
-	echo usage output: end
+	echo
+	echo before:
+	echo CHGRP=${CHGRP}
+	echo CHMOD=${CHMOD}
+	echo CHOWN=${CHOWN}
+	echo MKDIR=${MKDIR}
+	echo SORT=${SORT}
+	echo TOUCH=${TOUCH}
+	echo UNIQ=${UNIQ}
 fi
-
-OPT_AUSER=
-OPT_AGROUP=
-OPT_VIRTUALS=
-OPT_NOTINTERACTIVE=
-
-while getopts "hu:g:v:n" OPTION; do
-	if [ ${DEBUG} = '1' ] ; then
-		echo option: ${OPTION}
-	fi
-	case $OPTION in
-		h) usage ; exit 0 ;;
-		u) OPT_AUSER=$OPTARG ;;
-		g) OPT_AGROUP=$OPTARG ;;
-		v) OPT_VIRTUALS=$OPTARG ;;
-		n) OPT_NOTINTERACTIVE=1 ;;
-		?) usage ; exit 1 ;;
-	esac
-done
-shift $(($OPTIND - 1))
-
-# define command to execute for main program
-if [ -z $1 ]; then
-	COMMAND=fix
-else
-	COMMAND=$1
-fi
-
+# list of commands
+CAT=`which cat`
+CHGRP=`which chgrp`
+CHMOD=`which chmod`
+CHOWN=`which chown`
+MKDIR=`which mkdir`
+SORT=`which sort`
+TOUCH=`which touch`
+UNIQ=`which uniq`
 if [ ${DEBUG} = '1' ] ; then
-	echo COMMAND: ${COMMAND}
+	echo after:
+	echo CHGRP=${CHGRP}
+	echo CHMOD=${CHMOD}
+	echo CHOWN=${CHOWN}
+	echo MKDIR=${MKDIR}
+	echo SORT=${SORT}
+	echo TOUCH=${TOUCH}
+	echo UNIQ=${UNIQ}
 fi
 
 # part 2 - distribution check
@@ -279,6 +348,10 @@ what to answer, just press enter to each question (to use default value)"
 	echo " done."
 }
 
+command_nothing() {
+	echo 'Nothing done yet'
+}
+
 command_open() {
 	if [ "$USER" = 'root' ]; then
 		if [ -n "$OPT_AUSER" ]; then
@@ -301,20 +374,31 @@ command_open() {
 
 # debug exit
 if [ ${DEBUG} = '1' ] ; then
-	echo Exiting... for production mode set DEBUG=0 at the beginning of this script
+	echo
+	echo "Exiting... for execution mode use '-d off' or set DEBUG=0 at the beginning of this script"
+	echo
 	exit 1
 fi
 
 # part 5 - main program
 # ---------------------
 
-if [ "$COMMAND" = 'fix' ]; then
-	command_fix
-elif [ "$COMMAND" = 'open' ]; then
-	command_open
-else
-	echo "Type 'fix' or 'open' as command argument."
-fi
+###if [ "$COMMAND" = 'fix' ]; then
+###	command_fix
+###elif [ "$COMMAND" = 'open' ]; then
+###	command_open
+###else
+###	#echo "Type 'fix' or 'open' as command argument."
+###	echo ${HINT_FOR_USER}
+###fi
+
+case ${COMMAND} in
+	fix)		command_fix ;;
+	nothing)	command_nothing ;;
+	open)		command_open ;;
+	foo) echo foo ;;
+	*)		echo ${HINT_FOR_USER} ;;
+esac
 
 exit 0
 
