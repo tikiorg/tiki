@@ -7,7 +7,7 @@
 
 class JisonParser_Abstract extends TikiTestCase
 {
-	public $verbose = false;
+	static $verbose = false;
 	public $called;
 	public $parser;
 	public $syntaxSets = array();
@@ -56,7 +56,7 @@ class JisonParser_Abstract extends TikiTestCase
 				$syntax = $customHandled['syntax'];
 			}
 
-			if ($this->verbose == true) {
+			if (self::$verbose == true) {
 				echo $syntaxName . ":\n";
 				echo '"' . $parsed . '"' . "\n\n\n\n";
 			}

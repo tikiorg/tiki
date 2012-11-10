@@ -2,7 +2,7 @@
 
 class JisonParser_HtmlToWikiTest extends JisonParser_OutputTest
 {
-	public $verbose = false;
+	static $verbose = false;
 	public static $htmlToWikiParser;
 
 	function setUp()
@@ -16,10 +16,14 @@ class JisonParser_HtmlToWikiTest extends JisonParser_OutputTest
 
 	static function assertEquals($expected, $actual, $syntaxName, $syntax)
 	{
-		$actual = self::$htmlToWikiParser->parse($actual);
-		echo "\n\nReversal: '" . $actual . "'";
-		echo "\n\nExpected: '" . $syntax . "'";
+		$parsed = self::$htmlToWikiParser->parse($actual);
 
-		return parent::assertEquals($syntax, $actual, $syntaxName, $actual);
+		if (self::$verbose) {
+			echo "\n\nWiki: '" . $actual . "'";
+			echo "\n\nReversal: '" . $parsed . "'";
+			echo "\n\nExpected: '" . $syntax . "'";
+		}
+
+		return parent::assertEquals($syntax, $parsed, $syntaxName, $actual);
 	}
 }
