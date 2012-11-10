@@ -34,6 +34,9 @@ DEBUG=1 # debugging mode
 # part 1 - preliminaries
 # ----------------------
 
+if [ ${DEBUG} = '1' ] ; then
+	echo old path: ${PATH}
+fi
 #PATH="${PATH}:/bin:/usr/bin:/sbin:/usr/sbin:/usr/local/bin:/usr/local/sbin:/opt/bin:/opt/sbin:/opt/local/bin:/opt/local/sbin"
 for ADDPATH in `echo /bin /usr/bin /sbin /usr/sbin /usr/local/bin /usr/local/sbin /opt/bin /opt/sbin /opt/local/bin /opt/local/sbin` ; do
 	if [ -d ${ADDPATH} ] ; then
@@ -47,6 +50,9 @@ for ADDPATH in `echo /bin /usr/bin /sbin /usr/sbin /usr/local/bin /usr/local/sbi
 		fi
 	fi
 done
+if [ ${DEBUG} = '1' ] ; then
+	echo new path: ${PATH}
+fi
 
 # hint for users
 usage() {
