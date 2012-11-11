@@ -24,11 +24,11 @@
 					<strong>
 						{if !empty($lastup)}
 							{tr}Last update from SVN{/tr} ({$tiki_version}): {$lastup|tiki_long_datetime}
-								{if $svnrev}
-									- REV {$svnrev}
-								{/if}
 						{else}
 							{$tiki_version}
+						{/if}
+						{if $svnrev}
+							- REV {$svnrev}
 						{/if}
 					</strong>
 					({$db_engine_type})
