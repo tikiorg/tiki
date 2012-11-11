@@ -3217,7 +3217,7 @@ class FileGalLib extends TikiLib
 			} else {
 				$deleteAfter = $params['deleteAfter']*$params['deleteAfter_unit'];
 			}
-			$fileInfo['fileId'] = $this->replace_file($editFileId, $params['name'][0], $params['description'][0], $fileInfo['filename'], $fileInfo['data'], $fileInfo['filesize'], $fileInfo['filetype'], $fileInfo['user'], $fileInfo['path'], $params['comment'][0], $gal_info, $didFileReplace, $params['author'][0], $fileInfo['lastModif'], $fileInfo['lockedby'], $deleteAfter);
+			$fileInfo['fileId'] = $this->replace_file($editFileId, $params['name'][0], $params['description'][0], $fileInfo['filename'], $fileInfo['data'], $fileInfo['filesize'], $fileInfo['filetype'], $fileInfo['user'], $fileInfo['path'], $params['comment'][0], $gal_info, $didFileReplace, $params['author'][0], $fileInfo['lastModif'], $fileInfo['lockedby'], $deleteAfter, $fileInfo['metadata']);
 			$fileChangedMessage = tra('File update was successful') . ': ' . $params['name'];
 			$smarty->assign('fileChangedMessage', $fileChangedMessage);
 			$cat_type = 'file';

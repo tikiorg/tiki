@@ -300,7 +300,7 @@
 					</div>
 					<br clear="all">
 					<div>
-						{include file='tiki-upload_file_progress.tpl' fileId=$files[changes].id}
+						{include file='tiki-upload_file_progress.tpl' fileId=$files[changes].id name=$files[changes].filename}
 					</div>
 					{if isset($metarray) and $metarray|count gt 0}
 						<br>
