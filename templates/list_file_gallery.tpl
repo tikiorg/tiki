@@ -172,7 +172,7 @@
 
 			{pagination_links cant=$cant step=$maxRecords offset=$offset}
 				{if $view eq 'page'}
-					tiki-list_file_gallery.php?maxWidth={$maxWidth}&maxRecords={$maxRecords}&view={$view}
+					tiki-list_file_gallery.php?galleryId={$galleryId}&maxWidth={$maxWidth}&maxRecords={$maxRecords}&view={$view}
 				{/if}
 			{/pagination_links}
 			</div>

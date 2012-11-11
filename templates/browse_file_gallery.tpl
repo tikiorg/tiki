@@ -83,7 +83,7 @@
 										and ($propname neq 'name' or $view eq 'page')
 										and ($gal_info.$propkey eq 'a' or $gal_info.$propkey eq 'o'
 												or ($gal_info.$propkey eq 'y' and $show_details neq 'y')
-												or ($view eq 'page' and $gal_info.$propkey neq 'n')
+												or ($view eq 'page' and ($gal_info.$propkey neq 'n' or $propname eq 'name'))
 											)
 									}
 										<tr>
