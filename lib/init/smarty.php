@@ -16,28 +16,38 @@ require_once (defined('SMARTY_DIR') ? SMARTY_DIR : 'lib/smarty/libs/') . 'Smarty
 
 class Tiki_Security_Policy extends Smarty_Security
 {
-		public $php_modifiers = array( 'nl2br','escape', 'count', 'addslashes', 'ucfirst', 'ucwords', 'urlencode', 'md5', 'implode', 'explode', 'is_array', 'htmlentities', 'var_dump', 'strip_tags', 'json_encode', 'stristr' );
-		public $php_functions = array('isset', 'empty', 'count', 'sizeof', 'in_array', 'is_array', 'time', 'nl2br', 'tra', 'strlen', 'strstr', 'strtolower', 'basename', 'ereg', 'array_key_exists', 'preg_match', 'json_encode', 'stristr', 'is_numeric', 'array' );
-		public $secure_dir = array(
-			'',
-			'img/',
-			'img/icons',
-			'styles/strasa/img/icons/',
-			'styles/strasa/pics/icons/',
-			'styles/coelesce/pics/icons/',
-			'styles/darkroom/pics/icons/',
-			'styles/thenews/pics/icons/',
-			'styles/tikinewt/pics/icons/',
-			'styles/twist/pics/icons/',
-			'img/flags',
-			'img/mytiki',
-			'img/smiles',
-			'img/trackers',
-			'images/',
-			'img/icons/mime',
-			'img/icons/large',
-			'lib/ckeditor_tiki/ckeditor-icons',
-		);
+	public $secure_dir = array(
+		'',
+		'img/',
+		'img/icons',
+		'styles/strasa/img/icons/',
+		'styles/strasa/pics/icons/',
+		'styles/coelesce/pics/icons/',
+		'styles/darkroom/pics/icons/',
+		'styles/thenews/pics/icons/',
+		'styles/tikinewt/pics/icons/',
+		'styles/twist/pics/icons/',
+		'img/flags',
+		'img/mytiki',
+		'img/smiles',
+		'img/trackers',
+		'images/',
+		'img/icons/mime',
+		'img/icons/large',
+		'lib/ckeditor_tiki/ckeditor-icons',
+	);
+
+	function __construct($smarty)
+	{
+		$tikilib = TikiLib::lib('tiki');
+
+		parent::__construct($smarty);
+		$functions = array_filter($tikilib->get_preference('smarty_security_functions', array(), true));
+		$modifiers = array_filter($tikilib->get_preference('smarty_security_functions', array(), true));
+
+		$this->php_modifiers = array_merge(array( 'nl2br','escape', 'count', 'addslashes', 'ucfirst', 'ucwords', 'urlencode', 'md5', 'implode', 'explode', 'is_array', 'htmlentities', 'var_dump', 'strip_tags', 'json_encode', 'stristr' ), $modifiers);
+		$this->php_functions = array_merge(array('isset', 'empty', 'count', 'sizeof', 'in_array', 'is_array', 'time', 'nl2br', 'tra', 'strlen', 'strstr', 'strtolower', 'basename', 'ereg', 'array_key_exists', 'preg_match', 'json_encode', 'stristr', 'is_numeric', 'array' ), $functions);
+	}
 }
 
 class Smarty_Tiki extends Smarty

@@ -21,6 +21,10 @@
 
 		{tab name="{tr}General Security{/tr}"}
 			{preference name=smarty_security}
+			<div class="adminoptionboxchild" id="smarty_security_childcontainer">	
+				{preference name=smarty_security_functions}
+				{preference name=smarty_security_modifiers}
+			</div>
 			{preference name=feature_purifier}
 			{preference name=feature_htmlpurifier_output}
 			{preference name=menus_item_names_raw_teaser}

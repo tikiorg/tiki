@@ -54,7 +54,6 @@ $needed_prefs = array(
 	'lang_use_db' => 'n',
 	'feature_fullscreen' => 'n',
 	'error_reporting_level' => 0,
-	'smarty_notice_reporting' => 'n',
 	'memcache_enabled' => 'n',
 	'memcache_expiration' => 3600,
 	'memcache_prefix' => 'tiki_',
@@ -62,7 +61,6 @@ $needed_prefs = array(
 	'memcache_servers' => false,
 	'min_pass_length' => 5,
 	'pass_chr_special' => 'n',
-	'smarty_compilation' => 'modified',
 	'menus_item_names_raw' => 'n',
 );
 // check that tiki_preferences is there
@@ -528,9 +526,8 @@ if (isset($_SESSION["$user_cookie_site"])) {
 	}
 }
 
-if (is_object($smarty)) {
-	$smarty->assign('CSRFTicket', isset( $_SESSION['ticket'] ) ? $_SESSION['ticket'] : null);
-}
+$smarty->assign('CSRFTicket', isset( $_SESSION['ticket'] ) ? $_SESSION['ticket'] : null);
+
 require_once ('lib/setup/perms.php');
 // --------------------------------------------------------------
 // deal with register_globals
@@ -649,9 +646,7 @@ unset($GLOBALS['HTTP_SESSION_VARS']);
 unset($GLOBALS['HTTP_POST_FILES']);
 // --------------------------------------------------------------
 if (isset($_REQUEST['highlight']) || (isset($prefs['feature_referer_highlight']) && $prefs['feature_referer_highlight'] == 'y')) {
-	if (method_exists($smarty, 'loadFilter')) {
-		$smarty->loadFilter('output', 'highlight');
-	}
+	$smarty->loadFilter('output', 'highlight');
 }
 if (function_exists('mb_internal_encoding')) {
 	mb_internal_encoding("UTF-8");
@@ -664,6 +659,5 @@ if (!isset($_SERVER['QUERY_STRING'])) {
 if (!isset($_SERVER['REQUEST_URI']) || empty($_SERVER['REQUEST_URI'])) {
 	$_SERVER['REQUEST_URI'] = $_SERVER['PHP_SELF'] . '?' . $_SERVER['QUERY_STRING'];
 }
-if (is_object($smarty)) {
-	$smarty->assign("tikidomain", $tikidomain);
-}
+
+$smarty->assign("tikidomain", $tikidomain);

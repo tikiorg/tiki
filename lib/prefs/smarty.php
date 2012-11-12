@@ -22,6 +22,30 @@ function prefs_smarty_list()
 			'perspective' => false,
 			'default' => 'y',
 		),
+		'smarty_security_modifiers' => array(
+			'name' => tr('Extra smarty modifiers'),
+			'description' => tr('Make additional PHP functions available as smarty modifiers. May be needed for custom templates.'),
+			'warning' => tr('There may be security implications. Make sure you know what you are doing.'),
+			'type' => 'text',
+			'separator' => ',',
+			'perspective' => false,
+			'default' => '',
+			'dependencies' => array(
+				'smarty_security',
+			),
+		),
+		'smarty_security_functions' => array(
+			'name' => tr('Extra smarty functions'),
+			'description' => tr('Make additional PHP functions available as smarty functions. May be needed for custom templates.'),
+			'warning' => tr('There may be security implications. Make sure you know what you are doing.'),
+			'type' => 'text',
+			'separator' => ',',
+			'perspective' => false,
+			'default' => '',
+			'dependencies' => array(
+				'smarty_security',
+			),
+		),
 		'smarty_compilation' => array(
 			'name' => tra('Smarty Compilation'),
 			'description' => tra('Indicates when the template cache should be refreshed.'),
