@@ -129,15 +129,15 @@ class JisonParser_Html_Handler extends JisonParser_Html
 		$this->isStaticTag = $isStaticTag;
 	}
 
-	public function toWiki($tag, $contents = null)
+	public function toWiki(&$tag, &$contents = null)
 	{
 		//helpers
-		if ($this->hasClass($tag, "jpwch")) {
+		if ($this->hasClass($tag, "jpwch") == true) {
 			return "";
 		}
 
 		//non wiki tags are ignored
-		if (!$this->hasClass($tag, "jpwc")) {
+		if ($this->hasClass($tag, "jpwc") != true) {
 			return $this->elementFromTag($tag, $contents, true);
 		}
 
@@ -621,7 +621,7 @@ class JisonParser_Html_Handler extends JisonParser_Html
 		return $element;
 	}
 
-	public function tag($tag)
+	public function tag(&$tag)
 	{
 		$parts = preg_split("/[ >]/", substr($tag, 1)); //<tag> || <tag name="">
 		$name = array_shift($parts);
@@ -644,14 +644,14 @@ class JisonParser_Html_Handler extends JisonParser_Html
 		);
 	}
 
-	public function inlineTag($tag)
+	public function inlineTag(&$tag)
 	{
 		$tag = $this->tag($tag);
 		$tag['state'] = 'inline';
 		return $tag;
 	}
 
-	public function compareElementClosingToYytext($tag, $yytext)
+	public function compareElementClosingToYytext(&$tag, $yytext)
 	{
 		$yytext = strtolower(str_replace(' ', '', $yytext));
 		if ($yytext == strtolower("</" . $tag['name'] . ">")) {
@@ -659,7 +659,7 @@ class JisonParser_Html_Handler extends JisonParser_Html
 		}
 	}
 
-	public function elementFromTag($tag, $contents = null, $parse = false)
+	public function elementFromTag(&$tag, &$contents = null, $parse = false)
 	{
 		if ($parse == true) {
 			$parser = new JisonParser_Html_Handler();
@@ -716,5 +716,138 @@ class JisonParser_Html_Handler extends JisonParser_Html
 			return $this->Parser->processedTypeStack[count($this->Parser->processedTypeStack) - 1];
 		}
 		return '';
+	}
+
+	public static function isHtmlTag(&$yytext)
+	{
+		$parts = explode(" ", substr($yytext, 1));
+		$parts = array_filter($parts, 'strlen');
+
+		switch (strtolower($parts[0])) {
+			case "!doctype":
+			case "a":
+			case "abbr":
+			case "acronym":
+			case "address":
+			case "applet":
+			case "area":
+			case "article":
+			case "aside":
+			case "audio":
+			case "b":
+			case "base":
+			case "basefront":
+			case "bdi":
+			case "bdo":
+			case "big":
+			case "blockquote":
+			case "body":
+			case "br":
+			case "button":
+			case "canvas":
+			case "caption":
+			case "center":
+			case "cite":
+			case "code":
+			case "col":
+			case "colgroup":
+			case "command":
+			case "datalist":
+			case "dd":
+			case "del":
+			case "details":
+			case "dfn":
+			case "dir":
+			case "div":
+			case "dl":
+			case "dt":
+			case "em":
+			case "embed":
+			case "fieldset":
+			case "figcaption":
+			case "figure":
+			case "font":
+			case "footer":
+			case "form":
+			case "frameset":
+			case "h1":
+			case "h2":
+			case "h3":
+			case "h4":
+			case "h5":
+			case "h6":
+			case "head":
+			case "header":
+			case "hgroup":
+			case "hr":
+			case "html":
+			case "i":
+			case "iframe":
+			case "img":
+			case "input":
+			case "ins":
+			case "kbd":
+			case "keygen":
+			case "label":
+			case "legend":
+			case "li":
+			case "link":
+			case "map":
+			case "mark":
+			case "menu":
+			case "meta":
+			case "meter":
+			case "nav":
+			case "noframes":
+			case "noscript":
+			case "object":
+			case "ol":
+			case "optgroup":
+			case "option":
+			case "output":
+			case "p":
+			case "param":
+			case "pre":
+			case "progress":
+			case "q":
+			case "q":
+			case "rp":
+			case "rt":
+			case "ruby":
+			case "s":
+			case "samp":
+			case "script":
+			case "section":
+			case "select":
+			case "small":
+			case "source":
+			case "span":
+			case "strike":
+			case "strong":
+			case "style":
+			case "sub":
+			case "summary":
+			case "sup":
+			case "table":
+			case "tbody":
+			case "td":
+			case "textarea":
+			case "tfoot":
+			case "th":
+			case "thead":
+			case "time":
+			case "title":
+			case "tr":
+			case "track":
+			case "tt":
+			case "u":
+			case "ul":
+			case "var":
+			case "video":
+			case "wbr":
+				return true;
+		}
+
+		return false;
 	}
 }
