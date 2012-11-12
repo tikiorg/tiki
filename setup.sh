@@ -109,11 +109,11 @@ fi
 
 # hint for users
 #POSSIBLE_COMMANDS='open|fix|nothing'
-POSSIBLE_COMMANDS="fix|insane|mixed|morepain|moreworry|nothing|open|pain|paranoia|paranoia-suphp|risky|worry"
+POSSIBLE_COMMANDS="fix|insane|mixed|morepain|moreworry|nothing|open|pain|paranoia|paranoia-suphp|risky|sbox|worry"
 #HINT_FOR_USER="Type 'fix', 'nothing' or 'open' as command argument."
 HINT_FOR_USER="\nType 'fix', 'nothing' or 'open' as command argument.
 \nIf you used Tiki Permission Check via PHP, you know which of the following commands will probably work:
-\ninsane mixed morepain moreworry pain paranoia paranoia-suphp risky worry\n"
+\ninsane mixed morepain moreworry pain paranoia paranoia-suphp risky sbox worry\n"
 
 usage() {
 #usage: $0 [<switches>] open|fix
@@ -504,6 +504,7 @@ case ${COMMAND} in
 	paranoia-suphp)	permission_via_php_check ;;
 	php)		permission_via_php_check ;;
 	risky)		permission_via_php_check ;;
+	sbox)		permission_via_php_check ;;
 	worry)		permission_via_php_check ;;
 	foo)		echo foo ;;
 	*)		echo -e ${HINT_FOR_USER} ;;
