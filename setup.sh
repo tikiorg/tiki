@@ -299,7 +299,7 @@ set_permission_data() {
 		echo ${DEBUG_PREFIX} ${FIND} . -type d -exec ${CHMOD} ${MODEL_PERMS_SUBDIRS} {} \;
 		echo ${DEBUG_PREFIX} ${FIND} . -type f -exec ${CHMOD} ${MODEL_PERMS_FILES} {} \;
 	fi
-	debug_breakpoint
+	#debug_breakpoint
 	${FIND} . -type d -exec ${CHMOD} ${MODEL_PERMS_SUBDIRS} {} \;
 	${FIND} . -type f -exec ${CHMOD} ${MODEL_PERMS_FILES} {} \;
 	for WRITABLE in $DIRS ; do
