@@ -451,7 +451,7 @@ what to answer, just press enter to each question (to use default value)"
 
 command_nothing() {
 	echo 'Nothing done yet'
-	echo "Try 'sh setup.sh fix' or for classic default behaviour or 'sh setup.sh -h' for help."
+	echo "Try 'sh setup.sh fix' for classic default behaviour or 'sh setup.sh -h' for help."
 }
 
 command_open() {
