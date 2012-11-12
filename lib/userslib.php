@@ -4856,6 +4856,7 @@ class UsersLib extends TikiLib
 				'level' => 'basic',
 				'type' => 'wiki',
 				'admin' => false,
+				'prefs' => array('feature_wiki'),
 				'scope' => 'object',
 			),
 			array(
