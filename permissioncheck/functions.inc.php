@@ -86,12 +86,16 @@ function get_ownership_groupname($filename)
 // user/owner of file
 function get_ownership_username($filename)
 {
-	if (file_exists($filename)) {
-		$user = posix_getpwuid(fileowner($filename));
-		$username = $user['name'];
-	} else {
-		$username = 'no user';
-	}
+    if (function_exists('posix_getpwuid')){
+        if (file_exists($filename)) {
+            $user = posix_getpwuid(fileowner($filename));
+            $username = $user['name'];
+        } else {
+            $username = 'no user';
+        }
+    } else {
+        die('no posix extension');	// TODO (better)
+    }
 	return $username;
 }
 
@@ -99,7 +103,7 @@ function get_ownership_username($filename)
 function get_page_url($filename)
 {
 	$page_basename = 'http';
-	if ( $_SERVER["HTTPS"] == "on" ) {
+	if ( isset($_SERVER["HTTPS"]) && $_SERVER["HTTPS"] == "on" ) {
 		$page_basename .= 's';
 	}
 	$page_basename .= '://';
