@@ -37,6 +37,7 @@
 		{preference name=feature_categorypath}
 		<div class="adminoptionboxchild" id="feature_categorypath_childcontainer">
 			{preference name=categorypath_excluded}
+			{preference name=categorypath_format}
 		</div>
 		{preference name=category_sort_ascii}
 		<fieldset>

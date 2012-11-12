@@ -187,12 +187,10 @@ if ($prefs['feature_categories'] == 'y') {
 // Display category path or not (like {catpath()})
 if (isset($is_categorized) && $is_categorized) {
 	$smarty->assign('is_categorized', 'y');
-	if (isset($prefs['feature_categorypath']) and $prefs['feature_categories'] == 'y') {
-		if ($prefs['feature_categorypath'] == 'y') {
-			$cats = $categlib->get_object_categories('article', $objId);
-			$display_catpath = $categlib->get_categorypath($cats);
-			$smarty->assign('display_catpath', $display_catpath);
-		}
+	if ($prefs['feature_categories'] == 'y' && $prefs['feature_categorypath'] == 'y') {
+		$cats = $categlib->get_object_categories('article', $objId);
+		$display_catpath = $categlib->get_categorypath($cats);
+		$smarty->assign('display_catpath', $display_catpath);
 	}
 	// Display current category objects or not (like {category()})
 	if (isset($prefs['feature_categoryobjects']) and $prefs['feature_categories'] == 'y') {
