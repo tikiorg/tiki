@@ -22,6 +22,8 @@
 		<div id="wikiplugin_insert_childcontainer">
 			{preference name=tracker_insert_allowed}
 		</div>
+		{preference name=allocate_memory_tracker_export_items}
+		{preference name=allocate_time_tracker_export_items}
 	</fieldset>
 
 	<fieldset class="admin">
