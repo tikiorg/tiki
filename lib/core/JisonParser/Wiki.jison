@@ -484,7 +484,7 @@ CAPITOL_WORD                    ([A-Z]{1,}[a-z_\-\x80-\xFF]{1,}){2,}
 		//php $this->popState();
 		//php return 'LINK_END';
 	%}
-"["
+"["(?![ ])
 	%{
 		if (parser.isContent()) return 'CONTENT'; //js
 		parser.linkStack = true; //js
@@ -547,26 +547,23 @@ CAPITOL_WORD                    ([A-Z]{1,}[a-z_\-\x80-\xFF]{1,}){2,}
 	%{
 		if (parser.isContent()) return 'CONTENT'; //js
 		lexer.popState(); //js
-        parser.tableStack.pop(); //js
 		return 'TABLE_END'; //js
 
 		//php if ($this->isContent()) return 'CONTENT';
 		//php $this->popState();
-        //php array_pop($this->tableStack);
 		//php return 'TABLE_END';
 	%}
 [|][|]
 	%{
 		if (parser.isContent()) return 'CONTENT'; //js
 		lexer.begin('table'); //js
-		parser.tableStack.push(true); //js
 		return 'TABLE_START'; //js
 
 		//php if ($this->isContent()) return 'CONTENT';
 		//php $this->begin('table');
-		//php $this->tableStack[] = true;
 		//php return 'TABLE_START';
 	%}
+[|]                                     return 'PIPE';
 
 
 <titleBar><<EOF>>
@@ -746,7 +743,18 @@ CAPITOL_WORD                    ([A-Z]{1,}[a-z_\-\x80-\xFF]{1,}){2,}
 		//php return 'LINE_END';
 	%}
 "&"                                         return 'CHAR';
-[<](.|\n)*?[>]                              return 'HTML_TAG';
+[<](.|\n)*?[>]
+	%{
+		return 'HTML_TAG'; //js
+
+		//php if (JisonParser_Html_Handler::isHtmlTag($yytext)) {
+		//php   return 'HTML_TAG';
+		//php }
+		//php $tag = $yytext;
+		//php $yytext = "<";
+		//php $this->unput(substr($tag, 1));
+		//php return 'CONTENT';
+	%}
 "≤REAL_LT≥"(.|\n)*?"≤REAL_GT≥"    	        return 'HTML_TAG';
 ("§"[a-z0-9]{32}"§")                        return 'CONTENT';
 ("≤"(.)+"≥")                                return 'CONTENT';
@@ -796,6 +804,8 @@ lines
 line
  : contents
     {$$ = $1;}
+ | table
+	{$$ = $1;}
  | BLOCK_START BLOCK_END
     {
 	    $$ = parser.block($1); //js
@@ -806,6 +816,13 @@ line
         $$ = parser.block($1 + $2); //js
         //php $$ = $this->block($1 . $2);
     }
+ | LINE_END
+    {
+        $$ = parser.line($1); //js
+        //php $$ = $this->line($1);
+    }
+ | PIPE
+    {$$ = $1;}
  ;
 
 contents
@@ -923,12 +940,6 @@ content
         $$ = parser.doubleDash(); //js
         //php $$ = $this->doubleDash();
     }
- | TABLE_START TABLE_END
- | TABLE_START contents TABLE_END
-	{
-		$$ = parser.tableParser($2); //js
-		//php $$ = $this->tableParser($2);
-	}
  | TITLE_BAR_START TITLE_BAR_END
  | TITLE_BAR_START contents TITLE_BAR_END
 	{
@@ -974,11 +985,6 @@ content
  		//php $3['body'] = $2;
  		//php $$ = $this->plugin($3);
  	}
- | LINE_END
-    {
-        $$ = parser.line($1); //js
-        //php $$ = $this->line($1);
-    }
  | FORCED_LINE_END
     {
         $$ = parser.forcedLineEnd(); //js
@@ -993,6 +999,48 @@ content
     {
         $$ = parser.char($1); //js
         //php $$ = $this->char($1);
+    }
+ ;
+
+table
+ : TABLE_START TABLE_END
+ | TABLE_START tableContents TABLE_END
+   	{
+   		$$ = parser.tableParser($2); //js
+   		//php $$ = $this->tableParser($2);
+   	}
+ ;
+
+tableContents
+ : contents
+    {
+        $$ = $1; //js
+        //php $$ = $1;
+    }
+ |  LINE_END
+    {
+		$$ = $1; //js
+        //php $$ = $1;
+    }
+|  PIPE
+    {
+		$$ = $1; //js
+        //php $$ = $1;
+    }
+ |  tableContents LINE_END
+    {
+		$$ = $1 + $2; //js
+        //php $$ = $1 . $2;
+    }
+|   tableContents PIPE
+    {
+		$$ = $1 + $2; //js
+        //php $$ = $1 . $2;
+    }
+ |  tableContents contents
+    {
+		$$ = $1 + $2; //js
+		//php $$ = $1 . $2;
     }
  ;
 
