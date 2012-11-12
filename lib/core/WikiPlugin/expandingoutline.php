@@ -27,7 +27,7 @@ class WikiPlugin_expandingoutline extends WikiPlugin_HtmlBase
 		global $headerlib;
 
 		$tempParser = new JisonParser_Wiki_Handler();
-		$tempParser->list = new WikiPlugin_expandingoutline_list($parser->list);
+		$tempParser->list = new WikiPlugin_expandingoutline_list($parser->list, $tempParser);
 		$id = $this->id($index);
 
 		$headerlib->add_jq_onready(

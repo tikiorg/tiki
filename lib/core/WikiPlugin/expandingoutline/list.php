@@ -7,15 +7,17 @@
 
 class WikiPlugin_expandingoutline_list extends JisonParser_Wiki_List
 {
+	public $parser;
 	public $labelTracker = array();
 	public $typeTracking = array();
 
-	function __construct(JisonParser_Wiki_List &$parserList)
+	function __construct(JisonParser_Wiki_List &$parserList, $parser)
 	{
 		$this->stacks = $parserList->stacks;
 		$this->index = $parserList->index;
 		ini_set('error_reporting', E_ALL);
 		ini_set('display_errors', 1);
+		$this->parser = $parser;
 	}
 
 	public function toHtml()
