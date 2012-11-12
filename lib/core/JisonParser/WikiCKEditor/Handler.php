@@ -56,6 +56,8 @@ class JisonParser_WikiCKEditor_Handler extends JisonParser_Wiki_Handler
 		$this->Parser->specialCharacter = new JisonParser_WikiCKEditor_SpecialChar($this->Parser);
 
 		$this->pluginNegotiator = new WikiPlugin_Negotiator_CKEditor($this->Parser);
+
+		unset($this->Parser->autoLink);
 	}
 
 	function setOption($option = array())
@@ -155,6 +157,10 @@ class JisonParser_WikiCKEditor_Handler extends JisonParser_Wiki_Handler
 	 */
 	function link($type, $content) //[content|content]
 	{
+		if ($type == 'word') {
+			return $content;
+		}
+
 		return parent::link($type, $content, true);
 	}
 
