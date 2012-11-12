@@ -83,7 +83,7 @@
 										and ($propname neq 'name' or $view eq 'page')
 										and ($gal_info.$propkey eq 'a' or $gal_info.$propkey eq 'o'
 												or ($gal_info.$propkey eq 'y' and $show_details neq 'y')
-												or ($view eq 'page' and $gal_info.$propkey neq 'n')
+												or ($view eq 'page' and ($gal_info.$propkey neq 'n' or $propname eq 'name'))
 											)
 									}
 										<tr>
@@ -300,7 +300,7 @@
 					</div>
 					<br clear="all">
 					<div>
-						{include file='tiki-upload_file_progress.tpl' fileId=$files[changes].id}
+						{include file='tiki-upload_file_progress.tpl' fileId=$files[changes].id name=$files[changes].filename}
 					</div>
 					{if isset($metarray) and $metarray|count gt 0}
 						<br>

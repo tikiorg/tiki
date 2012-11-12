@@ -19,7 +19,8 @@ LIST_OF_SUBDIRS="${WORK_DIR}/list-of-subdirs.txt"
 #
 INDEX_FILE="index.php"
 DEFAULT_FILE_NAME="check.php"
-USECASES_FILE="${WORK_DIR}/usecases.txt"
+#USECASES_FILE="${WORK_DIR}/usecases.txt"
+USECASES_FILE="${WORK_DIR}/usecases.bin"
 GRANT="${WORK_DIR}/permission_granted.bin"
 NO="${WORK_DIR}/no.bin"
 YES="${WORK_DIR}/yes.bin"
@@ -65,6 +66,7 @@ hardcoded_perms() {
 	${CHMOD} 644 "${WORK_DIR}/${INDEX_FILE}"
 	${CHMOD} 644 "${WORK_DIR}/permission_granted.inc.php"
 	${CHMOD} 644 "${WORK_DIR}/usecases.inc.php"
+	#${CHMOD} 644 "${WORK_DIR}/usecases.bin"
 	#${CHMOD} 644 "${WORK_DIR}/usecases.txt"
 	${CHMOD} 644 "${USECASES_FILE}"
 }

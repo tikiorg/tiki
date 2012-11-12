@@ -907,16 +907,12 @@ class CategLib extends ObjectLib
 				}
 			}
 
-			// Hard-code a flag to hide the catpath, if no view permission is granted
-			//	If set to false, the hyperlinks will be removed and pure text is displayed, if no view permission is granted
-			$flHideOnNoPerm = true;
-
 			// Check if user has permission to view the page
 			$perms = Perms::get(array( 'type' => 'category', 'object' => $categId ));
 			$canView = $perms->view_category;
 
-			if ($canView || !$flHideOnNoPerm) {
-				$smarty->assign('catpathCanView', $canView);
+			if ($canView || in_array($prefs['categorypath_format'], array('link_or_text', 'always_text'))) {
+				$smarty->assign('catpathShowLink', $canView && in_array($prefs['categorypath_format'], array('link_when_visible', 'link_or_text')));
 				$smarty->assign('catp', array_reverse($catp, true));
 				$catpath .= $smarty->fetch('categpath.tpl');
 			}

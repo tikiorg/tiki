@@ -93,7 +93,7 @@
 			{if $view neq 'browse'}
 				{button _text="{tr}Browse Images{/tr}" view="browse" galleryId=$galleryId}
 			{/if}
-			{if $view neq 'page'}
+			{if $view neq 'page' and $filescount gt 0}
 				{button _text="{tr}Page View{/tr}" view="page" galleryId=$galleryId maxRecords=1}
 			{/if}
 			{if $view neq 'admin' and $tiki_p_admin_file_galleries eq 'y'}
@@ -205,7 +205,7 @@
 		</form>
 	</div><br>
 	{pagination_links cant=$cant step=$maxRecords offset=$offset}
-		tiki-list_file_gallery.php?maxWidth={$maxWidth}&maxRecords={$maxRecords}&view={$view}
+		tiki-list_file_gallery.php?galleryId={$galleryId}&maxWidth={$maxWidth}&maxRecords={$maxRecords}&view={$view}
 	{/pagination_links}
 	<br>
 {/if}

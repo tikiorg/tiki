@@ -888,6 +888,13 @@ if (isset($_GET['slideshow'])) {
 		}
 		$smarty->assign_by_ref('files', $files['data']);
 		$smarty->assign('cant', $files['cant']);
+		$subs = 0;
+		if ($with_subgals) {
+			foreach($files['data'] as $f) {
+				$subs = $subs + $f['isgal'];
+			}
+		}
+		$smarty->assign('filescount', $files['cant'] - $subs);
 	}
 	$smarty->assign('mid', 'tiki-list_file_gallery.tpl');
 }

@@ -9,6 +9,25 @@
 # This file sets permissions and creates relevant folders for Tiki.
 #
 
+# part -1 - developer comment
+# ---------------------------
+#
+# This version is supposed to act almost the same way as setup.sh revision 43875
+# if this script runs in production mode with commands 'fix' and 'open'. Minor changes
+# are:
+# - default is to do nothing
+# - debugging mode for further improvements
+#   and adaption of permission check data
+#   including a debugging option
+# - PATH
+# - order of commands changed
+# - it should be possible to run this script as executable
+# - command blocks are encapsulated in functions
+#
+# further plan for smooth transition: at some time move actual
+# setup.sh to setup-legacy.sh and this setup-revamp.sh to setup.sh
+# and later remove setup-legacy.sh
+
 # part 0 - choose production mode or verbose debugging mode
 # ---------------------------------------------------------
 
@@ -451,7 +470,6 @@ what to answer, just press enter to each question (to use default value)"
 
 command_nothing() {
 	echo 'Nothing done yet'
-	echo "Try 'sh setup.sh fix' or for classic default behaviour or 'sh setup.sh -h' for help."
 }
 
 command_open() {

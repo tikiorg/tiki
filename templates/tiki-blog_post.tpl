@@ -73,9 +73,7 @@
             </tr>
             <tr>
 				<td colspan="2" class="editblogform">
-					{if isset($data)}
-						{textarea id='blogedit' class="wikiedit" name="data"}{$data}{/textarea}
-					{/if}
+					{textarea id='blogedit' class="wikiedit" name="data"}{if isset($data)}{$data}{/if}{/textarea}
 				</td>
 			</tr>
 
@@ -85,9 +83,7 @@
 						{tr}Excerpt:{/tr}
 					</td>
 					<td class="editblogform">
-						{if isset($post_info.excerpt)}
-							{textarea id='post_excerpt' class="wikiedit" name="excerpt"}{$post_info.excerpt}{/textarea}
-						{/if}
+							{textarea id='post_excerpt' class="wikiedit" name="excerpt"}{if isset($post_info.excerpt)}{$post_info.excerpt}{/if}{/textarea}
 					</td>
 				</tr>
 			{/if}
