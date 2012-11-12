@@ -24,6 +24,8 @@
 		</div>
 		{preference name=allocate_memory_tracker_export_items}
 		{preference name=allocate_time_tracker_export_items}
+
+		{preference name=ajax_inline_edit}
 	</fieldset>
 
 	<fieldset class="admin">

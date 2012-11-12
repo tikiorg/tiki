@@ -9,11 +9,16 @@ class Search_Formatter_ValueFormatter_Trackerrender extends Search_Formatter_Val
 {
 	private $list_mode = 'n';
 	private $cancache = null;
+	private $editable = false;
 
 	function __construct($arguments)
 	{
 		if (isset($arguments['list_mode']) && $arguments['list_mode'] !== 'n') {
 			$this->list_mode = 'y';
+		}
+
+		if (isset($arguments['editable']) && in_array($arguments['editable'], array('block', 'inline'))) {
+			$this->editable = $arguments['editable'];
 		}
 	}
 
@@ -38,15 +43,17 @@ class Search_Formatter_ValueFormatter_Trackerrender extends Search_Formatter_Val
 		}
 
 		$trklib = TikiLib::lib('trk');
-		return '~np~' . $trklib->field_render_value(
+		$rendered = $trklib->field_render_value(
 			array(
 				'item' => $item,
 				'field' => $field,
 				'process' => 'y',
 				'search_render' => 'y',
 				'list_mode' => $this->list_mode,
+				'editable' => $this->editable,
 			)
-		) . '~/np~';
+		);
+		return '~np~' . $rendered . '~/np~';
 	}
 
 	function canCache()

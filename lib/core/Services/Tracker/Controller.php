@@ -683,6 +683,58 @@ class Services_Tracker_Controller
 		);
 	}
 
+	function action_edit_item_field($input)
+	{
+		$trackerId = $input->trackerId->int();
+		$definition = Tracker_Definition::get($trackerId);
+
+		if (! $definition) {
+			throw new Services_Exception_NotFound;
+		}
+
+		if (! $field = $definition->getField($input->fieldId->int())) {
+			throw new Services_Exception_NotFound;
+		}
+
+		if (! $itemId = $input->itemId->int()) {
+			throw new Services_Exception_MissingValue('itemId');
+		}
+
+		$itemInfo = TikiLib::lib('trk')->get_tracker_item($itemId);
+		if (! $itemInfo || $itemInfo['trackerId'] != $trackerId) {
+			throw new Services_Exception_NotFound;
+		}
+
+		$itemObject = Tracker_Item::fromInfo($itemInfo);
+		if (! $processed = $itemObject->prepareFieldInput($field, $input->none())) {
+			throw new Services_Exception_Denied;
+		}
+
+		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+			$fields = array();
+			$fields[ $field['permName'] ] = $processed['value'];
+
+			$result = $this->utilities->updateItem(
+				$definition,
+				array(
+					'itemId' => $itemId,
+					'status' => $itemInfo['status'],
+					'fields' => $fields,
+				)
+			);
+
+			if (false === $result) {
+				throw new Services_Exception(tr('Validation error'), 406);
+			}
+
+			TikiLib::lib('unifiedsearch')->processUpdateQueue();
+		}
+
+		return array(
+			'field' => $processed,
+		);
+	}
+
 	function action_set_location($input)
 	{
 		$location = $input->location->text();

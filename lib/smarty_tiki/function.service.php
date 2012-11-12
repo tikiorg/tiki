@@ -7,30 +7,14 @@
 
 function smarty_function_service($params, $smarty)
 {
-	global $prefs;
+	$servicelib = TikiLib::lib('service');
 	$smarty->loadPlugin('smarty_modifier_escape');
 
 	if (! isset($params['controller'])) {
 		return 'missing-controller';
 	}
 
-	if ($prefs['feature_sefurl'] == 'y') {
-		$url = "tiki-{$params['controller']}";
-
-		if (isset($params['action'])) {
-			$url .= "-{$params['action']}";
-		}
-
-		unset($params['controller']);
-		unset($params['action']);
-	} else {
-		$url = 'tiki-ajax_services.php';
-	}
-
-	if (count($params)) {
-		$url .= '?' . http_build_query($params, '', '&');
-	}
-
+	$url = $servicelib->getUrl($params);
 	return smarty_modifier_escape($url);
 }
 

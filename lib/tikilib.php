@@ -260,6 +260,9 @@ class TikiLib extends TikiDb_Bridge
 			case 'references':
 				global $referenceslib; require_once 'lib/references/referenceslib.php';
 				return self::$libraries[$name] = $referenceslib;
+			case 'service':
+				require_once 'lib/servicelib.php';
+				return self::$libraries[$name] = new ServiceLib;
 		}
 	}
 
