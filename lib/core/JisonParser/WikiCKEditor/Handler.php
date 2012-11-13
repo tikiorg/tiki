@@ -155,13 +155,13 @@ class JisonParser_WikiCKEditor_Handler extends JisonParser_Wiki_Handler
 	 * @param   $content string found inside detected syntax
 	 * @return  string  $content desired output from syntax
 	 */
-	function link($type, $content) //[content|content]
+	function link($type, $page, $description = '') //[content|content]
 	{
 		if ($type == 'word') {
-			return $content;
+			return $page;
 		}
 
-		return parent::link($type, $content, true);
+		return parent::link($type, $page, $description, true);
 	}
 
 

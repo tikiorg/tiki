@@ -27,8 +27,8 @@ class JisonParser_Html
 		$this->defaultActions = json_decode('{"3":[2,3],"9":[2,2]}', true);
 		
 		//lexer
-		$this->rules = 			array("/^(?:(<(.|\\n)[^>]*?\\/>))/","/^(?:$)/","/^(?:(<\\/(.|\\n)[^>]*?>))/","/^(?:(<(.|\\n)[^>]*?>))/","/^(?:(<\\/(.|\\n)[^>]*?>))/","/^(?:([A-Za-z0-9 .,?;]+))/","/^(?:[\\xE0-\\xFA])/","/^(?:[\\u0591-\\u05F4])/","/^(?:([ ]))/","/^(?:((\\n\\r|\\r\\n|[\\n\\r])))/","/^(?:(.))/","/^(?:$)/");
-		$this->conditions = 	json_decode('{"htmlElement":{"rules":[0,1,2,3,4,5,6,7,8,9,10,11],"inclusive":true},"INITIAL":{"rules":[0,3,4,5,6,7,8,9,10,11],"inclusive":true}}', true);
+		$this->rules = 			array("/^(?:(<(.|\\n)[^>]*?\\/>))/","/^(?:$)/","/^(?:(<\\/(.|\\n)[^>]*?>))/","/^(?:(<(.|\\n)[^>]*?>))/","/^(?:(<\\/(.|\\n)[^>]*?>))/","/^(?:([A-Za-z0-9 .,?;]+))/","/^(?:([ ]))/","/^(?:((\\n\\r|\\r\\n|[\\n\\r])))/","/^(?:(.))/","/^(?:$)/");
+		$this->conditions = 	json_decode('{"htmlElement":{"rules":[0,1,2,3,4,5,6,7,8,9],"inclusive":true},"INITIAL":{"rules":[0,3,4,5,6,7,8,9],"inclusive":true}}', true);
 		
 		$this->options =		json_decode('{}', true);
 	}
@@ -572,7 +572,7 @@ case 3:
     	      }
     	  return 7;
     	}
-    	
+
     	//A non-valid html tag, return "<" put the rest back into the parser
         $tag = $yy_->yytext;
         $yy_->yytext = "<";
@@ -589,20 +589,16 @@ case 5:return 7;
 break;
 case 6:return 7;
 break;
-case 7:return 7;
-break;
-case 8:return 7;
-break;
-case 9:
+case 7:
 		if ($this->htmlElementStackCount == 0 || $this->isStaticTag == true) {
 		  return 8;
 		}
 		return 'CONTENT';
 	
 break;
-case 10:return 7;
+case 8:return 7;
 break;
-case 11:return 5;
+case 9:return 5;
 break;
 }
 

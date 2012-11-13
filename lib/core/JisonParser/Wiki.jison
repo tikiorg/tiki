@@ -9,7 +9,7 @@ VARIABLE_NAME                   ([0-9A-Za-z ]{3,})
 SYNTAX_CHARS                    [{}\n_\^:\~'-|=\(\)\[\]*#+%<≤]
 LINE_CONTENT                    (.?)
 LINES_CONTENT                   (.|\n)+
-LINE_END                        (\n\r|\r\n|[\n\r])
+LINE_END                        (\n)
 BLOCK_START                     ([\!*#+;])
 WIKI_LINK_TYPE                  (([a-z0-9-]+))
 CAPITOL_WORD                    ([A-Z]{1,}[a-z_\-\x80-\xFF]{1,}){2,}
@@ -547,20 +547,24 @@ CAPITOL_WORD                    ([A-Z]{1,}[a-z_\-\x80-\xFF]{1,}){2,}
 	%{
 		if (parser.isContent()) return 'CONTENT'; //js
 		lexer.popState(); //js
+        parser.tableStack.pop(); //js
 		return 'TABLE_END'; //js
 
 		//php if ($this->isContent()) return 'CONTENT';
 		//php $this->popState();
+        //php array_pop($this->tableStack);
 		//php return 'TABLE_END';
 	%}
 [|][|]
 	%{
 		if (parser.isContent()) return 'CONTENT'; //js
 		lexer.begin('table'); //js
+		parser.tableStack.push(true); //js
 		return 'TABLE_START'; //js
 
 		//php if ($this->isContent()) return 'CONTENT';
 		//php $this->begin('table');
+		//php $this->tableStack[] = true;
 		//php return 'TABLE_START';
 	%}
 [|]                                     return 'PIPE';
@@ -804,8 +808,6 @@ lines
 line
  : contents
     {$$ = $1;}
- | table
-	{$$ = $1;}
  | BLOCK_START BLOCK_END
     {
 	    $$ = parser.block($1); //js
@@ -816,13 +818,6 @@ line
         $$ = parser.block($1 + $2); //js
         //php $$ = $this->block($1 . $2);
     }
- | LINE_END
-    {
-        $$ = parser.line($1); //js
-        //php $$ = $this->line($1);
-    }
- | PIPE
-    {$$ = $1;}
  ;
 
 contents
@@ -844,6 +839,8 @@ content
         $$ = parser.comment($1); //js
         //php $$ = $this->comment($1); //js
     }
+ | PIPE
+    {$$ = $1;}
  | NO_PARSE_START NO_PARSE_END
  | NO_PARSE_START contents NO_PARSE_END
     {
@@ -929,6 +926,11 @@ content
 		$$ = parser.link($1, $2); //js
 		//php $$ = $this->link($1, $2);
 	}
+ | LINK_START contents PIPE contents LINK_END
+	{
+		$$ = parser.link($1, $2, $4); //js
+		//php $$ = $this->link($1, $2, $4);
+	}
  | STRIKE_START STRIKE_END
  | STRIKE_START contents STRIKE_END
 	{
@@ -940,6 +942,12 @@ content
         $$ = parser.doubleDash(); //js
         //php $$ = $this->doubleDash();
     }
+ | TABLE_START TABLE_END
+ | TABLE_START contents TABLE_END
+	{
+		$$ = parser.tableParser($2); //js
+		//php $$ = $this->tableParser($2);
+	}
  | TITLE_BAR_START TITLE_BAR_END
  | TITLE_BAR_START contents TITLE_BAR_END
 	{
@@ -985,6 +993,11 @@ content
  		//php $3['body'] = $2;
  		//php $$ = $this->plugin($3);
  	}
+ | LINE_END
+    {
+        $$ = parser.line($1); //js
+        //php $$ = $this->line($1);
+    }
  | FORCED_LINE_END
     {
         $$ = parser.forcedLineEnd(); //js
@@ -999,48 +1012,6 @@ content
     {
         $$ = parser.char($1); //js
         //php $$ = $this->char($1);
-    }
- ;
-
-table
- : TABLE_START TABLE_END
- | TABLE_START tableContents TABLE_END
-   	{
-   		$$ = parser.tableParser($2); //js
-   		//php $$ = $this->tableParser($2);
-   	}
- ;
-
-tableContents
- : contents
-    {
-        $$ = $1; //js
-        //php $$ = $1;
-    }
- |  LINE_END
-    {
-		$$ = $1; //js
-        //php $$ = $1;
-    }
-|  PIPE
-    {
-		$$ = $1; //js
-        //php $$ = $1;
-    }
- |  tableContents LINE_END
-    {
-		$$ = $1 + $2; //js
-        //php $$ = $1 . $2;
-    }
-|   tableContents PIPE
-    {
-		$$ = $1 + $2; //js
-        //php $$ = $1 . $2;
-    }
- |  tableContents contents
-    {
-		$$ = $1 + $2; //js
-		//php $$ = $1 . $2;
     }
  ;
 

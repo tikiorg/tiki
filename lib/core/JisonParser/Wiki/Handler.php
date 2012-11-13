@@ -356,7 +356,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		}
 
 		$input = "\n" . $input . "\n"; //here we add 2 lines, so the parser doesn't have to do special things to track the first line and last, we remove these when we insert breaks, these are dynamically removed later
-
+		$input = str_replace("\r", "", $input);
 		$input = $this->specialCharacter->protect($input);
 	}
 
@@ -1145,14 +1145,9 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	 * @param   $includePageAsDataAttribute bool includes the page as an attribute in the link "data-page"
 	 * @return  string  $content desired output from syntax
 	 */
-	function link($type, $content, $includePageAsDataAttribute = false) //[content|content]
+	function link($type, $page, $description, $includePageAsDataAttribute = false) //[content|content]
 	{
 		global $tikilib, $prefs;
-
-		$parts = explode('|', $content);
-		$page = (isset($parts[0]) ? $parts[0] : $content);
-		array_shift($parts);
-		$description = implode('|', $parts);
 
 		$wikiExternal = '';
 		$parts = explode(':', $page);

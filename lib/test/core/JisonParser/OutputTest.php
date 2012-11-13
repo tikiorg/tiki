@@ -153,6 +153,7 @@ class JisonParser_OutputTest extends JisonParser_Abstract
 			'complex_state_tracking' => array(),
 			'no_line_skipping' => array(),
 			'line_skipping_mixed' => array(),
+			'odd_break_before_table_issue' => array("\n||test|test\ntest|test||\n", "<br/><table class=\'wikitable\'><tr><td class=\'wikicell\'>test</td><td class=\'wikicell\'>test</td></tr><tr><td class=\'wikicell\'>test</td><td class=\'wikicell\'>test</td></tr></table><br/>"),
 		);
 	}
 

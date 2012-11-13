@@ -70,8 +70,7 @@ HTML_TAG_OPEN                   "<"(.|\n)[^>]*?">"
     	//php return 'CONTENT';
 	%}
 ([A-Za-z0-9 .,?;]+)                         return 'CONTENT';
-[\xE0-\xFA]                                 return 'CONTENT';
-[\u0591-\u05F4]                             return 'CONTENT';
+
 ([ ])                                       return 'CONTENT';
 {LINE_END}
 	%{
