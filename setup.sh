@@ -486,6 +486,58 @@ permission_via_php_check() {
 	set_permission_data
 }
 
+set_group_minus_execute() {
+	${CHMOD} -R g-x .
+}
+
+set_group_minus_read() {
+	${CHMOD} -R g-r .
+}
+
+set_group_minus_write() {
+	${CHMOD} -R g-w .
+}
+
+set_group_plus_execute() {
+	${CHMOD} -R g+x .
+}
+
+set_group_plus_read() {
+	${CHMOD} -R g+r .
+}
+
+set_group_plus_write() {
+	${CHMOD} -R g+w .
+}
+
+set_other_minus_execute() {
+	${CHMOD} -R o-x .
+}
+
+set_other_minus_read() {
+	${CHMOD} -R o-r .
+}
+
+set_other_minus_write() {
+	${CHMOD} -R o-w .
+}
+
+set_other_plus_execute() {
+	${CHMOD} -R o+x .
+}
+
+set_other_plus_read() {
+	${CHMOD} -R o+r .
+}
+
+set_other_plus_write() {
+	${CHMOD} -R o+w .
+}
+
+set_user_plus_execute() {
+	${CHMOD} -R u+x .
+}
+
 # part 5 - main program
 # ---------------------
 
@@ -506,6 +558,20 @@ case ${COMMAND} in
 	risky)		permission_via_php_check ;;
 	sbox)		permission_via_php_check ;;
 	worry)		permission_via_php_check ;;
+	# plain chmod
+	gmr)		set_group_minus_read ;;
+	gmw)		set_group_minus_write ;;
+	gmx)		set_group_minus_execute ;;
+	gpr)		set_group_plus_read ;;
+	gpw)		set_group_plus_write ;;
+	gpx)		set_group_plus_execute ;;
+	omr)		set_other_minus_read ;;
+	omw)		set_other_minus_write ;;
+	omx)		set_other_minus_execute ;;
+	opr)		set_other_plus_read ;;
+	opw)		set_other_plus_write ;;
+	opx)		set_other_plus_execute ;;
+	upx)		set_user_plus_execute ;;
 	foo)		echo foo ;;
 	*)		echo -e ${HINT_FOR_USER} ;;
 esac
