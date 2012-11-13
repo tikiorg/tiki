@@ -133,8 +133,7 @@ class JisonParser_PluginTest extends JisonParser_Abstract
 		$prefs['wikiplugin_expandingoutline'] = 'y';
 
 		$syntax = array(
-"{EXPANDINGOUTLINE()}
-*test
+"{EXPANDINGOUTLINE()}*test
 *test
 **test
 **test
