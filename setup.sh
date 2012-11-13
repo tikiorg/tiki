@@ -538,6 +538,14 @@ set_user_plus_execute() {
 	${CHMOD} -R u+x .
 }
 
+set_user_plus_read() {
+	${CHMOD} -R u+r .
+}
+
+set_user_plus_write() {
+	${CHMOD} -R u+w .
+}
+
 # part 5 - main program
 # ---------------------
 
@@ -571,6 +579,8 @@ case ${COMMAND} in
 	opr)		set_other_plus_read ;;
 	opw)		set_other_plus_write ;;
 	opx)		set_other_plus_execute ;;
+	upr)		set_user_plus_read ;;
+	upw)		set_user_plus_write ;;
 	upx)		set_user_plus_execute ;;
 	foo)		echo foo ;;
 	*)		echo -e ${HINT_FOR_USER} ;;
