@@ -306,11 +306,11 @@ set_permission_data() {
 		if [ -d ${WRITABLE} ] ; then
 			if [ ${DEBUG} = '1' ] ; then
 				echo ${DEBUG_PREFIX}
-				echo ${DEBUG_PREFIX} ${FIND} ${WRITABLE} -type d -exec echo ${CHMOD} ${MODEL_PERMS_WRITE_SUBDIRS} {} \;
-				echo ${DEBUG_PREFIX} ${FIND} ${WRITABLE} -type f -exec echo ${CHMOD} ${MODEL_PERMS_WRITE_FILES} {} \;
+				echo ${DEBUG_PREFIX} ${FIND} ${WRITABLE} -type d -exec ${CHMOD} ${MODEL_PERMS_WRITE_SUBDIRS} {} \;
+				echo ${DEBUG_PREFIX} ${FIND} ${WRITABLE} -type f -exec ${CHMOD} ${MODEL_PERMS_WRITE_FILES} {} \;
 			fi
-			${FIND} ${WRITABLE} -type d -exec echo ${CHMOD} ${MODEL_PERMS_WRITE_SUBDIRS} {} \;
-			${FIND} ${WRITABLE} -type f -exec echo ${CHMOD} ${MODEL_PERMS_WRITE_FILES} {} \;
+			${FIND} ${WRITABLE} -type d -exec ${CHMOD} ${MODEL_PERMS_WRITE_SUBDIRS} {} \;
+			{FIND} ${WRITABLE} -type f -exec ${CHMOD} ${MODEL_PERMS_WRITE_FILES} {} \;
 		fi
 	done
 }
