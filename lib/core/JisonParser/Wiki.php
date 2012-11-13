@@ -1147,7 +1147,7 @@ case 65:
 break;
 case 66:
 
-		if ($this->isContent()) return 'CONTENT';
+		if ($this->isContent() || !empty($this->tableStack)) return 'CONTENT';
 		return 'LINE_END';
 	
 break;

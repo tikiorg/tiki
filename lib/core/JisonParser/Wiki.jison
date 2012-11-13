@@ -740,10 +740,10 @@ CAPITOL_WORD                    ([A-Z]{1,}[a-z_\-\x80-\xFF]{1,}){2,}
 	%}
 {LINE_END}
 	%{
-		if (parser.isContent()) return 'CONTENT'; //js
+		if (parser.isContent() || parser.tableStack) return 'CONTENT'; //js
 		return 'LINE_END'; //js
 
-		//php if ($this->isContent()) return 'CONTENT';
+		//php if ($this->isContent() || !empty($this->tableStack)) return 'CONTENT';
 		//php return 'LINE_END';
 	%}
 "&"                                         return 'CHAR';

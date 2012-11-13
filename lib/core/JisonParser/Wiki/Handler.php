@@ -1087,7 +1087,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 
 		$result = '';
 
-		if ($skipBr == false && empty($this->tableStack) && $this->nonBreakingTagDepth == 0) {
+		if ($skipBr == false && $this->nonBreakingTagDepth == 0) {
 			$result = $this->createWikiTag("line", "br", "", array(), "inline");
 		}
 
