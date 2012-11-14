@@ -17,18 +17,30 @@ function tf($wikiSyntax) {
 	$wiki = $parserHtmlToWiki->parse($html);
 	echo '"' . $wiki . '"';
 	echo "\n----------------------" . mb_detect_encoding($wiki) . "------------------------\n";
-	echo ($wikiSyntax == $wiki ? "SUCCESS" : "FAILURE");
+	$success =  $wikiSyntax == $wiki;
+	echo ($success  ? "SUCCESS" : "FAILURE");
 
 	unset($parser);
 	unset($WysiwygParser);
 	unset($parserHtmlToWiki);
 	unset($html);
+	
+	return $success;
 }
 
 global $tikilib;
 
+$cntSUCCESS = 0;
+$cntFAILURE = 0;
 $pages = $tikilib->fetchAll("SELECT pageName, data from tiki_pages");
 foreach($pages as &$page) {
-	tf($page['data']);
+	if (tf($page['data'])) {
+		++$cntSUCCESS;
+	} else {
+		++$cntFAILURE;
+	}
 	unset($page);
 }
+echo "\n------------- Statistics ---------------------------------\n";
+echo "\nSUCCESS: ".$cntSUCCESS."\n";
+echo "\nFAILURE: ".$cntFAILURE."\n";
