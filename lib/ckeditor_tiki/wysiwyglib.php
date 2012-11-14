@@ -11,18 +11,24 @@
 
 class WYSIWYGLib
 {
+	private function loadCKEditor()
+	{
+		global $tikiroot, $headerlib;
+
+		$headerlib->add_js_config('window.CKEDITOR_BASEPATH = "'. $tikiroot . 'lib/ckeditor/";')
+		//// for js debugging - copy _source from ckeditor distribution to libs/ckeditor to use
+		//// note, this breaks ajax page load via wikitopline edit icon
+		//->add_jsfile('lib/ckeditor/ckeditor_source.js');
+			->add_jsfile('lib/ckeditor/ckeditor.js', 0, true)
+			->add_js('window.CKEDITOR.config._TikiRoot = "'.$tikiroot.'";', 1);
+	}
+
 	function setUpEditor($is_html, $dom_id, $params = array(), $auto_save_referrer = '', $full_page = true)
 	{
 
-		global $tikiroot, $prefs;
-		$headerlib = TikiLib::lib('header');
-		$headerlib->add_js_config('window.CKEDITOR_BASEPATH = "'. $tikiroot . 'lib/ckeditor/";')
-				//// for js debugging - copy _source from ckeditor distribution to libs/ckeditor to use
-				//// note, this breaks ajax page load via wikitopline edit icon
-				//->add_jsfile('lib/ckeditor/ckeditor_source.js');
-				->add_jsfile('lib/ckeditor/ckeditor.js', 0, true)
-				->add_jsfile('lib/ckeditor/adapters/jquery.js', 0, true)
-				->add_js('window.CKEDITOR.config._TikiRoot = "'.$tikiroot.'";', 1);
+		global $tikiroot, $prefs, $headerlib;
+
+		$this->loadCKEditor();
 
 		if ($full_page) {
 			$headerlib->add_jsfile('lib/ckeditor_tiki/tikilink_dialog.js');
@@ -57,6 +63,56 @@ ajaxLoadingShow("'.$dom_id.'");
 			);	// before dialog tools init (10)
 		}
 
+		$this->finishLoading($dom_id, $auto_save_referrer, $params);
+	}
+
+
+	function setUpJisonEditor($is_html, $dom_id, $params = array(), $auto_save_referrer = '', $full_page = true)
+	{
+		global $tikiroot, $prefs, $headerlib;
+
+		$this->loadCKEditor();
+/*
+		if ($full_page) {
+			$headerlib->add_jsfile('lib/ckeditor_tiki/tikilink_dialog.js');
+			$headerlib->add_js(
+				'window.CKEDITOR.config.extraPlugins += (window.CKEDITOR.config.extraPlugins ? ",tikiplugin" : "tikiplugin" );
+				window.CKEDITOR.plugins.addExternal( "tikiplugin", "'.$tikiroot.'lib/ckeditor_tiki/plugins/tikiplugin/");',
+				5
+			);
+		}
+		if (!$is_html && $full_page) {
+			$headerlib->add_js(
+				'window.CKEDITOR.config.extraPlugins += (window.CKEDITOR.config.extraPlugins ? ",tikiwiki" : "tikiwiki" );
+				window.CKEDITOR.plugins.addExternal( "tikiwiki", "'.$tikiroot.'lib/ckeditor_tiki/plugins/tikiwiki/");',
+				5
+			);	// before dialog tools init (10)
+
+		}
+		if ($auto_save_referrer && $prefs['feature_ajax'] === 'y' &&
+			$prefs['ajax_autosave'] === 'y' && $params['autosave'] == 'y') {
+
+			$headerlib->add_js(
+				'// --- config settings for the autosave plugin ---
+window.CKEDITOR.config.ajaxAutoSaveTargetUrl = "'.$tikiroot.'tiki-auto_save.php";	// URL to post to (also used for plugin processing)
+window.CKEDITOR.config.extraPlugins += (window.CKEDITOR.config.extraPlugins ? ",autosave" : "autosave" );
+window.CKEDITOR.plugins.addExternal( "autosave", "'.$tikiroot.'lib/ckeditor_tiki/plugins/autosave/");
+window.CKEDITOR.config.ajaxAutoSaveRefreshTime = 30 ;			// RefreshTime
+window.CKEDITOR.config.ajaxAutoSaveSensitivity = 2 ;			// Sensitivity to key strokes
+window.CKEDITOR.config.contentsLangDirection = ' . ($prefs['feature_bidi'] === 'y' ? '"rtl"' : '"ui"') . '
+register_id("'.$dom_id.'","'.addcslashes($auto_save_referrer, '"').'");	// Register auto_save so it gets removed on submit
+ajaxLoadingShow("'.$dom_id.'");
+', 5
+			);	// before dialog tools init (10)
+		}
+*/
+		$this->finishLoading($dom_id, $auto_save_referrer, $params);
+	}
+
+	private function finishLoading($dom_id, $auto_save_referrer, $params)
+	{
+		global $tikiroot, $prefs, $headerlib, $smarty;
+
 		// work out current theme/option
 		global $tikilib, $tc_theme, $tc_theme_option;
 		if (!empty($tc_theme)) {
@@ -85,7 +141,9 @@ ajaxLoadingShow("'.$dom_id.'");
 		$ckeformattags = ToolbarCombos::getFormatTags('html');
 
 		// js to initiate the editor
-		$ckoptions = '{
+		$headerlib
+			->add_jq_onready(
+'CKEDITOR.replace( "' . $dom_id . '", {
 	toolbar_Tiki: ' .$cktools.',
 	toolbar: "Tiki",
 	language: "'.$prefs['language'].'",
@@ -101,9 +159,7 @@ ajaxLoadingShow("'.$dom_id.'");
 	language: "' . ($prefs['feature_detect_language'] === 'y' ? '' : $prefs['language']) . '",
 	'. (empty($params['cols']) ? 'height: 400,' : '') .'
 	contentsLangDirection: "' . ($prefs['feature_bidi'] === 'y' ? 'rtl' : 'ltr') . '"
-}';
-
-		return $ckoptions;
+});');
 	}
 
 }

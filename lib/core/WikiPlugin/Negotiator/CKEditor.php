@@ -19,4 +19,9 @@ class WikiPlugin_Negotiator_CKEditor extends WikiPlugin_Negotiator_Wiki
 	{
 		return $this->toSyntax();
 	}
+
+	function executeAwaiting(&$input)
+	{
+
+	}
 }
