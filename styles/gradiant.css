@@ -30,7 +30,7 @@ a:focus, a:active		{
 }
 body {
 	background: #f0f0f0;
-	font: 76%/1.8em 'Liberation Serif', Cambria, Georgia, serif;
+	font: 76%/1.5em 'Liberation Serif', Cambria, Georgia, serif;
 }
 a {
 	color: #333;
@@ -59,20 +59,54 @@ div.rbox-title {
 div.rbox-data {
 	border-radius: 0 .5em .5em .5em;
 }
-fieldset {
-	border: solid 1px #ccc;
+fieldset, .simplebox {
+	border: dotted 1px #ccc;
 }
 h1 {
 	padding: 0 .5em; font-size: 3em;
 }
 h1,
 h1 a {
-	color: #9f9f9f;
+	color: #0f90c0;
 	text-shadow: 0 0.07em 0.2em rgba(0, 0, 0, 0.1), -0.02em 0.05em 0.2em rgba(0, 0, 0, 0.1), 0.02em 0.05em 0.2em rgba(0, 0, 0, 0.1);
 }
 h2,
 h2 a {
 	color: #6f6f6f;
+}
+input[type=submit], input[type=button], input[type=reset], .button a {
+	background: #09c;
+	border: none;
+	border-radius: 5px;
+	box-shadow: inset 0 5px 15px rgba(0,0,0,.2), 0 2px 5px -3px #666;
+	color: #fff;
+	font: normal bold 1em/1.5em "Segoe UI", "Lucida Grande", sans-serif !important;
+	margin: 2px 3px !important;
+	padding: 4px;
+	text-shadow: -1px 1px 0 #666;
+}
+input[type=text], input[type=password], input[type=url], input.url, textarea {
+	border: solid 1px #cfcfcf;
+	box-shadow: inset 0 5px 15px rgba(0,0,0,.2);
+	padding: 4px 0;
+}
+.CodeMirror pre, .CodeMirror span {
+	font-size: 12px !important;
+	line-height: 14.4px !important;
+	padding: 0 !important;
+	vertical-align: baseline !important;
+}
+.CodeMirror > div {
+	font-size: 12px !important;
+	padding: 0 !important;
+	vertical-align: baseline !important;
+	height: 0; line-height: 14px;
+}
+.CodeMirror textarea {
+	font-size: 12px !important;
+	padding: 0 !important;
+	vertical-align: baseline !important;
+	height: 12px; line-height: 15px; min-height: auto !important;
 }
 .menuLevel1 a {
 	background: rgba(255,255,255,.75);
@@ -260,6 +294,10 @@ tt, code, kbd, samp {
 	right: 1em;
 	padding: 0;
 }
+.box-quickadmin .cssmenu_horiz a {
+    line-height: inherit;
+}
+
 #sitelogo {
 	display: block;
 	height: 15em;
@@ -283,7 +321,7 @@ tt, code, kbd, samp {
 #col2, #col3,
 .wikitext {
 	min-height: 300px;
-	padding: .5em;
+	padding: 5px;
 }
 .wikitext h1 {
 	font-family: "Segoe UI", "Lucida Grande", sans-serif;
@@ -359,6 +397,7 @@ a.icon:hover,
 a:hover .icon {
 	opacity: 1;
 }
+
 .wikipreview {
 	height: 400px;
 }
