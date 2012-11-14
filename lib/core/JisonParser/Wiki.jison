@@ -134,9 +134,11 @@ CAPITOL_WORD                    ([A-Z]{1,}[a-z_\-\x80-\xFF]{1,}){2,}
 	%}
 "{"{INLINE_PLUGIN_ID}.*?"}"
 	%{
+		if (parser.isContent()) return 'CONTENT'; //js
 		yytext = parser.inlinePlugin(yytext); //js
 		return 'INLINE_PLUGIN'; //js
 
+		//php if ($this->isContent()) return 'CONTENT';
 		//php $yytext = $this->inlinePlugin($yytext);
 		//php return 'INLINE_PLUGIN';
 	%}

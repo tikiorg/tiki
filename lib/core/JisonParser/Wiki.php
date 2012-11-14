@@ -748,6 +748,7 @@ case 12:
 break;
 case 13:
 
+		if ($this->isContent()) return 'CONTENT';
 		$yy_->yytext = $this->inlinePlugin($yy_->yytext);
 		return 'INLINE_PLUGIN';
 	
