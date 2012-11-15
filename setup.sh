@@ -233,6 +233,42 @@ DIRS="db dump img/wiki img/wiki_up img/trackers modules/cache temp temp/cache te
 
 # part 4.1 - several functions as permission settings for different usecases
 
+dec2oct() {
+	#DEC_IN=85
+	#
+	#
+	#
+	R8=$(( ${DEC_IN} % 8 ))
+	O1=${R8}
+	IN=$(( ${DEC_IN} - ${R8} ))
+	#
+	#echo foo ${IN}
+	#
+	DEC_IN=${IN}
+	R64=$(( ${DEC_IN} % 64 ))
+	O2=$(( ${R64} / 8 ))
+	IN=$(( ${DEC_IN} - ${R64} ))
+	#
+	#echo bar ${IN}
+	#
+	DEC_IN=${IN}
+	R512=$(( ${DEC_IN} % 512 ))
+	O3=$(( ${R512} / 64 ))
+	#
+	#echo ${R512} ${R64} ${R8}
+	#
+	OCT_OUT=${O3}${O2}${O1}
+}
+
+dec2oct_test() {
+	DEC_IN=$(( 0500 | 0220 ))
+	dec2oct
+	echo ${OCT_OUT}
+	echo break
+	exit 1
+}
+#dec2oct_test
+
 debug_breakpoint() {
 	echo
 	echo "debug breakpoint"
@@ -293,6 +329,21 @@ get_permission_data() {
 	fi
 }
 
+set_permission_dirs_special_write() {
+	# function must be defined before set_permission_data
+	for WRITABLE in $DIRS ; do
+		if [ -d ${WRITABLE} ] ; then
+			if [ ${DEBUG} = '1' ] ; then
+				echo ${DEBUG_PREFIX}
+				echo ${DEBUG_PREFIX} ${FIND} ${WRITABLE} -type d -exec ${CHMOD} ${MODEL_PERMS_WRITE_SUBDIRS} {} \;
+				echo ${DEBUG_PREFIX} ${FIND} ${WRITABLE} -type f -exec ${CHMOD} ${MODEL_PERMS_WRITE_FILES} {} \;
+			fi
+			${FIND} ${WRITABLE} -type d -exec ${CHMOD} ${MODEL_PERMS_WRITE_SUBDIRS} {} \;
+			${FIND} ${WRITABLE} -type f -exec ${CHMOD} ${MODEL_PERMS_WRITE_FILES} {} \;
+		fi
+	done
+}
+
 set_permission_data() {
 	if [ ${DEBUG} = '1' ] ; then
 		echo ${DEBUG_PREFIX}
@@ -302,6 +353,7 @@ set_permission_data() {
 	#debug_breakpoint
 	${FIND} . -type d -exec ${CHMOD} ${MODEL_PERMS_SUBDIRS} {} \;
 	${FIND} . -type f -exec ${CHMOD} ${MODEL_PERMS_FILES} {} \;
+	#set_permission_dirs_special_write
 	for WRITABLE in $DIRS ; do
 		if [ -d ${WRITABLE} ] ; then
 			if [ ${DEBUG} = '1' ] ; then
@@ -534,6 +586,10 @@ set_other_plus_write() {
 	${CHMOD} -R o+w .
 }
 
+set_user_minus_write() {
+	${CHMOD} -R u-w .
+}
+
 set_user_plus_execute() {
 	${CHMOD} -R u+x .
 }
@@ -544,6 +600,126 @@ set_user_plus_read() {
 
 set_user_plus_write() {
 	${CHMOD} -R u+w .
+}
+
+special_dirs_set_permissions_files() {
+	for WRITABLE in $DIRS ; do
+		if [ -d ${WRITABLE} ] ; then
+			if [ ${DEBUG} = '1' ] ; then
+				echo ${DEBUG_PREFIX}
+				echo ${DEBUG_PREFIX} ${FIND} ${WRITABLE} -type f -exec ${CHMOD} ${MODEL_PERMS_WRITE_FILES} {} \;
+			fi
+			${FIND} ${WRITABLE} -type f -exec ${CHMOD} ${MODEL_PERMS_WRITE_FILES} {} \;
+		fi
+	done
+}
+
+special_dirs_set_permissions_subdirs() {
+	for WRITABLE in $DIRS ; do
+		if [ -d ${WRITABLE} ] ; then
+			if [ ${DEBUG} = '1' ] ; then
+				echo ${DEBUG_PREFIX}
+				echo ${DEBUG_PREFIX} ${FIND} ${WRITABLE} -type d -exec ${CHMOD} ${MODEL_PERMS_WRITE_SUBDIRS} {} \;
+			fi
+			${FIND} ${WRITABLE} -type d -exec ${CHMOD} ${MODEL_PERMS_WRITE_SUBDIRS} {} \;
+		fi
+	done
+}
+
+special_dirs_set_group_minus_write_files() {
+	MODEL_PERMS_WRITE_FILES='g-w'
+	special_dirs_set_permissions_files
+}
+
+special_dirs_set_group_minus_write_subdirs() {
+	MODEL_PERMS_WRITE_SUBDIRS='g-w'
+	special_dirs_set_permissions_subdirs
+}
+
+special_dirs_set_group_minus_write() {
+	#order: 1. files 2. subdirs
+	special_dirs_set_group_minus_write_files
+	special_dirs_set_group_minus_write_subdirs
+}
+
+special_dirs_set_group_plus_write_files() {
+	MODEL_PERMS_WRITE_FILES='g+w'
+	special_dirs_set_permissions_files
+}
+
+special_dirs_set_group_plus_write_subdirs() {
+	MODEL_PERMS_WRITE_SUBDIRS='g+w'
+	special_dirs_set_permissions_subdirs
+}
+
+special_dirs_set_group_plus_write() {
+	#order: 1. subdirs 2. files
+	special_dirs_set_group_plus_write_subdirs
+	special_dirs_set_group_plus_write_files
+}
+
+special_dirs_set_other_minus_write_files() {
+	MODEL_PERMS_WRITE_FILES='o-w'
+	special_dirs_set_permissions_files
+}
+
+special_dirs_set_other_minus_write_subdirs() {
+	MODEL_PERMS_WRITE_SUBDIRS='o-w'
+	special_dirs_set_permissions_subdirs
+}
+
+special_dirs_set_other_minus_write() {
+	#order: 1. files 2. subdirs
+	special_dirs_set_other_minus_write_files
+	special_dirs_set_other_minus_write_subdirs
+}
+
+special_dirs_set_other_plus_write_files() {
+	MODEL_PERMS_WRITE_FILES='o+w'
+	special_dirs_set_permissions_files
+}
+
+special_dirs_set_other_plus_write_subdirs() {
+	MODEL_PERMS_WRITE_SUBDIRS='o+w'
+	special_dirs_set_permissions_subdirs
+}
+
+special_dirs_set_other_plus_write() {
+	#order: 1. subdirs 2. files
+	special_dirs_set_other_plus_write_subdirs
+	special_dirs_set_other_plus_write_files
+}
+
+special_dirs_set_user_minus_write_files() {
+	MODEL_PERMS_WRITE_FILES='u-w'
+	special_dirs_set_permissions_files
+}
+
+special_dirs_set_user_minus_write_subdirs() {
+	MODEL_PERMS_WRITE_SUBDIRS='u-w'
+	special_dirs_set_permissions_subdirs
+}
+
+special_dirs_set_user_minus_write() {
+	#order: 1. files 2. subdirs
+	special_dirs_set_user_minus_write_files
+	special_dirs_set_user_minus_write_subdirs
+}
+
+special_dirs_set_user_plus_write_files() {
+	MODEL_PERMS_WRITE_FILES='u+w'
+	special_dirs_set_permissions_files
+}
+
+special_dirs_set_user_plus_write_subdirs() {
+	MODEL_PERMS_WRITE_SUBDIRS='u+w'
+	special_dirs_set_permissions_subdirs
+}
+
+special_dirs_set_user_plus_write() {
+	#order: 1. subdirs 2. files
+	special_dirs_set_user_plus_write_subdirs
+	special_dirs_set_user_plus_write_files
 }
 
 # part 5 - main program
@@ -579,9 +755,17 @@ case ${COMMAND} in
 	opr)		set_other_plus_read ;;
 	opw)		set_other_plus_write ;;
 	opx)		set_other_plus_execute ;;
+	umw)		set_user_minus_write ;;
 	upr)		set_user_plus_read ;;
 	upw)		set_user_plus_write ;;
 	upx)		set_user_plus_execute ;;
+	# special chmod
+	sdgmw)		special_dirs_set_group_minus_write ;;
+	sdgpw)		special_dirs_set_group_plus_write ;;
+	sdomw)		special_dirs_set_other_minus_write ;;
+	sdopw)		special_dirs_set_other_plus_write ;;
+	sdumw)		special_dirs_set_user_minus_write ;;
+	sdupw)		special_dirs_set_user_plus_write ;;
 	foo)		echo foo ;;
 	*)		echo -e ${HINT_FOR_USER} ;;
 esac
