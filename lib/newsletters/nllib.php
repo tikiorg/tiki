@@ -438,6 +438,34 @@ class NlLib extends TikiLib
 			$zmail = tiki_get_admin_mail();
 			$zmail->setSubject(tra('Newsletter subscription information at').' '. $_SERVER["SERVER_NAME"]);
 			$zmail->setBodyText($mail_data);
+			//////////////////////////////////////////////////////////////////////////////////
+			//										//
+			// [BUG FIX] hollmeer 2012-11-04: 						//
+			// ADDED html part code	to fix a bug; if html-part not set, code stalls! 	//
+			// must be added in all functions in the file!					//
+			//										//
+			$mail_data_html = "";
+			try {
+				$mail_data_html = $smarty->fetch('mail/confirm_newsletter_subscription_html.tpl');
+			} catch (Exception $e) {
+				// html-template missing; ignore and use text-template below
+			}
+			if ($mail_data_html != '') {
+				//ensure body tags in html part
+				if (stristr($mail_data_html, '</body>') === false) {
+					$mail_data_html = "<body>" . nl2br($mail_data_html) . "</body>";
+				}
+			} else {
+				//no html-template, so just use text-template
+				if (stristr($mail_data, '</body>') === false) {
+					$mail_data_html = "<body>" . nl2br($mail_data) . "</body>";
+				} else {
+					$mail_data_html = $mail_data;
+				}
+			}
+			$zmail->setBodyHtml($mail_data_html);
+			//										//
+			//////////////////////////////////////////////////////////////////////////////////
 			$zmail->addTo($email);
 			try {
 				$zmail->send();
@@ -499,6 +527,34 @@ class NlLib extends TikiLib
 		$zmail->setSubject(sprintf($mail_data, $info["name"], $_SERVER["SERVER_NAME"]));
 		$mail_data = $smarty->fetchLang($lg, 'mail/newsletter_welcome.tpl');
 		$zmail->setBodyText($mail_data);
+		//////////////////////////////////////////////////////////////////////////////////
+		//										//
+		// [BUG FIX] hollmeer 2012-11-04: 						//
+		// ADDED html part code	to fix a bug; if html-part not set, code stalls! 	//
+		// must be added in all functions in the file!					//
+		//										//
+		$mail_data_html = "";
+		try {
+			$mail_data_html = $smarty->fetchLang($lg, 'mail/newsletter_welcome_html.tpl');
+		} catch (Exception $e) {
+			// html-template missing; ignore and use text-template below
+		}
+		if ($mail_data_html != '') {
+			//ensure body tags in html part
+			if (stristr($mail_data_html, '</body>') === false) {
+				$mail_data_html = "<body>" . nl2br($mail_data_html) . "</body>";
+			}
+		} else {
+			//no html-template, so just use text-template
+			if (stristr($mail_data, '</body>') === false) {
+				$mail_data_html = "<body>" . nl2br($mail_data) . "</body>";
+			} else {
+				$mail_data_html = $mail_data;
+			}
+		}
+		$zmail->setBodyHtml($mail_data_html);
+		//										//
+		//////////////////////////////////////////////////////////////////////////////////
 		$zmail->addTo($email);
 
 		try {
@@ -554,6 +610,34 @@ class NlLib extends TikiLib
 			$zmail->setSubject(sprintf($mail_data, $info["name"], $_SERVER["SERVER_NAME"]));
 			$mail_data = $smarty->fetchLang($lg, 'mail/newsletter_byebye.tpl');
 			$zmail->setBodyText($mail_data);
+			//////////////////////////////////////////////////////////////////////////////////
+			//										//
+			// [BUG FIX] hollmeer 2012-11-04: 						//
+			// ADDED html part code	to fix a bug; if html-part not set, code stalls! 	//
+			// must be added in all functions in the file!					//
+			//										//
+			$mail_data_html = "";
+			try {
+				$mail_data_html = $smarty->fetch('mail/newsletter_byebye_subject_html.tpl');
+			} catch (Exception $e) {
+				// html-template missing; ignore and use text-template below
+			}
+			if ($mail_data_html != '') {
+				//ensure body tags in html part
+				if (stristr($mail_data_html, '</body>') === false) {
+					$mail_data_html = "<body>" . nl2br($mail_data_html) . "</body>";
+				}
+			} else {
+				//no html-template, so just use text-template
+				if (stristr($mail_data, '</body>') === false) {
+					$mail_data_html = "<body>" . nl2br($mail_data) . "</body>";
+				} else {
+					$mail_data_html = $mail_data;
+				}
+			}
+			$zmail->setBodyHtml($mail_data_html);
+			//										//
+			//////////////////////////////////////////////////////////////////////////////////
 			$zmail->addTo($email);
 
 			try {

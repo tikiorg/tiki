@@ -583,4 +583,50 @@ if ( isset($token_error) ) {
 
 require_once( 'lib/setup/plugins_actions.php' );
 
+//////////////////////////////////////////////////////////////////////////
+// ********************************************************************	//
+// ** IMPORTANT NOTE: 						     ** //
+// ** USE THE GLOBAL VARIABLE BELOW TO CONTROL THE VERSION OF EMAIL  **	//
+// ** WHICH IS USED:						     **	//
+// ** 	$use_pgpmime_mail = true;				     **	//
+// **		USE TIKI OpenPGP Enabled PGP/MIME-standard mail      **	//
+// ** 	$use_pgpmime_mail = false;				     **	//
+// **		USE TIKI normal mail functionality		     **	//
+// **								     ** //
+// ** SETTING THIS GLOBAL VARIABLE TO "true" NEED PROPER	     ** //
+// ** CONFIGURATION OF gnupg AND RELATED KEYRING WITH PROPERLY	     ** //
+// ** CONFIGURED TIKI-SENDER KEYPAIR (PRIVATE/PUBLIC) AND ALL USER   ** //
+// ** ACCOUNT-RELATED PUBLIC KEYS				     ** //
+// **								     ** //
+// ** DO NOT SWITCH THIS VARIABLE TO TRUE FOR THIS EXPERIMENTAL	     ** //
+// ** FULLY PGP/MIME-ENCRYPTION COMPLIANT EMAIL FUNCTIONALITY, IF    ** //
+// ** YOU ARE **NOT ABSOLUTE SURE HOW TO CONFIGURE IT**!	     ** //
+// **								     ** //
+// ** ONCE PROPERLY CONFIGURED, SUCH 100% OPAQUE FUNCTIONALITY	     ** //
+// ** DELIVERS ROBUST END-TO-END PRIVACY WITH HIGH DEGREE OF TESTED  ** //
+// ** ROBUSTNESS FOR THE FOLLOWING MAIL TRAFFIC:		     ** //
+// **								     ** //
+// **	- all webmail-based messaging from messu-compose.php	     ** //
+// **   - all admin notifications				     ** //
+// **	- all newsletters					     ** //
+// **								     ** //
+// ** PLEASE NOTE THAT ALL SITE ACCOUNTS **MUST** HAVE PROPERLY	     ** //
+// ** CONFIGURED OpenPGP-COMPLIANT PUBLIC-KEY IN THE SYSTEM's	     ** //
+// ** KEYRING, SO IT IS NOT THEN WISE/POSSIBLE TO ALLOW ANONYMOUS    ** //
+// ** SUBSCRIPTIONS TO NEWSLETTERS ETC, OR USE NOT FULLY PGP/MIME    ** //
+// ** READY ACCOUNTS IN SUCH SYSTEM.				     ** //
+// **								     ** //
+// ** IT IS ASSUMED, THAT IF AND WHEN YOU TURN SUCH PGP/MIME ON	     ** //
+// ** YOU ARE FULLY AWARE OF THE REQUIREMENTS AND CONSEQUENCES.	     ** //
+// **								     ** //
+static $use_pgpmime_mail = false; // NOTE: TURN true WITH YOUR RISK!
+if ($use_pgpmime_mail) {
+	// hollmeer 2012-11-03:
+	// TURNED ON openPGP support from a lib based class
+	require_once( 'lib/openpgp/openpgplib.php' );
+}
+// **								     ** //
+// ********************************************************************	//
+//////////////////////////////////////////////////////////////////////////
+
 $headerlib->lockMinifiedJs();

@@ -321,7 +321,26 @@ class htmlMimeMail
 	*/
 	function setText($text = '')
 	{
-		$this->text = $text;
+
+		////////////////////////////////////////////////////////////////////////
+		//                                                                    //
+		// hollmeer 2012-11-03: ADDED PGP/MIME ENCRYPTION PREPARATION         //
+		// USING lib/openpgp/opepgplib.php                                    //
+		//                                                                    //
+	    	// get from globals (set in tiki-setup.php)
+		global $use_pgpmime_mail;
+		if ($use_pgpmime_mail) {
+			// USE PGP/MIME MAIL VERSION
+			global $openpgplib;
+			// prepend original subject from headers into text body
+			$this->text = $openpgplib->prependSubjectToText($this->headers,$text);
+		} else {
+			// USE ORIGINAL TIKI MAIL VERSION
+			$this->text = $text;
+		}
+		//                                                                    //
+		////////////////////////////////////////////////////////////////////////
+
 	}
 
 	/**
@@ -331,9 +350,28 @@ class htmlMimeMail
 	*/
 	function setHtml($html, $text = null, $images_dir = null)
 	{
-		$this->html = $html;
 
-		$this->html_text = $text;
+		////////////////////////////////////////////////////////////////////////
+		//                                                                    //
+		// hollmeer 2012-11-03: ADDED PGP/MIME ENCRYPTION PREPARATION         //
+		// USING lib/openpgp/opepgplib.php                                    //
+		//                                                                    //
+	    	// get from globals (set in tiki-setup.php)
+		global $use_pgpmime_mail;
+		if ($use_pgpmime_mail) {
+			// USE PGP/MIME MAIL VERSION
+			global $openpgplib;
+			// prepend original subject from headers into text body
+			$ret = $openpgplib->prependSubjectToHtml($this->headers,$html,$text);
+			$this->html = $ret[0];	
+			$this->html_text = $ret[1];
+		} else {
+			// USE ORIGINAL TIKI MAIL VERSION
+			$this->html = $html;
+			$this->html_text = $text;
+		}
+		//                                                                    //
+		////////////////////////////////////////////////////////////////////////
 
 		if (isset($images_dir)) {
 			$this->_findHtmlImages($images_dir);
@@ -728,12 +766,67 @@ class htmlMimeMail
 
 				$to = $this->_encodeHeader(implode(', ', $recipients), $this->build_params['head_charset']);
 
+				////////////////////////////////////////////////////////////////////////////
+				//                                                                        //
+				// hollmeer 2012-11-03: ADDED PGP/MIME ENCRYPTION                         //
+				// USING lib/openpgp/opepgplib.php                                        //
+				//                                                                        //
+			    	// get from globals (set in tiki-setup.php)
+				global $use_pgpmime_mail;
+				if ($use_pgpmime_mail) {
+					// USE PGP/MIME MAIL VERSION
+					global $openpgplib;
+					$pgpmime_msg = $openpgplib->prepareEncryptWithMailSender($headers,
+												 $this->output,
+												 $this->build_params['head_charset'],
+												 $smtp_recipients);
+					// use returned headers-string for pgp/mime instead of originals
+					$headers = $pgpmime_msg[0]; 		// set pgp/mime headers from result array (this is a string)
+					// use md5-hash as PGP/MIME subject instead of original subject
+					$subject = $pgpmime_msg[1]; 		// set pgp/mime subject from result array (this is a string)
+					// use encrypted message body
+					$this->output = $pgpmime_msg[2];	// set pgp/mime encrypted message body from result array (this is a string)
+				}
+				//                                                                        //
+				////////////////////////////////////////////////////////////////////////////
+
+
 				if (!empty($this->return_path)) {
 					// Set the sender for sendmail and use only the email address when the syntax of return_path is like 'Name <email>'
 					$additional_parameters = '-f' . preg_replace('/^.*<(.*?)>.*$/', '$1', $this->return_path);
-					$result = mail($to, $subject, $this->output, implode(CRLF, $headers), $additional_parameters);
+					////////////////////////////////////////////////////////////////////////////
+					//                                                                        //
+					// hollmeer 2012-11-03: ADDED PGP/MIME ENCRYPTION                         //
+					// USING lib/openpgp/opepgplib.php                                        //
+					//                                                                        //
+				    	// get from globals (set in tiki-setup.php)
+					global $use_pgpmime_mail;
+					if ($use_pgpmime_mail) {
+						// USE PGP/MIME MAIL VERSION
+						$result = mail($to, $subject, $this->output, $pgp_mime_headers, $additional_parameters);
+					} else {
+						// USE ORIGINAL TIKI MAIL VERSION
+						$result = mail($to, $subject, $this->output, implode(CRLF, $headers), $additional_parameters);
+					}
+					//                                                                        //
+					////////////////////////////////////////////////////////////////////////////
 				} else {
-					$result = mail($to, $subject, $this->output, implode(CRLF, $headers));
+					////////////////////////////////////////////////////////////////////////////
+					//                                                                        //
+					// hollmeer 2012-11-03: ADDED PGP/MIME ENCRYPTION                         //
+					// USING lib/openpgp/opepgplib.php                                        //
+					//                                                                        //
+				    	// get from globals (set in tiki-setup.php)
+					global $use_pgpmime_mail;
+					if ($use_pgpmime_mail) {
+						// USE PGP/MIME MAIL VERSION
+						$result = mail($to, $subject, $this->output, $pgp_mime_headers);
+					} else {
+						// USE ORIGINAL TIKI MAIL VERSION
+						$result = mail($to, $subject, $this->output, implode(CRLF, $headers));
+					}
+					//                                                                        //
+					////////////////////////////////////////////////////////////////////////////
 				}
 
 				// Reset the subject in case mail is resent
@@ -792,6 +885,30 @@ class htmlMimeMail
 
 				// Add To header based on $recipients argument
 				$headers[] = 'To: ' . $this->_encodeHeader(implode(', ', $recipients), $this->build_params['head_charset']);
+
+				////////////////////////////////////////////////////////////////////////////
+				//                                                                        //
+				// hollmeer 2012-11-03: ADDED PGP/MIME ENCRYPTION                         //
+				// USING lib/openpgp/opepgplib.php                                        //
+				//                                                                        //
+			    	// get from globals (set in tiki-setup.php)
+				global $use_pgpmime_mail;
+				if ($use_pgpmime_mail) {
+					// USE PGP/MIME MAIL VERSION
+					global $openpgplib;
+					$pgpmime_msg = $openpgplib->prepareEncryptWithSmtpSender($headers,
+												 $this->output,
+												 $this->build_params['head_charset'],
+												 $smtp_recipients);
+					// use returned headers-array for pgp/mime instead of originals
+					$headers = $pgpmime_msg[0]; 		// set pgp/mime headers from result array
+					// use encrypted message body
+					$this->output = $pgpmime_msg[1];	// set pgp/mime encrypted message body from result array
+				} else {
+					// NOTE: NO CHANGE NEEDED, IF USE ORIGINAL TIKI MAIL VERSION
+				}
+				//                                                                        //
+				////////////////////////////////////////////////////////////////////////////
 
 				// Add headers to send_params
 				$send_params['headers'] = $headers;
