@@ -3,8 +3,9 @@
 require_once('tiki-setup.php');
 
 function tf($wikiSyntax) {
-	//echo str_replace("\n", '"\n"', str_replace("\r", '"\r"', $wikiSyntax));
-	//die;
+	//The new parser strips all \r and lets \n do all the line break work
+	$wikiSyntax = str_replace("\r", '', $wikiSyntax);
+
 	$parser = new JisonParser_Wiki_Handler();
 	$WysiwygParser = new JisonParser_WikiCKEditor_Handler();
 	$parserHtmlToWiki = new JisonParser_Html_Handler();
