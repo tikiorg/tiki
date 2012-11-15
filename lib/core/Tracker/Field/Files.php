@@ -274,7 +274,7 @@ class Tracker_Field_Files extends Tracker_Field_Abstract
 		$parts = explode('*', $filter);
 		$parts = array_map('preg_quote', $parts, array_fill(0, count($parts), '/'));
 
-		$body = implode('[\w-]+', $parts);
+		$body = implode('[\w-]*', $parts);
 
 		// Force begin, ignore end which may contain charsets or other attributes
 		return preg_match("/^$body/", $info['filetype']);

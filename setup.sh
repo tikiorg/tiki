@@ -109,11 +109,11 @@ fi
 
 # hint for users
 #POSSIBLE_COMMANDS='open|fix|nothing'
-POSSIBLE_COMMANDS="fix|insane|mixed|morepain|moreworry|nothing|open|pain|paranoia|paranoia-suphp|risky|worry"
+POSSIBLE_COMMANDS="fix|insane|mixed|morepain|moreworry|nothing|open|pain|paranoia|paranoia-suphp|risky|sbox|worry"
 #HINT_FOR_USER="Type 'fix', 'nothing' or 'open' as command argument."
 HINT_FOR_USER="\nType 'fix', 'nothing' or 'open' as command argument.
 \nIf you used Tiki Permission Check via PHP, you know which of the following commands will probably work:
-\ninsane mixed morepain moreworry pain paranoia paranoia-suphp risky worry\n"
+\ninsane mixed morepain moreworry pain paranoia paranoia-suphp risky sbox worry\n"
 
 usage() {
 #usage: $0 [<switches>] open|fix
@@ -233,6 +233,42 @@ DIRS="db dump img/wiki img/wiki_up img/trackers modules/cache temp temp/cache te
 
 # part 4.1 - several functions as permission settings for different usecases
 
+dec2oct() {
+	#DEC_IN=85
+	#
+	#
+	#
+	R8=$(( ${DEC_IN} % 8 ))
+	O1=${R8}
+	IN=$(( ${DEC_IN} - ${R8} ))
+	#
+	#echo foo ${IN}
+	#
+	DEC_IN=${IN}
+	R64=$(( ${DEC_IN} % 64 ))
+	O2=$(( ${R64} / 8 ))
+	IN=$(( ${DEC_IN} - ${R64} ))
+	#
+	#echo bar ${IN}
+	#
+	DEC_IN=${IN}
+	R512=$(( ${DEC_IN} % 512 ))
+	O3=$(( ${R512} / 64 ))
+	#
+	#echo ${R512} ${R64} ${R8}
+	#
+	OCT_OUT=${O3}${O2}${O1}
+}
+
+dec2oct_test() {
+	DEC_IN=$(( 0500 | 0220 ))
+	dec2oct
+	echo ${OCT_OUT}
+	echo break
+	exit 1
+}
+#dec2oct_test
+
 debug_breakpoint() {
 	echo
 	echo "debug breakpoint"
@@ -293,24 +329,40 @@ get_permission_data() {
 	fi
 }
 
+set_permission_dirs_special_write() {
+	# function must be defined before set_permission_data
+	for WRITABLE in $DIRS ; do
+		if [ -d ${WRITABLE} ] ; then
+			if [ ${DEBUG} = '1' ] ; then
+				echo ${DEBUG_PREFIX}
+				echo ${DEBUG_PREFIX} ${FIND} ${WRITABLE} -type d -exec ${CHMOD} ${MODEL_PERMS_WRITE_SUBDIRS} {} \;
+				echo ${DEBUG_PREFIX} ${FIND} ${WRITABLE} -type f -exec ${CHMOD} ${MODEL_PERMS_WRITE_FILES} {} \;
+			fi
+			${FIND} ${WRITABLE} -type d -exec ${CHMOD} ${MODEL_PERMS_WRITE_SUBDIRS} {} \;
+			${FIND} ${WRITABLE} -type f -exec ${CHMOD} ${MODEL_PERMS_WRITE_FILES} {} \;
+		fi
+	done
+}
+
 set_permission_data() {
 	if [ ${DEBUG} = '1' ] ; then
 		echo ${DEBUG_PREFIX}
 		echo ${DEBUG_PREFIX} ${FIND} . -type d -exec ${CHMOD} ${MODEL_PERMS_SUBDIRS} {} \;
 		echo ${DEBUG_PREFIX} ${FIND} . -type f -exec ${CHMOD} ${MODEL_PERMS_FILES} {} \;
 	fi
-	debug_breakpoint
+	#debug_breakpoint
 	${FIND} . -type d -exec ${CHMOD} ${MODEL_PERMS_SUBDIRS} {} \;
 	${FIND} . -type f -exec ${CHMOD} ${MODEL_PERMS_FILES} {} \;
+	#set_permission_dirs_special_write
 	for WRITABLE in $DIRS ; do
 		if [ -d ${WRITABLE} ] ; then
 			if [ ${DEBUG} = '1' ] ; then
 				echo ${DEBUG_PREFIX}
-				echo ${DEBUG_PREFIX} ${FIND} ${WRITABLE} -type d -exec echo ${CHMOD} ${MODEL_PERMS_WRITE_SUBDIRS} {} \;
-				echo ${DEBUG_PREFIX} ${FIND} ${WRITABLE} -type f -exec echo ${CHMOD} ${MODEL_PERMS_WRITE_FILES} {} \;
+				echo ${DEBUG_PREFIX} ${FIND} ${WRITABLE} -type d -exec ${CHMOD} ${MODEL_PERMS_WRITE_SUBDIRS} {} \;
+				echo ${DEBUG_PREFIX} ${FIND} ${WRITABLE} -type f -exec ${CHMOD} ${MODEL_PERMS_WRITE_FILES} {} \;
 			fi
-			${FIND} ${WRITABLE} -type d -exec echo ${CHMOD} ${MODEL_PERMS_WRITE_SUBDIRS} {} \;
-			${FIND} ${WRITABLE} -type f -exec echo ${CHMOD} ${MODEL_PERMS_WRITE_FILES} {} \;
+			${FIND} ${WRITABLE} -type d -exec ${CHMOD} ${MODEL_PERMS_WRITE_SUBDIRS} {} \;
+			${FIND} ${WRITABLE} -type f -exec ${CHMOD} ${MODEL_PERMS_WRITE_FILES} {} \;
 		fi
 	done
 }
@@ -451,7 +503,7 @@ what to answer, just press enter to each question (to use default value)"
 
 command_nothing() {
 	echo 'Nothing done yet'
-	echo "Try 'sh setup.sh fix' or for classic default behaviour or 'sh setup.sh -h' for help."
+	echo "Try 'sh setup.sh fix' for classic default behaviour or 'sh setup.sh -h' for help."
 }
 
 command_open() {
@@ -486,6 +538,190 @@ permission_via_php_check() {
 	set_permission_data
 }
 
+set_group_minus_execute() {
+	${CHMOD} -R g-x .
+}
+
+set_group_minus_read() {
+	${CHMOD} -R g-r .
+}
+
+set_group_minus_write() {
+	${CHMOD} -R g-w .
+}
+
+set_group_plus_execute() {
+	${CHMOD} -R g+x .
+}
+
+set_group_plus_read() {
+	${CHMOD} -R g+r .
+}
+
+set_group_plus_write() {
+	${CHMOD} -R g+w .
+}
+
+set_other_minus_execute() {
+	${CHMOD} -R o-x .
+}
+
+set_other_minus_read() {
+	${CHMOD} -R o-r .
+}
+
+set_other_minus_write() {
+	${CHMOD} -R o-w .
+}
+
+set_other_plus_execute() {
+	${CHMOD} -R o+x .
+}
+
+set_other_plus_read() {
+	${CHMOD} -R o+r .
+}
+
+set_other_plus_write() {
+	${CHMOD} -R o+w .
+}
+
+set_user_minus_write() {
+	${CHMOD} -R u-w .
+}
+
+set_user_plus_execute() {
+	${CHMOD} -R u+x .
+}
+
+set_user_plus_read() {
+	${CHMOD} -R u+r .
+}
+
+set_user_plus_write() {
+	${CHMOD} -R u+w .
+}
+
+special_dirs_set_permissions_files() {
+	for WRITABLE in $DIRS ; do
+		if [ -d ${WRITABLE} ] ; then
+			if [ ${DEBUG} = '1' ] ; then
+				echo ${DEBUG_PREFIX}
+				echo ${DEBUG_PREFIX} ${FIND} ${WRITABLE} -type f -exec ${CHMOD} ${MODEL_PERMS_WRITE_FILES} {} \;
+			fi
+			${FIND} ${WRITABLE} -type f -exec ${CHMOD} ${MODEL_PERMS_WRITE_FILES} {} \;
+		fi
+	done
+}
+
+special_dirs_set_permissions_subdirs() {
+	for WRITABLE in $DIRS ; do
+		if [ -d ${WRITABLE} ] ; then
+			if [ ${DEBUG} = '1' ] ; then
+				echo ${DEBUG_PREFIX}
+				echo ${DEBUG_PREFIX} ${FIND} ${WRITABLE} -type d -exec ${CHMOD} ${MODEL_PERMS_WRITE_SUBDIRS} {} \;
+			fi
+			${FIND} ${WRITABLE} -type d -exec ${CHMOD} ${MODEL_PERMS_WRITE_SUBDIRS} {} \;
+		fi
+	done
+}
+
+special_dirs_set_group_minus_write_files() {
+	MODEL_PERMS_WRITE_FILES='g-w'
+	special_dirs_set_permissions_files
+}
+
+special_dirs_set_group_minus_write_subdirs() {
+	MODEL_PERMS_WRITE_SUBDIRS='g-w'
+	special_dirs_set_permissions_subdirs
+}
+
+special_dirs_set_group_minus_write() {
+	#order: 1. files 2. subdirs
+	special_dirs_set_group_minus_write_files
+	special_dirs_set_group_minus_write_subdirs
+}
+
+special_dirs_set_group_plus_write_files() {
+	MODEL_PERMS_WRITE_FILES='g+w'
+	special_dirs_set_permissions_files
+}
+
+special_dirs_set_group_plus_write_subdirs() {
+	MODEL_PERMS_WRITE_SUBDIRS='g+w'
+	special_dirs_set_permissions_subdirs
+}
+
+special_dirs_set_group_plus_write() {
+	#order: 1. subdirs 2. files
+	special_dirs_set_group_plus_write_subdirs
+	special_dirs_set_group_plus_write_files
+}
+
+special_dirs_set_other_minus_write_files() {
+	MODEL_PERMS_WRITE_FILES='o-w'
+	special_dirs_set_permissions_files
+}
+
+special_dirs_set_other_minus_write_subdirs() {
+	MODEL_PERMS_WRITE_SUBDIRS='o-w'
+	special_dirs_set_permissions_subdirs
+}
+
+special_dirs_set_other_minus_write() {
+	#order: 1. files 2. subdirs
+	special_dirs_set_other_minus_write_files
+	special_dirs_set_other_minus_write_subdirs
+}
+
+special_dirs_set_other_plus_write_files() {
+	MODEL_PERMS_WRITE_FILES='o+w'
+	special_dirs_set_permissions_files
+}
+
+special_dirs_set_other_plus_write_subdirs() {
+	MODEL_PERMS_WRITE_SUBDIRS='o+w'
+	special_dirs_set_permissions_subdirs
+}
+
+special_dirs_set_other_plus_write() {
+	#order: 1. subdirs 2. files
+	special_dirs_set_other_plus_write_subdirs
+	special_dirs_set_other_plus_write_files
+}
+
+special_dirs_set_user_minus_write_files() {
+	MODEL_PERMS_WRITE_FILES='u-w'
+	special_dirs_set_permissions_files
+}
+
+special_dirs_set_user_minus_write_subdirs() {
+	MODEL_PERMS_WRITE_SUBDIRS='u-w'
+	special_dirs_set_permissions_subdirs
+}
+
+special_dirs_set_user_minus_write() {
+	#order: 1. files 2. subdirs
+	special_dirs_set_user_minus_write_files
+	special_dirs_set_user_minus_write_subdirs
+}
+
+special_dirs_set_user_plus_write_files() {
+	MODEL_PERMS_WRITE_FILES='u+w'
+	special_dirs_set_permissions_files
+}
+
+special_dirs_set_user_plus_write_subdirs() {
+	MODEL_PERMS_WRITE_SUBDIRS='u+w'
+	special_dirs_set_permissions_subdirs
+}
+
+special_dirs_set_user_plus_write() {
+	#order: 1. subdirs 2. files
+	special_dirs_set_user_plus_write_subdirs
+	special_dirs_set_user_plus_write_files
+}
+
 # part 5 - main program
 # ---------------------
 
@@ -504,7 +740,32 @@ case ${COMMAND} in
 	paranoia-suphp)	permission_via_php_check ;;
 	php)		permission_via_php_check ;;
 	risky)		permission_via_php_check ;;
+	sbox)		permission_via_php_check ;;
 	worry)		permission_via_php_check ;;
+	# plain chmod
+	gmr)		set_group_minus_read ;;
+	gmw)		set_group_minus_write ;;
+	gmx)		set_group_minus_execute ;;
+	gpr)		set_group_plus_read ;;
+	gpw)		set_group_plus_write ;;
+	gpx)		set_group_plus_execute ;;
+	omr)		set_other_minus_read ;;
+	omw)		set_other_minus_write ;;
+	omx)		set_other_minus_execute ;;
+	opr)		set_other_plus_read ;;
+	opw)		set_other_plus_write ;;
+	opx)		set_other_plus_execute ;;
+	umw)		set_user_minus_write ;;
+	upr)		set_user_plus_read ;;
+	upw)		set_user_plus_write ;;
+	upx)		set_user_plus_execute ;;
+	# special chmod
+	sdgmw)		special_dirs_set_group_minus_write ;;
+	sdgpw)		special_dirs_set_group_plus_write ;;
+	sdomw)		special_dirs_set_other_minus_write ;;
+	sdopw)		special_dirs_set_other_plus_write ;;
+	sdumw)		special_dirs_set_user_minus_write ;;
+	sdupw)		special_dirs_set_user_plus_write ;;
 	foo)		echo foo ;;
 	*)		echo -e ${HINT_FOR_USER} ;;
 esac

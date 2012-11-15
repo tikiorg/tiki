@@ -86,12 +86,16 @@ function get_ownership_groupname($filename)
 // user/owner of file
 function get_ownership_username($filename)
 {
-	if (file_exists($filename)) {
-		$user = posix_getpwuid(fileowner($filename));
-		$username = $user['name'];
-	} else {
-		$username = 'no user';
-	}
+    if (function_exists('posix_getpwuid')){
+        if (file_exists($filename)) {
+            $user = posix_getpwuid(fileowner($filename));
+            $username = $user['name'];
+        } else {
+            $username = 'no user';
+        }
+    } else {
+        die('no posix extension');	// TODO (better)
+    }
 	return $username;
 }
 
@@ -99,7 +103,7 @@ function get_ownership_username($filename)
 function get_page_url($filename)
 {
 	$page_basename = 'http';
-	if ( $_SERVER["HTTPS"] == "on" ) {
+	if ( isset($_SERVER["HTTPS"]) && $_SERVER["HTTPS"] == "on" ) {
 		$page_basename .= 's';
 	}
 	$page_basename .= '://';
@@ -120,7 +124,7 @@ function get_page_url_clean($filename)
 	}
 	$page_basename .= '://';
 	$page_basename .= $_SERVER["SERVER_NAME"];
-	$tmp_path .= dirname($_SERVER['PHP_SELF']);
+	$tmp_path = dirname($_SERVER['PHP_SELF']);
 	$perm_check_subdir = 'permissioncheck';
 //	$tiki_path = str_replace("/$perm_check_subdir",'/',$tmp_path);
 	// previous one does not work in cases where 'permissioncheck' is already

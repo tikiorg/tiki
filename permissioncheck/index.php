@@ -226,7 +226,7 @@
 	echo '<td class="' . $css_class_writable . '">' . $perms_asc . '</td><td>' . $perms_oct . '</td><td>' . $filename . '</td></tr>' . "\n  ";
 	//
 //	$nosuchfile='/example_does_not_exist';
-	$usersubmittedfile = $_POST['usersubmittedfile'];
+	$usersubmittedfile = isset($_POST['usersubmittedfile']) ? $_POST['usersubmittedfile'] : '';
 	//$checkfile = $_POST['checkfile'];
 	if ( $usersubmittedfile == "" ) {
 		$dummy="foo";
