@@ -3878,6 +3878,14 @@ class TikiLib extends TikiDb_Bridge
 		global $prefs;
 		$value = isset($prefs[$name]) ? $prefs[$name] : $default;
 
+		if ( empty($value) ) {
+			if ( $expectArray ) {
+				return array();
+			} else {
+				return $value;
+			}
+		}
+
 		if ( $expectArray && is_string($value) ) {
 			return unserialize($value);
 		} else {
