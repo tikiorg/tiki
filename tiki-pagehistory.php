@@ -312,7 +312,7 @@ if (isset($preview)) {
 	} else {
 		$version = $histlib->get_version($page, $preview);
 		if ($version) {
-			$previewd = $tikilib->parse_data($version["data"], array('preview_mode' => true, 'is_html' => $info['is_html']));
+			$previewd = $tikilib->parse_data($version["data"], array('preview_mode' => true, 'is_html' => $version['is_html']));
 			$smarty->assign('previewd', $previewd);
 			$smarty->assign('preview', $preview);
 		}
