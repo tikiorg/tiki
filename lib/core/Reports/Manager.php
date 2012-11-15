@@ -94,6 +94,6 @@ class Reports_Manager
 	public function addToCache(&$watches, $data)
 	{
 		$users = $this->reportsUsers->getAllUsers();
-		$this->reportsCache->add(&$watches, $data, $users);
+		$this->reportsCache->add($watches, $data, $users);
 	}
 }
