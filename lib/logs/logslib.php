@@ -197,6 +197,7 @@ class LogsLib extends TikiLib
 			'shipping_fedex_password',
 			'shipping_ups_password',
 			'auth_phpbb_dbpasswd',
+			'zend_mail_smtp_pass',
 			'proxy_pass'
 		);
 		if ( $logObject ) {
