@@ -143,55 +143,50 @@
 		</div>
 	{/if}
 {/if}
-<table class="formcolor">
-	<tr>
-		<td>{$tree}</td>
-		<td width="20">&nbsp;</td>
-		<td>
-			{if $cant_pages > 0}
-				<table class="normal">
-					<tr>
-						<th>
-							{tr}Name{/tr}
-						</th>
-						<th>
-							{tr}Type{/tr}
-						</th>
-						{if $deep eq 'on'}
-							<th>
-								{tr}Category{/tr}
-							</th>
-						{/if}
-					</tr>
+<div class="cattree">{$tree}</div>
+<div class="catobj">
+	{if $cant_pages > 0}
+		<table class="normal">
+			<tr>
+				<th>
+					{tr}Name{/tr}
+				</th>
+				<th>
+					{tr}Type{/tr}
+				</th>
+				{if $deep eq 'on'}
+					<th>
+						{tr}Category{/tr}
+					</th>
+				{/if}
+			</tr>
 
-					{cycle values="odd,even" print=false}
-					{section name=ix loop=$objects}
-						<tr class="{cycle}">
-							<td class="text">
-								<a href={if empty($objects[ix].sefurl)}"{$objects[ix].href}"{else}"{$objects[ix].sefurl}"{/if} class="catname">{$objects[ix].name|escape|default:'&nbsp;'}</a>
-								<div class="subcomment">{$objects[ix].description|escape|nl2br}</div>
-							</td>
-							<td class="text">
-								{tr}{$objects[ix].type|replace:"wiki page":"wiki"|replace:"trackeritem":"tracker item"}{/tr}
-							</td>
-							{if $deep eq 'on'}
-								<td class="text">
-									{$objects[ix].categName|tr_if|escape}
-								</td>
-							{/if}
-						</tr>
-					{sectionelse}
-						{if $deep eq 'on'}
-							{norecords _colspan=3}
-						{else}
-							{norecords _colspan=2}
-						{/if}
-					{/section}
-				</table>
-				<br />
-			{/if}
-		</td>
-	</tr>
-</table>
+			{cycle values="odd,even" print=false}
+			{section name=ix loop=$objects}
+				<tr class="{cycle}">
+					<td class="text">
+						<a href={if empty($objects[ix].sefurl)}"{$objects[ix].href}"{else}"{$objects[ix].sefurl}"{/if} class="catname">{$objects[ix].name|escape|default:'&nbsp;'}</a>
+						<div class="subcomment">{$objects[ix].description|escape|nl2br}</div>
+					</td>
+					<td class="text">
+						{tr}{$objects[ix].type|replace:"wiki page":"wiki"|replace:"trackeritem":"tracker item"}{/tr}
+					</td>
+					{if $deep eq 'on'}
+						<td class="text">
+							{$objects[ix].categName|tr_if|escape}
+						</td>
+					{/if}
+				</tr>
+			{sectionelse}
+				{if $deep eq 'on'}
+					{norecords _colspan=3}
+				{else}
+					{norecords _colspan=2}
+				{/if}
+			{/section}
+		</table>
+		<br />
+	{/if}
+</div>
 
 {pagination_links cant=$cant_pages step=$maxRecords offset=$offset}{/pagination_links}
