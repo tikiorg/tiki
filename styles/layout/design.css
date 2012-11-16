@@ -54,6 +54,14 @@ body.wikitext {
 	background: transparent url(../../img/icons/lock_gray.png) no-repeat top right;
 }
 
+.editable-inline.modified {
+	border: solid 2px #ff6600;
+}
+
+.editable-inline.unsaved {
+	border: solid 2px red;
+}
+
 /* ColorBox */
 #cboxTitle {
 	background-color: #fff;
