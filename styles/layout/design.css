@@ -42,6 +42,18 @@ body.wikitext {
 	background: transparent url(../../img/loading-light.gif) no-repeat 50% 50%;
 }
 
+.editable-inline {
+	background: transparent url(../../img/icons/database_lightning.png) no-repeat top right;
+}
+
+.editable-inline.disabled {
+	background: transparent;
+}
+
+.editable-inline.failure {
+	background: transparent url(../../img/icons/lock_gray.png) no-repeat top right;
+}
+
 /* ColorBox */
 #cboxTitle {
 	background-color: #fff;
