@@ -46,7 +46,7 @@ body.wikitext {
 	background: transparent url(../../img/icons/database_lightning.png) no-repeat top right;
 }
 
-.editable-inline.disabled {
+.editable-inline.loaded {
 	background: transparent;
 }
 

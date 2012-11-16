@@ -9,7 +9,6 @@ class Tiki_Editable_Value
 {
 	private $inner;
 	private $layout = 'inline';
-	private $family = 'editable-value';
 	private $fieldFetchUrl;
 	private $objectStoreUrl;
 
@@ -19,10 +18,6 @@ class Tiki_Editable_Value
 		
 		if (! empty($parameters['layout']) && in_array($parameters['layout'], array('inline', 'block'))) {
 			$this->layout = $parameters['layout'];
-		}
-
-		if (! empty($parameters['family'])) {
-			$this->family = $parameters['family'];
 		}
 
 		if (empty($parameters['field_fetch_url'])) {
@@ -48,7 +43,6 @@ class Tiki_Editable_Value
 		$tag = ($this->layout == 'block') ? 'div' : 'span';
 		$fieldFetch = htmlspecialchars($this->fieldFetchUrl);
 		$objectStore = htmlspecialchars($this->objectStoreUrl);
-		$family = htmlspecialchars($this->family);
 
 		$value = $this->inner;
 		if (trim(strip_tags($value)) == '') {
@@ -56,7 +50,7 @@ class Tiki_Editable_Value
 			$value .= '&nbsp;';
 		}
 
-		return "<$tag class=\"editable-inline\" data-edit-family=\"$family\" data-field-fetch-url=\"$fieldFetch\" data-object-store-url=\"$objectStore\">$value</$tag>";
+		return "<$tag class=\"editable-inline\" data-field-fetch-url=\"$fieldFetch\" data-object-store-url=\"$objectStore\">$value</$tag>";
 	}
 }
 

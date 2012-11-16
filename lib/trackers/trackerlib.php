@@ -4400,7 +4400,6 @@ class TrackerLib extends TikiLib
 				$servicelib = TikiLib::lib('service');
 				$r = new Tiki_Editable_Value($r, array(
 					'layout' => $params['editable'],
-					'family' => "tracker-field-{$field['permName']}",
 					'object_store_url' => $servicelib->getUrl(array(
 						'controller' => 'tracker',
 						'action' => 'update_item',
