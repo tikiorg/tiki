@@ -114,7 +114,7 @@ POSSIBLE_COMMANDS="fix|insane|mixed|morepain|moreworry|nothing|open|pain|paranoi
 HINT_FOR_USER="\nType 'fix', 'nothing' or 'open' as command argument.
 \nIf you used Tiki Permission Check via PHP, you know which of the following commands will probably work:
 \ninsane mixed morepain moreworry pain paranoia paranoia-suphp risky sbox worry
-\nMore documentation: http://doc.tiki.org/Permission+Check/\n"
+\nMore documentation: http://doc.tiki.org/Permission+Check\n"
 
 hint_for_users() {
 	${CAT} <<EOF
@@ -123,7 +123,7 @@ If you used Tiki Permission Check via PHP, you know which of the following comma
 insane mixed morepain moreworry pain paranoia paranoia-suphp risky sbox worry
 
 There are some other commands recommended for advanced users only.
-More documentation about this: http://doc.tiki.org/Permission+Check/
+More documentation about this: http://doc.tiki.org/Permission+Check
 EOF
 }
 
@@ -142,7 +142,7 @@ usage: $0 [<switches>] ${POSSIBLE_COMMANDS}
 -d off|on    disable|enable debugging mode (override script default)
 
 There are some other commands recommended for advanced users only.
-More documentation about this: http://doc.tiki.org/Permission+Check/
+More documentation about this: http://doc.tiki.org/Permission+Check
 EOF
 }
 
@@ -758,7 +758,7 @@ tiki_setup_default_menu() {
  q quit                                  x exit
 
 There are some other commands recommended for advanced users only.
-More documentation about this: http://doc.tiki.org/Permission+Check/
+More documentation about this: http://doc.tiki.org/Permission+Check
  
 EOF
 }
