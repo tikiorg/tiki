@@ -180,19 +180,28 @@ class KalturaLib
 		
 		// first try to update
 	 	if ($current) {
-			$results = $this->client->uiConf->update($current, $uiConf);
-			if (isset($results->id)) {
-				return $results->id;	
-			}
+			 try {
+				 $results = $this->client->uiConf->update($current, $uiConf);
+				 if (isset($results->id)) {
+					 return $results->id;
+				 }
+			 } catch (Exception $e) {
+				 TikiLib::lib('errorreport')->report($e->getMessage());
+			 }
+			 try {
+				 // create if updating failed or not updating
+				 $uiConf->creationMode = KalturaUiConfCreationMode::ADVANCED;
+				 $results = $this->client->uiConf->add($uiConf);
+				 if (isset($results->id)) {
+					 return $results->id;
+				 } else {
+					 return '';
+				 }
+			 } catch (Exception $e) {
+				 TikiLib::lib('errorreport')->report($e->getMessage());
+			 }
 		}
-		// create if updating failed or not updating
-		$uiConf->creationMode = KalturaUiConfCreationMode::ADVANCED;
-		$results = $this->client->uiConf->add($uiConf);
-		if (isset($results->id)) {
-			return $results->id;	
-		} else {
-			return '';
-		}
+		return '';
 	}
 	
 }
