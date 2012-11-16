@@ -10,7 +10,7 @@
 				{/permission}
 				<ul>
 					{foreach from=$recording.playback key=type item=url}
-						<a href="{$url|escape}">{$type|escape}</a>
+						<a href="{$url|escape}">{$type|escape}</a> {tr}(including audio recording & chat log){/tr}
 					{/foreach}
 				</ul>
 			</li>

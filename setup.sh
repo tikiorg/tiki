@@ -113,7 +113,19 @@ POSSIBLE_COMMANDS="fix|insane|mixed|morepain|moreworry|nothing|open|pain|paranoi
 #HINT_FOR_USER="Type 'fix', 'nothing' or 'open' as command argument."
 HINT_FOR_USER="\nType 'fix', 'nothing' or 'open' as command argument.
 \nIf you used Tiki Permission Check via PHP, you know which of the following commands will probably work:
-\ninsane mixed morepain moreworry pain paranoia paranoia-suphp risky sbox worry\n"
+\ninsane mixed morepain moreworry pain paranoia paranoia-suphp risky sbox worry
+\nMore documentation: http://doc.tiki.org/Permission+Check\n"
+
+hint_for_users() {
+	${CAT} <<EOF
+Type 'fix', 'nothing' or 'open' as command argument.
+If you used Tiki Permission Check via PHP, you know which of the following commands will probably work:
+insane mixed morepain moreworry pain paranoia paranoia-suphp risky sbox worry
+
+There are some other commands recommended for advanced users only.
+More documentation about this: http://doc.tiki.org/Permission+Check
+EOF
+}
 
 usage() {
 #usage: $0 [<switches>] open|fix
@@ -128,6 +140,9 @@ usage: $0 [<switches>] ${POSSIBLE_COMMANDS}
 -v virtuals  list of virtuals (for multitiki, example: "www1 www2")
 -n           not interactive mode
 -d off|on    disable|enable debugging mode (override script default)
+
+There are some other commands recommended for advanced users only.
+More documentation about this: http://doc.tiki.org/Permission+Check
 EOF
 }
 
@@ -173,7 +188,8 @@ shift $(($OPTIND - 1))
 # default: do nothing
 if [ -z $1 ]; then
 	#COMMAND=fix
-	COMMAND="nothing"
+	#COMMAND="nothing"
+	COMMAND="default"
 else
 	COMMAND=$1
 fi
@@ -722,12 +738,76 @@ special_dirs_set_user_plus_write() {
 	special_dirs_set_user_plus_write_files
 }
 
+tiki_setup_default_menu() {
+	echo
+	${CAT}<<EOF
+ Tiki setup.sh - your options
+ ============================
+
+ f fix (classic default)                 o open (classic option)
+
+ predefined Tiki Permission Check models:
+ ----------------------------------------
+
+ 1 paranoia                              2 paranoia-suphp
+ 3 sbox                                  4 mixed
+ 5 worry                                 6 moreworry
+ 7 pain                                  8 morepain
+ 9 risky                                 a insane
+
+ q quit                                  x exit
+
+There are some other commands recommended for advanced users only.
+More documentation about this: http://doc.tiki.org/Permission+Check
+ 
+EOF
+}
+
+tiki_setup_default() {
+	dummy=foo
+	WHAT='f'
+	while true
+	do
+		tiki_setup_default_menu
+		echo -n "Your choice [${WHAT}]? "
+		read INPUT
+		if [ -z ${INPUT} ] ; then
+			DUMMY=foo
+		else
+			WHAT=${INPUT}
+		fi
+		case ${WHAT} in
+			0)	COMMAND="php" ; permission_via_php_check ;;
+			1)	COMMAND="paranoia" ; permission_via_php_check ;;
+			2)	COMMAND="paranoia-suphp" ; permission_via_php_check ;;
+			3)	COMMAND="sbox" ; permission_via_php_check ;;
+			4)	COMMAND="mixed" ; permission_via_php_check ;;
+			5)	COMMAND="worry" ; permission_via_php_check ;;
+			6)	COMMAND="moreworry" ; permission_via_php_check ;;
+			7)	COMMAND="pain" ; permission_via_php_check ;;
+			8)	COMMAND="morepain" ; permission_via_php_check ;;
+			9)	COMMAND="risky" ; permission_via_php_check ;;
+			a)	COMMAND="insane" ; permission_via_php_check ;;
+			c)	clear ;;
+			f)	command_fix ;;
+			o)	command_open ;;
+			q)	exit ;;
+			Q)	exit ;;
+			x)	exit ;;
+			X)	exit ;;
+			*)	echo 'no such command' ;;
+		esac
+	done
+}
+
 # part 5 - main program
 # ---------------------
 
 case ${COMMAND} in
 	# free defined
+	default)	tiki_setup_default ;;
 	fix)		command_fix ;;
+	menu)		tiki_setup_default ;;
 	nothing)	command_nothing ;;
 	open)		command_open ;;
 	# Tiki Permission Check (via PHP)
@@ -767,7 +847,8 @@ case ${COMMAND} in
 	sdumw)		special_dirs_set_user_minus_write ;;
 	sdupw)		special_dirs_set_user_plus_write ;;
 	foo)		echo foo ;;
-	*)		echo -e ${HINT_FOR_USER} ;;
+	#*)		echo ${HINT_FOR_USER} ;;
+	*)		hint_for_users ;;
 esac
 
 exit 0
