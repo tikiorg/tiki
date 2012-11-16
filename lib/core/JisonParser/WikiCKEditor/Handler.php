@@ -97,7 +97,8 @@ class JisonParser_WikiCKEditor_Handler extends JisonParser_Wiki_Handler
 		$negotiator->setDetails($pluginDetails);
 
 		return $this->createWikiTag("plugin", "span", "Plugin:" . $negotiator->name, array(
-			"data-syntax" => urlencode($negotiator->toSyntax())
+			"data-syntax" => urlencode($negotiator->toSyntax()),
+			"contenteditable" => "false"
 		));
 	}
 
