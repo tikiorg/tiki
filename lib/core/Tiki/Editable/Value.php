@@ -48,9 +48,15 @@ class Tiki_Editable_Value
 		$tag = ($this->layout == 'block') ? 'div' : 'span';
 		$fieldFetch = htmlspecialchars($this->fieldFetchUrl);
 		$objectStore = htmlspecialchars($this->objectStoreUrl);
-		$family = htmlspecialchars($family);
+		$family = htmlspecialchars($this->family);
 
-		return "<$tag class=\"editable-inline\" data-edit-family=\"$family\" data-field-fetch-url=\"$fieldFetch\" data-object-store-url=\"$objectStore\">{$this->inner}</$tag>";
+		$value = $this->inner;
+		if (trim(strip_tags($value)) == '') {
+			// When the value is empty, make sure it becomes visible/clickable
+			$value .= '&nbsp;';
+		}
+
+		return "<$tag class=\"editable-inline\" data-edit-family=\"$family\" data-field-fetch-url=\"$fieldFetch\" data-object-store-url=\"$objectStore\">$value</$tag>";
 	}
 }
 
