@@ -9,7 +9,7 @@
 {button _text="{tr}Add New Media{/tr}" href="tiki-kaltura_upload.php"}
 
 <div class="heading input_submit_container" style="text-align: right">
-	<input type="submit" name="webmail" value="{tr}Change preferences{/tr}" />
+	<input type="submit" name="video" value="{tr}Change preferences{/tr}" />
 </div>
 <fieldset class="admin">
 
