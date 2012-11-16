@@ -10,7 +10,8 @@ class Tiki_Editable_Value
 	private $inner;
 	private $layout = 'inline';
 	private $family = 'editable-value';
-	private $editUrl;
+	private $fieldFetchUrl;
+	private $objectStoreUrl;
 
 	function __construct($html, array $parameters)
 	{
@@ -24,11 +25,16 @@ class Tiki_Editable_Value
 			$this->family = $parameters['family'];
 		}
 
-		if (empty($parameters['edit_url'])) {
-			throw new Exception(tr('Internal error: mandatory parameter edit_url is missing'));
+		if (empty($parameters['field_fetch_url'])) {
+			throw new Exception(tr('Internal error: mandatory parameter field_fetch_url is missing'));
 		}
 
-		$this->editUrl = $parameters['edit_url'];
+		if (empty($parameters['object_store_url'])) {
+			throw new Exception(tr('Internal error: mandatory parameter object_store_url is missing'));
+		}
+
+		$this->fieldFetchUrl = $parameters['field_fetch_url'];
+		$this->objectStoreUrl = $parameters['object_store_url'];
 	}
 
 	function __toString()
@@ -40,10 +46,11 @@ class Tiki_Editable_Value
 		}
 
 		$tag = ($this->layout == 'block') ? 'div' : 'span';
-		$url = htmlspecialchars($this->editUrl);
+		$fieldFetch = htmlspecialchars($this->fieldFetchUrl);
+		$objectStore = htmlspecialchars($this->objectStoreUrl);
 		$family = htmlspecialchars($family);
 
-		return "<$tag class=\"editable-inline\" data-edit-family=\"$family\" data-edit-url=\"$url\">{$this->inner}</$tag>";
+		return "<$tag class=\"editable-inline\" data-edit-family=\"$family\" data-field-fetch-url=\"$fieldFetch\" data-object-store-url=\"$objectStore\">{$this->inner}</$tag>";
 	}
 }
 

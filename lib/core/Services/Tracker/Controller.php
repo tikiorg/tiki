@@ -683,7 +683,7 @@ class Services_Tracker_Controller
 		);
 	}
 
-	function action_edit_item_field($input)
+	function action_fetch_item_field($input)
 	{
 		$trackerId = $input->trackerId->int();
 		$definition = Tracker_Definition::get($trackerId);
@@ -708,26 +708,6 @@ class Services_Tracker_Controller
 		$itemObject = Tracker_Item::fromInfo($itemInfo);
 		if (! $processed = $itemObject->prepareFieldInput($field, $input->none())) {
 			throw new Services_Exception_Denied;
-		}
-
-		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-			$fields = array();
-			$fields[ $field['permName'] ] = $processed['value'];
-
-			$result = $this->utilities->updateItem(
-				$definition,
-				array(
-					'itemId' => $itemId,
-					'status' => $itemInfo['status'],
-					'fields' => $fields,
-				)
-			);
-
-			if (false === $result) {
-				throw new Services_Exception(tr('Validation error'), 406);
-			}
-
-			TikiLib::lib('unifiedsearch')->processUpdateQueue();
 		}
 
 		return array(

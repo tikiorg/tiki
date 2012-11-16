@@ -4399,11 +4399,17 @@ class TrackerLib extends TikiLib
 			if (! empty($params['editable'])) {
 				$servicelib = TikiLib::lib('service');
 				$r = new Tiki_Editable_Value($r, array(
-					'layout' => $this->editable,
+					'layout' => $params['editable'],
 					'family' => "tracker-field-{$field['permName']}",
-					'edit_url' => $servicelib->getUrl(array(
+					'object_store_url' => $servicelib->getUrl(array(
 						'controller' => 'tracker',
-						'action' => 'edit_item_field',
+						'action' => 'update_item',
+						'trackerId' => $field['trackerId'],
+						'itemId' => $item['itemId'],
+					)),
+					'field_fetch_url' => $servicelib->getUrl(array(
+						'controller' => 'tracker',
+						'action' => 'fetch_item_field',
 						'trackerId' => $field['trackerId'],
 						'itemId' => $item['itemId'],
 						'fieldId' => $field['fieldId'],
