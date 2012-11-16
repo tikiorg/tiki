@@ -106,6 +106,10 @@ ajaxLoadingShow("'.$dom_id.'");
 			);	// before dialog tools init (10)
 		}
 */
+		$headerlib->add_jq_onready(
+			'CKEDITOR.config.enterMode = CKEDITOR.ENTER_BR;' .
+			'CKEDITOR.config.shiftEnterMode = CKEDITOR.ENTER_BR;'
+		);
 		$this->finishLoading($dom_id, $auto_save_referrer, $params);
 	}
 
