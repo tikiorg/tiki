@@ -194,7 +194,7 @@
 					<td>
 						<input type="text" style="width:95%" name="home" id="groups_home" value="{$grouphome|escape}" {if $prefs.useGroupHome ne 'y'}disabled="disabled" {/if}/>
 						{remarksbox type="tip" title="{tr}Tip{/tr}"}
-							{tr}Use wiki page name or full URL{/tr}. {tr}For other Tiki features, use relative links (such as <em>http:tiki-forums.php</em>).{/tr}
+							{tr}Use wiki page name or full URL{/tr}. {tr}For other Tiki features, use links relative to the Tiki root (such as <em>/tiki-forums.php</em>).{/tr}
 						{/remarksbox}
 						{autocomplete element='#groups_home' type='pagename'}
 					</td>
