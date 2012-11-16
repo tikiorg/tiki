@@ -26,5 +26,12 @@ function prefs_ajax_list()
 			'type' => 'flag',
 			'default' => 'n',
 		),
+		'ajax_inline_edit_trackerlist' => array(
+			'name' => tr('Tracker list inline editing'),
+			'description' => tr('Enable inline editing on all fields listed in the tracker list page.'),
+			'type' => 'flag',
+			'default' => 'y',
+			'dependencies' => array('ajax_inline_edit'),
+		),
 	);
 }
