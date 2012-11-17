@@ -11,15 +11,20 @@ function tf($wikiSyntax) {
 	$parserHtmlToWiki = new JisonParser_Html_Handler();
 	$html = $WysiwygParser->parse($wikiSyntax);
 
-	echo '"' . $wikiSyntax . '"';
-	echo "\n---------------------" . mb_detect_encoding($wikiSyntax) . "-------------------------\n";
-	echo $html;
-	echo "\n----------------------------------------------\n";
 	$wiki = $parserHtmlToWiki->parse($html);
-	echo '"' . $wiki . '"';
-	echo "\n----------------------" . mb_detect_encoding($wiki) . "------------------------\n";
 	$success =  $wikiSyntax == $wiki;
-	echo ($success  ? "SUCCESS" : "FAILURE");
+
+	if($success == false) {
+		echo "\n";
+		echo '"' . $wikiSyntax . '"';
+		echo "\n---------------------" . mb_detect_encoding($wikiSyntax) . "-------------------------\n";
+		echo $html;
+		echo "\n----------------------------------------------\n";
+		// $wiki = $parserHtmlToWiki->parse($html);
+		echo '"' . $wiki . '"';
+		echo "\n----------------------" . mb_detect_encoding($wiki) . "------------------------\n";
+	}
+	echo ($success  ? "SUCCESS" : "FAILURE")."\n";
 
 	unset($parser);
 	unset($WysiwygParser);
@@ -35,6 +40,7 @@ $cntSUCCESS = 0;
 $cntFAILURE = 0;
 $pages = $tikilib->fetchAll("SELECT pageName, data from tiki_pages");
 foreach($pages as &$page) {
+	echo "Processing ".$page['pageName']." ";
 	if (tf($page['data'])) {
 		++$cntSUCCESS;
 	} else {
