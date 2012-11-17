@@ -4820,6 +4820,12 @@ class TikiLib extends TikiDb_Bridge
 
 		$this->table('tiki_pages')->update($queryData, array('pageName' => $pageName));
 
+		// Synchronize object comment
+		if (!empty($edit_description)) {
+			$query = 'update `tiki_objects` set `description`=? where `itemId`=? and `type`=?';
+			$this->query($query, array( $edit_description, $pageName, 'wiki page'));
+		}
+
 		//update status, page storage was updated in tiki 9 to be non html encoded
         require_once('lib/wiki/wikilib.php');
 		$converter = new convertToTiki9();
