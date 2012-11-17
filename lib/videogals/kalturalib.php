@@ -25,6 +25,10 @@ class KalturaLib
 		if (!$this->testSetup()) {
 			return false;
 		}
+		if (substr($prefs['kaltura_kServiceUrl'], -1) != '/') {
+			$prefs['kaltura_kServiceUrl'] = $prefs['kaltura_kServiceUrl'] . '/';
+			TikiLib::lib('tiki')->set_preference('kaltura_kServiceUrl', $prefs['kaltura_kServiceUrl']);
+		}
 		$this->kconfig = new KalturaConfiguration($prefs['kaltura_partnerId']);
 		$this->kconfig->serviceUrl = $prefs['kaltura_kServiceUrl'];
 		$this->client = new KalturaClient($this->kconfig);
@@ -165,7 +169,7 @@ class KalturaLib
 		} else {
 			$current = '';
 		}
-		
+
 		global $tikipath;
 		$uiConf = new KalturaUiConf();
 		$uiConf->name = 'Tiki.org Standard';
@@ -177,7 +181,7 @@ class KalturaLib
 		$uiConf->useCdn = 1;
 		$uiConf->swfUrl = '/flash/kcw/v2.1.4/ContributionWizard.swf';
 		$uiConf->tags = 'autodeploy, content_v3.2.5, content_upload';
-		
+
 		// first try to update
 	 	if ($current) {
 			 try {
