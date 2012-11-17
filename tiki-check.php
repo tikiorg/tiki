@@ -1148,6 +1148,30 @@ if ( function_exists('apache_get_version')) {
 	}
 }
 
+
+// IIS Properties
+$iis_properties = false;
+
+if (TikiInit::isIIS()) {
+
+	// IIS Rewrite module
+	if (TikiInit::hasIIS_UrlRewriteModule()) {
+		$iis_properties['IIS Url Rewrite Module'] = array(
+			'fitness' => tra('good'),
+			'setting' => 'Available',
+			'message' => tra('The URL Rewrite Module is required to use SEFURL on IIS.')
+			);
+	} else {
+		$iis_properties['IIS Url Rewrite Module'] = array(
+			'fitness' => tra('bad'),
+			'setting' => 'Not Available',
+			'message' => tra('The URL Rewrite Module is required to use SEFURL on IIS.')
+			);
+	}
+}
+
+
+
 // Security Checks
 // get all dangerous php settings and check them
 $security = false;
@@ -1432,6 +1456,11 @@ if ($standalone) {
 		$smarty->assign_by_ref('apache_properties', $apache_properties);
 	} else {
 		$smarty->assign('no_apache_properties', 'You are either not running the preferred Apache web server or you are running PHP with a SAPI that does not allow checking Apache properties (e.g. CGI or FPM).');
+	}
+	if ($iis_properties) {
+		$smarty->assign_by_ref('iis_properties', $iis_properties);
+	} else {
+		$smarty->assign('no_iis_properties', 'You are not running IIS web server.');
 	}
 	$smarty->assign_by_ref('security', $security);
 	$smarty->assign_by_ref('mysql_variables', $mysql_variables);
