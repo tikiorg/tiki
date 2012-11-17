@@ -57,6 +57,7 @@ a,
 a:visited {
 	color: #6d9e26;
 	text-decoration: none;
+	word-wrap: break-word;
 }
 
 a:active,
