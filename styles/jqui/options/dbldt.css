@@ -193,11 +193,12 @@ a.admbox.off,
 }
 
 html > body #col3[id] {
-	position: absolute;
+/* Removed parts which cause a misplaced right sidebar */
+/*	position: absolute;*/
 	right: 0;
 	padding-top: 10px;
-	float: right;
-    margin-right: 0;
+/*	float: right;
+    margin-right: 0; */
 }
 /****** Menus, Links ******/
 /** CSS (suckerfish) menus **/
