@@ -4821,7 +4821,7 @@ class TikiLib extends TikiDb_Bridge
 		$this->table('tiki_pages')->update($queryData, array('pageName' => $pageName));
 
 		// Synchronize object comment
-		if (!empty($edit_description)) {
+		if ($prefs['feature_wiki_description'] == 'y') {
 			$query = 'update `tiki_objects` set `description`=? where `itemId`=? and `type`=?';
 			$this->query($query, array( $edit_description, $pageName, 'wiki page'));
 		}
