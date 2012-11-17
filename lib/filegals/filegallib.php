@@ -2620,7 +2620,8 @@ class FileGalLib extends TikiLib
 				$query .= ' WHERE'.$mid;
 				$bindvars = array_merge($bindvars, $midvars);
 			}
-			if ( $orderby != '' ) $orderby = 'tab.'.$orderby;
+			//ORDER BY RAND() can be slow on large databases
+			if ($orderby != 'RAND()' && $orderby != '') $orderby = 'tab.'.$orderby;
 
 		} else {
 			$query = $f_query;
