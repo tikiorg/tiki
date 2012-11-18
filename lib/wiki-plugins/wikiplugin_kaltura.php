@@ -7,15 +7,18 @@
 
 function wikiplugin_kaltura_info()
 {
-	global $kalturaadminlib; require_once 'lib/videogals/kalturalib.php';
+	global $prefs;
+	if ($prefs['feature_kaltura'] === 'y') {
+		global $kalturaadminlib; require_once 'lib/videogals/kalturalib.php';
 
-	$players = array(array('value' => '', 'text' => tra('Default')));
-	if (is_object($kalturaadminlib) && !empty($kalturaadminlib->session)) {
-		$players1 = $kalturaadminlib->getPlayersUiConfs();
-		foreach ($players1 as & $pl) {
-			$players[] = array('value' => $pl['id'], 'text' => tra($pl['name']));
+		$players = array(array('value' => '', 'text' => tra('Default')));
+		if (is_object($kalturaadminlib) && !empty($kalturaadminlib->session)) {
+			$players1 = $kalturaadminlib->getPlayersUiConfs();
+			foreach ($players1 as & $pl) {
+				$players[] = array('value' => $pl['id'], 'text' => tra($pl['name']));
+			}
+			unset($players1);
 		}
-		unset($players1);
 	}
 
 	return array(

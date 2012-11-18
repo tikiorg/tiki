@@ -6,13 +6,14 @@
 // $Id$
 
 require_once 'tiki-setup.php';
-require_once 'lib/videogals/kalturalib.php';
 
 $auto_query_args = array();
 
 $access->check_feature('feature_kaltura');
 $access->check_permission(array('tiki_p_upload_videos'));
 //get_strings tra('Upload Media')
+
+require_once 'lib/videogals/kalturalib.php';
 
 $cwflashVars = array();
 if ($user) {

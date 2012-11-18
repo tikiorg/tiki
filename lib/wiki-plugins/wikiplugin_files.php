@@ -43,14 +43,14 @@ function wikiplugin_files_info()
 			'sort' => array(
 				'required' => false,
 				'name' => tra('Sort Order'),
-				'description' => tra('Order ascending or descending based on any field in the file gallery table. Default is name_asc'),
+				'description' => tra('Order ascending, descending or random based on any field in the file gallery table. Default is name_asc'),
 				'default' => 'name_asc',
 				'filter' => 'text'
 			),
 			'showaction' => array(
 				'required' => false,
 				'name' => tra('Show Action'),
-				'description' => tra('Show a column with icons for the various actions the user can take with each file (not shown by default)'),
+				'description' => tra('Show a column with icons for the various actions the user can take with each file (shown by default)'),
 				'filter' => 'alpha',
 				'default' => 'n',
 				'advanced' => true,

@@ -1506,7 +1506,7 @@ class UsersLib extends TikiLib
 			$previous = $this->now; // TODO: Should we really set lastLogin on the first login?
 		}
 
-		$query = 'update `users_users` set `lastLogin`=?, `currentLogin`=?, `unsuccessful_logins`=? where `login`=? and `waiting` <> \'a\'';	// don't update last login if waiting for admin
+		$query = 'update `users_users` set `lastLogin`=?, `currentLogin`=?, `unsuccessful_logins`=? where `login`=? and (`waiting` <> \'a\' OR `waiting` IS NULL)';	// don't update last login if waiting for admin
 		$this->query(
 			$query,
 			array(

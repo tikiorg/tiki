@@ -24,3 +24,4 @@
 	{/if}
 	{self_link _onclick='$.openEditHelp(0);return false'}{tr}Show Help{/tr}{icon _id='help'}{/self_link}
 </div>
+<br>

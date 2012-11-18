@@ -25,6 +25,10 @@ class KalturaLib
 		if (!$this->testSetup()) {
 			return false;
 		}
+		if (substr($prefs['kaltura_kServiceUrl'], -1) != '/') {
+			$prefs['kaltura_kServiceUrl'] = $prefs['kaltura_kServiceUrl'] . '/';
+			TikiLib::lib('tiki')->set_preference('kaltura_kServiceUrl', $prefs['kaltura_kServiceUrl']);
+		}
 		$this->kconfig = new KalturaConfiguration($prefs['kaltura_partnerId']);
 		$this->kconfig->serviceUrl = $prefs['kaltura_kServiceUrl'];
 		$this->client = new KalturaClient($this->kconfig);
@@ -165,7 +169,7 @@ class KalturaLib
 		} else {
 			$current = '';
 		}
-		
+
 		global $tikipath;
 		$uiConf = new KalturaUiConf();
 		$uiConf->name = 'Tiki.org Standard';
@@ -177,22 +181,32 @@ class KalturaLib
 		$uiConf->useCdn = 1;
 		$uiConf->swfUrl = '/flash/kcw/v2.1.4/ContributionWizard.swf';
 		$uiConf->tags = 'autodeploy, content_v3.2.5, content_upload';
-		
+
 		// first try to update
 	 	if ($current) {
-			$results = $this->client->uiConf->update($current, $uiConf);
-			if (isset($results->id)) {
-				return $results->id;	
-			}
+			 try {
+				 $results = $this->client->uiConf->update($current, $uiConf);
+				 if (isset($results->id)) {
+					 return $results->id;
+				 }
+			 } catch (Exception $e) {
+				 TikiLib::lib('errorreport')->report($e->getMessage());
+			 }
+		 } else {
+			 try {
+				 // create if updating failed or not updating
+				 $uiConf->creationMode = KalturaUiConfCreationMode::ADVANCED;
+				 $results = $this->client->uiConf->add($uiConf);
+				 if (isset($results->id)) {
+					 return $results->id;
+				 } else {
+					 return '';
+				 }
+			 } catch (Exception $e) {
+				 TikiLib::lib('errorreport')->report($e->getMessage());
+			 }
 		}
-		// create if updating failed or not updating
-		$uiConf->creationMode = KalturaUiConfCreationMode::ADVANCED;
-		$results = $this->client->uiConf->add($uiConf);
-		if (isset($results->id)) {
-			return $results->id;	
-		} else {
-			return '';
-		}
+		return '';
 	}
 	
 }
