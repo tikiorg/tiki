@@ -6,16 +6,25 @@ if (PHP_SAPI !== 'cli') {
 	die("Please run for a shell");
 }
 
-// Display command line options
-echo "Command line arguments\n";
-echo "  -x	eXclude the page contents from the dump\n";
-echo "\n";
 
+// Show a description of this tool
+echo "\nhtmlconvert: test tool for Jison parser\n";
+echo "---------------------------------------\n";
 
 // Interpret command line
 
+// Display help if no arguments are passed
+if(count($argv) <= 1) {
+	$argv[] = '-?';
+}
+
 // Help
 if (in_array('-?', $argv)) {
+	echo "Command line arguments\n";
+	echo "  -?	Show this help text\n";
+	echo "  -f	Generate a full report\n";
+	echo "  -x	Exclude the page contents from the report\n";
+	echo "\n";
 	die;
 }
 
@@ -26,7 +35,15 @@ if (in_array('-x', $argv)) {
 	$xcludeContent = true;
 }
 
+// Full content reporting
+if (in_array('-f', $argv)) {
+	echo "Full report.\n";
+	$xcludeContent = false;
+}
+
+
 // The test function
+///////////////////////////
 function tf($wikiSyntax, &$startTime, &$endTime) {
 	global $xcludeContent;
 	//The new parser strips all \r and lets \n do all the line break work
@@ -65,11 +82,15 @@ function tf($wikiSyntax, &$startTime, &$endTime) {
 	return $success;
 }
 
+// Run the process
+/////////////////////
 global $tikilib;
 
+echo "Loading ALL wiki pages from the database...\n";
 $pages = $tikilib->fetchAll("SELECT pageName, data from tiki_pages");
 $pageCount = count($pages);
 
+echo "Analyzing wiki pages...\n";
 $cntSUCCESS = 0;
 $cntFAILURE = 0;
 $totalElapsedTime = 0;
@@ -91,7 +112,7 @@ foreach($pages as &$page) {
 	// page_Parser statistics	
 	$totalTime = $endTime - $startTime;
 	$totalElapsedTime += $totalTime;
-	echo " msec: ".$totalTime."\n";
+	echo " - ".$totalTime." ms\n";
 
 }
 echo "\n------------- Statistics ---------------------------------\n";
@@ -108,6 +129,9 @@ if($idx > 0) {
 echo "\nTotal elapsed msec: ".$totalElapsedTime."\n";
 echo "Avg msec/page: ".$avgTimePerPage."\n";
 
+
+// Support functions
+///////////////////////
 
 // @return current micro time in milli-seconds
 function getMicroTime()
