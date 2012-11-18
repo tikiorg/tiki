@@ -118,7 +118,9 @@ ajaxLoadingShow("'.$dom_id.'");
 			window.CKEDITOR.config.extraPlugins += (window.CKEDITOR.config.extraPlugins ? ",jisonline" : "jisonline" );
 			window.CKEDITOR.plugins.addExternal( "jisonline", "'.$tikiroot.'lib/ckeditor_tiki/plugins/jisonline/");
 			window.CKEDITOR.config.extraPlugins += (window.CKEDITOR.config.extraPlugins ? ",jisonplugin" : "jisonplugin" );
-			window.CKEDITOR.plugins.addExternal( "jisonplugin", "'.$tikiroot.'lib/ckeditor_tiki/plugins/jisonplugin/");',
+			window.CKEDITOR.plugins.addExternal( "jisonplugin", "'.$tikiroot.'lib/ckeditor_tiki/plugins/jisonplugin/");
+			window.CKEDITOR.config.extraPlugins += (window.CKEDITOR.config.extraPlugins ? ",jisonsource" : "jisonsource" );
+			window.CKEDITOR.plugins.addExternal( "jisonsource", "'.$tikiroot.'lib/ckeditor_tiki/plugins/jisonsource/");',
 			5
 		);
 	}
