@@ -112,7 +112,7 @@ foreach($pages as &$page) {
 	// page_Parser statistics	
 	$totalTime = $endTime - $startTime;
 	$totalElapsedTime += $totalTime;
-	echo " - ".$totalTime." ms\n";
+	echo " - ".(int)$totalTime." ms\n";
 
 }
 echo "\n------------- Statistics ---------------------------------\n";
