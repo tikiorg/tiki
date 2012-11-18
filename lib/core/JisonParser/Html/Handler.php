@@ -83,6 +83,10 @@ class JisonParser_Html_Handler extends JisonParser_Html
 
 	public function parse($input)
 	{
+		if (empty($input)) {
+			return $input;
+		}
+
 		if ($this->parsing == true) {
 			$class = get_class($this->Parser);
 			$parser = new $class($this->Parser);
@@ -720,7 +724,7 @@ class JisonParser_Html_Handler extends JisonParser_Html
 
 	public static function isHtmlTag(&$yytext)
 	{
-		$parts = explode(" ", substr($yytext, 1));
+		$parts = explode(" ", substr($yytext, 1, -1));
 		$parts = array_filter($parts, 'strlen');
 
 		switch (strtolower($parts[0])) {
