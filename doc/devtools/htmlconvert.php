@@ -2,16 +2,20 @@
 
 require_once('tiki-setup.php');
 
-function tf($wikiSyntax) {
+function tf($wikiSyntax, &$startTime, &$endTime) {
 	//The new parser strips all \r and lets \n do all the line break work
 	$wikiSyntax = str_replace("\r", '', $wikiSyntax);
 
 	$parser = new JisonParser_Wiki_Handler();
 	$WysiwygParser = new JisonParser_WikiCKEditor_Handler();
 	$parserHtmlToWiki = new JisonParser_Html_Handler();
-	$html = $WysiwygParser->parse($wikiSyntax);
 
+	// Parse
+	$startTime = getMicroTime();
+	$html = $WysiwygParser->parse($wikiSyntax);
 	$wiki = $parserHtmlToWiki->parse($html);
+	$endTime = getMicroTime();
+
 	$success =  $wikiSyntax == $wiki;
 
 	if($success == false) {
@@ -48,10 +52,9 @@ foreach($pages as &$page) {
 	// Processing preparation
 	$idx++;
 	echo "Processing (".$idx."/".$pageCount.") - ".$page['pageName']." - ";
-	$startTime = getMicroTime();
 	
 	// Process the page
-	if (tf($page['data'])) {
+	if (tf($page['data'], $startTime, $endTime)) {
 		++$cntSUCCESS;
 	} else {
 		++$cntFAILURE;
@@ -59,10 +62,9 @@ foreach($pages as &$page) {
 	unset($page);
 
 	// page_Parser statistics	
-	$endTime = getMicroTime();
 	$totalTime = $endTime - $startTime;
 	$totalElapsedTime += $totalTime;
-	echo " (Elapsed sec: ".$totalTime.")\n";
+	echo " (Elapsed msec: ".$totalTime.")\n";
 }
 echo "\n------------- Statistics ---------------------------------\n";
 
@@ -72,14 +74,15 @@ echo "FAILURE: ".$cntFAILURE."\n";
 
 // Time spent
 $avgTimePerPage = $totalElapsedTime / $pageCount;
-echo "\nTotal elapsed sec: ".$totalElapsedTime;
-echo "Avg sec/page: ".$totalElapsedTime."\n";
+echo "\nTotal elapsed msec: ".$totalElapsedTime;
+echo "Avg msec/page: ".$totalElapsedTime."\n";
 
 
+// @return current micro time in milli-seconds
 function getMicroTime()
 {
 	$mtime = microtime(); 
 	$mtime = explode(" ",$mtime); 
 	$mtime = $mtime[1] + $mtime[0]; 
-	return $mtime;	
+	return $mtime * 1000;	// Convert to milliseconds
 }
