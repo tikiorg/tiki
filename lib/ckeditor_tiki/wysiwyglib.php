@@ -114,8 +114,11 @@ ajaxLoadingShow("'.$dom_id.'");
 		);
 		$this->finishLoading($dom_id, $auto_save_referrer, $params);
 		$headerlib->add_js(
-			'window.CKEDITOR.config.extraPlugins += (window.CKEDITOR.config.extraPlugins ? ",jisonline" : "jisonline" );
-				window.CKEDITOR.plugins.addExternal( "jisonline", "'.$tikiroot.'lib/ckeditor_tiki/plugins/jisonline/");',
+			'window.jisonSyntax = ' . json_encode(JisonParser_WikiCKEditor_Handler::$typeShorthand) . ';
+			window.CKEDITOR.config.extraPlugins += (window.CKEDITOR.config.extraPlugins ? ",jisonline" : "jisonline" );
+			window.CKEDITOR.plugins.addExternal( "jisonline", "'.$tikiroot.'lib/ckeditor_tiki/plugins/jisonline/");
+			window.CKEDITOR.config.extraPlugins += (window.CKEDITOR.config.extraPlugins ? ",jisonplugin" : "jisonplugin" );
+			window.CKEDITOR.plugins.addExternal( "jisonplugin", "'.$tikiroot.'lib/ckeditor_tiki/plugins/jisonplugin/");',
 			5
 		);
 	}
