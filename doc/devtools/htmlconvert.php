@@ -55,7 +55,7 @@ function tf($wikiSyntax, &$startTime, &$endTime) {
 		echo '"' . $wiki . '"';
 		echo "\n----------------------" . mb_detect_encoding($wiki) . "------------------------\n";
 	}
-	echo ($success  ? "SUCCESS" : "FAILURE");
+	echo ($success  ? "\tSUCCESS" : "\tFAILURE");
 
 	unset($parser);
 	unset($WysiwygParser);
@@ -91,7 +91,7 @@ foreach($pages as &$page) {
 	// page_Parser statistics	
 	$totalTime = $endTime - $startTime;
 	$totalElapsedTime += $totalTime;
-	echo " (Elapsed msec: ".$totalTime.")\n";
+	echo " msec: ".$totalTime."\n";
 
 }
 echo "\n------------- Statistics ---------------------------------\n";
