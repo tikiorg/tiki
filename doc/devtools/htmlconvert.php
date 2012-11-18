@@ -44,10 +44,15 @@ if (in_array('-f', $argv)) {
 
 // The test function
 ///////////////////////////
-function tf($wikiSyntax, &$startTime, &$endTime) {
+function tf($page, &$startTime, &$endTime) {
 	global $xcludeContent;
+	
 	//The new parser strips all \r and lets \n do all the line break work
-	$wikiSyntax = str_replace("\r", '', $wikiSyntax);
+	$syntax = $page['data'];
+	$syntax = str_replace("\r", '', $syntax);
+
+	// Determine the page syntax type
+	$is_html = isset($page['is_html']) ? $page['is_html'] == 1 : false;
 
 	$parser = new JisonParser_Wiki_Handler();
 	$WysiwygParser = new JisonParser_WikiCKEditor_Handler();
@@ -55,20 +60,26 @@ function tf($wikiSyntax, &$startTime, &$endTime) {
 
 	// Parse
 	$startTime = getMicroTime();
-	$html = $WysiwygParser->parse($wikiSyntax);
-	$wiki = $parserHtmlToWiki->parse($html);
+	if(!$is_html) {
+		$wikiSyntax = $syntax;
+		$html = $WysiwygParser->parse($wikiSyntax);
+		$wiki = $parserHtmlToWiki->parse($html);
+	} else {
+		$htmlSyntax = $syntax;
+		$wikiSyntax = $parserHtmlToWiki->parse($htmlSyntax);
+		$html = $WysiwygParser->parse($wikiSyntax);
+		$wiki = $parserHtmlToWiki->parse($html);
+	}
 	$endTime = getMicroTime();
 
 	$success =  $wikiSyntax == $wiki;
 	
 	if($success == false && !$xcludeContent) {
 		echo "\n";
-		echo "xcludeContent = ".$xcludeContent."\n";
 		echo '"' . $wikiSyntax . '"';
 		echo "\n---------------------" . mb_detect_encoding($wikiSyntax) . "-------------------------\n";
 		echo $html;
 		echo "\n----------------------------------------------\n";
-		// $wiki = $parserHtmlToWiki->parse($html);
 		echo '"' . $wiki . '"';
 		echo "\n----------------------" . mb_detect_encoding($wiki) . "------------------------\n";
 	}
@@ -87,7 +98,7 @@ function tf($wikiSyntax, &$startTime, &$endTime) {
 global $tikilib;
 
 echo "Loading ALL wiki pages from the database...\n";
-$pages = $tikilib->fetchAll("SELECT pageName, data from tiki_pages");
+$pages = $tikilib->fetchAll("SELECT pageName, data, is_html from tiki_pages");
 $pageCount = count($pages);
 
 echo "Analyzing wiki pages...\n";
@@ -102,7 +113,7 @@ foreach($pages as &$page) {
 	echo "Processing (".$idx."/".$pageCount.") - ".$page['pageName']." - ";
 	
 	// Process the page
-	if (tf($page['data'], $startTime, $endTime)) {
+	if (tf($page, $startTime, $endTime)) {
 		++$cntSUCCESS;
 	} else {
 		++$cntFAILURE;
