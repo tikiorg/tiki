@@ -192,6 +192,7 @@ class KalturaLib
 			 } catch (Exception $e) {
 				 TikiLib::lib('errorreport')->report($e->getMessage());
 			 }
+		 } else {
 			 try {
 				 // create if updating failed or not updating
 				 $uiConf->creationMode = KalturaUiConfCreationMode::ADVANCED;
