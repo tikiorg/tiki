@@ -24,7 +24,7 @@ function tf($wikiSyntax) {
 		echo '"' . $wiki . '"';
 		echo "\n----------------------" . mb_detect_encoding($wiki) . "------------------------\n";
 	}
-	echo ($success  ? "SUCCESS" : "FAILURE")."\n";
+	echo ($success  ? "SUCCESS" : "FAILURE");
 
 	unset($parser);
 	unset($WysiwygParser);
@@ -36,18 +36,50 @@ function tf($wikiSyntax) {
 
 global $tikilib;
 
+$pages = $tikilib->fetchAll("SELECT pageName, data from tiki_pages");
+$pageCount = count($pages);
+
 $cntSUCCESS = 0;
 $cntFAILURE = 0;
-$pages = $tikilib->fetchAll("SELECT pageName, data from tiki_pages");
+$totalElapsedTime = 0;
+$idx = 0;
 foreach($pages as &$page) {
-	echo "Processing ".$page['pageName']." ";
+	
+	// Processing preparation
+	$idx++;
+	echo "Processing (".$idx."/".$pageCount.") - ".$page['pageName']." - ";
+	$startTime = getMicroTime();
+	
+	// Process the page
 	if (tf($page['data'])) {
 		++$cntSUCCESS;
 	} else {
 		++$cntFAILURE;
 	}
 	unset($page);
+
+	// page_Parser statistics	
+	$endTime = getMicroTime();
+	$totalTime = $endTime - $startTime;
+	$totalElapsedTime += $totalTime;
+	echo " (Elapsed sec: ".$totalTime.")\n";
 }
 echo "\n------------- Statistics ---------------------------------\n";
+
+// Success / Failure
 echo "\nSUCCESS: ".$cntSUCCESS."\n";
-echo "\nFAILURE: ".$cntFAILURE."\n";
+echo "FAILURE: ".$cntFAILURE."\n";
+
+// Time spent
+$avgTimePerPage = $totalElapsedTime / $pageCount;
+echo "\nTotal elapsed sec: ".$totalElapsedTime;
+echo "Avg sec/page: ".$totalElapsedTime."\n";
+
+
+function getMicroTime()
+{
+	$mtime = microtime(); 
+	$mtime = explode(" ",$mtime); 
+	$mtime = $mtime[1] + $mtime[0]; 
+	return $mtime;	
+}
