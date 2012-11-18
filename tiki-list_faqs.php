@@ -17,7 +17,7 @@ if (!isset($_REQUEST["faqId"])) {
 }
 $smarty->assign('faqId', $_REQUEST["faqId"]);
 if ($_REQUEST["faqId"]) {
-	$info = $tikilib->get_faq($_REQUEST["faqId"]);
+	$info = $faqlib->get_faq($_REQUEST["faqId"]);
 } else {
 	$info = array();
 	$info["title"] = '';
