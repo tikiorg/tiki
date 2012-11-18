@@ -660,6 +660,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 			case 'h6':
 			case 'pre':
 			case 'ul':
+			case 'li':
 			case 'dl':
 			case 'div':
 			case 'table':
@@ -679,6 +680,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 			case '/h6':
 			case '/pre':
 			case '/ul':
+			case '/li':
 			case '/dl':
 			case '/div':
 			case '/table':
