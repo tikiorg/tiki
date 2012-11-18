@@ -52,6 +52,8 @@ class WYSIWYGLib
 			$headerlib->add_js(
 				'// --- config settings for the autosave plugin ---
 window.CKEDITOR.config.ajaxAutoSaveTargetUrl = "'.$tikiroot.'tiki-auto_save.php";	// URL to post to (also used for plugin processing)
+window.CKEDITOR.config.stylesSet = "tikistyles:' . $tikiroot . 'lib/ckeditor_tiki/tikistyles.js";
+window.CKEDITOR.config.templates_files = ["' . $tikiroot . 'lib/ckeditor_tiki/tikitemplates.js"];
 window.CKEDITOR.config.extraPlugins += (window.CKEDITOR.config.extraPlugins ? ",autosave" : "autosave" );
 window.CKEDITOR.plugins.addExternal( "autosave", "'.$tikiroot.'lib/ckeditor_tiki/plugins/autosave/");
 window.CKEDITOR.config.ajaxAutoSaveRefreshTime = 30 ;			// RefreshTime
@@ -111,6 +113,11 @@ ajaxLoadingShow("'.$dom_id.'");
 			'CKEDITOR.config.shiftEnterMode = CKEDITOR.ENTER_BR;'
 		);
 		$this->finishLoading($dom_id, $auto_save_referrer, $params);
+		$headerlib->add_js(
+			'window.CKEDITOR.config.extraPlugins += (window.CKEDITOR.config.extraPlugins ? ",jisonline" : "jisonline" );
+				window.CKEDITOR.plugins.addExternal( "jisonline", "'.$tikiroot.'lib/ckeditor_tiki/plugins/jisonline/");',
+			5
+		);
 	}
 
 	private function finishLoading($dom_id, $auto_save_referrer, $params)
@@ -155,8 +162,6 @@ ajaxLoadingShow("'.$dom_id.'");
 	autoSaveSelf: "'.addcslashes($auto_save_referrer, '"').'",		// unique reference for each page set up in ensureReferrer()
 	font_names: "' . trim($prefs['wysiwyg_fonts']) . '",
 	format_tags: "' . $ckeformattags . '",
-	stylesSet: "tikistyles:' . $tikiroot . 'lib/ckeditor_tiki/tikistyles.js",
-	templates_files: "' . $tikiroot . 'lib/ckeditor_tiki/tikitemplates.js",
 	contentsCss: ["' . $ckstyle . '"],
 	skin: "' . ($prefs['wysiwyg_toolbar_skin'] != 'default' ? $prefs['wysiwyg_toolbar_skin'] : 'kama') . '",
 	defaultLanguage: "' . $prefs['language'] . '",
