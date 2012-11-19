@@ -38,11 +38,14 @@ class JisonParser_Abstract extends TikiTestCase
 
 	public function createFakePage()
 	{
-		global $wikilib;
+		global $tikilib, $wikilib;
 		$_SERVER["SERVER_NAME"] = 'localhost';
 		$_SERVER["REQUEST_URI"] = 'localhost';
-		$wikilib->create_page("FakePage",0,"",0,"Fake Tiki Page");
-		$wikilib->create_page("[FakePage]",0,"",0,"Fake Tiki Page");
+		$tikilib->query(
+			'INSERT INTO tiki_pages (pageName, hits, comment, version, version_minor, user, ip, creator, created, wysiwyg)
+			VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+			array('FakePage', 0, 'Fake Tiki Page', 1, 0, 'admin', '0.0.0.0', 'admin', time(), 'n')
+		);
 	}
 
 	public function testOutput()
