@@ -1,17 +1,17 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 // Note for translators about translation of text ending with punctuation
-// 
+//
 // The current list of concerned punctuation can be found in 'lib/init/tra.php'
 // On 2009-03-02, it is: (':', '!', ';', '.', ',', '?')
 // For clarity, we explain here only for colons: ':' but it is the same for the rest
-// 
+//
 // Short version: it is not a problem that string "Login:" has no translation. Only "Login" needs to be translated.
-// 
+//
 // Technical justification:
 // If a string ending with colon needs translating (like "{tr}Login:{/tr}")
 // then Tiki tries to translate 'Login' and ':' separately.
@@ -11401,7 +11401,7 @@ $lang = array(
 "Click on the category name you want to list. The list of objects in that category will become visible." => "Cliquez sur le nom de la catégorie que vous voulez lister. La liste des objets dans cette catégorie deviendra visible.",
 "Select the objects you want to affect. Controls will appear in the category browser." => "Sélectionner les objets voulus. Les contrôles vont apparaître dans le navigateur des catégories.",
 "Use the plus and minus signs to add or remove the categories on selected objects." => "Utiliser les signes plus et moins pour ajouter ou enlever les catégories des objets sélectionnés.",
-"More results available. Please refine the search criterias" => "Plus de résultats disponibles. Marci d'affiner les critères de recherche",
+"More results available. Please refine the search criterias" => "Plus de résultats disponibles. Merci d'affiner les critères de recherche",
 "Select all" => "Tout sélectionner",
 "Unselect all" => "Tout désélectionner",
 "Edit Style Sheet" => "Modifier la feuille de style",
