@@ -356,7 +356,7 @@ CAPITOL_WORD                    ([A-Z]{1,}[a-z_\-\x80-\xFF]{1,}){2,}
 
         return 'EOF';
 	%}
-<center>[:][:]
+<center>[:][:][:]
 	%{
 		if (parser.isContent()) return 'CONTENT'; //js
 		lexer.popState(); //js
@@ -366,7 +366,7 @@ CAPITOL_WORD                    ([A-Z]{1,}[a-z_\-\x80-\xFF]{1,}){2,}
 		//php $this->popState();
 		//php return 'CENTER_END';
 	%}
-[:][:]
+[:][:][:]
 	%{
 		if (parser.isContent()) return 'CONTENT'; //js
 		lexer.begin('center'); //js
