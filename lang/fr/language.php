@@ -1,17 +1,17 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-//
+// 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 // Note for translators about translation of text ending with punctuation
-//
+// 
 // The current list of concerned punctuation can be found in 'lib/init/tra.php'
 // On 2009-03-02, it is: (':', '!', ';', '.', ',', '?')
 // For clarity, we explain here only for colons: ':' but it is the same for the rest
-//
+// 
 // Short version: it is not a problem that string "Login:" has no translation. Only "Login" needs to be translated.
-//
+// 
 // Technical justification:
 // If a string ending with colon needs translating (like "{tr}Login:{/tr}")
 // then Tiki tries to translate 'Login' and ':' separately.
@@ -819,6 +819,7 @@ $lang = array(
 "Regular Expression (Pattern)" => "Expression régulière (Modèle)",
 "User Name" => "Nom d'utilisateur",
 "Invalid data provided" => "Données fournies non valides",
+// "No item to clone" => "No item to clone",
 // "Item to clone not visible" => "Item to clone not visible",
 // "Not allowed to create new items" => "Not allowed to create new items",
 // "Item could not be created" => "Item could not be created",
@@ -1488,8 +1489,9 @@ $lang = array(
 "Rows" => "Nb max. de rangées \n(si applicable au module)",
 "Number of rows, or items, to display" => "Nombre de rangées ou éléments à afficher",
 "Default: 10" => "Par défaut : 10",
-"Contact the system administrator" => "Contacter l'administrateur système",
 "Failed to execute \"%0\" module" => "A échoué à exécuter le module \"%0\"",
+// "Missing dependencies" => "Missing dependencies",
+"Contact the system administrator" => "Contacter l'administrateur système",
 "Newsletter subscription information at" => "Les informations concernant la lettre d'information sont disponibles à ",
 "Error" => "Erreur",
 "Limiting the email send rate. Resuming in %0 seconds" => "Limitation en cours de la fréquence d'envoi de courriel. Reprise dans %0 secondes",
@@ -1773,6 +1775,12 @@ $lang = array(
 "Maximum of objects more like this, otherwise use the default max records" => "Nombre maximum d'objets plus comme celui-ci, sinon utiliser le nombre maximum d'enregistrements",
 "Exclude these category IDs" => "Exclure ces identificateurs de catégorie",
 "Category path won't appear for these category IDs" => "Le chemin de catégorie n'apparaîtra pas pour ces IDs de catégorie",
+// "Category path format" => "Category path format",
+// "Alter how the category path will be rendered" => "Alter how the category path will be rendered",
+// "Links to the category when category is visible" => "Links to the category when category is visible",
+// "Text label when category is visible" => "Text label when category is visible",
+// "Link when visible, text label otherwise" => "Link when visible, text label otherwise",
+// "Always display the category path labels" => "Always display the category path labels",
 "Center shadow start" => "Calque central - Début",
 "Center shadow end" => "Calque central - Fin",
 "Users can change site language" => "Les utilisateurs peuvent changer la langue du site",
@@ -2239,7 +2247,7 @@ $lang = array(
 "Use page description" => "Utiliser la description de la page",
 "Top of page" => "Haut de la page",
 "Top of center column" => "Haut de la colonne centrale",
-"Custom End of <body> Code" => "Personnalisation de la fin du <body> Code",
+// "Custom code just before the closing </body> tag" => "Custom code just before the closing </body> tag",
 "Webmaster Report" => "Signaler au webmestre",
 "Webmaster Email" => "Email du webmestre",
 "Leave blank to use the default sender email" => "Laisser vide pour utiliser l'émetteur par défaut",
@@ -2668,7 +2676,7 @@ $lang = array(
 "Label visible in the browser's title bar on all pages. Also appears in search engines" => "Texte visible dans la barre de titre des fenêtres du navigateur sur toutes les pages. Il apparaitra aussi dans les moteurs de recherche",
 "Validate new user registrations by email" => "Valider l'enregistrement des nouveaux utilisateurs par mail",
 "Upon registration, the new user will receive an email containing a link to confirm validity" => "Lors de l'enregistrement, le nouvel utilisateur recevra un email contenant un lien pour confirmer la validité",
-"Home page" => "Page d'accueil",
+// "Wiki Home page" => "Wiki Home page",
 "Landing page used for the wiki when no page is specified. The page will be created if it does not exist" => "Page par défaut utilisée pour le wiki lorsqu'aucune page n'est précisée. La page sera créée si elle n'existe pas",
 "Use group homepages" => "Utiliser les pages d'accueil de groupe",
 "Users can be sent to different pages upon login, depending on their default group." => "Les utilisateurs peuvent être redirigés vers des pages différentes à la connexion en fonction de leur groupe par défaut.",
@@ -3741,7 +3749,7 @@ $lang = array(
 "Office 2003" => "Office 2003",
 "V2 (FCKEditor appearance)" => "V2 (apparence FCKEditor)",
 "Use Wiki syntax in WYSIWYG" => "Utilisation de la syntaxe wiki dans l'éditeur Wysiwyg",
-// "Experimental, new : Allow to keep the wiki syntax with the WYSIWYG editor. WARNING: plugin edit is not working in that case in WYSIWYG mode, use the Source mode instead " => "Experimental, new : Allow to keep the wiki syntax with the WYSIWYG editor. WARNING: plugin edit is not working in that case in WYSIWYG mode, use the Source mode instead ",
+// "Allow to keep the wiki syntax with the WYSIWYG editor. Sometimes also known as \"Visual Wiki\"" => "Allow to keep the wiki syntax with the WYSIWYG editor. Sometimes also known as \"Visual Wiki\"",
 "Font names" => "Noms des polices",
 "List of font names separated by;" => "Liste des noms de polices séparés par ;",
 "SMTP Server" => "Serveur SMTP",
@@ -5401,9 +5409,9 @@ $lang = array(
 // "To list only files contained in these file galleries (multiple IDs separated by colon)" => "To list only files contained in these file galleries (multiple IDs separated by colon)",
 "To restrict files listed to those belonging to one or more categories. Enter a single category or ID or list of them separated by colon" => "Pour restreindre la liste des fichiers à ceux appartenant à une ou plusieurs catégories. Entrer une seule catégorie ou son identifiant ou une liste d'entre eux séparés par un point",
 "To list only specified files, enter their file IDs separated by colon" => "Pour lister seulement certains fichiers, entrer leurs identificateurs (ID) séparés par deux-points (:)",
-"Order ascending or descending based on any field in the file gallery table. Default is name_asc" => "Ordre croissant ou décroissant basé sur n'importe quel champ de la table galerie de fichiers. Par défaut : ordre croissant de noms (name_asc)",
+// "Order ascending, descending or random based on any field in the file gallery table. Default is name_asc" => "Order ascending, descending or random based on any field in the file gallery table. Default is name_asc",
 "Show Action" => "Afficher les actions",
-"Show a column with icons for the various actions the user can take with each file (not shown by default)" => "Afficher une colonne avec des icônes pour les différentes actions que l'utilisateur peut exécuter avec chaque fichier (non affichée par défaut)",
+// "Show a column with icons for the various actions the user can take with each file (shown by default)" => "Show a column with icons for the various actions the user can take with each file (shown by default)",
 "Show Find" => "Afficher 'Chercher'",
 "Show a search box above the list (not shown by default)" => "Afficher une boîte de recherche au dessus de la liste (non affichée par défaut)",
 // "Show the title of the file gallery (shown by default). Also shown on slide show pop up window if a single galleryId is used" => "Show the title of the file gallery (shown by default). Also shown on slide show pop up window if a single galleryId is used",
@@ -10840,7 +10848,6 @@ $lang = array(
 "Also inheriting permissions from the following groups (indirect inheritance through the groups selected above)." => "Le groupe hérite aussi les permissions des groupes suivants (héritage indirect à travers les groupes sélectionnés ci-dessus).",
 "Group Homepage or Url" => "Page d'accueil du groupe ou URL",
 "Use wiki page name or full URL" => "Utiliser le nom de la page Wiki ou l'URL complet",
-"For other Tiki features, use relative links (such as <em>/tiki-forums.php</em>)" => "Pour les autres fonctionnalités Tiki, utiliser des liens relatifs (comme <em>/tiki-forums.php</em>)",
 "For other Tiki features, use links relative to the Tiki root (such as <em>/tiki-forums.php</em>)" => "Pour les autres fonctionnalités Tiki, utiliser des liens relatifs (comme <em>/tiki-forums.php</em>)",
 "Default category assigned to uncategorized objects edited by a user with this default group" => "Catégorie associée par défaut aux objects édités par un utilisateur ayant ce groupe par défaut",
 "Group Theme" => "Thème du groupe",
@@ -10870,6 +10877,7 @@ $lang = array(
 "users in group" => "utilisateurs dans le groupe",
 "Banned members List" => "Liste des membres bannis",
 "Unban user" => "Dé-bannir un utilisateur",
+// "Add or Ban members to" => "Add or Ban members to",
 "Add to group" => "Ajouter au groupe",
 "Ban user from group" => "Bannir l'utilisateur du groupe",
 "Import/Export" => "Importer/Exporter",
@@ -13702,6 +13710,7 @@ $lang = array(
 // "Current recordings" => "Current recordings",
 // "On %0 from %1 to %2" => "On %0 from %1 to %2",
 // "This will permanently remove the recording" => "This will permanently remove the recording",
+// "(including audio recording & chat log)" => "(including audio recording & chat log)",
 // "{\$button_label}" => "{\$button_label}",
 "list" => "liste",
 // "{\$ftptitle}" => "{\$ftptitle}",
@@ -14206,6 +14215,7 @@ $lang = array(
 // "This extension is needed to connect your Tiki to an LDAP server. More info at: http://doc.tiki.org/LDAP " => "This extension is needed to connect your Tiki to an LDAP server. More info at: http://doc.tiki.org/LDAP ",
 // "You will not be able to connect your Tiki to an LDAP server as the needed PHP extension is missing. More info at: http://doc.tiki.org/LDAP" => "You will not be able to connect your Tiki to an LDAP server as the needed PHP extension is missing. More info at: http://doc.tiki.org/LDAP",
 // "This extension can be used to speed up your Tiki by saving sessions as well as wiki and forum data on a memcached server" => "This extension can be used to speed up your Tiki by saving sessions as well as wiki and forum data on a memcached server",
+// "This extension is used to interpret SVN information for TortoiseSVN 1.7 or higher" => "This extension is used to interpret SVN information for TortoiseSVN 1.7 or higher",
 // "The eval() function is required by the Smarty templating engine" => "The eval() function is required by the Smarty templating engine",
 // "You will get \"Please contact support about\" messages instead of modules. eval() is most probably disabled via Suhosin" => "You will get \"Please contact support about\" messages instead of modules. eval() is most probably disabled via Suhosin",
 // "The ZipArchive class is needed for features such as XML Wiki Import/Export and PluginArchiveBuilder" => "The ZipArchive class is needed for features such as XML Wiki Import/Export and PluginArchiveBuilder",
