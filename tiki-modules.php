@@ -47,7 +47,7 @@ foreach ( $modules as $zone => & $moduleList ) {
 }
 
 $smarty->assign('show_columns', $show_columns);
-$smarty->assign('module_zones', $moduleList);
+$smarty->assign('module_zones', $modules);
 
 $module_nodecorations = array('decorations' => 'n');
 $module_isflippable = array('flip' => 'y');
