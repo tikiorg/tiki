@@ -9,7 +9,10 @@ class JisonParser_Html_Handler extends JisonParser_Html
 	/* html tag tracking */
 	public $typeIndex = array();
 	public $htmlElementStack = array();
-	public $htmlElementStackCount = 0;
+	public $htmlElementStackCount = array();
+	public $htmlElementsStackCount = 0;
+	public $htmlElementsStack = array();
+
 	public $typeStack = array();
 	public $stash = array();
 
@@ -78,7 +81,9 @@ class JisonParser_Html_Handler extends JisonParser_Html
 		}
 
 		$this->htmlElementStack = array();
-		$this->htmlElementStackCount = 0;
+		$this->htmlElementStackCount = array();
+		$this->htmlElementsStackCount = 0;
+		$this->htmlElementsStack = array();
 	}
 
 	public function parse($input)
@@ -330,7 +335,7 @@ class JisonParser_Html_Handler extends JisonParser_Html
 
 			//line
 			case "line":
-				if ($this->Parser->htmlElementStackCount == 0) {
+				if ($this->Parser->htmlElementsStackCount == 0) {
 					$result = $this->newLine();
 				} else {
 					$result = $this->elementFromTag($tag);
@@ -605,14 +610,30 @@ class JisonParser_Html_Handler extends JisonParser_Html
 	public function stackHtmlElement($tag)
 	{
 		$tag = $this->tag($tag);
-		$this->htmlElementStack[] = $tag;
-		$this->htmlElementStackCount++;
+		if (strstr($this->_input, '</' . $tag['name'] . '>') !== false) {
+			if (!isset($this->htmlElementStack[$tag['name']])) {
+				$this->htmlElementStack[$tag['name']] = array();
+				$this->htmlElementStackCount[$tag['name']] = 0;
+			}
+			$this->htmlElementStack[$tag['name']][] = $tag;
+			$this->htmlElementStackCount[$tag['name']]++;
+			$this->htmlElementsStackCount++;
+			$this->htmlElementsStack[] = $tag['name'];
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	public function unStackHtmlElement($ending = '')
 	{
-		$this->htmlElementStackCount--;
-		$element = array_pop($this->htmlElementStack);
+		$name = strtolower(substr(str_replace(" ", "", $ending), 2, -1));
+		$this->htmlElementStackCount[$name]--;
+		$this->htmlElementStackCount[$name] = max(0, $this->htmlElementStackCount[$name]);
+		$this->htmlElementsStackCount--;
+		$this->htmlElementsStackCount = max(0, $this->htmlElementsStackCount);
+		$element = array_pop($this->htmlElementStack[$name]);
+		array_pop($this->htmlElementsStack);
 		$element['close'] = $ending;
 		if ($element['state'] == 'open') {
 			$element['state'] = 'closed';
@@ -726,6 +747,12 @@ class JisonParser_Html_Handler extends JisonParser_Html
 	{
 		$parts = explode(" ", substr($yytext, 1, -1));
 		$parts = array_filter($parts, 'strlen');
+
+		if ($parts[0]{0} == "/") {
+			$parts[0] = substr($parts[0], 1);
+		} else if ($parts[0]{strlen($parts[0]) - 1} == "/") {
+			$parts[0] = substr($parts[0], 0, -1);
+		}
 
 		switch (strtolower($parts[0])) {
 			case "!doctype":
@@ -853,5 +880,17 @@ class JisonParser_Html_Handler extends JisonParser_Html
 		}
 
 		return false;
+	}
+
+	function getMissingClosingKeys()
+	{
+		end($this->htmlElementStack);
+		$stack = key($this->htmlElementStack);
+		end($this->htmlElementStack[$stack]);
+		$element = key($this->htmlElementStack[$stack]);
+
+		if (isset($this->htmlElementStack[$stack][$element])) {
+			return array('stack' => $stack, 'element' => $element);
+		}
 	}
 }

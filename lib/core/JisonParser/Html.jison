@@ -20,9 +20,11 @@ HTML_TAG_OPEN                   "<"(.|\n)[^>]*?">"
 		//php }
 
 		//A non-valid html tag, return "<" put the rest back into the parser
-        //php $tag = $yytext;
-        //php $yytext = "<";
-        //php $this->unput(substr($tag, 1));
+        //php if (isset($yytext{0})) {
+        //php   $tag = $yytext;
+        //php   $yytext = $yytext{0};
+        //php   $this->unput(substr($tag, 1));
+        //php }
         //php return 'CONTENT';
 	%}
 
@@ -30,16 +32,22 @@ HTML_TAG_OPEN                   "<"(.|\n)[^>]*?">"
 <htmlElement><<EOF>>
 	%{
 		//A tag that was left open, and needs to close
-		//php $tag = $this->htmlElementStack[count($this->htmlElementStack) - 1];
-		//php $this->htmlElementStack[count($this->htmlElementStack) - 1]['state'] = 'repaired';
-		//php $this->unput('</' . $tag['name'] . '>');
+		//php $name = end($this->htmlElementsStack);
+		//php $keyStack = key($this->htmlElementStack);
+		//php end($this->htmlElementStack[$keyStack]);
+		//php $keyElement = key($this->htmlElementStack[$keyStack]);
+		//php $tag = &$this->htmlElementStack[$keyStack][$keyElement];
+		//php $tag['state'] = 'repaired';
+		//php if (!empty($tag['name'])) {
+		//php   $this->unput('</' . $tag['name'] . '>');
+		//php }
 		//php return 'CONTENT';
 	%}
 <htmlElement>{HTML_TAG_CLOSE}
 	%{
 		//A tag that is open and we just found the close for it
 		//php $element = $this->unStackHtmlElement($yytext);
-		//php if ($this->compareElementClosingToYytext($element, $yytext) && $this->htmlElementStackCount == 0) {
+		//php if ($this->compareElementClosingToYytext($element, $yytext) && $this->htmlElementsStackCount == 0) {
 		//php   $yytext = $element;
 		//php   $this->popState();
     	//php   return "HTML_TAG_CLOSE";
@@ -50,18 +58,21 @@ HTML_TAG_OPEN                   "<"(.|\n)[^>]*?">"
 	%{
 		//An tag open
 		//php if (JisonParser_Html_Handler::isHtmlTag($yytext) == true) {
-		//php   $this->stackHtmlElement($yytext);
-		//php       if ($this->htmlElementStackCount == 1) {
+		//php   if ($this->stackHtmlElement($yytext)) {
+		//php       if ($this->htmlElementsStackCount == 1) {
 		//php           $this->begin('htmlElement');
     	//php           return "HTML_TAG_OPEN";
     	//php       }
+    	//php   }
     	//php   return 'CONTENT';
     	//php }
 
-    	//A non-valid html tag, return "<" put the rest back into the parser
-        //php $tag = $yytext;
-        //php $yytext = "<";
-        //php $this->unput(substr($tag, 1));
+    	//A non-valid html tag, return the first character in the stack and put the rest back into the parser
+    	//php if (isset($yytext{0})) {
+        //php   $tag = $yytext;
+        //php   $yytext = $yytext{0};
+        //php   $this->unput(substr($tag, 1));
+        //php }
         //php return 'CONTENT';
 	%}
 {HTML_TAG_CLOSE}
@@ -74,7 +85,7 @@ HTML_TAG_OPEN                   "<"(.|\n)[^>]*?">"
 ([ ])                                       return 'CONTENT';
 {LINE_END}
 	%{
-		//php if ($this->htmlElementStackCount == 0 || $this->isStaticTag == true) {
+		//php if ($this->htmlElementsStackCount == 0 || $this->isStaticTag == true) {
 		//php   return 'LINE_END';
 		//php }
 		//php return 'CONTENT';

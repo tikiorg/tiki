@@ -537,24 +537,32 @@ case 0:
 		}
 
 		//A non-valid html tag, return "<" put the rest back into the parser
-        $tag = $yy_->yytext;
-        $yy_->yytext = "<";
-        $this->unput(substr($tag, 1));
+        if (isset($yy_->yytext{0})) {
+          $tag = $yy_->yytext;
+          $yy_->yytext = $yy_->yytext{0};
+          $this->unput(substr($tag, 1));
+        }
         return 7;
 	
 break;
 case 1:
 		//A tag that was left open, and needs to close
-		$tag = $this->htmlElementStack[count($this->htmlElementStack) - 1];
-		$this->htmlElementStack[count($this->htmlElementStack) - 1]['state'] = 'repaired';
-		$this->unput('</' . $tag['name'] . '>');
+		$name = end($this->htmlElementsStack);
+		$keyStack = key($this->htmlElementStack);
+		end($this->htmlElementStack[$keyStack]);
+		$keyElement = key($this->htmlElementStack[$keyStack]);
+		$tag = &$this->htmlElementStack[$keyStack][$keyElement];
+		$tag['state'] = 'repaired';
+		if (!empty($tag['name'])) {
+		  $this->unput('</' . $tag['name'] . '>');
+		}
 		return 7;
 	
 break;
 case 2:
 		//A tag that is open and we just found the close for it
 		$element = $this->unStackHtmlElement($yy_->yytext);
-		if ($this->compareElementClosingToYytext($element, $yy_->yytext) && $this->htmlElementStackCount == 0) {
+		if ($this->compareElementClosingToYytext($element, $yy_->yytext) && $this->htmlElementsStackCount == 0) {
 		  $yy_->yytext = $element;
 		  $this->popState();
     	  return "HTML_TAG_CLOSE";
@@ -565,18 +573,21 @@ break;
 case 3:
 		//An tag open
 		if (JisonParser_Html_Handler::isHtmlTag($yy_->yytext) == true) {
-		  $this->stackHtmlElement($yy_->yytext);
-		      if ($this->htmlElementStackCount == 1) {
+		  if ($this->stackHtmlElement($yy_->yytext)) {
+		      if ($this->htmlElementsStackCount == 1) {
 		          $this->begin('htmlElement');
     	          return "HTML_TAG_OPEN";
     	      }
+    	  }
     	  return 7;
     	}
 
-    	//A non-valid html tag, return "<" put the rest back into the parser
-        $tag = $yy_->yytext;
-        $yy_->yytext = "<";
-        $this->unput(substr($tag, 1));
+    	//A non-valid html tag, return the first character in the stack and put the rest back into the parser
+    	if (isset($yy_->yytext{0})) {
+          $tag = $yy_->yytext;
+          $yy_->yytext = $yy_->yytext{0};
+          $this->unput(substr($tag, 1));
+        }
         return 'CONTENT';
 	
 break;
@@ -590,7 +601,7 @@ break;
 case 6:return 7;
 break;
 case 7:
-		if ($this->htmlElementStackCount == 0 || $this->isStaticTag == true) {
+		if ($this->htmlElementsStackCount == 0 || $this->isStaticTag == true) {
 		  return 8;
 		}
 		return 'CONTENT';
