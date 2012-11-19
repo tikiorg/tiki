@@ -168,6 +168,7 @@ function smarty_block_textarea($params, $content, $smarty, $repeat)
 				});',
 				20
 			);
+			$html .= '<input name="jisonWyisywg" type="hidden" value="true" />';
 			$html .= '<textarea class="wikiedit ckeditor" name="'.$params['name'].'" id="'.$as_id.'">' . ($content) . '</textarea>';
 		} else {
 			// new ckeditor implementation 2010

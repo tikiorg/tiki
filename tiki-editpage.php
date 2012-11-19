@@ -1138,12 +1138,18 @@ if (
 				$edit .= "\r\n";
 			$edit = substr($info['data'], 0, $real_start).$edit.substr($info['data'], $real_start + $real_len);
 		}
-		if ($_SESSION['wysiwyg'] === 'y' && $prefs['feature_jison_wiki_parser'] == 'y' && $prefs['feature_wysiwyg'] === 'y') {
+		if (
+			isset($_REQUEST['jisonWyisywg']) &&
+			$_REQUEST['jisonWyisywg'] == 'true' &&
+			$prefs['feature_jison_wiki_parser'] == 'y' &&
+			$prefs['feature_wysiwyg'] === 'y'
+		) {
 			$parser = new JisonParser_Html_Handler();
 			$edit = $parser->parse($edit);
 		} else if ($_SESSION['wysiwyg'] === 'y' && $prefs['wysiwyg_wiki_parsed'] === 'y' && $prefs['wysiwyg_ckeditor'] === 'y') {
 			$edit = $editlib->partialParseWysiwygToWiki($edit);
 		}
+
 		$tikilib->update_page(
 			$_REQUEST["page"],
 			$edit,
