@@ -355,7 +355,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 			$this->isFirstBr = true;
 		}
 
-		$input = "\n" . $input . "\n"; //here we add 2 lines, so the parser doesn't have to do special things to track the first line and last, we remove these when we insert breaks, these are dynamically removed later
+		$input = "\n" . $input . "≤REAL_EOF≥"; //here we add 2 lines, so the parser doesn't have to do special things to track the first line and last, we remove these when we insert breaks, these are dynamically removed later
 		$input = str_replace("\r", "", $input);
 		$input = $this->specialCharacter->protect($input);
 	}
@@ -373,9 +373,8 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		//remove comment artifacts
 		$output = str_replace("<!---->", "", $output);
 
-		//Replace the break we put at the beginning
-		//$output = preg_replace("/^(([<]br [\/][>])?([\n][\r]|[\n\r]))/", "", $output);
-		$output = preg_replace("/(([<]br.[^>]*?[>])?([\n][\r]|[\r][\n]|[\n\r]))$/", "", $output);
+		//Replace special end tag
+		$this->removeEOF($output);
 
 		if ( $this->getOption('parseLists') == true) {
 			$lists = $this->Parser->list->toHtml();
@@ -928,6 +927,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		}
 
 		$content = substr($content, $exclamationCount);
+		$this->removeEOF($content);
 
 		$hNum = min(6, $exclamationCount); //html doesn't support 7+ header level
 		$id = $this->Parser->header->stack($hNum, $content);
@@ -1042,7 +1042,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		}
 
 		$content = substr($content, ($level + $noiseLength));
-
+		$this->removeEOF($content);
 		$result = $this->Parser->list->stack($this->line, $level, $content, $type);
 
 		if (isset($result)) {
@@ -1288,10 +1288,23 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	 * @param   $content string parsed content  found inside detected syntax
 	 * @return  string  $content desired output from syntax
 	 */
-	function tableParser($content) /*|| | \n | ||*/
+	function tableParser($content, $incomplete = false) /*|| | \n | ||*/
 	{
 		$tableContents = '';
 		$rows = explode("\n", $content);
+
+		if ($incomplete) {
+			$result = '';
+			end($rows);
+			$lastKey = key($rows);
+			foreach($rows as $key => $row) {
+				$result .= $row;
+				if ($key < $lastKey) {
+					$result .= $this->line("\n");
+				}
+			}
+			return $result;
+		}
 
 		for ($i = 0, $count_rows = count($rows); $i < $count_rows; $i++) {
 			$row = '';
@@ -1554,5 +1567,10 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 		) {
 			return true;
 		}
+	}
+
+	function removeEOF( &$output )
+	{
+		$output = str_replace("≤REAL_EOF≥", "", $output);
 	}
 }
