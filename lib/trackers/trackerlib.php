@@ -4398,7 +4398,7 @@ class TrackerLib extends TikiLib
 
 			if (! empty($params['editable'])) {
 				$servicelib = TikiLib::lib('service');
-				$r = new Tiki_Editable_Value($r, array(
+				$r = new Tiki_Render_Editable($r, array(
 					'layout' => $params['editable'],
 					'object_store_url' => $servicelib->getUrl(array(
 						'controller' => 'tracker',
