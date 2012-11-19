@@ -102,7 +102,7 @@ class JisonParser_OutputTest extends JisonParser_Abstract
 			'color_text2_r'     => array('~~#ff00ff:text', '<span style=\'color:#ff00ff;\'>text</span>'),
 			'htmllink_r'        => array("[www.google.com|Google", '<a class=\'wiki\' href=\'www.google.com\'>Google</a>'),
 			'wikilink_r'        => array("((FakePage", '<a href=\'tiki-index.php?page=FakePage\' title=\'FakePage\' class=\'wiki wiki_page\'>FakePage</a>'),
-			'table_r'           => array("||A1|B1|C1\nA2|B2|C2", '<table class=\'wikitable\'><tr><td class=\'wikicell\'>A1</td><td class=\'wikicell\'>B1</td><td class=\'wikicell\'>C1</td></tr><tr><td class=\'wikicell\'>A2</td><td class=\'wikicell\'>B2</td><td class=\'wikicell\'>C2</td></tr></table>'),
+			'table_r'           => array("||A1|B1|C1\nA2|B2|C2", "||A1|B1|C1\nA2|B2|C2"),
 
 			'wikilink_nested'   => array("(([FakePage]))", '<a href=\'tiki-index.php?page=%5BFakePage%5D\' title=\'[FakePage]\' class=\'wiki wiki_page\'>[FakePage]</a>'),
 			'htmllink_nested'   => array("[((Linked))]", '<a class=\'wiki\' href=\'((Linked))\'>((Linked))</a>'),
@@ -622,7 +622,7 @@ class JisonParser_OutputTest extends JisonParser_Abstract
 				"::.\n" .
 				"This should be bold\n\n"
 			,
-				"<strong>Here<br/>\n" .
+				"__Here<br/>\n" .
 					"<em>we are test<br/>\n" .
 						"<div class='simplebox'>testing state</div><br/>\n" .
 					"</em><br/>\n" .
@@ -635,8 +635,7 @@ class JisonParser_OutputTest extends JisonParser_Abstract
 						"See how we can handle multi lines easily?<br/>\n" .
 					"</div>.<br/>\n" .
 					"This should be bold<br/>\n" .
-					"<br/>\n" .
-				"</strong>"
+					"<br/>\n"
 			); //this is detected as open and auto closed.
 
 		$parsed = $this->parser->parse($syntax[0]);
