@@ -4,12 +4,13 @@
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
-
 $section = 'newsletters';
 require_once ('tiki-setup.php');
 global $nllib; include_once ('lib/newsletters/nllib.php');
 $access->check_feature('feature_newsletters');
-$access->check_permission('tiki_p_list_newsletters');
+if ( !isset( $_REQUEST["unsubscribe"] ) ){
+   $access->check_permission('tiki_p_list_newsletters');
+}
 
 $auto_query_args = array('nlId', 'offset', 'sort_mode', 'find');
 $smarty->assign('confirm', 'n');
@@ -35,7 +36,7 @@ if (isset($_REQUEST["unsubscribe"])) {
 		
 	}
 }
-if (!$user && $tiki_p_subscribe_newsletters != 'y' && !isset($_REQUEST["confirm_subscription"])) {
+if (!$user && $tiki_p_subscribe_newsletters != 'y' && !isset($_REQUEST["confirm_subscription"]) && !isset($_REQUEST["unsubscribe"])) {
 	$smarty->assign('msg', tra("You must be logged in to subscribe to newsletters"));
 	$smarty->display("error.tpl");
 	die;
