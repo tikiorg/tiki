@@ -20,9 +20,26 @@ function wikiplugin_sql_info()
 				'required' => true,
 				'name' => tra('DSN Name'),
 				'description' => tra('DSN name of the database being queried. The DSN name needs to first be defined at tiki-admin_dsn.php'),
-				'default' => '',
+				'default' => ''
 			),
-		),
+                        'raw' => array(
+                                'required' => false,
+                                'name' => tra('Raw return'),
+                                'description' => tra('Return raw data with no table formatting (0=normal, 1=raw)'),
+				'default' => '0'
+			),
+                        'delim' => array(
+                                'required' => false,
+                                'name' => tra('Delim'),
+                                'description' => tra('The delimiter to be used between data elements (sets raw=1) ')
+			),
+                        'wikiparse' => array(
+                                'required' => false,
+                                'name' => tra('Wiki Parse'),
+                                'description' => tra('Turn wiki parsing of select results on and off (0=off, 1=on)'),
+				'default' => '1'
+			)
+		)
 	);
 }
 
@@ -70,13 +87,13 @@ function wikiplugin_sql($data, $params)
 		return '~np~' . tra('Could not obtain valid DSN connection.') . '~/np~';
 	}
 	
-	$first = true;
+	$setup_table = ( isset( $raw ) or isset( $delim ) ) ? false : true;
 	$class = 'even';
 	while ($result && $res = $result->fetchRow() ) {
-		if ($first) {
+		if( $setup_table ){
 			$ret .= "<table class='normal'><thead><tr>";
 
-			$first = false;
+			$setup_table = false;
 
 			foreach (array_keys($res)as $col) {
 				$ret .= "<th>$col</th>";
@@ -85,7 +102,9 @@ function wikiplugin_sql($data, $params)
 			$ret .= "</tr></thead>";
 		}
 
-		$ret .= "<tr>";
+		if( !isset( $raw ) && !isset( $delim ) ){
+			$ret .= "<tr>";
+		}
 
 		if ($class == 'even') {
 			$class = 'odd';
@@ -93,18 +112,38 @@ function wikiplugin_sql($data, $params)
 			$class = 'even';
 		}
 	
+		$first_field = true;
 		foreach ($res as $name => $val) {
-			$ret .= "<td class='$class'>$val</td>";
+			if( isset( $delim ) && !$first_field ){
+				$ret .= $delim;
+			}
+
+			if( isset( $raw ) || isset( $delim ) ){
+				$ret .= "$val";
+			}else{
+                        	$ret .= "<td class=\"$class\">$val</td>";
+			}
+
+			$first_field = false;
+                }
+
+		if( !isset( $raw ) && !isset( $delim ) ){
+			$ret .= "<tr>";
+		}elseif( isset( $delim ) ){
+			$ret .= "<br>";
 		}
-		$ret .= "</tr>";
 	}
 
-	if ($ret) {
+	if ($ret && !isset( $raw )) {
 		$ret .= "</table>";
 	}
 	if ($dbmsg) {
 		$ret .= $dbmsg;
 	}
 
-	return '~np~' . $ret . '~/np~';
+	if ($wikiparse) {
+                return $ret;
+        } else {
+                return '~np~' . $ret . '~/np~';
+        }
 } 
