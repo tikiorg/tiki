@@ -177,6 +177,7 @@ class TWVersion
 				'9.2beta1',
 				'9.2',
 				'10.0alpha',
+				'10.0beta',
 			);
 	}
 
