@@ -449,6 +449,7 @@
 						{/if}
 					{/if}
 				{/if}
+				{$propval = null}
 			{/foreach}
 
 			{if !empty($other_columns_selected_val)}
