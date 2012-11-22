@@ -45,6 +45,11 @@
 								<div class="button comment-form">{self_link controller=comment action=post type=$type objectId=$objectId parentId=$comment.threadId}{tr}Reply{/tr}{/self_link}</div>
 							</td>
 							{/if}
+							<td>
+							{if $comment.can_edit}
+								<div class="button comment-form">{self_link controller=comment action=edit threadId=$comment.threadId}{tr}Edit{/tr}{/self_link}</div>
+							{/if}
+							</td>
 
 							{if $prefs.wiki_comments_simple_ratings eq 'y'}
 							<td>

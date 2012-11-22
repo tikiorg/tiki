@@ -19,9 +19,10 @@
 				<div class="admin featurelist">
 					{preference name=feature_comments_moderation}
 					{preference name=feature_comments_locking}
-					{preference name=feature_comments_post_as_anonymous}				
-					{preference name=comments_vote}				
-					{preference name=comments_archive}				
+					{preference name=feature_comments_post_as_anonymous}
+					{preference name=comments_vote}
+					{preference name=comments_archive}
+					{preference name=comments_allow_correction}
 
 					{preference name=comments_akismet_filter}
 

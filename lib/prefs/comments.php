@@ -64,5 +64,12 @@ function prefs_comments_list()
 			'tags' => array('advanced'),
 			'keywords' => array('askimet'),			
 		),
+		'comments_allow_correction' => array(
+			'name' => tr('Allow comments to be corrected by their author'),
+			'description' => tr('Allow comments to be modified by their author shortly after posting it, allowing to correct broken links or typos for a period of 30 minutes.'),
+			'type' => 'flag',
+			'default' => 'y',
+			'tags' => array('advanced'),
+		),
 	);
 }
