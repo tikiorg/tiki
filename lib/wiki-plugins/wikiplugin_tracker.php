@@ -32,7 +32,7 @@ function wikiplugin_tracker_info()
 			'action' => array(
 				'required' => false,
 				'name' => tra('Action'),
-				'description' => tra('Label on the submit button. Default is "Save".'),
+				'description' => tra('Label on the submit button. Default is "Save". When set to "NONE", the save button will not appear and values will be saved dynamically.'),
 				'separator' => ':',
 				'default' => 'Save'
 			),
@@ -42,7 +42,7 @@ function wikiplugin_tracker_info()
 				'description' => tra('Display the title of the tracker (not shown by default)'),
 				'filter' => 'alpha',
 				'default' => 'n',
-			'options' => array(
+				'options' => array(
 					array('text' => '', 'value' => ''),
 					array('text' => tra('Yes'), 'value' => 'y'),
 					array('text' => tra('No'), 'value' => 'n')
@@ -54,7 +54,7 @@ function wikiplugin_tracker_info()
 				'description' => tra('Show the tracker\'s description (not shown by default)'),
 				'filter' => 'alpha',
 				'default' => 'n',
-			'options' => array(
+				'options' => array(
 					array('text' => '', 'value' => ''),
 					array('text' => tra('Yes'), 'value' => 'y'),
 					array('text' => tra('No'), 'value' => 'n')
@@ -78,7 +78,7 @@ function wikiplugin_tracker_info()
 				'description' => tra('Show the status of the items (not shown by default)'),
 				'filter' => 'alpha',
 				'default' => 'n',
-			'options' => array(
+				'options' => array(
 					array('text' => '', 'value' => ''),
 					array('text' => tra('Yes'), 'value' => 'y'),
 					array('text' => tra('No'), 'value' => 'n')
@@ -290,7 +290,7 @@ function wikiplugin_tracker_info()
 				'description' => tra('Used when results are output to a wiki page to discard the tracker item itself once the wiki page is created'),
 				'filter' => 'alpha',
 				'default' => '',
-			'options' => array(
+				'options' => array(
 					array('text' => '', 'value' => ''),
 					array('text' => tra('Yes'), 'value' => 'y'),
 					array('text' => tra('No'), 'value' => 'n')
@@ -411,6 +411,13 @@ function wikiplugin_tracker($data, $params)
 	if (!is_array($action)) {
 		$action = array( $action );
 	}
+
+	$dynamicSave = false;
+	if (count($action) == 1 && reset($action) == 'NONE') {
+		$action = array();
+		$dynamicSave = true;
+	}
+
 	if (isset($preview)) {
 		if (empty($preview)) {
 			$preview = 'Preview';
@@ -1271,7 +1278,7 @@ function wikiplugin_tracker($data, $params)
 
 				if (!in_array($f['fieldId'], $auto_fieldId) && in_array($f['fieldId'], $hidden_fieldId)) {
 					// Show in hidden form
-					$back.= '<span style="display:none;">' . wikiplugin_tracker_render_input($f, $item)  . '</span>';
+					$back.= '<span style="display:none;">' . wikiplugin_tracker_render_input($f, $item, $dynamicSave)  . '</span>';
 				} elseif (!in_array($f['fieldId'], $auto_fieldId) && in_array($f['fieldId'], $outf)) {
 					if ($showmandatory == 'y' and $f['isMandatory'] == 'y') {
 						$onemandatory = true;
@@ -1284,7 +1291,7 @@ function wikiplugin_tracker($data, $params)
 							$smarty->assign('f_'.$f['fieldId'], '<span class="outputPretty" id="track_'.$f['fieldId'].'" name="track_'.$f['fieldId'].'">'. wikiplugin_tracker_render_value($f, $item) . '</span>');
 						} else {
 							$mand =  ($showmandatory == 'y' and $f['isMandatory'] == 'y')? "&nbsp;<strong class='mandatory_star'>*</strong>&nbsp;":'';
-							$smarty->assign('f_'.$f['fieldId'], wikiplugin_tracker_render_input($f, $item).$mand);
+							$smarty->assign('f_'.$f['fieldId'], wikiplugin_tracker_render_input($f, $item, $dynamicSave).$mand);
 						}
 					} else {
 						$back.= "<tr><td";
@@ -1321,7 +1328,7 @@ function wikiplugin_tracker($data, $params)
 							$back.= '</td><td>';
 						}
 
-						$back .= wikiplugin_tracker_render_input($f, $item);
+						$back .= wikiplugin_tracker_render_input($f, $item, $dynamicSave);
 						$back .= "</td></tr>";
 					}
 
@@ -1441,7 +1448,7 @@ FILL;
 	}
 }
 
-function wikiplugin_tracker_render_input($f, $item)
+function wikiplugin_tracker_render_input($f, $item, $dynamicSave)
 {
 	$definition = Tracker_Definition::get($f['trackerId']);
 
@@ -1457,7 +1464,22 @@ function wikiplugin_tracker_render_input($f, $item)
 		$handler = TikiLib::lib("trk")->get_field_handler($f, $item);
 	}
 
-	return $handler->renderInput(array('inTable' => 'y'));
+	$input = $handler->renderInput(array('inTable' => 'y'));
+
+	if ($dynamicSave && $item['itemId']) {
+		$servicelib = TikiLib::lib('service');
+		$input = new Tiki_Render_Editable($input, array(
+			'layout' => 'block',
+			'object_store_url' => $servicelib->getUrl(array(
+				'controller' => 'tracker',
+				'action' => 'update_item',
+				'trackerId' => $f['trackerId'],
+				'itemId' => $item['itemId'],
+			)),
+		));
+	}
+
+	return $input;
 }
 
 function wikiplugin_tracker_render_value($f, $item)

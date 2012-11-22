@@ -20,15 +20,14 @@ class Tiki_Render_Editable
 			$this->layout = $parameters['layout'];
 		}
 
-		if (empty($parameters['field_fetch_url'])) {
-			throw new Exception(tr('Internal error: mandatory parameter field_fetch_url is missing'));
-		}
-
 		if (empty($parameters['object_store_url'])) {
 			throw new Exception(tr('Internal error: mandatory parameter object_store_url is missing'));
 		}
 
-		$this->fieldFetchUrl = $parameters['field_fetch_url'];
+		if (! empty($parameters['field_fetch_url'])) {
+			$this->fieldFetchUrl = $parameters['field_fetch_url'];
+		}
+
 		$this->objectStoreUrl = $parameters['object_store_url'];
 	}
 
@@ -50,7 +49,13 @@ class Tiki_Render_Editable
 			$value .= '&nbsp;';
 		}
 
-		return "<$tag class=\"editable-inline\" data-field-fetch-url=\"$fieldFetch\" data-object-store-url=\"$objectStore\">$value</$tag>";
+		$class = "editable-inline";
+
+		if (! $fieldFetch) {
+			$class .= ' loaded';
+		}
+
+		return "<$tag class=\"$class\" data-field-fetch-url=\"$fieldFetch\" data-object-store-url=\"$objectStore\">$value</$tag>";
 	}
 }
 
