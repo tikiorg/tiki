@@ -80,7 +80,7 @@ class Tracker_Field_TextArea extends Tracker_Field_Text
 					),
 					'samerow' => array(
 						'name' => tr('Same Row'),
-						'description' => tr('Display the next field on the same row.'),
+						'description' => tr('Display the field name and input on the same row.'),
 						'deprecated' => false,
 						'filter' => 'int',
 						'default' => 1,

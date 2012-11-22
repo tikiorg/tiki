@@ -258,6 +258,19 @@ function wikiplugin_files_info()
 					array('text' => tra('No'), 'value' => 'n')
 				)
 			),
+			'showsource' => array(
+				'required' => false,
+				'name' => tra('Show Source'),
+				'description' => tra('Show the source (shown by default).'),
+				'filter' => 'alpha',
+				'default' => 'n',
+				'advanced' => true,
+				'options' => array(
+					array('text' => '', 'value' => ''),
+					array('text' => tra('Yes'), 'value' => 'y'),
+					array('text' => tra('No'), 'value' => 'n')
+				)
+			),
 			'slideshow' => array(
 				'required' => false,
 				'name' => tra('Show Slideshow'),
@@ -564,6 +577,7 @@ function wikiplugin_files($data, $params)
 	if (!empty($showaction)) $gal_info['show_action'] = $showaction;
 	if (!empty($showcomment)) $gal_info['show_comment'] = $showcomment;
 	if (!empty($showlasteditor)) $gal_info['show_last_user'] = $showlasteditor;
+	if (!empty($showsource)) $gal_info['show_source'] = $showsource;
 	if (!empty($showname) && $showname == 'y' && !empty($showfilename) && $showfilename == 'y') $gal_info['show_name'] = 'a';
 	if (!empty($showname) && $showname == 'y' && !empty($showfilename) && $showfilename == 'n') $gal_info['show_name'] = 'n';
 	if (!empty($showname) && $showname == 'n' && !empty($showfilename) && $showfilename == 'y') $gal_info['show_name'] = 'f';

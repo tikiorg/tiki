@@ -4282,7 +4282,12 @@ class TikiLib extends TikiDb_Bridge
 		$name = trim($name); // to avoid pb with trailing space http://dev.mysql.com/doc/refman/5.1/en/char.html
 
 		if (!$user) $user = 'anonymous';
-		if (empty($wysiwyg)) $wysiwyg = $prefs['wysiwyg_default'];
+		if (empty($wysiwyg)) {
+			$wysiwyg = $prefs['wysiwyg_default'];
+			if ($wysiwyg === 'y') {
+				$is_html = $prefs['wysiwyg_htmltowiki'] !== 'y';
+			}
+		}
 		// Collect pages before modifying data
 		$pointedPages = $this->get_pages($data, true);
 

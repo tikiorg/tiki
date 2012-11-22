@@ -86,7 +86,7 @@ class ParserLib extends TikiDb_Bridge
 				'skipvalidation'=>  false,
 				'ck_editor'=>   false,
 				'namespace' => false,
-			), (array) $this->option, (array)$option
+			), empty($option) ? array() : (array) $this->option, (array)$option
 		);
 	}
 
@@ -914,6 +914,8 @@ if ( \$('#$id') ) {
 		if (!empty($option)) {
 			$this->setOptions($option);
 		}
+		$saved_options = $this->option;		// save and reset the parsing options before plugin executes
+		$this->setOptions();
 
 		$data = $this->unprotectSpecialChars($data, true);					// We want to give plugins original
 		$args = preg_replace(array('/^&quot;/', '/&quot;$/'), '', $args);		// Similarly remove the encoded " chars from the args
@@ -971,6 +973,8 @@ if ( \$('#$id') ) {
 			} else {
 				$output = $func_name($data, $args, $offset);
 			}
+
+			$this->option = $saved_options;	// restore parsing options after plugin has executed
 
 			//This was added to remove the table of contents sometimes returned by other plugins, to use, simply have global $killtoc, and $killtoc = true;
 			if ($killtoc == true) {

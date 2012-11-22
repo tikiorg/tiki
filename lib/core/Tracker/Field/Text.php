@@ -26,7 +26,7 @@ class Tracker_Field_Text extends Tracker_Field_Abstract implements Tracker_Field
 				'params' => array(
 					'samerow' => array(
 						'name' => tr('Same Row'),
-						'description' => tr('Display the next field on the same row.'),
+						'description' => tr('Display the field name and input on the same row.'),
 						'deprecated' => false,
 						'filter' => 'int',
 						'default' => 1,
