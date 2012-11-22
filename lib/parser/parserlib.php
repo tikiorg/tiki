@@ -86,7 +86,7 @@ class ParserLib extends TikiDb_Bridge
 				'skipvalidation'=>  false,
 				'ck_editor'=>   false,
 				'namespace' => false,
-			), (array) $this->option, (array)$option
+			), empty($option) ? array() : (array) $this->option, (array)$option
 		);
 	}
 
@@ -915,7 +915,7 @@ if ( \$('#$id') ) {
 			$this->setOptions($option);
 		}
 		$saved_options = $this->option;		// save and reset the parsing options before plugin executes
-		$this->option = array();
+		$this->setOptions();
 
 		$data = $this->unprotectSpecialChars($data, true);					// We want to give plugins original
 		$args = preg_replace(array('/^&quot;/', '/&quot;$/'), '', $args);		// Similarly remove the encoded " chars from the args
