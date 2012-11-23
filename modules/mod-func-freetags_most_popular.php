@@ -30,7 +30,29 @@ function module_freetags_most_popular_info()
 				'name' => tra('Maximum elements'),
 				'description' => tra('If set to a number, limits the number of tags displayed.') . " " . tr('Default: 10.'),
 				'filter' => 'int'
-			)
+			),
+			'where' => array(
+				'required' => false,
+				'name' => tra('Object type'),
+				'description' => tra('Type of objects to extract. Set to All to find all types.'),
+				'filter' => 'text',
+				'default' => null,
+				'options' => array (
+					array('text' => tra('Same'), 'value' => 'all'),
+					array('text' => tra('All'), 'value' => 'all'),
+					array('text' => tra('Wiki Pages'), 'value' => 'wiki page'),
+					array('text' => tra('Blog Posts'), 'value' => 'blog post'),
+					array('text' => tra('Article'), 'value' => 'article'),
+					array('text' => tra('Directory'), 'value' => 'directory'),
+					array('text' => tra('Faqs'), 'value' => 'faq'),
+					array('text' => tra('File Galleries'), 'value' => 'file gallery'),
+					array('text' => tra('Files'), 'value' => 'file'),
+					array('text' => tra('Polls'), 'value' => 'poll'),
+					array('text' => tra('Quizzes'), 'value' => 'quiz'),
+					array('text' => tra('Surveys'), 'value' => 'survey'),
+					array('text' => tra('Trackers'), 'value' => 'tracker'),
+				),
+			),
 		),
 		'common_params' => array('rows') // This is not clean. We should use just max instead of max and rows as fallback,
 	);
@@ -46,7 +68,7 @@ function module_freetags_most_popular($mod_reference, $module_params)
 	$globalperms = Perms::get();
 	if ($globalperms->view_freetags) {
 		global $freetaglib; require_once 'lib/freetag/freetaglib.php';
-		$most_popular_tags = $freetaglib->get_most_popular_tags('', 0, empty($module_params['max']) ? $mod_reference["rows"] : $module_params['max']);
+		$most_popular_tags = $freetaglib->get_most_popular_tags('', 0, empty($module_params['max']) ? $mod_reference["rows"] : $module_params['max'], empty($module_params['where'])?'': $module_params['where']);
 		$smarty->assign_by_ref('most_popular_tags', $most_popular_tags);
 		$smarty->assign('type', (isset($module_params['type']) && $module_params['type'] == 'cloud') ? 'cloud' : 'list');
 	}

@@ -978,30 +978,36 @@ class FreetagLib extends ObjectLib
 	 *	 - 'count' => The number of objects tagged with this tag.
 	 */
 
-	function get_most_popular_tags($user = '', $offset = 0, $maxRecords = 25)
+	function get_most_popular_tags($user = '', $offset = 0, $maxRecords = 25, $type)
 	{
 
-		// get top tag popularity
+		$join = '';
+		$mid = ''; $mid2 = '';
+		$bindvals = array();
+		if (!empty($type)) {
+			$join .= ' LEFT JOIN `tiki_objects` tob on (tob.`objectId`= tfo.`objectId`)';
+			$mid .= ' AND `type` = ?';
+			$mid2 = 'WHERE `type`=?'; 
+			$bindvals[] = $type;
+		}
 		$query = 'SELECT COUNT(*) as count'
-						. ' FROM `tiki_freetagged_objects` o'
+						. ' FROM `tiki_freetagged_objects` tfo'
+						. $join . $mid2
 						. ' GROUP BY `tagId`'
 						. ' ORDER BY count DESC'
 						;
 
-		$top = $this->getOne($query);
-
-		$bindvals = array();
+		$top = $this->getOne($query, $bindvals);
 
 		if (isset($user) && (!empty($user))) {
-			$mid = 'AND `user` = ?';
+			$mid .= ' AND `user` = ?';
 			$bindvals[] = $user;
-		} else {
-			$mid = '';
 		}
 
 		$query = 'SELECT `tag`, COUNT(*) as count'
-						. ' FROM `tiki_freetags` tf, `tiki_freetagged_objects` tfo'
-						. ' WHERE tf.`tagId`= tfo.`tagId` ' . $mid
+			. ' FROM `tiki_freetags` tf, `tiki_freetagged_objects` tfo'
+			. $join
+		   				. ' WHERE tf.`tagId`= tfo.`tagId` ' . $mid
 						. ' GROUP BY `tag`'
 						. ' ORDER BY count DESC, tag ASC'
 						;
