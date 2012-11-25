@@ -1137,6 +1137,18 @@ class BlogLib extends TikiDb_Bridge
 
 		return array_keys($result);
 	}
+	function top_bloggers($limit)
+	{
+		$query = 'select distinct(`user`), count(`user`) as posts from `tiki_blog_posts` group by `user` order by `posts` desc';
+		$result = $this->query($query, array(), $limit, 0);
+		$ret = array();
+		while ($res =$result->fetchRow()) {
+			$ret[] = $res;
+		}
+		$query = 'select count(distinct(`user`))  from `tiki_blog_posts`';
+		$nb = $this->getOne($query);
+		return array('data' => $ret, 'count' => $nb);
+	}
 }
 
 global $bloglib;
