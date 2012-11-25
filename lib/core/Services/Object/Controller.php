@@ -63,6 +63,7 @@ class Services_Object_Controller
 		$smarty->assign('item', $item);
 		$smarty->assign('can_modify', $itemObject->canModify());
 		$smarty->assign('can_remove', $itemObject->canRemove());
+		$smarty->assign('mode', $input->mode->text() ? $input->mode->text() : 'table');
 		return $smarty->fetch('object/infobox/trackeritem.tpl');
 	}
 
