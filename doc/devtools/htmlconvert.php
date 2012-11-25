@@ -3,7 +3,7 @@ require_once('tiki-setup.php');
 
 // Make sure script is run from a shell
 if (PHP_SAPI !== 'cli') {
-	die("Please run for a shell");
+	die("Please run from a shell");
 }
 
 
