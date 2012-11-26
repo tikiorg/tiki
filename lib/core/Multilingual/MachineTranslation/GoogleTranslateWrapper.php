@@ -12,6 +12,19 @@
  
 class Multilingual_MachineTranslation_GoogleTranslateWrapper
 {
+  	const SERVICE_URL = "http://ajax.googleapis.com/ajax/services/language/translate?v=1.0";
+
+	//wiki markup (keep this regex in case we decide to translate wiki markup and not html)    
+	//	const WIKI_MARKUP = "/<[^>]*>| ?[\`\!\@\#\$\%\^\&\*\[\]\:\;\"\'\<\,\>\/\|\\\=\-\+\_\(\)]{2,} ?|\(\([\s\S]*?\)\)|\~[a-z]{2,3}\~[\s\S]*?\~\/[a-z]{2,3}\~|\~hs\~|\~\~[\s\S]*?\:|\~\~|[[^\|]*?\||\[[^|\]]*\]|\{\*[^\}\*]*?\*\}|\{[^\}]*?\}|^;|!/m";
+	const WIKI_MARKUP = "/<[^>]*>| ?[\`\!\@\#\$\%\^\&\*\[\]\:\;\"\'\<\,\>\/\|\\\=\-\+\_\(\)]{2,} ?|\(\([\s\S]*?\)\)|\~\/?[a-z]{2,3}\~|\~hs\~|\~\~[\s\S]*?\:|\~\~|[[^\|]*?\||\[[^|\]]*\]|\{\*[^\}\*]*?\*\}|\{[^\}]*?\}|^;|!/m";
+
+	//Google doesn't return parens upon translation
+	//Include spaces in markup (Google adds some, and they will be stripped later. Want to preserve the original ones)
+	const HTML_MARKUP = "/ ?<[^>]*> ?| ?\(|\) ?/";
+	const TITLE_TAG = "/(<[Hh][\d][^>]*>(<[^>]*>)*)([^<]*)/";
+  	const NO_TRANSLATE_STRING = "<span class='notranslate'>\$0</span>";
+	const NO_TRANSLATE_PATTERN = "/ <span class='notranslate'>(.*)<\/span> |^<span class='notranslate'>(.*)<\/span> | <span class='notranslate'>(.*)<\/span>\$|^<span class='notranslate'>(.*)<\/span>\$|<span class='notranslate'>(.*)<\/span>/Um";
+
 	//this array should be updated as Google Translate
 	//adds more languages
 	public $langsSupportedByGoogleTranslate = array (
@@ -63,35 +76,18 @@ class Multilingual_MachineTranslation_GoogleTranslateWrapper
   	private $targetLang; 
   	private $markup;
   	private $translatingHTML = true;
-  	private $googleAjaxUrl = "http://ajax.googleapis.com/ajax/services/language/translate?v=1.0";
-
-	//wiki markup (keep this regex in case we decide to translate wiki markup and not html)    
-	//	var $wikiMarkup = "/<[^>]*>| ?[\`\!\@\#\$\%\^\&\*\[\]\:\;\"\'\<\,\>\/\|\\\=\-\+\_\(\)]{2,} ?|\(\([\s\S]*?\)\)|\~[a-z]{2,3}\~[\s\S]*?\~\/[a-z]{2,3}\~|\~hs\~|\~\~[\s\S]*?\:|\~\~|[[^\|]*?\||\[[^|\]]*\]|\{\*[^\}\*]*?\*\}|\{[^\}]*?\}|^;|!/m";
-	private $wikiMarkup = "/<[^>]*>| ?[\`\!\@\#\$\%\^\&\*\[\]\:\;\"\'\<\,\>\/\|\\\=\-\+\_\(\)]{2,} ?|\(\([\s\S]*?\)\)|\~\/?[a-z]{2,3}\~|\~hs\~|\~\~[\s\S]*?\:|\~\~|[[^\|]*?\||\[[^|\]]*\]|\{\*[^\}\*]*?\*\}|\{[^\}]*?\}|^;|!/m";
-
-	//Google doesn't return parens upon translation
-	//Include spaces in markup (Google adds some, and they will be stripped later. Want to preserve the original ones)
-	private $htmlMarkup = "/ ?<[^>]*> ?| ?\(|\) ?/";
-
-	private $titleTag = "/(<[Hh][\d][^>]*>(<[^>]*>)*)([^<]*)/";
-	
-		
-  	private $escapeUntranslatableStrings = "<span class='notranslate'>\$0</span>";
-   	
-	private $notranslateTag = "/(<span class='notranslate'>(.*)<\/span>)/U";
-	private $notranslateTagWithSpaces = "/ <span class='notranslate'>(.*)<\/span> |^<span class='notranslate'>(.*)<\/span> | <span class='notranslate'>(.*)<\/span>\$|^<span class='notranslate'>(.*)<\/span>\$|<span class='notranslate'>(.*)<\/span>/Um";
-   private $arrayOfUntranslatableStringsAndTheirIDs = array();
-   private $currentID = 169;
+	private $arrayOfUntranslatableStringsAndTheirIDs = array();
+	private $currentID = 169;
    	
 	function __construct ($sourceLang, $targetLang, $html = true) 
 	{
 		$this->sourceLang = $sourceLang;
 		$this->targetLang = $targetLang;
 		if ($html) {
-			$this->markup = $this->htmlMarkup;
+			$this->markup = self::HTML_MARKUP;
 		} else {
 			$this->translatingHTML = false;
-			$this->markup = $this->wikiMarkup;
+			$this->markup = self::WIKI_MARKUP;
 		}
 	}
    	
@@ -104,8 +100,6 @@ class Multilingual_MachineTranslation_GoogleTranslateWrapper
 			$usedLangs[] = $trad['lang'];
 		}
 			
-		$langsCandidatesForMachineTranslation = array();
-		
 		if (!empty($prefs['available_languages'])) {
 			//restrict langs available for machine translation to those 
 			//available on the site
@@ -118,21 +112,20 @@ class Multilingual_MachineTranslation_GoogleTranslateWrapper
 		
 		//restrict langs available for machine translation to those
 		//not already used for human translation
-		foreach ( $usedLangs as $usedLang)  {
+		foreach ($usedLangs as $usedLang)  {
 			unset($langsCandidatesForMachineTranslationRaw[$usedLang]);
 		}
 		
 		
 		//restrict langs available for machine translation to those 
 		//available from Google Translate
-		$langsSupportedByGoogleTranslate = $this->langsSupportedByGoogleTranslate;
-		
-		$i = 0;
-		foreach (array_keys($langsCandidatesForMachineTranslationRaw) as $langCandidate) {
-			if (in_array($langCandidate, array_keys($langsSupportedByGoogleTranslate))) {
-				$langsCandidatesForMachineTranslation[$i]['lang'] = $langCandidate;
-				$langsCandidatesForMachineTranslation[$i]['langName'] = $langsCandidatesForMachineTranslationRaw[$langCandidate][0];
-				$i++;
+		$langsCandidatesForMachineTranslation = array();
+		foreach ($langsCandidatesForMachineTranslationRaw as $langCandidate => $name) {
+			if (isset($this->langsSupportedByGoogleTranslate[$langCandidate])) {
+				$langsCandidatesForMachineTranslation[] = array(
+					'lang' => $langCandidate,
+					'langName' => $name,
+				);
 			}
 		}
 		return $langsCandidatesForMachineTranslation;
@@ -141,23 +134,21 @@ class Multilingual_MachineTranslation_GoogleTranslateWrapper
 
 	function translateText($text) 
 	{
-		$langpair = $this->sourceLang."|".$this->targetLang;
 		$text = $this->escape_untranslatable_text($text);
+
 		$urlencodedText = urlencode($text); 
-		$result = "";
-		$chunks = array();
+		
 		if (strlen($urlencodedText) < 1800) {
-			$result = $this->getTranslationFromGoogle($urlencodedText, urlencode($langpair));
+			$chunks = array($text);
 		} else {
 			$chunks = $this->splitInLogicalChunksOf450CharsMax($text);
-			$ii = 0;
-			while ($ii < count($chunks)) {
-				$textToTranslate = $chunks[$ii];
-				$chunkTranslation = $this->getTranslationFromGoogle(urlencode($textToTranslate), urlencode($langpair))." ";
-				$result .= $chunkTranslation;
-				$ii++;
-			}  
 		}
+
+		$result = "";
+		foreach ($chunks as $textToTranslate) {
+			$result .= $this->getTranslationFromGoogle($textToTranslate)." ";
+		}  
+
 		$result = $this->remove_notranslateTags_and_reverse_to_original_markup($result);
 		return trim($result);
 	}
@@ -165,26 +156,27 @@ class Multilingual_MachineTranslation_GoogleTranslateWrapper
 
 	private function translateSentenceBySentence($text) 
 	{
-		$langpair = $this->sourceLang."|".$this->targetLang;
 		$segmentor = new Multilingual_Aligner_SentenceSegmentor();
 		$sentences = $segmentor->segment($text); 
-		$ii = 0;
 		$result = "";
-		while ($ii < count($sentences)) {
-			$textToTranslate = $sentences[$ii];	
-			$result .= $this->getTranslationFromGoogle(urlencode($textToTranslate), urlencode($langpair));
-			$ii++;
+		foreach ($sentences as $textToTranslate) {
+			$result .= $this->getTranslationFromGoogle($textToTranslate);
 		}  
 
 		return $result;		
 	} 
 
-	private function getTranslationFromGoogle($encodedText, $encodedLangpair) 
+	private function getTranslationFromGoogle($text) 
 	{
+		$langpair = $this->sourceLang."|".$this->targetLang;
+
+		$encodedText = urlencode($text);
+		$encodedLangpair = urlencode($langpair);
+
 		require_once 'lib/ointegratelib.php';
 		$ointegrate = new OIntegrate();
 
-		$url = $this->googleAjaxUrl."&q=".$encodedText."&langpair=".$encodedLangpair;
+		$url = self::SERVICE_URL."&q=".$encodedText."&langpair=".$encodedLangpair;
 		$oi_result = $ointegrate->performRequest($url);
 		$result = $oi_result->data['responseData']['translatedText'];
 		return $result;
@@ -220,11 +212,9 @@ class Multilingual_MachineTranslation_GoogleTranslateWrapper
 	{
 		//Title is all between <hx> tags. Put it in lower case, so Google doesn't
 		//take the capitalized words as proper names
-		if (preg_match_all($this->titleTag, $text, $matchesT) !=0 ) {
-			$i = 0;
-			while ($i < count($matchesT[0])) {
-				$text = str_replace($matchesT[0][$i], $matchesT[1][$i].strtolower($matchesT[3][$i]), $text);
-				$i++;
+		if (preg_match_all(self::TITLE_TAG, $text, $matchesT) !=0 ) {
+			foreach ($matchesT[0] as $i => $completeMatch) {
+				$text = str_replace($completeMatch, $matchesT[1][$i].strtolower($matchesT[3][$i]), $text);
 			}
 		}
 
@@ -237,7 +227,7 @@ class Multilingual_MachineTranslation_GoogleTranslateWrapper
 			$id = array_search($matched_markup, $this->arrayOfUntranslatableStringsAndTheirIDs);
 			if ($id == false) {
 				$id = (int)$this->currentID + 1;
-				$this->arrayOfUntranslatableStringsAndTheirIDs[$id]=$matched_markup;
+				$this->arrayOfUntranslatableStringsAndTheirIDs[$id] = $matched_markup;
 				$this->currentID = $id;
 			} 
 		}
@@ -254,7 +244,7 @@ class Multilingual_MachineTranslation_GoogleTranslateWrapper
 			}
 		}
 
-		$text = preg_replace("/(id[\d]+\.?(id[\d]+)*)/", $this->escapeUntranslatableStrings, $text);
+		$text = preg_replace("/(id[\d]+\.?(id[\d]+)*)/", self::NO_TRANSLATE_STRING, $text);
 		return $text;
 	}
 
@@ -263,18 +253,14 @@ class Multilingual_MachineTranslation_GoogleTranslateWrapper
 	{
 		//Google adds spaces before and after notranslate span
 
-		preg_match_all($this->notranslateTagWithSpaces, $text, $matches);
+		preg_match_all(self::NO_TRANSLATE_PATTERN, $text, $matches);
 
-		$i=1;
-		while ($i < count($matches)) {
-			$index = 0;
-			while ($index < count($matches[0])) {
-				if (!empty($matches[$i][$index])) {
-					$text = str_replace($matches[0][$index], $matches[$i][$index], $text);
+		foreach ($matches as $i => $match) {
+			foreach ($matches[0] as $index => $found) {
+				if (!empty($match[$index])) {
+					$text = str_replace($found, $match[$index], $text);
 				}
-				$index++;
 			}
-			$i++;
 		}
 
 		foreach ($this->arrayOfUntranslatableStringsAndTheirIDs as $id => $markup) {
@@ -284,29 +270,10 @@ class Multilingual_MachineTranslation_GoogleTranslateWrapper
 
 		//trimming leading spaces in each line (wiki syntax doesn't work unless)
 		if (!$this->translatingHTML) {
-			$textArray = explode("<br />", $text);
-			array_walk($textArray, array(&$this, '_trim'));
-			$text = implode("<br />", $textArray);
-			$text = $this->br2nl($text);
+			$textArray = preg_split('/\<br(\s*)?\/?\>/i', $text);
+			$textArray = array_map('trim', $textArray);
+			$text = implode("\n", $textArray);
 		}
-		//		$text = str_replace("<br />",'<br />\n',$text);
 		return $text;
-	}
-	
-	
-	private function mynl2br($text) 
-	{
-		$text = strtr($text, array('\n' => '<br />', '\r\n' =>'<br />'));
-		return $text;
-	}
-	
-	public function _trim(&$value) 
-	{
-    	$value = trim($value);   
-	}
-
-	private function br2nl($string) 
-	{
-    	return preg_replace('/\<br(\s*)?\/?\>/i', "\n", $string);
 	}
 }
