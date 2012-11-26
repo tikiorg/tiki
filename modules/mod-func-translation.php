@@ -89,6 +89,9 @@ function module_translation($mod_reference, $module_params)
 			$pageLang = '';
 
 		$transinfo = $tikilib->get_page_info($page);
+		if (empty($transinfo)) {
+			return;
+		}
 
 		$tempList = $multilinguallib->getTranslations('wiki page', $transinfo['page_id']);
 		$completeList = array();
