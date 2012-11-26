@@ -225,7 +225,7 @@ elif [ -f /etc/redhat-release ]; then
 elif [ -f /etc/gentoo-release ]; then
 	AUSER=apache
 	AGROUP=apache
-elif [ -f /etc/os-release ]; then
+elif [ -f /etc/SuSE-release ]; then
 	AUSER=wwwrun
 	AGROUP=wwwrun
 else
