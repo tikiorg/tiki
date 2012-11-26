@@ -76,7 +76,7 @@ class Tracker_Field_Category extends Tracker_Field_Abstract implements Tracker_F
 	public function getFieldData(array $requestData = array())
 	{
 		$key = 'ins_' . $this->getConfiguration('fieldId');
-		$parentId = $this->getOption(0);
+		$parentId = $this->getOption('parentId');
 
 		if (isset($requestData[$key]) && is_array($requestData[$key])) {
 			$selected = $requestData[$key];
@@ -177,8 +177,8 @@ class Tracker_Field_Category extends Tracker_Field_Abstract implements Tracker_F
 
 	private function getApplicableCategories()
 	{
-		$parentId = (int) $this->getOption(0);
-		$descends = $this->getOption(3) == 1;
+		$parentId = (int) $this->getOption('parentId');
+		$descends = $this->getOption('descendants') == 1;
 		if ($parentId > 0) {
 			return TikiLib::lib('categ')->getCategories(array('identifier'=>$parentId, 'type'=>$descends ? 'descendants' : 'children'));
 		} else {

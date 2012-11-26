@@ -2827,33 +2827,27 @@ class TrackerLib extends TikiLib
 		} else {
 				$cat_name = $mainfield;
 		}
-		$cat_href = "tiki-view_tracker_item.php?trackerId=$trackerId&itemId=$itemId";
 		// The following needed to ensure category field exist for item (to be readable by list_items)
+		$cat_href = "tiki-view_tracker_item.php?trackerId=$trackerId&itemId=$itemId";
+
+		// Collect the list of possible categories, those provided by a complete form
+		// The update_object_categories function will limit changes to those
+		$managed_categories = array();
 
 		$definition = Tracker_Definition::get($trackerId);
 		foreach ($definition->getCategorizedFields() as $t) {
 			$this->itemFields()->insert(array('itemId' => $itemId, 'fieldId' => $t,	'value' => ''), true);
+
+			$field = $definition->getField($t);
+			$handler = $this->get_field_handler($field);
+			$data = $handler->getFieldData();
+
+			$managed_categories = array_merge($managed_categories, array_map(function ($entry) {
+				return $entry['categId'];
+			}, $data['list']));
 		}
-		$old_categs = $categlib->get_object_categories('trackeritem', $itemId);
-		if (is_array($ins_categs)) {
-			$new_categs = array_diff($ins_categs, $old_categs);
-			$del_categs = array_diff($old_categs, $ins_categs);
-			if (!empty($parent_categs_only)) {
-				// put back categories that were not meant to be deleted (e.g. Tracker plugin)
-				foreach ($del_categs as $d) {
-					$parentId = $categlib->get_category_parent($d);
-					if (!in_array($parentId, $parent_categs_only)) {
-						$undel_categs[] = $d;
-					}
-				}
-				if (isset($undel_categs)) {
-					$del_categs = array_diff($del_categs, $undel_categs);
-				}
-			}
-			$remain_categs = array_diff($old_categs, $new_categs, $del_categs);
-			$ins_categs = array_merge($remain_categs, $new_categs);
-		}
-		$categlib->update_object_categories($ins_categs, $cat_objid, $cat_type, $cat_desc, $cat_name, $cat_href, null, $override_perms);
+
+		$categlib->update_object_categories($ins_categs, $cat_objid, $cat_type, $cat_desc, $cat_name, $cat_href, $managed_categories, $override_perms);
 	}
 
 	public function move_up_last_fields($trackerId, $fieldId, $delta=1)
