@@ -13,6 +13,11 @@
  */
 class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_Field_Synchronizable
 {
+	const CASCADE_NONE = 0;
+	const CASCADE_CATEG = 1;
+	const CASCADE_STATUS = 2;
+	const CASCADE_DELETE = 4;
+
 	public static function getTypes()
 	{
 		return array(
@@ -121,13 +126,19 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 						'separator' => '|',
 						'filter' => 'int',
 					),
-					'obtainCategories' => array(
-						'name' => tr('Ontain categories from remote item'),
-						'description' => tr("Update the current item's categories when the remote item is modified. Effectively synchronizes categories for child items to have appropriate permissions. Behavior is undefined if used on multiple fields where different items all try to manage the same permissions."),
+					'cascade' => array(
+						'name' => tr('Cascade actions'),
+						'description' => tr("Elements to cascade when the master is updated or deleted. Categories may conflict if multiple item links are used to different items attempting to manage the same categories. Same for status."),
 						'filter' => 'int',
 						'options' => array(
-							0 => tr('No'),
-							1 => tr('Yes'),
+							self::CASCADE_NONE => tr('No'),
+							self::CASCADE_CATEG => tr('Categories'),
+							self::CASCADE_STATUS => tr('Status'),
+							self::CASCADE_DELETE => tr('Delete'),
+							(self::CASCADE_CATEG | self::CASCADE_STATUS) => tr('Categories and status'),
+							(self::CASCADE_CATEG | self::CASCADE_DELETE) => tr('Categories and delete'),
+							(self::CASCADE_DELETE | self::CASCADE_STATUS) => tr('Delete and status'),
+							(self::CASCADE_CATEG | self::CASCADE_STATUS | self::CASCADE_DELETE) => tr('All'),
 						),
 					),
 				),
@@ -551,13 +562,28 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 		return count($intersect) > 0;
 	}
 
-	function obtainCategories($trackerId)
+	function cascadeCategories($trackerId)
+	{
+		return $this->cascade($trackerId, self::CASCADE_CATEG);
+	}
+
+	function cascadeStatus($trackerId)
+	{
+		return $this->cascade($trackerId, self::CASCADE_STATUS);
+	}
+
+	function cascadeDelete($trackerId)
+	{
+		return $this->cascade($trackerId, self::CASCADE_DELETE);
+	}
+
+	private function cascade($trackerId, $flag)
 	{
 		if ($this->getOption('trackerId') != $trackerId) {
 			return false;
 		}
 
-		return (bool) $this->getOption('obtainCategories');
+		return ($this->getOption('cascade') & $flag) > 0;
 	}
 
 	function watchCompare($old, $new)

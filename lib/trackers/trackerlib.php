@@ -1383,13 +1383,8 @@ class TrackerLib extends TikiLib
 			$fil['status'] = $status;
 			$old_values['status'] = $oldStatus;
 
-			$items->update(
-				array('status' => $status, 'lastModif' => $this->now,	'lastModifBy' => $user),
-				array('itemId' => (int) $itemId)
-			);
-			$version = $this->last_log_version($itemId) + 1;
-			if (($logslib->add_action('Updated', $itemId, 'trackeritem', $version)) == 0) {
-				$version = 0;
+			if ($status != $oldStatus) {
+				$this->change_status(array($itemId), $status);
 			}
 		} else {
 			if (empty($status) && isset($tracker_info['newItemStatus'])) {
@@ -2190,8 +2185,20 @@ class TrackerLib extends TikiLib
 		$multilinguallib = TikiLib::lib('multilingual');
 		$multilinguallib->detachTranslation('trackeritem', $itemId);
 
+		$tx = TikiDb::get()->begin();
+
+		$child = $this->findLinkedItems($itemId, function ($field, $handler) use ($trackerId) {
+			return $handler->cascadeDelete($trackerId);
+		});
+
+		foreach ($child as $i) {
+			$this->remove_tracker_item($i);
+		}
+
 		require_once('lib/search/refresh-functions.php');
-		refresh_index('trackeritem', $itemId, ! $bulk_mode);
+		refresh_index('trackeritem', $itemId);
+
+		$tx->commit();
 
 		return true;
 	}
@@ -2840,7 +2847,7 @@ class TrackerLib extends TikiLib
 		$this->update_item_categories($itemId, $managed_categories, $ins_categs, $override_perms);
 
 		$items = $this->findLinkedItems($itemId, function ($field, $handler) use ($trackerId) {
-			return $handler->obtainCategories($trackerId);
+			return $handler->cascadeCategories($trackerId);
 		});
 
 		$searchlib = TikiLib::lib('unifiedsearch');
@@ -3502,18 +3509,57 @@ class TrackerLib extends TikiLib
 
 	public function change_status($items, $status)
 	{
+		global $prefs, $user;
+		$tikilib = TikiLib::lib('tiki');
+		$logslib = TikiLib::lib('logs');
+
 		if (!count($items)) {
 			return;
 		}
-		foreach ($items as &$i) {
+
+		$toUpdate = array();
+
+		foreach ($items as $i) {
 			if (is_array($i) && isset($i['itemId'])) {
-				// support old behavior that was in Tiki 6
 				$i = $i['itemId'];
 			}
+
+			$toUpdate[] = $i;
 		}
-		unset($i);
+
 		$table = $this->items();
-		$table->updateMultiple(array('status' => $status), array('itemId' => $table->in($items)));
+		$map = $table->fetchMap('itemId', 'trackerId', array(
+			'itemId' => $table->in($toUpdate),
+		));
+
+		foreach ($toUpdate as $itemId) {
+			$trackerId = $map[$itemId];
+			$child = $this->findLinkedItems($itemId, function ($field, $handler) use ($trackerId) {
+				return $handler->cascadeStatus($trackerId);
+			});
+
+			$toUpdate = array_merge($toUpdate, $child);
+
+			$version = $this->last_log_version($itemId) + 1;
+			if (($logslib->add_action('Updated', $itemId, 'trackeritem', $version)) == 0) {
+				$version = 0;
+			}
+		}
+
+		$table = $this->items();
+		$table->updateMultiple(array(
+			'status' => $status,
+			'lastModif' => $tikilib->now,
+			'lastModifBy' => $user,
+		), array('itemId' => $table->in($toUpdate)));
+
+		if ($prefs['feature_search'] === 'y' && $prefs['unified_incremental_update'] === 'y') {
+			$searchlib = TikiLib::lib('unifiedsearch');
+
+			foreach ($toUpdate as $child) {
+				$searchlib->invalidateObject('trackeritem', $child);
+			}
+		}
 	}
 
 	public function log($version, $itemId, $fieldId, $value='')
