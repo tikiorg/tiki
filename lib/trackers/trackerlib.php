@@ -2818,17 +2818,7 @@ class TrackerLib extends TikiLib
 
 	public function categorized_item($trackerId, $itemId, $mainfield, $ins_categs, $parent_categs_only = array(), $override_perms = false)
 	{
-		$categlib = TikiLib::lib('categ');
-		$cat_type = "trackeritem";
-		$cat_objid = $itemId;
-		$cat_desc = '';
-		if (empty($mainfield)) {
-				$cat_name = $itemId;
-		} else {
-				$cat_name = $mainfield;
-		}
-		// The following needed to ensure category field exist for item (to be readable by list_items)
-		$cat_href = "tiki-view_tracker_item.php?trackerId=$trackerId&itemId=$itemId";
+		global $prefs;
 
 		// Collect the list of possible categories, those provided by a complete form
 		// The update_object_categories function will limit changes to those
@@ -2847,7 +2837,36 @@ class TrackerLib extends TikiLib
 			}, $data['list']));
 		}
 
-		$categlib->update_object_categories($ins_categs, $cat_objid, $cat_type, $cat_desc, $cat_name, $cat_href, $managed_categories, $override_perms);
+		$this->update_item_categories($itemId, $managed_categories, $ins_categs, $override_perms);
+
+		$items = $this->findLinkedItems($itemId, function ($field, $handler) use ($trackerId) {
+			return $handler->obtainCategories($trackerId);
+		});
+
+		$searchlib = TikiLib::lib('unifiedsearch');
+		$index = $prefs['feature_search'] === 'y' && $prefs['unified_incremental_update'] === 'y';
+
+		foreach ($items as $child) {
+			$this->update_item_categories($child, $managed_categories, $ins_categs, $override_perms);
+
+			if ($index) {
+				$searchlib->invalidateObject('trackeritem', $child);
+			}
+		}
+	}
+
+	private function update_item_categories($itemId, $managed_categories, $ins_categs, $override_perms)
+	{
+		$categlib = TikiLib::lib('categ');
+		$cat_desc = '';
+		$cat_name = $this->get_isMain_value(null, $id);
+
+		// The following needed to ensure category field exist for item (to be readable by list_items)
+		$smarty = TikiLib::lib('smarty');
+		$smarty->loadPlugin('smarty_modifier_sefurl');
+		$cat_href = smarty_modifier_sefurl($itemId, 'trackeritem');
+
+		$categlib->update_object_categories($ins_categs, $itemId, 'trackeritem', $cat_desc, $cat_name, $cat_href, $managed_categories, $override_perms);
 	}
 
 	public function move_up_last_fields($trackerId, $fieldId, $delta=1)
@@ -4432,6 +4451,17 @@ class TrackerLib extends TikiLib
 			}
 		}
 
+		$items = $this->findLinkedItems($args['object'], function ($field, $handler) use ($modifiedFields, $args) {
+			return $handler->itemsRequireRefresh($args['trackerId'], $modifiedFields);
+		});
+
+		$searchlib = TikiLib::lib('unifiedsearch');
+		foreach ($items as $itemId) {
+			$searchlib->invalidateObject('trackeritem', $itemId);
+		}
+	}
+
+	private function findLinkedItems($itemId, $callback) {
 		$fields = $this->table('tiki_tracker_fields');
 		$list = $fields->fetchAll(
 			$fields->all(), array('type' => $fields->exactly('r'))
@@ -4442,24 +4472,21 @@ class TrackerLib extends TikiLib
 		foreach ($list as $field) {
 			$handler = $this->get_field_handler($field);
 
-			if ($handler->itemsRequireRefresh($args['trackerId'], $modifiedFields)) {
+			if ($callback($field, $handler)) {
 				$toConsider[] = $field['fieldId'];
 			}
 		}
 
 		$itemFields = $this->table('tiki_tracker_item_fields');
-		$searchlib = TikiLib::lib('unifiedsearch');
 		$items = $itemFields->fetchColumn(
 			'itemId',
 			array(
 				'fieldId' => $itemFields->in($toConsider),
-				'value' => $args['object'],
+				'value' => $itemId,
 			)
 		);
 
-		foreach (array_unique($items) as $itemId) {
-			$searchlib->invalidateObject('trackeritem', $itemId);
-		}
+		return array_unique($items);
 	}
 
 	public function update_user_account($args)

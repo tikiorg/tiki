@@ -121,6 +121,15 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 						'separator' => '|',
 						'filter' => 'int',
 					),
+					'obtainCategories' => array(
+						'name' => tr('Ontain categories from remote item'),
+						'description' => tr("Update the current item's categories when the remote item is modified. Effectively synchronizes categories for child items to have appropriate permissions. Behavior is undefined if used on multiple fields where different items all try to manage the same permissions."),
+						'filter' => 'int',
+						'options' => array(
+							0 => tr('No'),
+							1 => tr('Yes'),
+						),
+					),
 				),
 			),
 		);
@@ -540,6 +549,15 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 		$intersect = array_intersect($usedFields, $modifiedFields);
 
 		return count($intersect) > 0;
+	}
+
+	function obtainCategories($trackerId)
+	{
+		if ($this->getOption('trackerId') != $trackerId) {
+			return false;
+		}
+
+		return (bool) $this->getOption('obtainCategories');
 	}
 
 	function watchCompare($old, $new)
