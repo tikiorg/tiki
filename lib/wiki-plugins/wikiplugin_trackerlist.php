@@ -466,6 +466,13 @@ function wikiplugin_trackerlist_info()
 					array('text' => tra('No'), 'value' => 'n')
 				)
 			),
+			'urlafterdelete' => array(
+				'required' => false,
+				'name' => tra('Url to redirect to after delete'),
+				'description' => tra('Url to redirect to after delete'),
+				'filter' => 'url',
+				'default' => '',
+			),
 			'showopenitem' => array(
 					'required' => false,
 					'name' => tra('Show Open Item'),
@@ -1430,6 +1437,12 @@ function wikiplugin_trackerlist($data, $params)
 			if ($itemToDelete->canRemove()) {
 				$trklib->remove_tracker_item($_REQUEST['delete']);
 			}
+
+			if (!empty($urlafterdelete)) {
+				header("Location: $urlafterdelete");
+				exit;
+			}
+
 		}
 		if (!empty($_REQUEST['closeitem'])) {
 			$itemToModify = Tracker_Item::fromId($_REQUEST['closeitem']);
