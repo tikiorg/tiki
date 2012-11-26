@@ -44,7 +44,7 @@ class Tracker_Field_Files extends Tracker_Field_Abstract
 					),
 					'imageParams' => array(
 						'name' => tr('Image parameters'),
-						'description' => tr('URL encoded params used as in the {img} plugin. e.g.') . ' max=400&desc=namedesc&stylebox=block"',
+						'description' => tr('URL encoded params used as in the {img} plugin. e.g.') . ' "max=400&desc=namedesc&stylebox=block"',
 						'filter' => 'text',
 					),
 					'imageParamsForLists' => array(
@@ -70,6 +70,11 @@ class Tracker_Field_Files extends Tracker_Field_Abstract
 							'n' => tr('No'),
 							'y' => tr('Yes'),
 						),
+					),
+					'browseGalleryId' => array(
+						'name' => tr('Browse Gallery ID'),
+						'description' => tr('File gallery browse files. Use 0 for root file gallery. (requires elFinder feature - experimental)'),
+						'filter' => 'int',
 					),
 				),
 			),
