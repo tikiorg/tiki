@@ -199,7 +199,6 @@ class WikiRenderer
 		}
 
 		if ($prefs['feature_machine_translation'] == 'y' && !empty($this->info['lang'])) {
-			require_once('lib/core/Multilingual/MachineTranslation/GoogleTranslateWrapper.php');
 			$translator = new Multilingual_MachineTranslation_GoogleTranslateWrapper($this->info['lang'], $this->info['lang']);
 			$langsCandidatesForMachineTranslation = $translator->getLangsCandidatesForMachineTranslation($this->trads);
 			$this->smartyassign('langsCandidatesForMachineTranslation', $langsCandidatesForMachineTranslation);
