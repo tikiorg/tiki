@@ -396,6 +396,7 @@ if ($prefs['javascript_enabled'] != 'n') {
 					.ui-selectmenu-status { line-height: .8em; margin-right: 16px; }'
 				);
 			}
+			$headerlib->add_jsfile('lib/jquery/jquery-ui-timepicker-addon.js');
 		}
 
 		if ( $prefs['feature_jquery_tooltips'] == 'y' ) {
@@ -517,8 +518,6 @@ if ($prefs['feature_draw'] == 'y') {
 	$headerlib->add_jsfile("lib/svg-edit_tiki/draw.js");
 	$headerlib->add_cssfile("lib/svg-edit_tiki/draw.css");
 }
-
-$headerlib->add_jsfile('lib/jquery/jquery-ui-timepicker-addon.js');
 
 if ($prefs['geo_always_load_openlayers'] == 'y') {
 	$headerlib->add_map();
