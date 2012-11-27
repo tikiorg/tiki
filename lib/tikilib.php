@@ -5328,6 +5328,8 @@ JS;
 
 	function multi_explode($delimiters, $string)
 	{
+		global $prefs;
+
 		if (is_array($delimiters) == false) $delimiters = array($delimiters);
 
 		$delimiter = array_shift($delimiters);
@@ -5335,13 +5337,16 @@ JS;
 		$array = array();
 		$keep = false;
 
+		$ignore_chars = array_unique(str_split($prefs['namespace_separator']));
+
 		foreach ($temp as $v) {
-			if (empty($v)) {
+			$filtered = str_replace($ignore_chars, '', $v);
+			if (empty($filtered)) {
 				if (! $keep) {
 					$array[count($array) - 1] .= $delimiter;
 				}
 
-				$array[count($array) - 1] .= $delimiter;
+				$array[count($array) - 1] .= $v . $delimiter;
 				$keep = true;
 			} elseif ($keep) {
 				$array[count($array) - 1] .= $v;
