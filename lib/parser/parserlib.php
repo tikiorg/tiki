@@ -966,16 +966,11 @@ if ( \$('#$id') ) {
 				$data = nl2br($data);
 			}
 
-			$saved_options = $this->option;		// save and reset the parsing options before plugin executes
-			$this->setOptions();
-
 			if ($classExists == true) {
 				$output = $class->exec($data, $args, $offset, $this);
 			} else {
 				$output = $func_name($data, $args, $offset);
 			}
-
-			$this->option = $saved_options;	// restore parsing options after plugin has executed
 
 			//This was added to remove the table of contents sometimes returned by other plugins, to use, simply have global $killtoc, and $killtoc = true;
 			if ($killtoc == true) {
