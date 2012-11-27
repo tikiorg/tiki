@@ -65,6 +65,9 @@ ajaxLoadingShow("'.$dom_id.'");
 			);	// before dialog tools init (10)
 		}
 
+		$ckeformattags = ToolbarCombos::getFormatTags('html');
+		$headerlib->add_js('window.CKEDITOR.config.format_tags = "' . $ckeformattags . '";');
+
 		$this->finishLoading($dom_id, $auto_save_referrer, $params);
 	}
 
@@ -108,19 +111,21 @@ ajaxLoadingShow("'.$dom_id.'");
 			);	// before dialog tools init (10)
 		}
 */
-		$headerlib->add_jq_onready(
-			'CKEDITOR.config.enterMode = CKEDITOR.ENTER_BR;' .
-			'CKEDITOR.config.shiftEnterMode = CKEDITOR.ENTER_BR;'
-		);
 		$this->finishLoading($dom_id, $auto_save_referrer, $params);
 		$headerlib->add_js(
-			'window.jisonSyntax = ' . json_encode(JisonParser_WikiCKEditor_Handler::$typeShorthand) . ';
-			window.CKEDITOR.config.extraPlugins += (window.CKEDITOR.config.extraPlugins ? ",jisonline" : "jisonline" );
-			window.CKEDITOR.plugins.addExternal( "jisonline", "'.$tikiroot.'lib/ckeditor_tiki/plugins/jisonline/");
-			window.CKEDITOR.config.extraPlugins += (window.CKEDITOR.config.extraPlugins ? ",jisonplugin" : "jisonplugin" );
-			window.CKEDITOR.plugins.addExternal( "jisonplugin", "'.$tikiroot.'lib/ckeditor_tiki/plugins/jisonplugin/");
-			window.CKEDITOR.config.extraPlugins += (window.CKEDITOR.config.extraPlugins ? ",jisonsource" : "jisonsource" );
-			window.CKEDITOR.plugins.addExternal( "jisonsource", "'.$tikiroot.'lib/ckeditor_tiki/plugins/jisonsource/");',
+			'window.CKEDITOR.config.stylesSet = "tikistyles:' . $tikiroot . 'lib/ckeditor_tiki/jisonstyles.js";
+			window.CKEDITOR.config.templates_files = ["' . $tikiroot . 'lib/ckeditor_tiki/jisontemplates.js"];
+			window.jisonSyntax = ' . json_encode(JisonParser_WikiCKEditor_Handler::$typeShorthand) . ';
+
+			function addCKEStyle(plugin) {
+				window.CKEDITOR.config.extraPlugins += (window.CKEDITOR.config.extraPlugins ? "," + plugin : plugin );
+				window.CKEDITOR.plugins.addExternal( plugin, "'.$tikiroot.'lib/ckeditor_tiki/plugins/" + plugin + "/");
+			}
+
+			addCKEStyle("jisonline");
+			addCKEStyle("jisonplugin");
+			addCKEStyle("jisonformat");
+			addCKEStyle("jisonsource");',
 			5
 		);
 	}
@@ -154,8 +159,6 @@ ajaxLoadingShow("'.$dom_id.'");
 		$cktools = substr($cktools, 1, strlen($cktools) - 2); // remove surrouding [ & ]
 		$cktools = str_replace(']],[[', '],"/",[', $cktools); // add new row chars - done here so as not to break existing f/ck
 
-		$ckeformattags = ToolbarCombos::getFormatTags('html');
-
 		// js to initiate the editor
 		$headerlib
 			->add_jq_onready(
@@ -166,7 +169,6 @@ ajaxLoadingShow("'.$dom_id.'");
 	customConfig: "",
 	autoSaveSelf: "'.addcslashes($auto_save_referrer, '"').'",		// unique reference for each page set up in ensureReferrer()
 	font_names: "' . trim($prefs['wysiwyg_fonts']) . '",
-	format_tags: "' . $ckeformattags . '",
 	contentsCss: ["' . $ckstyle . '"],
 	skin: "' . ($prefs['wysiwyg_toolbar_skin'] != 'default' ? $prefs['wysiwyg_toolbar_skin'] : 'kama') . '",
 	defaultLanguage: "' . $prefs['language'] . '",
