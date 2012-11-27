@@ -65,6 +65,15 @@ class JisonParser_WikiCKEditor_Handler extends JisonParser_Wiki_Handler
 		parent::setOption($option);
 	}
 
+	public function postParse(&$output)
+	{
+		//ckeditor inserts an element at the beginning, which confuses the conversion back to wiki from html, this is to prevent that from happening
+		if ($this->Parser->parseDepth == 0) {
+			$output = $this->createWikiHelper('BOF', 'span', '&shy;', array('contenteditable'=>'false')) . $output;
+		}
+		parent::postParse($output);
+	}
+
 	//end state handlers
 	//Wiki Syntax Objects Parsing Start
 	/**
