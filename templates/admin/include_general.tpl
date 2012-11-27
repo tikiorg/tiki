@@ -296,6 +296,7 @@
 				{preference name=namespace_enabled}
 				<div class="adminoptionboxchild" id="namespace_enabled_childcontainer">
 					{preference name=namespace_separator}
+					{preference name=feature_use_three_colon_centertag}
 				</div>
 			</fieldset>
 
