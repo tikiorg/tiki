@@ -1153,7 +1153,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 
 		$wikiExternal = '';
 		$parts = explode(':', $page);
-		if (isset($parts[1])) {
+		if (isset($parts[1]) && $type != 'external') {
 			$wikiExternal = array_shift($parts);
 			$page = implode(':', $parts);
 		}
