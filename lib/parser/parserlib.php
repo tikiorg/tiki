@@ -1476,8 +1476,13 @@ if ( \$('#$id') ) {
 
 		if ($prefs['feature_jison_wiki_parser'] == 'y') {//The following will stop and return based off new parser
 			//Testing new parser ;)
+			$BOF = '';
 			if ($this->option['ck_editor']) {
 				$parser = new JisonParser_WikiCKEditor_Handler();
+				//ckeditor inserts an element at the beginning, which confuses the conversion back to wiki from html, this is to prevent that from happening
+				if ($this->Parser->parseDepth == 0) {
+					$BOF = $parser->createWikiHelper('BOF', 'span', '&shy;', array('contenteditable'=>'false'));
+				}
 			} else {
 				$parser = new JisonParser_Wiki_Handler();
 			}
@@ -1489,7 +1494,7 @@ if ( \$('#$id') ) {
 			}
 
 			unset($parser);
-			return $data;
+			return $BOF . $data;
 		}
 
 		// if simple_wiki is true, disable some wiki syntax
