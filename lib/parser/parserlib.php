@@ -914,8 +914,6 @@ if ( \$('#$id') ) {
 		if (!empty($option)) {
 			$this->setOptions($option);
 		}
-		$saved_options = $this->option;		// save and reset the parsing options before plugin executes
-		$this->setOptions();
 
 		$data = $this->unprotectSpecialChars($data, true);					// We want to give plugins original
 		$args = preg_replace(array('/^&quot;/', '/&quot;$/'), '', $args);		// Similarly remove the encoded " chars from the args
@@ -967,6 +965,9 @@ if ( \$('#$id') ) {
 			if ($pluginFormat === 'wiki' && $this->option['preview_mode'] === true && $_SESSION['wysiwyg'] === 'y') {	// fix lost new lines in wysiwyg plugins data
 				$data = nl2br($data);
 			}
+
+			$saved_options = $this->option;		// save and reset the parsing options before plugin executes
+			$this->setOptions();
 
 			if ($classExists == true) {
 				$output = $class->exec($data, $args, $offset, $this);
