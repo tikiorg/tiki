@@ -131,7 +131,11 @@ class WikiPlugin_Negotiator_Wiki
 
 					$this->applyFilters();
 					$button = $this->button(false);
-					$result = $this->class->exec($this->body, $this->args, $this->index, $this->parser, $button);
+
+					$result = $this->class
+						->setButton($button)
+						->exec($this->body, $this->args, $this->index, $this->parser);
+
 					return $result;
 				}
 			}
