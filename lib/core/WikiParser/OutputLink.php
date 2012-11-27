@@ -190,6 +190,10 @@ class WikiParser_OutputLink
 
 		$out = '';
 
+		if (end($info['namespace_parts']) == $info['baseName']) {
+			array_pop($info['namespace_parts']);
+		}
+
 		$last = count($info['namespace_parts']) - 1;
 		foreach ($info['namespace_parts'] as $key => $part) {
 			$class = 'namespace';
