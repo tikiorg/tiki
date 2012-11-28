@@ -111,9 +111,9 @@ class JisonParser_Wiki_List
 		$html = '';
 
 		for ($i = 0; $i < $length; $i++) {
-			if (isset($stack[$i]) && empty($stack[$i]['content']) == false) {
+			$html .= $this->writeParentStartTag(isset($stack[$i]['type']) ? $stack[$i]['type'] : '*', $lastType, $lastParentTagType, $id);
 
-				$html .= $this->writeParentStartTag(isset($stack[$i]['type']) ? $stack[$i]['type'] : '*', $lastType, $lastParentTagType, $id);
+			if (isset($stack[$i]) && empty($stack[$i]['content']) == false) {
 
 				switch($stack[$i]['type']) {
 					case '*-': $listType = "ToggleUnordered"; break;
@@ -148,12 +148,10 @@ class JisonParser_Wiki_List
 						break;
 				}
 			} else if (!empty($stack[$i]['children'])) { //In this scenario, we have a jump in list types
-				$html .= $this->parser->createWikiTag("listParent", "ul",
-					$this->parser->createWikiTag("listEmpty", "li",
-						$this->toHtmlChildren($stack[$i]['children']),
-						array(
-							'style' => 'list-style-type:none;'
-						)
+				$html .= $this->parser->createWikiTag("listEmpty", "li",
+					$this->toHtmlChildren($stack[$i]['children']),
+					array(
+						'style' => 'list-style-type:none;'
 					)
 				);
 			}
