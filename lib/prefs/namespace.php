@@ -25,7 +25,7 @@ function prefs_namespace_list()
 			'name' => tr('Namespace separator'),
 			'size' => 5,
 			'type' => 'text',
-			'default' => '::',
+			'default' => ':+:',
 			'keywords' => 'Namespaces',
 			'perspective' => false,
 		),

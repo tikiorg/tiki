@@ -225,7 +225,7 @@ elif [ -f /etc/redhat-release ]; then
 elif [ -f /etc/gentoo-release ]; then
 	AUSER=apache
 	AGROUP=apache
-elif [ -f /etc/os-release ]; then
+elif [ -f /etc/SuSE-release ]; then
 	AUSER=wwwrun
 	AGROUP=wwwrun
 else
@@ -780,25 +780,25 @@ tiki_setup_default() {
 			WHAT=${INPUT}
 		fi
 		case ${WHAT} in
-			0)	COMMAND="php" ; permission_via_php_check ;;
-			1)	COMMAND="paranoia" ; permission_via_php_check ;;
-			2)	COMMAND="paranoia-suphp" ; permission_via_php_check ;;
-			3)	COMMAND="sbox" ; permission_via_php_check ;;
-			4)	COMMAND="mixed" ; permission_via_php_check ;;
-			5)	COMMAND="worry" ; permission_via_php_check ;;
-			6)	COMMAND="moreworry" ; permission_via_php_check ;;
-			7)	COMMAND="pain" ; permission_via_php_check ;;
-			8)	COMMAND="morepain" ; permission_via_php_check ;;
-			9)	COMMAND="risky" ; permission_via_php_check ;;
-			a)	COMMAND="insane" ; permission_via_php_check ;;
-			c)	clear ;;
-			f)	command_fix ;;
-			o)	command_open ;;
+			0)	WHAT='x'; COMMAND="php" ; permission_via_php_check ;;
+			1)	WHAT='x'; COMMAND="paranoia" ; permission_via_php_check ;;
+			2)	WHAT='x'; COMMAND="paranoia-suphp" ; permission_via_php_check ;;
+			3)	WHAT='x'; COMMAND="sbox" ; permission_via_php_check ;;
+			4)	WHAT='x'; COMMAND="mixed" ; permission_via_php_check ;;
+			5)	WHAT='x'; COMMAND="worry" ; permission_via_php_check ;;
+			6)	WHAT='x'; COMMAND="moreworry" ; permission_via_php_check ;;
+			7)	WHAT='x'; COMMAND="pain" ; permission_via_php_check ;;
+			8)	WHAT='x'; COMMAND="morepain" ; permission_via_php_check ;;
+			9)	WHAT='x'; COMMAND="risky" ; permission_via_php_check ;;
+			a)	WHAT='x'; COMMAND="insane" ; permission_via_php_check ;;
+			c)	WHAT='x'; clear ;;
+			f)	WHAT='x'; command_fix ;;
+			o)	WHAT='x'; command_open ;;
 			q)	exit ;;
 			Q)	exit ;;
 			x)	exit ;;
 			X)	exit ;;
-			*)	echo 'no such command' ;;
+			*)	WHAT='x'; echo 'no such command' ;;
 		esac
 	done
 }

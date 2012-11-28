@@ -71,9 +71,9 @@ class ObjectLib extends TikiLib
 						$href = 'tiki-directory_browse.php?parent=' . $itemId;
 						break;
 
-					case 'faq': 
+					case 'faq':
 						{
-							require_once ('lib/faqs/faqlib.php');							
+							require_once ('lib/faqs/faqlib.php');
 							$info = $faqlib->get_faq($itemId);
 
 							$description = $info['description'];

@@ -20,7 +20,7 @@ function upgrade_20100927_better_column_fix2_tiki($installer)
 	);
 
 	if ($result == 0) {
-		$result = $installer->query('ALTER TABLE `tiki_file_galleries` ADD COLUMN  `show_lastDownload` char(1) default NULL AFTER `show_hits`;');
+		$result = $installer->query('ALTER TABLE `tiki_file_galleries` ADD COLUMN  `show_lastDownload` char(1) default NULL AFTER `show_hits`');
 	}
 
 	$result = $installer->getOne(
@@ -29,6 +29,6 @@ function upgrade_20100927_better_column_fix2_tiki($installer)
 	);
 
 	if ($result == 0) {
-		$result = $installer->query('ALTER TABLE `tiki_shoutbox` ADD COLUMN `tweetId` bigint(20) unsigned NOT NULL AFTER `hash`;');
+		$result = $installer->query('ALTER TABLE `tiki_shoutbox` ADD COLUMN `tweetId` bigint(20) unsigned NOT NULL AFTER `hash`');
 	}
 }

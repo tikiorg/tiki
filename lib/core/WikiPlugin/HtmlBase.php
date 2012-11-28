@@ -10,6 +10,7 @@ abstract class WikiPlugin_HtmlBase extends WikiPlugin_ConditionBase
 	public $htmlTagType = 'div';
 	public $hasHtmlBody = true;
 	public $htmlAttributes = array('id'=>'', 'class'=>'', 'style'=>'');
+	public $button;
 
 	static $style = array(
 		'@keyframes' => array('filter' => 'text', 'default' => ''),
@@ -264,6 +265,12 @@ abstract class WikiPlugin_HtmlBase extends WikiPlugin_ConditionBase
 		return self::$style;
 	}
 
+	public function setButton($button)
+	{
+		$this->button = $button;
+		return $this;
+	}
+
 	protected function stylize(&$params)
 	{
 		$styles = '';
@@ -275,7 +282,7 @@ abstract class WikiPlugin_HtmlBase extends WikiPlugin_ConditionBase
 		return $styles;
 	}
 
-	public function exec($data, $params, $index, &$parser, &$button = '')
+	public function exec($data, $params, $index, &$parser)
 	{
 		$this->paramDefaults($params);
 		$style = $this->stylize($params);
@@ -297,7 +304,7 @@ abstract class WikiPlugin_HtmlBase extends WikiPlugin_ConditionBase
 		}
 
 		if ($this->hasHtmlBody == true) {
-			$output .=  '>' . $data . $button . '</' . $this->htmlTagType . '>';
+			$output .=  '>' . $data . (isset($this->button) ? $this->button : '') . '</' . $this->htmlTagType . '>';
 		} else {
 			$output .= ' />';
 		}
