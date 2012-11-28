@@ -29,7 +29,7 @@ $access->check_permission('tiki_p_view_faqs');
 
 $faqlib->add_faq_hit($_REQUEST["faqId"]);
 $smarty->assign('faqId', $_REQUEST["faqId"]);
-$faq_info = $tikilib->get_faq($_REQUEST["faqId"]);
+$faq_info = $faqlib->get_faq($_REQUEST["faqId"]);
 $smarty->assign('faq_info', $faq_info);
 if (!isset($_REQUEST["sort_mode"])) {
 	$sort_mode = 'position_asc,questionId_asc';
