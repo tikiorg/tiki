@@ -1,9 +1,16 @@
 <?php
 
-class JisonParser_HtmlToWikiTest extends JisonParser_OutputTest
+class JisonParser_HtmlToWikiTest extends JisonParser_Abstract
 {
 	static $verbose = false;
 	public static $htmlToWikiParser;
+	public $parentProvider;
+
+	function provider()
+	{
+		$this->parentProvider = new JisonParser_OutputTest();
+		$this->parentProvider->provider();
+	}
 
 	function setUp()
 	{
@@ -11,9 +18,8 @@ class JisonParser_HtmlToWikiTest extends JisonParser_OutputTest
 		$prefs['feature_jison_wiki_parser'] = 'y';
 		$this->parser = new JisonParser_WikiCKEditor_Handler();
 		self::$htmlToWikiParser = new JisonParser_Html_Handler();
-		$this->provider();
 
-		$this->syntaxSets[] = array("! WYSIWYG Sample Page
+		$this->parentProvider->syntaxSets[] = array("! WYSIWYG Sample Page
 Start off by clicking \"edit\" then switching the editor to use the wysiwyg editor using the {img src=\"pics/icons/pencil_go.png\"} button on the toolbar.
 !! Text formatting
 __bold__

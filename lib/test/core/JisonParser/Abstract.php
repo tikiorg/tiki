@@ -46,11 +46,17 @@ class JisonParser_Abstract extends TikiTestCase
 			VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
 			array('FakePage', 0, 'Fake Tiki Page', 1, 0, 'admin', '0.0.0.0', 'admin', time(), 'n')
 		);
+		$tikilib->query(
+			'INSERT INTO tiki_pages (pageName, hits, comment, version, version_minor, user, ip, creator, created, wysiwyg)
+			VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+			array('[FakePage]', 0, 'Fake Tiki Page', 1, 0, 'admin', '0.0.0.0', 'admin', time(), 'n')
+		);
 	}
 
 	public function testOutput()
 	{
-		foreach ($this->syntaxSets as $syntaxName => $syntax) {
+		$syntaxSets = (isset($this->parentProvider) ? $this->parentProvider->syntaxSets : $this->syntaxSets);
+		foreach ($syntaxSets as $syntaxName => $syntax) {
 			if (isset($syntax[0])) {
 				$parsed = $this->parser->parse($syntax[0]);
 			} else {
