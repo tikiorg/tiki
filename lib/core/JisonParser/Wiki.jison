@@ -356,7 +356,7 @@ CAPITOL_WORD                    ([A-Z]{1,}[a-z_\-\x80-\xFF]{1,}){2,}
 
         return 'EOF';
 	%}
-<center>[:][:][:]
+<center>[:][:]
 	%{
 		if (parser.isContent()) return 'CONTENT'; //js
 		lexer.popState(); //js
@@ -366,7 +366,7 @@ CAPITOL_WORD                    ([A-Z]{1,}[a-z_\-\x80-\xFF]{1,}){2,}
 		//php $this->popState();
 		//php return 'CENTER_END';
 	%}
-[:][:][:]
+[:][:]
 	%{
 		if (parser.isContent()) return 'CONTENT'; //js
 		lexer.begin('center'); //js
@@ -610,7 +610,6 @@ CAPITOL_WORD                    ([A-Z]{1,}[a-z_\-\x80-\xFF]{1,}){2,}
 		//php $this->tableStack[] = true;
 		//php return 'TABLE_START';
 	%}
-[|]                                     return 'PIPE';
 
 
 <titleBar><<EOF>>
@@ -824,6 +823,11 @@ line
         $$ = parser.block($1 + $2); //js
         //php $$ = $this->block($1 . $2);
     }
+ | BLOCK_START contents EOF
+    {
+        $$ = parser.block($1 + $2); //js
+        //php $$ = $this->block($1 . $2);
+    }
  ;
 
 contents
@@ -845,8 +849,6 @@ content
         $$ = parser.comment($1); //js
         //php $$ = $this->comment($1);
     }
- | PIPE
-    {$$ = $1;}
  | NO_PARSE_START NO_PARSE_END
  | NO_PARSE_START contents
     {
@@ -963,8 +965,8 @@ content
  | UNLINK_START UNLINK_END
  | UNLINK_START contents
     {
-        $$ = $1 + $2;//js
-        //php $$ = $1 . $2;
+        $$ = parser.unlink($1 + $2); //js
+        //php $$ = $this->unlink($1 . $2);
     }
  | UNLINK_START contents UNLINK_END
 	{
@@ -974,23 +976,13 @@ content
  | LINK_START LINK_END
  | LINK_START contents
     {
-        $$ = $1 + $2;//js
-        //php $$ = $1 . $2;
+        $$ = '[' + $2;//js
+        //php $$ = '[' . $2;
     }
  | LINK_START contents LINK_END
 	{
 		$$ = parser.link($1, $2); //js
 		//php $$ = $this->link($1, $2);
-	}
- | LINK_START contents PIPE contents
-    {
-        $$ = '[' + $2 + $3 + $4;//js
-        //php $$ = '[' . $2 . $3 . $4;
-    }
- | LINK_START contents PIPE contents LINK_END
-	{
-		$$ = parser.link($1, $2, $4); //js
-		//php $$ = $this->link($1, $2, $4);
 	}
  | STRIKE_START STRIKE_END
  | STRIKE_START contents
@@ -1093,16 +1085,6 @@ content
     {
         $$ = parser.forcedLineEnd(); //js
         //php $$ = $this->forcedLineEnd();
-    }
- | BLOCK_START contents EOF
-    {
-        $$ = parser.block($1 + $2); //js
-        //php $$ = $this->block($1 . $2);
-    }
- | BLOCK_START contents BLOCK_END
-    {
-        $$ = parser.block($1 + $2); //js
-        //php $$ = $this->block($1 . $2);
     }
  | CHAR
     {
