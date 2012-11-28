@@ -117,11 +117,13 @@ $page = $_REQUEST["page"];
 
 // Copy namespace from structure parent page
 if ($prefs['namespace_enabled'] === 'y') {
-	$s_page_info = $structlib->s_get_page_info($_REQUEST['current_page_id']);
-	$s_suffix = '';
-	if (isset($prefs['namespace_separator']) && !empty($prefs['namespace_separator']) && strpos($s_page_info['pageName'], $prefs['namespace_separator'])!==false) {
-		$split = explode($prefs['namespace_separator'], $s_page_info['pageName']);
-		$s_suffix = reset($split);
+	if (isset($_REQUEST['current_page_id'])) {
+		$s_page_info = $structlib->s_get_page_info($_REQUEST['current_page_id']);
+		$s_suffix = '';
+		if (isset($prefs['namespace_separator']) && !empty($prefs['namespace_separator']) && strpos($s_page_info['pageName'], $prefs['namespace_separator'])!==false) {
+			$split = explode($prefs['namespace_separator'], $s_page_info['pageName']);
+			$s_suffix = reset($split);
+		}
 	}
 }
 if (!empty($s_suffix)) {
