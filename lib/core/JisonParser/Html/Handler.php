@@ -291,13 +291,18 @@ class JisonParser_Html_Handler extends JisonParser_Html
 			//table
 			case "table":
 				$contents = $this->parse($contents);
-				$rows = $this->unStashStatic("table");
-				$result = $this->statedSyntax($tag, "||", implode("~REAL_NEW_LINE~", $rows), "||");
+				$body = $this->unStashStatic("table");
+				$result = $this->statedSyntax($tag, "||", implode('', $body), "||");
+				break;
+			case "tableBody":
+				$contents = $this->parse($contents);
+				$rows = $this->unStashStatic("tableBody");
+				$this->stashStatic(implode("~REAL_NEW_LINE~", $rows), "table");
 				break;
 			case "tableRow":
 				$contents = $this->parse($contents);
 				$columns = $this->unStashStatic('tableRow');
-				$this->stashStatic(implode("|", $columns), "table");
+				$this->stashStatic(implode("|", $columns), "tableBody");
 				break;
 			case "tableData":
 				$contents = $this->parse($contents);
@@ -335,7 +340,7 @@ class JisonParser_Html_Handler extends JisonParser_Html
 
 			//line
 			case "line":
-				if ($this->Parser->htmlElementsStackCount == 0) {
+				if ($tag['htmlElementsStackCount'] == 0) {
 					$result = $this->newLine();
 				} else {
 					$result = $this->elementFromTag($tag);
@@ -665,7 +670,8 @@ class JisonParser_Html_Handler extends JisonParser_Html
 			"params" => $params,
 			"open" => $tag,
 			"state" => "open",
-			"type" => $type
+			"type" => $type,
+			"htmlElementsStackCount" => $this->htmlElementsStackCount
 		);
 	}
 

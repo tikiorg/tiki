@@ -41,6 +41,7 @@ class JisonParser_WikiCKEditor_Handler extends JisonParser_Wiki_Handler
 		"strike" =>                     "stk",
 		"doubleDash" =>                 "dd",
 		"table" =>                      "t",
+		"tableBody" =>                  "tbd",
 		"tableRow" =>                   "tr",
 		"tableData" =>                  "td",
 		"titleBar" =>                   "tb",

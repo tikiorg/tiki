@@ -1147,9 +1147,15 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	 * @param   $includePageAsDataAttribute bool includes the page as an attribute in the link "data-page"
 	 * @return  string  $content desired output from syntax
 	 */
-	function link($type, $page, $description, $includePageAsDataAttribute = false) //[content|content]
+	function link($type, $page, $includePageAsDataAttribute = false) //[content|content]
 	{
 		global $tikilib, $prefs;
+
+		if ($type == 'word' && $prefs['feature_wikiwords'] != 'y') {
+			return $page;
+		}
+
+		$this->removeEOF($page);
 
 		$wikiExternal = '';
 		$parts = explode(':', $page);
@@ -1158,11 +1164,18 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 			$page = implode(':', $parts);
 		}
 
+		$description = '';
+		$parts = explode('|', $page);
+		if (isset($parts[1])) {
+			$page = array_shift($parts);
+			$description = implode('|', $parts);
+		}
 
 		if (!empty($description)) {
 			$feature_wikiwords = $prefs['feature_wikiwords'];
 			$prefs['feature_wikiwords'] = 'n';
 			$description = $this->parse($description);
+			$this->removeEOF($description);
 			$prefs['feature_wikiwords'] = $feature_wikiwords;
 		}
 
@@ -1316,8 +1329,10 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 			$tableContents .= $this->table_tr($row);
 		}
 
+		$tbody = $this->createWikiTag('tableBody', 'tbody', $tableContents);
+
 		return $this->createWikiTag(
-			"table", "table", $tableContents,
+			"table", "table", $tbody,
 			array(
 				"class" => "wikitable"
 			)
@@ -1487,7 +1502,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 
 		if (!empty($params)) {
 			foreach ($params as $param => $value) {
-				$tag .= " " . $param . "='" . $value . "'";
+				$tag .= " " . $param . "='" . trim($value) . "'";
 			}
 		}
 

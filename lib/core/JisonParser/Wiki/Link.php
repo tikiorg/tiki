@@ -30,7 +30,7 @@ class JisonParser_Wiki_Link
 	{
 		global $tikilib, $prefs;
 
-		$this->page = $page;
+		$this->page = $this->description = $page;
 		$this->parser = &$parser;
 
 		$this->namespaceSeparator = $prefs['namespace_separator'];
