@@ -92,7 +92,7 @@
 								($cur_field.type eq 'n' and $cur_field.options_array[0] == 0) or
 								($cur_field.type eq 'b' and $cur_field.options_array[0] == 0) 
 							} 
-								<td>
+								<td colspan="2">
 									<span class="formlabel">{$cur_field.name|escape}</span><br/>
 									<span class="formcontent">{trackeroutput field=$cur_field item=$item_info showlinks=n list_mode=n inTable=y}</span>
 								</td>
