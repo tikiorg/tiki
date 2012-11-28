@@ -310,6 +310,7 @@
 		{preference name=namespace_enabled}
 		<div class="adminoptionboxchild" id="namespace_enabled_childcontainer">
 			{preference name=namespace_separator}
+			{tr}To use :: as a separator, you should also use ::: as the wiki center tag syntax.{/tr}
 			{preference name=feature_use_three_colon_centertag}
 		</div>
 	{/tab}
