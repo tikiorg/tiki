@@ -25,7 +25,7 @@ class WYSIWYGLib
 
 	function setUpEditor($is_html, $dom_id, $params = array(), $auto_save_referrer = '', $full_page = true)
 	{
-
+		require_once('lib/toolbars/toolbarslib.php');
 		global $tikiroot, $prefs, $headerlib;
 
 		$this->loadCKEditor();
