@@ -301,6 +301,7 @@
 					<li>{tr}conflict with wiki syntax tagging{/tr}</li>
 					</ul>
 					{preference name=namespace_separator}
+					{preference name=namespace_indicator_in_structure}
 					<fieldset>
 						<legend>{tr}Settings that may be affected by the namespace separator{/tr}{help url="Watch"}</legend>
 
