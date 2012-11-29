@@ -63,6 +63,12 @@
 {preference name=record_untranslated}
 	
 {preference name=feature_machine_translation}
+<div class="adminoptionboxchild feature_machine_translation_childcontainer">
+	{preference name=lang_machine_translate_implementation}
+	{preference name=lang_google_api_key}
+	{preference name=lang_machine_translate_wiki}
+</div>
+
 </div>
 {/tab}
 

@@ -92,8 +92,8 @@ function prefs_feature_list($partial = false)
 			'tags' => array('experimental'),
 		),
 		'feature_machine_translation' => array(
-			'name' => tra('Machine Translation (by Google Translate)'),
-			'description' => tra('Uses Google Translate to translate the content of wiki pages to other languages.'),
+			'name' => tra('Machine Translation'),
+			'description' => tra('Uses machine translation to translate the content of the site to other languages. Note that this feature relies on external services thay may not be free. Google Translate is a paid service.'),
 			'help' => 'Machine+Translation',
 			'warning' => tra('Experimental'),
 			'tags' => array('experimental'),

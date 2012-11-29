@@ -52,11 +52,11 @@
 						{icon _id=google title="{tr}Google translate{/tr}"} {tr}Machine translations{/tr}
 					</h1>
 				{* List machine translation candidates for available language of the site *}
-					{section name=i loop=$langsCandidatesForMachineTranslation}
-						<a href="tiki-index.php?machine_translate_to_lang={$langsCandidatesForMachineTranslation[i].lang|escape}&page={$page|escape:"quotes"}&no_bl=y" title="{$langsCandidatesForMachineTranslation[i].langName|escape} ({$langsCandidatesForMachineTranslation[i].lang|escape})">
-							{$langsCandidatesForMachineTranslation[i].langName|escape} *
+					{foreach from=$langsCandidatesForMachineTranslation item=mtl}
+						<a href="tiki-index.php?machine_translate_to_lang={$mtl.lang|escape}&page={$page|escape:"quotes"}&no_bl=y" title="{$mtl.langName|escape} ({$mtl.lang|escape})">
+							{$mtl.langName|escape} *
 						</a>
-					{/section}
+					{/foreach}
 				{/if}
 			{* For all object types: Translation maintenance *}
 				{capture}{if $object_type eq 'wiki page' and $tiki_p_edit eq 'y'}

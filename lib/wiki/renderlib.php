@@ -198,9 +198,10 @@ class WikiRenderer
 			$this->smartyassign('pageLang', $pageLang);
 		}
 
-		if ($prefs['feature_machine_translation'] == 'y' && !empty($this->info['lang'])) {
-			$translator = new Multilingual_MachineTranslation_GoogleTranslateWrapper($this->info['lang'], $this->info['lang']);
-			$langsCandidatesForMachineTranslation = $translator->getLangsCandidatesForMachineTranslation($this->trads);
+		if ($prefs['feature_machine_translation'] == 'y' && $prefs['lang_machine_translate_wiki'] == 'y' && !empty($this->info['lang'])) {
+			$provider = new Multilingual_MachineTranslation;
+			$translator = $provider->getHtmlImplementation($this->info['lang'], $this->info['lang']);
+			$langsCandidatesForMachineTranslation = $translator->getCandidateLanguages($this->trads);
 			$this->smartyassign('langsCandidatesForMachineTranslation', $langsCandidatesForMachineTranslation);
 		}
 

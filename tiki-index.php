@@ -694,17 +694,20 @@ function generate_machine_translated_content($pageContent, $pageInfo, $targetLan
  */
 function translate_text($text, $sourceLang, $targetLang, $html = true)
 {
-	$translator = new Multilingual_MachineTranslation_GoogleTranslateWrapper($sourceLang, $targetLang, $html);
-	$translatedText = $translator->translateText($text);
-	return $translatedText;
-
+	$provider = new Multilingual_MachineTranslation;
+	if ($html) {
+		$translator = $provider->getHtmlImplementation($sourceLang, $targetLang);
+	} else {
+		$translator = $provider->getWikiImplementation($sourceLang, $targetLang);
+	}
+	$translated = $translator->translateText($text);
+	return $translated;
 }
 
 function make_sure_machine_translation_is_enabled()
 {
 	global $access, $_REQUEST, $prefs;
-	if ($prefs['feature_machine_translation'] != 'y') {
-		require_once('lib/tikiaccesslib.php');
+	if ($prefs['feature_machine_translation'] != 'y' || $prefs['lang_machine_translate_wiki' != 'y']) {
 		$error_msg = tra('You have requested that this page be machine translated:') .
 						' <b>' .
 						$_REQUEST['page'] .

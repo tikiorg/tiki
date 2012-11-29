@@ -10,9 +10,9 @@
  *
  */
  
-class Multilingual_MachineTranslation_GoogleTranslateWrapper
+class Multilingual_MachineTranslation_GoogleTranslateWrapper implements Multilingual_MachineTranslation_Interface
 {
-  	const SERVICE_URL = "http://ajax.googleapis.com/ajax/services/language/translate?v=1.0";
+  	const SERVICE_URL = "https://www.googleapis.com/language/translate/v2";
 
 	//wiki markup (keep this regex in case we decide to translate wiki markup and not html)    
 	//	const WIKI_MARKUP = "/<[^>]*>| ?[\`\!\@\#\$\%\^\&\*\[\]\:\;\"\'\<\,\>\/\|\\\=\-\+\_\(\)]{2,} ?|\(\([\s\S]*?\)\)|\~[a-z]{2,3}\~[\s\S]*?\~\/[a-z]{2,3}\~|\~hs\~|\~\~[\s\S]*?\:|\~\~|[[^\|]*?\||\[[^|\]]*\]|\{\*[^\}\*]*?\*\}|\{[^\}]*?\}|^;|!/m";
@@ -72,6 +72,7 @@ class Multilingual_MachineTranslation_GoogleTranslateWrapper
 		'vi' => 'Vietnamese'
 	);
 
+	private $key;
   	private $sourceLang;
   	private $targetLang; 
   	private $markup;
@@ -79,8 +80,9 @@ class Multilingual_MachineTranslation_GoogleTranslateWrapper
 	private $arrayOfUntranslatableStringsAndTheirIDs = array();
 	private $currentID = 169;
    	
-	function __construct ($sourceLang, $targetLang, $html = true) 
+	function __construct ($key, $sourceLang, $targetLang, $html = true) 
 	{
+		$this->key = $key;
 		$this->sourceLang = $sourceLang;
 		$this->targetLang = $targetLang;
 		if ($html) {
@@ -92,7 +94,7 @@ class Multilingual_MachineTranslation_GoogleTranslateWrapper
 	}
    	
    	
-	function getLangsCandidatesForMachineTranslation($trads) 
+	function getCandidateLanguages($trads) 
 	{
 		global $langmapping, $prefs;
 		$usedLangs = array();
@@ -124,7 +126,7 @@ class Multilingual_MachineTranslation_GoogleTranslateWrapper
 			if (isset($this->langsSupportedByGoogleTranslate[$langCandidate])) {
 				$langsCandidatesForMachineTranslation[] = array(
 					'lang' => $langCandidate,
-					'langName' => $name,
+					'langName' => is_array($name) ? reset($name) : $name,
 				);
 			}
 		}
@@ -147,7 +149,7 @@ class Multilingual_MachineTranslation_GoogleTranslateWrapper
 		$result = "";
 		foreach ($chunks as $textToTranslate) {
 			$result .= $this->getTranslationFromGoogle($textToTranslate)." ";
-		}  
+		}
 
 		$result = $this->remove_notranslateTags_and_reverse_to_original_markup($result);
 		return trim($result);
@@ -168,18 +170,23 @@ class Multilingual_MachineTranslation_GoogleTranslateWrapper
 
 	private function getTranslationFromGoogle($text) 
 	{
-		$langpair = $this->sourceLang."|".$this->targetLang;
-
-		$encodedText = urlencode($text);
-		$encodedLangpair = urlencode($langpair);
-
 		require_once 'lib/ointegratelib.php';
 		$ointegrate = new OIntegrate();
 
-		$url = self::SERVICE_URL."&q=".$encodedText."&langpair=".$encodedLangpair;
+		$url = self::SERVICE_URL . '?' . http_build_query(array(
+			'key' => $this->key,
+			'source' => $this->sourceLang,
+			'target' => $this->targetLang,
+			'q' => $text,
+			'format' => ($this->markup === self::HTML_MARKUP) ? 'html' : 'text',
+		), '', '&');
+
 		$oi_result = $ointegrate->performRequest($url);
-		$result = $oi_result->data['responseData']['translatedText'];
-		return $result;
+		$result = $oi_result->data['data']['translations'];
+
+		return implode('', array_map(function ($entry) {
+			return $entry['translatedText'];
+		}, $result));
 	}
 
 	private function splitInLogicalChunksOf450CharsMax($text) 
