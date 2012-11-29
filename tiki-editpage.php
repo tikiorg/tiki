@@ -1147,7 +1147,11 @@ if (
 			$prefs['feature_wysiwyg'] === 'y'
 		) {
 			$parser = new JisonParser_Html_Handler();
+			print_r($edit);
 			$edit = $parser->parse($edit);
+			print_r($edit);
+			print_r(Tikilib::getOne('select data from tiki_pages where pageName = ?', array($page)));
+			die;
 		} else if ($_SESSION['wysiwyg'] === 'y' && $prefs['wysiwyg_wiki_parsed'] === 'y' && $prefs['wysiwyg_ckeditor'] === 'y') {
 			$edit = $editlib->partialParseWysiwygToWiki($edit);
 		}

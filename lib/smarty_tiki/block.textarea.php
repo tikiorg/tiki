@@ -157,7 +157,7 @@ function smarty_block_textarea($params, $content, $smarty, $repeat)
 			global $wysiwyglib; include_once('lib/ckeditor_tiki/wysiwyglib.php');
 			$html .= $wysiwyglib->setUpJisonEditor($params['_is_html'], $as_id, $params, $auto_save_referrer);
 			$html .= '<input name="jisonWyisywg" type="hidden" value="true" />';
-			$html .= '<div class="wikiedit " name="'.$params['name'].'" id="'.$as_id.'">' . ($content) . '</div>';
+			$html .= '<div class="wikiedit ui-widget-content" name="'.$params['name'].'" id="'.$as_id.'">' . ($content) . '</div>';
 		} else {
 			// new ckeditor implementation 2010
 			if ($prefs['feature_ajax'] !== 'y' || $prefs['ajax_autosave'] !== 'y' ||

@@ -15,6 +15,7 @@ class HeaderLib
 	public $title;
 	public $jsfiles;
 	public $js;
+	public $jsfile_attr = array();
 	public $js_config;
 	public $jq_onready;
 	public $cssfiles;
@@ -88,6 +89,13 @@ class HeaderLib
 				$this->minified[$file] = $minified;
 			}
 		}
+		return $this;
+	}
+
+	function add_jsfile_with_attr($script, $attributes, $rank=0)
+	{
+		$this->add_jsfile($script, $rank);
+		$this->jsfile_attr[$script] = $attributes;
 		return $this;
 	}
 
@@ -268,8 +276,14 @@ class HeaderLib
 			foreach ($jsfiles as $x=>$jsf) {
 				$back.= "<!-- jsfile $x -->\n";
 				foreach ($jsf as $jf) {
+					$attrs = '';
+					if (isset($this->jsfile_attr[$jf])) {
+						foreach($this->jsfile_attr[$jf] as $attr => $value) {
+							$attrs .= ' ' . $attr . '="' . addslashes($value) . '"';
+						}
+					}
 					$jf = $this->convert_cdn($jf, $x);
-					$back.= "<script type=\"text/javascript\" src=\"".smarty_modifier_escape($jf)."\"></script>\n";
+					$back.= "<script$attrs type=\"text/javascript\" src=\"".smarty_modifier_escape($jf)."\"></script>\n";
 				}
 			}
 			$back.= "\n";
@@ -482,7 +496,14 @@ class HeaderLib
 		if (count($this->jsfiles)) {
 			foreach ($this->jsfiles as $x=>$jsf) {
 				foreach ($jsf as $jf) {
-					$out[] = "<script type=\"text/javascript\" src=\"".smarty_modifier_escape($jf)."\"></script>\n";
+					$attrs = '';
+					if (isset($this->jsfile_attr[$jf])) {
+						foreach($this->jsfile_attr[$jf] as $attr => $value) {
+							$attrs .= ' ' . $attr . '="' . addslashes($value) . '"';
+						}
+					}
+
+					$out[] = "<script$attrs type=\"text/javascript\" src=\"".smarty_modifier_escape($jf)."\"></script>\n";
 				}
 			}
 		}

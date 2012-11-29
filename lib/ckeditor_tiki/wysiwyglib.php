@@ -74,7 +74,35 @@ ajaxLoadingShow("'.$dom_id.'");
 
 	function setUpJisonEditor($is_html, $dom_id, $params = array(), $auto_save_referrer = '', $full_page = true)
 	{
+		global $tikiroot, $headerlib;
+		$headerlib
+			->add_cssfile('lib/aloha-editor/css/aloha.css')
+			->add_jsfile('lib/aloha-editor/lib/require.js')
+			->add_jsfile_with_attr('lib/aloha-editor/lib/aloha.js', array(
+			'data-aloha-plugins' => 'common/ui,
+									common/table,
+									common/list,
+									common/link,
+									common/highlighteditables,
+									common/block,
+									common/undo,
+									common/image,
+									common/paste,
+									common/commands,
+									common/abbr,
+									common/format'
+		))
+			->add_jq_onready(
+			"Aloha.ready(function() {
+				Aloha.settings.jQuery = jQuery;
+				Aloha.bind( 'aloha-add-markup', function( jEvent, markup ) {
+					markup.attr('data-t', 'b');
+		        });
+				$('#$dom_id').aloha();
+			});"
+			,10);
 
+		return "<script>Aloha ={};Aloha.settings = {};Aloha.settings.bundles = {};Aloha.settings.bundles['tiki'] = '../../aloha-editor_tiki/plugins';</script>";
 	}
 
 	private function finishLoading($dom_id, $auto_save_referrer, $params)
