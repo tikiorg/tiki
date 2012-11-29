@@ -11,24 +11,18 @@
 
 class WYSIWYGLib
 {
-	private function loadCKEditor()
-	{
-		global $tikiroot, $headerlib;
-
-		$headerlib->add_js_config('window.CKEDITOR_BASEPATH = "'. $tikiroot . 'lib/ckeditor/";')
-		//// for js debugging - copy _source from ckeditor distribution to libs/ckeditor to use
-		//// note, this breaks ajax page load via wikitopline edit icon
-		//->add_jsfile('lib/ckeditor/ckeditor_source.js');
-			->add_jsfile('lib/ckeditor/ckeditor.js', 0, true)
-			->add_js('window.CKEDITOR.config._TikiRoot = "'.$tikiroot.'";', 1);
-	}
-
 	function setUpEditor($is_html, $dom_id, $params = array(), $auto_save_referrer = '', $full_page = true)
 	{
-		require_once('lib/toolbars/toolbarslib.php');
-		global $tikiroot, $prefs, $headerlib;
 
-		$this->loadCKEditor();
+		global $tikiroot, $prefs;
+		$headerlib = TikiLib::lib('header');
+		$headerlib->add_js_config('window.CKEDITOR_BASEPATH = "'. $tikiroot . 'lib/ckeditor/";')
+				//// for js debugging - copy _source from ckeditor distribution to libs/ckeditor to use
+				//// note, this breaks ajax page load via wikitopline edit icon
+				//->add_jsfile('lib/ckeditor/ckeditor_source.js');
+				->add_jsfile('lib/ckeditor/ckeditor.js', 0, true)
+				->add_jsfile('lib/ckeditor/adapters/jquery.js', 0, true)
+				->add_js('window.CKEDITOR.config._TikiRoot = "'.$tikiroot.'";', 1);
 
 		if ($full_page) {
 			$headerlib->add_jsfile('lib/ckeditor_tiki/tikilink_dialog.js');
@@ -52,8 +46,6 @@ class WYSIWYGLib
 			$headerlib->add_js(
 				'// --- config settings for the autosave plugin ---
 window.CKEDITOR.config.ajaxAutoSaveTargetUrl = "'.$tikiroot.'tiki-auto_save.php";	// URL to post to (also used for plugin processing)
-window.CKEDITOR.config.stylesSet = "tikistyles:' . $tikiroot . 'lib/ckeditor_tiki/tikistyles.js";
-window.CKEDITOR.config.templates_files = ["' . $tikiroot . 'lib/ckeditor_tiki/tikitemplates.js"];
 window.CKEDITOR.config.extraPlugins += (window.CKEDITOR.config.extraPlugins ? ",autosave" : "autosave" );
 window.CKEDITOR.plugins.addExternal( "autosave", "'.$tikiroot.'lib/ckeditor_tiki/plugins/autosave/");
 window.CKEDITOR.config.ajaxAutoSaveRefreshTime = 30 ;			// RefreshTime
@@ -65,12 +57,54 @@ ajaxLoadingShow("'.$dom_id.'");
 			);	// before dialog tools init (10)
 		}
 
+		// work out current theme/option
+		global $tikilib, $tc_theme, $tc_theme_option;
+		if (!empty($tc_theme)) {
+			$ckstyle = $tikiroot . $tikilib->get_style_path('', '', $tc_theme);
+			if (!empty($tc_theme_option)) {
+				$ckstyle .= '","' . $tikiroot . $tikilib->get_style_path($tc_theme, $tc_theme_option, $tc_theme_option);
+			}
+		} else {
+			$ckstyle = $tikiroot . $tikilib->get_style_path('', '', $prefs['style']);
+			if (!empty($prefs['style_option']) && $tikilib->get_style_path($prefs['style'], $prefs['style_option'], $prefs['style_option'])) {
+				$ckstyle .= '","' . $tikiroot . $tikilib->get_style_path($prefs['style'], $prefs['style_option'], $prefs['style_option']);
+			}
+		}
+
+		// finally the toolbar
+		$smarty = TikiLib::lib('smarty');
+
+		$params['area_id'] = empty($params['area_id']) ? $dom_id : $params['area_id'];
+
+		$smarty->loadPlugin('smarty_function_toolbars');
+		$cktools = smarty_function_toolbars($params, $smarty);
+		$cktools = json_encode($cktools);
+		$cktools = substr($cktools, 1, strlen($cktools) - 2); // remove surrouding [ & ]
+		$cktools = str_replace(']],[[', '],"/",[', $cktools); // add new row chars - done here so as not to break existing f/ck
+
 		$ckeformattags = ToolbarCombos::getFormatTags('html');
-		$headerlib->add_js('window.CKEDITOR.config.format_tags = "' . $ckeformattags . '";');
 
-		$this->finishLoading($dom_id, $auto_save_referrer, $params);
+		// js to initiate the editor
+		$ckoptions = '{
+	toolbar_Tiki: ' .$cktools.',
+	toolbar: "Tiki",
+	language: "'.$prefs['language'].'",
+	customConfig: "",
+	autoSaveSelf: "'.addcslashes($auto_save_referrer, '"').'",		// unique reference for each page set up in ensureReferrer()
+	font_names: "' . trim($prefs['wysiwyg_fonts']) . '",
+	format_tags: "' . $ckeformattags . '",
+	stylesSet: "tikistyles:' . $tikiroot . 'lib/ckeditor_tiki/tikistyles.js",
+	templates_files: "' . $tikiroot . 'lib/ckeditor_tiki/tikitemplates.js",
+	contentsCss: ["' . $ckstyle . '"],
+	skin: "' . ($prefs['wysiwyg_toolbar_skin'] != 'default' ? $prefs['wysiwyg_toolbar_skin'] : 'kama') . '",
+	defaultLanguage: "' . $prefs['language'] . '",
+	language: "' . ($prefs['feature_detect_language'] === 'y' ? '' : $prefs['language']) . '",
+	'. (empty($params['cols']) ? 'height: 400,' : '') .'
+	contentsLangDirection: "' . ($prefs['feature_bidi'] === 'y' ? 'rtl' : 'ltr') . '"
+}';
+
+		return $ckoptions;
 	}
-
 
 	function setUpJisonEditor($is_html, $dom_id, $params = array(), $auto_save_referrer = '', $full_page = true)
 	{
@@ -104,55 +138,6 @@ ajaxLoadingShow("'.$dom_id.'");
 
 		return "<script>Aloha ={};Aloha.settings = {};Aloha.settings.bundles = {};Aloha.settings.bundles['tiki'] = '../../aloha-editor_tiki/plugins';</script>";
 	}
-
-	private function finishLoading($dom_id, $auto_save_referrer, $params)
-	{
-		global $tikiroot, $prefs, $headerlib, $smarty;
-
-		// work out current theme/option
-		global $tikilib, $tc_theme, $tc_theme_option;
-		if (!empty($tc_theme)) {
-			$ckstyle = $tikiroot . $tikilib->get_style_path('', '', $tc_theme);
-			if (!empty($tc_theme_option)) {
-				$ckstyle .= '","' . $tikiroot . $tikilib->get_style_path($tc_theme, $tc_theme_option, $tc_theme_option);
-			}
-		} else {
-			$ckstyle = $tikiroot . $tikilib->get_style_path('', '', $prefs['style']);
-			if (!empty($prefs['style_option']) && $tikilib->get_style_path($prefs['style'], $prefs['style_option'], $prefs['style_option'])) {
-				$ckstyle .= '","' . $tikiroot . $tikilib->get_style_path($prefs['style'], $prefs['style_option'], $prefs['style_option']);
-			}
-		}
-
-		// finally the toolbar
-		$smarty = TikiLib::lib('smarty');
-
-		$params['area_id'] = empty($params['area_id']) ? $dom_id : $params['area_id'];
-
-		$smarty->loadPlugin('smarty_function_toolbars');
-		$cktools = smarty_function_toolbars($params, $smarty);
-		$cktools = json_encode($cktools);
-		$cktools = substr($cktools, 1, strlen($cktools) - 2); // remove surrouding [ & ]
-		$cktools = str_replace(']],[[', '],"/",[', $cktools); // add new row chars - done here so as not to break existing f/ck
-
-		// js to initiate the editor
-		$headerlib
-			->add_jq_onready(
-'CKEDITOR.replace( "' . $dom_id . '", {
-	toolbar_Tiki: ' .$cktools.',
-	toolbar: "Tiki",
-	language: "'.$prefs['language'].'",
-	customConfig: "",
-	autoSaveSelf: "'.addcslashes($auto_save_referrer, '"').'",		// unique reference for each page set up in ensureReferrer()
-	font_names: "' . trim($prefs['wysiwyg_fonts']) . '",
-	contentsCss: ["' . $ckstyle . '"],
-	skin: "' . ($prefs['wysiwyg_toolbar_skin'] != 'default' ? $prefs['wysiwyg_toolbar_skin'] : 'kama') . '",
-	defaultLanguage: "' . $prefs['language'] . '",
-	language: "' . ($prefs['feature_detect_language'] === 'y' ? '' : $prefs['language']) . '",
-	'. (empty($params['cols']) ? 'height: 400,' : '') .'
-	contentsLangDirection: "' . ($prefs['feature_bidi'] === 'y' ? 'rtl' : 'ltr') . '"
-});');
-	}
-
 }
 
 global $wysiwyglib;
