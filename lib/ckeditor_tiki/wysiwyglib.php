@@ -74,60 +74,7 @@ ajaxLoadingShow("'.$dom_id.'");
 
 	function setUpJisonEditor($is_html, $dom_id, $params = array(), $auto_save_referrer = '', $full_page = true)
 	{
-		global $tikiroot, $prefs, $headerlib;
 
-		$this->loadCKEditor();
-/*
-		if ($full_page) {
-			$headerlib->add_jsfile('lib/ckeditor_tiki/tikilink_dialog.js');
-			$headerlib->add_js(
-				'window.CKEDITOR.config.extraPlugins += (window.CKEDITOR.config.extraPlugins ? ",tikiplugin" : "tikiplugin" );
-				window.CKEDITOR.plugins.addExternal( "tikiplugin", "'.$tikiroot.'lib/ckeditor_tiki/plugins/tikiplugin/");',
-				5
-			);
-		}
-		if (!$is_html && $full_page) {
-			$headerlib->add_js(
-				'window.CKEDITOR.config.extraPlugins += (window.CKEDITOR.config.extraPlugins ? ",tikiwiki" : "tikiwiki" );
-				window.CKEDITOR.plugins.addExternal( "tikiwiki", "'.$tikiroot.'lib/ckeditor_tiki/plugins/tikiwiki/");',
-				5
-			);	// before dialog tools init (10)
-
-		}
-		if ($auto_save_referrer && $prefs['feature_ajax'] === 'y' &&
-			$prefs['ajax_autosave'] === 'y' && $params['autosave'] == 'y') {
-
-			$headerlib->add_js(
-				'// --- config settings for the autosave plugin ---
-window.CKEDITOR.config.ajaxAutoSaveTargetUrl = "'.$tikiroot.'tiki-auto_save.php";	// URL to post to (also used for plugin processing)
-window.CKEDITOR.config.extraPlugins += (window.CKEDITOR.config.extraPlugins ? ",autosave" : "autosave" );
-window.CKEDITOR.plugins.addExternal( "autosave", "'.$tikiroot.'lib/ckeditor_tiki/plugins/autosave/");
-window.CKEDITOR.config.ajaxAutoSaveRefreshTime = 30 ;			// RefreshTime
-window.CKEDITOR.config.ajaxAutoSaveSensitivity = 2 ;			// Sensitivity to key strokes
-window.CKEDITOR.config.contentsLangDirection = ' . ($prefs['feature_bidi'] === 'y' ? '"rtl"' : '"ui"') . '
-register_id("'.$dom_id.'","'.addcslashes($auto_save_referrer, '"').'");	// Register auto_save so it gets removed on submit
-ajaxLoadingShow("'.$dom_id.'");
-', 5
-			);	// before dialog tools init (10)
-		}
-*/
-		$this->finishLoading($dom_id, $auto_save_referrer, $params);
-		$headerlib->add_js(
-			'window.CKEDITOR.config.stylesSet = "tikistyles:' . $tikiroot . 'lib/ckeditor_tiki/jisonstyles.js";
-			window.CKEDITOR.config.templates_files = ["' . $tikiroot . 'lib/ckeditor_tiki/jisontemplates.js"];
-			window.jisonSyntax = ' . json_encode(JisonParser_WikiCKEditor_Handler::$typeShorthand) . ';
-
-			function addCKEStyle(plugin) {
-				window.CKEDITOR.config.extraPlugins += (window.CKEDITOR.config.extraPlugins ? "," + plugin : plugin );
-				window.CKEDITOR.plugins.addExternal( plugin, "'.$tikiroot.'lib/ckeditor_tiki/plugins/" + plugin + "/");
-			}
-
-			addCKEStyle("jisonline");
-			addCKEStyle("jisonplugin");
-			addCKEStyle("jisonformat");
-			addCKEStyle("jisonsource");',
-			5
-		);
 	}
 
 	private function finishLoading($dom_id, $auto_save_referrer, $params)

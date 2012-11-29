@@ -155,21 +155,9 @@ function smarty_block_textarea($params, $content, $smarty, $repeat)
 
 		if ($prefs['feature_jison_wiki_parser'] == 'y') {
 			global $wysiwyglib; include_once('lib/ckeditor_tiki/wysiwyglib.php');
-			$wysiwyglib->setUpJisonEditor($params['_is_html'], $as_id, $params, $auto_save_referrer);
-
-			$headerlib->add_jq_onready(
-				'var ckEditorInstances = new Array();
-
-				CKEDITOR.on( "instanceReady", function( ev ) {
-					if (typeof ajaxLoadingHide == "function") { ajaxLoadingHide(); }
-					ckEditorInstances[ckEditorInstances.length] = this;
-					ev.editor.resetDirty();
-					$(ev.editor.element.$).hide();
-				});',
-				20
-			);
+			$html .= $wysiwyglib->setUpJisonEditor($params['_is_html'], $as_id, $params, $auto_save_referrer);
 			$html .= '<input name="jisonWyisywg" type="hidden" value="true" />';
-			$html .= '<textarea class="wikiedit ckeditor" name="'.$params['name'].'" id="'.$as_id.'">' . ($content) . '</textarea>';
+			$html .= '<div class="wikiedit " name="'.$params['name'].'" id="'.$as_id.'">' . ($content) . '</div>';
 		} else {
 			// new ckeditor implementation 2010
 			if ($prefs['feature_ajax'] !== 'y' || $prefs['ajax_autosave'] !== 'y' ||
