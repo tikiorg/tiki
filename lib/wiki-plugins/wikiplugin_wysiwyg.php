@@ -136,7 +136,7 @@ $("#' . $exec_key . '").each(function(){
 						return false;
 					})
 			);
-		}, ' . $ckoption . '
+		}' . (!empty($ckoption) ? ', ' . $ckoption : '') .'
 		);
 	});
 });
