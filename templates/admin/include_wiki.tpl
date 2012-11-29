@@ -308,7 +308,22 @@
 
 		{preference name=namespace_enabled}
 		<div class="adminoptionboxchild" id="namespace_enabled_childcontainer">
-		{preference name=namespace_separator}
+			{tr}The namespace separator should not{/tr}
+			<ul>
+			<li>{tr}contain any of the characters not allowed in wiki page names, typically{/tr} /?#[]@$&+;=&lt;&gt;</li>
+			<li>{tr}conflict with wiki syntax tagging{/tr}</li>
+			</ul>
+			{preference name=namespace_separator}
+			<fieldset>
+				<legend>{tr}Settings that may be affected by the namespace separator{/tr}{help url="Watch"}</legend>
+
+				{tr}To use :: as a separator, you should also use ::: as the wiki center tag syntax{/tr}.<br/>
+				{tr}Note: a conversion of :: to ::: for existing pages must be done manually{/tr}
+				{preference name=feature_use_three_colon_centertag}
+
+				{tr}If the page name display stripper conflicts with the namespace separator, the namespace is used and the page name display is not stripped.{/tr}
+				{preference name=wiki_pagename_strip}
+			</fieldset>
 		</div>
 	{/tab}
 
