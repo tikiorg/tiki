@@ -84,17 +84,23 @@ class Multilingual_MachineTranslation
 	{
 		global $prefs;
 
+		$handler = null;
+
 		switch ($this->implementation) {
 		case 'bing':
 			$clientId = $prefs['lang_bing_api_client_id'];
 			$clientSecret = $prefs['lang_bing_api_client_secret'];
-			return new Multilingual_MachineTranslation_BingTranslateWrapper($clientId, $clientSecret, $source, $target);
+			$handler = new Multilingual_MachineTranslation_BingTranslateWrapper($clientId, $clientSecret, $source, $target);
+			break;
 		case 'google':
 			$key = $prefs['lang_google_api_key'];
-			return new Multilingual_MachineTranslation_GoogleTranslateWrapper($key, $source, $target, true);
+			$handler = new Multilingual_MachineTranslation_GoogleTranslateWrapper($key, $source, $target, true);
+			break;
 		case 'null':
 		default:
 			return new Multilingual_MachineTranslation_Null;
 		}
+		
+		return new Multilingual_MachineTranslation_Cache($handler);
 	}
 }
