@@ -34,6 +34,10 @@ if ($prefs['feature_theme_control'] == 'y') {
 		list($tc_theme, $tc_theme_option) = $tcontrollib->parse_theme_option_string($tc_theme);
 	}
 	$tcontrollib->get_theme($cat_type, $cat_objid, $tc_theme, $tc_theme_option);
+	if ($cat_type == 'trackeritem' && empty($tc_theme)) {
+		$trackerId = $tcontrollib->table('tiki_tracker_items')->fetchOne('trackerId', array('itemId' => $cat_objid));
+		$tcontrollib->get_theme('tracker', $trackerId, $tc_theme, $tc_theme_option);
+	}
 	
 	if ($tc_theme) {
 		if ($old_tc_theme) {

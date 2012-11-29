@@ -339,7 +339,6 @@ class ThemeControlLib extends TikiLib
 		if ($obj_theme = $tcontrollib->tc_get_theme_by_object($type, $objectId)) {
 			list($tc_theme, $tc_theme_option) = $tcontrollib->parse_theme_option_string($obj_theme);
 		}
-		echo 'ssss'.$tc_theme_option;
 	}
 }
 $tcontrollib = new ThemeControlLib;
