@@ -263,6 +263,9 @@ class TikiLib extends TikiDb_Bridge
 			case 'service':
 				require_once 'lib/servicelib.php';
 				return self::$libraries[$name] = new ServiceLib;
+			case 'tcontrol':
+				global $tcontrollib; require_once 'lib/themecontrol/tcontrol.php';
+				return self::$libraries[$name] = $tcontrollib;
 		}
 	}
 

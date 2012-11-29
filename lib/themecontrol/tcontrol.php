@@ -309,6 +309,37 @@ class ThemeControlLib extends TikiLib
 		}
 		return $retval;
 	}
-	
+	function get_theme($type, $objectId, &$tc_theme, &$tc_theme_option)
+	{
+		$tcontrollib = TikiLib::lib('tcontrol');
+		$categlib = TikiLib::lib('categ');
+		// CATEGORIES
+		$tc_categs = $categlib->get_object_categories($type, $objectId);
+		if (count($tc_categs)) {
+			$cat_themes = array();	// collect all the category themes
+			foreach ($tc_categs as $cat) {
+				$ct = $tcontrollib->tc_get_theme_by_categ($cat);
+				if (!empty($ct) && !in_array($ct, $cat_themes)) {
+					$cat_themes[] = $ct;
+				
+//					$catt = $categlib->get_category($cat);
+//					$smarty->assign_by_ref('category', $catt["name"]);
+//					break;
+// 	Dead code? Smarty var $category only found in wikiplugin_files.tpl and set correctly there
+// 	seems to have no connection with theme control (jonnyb tiki5)
+				}
+			}
+			if (count($cat_themes) == 1) {	// only use category theme if there is exactly one set
+				list($tc_theme, $tc_theme_option) = $tcontrollib->parse_theme_option_string($cat_themes[0]);	
+			}
+		}
+
+	// OBJECTS - if object has been particularly set, override SECTION or CATEGORIES $tc_theme
+	// if not set, make sure we don't squash whatever $tc_theme may have been
+		if ($obj_theme = $tcontrollib->tc_get_theme_by_object($type, $objectId)) {
+			list($tc_theme, $tc_theme_option) = $tcontrollib->parse_theme_option_string($obj_theme);
+		}
+		echo 'ssss'.$tc_theme_option;
+	}
 }
 $tcontrollib = new ThemeControlLib;
