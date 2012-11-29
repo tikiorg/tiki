@@ -200,8 +200,7 @@ class WikiRenderer
 
 		if ($prefs['feature_machine_translation'] == 'y' && $prefs['lang_machine_translate_wiki'] == 'y' && !empty($this->info['lang'])) {
 			$provider = new Multilingual_MachineTranslation;
-			$translator = $provider->getHtmlImplementation($this->info['lang'], $this->info['lang']);
-			$langsCandidatesForMachineTranslation = $translator->getCandidateLanguages($this->trads);
+			$langsCandidatesForMachineTranslation = $provider->getAvailableLanguages($this->trads);
 			$this->smartyassign('langsCandidatesForMachineTranslation', $langsCandidatesForMachineTranslation);
 		}
 

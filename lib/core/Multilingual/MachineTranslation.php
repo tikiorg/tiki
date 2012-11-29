@@ -9,13 +9,11 @@
 class Multilingual_MachineTranslation
 {
 	private $implementation = 'null';
-	private $key;
 
-	public static function force($implementation, $key)
+	public static function force($implementation)
 	{
 		$self = new self;
 		$self->implementation = $implementation;
-		$self->key = $key;
 
 		return $self;
 	}
@@ -25,31 +23,75 @@ class Multilingual_MachineTranslation
 		global $prefs;
 
 		switch ($prefs['lang_machine_translate_implementation']) {
+		case 'bing':
+			if (! empty($prefs['lang_bing_api_client_id'])) {
+				$this->implementation = 'bing';
+			}
+			break;
+
 		case 'google':
-			if (! empty($prefs['lang_google_api_key'])) {
+			if (! empty($prefs['lang_google_api_client_id'])) {
 				$this->implementation = 'google';
-				$this->key = $prefs['lang_google_api_key'];
 			}
 			break;
 		}
 	}
 
-	function getHtmlImplementation($source, $target)
+	function getAvailableLanguages($realTranslations)
 	{
-		switch ($this->implementation) {
-		case 'google':
-			return new Multilingual_MachineTranslation_GoogleTranslateWrapper($this->key, $source, $target, true);
-		case 'null':
-		default:
-			return new Multilingual_MachineTranslation_Null;
+		global $langmapping, $prefs;
+		$usedLangs = array();
+		foreach ($realTranslations as $trad) {
+			$usedLangs[] = $trad['lang'];
 		}
+			
+		if (!empty($prefs['available_languages'])) {
+			$candidates = array();
+
+			//restrict langs available for machine translation to those 
+			//available on the site
+			foreach ($prefs['available_languages'] as $availLang) {
+				$candidates[$availLang] = $langmapping[$availLang];
+			}
+		} else {
+			$candidates = $langmapping;
+		}
+		
+		//restrict langs available for machine translation to those
+		//not already used for human translation
+		foreach ($usedLangs as $usedLang)  {
+			unset($candidates[$usedLang]);
+		}
+		
+		
+		//restrict langs available for machine translation to those 
+		//available from Google Translate
+		$proposed = array();
+		$supportedLanguages = $this->getHtmlImplementation('', '')
+			->getSupportedLanguages();
+		foreach ($candidates as $langCandidate => $name) {
+			if (isset($supportedLanguages[$langCandidate])) {
+				$proposed[] = array(
+					'lang' => $langCandidate,
+					'langName' => is_array($name) ? reset($name) : $name,
+				);
+			}
+		}
+		return $proposed;
 	}
 
-	function getWikiImplementation($source, $target)
+	function getHtmlImplementation($source, $target)
 	{
+		global $prefs;
+
 		switch ($this->implementation) {
+		case 'bing':
+			$clientId = $prefs['lang_bing_api_client_id'];
+			$clientSecret = $prefs['lang_bing_api_client_secret'];
+			return new Multilingual_MachineTranslation_BingTranslateWrapper($clientId, $clientSecret, $source, $target);
 		case 'google':
-			return new Multilingual_MachineTranslation_GoogleTranslateWrapper($this->key, $source, $target, false);
+			$key = $prefs['lang_google_api_key'];
+			return new Multilingual_MachineTranslation_GoogleTranslateWrapper($key, $source, $target, true);
 		case 'null':
 		default:
 			return new Multilingual_MachineTranslation_Null;

@@ -25,53 +25,6 @@ class Multilingual_MachineTranslation_GoogleTranslateWrapper implements Multilin
   	const NO_TRANSLATE_STRING = "<span class='notranslate'>\$0</span>";
 	const NO_TRANSLATE_PATTERN = "/ <span class='notranslate'>(.*)<\/span> |^<span class='notranslate'>(.*)<\/span> | <span class='notranslate'>(.*)<\/span>\$|^<span class='notranslate'>(.*)<\/span>\$|<span class='notranslate'>(.*)<\/span>/Um";
 
-	//this array should be updated as Google Translate
-	//adds more languages
-	public $langsSupportedByGoogleTranslate = array (
-		'sq' => 'Albanian',
-		'ar' => 'Arabic',
-		'bg' => 'Bulgarian',
-		'ca' => 'Catalan',
-		'zh' => 'Chinese',
-		'hr' => 'Croatian',
-		'cs' => 'Czech',
-		'da' => 'Danish',
-		'nl' => 'Dutch',
-		'en' => 'English',
-		'et' => 'Estonian',
-		'fil' => 'Filipino',
-		'fi' => 'Finnish',
-		'fr' => 'French',
-		'gl' => 'Galician',
-		'de' => 'German',
-		'el' => 'Greek',
-		'he' => 'Hebrew',
-		'hi' => 'Hindi',
-		'hu' => 'Hungarian',
-		'id' => 'Indonesian',
-		'it' => 'Italian',
-		'ja' => 'Japanese',
-		'ko' => 'Korean',
-		'lv' => 'Latvian',
-		'lt' => 'Lithuanian',
-		'mt' => 'Maltese',
-		'no' => 'Norwegian',
-		'fa' => 'Persian',
-		'pl' => 'Polish',
-		'pt' => 'Portuguese',
-		'ro' => 'Romanian',
-		'ru' => 'Russian',
-		'sr' => 'Serbian',
-		'sk' => 'Slovak',
-		'sl' => 'Slovenian',
-		'es' => 'Spanish',
-		'sv' => 'Swedish',
-		'th' => 'Thai',
-		'tr' => 'Turkish',
-		'uk' => 'Ukrainian',
-		'vi' => 'Vietnamese'
-	);
-
 	private $key;
   	private $sourceLang;
   	private $targetLang; 
@@ -94,43 +47,52 @@ class Multilingual_MachineTranslation_GoogleTranslateWrapper implements Multilin
 	}
    	
    	
-	function getCandidateLanguages($trads) 
+	function getSupportedLanguages()
 	{
-		global $langmapping, $prefs;
-		$usedLangs = array();
-		foreach ( $trads as $trad ) {
-			$usedLangs[] = $trad['lang'];
-		}
-			
-		if (!empty($prefs['available_languages'])) {
-			//restrict langs available for machine translation to those 
-			//available on the site
-			foreach ($prefs['available_languages'] as $availLang) {
-				$langsCandidatesForMachineTranslationRaw[$availLang] = $langmapping[$availLang];
-			}
-		} else {
-			$langsCandidatesForMachineTranslationRaw = $langmapping;
-		}
-		
-		//restrict langs available for machine translation to those
-		//not already used for human translation
-		foreach ($usedLangs as $usedLang)  {
-			unset($langsCandidatesForMachineTranslationRaw[$usedLang]);
-		}
-		
-		
-		//restrict langs available for machine translation to those 
-		//available from Google Translate
-		$langsCandidatesForMachineTranslation = array();
-		foreach ($langsCandidatesForMachineTranslationRaw as $langCandidate => $name) {
-			if (isset($this->langsSupportedByGoogleTranslate[$langCandidate])) {
-				$langsCandidatesForMachineTranslation[] = array(
-					'lang' => $langCandidate,
-					'langName' => is_array($name) ? reset($name) : $name,
-				);
-			}
-		}
-		return $langsCandidatesForMachineTranslation;
+		return array(
+			'sq' => 'Albanian',
+			'ar' => 'Arabic',
+			'bg' => 'Bulgarian',
+			'ca' => 'Catalan',
+			'zh' => 'Chinese',
+			'hr' => 'Croatian',
+			'cs' => 'Czech',
+			'da' => 'Danish',
+			'nl' => 'Dutch',
+			'en' => 'English',
+			'et' => 'Estonian',
+			'fil' => 'Filipino',
+			'fi' => 'Finnish',
+			'fr' => 'French',
+			'gl' => 'Galician',
+			'de' => 'German',
+			'el' => 'Greek',
+			'he' => 'Hebrew',
+			'hi' => 'Hindi',
+			'hu' => 'Hungarian',
+			'id' => 'Indonesian',
+			'it' => 'Italian',
+			'ja' => 'Japanese',
+			'ko' => 'Korean',
+			'lv' => 'Latvian',
+			'lt' => 'Lithuanian',
+			'mt' => 'Maltese',
+			'no' => 'Norwegian',
+			'fa' => 'Persian',
+			'pl' => 'Polish',
+			'pt' => 'Portuguese',
+			'ro' => 'Romanian',
+			'ru' => 'Russian',
+			'sr' => 'Serbian',
+			'sk' => 'Slovak',
+			'sl' => 'Slovenian',
+			'es' => 'Spanish',
+			'sv' => 'Swedish',
+			'th' => 'Thai',
+			'tr' => 'Turkish',
+			'uk' => 'Ukrainian',
+			'vi' => 'Vietnamese'
+		);
 	}
 
 

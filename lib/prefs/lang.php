@@ -22,6 +22,7 @@ function prefs_lang_list()
 			'type' => 'list',
 			'options' => array(
 				'google' => tr('Google Translate'),
+				'bing' => tr('Bing Translate'),
 			),
 		),
 		'lang_machine_translate_wiki' => array(
@@ -33,6 +34,18 @@ function prefs_lang_list()
 		'lang_google_api_key' => array(
 			'name' => tr('Google Translate API Key'),
 			'description' => tr('The key must be generated from the google console. Choose to create a server key.'),
+			'type' => 'text',
+			'default' => '',
+		),
+		'lang_bing_api_client_id' => array(
+			'name' => tr('Bing Translate Client ID'),
+			'description' => tr('Application must be registered.'),
+			'type' => 'text',
+			'default' => '',
+		),
+		'lang_bing_api_client_secret' => array(
+			'name' => tr('Bing Translate Client Secret'),
+			'description' => tr('Application must be registered.'),
 			'type' => 'text',
 			'default' => '',
 		),

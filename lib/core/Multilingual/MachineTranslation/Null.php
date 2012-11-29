@@ -8,7 +8,7 @@
  
 class Multilingual_MachineTranslation_Null implements Multilingual_MachineTranslation_Interface
 {
-	function getCandidateLanguages($trads)
+	function getSupportedLanguages()
 	{
 		return array();
 	}
