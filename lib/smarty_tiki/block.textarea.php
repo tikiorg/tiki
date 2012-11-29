@@ -187,8 +187,7 @@ function smarty_block_textarea($params, $content, $smarty, $repeat)
 			}
 
 			global $wysiwyglib; include_once('lib/ckeditor_tiki/wysiwyglib.php');
-			$wysiwyglib->setUpEditor($params['_is_html'], $as_id, $params, $auto_save_referrer);
-
+			$ckoptions = $wysiwyglib->setUpEditor($params['_is_html'], $as_id, $params, $auto_save_referrer);
 
 			$html .= '<input type="hidden" name="wysiwyg" value="y" />';
 
@@ -206,12 +205,13 @@ function smarty_block_textarea($params, $content, $smarty, $repeat)
 
 			$headerlib->add_jq_onready(
 				'var ckEditorInstances = new Array();
-				CKEDITOR.on( "instanceReady", function( ev ) {
+
+				$("#' . $as_id . '").ckeditor(function() {
 					if (typeof ajaxLoadingHide == "function") { ajaxLoadingHide(); }
 					ckEditorInstances[ckEditorInstances.length] = this;
-					ev.editor.resetDirty();
-					$(ev.editor.element.$).hide();
-				});',
+					this.resetDirty();
+					$(this.element.$).hide();
+				}, ' . $ckoptions . ');',
 				20
 			);	// after dialog tools init (10)
 		}
