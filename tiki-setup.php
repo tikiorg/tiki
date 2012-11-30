@@ -211,9 +211,11 @@ if (!empty($_SESSION['interactive_translation_mode']) && ($_SESSION['interactive
 if ($prefs['feature_freetags'] == 'y') {
 	require_once ('lib/setup/freetags.php');
 }
+if ($prefs['feature_categories'] == 'y') {
+	require_once ('lib/setup/categories.php');
+}
 if ($prefs['feature_areas'] == 'y' && $prefs['feature_categories'] == 'y') {
 	global $areaslib; require_once('lib/perspective/binderlib.php');
-	require_once ('lib/setup/categories.php');
 	$areaslib->HandleObjectCategories($objectCategoryIdsNoJail);
 }
 if ($prefs['feature_userlevels'] == 'y') {
