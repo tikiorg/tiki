@@ -1131,7 +1131,7 @@ if ( function_exists('apache_get_version')) {
 	}
 
 	// Get /server-info, if available
-	if (function_exists('curl_init')) {
+	if (function_exists('curl_init') && function_exists('curl_exec')) {
 		$curl = curl_init();
 		curl_setopt($curl, CURLOPT_URL, 'http://localhost/server-info');
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
