@@ -90,7 +90,9 @@ class UnifiedSearchLib
 
 		if (!isset($_SERVER['REQUEST_METHOD']) && !TikiInit::isWindows()) {		// called from shell.php and unix?
 			$output = null;
-			exec('ps ax | grep \'search/shell.php\'|grep -v grep', $output);	// check for another running process
+			if (function_exists('exec')) {
+				exec('ps ax | grep \'search/shell.php\'|grep -v grep', $output);	// check for another running process
+			}
 			if (is_array($output) && count($output) > 1) {
 				return true;
 			} else if ($file_exists) {
