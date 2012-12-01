@@ -8,82 +8,110 @@
  * Other modifications include overriding all left text-alignments and
  * turning them into right text-alignments.
  *
+ * >>>>> IMPORTANT NOTICE <<<<<
+ * BiDi is set by default to work with the defaul theme of Tiki, FiveAlive Blueberry
+ * Test and finalisation have been done on the Greenvalley theme.
+ * This theme is LeftToRight and RightToLeft. Image styles (background: url)
+ * are given has example so it make easy for you to understand how to customise.
+ * Change them so it fit your website graphic chart.
  */
 
 /* Hebrew and Arabic characters display smaller than latin characters */
-/* set here a different font size for RTL only */
-body {font: 90%/1.5em Arial, Helvetica, sans-serif !important}
+/* set here a different font size for RTL only - Note that latin char will look bigger than hebrew if mixed (numbers) */
+body {
+    font: 93% !important;
+}
+
+/* Example of background page customisation */
+/*#middle {
+    background: url('../greenvalley/page_background_rtl.jpg') repeat !important;
+}*/
 
 /***** Layout *****/
 /* This div encloses the whole Tiki application */
-DIV#tiki-main {direction: rtl !important}
-DIV#main {text-align: right}
+DIV#tiki-main {
+    direction: rtl !important;
+}
+
+DIV#main {
+    text-align: right;}
+
 
 /* This div encloses the "clean" Tiki screens */
-div#tiki-clean {direction: rtl !important}
+div#tiki-clean {
+    direction: rtl !important;
+}
 
 /* Col reversing; This is one col only specific and must be edited if otherwise */
 /* if using 3 columns state back margin-right:250px !important */
 #col1.marginright {
 	margin-left: 250px !important;
-	margin-right:0px !important
+	margin-right:0px !important;
 }
 
 #c1c2 #wrapper #col1.marginleft {
     margin-left: 0px !important;
-    margin-right: 200px !important;
+    margin-right: 250px !important;
 }
 
-#col2 {float:right !important}
+#col2 {
+    float:right !important;
+}
 
 #col3 {
 	float:left !important;
-	margin-left:0 !important
+	margin-left:0 !important;
 }
 
 /***** Box *****/
-.box {text-align: right !important}
+.box {
+    text-align: right !important;
+}
 
 /* This div encloses the images in box */
 ul li div.image {
 	float: right !important;
-	margin-left:3px !important
+	margin-left:5px !important;
 }
 
 /***** Header graphic adaptation - could be not portable *****/
+/* ===>> This is given as example and used with Tiki <<=== */
+/* ===>>default theme each header should be adapted <<=== */
+
+/** header banner **/
+#header {
+    background: url('../fivealive/options/blueberry/siteheader_rtl.jpg') 50% 0 no-repeat !important;
+}
+
 .header_container {
-	background: none !important;
+    background: url("../fivealive/header_left.png") no-repeat scroll 100% 0px transparent !important;
 }
 
-/*#header {
-        -moz-transform: scaleX(-1);
-        -o-transform: scaleX(-1);
-        -webkit-transform: scaleX(-1);
-        transform: scaleX(-1);
-        filter: FlipH;
-        -ms-filter: "FlipH"
-}*/
+/* Examples
+    background: url('../greenvalley/header_background_rtl.jpg') 50% 0 no-repeat !important;
+*/
 
-/* Logo Box */
+/** Logo position **/
 #top_modules .box-logo {
-	float: right !important;
-	margin: 0 10px 0 0;
+    float: right !important;
+    margin-right: 10px !important;
 }
+
+/** Logo Box **/
 
 #sitelogo {
 	float: right !important;
 }
 
-#top_modules .siteloginbar_popup {
-	right: 800px !important;
+#top_modules .box-login_box {
+	right: auto !important;
+    left: 10px;
 }
 
 
 /* site login popup content */
-#loginbox.forms fieldset label {
-	float: right !important;
-	direction: rtl !important;
-	text-align: right !important
+.siteloginbar_popup label {
+    float: right !important;
 }
 
 #loginbox.forms fieldset input#sl-login-user,
@@ -91,7 +119,7 @@ ul li div.image {
 #loginbox.forms fieldset input.wikiaction {
 	float: left !important;
 	direction: rtl !important;
-	text-align: right !important
+	text-align: right !important;
 }
 
 #siteloginbar_popup .pass a {
@@ -107,98 +135,167 @@ ul li div.image {
     text-align: right !important;
 }
 
-/*.cssmenu_horiz .pass a, .cssmenu_vert ul li .pass a {
-    padding: 0 !important;
-}*/
-
 /* Sitelogin Popup moved left Fivealive theme - could be not portable */
-#siteloginbar_popup {right: 865px !important}
+#siteloginbar_popup {
+    right: 865px !important;
+}
 
 /* Sitelogin hover panel moved right inside the body Fivealive theme - could be not portable */
 #login_link .cbox {
 	position:relative;
-	left: 170px
+	left: 170px;
 }
 
 #logout_link .cbox {
 	position:relative;
-	left: 200px
+	left: 200px;
 }
 
 ul.sf-shadow ul {background-image:none}
 
+/** Admin module **/
+#top_modules .box-quickadmin {
+    left: 10px;
+    margin-right: 640px;
+}
+
+#quickadmin ul.recent-prefs {
+    left: auto !important;
+}
+
 /***** CSS menu *****/
 /* Menu alignment */ 
-.cssmenu_horiz li, .cssmenu_vert li {float: right !important}
+.cssmenu_horiz li, .cssmenu_vert li {
+    float: right !important;
+}
+
+.cssmenu_horiz a, .cssmenu_vert a, .cssmenu_horiz ul li a {
+    padding-right: 0.5em;
+}
+
+/* Hebrew and Arabic are smaller so we reset font size */
+.menuText {
+    font-size: 1em !important;
+}
 
 /* Menu adjustment Fivealive theme - Could require editing depending the theme you are using */
 /* moving away menu item from indicator and keep text in the center */
 #tiki-top .cssmenu_horiz li a {
-	background-position: 0% 50% !important
+	background-position: 0% 50% !important;
+}
+
+.cssmenu_horiz a, .cssmenu_vert a, .cssmenu_horiz ul li a {
+    line-height: 16px;
+    text-decoration: none !important;
+}
+
+/** Vertical Menu **/
+
+.cssmenu_vert a.sf-with-ul {
+    padding-right: 0;
+    padding-left: 2.25em;
 }
 
 /* Reseting the position for sub item without indicator  */
-#tiki-top .cssmenu_horiz li ul li a {padding-right: 0.5em !important}
+#tiki-top .cssmenu_horiz li ul li a {
+    padding-right: 0.5em !important;
+}
 
 /* Repositionning sub-menu */
 .cssmenu_vert li ul {
-	right: 96.1333px !important;
+	right: 140px !important;
 }
 
 /* Indicator reversing and repositioning*/
-.cssmenu_vert a > .sf-sub-indicator,
 .cssmenu_horiz li li a > .sf-sub-indicator {
 	right: 120px;
+    top: 14px;
 	-moz-transform: scaleX(-1);
 	-o-transform: scaleX(-1);
 	-webkit-transform: scaleX(-1);
 	transform: scaleX(-1);
 	filter: FlipH;
-	-ms-filter: "FlipH"
+	-ms-filter: "FlipH";
+}
+
+.cssmenu_vert a > .sf-sub-indicator {
+    right: 120px;
+    -moz-transform: scaleX(-1);
+    -o-transform: scaleX(-1);
+    -webkit-transform: scaleX(-1);
+    transform: scaleX(-1);
+    filter: FlipH;
+    -ms-filter: "FlipH";
+}
+
+.sf-sub-indicator {
+    text-indent: 999em;
 }
 	
 /* Submenu alignment */
-.cssmenu_horiz li ul {
-	position: absolute;
-	left: -5em !important
+
+.cssmenu_horiz li:hover ul,
+.cssmenu_horiz li.sfHover ul,
+.cssmenu_vert li:hover ul,
+.cssmenu_vert li.sfHover ul {
+    left: auto; right: -1em;
 }
 
 /* menulevel2 adjustment */
 .cssmenu_horiz li ul li ul {
-	right:10em !important;
+	left:-13em !important;
 	padding: 0 8px 9px 0;
 	width: 13em !important;
-	background: url(../../lib/jquery/superfish/images/shadow.png) no-repeat bottom right
+	background: url(../../lib/jquery/superfish/images/shadow.png) no-repeat bottom right;
 }
 
 /***** MyTiki User Preferences *****/
-.tabcontent .floatleft {float: right !important}
-.tabcontent .floatright {float: left !important}
+.tabcontent .floatleft {
+    float: right !important;
+}
+
+.tabcontent .floatright {
+    float: left !important;
+}
+
 #user_information .tabcontent .floatright {
 	float: none !important;
-	padding-right: 15em
+	padding-right: 15em;
 }
 
 /***** Wiki page *****/
-div.tabstoggle {float: left !important}
+div.tabstoggle {
+    float: left !important;
+}
+
 .tabs .container {
 	float: right !important;
 	width: auto !important;
-	margin-right: -5px
+	margin-right: -2px
 }
 
-.tabstoggle .button {right:24px}
-.tabcontent table {text-align: right !important}
-#page-bar {float: right !important}
+.tabstoggle .button {
+    right:24px;
+}
+
+.tabcontent table {
+    text-align: right !important;
+}
+
+#page-bar {
+    float: right !important;
+}
 
 /***** File gallery  *****/
-#thumbnails {float: none !important}
+#thumbnails {
+    float: none !important;
+}
 
 /* Popup content - width is a tweak for the scroll right masking part of the table */
 .opaque {
 	text-align: right !important;
 	direction: rtl !important;
-	width: 96%
+	width: 96%;
 }
 
 /* Flip the navigation arrows */
@@ -208,24 +305,33 @@ div.tabstoggle {float: left !important}
 	-webkit-transform: scaleX(-1);
 	transform: scaleX(-1);
 	filter: FlipH;
-	-ms-filter: "FlipH"
+	-ms-filter: "FlipH";
 }
 
 /***** Article *****/
 /* Force the width of articles when using one col only - Could require editing depending the theme you are using */
-.articleheadingtext {min-width: 640px}
-.articletitle {text-align: right !important}
-.articleimage {
-	padding-left: 20px !important;
-	padding-right: 0
+.articleheadingtext {
+    min-width: 640px;
+}
+
+.articletitle {
+    text-align: right !important;
+}
+
+img.articleimage {
+    padding: 2px 2px 2px 20px !important;
 }
 
 /* Comment */
-.post .postbody .content, .post .author, .dirsite {text-align: right !important}
+.post .postbody .content, .post .author, .dirsite {
+    text-align: right !important;
+}
 
 /***** Calendar *****/
 /* keep date in the calendar in the right direction */
-.calId1 {direction:rtl}
+.calId1 {
+    direction:rtl;
+}
 
 /* Flip the calendar navigation arrows */
 #calscreen .viewmode img.icon {
@@ -234,21 +340,32 @@ div.tabstoggle {float: left !important}
 	-webkit-transform: scaleX(-1) !important;
 	transform: scaleX(-1) !important;
 	filter: FlipH !important;
-	-ms-filter: "FlipH" !important
+	-ms-filter: "FlipH" !important;
 }
 
 /***** Tables *****/
-table {width: 100%}
-table.formcolor {width: 98%}
+table {
+    width: 100%;
+}
+
+table.formcolor {
+    width: 98%;
+}
 
 /* When modules display a list of items each item is enclosed in a cell with the following style */
-td.module {text-align: right !important}
+td.module {
+    text-align: right !important;
+}
 
 /* Cells in forms without background color (inside a div for example) */
-td.form {text-align: right !important}
+td.form {
+    text-align: right !important;
+}
 
 /* Cells in forms using a background color */
-td.formcolor, td.galform, td.editblogform, td.editfgalform, td.comform, td.forumform {text-align: right !important}
+td.formcolor, td.galform, td.editblogform, td.editfgalform, td.comform, td.forumform {
+    text-align: right !important;
+}
 
 /* Odd rows in several listings */
 td.odd, td.gallistnameodd, td.gallistdescriptionodd, td.gallistcreatedodd, td.gallistlastModifodd, td.gallistuserodd,
@@ -262,7 +379,9 @@ td.odd, td.gallistnameodd, td.gallistdescriptionodd, td.gallistcreatedodd, td.ga
 	td.listfilesactionsodd, td.listarttitleodd, td.listarttopicodd, td.listartpublishDateodd, td.listartauthorodd,
 	td.listartreadsodd, td.listarthasimageodd, td.listartuseimageodd, td.listartactionsodd, td.listartsizeodd, td.forumstableodd,
 	td.forumstableinfoodd, td.topictitleodd, td.topicrepliesodd, td.topicreadsodd, td.topicscoreodd, td.topiclastpostodd,
-	td.topicauthorodd {text-align: right !important}
+	td.topicauthorodd {
+    text-align: right !important;
+}
 
 /* Even rows in several listings */
 td.even, td.gallistnameeven, td.gallistdescriptioneven, td.gallistcreatedeven, td.gallistlastModifeven, td.gallistusereven,
@@ -276,44 +395,69 @@ td.even, td.gallistnameeven, td.gallistdescriptioneven, td.gallistcreatedeven, t
 	td.listfilesactionseven, td.listarttitleeven, td.listarttopiceven, td.listartpublishDateeven, td.listartauthoreven,
 	td.listartreadseven, td.listarthasimageeven, td.listartuseimageeven, td.listartactionseven, td.listartsizeeven,
 	td.forumstableeven, td.forumstableinfoeven, td.topictitleeven, td.topicreplieseven, td.topicreadseven, td.topicscoreeven,
-	td.topiclastposteven, td.topicauthoreven {text-align: right !important}
+	td.topiclastposteven, td.topicauthoreven {
+    text-align: right !important;
+}
 
-td.third {text-align: right !important}
+td.third {
+    text-align: right !important;
+}
 
 /* Browsing an image */
-td.imageinfo {text-align: right !important}
+td.imageinfo {
+    text-align: right !important;
+}
 
 /* Inside chat */
-td.tdchatform {text-align: right !important}
-.tellafriend, .share {text-align:right}
+td.tdchatform {
+    text-align: right !important;
+}
+
+.tellafriend, .share {
+    text-align:right;
+}
 
 /***** plugin *****/
 /* Wikitracker plugin - Could require editing depending the theme you are using */
-.wikiplugin_tracker h6 {text-align: right !important}
+.wikiplugin_tracker h6 {
+    text-align: right !important;
+}
+
 .ui-dialog {
 direction: rtl !important;
-text-align: right !important
+text-align: right !important;
 }
 
 .ui-dialog-title {float: right !important}
 .ui-dialog-titlebar-close {
 	left: 0.3em !important;
-	right: auto !important
+	right: auto !important;
 }
 
 /***** module *****/
 /* Share module */
-#pagetop_modules .mod-share-item {float: right !important; text-align: right !important}
+#pagetop_modules .mod-share-item {
+    float: right !important;
+    text-align: right !important;
+}
 
 /* If an rtl language is set for the Facebook language module setting this will avoid collision */
-#pagetop_modules .fb_edge_widget_with_comment {right: 8px !important}
+#pagetop_modules .fb_edge_widget_with_comment {
+    right: 8px !important;
+}
 
 /***** Miscellaneous *****/
 /* Rss icons */
-#rss {text-align: right !important}
+#rss {
+    text-align: right !important;
+}
 
 /* Trackers */
-table.normal th.auto {text-align: right}
+table.normal th.auto {
+    text-align: right;
+}
 
 /* Toolbars items */
-.toolbars-admin ul#full-list-w.full, .toolbars-admin ul#full-list-p.full, .toolbars-admin ul#full-list-c.full {padding-right: 0px}
+.toolbars-admin ul#full-list-w.full, .toolbars-admin ul#full-list-p.full, .toolbars-admin ul#full-list-c.full {
+    padding-right: 0px;
+}
