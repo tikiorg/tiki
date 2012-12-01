@@ -3,7 +3,7 @@
 
 {if empty($prefs.sender_email)}
 	<br />
-	<div class="highlight simplebox">{icon _id=information style="vertical-align:middle"} {tr}You need to set <a href="tiki-admin.php?page=general">Sender Email</a> before creating email notifications.{/tr}</div>
+	<div class="highlight simplebox">{icon _id=information style="vertical-align:middle"} {tr}You need to set <a href="tiki-admin.php?page=general">Sender Email</a> before creating email notifications{/tr}.</div>
 	<br />
 {/if}
 
