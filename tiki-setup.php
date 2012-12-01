@@ -220,6 +220,8 @@ if ($prefs['feature_areas'] == 'y' && $prefs['feature_categories'] == 'y') {
 	global $areaslib; require_once('lib/perspective/binderlib.php');
 	require_once ('lib/setup/categories.php');
 	$areaslib->HandleObjectCategories($objectCategoryIdsNoJail);
+} elseif ($prefs['feature_categories'] == 'y') {
+	require_once ('lib/setup/categories.php');
 }
 if ($prefs['feature_userlevels'] == 'y') {
 	require_once ('lib/setup/userlevels.php');
