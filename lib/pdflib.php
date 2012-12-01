@@ -77,7 +77,23 @@ class PdfGenerator
 	{
 		$arg = escapeshellarg($url);
 
-		return `{$this->location} $arg -`;
+		// Write a temporary file, instead of using stdout
+		// There seemed to be encoding issues when using stdout (on Windows 7 64 bit).
+
+		// Use temp/public. It is cleaned up during a cache clean, in case some files are left
+		$filename = 'temp/public/out'.rand().'.pdf';
+		
+		// Run shell_exec command to generate out file
+		// NOTE: this requires write permissions
+		`{$this->location} $arg $filename`;
+		
+		// Read the out file
+		$pdf = file_get_contents($filename);
+		
+		// Delete the outfile
+		unlink($filename);
+		
+		return $pdf;
 	}
 
     /**
