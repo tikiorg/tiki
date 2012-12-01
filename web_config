@@ -14,7 +14,7 @@
 		<security>
 			<requestFiltering allowDoubleEscaping="True">
 				<!-- IIS 7 has a default 30MB limit. Use this value by default -->
-				<requestLimits maxAllowedContentLength="30000000" />
+        		<!-- requestLimits maxAllowedContentLength="30000000" / -->
 			</requestFiltering>
 		</security>
 		<rewrite>
