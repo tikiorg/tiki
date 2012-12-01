@@ -120,7 +120,34 @@
 			</fieldset>
 		{/tab}		
 		
-		
+		{tab name="{tr}OpenPGP{/tr}"}
+			<fieldset>
+				<legend>{tr}OpenPGP fuctionality for PGP/MIME encrypted email messaging{/tr}</legend>
+				{remarksbox type="tip" title="{tr}Note{/tr}"}
+					{tr}Experimental OpenPGP fuctionality for PGP/MIME encrypted email messaging.{/tr}<br><br>
+					{tr}All email-messaging/notifications/newsletters are sent as PGP/MIME-encrypted messages, signed with the signer-key, and are completely 100% opaque to outsiders. All user accounts need to be properly configured into gnupg keyring with public-keys related to their tiki-account-related email-addresses.{/tr}
+				{/remarksbox}
+				{preference name=openpgp_gpg_pgpmimemail}
+				<div class="adminoptionboxchild" id="openpgp_gpg_pgpmimemail_childcontainer">
+					{preference name=openpgp_gpg_home}
+					{preference name=openpgp_gpg_path}
+					{preference name=openpgp_gpg_signer_passphrase_store}
+					<div class="adminoptionboxchild openpgp_gpg_signer_passphrase_store_childcontainer preferences">
+						{preference name=openpgp_gpg_signer_passphrase}	
+						<br /><em>{tr}If you use preferences option for the signer passphrase, clear the file option just for security{/tr}</em>
+					</div>
+					<div class="adminoptionboxchild openpgp_gpg_signer_passphrase_store_childcontainer file">
+						{preference name=openpgp_gpg_signer_passfile}	
+						<br /><em>{tr}If you use file for the signer passphrase, clear the preferences option just for security{/tr}</em>
+					</div>
+					{remarksbox type="tip" title="{tr}Note{/tr}"}
+						{tr}The email of preference <a href="tiki-admin.php?page=general&alt=General">'sender_email'</a> is used as signer key ID, and it must have both private and public key in the gnupg keyring.{/tr}
+					{/remarksbox}
+				</div>
+			</fieldset>
+
+		{/tab}
+				
 {/tabset}	
 	
 	<div class="input_submit_container" style="margin-top: 5px; text-align: center">

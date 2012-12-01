@@ -327,9 +327,8 @@ class htmlMimeMail
 		// hollmeer 2012-11-03: ADDED PGP/MIME ENCRYPTION PREPARATION         //
 		// USING lib/openpgp/opepgplib.php                                    //
 		//                                                                    //
-	    	// get from globals (set in tiki-setup.php)
-		global $use_pgpmime_mail;
-		if ($use_pgpmime_mail) {
+		global $prefs;
+		if ($prefs['openpgp_gpg_pgpmimemail'] == 'y') {
 			// USE PGP/MIME MAIL VERSION
 			global $openpgplib;
 			// prepend original subject from headers into text body
@@ -356,9 +355,8 @@ class htmlMimeMail
 		// hollmeer 2012-11-03: ADDED PGP/MIME ENCRYPTION PREPARATION         //
 		// USING lib/openpgp/opepgplib.php                                    //
 		//                                                                    //
-	    	// get from globals (set in tiki-setup.php)
-		global $use_pgpmime_mail;
-		if ($use_pgpmime_mail) {
+		global $prefs;
+		if ($prefs['openpgp_gpg_pgpmimemail'] == 'y') {
 			// USE PGP/MIME MAIL VERSION
 			global $openpgplib;
 			// prepend original subject from headers into text body
@@ -771,9 +769,8 @@ class htmlMimeMail
 				// hollmeer 2012-11-03: ADDED PGP/MIME ENCRYPTION                         //
 				// USING lib/openpgp/opepgplib.php                                        //
 				//                                                                        //
-			    	// get from globals (set in tiki-setup.php)
-				global $use_pgpmime_mail;
-				if ($use_pgpmime_mail) {
+				global $prefs;
+				if ($prefs['openpgp_gpg_pgpmimemail'] == 'y') {
 					// USE PGP/MIME MAIL VERSION
 					global $openpgplib;
 					$pgpmime_msg = $openpgplib->prepareEncryptWithMailSender($headers,
@@ -799,9 +796,7 @@ class htmlMimeMail
 					// hollmeer 2012-11-03: ADDED PGP/MIME ENCRYPTION                         //
 					// USING lib/openpgp/opepgplib.php                                        //
 					//                                                                        //
-				    	// get from globals (set in tiki-setup.php)
-					global $use_pgpmime_mail;
-					if ($use_pgpmime_mail) {
+					if ($prefs['openpgp_gpg_pgpmimemail'] == 'y') {
 						// USE PGP/MIME MAIL VERSION
 						$result = mail($to, $subject, $this->output, $pgp_mime_headers, $additional_parameters);
 					} else {
@@ -816,9 +811,7 @@ class htmlMimeMail
 					// hollmeer 2012-11-03: ADDED PGP/MIME ENCRYPTION                         //
 					// USING lib/openpgp/opepgplib.php                                        //
 					//                                                                        //
-				    	// get from globals (set in tiki-setup.php)
-					global $use_pgpmime_mail;
-					if ($use_pgpmime_mail) {
+					if ($prefs['openpgp_gpg_pgpmimemail'] == 'y') {
 						// USE PGP/MIME MAIL VERSION
 						$result = mail($to, $subject, $this->output, $pgp_mime_headers);
 					} else {
@@ -891,9 +884,8 @@ class htmlMimeMail
 				// hollmeer 2012-11-03: ADDED PGP/MIME ENCRYPTION                         //
 				// USING lib/openpgp/opepgplib.php                                        //
 				//                                                                        //
-			    	// get from globals (set in tiki-setup.php)
-				global $use_pgpmime_mail;
-				if ($use_pgpmime_mail) {
+				global $prefs;
+				if ($prefs['openpgp_gpg_pgpmimemail'] == 'y') {
 					// USE PGP/MIME MAIL VERSION
 					global $openpgplib;
 					$pgpmime_msg = $openpgplib->prepareEncryptWithSmtpSender($headers,

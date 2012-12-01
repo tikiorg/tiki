@@ -589,12 +589,12 @@ require_once( 'lib/setup/plugins_actions.php' );
 // ** IMPORTANT NOTE: 						     ** //
 // ** USE THE GLOBAL VARIABLE BELOW TO CONTROL THE VERSION OF EMAIL  **	//
 // ** WHICH IS USED:						     **	//
-// ** 	$use_pgpmime_mail = true;				     **	//
+// ** 	$prefs['openpgp_gpg_pgpmimemail'] == 'y'		     **	//
 // **		USE TIKI OpenPGP Enabled PGP/MIME-standard mail      **	//
-// ** 	$use_pgpmime_mail = false;				     **	//
+// ** 	$prefs['openpgp_gpg_pgpmimemail'] == 'n'		     **	//
 // **		USE TIKI normal mail functionality		     **	//
 // **								     ** //
-// ** SETTING THIS GLOBAL VARIABLE TO "true" NEED PROPER	     ** //
+// ** SETTING THIS PREFERENCES VARIABLE TO "y" NEED PROPER	     ** //
 // ** CONFIGURATION OF gnupg AND RELATED KEYRING WITH PROPERLY	     ** //
 // ** CONFIGURED TIKI-SENDER KEYPAIR (PRIVATE/PUBLIC) AND ALL USER   ** //
 // ** ACCOUNT-RELATED PUBLIC KEYS				     ** //
@@ -620,8 +620,7 @@ require_once( 'lib/setup/plugins_actions.php' );
 // ** IT IS ASSUMED, THAT IF AND WHEN YOU TURN SUCH PGP/MIME ON	     ** //
 // ** YOU ARE FULLY AWARE OF THE REQUIREMENTS AND CONSEQUENCES.	     ** //
 // **								     ** //
-static $use_pgpmime_mail = false; // NOTE: TURN true WITH YOUR RISK!
-if ($use_pgpmime_mail) {
+if ($prefs['openpgp_gpg_pgpmimemail'] == 'y') {
 	// hollmeer 2012-11-03:
 	// TURNED ON openPGP support from a lib based class
 	require_once( 'lib/openpgp/openpgplib.php' );

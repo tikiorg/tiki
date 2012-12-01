@@ -28,7 +28,11 @@
 //		      into lib/openpgp/ per now. No patches needed anymore
 //		      into ZF to enable 100% PGP/MIME encryption.
 // v0.11
-// 201411-04	hollmeer: Protected function naming to _xxxx
+// 2014-11-04	hollmeer: Protected function naming to _xxxx
+// v0.12
+// 2014-12-01	hollmeer: Changed all OpenGPG functionality configuration to use 
+//		preferences
+//
 //
 //
 /////////////////////////////////////////////////////////////////////////////
@@ -59,7 +63,7 @@ class OpenPGPLib
 	 * @var string
 	 * @access public
 	 */
-	public $EOL = "\n";
+	private $EOL = "\n";
 
 
 	/**
@@ -67,35 +71,35 @@ class OpenPGPLib
 	* @var string
 	* @access protected
 	*/
-	protected $_gpg_path;
+	private $_gpg_path;
 
 	/**
 	* Full path to keyring directory
 	* @var string
 	* @access protected
 	*/
-	protected $_gpg_home;
+	private $_gpg_home;
 
 	/**
 	* gpg signer idfile
 	* @var string
 	* @access protected
 	*/
-	protected $_gpg_sgn_id;
+	private $_gpg_sgn_id;
 
 	/**
-	* gpg signer passfile
+	* gpg signer passphrase
 	* @var string
 	* @access protected
 	*/
-	protected $_gpg_sgn_passfile;
+	private $_gpg_sgn_passphrase;
 
 	/**
 	* gpg signer full passfile path
 	* @var string
 	* @access protected
 	*/
-	protected $_gpg_sgn_passfile_path;
+	private $_gpg_sgn_passfile_path;
 
 	/**
 	* gpg trust
@@ -104,7 +108,7 @@ class OpenPGPLib
 	* @var string
 	* @access protected
 	*/
-	protected $_gpg_trust;
+	private $_gpg_trust;
 
 	/**
 	* Constructor function. Set initial defaults.
@@ -113,11 +117,16 @@ class OpenPGPLib
 	{
 		global $prefs,$tiki_p_admin;
 
-		$this->_gpg_path = '/usr/bin/gpg';
-		$this->_gpg_home = '/home/www/.gnupg/';
+		$this->_gpg_path = $prefs['openpgp_gpg_path'];
+		$this->_gpg_home = $prefs['openpgp_gpg_home'];
 		$this->_gpg_sgn_id = $prefs['sender_email'];
-		$this->_gpg_sgn_passfile = 'signerpass';
-		$this->_gpg_sgn_passfile_path = $this->_gpg_home.'/signer/'.$this->_gpg_sgn_passfile;
+		if ($prefs['openpgp_gpg_signer_passphrase_store'] == 'file') {
+			$this->_gpg_sgn_passfile_path = $prefs['openpgp_gpg_signer_passfile'];
+			$this->_gpg_sgn_passphrase = '';
+		} else {
+			$this->_gpg_sgn_passfile_path = '';
+			$this->_gpg_sgn_passphrase = $prefs['openpgp_gpg_signer_passphrase'];
+		}
 		$this->_gpg_trust = '';
 
 		$this->setCrlf();
@@ -135,193 +144,6 @@ class OpenPGPLib
 		if (!defined('MAIL_MIMEPART_CRLF')) {
 			define('MAIL_MIMEPART_CRLF', $crlf, true);
 		}
-	}
-
-	function set_gpg_home($gpg_home = '/home/www/.gnupg')
-	{
-
-		global $tiki_p_admin;
-
-		if (!$tiki_p_admin) die;
-
-		//////////////////////////////////////////////////////////////////////////////
-		// sanity check - make sure "$gpg_home" is pointing to a directory
-		if (!is_dir($_gpg_home)) {
-			$error_msg = 'gpg homedir is not a directory: "'.$gpg_home.'"';
-			trigger_error($error_msg, E_USER_ERROR);
-			// if an error message directs you to the line above please
-			// double check that your full path to the .gnupg directory is correct
-			die();
-		} else {
-			$this->_gpg_home = $gpg_home;
-		}
-
-	}
-
-	/**
-	 * Get full path to gpg_home
-	 *
-	 * @access public
-	 * @return string
-	 */
-	function get_gpg_home()
-	{
-
-		global $tiki_p_admin;
-
-		if (!$tiki_p_admin) die;
-		return $this->_gpg_home;
-	}
-
-	/**
-	 * Set full path to gpg executable
-	 *
-	 * @param string 	$gpg_path
-	 * @access public
-	 * @return void
-	 */
-	function set_gpg_path($gpg_path = '/usr/bin/gpg')
-	{
-
-		global $tiki_p_admin;
-
-		if (!$tiki_p_admin) die;
-
-		////////////////////////////////////////////////////////////////////////////////////////
-		// sanity check - make sure "$gpg_path" is pointing to an executable program
-		if (!is_executable($gpg_path)) {
-			$error_msg = 'gpg is not executable: "'.$gpg_path.'"  :: or you may need to comment out this sanity check - see the source';
-			trigger_error($error_msg, E_USER_ERROR);
-			// if an error message directs you to the line above please
-			// double check that your full path to gpg is correct
-			// ////////////////////////////////////////////////////////////////////////////////////////////
-			// it has been reported that some (older) configurations of php will choke on this sanity check
-			// if this is causing an error, try to comment out this test
-			die();
-		} else {
-			$this->_gpg_path = $gpg_path;
-		}
-	}
-
-	/**
-	 * Get full path to gpg
-	 *
-	 * @access public
-	 * @return string
-	 */
-	function get_gpg_path()
-	{
-
-		global $tiki_p_admin;
-
-		if (!$tiki_p_admin) die;
-		return $this->_gpg_path;
-	}
-
-	/**
-	 * Set signer ID string
-	 *
-	 * @param string 	$gpg_sgn_id
-	 * @access public
-	 * @return void
-	 */
-	function set_gpg_sgn_id($gpg_sgn_id = '')
-	{
-
-		global $tiki_p_admin;
-
-		if (!$tiki_p_admin) die;
-
-		//////////////////////////////////////////////////////////////////////////////
-		// sanity check - make sure "$gpg_sgn_id" is pointing to a valid signer-capable keypair in keyring
-		if ($gpg_sgn_id != '') {
-			//TODO: test from keyring
-			$success = false;
-//			$success = this->check_sgn_id($gpg_sgn_id);
-			if ($success) {
-				$this->_gpg_sgn_id = $gpg_sgn_id;
-			} else {
-				$error_msg = 'gpg signer id is not found from the keyring: "'.$gpg_sgn_id.'"';
-				trigger_error($error_msg, E_USER_ERROR);
-				// if an error message directs you to the line above please
-				// double check that your signer private-key is imported into keyring and/or the id is correct
-				die();
-			}
-		} else {
-			// take sender_email as default
-			//TODO: add check if present in keyring...
-			$this->_gpg_sgn_id = $prefs['sender_email'];
-		}
-
-	}
-
-	/**
-	 * Get signer ID string
-	 *
-	 * @access public
-	 * @return string
-	 */
-	function get_gpg_sgn_id()
-	{
-
-		global $tiki_p_admin;
-
-		if (!$tiki_p_admin) die;
-		return $this->_gpg_sgn_id;
-	}
-
-	/**
-	 * Set signer passfile string
-	 *
-	 * @param string 	$gpg_sgn_passfile
-	 * @access public
-	 * @return void
-	 */
-	function set_gpg_sgn_passfile($gpg_sgn_passfile = '')
-	{
-
-		global $tiki_p_admin;
-
-		if (!$tiki_p_admin) die;
-
-		//////////////////////////////////////////////////////////////////////////////
-		// sanity check - make sure "$gpg_sgn_passfile" is pointing to a valid signerpass file
-		if ($gpg_sgn_passfile != '') {
-			//TODO: test file and if signing ok
-			$success = false;
-//TODO:			$success = this->check_sgn_passfile($gpg_sgn_passfile);
-			if ($success) {
-				$this->_gpg_sgn_passfile = $gpg_sgn_passfile;
-				$this->_gpg_sgn_passfile_path = $this->_gpg_home.'/signer/'.$this->_gpg_sgn_passfile;
-			} else {
-				$error_msg = 'gpg signer passfile is not found or not capable to sign: "'.$gpg_sgn_passfile.'"';
-				trigger_error($error_msg, E_USER_ERROR);
-				// if an error message directs you to the line above please
-				// double check that your signer passfile if ok, dir/file access perms are ok, and/or the passphrase is ok
-				die();
-			}
-		} else {
-			// take "signerpass" as default
-			//TODO: test file and if signing ok
-			$this->_gpg_sgn_passfile = 'signerpass';
-			$this->_gpg_sgn_passfile_path = $this->_gpg_home.'/signer/'.$this->_gpg_sgn_passfile;
-		}
-
-	}
-
-	/**
-	 * Get signer passfile string
-	 *
-	 * @access public
-	 * @return string
-	 */
-	function get_gpg_sgn_passfile()
-	{
-
-		global $tiki_p_admin;
-
-		if (!$tiki_p_admin) die;
-		return $this->_gpg_sgn_passfile;
 	}
 
 	/**
@@ -507,6 +329,8 @@ class OpenPGPLib
 	function gpg_encrypt()
 	{
 
+		global $prefs;
+
 		//////////////////////////////////////////////////////////
 		// sanity check - make sure there are at least 2 arguments
 		// any extra arguments are considered to be additional key IDs
@@ -545,7 +369,10 @@ class OpenPGPLib
 
 		///////////////////////////////
 		// open the GnuPG process and get the reply
-		$commandline = $this->_gpg_path
+		$commandline = '';
+		if ($prefs['openpgp_gpg_signer_passphrase_store'] == 'file') { 
+			// get signer-key passphrase from a file
+			$commandline .= $this->_gpg_path
 					.' --no-random-seed-file'
 					.' --homedir '.$this->_gpg_home
 					.' '.$this->_gpg_trust
@@ -554,6 +381,18 @@ class OpenPGPLib
 					.' --passphrase-file '.$this->_gpg_sgn_passfile_path
 					.' -sea '.$gpg_recipient_list
 					.' ';
+		} else { 
+			// get signer-key passphrase from preferences
+			$commandline .= $this->_gpg_path
+					.' --no-random-seed-file'
+					.' --homedir '.$this->_gpg_home
+					.' '.$this->_gpg_trust
+					.' --batch'
+					.' --local-user '.$this->_gpg_sgn_id
+					.' --passphrase '.$this->_gpg_sgn_passphrase
+					.' -sea '.$gpg_recipient_list
+					.' ';
+		}
 		$ret = $this->_gpg_exec_proc($commandline, $gpg_secret_message);
 
 		unset($gpg_args,

@@ -158,9 +158,7 @@ if (isset($_REQUEST['send'])) {
 	//                                                                    //
 	// get publickey armor block for email                                //
 	//                                                                    //
-    	// get from globals (set in tiki-setup.php)
-	global $use_pgpmime_mail;
-	if ($use_pgpmime_mail) {
+	if ($prefs['openpgp_gpg_pgpmimemail'] == 'y') {
 		global $openpgplib;
 		$aux_pgpmime_content = $openpgplib->getPublickeyArmorBlock($_REQUEST['priority'], $_REQUEST['to'], $_REQUEST['cc']);
 		$prepend_email_body = $aux_pgpmime_content[0];
@@ -176,7 +174,7 @@ if (isset($_REQUEST['send'])) {
 		// A changed encryption-related version was copied from lib/messu/messulib.pgp  //
 		// into lib/openpgp/openpgplib.php for prepending/appending content into	//
 		// message body									//
-		if ($use_pgpmime_mail) {
+		if ($prefs['openpgp_gpg_pgpmimemail'] == 'y') {
 			// USE PGP/MIME MAIL VERSION
 			$result = $openpgplib->post_message_with_pgparmor_attachment(
 				$a_user,

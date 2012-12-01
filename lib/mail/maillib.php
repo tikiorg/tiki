@@ -87,9 +87,7 @@ function tiki_mail_setup()
 		// hollmeer 2012-11-03: ADDED PGP/MIME ENCRYPTION PREPARATION         //
 		// USING lib/openpgp/opepgplib.php                                    //
 		//                                                                    //
-	    	// get from globals (set in tiki-setup.php)
-		global $use_pgpmime_mail;
-		if ($use_pgpmime_mail) {
+		if ($prefs['openpgp_gpg_pgpmimemail'] == 'y') {
 			// USE PGP/MIME MAIL VERSION
 			require_once('lib/openpgp/OpenPGP_Zend_Mail_Transport_Smtp.php');
 			require_once('lib/openpgp/OpenPGP_Zend_Mail.php');
@@ -119,9 +117,8 @@ function tiki_get_basic_mail()
 	// hollmeer 2012-11-03: ADDED PGP/MIME ENCRYPTION PREPARATION      //
 	// USING lib/openpgp/opepgplib.php                                 //
 	//                                                                 //
-    	// get from globals (set in tiki-setup.php)
-	global $use_pgpmime_mail;
-	if ($use_pgpmime_mail) {
+	global $prefs;
+	if ($prefs['openpgp_gpg_pgpmimemail'] == 'y') {
 		// USE PGP/MIME MAIL VERSION
 		return new OpenPGP_Zend_Mail('UTF-8');
 	} else {
