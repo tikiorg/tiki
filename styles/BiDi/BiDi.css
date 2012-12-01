@@ -24,7 +24,7 @@ body {
 
 /* Example of background page customisation */
 /*#middle {
-    background: url('../greenvalley/page_background_rtl.jpg') repeat !important;
+    background: url('/greenvalley/page_background_rtl.jpg') repeat !important;
 }*/
 
 /***** Layout *****/
@@ -80,7 +80,7 @@ ul li div.image {
 
 /** header banner **/
 #header {
-    background: url('../fivealive/options/blueberry/siteheader_rtl.jpg') 50% 0 no-repeat !important;
+    background: url('fivealive/siteheader_rtl.jpg') 50% 0 no-repeat !important;
 }
 
 .header_container {
