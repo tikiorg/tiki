@@ -1211,11 +1211,11 @@ if ($s) {
 
 // Determine system state
 $pdf_webkit = '';
-if($prefs['print_pdf_from_url'] == 'webkit') {
+if ($prefs['print_pdf_from_url'] == 'webkit') {
 	$pdf_webkit = '<b>'.tra('WebKit is enabled').'.</b> ';
 }
 $feature_blogs = '';
-if($prefs['feature_blogs'] == 'y') {
+if ($prefs['feature_blogs'] == 'y') {
 	$feature_blogs = '<b>'.tra('Blogs is enabled').'.</b> ';
 }
 
