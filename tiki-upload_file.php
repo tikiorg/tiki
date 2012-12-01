@@ -206,6 +206,9 @@ if (!empty($fileInfo['fileId'])) {
 	$smarty->assign('metarray', $filegallib->metadataAction($fileInfo['fileId']), 'get_array');
 }
 
+$is_iis = TikiInit::isIIS();
+$smarty->assign('is_iis', $is_iis);
+	
 $cat_type = 'file';
 $cat_objid = (int) $fileId;
 include_once ('categorize_list.php');

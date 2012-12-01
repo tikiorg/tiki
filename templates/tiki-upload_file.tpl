@@ -396,7 +396,9 @@
 		{tr}Maximum file size is around:{/tr}
 		{if $tiki_p_admin eq 'y'}<a title="{$max_upload_size_comment}">{/if}
 			{$max_upload_size|kbsize:true:0}
-		{if $tiki_p_admin eq 'y'}</a>{/if}
+		{if $tiki_p_admin eq 'y'}</a>
+			{if $is_iis}<br />{tr}Note: You are running IIS{/tr}. {tr}maxAllowedContentLength also limits upload size{/tr}. {tr}Please check web.config in the Tiki root folder{/tr}{/if}
+		{/if}
 	{/remarksbox}
 {/if}
 </div>
