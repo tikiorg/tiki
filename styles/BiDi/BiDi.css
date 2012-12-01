@@ -10,10 +10,10 @@
  *
  * >>>>> IMPORTANT NOTICE <<<<<
  * BiDi is set by default to work with the defaul theme of Tiki, FiveAlive Blueberry
- * Test and finalisation have been done on the Greenvalley theme.
+ * Test and finalisation have been also done on the Greenvalley theme.
  * This theme is LeftToRight and RightToLeft. Image styles (background: url)
  * are given has example so it make easy for you to understand how to customise.
- * Change them so it fit your website graphic chart.
+ * Change them so it fit your website graphic chart. Bsfez
  */
 
 /* Hebrew and Arabic characters display smaller than latin characters */
@@ -80,7 +80,7 @@ ul li div.image {
 
 /** header banner **/
 #header {
-    background: url('fivealive/siteheader_rtl.jpg') 50% 0 no-repeat !important;
+    background: url('../fivealive/options/blueberry/siteheader_rtl.jpg') 50% 0 no-repeat !important;
 }
 
 .header_container {
