@@ -2187,9 +2187,12 @@ class TrackerLib extends TikiLib
 
 		$tx = TikiDb::get()->begin();
 
-		$child = $this->findLinkedItems($itemId, function ($field, $handler) use ($trackerId) {
-			return $handler->cascadeDelete($trackerId);
-		});
+		$child = $this->findLinkedItems(
+			$itemId,
+			function ($field, $handler) use ($trackerId) {
+				return $handler->cascadeDelete($trackerId);
+			}
+		);
 
 		foreach ($child as $i) {
 			$this->remove_tracker_item($i);
@@ -2839,16 +2842,25 @@ class TrackerLib extends TikiLib
 			$handler = $this->get_field_handler($field);
 			$data = $handler->getFieldData();
 
-			$managed_categories = array_merge($managed_categories, array_map(function ($entry) {
-				return $entry['categId'];
-			}, $data['list']));
+			$managed_categories = array_merge(
+				$managed_categories,
+				array_map(
+					function ($entry) {
+						return $entry['categId'];
+					},
+					$data['list']
+				)
+			);
 		}
 
 		$this->update_item_categories($itemId, $managed_categories, $ins_categs, $override_perms);
 
-		$items = $this->findLinkedItems($itemId, function ($field, $handler) use ($trackerId) {
-			return $handler->cascadeCategories($trackerId);
-		});
+		$items = $this->findLinkedItems(
+			$itemId,
+			function ($field, $handler) use ($trackerId) {
+				return $handler->cascadeCategories($trackerId);
+			}
+		);
 
 		$searchlib = TikiLib::lib('unifiedsearch');
 		$index = $prefs['feature_search'] === 'y' && $prefs['unified_incremental_update'] === 'y';
@@ -3528,9 +3540,13 @@ class TrackerLib extends TikiLib
 		}
 
 		$table = $this->items();
-		$map = $table->fetchMap('itemId', 'trackerId', array(
-			'itemId' => $table->in($toUpdate),
-		));
+		$map = $table->fetchMap(
+			'itemId',
+			'trackerId',
+			array(
+				'itemId' => $table->in($toUpdate),
+			)
+		);
 
 		foreach ($toUpdate as $itemId) {
 			$trackerId = $map[$itemId];
