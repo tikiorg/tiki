@@ -75,6 +75,11 @@ class PdfGenerator
      */
     private function webkit( $url )
 	{
+		// Make sure shell_exec is available
+		if(!function_exists('shell_exec')) {
+			die(tra('Required function shell_exec is not enabled.'));
+		}
+
 		$arg = escapeshellarg($url);
 
 		// Write a temporary file, instead of using stdout
