@@ -1222,8 +1222,8 @@ $fcts = array(
 		),
 		array (
 			'function' => 'shell_exec',
-			'risky' => tra('Shell_exec is similar to exec.').' '.tra('Tiki does not need it, you may want to disable it.'),
-			'safe' =>  tra('Shell_exec is similar to exec.').' '.tra('Tiki does not need it, you are wise to have it disabled.')
+			'risky' => tra('Shell_exec is similar to exec.').' '.tra('Tiki needs it to run PDF from URL: WebKit(wkhtmltopdf).  If you need this and trust the other PHP software on your server, you should enable it.'),
+			'safe' =>  tra('Shell_exec is similar to exec.').' '.tra('Tiki needs it to run PDF from URL: WebKit(wkhtmltopdf).  If you need this and trust the other PHP software on your server, you should enable it.')
 		),
 		array (
 			'function' => 'system',
