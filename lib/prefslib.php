@@ -827,10 +827,10 @@ class PreferencesLib
 			$auser = $user;
 		}
 
-		$list = (array) $this->getRecent( $auser );
-		array_unshift( $list, $name );
-		$list = array_unique( $list );
-		$list = array_slice( $list, 0, 10 );
+		$list = (array) $this->getRecent($auser);
+		array_unshift($list, $name);
+		$list = array_unique($list);
+		$list = array_slice($list, 0, 10);
 
 		TikiLib::lib('tiki')->set_user_preference($auser, 'admin_recent_prefs', serialize($list));
 	}

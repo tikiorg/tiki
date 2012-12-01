@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -22,21 +22,21 @@ function wikiplugin_sql_info()
 				'description' => tra('DSN name of the database being queried. The DSN name needs to first be defined at tiki-admin_dsn.php'),
 				'default' => ''
 			),
-                        'raw' => array(
-                                'required' => false,
-                                'name' => tra('Raw return'),
-                                'description' => tra('Return raw data with no table formatting (0=normal, 1=raw)'),
+			'raw' => array(
+				'required' => false,
+				'name' => tra('Raw return'),
+				'description' => tra('Return raw data with no table formatting (0=normal, 1=raw)'),
 				'default' => '0'
 			),
-                        'delim' => array(
-                                'required' => false,
-                                'name' => tra('Delim'),
-                                'description' => tra('The delimiter to be used between data elements (sets raw=1) ')
+			'delim' => array(
+				'required' => false,
+				'name' => tra('Delim'),
+				'description' => tra('The delimiter to be used between data elements (sets raw=1) ')
 			),
-                        'wikiparse' => array(
-                                'required' => false,
-                                'name' => tra('Wiki Parse'),
-                                'description' => tra('Turn wiki parsing of select results on and off (0=off, 1=on)'),
+			'wikiparse' => array(
+				'required' => false,
+				'name' => tra('Wiki Parse'),
+				'description' => tra('Turn wiki parsing of select results on and off (0=off, 1=on)'),
 				'default' => '1'
 			)
 		)
@@ -75,7 +75,7 @@ function wikiplugin_sql($data, $params)
 		if (count($bindvars) != $nb) {
 			return tra('Missing db param');
 		}
-	}		
+	}
 
 	$ret = '';
 	$sql_oke = true;
@@ -86,11 +86,11 @@ function wikiplugin_sql($data, $params)
 	} else {
 		return '~np~' . tra('Could not obtain valid DSN connection.') . '~/np~';
 	}
-	
+
 	$setup_table = ( isset( $raw ) or isset( $delim ) ) ? false : true;
 	$class = 'even';
 	while ($result && $res = $result->fetchRow() ) {
-		if( $setup_table ){
+		if ( $setup_table ) {
 			$ret .= "<table class='normal'><thead><tr>";
 
 			$setup_table = false;
@@ -102,7 +102,7 @@ function wikiplugin_sql($data, $params)
 			$ret .= "</tr></thead>";
 		}
 
-		if( !isset( $raw ) && !isset( $delim ) ){
+		if ( !isset( $raw ) && !isset( $delim ) ) {
 			$ret .= "<tr>";
 		}
 
@@ -111,25 +111,25 @@ function wikiplugin_sql($data, $params)
 		} else {
 			$class = 'even';
 		}
-	
+
 		$first_field = true;
 		foreach ($res as $name => $val) {
-			if( isset( $delim ) && !$first_field ){
+			if ( isset( $delim ) && !$first_field ) {
 				$ret .= $delim;
 			}
 
-			if( isset( $raw ) || isset( $delim ) ){
+			if ( isset( $raw ) || isset( $delim ) ) {
 				$ret .= "$val";
-			}else{
-                        	$ret .= "<td class=\"$class\">$val</td>";
+			} else {
+				$ret .= "<td class=\"$class\">$val</td>";
 			}
 
 			$first_field = false;
-                }
+		}
 
-		if( !isset( $raw ) && !isset( $delim ) ){
+		if ( !isset( $raw ) && !isset( $delim ) ) {
 			$ret .= "<tr>";
-		}elseif( isset( $delim ) ){
+		} elseif ( isset( $delim ) ) {
 			$ret .= "<br>";
 		}
 	}
@@ -142,8 +142,8 @@ function wikiplugin_sql($data, $params)
 	}
 
 	if ($wikiparse) {
-                return $ret;
-        } else {
-                return '~np~' . $ret . '~/np~';
-        }
-} 
+		return $ret;
+	} else {
+		return '~np~' . $ret . '~/np~';
+	}
+}

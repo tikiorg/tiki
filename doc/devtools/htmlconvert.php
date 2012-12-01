@@ -1,4 +1,9 @@
 <?php
+// (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
+//
+// All Rights Reserved. See copyright.txt for details and a complete list of authors.
+// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+// $Id$
 require_once('tiki-setup.php');
 
 // Make sure script is run from a shell
@@ -14,7 +19,7 @@ echo "---------------------------------------\n";
 // Interpret command line
 
 // Display help if no arguments are passed
-if(count($argv) <= 1) {
+if (count($argv) <= 1) {
 	$argv[] = '-?';
 }
 
@@ -44,9 +49,10 @@ if (in_array('-f', $argv)) {
 
 // The test function
 ///////////////////////////
-function tf($page, &$startTime, &$endTime) {
+function tf($page, &$startTime, &$endTime)
+{
 	global $xcludeContent;
-	
+
 	//The new parser strips all \r and lets \n do all the line break work
 	$syntax = $page['data'];
 	$syntax = str_replace("\r", '', $syntax);
@@ -60,7 +66,7 @@ function tf($page, &$startTime, &$endTime) {
 
 	// Parse
 	$startTime = getMicroTime();
-	if(!$is_html) {
+	if (!$is_html) {
 		$wikiSyntax = $syntax;
 		$html = $WysiwygParser->parse($wikiSyntax);
 		$wiki = $parserHtmlToWiki->parse($html);
@@ -73,8 +79,8 @@ function tf($page, &$startTime, &$endTime) {
 	$endTime = getMicroTime();
 
 	$success =  $wikiSyntax == $wiki;
-	
-	if($success == false && !$xcludeContent) {
+
+	if ($success == false && !$xcludeContent) {
 		echo "\n";
 		echo '"' . $wikiSyntax . '"';
 		echo "\n---------------------" . mb_detect_encoding($wikiSyntax) . "-------------------------\n";
@@ -89,7 +95,7 @@ function tf($page, &$startTime, &$endTime) {
 	unset($WysiwygParser);
 	unset($parserHtmlToWiki);
 	unset($html);
-	
+
 	return $success;
 }
 
@@ -106,12 +112,12 @@ $cntSUCCESS = 0;
 $cntFAILURE = 0;
 $totalElapsedTime = 0;
 $idx = 0;
-foreach($pages as &$page) {
-	
+foreach ($pages as &$page) {
+
 	// Processing preparation
 	$idx++;
 	echo "Processing (".$idx."/".$pageCount.") - ".$page['pageName']." - ";
-	
+
 	// Process the page
 	if (tf($page, $startTime, $endTime)) {
 		++$cntSUCCESS;
@@ -120,7 +126,7 @@ foreach($pages as &$page) {
 	}
 	unset($page);
 
-	// page_Parser statistics	
+	// page_Parser statistics
 	$totalTime = $endTime - $startTime;
 	$totalElapsedTime += $totalTime;
 	echo " - ".(int)$totalTime." ms\n";
@@ -134,7 +140,7 @@ echo "FAILURE: ".$cntFAILURE."\n";
 
 // Time spent
 $avgTimePerPage = "N/A";
-if($idx > 0) {
+if ($idx > 0) {
 	$avgTimePerPage = $totalElapsedTime / $idx;
 }
 echo "\nTotal elapsed msec: ".$totalElapsedTime."\n";
@@ -147,8 +153,8 @@ echo "Avg msec/page: ".$avgTimePerPage."\n";
 // @return current micro time in milli-seconds
 function getMicroTime()
 {
-	$mtime = microtime(); 
-	$mtime = explode(" ",$mtime); 
-	$mtime = $mtime[1] + $mtime[0]; 
+	$mtime = microtime();
+	$mtime = explode(' ', $mtime);
+	$mtime = $mtime[1] + $mtime[0];
 	return $mtime * 1000;	// Convert to milliseconds
 }

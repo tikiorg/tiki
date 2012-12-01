@@ -116,12 +116,24 @@ class JisonParser_Wiki_List
 			if (isset($stack[$i]) && empty($stack[$i]['content']) == false) {
 
 				switch($stack[$i]['type']) {
-					case '*-': $listType = "ToggleUnordered"; break;
-					case '#-': $listType = "ToggleOrdered"; break;
-					case '+': $listType = "Break"; break;
-					case '*': $listType = "Unordered"; break;
-					case '#': $listType = "Ordered"; break;
-					case ';': $listType = "Definition"; break;
+					case '*-':
+						$listType = "ToggleUnordered";
+						break;
+					case '#-':
+						$listType = "ToggleOrdered";
+						break;
+					case '+':
+						$listType = "Break";
+						break;
+					case '*':
+						$listType = "Unordered";
+						break;
+					case '#':
+						$listType = "Ordered";
+						break;
+					case ';':
+						$listType = "Definition";
+						break;
 				}
 
 				switch($stack[$i]['type']) {
@@ -148,7 +160,9 @@ class JisonParser_Wiki_List
 						break;
 				}
 			} else if (!empty($stack[$i]['children'])) { //In this scenario, we have a jump in list types
-				$html .= $this->parser->createWikiTag("listEmpty", "li",
+				$html .= $this->parser->createWikiTag(
+					"listEmpty",
+					"li",
 					$this->toHtmlChildren($stack[$i]['children']),
 					array(
 						'style' => 'list-style-type:none;'
@@ -179,11 +193,16 @@ class JisonParser_Wiki_List
 
 			if ($listType == "*-" || $listType == "#-") {
 				$preTag .= $this->parser->createWikiHelper("listBreak", "br", "", array(), "inline");
-				$preTag .= $this->parser->createWikiHelper("listButton", "a", "[+]", array(
-					"id" => "flipper" . $id,
-					"href" => "javascript:flipWithSign(\"" . $id . "\");",
-					"class" => "link"
-				));
+				$preTag .= $this->parser->createWikiHelper(
+					"listButton",
+					"a",
+					"[+]",
+					array(
+						"id" => "flipper" . $id,
+						"href" => "javascript:flipWithSign(\"" . $id . "\");",
+						"class" => "link"
+					)
+				);
 			}
 
 			$lastListType = $listType;
@@ -194,10 +213,16 @@ class JisonParser_Wiki_List
 				$tagListType = "listParent";
 			}
 
-			$result .= $preTag . $this->parser->createWikiTag($tagListType, $parentTagType, "", array(
-				"class" => "tikiList",
-				"id" => $id
-			), "open");
+			$result .= $preTag . $this->parser->createWikiTag(
+				$tagListType,
+				$parentTagType,
+				"",
+				array(
+					"class" => "tikiList",
+					"id" => $id
+				),
+				"open"
+			);
 		}
 
 		return $result;
@@ -253,9 +278,14 @@ class JisonParser_Wiki_List
 		for ($length = count($stack); $i <= $length; $i++) {
 			if (!isset($stack[$i]['type'])) break;
 			if ($stack[$i]['type'] == $type) {
-				$result .= $this->parser->createWikiTag("listBreak", "li", $stack[$i]['content'], array(
-					'style' => 'list-style-type:none;'
-				));
+				$result .= $this->parser->createWikiTag(
+					"listBreak",
+					"li",
+					$stack[$i]['content'],
+					array(
+						'style' => 'list-style-type:none;'
+					)
+				);
 			} else {
 				$i--;
 				break;

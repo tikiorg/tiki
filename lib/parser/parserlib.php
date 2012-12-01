@@ -577,7 +577,7 @@ if ( \$('#$id') ) {
 	//*
 	function plugin_get_list( $includeReal = true, $includeAlias = true )
 	{
-		return WikiPlugin_Negotiator_Wiki::getList( $includeReal, $includeAlias );
+		return WikiPlugin_Negotiator_Wiki::getList($includeReal, $includeAlias);
 	}
 
 	function zend_plugin_exists($className)
@@ -647,19 +647,19 @@ if ( \$('#$id') ) {
 	//*
 	function plugin_alias_info( $name )
 	{
-		return WikiPlugin_Negotiator_Wiki_Alias::info( $name );
+		return WikiPlugin_Negotiator_Wiki_Alias::info($name);
 	}
 
 	//*
 	function plugin_alias_store( $name, $data )
 	{
-		return WikiPlugin_Negotiator_Wiki_Alias::store( $name, $data );
+		return WikiPlugin_Negotiator_Wiki_Alias::store($name, $data);
 	}
 
 	//*
 	function plugin_alias_delete( $name )
 	{
-		return WikiPlugin_Negotiator_Wiki_Alias::delete( $name );
+		return WikiPlugin_Negotiator_Wiki_Alias::delete($name);
 	}
 
 	//*

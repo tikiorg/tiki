@@ -150,7 +150,7 @@ if (isset($_REQUEST['send'])) {
 		$smarty->display("tiki.tpl");
 		die;
 	}
-	
+
 	////////////////////////////////////////////////////////////////////////
 	//                                                                    //
 	// hollmeer 2012-11-03: ADDED PGP/MIME ENCRYPTION PREPARATION      //
@@ -162,7 +162,7 @@ if (isset($_REQUEST['send'])) {
 	global $use_pgpmime_mail;
 	if ($use_pgpmime_mail) {
 		global $openpgplib;
-		$aux_pgpmime_content = $openpgplib->getPublickeyArmorBlock($_REQUEST['priority'],$_REQUEST['to'],$_REQUEST['cc']);
+		$aux_pgpmime_content = $openpgplib->getPublickeyArmorBlock($_REQUEST['priority'], $_REQUEST['to'], $_REQUEST['cc']);
 		$prepend_email_body = $aux_pgpmime_content[0];
 		$user_armor = $aux_pgpmime_content[1];
 	}
@@ -179,29 +179,30 @@ if (isset($_REQUEST['send'])) {
 		if ($use_pgpmime_mail) {
 			// USE PGP/MIME MAIL VERSION
 			$result = $openpgplib->post_message_with_pgparmor_attachment(
-						$a_user, 
-						$user, 
-						$_REQUEST['to'], 
-						$_REQUEST['cc'], 
-						$_REQUEST['subject'], 
-						$_REQUEST['body'], 
-						$prepend_email_body,	// NOTE THIS!
-						$user_armor, 		// NOTE THIS!
-						$_REQUEST['priority'], 
-						$_REQUEST['replyto_hash'],
-						isset($_REQUEST['replytome']) ? 'y' : '', isset($_REQUEST['bccme']) ? 'y' : '');
+				$a_user,
+				$user,
+				$_REQUEST['to'],
+				$_REQUEST['cc'],
+				$_REQUEST['subject'],
+				$_REQUEST['body'],
+				$prepend_email_body, // NOTE THIS!
+				$user_armor, // NOTE THIS!
+				$_REQUEST['priority'],
+				$_REQUEST['replyto_hash'],
+				isset($_REQUEST['replytome']) ? 'y' : '', isset($_REQUEST['bccme']) ? 'y' : ''
+			);
 		} else {
 			// USE ORIGINAL TIKI MAIL VERSION
 			$result = $messulib->post_message(
-						$a_user,
-						$user,
-						$_REQUEST['to'],
-						$_REQUEST['cc'],
-						$_REQUEST['subject'],
-						$_REQUEST['body'],
-						$_REQUEST['priority'],
-						$_REQUEST['replyto_hash'],
-						isset($_REQUEST['replytome']) ? 'y' : '', isset($_REQUEST['bccme']) ? 'y' : ''
+				$a_user,
+				$user,
+				$_REQUEST['to'],
+				$_REQUEST['cc'],
+				$_REQUEST['subject'],
+				$_REQUEST['body'],
+				$_REQUEST['priority'],
+				$_REQUEST['replyto_hash'],
+				isset($_REQUEST['replytome']) ? 'y' : '', isset($_REQUEST['bccme']) ? 'y' : ''
 			);
 		}
 		// 										//
