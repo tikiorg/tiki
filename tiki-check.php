@@ -1212,8 +1212,13 @@ if ($s) {
 // Determine system state
 $pdf_webkit = '';
 if($prefs['print_pdf_from_url'] == 'webkit') {
-	$pdf_webkit = '<b>'.tra('WebKit is enabled').'.</b>';
+	$pdf_webkit = '<b>'.tra('WebKit is enabled').'.</b> ';
 }
+$feature_blogs = '';
+if($prefs['feature_blogs'] == 'y') {
+	$feature_blogs = '<b>'.tra('Blogs is enabled').'.</b> ';
+}
+
 
 $fcts = array(
 		array (
@@ -1228,8 +1233,8 @@ $fcts = array(
 		),
 		array (
 			'function' => 'shell_exec',
-			'risky' => tra('Shell_exec is similar to exec.').' '.tra('Tiki needs it to run PDF from URL: WebKit(wkhtmltopdf). '.$pdf_webkit.' If you need this and trust the other PHP software on your server, you should enable it.'),
-			'safe' =>  tra('Shell_exec is similar to exec.').' '.tra('Tiki needs it to run PDF from URL: WebKit(wkhtmltopdf). '.$pdf_webkit.' If you need this and trust the other PHP software on your server, you should enable it.')
+			'risky' => tra('Shell_exec is similar to exec.').' '.tra('Tiki needs it to run PDF from URL: WebKit(wkhtmltopdf). '.$pdf_webkit.'If you need this and trust the other PHP software on your server, you should enable it.'),
+			'safe' =>  tra('Shell_exec is similar to exec.').' '.tra('Tiki needs it to run PDF from URL: WebKit(wkhtmltopdf). '.$pdf_webkit.'If you need this and trust the other PHP software on your server, you should enable it.')
 		),
 		array (
 			'function' => 'system',
@@ -1315,13 +1320,13 @@ if ($s == 1) {
 	$security['allow_url_fopen'] = array(
 		'setting' => 'Enabled',
 		'fitness' => tra('risky'),
-		'message' => tra('allow_url_fopen may potentially be used to upload remote data or scripts. If you dont use the blog feature, you can switch it off.')
+		'message' => tra('allow_url_fopen may potentially be used to upload remote data or scripts. '.$feature_blogs.'If you dont use the blog feature, you can switch it off.')
 	);
 } else {
 	$security['allow_url_fopen'] = array(
 		'setting' => 'Disabled',
 		'fitness' => tra('safe'),
-		'message' => tra('allow_url_fopen may potentially be used to upload remote data or scripts. If you dont use the blog feature, you can switch it off.')
+		'message' => tra('allow_url_fopen may potentially be used to upload remote data or scripts. '.$feature_blogs.'If you dont use the blog feature, you can switch it off.')
 	);
 }
 
