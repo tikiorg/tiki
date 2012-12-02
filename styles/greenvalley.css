@@ -1,0 +1,918 @@
+/* $Id: greenvalley.css Bernard Sfez $
+	Greenvalley theme (greenvalley.css) for Tiki Wiki CMS Groupware.
+	Using common files from fivealive themes.
+	Visit http://themes.tiki.org for more information.
+*/
+ 
+/* Import foundation CSS files. */
+@import url("lite/lite.css");
+@import url("layout/layout.css");
+@import url("layout/design.css");
+
+/***** XHTML Elements (body tag here, others follow Layout) *****/
+
+body {
+	background: url('greenvalley/background5.jpg') repeat;
+	font: 90% Century Gothic,Lucida Grande,Arial,Helvetcia,sans-serif;
+    color: rgb(30, 30, 30);
+}
+
+html > body {
+    font-size: 0.85em;
+}
+
+#middle {
+	background: url('greenvalley/page_background_ltr.jpg') repeat;
+}
+
+/***** XHTML Elements (other than body tag) ******/
+
+#page-data {
+    text-shadow: 1px 1px 0 rgb(255, 255, 255);
+}
+
+a,
+a:visited {
+	color: rgb(218, 56, 143);
+	text-decoration: none;
+}
+
+a:active, a:hover {
+	color: rgb(234, 98, 185);
+	text-decoration: underline;
+}
+
+h1:first-letter, h2:first-letter, h3:first-letter, h4:first-letter, h5:first-letter, h6:first-letter {
+    font-size: 120%;
+}
+
+/***** Layout *****/
+#tiki-center {
+	padding: 1.5em;
+}
+
+#c1c2	#wrapper	#col1.marginleft  {
+	margin-left: 250px;
+}
+
+#c1c2	#wrapper	#col1.marginright {
+	margin-right: 250px;
+}
+
+#c1c2	#wrapper	#col1	.content {
+	background: transparent;
+}
+
+#c1c2 #wrapper #col1 #tiki-center {
+	padding: 10px 20px 10px 10px;
+}
+
+#c1c2 #col2 {
+	width: 250px;
+	overflow: visible;
+}
+
+#c1c2 #col2 .content {
+	margin-left: 8px;
+}
+
+#col3 {
+	width: 250px;
+	margin-left: -250px;
+}
+
+#col3 .content {
+	margin-right: 8px;
+}
+
+#tikihelp {
+	position: relative;
+}
+
+/** footer **/
+
+#footer {
+	margin: 0 auto;
+	background: url('greenvalley/footer_bck.jpg') no-repeat;
+	color: #E0D6CC;
+	border-bottom-left-radius: 8px;
+	border-bottom-right-radius: 8px;
+	-webkit-border-bottom-left-radius: 8px;
+	-webkit-border-bottom-right-radius: 8px;
+	-moz-border-radius-bottomleft: 8px;
+	-moz-border-radius-bottomright: 8px;
+	padding-top:20px;
+}
+
+#footer h3, #footer a, #footer h3 a:visited {
+	color: #B29980;
+}
+
+#footer h3, #footer a:hover {
+    color: #c48054;
+}
+
+#footer .mod-share-item {
+	float: none
+}
+
+#bottom_modules {
+	padding : 10px;
+}
+
+/***** Site Header & Identity *****/
+
+#header {
+    min-height: 175px;
+	background: url('greenvalley/header_background_ltr.jpg') 50% 0 no-repeat;
+}
+
+#top_modules .box-quickadmin {
+	background: #fff;
+	opacity: 0.7;
+	right: 1em;
+	top: 28px;
+	border-bottom-left-radius: 8px;
+	border-bottom-right-radius: 8px;
+	-webkit-border-bottom-left-radius: 8px;
+	-webkit-border-bottom-right-radius: 8px;
+	-moz-border-radius-bottomleft: 8px;
+	-moz-border-radius-bottomright: 8px;
+}
+
+#top_modules .box-login_box {
+    position: absolute;
+    top: 144px;
+    font-size: 0.9em;
+}
+
+ul.siteloginbar_poppedup {
+    top: 20px !important;
+    left: -30px !important;
+    width: 12em !important;
+    text-align: center;
+}
+
+.siteloginbar_poppedup li.tabcontent {
+    padding: 6px;
+}
+
+.siteloginbar_popup label {
+    color: #B29980;
+}
+
+.siteloginbar_popup .pass {
+    width: 100%;
+    text-align: center;
+    margin-top: 4px;
+}
+
+.siteloginbar_popup .tabmark {
+    float: left;
+    border: 1px solid #473119;
+    background: #331A00;
+    border-bottom-width: 0 !important;
+    color: #fff;
+}
+
+.siteloginbar_popup .tabmark a, #wikitopline .tabcontent {
+    color: #E0D6CC;
+}
+
+.tabactive a {
+    color: #fff;
+}
+
+/****** Top Bar, Menus, Links ******/
+
+#topbar_modules {
+	height: 35px;
+    font-size: 0.9em;
+	background: url('greenvalley/menubar-wood2.jpg') 50% 50% no-repeat;
+	background-color: #473119;
+	-moz-box-shadow: inset 0 -3px 10px #331A00;
+	-webkit-box-shadow: inset 0 -3px 10px #331A00;
+	box-shadow: inset 0 -3px 10px #331A00;
+}
+
+#pagetop_modules {
+    margin-bottom: 2em;
+}
+
+/** CSS menus **/
+
+#tiki-top .cssmenu_horiz li ul, #topbar_modules .cssmenu_horiz li ul {
+    margin-top: 4px;
+}
+
+#tiki-top .cssmenu_horiz li a, #topbar_modules .cssmenu_horiz li a {
+	padding-top: 0.7em;
+	padding-bottom: 0.7em;
+	padding-right: 0.95em;
+	padding-left: 0.95em;
+	background: url('greenvalley/menu_divider.jpg') 100% 50% no-repeat;
+}
+
+#tiki-top .cssmenu_horiz li ul a:hover, #topbar_modules .cssmenu_horiz li ul a:hover {
+    color: #cda256;
+    background: #42281d;
+}
+
+.menuText {
+	font-size: 0.9em;
+}
+
+.cssmenu_horiz a {
+	color: #E0D6CC !important;
+}
+
+.cssmenu_horiz a:hover {
+	color: #855c33;
+}
+
+.cssmenu_horiz .sf-sub-indicator {
+	bottom: 0.2em !important;
+}
+
+.cssmenu_horiz li ul li {
+	background-color: #291500;
+}
+
+/** Buttons, Tab **/
+
+.button {
+    background: url('greenvalley/button_bck.jpg') 100% 50% no-repeat;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+    box-shadow: 2px 2px 3px 1px rgba(43, 43, 43, 0.65);
+    text-shadow: #f2e4ab 0px 1px 1px;
+}
+
+.button a {
+    padding: .3em .5em;
+}
+
+.button a, .highlight a {
+	color: rgb(66, 40, 29);
+	text-decoration: none;
+}
+
+.button a:active, .button a:hover, .highlight a:active, .highlight a:hover {
+	color: #E0D6CC;
+	text-decoration: none;
+}
+
+.button:hover {
+    color: #a99278;
+	background: url('greenvalley/button_bck_hover.jpg') 100% 50% no-repeat;
+    box-shadow: 1px 1px 2px 1px rgba(84, 60, 27, 0.64);
+    text-shadow: #2b2b2b 0px 1px 1px;
+}
+
+.button.highlight {
+    box-shadow: 1px 1px 2px 1px rgba(84, 60, 27, 0.64);
+    text-shadow: #2b2b2b 0px 1px 1px;
+}
+
+.button.highlight a {
+    color: #fff;
+    background: url('greenvalley/button_bck_hover.jpg') 100% 50% no-repeat;
+}
+
+.button, .button:hover, input[type="reset"], input[type="submit"], input[type="reset"]:hover, input[type="submit"]:hover {
+    margin: .6em .3em;
+}
+
+.button.highlight a {
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+}
+
+span.highlight {
+    padding: 0;
+}
+
+#mytiki_user_preference {
+	margin-top: 2.5em;
+}
+
+.tabs {
+	margin: 10px 0 0 0 !important;
+}
+
+.tabs .tabstoggle.floatright {
+    bottom: 11px;
+    right: 20px;
+}
+
+.tabs .tabstoggle.floatright .button {
+    border-right: 1px solid #2b1c12;
+    border-left: 1px solid #2b1c12;
+    border-top: 1px solid #2b1c12;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    border-bottom-right-radius: 0px;
+    border-bottom-left-radius: 0px;
+    -webkit-border-top-left-radius: 6px;
+    -webkit-border-top-right-radius: 6px;
+    -webkit-border-bottom-left-radius: 0px;
+    -webkit-border-bottom-right-radius: 0px;
+    -moz-border-radius-topleft: 6px;
+    -moz-border-radius-topright: 6px;
+    -moz-border-radius-bottomleft: 0px;
+    -moz-border-radius-bottomright: 0px;
+    background: url('greenvalley/button_bck_hover.jpg') 100% 50% no-repeat;
+    box-shadow: none;
+}
+
+.tabs .tabstoggle.floatright .button a {
+    color: #E0D6CC;
+    text-shadow: #2b2b2b 0px 1px 1px;
+}
+
+fieldset {
+    background-color: #deffd5;
+    border: 1px solid #8dff9c;
+    border-bottom-right-radius: 6px;
+    border-bottom-left-radius: 6px;
+    -webkit-border-bottom-left-radius: 6px;
+    -webkit-border-bottom-right-radius: 6px;
+    -moz-border-radius-bottomleft: 6px;
+    -moz-border-radius-bottomright: 6px;
+
+}
+
+.tabmark {
+    display: inline;
+    margin: 0 2px 0 0;
+    padding: 2px 5px 2px 5px;
+    top: -2px;
+    position: relative;
+    white-space: nowrap;
+    background-color: #deffd5;
+    border-right: 1px solid #8dff9c;
+    border-left: 1px solid #8dff9c;
+    border-top: 2px solid #8dff9c;
+	border-top-left-radius: 6px;
+	border-top-right-radius: 6px;
+	-webkit-border-top-left-radius: 6px;
+	-webkit-border-top-right-radius: 6px;
+	-moz-border-radius-topleft: 6px;
+	-moz-border-radius-topright: 6px;
+}
+
+.tabmark a {
+    color: #004C1A;
+    text-decoration: none;
+}
+
+.tabmark .tabactive a:active, .tabmark .tabactive a:hover {
+    color: #fff;
+}
+
+.tabactive {
+    background-color: #009933;
+    border-right: 1px solid #009933;
+    border-left: 1px solid #009933;
+    border-top: 2px solid #009933;
+}
+
+.tabactive a {
+    color: #fff;
+}
+
+/* Specific */
+.lang_select .tabcontent h1 {
+    background: #42281d;
+    color: #855c33;
+}
+
+/***** Wiki *****/
+
+.pagetitle {
+    text-shadow: #666 0px 1px 1px;
+}
+
+/***** Boxes *****/
+
+.box {
+	margin:10px;
+	margin-bottom: 20px;
+	border-left: 1px solid #53B042;
+	border-right: 1px solid #53B042;
+	border-bottom: 1px solid #53B042;
+	-webkit-border-radius: 8px;
+	-moz-border-radius: 8px;
+	border-radius: 8px;
+	-webkit-box-shadow: #666 0px 2px 3px;
+	-moz-box-shadow: #666 0px 2px 3px;
+	box-shadow: #666 0px 2px 3px;
+	background: #E6FFB2;
+}
+
+h3.box-title {
+    height:45px;
+    margin:0;
+    padding-top: 3px;
+  	background: url('greenvalley/box_header3.png') no-repeat scroll 50% 0% transparent;
+    text-align: center;
+    font-size: 1.2em;
+    color: #FFFFFF;
+    text-shadow: #666 0px 2px 3px;
+}
+
+h3.box-title .moduletitle em {
+    display: none;
+}
+
+.box-data ol, .box-data ul {
+    margin-bottom: 15px;
+}
+
+.box ol li, .box ul li  {
+	list-style-type:none;
+	padding-top: 5px;
+	padding-bottom: 8px;
+	border-bottom: 1px dashed #53B042;
+	line-height: 135%;
+	height: 28px;
+	font-size: .95em;
+}
+
+.box-switch_lang {
+    text-align: center !important;
+}
+
+.box form {
+    margin: 10px;
+}
+
+.box select {
+    font-size: 1em;
+    color: #B2FFB2;
+    background-color : #009933;
+    height: 20px;
+    border: none;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    border-radius: 20px;
+    text-shadow: 0 2px 2px rgba(0, 0, 0, 0.3);
+    -webkit-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 3px rgba(0, 0, 0, 0.2) inset;
+    -moz-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 3px rgba(0, 0, 0, 0.2) inset;
+    -o-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 3px rgba(0, 0, 0, 0.2) inset;
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 3px rgba(0, 0, 0, 0.2) inset;
+    -webkit-background-clip: padding-box;
+    -webkit-transition: all 0.7s ease-out 0s;  /* Saf3.2+, Chrome */
+    -moz-transition: all 0.7s ease-out 0s;  /* FF4+ */
+    -ms-transition: all 0.7s ease-out 0s;  /* IE10? */
+    -o-transition: all 0.7s ease-out 0s;  /* Opera 10.5+ */
+    transition: all 0.7s ease-out 0s;
+}
+
+.box ul li .image {
+	float: left;
+	margin-right:3px;
+	padding-top: 4px;
+}
+
+.more {
+	margin-left: 15px;
+	margin-top: 10px;
+}
+
+/** Menu Box **/
+/* CSS Menu */
+
+.cssmenubox .cssmenu_vert li {
+    height: auto;
+    border: none;
+    font-size: 1em;
+}
+
+.cssmenubox .sf-sub-indicator {
+    background: url('greenvalley/submenu_arrow.png') no-repeat scroll 50% 0% transparent;
+}
+
+.cssmenu_vert li ul li {
+    background: #E6FFB2;
+}
+
+.cssmenubox .box-data {
+    margin-top: -20px;
+}
+
+/** Login Box **/
+
+#mod-login_box fieldset {
+    padding: 1em !important;
+    border: none !important;
+    background: none;
+}
+
+#role_main .module {
+    max-width: 220px;
+}
+
+/****** Plugins *****/
+
+.ui-widget-header {
+    background: #53B042;
+    color: #fff;
+}
+
+/***** Tables *****/
+
+.normal, .admin {
+	border: 1px solid #53B042;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+table.normal tr:first-child {
+    background: #004C1A !important;
+}
+
+table.normal tr:nth-child(2n+1) {
+    background: #EBFFEB;
+}
+
+th {
+    color: #66C285;
+}
+
+td.third a, th a, td.heading a, tr.diffheader a {
+	color: 	#66C285;
+}
+
+td.third a:hover, th a:hover, td.heading a:hover, tr.diffheader a:hover {
+	color: 	#EBFFEB;
+}
+
+.normal td, .wikitable td, td.odd, td.even {
+    padding: 0.5em 0.3em;
+    border-collapse: collapse;
+}
+
+td.action {
+    text-align: right;
+}
+
+/***** Articles *****/
+
+.article {
+
+}
+
+.articletrailer .actions {
+	position: relative;
+	width: 100%;
+	padding-bottom:10px;
+	border-bottom: 1px dashed #E0D6CC;
+}
+
+.articletitle .titleb {
+	font-size: 0.9em;
+	color: #996633;
+}
+
+.articleheading {
+	margin: 1em 0;
+}
+
+img.articleimage {
+    margin-right: 0;
+    float: left;
+    clear: right;
+    padding: 2px 20px 2px 2px;
+    margin-bottom: 10px;
+}
+
+/***** Files Gallery *****/
+
+.thumbnailframe {
+	background: #000;
+	height: 96px !important;
+	margin-bottom: 10px;
+}
+
+.thumbnailframe {
+	text-align: center;
+}
+
+.thumbactions a.fgalname {
+	float: right;
+}
+
+/***** Trackers *****/
+
+/***** Miscellaneous *****/
+
+.description {
+	margin: 2em 0;
+	color: #3A7B2E;
+}
+
+/***** My custom tags *****/
+
+/** Design **/
+
+.menu_hebrew {
+    letter-spacing:0.1em;
+    font:tahoma;
+}
+/** Home Div **/
+
+#homefloat_right {
+	float: right;
+	width: 48%;
+    font-size: 0.9em;
+}
+
+#homefloat_right br {
+	display: none;
+}
+
+#homefloat_right h2 {
+    margin-top: 0;
+}
+
+#homefloat_left {
+	float: left;
+	width: 320px;
+	height: 240px;
+}
+
+/** Infinite carousel **/
+
+.infiniteCarousel {
+	border: 2px solid #006600;
+	margin-right:-20px;
+	width: 320px;
+	height: 240px;
+	direction: ltr !important;
+	overflow: hidden !important;
+	-moz-box-shadow: 0 0 15px #53B042;
+	-webkit-box-shadow: 0 0 15px #53B042;
+	box-shadow: 0 0 15px #53B042;
+}
+
+.anythingSlider anythingSlider-default {
+    padding: 0;
+    left: 18px;
+}
+
+.anythingSlider .anythingWindow {
+    border: 2px solid #006600;
+    -moz-box-shadow: 0 0 15px #53B042;
+    -webkit-box-shadow: 0 0 15px #53B042;
+    box-shadow: 0 0 15px #53B042;
+}
+
+.infiniteCarousel ul {
+	list-style: none;
+	width: 5440px !important;
+	margin: 0;
+	padding: 0;
+	position: relative;
+}
+
+.infiniteCarousel li {
+	display:inline;
+	float:left;
+	background-image: none;
+	padding-left: 0;
+	width: 320px;
+	height: 240px;
+}
+
+.infiniteCarousel br {display: none}
+
+/** Home Pictures Frame **/
+#home_pict {
+	width: 700px;
+	height:	170px;
+	margin: 0 auto;
+    padding-top: 3.5em;
+}
+
+#home_pictmask {
+	position:relative;
+	left:62px;
+	z-index: 100;
+}
+
+#home_pict_box {
+    text-align: center;
+	position:relative;
+	top:-132px;
+	left:11px;
+	background: #000;
+}
+
+#home_pict img {
+	margin-left: 51px;
+	margin-right: 51px;
+}
+/** Trackerfilter **/
+
+.trackerfilter {
+    background: url('greenvalley/menubar-wood2.jpg') 100% 50% no-repeat;
+}
+
+.trackerfilter table {
+    border: none;
+}
+
+.trackerfilter table.normal tr:first-child {
+    background: none !important;
+}
+
+.trackerfilter table.normal tr:nth-child(2n+1) {
+    background: none !important;}
+
+.trackerfilter table td {
+    vertical-align: middle;
+    font-size: 1.1em;
+    color: #fff;
+}
+
+.trackerfilter select {
+    margin: 0 10px;
+    color: #cda256;
+    background-color : #42281d;
+    height: 20px;
+    font-size: 1em;
+    border: none;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    border-radius: 20px;
+    text-shadow: 0 2px 2px rgba(0, 0, 0, 0.3);
+    -webkit-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 3px rgba(0, 0, 0, 0.2) inset;
+    -moz-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 3px rgba(0, 0, 0, 0.2) inset;
+    -o-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 3px rgba(0, 0, 0, 0.2) inset;
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 3px rgba(0, 0, 0, 0.2) inset;
+    -webkit-background-clip: padding-box;
+    -webkit-transition: all 0.7s ease-out 0s;  /* Saf3.2+, Chrome */
+    -moz-transition: all 0.7s ease-out 0s;  /* FF4+ */
+    -ms-transition: all 0.7s ease-out 0s;  /* IE10? */
+    -o-transition: all 0.7s ease-out 0s;  /* Opera 10.5+ */
+    transition: all 0.7s ease-out 0s;
+}
+
+/** Phonebook **/
+.phonebook {
+    width: 680px;
+    margin: 1em auto;
+    background: url('greenvalley/phonebook_ltr.jpg') no-repeat;
+    min-height: 800px;
+}
+
+.phonebook .normal {
+    width: 680px;
+    border: none;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.phonebook_listing {
+    width: 100%;
+}
+
+.phonebook_item {
+    float:left;
+    width: 100%;
+    margin: 1.33em auto 0 auto;
+    background: transparent !important;
+    font-size: 1em;
+}
+
+.phonebook_cell {
+    padding: 0 4px 0 10px;
+    width: 25%;
+    display:inline;
+    float: left;
+}
+
+.phonebook_tel {
+    padding: 0 4px 0 10px;
+    width: 15%;
+    display:inline;
+    float: left;
+}
+
+.phonebook_name {
+    font-weight: bold;
+    font-size: 120%;
+}
+
+.phonebook .mini {padding-top:0.6em;}
+.phonebook p {display:none;}
+
+/* Business tracker */
+.business_right {
+    float:right;
+    width:48%;
+}
+
+#business_left {
+    float:left;
+    width:45%;
+}
+
+.business_type {
+    position: relative;
+    top:14px;
+    right:15px;
+    color: #bbb;
+}
+
+.business_type a {
+    color: #777;
+    font-size:1.1em;
+}
+
+.business_card {
+    border: 1px dashed #f2e4ab;
+    margin:15px;
+    padding:4px;
+    background: #fff;
+    height:270px;
+}
+
+.business_header {
+    float:right;
+    height: 75px;
+}
+
+.business_header h3 {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 1.6em;
+    font-weight: bold;
+    color: #E23996;
+    -ms-transform:scale(1,1.8); /* IE 9 */
+    -moz-transform:scale(1,1.8); /* Firefox */
+    -webkit-transform:scale(1,1.8); /* Safari and Chrome */
+    -o-transform:scale(1,1.8); /* Opera */
+    transform:scale(1,1.8);
+    letter-spacing: .1em;
+}
+
+.business_header h4 {
+    font-size: 1em;
+    margin-bottom: 0.4em;
+    margin-top: 0.7em;
+}
+
+.business_picture {
+    float:left;
+}
+
+.business_picture p {
+    margin:0;
+}
+
+.business_picture img {
+    position:relative;
+    top:2px;
+    left:2px;
+}
+
+.business_text {
+    height: 120px;
+    position:relative;
+    top: 1em;
+    padding-bottom: 4px;
+    overflow: hidden;
+    clear:both;
+    font-size: .96em;
+}
+
+.business_bottom {
+    padding: 4px 0;
+    border-top: #f2e4ab 1px dashed;
+    background: #fff;
+    font-size: 1.05em;
+}
+
+.business_bottom p {
+    margin:0;
+    font-size:0.9em;
+}
+
+.business_bottom_right {
+    float:right;
+    width:40%;
+}
+
+.business_bottom_left {
+    text-align:left !important;
+    float:left;
+    width:60%;
+}
+
+.business_clear {
+    clear:both;
+}
+/* End of File */
