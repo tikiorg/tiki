@@ -1,0 +1,106 @@
+/* BiDi specific GreenValley theme modifications */
+
+/* GENERAL EXPLANATION
+ *
+/* Notice : BiDi layout modifications are general and try to address to all the themes.
+ * BiDi files are read and used when RTL (Right To Left) language is detected.
+ * They are located at "/styles/BiDi/" and consist today in BiDi.css only.
+ * This is a very hard task (if not impossible) as each theme got specificity.
+ * However it is possible to help as much as we can the Admin and Webmasters
+ * who would like to use Tiki in an RTL environment or using multilingual feature.
+ * The idea is have for each theme a specific BiDi adding for each theme a "rtl"
+ * folder to be used for graphics and .css files.
+ * This is experimental and will improve with time.
+ * Any help will be appreciated (please contact). Team : Bsfez/yonixxx.
+ */
+
+/* GreenValley Specific Theme Customisation for RTL language.
+ * GreenValley use specific header and page background.
+ * The theme use also several Pretty Tracker and Wiki Templates.
+ * The templates styles are specified here too
+ * greenvalley_BiDi.css 2012-12-02 Bernard Sfez
+ */
+
+/* Note : ID and Class have been added in some case to prioritize syles over
+ * BiDi.css and default one. Example, "#header" became "#main #header".
+
+/***** XHTML Elements (body tag) *****/
+
+/***** General page design (common to all pages) *****/
+
+#middle {
+    background: url('page_background_rtl.jpg') repeat !important;
+}
+
+/***** Layout *****/
+
+/* Col width */
+/*#middle #col1.marginright {
+    margin-left: 250px !important;
+    margin-right:0px !important;
+}
+
+#middle #c1c2 #wrapper #col1.marginleft {
+    margin-left: 0px !important;
+    margin-right: 250px !important;
+}*/
+
+/***** Layout *****/
+/* Col reversing; This is one col only specific and must be edited if otherwise */
+/* Note : margin width must be equal to col width in your rtl theme file */
+#middle #col1.marginleft {
+    margin-left: 0px !important;
+    margin-right: 250px !important;
+}
+
+#c1c2 #wrapper #col1.marginright {
+    margin-right: 0px !important;
+}
+
+
+#middle #c1c2 #wrapper #col1.marginright {
+    margin-left: 250px !important;
+}
+
+#middle #col2 {
+    float: right !important;
+}
+
+#middle #col3 {
+    float: left !important;
+    margin-left:0 !important;
+}
+
+/***** Header Login tab and Identity *****/
+
+/** header banner **/
+#main #header {
+    background: url('header_background_rtl.jpg') 50% 0 no-repeat !important;
+}
+
+/** Login Tab **/
+#main #top_modules .box-login_box {
+    right: auto !important;
+    left: 50px;
+}
+
+/* Moving left the action buttons */
+.wikitopline {
+    float:left;
+    position:relative; top:-28px;
+}
+
+/* Homepage pictures display */
+/*#home_pictmask {right: -62px !important}
+#home_pict_box {right: -12px !important}*/
+
+/* Homepage infinitecarousel */
+
+/* Phonebook Trackerpluginfilter */
+.phonebook {background: url(/greenvalley/rtl/phonebook_rtl.jpg) no-repeat !important}
+.phonebook_listing {padding-right: 22px; padding-left: 0}
+.phonebook_item {margin-bottom: 0.045em !important; margin-top: 0.8em !important}
+.phonebook_cell, .phonebook_tel, .phonebook_name {float: right !important}
+
+/* Business Trackerpluginfilter */
+.business_type {position: relative; top:14px; right:15px; color: #bbb}
