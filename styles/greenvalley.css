@@ -12,9 +12,9 @@
 /***** XHTML Elements (body tag here, others follow Layout) *****/
 
 body {
-	background: url('greenvalley/background5.jpg') repeat;
+	background: url('greenvalley/background.jpg') repeat;
 	font: 90% Century Gothic,Lucida Grande,Arial,Helvetcia,sans-serif;
-    color: rgb(30, 30, 30);
+	color: rgb(30, 30, 30);
 }
 
 html > body {
