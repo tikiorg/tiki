@@ -80,6 +80,12 @@ function smarty_function_payment( $params, $smarty )
 
 
 		$info['fullview'] = $objectperms->payment_view || $theguy;
+
+		if (!empty($smarty->tpl_vars['returnurl'])) {
+			$returl = $smarty->tpl_vars['returnurl'];
+			$info['returnurl'] = preg_match('|^https?://|', $returl) ? $returl : $tikilib->tikiUrl($returl);
+		}
+
 		if (!empty($params['returnurl']) && empty($result)) {
 			$info['url'] = preg_match('|^https?://|', $params['returnurl']) ? $params['returnurl'] : $tikilib->tikiUrl($params['returnurl']);
 			$info['url'] .= (strstr($params['returnurl'], '.php?') || !strstr($params['returnurl'], '.php')? '&':'?') . "invoice=$invoice";

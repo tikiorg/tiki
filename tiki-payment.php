@@ -34,6 +34,7 @@ $inputConfiguration = array(
 				'update' => 'word',
 				'daconfirm' => 'word',				// ticketlib
 				'ticket' => 'word',
+				'returnurl' => 'url',
 			),
 			'staticKeyFiltersForArrays' => array('cart' => 'digits',),	// params for cart module
 			'catchAllUnset' => null,
@@ -74,7 +75,7 @@ if ( isset($ipn_data) ) {
 	$info = $paymentlib->get_payment($invoice);
 
 	// Important to check with paypal first
-	if ( $paypallib->is_valid($ipn_data, $info) && $info ) {
+	if (isset($info) && $paypallib->is_valid($ipn_data, $info)) {
 		$amount = $paypallib->get_amount($ipn_data);
 		$paymentlib->enter_payment($invoice, $amount, 'paypal', $ipn_data);
 	} else {
@@ -98,6 +99,10 @@ if ( isset( $_POST['manual_amount'], $_POST['invoice'] ) && preg_match('/^\d+(\.
 				'note' => $_POST['note'],
 			)
 		);
+		if (isset($_POST['returnurl'])) {
+			header('Location: ' . $_POST['returnurl']);
+			exit;
+		}
 
 		$access->redirect('tiki-payment.php?invoice=' . $_POST['invoice'], tra('Manual payment entered.'));
 	} else {

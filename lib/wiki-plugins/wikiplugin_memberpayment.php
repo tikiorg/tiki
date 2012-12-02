@@ -82,6 +82,13 @@ function wikiplugin_memberpayment_info()
 				'filter' => 'text',
 				'default' => 'Number of periods:',
 			),
+			'returnurl' => array(
+				'required' => false,
+				'name' => tra('Return URL'),
+				'description' => tra('Page that payment service returns to after processing.'),
+				'filter' => 'url',
+				'default' => '',
+			),
 		),
 	);
 }
@@ -95,6 +102,7 @@ function wikiplugin_memberpayment( $data, $params, $offset )
 
 	$iPluginMemberpayment++;
 	$smarty->assign('iPluginMemberpayment', $iPluginMemberpayment);
+	$smarty->assign('returnurl', !empty($params['returnurl']) ? $params['returnurl'] : '');
 	$params['price'] = floatval($params['price']);
 	$default = array( 'currentuser'=>'n', 'inputtitle'=>'', 'howtitle' => '', 'periodslabel' => 'Number of periods:');
 	$params = array_merge($default, $params);

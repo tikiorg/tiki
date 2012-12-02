@@ -35,5 +35,5 @@
 	{/jq}
 </form>
 {else}
-{payment id=$wp_member_paymentid} {* TODO: can set returnurl param as well *}
+	{payment id=$wp_member_paymentid returnurl=$returnurl}
 {/if}
