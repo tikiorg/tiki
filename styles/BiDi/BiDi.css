@@ -7,8 +7,9 @@
  * output by setting the directionality property of this DIV element.
  * Other modifications include overriding all left text-alignments and
  * turning them into right text-alignments.
- *
- * >>>>> IMPORTANT NOTICE <<<<<
+*/
+
+/* >>>>> IMPORTANT NOTICE <<<<<
  * BiDi is set by default to work with the defaul theme of Tiki, FiveAlive Blueberry
  * Test and finalisation have been also done on the Greenvalley theme.
  * This theme is LeftToRight and RightToLeft. Image styles (background: url)
@@ -16,16 +17,31 @@
  * Change them so it fit your website graphic chart. Bsfez
  */
 
+/* Notice : BiDi layout modifications are general and try to address to all the themes.
+ * BiDi files are read and used when RTL (Right To Left) language is detected.
+ * They are located at "/styles/BiDi/" and consist today in BiDi.css only.
+ * This is a very hard task (if not impossible) as each theme got specificity.
+ * However it is possible to help as much as we can the Admin and Webmasters
+ * who would like to use Tiki in an RTL environment or using multilingual feature.
+ * The idea is have for each theme a specific BiDi adding for each theme a "rtl"
+ * folder to be used for graphics and .css files.
+ * This is experimental and will improve with time.
+ * Any help will be appreciated (please contact). Team : Bsfez/yonixxx.
+ */
+
+/* Import RTL Theme specifics CSS files. */
+/* @import url("../greenvalley/rtl/greenvalley_BiDi.css");*/
+
+/* The following address mainly to fivealive, option blueberry theme which is the
+ * default theme for a brand new installation. The theme specific should be set as
+ * Explained above.
+ */
+
 /* Hebrew and Arabic characters display smaller than latin characters */
 /* set here a different font size for RTL only - Note that latin char will look bigger than hebrew if mixed (numbers) */
 body {
     font: 93% !important;
 }
-
-/* Example of background page customisation */
-/*#middle {
-    background: url('/greenvalley/page_background_rtl.jpg') repeat !important;
-}*/
 
 /***** Layout *****/
 /* This div encloses the whole Tiki application */
@@ -43,24 +59,23 @@ div#tiki-clean {
 }
 
 /* Col reversing; This is one col only specific and must be edited if otherwise */
-/* if using 3 columns state back margin-right:250px !important */
-#col1.marginright {
-	margin-left: 250px !important;
-	margin-right:0px !important;
+/* Note : margin width must be equal to col width in your rtl theme file */
+#col1.marginleft {
+    margin-left: 0px !important;
+    margin-right: 200px !important;
 }
 
-#c1c2 #wrapper #col1.marginleft {
-    margin-left: 0px !important;
-    margin-right: 250px !important;
+#c1c2 #wrapper #col1.marginright {
+    margin-left: 200px !important;
 }
 
 #col2 {
-    float:right !important;
+    float: right !important;
 }
 
 #col3 {
-	float:left !important;
-	margin-left:0 !important;
+    float: left !important;
+    margin-left:0 !important;
 }
 
 /***** Box *****/
@@ -80,16 +95,12 @@ ul li div.image {
 
 /** header banner **/
 #header {
-    background: url('../fivealive/options/blueberry/siteheader_rtl.jpg') 50% 0 no-repeat !important;
+    background: url('../fivealive/options/blueberry/rtl/siteheader_rtl.jpg') 50% 0 no-repeat !important;
 }
 
 .header_container {
     background: url("../fivealive/header_left.png") no-repeat scroll 100% 0px transparent !important;
 }
-
-/* Examples
-    background: url('../greenvalley/header_background_rtl.jpg') 50% 0 no-repeat !important;
-*/
 
 /** Logo position **/
 #top_modules .box-logo {
@@ -103,11 +114,19 @@ ul li div.image {
 	float: right !important;
 }
 
+/* Login box left tag should be equal to col width */
 #top_modules .box-login_box {
 	right: auto !important;
-    left: 10px;
+    left: 200px;
 }
 
+.siteloginbar_popup ul.siteloginbar_poppedup {
+    width: 12em !important;
+}
+
+.siteloginbar_popup * {
+    margin: 0;
+}
 
 /* site login popup content */
 .siteloginbar_popup label {
@@ -135,7 +154,7 @@ ul li div.image {
     text-align: right !important;
 }
 
-/* Sitelogin Popup moved left Fivealive theme - could be not portable */
+/* Sitelogin Popup moved left Fivealive theme */
 #siteloginbar_popup {
     right: 865px !important;
 }
