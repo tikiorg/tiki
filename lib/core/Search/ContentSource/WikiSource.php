@@ -62,6 +62,10 @@ class Search_ContentSource_WikiSource implements Search_ContentSource_Interface
 			$data['wiki_uptodateness'] = $typeFactory->sortable($this->quantifylib->getCompleteness($info['page_id']));
 		}
 
+		if ($this->flaggedrevisionlib) {
+			$data['wiki_approval_state'] = $typeFactory->identifier('none');
+		}
+
 		$out = $data;
 
 		if ($this->flaggedrevisionlib && $this->flaggedrevisionlib->page_requires_approval($info['pageName'])) {
@@ -77,7 +81,8 @@ class Search_ContentSource_WikiSource implements Search_ContentSource_Interface
 					array(
 						'title' => $typeFactory->sortable(tr('%0 (latest)', $info['pageName'])),
 						'view_permission' => $typeFactory->identifier('tiki_p_wiki_view_latest'),
-						'url' => $typeFactory->identifier($wikilib->sefurl($info['pageName'], true) . 'latest'),
+						'wiki_approval_state' => $typeFactory->identifier('pending'),
+						'url' => $typeFactory->identifier(str_replace('&amp;', '&', $wikilib->sefurl($info['pageName'], true)) . 'latest'),
 					)
 				);
 			}
@@ -89,6 +94,7 @@ class Search_ContentSource_WikiSource implements Search_ContentSource_Interface
 					$data,
 					array(
 						'wiki_content' => $typeFactory->wikitext($versionInfo['data']),
+						'wiki_approval_state' => $typeFactory->identifier('approved'),
 						'hash' => $typeFactory->identifier($versionInfo['version']),
 					)
 				);
@@ -111,6 +117,7 @@ class Search_ContentSource_WikiSource implements Search_ContentSource_Interface
 			'contributors',
 
 			'wiki_content',
+			'wiki_approval_state',
 
 			'view_permission',
 		);
