@@ -9,14 +9,13 @@ class FlaggedRevisionLib extends TikiDb_Bridge
 {
 	function flag_revision($pageName, $version, $flag, $value)
 	{
-		global $user;
-		global $histlib; require_once 'lib/wiki/histlib.php';
+		global $prefs;
+		$attributelib = TikiLib::lib('attribute');
+		$histlib = TikiLib::lib('hist');
 
 		if ($version_info = $histlib->get_version($pageName, $version)) {
-			global $attributelib; require_once 'lib/attributes/attributelib.php';
-
 			if ($prefs['feature_actionlog'] == 'y') {
-				global $logslib; include_once('lib/logs/logslib.php');
+				$logslib = TikiLib::lib('logs');
 				$logslib->add_action('Flagged', $pageName, 'wiki page', "flag=$flag&version=$version&value=$value");
 			}
 
