@@ -57,7 +57,7 @@
 									var crf = $('form.commentRatingForm').submit(function() {
 										var vals = $(this).serialize();
 										$.modal(tr('Loading...'));
-										$.get('tiki-ajax_services.php?controller=rating&action=vote&' + vals, function() {
+										$.post($.service('rating', 'vote'), vals, function() {
 											$.modal();
 											$.notify(tr('Thanks for rating!'));
 										});
@@ -166,15 +166,16 @@ function comment_load(url) {
 	return this;
 };
 
-var comm_href =  ajax_url + "tiki-ajax_services.php?controller=comment&action=post&type="+encodeURIComponent("wiki page")+"&objectId="+encodeURIComponent(objectId);
-var url = 'tiki-ajax_services.php?controller=comment&action=list&type=wiki+page&objectId='+encodeURIComponent(objectId)+'#comment-container';
 $this = $('.comment-form').last().find('a');
 $this.parent().empty().removeClass('button').load($this.attr('href'), function () {
 	var form = $('form', this).submit(function () {
 		var errors;
 		$.post(form.attr('action'), $(this).serialize(), function (data, st) {
 			if (data.threadId) {
-				$("#comment-container").empty().comment_load(url);
+				$("#comment-container").empty().comment_load($.service('comment', 'list', {
+					type: data.type,
+					objectId: data.objectId
+				});
 				$comm_counter = $('span.count_comments');
 				if ($comm_counter.length != 0) {
 					var comment_count = parseInt($comm_counter.text()) + 1;
