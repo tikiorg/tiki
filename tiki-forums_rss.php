@@ -41,7 +41,7 @@ if ($output["data"]=="EMPTY") {
 	$titleId = "title";
 	$readrepl = 'tiki-view_forum_thread.php?forumId=%s&comments_parentId=%s';
 
-	$changes = $tikilib -> list_all_forum_topics(0, $prefs['feed_forums_max'], $dateId.'_desc', '');
+	$changes = $tikilib ->list_recent_forum_topics($prefs['feed_forums_max']);
 	$output = $rsslib->generate_feed($feed, $uniqueid, '', $changes, $readrepl, $param, $id, $title, $titleId, $desc, $descId, $dateId, $authorId);
 }
 header("Content-type: ".$output["content-type"]);

@@ -1718,38 +1718,32 @@ class TikiLib extends TikiDb_Bridge
 		return $pages;
 	}
 
-	function list_all_forum_topics($offset, $maxRecords, $sort_mode, $find)
+	function list_recent_forum_topics($maxRecords)
 	{
 		$bindvars = array('forum', 0);
-		if ($find) {
-		  $findesc = '%' . $find . '%';
-		  $mid = " and (`title` like ? or `data` like ?)";
-		  $bindvars[] = $findesc;
-		  $bindvars[] = $findesc;
-		} else {
-		  $mid = '';
-		}
 
 		$query = 'select `threadId`, `forumId` from `tiki_comments`,`tiki_forums`'
-			  . " where `object`=`forumId` and `objectType`=? and `parentId`=? $mid order by " . $this->convertSortMode($sort_mode);
-		$result = $this->fetchAll($query, $bindvars);
+			  . " where `object`=`forumId` and `objectType`=? and `parentId`=? order by " . $this->convertSortMode('commentDate_desc');
+		$result = $this->fetchAll($query, $bindvars, $maxRecords * 3, 0); // Load a little more, for permission filters
 		$res = $ret = $retids = array();
 		$n = 0;
 
-		//FIXME Perm:filter ?
 		foreach ( $result as $res ) {
 			$objperm = $this->get_perm_object($res['forumId'], 'forums', '', false);
 			if ($objperm['tiki_p_forum_read'] == 'y') {
-				if (($maxRecords == -1) || (($n >= $offset) && ($n < ($offset + $maxRecords)))) {
-					$retids[] = $res['threadId'];
-				}
+				$retids[] = $res['threadId'];
+
 				$n++;
+
+				if ($n >= $maxRecords) {
+					break;
+				}
 			}
 		}
 
 		if ( $n > 0 ) {
 		  $query = 'select * from `tiki_comments`'
-			  . ' where `threadId` in (' . implode(',', $retids) . ') order by ' . $this->convertSortMode($sort_mode);
+			  . ' where `threadId` in (' . implode(',', $retids) . ') order by ' . $this->convertSortMode('commentDate_desc');
 		  $ret = $this->fetchAll($query);
 		}
 
