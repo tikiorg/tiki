@@ -7,6 +7,8 @@
 
 class FlaggedRevisionLib extends TikiDb_Bridge
 {
+	const ACTION = 'Flagged';
+
 	function flag_revision($pageName, $version, $flag, $value)
 	{
 		global $prefs;
@@ -16,7 +18,7 @@ class FlaggedRevisionLib extends TikiDb_Bridge
 		if ($version_info = $histlib->get_version($pageName, $version)) {
 			if ($prefs['feature_actionlog'] == 'y') {
 				$logslib = TikiLib::lib('logs');
-				$logslib->add_action('Flagged', $pageName, 'wiki page', "flag=$flag&version=$version&value=$value");
+				$logslib->add_action(self::FLAGGED, $pageName, 'wiki page', "flag=$flag&version=$version&value=$value");
 			}
 
 			$attribute = $this->get_attribute_for_flag($flag);
@@ -82,6 +84,21 @@ class FlaggedRevisionLib extends TikiDb_Bridge
 		}
 
 		return false;
+	}
+
+	function find_approval_information($page, $version)
+	{
+		global $prefs;
+
+		if ($prefs['feature_actionlog'] == 'y') {
+			$logs = $this->table('tiki_actionlog');
+			return $logs->fetchRow(array('user', 'lastModif', 'ip'), array(
+				'action' => self::ACTION,
+				'object' => $page,
+				'objectType' => 'wiki page',
+				'comment' => "flag=moderation&version=$version&value=OK",
+			));
+		}
 	}
 
 	private function get_attribute_for_flag($flag)

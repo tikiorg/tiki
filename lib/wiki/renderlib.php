@@ -288,22 +288,31 @@ class WikiRenderer
 		// Get the authors style for this page
 		$wiki_authors_style = ( $prefs['wiki_authors_style_by_page'] == 'y' && $this->info['wiki_authors_style'] != '' ) ? $this->info['wiki_authors_style'] : $prefs['wiki_authors_style'];
 		$this->smartyassign('wiki_authors_style', $wiki_authors_style);
+		$this->smartyassign('revision_approval_info', null);
 
 		$this->smartyassign('cached_page', 'n');
 
 		if ($prefs['flaggedrev_approval'] == 'y') {
-			global $flaggedrevisionlib; require_once 'lib/wiki/flaggedrevisionlib.php';
+			$flaggedrevisionlib = TikiLib::lib('flaggedrevision');
 
 			if ($flaggedrevisionlib->page_requires_approval($this->page)) {
 				$this->smartyassign('revision_approval', true);
 
 				if ($version_info = $flaggedrevisionlib->get_version_with($this->page, 'moderation', 'OK')) {
 					$this->smartyassign('revision_approved', $version_info['version']);
+					$revision_displayed = $this->info['version'];
+
 					if ($this->content_to_render === null) {
-						$this->smartyassign('revision_displayed', $version_info['version']);
 						$this->content_to_render = $version_info['data'];
 					} else {
-						$this->smartyassign('revision_displayed', $this->info['version']);
+						$revision_displayed = $version_info['version'];
+					}
+
+					$this->smartyassign('revision_displayed', $revision_displayed);
+
+					if ($revision_displayed == $version_info['version']) {
+						$approval = $flaggedrevisionlib->find_approval_information($this->page, $revision_displayed);
+						$this->smartyassign('revision_approval_info', $approval);
 					}
 				} else {
 					$this->smartyassign('revision_approved', null);
