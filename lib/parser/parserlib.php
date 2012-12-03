@@ -2966,10 +2966,16 @@ if ( \$('#$id') ) {
 
 		$data = $matches->getText();
 
+		$htmlLinks = array("0" => "dummy");
+		$htmlLinksSefurl = array("0" => "dummy");
 		preg_match_all("/\(([a-z0-9-]+)?\( *($page_regex) *\)\)/", $data, $normal);
 		preg_match_all("/\(([a-z0-9-]+)?\( *($page_regex) *\|(.+?)\)\)/", $data, $withDesc);
-		preg_match_all('/<a class="wiki[^\"]*" href="tiki-index\.php\?page=([^\?&"]+)[^"]*"/', $data, $htmlLinks);
-		preg_match_all('/<a class="wiki[^\"]*wiki[^\"]*" href="([^\?&"]+)[^"]*"/', $data, $htmlLinksSefurl);
+		preg_match_all('/<a class="wiki[^\"]*" href="tiki-index\.php\?page=([^\?&"]+)[^"]*"/', $data, $htmlLinks1);
+		preg_match_all('/<a href="tiki-index\.php\?page=([^\?&"]+)[^"]*"/', $data, $htmlLinks2);
+		$htmlLinks[1] = array_merge($htmlLinks1[1], $htmlLinks2[1]);
+		preg_match_all('/<a class="wiki[^\"]*wiki[^\"]*" href="([^\?&"]+)[^"]*"/', $data, $htmlLinksSefurl1);
+		preg_match_all('/<a href="([^\?&"]+)[^"]*"/', $data, $htmlLinksSefurl2);
+		$htmlLinksSefurl[1] = array_merge($htmlLinksSefurl1[1], $htmlLinksSefurl2[1]);
 		preg_match_all('/<a class="wiki wikinew" href="tiki-editpage\.php\?page=([^\?&"]+)"/', $data, $htmlWantedLinks);
 		// TODO: revise the need to call modified urldecode() (shouldn't be needed after r37568). 20110922
 		foreach ($htmlLinks[1] as &$h) {
@@ -2982,16 +2988,34 @@ if ( \$('#$id') ) {
 			$h = $tikilib->urldecode($h);
 		}
 
-		// Remove any possible "tiki-index.php" in the SEFURL link list.
-		//	Non-sefurl links will be mapped as "tiki-index.php"
-		$tikiindex = array();
-		foreach ($htmlLinksSefurl[1] as $pageName) {
-			if (strpos($pageName, 'tiki-index.php') !== false) {
-				$tikiindex[] = $pageName;
+		// Post process SEFURL for html wiki pages
+		if(count($htmlLinksSefurl[1])) {
+			
+			// Remove any possible "tiki-index.php" in the SEFURL link list.
+			//	Non-sefurl links will be mapped as "tiki-index.php"
+			$tikiindex = array();
+			foreach ($htmlLinksSefurl[1] as $pageName) {
+				if (strpos($pageName, 'tiki-index.php') !== false) {
+					$tikiindex[] = $pageName;
+				}
+			}
+			$htmlLinksSefurl[1]=array_diff($htmlLinksSefurl[1], $tikiindex);
+	
+			if(count($htmlLinksSefurl[1])) {
+				// The case <a href=" ... will catch manually entered links. Only add links to wiki pages
+				$pages = $tikilib->get_all_pages();
+				$tikiindex = array();
+				foreach($htmlLinksSefurl[1] as $link) {
+					// Validate that the link is to a wiki page
+					if(!in_array($link, $pages)) {
+						// If it's not referring to a wiki page, add it to the removal list
+						$tikiindex[] = $link;
+					}
+				}
+				$htmlLinksSefurl[1]=array_diff($htmlLinksSefurl[1], $tikiindex);
 			}
 		}
-		$htmlLinksSefurl[1]=array_diff($htmlLinksSefurl[1], $tikiindex);
-
+		
 		if ($prefs['feature_wikiwords'] == 'y') {
 			preg_match_all("/([ \n\t\r\,\;]|^)?([A-Z][a-z0-9_\-]+[A-Z][a-z0-9_\-]+[A-Za-z0-9\-_]*)($|[ \n\t\r\,\;\.])/", $data, $wikiLinks);
 
