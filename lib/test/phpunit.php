@@ -11,5 +11,10 @@
 * 
 * Linux only (it should be simple to add support to other OSs).
 */
-
+// Linux
 require_once('/usr/bin/phpunit');
+
+// Windows
+// comment out the Linux require line (above) and uncomment the 2 lines below
+//$phpunit_path = PHP_PEAR_BIN_DIR.DIRECTORY_SEPARATOR.'phpunit';
+//require_once($phpunit_path);
