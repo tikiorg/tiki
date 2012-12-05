@@ -2973,7 +2973,7 @@ if ( \$('#$id') ) {
 		preg_match_all('/<a class="wiki[^\"]*" href="tiki-index\.php\?page=([^\?&"]+)[^"]*"/', $data, $htmlLinks1);
 		preg_match_all('/<a href="tiki-index\.php\?page=([^\?&"]+)[^"]*"/', $data, $htmlLinks2);
 		$htmlLinks[1] = array_merge($htmlLinks1[1], $htmlLinks2[1]);
-		preg_match_all('/<a class="wiki[^\"]*wiki[^\"]*" href="([^\?&"]+)[^"]*"/', $data, $htmlLinksSefurl1);
+		preg_match_all('/<a class="wiki[^\"]*" href="([^\?&"]+)[^"]*"/', $data, $htmlLinksSefurl1);
 		preg_match_all('/<a href="([^\?&"]+)[^"]*"/', $data, $htmlLinksSefurl2);
 		$htmlLinksSefurl[1] = array_merge($htmlLinksSefurl1[1], $htmlLinksSefurl2[1]);
 		preg_match_all('/<a class="wiki wikinew" href="tiki-editpage\.php\?page=([^\?&"]+)"/', $data, $htmlWantedLinks);
