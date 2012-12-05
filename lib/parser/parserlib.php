@@ -3024,11 +3024,11 @@ if ( \$('#$id') ) {
 				$relList = array_merge(
 					$normal[1],
 					$withDesc[1],
-					$wikiLinks[2], 
-					$htmlLinks[1], 
-					$htmlLinksSefurl[1],
-					$htmlWantedLinks[1]
-					);
+					count($wikiLinks[2]) ? array_fill(0, count($wikiLinks[2]), null) : array(),
+					count($htmlLinks[1]) ? array_fill(0, count($htmlLinks[1]), null) : array(),
+					count($htmlLinksSefurl[1]) ? array_fill(0, count($htmlLinksSefurl[1]), null) : array(),
+					count($htmlWantedLinks[1]) ? array_fill(0, count($htmlWantedLinks[1]), null) : array()
+				);
 			}
 		} else {
 			$pageList = array_merge($normal[2], $withDesc[2], $htmlLinks[1], $htmlLinksSefurl[1], $htmlWantedLinks[1]);
@@ -3036,9 +3036,9 @@ if ( \$('#$id') ) {
 				$relList = array_merge(
 					$normal[1],
 					$withDesc[1],
-					$htmlLinks[1], 
-					$htmlLinksSefurl[1],
-					$htmlWantedLinks[1]
+					count($htmlLinks[1]) ? array_fill(0, count($htmlLinks[1]), null) : array(),
+					count($htmlLinksSefurl[1]) ? array_fill(0, count($htmlLinksSefurl[1]), null) : array(),
+					count($htmlWantedLinks[1]) ? array_fill(0, count($htmlWantedLinks[1]), null) : array()
 				);
 			}
 		}
