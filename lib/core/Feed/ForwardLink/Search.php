@@ -128,7 +128,7 @@ JQ
 					"var phrase = $('span.forwardlinkMiddle".$i."')
 						.addClass('ui-state-highlight');
 
-					var phraseLink = $('<a>*</a>')
+					var phraseLink = $('<a><sup>&</sup></a>')
 						.data('metadataHere', " . json_encode($item->forwardlink) . ")
 						.data('metadataThere', " . json_encode($item->textlink) . ")
 						.addClass('forwardlinkA')
@@ -194,7 +194,7 @@ JQ
 					"var phrase = $('span.textlinkMiddle".$i."')
 						.addClass('ui-state-highlight');
 
-					var phraseLink = $('<a>*</a>')
+					var phraseLink = $('<a><sup>&</sup></a>')
 						.data('metadataHere', " . json_encode($item->textlink) . ")
 						.data('metadataThere', " . json_encode($item->forwardlink) . ")
 						.addClass('textlinkA')
