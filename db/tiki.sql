@@ -3397,7 +3397,7 @@ CREATE TABLE `tiki_rating_obtained` (
 DROP TABLE IF EXISTS `tiki_object_relations`;
 CREATE TABLE `tiki_object_relations` (
     `relationId` INT PRIMARY KEY AUTO_INCREMENT,
-    `relation` varchar(255) NOT NULL,
+    `relation` varchar(70) NOT NULL,
     `source_type` varchar(50) NOT NULL,
     `source_itemId` varchar(160) NOT NULL,
     `target_type` varchar(50) NOT NULL,
