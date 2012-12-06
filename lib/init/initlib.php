@@ -277,3 +277,10 @@ function tiki_error_handling($errno, $errstr, $errfile, $errline)
     	break;
 	}
 }
+
+// Patch missing $_SERVER['REQUEST_URI'] on IIS6
+if (empty($_SERVER['REQUEST_URI'])) {
+	if (TikiInit::isIIS()) {
+		$_SERVER['REQUEST_URI'] = $_SERVER['SCRIPT_NAME'];
+	}
+}
