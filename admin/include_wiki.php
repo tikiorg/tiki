@@ -78,7 +78,7 @@ if (isset($_REQUEST['wikidiscussprefs'])) {
 
 if (isset($_REQUEST['wikifeatures'])) {
 	check_ticket('admin-inc-wiki');
-	if ((isset($_REQUEST['feature_backlinks']) && $_REQUEST['feature_backlinks'] == 'on' && $prefs['feature_backlinks'] != 'y')
+	if ((isset($_REQUEST['feature_backlinks']) && $_REQUEST['feature_backlinks'] == 'on' && $prefs['feature_backlinks'] == 'y')
 			|| (empty($_REQUEST['feature_backlinks']) && $prefs['feature_backlinks'] == 'y')
 	) {
 		$backlinksChange = true;
