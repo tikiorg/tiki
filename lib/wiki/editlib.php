@@ -798,6 +798,13 @@ class EditLib
 		$search = '/(<a[^>]+href=\")https?\:\/\/' . preg_quote($_SERVER['HTTP_HOST'].$tikiroot, '/') . '([^>]+_cke_saved_href)/i';
 		$parsed = preg_replace($search, '$1$2', $parsed);
 
+		if (!$isHtml) {
+			// Fix for plugin being the last item in a page making it impossible to add new lines (new text ends up inside the plugin)
+			$parsed = preg_replace('/<!-- end tiki_plugin --><\/(span|div)>(<\/p>)?$/', '<!-- end tiki_plugin --></$1>&nbsp;$2', $parsed);
+			// also if first
+			$parsed = preg_replace('/^<(div|span) class="tiki_plugin"/', '&nbsp;<$1 class="tiki_plugin"', $parsed);
+		}
+
 		return $parsed;
 	}
 
