@@ -325,13 +325,13 @@
 						<tr>
 							<td>{tr}User:{/tr}</td>
 							<td>
-								<input type="text" name="inbound_pop_user" value="{$inbound_pop_user|escape}" />
+								<input type="text" name="inbound_pop_user" value="{$inbound_pop_user|escape}" autocomplete="off" />
 							</td>
 						</tr>
 						<tr>
 							<td>{tr}Password:{/tr}</td>
 							<td>
-								<input type="password" name="inbound_pop_password" value="{$inbound_pop_password|escape}" />
+								<input type="password" name="inbound_pop_password" value="{$inbound_pop_password|escape}" autocomplete="off" />
 							</td>
 						</tr>
 					</table>
