@@ -832,8 +832,8 @@ class EditLib
 		// take away the <p> that f/ck introduces around wiki heading ! to have maketoc/edit section working
 		$ret = preg_replace('/<p>!(.*)<\/p>/iu', "!$1\n", $ret);
 
-		// strip totally empty <p> tags generated in ckeditor 3.4
-		$ret = preg_replace('/\s*<p>[\s]*<\/p>\s*/iu', "$1\n", $ret);
+		// strip the last empty <p> tag generated somewhere (ckeditor 3.6, Tiki 10)
+		$ret = preg_replace('/\s*<p>[\s]*<\/p>\s*$/iu', "$1\n", $ret);
 		return $ret;
 	}
 
