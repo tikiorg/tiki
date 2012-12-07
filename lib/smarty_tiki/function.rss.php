@@ -14,22 +14,17 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 /* inserts the content of an rss feed into a module */
 function smarty_function_rss($params, $smarty)
 {
-	global $tikilib;
-	global $dbTiki;
-	global $rsslib;
-	include_once('lib/rss/rsslib.php');
 	extract($params, EXTR_SKIP);
 	// Param = zone
 	if (empty($id)) {
 		trigger_error("assign: missing id parameter");
-		return;
+		return '';
 	}
 	if (empty($max)) {
 		$max = 99;
 	}
 
-	global $tikilib;
-	return TikiLib::lib('parser')->plugin_execute(
+	$out = TikiLib::lib('parser')->plugin_execute(
 		'rss',
 		'',
 		array('id' => $id, 'max' => $max,),
@@ -37,4 +32,6 @@ function smarty_function_rss($params, $smarty)
 		false,
 		array('context_format' => 'html')
 	);
+	TikiLib::lib('parser')->setOptions();
+	return $out;
 }

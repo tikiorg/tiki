@@ -20,9 +20,8 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 
 function smarty_block_wikiplugin( $params, $content, $smarty, $repeat = false )
 {
- 	global $tikilib;
 
-	if ( $repeat ) return;
+	if ( $repeat ) return '';
 
 	if ( ! isset( $params['_name'] ) ) {
 		return '<div class="error">' . tra('Plugin name not specified.') . '</div>';
@@ -32,7 +31,7 @@ function smarty_block_wikiplugin( $params, $content, $smarty, $repeat = false )
 	unset( $params['_name'] );
 
 	$parserlib = TikiLib::lib('parser');
-	return $parserlib->plugin_execute(
+	$out = $parserlib->plugin_execute(
 		$name,
 		$content,
 		$params,
@@ -44,5 +43,7 @@ function smarty_block_wikiplugin( $params, $content, $smarty, $repeat = false )
 			'is_html' => 'y'
 		)
 	);
+	$parserlib->setOptions();
+	return $out;
 }
 
