@@ -1443,8 +1443,11 @@ class CategLib extends ObjectLib
 			if ( $objType == 'wiki page' ) {
 				$translations = $multilinguallib->getTranslations($objType, $this->get_page_id_from_name($objId), $objId);
 				$objectIdKey = 'objName';
-			} else {
+			} else if (in_array($objType, array('article'))) {	// only try on supported types
 				$translations = $multilinguallib->getTranslations($objType, $objId);
+				$objectIdKey = 'objId';
+			} else {
+				$translations = array();
 				$objectIdKey = 'objId';
 			}
 
