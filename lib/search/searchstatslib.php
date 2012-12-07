@@ -22,6 +22,19 @@ class SearchStatsLib extends TikiLib
 		$result = $this->query($query, array());
 	}
 
+	function register_term_hit($term)
+	{
+		$term = trim($term);
+
+		$table = $this->table('tiki_search_stats');
+		$table->insertOrUpdate(array(
+			'hits' => $table->increment(1),
+		), array(
+			'term' => $term,
+			'hits' => 1,
+		));
+	}
+
     /**
      * @param $offset
      * @param $maxRecords
@@ -55,4 +68,4 @@ class SearchStatsLib extends TikiLib
 		return $retval;
 	}
 }
-$searchstatslib = new SearchStatsLib;
+global $searchstatslib; $searchstatslib = new SearchStatsLib;

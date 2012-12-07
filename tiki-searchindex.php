@@ -138,7 +138,7 @@ $smarty->display("tiki.tpl");
  */
 function tiki_searchindex_get_results($filter, $offset, $maxRecords)
 {
-	global $unifiedsearchlib;
+	$unifiedsearchlib = TikiLib::lib('unifiedsearch');
 	$query = $unifiedsearchlib->buildQuery($filter);
 	$query->setRange($offset, $maxRecords);
 
@@ -146,5 +146,13 @@ function tiki_searchindex_get_results($filter, $offset, $maxRecords)
 		$query->setOrder($order);
 	}
 
+	if ($prefs['feature_search_stats'] == 'y') {
+		$stats = TikiLib::lib('searchstats');
+		foreach ($query->getTerms() as $term) {
+			$stats->register_term_hit($term);
+		}
+	}
+
 	return $query->search($unifiedsearchlib->getIndex());
 }
+

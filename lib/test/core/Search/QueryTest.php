@@ -21,6 +21,7 @@ class Search_QueryTest extends PHPUnit_Framework_TestCase
 		);
 
 		$this->assertEquals($expr, $index->getLastQuery());
+		$this->assertEquals(array('hello'), $query->getTerms());
 	}
 
 	function testCompositeQuery()
@@ -42,6 +43,7 @@ class Search_QueryTest extends PHPUnit_Framework_TestCase
 		);
 
 		$this->assertEquals($expr, $index->getLastQuery());
+		$this->assertEquals(array('hello', 'world'), $query->getTerms());
 	}
 
 	function testFilterType()
@@ -60,6 +62,7 @@ class Search_QueryTest extends PHPUnit_Framework_TestCase
 		);
 
 		$this->assertEquals($expr, $index->getLastQuery());
+		$this->assertEquals(array('hello'), $query->getTerms());
 	}
 
 	function testFilterCategory()
@@ -82,6 +85,7 @@ class Search_QueryTest extends PHPUnit_Framework_TestCase
 		);
 
 		$this->assertEquals($expr, $index->getLastQuery());
+		$this->assertEquals(array(), $query->getTerms());
 	}
 
 	function testDeepFilterCategory()
@@ -126,6 +130,7 @@ class Search_QueryTest extends PHPUnit_Framework_TestCase
 		);
 
 		$this->assertEquals($expr, $index->getLastQuery());
+		$this->assertEquals(array(), $query->getTerms());
 	}
 
 	function testDefaultSearchOrder()

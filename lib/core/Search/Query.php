@@ -208,4 +208,19 @@ class Search_Query
 
 		return $query;
 	}
+
+	function getTerms()
+	{
+		$terms = array();
+
+		$extractor = new Search_Type_Factory_Direct;
+
+		$this->expr->walk(function ($expr) use (& $terms, $extractor) {
+			if ($expr instanceof Search_Expr_Token && $expr->getField() == 'contents') {
+				$terms[] = $expr->getValue($extractor)->getValue();
+			}
+		});
+
+		return $terms;
+	}
 }
