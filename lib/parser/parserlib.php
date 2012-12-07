@@ -966,11 +966,13 @@ if ( \$('#$id') ) {
 				$data = nl2br($data);
 			}
 
+			$saved_options = $this->option;	// save current options (but do not reset)
 			if ($classExists == true) {
 				$output = $class->exec($data, $args, $offset, $this);
 			} else {
 				$output = $func_name($data, $args, $offset);
 			}
+			$this->option = $saved_options; // restore parsing options after plugin has executed
 
 			//This was added to remove the table of contents sometimes returned by other plugins, to use, simply have global $killtoc, and $killtoc = true;
 			if ($killtoc == true) {
@@ -1037,7 +1039,7 @@ if ( \$('#$id') ) {
 		$icon = isset($info['icon']) ? $info['icon'] : 'img/icons/wiki_plugin_edit.png';
 
 		// some plugins are just too flakey to do wysiwyg, so show the "source" for them ;(
-		if (in_array($name, array('trackerlist', 'kaltura', 'toc', 'freetagged', 'draw', 'googlemap', 'include', 'module'))) {
+		if (in_array($name, array('trackerlist', 'trackerfilter', 'kaltura', 'toc', 'freetagged', 'draw', 'googlemap', 'include', 'module'))) {
 			$plugin_result = '&nbsp;&nbsp;&nbsp;&nbsp;' . $ck_editor_plugin;
 		} else {
 			// Tiki 7+ adds ~np~ to plugin output so remove them
