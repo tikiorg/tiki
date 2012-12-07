@@ -134,14 +134,18 @@ class Multilingual_MachineTranslation_GoogleTranslateWrapper implements Multilin
 	{
 		require_once 'lib/ointegratelib.php';
 		$ointegrate = new OIntegrate();
-
-		$url = self::SERVICE_URL . '?' . http_build_query(array(
+		$params = array(
 			'key' => $this->key,
-			'source' => $this->sourceLang,
 			'target' => $this->targetLang,
 			'q' => $text,
 			'format' => ($this->markup === self::HTML_MARKUP) ? 'html' : 'text',
-		), '', '&');
+		);
+
+		if ($this->sourceLang != Multilingual_MachineTranslation::DETECT_LANGUAGE) {
+			$params['source'] = $this->sourceLang;
+		}
+
+		$url = self::SERVICE_URL . '?' . http_build_query($params, '', '&');
 
 		$oi_result = $ointegrate->performRequest($url);
 		$result = $oi_result->data['data']['translations'];

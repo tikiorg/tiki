@@ -692,14 +692,10 @@ function generate_machine_translated_content($pageContent, $pageInfo, $targetLan
  * @param bool $html
  * @return string
  */
-function translate_text($text, $sourceLang, $targetLang, $html = true)
+function translate_text($text, $sourceLang, $targetLang)
 {
 	$provider = new Multilingual_MachineTranslation;
-	if ($html) {
-		$translator = $provider->getHtmlImplementation($sourceLang, $targetLang);
-	} else {
-		$translator = $provider->getWikiImplementation($sourceLang, $targetLang);
-	}
+	$translator = $provider->getHtmlImplementation($sourceLang, $targetLang);
 	$translated = $translator->translateText($text);
 	return $translated;
 }

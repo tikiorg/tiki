@@ -8,7 +8,6 @@
 class Multilingual_MachineTranslation_BingTranslateWrapper implements Multilingual_MachineTranslation_Interface
 {
 	const AUTH_URL = 'https://datamarket.accesscontrol.windows.net/v2/OAuth2-13';
-  	//const TRANSLATE_URL = 'https://api.datamarket.azure.com/Data.ashx/Bing/MicrosoftTranslator/v1/Translate';
   	const TRANSLATE_URL = 'http://api.microsofttranslator.com/V2/Http.svc/Translate';
 
 	private $clientId;
@@ -75,30 +74,41 @@ class Multilingual_MachineTranslation_BingTranslateWrapper implements Multilingu
 	private function getTranslationFromBing($html) 
 	{
 		try {
-			$tikilib = TikiLib::lib('tiki');
 			$access = $this->getAccessToken();
-
-			$url = self::TRANSLATE_URL . '?' . http_build_query(array(
+			$params = array(
 				'appId' => '',
-				'from' => $this->sourceLang,
 				'to' => $this->targetLang,
 				'text' => $html,
-			), '', '&');
+			);
 
-			$client = $tikilib->get_http_client();
-			$client->setHeaders('Authorization', "Bearer $access");
-			$client->setUri($url);
-			$response = $client->request();
-			$xml = $response->getBody();
+			if ($this->sourceLang != Multilingual_MachineTranslation::DETECT_LANGUAGE) {
+				$params['from'] = $this->sourceLang;
+			}
 
-			$dom = new DOMDocument;
-			$dom->loadXML($xml);
+			$dom = $this->performRequest(self::TRANSLATE_URL, $access, $params);
 
 			return $dom->documentElement->textContent;
 		} catch (Exception $e) {
 			// Mostly netork errors, ignore
 			return $html;
 		}
+	}
+
+	private function performRequest($url, $access, $data)
+	{
+		$tikilib = TikiLib::lib('tiki');
+		$url = $url . '?' . http_build_query($data, '', '&');
+
+		$client = $tikilib->get_http_client();
+		$client->setHeaders('Authorization', "Bearer $access");
+		$client->setUri($url);
+		$response = $client->request();
+		$xml = $response->getBody();
+
+		$dom = new DOMDocument;
+		$dom->loadXML($xml);
+
+		return $dom;
 	}
 
 	private function getAccessToken()

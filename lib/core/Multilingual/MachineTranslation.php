@@ -8,6 +8,8 @@
  
 class Multilingual_MachineTranslation
 {
+	const DETECT_LANGUAGE = 'auto';
+
 	private $implementation = 'null';
 
 	public static function force($implementation)
@@ -101,6 +103,12 @@ class Multilingual_MachineTranslation
 			return new Multilingual_MachineTranslation_Null;
 		}
 		
-		return new Multilingual_MachineTranslation_Cache($handler);
+		return new Multilingual_MachineTranslation_Cache($handler, $source . $target);
+	}
+
+	function getDetectImplementation($target)
+	{
+		return $this->getHtmlImplementation(self::DETECT_LANGUAGE, $target);
 	}
 }
+
