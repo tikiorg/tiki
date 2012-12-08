@@ -798,6 +798,13 @@ class EditLib
 		$search = '/(<a[^>]+href=\")https?\:\/\/' . preg_quote($_SERVER['HTTP_HOST'].$tikiroot, '/') . '([^>]+_cke_saved_href)/i';
 		$parsed = preg_replace($search, '$1$2', $parsed);
 
+		if (!$isHtml) {
+			// Fix for plugin being the last item in a page making it impossible to add new lines (new text ends up inside the plugin)
+			$parsed = preg_replace('/<!-- end tiki_plugin --><\/(span|div)>(<\/p>)?$/', '<!-- end tiki_plugin --></$1>&nbsp;$2', $parsed);
+			// also if first
+			$parsed = preg_replace('/^<(div|span) class="tiki_plugin"/', '&nbsp;<$1 class="tiki_plugin"', $parsed);
+		}
+
 		return $parsed;
 	}
 
@@ -825,8 +832,8 @@ class EditLib
 		// take away the <p> that f/ck introduces around wiki heading ! to have maketoc/edit section working
 		$ret = preg_replace('/<p>!(.*)<\/p>/iu', "!$1\n", $ret);
 
-		// strip totally empty <p> tags generated in ckeditor 3.4
-		$ret = preg_replace('/\s*<p>[\s]*<\/p>\s*/iu', "$1\n", $ret);
+		// strip the last empty <p> tag generated somewhere (ckeditor 3.6, Tiki 10)
+		$ret = preg_replace('/\s*<p>[\s]*<\/p>\s*$/iu', "$1\n", $ret);
 		return $ret;
 	}
 
