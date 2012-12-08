@@ -38,7 +38,7 @@ class TikiCalendarLib extends CalendarLib
      * @param string $item_name
      * @return array
      */
-    function getCalendar($calIds, &$viewstart, &$viewend, $group_by = '', $item_name = 'actions')
+	function getCalendar($calIds, &$viewstart, &$viewend, $group_by = '', $item_name = 'actions')
 	{
 		return parent::getCalendar($calIds, $viewstart, $viewend, $group_by, $item_name);
 	}

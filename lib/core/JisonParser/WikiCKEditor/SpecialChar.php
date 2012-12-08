@@ -7,11 +7,13 @@
 
 class JisonParser_WikiCKEditor_SpecialChar extends JisonParser_Wiki_SpecialChar
 {
-	function protect(&$input) {
+	function protect(&$input)
+	{
 		return $input;
 	}
 
-	function unprotect(&$input) {
+	function unprotect(&$input)
+	{
 		return $input;
 	}
 }

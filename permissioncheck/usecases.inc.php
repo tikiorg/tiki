@@ -10,7 +10,7 @@ $uc_txt_file = 'usecases.txt'; // legacy
 $uc_file = 'usecases.bin';
 $file = fopen($uc_file, 'r') or exit('Unable to open file ' . $uc_file . '!');
 
-while(!feof($file)) {
+while (!feof($file)) {
 	$line_of_file_orig = fgets($file);
 	if ($line_of_file_orig == '') {
 		$dummy = true;

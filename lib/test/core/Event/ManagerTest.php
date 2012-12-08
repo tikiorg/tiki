@@ -141,9 +141,13 @@ class Event_ManagerTest extends PHPUnit_Framework_TestCase
 		$manager->bind('tiki.wiki.save', array($this, 'callbackMultiply'));
 		$manager->bind('tiki.wiki.update', array($this, 'callbackMultiply'));
 
-		$manager->bindPriority(5, 'tiki.test.foo', function () use ($manager) {
-			$manager->trigger('tiki.wiki.update');
-		});
+		$manager->bindPriority(
+			5,
+			'tiki.test.foo',
+			function () use ($manager) {
+				$manager->trigger('tiki.wiki.update');
+			}
+		);
 
 		$manager->trigger('tiki.test.foo');
 

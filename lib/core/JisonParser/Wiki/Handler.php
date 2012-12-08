@@ -1310,7 +1310,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 			$result = '';
 			end($rows);
 			$lastKey = key($rows);
-			foreach($rows as $key => $row) {
+			foreach ($rows as $key => $row) {
 				$result .= $row;
 				if ($key < $lastKey) {
 					$result .= $this->line("\n");

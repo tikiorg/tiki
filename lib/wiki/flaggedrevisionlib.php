@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -92,12 +92,15 @@ class FlaggedRevisionLib extends TikiDb_Bridge
 
 		if ($prefs['feature_actionlog'] == 'y') {
 			$logs = $this->table('tiki_actionlog');
-			return $logs->fetchRow(array('user', 'lastModif', 'ip'), array(
-				'action' => self::ACTION,
-				'object' => $page,
-				'objectType' => 'wiki page',
-				'comment' => "flag=moderation&version=$version&value=OK",
-			));
+			return $logs->fetchRow(
+				array('user', 'lastModif', 'ip'),
+				array(
+					'action' => self::ACTION,
+					'object' => $page,
+					'objectType' => 'wiki page',
+					'comment' => "flag=moderation&version=$version&value=OK",
+				)
+			);
 		}
 	}
 

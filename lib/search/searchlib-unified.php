@@ -124,9 +124,12 @@ class UnifiedSearchLib
 		TikiLib::lib('queue')->clear(self::INCREMENT_QUEUE);
 		$tikilib = TikiLib::lib('tiki');
 		$indexer = $this->buildIndexer($index, $loggit);
-		$stat = $tikilib->allocate_extra('unified_rebuild', function () use ($indexer) {
-			return $indexer->rebuild();
-		});
+		$stat = $tikilib->allocate_extra(
+			'unified_rebuild',
+			function () use ($indexer) {
+				return $indexer->rebuild();
+			}
+		);
 
 		// Force destruction to clear locks
 		unset($indexer);

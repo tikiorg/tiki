@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -21,13 +21,16 @@ function tiki_setup_events()
 
 		$prefix = $prefs['feature_wiki_userpage_prefix'];
 		if ($prefs['feature_wiki_userpage'] && ! empty($prefix)) {
-			$events->bind('tiki.wiki.save', function ($args) use ($events, $prefix) {
-				global $prefs;
-				if ($prefix == substr($args['object'], 0, strlen($prefix))) {
-					$user = substr($args['object'], strlen($prefix));
-					$events->trigger('tiki.user.update', array('type' => 'user', 'object' => $user));
+			$events->bind(
+				'tiki.wiki.save',
+				function ($args) use ($events, $prefix) {
+					global $prefs;
+					if ($prefix == substr($args['object'], 0, strlen($prefix))) {
+						$user = substr($args['object'], strlen($prefix));
+						$events->trigger('tiki.user.update', array('type' => 'user', 'object' => $user));
+					}
 				}
-			});
+			);
 		}
 	}
 
@@ -39,7 +42,7 @@ function tiki_setup_events()
 			$events->bind('tiki.trackeritem.save', Event_Lib::defer('trk', 'sync_categories'));
 			$events->bind('tiki.trackeritem.save', Event_Lib::defer('trk', 'sync_item_auto_categories'));
 		}
-		
+
 		if (! empty($prefs['user_trackersync_realname'])) {
 			$events->bind('tiki.trackeritem.save', Event_Lib::defer('trk', 'sync_user_realname'));
 		}

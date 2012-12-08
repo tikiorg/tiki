@@ -129,7 +129,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		$installer = new Tiki_Profile_Installer;
 		$profile = Tiki_Profile::fromNames($_GET['pd'], $_GET['pp']);
 		$error = '';
-		
+
 		// Check if profile is available.
 		// This will not be the case for a misconfigured profile server
 		if ($profile === false) {
@@ -156,8 +156,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		$installed = false;
 		$url = '';
 		$feedback = '';
-		
-		if($profile !== false) {
+
+		if ($profile !== false) {
 			foreach ($deps as $d) {
 				$dependencies[] = $d->pageUrl;
 				$userInput = array_merge($userInput, $d->getRequiredInput());
@@ -165,7 +165,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 			$parsed = $parserlib->parse_data($profile->pageContent);
 			$installed = $installer->isInstalled($profile);
-			
+
 			$url =  $profile->url;
 			$feedback = $profile->getFeedback();
 		}

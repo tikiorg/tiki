@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -27,12 +27,14 @@ class SearchStatsLib extends TikiLib
 		$term = trim($term);
 
 		$table = $this->table('tiki_search_stats');
-		$table->insertOrUpdate(array(
-			'hits' => $table->increment(1),
-		), array(
-			'term' => $term,
-			'hits' => 1,
-		));
+		$table->insertOrUpdate(
+			array(
+				'hits' => $table->increment(1),
+			), array(
+				'term' => $term,
+				'hits' => 1,
+			)
+		);
 	}
 
     /**

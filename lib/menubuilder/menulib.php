@@ -607,7 +607,7 @@ class MenuLib extends TikiLib
 			$conditions['userlevel'] = $options->lesserThan($level + 1);
 		}
 
-		$menu = $this->get_menu( $menuId );
+		$menu = $this->get_menu($menuId);
 
 		$sort = $options->expr($this->convertSortMode($sort_mode));
 		$result = $options->fetchAll($options->all(), $conditions, $maxRecords, $offset, $sort);

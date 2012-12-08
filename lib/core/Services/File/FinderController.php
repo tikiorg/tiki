@@ -122,7 +122,8 @@ class Services_File_FinderController
 	 * @param $volume
 	 * @return bool|null
 	 */
-	function elFinderAccess($attr, $path, $data, $volume) {
+	function elFinderAccess($attr, $path, $data, $volume)
+	{
 
 		$ar = explode('_', $path);
 		$visible = true;		// for now
@@ -201,7 +202,8 @@ class Services_File_FinderController
 		return $visible;
 	}
 
-	private function isParentOf( $id, $child, $parentIds) {
+	private function isParentOf( $id, $child, $parentIds)
+	{
 		if (!isset($parentIds[$child])) {
 			return false;
 		} else if ($parentIds[$child] == $id) {

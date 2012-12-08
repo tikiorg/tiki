@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -146,7 +146,7 @@ class Search_Query
 			$part->setField($f);
 			$parts[] = $part;
 		}
-		
+
 		if (count($parts) === 1) {
 			$this->expr->addPart($parts[0]);
 		} else {
@@ -196,7 +196,7 @@ class Search_Query
 	{
 		return $index->invalidateMultiple($this->expr);
 	}
-	
+
 	private function parse($query)
 	{
 		if (is_string($query)) {
@@ -215,11 +215,13 @@ class Search_Query
 
 		$extractor = new Search_Type_Factory_Direct;
 
-		$this->expr->walk(function ($expr) use (& $terms, $extractor) {
-			if ($expr instanceof Search_Expr_Token && $expr->getField() == 'contents') {
-				$terms[] = $expr->getValue($extractor)->getValue();
+		$this->expr->walk(
+			function ($expr) use (& $terms, $extractor) {
+				if ($expr instanceof Search_Expr_Token && $expr->getField() == 'contents') {
+					$terms[] = $expr->getValue($extractor)->getValue();
+				}
 			}
-		});
+		);
 
 		return $terms;
 	}

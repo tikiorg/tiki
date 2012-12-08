@@ -76,7 +76,7 @@ class PdfGenerator
     private function webkit( $url )
 	{
 		// Make sure shell_exec is available
-		if(!function_exists('shell_exec')) {
+		if (!function_exists('shell_exec')) {
 			die(tra('Required function shell_exec is not enabled.'));
 		}
 
@@ -87,17 +87,17 @@ class PdfGenerator
 
 		// Use temp/public. It is cleaned up during a cache clean, in case some files are left
 		$filename = 'temp/public/out'.rand().'.pdf';
-		
+
 		// Run shell_exec command to generate out file
 		// NOTE: this requires write permissions
 		`{$this->location} $arg $filename`;
-		
+
 		// Read the out file
 		$pdf = file_get_contents($filename);
-		
+
 		// Delete the outfile
 		unlink($filename);
-		
+
 		return $pdf;
 	}
 

@@ -1298,7 +1298,7 @@ class Tracker_Query
 
 		if ($this->canDelete()) {
 			$results = $this->query();
-			foreach($results as $itemId => $result) {
+			foreach ($results as $itemId => $result) {
 				$trklib->remove_tracker_item($itemId, $bulkMode);
 			}
 		}

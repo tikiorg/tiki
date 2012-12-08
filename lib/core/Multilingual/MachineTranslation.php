@@ -1,11 +1,11 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
- 
+
 class Multilingual_MachineTranslation
 {
 	const DETECT_LANGUAGE = 'auto';
@@ -46,11 +46,11 @@ class Multilingual_MachineTranslation
 		foreach ($realTranslations as $trad) {
 			$usedLangs[] = $trad['lang'];
 		}
-			
+
 		if (!empty($prefs['available_languages'])) {
 			$candidates = array();
 
-			//restrict langs available for machine translation to those 
+			//restrict langs available for machine translation to those
 			//available on the site
 			foreach ($prefs['available_languages'] as $availLang) {
 				$candidates[$availLang] = $langmapping[$availLang];
@@ -58,15 +58,15 @@ class Multilingual_MachineTranslation
 		} else {
 			$candidates = $langmapping;
 		}
-		
+
 		//restrict langs available for machine translation to those
 		//not already used for human translation
-		foreach ($usedLangs as $usedLang)  {
+		foreach ($usedLangs as $usedLang) {
 			unset($candidates[$usedLang]);
 		}
-		
-		
-		//restrict langs available for machine translation to those 
+
+
+		//restrict langs available for machine translation to those
 		//available from Google Translate
 		$proposed = array();
 		$supportedLanguages = $this->getHtmlImplementation('', '')
@@ -102,7 +102,7 @@ class Multilingual_MachineTranslation
 		default:
 			return new Multilingual_MachineTranslation_Null;
 		}
-		
+
 		return new Multilingual_MachineTranslation_Cache($handler, $source . $target);
 	}
 

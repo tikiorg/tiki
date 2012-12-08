@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -36,10 +36,12 @@ foreach ( $modules as $zone => & $moduleList ) {
 			$show_columns[$zone] = 'y';
 
 			$ref = (array) $mod_reference;
-			$mod_reference['data'] = new Tiki_Render_Lazy(function () use ($ref) {
-				$modlib = TikiLib::lib('mod');
-				return $modlib->execute_module($ref);
-			});
+			$mod_reference['data'] = new Tiki_Render_Lazy(
+				function () use ($ref) {
+					$modlib = TikiLib::lib('mod');
+					return $modlib->execute_module($ref);
+				}
+			);
 		}
 
 		$smarty->assign($zone, $moduleList);

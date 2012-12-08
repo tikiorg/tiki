@@ -192,16 +192,18 @@ class ObjectLib extends TikiLib
 
 		$tikilib = TikiLib::lib('tiki');
 		$table = $this->table('tiki_objects');
-		return $table->insert(array(
-			'type' => $type,
-			'itemId' => (string) $itemId,
-			'description' => $description,
-			'name' => $name,
-			'href' => $href,
-			'created' => (int) $tikilib->now,
-			'hits' => 0,
-			'comments_locked' => 'n',
-		));
+		return $table->insert(
+			array(
+				'type' => $type,
+				'itemId' => (string) $itemId,
+				'description' => $description,
+				'name' => $name,
+				'href' => $href,
+				'created' => (int) $tikilib->now,
+				'hits' => 0,
+				'comments_locked' => 'n',
+			)
+		);
 	}
 
 	function get_object_id($type, $itemId)

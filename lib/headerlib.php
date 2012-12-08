@@ -278,7 +278,7 @@ class HeaderLib
 				foreach ($jsf as $jf) {
 					$attrs = '';
 					if (isset($this->jsfile_attr[$jf])) {
-						foreach($this->jsfile_attr[$jf] as $attr => $value) {
+						foreach ($this->jsfile_attr[$jf] as $attr => $value) {
 							$attrs .= ' ' . $attr . '="' . addslashes($value) . '"';
 						}
 					}
@@ -498,7 +498,7 @@ class HeaderLib
 				foreach ($jsf as $jf) {
 					$attrs = '';
 					if (isset($this->jsfile_attr[$jf])) {
-						foreach($this->jsfile_attr[$jf] as $attr => $value) {
+						foreach ($this->jsfile_attr[$jf] as $attr => $value) {
 							$attrs .= ' ' . $attr . '="' . addslashes($value) . '"';
 						}
 					}
