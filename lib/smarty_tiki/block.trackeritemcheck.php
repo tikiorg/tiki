@@ -3,7 +3,7 @@
 //
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: block.permission.php 39783 2012-02-08 09:14:14Z sept_7 $
+// $Id$
 
 /**
  * Smarty plugin

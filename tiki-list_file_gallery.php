@@ -890,7 +890,7 @@ if (isset($_GET['slideshow'])) {
 		$smarty->assign('cant', $files['cant']);
 		$subs = 0;
 		if ($with_subgals) {
-			foreach($files['data'] as $f) {
+			foreach ($files['data'] as $f) {
 				$subs = $subs + $f['isgal'];
 			}
 		}

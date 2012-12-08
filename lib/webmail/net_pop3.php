@@ -1107,7 +1107,7 @@ class Net_POP3
 	function _getMultiline()
 	{
 		$data = '';
-		while (!is_a($tmp = $this->_recvLn(),'PEAR_Error')) {
+		while (!is_a($tmp = $this->_recvLn(), 'PEAR_Error')) {
 			if ($tmp == '.') {
 				return substr($data, 0, -2);
 			}

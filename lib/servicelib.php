@@ -18,7 +18,8 @@ class ServiceLib
 		return $this->broker;
 	}
 
-	function getUrl($params) {
+	function getUrl($params)
+	{
 		global $prefs;
 
 		if ($prefs['feature_sefurl'] == 'y') {

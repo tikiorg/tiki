@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -12,7 +12,7 @@
  * The java script generated defines tiki_plugins["pluginname"] with meta data for the parameters of the plugin.
  * This is then used to allow a nice way for the editor of the page to use a form to edit the plug-in when they
  * click the little edit icon next to the plug-ins generated html.
- * 
+ *
  * Cached by language to allow translations (tiki 5)
  */
 
@@ -40,7 +40,7 @@ if ( $all ) {
 	}
 
 	include 'tiki-setup.php';
-	
+
 	$parserlib = TikiLib::lib('parser');
 	$plugins = $parserlib->plugin_get_list();
 } else {
@@ -63,12 +63,13 @@ ob_start();
 $parserlib = TikiLib::lib('parser');
 ?>
 if ( typeof tiki_plugins == 'undefined' ) { var tiki_plugins = {}; }
-<?php foreach ( $plugins as $plugin ):
+<?php foreach ( $plugins as $plugin ) {
 	if ( ! $info = $parserlib->plugin_info($plugin) )
 		continue;
 ?>
 tiki_plugins.<?php echo $plugin ?> = <?php echo json_encode($info) ?>;
-<?php endforeach;
+<?php
+}
 
 $content = ob_get_contents();
 file_put_contents($cache, $content);

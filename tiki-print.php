@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -82,7 +82,7 @@ if (isset($_REQUEST['display']) && $_REQUEST['display'] == 'pdf') {
 	require_once 'lib/pdflib.php';
 	$generator = new PdfGenerator();
 	$pdf = $generator->getPdf('tiki-print.php', array('page' => $page));
-	if(empty($pdf)) {
+	if (empty($pdf)) {
 		echo "Unable to generate PDF";
 	} else {
 		$length = strlen($pdf);
