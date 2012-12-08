@@ -709,6 +709,9 @@ function perms_get_restrictions()
 	return $allowed;
 }
 
+/**
+ * @return mixed
+ */
 function get_displayed_permissions()
 {
 	global $objectFactory, $smarty;

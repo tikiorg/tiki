@@ -326,6 +326,7 @@ $smarty->display('tiki.tpl');
  *
  * Validates the given recipients and returns false on error or an array containing the recipients on success
  * @param array|string	$recipients		list of recipients as an array or a comma/semicolon separated list
+ * @return array|bool
  */
 function checkAddresses($recipients)
 {
@@ -365,12 +366,12 @@ function checkAddresses($recipients)
 /**
  *
  * Sends a promotional email to the given recipients
- * @param string		$sender		Sender e-Mail address
- * @param string|array	$recipients	List of recipients either as array or comma/semi colon separated string
- * @param string		$subject	E-Mail subject
- * @param string		$url_for_friend		URL to share
- * @param array			$tokenlist
- * @return bool						true on success / false if the supplied parameters were incorrect/missing or an error occurred sending the mail
+ * @param string        $sender        Sender e-Mail address
+ * @param string|array    $recipients    List of recipients either as array or comma/semi colon separated string
+ * @param string        $subject    E-Mail subject
+ * @param array            $tokenlist
+ * @internal param string $url_for_friend URL to share
+ * @return bool                        true on success / false if the supplied parameters were incorrect/missing or an error occurred sending the mail
  */
 function sendMail($sender, $recipients, $subject, $tokenlist = array())
 {

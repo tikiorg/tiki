@@ -689,7 +689,7 @@ function generate_machine_translated_content($pageContent, $pageInfo, $targetLan
  * @param $text
  * @param $sourceLang
  * @param $targetLang
- * @param bool $html
+ * @internal param bool $html
  * @return string
  */
 function translate_text($text, $sourceLang, $targetLang)
