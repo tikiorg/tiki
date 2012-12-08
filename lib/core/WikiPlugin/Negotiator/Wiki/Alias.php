@@ -26,7 +26,8 @@ class WikiPlugin_Negotiator_Wiki_Alias
 		return unserialize($prefs[$prefName]);
 	}
 
-	static public function getList() {
+	static public function getList()
+	{
 		global $prefs;
 		if ( isset($prefs['pluginaliaslist']) ) {
 			$alias = @unserialize($prefs['pluginaliaslist']);
@@ -186,9 +187,9 @@ class WikiPlugin_Negotiator_Wiki_Alias
 
 			switch( isset($info['encoding']) ? $info['encoding'] : 'none' ) {
 				case 'html': $replacements[] = htmlentities($value, ENT_QUOTES, 'UTF-8');
-				break;
+					break;
 				case 'url': $replacements[] = rawurlencode($value);
-				break;
+					break;
 				default: $replacements[] = $value;
 			}
 		}

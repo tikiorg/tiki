@@ -268,15 +268,15 @@ if ( $calendarViewMode['casedefault'] == 'month' ||
 		$lastweek += $weeksinyear;
 	}
 
-	// [BUG FIX] hollmeer 2012-11-01: correct the bug if 1 Jan of the FOCUS YEAR is Sunday, 
+	// [BUG FIX] hollmeer 2012-11-01: correct the bug if 1 Jan of the FOCUS YEAR is Sunday,
 	// and $prefs['calendar_firstDayofWeek'] is set to start from Monday.
-	// Original seems to output only two weeks in such case, e.g for 2012: 
+	// Original seems to output only two weeks in such case, e.g for 2012:
 	// weeks 52/2011 and 01/2012, as the 1 Jan 2012 is Sunday (i.e., start of focus year).
 	// For 2013 and 2014 all weeks generated as ok, as 1 Jan 2013 is Tuesday, and 1 Jan 2014 is Wednesday etc
 	// The bug is that only one week was added in such case, and actually the focus year was omitted, so add 52 weeks
 	$auxneedtoaddweeks=0;
 	if ($calendarViewMode['casedefault'] == 'year') {
-		$auxTmpWeekday = TikiLib::date_format("%w", $tikilib->make_time(0,0,0,1,1, $focus_year));
+		$auxTmpWeekday = TikiLib::date_format("%w", $tikilib->make_time(0, 0, 0, 1, 1, $focus_year));
 		if ( $firstDayofWeek == 1 and $auxTmpWeekday == 0 ) {
 			$auxneedtoaddweeks=52;
 		}

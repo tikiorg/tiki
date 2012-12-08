@@ -3370,7 +3370,7 @@ class Comments extends TikiLib
 
 		$votings = array();
 		$deliberationsUnsorted = array();
-		foreach($deliberations as &$deliberation) {
+		foreach ($deliberations as &$deliberation) {
 			$votings[$deliberation['threadId']] = $ratinglib->votings($deliberation['threadId'], 'comment', true);
 			$deliberationsUnsorted[$deliberation['threadId']] = $deliberation;
 		}
@@ -3379,7 +3379,7 @@ class Comments extends TikiLib
 		arsort($votings);
 
 		$deliberationsSorted = array();
-		foreach($votings as $threadId => $vote) {
+		foreach ($votings as $threadId => $vote) {
 			$deliberationsSorted[] = $deliberationsUnsorted[$threadId];
 		}
 

@@ -3,7 +3,7 @@
 //
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: Wiki.php 43477 2012-10-16 20:16:27Z robertplummer $
+// $Id$
 
 class WikiPlugin_Negotiator_Wiki
 {
@@ -383,7 +383,7 @@ class WikiPlugin_Negotiator_Wiki
 		$funcNameInfo = "wikiplugin_{$this->name}_info";
 
 		if ( ! function_exists($funcNameInfo) ) {
-			if ( $info = WikiPlugin_Negotiator_Wiki_Alias::info( $this->name ) ) {
+			if ( $info = WikiPlugin_Negotiator_Wiki_Alias::info($this->name) ) {
 				return self::$pluginInfo[$this->name] = $info['description'];
 			} else {
 				return self::$pluginInfo[$this->name] = false;

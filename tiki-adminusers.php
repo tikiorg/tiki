@@ -727,8 +727,19 @@ if (isset($_REQUEST['user']) and $_REQUEST['user']) {
 	$_REQUEST['user'] = 0;
 }
 
-$users = $userlib->get_users($offset, $numrows, $sort_mode, $find, $initial, true, $filterGroup, $filterEmail,
-		!empty($_REQUEST['filterEmailNotConfirmed']), !empty($_REQUEST['filterNotValidated']), !empty($_REQUEST['filterNeverLoggedIn']));
+$users = $userlib->get_users(
+	$offset,
+	$numrows,
+	$sort_mode,
+	$find,
+	$initial,
+	true,
+	$filterGroup,
+	$filterEmail,
+	!empty($_REQUEST['filterEmailNotConfirmed']),
+	!empty($_REQUEST['filterNotValidated']),
+	!empty($_REQUEST['filterNeverLoggedIn'])
+);
 
 if (!empty($group_management_mode) || !empty($set_default_groups_mode) || !empty($email_mode)) {
 	$arraylen = count($users['data']);

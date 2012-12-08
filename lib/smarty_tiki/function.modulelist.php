@@ -34,9 +34,15 @@ function smarty_function_modulelist($params, $smarty)
 	$content = '';
 	$key = $zone . '_modules';
 	if (isset($moduleZones[$key]) && is_array($moduleZones[$key])) {
-		$content = implode('', array_map(function ($module) {
-			return $module['data'];
-		}, $moduleZones[$key]));
+		$content = implode(
+			'',
+			array_map(
+				function ($module) {
+					return $module['data'];
+				},
+				$moduleZones[$key]
+			)
+		);
 	}
 
 	return <<<OUT

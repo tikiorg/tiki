@@ -86,7 +86,7 @@ function get_ownership_groupname($filename)
 // user/owner of file
 function get_ownership_username($filename)
 {
-    if (function_exists('posix_getpwuid')){
+    if (function_exists('posix_getpwuid')) {
         if (file_exists($filename)) {
             $user = posix_getpwuid(fileowner($filename));
             $username = $user['name'];
@@ -130,7 +130,7 @@ function get_page_url_clean($filename)
 	// previous one does not work in cases where 'permissioncheck' is already
 	// subdir in path to Tiki, e.g. /foo/permissioncheck/tiki/
 	//
-	$tiki_path = preg_replace("/\/$perm_check_subdir$/",'/',$tmp_path);
+	$tiki_path = preg_replace("/\/$perm_check_subdir$/", '/', $tmp_path);
 	// quick 'n dirty, does not work if Tiki path != document root
 	//$tiki_path = '/'
 	$page_basename .= $tiki_path . $filename;
