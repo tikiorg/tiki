@@ -14,4 +14,4 @@ certificate accept
 start merge for 7.x
 start merge for 8.x
 start merge for 9.x
-test in new repo - should work
+on the old sf.net repo (just checking)
