@@ -578,6 +578,12 @@ table.normal tr:nth-child(2n) {
 
 /** Tables **/
 
+td.italiclabel {
+	text-align: right;
+	padding-right: 5px;
+	font-style: italic;
+}
+
 .normal, 
 .admin {
 	border-collapse: collapse;
