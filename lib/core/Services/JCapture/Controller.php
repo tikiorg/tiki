@@ -54,13 +54,10 @@ class Services_JCapture_Controller
 
 	function action_upload($input)
 	{
-		global $prefs, $is_token_access;
+		global $prefs, $is_token_access, $detailtoken;
 
-		$tok = $input->sectok->text();
-		$tokenlib = AuthTokens::build($prefs);
-		$token = $tokenlib->getToken($tok);
 		if (!$is_token_access) {
-			throw new Services_Exception_NotAvailable(tr('Not authorised: ') . $tok);
+			throw new Services_Exception_NotAvailable(tr('Not authorised'));
 		}
 
 		$fileController = new Services_File_Controller();
@@ -71,6 +68,10 @@ class Services_JCapture_Controller
 			$input->offsetSet('type', $_FILES['Filedata']['type']);
 			$input->offsetSet('galleryId', $prefs['fgal_for_jcapture']);
 			$input->offsetSet('data', base64_encode(file_get_contents($_FILES['Filedata']['tmp_name'])));
+			$params = json_decode($detailtoken['parameters']);
+			if ($params && isset($params->user)) {
+				$input->offsetSet('user', $params->user);
+			}
 
 			$ret = $fileController->action_upload($input);
 		} else {
