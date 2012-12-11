@@ -2318,7 +2318,8 @@ CREATE TABLE `tiki_user_assigned_modules` (
   `ord` int(4) default NULL,
   `type` char(1) default NULL,
   `user` varchar(200) NOT NULL default '',
-  PRIMARY KEY (`name`(30),`user`,`position`, `ord`)
+  PRIMARY KEY (`name`(30),`user`,`position`, `ord`),
+  KEY `id` (moduleId)
 ) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS `tiki_user_bookmarks_folders`;
