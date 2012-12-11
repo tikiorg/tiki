@@ -1368,24 +1368,12 @@ class TikiLib extends TikiDb_Bridge
 				}
     			break;
 			case 'u':
-				$path = "tiki-show_user_avatar.php?user=" . urlencode($user);
-				if (ini_get('allow_url_fopen')) {		// described as "risky" by tiki-admin_security.php
-					$foo = parse_url($_SERVER['REQUEST_URI']);
-					$content = file_get_contents(self::httpPrefix(true) . dirname($foo['path']) . '/' . $path);
-					if (empty($content))
-						break;
+				$userprefslib = TikiLib::lib('userprefs');
+				$path = $userprefslib->get_public_avatar_path($user);
+
+				if ($path) {
+					$ret = "<img border='0' src='" . htmlspecialchars($path, ENT_NOQUOTES) . "' " . $style . " alt='" . htmlspecialchars($user, ENT_NOQUOTES) . "' />";
 				}
-
-				if ( $prefs['users_serve_avatar_static'] == 'y' ) {
-					global $tikidomain;
-					$files = glob("temp/public/$tikidomain/avatar_$user.{jpg,gif,png}", GLOB_BRACE);
-
-					if ( !empty($files[0]) ) {
-						$path = $files[0];
-					}
-				}
-
-				$ret = "<img border='0' src='" . htmlspecialchars($path, ENT_NOQUOTES) . "' " . $style . " alt='" . htmlspecialchars($user, ENT_NOQUOTES) . "' />";
 				break;
 			case 'n':
 			default:
