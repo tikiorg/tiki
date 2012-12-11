@@ -533,93 +533,93 @@ class JisonParser_Html
 
 
 switch($avoiding_name_collisions) {
-case 0:
-		//A tag that doesn't need to track state
-		if (JisonParser_Html_Handler::isHtmlTag($yy_->yytext) == true) {
-		  $yy_->yytext = $this->inlineTag($yy_->yytext);
-		  return "HTML_TAG_INLINE";
-		}
+	case 0:
+			//A tag that doesn't need to track state
+			if (JisonParser_Html_Handler::isHtmlTag($yy_->yytext) == true) {
+			  $yy_->yytext = $this->inlineTag($yy_->yytext);
+			  return "HTML_TAG_INLINE";
+			}
 
-		//A non-valid html tag, return "<" put the rest back into the parser
-        if (isset($yy_->yytext{0})) {
-          $tag = $yy_->yytext;
-          $yy_->yytext = $yy_->yytext{0};
-          $this->unput(substr($tag, 1));
-        }
-        return 7;
+			//A non-valid html tag, return "<" put the rest back into the parser
+	        if (isset($yy_->yytext{0})) {
+	          $tag = $yy_->yytext;
+	          $yy_->yytext = $yy_->yytext{0};
+	          $this->unput(substr($tag, 1));
+	        }
+		       return 7;
 
-break;
-case 1:
-		//A tag that was left open, and needs to close
-		$name = end($this->htmlElementsStack);
-		$keyStack = key($this->htmlElementStack);
-		end($this->htmlElementStack[$keyStack]);
-		$keyElement = key($this->htmlElementStack[$keyStack]);
-		$tag = &$this->htmlElementStack[$keyStack][$keyElement];
-		$tag['state'] = 'repaired';
-		if (!empty($tag['name'])) {
-		  $this->unput('</' . $tag['name'] . '>');
-		}
+		break;
+	case 1:
+			//A tag that was left open, and needs to close
+			$name = end($this->htmlElementsStack);
+			$keyStack = key($this->htmlElementStack);
+			end($this->htmlElementStack[$keyStack]);
+			$keyElement = key($this->htmlElementStack[$keyStack]);
+			$tag = &$this->htmlElementStack[$keyStack][$keyElement];
+			$tag['state'] = 'repaired';
+			if (!empty($tag['name'])) {
+			  $this->unput('</' . $tag['name'] . '>');
+			}
+			return 7;
+
+	break;
+	case 2:
+			//A tag that is open and we just found the close for it
+			$element = $this->unStackHtmlElement($yy_->yytext);
+			if ($this->compareElementClosingToYytext($element, $yy_->yytext) && $this->htmlElementsStackCount == 0) {
+			  $yy_->yytext = $element;
+			  $this->popState();
+	    	  return "HTML_TAG_CLOSE";
+	    	}
+	    	return 7;
+
+	break;
+	case 3:
+			//An tag open
+			if (JisonParser_Html_Handler::isHtmlTag($yy_->yytext) == true) {
+			  if ($this->stackHtmlElement($yy_->yytext)) {
+			      if ($this->htmlElementsStackCount == 1) {
+			          $this->begin('htmlElement');
+	    	          return "HTML_TAG_OPEN";
+	    	      }
+	    	  }
+	    	  return 7;
+	    	}
+
+	    	//A non-valid html tag, return the first character in the stack and put the rest back into the parser
+	    	if (isset($yy_->yytext{0})) {
+	          $tag = $yy_->yytext;
+	          $yy_->yytext = $yy_->yytext{0};
+	          $this->unput(substr($tag, 1));
+	        }
+	        return 'CONTENT';
+
+	break;
+	case 4:
+			//A tag that was not opened, needs to be ignored
+	    	return 7;
+
+	break;
+	case 5:
 		return 7;
+	break;
+	case 6:
+		return 7;
+	break;
+	case 7:
+			if ($this->htmlElementsStackCount == 0 || $this->isStaticTag == true) {
+			  return 8;
+			}
+			return 'CONTENT';
 
-break;
-case 2:
-		//A tag that is open and we just found the close for it
-		$element = $this->unStackHtmlElement($yy_->yytext);
-		if ($this->compareElementClosingToYytext($element, $yy_->yytext) && $this->htmlElementsStackCount == 0) {
-		  $yy_->yytext = $element;
-		  $this->popState();
-    	  return "HTML_TAG_CLOSE";
-    	}
-    	return 7;
-
-break;
-case 3:
-		//An tag open
-		if (JisonParser_Html_Handler::isHtmlTag($yy_->yytext) == true) {
-		  if ($this->stackHtmlElement($yy_->yytext)) {
-		      if ($this->htmlElementsStackCount == 1) {
-		          $this->begin('htmlElement');
-    	          return "HTML_TAG_OPEN";
-    	      }
-    	  }
-    	  return 7;
-    	}
-
-    	//A non-valid html tag, return the first character in the stack and put the rest back into the parser
-    	if (isset($yy_->yytext{0})) {
-          $tag = $yy_->yytext;
-          $yy_->yytext = $yy_->yytext{0};
-          $this->unput(substr($tag, 1));
-        }
-        return 'CONTENT';
-
-break;
-case 4:
-		//A tag that was not opened, needs to be ignored
-    	return 7;
-
-break;
-case 5:
-	return 7;
-break;
-case 6:
-	return 7;
-break;
-case 7:
-		if ($this->htmlElementsStackCount == 0 || $this->isStaticTag == true) {
-		  return 8;
-		}
-		return 'CONTENT';
-
-break;
-case 8:
-	return 7;
-break;
-case 9:
-	return 5;
-break;
-}
+	break;
+	case 8:
+		return 7;
+	break;
+	case 9:
+		return 5;
+	break;
+	}
 
 	}
 }

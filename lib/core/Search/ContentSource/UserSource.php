@@ -3,7 +3,7 @@
 //
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: SheetSource.php 43067 2012-09-20 20:00:44Z changi67 $
+// $Id$
 
 class Search_ContentSource_UserSource implements Search_ContentSource_Interface
 {
@@ -29,9 +29,14 @@ class Search_ContentSource_UserSource implements Search_ContentSource_Interface
 		if ($this->visibility == 'all') {
 			return $this->db->table('users_users')->fetchColumn('login', array());
 		} else {
-			return array_map(function ($row) {
-				return $row['login'];
-			}, $this->db->fetchAll('SELECT login FROM users_users u INNER JOIN tiki_user_preferences p ON u.login = p.user WHERE prefName = ? AND value = ?', array('user_information', 'public')));
+			return array_map(
+				function ($row) {
+					return $row['login'];
+				},
+				$this->db->fetchAll(
+					'SELECT login FROM users_users u INNER JOIN tiki_user_preferences p ON u.login = p.user WHERE prefName = ? AND value = ?', array('user_information', 'public')
+				)
+			);
 		}
 	}
 
@@ -143,14 +148,15 @@ class Search_ContentSource_UserSource implements Search_ContentSource_Interface
 
 	private function getTrackerFieldsForUser($user, $typeFactory)
 	{
-		$result = $this->db->fetchAll("
-			SELECT usersTrackerId trackerId, itemId 
-			FROM 
+		$result = $this->db->fetchAll(
+			"SELECT usersTrackerId trackerId, itemId
+			FROM
 				users_usergroups
 				INNER JOIN users_groups USING(groupName)
 				INNER JOIN tiki_tracker_item_fields ON usersFieldId = fieldId
 			WHERE value = ?
-		", array($user));
+			", array($user)
+		);
 
 		$data = array();
 		foreach ($result as $row) {

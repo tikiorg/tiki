@@ -77,9 +77,14 @@ class JisonParser_WikiCKEditor_Handler extends JisonParser_Wiki_Handler
 	 */
 	public function noParse($content)
 	{
-		return $this->createWikiTag("noParse", "span", parent::noParse($content), array(
-			"class" => "noParse"
-		));
+		return $this->createWikiTag(
+			"noParse",
+			"span",
+			parent::noParse($content),
+			array(
+				"class" => "noParse"
+			)
+		);
 	}
 
 	/**
@@ -97,13 +102,17 @@ class JisonParser_WikiCKEditor_Handler extends JisonParser_Wiki_Handler
 
 		$negotiator->setDetails($pluginDetails);
 
-		return $this->createWikiTag("plugin", "span", "Plugin:" . $negotiator->name, array(
-			"data-syntax" => rawurlencode($negotiator->toSyntax()),
-			"data-body" => rawurlencode($negotiator->body),
-			"data-args" => json_encode($negotiator->args),
-			"data-name" => $negotiator->name,
-			"contenteditable" => "false"
-		));
+		return $this->createWikiTag(
+			"plugin",
+			"span",
+			"Plugin:" . $negotiator->name, array(
+				"data-syntax" => rawurlencode($negotiator->toSyntax()),
+				"data-body" => rawurlencode($negotiator->body),
+				"data-args" => json_encode($negotiator->args),
+				"data-name" => $negotiator->name,
+				"contenteditable" => "false"
+			)
+		);
 	}
 
 	/**
@@ -179,9 +188,14 @@ class JisonParser_WikiCKEditor_Handler extends JisonParser_Wiki_Handler
 	 */
 	function comment($content)
 	{
-		return $this->createWikiTag("comment", "span", substr($content, 4, -5), array(
-			"class" => "wikiComment"
-		));
+		return $this->createWikiTag(
+			"comment",
+			"span",
+			substr($content, 4, -5),
+			array(
+				"class" => "wikiComment"
+			)
+		);
 	}
 
 

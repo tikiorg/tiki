@@ -1295,7 +1295,7 @@ function wikiplugin_tracker($data, $params)
 						}
 					} else {
 						$back.= "<tr><td";
-						
+
 						// If type is has a samerow param and samerow is "No", show text on one line and the input field on the next
 						$isTextOnSameRow = true;
 						switch($f['type']) {
@@ -1308,10 +1308,10 @@ function wikiplugin_tracker($data, $params)
 							$isTextOnSameRow = ($f['options_array'][8] == 0) ? false : true;
 							break;
 						}
-						if(!$isTextOnSameRow) {
+						if (!$isTextOnSameRow) {
 							 $back.= " colspan='2'";
 						}
-						
+
 						if (!empty($colwidth)) {
 							$back .= " width='".$colwidth."'";
 						}
@@ -1320,9 +1320,9 @@ function wikiplugin_tracker($data, $params)
 						if ($showmandatory == 'y' and $f['isMandatory'] == 'y') {
 							$back.= "&nbsp;<strong class='mandatory_star'>*</strong>&nbsp;";
 						}
-						// If use different lines, add a line break. 
+						// If use different lines, add a line break.
 						// Otherwise a new column
-						if(!$isTextOnSameRow) {
+						if (!$isTextOnSameRow) {
 							$back.= "<br/>";
 						} else {
 							$back.= '</td><td>';
@@ -1468,15 +1468,20 @@ function wikiplugin_tracker_render_input($f, $item, $dynamicSave)
 
 	if ($dynamicSave && $item['itemId']) {
 		$servicelib = TikiLib::lib('service');
-		$input = new Tiki_Render_Editable($input, array(
-			'layout' => 'block',
-			'object_store_url' => $servicelib->getUrl(array(
-				'controller' => 'tracker',
-				'action' => 'update_item',
-				'trackerId' => $f['trackerId'],
-				'itemId' => $item['itemId'],
-			)),
-		));
+		$input = new Tiki_Render_Editable(
+			$input,
+			array(
+				'layout' => 'block',
+				'object_store_url' => $servicelib->getUrl(
+					array(
+						'controller' => 'tracker',
+						'action' => 'update_item',
+						'trackerId' => $f['trackerId'],
+						'itemId' => $item['itemId'],
+					)
+				),
+			)
+		);
 	}
 
 	return $input;

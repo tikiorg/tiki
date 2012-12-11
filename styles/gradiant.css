@@ -34,7 +34,8 @@ body {
 }
 a {
 	color: #333;
-	text-decoration: none; text-shadow: rgba(255,255,255,1) 0 1px 0;
+	text-decoration: none;
+	text-shadow: rgba(255,255,255,1) 0 1px 0;
 	font-weight: bold;
 }
 a:hover {
@@ -63,7 +64,8 @@ fieldset, .simplebox {
 	border: dotted 1px #ccc;
 }
 h1 {
-	padding: 0 .5em; font-size: 3em;
+	padding: 0 .5em;
+	font-size: 3em;
 }
 h1,
 h1 a {
@@ -100,13 +102,16 @@ input[type=text], input[type=password], input[type=url], input.url, textarea {
 	font-size: 12px !important;
 	padding: 0 !important;
 	vertical-align: baseline !important;
-	height: 0; line-height: 14px;
+	height: 0;
+	line-height: 14px;
 }
 .CodeMirror textarea {
 	font-size: 12px !important;
 	padding: 0 !important;
 	vertical-align: baseline !important;
-	height: 12px; line-height: 15px; min-height: auto !important;
+	height: 12px;
+	line-height: 15px;
+	min-height: auto !important;
 }
 .menuLevel1 a {
 	background: rgba(255,255,255,.75);
@@ -140,7 +145,8 @@ input[type=text], input[type=password], input[type=url], input.url, textarea {
 /* parents of the selected item */
 .cssmenu_horiz li.selectedAscendant > a,
 .cssmenu_vert li.selectedAscendant > a {
-	font-style: normal; font-weight: normal !important;
+	font-style: normal;
+	font-weight: normal !important;
 }
 ul.sf-shadow ul {
 	background: rgba(0,0,0,.5);
@@ -165,14 +171,15 @@ nav ul.cssmenu_horiz.sf-shadow ul li:first-child:before {
 
 .siteloginbar_popup .tabmark {
 	background: transparent;
-	margin: 0;	
+	margin: 0;
 }
 .tabmark a.login_link {
 	background: #fff;
 	border-radius: .75em .75em 0 0;
 	box-shadow: inset 0 1.2em .6em -1em rgba(0, 0, 0, .1), inset 0 -.6em .6em -1em rgba(0,0,0,0.2);
 	line-height: 2em;
-	padding: 0 1.75em !important; margin-right: 2px;
+	padding: 0 1.75em !important;
+	margin-right: 2px;
 }
 .tabmark a.login_link:hover {
 	box-shadow: inset 0 1.6em .6em -1em rgba(0, 0, 0, .1), inset 0 -1em .6em -1em rgba(0,0,0,0.2);
@@ -188,7 +195,8 @@ a.login_link .sf-sub-indicator {
 	left: auto !important;
 	right: 0 !important;
 	top: auto !important;
-	padding: 5px !important; margin-top: 1px;
+	padding: 5px !important;
+	margin-top: 1px;
 	width: 22em !important;
 }
 .siteloginbar_poppedup * {line-height: 20px !important;}
@@ -215,7 +223,8 @@ a.login_link .sf-sub-indicator {
 	border: none;
 	border-top: solid 1px #999;
 	border-radius: 10px;
-	height: 20px; line-height: 20px;
+	height: 20px;
+	line-height: 20px;
 	padding: 0 10px;
 }
 .siteloginbar_poppedup input,
@@ -264,7 +273,8 @@ tt, code, kbd, samp {
 	padding: .1em;
 }
 #middle	{
-	background: -moz-linear-gradient(top, rgba(255,255,255,1) 0, rgba(200,200,200,1) 300px); color: #000; /* FF3.6+ */
+	background: -moz-linear-gradient(top, rgba(255,255,255,1) 0, rgba(200,200,200,1) 300px);
+	color: #000; /* FF3.6+ */
 	background: -webkit-gradient(linear, left top, left bottom, color-stop(0,rgba(255,255,255,1)), color-stop(300px,rgba(200,200,200,1))); /* Chrome,Safari4+ */
 	background: -webkit-linear-gradient(top, rgba(255,255,255,1) 0,rgba(200,200,200,1) 300px); /* Chrome10+,Safari5.1+ */
 	background: -o-linear-gradient(top, rgba(255,255,255,1) 0,rgba(200,200,200,1) 300px); /* Opera11.10+ */
@@ -302,17 +312,23 @@ tt, code, kbd, samp {
 	display: block;
 	height: 15em;
 	position: relative;
+	padding-left: 10px;
 }
 #sitelogo a {
 	background: rgba(5,5,5,.05);
 	border-radius: 100em / 5em;
 	box-shadow: 0 0 .6em .4em rgba(5,5,5,.05);
 	display: block;
-	position: relative; left: 1em; top: 13em;
-	width: 18em; height: .6em;
+	position: relative;
+	left: 1em;
+	top: 13em;
+	width: 18em;
+	height: .6em;
 }
 #sitelogo img {
-	position: absolute; top: -13em; left: -1em;
+	position: absolute;
+	top: -13em;
+	left: -1em;
 }
 #bottom_modules {
 	padding: .5em;
@@ -345,7 +361,8 @@ tt, code, kbd, samp {
 }
 .tabactive {
 	background: #fff;
-	border: solid 2px #ccc; border-width: 2px 1px 0;
+	border: solid 2px #ccc;
+	border-width: 2px 1px 0;
 	font-weight: bold;
 	height: 100%;
 	white-space: nowrap;
@@ -359,9 +376,6 @@ tt, code, kbd, samp {
 #editwiki_toolbar div {
 	border-radius: 0;
 }
-#sitelogo {
-	padding-left: 10px;
-}
 #sitetitle a {
 	font: normal bold 4em "Segoe UI", "Lucida Grande", sans-serif;
 	padding: 0 .5em;
@@ -369,7 +383,8 @@ tt, code, kbd, samp {
 	-moz-background-clip: text;
 	background-clip: text;
 	color: rgba(55,55,55,.5);
-	text-shadow: #fff 0 0 3em, rgba(255,255,255,.7) .2em .2em .3em, #fff 0 -.1em .5em, rgba(255,255,255,.7) -.2em 0 .3em; line-height: 1.5em;
+	text-shadow: #fff 0 0 3em, rgba(255,255,255,.7) .2em .2em .3em, #fff 0 -.1em .5em, rgba(255,255,255,.7) -.2em 0 .3em;
+	line-height: 1.5em;
 	-moz-transition: all .5s ease;
 	-o-transition: all .5s ease;
 	-webkit-transition: all .5s ease;
@@ -387,7 +402,8 @@ tt, code, kbd, samp {
 	font: italic normal 2em "Segoe UI", "Lucida Grande", sans-serif;
 	margin: -1em 0 0 7em;
 	padding: 0 .5em;
-	text-shadow: rgba(100,100,100,.5) 3em 3em 3em, rgba(0,0,200,.7) .2em .2em .3em, rgba(100,200,0,.7) .1em .2em .3em, rgba(0,100,200,1) 0 -.1em .5em, rgba(100,200,255,.7) -.2em 0 .3em; line-height: 1.5em;
+	text-shadow: rgba(100,100,100,.5) 3em 3em 3em, rgba(0,0,200,.7) .2em .2em .3em, rgba(100,200,0,.7) .1em .2em .3em, rgba(0,100,200,1) 0 -.1em .5em, rgba(100,200,255,.7) -.2em 0 .3em;
+	line-height: 1.5em;
 }
 a.icon,
 a .icon {

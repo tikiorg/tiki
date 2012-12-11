@@ -3550,9 +3550,12 @@ class TrackerLib extends TikiLib
 
 		foreach ($toUpdate as $itemId) {
 			$trackerId = $map[$itemId];
-			$child = $this->findLinkedItems($itemId, function ($field, $handler) use ($trackerId) {
-				return $handler->cascadeStatus($trackerId);
-			});
+			$child = $this->findLinkedItems(
+				$itemId,
+				function ($field, $handler) use ($trackerId) {
+					return $handler->cascadeStatus($trackerId);
+				}
+			);
 
 			$toUpdate = array_merge($toUpdate, $child);
 
@@ -3563,11 +3566,13 @@ class TrackerLib extends TikiLib
 		}
 
 		$table = $this->items();
-		$table->updateMultiple(array(
-			'status' => $status,
-			'lastModif' => $tikilib->now,
-			'lastModifBy' => $user,
-		), array('itemId' => $table->in($toUpdate)));
+		$table->updateMultiple(
+			array(
+				'status' => $status,
+				'lastModif' => $tikilib->now,
+				'lastModifBy' => $user,
+			), array('itemId' => $table->in($toUpdate))
+		);
 
 		if ($prefs['feature_search'] === 'y' && $prefs['unified_incremental_update'] === 'y') {
 			$searchlib = TikiLib::lib('unifiedsearch');
@@ -4473,22 +4478,29 @@ class TrackerLib extends TikiLib
 
 			if (! empty($params['editable'])) {
 				$servicelib = TikiLib::lib('service');
-				$r = new Tiki_Render_Editable($r, array(
-					'layout' => $params['editable'],
-					'object_store_url' => $servicelib->getUrl(array(
-						'controller' => 'tracker',
-						'action' => 'update_item',
-						'trackerId' => $field['trackerId'],
-						'itemId' => $item['itemId'],
-					)),
-					'field_fetch_url' => $servicelib->getUrl(array(
-						'controller' => 'tracker',
-						'action' => 'fetch_item_field',
-						'trackerId' => $field['trackerId'],
-						'itemId' => $item['itemId'],
-						'fieldId' => $field['fieldId'],
-					)),
-				));
+				$r = new Tiki_Render_Editable(
+					$r,
+					array(
+						'layout' => $params['editable'],
+						'object_store_url' => $servicelib->getUrl(
+							array(
+								'controller' => 'tracker',
+								'action' => 'update_item',
+								'trackerId' => $field['trackerId'],
+								'itemId' => $item['itemId'],
+							)
+						),
+						'field_fetch_url' => $servicelib->getUrl(
+							array(
+								'controller' => 'tracker',
+								'action' => 'fetch_item_field',
+								'trackerId' => $field['trackerId'],
+								'itemId' => $item['itemId'],
+								'fieldId' => $field['fieldId'],
+							)
+						),
+					)
+				);
 			}
 
 			TikiLib::lib('smarty')->assign("f_$fieldId", $r);
@@ -4513,9 +4525,12 @@ class TrackerLib extends TikiLib
 			}
 		}
 
-		$items = $this->findLinkedItems($args['object'], function ($field, $handler) use ($modifiedFields, $args) {
-			return $handler->itemsRequireRefresh($args['trackerId'], $modifiedFields);
-		});
+		$items = $this->findLinkedItems(
+			$args['object'],
+			function ($field, $handler) use ($modifiedFields, $args) {
+				return $handler->itemsRequireRefresh($args['trackerId'], $modifiedFields);
+			}
+		);
 
 		$searchlib = TikiLib::lib('unifiedsearch');
 		foreach ($items as $itemId) {
@@ -4523,7 +4538,8 @@ class TrackerLib extends TikiLib
 		}
 	}
 
-	private function findLinkedItems($itemId, $callback) {
+	private function findLinkedItems($itemId, $callback)
+	{
 		$fields = $this->table('tiki_tracker_fields');
 		$list = $fields->fetchAll(
 			$fields->all(), array('type' => $fields->exactly('r'))
@@ -4557,15 +4573,21 @@ class TrackerLib extends TikiLib
 
 		$fields = array_keys($args['values']);
 		$table = $this->table('users_groups');
-		$field = $table->fetchOne('usersFieldId', array(
-			'usersFieldId' => $table->in($fields),
-		));
+		$field = $table->fetchOne(
+			'usersFieldId',
+			array(
+				'usersFieldId' => $table->in($fields),
+			)
+		);
 
 		if ($field && ! empty($args['values'][$field])) {
-			TikiLib::events()->trigger('tiki.user.update', array(
-				'type' => 'user',
-				'object' => $args['values'][$field],
-			));
+			TikiLib::events()->trigger(
+				'tiki.user.update',
+				array(
+					'type' => 'user',
+					'object' => $args['values'][$field],
+				)
+			);
 		}
 	}
 }

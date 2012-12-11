@@ -87,7 +87,8 @@
 /* Moving left the action buttons */
 .wikitopline {
     float:left;
-    position:relative; top:-28px;
+    position:relative;
+	 top:-28px;
 }
 
 /* Homepage pictures display */
@@ -98,9 +99,20 @@
 
 /* Phonebook Trackerpluginfilter */
 .phonebook {background: url(/greenvalley/rtl/phonebook_rtl.jpg) no-repeat !important}
-.phonebook_listing {padding-right: 22px; padding-left: 0}
-.phonebook_item {margin-bottom: 0.045em !important; margin-top: 0.8em !important}
+.phonebook_listing {
+	padding-right: 22px;
+	padding-left: 0
+}
+.phonebook_item {
+	margin-bottom: 0.045em !important;
+	margin-top: 0.8em !important
+}
 .phonebook_cell, .phonebook_tel, .phonebook_name {float: right !important}
 
 /* Business Trackerpluginfilter */
-.business_type {position: relative; top:14px; right:15px; color: #bbb}
+.business_type {
+	position: relative;
+	top:14px;
+	right:15px;
+	color: #bbb
+}

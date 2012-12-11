@@ -230,9 +230,12 @@ if (isset($_REQUEST['preview'])) {
 		try {
 			$data = $smarty->fetch('modules/user_module.tpl');
 		} catch (Exception $e) {
-			$smarty->assign('msg', tr('There is a problem with your custom module "%0": ' . '<br><br><em>' . $e->getMessage() . '</em><br><br>' .
+			$smarty->assign(
+				'msg',
+				tr('There is a problem with your custom module "%0": ' . '<br><br><em>' . $e->getMessage() . '</em><br><br>' .
 					'<span class="button"><a href="tiki-admin_modules.php?um_edit=' . $_REQUEST['assign_name'] . '&cookietab=2#editcreate">' .
-					tr('Click here to edit the module') . '</a></span>', $_REQUEST['assign_name']));
+					tr('Click here to edit the module') . '</a></span>', $_REQUEST['assign_name'])
+			);
 			$smarty->display('error.tpl');
 			die;
 		}

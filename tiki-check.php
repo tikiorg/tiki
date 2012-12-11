@@ -823,8 +823,8 @@ if ($s) {
 	);
 }
 
-/* 
-*	If TortoiseSVN 1.7 is used, it uses an sqlite database to store the SVN info. sqlite3 extention needed to read svn info. 
+/*
+*	If TortoiseSVN 1.7 is used, it uses an sqlite database to store the SVN info. sqlite3 extention needed to read svn info.
 */
 if (is_file('.svn/wc.db')) {
 	// It's an TortoiseSVN 1.7+ installation
@@ -1409,13 +1409,19 @@ if ($standalone) {
 			echo '<p><label for="e-mail">e-mail address to send test mail to</label>: <input type="text" id="email_test_to" name="email_test_to" /></p>';
 			echo '<p><input type="submit" value=" Send e-mail " /></p>';
 			echo '<p><input type="hidden" id="dbhost" name="dbhost" value="';
-				if (isset($_POST['dbhost'])) { echo $_POST['dbhost']; };
+				if (isset($_POST['dbhost'])) {
+					echo $_POST['dbhost'];
+				};
 			echo '" /></p>';
 			echo '<p><input type="hidden" id="dbuser" name="dbuser" value="';
-				if (isset($_POST['dbuser'])) { echo $_POST['dbuser']; };
+				if (isset($_POST['dbuser'])) {
+					echo $_POST['dbuser'];
+				};
 			echo '"/></p>';
 			echo '<p><input type="hidden" id="dbpass" name="dbpass" value="';
-				if (isset($_POST['dbpass'])) { echo $_POST['dbpass']; };
+				if (isset($_POST['dbpass'])) {
+					echo $_POST['dbpass'];
+				};
 			echo '"/></p>';
 		echo '</form>';
 	}
