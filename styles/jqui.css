@@ -651,6 +651,7 @@ body.tiki_cms h1 a.pagetitle:hover {border-bottom: none}
 
 .post .author_info .icons {
 	text-align: left;
+	display: inline;
 }
 
 .post .author_info,
