@@ -28,6 +28,7 @@ class Services_File_Controller
 		$type = $input->type->text();
 		$data = $input->data->none();
 		$fileId = $input->fileId->int();
+		$asuser = $input->user->text();
 
 		$data = base64_decode($data);
 
@@ -35,9 +36,9 @@ class Services_File_Controller
 		$type = $mimelib->from_content($name, $data);
 
 		if ($fileId) {
-			$this->updateFile($gal_info, $name, $size, $type, $data, $fileId);
+			$this->updateFile($gal_info, $name, $size, $type, $data, $fileId, $asuser);
 		} else {
-			$fileId = $this->uploadFile($gal_info, $name, $size, $type, $data);
+			$fileId = $this->uploadFile($gal_info, $name, $size, $type, $data, $asuser);
 		}
 
 		if ($fileId === false) {
@@ -169,16 +170,16 @@ class Services_File_Controller
 		return $filegallib->get_file_gallery_info($galleryId);
 	}
 
-	private function uploadFile($gal_info, $name, $size, $type, $data)
+	private function uploadFile($gal_info, $name, $size, $type, $data, $asuser = null)
 	{
 		$filegallib = TikiLib::lib('filegal');
-		return $filegallib->upload_single_file($gal_info, $name, $size, $type, $data);
+		return $filegallib->upload_single_file($gal_info, $name, $size, $type, $data, $asuser);
 	}
 
-	private function updateFile($gal_info, $name, $size, $type, $data, $fileId)
+	private function updateFile($gal_info, $name, $size, $type, $data, $fileId, $asuser = null)
 	{
 		$filegallib = TikiLib::lib('filegal');
-		return $filegallib->update_single_file($gal_info, $name, $size, $type, $data, $fileId);
+		return $filegallib->update_single_file($gal_info, $name, $size, $type, $data, $fileId, $asuser);
 	}
 }
 

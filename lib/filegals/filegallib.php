@@ -3451,26 +3451,32 @@ class FileGalLib extends TikiLib
 		);
 	}
 
-	function upload_single_file($gal_info, $name, $size, $type, $data)
+	function upload_single_file($gal_info, $name, $size, $type, $data, $asuser = null)
 	{
 		global $user;
+		if (empty($asuser)) {
+			$asuser = $user;
+		}
 		if ($this->convert_from_data($gal_info, $fhash, $data)) {
 			$data = null;
 		}
 
-		return $this->insert_file($gal_info['galleryId'], $name, '', $name, $data, $size, $type, $user, $fhash, '');
+		return $this->insert_file($gal_info['galleryId'], $name, '', $name, $data, $size, $type, $asuser, $fhash, '');
 	}
 
-	function update_single_file($gal_info, $name, $size, $type, $data, $id)
+	function update_single_file($gal_info, $name, $size, $type, $data, $id, $asuser = null)
 	{
 		global $user;
+		if (empty($asuser)) {
+			$asuser = $user;
+		}
 		if ($this->convert_from_data($gal_info, $fhash, $data)) {
 			$data = null;
 		}
 
 		$didFileReplace = true;
 
-		return $this->replace_file($id, $name, '', $name, $data, $size, $type, $user, $fhash, '', $gal_info, $didFileReplace);
+		return $this->replace_file($id, $name, '', $name, $data, $size, $type, $asuser, $fhash, '', $gal_info, $didFileReplace);
 	}
 
 	private function convert_from_data($gal_info, & $fhash, $data)
