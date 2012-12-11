@@ -170,7 +170,7 @@ function wikiplugin_memberpayment( $data, $params, $offset )
 	$smarty->assign('returnurl', !empty($params['returnurl']) ? $params['returnurl'] : '');
 	$params['price'] = floatval($params['price']);
 	$default = array( 'currentuser'=>'n', 'inputtitle'=>'', 'inputtitleonly'=>'n', 'howtitle' => '',
-					'howtitleonly' => 'n', 'paytitle' => 'n', 'paytitleonly' => 'n', 'hideperiod' => 'n',
+					'howtitleonly' => 'n', 'paytitle' => '', 'paytitleonly' => 'n', 'hideperiod' => 'n',
 					'periodslabel' => 'Number of periods:');
 	$params = array_merge($default, $params);
 	$smarty->assign('hideperiod', $params['hideperiod']);
