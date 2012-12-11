@@ -511,7 +511,7 @@ class Graphic // {{{1
 		die( "Abstract Function Call" );
 	}
 
-	function _drawLegendBox( &$renderer ) // {{{2
+	function _drawLegendBox( &$renderer, $color ) // {{{2
 	{
 		die( "Abstract Function Call" );
 	}
