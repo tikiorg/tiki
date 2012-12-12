@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<mysqldump xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<database name="tiki9">
+	<table_data name="tiki_user_reports_cache">
+	<row>
+		<field name="id">1</field>
+		<field name="user">admin</field>
+		<field name="event">wiki_page_changed</field>
+		<field name="data">a:6:{s:5:&quot;event&quot;;s:17:&quot;wiki_page_changed&quot;;s:8:&quot;pageName&quot;;s:8:&quot;HomePage&quot;;s:6:&quot;object&quot;;s:8:&quot;HomePage&quot;;s:8:&quot;editUser&quot;;s:4:&quot;test&quot;;s:11:&quot;editComment&quot;;s:0:&quot;&quot;;s:6:&quot;oldVer&quot;;s:1:&quot;2&quot;;}</field>
+		<field name="time">2012-01-19 16:22:59</field>
+	</row>
+	<row>
+		<field name="id">2</field>
+		<field name="user">admin</field>
+		<field name="event">wiki_page_changed</field>
+		<field name="data">a:6:{s:5:&quot;event&quot;;s:17:&quot;wiki_page_changed&quot;;s:8:&quot;pageName&quot;;s:4:&quot;test&quot;;s:6:&quot;object&quot;;s:4:&quot;test&quot;;s:8:&quot;editUser&quot;;s:4:&quot;test&quot;;s:11:&quot;editComment&quot;;s:0:&quot;&quot;;s:6:&quot;oldVer&quot;;s:1:&quot;2&quot;;}</field>
+		<field name="time">2012-01-19 16:23:30</field>
+	</row>
+	<row>
+		<field name="id">3</field>
+		<field name="user">test</field>
+		<field name="event">wiki_page_changed</field>
+		<field name="data">a:6:{s:5:&quot;event&quot;;s:17:&quot;wiki_page_changed&quot;;s:8:&quot;pageName&quot;;s:4:&quot;test&quot;;s:6:&quot;object&quot;;s:4:&quot;test&quot;;s:8:&quot;editUser&quot;;s:4:&quot;test&quot;;s:11:&quot;editComment&quot;;s:0:&quot;&quot;;s:6:&quot;oldVer&quot;;s:1:&quot;2&quot;;}</field>
+		<field name="time">2012-01-19 16:23:30</field>
+	</row>
+	<row>
+		<field name="id">4</field>
+		<field name="user">admin</field>
+		<field name="event">wiki_page_changed</field>
+		<field name="data">a:1:{s:5:"event";s:17:"wiki_page_changed";}</field>
+		<field name="time">2012-01-19 16:23:30</field>
+	</row>
+	<row>
+		<field name="id">5</field>
+		<field name="user">test</field>
+		<field name="event">wiki_page_changed</field>
+		<field name="data">a:1:{s:5:"event";s:17:"wiki_page_changed";}</field>
+		<field name="time">2012-01-19 16:23:30</field>
+	</row>
+
+	</table_data>
+</database>
+</mysqldump>
