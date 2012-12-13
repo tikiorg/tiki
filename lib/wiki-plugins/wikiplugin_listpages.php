@@ -25,7 +25,7 @@ function wikiplugin_listpages_info()
 				'required' => false,
 				'name' => tra('Max'),
 				'description' => tra('Limit number of items displayed in the list. Default is to display all.'),
-				'filter' => 'digits',
+				'filter' => 'int',
 				'default' => -1,
 			),
 			'initial' => array(
