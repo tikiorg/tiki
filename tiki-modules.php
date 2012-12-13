@@ -10,24 +10,24 @@
 
 //this script may only be included - so its better to die if called directly.
 require_once('tiki-setup.php');
-global $modlib; include_once('lib/modules/modlib.php');
-global $access;
+$access = TikiLib::lib('access');
 $access->check_script($_SERVER["SCRIPT_NAME"], basename(__FILE__));
 
-global $usermoduleslib; include_once ('lib/usermodules/usermoduleslib.php');
+$modlib = TikiLib::lib('mod');
+$usermoduleslib = TikiLib::lib('usermodules');
+$userlib = TikiLib::lib('user');
+$smarty = TikiLib::lib('smarty');
+$tikilib = TikiLib::lib('tiki');
+
 include_once('tiki-module_controls.php');
-global $prefs, $user, $userlib, $tiki_p_admin, $tiki_p_configure_modules, $smarty, $tikidomain, $tikilib, $section, $page, $user_groups;
+global $prefs, $user;
 
 clearstatcache();
-
-if ($tiki_p_admin != 'y') {
-	$user_groups = $tikilib->get_user_groups($user);
-} else {
-	$user_groups = array();
-}
-
 $modules = $modlib->get_modules_for_user($user);
-record_module_loading_errors();
+
+if (Perms::get()->admin) {
+	$smarty->assign('module_pref_errors', $modlib->pref_errors);
+}
 
 $show_columns = array_fill_keys(array_keys($modules), 'n');
 
@@ -60,11 +60,3 @@ $smarty->assign('module_nodecorations', $module_nodecorations);
 $smarty->assign('module_isflippable', $module_isflippable);
 
 
-function record_module_loading_errors()
-{
-	global $user, $modlib, $tikilib, $smarty;
-	$user_groups = $tikilib->get_user_groups($user);
-	if (in_array('Admins', $user_groups)) {
-		$smarty->assign('module_pref_errors', $modlib->pref_errors);
-	}
-}

@@ -11,8 +11,6 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
   exit;
 }
 
-global $usermoduleslib; include_once('lib/usermodules/usermoduleslib.php');
-
 /**
  *
  */
@@ -107,7 +105,7 @@ class ModLib extends TikiLib
 			}
 		}
 		if ($type == "D" || $type == "P") {
-			global $usermoduleslib;
+			$usermoduleslib = TikiLib::lib('usermodules');
 			$usermoduleslib->add_module_users($moduleId, $name, $title, $position, $order, $cache_time, $rows, $groups, $params, $type);
 		}
 		return true;
@@ -451,7 +449,7 @@ class ModLib extends TikiLib
      */
     function filter_active_module( $module )
 	{
-		global $section, $page, $prefs, $user, $user_groups, $tikilib;
+		global $section, $page, $prefs, $user, $tikilib;
 
 		// Validate preferences
 		$module_info = $this->get_module_info($module['name']);
@@ -516,6 +514,12 @@ class ModLib extends TikiLib
 			}
 		}
 
+		if (! Perms::get()->admin) {
+			$user_groups = Perms::get()->getGroups();
+		} else {
+			$user_groups = array();
+		}
+
 		if ( 'y' != $this->check_groups($module, $user, $user_groups) ) {
 			return false;
 		}
@@ -531,10 +535,10 @@ class ModLib extends TikiLib
 		}
 
 		if ( isset( $params['contributor'] ) && $section == 'wiki page' && isset( $page ) ) {
-			global $wikilib; include_once('lib/wiki/wikilib.php');
 			if ( ! $page_info = $tikilib->get_page_info($page) ) {
 				return false;
 			} else {
+				$wikilib = TikiLib::lib('wiki');
 				$contributors = $wikilib->get_contributors($page);
 				$contributors[] = $page_info['creator'];
 				$in = in_array($user, $contributors);
@@ -681,7 +685,8 @@ class ModLib extends TikiLib
      */
     private function get_raw_module_list_for_user( $user, array $module_zones )
 	{
-		global $prefs, $tiki_p_configure_modules, $usermoduleslib;
+		global $prefs, $tiki_p_configure_modules;
+		$usermoduleslib = TikiLib::lib('usermodules');
 
 		$out = array_fill_keys(array_values($module_zones), array());
 

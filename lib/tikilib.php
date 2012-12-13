@@ -247,6 +247,9 @@ class TikiLib extends TikiDb_Bridge
 			case 'mod':
 				global $modlib; require_once 'lib/modules/modlib.php';
 				return self::$libraries[$name] = $modlib;
+			case 'usermodules':
+				global $usermoduleslib; require_once 'lib/usermodules/usermoduleslib.php';
+				return self::$libraries[$name] = $usermoduleslib;
 			case 'faq':
 				global $faqlib; require_once 'lib/faqs/faqlib.php';
 				return self::$libraries[$name] = $faqlib;
