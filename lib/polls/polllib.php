@@ -176,4 +176,4 @@ class PollLib extends PollLibShared
 	}
 
 }
-$polllib = new PollLib;
+global $polllib; $polllib = new PollLib;

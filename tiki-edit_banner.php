@@ -11,11 +11,7 @@
 require_once ('tiki-setup.php');
 
 require_once ('lib/tikilib.php'); # httpScheme()
-include_once ('lib/banners/bannerlib.php');
-
-if (!isset($bannerlib)) {
-	$bannerlib = new BannerLib;
-}
+$bannerlib = TikiLib::lib('banner');
 
 $access->check_feature('feature_banners');
 $access->check_permission('tiki_p_admin_banners');

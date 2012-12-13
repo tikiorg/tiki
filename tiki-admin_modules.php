@@ -18,33 +18,14 @@ $inputConfiguration = array(
 
 $section = 'admin';
 require_once ('tiki-setup.php');
-include_once ('lib/menubuilder/menulib.php');
-include_once ('lib/rss/rsslib.php');
-include_once ('lib/polls/polllib.php');
-include_once ('lib/banners/bannerlib.php');
-include_once ('lib/dcs/dcslib.php');
-include_once ('lib/modules/modlib.php');
-include_once ('lib/structures/structlib.php');
 
-if (!isset($dcslib)) {
-	$dcslib = new DCSLib($dbTiki);
-}
-
-if (!isset($bannerlib)) {
-	$bannerlib = new BannerLib($dbTiki);
-}
-
-if (!isset($rsslib)) {
-	$rsslib = new RssLib($dbTiki);
-}
-
-if (!isset($polllib)) {
-	$polllib = new PollLib($dbTiki);
-}
-
-if (!isset($structlib)) {
-	$structlib = new StructLib($dbTiki);
-}
+$dcslib = TikiLib::lib('dcs');
+$bannerlib = TikiLib::lib('banner');
+$rsslib = TikiLib::lib('rss');
+$polllib = TikiLib::lib('poll');
+$structlib = TikiLib::lib('struct');
+$modlib = TikiLib::lib('mod');
+$menulib = TikiLib::lib('menu');
 
 $smarty->assign('wysiwyg', 'n');
 if (isset($_REQUEST['wysiwyg']) && $_REQUEST['wysiwyg'] == 'y') {

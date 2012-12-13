@@ -14,11 +14,7 @@ if (!isset($_REQUEST["zone"])) {
 
 require_once ('tiki-setup.php');
 
-include_once ('lib/banners/bannerlib.php');
-
-if (!isset($bannerlib)) {
-	$bannerlib = new BannerLib;
-}
+$bannerlib = TikiLib::lib('banner');
 
 // CHECK FEATURE BANNERS HERE
 $access->check_feature('feature_banners');

@@ -27,7 +27,7 @@ function wikiplugin_rcontent_info()
 function wikiplugin_rcontent( $data, $params )
 {
 
-	global $dcslib; include_once('lib/dcs/dcslib.php');
+	$dcslib = TikiLib::lib('dcs');
 
 	$lang = null;
 	if ( isset( TikiLib::lib('parser')->option['language'] ) ) {

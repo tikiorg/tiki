@@ -420,4 +420,4 @@ class BannerLib extends TikiLib
 		return true;
 	}
 }
-$bannerlib = new BannerLib;
+global $bannerlib; $bannerlib = new BannerLib;

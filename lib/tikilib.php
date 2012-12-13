@@ -185,7 +185,7 @@ class TikiLib extends TikiDb_Bridge
 				global $geolib; require_once 'lib/geo/geolib.php';
 				return self::$libraries[$name] = $geolib;
 			case 'poll':
-				global $polllib; require_once 'lib/polllib.php';
+				global $polllib; require_once 'lib/polls/polllib.php';
 				return self::$libraries[$name] = $polllib;
 			case 'queue':
 				require_once 'lib/queuelib.php';
@@ -269,6 +269,12 @@ class TikiLib extends TikiDb_Bridge
 			case 'tcontrol':
 				global $tcontrollib; require_once 'lib/themecontrol/tcontrol.php';
 				return self::$libraries[$name] = $tcontrollib;
+			case 'dcs':
+				global $dcslib; require_once 'lib/dcs/dcslib.php';
+				return self::$libraries[$name] = $dcslib;
+			case 'banner':
+				global $bannerlib; require_once 'lib/banners/bannerlib.php';
+				return self::$libraries[$name] = $bannerlib;
 		}
 	}
 

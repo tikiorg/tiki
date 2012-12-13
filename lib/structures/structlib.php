@@ -1238,4 +1238,4 @@ class StructLib extends TikiLib
 		return array('data'=>$options, 'cant'=>$cant);
 	}
 }
-$structlib = new StructLib;
+global $structlib; $structlib = new StructLib;
