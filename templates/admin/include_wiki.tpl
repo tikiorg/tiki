@@ -141,6 +141,11 @@
 					{/if}
 			</div>
 
+			{preference name=wiki_pagination}
+			<div class="adminoptionboxchild" id="wiki_pagination_childcontainer">
+				{preference name=wiki_page_separator}
+			</div>
+
 			{preference name=feature_dump}
 			<div class="adminoptionboxchild" id="feature_dump_childcontainer">
 				<div class="adminoptionbox clearfix">

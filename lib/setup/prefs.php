@@ -68,7 +68,6 @@ function get_default_prefs()
 			'mailin_autocheckLast' => 0,
 			'wiki_bot_bar' => 'n',
 			'wiki_left_column' => 'y',
-			'wiki_page_separator' => '...page...',
 			'wiki_right_column' => 'y',
 			'wiki_top_bar' => 'y',
 			'feature_wiki_watch_structure' => 'n',

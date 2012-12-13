@@ -327,43 +327,65 @@ class WikiRenderer
 		}
 
 		if ($this->content_to_render === null) {
-			$pdata = $wikilib->get_parse($this->page, $canBeRefreshed);
+			$page = $this->page;
+			$pdata = new Tiki_Render_Lazy(function () use ($page) {
+				$wikilib = TikiLib::lib('wiki');
+				$smarty = TikiLib::lib('smarty');
+				$parsed = $wikilib->get_parse($page, $canBeRefreshed);
 
-			if ($canBeRefreshed) {
-				$this->smartyassign('cached_page', 'y');
-			}
+				if ($canBeRefreshed) {
+					$smarty->assign('cached_page', 'y');
+				}
+
+				return $parsed;
+			});
 		} else {
 			$parse_options = array(
 				'is_html' => $this->info['is_html'],
 				'language' => $this->info['lang'],
 			);
 
+			$content = $this->content_to_render;
 			if ($this->raw) {
-				$parserlib = TikiLib::lib('parser');
-				$pdata = $parserlib->parse_data_raw($this->content_to_render);
+				$pdata = new Tiki_Render_Lazy(function () use ($content) {
+					$parserlib = TikiLib::lib('parser');
+					return $parserlib->parse_data_raw($content);
+				});
 			} else {
-				$pdata = $wikilib->parse_data($this->content_to_render, $parse_options);
+				$pdata = new Tiki_Render_Lazy(function () use ($content, $parse_options) {
+					$wikilib = TikiLib::lib('wiki');
+					return $wikilib->parse_data($this->content_to_render, $parse_options);
+				});
 			}
 		}
 
-		$pages = $wikilib->get_number_of_pages($pdata);
-		$pdata = $wikilib->get_page($pdata, $this->pageNumber);
-		$this->smartyassign('pages', $pages);
+		if ($prefs['wiki_pagination'] == 'y') {
+			$pages = $wikilib->get_number_of_pages($pdata);
+			$pdata = $wikilib->get_page($pdata, $this->pageNumber);
+			$this->smartyassign('pages', $pages);
 
-		if ($pages>$this->pageNumber) {
-			$this->smartyassign('next_page', $this->pageNumber+1);
+			if ($pages>$this->pageNumber) {
+				$this->smartyassign('next_page', $this->pageNumber+1);
+			} else {
+				$this->smartyassign('next_page', $this->pageNumber);
+			}
+			if ($this->pageNumber>1) {
+				$this->smartyassign('prev_page', $this->pageNumber-1);
+			} else {
+				$this->smartyassign('prev_page', 1);
+			}
+
+			$this->smartyassign('first_page', 1);
+			$this->smartyassign('last_page', $pages);
+			$this->smartyassign('pagenum', $this->pageNumber);
 		} else {
-			$this->smartyassign('next_page', $this->pageNumber);
-		}
-		if ($this->pageNumber>1) {
-			$this->smartyassign('prev_page', $this->pageNumber-1);
-		} else {
+			$this->smartyassign('pages', 1);
+			$this->smartyassign('next_page', 1);
 			$this->smartyassign('prev_page', 1);
+			$this->smartyassign('first_page', 1);
+			$this->smartyassign('last_page', 1);
+			$this->smartyassign('pagenum', 1);
 		}
-
-		$this->smartyassign('first_page', 1);
-		$this->smartyassign('last_page', $pages);
-		$this->smartyassign('pagenum', $this->pageNumber);
 
 		$this->smartyassign('lastVersion', $this->info["version"]);
 		if (isset($this->info['last_version'])) {
