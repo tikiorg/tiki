@@ -84,5 +84,14 @@ function prefs_module_list()
 			'type' => 'text',
 			'default' => '',
 		),
+		'module_zone_available_extra' => array(
+			'name' => tr('Extra module zones available'),
+			'description' => tr('Extra module zones to be managed through the module administration interface. Useful if your custom theme requires a special zone other than the predefined ones.'),
+			'hint' => tr('Comma-separated list, 20 characters max per entry.'),
+			'type' => 'text',
+			'separator' => ',',
+			'filter' => 'alpha',
+			'default' => array(),
+		),
 	);
 }

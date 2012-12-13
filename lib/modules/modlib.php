@@ -33,6 +33,16 @@ class ModLib extends TikiLib
 		'bottom' => 'bottom_modules',
 	);
 
+	function __construct() {
+		global $prefs;
+
+		if (! empty($prefs['module_zone_available_extra'])) {
+			foreach ((array) $prefs['module_zone_available_extra'] as $name) {
+				$this->module_zones[$name] = $name . '_modules';
+			}
+		}
+	}
+
     /**
      * @param $name
      * @param $title
