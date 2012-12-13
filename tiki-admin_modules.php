@@ -337,17 +337,18 @@ if (isset($_REQUEST['um_edit'])) {
 	check_ticket('admin-modules');
 	$_REQUEST['um_edit'] = urldecode($_REQUEST['um_edit']);
 	$um_info = $modlib->get_user_module($_REQUEST['um_edit']);
-	$smarty->assign_by_ref('um_name', $um_info['name']);
-	$smarty->assign_by_ref('um_title', $um_info['title']);
-	$smarty->assign_by_ref('um_data', $um_info['data']);
-	$smarty->assign_by_ref('um_parse', $um_info['parse']);
+	$smarty->assign('um_name', $um_info['name']);
+	$smarty->assign('um_title', $um_info['title']);
+	$smarty->assign('um_data', $um_info['data']);
+	$smarty->assign('um_parse', $um_info['parse']);
 }
 $user_modules = $modlib->list_user_modules();
-$smarty->assign_by_ref('user_modules', $user_modules['data']);
+$smarty->assign('user_modules', $user_modules['data']);
 
 $all_modules = $modlib->get_all_modules();
 sort($all_modules);
-$smarty->assign_by_ref('all_modules', $all_modules);
+$smarty->assign('all_modules', $all_modules);
+
 $all_modules_info = array_combine(
 	$all_modules,
 	array_map(array( $modlib, 'get_module_info' ), $all_modules)
@@ -366,24 +367,15 @@ uasort($all_modules_info, 'compare_names');
 $smarty->assign_by_ref('all_modules_info', $all_modules_info);
 $smarty->assign('module_list_show_all', !empty($_REQUEST['module_list_show_all']));
 
-$orders = array();
-
-for ($i = 1;$i < 50;$i++) {
-	$orders[] = $i;
-}
-
-$smarty->assign_by_ref('orders', $orders);
+$smarty->assign('orders', range(1, 50));
 $groups = $userlib->list_all_groups();
 $allgroups = array();
 $temp_max = count($groups);
-for ($i = 0;$i < $temp_max;$i++) {
-	if (in_array($groups[$i], $module_groups)) {
-		$allgroups[$i]['groupName'] = $groups[$i];
-		$allgroups[$i]['selected'] = 'y';
-	} else {
-		$allgroups[$i]['groupName'] = $groups[$i];
-		$allgroups[$i]['selected'] = 'n';
-	}
+foreach ($groups as $groupName) {
+	$allgroups[] = array(
+		'groupName' => $groupName,
+		'selected' => in_array($groupName, $module_groups) ? 'y' : 'n',
+	);
 }
 
 $smarty->assign('groups', $allgroups);

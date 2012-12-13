@@ -24,13 +24,13 @@ class ModLib extends TikiLib
 	// additional module zones added to this array will be exposed to tiki.tpl
 	// TODO change modules user interface to enable additional zones
 	public $module_zones = array(
-		't' => 'top_modules',
-		'o' => 'topbar_modules',
-		'p' => 'pagetop_modules',
-		'l' => 'left_modules',
-		'r' => 'right_modules',
-		'q' => 'pagebottom_modules',
-		'b' => 'bottom_modules',
+		'top' => 'top_modules',
+		'topbar' => 'topbar_modules',
+		'pagetop' => 'pagetop_modules',
+		'left' => 'left_modules',
+		'right' => 'right_modules',
+		'pagebottom' => 'pagebottom_modules',
+		'bottom' => 'bottom_modules',
 	);
 
     /**
@@ -184,7 +184,7 @@ class ModLib extends TikiLib
      */
     function module_left($moduleId)
 	{
-		$query = "update `tiki_modules` set `position`='l' where `moduleId`=?";
+		$query = "update `tiki_modules` set `position`='left' where `moduleId`=?";
 		$result = $this->query($query, array($moduleId));
 		return true;
 	}
@@ -195,7 +195,7 @@ class ModLib extends TikiLib
      */
     function module_right($moduleId)
 	{
-		$query = "update `tiki_modules` set `position`='r' where `moduleId`=?";
+		$query = "update `tiki_modules` set `position`='right' where `moduleId`=?";
 		$result = $this->query($query, array($moduleId));
 		return true;
 	}

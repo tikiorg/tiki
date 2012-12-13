@@ -1519,7 +1519,7 @@ DROP TABLE IF EXISTS `tiki_modules`;
 CREATE TABLE `tiki_modules` (
   `moduleId` int(8) NOT NULL auto_increment,
   `name` varchar(200) NOT NULL default '',
-  `position` char(1) NOT NULL DEFAULT '',
+  `position` varchar(20) NOT NULL DEFAULT '',
   `ord` int(4) NOT NULL DEFAULT '0',
   `type` char(1) default NULL,
   `title` varchar(255) default NULL,
@@ -1529,16 +1529,16 @@ CREATE TABLE `tiki_modules` (
   `groups` text,
   PRIMARY KEY (`moduleId`),
   KEY `positionType` (position, type),
-  KEY `namePosOrdParam` (`name`(100), `position`, `ord`, `params`(140))
+  KEY `namePosOrdParam` (`name`(100), `position`, `ord`, `params`(120))
 ) ENGINE=MyISAM;
 
 INSERT INTO `tiki_modules` (name,position,ord,cache_time,params,groups) VALUES
-    ('menu','l',1,7200,'id=42&flip=y','a:1:{i:0;s:10:"Registered";}'),
-    ('logo','t',1,7200,'nobox=y','a:0:{}'),
-    ('login_box','t',2,0,'mode=popup&nobox=y','a:0:{}'),
-    ('quickadmin','t',3,7200,'nobox=y','a:1:{i:0;s:6:"Admins";}'),
-    ('rsslist','b',1,7200,'nobox=y','a:0:{}'),
-    ('poweredby','b',2,7200,'nobox=y&icons=n&version=n','a:0:{}');
+    ('menu','left',1,7200,'id=42&flip=y','a:1:{i:0;s:10:"Registered";}'),
+    ('logo','top',1,7200,'nobox=y','a:0:{}'),
+    ('login_box','top',2,0,'mode=popup&nobox=y','a:0:{}'),
+    ('quickadmin','top',3,7200,'nobox=y','a:1:{i:0;s:6:"Admins";}'),
+    ('rsslist','bottom',1,7200,'nobox=y','a:0:{}'),
+    ('poweredby','bottom',2,7200,'nobox=y&icons=n&version=n','a:0:{}');
 
 DROP TABLE IF EXISTS `tiki_newsletter_subscriptions`;
 CREATE TABLE `tiki_newsletter_subscriptions` (
@@ -2314,7 +2314,7 @@ DROP TABLE IF EXISTS `tiki_user_assigned_modules`;
 CREATE TABLE `tiki_user_assigned_modules` (
   `moduleId` int(8) NOT NULL,
   `name` varchar(200) NOT NULL default '',
-  `position` char(1) default NULL,
+  `position` varchar(20) default NULL,
   `ord` int(4) default NULL,
   `type` char(1) default NULL,
   `user` varchar(200) NOT NULL default '',
