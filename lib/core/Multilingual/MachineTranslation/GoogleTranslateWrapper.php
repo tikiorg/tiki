@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -9,12 +9,12 @@
  * Created on Jan 27, 2009
  *
  */
- 
+
 class Multilingual_MachineTranslation_GoogleTranslateWrapper implements Multilingual_MachineTranslation_Interface
 {
   	const SERVICE_URL = "https://www.googleapis.com/language/translate/v2";
 
-	//wiki markup (keep this regex in case we decide to translate wiki markup and not html)    
+	//wiki markup (keep this regex in case we decide to translate wiki markup and not html)
 	//	const WIKI_MARKUP = "/<[^>]*>| ?[\`\!\@\#\$\%\^\&\*\[\]\:\;\"\'\<\,\>\/\|\\\=\-\+\_\(\)]{2,} ?|\(\([\s\S]*?\)\)|\~[a-z]{2,3}\~[\s\S]*?\~\/[a-z]{2,3}\~|\~hs\~|\~\~[\s\S]*?\:|\~\~|[[^\|]*?\||\[[^|\]]*\]|\{\*[^\}\*]*?\*\}|\{[^\}]*?\}|^;|!/m";
 	const WIKI_MARKUP = "/<[^>]*>| ?[\`\!\@\#\$\%\^\&\*\[\]\:\;\"\'\<\,\>\/\|\\\=\-\+\_\(\)]{2,} ?|\(\([\s\S]*?\)\)|\~\/?[a-z]{2,3}\~|\~hs\~|\~\~[\s\S]*?\:|\~\~|[[^\|]*?\||\[[^|\]]*\]|\{\*[^\}\*]*?\*\}|\{[^\}]*?\}|^;|!/m";
 
@@ -27,13 +27,13 @@ class Multilingual_MachineTranslation_GoogleTranslateWrapper implements Multilin
 
 	private $key;
   	private $sourceLang;
-  	private $targetLang; 
+  	private $targetLang;
   	private $markup;
   	private $translatingHTML = true;
 	private $arrayOfUntranslatableStringsAndTheirIDs = array();
 	private $currentID = 169;
-   	
-	function __construct ($key, $sourceLang, $targetLang, $html = true) 
+
+	function __construct ($key, $sourceLang, $targetLang, $html = true)
 	{
 		$this->key = $key;
 		$this->sourceLang = $sourceLang;
@@ -45,8 +45,8 @@ class Multilingual_MachineTranslation_GoogleTranslateWrapper implements Multilin
 			$this->markup = self::WIKI_MARKUP;
 		}
 	}
-   	
-   	
+
+
 	function getSupportedLanguages()
 	{
 		return array(
@@ -96,12 +96,12 @@ class Multilingual_MachineTranslation_GoogleTranslateWrapper implements Multilin
 	}
 
 
-	function translateText($text) 
+	function translateText($text)
 	{
 		$text = $this->escape_untranslatable_text($text);
 
-		$urlencodedText = urlencode($text); 
-		
+		$urlencodedText = urlencode($text);
+
 		if (strlen($urlencodedText) < 1800) {
 			$chunks = array($text);
 		} else {
@@ -118,19 +118,19 @@ class Multilingual_MachineTranslation_GoogleTranslateWrapper implements Multilin
 	}
 
 
-	private function translateSentenceBySentence($text) 
+	private function translateSentenceBySentence($text)
 	{
 		$segmentor = new Multilingual_Aligner_SentenceSegmentor();
-		$sentences = $segmentor->segment($text); 
+		$sentences = $segmentor->segment($text);
 		$result = "";
 		foreach ($sentences as $textToTranslate) {
 			$result .= $this->getTranslationFromGoogle($textToTranslate);
-		}  
+		}
 
-		return $result;		
-	} 
+		return $result;
+	}
 
-	private function getTranslationFromGoogle($text) 
+	private function getTranslationFromGoogle($text)
 	{
 		require_once 'lib/ointegratelib.php';
 		$ointegrate = new OIntegrate();
@@ -150,16 +150,22 @@ class Multilingual_MachineTranslation_GoogleTranslateWrapper implements Multilin
 		$oi_result = $ointegrate->performRequest($url);
 		$result = $oi_result->data['data']['translations'];
 
-		return implode('', array_map(function ($entry) {
-			return $entry['translatedText'];
-		}, $result));
+		return implode(
+			'',
+			array_map(
+				function ($entry) {
+					return $entry['translatedText'];
+				},
+				$result
+			)
+		);
 	}
 
-	private function splitInLogicalChunksOf450CharsMax($text) 
+	private function splitInLogicalChunksOf450CharsMax($text)
 	{
 		$chunks = array();
 		$segmentor = new Multilingual_Aligner_SentenceSegmentor();
-		$sentences = $segmentor->segment($text); 
+		$sentences = $segmentor->segment($text);
 		$ii = 0;
 		$chunk = $sentences[$ii];
 		while ($ii < (count($sentences)-1)) {
@@ -167,21 +173,21 @@ class Multilingual_MachineTranslation_GoogleTranslateWrapper implements Multilin
 			if (strlen(urlencode($chunk)) < 450) {
 				$chunk = $chunk.$sentences[$ii];
 			} else {
-				$chunks[] = $chunk; 
+				$chunks[] = $chunk;
 				$chunk = $sentences[$ii];
 			}
 		}
-		$chunks[] = $chunk; 
+		$chunks[] = $chunk;
 		return $chunks;
 	}
 
-	/* 
-	 * Google Translate works best when wiki or html markup is first replaced with 
-	 * a unique id (here something like this is used: id169) and then those ids 
-	 * surrounded by Google's notranslate span tag. Upon translations span tags are 
-	 * removed and ids reversed to the original markup. 
+	/*
+	 * Google Translate works best when wiki or html markup is first replaced with
+	 * a unique id (here something like this is used: id169) and then those ids
+	 * surrounded by Google's notranslate span tag. Upon translations span tags are
+	 * removed and ids reversed to the original markup.
 	 */
-	private function escape_untranslatable_text($text) 
+	private function escape_untranslatable_text($text)
 	{
 		//Title is all between <hx> tags. Put it in lower case, so Google doesn't
 		//take the capitalized words as proper names
@@ -202,13 +208,13 @@ class Multilingual_MachineTranslation_GoogleTranslateWrapper implements Multilin
 				$id = (int)$this->currentID + 1;
 				$this->arrayOfUntranslatableStringsAndTheirIDs[$id] = $matched_markup;
 				$this->currentID = $id;
-			} 
+			}
 		}
 
-		foreach ($this->arrayOfUntranslatableStringsAndTheirIDs as $id => $markup) {		
+		foreach ($this->arrayOfUntranslatableStringsAndTheirIDs as $id => $markup) {
 			$id = "id".$id;
 
-			//adding dot after </ul> to have it segmented properly. otherwise when the html contains only lists, 
+			//adding dot after </ul> to have it segmented properly. otherwise when the html contains only lists,
 			//sentence segmentor can't find where to segment the text
 			if ($markup == "</ul>") {
 				$text = preg_replace("/".preg_quote($markup, '/')."/", $id.".", $text);
@@ -238,7 +244,7 @@ class Multilingual_MachineTranslation_GoogleTranslateWrapper implements Multilin
 
 		foreach ($this->arrayOfUntranslatableStringsAndTheirIDs as $id => $markup) {
 			$id = "id".$id;
-			$text = preg_replace("/$id/", $markup, $text); //str replace better 
+			$text = preg_replace("/$id/", $markup, $text); //str replace better
 		}
 
 		//trimming leading spaces in each line (wiki syntax doesn't work unless)

@@ -245,7 +245,7 @@ class WikiRenderer
 		if (!isset($this->info['is_html'])) {
 			$this->info['is_html'] = false;
 		}
-		
+
 		$this->setupComments();
 	} // }}}
 
@@ -328,17 +328,19 @@ class WikiRenderer
 
 		if ($this->content_to_render === null) {
 			$page = $this->page;
-			$pdata = new Tiki_Render_Lazy(function () use ($page) {
-				$wikilib = TikiLib::lib('wiki');
-				$smarty = TikiLib::lib('smarty');
-				$parsed = $wikilib->get_parse($page, $canBeRefreshed);
+			$pdata = new Tiki_Render_Lazy(
+				function () use ($page) {
+					$wikilib = TikiLib::lib('wiki');
+					$smarty = TikiLib::lib('smarty');
+					$parsed = $wikilib->get_parse($page, $canBeRefreshed);
 
-				if ($canBeRefreshed) {
-					$smarty->assign('cached_page', 'y');
+					if ($canBeRefreshed) {
+						$smarty->assign('cached_page', 'y');
+					}
+
+					return $parsed;
 				}
-
-				return $parsed;
-			});
+			);
 		} else {
 			$parse_options = array(
 				'is_html' => $this->info['is_html'],
@@ -347,15 +349,19 @@ class WikiRenderer
 
 			$content = $this->content_to_render;
 			if ($this->raw) {
-				$pdata = new Tiki_Render_Lazy(function () use ($content) {
-					$parserlib = TikiLib::lib('parser');
-					return $parserlib->parse_data_raw($content);
-				});
+				$pdata = new Tiki_Render_Lazy(
+					function () use ($content) {
+						$parserlib = TikiLib::lib('parser');
+						return $parserlib->parse_data_raw($content);
+					}
+				);
 			} else {
-				$pdata = new Tiki_Render_Lazy(function () use ($content, $parse_options) {
-					$wikilib = TikiLib::lib('wiki');
-					return $wikilib->parse_data($this->content_to_render, $parse_options);
-				});
+				$pdata = new Tiki_Render_Lazy(
+					function () use ($content, $parse_options) {
+						$wikilib = TikiLib::lib('wiki');
+						return $wikilib->parse_data($this->content_to_render, $parse_options);
+					}
+				);
 			}
 		}
 

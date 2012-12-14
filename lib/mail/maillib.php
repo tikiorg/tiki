@@ -140,16 +140,16 @@ function tiki_get_admin_mail()
 
 	/////////////////////////////////////////////////////////////////////
 	//                                                                 //
-	// [BUG FIX] hollmeer 2012-11-04: 
+	// [BUG FIX] hollmeer 2012-11-04:
 	// the $prefs['browsertitle']); needs to be commented (..?)
 	// from orig:
 	// $mail->setFrom($prefs['sender_email'], $prefs['browsertitle']);
-	$mail->setFrom( $prefs['sender_email'] );
-	// [BUG FIX] hollmeer 2012-11-04: 
-	// Added returnpath for Sendmail; does not send without; 
+	$mail->setFrom($prefs['sender_email']);
+	// [BUG FIX] hollmeer 2012-11-04:
+	// Added returnpath for Sendmail; does not send without;
 	// catch/ignore error, if already set
 	try {
-		$mail->setReturnPath( $prefs['sender_email'] );
+		$mail->setReturnPath($prefs['sender_email']);
 	} catch (Exception $e) {
 		// was already set, then do nothing
 	}
