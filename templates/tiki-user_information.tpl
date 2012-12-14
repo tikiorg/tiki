@@ -168,7 +168,16 @@
 	
 	{if $prefs.user_tracker_infos and $infoPublic eq "y"}{tab name="{tr}Additional Information{/tr}"}
 	<div class="simplebox">
-		<h2 class="center">{tr}Additional Information{/tr} &ndash; {$userinfo.login|userlink}</h2>
+		<div class="clearfix">
+			<div class="floatleft">
+				<h2 class="center">{tr}Additional Information{/tr} &ndash; {$userinfo.login|userlink}</h2>
+			</div>
+			<div class="floatright">
+				{if $userinfo.login eq $user}
+					<a class="link" href="tiki-view_tracker_item.php?view=+user&cookietab=2" title="{tr}Change user information{/tr}">{icon _id='wrench' align="right" alt="{tr}Change user information{/tr}"}</a>
+				{/if}
+			</div>
+		</div>
 			{cycle values="even,odd" print=false}
 			{foreach item=itemField from=$userItem.field_values}
 				{if $itemField.value ne '' or !empty($itemField.categs) or !empty($itemField.links)}
