@@ -37,6 +37,7 @@
 				{/if}
 
 				{preference name=geo_locate_blogpost}
+				{preference name=feature_sefurl_title_blog}				
 			</fieldset>
 
 			<fieldset>
