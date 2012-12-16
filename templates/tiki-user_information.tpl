@@ -241,6 +241,17 @@
 				{/section}
 			</div>
 			{/if}
+			{if $user_blog_posts|@count > 0}
+			<h3>{tr}Blogs Posts{/tr}</h3>
+			<div class="normal">
+			{section name=ix loop=$user_blog_posts}
+			<div>
+				<div class="{cycle}">		
+				<a class="link" title="{tr}View{/tr}" href="{$user_blog_posts[ix].postId|sefurl:blogpost}">{$user_blog_posts[ix].title|escape}</a>
+				</div>
+			</div>
+			{/section}
+			{/if}
 			{if $user_articles|@count > 0}
 			<h3>{tr}Articles{/tr}</h3>
 			<div class="normal">
