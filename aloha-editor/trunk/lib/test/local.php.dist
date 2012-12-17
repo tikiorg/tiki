@@ -1,8 +1,0 @@
-<?php
-$db_tiki='mysql';
-$dbversion_tiki='7.0';
-$host_tiki='localhost';
-$user_tiki='root';
-$pass_tiki='';
-$dbs_tiki='tiki_test';
-$client_charset='utf8';
