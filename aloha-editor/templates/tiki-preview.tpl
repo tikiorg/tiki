@@ -29,7 +29,7 @@ $("#preview_diff_style").change(function(){
 {/if}
 {if $prefs.feature_jquery_ui eq "y"}{jq}
 $('#autosave_preview').resizable({
-	handles:{'s':'#autosave_preview_grippy'},
+	//handles:{'s':'#autosave_preview_grippy'},
 	alsoResize:'#autosave_preview>div',
 	resize: function(event, ui) {
 		setCookie("wiki", $('#autosave_preview').height(), "preview");
