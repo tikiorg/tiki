@@ -856,7 +856,7 @@ class PreferencesLib
 		if (empty($recent)) {
 			return array();
 		} else {
-			return $tikilib->tiki_unserialize($recent);
+			return unserialize($recent);
 		}
 
 	}

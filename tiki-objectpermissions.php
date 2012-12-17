@@ -220,11 +220,11 @@ if (isset($_REQUEST['copy'])) {
 					'object' => $filter->filter($_REQUEST['objectId']),
 					'type' => $filter->filter($_REQUEST['objectType'])
 	);
-	$_SESSION['perms_clipboard'] = serialize($to_copy);
+	$_SESSION['perms_clipboard'] = $to_copy;
 }
 
 if (!empty($_SESSION['perms_clipboard'])) {
-	$perms_clipboard = TikiLib::tiki_unserialize($_SESSION['perms_clipboard']);
+	$perms_clipboard = $_SESSION['perms_clipboard'];
 	$smarty->assign(
 		'perms_clipboard_source',
 		$perms_clipboard['type'] . (empty($perms_clipboard['object']) ? '' : ' : ') . $perms_clipboard['object']

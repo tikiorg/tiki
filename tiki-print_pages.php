@@ -28,8 +28,8 @@ if (!isset($_REQUEST['printpages']) && !isset($_REQUEST['printstructures'])) {
 		$printpages[] = $_REQUEST["page"];
 	}
 } else {
-	$printpages = TikiLib::tiki_unserialize(urldecode($_REQUEST["printpages"]));
-	$printstructures = TikiLib::tiki_unserialize(urldecode($_REQUEST['printstructures']));
+	$printpages = json_decode(urldecode($_REQUEST["printpages"]));
+	$printstructures = json_decode(urldecode($_REQUEST['printstructures']));
 }
 if (isset($_REQUEST["find"])) {
 	$find = $_REQUEST["find"];
@@ -76,9 +76,9 @@ if (isset($_REQUEST['addstructure'])) {
 }
 $smarty->assign_by_ref('printpages', $printpages);
 $smarty->assign_by_ref('printstructures', $printstructures);
-$form_printpages = urlencode(serialize($printpages));
+$form_printpages = urlencode(json_encode($printpages));
 $smarty->assign_by_ref('form_printpages', $form_printpages);
-$form_printstructures = urlencode(serialize($printstructures));
+$form_printstructures = urlencode(json_encode($printstructures));
 $smarty->assign_by_ref('form_printstructures', $form_printstructures);
 $pages = $tikilib->list_pageNames(0, -1, 'pageName_asc', $find);
 $smarty->assign_by_ref('pages', $pages["data"]);
