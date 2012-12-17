@@ -39,19 +39,19 @@ if (!isset($_REQUEST['password'])) {
 if (!isset($_REQUEST['sendpages'])) {
 	$sendpages = array();
 } else {
-	$sendpages = TikiLib::tiki_unserialize(urldecode($_REQUEST['sendpages']));
+	$sendpages = json_decode(urldecode($_REQUEST['sendpages']));
 }
 
 if (!isset($_REQUEST['sendstructures'])) {
 	$sendstructures = array();
 } else {
-	$sendstructures = TikiLib::tiki_unserialize(urldecode($_REQUEST['sendstructures']));
+	$sendstructures = json_decode(urldecode($_REQUEST['sendstructures']));
 }
 
 if (!isset($_REQUEST['sendarticles'])) {
 	$sendarticles = array();
 } else {
-	$sendarticles = TikiLib::tiki_unserialize(urldecode($_REQUEST['sendarticles']));
+	$sendarticles = json_decode(urldecode($_REQUEST['sendarticles']));
 }
 
 $smarty->assign('username', $_REQUEST['username']);
@@ -237,9 +237,9 @@ foreach ($sendstructures as $key => $id) {
 }
 $smarty->assign('sendstructures_names', $sendstructures_names);
 $smarty->assign('sendarticles', $sendarticles);
-$form_sendpages = urlencode(serialize($sendpages));
-$form_sendstructures = urlencode(serialize($sendstructures));
-$form_sendarticles = urlencode(serialize($sendarticles));
+$form_sendpages = urlencode(json_encode($sendpages));
+$form_sendstructures = urlencode(json_encode($sendstructures));
+$form_sendarticles = urlencode(json_encode($sendarticles));
 $smarty->assign('form_sendpages', $form_sendpages);
 $smarty->assign('form_sendstructures', $form_sendstructures);
 $smarty->assign('form_sendarticles', $form_sendarticles);

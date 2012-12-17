@@ -6395,28 +6395,6 @@ JS;
 	}
 
 	/**
-	 * Test data before unserializing - thanks EgiX
-	 * and dcz (at) phpbb-seo (dot) com re: http://www.php.net/manual/en/function.unserialize.php#106411
-	 *
-	 * @param $data	string
-	 * @return bool|mixed
-	 */
-	public static function tiki_unserialize($data)
-	{
-		// unserialize will return false for object declared with O as well as if there is any ws between O and :
-		if (is_string($data) && strpos($data, "\0") === false) {
-			if (strpos($data, 'O:') === false) {
-				// the easy case, nothing to worry about, let unserialize do the job
-				return @unserialize($data);
-			} else if (!preg_match('/(^|;|{|})O:[0-9]+:"/', $data)) {
-				// in case we did have a string with O: in it, but it was not a true serialized object
-				return @unserialize($data);
-			}
-		}
-		return false;
-	}
-
-	/**
 	*	Return the request URI.
 	*	Assumes http or https is used. Non-standard ports are taken into account
 	*	@return Full URL to the current page
