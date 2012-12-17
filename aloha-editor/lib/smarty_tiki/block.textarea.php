@@ -154,8 +154,8 @@ function smarty_block_textarea($params, $content, $smarty, $repeat)
 		// TODO cope with wysiwyg and simple
 
 		if ($prefs['feature_jison_wiki_parser'] == 'y') {
-			global $wysiwyglib; include_once('lib/ckeditor_tiki/wysiwyglib.php');
-			$html .= $wysiwyglib->setUpJisonEditor($params['_is_html'], $as_id, $params, $auto_save_referrer);
+			global $wysiwyglib; include_once('lib/aloha-editor_tiki/wysiwyglib.php');
+			$html .= $wysiwyglib->setUpEditor($params['_is_html'], $as_id, $params, $auto_save_referrer);
 			$html .= '<input name="jisonWyisywg" type="hidden" value="true" />';
 			$html .= '<div class="wikiedit ui-widget-content" name="'.$params['name'].'" id="'.$as_id.'">' . ($content) . '</div>';
 		} else {
