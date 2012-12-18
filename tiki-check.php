@@ -13,8 +13,6 @@ if (file_exists('./db/local.php') && file_exists('./templates/tiki-check.tpl')) 
 	require_once ('tiki-setup.php');
 	$access->check_permission('tiki_p_admin');
 } else {
-	require_once('lib/init/initlib.php');
-	
 	$standalone = true;
 
     /**
@@ -1157,10 +1155,10 @@ if ( function_exists('apache_get_version')) {
 // IIS Properties
 $iis_properties = false;
 
-if (TikiInit::isIIS()) {
+if (check_isIIS()) {
 
 	// IIS Rewrite module
-	if (TikiInit::hasIIS_UrlRewriteModule()) {
+	if (check_hasIIS_UrlRewriteModule()) {
 		$iis_properties['IIS Url Rewrite Module'] = array(
 			'fitness' => tra('good'),
 			'setting' => 'Available',
@@ -1492,3 +1490,17 @@ if ($standalone) {
 	$smarty->display('tiki.tpl');
 }
 
+function check_isIIS()
+{
+	static $IIS;
+	// Sample value Microsoft-IIS/7.5
+	if (!isset($IIS) && isset($_SERVER['SERVER_SOFTWARE'])) {
+		$IIS = substr($_SERVER['SERVER_SOFTWARE'], 0, 13) == 'Microsoft-IIS';
+	}
+	return $IIS;
+}
+
+function check_hasIIS_UrlRewriteModule()
+{
+	return isset($_SERVER['IIS_UrlRewriteModule']) == true;
+}
