@@ -13,6 +13,8 @@ if (file_exists('./db/local.php') && file_exists('./templates/tiki-check.tpl')) 
 	require_once ('tiki-setup.php');
 	$access->check_permission('tiki_p_admin');
 } else {
+	require_once('lib/init/initlib.php');
+	
 	$standalone = true;
 
     /**
