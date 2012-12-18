@@ -104,8 +104,6 @@
 				{preference name=unsuccessful_logins}
 				{preference name=unsuccessful_logins_invalid}
 				{preference name=eponymousGroups}
-				{preference name=syncGroupsWithDirectory}
-				{preference name=syncUsersWithDirectory}
 				{preference name=desactive_login_autocomplete}
 				{preference name=feature_challenge}
 
@@ -255,6 +253,7 @@
 				{preference name=auth_ldap_group_userattr}
 				{preference name=auth_ldap_group_corr_userattr}
 				{preference name=auth_ldap_group_useroc}
+				{preference name=syncGroupsWithDirectory}
 			</fieldset>
 
 			<fieldset>
@@ -263,6 +262,7 @@
 				{preference name=auth_ldap_groupattr}
 				{preference name=auth_ldap_groupdescattr}
 				{preference name=auth_ldap_groupoc}
+				{preference name=syncUsersWithDirectory}
 			</fieldset>
 
 			<fieldset>
