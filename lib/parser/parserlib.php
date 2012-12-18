@@ -1072,16 +1072,6 @@ if ( \$('#$id') ) {
 			}
 		}
 
-		/*There was one extra html encode happening going to textarea, decoding it too early would lead to the plugin
-		not being detected, this fixes the over-encoded plugin body
-		*/
-		if (isset($_REQUEST['command']) && $_REQUEST['command'] == 'toHtmlFormat') {
-			$plugin_result = htmlspecialchars_decode(str_replace(array('"&quot;','&quot;"'), '"', $plugin_result));
-			$ck_editor_plugin = htmlspecialchars_decode(str_replace(array('"&quot;','&quot;"'), '"', $ck_editor_plugin));
-			$arg_str = str_replace(array('"&quot;','&quot;"'), '"', $arg_str);
-			$data = htmlspecialchars_decode(str_replace(array('"&quot;','&quot;"'), '"', $data));
-		}
-
 		$ret = '~np~<'.$elem.' class="tiki_plugin" plugin="' . $name . '" style="' . $elem_style . '"' .
 				' syntax="' . htmlentities($ck_editor_plugin, ENT_QUOTES, 'UTF-8') . '"' .
 				' args="' . htmlentities($arg_str, ENT_QUOTES, 'UTF-8') . '"' .
