@@ -254,8 +254,8 @@
 	{/if}
 
 	<div class="importFromExport">
-		<h2>{tr}Import From Export{/tr}</h2>
-		<h4>{tr}Import from CSV{/tr}</h4>
+		<h2>{tr}Import{/tr}</h2>
+		<h4>{tr}Import Structure{/tr}</h4>
 		<form class="simple" method="post" action="{service controller=tracker action=import}">
 			<label>
 				{tr}Raw data{/tr}
@@ -265,6 +265,7 @@
 				<input type="checkbox" name="preserve" value="1"/>
 				{tr}Preserve tracker ID{/tr}
 			</label>
+			{remarksbox close='n' title='{tr}Note{/tr}'}{tr}Use "Tracker -> Export -> Structure" to produce this data.{/tr}{/remarksbox}
 			<div class="submit">
 				<input type="submit" value="{tr}Import{/tr}"/>
 			</div>

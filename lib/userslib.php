@@ -1490,7 +1490,7 @@ class UsersLib extends TikiLib
 			$current = 0;
 		}
 
-		if ( $prefs['syncGroupsWithDirectory'] == 'y' || $prefs['syncUsersWithDirectory'] == 'y' ) {
+		if ( $prefs['auth_method'] === 'ldap' && ($prefs['syncGroupsWithDirectory'] == 'y' || $prefs['syncUsersWithDirectory'] == 'y' )) {
 			$ret &= $this->ldap_sync_user_and_groups($user, $pass);
 		}
 
