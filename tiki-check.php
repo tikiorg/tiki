@@ -1432,8 +1432,6 @@ if ($standalone) {
 	renderTable($server_information);
 	echo '<h2>Server Properties</h2>';
 	renderTable($server_properties);
-	echo '<h2>PHP scripting language properties</h2>';
-	renderTable($php_properties);
 	echo '<h2>Apache properties</h2>';
 	if ($apache_properties) {
 		renderTable($apache_properties);
@@ -1457,6 +1455,8 @@ if ($standalone) {
 	} else {
 		echo "You are not running IIS web server.";
 	}
+	echo '<h2>PHP scripting language properties</h2>';
+	renderTable($php_properties);
 	echo '<h2>PHP security properties</h2>';
 	renderTable($security);
 	echo '<h2>MySQL Variables</h2>';
