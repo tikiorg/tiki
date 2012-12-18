@@ -1451,6 +1451,12 @@ if ($standalone) {
 	} else {
 		echo 'You are either not running the preferred Apache web server or you are running PHP with a SAPI that does not allow checking Apache properties (e.g. CGI or FPM).';
 	}
+	echo '<h2>IIS properties</h2>';
+	if ($iis_properties) {
+		renderTable($iis_properties);
+	} else {
+		echo "You are not running IIS web server.";
+	}
 	echo '<h2>PHP security properties</h2>';
 	renderTable($security);
 	echo '<h2>MySQL Variables</h2>';
