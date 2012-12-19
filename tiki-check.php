@@ -4,7 +4,13 @@
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
-
+/*
+About the design:
+tiki-check.php is designed to run in 2 modes
+1) Regular mode. From inside TikiWiki, in Admin | General
+2) Stand-alone mode. Used to check a server pre-Tiki installation, by copying (only) tiki-check.php onto the server and pointing your browser to it.
+tiki-check.php should not crash but rather avoid running tests which lead to tiki-check crashes.
+*/
 if (file_exists('./db/local.php') && file_exists('./templates/tiki-check.tpl')) {
 	$standalone = false;
 	require_once ('tiki-setup.php');
