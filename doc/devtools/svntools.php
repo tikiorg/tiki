@@ -1,12 +1,13 @@
 <?php
 // (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 define('SVN_MIN_VERSION', 1.3);
-define('TIKISVN', 'https://tikiwiki.svn.sourceforge.net/svnroot/tikiwiki');
+#define('TIKISVN', 'https://tikiwiki.svn.sourceforge.net/svnroot/tikiwiki');
+define('TIKISVN', 'https://svn.code.sf.net/p/tikiwiki/code');
 
 function full($relative)
 {
@@ -34,7 +35,7 @@ function color($string, $color)
 }
 
 function error($message)
-{ 
+{
 	die(color($message, 'red') . "\n");
 }
 
@@ -73,7 +74,7 @@ function is_valid_merge_source($destination, $source)
 
 	if (is_experimental($destination))
 		return is_trunk($source);
-	
+
 	return false;
 }
 
@@ -107,10 +108,10 @@ function update_working_copy($localPath)
 function has_uncommited_changes($localPath)
 {
 	$localPath = escapeshellarg($localPath);
-	
+
 	$dom = new DOMDocument;
 	$dom->loadXML(`svn status --xml $localPath`);
-	
+
 	$xp = new DOMXPath($dom);
 	$count = $xp->query("/status/target/entry/wc-status[@item = 'added' or @item = 'conflicted' or @item = 'deleted' or @item = 'modified' or @item = 'replaced']");
 
@@ -120,10 +121,10 @@ function has_uncommited_changes($localPath)
 function get_conflicts($localPath)
 {
 	$localPath = escapeshellarg($localPath);
-	
+
 	$dom = new DOMDocument;
 	$dom->loadXML(`svn status --xml $localPath`);
-	
+
 	$xp = new DOMXPath($dom);
 	$list = $xp->query("/status/target/entry/wc-status[@item = 'conflicted']");
 
@@ -134,7 +135,7 @@ function find_last_merge($path, $source)
 {
 	$short = preg_quote(short($source), '/');
 	$pattern = "/^\\[(MRG|BRANCH)\\].*$short'?\s+\d+\s+to\s+(\d+)/";
-		
+
 	$descriptorspec = array(
 		0 => array('pipe', 'r'),
 		1 => array('pipe', 'w'),
