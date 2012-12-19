@@ -1,4 +1,7 @@
 <?php
+/**
+ * @package tikiwiki
+ */
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
 //
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -18,12 +21,19 @@ if (file_exists('./db/local.php') && file_exists('./templates/tiki-check.tpl')) 
 } else {
 	$standalone = true;
 
-	function tra($string)
+    /**
+     * @param $string
+     * @return mixed
+     */
+    function tra($string)
 	{
 		return $string;
 	}
 
-	function renderTable($var)
+    /**
+     * @param $var
+     */
+    function renderTable($var)
 	{
 		if (is_array($var)) {
 			echo '<table style="border:2px solid grey;">';
@@ -181,7 +191,12 @@ DBC;
 			case 'PDO':
 				// We don't do exception handling here to be PHP 4 compatible
 				$connection = new PDO('mysql:host='.$_POST['dbhost'], $_POST['dbuser'], $_POST['dbpass']);
-				function query($query, $connection)
+                /**
+                 * @param $query
+                 * @param $connection
+                 * @return mixed
+                 */
+                function query($query, $connection)
 				{
 					$result = $connection->query($query);
 					$return = $result->fetchAll();
@@ -196,7 +211,12 @@ DBC;
 					$connection = false;
 					echo 'Couldn\'t connect to database: '.$error;
 				}
-				function query($query, $connection)
+                /**
+                 * @param $query
+                 * @param $connection
+                 * @return array
+                 */
+                function query($query, $connection)
 				{
 					$result = $connection->query($query);
 					$return = array();
@@ -211,7 +231,12 @@ DBC;
 				if ( $connection === false ) {
 					echo 'Cannot connect to MySQL. Wrong credentials?';
 				}
-				function query($query, $connection = '')
+                /**
+                 * @param $query
+                 * @param string $connection
+                 * @return array
+                 */
+                function query($query, $connection = '')
 				{
 					$result = mysql_query($query);
 					$return = array();
@@ -224,7 +249,11 @@ DBC;
 		}
 	}
 } else {
-	function query($query)
+    /**
+     * @param $query
+     * @return array
+     */
+    function query($query)
 	{
 		global $tikilib;
 		$result = $tikilib->query($query);
@@ -803,8 +832,8 @@ if ($s) {
 	);
 }
 
-/* 
-*	If TortoiseSVN 1.7 is used, it uses an sqlite database to store the SVN info. sqlite3 extention needed to read svn info. 
+/*
+*	If TortoiseSVN 1.7 is used, it uses an sqlite database to store the SVN info. sqlite3 extention needed to read svn info.
 */
 if (is_file('.svn/wc.db')) {
 	// It's an TortoiseSVN 1.7+ installation
@@ -1111,7 +1140,7 @@ if ( function_exists('apache_get_version')) {
 	}
 
 	// Get /server-info, if available
-	if (function_exists('curl_init')) {
+	if (function_exists('curl_init') && function_exists('curl_exec')) {
 		$curl = curl_init();
 		curl_setopt($curl, CURLOPT_URL, 'http://localhost/server-info');
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
@@ -1127,6 +1156,30 @@ if ( function_exists('apache_get_version')) {
 		$apache_server_info = 'nocurl';
 	}
 }
+
+
+// IIS Properties
+$iis_properties = false;
+
+if (check_isIIS()) {
+
+	// IIS Rewrite module
+	if (check_hasIIS_UrlRewriteModule()) {
+		$iis_properties['IIS Url Rewrite Module'] = array(
+			'fitness' => tra('good'),
+			'setting' => 'Available',
+			'message' => tra('The URL Rewrite Module is required to use SEFURL on IIS.')
+			);
+	} else {
+		$iis_properties['IIS Url Rewrite Module'] = array(
+			'fitness' => tra('bad'),
+			'setting' => 'Not Available',
+			'message' => tra('The URL Rewrite Module is required to use SEFURL on IIS.')
+			);
+	}
+}
+
+
 
 // Security Checks
 // get all dangerous php settings and check them
@@ -1165,6 +1218,16 @@ if ($s) {
 	);
 }
 
+// Determine system state
+$pdf_webkit = '';
+if (isset($prefs) && $prefs['print_pdf_from_url'] == 'webkit') {
+	$pdf_webkit = '<b>'.tra('WebKit is enabled').'.</b> ';
+}
+$feature_blogs = '';
+if (isset($prefs) && $prefs['feature_blogs'] == 'y') {
+	$feature_blogs = '<b>'.tra('Blogs is enabled').'.</b> ';
+}
+
 $fcts = array(
 		array (
 			'function' => 'exec',
@@ -1178,8 +1241,8 @@ $fcts = array(
 		),
 		array (
 			'function' => 'shell_exec',
-			'risky' => tra('Shell_exec is similar to exec.').' '.tra('Tiki does not need it, you may want to disable it.'),
-			'safe' =>  tra('Shell_exec is similar to exec.').' '.tra('Tiki does not need it, you are wise to have it disabled.')
+			'risky' => tra('Shell_exec is similar to exec.').' '.tra('Tiki needs it to run PDF from URL: WebKit(wkhtmltopdf). '.$pdf_webkit.'If you need this and trust the other PHP software on your server, you should enable it.'),
+			'safe' =>  tra('Shell_exec is similar to exec.').' '.tra('Tiki needs it to run PDF from URL: WebKit(wkhtmltopdf). '.$pdf_webkit.'If you need this and trust the other PHP software on your server, you should enable it.')
 		),
 		array (
 			'function' => 'system',
@@ -1265,13 +1328,13 @@ if ($s == 1) {
 	$security['allow_url_fopen'] = array(
 		'setting' => 'Enabled',
 		'fitness' => tra('risky'),
-		'message' => tra('allow_url_fopen may potentially be used to upload remote data or scripts. If you dont use the blog feature, you can switch it off.')
+		'message' => tra('allow_url_fopen may potentially be used to upload remote data or scripts. '.$feature_blogs.'If you dont use the blog feature, you can switch it off.')
 	);
 } else {
 	$security['allow_url_fopen'] = array(
 		'setting' => 'Disabled',
 		'fitness' => tra('safe'),
-		'message' => tra('allow_url_fopen may potentially be used to upload remote data or scripts. If you dont use the blog feature, you can switch it off.')
+		'message' => tra('allow_url_fopen may potentially be used to upload remote data or scripts. '.$feature_blogs.'If you dont use the blog feature, you can switch it off.')
 	);
 }
 
@@ -1354,13 +1417,19 @@ if ($standalone) {
 			echo '<p><label for="e-mail">e-mail address to send test mail to</label>: <input type="text" id="email_test_to" name="email_test_to" /></p>';
 			echo '<p><input type="submit" value=" Send e-mail " /></p>';
 			echo '<p><input type="hidden" id="dbhost" name="dbhost" value="';
-				if (isset($_POST['dbhost'])) { echo $_POST['dbhost']; };
+				if (isset($_POST['dbhost'])) {
+					echo $_POST['dbhost'];
+				};
 			echo '" /></p>';
 			echo '<p><input type="hidden" id="dbuser" name="dbuser" value="';
-				if (isset($_POST['dbuser'])) { echo $_POST['dbuser']; };
+				if (isset($_POST['dbuser'])) {
+					echo $_POST['dbuser'];
+				};
 			echo '"/></p>';
 			echo '<p><input type="hidden" id="dbpass" name="dbpass" value="';
-				if (isset($_POST['dbpass'])) { echo $_POST['dbpass']; };
+				if (isset($_POST['dbpass'])) {
+					echo $_POST['dbpass'];
+				};
 			echo '"/></p>';
 		echo '</form>';
 	}
@@ -1385,6 +1454,12 @@ if ($standalone) {
 		}
 	} else {
 		echo 'You are either not running the preferred Apache web server or you are running PHP with a SAPI that does not allow checking Apache properties (e.g. CGI or FPM).';
+	}
+	echo '<h2>IIS properties</h2>';
+	if ($iis_properties) {
+		renderTable($iis_properties);
+	} else {
+		echo "You are not running IIS web server.";
 	}
 	echo '<h2>PHP scripting language properties</h2>';
 	renderTable($php_properties);
@@ -1413,6 +1488,11 @@ if ($standalone) {
 	} else {
 		$smarty->assign('no_apache_properties', 'You are either not running the preferred Apache web server or you are running PHP with a SAPI that does not allow checking Apache properties (e.g. CGI or FPM).');
 	}
+	if ($iis_properties) {
+		$smarty->assign_by_ref('iis_properties', $iis_properties);
+	} else {
+		$smarty->assign('no_iis_properties', 'You are not running IIS web server.');
+	}
 	$smarty->assign_by_ref('security', $security);
 	$smarty->assign_by_ref('mysql_variables', $mysql_variables);
 	$smarty->assign_by_ref('mysql_crashed_tables', $mysql_crashed_tables);
@@ -1422,3 +1502,17 @@ if ($standalone) {
 	$smarty->display('tiki.tpl');
 }
 
+function check_isIIS()
+{
+	static $IIS;
+	// Sample value Microsoft-IIS/7.5
+	if (!isset($IIS) && isset($_SERVER['SERVER_SOFTWARE'])) {
+		$IIS = substr($_SERVER['SERVER_SOFTWARE'], 0, 13) == 'Microsoft-IIS';
+	}
+	return $IIS;
+}
+
+function check_hasIIS_UrlRewriteModule()
+{
+	return isset($_SERVER['IIS_UrlRewriteModule']) == true;
+}
