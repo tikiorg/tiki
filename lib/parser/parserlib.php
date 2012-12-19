@@ -1011,6 +1011,9 @@ if ( \$('#$id') ) {
 					$ck_editor_plugin .= $argKey.'="'.implode($sep, $argValue).'" ';	// process array
 					$arg_str .= $argKey.'='.implode($sep, $argValue).'&';
 				} else {
+					if ($name === 'module') {	// failsafe double-quote prevention for module plugin
+						$argValue =  preg_replace('/^&quot;(.*)&quot;$/', '$1', $argValue);
+					}
 					$ck_editor_plugin .= $argKey.'="'.$argValue.'" ';
 					$arg_str .= $argKey.'='.$argValue.'&';
 				}
@@ -1039,7 +1042,7 @@ if ( \$('#$id') ) {
 		$icon = isset($info['icon']) ? $info['icon'] : 'img/icons/wiki_plugin_edit.png';
 
 		// some plugins are just too flakey to do wysiwyg, so show the "source" for them ;(
-		if (in_array($name, array('trackerlist', 'trackerfilter', 'kaltura', 'toc', 'freetagged', 'draw', 'googlemap', 'include', 'module'))) {
+		if (in_array($name, array('tracker', 'trackerlist', 'trackerfilter', 'kaltura', 'toc', 'freetagged', 'draw', 'googlemap', 'include', 'module'))) {
 			$plugin_result = '&nbsp;&nbsp;&nbsp;&nbsp;' . $ck_editor_plugin;
 		} else {
 			// Tiki 7+ adds ~np~ to plugin output so remove them
@@ -1070,16 +1073,6 @@ if ( \$('#$id') ) {
 			if (count($m)) {
 				$elem_style .= $m[1];
 			}
-		}
-
-		/*There was one extra html encode happening going to textarea, decoding it too early would lead to the plugin
-		not being detected, this fixes the over-encoded plugin body
-		*/
-		if (isset($_REQUEST['command']) && $_REQUEST['command'] == 'toHtmlFormat') {
-			$plugin_result = htmlspecialchars_decode(str_replace(array('"&quot;','&quot;"'), '"', $plugin_result));
-			$ck_editor_plugin = htmlspecialchars_decode(str_replace(array('"&quot;','&quot;"'), '"', $ck_editor_plugin));
-			$arg_str = str_replace(array('"&quot;','&quot;"'), '"', $arg_str);
-			$data = htmlspecialchars_decode(str_replace(array('"&quot;','&quot;"'), '"', $data));
 		}
 
 		$ret = '~np~<'.$elem.' class="tiki_plugin" plugin="' . $name . '" style="' . $elem_style . '"' .

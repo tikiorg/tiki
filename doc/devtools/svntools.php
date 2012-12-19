@@ -6,7 +6,6 @@
 // $Id$
 
 define('SVN_MIN_VERSION', 1.3);
-#define('TIKISVN', 'https://tikiwiki.svn.sourceforge.net/svnroot/tikiwiki');
 define('TIKISVN', 'https://svn.code.sf.net/p/tikiwiki/code');
 
 /**

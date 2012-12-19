@@ -17,7 +17,7 @@
 # ==========================================================================
 #
 
-SVNROOT="https://svn.code.sf.net/p/tikiwiki/code"
+SVNROOT="http://svn.code.sf.net/p/tikiwiki/code"
 WORKDIR="$HOME/tikipack"
 MODULE="tiki"
 
