@@ -16,12 +16,12 @@ if (!isset($_REQUEST['printpages']) && !isset($_REQUEST['printstructures'])) {
 	die;
 } else {
 	if (isset($_REQUEST['printpages'])) {
-		$printpages = TikiLib::tiki_unserialize(urldecode($_REQUEST['printpages']));
+		$printpages = json_decode(urldecode($_REQUEST['printpages']));
 	} else {
 		$printpages = array();
 	}
 	if (isset($_REQUEST['printstructures'])) {
-		$printstructures = TikiLib::tiki_unserialize(urldecode($_REQUEST['printstructures']));
+		$printstructures = json_decode(urldecode($_REQUEST['printstructures']));
 	} else {
 		$printstructures = array();
 	}
