@@ -74,6 +74,11 @@
 			<div class="adminoptionboxchild" id="forum_list_desc_childcontainer">
 				{preference name=forum_list_description_len}
 			</div>
+
+			{preference name=forum_category_selector_in_list}
+			<div class="adminoptionboxchild" id="forum_category_selector_in_list_childcontainer">
+				{preference name=forum_available_categories}
+			</div>
 		{/tab}
 	{/tabset}
 	<div class="heading input_submit_container" style="text-align: center">

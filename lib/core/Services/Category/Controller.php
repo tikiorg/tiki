@@ -78,6 +78,43 @@ class Services_Category_Controller
 		}
 	}
 
+	function action_select($input)
+	{
+		$categlib = TikiLib::lib('categ');
+		$objectlib = TikiLib::lib('object');
+		$smarty = TikiLib::lib('smarty');
+
+		$type = $input->type->text();
+		$object = $input->object->text();
+
+		$perms = Perms::get($type, $object);
+		if (! $perms->modify_object_categories) {
+			throw new Services_Exception_Denied('Not allowed to modify categories');
+		}
+
+		$input->replaceFilter('subset', 'int');
+		$subset = $input->asArray('subset', ',');
+
+		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+			$smarty->loadPlugin('smarty_modifier_sefurl');
+			$name = $objectlib->get_title($type, $object);
+			$url = smarty_modifier_sefurl($object, $type);
+			$targetCategories = (array) $input->categories->int();
+			$count = $categlib->update_object_categories($targetCategories, $object, $type, '', $name, $url, $subset, false);
+		}
+
+		$categories = $categlib->get_object_categories($type, $object);
+		return array(
+			'subset' => implode(',', $subset),
+			'categories' => array_combine($subset, array_map(function ($categId) use ($categories) {
+				return array(
+					'name' => TikiLib::lib('object')->get_title('category', $categId),
+					'selected' => in_array($categId, $categories),
+				);
+			}, $subset)),
+		);
+	}
+
 	private function processObjects($function, $categId, $objects)
 	{
 		$unifiedsearchlib = TikiLib::lib('unifiedsearch');

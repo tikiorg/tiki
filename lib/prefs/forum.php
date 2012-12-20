@@ -31,8 +31,8 @@ function prefs_forum_list()
 			'default' => 'y',
 		),
 		'forum_thread_user_settings_threshold' => array(
-                        'name' => tra('Display thread configuration bar only when number of posts exceed'),
-                        'type' => 'text',
+			'name' => tra('Display thread configuration bar only when number of posts exceed'),
+			'type' => 'text',
 			'size' => '5',
 			'filter' => 'digit',
 			'default' => 10,
@@ -119,6 +119,22 @@ function prefs_forum_list()
 			'description' => tra('Shows a blank title box and requires it to be filled before submission of forum post.'),
 			'type' => 'flag',
 			'default' => 'n',
+		),
+		'forum_available_categories' => array(
+			'name' => tr('Forum post categories'),
+			'description' => tr('Categories available in the category picker for forum posts.'),
+			'type' => 'text',
+			'separator' => ',',
+			'filter' => 'digits',
+			'default' => array(),
+			'dependencies' => array('feature_categories'),
+		),
+		'forum_category_selector_in_list' => array(
+			'name' => tr('Include category selector in forum list'),
+			'description' => tr("Include a drop list in the forum list to select the post's category."),
+			'type' => 'flag',
+			'default' => 'n',
+			'dependencies' => array('feature_categories'),
 		),
 	);
 }
