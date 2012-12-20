@@ -10,7 +10,7 @@
 /*
 About the design:
 tiki-check.php is designed to run in 2 modes
-1) Regular mode. From inside TikiWiki, in Admin | General
+1) Regular mode. From inside Tiki, in Admin | General
 2) Stand-alone mode. Used to check a server pre-Tiki installation, by copying (only) tiki-check.php onto the server and pointing your browser to it.
 tiki-check.php should not crash but rather avoid running tests which lead to tiki-check crashes.
 */
@@ -1083,7 +1083,7 @@ if ( function_exists('apache_get_version')) {
 			$apache_properties['RewriteBase'] = array(
 				'setting' => $rewritebase,
 				'fitness' => tra('info') ,
-				'message' => tra('You haven\'t activated .htaccess. So this check is useless. If you want to use Search Engine Friendly URLs, you will have to activate .htaccess by copying _htaccess into its place. Then come back to have a look at this check again.')
+				'message' => tra('You haven\'t activated .htaccess. So this check is useless. If you want to use Search Engine Friendly URLs, you will have to activate .htaccess by copying _htaccess into its place (or a symlink if supported by your Operating System). Then come back to have a look at this check again.')
 			);
 		}
 	}
