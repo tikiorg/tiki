@@ -1,13 +1,13 @@
 #!/bin/sh -x
 # (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
-# 
+#
 # All Rights Reserved. See copyright.txt for details and a complete list of authors.
 # Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 # $Id$
 
 #
 # This script does an export of a given subversion tree and creates a set of
-# release packages that can be uploaded to SourceForge and installed by end 
+# release packages that can be uploaded to SourceForge and installed by end
 # users.
 
 # ==========================================================================
@@ -17,7 +17,7 @@
 # ==========================================================================
 #
 
-SVNROOT="https://tikiwiki.svn.sourceforge.net/svnroot/tikiwiki"
+SVNROOT="http://svn.code.sf.net/p/tikiwiki/code"
 WORKDIR="$HOME/tikipack"
 MODULE="tiki"
 
