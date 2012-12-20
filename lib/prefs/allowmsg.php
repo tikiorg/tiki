@@ -10,7 +10,7 @@ function prefs_allowmsg_list()
 	return array(
 		'allowmsg_by_default' => array(
 			'name' => tra('Users accept internal messages by default'),
-			'description' => tra('Users accept internal messages by default'),
+			'description' => tra('if set, Users accept internal messages by default'),
 			'type' => 'flag',
 			'dependencies' => array(
 				'feature_messages',
@@ -19,7 +19,7 @@ function prefs_allowmsg_list()
 		),
 		'allowmsg_is_optional' => array(
 			'name' => tra('Users can opt-out of internal messages'),
-			'description' => tra('Users can opt-out of internal messages'),
+			'description' => tra('if set, Users can opt-out of internal messages'),
 			'type' => 'flag',
 			'dependencies' => array(
 				'feature_messages',

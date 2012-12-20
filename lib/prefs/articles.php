@@ -10,6 +10,7 @@ function prefs_articles_list()
 	return array(
 		'articles_feature_copyrights' => array(
 			'name' => tra('Articles'),
+            'description' => tra('allows you to add copyright information for articles'),
 			'type' => 'flag',
 			'dependencies' => array(
 				'feature_articles',
