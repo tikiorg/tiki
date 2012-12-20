@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -176,7 +176,7 @@ if (isset($_REQUEST['group'])) {
 	foreach($groups['data'] as $grp) {
 		if ($grp['groupName'] == $_REQUEST['group']) {
 			$grp_id = $grp['id'];
-			break; 
+			break;
 		}
 	}
 	if ($grp_id > 0 && !in_array($grp_id, $group_filter)) {
@@ -199,7 +199,7 @@ if (isset($_REQUEST['assign']) && !isset($_REQUEST['quick_perms'])) {
 			}
 		}
 	}
-	
+
 	$newPermissions = get_assign_permissions();
 	$permissionApplier->apply( $newPermissions );
 	if (isset($_REQUEST['group'])) {
@@ -217,18 +217,21 @@ if (isset($_REQUEST['remove'])) {
 if (isset($_REQUEST['copy'])) {
 	$newPermissions = get_assign_permissions();
 	$to_copy = array('perms' => $newPermissions->getPermissionArray(), 'object' => $_REQUEST['objectId'], 'type' => $_REQUEST['objectType']);
-	$_SESSION['perms_clipboard'] = serialize($to_copy);
+	$_SESSION['perms_clipboard'] = $to_copy;
 }
 
 if (!empty($_SESSION['perms_clipboard'])) {
-	$perms_clipboard = unserialize($_SESSION['perms_clipboard']);
-	$smarty->assign('perms_clipboard_source', $perms_clipboard['type'] . (empty($perms_clipboard['object']) ? '' : ' : ') . $perms_clipboard['object']);
+	$perms_clipboard = $_SESSION['perms_clipboard'];
+	$smarty->assign(
+		'perms_clipboard_source',
+		$perms_clipboard['type'] . (empty($perms_clipboard['object']) ? '' : ' : ') . $perms_clipboard['object']
+	);
 
 	if (isset($_REQUEST['paste'])) {
 		unset($_SESSION['perms_clipboard']);
-		
+
 		$set = new Perms_Reflection_PermissionSet;
-	
+
 		if( isset( $perms_clipboard['perms'] ) ) {
 			foreach( $perms_clipboard['perms'] as $group => $gperms ) {
 				foreach( $gperms as $perm ) {
@@ -279,9 +282,9 @@ if( $prefs['feature_quick_object_perms'] == 'y' ) {
 
 	if (isset($_REQUEST['assign']) && isset($_REQUEST['quick_perms'])) {
 		check_ticket('object-perms');
-	
+
 		$groups = $userlib->get_groups(0, -1, 'groupName_asc', '', '', 'n');
-	
+
 		$userInput = array();
 		foreach($groups['data'] as $group) {
 			if(isset($_REQUEST["perm_".$group['groupName']])) {
@@ -305,7 +308,7 @@ if( $prefs['feature_quick_object_perms'] == 'y' ) {
 	}
 
 	$map = $quickperms->getAppliedPermissions( $displayedPermissions, $groupNames );
-		
+
 	foreach($groups['data'] as $key=>$group) {
 		$groups['data'][$key]['groupSumm'] = $map[ $group['groupName'] ];
 	}
@@ -327,9 +330,9 @@ foreach($groups['data'] as &$row) {
 		$permGroups[] = 'perm['.$row['groupName'].']';
 		$groupInheritance[] = $userlib->get_included_groups($row['groupName']);
 		$inh = $userlib->get_included_groups($row['groupName']);
-	
+
 		$groupIndices[] = $row['groupName'] . '_hasPerm';
-		
+
 		$row['in_group_filter'] = 'y';
 	} else {
 		$row['in_group_filter'] = 'n';
@@ -385,7 +388,7 @@ foreach ($candidates['data'] as $perm) {
 		$perm[$groupName . '_hasPerm'] = $p;
 		$perm[$groupIndices[$index]] = $p;
 	}
-	
+
 	// work out if specific feature is on
 	$pref_feature = false;
 	if (isset($perm['feature_check'])) {
@@ -459,9 +462,9 @@ JS;
 			attr('checked',\$(this).attr('checked')).					// check and disable
 			attr('disabled',\$(this).attr('checked') ? 'disabled' : '');
 	}
-		
+
 	\$(this).change( function() {									// bind click event
-	
+
 		if (\$(this).attr('checked')) {
 			\$('input[value="'+\$(this).val()+'"]').			// same...
 				filter('$beneficiaries').
@@ -667,7 +670,7 @@ function get_displayed_permissions() {
 	$currentObject = $objectFactory->get( $_REQUEST['objectType'], $_REQUEST['objectId'] );
 	$displayedPermissions = $currentObject->getDirectPermissions();
 	$globPerms = $objectFactory->get( 'global', null )->getDirectPermissions();	// global perms
-	
+
 	$comparator = new Perms_Reflection_PermissionComparator( $displayedPermissions, new Perms_Reflection_PermissionSet );
 
 	$smarty->assign('permissions_displayed', 'direct');
