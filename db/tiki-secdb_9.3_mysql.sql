@@ -78,7 +78,6 @@ INSERT INTO `tiki_secdb` (`filename`, `md5_value`, `tiki_version`, `severity`) V
 INSERT INTO `tiki_secdb` (`filename`, `md5_value`, `tiki_version`, `severity`) VALUES('./db/tiki-db-adodb.php', '229aecefb4c7fdc1ae101bd8ee1d5b63', '9.3', 0);
 INSERT INTO `tiki_secdb` (`filename`, `md5_value`, `tiki_version`, `severity`) VALUES('./db/tiki-db-pdo.php', 'd18a70914d7c4207c53f5941eff5988d', '9.3', 0);
 INSERT INTO `tiki_secdb` (`filename`, `md5_value`, `tiki_version`, `severity`) VALUES('./db/tiki-db.php', 'a2f329245ca1fb12be2c5135da0d4a1e', '9.3', 0);
-INSERT INTO `tiki_secdb` (`filename`, `md5_value`, `tiki_version`, `severity`) VALUES('./db/tiki-secdb_9.2_mysql.sql', 'cee69e20afa1c058556dfb5044310a97', '9.3', 0);
 INSERT INTO `tiki_secdb` (`filename`, `md5_value`, `tiki_version`, `severity`) VALUES('./db/tiki-secdb_9.3_mysql.sql', 'd41d8cd98f00b204e9800998ecf8427e', '9.3', 0);
 INSERT INTO `tiki_secdb` (`filename`, `md5_value`, `tiki_version`, `severity`) VALUES('./db/tiki.sql', '86c76e9b783f8e5c53e60e9f7fa6db19', '9.3', 0);
 INSERT INTO `tiki_secdb` (`filename`, `md5_value`, `tiki_version`, `severity`) VALUES('./db/tiki_1.8to1.9.sql', 'af71d9c71066a5064df20d7f5860901d', '9.3', 0);
@@ -1635,7 +1634,7 @@ INSERT INTO `tiki_secdb` (`filename`, `md5_value`, `tiki_version`, `severity`) V
 INSERT INTO `tiki_secdb` (`filename`, `md5_value`, `tiki_version`, `severity`) VALUES('./lib/core/Tracker/Field/StaticText.php', '63bb595d8c41c7873646fdb1584dc1a6', '9.3', 0);
 INSERT INTO `tiki_secdb` (`filename`, `md5_value`, `tiki_version`, `severity`) VALUES('./lib/core/Tracker/Field/Synchronizable.php', '7ff599fe4cc65e9c71c0154b50a47ec8', '9.3', 0);
 INSERT INTO `tiki_secdb` (`filename`, `md5_value`, `tiki_version`, `severity`) VALUES('./lib/core/Tracker/Field/Text.php', '200638c45b7f8c13daa95ecec2f08a1d', '9.3', 0);
-INSERT INTO `tiki_secdb` (`filename`, `md5_value`, `tiki_version`, `severity`) VALUES('./lib/core/Tracker/Field/TextArea.php', '1bd68dd05474ec12986d1338e16d692f', '9.3', 0);
+INSERT INTO `tiki_secdb` (`filename`, `md5_value`, `tiki_version`, `severity`) VALUES('./lib/core/Tracker/Field/TextArea.php', 'b5be83c21708e727d09c75e25d5a33b2', '9.3', 0);
 INSERT INTO `tiki_secdb` (`filename`, `md5_value`, `tiki_version`, `severity`) VALUES('./lib/core/Tracker/Field/Url.php', 'ae04380b3d440659b5276f59443fd6a7', '9.3', 0);
 INSERT INTO `tiki_secdb` (`filename`, `md5_value`, `tiki_version`, `severity`) VALUES('./lib/core/Tracker/Field/UserGroups.php', 'bb1799d66dbb0ac98fcbe589f3871ad3', '9.3', 0);
 INSERT INTO `tiki_secdb` (`filename`, `md5_value`, `tiki_version`, `severity`) VALUES('./lib/core/Tracker/Field/UserPreference.php', 'bfb795a46075b2af3db332353a541c4a', '9.3', 0);
