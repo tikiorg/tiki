@@ -1,9 +1,9 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: wikiplugin_module.php 43760 2012-11-02 14:57:56Z lphuberdeau $
+// $Id$
 
 function wikiplugin_modulelist_info()
 {
@@ -35,8 +35,11 @@ function wikiplugin_modulelist($data, $params)
 	$smarty = TikiLib::lib('smarty');
 	$smarty->loadPlugin('smarty_function_modulelist');
 
-	return smarty_function_modulelist(array(
-		'zone' => $params['zone'],
-		'id' => $params['zone'] . '_plugin_modules',
-	), $smarty);
+	return smarty_function_modulelist(
+		array(
+			'zone' => $params['zone'],
+			'id' => $params['zone'] . '_plugin_modules',
+		),
+		$smarty
+	);
 }

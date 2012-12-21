@@ -541,13 +541,12 @@ switch($avoiding_name_collisions) {
 			}
 
 			//A non-valid html tag, return "<" put the rest back into the parser
-	        if (isset($yy_->yytext{0})) {
-	          $tag = $yy_->yytext;
-	          $yy_->yytext = $yy_->yytext{0};
-	          $this->unput(substr($tag, 1));
-	        }
-		       return 7;
-
+			if (isset($yy_->yytext{0})) {
+				$tag = $yy_->yytext;
+				$yy_->yytext = $yy_->yytext{0};
+				$this->unput(substr($tag, 1));
+			}
+			return 7;
 		break;
 	case 1:
 			//A tag that was left open, and needs to close

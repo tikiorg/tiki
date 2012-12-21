@@ -31,7 +31,8 @@ class ModLib extends TikiLib
 		'bottom' => 'bottom_modules',
 	);
 
-	function __construct() {
+	function __construct()
+	{
 		global $prefs;
 
 		if (! empty($prefs['module_zone_available_extra'])) {

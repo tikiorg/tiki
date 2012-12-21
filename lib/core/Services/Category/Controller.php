@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -106,12 +106,18 @@ class Services_Category_Controller
 		$categories = $categlib->get_object_categories($type, $object);
 		return array(
 			'subset' => implode(',', $subset),
-			'categories' => array_combine($subset, array_map(function ($categId) use ($categories) {
-				return array(
-					'name' => TikiLib::lib('object')->get_title('category', $categId),
-					'selected' => in_array($categId, $categories),
-				);
-			}, $subset)),
+			'categories' => array_combine(
+				$subset,
+				array_map(
+					function ($categId) use ($categories) {
+						return array(
+							'name' => TikiLib::lib('object')->get_title('category', $categId),
+							'selected' => in_array($categId, $categories),
+						);
+					},
+					$subset
+				)
+			),
 		);
 	}
 

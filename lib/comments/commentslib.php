@@ -493,7 +493,7 @@ class Comments extends TikiLib
 								$this->add_thread_attachment($forum_info, $threadid, $errors, $part_name, $part['type'], strlen($part['body']), 1, '', '', $part['body']);
 							} elseif ($part['disposition'] == 'inline') {
 								foreach ($part['parts'] as $p) {
-									$this->add_thread_attachment($forum_info, $threadid, $errors, '-', $p['type'], strlen($p['body']),	1, '', '', $p['body']);
+									$this->add_thread_attachment($forum_info, $threadid, $errors, '-', $p['type'], strlen($p['body']), 1, '', '', $p['body']);
 								}
 							}
 						}
@@ -3215,7 +3215,7 @@ class Comments extends TikiLib
 						$params['comment_topictype'],
 						$params['comment_topicsummary'],
 						$params['comment_topicsmiley'],
-						isset($params['contributions'])? $params['contributions']: '',	$params['anonymous_name']
+						isset($params['contributions']) ? $params['contributions']: '',	$params['anonymous_name']
 					);
 					// The thread *WAS* successfully created.
 

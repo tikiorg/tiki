@@ -388,7 +388,7 @@ class UsersLib extends TikiLib
 		// If preference login_multiple_forbidden is set, don't let user login if already logged in
 		if ($result == USER_VALID && $prefs['login_multiple_forbidden'] == 'y' && $user != 'admin' ) {
 			global $tikilib;
-			$tikilib->update_session() ;
+			$tikilib->update_session();
 			if ( $tikilib->is_user_online($user) ) {
 				$result = USER_ALREADY_LOGGED;
 			}

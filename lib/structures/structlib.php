@@ -388,7 +388,7 @@ class StructLib extends TikiLib
 	*/
 	public function get_structure_path($page_ref_id)
 	{
-		global $prefs;	
+		global $prefs;
 		$structure_path = array();
 		$page_info = $this->s_get_page_info($page_ref_id);
 		if ($page_info['parent_id']) {
@@ -1076,10 +1076,10 @@ class StructLib extends TikiLib
 					if (!in_array($word, $words)) {
 						$words[] = $word;
 						$index[$word]=Array();
-	      		}
+					}
 					if (!in_array($res['pageName'].'|'.$res['description'], $index[$word])) {
 						$index[$word][] = $res['pageName'].'|'.$res['description'];
-	      		}
+					}
 	    		}
 	  		}
 		}
@@ -1166,7 +1166,7 @@ class StructLib extends TikiLib
 				if (isset($name) && isset($link)) {
 					$pageName = $link;
 					$pages[] = $pageName;
-			   }
+				}
 				$pages2 = $this->traverse2($node);
 				foreach ($pages2 as $elem) {
 					$pages[] = $elem;

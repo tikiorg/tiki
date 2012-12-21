@@ -17,23 +17,34 @@ function smarty_function_categoryselector($params, $smarty)
 	$categories = $categlib->get_object_categories($params['type'], $params['object']);
 	$intersect = array_intersect($categories, $params['categories']);
 
-	$data = implode('', array_map(function ($categId) {
-		$objectlib = TikiLib::lib('object');
-		return '<div>' . htmlspecialchars($objectlib->get_title('category', $categId)) . '</div>';
-	}, $intersect));
+	$data = implode(
+		'',
+		array_map(
+			function ($categId) {
+				$objectlib = TikiLib::lib('object');
+				return '<div>' . htmlspecialchars($objectlib->get_title('category', $categId)) . '</div>';
+			},
+			$intersect
+		)
+	);
 
 	$servicelib = TikiLib::lib('service');
-	$url = $servicelib->getUrl(array(
-		'controller' => 'category',
-		'action' => 'select',
-		'type' => $params['type'],
-		'object' => $params['object'],
-		'subset' => implode(',', $params['categories']),
-	));
-	return new Tiki_Render_Editable($data, array(
-		'layout' => 'block',
-		'object_store_url' => $url,
-		'field_fetch_url' => $url,
-	));
+	$url = $servicelib->getUrl(
+		array(
+			'controller' => 'category',
+			'action' => 'select',
+			'type' => $params['type'],
+			'object' => $params['object'],
+			'subset' => implode(',', $params['categories']),
+		)
+	);
+	return new Tiki_Render_Editable(
+		$data,
+		array(
+			'layout' => 'block',
+			'object_store_url' => $url,
+			'field_fetch_url' => $url,
+		)
+	);
 }
 
