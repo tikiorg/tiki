@@ -27,7 +27,7 @@ class Tiki_Version_Version
 		if ($version instanceof self) {
 			return $version;
 		} else {
-			preg_match('/^(\d+)\.(\d+)?(\.([\d\.]+))?((alpha|beta|rc|pre)(\d*))?$/', $version, $parts);
+			preg_match('/^(\d+)\.(\d+)?(\.([\d\.]+))?((alpha|beta|rc|pre|svn)(\d*))?$/', $version, $parts);
 			for ($i = 0; 8 > $i; ++$i) {
 				if (! isset($parts[$i])) {
 					$parts[$i] = null;
