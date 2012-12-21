@@ -185,7 +185,7 @@ class TikiLib extends TikiDb_Bridge
 				global $geolib; require_once 'lib/geo/geolib.php';
 				return self::$libraries[$name] = $geolib;
 			case 'poll':
-				global $polllib; require_once 'lib/polllib.php';
+				global $polllib; require_once 'lib/polls/polllib.php';
 				return self::$libraries[$name] = $polllib;
 			case 'queue':
 				require_once 'lib/queuelib.php';
@@ -247,6 +247,9 @@ class TikiLib extends TikiDb_Bridge
 			case 'mod':
 				global $modlib; require_once 'lib/modules/modlib.php';
 				return self::$libraries[$name] = $modlib;
+			case 'usermodules':
+				global $usermoduleslib; require_once 'lib/usermodules/usermoduleslib.php';
+				return self::$libraries[$name] = $usermoduleslib;
 			case 'faq':
 				global $faqlib; require_once 'lib/faqs/faqlib.php';
 				return self::$libraries[$name] = $faqlib;
@@ -269,6 +272,12 @@ class TikiLib extends TikiDb_Bridge
 			case 'tcontrol':
 				global $tcontrollib; require_once 'lib/themecontrol/tcontrol.php';
 				return self::$libraries[$name] = $tcontrollib;
+			case 'dcs':
+				global $dcslib; require_once 'lib/dcs/dcslib.php';
+				return self::$libraries[$name] = $dcslib;
+			case 'banner':
+				global $bannerlib; require_once 'lib/banners/bannerlib.php';
+				return self::$libraries[$name] = $bannerlib;
 		}
 	}
 
@@ -6383,28 +6392,6 @@ JS;
     public static function rawurldecode($string)
 	{
 	   return TikiInit::to_utf8(rawurldecode($string));
-	}
-
-	/**
-	 * Test data before unserializing - thanks EgiX
-	 * and dcz (at) phpbb-seo (dot) com re: http://www.php.net/manual/en/function.unserialize.php#106411
-	 *
-	 * @param $data	string
-	 * @return bool|mixed
-	 */
-	public static function tiki_unserialize($data)
-	{
-		// unserialize will return false for object declared with O as well as if there is any ws between O and :
-		if (is_string($data) && strpos($data, "\0") === false) {
-			if (strpos($data, 'O:') === false) {
-				// the easy case, nothing to worry about, let unserialize do the job
-				return @unserialize($data);
-			} else if (!preg_match('/(^|;|{|})O:[0-9]+:"/', $data)) {
-				// in case we did have a string with O: in it, but it was not a true serialized object
-				return @unserialize($data);
-			}
-		}
-		return false;
 	}
 
 	/**

@@ -9,9 +9,9 @@
 // $Id$
 
 require_once ('tiki-setup.php');
-global $usermoduleslib;
-include_once ('lib/usermodules/usermoduleslib.php');
-global $smarty, $tiki_p_configure_modules, $prefs, $user;
+$usermoduleslib = TikiLib::lib('usermodules');
+$smarty = TikiLib::lib('smarty');
+global $tiki_p_configure_modules, $prefs, $user;
 $check_req = (isset($_REQUEST["mc_unassign"]) || isset($_REQUEST["mc_up"]) || isset($_REQUEST["mc_down"]) || isset($_REQUEST["mc_move"]));
 if ($tiki_p_configure_modules != 'y' && $check_req) {
 	$smarty->assign('errortype', 401);

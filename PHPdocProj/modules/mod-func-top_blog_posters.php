@@ -20,7 +20,12 @@ function module_top_blog_posters_info()
 		'name' => tra('Top Blog Posters'),
 		'description' => tra('Displays the specified number of users who posted to blogs, starting with the one having most posts.'),
 		'prefs' => array('feature_blogs'),
-		'params' => array(),
+		'params' => array(
+			'blogId' => array(
+				'name' => tra('Blog ID'),
+				'description' => tra('Limit to a blog')
+			)
+		),
 		'common_params' => array('nonums', 'rows')
 	);
 }
@@ -32,7 +37,10 @@ function module_top_blog_posters_info()
 function module_top_blog_posters($mod_reference, $module_params)
 {
 	global $smarty;
-	$bloggers =  TikiLib::lib('blog')->top_bloggers($mod_reference['rows']);
+	$cond = null;
+	if (!empty($module_params['blogId']))
+		$cond = $module_params['blogId'];
+	$bloggers =  TikiLib::lib('blog')->top_bloggers($mod_reference['rows'], $cond);
 
 	$smarty->assign_by_ref('modTopBloggers', $bloggers['data']);
 }

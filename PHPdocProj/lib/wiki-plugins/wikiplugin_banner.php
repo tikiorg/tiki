@@ -42,7 +42,7 @@ function wikiplugin_banner($data, $params)
 	if ($prefs['feature_banners'] != 'y') {
 		return;
 	}
-    global $bannerlib;include_once('lib/banners/bannerlib.php');
+    $bannerlib = TikiLib::lib('banner');
 
 	extract($params, EXTR_SKIP);
 		

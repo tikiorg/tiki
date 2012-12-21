@@ -474,6 +474,9 @@
 			{if $prefs.feature_multilingual eq 'y'}
 				<th>{tr}Language{/tr}</th>
 			{/if}
+			{if $prefs.forum_category_selector_in_list eq 'y'}
+				<th>{tr}Category{/tr}</th>
+			{/if}
 			<th>{tr}Actions{/tr}</th>
 		</tr>
 		
@@ -590,6 +593,10 @@
 					<td>
 						{$forum_info.forumLanguage}
 					</td>
+				{/if}
+
+				{if $prefs.forum_category_selector_in_list eq 'y'}
+					<td>{categoryselector type="forum post" object=$comments_coms[ix].threadId categories=$prefs.forum_available_categories}</td>
 				{/if}
 				
 				<td class="text" nowrap="nowrap">

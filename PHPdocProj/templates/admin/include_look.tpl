@@ -98,6 +98,7 @@
 					{preference name=module_zones_bottom}			
 				</fieldset>
 				{preference name=module_file}
+				{preference name=module_zone_available_extra}
 			</div>
 			
 			<div class="adminoptionbox">

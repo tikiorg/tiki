@@ -124,6 +124,8 @@ if ($prefs['feature_display_my_to_others'] == 'y') {
 		require_once('lib/blogs/bloglib.php');
 		$user_blogs = $bloglib->list_user_blogs($userwatch, false);
 		$smarty->assign_by_ref('user_blogs', $user_blogs);
+		$user_blog_posts = $bloglib->list_posts(0, -1, 'created_desc', '', -1, $userwatch);
+		$smarty->assign_by_ref('user_blog_posts', $user_blog_posts['data']);
 	}
 	if ($prefs['feature_galleries'] == 'y') {
 		$user_galleries = $tikilib->get_user_galleries($userwatch, -1);

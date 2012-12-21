@@ -676,5 +676,17 @@ function prefs_wiki_list($partial = false)
 			),
 			'default' => '',
 		),
+		'wiki_pagination' => array(
+			'name' => tr('Wiki Pagination'),
+			'description' => tr('Allows to separate a wiki page into a paginated page using a separator.'),
+			'type' => 'flag',
+			'default' => 'n',
+		),
+		'wiki_page_separator' => array(
+			'name' => tr('Wiki page separator'),
+			'description' => tr('Separator used within the content of a wiki page to split the content.'),
+			'type' => 'text',
+			'default' => '...page...',
+		),
 	);
 }

@@ -7,7 +7,13 @@
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
-
+/*
+About the design:
+tiki-check.php is designed to run in 2 modes
+1) Regular mode. From inside Tiki, in Admin | General
+2) Stand-alone mode. Used to check a server pre-Tiki installation, by copying (only) tiki-check.php onto the server and pointing your browser to it.
+tiki-check.php should not crash but rather avoid running tests which lead to tiki-check crashes.
+*/
 if (file_exists('./db/local.php') && file_exists('./templates/tiki-check.tpl')) {
 	$standalone = false;
 	require_once ('tiki-setup.php');
@@ -1077,7 +1083,7 @@ if ( function_exists('apache_get_version')) {
 			$apache_properties['RewriteBase'] = array(
 				'setting' => $rewritebase,
 				'fitness' => tra('info') ,
-				'message' => tra('You haven\'t activated .htaccess. So this check is useless. If you want to use Search Engine Friendly URLs, you will have to activate .htaccess by copying _htaccess into its place. Then come back to have a look at this check again.')
+				'message' => tra('You haven\'t activated .htaccess. So this check is useless. If you want to use Search Engine Friendly URLs, you will have to activate .htaccess by copying _htaccess into its place (or a symlink if supported by your Operating System). Then come back to have a look at this check again.')
 			);
 		}
 	}
@@ -1155,10 +1161,10 @@ if ( function_exists('apache_get_version')) {
 // IIS Properties
 $iis_properties = false;
 
-if (TikiInit::isIIS()) {
+if (check_isIIS()) {
 
 	// IIS Rewrite module
-	if (TikiInit::hasIIS_UrlRewriteModule()) {
+	if (check_hasIIS_UrlRewriteModule()) {
 		$iis_properties['IIS Url Rewrite Module'] = array(
 			'fitness' => tra('good'),
 			'setting' => 'Available',
@@ -1214,14 +1220,13 @@ if ($s) {
 
 // Determine system state
 $pdf_webkit = '';
-if ($prefs['print_pdf_from_url'] == 'webkit') {
+if (isset($prefs) && $prefs['print_pdf_from_url'] == 'webkit') {
 	$pdf_webkit = '<b>'.tra('WebKit is enabled').'.</b> ';
 }
 $feature_blogs = '';
-if ($prefs['feature_blogs'] == 'y') {
+if (isset($prefs) && $prefs['feature_blogs'] == 'y') {
 	$feature_blogs = '<b>'.tra('Blogs is enabled').'.</b> ';
 }
-
 
 $fcts = array(
 		array (
@@ -1433,8 +1438,6 @@ if ($standalone) {
 	renderTable($server_information);
 	echo '<h2>Server Properties</h2>';
 	renderTable($server_properties);
-	echo '<h2>PHP scripting language properties</h2>';
-	renderTable($php_properties);
 	echo '<h2>Apache properties</h2>';
 	if ($apache_properties) {
 		renderTable($apache_properties);
@@ -1452,6 +1455,14 @@ if ($standalone) {
 	} else {
 		echo 'You are either not running the preferred Apache web server or you are running PHP with a SAPI that does not allow checking Apache properties (e.g. CGI or FPM).';
 	}
+	echo '<h2>IIS properties</h2>';
+	if ($iis_properties) {
+		renderTable($iis_properties);
+	} else {
+		echo "You are not running IIS web server.";
+	}
+	echo '<h2>PHP scripting language properties</h2>';
+	renderTable($php_properties);
 	echo '<h2>PHP security properties</h2>';
 	renderTable($security);
 	echo '<h2>MySQL Variables</h2>';
@@ -1491,3 +1502,17 @@ if ($standalone) {
 	$smarty->display('tiki.tpl');
 }
 
+function check_isIIS()
+{
+	static $IIS;
+	// Sample value Microsoft-IIS/7.5
+	if (!isset($IIS) && isset($_SERVER['SERVER_SOFTWARE'])) {
+		$IIS = substr($_SERVER['SERVER_SOFTWARE'], 0, 13) == 'Microsoft-IIS';
+	}
+	return $IIS;
+}
+
+function check_hasIIS_UrlRewriteModule()
+{
+	return isset($_SERVER['IIS_UrlRewriteModule']) == true;
+}

@@ -43,10 +43,7 @@ if (is_file($bannercachefile) and (!isset($_REQUEST["reload"]))) {
 	$size = getimagesize($bannercachefile);
 	$type = $size['mime'];
 } else {
-	include_once ('lib/banners/bannerlib.php');
-	if (!isset($bannerlib)) {
-		$bannerlib = new BannerLib;
-	}
+	$bannerlib = TikiLib::lib('banner');
 	$data = $bannerlib->get_banner($_REQUEST["id"]);
 	if (!$data) {
 		die;

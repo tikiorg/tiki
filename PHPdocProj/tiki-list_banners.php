@@ -6,11 +6,10 @@
 // $Id$
 
 require_once ('tiki-setup.php');
-include_once ('lib/banners/bannerlib.php');
-if (!isset($bannerlib)) {
-	$bannerlib = new BannerLib;
-}
+
 $access->check_feature('feature_banners');
+
+$bannerlib = TikiLib::lib('banner');
 
 if (isset($_REQUEST["remove"])) {
 	if ($tiki_p_admin_banners != 'y') {

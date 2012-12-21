@@ -33,13 +33,13 @@
 		//$groupname = get_ownership_groupname($filename);
 		//$perms_oct = get_perms_octal($filename);
 		//$perms_asc = get_perms_ascii($filename);
-		get_perm_data($filename,$username,$groupname,$perms_asc,$perms_oct);
+		get_perm_data($filename, $username, $groupname, $perms_asc, $perms_oct);
 
 		echo '<td>' . $username . '</td><td>' . $groupname. '</td><td>' .$perms_asc . '</td>';
 		echo '<td>' . $perms_oct . '</td><td>permissioncheck/' . $filename .'</td>';
 
 	?>
-</tr> 
+</tr>
  </table>
  <p class="block">
 	To use password protection for Tiki Permission Check create a

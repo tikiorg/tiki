@@ -10,11 +10,12 @@
 
 $section = 'mytiki';
 require_once ('tiki-setup.php');
-include_once ('lib/usermodules/usermoduleslib.php');
 
 $access->check_feature(array('feature_modulecontrols', 'user_assigned_modules'));
 $access->check_user($user);
 $access->check_permission('tiki_p_configure_modules');
+
+$usermoduleslib = TikiLib::lib('usermodules');
 
 if (isset($_REQUEST["recreate"])) {
 	check_ticket('user-modules');

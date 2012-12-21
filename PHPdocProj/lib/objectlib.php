@@ -390,6 +390,10 @@ class ObjectLib extends TikiLib
 				$info = TikiLib::lib('comments')->get_forum($object);
 				return (array('title' => $info['name']));
 
+			case 'forum post':
+				$info = TikiLib::lib('comments')->get_comment($object);
+				return (array('title' => $info['title']));
+
 			case 'tracker':
 				$info = TikiLib::lib('trk')->get_tracker($object);
 				return (array('title' => $info['name']));

@@ -900,7 +900,7 @@ if (
 		$install_type = 'update';
 	}
 
-	// Try to activate Apache htaccess file by copying _htaccess into .htaccess
+	// Try to activate Apache htaccess file by making a symlink or copying _htaccess into .htaccess
 	// Do nothing (but warn the user to do it manually) if:
 	//   - there is no  _htaccess file,
 	//   - there is already an existing .htaccess (that is not necessarily the one that comes from Tiki),

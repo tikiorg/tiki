@@ -15,14 +15,11 @@ if (!isset($_REQUEST["id"])) {
 }
 
 require_once ('tiki-setup.php');
-include_once ('lib/banners/bannerlib.php');
-
-if (!isset($bannerlib)) {
-	$bannerlib = new BannerLib;
-}
 
 // CHECK FEATURE BANNERS HERE
 $access->check_feature('feature_banners');
+
+$bannerlib = TikiLib::lib('banner');
 
 $data = $bannerlib->get_banner($_REQUEST["id"]);
 $id = $data["bannerId"];

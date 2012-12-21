@@ -1204,13 +1204,15 @@ function prefs_feature_list($partial = false)
 			'name' => tra('Display article title in the sefurl'),
 			'type' => 'flag',
 			'perspective' => false,
-			'default' =>'n',
+			'dependencies' => array('feature_sefurl'),				
+			'default' =>'y',
 		),	
 		'feature_sefurl_title_blog' => array(
 			'name' => tra('Display blog title in the SEFURL'),
 			'type' => 'flag',
 			'perspective' => false,
-			'default' =>'n',
+			'dependencies' => array('feature_sefurl'),			
+			'default' =>'y',
 		),
 		'feature_sefurl_tracker_prefixalias' => array(
 			'name' => tra('Rewrite tiki-view_tracker.php?itemId=yyy to Prefixyyy page'),

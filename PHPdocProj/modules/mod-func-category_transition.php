@@ -31,9 +31,12 @@ function module_category_transition_info()
  */
 function module_category_transition($mod_reference, $module_params)
 {
-	global $smarty, $cat_type, $cat_objid, $modlib;
+	global $smarty, $modlib;
 
-	if ($cat_type && $cat_objid) {
+	if ($object = current_object()) {
+		$cat_type = $object['type'];
+		$cat_objid = $object['object'];
+
 		$smarty->assign('objType', $cat_type);
 		$smarty->assign('objId', $cat_objid);
 

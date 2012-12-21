@@ -13,6 +13,6 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 
 function smarty_function_rcontent($params, $smarty)
 {
-	global $dcslib; include_once('lib/dcs/dcslib.php');
+	$dcslib = TikiLib::lib('dcs');
 	return $dcslib->get_random_content($params['id']);
 }

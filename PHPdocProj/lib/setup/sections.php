@@ -209,6 +209,13 @@ function current_object()
 		);
 	}
 
+	if ($section == 'forums' && ! empty($_REQUEST['comments_parentId'])) {
+		return array(
+			'type' => 'forum post',
+			'object' => $_REQUEST['comments_parentId'],
+		);
+	}
+
 	if ( $cat_type && $cat_objid ) {
 		return array(
 			'type' => $cat_type,
