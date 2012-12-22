@@ -263,7 +263,9 @@ function smarty_block_pagination_links($params, $url, $smarty, &$repeat)
 			$html .= '<span class="pagenums">' . tra($params['itemname']);
 			$nb_step = ($zero_based_maxminus + floor(($real_offset) / $params['step']));
 			$html .= '<input type="hidden" class="pagenumstep" value="'.$nb_step.'" data-step="'.$params['step'].'" data-url="'.$url.'" data-offset_jsvar="'
-				. (isset($params['offset_jsvar']) ? $params['offset_jsvar'] : '') . '" onclick="'.$params['_onclick'].'"/>';
+				. (isset($params['offset_jsvar']) ? $params['offset_jsvar'] : '')
+				. '" data-offset_arg="' . $params['offset_arg']
+				. '" onclick="'.$params['_onclick'].'"/>';
 			$html .= '<input type="hidden" class="pagenumend" value="'.$nb_pages.'" />';
 
 			if ($params['show_numbers'] == 'y') {
