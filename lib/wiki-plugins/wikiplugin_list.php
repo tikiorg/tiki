@@ -82,8 +82,8 @@ function wikiplugin_list($data, $params)
 					TikiLib::lib('errorreport')->report(tr('Missing template "%0"', $arguments['template']));
 					return '';
 				}
-				$builder = new Search_Formatter_ArrayBuilder;
-				$templateData = $builder->getData($output->getBody());
+				$abuilder = new Search_Formatter_ArrayBuilder;
+				$templateData = $abuilder->getData($output->getBody());
 
 				$plugin = new Search_Formatter_Plugin_SmartyTemplate($arguments['template']);
 				$plugin->setData($templateData);
