@@ -39,6 +39,7 @@ function prefs_available_list($partial = false)
 		),
 		'available_styles' => array(
 			'name' => tra('Available styles'),
+            'description' => tra(''),
 			'type' => 'multilist',
 			'options' => $styles,
 			'dependencies' => array(

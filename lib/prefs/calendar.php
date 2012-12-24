@@ -10,6 +10,7 @@ function prefs_calendar_list()
 	return array(
 		'calendar_view_days' => array(
 			'name' => tra('Days to display in the Calendar'),
+            'description' => tra(''),
 			'type' => 'multicheckbox',
 			'options' => array( 
 				0 => tra('Sunday'),
@@ -24,6 +25,7 @@ function prefs_calendar_list()
 		),
 		'calendar_view_mode' => array(
 			'name' => tra('Default view mode'),
+            'description' => tra(''),
 			'type' => 'list',
 			'options' => array(
 				'day' => tra('Day'),
@@ -38,6 +40,7 @@ function prefs_calendar_list()
 		),
 		'calendar_list_begins_focus' => array(
 			'name' => tra('View list begins'),
+            'description' => tra(''),
 			'type' => 'list',
 			'options' => array(
 				'y' => tra('Focus Date'),
@@ -47,6 +50,7 @@ function prefs_calendar_list()
 		),
 		'calendar_firstDayofWeek' => array(
 			'name' => tra('First day of the week'),
+            'description' => tra(''),
 			'type' => 'list',
 			'options' => array(
 				'0' => tra('Sunday'),
@@ -57,6 +61,7 @@ function prefs_calendar_list()
 		),
 		'calendar_timespan' => array(
 			'name' => tra('Split hours in periods of'),
+            'description' => tra(''),
 			'type' => 'list',
 			'options' => array(
 				'1' => tra('1 minute'),
@@ -69,6 +74,7 @@ function prefs_calendar_list()
 		),
 		'calendar_start_year' => array(
 			'name' => tra('First year in the dropdown'),
+            'description' => tra(''),
 			'type' => 'text',
 			'size' => '5',
 			'hint' => tra('Enter a year or use +/- N to specify a year relative to the current year'),
@@ -76,6 +82,7 @@ function prefs_calendar_list()
 		),
 		'calendar_end_year' => array(
 			'name' => tra('Last year in the dropdown'),
+            'description' => tra(''),
 			'type' => 'text',
 			'size' => '5',
 			'hint' => tra('Enter a year or use +/- N to specify a year relative to the current year'),
@@ -83,16 +90,19 @@ function prefs_calendar_list()
 		),
 		'calendar_sticky_popup' => array(
 			'name' => tra('Sticky popup'),
+            'description' => tra(''),
 			'type' => 'flag',
 			'default' => 'n',
 		),
 		'calendar_view_tab' => array(
 			'name' => tra('Item view tab'),
+            'description' => tra(''),
 			'type' => 'flag',
 			'default' => 'n',
 		),
 		'calendar_addtogooglecal' => array(
 			'name' => tra('Show Add to Google Calendar icon'),
+            'description' => tra(''),
 			'type' => 'flag',
 			'dependencies' => array(
 				'wikiplugin_addtogooglecal'
@@ -101,11 +111,13 @@ function prefs_calendar_list()
 		),
 		'calendar_export' => array(
 			'name' => tra('Show Export Calendars button'),
+            'description' => tra(''),
 			'type' => 'flag',
 			'default' => 'n',
 		),
 		'calendar_fullcalendar' => array(
 			'name' => tra('Use FullCalendar to display Calendars'),
+            'description' => tra(''),
 			'type' => 'flag',
 			'dependencies' => array(
 				'feature_jquery'

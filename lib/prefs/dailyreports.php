@@ -10,10 +10,11 @@ function prefs_dailyreports_list()
 	return array(
 		'dailyreports_enabled_for_new_users' => array(
 			'name' => tr('Enable daily reports for new users'),
+            'description' => tra('Determines if daily reports will be automatically enabled for new Users. Default is "no".'),
 			'type' => 'flag',
 			'default' => 'n',
 			'help' => 'Daily+Reports',
-			'tags' => array('basic'),
+			'tags' => array('basic','tiki reporting feature'),
 		),
 	);
 }

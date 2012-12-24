@@ -10,6 +10,7 @@ function prefs_cookie_list()
 	return array(
 		'cookie_name' => array(
 			'name' => tra('Cookie name'),
+            'description' => tra(''),
 			'type' => 'text',
 			'size' => 35,
 			'perspective' => false,
@@ -17,6 +18,7 @@ function prefs_cookie_list()
 		),
 		'cookie_domain' => array(
 			'name' => tra('Domain'),
+            'description' => tra(''),
 			'type' => 'text',
 			'size' => 35,
 			'perspective' => false,
@@ -24,6 +26,7 @@ function prefs_cookie_list()
 		),
 		'cookie_path' => array(
 			'name' => tra('Path'),
+            'description' => tra(''),
 			'type' => 'text',
 			'size' => 35,
 			'perspective' => false,

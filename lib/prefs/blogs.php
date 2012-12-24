@@ -10,6 +10,7 @@ function prefs_blogs_list()
 	return array(
 		'blogs_feature_copyrights' => array(
 			'name' => tra('Blogs'),
+            'description' => tra('Allows for addition of individual copyright notices on blog posts'),
 			'type' => 'flag',
 			'dependencies' => array(
 				'feature_blogs',

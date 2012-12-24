@@ -10,8 +10,8 @@ function prefs_connect_list()
     return array (
 		'connect_feature' => array(
 			'name' => tra('Tiki Connect'),
-			'type' => 'flag',
             'description' => tra('Connect your Tiki with the community by sending anonymised statistical data to tiki.org'),
+			'type' => 'flag',
 			'default' => 'n',	// to be enabled by default when working for Tiki 8
 			'tags' => array('experimental', 'basic'),
 			'warning' => tra('Experimental. This feature is still under development.'),

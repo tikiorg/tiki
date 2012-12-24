@@ -85,6 +85,7 @@ function prefs_category_list()
 		),
 		'category_morelikethis_algorithm' => array(
 			'name' => tra('"More Like This" algorithm for categories'),
+            'description' => tra(''),
 			'type' => 'list',
 			'options' => array(
 							   '' => '',
@@ -95,6 +96,7 @@ function prefs_category_list()
 		),
 		'category_morelikethis_mincommon' => array(
 			'name' => tra('Minimum number of categories in common'),
+            'description' => tra(''),
 			'type' => 'list',
 			'options' => array(
 				'1' => tra('1'),
@@ -112,11 +114,13 @@ function prefs_category_list()
 		),
 		'category_morelikethis_mincommon_orless' => array(
 			'name' => tra('Or look for the maximum less categories in common if no objects with the above number of common categories'),
+            'description' => tra(''),
 			'type' => 'flag',
 			'default' => 'y',
 			),
 		'category_morelikethis_mincommon_max' => array(
 			'name' => tra('Maximum of objects more like this, otherwise use the default max records'),
+            'description' => tra(''),
 			'type' => 'text',
 			'size' => 3,
 			'filter' => 'int',
