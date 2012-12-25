@@ -10,12 +10,14 @@ function prefs_faq_list()
 	return array(
 		'faq_comments_per_page' => array(
 			'name' => tra('Default number of comments per page'),
+            'description' => tra('number of comments to show per page'),
 			'type' => 'text',
 			'size' => '5',
 			'default' => 10,
 		),
 		'faq_comments_default_ordering' => array(
 			'name' => tra('Comments default ordering'),
+            'description' => tra('default ordering for listed comments'),
 			'type' => 'list',
 			'options' => array(
 				'commentDate_desc' => tra('Newest first'),
@@ -26,6 +28,7 @@ function prefs_faq_list()
 		),
 		'faq_prefix' => array(
 			'name' => tra('Question and Answer prefix on Answers'),
+            'description' => tra('Question and Answer prefix'),
 			'type' => 'list',
 			'options' => array(
 				'none' => tra('None'),
