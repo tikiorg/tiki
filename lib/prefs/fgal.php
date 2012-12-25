@@ -10,6 +10,7 @@ function prefs_fgal_list()
 	return array(
 		'fgal_podcast_dir' => array(
 			'name' => tra('Podcast directory'),
+            'description' => tra(''),
 			'type' => 'text',
 			'help' => 'File+Gallery+Config',
 			'size' => 50,
@@ -19,6 +20,7 @@ function prefs_fgal_list()
 		),
 		'fgal_batch_dir' => array(
 			'name' => tra('Path'),
+            'description' => tra(''),
 			'type' => 'text',
 			'help' => 'File+Gallery+config',
 			'size' => 50,
@@ -28,6 +30,7 @@ function prefs_fgal_list()
 		),
 		'fgal_prevent_negative_score' => array(
 			'name' => tra('Prevent download if score becomes negative'),
+            'description' => tra(''),
 			'type' => 'flag',
 			'help' => 'File+Gallery+config',
 			'default' => 'n',
@@ -35,12 +38,14 @@ function prefs_fgal_list()
 		),
 		'fgal_limit_hits_per_file' => array(
 			'name' => tra('Allow download limit per file'),
+            'description' => tra(''),
 			'type' => 'flag',
 			'help' => 'File+Gallery+config',
 			'default' => 'n',
 		),
 		'fgal_allow_duplicates' => array(
 			'name' => tra('Allow same file to be uploaded more than once'),
+            'description' => tra(''),
 			'type' => 'list',
 			'help' => 'File+Gallery+config',
 			'perspective' => false,
@@ -53,13 +58,14 @@ function prefs_fgal_list()
 		),
 		'fgal_display_zip_option' => array(
 			'name' => tra('Display zip option in gallery'),
+            'description' => tra('Display in the gallery the zip option (in upload and gallery file)'),
 			'type' => 'flag',
-			'description' => tra('Display in the gallery the zip option (in upload and gallery file)'),
 			'help' => 'File+Gallery+config',
 			'default' => 'n',
 		),
 		'fgal_upload_progressbar' => array(
 			'name' => tra('Upload progressbar'),
+            'description' => tra(''),
 			'type' => 'list',
 			'options'=> array(
 				'n'	=>	tra('None'),
@@ -70,18 +76,21 @@ function prefs_fgal_list()
 		),
 		'fgal_match_regex' => array(
 			'name' => tra('Must match'),
+            'description' => tra(''),
 			'type' => 'text',
 			'size' => 50,
 			'default' => '',
 		),
 		'fgal_nmatch_regex' => array(
 			'name' => tra('Cannot match'),
+            'description' => tra(''),
 			'type' => 'text',
 			'size' => 50,
 			'default' => '',
 		),
 		'fgal_quota' => array (
 			'name' => tra('Quota for all the files and archives'),
+            'description' => tra(''),
 			'shorthint' => tra('Mb').' '.tra('(0 for unlimited)'),
 			'type' => 'text',
 			'size' => 7,
@@ -89,11 +98,13 @@ function prefs_fgal_list()
 		),
 		'fgal_quota_per_fgal' => array (
 			'name' => tra('Quota can be defined for each file gallery'),
+            'description' => tra(''),
 			'type' => 'flag',
 			'default' => 'n',
 		),
 		'fgal_quota_default' => array (
 			'name' => tra('Default quota for each new gallery'),
+            'description' => tra(''),
 			'shorthint' => tra('Mb').' '.tra('(0 for unlimited)'),
 			'type' => 'text',
 			'size' => 7,
@@ -101,6 +112,7 @@ function prefs_fgal_list()
 		),
 		'fgal_quota_show' => array (
 			'name' => tra('Show quota bar in the list page'),
+            'description' => tra(''),
 			'type' => 'list',
 			'options' => array(
 							  'n' 				=> tra('Never'),
@@ -112,6 +124,7 @@ function prefs_fgal_list()
 		),
 		'fgal_use_db' => array(
 			'name' => tra('Storage'),
+            'description' => tra(''),
 			'type' => 'list',
 			'perspective' => false,
 			'options' => array(
@@ -123,35 +136,40 @@ function prefs_fgal_list()
 		),
 		'fgal_use_dir' => array(
 			'name' => tra('Path to store files in the file gallery'),
-			'type' => 'text',
-			'size' => 50,
-			'perspective' => false,
-			'default' => '',
-			'tags' => array('basic'),
 			'description' => tra("Set a directory on your server. Ex.: /var/www/  It's recommended that this directory not be web accessible. PHP must be able to read/write to the directory."),
+            'type' => 'text',
+            'size' => 50,
+            'perspective' => false,
+            'default' => '',
+            'tags' => array('basic'),
 		),
 		'fgal_search_in_content' => array(
-			'name' => tra('Include the search box on the current gallery files just after the find div'),
+			'name' => tra('File Gallery - Searchable content'),
+            'description' => tra('Include the search box on the current gallery files just after the find div'),
 			'type' => 'flag',
 			'default' => 'n',
 		),
 		'fgal_search' => array(
 			'name' => tra('Include a search box on file galleries'),
+            'description' => tra(''),
 			'type' => 'flag',
 			'default' => 'y',
 		),
 		'fgal_list_ratio_hits' => array(
 			'name' => tra('Display hits with a ratio between hits / maxhits'),
+            'description' => tra(''),
 			'type' => 'flag',
 			'default' => 'n',
 		),
 		'fgal_display_properties' => array(
 			'name' => tra('Display properties in the context menu'),
+            'description' => tra(''),
 			'type' => 'flag',
 			'default' => 'y',
 		),
 		'fgal_display_replace' => array(
 			'name' => tra('Display replace menu in context menu'),
+            'description' => tra(''),
 			'type' => 'flag',
 			'default' => 'y',
 		),
