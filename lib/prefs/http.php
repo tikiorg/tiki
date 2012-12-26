@@ -10,6 +10,7 @@ function prefs_http_list()
 	return array(
 		'http_port' => array(
 			'name' => tra('HTTP port'),
+            'description' => tra('the port used to access this server, if left empty will use port 80'),
 			'type' => 'text',
 			'size' => 5,
 			'filter' => 'digits',

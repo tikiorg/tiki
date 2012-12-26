@@ -11,6 +11,7 @@ function prefs_highlight_list($partial = false)
 	return array(
 		'highlight_group' => array(
 			'name' => tra('Highlight group'),
+            'description' => tra(''),
 			'help' => 'Groups',
 			'type' => 'list',
 			'options' => highlight_group_values($partial),

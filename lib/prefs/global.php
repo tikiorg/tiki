@@ -32,9 +32,9 @@ function prefs_global_list($partial = false)
 	return array(
 		'style' => array(
 			'name' => tra('Theme'),
-			'type' => 'list',
+            'description' => tra('Style of the site, sometimes called a skin or CSS. See http://themes.tiki.org for more Tiki themes.'),
+            'type' => 'list',
 			'help' => 'Themes',
-			'description' => tra('Style of the site, sometimes called a skin or CSS. See http://themes.tiki.org for more Tiki themes.'),
 			'options' => $styles,
 			'default' => 'fivealive.css',
 			'tags' => array('basic'),
@@ -74,6 +74,7 @@ function prefs_global_list($partial = false)
 		),
 		'limitedGoGroupHome' => array(
 			'name' => tra('Go to group homepage only if login from default homepage'),
+            'description' => tra(''),
 			'type' => 'flag',
 			'dependencies' => array(
 				'useGroupHome',
@@ -93,18 +94,20 @@ function prefs_global_list($partial = false)
 		),
 		'cachepages' => array(
 			'name' => tra('Cache external pages'),
+            'description' => tra(''),
 			'type' => 'flag',
 			'default' => 'n',
 		),
 		'cacheimages' => array(
 			'name' => tra('Cache external images'),
+            'description' => tra(''),
 			'type' => 'flag',
 			'default' => 'n',
 		),
 		'tmpDir' => array(
 			'name' => tra('Temporary directory'),
+            'description' => tra('Tiki requires full read and write access to this directory.'),
 			'type' => 'text',
-			'description' => tra('Tiki requires full read and write access to this directory.'),
 			'size' => 30,
 			'default' => TikiInit::tempdir(),
 			'perspective' => false,
@@ -123,24 +126,28 @@ function prefs_global_list($partial = false)
 		),
 		'popupLinks' => array(
 			'name' => tra('Open external links in new window'),
+            'description' => tra(''),
 			'type' => 'flag',
 			'default' => 'y',
 			'tags' => array('basic'),
 		),
 		'wikiLicensePage' => array(
 			'name' => tra('License page'),
+            'description' => tra(''),
 			'type' => 'text',
 			'size' => '30',
 			'default' => '',
 		),
 		'wikiSubmitNotice' => array(
 			'name' => tra('Submit notice'),
+            'description' => tra(''),
 			'type' => 'text',
 			'size' => '30',
 			'default' => '',
 		),
 		'gdaltindex' => array(
 			'name' => tra('Full path to gdaltindex'),
+            'description' => tra(''),
 			'type' => 'text',
 			'size' => '50',
 			'help' => 'Maps',
@@ -149,6 +156,7 @@ function prefs_global_list($partial = false)
 		),
 		'ogr2ogr' => array(
 			'name' => tra('Full path to ogr2ogr'),
+            'description' => tra(''),
 			'type' => 'text',
 			'size' => '50',
 			'help' => 'Maps',
@@ -157,6 +165,7 @@ function prefs_global_list($partial = false)
 		),
 		'mapzone' => array(
 			'name' => tra('Map Zone'),
+            'description' => tra(''),
 			'type' => 'list',
 			'help' => 'Maps',
 			'options' => array(
@@ -167,11 +176,13 @@ function prefs_global_list($partial = false)
 		),
 		'modallgroups' => array(
 			'name' => tra('Display modules to all groups always'),
+            'description' => tra(''),
 			'type' => 'flag',
 			'default' => 'n',
 		),
 		'modseparateanon' => array(
 			'name' => tra('Hide anonymous-only modules from registered users'),
+            'description' => tra(''),
 			'type' => 'flag',
 			'default' => 'n',
 		),
@@ -182,6 +193,7 @@ function prefs_global_list($partial = false)
 		),
 		'maxArticles' => array(
 			'name' => tra('Maximum number of articles on articles home page'),
+            'description' => tra(''),
 			'type' => 'text',
 			'size' => '5',
 			'filter' => 'digits',
@@ -189,32 +201,36 @@ function prefs_global_list($partial = false)
 		),
 		'sitead' => array(
 			'name' => tra('Site Ads and Banners Content'),
-			'hint' => tra('Example:') . ' ' . "{banner zone='" . tra('Test') . "'}", 
+            'description' => tra(''),
+			'hint' => tra('Example:') . ' ' . "{banner zone='" . tra('Test') . "'}",
 			'type' => 'textarea',
 			'size' => '5',
 			'default' => '',
 		),
 		'urlOnUsername' => array(
 			'name' => tra('URL to go to when clicking on a username'),
+            'description' => tra(''),
 			'type' => 'text',
 			'description' => tra('URL to go to when clicking on a username.').' '.tra('Default').': tiki-user_information.php?userId=%userId% <em>('.tra('Use %user% for login name and %userId% for userId)').')</em>',
 			'default' => '',
 		),
 		'forgotPass' => array(
 			'name' => tra('Forgot password'),
-			'type' => 'flag',
 			'description' => tra('Users can request to reset password. They will receive a link by email.'),
+            'type' => 'flag',
 			'detail' => tra("Since passwords are encrypted, it's not possible to tell the user what the password is. It's only possible to change it."),
 			'default' => 'y',
 			'tags' => array('basic'),
 		),
 		'useGroupTheme' => array(
 			'name' => tra('Each group can have its theme'),
+            'description' => tra(''),
 			'type' => 'flag',
 			'default' => 'n',
 		),
 		'sitetitle' => array(
 			'name' => tra('Site title'),
+            'description' => tra(''),
 			'type' => 'text',
 			'size' => '50',
 			'default' => '',
@@ -222,6 +238,7 @@ function prefs_global_list($partial = false)
 		),
 		'sitesubtitle' => array(
 			'name' => tra('Subtitle'),
+            'description' => tra(''),
 			'type' => 'text',
 			'size' => '50',
 			'default' => '',
@@ -229,6 +246,7 @@ function prefs_global_list($partial = false)
 		),
 		'maxRecords' => array(
 			'name' => tra('Maximum number of records in listings'),
+            'description' => tra(''),
 			'type' => 'text',
 			'size' => '3',
 			'default' => 24,
@@ -236,6 +254,7 @@ function prefs_global_list($partial = false)
 		),
 		'maxVersions' => array(
 			'name' => tra('Maximum number of versions:'),
+            'description' => tra(''),
 			'type' => 'text',
 			'size' => '5',
 			'hint' => tra('0 for unlimited versions'),
@@ -243,20 +262,21 @@ function prefs_global_list($partial = false)
 		),
 		'allowRegister' => array(
 			'name' => tra('Users can register'),
+            'description' => tra('permit User registration'),
 			'type' => 'flag',
 			'default' => 'n',
 			'tags' => array('basic'),
 		),
 		'validateEmail' => array(
 			'name' => tra("Validate user's email server"),
+            'description' => tra('Tiki will perform a DNS lookup and attempt to open a SMTP session to validate the email server.'),
 			'type' => 'flag',
-			'description' => tra('Tiki will perform a DNS lookup and attempt to open a SMTP session to validate the email server.'),
 			'default' => 'n',
 		),
 		'validateRegistration' => array(
 			'name' => tra('Require validation by Admin'),
-			'type' => 'flag',
 			'description' => tra('The administrator will receive an email for each new user registration, and must validate the user before the user can login.'),
+            'type' => 'flag',
 			'dependencies' => array(
 				'sender_email',
 			),
@@ -264,13 +284,14 @@ function prefs_global_list($partial = false)
 		),
 		'useRegisterPasscode' => array(
 			'name' => tra('Require passcode to register'),
+            'description' => tra('Users must enter a code to register.  You must inform users of this code. Use to restrict registration to invited users only.'),
 			'type' => 'flag',
-			'description' => tra('Users must enter a code to register.  You must inform users of this code. Use to restrict registration to invited users only.'),
 			'default' => 'n',
 			'tags' => array('basic'),
 		),
 		'registerPasscode' => array(
 			'name' => tra('Passcode'),
+            'description' => tra(''),
 			'type' => 'text',
 			'size' => 15,
 			'hint' =>  tra('Alphanumeric code required to complete the registration'),
@@ -279,9 +300,9 @@ function prefs_global_list($partial = false)
 		),
 		'userTracker' => array(
 			'name' => tra('Use tracker to collect more user information'),
+            'description' => tra('Display a tracker (form) for the user to complete, as part of the registration process. Use this tracker to store additional information about each user.'),
 			'type' => 'flag',
 			'help' => 'User+Tracker',
-			'description' => tra('Display a tracker (form) for the user to complete, as part of the registration process. Use this tracker to store additional information about each user.'),
 			'dependencies' => array(
 				'feature_trackers',
 			),
@@ -290,6 +311,7 @@ function prefs_global_list($partial = false)
 		),
 		'groupTracker' => array(
 			'name' => tra('Use tracker to collect more group information'),
+            'description' => tra(''),
 			'type' => 'flag',
 			'help' => 'Group+Tracker',
 			'dependencies' => array(
@@ -300,6 +322,7 @@ function prefs_global_list($partial = false)
 		),
 		'eponymousGroups' => array(
 			'name' => tra('Create a new group for each user'),
+            'description' => tra(''),
 			'type' => 'flag',
 			'hint' => tra("The group will be named identical to the user's username"),
 			'help' => 'Groups',
@@ -307,18 +330,21 @@ function prefs_global_list($partial = false)
 		),
 		'syncGroupsWithDirectory' => array(
 			'name' => tra('Synchronize Tiki groups with a directory'),
+            'description' => tra(''),
 			'type' => 'flag',
 			'hint' => tra('Define the directory within the "LDAP" tab'),
 			'default' => 'n',
 		),
 		'syncUsersWithDirectory' => array(
 			'name' => tra('Synchronize Tiki users with a directory'),
+            'description' => tra(''),
 			'type' => 'flag',
 			'hint' => tra('Define the directory within the "LDAP" tab'),
 			'default' => 'n',
 		),
 		'rememberme' => array(
 			'name' => tra('Remember me'),
+            'description' => tra(''),
 			'type' => 'list',
 			'help' => 'Login+Config#Remember_Me',
 			'options' => array(
@@ -331,18 +357,19 @@ function prefs_global_list($partial = false)
 		),
 		'remembertime' => array(
 			'name' => tra('Duration'),
+            'description' => tra(''),
 			'type' => 'list',
 			'options' => array(
-				'300'				=> '5 ' . tra('minutes'),
-				'900'				=> '15 ' . tra('minutes'),
-				'1800'			=> '30 ' . tra('minutes'),
-				'3600'			=> '1 ' . tra('hour'),
-				'7200'			=> '2 ' . tra('hours'),
-				'36000'			=> '10 ' . tra('hours'),
-				'72000'			=> '20 ' . tra('hours'),
-				'86400'			=> '1 ' . tra('day'),
-				'604800'		=> '1 ' . tra('week'),
-				'2629743'		=> '1 ' . tra('month'),
+				'300'		=> '5 ' . tra('minutes'),
+				'900'		=> '15 ' . tra('minutes'),
+				'1800'		=> '30 ' . tra('minutes'),
+				'3600'		=> '1 ' . tra('hour'),
+				'7200'		=> '2 ' . tra('hours'),
+				'36000'		=> '10 ' . tra('hours'),
+				'72000'		=> '20 ' . tra('hours'),
+				'86400'		=> '1 ' . tra('day'),
+				'604800'	=> '1 ' . tra('week'),
+				'2629743'	=> '1 ' . tra('month'),
 				'31556926'	=> '1 ' . tra('year'),
 			),
 			'default' => 7200,
@@ -350,6 +377,7 @@ function prefs_global_list($partial = false)
 		),
 		'urlIndex' => array(
 			'name' => tra('Homepage URL'),
+            'description' => tra(''),
 			'type' => 'text',
 			'size' => 50,
 			'default' => '',
@@ -367,16 +395,16 @@ function prefs_global_list($partial = false)
 		),
 		'tikiIndex' => array(
 			'name' => tra('Use Tiki feature as homepage'),
+            'description' => tra('Select the Tiki feature to use as the site homepage. Only enabled features are listed.'),
 			'type' => 'list',
 			'options' => feature_home_pages($partial),
-			'description' => tra('Select the Tiki feature to use as the site homepage. Only enabled features are listed.'),
 			'default' => 'tiki-index.php',
 			'tags' => array('basic'),
 		),
 		'disableJavascript' => array(
 			'name' => tra('Disable JavaScript'),
+            'description' => tra('Disable JavaScript for testing purpose even if the browser allows it'),
 			'type' => 'flag',
-			'description' => tra('Disable JavaScript for testing purpose even if the browser allows it'),
 			'default' => 'n',
 		),
 	);

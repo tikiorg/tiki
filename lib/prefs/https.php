@@ -17,6 +17,7 @@ function prefs_https_list()
 		),
 		'https_port' => array(
 			'name' => tra('HTTPS port'),
+            'description' => tra('the HTTPS port for this server, default=443'),
 			'type' => 'text',
 			'size' => 5,
 			'filter' => 'digits',
