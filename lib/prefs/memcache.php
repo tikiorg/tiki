@@ -55,18 +55,21 @@ function prefs_memcache_list()
 		),
 		'memcache_wiki_data' => array(
 			'name' => tra('Cache wiki data in memcache'),
+            'description' => tra(''),
 			'type' => 'flag',
 			'default' => 'y',
 			'extensions' => array( 'memcache' ),
 		),
 		'memcache_wiki_output' => array(
 			'name' => tra('Cache wiki output in memcache'),
+            'description' => tra(''),
 			'type' => 'flag',
 			'default' => 'y',
 			'extensions' => array( 'memcache' ),
 		),
 		'memcache_forum_output' => array(
 			'name' => tra('Cache forum output in memcache'),
+            'description' => tra(''),
 			'type' => 'flag',
 			'default' => 'y',
 			'extensions' => array( 'memcache' ),

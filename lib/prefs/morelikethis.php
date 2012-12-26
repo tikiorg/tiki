@@ -12,6 +12,7 @@ function prefs_morelikethis_list()
 		// Used in templates/tiki-admin-include-freetags.tpl
 		'morelikethis_algorithm' => array(
 			'name' => tra('"More Like This" algorithm'),
+            'description' => tra(''),
 			'type' => 'list',
 			'options' => array(
 				'basic' => tra('Basic'),
@@ -21,6 +22,7 @@ function prefs_morelikethis_list()
 		),
 		'morelikethis_basic_mincommon' => array(
 			'name' => tra('Minimum number of tags in common'),
+            'description' => tra(''),
 			'type' => 'list',
 			'options' => array(
 				'1' => tra('1'),

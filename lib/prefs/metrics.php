@@ -44,6 +44,7 @@ function prefs_metrics_list()
 		),
 		'metrics_metric_name_length' => array(
 			'name' => tra('Metric name length'),
+            'description' => tra(''),
 			'type' => 'text',
 			'size' => 4,
 			'filter' => 'digits',
@@ -51,6 +52,7 @@ function prefs_metrics_list()
 		),
 		'metrics_tab_name_length' => array(
 			'name' => tra('Metric tab name length'),
+            'description' => tra(''),
 			'type' => 'text',
 			'size' => 4,
 			'filter' => 'digits',

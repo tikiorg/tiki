@@ -16,6 +16,7 @@ function prefs_menus_list()
 		),
 		'menus_items_icons_path' => array(
 			'name' => tra('Default path for the icons'),
+            'description' => tra(''),
 			'type' => 'text',
 			'default' => 'img/icons/large',
 		),
