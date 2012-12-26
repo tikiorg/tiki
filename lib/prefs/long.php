@@ -10,6 +10,7 @@ function prefs_long_list()
 	return array(
 		'long_date_format' => array(
 			'name' => tra('Long date format'),
+            'description' => tra(''),
 			'type' => 'text',
 			'size' => '30',
 			'default' => '%A %d of %B, %Y',
@@ -18,6 +19,7 @@ function prefs_long_list()
 		),
 		'long_time_format' => array(
 			'name' => tra('Long time format'),
+            'description' => tra(''),
 			'type' => 'text',
 			'size' => '30',
 			'default' => '%H:%M:%S %Z',

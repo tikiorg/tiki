@@ -10,6 +10,7 @@ function prefs_ldap_list()
 	return array(
 		'ldap_create_user_tiki' => array(
 			'name' => tra('If user does not exist in Tiki'),
+            'description' => tra(''),
 			'type' => 'list',
 			'perspective' => false,
 			'options' => array(
@@ -20,11 +21,13 @@ function prefs_ldap_list()
 		),
 		'ldap_create_user_ldap' => array(
 			'name' => tra('Create user if not in LDAP'),
+            'description' => tra(''),
 			'type' => 'flag',
 			'default' => 'n',
 		),
 		'ldap_skip_admin' => array(
 			'name' => tra('Use Tiki authentication for Admin login'),
+            'description' => tra(''),
 			'type' => 'flag',
 			'default' => 'y',
 		),

@@ -20,6 +20,7 @@ function prefs_ids_list()
 		),
 		'ids_single_threshold' => array(
 			'name' => tra('Per-request maximum impact'),
+            'description' => tra(''),
 			'type' => 'text',
 			'filter' => 'int',
 			'default' => 25,
@@ -28,6 +29,7 @@ function prefs_ids_list()
 		),
 		'ids_session_threshold' => array(
 			'name' => tra('Per-session impact'),
+            'description' => tra(''),
 			'type' => 'text',
 			'filter' => 'int',
 			'default' => 150,
