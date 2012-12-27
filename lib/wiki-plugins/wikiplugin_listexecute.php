@@ -95,7 +95,7 @@ function wikiplugin_listexecute($data, $params)
 
 				foreach ($list as $entry) {
 					$identifier = "{$entry['object_type']}:{$entry['object_id']}";
-					if (in_array($identifier, $objects)) {
+					if (in_array($identifier, $objects) || in_array('ALL', $objects)) {
 						$success = $action->execute($entry);
 
 						$reportSource->setStatus($entry['object_type'], $entry['object_id'], $success);
