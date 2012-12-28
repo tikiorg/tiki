@@ -10,21 +10,25 @@ function prefs_pagination_list()
 	return array(
 		'pagination_firstlast' => array(
 			'name' => tra("Display 'First' and 'Last' links"),
+            'description' => tra('if set, will display \'first\' and \'last\' links on pages'),
 			'type' => 'flag',
 			'default' => 'y',
 		),
 		'pagination_fastmove_links' => array(
-			'name' => tra('Display fast move links (by 10 percent of the total number of pages) '),
+			'name' => tra('Display fast move links'),
+            'description' => tra('Display fast move links (by 10 percent of the total number of pages) '),
 			'type' => 'flag',
 			'default' => 'y',
 		),
 		'pagination_hide_if_one_page' => array(
 			'name' => tra('Hide pagination when there is only one page'),
+            'description' => tra('Hide pagination on single pages'),
 			'type' => 'flag',
 			'default' => 'y',
 		),
 		'pagination_icons' => array(
 			'name' => tra('Use Icons'),
+            'description' => tra(''),
 			'type' => 'flag',
 			'default' => 'y',
 		),

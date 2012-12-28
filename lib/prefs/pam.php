@@ -10,16 +10,19 @@ function prefs_pam_list()
 	return array(
 		'pam_create_user_tiki' => array(
 			'name' => tra('Create user if not in Tiki'),
+            'description' => tra(''),
 			'type' => 'flag',
 			'default' => 'n',
 		),
 		'pam_skip_admin' => array(
 			'name' => tra('Use Tiki authentication for Admin login'),
+            'description' => tra(''),
 			'type' => 'flag',
 			'default' => 'n',
 		),
 		'pam_service' => array(
 			'name' => tra('PAM service'),
+            'description' => tra(''),
 			'type' => 'text',
 			'size' => 20,
 			'hint' => tra('Currently unused'),

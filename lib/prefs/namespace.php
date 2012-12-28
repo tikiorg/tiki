@@ -20,6 +20,7 @@ function prefs_namespace_list()
 		),
 		'namespace_separator' => array(
 			'name' => tr('Namespace separator'),
+			'description' => tra(''),
 			'size' => 5,
 			'type' => 'text',
 			'default' => ':_:',

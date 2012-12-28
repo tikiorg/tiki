@@ -69,8 +69,8 @@ function prefs_payment_list()
 		),
 		'payment_default_delay' => array(
 			'name' => tra('Default acceptable payment delay'),
-			'shorthint' => tra('days'),
 			'description' => tra('Amount of days before the payment requests becomes overdue. This can be changed per payment request.'),
+            'shorthint' => tra('days'),
 			'type' => 'text',
 			'filter' => 'digits',
 			'size' => 3,
