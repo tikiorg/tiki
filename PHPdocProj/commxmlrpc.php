@@ -1,6 +1,6 @@
 <?php
 /**
- * @package tikiwiki
+ * @package Tikiwiki
  */
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
 //
@@ -8,9 +8,9 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-include_once("tiki-setup.php");
-include_once ("lib/pear/XML/Server.php");
-include_once ('lib/commcenter/commlib.php');
+require_once("tiki-setup.php");
+require_once ("lib/pear/XML/Server.php");
+require_once ('lib/commcenter/commlib.php');
 
 if ($tikilib->get_preference("feature_comm", 'n') != 'y') {
 	die;
