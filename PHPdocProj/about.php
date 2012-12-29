@@ -1,5 +1,7 @@
 <?php
 /**
+ * this page is used as doxygen output mainpage, content is pasted in from README.
+ *
  * @package tikiwiki
  */
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
