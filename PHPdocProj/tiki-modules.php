@@ -40,7 +40,8 @@ foreach ( $modules as $zone => & $moduleList ) {
 
 			$ref = (array) $mod_reference;
 			$mod_reference['data'] = new Tiki_Render_Lazy(
-				function () use ($ref) {
+				//function () use ($ref) {
+                function() use ($ref) {
 					$modlib = TikiLib::lib('mod');
 					return $modlib->execute_module($ref);
 				}
