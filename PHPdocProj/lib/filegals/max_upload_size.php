@@ -1,8 +1,11 @@
 <?php
-// (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
-// All Rights Reserved. See copyright.txt for details and a complete list of authors.
-// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+/**
+ * Try to detect a file max size due to upload or memory limits. (To do an insert into the database, the data has to be put in memory by PHP).
+ *
+ * @package Tikiwiki\lib\filegals
+ * @copyright (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project. All Rights Reserved. See copyright.txt for details and a complete list of authors.
+ * @licence Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+ */
 // $Id$
 
 //this script may only be included - so its better to die if called directly.
@@ -11,9 +14,6 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
   exit;
 }
 
-// Try to detect a file max size due to upload or memory limits
-// (to do an insert into the database, the data has to be put in memory by PHP)
-//
 global $tikilib, $smarty;
 @$max_upload_size = $tikilib->return_bytes(ini_get('upload_max_filesize'));
 @$post_max_size = $tikilib->return_bytes(ini_get('post_max_size'));

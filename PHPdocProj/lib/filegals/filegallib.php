@@ -1,8 +1,11 @@
 <?php
-// (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-//
-// All Rights Reserved. See copyright.txt for details and a complete list of authors.
-// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+/**
+ * extends the Tiki library to provide a FileGallery library.
+ *
+ * @package Tikiwiki\lib\filegals
+ * @copyright (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project. All Rights Reserved. See copyright.txt for details and a complete list of authors.
+ * @licence Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+ */
 // $Id$
 
 //this script may only be included - so its better to die if called directly.
@@ -11,6 +14,9 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
   exit;
 }
 
+/**
+ *
+ */
 class FileGalLib extends TikiLib
 {
 	function isPodCastGallery($galleryId, $gal_info=null)
@@ -285,16 +291,20 @@ class FileGalLib extends TikiLib
 	/**
 	 * Create or update a file draft
 	 *
-	 * @global array $prefs
-	 * @param int $fileId
+	 * @param int    $fileId
 	 * @param string $filename
-	 * @param int $size
+	 * @param int    $size
 	 * @param string $type
 	 * @param string $data
 	 * @param string $creator
 	 * @param string $path
 	 * @param string $checksum
 	 * @param string $lockedby
+	 *
+	 * @global array $prefs
+	 * @global array $prefs
+	 * @global array $prefs
+	 * @return bool
 	 */
 	function insert_draft($fileId,$filename,$size,$type,$data,$creator,$path,$checksum,$lockedby, $metadata = null)
 	{
@@ -380,6 +390,7 @@ class FileGalLib extends TikiLib
 	 *
 	 * @global string $user
 	 * @param int $fileId
+	 * @return bool
 	 */
 	function validate_draft($fileId)
 	{
@@ -1502,7 +1513,9 @@ class FileGalLib extends TikiLib
 	 * Get the Id of the gallery special root, which will be a gallery of type 'special' with the parentId '-1'
 	 *    (i.e. 'File Galleries', 'Users File Galleries', ...)
 	 *
-	 * @param int $galleryId The id of the gallery
+	 * @param int  $galleryId The id of the gallery
+	 * @param null $treeParentId
+	 * @param null $tree
 	 * @return The special root gallery Id
 	 */
 	// WARNING: Semi-private function. "Public callers" should only pass the galleryId parameter.
@@ -2314,6 +2327,7 @@ class FileGalLib extends TikiLib
 	 * Retrieve file draft
 	 *
 	 * @param int $id
+	 * @return array
 	 */
 	function get_file_draft($id)
 	{
@@ -2368,23 +2382,27 @@ class FileGalLib extends TikiLib
 	/**
 	 * Get files and/or subgals list with additional data from one or all file galleries
 	 *
-	 * @param int $offset
-	 * @param int $maxRecords
+	 * @param int    $offset
+	 * @param int    $maxRecords
 	 * @param string $sort_mode
 	 * @param string $find
-	 * @param int $galleryId (-1 = all galleries (default))
-	 * @param bool $with_archive give back the number of archives
-	 * @param bool $with_subgals include subgals in the listing
-	 * @param bool $with_subgals_size calculate the size of subgals
-	 * @param bool $with_files include files in the listing
-	 * @param bool $with_files_data include files data in the listing
-	 * @param bool $with_parent_name include parent names in the listing
-	 * @param bool $recursive include all subgals recursively (yet only implemented for galleryId == -1)
-	 * @param string $my_user use another user than the current one
-	 * @param bool $keep_subgals_together do not mix files and subgals when sorting (if true, subgals will always be at the top)
-	 * @param bool $parent_is_file use $galleryId param as $fileId (to return only archives of the file)
-	 * @param array filter: creator, categId, lastModif, lastDownload, fileId
-	 * @param string wiki_syntax: text to be inserted in editor onclick (from fgal manager)
+	 * @param int    $galleryId             (-1 = all galleries (default))
+	 * @param bool   $with_archive          give back the number of archives
+	 * @param bool   $with_subgals          include subgals in the listing
+	 * @param bool   $with_subgals_size     calculate the size of subgals
+	 * @param bool   $with_files            include files in the listing
+	 * @param bool   $with_files_data       include files data in the listing
+	 * @param bool   $with_parent_name      include parent names in the listing
+	 * @param bool   $with_files_count
+	 * @param bool   $recursive             include all subgals recursively (yet only implemented for galleryId == -1)
+	 * @param string $my_user               use another user than the current one
+	 * @param bool   $keep_subgals_together do not mix files and subgals when sorting (if true, subgals will always be at the top)
+	 * @param bool   $parent_is_file        use $galleryId param as $fileId (to return only archives of the file)
+	 * @param bool   $with_backlink
+	 * @param string $filter
+	 * @param string $wiki_syntax
+	 * @internal param \filter $array : creator, categId, lastModif, lastDownload, fileId
+	 * @internal param \wiki_syntax $string : text to be inserted in editor onclick (from fgal manager)
 	 * @return array of found files and subgals
 	 */
 	function get_files($offset, $maxRecords, $sort_mode, $find, $galleryId=-1, $with_archive=false, $with_subgals=false,
