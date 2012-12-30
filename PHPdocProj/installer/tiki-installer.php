@@ -1,8 +1,12 @@
 <?php
-// (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-//
-// All Rights Reserved. See copyright.txt for details and a complete list of authors.
-// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+/**
+ * Tiki's Installer. 
+ *
+ * @package Tikiwiki
+ * @subpackage installer
+ * @copyright (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project. All Rights Reserved. See copyright.txt for details and a complete list of authors.
+ * @licence Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+ */
 // $Id$
 
 // To (re-)enable this script the file has to be named tiki-installer.php and the following four lines
@@ -36,6 +40,7 @@ class InstallerDatabaseErrorHandler implements TikiDb_ErrorHandler
      * @param $query
      * @param $values
      * @param $result
+     * @return mixed|void
      */
     function handle(TikiDb $db, $query, $values, $result)
 	{
