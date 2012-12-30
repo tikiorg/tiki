@@ -53,6 +53,14 @@ $show_types = array();
 $selected_types = array();
 foreach ($sections_enabled as $k => $info) {
 	if (isset($_REQUEST['types_section']) && $k != $_REQUEST['types_section']) continue;
+	// The logic below obviously does not work for tracker comments, so let's handle them in a way that is simpler to understand
+	if ($k == 'trackers' && $prefs['feature_trackers'] == 'y') {
+		$show_types['trackeritem'] = 'Tracker Item';
+		if ($default_list_value == 'y' || in_array('trackeritem', $requested_types)) {
+			$selected_types[] = 'trackeritem';
+		}
+		continue;
+	}
 	foreach ($sections_keys as $stype => $sfeature) {
 		if (isset($info[$sfeature]) && $prefs[$info[$sfeature]] == 'y' && isset($info[$stype])) {
 			$comment_type = $info[$stype];
