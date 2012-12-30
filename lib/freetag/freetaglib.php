@@ -978,17 +978,23 @@ class FreetagLib extends ObjectLib
 	 *	 - 'count' => The number of objects tagged with this tag.
 	 */
 
-	function get_most_popular_tags($user = '', $offset = 0, $maxRecords = 25, $type)
+	function get_most_popular_tags($user = '', $offset = 0, $maxRecords = 25, $type=null, $objectId=null)
 	{
 
 		$join = '';
 		$mid = ''; $mid2 = '';
 		$bindvals = array();
-		if (!empty($type)) {
+		if (!empty($type) || !empty($objectId)) {
 			$join .= ' LEFT JOIN `tiki_objects` tob on (tob.`objectId`= tfo.`objectId`)';
 			$mid .= ' AND `type` = ?';
 			$mid2 = 'WHERE `type`=?'; 
 			$bindvals[] = $type;
+			if (!empty($objectId)) {
+				$join .= ' LEFT JOIN `tiki_blog_posts` tbp on (tob.`objectId` = tbp.`postId`)';
+				$mid .= ' AND tbp.`blogId` = ?';
+				$mid2 .= ' AND tbp.`blogId` = ?';
+				$bindvals[] = $objectId;
+			}
 		}
 		$query = 'SELECT COUNT(*) as count'
 						. ' FROM `tiki_freetagged_objects` tfo'

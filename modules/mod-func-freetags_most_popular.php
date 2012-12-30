@@ -53,6 +53,13 @@ function module_freetags_most_popular_info()
 					array('text' => tra('Trackers'), 'value' => 'tracker'),
 				),
 			),
+			'objectId' => array(
+				'required' => false,
+                                'name' => tra('BlogId'),
+				'description' => tra('Blog Id if only blog posts selected'),
+				'filter' => 'int',
+				'default' => null,
+			),
 		),
 		'common_params' => array('rows') // This is not clean. We should use just max instead of max and rows as fallback,
 	);
@@ -68,7 +75,7 @@ function module_freetags_most_popular($mod_reference, $module_params)
 	$globalperms = Perms::get();
 	if ($globalperms->view_freetags) {
 		global $freetaglib; require_once 'lib/freetag/freetaglib.php';
-		$most_popular_tags = $freetaglib->get_most_popular_tags('', 0, empty($module_params['max']) ? $mod_reference["rows"] : $module_params['max'], empty($module_params['where'])?'': $module_params['where']);
+		$most_popular_tags = $freetaglib->get_most_popular_tags('', 0, empty($module_params['max']) ? $mod_reference["rows"] : $module_params['max'], empty($module_params['where'])?'': $module_params['where'], empty($module_params['objectId'])?'': $module_params['objectId']);
 		$smarty->assign_by_ref('most_popular_tags', $most_popular_tags);
 		$smarty->assign('type', (isset($module_params['type']) && $module_params['type'] == 'cloud') ? 'cloud' : 'list');
 	}
