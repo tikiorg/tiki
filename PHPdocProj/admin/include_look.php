@@ -1,14 +1,14 @@
 <?php
 /**
- * This script may only be included
+ * This script may only be included.
  *
  * provides inclusion calls to internal Tiki components
  *
  * All Rights Reserved. See copyright.txt for details and a complete list of authors.
- * Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
  *
  * @package Tikiwiki\admin
  * @copyright (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
+ * @licence Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
  */
 // $Id$
 
@@ -42,24 +42,28 @@ $smarty->assign('a_style', $a_style);
 $smarty->assign('style_options', $tikilib->list_style_options($a_style));
 
 /**
+ * find thumbnail if there is one
+ *
  * @param $stl - style file name (e.g. thenews.css)
  * @param $opt - optional option file name
  * @return string path to thumbnail file
  */
-function get_thumbnail_file($stl, $opt = '') // find thumbnail if there is one
+function get_thumbnail_file($stl, $opt = '')
 {
 	global $tikilib;
 	if (!empty($opt) && $opt != tr('None')) {
-		$filename = preg_replace('/\.css$/i', '.png', $opt); // change .css to .png
+		/** @var $filename  change .css to .png*/
+		$filename = preg_replace('/\.css$/i', '.png', $opt);
 
 	} else {
-		$filename = preg_replace('/\.css$/i', '.png', $stl); // change .css to .png
+		/** @var $filename  change .css to .png*/
+		$filename = preg_replace('/\.css$/i', '.png', $stl);
 		$opt = '';
 	}
 	return $tikilib->get_style_path($stl, $opt, $filename);
 }
 
-// find thumbnail if there is one
+/** @var $thumbfile the thunmbnail retrieved */
 $thumbfile = get_thumbnail_file($a_style, $prefs['site_style_option']);
 if (empty($thumbfile)) {
 	$thumbfile = get_thumbnail_file($a_style);

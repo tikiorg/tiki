@@ -1,14 +1,14 @@
 <?php
 /**
- * This script may only be included
+ * This script may only be included.
  *
  * provides inclusion calls to internal Tiki components
  *
  * All Rights Reserved. See copyright.txt for details and a complete list of authors.
- * Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
  *
  * @package Tikiwiki\admin
  * @copyright (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
+ * @licence Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
  */
 // $Id$
 
@@ -21,11 +21,14 @@ if (isset($_REQUEST['searchprefs'])) {
 	check_ticket('admin-inc-search');
 }
 /**
+ * creates an array containing a list of all currently active features
+ *
  * @return array
  */
 function activated_features()
 {
 	global $prefs;
+	/** @var array $activated_features an array to store the data */
 	$activated_features = array();
 
 	$features = array(

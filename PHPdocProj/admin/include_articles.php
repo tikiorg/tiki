@@ -18,12 +18,15 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 	exit;
 }
 
+/** test for $_REQUEST["cmsprefs"], check 'admin-inc-cms' ticket */
 if (isset($_REQUEST["cmsprefs"])) {
 	check_ticket('admin-inc-cms');
 }
+/** test for $_REQUEST["articlecomprefs"], check 'admin-inc-cms' ticket */
 if (isset($_REQUEST["articlecomprefs"])) {
 	check_ticket('admin-inc-cms');
 }
+/** test for $_REQUEST['import'], check 'admin-inc-cms' ticket then list articles */
 if (isset($_REQUEST['import'])) {
 	global $artlib;
 	include_once ('lib/articles/artlib.php');
