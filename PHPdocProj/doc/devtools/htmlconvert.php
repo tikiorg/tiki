@@ -1,8 +1,11 @@
 <?php
-// (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-//
-// All Rights Reserved. See copyright.txt for details and a complete list of authors.
-// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+/**
+ * htmlconvert: test tool for Jison parser.
+ *
+ * @package Tikiwiki\doc\devtools
+ * @copyright (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project. All Rights Reserved. See copyright.txt for details and a complete list of authors.
+ * @licence Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+ */
 // $Id$
 require_once('tiki-setup.php');
 
@@ -49,6 +52,13 @@ if (in_array('-f', $argv)) {
 
 // The test function
 ///////////////////////////
+/**
+ * @param $page
+ * @param $startTime
+ * @param $endTime
+ *
+ * @return bool
+ */
 function tf($page, &$startTime, &$endTime)
 {
 	global $xcludeContent;
@@ -151,6 +161,9 @@ echo "Avg msec/page: ".$avgTimePerPage."\n";
 ///////////////////////
 
 // @return current micro time in milli-seconds
+/**
+ * @return mixed
+ */
 function getMicroTime()
 {
 	$mtime = microtime();

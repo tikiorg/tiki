@@ -1,21 +1,27 @@
 <?php
-// (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
-// All Rights Reserved. See copyright.txt for details and a complete list of authors.
-// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+/**
+ * outputs the prefreport as a pipe delimited CSV file.
+ *
+ * still needs some refinement to ensure strings are properly escaped in it's present form,
+ * we run into errors due to the number of rows when importing into Spreadsheet Apps.
+ *
+ * @package Tikiwiki\docs\devtools
+ * @copyright (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project. All Rights Reserved. See copyright.txt for details and a complete list of authors.
+ * @licence Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+ */
 // $Id$
 
-// outputs the prefreport as a pipe delimited file
+//
 
 // Usage: From the command line:
 // php doc/devtools/prefreport.php
-// resulting file can be found at dump/prefreport.txt
+// resulting file can be found at /prefreport.csv
 //
 // also check out  doc/devtools/securitycheck.php to see in which files are 
 // used each pref (and permission name too)
 //
 
-$ourFileName = "dump/prefreport.txt";
+$ourFileName = "prefreport.csv";
 
 require_once 'tiki-setup.php';
 require_once 'lib/prefslib.php';
