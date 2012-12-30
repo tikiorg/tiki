@@ -809,8 +809,9 @@ class ImageGalsLib extends TikiLib
 		$filename = $this->filename; // filename of original image
 		$this->type = $itype;
 
-		//store (needs overwrite param to be true to update, not create new)
-		$this->store_image_data(true);
+		// We only reach this point if rebuild_thumbnails() was run, i.e. there is nothing
+		// in the database - so we need overwrite param to be false to insert into database
+		$this->store_image_data(false);
 
 		//return new size
 		$newsize["xsize"] = $this->xsize;
