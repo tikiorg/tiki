@@ -12492,7 +12492,7 @@ $lang = array(
 // "Source of version" => "Source of version",
 // "s=source" => "s=source",
 // "b=rollback" => "b=rollback",
-// "by %0" => "by %0",
+"by %0" => "af %0",
 // "from %0" => "from %0",
 // "approved" => "approved",
 // "Updated from" => "Updated from",
