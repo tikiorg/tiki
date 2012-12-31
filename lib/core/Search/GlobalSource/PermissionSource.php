@@ -31,23 +31,42 @@ class Search_GlobalSource_PermissionSource implements Search_GlobalSource_Interf
 		if (isset($data['view_permission'])) {
 			$viewPermission = is_object($data['view_permission']) ? $data['view_permission']->getValue() : $data['view_permission'];
 
-			$groups = array_merge($groups, $this->getAllowedGroups($objectType, $objectId, $viewPermission));
+			if (isset($data['_permission_accessor'])) {
+				$accessor = $data['_permission_accessor'];
+			} else {
+				$accessor = $this->perms->getAccessor(
+					array(
+						'type' => $objectType,
+						'object' => $objectId,
+					)
+				);
+			}
+
+			$groups = array_merge($groups, $this->getAllowedGroups($accessor, $viewPermission));
 		}
 
 		if (isset($data['parent_view_permission'], $data['parent_object_id'], $data['parent_object_type'])) {
 			$viewPermission = is_object($data['parent_view_permission']) ? $data['parent_view_permission']->getValue() : $data['parent_view_permission'];
-			$objectType = is_object($data['parent_object_type']) ? $data['parent_object_type']->getValue() : $data['parent_object_type'];
-			$objectId = is_object($data['parent_object_id']) ? $data['parent_object_id']->getValue() : $data['parent_object_id'];
+			$accessor = $this->perms->getAccessor(
+				array(
+					'type' => $data['parent_object_type']->getValue(),
+					'object' => $data['parent_object_id']->getValue(),
+				)
+			);
 
-			$groups = array_merge($groups, $this->getAllowedGroups($objectType, $objectId, $viewPermission));
+			$groups = array_merge($groups, $this->getAllowedGroups($accessor, $viewPermission));
 		}
 
 		// Used for comments - must see the parent view permission in addition to a global permission to view comments
 		if (isset($data['global_view_permission'])) {
 			$globalPermission = $data['global_view_permission'];
-			$globalPermission = is_object($globalPermission) ? $globalPermission->getValue() : $globalPermission;
+			$globalPermission = $globalPermission->getValue();
 			$groups = $this->getGroupExpansion($groups);
 			$groups = $this->filterWithGlobalPermission($groups, $globalPermission);
+		}
+
+		if (! empty($data['_extra_groups'])) {
+			$groups = array_merge($groups, $data['_extra_groups']);
 		}
 
 		return array(
@@ -55,15 +74,8 @@ class Search_GlobalSource_PermissionSource implements Search_GlobalSource_Interf
 		);
 	}
 
-	private function getAllowedGroups($objectType, $objectId, $viewPermission)
+	private function getAllowedGroups($accessor, $viewPermission)
 	{
-		$accessor = $this->perms->getAccessor(
-			array(
-				'type' => $objectType,
-				'object' => $objectId,
-			)
-		);
-
 		$groups = array();
 		foreach ($this->getCheckList($accessor) as $groupName) {
 			$accessor->setGroups(array($groupName));

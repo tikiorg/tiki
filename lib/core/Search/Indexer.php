@@ -154,6 +154,8 @@ class Search_Indexer
 		$data = array_merge(array_filter($data), $base);
 		$data = $this->applyFilters($data);
 
+		$data = $this->removeTemporaryKeys($data);
+
 		$this->searchIndex->addDocument($data);
 	}
 
@@ -166,6 +168,22 @@ class Search_Indexer
 
 			if (is_callable(array($value, 'filter'))) {
 				$data[$key] = $value->filter($this->contentFilters);
+			}
+		}
+
+		return $data;
+	}
+
+	private function removeTemporaryKeys($data)
+	{
+		$keys = array_keys($data);
+		$toRemove = array_filter($keys, function ($key) {
+			return $key{0} === '_';
+		});
+
+		foreach ($keys as $key) {
+			if ($key{0} === '_') {
+				unset($data[$key]);
 			}
 		}
 

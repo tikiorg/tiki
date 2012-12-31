@@ -36,13 +36,8 @@ class Search_ContentSource_TrackerItemSource implements Search_ContentSource_Int
 
 		$item = $this->trklib->get_tracker_item($objectId);
 
-		if ($item['status'] == 'c') {
-			$permNeeded = 'tiki_p_view_trackers_closed';
-		} elseif ($item['status'] == 'p') {
-			$permNeeded = 'tiki_p_view_trackers_pending';
-		} else {
-			$permNeeded = 'tiki_p_view_trackers';
-		}
+		$itemObject = Tracker_Item::fromInfo($item);
+		$permNeeded = $itemObject->getViewPermission();
 
 		$definition = Tracker_Definition::get($item['trackerId']);
 
@@ -54,6 +49,7 @@ class Search_ContentSource_TrackerItemSource implements Search_ContentSource_Int
 			$data = array_merge($data, $handler->getDocumentPart($baseKey, $typeFactory));
 		}
 
+		$ownerGroup = $itemObject->getOwnerGroup();
 		$data = array_merge(
 			$data,
 			array(
@@ -64,9 +60,11 @@ class Search_ContentSource_TrackerItemSource implements Search_ContentSource_Int
 				'tracker_status' => $typeFactory->identifier($item['status']),
 				'tracker_id' => $typeFactory->identifier($item['trackerId']),
 
-				'parent_object_type' => $typeFactory->identifier('tracker'),
-				'parent_object_id' => $typeFactory->identifier($item['trackerId']),
-				'parent_view_permission' => $typeFactory->identifier($permNeeded),
+				'view_permission' => $typeFactory->identifier($permNeeded),
+
+				// Fake attributes, removed before indexing
+				'_permission_accessor' => $itemObject->getPerms(),
+				'_extra_groups' => $ownerGroup ? array($ownerGroup) : null,
 			)
 		);
 
