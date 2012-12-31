@@ -69,15 +69,9 @@ class Tracker_Item
 			return true;
 		}
 
-		$status = $this->info['status'];
+		$permName = $this->getViewPermission();
 
-		if ($status == 'c') {
-			return $this->perms->view_trackers_closed;
-		} elseif ($status == 'p') {
-			return $this->perms->view_trackers_pending;
-		} else {
-			return $this->perms->view_trackers;
-		}
+		return $this->perms->$permName;
 	}
 
 	function canModify()
@@ -363,6 +357,24 @@ class Tracker_Item
 	public function getPerms()
 	{
 		return $this->perms;
+	}
+
+	public function getOwnerGroup()
+	{
+		return $this->ownerGroup;
+	}
+
+	public function getViewPermission()
+	{
+		$status = $this->info['status'];
+
+		if ($status == 'c') {
+			return 'view_trackers_closed';
+		} elseif ($status == 'p') {
+			return 'view_trackers_pending';
+		} else {
+			return 'view_trackers';
+		}
 	}
 
 	public function getData($input = null)

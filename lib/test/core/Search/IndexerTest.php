@@ -223,5 +223,23 @@ class Search_IndexerTest extends PHPUnit_Framework_TestCase
 		$this->assertEquals($typeFactory->plaintext('Hello (latest)'), $document['title']);
 		$this->assertEquals(array('wiki page' => 2), $stats);
 	}
+
+	function testTemporaryFields()
+	{
+		$contentSource = new Search_ContentSource_Static(
+			array('HomePage' => array('_title' => 'Hello'),),
+			array('_title' => 'plaintext')
+		);
+
+		$index = new Search_Index_Memory;
+		$indexer = new Search_Indexer($index);
+		$indexer->addContentSource('wiki page', $contentSource);
+		$stats = $indexer->rebuild();
+
+		$document = $index->getDocument(0);
+
+		$typeFactory = $index->getTypeFactory();
+		$this->assertArrayNotHasKey('_title', $document);
+	}
 }
 
