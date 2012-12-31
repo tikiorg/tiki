@@ -45,8 +45,11 @@ class Search_Action_EmailAction implements Search_Action_Action
 				$mail->addBcc($bcc);
 			}
 
-			$mail->setSubject($data->subject->text());
-			$mail->setBodyHtml($data->content->name());
+			$content = $this->parse($data->content->none());
+			$subject = $this->parse($data->subject->text());
+
+			$mail->setSubject(strip_tags($subject));
+			$mail->setBodyHtml($content);
 
 			$mail->send();
 
@@ -54,6 +57,15 @@ class Search_Action_EmailAction implements Search_Action_Action
 		} catch (Exception $e) {
 			return false;
 		}
+	}
+
+	private function parse($content)
+	{
+		$content = "~np~$content~/np~";
+
+		$parserlib = TikiLib::lib('parser');
+
+		return trim($parserlib->parse_data($content));
 	}
 }
 
