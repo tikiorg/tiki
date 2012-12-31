@@ -82,8 +82,8 @@ function wikiplugin_listexecute($data, $params)
 
 		$reportSource = new Search_GlobalSource_Reporting;
 
-		if (isset($_POST['action'], $_POST['objects'])) {
-			$action = $_POST['action'];
+		if (isset($_POST['list_action'], $_POST['objects'])) {
+			$action = $_POST['list_action'];
 			$objects = (array) $_POST['objects'];
 
 			if (isset($actions[$action])) {

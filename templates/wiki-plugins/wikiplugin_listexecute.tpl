@@ -13,7 +13,7 @@
 			</li>
 		{/foreach}
 	</ol>
-	<select name="action">
+	<select name="list_action">
 		<option></option>
 		{foreach from=$actions item=action}
 			<option value="{$action|escape}">{$action|escape}</option>
