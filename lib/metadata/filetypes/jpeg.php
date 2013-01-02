@@ -150,7 +150,7 @@ class Jpeg extends ImageFile
 
 		//XMP
 		//get raw xmp DOM, convert to an array add tags and interpret
-		if (isset($metaObj->content)) {
+		if (!empty($metaObj->content)) {
 			require_once('lib/metadata/datatypes/xmp.php');
 			$xmp = new Xmp;
 			$metadata['xmpraw'] = $xmp->getXmp($metaObj->content, $metaObj->basicraw['type']);
