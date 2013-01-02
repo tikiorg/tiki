@@ -84,6 +84,9 @@ try {
 }
 
 if ( ! function_exists('close_connection') ) {
+	/** 
+	 * close the DB connection 
+	 */
 	function close_connection()
 	{
 		global $dbTiki;

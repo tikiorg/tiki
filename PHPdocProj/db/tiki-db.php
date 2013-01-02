@@ -145,11 +145,13 @@ if ( $dbversion_tiki == '1.10' ) {
 }
 
 /**
- *
+ * handles DB errors in Tiki
  */
 class TikiDb_LegacyErrorHandler implements TikiDb_ErrorHandler
 {
     /**
+     * function to handle the errors
+     * 
      * @param TikiDb $db
      * @param $query
      * @param $values
@@ -176,6 +178,8 @@ class TikiDb_LegacyErrorHandler implements TikiDb_ErrorHandler
 
 		if (function_exists('xdebug_get_function_stack')) {
             /**
+             * outputs the stack trace so we can locate the error
+             * 
              * @param $stack
              * @return string
              */
@@ -211,6 +215,8 @@ class TikiDb_LegacyErrorHandler implements TikiDb_ErrorHandler
 		die;
 	} // }}}
     /**
+     * adds $msg to the log records
+     * 
      * @param $msg
      */
     function log($msg)
@@ -250,6 +256,7 @@ if ( isset( $shadow_host, $shadow_user, $shadow_pass, $shadow_dbs ) ) {
 unset($host_map, $db_tiki, $host_tiki, $user_tiki, $pass_tiki, $dbs_tiki, $shadow_user, $shadow_pass, $shadow_host, $shadow_dbs);
 
 /**
+ * initializes the connection to Tiki's Database
  * @param $db
  */
 function init_connection( $db )
