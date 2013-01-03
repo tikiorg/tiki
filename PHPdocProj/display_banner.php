@@ -1,6 +1,10 @@
 <?php
 /**
- * @package tikiwiki
+ * if <i>feature_banners</i> is enabled, this script displays banners
+ *
+ * @package Tikiwiki/
+ * @copyright (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project. All Rights Reserved. See copyright.txt for details and a complete list of authors.
+ * @licence Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
  */
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
 // 

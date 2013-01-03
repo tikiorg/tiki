@@ -1,14 +1,17 @@
 <?php
 /**
+ * requires Feature->Comm enabled
+ *
+ * All Rights Reserved. See copyright.txt for details and a complete list of authors.
+ * Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+ *
  * @package Tikiwiki
+ * @copyright (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
  */
-// (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-//
-// All Rights Reserved. See copyright.txt for details and a complete list of authors.
-// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 require_once("tiki-setup.php");
+/** @noinspection PhpIncludeInspection */
 require_once ("lib/pear/XML/Server.php");
 require_once ('lib/commcenter/commlib.php');
 
@@ -25,6 +28,8 @@ $map = array(
 $s = new XML_RPC_Server($map);
 
 /**
+ * checks for permissions and then recieves a page submitted via email by $user
+ * 
  * @param $params
  * @return XML_RPC_Response
  */
@@ -65,8 +70,9 @@ function sendStructurePage($params)
 	return new XML_RPC_Response(new XML_RPC_Value(1, "boolean"));
 }
 
-/* Validates the user and returns user information */
 /**
+ * Validates the user and returns user information
+ * 
  * @param $params
  * @return XML_RPC_Response
  */
@@ -111,12 +117,13 @@ function sendPage($params)
 }
 
 /**
+ * Get the page and store it in received_pages
+ * 
  * @param $params
  * @return XML_RPC_Response
  */
 function sendArticle($params)
 {
-	// Get the page and store it in received_pages
 	global $tikilib, $userlib, $commlib, $prefs;
 
 	$pp = $params->getParam(0);

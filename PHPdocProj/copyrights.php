@@ -1,11 +1,14 @@
 <?php
 /**
- * @package tikiwiki
+ * Copyright management.
+ * 
+ * tests that <i>wiki_feature_copyrights</i> is active and the user has <i>tiki_p_edit_copyrights</i> 
+ * if both are true, adds the copyright data to a given Wiki page.
+ * 
+ * @package Tikiwiki
+ * @copyright (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project All Rights Reserved. See copyright.txt for details and a complete list of authors.
+ * @licence Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
  */
-// (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
-// All Rights Reserved. See copyright.txt for details and a complete list of authors.
-// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 require_once ('tiki-setup.php');

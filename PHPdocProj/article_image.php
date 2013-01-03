@@ -1,15 +1,14 @@
 <?php
 /**
- * @package tikiwiki
+ * Application to dispay an image from the database with the option to resize the image dynamically creating a thumbnail on the fly.
+ *
+ * All Rights Reserved. See copyright.txt for details and a complete list of authors.
+ * Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+ *
+ * @package Tikiwiki
+ * @copyright (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
  */
-// (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
-// All Rights Reserved. See copyright.txt for details and a complete list of authors.
-// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
-
-// application to display an image from the database with 
-// option to resize the image dynamically creating a thumbnail on the fly.
 
 // This handles 4 types of images, depending on the image_type parameter: 
 // "article": Images for articles

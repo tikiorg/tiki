@@ -1,11 +1,13 @@
 <?php
 /**
- * @package tikiwiki
+ * used to display contibutions from a requested User
+ *
+ * All Rights Reserved. See copyright.txt for details and a complete list of authors.
+ * Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+ *
+ * @package Tikiwiki
+ * @copyright (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
  */
-// (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
-// All Rights Reserved. See copyright.txt for details and a complete list of authors.
-// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 // the script uses the var $_REQUEST['contributions'] = the list of selected contributions to preselect the contributions
