@@ -1,8 +1,13 @@
 <?php
-// (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-//
-// All Rights Reserved. See copyright.txt for details and a complete list of authors.
-// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+/**
+ * Tiki->Articles library
+ *
+ * All Rights Reserved. See copyright.txt for details and a complete list of authors.
+ *
+ * @package Tikiwiki\lib\articles
+ * @copyright (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
+ * @licence Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+ */
 // $Id$
 
 //this script may only be included - so its better to die if called directly.
@@ -11,15 +16,29 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
 	exit;
 }
 
+/**
+ *
+ */
 class ArtLib extends TikiLib
 {
 	//Special parsing for multipage articles
+	/**
+	 * @param $data
+	 *
+	 * @return int
+	 */
 	function get_number_of_pages($data)
 	{
 		$parts = explode('...page...', $data);
 		return count($parts);
 	}
 
+	/**
+	 * @param $data
+	 * @param $i
+	 *
+	 * @return string
+	 */
 	function get_page($data, $i)
 	{
 		// Get slides
@@ -38,6 +57,11 @@ class ArtLib extends TikiLib
 		return $ret;
 	}
 
+	/**
+	 * @param $subId
+	 *
+	 * @return bool
+	 */
 	function approve_submission($subId)
 	{
 		$data = $this->get_submission($subId);
@@ -87,6 +111,11 @@ class ArtLib extends TikiLib
 		$this->remove_submission($subId);
 	}
 
+	/**
+	 * @param $articleId
+	 *
+	 * @return bool
+	 */
 	function add_article_hit($articleId)
 	{
 		global $prefs, $user;
@@ -100,6 +129,12 @@ class ArtLib extends TikiLib
 		return true;
 	}
 
+	/**
+	 * @param        $articleId
+	 * @param string $article_data
+	 *
+	 * @return bool
+	 */
 	function remove_article($articleId, $article_data ='')
 	{
 		global $smarty, $tikilib, $user, $prefs;
@@ -177,6 +212,11 @@ class ArtLib extends TikiLib
 		}
 	}
 
+	/**
+	 * @param $subId
+	 *
+	 * @return bool
+	 */
 	function remove_submission($subId)
 	{
 		if ($subId) {
@@ -187,7 +227,34 @@ class ArtLib extends TikiLib
 		}
 	}
 
-	function replace_submission($title
+	/**
+	 * @param        $title
+	 * @param        $authorName
+	 * @param        $topicId
+	 * @param        $useImage
+	 * @param        $imgname
+	 * @param        $imgsize
+	 * @param        $imgtype
+	 * @param        $imgdata
+	 * @param        $heading
+	 * @param        $body
+	 * @param        $publishDate
+	 * @param        $expireDate
+	 * @param        $user
+	 * @param        $subId
+	 * @param        $image_x
+	 * @param        $image_y
+	 * @param        $type
+	 * @param        $topline
+	 * @param        $subtitle
+	 * @param        $linkto
+	 * @param        $image_caption
+	 * @param        $lang
+	 * @param int    $rating
+	 * @param string $isfloat
+	 *
+	 * @return bool|mixed
+	 */function replace_submission($title
 														, $authorName
 														, $topicId
 														, $useImage
@@ -393,7 +460,39 @@ class ArtLib extends TikiLib
 		return $id;
 	}
 
-	function replace_article( $title
+	/**
+	 * @param        $title
+	 * @param        $authorName
+	 * @param        $topicId
+	 * @param        $useImage
+	 * @param        $imgname
+	 * @param        $imgsize
+	 * @param        $imgtype
+	 * @param        $imgdata
+	 * @param        $heading
+	 * @param        $body
+	 * @param        $publishDate
+	 * @param        $expireDate
+	 * @param        $user
+	 * @param        $articleId
+	 * @param        $image_x
+	 * @param        $image_y
+	 * @param        $type
+	 * @param        $topline
+	 * @param        $subtitle
+	 * @param        $linkto
+	 * @param        $image_caption
+	 * @param        $lang
+	 * @param int    $rating
+	 * @param string $isfloat
+	 * @param string $emails
+	 * @param string $from
+	 * @param string $list_image_x
+	 * @param string $list_image_y
+	 * @param string $ispublished
+	 *
+	 * @return mixed
+	 */function replace_article( $title
 													, $authorName
 													, $topicId
 													, $useImage
@@ -635,6 +734,15 @@ class ArtLib extends TikiLib
 		return $articleId;
 	}
 
+	/**
+	 * @param $name
+	 * @param $imagename
+	 * @param $imagetype
+	 * @param $imagesize
+	 * @param $imagedata
+	 *
+	 * @return mixed
+	 */
 	function add_topic($name, $imagename, $imagetype, $imagesize, $imagedata)
 	{
 		$query = 'insert into `tiki_topics`(`name`,`image_name`,`image_type`,`image_size`,`image_data`,`active`,`created`) values(?,?,?,?,?,?,?)';
@@ -645,6 +753,12 @@ class ArtLib extends TikiLib
 		return $topicId;
 	}
 
+	/**
+	 * @param     $topicId
+	 * @param int $all
+	 *
+	 * @return bool
+	 */
 	function remove_topic($topicId, $all = 0)
 	{
 		$query = 'delete from `tiki_topics` where `topicId`=?';
@@ -662,6 +776,12 @@ class ArtLib extends TikiLib
 		return true;
 	}
 
+	/**
+	 * @param $topicId
+	 * @param $name
+	 *
+	 * @return bool
+	 */
 	function replace_topic_name($topicId, $name)
 	{
 		$query = 'update `tiki_topics` set `name` = ? where `topicId` = ?';
@@ -672,6 +792,15 @@ class ArtLib extends TikiLib
 		return true;
 	}
 
+	/**
+	 * @param $topicId
+	 * @param $imagename
+	 * @param $imagetype
+	 * @param $imagesize
+	 * @param $imagedata
+	 *
+	 * @return bool
+	 */
 	function replace_topic_image($topicId, $imagename, $imagetype, $imagesize, $imagedata)
 	{
 		$topicId = (int)$topicId;
@@ -681,6 +810,9 @@ class ArtLib extends TikiLib
 		return true;
 	}
 
+	/**
+	 * @param $topicId
+	 */
 	function activate_topic($topicId)
 	{
 		$query = 'update `tiki_topics` set `active`=? where `topicId`=?';
@@ -688,6 +820,9 @@ class ArtLib extends TikiLib
 		$result = $this->query($query, array('y', $topicId));
 	}
 
+	/**
+	 * @param $topicId
+	 */
 	function deactivate_topic($topicId)
 	{
 		$query = 'update `tiki_topics` set `active`=? where `topicId`=?';
@@ -695,6 +830,11 @@ class ArtLib extends TikiLib
 		$result = $this->query($query, array('n', $topicId));
 	}
 
+	/**
+	 * @param $topicId
+	 *
+	 * @return mixed
+	 */
 	function get_topic($topicId)
 	{
 		$query = 'select `topicId`,`name`,`image_name`,`image_size`,`image_type` from `tiki_topics` where `topicId`=?';
@@ -705,12 +845,20 @@ class ArtLib extends TikiLib
 		return $res;
 	}
 
+	/**
+	 * @param $name
+	 *
+	 * @return mixed
+	 */
 	function get_topicId($name)
 	{
 		$query = 'select `topicId` from `tiki_topics` where `name`=?';
 		return $this->getOne($query, array($name));
 	}
 
+	/**
+	 * @return array
+	 */
 	function list_topics()
 	{
 		$query = 'select `topicId`,`name`,`image_name`,`image_size`,`image_type`,`active` from `tiki_topics` order by `name`';
@@ -729,6 +877,9 @@ class ArtLib extends TikiLib
 		return $ret;
 	}
 
+	/**
+	 * @return array
+	 */
 	function list_active_topics()
 	{
 		$query = 'select * from `tiki_topics` where `active`=?';
@@ -745,6 +896,11 @@ class ArtLib extends TikiLib
 	}
 
 	// Article Type functions
+	/**
+	 * @param $type
+	 *
+	 * @return bool
+	 */
 	function add_type($type)
 	{
 		$result = $this->query('insert into `tiki_article_types`(`type`) values(?)', array($type));
@@ -752,6 +908,27 @@ class ArtLib extends TikiLib
 		return true;
 	}
 
+	/**
+	 * @param $type
+	 * @param $use_ratings
+	 * @param $show_pre_publ
+	 * @param $show_post_expire
+	 * @param $heading_only
+	 * @param $allow_comments
+	 * @param $comment_can_rate_article
+	 * @param $show_image
+	 * @param $show_avatar
+	 * @param $show_author
+	 * @param $show_pubdate
+	 * @param $show_expdate
+	 * @param $show_reads
+	 * @param $show_size
+	 * @param $show_topline
+	 * @param $show_subtitle
+	 * @param $show_linkto
+	 * @param $show_image_caption
+	 * @param $creator_edit
+	 */
 	function edit_type( $type
 										, $use_ratings
 										, $show_pre_publ
@@ -926,6 +1103,9 @@ class ArtLib extends TikiLib
 		);
 	}
 
+	/**
+	 * @param $type
+	 */
 	function remove_type($type)
 	{
 		$query = 'delete from `tiki_article_types` where `type`=?';
@@ -935,6 +1115,11 @@ class ArtLib extends TikiLib
 		$result = $this->query($query, array($type));
 	}
 
+	/**
+	 * @param $type
+	 *
+	 * @return mixed
+	 */
 	function get_type($type)
 	{
 		$query = 'select * from `tiki_article_types` where `type`=?';
@@ -945,6 +1130,9 @@ class ArtLib extends TikiLib
 		return $res;
 	}
 
+	/**
+	 * @return array
+	 */
 	function list_types()
 	{
 		$query = 'select * from `tiki_article_types`';
@@ -959,6 +1147,9 @@ class ArtLib extends TikiLib
 		return $ret;
 	}
 
+	/**
+	 * @return array
+	 */
 	function list_types_byname()
 	{
 		$query = "select * from `tiki_article_types` order by `type` asc";
@@ -972,6 +1163,12 @@ class ArtLib extends TikiLib
 		return $ret;
 	}
 
+	/**
+	 * @param $user
+	 * @param $max
+	 *
+	 * @return array
+	 */
 	function get_user_articles($user, $max)
 	{
 		$query = 'select `articleId` ,`title` from `tiki_articles` where `author`=? order by `publishDate` desc';
@@ -988,8 +1185,14 @@ class ArtLib extends TikiLib
 		return $ret;
 	}
 
-	function import_csv($fileName, &$msgs, $csvDelimiter = ',')
-	{
+	/**
+	 * @param        $fileName
+	 * @param        $msgs
+	 * @param string $csvDelimiter
+	 *
+	 * @return bool
+	 */
+	function import_csv($fileName, &$msgs, $csvDelimiter = ',') {
 		global $user, $prefs, $tikilib;
 		$fhandle = fopen($fileName, 'r');
 		if (($fds = fgetcsv($fhandle, 4096, $csvDelimiter)) === false || empty($fds[0])) {
@@ -999,57 +1202,57 @@ class ArtLib extends TikiLib
 		for ($i = 0, $icount_fds = count($fds); $i < $icount_fds; $i++) {
 			$fields[trim($fds[$i])] = $i;
 		}
-		if (!isset($fields['title']))					$fields['title']				= $i++;
-		if (!isset($fields['authorName']))		$fields['authorName']		= $i++;
-		if (!isset($fields['topicId']))				$fields['topicId']			= $i++;
-		if (!isset($fields['useImage']))			$fields['useImage']			= $i++;
-		if (!isset($fields['imgname']))				$fields['imgname']			= $i++;
-		if (!isset($fields['imgsize']))				$fields['imgsize']			= $i++;
-		if (!isset($fields['imgtype']))				$fields['imgtype']			= $i++;
-		if (!isset($fields['imgdata']))				$fields['imgdata']			= $i++;
-		if (!isset($fields['heading']))				$fields['heading']			= $i++;
-		if (!isset($fields['body']))					$fields['body']					= $i++;
-		if (!isset($fields['publishDate']))		$fields['publishDate']	= $i++;
-		if (!isset($fields['expireDate']))		$fields['expireDate']		= $i++;
-		if (!isset($fields['user']))					$fields['user']					= $i++;
-		if (!isset($fields['image_x']))				$fields['image_x']			= $i++;
-		if (!isset($fields['image_y']))				$fields['image_y']			= $i++;
-		if (!isset($fields['type']))					$fields['type']					= $i++;
-		if (!isset($fields['topline']))				$fields['topline']			= $i++;
-		if (!isset($fields['subtitle']))			$fields['subtitle']			= $i++;
-		if (!isset($fields['linkto']))				$fields['linkto']				= $i++;
-		if (!isset($fields['image_caption'])) $fields['image_caption']= $i++;
-		if (!isset($fields['lang']))					$fields['lang']					= $i++;
-		if (!isset($fields['rating']))				$fields['rating']				= $i++;
-		if (!isset($fields['isfloat']))				$fields['isfloat']			= $i++;
-		if (!isset($fields['emails']))				$fields['emails']				= $i++;
+		if (!isset($fields['title'])) $fields['title'] = $i++;
+		if (!isset($fields['authorName'])) $fields['authorName'] = $i++;
+		if (!isset($fields['topicId'])) $fields['topicId'] = $i++;
+		if (!isset($fields['useImage'])) $fields['useImage'] = $i++;
+		if (!isset($fields['imgname'])) $fields['imgname'] = $i++;
+		if (!isset($fields['imgsize'])) $fields['imgsize'] = $i++;
+		if (!isset($fields['imgtype'])) $fields['imgtype'] = $i++;
+		if (!isset($fields['imgdata'])) $fields['imgdata'] = $i++;
+		if (!isset($fields['heading'])) $fields['heading'] = $i++;
+		if (!isset($fields['body'])) $fields['body'] = $i++;
+		if (!isset($fields['publishDate'])) $fields['publishDate'] = $i++;
+		if (!isset($fields['expireDate'])) $fields['expireDate'] = $i++;
+		if (!isset($fields['user'])) $fields['user'] = $i++;
+		if (!isset($fields['image_x'])) $fields['image_x'] = $i++;
+		if (!isset($fields['image_y'])) $fields['image_y'] = $i++;
+		if (!isset($fields['type'])) $fields['type'] = $i++;
+		if (!isset($fields['topline'])) $fields['topline'] = $i++;
+		if (!isset($fields['subtitle'])) $fields['subtitle'] = $i++;
+		if (!isset($fields['linkto'])) $fields['linkto'] = $i++;
+		if (!isset($fields['image_caption'])) $fields['image_caption'] = $i++;
+		if (!isset($fields['lang'])) $fields['lang'] = $i++;
+		if (!isset($fields['rating'])) $fields['rating'] = $i++;
+		if (!isset($fields['isfloat'])) $fields['isfloat'] = $i++;
+		if (!isset($fields['emails'])) $fields['emails'] = $i++;
 		$line = 1;
 		while (($data = fgetcsv($fhandle, 4096, $csvDelimiter)) !== false) {
 			++$line;
-			if (!isset($data[$fields['title']]))				$data[$fields['title']]					= '';
-			if (!isset($data[$fields['authorName']]))		$data[$fields['authorName']]		= '';
-			if (!isset($data[$fields['topicId']]))			$data[$fields['topicId']]				= 0;
-			if (!isset($data[$fields['useImage']]))			$data[$fields['useImage']]			= 'n';
-			if (!isset($data[$fields['imgname']]))			$data[$fields['imgname']]				= '';
-			if (!isset($data[$fields['imgsize']]))			$data[$fields['imgsize']]				= '';
-			if (!isset($data[$fields['imgtype']]))			$data[$fields['imgtype']]				= '';
-			if (!isset($data[$fields['imgdata']]))			$data[$fields['imgdata']]				= '';
-			if (!isset($data[$fields['heading']]))			$data[$fields['heading']]				= '';
-			if (!isset($data[$fields['body']]))					$data[$fields['body']]					= '';
-			if (!isset($data[$fields['publishDate']]))	$data[$fields['publishDate']]		= $tikilib->now;
-			if (!isset($data[$fields['expireDate']]))		$data[$fields['expireDate']]		= $tikilib->now + 365*24*60*60;
-			if (!isset($data[$fields['user']]))					$data[$fields['user']]					= $user;
-			if (!isset($data[$fields['image_x']]))			$data[$fields['image_x']]				= 0;
-			if (!isset($data[$fields['image_y']]))			$data[$fields['image_y']]				= 0;
-			if (!isset($data[$fields['type']]))					$data[$fields['type']]					= 'Article';
-			if (!isset($data[$fields['topline']]))			$data[$fields['topline']]				= '';
-			if (!isset($data[$fields['subtitle']]))			$data[$fields['subtitle']]			= '';
-			if (!isset($data[$fields['linkto']]))				$data[$fields['linkto']]				= '';
-			if (!isset($data[$fields['image_caption']]))$data[$fields['image_caption']] = '';
-			if (!isset($data[$fields['lang']]))					$data[$fields['lang']]					= $prefs['language'];
-			if (!isset($data[$fields['rating']]))				$data[$fields['rating']]				= 7;
-			if (!isset($data[$fields['isfloat']]))			$data[$fields['isfloat']]				= 'n';
-			if (!isset($data[$fields['emails']]))				$data[$fields['emails']]				= '';
+			if (!isset($data[$fields['title']])) $data[$fields['title']] = '';
+			if (!isset($data[$fields['authorName']])) $data[$fields['authorName']] = '';
+			if (!isset($data[$fields['topicId']])) $data[$fields['topicId']] = 0;
+			if (!isset($data[$fields['useImage']])) $data[$fields['useImage']] = 'n';
+			if (!isset($data[$fields['imgname']])) $data[$fields['imgname']] = '';
+			if (!isset($data[$fields['imgsize']])) $data[$fields['imgsize']] = '';
+			if (!isset($data[$fields['imgtype']])) $data[$fields['imgtype']] = '';
+			if (!isset($data[$fields['imgdata']])) $data[$fields['imgdata']] = '';
+			if (!isset($data[$fields['heading']])) $data[$fields['heading']] = '';
+			if (!isset($data[$fields['body']])) $data[$fields['body']] = '';
+			if (!isset($data[$fields['publishDate']])) $data[$fields['publishDate']] = $tikilib->now;
+			if (!isset($data[$fields['expireDate']])) $data[$fields['expireDate']] = $tikilib->now + 365 * 24 * 60 * 60;
+			if (!isset($data[$fields['user']])) $data[$fields['user']] = $user;
+			if (!isset($data[$fields['image_x']])) $data[$fields['image_x']] = 0;
+			if (!isset($data[$fields['image_y']])) $data[$fields['image_y']] = 0;
+			if (!isset($data[$fields['type']])) $data[$fields['type']] = 'Article';
+			if (!isset($data[$fields['topline']])) $data[$fields['topline']] = '';
+			if (!isset($data[$fields['subtitle']])) $data[$fields['subtitle']] = '';
+			if (!isset($data[$fields['linkto']])) $data[$fields['linkto']] = '';
+			if (!isset($data[$fields['image_caption']])) $data[$fields['image_caption']] = '';
+			if (!isset($data[$fields['lang']])) $data[$fields['lang']] = $prefs['language'];
+			if (!isset($data[$fields['rating']])) $data[$fields['rating']] = 7;
+			if (!isset($data[$fields['isfloat']])) $data[$fields['isfloat']] = 'n';
+			if (!isset($data[$fields['emails']])) $data[$fields['emails']] = '';
 
 			$articleId = $this->replace_article(
 				$data[$fields['title']],
@@ -1085,6 +1288,14 @@ class ArtLib extends TikiLib
 		return true;
 	}
 
+	/**
+	 * deletes an imamge from the image_cache
+	 *
+	 * @param $image_type
+	 * @param $imageId
+	 *
+	 * @return bool
+	 */
 	function delete_image_cache($image_type, $imageId)
 	{
 		global $prefs, $tikidomain;
@@ -1117,12 +1328,26 @@ class ArtLib extends TikiLib
 		}
 	}
 
+	/**
+	 * retrieves the title of the article identified by $articleId
+	 *
+	 * @param $articleId
+	 *
+	 * @return mixed
+	 */
 	function get_title($articleId)
 	{
 		$query = 'select `title` from `tiki_articles` where `articleId`=?';
 		return $this->getOne($query, array((int)$articleId));
 	}
 
+	/**
+	 * retrieves the topic Id for the requesterd Topic
+	 *
+	 * @param $topic
+	 *
+	 * @return mixed
+	 */
 	function fetchtopicId($topic)
 	{
 		$topicId = '';
@@ -1131,6 +1356,11 @@ class ArtLib extends TikiLib
 		return $topicId;
 	}
 
+	/**
+	 * Gets the reference Id for the most recent article.
+	 *
+	 * @return mixed
+	 */
 	function get_most_recent_article_id()
 	{
 		$maxRecords = 1;
@@ -1146,27 +1376,51 @@ class ArtLib extends TikiLib
 		return $id;
 	}
 
-	function list_articles( $offset = 0
-												, $maxRecords = -1
-												, $sort_mode = 'publishDate_desc'
-												, $find = ''
-												, $date_min = 0
-												, $date_max = 0
-												, $user = false
-												, $type = ''
-												, $topicId = ''
-												, $visible_only = 'y'
-												, $topic = ''
-												, $categId = ''
-												, $creator = ''
-												, $group = ''
-												, $lang = ''
-												, $min_rating = ''
-												, $max_rating = ''
-												, $override_dates = false
-												, $ispublished = ''
-												, $filter = ''
-												)
+	/**
+	 * @param int    $offset
+	 * @param        $maxRecords
+	 * @param string $sort_mode
+	 * @param string $find
+	 * @param int    $date_min
+	 * @param int    $date_max
+	 * @param bool   $user
+	 * @param string $type
+	 * @param string $topicId
+	 * @param string $visible_only
+	 * @param string $topic
+	 * @param string $categId
+	 * @param string $creator
+	 * @param string $group
+	 * @param string $lang
+	 * @param string $min_rating
+	 * @param string $max_rating
+	 * @param bool   $override_dates
+	 * @param string $ispublished
+	 * @param string $filter
+	 *
+	 * @return array
+	 */
+	function list_articles($offset = 0
+		, $maxRecords = -1
+		, $sort_mode = 'publishDate_desc'
+		, $find = ''
+		, $date_min = 0
+		, $date_max = 0
+		, $user = false
+		, $type = ''
+		, $topicId = ''
+		, $visible_only = 'y'
+		, $topic = ''
+		, $categId = ''
+		, $creator = ''
+		, $group = ''
+		, $lang = ''
+		, $min_rating = ''
+		, $max_rating = ''
+		, $override_dates = false
+		, $ispublished = ''
+		, $filter = ''
+	)
 	{
 
 		global $userlib, $user, $prefs;
@@ -1414,6 +1668,15 @@ class ArtLib extends TikiLib
 		return $retval;
 	}
 
+	/**
+	 * @param int    $offset
+	 * @param        $maxRecords
+	 * @param string $sort_mode
+	 * @param string $find
+	 * @param string $date
+	 *
+	 * @return array
+	 */
 	function list_submissions($offset = 0, $maxRecords = -1, $sort_mode = 'publishDate_desc', $find = '', $date = '')
 	{
 		if ($find) {
@@ -1464,6 +1727,12 @@ class ArtLib extends TikiLib
 		return $retval;
 	}
 
+	/**
+	 * @param      $articleId
+	 * @param bool $checkPerms
+	 *
+	 * @return bool|string
+	 */
 	function get_article($articleId, $checkPerms = true)
 	{
 		global $user, $prefs;
@@ -1520,6 +1789,11 @@ class ArtLib extends TikiLib
 		return $res;
 	}
 
+	/**
+	 * @param $subId
+	 *
+	 * @return bool
+	 */
 	function get_submission($subId)
 	{
 		$query = 'select * from `tiki_submissions` where `subId`=?';
@@ -1533,6 +1807,11 @@ class ArtLib extends TikiLib
 		return $res;
 	}
 
+	/**
+	 * @param $topicId
+	 *
+	 * @return mixed
+	 */
 	function get_topic_image($topicId)
 	{
 		$query = 'select `image_name` ,`image_size`,`image_type`, `image_data` from `tiki_topics` where `topicId`=?';
@@ -1541,6 +1820,11 @@ class ArtLib extends TikiLib
 		return $res;
 	}
 
+	/**
+	 * @param $id
+	 *
+	 * @return mixed
+	 */
 	function get_article_image($id)
 	{
 		$query = 'select `image_name` ,`image_size`,`image_type`, `image_data` from `tiki_articles` where `articleId`=?';
@@ -1549,6 +1833,12 @@ class ArtLib extends TikiLib
 		return $res;
 	}
 
+	/**
+	 * @param $artType
+	 * @param $attributeName
+	 *
+	 * @return bool|int|mixed
+	 */
 	function add_article_type_attribute($artType, $attributeName)
 	{
 		global $relationlib, $attributelib;
@@ -1568,6 +1858,12 @@ class ArtLib extends TikiLib
 		}
 	}
 
+	/**
+	 * @param $artType
+	 * @param $relationId
+	 *
+	 * @return bool
+	 */
 	function delete_article_type_attribute($artType, $relationId)
 	{
 		global $relationlib;
@@ -1584,6 +1880,11 @@ class ArtLib extends TikiLib
 		return true;
 	}
 
+	/**
+	 * @param $artType
+	 *
+	 * @return array
+	 */
 	function get_article_type_attributes($artType)
 	{
 		global $relationlib, $attributelib;
@@ -1606,6 +1907,13 @@ class ArtLib extends TikiLib
 		return $ret;
 	}
 
+	/**
+	 * @param      $articleId
+	 * @param      $attributeArray
+	 * @param bool $isSubmission
+	 *
+	 * @return bool
+	 */
 	function set_article_attributes($articleId, $attributeArray, $isSubmission = false)
 	{
 		// expects attributeArray in the form of $key=>$val where $key is tiki.article.xxxx and $val is value
@@ -1627,6 +1935,12 @@ class ArtLib extends TikiLib
 		return true;
 	}
 
+	/**
+	 * @param      $articleId
+	 * @param bool $isSubmission
+	 *
+	 * @return array
+	 */
 	function get_article_attributes($articleId, $isSubmission = false)
 	{
 		global $attributelib;
@@ -1650,6 +1964,10 @@ class ArtLib extends TikiLib
 		return $ret;
 	}
 
+	/**
+	 * @param $subId
+	 * @param $articleId
+	 */
 	function transfer_attributes_from_submission($subId, $articleId)
 	{
 		$this->query(
