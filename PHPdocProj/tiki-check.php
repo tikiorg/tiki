@@ -1,6 +1,6 @@
 <?php
 /**
- * @package tikiwiki
+ * @package Tikiwiki
  */
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
 //
@@ -1502,6 +1502,9 @@ if ($standalone) {
 	$smarty->display('tiki.tpl');
 }
 
+/**
+ * @return bool
+ */
 function check_isIIS()
 {
 	static $IIS;
@@ -1512,6 +1515,9 @@ function check_isIIS()
 	return $IIS;
 }
 
+/**
+ * @return bool
+ */
 function check_hasIIS_UrlRewriteModule()
 {
 	return isset($_SERVER['IIS_UrlRewriteModule']) == true;
