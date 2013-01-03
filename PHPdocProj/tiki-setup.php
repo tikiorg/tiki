@@ -1,14 +1,21 @@
 <?php
 /**
- * @package tikiwiki
+ * This script may only be included.
+ *
+ * Calls internal Tiki component files to 'create' the viewable page.
+ *
+ * All Rights Reserved. See copyright.txt for details and a complete list of authors.
+ * Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+ *
+ * @package Tikiwiki
+ * @copyright (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
  */
-// (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-//
-// All Rights Reserved. See copyright.txt for details and a complete list of authors.
-// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-//this script may only be included - so its better to die if called directly.
+/**
+ * @global mixed $prefs
+ * @global mixed $tikilib
+ */
 global $prefs, $tikilib;
 if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
 	header('location: index.php');

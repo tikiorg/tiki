@@ -1,6 +1,10 @@
 <?php
 /**
- * @package tikiwiki
+ * calls Tiki's internal component scripts
+ * 
+ * @package Tikiwiki\
+ * @copyright (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project. All Rights Reserved. See copyright.txt for details and a complete list of authors.
+ * @licence Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
  */
 // (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
 //
@@ -28,7 +32,7 @@ ini_set('session.use_only_cookies', 1);
 // ini_set('session.save_handler', 'mm');
 // ... or if you use turck mmcache
 // ini_set('session.save_handler', 'mmcache');
-// ... or if you just cant to store sessions in file
+// ... or if you just want to store sessions in file
 // ini_set('session.save_handler', 'files');
 // Smarty workaround - if this would be 'On' in php.ini Smarty fails to parse tags
 ini_set('magic_quotes_sybase', 'Off');
