@@ -1,11 +1,19 @@
 <?php
-/*
-Check the file gallery directory for consistancy.
-This implies
-1) Prereq: File Gallery uses a directory to store the files
-2) All rows in the tiki_files tables have a corresponding file in the directory
-3) All files in the directory have a corresponding row in the tiki_files table
-*/
+/**
+ * Check the file gallery directory for consistancy. 
+ * 
+ * This implies
+ * <ol>
+ *   <li>Prereq: File Gallery uses a directory to store the files</li>
+ *   <li>All rows in the tiki_files tables have a corresponding file in the directory</li>
+ *   <li>All files in the directory have a corresponding row in the tiki_files table</li>
+ * </ol>
+ *
+ * @package Tikiwiki\doc
+ * @subpackage devtools
+ * @copyright (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project. All Rights Reserved. See copyright.txt for details and a complete list of authors.
+ * @licence Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+ */
 
 require_once('tiki-setup.php');
 $tikilib = TikiLib::lib('tiki');
