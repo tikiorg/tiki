@@ -28,6 +28,12 @@ class Search_Action_ActionStep implements Search_Action_Step
 				if (in_array($key, $required)) {
 					$required[] = $value;
 				}
+			} elseif (preg_match('/^(.*)_field_coalesce$/', $key, $parts)) {
+				$key = $parts[1];
+
+				if (in_array($key, $required)) {
+					$required = array_merge($required, $this->splitFields($value));
+				}
 			} else {
 				$found[] = $key;
 			}
@@ -55,7 +61,7 @@ class Search_Action_ActionStep implements Search_Action_Step
 		$out = array();
 
 		foreach ($this->action->getValues() as $fieldName => $isRequired) {
-			$readFrom = $fieldName;
+			$readFrom = array($fieldName);
 
 			if (isset($this->definition[$fieldName])) {
 				// Static value
@@ -63,20 +69,34 @@ class Search_Action_ActionStep implements Search_Action_Step
 				continue;
 			} elseif (isset($this->definition[$fieldName . '_field'])) {
 				// Use different field
-				$readFrom = $this->definition[$fieldName . '_field'];
+				$readFrom = array($this->definition[$fieldName . '_field']);
+			} elseif (isset($this->definition[$fieldName . '_field_coalesce'])) {
+				$readFrom = $this->splitFields($this->definition[$fieldName . '_field_coalesce']);
 			}
 
-			if (isset($entry[$readFrom])) {
-				$out[$fieldName] = $entry[$readFrom];
-			} elseif (! $isRequired) {
-				$out[$fieldName] = null;
-			} else {
-				// Missing value, error
-				return null;
+			foreach ($readFrom as $candidate) {
+				if (isset($entry[$candidate])) {
+					$out[$fieldName] = $entry[$candidate];
+					break;
+				}
+			}
+
+			if (! isset($out[$fieldName])) {
+				if (! $isRequired) {
+					$out[$fieldName] = null;
+				} else {
+					// Missing value, error
+					return null;
+				}
 			}
 		}
 
 		return new JitFilter($out);
+	}
+
+	private function splitFields($string)
+	{
+		return array_filter(array_map('trim', explode(',', $string)));
 	}
 }
 
