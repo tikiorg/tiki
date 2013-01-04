@@ -65,7 +65,11 @@ class Search_Action_EmailAction implements Search_Action_Action
 
 		$parserlib = TikiLib::lib('parser');
 
-		return trim($parserlib->parse_data($content));
+		$options = array(
+			'protect_email' => false,
+		);
+
+		return trim($parserlib->parse_data($content, $options));
 	}
 }
 

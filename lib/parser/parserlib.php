@@ -86,6 +86,7 @@ class ParserLib extends TikiDb_Bridge
 				'skipvalidation'=>  false,
 				'ck_editor'=>   false,
 				'namespace' => false,
+				'protect_email' => true,
 			), empty($option) ? array() : (array) $this->option, (array)$option
 		);
 	}
@@ -1321,10 +1322,11 @@ if ( \$('#$id') ) {
 		$patterns[] = "#([\n ])www\.([a-z0-9\-]+)\.([a-z0-9\-.\~]+)((?:/[^,< \n\r]*)?)#i";
 		$replacements[] = "\\1<a $attrib href=\"http://www.\\2.\\3\\4\">www.\\2.\\3\\4$ext_icon</a>";
 		$patterns[] = "#([\n ])([a-z0-9\-_.]+?)@([\w\-]+\.([\w\-\.]+\.)*[\w]+)#i";
-		if ($prefs['feature_wiki_protect_email'] == 'y')
+		if ($this->option['protect_email'] && $prefs['feature_wiki_protect_email'] == 'y') {
 			$replacements[] = "\\1" . $tikilib->protect_email("\\2", "\\3");
-		else
+		} else {
 			$replacements[] = "\\1<a class='wiki' href=\"mailto:\\2@\\3\">\\2@\\3</a>";
+		}
 		$patterns[] = "#([\n ])magnet\:\?([^,< \n\r]+)#i";
 		$replacements[] = "\\1<a class='wiki' href=\"magnet:?\\2\">magnet:?\\2</a>";
 		$text = preg_replace($patterns, $replacements, $text);
