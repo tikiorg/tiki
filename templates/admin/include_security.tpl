@@ -52,12 +52,6 @@
 		</fieldset>
 		{/tab}
 
-		{tab name="{tr}IDS{/tr}"}
-			{preference name=ids_enabled}
-			{preference name=ids_single_threshold}
-			{preference name=ids_session_threshold}
-		{/tab}
-	
 		{tab name="{tr}Spam protection{/tr}"}
 			<fieldset>
 			<legend>{tr}Captcha{/tr}</legend>
