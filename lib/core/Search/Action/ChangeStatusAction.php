@@ -12,7 +12,6 @@ class Search_Action_ChangeStatusAction implements Search_Action_Action
 		return array(
 			'object_type' => true,
 			'object_id' => true,
-			'tracker_status' => true,
 			'from' => true,
 			'to' => true,
 		);
@@ -24,7 +23,6 @@ class Search_Action_ChangeStatusAction implements Search_Action_Action
 		$object_id = $data->object_id->int();
 		$from = $data->from->alpha();
 		$to = $data->to->alpha();
-		$tracker_status = $data->tracker_status->alpha();
 
 		if ($object_type != 'trackeritem') {
 			return false;
@@ -35,7 +33,10 @@ class Search_Action_ChangeStatusAction implements Search_Action_Action
 			return false;
 		}
 
-		if ($tracker_status != $from) {
+		$trklib = TikiLib::lib('trk');
+		$info = $trklib->get_item_info($object_id);
+
+		if (! $info || $info['status'] != $from) {
 			return false;
 		}
 
