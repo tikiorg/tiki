@@ -12,7 +12,10 @@
 /**
  * TikiWiki Versioning class.
  * 
- * Sets the versioning data for this release of Tiki. 
+ * Sets the versioning data for this release of Tiki.
+ * 
+ * @package \lib
+ * @subpackage setup
  */
 class TWVersion
 {
@@ -65,16 +68,16 @@ class TWVersion
 	 * 
 	 * @var string $svn
 	 */
-	public $svn; 
+	public $svn;
 
+	/**
+	 * Set the development branch.  Valid are:
+	 *  - stable   : Represents stable releases.
+	 *  - unstable : Represents candidate and test/development releases.
+	 *  - trunk    : Represents next generation development version.
+	 */
 	function TWVersion()
 	{
-		/**
-		 * Set the development branch.  Valid are:
-		 *  - stable   : Represents stable releases.
-		 *  - unstable : Represents candidate and test/development releases.
-		 *  - trunk    : Represents next generation development version.
-		 */
 		$this->branch 	= 'trunk';
 
 		// Set everything else, including defaults.
@@ -94,6 +97,8 @@ class TWVersion
 	}
 
 	/**
+	 * gets the Base Version for this Tiki release.
+	 * 
 	 * @return mixed
 	 */
 	function getBaseVersion()
