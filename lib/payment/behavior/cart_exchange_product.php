@@ -1,24 +1,24 @@
 <?php
-// (c) Copyright 2002-2012 by authors of the Tiki Wiki/CMS/Groupware Project
-// 
+// (c) Copyright 2002-2013 by authors of the Tiki Wiki CMS Groupware Project
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 function payment_behavior_cart_exchange_product( $exchangeorderitemid = 0, $exchangetoproductid = 0 )
 {
-	
+
 	global $prefs;
-	
+
 	if (!($exchangeorderitemid) || !($exchangetoproductid) || $prefs['payment_cart_exchange'] != 'y') {
 		return false;
 	}
 
 	global $trklib;
 	include_once ('lib/trackers/trackerlib.php');
-	
+
 	$orderitemsTrackerId = $prefs['payment_cart_orderitems_tracker'];
-	
+
 	$exchangefromrecordFieldId = $trklib->get_field_id($orderitemsTrackerId, 'Exchange - Current Order ID');
 	$exchangetorecordFieldId = $trklib->get_field_id($orderitemsTrackerId, 'Exchange - Desired Product ID');
 	$realEventFieldId = $trklib->get_field_id($orderitemsTrackerId, 'Real Associated Event ID');
@@ -53,7 +53,7 @@ function payment_behavior_cart_exchange_product( $exchangeorderitemid = 0, $exch
 	// Perform exchange
 	if ($producteventFieldId && $realEventFieldId) {
 		// Update real associated event id if necessary
-		$eventId = $trklib->get_item_value($productsTrackerId, $exchangetoproductid, $producteventFieldId); 
+		$eventId = $trklib->get_item_value($productsTrackerId, $exchangetoproductid, $producteventFieldId);
 		if ($eventId) {
 			$ins_fields["data"][] = array('type' => 't', 'fieldId' => $realEventFieldId, 'value' => $eventId);
 			$ins_fields["data"][] = array('type' => 'r', 'fieldId' => $eventFieldId, 'value' => $eventId);
@@ -61,7 +61,7 @@ function payment_behavior_cart_exchange_product( $exchangeorderitemid = 0, $exch
 			$eventEndDate = $trklib->get_item_value($eventsTrackerId, $eventId, $eventEndFieldId);
 			$ins_fields["data"][] = array('type' => 'f', 'fieldId' => $itemeventStartFieldId, 'value' => $eventStartDate);
 			$ins_fields["data"][] = array('type' => 'f', 'fieldId' => $itemeventEndFieldId, 'value' => $eventEndDate);
-			
+
 		}
 	}
 	$ins_fields["data"][] = array('type' => 'r', 'fieldId' => $associatedproductFieldId, 'value' => $exchangetoproductid);
@@ -71,5 +71,5 @@ function payment_behavior_cart_exchange_product( $exchangeorderitemid = 0, $exch
 	global $cartlib; require_once 'lib/payment/cartlib.php';
 	$cartlib->change_inventory($fromproductId, $amountBought);
 
-	return true;	
+	return true;
 }

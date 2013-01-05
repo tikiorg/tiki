@@ -1,6 +1,6 @@
 <?php
-// (c) Copyright 2002-2012 by authors of the Tiki Wiki/CMS/Groupware Project
-// 
+// (c) Copyright 2002-2013 by authors of the Tiki Wiki CMS Groupware Project
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -31,7 +31,7 @@ function wikiplugin_addreference($data,$params)
 	if ($prefs['wikiplugin_addreference'] == 'y') {
 
 		include_once ("lib/references/referenceslib.php");
-		
+
 		if (! isset($GLOBALS['referencesData'])) {
 			$GLOBALS['referencesData'] = array();
 		}
@@ -39,19 +39,19 @@ function wikiplugin_addreference($data,$params)
 		$data = trim($data);
 
 		if (strstr($_SERVER['SCRIPT_NAME'], 'tiki-print.php')) {
-			
+
 			$page = urldecode($_REQUEST['page']);
 			$page_id = TikiLib::lib('tiki')->get_page_id_from_name($page);
 			$page_info = TikiLib::lib('tiki')->get_page_info($page);
 
 		} else {
-			
+
 			$object = current_object();
 			$page_id = TikiLib::lib('tiki')->get_page_id_from_name($object['object']);
 			$page_info = TikiLib::lib('tiki')->get_page_info($object['object']);
 
 		}
-			
+
 		extract($params, EXTR_SKIP);
 		if (empty($params['biblio_code'])) {
 			return;
@@ -73,7 +73,7 @@ function wikiplugin_addreference($data,$params)
 		unset($temp);
 
 		$found_keys = array();
-		
+
 		foreach ($curr_matches as $key=>$val) {
 			if (strlen(trim($val)) > 0) {
 				if ($val == $params['biblio_code']) {
@@ -87,9 +87,9 @@ function wikiplugin_addreference($data,$params)
 		}
 
 		$GLOBALS['referencesData'] = $curr_matches;
-		
+
 		$url = $GLOBALS['base_uri'] . "#" . $params['biblio_code'];
-		
+
 		return $data . "<a href='" . $url . "' title='" . $params['biblio_code'] . "'><sup>" . $index . "</sup></a>";
 
 	}
