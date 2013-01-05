@@ -6,6 +6,7 @@
  *
  * @package \lib
  * @subpackage setup
+ * @ignore
  * @copyright (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
  * @licence Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
  */
