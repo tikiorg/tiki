@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
+// (c) Copyright 2002-2013 by authors of the Tiki Wiki CMS Groupware Project
 //
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -18,13 +18,13 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
 class FileMetadata
 {
 	public $currname = null;		//working file path used to access file, may not be the same as embedded in file metadata
-	private $content = null;		//file content. Set private to avoid having clients using metadata to access the file content
+	public $content = null;			//file content string
 	public $filesize = 0;			//file size in bytes
 	public $basicraw = null;		//for basic file information
 	public $basicinfo = null;		//processed basic file information
 	public $typemeta = null;		//array used to store metadata beyond generic file data
 	public $error = null;			//error messages stored here
-	public $types = array (		//files types handled for extended metadata with values used for class and file name
+	public $types = array (			//files types handled for extended metadata with values used for class and file name
 		'image/jpeg' => 'jpeg',
 		'image/jpg' => 'jpeg',
 	);
@@ -51,20 +51,14 @@ class FileMetadata
 			if (!$temppath) {
 				$this->error = 'The file is empty';
 			} else {
-				$this->content = $file;
-				$this->filesize = function_exists('mb_strlen') ? mb_strlen($this->content, '8bit') : strlen($this->content);
+				$this->filesize = @filesize($temppath);;
 				$this->currname = $temppath;
 			}
 		} else {
 			//when $file is a path
 			if (is_readable($file)) {
 				$this->currname = $file;
-				
-				// Do not load the file content. The size may be excessive, e.g. for video images
-				//	The filesize can be determined directly
-				$this->content = null; // file_get_contents($file);
-				
-				$this->filesize = @filesize($file);;
+				$this->filesize = @filesize($file);
 				$temppath = $file;
 				$leavelink = true;
 				if ($this->filesize <= 0) {
@@ -80,8 +74,10 @@ class FileMetadata
 					$this->error = 'The file is not readable';
 				} else {
 					$this->currname = $file;
+					//go ahead and get content of external file here since this class is only called for external files
+					//when getting extended metadata through the img plugin
 					$this->content = $externalinfo['data'];
-					$this->filesize = function_exists('mb_strlen') ? mb_strlen($this->content, '8bit') : strlen($this->content);
+					$this->filesize = @filesize($file);
 					//set type here for external files
 					$this->type = $externalinfo['type'];
 				}
@@ -97,7 +93,7 @@ class FileMetadata
 			$finfo = new finfo(FILEINFO_MIME);
 			$type_charset = $finfo->file($temppath);
 			$type_charset = explode(';', $type_charset);
-			//external file tyes may already be set at this point
+			//external file types may already be set at this point
 			$this->basicraw['type'] = empty($this->type) ?  $type_charset[0] : $this->type;
 			$this->basicraw['charset'] = trim($type_charset[1]);
 			$finfo = new finfo(FILEINFO_DEVICES);
@@ -114,6 +110,10 @@ class FileMetadata
 		//from this point, additional metadata is obtained from classes specific to the file type in separate php files
 		//all results for this additional metadata go into the $this->typemeta array
 		if ($extended && $this->canProcessExtended()) {
+			//set content property
+			if ($this->content === null) {
+				$this->content = $ispath === false ? $file : file_get_contents($file);
+			}
 			//used for name of class and the file the class is in
 			$type = $this->types[$this->basicraw['type']];
 			//file must be named based on $type
@@ -122,6 +122,8 @@ class FileMetadata
 			$type = ucfirst($type);
 			$typeObj = new $type($this);
 			$this->typemeta = $typeObj->getExtendedData($this);
+			//Set client to null to avoid having clients using metadata to access the file content
+			$this->content = null;
 		}
 		$this->setBestMetadata();
 		if (!$leavelink) {
