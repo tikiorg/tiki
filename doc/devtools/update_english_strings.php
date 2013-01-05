@@ -1,6 +1,6 @@
 <?php
-// (c) Copyright 2002-2012 by authors of the Tiki Wiki/CMS/Groupware Project
-// 
+// (c) Copyright 2002-2013 by authors of the Tiki Wiki CMS Groupware Project
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -9,7 +9,7 @@
 // string is changed in Tiki source code
 // This script is experimental. Always review the changes to language.php file before
 // committing.
-// 
+//
 // Also see: doc/devtools/mass_wording_corrections.pl
 //
 
@@ -32,15 +32,15 @@ while (($dir = readdir($dirHandle)) !== false) {
 	if ($dir == '.' || $dir == '..') {
 		continue;
 	}
-	
+
 	$dir = 'lang/' . $dir;
 	if (is_dir($dir)) {
 		$filePath = $dir . '/language.php';
-		
+
 		if (!file_exists($filePath)) {
 			continue;
 		}
- 
+
 		$langFile = file_get_contents($filePath);
 		$fileHandle = fopen($filePath, 'w');
 		$langFile = str_replace("\"$oldString\" => ", "\n\"$newString\" => ", $langFile);

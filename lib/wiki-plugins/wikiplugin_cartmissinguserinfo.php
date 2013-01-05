@@ -1,6 +1,6 @@
 <?php
-// (c) Copyright 2002-2012 by authors of the Tiki Wiki/CMS/Groupware Project
-// 
+// (c) Copyright 2002-2013 by authors of the Tiki Wiki CMS Groupware Project
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -10,10 +10,10 @@ function wikiplugin_cartmissinguserinfo_info()
 {
 	return array(
 		'name' => tra('Cart Missing User Info'),
-		'documentation' => tra('PluginCartMissingUserInfo'),		
+		'documentation' => tra('PluginCartMissingUserInfo'),
 		'description' => tra('Check if user still has missing info to enter'),
 		'prefs' => array('wikiplugin_cartmissinguserinfo', 'payment_feature'),
-		'tags' => array( 'experimental' ),		
+		'tags' => array( 'experimental' ),
 		'params' => array(
 			'info_type' => array(
 				'required' => true,
@@ -29,7 +29,7 @@ function wikiplugin_cartmissinguserinfo_info()
 				'required' => true,
 				'name' => tra('Product Class ID'),
 				'filter' => 'int',
-				'default' => '', 
+				'default' => '',
 			),
 		),
 	);
@@ -38,7 +38,7 @@ function wikiplugin_cartmissinguserinfo_info()
 function wikiplugin_cartmissinguserinfo($data, $params)
 {
 	global $smarty;
-	global $cartlib; require_once 'lib/payment/cartlib.php';	
+	global $cartlib; require_once 'lib/payment/cartlib.php';
 	if (empty($params['product_class_id']) || empty($params['info_type'])) {
 		return tra('Missing parameters');
 	}
