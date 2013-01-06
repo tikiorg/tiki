@@ -2,10 +2,10 @@
 /**
  * Tiki's Installation script.
  * 
- * Used to install a fresh Tiki instance, or to upgrade an existing Tiki to a newer version.
+ * Used to install a fresh Tiki instance, to upgrade an existing Tiki to a newer version and to test sendmail.
  *
- * @package \
- * @copyright (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project. All Rights Reserved. See copyright.txt for details and a complete list of authors.
+ * @package TikiWiki
+ * @copyright (c) Copyright 2002-2013 by authors of the Tiki Wiki CMS Groupware Project. All Rights Reserved. See copyright.txt for details and a complete list of authors.
  * @licence Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
  */
 // $Id: tiki-install.php 44248 2012-12-11 10:50:19Z changi67 $
@@ -32,6 +32,11 @@ $tikipath = dirname(__FILE__) . '/';
 TikiInit::prependIncludePath($tikipath.'lib/pear');
 TikiInit::appendIncludePath($tikipath.'lib/core');
 TikiInit::appendIncludePath($tikipath);
+/** 
+ * require Zend Loader
+ * @package Zend/Loader
+ * @link http://framework.zend.com/apidoc/1.12/db_Zend_Loader_Autoloader.html Zend Loader 
+ */
 require_once 'Zend/Loader/Autoloader.php';
 Zend_Loader_Autoloader::getInstance()
 	->registerNamespace('TikiFilter')
@@ -48,13 +53,13 @@ if (file_exists($lockFile)) {
 	$title = 'Tiki Installer Disabled';
 	$td = empty($tikidomain)? '': '/'.$tikidomain;
 	$content = '
-							<p>As a security precaution, the Tiki Installer has been disabled. To re-enable the installer:</p>
-							<div style="border: solid 1px #ccc; margin: 1em auto; width: 40%;">
-								<ol style="text-align: left">
-									<li>Use your file manager application to find the directory where you have unpacked your Tiki and remove the <strong><code>lock</code></strong> file which was created in the <strong><code>db'.$td.'</code></strong> folder.</li>
-									<li>Re-run <strong><a href="tiki-install.php'.(empty($tikidomain)?'':"?multi=$tikidomain").'" title="Tiki Installer">tiki-install.php'.(empty($tikidomain)?'':"?multi=$tikidomain").'</a></strong>.</li>
-								</ol>
-							</div>';
+		<p>As a security precaution, the Tiki Installer has been disabled. To re-enable the installer:</p>
+		<div style="border: solid 1px #ccc; margin: 1em auto; width: 40%;">
+			<ol style="text-align: left">
+				<li>Use your file manager application to find the directory where you have unpacked your Tiki and remove the <strong><code>lock</code></strong> file which was created in the <strong><code>db'.$td.'</code></strong> folder.</li>
+				<li>Re-run <strong><a href="tiki-install.php'.(empty($tikidomain)?'':"?multi=$tikidomain").'" title="Tiki Installer">tiki-install.php'.(empty($tikidomain)?'':"?multi=$tikidomain").'</a></strong>.</li>
+			</ol>
+		</div>';
 	createPage($title, $content);
 }
 
@@ -102,35 +107,36 @@ if (isset($_SESSION['accessible'])) {
 	// Thus, display a form.
 	$title = 'Tiki Installer Security Precaution';
 	$content = '
-							<p style="margin-top: 24px;">You are attempting to run the Tiki Installer. For your protection, this installer can be used only by a site administrator.</p>
-							<p>To verify that you are a site administrator, enter your <strong><em>database</em></strong> credentials (database username and password) here.</p>
-							<p>If you have forgotten your database credentials, find the directory where you have unpacked your Tiki and have a look inside the <strong><code>db</code></strong> folder into the <strong><code>local.php</code></strong> file.</p>
-							<form method="post" action="' . $_SERVER['REQUEST_URI'] . '">
-								<p><label for="dbuser">Database username</label>: <input type="text" id="dbuser" name="dbuser" /></p>
-								<p><label for="dbpass">Database password</label>: <input type="password" id="dbpass" name="dbpass" /></p>
-								<p><input type="submit" value=" Validate and Continue " /></p>
-							</form>
-							<p>&nbsp;</p>';
+		<p style="margin-top: 24px;">You are attempting to run the Tiki Installer. For your protection, this installer can be used only by a site administrator.</p>
+		<p>To verify that you are a site administrator, enter your <strong><em>database</em></strong> credentials (database username and password) here.</p>
+		<p>If you have forgotten your database credentials, find the directory where you have unpacked your Tiki and have a look inside the <strong><code>db</code></strong> folder into the <strong><code>local.php</code></strong> file.</p>
+		<form method="post" action="' . $_SERVER['REQUEST_URI'] . '">
+			<p><label for="dbuser">Database username</label>: <input type="text" id="dbuser" name="dbuser" /></p>
+			<p><label for="dbpass">Database password</label>: <input type="password" id="dbpass" name="dbpass" /></p>
+			<p><input type="submit" value=" Validate and Continue " /></p>
+		</form>
+		<p>&nbsp;</p>';
 	createPage($title, $content);
 }
 
-
 /**
  * creates the HTML page to be displayed. 
- * 
- * kstingel: 
- * since Tiki is reported to be HTML5 compatible now, should we adjust the template 
- * below to be HTML5 compliant?
  * 
  * @param string $title   page Title
  * @param mixed  $content page Content
  */
 function createPage($title, $content)
 {
+	/* kstingel: commented out originals of replaced lines */ 
+	// echo <<<END
+	// <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+	//    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+	// <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+	// 
+	// 
+	
 	echo <<<END
-<!DOCTYPE html 
-	PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
