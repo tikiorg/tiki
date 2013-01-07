@@ -1,11 +1,13 @@
 <?php
 /**
- * @package tikiwiki
+ * Tiki's Installation script.
+ * 
+ * Used to install a fresh Tiki instance, to upgrade an existing Tiki to a newer version and to test sendmail.
+ *
+ * @package TikiWiki 
+ * @copyright (c) Copyright 2002-2013 by authors of the Tiki Wiki CMS Groupware Project. All Rights Reserved. See copyright.txt for details and a complete list of authors.
+ * @licence Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
  */
-// (c) Copyright 2002-2013 by authors of the Tiki Wiki CMS Groupware Project
-// 
-// All Rights Reserved. See copyright.txt for details and a complete list of authors.
-// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 $in_installer = 1;
@@ -114,8 +116,12 @@ if (isset($_SESSION['accessible'])) {
 
 
 /**
- * @param $title
- * @param $content
+ * creates the HTML page to be displayed.
+ * 
+ * Tiki may not have been installed when we reach here, so we can't use our templating system yet. 
+ * 
+ * @param string $title   page Title
+ * @param mixed  $content page Content
  */
 function createPage($title, $content)
 {
