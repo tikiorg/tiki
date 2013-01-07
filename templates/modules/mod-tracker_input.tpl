@@ -41,9 +41,15 @@
 			data: $(form).serialize(),
 			success: function (data) {
 				$(form).trigger('insert', [ data ]);
+				{{if $tracker_input.insertMode}}
+					$(form).closest('.tab, #appframe, body').find('.map-container')[0].modeManager.switchTo("{{$tracker_input.insertMode|escape}}");
+				{{/if}}
 			},
 			close: function () {
 				$(form).trigger('cancel');
+				{{if $tracker_input.insertMode}}
+					$(form).closest('.tab, #appframe, body').find('.map-container')[0].modeManager.switchTo("{{$tracker_input.insertMode|escape}}");
+				{{/if}}
 			}
 		});
 		return false;

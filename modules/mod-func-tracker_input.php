@@ -52,6 +52,12 @@ function module_tracker_input_info()
 				'description' => tr('Operation to perform in the following format: operationName(argument). Current operations are redirect with the URL template as the argument. @valueName@ will be replaced by the appropriate value where valueName is itemId, status or a permanent name'),
 				'filter' => 'text',
 			),
+			'insertmode' => array(
+				'name' => tr('Mode change on complete'),
+				'description' => tr('Target mode to enter after dialog closes'),
+				'filter' => 'text',
+				'default' => '',
+			),
 		),
 	);
 }
@@ -82,6 +88,7 @@ function module_tracker_input($mod_reference, $module_params)
 	$streetview = isset($module_params['streetview']) ? $module_params['streetview'] : '';
 	$streetViewField = $definition->getFieldFromPermName($streetview);
 	$success = isset($module_params['success']) ? $module_params['success'] : '';
+	$insertmode = isset($module_params['insertmode']) ? $module_params['insertmode'] : '';
 
 	if (! $streetview || $prefs['fgal_upload_from_source'] != 'y' || ! $streetViewField) {
 		$streetview = '';
@@ -139,6 +146,7 @@ function module_tracker_input($mod_reference, $module_params)
 				'operation' => $operation,
 				'argument' => $operationArgument,
 			),
+			'insertMode' => $insertmode,
 		)
 	);
 }
