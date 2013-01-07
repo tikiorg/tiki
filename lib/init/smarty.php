@@ -1,11 +1,17 @@
 <?php
-// (c) Copyright 2002-2013 by authors of the Tiki Wiki CMS Groupware Project
-//
-// All Rights Reserved. See copyright.txt for details and a complete list of authors.
-// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+/**
+ * brings Smarty functionality into Tiki
+ * 
+ * this script may only be included, it will die if called directly.
+ *
+ * @package TikiWiki
+ * @subpackage lib\init
+ * @copyright (c) Copyright 2002-2013 by authors of the Tiki Wiki CMS Groupware Project. All Rights Reserved. See copyright.txt for details and a complete list of authors.
+ * @licence Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+ */
 // $Id$
 
-//this script may only be included - so its better to die if called directly.
+// die if called directly.
 if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== FALSE) {
   header('location: index.php');
   exit;
@@ -14,8 +20,15 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== FALSE) {
 require_once 'lib/setup/third_party.php';
 require_once (defined('SMARTY_DIR') ? SMARTY_DIR : 'lib/smarty/libs/') . 'Smarty.class.php';
 
+/**
+ * extends Smarty_Security
+ * @package TikiWiki\lib\init
+ */
 class Tiki_Security_Policy extends Smarty_Security
 {
+	/**
+	 * @var array $secure_dir
+	 */
 	public $secure_dir = array(
 		'',
 		'img/',
@@ -37,6 +50,9 @@ class Tiki_Security_Policy extends Smarty_Security
 		'lib/ckeditor_tiki/ckeditor-icons',
 	);
 
+	/**
+	 * @param Smarty $smarty
+	 */
 	function __construct($smarty)
 	{
 		if (class_exists("TikiLib")) {
@@ -62,12 +78,30 @@ class Tiki_Security_Policy extends Smarty_Security
 	}
 }
 
+/**
+ * extends Smarty.
+ * 
+ * Centralizing overrides here will avoid problems when upgrading to newer versions of the Smarty library.
+ * @package TikiWiki\lib\init
+ */
 class Smarty_Tiki extends Smarty
 {
+	/**
+	 * @var array|null
+	 */
 	var $url_overriding_prefix_stack = null;
+	/**
+	 * @var null
+	 */
 	var $url_overriding_prefix = null;
+	/**
+	 * @var null|string
+	 */
 	var $main_template_dir = null;
 
+	/**
+	 * @param string $tikidomain
+	 */
 	function Smarty_Tiki($tikidomain = '')
 	{
 		parent::__construct();
@@ -120,10 +154,16 @@ class Smarty_Tiki extends Smarty
 		}
 	}
 
-	// Fetch templates from plugins (smarty plugins, wiki plugins, modules, ...) that may need to :
-	//   - temporarily override some smarty vars,
-	//   - prefix their self_link / button / query URL arguments
-	//
+	/**
+	 * Fetch templates from plugins (smarty plugins, wiki plugins, modules, ...) that may need to :
+	 * - temporarily override some smarty vars,
+	 * - prefix their self_link / button / query URL arguments
+	 * 
+	 * @param      $_smarty_tpl_file
+	 * @param null $override_vars
+	 *
+	 * @return string
+	 */
 	function plugin_fetch($_smarty_tpl_file, &$override_vars = null)
 	{
 		$smarty_orig_values = array();
@@ -147,6 +187,16 @@ class Smarty_Tiki extends Smarty
 		return $return;
 	}
 
+	/**
+	 * @param null $_smarty_tpl_file
+	 * @param null $_smarty_cache_id
+	 * @param null $_smarty_compile_id
+	 * @param null $parent
+	 * @param bool $_smarty_display
+	 * @param bool $merge_tpl_vars
+	 * @param bool $no_output_filter
+	 * @return string
+	 */
 	public function fetch($_smarty_tpl_file = null, $_smarty_cache_id = null, $_smarty_compile_id = null, $parent = null, $_smarty_display = false, $merge_tpl_vars = true, $no_output_filter = false)
 	{
 		global $prefs, $style_base, $tikidomain;
@@ -219,17 +269,34 @@ class Smarty_Tiki extends Smarty
 		return parent::fetch($_smarty_tpl_file, $_smarty_cache_id, $_smarty_compile_id, $parent, $_smarty_display);
 	}
 
+	/**
+	 * @param $var
+	 * @return Smarty_Internal_Data
+	 */
 	function clear_assign($var)
 	{
 		return parent::clearAssign($var);
 	}
 
+	/**
+	 * @param $var
+	 * @param $value
+	 * @return Smarty_Internal_Data
+	 */
 	function assign_by_ref($var,&$value)
 	{
 		return parent::assignByRef($var, $value);
 	}
 
-	/* fetch in a specific language  without theme consideration */
+	/**
+	 * fetch in a specific language  without theme consideration
+	 * @param      $lg
+	 * @param      $_smarty_tpl_file
+	 * @param null $_smarty_cache_id
+	 * @param null $_smarty_compile_id
+	 * @param bool $_smarty_display
+	 * @return mixed
+	 */
 	function fetchLang($lg, $_smarty_tpl_file, $_smarty_cache_id = null, $_smarty_compile_id = null, $_smarty_display = false)
 	{
 		global $prefs, $lang, $style_base, $tikidomain;
@@ -255,6 +322,14 @@ class Smarty_Tiki extends Smarty
 		return preg_replace("/^[ \t]*/", '', $res);
 	}
 
+	/**
+	 * @param null   $resource_name
+	 * @param null   $cache_id
+	 * @param null   $compile_id
+	 * @param null   $parent
+	 * @param string $content_type
+	 * @return Purified|void
+	 */
 	function display($resource_name = null, $cache_id=null, $compile_id = null, $parent = null, $content_type = 'text/html; charset=utf-8')
 	{
 
@@ -271,12 +346,12 @@ class Smarty_Tiki extends Smarty
 			}
 		}
 
-		//
-		// By default, display is used with text/html content in UTF-8 encoding
-		// If you want to output other data from smarty,
-		//   - either use fetch() / fetchLang()
-		//   - or set $content_type to '' (empty string) or another content type.
-		//
+		/**
+		 * By default, display is used with text/html content in UTF-8 encoding
+		 * If you want to output other data from smarty,
+		 * - either use fetch() / fetchLang()
+		 * - or set $content_type to '' (empty string) or another content type.
+		 */
 		if ( $content_type != '' && ! headers_sent() ) {
 			header('Content-Type: '.$content_type);
 		}
@@ -287,7 +362,11 @@ class Smarty_Tiki extends Smarty
 
 		}
 	}
-	// Returns the file name associated to the template name
+	/**
+	 * Returns the file name associated to the template name
+	 * @param $template
+	 * @return string
+	 */
 	function get_filename($template)
 	{
 		global $tikidomain, $style_base;
@@ -303,12 +382,20 @@ class Smarty_Tiki extends Smarty
 		return $this->main_template_dir.$file.$template;
 	}
 
+	/**
+	 * @param $url_arguments_prefix
+	 * @param $arguments_list
+	 */
 	function set_request_overriders( $url_arguments_prefix, $arguments_list )
 	{
 		$this->url_overriding_prefix_stack[] = array( $url_arguments_prefix . '-', $arguments_list );
 		$this->url_overriding_prefix =& $this->url_overriding_prefix_stack[ count($this->url_overriding_prefix_stack) - 1 ];
 	}
 
+	/**
+	 * @param $url_arguments_prefix
+	 * @param $arguments_list
+	 */
 	function remove_request_overriders( $url_arguments_prefix, $arguments_list )
 	{
 		$last_override_prefix = empty( $this->url_overriding_prefix_stack ) ? false : array_pop($this->url_overriding_prefix_stack);
