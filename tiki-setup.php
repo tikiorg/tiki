@@ -1,14 +1,20 @@
 <?php
 /**
- * @package tikiwiki
+ * contains the hooks for Tiki's internal functionality.
+ * 
+ * this script may only be included, it will die if called directly.
+ * 
+ * @package TikiWiki
+ * @copyright (c) Copyright 2002-2013 by authors of the Tiki Wiki CMS Groupware Project. All Rights Reserved. See copyright.txt for details and a complete list of authors.
+ * @licence Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
  */
-// (c) Copyright 2002-2013 by authors of the Tiki Wiki CMS Groupware Project
-//
-// All Rights Reserved. See copyright.txt for details and a complete list of authors.
-// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-//this script may only be included - so its better to die if called directly.
+// die if called directly.
+/** 
+ * @global array $prefs
+ * @global array $tikilib 
+ */
 global $prefs, $tikilib;
 if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
 	header('location: index.php');
@@ -588,48 +594,48 @@ if ( isset($token_error) ) {
 require_once( 'lib/setup/plugins_actions.php' );
 
 //////////////////////////////////////////////////////////////////////////
-// ********************************************************************	//
-// ** IMPORTANT NOTE: 						     ** //
-// ** USE THE GLOBAL VARIABLE BELOW TO CONTROL THE VERSION OF EMAIL  **	//
-// ** WHICH IS USED:						     **	//
-// ** 	$prefs['openpgp_gpg_pgpmimemail'] == 'y'		     **	//
-// **		USE TIKI OpenPGP Enabled PGP/MIME-standard mail      **	//
-// ** 	$prefs['openpgp_gpg_pgpmimemail'] == 'n'		     **	//
-// **		USE TIKI normal mail functionality		     **	//
-// **								     ** //
-// ** SETTING THIS PREFERENCES VARIABLE TO "y" NEED PROPER	     ** //
-// ** CONFIGURATION OF gnupg AND RELATED KEYRING WITH PROPERLY	     ** //
+// ******************************************************************** //
+// ** IMPORTANT NOTE:                                                ** //
+// ** USE THE GLOBAL VARIABLE BELOW TO CONTROL THE VERSION OF EMAIL  ** //
+// ** WHICH IS USED                                                  ** //
+// **   $prefs['openpgp_gpg_pgpmimemail'] == 'y'                     ** //
+// **       USE TIKI OpenPGP Enabled PGP/MIME-standard mail          ** //
+// **   $prefs['openpgp_gpg_pgpmimemail'] == 'n'                     ** //
+// **       USE TIKI normal mail functionality                       ** //
+// **                                                                ** //
+// ** SETTING THIS PREFERENCES VARIABLE TO "y" NEED PROPER           ** //
+// ** CONFIGURATION OF gnupg AND RELATED KEYRING WITH PROPERLY       ** //
 // ** CONFIGURED TIKI-SENDER KEYPAIR (PRIVATE/PUBLIC) AND ALL USER   ** //
-// ** ACCOUNT-RELATED PUBLIC KEYS				     ** //
-// **								     ** //
-// ** DO NOT SWITCH THIS VARIABLE TO TRUE FOR THIS EXPERIMENTAL	     ** //
+// ** ACCOUNT-RELATED PUBLIC KEYS                                    ** //
+// **                                                                ** //
+// ** DO NOT SWITCH THIS VARIABLE TO TRUE FOR THIS EXPERIMENTAL      ** //
 // ** FULLY PGP/MIME-ENCRYPTION COMPLIANT EMAIL FUNCTIONALITY, IF    ** //
-// ** YOU ARE **NOT ABSOLUTE SURE HOW TO CONFIGURE IT**!	     ** //
-// **								     ** //
-// ** ONCE PROPERLY CONFIGURED, SUCH 100% OPAQUE FUNCTIONALITY	     ** //
+// ** YOU ARE **NOT ABSOLUTE SURE HOW TO CONFIGURE IT**!             ** //
+// **                                                                ** //
+// ** ONCE PROPERLY CONFIGURED, SUCH 100% OPAQUE FUNCTIONALITY       ** //
 // ** DELIVERS ROBUST END-TO-END PRIVACY WITH HIGH DEGREE OF TESTED  ** //
-// ** ROBUSTNESS FOR THE FOLLOWING MAIL TRAFFIC:		     ** //
-// **								     ** //
-// **	- all webmail-based messaging from messu-compose.php	     ** //
-// **   - all admin notifications				     ** //
-// **	- all newsletters					     ** //
-// **								     ** //
+// ** ROBUSTNESS FOR THE FOLLOWING MAIL TRAFFIC:                     ** //
+// **                                                                ** //
+// **   - all webmail-based messaging from messu-compose.php         ** //
+// **   - all admin notifications                                    ** //
+// **   - all newsletters                                            ** //
+// **                                                                ** //
 // ** PLEASE NOTE THAT ALL SITE ACCOUNTS **MUST** HAVE PROPERLY	     ** //
 // ** CONFIGURED OpenPGP-COMPLIANT PUBLIC-KEY IN THE SYSTEM's	     ** //
 // ** KEYRING, SO IT IS NOT THEN WISE/POSSIBLE TO ALLOW ANONYMOUS    ** //
 // ** SUBSCRIPTIONS TO NEWSLETTERS ETC, OR USE NOT FULLY PGP/MIME    ** //
-// ** READY ACCOUNTS IN SUCH SYSTEM.				     ** //
-// **								     ** //
-// ** IT IS ASSUMED, THAT IF AND WHEN YOU TURN SUCH PGP/MIME ON	     ** //
-// ** YOU ARE FULLY AWARE OF THE REQUIREMENTS AND CONSEQUENCES.	     ** //
-// **								     ** //
+// ** READY ACCOUNTS IN SUCH SYSTEM.                                 ** //
+// **                                                                ** //
+// ** IT IS ASSUMED, THAT IF AND WHEN YOU TURN SUCH PGP/MIME ON      ** //
+// ** YOU ARE FULLY AWARE OF THE REQUIREMENTS AND CONSEQUENCES.      ** //
+// **                                                                ** //
 if ($prefs['openpgp_gpg_pgpmimemail'] == 'y') {
 	// hollmeer 2012-11-03:
 	// TURNED ON openPGP support from a lib based class
 	require_once( 'lib/openpgp/openpgplib.php' );
 }
-// **								     ** //
-// ********************************************************************	//
+// **                                                                ** //
+// ******************************************************************** //
 //////////////////////////////////////////////////////////////////////////
 
 $headerlib->lockMinifiedJs();

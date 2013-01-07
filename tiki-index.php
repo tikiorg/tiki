@@ -1,8 +1,11 @@
 <?php
-// (c) Copyright 2002-2013 by authors of the Tiki Wiki CMS Groupware Project
-//
-// All Rights Reserved. See copyright.txt for details and a complete list of authors.
-// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+/**
+ * Tiki's entry point.
+ *
+ * @package TikiWiki
+ * @copyright (c) Copyright 2002-2013 by authors of the Tiki Wiki CMS Groupware Project. All Rights Reserved. See copyright.txt for details and a complete list of authors.
+ * @licence Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+ */
 // $Id$
 
 $inputConfiguration = array(
@@ -659,6 +662,7 @@ $smarty->display('tiki.tpl');
 
 
 /**
+ * generate machine translation of markup
  * @param $pageInfo
  * @param $targetLang
  * @return string
@@ -672,6 +676,7 @@ function generate_machine_translated_markup($pageInfo, $targetLang)
 }
 
 /**
+ * generate machine translation of content
  * @param $pageContent
  * @param $pageInfo
  * @param $targetLang
@@ -686,6 +691,7 @@ function generate_machine_translated_content($pageContent, $pageInfo, $targetLan
 
 
 /**
+ * generate machine translation of text
  * @param $text
  * @param $sourceLang
  * @param $targetLang
@@ -700,6 +706,9 @@ function translate_text($text, $sourceLang, $targetLang)
 	return $translated;
 }
 
+/**
+ * check this Tiki has the Translation feature enabled
+ */
 function make_sure_machine_translation_is_enabled()
 {
 	global $access, $_REQUEST, $prefs;
