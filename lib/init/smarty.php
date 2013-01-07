@@ -27,6 +27,7 @@ require_once (defined('SMARTY_DIR') ? SMARTY_DIR : 'lib/smarty/libs/') . 'Smarty
 class Tiki_Security_Policy extends Smarty_Security
 {
 	/**
+	 * needs a proper description
 	 * @var array $secure_dir
 	 */
 	public $secure_dir = array(
@@ -51,6 +52,7 @@ class Tiki_Security_Policy extends Smarty_Security
 	);
 
 	/**
+	 * needs a proper description
 	 * @param Smarty $smarty
 	 */
 	function __construct($smarty)
@@ -87,19 +89,23 @@ class Tiki_Security_Policy extends Smarty_Security
 class Smarty_Tiki extends Smarty
 {
 	/**
+	 * needs a proper description
 	 * @var array|null
 	 */
 	var $url_overriding_prefix_stack = null;
 	/**
+	 * needs a proper description
 	 * @var null
 	 */
 	var $url_overriding_prefix = null;
 	/**
+	 * needs a proper description
 	 * @var null|string
 	 */
 	var $main_template_dir = null;
 
 	/**
+	 * needs a proper description
 	 * @param string $tikidomain
 	 */
 	function Smarty_Tiki($tikidomain = '')
@@ -188,6 +194,7 @@ class Smarty_Tiki extends Smarty
 	}
 
 	/**
+	 * needs a proper description
 	 * @param null $_smarty_tpl_file
 	 * @param null $_smarty_cache_id
 	 * @param null $_smarty_compile_id
@@ -270,6 +277,7 @@ class Smarty_Tiki extends Smarty
 	}
 
 	/**
+	 * needs a proper description
 	 * @param $var
 	 * @return Smarty_Internal_Data
 	 */
@@ -279,6 +287,7 @@ class Smarty_Tiki extends Smarty
 	}
 
 	/**
+	 * needs a proper description
 	 * @param $var
 	 * @param $value
 	 * @return Smarty_Internal_Data
@@ -323,6 +332,7 @@ class Smarty_Tiki extends Smarty
 	}
 
 	/**
+	 * needs a proper description
 	 * @param null   $resource_name
 	 * @param null   $cache_id
 	 * @param null   $compile_id
@@ -383,6 +393,7 @@ class Smarty_Tiki extends Smarty
 	}
 
 	/**
+	 * needs a proper description
 	 * @param $url_arguments_prefix
 	 * @param $arguments_list
 	 */
@@ -393,6 +404,7 @@ class Smarty_Tiki extends Smarty
 	}
 
 	/**
+	 * needs a proper description
 	 * @param $url_arguments_prefix
 	 * @param $arguments_list
 	 */

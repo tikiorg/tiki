@@ -16,12 +16,13 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
 }
 
 /**
- *
+ * performs some checks on the underlying system, before initializing Tiki.
+ * @package TikiWiki\lib\init
  */
 class TikiInit
 {
 	/**
-	 *
+	 * dummy constructor
 	 */
 	function TikiInit()
 	{
@@ -45,7 +46,7 @@ class TikiInit
 
 
 /** Return true if windows, otherwise false
-  * \static
+  * @static
   */
 	static function isWindows()
 	{
@@ -59,8 +60,8 @@ class TikiInit
 	/**
 	 * Copes with Windows permissions
 	 *
-	 * @param string $path    directory to test
-	 * @param bool   $is_file default false for a dir
+	 * @param string $path directory to test
+	 *
 	 * @return bool
 	 */
 	static function is_writeable($path)
@@ -104,7 +105,9 @@ class TikiInit
 
 
     /** Prepend $path to the include path
-     * \static
+     * @static          
+     * @param string $path the path to prepend
+     * @return string
      */
 	static function prependIncludePath($path)
 	{
@@ -122,7 +125,8 @@ class TikiInit
 
 
     /** Append $path to the include path
-     * \static
+     * @static 
+     * @param mixed $path
      */
 	static function appendIncludePath($path)
 	{
@@ -142,7 +146,7 @@ class TikiInit
     /** Return system defined temporary directory.
      * In Unix, this is usually /tmp
      * In Windows, this is usually c:\windows\temp or c:\winnt\temp
-     * \static
+     * @static
      */
 	static function tempdir()
 	{
@@ -158,6 +162,7 @@ class TikiInit
 	/**
 	 * Convert a string to UTF-8. Fixes a bug in PHP decode
 	 * From http://w3.org/International/questions/qa-forms-utf-8.html
+	 * @static
 	 * @param string String to be converted
 	 * @return UTF-8 representation of the string
 	 */
@@ -184,9 +189,9 @@ class TikiInit
 	}
 
 	/**
-	 *	Determine if the web server is an IIS server
-	 *	@return true if IIS server, else false
-  	 * \static
+	 * Determine if the web server is an IIS server
+	 * @return true if IIS server, else false
+  	 * @static
 	 */
 	static function isIIS()
 	{
@@ -211,6 +216,13 @@ class TikiInit
 	}
 }
 
+/**
+ * set how Tiki will report Errors
+ * @param $errno
+ * @param $errstr
+ * @param $errfile
+ * @param $errline
+ */
 function tiki_error_handling($errno, $errstr, $errfile, $errline)
 {
 	global $prefs, $phpErrors;
