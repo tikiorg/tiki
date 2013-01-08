@@ -1419,12 +1419,11 @@ class Comments extends TikiLib
 		}
 
 		if ($prefs['comments_archive'] == 'y' && $tiki_p_admin_comments != 'y') {
-			$conditions['archived'] = $comments->expr('`archived` = ? OR `archived` IS NULL', array('n'));
+			$conditions['archived'] = $comments->expr(' ( `archived` = ? OR `archived` IS NULL ) ', array('n'));
 		}
 
 		return $comments->fetchCount($conditions);
 	}
-
 
 	function order_comments_by_count($type = 'wiki', $lang = '', $maxRecords = -1)
 	{
