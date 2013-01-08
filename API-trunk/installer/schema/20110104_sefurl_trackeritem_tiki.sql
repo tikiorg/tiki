@@ -1,0 +1,1 @@
+update `tiki_sefurl_regex_out` set `right`='item$1' where `right`= 'item$2' and `left`='tiki-view_tracker_item.php\\?itemId=(\\d+)';

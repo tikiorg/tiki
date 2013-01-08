@@ -1,0 +1,714 @@
+/* $Id$
+	Simple theme option for Arcturus.css;
+	for TikiWiki CMS/Groupware.
+	Visit http://themes.tiki.org for more information.
+*/
+
+ /* reset arcturus values */
+ body,
+#middle,
+#c1c2 #col2,
+#c1c2 #wrapper #col1 #tiki-center,
+#col3,
+#tiki-top,
+.wikitext,
+.footerbgtrap,
+.box,
+h3.box-title,
+.separator,
+.option a:hover {
+	background: none;
+}
+
+.box {
+	border: none;
+	background: #e1ebf0;
+	margin: 0.2em;
+	padding-bottom: 0; /* overrides padding-bottom: 10px of the arcturus.css */
+}
+
+h1, h2, h3, h4, h5 {
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+#secondary_site_menu li,
+#secondary_site_menu li a,
+#tiki-top .cssmenu_horiz li,
+#tiki-top .cssmenu_horiz li a {
+	background: none;
+}
+/* end reset */
+
+
+body {
+	background: #fff url(simple/bg.png) top center repeat-y;
+	font-family: "Trebuchet MS", "Luxi Sans", "Lucida Grande", Tahoma, helvetica, sans-serif;
+	font-size: 80% !important;
+}
+	
+html>body {
+	font-size: 0.75em !important;
+}
+
+	
+#tiki-top {
+	background: #e1ebf0;
+	border: 1px solid #6699cc;
+}
+	
+.header,
+#c1c2,
+#c1c2 #wrapper,
+#c1c2 #wrapper #col1,
+#c1c2 #wrapper #col1 >.content,
+#c1c2 #wrapper #col1 #tiki-center,
+#c1c2 #col2,
+#col3 {background: transparent}
+
+#c1c2 #wrapper #col1 #tiki-center {border: 0}
+
+#c1c2 #wrapper #col1.marginleft  {
+	margin-left: 180px;
+}
+
+#c1c2 #wrapper #col1.marginright {
+	margin-right: 180px;
+}
+
+#c1c2 #col2,
+#col3 {
+	width: 180px;
+	padding: 0;
+}
+	
+#col3 {
+	margin-left: -180px;
+}
+	
+#centercolumn {padding: 5px}
+#tiki-center {padding: 5px 0}
+
+
+.footerbgtrap {
+	background: transparent;
+	color: #000;
+}
+
+.content {padding: 1em}
+
+div {font-size: 1em}
+
+a,
+a:link,
+a:visited {color: #0077cc}
+a:hover {color: #0099ee}
+
+h1 {
+	font-size: 2em;
+	font-family: "Times New Roman", Times, serif;
+	letter-spacing: 0.1em;
+	text-align: center;
+}
+
+hr {
+	border-top: 0;
+	background: #abcdef;
+	color: #abcdef;
+}
+
+fieldset {
+	padding: 0.9em;
+	margin-bottom: 0.2em;
+	border: solid 1px #99ccff;
+}
+
+input {
+	border: solid 1px #abcdef;
+	line-height: 1.6em;
+	padding: 0.1em;
+	margin-left: 2px;
+	margin-right: 2px;
+	vertical-align: middle;
+}
+
+input[type="text"],
+input[type="password"] {font-size: 1em}
+
+input[type="text"],
+input[type="password"],
+textarea {border: solid 1px #abcdef}
+
+input[type="submit"],
+input[type="file"],
+select {
+	border: solid 1px #abcdef;
+	background: #f0f9ff;
+	color: #000;
+}
+
+
+.button a,
+.button a:visited,
+button,
+input[type=reset],
+input[type=submit],
+.button input,
+.submitbutton,
+.calbuttonBox {
+	border: 1px solid #99ccff;
+	background: #f6f9fc url(simple/button_bg.png) center center repeat-x;
+	color: #0066cc;
+	font-family: "Trebuchet MS", "Luxi Sans", "Lucida Grande", Tahoma, helvetica, sans-serif;
+	font-size: 0.8em;
+	line-height: 1.6em;
+	margin-left: 2px;
+	margin-right: 2px;
+	padding: 1px;
+	vertical-align: middle;
+}
+
+.button a:hover,
+button:hover,
+input[type=reset]:hover,
+input[type=submit]:hover,
+.button input:hover,
+.submitbutton:hover,
+.calbuttonBox:hover {
+	border: 1px solid #000;
+	color: #000;
+	background: #f6f9fc url(simple/button_bg.png) center 100% repeat-x;
+	font-family: "Trebuchet MS", "Luxi Sans", "Lucida Grande", Tahoma, helvetica, sans-serif;
+	font-size: 0.8em;
+	line-height: 1.6em;
+	margin-left: 2px;
+	margin-right: 2px;
+	padding: 1px;
+	vertical-align: middle;
+}
+
+select {text-align: start}
+
+textarea {
+	padding: 0.1em;
+	width: 98%
+}
+
+
+#tiki-top a,
+#tiki-top a:visited {
+	color: #0077cc;
+	text-decoration: none;
+}
+
+#tiki-top a:hover {
+    color: #0099ee;
+    text-decoration: underline;
+    background: none;
+}
+
+#tiki-top label {
+	color: #000;
+}
+
+#topbar_modules .box-search {
+    top: 1.1em;
+    right: 1em;
+}
+	
+h3.box-title {
+	color: #0077cc;
+	background: #abcdef;
+	border-bottom: solid 0 #abcdef;
+	text-align: center;
+	margin: 0;
+}
+
+.box-data {
+	border-bottom: solid 2px #abcdef;
+	border-left: solid 2px #abcdef;
+	border-right: solid 2px #abcdef;
+	padding: 0.4em;
+	padding-bottom: 0.6em;
+	margin: 0;
+}
+
+.box-data a {
+	text-decoration: none;
+}
+
+.box-data a:hover {
+	color: #000;
+}
+
+.box-data a.linkmenu {
+	display: block;
+	background: #f0f9ff;
+	border: solid 1px #abcdef;
+	color: #3f3f6f;
+	margin-top: 0.1em;
+	margin-bottom: 0.2em;
+	padding: 0.2em;
+	text-align: start;
+}
+
+.box-data a.linkmenu:hover {
+	background: #fff;
+	border: solid 1px #000;
+	color: #000;
+}
+
+.box-data a.separator {
+	font-weight: bold;
+	margin-top: 0.1em;
+	margin-bottom: 0.1em;
+	padding: 0.2em;
+}
+
+.box-data form {
+	text-align: center;
+}
+
+.box-data select {width: 120px}
+
+.box-data .option,
+.box-data .separatorline {
+	font-size: 0.9em;
+	height: 1.2em;
+	text-align: start;
+}
+
+.box-data .option a {
+	display: inline;
+	background: transparent;
+	border: 0;
+	color: #07c;
+	font-weight: bold;
+}
+
+.box-data .option a:hover {
+	background: transparent;
+	border: 0;
+	color: #000;
+}
+
+.box-data .separator {
+	text-align: start;
+}
+
+.box-data table {
+	margin: auto;
+}
+
+.box-data table td {
+	padding: 0.2em;
+	text-align: start;
+}
+
+.cbox {
+	background: inherit;
+	border: none;
+}
+
+.cbox-title {
+	font-size: medium;
+	text-align: center;
+}
+
+table {
+	background: #e1ebf0;
+	border: solid 1px #69c;
+	font-size: 1em;
+}
+
+.normal,
+.admin {border-collapse: collapse}
+
+.normal th,
+th,
+td.heading,
+tr.diffheader {
+	background: #abcdef;
+	font-size: 1em;
+}
+
+.email .closeButton {width: 100%}
+.email .closeButton form {text-align: right}
+.email {border: solid 1px #abcdef}
+.email td.body {border: dashed 1px #69c}
+td.button {text-align: right}
+small {font-size: 0.8em}
+
+.normal .even,
+tr.even td,
+td.even,
+li.even,
+.eventhumb {
+	background: #f0f9ff;
+}
+
+.normal .odd,
+tr.odd td,
+td.odd,
+li.odd,
+.oddthumb  {
+	background: #def;
+}
+
+.simplebox {
+	background: #f0f9ff;
+	border: 1px solid #9cf;
+}
+
+h1.pagetitle {font-size: 1.3em }
+
+h1.pagetitle a,
+h1.pagetitle a:visited,
+h1.pagetitle a:hover {
+	color: #000;
+	display: block;
+	font-size: 1.3em;
+	text-align: center;
+	text-decoration: none;
+}
+
+.titlebar {
+	background: #abcdef;
+	font-weight: bold;
+	border: none;
+	letter-spacing: normal;
+	margin: auto;
+}
+
+.wikitable {
+	border-left: 1px solid #000;
+	border-top: 1px solid #000;
+	border-right: 0;
+	border-bottom: 0;
+	margin: auto;
+	padding: 0;
+	width: 90%;
+}
+
+.wikitable td {
+	border-right: 1px solid #000;
+	border-bottom: 1px solid #000;
+	margin: 0;
+	padding: 0.2em;
+}
+
+.wikitext {
+	background: transparent;
+}
+
+body.wikitext {
+	margin: 5px;
+}
+
+.wikitopline {
+	border: 1px dashed #abcdef;
+	background: #e1ebf0;
+}
+
+.codelisting {
+	font-family: monospace;
+	padding: 2ex;
+	background: #ddeeff;
+	margin: 1ex;
+	border: 1px dashed #adacaf;
+}
+
+.versions {
+	border-top: 1px dashed #999;
+	border-bottom: 1px dashed #999;
+	min-height: 142px;
+}
+
+.versionav {
+	display: inline;
+	float: right;
+	border-left: 1px dashed #999;
+}
+
+.versionav .button2 {
+	display: block;
+	border: 0;
+	border-bottom: 1px dashed #999;
+	background: transparent;
+}
+
+.versionav .button2 a {
+	border: 0;
+	background: inherit;
+	padding: 0 10px;
+}
+
+.versionav .highlight {
+	background: #ccc;
+	font-weight: bold;
+}
+
+.versiontitle {
+	font-weight: bold;
+	border-bottom: 1px dashed #999;
+	border-left: 1px dashed #999;
+	padding: 2px 30px;
+	float: right;
+}
+
+.quoteheader {
+	margin: 10px 5px 0 5px;
+	padding: 4px;
+	border-width: 1px 1px 0 1px;
+	border-style: solid;
+	border-color: #a9b8c2;
+	color: black;
+	font-weight: bold;
+	background: #a9b8c2;
+	font-size: 90%;
+}
+
+.quotebody {
+	margin: 0 5px 10px 5px;
+	padding: 5px;
+	border-color: #a9b8c2;
+	border-width: 0 1px 1px 1px;
+	border-style: solid;
+	color: black;
+	background: #edeeef;
+}
+
+/*
+ * articles
+ */
+
+.titlea {
+	font-size: large;
+}
+
+.titleb {
+	font-size: x-small;
+}
+
+/*
+ * blogs
+ */
+
+.blogtitle {
+	font-size: large;
+}
+
+.attention {
+	color: #c00}
+
+.highlight {
+	background: #fc0;
+	padding: 0 2px 0 2px}
+
+/*
+ * CSS Menus
+ */
+/* default and topbar dropdown typography (colors) and padding */
+.cssmenu_horiz li,
+.cssmenu_vert ul li,
+#tiki-top .cssmenu_horiz li:hover ul li,
+#tiki-top .cssmenu_horiz li:hover ul li a,
+#tiki-top .cssmenu_horiz li ul li a {
+	background: #def;
+}
+
+.cssmenu_horiz a,
+.cssmenu_vert a,
+#tiki-top .cssmenu_horiz li a {
+	color: #0077cc;
+	font-weight: bold;
+}
+
+.cssmenu_horiz a,
+.cssmenu_vert li ul a,
+#tiki-top .cssmenu_horiz li:hover ul li a,
+#tiki-top .cssmenu_horiz li ul li a:hover {
+	background: #def;
+	color: #0077cc;
+	font-weight: bold;
+}
+
+.cssmenu_horiz a:hover,
+.cssmenu_vert a:hover,
+#tiki-top .cssmenu_horiz li ul li a:hover {
+	text-decoration: underline;
+	color: #000;
+	background: none;
+}
+
+.cssmenu_horiz li ul li,
+.cssmenu_vert li ul li {
+	background: #def;
+	border: 1px solid #abcdef;
+	border-top: 0;
+	margin-bottom: -1px
+}
+
+.cssmenu_horiz li ul li:first-child,
+.cssmenu_vert li ul li:first-child {
+	border-top: 1px solid #abcdef;
+}
+
+#tiki-top .cssmenu_horiz li {
+	background: none;
+	border-right: 1px solid #abcdef;
+}
+
+#col2 .cssmenu_vert,
+#col2 .cssmenu_vert li {
+	width: 136px;
+}
+
+/* offset from left column (matches above) */
+#col2 .cssmenu_vert li:hover ul,
+#col2 .cssmenu_vert li.sfHover ul {
+	left: 136px;
+}
+
+/* special arrows and arrow top padding */
+.sf-sub-indicator {
+	background: url(simple/arrows-0b8a98.png) no-repeat -10px -100px;
+}
+.cssmenu_vert li a .sf-sub-indicator {
+	background: url(simple/arrows-0b8a98.png) no-repeat 0 0;
+}
+
+#page-bar {
+	border-bottom: solid 1px #000;
+}
+
+.tabs {
+	background: none;
+	border: none;
+	border-bottom: solid 1px #000;
+	margin: 0 0.2em;
+}
+
+.tabstoggle .button {
+	display: block;
+	padding-top: 2px;
+	}
+.tabstoggle span a, .tabstoggle span a:hover {
+	display: block;
+}
+
+.tabmark {
+	font-size: 85%;
+	background: #abcdef;
+	border-color: #000;
+}
+
+.tabmark a,
+.tabmark a:visited {
+	color: #000;
+	padding: 1px 5px 1px 5px;
+}
+
+.tabmark a:active {
+	background: #fff;
+	color: red;
+}
+
+.tabmark a:hover {
+	color: black;
+	background: #f0f9ff;
+}
+	
+.tabinactive:hover,
+.tabactive {
+	background: #f0f9ff;
+}
+
+.tabcontent {
+	border: 1px solid #000;
+	top: 0;
+	padding: 6px 2px 2px 2px;
+	margin-bottom: 25px;
+	background: #f0f9ff;
+}
+
+.normal {
+	border: solid 1px #abcdef;
+}
+
+.categpath {
+	font-size: x-small
+}
+
+.admbox {
+	border: 2px solid #abcdef;
+	height: 100px;
+	width: 100px;
+	text-align: center;
+	float: left;
+	margin: 5px;
+}
+
+.admbox:hover {background: #ddeeff;}
+.admbox img {margin-top: 20px;}
+
+/* structures toc */
+.toc {
+	margin-left: 0.5em;
+	padding-left: 0.5em;
+	list-style-type: none;
+}
+
+.toc li {
+	margin-left: .2em;
+	padding-left: .2em;
+}
+
+/* jscalendar */
+.daterow {
+	padding: 0 5px;
+	border: 1px outset #ddd;
+	background: #ddd}
+
+.daterow:hover {
+	background: #fff;
+	cursor: pointer}
+
+.daterow:active {
+	border: 1px inset #ddd}
+
+/* main calendar table */
+#caltable {
+	border-left: solid 1px #abcdef;
+	border-top: solid 1px #abcdef;
+	border-right: 0;
+	border-bottom: 0}
+
+#caltable td {
+	background: #fff;
+	border-right: solid 1px #abcdef;
+	border-bottom: solid 1px #abcdef;
+	padding: 0.1em;
+	vertical-align: top}
+
+#caltable .calfocuson {
+	background: #fc0;
+	border: solid 1px #000}
+
+#caltable .calfocuson a {
+	color: #000}
+
+#caltable .calfocus a,
+#caltable .calfocuson a {
+	text-decoration: none}
+
+.calcontent {
+	min-height: 7em;
+	height: auto !important;
+	height: 7em;
+	min-width: 7em;
+	width: auto !important;
+	width: 7em}
+
+.opaque {background: #fff}
+
+/* end of file */
