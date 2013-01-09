@@ -174,6 +174,14 @@
 					{tr}wiki:pageName for a wiki page or tpl:tplName for a template{/tr}
 				</div>
 			</label>
+			<label>
+				<input type="checkbox" name="adminOnlyViewEditItem" value="1"
+					{if $info.adminOnlyViewEditItem eq 'y'} checked="checked"{/if}/>
+				{tr}Admins only can view or edit an item{/tr}
+				<div class="description">
+					{tr}Only users with admin tracker permission can use the built in tracker interface (if you want to restrict non-admins to custom wiki page tracker interfaces){/tr}
+				</div>
+			</label>
 		</div>
 		<h4>{tr}Status{/tr}</h4>
 		<div>

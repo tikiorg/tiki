@@ -289,6 +289,10 @@ if (! $itemObject->canView()) {
 	$smarty->display("error.tpl");
 	die;
 }
+if ($tracker_info['adminOnlyViewEditItem'] === 'y') {
+	$access->check_permission('tiki_p_admin_trackers', tra('Admin this tracker'), 'tracker', $tracker_info['trackerId']);
+}
+
 
 if (!empty($_REQUEST['moveto']) && $tiki_p_admin_trackers == 'y') { // mo to another tracker fields with same name
 	$perms = Perms::get('tracker', $_REQUEST['moveto']);

@@ -102,6 +102,10 @@ if ($tiki_p_create_tracker_items == 'y' && !empty($t['end'])) {
 
 $access->check_permission_either(array('tiki_p_view_trackers', 'tiki_p_create_tracker_items'));
 
+if ($tracker_info['adminOnlyViewEditItem'] === 'y') {
+	$access->check_permission('tiki_p_admin_trackers', tra('Admin this tracker'), 'tracker', $tracker_info['trackerId']);
+}
+
 if ($tiki_p_view_trackers != 'y') {
 	$userCreatorFieldId = $trklib->get_field_id_from_type($_REQUEST['trackerId'], 'u', '1%');
 	$groupCreatorFieldId = $trklib->get_field_id_from_type($_REQUEST['trackerId'], 'g', '1%');
