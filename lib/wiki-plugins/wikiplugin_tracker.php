@@ -1294,7 +1294,7 @@ function wikiplugin_tracker($data, $params)
 							$smarty->assign('f_'.$f['fieldId'], wikiplugin_tracker_render_input($f, $item, $dynamicSave).$mand);
 						}
 					} else {
-						$back.= "<tr><td";
+						$back.= '<tr><td class="tracker_input_label"';
 
 						// If type is has a samerow param and samerow is "No", show text on one line and the input field on the next
 						$isTextOnSameRow = true;
@@ -1325,7 +1325,7 @@ function wikiplugin_tracker($data, $params)
 						if (!$isTextOnSameRow) {
 							$back.= "<br/>";
 						} else {
-							$back.= '</td><td>';
+							$back.= '</td><td class="tracker_input_value">';
 						}
 
 						$back .= wikiplugin_tracker_render_input($f, $item, $dynamicSave);
