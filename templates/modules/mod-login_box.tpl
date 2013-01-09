@@ -47,6 +47,36 @@ if (jqueryTiki.no_cookie) {
 	});
 }
 {/jq}
+{if $prefs.feature_jquery_tooltips eq 'y'}
+	{assign var="closeText" value="{tr}Close{/tr}"}
+	{jq}
+	$('.login_link').cluetip({
+		activation: 'click',
+		arrows: false,
+		showTitle: false,
+		closePosition: 'bottom',
+		closeText: '{{$closeText}}',
+		cluetipClass: 'transparent',
+		dropShadow: false,
+		hideLocal: true,
+		local: true,
+		leftOffset: -100,
+		positionBy: 'topBottom',
+		sticky: true,
+		topOffset: 10,
+		fx: {
+			open: 'fadeIn', // can be 'show' or 'slideDown' or 'fadeIn'
+			openSpeed: '200'
+		},
+		width: 'auto',
+		onShow: function() {
+			$('#main').one('mousedown',function() {
+				$(document).trigger('hideCluetip');
+			})
+		}
+	});
+	{/jq}
+{/if}
 {if !isset($tpl_module_title)}{assign var=tpl_module_title value="{tr}Log in{/tr}"}{/if}{* Left for performance, since tiki-login_scr.php includes this template directly. *}
 {if !isset($module_params)}{assign var=module_params value=' '}{/if}
 {if isset($nobox)}{$module_params.nobox = $nobox}{/if}
@@ -79,7 +109,7 @@ if (jqueryTiki.no_cookie) {
 		{elseif $mode eq "popup"}
 			<div class="siteloginbar_popup">
 				<ul class="clearfix cssmenu_horiz">
-					<li {*class="tabmark" *}id="logout_link_{$module_logo_instance}"><div class="tabmark"><a href="tiki-logout.php" class="login_link">{tr}Log out{/tr}<span class="sf-sub-indicator"> »</span></a></div>
+					<li id="logout_link_{$module_logo_instance}"><div class="tabmark"><a href="tiki-logout.php" class="login_link">{tr}Log out{/tr}</a></div>
 						<ul class="siteloginbar_poppedup">
 							<li class="tabcontent">
 								{*<div class="cbox">*}{$user|userlink} <a href="tiki-logout.php" title="{tr}Log out{/tr}">{tr}Log out{/tr}</a>{*</div>*}
@@ -115,6 +145,14 @@ if (jqueryTiki.no_cookie) {
 		{/if}
 	{else}
 		{assign var='close_tags' value=''}
+		{if $mode eq "popup"}
+			<div class="siteloginbar_popup">
+				<ul class="clearfix{if $prefs.feature_jquery_tooltips ne 'y'} cssmenu_horiz{/if}">
+					<li id="logout_link_{$module_logo_instance}"><div class="tabmark"><a href="tiki-login.php" class="login_link" onclick="return false;" rel=".siteloginbar_poppedup">{tr}Log in{/tr}</a></div>
+						<ul class="siteloginbar_poppedup">
+							<li class="tabcontent">
+								{capture assign="close_tags"}</li></ul></li></ul></div>{$close_tags}{/capture}
+		{/if}
 		<form name="loginbox" id="loginbox-{$module_logo_instance}" action="{if $prefs.https_login eq 'encouraged' || $prefs.https_login eq 'required' || $prefs.https_login eq 'force_nocheck'}{$base_url_https}{/if}{$prefs.login_url}"
 				method="post" {if $prefs.feature_challenge eq 'y'}onsubmit="doChallengeResponse()"{/if}
 				{if $prefs.desactive_login_autocomplete eq 'y'} autocomplete="off"{/if}> 
@@ -137,14 +175,6 @@ function doChallengeResponse() {
 			<input type="hidden" name="response" value="" />
 		{/if}
 		{if !empty($urllogin)}<input type="hidden" name="url" value="{$urllogin|escape}" />{/if}
-		{if $mode eq "popup"}
-			<div class="siteloginbar_popup">
-				<ul class="clearfix cssmenu_horiz">
-					<li {*class="tabmark" *}id="logout_link_{$module_logo_instance}"><div class="tabmark"><a href="tiki-login.php" class="login_link">{tr}Log in{/tr}<span class="sf-sub-indicator"> »</span></a></div>
-						<ul class="siteloginbar_poppedup">
-							<li class="tabcontent">
-								{capture assign="close_tags"}</li></ul></li></ul></div>{$close_tags}{/capture}
-		{/if}
 		{if $module_params.nobox neq 'y'}
 			<fieldset>
 				{capture assign="close_tags"}</fieldset>{$close_tags}{/capture}
@@ -156,7 +186,7 @@ function doChallengeResponse() {
 				{else}{$error_login|escape}{/if}
 			{/remarksbox}
 		{/if}
-		<div>
+		<div class="user">
 			{if !isset($module_logo_instance)}{assign var=module_logo_instance value=' '}{/if}
 			<label for="login-user_{$module_logo_instance}">{if $prefs.login_is_email eq 'y'}{tr}Email:{/tr}{else}{tr}Username:{/tr}{/if}</label>
 			{if !isset($loginuser) or $loginuser eq ''}
@@ -167,12 +197,12 @@ function doChallengeResponse() {
 			{/if}
 		</div>
 		{if $prefs.feature_challenge eq 'y'} <!-- quick hack to make challenge/response work until 1.8 tiki auth overhaul -->
-			<div>
+			<div class="email">
 				<label for="login-email_{$module_logo_instance}">{tr}eMail:{/tr}</label>
 				<input type="text" name="email" id="login-email_{$module_logo_instance}" size="{if empty($module_params.input_size)}15{else}{$module_params.input_size}{/if}" />
 			</div>
 		{/if}
-		<div>
+		<div class="pass">
 			<label for="login-pass_{$module_logo_instance}">{tr}Password:{/tr}</label>
 			<input onkeypress="capLock(event, this)" type="password" name="pass" id="login-pass_{$module_logo_instance}" size="{if empty($module_params.input_size)}15{else}{$module_params.input_size}{/if}" />
 			<div class="divCapson" style="display:none;">

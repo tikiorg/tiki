@@ -610,15 +610,15 @@ select {
 	-moz-border-radius-topright: 5px;
 }
 
-.siteloginbar_popup .cssmenu_horiz #register_link {
+.siteloginbar_popup ul.clearfix #register_link {
 	background-color: #969696;
 }
 
-.siteloginbar_popup .cssmenu_horiz .tabmark {
+.siteloginbar_popup ul.clearfix .tabmark {
 	background-color: #070707;
 }
 
-.siteloginbar_poppedup li {
+.siteloginbar_poppedup li.tabcontent {
 	border-radius: 5px;
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
@@ -669,7 +669,7 @@ a.login_link {
 	text-transform: uppercase;
 /*	margin-bottom: -1px !important;*/
 }
-.siteloginbar_popup .cssmenu_horiz ul {
+.siteloginbar_popup ul.clearfix ul {
 	margin-top: -2px;
 }
 
@@ -1266,6 +1266,11 @@ a.dirsublink {
 .cluetip-default #cluetip-title a {
 	color: #CBF4FA;
 }
+
+/* fake 'transparent' theme (for ClueTip login box popup) */
+/*.cluetip-transparent {
+	top: 168px !important;
+}*/
   
 
 /***** End New (unsorted) *****/

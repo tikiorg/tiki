@@ -1333,6 +1333,9 @@ textarea.tshoutbox{
 	background: #fff;
 	color: #900;
 }
+.cluetip-close {
+	text-align: right;
+}
 	
 .cluetip-fullhtml {
 	margin: 0;
@@ -1731,6 +1734,57 @@ form.simple textarea.export {
 .structuremenu .menuSection .option, .structuremenu .menuSection .optionline {
 	background: transparent url(../../img/icons/h_trenner.gif) center left no-repeat;
 	padding-left: 21px;
+}
+
+/* Site Login Bar Pop-up */
+.siteloginbar_poppedup .tabcontent {
+/*	box-shadow: 0 5px 5px -3px rgba(0, 0, 0, .5);*/
+}
+.siteloginbar_poppedup .user,
+.siteloginbar_poppedup .pass {
+	display: table-row;
+} 
+.siteloginbar_poppedup .user label,
+.siteloginbar_poppedup .pass label,
+.siteloginbar_poppedup .user input,
+.siteloginbar_poppedup .pass input {
+	display: table-cell;
+	vertical-align: top;
+}
+.siteloginbar_poppedup .user label,
+.siteloginbar_poppedup .pass label {
+	padding-left: 10px;
+	padding-right: 10px;
+	padding-top: 5px;
+}
+
+.siteloginbar_poppedup .user input,
+.siteloginbar_poppedup .pass input {
+	width: 160px;
+}
+.siteloginbar_popup * {
+	padding: 0;
+}
+.siteloginbar_popup a {
+	line-height: 16px;
+	position: relative;
+}
+.siteloginbar_popup .tabmark a:focus {
+	outline: none;
+}
+.siteloginbar_popup .tabmark a:after {
+	content: "";
+	position: absolute;
+	top: 100%;
+	right: 8px;
+	border-top: 5px solid black;
+	border-top-color: #ccc;
+	border-left: 5px solid transparent;
+	border-right: 5px solid transparent;
+	margin-top: -15px;
+}
+.siteloginbar_popup .tabmark a:hover:after {
+	border-top-color: #fff;
 }
 
 /* Twitter module styling */

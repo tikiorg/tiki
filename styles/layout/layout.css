@@ -215,13 +215,15 @@ li#register_link {
 	padding-right: 26px !important;
 }
 
-.siteloginbar_popup .cssmenu_horiz {
+.siteloginbar_popup ul, ul.siteloginbar_poppedup {
+	list-style: none;
+}
+.siteloginbar_popup ul.clearfix {
 	width: inherit;
 	margin: inherit;
-	padding: inherit;
 }
 
-.siteloginbar_popup .cssmenu_horiz ul li {
+.siteloginbar_popup ul.clearfix ul li {
 	width: 100%;
 	font-size: inherit;
 }
@@ -240,16 +242,16 @@ li#logout_link a {
 	text-align: center;
 }
 
-.siteloginbar_popup .cssmenu_horiz div a.login_link {
+.siteloginbar_popup ul.clearfix div a.login_link {
 	display: block;
 }
 
-.siteloginbar_popup .cssmenu_horiz div a {
+.siteloginbar_popup ul.clearfix div a {
 	display: inline;
 }
 
 .siteloginbar_poppedup {
-	padding: 10px;
+	padding: 0;
 	margin: 2px 2px 3px 1px;
 }
 
@@ -2051,6 +2053,15 @@ ul.freetagged li {
 
 #cluetip {
 	display: none;
+}
+
+/* fake 'transparent' theme (for ClueTip login box popup) */
+.cluetip-transparent .ui-cluetip-content {
+	padding: 0;
+}
+.cluetip-transparent.ui-widget-content, .cluetip-transparent .ui-widget-content {
+	background: none;
+	border: none;
 }
 
 /***** New (unsorted) *****/
