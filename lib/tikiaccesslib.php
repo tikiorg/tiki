@@ -169,7 +169,7 @@ class TikiAccessLib extends TikiLib
 				$permission = $permission_name;
 			}
 			$this->display_error('', tra("You do not have permission to use this feature:")." ". $permission, '403', false);
-			if (!$user) {
+			if (empty($GLOBALS['user'])) {
 				$_SESSION['loginfrom'] = $_SERVER['REQUEST_URI'];
 			}
 		}
