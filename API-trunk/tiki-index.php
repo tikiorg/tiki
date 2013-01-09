@@ -85,18 +85,6 @@ if (!isset($_SESSION['thedate'])) {
 	$thedate = $_SESSION['thedate'];
 }
 
-// Check if a WS is active
-global $perspectivelib; require_once 'lib/perspectivelib.php';
-$activeWS = $perspectivelib->get_current_perspective(null);
-
-// If there's a WS active and the WS has a homepage, then load the WS homepage
-if ((!empty($activeWS)) and $isHomePage) {
-	$preferences = $perspectivelib->get_preferences($activeWS);
-	if (!empty($preferences['wsHomepage'])) {
-		$_REQUEST['page'] = $preferences['wsHomepage'];
-	}
-}
-
 // If a page have been requested, then show the page.
 if (isset($_REQUEST['page_id'])) {
 	$_REQUEST['page'] = $tikilib->get_page_name_from_id($_REQUEST['page_id']);
