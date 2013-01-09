@@ -150,8 +150,8 @@ li.sfHover > a > .sf-sub-indicator {
 
 /*** shadows for all but IE6 ***/
 ul.sf-shadow ul {
-	background: url(../lib/jquery/superfish/images/shadow.png) no-repeat bottom right;
-	padding: 0 8px 9px 0;
+	box-shadow: 0 5px 6px -3px rgba(0, 0, 0, .5);
+	padding: 0;
 }
 
 ul.sf-shadow ul.sf-shadow-off {
