@@ -7,7 +7,7 @@
  * @package TikiWiki
  * @subpackage \
  * @copyright (c) Copyright 2002-2013 by authors of the Tiki Wiki CMS Groupware Project. All Rights Reserved. See copyright.txt for details and a complete list of authors.
- * @licence Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+ * @licence LGPL. See licence.txt for more details
  */
 // $Id$
 
@@ -33,6 +33,7 @@ $map = array (
 $s = new XML_RPC_Server($map);
 
 /**
+ * checks $user has permission on the Blog identified by $blogid
  * @param $user
  * @param $blogid
  * @param $permName
@@ -56,8 +57,8 @@ function check_individual($user,$blogid,$permName)
 	}
 }
 
-/* Validates the user and returns user information */
 /**
+ * Validates the user and returns user information
  * @param $params
  * @return XML_RPC_Response
  */
@@ -94,8 +95,8 @@ function getUserInfo($params)
 	}
 }
 
-/* Posts a new submission to the CMS */
 /**
+ * Posts a new submission to the CMS
  * @param $params
  * @return XML_RPC_Response
  */
@@ -162,6 +163,7 @@ function newPost($params)
 
 // :TODO: editPost
 /**
+ * edits a post already in the CMS
  * @param $params
  * @return XML_RPC_Response
  */
@@ -225,6 +227,7 @@ function editPost($params)
 
 // :TODO: deletePost
 /**
+ * removes a post from the CMS
  * @param $params
  * @return XML_RPC_Response
  */
@@ -274,6 +277,7 @@ function deletePost($params)
 // :TODO: setTemplate
 // :TODO: getPost
 /**
+ * retrieves a post from the CMS
  * @param $params
  * @return XML_RPC_Response
  */
@@ -339,6 +343,7 @@ function getPost($params)
 
 // :TODO: getRecentPosts
 /**
+ * retrieves a list of recent posts to the CMS
  * @param $params
  * @return XML_RPC_Response
  */
@@ -409,8 +414,8 @@ function getRecentPosts($params)
 }
 
 // :TODO: tiki.tikiPost
-/* Get the topics where the user can post a new */
 /**
+ * Get the topics where the user can post a new
  * @param $params
  * @return XML_RPC_Response
  */
