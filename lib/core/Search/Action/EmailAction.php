@@ -11,9 +11,9 @@ class Search_Action_EmailAction implements Search_Action_Action
 	{
 		return array(
 			'replyto' => false,
-			'to' => true,
-			'cc' => false,
-			'bcc' => false,
+			'to+' => true,
+			'cc+' => false,
+			'bcc+' => false,
 			'subject' => true,
 			'content' => true,
 		);
@@ -35,14 +35,16 @@ class Search_Action_EmailAction implements Search_Action_Action
 				$mail->setReplyTo($replyto);
 			}
 
-			$mail->addTo($data->to->email());
-
-			if ($cc = $data->cc->email()) {
-				$mail->addCc($cc);
+			foreach ($data->to->email() as $to) {
+				$mail->addTo($this->stripNp($to));
 			}
 
-			if ($bcc = $data->bcc->email()) {
-				$mail->addBcc($bcc);
+			foreach ($data->cc->email() as $cc) {
+				$mail->addCc($this->stripNp($cc));
+			}
+
+			foreach ($data->bcc->email() as $bcc) {
+				$mail->addBcc($this->stripNp($bcc));
 			}
 
 			$content = $this->parse($data->content->none());
@@ -70,6 +72,11 @@ class Search_Action_EmailAction implements Search_Action_Action
 		);
 
 		return trim($parserlib->parse_data($content, $options));
+	}
+
+	private function stripNp($content)
+	{
+		return str_replace(array('~np~', '~/np~'), '', $content);
 	}
 }
 

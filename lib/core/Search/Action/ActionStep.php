@@ -18,7 +18,10 @@ class Search_Action_ActionStep implements Search_Action_Step
 
 	function getFields()
 	{
-		$required = array_keys($this->action->getValues());
+		$required = array();
+		foreach (array_keys($this->action->getValues()) as $keyName) {
+			$required[] = rtrim($keyName, '+');
+		}
 		$found = array();
 
 		foreach ($this->definition as $key => $value) {
@@ -47,6 +50,8 @@ class Search_Action_ActionStep implements Search_Action_Step
 		if ($entry = $this->prepare($entry)) {
 			return $this->action->validate($entry);
 		}
+
+		return false;
 	}
 
 	function execute(array $entry)
@@ -54,6 +59,8 @@ class Search_Action_ActionStep implements Search_Action_Step
 		if ($entry = $this->prepare($entry)) {
 			return $this->action->execute($entry);
 		}
+
+		return false;
 	}
 
 	private function prepare($entry)
@@ -61,37 +68,52 @@ class Search_Action_ActionStep implements Search_Action_Step
 		$out = array();
 
 		foreach ($this->action->getValues() as $fieldName => $isRequired) {
-			$readFrom = array($fieldName);
+			$initialName = $fieldName;
+			$fieldName = rtrim($fieldName, '+');
+			$requiresArray = $initialName != $fieldName;
+
+			$values = array();
 
 			if (isset($this->definition[$fieldName])) {
 				// Static value
-				$out[$fieldName] = $this->definition[$fieldName];
-				continue;
+				$values = array($this->definition[$fieldName]);
 			} elseif (isset($this->definition[$fieldName . '_field'])) {
 				// Use different field
-				$readFrom = array($this->definition[$fieldName . '_field']);
+				$values = $this->readValues($entry, array($this->definition[$fieldName . '_field']));
 			} elseif (isset($this->definition[$fieldName . '_field_coalesce'])) {
 				$readFrom = $this->splitFields($this->definition[$fieldName . '_field_coalesce']);
+				$values = $this->readValues($entry, $readFrom);
+				$values = array_slice($values, 0, 1);
+			} elseif (isset($this->definition[$fieldName . '_field_multiple'])) {
+				$readFrom = $this->splitFields($this->definition[$fieldName . '_field_multiple']);
+				$values = $this->readValues($entry, $readFrom);
+			} else {
+				$values = $this->readValues($entry, array($fieldName));
 			}
 
-			foreach ($readFrom as $candidate) {
-				if (isset($entry[$candidate])) {
-					$out[$fieldName] = $entry[$candidate];
-					break;
-				}
-			}
-
-			if (! isset($out[$fieldName])) {
-				if (! $isRequired) {
-					$out[$fieldName] = null;
-				} else {
-					// Missing value, error
-					return null;
-				}
+			if (empty($values) && $isRequired) {
+				return null;
+			} elseif ($requiresArray) {
+				$out[$fieldName] = $values;
+			} else {
+				$out[$fieldName] = empty($values) ? null : reset($values);
 			}
 		}
 
 		return new JitFilter($out);
+	}
+
+	private function readValues($entry, $readFrom)
+	{
+		$values = array();
+
+		foreach ($readFrom as $candidate) {
+			if (isset($entry[$candidate])) {
+				$values[] = $entry[$candidate];
+			}
+		}
+
+		return $values;
 	}
 
 	private function splitFields($string)
