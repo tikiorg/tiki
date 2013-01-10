@@ -609,6 +609,9 @@ select {
 	-moz-border-radius-topleft: 5px;
 	-moz-border-radius-topright: 5px;
 }
+.siteloginbar_poppedup .tabcontent {
+	box-shadow: 0 5px 5px -3px rgba(0, 0, 0, .5);
+}
 
 .siteloginbar_popup ul.clearfix #register_link {
 	background-color: #969696;
