@@ -1,17 +1,21 @@
 <?php
 /**
- * @package tikiwiki
+ * variation of tiki-index.php.
+ * displays tiki-index with parsed content
+ *
+ * @package   Tiki
+ * @copyright (c) Copyright 2002-2013 by authors of the Tiki Wiki CMS Groupware Project. All Rights Reserved. See copyright.txt for details and a complete list of authors.
+ * @licence   LGPL. See licence.txt for more details
  */
-// (c) Copyright 2002-2013 by authors of the Tiki Wiki CMS Groupware Project
-// 
-// All Rights Reserved. See copyright.txt for details and a complete list of authors.
-// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 $section = 'wiki page';
+/** @package Tiki */
 require_once('tiki-setup.php');
+/** @package Tiki */
 include_once('lib/structures/structlib.php');
 
+/** @package Tiki */
 include_once('lib/wiki/wikilib.php');
 
 $parserlib = TikiLib::lib('parser');
@@ -19,6 +23,7 @@ $parserlib = TikiLib::lib('parser');
 if ($prefs['feature_categories'] == 'y') {
 	global $categlib;
 	if (!is_object($categlib)) {
+		/** @package Tiki */
 		include_once('lib/categories/categlib.php');
 	}
 }
@@ -53,6 +58,7 @@ if (!($info = $tikilib->get_page_info($page))) {
 	die;
 }
 
+/** @package Tiki */
 require_once 'lib/wiki/renderlib.php';
 $pageRenderer = new WikiRenderer($info, $user);
 $objectperms = $pageRenderer->applyPermissions();
@@ -104,6 +110,7 @@ if (($tiki_p_admin_wiki == 'y')
 // Save to notepad if user wants to
 if ($user && $prefs['feature_wiki_notepad'] == 'y' && $tiki_p_notepad == 'y' && $prefs['feature_notepad'] == 'y' && isset($_REQUEST['savenotepad'])) {
 		check_ticket('index-p');
+	/** @package Tiki */
 	include_once('lib/notepad/notepadlib.php');
 
 	$notepadlib->replace_note($user, 0, $_REQUEST['page'], $info['data']);
@@ -159,6 +166,7 @@ if ( isset( $_REQUEST['pagenum'] ) && $_REQUEST['pagenum'] > 0 ) {
 }
 
 
+/** @package Tiki */
 include_once('tiki-section_options.php');
 
 $pageRenderer->runSetups();

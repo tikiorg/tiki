@@ -1,17 +1,21 @@
 <?php
 /**
- * @package tikiwiki
+ * variation of tiki-index.php.
+ * displays a 'raw' page.
+ *
+ * @package   Tiki
+ * @copyright (c) Copyright 2002-2013 by authors of the Tiki Wiki CMS Groupware Project. All Rights Reserved. See copyright.txt for details and a complete list of authors.
+ * @licence   LGPL. See licence.txt for more details
  */
-// (c) Copyright 2002-2013 by authors of the Tiki Wiki CMS Groupware Project
-// 
-// All Rights Reserved. See copyright.txt for details and a complete list of authors.
-// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 $section = 'wiki page';
+/** @package Tiki */
 require_once ('tiki-setup.php');
 
+/** @package Tiki */
 include_once ('lib/structures/structlib.php');
+/** @package Tiki */
 include_once ('lib/wiki/wikilib.php');
 
 if ($prefs['feature_wiki'] != 'y') {
@@ -46,6 +50,7 @@ if (!($info = $tikilib->get_page_info($page))) {
 	die;
 }
 
+/** @package Tiki */
 require_once 'lib/wiki/renderlib.php';
 $pageRenderer = new WikiRenderer($info, $user);
 $objectperms = $pageRenderer->applyPermissions();
@@ -106,6 +111,7 @@ if ( isset( $_REQUEST['pagenum'] ) && $_REQUEST['pagenum'] > 0 ) {
 
 $pageRenderer->useRaw();
 
+/** @package Tiki */
 include_once ('tiki-section_options.php');
 $pageRenderer->runSetups();
 ask_ticket('index-raw');
