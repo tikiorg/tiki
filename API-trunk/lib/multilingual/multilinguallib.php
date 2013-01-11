@@ -1,25 +1,33 @@
 <?php
-// (c) Copyright 2002-2013 by authors of the Tiki Wiki CMS Groupware Project
-//
-// All Rights Reserved. See copyright.txt for details and a complete list of authors.
-// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+/**
+ * Feature: i18n.
+ * 
+ * Enables internationalization features and multilingual support for the entire site.
+ * this script may only be included, it will die if called directly.
+ *
+ * @package   Tiki
+ * @subpackage i18n
+ * @copyright (c) Copyright 2002-2013 by authors of the Tiki Wiki CMS Groupware Project. All Rights Reserved. See copyright.txt for details and a complete list of authors.
+ * @licence   LGPL. See licence.txt for more details
+ */
 // $Id$
 
-//this script may only be included - so its better to die if called directly.
+// die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 		header("location: index.php");
 		exit;
 }
 
 /**
- *
+ * extends TikiLib to provide internationalization features and multilingual support.
+ * @package   Tiki\i18n
  */
 class MultilingualLib extends TikiLib
 {
 	public $mtEnabled = 'y';
 
 	/**
-	 * @brief add an object and its transaltion set into the set of translations of another one
+	 * add an object and its translation set into the set of translations of another one
 	 * @param: type = (idem tiki_categ) 'wiki page'...
 	 * @param: srcId = id of the source
 	 * @param: srcLang = lang of the source

@@ -1,10 +1,19 @@
 <?php
-// (c) Copyright 2002-2013 by authors of the Tiki Wiki CMS Groupware Project
-// 
-// All Rights Reserved. See copyright.txt for details and a complete list of authors.
-// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+/**
+ * lists features available in Tiki
+ *
+ * @package   Tiki
+ * @copyright (c) Copyright 2002-2013 by authors of the Tiki Wiki CMS Groupware Project. All Rights Reserved. See copyright.txt for details and a complete list of authors.
+ * @licence   LGPL. See licence.txt for more details
+ */
 // $Id$
 
+/**
+ * creates a list of features
+ * @param bool $partial
+ *
+ * @return array
+ */
 function prefs_feature_list($partial = false)
 {
 
@@ -306,7 +315,7 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_multilingual' => array(
 			'name' => tra('Multilingual'),
-			'description' => tra('Enables internationalization features and multilingual support for then entire site.'),
+			'description' => tra('Enables internationalization features and multilingual support for the entire site.'),
 			'help' => 'Internationalization',
 			'type' => 'flag',
 			'default' => 'n',
