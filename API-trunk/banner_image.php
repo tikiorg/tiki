@@ -27,6 +27,7 @@ if (is_file($bannercachefile) and (!isset($_REQUEST["reload"]))) {
 	exit;
 }
 
+/** @package Tiki */
 require_once ('tiki-setup.php');
 
 $access->check_feature('feature_banners');

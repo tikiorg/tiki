@@ -10,6 +10,7 @@
  */
 // $Id$
 
+/** @package Tiki */
 require_once ('tiki-setup.php');
 
 $access->check_feature('feature_banners');

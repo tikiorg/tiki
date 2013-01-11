@@ -16,7 +16,9 @@
  */
 // $Id$
 
+/** @package Tiki */
 require_once ('tiki-setup.php');
+/** @package Tiki */
 require_once 'lib/articles/artlib.php';
 
 $access->check_feature('feature_articles');
@@ -85,6 +87,7 @@ if ($imagePrefix == "article_preview" && !is_file($temporaryFile)) {
 	$data =& $storedData["image_data"];
 	header("Content-type: ".$type);
 	if (!empty($_REQUEST['width'])) {
+		/** @package Tiki */
 		require_once('lib/images/images.php');
 		$image = new Image($data);
 		if ($image->get_width() > $_REQUEST['width']) {
