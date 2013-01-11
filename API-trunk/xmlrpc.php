@@ -1,12 +1,11 @@
 <?php
 /**
- * provides XML functions for Tiki.
+ * Feature: Blogs.
  * 
- * Used by Blog feature.
+ * provides XML functions for Tiki.
  *
  * @uses XML_RPC
- * @package TikiWiki
- * @subpackage \
+ * @package Tiki
  * @copyright (c) Copyright 2002-2013 by authors of the Tiki Wiki CMS Groupware Project. All Rights Reserved. See copyright.txt for details and a complete list of authors.
  * @licence LGPL. See licence.txt for more details
  */

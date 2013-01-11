@@ -1,23 +1,20 @@
 <?php
 /**
- * @package tikiwiki
+ * application to display an image from the database with option to resize the image dynamically creating a thumbnail on the fly.
+ * 
+ * This handles 4 types of images, depending on the image_type parameter: 
+ * - "article": Images for articles
+ * - "submission": Images for article submissions
+ * - "topic": Images for topics associated to articles
+ * - "preview": Special case used for article previews. A recently uploaded custom article image. Not cached nor generated here. See tiki-edit_article.php
+ * Any other value is invalid
+ * If image_type has no value, we default to "article" to preserve previous behaviour.
+ * 
+ * @package Tiki
+ * @copyright (c) Copyright 2002-2013 by authors of the Tiki Wiki CMS Groupware Project. All Rights Reserved. See copyright.txt for details and a complete list of authors.
+ * @licence LGPL. See licence.txt for more details
  */
-// (c) Copyright 2002-2013 by authors of the Tiki Wiki CMS Groupware Project
-// 
-// All Rights Reserved. See copyright.txt for details and a complete list of authors.
-// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
-
-// application to display an image from the database with 
-// option to resize the image dynamically creating a thumbnail on the fly.
-
-// This handles 4 types of images, depending on the image_type parameter: 
-// "article": Images for articles
-// "submission": Images for article submissions
-// "topic": Images for topics associated to articles
-// "preview": Special case used for article previews. A recently uploaded custom article image. Not cached nor generated here. See tiki-edit_article.php
-// Any other value is invalid
-// If image_type has no value, we default to "article" to preserve previous behaviour
 
 require_once ('tiki-setup.php');
 require_once 'lib/articles/artlib.php';
