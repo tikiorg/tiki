@@ -4,7 +4,7 @@
  * 
  * Used to install a fresh Tiki instance, to upgrade an existing Tiki to a newer version and to test sendmail.
  *
- * @package TikiWiki 
+ * @package Tiki
  * @copyright (c) Copyright 2002-2013 by authors of the Tiki Wiki CMS Groupware Project. All Rights Reserved. See copyright.txt for details and a complete list of authors.
  * @licence Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
  */
