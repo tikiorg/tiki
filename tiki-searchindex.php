@@ -141,6 +141,8 @@ $smarty->display("tiki.tpl");
  */
 function tiki_searchindex_get_results($filter, $offset, $maxRecords)
 {
+	global $prefs;
+	
 	$unifiedsearchlib = TikiLib::lib('unifiedsearch');
 	$query = $unifiedsearchlib->buildQuery($filter);
 	$query->setRange($offset, $maxRecords);
