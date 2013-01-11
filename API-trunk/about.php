@@ -1,64 +1,47 @@
 <?php
 /**
- * About Tiki
+ * About Tiki.
+ * 
+ * This page is used as doxygen output mainpage, content is pasted in from README.
  *
- * @package TikiWiki
+ * @package Tiki
  * @copyright (c) Copyright 2002-2013 by authors of the Tiki Wiki CMS Groupware Project. All Rights Reserved. See copyright.txt for details and a complete list of authors.
  * @licence Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
  */
 // $Id$
 
-/*
-  this page is used as doxygen output mainpage,
-  content is pasted in from README.
-*/
-
 /**
 \mainpage
 
-
-Tiki Wiki CMS Groupware is Free and Open Source Software (FOSS). It is a community-driven project which exists and improves thanks to the participation of people just like YOU.
-
-
-IMPORTANT LINKS
----------------
-* General information & overview
-  http://info.tiki.org
-
-* Official documentation
-  http://doc.tiki.org
-
-* Forums & community
-  http://tiki.org/tiki-forums.php
-
-* Developers
-  http://dev.tiki.org
-
-* Themes & styling
-  http://themes.tiki.org
-
-* Security
-  http://security.tiki.org
-
-* IRC chat channel: #tikiwiki on irc.freenode.net
-  http://irc.tiki.org/
+Tiki! The wiki with a lot of features!
+Version 10.0
 
 
+DOCUMENTATION
+
+ * The documentation for 10.0 version is ever evolving at http://doc.tiki.org.
+You're encouraged to contribute.
+
+ * It is highly recommended that you refer to the online documentation:
+ * http://doc.tiki.org/Installation for a setup guide
+
+ * Notes about this release are accessible from http://tiki.org/ReleaseNotes100
+ * Tikiwiki has an active IRC channel, #tikiwiki on irc.freenode.net
 
 INSTALLATION
-------------
-Please see the INSTALL file in this folder for basic installation instructions.
-For more details, please see:
-http://doc.tiki.org/Installation
 
+ * There is a file INSTALL in this directory with notes on how to setup and
+configure Tiki. Again, see http://doc.tiki.org/Installation for the latest install help.
 
+UPGRADES
+
+ * Read the online instructions if you want to upgrade your Tiki from a previous release http://doc.tiki.org/Upgrade
 
 COPYRIGHT
----------
-Copyright (c) 2002-2008, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.All
-Rights Reserved. See copyright.txt for details and a complete list of authors.
-Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
+Copyright (c) 2002-2013, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
+All Rights Reserved. See copyright.txt for details and a complete list of authors.
+Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 ... Have fun!
 */
