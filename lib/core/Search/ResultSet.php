@@ -84,6 +84,7 @@ class Search_ResultSet extends ArrayObject
 				 && $key != 'parent_object_id'
 				 && $key != 'relevance'
 				 && $key != 'url'
+			     && $key != 'title'
 				 && ! empty($value) // Skip empty
 				 && ! is_array($value) // Skip arrays, multivalues fields are not human readable
 				 && ! preg_match('/^[\w-]+$/', $value)) { // Skip anything that looks like a single token
