@@ -4,7 +4,7 @@
  * 
  * this script may only be included, it will die if called directly.
  * 
- * @package TikiWiki
+ * @package Tiki
  * @copyright (c) Copyright 2002-2013 by authors of the Tiki Wiki CMS Groupware Project. All Rights Reserved. See copyright.txt for details and a complete list of authors.
  * @licence LGPL. See licence.txt for more details
  */
@@ -25,11 +25,18 @@ if (version_compare(PHP_VERSION, '5.3.0', '<')) {
 	exit;
 }
 
-// Be sure that the user is not already defined by PHP on hosts that still have the php.ini config "register_globals = On"
+/** Be sure that the user is not already defined by PHP on hosts that still have the php.ini config "register_globals = On". */
 unset($user);
 
+/** 
+ * call libraries provided by third parties
+ * @package Tiki 
+ */
 require_once 'lib/setup/third_party.php';
-// Enable Versioning
+/** 
+ * Enable Versioning
+ * @package Tiki 
+ */
 include_once ('lib/setup/twversion.class.php');
 $TWV = new TWVersion();
 $num_queries = 0;
@@ -37,10 +44,13 @@ $elapsed_in_db = 0.0;
 $server_load = '';
 $area = 'tiki';
 $crumbs = array();
+/** @package Tiki */
 require_once ('lib/setup/tikisetup.class.php');
+/** @package Tiki */
 require_once ('lib/setup/timer.class.php');
 $tiki_timer = new timer();
 $tiki_timer->start();
+/** @package Tiki */
 require_once ('tiki-setup_base.php');
 
 // Attempt setting locales. This code is just a start, locales should be set per-user.

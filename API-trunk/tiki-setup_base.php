@@ -16,6 +16,7 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 	header("location: index.php");
 	exit;
 }
+/** @package Tiki */
 require_once ('tiki-filter-base.php');
 // ---------------------------------------------------------------------
 // basic php conf adjustment
@@ -41,9 +42,12 @@ ini_set('allow_call_time_pass_reference', 'On');
 $memory_limiter = new Tiki_MemoryLimit('128M'); // Keep in variable to hold scope
 
 // ---------------------------------------------------------------------
-// inclusions of mandatory stuff and setup
+// inclusions of mandatory stuff and setup 
+/** @package Tiki */
 require_once ('lib/tikiticketlib.php');
+/** @package Tiki */
 require_once ('db/tiki-db.php');
+/** @package Tiki */
 require_once ('lib/tikilib.php');
 $tikilib = new TikiLib;
 // Get tiki-setup_base needed preferences in one query
@@ -83,10 +87,14 @@ if ($prefs['session_protected'] == 'y' && ! isset($_SERVER['HTTPS']) && php_sapi
 }
 
 global $cachelib;
+/** @package Tiki */
 require_once ('lib/cache/cachelib.php');
 global $logslib;
+/** @package Tiki */
 require_once ('lib/logs/logslib.php');
+/** @package Tiki */
 include_once ('lib/init/tra.php');
+/** @package Tiki */
 require_once ('lib/tikidate.php');
 $tikidate = new TikiDate();
 // set session lifetime
@@ -96,11 +104,14 @@ if ($prefs['session_lifetime'] > 0) {
 // is session data  stored in DB or in filesystem?
 if (isset($prefs['session_storage']) && $prefs['session_storage'] == 'db') {
 	if ($api_tiki == 'adodb') {
+		/** @package Tiki */
 		require_once ('lib/tikisession-adodb.php');
 	} elseif ($api_tiki == 'pdo') {
+		/** @package Tiki */
 		require_once ('lib/tikisession-pdo.php');
 	}
 } elseif ( isset($prefs['session_storage']) && $prefs['session_storage'] == 'memcache' && TikiLib::lib("memcache")->isEnabled() ) {
+	/** @package Tiki */
 	require_once ('lib/tikisession-memcache.php');
 }
 
@@ -141,6 +152,7 @@ if (isset($_SERVER["REQUEST_URI"])) {
 		unset($session_params);
 
 		try {
+			/** @package Zend\Session */
 			require_once "Zend/Session.php";
 			Zend_Session::start();
 		} catch( Zend_Session_Exception $e ) {
@@ -151,21 +163,27 @@ if (isset($_SERVER["REQUEST_URI"])) {
 
 // Moved here from tiki-setup.php because smarty use a copy of session
 if ($prefs['feature_fullscreen'] == 'y') {
+	/** @package Tiki */
 	require_once ('lib/setup/fullscreen.php');
 }
-// Retrieve all preferences
+// Retrieve all preferences               
+/** @package Tiki */
 require_once ('lib/setup/prefs.php');
-// Smarty needs session since 2.6.25
+// Smarty needs session since 2.6.25                   
+/** @package Tiki */
 global $smarty; require_once ('lib/init/smarty.php');
 
 // Define the special maxRecords global variable
 $maxRecords = $prefs['maxRecords'];
 $smarty->assignByRef('maxRecords', $maxRecords);
 
+/** @package Tiki */
 require_once ('lib/userslib.php'); global $userlib;
 $userlib = new UsersLib;
+/** @package Tiki */
 require_once ('lib/tikiaccesslib.php');
 $access = new TikiAccessLib;
+/** @package Tiki */
 require_once ('lib/breadcrumblib.php');
 // ------------------------------------------------------
 // DEAL WITH XSS-TYPE ATTACKS AND OTHER REQUEST ISSUES
@@ -359,6 +377,7 @@ if ($magic_quotes_gpc) {
 	remove_gpc($_COOKIE);
 }
 
+/** @package Tiki */
 require_once ('lib/setup/absolute_urls.php');
 
 // in the case of tikis on same domain we have to distinguish the realm
@@ -429,6 +448,7 @@ if (isset($_SESSION["$user_cookie_site"])) {
 	$user_details = $userlib->get_user_details($user);
 	if (!is_array($user_details) || !is_array($user_details['info']) || (int) $user_details['info']['lastLogin'] <= 0) {
 		global $cachelib;
+		/** @package Tiki */
 		require_once ('lib/cache/cachelib.php');
 		$cachelib->invalidate('user_details_' . $user);
 		$user_details = $userlib->get_user_details($user);
@@ -475,6 +495,7 @@ if (isset($_SESSION["$user_cookie_site"])) {
 
 $smarty->assign('CSRFTicket', isset( $_SESSION['ticket'] ) ? $_SESSION['ticket'] : null);
 
+/** @package Tiki */
 require_once ('lib/setup/perms.php');
 // --------------------------------------------------------------
 // deal with register_globals
