@@ -18,31 +18,35 @@ class Search_Action_ActionStep implements Search_Action_Step
 
 	function getFields()
 	{
-		$required = array();
+		$initial = array();
 		foreach (array_keys($this->action->getValues()) as $keyName) {
-			$required[] = rtrim($keyName, '+');
+			$initial[] = rtrim($keyName, '+');
 		}
+
+		$required = array();
 		$found = array();
 
 		foreach ($this->definition as $key => $value) {
 			if (preg_match('/^(.*)_field$/', $key, $parts)) {
 				$key = $parts[1];
 
-				if (in_array($key, $required)) {
+				if (in_array($key, $initial)) {
 					$required[] = $value;
+					$initial = array_diff($initial, array($key));
 				}
-			} elseif (preg_match('/^(.*)_field_coalesce$/', $key, $parts)) {
+			} elseif (preg_match('/^(.*)_field_(coalesce|multiple)$/', $key, $parts)) {
 				$key = $parts[1];
 
-				if (in_array($key, $required)) {
+				if (in_array($key, $initial)) {
 					$required = array_merge($required, $this->splitFields($value));
+					$initial = array_diff($initial, array($key));
 				}
 			} else {
 				$found[] = $key;
 			}
 		}
 
-		return array_diff($required, $found);
+		return array_diff(array_merge($initial, $required), $found);
 	}
 
 	function validate(array $entry)

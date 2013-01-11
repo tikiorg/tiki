@@ -18,6 +18,7 @@ class Search_ActionStepTest extends PHPUnit_Framework_TestCase
 
 		$step = new Search_Action_ActionStep($action, array());
 		$this->assertFalse($step->validate(array()));
+		$this->assertEquals(array('hello'), $step->getFields());
 	}
 
 	function testMissingValueButNotRequired()
@@ -35,6 +36,7 @@ class Search_ActionStepTest extends PHPUnit_Framework_TestCase
 
 		$step = new Search_Action_ActionStep($action, array());
 		$this->assertTrue($step->validate(array()));
+		$this->assertEquals(array('hello'), $step->getFields());
 	}
 
 	function testValueProvidedStaticInDefinition()
@@ -52,6 +54,7 @@ class Search_ActionStepTest extends PHPUnit_Framework_TestCase
 
 		$step = new Search_Action_ActionStep($action, array('hello' => 'world'));
 		$this->assertTrue($step->validate(array()));
+		$this->assertEquals(array(), $step->getFields());
 	}
 
 	function testValueProvidedInEntryDirectly()
@@ -69,6 +72,7 @@ class Search_ActionStepTest extends PHPUnit_Framework_TestCase
 
 		$step = new Search_Action_ActionStep($action, array());
 		$this->assertTrue($step->validate(array('hello' => 'world')));
+		$this->assertEquals(array('hello'), $step->getFields());
 	}
 
 	function testDefinitionDefersToSingleField()
@@ -86,6 +90,7 @@ class Search_ActionStepTest extends PHPUnit_Framework_TestCase
 
 		$step = new Search_Action_ActionStep($action, array('hello_field' => 'test'));
 		$this->assertTrue($step->validate(array('test' => 'world')));
+		$this->assertEquals(array('test'), $step->getFields());
 	}
 
 	function testDefinitionCoalesceField()
@@ -103,6 +108,7 @@ class Search_ActionStepTest extends PHPUnit_Framework_TestCase
 
 		$step = new Search_Action_ActionStep($action, array('hello_field_coalesce' => 'foo,bar,test,baz,hello'));
 		$this->assertTrue($step->validate(array('test' => 'right', 'baz' => 'wrong')));
+		$this->assertEquals(array('foo', 'bar', 'test', 'baz', 'hello'), $step->getFields());
 	}
 
 	function testDefinitionCoalesceFieldNoMatch()
@@ -116,6 +122,7 @@ class Search_ActionStepTest extends PHPUnit_Framework_TestCase
 
 		$step = new Search_Action_ActionStep($action, array('hello_field_coalesce' => 'foo,bar,test,baz,hello'));
 		$this->assertFalse($step->validate(array()));
+		$this->assertEquals(array('foo', 'bar', 'test', 'baz', 'hello'), $step->getFields());
 	}
 
 	function testRequiresValueAsArrayButMissing()
@@ -133,6 +140,7 @@ class Search_ActionStepTest extends PHPUnit_Framework_TestCase
 
 		$step = new Search_Action_ActionStep($action, array());
 		$this->assertTrue($step->validate(array()));
+		$this->assertEquals(array('hello'), $step->getFields());
 	}
 
 	function testRequiresValueAsArrayAndSingleValue()
@@ -150,6 +158,7 @@ class Search_ActionStepTest extends PHPUnit_Framework_TestCase
 
 		$step = new Search_Action_ActionStep($action, array('hello' => 'world'));
 		$this->assertTrue($step->validate(array()));
+		$this->assertEquals(array(), $step->getFields());
 	}
 
 	function testRequiresValueAsArrayAndMultipleValues()
@@ -167,6 +176,7 @@ class Search_ActionStepTest extends PHPUnit_Framework_TestCase
 
 		$step = new Search_Action_ActionStep($action, array('hello_field_multiple' => 'foo,bar,baz'));
 		$this->assertTrue($step->validate(array('foo' => 'a', 'baz' => 'b')));
+		$this->assertEquals(array('foo', 'bar', 'baz'), $step->getFields());
 	}
 }
 
