@@ -118,7 +118,9 @@ if (isset($_SESSION['accessible'])) {
 /**
  * creates the HTML page to be displayed.
  * 
- * Tiki may not have been installed when we reach here, so we can't use our templating system yet. 
+ * Tiki may not have been installed when we reach here, so we can't use our templating system yet.
+ * 
+ * @package Tiki
  * 
  * @param string $title   page Title
  * @param mixed  $content page Content
