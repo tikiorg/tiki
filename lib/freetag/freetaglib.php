@@ -990,7 +990,7 @@ class FreetagLib extends ObjectLib
 			$mid2 = 'WHERE `type`=?'; 
 			$bindvals[] = $type;
 			if (!empty($objectId)) {
-				$join .= ' LEFT JOIN `tiki_blog_posts` tbp on (tob.`objectId` = tbp.`postId`)';
+				$join .= ' LEFT JOIN `tiki_blog_posts` tbp on (tob.`itemId` = tbp.`postId`)';
 				$mid .= ' AND tbp.`blogId` = ?';
 				$mid2 .= ' AND tbp.`blogId` = ?';
 				$bindvals[] = $objectId;
