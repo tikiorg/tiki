@@ -90,16 +90,17 @@ class Tracker_Field_ItemsList extends Tracker_Field_Abstract
 
 	function renderOutput( $context = array() )
 	{
-		if ($context['list_mode'] === 'csv') {
-			return $this->getConfiguration('value');
+		if (isset($context['search_render']) && $context['search_render'] == 'y') {
+			$items = $this->getData($this->getConfiguration('fieldId'));
 		} else {
-			if (isset($context['search_render']) && $context['search_render'] == 'y') {
-				$items = $this->getData($this->getConfiguration('fieldId'));
-			} else {
-				$items = $this->getItemIds();
-			}
+			$items = $this->getItemIds();
+		}
 
-			$list = $this->getItemLabels($items);
+		$list = $this->getItemLabels($items);
+
+		if ($context['list_mode'] === 'csv') {
+			return implode('%%%', $list);
+		} else {
 			return $this->renderTemplate(
 				'trackeroutput/itemslist.tpl',
 				$context,
