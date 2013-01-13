@@ -1099,7 +1099,7 @@ class Services_Tracker_Controller
 				$recordsMax = $input->recordsMax->int();
 				$recordsOffset = $input->recordsOffset->int() - 1;
 
-				$writeCsv = function ($fields) use($separator, $delimitorL, $delimitorR, $encoding) {
+				$writeCsv = function ($fields) use($separator, $delimitorL, $delimitorR, $encoding, $cr) {
 					$values = array();
 					foreach ($fields as $v) {
 						$values[] = "$delimitorL$v$delimitorR";
