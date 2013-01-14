@@ -1369,12 +1369,12 @@ function wikiplugin_img( $data, $params )
 			)
 		) {
 			if ($prefs['wiki_edit_icons_toggle'] == 'y' && !isset($_COOKIE['wiki_plugin_edit_view'])) {
-				$iconDisplayStyle = " style='display:none;'";
+				$iconDisplayStyle = " style=\"display:none;\"";
 			} else {
 				$iconDisplayStyle = '';
 			}
-			$repl .= "<br /><a href='tiki-edit_draw.php?fileId={$imgdata['fileId']}' onclick='return $(this).ajaxEditDraw();' title='".tr("Draw on the Image") . " " . "'" .
-						" class='editplugin pluginImgEdit{$imgdata['fileId']}' data-fileid='{$imgdata['fileId']}' data-galleryid='{$dbinfo['galleryId']}'{$iconDisplayStyle}>" .
+			$repl .= "<br /><a href=\"tiki-edit_draw.php?fileId={$imgdata['fileId']}\" onclick=\"return $(this).ajaxEditDraw();\" title=\"".tr("Draw on the Image") . "\"" .
+						" class=\"editplugin pluginImgEdit{$imgdata['fileId']}\" data-fileid=\"{$imgdata['fileId']}\" data-galleryid=\"{$dbinfo['galleryId']}\"{$iconDisplayStyle}>" .
 						"<img width='16' height='16' class='icon' alt='Edit' src='img/icons/page_edit.png' /></a>";
 		}
 	}
