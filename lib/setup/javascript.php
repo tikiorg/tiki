@@ -72,6 +72,16 @@ if ($prefs['javascript_enabled'] == 'y') {	// we have JavaScript
 		}
 	}
 
+	/** Use custom.js in lang dir if there **/
+	$language = $prefs['language'];
+	if (is_file("lang/$language/custom.js")) {
+		TikiLib::lib('header')->add_jsfile("lang/$language/custom.js", 60);	// after styles custom.js
+	}
+
+	if (!empty($tikidomain) && is_file("lang/$language/$tikidomain/custom.js")) {		// Note: lang tikidomain dirs not created automatically
+		TikiLib::lib('header')->add_jsfile("lang/$language/$tikidomain/custom.js", 60);
+	}
+
 	// setup timezone array
 	$tz = array_keys(DateTimeZone::listAbbreviations());
 	$headerlib->add_js(
