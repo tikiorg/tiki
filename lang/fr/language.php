@@ -22,6 +22,7 @@
 // This allows correctly displaying emails and JavaScript messages, not only web pages as would happen with &nbsp;.
 
 $lang = array(
+"Draw on the Image" => "Dessiner sur l'image",
 "You must specify a directory" => "Vous devez spécifier un répertoire",
 "Creation Date" => "Date de création",
 "Name" => "Nom",
