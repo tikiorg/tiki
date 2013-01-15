@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2013 by authors of the Tiki Wiki CMS Groupware Project
+// (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
 //
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -407,7 +407,7 @@ function wikiplugin_appframe_template($data, $params, $start)
 		$smarty->assign('input', $data);
 		return $smarty->fetch($file);
 	} catch (SmartyException $e) {
-		return tr('Template file not found: ' . $file);
+		return tr('Template file not found: %0', $file);
 	}
 }
 
