@@ -439,7 +439,13 @@ class UnifiedSearchLib
 		}
 
 		if (isset($filter['content']) && $filter['content']) {
-			$query->filterContent($filter['content'], TikiLib::lib('tiki')->get_preference('unified_default_content', array('contents'), true));
+			$o = TikiLib::lib('tiki')->get_preference('unified_default_content', array('contents'), true);
+			if(count($o) == 1 && empty($o[0])) {
+				// Use "contents" field by default, if no default is specified
+				$query->filterContent($filter['content'], array('contents'));
+			} else {
+				$query->filterContent($filter['content'], $o);
+			}
 		}
 
 		if (isset($filter['autocomplete']) && $filter['autocomplete']) {
