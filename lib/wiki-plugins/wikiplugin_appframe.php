@@ -358,7 +358,7 @@ function wikiplugin_appframe_template($data, $params, $start)
 		$smarty->assign('input', $params->toArray());
 		return $smarty->fetch($file);
 	} catch (SmartyException $e) {
-		return tr('Template file not found: ' . $file);
+		return tr('Template file not found: %0', $file);
 	}
 }
 
