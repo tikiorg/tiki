@@ -362,7 +362,7 @@ class Search_Index_Lucene_HighlightHelper implements Zend_Filter_Interface
 	function filter($content)
 	{
 		$content = $this->snippetHelper->filter($content);
-		return trim(strip_tags($this->query->highlightMatches($content), '<b><i><em><strong><pre><code><span>'));
+		return trim(strip_tags($this->query->highlightMatches($content, 'UTF-8'), '<b><i><em><strong><pre><code><span>'));
 	}
 }
 
