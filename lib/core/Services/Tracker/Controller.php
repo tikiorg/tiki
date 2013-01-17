@@ -584,6 +584,12 @@ class Services_Tracker_Controller
 			$fields = $out;
 		}
 
+		global $prefs;
+		if ($prefs['feature_jquery_validation'] === 'y') {
+			$validationjs = TikiLib::lib('validators')->generateTrackerValidateJS($definition->getFields());
+			TikiLib::lib('smarty')->assign('validationjs', $validationjs);
+		}
+
 		$itemId = 0;
 		if (! empty($fields) && $_SERVER['REQUEST_METHOD'] == 'POST') {
 			foreach ($forced as $key => $value) {
@@ -657,6 +663,12 @@ class Services_Tracker_Controller
 					$fields[$key] = $value;
 				}
 			}
+		}
+
+		global $prefs;
+		if ($prefs['feature_jquery_validation'] === 'y') {
+			$validationjs = TikiLib::lib('validators')->generateTrackerValidateJS($definition->getFields());
+			TikiLib::lib('smarty')->assign('validationjs', $validationjs);
 		}
 
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {

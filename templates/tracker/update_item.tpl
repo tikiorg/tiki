@@ -1,4 +1,4 @@
-<form class="simple" method="post" action="{service controller=tracker action=update_item}">
+<form class="simple" method="post" action="{service controller=tracker action=update_item}" id="editItemForm">
 	{trackerfields trackerId=$trackerId fields=$fields}
 	<div class="submit">
 		<input type="hidden" name="itemId" value="{$itemId|escape}"/>
@@ -7,5 +7,6 @@
 		{foreach from=$forced key=permName item=value}
 			<input type="hidden" name="forced~{$permName|escape}" value="{$value|escape}"/>
 		{/foreach}
+		{include file="tracker_validator.tpl"}
 	</div>
 </form>
