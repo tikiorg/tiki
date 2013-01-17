@@ -587,7 +587,7 @@ class Services_Tracker_Controller
 		global $prefs;
 		if ($prefs['feature_jquery_validation'] === 'y') {
 			$validationjs = TikiLib::lib('validators')->generateTrackerValidateJS($definition->getFields());
-			TikiLib::lib('smarty')->assign('validationjs', $validationjs);
+			TikiLib::lib('header')->add_jq_onready('$("#insertItemForm").validate({' . $validationjs .', ignore: ".ignore"});');
 		}
 
 		$itemId = 0;
@@ -668,7 +668,7 @@ class Services_Tracker_Controller
 		global $prefs;
 		if ($prefs['feature_jquery_validation'] === 'y') {
 			$validationjs = TikiLib::lib('validators')->generateTrackerValidateJS($definition->getFields());
-			TikiLib::lib('smarty')->assign('validationjs', $validationjs);
+			TikiLib::lib('header')->add_jq_onready('$("#updateItemForm").validate({' . $validationjs .', ignore: ".ignore"});');
 		}
 
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
