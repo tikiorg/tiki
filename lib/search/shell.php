@@ -7,15 +7,17 @@
 
 if ( isset($_SERVER['REQUEST_METHOD']) ) die;
 
-if ( !isset( $_SERVER['argv'][1] ) || !in_array($_SERVER['argv'][1], array('rebuild','process','optimize')))
+if ( !isset( $_SERVER['argv'][1] ) || !in_array($_SERVER['argv'][1], array('rebuild','process','optimize','stopRebuild')))
 	die( 'Usage: [searchuser=<username>] php lib/search/shell.php command [option]
 	Where command [option] can be:
 		rebuild [log]
 		process [integer (default 10)]
 		optimize
-	Returns an error code (1) if search is already being rebuilt
+		stopRebuild
+	Returns an error code (1) if search is already being rebuilt.
 	N.B. Needs to be run as the "apache" user, e.g. > "sudo -u www-data php lib/search/shell.php process 20"
 	N.B. By default, executes with the Anonymous permissions but this can be overridden, e.g. > "sudo -u www-data searchuser=admin php lib/search/shell.php rebuild"
+	On Windows a failed rebuild must be stopped manually, using shell_exec.php_check_syntax stopRebuild, before a new rebuild can be run.
 ' );
 
 if ( ! file_exists('db/local.php') )
@@ -37,6 +39,15 @@ $logger->debug('Running search shell utility');
 
 global $unifiedsearchlib;
 require_once 'lib/search/searchlib-unified.php';
+
+if ( $_SERVER['argv'][1] === 'stopRebuild' ) {
+	$logger->info('Stopping rebuild...');
+	ob_flush();
+	$unifiedsearchlib->stopRebuild();
+	$logger->info("Stopped rebuild\n");
+	ob_flush();
+	return;
+}
 
 if ($unifiedsearchlib->rebuildInProgress()) {
 	$logger->err('Rebuild in progress - exiting.');

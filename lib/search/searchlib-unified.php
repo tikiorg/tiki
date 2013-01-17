@@ -103,6 +103,22 @@ class UnifiedSearchLib
 		return $file_exists;
 	}
 
+	/**
+	 */
+	function stopRebuild()
+	{
+		$tempName = $this->getIndexLocation() . '-new';
+		$file_exists = file_exists($tempName);
+		if($file_exists) {
+			$this->destroyDirectory($tempName);
+		}
+		$tempName = $this->getIndexLocation() . '-old';
+		$file_exists = file_exists($tempName);
+		if($file_exists) {
+			$this->destroyDirectory($tempName);
+		}
+	}
+
     /**
      * @param bool $loggit
      * @return array
