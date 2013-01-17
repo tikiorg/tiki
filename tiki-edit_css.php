@@ -24,8 +24,8 @@ if (!isset($_REQUEST['editstyle'])) {
 	$editstyle = '';
 } else {
 	$editstyle = $_REQUEST['editstyle'];
-	if (!preg_match('#^[a-z\d]+(/[-_a-z\d]+)*$#i', $editstyle)) {
-		$smarty->assign('msg', tra('Incorrect name'));
+	if (!preg_match('#^[-_a-z\d]+(/[-_a-z\d]+)*$#i', $editstyle)) {
+		$smarty->assign('msg', tra('Incorrect name').' '.$editstyle);
 		$smarty->display('error.tpl');
 		die;
 	}
