@@ -1,5 +1,5 @@
 {if ! $itemId}
-	<form class="simple" method="post" action="{service controller=tracker action=insert_item}" id="editItemForm">
+	<form class="simple" method="post" action="{service controller=tracker action=insert_item}" id="insertItemForm">
 		{trackerfields trackerId=$trackerId fields=$fields}
 		<div class="submit">
 			<input type="hidden" name="trackerId" value="{$trackerId|escape}"/>
@@ -9,7 +9,6 @@
 			{/foreach}
 		</div>
 	</form>
-	{include file="tracker_validator.tpl"}
 {else}
 	{object_link type=trackeritem id=$itemId}
 {/if}
