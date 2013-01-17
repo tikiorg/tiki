@@ -4155,10 +4155,11 @@ textarea.tshoutbox{
 
 /* jquery validation */
 
-label.error {
-	background : url('../../img/icons/error.png') no-repeat;
+label.error,
+form.simple label.error {
+	background : url('../../img/icons/error.png') no-repeat 0 4px;
 	color:red;
-	padding-left:20px;
+	padding: 4px 0 0 20px;
 	margin-left: 0.5em;
 }
 
