@@ -1298,7 +1298,11 @@ function wikiplugin_tracker($data, $params)
 							$isTextOnSameRow = ($f['options_array'][0] == 0) ? false : true;
 							break;
 						case 'a':	// Text area
-							$isTextOnSameRow = ($f['options_array'][8] == 0) ? false : true;
+							if(empty($f['options_array'][8])) {
+								$isTextOnSameRow = true;
+							} else {
+								$isTextOnSameRow = ($f['options_array'][8] == 0) ? false : true;
+							}
 							break;
 						}
 						if(!$isTextOnSameRow) {
