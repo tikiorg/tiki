@@ -174,6 +174,14 @@
 					{tr}wiki:pageName for a wiki page or tpl:tplName for a template{/tr}
 				</div>
 			</label>
+			<label>
+				<input type="checkbox" name="adminOnlyViewEditItem" value="1"
+					{if $info.adminOnlyViewEditItem eq 'y'} checked="checked"{/if}/>
+				{tr}Restrict non admins to wiki page access only{/tr}
+				<div class="description">
+					{tr}Only users with admin tracker permission (tiki_p_admin_trackers) can use the built-in tracker interfaces (tiki-view_tracker.php and tiki-view_tracker_item.php). This is useful if you want the users of these trackers to only access them via wiki pages, where you can use the various tracker plugins to embed forms and reports.{/tr}
+				</div>
+			</label>
 		</div>
 		<h4>{tr}Status{/tr}</h4>
 		<div>
