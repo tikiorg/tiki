@@ -127,6 +127,9 @@ class Tiki_Profile_InstallHandler_TrackerField extends Tiki_Profile_InstallHandl
 			'public' => 'isPublic',
 			'mandatory' => 'isMandatory',
 			'multilingual' => 'isMultilingual',
+			'validation' => 'validation',
+			'validation_param' => 'validationParam',
+			'validation_message' => 'validationMessage',
 		);
 	} // }}}
 
