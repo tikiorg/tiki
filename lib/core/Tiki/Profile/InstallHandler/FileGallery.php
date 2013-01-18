@@ -17,6 +17,7 @@ class Tiki_Profile_InstallHandler_FileGallery extends Tiki_Profile_InstallHandle
 			'public' => 'n',
 			'galleryId' => null,
 			'parent' => -1,
+			'visible' => 'n',		// fgal default is y so set here so it gets set only if specified in flags[]
 		);
 
 		$conversions = array(
