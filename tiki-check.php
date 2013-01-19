@@ -385,12 +385,35 @@ if ( function_exists('apc_sma_info') && ini_get('apc.enabled') ) {
 		'setting' => 'xCache',
 		'message' => tra('You are using xCache as your ByteCode Cache which increases performance, if correctly configured. See Admin->Performance in your Tiki for more details.')
 	);
+} elseif ( function_exists('wincache_fcache_fileinfo') && ( ini_get('wincache.fcenabled') == '1') ) {
+	$sapi_type = php_sapi_name();
+	if ($sapi_type == 'cgi-fcgi') { 
+		$php_properties['ByteCode Cache'] = array(
+			'fitness' => tra('good'),
+			'setting' => 'WinCache',
+			'message' => tra('You are using WinCache as your ByteCode Cache which increases performance, if correctly configured. See Admin->Performance in your Tiki for more details.')
+		);
+	} else {
+		$php_properties['ByteCode Cache'] = array(
+			'fitness' => tra('ugly'),
+			'setting' => 'WinCache',
+			'message' => tra('You are using WinCache as your ByteCode Cache, but you do not seem to use the required CGI/FastCGI server API.')
+		);
+	}
 } else {
-	$php_properties['ByteCode Cache'] = array(
-		'fitness' => tra('ugly'),
-		'setting' => 'N/A',
-		'message' => tra('You are using neither APC nor xCache as your ByteCode Cache which would increase performance, if correctly configured. See Admin->Performance in your Tiki for more details.')
-	);
+	if(check_isIIS()) {
+		$php_properties['ByteCode Cache'] = array(
+			'fitness' => tra('ugly'),
+			'setting' => 'N/A',
+			'message' => tra('You are using neither APC, WinCache nor xCache as your ByteCode Cache which would increase performance, if correctly configured. See Admin->Performance in your Tiki for more details.')
+			);
+	} else {
+		$php_properties['ByteCode Cache'] = array(
+			'fitness' => tra('ugly'),
+			'setting' => 'N/A',
+			'message' => tra('You are using neither APC nor xCache as your ByteCode Cache which would increase performance, if correctly configured. See Admin->Performance in your Tiki for more details.')
+			);
+	}
 }
 
 // memory_limit
