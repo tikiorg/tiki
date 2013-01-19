@@ -19,8 +19,9 @@ class Search_Index_Lucene implements Search_Index_Interface
 	{
 		switch($lang) {
 		case 'en':
-		default:
-			Zend_Search_Lucene_Analysis_Analyzer::setDefault(new StandardAnalyzer_Analyzer_Standard_English());
+			default:
+				Zend_Search_Lucene_Analysis_Analyzer::setDefault(new StandardAnalyzer_Analyzer_Standard_English());
+				Zend_Search_Lucene_Search_QueryParser::setDefaultEncoding('UTF-8');
 		}
 
 		$this->directory = $directory;
@@ -354,7 +355,7 @@ class Search_Index_Lucene_HighlightHelper implements Zend_Filter_Interface
 	{
 		$qstr = $query->__toString();									// query needs the object_type field removing for highlighting
 		$qstr = preg_replace('/\+?\(\(object_type.*?\)\)/', '', $qstr);	// this is the only way i can find to remove a term form a query
-		$query = Zend_Search_Lucene_Search_QueryParser::parse($qstr);	// rebuild
+		$query = Zend_Search_Lucene_Search_QueryParser::parse($qstr, 'UTF-8');	// rebuild
 		$this->query = $query;
 		$this->snippetHelper = new Search_ResultSet_SnippetHelper;
 	}

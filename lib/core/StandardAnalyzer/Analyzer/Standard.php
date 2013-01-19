@@ -29,6 +29,32 @@ abstract class StandardAnalyzer_Analyzer_Standard extends Zend_Search_Lucene_Ana
      */
     private $_filters = array();
 
+	/**
+	 * Current char position in an UTF-8 stream
+	 *
+	 * @var integer
+	 */
+	private $_position;
+
+	/**
+	 * Current binary position in an UTF-8 stream
+	 *
+	 * @var integer
+	 */
+	private $_bytePosition;
+
+
+	public function __construct()
+	{
+		if (@preg_match('/\pL/u', 'a') != 1) {
+			// PCRE unicode support is turned off
+			require_once 'Zend/Search/Lucene/Exception.php';
+			throw new Zend_Search_Lucene_Exception('Analyzer needs PCRE unicode support to be enabled.');
+		}
+		$this->_position     = 0;
+		$this->_bytePosition = 0;
+	}
+
     /**
      * Add Token filter to the Analyzer
      *
@@ -39,27 +65,19 @@ abstract class StandardAnalyzer_Analyzer_Standard extends Zend_Search_Lucene_Ana
         $this->_filters[] = $filter;
     }
 
-	/**
-     * Current position in a stream
-     *
-     * @var integer
-     */
-    private $_position;
-
     /**
      * Reset token stream
      */
     public function reset()
     {
-        $this->_position = 0;
+        $this->_position     = 0;
+		$this->_bytePosition = 0;
 
         if ($this->_input === null) {
             return;
         }
 
-        // convert input into ascii
-        $this->_input = iconv($this->_encoding, 'ASCII//TRANSLIT', $this->_input);
-        $this->_encoding = 'ASCII';
+		// Keeping the current encoding seems to work. So don't convert.
     }
 	
     /**
@@ -88,20 +106,33 @@ abstract class StandardAnalyzer_Analyzer_Standard extends Zend_Search_Lucene_Ana
 			return null;
 		}
 
+		//Parse UTF-8
 		do {
-			if (! preg_match('/[a-zA-Z0-9]+(\.[0-9]+)*/', $this->_input, $match, PREG_OFFSET_CAPTURE, $this->_position)) {
-				// It covers both cases a) there are no matches (preg_match(...) === 0)
-				// b) error occured (preg_match(...) === FALSE)
-				return null;
-			}
+            if (! preg_match('/[\p{L}]+/u', $this->_input, $match, PREG_OFFSET_CAPTURE, $this->_bytePosition)) {
+                // It covers both cases a) there are no matches (preg_match(...) === 0)
+                // b) error occured (preg_match(...) === FALSE)
+                return null;
+            }
 
-			$str = $match[0][0];
-			$pos = $match[0][1];
-			$endpos = $pos + strlen($str);
-	
-			$this->_position = $endpos;
-	
-			$token = $this->normalize(new Zend_Search_Lucene_Analysis_Token($str, $pos, $endpos));
+            // matched string
+            $matchedWord = $match[0][0];
+
+            // binary position of the matched word in the input stream
+            $binStartPos = $match[0][1];
+
+            // character position of the matched word in the input stream
+            $startPos = $this->_position +
+                        iconv_strlen(substr($this->_input,
+                                            $this->_bytePosition,
+                                            $binStartPos - $this->_bytePosition),
+                                     'UTF-8');
+            // character postion of the end of matched word in the input stream
+            $endPos = $startPos + iconv_strlen($matchedWord, 'UTF-8');
+
+            $this->_bytePosition = $binStartPos + strlen($matchedWord);
+            $this->_position     = $endPos;
+
+            $token = $this->normalize(new Zend_Search_Lucene_Analysis_Token($matchedWord, $startPos, $endPos));
 		} while ($token === null); // try again if token is skipped
 
 		return $token;
