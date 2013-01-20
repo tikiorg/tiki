@@ -49,7 +49,7 @@
 					</tr>
 					<tr>
 					<td style="width=260px">
-					{tr}Memory used{/tr}: {$opcode_stats.memory_used * 100}% - {tr}available{/tr}: {$opcode_stats.memory_avail * 100}%
+					{tr}Memory Used{/tr}: {$opcode_stats.memory_used * 100}% - {tr}Available{/tr}: {$opcode_stats.memory_avail * 100}%
 					</td>
 					<td style="width=260px">
 					{tr}Cache Hits{/tr}: {$opcode_stats.hit_hit * 100}% - {tr}Misses{/tr}: {$opcode_stats.hit_miss * 100}%
