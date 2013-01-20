@@ -78,6 +78,33 @@ if ( function_exists('apc_sma_info') && ini_get('apc.enabled') ) {
 		$opcode_stats['hit_hit'] /= $opcode_stats['hit_total'];
 		$opcode_stats['hit_miss'] /= $opcode_stats['hit_total'];
 	}
+} elseif ( function_exists('wincache_ocache_fileinfo') && ( ini_get('wincache.ocenabled') == '1') ) {
+	$opcode_cache = 'WinCache';
+
+	$stat_flag = 'wincache.ocenabled';
+	$opcode_stats = array(
+		'memory_used' => 0,
+		'memory_avail' => 0,
+		'memory_total' => 0,
+		'hit_hit' => 0,
+		'hit_miss' => 0,
+		'hit_total' => 0,
+		);
+	
+	$info = wincache_ocache_fileinfo();
+	$opcode_stats['hit_hit'] = $info['total_hit_count'];
+	$opcode_stats['hit_miss'] = $info['total_miss_count'];
+	$opcode_stats['hit_total'] = $info['total_hit_count'] + $info['total_miss_count'];
+	
+	$memory = wincache_ocache_meminfo();
+	$opcode_stats['memory_avail'] = $memory['memory_free'];
+	$opcode_stats['memory_total'] = $memory['memory_total'];
+	$opcode_stats['memory_used'] = $memory['memory_total'] - $memory['memory_free'];
+	
+	$opcode_stats['memory_used'] /= $opcode_stats['memory_total'];
+	$opcode_stats['memory_avail'] /= $opcode_stats['memory_total'];
+	$opcode_stats['hit_hit'] /= $opcode_stats['hit_total'];
+	$opcode_stats['hit_miss'] /= $opcode_stats['hit_total'];
 }
 
 if ( $stat_flag ) {

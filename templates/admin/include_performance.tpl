@@ -71,7 +71,7 @@
 					</p>
 				{/if}
 			{else}
-				{tr}Bytecode cache is not used. Using a bytecode cache (APC, XCache) is highly recommended for production environments.{/tr}
+				{tr}Bytecode cache is not used. Using a bytecode cache (APC, XCache, WinCache) is highly recommended for production environments.{/tr}
 			{/if}
 		{/tab}
 		
