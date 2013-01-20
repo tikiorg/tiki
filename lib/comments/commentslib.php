@@ -228,7 +228,7 @@ class Comments extends TikiLib
 		if ( empty($att['data']) && !empty($att['path']) && !empty($att['forum_info']['att_store_dir']) ) {
 			unlink($att['forum_info']['att_store_dir'] . $att['path']);
 		}
-		$this->table('tiki_forum_attachments')->delete('forumId', array('attId' => $attId));
+		$this->table('tiki_forum_attachments')->delete(array('attId' => $attId));
 	}
 
 	function parse_output(&$obj, &$parts, $i)
