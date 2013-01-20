@@ -107,6 +107,13 @@ if ( function_exists('apc_sma_info') && ini_get('apc.enabled') ) {
 	$opcode_stats['hit_miss'] /= $opcode_stats['hit_total'];
 }
 
+// Make results easier to read
+$opcode_stats['memory_used'] = round($opcode_stats['memory_used'],2);
+$opcode_stats['memory_avail'] = round($opcode_stats['memory_avail'],2);
+$opcode_stats['hit_hit'] = round($opcode_stats['hit_hit'],2);
+$opcode_stats['hit_miss'] = round($opcode_stats['hit_miss'],2);
+
+
 if ( $stat_flag ) {
 	$opcode_stats['warning_check'] = (bool) ini_get($stat_flag);
 	$smarty->assign('stat_flag', $stat_flag);
