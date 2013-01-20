@@ -47,7 +47,7 @@ class Services_Tracker_SearchController
 			$id = '0';
 		}
 		// setup AJAX pagination
-		$offset_jsvar = "customsearch_offset_$id";
+		$offset_jsvar = "customsearch_$id.offset";
 		$onclick = "$('#customsearch_$id').submit();return false;";
 		$dataappend['pagination'] = "{pagination offset_jsvar=\"$offset_jsvar\" onclick=\"$onclick\"}";
 
