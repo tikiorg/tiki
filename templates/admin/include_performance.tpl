@@ -42,10 +42,20 @@
 				{/if}
 
 				<p>
-					<img src="http://chart.apis.google.com/chart?cht=p3&amp;chs=250x100&amp;chd=t:{$opcode_stats.memory_used},{$opcode_stats.memory_avail}&amp;chl={tr}Available{/tr}|{tr}Used{/tr}&amp;chtt={tr}Memory{/tr}" width="250" height="100"/>
-					<img src="http://chart.apis.google.com/chart?cht=p3&amp;chs=250x100&amp;chd=t:{$opcode_stats.hit_hit},{$opcode_stats.hit_miss}&amp;chl={tr}Miss{/tr}|{tr}Hit{/tr}&amp;chtt={tr}Cache Hits{/tr}" width="250" height="100"/>
-					<br />
-					Memory used: {$opcode_stats.memory_used * 100}% - Memory available: {$opcode_stats.memory_avail * 100}%	&nbsp;&nbsp;&nbsp; Cache Hits: {$opcode_stats.hit_hit * 100}% - Cache Hits: {$opcode_stats.hit_miss * 100}% 			
+					<table style="width=520px;border: 0px">
+					<tr>
+					<td><img src="http://chart.apis.google.com/chart?cht=p3&amp;chs=250x100&amp;chd=t:{$opcode_stats.memory_used},{$opcode_stats.memory_avail}&amp;chl={tr}Available{/tr}|{tr}Used{/tr}&amp;chtt={tr}Memory{/tr}" width="250" height="100"/></td>
+					<td><img src="http://chart.apis.google.com/chart?cht=p3&amp;chs=250x100&amp;chd=t:{$opcode_stats.hit_hit},{$opcode_stats.hit_miss}&amp;chl={tr}Miss{/tr}|{tr}Hit{/tr}&amp;chtt={tr}Cache Hits{/tr}" width="250" height="100"/></td>
+					</tr>
+					<tr>
+					<td style="width=260px">
+					{tr}Memory used{/tr}: {$opcode_stats.memory_used * 100}% - {tr}available{/tr}: {$opcode_stats.memory_avail * 100}%
+					</td>
+					<td style="width=260px">
+					{tr}Cache Hits{/tr}: {$opcode_stats.hit_hit * 100}% - {tr}Misses{/tr}: {$opcode_stats.hit_miss * 100}%
+					</td>
+					</tr>
+					</table>
 					<hr />
 				</p>
 
