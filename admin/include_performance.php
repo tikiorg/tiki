@@ -1,6 +1,6 @@
 <?php
-// (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
-// 
+// (c) Copyright 2002-2013 by authors of the Tiki Wiki CMS Groupware Project
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -45,10 +45,10 @@ if ( function_exists('apc_sma_info') && ini_get('apc.enabled') ) {
 		'hit_miss' => $cache['num_misses'] / $hit_total,
 		'hit_total' => $hit_total,
 	);
-} elseif ( function_exists('xcache_info') ) {
+} elseif ( function_exists('xcache_info') && ( ini_get('xcache.cacher') == '1' || ini_get('xcache.cacher') == 'On' ) ) {
 	$opcode_cache = 'XCache';
 
-	if ( ini_get('xcache.admin.enable_auth') ) {
+	if ( ini_get('xcache.admin.enable_auth') == '1' || ini_get('xcache.admin.enable_auth') == 'On' ) {
 		$opcode_stats['warning_xcache_blocked'] = true;
 	} else {
 		$stat_flag = 'xcache.stat';
@@ -61,7 +61,7 @@ if ( function_exists('apc_sma_info') && ini_get('apc.enabled') ) {
 			'hit_total' => 0,
 		);
 
-		foreach ( range(0, xcache_count(XC_TYPE_PHP) - 1) as $index ) {
+		foreach (range(0, xcache_count(XC_TYPE_PHP) - 1) as $index) {
 			$info = xcache_info(XC_TYPE_PHP, $index);
 
 			$opcode_stats['hit_hit'] += $info['hits'];
@@ -78,7 +78,41 @@ if ( function_exists('apc_sma_info') && ini_get('apc.enabled') ) {
 		$opcode_stats['hit_hit'] /= $opcode_stats['hit_total'];
 		$opcode_stats['hit_miss'] /= $opcode_stats['hit_total'];
 	}
+} elseif ( function_exists('wincache_ocache_fileinfo') && ( ini_get('wincache.ocenabled') == '1') ) {
+	$opcode_cache = 'WinCache';
+
+	$stat_flag = 'wincache.ocenabled';
+	$opcode_stats = array(
+		'memory_used' => 0,
+		'memory_avail' => 0,
+		'memory_total' => 0,
+		'hit_hit' => 0,
+		'hit_miss' => 0,
+		'hit_total' => 0,
+		);
+	
+	$info = wincache_ocache_fileinfo();
+	$opcode_stats['hit_hit'] = $info['total_hit_count'];
+	$opcode_stats['hit_miss'] = $info['total_miss_count'];
+	$opcode_stats['hit_total'] = $info['total_hit_count'] + $info['total_miss_count'];
+	
+	$memory = wincache_ocache_meminfo();
+	$opcode_stats['memory_avail'] = $memory['memory_free'];
+	$opcode_stats['memory_total'] = $memory['memory_total'];
+	$opcode_stats['memory_used'] = $memory['memory_total'] - $memory['memory_free'];
+	
+	$opcode_stats['memory_used'] /= $opcode_stats['memory_total'];
+	$opcode_stats['memory_avail'] /= $opcode_stats['memory_total'];
+	$opcode_stats['hit_hit'] /= $opcode_stats['hit_total'];
+	$opcode_stats['hit_miss'] /= $opcode_stats['hit_total'];
 }
+
+// Make results easier to read
+$opcode_stats['memory_used'] = round($opcode_stats['memory_used'],2);
+$opcode_stats['memory_avail'] = round($opcode_stats['memory_avail'],2);
+$opcode_stats['hit_hit'] = round($opcode_stats['hit_hit'],2);
+$opcode_stats['hit_miss'] = round($opcode_stats['hit_miss'],2);
+
 
 if ( $stat_flag ) {
 	$opcode_stats['warning_check'] = (bool) ini_get($stat_flag);
@@ -87,21 +121,21 @@ if ( $stat_flag ) {
 
 if ( isset($opcode_stats['hit_total']) ) {
 	$opcode_stats = array_merge(
-					$opcode_stats, 
-					array(
-						'warning_fresh' => $opcode_stats['hit_total'] < 10000,
-						'warning_ratio' => $opcode_stats['hit_hit'] < 0.8,
-					) 
+		$opcode_stats,
+		array(
+			'warning_fresh' => $opcode_stats['hit_total'] < 10000,
+			'warning_ratio' => $opcode_stats['hit_hit'] < 0.8,
+		)
 	);
 }
 
 if ( isset($opcode_stats['memory_total']) ) {
 	$opcode_stats = array_merge(
-					$opcode_stats, 
-					array(
-						'warning_starve' => $opcode_stats['memory_avail'] < 0.2,
-						'warning_low' => $opcode_stats['memory_total'] < 60*1024*1024,
-					) 
+		$opcode_stats,
+		array(
+			'warning_starve' => $opcode_stats['memory_avail'] < 0.2,
+			'warning_low' => $opcode_stats['memory_total'] < 60*1024*1024,
+		)
 	);
 }
 
