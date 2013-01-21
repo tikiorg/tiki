@@ -10,7 +10,7 @@
 /*
 About the design:
 tiki-check.php is designed to run in 2 modes
-1) Regular mode. From inside TikiWiki, in Admin | General
+1) Regular mode. From inside Tiki, in Admin | General
 2) Stand-alone mode. Used to check a server pre-Tiki installation, by copying (only) tiki-check.php onto the server and pointing your browser to it.
 tiki-check.php should not crash but rather avoid running tests which lead to tiki-check crashes.
 */
@@ -385,12 +385,35 @@ if ( function_exists('apc_sma_info') && ini_get('apc.enabled') ) {
 		'setting' => 'xCache',
 		'message' => tra('You are using xCache as your ByteCode Cache which increases performance, if correctly configured. See Admin->Performance in your Tiki for more details.')
 	);
+} elseif ( function_exists('wincache_ocache_fileinfo') && ( ini_get('wincache.ocenabled') == '1') ) {
+	$sapi_type = php_sapi_name();
+	if ($sapi_type == 'cgi-fcgi') { 
+		$php_properties['ByteCode Cache'] = array(
+			'fitness' => tra('good'),
+			'setting' => 'WinCache',
+			'message' => tra('You are using WinCache as your ByteCode Cache which increases performance, if correctly configured. See Admin->Performance in your Tiki for more details.')
+		);
+	} else {
+		$php_properties['ByteCode Cache'] = array(
+			'fitness' => tra('ugly'),
+			'setting' => 'WinCache',
+			'message' => tra('You are using WinCache as your ByteCode Cache, but you do not seem to use the required CGI/FastCGI server API.')
+		);
+	}
 } else {
-	$php_properties['ByteCode Cache'] = array(
-		'fitness' => tra('ugly'),
-		'setting' => 'N/A',
-		'message' => tra('You are using neither APC nor xCache as your ByteCode Cache which would increase performance, if correctly configured. See Admin->Performance in your Tiki for more details.')
-	);
+	if(check_isIIS()) {
+		$php_properties['ByteCode Cache'] = array(
+			'fitness' => tra('ugly'),
+			'setting' => 'N/A',
+			'message' => tra('You are using neither APC, WinCache nor xCache as your ByteCode Cache which would increase performance, if correctly configured. See Admin->Performance in your Tiki for more details.')
+		);
+	} else {
+		$php_properties['ByteCode Cache'] = array(
+			'fitness' => tra('ugly'),
+			'setting' => 'N/A',
+			'message' => tra('You are using neither APC nor xCache as your ByteCode Cache which would increase performance, if correctly configured. See Admin->Performance in your Tiki for more details.')
+		);
+	}
 }
 
 // memory_limit
@@ -1083,7 +1106,7 @@ if ( function_exists('apache_get_version')) {
 			$apache_properties['RewriteBase'] = array(
 				'setting' => $rewritebase,
 				'fitness' => tra('info') ,
-				'message' => tra('You haven\'t activated .htaccess. So this check is useless. If you want to use Search Engine Friendly URLs, you will have to activate .htaccess by copying _htaccess into its place. Then come back to have a look at this check again.')
+				'message' => tra('You haven\'t activated .htaccess. So this check is useless. If you want to use Search Engine Friendly URLs, you will have to activate .htaccess by copying _htaccess into its place (or a symlink if supported by your Operating System). Then come back to have a look at this check again.')
 			);
 		}
 	}
