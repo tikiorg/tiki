@@ -74,7 +74,7 @@ if ($tikilib->query("SHOW TABLES LIKE 'tiki_preferences'")->numRows() == 0) {
 }
 $tikilib->get_preferences($needed_prefs, true, true);
 
-if ($prefs['session_protected'] == 'y' && ! isset($_SERVER['HTTPS']) && php_sapi_name() != 'cli') {
+if (isset($prefs['session_protected']) && $prefs['session_protected'] == 'y' && ! isset($_SERVER['HTTPS']) && php_sapi_name() != 'cli') {
 	header("Location: https://{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}");
 	exit;
 }
@@ -87,7 +87,7 @@ include_once ('lib/init/tra.php');
 require_once ('lib/tikidate.php');
 $tikidate = new TikiDate();
 // set session lifetime
-if ($prefs['session_lifetime'] > 0) {
+if (isset($prefs['session_lifetime']) && $prefs['session_lifetime'] > 0) {
 	ini_set('session.gc_maxlifetime', $prefs['session_lifetime'] * 60);
 }
 // is session data  stored in DB or in filesystem?
@@ -120,7 +120,7 @@ if ( isset($prefs['session_silent']) && $prefs['session_silent'] == 'y' && empty
 }
 
 // If called from the CDN, refuse to execute anything
-$cdn_pref = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') ? $prefs['tiki_cdn_ssl'] : $prefs['tiki_cdn'];
+$cdn_pref = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') ? $prefs['tiki_cdn_ssl'] : isset($prefs['tiki_cdn']) ? $prefs['tiki_cdn'] : '' ;
 if ( $cdn_pref ) {
 	$host = parse_url($cdn_pref, PHP_URL_HOST);
 	if (isset($_SERVER['HTTP_HOST']) && $host == $_SERVER['HTTP_HOST'] ) {
@@ -147,7 +147,7 @@ if (isset($_SERVER["REQUEST_URI"])) {
 }
 
 // Moved here from tiki-setup.php because smarty use a copy of session
-if ($prefs['feature_fullscreen'] == 'y') {
+if (isset($prefs['feature_fullscreen']) && $prefs['feature_fullscreen'] == 'y') {
 	require_once ('lib/setup/fullscreen.php');
 }
 // Retrieve all preferences

@@ -30,7 +30,7 @@ function prefs_cookie_list()
 			'type' => 'text',
 			'size' => 35,
 			'perspective' => false,
-			'default' => $GLOBALS['tikiroot'],
+			'default' => isset($GLOBALS['tikiroot']) ? $GLOBALS['tikiroot'] : '' ,
 		),
 		'cookie_consent_feature' => array(
 			'name' => tra('Cookie Consent'),
