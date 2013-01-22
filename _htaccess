@@ -32,6 +32,12 @@
 	deny from all
 </FilesMatch>
 
+# This prevents reading of tags file for developpers who run ctags on their server
+#<Files tags>
+#	order deny,allow
+#	deny from all
+#</Files>
+
 <IfModule mod_dir.c>
 	DirectoryIndex index.php
 	# if using wiki as homepage feature you may avoid the home page name being appended to the url by replacing the previous line with the following line
