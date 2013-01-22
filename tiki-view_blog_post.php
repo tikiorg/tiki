@@ -55,9 +55,7 @@ if (!$blog_data) {
 
 $tikilib->get_perm_object($blogId, 'blog');
 
-if (!$user || !$tikilib->user_has_perm_on_object($user, $blogId, 'blog', 'tiki_p_read_blog')) {
-	$access->display_error( '', 'You do not have permission to use this feature: tiki_p_read_blog');
-}
+$access->check_permission('tiki_p_read_blog');
 
 $ownsblog = 'n';
 if ($user && $user == $blog_data["user"]) {
