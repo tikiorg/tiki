@@ -2,11 +2,13 @@
 /**
  * Tiki's Installation script.
  * 
- * Used to install a fresh Tiki instance, to upgrade an existing Tiki to a newer version and to test sendmail.
+ * Used to install a fresh Tiki instance, to upgrade an existing Tiki to a newer version 
+ * and to test sendmail.
  *
  * @package Tiki
- * @copyright (c) Copyright 2002-2013 by authors of the Tiki Wiki CMS Groupware Project. All Rights Reserved. See copyright.txt for details and a complete list of authors.
- * @licence Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+ * @copyright (c) Copyright 2002-2013 by authors of the Tiki Wiki CMS Groupware Project. All 
+ * Rights Reserved. See copyright.txt for details and a complete list of authors.
+ * @license Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
  */
 // $Id$
 
@@ -26,12 +28,19 @@ if (version_compare(PHP_VERSION, '5.3.0', '<')) {
 	$content = '<p>Please contact your system administrator ( if you are not the one ;) ). Your version: '.PHP_VERSION.' <br /> <br /> '.'Please also visit <a href="tiki-check.php">Server Check</a>'.'</p>';
 	createPage($title, $content);
 }
-
+/** 
+ * @package Tiki
+ * @uses    lib/init/initlib.php
+ */
 require_once('lib/init/initlib.php');
 $tikipath = dirname(__FILE__) . '/';
 TikiInit::prependIncludePath($tikipath.'lib/pear');
 TikiInit::appendIncludePath($tikipath.'lib/core');
 TikiInit::appendIncludePath($tikipath);
+/** 
+ * @package Zend\Loader
+ * @see     lib/core/Zend/Loader/autoloader.php
+ */
 require_once 'Zend/Loader/Autoloader.php';
 Zend_Loader_Autoloader::getInstance()
 	->registerNamespace('TikiFilter')
