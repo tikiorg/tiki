@@ -11,6 +11,7 @@ class Search_Formatter_Plugin_SmartyTemplate implements Search_Formatter_Plugin_
 	private $changeDelimiters;
 	private $data = array();
 	private $fields = array();
+	private $assigns = array();
 
 	function __construct($templateFile, $changeDelimiters = false)
 	{
@@ -21,6 +22,24 @@ class Search_Formatter_Plugin_SmartyTemplate implements Search_Formatter_Plugin_
 	function setData(array $data)
 	{
 		$this->data = $data;
+	}
+
+	/**
+	 * Set a list of global var names to assign to smarty so they can be used in custom templates
+	 *
+	 * @param array $assigns
+	 */
+	function setAssigns(array $assigns)
+	{
+		$assigns2 = array();
+		foreach ($assigns as $value) {
+			if (!isset($GLOBALS[trim($value)])) {
+				trigger_error('Global not found for assign var ' . $value);
+			} else {
+				$assigns2[] = trim($value);
+			}
+		}
+		$this->assigns = $assigns2;
 	}
 
 	function getFields()
@@ -68,6 +87,10 @@ class Search_Formatter_Plugin_SmartyTemplate implements Search_Formatter_Plugin_
 
 		foreach ($this->data as $key => $value) {
 			$smarty->assign($key, $value);
+		}
+
+		foreach ($this->assigns as $value) {
+			$smarty->assign($value, $GLOBALS[$value]);
 		}
 
 		$smarty->assign('results', $entries);
