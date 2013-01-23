@@ -4462,7 +4462,12 @@ class TrackerLib extends TikiLib
 		$handler = $this->get_field_handler($field, $item);
 
 		if ($handler && isset($params['process']) && $params['process'] == 'y') {
-			$field = array_merge($field, $handler->getFieldData($field));
+			if ($field['type'] === 'e') {	// category
+				$requestData = array('ins_' . $field['fieldId'] => explode(',', $field['value']));
+			} else {
+				$requestData = $field;
+			}
+			$field = array_merge($field, $handler->getFieldData($requestData));
 			$handler = $this->get_field_handler($field, $item);
 		}
 
