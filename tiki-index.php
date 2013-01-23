@@ -61,7 +61,8 @@ $auto_query_args = array(
 				'sort_mode',
 				'machine_translate_to_lang',
 				'version',
-				'date'
+				'date',
+				'itemId',
 );
 
 if ($prefs['feature_categories'] == 'y') {
