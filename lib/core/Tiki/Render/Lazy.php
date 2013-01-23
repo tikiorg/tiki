@@ -18,7 +18,11 @@ class Tiki_Render_Lazy
 	function __toString()
 	{
 		if ($this->callback) {
-			$this->data = call_user_func($this->callback);
+			try {
+				$this->data = call_user_func($this->callback);
+			} catch (Exception $e) {
+				$this->data = $e->getMessage();
+			}
 			$this->callback = null;
 		}
 
