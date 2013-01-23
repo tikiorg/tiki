@@ -77,9 +77,6 @@ function wikiplugin_list($data, $params)
 				$plugin = new Search_Formatter_Plugin_SmartyTemplate($arguments['template']);
 				$plugin->setData($templateData);
 				$plugin->setFields(wp_list_findfields($templateData));
-				if (isset($arguments['assigns'])) {
-					$plugin->setAssigns(explode(',', $arguments['assigns']));
-				}
 			} elseif (isset($arguments['wiki']) && TikiLib::lib('tiki')->page_exists($arguments['wiki'])) {	
 				$wikitpl = "tplwiki:" . $arguments['wiki'];
 				$wikicontent = TikiLib::lib('smarty')->fetch($wikitpl);
