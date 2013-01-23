@@ -218,7 +218,7 @@ function prefs_payment_list()
 			'type' => 'text',
 			'filter' => 'digits',
 			'size' => 3,
-			'default' => 'none',
+			'default' => 0,
 		),
 		'payment_cart_inventory_total_field' => array(
 			'name' => tra('Inventory Total Field ID'),
