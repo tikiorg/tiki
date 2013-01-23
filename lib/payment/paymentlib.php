@@ -126,14 +126,13 @@ class PaymentLib extends TikiDb_Bridge
 	function get_payment( $id )
 	{
 		global $tikilib, $prefs;
-		$info = reset(
-			$this->fetchAll(
+		$info = $this->fetchAll(
 				'SELECT tpr.*, uu.`login` as `user` FROM `tiki_payment_requests` tpr' .
 				' LEFT JOIN `users_users` uu ON (uu.`userId` = tpr.`userId`)' .
 				' WHERE `paymentRequestId` = ?',
 				array($id)
-			)
-		);
+			);
+		$info = reset($info);
 
 		if ( $info ) {
 			$info['state'] = $this->find_state($info);
@@ -148,6 +147,7 @@ class PaymentLib extends TikiDb_Bridge
 			$info['returnurl'] = $info['url'];
 
 			// Add token if feature is activated (need prefs
+			global $user;
 			if ($prefs['auth_token_access'] == 'y' &&
 					(!$user || isset($_SESSION['forceanon']) &&
 					$_SESSION['forceanon'] == 'y' &&
