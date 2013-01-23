@@ -6152,7 +6152,12 @@ class TikiLib extends TikiDb_Bridge
 			$width = (int) $params['width'];
 			$height = (int) $params['height'];
 			$version = json_encode($params['version']);
-			unset( $params['movie'], $params['width'], $params['height'], $params['version'] );
+			if (!empty($params['altimg'])) {
+				$alt = '<img src="' . $params['altimg'] . '" width="' . $width . '" height="' . $height . '" alt=\"\" />';
+			} else {
+				$alt = tra('Flash player not available.');
+			}
+			unset( $params['movie'], $params['width'], $params['height'], $params['version'], $params['altimg'] );
 			$params = json_encode($params);
 
 			if (!$flashvars) {
@@ -6165,7 +6170,7 @@ class TikiLib extends TikiDb_Bridge
 swfobject.embedSWF( $movie, $div, $width, $height, $version, 'lib/swfobject/expressInstall.swf', $flashvars, $params, {} );
 JS;
 			$headerlib->add_js($js);
-			return "<div id=\"$myId\">" . tra('Flash player not available.') . "</div>";
+			return "<div id=\"$myId\">" . $alt . "</div>";
 		} else { // link on the movie will not work with IE6
 			extract($params, EXTR_SKIP);
 			$asetup = "<object classid=\"clsid:D27CDB6E-AE6D-11cf-96B8-444553540000\" codebase=\"http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,29,0\" width=\"$width\" height=\"$height\">";
@@ -6177,6 +6182,9 @@ JS;
 			}
 			if (!empty($params['allowFullScreen'])) {
 				$asetup .= '<param name="allowFullScreen" value="' . $params['allowFullScreen'] . '"></param>';
+			}
+			if (!empty($params['altimg'])) {
+				$asetup .= '<img src="' . $params['altimg'] . '" width="' . $width . '" height="' . $height . '" alt=\"\" />';
 			}
 			$asetup .= "<embed src=\"$movie\" quality=\"$quality\" pluginspage=\"http://www.macromedia.com/go/getflashplayer\" type=\"application/x-shockwave-flash\" width=\"$width\" height=\"$height\" wmode=\"transparent\"></embed></object>";
 			return $asetup;
