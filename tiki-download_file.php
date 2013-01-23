@@ -338,7 +338,7 @@ if ( isset($_GET['preview']) || isset($_GET['thumbnail']) || isset($_GET['displa
 						$image->convert($thumbnail_format);
 					}
 		
-					$content =& $image->display();
+					$content = $image->display();
 	
 					// If the new image creating has failed, fallback to an icon
 					if ( ! isset($_GET['icon']) && ( $content === null || $content === false ) ) {
