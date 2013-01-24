@@ -50,6 +50,16 @@ class Tracker_Field_Relation extends Tracker_Field_Abstract
 							1 => tr('Yes'),
 						),
 					),
+					'display' => array(
+						'name' => tr('Display'),
+						'description' => tr('Control how the relations are displayed in view mode'),
+						'filter' => 'word',
+						'options' => array(
+							'list' => tr('List'),
+							'count' => tr('Count'),
+							'toggle' => tr('Count with toggle for list'),
+						),
+					),
 				),
 			),
 		);
@@ -121,7 +131,14 @@ class Tracker_Field_Relation extends Tracker_Field_Abstract
 		if ($context['list_mode'] === 'csv') {
 			return $this->getConfiguration('value');
 		} else {
-			return $this->renderTemplate('trackeroutput/relation.tpl', $context);
+			$display = $this->getOption('display');
+			if (! in_array($display, array('list', 'count', 'toggle'))) {
+				$display = 'list';
+			}
+
+			return $this->renderTemplate('trackeroutput/relation.tpl', $context, array(
+				'display' => $display,
+			));
 		}
 	}
 
