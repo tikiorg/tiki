@@ -11,6 +11,8 @@
 		<option value="{$cat.categId|escape}" {if in_array($cat.categId, $field.selected_categories)}selected="selected"{/if}>{$cat.relativePathString|escape}</option>
 	{/foreach}
 	</select>
+{elseif !empty($cat_tree)}
+	{$cat_tree}{* checkboxes with descendents *}
 {else}
 <table width="100%">
 	<tr>

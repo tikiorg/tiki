@@ -57,6 +57,7 @@ class Tracker_Field_Category extends Tracker_Field_Abstract implements Tracker_F
 						'options' => array(
 							0 => tr('First level only'),
 							1 => tr('All descendants'),
+							2 => tr('All descendants and display full path'),
 						),
 					),
 					'help' => array(
@@ -101,6 +102,15 @@ class Tracker_Field_Category extends Tracker_Field_Abstract implements Tracker_F
 
 	public function renderInput($context = array())
 	{
+		if ($this->getOption('descendants') > 0 && $this->getOption('inputtype') === 'checkbox') {
+			$categories = $this->getConfiguration('list');
+			$selected_categories = $this->getConfiguration('selected_categories');
+			$smarty = TikiLib::lib('smarty');
+			$smarty->assign_by_ref('categories', $categories);
+			$cat_tree = TikiLib::lib('categ')->generate_cat_tree($categories, true, $selected_categories);
+			$cat_tree = str_replace('name="cat_categories[]"', 'name="' . $this->getInsertId() . '[]"', $cat_tree);
+			$smarty->assign('cat_tree', $cat_tree);
+		}
 		return $this->renderTemplate('trackerinput/category.tpl', $context);
 	}
 
@@ -109,10 +119,22 @@ class Tracker_Field_Category extends Tracker_Field_Abstract implements Tracker_F
 		$selected_categories = $this->getConfiguration('selected_categories');
 		$categories = $this->getConfiguration('list');
 		$ret = array();
+		if ($this->getOption('descendants') == 2) {
+			$parentId = $this->getOption('parentId');
+			$parent_offset = 0;
+			if ($parentId > 0) {
+				$parent_offset = strlen(TikiLib::lib('categ')->get_category_name($parentId)) + 2;
+			}
+
+		}
 		foreach ($selected_categories as $categId) {
 			foreach ($categories as $category) {
 				if ($category['categId'] == $categId) {
-					$ret[] = $category['name'];
+					if ($this->getOption('descendants') == 2) {
+						$ret[] = substr($category['categpath'], $parent_offset);
+					} else {
+						$ret[] = $category['name'];
+					}
 					break;
 				}
 			}
@@ -178,7 +200,7 @@ class Tracker_Field_Category extends Tracker_Field_Abstract implements Tracker_F
 	private function getApplicableCategories()
 	{
 		$parentId = (int) $this->getOption('parentId');
-		$descends = $this->getOption('descendants') == 1;
+		$descends = $this->getOption('descendants') > 0;
 		if ($parentId > 0) {
 			return TikiLib::lib('categ')->getCategories(array('identifier'=>$parentId, 'type'=>$descends ? 'descendants' : 'children'));
 		} else {
