@@ -26,7 +26,7 @@ function wikiplugin_kaltura_info()
 		'documentation' => 'PluginKaltura',
 		'description' => tra('Display a video created through the Kaltura feature'),
 		'prefs' => array('wikiplugin_kaltura', 'feature_kaltura'),
-		'extraparams' => true,
+		'format' => 'html',
 		'icon' => 'img/icons/film_edit.png',
 		'params' => array(
 			'id' => array(
@@ -107,7 +107,7 @@ function wikiplugin_kaltura($data, $params)
 	$defaults = array();
 	$plugininfo = wikiplugin_kaltura_info();
 	foreach ($plugininfo['params'] as $key => $param) {
-		$defaults["$key"] = $param['default'];
+		$defaults[$key] = $param['default'];
 	}
 
 	if (empty($params['id'])) {
@@ -150,15 +150,13 @@ $("#kaltura_upload_btn' . $instance . ' a").live("click", function() {
 	}
 
 	if (empty($params['player_id'])) {
-		$playerId = $prefs['kaltura_kdpUIConf'];
-	} else {
-		$playerId = $params['player_id'];
+		$params['player_id'] = $prefs['kaltura_kdpUIConf'];
 	}
 
 	global $kalturaadminlib; require_once 'lib/videogals/kalturalib.php';
 
 	if ($kalturaadminlib && $kalturaadminlib->session && (empty($params['width']) || empty($params['height']))) {
-		$player = $kalturaadminlib->getPlayersUiConf($playerId);
+		$player = $kalturaadminlib->getPlayersUiConf($params['player_id']);
 		if (!empty($player)) {
 			if (empty($params['width'])) {
 				$params['width'] = $player['width'];
@@ -171,19 +169,11 @@ $("#kaltura_upload_btn' . $instance . ' a").live("click", function() {
 		}
 	}
 	$params = array_merge($defaults, $params);
+	$params['session'] = $kalturalib->session;
 
-
-	$code ='<object name="kaltura_player" id="kaltura_player" type="application/x-shockwave-flash" allowScriptAccess="always" ' .
-			'allowNetworking="all" allowFullScreen="true" height="'.$params['height'].'" width="'.$params['width'].'" data="'.$prefs['kaltura_kServiceUrl'] .
-			'index.php/kwidget/wid/_'.$prefs['kaltura_partnerId'].'/uiconf_id/'. $playerId .'/entry_id/'.urlencode($id).'">' .
-					'<param name="allowScriptAccess" value="always" />' .
-					'<param name="allowNetworking" value="all" />' .
-					'<param name="allowFullScreen" value="true" />' .
-					'<param name="movie" value="'.$prefs['kaltura_kServiceUrl'].'index.php/kwidget/wid/_' .
-						$prefs['kaltura_partnerId'].'/uiconf_id/'. $playerId .'/entry_id/'.urlencode($id).'"/>' .
-					' <param name="flashVars" value="entry_id='.htmlspecialchars($id).'&ks='.$kalturalib->session.'"/>' .
-					'<param name="wmode" value="opaque"/>' .
-				'</object>';
+	$smarty = TikiLib::lib('smarty');
+	$smarty->assign('kaltura', $params);
+	$code = $smarty->fetch('wiki-plugins/wikiplugin_kaltura.tpl');
 
 	$style = '';
 	if (!empty($params['align'])) {
@@ -196,5 +186,5 @@ $("#kaltura_upload_btn' . $instance . ' a").live("click", function() {
 		$code = "<div style=\"$style\">$code</div>";
 	}
 
-    return '~np~'.$code.'~/np~';
+	return $code;
 }
