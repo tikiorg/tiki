@@ -200,6 +200,8 @@ class FreetagLib extends ObjectLib
 																		, $sort_mode = 'name_asc'
 																		, $find = ''
 																		, $broaden = 'n'
+																		, $objectId = null
+
 																		)
 	{
 
@@ -319,14 +321,15 @@ class FreetagLib extends ObjectLib
 		$permMap = TikiLib::lib('object')->map_object_type_to_permission();
 		while ($row = $result->fetchRow()) {
 			$ok = false;
-			if ($tiki_p_admin == 'y') {
-				$ok = true;
-			} elseif ($row['type'] == 'blog post') {
+			if ($row['type'] == 'blog post') {
 				$bloglib = TikiLib::lib('blog');
 				$post_info = $bloglib->get_post($row['itemId']);
-				if ($this->user_has_perm_on_object($user, $post_info['blogId'], 'blog', 'tiki_p_read_blog')) {
+				if (!empty($objectId) && $objectId != $post_info['blogId']) {
+				} elseif ($tiki_p_admin == 'y' && $this->user_has_perm_on_object($user, $post_info['blogId'], 'blog', 'tiki_p_read_blog')) {
 					$ok = true;
 				}
+			} elseif ($tiki_p_admin == 'y') {
+                                $ok = true;
 			} elseif ($this->user_has_perm_on_object($user, $row['itemId'], $row['type'], $permMap[$row['type']])) {
 				$ok = true;
 			}

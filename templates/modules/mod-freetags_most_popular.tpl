@@ -4,7 +4,7 @@
 {foreach from=$most_popular_tags item=tag}
 {if ($type ne 'cloud')}<li class="freetag">{/if}
 	{capture name=tagurl}{if (strstr($tag.tag, ' '))}"{$tag.tag}"{else}{$tag.tag}{/if}{/capture}
-  	<a class="freetag_{$tag.size}" title="{tr}List everything tagged{/tr} {$tag.tag|escape}" href="tiki-browse_freetags.php?tag={$smarty.capture.tagurl|escape:'url'}{if !empty($module_params.where)}&amp;type={$module_params.where|escape:'url'}{/if}">{$tag.tag|escape}</a>
+  	<a class="freetag_{$tag.size}" title="{tr}List everything tagged{/tr} {$tag.tag|escape}" href="tiki-browse_freetags.php?tag={$smarty.capture.tagurl|escape:'url'}{if !empty($module_params.where)}&amp;type={$module_params.where|escape:'url'}{/if}{if !empty($module_params.objectId)}&amp;objectId={$module_params.objectId|escape:'url'}{/if}">{$tag.tag|escape}</a>
   &nbsp;
 {if ($type ne 'cloud')}</li>{/if}
 {/foreach}

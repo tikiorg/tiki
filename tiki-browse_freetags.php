@@ -57,7 +57,7 @@ if (!isset($_REQUEST["offset"])) {
 }
 $smarty->assign_by_ref('offset', $offset);
 if (!isset($_REQUEST["type"])) {
-	$type = '';
+	$type = isset($_REQUEST['old_type'])?$_REQUEST['old_type']: '';
 } else {
 	$type = $_REQUEST["type"];
 }
@@ -100,7 +100,18 @@ if (empty($_REQUEST['tsort_mode'])) {
 	$tsort_mode = $_REQUEST['sort_mode'];
 	$smarty->assign_by_ref('tsort_mode', $tsort_mode);
 }
-$most_popular_tags = $freetaglib->get_most_popular_tags('', 0, $maxPopular, $tsort_mode);
+if (!empty($_REQUEST['objectId'])) {
+	$objectId = $_REQUEST['objectId'];
+} else {
+	$objectId = null;
+}
+$smarty->assign_by_ref('objectId', $objectId);
+if ($prefs['feature_blogs'] == 'y' && $type == 'blog post') {
+	$blogs = TikiLib::lib('blog')->list_blogs();
+	$smarty->assign('blogs', $blogs['data']);
+}
+
+$most_popular_tags = $freetaglib->get_most_popular_tags('', 0, $maxPopular, $tsort_mode, $objectId);
 if (!empty($prefs['freetags_cloud_colors'])) {
 	$colors = explode(',', $prefs['freetags_cloud_colors']);
 	$prev = '';
@@ -121,7 +132,7 @@ if ($broaden == 'last') {
 		$tagArray[count($tagArray) - 1]
 	);
 }
-$objects = $freetaglib->get_objects_with_tag_combo($tagArray, $type, $view_user, $offset, $maxRecords, $sort_mode, $find, $broaden);
+$objects = $freetaglib->get_objects_with_tag_combo($tagArray, $type, $view_user, $offset, $maxRecords, $sort_mode, $find, $broaden, $objectId);
 
 $smarty->assign_by_ref('objects', $objects["data"]);
 $smarty->assign_by_ref('cantobjects', $objects["cant"]);

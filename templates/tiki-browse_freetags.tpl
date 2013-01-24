@@ -101,7 +101,7 @@
 			{assign var=thisbroaden value=''}
 		{/if}
 	
-		{button _text="{tr}All{/tr}" _class=$thisclass href="tiki-browse_freetags.php?tag=$tagString$thisbroaden"}
+		{button _text="{tr}All{/tr}" _class=$thisclass href="tiki-browse_freetags.php?tag=$tagString$thisbroaden&amp;type="}
 
 		{foreach item=objectType from=$objects_with_freetags}
 			{foreach item=sect key=key from=$sections_enabled}
@@ -152,14 +152,26 @@
 				{/if}
 			{/foreach}
 		{/foreach}
+		{if !empty($blogs)}
+			<div id="blogs"{if $type ne 'blog post'} style="visibility:hidden"{/if}>
+			<select name="objectId" onchange="this.form.submit();">
+				<option value="">--{tr}All blogs{/tr}--</option>
+				{foreach item=blog from=$blogs}
+					<option value="{$blog.blogId|escape}"{if $blog.blogId eq $objectId} selected="selected"{/if}>{$blog.title|escape}</option>
+				{/foreach}
+			</select>
+			</div>
+		{/if}
 
-		<input type="text" name="find" value="{$find}" />
+		<input type="hidden" name="old_type" value="{$type|escape}" />
+		<input type="text" name="find" value="{$find|escape}" />
 		<input type="submit" value="{tr}Filter{/tr}" />
 	{/capture}
-</form>
 
 {if $cpt > 1}
 	<div class="freetagsbrowse">{$smarty.capture.browse}</div>{/if}
+
+</form>
 
 <div class="freetagresult">
 	{if $tagString}
