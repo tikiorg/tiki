@@ -139,8 +139,9 @@ class Search_ContentSource_UserSource implements Search_ContentSource_Interface
 
 		$handlers = array();
 		foreach ($result as $row) {
-			$definition = Tracker_Definition::get($row['usersTrackerId']);
-			$handlers = array_merge($handlers, Search_ContentSource_TrackerItemSource::getIndexableHandlers($definition));
+			if ($definition = Tracker_Definition::get($row['usersTrackerId'])) {
+				$handlers = array_merge($handlers, Search_ContentSource_TrackerItemSource::getIndexableHandlers($definition));
+			}
 		}
 
 		return $handlers;
@@ -154,13 +155,18 @@ class Search_ContentSource_UserSource implements Search_ContentSource_Interface
 				users_usergroups
 				INNER JOIN users_groups USING(groupName)
 				INNER JOIN tiki_tracker_item_fields ON usersFieldId = fieldId
-			WHERE value = ?
+			WHERE value = ? AND usersTrackerId IS NOT NULL
 			", array($user)
 		);
 
 		$data = array();
 		foreach ($result as $row) {
 			$definition = Tracker_Definition::get($row['trackerId']);
+
+			if (! $definition) {
+				continue;
+			}
+
 			$item = $this->trk->get_tracker_item($row['itemId']);
 
 			foreach (Search_ContentSource_TrackerItemSource::getIndexableHandlers($definition, $item) as $baseKey => $handler) {

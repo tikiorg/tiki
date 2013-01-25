@@ -9,7 +9,7 @@ class Search_GlobalSource_Geolocation implements Search_GlobalSource_Interface
 {
 	function getData($objectType, $objectId, Search_Type_Factory_Interface $typeFactory, array $data = array())
 	{
-		if (isset($data['geo_location']) || isset($data['geo_location'])) {
+		if (isset($data['geo_location'])) {
 			return false;
 		}
 

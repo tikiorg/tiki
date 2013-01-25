@@ -27,6 +27,10 @@ class GeoLib
 				'lon' => $attributes['tiki.geo.lon'],
 			);
 
+			if ($coords['lat'] == 0 && $coords['lon'] == 0) {
+				return;
+			}
+
 			if (! empty($attributes['tiki.geo.google.zoom'])) {
 				$coords['zoom'] = $attributes['tiki.geo.google.zoom'];
 			}
@@ -54,6 +58,10 @@ class GeoLib
     function build_location_string($coords)
 	{
 		if (! empty($coords['lat']) && ! empty($coords['lon'])) {
+			if ($coords['lat'] == 0 && $coords['lon'] == 0) {
+				return;
+			}
+
 			$string = "{$coords['lon']},{$coords['lat']}";
 
 			if (! empty($coords['zoom'])) {

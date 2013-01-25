@@ -231,7 +231,7 @@ class Comments extends TikiLib
 		if ( empty($att['data']) && !empty($att['path']) && !empty($att['forum_info']['att_store_dir']) ) {
 			unlink($att['forum_info']['att_store_dir'] . $att['path']);
 		}
-		$this->table('tiki_forum_attachments')->delete('forumId', array('attId' => $attId));
+		$this->table('tiki_forum_attachments')->delete(array('attId' => $attId));
 	}
 
 	function parse_output(&$obj, &$parts, $i)
@@ -2019,9 +2019,6 @@ class Comments extends TikiLib
 		} else {
 			$ret = $this->fetchAll($query, array_merge($bind_mid, $bind_time));
 			$cant = $this->getOne($query_cant, array_merge($bind_mid_cant, $bind_time));
-			foreach ($ret as $i=>$row) {
-				$this->add_comments_extras($ret[$i]);
-			}
 		}
 
 		foreach ($ret as $key=>$res) {
@@ -2125,6 +2122,10 @@ class Comments extends TikiLib
 			$retval['data'][$i]['replies_flat'] = array();
 			$rf = &$retval['data'][$i]['replies_flat'];
 			$this->flatten_comment_replies($r, $rf);
+		}
+
+		foreach ($retval['data'] as & $row) {
+			$this->add_comments_extras($row);
 		}
 
 		return $retval;

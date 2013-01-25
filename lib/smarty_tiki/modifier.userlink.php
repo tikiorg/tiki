@@ -182,7 +182,7 @@ function smarty_modifier_userlink($other_user, $class='link', $idletime='not_set
 		$lon = $userlib->get_user_preference($other_user, 'lon');
 		$zoom = $userlib->get_user_preference($other_user, 'zoom');
 
-		if ($lat || $lon) {
+		if (! ($lat == 0 && $lon == 0)) {
 			$class .= " geolocated";
 			$metadata .= " data-geo-lat='$lat' data-geo-lon='$lon'";
 
