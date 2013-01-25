@@ -1369,7 +1369,18 @@ class ArtLib extends TikiLib
 				from `tiki_articles`
 				$fromSql
 				$join
-				$mid $mid2 order by " . $this->convertSortMode($sort_mode);
+				$mid $mid2 order by " . $this->convertSortMode($sort_mode, array(
+					'title',
+					'state',
+					'authorName',
+					'topicId',
+					'topicName',
+					'publishDate',
+					'expireDate',
+					'created',
+					'author',
+					'rating',
+				));
 
 		$result = $this->query($query, $bindvars, $maxRecords, $offset);
 		$query_cant = "select distinct count(*) from `tiki_articles` $fromSql $join $mid $mid2";

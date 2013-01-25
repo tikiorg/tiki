@@ -87,9 +87,9 @@ class TikiDb_Bridge extends TikiDb
 		self::get()->convertQueryTablePrefixes($query);
 	} // }}}
 
-	function convertSortMode( $sort_mode ) // {{{
+	function convertSortMode( $sort_mode, $fields = null ) // {{{
 	{
-		return self::get()->convertSortMode($sort_mode);
+		return self::get()->convertSortMode($sort_mode, $fields);
 	} // }}}
 
 	function getQuery() // {{{
