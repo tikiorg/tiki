@@ -232,9 +232,9 @@ customsearch_$id = customsearch;
 			$match->replaceWith('');
 			continue;
 		}
-		if ($arguments['_filter'] == 'content' && !empty($arguments['_field'])) {
+		if (!empty($arguments['_field']) && $arguments['_filter'] == 'content') {
 			$filter = $arguments['_field'];
-		} elseif ($arguments['_filter'] == 'content' && empty($arguments['_field'])) {
+		} elseif (!empty($arguments['_field']) && $arguments['_filter'] == 'content') {
 			$filter = 'content';
 		} else {
 			$filter = '';
@@ -282,6 +282,7 @@ customsearch_$id = customsearch;
 		$callbackScript = TikiLib::lib('smarty')->fetch($callbackscript_tpl);
 	}
 
+	global $page;
 	$script .= "
 customsearch._load = function (receive) {
 	var datamap = {
