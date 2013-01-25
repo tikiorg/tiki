@@ -1,4 +1,4 @@
-<div class="files-field uninitialized">
+<div class="files-field uninitialized" data-galleryid="{$field.galleryId|escape}" data-firstfile="{$field.firstfile|escape}">
 {if $field.limit}
 	{remarksbox _type=info title="{tr}Attached files limitation{/tr}"}
 		{tr _0=$field.limit}The amount of files that can be attached is limited to <strong>%0</strong>. The latest files will be preserved.{/tr}
@@ -94,7 +94,7 @@ var handleFiles = function (files) {
 							$(this).closest('li').remove();
 						});
 									
-						if ({{$field.firstfile|escape}} > 0) {
+						if (li.closest('.files-field').data('firstfile') > 0) {	
 							li.prev('li').remove();
 						}
 					},
@@ -110,8 +110,8 @@ var handleFiles = function (files) {
 						size: file.size,
 						type: file.type,
 						data: data,
-						fileId: {{$field.firstfile|escape}},
-						galleryId: {{$field.galleryId|escape}}
+						fileId: li.closest('.files-field').data('firstfile'), 
+						galleryId: li.closest('.files-field').data('galleryid') 
 					}
 				});
 			};
@@ -180,7 +180,7 @@ $url.keypress(function (e) {
 			url: $.service('file', 'remote'),
 			dataType: 'json',
 			data: {
-				galleryId: "{{$field.galleryId|escape}}",
+				galleryId: $(this).closest('.files-field').data('galleryid'),
 				url: url
 			},
 			success: function (data) {
