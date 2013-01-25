@@ -49,6 +49,12 @@ class KalturaLib
 		}
 	}
 
+	function getMediaUrl($entryId, $playerId)
+	{
+		global $prefs;
+		return $this->kconfig->serviceUrl . "kwidget/wid/_{$prefs['kaltura_partnerId']}/uiconf_id/$playerId/entry_id/$entryId";
+	}
+
 	function testSetup() {
 		global $prefs;
 		if (!$this->initialized || empty($prefs['kaltura_partnerId']) || !is_numeric($prefs['kaltura_partnerId']) || empty($prefs['kaltura_secret']) || empty($prefs['kaltura_adminSecret'])) {

@@ -153,7 +153,11 @@ $("#kaltura_upload_btn' . $instance . ' a").live("click", function() {
 		$params['player_id'] = $prefs['kaltura_kdpUIConf'];
 	}
 
-	global $kalturaadminlib; require_once 'lib/videogals/kalturalib.php';
+	global $kalturaadminlib, $kalturalib; require_once 'lib/videogals/kalturalib.php';
+
+	if (! $kalturalib) {
+		return '<div>Kaltura not configured.</div>';
+	}
 
 	if ($kalturaadminlib && $kalturaadminlib->session && (empty($params['width']) || empty($params['height']))) {
 		$player = $kalturaadminlib->getPlayersUiConf($params['player_id']);
@@ -170,6 +174,7 @@ $("#kaltura_upload_btn' . $instance . ' a").live("click", function() {
 	}
 	$params = array_merge($defaults, $params);
 	$params['session'] = $kalturalib->session;
+	$params['media_url'] = $kalturalib->getMediaUrl($params['id'], $params['player_id']);
 
 	$smarty = TikiLib::lib('smarty');
 	$smarty->assign('kaltura', $params);
