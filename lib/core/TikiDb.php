@@ -170,7 +170,7 @@ abstract class TikiDb
 		}
 	} // }}}
 
-	function convertSortMode( $sort_mode ) // {{{
+	function convertSortMode( $sort_mode, $fields = null ) // {{{
 	{
 		if ( !$sort_mode ) {
 			return '';
@@ -183,8 +183,8 @@ abstract class TikiDb
 			return "RAND()";
 		}
 
-		$sorts=explode(',', $sort_mode);
-		foreach ($sorts as $k => $sort) {
+		$sorts = array();
+		foreach (explode(',', $sort_mode) as $sort) {
 
 			// force ending to either _asc or _desc unless it's "random"
 			$sep = strrpos($sort, '_');
@@ -196,11 +196,22 @@ abstract class TikiDb
 				$sort .= 'asc';
 			}
 
+			// When valid fields are specified, skip those not available
+			if (is_array($fields) && preg_match('/^(.*)_(asc|desc)$/', $sort, $parts)) {
+				if (! in_array($parts[1], $fields)) {
+					continue;
+				}
+			}
+
 			$sort = preg_replace('/_asc$/', '` asc', $sort);
 			$sort = preg_replace('/_desc$/', '` desc', $sort);
 			$sort = '`' . $sort;
 			$sort = str_replace('.', '`.`', $sort);
-			$sorts[$k]=$sort;
+			$sorts[] = $sort;
+		}
+
+		if (empty($sorts)) {
+			return '1';
 		}
 
 		$sort_mode=implode(',', $sorts);
