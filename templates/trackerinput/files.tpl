@@ -1,4 +1,4 @@
-<div class="files-field uninitialized">
+<div class="files-field uninitialized" data-galleryid="{$field.galleryId|escape}" data-firstfile="{$field.firstfile|escape}">
 <ol class="tracker-item-files current-list">
 	{foreach from=$field.files item=info}
 		<li data-file-id="{$info.fileId|escape}">
@@ -88,7 +88,7 @@ var handleFiles = function (files) {
 							$(this).closest('li').remove();
 						});
 									
-						if ({{$field.firstfile|escape}} > 0) {
+						if (li.closest('.files-field').data('firstfile') > 0) {
 							li.prev('li').remove();
 						}
 					},
@@ -104,8 +104,8 @@ var handleFiles = function (files) {
 						size: file.size,
 						type: file.type,
 						data: data,
-						fileId: {{$field.firstfile|escape}},
-						galleryId: {{$field.galleryId|escape}}
+						fileId: li.closest('.files-field').data('firstfile'), 
+						galleryId: li.closest('.files-field').data('galleryid') 
 					}
 				});
 			};
@@ -174,7 +174,7 @@ $url.keypress(function (e) {
 			url: $.service('file', 'remote'),
 			dataType: 'json',
 			data: {
-				galleryId: "{{$field.galleryId|escape}}",
+				galleryId: $(this).closest('.files-field').data('galleryid'), 
 				url: url
 			},
 			success: function (data) {
