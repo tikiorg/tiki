@@ -38,6 +38,55 @@ class UserPrefsLib extends TikiLib
 		return $res;
 	}
 
+	function get_public_avatar_path($user)
+	{
+		global $prefs, $tikidomain;
+
+		if ( $prefs['users_serve_avatar_static'] == 'y' ) {
+			$domain = '';
+			if (! empty($tikidomain)) {
+				$domain = "/$tikidomain";
+			}
+			$files = glob("temp/public$domain/avatar_$user.{jpg,gif,png}", GLOB_BRACE);
+
+			if (! empty($files[0])) {
+				return $files[0];
+			}
+
+			return $this->generate_avatar_file($user);
+		} else {
+			$info = $this->get_user_avatar_img($user);
+			$content = $info["avatarData"];
+			if (! empty($content)) {
+				return "tiki-show_user_avatar.php?user=" . urlencode($user);
+			}
+		}
+
+		return 'img/noavatar.png';
+	}
+
+	private function generate_avatar_file($user)
+	{
+		global $tikidomain;
+
+		$info = $this->get_user_avatar_img($user);
+		$type = $info["avatarFileType"];
+		$content = $info["avatarData"];
+
+		if (empty($content)) {
+			return 'img/noavatar.png';
+		}
+
+		require 'lib/mime/mimeextensions.php';
+		$ext = $mimeextensions[$type];
+		$image = "temp/public/$tikidomain/avatar_{$user}.$ext";
+
+		file_put_contents($image, $info['avatarData']);
+		chmod($image, 0644);
+
+		return $image;
+	}
+
 	function set_file_gallery_image($u, $filename, $size, $type, $data)
 	{
 		global $prefs, $tikilib;
