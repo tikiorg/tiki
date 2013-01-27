@@ -3,7 +3,6 @@
  * Tiki's entry point.
  *
  * @package   Tiki
- * @uses      tiki-setup.php
  * @uses      lib/multilingual/multilinguallib.php
  * @copyright (c) Copyright 2002-2013 by authors of the Tiki Wiki CMS Groupware Project. All Rights Reserved. See copyright.txt for details and a complete list of authors.
  * @license   LGPL. See license.txt for details. 
@@ -40,14 +39,28 @@ $inputConfiguration = array(
 // Initialization
 $section    = 'wiki page';
 $isHomePage = (!isset($_REQUEST['page']));
-/** @package Tiki */
+/** 
+ * @package Tiki
+ * @uses    tiki-setup.php 
+ */
 require_once('tiki-setup.php');
 
-/** @package Tiki */
+/**
+ * @package Tiki
+ * @uses    lib/multilingual/multilinguallib.php
+ */
 require_once('lib/multilingual/multilinguallib.php');
 
+/**
+ * Feature: Wiki->Structures.
+ * 
+ * If the feature is enabled, load the library, else continue.
+ */
 if ($prefs['feature_wiki_structure'] == 'y') {
-	/** @package Tiki */
+	/**
+	 * @package Tiki
+	 * @uses    lib/structures/structlib.php
+	 */
 	include_once('lib/structures/structlib.php');
 }
 
@@ -274,7 +287,9 @@ if (empty($info) && !($user && $prefs['feature_wiki_userpage'] == 'y' && strcase
 		$newPage = $likepages[0];
 	}
 
-	/* if we have exactly one match, redirect to it */
+	/** 
+	 * if we have exactly one match, redirect to it. 
+	 */
 	if (isset($newPage) && !$isUserPage) {
 		$url = $wikilib->sefurl($newPage);
 
