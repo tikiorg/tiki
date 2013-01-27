@@ -3,9 +3,9 @@
  * This redirects to the site's root to prevent directory browsing.
  *
  * @ignore
- * @package    Tiki
+ * @package    Tiki\DevTools
  * @copyright  (c) Copyright 2002-2013 by authors of the Tiki Wiki CMS Groupware Project
- * @license    LGPL. See licence.txt for more details
+ * @license    LGPL. See license.txt for more details
  */
 // $Id$
 
