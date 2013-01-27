@@ -18,7 +18,7 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
  * @package Tiki
  * @subpackage Blogs
  * @version
- * @license LGPL. See licence.txt for more details
+ * @license LGPL. See license.txt for more details
  */
 class BlogLib extends TikiDb_Bridge
 {

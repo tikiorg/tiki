@@ -1,19 +1,26 @@
 <?php
-// (c) Copyright 2002-2013 by authors of the Tiki Wiki CMS Groupware Project
-// 
-// All Rights Reserved. See copyright.txt for details and a complete list of authors.
-// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+/**
+ * Should generally be instantiated from tiki-setup.php
+ *
+ * @package   Tiki\lib\Setup
+ * @copyright (c) Copyright 2002-2013 by authors of the Tiki Wiki CMS Groupware Project. All Rights Reserved. See copyright.txt for details and a complete list of authors.
+ * @license   LGPL. See license.txt for more details
+ */
 // $Id$
-
+/** @uses lib/init/initlib.php */
 require_once('lib/init/initlib.php');
 
+/**
+ * extends TikiInit to startup Tiki
+ * @package   Tiki\lib\Setup
+ */
 class TikiSetup extends TikiInit
 {
-	/*!
-		Check that everything is set up properly
-
-		\static
-	*/
+	/**
+	 * Check that everything is set up properly
+	 * @static
+	 * @param string $tikidomain
+	 */
 	static function check($tikidomain = '')
 	{
 		static $checked;

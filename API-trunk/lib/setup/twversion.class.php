@@ -1,29 +1,72 @@
 <?php
-// (c) Copyright 2002-2013 by authors of the Tiki Wiki CMS Groupware Project
-//
-// All Rights Reserved. See copyright.txt for details and a complete list of authors.
-// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+/**
+ * Should generally be instantiated from tiki-setup.php
+ *
+ * @package   Tiki\lib\Setup
+ * @copyright (c) Copyright 2002-2013 by authors of the Tiki Wiki CMS Groupware Project. All Rights Reserved. See copyright.txt for details and a complete list of authors.
+ * @license   LGPL. See license.txt for more details
+ */
 // $Id$
 
-// Should generally be instantiated from tiki-setup.php
-
+/**
+ * class to provide version info for tagged releases.
+ * @package   Tiki\lib\Setup
+ */
 class TWVersion
 {
-	public $branch;		// Development cycle
-	public $version;		// This version
-	private $latestMinorRelease;		// Latest release in the same major version release series
-	public $latestRelease;		// Latest release
-	private $isLatestMajorVersion; // Whether or not the current major version is the latest
-	public $releases;		// Array of all releases from website
-	public $star;			// Star being used for this version tree
-	public $svn;			// Is this a Subversion version or a package?
+	/** 
+	 * Development cycle
+	 * 
+	 * Permitted values:
+	 * *  stable   : Represents stable releases.
+	 * *  unstable : Represents candidate and test/development releases.
+	 * *  trunk    : Represents next generation development version.
+	 * 
+	 * @var string
+	 */
+	public $branch;
+	/**
+	 * This version
+	 * @var string
+	 */
+	public $version;
+	/**
+	 * Latest release in the same major version release series
+	 * @var
+	 */
+	private $latestMinorRelease;
+	/**
+	 * Latest release
+	 * @var
+	 */
+	public $latestRelease;
+	/**
+	 * Whether or not the current major version is the latest
+	 * @var bool
+	 */
+	private $isLatestMajorVersion;
+	/**
+	 * Array of all releases from website
+	 * @var array
+	 */
+	public $releases; 
+	/**
+	 * Star being used for this version tree
+	 * @var string
+	 */
+	public $star; 
+	/**
+	 * Is this a Subversion version or a package?
+	 * @var string
+	 */
+	public $svn;
 
+	/**
+	 * class instantiation
+	 */
 	function TWVersion()
 	{
-		// Set the development branch.  Valid are:
-		//   stable   : Represents stable releases.
-		//   unstable : Represents candidate and test/development releases.
-		//   trunk     : Represents next generation development version.
+		// Set the development branch.
 		$this->branch 	= 'trunk';
 
 		// Set everything else, including defaults.
@@ -32,22 +75,36 @@ class TWVersion
 		$this->releases	= array();
 
 		// Check for Subversion or not
+		/* FIXME the way this var is allocated could cause problems if SVN-cli > 1.6 due to the way checkouts are stored in 1.7  */
 		$this->svn	= is_dir('.svn') ? 'y' : 'n';
 	}
 
-	// Returns the latest minor release in the same major version release series.
+	/**
+	 * Returns the latest minor release in the same major version release series.
+	 * 
+	 * @return mixed
+	 */
 	function getLatestMinorRelease()
 	{
 		$this->pollVersion();
 		return $this->latestMinorRelease;
 	}
 
+	/**
+	 * returns the Tiki Base version
+	 * @return mixed
+	 */
 	function getBaseVersion()
 	{
 		return preg_replace("/^(\d+\.\d+).*$/", '$1', $this->version);
 	}
 
-	// Returns an array of all used Tiki stars.
+	/**
+	 * Tiki uses (astrological) Star names as referential names for each release, 
+	 * this function returns the array of all Stars used.
+	 * 
+	 * @return array
+	 */
 	function tikiStars()
 	{
 		return array(
@@ -75,7 +132,10 @@ class TWVersion
 		);
 	}
 
-	// Returns an array of all valid versions of Tiki.
+	/**
+	 * Returns an array of all valid versions of Tiki.
+	 * @return array
+	 */
 	function tikiVersions()
 	{
 		// These are all the valid release versions of Tiki.
@@ -185,7 +245,10 @@ class TWVersion
 			);
 	}
 
-	// Gets the latest star used by Tiki.
+	/**
+	 * Gets the latest star used by Tiki.
+	 * @return mixed
+	 */
 	function getStar()
 	{
 		$stars = $this->tikiStars();
@@ -194,14 +257,18 @@ class TWVersion
 		return $star;
 	}
 
-	// Determines the currently-running version of Tikiwiki.
+	/**
+	 * Determines the currently-running version of Tikiwiki.
+	 * @return string
+	 */
 	function getVersion()
 	{
 		return $this->version;
 	}
 
-	// Pulls the list of releases in the current branch of Tikiwiki from
-	// a central site.
+	/**
+	 * Pulls the list of releases in the current branch of Tikiwiki from a central site.
+	 */
 	private function pollVersion()
 	{
 		static $done = false;
@@ -233,14 +300,20 @@ class TWVersion
 		$done = true;
 	}
 
-	// Returns true if the current major version is the latest, false otherwise.
+	/**
+	 * Returns true if the current major version is the latest, false otherwise.
+	 * @return bool
+	 */
 	function isLatestMajorVersion()
 	{
 		$this->pollVersion();
 		return $this->isLatestMajorVersion;
 	}
 
-	// Returns true if the current version is the latest in its major version release series, false otherwise.
+	/**
+	 * Returns true if the current version is the latest in its major version release series, false otherwise.
+	 * @return bool
+	 */
 	function isLatestMinorRelease()
 	{
 		$this->pollVersion();

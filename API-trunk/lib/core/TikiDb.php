@@ -1,12 +1,29 @@
 <?php
-// (c) Copyright 2002-2013 by authors of the Tiki Wiki CMS Groupware Project
-// 
-// All Rights Reserved. See copyright.txt for details and a complete list of authors.
-// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+/**
+ * Tiki's Database functions.
+ *
+ * @package   Tiki\lib\Core
+ * @copyright (c) Copyright 2002-2013 by authors of the Tiki Wiki CMS Groupware Project. All Rights Reserved. See copyright.txt for details and a complete list of authors.
+ * @license   LGPLv2.1. See {@link license.txt} for more details
+ */
 // $Id$
 
+/**
+ * abstract class for Tiki's Database functions.
+ * @package  Tiki\lib\Core
+ * @property-read $errorMessage
+ * @property-read $serverType
+ * @property-read $savedQuery
+ * @property-read $tablePrefix
+ * @property-read $usersTablePrefix
+ */
 abstract class TikiDb
 {
+	/**
+	 * @visibility private
+	 * @static
+	 * @var TikiDb $instance
+	 */
 	private static $instance;
 
 	private $errorHandler;
