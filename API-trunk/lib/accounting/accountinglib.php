@@ -1,16 +1,22 @@
 <?php
-// (c) Copyright 2002-2013 by authors of the Tiki Wiki CMS Groupware Project
-//
-// All Rights Reserved. See copyright.txt for details and a complete list of authors.
-// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+/**
+ *
+ * this script may only be included, it will die if called directly.
+ *
+ * @package   Tiki\lib\accounting
+ * @copyright (c) Copyright 2002-2013 by authors of the Tiki Wiki CMS Groupware Project. All Rights Reserved. See copyright.txt for details and a complete list of authors.
+ * @license   LGPLv2.1. See license.txt for more details 
+ */
 // $Id$
 
-// this script may only be included - so its better to die if called directly.
+// die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 	header("location: index.php");
 	exit;
 }
-
+/**
+ * @uses lib/logs/logslib.php
+ */
 require_once ('lib/logs/logslib.php');
 
 /**
@@ -31,6 +37,7 @@ class AccountingLib extends LogsLib
 	/**
 	 *
 	 * Storing the book data if already requested once, this may save us a few queries
+	 * @visibility private
 	 * @var array	$_book	array with the books structure
 	 */
 	private $_book = '';
@@ -450,6 +457,7 @@ class AccountingLib extends LogsLib
 		$errors = $this->validateId('accountId', $newAccountId, 'tiki_acct_account', true, 'accountBookId', $bookId);
 		if ($accountId != $newAccountId) {
 			if (!$this->accountChangeable($bookId, $accountId))
+				/** @var array $errors */
 				$errors[] = tra('AccountId %0 is already in use and must not be changed. Please disable it if it is no longer needed.', $args = array($accountId));
 		}
 
@@ -547,8 +555,8 @@ class AccountingLib extends LogsLib
 	} //manualRollback
 
 	/**
-	 *
 	 * Checks if the book date is within the books limits
+	 * 
 	 * @param array		$book		book array
 	 * @param unknown_type $Date
 	 */
