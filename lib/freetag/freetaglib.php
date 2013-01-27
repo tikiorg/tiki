@@ -325,7 +325,7 @@ class FreetagLib extends ObjectLib
 				$bloglib = TikiLib::lib('blog');
 				$post_info = $bloglib->get_post($row['itemId']);
 				if (!empty($objectId) && $objectId != $post_info['blogId']) {
-				} elseif ($tiki_p_admin == 'y' && $this->user_has_perm_on_object($user, $post_info['blogId'], 'blog', 'tiki_p_read_blog')) {
+				} elseif ($tiki_p_admin == 'y' || $this->user_has_perm_on_object($user, $post_info['blogId'], 'blog', 'tiki_p_read_blog')) {
 					$ok = true;
 				}
 			} elseif ($tiki_p_admin == 'y') {
