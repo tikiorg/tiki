@@ -11,6 +11,10 @@ require_once("KalturaEnums.php");
 require_once("KalturaTypes.php");
 
 
+/**
+ * @package External
+ * @subpackage Kaltura
+ */
 class KalturaAccessControlService extends KalturaServiceBase
 {
 	function __construct(KalturaClient $client = null)
@@ -88,6 +92,10 @@ class KalturaAccessControlService extends KalturaServiceBase
 	}
 }
 
+/**
+ * @package External
+ * @subpackage Kaltura
+ */
 class KalturaAdminUserService extends KalturaServiceBase
 {
 	function __construct(KalturaClient $client = null)
@@ -154,6 +162,10 @@ class KalturaAdminUserService extends KalturaServiceBase
 	}
 }
 
+/**
+ * @package External
+ * @subpackage Kaltura
+ */
 class KalturaBaseEntryService extends KalturaServiceBase
 {
 	function __construct(KalturaClient $client = null)
@@ -457,6 +469,10 @@ class KalturaBaseEntryService extends KalturaServiceBase
 	}
 }
 
+/**
+ * @package External
+ * @subpackage Kaltura
+ */
 class KalturaBulkUploadService extends KalturaServiceBase
 {
 	function __construct(KalturaClient $client = null)
@@ -540,6 +556,10 @@ class KalturaBulkUploadService extends KalturaServiceBase
 	}
 }
 
+/**
+ * @package External
+ * @subpackage Kaltura
+ */
 class KalturaCategoryService extends KalturaServiceBase
 {
 	function __construct(KalturaClient $client = null)
@@ -615,6 +635,10 @@ class KalturaCategoryService extends KalturaServiceBase
 	}
 }
 
+/**
+ * @package External
+ * @subpackage Kaltura
+ */
 class KalturaConversionProfileAssetParamsService extends KalturaServiceBase
 {
 	function __construct(KalturaClient $client = null)
@@ -654,6 +678,10 @@ class KalturaConversionProfileAssetParamsService extends KalturaServiceBase
 	}
 }
 
+/**
+ * @package External
+ * @subpackage Kaltura
+ */
 class KalturaConversionProfileService extends KalturaServiceBase
 {
 	function __construct(KalturaClient $client = null)
@@ -756,6 +784,10 @@ class KalturaConversionProfileService extends KalturaServiceBase
 	}
 }
 
+/**
+ * @package External
+ * @subpackage Kaltura
+ */
 class KalturaDataService extends KalturaServiceBase
 {
 	function __construct(KalturaClient $client = null)
@@ -845,6 +877,10 @@ class KalturaDataService extends KalturaServiceBase
 	}
 }
 
+/**
+ * @package External
+ * @subpackage Kaltura
+ */
 class KalturaDocumentService extends KalturaServiceBase
 {
 	function __construct(KalturaClient $client = null)
@@ -1023,6 +1059,10 @@ class KalturaDocumentService extends KalturaServiceBase
 	}
 }
 
+/**
+ * @package External
+ * @subpackage Kaltura
+ */
 class KalturaEmailIngestionProfileService extends KalturaServiceBase
 {
 	function __construct(KalturaClient $client = null)
@@ -1114,6 +1154,10 @@ class KalturaEmailIngestionProfileService extends KalturaServiceBase
 	}
 }
 
+/**
+ * @package External
+ * @subpackage Kaltura
+ */
 class KalturaFlavorAssetService extends KalturaServiceBase
 {
 	function __construct(KalturaClient $client = null)
@@ -1313,6 +1357,10 @@ class KalturaFlavorAssetService extends KalturaServiceBase
 	}
 }
 
+/**
+ * @package External
+ * @subpackage Kaltura
+ */
 class KalturaFlavorParamsService extends KalturaServiceBase
 {
 	function __construct(KalturaClient $client = null)
@@ -1403,6 +1451,10 @@ class KalturaFlavorParamsService extends KalturaServiceBase
 	}
 }
 
+/**
+ * @package External
+ * @subpackage Kaltura
+ */
 class KalturaLiveStreamService extends KalturaServiceBase
 {
 	function __construct(KalturaClient $client = null)
@@ -1511,6 +1563,10 @@ class KalturaLiveStreamService extends KalturaServiceBase
 	}
 }
 
+/**
+ * @package External
+ * @subpackage Kaltura
+ */
 class KalturaMediaInfoService extends KalturaServiceBase
 {
 	function __construct(KalturaClient $client = null)
@@ -1535,6 +1591,10 @@ class KalturaMediaInfoService extends KalturaServiceBase
 	}
 }
 
+/**
+ * @package External
+ * @subpackage Kaltura
+ */
 class KalturaMediaService extends KalturaServiceBase
 {
 	function __construct(KalturaClient $client = null)
@@ -1947,6 +2007,10 @@ class KalturaMediaService extends KalturaServiceBase
 	}
 }
 
+/**
+ * @package External
+ * @subpackage Kaltura
+ */
 class KalturaMixingService extends KalturaServiceBase
 {
 	function __construct(KalturaClient $client = null)
@@ -2122,6 +2186,10 @@ class KalturaMixingService extends KalturaServiceBase
 	}
 }
 
+/**
+ * @package External
+ * @subpackage Kaltura
+ */
 class KalturaNotificationService extends KalturaServiceBase
 {
 	function __construct(KalturaClient $client = null)
@@ -2144,6 +2212,10 @@ class KalturaNotificationService extends KalturaServiceBase
 	}
 }
 
+/**
+ * @package External
+ * @subpackage Kaltura
+ */
 class KalturaPartnerService extends KalturaServiceBase
 {
 	function __construct(KalturaClient $client = null)
@@ -2222,6 +2294,10 @@ class KalturaPartnerService extends KalturaServiceBase
 	}
 }
 
+/**
+ * @package External
+ * @subpackage Kaltura
+ */
 class KalturaPermissionItemService extends KalturaServiceBase
 {
 	function __construct(KalturaClient $client = null)
@@ -2299,6 +2375,10 @@ class KalturaPermissionItemService extends KalturaServiceBase
 	}
 }
 
+/**
+ * @package External
+ * @subpackage Kaltura
+ */
 class KalturaPermissionService extends KalturaServiceBase
 {
 	function __construct(KalturaClient $client = null)
@@ -2388,6 +2468,10 @@ class KalturaPermissionService extends KalturaServiceBase
 	}
 }
 
+/**
+ * @package External
+ * @subpackage Kaltura
+ */
 class KalturaPlaylistService extends KalturaServiceBase
 {
 	function __construct(KalturaClient $client = null)
@@ -2544,6 +2628,10 @@ class KalturaPlaylistService extends KalturaServiceBase
 	}
 }
 
+/**
+ * @package External
+ * @subpackage Kaltura
+ */
 class KalturaReportService extends KalturaServiceBase
 {
 	function __construct(KalturaClient $client = null)
@@ -2654,6 +2742,10 @@ class KalturaReportService extends KalturaServiceBase
 	}
 }
 
+/**
+ * @package External
+ * @subpackage Kaltura
+ */
 class KalturaSchemaService extends KalturaServiceBase
 {
 	function __construct(KalturaClient $client = null)
@@ -2671,6 +2763,10 @@ class KalturaSchemaService extends KalturaServiceBase
 	}
 }
 
+/**
+ * @package External
+ * @subpackage Kaltura
+ */
 class KalturaSearchService extends KalturaServiceBase
 {
 	function __construct(KalturaClient $client = null)
@@ -2736,6 +2832,10 @@ class KalturaSearchService extends KalturaServiceBase
 	}
 }
 
+/**
+ * @package External
+ * @subpackage Kaltura
+ */
 class KalturaSessionService extends KalturaServiceBase
 {
 	function __construct(KalturaClient $client = null)
@@ -2807,6 +2907,10 @@ class KalturaSessionService extends KalturaServiceBase
 	}
 }
 
+/**
+ * @package External
+ * @subpackage Kaltura
+ */
 class KalturaStatsService extends KalturaServiceBase
 {
 	function __construct(KalturaClient $client = null)
@@ -2854,6 +2958,10 @@ class KalturaStatsService extends KalturaServiceBase
 	}
 }
 
+/**
+ * @package External
+ * @subpackage Kaltura
+ */
 class KalturaStorageProfileService extends KalturaServiceBase
 {
 	function __construct(KalturaClient $client = null)
@@ -2932,6 +3040,10 @@ class KalturaStorageProfileService extends KalturaServiceBase
 	}
 }
 
+/**
+ * @package External
+ * @subpackage Kaltura
+ */
 class KalturaSyndicationFeedService extends KalturaServiceBase
 {
 	function __construct(KalturaClient $client = null)
@@ -3035,6 +3147,10 @@ class KalturaSyndicationFeedService extends KalturaServiceBase
 	}
 }
 
+/**
+ * @package External
+ * @subpackage Kaltura
+ */
 class KalturaSystemService extends KalturaServiceBase
 {
 	function __construct(KalturaClient $client = null)
@@ -3055,6 +3171,10 @@ class KalturaSystemService extends KalturaServiceBase
 	}
 }
 
+/**
+ * @package External
+ * @subpackage Kaltura
+ */
 class KalturaThumbAssetService extends KalturaServiceBase
 {
 	function __construct(KalturaClient $client = null)
@@ -3290,6 +3410,10 @@ class KalturaThumbAssetService extends KalturaServiceBase
 	}
 }
 
+/**
+ * @package External
+ * @subpackage Kaltura
+ */
 class KalturaThumbParamsService extends KalturaServiceBase
 {
 	function __construct(KalturaClient $client = null)
@@ -3380,6 +3504,10 @@ class KalturaThumbParamsService extends KalturaServiceBase
 	}
 }
 
+/**
+ * @package External
+ * @subpackage Kaltura
+ */
 class KalturaUiConfService extends KalturaServiceBase
 {
 	function __construct(KalturaClient $client = null)
@@ -3498,6 +3626,10 @@ class KalturaUiConfService extends KalturaServiceBase
 	}
 }
 
+/**
+ * @package External
+ * @subpackage Kaltura
+ */
 class KalturaUploadService extends KalturaServiceBase
 {
 	function __construct(KalturaClient $client = null)
@@ -3533,6 +3665,10 @@ class KalturaUploadService extends KalturaServiceBase
 	}
 }
 
+/**
+ * @package External
+ * @subpackage Kaltura
+ */
 class KalturaUploadTokenService extends KalturaServiceBase
 {
 	function __construct(KalturaClient $client = null)
@@ -3615,6 +3751,10 @@ class KalturaUploadTokenService extends KalturaServiceBase
 	}
 }
 
+/**
+ * @package External
+ * @subpackage Kaltura
+ */
 class KalturaUserRoleService extends KalturaServiceBase
 {
 	function __construct(KalturaClient $client = null)
@@ -3705,6 +3845,10 @@ class KalturaUserRoleService extends KalturaServiceBase
 	}
 }
 
+/**
+ * @package External
+ * @subpackage Kaltura
+ */
 class KalturaUserService extends KalturaServiceBase
 {
 	function __construct(KalturaClient $client = null)
@@ -3916,6 +4060,10 @@ class KalturaUserService extends KalturaServiceBase
 	}
 }
 
+/**
+ * @package External
+ * @subpackage Kaltura
+ */
 class KalturaWidgetService extends KalturaServiceBase
 {
 	function __construct(KalturaClient $client = null)
@@ -3993,6 +4141,10 @@ class KalturaWidgetService extends KalturaServiceBase
 	}
 }
 
+/**
+ * @package External
+ * @subpackage Kaltura
+ */
 class KalturaXInternalService extends KalturaServiceBase
 {
 	function __construct(KalturaClient $client = null)
@@ -4015,6 +4167,10 @@ class KalturaXInternalService extends KalturaServiceBase
 	}
 }
 
+/**
+ * @package External
+ * @subpackage Kaltura
+ */
 class KalturaClient extends KalturaClientBase
 {
 	/**
