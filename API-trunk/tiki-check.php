@@ -1,19 +1,19 @@
 <?php
 /**
- * @package tikiwiki
+ * checks server settings
+ *
+ * @package   Tiki
+ * @copyright (c) Copyright 2002-2013 by authors of the Tiki Wiki CMS Groupware Project. All Rights Reserved. See copyright.txt for details and a complete list of authors.
+ * @license   LGPLv2.1. See license.txt for more details
  */
-// (c) Copyright 2002-2013 by authors of the Tiki Wiki CMS Groupware Project
-//
-// All Rights Reserved. See copyright.txt for details and a complete list of authors.
-// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
-/*
-About the design:
-tiki-check.php is designed to run in 2 modes
-1) Regular mode. From inside Tiki, in Admin | General
-2) Stand-alone mode. Used to check a server pre-Tiki installation, by copying (only) tiki-check.php onto the server and pointing your browser to it.
-tiki-check.php should not crash but rather avoid running tests which lead to tiki-check crashes.
-*/
+/**
+ * About the design:
+ * tiki-check.php is designed to run in 2 modes
+ * 1) Regular mode. From inside Tiki, in Admin | General
+ * 2) Stand-alone mode. Used to check a server pre-Tiki installation, by copying (only) tiki-check.php onto the server and pointing your browser to it.
+ * tiki-check.php should not crash but rather avoid running tests which lead to tiki-check crashes.
+ */
 if (file_exists('./db/local.php') && file_exists('./templates/tiki-check.tpl')) {
 	$standalone = false;
 	require_once ('tiki-setup.php');
@@ -22,8 +22,9 @@ if (file_exists('./db/local.php') && file_exists('./templates/tiki-check.tpl')) 
 	$standalone = true;
 
     /**
+     * translates the string $string
      * @param $string
-     * @return mixed
+     * @return string
      */
     function tra($string)
 	{
@@ -31,6 +32,7 @@ if (file_exists('./db/local.php') && file_exists('./templates/tiki-check.tpl')) 
 	}
 
     /**
+     * renders a table
      * @param $var
      */
     function renderTable($var)
@@ -74,9 +76,11 @@ if (file_exists('./db/local.php') && file_exists('./templates/tiki-check.tpl')) 
 // Get PHP properties and check them
 $php_properties = false;
 
-// Check error reporting level
+/** @var $e  */
 $e = error_reporting();
+/** @var $d  */
 $d = ini_get('display_errors');
+/** Check error reporting level */
 if ( $e == 0 ) {
 	if ($d != 1) {
 		$php_properties['Error reporting'] = array(
