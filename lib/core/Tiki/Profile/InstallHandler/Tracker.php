@@ -55,6 +55,7 @@ class Tiki_Profile_InstallHandler_Tracker extends Tiki_Profile_InstallHandler
 			'allow_one_item_per_user' => 'oneUserItem',
 			'section_format' => 'sectionFormat',
 			'popup_fields' => 'showPopup',
+			'admin_only_view' => 'adminOnlyViewEditItem',
 		);
 	} // }}}
 
