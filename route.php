@@ -165,9 +165,17 @@ $inclusion = null;
 switch ($sapi) {
 case 'apache2handler':
 default:
+	if (isset($_SERVER['SCRIPT_URL'])) {
+		$full = $_SERVER['SCRIPT_URL'];
+	} elseif ($_SERVER['REDIRECT_URL']) {
+		$full = $_SERVER['REDIRECT_URL'];
+	} else {
+		break;
+	}
+
 	$file = basename(__FILE__);
 	$base = substr($_SERVER['PHP_SELF'], 0, -strlen($file));
-	$path = substr($_SERVER['SCRIPT_URL'], strlen($base));
+	$path = substr($full, strlen($base));
 	break;
 }
 
