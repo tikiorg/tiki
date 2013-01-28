@@ -80,7 +80,11 @@ $php_properties = false;
 $e = error_reporting();
 /** @var $d  */
 $d = ini_get('display_errors');
-/** Check error reporting level */
+/** 
+ * Check error reporting level
+ * 
+ * returns a message based on the current Error reporting level 
+ */
 if ( $e == 0 ) {
 	if ($d != 1) {
 		$php_properties['Error reporting'] = array(
@@ -125,11 +129,13 @@ if ( $e == 0 ) {
 	}
 }
 
-// Now we can raise our error_reporting to make sure we get all errors
-// This is especially important as we can't use proper exception handling with PDO as we need to be PHP 4 compatible
+/** 
+ * Now we can raise our error_reporting to make sure we get all errors
+ * This is especially important as we can't use proper exception handling with PDO as we need to be PHP 4 compatible      
+ */
 error_reporting(-1);
 
-// Check if ini_set works
+/** Check if ini_set works */
 if (function_exists('ini_set')) {
 	$php_properties['ini_set'] = array(
 		'fitness' => tra('good'),
@@ -146,8 +152,13 @@ if (function_exists('ini_set')) {
 	);
 }
 
-// First things first
-// If we don't have a DB-connection, some tests don't run
+/**
+ * First things first
+ * 
+ * If we don't have a DB-connection, some tests don't run
+ * 
+ * @var $s
+ */ 
 $s = extension_loaded('pdo_mysql');
 if ($s) {
 	$php_properties['DB Driver'] = array(
@@ -176,7 +187,11 @@ if ($s) {
 
 }
 
-// Now connect to the DB and make all our connectivity methods work the same
+/** 
+ * Now connect to the DB and make all our connectivity methods work the same
+ * 
+ * @var $connection  
+ */
 $connection = false;
 if ( $standalone ) {
 	if ( empty($_POST['dbhost']) && !($php_properties['DB Driver']['setting'] == 'Not available') ) {
