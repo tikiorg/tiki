@@ -148,32 +148,7 @@ RewriteRule (.*) - [L]
 #
 #RewriteRule ^sitemap.txt$          tiki-browse_categories.php?find=&deep=on&type=wiki+page&parentId=2&sort_mode=name_asc&links&maxRecords=1000000 [L]
 
-# direct one-word access
-RewriteRule ^(img\/trackers\/.*)   $1                                       [L]
-RewriteRule ^calendar$             tiki-calendar.php                        [L]
-RewriteRule ^articles$             tiki-view_articles.php                   [L]
-RewriteRule ^blogs$                tiki-list_blogs.php                      [L]
-RewriteRule ^categories$           tiki-browse_categories.php               [L]
-RewriteRule ^chat$                 tiki-chat.php                            [L]
-RewriteRule ^contact$              tiki-contact.php                         [L]
-RewriteRule ^directories$          tiki-directory_browse.php                [L]
-RewriteRule ^faqs$                 tiki-list_faqs.php                       [L]
-RewriteRule ^filelist$             tiki-list_file_gallery.php               [L]
-RewriteRule ^forums$               tiki-forums.php                          [L]
-RewriteRule ^galleries$            tiki-galleries.php                       [L]
-RewriteRule ^login$                tiki-login_scr.php                       [L]
-RewriteRule ^logout$               tiki-logout.php                          [L]
-# Note that email validation will not work if tiki-register.php is rewritten.
-# RewriteRule ^register$             tiki-register.php                        [L]
-RewriteRule ^my$                   tiki-my_tiki.php                         [L]
-RewriteRule ^newsletters$          tiki-newsletters.php                     [L]
-RewriteRule ^quizzes$              tiki-list_quizzes.php                    [L]
-RewriteRule ^sheets$               tiki-sheets.php                          [L]
-RewriteRule ^stats$                tiki-stats.php                           [L]
-RewriteRule ^surveys$              tiki-list_surveys.php                    [L]
-RewriteRule ^trackers$             tiki-list_trackers.php                   [L]
-RewriteRule ^users$                tiki-list_users.php                      [L]
-RewriteRule ^userinfo$          tiki-view_tracker_item.php?view=+user&cookietab=2 [L]
+RewriteRule .*                     route.php                                [L]
 
 # access a link to any user by providing its username (exact match) after u:
 #   (uncomment to enable)
@@ -181,67 +156,5 @@ RewriteRule ^userinfo$          tiki-view_tracker_item.php?view=+user&cookietab=
 # alternative procedure to show a list of users with that string 
 #   (adapt with your user tracker id and user selector field id)
 #RewriteRule ^u:([A-Za-z0-9]+)       tiki-view_tracker.php?trackerId=1&filterfield=3&filtervalue\[3\]=$1           [QSA,L]
-
-# access any object by its numeric identifier
-RewriteRule ^article([0-9]+)\-.*(&comzone=.*)$  article$1$2
-RewriteRule ^article([0-9]+)\-.*$  article$1
-RewriteRule ^blog([0-9]+)\-.*$     blog$1
-RewriteRule ^blogpost([0-9]+)\-.*$ blogpost$1
-RewriteRule ^article([0-9]+)(.*)   tiki-read_article.php?articleId=$1$2     [QSA,L]
-RewriteRule ^art([0-9]+)(.*)       tiki-read_article.php?articleId=$1$2     [QSA,L]
-
-# The following supports up to seven merged calendars; most to least. SEWilco 2008-07-15
-RewriteRule ^cal([0-9]+),([0-9]+),([0-9]+),([0-9]+),([0-9]+),([0-9]+),([0-9]+)  tiki-calendar.php?calIds[]=$1&calIds[]=$2&calIds[]=$3&calIds[]=$4&calIds[]=$5&calIds[]=$6&calIds[]=$7 [QSA,L]
-RewriteRule ^cal([0-9]+),([0-9]+),([0-9]+),([0-9]+),([0-9]+),([0-9]+)  tiki-calendar.php?calIds[]=$1&calIds[]=$2&calIds[]=$3&calIds[]=$4&calIds[]=$5&calIds[]=$6 [QSA,L]
-RewriteRule ^cal([0-9]+),([0-9]+),([0-9]+),([0-9]+),([0-9]+)  tiki-calendar.php?calIds[]=$1&calIds[]=$2&calIds[]=$3&calIds[]=$4&calIds[]=$5 [QSA,L]
-RewriteRule ^cal([0-9]+),([0-9]+),([0-9]+),([0-9]+)  tiki-calendar.php?calIds[]=$1&calIds[]=$2&calIds[]=$3&calIds[]=$4 [QSA,L]
-RewriteRule ^cal([0-9]+),([0-9]+),([0-9]+)  tiki-calendar.php?calIds[]=$1&calIds[]=$2&calIds[]=$3 [QSA,L]
-RewriteRule ^cal([0-9]+),([0-9]+)  tiki-calendar.php?calIds[]=$1&calIds[]=$2 [QSA,L]
-RewriteRule ^cal([0-9]+)           tiki-calendar.php?calIds[]=$1            [QSA,L]
-
-RewriteRule ^cat([0-9]+)\-?[^&]*(.*)       tiki-browse_categories.php?parentId=$1$2 [QSA,L]
-RewriteRule ^blog([0-9]+)(.*)      tiki-view_blog.php?blogId=$1$2           [QSA,L]
-RewriteRule ^blogpost([0-9]+)(.*)  tiki-view_blog_post.php?postId=$1$2      [QSA,L]
-RewriteRule ^browseimage([0-9]+)(.*) tiki-browse_image.php?imageId=$1$2     [QSA,L]
-RewriteRule ^directory([0-9]+)(.*) tiki-directory_browse.php?parent=$1$2    [QSA,L]
-RewriteRule ^dirlink([0-9]+)       tiki-directory_redirect.php?siteId=$1    [QSA,L]
-RewriteRule ^faq([0-9]+)(.*)       tiki-view_faq.php?faqId=$1$2             [QSA,L]
-RewriteRule ^file([0-9]+)(.*)      tiki-list_file_gallery.php?galleryId=$1$2 [QSA,L]
-RewriteRule ^dl([0-9]+)(.*)        tiki-download_file.php?fileId=$1$2       [QSA,L]
-RewriteRule ^thumbnail([0-9]+)(.*) tiki-download_file.php?fileId=$1&thumbnail$2 [QSA,L]
-RewriteRule ^display([0-9]+)(.*)   tiki-download_file.php?fileId=$1&display$2 [QSA,L]
-RewriteRule ^preview([0-9]+)(.*)   tiki-download_file.php?fileId=$1&preview$2 [QSA,L]
-RewriteRule ^forum([0-9]+)(.*)     tiki-view_forum.php?forumId=$1$2         [QSA,L]
-RewriteRule ^forumthread([0-9]+)(.*) tiki-view_forum_thread.php?comments_parentId=$1$2 [QSA,L]
-RewriteRule ^gallery([0-9]+)(.*)   tiki-browse_gallery.php?galleryId=$1$2   [QSA,L]
-RewriteRule ^img([0-9]+)(.*)       show_image.php?id=$1$2                   [QSA,L]
-RewriteRule ^image([0-9]+)(.*)     show_image.php?id=$1$2                   [QSA,L]
-RewriteRule ^imagescale([0-9]+)/([0-9]+)(.*) show_image.php?id=$1&scalesize=$2$3  [QSA,L]
-RewriteRule ^newsletter([0-9]+)(.*) tiki-newsletters.php?nlId=$1$2&info=1    [QSA,L]
-RewriteRule ^quiz([0-9]+)(.*)      tiki-take_quiz.php?quizId=$1$2           [QSA,L]
-RewriteRule ^survey([0-9]+)(.*)    tiki-take_survey.php?surveyId=$1$2       [QSA,L]
-RewriteRule ^tracker([0-9]+)(.*)   tiki-view_tracker.php?trackerId=$1$2     [QSA,L]
-RewriteRule ^item([0-9]+)(.*)      tiki-view_tracker_item.php?itemId=$1$2   [QSA,L]
-RewriteRule ^int([0-9]+)(.*)       tiki-integrator.php?repID=$1$2           [QSA,L]
-RewriteRule ^sheet([0-9]+)(.*)     tiki-view_sheets.php?sheetId=$1$2        [QSA,L]
-RewriteRule ^poll([0-9]+)(.*)      tiki-poll_form.php?pollId=$1$2           [QSA,L]
-RewriteRule ^wiki-([A-Za-z0-9]+)   tiki-index.php?page=$1                   [QSA,L]
-RewriteRule ^page-([A-Za-z0-9]+)   tiki-index.php?page=$1                   [QSA,L]
-RewriteRule ^show:(~?)(.+)$        tiki-slideshow.php?page=$1$2             [QSA,L]
-RewriteRule ^user([0-9]+)(.*)      tiki-user_information.php?userId=$1$2    [QSA,L]
-RewriteRule ^(lib/wiki3d/.+\.jar)$ $1                                       [L]
-
-# Stop processing filenames here, so that 404 errors are returned (for example if the URL contains a typo like tiki-indexx.php) rather than being interpreted as a match to a broad rule.
-# "Dirty URL"s will stop here.
-RewriteRule \.(css|gif|jpg|png|php|html|js|htm|shtml|cgi|sql|phtml|txt|ihtml)   -       [last]
-
-#Redirect addresses with bogus directories: e.g., example.com/bogus/.*
-#Otherwise causes a broken page to load
-#RewriteRule ^.*/.*$ http://www.example.com/Page+Not+Found    [L]
-
-
-RewriteRule ^tiki-([a-z_]+)-([a-z_]+) tiki-ajax_services.php?controller=$1&action=$2		[QSA,L]
-RewriteRule ^tiki-([a-z_]+)         tiki-ajax_services.php?controller=$1		[QSA,L] # action may be specified in request body (POST)
-RewriteRule ^(.+)$                 tiki-index.php?page=$1                   [QSA,L]
 
 </IfModule>

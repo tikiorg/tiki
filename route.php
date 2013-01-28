@@ -1,0 +1,184 @@
+<?php
+
+function tiki_route($path)
+{
+	$simple = array(
+		'articles' => 'tiki-view_articles.php',
+		'blogs' => 'tiki-list_blogs.php',
+		'calendar' => 'tiki-calendar.php',
+		'chat' => 'tiki-chat.php',
+		'contact' => 'tiki-contact.php',
+		'directories' => 'tiki-directory_browse.php',
+		'faqs' => 'tiki-list_faqs.php',
+		'filelist' => 'tiki-list_file_gallery.php',
+		'forums' => 'tiki-forums.php',
+		'galleries' => 'tiki-galleries.php',
+		'login' => 'tiki-login_scr.php',
+		'logout' => 'tiki-logout.php',
+		'my' => 'tiki-my_tiki.php',
+		'newsletters' => 'tiki-newsletters.php',
+		'quizzes' => 'tiki-list_quizzes.php',
+		'register' => 'tiki-register.php',
+		'sheets' => 'tiki-sheets.php',
+		'stats' => 'tiki-stats.php',
+		'surveys' => 'tiki-list_surveys.php',
+		'trackers' => 'tiki-list_trackers.php',
+		'users' => 'tiki-list_users.php',
+	);
+
+	foreach ($simple as $key => $file) {
+		tiki_route_attempt("|^$key$|", $file);
+	}
+
+	/*
+		Valid:
+
+		art123
+		article123
+		art123-XYZ
+		article123-XYZ
+	*/
+	tiki_route_attempt('/^(art|article)(\d+)(\-.*)?$/', 'tiki-read_article.php', tiki_route_single(2, 'articleId'));
+
+	tiki_route_attempt('|^blog(\d+)(\-.*)?$|', 'tiki-view_blog.php', tiki_route_single(1, 'blogId'));
+	tiki_route_attempt('|^blogpost(\d+)(\-.*)?$|', 'tiki-view_blog_post.php', tiki_route_single(1, 'postId'));
+	tiki_route_attempt_prefix('browseimage', 'tiki-browse_image.php', 'imageId');
+
+	tiki_route_attempt('|^cal(\d[\d,]*)$|', 'tiki-calendar.php', function ($parts) {
+		$ids = explode(',', $parts[1]);
+		$ids = array_filter($ids);
+		return array('calIds' => $ids);
+	});
+
+	tiki_route_attempt_prefix('cat', 'tiki-browse_categories.php', 'parentId');
+
+	tiki_route_attempt_prefix('directory', 'tiki-directory_browse.php', 'parent');
+	tiki_route_attempt_prefix('dirlink', 'tiki-directory_redirect.php', 'siteId');
+
+	tiki_route_attempt_prefix('faq', 'tiki-view_faq.php', 'faqId');
+	tiki_route_attempt_prefix('file', 'tiki-list_file_gallery.php', 'galleryId');
+	tiki_route_attempt_prefix('forum', 'tiki-view_forum.php', 'forumId');
+	tiki_route_attempt_prefix('forumthread', 'tiki-view_forum_thread.php', 'comments_parentId');
+	tiki_route_attempt_prefix('gallery', 'tiki-browse_gallery.php', 'galleryId');
+	tiki_route_attempt_prefix('img', 'show_image.php', 'id');
+	tiki_route_attempt_prefix('image', 'show_image.php', 'id');
+	tiki_route_attempt('|^imagescale(\d+)/(\d+)$|', 'show_image.php', function ($parts) {
+		return array(
+			'id' => $parts[1],
+			'scalesize' => $parts[2],
+		);
+	});
+	tiki_route_attempt_prefix('int', 'tiki-integrator.php', 'repID');
+	tiki_route_attempt_prefix('item', 'tiki-view_tracker_item.php', 'itemId');
+	tiki_route_attempt_prefix('newsletter', 'tiki-newsletters.php', 'nlId=1', array('info' => '1'));
+	tiki_route_attempt_prefix('poll', 'tiki-poll_form.php', 'pollId');
+	tiki_route_attempt_prefix('quiz', 'tiki-take_quiz.php', 'quizId');
+	tiki_route_attempt_prefix('survey', 'tiki-take_survey.php', 'surveyId');
+	tiki_route_attempt_prefix('tracker', 'tiki-view_tracker.php', 'trackerId');
+	tiki_route_attempt_prefix('sheet', 'tiki-view_sheets.php', 'sheetId');
+	tiki_route_attempt_prefix('user', 'tiki-user_information.php', 'userId');
+	tiki_route_attempt('|^userinfo$|', 'tiki-view_tracker_item.php', null, array('view' => ' user', 'cookietab' => '2'));
+
+	tiki_route_attempt_prefix('dl', 'tiki-download_file.php', 'fileId');
+	tiki_route_attempt_prefix('thumbnail', 'tiki-download_file.php', 'fileId', array('tumbnail' => ''));
+	tiki_route_attempt_prefix('display', 'tiki-download_file.php', 'fileId', array('display' => ''));
+	tiki_route_attempt_prefix('preview', 'tiki-download_file.php', 'fileId', array('preview' => ''));
+
+	tiki_route_attempt('/^(wiki|page)\-(.+)$/', 'tiki-index.php', function ($parts) {
+		return array('page' => $parts[2]);
+	});
+	tiki_route_attempt('/^show:(.+)$/', 'tiki-slideshow.php', function ($parts) {
+		return array('page' => $parts[2]);
+	});
+
+	tiki_route_attempt('|^tiki\-(\w+)(\-(\w+))?$|', 'tiki-ajax_services.php', function ($parts) {
+		$params = array('controller' => $parts[1]);
+
+		if (isset($parts[3])) {
+			$params['action'] = $parts[3];
+		}
+
+		return $params;
+	});
+
+	if (false !== $dot = strrpos($path, '.')) {
+		// Prevent things that look like filenames from being considered for wiki page names
+		$extension = substr($path, $dot + 1);
+		if (in_array($extension, array('css', 'gif', 'jpg', 'png', 'php', 'html', 'js', 'htm', 'shtml', 'cgi', 'sql', 'phtml', 'txt', 'ihtml'))) {
+			return;
+		}
+	}
+
+	tiki_route_attempt('|.*|', 'tiki-index.php', function ($parts) {
+		return array('page' => $parts[0]);
+	});
+}
+
+
+$sapi = php_sapi_name();
+$base = null;
+$path = null;
+$inclusion = null;
+
+// This portion may need to vary depending on the webserver/configuration
+
+switch ($sapi) {
+case 'apache2handler':
+default:
+	$file = basename(__FILE__);
+	$base = substr($_SERVER['PHP_SELF'], 0, -strlen($file));
+	$path = substr($_SERVER['SCRIPT_URL'], strlen($base));
+	break;
+}
+
+// Global check
+
+if (is_null($base) || is_null($path)) {
+	header('HTTP/1.0 500 Internal Server Error');
+	header('Content-Type: text/plain');
+
+	echo "Request could not be understood. Verify routing file.";
+	exit;
+}
+
+tiki_route($path);
+
+if ($inclusion) {
+	include __DIR__ . '/' . $inclusion;
+} else {
+	header('HTTP/1.0 Not Found');
+	header('Content-Type: text/plain');
+
+	echo "No route found.";
+	exit;
+}
+
+function tiki_route_attempt($pattern, $file, $callback = null, $extra = array())
+{
+	global $path, $inclusion;
+
+	if ($inclusion) {
+		return;
+	}
+
+	if (preg_match($pattern, $path, $parts)) {
+		$inclusion = $file;
+
+		if ($callback) {
+			$_GET = array_merge($_GET, $callback($parts), $extra);
+		}
+	}
+}
+
+function tiki_route_attempt_prefix($prefix, $file, $key, $extra = array())
+{
+	tiki_route_attempt("|^$prefix(\d+)$|", $file, tiki_route_single(1, $key), $extra);
+}
+
+function tiki_route_single($index, $name)
+{
+	return function ($parts) use ($index, $name) {
+		return array($name => $parts[$index]);
+	};
+}
+
