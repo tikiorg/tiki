@@ -1,5 +1,17 @@
 <?php
+// (c) Copyright 2002-2013 by authors of the Tiki Wiki CMS Groupware Project
+// 
+// All Rights Reserved. See copyright.txt for details and a complete list of authors.
+// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+// $Id$
 
+// Adding support for an other web server? Check the end of the file
+
+/**
+ * Routing method, receives the path portion of the URL relative to tiki root.
+ * http://example.com/tiki/hello-world?foo-bar
+ * $path is expectedto be hello-world
+ */
 function tiki_route($path)
 {
 	$simple = array(
@@ -114,6 +126,34 @@ function tiki_route($path)
 	});
 }
 
+function tiki_route_attempt($pattern, $file, $callback = null, $extra = array())
+{
+	global $path, $inclusion;
+
+	if ($inclusion) {
+		return;
+	}
+
+	if (preg_match($pattern, $path, $parts)) {
+		$inclusion = $file;
+
+		if ($callback) {
+			$_GET = array_merge($_GET, $callback($parts), $extra);
+		}
+	}
+}
+
+function tiki_route_attempt_prefix($prefix, $file, $key, $extra = array())
+{
+	tiki_route_attempt("|^$prefix(\d+)$|", $file, tiki_route_single(1, $key), $extra);
+}
+
+function tiki_route_single($index, $name)
+{
+	return function ($parts) use ($index, $name) {
+		return array($name => $parts[$index]);
+	};
+}
 
 $sapi = php_sapi_name();
 $base = null;
@@ -151,34 +191,5 @@ if ($inclusion) {
 
 	echo "No route found.";
 	exit;
-}
-
-function tiki_route_attempt($pattern, $file, $callback = null, $extra = array())
-{
-	global $path, $inclusion;
-
-	if ($inclusion) {
-		return;
-	}
-
-	if (preg_match($pattern, $path, $parts)) {
-		$inclusion = $file;
-
-		if ($callback) {
-			$_GET = array_merge($_GET, $callback($parts), $extra);
-		}
-	}
-}
-
-function tiki_route_attempt_prefix($prefix, $file, $key, $extra = array())
-{
-	tiki_route_attempt("|^$prefix(\d+)$|", $file, tiki_route_single(1, $key), $extra);
-}
-
-function tiki_route_single($index, $name)
-{
-	return function ($parts) use ($index, $name) {
-		return array($name => $parts[$index]);
-	};
 }
 
