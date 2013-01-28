@@ -843,11 +843,15 @@ table {
 	color: #2d2d2d;
 }
 
-.odd {
+.odd,
+table.normal tr:nth-child(2n+1),
+table.normal tr:nth-child(2n+1) td {
 	background: #dddfdf;
 }
 
-.even {
+.even,
+table.normal tr:nth-child(2n),
+table.normal tr:nth-child(2n) td {
 	background: #f0f0f0;
 }
 
@@ -877,7 +881,9 @@ td.odd,
 td.even,
 td.form,
 .editblogform td,
-.formcolor td {
+.formcolor td,
+table.normal tr:nth-child(2n+1) td,
+table.normal tr:nth-child(2n) td{
 	padding: 3px;
 }
 

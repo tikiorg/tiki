@@ -444,7 +444,8 @@ tr.diffheader {
 tr.odd td,
 td.odd,
 li.odd,
-.calodd {
+.calodd,
+table.normal tr:nth-child(2n+1) td {
 	color: #90ee90;
 	background: #404040;
 }
@@ -453,7 +454,8 @@ tr.even td,
 td.even,
 li.even,
 .forum_actions,
-.caltable .even {
+.caltable .even,
+table.normal tr:nth-child(2n) td {
 	color: #90ee90;
 	background: #507050;
 }

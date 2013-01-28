@@ -129,7 +129,10 @@ hr {
 legend {color: #a9a9a9}
 
 input[type=text],
-input[type=password] {
+input[type=password],
+input[type=email],
+input[type=file],
+input[type=number]  {
 	background: #586858;
 	border: 1px solid;
 	border-color: #5a5a62 #b5b5c3 #b5b5c3 #5a5a62;
@@ -535,12 +538,14 @@ tr.odd td {
 	color: #fff;
 }
 
-tr.even {
+tr.even,
+table.normal tr:nth-child(2n) {
 	background: #0e150e;
 	color: #fff;
 }
 
-td.odd {
+td.odd,
+table.normal tr:nth-child(2n+1) {
 	background: #000 url(abse/menubg.jpg) repeat-y;
 	color: #fff;
 	border-right: 1px solid #636f65}

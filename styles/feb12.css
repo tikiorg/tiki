@@ -682,20 +682,23 @@ td {
 .even,
 .form,
 .formcolor td,
-.editblogform td {
+.editblogform td,
+{
 	padding: 0.2em;
 	border-right: solid 1px #909090;
 	border-collapse: collapse;
 }
 
 tr.odd td,
-.odd {
+.odd,
+table.normal tr:nth-child(2n+1) {
 	border-right: 1px solid #909090;
 	background: #F5F5F5;
 }
 
 tr.even td,
-.even {
+.even,
+table.normal tr:nth-child(2n) {
 	background: #ECECEC;
 	border-right: 1px solid #909090;
 }

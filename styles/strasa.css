@@ -170,7 +170,10 @@ select {
 }
 
 input[type=text],
-input[type=password] {
+input[type=password],
+input[type="email"],
+input[type="file"],
+input[type="number"] {
 	background-color: #f3fcfe;
 	border: 1px solid;
 	border-color: #223845 #4d7b9b #4d7b9b #223845;
@@ -1009,12 +1012,14 @@ table {
 	padding: 3px;
 }
 
-.odd {
+.odd,
+table.normal tr:nth-child(2n+1) {
 	background: #f0f0f0;
 	color: #000;
 }
 
-.even {
+.even,
+table.normal tr:nth-child(2n) {
 	background: #dcdcdc;
 	color: #000;
 }
@@ -1022,7 +1027,9 @@ table {
 .normal td,
 .wikitable td,
 td.odd,
-td.even {
+td.even,
+table.normal tr:nth-child(2n+1),
+table.normal tr:nth-child(2n) {
 	padding: 0.2em;
 	vertical-align: top;
 }

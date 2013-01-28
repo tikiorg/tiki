@@ -141,7 +141,10 @@ input[type="submit"]:hover,
 }
 
 input[type="text"],
-input[type="password"] {
+input[type="password"],
+input[type="email"],
+input[type="file"],
+input[type="number"] {
 	font-size: 0.9em;
 	border: solid 1px #aaa;
 	background-color: #ECEEF2;
@@ -509,20 +512,24 @@ h3.box-title {
 .editblogform td {padding: 3px}
 
 td.odd,
-tr.odd {
+tr.odd,
+table.normal tr:nth-child(2n+1) {
 	background: #F7F9FA;
 	border-collapse: collapse;
 	color: #393e51}
 
 td.even,
-tr.even {
+tr.even,
+table.normal tr:nth-child(2n) {
 	background: #E7E9EA;
 	border-collapse: collapse;
 	color: #393e51}
 	
 .wikitable td,
 td.odd,
-td.even {
+td.even,
+table.normal tr:nth-child(2n+1),
+table.normal tr:nth-child(2n) {
 	margin: 0;
 	padding: 0.2em;
 	vertical-align: top}

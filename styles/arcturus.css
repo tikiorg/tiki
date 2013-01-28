@@ -525,7 +525,8 @@ tr.diffheader a {
 tr.odd td,
 td.odd,
 li.odd,
-.oddthumb {
+.oddthumb,
+table.normal tr:nth-child(2n+1) {
 	font-size: 12px;
 	color: #000;
 	background: #efefef;
@@ -534,7 +535,8 @@ li.odd,
 tr.even td,
 td.even,
 li.even,
-.eventhumb {
+.eventhumb,
+table.normal tr:nth-child(2n) {
 	font-size: 12px;
 	background: #fff;
 	color: #000;

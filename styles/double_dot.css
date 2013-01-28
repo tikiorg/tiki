@@ -734,13 +734,15 @@ fieldset.admin label,
 
 tr.odd td,
 td.odd,
-li.odd {
+li.odd,
+table.normal tr:nth-child(2n+1) {
 	background: #f9f9f9;
 }
 
 tr.even td,
 td.even,
-li.even {
+li.even,
+table.normal tr:nth-child(2n) {
 	background: #f3f3f3;
 }
 

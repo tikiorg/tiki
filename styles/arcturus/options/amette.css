@@ -93,12 +93,14 @@ input {
 }
 
 input[type='text'],
-input[type='password'] {
+input[type='password'],
+input[type='email'],
+input[type='file'],
+input[type='number'] {
 	font-size: 1em;
+	border: solid 1px #24880c;
 }
 
-input[type='text'],
-input[type='password'],
 textarea {
 	border: solid 1px #24880c;
 }
@@ -463,10 +465,12 @@ h1.pagetitle a:hover {
 	text-decoration: none;
 	color: #fff;
 }
-.normal .even { /* table with class normal, even cells */
+.normal .even, /* table with class normal, even cells */
+table.normal tr:nth-child(2n) {
 	background-color: #fff;
 }
-.normal .odd { /* table with class normal, odd cells */
+.normal .odd, /* table with class normal, odd cells */
+table.normal tr:nth-child(2n+1) {
 	background-color: #fff;
 }
 .simplebox { /* simple box wiki syntax */

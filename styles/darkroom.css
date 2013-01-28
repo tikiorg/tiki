@@ -116,8 +116,11 @@ textarea {
 	cursor: text;
 }
 
-input[type=text],
-input[type=password] {
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="file"],
+input[type="number"] {
 	border: solid 1px #aaa;
 	background-color: #292929; /* use background-color here; background only shorthand property overrides the background image of .openid_url login field specified in styles/layout/design.css */
 	color: #f5f5f5;
@@ -179,10 +182,6 @@ input[type=submit]:hover,
 	text-decoration: none;
 	padding: 0 4px;
 	font-size: 0.8em;
-}
-
-input[type=file] {
-	color: #000;
 }
 
 select {
@@ -998,14 +997,16 @@ tr.even {
 }
 
 tr.odd td,
-td.odd {
+td.odd,
+table.normal tr:nth-child(2n+1) {
 	color: #fff;
 	background: #292929;
 	border-right: 1px solid #696969;
 }
 
 tr.even td,
-td.even {
+td.even,
+table.normal tr:nth-child(2n) {
 	color: #fff;
 	background: #232323;
 	border-right: 1px solid #696969;

@@ -205,11 +205,14 @@ th.header {
 	border: 2px solid #cbf4f6;
 }
 
-.odd {
+.odd,
+table.normal tr:nth-child(2n+1) {
 	background: #cbf4f6;
 }
 
-.even {
+.even,
+table.normal tr:nth-child(2n),
+table.normal tr:nth-child(2n) td {
 	background: #d3f9f9;
 }
 

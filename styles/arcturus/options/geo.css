@@ -226,14 +226,16 @@ tr.diffheader {
 tr.odd td,
 td.odd,
 li.odd,
-.oddthumb {
+.oddthumb,
+table.normal tr:nth-child(2n+1) {
 	background: #d9d9b0;
 }
 
 tr.even td,
 td.even,
 li.even,
-.eventhumb {
+.eventhumb,
+table.normal tr:nth-child(2n) {
 	background: #d1d2a9;
 }
 

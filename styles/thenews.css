@@ -719,19 +719,23 @@ body.tiki_mytiki #tiki-center .normal form {
 .normal td,
 .wikitable td,
 td.odd,
-td.even {
+td.even,
+table.normal tr:nth-child(2n+1),
+table.normal tr:nth-child(2n) {
 	margin: 0;
 	padding: 0.2em;
 	vertical-align: top;
 }
 
 tr.odd td,
-td.odd {
+td.odd,
+table.normal tr:nth-child(2n+1) {
 	background: #eee;
 }
 
 tr.even td,
-td.even {
+td.even,
+table.normal tr:nth-child(2n) {
 	background: #f9f9f9;
 }
 

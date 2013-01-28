@@ -877,34 +877,40 @@ a.forumnameread {
 	color: #000;
 }
 
-tr.odd {
+tr.odd,
+table.normal tr:nth-child(2n+1) {
 	border: 1px solid #8cacbb;
 	color: black;
 	background: #f7f9fa;
 }
 
-tr.odd:hover {
+tr.odd:hover,
+table.normal tr:nth-child(2n+1):hover {
 	background: #fff7e6;
 }
 
-tr.even {
+tr.even,
+table.normal tr:nth-child(2n) {
 	border: 1px solid #8cacbb;
 	background: #e7e9ea;
 	color: #000;
 }
 
-tr.even:hover {
+tr.even:hover,
+table.normal tr:nth-child(2n):hover {
 	background: #fff7e6;
 }
 
-td.odd {
+td.odd,
+table.normal tr:nth-child(2n+1) td {
 	border: 1px solid #8cacbb;
 	border-collapse: collapse;
 	background: #f7f9fa;
 	vertical-align: middle;
 }
 
-td.even {
+td.even,
+table.normal tr:nth-child(2n) td{
 	border: 1px solid #8cacbb;
 	background: #e7e9ea;
 	color: black;
@@ -913,7 +919,9 @@ td.even {
 }
 
 tr.even td.even,
-tr.odd td.odd {
+tr.odd td.odd,
+table.normal tr:nth-child(2n+1) td,
+table.normal tr:nth-child(2n) td {
 	background: transparent;
 }
 
