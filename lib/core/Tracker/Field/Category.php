@@ -119,19 +119,11 @@ class Tracker_Field_Category extends Tracker_Field_Abstract implements Tracker_F
 		$selected_categories = $this->getConfiguration('selected_categories');
 		$categories = $this->getConfiguration('list');
 		$ret = array();
-		if ($this->getOption('descendants') == 2) {
-			$parentId = $this->getOption('parentId');
-			$parent_offset = 0;
-			if ($parentId > 0) {
-				$parent_offset = strlen(TikiLib::lib('categ')->get_category_name($parentId)) + 2;
-			}
-
-		}
 		foreach ($selected_categories as $categId) {
 			foreach ($categories as $category) {
 				if ($category['categId'] == $categId) {
 					if ($this->getOption('descendants') == 2) {
-						$ret[] = substr($category['categpath'], $parent_offset);
+						$ret[] = $category['relativePathString'];
 					} else {
 						$ret[] = $category['name'];
 					}
