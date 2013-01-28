@@ -418,6 +418,8 @@ function cs_design_categories($id, $fieldname, $fieldid, $arguments, $default, &
 	}
 	if (!isset($_categpath)) {
 		$_categpath = false;
+	} else {
+		$_categpath = ($_categpath === 'y');
 	}
 
 	$cats = TikiLib::lib('categ')->getCategories($filter);
@@ -528,7 +530,7 @@ customsearch_quiet = false;
 
 	}
 
-	return $document->saveHTML();
+	return '~np~' . $document->saveHTML() . '~/np~';
 }
 
 function cs_design_select($id, $fieldname, $fieldid, $arguments, $default, &$script, &$groups)
