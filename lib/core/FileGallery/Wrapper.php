@@ -39,7 +39,7 @@ class FileGallery_Wrapper
 			@file_put_contents($tmpfname, $this->data);
 			return $tmpfname;
 		} else {
-			$savedir = $this->get_gallery_save_dir($this->galleryId);
+			$savedir = $this->getGallerySaveDir();
 
 			return $savedir . $this->path;
 		}
@@ -48,13 +48,20 @@ class FileGallery_Wrapper
 	function getContents()
 	{
 		if (! empty($this->path)) {
-			$savedir = $this->get_gallery_save_dir($galleryId);
+			$savedir = $this->getGallerySaveDir();
 
-			$tmpfname = $savedir . $path;
+			$tmpfname = $savedir . $this->path;
 
+			return file_get_contents($tmpfname);
 		} else {
-			return $data;
+			return $this->data;
 		}
+	}
+
+	private function getGallerySaveDir()
+	{
+		$filegallib = TikiLib::lib('filegal');
+		return $filegallib->get_gallery_save_dir($this->galleryId);
 	}
 }
 
