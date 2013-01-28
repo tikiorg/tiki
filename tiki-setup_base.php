@@ -486,7 +486,7 @@ if (ini_get('register_globals')) {
 }
 $serverFilter = new DeclFilter;
 if ( ( isset($prefs['tiki_allow_trust_input']) && $prefs['tiki_allow_trust_input'] ) !== 'y' || $tiki_p_trust_input != 'y') {
-	$serverFilter->addStaticKeyFilters(array('QUERY_STRING' => 'xss', 'REQUEST_URI' => 'xss', 'PHP_SELF' => 'xss',));
+	$serverFilter->addStaticKeyFilters(array('QUERY_STRING' => 'xss', 'REQUEST_URI' => 'url', 'PHP_SELF' => 'url',));
 }
 $jitServer = new JitFilter($_SERVER);
 $_SERVER = $serverFilter->filter($_SERVER);
@@ -598,8 +598,6 @@ if (function_exists('mb_internal_encoding')) {
 if (!isset($_SERVER['QUERY_STRING'])) {
 	$_SERVER['QUERY_STRING'] = '';
 }
-if (!isset($_SERVER['REQUEST_URI']) || empty($_SERVER['REQUEST_URI'])) {
-	$_SERVER['REQUEST_URI'] = $_SERVER['PHP_SELF'] . '?' . $_SERVER['QUERY_STRING'];
-}
+$_SERVER['REQUEST_URI'] = $_SERVER['PHP_SELF'] . '?' . $_SERVER['QUERY_STRING'];
 
 $smarty->assign("tikidomain", $tikidomain);
