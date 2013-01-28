@@ -10,7 +10,7 @@
 						<li style="line-height: 2em;"><em>{tr}Recent:{/tr}</em></li>
 						{foreach $recent_prefs as $p}
 							<li>
-								<a href="tiki-admin.php?lm_criteria=%22{$p}%22">{$p|stringfix}</a>
+								<a href="tiki-admin.php?lm_criteria={$p|stringfix:"_":" AND "}">{$p|stringfix}</a>
 							</li>
 						{foreachelse}
 							<li>{tr}None{/tr}</li>
