@@ -179,8 +179,10 @@ case 'apache2handler':
 default:
 	if (isset($_SERVER['SCRIPT_URL'])) {
 		$full = $_SERVER['SCRIPT_URL'];
-	} elseif ($_SERVER['REDIRECT_URL']) {
+	} elseif (isset($_SERVER['REDIRECT_URL'])) {
 		$full = $_SERVER['REDIRECT_URL'];
+	} elseif (isset($_SERVER['UNENCODED_URL'])) {	// For IIS
+		$full = $_SERVER['UNENCODED_URL'];
 	} else {
 		break;
 	}

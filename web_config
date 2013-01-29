@@ -11,340 +11,144 @@
         <add value="index.php" />
       </files>
     </defaultDocument>
-		<security>
-			<requestFiltering allowDoubleEscaping="True">
-				<!-- IIS 7 has a default 30MB limit. Use this value by default -->
-        		<!-- requestLimits maxAllowedContentLength="30000000" / -->
-			</requestFiltering>
-		</security>
-		<rewrite>
-            <rules>
-                <clear />
-                <rule name="RequestBlockingRule1">
-                    <match url=".*" />
-                    <conditions logicalGrouping="MatchAll">
-                        <add input="{URL}" pattern="\.(bak|inc|lib|sh|tpl|sql)$" />
-                    </conditions>
-                    <action type="CustomResponse" statusCode="403" />
-                </rule>
-				<rule name="Imported Rule 1">
-				  <match url="^pics/large/(.*)$" ignoreCase="false" />
-				  <action type="Rewrite" url="img/icons/large/{R:1}" />
-				</rule>
-				<rule name="Imported Rule 2">
-				  <match url="^img/mytiki/(.*)$" ignoreCase="false" />
-				  <action type="Rewrite" url="img/icons/large/{R:1}" />
-				</rule>
-				<rule name="Imported Rule 3">
-				  <match url="^pics/(.*)$" ignoreCase="false" />
-				  <action type="Rewrite" url="img//{R:1}" />
-				</rule>
-				<rule name="Imported Rule 4">
-				  <match url="^images/(.*)$" ignoreCase="false" />
-				  <action type="Rewrite" url="img/icons//{R:1}" />
-				</rule>
-				<rule name="Imported Rule 6" stopProcessing="true">
-				  <match url=".*/\.svn/.*" ignoreCase="false" />
-				  <action type="CustomResponse" statusCode="403" statusReason="Forbidden" statusDescription="Forbidden" />
-				</rule>
-				<rule name="Imported Rule 7" stopProcessing="true">
-				  <match url="(.*)" ignoreCase="false" />
-				  <conditions logicalGrouping="MatchAny">
-					<add input="{REQUEST_FILENAME}" matchType="IsFile" ignoreCase="false" />
-					<add input="{REQUEST_FILENAME}" matchType="IsDirectory" ignoreCase="false" />
-				  </conditions>
-				  <action type="None" />
-				</rule>
-				<rule name="Imported Rule 8" stopProcessing="true">
-				  <match url="^(img\/trackers\/.*)" ignoreCase="false" />
-				  <action type="Rewrite" url="{R:1}" />
-				</rule>
-				<rule name="Imported Rule 9" stopProcessing="true">
-				  <match url="^calendar$" ignoreCase="false" />
-				  <action type="Rewrite" url="tiki-calendar.php" />
-				</rule>
-				<rule name="Imported Rule 10" stopProcessing="true">
-				  <match url="^articles$" ignoreCase="false" />
-				  <action type="Rewrite" url="tiki-view_articles.php" />
-				</rule>
-				<rule name="Imported Rule 11" stopProcessing="true">
-				  <match url="^blogs$" ignoreCase="false" />
-				  <action type="Rewrite" url="tiki-list_blogs.php" />
-				</rule>
-				<rule name="Imported Rule 12" stopProcessing="true">
-				  <match url="^categories$" ignoreCase="false" />
-				  <action type="Rewrite" url="tiki-browse_categories.php" />
-				</rule>
-				<rule name="Imported Rule 13" stopProcessing="true">
-				  <match url="^chat$" ignoreCase="false" />
-				  <action type="Rewrite" url="tiki-chat.php" />
-				</rule>
-				<rule name="Imported Rule 14" stopProcessing="true">
-				  <match url="^contact$" ignoreCase="false" />
-				  <action type="Rewrite" url="tiki-contact.php" />
-				</rule>
-				<rule name="Imported Rule 15" stopProcessing="true">
-				  <match url="^directories$" ignoreCase="false" />
-				  <action type="Rewrite" url="tiki-directory_browse.php" />
-				</rule>
-				<rule name="Imported Rule 16" stopProcessing="true">
-				  <match url="^faqs$" ignoreCase="false" />
-				  <action type="Rewrite" url="tiki-list_faqs.php" />
-				</rule>
-				<rule name="Imported Rule 17" stopProcessing="true">
-				  <match url="^filelist$" ignoreCase="false" />
-				  <action type="Rewrite" url="tiki-list_file_gallery.php" />
-				</rule>
-				<rule name="Imported Rule 18" stopProcessing="true">
-				  <match url="^forums$" ignoreCase="false" />
-				  <action type="Rewrite" url="tiki-forums.php" />
-				</rule>
-				<rule name="Imported Rule 19" stopProcessing="true">
-				  <match url="^galleries$" ignoreCase="false" />
-				  <action type="Rewrite" url="tiki-galleries.php" />
-				</rule>
-				<rule name="Imported Rule 20" stopProcessing="true">
-				  <match url="^login$" ignoreCase="false" />
-				  <action type="Rewrite" url="tiki-login_scr.php" />
-				</rule>
-				<rule name="Imported Rule 21" stopProcessing="true">
-				  <match url="^logout$" ignoreCase="false" />
-				  <action type="Rewrite" url="tiki-logout.php" />
-				</rule>
-        <!--Note that email validation will not work if tiki-register.php is rewritten. -->
-				<!--<rule name="Imported Rule 21bis" stopProcessing="true">
-				  <match url="^register$" ignoreCase="false" />
-				  <action type="Rewrite" url="tiki-register.php" />
-				</rule>-->
-				<rule name="Imported Rule 22" stopProcessing="true">
-				  <match url="^my$" ignoreCase="false" />
-				  <action type="Rewrite" url="tiki-my_tiki.php" />
-				</rule>
-				<rule name="Imported Rule 23" stopProcessing="true">
-				  <match url="^newsletters$" ignoreCase="false" />
-				  <action type="Rewrite" url="tiki-newsletters.php" />
-				</rule>
-				<rule name="Imported Rule 24" stopProcessing="true">
-				  <match url="^quizzes$" ignoreCase="false" />
-				  <action type="Rewrite" url="tiki-list_quizzes.php" />
-				</rule>
-				<rule name="Imported Rule 25" stopProcessing="true">
-				  <match url="^sheets$" ignoreCase="false" />
-				  <action type="Rewrite" url="tiki-sheets.php" />
-				</rule>
-				<rule name="Imported Rule 26" stopProcessing="true">
-				  <match url="^stats$" ignoreCase="false" />
-				  <action type="Rewrite" url="tiki-stats.php" />
-				</rule>
-				<rule name="Imported Rule 27" stopProcessing="true">
-				  <match url="^surveys$" ignoreCase="false" />
-				  <action type="Rewrite" url="tiki-list_surveys.php" />
-				</rule>
-				<rule name="Imported Rule 28" stopProcessing="true">
-				  <match url="^trackers$" ignoreCase="false" />
-				  <action type="Rewrite" url="tiki-list_trackers.php" />
-				</rule>
-				<rule name="Imported Rule 29" stopProcessing="true">
-				  <match url="^users$" ignoreCase="false" />
-				  <action type="Rewrite" url="tiki-list_users.php" />
-				</rule>
-				<rule name="Imported Rule 30" stopProcessing="true">
-				  <match url="^userinfo$" ignoreCase="false" />
-				  <action type="Rewrite" url="tiki-view_tracker_item.php?view=+user&amp;cookietab=2" appendQueryString="false" />
-				</rule>
-				<rule name="Imported Rule 31">
-				  <match url="^article([0-9]+)\-.*(&amp;comzone=.*)$" ignoreCase="false" />
-				  <action type="Rewrite" url="article{R:1}{R:2}" />
-				</rule>
-				<rule name="Imported Rule 32">
-				  <match url="^article([0-9]+)\-.*$" ignoreCase="false" />
-				  <action type="Rewrite" url="article{R:1}" />
-				</rule>
-				<rule name="Imported Rule 33">
-				  <match url="^blog([0-9]+)\-.*$" ignoreCase="false" />
-				  <action type="Rewrite" url="blog{R:1}" />
-				</rule>
-				<rule name="Imported Rule 34">
-				  <match url="^blogpost([0-9]+)\-.*$" ignoreCase="false" />
-				  <action type="Rewrite" url="blogpost{R:1}" />
-				</rule>
-				<rule name="Imported Rule 35" stopProcessing="true">
-				  <match url="^article([0-9]+)(.*)" ignoreCase="false" />
-				  <action type="Rewrite" url="tiki-read_article.php?articleId={R:1}{R:2}" appendQueryString="true" />
-				</rule>
-				<rule name="Imported Rule 36" stopProcessing="true">
-				  <match url="^art([0-9]+)(.*)" ignoreCase="false" />
-				  <action type="Rewrite" url="tiki-read_article.php?articleId={R:1}{R:2}" appendQueryString="true" />
-				</rule>
-				<rule name="Imported Rule 37" stopProcessing="true">
-				  <match url="^cal([0-9]+),([0-9]+),([0-9]+),([0-9]+),([0-9]+),([0-9]+),([0-9]+)" ignoreCase="false" />
-				  <action type="Rewrite" url="tiki-calendar.php?calIds[]={R:1}&amp;calIds[]={R:2}&amp;calIds[]={R:3}&amp;calIds[]={R:4}&amp;calIds[]={R:5}&amp;calIds[]={R:6}&amp;calIds[]={R:7}" appendQueryString="true" />
-				</rule>
-				<rule name="Imported Rule 38" stopProcessing="true">
-				  <match url="^cal([0-9]+),([0-9]+),([0-9]+),([0-9]+),([0-9]+),([0-9]+)" ignoreCase="false" />
-				  <action type="Rewrite" url="tiki-calendar.php?calIds[]={R:1}&amp;calIds[]={R:2}&amp;calIds[]={R:3}&amp;calIds[]={R:4}&amp;calIds[]={R:5}&amp;calIds[]={R:6}" appendQueryString="true" />
-				</rule>
-				<rule name="Imported Rule 39" stopProcessing="true">
-				  <match url="^cal([0-9]+),([0-9]+),([0-9]+),([0-9]+),([0-9]+)" ignoreCase="false" />
-				  <action type="Rewrite" url="tiki-calendar.php?calIds[]={R:1}&amp;calIds[]={R:2}&amp;calIds[]={R:3}&amp;calIds[]={R:4}&amp;calIds[]={R:5}" appendQueryString="true" />
-				</rule>
-				<rule name="Imported Rule 40" stopProcessing="true">
-				  <match url="^cal([0-9]+),([0-9]+),([0-9]+),([0-9]+)" ignoreCase="false" />
-				  <action type="Rewrite" url="tiki-calendar.php?calIds[]={R:1}&amp;calIds[]={R:2}&amp;calIds[]={R:3}&amp;calIds[]={R:4}" appendQueryString="true" />
-				</rule>
-				<rule name="Imported Rule 41" stopProcessing="true">
-				  <match url="^cal([0-9]+),([0-9]+),([0-9]+)" ignoreCase="false" />
-				  <action type="Rewrite" url="tiki-calendar.php?calIds[]={R:1}&amp;calIds[]={R:2}&amp;calIds[]={R:3}" appendQueryString="true" />
-				</rule>
-				<rule name="Imported Rule 42" stopProcessing="true">
-				  <match url="^cal([0-9]+),([0-9]+)" ignoreCase="false" />
-				  <action type="Rewrite" url="tiki-calendar.php?calIds[]={R:1}&amp;calIds[]={R:2}" appendQueryString="true" />
-				</rule>
-				<rule name="Imported Rule 43" stopProcessing="true">
-				  <match url="^cal([0-9]+)" ignoreCase="false" />
-				  <action type="Rewrite" url="tiki-calendar.php?calIds[]={R:1}" appendQueryString="true" />
-				</rule>
-				<rule name="Imported Rule 44" stopProcessing="true">
-				  <match url="^cat([0-9]+)\-?[^&amp;]*(.*)" ignoreCase="false" />
-				  <action type="Rewrite" url="tiki-browse_categories.php?parentId={R:1}{R:2}" appendQueryString="true" />
-				</rule>
-				<rule name="Imported Rule 45" stopProcessing="true">
-				  <match url="^blog([0-9]+)(.*)" ignoreCase="false" />
-				  <action type="Rewrite" url="tiki-view_blog.php?blogId={R:1}{R:2}" appendQueryString="true" />
-				</rule>
-				<rule name="Imported Rule 46" stopProcessing="true">
-				  <match url="^blogpost([0-9]+)(.*)" ignoreCase="false" />
-				  <action type="Rewrite" url="tiki-view_blog_post.php?postId={R:1}{R:2}" appendQueryString="true" />
-				</rule>
-				<rule name="Imported Rule 47" stopProcessing="true">
-				  <match url="^browseimage([0-9]+)(.*)" ignoreCase="false" />
-				  <action type="Rewrite" url="tiki-browse_image.php?imageId={R:1}{R:2}" appendQueryString="true" />
-				</rule>
-				<rule name="Imported Rule 48" stopProcessing="true">
-				  <match url="^directory([0-9]+)(.*)" ignoreCase="false" />
-				  <action type="Rewrite" url="tiki-directory_browse.php?parent={R:1}{R:2}" appendQueryString="true" />
-				</rule>
-				<rule name="Imported Rule 49" stopProcessing="true">
-				  <match url="^dirlink([0-9]+)" ignoreCase="false" />
-				  <action type="Rewrite" url="tiki-directory_redirect.php?siteId={R:1}" appendQueryString="true" />
-				</rule>
-				<rule name="Imported Rule 50" stopProcessing="true">
-				  <match url="^faq([0-9]+)(.*)" ignoreCase="false" />
-				  <action type="Rewrite" url="tiki-view_faq.php?faqId={R:1}{R:2}" appendQueryString="true" />
-				</rule>
-				<rule name="Imported Rule 51" stopProcessing="true">
-				  <match url="^file([0-9]+)(.*)" ignoreCase="false" />
-				  <action type="Rewrite" url="tiki-list_file_gallery.php?galleryId={R:1}{R:2}" appendQueryString="true" />
-				</rule>
-				<rule name="Imported Rule 52" stopProcessing="true">
-				  <match url="^dl([0-9]+)(.*)" ignoreCase="false" />
-				  <action type="Rewrite" url="tiki-download_file.php?fileId={R:1}{R:2}" appendQueryString="true" />
-				</rule>
-				<rule name="Imported Rule 53" stopProcessing="true">
-				  <match url="^thumbnail([0-9]+)(.*)" ignoreCase="false" />
-				  <action type="Rewrite" url="tiki-download_file.php?fileId={R:1}&amp;thumbnail{R:2}" appendQueryString="true" />
-				</rule>
-				<rule name="Imported Rule 54" stopProcessing="true">
-				  <match url="^display([0-9]+)(.*)" ignoreCase="false" />
-				  <action type="Rewrite" url="tiki-download_file.php?fileId={R:1}&amp;display{R:2}" appendQueryString="true" />
-				</rule>
-				<rule name="Imported Rule 55" stopProcessing="true">
-				  <match url="^preview([0-9]+)(.*)" ignoreCase="false" />
-				  <action type="Rewrite" url="tiki-download_file.php?fileId={R:1}&amp;preview{R:2}" appendQueryString="true" />
-				</rule>
-				<rule name="Imported Rule 56" stopProcessing="true">
-				  <match url="^forum([0-9]+)(.*)" ignoreCase="false" />
-				  <action type="Rewrite" url="tiki-view_forum.php?forumId={R:1}{R:2}" appendQueryString="true" />
-				</rule>
-				<rule name="Imported Rule 57" stopProcessing="true">
-				  <match url="^forumthread([0-9]+)(.*)" ignoreCase="false" />
-				  <action type="Rewrite" url="tiki-view_forum_thread.php?comments_parentId={R:1}{R:2}" appendQueryString="true" />
-				</rule>
-				<rule name="Imported Rule 58" stopProcessing="true">
-				  <match url="^gallery([0-9]+)(.*)" ignoreCase="false" />
-				  <action type="Rewrite" url="tiki-browse_gallery.php?galleryId={R:1}{R:2}" appendQueryString="true" />
-				</rule>
-				<rule name="Imported Rule 59" stopProcessing="true">
-				  <match url="^img([0-9]+)(.*)" ignoreCase="false" />
-				  <action type="Rewrite" url="show_image.php?id={R:1}{R:2}" appendQueryString="true" />
-				</rule>
-				<rule name="Imported Rule 60" stopProcessing="true">
-				  <match url="^image([0-9]+)(.*)" ignoreCase="false" />
-				  <action type="Rewrite" url="show_image.php?id={R:1}{R:2}" appendQueryString="true" />
-				</rule>
-				<rule name="Imported Rule 61" stopProcessing="true">
-				  <match url="^imagescale([0-9]+)/([0-9]+)(.*)" ignoreCase="false" />
-				  <action type="Rewrite" url="show_image.php?id={R:1}&amp;scalesize={R:2}{R:3}" appendQueryString="true" />
-				</rule>
-				<rule name="Imported Rule 62" stopProcessing="true">
-				  <match url="^newsletter([0-9]+)(.*)" ignoreCase="false" />
-				  <action type="Rewrite" url="tiki-newsletters.php?nlId={R:1}{R:2}&amp;info=1" appendQueryString="true" />
-				</rule>
-				<rule name="Imported Rule 63" stopProcessing="true">
-				  <match url="^quiz([0-9]+)(.*)" ignoreCase="false" />
-				  <action type="Rewrite" url="tiki-take_quiz.php?quizId={R:1}{R:2}" appendQueryString="true" />
-				</rule>
-				<rule name="Imported Rule 64" stopProcessing="true">
-				  <match url="^survey([0-9]+)(.*)" ignoreCase="false" />
-				  <action type="Rewrite" url="tiki-take_survey.php?surveyId={R:1}{R:2}" appendQueryString="true" />
-				</rule>
-				<rule name="Imported Rule 65" stopProcessing="true">
-				  <match url="^tracker([0-9]+)(.*)" ignoreCase="false" />
-				  <action type="Rewrite" url="tiki-view_tracker.php?trackerId={R:1}{R:2}" appendQueryString="true" />
-				</rule>
-				<rule name="Imported Rule 66" stopProcessing="true">
-				  <match url="^item([0-9]+)(.*)" ignoreCase="false" />
-				  <action type="Rewrite" url="tiki-view_tracker_item.php?itemId={R:1}{R:2}" appendQueryString="true" />
-				</rule>
-				<rule name="Imported Rule 67" stopProcessing="true">
-				  <match url="^int([0-9]+)(.*)" ignoreCase="false" />
-				  <action type="Rewrite" url="tiki-integrator.php?repID={R:1}{R:2}" appendQueryString="true" />
-				</rule>
-				<rule name="Imported Rule 68" stopProcessing="true">
-				  <match url="^sheet([0-9]+)(.*)" ignoreCase="false" />
-				  <action type="Rewrite" url="tiki-view_sheets.php?sheetId={R:1}{R:2}" appendQueryString="true" />
-				</rule>
-				<rule name="Imported Rule 69" stopProcessing="true">
-				  <match url="^poll([0-9]+)(.*)" ignoreCase="false" />
-				  <action type="Rewrite" url="tiki-poll_form.php?pollId={R:1}{R:2}" appendQueryString="true" />
-				</rule>
-				<rule name="Imported Rule 70" stopProcessing="true">
-				  <match url="^wiki-([A-Za-z0-9]+)" ignoreCase="false" />
-				  <action type="Rewrite" url="tiki-index.php?page={R:1}" appendQueryString="true" />
-				</rule>
-				<rule name="Imported Rule 71" stopProcessing="true">
-				  <match url="^page-([A-Za-z0-9]+)" ignoreCase="false" />
-				  <action type="Rewrite" url="tiki-index.php?page={R:1}" appendQueryString="true" />
-				</rule>
-				<rule name="Imported Rule 72" stopProcessing="true">
-				  <match url="^show:(~?)(.+)$" ignoreCase="false" />
-				  <action type="Rewrite" url="tiki-slideshow.php?page={R:1}{R:2}" appendQueryString="true" />
-				</rule>
-				<rule name="Imported Rule 73" stopProcessing="true">
-				  <match url="^user([0-9]+)(.*)" ignoreCase="false" />
-				  <action type="Rewrite" url="tiki-user_information.php?userId={R:1}{R:2}" appendQueryString="true" />
-				</rule>
-				<rule name="Imported Rule 74" stopProcessing="true">
-				  <match url="^(lib/wiki3d/.+\.jar)$" ignoreCase="false" />
-				  <action type="Rewrite" url="{R:1}" />
-				</rule>
-				<rule name="Imported Rule 75" stopProcessing="true">
-				  <match url="\.(css|gif|jpg|png|php|html|js|htm|shtml|cgi|sql|phtml|txt|ihtml)" ignoreCase="false" />
-				  <action type="None" />
-				</rule>
-				<rule name="Imported Rule 76" stopProcessing="true">
-				  <match url="^tiki-([a-z_]+)-([a-z_]+)" ignoreCase="false" />
-				  <action type="Rewrite" url="tiki-ajax_services.php?controller={R:1}&amp;action={R:2}" appendQueryString="true" />
-				</rule>
-				<rule name="Imported Rule 77" stopProcessing="true">
-				  <match url="^tiki-([a-z_]+)" ignoreCase="false" />
-				  <action type="Rewrite" url="tiki-ajax_services.php?controller={R:1}" appendQueryString="true" />
-				</rule>
-				<rule name="Imported Rule 78" stopProcessing="true">
-				  <match url="^(.+)$" ignoreCase="false" />
-				  <action type="Rewrite" url="tiki-index.php?page={R:1}" appendQueryString="true" />
-				</rule>
-            </rules>
-        </rewrite>
+	<security>
+		<requestFiltering allowDoubleEscaping="True">
+			<!-- IIS 7 has a default 30MB limit. Use this value by default -->
+			<!-- requestLimits maxAllowedContentLength="30000000" / -->
+		</requestFiltering>
+	</security>
+	<rewrite>
+		<rules>
+		<!--# $Id$ [This line is used to check that this configuration file is up to date. Do not edit this line and leave it as the first line.]-->
+		<!--# These are suggested configuration directives for use with Tiki.-->
+		<!--# They enhance security and permit clean URLs.-->
+		<!--# In your Tiki instance, visit tiki-admin.php?page=sefurl to make Tiki use clean URLs in generated links.-->
+		<!--#-->
+		<!--# To use, ideally, create a symbolic link from .htaccess to _htaccess. This will keep the configuration up-to-date.-->
+		<!--# If you can't, do one of the following:-->
+		<!--# - Copy _htaccess to .htaccess. Note : Do not move (rename) _htaccess, it is required for other uses (like SEFURL).-->
+		<!--# - Add the content of this file to your httpd.conf.-->
+		<!--# This should be repeated when the reference _htaccess file changes (when upgrading Tiki). -->
+		<!--#-->
+		<!--# Please find more info here-->
+		<!--# http://doc.tiki.org/Rewrite+Rules-->
+		<!--# DEVELOPERS: This configuration must be kept synchronized with the configuration for other Web servers. See http://dev.tiki.org/Operating+System+independence#Keep_web.config_and_.htaccess_synchronized-->
+		<!--#Redirect bogus directories, which otherwise cause a broken page to upload very slowly-->
+		<!--#e.g., try yourdomain.com/bogus/ or yourdomain.com/tiki/bogus/ and see what happens-->
+		<!--#The below may not work in all configurations depending on redirects already in place-->
+		<!--#If certain directories containing other programs are legitimate (eg when tiki is installed in a subdirectory),-->
+		<!--#then you will first need a condition like the following-->
+		<!--#RewriteCond %{REQUEST_URI} !(^/otherokaydirectory/)-->
+		<!--#Then use something like this if your tiki program is in a subdirectory-->
+		<!--#RewriteRule ^(.+[^/])/$  /tiki/HomePage [R=301,L]-->
+		<!--#Use this if tiki is installed in the root (above condition probably not necessary in this case)-->
+		<!--#RewriteRule ^(.+[^/])/$  /HomePage [R=301,L]-->
+		<!--# This prevents reading of files with certain extensions.-->
+		<!--# This prevents reading of tags file for developpers who run ctags on their server-->
+		<!--#<Files tags>-->
+		<!--#	order deny,allow-->
+		<!--#	deny from all-->
+		<!--#</Files>-->
+		<!--# if using wiki as homepage feature you may avoid the home page name being appended to the url by replacing the previous line with the following line-->
+		<!--#DirectoryIndex tiki-index.php index.php-->
+		<!--# Using ETags will improve the YSlow scores-->
+		<!--# If the site is stable, might be worth setting the expires header on all files for optimization.-->
+		<!--#<IfModule mod_expires.c>-->
+		<!--#	<FilesMatch "\.(js|png|gif|jpg|css|ico)$">-->
+		<!--#		ExpiresActive on-->
+		<!--#		ExpiresDefault "access plus 6 months"-->
+		<!--#	</FilesMatch>-->
+		<!--#</IfModule>-->
+		<!--# if you want to use the Web Server Auth-->
+		<!--#AuthType Basic-->
+		<!--#AuthName "Restricted Access"-->
+		<!--#AuthUserFile /etc/httpd/passwords-->
+		<!--#Require valid-user -->
+		<!--# Handling in Tiki errors caught by Apache-->
+		<!--# Tiki can catch some errors and deal with them by redirecting to a similar page, sending you to the search, etc. However, some errors do not reach Tiki and are only caught by Apache (ex.: filenameThatDoesntExist.php). -->
+		<!--# To make Tiki handle errors caught by Apache, uncomment some of the following lines and adapt the page names. You must create the pages before trying to use them. -->
+		<!--#ErrorDocument 404 /tiki-index.php?page=File+not+found-->
+		<!--#ErrorDocument 500 /tiki-index.php?page=Server+error-->
+		<!--# Permanent redirect: Add directive as the example below. This is useful if you were using another Web application or static HTML and you want to avoid broken links.-->
+		<!--# Redirect 301 /oldpage.html /tiki-index.php?page=newpage-->
+		<!--# Tiki requires PHP 5. If your host doesn't offer PHP 5 by default, it's possible that it can be activated by using (uncommenting) the lines below. Check with your host.-->
+		<!--# AddType application/x-httpd-php5 .php-->
+		<!--# AddHandler application/x-httpd-php5 .php-->
+		<!--# to activate the error display, uncomment the following line-->
+		<!--#php_flag display_errors on-->
+		<!--# to set the error_reporting level, uncomment the following line. Values are explained here: http://www.php.net/manual/en/errorfunc.constants.php-->
+		<!--# php_value error_reporting E_ALL-->
+		<!--# increase memory (default is 128M). Use this if you are getting blank pages and strange errors -->
+		<!--# php_value memory_limit 256M-->
+		<!--# increase execution time (default value in apache use to be 30, and in some cases of long wiki pages with many plugins it may take longer)-->
+		<!--#php_value max_execution_time 90-->
+		<!--# increase the maximum file size for uploads allowed by php for Tiki (default value in apache use to be 2M which is usually too low for pdf or documents with some images, screenshots, etc)-->
+		<!--#php_value upload_max_filesize 10M-->
+		<!--#php_value post_max_size 11M-->
+		<!--# This sets the maximum time in seconds a script is allowed to parse input data, like POST and GET. -->
+		<!--#php_value max_input_time 90-->
+		<!--# In some cases you may see open_basedir warnings about Smarty accessing php files that it shouldn't-->
+		<!--# The following line (uncommented) will reset the include path to use only Tiki's files which will solve this in most cases-->
+		<!--#php_value include_path "." -->
+		<!--# some features like assigning perms to a group with a name containing a quote will not work without this-->
+		<!--#php_flag magic_quotes_gpc off-->
+		<!--# Rewrite rules to maintain any hard-coded URLs following http://dev.tiki.org/ImgDirectoryRevamp-->
+		<rule name="Imported Rule 1">
+		  <match url="^img/icons2/(.*)$" ignoreCase="false" />
+		  <action type="Rewrite" url="img/icons/{R:1}" />
+		</rule>
+		<rule name="Imported Rule 2">
+		  <match url="^pics/large/(.*)$" ignoreCase="false" />
+		  <action type="Rewrite" url="img/icons/large/{R:1}" />
+		</rule>
+		<rule name="Imported Rule 3">
+		  <match url="^img/mytiki/(.*)$" ignoreCase="false" />
+		  <action type="Rewrite" url="img/icons/large/{R:1}" />
+		</rule>
+		<rule name="Imported Rule 4">
+		  <match url="^pics/(.*)$" ignoreCase="false" />
+		  <action type="Rewrite" url="img/{R:1}" />
+		</rule>
+		<rule name="Imported Rule 5">
+		  <match url="^images/(.*)$" ignoreCase="false" />
+		  <action type="Rewrite" url="img/icons/{R:1}" />
+		</rule>
+		<!--The rule cannot be converted into an equivalent IIS format because of unsupported flags: E-->
+		<!--# You may need to uncomment and fix the RewriteBase value below to suit your installation. e.g. if your Tiki is not installed directly in the web root.-->
+		<!--#RewriteBase   /tiki-->
+		<!--# And if you get errors like "The requested URL /absolutepath/tiki-index.php was not found on this server",-->
+		<!--# You may need to uncomment the following line.-->
+		<!--# RewriteBase   /-->
+		<!--#If your website is a checkout-->
+		<rule name="Imported Rule 7" stopProcessing="true">
+		  <match url=".*/\.svn/.*" ignoreCase="false" />
+		  <action type="CustomResponse" statusCode="403" statusReason="Forbidden" statusDescription="Forbidden" />
+		</rule>
+		<rule name="Imported Rule 8" stopProcessing="true">
+		  <match url="(.*)" ignoreCase="false" />
+		  <conditions logicalGrouping="MatchAny">
+			<!--The condition pattern is not supported: -s.-->
+			<!--The condition pattern is not supported: -l.-->
+			<add input="{REQUEST_FILENAME}" matchType="IsFile" ignoreCase="false" />
+			<add input="{REQUEST_FILENAME}" matchType="IsDirectory" ignoreCase="false" />
+		  </conditions>
+		  <action type="None" />
+		</rule>
+		<!--# Rewrite rule to make this Tiki a profiles repository (uncomment to enable)-->
+		<!--# Set the parentId (here set as 1) to the Id of the category containing your profile pages-->
+		<!--# See http://doc.tiki.org/Profiles for more-->
+		<!--# Note: you need to allow tiki_p_view_category and tiki_p_export_wiki for anonymous to be a repository-->
+		<!--#       and enable feature_wiki_export (as well as feature_wiki and feature_categories)-->
+		<!--#RewriteRule ^profiles$             tiki-browse_categories.php?find=&deep=on&type=wiki+page&parentId=1&sort_mode=name_asc&plain&maxRecords=1000000 [L]-->
+		<!--# Rule to make a short link to a list of object to export as a plain text sitemap-->
+		<!--# Set the parentId (here set as 2) to the id of a category containing the objects you wish to be crawled by search engines-->
+		<!--#-->
+		<!--#RewriteRule ^sitemap.txt$          tiki-browse_categories.php?find=&deep=on&type=wiki+page&parentId=2&sort_mode=name_asc&links&maxRecords=1000000 [L]-->
+		<rule name="Imported Rule 9" stopProcessing="true">
+		  <match url=".*" ignoreCase="false" />
+		  <action type="Rewrite" url="route.php" />
+		</rule>
+		</rules>
+	</rewrite>		
   </system.webServer>
 </configuration>
