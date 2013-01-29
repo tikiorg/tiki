@@ -1,19 +1,19 @@
 <?php
 /**
- * checks server settings
+ *
  *
  * @package   Tiki
  * @copyright (c) Copyright 2002-2013 by authors of the Tiki Wiki CMS Groupware Project. All Rights Reserved. See copyright.txt for details and a complete list of authors.
- * @license   LGPLv2.1. See license.txt for more details
+ * @license   LGPL. See license.txt for more details
  */
 // $Id$
-/**
- * About the design:
- * tiki-check.php is designed to run in 2 modes
- * 1) Regular mode. From inside Tiki, in Admin | General
- * 2) Stand-alone mode. Used to check a server pre-Tiki installation, by copying (only) tiki-check.php onto the server and pointing your browser to it.
- * tiki-check.php should not crash but rather avoid running tests which lead to tiki-check crashes.
- */
+/*
+About the design:
+tiki-check.php is designed to run in 2 modes
+1) Regular mode. From inside Tiki, in Admin | General
+2) Stand-alone mode. Used to check a server pre-Tiki installation, by copying (only) tiki-check.php onto the server and pointing your browser to it.
+tiki-check.php should not crash but rather avoid running tests which lead to tiki-check crashes.
+*/
 if (file_exists('./db/local.php') && file_exists('./templates/tiki-check.tpl')) {
 	$standalone = false;
 	require_once ('tiki-setup.php');
@@ -22,9 +22,8 @@ if (file_exists('./db/local.php') && file_exists('./templates/tiki-check.tpl')) 
 	$standalone = true;
 
     /**
-     * translates the string $string
      * @param $string
-     * @return string
+     * @return mixed
      */
     function tra($string)
 	{
@@ -32,7 +31,6 @@ if (file_exists('./db/local.php') && file_exists('./templates/tiki-check.tpl')) 
 	}
 
     /**
-     * renders a table
      * @param $var
      */
     function renderTable($var)
@@ -76,15 +74,9 @@ if (file_exists('./db/local.php') && file_exists('./templates/tiki-check.tpl')) 
 // Get PHP properties and check them
 $php_properties = false;
 
-/** @var $e  */
+// Check error reporting level
 $e = error_reporting();
-/** @var $d  */
 $d = ini_get('display_errors');
-/** 
- * Check error reporting level
- * 
- * returns a message based on the current Error reporting level 
- */
 if ( $e == 0 ) {
 	if ($d != 1) {
 		$php_properties['Error reporting'] = array(
@@ -129,13 +121,11 @@ if ( $e == 0 ) {
 	}
 }
 
-/** 
- * Now we can raise our error_reporting to make sure we get all errors
- * This is especially important as we can't use proper exception handling with PDO as we need to be PHP 4 compatible      
- */
+// Now we can raise our error_reporting to make sure we get all errors
+// This is especially important as we can't use proper exception handling with PDO as we need to be PHP 4 compatible
 error_reporting(-1);
 
-/** Check if ini_set works */
+// Check if ini_set works
 if (function_exists('ini_set')) {
 	$php_properties['ini_set'] = array(
 		'fitness' => tra('good'),
@@ -152,13 +142,8 @@ if (function_exists('ini_set')) {
 	);
 }
 
-/**
- * First things first
- * 
- * If we don't have a DB-connection, some tests don't run
- * 
- * @var $s
- */ 
+// First things first
+// If we don't have a DB-connection, some tests don't run
 $s = extension_loaded('pdo_mysql');
 if ($s) {
 	$php_properties['DB Driver'] = array(
@@ -187,11 +172,7 @@ if ($s) {
 
 }
 
-/** 
- * Now connect to the DB and make all our connectivity methods work the same
- * 
- * @var $connection  
- */
+// Now connect to the DB and make all our connectivity methods work the same
 $connection = false;
 if ( $standalone ) {
 	if ( empty($_POST['dbhost']) && !($php_properties['DB Driver']['setting'] == 'Not available') ) {
