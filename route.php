@@ -14,6 +14,18 @@
  */
 function tiki_route($path)
 {
+	/* 
+	// If you are converting to Tiki and want to preserve some URLs, map the urls and remove the comment block
+	$urlMapping = array(
+		'wiki/old-page-name' => 'PageName',
+		'corporate/Privacy+Policy.pdf' => 'dl123',
+	);
+
+	if (isset($urlMapping[$path])) {
+		$path = $urlMapping[$path];
+	}
+	*/
+
 	$simple = array(
 		'articles' => 'tiki-view_articles.php',
 		'blogs' => 'tiki-list_blogs.php',
