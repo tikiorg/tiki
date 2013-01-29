@@ -5,7 +5,7 @@
  *
  * @package   Tiki
  * @copyright (c) Copyright 2002-2013 by authors of the Tiki Wiki CMS Groupware Project. All Rights Reserved. See copyright.txt for details and a complete list of authors.
-* @license   LGPL. See license.txt for more details
+ * @license   LGPL. See license.txt for more details
  */
 // $Id$
 
@@ -23,7 +23,7 @@ $parserlib = TikiLib::lib('parser');
 if ($prefs['feature_categories'] == 'y') {
 	global $categlib;
 	if (!is_object($categlib)) {
-		/** @package Tiki */
+		/** @package Tiki\Categories  */
 		include_once('lib/categories/categlib.php');
 	}
 }

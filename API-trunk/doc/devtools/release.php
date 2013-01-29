@@ -1,18 +1,23 @@
 <?php
-// (c) Copyright 2002-2013 by authors of the Tiki Wiki CMS Groupware Project
-//
-// All Rights Reserved. See copyright.txt for details and a complete list of authors.
-// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+/**
+ * This is the main script to release Tiki
+ *
+ * This script MUST be run via the php-cli, it CANNOT be run via the webserver.
+ *
+ * @package   Tiki\DevTools
+ * @copyright (c) Copyright 2002-2013 by authors of the Tiki Wiki CMS Groupware Project. All Rights Reserved. See copyright.txt for details and a complete list of authors.
+ * @license   LGPL. See license.txt for more details
+ */
 // $Id$
 
-// ** This is the main script to release Tiki **
-//
-// To get the Tiki release HOWTO, try:
-//    php doc/devtools/release.php --howto
-//
-// You can also get a detailed help on this script with:
-//    php doc/devtools/release.php --help
-//
+/**
+ * To get the Tiki release HOWTO, try:
+ * <code>php doc/devtools/release.php --howto</code>
+ *
+ * You can also get a detailed help on this script with:
+ * <code>php doc/devtools/release.php --help</code>
+ *
+ */
 
 define('TOOLS', dirname(__FILE__));
 define('ROOT', realpath(TOOLS . '/../..'));

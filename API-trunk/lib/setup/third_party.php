@@ -4,8 +4,7 @@
  * 
  * this script may only be included, it will die if called directly.
  *
- * @package TikiWiki
- * @subpackage lib\setup
+ * @package TikiWiki\Setup
  * @copyright (c) Copyright 2002-2013 by authors of the Tiki Wiki CMS Groupware Project. All Rights Reserved. See copyright.txt for details and a complete list of authors.
  * @license Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
  */
@@ -21,5 +20,9 @@ if ( basename($_SERVER['SCRIPT_NAME']) == basename(__FILE__) ) {
 define('THIRD_PARTY_LIBS_PATTERN', '#lib/(pear|ajax|adodb)#');
 
 define('TIKI_SMARTY_DIR', 'lib/smarty_tiki/');
-// add a line like the following in db/local.php to use an external smarty installation: $smarty_path='/usr/share/php/smarty/'
+/**
+ * add a line like the following in db/local.php to use an external smarty
+ * installation:
+ * <code>$smarty_path='/usr/share/php/smarty/'</code>
+ */
 if ( isset($smarty_path) && $smarty_path != '' && file_exists($smarty_path.'Smarty.class.php') ) define('SMARTY_DIR', $smarty_path);

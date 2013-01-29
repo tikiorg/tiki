@@ -3,7 +3,6 @@
  * Tiki's entry point.
  *
  * @package   Tiki
- * @uses      lib/multilingual/multilinguallib.php
  * @copyright (c) Copyright 2002-2013 by authors of the Tiki Wiki CMS Groupware Project. All Rights Reserved. See copyright.txt for details and a complete list of authors.
  * @license   LGPL. See license.txt for details. 
  */
@@ -46,7 +45,7 @@ $isHomePage = (!isset($_REQUEST['page']));
 require_once('tiki-setup.php');
 
 /**
- * @package Tiki
+ * @package Tiki\i18n
  * @uses    lib/multilingual/multilinguallib.php
  */
 require_once('lib/multilingual/multilinguallib.php');

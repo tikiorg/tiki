@@ -12,6 +12,10 @@
 // $Id$
 
 // die if called directly.
+if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
+	header("location: index.php");
+	exit;
+}
 /** 
  * @global array $prefs
  * @global array $tikilib 
@@ -26,12 +30,15 @@ if (version_compare(PHP_VERSION, '5.3.0', '<')) {
 	exit;
 }
 
-/** Be sure that the user is not already defined by PHP on hosts that still have the php.ini config "register_globals = On". */
+/**
+ * Be sure that the user is not already defined by PHP on hosts that still have
+ * the php.ini config "register_globals = On".
+ */
 unset($user);
 
 /** 
  * call libraries provided by third parties
- * @package Tiki 
+ * @package Tiki\Setup
  */
 require_once 'lib/setup/third_party.php';
 /** 
@@ -54,11 +61,20 @@ $tiki_timer->start();
 /** @package Tiki */
 require_once ('tiki-setup_base.php');
 
-// Attempt setting locales. This code is just a start, locales should be set per-user.
-// Also, different operating systems use different locale strings. en_US.utf8 is valid on POSIX systems, maybe not on Windows, feel free to add alternative locale strings.
-setlocale(LC_ALL, ''); // Attempt changing the locale to the system default.
-// Since the system default may not be UTF-8 but we may be dealing with multilingual content, attempt ensuring the collations are intelligent by forcing a general UTF-8 collation.
-// This will have no effect if the locale string is not valid or if the designated locale is not generated.
+/**
+ * Attempt setting locales. This code is just a start, locales should be set per-user.
+ *
+ * Also, different operating systems use different locale strings. en_US.utf8 is valid on POSIX
+ * systems, maybe not on Windows, feel free to add alternative locale strings.
+ *
+ * Attempt changing the locale to the system default.
+ */
+setlocale(LC_ALL, '');
+/* Since the system default may not be UTF-8 but we may be dealing with multilingual
+   content, attempt ensuring the collations are intelligent by forcing a
+   general UTF-8 collation.
+   This will have no effect if the locale string is not valid or if the designated
+   locale is not generated.*/
 
 foreach (array('en_US.utf8') as $UnicodeLocale) {
 	if (setlocale(LC_COLLATE, $UnicodeLocale)) {
@@ -67,6 +83,10 @@ foreach (array('en_US.utf8') as $UnicodeLocale) {
 }
 
 if ($prefs['feature_tikitests'] == 'y') {
+	/**
+	 * @package Tiki\Tests
+	 * @uses tiki_tests/tikitestslib.php
+	 */
 	require_once ('tiki_tests/tikitestslib.php');
 }
 $crumbs[] = new Breadcrumb($prefs['browsertitle'], '', $prefs['tikiIndex']);
