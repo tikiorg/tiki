@@ -1,12 +1,11 @@
 <?php
 /**
  * This redirects to the site's root to prevent directory browsing.
- *  
- * @ignore 
- * @package TikiWiki
- * @subpackage admin
- * @copyright (c) Copyright 2002-2013 by authors of the Tiki Wiki CMS Groupware Project
- * @licence Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+ *
+ * @ignore
+ * @package    Tiki\Admin
+ * @copyright  (c) Copyright 2002-2013 by authors of the Tiki Wiki CMS Groupware Project
+ * @license    LGPL. See license.txt for more details
  */
 // $Id$
 

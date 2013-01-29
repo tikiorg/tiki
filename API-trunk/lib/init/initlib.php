@@ -17,7 +17,7 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
 
 /**
  * performs some checks on the underlying system, before initializing Tiki.
- * @package TikiWiki\lib\init
+ * @package Tiki\Init
  */
 class TikiInit
 {

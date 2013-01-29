@@ -22,7 +22,7 @@ require_once (defined('SMARTY_DIR') ? SMARTY_DIR : 'lib/smarty/libs/') . 'Smarty
 
 /**
  * extends Smarty_Security
- * @package TikiWiki\lib\init
+ * @package Tiki\Init
  */
 class Tiki_Security_Policy extends Smarty_Security
 {
@@ -84,7 +84,7 @@ class Tiki_Security_Policy extends Smarty_Security
  * extends Smarty.
  * 
  * Centralizing overrides here will avoid problems when upgrading to newer versions of the Smarty library.
- * @package TikiWiki\lib\init
+ * @package Tiki\Init
  */
 class Smarty_Tiki extends Smarty
 {
