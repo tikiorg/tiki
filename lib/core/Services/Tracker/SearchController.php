@@ -340,7 +340,7 @@ class Services_Tracker_SearchController
 			return false;
 		}
 		if ($value) {
-			if (isset($config['_deep']) && $config['_deep'] != 'n') {
+			if (isset($config['_showdeep']) && $config['_showdeep'] != 'n') {
 				return '{filter deepcategories="' . $value . '"}';
 			} else {
 				return '{filter categories="' . $value . '"}';
