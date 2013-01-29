@@ -3309,13 +3309,12 @@ class FileGalLib extends TikiLib
 			$feedback_message = sprintf(tra('Image was reduced: %s x %s -> %s x %s'), $image_x, $image_y, (int)$image_new_x, (int)$image_new_y);
 			$dataforsize = file_get_contents($work_file);
 			$size = function_exists('mb_strlen') ? mb_strlen($dataforsize, '8bit') : strlen($dataforsize);
-
-			if ($data) {
-				$data = $dataforsize;
-			}
-
 			$metadata = $this->extractMetadataJson($work_file);
-			unlink($work_file);
+
+			if ($data) {					// image stored in $data so the file $work_file is temporary
+				$data = $dataforsize;
+				unlink($work_file);			// otherwise it's the actual filesystem version of the image so should not be deleted
+			}
 		}
 	}
 
