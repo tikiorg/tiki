@@ -959,13 +959,13 @@ if ($connection || !$standalone) {
 		$mysql_properties['max_allowed_packet'] = array(
 			'fitness' => tra('good'),
 			'setting' => $max_allowed_packet.'M',
-			'message' => tra('Your max_allowed_packet setting is at').' '.$max_allowed_packet.'M. '.tra('You can upload quite big files, but keep in mind to set your script timeouts accordingly.')
+			'message' => tra('Your max_allowed_packet setting is at').' '.$max_allowed_packet.'M. '.tra('You can upload quite big files, but keep in mind to set your script timeouts accordingly.').' '.tra('This limits the size of binary files that can be added to Tiki, when storing files in the database. Please see: <a href="http://doc.tiki.org/File+Storage">file storage</a>.')
 		);
 	} else {
 		$mysql_properties['max_allowed_packet'] = array(
 			'fitness' => tra('ugly'),
 			'setting' => $max_allowed_packet.'M',
-			'message' => tra('Your max_allowed_packet setting is at').' '.$max_allowed_packet.'M. '.tra('Nothing wrong with that, but some users might want to upload something bigger.')
+			'message' => tra('Your max_allowed_packet setting is at').' '.$max_allowed_packet.'M. '.tra('Nothing wrong with that, but some users might want to upload something bigger.').' '.tra('This limits the size of binary files that can be added to Tiki, when storing files in the database. Please see: <a href="http://doc.tiki.org/File+Storage">file storage</a>.')
 		);
 	}
 
