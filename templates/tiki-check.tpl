@@ -21,6 +21,8 @@
 					{icon _id=exclamation alt="" style="vertical-align:middle"}
 				{elseif $item.fitness eq 'ugly'}
 					{icon _id=error alt="" style="vertical-align:middle"}
+				{elseif $item.fitness eq 'info'}
+					{icon _id=information alt="" style="vertical-align:middle"}					
 				{elseif $item.fitness eq 'unknown'}
 					{icon _id=no_information alt="" style="vertical-align:middle"}
 				{/if}
@@ -91,6 +93,8 @@ To test if your installation is capable of sending emails please visit the <a hr
 					{icon _id=exclamation alt="" style="vertical-align:middle"}
 				{elseif $item.fitness eq 'ugly'}
 					{icon _id=error alt="" style="vertical-align:middle"}
+				{elseif $item.fitness eq 'info'}
+					{icon _id=information alt="" style="vertical-align:middle"}							
 				{elseif $item.fitness eq 'unknown'}
 					{icon _id=no_information alt="" style="vertical-align:middle"}
 				{/if}
@@ -157,6 +161,8 @@ To backup these directories go to <a href="tiki-admin_system.php">Admin->Tiki Ca
 						{icon _id=exclamation alt="" style="vertical-align:middle"}
 					{elseif $item.fitness eq 'ugly'}
 						{icon _id=error alt="" style="vertical-align:middle"}
+					{elseif $item.fitness eq 'info'}
+						{icon _id=information alt="" style="vertical-align:middle"}								
 					{elseif $item.fitness eq 'unknown'}
 						{icon _id=no_information alt="" style="vertical-align:middle"}
 					{/if}
@@ -193,6 +199,8 @@ To backup these directories go to <a href="tiki-admin_system.php">Admin->Tiki Ca
 						{icon _id=exclamation alt="" style="vertical-align:middle"}
 					{elseif $item.fitness eq 'ugly'}
 						{icon _id=error alt="" style="vertical-align:middle"}
+					{elseif $item.fitness eq 'info'}
+						{icon _id=information alt="" style="vertical-align:middle"}								
 					{elseif $item.fitness eq 'unknown'}
 						{icon _id=no_information alt="" style="vertical-align:middle"}
 					{/if}
@@ -228,6 +236,8 @@ To backup these directories go to <a href="tiki-admin_system.php">Admin->Tiki Ca
 					{icon _id=exclamation alt="" style="vertical-align:middle"}
 				{elseif $item.fitness eq 'ugly'}
 					{icon _id=error alt="" style="vertical-align:middle"}
+				{elseif $item.fitness eq 'info'}
+					{icon _id=information alt="" style="vertical-align:middle"}							
 				{elseif $item.fitness eq 'unknown'}
 					{icon _id=no_information alt="" style="vertical-align:middle"}
 				{/if}
@@ -261,6 +271,8 @@ To check the file integrity of your Tiki installation, go to <a href="tiki-admin
 					{icon _id=exclamation alt="" style="vertical-align:middle"}
 				{elseif $item.fitness eq 'ugly'}
 					{icon _id=error alt="" style="vertical-align:middle"}
+				{elseif $item.fitness eq 'info'}
+					{icon _id=information alt="" style="vertical-align:middle"}							
 				{elseif $item.fitness eq 'unknown'}
 					{icon _id=no_information alt="" style="vertical-align:middle"}
 				{/if}

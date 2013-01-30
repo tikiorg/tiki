@@ -56,7 +56,7 @@ if (file_exists('./db/local.php') && file_exists('./templates/tiki-check.tpl')) 
 						case 'risky':
 							echo 'red';
 							break;
-						case 'information':
+						case 'info':
 							echo 'black';
 							break;
 					}
@@ -80,13 +80,13 @@ $d = ini_get('display_errors');
 if ( $e == 0 ) {
 	if ($d != 1) {
 		$php_properties['Error reporting'] = array(
-			'fitness' => tra('information'),
+			'fitness' => tra('info'),
 			'setting' => 'Disabled',
 			'message' => tra('You will get no errors reported, because error_reporting and display_errors are both turned off. This might be the right thing for a production site, but in case of problems enable these in php.ini to get more information.')
 		);
 	} else {
 		$php_properties['Error reporting'] = array(
-			'fitness' => tra('information'),
+			'fitness' => tra('info'),
 			'setting' => 'Disabled',
 			'message' => tra('You will get no errors reported although display_errors is On, because the error_reporting level is set to 0. This might be the right thing for a production site, but in case of problems raise the value in php.ini to get more information.')
 		);
@@ -94,13 +94,13 @@ if ( $e == 0 ) {
 } elseif ( $e > 0 && $e < 32767) {
 	if ($d != 1) {
 		$php_properties['Error reporting'] = array(
-			'fitness' => tra('information'),
+			'fitness' => tra('info'),
 			'setting' => 'Disabled',
 			'message' => tra('You will get no errors reported, because display_errors is turned off. This might be the right thing for a production site, but in case of problems enable it in php.ini to get more information. Your error_reporting level is decent at '.$e.'.')
 		);
 	} else {
 		$php_properties['Error reporting'] = array(
-			'fitness' => tra('information'),
+			'fitness' => tra('info'),
 			'setting' => 'Partly',
 			'message' => tra('You will not get all errors reported as your error_reporting level is at '.$e.'. '.'This is not necessarily a bad thing (and it might be just right for production sites) as you will still get critical errors reported, but sometimes it can be handy to get more information. Check your error_reporting level in php.ini in case of having issues.')
 		);
@@ -108,13 +108,13 @@ if ( $e == 0 ) {
 } else {
 	if ( $d != 1 ) {
 		$php_properties['Error reporting'] = array(
-			'fitness' => tra('information'),
+			'fitness' => tra('info'),
 			'setting' => 'Disabled',
 			'message' => tra('You will get no errors reported although your error_reporting level is all the way up at '.$e.', but display_errors is off. This might be the right thing for a production site, but in case of problems enable it in php.ini to get more information.')
 		);
 	} else {
 		$php_properties['Error reporting'] = array(
-			'fitness' => tra('information'),
+			'fitness' => tra('info'),
 			'setting' => 'Full',
 			'message' => tra('You will get all errors reported as your error_reporting level is all the way up at '.$e.' and display_errors is on. Way to go in case of problems as the error reports usually contain some valuable hints!')
 		);
@@ -354,19 +354,19 @@ if (version_compare(PHP_VERSION, '5.1.0', '<')) {
 $s = php_sapi_name();
 if (substr($s, 0, 3) == 'cgi') {
 	$php_properties['PHP Server API'] = array(
-		'fitness' => tra('information'),
+		'fitness' => tra('info'),
 		'setting' => $s,
 		'message' => tra('You are running PHP as CGI. Feel free to use a threaded Apache MPM to increase performance.')
 	);
 } elseif (substr($s, 0, 3) == 'fpm') {
 	$php_properties['PHP Server API'] = array(
-		'fitness' => tra('information'),
+		'fitness' => tra('info'),
 		'setting' => $s,
 		'message' => tra('You are running PHP using FPM (Fastcgi Process Manager). Feel free to use a threaded Apache MPM to increase performance.')
 	);
 } else {
 	$php_properties['PHP Server API'] = array(
-		'fitness' => tra('information'),
+		'fitness' => tra('info'),
 		'setting' => $s,
 		'message' => tra('You are not running PHP as CGI. Be aware that PHP is not thread-safe and you should not use a threaded Apache MPM (like worker).')
 	);
@@ -1020,13 +1020,13 @@ if ($connection || !$standalone) {
 	$s = $result[0]['Value'];
 	if ($s == 'OFF') {
 		$mysql_properties['slow_query_log'] = array(
-			'fitness' => tra('information'),
+			'fitness' => tra('info'),
 			'setting' => $s,
 			'message' => tra('Your MySQL doesn\'t log slow queries. If you have performance issues, you might want to enable this, but keep in mind that the logging itself slows MySQL down.')
 		);
 	} else {
 		$mysql_properties['slow_query_log'] = array(
-			'fitness' => tra('information'),
+			'fitness' => tra('info'),
 			'setting' => $s,
 			'message' => tra('Your MySQL logs slow queries. If you don\'t have performance issues, you should disable this on a production site as it slows MySQL down.')
 		);
