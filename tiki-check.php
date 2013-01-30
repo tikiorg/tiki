@@ -1001,13 +1001,13 @@ if ($connection || !$standalone) {
 				$mysql_properties[$value['Variable_name']] = array(
 					'fitness' => tra('good'),
 					'setting' => $value['Value'],
-					'message' => tra('Tiki is fully UTF-8 and so should every part of your stack be.')
+					'message' => tra('Tiki is fully UTF-8 and so should every part of your stack be. utf8_unicode_ci is the default collation for Tiki.')
 				);
 			} else {
 				$mysql_properties[$value['Variable_name']] = array(
 					'fitness' => tra('ugly'),
 					'setting' => $value['Value'],
-					'message' => tra('On a fresh install you should have everything set to UTF-8 to not run into any suprises. For further information please see <a href="http://doc.tiki.org/Understanding+Encoding">Understanding Encoding</a>.')
+					'message' => tra('On a fresh install you should have everything set to UTF-8 to not run into any suprises. utf8_unicode_ci is the default collation for Tiki. For further information please see <a href="http://doc.tiki.org/Understanding+Encoding">Understanding Encoding</a>.')
 				);
 			}
 
