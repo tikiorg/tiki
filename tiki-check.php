@@ -1473,7 +1473,7 @@ if ($standalone) {
 		} elseif ($apache_server_info == 'nocurl') {
 			echo 'You don\'t have the Curl extension in PHP, so we can\'t append Apache\'s server-info.';
 		} else {
-			echo 'Apparantly you have not enabled mod_info in your Apache, so we can\'t append more verbose information to this output.';
+			echo 'Apparently you have not enabled mod_info in your Apache, so we can\'t append more verbose information to this output.';
 		}
 	} else {
 		echo 'You are either not running the preferred Apache web server or you are running PHP with a SAPI that does not allow checking Apache properties (e.g. CGI or FPM).';
