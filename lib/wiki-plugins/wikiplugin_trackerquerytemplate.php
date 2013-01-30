@@ -62,6 +62,12 @@ function wikiplugin_trackerquerytemplate_info()
 				'description' => tra('Item id of tracker item'),
 				'default' => '',
 			),
+			'itemids' => array(
+				'required' => false,
+				'name' => tra('Tracker Item Ids'),
+				'description' => tra('Item id of tracker items, separated with comma'),
+				'default' => '',
+			),
 			'likefilters' => array(
 				'required' => false,
 				'name' => tra('Like Filters'),
@@ -94,8 +100,6 @@ function wikiplugin_trackerquerytemplate($data, $params)
 {
 	global $tikilib;
 
-	$handler = new dataToFieldHandler();
-
 	$params = array_merge(
 		array(
 			'tracker'=>'',
@@ -109,10 +113,24 @@ function wikiplugin_trackerquerytemplate($data, $params)
 		$params
 	);
 
+	if (!empty($params['itemids'])) {
+		$itemIds = explode(',', $params['itemids']);
+		unset($params['itemids']);
+		$newData = '';
+		foreach($itemIds as $itemId) {
+			if (!empty($itemId)) {
+				$params['itemid'] = $itemId;
+				$newData .= wikiplugin_trackerquerytemplate($data, $params);
+			}
+		}
+		return $newData;
+	}
+
+	$handler = new dataToFieldHandler();
+
 	foreach ($params as &$param) {//We parse the variables
 		$param = $handler->parse($param);
 	}
-
 
 	$query = Tracker_Query::tracker($params['tracker'])->excludeDetails();
 
@@ -235,6 +253,7 @@ class dataToFieldHandler
 
 		$data = str_replace('$trackerId$', $this->trackerId, $data);
 		$data = str_replace('$itemId$', $this->itemId, $data);
+		$data = str_replace('$'. $this->trackerId . '_itemId$', $this->itemId, $data);
 
 		if ($this->pattern == 'name') {
 			foreach ($this->fields as $key => $field) {
