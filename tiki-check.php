@@ -403,13 +403,13 @@ if ( function_exists('apc_sma_info') && ini_get('apc.enabled') ) {
 } else {
 	if(check_isIIS()) {
 		$php_properties['ByteCode Cache'] = array(
-			'fitness' => tra('ugly'),
+			'fitness' => tra('info'),
 			'setting' => 'N/A',
 			'message' => tra('You are using neither APC, WinCache nor xCache as your ByteCode Cache which would increase performance, if correctly configured. See Admin->Performance in your Tiki for more details.')
 		);
 	} else {
 		$php_properties['ByteCode Cache'] = array(
-			'fitness' => tra('ugly'),
+			'fitness' => tra('info'),
 			'setting' => 'N/A',
 			'message' => tra('You are using neither APC nor xCache as your ByteCode Cache which would increase performance, if correctly configured. See Admin->Performance in your Tiki for more details.')
 		);
@@ -740,7 +740,7 @@ if ( $s ) {
 	}
 } else {
 	$php_properties['Image Magick'] = array(
-		'fitness' => tra('ugly'),
+		'fitness' => tra('info'),
 		'setting' => 'Not Available',
 		'message' => tra('ImageMagick is used as a fallback in case that GD is not available.')
 		);
@@ -834,7 +834,7 @@ if ($s) {
 	);
 } else {
 	$php_properties['LDAP'] = array(
-		'fitness' => tra('ugly'),
+		'fitness' => tra('info'),
 		'setting' => 'Not available',
 		'message' => tra('You will not be able to connect your Tiki to an LDAP server as the needed PHP extension is missing. More info at: http://doc.tiki.org/LDAP')
 	);
@@ -849,7 +849,7 @@ if ($s) {
 	);
 } else {
 	$php_properties['memcache'] = array(
-		'fitness' => tra('ugly'),
+		'fitness' => tra('info'),
 		'setting' => 'Not available',
 		'message' => tra('This extension can be used to speed up your Tiki by saving sessions as well as wiki and forum data on a memcached server.')
 	);
