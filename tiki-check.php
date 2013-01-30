@@ -535,7 +535,7 @@ if ( strtolower($s) == 'utf-8' ) {
 	);
 } else {
 	$php_properties['default_charset'] = array(
-		'fitness' => tra('bad'),
+		'fitness' => tra('ugly'),
 		'setting' => $s,
 		'message' => tra('default_charset should be UTF-8 as Tiki is fully UTF-8. Please check your php.ini.')
 	);
@@ -545,7 +545,7 @@ if ( strtolower($s) == 'utf-8' ) {
 $s = ini_get('date.timezone');
 if ( empty($s) ) {
 	$php_properties['date.timezone'] = array(
-		'fitness' => tra('bad'),
+		'fitness' => tra('ugly'),
 		'setting' => $s,
 		'message' => tra('You have no timezone set! While there are a lot of fallbacks in PHP to determine the timezone, the only reliable solution is to set it explicitly in php.ini! Please check the value of date.timezone in php.ini.')
 	);
