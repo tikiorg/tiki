@@ -1407,7 +1407,7 @@ if (!$standalone) {
 if ($standalone) {
 	echo '<style type="text/css">td, th { border: 1px solid #000000; vertical-align: baseline;}</style>';
 	echo '<h1>Tiki Server Compatibility</h1>';
-	echo '<h2>MySQL Database Properties</h2>';
+	echo '<h2>MySQL or MariaBD Database Properties</h2>';
 	renderTable($mysql_properties);
 	echo '<h2>Test sending e-mails</h2>';
 	if (isset($_REQUEST['email_test_to'])) {
