@@ -3,7 +3,7 @@
 		<a target="_blank" href="{$rsstitle.link|escape}">{$rsstitle.title|escape}</a>
 	</div>
 {/if}
-<ul class="rsslist">
+<ul class="rsslist{if $ticker} rssticker{/if}">
 	{foreach from=$items item=item}
             {if $icon}
             <div style="list-style:square inside url({$icon})">
@@ -30,3 +30,12 @@
             {/if}
 	{/foreach}
 </ul>
+
+{if $ticker}
+{jq}
+function rsstick(){
+	$('ul.rssticker li:first').slideUp( function () { $(this).appendTo($('ul.rssticker')).slideDown(); });
+}
+setInterval(function(){ rsstick() }, 5000);
+{/jq}
+{/if}

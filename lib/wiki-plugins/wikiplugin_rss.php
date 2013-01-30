@@ -87,6 +87,25 @@ function wikiplugin_rss_info()
 					array('text' => tra('No'), 'value' => 0)
 				)
 			),
+			'ticker' => array(
+				'required' => false,
+				'name' => tra('Ticker'),
+				'filter' => 'int',
+				'description' => tra('Ticker Output'),
+				'default' => 1,
+				'options' => array(
+					array('text' => '', 'value' => ''),
+					array('text' => tra('Yes'), 'value' => 1),
+					array('text' => tra('No'), 'value' => 0)
+				)
+			),
+			'desclen' => array(
+				'required' => false,
+				'name' => tra('Description Length'),
+				'filter' => 'int',
+				'description' => tra('Description length, trancates descriptions'),
+				'default' => 0,
+			),
 		),
 	);
 }
@@ -104,6 +123,8 @@ function wikiplugin_rss($data,$params)
 			'author' => 0,
 			'icon' => '',
 			'showtitle' => 1,
+			"ticker" => 0,
+			"desclen" => 0,
 		),
 		$params
 	);
@@ -128,6 +149,12 @@ function wikiplugin_rss($data,$params)
 		}
 	}
 
+	if ($params['desc'] > 0 && $params['desclen'] > 0) {
+		foreach($items as &$item) {
+			$item['description'] = limit_text($item['description'], $params['desclen']);
+		}
+	}
+
 	global $smarty;
 	$smarty->assign('rsstitle', $title);
 	$smarty->assign('items', $items);
@@ -136,5 +163,15 @@ function wikiplugin_rss($data,$params)
 	$smarty->assign('showdesc', $params['desc'] > 0);
 	$smarty->assign('showauthor', $params['author'] > 0);
 	$smarty->assign('icon', $params['icon']);
+	$smarty->assign('ticker', $params['ticker']);
 	return $smarty->fetch('wiki-plugins/wikiplugin_rss.tpl');
+}
+
+function limit_text($text, $limit) {
+	if (str_word_count($text, 0) > $limit) {
+		$words = str_word_count($text, 2);
+		$pos = array_keys($words);
+		$text = substr($text, 0, $pos[$limit]) . '...';
+	}
+	return $text;
 }
