@@ -22,7 +22,7 @@
 				{elseif $item.fitness eq 'ugly'}
 					{icon _id=error alt="" style="vertical-align:middle"}
 				{elseif $item.fitness eq 'unknown'}
-					{icon _id=error alt="" style="vertical-align:middle"}
+					{icon _id=no_information alt="" style="vertical-align:middle"}
 				{/if}
 				{$item.fitness}
 			</td>
@@ -92,7 +92,7 @@ To test if your installation is capable of sending emails please visit the <a hr
 				{elseif $item.fitness eq 'ugly'}
 					{icon _id=error alt="" style="vertical-align:middle"}
 				{elseif $item.fitness eq 'unknown'}
-					{icon _id=error alt="" style="vertical-align:middle"}
+					{icon _id=no_information alt="" style="vertical-align:middle"}
 				{/if}
 				{$item.fitness}
 			</td>
@@ -158,7 +158,7 @@ To backup these directories go to <a href="tiki-admin_system.php">Admin->Tiki Ca
 					{elseif $item.fitness eq 'ugly'}
 						{icon _id=error alt="" style="vertical-align:middle"}
 					{elseif $item.fitness eq 'unknown'}
-						{icon _id=error alt="" style="vertical-align:middle"}
+						{icon _id=no_information alt="" style="vertical-align:middle"}
 					{/if}
 					{$item.fitness}
 				</td>
@@ -194,7 +194,7 @@ To backup these directories go to <a href="tiki-admin_system.php">Admin->Tiki Ca
 					{elseif $item.fitness eq 'ugly'}
 						{icon _id=error alt="" style="vertical-align:middle"}
 					{elseif $item.fitness eq 'unknown'}
-						{icon _id=error alt="" style="vertical-align:middle"}
+						{icon _id=no_information alt="" style="vertical-align:middle"}
 					{/if}
 					{$item.fitness}
 				</td>
@@ -229,7 +229,7 @@ To backup these directories go to <a href="tiki-admin_system.php">Admin->Tiki Ca
 				{elseif $item.fitness eq 'ugly'}
 					{icon _id=error alt="" style="vertical-align:middle"}
 				{elseif $item.fitness eq 'unknown'}
-					{icon _id=error alt="" style="vertical-align:middle"}
+					{icon _id=no_information alt="" style="vertical-align:middle"}
 				{/if}
 				{$item.fitness}
 			</td>
@@ -262,7 +262,7 @@ To check the file integrity of your Tiki installation, go to <a href="tiki-admin
 				{elseif $item.fitness eq 'ugly'}
 					{icon _id=error alt="" style="vertical-align:middle"}
 				{elseif $item.fitness eq 'unknown'}
-					{icon _id=error alt="" style="vertical-align:middle"}
+					{icon _id=no_information alt="" style="vertical-align:middle"}
 				{/if}
 				{$item.fitness}
 			</td>
