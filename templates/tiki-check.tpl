@@ -86,13 +86,13 @@ To test if your installation is capable of sending emails please visit the <a hr
 			<td class="text">{$item.value}</td>
 			<td class="text">
 				{if $item.fitness eq 'good'}
-					{icon _id=accept alt="$item.fitness" style="vertical-align:middle"}
+					{icon _id=accept alt="" style="vertical-align:middle"}
 				{elseif $item.fitness eq 'bad'}
-					{icon _id=exclamation alt="$item.fitness" style="vertical-align:middle"}
+					{icon _id=exclamation alt="" style="vertical-align:middle"}
 				{elseif $item.fitness eq 'ugly'}
-					{icon _id=error alt="$item.fitness" style="vertical-align:middle"}
+					{icon _id=error alt="" style="vertical-align:middle"}
 				{elseif $item.fitness eq 'unknown'}
-					{icon _id=error alt="$item.fitness" style="vertical-align:middle"}
+					{icon _id=error alt="" style="vertical-align:middle"}
 				{/if}
 				{$item.fitness}
 			</td>
@@ -118,9 +118,9 @@ To backup these directories go to <a href="tiki-admin_system.php">Admin->Tiki Ca
 				<td class="text">{$d|escape}</td>
 				<td class="text">
 					{if $dirsWritable[$k]}
-						{icon _id=accept alt="$item.fitness" style="vertical-align:middle"}
+						{icon _id=accept alt="" style="vertical-align:middle"}
 					{else}
-						{icon _id=exclamation alt="$item.fitness" style="vertical-align:middle"}
+						{icon _id=exclamation alt="" style="vertical-align:middle"}
 					{/if}
 				</td>
 				<td>
@@ -152,13 +152,13 @@ To backup these directories go to <a href="tiki-admin_system.php">Admin->Tiki Ca
 				<td class="text">{$item.setting}</td>
 				<td class="text">
 					{if $item.fitness eq 'good'}
-						{icon _id=accept alt="$item.fitness" style="vertical-align:middle"}
+						{icon _id=accept alt="" style="vertical-align:middle"}
 					{elseif $item.fitness eq 'bad'}
-						{icon _id=exclamation alt="$item.fitness" style="vertical-align:middle"}
+						{icon _id=exclamation alt="" style="vertical-align:middle"}
 					{elseif $item.fitness eq 'ugly'}
-						{icon _id=error alt="$item.fitness" style="vertical-align:middle"}
+						{icon _id=error alt="" style="vertical-align:middle"}
 					{elseif $item.fitness eq 'unknown'}
-						{icon _id=error alt="$item.fitness" style="vertical-align:middle"}
+						{icon _id=error alt="" style="vertical-align:middle"}
 					{/if}
 					{$item.fitness}
 				</td>
@@ -188,13 +188,13 @@ To backup these directories go to <a href="tiki-admin_system.php">Admin->Tiki Ca
 				<td class="text">{$item.setting}</td>
 				<td class="text">
 					{if $item.fitness eq 'good'}
-						{icon _id=accept alt="$item.fitness" style="vertical-align:middle"}
+						{icon _id=accept alt="" style="vertical-align:middle"}
 					{elseif $item.fitness eq 'bad'}
-						{icon _id=exclamation alt="$item.fitness" style="vertical-align:middle"}
+						{icon _id=exclamation alt="" style="vertical-align:middle"}
 					{elseif $item.fitness eq 'ugly'}
-						{icon _id=error alt="$item.fitness" style="vertical-align:middle"}
+						{icon _id=error alt="" style="vertical-align:middle"}
 					{elseif $item.fitness eq 'unknown'}
-						{icon _id=error alt="$item.fitness" style="vertical-align:middle"}
+						{icon _id=error alt="" style="vertical-align:middle"}
 					{/if}
 					{$item.fitness}
 				</td>
@@ -223,13 +223,13 @@ To backup these directories go to <a href="tiki-admin_system.php">Admin->Tiki Ca
 			<td class="text">{$item.setting}</td>
 			<td class="text">
 				{if $item.fitness eq 'good'}
-					{icon _id=accept alt="$item.fitness" style="vertical-align:middle"}
+					{icon _id=accept alt="" style="vertical-align:middle"}
 				{elseif $item.fitness eq 'bad'}
-					{icon _id=exclamation alt="$item.fitness" style="vertical-align:middle"}
+					{icon _id=exclamation alt="" style="vertical-align:middle"}
 				{elseif $item.fitness eq 'ugly'}
-					{icon _id=error alt="$item.fitness" style="vertical-align:middle"}
+					{icon _id=error alt="" style="vertical-align:middle"}
 				{elseif $item.fitness eq 'unknown'}
-					{icon _id=error alt="$item.fitness" style="vertical-align:middle"}
+					{icon _id=error alt="" style="vertical-align:middle"}
 				{/if}
 				{$item.fitness}
 			</td>
@@ -256,13 +256,13 @@ To check the file integrity of your Tiki installation, go to <a href="tiki-admin
 			<td class="text">{$item.setting}</td>
 			<td class="text">
 				{if $item.fitness eq 'good' or $item.fitness eq 'safe'}
-					{icon _id=accept alt="$item.fitness" style="vertical-align:middle"}
+					{icon _id=accept alt="" style="vertical-align:middle"}
 				{elseif $item.fitness eq 'bad' or $item.fitness eq 'risky'}
-					{icon _id=exclamation alt="$item.fitness" style="vertical-align:middle"}
+					{icon _id=exclamation alt="" style="vertical-align:middle"}
 				{elseif $item.fitness eq 'ugly'}
-					{icon _id=error alt="$item.fitness" style="vertical-align:middle"}
+					{icon _id=error alt="" style="vertical-align:middle"}
 				{elseif $item.fitness eq 'unknown'}
-					{icon _id=error alt="$item.fitness" style="vertical-align:middle"}
+					{icon _id=error alt="" style="vertical-align:middle"}
 				{/if}
 				{$item.fitness}
 			</td>
