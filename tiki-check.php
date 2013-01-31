@@ -686,7 +686,7 @@ if ($s) {
 	);
 } else {
 	$php_properties['fileinfo'] = array(
-		'fitness' => tra('bad'),
+		'fitness' => tra('ugly'),
 		'setting' => 'Not available',
 		'message' => tra("The fileinfo extension is needed for the 'Validate uploaded file content' preference.")
 	);
