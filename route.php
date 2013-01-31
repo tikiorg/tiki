@@ -211,7 +211,7 @@ if ($inclusion) {
 	header('HTTP/1.0 Not Found');
 	header('Content-Type: text/plain');
 
-	echo "No route found.";
+	echo "No route found. Please see http://dev.tiki.org/URL+Rewriting+Revamp";
 	exit;
 }
 
