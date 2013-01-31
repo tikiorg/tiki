@@ -787,7 +787,7 @@ class HeaderLib
 				$args['key'] = $prefs['gmap_key'];
 			}
 
-			$this->add_jsfile('http://maps.google.com/maps/api/js?' . http_build_query($args, '', '&'), 'external');
+			$this->add_jsfile($tikilib->httpScheme() . '://maps.google.com/maps/api/js?' . http_build_query($args, '', '&'), 'external');
 		}
 
 		/* Needs additional testing

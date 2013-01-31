@@ -24,7 +24,7 @@ class FileGalLib extends TikiLib
 		}
 	}
 
-	private function get_gallery_save_dir($galleryId, $galInfo = null)
+	public function get_gallery_save_dir($galleryId, $galInfo = null)
 	{
 		global $prefs;
 

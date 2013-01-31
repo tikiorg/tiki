@@ -686,38 +686,50 @@ ol.module {
 .wikitable td,
 .normal td,
 td.odd,
-td.even {
+td.even,
+table.normal tr:nth-child(2n+1) td,
+table.normal tr:nth-child(2n) td {
 	margin: 0;
 	padding: 0.2em;
 	vertical-align: top;
 	border: solid 1px #909090;
 	border-collapse: collapse}
 
-tr.odd {
+tr.odd,
+table.normal tr:nth-child(2n+1) {
 	color: black;
 	background: #efefef;
 	text-align: left}
 
-tr.odd:hover {background: #fff7e6}
+tr.odd:hover,
+table.normal tr:nth-child(2n+1):hover {
+	background: #fff7e6;
+}
 
 tr.odddark {
 	padding: 2px;
 	border: 1px solid #fff}
 
-tr.even {
+tr.even,
+table.normal tr:nth-child(2n) {
 	color: black;
 	background: #fff;
 	text-align: left}
 
-tr.even:hover {background: #fff7e6}
+tr.even:hover,
+table.normal tr:nth-child(2n):hover {
+	background: #fff7e6
+}
 
-td.odd {
+td.odd,
+table.normal tr:nth-child(2n+1) {
 	vertical-align: middle;
 	color: black;
 	background: #efefef;
 	text-align: left}
 
-td.even {
+td.even,
+table.normal tr:nth-child(2n) {
 	vertical-align: middle;
 	color: black;
 	background: #fff;

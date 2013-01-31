@@ -111,6 +111,10 @@ input[type="submit"]:hover,
 
 select,
 input[type="text"],
+input[type="email"],
+input[type="file"],
+input[type="number"],
+input[type="password"],
 textarea,
 .adminoptionbox option {
 	color: #fff;
@@ -351,20 +355,24 @@ tr.diffheader {
 
 tr.odd td,
 td.odd,
-li.odd {
+li.odd,
+table.normal tr:nth-child(2n+1) {
 	background: #121212;
 	color: #aeaeae;
 }
 
 tr.even td,
 td.even,
-li.even {
+li.even,
+table.normal tr:nth-child(2n) {
 	background: #222;
 	color: #aeaeae;
 }
 
 tr.odd:hover,
-tr.even:hover {
+tr.even:hover,
+table.normal tr:nth-child(2n+1):hover,
+table.normal tr:nth-child(2n):hover {
 	background: #000;
 }
 

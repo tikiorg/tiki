@@ -515,7 +515,7 @@ class ObjectLib extends TikiLib
 
 		if ($coordinates = TikiLib::lib('geo')->get_coordinates($type, $object)) {
 			$classList[] = 'geolocated';
-			$metadata = " data-geo-lat=\"{$coordinates['lat']}\" data-geo-lon=\"{$coordinates['lon']}\"";
+			$metadata .= " data-geo-lat=\"{$coordinates['lat']}\" data-geo-lon=\"{$coordinates['lon']}\"";
 
 			if (isset($coordinates['zoom'])) {
 				$metadata .= " data-geo-zoom=\"{$coordinates['zoom']}\"";

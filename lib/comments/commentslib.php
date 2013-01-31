@@ -1902,12 +1902,12 @@ class Comments extends TikiLib
 	{
 		global $userlib, $tiki_p_admin_comments, $prefs;
 
+		$orig_maxRecords = $maxRecords;
+		$orig_offset = $offset;
+
 		// $start_time = microtime(true);
 		// Turn maxRecords into maxRecords + offset, so we can increment it without worrying too much.
 		$maxRecords = $offset + $maxRecords;
-
-		$orig_maxRecords = $maxRecords;
-		$orig_offset = $offset;
 
 		if ($sort_mode == 'points_asc') {
 			$sort_mode = 'average_asc';
@@ -2122,6 +2122,10 @@ class Comments extends TikiLib
 			$retval['data'][$i]['replies_flat'] = array();
 			$rf = &$retval['data'][$i]['replies_flat'];
 			$this->flatten_comment_replies($r, $rf);
+		}
+
+		if (count($retval['data']) > $orig_maxRecords) {
+			$retval['data'] = array_slice($retval['data'], -$orig_maxRecords);
 		}
 
 		foreach ($retval['data'] as & $row) {

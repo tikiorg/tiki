@@ -627,18 +627,22 @@ th, td.heading {
 
 tr.odd td,
 td.odd,
-li.odd {
+li.odd,
+table.normal tr:nth-child(2n+1) {
 	background: #ececec;
 	border-right: 1px solid #DDDDDD}
 
 tr.even td,
 td.even,
-li.even {
+li.even,
+table.normal tr:nth-child(2n) {
 	background: #f5f5f5;
 	border-right: 1px solid #DDDDDD}
 
 td.odd,
-td.even {
+td.even,
+table.normal tr:nth-child(2n+1),
+table.normal tr:nth-child(2n) {
 	margin: 0;
 	padding: 0.2em;
 	vertical-align: top}

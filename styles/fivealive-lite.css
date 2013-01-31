@@ -113,6 +113,9 @@ select,
 input[type="text"],
 input[type="password"],
 input[type="file"],
+input[type="email"],
+input[type="file"],
+input[type="number"],
 input#login-pass,
 textarea,
 .adminoptionbox option {
@@ -693,11 +696,13 @@ form .normal,
 	border: 2px solid #c2eef8;
 }
 
-.odd {
+.odd,
+table.normal tr:nth-child(2n+1) {
 	background: #e3f7fb;
 }
 
-.even {
+.even,
+table.normal tr:nth-child(2n) {
 	background: #d6f3fa;
 }
 

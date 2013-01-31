@@ -3219,6 +3219,7 @@ caption {
 
 .numeric, td.numeric {
 	text-align: right;
+	padding-right: 1px;
 }
 
 /***** Wiki *****/
