@@ -116,24 +116,46 @@ function wikiplugin_kaltura($data, $params)
 			$smarty = TikiLib::lib('smarty');
 			$smarty->loadPlugin('smarty_function_button');
 
+			$json_page = json_encode($page);
+			$json_instance = json_encode($instance);
+			$json_title = json_encode(tr('Upload Media'));
 			TikiLib::lib('header')->add_jq_onready(
-				'
-$("#kaltura_upload_btn' . $instance . ' a").live("click", function() {
-	openMediaUploader("<input type=\"hidden\" name=\"from\" value=\"plugin\" />" +
-					"<input type=\"hidden\" name=\"content\" value=\"\" />" +
-					"<input type=\"hidden\" name=\"type\" value=\"kaltura\" />" +
-					"<input type=\"hidden\" name=\"page\" value=\"'.$page.'\" />" +
-					"<input type=\"hidden\" name=\"index\" value=\"'.$instance.'\" />",
-				"tiki-wikiplugin_edit.php");
+<<<REG
+$("#kaltura_upload_btn$instance a").live("click", function() {
+	$(this).serviceDialog({
+		title: $json_title,
+		width: 710,
+		height: 450,
+		hideButtons: true,
+		success: function (data) {
+			if (data.entries) {
+				$.post('tiki-wikiplugin_edit.php', {
+					content: '',
+					type: 'kaltura',
+					page: {$json_page},
+					index: {$json_instance},
+					params: {
+						id: data.entries[0]
+					}
+				}, function () {
+					document.location.reload();
+				});
+			}
+		}
+	});
 	return false;
 });
-			'
+REG
 			);
 
 			$html = smarty_function_button(
 				array(	// default for add_button_label already tra but not merged yet
 					'_text' => !empty($params['add_button_label']) ? tra($params['add_button_label']) : $defaults['add_button_label'],
 					'_id' => 'kaltura_upload_btn' . $instance,
+					'href' => TikiLib::lib('service')->getUrl(array(
+						'controller' => 'kaltura',
+						'action' => 'upload'
+					)),
 				),
 				$smarty
 			);
