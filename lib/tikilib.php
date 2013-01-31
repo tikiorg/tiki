@@ -278,6 +278,12 @@ class TikiLib extends TikiDb_Bridge
 			case 'banner':
 				global $bannerlib; require_once 'lib/banners/bannerlib.php';
 				return self::$libraries[$name] = $bannerlib;
+			case 'kalturauser':
+				require_once 'lib/videogals/kalturalib.php';
+				return self::$libraries[$name] = new KalturaLib(KalturaLib::SESSION_USER);
+			case 'kalturaadmin':
+				require_once 'lib/videogals/kalturalib.php';
+				return self::$libraries[$name] = new KalturaLib(KalturaLib::SESSION_ADMIN);
 		}
 	}
 

@@ -20,13 +20,13 @@ class Services_Kaltura_Controller
 		}
 
 		global $user, $prefs;
-		global $kalturalib; require_once 'lib/videogals/kalturalib.php';
+		$kalturalib = TikiLib::lib('kalturauser');
 
 		$identifier = uniqid();
 		$cwflashVars = array(
 			'uid' => $user ? $user : 'Anonymous',
 			'partnerId' => $prefs['kaltura_partnerId'],
-			'ks' => $kalturalib->session,
+			'ks' => $kalturalib->getSessionKey(),
 			'afterAddEntry' => 'afterAddEntry_' . $identifier,
 			'close' => 'onContributionWizardClose',
 			'showCloseButton' => false,

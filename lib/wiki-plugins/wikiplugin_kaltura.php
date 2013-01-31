@@ -9,15 +9,16 @@ function wikiplugin_kaltura_info()
 {
 	global $prefs;
 	if ($prefs['feature_kaltura'] === 'y') {
-		global $kalturaadminlib; require_once 'lib/videogals/kalturalib.php';
+		$kalturaadminlib = TikiLib::lib('kalturaadmin');
 
-		$players = array(array('value' => '', 'text' => tra('Default')));
-		if (is_object($kalturaadminlib) && !empty($kalturaadminlib->session)) {
-			$players1 = $kalturaadminlib->getPlayersUiConfs();
-			foreach ($players1 as & $pl) {
-				$players[] = array('value' => $pl['id'], 'text' => tra($pl['name']));
-			}
-			unset($players1);
+		$playerList = $kalturaadminlib->getPlayersUiConfs();
+		$players = array();
+		foreach ($playerList as $pl) {
+			$players[] = array('value' => $pl['id'], 'text' => tra($pl['name']));
+		}
+
+		if (count($players)) {
+			array_unshift($players, array('value' => '', 'text' => tra('Default')));
 		}
 	}
 
@@ -98,7 +99,7 @@ function wikiplugin_kaltura_info()
 
 function wikiplugin_kaltura($data, $params)
 {
-	global $prefs, $kalturalib, $tiki_p_upload_videos, $user, $page;
+	global $prefs, $tiki_p_upload_videos, $user, $page;
 
 	static $instance = 0;
 
@@ -175,15 +176,10 @@ REG
 		$params['player_id'] = $prefs['kaltura_kdpUIConf'];
 	}
 
-	global $kalturaadminlib, $kalturalib; require_once 'lib/videogals/kalturalib.php';
-
-	if (! $kalturalib) {
-		return '<div>Kaltura not configured.</div>';
-	}
-
-	if ($kalturaadminlib && $kalturaadminlib->session && (empty($params['width']) || empty($params['height']))) {
+	if (empty($params['width']) || empty($params['height'])) {
+		$kalturaadminlib = TikiLib::lib('kalturaadmin');
 		$player = $kalturaadminlib->getPlayersUiConf($params['player_id']);
-		if (!empty($player)) {
+		if (! empty($player)) {
 			if (empty($params['width'])) {
 				$params['width'] = $player['width'];
 			}
@@ -194,8 +190,10 @@ REG
 			return '<span class="error">' . tra('Player not found') . '</span>';
 		}
 	}
+
+	$kalturalib = TikiLib::lib('kalturauser');
 	$params = array_merge($defaults, $params);
-	$params['session'] = $kalturalib->session;
+	$params['session'] = $kalturalib->getSessionKey();
 	$params['media_url'] = $kalturalib->getMediaUrl($params['id'], $params['player_id']);
 
 	$smarty = TikiLib::lib('smarty');

@@ -12,8 +12,9 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 }
 
 if ($prefs['feature_kaltura'] === 'y') {
-	require_once 'lib/videogals/kalturalib.php';
-	if (is_object($kalturaadminlib) && !empty($kalturaadminlib->session)) {
+	$kalturaadminlib = TikiLib::lib('kalturaadmin');
+
+	if ($kalturaadminlib->getSessionKey()) {
 		// contribution wizard
 		$kcwDefault = $kalturaadminlib->updateStandardTikiKcw();
 		if ($kcwDefault) {

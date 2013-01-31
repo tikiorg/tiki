@@ -5,132 +5,146 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$ 
 
-define('SESSION_ADMIN', 2);
-define('SESSION_USER', 0);
 
 require_once ('lib/videogals/KalturaClient.php');
 
 class KalturaLib
 {
-	var $session;
-	var $kconfig;
-	var $client;
-	var $initialized = false;
+	const CONFIGURATION_LIST = 'kaltura_configuration_list';
+	const SESSION_ADMIN = 2;
+	const SESSION_USER = 0;
+
+	private $session;
+	private $kconfig;
+	private $client;
+	private $sessionType;
+	private $initialized = false;
 	
 	function __construct($session_type)
 	{
 		global $prefs, $smarty;
-		$this->initialized = true;
 
-		if (!$this->testSetup()) {
-			return false;
-		}
 		if (substr($prefs['kaltura_kServiceUrl'], -1) != '/') {
 			$prefs['kaltura_kServiceUrl'] = $prefs['kaltura_kServiceUrl'] . '/';
 			TikiLib::lib('tiki')->set_preference('kaltura_kServiceUrl', $prefs['kaltura_kServiceUrl']);
 		}
-		$this->kconfig = new KalturaConfiguration($prefs['kaltura_partnerId']);
-		$this->kconfig->serviceUrl = $prefs['kaltura_kServiceUrl'];
-		$this->client = new KalturaClient($this->kconfig);
 
-		// test that the service is still available (for this partner id etc)
-		try {
-			if ($session_type == SESSION_ADMIN) {
-				$this->startAdminSession();
-			} else {
-				$this->startUserSession();
-			}
-			$smarty->assign('kServiceUrl', $prefs['kaltura_kServiceUrl']);
+		$smarty->assign('kServiceUrl', $prefs['kaltura_kServiceUrl']);
+		
+		$this->sessionType = $session_type;
 
-		} catch (Exception $e) {
+	}
 
-			$this->initialized = false;
-			TikiLib::lib('errorreport')->report($e->getMessage());
+	public function getSessionKey()
+	{
+		if ($this->getClient()) {
+			return $this->session;
 		}
+	}
+
+	private function getConfig()
+	{
+		if (! $this->kconfig) {
+			global $prefs;
+			$this->kconfig = new KalturaConfiguration($prefs['kaltura_partnerId']);
+			$this->kconfig->serviceUrl = $prefs['kaltura_kServiceUrl'];
+		}
+
+		return $this->kconfig;
+	}
+
+	private function getClient()
+	{
+		if (! $this->initialized && ! $this->client) {
+			$this->initialized = true;
+			try {
+				$client = new KalturaClient($this->getConfig());
+				if ($session = $this->initializeClient($client)) {
+					$this->client = $client;
+					$this->session = $session;
+				}
+			} catch (Exception $e) {
+				TikiLib::lib('errorreport')->report($e->getMessage());
+			}
+		}
+
+		return $this->client;
 	}
 
 	function getMediaUrl($entryId, $playerId)
 	{
 		global $prefs;
-		return $this->kconfig->serviceUrl . "kwidget/wid/_{$prefs['kaltura_partnerId']}/uiconf_id/$playerId/entry_id/$entryId";
+		$config = $this->getConfig();
+		return $config->serviceUrl . "kwidget/wid/_{$prefs['kaltura_partnerId']}/uiconf_id/$playerId/entry_id/$entryId";
 	}
 
 	function testSetup() {
 		global $prefs;
-		if (!$this->initialized || empty($prefs['kaltura_partnerId']) || !is_numeric($prefs['kaltura_partnerId']) || empty($prefs['kaltura_secret']) || empty($prefs['kaltura_adminSecret'])) {
+		if (empty($prefs['kaltura_partnerId']) || !is_numeric($prefs['kaltura_partnerId']) || empty($prefs['kaltura_secret']) || empty($prefs['kaltura_adminSecret'])) {
 			return false;
 		} else {
 			return true;
 		}
 	}
 	
-	private function startAdminSession() {
+	private function initializeClient($client) {
 		global $prefs, $user;
-		if (!$this->testSetup()) {
-			return;
+
+		if (! $this->testSetup()) {
+			return false;
 		}
+
 		if ($user) {
 			$kuser = $user;
 		} else {
 			$kuser = 'Anonymous';
 		}
-		if (!is_object($this->session)) {
-			$this->session = $this->client->session->start($prefs['kaltura_adminSecret'], $kuser, SESSION_ADMIN, $prefs['kaltura_partnerId'], 86400, 'edit:*');
+
+		if ($this->sessionType == self::SESSION_ADMIN) {
+			$session = $client->session->start($prefs['kaltura_adminSecret'], $kuser, self::SESSION_ADMIN, $prefs['kaltura_partnerId'], 86400, 'edit:*');
+		} else {
+			$session = $client->session->start($prefs['kaltura_secret'], $kuser, self::SESSION_USER, $prefs['kaltura_partnerId'], 86400, 'edit:*');
 		}
-		$this->client->setKs($this->session);
+		$client->setKs($session);
+
+		return $session;
 	}
 	
-	private function startUserSession() {
-		global $prefs, $user;
-		if (!$this->testSetup()) {
-			return;
-		}
-		if ($user) {
-			$kuser = $user;
-		} else {
-			$kuser = 'Anonymous';
-		}
-		if (!is_object($this->session)) {
-			$this->session = $this->client->session->start($prefs['kaltura_secret'], $kuser, SESSION_USER, $prefs['kaltura_partnerId'], 86400, 'edit:*');
-		}
-		$this->client->setKs($this->session);
-	}
-		
 	private function _getPlayersUiConfs()
 	{
-		if (!$this->session) {
-			$this->startAdminSession();
+		if ($client = $this->getClient()) {
+			$filter = new KalturaUiConfFilter();
+			$filter->objTypeEqual = 1; // 1 denotes Players
+			$filter->orderBy = +createdAt;
+			$uiConfs = $client->uiConf->listAction($filter);
+			
+			if (is_null($client->error)) {
+				return $uiConfs;
+			}
 		}
-		$filter = new KalturaUiConfFilter();
-		$filter->objTypeEqual = 1; // 1 denotes Players
-		$filter->orderBy = +createdAt;
-		$uiConfs = $this->client->uiConf->listAction($filter);
-		
-		if (!is_null($this->client->error))
-		{
-			$uiConfs = new stdClass();
-			$uiConfs->objects = array();
-		}
-		
-		return($uiConfs);
+
+		$uiConfs = new stdClass();
+		$uiConfs->objects = array();
+
+		return $uiConfs;
 	}
 	
 	function getPlayersUiConfs() {
-		if (!$this->testSetup()) {
-			return null;
+		$cachelib = TikiLib::lib('cache');
+
+		if (! $configurations = $cachelib->getSerialized(self::CONFIGURATION_LIST)) {
+			$obj = $this->_getPlayersUiConfs()->objects;
+			$configurations = array();
+			foreach ($obj as $o) {
+				$configurations[] = get_object_vars($o);
+			}
+
+			$cachelib->cacheItem(self::CONFIGURATION_LIST, serialize($configurations));
 		}
-		$obj = $this->_getPlayersUiConfs()->objects;
-		$arr = array();
-		foreach ($obj as $o) {
-			$arr[] = get_object_vars($o);
-		}
-		return $arr;
+
+		return $configurations;
 	}
 
-	function getPlayersUiConfsObj() {
-		return $this->_getPlayersUiConfs();		
-	}
-	
 	function getPlayersUiConf($playerId) {
 		$obj = $this->_getPlayersUiConf($playerId)->objects;
 		$arr = array();
@@ -142,83 +156,178 @@ class KalturaLib
 
 	private function _getPlayersUiConf($playerId)
 	{
-		if (!$this->session) {
-			$this->startAdminSession();
-		}
-		$filter = new KalturaUiConfFilter();
-		$filter->objTypeEqual = 1; // 1 denotes Players
-		$filter->idEqual = $playerId;
-		$uiConf = $this->client->uiConf->listAction($filter);
+		// TODO : Use the already-obtained list
 
-		if (!is_null($this->client->error))
-		{
-			$uiConf = new stdClass();
-			$uiConf->objects = array();
-		}
+		if ($client = $this->getClient()) {
+			$filter = new KalturaUiConfFilter();
+			$filter->objTypeEqual = 1; // 1 denotes Players
+			$filter->idEqual = $playerId;
+			$uiConf = $client->uiConf->listAction($filter);
 
-		return($uiConf);
+			if (!is_null($client->error))
+			{
+				$uiConf = new stdClass();
+				$uiConf->objects = array();
+			}
+
+			return $uiConf;
+		}
 	}
 
 	function updateStandardTikiKcw() {
-		if (!$this->testSetup()) {
-			return '';
-		}
-		// first check if there is an existing one
-		$pager = null;
-		$filter = new KalturaUiConfFilter();
-		$filter->nameLike = 'Tiki.org Standard';
-		$filter->objTypeEqual = KalturaUiConfObjType::CONTRIBUTION_WIZARD;
-		$existing = $this->client->uiConf->listAction($filter, $pager);
-		if (count($existing->objects) > 0) {
-			$current_obj = array_pop($existing->objects);
-			$current = $current_obj->id;
-		} else {
-			$current = '';
+		if ($client = $this->getClient()) {
+			// first check if there is an existing one
+			$pager = null;
+			$filter = new KalturaUiConfFilter();
+			$filter->nameLike = 'Tiki.org Standard';
+			$filter->objTypeEqual = KalturaUiConfObjType::CONTRIBUTION_WIZARD;
+			$existing = $client->uiConf->listAction($filter, $pager);
+			if (count($existing->objects) > 0) {
+				$current_obj = array_pop($existing->objects);
+				$current = $current_obj->id;
+			} else {
+				$current = '';
+			}
+
+			global $tikipath;
+			$uiConf = new KalturaUiConf();
+			$uiConf->name = 'Tiki.org Standard';
+			$uiConf->objType = KalturaUiConfObjType::CONTRIBUTION_WIZARD;
+			$filename = $tikipath . "lib/videogals/standardTikiKcw.xml";
+			$fh = fopen($filename, 'r');
+			$confXML = fread($fh, filesize($filename));
+			$uiConf->confFile = $confXML;
+			$uiConf->useCdn = 1;
+			$uiConf->swfUrl = '/flash/kcw/v2.1.4/ContributionWizard.swf';
+			$uiConf->tags = 'autodeploy, content_v3.2.5, content_upload';
+
+			// first try to update
+			if ($current) {
+				 try {
+					 $results = $client->uiConf->update($current, $uiConf);
+					 if (isset($results->id)) {
+						 return $results->id;
+					 }
+				 } catch (Exception $e) {
+					 TikiLib::lib('errorreport')->report($e->getMessage());
+				 }
+			 } else {
+				 try {
+					 // create if updating failed or not updating
+					 $uiConf->creationMode = KalturaUiConfCreationMode::ADVANCED;
+					 $results = $client->uiConf->add($uiConf);
+					 if (isset($results->id)) {
+						 return $results->id;
+					 } else {
+						 return '';
+					 }
+				 } catch (Exception $e) {
+					 TikiLib::lib('errorreport')->report($e->getMessage());
+				 }
+			}
 		}
 
-		global $tikipath;
-		$uiConf = new KalturaUiConf();
-		$uiConf->name = 'Tiki.org Standard';
-		$uiConf->objType = KalturaUiConfObjType::CONTRIBUTION_WIZARD;
-		$filename = $tikipath . "lib/videogals/standardTikiKcw.xml";
-		$fh = fopen($filename, 'r');
-		$confXML = fread($fh, filesize($filename));
-		$uiConf->confFile = $confXML;
-		$uiConf->useCdn = 1;
-		$uiConf->swfUrl = '/flash/kcw/v2.1.4/ContributionWizard.swf';
-		$uiConf->tags = 'autodeploy, content_v3.2.5, content_upload';
-
-		// first try to update
-	 	if ($current) {
-			 try {
-				 $results = $this->client->uiConf->update($current, $uiConf);
-				 if (isset($results->id)) {
-					 return $results->id;
-				 }
-			 } catch (Exception $e) {
-				 TikiLib::lib('errorreport')->report($e->getMessage());
-			 }
-		 } else {
-			 try {
-				 // create if updating failed or not updating
-				 $uiConf->creationMode = KalturaUiConfCreationMode::ADVANCED;
-				 $results = $this->client->uiConf->add($uiConf);
-				 if (isset($results->id)) {
-					 return $results->id;
-				 } else {
-					 return '';
-				 }
-			 } catch (Exception $e) {
-				 TikiLib::lib('errorreport')->report($e->getMessage());
-			 }
-		}
 		return '';
 	}
+
+	public function cloneMix($entryId)
+	{
+		if ($client = $this->getClient()) {
+			return $client->mixing->cloneAction($entryId);
+		}
+	}
+
+	public function deleteMedia($entryId)
+	{
+		if ($client = $this->getClient()) {
+			return $client->media->delete($entryId);
+		}
+	}
+
+	public function deleteMix($entryId)
+	{
+		if ($client = $this->getClient()) {
+			return $client->mixing->delete($entryId);
+		}
+	}
+
+	public function flattenVideo($entryId)
+	{
+		if ($client = $this->getClient()) {
+			return $client->mixing->requestFlattening($entryId, 'flv');
+		}
+	}
+
+	public function getMix($entryId)
+	{
+		if ($client = $this->getClient()) {
+			return $client->mixing->get($entryId);
+		}
+	}
+
+	public function updateMix($entryId, array $data)
+	{
+		if ($client = $this->getClient()) {
+			$kentry = new KalturaPlayableEntry();
+			$kentry->name = $data['name'];
+			$kentry->description = $data['description'];
+			$kentry->tags = $data['tags'];
+			$kentry->editorType = $data['editorType'];
+			$kentry->adminTags = $data['adminTags'];
+
+			return $client->mixing->update($entryId, $kentry);
+		}
+	}
+
+	public function getMedia($entryId)
+	{
+		if ($client = $this->getClient()) {
+			return $client->media->get($entryId);
+		}
+	}
+
+	public function updateMedia($entryId, array $data)
+	{
+		if ($client = $this->getClient()) {
+			$kentry = new KalturaPlayableEntry();
+			$kentry->name = $data['name'];
+			$kentry->description = $data['description'];
+			$kentry->tags = $data['tags'];
+			$kentry->adminTags = $data['adminTags'];
+
+			return $client->media->update($entryId, $kentry);
+		}
+	}
 	
+	public function listMix($sort_mode, $page, $page_size, $find)
+	{
+		if ($client = $this->getClient()) {
+			$kpager = new KalturaFilterPager();
+			$kpager->pageIndex = $page;
+			$kpager->pageSize = $page_size;
+
+			$kfilter = new KalturaMixEntryFilter();
+			$kfilter->orderBy = $sort_mode;
+			$kfilter->nameMultiLikeOr = $find;
+			
+			return $client->mixing->listAction($kfilter, $kpager);
+		}
+	}
+	
+	public function listMedia($sort_mode, $page, $page_size, $find)
+	{
+		if ($client = $this->getClient()) {
+			$kpager = new KalturaFilterPager();
+			$kpager->pageIndex = $page;
+			$kpager->pageSize = $page_size;
+
+			$kfilter = new KalturaMixEntryFilter();
+			$kfilter->orderBy = $sort_mode;
+			$kfilter->nameMultiLikeOr = $find;
+			$kfilter->statusIn = '-1,-2,0,1,2';
+			
+			return $client->media->listAction($kfilter, $kpager);
+		}
+	}
 }
 
-global $kalturalib, $kalturaadminlib;
-$kalturaadminlib = new KalturaLib(SESSION_ADMIN);
-if ($kalturaadminlib->session) {	// only make user session if admin one worked
-	$kalturalib = new KalturaLib(SESSION_USER);
-}
