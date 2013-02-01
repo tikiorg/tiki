@@ -128,5 +128,15 @@ function filter_out_sefurl($tpl_output, $type = null, $title = '', $with_next = 
 			}
 		}
 	}
+
+	if (strpos($tpl_output, '?') === false) {	// historically tiki has coped with malformed short urls with no ?
+		$amppos = strpos($tpl_output, '&');		// route.php rquires that we no longer do that
+		if ( $amppos !== false) {
+			if (substr($tpl_output, $amppos, 5) !== '&amp;') {
+				$tpl_output{$amppos} = '?';
+			}
+		}
+	}
+
 	return $tpl_output;
 }
