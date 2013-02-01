@@ -32,20 +32,21 @@ function smarty_block_title($params, $content, $template, &$repeat)
 	if ( $repeat || empty($content) ) return;
 
 	$template->loadPlugin('smarty_function_icon');
+	$template->loadPlugin('smarty_modifier_sefurl');
 
 	if ( ! isset($params['help']) ) $params['help'] = '';
 	if ( ! isset($params['admpage']) ) $params['admpage'] = '';
-	if ( ! isset($params['url']) ) {
-		$template->loadPlugin('smarty_function_query');
-		$params['url'] = htmlspecialchars(smarty_function_query(array('_type' => 'absolute_path'), $template));
-		$params['url'] = str_replace('&amp;amp;', '&', $params['url']);
-	}
 
 	// Set the variable for the HTML title tag
 	$template->smarty->assign('headtitle', $content);
 
 	$class = 'pagetitle';
 	$current = current_object();
+
+	if ( ! isset($params['url']) ) {
+		$params['url'] = smarty_modifier_sefurl($current['object'], $current['type']);
+	}
+
 	$metadata = '';
 	$coordinates = TikiLib::lib('geo')->get_coordinates($current['type'], $current['object']);
 	if ($coordinates) {
