@@ -336,5 +336,29 @@ class KalturaLib
 			return $client->media->listAction($kfilter, $kpager);
 		}
 	}
+
+	public function getMovieList(array $movies)
+	{
+		if (count($movies) && $client = $this->getClient()) {
+			$kpager = new KalturaFilterPager();
+			$kpager->pageIndex = $page;
+			$kpager->pageSize = count($movies);
+
+			$kfilter = new KalturaMixEntryFilter();
+			$kfilter->idIn = implode(',', $movies);
+			
+			$mediaList = array();
+			foreach ($client->media->listAction($kfilter, $kpager)->objects as $media) {
+				$mediaList[] = array(
+					'id' => $media->id,
+					'name' => $media->name,
+				);
+			}
+
+			return $mediaList;
+		}
+
+		return array();
+	}
 }
 
