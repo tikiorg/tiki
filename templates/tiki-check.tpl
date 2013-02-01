@@ -1,7 +1,7 @@
-{* $Id: tiki-check.tpl 43202 2012-09-29 19:18:29Z amette $ *}
+{* $Id: tiki-check.tpl 44697 2013-01-30 21:24:42Z marclaporte $ *}
 {title help="Server+Check"}{tr}Server Check{/tr}{/title}
 
-<h2>{tr}MySQL Database Properties{/tr}</h2>
+<h2>{tr}MySQL or MariaDB Database Properties{/tr}</h2>
 <table class="normal">
 	<tr>
 		<th>{tr}Property{/tr}</th>
@@ -16,13 +16,15 @@
 			<td class="text">{$item.setting}</td>
 			<td class="text">
 				{if $item.fitness eq 'good'}
-					{icon _id=accept alt="$item.fitness" style="vertical-align:middle"}
+					{icon _id=accept alt="" style="vertical-align:middle"}
 				{elseif $item.fitness eq 'bad'}
-					{icon _id=exclamation alt="$item.fitness" style="vertical-align:middle"}
+					{icon _id=exclamation alt="" style="vertical-align:middle"}
 				{elseif $item.fitness eq 'ugly'}
-					{icon _id=error alt="$item.fitness" style="vertical-align:middle"}
+					{icon _id=error alt="" style="vertical-align:middle"}
+				{elseif $item.fitness eq 'info'}
+					{icon _id=information alt="" style="vertical-align:middle"}					
 				{elseif $item.fitness eq 'unknown'}
-					{icon _id=error alt="$item.fitness" style="vertical-align:middle"}
+					{icon _id=no_information alt="" style="vertical-align:middle"}
 				{/if}
 				{$item.fitness}
 			</td>
@@ -86,114 +88,15 @@ To test if your installation is capable of sending emails please visit the <a hr
 			<td class="text">{$item.value}</td>
 			<td class="text">
 				{if $item.fitness eq 'good'}
-					{icon _id=accept alt="$item.fitness" style="vertical-align:middle"}
+					{icon _id=accept alt="" style="vertical-align:middle"}
 				{elseif $item.fitness eq 'bad'}
-					{icon _id=exclamation alt="$item.fitness" style="vertical-align:middle"}
+					{icon _id=exclamation alt="" style="vertical-align:middle"}
 				{elseif $item.fitness eq 'ugly'}
-					{icon _id=error alt="$item.fitness" style="vertical-align:middle"}
+					{icon _id=error alt="" style="vertical-align:middle"}
+				{elseif $item.fitness eq 'info'}
+					{icon _id=information alt="" style="vertical-align:middle"}							
 				{elseif $item.fitness eq 'unknown'}
-					{icon _id=error alt="$item.fitness" style="vertical-align:middle"}
-				{/if}
-				{$item.fitness}
-			</td>
-			<td class="text">{$item.message}</td>
-		</tr>
-	{foreachelse}
-		{norecords _colspan=4}
-	{/foreach}
-</table>
-
-<h2>{tr}PHP scripting language properties{/tr}</h2>
-<table class="normal">
-	<tr>
-		<th>{tr}Property{/tr}</th>
-		<th>{tr}Value{/tr}</th>
-		<th>{tr}Tiki Fitness{/tr}</th>
-		<th>{tr}Explanation{/tr}</th>
-	</tr>
-	{cycle values="even,odd" print=false}
-	{foreach from=$php_properties key=key item=item}
-		<tr class="{cycle}">
-			<td class="text">{$key}</td>
-			<td class="text">{$item.setting}</td>
-			<td class="text">
-				{if $item.fitness eq 'good'}
-					{icon _id=accept alt="$item.fitness" style="vertical-align:middle"}
-				{elseif $item.fitness eq 'bad'}
-					{icon _id=exclamation alt="$item.fitness" style="vertical-align:middle"}
-				{elseif $item.fitness eq 'ugly'}
-					{icon _id=error alt="$item.fitness" style="vertical-align:middle"}
-				{elseif $item.fitness eq 'unknown'}
-					{icon _id=error alt="$item.fitness" style="vertical-align:middle"}
-				{/if}
-				{$item.fitness}
-			</td>
-			<td class="text">{$item.message}</td>
-		</tr>
-	{foreachelse}
-		{norecords _colspan=4}
-	{/foreach}
-</table>
-
-<h2>{tr}Apache properties{/tr}</h2>
-{if $apache_properties}
-	<table class="normal">
-		<tr>
-			<th>{tr}Property{/tr}</th>
-			<th>{tr}Value{/tr}</th>
-			<th>{tr}Tiki Fitness{/tr}</th>
-			<th>{tr}Explanation{/tr}</th>
-		</tr>
-		{cycle values="even,odd" print=false}
-		{foreach from=$apache_properties key=key item=item}
-			<tr class="{cycle}">
-				<td class="text">{$key}</td>
-				<td class="text">{$item.setting}</td>
-				<td class="text">
-					{if $item.fitness eq 'good'}
-						{icon _id=accept alt="$item.fitness" style="vertical-align:middle"}
-					{elseif $item.fitness eq 'bad'}
-						{icon _id=exclamation alt="$item.fitness" style="vertical-align:middle"}
-					{elseif $item.fitness eq 'ugly'}
-						{icon _id=error alt="$item.fitness" style="vertical-align:middle"}
-					{elseif $item.fitness eq 'unknown'}
-						{icon _id=error alt="$item.fitness" style="vertical-align:middle"}
-					{/if}
-					{$item.fitness}
-				</td>
-				<td class="text">{$item.message}</td>
-			</tr>
-		{foreachelse}
-			{norecords _colspan=4}
-		{/foreach}
-	</table>
-{else}
-	{$no_apache_properties}
-{/if}
-
-<h2>{tr}PHP Security properties{/tr}</h2>
-To check the file integrity of your Tiki installation, go to <a href="tiki-admin_security.php">Admin->Security</a>.
-<table class="normal">
-	<tr>
-		<th>{tr}Property{/tr}</th>
-		<th>{tr}Value{/tr}</th>
-		<th>{tr}Tiki Fitness{/tr}</th>
-		<th>{tr}Explanation{/tr}</th>
-	</tr>
-	{cycle values="even,odd" print=false}
-	{foreach from=$security key=key item=item}
-		<tr class="{cycle}">
-			<td class="text">{$key}</td>
-			<td class="text">{$item.setting}</td>
-			<td class="text">
-				{if $item.fitness eq 'good' or $item.fitness eq 'safe'}
-					{icon _id=accept alt="$item.fitness" style="vertical-align:middle"}
-				{elseif $item.fitness eq 'bad' or $item.fitness eq 'risky'}
-					{icon _id=exclamation alt="$item.fitness" style="vertical-align:middle"}
-				{elseif $item.fitness eq 'ugly'}
-					{icon _id=error alt="$item.fitness" style="vertical-align:middle"}
-				{elseif $item.fitness eq 'unknown'}
-					{icon _id=error alt="$item.fitness" style="vertical-align:middle"}
+					{icon _id=no_information alt="" style="vertical-align:middle"}
 				{/if}
 				{$item.fitness}
 			</td>
@@ -219,9 +122,9 @@ To backup these directories go to <a href="tiki-admin_system.php">Admin->Tiki Ca
 				<td class="text">{$d|escape}</td>
 				<td class="text">
 					{if $dirsWritable[$k]}
-						{icon _id=accept alt="$item.fitness" style="vertical-align:middle"}
+						{icon _id=accept alt="" style="vertical-align:middle"}
 					{else}
-						{icon _id=exclamation alt="$item.fitness" style="vertical-align:middle"}
+						{icon _id=exclamation alt="" style="vertical-align:middle"}
 					{/if}
 				</td>
 				<td>
@@ -236,6 +139,151 @@ To backup these directories go to <a href="tiki-admin_system.php">Admin->Tiki Ca
 	</table>
 {/if}
 
+
+<h2>{tr}Apache properties{/tr}</h2>
+{if $apache_properties}
+	<table class="normal">
+		<tr>
+			<th>{tr}Property{/tr}</th>
+			<th>{tr}Value{/tr}</th>
+			<th>{tr}Tiki Fitness{/tr}</th>
+			<th>{tr}Explanation{/tr}</th>
+		</tr>
+		{cycle values="even,odd" print=false}
+		{foreach from=$apache_properties key=key item=item}
+			<tr class="{cycle}">
+				<td class="text">{$key}</td>
+				<td class="text">{$item.setting}</td>
+				<td class="text">
+					{if $item.fitness eq 'good'}
+						{icon _id=accept alt="" style="vertical-align:middle"}
+					{elseif $item.fitness eq 'bad'}
+						{icon _id=exclamation alt="" style="vertical-align:middle"}
+					{elseif $item.fitness eq 'ugly'}
+						{icon _id=error alt="" style="vertical-align:middle"}
+					{elseif $item.fitness eq 'info'}
+						{icon _id=information alt="" style="vertical-align:middle"}								
+					{elseif $item.fitness eq 'unknown'}
+						{icon _id=no_information alt="" style="vertical-align:middle"}
+					{/if}
+					{$item.fitness}
+				</td>
+				<td class="text">{$item.message}</td>
+			</tr>
+		{foreachelse}
+			{norecords _colspan=4}
+		{/foreach}
+	</table>
+{else}
+	{$no_apache_properties}
+{/if}
+
+<h2>{tr}IIS properties{/tr}</h2>
+{if $iis_properties}
+	<table class="normal">
+		<tr>
+			<th>{tr}Property{/tr}</th>
+			<th>{tr}Value{/tr}</th>
+			<th>{tr}Tiki Fitness{/tr}</th>
+			<th>{tr}Explanation{/tr}</th>
+		</tr>
+		{cycle values="even,odd" print=false}
+		{foreach from=$iis_properties key=key item=item}
+			<tr class="{cycle}">
+				<td class="text">{$key}</td>
+				<td class="text">{$item.setting}</td>
+				<td class="text">
+					{if $item.fitness eq 'good'}
+						{icon _id=accept alt="" style="vertical-align:middle"}
+					{elseif $item.fitness eq 'bad'}
+						{icon _id=exclamation alt="" style="vertical-align:middle"}
+					{elseif $item.fitness eq 'ugly'}
+						{icon _id=error alt="" style="vertical-align:middle"}
+					{elseif $item.fitness eq 'info'}
+						{icon _id=information alt="" style="vertical-align:middle"}								
+					{elseif $item.fitness eq 'unknown'}
+						{icon _id=no_information alt="" style="vertical-align:middle"}
+					{/if}
+					{$item.fitness}
+				</td>
+				<td class="text">{$item.message}</td>
+			</tr>
+		{foreachelse}
+			{norecords _colspan=4}
+		{/foreach}
+	</table>
+{else}
+	{$no_iis_properties}
+{/if}
+
+<h2>{tr}PHP scripting language properties{/tr}</h2>
+<table class="normal">
+	<tr>
+		<th>{tr}Property{/tr}</th>
+		<th>{tr}Value{/tr}</th>
+		<th>{tr}Tiki Fitness{/tr}</th>
+		<th>{tr}Explanation{/tr}</th>
+	</tr>
+	{cycle values="even,odd" print=false}
+	{foreach from=$php_properties key=key item=item}
+		<tr class="{cycle}">
+			<td class="text">{$key}</td>
+			<td class="text">{$item.setting}</td>
+			<td class="text">
+				{if $item.fitness eq 'good'}
+					{icon _id=accept alt="" style="vertical-align:middle"}
+				{elseif $item.fitness eq 'bad'}
+					{icon _id=exclamation alt="" style="vertical-align:middle"}
+				{elseif $item.fitness eq 'ugly'}
+					{icon _id=error alt="" style="vertical-align:middle"}
+				{elseif $item.fitness eq 'info'}
+					{icon _id=information alt="" style="vertical-align:middle"}							
+				{elseif $item.fitness eq 'unknown'}
+					{icon _id=no_information alt="" style="vertical-align:middle"}
+				{/if}
+				{$item.fitness}
+			</td>
+			<td class="text">{$item.message}</td>
+		</tr>
+	{foreachelse}
+		{norecords _colspan=4}
+	{/foreach}
+</table>
+
+<h2>{tr}PHP Security properties{/tr}</h2>
+To check the file integrity of your Tiki installation, go to <a href="tiki-admin_security.php">Admin->Security</a>.
+<table class="normal">
+	<tr>
+		<th>{tr}Property{/tr}</th>
+		<th>{tr}Value{/tr}</th>
+		<th>{tr}Tiki Fitness{/tr}</th>
+		<th>{tr}Explanation{/tr}</th>
+	</tr>
+	{cycle values="even,odd" print=false}
+	{foreach from=$security key=key item=item}
+		<tr class="{cycle}">
+			<td class="text">{$key}</td>
+			<td class="text">{$item.setting}</td>
+			<td class="text">
+				{if $item.fitness eq 'good' or $item.fitness eq 'safe'}
+					{icon _id=accept alt="" style="vertical-align:middle"}
+				{elseif $item.fitness eq 'bad' or $item.fitness eq 'risky'}
+					{icon _id=exclamation alt="" style="vertical-align:middle"}
+				{elseif $item.fitness eq 'ugly'}
+					{icon _id=error alt="" style="vertical-align:middle"}
+				{elseif $item.fitness eq 'info'}
+					{icon _id=information alt="" style="vertical-align:middle"}							
+				{elseif $item.fitness eq 'unknown'}
+					{icon _id=no_information alt="" style="vertical-align:middle"}
+				{/if}
+				{$item.fitness}
+			</td>
+			<td class="text">{$item.message}</td>
+		</tr>
+	{foreachelse}
+		{norecords _colspan=4}
+	{/foreach}
+</table>
 
 <h2>{tr}MySQL Variable Information{/tr}</h2>
 <table class="normal">
