@@ -104,7 +104,7 @@ function tiki_route($path)
 	tiki_route_attempt('|^userinfo$|', 'tiki-view_tracker_item.php', null, array('view' => ' user', 'cookietab' => '2'));
 
 	tiki_route_attempt_prefix('dl', 'tiki-download_file.php', 'fileId');
-	tiki_route_attempt_prefix('thumbnail', 'tiki-download_file.php', 'fileId', array('tumbnail' => ''));
+	tiki_route_attempt_prefix('thumbnail', 'tiki-download_file.php', 'fileId', array('thumbnail' => ''));
 	tiki_route_attempt_prefix('display', 'tiki-download_file.php', 'fileId', array('display' => ''));
 	tiki_route_attempt_prefix('preview', 'tiki-download_file.php', 'fileId', array('preview' => ''));
 
