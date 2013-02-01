@@ -56,7 +56,7 @@ if (file_exists('./db/local.php') && file_exists('./templates/tiki-check.tpl')) 
 						case 'risky':
 							echo 'red';
 							break;
-						case 'information':
+						case 'info':
 							echo 'black';
 							break;
 					}
@@ -80,13 +80,13 @@ $d = ini_get('display_errors');
 if ( $e == 0 ) {
 	if ($d != 1) {
 		$php_properties['Error reporting'] = array(
-			'fitness' => tra('information'),
+			'fitness' => tra('info'),
 			'setting' => 'Disabled',
 			'message' => tra('You will get no errors reported, because error_reporting and display_errors are both turned off. This might be the right thing for a production site, but in case of problems enable these in php.ini to get more information.')
 		);
 	} else {
 		$php_properties['Error reporting'] = array(
-			'fitness' => tra('information'),
+			'fitness' => tra('info'),
 			'setting' => 'Disabled',
 			'message' => tra('You will get no errors reported although display_errors is On, because the error_reporting level is set to 0. This might be the right thing for a production site, but in case of problems raise the value in php.ini to get more information.')
 		);
@@ -94,13 +94,13 @@ if ( $e == 0 ) {
 } elseif ( $e > 0 && $e < 32767) {
 	if ($d != 1) {
 		$php_properties['Error reporting'] = array(
-			'fitness' => tra('information'),
+			'fitness' => tra('info'),
 			'setting' => 'Disabled',
 			'message' => tra('You will get no errors reported, because display_errors is turned off. This might be the right thing for a production site, but in case of problems enable it in php.ini to get more information. Your error_reporting level is decent at '.$e.'.')
 		);
 	} else {
 		$php_properties['Error reporting'] = array(
-			'fitness' => tra('information'),
+			'fitness' => tra('info'),
 			'setting' => 'Partly',
 			'message' => tra('You will not get all errors reported as your error_reporting level is at '.$e.'. '.'This is not necessarily a bad thing (and it might be just right for production sites) as you will still get critical errors reported, but sometimes it can be handy to get more information. Check your error_reporting level in php.ini in case of having issues.')
 		);
@@ -108,13 +108,13 @@ if ( $e == 0 ) {
 } else {
 	if ( $d != 1 ) {
 		$php_properties['Error reporting'] = array(
-			'fitness' => tra('information'),
+			'fitness' => tra('info'),
 			'setting' => 'Disabled',
 			'message' => tra('You will get no errors reported although your error_reporting level is all the way up at '.$e.', but display_errors is off. This might be the right thing for a production site, but in case of problems enable it in php.ini to get more information.')
 		);
 	} else {
 		$php_properties['Error reporting'] = array(
-			'fitness' => tra('information'),
+			'fitness' => tra('info'),
 			'setting' => 'Full',
 			'message' => tra('You will get all errors reported as your error_reporting level is all the way up at '.$e.' and display_errors is on. Way to go in case of problems as the error reports usually contain some valuable hints!')
 		);
@@ -354,19 +354,19 @@ if (version_compare(PHP_VERSION, '5.1.0', '<')) {
 $s = php_sapi_name();
 if (substr($s, 0, 3) == 'cgi') {
 	$php_properties['PHP Server API'] = array(
-		'fitness' => tra('information'),
+		'fitness' => tra('info'),
 		'setting' => $s,
 		'message' => tra('You are running PHP as CGI. Feel free to use a threaded Apache MPM to increase performance.')
 	);
 } elseif (substr($s, 0, 3) == 'fpm') {
 	$php_properties['PHP Server API'] = array(
-		'fitness' => tra('information'),
+		'fitness' => tra('info'),
 		'setting' => $s,
 		'message' => tra('You are running PHP using FPM (Fastcgi Process Manager). Feel free to use a threaded Apache MPM to increase performance.')
 	);
 } else {
 	$php_properties['PHP Server API'] = array(
-		'fitness' => tra('information'),
+		'fitness' => tra('info'),
 		'setting' => $s,
 		'message' => tra('You are not running PHP as CGI. Be aware that PHP is not thread-safe and you should not use a threaded Apache MPM (like worker).')
 	);
@@ -403,13 +403,13 @@ if ( function_exists('apc_sma_info') && ini_get('apc.enabled') ) {
 } else {
 	if(check_isIIS()) {
 		$php_properties['ByteCode Cache'] = array(
-			'fitness' => tra('ugly'),
+			'fitness' => tra('info'),
 			'setting' => 'N/A',
 			'message' => tra('You are using neither APC, WinCache nor xCache as your ByteCode Cache which would increase performance, if correctly configured. See Admin->Performance in your Tiki for more details.')
 		);
 	} else {
 		$php_properties['ByteCode Cache'] = array(
-			'fitness' => tra('ugly'),
+			'fitness' => tra('info'),
 			'setting' => 'N/A',
 			'message' => tra('You are using neither APC nor xCache as your ByteCode Cache which would increase performance, if correctly configured. See Admin->Performance in your Tiki for more details.')
 		);
@@ -535,7 +535,7 @@ if ( strtolower($s) == 'utf-8' ) {
 	);
 } else {
 	$php_properties['default_charset'] = array(
-		'fitness' => tra('bad'),
+		'fitness' => tra('ugly'),
 		'setting' => $s,
 		'message' => tra('default_charset should be UTF-8 as Tiki is fully UTF-8. Please check your php.ini.')
 	);
@@ -545,7 +545,7 @@ if ( strtolower($s) == 'utf-8' ) {
 $s = ini_get('date.timezone');
 if ( empty($s) ) {
 	$php_properties['date.timezone'] = array(
-		'fitness' => tra('bad'),
+		'fitness' => tra('ugly'),
 		'setting' => $s,
 		'message' => tra('You have no timezone set! While there are a lot of fallbacks in PHP to determine the timezone, the only reliable solution is to set it explicitly in php.ini! Please check the value of date.timezone in php.ini.')
 	);
@@ -686,7 +686,7 @@ if ($s) {
 	);
 } else {
 	$php_properties['fileinfo'] = array(
-		'fitness' => tra('bad'),
+		'fitness' => tra('ugly'),
 		'setting' => 'Not available',
 		'message' => tra("The fileinfo extension is needed for the 'Validate uploaded file content' preference.")
 	);
@@ -740,7 +740,7 @@ if ( $s ) {
 	}
 } else {
 	$php_properties['Image Magick'] = array(
-		'fitness' => tra('ugly'),
+		'fitness' => tra('info'),
 		'setting' => 'Not Available',
 		'message' => tra('ImageMagick is used as a fallback in case that GD is not available.')
 		);
@@ -834,7 +834,7 @@ if ($s) {
 	);
 } else {
 	$php_properties['LDAP'] = array(
-		'fitness' => tra('ugly'),
+		'fitness' => tra('info'),
 		'setting' => 'Not available',
 		'message' => tra('You will not be able to connect your Tiki to an LDAP server as the needed PHP extension is missing. More info at: http://doc.tiki.org/LDAP')
 	);
@@ -849,7 +849,7 @@ if ($s) {
 	);
 } else {
 	$php_properties['memcache'] = array(
-		'fitness' => tra('ugly'),
+		'fitness' => tra('info'),
 		'setting' => 'Not available',
 		'message' => tra('This extension can be used to speed up your Tiki by saving sessions as well as wiki and forum data on a memcached server.')
 	);
@@ -959,13 +959,13 @@ if ($connection || !$standalone) {
 		$mysql_properties['max_allowed_packet'] = array(
 			'fitness' => tra('good'),
 			'setting' => $max_allowed_packet.'M',
-			'message' => tra('Your max_allowed_packet setting is at').' '.$max_allowed_packet.'M. '.tra('You can upload quite big files, but keep in mind to set your script timeouts accordingly.')
+			'message' => tra('Your max_allowed_packet setting is at').' '.$max_allowed_packet.'M. '.tra('You can upload quite big files, but keep in mind to set your script timeouts accordingly.').' '.tra('This limits the size of binary files that can be added to Tiki, when storing files in the database. Please see: <a href="http://doc.tiki.org/File+Storage">file storage</a>.')
 		);
 	} else {
 		$mysql_properties['max_allowed_packet'] = array(
 			'fitness' => tra('ugly'),
 			'setting' => $max_allowed_packet.'M',
-			'message' => tra('Your max_allowed_packet setting is at').' '.$max_allowed_packet.'M. '.tra('Nothing wrong with that, but some users might want to upload something bigger.')
+			'message' => tra('Your max_allowed_packet setting is at').' '.$max_allowed_packet.'M. '.tra('Nothing wrong with that, but some users might want to upload something bigger.').' '.tra('This limits the size of binary files that can be added to Tiki, when storing files in the database. Please see: <a href="http://doc.tiki.org/File+Storage">file storage</a>.')
 		);
 	}
 
@@ -1001,13 +1001,13 @@ if ($connection || !$standalone) {
 				$mysql_properties[$value['Variable_name']] = array(
 					'fitness' => tra('good'),
 					'setting' => $value['Value'],
-					'message' => tra('Tiki is fully UTF-8 and so should every part of your stack be.')
+					'message' => tra('Tiki is fully UTF-8 and so should every part of your stack be. utf8_unicode_ci is the default collation for Tiki.')
 				);
 			} else {
 				$mysql_properties[$value['Variable_name']] = array(
 					'fitness' => tra('ugly'),
 					'setting' => $value['Value'],
-					'message' => tra('On a fresh install you should have everything set to UTF-8 to not run into any suprises. For further information please see <a href="http://doc.tiki.org/Understanding+Encoding">Understanding Encoding</a>.')
+					'message' => tra('On a fresh install you should have everything set to UTF-8 to not run into any suprises. utf8_unicode_ci is the default collation for Tiki. For further information please see <a href="http://doc.tiki.org/Understanding+Encoding">Understanding Encoding</a>.')
 				);
 			}
 
@@ -1020,13 +1020,13 @@ if ($connection || !$standalone) {
 	$s = $result[0]['Value'];
 	if ($s == 'OFF') {
 		$mysql_properties['slow_query_log'] = array(
-			'fitness' => tra('information'),
+			'fitness' => tra('info'),
 			'setting' => $s,
 			'message' => tra('Your MySQL doesn\'t log slow queries. If you have performance issues, you might want to enable this, but keep in mind that the logging itself slows MySQL down.')
 		);
 	} else {
 		$mysql_properties['slow_query_log'] = array(
-			'fitness' => tra('information'),
+			'fitness' => tra('info'),
 			'setting' => $s,
 			'message' => tra('Your MySQL logs slow queries. If you don\'t have performance issues, you should disable this on a production site as it slows MySQL down.')
 		);
@@ -1264,8 +1264,8 @@ $fcts = array(
 		),
 		array (
 			'function' => 'shell_exec',
-			'risky' => tra('Shell_exec is similar to exec.').' '.tra('Tiki needs it to run PDF from URL: WebKit(wkhtmltopdf). '.$pdf_webkit.'If you need this and trust the other PHP software on your server, you should enable it.'),
-			'safe' =>  tra('Shell_exec is similar to exec.').' '.tra('Tiki needs it to run PDF from URL: WebKit(wkhtmltopdf). '.$pdf_webkit.'If you need this and trust the other PHP software on your server, you should enable it.')
+			'risky' => tra('Shell_exec is similar to exec.').' '.tra('Tiki needs it to run PDF from URL: WebKit (wkhtmltopdf). '.$pdf_webkit.'If you need this and trust the other PHP software on your server, you should enable it.'),
+			'safe' =>  tra('Shell_exec is similar to exec.').' '.tra('Tiki needs it to run PDF from URL: WebKit (wkhtmltopdf). '.$pdf_webkit.'If you need this and trust the other PHP software on your server, you should enable it.')
 		),
 		array (
 			'function' => 'system',
@@ -1407,7 +1407,7 @@ if (!$standalone) {
 if ($standalone) {
 	echo '<style type="text/css">td, th { border: 1px solid #000000; vertical-align: baseline;}</style>';
 	echo '<h1>Tiki Server Compatibility</h1>';
-	echo '<h2>MySQL Database Properties</h2>';
+	echo '<h2>MySQL or MariaBD Database Properties</h2>';
 	renderTable($mysql_properties);
 	echo '<h2>Test sending e-mails</h2>';
 	if (isset($_REQUEST['email_test_to'])) {
@@ -1473,7 +1473,7 @@ if ($standalone) {
 		} elseif ($apache_server_info == 'nocurl') {
 			echo 'You don\'t have the Curl extension in PHP, so we can\'t append Apache\'s server-info.';
 		} else {
-			echo 'Apparantly you have not enabled mod_info in your Apache, so we can\'t append more verbose information to this output.';
+			echo 'Apparently you have not enabled mod_info in your Apache, so we can\'t append more verbose information to this output.';
 		}
 	} else {
 		echo 'You are either not running the preferred Apache web server or you are running PHP with a SAPI that does not allow checking Apache properties (e.g. CGI or FPM).';
