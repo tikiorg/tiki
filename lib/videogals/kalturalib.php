@@ -37,7 +37,18 @@ class KalturaLib
 
 	public function getSessionKey()
 	{
+		$tikilib = TikiLib::lib('tiki');
+
+		$session = "kaltura_session" . $this->sessionType;
+		if (isset($_SESSION[$session]) && $_SESSION[$session]['expiry'] > $tikilib->now) {
+			return $_SESSION[$session]['key'];
+		}
+
 		if ($this->getClient()) {
+			$_SESSION[$session] = array(
+				'key' => $this->session,
+				'expiry' => $tikilib->now + 1800, // Keep for half an hour
+			);
 			return $this->session;
 		}
 	}
@@ -146,31 +157,13 @@ class KalturaLib
 	}
 
 	function getPlayersUiConf($playerId) {
-		$obj = $this->_getPlayersUiConf($playerId)->objects;
-		$arr = array();
-		if (count($obj) === 1) {
-			$arr = get_object_vars($obj[0]);
-		}
-		return $arr;
-	}
+		// Ontaining full list, because it is cached
+		$confs = $this->getPlayersUiConfs();
 
-	private function _getPlayersUiConf($playerId)
-	{
-		// TODO : Use the already-obtained list
-
-		if ($client = $this->getClient()) {
-			$filter = new KalturaUiConfFilter();
-			$filter->objTypeEqual = 1; // 1 denotes Players
-			$filter->idEqual = $playerId;
-			$uiConf = $client->uiConf->listAction($filter);
-
-			if (!is_null($client->error))
-			{
-				$uiConf = new stdClass();
-				$uiConf->objects = array();
+		foreach ($confs as $config) {
+			if ($config['id'] == $playerId) {
+				return $config;
 			}
-
-			return $uiConf;
 		}
 	}
 
