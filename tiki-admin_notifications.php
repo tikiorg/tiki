@@ -20,7 +20,7 @@ $inputConfiguration = array(
 			'sort_mode' => 'word',
 			'find' => 'striptags',
 			'email' => 'email',
-			'event' => 'word',
+			'event' => 'text',
 			'add' => 'alpha',
 			'delsel_x' => 'alpha',
 		) ,
