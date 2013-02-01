@@ -14,7 +14,6 @@ class KalturaLib
 	const SESSION_ADMIN = 2;
 	const SESSION_USER = 0;
 
-	private $session;
 	private $kconfig;
 	private $client;
 	private $sessionType;
@@ -39,17 +38,29 @@ class KalturaLib
 	{
 		$tikilib = TikiLib::lib('tiki');
 
-		$session = "kaltura_session" . $this->sessionType;
-		if (isset($_SESSION[$session]) && $_SESSION[$session]['expiry'] > $tikilib->now) {
-			return $_SESSION[$session]['key'];
+		if ($session = $this->storedKey()) {
+			return $session;
 		}
 
 		if ($this->getClient()) {
+			return $this->storedKey();
+		}
+	}
+
+	private function storedKey($key = null)
+	{
+		global $user;
+		$session = "kaltura_session_{$this->sessionType}_$user";
+
+		if (is_null($key)) {
+			if (isset($_SESSION[$session]) && $_SESSION[$session]['expiry'] > $tikilib->now) {
+				return $_SESSION[$session]['key'];
+			}
+		} else {
 			$_SESSION[$session] = array(
-				'key' => $this->session,
+				'key' => $key,
 				'expiry' => $tikilib->now + 1800, // Keep for half an hour
 			);
-			return $this->session;
 		}
 	}
 
@@ -70,9 +81,13 @@ class KalturaLib
 			$this->initialized = true;
 			try {
 				$client = new KalturaClient($this->getConfig());
-				if ($session = $this->initializeClient($client)) {
+				if ($session = $this->storedKey()) {
+					$client->setKs($session);
 					$this->client = $client;
-					$this->session = $session;
+				} elseif ($session = $this->initializeClient($client)) {
+					$client->setKs($session);
+					$this->client = $client;
+					$this->storedKey($session);
 				}
 			} catch (Exception $e) {
 				TikiLib::lib('errorreport')->report($e->getMessage());
@@ -116,7 +131,6 @@ class KalturaLib
 		} else {
 			$session = $client->session->start($prefs['kaltura_secret'], $kuser, self::SESSION_USER, $prefs['kaltura_partnerId'], 86400, 'edit:*');
 		}
-		$client->setKs($session);
 
 		return $session;
 	}
