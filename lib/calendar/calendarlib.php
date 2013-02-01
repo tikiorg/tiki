@@ -16,14 +16,14 @@ if (!defined('weekInSeconds')) define('weekInSeconds', 604800);
 
 class CalendarLib extends TikiLib
 {
-	function convertSortMode($sort_mode)
+	function convertSortMode($sort_mode, $fields = null)
 	{
 		$tmp = explode("_", $sort_mode);
 		if (count($tmp) == 2) {
 			if ($tmp[0] == "categoryName" || $tmp[0] == "locationName")
 				return "name " . $tmp[1];
 		}
-		return parent::convertSortMode($sort_mode);
+		return parent::convertSortMode($sort_mode, $fields);
 	}
 
 	function list_calendars($offset = 0, $maxRecords = -1, $sort_mode = 'name_asc', $find = '')
