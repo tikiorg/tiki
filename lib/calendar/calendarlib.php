@@ -23,14 +23,14 @@ class CalendarLib extends TikiLib
      * @param $sort_mode
      * @return string
      */
-    function convertSortMode($sort_mode)
+	function convertSortMode($sort_mode, $fields = null)
 	{
 		$tmp = explode("_", $sort_mode);
 		if (count($tmp) == 2) {
 			if ($tmp[0] == "categoryName" || $tmp[0] == "locationName")
 				return "name " . $tmp[1];
 		}
-		return parent::convertSortMode($sort_mode);
+		return parent::convertSortMode($sort_mode, $fields);
 	}
 
     /**
