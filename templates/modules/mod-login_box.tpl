@@ -181,8 +181,8 @@ function doChallengeResponse() {
 		{/if}
 		{if !empty($error_login)}
 			{remarksbox type='errors' title="{tr}Error{/tr}"}
-				{if $error_login == -5}{tr}Invalid username{/tr}
-				{elseif $error_login == -3}{tr}Invalid password{/tr}
+				{if $error_login == -5}{tr}Invalid username or password{/tr}
+				{elseif $error_login == -3}{tr}Invalid username or password{/tr}
 				{else}{$error_login|escape}{/if}
 			{/remarksbox}
 		{/if}
