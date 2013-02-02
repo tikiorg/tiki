@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2013 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -14,7 +14,7 @@
  */
 function tiki_route($path)
 {
-	/* 
+	/*
 	// If you are converting to Tiki and want to preserve some URLs, map the urls and remove the comment block
 	$urlMapping = array(
 		'wiki/old-page-name' => 'PageName',
@@ -179,6 +179,8 @@ case 'apache2handler':
 default:
 	if (isset($_SERVER['SCRIPT_URL'])) {
 		$full = $_SERVER['SCRIPT_URL'];
+	} elseif (isset($_SERVER['REQUEST_URI'])) {
+		$full = $_SERVER['REQUEST_URI'];
 	} elseif (isset($_SERVER['REDIRECT_URL'])) {
 		$full = $_SERVER['REDIRECT_URL'];
 	} elseif (isset($_SERVER['UNENCODED_URL'])) {	// For IIS
