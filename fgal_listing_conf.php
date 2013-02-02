@@ -91,6 +91,11 @@ if (isset($_REQUEST['view']) && $_REQUEST['view'] == 'admin') {
 	$fgal_options['icon_fileId'] = '';
 } else {
 	foreach ( $fgal_options as $k_gal => $v ) {
+		// Validate that option exists. 
+		if (!isset($fgal_options[$k_gal])) {
+			continue;
+		}
+
 		$k_prefs = 'fgal_'.$k_gal;
 
 		if ( isset($_REQUEST['page']) && $_REQUEST['page'] === 'fgal' ) {
