@@ -6,7 +6,7 @@
  * this script may only be included, it will die if called directly.
  *
  * @package   Tiki
- * @subpackage i18n
+ * @subpackage Multilingual
  * @copyright (c) Copyright 2002-2013 by authors of the Tiki Wiki CMS Groupware Project. All Rights Reserved. See copyright.txt for details and a complete list of authors.
  * @license   LGPL. See license.txt for more details
  */
@@ -20,20 +20,24 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 
 /**
  * extends TikiLib to provide internationalization features and multilingual support.
- * @package   Tiki\i18n
+ * @package   Tiki\Multilingual
  */
 class MultilingualLib extends TikiLib
 {
+	/**
+	 * @var string
+	 */
 	public $mtEnabled = 'y';
 
 	/**
 	 * add an object and its translation set into the set of translations of another one
-	 * @param: type = (idem tiki_categ) 'wiki page'...
-	 * @param: srcId = id of the source
-	 * @param: srcLang = lang of the source
-	 * @param: objId = id of the translation
-	 * @param: objLang = lang of the translation
-	 * @requirment: no translation of the source in this lang must exist
+	 * @param: string $type = (idem tiki_categ) 'wiki page'...
+	 * @param: string $srcId = id of the source
+	 * @param: string $srcLang = lang of the source
+	 * @param: string $objId = id of the translation
+	 * @param: string $objLang = lang of the translation
+	 * @requirement: no translation of the source in this lang must exist
+	 * @return null|string
 	 */
 	function insertTranslation($type, $srcId, $srcLang, $objId, $objLang)
 	{
@@ -79,8 +83,14 @@ class MultilingualLib extends TikiLib
 	}
 
 	/**
-	 * @brief update the object for the language of a translation set
-	 * @param $objId: new object for the translation of $srcId of type $type in the language $objLang
+	 * update the object for the language of a translation set
+	 *
+	 * @param $type
+	 * @param $srcId
+	 * @param $objId : new object for the translation of $srcId of type $type in the language $objLang
+	 * @param $objLang
+	 *
+	 * @return void
 	 */
 	function updateTranslation($type, $srcId, $objId, $objLang)
 	{
@@ -89,7 +99,12 @@ class MultilingualLib extends TikiLib
 	}
 
 	/**
-	 * @brief get the translation in a language of an object if exists
+	 * get the translation in a language of an object if exists
+	 *
+	 * @param $type
+	 * @param $srcId
+	 * @param $objLang
+	 *
 	 * @return array(objId, traId)
 	 */
 	function getTranslation($type, $srcId, $objLang)
@@ -124,21 +139,15 @@ class MultilingualLib extends TikiLib
 		return $ret;
 	}
 
-	/*
-	 * @brief gets all the translations of an object
-	 * @param type = (idem tiki_categ) 'wiki page'...
-	 * @param objId = object Id
-	 * @param long = Whether the language name returned (langName) should be in long format
-	 * @return: array(objId, objName, lang, langName) with langName=localized language name
-	 */
-    /**
-     * @param $type
-     * @param $objId
+	/**
+     * gets all the translations of an object
+     * @param string $type (idem tiki_categ) valid options are ('wiki page'|'article')
+     * @param string $objId object Id
      * @param string $objName
      * @param string $objLang
-     * @param bool $long
-     * @return array
-     * @throws Exception
+     * @param bool $long Whether the language name returned (langName) should be in long format
+     * @return array(objId, objName, lang, langName) with langName=localized language name
+     * @throws Exception if $type is not supported
      */
     function getTranslations($type, $objId, $objName='', $objLang='', $long=false)
 	{
@@ -174,7 +183,11 @@ class MultilingualLib extends TikiLib
 	}
 
 	/**
-	 * @brief sort function on langName string
+	 * sort function on langName string
+	 *
+	 * @param $l1 the first language
+	 * @param $l2 the second language
+	 * @return int
 	 */
 	function compare_lang($l1, $l2)
 	{
@@ -182,7 +195,14 @@ class MultilingualLib extends TikiLib
 	}
 
 	/**
-	 * @brief: update lang in all tiki pages
+	 * update lang in all tiki pages
+	 *
+	 * @param      $type
+	 * @param      $objId
+	 * @param      $lang
+	 * @param bool $optimisation
+	 *
+	 * @return null|string
 	 */
 	function updateObjectLang($type, $objId, $lang, $optimisation = false)
 	{
@@ -206,7 +226,12 @@ class MultilingualLib extends TikiLib
 	}
 
 	/**
-	 * @brief: detach one translation
+	 * detach one translation
+	 *
+	 * @param $type
+	 * @param $objId
+	 *
+	 * @return void
 	 */
 	function detachTranslation($type, $objId)
 	{
@@ -216,7 +241,13 @@ class MultilingualLib extends TikiLib
 	}
 
 	/**
-	 * @brief : test if val exists in a list of objects
+	 * test if val exists in a list of objects
+	 *
+	 * @param $tab
+	 * @param $val
+	 * @param $col
+	 *
+	 * @return bool
 	 */
 	function exist($tab, $val, $col)
 	{
@@ -229,8 +260,12 @@ class MultilingualLib extends TikiLib
 	}
 
 	/**
-	 * @brief : returns an ordered list of preferred languages
+	 * returns an ordered list of preferred languages
+	 *
 	 * @param $langContext: optional the language the user comes from
+	 * @param $include_browser_lang
+	 *
+	 * @return array
 	 */
 	function preferredLangs($langContext = null, $include_browser_lang = null)
 	{
@@ -302,7 +337,8 @@ class MultilingualLib extends TikiLib
 	}
 
 	/**
-	 * @brief : return the root language ex: en-uk returns en
+	 * return the root language ex: en-uk returns en 
+	 * @param $lang the language to strip
 	 */
 	function rootLang($lang)
 	{
@@ -310,7 +346,13 @@ class MultilingualLib extends TikiLib
 	}
 
 	/**
-	 * @brief : fitler a list of object to have only one objet in the set of translations with the best language
+	 * filter a list of object to have only one object in the set of translations with the best language
+	 *
+	 * @param $type
+	 * @param $listObjs
+	 * @param $langContext (optional)
+	 *
+	 * @return array
 	 */
 	function selectLangList($type, $listObjs, $langContext = null)
 	{
@@ -381,7 +423,13 @@ class MultilingualLib extends TikiLib
 	}
 
 	/**
-	 * @brief : select the object with the best language from another object
+	 * select the object with the best language from another object
+	 *
+	 * @param $type
+	 * @param $objId
+	 * @param $langContext (optional)
+	 *
+	 * @return
 	 */
 	function selectLangObj($type, $objId, $langContext = null)
 	{
