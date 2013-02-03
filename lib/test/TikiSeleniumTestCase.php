@@ -122,7 +122,7 @@ class TikiSeleniumTestCase extends PHPUnit_Extensions_SeleniumTestCase
 			$this->type("sl-login-user", $user);
 			$this->type("sl-login-pass", $password);
 			$this->clickAndWait("login");
-			if ($this->isTextPresent("Invalid password")) {
+			if ($this->isTextPresent("Invalid username or password")) {
 				return false;
 			}
 		}
