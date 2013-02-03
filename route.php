@@ -30,7 +30,6 @@ function tiki_route($path)
 		'articles' => 'tiki-view_articles.php',
 		'blogs' => 'tiki-list_blogs.php',
 		'calendar' => 'tiki-calendar.php',
-		'categories' => 'tiki-browse_categories.php',
 		'chat' => 'tiki-chat.php',
 		'contact' => 'tiki-contact.php',
 		'directories' => 'tiki-directory_browse.php',
@@ -124,6 +123,10 @@ function tiki_route($path)
 		}
 
 		return $params;
+	});
+
+	tiki_route_attempt('/^categories$/', 'tiki-browse_categories.php', function ($parts) {
+		return array();
 	});
 
 	if (false !== $dot = strrpos($path, '.')) {
