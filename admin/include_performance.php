@@ -142,18 +142,33 @@ if ( isset($opcode_stats['memory_total']) ) {
 $smarty->assign('opcode_cache', $opcode_cache);
 $smarty->assign('opcode_stats', $opcode_stats);
 
+$txtUsed = tr('Used');
+$txtAvailable = tr('Available');
+if ($opcode_cache == 'WinCache') {
+	// Somehow WinCache seems to flip the representations
+	$txtAvailable = tr('Used');
+	$txtUsed = tr('Available');
+}
 $smarty->assign('memory_graph', $tikilib->httpScheme() . '://chart.apis.google.com/chart?' . http_build_query(array(
 	'cht' => 'p3',
 	'chs' => '250x100',
 	'chd' => "t:{$opcode_stats['memory_used']},{$opcode_stats['memory_avail']}",
-	'chl' => tr('Used') . '|' . tr('Available'),
+	'chl' => $txtUsed . '|' .$txtAvailable,
 	'chtt' => tr('Memory'),
 ), '', '&'));
 
+$txtHit = tr('Hit');
+$txtMiss = tr('Miss');
+if ($opcode_cache == 'WinCache') {
+	// Somehow WinCache seems to flip the representations
+	$txtHit = tr('Miss');
+	$txtMiss = tr('Hit');
+}
 $smarty->assign('hits_graph', $tikilib->httpScheme() . '://chart.apis.google.com/chart?' . http_build_query(array(
 	'cht' => 'p3',
 	'chs' => '250x100',
 	'chd' => "t:{$opcode_stats['hit_hit']},{$opcode_stats['hit_miss']}",
-	'chl' => tr('Hit') . '|' . tr('Miss'),
-), '', '&'));
+	'chl' => $txtHit . '|' . $txtMiss,
+	'chtt' => tr('Cache'),
+	), '', '&'));
 
