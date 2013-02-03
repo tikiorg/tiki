@@ -182,6 +182,9 @@ default:
 		$full = $_SERVER['SCRIPT_URL'];
 	} elseif (isset($_SERVER['REQUEST_URI'])) {
 		$full = $_SERVER['REQUEST_URI'];
+		if (strpos($full, '?') !== false) {
+			$full = substr($full, 0, strpos($full, '?'));
+		}
 	} elseif (isset($_SERVER['REDIRECT_URL'])) {
 		$full = $_SERVER['REDIRECT_URL'];
 	} elseif (isset($_SERVER['UNENCODED_URL'])) {	// For IIS
