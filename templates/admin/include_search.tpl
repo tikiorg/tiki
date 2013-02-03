@@ -73,7 +73,7 @@
 							<a href="tiki-admin.php?page=search&amp;rebuild=now" id="rebuild-link">{tr}Rebuild Index{/tr}</a> {tr}From the command line:{/tr} <kbd>php lib/search/shell.php rebuild</kbd><br />
 							<label for="log-rebuild">{tr}Log rebuild?{/tr}</label>
 							<input type="checkbox" id="log-rebuild" />
-							<span class="description">{tr}Log file is saved as temp/Search_Indexer.log{/tr}</span>
+							<span class="description">{tr}Log file is saved as temp/Search_Indexer.log{/tr}</span> <br /> {tr}From the command line:{/tr} <kbd>php lib/search/shell.php rebuild log</kbd><br />
 							{jq}
 $("#log-rebuild").click(function(){
 	if ($(this).prop("checked")) {
