@@ -138,7 +138,7 @@ function tiki_route($path)
 	}
 
 	tiki_route_attempt('|.*|', 'tiki-index.php', function ($parts) {
-		if (strstr($parts[0], '+')) {
+		if (strpos($parts[0], '+') !== false) {
 			$parts[0] = preg_replace('/\+/', ' ', $parts[0]);
 		}
 		return array('page' => preg_replace('/\+/', ' ', $parts[0]));
