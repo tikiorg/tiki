@@ -172,6 +172,10 @@ function smarty_function_query($params, $smarty)
 			$params['_type'] = 'anchor';
 
 		}
+		if (basename($php_self) === 'route.php') {
+			global $inclusion;
+			$php_self = str_replace('route.php', $inclusion, $php_self);
+		}
 
 		switch ( $params['_type'] ) {
 			case 'absolute_uri':
