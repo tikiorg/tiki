@@ -51,6 +51,10 @@ input[type="submit"]:hover,
 
 input[type="text"],
 input[type="password"],
+input[type="file"],
+input[type="email"],
+input[type="file"],
+input[type="number"],
 select,
 textarea,
 body.cke_show_borders {
@@ -220,13 +224,15 @@ tr.diffheader {
 
 tr.odd td,
 td.odd,
-li.odd {
+li.odd,
+table.normal tr:nth-child(2n+1) {
 	background: #c6e99c;
 }
 
 tr.even td,
 td.even,
-li.even {
+li.even,
+table.normal tr:nth-child(2n) {
 	background: #b0e077;
 }
 

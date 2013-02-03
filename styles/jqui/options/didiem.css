@@ -271,6 +271,10 @@ input[type="submit"]:hover,
 
 input[type="text"],
 input[type="password"],
+input[type="file"],
+input[type="email"],
+input[type="file"],
+input[type="number"],
 select {
 	margin: 1px 0;
 }
@@ -285,6 +289,10 @@ form.filter {
 }
 
 input[type="text"],
+input[type="file"],
+input[type="email"],
+input[type="file"],
+input[type="number"],
 div.fancyfilter,
 textarea {
 	border: 1px solid #e0e0e0;
