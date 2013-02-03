@@ -128,8 +128,11 @@ hr {
 
 legend {color: #a9a9a9}
 
-input[type=text],
-input[type=password] {
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="file"],
+input[type="number"] {
 	background: #586858;
 	border: 1px solid;
 	border-color: #5a5a62 #b5b5c3 #b5b5c3 #5a5a62;
@@ -159,7 +162,8 @@ button,
 .submitbutton,
 .calbuttonBox,
 input[type=submit],
-input[type=reset] {
+input[type=reset],
+img[type="input"]{
 	background: #424248 url(abse/titlebgoff.png) repeat-x;
 	border: 1px solid;
 	border-color: #b5b5c3 #5a5a62 #5a5a62 #b5b5c3;
@@ -178,7 +182,8 @@ button:hover,
 .button input:hover,
 .submitbutton:hover,
 option:hover,
-.calbuttonBox a:hover {
+.calbuttonBox a:hover,
+img[type="input"]:hover {
 	background: url(abse/titlebgon.png) repeat-x 0 1px;
 	color: #fff/*#BDCEC3*/;
 	text-decoration: none}
@@ -535,12 +540,14 @@ tr.odd td {
 	color: #fff;
 }
 
-tr.even {
+tr.even,
+table.normal tr:nth-child(2n) {
 	background: #0e150e;
 	color: #fff;
 }
 
-td.odd {
+td.odd,
+table.normal tr:nth-child(2n+1) {
 	background: #000 url(abse/menubg.jpg) repeat-y;
 	color: #fff;
 	border-right: 1px solid #636f65}

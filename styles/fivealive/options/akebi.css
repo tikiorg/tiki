@@ -206,12 +206,14 @@ th.header {
 }
 
 .odd,
-.calodd {
+.calodd,
+table.normal tr:nth-child(2n+1) {
 	background: #cbf4f6;
 }
 
 .even,
-.caleven {
+.caleven,
+table.normal tr:nth-child(2n) {
 	background: #d3f9f9;
 }
 

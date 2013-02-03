@@ -477,7 +477,8 @@ td {vertical-align: top}
 tr.odd,
 td.odd,
 tr.odd td,
-li.odd {
+li.odd,
+table.normal tr:nth-child(2n+1) {
 	background: #030511;
 	color: #f4f4f4;
 }
@@ -485,7 +486,8 @@ li.odd {
 tr.even,
 td.even,
 tr.even td,
-li.even {
+li.even,
+table.normal tr:nth-child(2n) {
 	background: #313131;
 	color: #f4f4f4;
 }
@@ -493,7 +495,9 @@ li.even {
 tr.odd td,
 td.odd,
 tr.even td,
-td.even {
+td.even,
+table.normal tr:nth-child(2n+1),
+table.normal tr:nth-child(2n) {
 	border-right: 1px solid #696969;
 }
 

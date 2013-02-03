@@ -167,7 +167,9 @@ input[type=checkbox],
 input[type=radio] {border: 0}
 
 input[type="text"],
-input[type="password"] {
+input[type="password"],
+input[type="email"],
+input[type="number"] {
 	background-color: #d2d9e3;
 	color: #000}
 

@@ -251,21 +251,24 @@ tr.diffheader a {
 
 tr.odd td,
 td.odd,
-li.odd {
+li.odd,
+table.normal tr:nth-child(2n+1) {
 	font-size: 10px;
 	background-color:#F0F0F0;
 	border:1px solid #676767;}
 
 tr.odd td:hover,
 td.odd:hover,
-li.odd:hover {
+li.odd:hover,
+table.normal tr:nth-child(2n+1):hover {
 	background: #FFF7E6;
 }
 
 tr.even td,
 td.even,
 li.even,
-.forum_actions {
+.forum_actions,
+table.normal tr:nth-child(2n) {
 	border: 1px solid #676767;  
 	font-size: 10px;
 	background-color: #E0E0E0;
@@ -274,7 +277,8 @@ li.even,
 
 tr.even td:hover,
 td.even:hover,
-li.even:hover {
+li.even:hover,
+table.normal tr:nth-child(2n):hover {
 	background: #FFF7E6;
 }
 
