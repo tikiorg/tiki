@@ -15,7 +15,6 @@ error_reporting(E_ALL);
 ini_set("display_errors", 'stdout');
 
 require_once ("tiki-setup.php");
-require_once ("lib/webmail/htmlMimeMail.php");
 
 echo ("Mail queue processor starting...\n");
 

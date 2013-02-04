@@ -16,10 +16,10 @@
 {/if}
 
 {tr}To validate that account, please follow the link:{/tr}
-{$mail_machine}?user={$mail_user|escape:'url'}&pass={$mail_apass}
+{$validation_url}
 
-{tr}Assign to a group:{/tr} {$mail_machine_assignuser}?assign_user={$mail_user|escape:'url'}
-{tr}View user's data:{/tr} {$mail_machine_userprefs}?view_user={$mail_user|escape:'url'}
+{tr}Assign to a group:{/tr} {$assignuser_url}
+{tr}View user's data:{/tr} {$userpref_url}
 
 
 {tr}Best regards{/tr}

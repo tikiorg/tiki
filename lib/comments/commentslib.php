@@ -294,12 +294,9 @@ class Comments extends TikiLib
 
 	function process_inbound_mail($forumId)
 	{
-		// require_once ("lib/webmail/pop3.php");
 		require_once ("lib/webmail/net_pop3.php");
 
 		require_once ("lib/mail/mimelib.php");
-		//require_once ("lib/webmail/mimeDecode.php");
-		include_once ("lib/webmail/htmlMimeMail.php");
 		$info = $this->get_forum($forumId);
 
 		// for any reason my sybase test machine adds a space to

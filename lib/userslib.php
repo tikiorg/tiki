@@ -5779,8 +5779,9 @@ class UsersLib extends TikiLib
 			$hash = $this->hash_pass($pass);
 		} else {
 			$hash = '';
-			if (!isset($prefs['validateRegistration']) || $prefs['validateRegistration'] != 'y')
+			if (!isset($prefs['validateRegistration']) || $prefs['validateRegistration'] != 'y') {
 				$lastLogin = $tikilib->now;
+			}
 		}
 
 		if ( $prefs['feature_clear_passwords'] == 'n' ) {
@@ -5793,30 +5794,22 @@ class UsersLib extends TikiLib
 			$new_pass_confirm = $this->now;
 		}
 		$new_email_confirm = $this->now;
-		$query = 'insert into `users_users`' .
-						' (`login`, `password`, `email`, `provpass`, `registrationDate`,' .
-						' `hash`, `pass_confirm`, `email_confirm`, `created`, `valid`,' .
-						' `openid_url`, `lastLogin`, `waiting`)' .
-						' values(?,?,?,?,?,?,?,?,?,?,?,?,?)';
-
-		$result = $this->query(
-			$query,
-			array(
-				$user,
-				$pass,
-				$email,
-				$provpass,
-				(int) $this->now,
-				$hash,
-				(int) $new_pass_confirm,
-				(int) $new_email_confirm,
-				(int) $this->now,
-				$valid,
-				$openid_url,
-				$lastLogin,
-				$waiting
-			)
-		);
+		$userTable = $this->table('users_users');
+		$userTable->insert(array(
+			'login' => $user,
+			'password' => $pass,
+			'email' => $email,
+			'provpass' => $provpass,
+			'registrationDate' => (int) $this->now,
+			'hash' => $hash,
+			'pass_confirm' => (int) $new_pass_confirm,
+			'email_confirm' => (int) $new_email_confirm,
+			'created' => (int) $this->now,
+			'valid' => $valid,
+			'openid_url' => $openid_url,
+			'lastLogin' => $lastLogin,
+			'waiting' => $waiting,
+		));
 
 		$this->assign_user_to_group($user, 'Registered');
 
@@ -6572,46 +6565,12 @@ class UsersLib extends TikiLib
 	function send_validation_email($name, $apass, $email, $again = '', $second = '',
 		$chosenGroup = '', $mailTemplate = '', $pass = '')
 	{
-		// TODO: CLEANUP duplicates code in callback_tikiwiki_send_email() in registrationlib?
 		global $tikilib, $prefs, $smarty;
-		$foo = parse_url($_SERVER['REQUEST_URI']);
-		$foo1 = str_replace(
-			array(
-				'tiki-send_mail',
-				'tiki-register',
-				'tiki-remind_password',
-				'tiki-adminusers',
-				'remote'
-			),
-			'tiki-login_validate',
-			$foo['path']
-		);
 
-		$foo2 = str_replace(
-			array(
-				'tiki-send_mail',
-				'tiki-register',
-				'tiki-remind_password',
-				'tiki-adminusers'
-			),
-			'tiki-assignuser',
-			$foo['path']
-		);
-
-		$foo3 = str_replace(
-			array(
-				'tiki-send_mail',
-				'tiki-register',
-				'tiki-remind_password',
-				'tiki-adminusers'
-			),
-			'tiki-user_preferences',
-			$foo['path']
-		);
-
-		$machine = $tikilib->httpPrefix(true) . $foo1;
-		$machine_assignuser = $tikilib->httpPrefix(true) . $foo2;
-		$machine_userprefs = $tikilib->httpPrefix(true) . $foo3;
+		// mail_machine kept for BC, use $validation_url
+		$machine = TikiLib::tikiUrl('tiki-login_validate.php');
+		$machine_assignuser = TikiLib::tikiUrl('tiki-assignuser.php');
+		$machine_userprefs = TikiLib::tikiUrl('tiki-user_preferences.php');
 		$smarty->assign('mail_machine', $machine);
 		$smarty->assign('mail_machine_assignuser', $machine_assignuser);
 		$smarty->assign('mail_machine_userprefs', $machine_userprefs);
@@ -6620,6 +6579,16 @@ class UsersLib extends TikiLib
 		$smarty->assign('mail_apass', $apass);
 		$smarty->assign('mail_email', $email);
 		$smarty->assign('mail_again', $again);
+		$smarty->assign('validation_url', TikiLib::tikiUrl('tiki-login_validate.php', array(
+			'user' => $name,
+			'pass' => $apass,
+		)));
+		$smarty->assign('assignuser_url', TikiLib::tikiUrl('tiki-assignuser.php', array(
+			'assign_user' => $name,
+		)));
+		$smarty->assign('userpref_url', TikiLib::tikiUrl('tiki-user_preferences.php', array(
+			'view_user' => $name,
+		)));
 
 		include_once('lib/webmail/tikimaillib.php');
 
@@ -6715,8 +6684,14 @@ class UsersLib extends TikiLib
 				}
 			}
 		} elseif ($prefs['validateUsers'] == 'y' || !empty($pass)) {
-			if ( $mailTemplate == '' )
+			if ( $mailTemplate == '' ) {
 				$mailTemplate = 'user_validation_mail';
+			}
+
+			$smarty->assign('validation_url', TikiLib::tikiUrl('tiki-confirm_user_email.php', array(
+				'user' => $name,
+				'pass' => $apass,
+			)));
 
 			$smarty->assign('mail_pass', $pass);
 			$mail_data = $smarty->fetch("mail/$mailTemplate.tpl");
@@ -6771,6 +6746,7 @@ class UsersLib extends TikiLib
 		if (!($res = $result->fetchRow())) {
 			return false;
 		}
+var_dump($res);die;
 
 		if (md5($res['provpass']) == $pass) {
 			$this->confirm_user($user);
@@ -6812,7 +6788,7 @@ class UsersLib extends TikiLib
 		$mail_data = sprintf($mail_data, $_SERVER['SERVER_NAME']);
 		$mail->setSubject($mail_data);
 		$foo = parse_url($_SERVER['REQUEST_URI']);
-		$mail_machine = $tikilib->httpPrefix(true) . str_replace('tiki-login.php', 'tiki-confirm_user_email.php', $foo['path']);
+		$mail_machine = TikiLib::tikiUrl('tiki-confirm_user_email.php'); // for BC
 		$smarty->assign('mail_machine', $mail_machine);
 		$mail_data = $smarty->fetchLang($languageEmail, "mail/$tpl.tpl");
 		$mail->setText($mail_data);

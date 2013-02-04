@@ -1771,7 +1771,6 @@ class FileGalLib extends TikiLib
 					$lg = $tikilib->get_user_preference($not['user'], 'language', $prefs['site_language']);
 					$mail->setSubject(tra('File gallery quota exceeded', $lg));
 					$mail->setText($smarty->fetchLang($lg, 'mail/fgal_quota_exceeded.tpl'));
-					$mail->buildMessage();
 					$mail->send(array($not['email']));
 				}
 			}

@@ -62,9 +62,6 @@ if ( $prefs['auth_token_access'] == 'y' && isset($_REQUEST['TOKEN']) ) {
 				include_once ('lib/webmail/tikimaillib.php');
 				$mail = new TikiMail();
 
-				$mail->setFrom($prefs['sender_email']);
-				$mail->setHeader('Return-Path', '<' . $prefs['sender_email'] . '>');
-				$mail->setHeader('Reply-To', '<' . $prefs['sender_email'] . '>');
 				$mail->setSubject($detailtoken['email'] . ' ' . tra(' has accessed your temporary shared content'));
 
 				foreach ($nots as $i=>$not) {

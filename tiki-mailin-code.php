@@ -124,12 +124,8 @@ foreach ($accs['data'] as $acc) {
 						$content.= "Anonymous user acces denied, sending auto-reply to email address:&nbsp;" . $aux["From"] . "<br />";
 						$mail = new TikiMail();
 						$mail->setFrom($acc["account"]);
-						$c = $prefs['default_mail_charset'];
-						$mail->setHeadCharset($c);
-						$mail->setTextCharset($c);
 						$l = $prefs['language'];
 						$mail->setSubject(tra('Tiki mail-in auto-reply', $l));
-						$mail->setSMTPParams($acc["smtp"], $acc["smtpPort"], '', $acc["useAuth"], $acc["username"], $acc["pass"]);
 						$mail->setText(tra("Sorry, you can't use this feature.", $l));
 						$res = $mail->send(array($email_from), 'mail');
 						$content.= "Response sent<br />";
@@ -197,11 +193,6 @@ foreach ($accs['data'] as $acc) {
 								// and also sends the source of the page
 								$mail = new TikiMail();
 								$mail->setFrom($acc["account"]);
-								$c = $prefs['default_mail_charset'];
-								$mail->setHeadCharset($c);
-								$mail->setHtmlCharset($c);
-								$mail->setTextCharset($c);
-								$mail->setSMTPParams($acc["smtp"], $acc["smtpPort"], '', $acc["useAuth"], $acc["username"], $acc["pass"]);
 								if ($tikilib->page_exists($page)) {
 									$mail->setSubject($page);
 									$info = $tikilib->get_page_info($page);
@@ -254,13 +245,9 @@ foreach ($accs['data'] as $acc) {
 							} else {
 								$mail = new TikiMail();
 								$mail->setFrom($acc["account"]);
-								$c = $prefs['default_mail_charset'];
-								$mail->setHeadCharset($c);
-								$mail->setTextCharset($c);
 								$l = $prefs['language'];
 								$mail_data = $smarty->fetchLang($l, "mail/mailin_help_subject.tpl");
 								$mail->setSubject($mail_data);
-								$mail->setSMTPParams($acc["smtp"], $acc["smtpPort"], '', $acc["useAuth"], $acc["username"], $acc["pass"]);
 								$smarty->assign('subject', $output['header']['subject']);
 								$mail_data = $smarty->fetchLang($l, "mail/mailin_help.tpl");
 								$mail->setText($mail_data);

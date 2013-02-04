@@ -764,19 +764,17 @@ class OpenPGPLib
 				if ($userlib->user_exists($from)) {
 					$from_email = $userlib->get_user_email($from);
 					if ($bcc_sender === 'y' && !empty($from_email)) {
-						$mail->setHeader("Bcc", $from_email);
+						$mail->setBcc($from_email);
 					}
 					if ($replyto_email !== 'y' && $userlib->get_user_preference($from, 'email is public', 'n') == 'n') {
 						$from_email = '';	// empty $from_email if not to be used - saves getting it twice
 					}
 					if (!empty($from_email)) {
-						$mail->setHeader("Reply-To", $from_email);
+						$mail->setReplyTo($from_email);
 					}
 				}
-				if (!empty($prefs['sender_email'])) {
-					$mail->setHeader("From", $prefs['sender_email']);
-				} else if (!empty($from_email)) {
-					$mail->setHeader("From", $from_email);
+				if (!empty($from_email)) {
+					$mail->setFrom($from_email);
 				}
 
 				if (!$mail->send(array($email), 'mail')) {

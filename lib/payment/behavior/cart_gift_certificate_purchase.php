@@ -91,7 +91,6 @@ function payment_behavior_cart_gift_certificate_purchase(
 	$mail = new TikiMail();
 	$mail->setSubject($mail_subject);
 	$mail->setText($mail_data);
-	$mail->setHeader("From", $prefs['sender_email']);
 	$mail->send($giftcertemail);
 
 	return true;

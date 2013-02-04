@@ -1267,7 +1267,7 @@ class NlLib extends TikiLib
 				$att->mimeType = $f['type'];
 			}
 
-			$zmail->setSubject($info['subject']); // htmlMimeMail memorised the encoded subject
+			$zmail->setSubject($info['subject']);
 
 			$mailcache[$editionId] = array(
 				'zmail' => $zmail,

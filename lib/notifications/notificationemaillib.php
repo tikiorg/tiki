@@ -65,9 +65,8 @@ function sendForumEmailNotification(
 		$smarty->assign('author', $author);
 		$mail_data = $smarty->fetch("mail/forum_outbound.tpl");
 		$mail->setText($mail_data);
-		$mail->setHeader("Reply-To", $my_sender);
-		$mail->setHeader("From", $my_sender);
-		$mail->setHeader("X-Tiki", 'yes');
+		$mail->setReplyTo($my_sender);
+		$mail->setFrom($my_sender);
 		$mail->setSubject($topicName);
 
 		if ($inReplyTo) {
@@ -88,8 +87,6 @@ function sendForumEmailNotification(
 				$mail->addAttachment($file, $att_data['filename'], $att_data['filetype']);
 			}
 		}
-
-		$mail->buildMessage();
 
 		// Message-ID is set below buildMessage because otherwise lib/webmail/htmlMimeMail.php will over-write it.
 		$mail->setHeader("Message-ID", "<".$messageId.">");
@@ -173,7 +170,6 @@ function sendForumEmailNotification(
 			$mail->setSubject($mail_data);
 			$mail_data = $smarty->fetchLang($not['language'], "mail/forum_post_notification.tpl");
 			$mail->setText($mail_data);
-			$mail->buildMessage();
 			$mail->send(array($not['email']));
 		}
 	}
@@ -359,7 +355,6 @@ function sendWikiEmailNotification(
 			$mail = new TikiMail($not['user']);
 			$mail->setSubject(sprintf($mail_subject, $pageName));
 			$mail->setText($mail_data);
-			$mail->setHeader("From", $prefs['sender_email']);
 			$mail->send(array($not['email']));
 
 		}
@@ -412,7 +407,6 @@ function sendEmailNotification($watches, $dummy, $subjectTpl, $subjectParam, $tx
 			$mail->setSubject($subjectParam);
 		}
 		$mail->setText($smarty->fetchLang($watch['language'], "mail/".$txtTpl));
-		$mail->buildMessage();
 		if ($mail->send(array($watch['email']))) {
 			$sent++;
 		}
@@ -512,7 +506,6 @@ function sendFileGalleryEmailNotification($event, $galleryId, $galleryName, $nam
 				$mail_data = $smarty->fetchLang($not['language'], "mail/user_watch_file_gallery_remove_file.tpl");
 			}
 			$mail->setText($mail_data);
-			$mail->buildMessage();
 			$mail->send(array($not['email']));
 		}
 	}
@@ -638,7 +631,6 @@ function sendCategoryEmailNotification($values)
 
 			$mail->setSubject($mail_subject);
 			$mail->setText($mail_data);
-			$mail->buildMessage();
 			$mail->send(array($not['email']));
 		}
 	}
@@ -661,7 +653,6 @@ function sendStructureEmailNotification($params)
 		$machine = $tikilib->httpPrefix(true) . dirname($foo["path"]);
 		$smarty->assign_by_ref('mail_machine', $machine);
 		include_once('lib/webmail/tikimaillib.php');
-		$mail = new TikiMail();
 		$smarty->assign_by_ref('action', $params['action']);
 		$smarty->assign_by_ref('page_ref_id', $params['page_ref_id']);
 
@@ -670,13 +661,13 @@ function sendStructureEmailNotification($params)
 		}
 
 		foreach ($nots as $not) {
+			$mail = new TikiMail();
 			$mail->setUser($not['user']);
 			$not['language'] = $tikilib->get_user_preference($not['user'], 'language', $defaultLanguage);
 			$mail_subject = $smarty->fetchLang($not['language'], 'mail/user_watch_structure_subject.tpl');
 			$mail_data = $smarty->fetchLang($not['language'], 'mail/user_watch_structure.tpl');
 			$mail->setSubject($mail_subject);
 			$mail->setText($mail_data);
-			$mail->buildMessage();
 			$mail->send(array($not['email']));
 		}
 	}

@@ -140,7 +140,6 @@ if (isset($_REQUEST['send'])) {
             $mail = new TikiMail();
             $mail->setFrom($prefs['sender_email']);
             $mail->setSubject($_REQUEST["emailsubject"]);
-            $mail->setCrlf("\n");
             $url=str_replace('tiki-invite.php', 'tiki-invited.php', $_SERVER['SCRIPT_URI'])
                 .'?invite='.$id.'&email='.urlencode($m['email']);
             $text=$_text;

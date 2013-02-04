@@ -850,13 +850,14 @@ function wikiplugin_tracker($data, $params)
 						}
 						include_once('lib/webmail/tikimaillib.php');
 						$mail = new TikiMail();
-						$mail->setHeader('From', $emailOptions[0]);
+						$mail->setFrom($emailOptions[0]);
 
 						if (!empty($emailOptions[2])) { //tpl
 							$emailOptions[2] = preg_split('/ *, */', $emailOptions[2]);
 							foreach ($emailOptions[2] as $ieo=>$eo) {
-								if (!preg_match('/\.tpl$/', $eo))
+								if (!preg_match('/\.tpl$/', $eo)) {
 									$emailOptions[2][$ieo] = $eo.'.tpl';
+								}
 								$tplSubject[$ieo] = str_replace('.tpl', '_subject.tpl', $emailOptions[2][$ieo]);
 							}
 						} else {
@@ -879,10 +880,10 @@ function wikiplugin_tracker($data, $params)
 							} else {
 							$mail->setText($mail_data);
 							}
-							$mail->buildMessage(array('text_encoding' => '8bit'));
 							$mail->send($ueo);
-							if (isset($tplSubject[$itpl+1]))
+							if (isset($tplSubject[$itpl+1])) {
 								++$itpl;
+							}
 						}
 					}
 					if (empty($url)) {

@@ -6,187 +6,115 @@
 // $Id$
 
 /**
- * Extension htmlMimeMail
  * set some default params (mainly utf8 as titi is utf8) + use the mailCharset pref from a user
  */
 global $access;
 $access->check_script($_SERVER["SCRIPT_NAME"], basename(__FILE__));
-include_once("lib/webmail/htmlMimeMail.php");
 
-class TikiMail extends HtmlMimeMail
+class TikiMail
 {
-	var $charset;
+	private $mail;
 
 	/* $user = user you send the mail
 		 $from = email you send from*/
 	function __construct($user = null, $from=null)
 	{
-		global $prefs, $tikilib;
+		require_once 'lib/mail/maillib.php';
 
-		parent::htmlMimeMail();
-		$this->charset = !$user ? $prefs['default_mail_charset'] : $tikilib->get_user_preference($user, 'mailCharset', 'utf-8');
-		$this->setTextCharset($this->charset);
-		$this->setHtmlCharset($this->charset);
-		$this->setHeadCharset($this->charset);
-		if (isset($prefs['mail_crlf'])) {
-			$this->setCrlf($prefs['mail_crlf'] == "LF"? "\n": "\r\n");
-		}
-		if ($prefs['zend_mail_handler'] == 'smtp') {
-			if ($prefs['zend_mail_smtp_auth'] == 'login') {
-				$this->setSMTPParams(
-					$prefs['zend_mail_smtp_server'],
-					$prefs['zend_mail_smtp_port'],
-					$prefs['zend_mail_smtp_helo'],
-					true,
-					$prefs['zend_mail_smtp_user'],
-					$prefs['zend_mail_smtp_pass'],
-					$prefs['zend_mail_smtp_security']
-				);
-			} else {
-				$this->setSMTPParams(
-					$prefs['zend_mail_smtp_server'],
-					$prefs['zend_mail_smtp_port'],
-					$prefs['zend_mail_smtp_helo'],
-					false,
-					null,
-					null,
-					$prefs['zend_mail_smtp_security']
-				);
+		if (! empty($from)) {
+			$this->mail = tiki_get_basic_mail();
+			try {
+				$this->mail->setFrom($from);
+				$this->mail->setReturnPath($from);
+			} catch (Exception $e) {
+				// was already set, then do nothing
 			}
+		} else {
+			$this->mail = tiki_get_admin_mail();
 		}
-		if (empty($from)) {
-			$from = $prefs['sender_email'];
-		}
-		$this->setFrom($from);
-		if (!@ini_get('safe_mode')) {
-			$this->setReturnPath($from); // in safe-mode, return-path must then be configured at the server level
-		}
-		$this->setHeader("Return-Path", $from); // just in case, mainly will not work as usually the server rewrites the envelop
-		$this->setHeader("Reply-To", $from);
 	}
 
 	function setUser($user)
 	{
-		global $tikilib, $prefs;
-		$this->charset = $tikilib->get_user_preference($user, 'mailCharset', $prefs['default_mail_charset']);
-		$this->setTextCharset($this->charset);
-		$this->setHtmlCharset($this->charset);
-		$this->setHeadCharset($this->charset);
 	}
 
-	function _encodeHeader($input, $charset = 'ISO-8859-1')
+	function setFrom($email)
 	{
-		// todo perhaps chunk_split
-		if (preg_match('/[\x80-\xFF]/', $input)) {
-			$input = preg_replace('/([\x80-\xFF =])/e', '"=" . strtoupper(dechex(ord("\1")))', $input);
-			return '=?' . $charset . '?Q?' . $input . '?=';
-		}
-		else
-			return $input;
+		$this->mail->setFrom($email);
+	}
+
+	function setReplyTo($email)
+	{
+		$this->mail->setReplyTo($email);
 	}
 
 	function setSubject($subject)
 	{
-		if ($this->charset != "utf-8")
-			parent::setSubject(encodeString($this->encodeNonInCharset($subject, false), $this->charset));
-		else
-			parent::setSubject($subject);
+		$this->mail->setSubject($subject);
 	}
 
 	function setHtml($html, $text = null, $images_dir = null)
 	{
-		if ($this->charset != "utf-8") {
-			parent::setHtml(
-				encodeString($this->encodeNonInCharset($html, true), $this->charset),
-				encodeString($this->encodeNonInCharset($text, false), $this->charset),
-				$images_dir
-			);
-		} else {
-			parent::setHtml($html, $text, $images_dir);
+		$this->mail->setBodyHtml($html);
+		if ($text) {
+			$this->mail->setBodyText($text);
 		}
 	}
 
 	function setText($text = '')
 	{
-		global $prefs;
-		if (!empty($prefs['email_footer'])) {
-			$text .= CRLF . $prefs['email_footer'];
-		}
-		if ($this->charset != "utf-8")
-			parent::setText(encodeString($this->encodeNonInCharset($text, false), $this->charset));
-		else
-			parent::setText($text);
+		$this->mail->setBodyText($text);
 	}
 
-	/**
-	 * encode non existing charater is final charset
-	 */
-	function encodeNonInCharset($string, $toHtml=true)
+	function setCc($address)
 	{
-		if ($this->charset == 'iso-8859-1') {
-			$bad = array('€','‚', 'ƒ','„', '…', '†', '‡', 'ˆ', '‰', 'Š',
-					'‹', 'Œ', '‘', '’', '“', '”', '•', '–', '—', '˜', '™',
-					'š', '›', 'œ', 'ÿ');
-			$html = array('&euro;', '&sbquo;', '&fnof;', '&bdquo;', '&hellip;', '&dagger;', '&Dagger;', '&circ;', '&permil;', '&Scaron;',
-					'&lsaquo;', '&OElig;', '&lsquo;', '&rsquo;', '&ldquo;', '&rdquo;', '&bull;', '&ndash;', '&mdash;', '&tilde;', '&trade;',
-					'&scaron;', '&rsaquo;', '&oelig;', '&Yuml;');
-			$text = array('euros', ',', 'f', ',,', '...', 'T','T', '^', '0/00', 'S',
-					'<', 'OE', '\'', '\'', '"', '"', '.', '-', '-', '~', '(TM)',
-					's', '>', 'oe', 'y');
+		foreach ((array) $address as $cc) {
+			$this->mail->addCc($cc);
+		}
+	}
 
-			return str_replace($bad, $toHtml? $html: $text, $string);
-		} else
-			return $string;
+	function setBcc($address)
+	{
+		foreach ((array) $address as $bcc) {
+			$this->mail->addBcc($bcc);
+		}
+	}
+
+	function setHeader($name, $value)
+	{
+		$this->mail->addHeader($name, $value);
 	}
 
 	function send($recipients, $type = 'mail')
 	{
 		global $prefs;
-		global $logslib; include_once ('lib/logs/logslib.php');
-		if ($prefs['zend_mail_handler'] == 'smtp') {
-			$type = 'smtp';
+		$logslib = TikiLib::lib('logs');
+
+		$this->mail->clearHeader('To');
+		foreach ((array) $recipients as $to) {
+			$this->mail->addTo($to);
 		}
-		$result = parent::send($recipients, $type);
-		$title = $result?'mail': 'mail error';
-		if (!$result || $prefs['log_mail'] == 'y')
+
+		try {
+			$this->mail->send();
+
+			$title = 'mail';
+		} catch (Zend_Mail_Exception $e) {
+			$title = 'mail error';
+		}
+
+		if ($title == 'mail error' || $prefs['log_mail'] == 'y') {
 			foreach ($recipients as $u) {
-				$logslib->add_log($title, $u . '/' . $this->headers['Subject']);
+				$logslib->add_log($title, $u . '/' . $this->mail->getSubject());
 			}
-		return $result;
+		}
+		return $title == 'mail';
 	}
-}
 
-/**
- * encode a string
- * @param string $string : the string in utf-8
- * @param $charset: iso8859-1 or utf-8
- */
-function encodeString($string, $charset="utf-8")
-{
-	if ($string == null)
-		return null;
-	else if ($charset == "iso-8859-1")
-		return utf8_decode($string);
-	/* add other charsets */
-
-	else
-		return $string;
-}
-
-function decode_subject_utf8($string)
-{
-	if (preg_match('/=\?.*\?.*\?=/', $string) === false)
-		return $string;
-	$string = explode('?', $string);
-	$str = strtolower($string[2]) == 'q' ?quoted_printable_decode($string[3]):base64_decode($string[3]);
-	if (strtolower($string[1]) == "iso-8859-1")
-		return utf8_encode($str);
-	else if (strtolower($string[1]) == "utf-8")
-		return $str;
-	else if (function_exists('mb_convert_encoding'))
-		return mb_convert_encoding($str, "utf-8", $string[1]);
-	else
-		return $str;
+	function addAttachment($data, $filename, $mimetype)
+	{
+		$this->mail->createAttachment($data, $mimetype, Zend_Mime::DISPOSITION_INLINE, Zend_Mime::ENCODING_BASE64, $filename);
+	}
 }
 
 /**

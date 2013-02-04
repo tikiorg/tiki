@@ -56,7 +56,6 @@ class Reports_Send
 			$this->mail->setHtml($mailData);
 		}
 
-		$this->mail->buildMessage();
 		$this->mail->send(array($userData['email']));
 
 		$prefs['language'] = $lgSave;  //Restore language settings

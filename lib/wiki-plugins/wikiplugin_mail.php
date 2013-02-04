@@ -141,7 +141,6 @@ function wikiplugin_mail($data, $params)
 			$mail->setSubject($_REQUEST['mail_subject']);
 			$mail->setText($_REQUEST['mail_mess']);
 			if ($mail->send($to)) {
-				//echo '<pre>MAIL'; print_r($to); echo '</pre>';
 				$smarty->assign_by_ref('sents', $to);
 			} else {
 				$mail_error = true;

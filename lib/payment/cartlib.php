@@ -831,7 +831,6 @@ class CartLib
 				} else {
 					$mail->setHtml($mail_data);
 				}
-				$mail->setHeader("From", $prefs['sender_email']);
 				$mail->send($_SESSION['shopperinfo']['email']); // the field to use probably needs to be configurable as well
 			}
 		}

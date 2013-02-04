@@ -407,24 +407,25 @@ function sendMail($sender, $recipients, $subject, $tokenlist = array())
 	}
 
 	include_once ('lib/webmail/tikimaillib.php');
-	$mail = new TikiMail();
 	$smarty->assign_by_ref('mail_site', $_SERVER['SERVER_NAME']);
 
-	if (!empty($user) && $from == $userlib->get_user_email($user)) {
-		$mail->setFrom($from);
-		$mail->setHeader('Return-Path', "<$from>");
-		$mail->setHeader('Reply-To', "<$from>");
-	}
-
-	$mail->setSubject($subject);
+	$applyFrom = (!empty($user) && $from == $userlib->get_user_email($user));
 
 	$ok = true;
 	foreach ($recipients as $i=>$recipient) {
+		$mail = new TikiMail();
+
+		$mail->setSubject($subject);
+
+		if ($applyFrom) {
+			$mail->setFrom($from);
+			$mail->setReplyTo("<$from>");
+		}
+
 		$url_for_friend = $tokenlist[$i]['url'];
 		$smarty->assign('url_for_friend', $url_for_friend);
 		$txt = $smarty->fetch('mail/share.tpl');
 		// Rebuild email message texte
-		$mail->is_built = false;
 		$mail->setText($txt);
 		$mailsent = $mail->send(array($recipient));
 		if (!$mailsent) {

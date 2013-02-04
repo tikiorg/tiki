@@ -655,7 +655,6 @@ class CalendarLib extends TikiLib
 				$mail->setSubject($mail_data);
 				$mail_data = $smarty->fetchLang($defaultLanguage, "mail/user_watch_calendar.tpl");
 				$mail->setText($mail_data);
-				$mail->buildMessage();
 				$mail->send(array($not['email']));
 			}
 		}

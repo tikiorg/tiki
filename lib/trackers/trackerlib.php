@@ -307,7 +307,6 @@ class TrackerLib extends TikiLib
 			$smarty->assign('mail_item_desc', $desc);
 			foreach ($watchers as $w) {
 				$mail = new TikiMail($w['user']);
-				$mail->setHeader("From", $prefs['sender_email']);
 				$mail->setSubject($smarty->fetchLang($w['language'], 'mail/tracker_changed_notification_subject.tpl'));
 				$mail->setText($smarty->fetchLang($w['language'], 'mail/tracker_changed_notification.tpl'));
 				$mail->send(array($w['email']));
@@ -2119,7 +2118,6 @@ class TrackerLib extends TikiLib
 				$smarty->assign('server_name', $_SERVER['SERVER_NAME']);
 				foreach ($watchers as $w) {
 					$mail = new TikiMail($w['user']);
-					$mail->setHeader("From", $prefs['sender_email']);
 					$mail->setSubject($smarty->fetchLang($w['language'], 'mail/tracker_changed_notification_subject.tpl'));
 					$mail->setText($smarty->fetchLang($w['language'], 'mail/tracker_changed_notification.tpl'));
 					$mail->send(array($w['email']));
@@ -3971,7 +3969,6 @@ class TrackerLib extends TikiLib
 					$mail = new TikiMail($watcher['user']);
 					$mail->setSubject($smarty->fetchLang($watcher['language'], 'mail/tracker_changed_notification_subject.tpl'));
 					$mail->setText($mail_data);
-					$mail->setHeader("From", $prefs['sender_email']);
 					$mail->send(array($watcher['email']));
 				}
 			} else {
@@ -4030,7 +4027,7 @@ class TrackerLib extends TikiLib
 					$mail->setSubject('['.$trackerName.'] '.str_replace('> ', '', $watcher_subject).' (' . tra('Tracker was modified at %0 by %1', $watcher['language'], false, array($_SERVER["SERVER_NAME"], $user)) . ')');
 					$mail->setText(tra('View the tracker item at:', $watcher['language'])." $machine/tiki-view_tracker_item.php?itemId=$itemId\n\n" . $watcher_data);
 					if ( ! empty( $my_sender ) ) {
-						$mail->setHeader("Reply-To", $my_sender);
+						$mail->setReplyTo($my_sender);
 					}
 					$mail->send(array($watcher['email']));
 					$i++;

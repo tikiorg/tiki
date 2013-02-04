@@ -5030,7 +5030,7 @@ class TikiLib extends TikiDb_Bridge
 
 		$recipients = $this->plugin_get_email_users_with_perm();
 
-		$mail->setBcc(join(', ', $recipients));
+		$mail->setBcc($recipients);
 
 		$mail->send(array($prefs['sender_email']));
 	}
