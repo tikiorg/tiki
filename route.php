@@ -74,7 +74,11 @@ function tiki_route($path)
 		return array('calIds' => $ids);
 	});
 
-	tiki_route_attempt_prefix('cat', 'tiki-browse_categories.php', 'parentId');
+	tiki_route_attempt('|^cat([0-9]+)\-?[^&]*(.*)|', 'tiki-browse_categories.php', function ($parts) {
+		return array(
+			'parentId' => $parts[1],
+		);
+	});
 
 	tiki_route_attempt_prefix('directory', 'tiki-directory_browse.php', 'parent');
 	tiki_route_attempt_prefix('dirlink', 'tiki-directory_redirect.php', 'siteId');
