@@ -427,7 +427,8 @@ tr.diffheader {
 	font-variant: small-caps;
 	font-size: inherit;
 	color: #90ee90;
-	background: none;
+	background-color: #000;
+	background-image: url("matrix/red.png");
 }
 
 .normal,

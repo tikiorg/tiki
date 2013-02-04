@@ -28,6 +28,7 @@ class Search_Indexer
 		} else {
 			$writer = new Zend_Log_Writer_Null();
 		}
+		$writer->setFormatter(new Zend_Log_Formatter_Simple(Zend_Log_Formatter_Simple::DEFAULT_FORMAT . ' [%memoryUsage% bytes]' . PHP_EOL));
 		$this->log = new Zend_Log($writer);
 
 		$this->searchIndex = $searchIndex;
@@ -54,7 +55,7 @@ class Search_Indexer
 	 */
 	public function rebuild()
 	{
-		$this->log->info('Starting rebuild');
+		$this->log('Starting rebuild');
 		$stat = array_fill_keys(array_keys($this->contentSources), 0);
 
 		foreach ($this->contentSources as $objectType => $contentSource) {
@@ -63,10 +64,10 @@ class Search_Indexer
 			}
 		}
 
-		$this->log->info('Starting optimization');
+		$this->log('Starting optimization');
 		$this->searchIndex->optimize();
-		$this->log->info('Finished optimization');
-		$this->log->info('Finished rebuild');
+		$this->log('Finished optimization');
+		$this->log('Finished rebuild');
 		return $stat;
 	}
 
@@ -97,12 +98,12 @@ class Search_Indexer
 		if (!empty( $prefs['unified_excluded_categories'] )) {
 			$categs = TikiLib::lib('categ')->get_object_categories($objectType, $objectId);
 			if (array_intersect($prefs['unified_excluded_categories'], $categs)) {
-				$this->log->info("addDocument skipped $objectType $objectId");
+				$this->log("addDocument skipped $objectType $objectId");
 				return 0;
 			}
 		}
 
-		$this->log->info("addDocument $objectType $objectId");
+		$this->log("addDocument $objectType $objectId");
 
 		$typeFactory = $this->searchIndex->getTypeFactory();
 
@@ -224,6 +225,12 @@ class Search_Indexer
 		}
 
 		return $this->cacheTypes[$objectType];
+	}
+
+	private function log($message)
+	{
+		$this->log->setEventItem('memoryUsage', memory_get_usage());
+		$this->log->info($message);
 	}
 }
 

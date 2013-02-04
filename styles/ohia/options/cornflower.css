@@ -310,7 +310,8 @@ td {vertical-align: top}
 tr.odd,
 td.odd,
 tr.odd td,
-li.odd {
+li.odd,
+table.normal tr:nth-child(2n+1) {
 	background: #94BBC4;
 	color: #004354;
 }
@@ -318,7 +319,8 @@ li.odd {
 tr.even,
 td.even,
 tr.even td,
-li.even {
+li.even,
+table.normal tr:nth-child(2n) {
 	background: #A3BFC9;
 	color: #004354;
 }
@@ -326,7 +328,9 @@ li.even {
 tr.odd td,
 td.odd,
 tr.even td,
-td.even {
+td.even,
+table.normal tr:nth-child(2n+1),
+table.normal tr:nth-child(2n) {
 	border-right: none;
 }
 

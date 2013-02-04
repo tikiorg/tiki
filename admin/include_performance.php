@@ -170,5 +170,5 @@ $smarty->assign('hits_graph', $tikilib->httpScheme() . '://chart.apis.google.com
 	'chd' => "t:{$opcode_stats['hit_hit']},{$opcode_stats['hit_miss']}",
 	'chl' => $txtHit . '|' . $txtMiss,
 	'chtt' => tr('Cache'),
-	), '', '&'));
+), '', '&'));
 

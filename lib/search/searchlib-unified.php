@@ -86,21 +86,10 @@ class UnifiedSearchLib
     function rebuildInProgress()
 	{
 		$tempName = $this->getIndexLocation() . '-new';
-		$file_exists = file_exists($tempName);
+		$new_exists = file_exists($this->getIndexLocation() . '-new');
+		$old_exists = file_exists($this->getIndexLocation() . '-old');
 
-		if (!isset($_SERVER['REQUEST_METHOD']) && !TikiInit::isWindows()) {		// called from shell.php and unix?
-			$output = null;
-			if (function_exists('exec')) {
-				exec('ps ax | grep \'search/shell.php\'|grep -v sudo|grep -v grep', $output);	// check for another running process
-			}
-			if (is_array($output) && count($output) > 1) {
-				return true;
-			} else if ($file_exists) {
-				$this->destroyDirectory($tempName);
-				$file_exists = false;
-			}
-		}
-		return $file_exists;
+		return $new_exists || $old_exists;
 	}
 
 	/**
@@ -136,6 +125,14 @@ class UnifiedSearchLib
 			die('Unsupported');
 		}
 
+		$unifiedsearchlib = $this;
+		register_shutdown_function(function () use ($tempName, $unifiedsearchlib) {
+			if (file_exists($tempName)) {
+				$unifiedsearchlib->destroyDirectory($tempName);
+				echo "Abnormal termination. Likely ran out of memory.";
+			}
+		});
+
 		// Build in -new
 		TikiLib::lib('queue')->clear(self::INCREMENT_QUEUE);
 		$tikilib = TikiLib::lib('tiki');
@@ -151,16 +148,25 @@ class UnifiedSearchLib
 		unset($indexer);
 		unset($index);
 
+		$errlib = TikiLib::lib('errorreport');
 		if ($prefs['unified_engine'] == 'lucene') {
 			// Current to -old
 			if (file_exists($index_location)) {
-				rename($index_location, $swapName);
+				if (! rename($index_location, $swapName)) {
+					$errlib->report(tr('Could not remove active index. Likely a file permission issue.'));
+				}
 			}
 			// -new to current
-			rename($tempName, $index_location);
+			if (! rename($tempName, $index_location)) {
+				$errlib->report(tr('Could not transfer new index to active. Likely a file permission issue.'));
+			}
 
 			// Destroy old
 			$this->destroyDirectory($swapName);
+
+			if (file_exists($swapName)) {
+				$errlib->report(tr('Failed to destroy the old index. Likely a file permission issue.'));
+			}
 		}
 
 		// Process the documents updated while we were processing the update
@@ -500,10 +506,13 @@ class UnifiedSearchLib
 	}
 
     /**
+	 * Private. Used by a callback, so made public until PHP 5.4.
+	 *
      * @param $path
      * @return int
+	 * @private
      */
-    private function destroyDirectory($path)
+	function destroyDirectory($path)
 	{
 		if (!$path or !is_dir($path)) return 0;
 
