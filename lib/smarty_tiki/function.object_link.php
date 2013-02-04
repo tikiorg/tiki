@@ -160,7 +160,7 @@ function smarty_function_object_link_trackeritem( $smarty, $object, $title = nul
 
 	$item = Tracker_Item::fromId($object);
 
-	if ($status = $item->getDisplayedStatus()) {
+	if ($item && $status = $item->getDisplayedStatus()) {
 		$alt = tr($status);
 		$pre = "<img src=\"img/icons/status_$status.gif\" alt=\"$status\"/>&nbsp;";
 	}
