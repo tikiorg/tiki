@@ -23,9 +23,10 @@ function isValidLocale($localeIdentifier = '')
 // Returns true on success, false on failure (if $localeIdentifier is not a valid and allowed locale identifier) 
 function setLanguage($localeIdentifier = '')
 {
-	global $prefs, $tikilib, $user;
+	global $prefs, $tikilib, $user, $smarty;
 	if (isValidLocale($localeIdentifier)) {
 		$prefs['language'] = $localeIdentifier;
+		$smarty->refreshLanguage();
 		return $tikilib->set_user_preference($user, 'language', $localeIdentifier);
 	} else {
 		return false;

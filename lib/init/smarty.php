@@ -131,7 +131,8 @@ class Smarty_Tiki extends Smarty
 		$this->addTemplateDir($this->main_template_dir.'/styles/'.$style_base.'/');
 		$this->addTemplateDir($this->main_template_dir);
 
-		$this->setCompileDir(realpath("templates_c/$tikidomain"));
+		
+		$this->refreshLanguage();
 		$this->setConfigDir(null);
 		if (! isset($prefs['smarty_compilation'])) {
 			$prefs['smarty_compilation'] = '';
@@ -325,8 +326,10 @@ class Smarty_Tiki extends Smarty
 
 		$lgSave = $prefs['language'];
 		$prefs['language'] = $lg;
+		$this->refreshLanguage();
 		$res = parent::fetch($_smarty_tpl_file, $_smarty_cache_id, $_smarty_compile_id, null, $_smarty_display);
 		$prefs['language'] = $lgSave; // Restore the language of the user triggering the notification
+		$this->refreshLanguage();
 
 		return preg_replace("/^[ \t]*/", '', $res);
 	}
@@ -415,6 +418,18 @@ class Smarty_Tiki extends Smarty
 			trigger_error('URL Overriding prefix stack is in a bad state', E_USER_ERROR);
 		}
 		$this->url_overriding_prefix =& $this->url_overriding_prefix_stack[ count($this->url_overriding_prefix_stack) - 1 ];;
+	}
+
+	function refreshLanguage()
+	{
+		global $tikidomain, $prefs;
+
+		$lang = $prefs['language'];
+		if (empty($lang)) {
+			$lang = 'default';
+		}
+
+		$this->setCompileDir(realpath("templates_c") . "/$lang/$tikidomain");
 	}
 }
 
