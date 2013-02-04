@@ -26,10 +26,12 @@ function tiki_route($path)
 	}
 	*/
 
+
 	$simple = array(
 		'articles' => 'tiki-view_articles.php',
 		'blogs' => 'tiki-list_blogs.php',
 		'calendar' => 'tiki-calendar.php',
+		'categories' => 'tiki-browse_categories.php',
 		'chat' => 'tiki-chat.php',
 		'contact' => 'tiki-contact.php',
 		'directories' => 'tiki-directory_browse.php',
@@ -66,18 +68,13 @@ function tiki_route($path)
 
 	tiki_route_attempt('|^blog(\d+)(\-.*)?$|', 'tiki-view_blog.php', tiki_route_single(1, 'blogId'));
 	tiki_route_attempt('|^blogpost(\d+)(\-.*)?$|', 'tiki-view_blog_post.php', tiki_route_single(1, 'postId'));
+	tiki_route_attempt('|^cat(\d+)(\-.*)?$|', 'tiki-browse_categories.php', tiki_route_single(1, 'parentId'));
 	tiki_route_attempt_prefix('browseimage', 'tiki-browse_image.php', 'imageId');
 
 	tiki_route_attempt('|^cal(\d[\d,]*)$|', 'tiki-calendar.php', function ($parts) {
 		$ids = explode(',', $parts[1]);
 		$ids = array_filter($ids);
 		return array('calIds' => $ids);
-	});
-
-	tiki_route_attempt('|^cat([0-9]+)\-?[^&]*(.*)|', 'tiki-browse_categories.php', function ($parts) {
-		return array(
-			'parentId' => $parts[1],
-		);
 	});
 
 	tiki_route_attempt_prefix('directory', 'tiki-directory_browse.php', 'parent');
@@ -129,10 +126,6 @@ function tiki_route($path)
 		return $params;
 	});
 
-	tiki_route_attempt('/^categories$/', 'tiki-browse_categories.php', function ($parts) {
-		return array();
-	});
-
 	if (false !== $dot = strrpos($path, '.')) {
 		// Prevent things that look like filenames from being considered for wiki page names
 		$extension = substr($path, $dot + 1);
@@ -142,10 +135,7 @@ function tiki_route($path)
 	}
 
 	tiki_route_attempt('|.*|', 'tiki-index.php', function ($parts) {
-		if (strpos($parts[0], '+') !== false) {
-			$parts[0] = preg_replace('/\+/', ' ', $parts[0]);
-		}
-		return array('page' => preg_replace('/\+/', ' ', $parts[0]));
+		return array('page' => str_replace('+', ' ', $parts[0]));
 	});
 }
 
