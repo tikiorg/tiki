@@ -25,6 +25,7 @@ function setLanguage($localeIdentifier = '')
 {
 	global $prefs, $tikilib, $user;
 	if (isValidLocale($localeIdentifier)) {
+		$prefs['language'] = $localeIdentifier;
 		return $tikilib->set_user_preference($user, 'language', $localeIdentifier);
 	} else {
 		return false;

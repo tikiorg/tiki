@@ -88,13 +88,16 @@ if ($isvalid) {
 			TikiLib::lib('menu')->empty_menu_cache();
 		}
 	}
+
+	if ($language = $tikilib->get_user_preference($user, 'language')) {
+		setLanguage($language);
+	}
+
 	if (!empty($prefs['url_after_validation']) && !$wasAdminValidation) {
-		header('Location: '.$prefs['url_after_validation']);
+		$target = $prefs['url_after_validation'];
+		$access->redirect($target);
 	} else {
-		$smarty->assign('msg', tra("Account validated successfully."));
-		$smarty->assign('mid', 'tiki-information.tpl');
-		$smarty->display("tiki.tpl");
-		die;
+		$access->redirect($prefs['tikiIndex'], tra("Account validated successfully."));
 	}
 } else {
 	if ($error == PASSWORD_INCORRECT) $error = tra("Invalid username or password");

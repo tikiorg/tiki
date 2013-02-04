@@ -5844,6 +5844,10 @@ class UsersLib extends TikiLib
 				$this->set_user_preference($user, $pref_name, $value);
 			}
 		}
+
+		if ($prefs['change_language'] == 'y' && $prefs['site_language'] != $prefs['language']) {
+			$this->set_user_preference($user, 'language', $prefs['language']);
+		}
 	}
 	function change_user_email_only($user, $email)
 	{
@@ -6688,7 +6692,7 @@ class UsersLib extends TikiLib
 				$mailTemplate = 'user_validation_mail';
 			}
 
-			$smarty->assign('validation_url', TikiLib::tikiUrl('tiki-confirm_user_email.php', array(
+			$smarty->assign('validation_url', TikiLib::tikiUrl('tiki-login_validate.php', array(
 				'user' => $name,
 				'pass' => $apass,
 			)));
@@ -6746,7 +6750,6 @@ class UsersLib extends TikiLib
 		if (!($res = $result->fetchRow())) {
 			return false;
 		}
-var_dump($res);die;
 
 		if (md5($res['provpass']) == $pass) {
 			$this->confirm_user($user);
