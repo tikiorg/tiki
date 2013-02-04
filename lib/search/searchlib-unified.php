@@ -98,6 +98,14 @@ class UnifiedSearchLib
 		@ini_set('max_execution_time', 0);
 		@ini_set('memory_limit', -1);
 
+		$unifiedsearchlib = $this;
+		register_shutdown_function(function () use ($tempName, $unifiedsearchlib) {
+			if (file_exists($tempName)) {
+				$unifiedsearchlib->destroyDirectory($tempName);
+				echo "Abnormal termination. Likely ran out of memory.";
+			}
+		});
+
 		// Build in -new
 		TikiLib::lib('queue')->clear(self::INCREMENT_QUEUE);
 		$indexer = $this->buildIndexer($index, $loggit);
@@ -419,7 +427,7 @@ class UnifiedSearchLib
 		return $query;
 	}
 
-	private function destroyDirectory($path)
+	/* private */ function destroyDirectory($path)
 	{
 		if (!$path or !is_dir($path)) return 0;
 
