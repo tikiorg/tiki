@@ -71,7 +71,7 @@ function module_categories($mod_reference, &$module_params)
 		$deep = $module_params['deep'];
 	else
 		$deep= 'on';
-	$urlEnd .= "&amp;deep=$deep";
+	$urlEnd .= "?deep=$deep";
 	$name = "";
 
 	$categories = $categlib->getCategories();
