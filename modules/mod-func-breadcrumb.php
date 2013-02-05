@@ -27,6 +27,11 @@ function module_breadcrumb_info()
 				'description' => tra('Maximum number of characters in page names allowed before truncating.'),
 				'filter' => 'int'
 			),
+			'show_namespace' => array(
+				'name' => tra('Show Namespace'),
+				'description' => tra('Show namespace prefix in page names.').' ( y / n )',	// Do not translate y/n					
+				'default' => 'y'
+			)
 		),
 		'common_params' => array('nonums', 'rows')
 	);
@@ -69,4 +74,5 @@ function module_breadcrumb($mod_reference, $module_params)
 	$bbreadCrumb = array_slice(array_reverse($fullBreadCrumb), 0, $mod_reference['rows']);
 	$smarty->assign('breadCrumb', $bbreadCrumb);
 	$smarty->assign('maxlen', isset($module_params["maxlen"]) ? $module_params["maxlen"] : 0);
+	$smarty->assign('namespaceoption',$module_params['show_namespace']);
 }

@@ -6,9 +6,27 @@
 		<li>
 			<a class="linkmodule" href="{$breadCrumb[ix]|sefurl}">
 				{if ($maxlen > 0 && strlen($breadCrumb[ix]) > $maxlen)}
-					{$breadCrumb[ix]|truncate:$maxlen:"...":true|escape}
+					{if $namespaceoption eq 'n'}
+						{$data=$prefs.namespace_separator|explode:$breadCrumb[ix]}
+						{if empty($data['1'])}
+							{$data['0']|truncate:$maxlen:"...":true|escape}
+						{else}
+							{$data['1']|truncate:$maxlen:"...":true|escape}
+						{/if}
+					{else}
+						{$breadCrumb[ix]|truncate:$maxlen:"...":true|escape}
+					{/if}
 				{else}
-					{$breadCrumb[ix]|escape}
+					{if $namespaceoption eq 'n'}
+						{$data=$prefs.namespace_separator|explode:$breadCrumb[ix]}
+						{if empty($data['1'])}
+							{$data['0']|escape}
+						{else}
+							{$data['1']|escape}
+						{/if}
+					{else}
+						{$breadCrumb[ix]|escape}
+					{/if}
 				{/if}
 			</a>
 		</li>
