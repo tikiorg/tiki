@@ -1196,7 +1196,7 @@ class StructLib extends TikiLib
 		}
 	}
 	/* transform a structure into a menu */
-	public function to_menu($channels, $structure, $sectionLevel=0, $cumul=0)
+	public function to_menu($channels, $structure, $sectionLevel=0, $cumul=0, $params=array())
 	{
 		global $smarty;
 		include_once('lib/smarty_tiki/function.sefurl.php');
@@ -1215,7 +1215,11 @@ class StructLib extends TikiLib
 					}
 				}
 			}
-			$option['name'] = empty($channel['page_alias'])? $channel['pageName']: $channel['page_alias'];
+			$pageName = $channel['pageName'];
+			if (isset($params['show_namespace']) && $params['show_namespace'] === 'n') {
+				$pageName = !empty($channel['short_pageName']) ? $channel['short_pageName'] : $channel['pageName'];
+			}
+			$option['name'] = empty($channel['page_alias'])? $pageName: $channel['page_alias'];	
 			$option['type'] = empty($channel['sub'])? 'o': ($sectionLevel?$sectionLevel:'s');
 			$option['url'] = smarty_function_sefurl(array('page'=>$channel['pageName'], 'structure'=>$structure, 'page_ref_id'=>$channel['page_ref_id'], 'sefurl'=>'n'), $smarty);
 			$option['canonic'] = '(('.$channel['pageName'].'))';

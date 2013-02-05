@@ -111,7 +111,7 @@ function get_menu_with_selections($params)
 
 		$channels = $structlib->build_subtree_toc($structureId);
 		$structure_info =  $structlib->s_get_page_info($structureId);
-		$channels = $structlib->to_menu($channels, $structure_info['pageName']);
+		$channels = $structlib->to_menu($channels, $structure_info['pageName'], 0, 0, $params);
 		$menu_info = array('type'=>'d', 'menuId'=> "s_$structureId", 'structure' => 'y');
 		//echo '<pre>'; print_r($channels); echo '</pre>';
 	} else if (!empty($id)) {

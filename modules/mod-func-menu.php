@@ -74,6 +74,11 @@ function module_menu_info()
 				'description' => tra('Open the menu to show current option if possible') . ' ' . tra('(y/n default y)'),
 				'filter' => 'alpha',
 			),
+			'show_namespace' => array(
+				'name' => tra('Show Namespace'),
+				'description' => tra('Show namespace prefix in page names'),
+				'default' => 'y'
+				),
 		)
 	);
 }
