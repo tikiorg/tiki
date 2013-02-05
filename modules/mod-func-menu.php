@@ -76,7 +76,7 @@ function module_menu_info()
 			),
 			'show_namespace' => array(
 				'name' => tra('Show Namespace'),
-				'description' => tra('Show namespace prefix in page names'),
+				'description' => tra('Show namespace prefix in page names').' ( y / n )',	// Do not translate y/n	
 				'default' => 'y'
 				),
 		)
