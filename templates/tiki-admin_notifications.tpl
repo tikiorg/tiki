@@ -62,6 +62,11 @@
 			<td>
 				<input type="text" id='femail' name="email" />
 			</td>
+		</tr>
+		<tr>
+			<td>
+				<span class="simple_inlinehelp">{tr}Note that a user is not notified for his own action{/tr}.</span>
+			</td>
 		</tr> 
 		<tr>
 			<td>&nbsp;</td>
