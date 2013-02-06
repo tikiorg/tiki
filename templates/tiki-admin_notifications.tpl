@@ -64,6 +64,11 @@
 			</td>
 		</tr> 
 		<tr>
+			<td>
+				<span class="simple_inlinehelp">{tr}Note that a user is not notified for his own action{/tr}.</span>
+			</td>
+		</tr>
+		<tr>
 			<td>&nbsp;</td>
 			<td><input type="submit" name="add" value="{tr}Add{/tr}" /></td>
 		</tr>
