@@ -26,7 +26,7 @@ class TWVersion
 		$this->branch 	= 'stable';
 
 		// Set everything else, including defaults.
-		$this->version 	= '6.9';
+		$this->version 	= '6.10';
 		$this->star	= 'Rigel';
 		$this->releases	= array();
 
@@ -69,6 +69,7 @@ class TWVersion
 				18=>'Electra',		// 7.x
 				19=>'Acubens',	// 8.x
 				20=>'Herbig Haro'	// 9.x
+				21=>'Sun'			// 10.x
 		);
 	}
 
@@ -150,6 +151,7 @@ class TWVersion
 				'6.7',
 				'6.8',
 				'6.9',
+        '6.10',
 				'7.0beta1',
 				'7.0beta2',
 				'7.0RC1',
