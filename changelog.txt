@@ -25,6 +25,43 @@ When possible, it's also nice to indicate what feature is concerned by the chang
 Before 2.0, there was only [MOD] for both [ENH] and [MOD]:
 
 ----------------------------------------------------------------------
+Version 6.10
+<http://tiki.org/ReleaseNotes610>
+------------------
+
+----------------------------------------------
+r44802 | pkdille | 2013-02-07 20:38:58 +0100 (Thu, 07 Feb 2013) | 1 line
+
+[bp/r44391][bp/r44390][FIX] Actually really insert something into the database when user asks to rebuild thumbnails
+----------------------------------------------
+r44801 | pkdille | 2013-02-07 20:36:38 +0100 (Thu, 07 Feb 2013) | 1 line
+
+[bp/r41471][bp/41469][FIX]Typo (thanks luciash). I know this branch is to be blocked or deleted at some point, but, just in case, I fix this typo here also.
+----------------------------------------------
+r44799 | pkdille | 2013-02-07 20:02:15 +0100 (Thu, 07 Feb 2013) | 1 line
+
+[bp/r41426][bp/r41425][FIX] Change search scope so that match doesn't need to be exact. A fix in the sense that this is what users will expect and this was the behavior before (although not sure how)
+----------------------------------------------
+r44798 | pkdille | 2013-02-07 19:59:44 +0100 (Thu, 07 Feb 2013) | 1 line
+
+[bp/r41367][bp/tiki9/r41272] [FIX] showhide parameter of maketoc. Collateral damage of r24793
+----------------------------------------------
+r44793 | pkdille | 2013-02-07 19:52:45 +0100 (Thu, 07 Feb 2013) | 1 line
+
+[bp/r40953][FIX] [bp40948] text typo
+----------------------------------------------
+r44792 | pkdille | 2013-02-07 19:50:51 +0100 (Thu, 07 Feb 2013) | 1 line
+
+[bp/r40922][bp/r40921][FIX] Eliminate dead option "Let me select my own colors".
+----------------------------------------------
+r44789 | pkdille | 2013-02-07 19:46:12 +0100 (Thu, 07 Feb 2013) | 1 line
+
+[bp/r40756][bp/r40754][ENH] Make optional the selection of whether the period is after an item was created or modified, since both use cases seem frequent. In fact this could have been tagged as a [FIX] since wihtout it some use cases of trackerlist provide wrong results and way for the user to request tiki provide their expected results.
+----------------------------------------------
+r44699 | marclaporte | 2013-01-30 23:50:36 +0100 (Wed, 30 Jan 2013) | 1 line
+
+[bp/r42931] changing default session from unlimited to 1 week   This is worth backporting to LTS because if you store your sessions in the DB, you can end up with a lot of data. I had one with 17 gigs!
+----------------------------------------------
 Version 6.9
 <http://tiki.org/ReleaseNotes69>
 ------------------
@@ -3708,11 +3745,6 @@ r31688 | yonixxx | 2010-12-30 10:20:32 +0100 (Thu, 30 Dec 2010) | 1 line
 r31661 | chealer | 2010-12-26 19:02:04 +0100 (Sun, 26 Dec 2010) | 1 line
 
 [bp/r31660] menus_item_names_raw: add a fake preference on which the real preference depends. admins need to check both to enable for real. the prominent warning is left for the hidden (child) preference
-----------------------------------------------
-Version 6.1
-<http://tiki.org/ReleaseNotes61>
-------------------
-
 ----------------------------------------------
 r31399 | pkdille | 2010-12-14 16:49:49 +0100 (Tue, 14 Dec 2010) | 1 line
 
