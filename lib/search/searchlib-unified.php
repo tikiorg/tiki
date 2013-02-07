@@ -52,6 +52,8 @@ class UnifiedSearchLib
 		$queuelib = TikiLib::lib('queue');
 		$toProcess = $queuelib->pull(self::INCREMENT_QUEUE, $count);
 		$errlib = TikiLib::lib('errorreport');
+		$access = TikiLib::lib('access');
+		$access->preventRedirect(true);
 
 		if (count($toProcess)) {
 			try {
@@ -69,6 +71,8 @@ class UnifiedSearchLib
 				);
 			}
 		}
+
+		$access->preventRedirect(false);
 	}
 
     /**
@@ -136,6 +140,8 @@ class UnifiedSearchLib
 		// Build in -new
 		TikiLib::lib('queue')->clear(self::INCREMENT_QUEUE);
 		$tikilib = TikiLib::lib('tiki');
+		$access = TikiLib::lib('access');
+		$access->preventRedirect(true);
 		$indexer = $this->buildIndexer($index, $loggit);
 		$stat = $tikilib->allocate_extra(
 			'unified_rebuild',
@@ -143,6 +149,7 @@ class UnifiedSearchLib
 				return $indexer->rebuild();
 			}
 		);
+		$access->preventRedirect(false);
 
 		// Force destruction to clear locks
 		unset($indexer);

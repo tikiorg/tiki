@@ -20,6 +20,12 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
  */
 class TikiAccessLib extends TikiLib
 {
+	private $noRedirect = false;
+
+	function preventRedirect($prevent)
+	{
+		$this->noRedirect = (bool) $prevent;
+	}
 
 	/**
 	 * check that the user is admin or has admin permissions
@@ -426,6 +432,10 @@ class TikiAccessLib extends TikiLib
 	function redirect( $url = '', $msg = '', $code = 302 )
 	{
 		global $prefs;
+
+		if ($this->noRedirect) {
+			return;
+		}
 
 		if ( $url == '' )
 			$url = $prefs['tikiIndex'];
