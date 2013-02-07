@@ -28,16 +28,15 @@ function smarty_function_user_registration($params, $smarty)
 	$smarty->assign('openid_associate', 'n');
 
 // NOTE that this is not a standard access check, it checks for the opposite of that, i.e. whether logged in already
-	if (!empty($user)) {
+	if (false && !empty($user)) {
 		$smarty->assign('msg', tra('You are already logged in'));
 		$smarty->display('error.tpl');
 		return;
 	}
 	$smarty->assign('showmsg', 'n');
 // ensure ssl
-	if (!$https_mode && $prefs['https_login'] == 'required') {
-		header('Location: ' . $base_url_https . 'tiki-register.php');
-		die();
+	if (true || !$https_mode && $prefs['https_login'] == 'required') {
+		TikiLib::lib('access')->redirect($base_url_https . 'tiki-register.php');
 	}
 //get custom fields
 	$customfields = $registrationlib->get_customfields();
