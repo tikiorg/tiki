@@ -18,6 +18,7 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 class Comments extends TikiLib
 {
 	public $time_control = 0;
+	private $extras = true;
 
 	/* Functions for the forums */
 	function report_post($forumId, $parentId, $threadId, $user, $reason = '')
@@ -1437,6 +1438,11 @@ class Comments extends TikiLib
 		return $ret;
 	}
 
+	public function extras_enabled($enabled)
+	{
+		$this->extras = (bool) $enabled;
+	}
+
 	// FORUMS END
     /**
      * @param $id
@@ -1478,6 +1484,10 @@ class Comments extends TikiLib
      */
     function add_comments_extras(&$res, $forum_info=null)
 	{
+		if (! $this->extras) {
+			return;
+		}
+
 		// this function adds some extras to the referenced array.
 		// This array should already contain the contents of the tiki_comments table row
 		// used in $this->get_comment and $this->get_comments

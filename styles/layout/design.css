@@ -4462,4 +4462,31 @@ form.simple textarea.export {
 	font-size: inherit;
 	width: 375px;
 }
+
+/* Maps */
+.olControlNavToolbar {
+    top: 345px !important;
+}
+.olControlMousePosition {
+    background: rgba(0, 0, 0, 0.75);
+    border-radius: 16px;
+    bottom: auto !important;
+    color: #FFF;
+    display: block;
+    font-family: Arial;
+    font-size: smaller;
+    padding: 0 8px;
+    position: absolute;
+    right: 6px !important;
+    top: 7px;
+}
+.olControlScaleLine {
+    bottom: 30px !important;
+    left: 50px !important;
+}
+.olControlScaleLineTop,
+.olControlScaleLineBottom {
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
 /* End of file */

@@ -129,7 +129,7 @@ class UnifiedSearchLib
 		register_shutdown_function(function () use ($tempName, $unifiedsearchlib) {
 			if (file_exists($tempName)) {
 				$unifiedsearchlib->destroyDirectory($tempName);
-				echo "Abnormal termination. Likely ran out of memory.";
+				echo "Abnormal termination. Unless it was killed manually, it likely ran out of memory.\n";
 			}
 		});
 

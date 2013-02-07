@@ -5,6 +5,23 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
+/*
+ * The following section ensures that when a KILL signal is received, PHP will
+ * exit cleanly and trigger the shutdown functions.
+ */
+declare(ticks = 1); // how often to check for signals
+
+if (function_exists('pcntl_signal')) {
+	$exit = function () {
+		exit;
+	};
+
+	pcntl_signal(SIGTERM, $exit);
+	pcntl_signal(SIGHUP,  $exit);
+	pcntl_signal(SIGINT, $exit);
+}
+
+
 if ( isset($_SERVER['REQUEST_METHOD']) ) die;
 
 if ( !isset( $_SERVER['argv'][1] ) || !in_array($_SERVER['argv'][1], array('rebuild','process','optimize','stopRebuild')))

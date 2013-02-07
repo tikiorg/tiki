@@ -91,7 +91,7 @@ function wikiplugin_rss_info()
 				'required' => false,
 				'name' => tra('Ticker'),
 				'filter' => 'int',
-				'description' => tra('Ticker Output'),
+				'description' => tra('Turn static feed display into ticker news like'),
 				'default' => 1,
 				'options' => array(
 					array('text' => '', 'value' => ''),
@@ -103,7 +103,7 @@ function wikiplugin_rss_info()
 				'required' => false,
 				'name' => tra('Description Length'),
 				'filter' => 'int',
-				'description' => tra('Description length, trancates descriptions'),
+				'description' => tra('Max characters/length, truncates text to fit design'),
 				'default' => 0,
 			),
 		),
@@ -123,8 +123,8 @@ function wikiplugin_rss($data,$params)
 			'author' => 0,
 			'icon' => '',
 			'showtitle' => 1,
-			"ticker" => 0,
-			"desclen" => 0,
+			'ticker' => 0,
+			'desclen' => 0,
 		),
 		$params
 	);
