@@ -33,8 +33,6 @@ class TikiSecure
 		$keys = $this->getKeys();
 		
 		$path = get_include_path();
-		set_include_path("lib/phpseclib/");
-		require_once('Crypt/RSA.php');
 		$rsa = new Crypt_RSA();
 		
 		$rsa->loadKey($keys->publickey);
@@ -90,8 +88,6 @@ class TikiSecure
 	{
 		set_time_limit(30000);
 		$path = get_include_path();
-		set_include_path("lib/phpseclib/");
-		require_once('Crypt/RSA.php');
 		
 		$rsa = new Crypt_RSA();
 		$keys = $rsa->createKey($this->bits);

@@ -4,6 +4,7 @@
 	"homepage": "https://tiki.org",
 	"minimum-stability": "stable",
 	"require": {
+		"phpseclib/phpseclib": "0.3.1",
 		"smarty/smarty": "3.1.13",
 		"zendframework/zendframework1": "1.12.1"
 	},
