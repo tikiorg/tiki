@@ -16,9 +16,6 @@
  */
 
 
-/** Zend_Search_Lucene_Analysis_Analyzer */
-require_once 'Zend/Search/Lucene/Analysis/Analyzer.php';
-
 abstract class StandardAnalyzer_Analyzer_Standard extends Zend_Search_Lucene_Analysis_Analyzer
 {
   /**
@@ -48,7 +45,6 @@ abstract class StandardAnalyzer_Analyzer_Standard extends Zend_Search_Lucene_Ana
 	{
 		if (@preg_match('/\pL/u', 'a') != 1) {
 			// PCRE unicode support is turned off
-			require_once 'Zend/Search/Lucene/Exception.php';
 			throw new Zend_Search_Lucene_Exception('Analyzer needs PCRE unicode support to be enabled.');
 		}
 		$this->_position     = 0;

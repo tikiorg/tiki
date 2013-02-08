@@ -52,5 +52,5 @@ function module_last_tracker_comments($mod_reference, $module_params)
 	require_once ('lib/trackers/trackerlib.php');
 		
 	$ranking = $trklib->list_last_comments($trackerId, $itemId, 0, $mod_reference["rows"]);
-	$smarty->assign('modLastModifComments', $ranking["data"]);
+	$smarty->assign('modLastModifComments', isset($ranking['data']) ? $ranking["data"] : array());
 }

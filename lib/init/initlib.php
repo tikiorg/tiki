@@ -15,6 +15,13 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
   exit;
 }
 
+if (! file_exists('vendor/autoload.php')) {
+	echo "Your Tiki is not completely set-up. Composer has not been run to fetch dependencies. See http://dev.tiki.org/Composer for details.";
+	exit;
+}
+
+require_once 'vendor/autoload.php';
+
 /**
  * performs some checks on the underlying system, before initializing Tiki.
  * @package TikiWiki\lib\init
@@ -303,3 +310,4 @@ if (empty($_SERVER['REQUEST_URI'])) {
 		$_SERVER['REQUEST_URI'] = $_SERVER['SCRIPT_NAME'];
 	}
 }
+

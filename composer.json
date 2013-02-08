@@ -1,0 +1,42 @@
+{
+	"name": "tiki/tiki",
+	"license": "LGPL-2.1",
+	"homepage": "https://tiki.org",
+	"minimum-stability": "stable",
+	"require": {
+		"smarty/smarty": "3.1.13",
+		"zendframework/zendframework1": "1.12.1"
+	},
+	"require-dev": {
+	},
+	"autoload": {
+		"psr-0": {
+			"Horde": "lib/core/",
+			"TikiFilter": "lib/core/",
+			"DeclFilter": "lib/core/",
+			"JisonParser": "lib/core/",
+			"JitFilter": "lib/core/",
+			"Search": "lib/core/",
+			"Perms": "lib/core/",
+			"Math": "lib/core/",
+			"Category": "lib/core/",
+			"WikiParser": "lib/core/",
+			"Multilingual": "lib/core/",
+			"Tracker": "lib/core/",
+			"Event": "lib/core/",
+			"Services": "lib/core/",
+			"Tiki": "lib/core/",
+			"TikiDb": "lib/core/",
+			"Report": "lib/core/",
+			"Feed": "lib/core/",
+			"FileGallery": "lib/core/",
+			"WikiPlugin": "lib/core/"
+		},
+		"classmap": [
+			"lib/pear/",
+			"lib/openpgp/",
+			"vendor/smarty/smarty/distribution/libs/sysplugins/smarty_security.php",
+			"lib/core/StandardAnalyzer/"
+		]
+	}
+}

@@ -64,9 +64,6 @@ class Tiki_WebServices
 	}
 }
 
-require_once 'lib/core/Zend/Soap/Server.php';
-require_once 'lib/core/Zend/Soap/AutoDiscover.php';
-
 if (is_null($_GET['wsdl'])) {
 	$server = new Zend_Soap_Server($_SERVER['SCRIPT_URI'] . '?wsdl');
 	$server->setClass('Tiki_WebServices');

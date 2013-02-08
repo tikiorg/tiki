@@ -14,7 +14,7 @@ class Transition_AtLeastTest extends PHPUnit_Framework_TestCase
 {
 	function testOver()
 	{
-		$transition = new Transition('A', 'B');
+		$transition = new Tiki_Transition('A', 'B');
 		$transition->setStates(array('A', 'C', 'D', 'F'));
 		$transition->addGuard('atLeast', 2, array('C', 'D', 'E', 'F', 'G'));
 
@@ -23,7 +23,7 @@ class Transition_AtLeastTest extends PHPUnit_Framework_TestCase
 
 	function testRightOn()
 	{
-		$transition = new Transition('A', 'B');
+		$transition = new Tiki_Transition('A', 'B');
 		$transition->setStates(array('A', 'C', 'D', 'F'));
 		$transition->addGuard('atLeast', 3, array('C', 'D', 'E', 'F', 'G'));
 
@@ -32,7 +32,7 @@ class Transition_AtLeastTest extends PHPUnit_Framework_TestCase
 
 	function testUnder()
 	{
-		$transition = new Transition('A', 'B');
+		$transition = new Tiki_Transition('A', 'B');
 		$transition->setStates(array('A', 'C', 'D', 'F'));
 		$transition->addGuard('atLeast', 4, array('C', 'D', 'E', 'F', 'G'));
 
@@ -44,7 +44,7 @@ class Transition_AtLeastTest extends PHPUnit_Framework_TestCase
 
 	function testImpossibleCondition()
 	{
-		$transition = new Transition('A', 'B');
+		$transition = new Tiki_Transition('A', 'B');
 		$transition->setStates(array('A', 'C', 'D', 'F'));
 		$transition->addGuard('atLeast', 4, array('C', 'D', 'E'));
 

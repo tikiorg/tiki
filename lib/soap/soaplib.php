@@ -11,9 +11,6 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 	die;
 }
 
-require_once('lib/core/Zend/Soap/Client.php');
-require_once('lib/core/Zend/Soap/Wsdl.php');
-
 class Tiki_Soap
 {
 	private $cookies;

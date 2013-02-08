@@ -83,8 +83,6 @@ function module_last_youtube_playlist_videos($mod_reference, $module_params)
 {
 	global $smarty, $prefs; 
 	$tikilib = TikiLib::lib('tiki');
-	require_once 'Zend/Loader.php';
-	Zend_Loader::loadClass('Zend_Gdata_YouTube');
 	$data = array();
 	
 	if (!empty($module_params['id'])) {

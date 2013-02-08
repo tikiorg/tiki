@@ -40,22 +40,6 @@
 
 
 /**
- * @see Zend_Mime
- */
-require_once('lib/core/Zend/Mime.php');
-
-/**
- * @see Zend_Mail_Protocol_Smtp
- */
-require_once('lib/core/Zend/Mail/Protocol/Smtp.php');
-
-/**
- * @see OpenPGP_Zend_Mail_Transport_Abstract
- */
-require_once('lib/openpgp/OpenPGP_Zend_Mail_Transport_Abstract.php');
-
-
-/**
  * SMTP connection object
  *
  * Loads an instance of Zend_Mail_Protocol_Smtp and forwards smtp transactions
@@ -204,10 +188,6 @@ class OpenPGP_Zend_Mail_Transport_Smtp extends OpenPGP_Zend_Mail_Transport_Abstr
             if ($this->_auth) {
                 $connectionClass .= '_Auth_' . ucwords($this->_auth);
             }
-            if (!class_exists($connectionClass)) {
-                require_once 'lib/core/Zend/Loader.php';
-                Zend_Loader::loadClass($connectionClass);
-            }
             $this->setConnection(new $connectionClass($this->_host, $this->_port, $this->_config));
             $this->_connection->connect();
             $this->_connection->helo($this->_name);
@@ -241,10 +221,6 @@ class OpenPGP_Zend_Mail_Transport_Smtp extends OpenPGP_Zend_Mail_Transport_Abstr
     protected function _prepareHeaders($headers)
     {
         if (!$this->_mail) {
-            /**
-             * @see Zend_Mail_Transport_Exception
-             */
-            require_once 'lib/core/Zend/Mail/Transport/Exception.php';
             throw new Zend_Mail_Transport_Exception('_prepareHeaders requires a registered OpenPGP_Zend_Mail object');
         }
 

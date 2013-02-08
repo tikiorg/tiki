@@ -85,8 +85,6 @@ function tiki_mail_setup()
 		// hollmeer 2012-11-03: ADDED PGP/MIME ENCRYPTION PREPARATION
 		if ($prefs['openpgp_gpg_pgpmimemail'] == 'y') {
 			// USE PGP/MIME MAIL VERSION
-			require_once('lib/openpgp/OpenPGP_Zend_Mail_Transport_Smtp.php');
-			require_once('lib/openpgp/OpenPGP_Zend_Mail.php');
 			$transport = new OpenPGP_Zend_Mail_Transport_Smtp($prefs['zend_mail_smtp_server'], $options);
 			OpenPGP_Zend_Mail::setDefaultTransport($transport);
 		} else {

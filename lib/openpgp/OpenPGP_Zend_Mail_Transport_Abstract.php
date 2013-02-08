@@ -38,13 +38,6 @@
  */
 /////////////////////////////////////////////////////////////////////////////
 
-
-/**
- * @see Zend_Mime
- */
-require_once('lib/core/Zend/Mime.php');
-
-
 /**
  * Abstract for sending eMails through different
  * ways of transport
@@ -194,10 +187,6 @@ abstract class OpenPGP_Zend_Mail_Transport_Abstract
     protected function _prepareHeaders($headers)
     {
         if (!$this->_mail) {
-            /**
-             * @see Zend_Mail_Transport_Exception
-             */
-            require_once 'lib/core/Zend/Mail/Transport/Exception.php';
             throw new Zend_Mail_Transport_Exception('Missing OpenPGP_Zend_Mail object in _mail property');
         }
 
@@ -223,10 +212,6 @@ abstract class OpenPGP_Zend_Mail_Transport_Abstract
             }
         }
         if (!$sane) {
-            /**
-             * @see Zend_Mail_Transport_Exception
-             */
-            require_once 'lib/core/Zend/Mail/Transport/Exception.php';
             throw new Zend_Mail_Exception('At least one mail header line is too long');
         }
     }
@@ -342,10 +327,6 @@ abstract class OpenPGP_Zend_Mail_Transport_Abstract
         }
 
         if (!$body) {
-            /**
-             * @see Zend_Mail_Transport_Exception
-             */
-            require_once 'lib/core/Zend/Mail/Transport/Exception.php';
             throw new Zend_Mail_Transport_Exception('No body specified');
         }
 
@@ -381,10 +362,6 @@ abstract class OpenPGP_Zend_Mail_Transport_Abstract
         $count    = count($this->_parts);
         $boundary = null;
         if ($count < 1) {
-            /**
-             * @see Zend_Mail_Transport_Exception
-             */
-            require_once 'lib/core/Zend/Mail/Transport/Exception.php';
             throw new Zend_Mail_Transport_Exception('Empty mail cannot be sent');
         }
 

@@ -76,29 +76,4 @@ array_unshift(
 );
 
 require_once('lib/init/initlib.php');
-TikiInit::prependIncludePath($tikipath.'lib/pear');
-TikiInit::appendIncludePath($tikipath.'lib/core');
 TikiInit::appendIncludePath($tikipath);
-require_once 'Zend/Loader/Autoloader.php';
-Zend_Loader_Autoloader::getInstance()
-	->registerNamespace('Horde')
-	->registerNamespace('TikiFilter')
-	->registerNamespace('DeclFilter')
-	->registerNamespace('JisonParser')
-	->registerNamespace('JitFilter')
-	->registerNamespace('Search')
-	->registerNamespace('Perms')
-	->registerNamespace('Math')
-	->registerNamespace('Category')
-	->registerNamespace('WikiParser')
-	->registerNamespace('Multilingual')
-	->registerNamespace('StandardAnalyzer')
-	->registerNamespace('Tracker')
-	->registerNamespace('Event_')
-	->registerNamespace('Services_')
-	->registerNamespace('Tiki_')
-	->registerNamespace('TikiDb')
-	->registerNamespace('Report')
-	->registerNamespace('Feed')
-	->registerNamespace('FileGallery')
-	->registerNamespace('WikiPlugin');

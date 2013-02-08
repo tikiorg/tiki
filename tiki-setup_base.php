@@ -138,7 +138,6 @@ if (isset($_SERVER["REQUEST_URI"])) {
 		unset($session_params);
 
 		try {
-			require_once "Zend/Session.php";
 			Zend_Session::start();
 		} catch( Zend_Session_Exception $e ) {
 			// Ignore

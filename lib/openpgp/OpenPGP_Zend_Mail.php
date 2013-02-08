@@ -39,27 +39,6 @@
 
 
 /**
- * @see OpenPGP_Zend_Mail_Transport_Abstract
- */
-require_once 'lib/openpgp/OpenPGP_Zend_Mail_Transport_Abstract.php';
-
-/**
- * @see Zend_Mime
- */
-require_once 'lib/core/Zend/Mime.php';
-
-/**
- * @see Zend_Mime_Message
- */
-require_once 'lib/core/Zend/Mime/Message.php';
-
-/**
- * @see Zend_Mime_Part
- */
-require_once 'lib/core/Zend/Mime/Part.php';
-
-
-/**
  * Class for sending an email.
  *
  */
@@ -259,10 +238,6 @@ class OpenPGP_Zend_Mail extends Zend_Mime_Message
             Zend_Mime::MULTIPART_RELATED,
         );
         if (!in_array($type, $allowed)) {
-            /**
-             * @see Zend_Mail_Exception
-             */
-            require_once 'lib/core/Zend/Mail/Exception.php';
             throw new Zend_Mail_Exception('Invalid content type "' . $type . '"');
         }
 
@@ -353,10 +328,6 @@ class OpenPGP_Zend_Mail extends Zend_Mime_Message
             Zend_Mime::ENCODING_QUOTEDPRINTABLE
         );
         if (!in_array($encoding, $allowed)) {
-            /**
-             * @see Zend_Mail_Exception
-             */
-            require_once 'lib/core/Zend/Mail/Exception.php';
             throw new Zend_Mail_Exception('Invalid encoding "' . $encoding . '"');
         }
         $this->_headerEncoding = $encoding;
@@ -687,10 +658,6 @@ class OpenPGP_Zend_Mail extends Zend_Mime_Message
     public function setFrom($email, $name = null)
     {
         if (null !== $this->_from) {
-            /**
-             * @see Zend_Mail_Exception
-             */
-            require_once 'lib/core/Zend/Mail/Exception.php';
             throw new Zend_Mail_Exception('From Header set twice');
         }
 
@@ -713,10 +680,6 @@ class OpenPGP_Zend_Mail extends Zend_Mime_Message
     public function setReplyTo($email, $name = null)
     {
         if (null !== $this->_replyTo) {
-            /**
-             * @see Zend_Mail_Exception
-             */
-            require_once 'lib/core/Zend/Mail/Exception.php';
             throw new Zend_Mail_Exception('Reply-To Header set twice');
         }
 
@@ -814,7 +777,6 @@ class OpenPGP_Zend_Mail extends Zend_Mime_Message
     public function setFromToDefaultFrom() {
         $from = self::getDefaultFrom();
         if($from === null) {
-            require_once 'lib/core/Zend/Mail/Exception.php';
             throw new Zend_Mail_Exception(
                 'No default From Address set to use');
         }
@@ -864,7 +826,6 @@ class OpenPGP_Zend_Mail extends Zend_Mime_Message
     public function setReplyToFromDefault() {
         $replyTo = self::getDefaultReplyTo();
         if($replyTo === null) {
-            require_once 'lib/core/Zend/Mail/Exception.php';
             throw new Zend_Mail_Exception(
                 'No default Reply-To Address set to use');
         }
@@ -891,7 +852,6 @@ class OpenPGP_Zend_Mail extends Zend_Mime_Message
             /**
              * @see Zend_Mail_Exception
              */
-            require_once 'lib/core/Zend/Mail/Exception.php';
             throw new Zend_Mail_Exception('Return-Path Header set twice');
         }
         return $this;
@@ -943,7 +903,6 @@ class OpenPGP_Zend_Mail extends Zend_Mime_Message
             /**
              * @see Zend_Mail_Exception
              */
-            require_once 'lib/core/Zend/Mail/Exception.php';
             throw new Zend_Mail_Exception('Subject set twice');
         }
         return $this;
@@ -989,10 +948,6 @@ class OpenPGP_Zend_Mail extends Zend_Mime_Message
             } else if (is_string($date)) {
                 $date = strtotime($date);
                 if ($date === false || $date < 0) {
-                    /**
-                     * @see Zend_Mail_Exception
-                     */
-                    require_once 'lib/core/Zend/Mail/Exception.php';
                     throw new Zend_Mail_Exception('String representations of Date Header must be ' .
                                                   'strtotime()-compatible');
                 }
@@ -1000,20 +955,12 @@ class OpenPGP_Zend_Mail extends Zend_Mime_Message
             } else if ($date instanceof Zend_Date) {
                 $date = $date->get(Zend_Date::RFC_2822);
             } else {
-                /**
-                 * @see Zend_Mail_Exception
-                 */
-                require_once 'lib/core/Zend/Mail/Exception.php';
                 throw new Zend_Mail_Exception(__METHOD__ . ' only accepts UNIX timestamps, Zend_Date objects, ' .
                                               ' and strtotime()-compatible strings');
             }
             $this->_date = $date;
             $this->_storeHeader('Date', $date);
         } else {
-            /**
-             * @see Zend_Mail_Exception
-             */
-            require_once 'lib/core/Zend/Mail/Exception.php';
             throw new Zend_Mail_Exception('Date Header set twice');
         }
         return $this;
@@ -1066,10 +1013,6 @@ class OpenPGP_Zend_Mail extends Zend_Mime_Message
             $this->_messageId = $id;
             $this->_storeHeader('Message-Id', '<' . $this->_messageId . '>');
         } else {
-            /**
-             * @see Zend_Mail_Exception
-             */
-            require_once 'lib/core/Zend/Mail/Exception.php';
             throw new Zend_Mail_Exception('Message-ID set twice');
         }
 
@@ -1150,10 +1093,6 @@ class OpenPGP_Zend_Mail extends Zend_Mime_Message
                           'date', 'message-id',
                          );
         if (in_array(strtolower($name), $prohibit)) {
-            /**
-             * @see Zend_Mail_Exception
-             */
-            require_once 'lib/core/Zend/Mail/Exception.php';
             throw new Zend_Mail_Exception('Cannot set standard header from addHeader()');
         }
 
@@ -1186,7 +1125,6 @@ class OpenPGP_Zend_Mail extends Zend_Mime_Message
     {
         if ($transport === null) {
             if (! self::$_defaultTransport instanceof OpenPGP_Zend_Mail_Transport_Abstract) {
-                require_once 'lib/openpgp/OpenPGP_Zend_Mail_Transport_Sendmail.php';
                 $transport = new OpenPGP_Zend_Mail_Transport_Sendmail();
             } else {
                 $transport = self::$_defaultTransport;

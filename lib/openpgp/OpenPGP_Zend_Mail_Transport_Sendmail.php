@@ -41,12 +41,6 @@
 
 
 /**
- * @see OpenPGP_Zend_Mail_Transport_Abstract
- */
-require_once('lib/openpgp/OpenPGP_Zend_Mail_Transport_Abstract.php');
-
-
-/**
  * Class for sending eMails via the PHP internal mail() function
  *
  */
@@ -127,13 +121,6 @@ class OpenPGP_Zend_Mail_Transport_Sendmail extends OpenPGP_Zend_Mail_Transport_A
             restore_error_handler();
         } else {
             if(!is_string($this->parameters)) {
-                /**
-                 * @see Zend_Mail_Transport_Exception
-                 *
-                 * Exception is thrown here because
-                 * $parameters is a public property
-                 */
-                require_once 'lib/core/Zend/Mail/Transport/Exception.php';
                 throw new Zend_Mail_Transport_Exception(
                     'Parameters were set but are not a string'
                 );
@@ -150,10 +137,6 @@ class OpenPGP_Zend_Mail_Transport_Sendmail extends OpenPGP_Zend_Mail_Transport_A
         }
 
         if ($this->_errstr !== null || !$result) {
-            /**
-             * @see Zend_Mail_Transport_Exception
-             */
-            require_once 'lib/core/Zend/Mail/Transport/Exception.php';
             throw new Zend_Mail_Transport_Exception('Unable to send mail. ' . $this->_errstr);
         }
     }
@@ -174,10 +157,6 @@ class OpenPGP_Zend_Mail_Transport_Sendmail extends OpenPGP_Zend_Mail_Transport_A
     protected function _prepareHeaders($headers)
     {
         if (!$this->_mail) {
-            /**
-             * @see Zend_Mail_Transport_Exception
-             */
-            require_once 'lib/core/Zend/Mail/Transport/Exception.php';
             throw new Zend_Mail_Transport_Exception('_prepareHeaders requires a registered OpenPGP_Zend_Mail object');
         }
 
@@ -186,19 +165,11 @@ class OpenPGP_Zend_Mail_Transport_Sendmail extends OpenPGP_Zend_Mail_Transport_A
         if (0 === strpos(PHP_OS, 'WIN')) {
             // If the current recipients list is empty, throw an error
             if (empty($this->recipients)) {
-                /**
-                 * @see Zend_Mail_Transport_Exception
-                 */
-                require_once 'lib/core/Zend/Mail/Transport/Exception.php';
                 throw new Zend_Mail_Transport_Exception('Missing To addresses');
             }
         } else {
             // All others, simply grab the recipients and unset the To: header
             if (!isset($headers['To'])) {
-                /**
-                 * @see Zend_Mail_Transport_Exception
-                 */
-                require_once 'lib/core/Zend/Mail/Transport/Exception.php';
                 throw new Zend_Mail_Transport_Exception('Missing To header');
             }
 

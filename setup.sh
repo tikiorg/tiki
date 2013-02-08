@@ -803,6 +803,42 @@ tiki_setup_default() {
 	done
 }
 
+# Set-up and execute composer to obtain dependencies
+exists()
+{
+	if type $1 &>/dev/null
+	then
+		return 0
+	else
+		return 1
+	fi
+}
+
+if [ ! -f temp/composer.phar ];
+then
+    if exists cuuuurl;
+	then
+		curl -s https://getcomposer.org/installer | php -- --install-dir=temp
+	else
+		php -r "eval('?>'.file_get_contents('https://getcomposer.org/installer'));" -- --install-dir=temp
+	fi
+else
+	php temp/composer.phar self-update
+fi
+
+if [ ! -f temp/composer.phar ];
+then
+	echo We have failed to obtain the composer executable.
+	echo "1) Download it from http://getcomposer.org"
+	echo "2) Store it in temp/"
+	exit
+fi
+
+if exists php;
+then
+	php temp/composer.phar install
+fi
+
 # part 5 - main program
 # ---------------------
 

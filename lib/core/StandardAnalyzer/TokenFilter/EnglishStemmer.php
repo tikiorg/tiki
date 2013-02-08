@@ -11,14 +11,6 @@
  *
  */
 
-/* Depending on your circumstances, you may want to change the paths to meet your conventional / functional needs */
-require_once 'StandardAnalyzer/TokenFilter/EnglishStemmer/PorterStemmer.php';
-/** Zend_Search_Lucene_Analysis_TokenFilter */
-require_once 'Zend/Search/Lucene/Analysis/TokenFilter.php';
-/** Zend_Search_Lucene_Exception */
-require_once 'Zend/Search/Lucene/Exception.php';
-
-
 class StandardAnalyzer_Analysis_TokenFilter_EnglishStemmer extends Zend_Search_Lucene_Analysis_TokenFilter
 {
     /**

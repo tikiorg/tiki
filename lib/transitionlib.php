@@ -5,8 +5,6 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-require_once 'Transition.php';
-
 /**
  * TransitionLib
  *
@@ -42,7 +40,7 @@ class TransitionLib
 		);
 
 		foreach ( $transitions as & $tr ) {
-			$object = new Transition($tr['from'], $tr['to']);
+			$object = new Tiki_Transition($tr['from'], $tr['to']);
 			$object->setStates($states);
 			foreach ( $tr['guards'] as $guard ) {
 				call_user_func_array(array($object, 'addGuard' ), $guard);
@@ -97,7 +95,7 @@ class TransitionLib
 		// Verify that the states are consistent
 		$states = $this->getCurrentStates($object, $type);
 
-		$tr = new Transition($transition['from'], $transition['to']);
+		$tr = new Tiki_Transition($transition['from'], $transition['to']);
 		$tr->setStates($states);
 
 		foreach ( $transition['guards'] as $guard ) {

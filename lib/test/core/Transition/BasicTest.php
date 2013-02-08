@@ -14,7 +14,7 @@ class Transition_BasicTest extends PHPUnit_Framework_TestCase
 {
 	function testSimpleTransition()
 	{
-		$transition = new Transition('A', 'B');
+		$transition = new Tiki_Transition('A', 'B');
 		$transition->setStates(array('A'));
 
 		$this->assertTrue($transition->isReady());
@@ -22,7 +22,7 @@ class Transition_BasicTest extends PHPUnit_Framework_TestCase
 
 	function testAlreadyInTarget()
 	{
-		$transition = new Transition('A', 'B');
+		$transition = new Tiki_Transition('A', 'B');
 		$transition->setStates(array('B'));
 
 		$this->assertFalse($transition->isReady());
@@ -30,7 +30,7 @@ class Transition_BasicTest extends PHPUnit_Framework_TestCase
 
 	function testInBoth()
 	{
-		$transition = new Transition('A', 'B');
+		$transition = new Tiki_Transition('A', 'B');
 		$transition->setStates(array('A', 'B'));
 
 		$this->assertFalse($transition->isReady());
@@ -38,7 +38,7 @@ class Transition_BasicTest extends PHPUnit_Framework_TestCase
 
 	function testExplainWhenReady()
 	{
-		$transition = new Transition('A', 'B');
+		$transition = new Tiki_Transition('A', 'B');
 		$transition->setStates(array('A'));
 
 		$this->assertEquals(array(), $transition->explain());
@@ -46,7 +46,7 @@ class Transition_BasicTest extends PHPUnit_Framework_TestCase
 
 	function testExplainWhenOriginNotMet()
 	{
-		$transition = new Transition('A', 'B');
+		$transition = new Tiki_Transition('A', 'B');
 
 		$this->assertEquals(
 			array(array('class' => 'missing', 'count' => 1, 'set' => array('A')),),
@@ -56,7 +56,7 @@ class Transition_BasicTest extends PHPUnit_Framework_TestCase
 
 	function testExplainWhenInTarget()
 	{
-		$transition = new Transition('A', 'B');
+		$transition = new Tiki_Transition('A', 'B');
 		$transition->setStates(array('A', 'B'));
 
 		$this->assertEquals(
@@ -67,7 +67,7 @@ class Transition_BasicTest extends PHPUnit_Framework_TestCase
 
 	function testAddUnknownGuardType()
 	{
-		$transition = new Transition('A', 'B');
+		$transition = new Tiki_Transition('A', 'B');
 		$transition->setStates(array('A'));
 		$transition->addGuard('foobar', 5, array('D', 'E', 'F'));
 
@@ -79,7 +79,7 @@ class Transition_BasicTest extends PHPUnit_Framework_TestCase
 
 	function testAddPassingCustomGuard()
 	{
-		$transition = new Transition('A', 'B');
+		$transition = new Tiki_Transition('A', 'B');
 		$transition->setStates(array('A', 'C', 'F'));
 		$transition->addGuard('exactly', 2, array('C', 'D', 'E', 'F'));
 
@@ -88,7 +88,7 @@ class Transition_BasicTest extends PHPUnit_Framework_TestCase
 
 	function testAddFailingCustomGuard()
 	{
-		$transition = new Transition('A', 'B');
+		$transition = new Tiki_Transition('A', 'B');
 		$transition->setStates(array('A', 'C', 'F'));
 		$transition->addGuard('exactly', 4, array('C', 'D', 'E', 'F', 'G'));
 
@@ -100,7 +100,7 @@ class Transition_BasicTest extends PHPUnit_Framework_TestCase
 
 	function testImpossibleCondition()
 	{
-		$transition = new Transition('A', 'B');
+		$transition = new Tiki_Transition('A', 'B');
 		$transition->setStates(array('A', 'C', 'D', 'F'));
 		$transition->addGuard('exactly', 4, array('C', 'D', 'E'));
 

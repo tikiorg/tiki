@@ -53,7 +53,6 @@ class Captcha
 		}
 
 		if ($type === 'recaptcha') {
-			require_once('lib/core/Zend/Captcha/ReCaptcha.php');
 			$this->captcha = new Zend_Captcha_ReCaptcha(
 				array(
 					'privkey' => $prefs['recaptcha_privkey'],
@@ -79,7 +78,6 @@ class Captcha
 			);
 			$this->type = 'default';
 		} else {		// implied $type==='dumb'
-			require_once('lib/core/Zend/Captcha/Dumb.php');
 			$this->captcha = new Zend_Captcha_Dumb;
 			$this->captcha->setWordlen($prefs['captcha_wordLen']);
 			$this->type = 'dumb';
