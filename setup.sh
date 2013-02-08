@@ -816,7 +816,7 @@ exists()
 
 if [ ! -f temp/composer.phar ];
 then
-    if exists cuuuurl;
+    if exists curl;
 	then
 		curl -s https://getcomposer.org/installer | php -- --install-dir=temp
 	else

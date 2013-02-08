@@ -6,7 +6,9 @@
 	"require": {
 		"phpseclib/phpseclib": "0.3.1",
 		"smarty/smarty": "3.1.13",
-		"zendframework/zendframework1": "1.12.1"
+		"zendframework/zendframework1": "1.12.1",
+		"zetacomponents/base": "1.8",
+		"zetacomponents/webdav": "1.1.3"
 	},
 	"require-dev": {
 	},
@@ -37,6 +39,7 @@
 			"lib/pear/",
 			"lib/openpgp/",
 			"vendor/smarty/smarty/distribution/libs/sysplugins/smarty_security.php",
+			"lib/TikiWebdav/",
 			"lib/core/StandardAnalyzer/"
 		]
 	}

@@ -24,7 +24,11 @@ if(isset($_SERVER['REDIRECT_HTTP_AUTHORIZATION']))
 	$_SERVER['HTTP_AUTHORIZATION'] = $_SERVER['REDIRECT_HTTP_AUTHORIZATION'];
 if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
 	$ha = base64_decode(substr($_SERVER['HTTP_AUTHORIZATION'], 6));
-	list($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW']) = explode(':', $ha);
+	$parts = explode(':', $ha);
+	while (count($parts) < 2) {
+		$parts[] = null;
+	}
+	list($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW']) = $parts;
 }
 
 $webdav_access = false;
@@ -81,8 +85,7 @@ if ( $_SERVER['REQUEST_METHOD'] === 'GET' && $_SERVER['REQUEST_URI'] === $_SERVE
 	}
 
 	$path = preg_replace('#.*tiki-webdav\.php#', '', rawurldecode(trim($_SERVER['REQUEST_URI'])));
-	require_once 'lib/TikiWebdav/autoload.php';
-	require_once 'lib/TikiWebdav/Server.php';
+	$path = rtrim($path, '?');
 
 	print_debug("\n=== _SERVER() ===\n".print_r($_SERVER, true)."\n");
 	$server = TikiWebdav_Server::getInstance();
@@ -91,10 +94,6 @@ if ( $_SERVER['REQUEST_METHOD'] === 'GET' && $_SERVER['REQUEST_URI'] === $_SERVE
 	print_debug("\n====PATH : $path ====\n");
 	if (preg_match('/^\/Wiki Pages\//', $path)) {
 		print_debug("\n====Wiki====\n");
-		require_once 'lib/TikiWebdav/Backend/Wiki.php';
-		require_once 'lib/TikiWebdav/PathFactories/Wiki.php';
-		require_once 'lib/TikiWebdav/Auth/Default.php';
-		require_once 'lib/TikiWebdav/Auth/Wiki.php';
 
 		$pathFactory = new TikiWebdav_PathFactories_Wiki();
 		$backend = new TikiWebdav_Backends_Wiki();
@@ -108,9 +107,6 @@ if ( $_SERVER['REQUEST_METHOD'] === 'GET' && $_SERVER['REQUEST_URI'] === $_SERVE
 		$server->auth = new TikiWebdav_Auth_Wiki($backend->getRoot().'/.webdav-token.php');
 
 	} else {
-		require_once 'lib/TikiWebdav/Backend/File.php';
-		require_once 'lib/TikiWebdav/PathFactories/File.php';
-		require_once 'lib/TikiWebdav/Auth/Default.php';
 
 		$pathFactory = new TikiWebdav_PathFactories_File;
 		$backend = new TikiWebdav_Backends_File;
