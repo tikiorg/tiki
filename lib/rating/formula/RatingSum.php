@@ -5,8 +5,6 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-require_once 'lib/rating/formula/RatingAverage.php';
-
 class Tiki_Formula_Function_RatingSum extends Tiki_Formula_Function_RatingAverage
 {
 	function __construct()

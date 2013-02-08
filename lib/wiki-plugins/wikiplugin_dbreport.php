@@ -1781,8 +1781,11 @@ function wikiplugin_dbreport($data, $params)
 	}
 	// open the database
 	if (isset($dsn)) {
-		// open database dsn connection
-		require_once ('lib/adodb/adodb.inc.php');
+		// Force autoloading
+		if (! class_exists('ADOConnection')) {
+			return tr('AdoDb not found');
+		}
+
 		$ado = ADONewConnection($dsn);
 		if (!$ado) {
 			$ret .= wikiplugin_dbreport_error_box($ado->ErrorMsg());

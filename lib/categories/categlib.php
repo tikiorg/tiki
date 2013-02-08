@@ -1417,7 +1417,6 @@ class CategLib extends ObjectLib
 			}
 		}
 
-		require_once 'lib/core/Category/Manipulator.php';
 		$manip = new Category_Manipulator($objType, $objId);
 		if ($override_perms) {
 			$manip->overrideChecks();

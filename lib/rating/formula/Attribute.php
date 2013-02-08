@@ -5,8 +5,6 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-require_once 'Math/Formula/Function.php';
-
 class Tiki_Formula_Function_Attribute extends Math_Formula_Function
 {
 	function evaluate( $element )

@@ -4,23 +4,23 @@
 /**
  * Tiki OpenPGP PGP/MIME Mail Enhancement to Zend Framework
  *
- * See lib/core/Zend/Mail/Transport/Sendmail.php for original Zend Framework class
+ * See Zend/Mail/Transport/Sendmail.php for original Zend Framework class
  *
  * Files of Tiki OpenPGP PGP/MIME Mail Enhancement to Zend Framework are:
  *
  * Tiki OpenPGP		lib/openpgp/openpgplib.php
  *
  * Tiki OpenPGP		lib/openpgp/OpenPGP_Zend_Mail.php
- * =>	ZF Original	lib/core/Zend/Mail.php
+ * =>	ZF Original	Zend/Mail.php
  *
  * Tiki OpenPGP		lib/openpgp/OpenPGP_Zend_Mail_Transport_Abstract.php
- * =>	ZF Original	lib/core/Zend/Mail/Transport/Abstract.php
+ * =>	ZF Original	Zend/Mail/Transport/Abstract.php
  *
  * Tiki OpenPGP		lib/openpgp/OpenPGP_Zend_Mail_Transport_Sendmail.php
- * =>	ZF Original	lib/core/Zend/Mail/Transport/Sendmail.php
+ * =>	ZF Original	Zend/Mail/Transport/Sendmail.php
  *
  * Tiki OpenPGP		lib/openpgp/OpenPGP_Zend_Mail_Transport_Smtp.php
- * =>	ZF Original	lib/core/Zend/Mail/Transport/Smtp.php
+ * =>	ZF Original	Zend/Mail/Transport/Smtp.php
  *
  * PURPOSE:
  * Avoid direct patching to ZF by bringing/changing into lib/openpgp/ versions

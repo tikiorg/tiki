@@ -22,7 +22,6 @@ class Search_Indexer
 	{
 		if ($loggit) {
 			// unused externally, set this to true here to enable logging
-			include_once 'lib/core/Zend/Log/Writer/Syslog.php';
 			global $prefs;
 			$writer = new Zend_Log_Writer_Stream($prefs['tmpDir'] . '/Search_Indexer.log', 'w');
 		} else {

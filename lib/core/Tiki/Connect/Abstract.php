@@ -5,7 +5,7 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-abstract class Connect_Abstract
+abstract class Tiki_Connect_Abstract
 {
 
 	// preferences that we should not collect

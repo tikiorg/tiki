@@ -4,6 +4,8 @@
 	"homepage": "https://tiki.org",
 	"minimum-stability": "stable",
 	"require": {
+		"adodb/adodb": "5.18",
+		"phpcas/phpcas": "1.3.1",
 		"phpseclib/phpseclib": "0.3.1",
 		"smarty/smarty": "3.1.13",
 		"zendframework/zendframework1": "1.12.1",
@@ -38,9 +40,37 @@
 		"classmap": [
 			"lib/pear/",
 			"lib/openpgp/",
-			"vendor/smarty/smarty/distribution/libs/sysplugins/smarty_security.php",
+			"lib/language/",
 			"lib/TikiWebdav/",
-			"lib/core/StandardAnalyzer/"
+			"lib/rating/formula/",
+			"lib/core/StandardAnalyzer/",
+			"vendor/smarty/smarty/distribution/libs/sysplugins/smarty_security.php",
+			"vendor/adodb/adodb/",
+			"vendor/phpcas/phpcas/"
 		]
-	}
+	},
+	"repositories": [
+		{
+			"type": "package",
+			"package": {
+				"name": "phpcas/phpcas",
+				"version": "1.3.1",
+				"dist": {
+					"url": "http://downloads.jasig.org/cas-clients/php/1.3.1/CAS-1.3.1.tgz",
+					"type": "tar"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "adodb/adodb",
+				"version": "5.18",
+				"dist": {
+					"url": "http://downloads.sourceforge.net/project/adodb/adodb-php5-only/adodb-518-for-php5/adodb518a.tgz",
+					"type": "tar"
+				}
+			}
+		}
+	]
 }

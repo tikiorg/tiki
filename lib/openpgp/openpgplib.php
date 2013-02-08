@@ -23,8 +23,8 @@
 //		such portions e.g. there
 //		NOTE: Zend Framework as is wrapped by bringing/changing
 //		      necessary classes from
-//				lib/core/Zend/Mail/ and
-//				lib/core/Zend/Mail/Transport/
+//				Zend/Mail/ and
+//				Zend/Mail/Transport/
 //		      into lib/openpgp/ per now. No patches needed anymore
 //		      into ZF to enable 100% PGP/MIME encryption.
 // v0.11
@@ -1087,7 +1087,7 @@ class OpenPGPLib
 
 	//////////////////////////////////////////////////////////
 	/**
-	 * Prepend header name to header value; copied here from lib/core/Zend/Mail/Transport/Abstract
+	 * Prepend header name to header value; copied here from Zend/Mail/Transport/Abstract
 	 * See usage in the array_walk in function below
 	 * @param string $item
 	 * @param string $key

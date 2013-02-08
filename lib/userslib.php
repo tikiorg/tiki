@@ -897,8 +897,6 @@ class UsersLib extends TikiLib
 			return false;
 		}
 		if ( self::$cas_initialized === false ) {
-			// import phpCAS lib
-			require_once('lib/phpcas/CAS.php');
 			// initialize phpCAS
 			phpCAS::client($prefs['cas_version'], '' . $prefs['cas_hostname'], (int) $prefs['cas_port'], '' . $prefs['cas_path'], false);
 			self::$cas_initialized = true;

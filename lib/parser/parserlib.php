@@ -587,7 +587,7 @@ if ( \$('#$id') ) {
 			return true;
 		}
 
-		return file_exists(str_replace("_", "/", "lib/core/" . $className . '.php')) == true && class_exists($className) == true;
+		return class_exists($className) == true;
 	}
 	//*
 	function plugin_exists( $name, $include = false )

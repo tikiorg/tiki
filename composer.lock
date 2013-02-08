@@ -1,6 +1,28 @@
 {
-    "hash": "ddcc1935c876172d010420bdb49f105b",
+    "hash": "70d13d55a778209da973f9a071f082cf",
     "packages": [
+        {
+            "name": "adodb/adodb",
+            "version": "5.18",
+            "dist": {
+                "type": "tar",
+                "url": "http://downloads.sourceforge.net/project/adodb/adodb-php5-only/adodb-518-for-php5/adodb518a.tgz",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "library"
+        },
+        {
+            "name": "phpcas/phpcas",
+            "version": "1.3.1",
+            "dist": {
+                "type": "tar",
+                "url": "http://downloads.jasig.org/cas-clients/php/1.3.1/CAS-1.3.1.tgz",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "library"
+        },
         {
             "name": "phpseclib/phpseclib",
             "version": "0.3.1",

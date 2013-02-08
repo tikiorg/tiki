@@ -11,11 +11,14 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
 	exit;
 }
 
+// Force autoloading
+if (! class_exists('ADOConnection')) {
+	die('AdoDb not found');
+}
+
 	define('ADODB_FORCE_NULLS', 1);
 	define('ADODB_ASSOC_CASE', 2);
 	define('ADODB_CASE_ASSOC', 2); // typo in adodb's driver for sybase?
-	require_once ('lib/adodb/adodb.inc.php');
-	include_once ('lib/adodb/adodb-pear.inc.php');
 
 	$ADODB_FETCH_MODE = ADODB_FETCH_ASSOC;
 
@@ -65,5 +68,4 @@ if ( ! function_exists('close_connection') ) {
 	}
 }
 
-require_once 'lib/core/TikiDb/Adodb.php';
 TikiDb::set(new TikiDb_Adodb($dbTiki));

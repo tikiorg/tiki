@@ -11,7 +11,6 @@
 // Mediawiki authentication plugin for phpBB3 with mysql4
 // By Steve Streeting 26 Dec 2008
 
-require_once('lib/adodb/adodb.inc.php');
 require_once ('lib/auth/PasswordHash.php');
 
 // some definitions for helping with authentication
@@ -57,6 +56,12 @@ class TikiPhpBBLib
 		$dbpasswd = $prefs['auth_phpbb_dbpasswd'];
 		$dbname = $prefs['auth_phpbb_dbname'];
 		$dbtype = 'mysql';//$prefs['auth_phpbb_dbtype'];
+
+		// Force autoloading
+		if (! class_exists('ADOConnection')) {
+			return false;
+		}
+
 
 		$dbconnection = NewADOConnection($dbtype);
 		$dbconnection->Connect($dbhost, $dbuser, $dbpasswd, $dbname);

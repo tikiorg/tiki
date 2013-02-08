@@ -9,7 +9,6 @@
 // $Id$
 
 include('tiki-setup.php');
-require_once('lib/core/Request.php');
 
 $access->check_feature('feature_newsletters');
 
@@ -33,7 +32,7 @@ function display_usage()
 }
 error_reporting(E_ALL);
 
-$request = new Request();
+$request = new Tiki_Request();
 
 $editionId = $request->getProperty('editionId'); 
 

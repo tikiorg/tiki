@@ -230,11 +230,9 @@ class TikiLib extends TikiDb_Bridge
 				require_once('lib/parser/parserlib.php');
 				return self::$libraries[$name] = new ParserLib;
 			case 'connect':
-				require_once('lib/core/Connect/Client.php');
-				return self::$libraries[$name] = new Connect_Client();
+				return self::$libraries[$name] = new Tiki_Connect_Client();
 			case 'connect_server':
-				require_once('lib/core/Connect/Server.php');
-				return self::$libraries[$name] = new Connect_Server();
+				return self::$libraries[$name] = new Tiki_Connect_Server();
 			case 'bigbluebutton':
 				global $bigbluebuttonlib; require_once 'lib/bigbluebuttonlib.php';
 				return self::$libraries[$name] = $bigbluebuttonlib;
@@ -677,7 +675,11 @@ class TikiLib extends TikiDb_Bridge
 				$api_tiki = null;
 				require 'db/local.php';
 				if (isset($api_tiki) &&  $api_tiki == 'adodb') {
-					require_once ('lib/adodb/adodb.inc.php');
+					// Force autoloading
+					if (! class_exists('ADOConnection')) {
+						return null;
+					}
+
 					$dbsqlplugin = ADONewConnection($dbdriver);
 					if ( $dbsqlplugin->NConnect($dbhost, $dbuserid, $dbpassword, $database) ) {
 						$connectionMap[$name] = new TikiDb_AdoDb($dbsqlplugin);

@@ -43,8 +43,6 @@ function smarty_block_trackeritemcheck($params, $content, $smarty, $repeat)
 		$params['mode'] = '';		// default is to view
 	}
 
-	include_once('lib/core/Tracker/Item.php');
-
 	$item = Tracker_Item::fromId($params['itemId']);
 
 	$allowed = false;

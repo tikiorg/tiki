@@ -16,7 +16,6 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 
 require_once('lib/perspectivelib.php');
 require_once('lib/categories/categlib.php');
-include_once('lib/core/Zend/OpenId.php');	// contains useful redirect selfUrl functions
 
 class AreasLib extends CategLib
 {

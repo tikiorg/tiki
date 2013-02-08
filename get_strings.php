@@ -36,14 +36,6 @@ if (php_sapi_name() != 'cli') {
 	$access->check_permission('tiki_p_admin');
 }
 
-require_once('lib/core/Request.php');
-require_once('lib/language/CollectFiles.php');
-require_once('lib/language/FileType.php');
-require_once('lib/language/FileType/Php.php');
-require_once('lib/language/FileType/Tpl.php');
-require_once('lib/language/GetStrings.php');
-require_once('lib/language/WriteFile/Factory.php');
-
 require_once('lib/setup/timer.class.php');
 
 $timer = new timer();
@@ -51,7 +43,7 @@ $timer->start();
 
 $options = array();
 
-$request = new Request();
+$request = new Tiki_Request();
 
 if ($request->hasProperty('lang')) {
 	$options['lang'] = $request->getProperty('lang');
@@ -62,11 +54,11 @@ if ($request->hasProperty('outputFiles')) {
 }
 
 $excludeDirs = array(
-	'dump' , 'img', 'lang', 'lib/adodb', 'lib/ckeditor',
-	'lib/codemirror', 'lib/core/Zend', 'lib/ezcomponents', 'lib/html5shim', 
+	'dump' , 'img', 'lang', 'lib/ckeditor',
+	'lib/codemirror', 'lib/html5shim', 
 	'lib/htmlpurifier', 'lib/jquery', 'lib/jquery.s5', 'lib/jquery.sheet', 'lib/jscalendar', 'lib/mobileesp', 'lib/pclzip',
-	'lib/pear', 'lib/phpcas', 'lib/smarty', 'lib/svg-edit', 'lib/test',	'temp',
-	'temp/cache',	'templates_c'
+	'lib/pear', 'lib/svg-edit', 'lib/test',	'temp',
+	'temp/cache',	'templates_c', 'vendor'
 );
 
 $includeFiles = array(

@@ -5,9 +5,7 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-require_once('lib/core/Connect/Abstract.php');
-
-class Connect_Server extends Connect_Abstract
+class Tiki_Connect_Server extends Tiki_Connect_Abstract
 {
 	private $indexFile;
 

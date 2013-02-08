@@ -34,7 +34,6 @@ try {
 
 		$dbTiki = new PDO("$db_tiki:$db_hoststring;dbname=$dbs_tiki", $user_tiki, $pass_tiki, $pdoDriverOptions);
 	*/
-	require_once 'lib/core/TikiDb/Pdo.php';
 
 	$conn = false;
 	$pdo_options = array();

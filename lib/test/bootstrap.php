@@ -37,8 +37,10 @@ $api_tiki = 'adodb';
 $local_php = dirname(__FILE__) . '/local.php';
 require_once($local_php);
 
-require_once ('lib/adodb/adodb.inc.php');
-include_once ('lib/adodb/adodb-pear.inc.php');
+// Force autoloading
+if (! class_exists('ADOConnection')) {
+	die('AdoDb not found.');
+}
 
 $ADODB_FETCH_MODE = ADODB_FETCH_ASSOC;
 

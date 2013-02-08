@@ -97,15 +97,11 @@ class Math_Formula_Runner
 		$filter = new Zend_Filter_Word_DashToCamelCase;
 		$ucname = $filter->filter(ucfirst($name));
 
-		foreach ( $this->sources as $prefix => $path ) {
+		foreach ( $this->sources as $prefix => $null ) {
 			$class = $prefix . $ucname;
-			$file = "$path/$ucname.php";
 
-			if ( file_exists($file) ) {
-				require_once $file;
-				if ( class_exists($class) ) {
-					return $this->known[$name] = new $class;
-				}
+			if ( class_exists($class) ) {
+				return $this->known[$name] = new $class;
 			}
 		}
 

@@ -32,7 +32,7 @@ class WikiPlugin_Negotiator_Wiki
 	private $alias;
 
 	public static $standardRelativePath = 'lib/wiki-plugins/wikiplugin_';
-	public static $zendRelativePath = 'lib/core/';
+	public static $zendRelativePath = 'vendor/zendframework/zendframework1/library/';
 	public static $checkZendPaths = true;
 	static $pluginIndexes = array();
 	static $pluginInfo = array();

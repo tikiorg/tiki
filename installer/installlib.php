@@ -13,7 +13,6 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 
 
 require_once 'lib/setup/twversion.class.php';
-require_once('lib/core/TikiDb/Bridge.php');
 
 /**
  *

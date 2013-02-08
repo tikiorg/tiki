@@ -42,7 +42,11 @@ class InstallerDatabaseErrorHandler implements TikiDb_ErrorHandler
 	}
 }
 
-include_once 'lib/adodb/adodb.inc.php';
+// Force autoloading
+if (! class_exists('ADOConnection')) {
+	die('AdoDb not found');
+}
+
 $dbTiki = ADONewConnection($db_tiki);
 $db = new TikiDb_Adodb($dbTiki);
 $db->setServerType($db_tiki);
@@ -707,8 +711,6 @@ if (!defined('ADODB_CASE_ASSOC')) { // typo in adodb's driver for sybase? // so 
 	define('ADODB_CASE_ASSOC', 2);
 }
 
-include_once ('lib/adodb/adodb.inc.php');
-
 include('lib/tikilib.php');
 
 // Get list of available languages
@@ -965,7 +967,6 @@ if ($install_step == '2') {
 			}
 
 			// check email address format
-			include_once('lib/core/Zend/Validate/EmailAddress.php');
 			$validator = new Zend_Validate_EmailAddress();
 			if (!$validator->isValid($email_test_to)) {
 				$smarty->assign('email_test_err', tra('Email address not valid, test mail not sent'));

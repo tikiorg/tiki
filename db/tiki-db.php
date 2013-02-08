@@ -238,7 +238,6 @@ if ( isset( $shadow_host, $shadow_user, $shadow_pass, $shadow_dbs ) ) {
 	$dbSlave = TikiDb::get();
 	init_connection($dbSlave);
 
-	require_once 'lib/core/TikiDb/MasterSlaveDispatch.php';
 	$db = new TikiDb_MasterSlaveDispatch($dbMaster, $dbSlave);
 	TikiDb::set($db);
 }

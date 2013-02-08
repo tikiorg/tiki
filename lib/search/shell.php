@@ -46,7 +46,6 @@ if( $user = getenv('searchuser') ) {
 	echo "Execute with same permissions as user: " . $user . "\n";
 }
 
-include_once 'lib/core/Zend/Log/Writer/Syslog.php';
 $log_level = Zend_Log::INFO;
 $writer = new Zend_Log_Writer_Stream('php://output');
 $writer->addFilter((int) $log_level);

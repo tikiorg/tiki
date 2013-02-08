@@ -9,7 +9,7 @@
  * Creates a request object populated with data
  * from either http request or cli arguments.
  */
-class Request
+class Tiki_Request
 {
 	protected $properties = array();
 	
