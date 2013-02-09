@@ -19,8 +19,8 @@ $toVersion = $_SERVER['argv'][2];
 $from = full("tags/$fromVersion");
 $to = full("tags/$toVersion");
 
-$fromRep = get_info($source);
-$toRep = get_info($branch);
+$fromRep = get_info($from);
+$toRep = get_info($to);
 $local = get_info('.');
 
 if (! isset($fromRep->entry))
@@ -35,10 +35,10 @@ if (has_uncommited_changes('.'))
 info("Converting local copy to origin.");
 `svn switch $from`;
 
-$tar = "tikiwiki-inc-$fromVersion-to-$toVersion.tar";
+$tar = "tiki-inc-$fromVersion-to-$toVersion.tar";
 
 info("Converting to destination and packaging.");
-`svn switch $to | awk '/^[UA] / {print $2}' | grep -v devtools | xargs tar --exclude "*.svn*" -cf $tar`;
+`svn switch $to | awk '/^[UA]/{print $2}' | grep -v devtools | xargs tar --exclude "*.svn*" -cf $tar`;
 `gzip -5 $tar`;
 
 info("Reverting to prior status.");
