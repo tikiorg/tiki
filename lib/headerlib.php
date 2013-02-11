@@ -258,6 +258,10 @@ class HeaderLib
 	{
 		global $prefs, $smarty;
 
+		if ($prefs['javascript_enabled'] == 'n') {
+			return;
+		}
+
 		$smarty->loadPlugin('smarty_modifier_escape');
 		ksort($this->jsfiles);
 
@@ -371,6 +375,12 @@ class HeaderLib
 
 	function output_js_config($wrap = true)
 	{
+		global $prefs;
+
+		if ($prefs['javascript_enabled'] == 'n') {
+			return;
+		}
+
 		$back = null;
 		if (count($this->js_config)) {
 			ksort($this->js_config);
@@ -403,6 +413,10 @@ class HeaderLib
 	function output_js($wrap = true)
 	{	// called in tiki.tpl - JS output at end of file now (pre 5.0)
 		global $prefs;
+
+		if ($prefs['javascript_enabled'] == 'n') {
+			return;
+		}
 
 		ksort($this->js);
 		ksort($this->jq_onready);

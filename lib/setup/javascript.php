@@ -20,8 +20,7 @@ if ($prefs['disableJavascript'] == 'y' ) {
 	// Update the pref with the cookie value
 	$prefs['javascript_enabled'] = $js_cookie;
 } else {
-	// Set the cookie to 'n', through PHP / HTTP headers
-	$prefs['javascript_enabled'] = 'n';
+	$prefs['javascript_enabled'] = 'y';
 }
 
 if ( $prefs['javascript_enabled'] != 'y' && $prefs['disableJavascript'] != 'y' ) {
