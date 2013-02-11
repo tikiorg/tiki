@@ -86,7 +86,7 @@ if ( $_SERVER['argv'][1] === 'process' ) {
 			$logger->info('Processed queue');
 			ob_flush();
 
-		} catch (Zend_Search_Lucene_Exception $e) {
+		} catch (ZendSearch\Lucene\ExceptionInterface $e) {
 
 			$msg = tr('Search index could not be updated: %0', $e->getMessage());
 

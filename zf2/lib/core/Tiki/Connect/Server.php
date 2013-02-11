@@ -5,6 +5,10 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
+use ZendSearch\Lucene\ExceptionInterface as LuceneException;
+use ZendSearch\Lucene\Document\Field;
+use ZendSearch\Lucene;
+
 class Tiki_Connect_Server extends Tiki_Connect_Abstract
 {
 	private $indexFile;
@@ -20,8 +24,8 @@ class Tiki_Connect_Server extends Tiki_Connect_Abstract
 	{
 		$index = $this->getIndex();
 
-		Zend_Search_Lucene_Search_Query_Wildcard::setMinPrefixLength(0);
-		Zend_Search_Lucene::setResultSetLimit(25);	// TODO during dev
+		Lucene\Search\Query\Wildcard::setMinPrefixLength(0);
+		Lucene\Lucene::setResultSetLimit(25);	// TODO during dev
 
 		$results = $index->find($criteria);
 
@@ -31,37 +35,37 @@ class Tiki_Connect_Server extends Tiki_Connect_Abstract
 			$res['created'] = $hit->created;
 			try {
 				$res['title'] = $hit->title;
-			} catch (Zend_Search_Lucene_Exception $e) {
+			} catch (LuceneException $e) {
 				$res['title'] = '';
 			}
 			try {
 				$res['url'] = $hit->url;
-			} catch (Zend_Search_Lucene_Exception $e) {
+			} catch (LuceneException $e) {
 				$res['url'] = '';
 			}
 			try {
 				$res['keywords'] = $hit->keywords;
-			} catch (Zend_Search_Lucene_Exception $e) {
+			} catch (LuceneException $e) {
 				$res['keywords'] = '';
 			}
 			try {
 				$res['language'] = $hit->language;
-			} catch (Zend_Search_Lucene_Exception $e) {
+			} catch (LuceneException $e) {
 				$res['language'] = '';
 			}
 			try {
 				$res['geo_lat'] = $hit->geo_lat;
-			} catch (Zend_Search_Lucene_Exception $e) {
+			} catch (LuceneException $e) {
 				$res['geo_lat'] = '';
 			}
 			try {
 				$res['geo_lon'] = $hit->geo_lon;
-			} catch (Zend_Search_Lucene_Exception $e) {
+			} catch (LuceneException $e) {
 				$res['geo_lon'] = '';
 			}
 			try {
 				$res['geo_zoom'] = $hit->geo_zoom;
-			} catch (Zend_Search_Lucene_Exception $e) {
+			} catch (LuceneException $e) {
 				$res['geo_zoom'] = '';
 			}
 
@@ -93,7 +97,7 @@ class Tiki_Connect_Server extends Tiki_Connect_Abstract
 	{
 
 		if ($rebuld || $this->indexNeedsRebuilding()) {
-			$index = Zend_Search_Lucene::create($this->indexFile);
+			$index = Lucene\Lucene::create($this->indexFile);
 
 			foreach ($this->getReceivedDataLatest() as $connection) {
 				$data = unserialize($connection['data']);
@@ -108,7 +112,7 @@ class Tiki_Connect_Server extends Tiki_Connect_Abstract
 			return $index;
 		}
 
-		return Zend_Search_Lucene::open($this->indexFile);
+		return Lucene\Lucene::open($this->indexFile);
 	}
 
 	public function indexNeedsRebuilding()
@@ -118,51 +122,51 @@ class Tiki_Connect_Server extends Tiki_Connect_Abstract
 
 	private function indexConnection($created, $data)
 	{
-		$doc = new Zend_Search_Lucene_Document();
-		$doc->addField(Zend_Search_Lucene_Field::Keyword('created', $created));
-		$doc->addField(Zend_Search_Lucene_Field::Text('version', $data['version']));
+		$doc = new Lucene\Document();
+		$doc->addField(Field::Keyword('created', $created));
+		$doc->addField(Field::Text('version', $data['version']));
 
 		if (!empty($data['site'])) {
 			if (!empty($data['site']['connect_site_title'])) {
-				$doc->addField(Zend_Search_Lucene_Field::Text('title', $data['site']['connect_site_title']));
+				$doc->addField(Field::Text('title', $data['site']['connect_site_title']));
 			}
 			if (!empty($data['site']['connect_site_url'])) {
-				$doc->addField(Zend_Search_Lucene_Field::Keyword('url', $data['site']['connect_site_url']));
+				$doc->addField(Field::Keyword('url', $data['site']['connect_site_url']));
 			}
 			if (!empty($data['site']['connect_site_email'])) {
-				$doc->addField(Zend_Search_Lucene_Field::Keyword('email', $data['site']['connect_site_email']));	// hmm
+				$doc->addField(Field::Keyword('email', $data['site']['connect_site_email']));	// hmm
 			}
 			if (!empty($data['site']['connect_site_keywords'])) {
-				$doc->addField(Zend_Search_Lucene_Field::Text('keywords', $data['site']['connect_site_keywords']));
+				$doc->addField(Field::Text('keywords', $data['site']['connect_site_keywords']));
 			}
 			if (!empty($data['site']['connect_site_location'])) {
 				$loc = TikiLib::lib('geo')->parse_coordinates($data['site']['connect_site_location']);
 				if (count($loc) > 1) {
-					$doc->addField(Zend_Search_Lucene_Field::Keyword('geo_lat', $loc['lat']));
-					$doc->addField(Zend_Search_Lucene_Field::Keyword('geo_lon', $loc['lon']));
+					$doc->addField(Field::Keyword('geo_lat', $loc['lat']));
+					$doc->addField(Field::Keyword('geo_lon', $loc['lon']));
 					if (count($loc) > 2) {
-						$doc->addField(Zend_Search_Lucene_Field::Keyword('geo_zoom', $loc['zoom']));
+						$doc->addField(Field::Keyword('geo_zoom', $loc['zoom']));
 					}
 				}
 			}
 		} else {
-			$doc->addField(Zend_Search_Lucene_Field::Text('title', tra('Anonymous')));
+			$doc->addField(Field::Text('title', tra('Anonymous')));
 		}
 		if (!empty($data['tables'])) {
-			$doc->addField(Zend_Search_Lucene_Field::UnIndexed('tables', serialize($data['tables'])));
+			$doc->addField(Field::UnIndexed('tables', serialize($data['tables'])));
 		}
 		if (!empty($data['prefs'])) {
-			$doc->addField(Zend_Search_Lucene_Field::UnIndexed('prefs', serialize($data['prefs'])));
+			$doc->addField(Field::UnIndexed('prefs', serialize($data['prefs'])));
 			if (!empty($data['prefs']['language'])) {
 				$languages = TikiLib::get_language_map();
-				$doc->addField(Zend_Search_Lucene_Field::Text('language', $languages[$data['prefs']['language']]));
+				$doc->addField(Field::Text('language', $languages[$data['prefs']['language']]));
 			}
 		}
 		if (!empty($data['server'])) {
-			$doc->addField(Zend_Search_Lucene_Field::UnIndexed('server', serialize($data['server'])));
+			$doc->addField(Field::UnIndexed('server', serialize($data['server'])));
 		}
 		if (!empty($data['votes'])) {
-			$doc->addField(Zend_Search_Lucene_Field::UnIndexed('votes', serialize($data['votes'])));
+			$doc->addField(Field::UnIndexed('votes', serialize($data['votes'])));
 		}
 
 

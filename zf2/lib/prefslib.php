@@ -458,7 +458,7 @@ class PreferencesLib
 
 	public function rebuildIndex()
 	{
-		$index = Zend_Search_Lucene::create($this->file);
+		$index = ZendSearch\Lucene\Lucene::create($this->file);
 
 		foreach ($this->getAvailableFiles() as $file) {
 			$data = $this->getFileData($file);
@@ -478,14 +478,14 @@ class PreferencesLib
 	{
 		global $prefs;
 		if ( $prefs['language'] == 'en' ) {
-			Zend_Search_Lucene_Analysis_Analyzer::setDefault(new StandardAnalyzer_Analyzer_Standard_English());
+			ZendSearch\Lucene\Analysis\Analyzer::setDefault(new StandardAnalyzer_Analyzer_Standard_English());
 		}
 
 		if ( $this->indexNeedsRebuilding()) {
 			return $this->rebuildIndex();
 		}
 
-		return Zend_Search_Lucene::open($this->file);
+		return Zend\Search\Lucene\Lucene::open($this->file);
 	}
 
 	public function indexNeedsRebuilding()
@@ -558,21 +558,21 @@ class PreferencesLib
 
 	private function indexPreference( $pref, $info )
 	{
-		$doc = new Zend_Search_Lucene_Document();
-		$doc->addField(Zend_Search_Lucene_Field::UnIndexed('preference', $pref));
-		$doc->addField(Zend_Search_Lucene_Field::Text('name', $info['name']));
+		$doc = new ZendSearch\Lucene\Document();
+		$doc->addField(ZendSearch\Lucene\Field::UnIndexed('preference', $pref));
+		$doc->addField(ZendSearch\Lucene\Field::Text('name', $info['name']));
 		if (!empty($info['description'])) {
-			$doc->addField(Zend_Search_Lucene_Field::Text('description', $info['description']));
+			$doc->addField(ZendSearch\Lucene\Field::Text('description', $info['description']));
 		}
 		if (!empty($info['keywords'])) {
-			$doc->addField(Zend_Search_Lucene_Field::Text('keywords', $info['keywords']));
+			$doc->addField(ZendSearch\Lucene\Field::Text('keywords', $info['keywords']));
 		}
 
 		if ( isset( $info['options'] ) ) {
-			$doc->addField(Zend_Search_Lucene_Field::Text('options', implode(' ', $info['options'])));
+			$doc->addField(ZendSearch\Lucene\Field::Text('options', implode(' ', $info['options'])));
 		}
 
-		$doc->addField(Zend_Search_Lucene_Field::Text('tags', implode(' ', $info['tags'])));
+		$doc->addField(ZendSearch\Lucene\Field::Text('tags', implode(' ', $info['tags'])));
 
 		return $doc;
 	}

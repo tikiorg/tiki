@@ -1,5 +1,5 @@
 {
-    "hash": "fe6ca1f01e394503b7dcb97b8d591056",
+    "hash": "3245bbf5ba31318056d655a82f975d61",
     "packages": [
         {
             "name": "adodb/adodb",
@@ -11,6 +11,42 @@
                 "shasum": null
             },
             "type": "library"
+        },
+        {
+            "name": "lphuberdeau/zendsearch",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/lphuberdeau/ZendSearch",
+                "reference": "01bf99c370987dcfff8ee43c5a4d7e33d326cf16"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/lphuberdeau/ZendSearch/zipball/01bf99c370987dcfff8ee43c5a4d7e33d326cf16",
+                "reference": "01bf99c370987dcfff8ee43c5a4d7e33d326cf16",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "time": "2013-02-11 17:28:48",
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "ZendSearch": "library/"
+                }
+            },
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "description": "a general purpose text search engine written entirely in PHP 5",
+            "keywords": [
+                "lucene",
+                "zf2"
+            ],
+            "support": {
+                "source": "https://github.com/lphuberdeau/ZendSearch/tree/master"
+            }
         },
         {
             "name": "phpcas/phpcas",
@@ -617,7 +653,7 @@
 
     ],
     "minimum-stability": "stable",
-    "stability-flags": [
-
-    ]
+    "stability-flags": {
+        "lphuberdeau/zendsearch": 20
+    }
 }

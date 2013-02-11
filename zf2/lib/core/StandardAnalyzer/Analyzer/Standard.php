@@ -16,7 +16,7 @@
  */
 
 
-abstract class StandardAnalyzer_Analyzer_Standard extends Zend_Search_Lucene_Analysis_Analyzer
+abstract class StandardAnalyzer_Analyzer_Standard extends ZendSearch\Lucene\Analysis\Analyzer\AbstractAnalyzer
 {
   /**
      * The set of Token filters applied to the Token stream.
@@ -45,7 +45,7 @@ abstract class StandardAnalyzer_Analyzer_Standard extends Zend_Search_Lucene_Ana
 	{
 		if (@preg_match('/\pL/u', 'a') != 1) {
 			// PCRE unicode support is turned off
-			throw new Zend_Search_Lucene_Exception('Analyzer needs PCRE unicode support to be enabled.');
+			throw new ZendSearch\Lucene\Exception('Analyzer needs PCRE unicode support to be enabled.');
 		}
 		$this->_position     = 0;
 		$this->_bytePosition = 0;
@@ -56,7 +56,7 @@ abstract class StandardAnalyzer_Analyzer_Standard extends Zend_Search_Lucene_Ana
      *
      * @param Zend_Search_Lucene_Analysis_TokenFilter $filter
      */
-    public function addFilter(Zend_Search_Lucene_Analysis_TokenFilter $filter)
+    public function addFilter(ZendSearch\Lucene\Analysis\TokenFilter\TokenFilterInterface $filter)
     {
         $this->_filters[] = $filter;
     }
@@ -73,7 +73,9 @@ abstract class StandardAnalyzer_Analyzer_Standard extends Zend_Search_Lucene_Ana
             return;
         }
 
-		// Keeping the current encoding seems to work. So don't convert.
+		// convert input into ascii
+		$this->_input = iconv($this->_encoding, 'ASCII//TRANSLIT', $this->_input);
+		$this->_encoding = 'ASCII';
     }
 	
     /**
@@ -82,7 +84,7 @@ abstract class StandardAnalyzer_Analyzer_Standard extends Zend_Search_Lucene_Ana
      * @param Zend_Search_Lucene_Analysis_Token $token
      * @return Zend_Search_Lucene_Analysis_Token
      */
-    public function normalize(Zend_Search_Lucene_Analysis_Token $token)
+    public function normalize(ZendSearch\Lucene\Analysis\Token $token)
     {
         foreach ($this->_filters as $filter) {
             $token = $filter->normalize($token);
@@ -104,7 +106,7 @@ abstract class StandardAnalyzer_Analyzer_Standard extends Zend_Search_Lucene_Ana
 
 		//Parse UTF-8
 		do {
-            if (! preg_match('/[\p{L}]+/u', $this->_input, $match, PREG_OFFSET_CAPTURE, $this->_bytePosition)) {
+            if (! preg_match('/[\p{L}0-9\.]+/u', $this->_input, $match, PREG_OFFSET_CAPTURE, $this->_bytePosition)) {
                 // It covers both cases a) there are no matches (preg_match(...) === 0)
                 // b) error occured (preg_match(...) === FALSE)
                 return null;
@@ -128,7 +130,7 @@ abstract class StandardAnalyzer_Analyzer_Standard extends Zend_Search_Lucene_Ana
             $this->_bytePosition = $binStartPos + strlen($matchedWord);
             $this->_position     = $endPos;
 
-            $token = $this->normalize(new Zend_Search_Lucene_Analysis_Token($matchedWord, $startPos, $endPos));
+            $token = $this->normalize(new ZendSearch\Lucene\Analysis\Token($matchedWord, $startPos, $endPos));
 		} while ($token === null); // try again if token is skipped
 
 		return $token;

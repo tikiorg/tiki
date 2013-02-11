@@ -5,6 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
+use ZendSearch\Lucene;
+
 class Search_Index_Lucene implements Search_Index_Interface
 {
 	private $lucene;
@@ -13,15 +15,14 @@ class Search_Index_Lucene implements Search_Index_Interface
 	private $lastModif;
 	private $directory;
 	private $maxResults = 0;
-	private $resultSetLimit = 0;
 
 	function __construct($directory, $lang = 'en', $highlight = true)
 	{
 		switch($lang) {
 		case 'en':
 			default:
-				Zend_Search_Lucene_Analysis_Analyzer::setDefault(new StandardAnalyzer_Analyzer_Standard_English());
-				Zend_Search_Lucene_Search_QueryParser::setDefaultEncoding('UTF-8');
+				Lucene\Analysis\Analyzer\Analyzer::setDefault(new StandardAnalyzer_Analyzer_Standard_English());
+				Lucene\Search\QueryParser::setDefaultEncoding('UTF-8');
 		}
 
 		$this->directory = $directory;
@@ -37,9 +38,9 @@ class Search_Index_Lucene implements Search_Index_Interface
 		}
 
 		try {
-			$this->lucene = Zend_Search_Lucene::open($this->directory);
-		} catch (Zend_Search_Lucene_Exception $e) {
-			$this->lucene = Zend_Search_Lucene::create($this->directory);
+			$this->lucene = Lucene\Lucene::open($this->directory);
+		} catch (Lucene\Exception\ExceptionInterface $e) {
+			$this->lucene = Lucene\Lucene::create($this->directory);
 		}
 		global $prefs;
 		if (!empty($prefs['unified_lucene_max_buffered_docs'])) {							// these break indexing if set empty
@@ -51,7 +52,6 @@ class Search_Index_Lucene implements Search_Index_Interface
 		if (!empty($prefs['unified_lucene_merge_factor'])) {
 			$this->lucene->setMergeFactor($prefs['unified_lucene_merge_factor']);			// default is 10
 		}
-		$this->lucene->setResultSetLimit($this->resultSetLimit);
 
 		return $this->lucene;
 	}
@@ -116,12 +116,12 @@ class Search_Index_Lucene implements Search_Index_Interface
 
 	public function setResultSetLimit($resultSetLimit)
 	{
-		$this->resultSetLimit = $resultSetLimit;
+		ZendSearch\Lucene\Lucene::setResultSetLimit($resultSetLimit);
 	}
 
 	public function getResultSetLimit()
 	{
-		return $this->resultSetLimit;
+		return ZendSearch\Lucene\Lucene::getResultSetLimit();
 	}
 
 	private function internalFind(& $query, $sortOrder)
@@ -141,7 +141,7 @@ class Search_Index_Lucene implements Search_Index_Interface
 		$query = $this->buildQuery($query);
 		try {
 			$hits = $this->getLucene()->find($query, $this->getSortField($sortOrder), $this->getSortType($sortOrder), $this->getSortOrder($sortOrder));
-		} catch (Exception $e) {
+		} catch (ZendSearch\Lucene\ExceptionInterface $e) {
 			TikiLib::lib('errorreport')->report($e->getMessage());
 		}
 
@@ -230,7 +230,7 @@ class Search_Index_Lucene implements Search_Index_Interface
 
 	private function generateDocument($data)
 	{
-		$document = new Zend_Search_Lucene_Document;
+		$document = new Lucene\Document;
 		$typeMap = array(
 			'Search_Type_WikiText' => 'UnStored',
 			'Search_Type_PlainText' => 'UnStored',
@@ -241,7 +241,7 @@ class Search_Index_Lucene implements Search_Index_Interface
 		);
 		foreach ($data as $key => $value) {
 			$luceneType = $typeMap[get_class($value)];
-			$field = Zend_Search_Lucene_Field::$luceneType($key, $value->getValue(), 'UTF-8');
+			$field = Lucene\Document\Field::$luceneType($key, $value->getValue(), 'UTF-8');
 			$document->addField($field);
 		}
 
@@ -251,7 +251,7 @@ class Search_Index_Lucene implements Search_Index_Interface
 	private function buildQuery($expr)
 	{
 		$query = (string) $expr->walk(array($this, 'walkCallback'));
-		return Zend_Search_Lucene_Search_QueryParser::parse($query, 'UTF-8');
+		return Lucene\Search\QueryParser::parse($query, 'UTF-8');
 	}
 
 	function walkCallback($node, $childNodes)
@@ -263,7 +263,7 @@ class Search_Index_Lucene implements Search_Index_Interface
 		} elseif ($node instanceof Search_Expr_Or) {
 			$term = $this->buildCondition($childNodes, null);
 		} elseif ($node instanceof Search_Expr_Not) {
-			$result = new Zend_Search_Lucene_Search_Query_Boolean;
+			$result = new Lucene\Search\Query\Boolean;
 			$result->addSubquery($childNodes[0], false);
 
 			$term = $result;
@@ -276,7 +276,7 @@ class Search_Index_Lucene implements Search_Index_Interface
 
 			// Range search not supported for phrases, so revert to normal token matching
 			if (method_exists($from, 'getTerm')) {
-				$range = new Zend_Search_Lucene_Search_Query_Range(
+				$range = new Lucene\Search\Query\Range(
 					$from->getTerm(),
 					$to->getTerm(),
 					true // inclusive
@@ -299,11 +299,11 @@ class Search_Index_Lucene implements Search_Index_Interface
 
 	private function buildCondition($childNodes, $required)
 	{
-		$result = new Zend_Search_Lucene_Search_Query_Boolean;
+		$result = new Lucene\Search\Query\Boolean;
 		foreach ($childNodes as $child) {
 
 			// Detect if child is a NOT, and reformulate on the fly to support the syntax
-			if ($child instanceof Zend_Search_Lucene_Search_Query_Boolean) {
+			if ($child instanceof Lucene\Search\Query\Boolean) {
 				$signs = $child->getSigns();
 				if (count($signs) === 1 && $signs[0] === false) {
 					$result->addSubquery(reset($child->getSubqueries()), false);
@@ -332,16 +332,16 @@ class Search_Index_Lucene implements Search_Index_Interface
 
 			$parts = explode(' ', $whole);
 			if (count($parts) === 1) {
-				return new Zend_Search_Lucene_Search_Query_Term(new Zend_Search_Lucene_Index_Term($parts[0], $field), true);
+				return new Lucene\Search\Query\Term(new Lucene\Index\Term($parts[0], $field), true);
 			} else {
-				return new Zend_Search_Lucene_Search_Query_Phrase($parts, array_keys($parts), $field);
+				return new Lucene\Search\Query\Phrase($parts, array_keys($parts), $field);
 			}
 		case 'Search_Type_Timestamp':
 			$parts = explode(' ', $value->getValue());
-			return new Zend_Search_Lucene_Search_Query_Term(new Zend_Search_Lucene_Index_Term($parts[0], $field), true);
+			return new Lucene\Search\Query\Term(new Lucene\Index\Term($parts[0], $field), true);
 		case 'Search_Type_Whole':
 			$parts = explode(' ', $value->getValue());
-			return new Zend_Search_Lucene_Search_Query_Phrase($parts, array_keys($parts), $field);
+			return new Lucene\Search\Query\Phrase($parts, array_keys($parts), $field);
 		}
 	}
 }
@@ -355,7 +355,7 @@ class Search_Index_Lucene_HighlightHelper implements Zend\Filter\FilterInterface
 	{
 		$qstr = $query->__toString();									// query needs the object_type field removing for highlighting
 		$qstr = preg_replace('/\+?\(\(object_type.*?\)\)/', '', $qstr);	// this is the only way i can find to remove a term form a query
-		$query = Zend_Search_Lucene_Search_QueryParser::parse($qstr, 'UTF-8');	// rebuild
+		$query = Lucene\Search\QueryParser::parse($qstr, 'UTF-8');	// rebuild
 		$this->query = $query;
 		$this->snippetHelper = new Search_ResultSet_SnippetHelper;
 	}

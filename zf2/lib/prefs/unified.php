@@ -78,10 +78,10 @@ function prefs_unified_list()
 			'description' => tra('Use OR (default) or AND as the default search operator.'),
 			'type' => 'list',
 			'filter' => 'int',
-			'default' => Zend_Search_Lucene_Search_QueryParser::B_OR,
+			'default' => ZendSearch\Lucene\Search\QueryParser::B_OR,
 			'options' => array(
-				Zend_Search_Lucene_Search_QueryParser::B_OR => tra('OR'),
-				Zend_Search_Lucene_Search_QueryParser::B_AND => tra('AND'),
+				ZendSearch\Lucene\Search\QueryParser::B_OR => tra('OR'),
+				ZendSearch\Lucene\Search\QueryParser::B_AND => tra('AND'),
 			),
 		),
 		'unified_lucene_merge_factor' => array(

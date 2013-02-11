@@ -59,7 +59,7 @@ class UnifiedSearchLib
 			try {
 				$indexer = $this->buildIndexer($this->getIndex());
 				$indexer->update($toProcess);
-			} catch (Zend_Search_Lucene_Exception $e) {
+			} catch (ZendSearch\Lucene\ExceptionInterface $e) {
 				// Re-queue pulled messages for next update
 				foreach ($toProcess as $message) {
 					$queuelib->push(self::INCREMENT_QUEUE, $message);
@@ -383,7 +383,7 @@ class UnifiedSearchLib
 		global $prefs;
 
 		if ($prefs['unified_engine'] == 'lucene') {
-			Zend_Search_Lucene::setTermsPerQueryLimit($prefs['unified_lucene_terms_limit']);
+			ZendSearch\Lucene\Lucene::setTermsPerQueryLimit($prefs['unified_lucene_terms_limit']);
 			$index = new Search_Index_Lucene($this->getIndexLocation(), $prefs['language'], $prefs['unified_lucene_highlight'] == 'y');
 			$index->setCache(TikiLib::lib('cache'));
 			$index->setMaxResults($prefs['unified_lucene_max_result']);

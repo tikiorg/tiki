@@ -34,7 +34,7 @@ function refresh_index($object_type, $object_id = null, $process = true)
 				$unifiedsearchlib->processUpdateQueue();
 			}
 
-		} catch (Zend_Search_Lucene_Exception $e) {
+		} catch (ZendSearch\Lucene\ExceptionInterface $e) {
 
 			$errlib = TikiLib::lib('errorreport');
 			$message = $e->getMessage();

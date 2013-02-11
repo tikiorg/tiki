@@ -16,6 +16,7 @@
 		"zendframework/zend-mime": "2.0.7",
 		"zendframework/zend-servicemanager": "2.0.7",
 		"zendframework/zend-validator": "2.0.7",
+		"lphuberdeau/zendsearch": "dev-master",
 		"zendframework/zendframework1": "1.12.1"
 	},
 	"require-dev": {
@@ -60,6 +61,10 @@
 		]
 	},
 	"repositories": [
+		{
+			"type": "vcs",
+			"url": "https://github.com/lphuberdeau/ZendSearch"
+		},
 		{
 			"type": "package",
 			"package": {

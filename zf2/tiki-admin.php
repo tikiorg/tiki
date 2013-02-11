@@ -209,7 +209,7 @@ if ( isset( $_REQUEST['lm_criteria'] ) ) {
 		$results = array_slice($results, 0, 50);
 		$smarty->assign('lm_searchresults', $results);
 		$smarty->assign('lm_error', '');
-	} catch(Zend_Search_Lucene_Exception $e) {
+	} catch(ZendSearch\Lucene\ExceptionInterface $e) {
 		$smarty->assign('lm_criteria', $_REQUEST['lm_criteria']);
 		$smarty->assign('lm_error', $e->getMessage());
 		$smarty->assign('lm_searchresults', '');

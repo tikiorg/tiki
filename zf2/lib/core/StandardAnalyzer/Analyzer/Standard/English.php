@@ -15,6 +15,8 @@
  * @category   PHP_Analyzer_Standard
  */
 
+use ZendSearch\Lucene\Analysis\TokenFilter;
+
  /** StandardAnalyzer_ */
  /* Depending on your circumstances, you may want to change the paths to meet your conventional / functional needs */
 
@@ -24,8 +26,9 @@ class StandardAnalyzer_Analyzer_Standard_English extends StandardAnalyzer_Analyz
 	
     public function __construct()
     {
-        $this->addFilter(new Zend_Search_Lucene_Analysis_TokenFilter_LowerCaseUtf8());
-        $this->addFilter(new Zend_Search_Lucene_Analysis_TokenFilter_StopWords($this->_stopWords));
+		parent::__construct();
+        $this->addFilter(new TokenFilter\LowerCaseUtf8());
+        $this->addFilter(new TokenFilter\StopWords($this->_stopWords));
         $this->addFilter(new StandardAnalyzer_Analysis_TokenFilter_EnglishStemmer());	
     }
 }
