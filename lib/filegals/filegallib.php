@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2013 by authors of the Tiki Wiki CMS Groupware Project
+// (c) Copyright 2002-2012 by authors of the Tiki Wiki CMS Groupware Project
 //
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -24,7 +24,7 @@ class FileGalLib extends TikiLib
 		}
 	}
 
-	public function get_gallery_save_dir($galleryId, $galInfo = null)
+	function get_gallery_save_dir($galleryId, $galInfo = null)
 	{
 		global $prefs;
 
@@ -3309,12 +3309,13 @@ class FileGalLib extends TikiLib
 			$feedback_message = sprintf(tra('Image was reduced: %s x %s -> %s x %s'), $image_x, $image_y, (int)$image_new_x, (int)$image_new_y);
 			$dataforsize = file_get_contents($work_file);
 			$size = function_exists('mb_strlen') ? mb_strlen($dataforsize, '8bit') : strlen($dataforsize);
-			$metadata = $this->extractMetadataJson($work_file);
 
-			if ($data) {					// image stored in $data so the file $work_file is temporary
+			if ($data) {
 				$data = $dataforsize;
-				unlink($work_file);			// otherwise it's the actual filesystem version of the image so should not be deleted
 			}
+
+			$metadata = $this->extractMetadataJson($work_file);
+			unlink($work_file);
 		}
 	}
 
