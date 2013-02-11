@@ -55,7 +55,6 @@ if (isset($_REQUEST["remind"])) {
 	if (isset($showmsg) && $showmsg == 'e') {
 		$smarty->assign('showmsg', 'e');
 	} else {
-		include_once ('lib/webmail/tikimaillib.php');
 		$name = $_REQUEST['name'];
 		if ($prefs['feature_clear_passwords'] == 'y') {
 			$pass = $userlib->get_user_password($name);

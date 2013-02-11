@@ -95,9 +95,9 @@ class OpenPGP_Zend_Mail_Transport_Smtp extends OpenPGP_Zend_Mail_Transport_Abstr
 
 
     /**
-     * Instance of Zend_Mail_Protocol_Smtp
+     * Instance of Zend\Mail\Protocol\Smtp
      *
-     * @var Zend_Mail_Protocol_Smtp
+     * @var Zend\Mail\Protocol\Smtp
      */
     protected $_connection;
 
@@ -136,7 +136,7 @@ class OpenPGP_Zend_Mail_Transport_Smtp extends OpenPGP_Zend_Mail_Transport_Abstr
      */
     public function __destruct()
     {
-        if ($this->_connection instanceof Zend_Mail_Protocol_Smtp) {
+        if ($this->_connection instanceof Zend\Mail\Protocol\Smtp) {
             try {
                 $this->_connection->quit();
             } catch (Zend_Mail_Protocol_Exception $e) {
@@ -150,11 +150,9 @@ class OpenPGP_Zend_Mail_Transport_Smtp extends OpenPGP_Zend_Mail_Transport_Abstr
     /**
      * Sets the connection protocol instance
      *
-     * @param Zend_Mail_Protocol_Abstract $client
-     *
      * @return void
      */
-    public function setConnection(Zend_Mail_Protocol_Abstract $connection)
+    public function setConnection(Zend\Mail\Protocol\Abstract $connection)
     {
         $this->_connection = $connection;
     }
@@ -182,9 +180,9 @@ class OpenPGP_Zend_Mail_Transport_Smtp extends OpenPGP_Zend_Mail_Transport_Abstr
     public function _sendMail()
     {
         // If sending multiple messages per session use existing adapter
-        if (!($this->_connection instanceof Zend_Mail_Protocol_Smtp)) {
+        if (!($this->_connection instanceof Zend\Mail\Protocol\Smtp)) {
             // Check if authentication is required and determine required class
-            $connectionClass = 'Zend_Mail_Protocol_Smtp';
+            $connectionClass = 'Zend\Mail\Protocol\Smtp';
             if ($this->_auth) {
                 $connectionClass .= '_Auth_' . ucwords($this->_auth);
             }
@@ -221,7 +219,7 @@ class OpenPGP_Zend_Mail_Transport_Smtp extends OpenPGP_Zend_Mail_Transport_Abstr
     protected function _prepareHeaders($headers)
     {
         if (!$this->_mail) {
-            throw new Zend_Mail_Transport_Exception('_prepareHeaders requires a registered OpenPGP_Zend_Mail object');
+            throw new Zend\Mail\Transport\Exception('_prepareHeaders requires a registered OpenPGP_Zend_Mail object');
         }
 
         unset($headers['Bcc']);

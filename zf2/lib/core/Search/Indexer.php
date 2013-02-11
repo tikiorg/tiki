@@ -43,7 +43,7 @@ class Search_Indexer
 		$this->globalSources[] = $globalSource;
 	}
 
-	public function addContentFilter(Zend_Filter_Interface $filter)
+	public function addContentFilter(Zend\Filter\FilterInterface $filter)
 	{
 		$this->contentFilters[] = $filter;
 	}

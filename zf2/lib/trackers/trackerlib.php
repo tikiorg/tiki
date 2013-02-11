@@ -301,7 +301,6 @@ class TrackerLib extends TikiLib
 			if (!isset($_SERVER["SERVER_NAME"])) {
 				$_SERVER["SERVER_NAME"] = $_SERVER["HTTP_HOST"];
 			}
-			include_once ('lib/webmail/tikimaillib.php');
 			$smarty->assign('server_name', $_SERVER['SERVER_NAME']);
 			$desc = $this->get_isMain_value($trackerId, $itemId);
 			$smarty->assign('mail_item_desc', $desc);
@@ -2114,7 +2113,6 @@ class TrackerLib extends TikiLib
 				if (!isset($_SERVER["SERVER_NAME"])) {
 					$_SERVER["SERVER_NAME"] = $_SERVER["HTTP_HOST"];
 				}
-				include_once ('lib/webmail/tikimaillib.php');
 				$smarty->assign('server_name', $_SERVER['SERVER_NAME']);
 				foreach ($watchers as $w) {
 					$mail = new TikiMail($w['user']);
@@ -3927,7 +3925,6 @@ class TrackerLib extends TikiLib
 			if (!isset($_SERVER["SERVER_NAME"])) {
 				$_SERVER["SERVER_NAME"] = $_SERVER["HTTP_HOST"];
 			}
-			include_once('lib/webmail/tikimaillib.php');
 			if ( $simpleEmail == "n" ) {
 				$desc = $this->get_isMain_value($trackerId, $itemId);
 				if ($tracker_info['doNotShowEmptyField'] === 'y') {

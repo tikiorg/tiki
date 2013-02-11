@@ -501,7 +501,7 @@ class WebMailLib extends TikiLib
 		if (!empty($this->current_account['imap'])) {
 
 			// connecting with Imap
-			return new Zend_Mail_Storage_Imap(
+			return new Zend\Mail\Storage\Imap(
 				array(
 					'host'     => $this->current_account["imap"],
 					'user'     => $this->current_account["username"],
@@ -513,21 +513,21 @@ class WebMailLib extends TikiLib
 		} else if (!empty($this->current_account['mbox'])) {
 
 			// connecting with Mbox locally
-			return new Zend_Mail_Storage_Mbox(
+			return new Zend\Mail\Storage\Mbox(
 				array('filename' => $this->current_account["mbox"])
 			);
 
 		} else if (!empty($this->current_account['maildir'])) {
 
 			// connecting with Maildir locally
-			return new Zend_Mail_Storage_Maildir(
+			return new Zend\Mail\Storage\Maildir(
 				array('dirname' => $this->current_account["mbox"])
 			);
 
 		} else if (!empty($this->current_account['pop'])) {
 
 			// connecting with Pop3
-			return new Zend_Mail_Storage_Pop3(
+			return new Zend\Mail\Storage\Pop3(
 				array(
 					'host'     => $this->current_account["pop"],
 					'user'     => $this->current_account["username"],
@@ -537,7 +537,7 @@ class WebMailLib extends TikiLib
 			);
 		}
 		// not returned yet?
-		throw new Zend_Mail_Storage_Exception('No server to check');
+		throw new Zend\Mail\Storage\Exception('No server to check');
 	}	// end get_mail_storage()
 
 	/**
@@ -551,12 +551,12 @@ class WebMailLib extends TikiLib
 		// deal with transfer encoding
 		try {	// no headerExists() func a part (why?)
 			$enc = $part->contentTransferEncoding;
-		} catch (Zend_Mail_Exception $e) {
+		} catch (Zend\Mail\Exception $e) {
 			$enc = '';
 		}
 		try {	// no headerExists() func a part (why?)
 			$ct = $part->contentType;
-		} catch (Zend_Mail_Exception $e) {
+		} catch (Zend\Mail\Exception $e) {
 			$ct = '';
 		}
 		try {
@@ -584,7 +584,7 @@ class WebMailLib extends TikiLib
 			if (strtok($ct, ';') == 'text/plain' && !$getAllParts) {
 				return $result;
 			}
-		} catch (Zend_Mail_Exception $e) {
+		} catch (Zend\Mail\Exception $e) {
 			// ignore?
 		}
 		return $result;

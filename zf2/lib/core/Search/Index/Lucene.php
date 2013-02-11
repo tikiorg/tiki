@@ -346,7 +346,7 @@ class Search_Index_Lucene implements Search_Index_Interface
 	}
 }
 
-class Search_Index_Lucene_HighlightHelper implements Zend_Filter_Interface
+class Search_Index_Lucene_HighlightHelper implements Zend\Filter\FilterInterface
 {
 	private $query;
 	private $snippetHelper;

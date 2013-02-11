@@ -5,7 +5,7 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-class TikiFilter_PreventXss implements Zend_Filter_Interface
+class TikiFilter_PreventXss implements Zend\Filter\FilterInterface
 {
 	function filter( $value )
 	{

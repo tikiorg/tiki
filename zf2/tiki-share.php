@@ -25,7 +25,6 @@ if (empty($_REQUEST['report'])) {
 
 // email related:
 // include_once ('lib/registration/registrationlib.php'); // done in the email function
-//include_once ('lib/webmail/tikimaillib.php'); // done in the email function
 $smarty->assign('do_email', (isset($_REQUEST['do_email'])?$_REQUEST['do_email']:true));
 if (empty($_REQUEST['report']) || $_REQUEST['report'] != 'y') {
 	// twitter/facebook related
@@ -406,7 +405,6 @@ function sendMail($sender, $recipients, $subject, $tokenlist = array())
 		return false;
 	}
 
-	include_once ('lib/webmail/tikimaillib.php');
 	$smarty->assign_by_ref('mail_site', $_SERVER['SERVER_NAME']);
 
 	$applyFrom = (!empty($user) && $from == $userlib->get_user_email($user));

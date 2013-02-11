@@ -818,7 +818,6 @@ class CartLib
 			$shopperurl = $tokenlib->includeToken($shopperurl, array($prefs['payment_cart_anon_group'], 'Anonymous'));
 
 			if ( !empty($_SESSION['shopperinfo']['email']) ) {
-				require_once('lib/webmail/tikimaillib.php');
 				global $smarty;
 				$smarty->assign('shopperurl', $shopperurl);
 				$smarty->assign('email_template_ids', $email_template_ids);

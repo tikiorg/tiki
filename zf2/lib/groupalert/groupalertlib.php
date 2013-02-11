@@ -80,7 +80,6 @@ class groupAlertLib extends TikiLib
 		foreach ( $ListUserToAlert as $user ) {
 			$email=$userlib->get_user_email($user);
 			if ( ! empty($email) ) {
-				include_once ('lib/webmail/tikimaillib.php');
 				$mail = new TikiMail();
 				$mail->setText(tra("You are alerted by the server "). $project . "\n" . tra("You can check the modifications at : ") .$URL);
 				$mail->setSubject(tra("You are alerted of a change on ").$project);

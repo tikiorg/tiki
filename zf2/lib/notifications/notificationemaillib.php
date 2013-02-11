@@ -41,7 +41,6 @@ function sendForumEmailNotification(
 
 	//outbound email ->  will be sent in utf8 - from sender_email
 	if ($forum_info['outbound_address']) {
-		include_once('lib/webmail/tikimaillib.php');
 		$mail = new TikiMail();
 		$mail->setSubject($title);
 		if (!empty($forum_info['outbound_mails_reply_link']) && $forum_info['outbound_mails_reply_link'] == 'y') {
@@ -141,7 +140,6 @@ function sendForumEmailNotification(
 	}
 
 	if (count($nots)) {
-		include_once('lib/webmail/tikimaillib.php');
 		$mail = new TikiMail();
 		$smarty->assign('mail_forum', $forum_info["name"]);
 		$smarty->assign('mail_title', $title);
@@ -304,7 +302,6 @@ function sendWikiEmailNotification(
 
 	if (count($nots)) {
 		$edit_data = TikiLib::htmldecode($edit_data);
-		include_once('lib/mail/maillib.php');
 		$smarty->assign('mail_site', $_SERVER["SERVER_NAME"]);
 		$smarty->assign('mail_page', $pageName);
 		$smarty->assign('mail_date', $tikilib->now);
@@ -343,8 +340,6 @@ function sendWikiEmailNotification(
 			$smarty->assign('mail_action', 'edit');
 		}
 
-		include_once('lib/webmail/tikimaillib.php');
-
 		foreach ($nots as $not) {
 			if (empty($not['email'])) continue;
 			$smarty->assign('watchId', $not['watchId']);
@@ -375,7 +370,6 @@ function sendWikiEmailNotification(
 function sendEmailNotification($watches, $dummy, $subjectTpl, $subjectParam, $txtTpl, $from='')
 {
 	global $smarty, $tikilib;
-	include_once('lib/webmail/tikimaillib.php');
 	$sent = 0;
 	$mail = new TikiMail(null, $from);
 	$smarty->assign('mail_date', $tikilib->now);
@@ -483,7 +477,6 @@ function sendFileGalleryEmailNotification($event, $galleryId, $galleryName, $nam
 	}
 
 	if (count($nots)) {
-		include_once('lib/webmail/tikimaillib.php');
 		$mail = new TikiMail();
 		$smarty->assign('galleryName', $galleryName);
 		$smarty->assign('galleryId', $galleryId);
@@ -571,7 +564,6 @@ function sendCategoryEmailNotification($values)
 	}
 
 	if (count($nots)) {
-		include_once('lib/webmail/tikimaillib.php');
 		$mail = new TikiMail();
 
 		$smarty->assign('categoryId', $categoryId);
@@ -652,7 +644,6 @@ function sendStructureEmailNotification($params)
 		$foo = parse_url($_SERVER["REQUEST_URI"]);
 		$machine = $tikilib->httpPrefix(true) . dirname($foo["path"]);
 		$smarty->assign_by_ref('mail_machine', $machine);
-		include_once('lib/webmail/tikimaillib.php');
 		$smarty->assign_by_ref('action', $params['action']);
 		$smarty->assign_by_ref('page_ref_id', $params['page_ref_id']);
 

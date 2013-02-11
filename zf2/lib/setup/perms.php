@@ -59,7 +59,6 @@ if ( $prefs['auth_token_access'] == 'y' && isset($_REQUEST['TOKEN']) ) {
 			$smarty->assign_by_ref('page_token', $notificationPage);
 
 			if (is_array($nots)) {
-				include_once ('lib/webmail/tikimaillib.php');
 				$mail = new TikiMail();
 
 				$mail->setSubject($detailtoken['email'] . ' ' . tra(' has accessed your temporary shared content'));

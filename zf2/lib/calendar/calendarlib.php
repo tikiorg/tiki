@@ -639,7 +639,6 @@ class CalendarLib extends TikiLib
 		}
 
 		if ($nots) {
-			include_once('lib/webmail/tikimaillib.php');
 			$mail = new TikiMail();
 			$smarty->assign('mail_new', $new);
 			$smarty->assign('mail_data', $data);

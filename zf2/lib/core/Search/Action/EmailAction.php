@@ -26,39 +26,32 @@ class Search_Action_EmailAction implements Search_Action_Action
 
 	function execute(JitFilter $data)
 	{
-		require_once 'lib/mail/maillib.php';
+		$mail = new TikiMail;
+		$to = array();
 
-		try {
-			$mail = tiki_get_admin_mail();
-
-			if ($replyto = $data->replyto->email()) {
-				$mail->setReplyTo($replyto);
-			}
-
-			foreach ($data->to->email() as $to) {
-				$mail->addTo($this->stripNp($to));
-			}
-
-			foreach ($data->cc->email() as $cc) {
-				$mail->addCc($this->stripNp($cc));
-			}
-
-			foreach ($data->bcc->email() as $bcc) {
-				$mail->addBcc($this->stripNp($bcc));
-			}
-
-			$content = $this->parse($data->content->none());
-			$subject = $this->parse($data->subject->text());
-
-			$mail->setSubject(strip_tags($subject));
-			$mail->setBodyHtml($content);
-
-			$mail->send();
-
-			return true;
-		} catch (Exception $e) {
-			return false;
+		if ($replyto = $data->replyto->email()) {
+			$mail->setReplyTo($replyto);
 		}
+
+		foreach ($data->to->email() as $email) {
+			$to[] = $this->stripNp($email);
+		}
+
+		foreach ($data->cc->email() as $cc) {
+			$mail->setCc($this->stripNp($cc));
+		}
+
+		foreach ($data->bcc->email() as $bcc) {
+			$mail->setBcc($this->stripNp($bcc));
+		}
+
+		$content = $this->parse($data->content->none());
+		$subject = $this->parse($data->subject->text());
+
+		$mail->setSubject(strip_tags($subject));
+		$mail->setHtml($content);
+
+		return $mail->send($to);
 	}
 
 	private function parse($content)

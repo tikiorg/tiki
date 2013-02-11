@@ -116,7 +116,6 @@ class Messu extends TikiLib
 			}
 			$email = $userlib->get_user_email($user);
 			if ($email) {
-				include_once('lib/webmail/tikimaillib.php');
 				$smarty->assign('mail_site', $_SERVER['SERVER_NAME']);
 				$smarty->assign('mail_machine', $machine);
 				$smarty->assign('mail_date', $this->now);

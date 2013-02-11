@@ -848,7 +848,6 @@ function wikiplugin_tracker($data, $params)
 									$emailOptions[1][$key] = $trklib->get_item_value($trackerId, $rid, $email);
 							}
 						}
-						include_once('lib/webmail/tikimaillib.php');
 						$mail = new TikiMail();
 						$mail->setFrom($emailOptions[0]);
 

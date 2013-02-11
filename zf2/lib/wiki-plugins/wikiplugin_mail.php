@@ -136,7 +136,6 @@ function wikiplugin_mail($data, $params)
 	if (isset($_REQUEST["mail_send$ipluginmail"])) { // send something
 		$to = $_SESSION['to'];
 		if (!empty($to)) {
-			include_once ('lib/webmail/tikimaillib.php');
 			$mail = new TikiMail(null, $userlib->get_user_email($user));
 			$mail->setSubject($_REQUEST['mail_subject']);
 			$mail->setText($_REQUEST['mail_mess']);

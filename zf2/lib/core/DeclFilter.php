@@ -10,7 +10,7 @@
  * Declarative filters are to be defined prior to filtering. Various rules can
  * be defined in sequence. The first filter that applies will be used.
  */
-class DeclFilter implements Zend_Filter_Interface
+class DeclFilter implements Zend\Filter\FilterInterface
 {
 	private $rules = array();
 

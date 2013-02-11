@@ -220,7 +220,6 @@ class TodoLib
 		} else {
 			$todo['to']['body'] = $smarty->fetchLang($lang, $todo['to']['body']);
 		}
-		include_once ('lib/webmail/tikimaillib.php');
 		$mail = new TikiMail(empty($to['user'])?null:$to['user']);
 		$mail->setSubject($todo['to']['subject']);
 		$mail->setHtml($todo['to']['body']);

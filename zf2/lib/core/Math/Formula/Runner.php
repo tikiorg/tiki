@@ -94,7 +94,7 @@ class Math_Formula_Runner
 			return $this->known[$name];
 		}
 
-		$filter = new Zend_Filter_Word_DashToCamelCase;
+		$filter = new Zend\Filter\Word\DashToCamelCase;
 		$ucname = $filter->filter(ucfirst($name));
 
 		foreach ( $this->sources as $prefix => $null ) {

@@ -121,7 +121,7 @@ class OpenPGP_Zend_Mail_Transport_Sendmail extends OpenPGP_Zend_Mail_Transport_A
             restore_error_handler();
         } else {
             if(!is_string($this->parameters)) {
-                throw new Zend_Mail_Transport_Exception(
+                throw new Zend\Mail\Transport\Exception(
                     'Parameters were set but are not a string'
                 );
             }
@@ -137,7 +137,7 @@ class OpenPGP_Zend_Mail_Transport_Sendmail extends OpenPGP_Zend_Mail_Transport_A
         }
 
         if ($this->_errstr !== null || !$result) {
-            throw new Zend_Mail_Transport_Exception('Unable to send mail. ' . $this->_errstr);
+            throw new Zend\Mail\Transport\Exception('Unable to send mail. ' . $this->_errstr);
         }
     }
 

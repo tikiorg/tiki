@@ -8,8 +8,6 @@ require_once ('tiki-setup.php');
 $access->check_feature('feature_invite');
 $access->check_permission('tiki_p_invite');
 
-require_once ('lib/webmail/tikimaillib.php');
-
 @ini_set('max_execution_time', 0); //will not work if safe_mode is on
 $prefs['feature_wiki_protect_email'] = 'n'; //not to alter the email
 

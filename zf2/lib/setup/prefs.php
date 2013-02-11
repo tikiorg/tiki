@@ -299,7 +299,7 @@ function get_default_prefs()
 			'scaleSizeGalleries' => '',
 			'thumbSizeXGalleries' => '',
 			'thumbSizeYGalleries' => '',
-			'javascript_enabled' => 'n',
+			'javascript_enabled' => 'y',
 
 
 			// SefUrl

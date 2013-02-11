@@ -350,7 +350,6 @@ if ($isvalid) {
 			$userlib->change_user_waiting($requestedUser, 'a');
 			$msg = sprintf(tra('More than %d unsuccessful login attempts have been made.'), $prefs['unsuccessful_logins_invalid']);
 			$msg .= ' '.tra('Your account has been suspended.').' '.tra('A site administrator will reactivate it');
-			include_once ('lib/webmail/tikimaillib.php');
 			$mail = new TikiMail();
 			$smarty->assign('msg', $msg);
 			$smarty->assign('mail_user', $requestedUser);

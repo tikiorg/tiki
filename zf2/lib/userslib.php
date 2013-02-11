@@ -6592,8 +6592,6 @@ class UsersLib extends TikiLib
 			'view_user' => $name,
 		)));
 
-		include_once('lib/webmail/tikimaillib.php');
-
 		if ($second == 'y') {
 			$mail_data = $smarty->fetch('mail/confirm_user_email_after_approval.tpl');
 			$mail = new TikiMail();
@@ -6776,7 +6774,6 @@ class UsersLib extends TikiLib
 	function send_confirm_email($user,$tpl='confirm_user_email')
 	{
 		global $smarty, $prefs, $tikilib;
-		include_once ('lib/webmail/tikimaillib.php');
 		$languageEmail = $this->get_user_preference($_REQUEST['username'], 'language', $prefs['site_language']);
 		$apass = $this->renew_user_password($user);
 		$apass = md5($apass);

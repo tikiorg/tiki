@@ -1760,7 +1760,6 @@ class FileGalLib extends TikiLib
 			global $tikilib;
 			$nots = $tikilib->get_event_watches('fgal_quota_exceeded', '*');
 			if (!empty($nots)) {
-				include_once ('lib/webmail/tikimaillib.php');
 				$mail = new TikiMail();
 				$foo = parse_url($_SERVER["REQUEST_URI"]);
 				$machine = $tikilib->httpPrefix(true) . dirname($foo["path"]);
@@ -2191,7 +2190,6 @@ class FileGalLib extends TikiLib
 	function deleteOldFiles()
 	{
 		global $prefs, $smarty;
-		include_once('lib/webmail/tikimaillib.php');
 		$query = 'select * from `tiki_files` where `deleteAfter` < '.$this->now.' - `lastModif` and `deleteAfter` is not NULL and `deleteAfter` != \'\' order by galleryId asc';
 		$files = $this->fetchAll($query, array());
 		foreach ($files as $fileInfo) {

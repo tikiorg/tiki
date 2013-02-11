@@ -8,7 +8,6 @@
 function payment_behavior_cart_send_confirm_email( $u, $email_template_ids = array() )
 {
 	global $prefs, $smarty, $userlib;
-	require_once('lib/webmail/tikimaillib.php');
 	$email = $userlib->get_user_email($u);
 	if (!$email) return false;
 	$smarty->assign("email_template_ids", $email_template_ids);

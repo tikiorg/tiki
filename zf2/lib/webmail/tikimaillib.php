@@ -13,16 +13,16 @@ $access->check_script($_SERVER["SCRIPT_NAME"], basename(__FILE__));
 
 class TikiMail
 {
+	private $maillib;
 	private $mail;
 
 	/* $user = user you send the mail
 		 $from = email you send from*/
 	function __construct($user = null, $from=null)
 	{
-		require_once 'lib/mail/maillib.php';
-
+		$this->maillib = TikiLib::lib('mail');
 		if (! empty($from)) {
-			$this->mail = tiki_get_basic_mail();
+			$this->mail = $this->maillib->createMessage();
 			try {
 				$this->mail->setFrom($from);
 				$this->mail->setReturnPath($from);
@@ -30,7 +30,7 @@ class TikiMail
 				// was already set, then do nothing
 			}
 		} else {
-			$this->mail = tiki_get_admin_mail();
+			$this->mail = $this->maillib->createAdminMessage();
 		}
 	}
 
@@ -55,15 +55,22 @@ class TikiMail
 
 	function setHtml($html, $text = null, $images_dir = null)
 	{
-		$this->mail->setBodyHtml($html);
+		$part = new Zend\Mime\Part($html);
+		$part->type = 'text/html';
+
+		$this->addPart($part);
+
 		if ($text) {
-			$this->mail->setBodyText($text);
+			$this->setText($text);
 		}
 	}
 
 	function setText($text = '')
 	{
-		$this->mail->setBodyText($text);
+		$part = new Zend\Mime\Part($text);
+		$part->type = 'text/plain';
+
+		$this->addPart($part);
 	}
 
 	function setCc($address)
@@ -90,16 +97,16 @@ class TikiMail
 		global $prefs;
 		$logslib = TikiLib::lib('logs');
 
-		$this->mail->clearHeader('To');
+		$this->mail->getHeaders()->removeHeader('To');
 		foreach ((array) $recipients as $to) {
 			$this->mail->addTo($to);
 		}
 
 		try {
-			$this->mail->send();
+			$this->maillib->send($this->mail);
 
 			$title = 'mail';
-		} catch (Zend_Mail_Exception $e) {
+		} catch (Zend\Mail\Exception $e) {
 			$title = 'mail error';
 		}
 
@@ -113,7 +120,25 @@ class TikiMail
 
 	function addAttachment($data, $filename, $mimetype)
 	{
-		$this->mail->createAttachment($data, $mimetype, Zend_Mime::DISPOSITION_INLINE, Zend_Mime::ENCODING_BASE64, $filename);
+		$attachment = new Zend\Mime\Part($data);
+		$attachment->type = $mimetype;
+		$at->disposition = Zend\Mime\Mime::DISPOSITION_INLINE;
+		$at->encoding = Zend\Mime\Mime::ENCODING_BASE64;
+		$at->filename = $filename;
+			
+		$this->addPart($part);
+	}
+
+	private function addPart($part)
+	{
+		$body = $this->mail->getBody();
+
+		if (! $body) {
+			$body = new Zend\Mime\Message;
+		}
+
+		$body->addPart($part);
+		$this->mail->setBody($body);
 	}
 }
 

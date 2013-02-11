@@ -322,7 +322,7 @@ OUT;
 	}
 }
 
-class Search_FormatterTest_HighlightHelper implements Zend_Filter_Interface
+class Search_FormatterTest_HighlightHelper implements Zend\Filter\FilterInterface
 {
 	function filter($content)
 	{

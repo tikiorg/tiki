@@ -62,7 +62,6 @@ if ($isvalid) {
 		$smarty->assign('mail_site', $_SERVER['SERVER_NAME']);
 		$smarty->assign('mail_user', $_REQUEST['user']);
 		$email = $userlib->get_user_email($_REQUEST['user']);
-		include_once ("lib/webmail/tikimaillib.php");
 		$mail = new TikiMail();
 		$mail->setText($smarty->fetch('mail/moderate_activation_mail.tpl'));
 		$mail->setSubject($smarty->fetch('mail/moderate_activation_mail_subject.tpl'));

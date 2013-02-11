@@ -23,6 +23,111 @@
 $charset = 'utf-8'; // What charset we do use in Tiki
 $in_str = '';
 
+class MailLib
+{
+	private $transport;
+
+	function setUp()
+	{
+		if ( $this->transport ) {
+			return;
+		}
+
+		global $prefs;
+		if ( $prefs['zend_mail_handler'] == 'smtp' ) {
+			$options = array(
+				'name' => $prefs['zend_mail_smtp_server'],
+				'host' => $prefs['zend_mail_smtp_server'],
+			);
+
+			if ( $prefs['zend_mail_smtp_auth'] ) {
+				$options['connection_class'] = $prefs['zend_mail_smtp_auth'];
+				$options['connection_config'] = array(
+					'username' => $prefs['zend_mail_smtp_user'],
+					'password' => $prefs['zend_mail_smtp_pass'],
+				);
+			}
+
+			if ( $prefs['zend_mail_smtp_port'] ) {
+				$options['port'] = $prefs['zend_mail_smtp_port'];
+			}
+
+			if ( $prefs['zend_mail_smtp_security'] ) {
+				$options['connection_config']['ssl'] = $prefs['zend_mail_smtp_security'];
+			}
+
+			$options = new Zend\Mail\Transport\SmtpOptions($options);
+			$this->transport = new Zend\Mail\Transport\Smtp($options);
+
+			/* Disabled - needs re-implementation with ZF Mail 2
+			// hollmeer 2012-11-03: ADDED PGP/MIME ENCRYPTION PREPARATION
+			if ($prefs['openpgp_gpg_pgpmimemail'] == 'y') {
+				// USE PGP/MIME MAIL VERSION
+				$this->transport = new OpenPGP_Zend_Mail_Transport_Smtp($options);
+			}
+			*/
+		} elseif ($prefs['zend_mail_handler'] == 'file') {
+			$options = new Zend\Mail\Transport\FileOptions(array(
+				'path' => 'temp',
+				'callback' => function ($transport) {
+					return 'Mail_' . date('YmdHis') . '_' . mt_rand() . '.tmp';
+				},
+			));
+			$this->transport = new Zend\Mail\Transport\File($options);
+		} else {
+			$this->transport = new Zend\Mail\Transport\Sendmail;
+		}
+	}
+
+	function createMessage()
+	{
+		$this->setUp();
+
+		// hollmeer 2012-11-03: ADDED PGP/MIME ENCRYPTION PREPARATION
+		// USING lib/openpgp/opepgplib.php
+		global $prefs;
+		if ($prefs['openpgp_gpg_pgpmimemail'] == 'y') {
+			// USE PGP/MIME MAIL VERSION
+			$mail = new OpenPGP_Zend_Mail;
+		} else {
+			// USE ORIGINAL TIKI MAIL VERSION
+			$mail = new Zend\Mail\Message;
+		}
+
+		$mail->setEncoding('UTF-8');
+		$mail->getHeaders()->addHeaderLine('X-Tiki', 'yes');
+		return $mail;
+	}
+
+	function createAdminMessage()
+	{
+		global $prefs;
+
+		$mail = $this->createMessage();
+
+		if (! empty($prefs['sender_email'])) {
+			// [BUG FIX] hollmeer 2012-11-04:
+			// Added returnpath for Sendmail; does not send without;
+			// catch/ignore error, if already set
+			try {
+				$mail->setFrom($prefs['sender_email']);
+				$mail->setReplyTo($prefs['sender_email']);
+			} catch (Exception $e) {
+				// was already set, then do nothing
+			}
+		}
+
+		return $mail;
+	}
+
+	function send(Zend\Mail\Message $message)
+	{
+		$this->setUp();
+
+		return $this->transport->send($message);
+	}
+}
+
 /**
  * @param $in_str
  * @param $charset
@@ -57,73 +162,12 @@ function encode_headers($in_str, $charset)
    return $out_str;
 }// end function encode_headers
 
-function tiki_mail_setup()
-{
-	static $done = false;
-	if ( $done ) {
-		return;
-	}
-
-	global $prefs;
-	if ( $prefs['zend_mail_handler'] == 'smtp' ) {
-		$options = array();
-
-		if ( $prefs['zend_mail_smtp_auth'] ) {
-			$options['auth'] = $prefs['zend_mail_smtp_auth'];
-			$options['username'] = $prefs['zend_mail_smtp_user'];
-			$options['password'] = $prefs['zend_mail_smtp_pass'];
-		}
-
-		if ( $prefs['zend_mail_smtp_port'] ) {
-			$options['port'] = $prefs['zend_mail_smtp_port'];
-		}
-
-		if ( $prefs['zend_mail_smtp_security'] ) {
-			$options['ssl'] = $prefs['zend_mail_smtp_security'];
-		}
-
-		// hollmeer 2012-11-03: ADDED PGP/MIME ENCRYPTION PREPARATION
-		if ($prefs['openpgp_gpg_pgpmimemail'] == 'y') {
-			// USE PGP/MIME MAIL VERSION
-			$transport = new OpenPGP_Zend_Mail_Transport_Smtp($prefs['zend_mail_smtp_server'], $options);
-			OpenPGP_Zend_Mail::setDefaultTransport($transport);
-		} else {
-			// USE ORIGINAL TIKI MAIL VERSION
-			$transport = new Zend_Mail_Transport_Smtp($prefs['zend_mail_smtp_server'], $options);
-			Zend_Mail::setDefaultTransport($transport);
-		}
-	} elseif ($prefs['zend_mail_handler'] == 'file') {
-		$transport = new Zend_Mail_Transport_File(array(
-			'path' => 'temp',
-			'callback' => function ($transport) {
-				return 'Mail_' . date('YmdHis') . '_' . mt_rand() . '.tmp';
-			},
-		));
-		Zend_Mail::setDefaultTransport($transport);
-	}
-
-	$done = true;
-}
-
 /**
  * @return Zend_Mail
  */
 function tiki_get_basic_mail()
 {
-	tiki_mail_setup();
-	// hollmeer 2012-11-03: ADDED PGP/MIME ENCRYPTION PREPARATION
-	// USING lib/openpgp/opepgplib.php
-	global $prefs;
-	if ($prefs['openpgp_gpg_pgpmimemail'] == 'y') {
-		// USE PGP/MIME MAIL VERSION
-		$mail = new OpenPGP_Zend_Mail('UTF-8');
-	} else {
-		// USE ORIGINAL TIKI MAIL VERSION
-		$mail = new Zend_Mail('UTF-8');
-	}
-
-	$mail->addHeader('X-Tiki', 'yes');
-	return $mail;
+	return TikiLib::lib('mail')->createMessage();
 }
 
 /**
@@ -131,23 +175,7 @@ function tiki_get_basic_mail()
  */
 function tiki_get_admin_mail()
 {
-	global $prefs;
-
-	$mail = tiki_get_basic_mail();
-
-	if (! empty($prefs['sender_email'])) {
-		// [BUG FIX] hollmeer 2012-11-04:
-		// Added returnpath for Sendmail; does not send without;
-		// catch/ignore error, if already set
-		try {
-			$mail->setFrom($prefs['sender_email']);
-			$mail->setReturnPath($prefs['sender_email']);
-		} catch (Exception $e) {
-			// was already set, then do nothing
-		}
-	}
-
-	return $mail;
+	return TikiLib::lib('mail')->createAdminMessage();
 }
 
 /**
@@ -163,7 +191,7 @@ function tiki_send_admin_mail( $email, $recipientName, $subject, $textBody )
 	$mail->addTo($email, $recipientName);
 
 	$mail->setSubject($subject);
-	$mail->setBodyText($textBody);
+	$mail->setBody($textBody);
 
-	$mail->send();
+	TikiLib::lib('mail')->send($mail);
 }

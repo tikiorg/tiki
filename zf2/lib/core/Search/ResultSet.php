@@ -42,7 +42,7 @@ class Search_ResultSet extends ArrayObject
 		return $return;
 	}
 
-	function setHighlightHelper(Zend_Filter_Interface $helper)
+	function setHighlightHelper(Zend\Filter\FilterInterface $helper)
 	{
 		$this->highlightHelper = $helper;
 	}

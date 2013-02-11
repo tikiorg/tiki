@@ -5,10 +5,11 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-class TikiFilter_RawUnsafe implements Zend\Filter\FilterInterface
+class TikiFilter_Alpha extends Zend\Filter\PregReplace
 {
-	function filter( $value )
+	function __construct()
 	{
-		return str_replace('<x>', '', $value);
+		parent::__construct('/[a-z]+/i', '');
 	}
 }
+

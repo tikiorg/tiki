@@ -510,7 +510,6 @@ if (isset($_REQUEST['batch']) && is_uploaded_file($_FILES['csvlist']['tmp_name']
 		die;
 	}
 
-	include_once ('lib/webmail/tikimaillib.php');
 	$mail = new TikiMail();
 
 	if (!empty($_REQUEST['bcc'])) {

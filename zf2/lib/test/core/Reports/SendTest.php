@@ -5,8 +5,6 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-require_once('lib/webmail/tikimaillib.php');
-
 class Reports_SendTest extends TikiTestCase
 {
 	protected $obj;

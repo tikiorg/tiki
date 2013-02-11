@@ -85,7 +85,6 @@ function wikiplugin_invite( $data, $params)
 					$invitedGroups[] = $userlib->get_group_info($group);
 				}
 			}
-			include_once ('lib/webmail/tikimaillib.php');
 			$mail = new TikiMail();
 			$machine = parse_url($_SERVER['REQUEST_URI']);
 			$machine = $tikilib->httpPrefix(true).dirname($machine['path']);

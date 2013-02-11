@@ -82,7 +82,6 @@ function payment_behavior_cart_gift_certificate_purchase(
 	}
 
 	// Send email to user with gift cert
-	require_once('lib/webmail/tikimaillib.php');
 	global $smarty, $prefs;
 	$smarty->assign('giftcerts', $giftcerts);
 	$smarty->assign('numberCodes', count($return_array['items']));

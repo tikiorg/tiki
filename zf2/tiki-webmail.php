@@ -18,7 +18,6 @@ $access->check_permission_either(array('tiki_p_use_webmail', 'tiki_p_use_group_w
 
 require_once ('lib/webmail/net_pop3.php');
 require_once ('lib/mail/mimelib.php');
-include_once ('lib/webmail/tikimaillib.php');
 
 // AJAX_TODO
 /**

@@ -84,7 +84,6 @@ if (isset($_REQUEST['send'])) {
 	if (!empty($_REQUEST['name'])) $smarty->assign('name', $_REQUEST['name']);
 	if (!empty($_REQUEST['comment'])) $smarty->assign('comment', $_REQUEST['comment']);
 	if (empty($errors)) {
-		include_once ('lib/webmail/tikimaillib.php');
 		$smarty->assign_by_ref('mail_site', $_SERVER['SERVER_NAME']);
 		if (isset($_REQUEST['report']) && $_REQUEST['report'] == 'y') {
 			$subject = tra('Report to the webmaster', $prefs['site_language']);
