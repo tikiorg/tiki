@@ -1,0 +1,99 @@
+/* $Id$
+	Shadows theme option for Tikinewt theme.
+	Tiki Wiki CMS Groupware.
+*/
+
+body {
+	background: #F3F6F9;
+}
+
+#c1c2 #wrapper #col1 #tiki-center {
+	border: none;
+	background: none;
+}
+
+/***** Boxes *****/
+/** Modules **/
+.box,
+#c1c2 #wrapper #col1 #tiki-center {
+	border: none;
+	background: url(shadows/box_shadow.png) 100% 100%;
+	padding: 0 8px 9px 0;
+	margin: 6px !important;
+}
+
+h3.box-title {
+	border-bottom: 2px solid #f7f7f7;
+	background: #fff;
+}
+
+.box h3 {
+	margin-top: 0;
+}
+
+#role_main,
+#custom_center_column_header,
+.box-data {
+	padding: 6px;
+	background: #fff;
+}
+
+/** Other boxes **/
+.cbox {
+	background: url(shadows/box_shadow.png) no-repeat 100% 100% !important;
+	padding: 0 8px 9px 0;
+	margin: 6px !important;
+	border: none;
+}
+
+.cbox-title {
+	border-bottom: 2px solid #f7f7f7;
+	background: #fff;
+	padding: 8px 8px 2px 8px;
+	color: #666;
+	font-weight: bold;
+	font-size: 17px;
+}
+
+.cbox-data {
+	background: #fff !important;
+	padding: 6px;
+}
+
+.title_right .cbox-title {
+	text-align: right;
+}
+
+.cbox-data hr {
+	height: 2px;
+	color: #ddd;
+	background: #ddd;
+}
+
+.rbox-title, 
+.rbox-data {
+	border: 1px solid #ddd;
+}
+
+.article {
+	background: url(shadows/box_shadow.png) no-repeat 100% 100%;
+	padding: 0 8px 9px 0;
+	margin: 6px 6px 40px 6px !important;
+	margin-bottom: 15px;
+}
+
+.articletitle,
+.articleheading,
+.articletrailer,
+.articletopline {
+	background: #fff !important;
+	padding: 6px;
+	margin: 0;
+}
+
+/***** Forums *****/
+.post {
+	background: url(shadows/box_shadow.png) no-repeat 100% 100%;
+	padding: 0 8px 9px 0;
+	margin: 6px !important;
+}
