@@ -967,7 +967,7 @@ if ($install_step == '2') {
 			}
 
 			// check email address format
-			$validator = new Zend_Validate_EmailAddress();
+			$validator = new Zend\Validator\EmailAddress;
 			if (!$validator->isValid($email_test_to)) {
 				$smarty->assign('email_test_err', tra('Email address not valid, test mail not sent'));
 				$email_test_ready = false;

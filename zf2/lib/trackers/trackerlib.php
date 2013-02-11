@@ -2017,7 +2017,7 @@ class TrackerLib extends TikiLib
 					switch ($f['type']) {
 						// IP address (only for IPv4)
 						case 'I':
-							$validator = new Zend_Validate_Ip;
+							$validator = new Zend\Validator\Ip;
 							if (!$validator->isValid($f['value'])) {
 								$erroneous_values[] = $f;
 							}
