@@ -420,10 +420,15 @@ $("#repository, #categories").change(function(){
 					{cycle values="odd,even" print=false}
 					{foreach from=$modified_list  key="name" item="data"}
 						<li class="{cycle}">
-							<input type="checkbox" name="prefs_to_export[{$name}]" value="{$data.current.serial|escape}"
+							{if is_array($data.current.expanded)}
+								{assign var=current value=$data.current.expanded|implode:", "}
+								{assign var=current value="[$current]"}
+							{else}
+								{assign var=current value=$data.current.expanded}
+							{/if}
+							<input type="checkbox" name="prefs_to_export[{$name}]" value="{$current|escape}"
 									 id="checkbox_{$name}"{if isset($prefs_to_export[$name])} checked="checked"{/if} />
 							<label for="checkbox_{$name}">
-								{if is_array($data.current.expanded)}{assign var=current value=$data.current.expanded|implode:", "}{else}{assign var=current value=$data.current.expanded}{/if} 
 								{$name} = '<strong>{$current|truncate:40:"...":true|escape}</strong>'{* FIXME: This one line per preference display format is ugly and doesn't work for multiline values *}
 								<em>
 									&nbsp;&nbsp;
