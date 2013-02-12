@@ -74,20 +74,22 @@ function module_categories($mod_reference, &$module_params)
 	$urlEnd .= "?deep=$deep";
 	$name = "";
 
-	$categories = $categlib->getCategories();
 
-	if (empty($categories)) {
-		return;
-	}
 	if (isset($module_params['categId'])) {
 		$categId = $module_params['categId'];
+		$categories = $categlib->getCategories(array('identifier' => $categId, 'type' => 'descendants'));
 		foreach ($categories as $cat) {
 			if ($cat['categId'] == $categId)
 				$name = $cat['name'];
 		}
-	} else
+	} else {
+		$categories = $categlib->getCategories();
 		$categId = 0;
-		
+	}
+	if (empty($categories)) {
+		return;
+	}
+
 	if (isset($module_params['categParentIds'])) {
 		$categParentIds = explode(',', $module_params['categParentIds']);
 		$filtered_categories = array();
