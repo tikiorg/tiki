@@ -86,20 +86,40 @@ function wikiplugin_trackertoggle($data, $params)
 	} else {
 		$htmlFieldName = "ins_$fieldId";
 
-		if ($field['type'] == 'c') {
-			$extension = ':checked';
-			$value = $value == 'y'? 'undefined': "'on'";
-			$trigger = 'change';
-		} else {
-			$extension = '';
-			$trigger = 'keyup';
-			if (!is_numeric($value) && ! preg_match('/^[\'"].*[\'"]$/', $value)) {
-				$value = "'$value'";		// add quotes if not already quoted and not a number
-			}
-		}
 		$htmltype = $field['type'] == 'a'? 'textarea': 'input';
+		$extension = '';
+		$trigger = 'keyup';
+		if (!is_numeric($value) && ! preg_match('/^[\'"].*[\'"]$/', $value)) {
+			$value = "'$value'";		// add quotes if not already quoted and not a number
+		}
+		switch ($field['type']) {
+			case 'c':
+				$extension = ':checked';
+				$value = $value == 'y'? 'undefined': "'on'";
+				$trigger = 'change';
+				break;
+			case 'a':
+				$htmltype = 'textarea';
+				break;
+			case 'd':
+			case 'D':
+			case 'w':
+			case 'g':
+			case 'u':
+				$htmltype = 'select';
+				$trigger = 'change';
+				break;
+			case 'e':					// category - NB needs categId not categName to match
+				if ($field['options_array'][1] == 'd') {
+					$htmltype = 'select';
+					$trigger = 'change';
+					$htmlFieldName = "\"{$htmlFieldName}[]\"";
+				}
+				break;
+			default:
+		}
 		$jq = "if (\$('".$htmltype."[name=$htmlFieldName]$extension').val() == $value) {\$('#$id').$action();} else {\$('#$id').$anti();}";
-		$jq = "\$('".$htmltype."[name=$htmlFieldName]').$trigger(function () { $jq }).trigger('$trigger');\n";
+		$jq = "\$('".$htmltype."[name=$htmlFieldName]').$trigger(function () { $jq }).trigger('$trigger');";
 	}
 
 	TikiLib::lib('header')->add_jq_onready($jq);
