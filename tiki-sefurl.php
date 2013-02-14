@@ -131,7 +131,8 @@ function filter_out_sefurl($tpl_output, $type = null, $title = '', $with_next = 
 
 	if (strpos($tpl_output, '?') === false) {	// historically tiki has coped with malformed short urls with no ?
 		$amppos = strpos($tpl_output, '&');		// route.php rquires that we no longer do that
-		if ( $amppos !== false) {
+		$eqpos = strpos($tpl_output, '=');
+		if ( $amppos !== false && $eqpos > $amppos) {
 			if (substr($tpl_output, $amppos, 5) !== '&amp;') {
 				$tpl_output{$amppos} = '?';
 			} else {
