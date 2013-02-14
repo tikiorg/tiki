@@ -51,9 +51,6 @@ function wikiplugin_trackertoggle_info()
 
 function wikiplugin_trackertoggle($data, $params)
 {
-	global $trklib; TikiLib::lib('tracker');
-	global $headerlib; TikiLib::lib('header');
-
 	$default = array('visible' => 'n');
 	$params = array_merge($default, $params);
 	extract($params, EXTR_SKIP);
@@ -61,7 +58,7 @@ function wikiplugin_trackertoggle($data, $params)
 	if (empty($fieldId)) {
 		TikiLib::lib('errorreport')->report(tr('trackertoggle: Param fieldId is required.'));
 	}
-	$field = $trklib->get_tracker_field($fieldId);
+	$field = TikiLib::lib('trk')->get_tracker_field($fieldId);
 	if (empty($field)) {
 		TikiLib::lib('errorreport')->report(tr('trackertoggle: Param fieldId field %0 does not exsist.', $fieldId));
 	}
@@ -80,7 +77,7 @@ function wikiplugin_trackertoggle($data, $params)
 	$action = $visible == 'y'? 'show': 'hide';
 	$anti = $visible == 'y'? 'hide': 'show';
 	if (!empty($itemId)) {
-		$fieldValue = $trklib->get_item_value(0, $itemId, $fieldId);
+		$fieldValue = TikiLib::lib('trk')->get_item_value(0, $itemId, $fieldId);
 		if ($fieldValue === $value) {
 			$jq = "\$('#$id').$action();";
 		} else {
@@ -105,5 +102,5 @@ function wikiplugin_trackertoggle($data, $params)
 		$jq = "\$('".$htmltype."[name=$htmlFieldName]').$trigger(function () { $jq }).trigger('$trigger');\n";
 	}
 
-	$headerlib->add_jq_onready($jq);
+	TikiLib::lib('header')->add_jq_onready($jq);
 }
