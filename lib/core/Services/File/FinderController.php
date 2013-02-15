@@ -76,7 +76,8 @@ class Services_File_FinderController
 			)
 		);
 		if ($input->defaultGalleryId->int()) {
-			$opts['roots'][0]['startPath'] = "d_{$input->defaultGalleryId->int()}";	// needs to be the cached name in elfinder (with 'd_' in front)
+			$d = $input->defaultGalleryId->int() != $this->fileController->defaultGalleryId ? 'd_' : '';
+			$opts['roots'][0]['startPath'] = "$d{$input->defaultGalleryId->int()}";	// needs to be the cached name in elfinder (with 'd_' in front) unless it's the root id
 			$opts['roots'][0]['accessControlData'] = array('startPath' => $input->defaultGalleryId->int(), 'deepGallerySearch' => $input->deepGallerySearch->int(), 'parentIds' => $parentIds);
 		} else if (!$input->deepGallerySearch->int()) {
 			$opts['roots'][0]['startPath'] = $this->fileController->defaultGalleryId;	// root path just needs the id
