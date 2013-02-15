@@ -42,7 +42,7 @@
 	{include file="tiki-accounting_account_list.tpl"}
 </div>
 {/tab}
-{tab name="{tr}Bank acounts{/tr}"}
+{tab name="{tr}Bank accounts{/tr}"}
 {/tab}
 {tab name="{tr}Journal{/tr}"}
 <div style="max-height: 80%; overflow: scroll;">
