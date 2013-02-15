@@ -40,12 +40,16 @@ function module_last_blog_posts_info()
  */
 function module_last_blog_posts($mod_reference, $module_params)
 {
-	global $smarty, $tikilib;
-	global $bloglib; include_once ('lib/blogs/bloglib.php');
+	$smarty = TikiLib::lib('smarty');
 
 	$blogId = isset($module_params["blogid"]) ? $module_params["blogid"] : 0;
 	$smarty->assign('blogid', $blogId);
-	$ranking = $bloglib->list_blog_posts($blogId, true, 0, $mod_reference["rows"], 'created_desc', '', '', $tikilib->now);
-	$smarty->assign('modLastBlogPosts', $ranking["data"]);
+
+	$perms = Perms::get(array( 'type' => 'blog', 'object' => $blogId ));
+	TikiLib::lib('tiki')->get_perm_object($blogId, 'blog');
+
+	$blog_posts = TikiLib::lib('blog')->list_blog_posts($blogId, $perms->blog_admin, 0, $mod_reference["rows"], 'created_desc', '', '', TikiLib::lib('tiki')->now);
+	$smarty->assign('modLastBlogPosts', $blog_posts["data"]);
 	$smarty->assign('nodate', isset($module_params["nodate"]) ? $module_params["nodate"] : 'n');
+
 }

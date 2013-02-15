@@ -122,22 +122,7 @@ $date_max = isset($_REQUEST['date_max']) ? $_REQUEST['date_max'] : $tikilib->now
 $listpages = $bloglib->list_blog_posts($_REQUEST["blogId"], true, $offset, $blog_data["maxPosts"], $sort_mode, $find, $date_min, $date_max);
 //Keep track of month of last viewed posts for months_links module foldable display
 $_SESSION['blogs_last_viewed_month'] = TikiLib::date_format("%Y-%m", $date_max);
-$temp_max = count($listpages["data"]);
-for ($i = 0; $i < $temp_max; $i++) {
-	if ($listpages['data'][$i]['wysiwyg'] === 'n') {
-		// non-wysiwyg posts data get parsed in list_blog_posts
-		$listpages['data'][$i]['parsed_data'] = $listpages['data'][$i]['data'];
-	} else {
-		$listpages["data"][$i]["parsed_data"] = $tikilib->parse_data($bloglib->get_page($listpages["data"][$i]["data"], 1), array('is_html' => true));
-	}
-	if ($prefs['feature_freetags'] == 'y') {
-		// And get the Tags for the posts
-		$listpages["data"][$i]["freetags"] = $freetaglib->get_tags_on_object($listpages["data"][$i]["postId"], "blog post");
-	}
-	if ($listpages["data"][$i]['priv'] == 'y') {
-		$listpages["data"][$i]['title'] .= ' (' . tra("private") . ')';
-	}
-}
+
 $maxRecords = $blog_data["maxPosts"];
 $smarty->assign('maxRecords', $maxRecords);
 // If there're more records then assign next_offset

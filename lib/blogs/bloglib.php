@@ -499,7 +499,7 @@ class BlogLib extends TikiDb_Bridge
 							$date_min = '', $date_max = '', $approved = 'y'
 	)
 	{
-		global $tikilib, $tiki_p_admin, $tiki_p_blog_admin, $tiki_p_blog_post, $user;
+		global $tikilib, $tiki_p_admin, $tiki_p_blog_admin, $tiki_p_blog_post, $user, $prefs;
 		global $commentslib; require_once('lib/comments/commentslib.php');
 
 		$parserlib = TikiLib::lib('parser');
@@ -570,20 +570,23 @@ class BlogLib extends TikiDb_Bridge
 			$res['pages'] = $this->get_number_of_pages($res['data']);
 			$res['avatar'] = $tikilib->get_user_avatar($res['user']);
 
-			if (isset($res['excerpt']) && $res['excerpt'] != NULL) {
-				$res['excerpt'] = $parserlib->parse_data($res['excerpt'], array('is_html' => true));
-			}
+			$is_html = $res['wysiwyg'] === 'y' && $prefs['wysiwyg_htmltowiki'] !== 'y';
 
-			if (isset($res['wysiwyg']) && $res['wysiwyg'] == 'n') {
-				$res['data'] =  $parserlib->parse_data($res['data']);
+			$res['parsed_excerpt'] = $parserlib->parse_data($res['excerpt'], array('is_html' => $is_html));
+			$res['parsed_data'] =  $parserlib->parse_data($res['data'], array('is_html' => $is_html));
+
+			if ($prefs['feature_freetags'] == 'y') { // And get the Tags for the posts
+				$res['freetags'] = TikiLib::lib('freetag')->get_tags_on_object($res['postId'], 'blog post');
+			} else {
+				$res['freetags'] = array();
 			}
 
 			$ret[] = $res;
 		}
 
 		$retval = array();
-		$retval["data"] = $ret;
-		$retval["cant"] = $cant;
+		$retval['data'] = $ret;
+		$retval['cant'] = $cant;
 
 		return $retval;
 	}

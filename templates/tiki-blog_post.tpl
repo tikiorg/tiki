@@ -79,10 +79,12 @@
 
 			{if $blog_data.use_excerpt eq 'y'}
 				<tr>
-					<td class="editblogform">
+					<td colspan="2" class="editblogform">
 						{tr}Excerpt:{/tr}
 					</td>
-					<td class="editblogform">
+				</tr>
+				<tr>
+					<td colspan="2" class="editblogform">
 							{textarea id='post_excerpt' class="wikiedit" name="excerpt"}{if isset($post_info.excerpt)}{$post_info.excerpt}{/if}{/textarea}
 					</td>
 				</tr>

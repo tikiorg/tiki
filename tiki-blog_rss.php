@@ -55,7 +55,7 @@ if ($output['data'] == 'EMPTY') {
 			$data['data'],
 			array(
 				'print' => true,
-				'is_html' => true,
+				'is_html' => $data['wysiwyg'] === 'y' && $prefs['wysiwyg_htmltowiki'] !== 'y',
 			)
 		);
 		$data['sefurl'] = filter_out_sefurl(sprintf($readrepl, $data['postId']), 'blogpost', urlencode($data['title']));
