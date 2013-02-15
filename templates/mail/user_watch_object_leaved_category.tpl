@@ -8,4 +8,4 @@
 
 {tr}Object:{/tr} {$objectName}
 {tr}Object type:{/tr} {$objectType}
-{$mail_machine}/{$objectUrl}
+{$objectUrl}
