@@ -98,26 +98,9 @@ input.url, textarea {
 	box-shadow: inset 0 5px 15px rgba(0,0,0,.2);
 	padding: 4px 0;
 }
-.CodeMirror pre, .CodeMirror span {
-	font-size: 12px !important;
-	line-height: 14.4px !important;
-	padding: 0 !important;
+.CodeMirror, .CodeMirror * {
+	font-family: "Courier New", "Liberation Mono", monospace !important;
 	vertical-align: baseline !important;
-}
-.CodeMirror > div {
-	font-size: 12px !important;
-	padding: 0 !important;
-	vertical-align: baseline !important;
-	height: 0;
-	line-height: 14px;
-}
-.CodeMirror textarea {
-	font-size: 12px !important;
-	padding: 0 !important;
-	vertical-align: baseline !important;
-	height: 12px;
-	line-height: 15px;
-	min-height: auto !important;
 }
 .menuLevel1 a {
 	background: rgba(255,255,255,.75);
@@ -418,6 +401,10 @@ a .icon {
 a.icon:hover,
 a:hover .icon {
 	opacity: 1;
+}
+
+.ui-widget {
+	font-family: inherit;
 }
 
 .wikipreview {
