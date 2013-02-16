@@ -20,55 +20,57 @@ if (file_exists('./db/local.php') && file_exists('./templates/tiki-check.tpl')) 
 	$access->check_permission('tiki_p_admin');
 } else {
 	$standalone = true;
+	$render = "";
 
-    /**
-     * @param $string
-     * @return mixed
-     */
-    function tra($string)
+	/**
+	 * @param $string
+	 * @return mixed
+	 */
+	function tra($string)
 	{
 		return $string;
 	}
 
-    /**
-     * @param $var
-     */
-    function renderTable($var)
+	/**
+	  * @param $var
+	  */
+	function renderTable($var)
 	{
+		global $render;
 		if (is_array($var)) {
-			echo '<table style="border:2px solid grey;">';
+			$render .= '<table style="border:2px solid grey;">';
 			foreach ($var as $key => $value) {
-				echo '<tr style="border:1px solid">',
-				'<td style="border:1px black;padding:5px;">',
-				$key,
-				"</td>";
+				$render .= '<tr style="border:1px solid">';
+				$render .= '<td style="border:1px black;padding:5px;white-space:nowrap;">';
+				$render .= $key;
+				$render .= "</td>";
+				$iNbCol=0;
 				foreach ($var[$key] as $key2 => $value2) {
-					echo '<td style="border:1px solid"><span style="color:';
+					$render .= '<td style="border:1px solid;';
+					if ($iNbCol != count(array_keys($var[$key]))-1) {
+						$render .= 'text-align: center;white-space:nowrap;';
+					}
+					$render .= '"><span class="';
 					switch($value2) {
 						case 'good':
 						case 'safe':
-							echo 'green';
-							break;
 						case 'ugly':
-							echo 'yellow';
-							break;
 						case 'bad':
 						case 'risky':
-							echo 'red';
-							break;
 						case 'info':
-							echo 'black';
+							$render .= "button $value2";
 							break;
 					}
-					echo '">'.$value2.'</span></td>';
+					$render .= '">'.$value2.'</span></td>';
+					$iNbCol++;
 				}
-				echo '</tr>';
+				$render .= '</tr>';
 			}
-			echo '</table>';
+			$render .= '</table>';
 		} else {
-			echo 'Nothing to display.';
+			$render .= 'Nothing to display.';
 		}
-	}
+ 	}
 }
 
 // Get PHP properties and check them
@@ -176,27 +178,27 @@ if ($s) {
 $connection = false;
 if ( $standalone ) {
 	if ( empty($_POST['dbhost']) && !($php_properties['DB Driver']['setting'] == 'Not available') ) {
-			print <<<DBC
-			<h2>Database credentials</h2>
-			Couldn't connect to database, please provide valid credentials.
-			<form method="post" action="{$_SERVER['REQUEST_URI']}">
-				<p><label for="dbhost">Database host</label>: <input type="text" id="dbhost" name="dbhost" value="localhost" /></p>
-				<p><label for="dbuser">Database username</label>: <input type="text" id="dbuser" name="dbuser" /></p>
-				<p><label for="dbpass">Database password</label>: <input type="password" id="dbpass" name="dbpass" /></p>
-				<p><input type="submit" value=" Connect " /></p>
-			</form>
+			$render .= <<<DBC
+<h2>Database credentials</h2>
+Couldn't connect to database, please provide valid credentials.
+<form method="post" action="{$_SERVER['REQUEST_URI']}">
+	<p><label for="dbhost">Database host</label>: <input type="text" id="dbhost" name="dbhost" value="localhost" /></p>
+	<p><label for="dbuser">Database username</label>: <input type="text" id="dbuser" name="dbuser" /></p>
+	<p><label for="dbpass">Database password</label>: <input type="password" id="dbpass" name="dbpass" /></p>
+	<p><input type="submit" value=" Connect " /></p>
+</form>
 DBC;
 	} else {
 		switch ($php_properties['DB Driver']['setting']) {
 			case 'PDO':
 				// We don't do exception handling here to be PHP 4 compatible
 				$connection = new PDO('mysql:host='.$_POST['dbhost'], $_POST['dbuser'], $_POST['dbpass']);
-                /**
-                 * @param $query
-                 * @param $connection
-                 * @return mixed
-                 */
-                function query($query, $connection)
+				/**
+				  * @param $query
+				   * @param $connection
+				   * @return mixed
+				  */
+				function query($query, $connection)
 				{
 					$result = $connection->query($query);
 					$return = $result->fetchAll();
@@ -209,14 +211,14 @@ DBC;
 				$error = mysqli_connect_error();
 				if ( !empty($error) ) {
 					$connection = false;
-					echo 'Couldn\'t connect to database: '.$error;
+					$render .= 'Couldn\'t connect to database: '.$error;
 				}
-                /**
-                 * @param $query
-                 * @param $connection
-                 * @return array
-                 */
-                function query($query, $connection)
+				/**
+				 * @param $query
+				 * @param $connection
+				 * @return array
+				 */
+				function query($query, $connection)
 				{
 					$result = $connection->query($query);
 					$return = array();
@@ -229,14 +231,14 @@ DBC;
 			case 'MySQL':
 				$connection = mysql_connect($_POST['dbhost'], $_POST['dbuser'], $_POST['dbpass']);
 				if ( $connection === false ) {
-					echo 'Cannot connect to MySQL. Wrong credentials?';
+					$render .= 'Cannot connect to MySQL. Wrong credentials?';
 				}
-                /**
-                 * @param $query
-                 * @param string $connection
-                 * @return array
-                 */
-                function query($query, $connection = '')
+				/**
+				 * @param $query
+				 * @param string $connection
+				 * @return array
+				 */
+				function query($query, $connection = '')
 				{
 					$result = mysql_query($query);
 					$return = array();
@@ -249,11 +251,11 @@ DBC;
 		}
 	}
 } else {
-    /**
-     * @param $query
-     * @return array
-     */
-    function query($query)
+	/**
+	  * @param $query
+	  * @return array
+	  */
+	function query($query)
 	{
 		global $tikilib;
 		$result = $tikilib->query($query);
@@ -387,7 +389,7 @@ if ( function_exists('apc_sma_info') && ini_get('apc.enabled') ) {
 	);
 } elseif ( function_exists('wincache_ocache_fileinfo') && ( ini_get('wincache.ocenabled') == '1') ) {
 	$sapi_type = php_sapi_name();
-	if ($sapi_type == 'cgi-fcgi') { 
+	if ($sapi_type == 'cgi-fcgi') {
 		$php_properties['ByteCode Cache'] = array(
 			'fitness' => tra('good'),
 			'setting' => 'WinCache',
@@ -575,7 +577,7 @@ if ($s) {
 
 // max_execution_time
 $s = ini_get('max_execution_time');
-if ( $s >= 30 && $s <= 90  ) {
+if ( $s >= 30 && $s <= 90 ) {
 	$php_properties['max_execution_time'] = array(
 		'fitness' => tra('good'),
 		'setting' => $s.'s',
@@ -603,7 +605,7 @@ if ( $s >= 30 && $s <= 90  ) {
 
 // max_input_time
 $s = ini_get('max_input_time');
-if ( $s >= 50 && $s <= 90  ) {
+if ( $s >= 50 && $s <= 90 ) {
 	$php_properties['max_input_time'] = array(
 		'fitness' => tra('good'),
 		'setting' => $s.'s',
@@ -1405,11 +1407,11 @@ if (!$standalone) {
 }
 
 if ($standalone) {
-	echo '<style type="text/css">td, th { border: 1px solid #000000; vertical-align: baseline;}</style>';
-	echo '<h1>Tiki Server Compatibility</h1>';
-	echo '<h2>MySQL or MariaBD Database Properties</h2>';
+	$render .= '<style type="text/css">td, th { border: 1px solid #000000; vertical-align: baseline;}</style>';
+//	$render .= '<h1>Tiki Server Compatibility</h1>';
+	$render .= '<h2>MySQL or MariaBD Database Properties</h2>';
 	renderTable($mysql_properties);
-	echo '<h2>Test sending e-mails</h2>';
+	$render .= '<h2>Test sending e-mails</h2>';
 	if (isset($_REQUEST['email_test_to'])) {
 		$email_test_headers = 'From: noreply@tiki.org' . "\n";	// needs a valid sender
 		$email_test_headers .= 'Reply-to: '. $_POST['email_test_to'] . "\n";
@@ -1436,71 +1438,72 @@ if ($standalone) {
 		}
 		renderTable($mail);
 	} else {
-		echo '<form method="post" action="'.$_SERVER['REQUEST_URI'].'">';
-			echo '<p><label for="e-mail">e-mail address to send test mail to</label>: <input type="text" id="email_test_to" name="email_test_to" /></p>';
-			echo '<p><input type="submit" value=" Send e-mail " /></p>';
-			echo '<p><input type="hidden" id="dbhost" name="dbhost" value="';
+		$render .= '<form method="post" action="'.$_SERVER['REQUEST_URI'].'">';
+		$render .= '<p><label for="e-mail">e-mail address to send test mail to</label>: <input type="text" id="email_test_to" name="email_test_to" /></p>';
+		$render .= '<p><input type="submit" value=" Send e-mail " /></p>';
+		$render .= '<p><input type="hidden" id="dbhost" name="dbhost" value="';
 				if (isset($_POST['dbhost'])) {
-					echo $_POST['dbhost'];
+					$render .= $_POST['dbhost'];
 				};
-			echo '" /></p>';
-			echo '<p><input type="hidden" id="dbuser" name="dbuser" value="';
+			$render .= '" /></p>';
+			$render .= '<p><input type="hidden" id="dbuser" name="dbuser" value="';
 				if (isset($_POST['dbuser'])) {
-					echo $_POST['dbuser'];
+					$render .= $_POST['dbuser'];
 				};
-			echo '"/></p>';
-			echo '<p><input type="hidden" id="dbpass" name="dbpass" value="';
+			$render .= '"/></p>';
+			$render .= '<p><input type="hidden" id="dbpass" name="dbpass" value="';
 				if (isset($_POST['dbpass'])) {
-					echo $_POST['dbpass'];
+					$render .= $_POST['dbpass'];
 				};
-			echo '"/></p>';
-		echo '</form>';
+			$render .= '"/></p>';
+		$render .= '</form>';
 	}
 
-	echo '<h2>Server Information</h2>';
+	$render .= '<h2>Server Information</h2>';
 	renderTable($server_information);
-	echo '<h2>Server Properties</h2>';
+	$render .= '<h2>Server Properties</h2>';
 	renderTable($server_properties);
-	echo '<h2>Apache properties</h2>';
+	$render .= '<h2>Apache properties</h2>';
 	if ($apache_properties) {
 		renderTable($apache_properties);
 		if ($apache_server_info != 'nocurl' && $apache_server_info != false) {
 			if (isset($_REQUEST['apacheinfo']) && $_REQUEST['apacheinfo'] == 'y') {
-				print $apache_server_info;
+				$render .= $apache_server_info;
 			} else {
-				echo '<a href="'.$_SERVER['SCRIPT_NAME'].'?'.$_SERVER['QUERY_STRING'].'&apacheinfo=y">Append Apache /server-info;</a>';
+				$render .= '<a href="'.$_SERVER['SCRIPT_NAME'].'?'.$_SERVER['QUERY_STRING'].'&apacheinfo=y">Append Apache /server-info;</a>';
 			}
 		} elseif ($apache_server_info == 'nocurl') {
-			echo 'You don\'t have the Curl extension in PHP, so we can\'t append Apache\'s server-info.';
+			$render .= 'You don\'t have the Curl extension in PHP, so we can\'t append Apache\'s server-info.';
 		} else {
-			echo 'Apparently you have not enabled mod_info in your Apache, so we can\'t append more verbose information to this output.';
+			$render .= 'Apparently you have not enabled mod_info in your Apache, so we can\'t append more verbose information to this output.';
 		}
 	} else {
-		echo 'You are either not running the preferred Apache web server or you are running PHP with a SAPI that does not allow checking Apache properties (e.g. CGI or FPM).';
+		$render .= 'You are either not running the preferred Apache web server or you are running PHP with a SAPI that does not allow checking Apache properties (e.g. CGI or FPM).';
 	}
-	echo '<h2>IIS properties</h2>';
+	$render .= '<h2>IIS properties</h2>';
 	if ($iis_properties) {
 		renderTable($iis_properties);
 	} else {
-		echo "You are not running IIS web server.";
+		$render .= "You are not running IIS web server.";
 	}
-	echo '<h2>PHP scripting language properties</h2>';
+	$render .= '<h2>PHP scripting language properties</h2>';
 	renderTable($php_properties);
-	echo '<h2>PHP security properties</h2>';
+	$render .= '<h2>PHP security properties</h2>';
 	renderTable($security);
-	echo '<h2>MySQL Variables</h2>';
+	$render .= '<h2>MySQL Variables</h2>';
 	renderTable($mysql_variables);
-	echo '<h2>PHP Info</h2>';
+	$render .= '<h2>PHP Info</h2>';
 	if ( isset($_REQUEST['phpinfo']) && $_REQUEST['phpinfo'] == 'y' ) {
 		ob_start();
 		phpinfo();
 		$info = ob_get_contents();
 		ob_end_clean();
 		$info = preg_replace('%^.*<body>(.*)</body>.*$%ms', '$1', $info);
-		print($info);
+		$render .= $info;
 	} else {
-		echo '<a href="'.$_SERVER['SCRIPT_NAME'].'?'.$_SERVER['QUERY_STRING'].'&phpinfo=y">Append phpinfo();</a>';
+		$render .= '<a href="'.$_SERVER['SCRIPT_NAME'].'?'.$_SERVER['QUERY_STRING'].'&phpinfo=y">Append phpinfo();</a>';
 	}
+	createPage('Tiki Server Compatibility', $render);
 } else {
 	$smarty->assign_by_ref('server_information', $server_information);
 	$smarty->assign_by_ref('server_properties', $server_properties);
@@ -1538,4 +1541,73 @@ function check_isIIS()
 function check_hasIIS_UrlRewriteModule()
 {
 	return isset($_SERVER['IIS_UrlRewriteModule']) == true;
+}
+function createPage($title, $content)
+{
+	echo <<<END
+<html
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<link type="text/css" rel="stylesheet" href="styles/fivealive.css" />
+		<title>$title</title>
+		<style type="text/css">
+			table { border-collapse: collapse;}
+			.button {
+				border-radius: 3px 3px 3px 3px;
+				font-size: 12.05px;
+				font-weight: bold;
+				padding: 2px 4px 3px;
+				text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+				color: #FFF;
+				text-transform: uppercase;
+			}
+			.ugly {background: #f89406;}
+			.bad, .risky { background-color: #bd362f;}
+			.good, .safe { background-color: #5bb75b;}
+			.info {background-color: #2f96b4;}
+//			h1 { border-bottom: 1px solid #DADADA; color: #7e7363; }
+		</style>
+	</head>
+	<body class="tiki_wiki fixed_width">
+	<div id="fixedwidth" class="fixedwidth">
+		<div class="header_outer">
+			<div class="header_container">
+				<div class="clearfix fixedwidth header_fixedwidth">
+					<header id="header" class="header">
+					<div class="content clearfix modules" id="top_modules" style="min-height: 168px;">
+						<div id="sitelogo" style="float: left">
+							<img alt="Tiki Wiki CMS Groupware" src="img/tiki/Tiki_WCG.png">
+						</div>
+						<div id="sitetitles" style="float: left;">
+							<div id="sitetitle" style="font-size: 42px;">$title</div>
+						</div>
+					</div>
+					</header>
+				</div>
+			</div>
+		</div>
+		<div class="middle_outer">
+			<div id="middle" class="fixedwidth">
+				<div id="tiki-top" class="clearfix">
+					<h1 style="font-size: 30px; line-height: 30px; color: #fff; text-shadow: 3px 2px 0 #781437; margin: 8px 0 0 10px; padding: 0;">
+					</h1>
+				</div>
+			</div>
+			<div id="middle" style="width: 990px;">
+				$content
+			</div>
+		</div>
+	</div><!--
+	<footer id="footer" class="footer" style="margin-top: 50px;">
+	<div class="footer_liner">
+		<div class="footerbgtrap fixedwidth" style="padding: 10px 0;">
+			<a href="http://tiki.org" target="_blank" title="Powered by Tiki Wiki CMS Groupware"><img src="img/tiki/tikibutton.png" alt="Powered by Tiki Wiki CMS Groupware" /></a>
+		</div>
+	</div>
+</footer>-->
+</div>
+	</body>
+</html>
+END;
+	die;
 }
