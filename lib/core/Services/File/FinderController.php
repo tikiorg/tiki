@@ -60,14 +60,15 @@ class Services_File_FinderController
 		}
 
 		// turn off most elfinder commands here too (stops the back-end methods being accessible)
-		$disabled = array('rm', 'duplicate', 'rename', 'mkdir', 'mkfile', 'upload', 'copy', 'cut', 'paste', 'edit', 'extract', 'archive', 'resize');
+		$disabled = array('rm', 'duplicate', 'mkdir', 'mkfile', 'upload', 'copy', 'cut', 'paste', 'edit', 'extract', 'archive', 'resize');
+		// done so far: 'rename'
 
 		$opts = array(
 			'debug' => true,
 			'roots' => array(
 				array(
 					'driver'        => 'TikiFiles',   								// driver for accessing file system (REQUIRED)
-					'path'          => "{$this->fileController->defaultGalleryId}",	// path to files (REQUIRED)
+					'path'          => '1',					// only tiki root filegal so far - path to files (REQUIRED)
 					'disabled'		=> $disabled,
 
 //					'URL'           => 												// URL to files (seems not to be REQUIRED)

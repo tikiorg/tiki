@@ -126,7 +126,7 @@
 		{/if}
 	{/if}
 
-	{if $edit_mode neq 'y' and $prefs.fgal_show_slideshow eq 'y' and $gal_info.show_slideshow.value eq 'y'}
+	{if $edit_mode neq 'y' and $prefs.fgal_show_slideshow eq 'y' and $gal_info.show_slideshow eq 'y'}
 		{button _text="{tr}SlideShow{/tr}" href="#" _onclick="javascript:window.open('tiki-list_file_gallery.php?galleryId=$galleryId&amp;slideshow','','menubar=no,width=600,height=500,resizable=yes');return false;"}
 	{/if}
 </div>
@@ -173,42 +173,44 @@
 {elseif $dup_mode eq 'y'}
 	{include file='duplicate_file_gallery.tpl'}
 {else}
-	{if $prefs.fgal_search eq 'y' and $view neq 'page'}
-		{include file='find.tpl' find_show_num_rows = 'y' find_show_categories_multi='y' find_durations=$find_durations find_show_sub='y' find_other="{tr}Gallery of this fileId{/tr}" find_in="<ul><li>{tr}Name{/tr}</li><li>{tr}Filename{/tr}</li><li>{tr}Description{/tr}</li></ul>"}
-	{/if}
-	{if $prefs.fgal_search_in_content eq 'y' and $galleryId > 0}
-		{if $view neq 'page'}
-			<div class="findtable">
-				<form id="search-form" class="forms" method="get" action="tiki-search{if $prefs.feature_forum_local_tiki_search eq 'y'}index{else}results{/if}.php">
-					<input type="hidden" name="where" value="files" />
-					<input type="hidden" name="galleryId" value="{$galleryId}" />
-					<label class="find_content">{tr}Search in content{/tr}
-						<input name="highlight" size="30" type="text" />
-					</label>
-					<input type="submit" class="wikiaction" name="search" value="{tr}Go{/tr}"/>
-				</form>
-			</div>
+	{if $prefs.fgal_elfinder_feature neq 'y' or $view eq 'admin'}
+		{if $prefs.fgal_search eq 'y' and $view neq 'page'}
+			{include file='find.tpl' find_show_num_rows = 'y' find_show_categories_multi='y' find_durations=$find_durations find_show_sub='y' find_other="{tr}Gallery of this fileId{/tr}" find_in="<ul><li>{tr}Name{/tr}</li><li>{tr}Filename{/tr}</li><li>{tr}Description{/tr}</li></ul>"}
+		{/if}
+		{if $prefs.fgal_search_in_content eq 'y' and $galleryId > 0}
+			{if $view neq 'page'}
+				<div class="findtable">
+					<form id="search-form" class="forms" method="get" action="tiki-search{if $prefs.feature_forum_local_tiki_search eq 'y'}index{else}results{/if}.php">
+						<input type="hidden" name="where" value="files" />
+						<input type="hidden" name="galleryId" value="{$galleryId}" />
+						<label class="find_content">{tr}Search in content{/tr}
+							<input name="highlight" size="30" type="text" />
+						</label>
+						<input type="submit" class="wikiaction" name="search" value="{tr}Go{/tr}"/>
+					</form>
+				</div>
+			{/if}
 		{/if}
 	{/if}
 
-{if $view eq 'page'}
-	<div class="pageview">
-		<form id="size-form" class="forms" action="tiki-list_file_gallery.php">
-			<input type="hidden" name="view" value="page" />
-			<input type="hidden" name="galleryId" value="{$galleryId}" />
-			<input type="hidden" name="maxRecords" value=1 />
-			<input type="hidden" name="offset" value="{$offset}" />
-			<label for="maxWidth">
-				{tr}Max width{/tr}&nbsp;<input id="maxWidth" type="text" name="maxWidth" value="{$maxWidth}" />
-			</label>
-			<input type="submit" class="wikiaction" name="setSize" value="{tr}Go{/tr}"/>
-		</form>
-	</div><br>
-	{pagination_links cant=$cant step=$maxRecords offset=$offset}
-		tiki-list_file_gallery.php?galleryId={$galleryId}&maxWidth={$maxWidth}&maxRecords={$maxRecords}&view={$view}
-	{/pagination_links}
-	<br>
-{/if}
+	{if $view eq 'page'}
+		<div class="pageview">
+			<form id="size-form" class="forms" action="tiki-list_file_gallery.php">
+				<input type="hidden" name="view" value="page" />
+				<input type="hidden" name="galleryId" value="{$galleryId}" />
+				<input type="hidden" name="maxRecords" value=1 />
+				<input type="hidden" name="offset" value="{$offset}" />
+				<label for="maxWidth">
+					{tr}Max width{/tr}&nbsp;<input id="maxWidth" type="text" name="maxWidth" value="{$maxWidth}" />
+				</label>
+				<input type="submit" class="wikiaction" name="setSize" value="{tr}Go{/tr}"/>
+			</form>
+		</div><br>
+		{pagination_links cant=$cant step=$maxRecords offset=$offset}
+			tiki-list_file_gallery.php?galleryId={$galleryId}&maxWidth={$maxWidth}&maxRecords={$maxRecords}&view={$view}
+		{/pagination_links}
+		<br>
+	{/if}
 	{if $prefs.fgal_quota_show neq 'n' and $gal_info.quota}
 		<div style="float:right">
 			{capture name='use'}
@@ -225,7 +227,22 @@
 		</div>
 	{/if}
 
-	{include file='list_file_gallery.tpl'}
+	{if $prefs.fgal_elfinder_feature eq 'y' and $view neq 'admin'}
+		<div class="elFinderDialog" style="height: 100%"></div>
+		{jq}
+
+var elfoptions = initElFinder({
+		defaultGalleryId: {{$galleryId}},
+		deepGallerySearch:1,
+		getFileCallback: function(file,elfinder) { window.handleFinderFile(file,elfinder); },
+		height: 600
+	});
+
+$(".elFinderDialog").elfinder(elfoptions).elfinder('instance');
+		{/jq}
+	{else}
+		{include file='list_file_gallery.tpl'}
+	{/if}
 
 	{if $galleryId gt 0
 		&& $prefs.feature_file_galleries_comments == 'y'

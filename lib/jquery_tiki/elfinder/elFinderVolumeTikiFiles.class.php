@@ -9,12 +9,12 @@
  * Started life as copy of elFinderVolumeMySQL.class.php
  * Initial convertion to work with Tiki filegals for Tiki 10
  *
- * $Id$
- *
  **/
 
 class elFinderVolumeTikiFiles extends elFinderVolumeDriver
 {
+	private $filesTable;
+	private $fileGalleriesTable;
 
 	/**
 	 * Driver id
@@ -52,6 +52,9 @@ class elFinderVolumeTikiFiles extends elFinderVolumeDriver
 	public function __construct()
 	{
 		global $tikidomainslash, $prefs;
+
+		$this->fileGalleriesTable = TikiDb::get()->table('tiki_file_galleries');
+		$this->filesTable = TikiDb::get()->table('tiki_files');
 
 		$opts = array(
 			'tmbPath'       => 'temp/public/'.$tikidomainslash,
@@ -293,7 +296,7 @@ class elFinderVolumeTikiFiles extends elFinderVolumeDriver
 	/*********************** paths/urls *************************/
 
 	/**
-	 * Return parent directory path
+	 * Return parent directory path - for tiki this is the galleryId
 	 *
 	 * @param  string  $path  file path
 	 * @return string
@@ -326,8 +329,18 @@ class elFinderVolumeTikiFiles extends elFinderVolumeDriver
 	 **/
 	protected function _joinPath($dir, $name)
 	{
-
-		return -1;
+		if ($fileId = $this->filesTable->fetchOne('fileId',
+				array ('name' => $name, 'galleryId' => str_replace('d_', '', $dir))
+		)) {
+			return 'f_' . $fileId;
+		} else {
+			if ($galleryId = $this->fileGalleriesTable->fetchOne('galleryId',
+					array ('name' => $name, 'parentId' => str_replace('d_', '', $dir))
+			)) {
+				return 'd_' . $galleryId;
+			}
+		}
+		return '';
 	}
 
 	/**
@@ -425,6 +438,18 @@ class elFinderVolumeTikiFiles extends elFinderVolumeDriver
 	 **/
 	protected function _stat($path)
 	{
+		if (empty($path)) {
+			return false;
+		}
+		// convert from galleryId/name file convention
+		$ar = explode('/', $path);
+		if (count($ar) === 2) {
+			if ($fileId = $this->filesTable->fetchOne('fileId', array ('name' => $ar[1]))) {
+				$path = 'f_' . $fileId;
+			} else {
+				return false;
+			}
+		}
 
 		$ar = explode('_', $path);
 		if (count($ar) === 2) {
@@ -439,6 +464,9 @@ class elFinderVolumeTikiFiles extends elFinderVolumeDriver
 			$res = $this->filegallib->get_file($path);
 		}
 
+		if (empty($res['galleryId'])) {
+			return array();
+		}
 
 		if ($res) {
 			$res['isgal'] = $isgal;
@@ -597,7 +625,7 @@ class elFinderVolumeTikiFiles extends elFinderVolumeDriver
 	}
 
 	/**
-	 * Move file into another parent dir.
+	 * Move file into another parent dir and/or rename.
 	 * Return new file path or false.
 	 *
 	 * @param  string  $source  source file path
@@ -607,6 +635,40 @@ class elFinderVolumeTikiFiles extends elFinderVolumeDriver
 	 **/
 	protected function _move($source, $targetDir, $name)
 	{
+		$ar = explode('_', $source);
+		if (count($ar) === 2) {
+			$isgal = $ar[0] === 'd';
+			$source = $ar[1];
+		} else {
+			$isgal = true;
+		}
+		$name = trim(strip_tags($name));
+		$targetDirId = str_replace('d_', '', $targetDir);
+		if ($isgal) {
+			$srcDirId = str_replace('d_', '', $source);
+			$result = $this->fileGalleriesTable->update(
+				array(
+					'name' => $name,
+					'parentId' => $targetDirId,
+				),
+				array('galleryId' => $srcDirId)
+			);
+			if ($result) {
+				return 'd_' . $srcDirId;
+			}
+		} else {
+			$result = $this->filesTable->update(
+				array(
+					'name' => $name,
+					'galleryId' => $targetDirId,
+				),
+				array('fileId' => $source)
+			);
+			if ($result) {
+				return 'f_' . $source;
+			}
+		}
+		return '';
 	}
 
 	/**
@@ -665,11 +727,11 @@ class elFinderVolumeTikiFiles extends elFinderVolumeDriver
 			if (($trgfp = fopen($tmpfile, 'wb')) == false) {
 				unlink($tmpfile);
 			} else {
+				fclose($trgfp);
 				while (!feof($fp)) {
 					//fwrite($trgfp, fread($fp, 8192));
 					// TODO save file here
 				}
-				fclose($trgfp);
 
 				unlink($tmpfile);
 			}
