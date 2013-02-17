@@ -60,8 +60,8 @@ class Services_File_FinderController
 		}
 
 		// turn off most elfinder commands here too (stops the back-end methods being accessible)
-		$disabled = array('rm', 'duplicate', 'mkdir', 'mkfile', 'upload', 'copy', 'cut', 'paste', 'edit', 'extract', 'archive', 'resize');
-		// done so far: 'rename'
+		$disabled = array('mkdir', 'mkfile', 'edit', 'extract', 'archive', 'resize');
+		// done so far: 'rename', 'rm', 'duplicate', 'upload', 'copy', 'cut', 'paste',
 
 		$opts = array(
 			'debug' => true,
@@ -73,6 +73,7 @@ class Services_File_FinderController
 
 //					'URL'           => 												// URL to files (seems not to be REQUIRED)
 					'accessControl' => array($this, 'elFinderAccess'),				// obey tiki perms
+					'uploadMaxSize' => ini_get('upload_max_filesize'),
 				)
 			)
 		);
@@ -105,8 +106,12 @@ class Services_File_FinderController
 			return $info;
 		}
 
-		// elfinder needs "raw" $_GET
-		$_GET = $input->asArray();
+		// elfinder needs "raw" $_GET or $_POST
+		if ($_SERVER["REQUEST_METHOD"] == 'POST') {
+			$_POST = $input->asArray();
+		} else {
+			$_GET = $input->asArray();
+		}
 
 		$connector->run();
 		// deals with response

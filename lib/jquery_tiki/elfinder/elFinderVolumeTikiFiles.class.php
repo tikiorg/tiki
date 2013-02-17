@@ -196,7 +196,7 @@ class elFinderVolumeTikiFiles extends elFinderVolumeDriver
 	{
 		$this->dirsCache[$path] = array();
 
-		$res = $this->filegallib->get_files(0, -1, 'name_desc', '', str_replace('d_', '', $path), false, true);
+		$res = $this->filegallib->get_files(0, -1, 'name_desc', '', $this->pathToId($path), false, true);
 
 		if ($res['cant']) {
 			foreach ($res['data'] as $row) {
@@ -330,12 +330,12 @@ class elFinderVolumeTikiFiles extends elFinderVolumeDriver
 	protected function _joinPath($dir, $name)
 	{
 		if ($fileId = $this->filesTable->fetchOne('fileId',
-				array ('name' => $name, 'galleryId' => str_replace('d_', '', $dir))
+				array ('name' => $name, 'galleryId' => $this->pathToId($dir))
 		)) {
 			return 'f_' . $fileId;
 		} else {
 			if ($galleryId = $this->fileGalleriesTable->fetchOne('galleryId',
-					array ('name' => $name, 'parentId' => str_replace('d_', '', $dir))
+					array ('name' => $name, 'parentId' => $this->pathToId($dir))
 			)) {
 				return 'd_' . $galleryId;
 			}
@@ -538,7 +538,7 @@ class elFinderVolumeTikiFiles extends elFinderVolumeDriver
 
 
 		if ($fp) {
-			$fileId = str_replace('f_', '', $path);
+			$fileId = $this->pathToId($path);
 			$res = $this->filegallib->get_file($fileId);
 			if ( ! empty($res['path']) ) {
 				$filepath = $prefs['fgal_use_dir'].$res['path'];
@@ -643,9 +643,9 @@ class elFinderVolumeTikiFiles extends elFinderVolumeDriver
 			$isgal = true;
 		}
 		$name = trim(strip_tags($name));
-		$targetDirId = str_replace('d_', '', $targetDir);
+		$targetDirId = $this->pathToId($targetDir);
 		if ($isgal) {
-			$srcDirId = str_replace('d_', '', $source);
+			$srcDirId = $this->pathToId($source);
 			$result = $this->fileGalleriesTable->update(
 				array(
 					'name' => $name,
@@ -671,6 +671,11 @@ class elFinderVolumeTikiFiles extends elFinderVolumeDriver
 		return '';
 	}
 
+	private function pathToId($path)
+	{
+		return preg_replace('/[df]_/', '', $path);
+	}
+
 	/**
 	 * Remove file
 	 *
@@ -679,6 +684,7 @@ class elFinderVolumeTikiFiles extends elFinderVolumeDriver
 	 **/
 	protected function _unlink($path)
 	{
+		return $this->filegallib->remove_file(array('fileId' => $this->pathToId($path)));
 	}
 
 	/**
@@ -723,21 +729,30 @@ class elFinderVolumeTikiFiles extends elFinderVolumeDriver
 		$stat = fstat($fp);
 		$size = $stat['size'];
 
-		if (($tmpfile = tempnam($this->tmpPath, $this->id))) {
-			if (($trgfp = fopen($tmpfile, 'wb')) == false) {
-				unlink($tmpfile);
-			} else {
-				fclose($trgfp);
-				while (!feof($fp)) {
-					//fwrite($trgfp, fread($fp, 8192));
-					// TODO save file here
-				}
-
-				unlink($tmpfile);
-			}
+		$data = '';
+		while (!feof($fp)) {
+			$data .= fread($fp, 8192);
 		}
+		//fclose($fp);
 
-		return false;
+		$galleryId = $this->pathToId($dir);
+		$fileId = $this->filegallib->upload_single_file(
+			array(
+				'galleryId' => $galleryId,
+				'name' => $this->fileGalleriesTable->fetchOne('name', array('galleryId' => $galleryId))
+			),
+			$name,
+			$size,
+			$mime,
+			$data
+		);
+
+		if ($fileId) {
+			$this->options['accessControlData']['parentIds']['files'][$fileId] = $galleryId;
+			return 'f_' . $fileId;
+		} else {
+			return false;
+		}
 	}
 
 	/**
