@@ -193,6 +193,9 @@ class FileGalLib extends TikiLib
 		$filesTable = $this->table('tiki_files');
 		$galleriesTable = $this->table('tiki_file_galleries');
 
+		if ($name === $filename) {
+			$name = $this->getTitleFromFilename($name);
+		}
 		$name = trim(strip_tags($name));
 		$description = strip_tags($description);
 
@@ -3146,9 +3149,7 @@ class FileGalLib extends TikiLib
 								$this->set_download_limit($editFileId, $params['hit_limit'][$key]);
 							}
 						} else {
-							$title = preg_replace('/\.\w*$/', '', $params["name"][$key]);	// remove extension
-							$title = preg_replace('/[\-_]+/', ' ', $title);					// turn _ etc into spaces
-							$title = ucwords($title);
+							$title = $this->getTitleFromFilename($params["name"][$key]);
 							$fileId = $this->insert_file(
 								$params["galleryId"][$key], $title,
 								$params["description"][$key], $name, $data, $size, $type, $params['user'][$key],
@@ -3269,6 +3270,14 @@ class FileGalLib extends TikiLib
 
 		// Returns fileInfo of the new file if only one file has been edited / uploaded
 		return $fileInfo;
+	}
+
+	private function getTitleFromFilename($title)
+	{
+		$title = preg_replace('/\.\w*$/', '', $title); // remove extension
+		$title = preg_replace('/[\-_]+/', ' ', $title); // turn _ etc into spaces
+		$title = ucwords($title);
+		return $title;
 	}
 
 	private function transformImage($path, & $data, & $size, $gal_info, $type, & $metadata)
