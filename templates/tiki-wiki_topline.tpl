@@ -56,7 +56,7 @@
 								<a title="{tr}Refresh{/tr}" href="tiki-index.php?page={$page|escape:"url"}&amp;refresh=1">{icon _id='arrow_refresh'}</a>
 							{/if}
 							{if $prefs.feature_wiki_print eq 'y'}
-								<a title="{tr}Print{/tr}" href="tiki-print.php?{if !empty($page_ref_id)}page_ref_id={$page_ref_id}&amp;{/if}page={$page|escape:"url"}">{icon _id='printer' alt="{tr}Print{/tr}"}</a>
+								<a title="{tr}Print{/tr}" href="tiki-print.php?{query}">{icon _id='printer' alt="{tr}Print{/tr}"}</a>
 							{/if}
 					
 							{if $prefs.feature_share eq 'y' && $tiki_p_share eq 'y'}
