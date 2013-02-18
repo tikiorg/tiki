@@ -13,15 +13,17 @@ class WYSIWYGLib
 {
 	function setUpEditor($is_html, $dom_id, $params = array(), $auto_save_referrer = '', $full_page = true)
 	{
-
+		$ckEditor = 'ckeditor4';
+		// $ckEditor = 'ckeditor'; ... to revert also fix CKEDITOR.addCss in the plugin.js files
+		
 		global $tikiroot, $prefs;
 		$headerlib = TikiLib::lib('header');
-		$headerlib->add_js_config('window.CKEDITOR_BASEPATH = "'. $tikiroot . 'lib/ckeditor/";')
+		$headerlib->add_js_config('window.CKEDITOR_BASEPATH = "'. $tikiroot . 'lib/'.$ckEditor.'/";')
 				//// for js debugging - copy _source from ckeditor distribution to libs/ckeditor to use
 				//// note, this breaks ajax page load via wikitopline edit icon
 				//->add_jsfile('lib/ckeditor/ckeditor_source.js');
-				->add_jsfile('lib/ckeditor/ckeditor.js', 0, true)
-				->add_jsfile('lib/ckeditor/adapters/jquery.js', 0, true)
+				->add_jsfile('lib/'.$ckEditor.'/ckeditor.js', 0, true)
+				->add_jsfile('lib/'.$ckEditor.'/adapters/jquery.js', 0, true)
 				->add_js('window.CKEDITOR.config._TikiRoot = "'.$tikiroot.'";', 1);
 
 		if ($full_page) {
@@ -50,12 +52,13 @@ window.CKEDITOR.config.extraPlugins += (window.CKEDITOR.config.extraPlugins ? ",
 window.CKEDITOR.plugins.addExternal( "autosave", "'.$tikiroot.'lib/ckeditor_tiki/plugins/autosave/");
 window.CKEDITOR.config.ajaxAutoSaveRefreshTime = 30 ;			// RefreshTime
 window.CKEDITOR.config.ajaxAutoSaveSensitivity = 2 ;			// Sensitivity to key strokes
-window.CKEDITOR.config.contentsLangDirection = ' . ($prefs['feature_bidi'] === 'y' ? '"rtl"' : '"ui"') . '
 register_id("'.$dom_id.'","'.addcslashes($auto_save_referrer, '"').'");	// Register auto_save so it gets removed on submit
 ajaxLoadingShow("'.$dom_id.'");
 ', 5
 			);	// before dialog tools init (10)
 		}
+// Maybe not supported by CkEditor 4. Causes JS error
+// window.CKEDITOR.config.contentsLangDirection = ' . ($prefs['feature_bidi'] === 'y' ? '"rtl"' : '"ui"') . '
 
 		// work out current theme/option
 		global $tikilib, $tc_theme, $tc_theme_option;
@@ -100,8 +103,9 @@ ajaxLoadingShow("'.$dom_id.'");
 	defaultLanguage: "' . $prefs['language'] . '",
 	language: "' . ($prefs['feature_detect_language'] === 'y' ? '' : $prefs['language']) . '",
 	'. (empty($params['cols']) ? 'height: 400,' : '') .'
-	contentsLangDirection: "' . ($prefs['feature_bidi'] === 'y' ? 'rtl' : 'ltr') . '"
 }';
+// Not compatible with CkEditor4. So removed from $ckoptions
+// 	contentsLangDirection: "' . ($prefs['feature_bidi'] === 'y' ? 'rtl' : 'ltr') . '"
 
 		return $ckoptions;
 	}
