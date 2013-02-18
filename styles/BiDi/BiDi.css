@@ -508,10 +508,14 @@ input#login-pass_tiki-login, input#login-user_tiki-login {
     float: right;
 }
 
+form#loginbox-tiki-login fieldset div {
+    clear: both;
+}
+
 #loginbox-tiki-login input.button {
     clear: both;
     display: block;
-    margin: 5em auto 1em auto;
+    margin: 3em auto 1em auto;
 }
 
 /***** Miscellaneous *****/
