@@ -53,6 +53,10 @@ function smarty_function_html_body_attributes($params, $smarty)
 			}
 		}
 	}
+
+	if ($prefs['feature_perspective'] == 'y') {
+		$class .= ' perspective' . $_SESSION['current_perspective'];
+	}
 	
 	if (!empty($onload)) {
 		$back .= ' onload="' . $onload . '"';
