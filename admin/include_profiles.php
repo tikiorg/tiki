@@ -95,7 +95,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		$profile = Tiki_Profile::fromString($test_source, $_POST['profile_tester_name']);
 		$profile->removeSymbols();
 		$installer = new Tiki_Profile_Installer;
-		$installer->install($profile);
+		$empty_cache = $_REQUEST['empty_cache'];
+		$smarty->assign('empty_cache', $empty_cache);
+
+		$installer->install($profile, $empty_cache);
 
 		if ($target = $profile->getInstructionPage()) {
 			global $wikilib;
