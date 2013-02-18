@@ -173,7 +173,7 @@
 {elseif $dup_mode eq 'y'}
 	{include file='duplicate_file_gallery.tpl'}
 {else}
-	{if $prefs.fgal_elfinder_feature neq 'y' or $view eq 'admin'}
+	{if $prefs.fgal_elfinder_feature neq 'y' or $view neq 'browse'}
 		{if $prefs.fgal_search eq 'y' and $view neq 'page'}
 			{include file='find.tpl' find_show_num_rows = 'y' find_show_categories_multi='y' find_durations=$find_durations find_show_sub='y' find_other="{tr}Gallery of this fileId{/tr}" find_in="<ul><li>{tr}Name{/tr}</li><li>{tr}Filename{/tr}</li><li>{tr}Description{/tr}</li></ul>"}
 		{/if}
@@ -226,8 +226,7 @@
 			{/if}			
 		</div>
 	{/if}
-
-	{if $prefs.fgal_elfinder_feature eq 'y' and $view neq 'admin'}
+	{if $prefs.fgal_elfinder_feature eq 'y' and $view eq 'browse'}
 		<div class="elFinderDialog" style="height: 100%"></div>
 		{jq}
 
