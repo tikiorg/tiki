@@ -644,28 +644,37 @@ class elFinderVolumeTikiFiles extends elFinderVolumeDriver
 		}
 		$name = trim(strip_tags($name));
 		$targetDirId = $this->pathToId($targetDir);
+		$targetPerms = Perms::get(array( 'type' => 'file gallery', 'object' => $targetDir ));
+		$srcDirId = $this->pathToId($source);
+
 		if ($isgal) {
-			$srcDirId = $this->pathToId($source);
-			$result = $this->fileGalleriesTable->update(
-				array(
-					'name' => $name,
-					'parentId' => $targetDirId,
-				),
-				array('galleryId' => $srcDirId)
-			);
-			if ($result) {
-				return 'd_' . $srcDirId;
+			$srcPerms = Perms::get(array( 'type' => 'file gallery', 'object' => $srcDirId ));
+			if ($srcPerms->admin_file_galleries && $targetPerms->admin_file_galleries) {
+				$result = $this->fileGalleriesTable->update(
+					array(
+						'name' => $name,
+						'parentId' => $targetDirId,
+					),
+					array('galleryId' => $srcDirId)
+				);
+				if ($result) {
+					return 'd_' . $srcDirId;
+				}
 			}
 		} else {
-			$result = $this->filesTable->update(
-				array(
-					'name' => $name,
-					'galleryId' => $targetDirId,
-				),
-				array('fileId' => $source)
-			);
-			if ($result) {
-				return 'f_' . $source;
+			$galleryId = $this->options['accessControlData']['parentIds']['files'][$srcDirId];
+			$srcPerms = Perms::get(array( 'type' => 'file gallery', 'object' => $galleryId ));
+			if ($srcPerms->edit_gallery_file && ($srcDirId !== $targetDirId || $targetPerms->admin_file_galleries)) {
+				$result = $this->filesTable->update(
+					array(
+						'name' => $name,
+						'galleryId' => $targetDirId,
+					),
+					array('fileId' => $srcDirId)
+				);
+				if ($result) {
+					return 'f_' . $srcDirId;
+				}
 			}
 		}
 		return '';
@@ -684,7 +693,13 @@ class elFinderVolumeTikiFiles extends elFinderVolumeDriver
 	 **/
 	protected function _unlink($path)
 	{
-		return $this->filegallib->remove_file(array('fileId' => $this->pathToId($path)));
+		$galleryId = $this->options['accessControlData']['parentIds']['files'][$this->pathToId($path)];
+		$perms = Perms::get(array( 'type' => 'file gallery', 'object' => $galleryId ));
+		if ($perms->remove_files) {
+			return $this->filegallib->remove_file(array('fileId' => $this->pathToId($path)));
+		} else {
+			return false;
+		}
 	}
 
 	/**
@@ -736,16 +751,22 @@ class elFinderVolumeTikiFiles extends elFinderVolumeDriver
 		//fclose($fp);
 
 		$galleryId = $this->pathToId($dir);
-		$fileId = $this->filegallib->upload_single_file(
-			array(
-				'galleryId' => $galleryId,
-				'name' => $this->fileGalleriesTable->fetchOne('name', array('galleryId' => $galleryId))
-			),
-			$name,
-			$size,
-			$mime,
-			$data
-		);
+		$fileId = 0;
+
+		$perms = Perms::get(array( 'type' => 'file gallery', 'object' => $galleryId ));
+		if ($perms->upload_files) {
+
+			$fileId = $this->filegallib->upload_single_file(
+				array(
+					'galleryId' => $galleryId,
+					'name' => $this->fileGalleriesTable->fetchOne('name', array('galleryId' => $galleryId))
+				),
+				$name,
+				$size,
+				$mime,
+				$data
+			);
+		}
 
 		if ($fileId) {
 			$this->options['accessControlData']['parentIds']['files'][$fileId] = $galleryId;

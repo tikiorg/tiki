@@ -148,18 +148,29 @@ class Services_File_FinderController
 		}
 
 		if ($isgal) {
-			$objectType = 'file gallery';
+			//$objectType = 'file gallery';
+			$galleryId = $id;
 		} else {
 			$objectType = 'file';
+			// Seems individual file perms aren't set so use the gallery ones
+			$galleryId = $data['parentIds']['files'][$id];
 		}
 
-		$perms = Perms::get(array( 'type' => $objectType, 'object' => $id ));
+		$perms = Perms::get(array( 'type' => 'file gallery', 'object' => $galleryId ));
 
 		switch($attr) {
 			case 'read':
-				return $visible && $perms->download_files;
+				if ($isgal) {
+					return $visible && $perms->view_file_gallery;
+				} else {
+					return $visible && $perms->download_files;
+				}
 			case 'write':
-				return $visible && $perms->edit_gallery_file;
+				if ($isgal) {
+					return $visible && ($perms->admin_file_galleries || $perms->upload_files);
+				} else {
+					return $visible && ($perms->edit_gallery_file || $perms->remove_files);
+				}
 			case 'locked':
 			case 'hidden':
 				return !$visible;
