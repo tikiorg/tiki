@@ -30,7 +30,7 @@
  */
 
 /* Import RTL Theme specifics CSS files. */
-/* @import url("../greenvalley/rtl/greenvalley_BiDi.css");*/
+@import url("../greenvalley/rtl/greenvalley_BiDi.css");
 
 /* The following address mainly to fivealive, option blueberry theme which is the
  * default theme for a brand new installation. The theme specific should be set as
@@ -85,8 +85,14 @@ div#tiki-clean {
 
 /* This div encloses the images in box */
 ul li div.image {
-	float: right !important;
-	margin-left:5px !important;
+    float: right !important;
+    margin-left:5px !important;
+}
+
+/** Remark Box margin **/
+
+.rbox {
+    margin: 1em 0 0.3em 0.3em !important;
 }
 
 /***** Header graphic adaptation - could be not portable *****/
@@ -114,9 +120,16 @@ ul li div.image {
 	float: right !important;
 }
 
+/* Site title and subtitle position */
+#sitetitles {
+    left: auto;
+    right: 100px;
+}
+
+/** Login Box **/
 /* Login box left tag should be equal to col width */
 #top_modules .box-login_box {
-	right: auto !important;
+    right: auto !important;
     left: 200px;
 }
 
@@ -182,8 +195,15 @@ ul.sf-shadow ul {background-image:none}
     left: auto !important;
 }
 
+/** Search Box **/
+#top_modules.search_box {
+    float: left !important;
+    marging-left: 5px;
+    top: 55px !important;
+}
+
 /***** CSS menu *****/
-/* Menu alignment */ 
+/* Menu alignment */
 .cssmenu_horiz li, .cssmenu_vert li {
     float: right !important;
 }
@@ -250,7 +270,7 @@ ul.sf-shadow ul {background-image:none}
 .sf-sub-indicator {
     text-indent: 999em;
 }
-	
+
 /* Submenu alignment */
 
 .cssmenu_horiz li:hover ul,
@@ -290,11 +310,11 @@ div.tabstoggle {
 .tabs .container {
 	float: right !important;
 	width: auto !important;
-	margin-right: -2px
+	margin-right: -6px
 }
 
-.tabstoggle .button {
-    right:24px;
+.tabs .tabstoggle.floatright .button {
+    right:59px;
 }
 
 .tabcontent table {
@@ -388,33 +408,33 @@ td.formcolor, td.galform, td.editblogform, td.editfgalform, td.comform, td.forum
 
 /* Odd rows in several listings */
 td.odd, td.gallistnameodd, td.gallistdescriptionodd, td.gallistcreatedodd, td.gallistlastModifodd, td.gallistuserodd,
-	td.gallistimagesodd, td.gallisthitsodd, td.gallistactionsodd, td.listgalidodd, td.listgalnameodd, td.listgalcreatedodd,
-	td.listgalhitsodd, td.listgaluserodd, td.listgalfilesizeodd, td.bloglistnameodd, td.bloglistdescriptionodd,
-	td.bloglistcreatedodd, td.bloglistlastModifodd, td.bloglistuserodd, td.bloglistpublicodd, td.bloglistpostsodd,
-	td.bloglistvisitsodd, td.bloglistactivityodd, td.bloglistactionsodd, td.listfgalnameodd, td.listfgaldescriptionodd,
-	td.listfgalcreatedodd, td.listfgallastModifodd, td.listfgaluserodd, td.listfgalfilesodd, td.listfgalvisitsodd,
-	td.listfgalactionsodd, td.listfilesnameodd, td.listfilesdescriptionodd, td.listfilesidodd, td.listfilesfilenameodd,
-	td.listfilesfilesizeodd, td.listfilescreatedodd, td.listfilesdlsodd, td.listfilesnameodd, td.listfilesuserodd,
-	td.listfilesactionsodd, td.listarttitleodd, td.listarttopicodd, td.listartpublishDateodd, td.listartauthorodd,
-	td.listartreadsodd, td.listarthasimageodd, td.listartuseimageodd, td.listartactionsodd, td.listartsizeodd, td.forumstableodd,
-	td.forumstableinfoodd, td.topictitleodd, td.topicrepliesodd, td.topicreadsodd, td.topicscoreodd, td.topiclastpostodd,
-	td.topicauthorodd {
+td.gallistimagesodd, td.gallisthitsodd, td.gallistactionsodd, td.listgalidodd, td.listgalnameodd, td.listgalcreatedodd,
+td.listgalhitsodd, td.listgaluserodd, td.listgalfilesizeodd, td.bloglistnameodd, td.bloglistdescriptionodd,
+td.bloglistcreatedodd, td.bloglistlastModifodd, td.bloglistuserodd, td.bloglistpublicodd, td.bloglistpostsodd,
+td.bloglistvisitsodd, td.bloglistactivityodd, td.bloglistactionsodd, td.listfgalnameodd, td.listfgaldescriptionodd,
+td.listfgalcreatedodd, td.listfgallastModifodd, td.listfgaluserodd, td.listfgalfilesodd, td.listfgalvisitsodd,
+td.listfgalactionsodd, td.listfilesnameodd, td.listfilesdescriptionodd, td.listfilesidodd, td.listfilesfilenameodd,
+td.listfilesfilesizeodd, td.listfilescreatedodd, td.listfilesdlsodd, td.listfilesnameodd, td.listfilesuserodd,
+td.listfilesactionsodd, td.listarttitleodd, td.listarttopicodd, td.listartpublishDateodd, td.listartauthorodd,
+td.listartreadsodd, td.listarthasimageodd, td.listartuseimageodd, td.listartactionsodd, td.listartsizeodd, td.forumstableodd,
+td.forumstableinfoodd, td.topictitleodd, td.topicrepliesodd, td.topicreadsodd, td.topicscoreodd, td.topiclastpostodd,
+td.topicauthorodd {
     text-align: right !important;
 }
 
 /* Even rows in several listings */
 td.even, td.gallistnameeven, td.gallistdescriptioneven, td.gallistcreatedeven, td.gallistlastModifeven, td.gallistusereven,
-	td.gallistimageseven, td.gallisthitseven, td.gallistactionseven, td.listgalideven, td.listgalnameeven, td.listgalcreatedeven,
-	td.listgalhitseven, td.listgalusereven, td.listgalfilesizeeven, td.bloglistnameeven, td.bloglistdescriptioneven,
-	td.bloglistcreatedeven, td.bloglistlastModifeven, td.bloglistusereven, td.bloglistpubliceven, td.bloglistpostseven,
-	td.bloglistvisitseven, td.bloglistactivityeven, td.bloglistactionseven, td.listfgalnameeven, td.listfgaldescriptioneven,
-	td.listfgalcreatedeven, td.listfgallastModifeven, td.listfgalusereven, td.listfgalfileseven, td.listfgalvisitseven,
-	td.listfgalactionseven, td.listfilesnameeven, td.listfilesdescriptioneven, td.listfilesideven, td.listfilesfilenameeven,
-	td.listfilesfilesizeeven, td.listfilescreatedeven, td.listfilesdlseven, td.listfilesnameeven, td.listfilesusereven,
-	td.listfilesactionseven, td.listarttitleeven, td.listarttopiceven, td.listartpublishDateeven, td.listartauthoreven,
-	td.listartreadseven, td.listarthasimageeven, td.listartuseimageeven, td.listartactionseven, td.listartsizeeven,
-	td.forumstableeven, td.forumstableinfoeven, td.topictitleeven, td.topicreplieseven, td.topicreadseven, td.topicscoreeven,
-	td.topiclastposteven, td.topicauthoreven {
+td.gallistimageseven, td.gallisthitseven, td.gallistactionseven, td.listgalideven, td.listgalnameeven, td.listgalcreatedeven,
+td.listgalhitseven, td.listgalusereven, td.listgalfilesizeeven, td.bloglistnameeven, td.bloglistdescriptioneven,
+td.bloglistcreatedeven, td.bloglistlastModifeven, td.bloglistusereven, td.bloglistpubliceven, td.bloglistpostseven,
+td.bloglistvisitseven, td.bloglistactivityeven, td.bloglistactionseven, td.listfgalnameeven, td.listfgaldescriptioneven,
+td.listfgalcreatedeven, td.listfgallastModifeven, td.listfgalusereven, td.listfgalfileseven, td.listfgalvisitseven,
+td.listfgalactionseven, td.listfilesnameeven, td.listfilesdescriptioneven, td.listfilesideven, td.listfilesfilenameeven,
+td.listfilesfilesizeeven, td.listfilescreatedeven, td.listfilesdlseven, td.listfilesnameeven, td.listfilesusereven,
+td.listfilesactionseven, td.listarttitleeven, td.listarttopiceven, td.listartpublishDateeven, td.listartauthoreven,
+td.listartreadseven, td.listarthasimageeven, td.listartuseimageeven, td.listartactionseven, td.listartsizeeven,
+td.forumstableeven, td.forumstableinfoeven, td.topictitleeven, td.topicreplieseven, td.topicreadseven, td.topicscoreeven,
+td.topiclastposteven, td.topicauthoreven {
     text-align: right !important;
 }
 
@@ -436,25 +456,25 @@ td.tdchatform {
     text-align:right;
 }
 
-/***** plugin *****/
-/* Wikitracker plugin - Could require editing depending the theme you are using */
+/***** Plugins *****/
+/** Wikitracker plugin - Could require editing depending the theme you are using **/
 .wikiplugin_tracker h6 {
     text-align: right !important;
 }
 
 .ui-dialog {
-direction: rtl !important;
-text-align: right !important;
+    direction: rtl !important;
+    text-align: right !important;
 }
 
 .ui-dialog-title {float: right !important}
 .ui-dialog-titlebar-close {
-	left: 0.3em !important;
-	right: auto !important;
+    left: 0.3em !important;
+    right: auto !important;
 }
 
-/***** module *****/
-/* Share module */
+/***** Modules *****/
+/** Share module **/
 #pagetop_modules .mod-share-item {
     float: right !important;
     text-align: right !important;
@@ -463,6 +483,35 @@ text-align: right !important;
 /* If an rtl language is set for the Facebook language module setting this will avoid collision */
 #pagetop_modules .fb_edge_widget_with_comment {
     right: 8px !important;
+}
+
+/** Login Module **/
+/* When displayd in a wiki page */
+#role_main .module.box-login_box {
+    max-width: 240px;
+}
+
+#role_main form#loginbox-tiki-login {
+    padding: 1em;
+}
+
+/* Login box content alignment */
+#mod-login-box {
+    text-align: center;
+}
+
+input#login-pass_tiki-login, input#login-user_tiki-login {
+    float: left;
+}
+
+#loginbox-tiki-login label {
+    float: right;
+}
+
+#loginbox-tiki-login input.button {
+    clear: both;
+    display: block;
+    margin: 5em auto 1em auto;
 }
 
 /***** Miscellaneous *****/
