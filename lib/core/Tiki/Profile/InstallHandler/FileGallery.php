@@ -58,6 +58,19 @@ class Tiki_Profile_InstallHandler_FileGallery extends Tiki_Profile_InstallHandle
 		$column = isset( $data['column'] ) ? $data['column'] : array();
 		$popup = isset( $data['popup'] ) ? $data['popup'] : array();
 
+		if (in_array('name', $column) && in_array('filename', $column)) {
+			$data['show_name'] = 'a';
+			unset($column[array_search('name', $column)], $column[array_search('filename', $column)]);
+			unset($columns[array_search('name', $columns)]);
+		} else if (in_array('name', $column)) {
+			$data['show_name'] = 'n';
+			unset($column[array_search('name', $column)]);
+			unset($columns[array_search('name', $columns)]);
+		} else if (in_array('filename', $column)) {
+			$data['show_name'] = 'f';
+			unset($column[array_search('filename', $column)]);
+			unset($columns[array_search('name', $columns)]);
+		}
 		$both = array_intersect($column, $popup);
 		if ($column || $popup) {
 			$hide = array_diff($columns, array_merge($column, $popup));
