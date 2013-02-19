@@ -48,11 +48,10 @@ function prefs_wysiwyg_list()
 			'name' => tra('Wysiwyg editor skin'),
 			'type' => 'list',
 			'options' => array(
-				'kama' => tra('Kama (Default)'),
-				'office2003' => tra('Office 2003'),
-				'v2' => tra('V2 (FCKEditor appearance)'),
+				'moono' => tra('Moono (Default)'),
+				'kama' => tra('Kama'),
 			),
-			'default' => 'kama',
+			'default' => 'moono',
 		),
 		'wysiwyg_htmltowiki' => array(
 			'name' => tra('Use Wiki syntax in WYSIWYG'),

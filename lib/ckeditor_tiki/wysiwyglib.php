@@ -98,7 +98,7 @@ ajaxLoadingShow("'.$dom_id.'");
 	stylesSet: "tikistyles:' . $tikiroot . 'lib/ckeditor_tiki/tikistyles.js",
 	templates_files: "' . $tikiroot . 'lib/ckeditor_tiki/tikitemplates.js",
 	contentsCss: ["' . $ckstyle . '"],
-	skin: "' . ($prefs['wysiwyg_toolbar_skin'] != 'default' ? $prefs['wysiwyg_toolbar_skin'] : 'kama') . '",
+	skin: "' . ($prefs['wysiwyg_toolbar_skin'] != 'default' ? $prefs['wysiwyg_toolbar_skin'] : 'moono') . '",
 	defaultLanguage: "' . $prefs['language'] . '",
  	contentsLangDirection: "' . ($prefs['feature_bidi'] === 'y' ? 'rtl' : 'ltr') . '",
 	language: "' . ($prefs['feature_detect_language'] === 'y' ? '' : $prefs['language']) . '",
