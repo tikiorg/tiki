@@ -606,7 +606,7 @@ class ToolbarCkOnly extends Toolbar
 			return parent::getIconHtml();
 		}
 
-		$headerlib->add_cssfile('lib/ckeditor/skins/kama/editor.css');
+		$headerlib->add_cssfile('lib/ckeditor4/skins/kama/editor.css');
 		$cls = strtolower($this->wysiwyg);
 		$cls = str_replace(array('selectall', 'removeformat', 'spellchecker'), array('selectAll', 'removeFormat', 'checkspell'), $cls);	// work around some "features" in ckeditor icons.css
 		$headerlib->add_css(
