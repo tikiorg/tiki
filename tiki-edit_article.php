@@ -51,7 +51,7 @@ if (!empty($_REQUEST['articleId'])) {
 
 if (isset($_REQUEST['cancel_edit'])) {
 	if (empty($articleId)) {
-		header('localtion: tiki-view_articles.php');
+		header('location: tiki-view_articles.php');
 		die;
 	}
 	include_once('tiki-sefurl.php');
