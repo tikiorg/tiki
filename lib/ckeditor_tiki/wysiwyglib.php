@@ -51,14 +51,13 @@ window.CKEDITOR.config.ajaxAutoSaveTargetUrl = "'.$tikiroot.'tiki-auto_save.php"
 window.CKEDITOR.config.extraPlugins += (window.CKEDITOR.config.extraPlugins ? ",autosave" : "autosave" );
 window.CKEDITOR.plugins.addExternal( "autosave", "'.$tikiroot.'lib/ckeditor_tiki/plugins/autosave/");
 window.CKEDITOR.config.ajaxAutoSaveRefreshTime = 30 ;			// RefreshTime
+window.CKEDITOR.config.contentsLangDirection = ' . ($prefs['feature_bidi'] === 'y' ? '"rtl"' : '"ui"') . ';
 window.CKEDITOR.config.ajaxAutoSaveSensitivity = 2 ;			// Sensitivity to key strokes
 register_id("'.$dom_id.'","'.addcslashes($auto_save_referrer, '"').'");	// Register auto_save so it gets removed on submit
 ajaxLoadingShow("'.$dom_id.'");
 ', 5
 			);	// before dialog tools init (10)
 		}
-// Maybe not supported by CkEditor 4. Causes JS error
-// window.CKEDITOR.config.contentsLangDirection = ' . ($prefs['feature_bidi'] === 'y' ? '"rtl"' : '"ui"') . '
 
 		// work out current theme/option
 		global $tikilib, $tc_theme, $tc_theme_option;
@@ -101,11 +100,11 @@ ajaxLoadingShow("'.$dom_id.'");
 	contentsCss: ["' . $ckstyle . '"],
 	skin: "' . ($prefs['wysiwyg_toolbar_skin'] != 'default' ? $prefs['wysiwyg_toolbar_skin'] : 'kama') . '",
 	defaultLanguage: "' . $prefs['language'] . '",
+ 	contentsLangDirection: "' . ($prefs['feature_bidi'] === 'y' ? 'rtl' : 'ltr') . '",
 	language: "' . ($prefs['feature_detect_language'] === 'y' ? '' : $prefs['language']) . '",
 	'. (empty($params['cols']) ? 'height: 400,' : '') .'
 }';
-// Not compatible with CkEditor4. So removed from $ckoptions
-// 	contentsLangDirection: "' . ($prefs['feature_bidi'] === 'y' ? 'rtl' : 'ltr') . '"
+
 
 		return $ckoptions;
 	}
