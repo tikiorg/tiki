@@ -75,9 +75,8 @@ function wikiplugin_bloglist($data, $params)
 	global $tikilib, $smarty, $user;
 
 	if (!isset($params['Id'])) {
-		$text = ("<b>missing blog Id for BLOGLIST plugins</b><br />");
-		$text .= wikiplugin_bloglist_help();
-		return $text;
+		TikiLib::lib('errorreport')->report(tra('missing blog Id for BLOGLIST plugins'));
+		return '';
 	}
 
 	if (!isset($params['Items'])) $params['Items'] = -1;
