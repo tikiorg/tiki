@@ -2570,7 +2570,7 @@ CREATE TABLE `tiki_wiki_attachments` (
   `filename` varchar(255) default NULL,
   `filetype` varchar(80) default NULL,
   `filesize` int(14) default NULL,
-  `user` varchar(200) NOT NULL default '',
+  `user` varchar(200) default NULL,
   `data` longblob,
   `path` varchar(255) default NULL,
   `hits` int(10) default NULL,
