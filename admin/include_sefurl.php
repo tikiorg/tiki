@@ -55,7 +55,7 @@ if (isset($enabledFileName)) {
 				global $url_path;
 				$rewritebase = '/';
 				while ($nextLine = fgets($enabledFile)) {
-					if (preg_match('/^RewriteBase\s*(.*)$/', $nextLine, $m)) {
+					if (preg_match('/^RewriteBase\s*[\'"]?"(.*?)[\'"]?$/', $nextLine, $m)) {
 						$rewritebase = substr($m[1], -1) !== '/' ? $m[1] . '/' : $m[1];
 						break;
 					}
