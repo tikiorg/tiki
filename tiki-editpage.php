@@ -142,7 +142,11 @@ if (!empty($s_suffix)) {
 }
 
 if ($prefs['namespace_enabled'] == 'y' && isset($_REQUEST['namespace'])) {
-	$page = $_REQUEST['namespace'] . $prefs['namespace_separator'] . $page;
+	// Only prepend the namespace separator, if the page is missing a namespace
+	$ns = $_REQUEST['namespace'] . $prefs['namespace_separator'];
+	if (strpos($page, $ns, 0) === false) {
+		$page = $ns . $page;
+	}
 }
 
 $smarty->assign('page', $page);
