@@ -54,7 +54,6 @@ function wikiplugin_convene($data, $params)
 	++$conveneI;
 	$i = $conveneI;
 
-
 	$params = array_merge(
 		array(
 			"title" => "Convene",
@@ -342,6 +341,7 @@ FORM;
 						'<input type="hidden" name="index" value="$i"/>'+
 						'<input type="hidden" name="type" value="convene"/>'+
 						'<input type="hidden" name="params[title]" value="$title"/>'+
+						'<input type="hidden" name="params[dateformat]" value="$dateformat"/>'+
 					'</div>'+
 				'</form>')
 				.appendTo('body')
