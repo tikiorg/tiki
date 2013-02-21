@@ -1,4 +1,4 @@
-<form action="{$smarty.server.PHP_SELF}" method="get">
+<form action="#" method="get">
 	<input type="hidden" name="trackerId" value="{$trackerId|escape}" />
 	{if $status}<input type="hidden" name="status" value="{$status}" />{/if}
 	{if $sort_mode}<input type="hidden" name="sort_mode" value="{$sort_mode}" />{/if}
