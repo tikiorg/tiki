@@ -144,16 +144,35 @@ if ( ((is_array($calendarIds) && (count($calendarIds) > 0)) or isset($_REQUEST["
 			$ea['Summary']=$event['name'];
 			$ea['dateStart']=$event['start'];
 			$ea['dateEnd']=$event['end'];
-			$ea['Description']=preg_replace('/\n/', "\\n", $event['description']);
+			$ea['Description']= preg_replace('/\n/', "\\n", strip_tags(
+					TikiLib::lib('parser')->parse_data(
+						$event['description'],
+						array('is_html' => $prefs['calendar_description_is_html'] === 'y')
+					)
+				)
+			);
 			if ($event['participants']) {
 				$ea['Attendees']=$event['participants'];
 			}
 			$ea['LastModified']=$event['lastModif'];
-			// Second character of duration value must be a 'P' ??
-			$ea['Duration']=($event['end'] - $event['start']);
+
+			// re: Second character of duration value must be a 'P' ??
+			// jb for tiki 11 - feb 2013
+			// spec is at: https://tools.ietf.org/html/rfc5545#section-3.3.6, so i tried:
+			//	$durationSeconds = $event['end'] - $event['start'];
+			//	$duration = $durationSeconds > 0 ? '+' : '-';
+			//	$duration .= 'P' . $durationSeconds . 'S';
+			// however, when formatted seemingly correctly you then get an error saying it's not in integer! :(
+			// so just removing duration for now as it's implied by the start and end anyway - TODO better
+			// $ea['Duration']=($duration);
+
 			$ea['Contact']=array($event['user']);
-			$ea['organizer']=array($event['organizers']);
-			$ea['URL']=$event['url'];
+			if (!empty($event['organizers'])) {
+				$ea['organizer']=array($event['organizers']);
+			}
+			if (!empty($event['url'])) {
+				$ea['URL']=$event['url'];
+			}
 			$ea['DateStamp']=$event['created'];
 			//$ea['RequestStatus']=$event['status'];
 			$ea['UID']='tiki-'.$event['calendarId'].'-'.$event['calitemId'];
