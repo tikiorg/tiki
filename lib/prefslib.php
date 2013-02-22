@@ -439,7 +439,7 @@ class PreferencesLib
 						|| ( $info['type'] != 'flag' && ! empty( $info['value'] ) )
 				);
 			} elseif ($key == 'profiles') {
-				foreach ($dep as $profile) {
+				foreach ( (array) $dep as $profile) {
 					$out[] = array(
 						'name' => $profile,
 						'label' => $profile,
