@@ -17,11 +17,7 @@ function tra($string)
 	return $string;
 }
 
-function __autoload($name)
-{
-	$path = str_replace('_', '/', $name);
-	require_once($path . '.php');
-}
+require __DIR__ . '/../../../vendor/autoload.php';
 
 $tikidomain = '';
 $api_tiki = null;

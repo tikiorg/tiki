@@ -73,7 +73,9 @@ abstract class StandardAnalyzer_Analyzer_Standard extends Zend_Search_Lucene_Ana
             return;
         }
 
-		// Keeping the current encoding seems to work. So don't convert.
+		// convert input into ascii
+		$this->_input = iconv($this->_encoding, 'ASCII//TRANSLIT', $this->_input);
+		$this->_encoding = 'ASCII';
     }
 	
     /**
@@ -104,7 +106,7 @@ abstract class StandardAnalyzer_Analyzer_Standard extends Zend_Search_Lucene_Ana
 
 		//Parse UTF-8
 		do {
-            if (! preg_match('/[\p{L}]+/u', $this->_input, $match, PREG_OFFSET_CAPTURE, $this->_bytePosition)) {
+            if (! preg_match('/[\p{L}0-9\.]+/u', $this->_input, $match, PREG_OFFSET_CAPTURE, $this->_bytePosition)) {
                 // It covers both cases a) there are no matches (preg_match(...) === 0)
                 // b) error occured (preg_match(...) === FALSE)
                 return null;
