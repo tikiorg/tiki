@@ -325,7 +325,7 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 		$label = TikiLib::lib('object')->get_title('trackeritem', $item);
 
 		$out = array(
-			$baseKey => $typeFactory->sortable($item),
+			$baseKey => $typeFactory->identifier($item),
 			"{$baseKey}_text" => $typeFactory->plaintext($label),
 		);
 

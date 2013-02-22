@@ -93,6 +93,16 @@ class Tracker_Field_Numeric extends Tracker_Field_Abstract implements Tracker_Fi
 		return $this->renderTemplate('trackerinput/numeric.tpl', $context);
 	}
 
+	function getDocumentPart($baseKey, Search_Type_Factory_Interface $typeFactory)
+	{
+		$item = $this->getValue();
+
+		$out = array(
+			$baseKey => $typeFactory->identifier($item),
+		);
+		return $out;
+	}
+
 	function importRemote($value)
 	{
 		return $value;
