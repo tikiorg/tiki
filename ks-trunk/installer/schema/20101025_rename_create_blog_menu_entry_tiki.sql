@@ -1,0 +1,1 @@
+UPDATE `tiki_menu_options` SET `name` = 'Create Blog' WHERE `menuId` = 42 AND `name` = 'Create/Edit Blog' AND `position` = 465;
