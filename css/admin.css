@@ -80,6 +80,10 @@ a.admbox.off img {
 	text-align: left;
 }
 
+.adminoptionpopup a {
+	display: block;
+}
+
 .labelColumns label {
 	display: block;
 	float: left;
