@@ -161,24 +161,26 @@ function smarty_block_textarea($params, $content, $smarty, $repeat)
 		} else {
 			// new ckeditor implementation 2010
 			if ($prefs['feature_ajax'] !== 'y' || $prefs['ajax_autosave'] !== 'y' ||
-					$prefs['feature_wiki_paragraph_formatting'] !== 'y' || $prefs['feature_wiki_paragraph_formatting_add_br'] !== 'y' ||
+					$prefs['feature_wiki_paragraph_formatting'] !== 'y' || $prefs['feature_wiki_paragraph_formatting_add_br'] === 'y' ||
 					$prefs['wysiwyg_wiki_parsed'] !== 'y') {
 
 				// show dev notice
 				$smarty->loadPlugin('smarty_block_remarksbox');
-				$msg = tra('<strong>Thank you for trying the new ckeditor implementation for Tiki 6</strong><br /><br />');
+				$msg = '';
 
 				global $tiki_p_admin;
 				if ($tiki_p_admin) {
-					$profile_link = 'tiki-admin.php?profile=WYSIWYG_6x&repository=http%3A%2F%2Fprofiles.tiki.org%2Fprofiles&page=profiles&list=List';
+					// TODO: Create the up-to-date profile for it (WYSIWYG_CKEditor4)
+					$profile_link = 'tiki-admin.php?profile=WYSIWYG_CKEditor4&repository=http%3A%2F%2Fprofiles.tiki.org%2Fprofiles&page=profiles&list=List';
+					// TODO: Put check of what prefs are actually set up wrongly and list them in the msg
 					$msg .= tra("Some of your preferences should be set differently for this to work at it's best. Please click this to apply the recommended profile:") .
-					   ' <a href="'.$profile_link.'">WYSIWYG_6x</a>';
+					   ' <a href="'.$profile_link.'">WYSIWYG CKEditor4 Profile</a>';
 				} else {
 					$msg .= tra('Some of the settings at this site should be set differently for this to work best. Please ask the administrator to try this.');
 				}
 
 				$remrepeat = false;
-				$html .= smarty_block_remarksbox(array( 'type'=>'info', 'icon'=>'bricks', 'title'=>tra('Ckeditor Development Notice')), $msg, $smarty, $remrepeat)."\n";
+				$html .= smarty_block_remarksbox(array( 'type'=>'info', 'icon'=>'bricks', 'title'=>tra('CKEditor Development Notice')), $msg, $smarty, $remrepeat)."\n";
 			}
 
 			// set up ckeditor
