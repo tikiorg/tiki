@@ -21,7 +21,7 @@
  * @author   Jonny Bradley, replacing Smarty original (by Monte Ohrt <monte at ohrt dot com>)
  * @param    array
  * @param    Smarty
- * @return   string now formatted to cluetips natively
+ * @return   string now formatted to use convertOverlib() in tiki-jquery.js
  *
  * params still relevant:
  *
@@ -33,71 +33,102 @@
  */
 function smarty_function_popup($params, $smarty)
 {
-	$options = array();
-	$body = '';
-	$title = '';
-
-	foreach ($params as $key => $value) {
-		switch ($key) {
+	$append = '';
+	foreach ($params as $_key => $_value) {
+		switch ($_key) {
 			case 'text':
-				$body = $value;
-				break;
 			case 'trigger':
-				switch ($value) {
-					case 'onclick':
-					case 'onClick':
-						$options['activation'] = 'click';
-						break;
-					default:
-						break;
+			case 'function':
+			case 'inarray':
+				$$_key = (string) $_value;
+				if ($_key == 'function' || $_key == 'inarray') {
+					$append .= ',\'' . strtoupper($_key) . "=$_value'";
 				}
 				break;
+
 			case 'caption':
-				$title = $value;
+			case 'closetext':
+			case 'status':
+				$append .= ',\'' . strtoupper($_key) . "=" . str_replace("'", "\'", $_value) . "'";
 				break;
 
+			case 'fgcolor':
+			case 'bgcolor':
+			case 'textcolor':
+			case 'capcolor':
+			case 'closecolor':
+			case 'textfont':
+			case 'captionfont':
+			case 'closefont':
+			case 'fgbackground':
+			case 'bgbackground':
+			case 'caparray':
+			case 'capicon':
+			case 'background':
+			case 'frame':
+				$append .= ',\'' . strtoupper($_key) . "=$_value'";
+				break;
+
+			case 'textsize':
+			case 'captionsize':
+			case 'closesize':
 			case 'width':
 			case 'height':
-			case 'sticky':
-				$params[$key] = $value;
-				break;
-			case 'fullhtml':
-				$options['escapeTitle'] = true;
+			case 'border':
+			case 'offsetx':
+			case 'offsety':
+			case 'snapx':
+			case 'snapy':
+			case 'fixx':
+			case 'fixy':
+			case 'padx':
+			case 'pady':
+			case 'timeout':
+			case 'delay':
+				$append .= ',\'' . strtoupper($_key) . "=$_value'";
 				break;
 
+			case 'sticky':
 			case 'left':
 			case 'right':
 			case 'center':
+			case 'above':
+			case 'below':
+			case 'noclose':
+			case 'autostatus':
+			case 'autostatuscap':
+			case 'fullhtml':
 			case 'hauto':
 			case 'vauto':
 			case 'mouseoff':
+			case 'followmouse':
+			case 'closeclick':
+				if ($_value) {
+					$append .= ',\'' . strtoupper($_key) . '\'';
+				}
 				break;
 
 			default:
-				trigger_error("[popup] unknown parameter $key", E_USER_WARNING);
+				trigger_error("[popup] unknown parameter $_key", E_USER_WARNING);
 		}
 	}
 
-	if (empty($title) && empty($body)) {
-		trigger_error("cluetips: attribute 'text' or 'caption' required");
+	if (empty($text) && !isset($inarray) && empty($function)) {
+		trigger_error("overlib: attribute 'text' or 'inarray' or 'function' required");
 		return false;
 	}
 
-	$body = preg_replace(array('/\\\\r\n/','/\\\\n/','/\\\\r/', '/\\t/'), '', $body);
-	$body = str_replace('\&#039;', '&#039;', $body);	// unescape previous js escapes
-	$body = str_replace('\&quot;', '&quot;', $body);
-	$body = str_replace('&lt;\/', '&lt;/', $body);
-	$retval = ' class="tips"';
-	if ($title) {
-		$retval .= '" title="' . $title . '"';
+	if (empty($trigger)) {
+		$trigger = "onmouseover";
 	} else {
-		$options['showTitle'] = false;
+		$append .= ',\'' . $trigger . '\'';
 	}
-	if ($body) {
-		$retval .= '" data-cluetip-body=\'' . $body . '\'';
-		$options['attribute'] = 'data-cluetip-body';
-	}
-	$retval .= ' data-cluetip-options=\'' . json_encode($options) . '\'';
+
+	// Remove newlines to avoid JavaScript statement over several lines
+	$text = preg_replace(array('/\\\\r\n/','/\\\\n/','/\\\\r/'), "", $text);
+	$retval = $trigger . '="return convertOverlib(this,\'' . $text . '\'';
+	$append = trim($append, ',');
+	$retval .= ',[' . $append . ']);"';
 
 	return $retval;
 }
