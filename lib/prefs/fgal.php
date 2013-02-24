@@ -280,6 +280,7 @@ function prefs_fgal_list()
 			'description' => tra('Modern file manager'),
 			'type' => 'flag',
 			'default' => 'n',
+			'warning' => tra('Experimental'),
 			'tags' => array('experimental'),
 			'dependencies' => array('feature_jquery_ui'),
 		),
