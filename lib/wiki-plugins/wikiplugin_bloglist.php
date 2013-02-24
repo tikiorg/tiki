@@ -125,7 +125,13 @@ function wikiplugin_bloglist($data, $params)
 		$blogItems = $bloglib->list_blog_posts($params['Id'], false, $params['offset'], $params['Items'], $params['sort_mode'], $params['find'], $dateStartTS, $dateEndTS);
 		$temp_max = count($blogItems["data"]);
 		for ($i = 0; $i < $temp_max; $i++) {
-			$blogItems["data"][$i]["parsed_data"] = $tikilib->parse_data($bloglib->get_page($blogItems["data"][$i]["data"], 1), array('is_html' => ($params['isHtml'] === 'y')));
+			// curiously in tiki 10 and before non-wysiwyg posts get parsed in bloblib. This is fixed more completely in tiki 11+
+			$is_html = $blogItems['data'][$i]['wysiwyg'] === 'y' && $prefs['wysiwyg_htmltowiki'] !== 'y';
+			if ($is_html) {
+				$blogItems['data'][$i]['parsed_data'] = $tikilib->parse_data($bloglib->get_page($blogItems['data'][$i]['data'], 1), array('is_html' => true));
+			} else {
+				$blogItems['data'][$i]['parsed_data'] = $blogItems['data'][$i]['data'];
+			}
 			if ($prefs['feature_freetags'] == 'y') { // And get the Tags for the posts
 				global $freetaglib; include_once('lib/freetag/freetaglib.php');
 				$blogItems["data"][$i]["freetags"] = $freetaglib->get_tags_on_object($blogItems["data"][$i]["postId"], "blog post");
