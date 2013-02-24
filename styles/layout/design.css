@@ -3870,9 +3870,6 @@ textarea.tshoutbox{
 	list-style: none;
 }
 
-/* Button from 'Show php error messages' hidden box */
-.button[id="show-errors-button"]{font-size:5%;}
-
 /* admin boxes etc (.admbox) now defined in css/admin.css */
 
 .mods_revision {
