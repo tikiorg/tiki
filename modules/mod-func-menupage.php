@@ -72,7 +72,13 @@ function module_menupage($mod_reference, $module_params)
 			$pagemenu = $wikilib->include_default_namespace($pagemenu);
 		}
 
-		$content = $wikilib->get_parse($pagemenu, $dummy, true);
+		$perms = Perms::get(array('object' => $pagemenu, 'type' => 'wiki page'));
+
+		if ($perms->view) {
+			$content = $wikilib->get_parse($pagemenu, $dummy, true);
+		//} else {
+			// error here? or just hide the content silently for now...
+		}
 
 		if (! empty($content) && ! empty($module_params['menu_type']) && in_array($module_params['menu_type'], array('horiz', 'vert'))) {
 			$class = 'cssmenu_' . $module_params['menu_type'];
@@ -91,6 +97,5 @@ function module_menupage($mod_reference, $module_params)
 
 		$smarty->assign('tpl_module_title', $wikilib->get_without_namespace($pagemenu));
 		$smarty->assign_by_ref('contentmenu', $content);
-		$smarty->assign('pagemenu', $pagemenu);
 	}
 }
