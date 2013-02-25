@@ -1,6 +1,5 @@
 {* $Id$ *}<!DOCTYPE html>
-{* override for mobile *}
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{if !empty($pageLang)}{$pageLang}{else}{$prefs.language}{/if}" lang="{if !empty($pageLang)}{$pageLang}{else}{$prefs.language}{/if}"{if !empty($page_id)} id="page_{$page_id}"{/if}>
+{* override for mobile *}<html lang="{if !empty($pageLang)}{$pageLang}{else}{$prefs.language}{/if}"{if !empty($page_id)} id="page_{$page_id}"{/if}>
 	<head>
 		{include file='header.tpl'}
 		<meta name="viewport" content="width=device-width, initial-scale=1">{* mobile *}
