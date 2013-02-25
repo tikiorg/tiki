@@ -1,5 +1,5 @@
 {* $Id$ *}<!DOCTYPE html>
-<html id="print" lang="{if !empty($pageLang)}{$pageLang}{else}{$prefs.language}{/if}"{if !empty($page_id)} id="page_{$page_id}"{/if}>
+<html lang="{if !empty($pageLang)}{$pageLang}{else}{$prefs.language}{/if}"{if !empty($page_id)} id="print_page_{$page_id}"{/if}>
 	<head>
 {include file='header.tpl'}
 	</head>
