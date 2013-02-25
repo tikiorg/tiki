@@ -699,13 +699,21 @@ $s = extension_loaded('gd');
 if ( $s && function_exists('gd_info') ) {
 	$gd_info = gd_info();
 	$im = @imagecreate(110, 20);
-	if ($im) {
+	$ft = @imageftbbox(12, 0, './lib/captcha/DejaVuSansMono.ttf', 'test');
+	if ($im && $ft) {
 		$php_properties['gd'] = array(
 			'fitness' => tra('good'),
 			'setting' => $gd_info['GD Version'],
 			'message' => tra('The GD extension is needed for manipulation of images, e.g. also for CAPTCHAs.')
 		);
 		imagedestroy($im);
+	} else if ($im) {
+		$php_properties['gd'] = array(
+				'fitness' => tra('ugly'),
+				'setting' => $gd_info['GD Version'],
+				'message' => tra('The GD extension is loaded, and Tiki can create images, but the FreeType extension is needed for CAPTCHA text generation.')
+			);
+			imagedestroy($im);
 	} else {
 		$php_properties['gd'] = array(
 			'fitness' => tra('ugly'),
