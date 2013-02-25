@@ -143,6 +143,10 @@ class Services_File_Controller
 
 		$info = $filegallib->get_file_by_name($gal_info['galleryId'], $name);
 
+		if (empty($info)) {
+			$info = $filegallib->get_file_by_name($gal_info['galleryId'], $name, 'filename');
+		}
+
 		return $info;
 	}
 
