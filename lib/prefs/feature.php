@@ -671,6 +671,11 @@ function prefs_feature_list($partial = false)
 			'help' => 'Wysiwyg',
 			'type' => 'flag',
 			'default' => 'n',
+			'dependencies' => array(
+				'feature_ajax',
+				'ajax_autosave',
+				'feature_wiki_paragraph_formatting',
+			),
 			'tags' => array('experimental'),
 		),
 		'feature_kaltura' => array(
