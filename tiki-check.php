@@ -698,8 +698,13 @@ if ($s) {
 $s = extension_loaded('gd');
 if ( $s && function_exists('gd_info') ) {
 	$gd_info = gd_info();
-	$im = @imagecreate(110, 20);
-	$ft = @imageftbbox(12, 0, './lib/captcha/DejaVuSansMono.ttf', 'test');
+	$im = $ft = null;
+	if (function_exists('imagecreate')) {
+		$im = @imagecreate(110, 20);
+	}
+	if (function_exists('imageftbbox')) {
+		$ft = @imageftbbox(12, 0, './lib/captcha/DejaVuSansMono.ttf', 'test');
+	}
 	if ($im && $ft) {
 		$php_properties['gd'] = array(
 			'fitness' => tra('good'),
