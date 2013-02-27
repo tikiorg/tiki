@@ -283,7 +283,7 @@ if (isset($_REQUEST['export'])) {
 	$export_yaml = "{CODE(caption=>YAML,wrap=>0)}\n" . $export_yaml . "{CODE}\n";
 
 	include_once 'lib/wiki-plugins/wikiplugin_code.php';
-	$export_yaml = wikiplugin_code($export_yaml, array('caption' => 'Wiki markup', 'colors' => 'tikiwiki' ), null, array());
+	$export_yaml = wikiplugin_code($export_yaml, array('caption' => 'Wiki markup', 'colors' => 'tiki' ), null, array());
 	$export_yaml = preg_replace('/~[\/]?np~/', '', $export_yaml);
 
 	$smarty->assign('export_yaml', $export_yaml);

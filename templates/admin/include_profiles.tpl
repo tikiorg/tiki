@@ -393,7 +393,7 @@ $("#repository, #categories").change(function(){
 		<fieldset id="export_to_yaml">
 			<legend>{tr}Export YAML{/tr}</legend>
 			{if !empty($export_yaml)}
-				{$export_yaml}
+				<div class="wikitext">{$export_yaml}</div>
 			{/if}
 			<div class="navbar">
 				<label for="export_type">{tr}Object type:{/tr}</label>

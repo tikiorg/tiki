@@ -489,4 +489,10 @@ a.admbox.off img {
 	margin-left: 1em;
 }
 
+#export_to_yaml .wikitext {
+	height: 30em;
+	overflow: auto;
+	padding: .5em;
+}
+
 /* end profiles */
