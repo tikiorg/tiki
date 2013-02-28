@@ -17,7 +17,7 @@
 </h2>
 
 {if $pId}
-	{tr}You are editing block:{/tr} {$pId}<br />
+	{tr}You are editing block:{/tr} {$pId}<br>
 {/if}
 
 <form action="tiki-edit_programmed_content.php" method="post">

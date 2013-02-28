@@ -42,7 +42,7 @@
 		<td><a href="tiki-admin_system.php?do=prefs" class="link" title="{tr}Empty{/tr}">{icon _id='img/icons/del.gif' alt="{tr}Empty{/tr}"}</a></td>
 	</tr>
 </table>
-<br />
+<br>
 
 {if count($dirs) && $tiki_p_admin eq 'y'}
 	<h2>{tr}Directories to save{/tr}</h2>

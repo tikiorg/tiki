@@ -12,7 +12,7 @@
       {if $questions[ix].type eq 'c'}
         <div class="quizoptions">
           {section name=jx loop=$questions[ix].qoptions}
-            <input type="radio" value="{$questions[ix].qoptions[jx].optionId|escape}" name="question_{$questions[ix].questionId}" />{$questions[ix].qoptions[jx].qoption}<br />
+            <input type="radio" value="{$questions[ix].qoptions[jx].optionId|escape}" name="question_{$questions[ix].questionId}" />{$questions[ix].qoptions[jx].qoption}<br>
           {/section}
         </div>  
       {elseif $questions[ix].type eq 't'}
@@ -55,7 +55,7 @@
       {elseif $questions[ix].type eq 'm'}
         <div class="quizoptions">
           {section name=jx loop=$questions[ix].qoptions}
-            <input type="checkbox" value="{$questions[ix].qoptions[jx].optionId|escape}" name="question_{$questions[ix].questionId}[{$questions[ix].qoptions[jx].optionId}]" />{$questions[ix].qoptions[jx].qoption}<br />
+            <input type="checkbox" value="{$questions[ix].qoptions[jx].optionId|escape}" name="question_{$questions[ix].questionId}[{$questions[ix].qoptions[jx].optionId}]" />{$questions[ix].qoptions[jx].qoption}<br>
           {/section}
         </div>  
       {elseif $questions[ix].type eq 'r' or $questions[ix].type eq 's'}

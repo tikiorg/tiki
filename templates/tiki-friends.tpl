@@ -2,7 +2,7 @@
 
 {if $msg}
   <center>{$msg}</center>
-  <br /><br />
+  <br><br>
 {/if}
 
 {if $pending_requests|@count}

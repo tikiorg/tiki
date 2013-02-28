@@ -25,10 +25,10 @@
 {if !empty($errors)}
 	<div class="simplebox highlight">
 		{tr}One of the email addresses you typed is invalid{/tr}
-		<br />
+		<br>
 		{foreach from=$errors item=m name=errors}
 			{$m}
-			{if !$smarty.foreach.errors.last}<br />{/if}
+			{if !$smarty.foreach.errors.last}<br>{/if}
 		{/foreach}
 	</div>
 {/if}
@@ -80,7 +80,7 @@
 							<option value="{$languages[ix].value|escape}"{if $lang eq $languages[ix].value} selected="selected"{/if}>{$languages[ix].name}</option>
 						{/section}
 					</select>
-					<br />
+					<br>
 					{if $articleId != 0}
 						{tr _0="tiki-edit_article.php?translationOf=$articleId"}To translate, do not change the language and the content.
 						Instead, <a href="%0">create a new translation</a> in the new language.{/tr}
@@ -89,7 +89,7 @@
 						<p>{tr}Edit Translations{/tr}:</p>
 						{section loop=$translations name=t}
 						{if $articleId != $translations[t].objId}
-								{$translations[t].lang|escape}: <a href="tiki-edit_article.php?articleId={$translations[t].objId|escape}">{$translations[t].objName|escape}</a><br />
+								{$translations[t].lang|escape}: <a href="tiki-edit_article.php?articleId={$translations[t].objId|escape}">{$translations[t].objName|escape}</a><br>
 							{/if}
 						{/section}
 					{/if}
@@ -211,7 +211,7 @@
 			<td>{tr}Maximum dimensions of custom image in view mode (Read Article){/tr}</td>
 			<td>
 				<label>{tr}Width{/tr}</label> <input type="text" name="image_x"{if $image_x > 0} value="{$image_x|escape}"{/if} /> {tr}pixels{/tr}
-				{icon _id='help' alt="{tr}If different than the uploaded image{/tr}"}<br />
+				{icon _id='help' alt="{tr}If different than the uploaded image{/tr}"}<br>
 				<label>{tr}Height{/tr} <input type="text" name="image_y"{if $image_y > 0} value="{$image_y|escape}"{/if} /></label> {tr}pixels{/tr}
 			</td>
 		</tr>
@@ -219,7 +219,7 @@
 			<td>{tr}Maximum dimensions of custom image in list mode (View Articles){/tr}</td>
 			<td>
 				<label>{tr}Width{/tr}</label> <input type="text" name="list_image_x" value="{$list_image_x|escape}" /> {tr}pixels{/tr}
-				{icon _id='help' alt="{tr}If different than in view mode{/tr}"}<br />
+				{icon _id='help' alt="{tr}If different than in view mode{/tr}"}<br>
 				<label>{tr}Height{/tr}</label> <input type="text" name="list_image_y" value="{$list_image_y|escape}" /> {tr}pixels{/tr}
 				
 			</td>
@@ -327,7 +327,7 @@
 				</td>
 				<td>
 					<input type="text" name="emails" value="{$emails|escape}" size="60" />
-					<br />
+					<br>
 					{if !empty($userEmail) and $userEmail ne $prefs.sender_email}
 						{tr}From:{/tr} {$userEmail|escape}
 						<input type="radio" name="from" value="{$userEmail|escape}"{if empty($from) or $from eq $userEmail} checked="checked"{/if} /> 
@@ -382,4 +382,4 @@ $("#editpageform").submit(function(evt) {
 {/if}
 </form>
 
-<br />
+<br>

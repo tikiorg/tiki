@@ -2,7 +2,7 @@
 
 {include file='tiki-mytiki_bar.tpl'}
 {include file='messu-nav.tpl'}
-<br /><br />
+<br><br>
 
 {if $message}
 	<div class="simplebox highlight">
@@ -15,7 +15,7 @@
 		{/if}
 		{$message}
 		{if $preview eq '1'}
-			<br />
+			<br>
 			<form method="post">
 				<input type="hidden" name="groupbr" value="{$groupbr|escape}" />
 				<input type="hidden" name="priority" value="{$priority|escape}" />
@@ -26,8 +26,8 @@
 			</form>
 		{/if}
 	</div>
-	<br />
-	<br />
+	<br>
+	<br>
 {/if}
 
 {if $sent ne '1' and $preview ne '1'}
@@ -73,11 +73,11 @@
 				</td>
 			</tr>
 		</table>
-		<br />
+		<br>
 		<table class="normal" >
 			<tr>
 				<td style="text-align: center;">
-					<textarea rows="20" cols="80" name="body">{$body|escape}</textarea><br /><input type="submit" name="preview" value="{tr}Send{/tr}" />
+					<textarea rows="20" cols="80" name="body">{$body|escape}</textarea><br><input type="submit" name="preview" value="{tr}Send{/tr}" />
 				</td>
 			</tr>
 		</table>

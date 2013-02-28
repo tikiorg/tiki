@@ -29,7 +29,7 @@
 	{remarksbox type="feedback" title="{tr}Feedback{/tr}"}
 	{section name=n loop=$tikifeedback}
 	{tr}{$tikifeedback[n].mes|escape}{/tr}
-	<br />
+	<br>
 	{/section}{/remarksbox}
 {/if}
 
@@ -37,8 +37,8 @@
 	{remarksbox type="feedback" title="{tr}Batch Upload Results{/tr}"}
 		{tr}Updated users:{/tr} {$added}
 		{if $discarded != ""}- {tr}Rejected users:{/tr} {$discarded}{/if}
-		<br />
-		<br />
+		<br>
+		<br>
 		{if $discardlist != ''}
 			<table class="normal">
 				<tr>
@@ -55,9 +55,9 @@
 		{/if}
 
 		{if $errors}
-			<br />
+			<br>
 			{section name=ix loop=$errors}
-				{$errors[ix]}<br />
+				{$errors[ix]}<br>
 			{/section}
 		{/if}
 	{/remarksbox}
@@ -182,7 +182,7 @@
 							{/if}
 					
 							{if $users[user].waiting eq 'u'}
-								<br />
+								<br>
 								{tr}Need to validate email{/tr}
 							{/if}
 						</td>
@@ -211,7 +211,7 @@
 										{else}
 											{icon _id='bullet_white'}
 										{/if}
-										{if !$smarty.foreach.gr.last}<br />{/if}
+										{if !$smarty.foreach.gr.last}<br>{/if}
 									{/if}
 								</div>
 							{/foreach}
@@ -278,7 +278,7 @@
 									<option value="remove">{tr}Remove selected from{/tr}</option>
 								</select></label>
 								<label>{tr}the following groups:{/tr}
-								<br />
+								<br>
 								<select name="checked_groups[]" multiple="multiple" size="20">
 									{section name=ix loop=$all_groups}
 										{if $all_groups[ix] != 'Anonymous' && $all_groups[ix] != 'Registered'}
@@ -286,12 +286,12 @@
 										{/if}
 									{/section}
 								</select></label>
-								<br />
+								<br>
 								<input type="submit" value="{tr}OK{/tr}" />
 								{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Use Ctrl+Click to select multiple options{/tr}{/remarksbox}
 							{elseif $set_default_groups_mode eq 'y'}
 								<label>{tr}Set the default group of the selected users to:{/tr}
-								<br />
+								<br>
 								<select name="checked_group" size="20">
 									{section name=ix loop=$all_groups}
 										{if $all_groups[ix] != 'Anonymous'}
@@ -299,13 +299,13 @@
 										{/if}
 									{/section}
 								</select></label>
-								<br />
+								<br>
 								<input type="submit" value="{tr}OK{/tr}" />
 								<input type="hidden" name="set_default_groups" value="{$set_default_groups_mode}" />
 							{elseif $email_mode eq 'y'}
 								<label>{tr}Template wiki page{/tr} 
 								<input type="text" name="wikiTpl" /></label>
-								<br />
+								<br>
 								<label>{tr}bcc{/tr} 
 								<input type="text" name="bcc" /></label>
 								<input type="submit" value="{tr}OK{/tr}" />
@@ -360,13 +360,13 @@
 					<td>
 						{if $userinfo.login neq 'admin'}
 							<input type="text" id='login' name='login' value="{$userinfo.login|escape}" />
-							<br /> 
+							<br> 
 							{if $prefs.login_is_email eq 'y'}
 								<em>{tr}Use the email as username{/tr}.</em>
 							{elseif $prefs.lowercase_username eq 'y'} 
 								<em>{tr}Lowercase only{/tr}</em>.
 							{/if}
-							<br />
+							<br>
 							{if $userinfo.userId}
 								<p>
 									{icon _id='exclamation' alt="{tr}Warning{/tr}" style="vertical-align:middle"} 
@@ -391,25 +391,25 @@
 					<tr>
 						<td colspan="2">
 							<b>{tr}No password is required{/tr}</b>
-							<br />
+							<br>
 							<i>{tr}Tiki is configured to delegate the password managment to LDAP.{/tr}</i>
 						</td>
 					</tr>
 				{else}
 					<tr>
-						<td><label for="pass1">{tr}Password:{/tr}</label>{if !$userinfo.userId}<br />({tr}required{/tr}){/if}</td>
+						<td><label for="pass1">{tr}Password:{/tr}</label>{if !$userinfo.userId}<br>({tr}required{/tr}){/if}</td>
 						<td>
 							<input type="password" name="pass" id="pass1" onkeyup="runPassword(this.value, 'mypassword');checkPasswordsMatch('#pass2', '#pass1', '#mypassword2_text')" />
 							<div style="float:right;margin-left:5px;">
 								<div id="mypassword_text"></div>
 								<div id="mypassword_bar" style="font-size: 5px; height: 2px; width: 0px;"></div> 
 							</div>
-							<br />
+							<br>
 							{include file='password_help.tpl'}
 						</td>
 					</tr>
 					<tr>
-						<td><label for="pass2">{tr}Repeat Password:{/tr}</label>{if !$userinfo.userId}<br />({tr}required{/tr}){/if}</td>
+						<td><label for="pass2">{tr}Repeat Password:{/tr}</label>{if !$userinfo.userId}<br>({tr}required{/tr}){/if}</td>
 						<td>
 							<input type="password" name="pass2" id="pass2" onkeyup="checkPasswordsMatch('#pass2', '#pass1', '#mypassword2_text')" />
 							<div style="float:right;margin-left:5px;">
@@ -461,7 +461,7 @@
 							<label><input type="checkbox" name="need_email_validation" {if ($userinfo.login eq '' and ($prefs.validateUsers eq 'y' or $prefs.validateRegistration eq 'y')) or $userinfo.provpass neq ''}checked="checked" {/if}/> 
 							{tr}Send an email to the user in order to allow him to validate his account.{/tr}</label> 
 							
-							{if empty($prefs.sender_email)}<br /><span class="highlight">{tr}You need to set <a href="tiki-admin.php?page=general">Sender Email</a>{/tr}</span>{/if}						
+							{if empty($prefs.sender_email)}<br><span class="highlight">{tr}You need to set <a href="tiki-admin.php?page=general">Sender Email</a>{/tr}</span>{/if}						
 	
 						</td>
 					</tr>
@@ -527,16 +527,16 @@
 					</td>
 				</tr>
 			</table>
-			<br />
-			<br />
+			<br>
+			<br>
 	
 			{if $prefs.userTracker eq 'y'}
 				{if $userstrackerid and $usersitemid}
 					{tr}User tracker item : {$usersitemid}{/tr} 
 					{button href="tiki-view_tracker_item.php?trackerId=$userstrackerid&amp;itemId=$usersitemid&amp;show=mod" _text="{tr}Edit Item{/tr}"}
 				{/if}
-				<br />
-				<br />
+				<br>
+				<br>
 			{/if}
 		</form>
 	{else}
@@ -555,23 +555,23 @@
 				<td>
 					<label for="csvlist">
 						{tr}CSV File:{/tr}
-						{help url="Users+Management#Adding_new_users_in_bulk" desc="{tr}CSV file layout:{/tr} {tr}login,password,email,groups,default_group,realName<br />user1,pass1,email1,group1,group1<br />user2,pass2,email2,\"group1,group2\",group1{/tr}<br /><br />{tr}Only login, password, email are mandatory.Use an empty password for automatic password generation. Use same login and email if the login use email. Groups are separated by comma. With group name with comma, double the comma.{/tr}"}
+						{help url="Users+Management#Adding_new_users_in_bulk" desc="{tr}CSV file layout:{/tr} {tr}login,password,email,groups,default_group,realName<br>user1,pass1,email1,group1,group1<br>user2,pass2,email2,\"group1,group2\",group1{/tr}<br><br>{tr}Only login, password, email are mandatory.Use an empty password for automatic password generation. Use same login and email if the login use email. Groups are separated by comma. With group name with comma, double the comma.{/tr}"}
 					</label>
 				</td>
 				<td>
 					<input type="file" id="csvlist" name="csvlist"/>
-					<br />
+					<br>
 					<label><input type="radio" name="overwrite" value="y" />&nbsp;{tr}Overwrite{/tr}</label>
-					<br />
+					<br>
 					<label><input type="radio" name="overwrite" value="n" checked="checked" />&nbsp;{tr}Don't overwrite{/tr}</label>
-					<br />
+					<br>
 					<label>{tr}Overwrite groups:{/tr} <input type="checkbox" name="overwriteGroup" /></label>
-                    <br />
+                    <br>
 					<label>{tr}Create groups:{/tr} <input type="checkbox" name="createGroup" /></label>
-                    <br />
+                    <br>
 					{if $prefs.change_password neq 'n'}
                      <label>{tr}User must change password at first login:{/tr} <input type="checkbox" name="forcePasswordChange" /></label>
-					<br />
+					<br>
 					{/if}
                     <label>{tr}Send an email to the user in order to allow him to validate his account.{/tr} <input type="checkbox" name="notification" /></label>
 				</td>

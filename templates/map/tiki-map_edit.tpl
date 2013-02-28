@@ -1,7 +1,7 @@
 {* $Id$ *}
 
-<a class="pagetitle" href="tiki-map_edit.php?mode=listing">{tr}Mapfiles{/tr}</a><br />
-<a href="http://www.mapserver.org/mapfile/reference.html">http://www.mapserver.org/mapfile/reference.html</a><br /><br />
+<a class="pagetitle" href="tiki-map_edit.php?mode=listing">{tr}Mapfiles{/tr}</a><br>
+<a href="http://www.mapserver.org/mapfile/reference.html">http://www.mapserver.org/mapfile/reference.html</a><br><br>
 {if $mapfile}<h2>{tr}Mapfile:{/tr} {$mapfile}</h2>{/if}
 {if $mode eq 'listing'}
 <h3>{tr}Available mapfiles:{/tr}</h3>
@@ -78,10 +78,10 @@
 {/if}
 {/if}
 {if $mode eq 'editing'}
-<a class="link" href="tiki-map_edit.php">{tr}Mapfile listing{/tr}</a><br /><br />
+<a class="link" href="tiki-map_edit.php">{tr}Mapfile listing{/tr}</a><br><br>
 <form enctype="multipart/form-data" action="tiki-map_edit.php" method="post" id='editpageform'>
 <a class="link" href="tiki-map_edit.php?mapfile={$mapfile}&mode=editing">{tr}Reload{/tr}</a>&nbsp;&nbsp;
-<a class="link" href="tiki-map_history.php?mapfile={$mapfile}">{tr}History{/tr}</a><br />
+<a class="link" href="tiki-map_history.php?mapfile={$mapfile}">{tr}History{/tr}</a><br>
 
 <table class="normal">
 <tr class="formcolor">
@@ -114,13 +114,13 @@
 </form>
 </div>
 {/if}
-  <br />
+  <br>
   <div align="center">
   <table class="normal">
   <tr>
   	<td class="even">
   	<small>
-    {tr}You can view this map in your browser using:{/tr} <a class="maplink" href="{$url_browse}?mapfile={$mapfile}">{$url_browse}?mapfile={$mapfile}</a><br />
+    {tr}You can view this map in your browser using:{/tr} <a class="maplink" href="{$url_browse}?mapfile={$mapfile}">{$url_browse}?mapfile={$mapfile}</a><br>
     </small>
     </td>
   </tr>

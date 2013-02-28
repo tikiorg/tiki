@@ -178,4 +178,4 @@
   {/if}
   <input type="submit" class="wikiaction" name="save" value="{tr}Save{/tr}" />
 </form>
-<br />
+<br>

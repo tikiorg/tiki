@@ -22,7 +22,7 @@
 		{tr}Only pending invitations:{/tr}
 		<input type="checkbox" name="only_pending"{if $only_pending eq 'y'} checked="checked"{/if} />
 	</label>
-	<br />
+	<br>
 	<input type="submit" name="filter" value="{tr}Filter{/tr}" />
 	</form>
 </div>

@@ -13,8 +13,8 @@
 	</div>
 {/if}
 
-<br />
-<br />
+<br>
+<br>
 
 <form method="post" action="tiki-send_objects.php">
 	<div class="cbox">
@@ -22,12 +22,12 @@
 			{tr}Filter{/tr}
 		</div>
 		<div class="cbox-data">
-			{tr}Filter:{/tr}<input type="text" name="find" value="{$find|escape}"/><input type="submit" name="filter" value="{tr}Filter{/tr}" /><br />
+			{tr}Filter:{/tr}<input type="text" name="find" value="{$find|escape}"/><input type="submit" name="filter" value="{tr}Filter{/tr}" /><br>
 		</div>
 	</div>
 	
-	<br />
-	<br />
+	<br>
+	<br>
 
 	{if $tiki_p_send_pages eq 'y'}
 		<div class="cbox">
@@ -51,8 +51,8 @@
 			</div>
 		</div>
 
-	<br />
-	<br />
+	<br>
+	<br>
 
 		{if count($structures)}
 			<div class="cbox">
@@ -78,8 +78,8 @@
 		{/if}
 	{/if}
 	
-	<br />
-	<br />
+	<br>
+	<br>
 
 	{if $tiki_p_send_articles eq 'y'}
 		<div class="cbox">
@@ -104,8 +104,8 @@
 		</div>
 	{/if}
 
-	<br />
-	<br />
+	<br>
+	<br>
 
 	<div class="cbox">
 		<div class="cbox-title">
@@ -120,7 +120,7 @@
 					<td>{tr}Site:{/tr}</td>
 					<td>
 						<input type="text" name="site" value="{$site|escape}" />
-						<br />
+						<br>
 						<i>{tr}Ex: http://tiki.org or localhost{/tr}</i>
 					</td>
 				</tr>
@@ -128,7 +128,7 @@
 					<td>{tr}Path:{/tr}</td>
 					<td>
 						<input type="text" name="path" value="{$path|escape}" />
-						<br />
+						<br>
 						<i>{tr}Use /commxmlrpc.php if your Tiki site is installed at the root, otherwise adapt /tiki to your need{/tr}</i>
 					</td>
 				</tr>

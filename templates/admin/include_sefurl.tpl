@@ -32,7 +32,7 @@
 				{/remarksbox}
 			{elseif $configurationFile eq 'unexpected reference' or $configurationFile eq 'unexpected enabled'}
 				{remarksbox type="warning" title="{tr}Warning{/tr}"}
-				{tr _0=$enabledFileName}%0 is not in the expected format.{/tr} {tr}Unable to verify that your URL rewriting configuration is up to date.{/tr} {tr}SEFURL may not work completely or correctly if Tiki URL rewriting configuration is not current.{/tr}<br />
+				{tr _0=$enabledFileName}%0 is not in the expected format.{/tr} {tr}Unable to verify that your URL rewriting configuration is up to date.{/tr} {tr}SEFURL may not work completely or correctly if Tiki URL rewriting configuration is not current.{/tr}<br>
 				{tr _0=$enabledFileName}%0 may simply be outdated.{/tr}
 				{tr _0="<strong>$referenceFileName</strong>" _1="<strong>$enabledFileName</strong>"}To update this file, if it was not customized, copy the %0 file (located in the main directory of your Tiki installation) to %1, overwriting the latter.{/tr}
 				{/remarksbox}

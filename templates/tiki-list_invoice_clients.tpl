@@ -23,24 +23,24 @@
 			<table style='width: 100%;'>
 				<tr>
 					<td style='width: 50%;'>
-						{if $Client.$Address1}{$Client.$Address1}<br />{/if}
-						{if $Client.$Address2}{$Client.$Address2}<br />{/if}
-						{if $Client.City && $Client.Province && $Client.$PostalCode}{$Client.City} {$Client.Province}, {$Client.$PostalCode}<br />{/if}
-						{if $Client.Website}<a href='{$Client.Website}'>{$Client.Website}</a><br />{/if}
-						{tr}Tax Status:{/tr} {if $Client.$TaxStatus eq 'y'}{tr}Taxable{/tr}{else}Not Taxable{/if}<br />
+						{if $Client.$Address1}{$Client.$Address1}<br>{/if}
+						{if $Client.$Address2}{$Client.$Address2}<br>{/if}
+						{if $Client.City && $Client.Province && $Client.$PostalCode}{$Client.City} {$Client.Province}, {$Client.$PostalCode}<br>{/if}
+						{if $Client.Website}<a href='{$Client.Website}'>{$Client.Website}</a><br>{/if}
+						{tr}Tax Status:{/tr} {if $Client.$TaxStatus eq 'y'}{tr}Taxable{/tr}{else}Not Taxable{/if}<br>
 						
 						{button href="tiki-invoice_edit_client_contact.php?contact=$contactId" _text="{tr}View{/tr}"}
 						{button href="tiki-invoice_edit_client_contact.php?contact=$contactId" _text="{tr}Edit{/tr}"}
 						{button href="tiki-invoice_edit_client_contact.php?contact=$contactId" _text="{tr}Delete{/tr}"}
 					</td>
 					<td style='width: 50%;'>
-						{button href="tiki-invoice_edit_client_contact.php" _text="{tr}New Contact{/tr}"}<br />
+						{button href="tiki-invoice_edit_client_contact.php" _text="{tr}New Contact{/tr}"}<br>
 						{foreach from=$Client.$ContactIds key=k item=contactId}
 							{if $contactId}
-								{$Client.$ContactTitles[$k]} {$Client.$ContactFirstNames[$k]} {$Client.$ContactLastNames[$k]}<br />
+								{$Client.$ContactTitles[$k]} {$Client.$ContactFirstNames[$k]} {$Client.$ContactLastNames[$k]}<br>
 								{$Client.$ContactEmails[$k]}
 								
-								<br />
+								<br>
 								{button href="tiki-invoice_edit_client_contact.php?contact=$contactId" _text="{tr}View{/tr}"}
 								{button href="tiki-invoice_edit_client_contact.php?contact=$contactId" _text="{tr}Edit{/tr}"}
 								{button href="tiki-invoice_edit_client_contact.php?contact=$contactId" _text="{tr}Delete{/tr}"}

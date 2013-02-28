@@ -79,7 +79,7 @@
 <div class="clearfix">
 	<p>{tr}Before installing Tiki, <a href="http://doc.tiki.org/Requirements" target="_blank">review the documentation</a> and confirm that your system meets the minimum requirements.{/tr}</p>
 	<p>{tr}This installer will perform some basic checks automatically.{/tr} {tr}Please see: {/tr}<a href="tiki-check.php" target="_blank">{tr}a detailed report about your server.{/tr}</a></p>
-	<br />
+	<br>
 	<h2>{tr}Memory{/tr}</h2>
 {if $php_memory_limit <= 0}
 	<div style="background: #c2eef8; border: 2px solid #2098cd; color:#000;">
@@ -102,7 +102,7 @@
 	</div>	
 {/if}			
 
-	<br />
+	<br>
 	<h2>{tr}Mail{/tr}</h2><a name="mail"> </a>
 	<p>{tr}Tiki uses the PHP <strong>mail</strong> function to send email notifications and messages.{/tr}</p>
 {if $mail_test_performed ne 'y'}
@@ -114,7 +114,7 @@
 			<input type="text" size="40" name="email_test_to" id="email_test_to" value="{if isset($email_test_to)}{$email_test_to}{/if}" />
 			{if isset($email_test_err)}<span class="attention"><em>{$email_test_err}</em></span>
 			{else}<em>{tr}Email address to send test to.{/tr}</em>{/if}
-			<br /><br />
+			<br><br>
 			<input type="checkbox" name="email_test_cc" checked="checked" value="1" />
 			<em>{tr}Copy test mail to {/tr} {$email_test_tw}?</em>
 		</div>
@@ -142,7 +142,7 @@
 	<p>{tr}Review the mail settings in your <strong>php.ini</strong> file (for example: confirm that the <strong>sendmail_path</strong> is correct).{/tr} {tr}If your host requires SMTP authentication, additional configuration may be necessary.{/tr}</p>
 {/if}
 {/if}
-	<br />
+	<br>
 	<h2>{tr}Image Processing{/tr}</h2>
 {if $gd_test eq 'y'}
 	<div style="background: #c2eef8; border: 2px solid #2098cd; color:#000;">
@@ -187,7 +187,7 @@
 	<div align="center" style="padding:1em">
 		<p>
 			<img src="img/icons/information.png" alt="{tr}Information{/tr}" style="vertical-align: bottom;" />
-			{tr}Tiki found an existing database connection in your local.php file.{/tr}<br />
+			{tr}Tiki found an existing database connection in your local.php file.{/tr}<br>
 			<em>{tr _0=$dbname}Database name: &quot;%0&quot;{/tr}</em>
 		</p>
 		<form action="tiki-install.php" method="post">
@@ -196,13 +196,13 @@
 			{if $lang}<input type="hidden" name="lang" value="{$lang}" />{/if}
 			<input type="submit" value=" {tr}Use Existing Connection{/tr} " />
 		</form>
-		or<br />
+		or<br>
 		<a href="#" onclick="$('#installer_3_new_db_form').toggle();return false;" class="button">{tr}Modify database connection{/tr}</a>
 	</div>
 {/if}		
 	
 {if $tikifeedback}
-	<br />
+	<br>
 {section name=n loop=$tikifeedback}
 	<div class="simplebox {if $tikifeedback[n].num > 0} highlight{/if}">
 		<img src="img/icons/{if $tikifeedback[n].num > 0}delete.png" alt="{tr}Error{/tr}"{else}accept.png" alt="{tr}Success{/tr}"{/if} style="vertical-align:middle" /> {$tikifeedback[n].mes}
@@ -237,7 +237,7 @@
 			<label for="host">{tr}Host name:{/tr}</label>
 			<div style="margin-left:1em">
 			<input type="text" name="host" id="host" value="{if isset($smarty.request.host)}{$smarty.request.host|escape:"html"}{else}localhost{/if}" size="40" /> <a href="javascript:void(0)" onclick="flip('host_help');" title="{tr}Help{/tr}"><img src="img/icons/help.png" alt="{tr}Help{/tr}" /></a>
-			<br /><em>{tr}Enter the host name or IP for your database.{/tr}</em>
+			<br><em>{tr}Enter the host name or IP for your database.{/tr}</em>
 			<div style="display:none;" id="host_help">
 				<p>{tr}Use <strong>localhost</strong> if the database is running on the same machine as Tiki.{/tr}</p>
 				<p>{tr}For non-default port number use <strong>example.com;port=3307</strong>.{/tr}</p>
@@ -249,14 +249,14 @@
 			<div style="margin-left:1em;">
 			<input type="text" id="name" name="name" size="40" value="{if isset($smarty.request.name)}{$smarty.request.name|escape:"html"}{/if}" /> <a href="javascript:void(0)" onclick="flip('name_help');" title="{tr}Help{/tr}"><img src="img/icons/help.png" alt="{tr}Help{/tr}" /></a>
 		
-			<br /><em>{tr}Enter the name of the database that Tiki will use (if already created) or create (if permitted).{/tr}</em> 
+			<br><em>{tr}Enter the name of the database that Tiki will use (if already created) or create (if permitted).{/tr}</em> 
 			<div style="margin-left:1em;display:none;" id="name_help">
 				<p>{tr}You can create the database using Adminer, phpMyAdmin, cPanel, or ask your hosting provider. If the database doesn't exist and the supplied username has permissions, the database will be created.{/tr}</p>
 				<p>{tr}If you are using a database which is already being used for something else (not recommended), check db/tiki.sql to make sure the table names used by Tiki are not already used.{/tr}</p>
 			</div>
 			</div>
 		</div>
-		</fieldset><br />
+		</fieldset><br>
 		<fieldset><legend>{tr}Database user{/tr}</legend>
 		<p>{tr}Enter a database user with administrator permission for the Database.{/tr}</p>
 		<div style="padding:5px;">
@@ -289,7 +289,7 @@
 <div class="clearfix">
 <p>
 {if $tikidb_created}
-	{tr}This install will populate (or upgrade) the database.{/tr}<br /><br />
+	{tr}This install will populate (or upgrade) the database.{/tr}<br><br>
 	{tr}If you want to upgrade from a previous Tiki release, ensure that you have read and understood the <a href="http://doc.tiki.org/Upgrade" target="_blank">Upgrade instructions</a>.{/tr}
 {else}
 	{tr}A new install will populate the database.{/tr}
@@ -323,7 +323,7 @@
 		    	<input type="hidden" name="install_step" value="5" />
 				{if $multi}<input type="hidden" name="multi" value="{$multi}" />{/if}
 				{if $lang}<input type="hidden" name="lang" value="{$lang}" />{/if}
-	  <br />
+	  <br>
 <table class="formcolor">
 	<tr>
 		<td valign="top">
@@ -482,19 +482,19 @@
 <div class="clearfix">
 	<p>{tr}Complete these fields to configure common, general settings for your site.{/tr} {tr}The information you enter here can be changed later.{/tr}</p>
 	<p>{tr}Refer to the <a href="http://doc.tiki.org/Admin+Panels" target="_blank">documentation</a> for complete information on these, and other, settings.{/tr}</p>
-	<br />
+	<br>
 	<fieldset><legend>{tr}General{/tr} <a href="http://doc.tiki.org/general+admin" target="_blank" title="{tr}Help{/tr}"><img src="img/icons/help.png" alt="{tr}Help{/tr}" /></a></legend>
 <div style="padding:5px; clear:both"><label for="browsertitle">{tr}Browser title:{/tr}</label>
 		<div style="margin-left:1em"><input type="text" size="40" name="browsertitle" id="browsertitle" onclick="if (this.value=='{tr}My Tiki{/tr}') this.value='';" onfocus="origval=this.value;" onblur="if (this.value=='') this.value=origval;" value="{if $prefs.browsertitle eq ''}{tr}My Tiki{/tr}{else}{$prefs.browsertitle|escape}{/if}" />
-			<br /><em>{tr}This will appear in the browser title bar.{/tr}</em></div>
+			<br><em>{tr}This will appear in the browser title bar.{/tr}</em></div>
 		</div>
 		<div style="padding:5px; clear:both"><label for="sender_email">{tr}Sender email:{/tr}</label>
 			<div style="margin-left:1em"><input type="text" size="40" name="sender_email" id="sender_email" value="{$prefs.sender_email|escape}" />
-			<br /><em>{tr}Email sent by your site will use this address.{/tr}</em>
+			<br><em>{tr}Email sent by your site will use this address.{/tr}</em>
 			</div>
 		</div>
 	</fieldset>
-<br />
+<br>
 <fieldset>
 	<legend>{tr}Secure Log in{/tr} <a href="http://doc.tiki.org/login+config" target="_blank" title="{tr}Help{/tr}">
 		<img src="img/icons/help.png" alt="{tr}Help{/tr}" /></a>
@@ -522,7 +522,7 @@
 		</div>
 	</div>
 </fieldset>
-<br />
+<br>
 <fieldset>
 	<legend>{tr}Logging and Reporting{/tr}</legend>
 	<div class="adminoptionbox">
@@ -546,16 +546,16 @@
 			<div style="padding:5px;clear:both">	  
 				<label for="log_tpl">{tr}Add HTML comment at start and end of each Smarty template (TPL){/tr}.</label>
 				<input type="checkbox" id="log_tpl" name="log_tpl"{if $prefs.log_tpl eq 'y'} checked="checked"{/if}" />
-				<br /><em><img src="img/icons/error.png" alt="{tr}Alert{/tr}" style="vertical-align:middle" /> {tr}Use only for development, not in production because these warnings are added to emails as well, and visible to the users{/tr}.</em>
+				<br><em><img src="img/icons/error.png" alt="{tr}Alert{/tr}" style="vertical-align:middle" /> {tr}Use only for development, not in production because these warnings are added to emails as well, and visible to the users{/tr}.</em>
 			</div>
 		</div>
 	</div>
 </fieldset>
-<br />
+<br>
 	<fieldset><legend>{tr}Administrator{/tr}</legend>
 		<div style="padding:5px"><label for="admin_email">{tr}Admin email:{/tr}</label>
 			<div style="margin-left:1em"><input type="text" size="40" name="admin_email" id="admin_email" value="{if isset($admin_email)}{$admin_email}{/if}" />
-			<br /><em>{tr}This is the email address for your administrator account.{/tr}</em></div>
+			<br><em>{tr}This is the email address for your administrator account.{/tr}</em></div>
 		</div>
 	</fieldset>
 	{if $upgradefix eq 'y'}
@@ -717,7 +717,7 @@
 				</div>
 {/foreach}
 
-<br />
+<br>
 <div><strong>{tr}Adding a new host:{/tr}</strong></div>
 {tr}To add a new virtual host run the setup.sh with the domain name of the new host as a last parameter.{/tr}
 

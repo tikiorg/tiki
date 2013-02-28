@@ -1,6 +1,6 @@
 {* $Id$ *}
 
-<a class="pagetitle" href="tiki-map_upload.php">Layer Management</a><br /><br />
+<a class="pagetitle" href="tiki-map_upload.php">Layer Management</a><br><br>
 <a class="link" href="tiki-map_upload.php?dir={$dir}">
 <h3>{tr}{$dir}{/tr}</h3></a>
 <table class="normal">
@@ -62,31 +62,31 @@
 </tr>
 {/section}
 </table>
-<br />
+<br>
 {if $tiki_p_map_create eq 'y'}
 <form enctype="multipart/form-data" action="tiki-map_upload.php" method="post">
 <input type="hidden" name="dir" value="{$dir}" />
 <input type="hidden" name="upload" value="true" />
-{tr}Upload From Disk:{/tr}<br />
+{tr}Upload From Disk:{/tr}<br>
 <input name="userfile1" type="file" />
 <input name="userfile2" type="file" />
-<br />
+<br>
 <input name="userfile3" type="file" />
 <input name="userfile4" type="file" />
-<br />
+<br>
 <input name="userfile5" type="file" />
 <input name="userfile6" type="file" />
-<br />
+<br>
 <input type="submit" value="{tr}Upload Files{/tr}"> ({$max_file_size}{tr}Bytes maximum{/tr})
 </form>
-<br />
+<br>
 <form action="tiki-map_upload.php" method="get">
 <input type="hidden" name="dir" value="{$dir}" />
 <input type="hidden" name="action" value="createdir" />
 {tr}Create Directory:{/tr} <input name="directory" type="text" />
 <input type="submit" value="{tr}Create{/tr}">
 </form>
-<br />
+<br>
 <form action="tiki-map_upload.php" method="get">
 <input type="hidden" name="dir" value="{$dir}" />
 <input type="hidden" name="action" value="createindex" />

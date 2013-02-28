@@ -159,7 +159,7 @@ Add a value in first check when you create a new admin page. *}
 			{else}
 				{icon _id=information alt="{tr}Information{/tr}" style="vertical-align: middle"}
 			{/if}
-					{if $tikifeedback[n].st ne 3}{tr}Preference{/tr} {/if}<strong>{tr}{$tikifeedback[n].mes|stringfix}{/tr}</strong><br />
+					{if $tikifeedback[n].st ne 3}{tr}Preference{/tr} {/if}<strong>{tr}{$tikifeedback[n].mes|stringfix}{/tr}</strong><br>
 					{if $tikifeedback[n].st ne 3}(<em>{tr}Preference name:{/tr}</em> {$tikifeedback[n].name}){/if}
 				</p>
 			</li>
@@ -179,7 +179,7 @@ if $pagetop_msg}
 <br style="clear:both" />
 {remarksbox type="tip" title="{tr}Crosslinks to other features and settings{/tr}"}
 
-	{tr}Administration features:{/tr}<br />
+	{tr}Administration features:{/tr}<br>
 	{* TODO: to be fixed {if $prefs.feature_debug_console eq 'y'} <a href="javascript:toggle("debugconsole")">{tr}(debug){/tr}</a> {/if} *}
 	<a href="tiki-adminusers.php">{tr}Users{/tr}</a> 
 	<a href="tiki-admingroups.php">{tr}Groups{/tr}</a> 
@@ -189,16 +189,16 @@ if $pagetop_msg}
 	<a href="tiki-mods.php">{tr}Mods{/tr}</a>
 	<hr />
 
-	{tr}Transversal features{/tr} ({tr}which apply to more than one section{/tr}):<br />
+	{tr}Transversal features{/tr} ({tr}which apply to more than one section{/tr}):<br>
 	<a href="tiki-admin_notifications.php">{tr}Mail Notifications{/tr}</a> 
 	<hr />
 
-	{tr}Navigation features:{/tr}<br />
+	{tr}Navigation features:{/tr}<br>
 	<a href="tiki-admin_menus.php">{tr}Menus{/tr}</a> 
 	<a href="tiki-admin_modules.php">{tr}Modules{/tr}</a>
 	<hr />
 
-	{tr}Text area features{/tr} ({tr}features you can use in all text areas, like wiki pages, blogs, articles, forums, etc{/tr}):<br />
+	{tr}Text area features{/tr} ({tr}features you can use in all text areas, like wiki pages, blogs, articles, forums, etc{/tr}):<br>
 	<a href="tiki-admin_cookies.php">{tr}Cookies{/tr}</a> 
 	<a href="tiki-list_cache.php">{tr}External Pages Cache{/tr}</a> 
 	<a href="tiki-admin_toolbars.php">{tr}Toolbars{/tr}</a> 

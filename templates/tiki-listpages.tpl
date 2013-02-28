@@ -43,7 +43,7 @@
 <div class="center" style="text-align: center">
 	<strong>{tr}Insert name of the page you wish to create{/tr}</strong>
 	<form method="get" action="tiki-editpage.php">
-		<input id="pagename" type="text" size="30" name="page" /><br />
+		<input id="pagename" type="text" size="30" name="page" /><br>
 		{if $prefs.namespace_enabled == 'y' && $prefs.namespace_default}
 			<div>
 				<label>

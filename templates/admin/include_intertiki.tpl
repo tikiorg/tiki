@@ -10,7 +10,7 @@
 				<tr>
 					<td>
 						{tr}InterTiki Slave mode{/tr}
-						<br />
+						<br>
 						<small>{tr}Warning: overrides manually registered local users{/tr}</small>
 					</td>
 					<td>
@@ -36,13 +36,13 @@
 						</select>
 						<div id="admin-slavemode-options" style="display: {if $prefs.feature_intertiki_mymaster eq ''}none{else}block{/if}">
 							<input type="checkbox" name="feature_intertiki_import_preferences" {if $prefs.feature_intertiki_import_preferences eq 'y'}checked="checked"{/if}/>
-							{tr}Import user preferences{/tr}<br />
+							{tr}Import user preferences{/tr}<br>
 	
 							<input type="checkbox" name="feature_intertiki_import_groups" {if $prefs.feature_intertiki_import_groups eq 'y'}checked="checked"{/if}/>
 							{tr}Import user groups{/tr}
-							<br />
+							<br>
 							{tr}Limit group import (comma-separated list of imported groups, leave empty to avoid limitation){/tr}
-							<br />
+							<br>
 							<input type="text" name="feature_intertiki_imported_groups" value="{$prefs.feature_intertiki_imported_groups}" />
 						</div>
 					</td>

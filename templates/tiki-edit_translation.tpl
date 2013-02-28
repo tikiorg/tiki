@@ -23,7 +23,7 @@
 		{tr}The object is already in the set of translations{/tr}
 	{/if}
 	</div>
-	<br />
+	<br>
 {/if}
 
 {if $langpage}
@@ -46,9 +46,9 @@
 	{$content_of_update_translation_section}
 </div>
 
-<br />
+<br>
 <hr />
-<br />
+<br>
 
 <a name="new_translation"></a>
 <h3>{tr}Translate this page to a new language{/tr}</h3>
@@ -72,7 +72,7 @@
 		</p>
 		{if $prefs.feature_categories eq 'y'}
 			{tr}Below, assign categories to this new translation (Note: they should probably be the same as the categories of the page being translate){/tr}
-			<br />
+			<br>
 			{include file="categorize.tpl" notable=y}
 		{/if}
 		<p align="center"><input type="submit" value="{tr}Create translation{/tr}"/></p>

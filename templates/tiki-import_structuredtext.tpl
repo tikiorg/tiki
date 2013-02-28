@@ -20,7 +20,7 @@
 </tr>
 </table>
 </form>
-<br /><br />
+<br><br>
 {if $result eq 'y'}
 <table class="normal">
 <tr>

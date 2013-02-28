@@ -3,7 +3,7 @@
 {include file='tiki-mytiki_bar.tpl'}
 {include file='messu-nav.tpl'}
 {if $prefs.messu_mailbox_size gt '0'}
-<br />
+<br>
 <table border='0' cellpadding='0' cellspacing='0'>
 	<tr>
 		<td>
@@ -19,7 +19,7 @@
 </table>
 [{$messu_mailbox_number} / {$prefs.messu_mailbox_size}] {tr}messages{/tr}. {if $messu_mailbox_number ge $prefs.messu_mailbox_size}{tr}Mailbox is full! Delete or archive some messages if you want to receive more messages.{/tr}{/if}
 {/if}
-<br /><br />
+<br><br>
 <form action="messu-mailbox.php" method="get">
 	<label for="mess-mailmessages">{tr}Messages:{/tr}</label>
 	<select name="flags" id="mess-mailmessages">
@@ -42,7 +42,7 @@
 	<input type="text" name="find" id="mess-mailcont" value="{$find|escape}" />
 	<input type="submit" name="filter" value="{tr}Filter{/tr}" />
 </form>
-<br />
+<br>
 
 <form action="messu-mailbox.php" method="post" name="form_messu_mailbox">
 	<input type="hidden" name="offset" value="{$offset|escape}" />

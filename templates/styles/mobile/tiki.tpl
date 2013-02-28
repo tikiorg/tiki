@@ -45,7 +45,7 @@
 				color: #333;
 				cursor: wait;
 				background: transparent url('img/loading-light.gif') no-repeat 50% 50%;">
-		{tr}Loading...{/tr}<br /><br /><br />
+		{tr}Loading...{/tr}<br><br><br>
 		</div></div>{* inline loading div for page load for mobile *}
 		<div id="fixedwidth" class="fixedwidth" style="display: none;"> {* enables fixed-width layouts *}
 			{if $prefs.feature_layoutshadows eq 'y'}<div id="main-shadow">{eval var=$prefs.main_shadow_start}{/if}

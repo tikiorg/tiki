@@ -49,7 +49,7 @@
 						{if isset($other_columns)}
 							{$other_columns}
 						{/if}
-						{self_link sort_mode=$propname|cat:'_asc'}{$fgal_listing_conf.$propname.name}{/self_link}<br />
+						{self_link sort_mode=$propname|cat:'_asc'}{$fgal_listing_conf.$propname.name}{/self_link}<br>
 					{/capture}
 				{/if}
 			{/if}
@@ -241,7 +241,7 @@
 							<div>
 								{if isset($files[changes].share.data)}
 									{foreach item=prop key=propname from=$files[changes].share.data}
-										<b>{$prop.email}</b>: {$prop.visit} / {$prop.maxhits}<br />
+										<b>{$prop.email}</b>: {$prop.visit} / {$prop.maxhits}<br>
 										{assign var=nb_over_share value=$nb_over_share+1}
 									{/foreach}
 								{/if}

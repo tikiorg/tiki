@@ -9,12 +9,12 @@
     <td width="15%"><code>{$command_result.name}</code></td>
     <td>{$command_result.description} </td>
    </tr>
-   <tr><td><br /></td></tr>
+   <tr><td><br></td></tr>
    <tr>
     <td></td>
     <td> {tr}Syntax:{/tr} <pre>{$command_result.syntax}</pre> </td>
    </tr>
-   <tr><td><br /></td></tr>
+   <tr><td><br></td></tr>
    <tr>
     <td></td>
     <td> {tr}Example:{/tr} <pre>{$command_result.example}</pre>  </td>

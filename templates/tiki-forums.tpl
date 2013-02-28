@@ -99,7 +99,7 @@
 					{/if}
 				</span>
 				{if $prefs.forum_list_desc eq 'y'}
-					<br />
+					<br>
 					<div class="subcomment">
 						{capture name="parsedDesc"}{wiki}{$channels[user].description}{/wiki}{/capture}
 						{if strlen($smarty.capture.parsedDesc) < $prefs.forum_list_description_len}
@@ -122,7 +122,7 @@
 			{if $prefs.forum_list_lastpost eq 'y'}	
 				<td class="text">
 					{if isset($channels[user].lastPost)}
-						{$channels[user].lastPost|tiki_short_datetime}<br />
+						{$channels[user].lastPost|tiki_short_datetime}<br>
 						{if $prefs.forum_reply_notitle neq 'y'}<small><i>{$channels[user].lastPostData.title|escape}</i>{/if}
 						{tr}by{/tr} {$channels[user].lastPostData.userName|username}</small>
 					{/if}

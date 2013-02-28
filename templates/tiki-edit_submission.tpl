@@ -6,7 +6,7 @@
 	{remarksbox type='errors' title="{tr}Errors{/tr}"}
 		{foreach from=$errors item=m name=errors}
 			{$m}
-			{if !$smarty.foreach.errors.last}<br />{/if}
+			{if !$smarty.foreach.errors.last}<br>{/if}
 		{/foreach}
 	{/remarksbox}
 {/if}
@@ -45,7 +45,7 @@
 		{if $types.$type.show_subtitle eq 'y'}, {tr}<b>Subtitle</b>=small line below Title{/tr}{/if}
 		{if $types.$type.show_linkto eq 'y'}, {tr}<b>Source</b>=URL to article source{/tr}{/if}
 	</div>
-	<br />
+	<br>
 	<table class="formcolor">
 		<tr id='show_topline' {if $types.$type.show_topline eq 'y'}style="display:;"{else}style="display:none;"{/if}>
 			<td>{tr}Topline{/tr} *</td>
@@ -288,7 +288,7 @@
 	{/if}
 
 	<div align="center">
-		{if $prefs.feature_antibot eq 'y'}<br /><div align="center">{include file='antibot.tpl' antibot_table='y'}</div><br />{/if}
+		{if $prefs.feature_antibot eq 'y'}<br><div align="center">{include file='antibot.tpl' antibot_table='y'}</div><br>{/if}
 		<input type="submit" class="wikiaction" name="preview" value="{tr}Preview{/tr}" onclick="needToConfirm=false;" />
 		<input type="submit" class="wikiaction" name="submitarticle" value="{tr}Submit Article{/tr}" onclick="needToConfirm=false;" />
 		{if $tiki_p_autoapprove_submission eq 'y'}
@@ -297,4 +297,4 @@
 	</div>
 </form>
 
-<br />
+<br>

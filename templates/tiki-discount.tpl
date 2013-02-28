@@ -48,7 +48,7 @@
 	<tr>
 		<td><label for="value">{tr}Value:{/tr}</label></td>
 		<td>
-			<input type="text" id="value" name="value" {if empty($info.percent) and !empty($info.value)}value="{$info.value|escape}" {/if} />{$prefs.payment_currency|escape}<br />
+			<input type="text" id="value" name="value" {if empty($info.percent) and !empty($info.value)}value="{$info.value|escape}" {/if} />{$prefs.payment_currency|escape}<br>
 			{tr}or{/tr}<input type="text" id="percent" name="percent" {if !empty($info.percent)} value="{$info.percent|escape}"{/if} />%
 		</td>
 	</tr>

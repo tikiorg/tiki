@@ -3,12 +3,12 @@
 {include file='tiki-mytiki_bar.tpl'}
 {include file='messu-nav.tpl'}
 
-{if $allowMsgs ne 'y'}<br />
+{if $allowMsgs ne 'y'}<br>
 	<div class="simplebox">
 		{icon _id=information style="vertical-align:middle" align="left"} {tr}If you want people to be able to reply to you, enable <a href='tiki-user_preferences.php'>Allow messages from other users</a> in your preferences.{/tr}
 	</div>
-	<br />
-	<br />
+	<br>
+	<br>
 {/if}
 
 
@@ -107,4 +107,4 @@
 		</table>
 	</form>
 {/if}
-<br />
+<br>

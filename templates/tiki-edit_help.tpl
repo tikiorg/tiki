@@ -48,7 +48,7 @@
 {/if}{* wysiwyg *}
 <tr class="{cycle}"><td><strong><img src='img/icons/database_gear.png' alt='' /> {tr}Dynamic variables{/tr}</strong> <br/> %{tr}Name{/tr}% {tr}Inserts an editable variable{/tr}</td></tr>
 
-<tr class="{cycle}"><td><img src='img/icons/world_link.png' alt='' /> <strong>{tr}External links{/tr}</strong> <br/> {tr}use square brackets for an external link: [URL], [URL|link_description],[URL|link_description|relation] or [URL|description|relation|nocache] (that last prevents the local Wiki from caching the linked page; relation can be used to insert rel attribute for the link - useful e.g. for shadowbox).{/tr}<br />
+<tr class="{cycle}"><td><img src='img/icons/world_link.png' alt='' /> <strong>{tr}External links{/tr}</strong> <br/> {tr}use square brackets for an external link: [URL], [URL|link_description],[URL|link_description|relation] or [URL|description|relation|nocache] (that last prevents the local Wiki from caching the linked page; relation can be used to insert rel attribute for the link - useful e.g. for shadowbox).{/tr}<br>
 {tr}For an external Wiki, use ExternalWikiName:PageName or ((External Wiki Name: Page Name)){/tr}</td></tr>
 <tr class="{cycle}"><td><strong>{tr}Square Brackets{/tr}</strong> <br/> {tr}Use [[foo] to show [foo].{/tr}</td></tr>
 
@@ -64,7 +64,7 @@
 <tr class="{cycle}"><td><img src='img/icons/text_list_bullets.png' alt='' /> <img src='img/icons/text_list_numbers.png' alt='' /> <strong>{tr}Lists{/tr}</strong> <br/> * {tr}for bullet lists{/tr}, # {tr}for numbered lists{/tr}, ;{tr}Word:{/tr}{tr}definition{/tr} {tr}for definiton lists{/tr}</td></tr>
 <tr class="{cycle}"><td><strong>{tr}Indentation{/tr}</strong> <br/>+, ++ {tr}Creates an indentation for each plus (useful in list to continue at the same level){/tr}</td></tr>
 {if $prefs.feature_wiki_tables eq 'new'}
-<tr class="{cycle}"><td><img src='img/icons/table.png' alt='' /> <strong>{tr}Tables{/tr}</strong> <br/> || {tr}row{/tr}1-{tr}col{/tr}1 | {tr}row{/tr}1-{tr}col{/tr}2 | {tr}row{/tr}1-{tr}col{/tr}3<br />{tr}row{/tr}2-{tr}col{/tr}1 | {tr}row{/tr}2-{tr}col{/tr}2 | {tr}row{/tr}2-{tr}col{/tr}3 ||</td></tr>
+<tr class="{cycle}"><td><img src='img/icons/table.png' alt='' /> <strong>{tr}Tables{/tr}</strong> <br/> || {tr}row{/tr}1-{tr}col{/tr}1 | {tr}row{/tr}1-{tr}col{/tr}2 | {tr}row{/tr}1-{tr}col{/tr}3<br>{tr}row{/tr}2-{tr}col{/tr}1 | {tr}row{/tr}2-{tr}col{/tr}2 | {tr}row{/tr}2-{tr}col{/tr}3 ||</td></tr>
 {else}
 <tr class="{cycle}"><td><img src='img/icons/table.png' alt='' /> <strong>{tr}Tables{/tr}</strong> <br/> ||{tr}row{/tr}1-{tr}col{/tr}1|{tr}row{/tr}1-{tr}col{/tr}2|{tr}row{/tr}1-{tr}col{/tr}3||{tr}row{/tr}2-{tr}col{/tr}1|{tr}row{/tr}2-{tr}col{/tr}2|{tr}row{/tr}2-{tr}col{/tr}3||</td></tr>
 {/if}

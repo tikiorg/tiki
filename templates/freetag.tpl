@@ -13,7 +13,7 @@
 				{/if}
 
 				<input type="text" id="tagBox" name="freetag_string" value="{$taglist|escape}" style="width:98%" />
-				<br />
+				<br>
 				{foreach from=$tag_suggestion item=t}
 					{capture name=tagurl}{if (strstr($t, ' '))}"{$t}"{else}{$t}{/if}{/capture}
 					<a href="javascript:addTag('{$smarty.capture.tagurl|escape:'javascript'|escape}');" onclick="javascript:needToConfirm=false">{$t|escape}</a> 

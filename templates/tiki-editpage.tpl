@@ -465,7 +465,7 @@ $("#allowhtml").change(function() {
 											<option value="{$languages[ix].value|escape}"{if $lang eq $languages[ix].value or (!($data.page_id) and $lang eq '' and $languages[ix].value eq $prefs.language)} selected="selected"{/if}>{$languages[ix].name}</option>
 										{/section}
 									</select>
-									<br />
+									<br>
 									{tr _0="tiki-edit_translation.php?no_bl=y&amp;page={$page|escape:url}"}To translate, do not change the language and the content.
 									Instead, <a href="%0">create a new translation</a> in the new language.{/tr}
 									{if $translationOf}

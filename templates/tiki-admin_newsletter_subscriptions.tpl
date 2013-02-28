@@ -181,7 +181,7 @@
 			<td width="30%">{tr}Email:{/tr}</td>
 			<td colspan="2">
 				<textarea cols="70" rows="6" wrap="soft" name="email"></textarea>
-				<br />
+				<br>
 				<i>{tr}You can add several email addresses by separating them with commas.{/tr}</i>
 			</td>
 		</tr>
@@ -225,7 +225,7 @@
 						<option value="{$groups[x]|escape}">{$groups[x]|escape}</option>
 					{/section}
 				</select>
-				<br />
+				<br>
 				<i>{tr}Group subscription also subscribes included groups{/tr}</i>
 			</td>
 		</tr>
@@ -263,7 +263,7 @@
 				<td width="30%">{tr}File:{/tr}</td>
 				<td colspan="2">
 					<input type="file" name="batch_subscription" />
-					<br />
+					<br>
 					<i>{tr}txt file, one e-mail per line{/tr}</i>
 				</td>
 			</tr> 	 
@@ -293,7 +293,7 @@
 				<td width="30%">Wiki page</td>
 				<td colspan="2">
 					<input type="text" name="wikiPageName" value="" size="60"  />
-					<br />
+					<br>
 					<i>{tr}Wiki page, one e-mail per line{/tr}</i>
 				</td>
 			</tr>
@@ -362,7 +362,7 @@
 						{/if}
 					{/section}
 				</select>
-				<br />
+				<br>
 			</td>
 		</tr>
 		<tr>
@@ -382,7 +382,7 @@
 			<td width="30%">Wiki page</td>
 			<td colspan="2">
 				<input type="text" name="wikiPageName" value="" size="60" />
-				<br />
+				<br>
 				<i>{tr}Emails on a wiki page which will be added at each newsletter sending, one e-mail per line{/tr}</i>
 				{autocomplete element='input[name=wikiPageName]' type='pagename'}
 			</td>

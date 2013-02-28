@@ -28,7 +28,7 @@
 	{/if}
 {/if}
 
-<br />
+<br>
 
 {if $findwhat!=""}
 	{tr}Found{/tr} "<b>{$findwhat|escape}</b>" {tr}in{/tr} {$cant_records|escape} {tr}LastChanges{/tr} 

@@ -69,7 +69,7 @@ Set the names of the table headings to reflect the names of the db
 {*first section beginning *}
 {section name=ix loop=$questions}
 {tr}Question:{/tr}
-<a class="link" href="tiki-edit_quiz_questions.php?quizId={$quizId.questionId}">{$questions[ix].question|escape}<br /></a>
+<a class="link" href="tiki-edit_quiz_questions.php?quizId={$quizId.questionId}">{$questions[ix].question|escape}<br></a>
 
 <table class="normal">
 <!-- begin header data for table -->
@@ -99,6 +99,6 @@ Set the names of the table headings to reflect the names of the db
   {/section}
 </table>
 
-<br />
+<br>
 {*first section end *}
 {/section}

@@ -6,7 +6,7 @@
 {if isset($sent) && empty($errors)}
 	<div class="simplebox highlight">
 		{icon _id=accept alt="{tr}OK{/tr}" style="vertical-align:middle" align="left"}
-		{tr}Page shared:{/tr}<br />
+		{tr}Page shared:{/tr}<br>
 		{if isset($emailSent)}
 			<div>
 				{tr}The link was sent via e-Mail to the following addresses:{/tr} {$addresses|escape}
@@ -29,10 +29,10 @@
 		{if isset($threadId) and $threadId>0}
 			<div>
 				{tr}The link was published in a{/tr} <a href="tiki-view_forum_thread.php?comments_parentId={$threadId}&forumId={$forumId}">{tr}forum{/tr}</a>
-				<br />
+				<br>
 				{foreach from=$feedbacks item=feedback}
 					{$feedback}
-					<br />
+					<br>
 				{/foreach}
 			</div>
 		{/if}
@@ -44,7 +44,7 @@
 		{icon _id=exclamation alt="{tr}Error{/tr}" style="vertical-align:middle" align="left"}
 		{foreach from=$errors item=m name=errors}
 			{$m}
-			{if !$smarty.foreach.errors.last}<br />{/if}
+			{if !$smarty.foreach.errors.last}<br>{/if}
 		{/foreach}
 	</div>
 {/if}
@@ -86,7 +86,7 @@
 			<tr>
 				<td rowspan="2">
 					<img src="img/icons/large/evolution48x48.png" alt="{tr}e-Mail{/tr}"/>
-					<br />
+					<br>
 					{tr}Send via e-Mail{/tr}
 				</td>
 				<td>
@@ -109,11 +109,11 @@
 								<td>
 									{if $prefs.feature_jquery_autocomplete == 'y'}
 										{user_selector contact='true' user = '' multiple='true' editable='y' mustmatch='false' group='all' name='addresses' id='addresses' style='width:95%' user_selector_threshold=0}
-										<br />
+										<br>
 										<em>{tr}Separate multiple email addresses with a comma and a space{/tr}</em>
 									{else}
 										<input style="width:95%;" type="text" size="60" name="addresses" value="{$addresses|escape}"/>
-										<br />
+										<br>
 										<em>{tr}Separate multiple email addresses with a comma.{/tr}</em>
 									{/if}
 								</td>
@@ -151,7 +151,7 @@
 				<tr>
 					<td rowspan="2">
 						<img src="img/icons/twitter_t_logo_32.png" alt="Twitter" />
-						<br />
+						<br>
 						{tr}Tweet via Twitter{/tr}
 					</td>
 					<td>
@@ -189,7 +189,7 @@
 				<tr>
 					<td rowspan="2">
 						<img src="img/icons/facebook-logo_32.png" alt="Facebook" />
-						<br />
+						<br>
 							{tr}Put on my Facebook wall{/tr}
 					</td>
 					<td>
@@ -213,7 +213,7 @@
 									<td>{tr}Link text{/tr}</td>
 									<td>
 										<input type="text" name="fblinktitle" id="fblinktitle" value="{$fblinktitle|escape}" style="width: 95%;" />
-										<br />
+										<br>
 										<em>{tr}This will be the title for the URL{/tr}</em>
 									</td>
 								</tr>
@@ -263,7 +263,7 @@
 				<tr>
 					<td rowspan="2">
 						<img src="img/icons/large/messages48x48.png" alt="{tr}Messages{/tr}" />
-						<br />
+						<br>
 						{tr}Send message{/tr}
 					</td>
 					<td>
@@ -291,7 +291,7 @@
 										{else}
 											<input style="width:95%;" type="text" size="60" name="messageto" value="{$messageto|escape}"/>
 										{/if}
-										<br />
+										<br>
 										<em>{tr}Separate multiple recipients with a semicolon.{/tr}</em>
 									</td>
 								</tr>
@@ -318,7 +318,7 @@
 				<tr>
 					<td rowspan="2">
 						<img src="img/icons/large/stock_index48x48.png" alt="{tr}Forums{/tr}" />
-						<br />
+						<br>
 						{tr}Post on forum{/tr}
 					</td>
 					<td>

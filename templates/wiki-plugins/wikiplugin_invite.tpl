@@ -2,7 +2,7 @@
 {if $errors}
 	{remarksbox type="feedback"}
 		{foreach from=$errors item=error}
-			{$error|escape}<br />
+			{$error|escape}<br>
 		{/foreach}
 	{/remarksbox}
 {/if}

@@ -57,7 +57,7 @@
 	<div id="confirmArea">
 	{remarksbox type='note' title="{tr}Please Confirm{/tr}"}
 		<b>{tr}This newsletter will be sent to {$subscribers} email addresses.{/tr}</b>
-		<br />
+		<br>
 		{tr}Reply to:{/tr} {if empty($replyto)}{$prefs.sender_email|escape} ({tr}default{/tr}){else}{$replyto|escape}{/if}
 	{/remarksbox}
 	<p>
@@ -262,7 +262,7 @@
 					</td>
 					<td id="clipcol2" >
 						{tr}To include the article clipping into your newsletter, cut and paste it into the contents.{/tr}
-						<br />{tr}If autoclipping is enabled, you can also enter "~~~articleclip~~~" which will be replaced with the latest	clip when sending.{/tr}
+						<br>{tr}If autoclipping is enabled, you can also enter "~~~articleclip~~~" which will be replaced with the latest	clip when sending.{/tr}
 						{if !empty($articleClip)}
 						{remarksbox type="warning" title="{tr}Notice{/tr}"}
 							{tr}Be careful not to paste articles that must not be seen by the recipients{/tr} 

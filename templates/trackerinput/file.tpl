@@ -4,7 +4,7 @@
 	<input type="file" name="{$field.ins_id}"{if isset($input_err)} value=""{/if}{if $field.isMandatory eq 'y'} class="file_{$field.ins_id}"{/if} />
 {/if}
 {if $field.value ne '' and is_numeric($field.value)}
-	<br />
+	<br>
 	<a href="tiki-download_item_attachment.php?attId={$field.value}" title="{tr}Download{/tr}">
 		{$field.filename}&nbsp;
 		{icon _id='disk' alt="{tr}Download{/tr}"}

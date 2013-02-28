@@ -48,7 +48,7 @@
     <tr> {section name=numloop loop=$categs}
       <td><a class="dirlink" href="tiki-directory_browse.php?parent={$categs[numloop].categId}">{$categs[numloop].name|escape}</a> {if $categs[numloop].showCount eq 'y'}
         ({$categs[numloop].sites})
-        {/if} <br />
+        {/if} <br>
         {* Now display subcats if any *}
         {section name=ix loop=$categs[numloop].subcats}
         {if $categs[numloop].childrenType ne 'd'} <a class="dirsublink" href="tiki-directory_browse.php?parent={$categs[numloop].subcats[ix].categId}">{$categs[numloop].subcats[ix].name}</a> {else}
@@ -110,7 +110,7 @@
     {section name=ii loop=$items[ix].cats}
     {if $fsfs}
     {assign var=fsfs value=0}{else},&nbsp;
-    {/if} <a class="dirsublink" href="tiki-directory_browse.php?parent={$items[ix].cats[ii].categId}">{$items[ix].cats[ii].path|escape}</a> {/section} </span> <br />
+    {/if} <a class="dirsublink" href="tiki-directory_browse.php?parent={$items[ix].cats[ii].categId}">{$items[ix].cats[ii].path|escape}</a> {/section} </span> <br>
     <span class="dirsitetrail"> {tr}Added:{/tr} {$items[ix].created|tiki_short_date} {tr}Last updated:{/tr} {$items[ix].lastModif|tiki_short_date} {tr}Hits:{/tr} {$items[ix].hits} </span> </div>
   {/section} </div>
 {pagination_links cant=$cant_pages step=$prefs.directory_links_per_page offset=$offset}{/pagination_links}
@@ -120,9 +120,9 @@
 {/if}
 
 {if count($related)>0}
-<div class="dirrelated"> {tr}Related directory categories{/tr} <br />
-  <br />
-  {section name=ix loop=$related} <a class="dirlink" href="tiki-directory_browse.php?parent={$related[ix].relatedTo}">{$related[ix].path}</a> <br />
+<div class="dirrelated"> {tr}Related directory categories{/tr} <br>
+  <br>
+  {section name=ix loop=$related} <a class="dirlink" href="tiki-directory_browse.php?parent={$related[ix].relatedTo}">{$related[ix].path}</a> <br>
   {/section} </div>
 {/if}
 

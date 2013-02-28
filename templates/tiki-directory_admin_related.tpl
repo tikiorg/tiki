@@ -17,7 +17,7 @@
   </select>
   <input type="submit" name="go" value="{tr}Go{/tr}" />
 </form>
-<br />
+<br>
 <h2>{tr}Add a related directory category{/tr}</h2>
 <form action="tiki-directory_admin_related.php" method="post">
   <input type="hidden" name="parent" value="{$parent|escape}" />
@@ -45,7 +45,7 @@
     </tr>
   </table>
 </form>
-<br />
+<br>
 <h2>{tr}Related directory categories{/tr}</h2>
 {* Display the list of categories (items) using pagination *}
 {* Links to edit, remove, browse the categories *}

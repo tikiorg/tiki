@@ -168,7 +168,7 @@
 				{/if}
 			</form>
 
-			{reindex_file_pixel id=$reindex_file_id}<br />
+			{reindex_file_pixel id=$reindex_file_id}<br>
 
 			{pagination_links cant=$cant step=$maxRecords offset=$offset}
 				{if $view eq 'page'}

@@ -18,7 +18,7 @@
   </select>
   <input type="submit" name="go" value="{tr}Go{/tr}" />
 </form>
-{* Dislay a form to add or edit a category *} <br />
+{* Dislay a form to add or edit a category *} <br>
 {if $categId eq 0}
 <h2>{tr}Add a directory category{/tr}</h2>
 {else}
@@ -86,7 +86,7 @@
     </tr>
   </table>
 </form>
-<br />
+<br>
 <h2>{tr}Directory Subcategories{/tr}</h2>
 {* Display the list of categories (items) using pagination *}
 {* Links to edit, remove, browse the categories *}

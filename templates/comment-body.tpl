@@ -87,7 +87,7 @@
 		{/if}
 	>{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
 	{/if}
-	<br />
+	<br>
 	{/section}
 </div>
 {/if}

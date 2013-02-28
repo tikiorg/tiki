@@ -44,7 +44,7 @@
 </form>
 {* This is the area for choosing questions from the db... it really should support choosing options from the answers, but only show if there are existing questions *}
 {if $allq}
-<br /><h2> {tr}Use a question from another FAQ{/tr}</h2>
+<br><h2> {tr}Use a question from another FAQ{/tr}</h2>
 <form action="tiki-faq_questions.php" method="post">
 <input type="hidden" name="questionId" value="{$questionId|escape}" />
 <input type="hidden" name="faqId" value="{$faqId|escape}" />
@@ -76,10 +76,10 @@
 </table>
 </form>
 {/if}
-<br />
+<br>
 
 {* next big chunk *}
-<br />
+<br>
 <h2>{tr}FAQ questions{/tr}</h2>
 {if $channels or ($find ne '')}
   {include file='find.tpl'}

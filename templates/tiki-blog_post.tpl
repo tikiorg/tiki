@@ -102,7 +102,7 @@
 											<a class="link" href="tiki-view_blog_post_image.php?imgId={$post_images[ix].imgId}">{$post_images[ix].filename}</a> 
 										</td>
 										<td>
-											<textarea rows="2" cols="40">{$post_images[ix].link|escape}</textarea><br />
+											<textarea rows="2" cols="40">{$post_images[ix].link|escape}</textarea><br>
 											<textarea rows="1" cols="40">{$post_images[ix].absolute|escape}</textarea>
 										</td>
 										<td>

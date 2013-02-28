@@ -71,7 +71,7 @@
 				</a>]
 			{/if}
 			{if $prefs.direct_pagination eq 'y'}
-				<br />
+				<br>
 				{section loop=$cant_pages name=foo}
 					{assign var=selector_offset value=$smarty.section.foo.index|times:$prefs.maxRecords}
 					<a class="prevnext" href="tiki-webmail_contacts.php?element={$element}&amp;section=contacts&amp;find={$find}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}">

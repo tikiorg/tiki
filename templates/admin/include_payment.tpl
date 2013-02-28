@@ -13,9 +13,9 @@
 	{tabset}
 		{tab name="{tr}Payment{/tr}"}
 			{remarksbox title="{tr}Choose payment system{/tr}"}
-				{tr}You can use only one payment method: PayPal or Cclite or Tiki User Credits{/tr}<br />
-				{tr}PayPal is working at the moment. See PayPal.com{/tr}<br />
-				{tr}Cclite: Community currency accounting for local exchange trading systems (LETS). See {/tr}<a href="http://sourceforge.net/projects/cclite/">{tr}sourceforge.net{/tr}</a><br />
+				{tr}You can use only one payment method: PayPal or Cclite or Tiki User Credits{/tr}<br>
+				{tr}PayPal is working at the moment. See PayPal.com{/tr}<br>
+				{tr}Cclite: Community currency accounting for local exchange trading systems (LETS). See {/tr}<a href="http://sourceforge.net/projects/cclite/">{tr}sourceforge.net{/tr}</a><br>
 				{tr}Tiki User Credits: Requires this other feature to be configured{/tr}
 			{/remarksbox}
 

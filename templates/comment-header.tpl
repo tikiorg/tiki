@@ -49,7 +49,7 @@
 			<a href="tiki-object_watches.php?objectId={$comments_parentId|escape:"url"}&amp;watch_event=forum_post_thread&amp;objectType=forum&amp;objectName={$comment.title|escape:"url"}&amp;objectHref={'tiki-view_forum_thread.php?comments_parentId='|cat:$comments_parentId|cat:'&forumId='|cat:$forumId|escape:"url"}" class="icon">{icon _id='eye_group' alt="{tr}Group Monitor{/tr}"}</a>
 		{/if}
 		{/if}
-		<br />
+		<br>
 		{if $category_watched eq 'y'}
 			{tr}Watched by categories:{/tr}
 			{section name=i loop=$watching_categories}

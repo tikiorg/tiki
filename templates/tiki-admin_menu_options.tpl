@@ -64,9 +64,9 @@
 										{if $channels[user].url}
 											{tr}URL:{/tr} <a href="{if $prefs.menus_item_names_raw eq 'n'}{$channels[user].url|escape}{else}{$channels[user].url}{/if}" class="link" target="_blank" title="{$channels[user].canonic|escape}">{$channels[user].canonic|truncate:40:' ...'|escape}</a>
 										{/if}
-										{if $channels[user].section}<br />{tr}Sections:{/tr} {$channels[user].section}{/if}
-										{if $channels[user].perm}<br />{tr}Permissions:{/tr} {$channels[user].perm}{/if}
-										{if $channels[user].groupname}<br />{tr}Groups:{/tr} {$channels[user].groupname|escape}{/if}
+										{if $channels[user].section}<br>{tr}Sections:{/tr} {$channels[user].section}{/if}
+										{if $channels[user].perm}<br>{tr}Permissions:{/tr} {$channels[user].perm}{/if}
+										{if $channels[user].groupname}<br>{tr}Groups:{/tr} {$channels[user].groupname|escape}{/if}
 									</div>
 								</td>
 								<td class="text">{$channels[user].type_description}</td>
@@ -300,7 +300,7 @@
 							<td colspan="3">
 								{autocomplete element="#menu_url" type='pagename' options="select:function(event,ui){ldelim}ui.item.value='(('+ui.item.value+'))';{rdelim}"}
 								<input id="menu_url" type="text" name="url" value="{$url|escape}" size="34" />
-								<br /><em>{tr}For wiki page, use ((PageName)).{/tr}</em>
+								<br><em>{tr}For wiki page, use ((PageName)).{/tr}</em>
 							</td>
 						</tr>
 						<tr>
@@ -329,14 +329,14 @@
 									{foreach key=k item=i from=$option_groups}<option value="{$k|escape}" {$i}>{$k|escape}</option>{/foreach}
 								</select>
 								{if $option_groups|@count ge '2'}
-								{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Use Ctrl+Click to select multiple options{/tr}<br />{tr}Selecting 2 groups means that the option will be seen if the user belongs to the 2 groups. If you want the 2 groups to see the option, create 2 options with one group each.{/tr}<br />{tr}If the url is ((PageName)), you do not need to put the groups, the option will be displayed only if the page can be displayed.{/tr}{/remarksbox}
+								{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Use Ctrl+Click to select multiple options{/tr}<br>{tr}Selecting 2 groups means that the option will be seen if the user belongs to the 2 groups. If you want the 2 groups to see the option, create 2 options with one group each.{/tr}<br>{tr}If the url is ((PageName)), you do not need to put the groups, the option will be displayed only if the page can be displayed.{/tr}{/remarksbox}
 								{/if}
 							</td>
 						</tr>
 						<tr>
 							<td>{tr}Sections:{/tr}</td>
 							<td colspan="3">
-								<input id="menu_section" type="text" name="section" value="{$section|escape}" size="34" /><br />
+								<input id="menu_section" type="text" name="section" value="{$section|escape}" size="34" /><br>
 								{autocomplete element="#menu_section" type="array" options="source:prefNames,multiple:true,multipleSeparator:','"}{* note, multiple doesn't work in jquery-ui 1.8 *}
 								<em>{tr}Separate multiple feature/preferences with a comma ( , ) for an AND or a vertical bar ( | ) for an OR.{/tr}</em>
 							</td>
@@ -344,7 +344,7 @@
 						<tr>
 							<td>{tr}Permissions:{/tr}</td>
 							<td colspan="3">
-								<input id="menu_perm" type="text" name="perm" value="{$perm|escape}" size="34" /><br />
+								<input id="menu_perm" type="text" name="perm" value="{$perm|escape}" size="34" /><br>
 								{autocomplete element="#menu_perm" type="array" options="source:permNames,multiple:true,multipleSeparator:','"}{* note, multiple doesn't work in jquery-ui 1.8 *}
 								<em>{tr}Separate multiple permissions with a comma ( , ) for an AND or a vertical bar ( | ) for an OR.{/tr}</em>
 							</td>
@@ -389,7 +389,7 @@
 			</select>
 			<label for="preview_css">CSS:</label>
 			<input type="checkbox" id="preview_css" name="preview_css" onchange="this.form.submit()"{if $preview_css eq 'y'} checked="checked"{/if}>
-			<br />
+			<br>
 			<label for="preview_code">Smarty Code</label>
 			<pre id="preview_code">
 {ldelim}menu id={$menuId} css={$preview_css} type={$preview_type}{rdelim}</pre>
@@ -411,7 +411,7 @@
 	<input type="submit" name="export" value="{tr}Export{/tr}" />
 </form>
 
-<br />
+<br>
 <a name="import"></a>
 <h2>{tr}Import CSV data{/tr}</h2>
 {remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}To add new options to the menu set the optionId field to 0. To remove an option set the remove field to 'y'.{/tr}{/remarksbox}

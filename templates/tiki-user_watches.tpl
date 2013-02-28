@@ -35,12 +35,12 @@
 			</p>
 			
 			<div style="float:left; margin-right: 50px;">
-			    <input type="radio" name="view" value="short"{if $report_preferences.view eq "short"} checked="checked"{/if} /> {tr}Short report{/tr}<br />
-		    	<input type="radio" name="view" value="detailed"{if $report_preferences.view eq "detailed" OR $report_preferences eq false} checked="checked"{/if} /> {tr}Detailed report{/tr}<br />
+			    <input type="radio" name="view" value="short"{if $report_preferences.view eq "short"} checked="checked"{/if} /> {tr}Short report{/tr}<br>
+		    	<input type="radio" name="view" value="detailed"{if $report_preferences.view eq "detailed" OR $report_preferences eq false} checked="checked"{/if} /> {tr}Detailed report{/tr}<br>
 			</div>
 			<div style="float:left; margin-right: 50px;">
-			    <input type="radio" name="type" value="html"{if $report_preferences.type eq "html" OR $report_preferences eq false} checked="checked"{/if} /> {tr}HTML-Email{/tr}<br />
-		    	<input type="radio" name="type" value="plain"{if $report_preferences.type eq "plain"} checked="checked"{/if} /> {tr}Plain text{/tr}<br />
+			    <input type="radio" name="type" value="html"{if $report_preferences.type eq "html" OR $report_preferences eq false} checked="checked"{/if} /> {tr}HTML-Email{/tr}<br>
+		    	<input type="radio" name="type" value="plain"{if $report_preferences.type eq "plain"} checked="checked"{/if} /> {tr}Plain text{/tr}<br>
 		    </div>
 			<div>
 				<input type="checkbox" name="always_email" value="1"{if $report_preferences.always_email eq 1 OR $report_preferences eq false} checked="checked"{/if}/> {tr}Send me an email also if nothing happened{/tr}
@@ -141,7 +141,7 @@
 {/foreach}
 </select>
 </form>
-<br />
+<br>
 <form action="tiki-user_watches.php" method="post">
 <table class="normal">
 	<tr>

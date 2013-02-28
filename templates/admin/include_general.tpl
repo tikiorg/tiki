@@ -251,7 +251,7 @@
 				{preference name='permission_denied_login_box' mode='invert'}
 				<div class="adminoptionboxchild" id="permission_denied_login_box_childcontainer">
 					{tr}or{/tr}
-					<br />
+					<br>
 					{preference name=permission_denied_url}
 				</div>
 				{preference name='url_anonymous_page_not_found'}

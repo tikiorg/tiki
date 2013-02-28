@@ -14,8 +14,8 @@
 		{button href="tiki-admin_newsletters.php" _text="{tr}Admin Newsletters{/tr}"}
 	{/if}
 </div>
-<br />
-<br />
+<br>
+<br>
 <div id="newsletter_archives">
 {if $edition}
 <h3>{tr}Subject{/tr}</h3>
@@ -31,7 +31,7 @@
 {/if}
 <div class="newsletter_trailer">
 {assign var="sent" value=$edition.users}
-{tr}The newsletter was sent to {$sent} email addresses{/tr}<br />
+{tr}The newsletter was sent to {$sent} email addresses{/tr}<br>
 {$edition.sent|tiki_short_datetime}
 </div>
 {/if}

@@ -60,7 +60,7 @@
 						<span class="mod_numbers">{$smarty.section.ix.index_next})</span>&nbsp;
 					{/if}
 					<a class="linkmodule tips300 webmail_subject" href="tiki-webmail.php?locSection=read&amp;msgid={$webmail_list[ix].msgid}"
-							title="<span class='webmail_tip_title'><strong>{$subject}</strong><br />{tr}From:{/tr} <em>{$sender.name}</em> <tt>&amp;lt;{$sender.email}&amp;gt;</tt></span>|({$date_value})">
+							title="<span class='webmail_tip_title'><strong>{$subject}</strong><br>{tr}From:{/tr} <em>{$sender.name}</em> <tt>&amp;lt;{$sender.email}&amp;gt;</tt></span>|({$date_value})">
 						{if $maxlen > 0}{* default value for maxlen param eq 26 *}
 							{$subject|truncate:$maxlen:"...":true}
 						{else}
@@ -89,7 +89,7 @@
 						<span class="mod_webmail_from">{$sender.email|truncate:20:"...":true}</span>
 					{/if}
 					{capture assign=tit}{strip}
-					<span class='webmail_tip_title'><strong>{$subject}</strong><br /></span>|{tr}From:{/tr} <em>{$sender.name}</em> &nbsp; <tt>&amp;lt;{$sender.email}&amp;gt;</tt><br /><small>[{$date_value}]</small>
+					<span class='webmail_tip_title'><strong>{$subject}</strong><br></span>|{tr}From:{/tr} <em>{$sender.name}</em> &nbsp; <tt>&amp;lt;{$sender.email}&amp;gt;</tt><br><small>[{$date_value}]</small>
 					{/strip}{/capture}
 					{self_link _script='tiki-webmail.php' msgid=$webmail_list[ix].msgid locSection='read' _noauto='y' _class='clearfix linkmodule tips300 webmail_subject' _title=$tit}
 						{if $maxlen > 0}{* default value for maxlen param eq 26 *}
@@ -104,8 +104,8 @@
 		{sectionelse}
 			{section name=foo loop=10}{* dummy loop to keep module height (approx) *}
 				<div class="webmail_item_empty">
-					&nbsp;<br />
-					&nbsp;<br />
+					&nbsp;<br>
+					&nbsp;<br>
 				</div>
 			{/section}
 		{/section}

@@ -264,25 +264,25 @@ function showDetails( id, domain, profile ) { // {{{
 									<p>
 										{assign var=profilesFilterUrlFeaturedProfiles value='Featured+profiles'}
 										<a href="{$profilesFilterUrlStart}{$tikiMajorVersion}{$profilesFilterUrlMid}{$profilesFilterUrlFeaturedProfiles}{$profilesFilterUrlEnd}">{tr}Featured Profiles{/tr}</a>
-										<br />{tr}Featured Profiles is a list of applications that are maintained by the Tiki community and are a great way to get started.{/tr}
+										<br>{tr}Featured Profiles is a list of applications that are maintained by the Tiki community and are a great way to get started.{/tr}
 									</p>
 									
 									<p>
 										{assign var=profilesFilterUrlFullProfiles value='Full+profile+(out+of+the+box+%26+ready+to+go)'}
 										<a href="{$profilesFilterUrlStart}{$tikiMajorVersion}{$profilesFilterUrlMid}{$profilesFilterUrlFullProfiles}{$profilesFilterUrlEnd}">{tr}Full Profiles{/tr}</a>
-										<br />{tr}Full Profiles are full featured out of the box solutions.{/tr} 
+										<br>{tr}Full Profiles are full featured out of the box solutions.{/tr} 
 									</p>
 		
 									<p>
 										{assign var=profilesFilterUrlMiniProfiles value='Mini-profile+(can+be+included+in+other)'}
 										<a href="{$profilesFilterUrlStart}{$tikiMajorVersion}{$profilesFilterUrlMid}{$profilesFilterUrlMiniProfiles}{$profilesFilterUrlEnd}">{tr}Mini Profiles{/tr}</a>
-										<br />{tr}Mini Profiles will configure specific features and are a great way to add more functionality to an existing configuration.{/tr} 
+										<br>{tr}Mini Profiles will configure specific features and are a great way to add more functionality to an existing configuration.{/tr} 
 									</p>
 		
 									<p>
 										{assign var=profilesFilterUrlLearningProfiles value='Learning+profile+(just+to+show+off+feature)'}
 										<a href="{$profilesFilterUrlStart}{$tikiMajorVersion}{$profilesFilterUrlMid}{$profilesFilterUrlLearningProfiles}{$profilesFilterUrlEnd}">{tr}Learning Profiles{/tr}</a>
-										<br />{tr}Learning Profiles will allow you to quickly evaluate specific features in Tiki.{/tr}
+										<br>{tr}Learning Profiles will allow you to quickly evaluate specific features in Tiki.{/tr}
 									</p>
 		
 								</td>
@@ -334,7 +334,7 @@ $("#repository, #categories").change(function(){
 				</div>
 		</form>
 	        <a name="step2"></a>
-	<br />	
+	<br>	
 		
 	       {if isset($result) && $result|@count != '0'}
 	
@@ -499,7 +499,7 @@ $("#export_type").change(function(){
 	<fieldset><legend>{tr}Profile tester{/tr}</legend>
 		<form action="tiki-admin.php?page=profiles" method="post">
 		{remarksbox type="warning" title="{tr}Warning{/tr}"}
-			{tr}Paste or type wiki markup and YAML (with or without the {literal}{CODE}{/literal} tags) into the text area below{/tr}<br />
+			{tr}Paste or type wiki markup and YAML (with or without the {literal}{CODE}{/literal} tags) into the text area below{/tr}<br>
 			<em><strong>{tr}This will run the profile and make potentially unrecoverable changes in your database!{/tr}</strong></em>
 			<div class="adminoptionbox">
 				<div class="adminoptionlabel">

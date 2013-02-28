@@ -12,7 +12,7 @@
       {/if}
     {/if}
     {$contributors[author]}
-    {/section}.<br />                                         
+    {/section}.<br>                                         
     {tr}Page last modified on{/tr} {$lastModif|tiki_long_datetime}.
   </footer>
   {elseif isset($prefs.wiki_authors_style) &&  $prefs.wiki_authors_style eq 'collaborative'}
@@ -23,7 +23,7 @@
     {else} {tr}and{/tr}
     {/if}
     {$contributors[author]}
-    {/section}.<br />
+    {/section}.<br>
     {tr}Page last modified on{/tr} {$lastModif|tiki_long_datetime}.
   </footer>
   {elseif isset($prefs.wiki_authors_style) &&  $prefs.wiki_authors_style eq 'none'}
@@ -174,7 +174,7 @@
 		            '</select>'
 		        );
 
-		        inputs.append('<br />');
+		        inputs.append('<br>');
 
 		        inputs.append(
                     tr('Font Size: ') +

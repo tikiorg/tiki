@@ -6,7 +6,7 @@
 		<div class='box-title'><strong>{tr}Other Sorts{/tr}</strong></div>
 		<div class='box-data'>
  			<a href="tiki-list_kaltura_entries.php?list={$entryType}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq '-views'}asc_views{else}desc_views{/if}">{tr}Loads{/tr}</a>
-			<br />
+			<br>
  			<a href="tiki-list_kaltura_entries.php?list={$entryType}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq '-plays'}asc_plays{else}desc_plays{/if}">{tr}Plays{/tr}</a>
 		</div>
 	</div>

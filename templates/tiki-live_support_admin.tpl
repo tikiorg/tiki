@@ -8,16 +8,16 @@
 </div>
 
 {if $html}
-	<b>Generated HTML code:</b><br />
-	Copy-paste the following XHTML snippet in the pages where you want to provide live support.<br />
+	<b>Generated HTML code:</b><br>
+	Copy-paste the following XHTML snippet in the pages where you want to provide live support.<br>
 	<table>
 	<tr>
 		<td>
-		<small>HTML code</small><br />	
+		<small>HTML code</small><br>	
 		<textarea rows="5" cols="60">{$html|escape}</textarea>
 		</td>
 		<td>
-		<small>result</small><br />
+		<small>result</small><br>
 		{$html}
 		</td>
 	</tr>
@@ -38,7 +38,7 @@
 {section name=ix loop=$online_operators}
 <tr class="{cycle}">
 		<td style="text-align:center;">
-			{$online_operators[ix].user|avatarize}<br />	
+			{$online_operators[ix].user|avatarize}<br>	
 			<b>{$online_operators[ix].user|escape}</b>
 		</td>
 		<td>
@@ -84,7 +84,7 @@
 {section name=ix loop=$offline_operators}
 	<tr class="{cycle}">
 		<td style="text-align:center;">
-			{$offline_operators[ix].user|avatarize}<br />	
+			{$offline_operators[ix].user|avatarize}<br>	
 			<b>{$offline_operators[ix].user|escape}</b>
 		</td>
 		<td>

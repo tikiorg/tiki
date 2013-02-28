@@ -31,7 +31,7 @@ close();
 			{/remarksbox}
 		{elseif $errortype eq "404" and isset($page)}
 			{remarksbox type='errors' title=$errortitle}
-				{tr}Page not found{/tr}<br />{$page|escape}
+				{tr}Page not found{/tr}<br>{$page|escape}
 			{/remarksbox}
 			{if $prefs.feature_likePages eq 'y'}
 				{if $likepages}
@@ -97,12 +97,12 @@ close();
 
 		{if isset($page) and $page and $create eq 'y' and ($tiki_p_admin eq 'y' or $tiki_p_admin_wiki eq 'y' or $tiki_p_edit eq 'y')}
 			{button href="tiki-editpage.php?page=$page" _text="{tr}Create this page{/tr}"} {tr}(page will be orphaned){/tr}
-			<br /><br />
+			<br><br>
 		{/if}
 
 		{if $prefs.javascript_enabled eq 'y'}
 			{button _onclick="javascript:history.back();return false;" _text="{tr}Go back{/tr}" _ajax="n"}
-			<br /><br />
+			<br><br>
 		{/if}
 
 		{button href=$prefs.tikiIndex _text="{tr}Return to home page{/tr}"}

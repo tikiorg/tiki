@@ -17,7 +17,7 @@
 			<tr>
 				<td><label for="fgal_{$key}">{$item.name}:<label></td>
 				<td>
-					<input type="text" id="fgal_{$key}" name="fgal_{$key}" value="{$item.value}" /><br />
+					<input type="text" id="fgal_{$key}" name="fgal_{$key}" value="{$item.value}" /><br>
 					<em>{tr}Enter the ID of any file in any gallery to be used as the icon for this gallery in browse view{/tr}</em>
 				</td>
 			</tr>

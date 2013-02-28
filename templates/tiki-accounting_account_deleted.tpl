@@ -7,7 +7,7 @@
 		{icon _id=exclamation alt="{tr}Error{/tr}" style="vertical-align:middle" align="left"}
 		{foreach from=$errors item=m name=errors}
 			{$m}
-			{if !$smarty.foreach.errors.last}<br />{/if}
+			{if !$smarty.foreach.errors.last}<br>{/if}
 		{/foreach}
 	</div>
 {else}

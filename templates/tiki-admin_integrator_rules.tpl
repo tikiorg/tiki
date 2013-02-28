@@ -25,7 +25,7 @@
   </td>
 </tr> </table>
 </form>
-<br /><br />
+<br><br>
 </div>
 {/if}
 

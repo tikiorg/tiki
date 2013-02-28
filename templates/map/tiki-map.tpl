@@ -144,8 +144,8 @@
 			</select>
 			<select name="size" size="1">
 				{html_options values=$possiblesizes selected=$size output=$displaysizes}
-			</select><br />
-			<input name="Redraw" value="{tr}Redraw{/tr}" type="Submit" /><br />
+			</select><br>
+			<input name="Redraw" value="{tr}Redraw{/tr}" type="Submit" /><br>
 			<small>{tr}select zoom/pan/query and image size{/tr}</small>
 		</td></tr>
 			<tr><td align="center"> 
@@ -165,7 +165,7 @@
 				<img src="img/icons/wrench.png" alt="{tr}Edit{/tr}" title="{tr}Edit{/tr}" width="16" height="16" /></a>
 			{/if}
 			&nbsp;
-			<a href="tiki-map.php?mapfile={$mapfile}" ><small>{tr}Reset Map{/tr}</small></a><br /> 
+			<a href="tiki-map.php?mapfile={$mapfile}" ><small>{tr}Reset Map{/tr}</small></a><br> 
 			<small>{tr}Click on the map or click redraw{/tr}</small>
 			<input id="minx" type="hidden" name="minx" value="{$minx}" />
 			<input id="miny" type="hidden" name="miny" value="{$miny}" />
@@ -173,7 +173,7 @@
 			<input id="maxy" type="hidden" name="maxy" value="{$maxy}" />
 			<input id="size" type="hidden" name="oldsize" value="{$size}" />
 			<a href="tiki-index.php?page={$prefs.map_help}"><small>{tr}Help{/tr}</small></a>&nbsp;
-			<a href="tiki-index.php?page={$prefs.map_comments}"><small>{tr}Comments{/tr}</small></a><br />
+			<a href="tiki-index.php?page={$prefs.map_comments}"><small>{tr}Comments{/tr}</small></a><br>
 		</td></tr>
 	<tr><td><div id="resultBox">{$map_querymsg}</div></td></tr>	
 		</table>

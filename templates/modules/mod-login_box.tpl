@@ -96,7 +96,7 @@ if (jqueryTiki.no_cookie) {
 						<label for="login-switchuser_{$module_logo_instance}">{tr}Username:{/tr}</label>
 						<input type="hidden" name="su" value="1" />
 						{if $prefs.feature_help eq 'y'}
-							{help url="Switch+User" desc="{tr}Help{/tr}" desc="{tr}Switch User:{/tr}{tr}Enter user name and click 'Switch'.<br />Useful for testing permissions.{/tr}"}
+							{help url="Switch+User" desc="{tr}Help{/tr}" desc="{tr}Switch User:{/tr}{tr}Enter user name and click 'Switch'.<br>Useful for testing permissions.{/tr}"}
 						{/if}
 						<input type="text" name="username" id="login-switchuser_{$module_logo_instance}" size="{if empty($module_params.input_size)}15{else}{$module_params.input_size}{/if}" />
 						<div style="text-align: center"><button type="submit" name="actsu">{tr}Switch{/tr}</button></div>
@@ -136,12 +136,12 @@ if (jqueryTiki.no_cookie) {
 	{elseif $prefs.auth_method eq 'cas' && $showloginboxes neq 'y'}
 		<b><a class="linkmodule" href="tiki-login.php?cas=y">{tr}Log in through CAS{/tr}</a></b>
 		{if $prefs.cas_skip_admin eq 'y'}
-			<br /><a class="linkmodule" href="tiki-login_scr.php?user=admin">{tr}Log in as admin{/tr}</a>
+			<br><a class="linkmodule" href="tiki-login_scr.php?user=admin">{tr}Log in as admin{/tr}</a>
 		{/if}
 	{elseif $prefs.auth_method eq 'shib' && $showloginboxes neq 'y'}
 		<b><a class="linkmodule" href="tiki-login.php">{tr}Log in through Shibboleth{/tr}</a></b>
 		{if $prefs.shib_skip_admin eq 'y'}
-			<br /><a class="linkmodule" href="tiki-login_scr.php?user=admin">{tr}Log in as admin{/tr}</a>
+			<br><a class="linkmodule" href="tiki-login_scr.php?user=admin">{tr}Log in as admin{/tr}</a>
 		{/if}
 	{else}
 		{assign var='close_tags' value=''}

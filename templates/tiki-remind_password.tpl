@@ -13,7 +13,7 @@
 		{$msg|escape:'html'|@default:"{tr}Enter your email.{/tr}"}
 	{/if}
 	{if $showmsg eq 'e'}</span>{/if}
-	<br /><br />
+	<br><br>
 {/if}
 
 {if $showfrm eq 'y'}

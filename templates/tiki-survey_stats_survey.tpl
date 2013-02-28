@@ -10,7 +10,7 @@
 		{button href="tiki-admin_surveys.php" _text="{tr}Admin Surveys{/tr}"}
 	{/if}
 </div>
-<br />
+<br>
 
 {section name=ix loop=$channels}
   <table class="formcolor">
@@ -45,7 +45,7 @@
           </div>
           <div>
             {fileinfo _id=$channels[ix].qoptions[jx].qoption _field='name' _link='thumb'}
-            <br />{fileinfo _id=$channels[ix].qoptions[jx].qoption _field='description'}
+            <br>{fileinfo _id=$channels[ix].qoptions[jx].qoption _field='description'}
           </div>
         {else}
           {$channels[ix].qoptions[jx].qoption}
@@ -58,5 +58,5 @@
     {/section}
   {/if}
   </table>
-  <br />
+  <br>
 {/section}

@@ -52,9 +52,9 @@
 					<td>
 						<input type="radio" name="gal_use_db" value="n" {if $prefs.gal_use_db eq 'n'}checked="checked"{/if}/>
 						<label>{tr}Directory path:{/tr}</label>
-						<br />
+						<br>
 						<input type="text" name="gal_use_dir" value="{$prefs.gal_use_dir|escape}" size="50" />
-						<br />
+						<br>
 						({tr}Note: if you change this directory, you have to move the contents to the new directory. You can also use the 'Mover' below.{/tr})
 					</td>
 				</tr>
@@ -84,7 +84,7 @@
 				</tr>
 				<tr>
 					<td colspan="2"><b>{tr}Directory Batch Loading{/tr}</b>
-					<br />
+					<br>
 					{tr}If you enable Directory Batch Loading, you need to setup a web-readable directory (outside of your web space is better). Then setup a way to upload images in that dir, either by scp, ftp, or other protocols{/tr}
 				</td>
 			</tr>

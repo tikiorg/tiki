@@ -23,7 +23,7 @@
 				{if $gzip_handler ne 'none'}
 					<div class="highlight" style="margin-left:30px;">
 						{tr}Output compression is active.{/tr}
-						<br />
+						<br>
 						{tr}Compression is handled by:{/tr} {$gzip_handler}.
 					</div>
 				{/if}

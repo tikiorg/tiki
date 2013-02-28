@@ -7,18 +7,18 @@
 	<tr>
 		<td>
 			{self_link _icon='img/webmail/mailbox.gif' locSection='mailbox' _width='48' _height='48'}{tr}Mailbox{/tr}{/self_link}
-			<br />
+			<br>
 			{self_link locSection='mailbox'}{tr}Mailbox{/tr}{/self_link}
 		</td>
 		<td>
 			{self_link _icon='img/webmail/compose.gif' locSection='compose' _width='48' _height='48'}{tr}Compose{/tr}{/self_link}
-			<br />
+			<br>
 			{self_link locSection='compose'}{tr}Compose{/tr}{/self_link}
 		</td>
 		{if $prefs.feature_contacts eq 'y'}
 			<td>
 				{self_link _icon='img/webmail/contact.gif' _script='tiki-contacts.php' _width='48' _height='48'}{tr}Contacts{/tr}{/self_link}
-				<br />
+				<br>
 				{self_link  _script='tiki-contacts.php'}{tr}Contacts{/tr}{/self_link}
 			</td>
 		{/if}
@@ -26,7 +26,7 @@
 		</td>
 		<td>
 			{self_link _icon='img/webmail/settings.gif' locSection='settings' _width='48' _height='48'}{tr}Settings{/tr}{/self_link}
-			<br />
+			<br>
 			{self_link locSection='settings'}{tr}Settings{/tr}{/self_link}
 		</td>
 	</tr>
@@ -291,7 +291,7 @@
 				</div>
 			{else}
 				{remarksbox type="info" title="{tr}Permissions{/tr}"}
-					{tr}You do not have the correct permissions to Add or Edit a webmail account. <BR />Please contact your administrator and ask for "admin_personal_webmail" or "admin_group_webmail" permission.{/tr}
+					{tr}You do not have the correct permissions to Add or Edit a webmail account. <br>Please contact your administrator and ask for "admin_personal_webmail" or "admin_group_webmail" permission.{/tr}
 				{/remarksbox}
 			{/if}
 		{/tab}
@@ -329,7 +329,7 @@
 			</td>
 		</tr>
 	</table>
-	<br />
+	<br>
 	<form action="tiki-webmail.php" method="post" name="mailb">
 		<input type="hidden" name="quickFlag" value="" />
 		<input type="hidden" name="quickFlagMsg" value="" />
@@ -343,8 +343,8 @@
 			<option value="unread">{tr}Mark as unread{/tr}</option>
 		</select>
 		<input type="submit" name="operate" value="{tr}Mark{/tr}" />
-		<br />
-		<br />
+		<br>
+		<br>
 		<table class="normal webmail_list">
 			<tr>
 				<th>{select_all checkbox_names='msg[]'}</th>
@@ -481,7 +481,7 @@
 						{if is_array($item)}
 							{foreach from=$item item=part}
 								{$part}
-								<br />
+								<br>
 							{/foreach}
 						{else}
 							{$item}
@@ -602,10 +602,10 @@
 			</form>
 		{else}
 			{$msg}
-			<br /><br />
+			<br><br>
 			{if $notcon eq 'y'}
 				{tr}The following addresses are not in your address book{/tr}
-				<br /><br />
+				<br><br>
 				<form action="tiki-webmail.php" method="post">
 					<table class="normal">
 						<tr>

@@ -120,7 +120,7 @@
 			{/remarksbox}
 			{if !isset($disabled)}
 				{button href="?page=textarea&disabled=y" _text="{tr}Check disabled plugins used in wiki pages{/tr}"}
-				<br /><br />
+				<br><br>
 			{else}
 				{remarksbox type=errors title="{tr}Disabled used plugins{/tr}"}
 					{if empty($disabled)}
@@ -170,7 +170,7 @@
 
 		{tab name="{tr}Plugin Aliases{/tr}"}
 			{remarksbox type="note" title="{tr}About plugin aliases{/tr}"}
-				{tr}Tiki plugin aliases allow you to define your own custom configurations of existing plugins.<br />Find out more here: {help url="Plugin+Alias"}{/tr}
+				{tr}Tiki plugin aliases allow you to define your own custom configurations of existing plugins.<br>Find out more here: {help url="Plugin+Alias"}{/tr}
 			{/remarksbox}
 			{if $prefs.feature_jquery neq 'y'}
 				{remarksbox type="tip" title="{tr}Tip{/tr}"}

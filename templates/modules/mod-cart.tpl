@@ -43,11 +43,11 @@
 			{if $has_gift_certificate eq 'true'}
 				{if $gift_certificate_redeem_code && $gift_certificate_amount}
 					<span>
-						{tr}Gift Certificate:{/tr} {$gift_certificate_redeem_code}<br />
+						{tr}Gift Certificate:{/tr} {$gift_certificate_redeem_code}<br>
 						{tr}Value{/tr}
 						: {$gift_certificate_mode_symbol_before}{$gift_certificate_amount}{$gift_certificate_mode_symbol_after}
 					</span>
-					<br />
+					<br>
 				{/if}
 				{if $gift_certificate_redeem_code}
 					<input type="submit" name="remove_gift_certificate" value="{tr}Remove Gift Certificate{/tr}"/>
@@ -55,8 +55,8 @@
 					Code: <input type="text" name="gift_certificate_redeem_code" style="width: 70px;" />
 					<input type="submit" name="add_gift_certificate" value="{tr}Add Gift Certificate{/tr}"/>
 				{/if}
-				<br />
-				<br />
+				<br>
+				<br>
 			{/if}
 			
 			<p>{tr}Total:{/tr} <strong>{$cart_total|escape} {$prefs.payment_currency|escape}</strong></p>

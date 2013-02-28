@@ -9,10 +9,10 @@
 <form action="tiki-search_replace.php" method="post">
 {tr}Search:{/tr} <input type="text" size="30" name="searchtext" value="{$searchtext|escape}" />
 &nbsp;{tr}Case sensitive:{/tr} <input type="checkbox" name="casesensitive" value="y" {if $casesensitive eq 'y'}checked="checked"{/if} />
-<br />{tr}Replace:{/tr} <input type="text" size="30" name="replacetext" value="{$replacetext|escape}" />
-<br />{tr}Max number of pages at a time:{/tr} <input type="text" size="5" name="maxRecords" value="{$maxRecords|escape}" />
+<br>{tr}Replace:{/tr} <input type="text" size="30" name="replacetext" value="{$replacetext|escape}" />
+<br>{tr}Max number of pages at a time:{/tr} <input type="text" size="5" name="maxRecords" value="{$maxRecords|escape}" />
 &nbsp;{tr}Number of surrounding chars to preview:{/tr} <input type="text" size="5" name="paddingLength" value="{$paddingLength|escape}" />
-<br />
+<br>
 <select name="categId">
 	<option value='' {if $find_categId eq ''}selected="selected"{/if}>{tr}any category{/tr}</option>
 	{foreach $categories as $catix}

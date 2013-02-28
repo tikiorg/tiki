@@ -130,7 +130,7 @@
 	{/if}
 
 	{if $pages > 1 and $prefs.wiki_page_navigation_bar neq 'top'}
-		<br />
+		<br>
 		<div class="center navigation_bar pagination position_bottom">
 			<a href="tiki-index.php?{if $page_info}page_ref_id={$page_info.page_ref_id}{else}page={$page|escape:"url"}{/if}&amp;pagenum={$first_page}">{icon _id='resultset_first' alt="{tr}First page{/tr}"}</a>
 
@@ -164,7 +164,7 @@
 	{include file='show_copyright.tpl'}
 
 	{if $print_page eq 'y'}
-		<br />
+		<br>
 		{capture name=url}{query _script='tiki-index.php' _type='absolute_uri'}{/capture}
 		{tr}The original document is available at{/tr} <a href="{$smarty.capture.url}">{$smarty.capture.url}</a>
 	{/if}

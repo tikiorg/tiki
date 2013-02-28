@@ -1,8 +1,8 @@
 {title}{tr}Search results{/tr}{/title}
 
 {* The navigation bar *}
-{include file='tiki-directory_bar.tpl'} <br />
-<br />
+{include file='tiki-directory_bar.tpl'} <br>
+<br>
 <div align="center">
   <form action="tiki-directory_search.php" method="post">
     <input type="hidden" name="parent" value="{$parent|escape}" />
@@ -34,14 +34,14 @@
     </select>
     <input type="submit" name="xx" value="sort" />
   </form>
-  <br />
+  <br>
   {/if}
   {section name=ix loop=$items}
-  <div class="dirsite"> {if $prefs.directory_country_flag eq 'y'} <img alt="flag" src="img/flags/{$items[ix].country}.gif" /> {/if} <a class="dirsitelink" href="tiki-directory_redirect.php?siteId={$items[ix].siteId}" {if $prefs.directory_open_links eq 'n'}target='_blank'{/if}>{$items[ix].name}</a> {if $tiki_p_admin_directory_sites eq 'y'} [<a class="dirsitelink" href="tiki-directory_admin_sites.php?siteId={$items[ix].siteId}">edit</a>]{/if} <br />
-    <span class="dirsitedesc">{$items[ix].description}</span><br />
+  <div class="dirsite"> {if $prefs.directory_country_flag eq 'y'} <img alt="flag" src="img/flags/{$items[ix].country}.gif" /> {/if} <a class="dirsitelink" href="tiki-directory_redirect.php?siteId={$items[ix].siteId}" {if $prefs.directory_open_links eq 'n'}target='_blank'{/if}>{$items[ix].name}</a> {if $tiki_p_admin_directory_sites eq 'y'} [<a class="dirsitelink" href="tiki-directory_admin_sites.php?siteId={$items[ix].siteId}">edit</a>]{/if} <br>
+    <span class="dirsitedesc">{$items[ix].description}</span><br>
     {assign var=fsfs value=1} <span class="dirsitecats"> {tr}Directory Categories:{/tr}
     {section name=ii loop=$items[ix].cats}
-    {if $fsfs}{assign var=fsfs value=0}{else}, {/if} <a class="dirsublink" href="tiki-directory_browse.php?parent={$items[ix].cats[ii].categId}">{$items[ix].cats[ii].path}</a> {/section} </span><br />
+    {if $fsfs}{assign var=fsfs value=0}{else}, {/if} <a class="dirsublink" href="tiki-directory_browse.php?parent={$items[ix].cats[ii].categId}">{$items[ix].cats[ii].path}</a> {/section} </span><br>
     <span class="dirsitetrail">{tr}Added:{/tr} {$items[ix].created|tiki_short_date} {tr}Last updated:{/tr} {$items[ix].lastModif|tiki_short_date} {tr}Hits:{/tr} {$items[ix].hits}</span> </div>
   {sectionelse}{tr}No records found.{/tr}
   {/section} </div>

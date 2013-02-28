@@ -1,7 +1,7 @@
 {* $Id$ *}
 {if $tiki_p_create_file_galleries eq 'y'}
 	{if isset($individual) and $individual eq 'y'}
-		<br />
+		<br>
 		<a class="fgallink" href="tiki-objectpermissions.php?objectName={$name|escape:"url"}&amp;objectType=file+gallery&amp;permType=file+galleries&amp;objectId={$galleryId}">
 			{tr}There are individual permissions set for this file gallery{/tr}
 		</a>
@@ -114,7 +114,7 @@ $('#fgal_template').change( function() {
 							<td>
 								<input type="checkbox" id="public" name="public" {if isset($gal_info.public)
 									and $gal_info.public eq 'y'}checked="checked"{/if}/>
-								<br />
+								<br>
 								<em>{tr}Any user with permission (not only the gallery owner) can upload files{/tr}.</em>
 							</td>
 						</tr>
@@ -140,7 +140,7 @@ $('#fgal_template').change( function() {
 							</td>
 							<td>
 								<input size="5" type="text" id="archives" name="archives" value="{$gal_info.archives|escape}" />
-								<br />
+								<br>
 								<em>{tr}Use{/tr} 0={tr}unlimited{/tr}, -1={tr}none{/tr}.</em>
 								{if $galleryId neq $treeRootId}
 							</td>
@@ -177,15 +177,15 @@ $('#fgal_template').change( function() {
 									<td>{tr}Quota{/tr}</td>
 									<td>
 										<input type="text" id="quota" name="quota" value="{$gal_info.quota}" size="5" />{tr}Mb{/tr} <i>{tr}(0 for unlimited){/tr}</i>
-										{if $gal_info.usedSize}<br />{tr}Used:{/tr} {$gal_info.usedSize|kbsize}{/if}
+										{if $gal_info.usedSize}<br>{tr}Used:{/tr} {$gal_info.usedSize|kbsize}{/if}
 										{if !empty($gal_info.quota)}
 											{capture name='use'}
 												{math equation="round((100*x)/(1024*1024*y))" x=$gal_info.usedSize y=$gal_info.quota}
 											{/capture}
 											{quotabar length='100' value=$smarty.capture.use}
 										{/if}
-										{if !empty($gal_info.maxQuota)}<br />{tr}Max:{/tr} {$gal_info.maxQuota} {tr}Mb{/tr}{/if}
-										{if !empty($gal_info.minQuota)}<br />{tr}Min:{/tr} {$gal_info.minQuota} {tr}Mb{/tr}{/if}
+										{if !empty($gal_info.maxQuota)}<br>{tr}Max:{/tr} {$gal_info.maxQuota} {tr}Mb{/tr}{/if}
+										{if !empty($gal_info.minQuota)}<br>{tr}Min:{/tr} {$gal_info.minQuota} {tr}Mb{/tr}{/if}
 									</td>
 								</tr>
 							{/if}
@@ -217,7 +217,7 @@ $('#fgal_template').change( function() {
 							</td>
 							<td>
 								<input size="5" type="text" name="image_max_size_x" value="{$gal_info.image_max_size_x|escape}" /> px
-								<br />
+								<br>
 								<i>{tr}If an image is wider than this, it will be resized.{/tr} {tr}Attention: In this case, the original image will be lost.{/tr} (0={tr}unlimited{/tr})</i>
 							</td>
 						</tr>
@@ -227,7 +227,7 @@ $('#fgal_template').change( function() {
 							</td>
 							<td>
 								<input size="5" type="text" name="image_max_size_y" value="{$gal_info.image_max_size_y|escape}" /> px
-								<br />
+								<br>
 								<i>{tr}If an image is higher than this, it will be resized.{/tr} {tr}Attention: In this case, the original image will be lost.{/tr} (0={tr}unlimited{/tr})</i>
 							</td>
 						</tr>
@@ -237,7 +237,7 @@ $('#fgal_template').change( function() {
 							</td>
 							<td>
 								<input size="80" type="text" name="wiki_syntax" value="{$gal_info.wiki_syntax|escape}" />
-								<br />
+								<br>
 								<i>{tr}The default is {/tr}"{literal}{img fileId="%fileId%" thumb="y" rel="box[g]"}{/literal}")</i>
 								<i>{tr}Field names will be replaced when enclosed in % chars. e.g. %fileId%, %name%, %filename%, %description%{/tr}</i>
 							</td>
@@ -259,10 +259,10 @@ $('#fgal_template').change( function() {
 										<option value="{$item|escape}" {if $sortorder == $item} selected="selected"{/if}>{$key}</option>
 									{/foreach}
 								</select>
-								<br />
+								<br>
 								<input type="radio" id="sortdirection2" name="sortdirection" value="asc" {if $sortdirection == 'asc'}checked="checked"{/if} />
 								<label for="sortdirection2">{tr}Ascending{/tr}</label>
-								<br />
+								<br>
 								<input type="radio" id="sortdirection1" name="sortdirection" value="desc" {if $sortdirection == 'desc'}checked="checked"{/if} />
 								<label for="sortdirection1">{tr}Descending{/tr}</label>
 							</td>
@@ -294,5 +294,5 @@ $('#fgal_template').change( function() {
 			<input type="submit" value="{tr}Save{/tr}" name="edit" />
 		</form>
 	</div>
-	<br />
+	<br>
 {/if}

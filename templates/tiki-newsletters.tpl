@@ -33,10 +33,10 @@
 			<td>{$nl_info.description|escape|nl2br}</td>
 		</tr>
 	</table>
-	<br />
+	<br>
 {elseif $confirm eq 'f'}
 	<div class="simplebox error">{tr}Subscription failed.{/tr}</div>
-	<br />
+	<br>
 {/if}
 
 {if $subscribe eq 'y'}

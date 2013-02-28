@@ -218,7 +218,7 @@
 			{/capture}
 			{if $prefs.fgal_quota_show neq 'y'}
 				<b>{$smarty.capture.use} %</b> {tr}space use on{/tr} <b>{$gal_info.quota} Mo</b>
-				<br />
+				<br>
 			{/if}
 			
 			{if $prefs.fgal_quota_show neq 'text_only'}

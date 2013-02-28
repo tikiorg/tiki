@@ -104,7 +104,7 @@
 	
 	{if $channels}
 		<div style="text-align:left">
-			<br />
+			<br>
 			{tr}Perform action with checked:{/tr}
 			<select name="batchaction" onchange="show('groups');">
 				<option value="">{tr}...{/tr}</option>
@@ -395,7 +395,7 @@
 			<td>{tr}Attachments{/tr}</td>
 			<td>
 				{html_options name=att options=$attachment_options selected=$att}
-				<br />
+				<br>
 				{tr}Store attachments in:{/tr}
 				<table class="formcolor">
 					<tr>
@@ -410,7 +410,7 @@
 						</tr>
 						<tr>
 							<td>
-								{tr}Max attachment size (bytes):{/tr} <input type="text" name="att_max_size" value="{$att_max_size|escape}" /><br /><i>{tr}Max:{/tr} {$maxAttachSize|escape} ({$maxAttachSize|kbsize})</i>
+								{tr}Max attachment size (bytes):{/tr} <input type="text" name="att_max_size" value="{$att_max_size|escape}" /><br><i>{tr}Max:{/tr} {$maxAttachSize|escape} ({$maxAttachSize|kbsize})</i>
 							</td>
 						</tr>
 						<tr>

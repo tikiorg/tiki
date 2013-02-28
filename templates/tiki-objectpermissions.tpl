@@ -34,19 +34,19 @@
 					{else}
 						{tr}This category's direct permissions override any global permissions affecting objects in it.{/tr}
 					{/if}
-					<br />
+					<br>
 					{tr}To edit global permissions{/tr} {self_link objectType='global' objectId='' objectName='' permType=$permType}{tr}click here{/tr}{/self_link}.
 				{/remarksbox}
 			{elseif  $permissions_displayed eq 'category'}
 				{remarksbox type="warning" title="{tr}Warning{/tr}"}
-					{tr}No permissions yet applied to this object but category permissions affect this object and are displayed below.{/tr}<br />
+					{tr}No permissions yet applied to this object but category permissions affect this object and are displayed below.{/tr}<br>
 					{if $tiki_p_admin eq 'y'}{tr}To edit category permissions{/tr} {self_link _script='tiki-admin_categories.php'}{tr}click here{/tr}{/self_link}.{/if}
 				{/remarksbox}
 			{elseif $permissions_displayed eq 'parent'}
 				{remarksbox type="note" title="{tr}Note{/tr}"}
-					{tr}No direct permissions yet applied to this object. Global permissions apply.{/tr}<br />
+					{tr}No direct permissions yet applied to this object. Global permissions apply.{/tr}<br>
 					{if $tiki_p_admin eq 'y'}{tr}To edit global permissions{/tr} {self_link objectType='global' permType=$permType}{tr}click here{/tr}{/self_link}.{/if}
-					<br /><br />
+					<br><br>
 					{tr}Currently inherited permissions displayed.{/tr}
 				{/remarksbox}
 			{/if}
@@ -131,7 +131,7 @@ if ($("#assignstructure").attr("checked")) {
 			<input type="hidden" name="referer" value="{$referer|escape}" />
 			{if isset($groupsFiltered)}
 				{remarksbox type="warning" title="{tr}Note{/tr}"}
-					{tr}Some of your groups have been automatically hidden.<br /> Select the groups below to assign permissions for.{/tr}
+					{tr}Some of your groups have been automatically hidden.<br> Select the groups below to assign permissions for.{/tr}
 					{tr}These groups are not the groups that have permissions on the object. It is only the groups you can see in the columns of the first tab.{/tr}
 				{/remarksbox}
 			{else}
@@ -164,7 +164,7 @@ if ($("#assignstructure").attr("checked")) {
 			<input type="hidden" name="referer" value="{$referer|escape}" />
 			{if isset($featuresFiltered)}
 				{remarksbox type="warning" title="{tr}Warning{/tr}"}
-					{tr}Some of your features have been automatically hidden.<br /> Select the features below to assign permissions for.{/tr}
+					{tr}Some of your features have been automatically hidden.<br> Select the features below to assign permissions for.{/tr}
 				{/remarksbox}
 			{/if}
 
@@ -241,7 +241,7 @@ if ($("#assignstructure").attr("checked")) {
 		{if empty($filegals_manager)}
 			{remarksbox type="note" icon="bricks" title="{tr}Experimental{/tr}"}
 				{tr}<em>Quick permissions</em> should be considered as an experimental feature.{/tr}<br/>
-				{tr}Although permissions will be set as expected using this form, it doesn't necessarily show the current permissions reliably.{/tr}<br /><br />
+				{tr}Although permissions will be set as expected using this form, it doesn't necessarily show the current permissions reliably.{/tr}<br><br>
 				{tr}There is also no undo - <strong>Use with care!</strong>{/tr}
 			{/remarksbox}
 		{/if}

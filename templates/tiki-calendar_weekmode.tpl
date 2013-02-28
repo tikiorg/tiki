@@ -12,7 +12,7 @@
 					<td id="top_{$smarty.section.dn.index}" class="calHeading heading{if $today eq $viewWeekDays[dn]}On{/if}" width="13%">
 						<a href="{$myurl}?viewmode=day&amp;todate={$viewWeekDays[dn]}" title="{tr}View this Day{/tr}">
 							{$daysnames[dn]}
-						</a><br />
+						</a><br>
 						{* test display_field_order and use %d/%m or %m/%d on each day 'cell' *}
 						{if ($prefs.display_field_order eq 'DMY') || ($prefs.display_field_order eq 'DYM')
 							|| ($prefs.display_field_order eq 'YDM')}

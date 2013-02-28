@@ -9,7 +9,7 @@
 				<option value="{$one|escape}">{$one|escape}</option>
 			{/foreach}
 		</select>
-		<br />
+		<br>
 	{/if}
 	
 	<table>

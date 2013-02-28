@@ -65,7 +65,7 @@
 					<div class="adminoptionbox">
 						<div class="adminoptionlabel">
 							<label for="registration_choices">{tr}Users can select a group to join at registration:{/tr}</label>
-							<br />
+							<br>
 							<em>{tr}By default, new users automatically join the Registered group{/tr}.</em>
 						</div>
 						<div class="adminoptionlabel">

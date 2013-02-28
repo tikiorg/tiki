@@ -53,7 +53,7 @@
 					{capture name="line"}
 						{trackeroutput field=$field_value item=$item list_mode='csv' showlinks='n'}
 					{/capture}
-					{$delimitorL}{$smarty.capture.line|replace:"\r\n":"$CR"|replace:"\n":"$CR"|replace:"<br />":"$CR"|replace:"$delimitorL":"$delimitorL$delimitorL"|replace:"$delimitorR":"$delimitorR$delimitorR"}{$delimitorR}
+					{$delimitorL}{$smarty.capture.line|replace:"\r\n":"$CR"|replace:"\n":"$CR"|replace:"<br>":"$CR"|replace:"$delimitorL":"$delimitorL$delimitorL"|replace:"$delimitorR":"$delimitorR$delimitorR"}{$delimitorR}
 				{else}
 					{$delimitorL}{$delimitorR}
 				{/if}

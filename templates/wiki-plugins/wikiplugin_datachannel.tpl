@@ -1,7 +1,7 @@
 {if !empty($datachannel_feedbacks)}
 {remarksbox type='note' title="{tr}Feedback{/tr}"}
 	{foreach from=$datachannel_feedbacks item=feedback}
-		{$feedback|escape}<br />
+		{$feedback|escape}<br>
 	{/foreach}
 {/remarksbox}
 {/if}

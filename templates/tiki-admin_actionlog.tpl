@@ -103,12 +103,12 @@
 							<td colspan="2">
 								<input type="submit" name="graph" value="{tr}Graph Contributions{/tr}" />
 								{if $prefs.feature_jpgraph eq 'y'}
-									<br />
+									<br>
 									{tr}Group Bar Plot:{/tr}
 									<input type="radio" name="barPlot" value="group" /> 
 									{tr}Accumulated Bar Plot:{/tr}
 									<input type="radio" name="barPlot" value="acc" checked="checked" />
-									<br />
+									<br>
 									{tr}Background color:{/tr} 
 									<select name="bgcolor">
 										{foreach item=color from=$bgcolors}
@@ -121,7 +121,7 @@
 											<option value="{$color|escape}"{if $defaultLegendBgcolor eq $color} selected="selected"{/if}>{tr}{$color}{/tr}</option>
 										{/foreach}
 									</select>
-									<br />
+									<br>
 									{tr}Save graphs to image gallery:{/tr} 
 									<select name="galleryId">
 										<option value="" selected="selected" />
@@ -599,11 +599,11 @@
 						{foreach from=$contribution.stat item=stat}
 							<td>
 								{if !empty($stat.add)}<span class="diffadded">{$stat.add}</span>{/if}
-							<br />
+							<br>
 								{if !empty($stat.del)}<span class="diffdeleted">{$stat.del}</span>{/if}
-								<br />
+								<br>
 								{if !empty($stat.del) || !empty($stat.add)}{math equation=x-y x=$stat.add y=$stat.del}{/if}
-								<br />
+								<br>
 							</td>
 						{/foreach}
 					</tr>
@@ -645,7 +645,7 @@
 				<input type="submit" name="search" value="{tr}Search{/tr}" />
 			</span>
 		</fieldset>
-		<br />
+		<br>
 		<span class="input_submit_container" style="float: right">
 			<input type="submit" name="save" value="{tr}Set{/tr}" />
 		</span>

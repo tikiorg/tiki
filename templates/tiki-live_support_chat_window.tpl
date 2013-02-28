@@ -23,11 +23,11 @@
 	{/if}
 		<table>
 			<tr>
-				<td  valign="top" style="text-align:center;">{$req_info.operator|avatarize}<br />
+				<td  valign="top" style="text-align:center;">{$req_info.operator|avatarize}<br>
 					<b>{$req_info.operator}</b>
 				</td>
 				<td valign="top" >
-					{tr}Chat started{/tr}<br />
+					{tr}Chat started{/tr}<br>
 					<i>{$req_info.reason}</i>
 				</td>
 			</tr>
@@ -38,11 +38,11 @@
 		{if $req_info.tiki_user}
 			<table>
 			<tr>
-				<td  valign="top" style="text-align:center;">{$req_info.tiki_user|avatarize}<br />
+				<td  valign="top" style="text-align:center;">{$req_info.tiki_user|avatarize}<br>
 					<b>{$req_info.tiki_user}</b>({$IP})
 				</td>
 				<td valign="top" >
-					{tr}Chat started{/tr}<br />
+					{tr}Chat started{/tr}<br>
 					<i>{$req_info.reason}</i>
 				</td>
 			</tr>
@@ -54,7 +54,7 @@
 					<b>{$req_info.user}</b>({$IP})
 				</td>
 				<td valign="top" >
-					{tr}Chat started{/tr}<br />
+					{tr}Chat started{/tr}<br>
 					<i>{$req_info.reason}</i>
 				</td>
 			</tr>
@@ -64,9 +64,9 @@
 		<table >
 			<tr>
 				<td  style="text-align:center;" valign="top">
-					<b>{tr}User:{/tr}</b><br />
+					<b>{tr}User:{/tr}</b><br>
 					{if $req_info.tiki_user}
-						{$req_info.tiki_user|avatarize}<br />
+						{$req_info.tiki_user|avatarize}<br>
 						<b>{$req_info.tiki_user}</b>
 					{else}
 						<b>{$req_info.user}</b>
@@ -76,8 +76,8 @@
 					<i>{$req_info.reason}</i>
 				</td>
 				<td  style="text-align:center;" valign="top">
-					<b>{tr}Operator:{/tr}</b><br />
-					{$req_info.operator|avatarize}<br />
+					<b>{tr}Operator:{/tr}</b><br>
+					{$req_info.operator|avatarize}<br>
 					<b>{$req_info.operator}</b>				
 				</td>
 			</tr>

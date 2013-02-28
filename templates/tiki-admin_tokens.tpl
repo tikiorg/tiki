@@ -32,7 +32,7 @@
 					<td>{$token.email}</td>
 					<td>
 						{foreach $token.parameters as $key => $value}
-							{$key}={$value}<br />
+							{$key}={$value}<br>
 						{/foreach}
 					</td>
 					<td>{$token.groups}</td>

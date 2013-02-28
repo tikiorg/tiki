@@ -1,7 +1,7 @@
 {button _class="add_tracker_button" _text="{tr}Add Tracker{/tr}" _htmlelement="role_main" _template="tiki-tracker_export_join_designer.tpl" _auto_args="*" _title="{tr}Add Tracker To Tracker Report{/tr}"|cat:$uWarning}
 {button _class="view_button" _text="{tr}View{/tr}" _htmlelement="role_main" _template="tiki-tracker_export_join_designer.tpl" _auto_args="*" _title="{tr}View Tracker Report{/tr}"|cat:$uWarning}
-<br />
-<br />
+<br>
+<br>
 <div id="trackerElements" style="display:none;">
 	<select class="trackerList">
 		<option value="">{tr}Pick tracker to join{/tr}</option>
@@ -30,15 +30,15 @@
 	
 	<div class="trackerStatusType">
 		<h5>Tracker Status</h5>
-		<input type="checkbox" checked="true" class="tracker_status_type" value="o" name="Tracker - Open" /> {tr}Tracker - Open{/tr}<br />
-		<input type="checkbox" checked="true" class="tracker_status_type" value="p" name="Tracker - Pending" /> {tr}Tracker - Pending{/tr}<br />
+		<input type="checkbox" checked="true" class="tracker_status_type" value="o" name="Tracker - Open" /> {tr}Tracker - Open{/tr}<br>
+		<input type="checkbox" checked="true" class="tracker_status_type" value="p" name="Tracker - Pending" /> {tr}Tracker - Pending{/tr}<br>
 		<input type="checkbox" checked="true" class="tracker_status_type" value="c" name="Tracker - Closed" /> {tr}Tracker - Closed{/tr}
 	</div>
 </div>
 <div id="reportDesigner">
 
 </div>
-<br />
-<br />
+<br>
+<br>
 {button _class="add_tracker_button" _text="{tr}Add Tracker{/tr}" _htmlelement="role_main" _template="tiki-tracker_export_join_designer.tpl" _auto_args="*" _title="{tr}Add Tracker To Tracker Report{/tr}"|cat:$uWarning}
 {button _class="view_button" _text="{tr}View{/tr}" _htmlelement="role_main" _template="tiki-tracker_export_join_designer.tpl" _auto_args="*" _title="{tr}View Tracker Report{/tr}"|cat:$uWarning}

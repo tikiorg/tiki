@@ -121,7 +121,7 @@
 					<td>{tr}Description:{/tr}</td>
 					<td>
 						<textarea name="description" rows="5" wrap="virtual" style="width:100%;">{$description|escape}</textarea>
-						<br />
+						<br>
 						{tr}Show in popup box{/tr}
 						<input type="checkbox" name="show[description]" value="on"{if $show_description eq 'y'} checked="checked"{/if} />
 					</td>
@@ -263,10 +263,10 @@
 							<option value='y' {if $info.customstatus ne 'n'}selected="selected"{/if}>{tr}Yes{/tr}</option>
 							<option value='n' {if $info.customstatus eq 'n'}selected="selected"{/if}>{tr}No{/tr}</option>
 						</select>
-						<br />
+						<br>
 						{tr}Default event status:{/tr}
 						{html_options name='options[defaulteventstatus]' options=$eventstatus selected=$defaulteventstatus}
-						<br />
+						<br>
 						{tr}Show in popup box{/tr}<input type="checkbox" name="show[status]" value="on"{if $info.show_status eq 'y'} checked="checked"{/if} />
 						{tr}Show in calendar view{/tr}<input type="checkbox" name="show[status_calview]" value="on"{if $info.show_status_calview ne 'n'} checked="checked"{/if} />
 					</td>
@@ -305,7 +305,7 @@
 					</td>
 				</tr>
 			</table>
-			<br />
+			<br>
 			{if $calendarId ne 0}{$name|escape} : {/if}
 			{tr}Delete events older than:{/tr} <input type="text" name="days" value="0"/> {tr}days{/tr} <input type="submit" name="clean" value="{tr}Delete{/tr}" />
 		</form>

@@ -40,14 +40,14 @@
 
 {tr}About WikiPlugins and security: Make sure to only grant the "tiki_p_plugin_approve" permission to trusted editors.{/tr} {tr}You can deactivate risky plugins at (<a href="tiki-admin.php?page=textarea">tiki-admin.php?page=textarea</a>).{/tr} {tr}You can approve plugin use at <a href="tiki-plugins.php">tiki-plugins.php</a>.{/tr}
 
-<br />
+<br>
 <h2>{tr}Security checks{/tr}</h2>
 <div>
 	<a href="tiki-admin_security.php?check_files">{tr}Check all tiki files{/tr}</a>
-	<br />
+	<br>
 	{tr}Note, that this can take a very long time. You should check your max_execution_time setting in php.ini.{/tr}
-	<br />
-	<br />
+	<br>
+	<br>
 </div>
 {if $filecheck}
 	{cycle values="even,odd" print=false}
@@ -72,9 +72,9 @@
 
 {remarksbox type="tip" title="{tr}Info{/tr}"}
 	{tr}Note, that this can take a very long time. You should check your max_execution_time setting in php.ini.{/tr}
-	<br />
+	<br>
 	{tr}This check tries to find files with problematic file permissions. Some file permissions that are shown here as problematic may be unproblematic or unavoidable in some environments.{/tr}
-	<br />
+	<br>
 	{tr}See end of table for detailed explanations.{/tr}
 {/remarksbox}
 
@@ -230,26 +230,26 @@
 
 	{remarksbox type="tip" title="{tr}Info{/tr}"}
 		{tr}What to do with these check results?{/tr}
-		<br />
+		<br>
 		{tr}Set User ID (suid) files{/tr}
-		<br />
+		<br>
 		{tr}Suid files are not part of tiki and there is no need for suid files in a webspace. Sometimes intruders that gain elevated privileges leave suid files to "keep the door open".{/tr}
-		<br />
+		<br>
 		{tr}World writable files or directories{/tr}
-		<br />
+		<br>
 		{tr}In some environments where you cannot get root or have no other possibilities, it is unavoidable to let your webserver write to some tiki directories like "templates_c" or "temp". In any other case this is not needed. A bug in a script or other users could easily put malicious scripts on your webspace or upload illegal content.{/tr}
-		<br />
+		<br>
 		{tr}Files or directories the Webserver can write to{/tr}
-		<br />
+		<br>
 		{tr}The risk is almost the same in shared hosting environments without proper privilege separation (suexec wrappers). The webserver has to be able to write to some directories like "templates_c" or "temp". Review the tiki install guide for further information.{/tr}
-		<br />
+		<br>
 		{tr}Strange Inodes (not file, not link, not directory){/tr}
-		<br />
+		<br>
 		{tr}Inodes that are not files or directories are not part of tiki. Review these Inodes!{/tr}
-		<br />
+		<br>
 		{tr}Executable files{/tr}
-		<br />
+		<br>
 		{tr}Setting the executable bit can be dangerous if the webserver is configured to execute cgi scripts from that directories. If you use the usual php module (for apache) then php scripts and other files in tiki do not need to have the executable bit. You can safely remove the executable bit with chmod.{/tr}
-		<br />
+		<br>
 	{/remarksbox}
 {/if}

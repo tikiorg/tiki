@@ -55,7 +55,7 @@
 		</tr>
 	</form>
 </table>
-<br />
+<br>
 <div align="left"><h2>{tr _0=$assign_user|escape}Assign User %0 to Groups{/tr}</h2></div>
 
 {include file='find.tpl' find_show_num_rows='y'}

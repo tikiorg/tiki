@@ -26,7 +26,7 @@
 					<input type="text" maxlength="80" size="20" name="firstName" value="{$info.firstName|escape}" />
 				</td>
 				<td rowspan="5">
-					{tr}Publish this contact to groups:{/tr}<br />
+					{tr}Publish this contact to groups:{/tr}<br>
 					<select multiple="multiple" name="groups[]" size="6">
 						<option value=""></option>
 						{foreach item=group from=$groups}
@@ -189,7 +189,7 @@
 		[<a class="prevnext" href="tiki-contacts.php?find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}Next{/tr}</a>]
 	{/if}
 	{if $prefs.direct_pagination eq 'y'}
-		<br />
+		<br>
 		{section loop=$cant_pages name=foo}
 			{assign var=selector_offset value=$smarty.section.foo.index|times:$prefs.maxRecords}
 			<a class="prevnext" href="tiki-contacts.php?find={$find}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}">{$smarty.section.foo.index_next}</a>

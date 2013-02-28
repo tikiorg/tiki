@@ -34,8 +34,8 @@
   <td class="journal" style="text-align:right">{if $i<$s.creditcount}{if $book.bookCurrencyPos==-1}{$book.bookCurrency} {/if}{$s.credit[$i].stackItemAmount|number_format:$book.bookDecimals:$book.bookDecPoint:$book.bookThousand}{if $book.bookCurrencyPos==1} {$book.bookCurrency}{/if}&nbsp;{/if}</td>
   <td class="journal">{if $i<$j.creditcount}{$j.credit[$i].stackItemText|escape}{/if}&nbsp;</td>
   {if $smarty.section.posts.first}<td rowspan="{$s.maxcount}">
-   <a class="icon" href="tiki-accounting_stack.php?action=delete&bookId={$bookId}&stackId={$s.stackId}">{icon _id="delete" alt="{tr}delete this transaction from the stack{/tr}" _confirm="{tr}Are you sure you want to delete this transaction from stack?{/tr}"}</a><br />
-   {if $canBook}<a class="icon" href="tiki-accounting_stack.php?action=confirm&bookId={$bookId}&stackId={$s.stackId}">{icon _id="arrow_right" alt="{tr}confirm this transaction{/tr}" _confirm="{tr}Are you sure you want to confirm this transaction?{/tr}"}</a><br />{/if}
+   <a class="icon" href="tiki-accounting_stack.php?action=delete&bookId={$bookId}&stackId={$s.stackId}">{icon _id="delete" alt="{tr}delete this transaction from the stack{/tr}" _confirm="{tr}Are you sure you want to delete this transaction from stack?{/tr}"}</a><br>
+   {if $canBook}<a class="icon" href="tiki-accounting_stack.php?action=confirm&bookId={$bookId}&stackId={$s.stackId}">{icon _id="arrow_right" alt="{tr}confirm this transaction{/tr}" _confirm="{tr}Are you sure you want to confirm this transaction?{/tr}"}</a><br>{/if}
   </td>{/if}
  </tr>
 {/section}

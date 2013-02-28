@@ -85,16 +85,16 @@
 					<tr>
 						<td>{tr}Fields to show during browsing the gallery:{/tr}</td>
 						<td>
-							<input type="checkbox" name="showname" value="y" {if $showname=='y'}checked="checked"{/if} />{tr}Name{/tr}<br />
-							<input type="checkbox" name="showimageid" value="y" {if $showimageid=='y'}checked="checked"{/if} />{tr}Image ID{/tr}<br />
-							<input type="checkbox" name="showdescription" value="y" {if $showdescription=='y'}checked="checked"{/if} />{tr}Description{/tr}<br />
-							<input type="checkbox" name="showcreated" value="y" {if $showcreated=='y'}checked="checked"{/if} />{tr}Creation Date{/tr}<br />
-							<input type="checkbox" name="showuser" value="y" {if $showuser=='y'}checked="checked"{/if} />{tr}User{/tr}<br />
-							<input type="checkbox" name="showhits" value="y" {if $showhits=='y'}checked="checked"{/if} />{tr}Hits{/tr}<br />
-							<input type="checkbox" name="showxysize" value="y" {if $showxysize=='y'}checked="checked"{/if} />{tr}XY-Size{/tr}<br />
-							<input type="checkbox" name="showfilesize" value="y" {if $showfilesize=='y'}checked="checked"{/if} />{tr}Filesize{/tr}<br />
-							<input type="checkbox" name="showfilename" value="y" {if $showfilename=='y'}checked="checked"{/if} />{tr}Filename{/tr}<br />
-							<input type="checkbox" name="showcategories" value="y" {if $showcategories=='y'}checked="checked"{/if} />{tr}Categories{/tr}<br />
+							<input type="checkbox" name="showname" value="y" {if $showname=='y'}checked="checked"{/if} />{tr}Name{/tr}<br>
+							<input type="checkbox" name="showimageid" value="y" {if $showimageid=='y'}checked="checked"{/if} />{tr}Image ID{/tr}<br>
+							<input type="checkbox" name="showdescription" value="y" {if $showdescription=='y'}checked="checked"{/if} />{tr}Description{/tr}<br>
+							<input type="checkbox" name="showcreated" value="y" {if $showcreated=='y'}checked="checked"{/if} />{tr}Creation Date{/tr}<br>
+							<input type="checkbox" name="showuser" value="y" {if $showuser=='y'}checked="checked"{/if} />{tr}User{/tr}<br>
+							<input type="checkbox" name="showhits" value="y" {if $showhits=='y'}checked="checked"{/if} />{tr}Hits{/tr}<br>
+							<input type="checkbox" name="showxysize" value="y" {if $showxysize=='y'}checked="checked"{/if} />{tr}XY-Size{/tr}<br>
+							<input type="checkbox" name="showfilesize" value="y" {if $showfilesize=='y'}checked="checked"{/if} />{tr}Filesize{/tr}<br>
+							<input type="checkbox" name="showfilename" value="y" {if $showfilename=='y'}checked="checked"{/if} />{tr}Filename{/tr}<br>
+							<input type="checkbox" name="showcategories" value="y" {if $showcategories=='y'}checked="checked"{/if} />{tr}Categories{/tr}<br>
 						</td>
 					</tr>
 					<tr>
@@ -124,17 +124,17 @@
 							<td>
 								{tr}Global default{/tr} {$prefs.scaleSizeGalleries}x{$prefs.scaleSizeGalleries} ({tr}Bounding box{/tr}) 
 								<input type="radio" name="defaultscale" value="{$prefs.scaleSizeGalleries}" {if $defaultscale==$prefs.scaleSizeGalleries}checked="checked"{/if} />
-								{tr}default scale{/tr}<br />
+								{tr}default scale{/tr}<br>
 								{section  name=scales loop=$scaleinfo}
 									{if $scaleinfo[scales].scale ne $prefs.scaleSizeGalleries}
 										{tr}Remove:{/tr}<input type="checkbox" name="removescale_{$scaleinfo[scales].scale|escape}" />
 										{$scaleinfo[scales].scale}x{$scaleinfo[scales].scale} ({tr}Bounding box{/tr}) 
 										<input type="radio" name="defaultscale" value="{$scaleinfo[scales].scale}" {if $defaultscale==$scaleinfo[scales].scale}checked="checked"{/if} />
-										{tr}default scale{/tr}<br />
+										{tr}default scale{/tr}<br>
 									{/if}
 								{sectionelse}
 									{tr}No scales available{/tr}
-								{/section}<br />
+								{/section}<br>
 								{tr}Original image is default scale{/tr}<input type="radio" name="defaultscale" value="o" {if $defaultscale=='o'}checked="checked"{/if} />
 							</td>
 						</tr>
@@ -148,7 +148,7 @@
 				</table>
 			</form>
 		</div>
-		<br />
+		<br>
 	{/if}
 {/if}
 {if $galleryId > 0}

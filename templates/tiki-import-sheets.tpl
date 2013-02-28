@@ -50,8 +50,8 @@
 			<option value="{$charsets[key]}">{$charsets[key]}</option>
 		{/section}
 		</select>
-    <br />
-    <br />
+    <br>
+    <br>
 		<input type="file" name="file" />
 		<input type="submit" value="{tr}Import{/tr}" />
 	</form>

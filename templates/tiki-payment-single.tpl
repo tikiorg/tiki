@@ -117,7 +117,7 @@
 							<input type="submit" value="{tr}Refresh page{/tr}" />
 						</form>
 						{remarksbox title="{tr}Payment info{/tr}" type="info"}
-							{$ccresult}<br />
+							{$ccresult}<br>
 							{$ccresult2}
 						{/remarksbox}
 					{else}
@@ -128,7 +128,7 @@
 						</form>
 						{if (!empty($ccresult) or !empty($ccresult2))}
 							{remarksbox title="{tr}Payment problem{/tr}" type="info"}
-								{$ccresult}<br />
+								{$ccresult}<br>
 								{$ccresult2}
 							{/remarksbox}
 						{/if}

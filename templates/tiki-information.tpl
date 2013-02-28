@@ -1,6 +1,6 @@
 {* $Id$ *}
 <div id="tiki-center">
-<br />
+<br>
 <div class="cbox">
 	 <div class="cbox-title">
 	 {tr}Information{/tr}
@@ -9,7 +9,7 @@
 	<div class="simplebox highlight">
 	{if is_array($msg)}
 		{foreach from=$msg item=line}
-	 		{$line|escape}<br />
+	 		{$line|escape}<br>
 	 	{/foreach}
 	{else}
 		{$msg|escape}
@@ -19,7 +19,7 @@
 	<p>
 
 	{if $show_history_back_link eq 'y'}
-		<a href="javascript:history.back()" class="linkmenu">{tr}Go back{/tr}</a><br /><br />
+		<a href="javascript:history.back()" class="linkmenu">{tr}Go back{/tr}</a><br><br>
 	{/if}
 	 &nbsp;<a href="{$prefs.tikiIndex}" class="linkmenu">{tr}Return to home page{/tr}</a>
 	</p>

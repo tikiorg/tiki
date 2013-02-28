@@ -92,14 +92,14 @@ function tf_export_submit(fm) {
 			<label><input {if $filter.format eq "c"}type="checkbox"{else}type="radio"{/if}
 					name="f_{$filter.fieldId}{if $filter.format eq "c"}[]{/if}"
 					value=""{if !$filter.selected} checked="checked"{/if} />
-			{tr}Any{/tr}</label>{if !isset($line) || $line ne 'y'}<br />{/if}
+			{tr}Any{/tr}</label>{if !isset($line) || $line ne 'y'}<br>{/if}
 			{section name=io loop=$filter.opts}
 				<label><input {if $filter.format eq "c"}type="checkbox"{else}type="radio"{/if}
 						name="f_{$filter.fieldId}{if $filter.format eq "c"}[]{/if}"
 						value="{$filter.opts[io].id|escape:url}"
 						{if $filter.opts[io].selected eq "y"} checked="checked"{/if} /></label>
 				{$filter.opts[io].name|tr_if}
-				{if !isset($line) || $line ne 'y'}<br />{/if}
+				{if !isset($line) || $line ne 'y'}<br>{/if}
 			{/section}
 		{/if}
 		</td>
@@ -120,9 +120,9 @@ function tf_export_submit(fm) {
 	{/if}
 	{if $googlemapButtons && $googlemapButtons eq 'y'}
         {if isset($mapview) && $mapview}
-        <br /><input class="button submit" type="submit" name="searchlist" value="{tr}List View{/tr}" />
+        <br><input class="button submit" type="submit" name="searchlist" value="{tr}List View{/tr}" />
         {else}
-        <br /><input class="button submit" type="submit" name="searchmap" value="{tr}Map View{/tr}" />
+        <br><input class="button submit" type="submit" name="searchmap" value="{tr}Map View{/tr}" />
         {/if}
 	{/if}
 </td>

@@ -48,15 +48,15 @@
 	<h3>{tr}The following image was successfully uploaded:{/tr}</h3>
 	<div align="center">
 		<img src="show_image.php?id={$imageId}" alt="{tr}Image ID{/tr}" />
-		<br />
+		<br>
 		<b>{tr}Thumbnail:{/tr}</b>
-		<br />
+		<br>
 		<img src="show_image.php?id={$imageId}&amp;thumb=1" alt="{tr}Image ID thumb{/tr}" />
-		<br /><br />
+		<br><br>
 		<div class="wikitext">
 			{tr}You can view this image in your browser using:{/tr}&nbsp;
 			<a class="link" href="{$url_browse}?imageId={$imageId}">{$url_browse}?imageId={$imageId}</a>
-			<br /><br />
+			<br><br>
 			{tr}You can include the image in an Wiki page using:{/tr}&nbsp;
 			<form>
 				<textarea rows="3" cols="60" style="width: 90%">
@@ -78,7 +78,7 @@
 					<td>{tr}Image Name:{/tr}</td>
 					<td>
 						<input type="text" size ="50" name="name" />
-						<br />
+						<br>
 						{tr}or use filename:{/tr} <input type="checkbox" name="use_filename" />
 					</td>
 				</tr>
@@ -150,10 +150,10 @@
 					<td>
 						<input name="userfile3" type="file" />
 						<input name="userfile4" type="file" />
-						<br />
+						<br>
 						<input name="userfile5" type="file" />
 						<input name="userfile6" type="file" />
-						<br />
+						<br>
 						<input name="userfile7" type="file" />
 						<input name="userfile8" type="file" />
 					</td>

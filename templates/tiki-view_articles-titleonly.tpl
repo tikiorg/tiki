@@ -5,7 +5,7 @@
 		<span class="newsitem">
 			<a href="{$smarty.capture.href}">{$listpages[ix].title|escape}</a>
 		</span>
-		<br />
+		<br>
 	</div>
 {/section}
 {if !empty($container_class)}</div>{/if}

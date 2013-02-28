@@ -13,20 +13,20 @@
 			<td class="date">
 				<abbr class="dtstart" title="{$event.start|tiki_short_date}">
 					<a href="{$myurl}?todate={$event.start}" title="{tr}Change Focus{/tr}">{$event.start|tiki_short_date}</a>
-				</abbr><br />
+				</abbr><br>
 				{if $event.allday} {tr}All day{/tr} {else} {$event.start|tiki_short_time} {/if}
 			</td>
 			<td class="date">
-				{if $event.start|tiki_short_date ne $event.end|tiki_short_date}<abbr class="dtend" title="{$event.end|tiki_short_date}"><a href="{$myurl}?todate={$event.end}" title="{tr}Change Focus{/tr}">{$event.end|tiki_short_date}</a></abbr> {/if}<br />
+				{if $event.start|tiki_short_date ne $event.end|tiki_short_date}<abbr class="dtend" title="{$event.end|tiki_short_date}"><a href="{$myurl}?todate={$event.end}" title="{tr}Change Focus{/tr}">{$event.end|tiki_short_date}</a></abbr> {/if}<br>
 {if $event.start ne $event.end and $event.allday ne 1}{$event.end|tiki_short_time}{/if}
 			</td>
 			<td style="{if $infocals.$calendarId.custombgcolor ne ''}background-color:#{$infocals.$calendarId.custombgcolor};{/if}">
 				<a class="link" href="tiki-calendar_edit_item.php?viewcalitemId={$event.calitemId}" title="{tr}View{/tr}">
 				{if $infocals.$calendarId.customfgcolor ne ''}<span style="color:#{$infocals.$calendarId.customfgcolor};">{/if}
-				<span class="summary">{$event.name|escape}</span></a><br />
+				<span class="summary">{$event.name|escape}</span></a><br>
 				<span class="description" style="font-style:italic">{$event.parsed}</span>
 				{if $event.web}
-					<br /><a href="{$event.web}" target="_other" class="calweb" title="{$event.web}"><img src="img/icons/external_link.gif" width="7" height="7" alt="&gt;" /></a>
+					<br><a href="{$event.web}" target="_other" class="calweb" title="{$event.web}"><img src="img/icons/external_link.gif" width="7" height="7" alt="&gt;" /></a>
 					{if $infocals.$calendarId.customfgcolor ne ''}</span>{/if}
 				{/if}
 			</td>

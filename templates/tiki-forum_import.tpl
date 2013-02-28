@@ -34,15 +34,15 @@
 		<input type="text" name="prefix" value="{$fi_prefixes[0]}" />
 		</td></tr>
 	</table>
-	<br />
+	<br>
 	<div align="center">
 		<input type="submit" value="{tr}Get Forum List{/tr}" />
 	</div>
-	<br />
+	<br>
 	</form>
 </div>
 </div>
-<br />
+<br>
 <div class="cbox">
 <div class="cbox-title">{tr}Import from Another DB or Server{/tr}</div>
 <div class="cbox-data">
@@ -68,18 +68,18 @@
 		<input type="text" name="password" />
                 </td></tr>
 	</table>
-	<br />
+	<br>
 	<div align="center">
 		<input type="submit" value="Test Connection" />
 	</div>
-	<br />
+	<br>
 	</form>
 </div>
 </div>
 <div align="center">
 	<b>...OR...</b>
 </div>
-<br />
+<br>
 
 End hiding of unfinished section... *}
 <div class="cbox">
@@ -103,7 +103,7 @@ End hiding of unfinished section... *}
 		<tr><td>{tr}DB Prefix:{/tr}</td><td>
 		<input type="text" name="prefix" value="{$fi_prefixes[0]}" />
 		</td></tr>
-		<tr><td>{tr}Local SQL Filename on Server (path will be stripped):{/tr}<br />
+		<tr><td>{tr}Local SQL Filename on Server (path will be stripped):{/tr}<br>
 		<i>{tr}Must be in tikiroot/{$tmpdir} or tikiroot/img/wiki_up{/tr}</i></td><td>
 		<input type="text" name="server" />
 	</td></tr>
@@ -111,7 +111,7 @@ End hiding of unfinished section... *}
 	<div align="center">
 		<input type="submit" value="{tr}Get Forum List{/tr}" />
 	</div>
-	<br />
+	<br>
 	</form>
 </div>
 </div>
@@ -148,7 +148,7 @@ End hiding of unfinished section... *}
 		  <input type="submit" value="{tr}Go Back{/tr}" />
 		{/if}
 	</div>
-	<br />
+	<br>
 	</form>
 </div>
 </div>
@@ -207,7 +207,7 @@ End hiding of unfinished section... *}
 	</tr>
 	{/section}
 	</table>
-	<br />
+	<br>
 	<div align="center">
 		{if $noforumsF eq 'true'}
 			<b><i>There are no forums to migrate!</b></i>
@@ -219,7 +219,7 @@ End hiding of unfinished section... *}
 			<b><i>Please note that by clicking on Import Forum, depending on the size of your SQL file, import may take several minutes.  Please be patient.</i></b>
 		{/if}
 	</div>
-	<br />
+	<br>
 </div>
 </div>
 </form>
@@ -237,11 +237,11 @@ End hiding of unfinished section... *}
 		<div align="center">
 			<input type="submit" value="{tr}Go Back{/tr}" />
 		</div>
-		<br />
+		<br>
 		</form>
 	{else}
 		<b>{$tomove} <i>actual</i> posts moved from forum {$fF} to {$tF}.</b>
-		<br />
+		<br>
 		(over time, forum counters may have skewed, so the actual number of posts moved may not equal the number of posts shown in the previous screen.)
 	{/if}
 

@@ -53,9 +53,9 @@
 				<legend>{tr}Tiki Connect{/tr}</legend>
 				{remarksbox type="info" title="{tr}New Feature{/tr}" icon="bricks"}
 					<p><em>{tr}Please note: Experimental - work in progress{/tr}</em></p>
-					<p>{tr}Tiki Connect is a way to let the Tiki project know how it is being used, and which parts people like or would like fixing (or explaining).{/tr}<br />
+					<p>{tr}Tiki Connect is a way to let the Tiki project know how it is being used, and which parts people like or would like fixing (or explaining).{/tr}<br>
 					{tr}When you click the "Send Info" below you will be connected with mother.tiki.org, which is where the data will be collected.{/tr}</p>
-					<p>{tr}You can also send feedback about Tiki by checking the "Feedback" checkbox above. Icons will appear next to all the preferences where you can "like", request a "fix" or ask "what's this for?"{/tr}<br />
+					<p>{tr}You can also send feedback about Tiki by checking the "Feedback" checkbox above. Icons will appear next to all the preferences where you can "like", request a "fix" or ask "what's this for?"{/tr}<br>
 					{tr}Your votes are sent when you connect with mother.tiki.org (currently only be clicking the "Send Info" button){/tr}</p>
 					<p>{tr}For more info{/tr} <a href="http://doc.tiki.org/Connect">{tr}click here{/tr}</a></p>
 				{/remarksbox}

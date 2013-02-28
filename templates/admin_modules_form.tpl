@@ -67,7 +67,7 @@
 						<div class="simplebox">
 							{icon _id=information style="vertical-align:middle;float:left"} {tr}The{/tr} <a class="rbox-link" href="tiki-admin.php?page=module">{tr}Display Modules to All Groups{/tr}</a> {tr}setting will override your selection of specific groups.{/tr}
 						</div>
-						<br />
+						<br>
 					{/if}
 				</div>
 			</div>
@@ -104,7 +104,7 @@
 								</div>
 								<div class="description q234">
 									<input type="text" id="assign_params[{$name|escape}]" name="assign_params[{$name|escape}]" value="{$param.value|escape}"{if !empty($param.filter)} class="{$param.filter}" {/if}/>
-									<br />
+									<br>
 									{$param.description|escape}
 									{if !empty($param.default)} - {tr}Default:{/tr} {$param.default|escape}{/if}
 								</div>

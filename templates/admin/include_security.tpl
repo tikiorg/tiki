@@ -128,11 +128,11 @@
 					{preference name=openpgp_gpg_signer_passphrase_store}
 					<div class="adminoptionboxchild openpgp_gpg_signer_passphrase_store_childcontainer preferences">
 						{preference name=openpgp_gpg_signer_passphrase}	
-						<br /><em>{tr}If you use preferences option for the signer passphrase, clear the file option just for security{/tr}</em>
+						<br><em>{tr}If you use preferences option for the signer passphrase, clear the file option just for security{/tr}</em>
 					</div>
 					<div class="adminoptionboxchild openpgp_gpg_signer_passphrase_store_childcontainer file">
 						{preference name=openpgp_gpg_signer_passfile}	
-						<br /><em>{tr}If you use file for the signer passphrase, clear the preferences option just for security{/tr}</em>
+						<br><em>{tr}If you use file for the signer passphrase, clear the preferences option just for security{/tr}</em>
 					</div>
 					{remarksbox type="tip" title="{tr}Note{/tr}"}
 						{tr}The email of preference <a href="tiki-admin.php?page=general&alt=General">'sender_email'</a> is used as signer key ID, and it must have both private and public key in the gnupg keyring.{/tr}

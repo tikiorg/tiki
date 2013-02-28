@@ -348,19 +348,19 @@ function delete_ref(ref_id){
 			
 			{if $use_references eq 1}
 				{if $libReferencesCant gt 0}
-					{tr}Library References{/tr}:<br />
+					{tr}Library References{/tr}:<br>
 					<select name="lib_ref" id="lib_ref">
 						{section name=i loop=$libReferences}
 							<option value="{$libReferences[i].ref_id|escape}">{$libReferences[i].biblio_code|escape}</option>
 						{/section}
 					</select>
-					<br />
+					<br>
 					<input class="wikiaction" type="submit" value="{tr}Use{/tr}" id="u_lib" name="u_lib" />
-					<br /><span id="u_lib_status"></span>
+					<br><span id="u_lib_status"></span>
 				{/if}
 			{/if}
 			{if $edit_references eq 1 && $libReferencesCant gt 0}
-				<br /><a href="tiki-references.php" target="_blank">{tr}Edit Library References{/tr}</a>
+				<br><a href="tiki-references.php" target="_blank">{tr}Edit Library References{/tr}</a>
 			{/if}
 
 		</td>
@@ -410,7 +410,7 @@ function delete_ref(ref_id){
 						<td>{tr}Style{/tr}:</td>
 						<td>
 							<input type="text" size="30"  class="wikiedit" name="e_ref_style" id="e_ref_style" value="" />
-							<br />
+							<br>
 							<small>{tr}Enter the CSS class name to be added in the 'li' tag for listing this reference.{/tr}</small>
 						</td>
 					</tr>
@@ -418,10 +418,10 @@ function delete_ref(ref_id){
 						<td>{tr}Template{/tr}:</td>
 						<td>
 							<input type="text" size="30"  class="wikiedit" name="e_ref_template" id="e_ref_template" value="" />
-							<br />
+							<br>
 							<small>
 								{tr}Enter template format in which you want to display the reference details in the bibliography listing. For example{/tr}: ~title~ (~year~) ~author~
-								<br />
+								<br>
 								{tr}All the codes must be in lower case letters separated with spaces.{/tr}
 							</small>
 						</td>

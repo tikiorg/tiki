@@ -66,25 +66,25 @@
 							{if $diffdata[ix].type == "diffheader"}
 								{assign var="oldd" value=$diffdata[ix].old}
 								{assign var="newd" value=$diffdata[ix].new}
-								<br /><div class="diffheader">@@ {tr}-Lines: {$oldd} changed to +Lines: {$newd}{/tr} @@</div>
+								<br><div class="diffheader">@@ {tr}-Lines: {$oldd} changed to +Lines: {$newd}{/tr} @@</div>
 							{elseif $diffdata[ix].type == "diffdeleted"}
 								<div class="diffdeleted">
 								{section name=iy loop=$diffdata[ix].data}
-									{if not $smarty.section.iy.first}<br />{/if}
+									{if not $smarty.section.iy.first}<br>{/if}
 									- {$diffdata[ix].data[iy]}
 								{/section}
 								</div>
 							{elseif $diffdata[ix].type == "diffadded"}
 								<div class="diffadded">
 									{section name=iy loop=$diffdata[ix].data}
-										{if not $smarty.section.iy.first}<br />{/if}
+										{if not $smarty.section.iy.first}<br>{/if}
 										+ {$diffdata[ix].data[iy]}
 									{/section}
 								</div>
 							{elseif $diffdata[ix].type == "diffbody"}
 								<div class="diffbody">
 								{section name=iy loop=$diffdata[ix].data}
-									{if not $smarty.section.iy.first}<br />{/if}
+									{if not $smarty.section.iy.first}<br>{/if}
 									{$diffdata[ix].data[iy]}
 								{/section}
 							</div>

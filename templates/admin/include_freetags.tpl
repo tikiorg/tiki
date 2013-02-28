@@ -34,7 +34,7 @@
 					<div class="adminoptionlabel">
 						<label for="freetags_cloud_colors">{tr}Random tag cloud colors:{/tr}</label>
 						<input type="text" name="freetags_cloud_colors" id="freetags_cloud_colors" value="{foreach from=$prefs.freetags_cloud_colors item=color name=colors}{$color}{if !$smarty.foreach.colors.last},{/if}{/foreach}" />
-						<br />
+						<br>
 						<em>{tr}Separate colors with a comma (,){/tr}.</em>
 					</div>
 				</div>
@@ -44,7 +44,7 @@
 				<div class="adminoptionboxchild">
 					<a class="button" href='#Browsing' onclick="$('input[name=freetags_normalized_valid_chars]').val('a-zA-Z0-9');return false;">{tr}Alphanumeric ASCII characters only{/tr}</a>
 					({tr}No accents or special characters{/tr}.)
-					<br />
+					<br>
 					<a class="button" href='#Browsing' onclick="$('input[name=freetags_normalized_valid_chars]').val('');return false;">{tr}Accept all characters{/tr}</a>
 				</div>
 				{preference name=freetags_lowercase_only}

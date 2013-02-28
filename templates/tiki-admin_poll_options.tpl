@@ -15,7 +15,7 @@
 	</div>
 </div>
 
-<br />
+<br>
 
 <h2>{if $optionId eq ''}{tr}Add poll option{/tr}{else}{tr}Edit poll option{/tr}{/if}</h2>
 <form action="tiki-admin_poll_options.php" method="post">
@@ -38,7 +38,7 @@
 	</table>
 </form>
 
-<br />
+<br>
 
 <h2>{tr}Poll options{/tr}</h2>
 <div align="center">

@@ -33,7 +33,7 @@
 		{norecords _colspan=6}
 	{/section}
 </table>
-<br />
+<br>
 {if $editurl eq 'n'}
 	<h2>{tr}Add Featured Link{/tr}</h2>
 {else}

@@ -6,7 +6,7 @@
 	{if !empty($confirm_detail)}
 		{$confirm_detail}
 	{/if}
-	<br />
+	<br>
 	<div class="cbox-data">
 		<form id='confirm' action="{$confirmaction|escape}" method="post">
 			<div>

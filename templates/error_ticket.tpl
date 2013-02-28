@@ -21,19 +21,19 @@
       </td>
       {/if}
       <td id="centercolumn"><div id="tiki-center">
-      <br />
+      <br>
         <div class="cbox">
         <div class="cbox-title">{icon _id=exclamation alt="{tr}Error{/tr}" style="vertical-align:middle"} {$errortitle|default:"{tr}Error{/tr}"}
         </div>
         <div class="cbox-data">
-        <br />{$msg}
+        <br>{$msg}
 <form action="{$self}{if $query}?{$query|escape}{/if}" method="post">
 {foreach key=k item=i from=$post}
 <input type="hidden" name="{$k}" value="{$i|escape}" />
 {/foreach}
 <input type="submit" name="ticket_action_button" value="{tr}Click here to confirm your action{/tr}" />
-</form><br /><br />
-        {if $prefs.javascript_enabled eq 'y'}{button href="javascript:history.back()" _text="{tr}Go back{/tr}"}<br /><br />{/if}
+</form><br><br>
+        {if $prefs.javascript_enabled eq 'y'}{button href="javascript:history.back()" _text="{tr}Go back{/tr}"}<br><br>{/if}
         {button href="$prefs.tikiIndex" _text="{tr}Return to home page{/tr}"}
         </div>
         </div>

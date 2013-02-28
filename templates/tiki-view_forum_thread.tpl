@@ -16,11 +16,11 @@
 </div>
 
 {if $post_reported eq 'y'}
-	<br />
+	<br>
 	<div class="simplebox highlight reported_note">
     {icon _id=information style="vertical-align:middle;align=left"} {tr}The post has been reported and will be reviewed by a moderator.{/tr}
 	</div>
-	<br />
+	<br>
 {/if}
 
 <a class="link" href="tiki-forums.php">{tr}Forums{/tr}</a> 

@@ -2,7 +2,7 @@
 	{select_all checkbox_names=$field.ins_id|cat:"[]" label="{tr}Select All{/tr}"}
 {/if}
 {if $field.options_array[1] eq 'd' || $field.options_array[1] eq 'm'}
-	{if $field.options_array[1] eq 'm'}<small>{tr}Hold "Ctrl" in order to select multiple values{/tr}</small><br />{/if}
+	{if $field.options_array[1] eq 'm'}<small>{tr}Hold "Ctrl" in order to select multiple values{/tr}</small><br>{/if}
 	<select name="{$field.ins_id}[]"{if $field.options_array[1] eq 'm'} multiple="multiple"{/if}>
 	{if $field.options_array[1] eq 'd' and (empty($field.value[0]) or $field.isMandatory ne 'y')}
 		<option value=""></option>

@@ -34,7 +34,7 @@
 	{preference name=kaltura_secret}
 </fieldset>
 
-<br />
+<br>
 
 <fieldset class="admin">
 <legend>{tr}Kaltura Dynamic Player{/tr}</legend>
@@ -43,7 +43,7 @@
 	{$kplayerlist}
 </fieldset>
 
-<br />
+<br>
 
 <fieldset class="admin">
 <legend>{tr}Kaltura Contribution Wizard{/tr}</legend>
@@ -51,14 +51,14 @@
 {tr}You can manually edit these values in lib/videogals/standardTikiKcw.xml{/tr}
 </fieldset>
 
-<br />
+<br>
 
 <fieldset class="admin">
 <legend>{tr}Legacy support{/tr}</legend>
 	{preference name=kaltura_legacyremix}
 </fieldset>
 
-<br />
+<br>
 
 <div align="center" style="padding:1em;"><input type="submit" name="video" value="{tr}Change preferences{/tr}" /></div>
 </form>

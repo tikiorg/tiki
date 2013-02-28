@@ -7,14 +7,14 @@
 
 <div align="center">
 {if $show eq 'y'}
-<br />
+<br>
 <hr/>
 <h2>{tr}Edit successful!{/tr}</h2>
 <h3>{tr}The following image was successfully edited:{/tr}</h3>
 <hr/>
-<br />
+<br>
 {/if}
-<img src="show_image.php?id={$imageId}" alt="{tr}Image{/tr}" /><br /><br />
+<img src="show_image.php?id={$imageId}" alt="{tr}Image{/tr}" /><br><br>
 <form enctype="multipart/form-data" action="tiki-edit_image.php" method="post">
 <input type="hidden" name="edit" value="{$imageId|escape}" />
 <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
@@ -27,13 +27,13 @@
 <tr><td>{tr}Longitude (WGS84/decimal degrees):{/tr}</td><td><input type="text" name="lon" value="{$lon|escape}" /></td></tr>
 {/if}
 {include file='categorize.tpl'}
-<tr><td>{tr}Upload from disk to change the image:{/tr}</td><td>{$filename}<br /><input name="userfile" type="file" />
+<tr><td>{tr}Upload from disk to change the image:{/tr}</td><td>{$filename}<br><input name="userfile" type="file" />
 </td></tr>
 <tr><td>&nbsp;</td><td><input type="submit" name="editimage" value="{tr}Save{/tr}" />&nbsp;&nbsp;<input type="submit" name="editimage_andgonext" value="{tr}Save and Go Next{/tr}" />&nbsp;&nbsp;<a class="link" href="tiki-browse_image.php?imageId={$imageId}">{tr}Cancel Edit{/tr}</a></td></tr>
 </table>
 </form>
-<br />
-<br /><br />   
+<br>
+<br><br>   
 	<!--this table is a duplicate of the one in tiki-browse_image.tpl-->  
 	<table class="normal noslideshow">
 		<tr><td class="odd">{tr}Image Name:{/tr}</td><td class="odd">{$name}</td></tr>
@@ -70,7 +70,7 @@
 		</tr>
 		{/if}
 	</table>
-	<br /><br />    
+	<br><br>    
 	<table class="normal noslideshow" style="font-size:small">
 		<tr>
 			<td class="even" style="border-bottom:0px" colspan="2">

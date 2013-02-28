@@ -1,4 +1,4 @@
-<br />
+<br>
 <iframe width="100%" name="{$title|escape}" src="{$url}" marginwidth="0" marginheight="0" height="700" scrolling="auto" frameborder="0"
 {*
  * The line below is used to auto-resize the iframe height with javascript to match the content height and avoid vertical scrollbars.

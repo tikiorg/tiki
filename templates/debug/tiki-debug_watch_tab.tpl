@@ -13,7 +13,7 @@
         <code>{$watchlist[i].var}</code>
       </td>
       <td class="{cycle}"{if $smarty.section.i.index == 0} id="firstrow"{/if}>
-        <pre>{$watchlist[i].value|escape:"html"|wordwrap:60:"\n":true|replace:"\n":"<br />"}</pre>
+        <pre>{$watchlist[i].value|escape:"html"|wordwrap:60:"\n":true|replace:"\n":"<br>"}</pre>
       </td>
     </tr>
   {/section}

@@ -2,7 +2,7 @@
 {title help="Directory"}{tr}Validate sites{/tr}{/title}
 
 {* Display the title using parent *}
-{include file='tiki-directory_admin_bar.tpl'} <br />
+{include file='tiki-directory_admin_bar.tpl'} <br>
 <h2>{tr}Sites{/tr}</h2>
 {* Display the list of categories (items) using pagination *}
 {* Links to edit, remove, browse the categories *}
@@ -10,7 +10,7 @@
 {jq notonready=true}
 var CHECKBOX_LIST = [{{section name=user loop=$items}'sites[{$items[user].siteId}]'{if not $smarty.section.user.last},{/if}{/section}}];
 {/jq}
-  <br />
+  <br>
   <table class="normal">
     <tr>
       <th>{if $items}
@@ -48,7 +48,7 @@ var CHECKBOX_LIST = [{{section name=user loop=$items}'sites[{$items[user].siteId
 		{norecords _colspan=6}
     {/section}
   </table>
-  {if $items} <br />
+  {if $items} <br>
   {tr}Perform action with selected:{/tr}
   <input type="submit" name="del" value="{tr}Remove{/tr}" />
   <input type="submit" name="validate" value="{tr}Validate{/tr}" />

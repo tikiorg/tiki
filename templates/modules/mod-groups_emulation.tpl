@@ -49,6 +49,6 @@
 			<div style="text-align: center"><button type="submit" name="emulategroups" value="setgroups" >{tr}Simulate{/tr}</button></div>
 		</fieldset>
 	</form>
-<br />
+<br>
 {/tikimodule}
 {/strip}

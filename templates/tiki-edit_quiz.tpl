@@ -78,8 +78,8 @@
 
 {if $individual eq 'y'}
 	<a class="link" href="tiki-objectpermissions.php?objectName={$name|escape:"url"}&amp;objectType=quiz&amp;permType=quizzes&amp;objectId={$quizId}">{tr}There are individual permissions set for this quiz{/tr}</a>
-	<br />
-	<br />
+	<br>
+	<br>
 {/if}
 
 <form action="tiki-edit_quiz.php" method="post">

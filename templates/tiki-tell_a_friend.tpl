@@ -17,7 +17,7 @@
 		{if $report eq 'y'}
 			{tr}Your email was sent{/tr}.
 		{else}
-			{tr}The link was sent to the following addresses:{/tr}<br />
+			{tr}The link was sent to the following addresses:{/tr}<br>
 			{$sent|escape}
 		{/if}
 	</div>
@@ -28,7 +28,7 @@
 		{icon _id=exclamation alt="{tr}Error{/tr}" style="vertical-align:middle" align="left"} 
 		{foreach from=$errors item=m name=errors}
 			{$m}
-			{if !$smarty.foreach.errors.last}<br />{/if}
+			{if !$smarty.foreach.errors.last}<br>{/if}
 		{/foreach}
 	</div>
 {/if}
@@ -45,7 +45,7 @@
 				<td>{tr}Friend's email{/tr}</td>
 				<td>
 					<input style="width:95%;" type="text" size="60" name="addresses" value="{$addresses|escape}"/>
-					<br /><em>{tr}Separate multiple email addresses with a comma.{/tr}</em>
+					<br><em>{tr}Separate multiple email addresses with a comma.{/tr}</em>
 				</td>
 			</tr>
 		{else}

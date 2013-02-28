@@ -35,7 +35,7 @@
 		<li>{tr}New modules can be dragged from the "All Modules" tab{/tr}</li>
 	</ul>
 	<p>
-		<strong>{tr}Note:{/tr}</strong> {tr}Links and buttons in modules, apart from the Application Menu, have been deliberately disabled on this page to make drag and drop more reliable. Click here to return <a href="./">HOME</a>{/tr}<br />
+		<strong>{tr}Note:{/tr}</strong> {tr}Links and buttons in modules, apart from the Application Menu, have been deliberately disabled on this page to make drag and drop more reliable. Click here to return <a href="./">HOME</a>{/tr}<br>
 		<strong><em>{tr}More info here{/tr}</em></strong> {icon _id="help" link="http://dev.tiki.org/Modules+Revamp"}
 	</p>
 	
@@ -76,7 +76,7 @@
 								<td>{$module.ord}</td>
 								<td>{$module.cache_time}</td>
 								<td>{$module.rows}</td>
-								<td style="font-size:smaller;">{$module.params|escape:unescape|replace:"+":" "|replace:"&":"<br />"}</td>
+								<td style="font-size:smaller;">{$module.params|escape:unescape|replace:"+":" "|replace:"&":"<br>"}</td>
 								<td style="font-size:smaller;">{$module.module_groups}</td>
 								<td>
 									<a class="link" href="tiki-admin_modules.php?edit_assign={$module.moduleId}&cookietab=2" title="{tr}Edit{/tr}">{icon _id='page_edit'}</a>
@@ -163,7 +163,7 @@
          {norecords _colspan=3}
 		{/section}
 	</table>
-	<br />
+	<br>
 	{if $um_name eq ''}
 		<h2>{tr}Create new custom module{/tr}</h2>
 	{else}
@@ -344,10 +344,10 @@
 				</td>
 			</tr>
 			<tr>
-				<td colspan="2" class="odd">{tr}Data{/tr}<br />
+				<td colspan="2" class="odd">{tr}Data{/tr}<br>
 					<a name="editcreate"></a>
 					{textarea name='um_data' id='um_data' rows="6" cols="80" _toolbars='y' _previewConfirmExit='n' _wysiwyg="n"}{$um_data}{/textarea}
-					<br />
+					<br>
 					<input type="submit" name="um_update" value="{if empty($um_name)}{tr}Create{/tr}{else}{tr}Save{/tr}{/if}" onclick="needToConfirm=false" />
 				</td>
 			</tr>

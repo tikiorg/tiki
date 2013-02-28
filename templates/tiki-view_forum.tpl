@@ -89,12 +89,12 @@
 
 <a class="link" href="tiki-forums.php">{tr}Forums{/tr}</a> {$prefs.site_crumb_seper} <a class="link" href="tiki-view_forum.php?forumId={$forumId}">{$forum_info.name|escape}</a>
 
-<br />
+<br>
 
 {if !empty($errors)}
 	{remarksbox type="warning" title="{tr}Errors{/tr}"}
 		{foreach from=$errors item=error name=error}
-			{if !$smarty.foreach.error.first}<br />{/if}
+			{if !$smarty.foreach.error.first}<br>{/if}
 			{$error|escape}
 		{/foreach}
 	{/remarksbox}
@@ -103,14 +103,14 @@
 	{remarksbox type="note"}
 		{foreach from=$feedbacks item=feedback name=feedback}
 			{$feedback|escape}
-			{if !$smarty.foreach.feedback.first}<br />{/if}
+			{if !$smarty.foreach.feedback.first}<br>{/if}
 		{/foreach}
 	{/remarksbox}
 {/if}
 
 {if $tiki_p_forum_post_topic eq 'y'}
 	{if $comment_preview eq 'y'}
-		<br /><br />
+		<br><br>
 		<b>{tr}Preview{/tr}</b>
 		<div class="commentscomment">
 			<div class="commentheader">
@@ -119,7 +119,7 @@
 						<td>
 							<div class="commentheader">
 								<span class="commentstitle">{$comments_preview_title|escape}</span>
-								<br />
+								<br>
 								{tr}by{/tr} {$user|userlink}
 							</div>
 						</td>
@@ -132,7 +132,7 @@
 			</div>
 			<div class="commenttext">
 				{$comments_preview_data}
-				<br />
+				<br>
 			</div>
 		</div>
 	{/if}
@@ -323,7 +323,7 @@
 						<td>
 							<input type="radio" name="set_thread_watch" value="y" id="thread_watch_yes" checked="checked" />
 							<label for="thread_watch_yes">{tr}Send me an e-mail when someone replies to my topic{/tr}</label>
-							<br />
+							<br>
 							<input type="radio" name="set_thread_watch" value="n" id="thread_watch_no" />
 							<label for="thread_watch_no">{tr}Don't send me any e-mails{/tr}</label>
 						</td>
@@ -331,7 +331,7 @@
 				{/if}
 				{if empty($user) && $prefs.feature_user_watches eq 'y'}
 					<tr>
-						<td><label for="anonymous_email">{tr}If you would like to be notified when someone replies to this topic<br />please tell us your e-mail address:{/tr}</label></td>
+						<td><label for="anonymous_email">{tr}If you would like to be notified when someone replies to this topic<br>please tell us your e-mail address:{/tr}</label></td>
 						<td><input type="text" size="30" id="anonymous_email" name="anonymous_email" /></td>
 					</tr>
 				{/if}
@@ -349,22 +349,22 @@
 				</tr>
 			</table>
 		</form>
-		<br />
+		<br>
 		
 		<table class="formcolor" id="commentshelp">
 			<tr>
 				<td class="even">
 					<b>{tr}Editing posts:{/tr}</b>
-					<br />
-					<br />
-					{tr}Use{/tr} [http://www.foo.com] {tr}or{/tr} [http://www.foo.com|description] {tr}for links{/tr}<br />
-					{tr}HTML tags are not allowed inside posts{/tr}<br />
+					<br>
+					<br>
+					{tr}Use{/tr} [http://www.foo.com] {tr}or{/tr} [http://www.foo.com|description] {tr}for links{/tr}<br>
+					{tr}HTML tags are not allowed inside posts{/tr}<br>
 				</td>
 			</tr>
 		</table>
 	</div> <!-- end forumpost -->
 
-	<br />
+	<br>
 {/if}
 
 {if $prefs.feature_forum_content_search eq 'y' and $prefs.feature_search eq 'y'}
@@ -402,7 +402,7 @@
 				<td style="text-align:right;" class="odd" colspan="10">
 					{if $reported > 0}
 						<a class="link" href="tiki-forums_reported.php?forumId={$forumId}">{tr}Reported Messages:{/tr}{$reported}</a>
-						<br />
+						<br>
 					{/if}
 					<a class="link" href="tiki-forum_queue.php?forumId={$forumId}">{tr}Queued Messages:{/tr} {$queued}</a>
 				</td>
@@ -555,7 +555,7 @@
 						<div style="float:left;">
 							{$comments_coms[ix].lastPost|tiki_short_datetime} {* date_format:"%b %d [%H:%M]" *}
 							{if $comments_coms[ix].replies}
-								<br />
+								<br>
 								<small>{if $forum_info.topics_list_lastpost_title eq 'y'}<i>{$comments_coms[ix].lastPostData.title|escape}</i> {/if}{tr}by{/tr} {$comments_coms[ix].lastPostData.userName|userlink}</small>
 							{/if}
 						</div>
@@ -654,7 +654,7 @@
 			</tr>
 		{/section}
 	</table>
-	<br />
+	<br>
 {/if}
 
 <div id="page-bar" class="clearfix">

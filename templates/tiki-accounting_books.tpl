@@ -4,7 +4,7 @@
 		{icon _id=exclamation alt="{tr}Error{/tr}" style="vertical-align:middle" align="left"}
 		{foreach from=$errors item=m name=errors}
 			{$m}
-			{if !$smarty.foreach.errors.last}<br />{/if}
+			{if !$smarty.foreach.errors.last}<br>{/if}
 		{/foreach}
 	</div>
 {/if}
@@ -100,10 +100,10 @@
 	<fieldset>
 		<legend>{tr}AutomTax{/tr}</legend>
 		<div>
-			<div class="aclabel"><label class="aclabel">{tr}Allow automatic tax calculation{/tr}</label><br />&nbsp;</div>
+			<div class="aclabel"><label class="aclabel">{tr}Allow automatic tax calculation{/tr}</label><br>&nbsp;</div>
 			<div>
-				<input type="radio" name="bookAutoTax" id="bookAutoTaxY"{if $bookAutoTax!='n'} checked="checked"{/if} />{tr}Yes{/tr}<br />
-				<input type="radio" name="bookAutoTax" id="bookAutoTaxN"{if $bookAutoTax=='n'} checked="checked"{/if} />{tr}No{/tr}<br />
+				<input type="radio" name="bookAutoTax" id="bookAutoTaxY"{if $bookAutoTax!='n'} checked="checked"{/if} />{tr}Yes{/tr}<br>
+				<input type="radio" name="bookAutoTax" id="bookAutoTaxN"{if $bookAutoTax=='n'} checked="checked"{/if} />{tr}No{/tr}<br>
 			</div>
 		</div>
 	</fieldset>

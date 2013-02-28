@@ -56,17 +56,17 @@
 			</tr>	
 		</table>
 		
-		<br /><br />				
+		<br><br>				
 		<input onclick="request_chat(document.getElementById('username').value,document.getElementById('tiki_user').value,document.getElementById('emailaddress').value,document.getElementById('reason').value);" type="button" value="{tr}Request support{/tr}" />
-		<br /><br />
+		<br><br>
 		<!--<a href="tiki-live_support_message.php" class="link">{tr}Open a support ticket instead{/tr}</a>-->
 	</div>
 	
 	<div id='requesting_chat' style='display:none;'>
 		<b>{tr}Your request is being processed{/tr}....</b>
-		<br /><br />
-		<a href="javascript:client_close();window.close();" class="link">{tr}cancel request and exit{/tr}</a><br />
-		<!--<a href="tiki-live_support_message.php" class="link">{tr}cancel request and leave a message{/tr}</a><br />-->
+		<br><br>
+		<a href="javascript:client_close();window.close();" class="link">{tr}cancel request and exit{/tr}</a><br>
+		<!--<a href="tiki-live_support_message.php" class="link">{tr}cancel request and leave a message{/tr}</a><br>-->
 	</div>
 	
   </body>

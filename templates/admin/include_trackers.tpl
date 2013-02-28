@@ -48,7 +48,7 @@
 				{tr}Use a directory to store files:{/tr}</td>
 			  <td>
 				<input type="radio" name="t_use_db" value="n" {if $prefs.t_use_db eq 'n'}checked="checked"{/if}/> {tr}Path:{/tr}
-				<br />
+				<br>
 				<input type="text" name="t_use_dir" value="{$prefs.t_use_dir|escape}" size="50" />
 			  </td>
 			</tr>

@@ -37,7 +37,7 @@
  </ul>
 {else}
  <form method='POST' action='tiki-invite.php'>
-  <br />
+  <br>
   <div style='text-align: right'>
    Load a previous invitation settings : 
    <select name='loadprevious' onchange='this.form.submit()'>
@@ -47,7 +47,7 @@
     {/foreach}
    </select>
   </div>
-  <br />
+  <br>
   <div>{tr}Fill this box with the list of e-mails you want to invite :{/tr}</div>
   <div><textarea name='emailslist' style='width: 100%; height: 150px;'>{$smarty.request.emailslist|escape}</textarea></div>
 
@@ -56,11 +56,11 @@
    <div><input type='radio' name='emailslist_format' value='all' {if $smarty.request.emailslist_format == 'all'}checked{/if}> {tr}Everything that appear as an email in the text will be detected and used (in that case, {literal}{firstname} and {lastname}{/literal} will be ignored in the email content){/tr}</div>
   </div>
 
-  <br />
+  <br>
   <div>{tr}Type here the e-mail subject you'll want to be sent to them :{/tr}</div>
   <div><input name='emailsubject' style='width: 100%;' value='{if isset($smarty.request.emailsubject)}{$smarty.request.emailsubject|escape}{else}Invitation{/if}' /></div>
 
-  <br />
+  <br>
   <div>{tr}Type here the e-mail content you'll want to be sent to them (and let the {literal}{link}{/literal} word, it will be replaced with the good link for registering) :{/tr}</div>
   <div><textarea name='emailcontent' style='width: 100%; height: 150px;'>{if isset($smarty.request.emailcontent)}{$smarty.request.emailcontent|escape}{else}Hi {literal}{firstname} {lastname}{/literal},
 
@@ -72,7 +72,7 @@ To register, just follow this link:
 Kind regards
 {/if}</textarea></div>
 
-  <br />
+  <br>
   <div>{tr}Type here the content that the user will see when he'll click on the link from the mail :{/tr}</div>
   <div><textarea name='wikicontent' style='width: 100%; height: 150px;'>{if isset($smarty.request.emailcontent)}{$smarty.request.wikicontent|escape}{else}Hi {literal}{firstname} {lastname}{/literal},
 
@@ -81,7 +81,7 @@ You are here because you have just clicked on the link from my invitation email.
 {/if}</textarea></div>
 
 {if count($invitegroups) > 0 && count($usergroups) > 0}
-  <br />
+  <br>
   <div>{tr}Choose one or more group you want theses suscribtion to be in. Don't choose any if you don't want anything special :{/tr}</div>
   <div><select multiple="multiple" name='invitegroups[]'>
    {foreach from=$usergroups item=ug}
@@ -91,9 +91,9 @@ You are here because you have just clicked on the link from my invitation email.
 {else}
 <input type='hidden' name='invitegroups' value=''/>
 {/if} 
-  <br />
+  <br>
   <div>Redirect to this wiki page after invitation acceptance (let it blank if unwanted) : <input type='text' name='wikipageafter' value='{$smarty.request.wikipageafter|escape}' /></div>
-  <br />
+  <br>
   <div><input type='submit' name='send' value="{tr}Send{/tr}" /></div>
  </form>
 {/if}

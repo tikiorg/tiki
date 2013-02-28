@@ -1,6 +1,6 @@
 {title help="Tiki+Importer"}{tr}Tiki Importer{/tr}{/title}
 
-<br />
+<br>
 
 {if isset($chooseSoftware)}
     {remarksbox type="warning" title="{tr}Warning:{/tr}"}
@@ -20,7 +20,7 @@
 	{tr}Depending on the size of the file from the source software, the import process may take a while to complete. This might be a problem according to your PHP and web server settings. This script tries to change the relevant settings but there are some settings that the script cannot change. So, if you are having problems with the script, please try to increase the value of the following PHP settings: max_input_time, max_execution_time (this setting is limited by the web server setting, if you are running Apache also change its Timeout setting), post_max_size, upload_max_filesize, memory_limit. It is recommended that you run this script on a server where you can change the values of those settings (if needed).{/tr}
     {/remarksbox}
        
-    <br />
+    <br>
     <label for="importerClassName">{tr}Select the software to import from:{/tr}</label>
     <form method="post" name="chooseSoftware" action="tiki-importer.php">
         <select name="importerClassName" id="importerClassName">
@@ -39,11 +39,11 @@
         <input type="hidden" name="importerClassName" value="{$importerClassName}"/>
         {foreach from=$importerOptions item=option}
             {if $option.type eq 'checkbox'}
-                <input type="checkbox" name="{$option.name}" id="{$option.name}"/><label for="{$option.name}">{$option.label}</label><br />
+                <input type="checkbox" name="{$option.name}" id="{$option.name}"/><label for="{$option.name}">{$option.label}</label><br>
             {elseif $option.type eq 'text'}
-                <label>{$option.label}<input type="text" name="{$option.name}" {if isset($option.value)}value="{$option.value}"{/if}/></label><br />
+                <label>{$option.label}<input type="text" name="{$option.name}" {if isset($option.value)}value="{$option.value}"{/if}/></label><br>
             {elseif $option.type eq 'select'}
-		        <label for="{$option.name}">{$option.label}</label><br />
+		        <label for="{$option.name}">{$option.label}</label><br>
 		        <select id="{$option.name}" name="{$option.name}">
 		        {foreach from=$option.options item=selectOption}
                     <option value="{$selectOption.name}">{$selectOption.label}</option>
@@ -51,8 +51,8 @@
 		        </select>
             {/if}
         {/foreach}
-        <br /><br />
-        <input type="file" name="importFile"/><br />
+        <br><br>
+        <input type="file" name="importFile"/><br>
         <input type="submit" value="{tr}Import{/tr}"/>
     </form>
 {elseif !empty($importFeedback)}
@@ -82,16 +82,16 @@
 	{/if}
 
     {if !empty($importErrors)}
-        <br />
+        <br>
         <p><b>{tr}Errors:{/tr}</b></p>
         <textarea rows="15" cols="100" codemirror="false">{$importErrors}</textarea> 
     {/if}
-    <br /><br />
+    <br><br>
     <p><b>{tr}Importer log:{/tr}</b></p>
     <textarea rows="15" cols="100" codemirror="false">{$importLog}</textarea>
     
     {if isset($wordpressUrls)}
-    	<br /><br />
+    	<br><br>
     	<p><b>{tr}Suggested .htaccess rules:{/tr}</b></p>
     	<textarea rows="15" cols="100" codemirror="false">{$wordpressUrls}</textarea>
     {/if}

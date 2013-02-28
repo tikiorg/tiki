@@ -24,7 +24,7 @@
 		{tr}Number of top voted polls to show{/tr}
 		<input type="text" name="maxRecords" value="{$maxRecords|escape}" size="3" />
 	</label>
-	<br />
+	<br>
 {/if}
 <label>
 	<input type="radio" name="which_date" value="between"{if $which_date eq 'between'} checked="checked"{/if} />{tr}Vote range displayed:{/tr} 
@@ -35,13 +35,13 @@
 <label>
 	{tr}End:{/tr} {html_select_date prefix="to_" time="$vote_to_date" start_year="$start_year"}
 </label>
-<br />
+<br>
 {if empty($pollId) or $poll_info.voteConsiderationSpan > 0}
 	<label>
 		<input type="radio" name="which_date" value="all"{if $which_date eq 'all'} checked="checked"{/if} />
 		{tr}All votes with no span consideration{/tr}
 	</label>
-	<br />
+	<br>
 	<label>
 		<input type="radio" name="which_date" value="consideration"{if $which_date eq 'consideration' or $which_date eq ''} checked="checked"{/if} />
 		{tr}All votes with span consideration{/tr}
@@ -52,7 +52,7 @@
 		{tr}All votes{/tr}
 	</label>		
 {/if}
-<br />
+<br>
 <input type="submit" name="search" value="{tr}Find{/tr}" />
 </form>
 

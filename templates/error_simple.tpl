@@ -11,8 +11,8 @@
 			<div class="cbox">
 				<div class="cbox-title">{icon _id=exclamation alt="{tr}Error{/tr}" style="vertical-align:middle"}{tr}Error{/tr}</div>
 				<div class="cbox-data">
-					{$msg}<br /><br />
-					<a href="javascript:window.close()" class="linkmenu">{tr}Close Window{/tr}</a><br /><br />
+					{$msg}<br><br>
+					<a href="javascript:window.close()" class="linkmenu">{tr}Close Window{/tr}</a><br><br>
 				</div>
 			</div>
 		</div>

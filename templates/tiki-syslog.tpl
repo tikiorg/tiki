@@ -7,13 +7,13 @@
 </div>
 
 {if $tikifeedback}
-  <br />
+  <br>
   {section name=n loop=$tikifeedback}
     <div class="simplebox {if $tikifeedback[n].num > 0} highlight{/if}">{$tikifeedback[n].mes}</div>
   {/section}
 {/if}
 
-<br /><br />
+<br><br>
 
 <form method="get" action="tiki-syslog.php">
   <label>{tr}Clean logs older than{/tr}&nbsp;

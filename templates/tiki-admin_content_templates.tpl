@@ -33,37 +33,37 @@
 					<input type="checkbox" name="section_cms" {if $info.section_cms eq 'y'}checked="checked"{/if} /> 
 					{tr}CMS{/tr} ({tr}Articles{/tr})
 					{if $info.section_cms eq 'y'}{$toolbar_section='cms'}{/if}
-					<br />
+					<br>
 				{/if}
 				{if $prefs.feature_wiki_templates eq 'y'}
 					<label><input type="checkbox" name="section_wiki" {if $info.section_wiki eq 'y'}checked="checked"{/if} />
 					{tr}Wiki{/tr}</label>
 					{if $info.section_wiki eq 'y'}{$toolbar_section='wiki page'}{/if}
-					<br />
+					<br>
 				{/if}
 				{if $prefs.feature_file_galleries_templates eq 'y'}
 					<label><input type="checkbox" name="section_file_galleries" {if $info.section_file_galleries eq 'y'}checked="checked"{/if} />
 					{if $info.section_file_galleries eq 'y'}{$toolbar_section='admin'}{/if}
 					{tr}File Galleries{/tr}</label>
-					<br />
+					<br>
 				{/if}
 				{if $prefs.feature_newsletters eq 'y'}
 					<label><input type="checkbox" name="section_newsletters" {if $info.section_newsletters eq 'y'}checked="checked"{/if} />
 					{if $info.section_newsletters eq 'y'}{$toolbar_section='newsletters'}{/if}
 					{tr}Newsletters{/tr}</label>
-					<br />
+					<br>
 				{/if}
 				{if $prefs.feature_events eq 'y'}
 					<label><input type="checkbox" name="section_events" {if $info.section_events eq 'y'}checked="checked"{/if} />
 					{if $info.section_events eq 'y'}{$toolbar_section='calendar'}{/if}
 					{tr}Events{/tr}</label>
-					<br />
+					<br>
 				{/if}
 				{if $prefs.feature_html_pages eq 'y'}
 					<label><input type="checkbox" name="section_html" {if $info.section_html eq 'y'}checked="checked"{/if} />
 					{if $info.section_html eq 'y'}{$toolbar_section='wiki page'}{/if}
 					{tr}HTML Pages{/tr}</label>
-					<br />
+					<br>
 				{/if}
 				{if ($prefs.feature_cms_templates ne 'y') and ($prefs.feature_wiki_templates ne 'y') and ($prefs.feature_file_galleries_templates ne 'y') and ($prefs.feature_newsletters ne 'y') and ($prefs.feature_events ne 'y') and ($prefs.feature_html_pages ne 'y')}
 					{tr}No features are configured to use templates.{/tr}

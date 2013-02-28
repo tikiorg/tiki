@@ -7,7 +7,7 @@
 		{icon _id=exclamation alt="{tr}Error{/tr}" style="vertical-align:middle" align="left"}
 		{foreach from=$errors item=m name=errors}
 			{$m}
-			{if !$smarty.foreach.errors.last}<br />{/if}
+			{if !$smarty.foreach.errors.last}<br>{/if}
 		{/foreach}
 	</div>
 {/if}
@@ -31,9 +31,9 @@
 <div class="box">
 	<h3 class="boxtitle">{tr}Tasks{/tr}</h3>
 	<div class="box-data" style="width: 500px">
-		{if $canBook}{button href="tiki-accounting_entry.php?bookId=$bookId" _text="{tr}Book new entries{/tr}"}<br />
-		{button href="tiki-accounting_stack.php?bookId=$bookId&hideform=1" _text="{tr}Confirm stack entries{/tr}"}<br />{/if}
-		{if $canStack}{button href="tiki-accounting_stack.php?bookId=$bookId" _text="{tr}Book into Stack{/tr}"}<br />{/if}
+		{if $canBook}{button href="tiki-accounting_entry.php?bookId=$bookId" _text="{tr}Book new entries{/tr}"}<br>
+		{button href="tiki-accounting_stack.php?bookId=$bookId&hideform=1" _text="{tr}Confirm stack entries{/tr}"}<br>{/if}
+		{if $canStack}{button href="tiki-accounting_stack.php?bookId=$bookId" _text="{tr}Book into Stack{/tr}"}<br>{/if}
 	</div>
 </div>
 {/tab}

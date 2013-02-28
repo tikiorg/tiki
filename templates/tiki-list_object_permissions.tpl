@@ -7,7 +7,7 @@
 {if !empty($feedbacks)}
 	{remarksbox type="note" title="{tr}Feedback{/tr}"}
 		{foreach from=$feedbacks item=feedback name=feedback}
-			{if !$smarty.foreach.feedback.first}<br />{/if}
+			{if !$smarty.foreach.feedback.first}<br>{/if}
 			{$feedback|escape}
 		{/foreach}
 	{/remarksbox}
@@ -63,7 +63,7 @@
 						<div style="float:left">{tr}Perform action with checked:{/tr}</div>
 						<div style="float:left">
 						{icon _id='cross' _tag='input_image' _confirm="{tr}Delete the selected permissions?{/tr}" name='delsel' alt="{tr}Delete the selected permissions{/tr}"}
-							 <br />						
+							 <br>						
 							 <input type="text" name="toGroup" /><input type="submit" name="dupsel" value="{tr}Duplicate the selected permissions on this group{/tr}" />
 	  					</div>
 					{/if}
@@ -109,7 +109,7 @@
 						<div style="float:left">{tr}Perform action with checked:{/tr}</div>
 						<div style="float:left">
 							 {icon _id='cross' _tag='input_image' _confirm="{tr}Delete the selected permissions?{/tr}" name='delsel' alt="{tr}Delete the selected permissions{/tr}" style='vertical-align: middle;'}
-							 <br />						
+							 <br>						
 							 <input type="text" name="toGroup" /><input type="submit" name="dupsel" value="{tr}Duplicate the selected permissions on this group{/tr}" />
 						</div>
 					{/if}

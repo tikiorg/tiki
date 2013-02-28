@@ -71,7 +71,7 @@
 					</td>
 					<td>
 						<input type="text" id="voteConsiderationSpan" name="voteConsiderationSpan" size="5" value="{$info.voteConsiderationSpan|escape}"/>
-						<br />
+						<br>
 						<i>{tr}0 for no limit{/tr}</i>
 					</td>
 				</tr>
@@ -113,7 +113,7 @@
 							{section name=cat loop=$channels[user].categories}
 								{$channels[user].categories[cat].name}
 								{if !$smarty.section.cat.last}
-									<br />
+									<br>
 								{/if}
 							{/section}
 						</td>
@@ -123,7 +123,7 @@
 							{section name=obj loop=$channels[user].objects}
 								<a href="{$channels[user].objects[obj].href}">{$channels[user].objects[obj].name}</a>
 								{if !$smarty.section.obj.last}
-									<br />
+									<br>
 								{/if}
 							{/section}
 						</td>

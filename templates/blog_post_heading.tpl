@@ -7,7 +7,7 @@
 {* example code to add more info to the default blog heading if desired
  * remove the line above (starting curly bracket then asterisk) and the last line to enable
 <div class="bloginfo">
-{tr}Created by{/tr} {$post_info.user|userlink} {$post_info.created|tiki_short_datetime:on}<br />
-{tr}Last post{/tr} {$post_info.lastModif|tiki_short_datetime}<br />
+{tr}Created by{/tr} {$post_info.user|userlink} {$post_info.created|tiki_short_datetime:on}<br>
+{tr}Last post{/tr} {$post_info.lastModif|tiki_short_datetime}<br>
 </div>
 *}

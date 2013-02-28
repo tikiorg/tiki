@@ -382,7 +382,7 @@
 	<div align="center">
 		<img src="tiki-usage_chart.php" alt="{tr}Usage chart image{/tr}"/>
 	</div>
-	<br />
+	<br>
 	<div align="center">
 		<img src="tiki-usage_chart.php?type=daily" alt="{tr}Daily Usage{/tr}"/>
 	</div>

@@ -132,7 +132,7 @@
 		</td>
     </tr>
     <tr>
-      <td>{tr}Description{/tr}<br /><br />
+      <td>{tr}Description{/tr}<br><br>
       </td>
       <td colspan="3">
         {toolbars area_id='edittask'}
@@ -226,7 +226,7 @@
 	<tr>
 		<td>{tr}Info{/tr}</td>
 		<td colspan="3">
-			{tr}This message will be send to users if you are makeing changes of assigned tasks{/tr}<br />
+			{tr}This message will be send to users if you are makeing changes of assigned tasks{/tr}<br>
 			<textarea style="width:98%;" rows="2" cols="80" name="task_info_message">{$info.info|escape}</textarea>
 			<input checked="checked" type="checkbox" name="task_send_changes_message" />{tr}Send message with changes{/tr}
 		</td>

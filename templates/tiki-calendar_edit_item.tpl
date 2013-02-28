@@ -58,7 +58,7 @@
 				<td style="background-color:#{$calendar.custombgcolor};color:#{$calendar.customfgcolor};">
 					{if $edit}
 						{if $prefs.javascript_enabled eq 'n'}
-							{$calendar.name|escape}<br />{tr}or{/tr}&nbsp;
+							{$calendar.name|escape}<br>{tr}or{/tr}&nbsp;
 							<input type="submit" name="changeCal" value="{tr}Go to{/tr}" />
 						{/if}
 						<select name="save[calendarId]" id="calid" onchange="javascript:needToConfirm=false;document.getElementById('editcalitem').submit();">
@@ -155,7 +155,7 @@
 								{/if}
 								{if $recurrence.id gt 0}
 									{if $recurrence.weekly}
-										<input type="hidden" name="recurrenceType" value="weekly" />{tr}On a weekly basis{/tr}<br />
+										<input type="hidden" name="recurrenceType" value="weekly" />{tr}On a weekly basis{/tr}<br>
 									{/if}
 								{else}
 									<input type="radio" id="id_recurrenceTypeW" name="recurrenceType" value="weekly"
@@ -166,7 +166,7 @@
 									<label for="id_recurrenceTypeW">
 										{tr}On a weekly basis{/tr}
 									</label>
-									<br />
+									<br>
 									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 								{/if}
 								{if $recurrence.id eq 0 or $recurrence.weekly}
@@ -223,12 +223,12 @@
 										</option>
 									</select>
 									&nbsp;{tr}of the week{/tr}
-									<br />
+									<br>
 									<hr style="width:75%"/>
 								{/if}
 								{if $recurrence.id gt 0}
 									{if $recurrence.monthly}
-										<input type="hidden" name="recurrenceType" value="monthly" />{tr}On a monthly basis{/tr}<br />
+										<input type="hidden" name="recurrenceType" value="monthly" />{tr}On a monthly basis{/tr}<br>
 									{/if}
 								{else}
 									<input type="radio" id="id_recurrenceTypeM" name="recurrenceType" value="monthly"
@@ -239,7 +239,7 @@
 									<label for="id_recurrenceTypeM">
 										{tr}On a monthly basis{/tr}
 									</label>
-									<br />
+									<br>
 										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 								{/if}
 								{if $recurrence.id eq 0 or $recurrence.monthly}
@@ -259,11 +259,11 @@
 										{/section}
 									</select>
 									&nbsp;{tr}of the month{/tr}
-									<br /><hr style="width:75%"/>
+									<br><hr style="width:75%"/>
 								{/if}
 								{if $recurrence.id gt 0}
 									{if $recurrence.yearly}
-									  <input type="hidden" name="recurrenceType" value="yearly" />{tr}On a yearly basis{/tr}<br />
+									  <input type="hidden" name="recurrenceType" value="yearly" />{tr}On a yearly basis{/tr}<br>
 									{/if}
 								{else}
 									<input type="radio" id="id_recurrenceTypeY" name="recurrenceType" value="yearly"
@@ -274,7 +274,7 @@
 									<label for="id_recurrenceTypeY">
 										{tr}On a yearly basis{/tr}
 									</label>
-									<br />
+									<br>
 									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 								{/if}
 								{if $recurrence.id eq 0 or $recurrence.yearly}
@@ -381,9 +381,9 @@
 									</select>
 									&nbsp;&nbsp;
 									<span id="errorDateOfYear" style="color:#900;"></span>
-									<br /><br /><hr />
+									<br><br><hr />
 								{/if}
-								<br />
+								<br>
 								{if $recurrence.id gt 0}
 									<input type="hidden" name="startPeriod" value="{$recurrence.startPeriod}"/>
 									<input type="hidden" name="nbRecurrences" value="{$recurrence.nbRecurrences}"/>
@@ -401,7 +401,7 @@
 									{else}
 										{html_select_date prefix="startPeriod_" time=$recurrence.startPeriod field_order=$prefs.display_field_order start_year=$prefs.calendar_start_year end_year=$prefs.calendar_end_year}
 									{/if}
-									<br /><hr style="width:75%"/>
+									<br><hr style="width:75%"/>
 									<input type="radio" id="id_endTypeNb" name="endType" value="nb"
 										{if $recurrence.nbRecurrences or $calitem.calitemId eq 0}
 											checked="checked"
@@ -425,7 +425,7 @@
 									<label for="id_endTypeNb">
 										{$occurnumber}
 									</label>
-									<br />
+									<br>
 									<input type="radio" id="id_endTypeDt" name="endType" value="dt"
 										{if $recurrence.endPeriod gt 0}
 											checked="checked"
@@ -441,7 +441,7 @@
 										{html_select_date prefix="endPeriod_" time=$recurrence.endPeriod field_order=$prefs.display_field_order start_year=$prefs.calendar_start_year end_year=$prefs.calendar_end_year}
 									{/if}
 								{/if}
-								<br />&nbsp;
+								<br>&nbsp;
 							</div>
 						{else}
 							{if $recurrence.id > 0}
@@ -460,7 +460,7 @@
 									{else}
 										{tr}on each{/tr}&nbsp;{$recurrence.dateOfYear_day} {tr}of{/tr} {tr}{$monthnames[$recurrence.dateOfYear_month]}{/tr}
 									{/if}
-									<br />
+									<br>
 									{tr}starting{/tr} {$recurrence.startPeriod|tiki_long_date}
 									{if $recurrence.endPeriod gt 0}
 										, {tr}ending{/tr}&nbsp;{$recurrence.endPeriod|tiki_long_date}
@@ -726,7 +726,7 @@
 						{/if}
 					{/if}
 					{if $impossibleDates}
-						<br />
+						<br>
 						<span style="color:#900;">
 							{tr}Events cannot end before they start{/tr}
 						</span>
@@ -978,7 +978,7 @@
 							{/if}
 						{else}
 							{foreach item=org from=$calitem.organizers}
-								{$org|userlink}<br />
+								{$org|userlink}<br>
 							{/foreach}
 						{/if}
 					{/if}
@@ -1020,7 +1020,7 @@
 								{if $listroles[$ppl.role]}
 									({$listroles[$ppl.role]})
 								{/if}
-								<br />
+								<br>
 								{if $ppl.name eq $user}
 									{assign var='in_particip' value='y'}
 								{/if}
@@ -1047,17 +1047,17 @@
 				<td colspan="2">
 					{if $edit}
 						<div style="display: {if $calendar.customparticipants eq 'y' and (isset($cookie.show_calparthelp) and $cookie.show_calparthelp eq 'y')}block{else}none{/if};" id="calparthelp">
-							{tr}Roles{/tr}<br />
-							0: {tr}chair{/tr} ({tr}default role{/tr})<br />
-							1: {tr}required participant{/tr}<br />
-							2: {tr}optional participant{/tr}<br />
-							3: {tr}non participant{/tr}<br />
-							<br />
+							{tr}Roles{/tr}<br>
+							0: {tr}chair{/tr} ({tr}default role{/tr})<br>
+							1: {tr}required participant{/tr}<br>
+							2: {tr}optional participant{/tr}<br>
+							3: {tr}non participant{/tr}<br>
+							<br>
 							{tr}Give participant list separated by commas. Roles have to be given in a prefix separated by a column like in:{/tr}&nbsp;
 							<span class="inline_syntax">
 								{tr}role:login_or_email,login_or_email{/tr}
 							</span>
-							<br />
+							<br>
 							{tr}If no role is provided, default role will be "Chair participant".{/tr}
 					{/if}
 					</div>
@@ -1072,11 +1072,11 @@
 							<input type="radio" id="id_affectEvt" name="affect" value="event" checked="checked"/>
 							<label for="id_affectEvt">
 								{tr}Update this event only{/tr}
-							</label><br />
+							</label><br>
 							<input type="radio" id="id_affectMan" name="affect" value="manually"/>
 							<label for="id_affectMan">
 								{tr}Update every unchanged events of this recurrence rule{/tr}
-							</label><br />
+							</label><br>
 								<input type="radio" id="id_affectAll" name="affect" value="all"/>
 								<label for="id_affectAll">
 									{tr}Update every events of this recurrence rule{/tr}

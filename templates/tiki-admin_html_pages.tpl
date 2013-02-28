@@ -77,7 +77,7 @@
 	</table>
 </form>
 
-<br />
+<br>
 <h2>{tr}HTML pages{/tr}</h2>
 {if $channels}
 	{include file='find.tpl'}

@@ -25,7 +25,7 @@
 				<td>{tr}Use a directory to store userfiles:{/tr}</td>
 				<td>
 					<input type="radio" name="uf_use_db" value="n" {if $prefs.uf_use_db eq 'n'}checked="checked"{/if}/> {tr}Path:{/tr}
-					<br />
+					<br>
 					<input type="text" name="uf_use_dir" value="{$prefs.uf_use_dir|escape}" size="50" />
 				</td>
 			</tr>

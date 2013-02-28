@@ -19,9 +19,9 @@
 		<tr>
 			<td></td>
 			<td><b>{tr}Type{/tr}</b></td>
-			<td><b>{tr}Creation Date{/tr}</b><br />{tr}(YYYY-MM-DD HH:MM:SS){/tr}</td>
-			<td><b>{tr}Expiration Date{/tr}</b><br />{tr}(YYYY-MM-DD HH:MM:SS){/tr}</td>
-			<td><b>{tr}Used{/tr}</b><br />{tr}(level credits always 0){/tr}</td>
+			<td><b>{tr}Creation Date{/tr}</b><br>{tr}(YYYY-MM-DD HH:MM:SS){/tr}</td>
+			<td><b>{tr}Expiration Date{/tr}</b><br>{tr}(YYYY-MM-DD HH:MM:SS){/tr}</td>
+			<td><b>{tr}Used{/tr}</b><br>{tr}(level credits always 0){/tr}</td>
 			<td><b>{tr}Total{/tr}</b></td>
 		</tr>
 		{foreach key=id item=data from=$credits}
@@ -81,7 +81,7 @@
 	<option value="{$id}">{$id|escape}</option>
 	{/foreach}
 	</select>
-	<br />
+	<br>
 	{tr}Amount:{/tr} <input type="text" name="use_credit_amount" value="0" size="8" />
 	<input type="hidden" name="userfilter" value="{$userfilter|escape}"/>
 	<input type="submit" name="use_credit" value="{tr}Use{/tr}"/>
@@ -94,7 +94,7 @@
 	<option value="{$id}">{$id|escape}</option>
 	{/foreach}
 	</select>
-	<br />
+	<br>
 	{tr}Amount:{/tr} <input type="text" name="restore_credit_amount" value="0" size="8" />
 	<input type="hidden" name="userfilter" value="{$userfilter|escape}"/>
 	<input type="submit" name="restore_credit" value="{tr}Restore{/tr}"/>
@@ -108,7 +108,7 @@
 			<tr>
 				<td>
 					{html_select_date time=$startDate prefix="startDate_" end_year="-10" day_value_format="%02d" field_order=$prefs.display_field_order}
-				<br />
+				<br>
 					{html_select_date time=$endDate prefix="endDate_" end_year="-10" day_value_format="%02d" field_order=$prefs.display_field_order}
 				</td>
 				<td>

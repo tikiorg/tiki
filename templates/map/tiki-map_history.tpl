@@ -1,4 +1,4 @@
-<a class="pagetitle" href="tiki-map_history.php?mapfile={$mapfile}">{tr}Mapfile History{/tr}</a> {tr}of{/tr}<a class="pagetitle" href="tiki-map_edit.php?mapfile={$mapfile}&mode=editing"> {$mapfile}</a><br />
+<a class="pagetitle" href="tiki-map_history.php?mapfile={$mapfile}">{tr}Mapfile History{/tr}</a> {tr}of{/tr}<a class="pagetitle" href="tiki-map_edit.php?mapfile={$mapfile}&mode=editing"> {$mapfile}</a><br>
 {if $preview}
 <h2>{tr}Version:{/tr} {$preview}</h2>
 <div  class="wikitext">{$previewd}</div>
@@ -44,25 +44,25 @@
       {if $diffdata[ix].type == "diffheader"}
 		{assign var="oldd" value=$diffdata[ix].old}
 		{assign var="newd" value=$diffdata[ix].new}
-           <br /><div class="diffheader">@@ {tr}-Lines: {$oldd} changed to +Lines: {$newd}{/tr} @@</div>
+           <br><div class="diffheader">@@ {tr}-Lines: {$oldd} changed to +Lines: {$newd}{/tr} @@</div>
       {elseif $diffdata[ix].type == "diffdeleted"}
 		<div class="diffdeleted">
 			{section name=iy loop=$diffdata[ix].data}
-				{if not $smarty.section.iy.first}<br />{/if}
+				{if not $smarty.section.iy.first}<br>{/if}
 				- {$diffdata[ix].data[iy]}
 			{/section}
             </div>
       {elseif $diffdata[ix].type == "diffadded"}
             <div class="diffadded">
 			{section name=iy loop=$diffdata[ix].data}
-				{if not $smarty.section.iy.first}<br />{/if}
+				{if not $smarty.section.iy.first}<br>{/if}
 				+ {$diffdata[ix].data[iy]}
 			{/section}
 		</div>
       {elseif $diffdata[ix].type == "diffbody"}
             <div class="diffbody">
 			{section name=iy loop=$diffdata[ix].data}
-				{if not $smarty.section.iy.first}<br />{/if}
+				{if not $smarty.section.iy.first}<br>{/if}
 				{$diffdata[ix].data[iy]}
 			{/section}
 		</div>
@@ -78,7 +78,7 @@
 {if $diff_style eq 'sidediff' || $diff_style eq 'minsidediff'}
   {if $diffdata}{$diffdata}{else}{tr}Versions are identical{/tr}</td></tr></table>{/if}
 {/if}
-<br />
+<br>
 
 {if $preview || $diff_style}<h2>{tr}History{/tr}</h2>{/if}
 <form action="tiki-map_history.php" method="get">
@@ -105,7 +105,7 @@
 <th>{tr}Action{/tr}</th>
 {if $prefs.default_wiki_diff_style != "old" and $history}
 <th colspan="2">
-<input type="submit" name="compare" value="{tr}Compare{/tr}" /><br />
+<input type="submit" name="compare" value="{tr}Compare{/tr}" /><br>
 </th>
 {/if}
 </tr>

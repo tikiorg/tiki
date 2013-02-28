@@ -141,12 +141,12 @@
 								</div>  
 				{elseif $friend_pending}
 								<div class="clearfix">
-									<div class="">{icon _id='user_delete'} {tr}The user requested friendship with you{/tr} <br /><a class="link" href="tiki-friends.php?accept={$userinfo.login}">{tr}Accept friendship from this user{/tr}</a> <br /><a class="link" href="tiki-friends.php?refuse={$userinfo.login}">{tr}Refuse friendship from this user{/tr}</a>
+									<div class="">{icon _id='user_delete'} {tr}The user requested friendship with you{/tr} <br><a class="link" href="tiki-friends.php?accept={$userinfo.login}">{tr}Accept friendship from this user{/tr}</a> <br><a class="link" href="tiki-friends.php?refuse={$userinfo.login}">{tr}Refuse friendship from this user{/tr}</a>
 	 								</div>
 								</div>
 				{elseif $friend_waiting}
 								<div class="clearfix">
-									<div class="">{icon _id='user_delete'} {tr}Currently waiting for user approval{/tr} <br />
+									<div class="">{icon _id='user_delete'} {tr}Currently waiting for user approval{/tr} <br>
 										<a class="link" href="tiki-friends.php?cancel_waiting_friendship={$userinfo.login}">{tr}Cancel friendship request towards this user{/tr}</a>
 									</div>
 								</div>  

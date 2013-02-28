@@ -95,7 +95,7 @@
 {/if}
   
 {if $popup eq ""}
-	<br /><br />
+	<br><br>
 	<table class="normal noslideshow">
 		<tr><td class="odd">{tr}Image Name:{/tr}</td><td class="odd">{$name}</td></tr>
 		<tr><td class="even">{tr}Created:{/tr}</td><td class="even">{$created|tiki_long_datetime}</td></tr>
@@ -131,7 +131,7 @@
 		</tr>
 		{/if}
 	</table>
-	<br /><br />    
+	<br><br>    
 	<table class="normal noslideshow" style="font-size:small">
 		<tr>
 			<td class="even" style="border-bottom:0px" colspan="2">

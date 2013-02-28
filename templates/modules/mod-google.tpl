@@ -9,8 +9,8 @@
   <input name="googles" type="image" src="img/googleg.gif" alt="Google" align="left" />&nbsp;
   <input type="text" name="q" size="12"  maxlength="100" />
   {if $url_host ne ''}
-    <input type="hidden" name="domains" value="{$url_host}" /><br />
-    <input type="radio" name="sitesearch" value="{$url_host}" checked="checked" />{$url_host}<br />
+    <input type="hidden" name="domains" value="{$url_host}" /><br>
+    <input type="radio" name="sitesearch" value="{$url_host}" checked="checked" />{$url_host}<br>
     <input type="radio" name="sitesearch" value="" />WWW
   {/if}
 </form>

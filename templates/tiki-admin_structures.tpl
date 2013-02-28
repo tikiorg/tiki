@@ -15,7 +15,7 @@
 
 {if $askremove eq 'y'}
 	{remarksbox type='confirm' title="{tr}Please Confirm{/tr}"}
-		{tr}You will remove structure:{/tr} {$removename|escape}<br />
+		{tr}You will remove structure:{/tr} {$removename|escape}<br>
 		{button href="?rremove=$remove&amp;page=$removename" _text="{tr}Destroy the structure leaving the wiki pages{/tr}"}
 		{if $tiki_p_remove == 'y'}
 			{button href="?rremovex=$remove&amp;page=$removename" _text="{tr}Destroy the structure and remove the pages{/tr}"}
@@ -70,7 +70,7 @@
 		{if $channels or ($find ne '')}
 			{include file='find.tpl' find_show_languages='y' find_show_categories='y' find_show_num_rows='y'}
 		{/if}
-		<br />
+		<br>
 		<form>
 			<table class="normal">
 				<tr>
@@ -154,7 +154,7 @@
 						<td><input type="text" name="alias" id="alias" /></td>
 					</tr>
 					<tr>
-						<td><label for="tree">{tr}Tree:{/tr}</label><br />(optional)</td>
+						<td><label for="tree">{tr}Tree:{/tr}</label><br>(optional)</td>
 						<td colspan="2">
 							<textarea rows="5" cols="60" id="tree" name="tree" style="width:95%"></textarea>
 							{remarksbox type="tip" title="{tr}Note{/tr}"}{tr}Use single spaces to indent structure levels{/tr}{/remarksbox}

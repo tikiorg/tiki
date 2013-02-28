@@ -26,7 +26,7 @@
 {button href="tiki-socialnetworks.php?remove_twitter=true" _text="{tr}Remove{/tr}"}
 {tr}Twitter authorisation.{/tr}
 {else}
-{if $show_removal}<a href="https://twitter.com/settings/connections" target="_blank">{tr}Click here{/tr}</a>{tr}to manage your authorisations at Twitter{/tr}<br />{else}
+{if $show_removal}<a href="https://twitter.com/settings/connections" target="_blank">{tr}Click here{/tr}</a>{tr}to manage your authorisations at Twitter{/tr}<br>{else}
 {* Can't use button here, we need the reload/redirect to work *}
 <span class="button"><a href="tiki-socialnetworks.php?request_twitter=true">Authorize</a></span>
 {tr}this site with twitter.com to use Twitter integration of this site.{/tr}
@@ -47,7 +47,7 @@
 {button href="tiki-socialnetworks.php?remove_facebook=true" _text="{tr}Remove{/tr}"}
 {tr}Facebook authorisation.{/tr}
 {else}
-{if $show_removal}<a href="http://facebook.com/editapps.php" target="_blank">{tr}Click here{/tr}</a>{tr}to manage your authorisations at Facebook{/tr}<br />{else}
+{if $show_removal}<a href="http://facebook.com/editapps.php" target="_blank">{tr}Click here{/tr}</a>{tr}to manage your authorisations at Facebook{/tr}<br>{else}
 {* Can't use button here, we need the reload/redirect to work *}
 <span class="button"><a href="tiki-socialnetworks.php?request_facebook=true">Authorize</a></span>
 {tr}this site with facebook.com to use Facebook integration of this site.{/tr}

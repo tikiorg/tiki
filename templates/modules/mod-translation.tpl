@@ -68,7 +68,7 @@
 							{/foreach}
 						</ul>
 					{/if}
-				</div><br />
+				</div><br>
 			{/if}
 			
 			{if $mod_translation_worst_known or $mod_translation_worst_other}
@@ -114,7 +114,7 @@
 						{/foreach}
 					</ul>
 					{/if}
-				</div><br />
+				</div><br>
 			{/if}
 		
 	{/tikimodule}

@@ -45,11 +45,11 @@
 			</tr>
 			<tr>
 				<td>{tr}URIs where the banner appears only{/tr}</td>
-				<td><input type="text" name="onlyInURIs" value="{$onlyInURIs|escape}" /><br /><i>{tr}Type each URI enclosed with the # character. Exemple:#/this_page#/tiki-index.php?page=this_page#{/tr}</i>
+				<td><input type="text" name="onlyInURIs" value="{$onlyInURIs|escape}" /><br><i>{tr}Type each URI enclosed with the # character. Exemple:#/this_page#/tiki-index.php?page=this_page#{/tr}</i>
 			</tr>
 			<tr>
 				<td>{tr}URIs where the banner will not appear {/tr}</td>
-				<td><input type="text" name="exceptInURIs" value="{$exceptInURIs|escape}" /><br /><i>{tr}Type each URI enclosed with the # character. Exemple:#/this_page#/tiki-index.php?page=this_page#{/tr}</i>
+				<td><input type="text" name="exceptInURIs" value="{$exceptInURIs|escape}" /><br><i>{tr}Type each URI enclosed with the # character. Exemple:#/this_page#/tiki-index.php?page=this_page#{/tr}</i>
 			</tr>
 			<tr>
 				<td>{tr}Zone:{/tr}</td>
@@ -61,9 +61,9 @@
 							<option value="" disabled="disabled" selected="selected">{tr}None{/tr}</option>
 						{/section}
 					</select>
-					<br />
+					<br>
 					{tr}Or, create a new zone:{/tr}
-					<br />
+					<br>
 					<input type="text" name="zoneName" size="10" />
 					<input type="submit" name="create_zone" value="{tr}Create{/tr}" />
 				</td>
@@ -224,11 +224,11 @@
 						<tr>
 							<td>
 								{tr}Movie URL{/tr} <input type="text" size="50" name="movieUrl" value="{$movie.movie|escape}" />
-								<br />
+								<br>
 								{tr}Movie Size:{/tr} <input type="text" size="4" name="movieWidth" value="{$movie.width|escape}" /> {tr}Pixels{/tr} x <input type="text" size="4" name="movieHeight" value="{$movie.height|escape}" /> {tr}Pixels{/tr}
-								<br />
+								<br>
 								{tr}FlashPlugin min version:{/tr} <input type="text" name="movieVersion" value="{$movie.version|escape}" />({tr}ex:{/tr}9.0.0)
-								<br />
+								<br>
 								Note: To be managed with tiki , your flash banner link should be: <a class="link" href="banner_click.php?id={$bannerId}&amp;url={$url}">banner_click.php?id={$bannerId}&amp;url={$url}</a> 
 							</td>
 						</tr>

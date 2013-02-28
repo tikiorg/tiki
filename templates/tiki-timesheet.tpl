@@ -46,7 +46,7 @@
 						<input type="text" name="jtrack-task-estimate" id="jtrack-task-estimate" class="jtrack-text" />
 					</p>
 					<p>
-						<input type="checkbox" name="jtrack-task-completed" id="jtrack-task-completed" /> {tr}Task is completed{/tr}<br />
+						<input type="checkbox" name="jtrack-task-completed" id="jtrack-task-completed" /> {tr}Task is completed{/tr}<br>
 						<input type="checkbox" name="jtrack-task-archived" id="jtrack-task-archived" /> {tr}Task is archived{/tr}
 					</p>
 					<p>

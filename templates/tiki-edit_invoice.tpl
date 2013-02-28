@@ -24,7 +24,7 @@
 		<tr>
 			<td>
 				{tr}Invoice Number{/tr} <input name='InvoiceNumber' id='InvoiceNumber' type='text' value='{if $invoice.$InvoiceNumber}{$invoice.$InvoiceNumber}{else}{$NewInvoiceNumber}{/if}' />
-				<br />
+				<br>
 				{tr}Date Issued{/tr} <input name='DateIssued' id='DateIssued' value='{$invoice.$DateIssued}' />
 			</td>
 		</tr>
@@ -61,12 +61,12 @@
 
 	</table>
 
-	{tr}Amount:{/tr} <span id='Amount'></span><br />
-	{tr}Total:{/tr} <span id='Total'></span><br />
+	{tr}Amount:{/tr} <span id='Amount'></span><br>
+	{tr}Total:{/tr} <span id='Total'></span><br>
 
 	{tr}Invoice Note{/tr}
-	<br />
+	<br>
 	<textarea name="InvoiceNote" id="InvoiceNote">{$invoice.$InvoiceNote}</textarea>
-	<br />
+	<br>
 	<input type="submit" value="{tr}Save Invoice{/tr}" name="submit" />
 </form>

@@ -120,7 +120,7 @@
 
 			{section name=rep loop=$comments_coms}
 				{include file='comment.tpl' comment=$comments_coms[rep]}
-				{if $thread_style != 'commentStyle_plain'}<br />{/if}
+				{if $thread_style != 'commentStyle_plain'}<br>{/if}
 			{/section}
 		</form>
 
@@ -144,7 +144,7 @@
 					{/if}
 
 					{if $prefs.direct_pagination eq 'y' && $display eq ''}
-						<br />
+						<br>
 						{section loop=$comments_cant_pages name=foo}
 							{assign var=selector_offset value=$smarty.section.foo.index|times:$comments_per_page}
 							<a class="prevnext" href="{$comments_complete_father}comments_threshold={$comments_threshold}&amp;comments_parentId={$comments_parentId}&amp;comments_offset={$selector_offset}{$thread_sort_mode_param}&amp;comments_per_page={$comments_per_page}&amp;thread_style={$thread_style}">
@@ -160,7 +160,7 @@
 {if !empty($errors)}
 	{remarksbox type="warning" title="{tr}Errors{/tr}"}
 		{foreach from=$errors item=error name=error}
-			{if !$smarty.foreach.error.first}<br />{/if}
+			{if !$smarty.foreach.error.first}<br>{/if}
 			{$error|escape}
 		{/foreach}
 	{/remarksbox}
@@ -169,7 +169,7 @@
 	{remarksbox type="note"}
 		{foreach from=$feedbacks item=feedback name=feedback}
 			{$feedback|escape}
-			{if !$smarty.foreach.feedback.first}<br />{/if}
+			{if !$smarty.foreach.feedback.first}<br>{/if}
 		{/foreach}
 	{/remarksbox}
 {/if}
@@ -224,7 +224,7 @@
 						<tr>
 							<td>
 								<label for="anonymous_email">
-									{tr}If you would like to be notified when someone replies to this topic<br />please tell us your e-mail address{/tr}
+									{tr}If you would like to be notified when someone replies to this topic<br>please tell us your e-mail address{/tr}
 								</label>
 							</td>
 							<td>
@@ -307,7 +307,7 @@
 				</table>
 			</form>
 
-			<br />
+			<br>
 			{assign var=tips_title value="{tr}Posting replies{/tr}"}
 
 			</div>

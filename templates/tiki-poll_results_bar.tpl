@@ -20,12 +20,12 @@
     	</tr>
 	{/section}
 </table>
-<br />
+<br>
 {if $showtotal ne 'n'}
-{tr}Number of votes:{/tr} {$poll_info.votes} {tr}votes{/tr}<br /><br />
+{tr}Number of votes:{/tr} {$poll_info.votes} {tr}votes{/tr}<br><br>
 {/if}
 {if is_numeric($poll_info.total)}
-	{tr}Total:{/tr} {$poll_info.total}<br />
+	{tr}Total:{/tr} {$poll_info.total}<br>
 	{tr}Average:{/tr} {math equation="x/y" x=$poll_info.total y=$poll_info.votes format="%.2f"}
 {/if}
 </div>

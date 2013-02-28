@@ -14,7 +14,7 @@
 		{/if}
 		<ul>
 			{section name=ix loop=$items}
-				<li><a href="{$items[ix].url|escape}" class="link">{$items[ix].title|escape}</a>{if $items[ix].pubDate ne ""}<br /><span class="rssdate">({$items[ix].pubDate|escape})</span>{/if}</li>
+				<li><a href="{$items[ix].url|escape}" class="link">{$items[ix].title|escape}</a>{if $items[ix].pubDate ne ""}<br><span class="rssdate">({$items[ix].pubDate|escape})</span>{/if}</li>
 			{/section}
 		</ul>
 	{/remarksbox}
@@ -42,13 +42,13 @@
 					<tr class="{cycle}">
 						<td class="id">{$channels[chan].rssId|escape}</td>
 						<td class="text">
-							<strong>{$channels[chan].name|escape}</strong><br />
-							{if $channels[chan].description}{$channels[chan].description|escape|nl2br}<br />{/if}
-							{tr}Site:{/tr} <a href="{$channels[chan].siteurl|escape}">{$channels[chan].sitetitle|escape}</a><br />
-							{tr}Feed:{/tr} <a class="link" href="{$channels[chan].url|escape}">{$channels[chan].url|truncate:50:"...":true}</a><br />
+							<strong>{$channels[chan].name|escape}</strong><br>
+							{if $channels[chan].description}{$channels[chan].description|escape|nl2br}<br>{/if}
+							{tr}Site:{/tr} <a href="{$channels[chan].siteurl|escape}">{$channels[chan].sitetitle|escape}</a><br>
+							{tr}Feed:{/tr} <a class="link" href="{$channels[chan].url|escape}">{$channels[chan].url|truncate:50:"...":true}</a><br>
 						</td>
 						<td class="text">
-							{if $channels[chan].lastUpdated eq '1000000'}{tr}Never{/tr}{else}{$channels[chan].lastUpdated|tiki_short_datetime}{/if}<br />
+							{if $channels[chan].lastUpdated eq '1000000'}{tr}Never{/tr}{else}{$channels[chan].lastUpdated|tiki_short_datetime}{/if}<br>
 							{tr}Refresh rate:{/tr} {$channels[chan].refresh|duration}
 						</td>
 						<td class="text">{$channels[chan].showTitle|escape}</td>

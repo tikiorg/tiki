@@ -3,7 +3,7 @@
 {title help="MyTiki"}{tr}My Tiki{/tr}{/title}
 
   {include file='tiki-mytiki_bar.tpl'}
-  <br />
+  <br>
 
   {capture name=my}
   {if $prefs.feature_wiki eq 'y' and $mytiki_pages eq 'y'}
@@ -148,7 +148,7 @@
           </table>
 		  <div style="text-align:right;">
 		  	   {tr}Records:{/tr} {$user_items|@count}
-			   {if !empty($nb_item_comments)}<br />{tr}Comments:{/tr} {$nb_item_comments}{/if}
+			   {if !empty($nb_item_comments)}<br>{tr}Comments:{/tr} {$nb_item_comments}{/if}
 		  </div>
         </div>
       </div>

@@ -124,7 +124,7 @@
 		{/if}
 		</ul>
 
-		<br />
+		<br>
 		{if $installask.wanted}
 			<input type='submit' id='button_install' name='button-install' value="{tr}Install{/tr}"{if $installask.unavailable} style='display: none;'{/if} />
 		{elseif $installask.wantedtoremove}
@@ -141,13 +141,13 @@ function update_button_install() {
 	</div>
 </form>
 {/if}
-<br />
+<br>
 {if $tikifeedback}
-	<br />
+	<br>
 	{section name=n loop=$tikifeedback}
 		<div class="simplebox {if $tikifeedback[n].num > 0} highlight{/if}">
 			{if $tikifeedback[n].num > 0}{icon _id=delete alt="Alert" style="vertical-align:middle;"}{/if}{$tikifeedback[n].mes}
-		</div><br />
+		</div><br>
 	{/section}
 {/if}
 
@@ -272,19 +272,19 @@ function update_button_install() {
 								<tr>
 									<td>
 										<div class="simplebox">
-											{if $more->docurl}Documentation :<br />{foreach key=ku item=iu from=$more->docurl}<a href="{$iu}">{$iu}</a><br />{/foreach}{/if}
-											{if $more->devurl}Development : <br />{foreach key=ku item=iu from=$more->devurl}<a href="{$iu}">{$iu}</a><br />{/foreach}{/if}
-											{if $more->help}{$more.help}<br />{/if}
-											{if $more->help}{$more.help}<br />{/if}
-											{if $more->author}{tr}Author:{/tr} {$more->author[0]}<br />{/if}
-											{if $more->licence}{tr}licence:{/tr} {$more->licence}<br />{/if}
+											{if $more->docurl}Documentation :<br>{foreach key=ku item=iu from=$more->docurl}<a href="{$iu}">{$iu}</a><br>{/foreach}{/if}
+											{if $more->devurl}Development : <br>{foreach key=ku item=iu from=$more->devurl}<a href="{$iu}">{$iu}</a><br>{/foreach}{/if}
+											{if $more->help}{$more.help}<br>{/if}
+											{if $more->help}{$more.help}<br>{/if}
+											{if $more->author}{tr}Author:{/tr} {$more->author[0]}<br>{/if}
+											{if $more->licence}{tr}licence:{/tr} {$more->licence}<br>{/if}
 											
-											{tr}Last Modification:{/tr} {$more->lastmodif}<br />
-											{tr}by:{/tr} {$more->contributor[0]}<br />
+											{tr}Last Modification:{/tr} {$more->lastmodif}<br>
+											{tr}by:{/tr} {$more->contributor[0]}<br>
 										</div>
 									</td><td>
 										{foreach key=kk item=ii from=$more->files}
-											{$ii[0]} -&gt; <b>{$ii[1]}</b><br />
+											{$ii[0]} -&gt; <b>{$ii[1]}</b><br>
 										{/foreach}
 									</td>
 								</tr>

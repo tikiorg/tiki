@@ -41,7 +41,7 @@
 {$online_user.user|escape}
 {/if}
 {if $cluster}({$online_user.tikihost}){/if}
-<br />
+<br>
 {/foreach}
 {/if}
 {/tikimodule}

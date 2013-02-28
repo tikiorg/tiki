@@ -41,7 +41,7 @@
 					<textarea rows="4" cols="60" name="message">{$message|escape}</textarea>
 					{if $prefs.feature_socialnetworks eq 'y' && $user neq ''}
 						{if $prefs.socialnetworks_twitter_consumer_key neq ''}
-							<div><input type="checkbox" name="tweet" id="tweet" value='1' /> {tr}Tweet with Twitter{/tr}<br /></div>
+							<div><input type="checkbox" name="tweet" id="tweet" value='1' /> {tr}Tweet with Twitter{/tr}<br></div>
 						{/if}
 						{if $prefs.socialnetworks_facebook_application_id neq ''}
 							<div><input type="checkbox" name="facebook" id="facebook" value='1' /> {tr}Post on my Facebook wall{/tr}</div>
@@ -78,7 +78,7 @@
 				{icon _id='page_edit' alt="{tr}Edit{/tr}"}
 			</a>
 		{/if}
-		<br />
+		<br>
 		{$channels[user].message}
 	</div>
 {/section}

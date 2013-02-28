@@ -109,7 +109,7 @@
 				{preference name=wiki_edit_minor}
 				<div class="adminoptionboxchild" id="wiki_edit_minor_childcontainer">
 					{remarksbox type=note title="{tr}Note{/tr}"}{tr}Minor edits do not flag new content for translation and do not send watch notifications (unless "Watch minor edits" is enabled).{/tr}
-						<br />
+						<br>
 						{tr}Only user groups granted the tiki_p_minor permission (and admins) will be able to save minor edits when this is enabled.{/tr}
 						<a class="link" href="tiki-objectpermissions.php?permType=wiki&amp;textFilter=minor&amp;show_disabled_features=y" title="{tr}Permission{/tr}">{icon _id="key" alt="{tr}Permission{/tr}"}</a>
 					{/remarksbox}
@@ -196,7 +196,7 @@
 			{preference name=feature_filegals_manager}
 			{button href="tiki-admin.php?page=wiki&amp;rmvunusedpic=1" _text="{tr}Remove unused pictures{/tr}"}
 			{button href="tiki-admin.php?page=wiki&amp;moveWikiUp=1" _text="{tr}Move images from wiki_up to the home file gallery{/tr}"}
-			<br /><em>{tr}If you use these buttons please make sure to have a backup of the database and the directory wiki_up{/tr}</em>
+			<br><em>{tr}If you use these buttons please make sure to have a backup of the database and the directory wiki_up{/tr}</em>
 		</div>
 
 		{preference name=feature_wiki_export}
@@ -434,8 +434,8 @@
 	{/if}
 
 	{tab name="{tr}Tools{/tr}"}
-		<a href="tiki-search_replace.php">{tr}Mass search and replace{/tr}</a><br />
-		<a href="tiki-report_direct_object_perms.php">{tr}Report wiki pages with direct object permissions{/tr}</a><br />
+		<a href="tiki-search_replace.php">{tr}Mass search and replace{/tr}</a><br>
+		<a href="tiki-report_direct_object_perms.php">{tr}Report wiki pages with direct object permissions{/tr}</a><br>
 	{/tab}
 {/tabset}
 

@@ -54,7 +54,7 @@
 						{if $listpages[ix].show_reads eq 'y'}
 							<span class="reads">({$listpages[ix].nbreads} {tr}Reads{/tr})</span>
 						{/if}
-					</span><br />
+					</span><br>
 				{/if}
 			</header>
 			{if $listpages[ix].use_ratings eq 'y'}

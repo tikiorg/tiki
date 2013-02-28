@@ -70,7 +70,7 @@
 						{if !in_array($users[user].included[ix], $users[user].included_direct)}<i>{/if}
 						{$users[user].included[ix]|escape}
 						{if !in_array($users[user].included[ix], $users[user].included_direct)}</i>{/if}
-						<br />
+						<br>
 					{/section}
 				</td>
 
@@ -157,7 +157,7 @@
 						{foreach key=gr item=yn from=$inc}
 							{if $yn eq 'y'}{$gr|escape} {/if}
 						{/foreach}
-						<br />
+						<br>
 					{/if}
 					<select name="include_groups[]" id="groups_inc" multiple="multiple" size="8">
 						{if !empty($groupname)}<option value="">{tr}None{/tr}</option>{/if}
@@ -165,7 +165,7 @@
 							<option value="{$gr|escape}" {if $yn eq 'y'} selected="selected"{/if}>{$gr|truncate:"52"|escape}</option>
 						{/foreach}
 					</select>
-					<br />
+					<br>
 					{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Use Ctrl+Click to select multiple options{/tr}{/remarksbox}
 				</td>
 			</tr>
@@ -240,7 +240,7 @@
 							{/foreach}
 						</select>
 						{if $grouptrackerid}
-							<br />
+							<br>
 							<select name="groupfield">
 								<option value="0">{tr}choose a field ...{/tr}</option>
 								{section name=ix loop=$groupFields}
@@ -269,7 +269,7 @@
 							{/foreach}
 						</select>
 						{if $userstrackerid}
-							<br />
+							<br>
 							<select name="usersfield">
 								<option value="0">{tr}choose a field ...{/tr}</option>
 								{section name=ix loop=$usersFields}
@@ -286,7 +286,7 @@
 					</td>
 				</tr>
 				<tr>
-					<td>{tr}Users Information Tracker Fields Asked at Registration Time<br />(fieldIds separated with :){/tr}</td>
+					<td>{tr}Users Information Tracker Fields Asked at Registration Time<br>(fieldIds separated with :){/tr}</td>
 					<td><input type="text" style="width:95%" name="registrationUsersFieldIds" value="{$registrationUsersFieldIds|escape}" /></td>
 				</tr>
 			{/if}
@@ -299,11 +299,11 @@
 
 			<tr>
 				<td>{tr}Users are automatically unassigned from the group after{/tr}</td>
-				<td><input type="text" name="expireAfter" value="{$group_info.expireAfter|escape}" />{tr}Days{/tr}<br /><i>{tr}0 or empty for never{/tr}</i></td>
+				<td><input type="text" name="expireAfter" value="{$group_info.expireAfter|escape}" />{tr}Days{/tr}<br><i>{tr}0 or empty for never{/tr}</i></td>
 			</tr>
 			<tr>
 				<td>{tr}Or, users are automatically unassigned from the group at an anniversary date{/tr}</td>
-				<td><input type="text" name="anniversary" value="{$group_info.anniversary|escape}" /><br /><i>{tr}MMDD for annual or DD for monthly{/tr}</i></td>
+				<td><input type="text" name="anniversary" value="{$group_info.anniversary|escape}" /><br><i>{tr}MMDD for annual or DD for monthly{/tr}</i></td>
 			</tr>
 			<tr>
 				<td>{tr}Payment for membership extension is prorated at a minimum interval of a{/tr}</td>
@@ -315,7 +315,7 @@
 			</tr>
 			<tr>
 				<td>{tr}Users are automatically assigned at registration in the group if their emails match the pattern{/tr}</td>
-				<td><input type="text" size="40" name="emailPattern" value="{$group_info.emailPattern|escape}" /><br />{tr}Example: {/tr}/@tw\.org$/ <br />{tr}Example:{/tr} /@(tw.org$)|(tw\.com$)/</td>
+				<td><input type="text" size="40" name="emailPattern" value="{$group_info.emailPattern|escape}" /><br>{tr}Example: {/tr}/@tw\.org$/ <br>{tr}Example:{/tr} /@(tw.org$)|(tw\.com$)/</td>
 			</tr>
 		{/if}
 
@@ -348,7 +348,7 @@
 			{/if}
 		</table>
 	</form>
-	<br /><br />
+	<br><br>
 
 	{if $prefs.groupTracker eq 'y'}
 		{if $grouptrackerid and $groupitemid}
@@ -362,7 +362,7 @@
 				{tr}Choose a field ...{/tr}
 			{/if}
 		{/if}
-		<br /><br />
+		<br><br>
 	{/if}
 {/tab}
 
@@ -459,7 +459,7 @@
 			{if $errors}
 				<div class="simple highlight">
 					{foreach from=$errors item=e}
-						{$e}<br />
+						{$e}<br>
 					{/foreach}
 				</div>
 			{/if}
@@ -480,9 +480,9 @@
 					<td class="auto">
 						<input type="checkbox" name="username" checked="checked" />
 						{tr}Username{/tr}
-						<br />
+						<br>
 						<input type="checkbox" name="email"/>{tr}Email{/tr}
-						<br />
+						<br>
 						<input type="checkbox" name="lastLogin" />{tr}Last login{/tr}
 					</td>
 				</tr>
@@ -495,12 +495,12 @@
 			<h2>{tr}Batch upload (CSV file){/tr}</h2>
 			<h3>{tr}Assign users to group:{/tr} {$groupname|escape} </h3>
 			{remarksbox type="tip" title="{tr}Tip{/tr}"}
-				{tr}Each user in the file must already exist.{/tr}<br />{tr}To create users or/and assign them to groups, got to <a href="tiki-adminusers.php">admin->users</a>{/tr}
+				{tr}Each user in the file must already exist.{/tr}<br>{tr}To create users or/and assign them to groups, got to <a href="tiki-adminusers.php">admin->users</a>{/tr}
 			{/remarksbox}
 			<table class="formcolor">
 				<tr>
 					<td class="auto">
-						{tr}CSV File{/tr}<a {popup text='user<br />user1<br />user2'}>{icon _id='help'}</a>
+						{tr}CSV File{/tr}<a {popup text='user<br>user1<br>user2'}>{icon _id='help'}</a>
 					</td>
 					<td class="auto"><input name="csvlist" type="file" /></td>
 				</tr>

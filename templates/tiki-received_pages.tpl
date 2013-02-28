@@ -6,7 +6,7 @@
 	<div class="simplebox highlight">
 		{foreach item=error from=$errors}
 			{tr}{$error.error}{/tr} {$error.param}
-			<br />
+			<br>
 		{/foreach}
 	</div>
 {/if}

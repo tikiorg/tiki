@@ -70,10 +70,10 @@
 					<ul>
 						<li><a href="tiki-admin.php?page=search&amp;optimize=now">{tr}Optimize{/tr}</a> {tr}From the command line:{/tr} <kbd>php lib/search/shell.php optimize</kbd></li>
 						<li>
-							<a href="tiki-admin.php?page=search&amp;rebuild=now" id="rebuild-link">{tr}Rebuild Index{/tr}</a> {tr}From the command line:{/tr} <kbd>php lib/search/shell.php rebuild</kbd><br />
+							<a href="tiki-admin.php?page=search&amp;rebuild=now" id="rebuild-link">{tr}Rebuild Index{/tr}</a> {tr}From the command line:{/tr} <kbd>php lib/search/shell.php rebuild</kbd><br>
 							<label for="log-rebuild">{tr}Log rebuild?{/tr}</label>
 							<input type="checkbox" id="log-rebuild" />
-							<span class="description">{tr}Log file is saved as temp/Search_Indexer.log{/tr}</span> <br /> {tr}From the command line:{/tr} <kbd>php lib/search/shell.php rebuild log</kbd><br />
+							<span class="description">{tr}Log file is saved as temp/Search_Indexer.log{/tr}</span> <br> {tr}From the command line:{/tr} <kbd>php lib/search/shell.php rebuild log</kbd><br>
 							{jq}
 $("#log-rebuild").click(function(){
 	if ($(this).prop("checked")) {
@@ -108,7 +108,7 @@ $("#log-rebuild").click(function(){
 								{jq} setTimeout(function() { history.go(0); }, 1000); {/jq}
 								<li><strong><a  href="tiki-admin.php?page=search&amp;process=">{tr}Stop{/tr}</a></strong></li>
 							{else}
-								<li><em><a  href="tiki-admin.php?page=search&amp;process=all">{tr}All{/tr}</a></em> <br /><span class="description">{tr}Uses JavaScript to reload this page until queue is processed{/tr}</span></li>
+								<li><em><a  href="tiki-admin.php?page=search&amp;process=all">{tr}All{/tr}</a></em> <br><span class="description">{tr}Uses JavaScript to reload this page until queue is processed{/tr}</span></li>
 							{/if}
 						</ul>
 					{/if}

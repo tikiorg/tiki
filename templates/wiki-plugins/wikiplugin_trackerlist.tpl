@@ -147,7 +147,7 @@ the section loop so that the vars are not replaced by nested pretty tracker exec
 		{elseif $checkbox}
 			{if $checkbox.tpl}{include file="$checkbox.tpl"}{/if}
 			{if !empty($checkbox.submit) and !empty($checkbox.title)}
-				<br />
+				<br>
 				<input type="submit" name="{$checkbox.submit}" value="{tr}{$checkbox.title}{/tr}" />
 			{/if}
 			</form>

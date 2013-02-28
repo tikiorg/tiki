@@ -16,7 +16,7 @@
 	<tr>
 		<td>
 			<b>{tr}Upcoming Events{/tr}</b>
-			<br />
+			<br>
 			<table class="normal">
 				{section name=ix loop=$upcoming}
 					<tr>
@@ -42,7 +42,7 @@
 		</td>
 	</tr>
 </table>
-<br />
+<br>
 
 {cycle values="odd,even" print=false}
 {if $view eq 'daily'}
@@ -59,7 +59,7 @@
 					<table>
 						<tr>
 							<td>
-								{$slots[ix].start|tiki_short_time}<!--<br />{$slots[ix].end|tiki_short_time}-->
+								{$slots[ix].start|tiki_short_time}<!--<br>{$slots[ix].end|tiki_short_time}-->
 							</td>
 							<td>
 								{section name=jj loop=$slots[ix].events}
@@ -72,7 +72,7 @@
 									{/if}
 									<a title="{$slots[ix].events[jj].start|tiki_short_time}-{$slots[ix].events[jj].end|tiki_short_time}:{$slots[ix].events[jj].description}" class="link" href="tiki-minical.php?view={$view}&amp;eventId={$slots[ix].events[jj].eventId}#add">{$slots[ix].events[jj].title|escape}</a>
 									<a class="link" href="tiki-minical.php?view={$view}&amp;remove={$slots[ix].events[jj].eventId}">{icon _id='cross' alt="{tr}Remove{/tr}" style="vertical-align:middle;"}</a>
-									<br />
+									<br>
 								{/section}
 							</td>
 						</tr>
@@ -96,7 +96,7 @@
 					<table >
 						<tr>
 							<td >
-								<a class="link" href="tiki-minical.php?view=daily&amp;day={$slots[ix].start|tiki_date_format:"%d"}&amp;mon={$slots[ix].start|tiki_date_format:"%m"}&amp;year={$slots[ix].start|tiki_date_format:"%Y"}">{$slots[ix].start|tiki_date_format:"%a"}<br />{$slots[ix].start|tiki_date_format:"%d"}</a>
+								<a class="link" href="tiki-minical.php?view=daily&amp;day={$slots[ix].start|tiki_date_format:"%d"}&amp;mon={$slots[ix].start|tiki_date_format:"%m"}&amp;year={$slots[ix].start|tiki_date_format:"%Y"}">{$slots[ix].start|tiki_date_format:"%a"}<br>{$slots[ix].start|tiki_date_format:"%d"}</a>
 							</td>
 							<td>
 								{section name=jj loop=$slots[ix].events}
@@ -111,7 +111,7 @@
 
 									<a title="{$slots[ix].events[jj].start|tiki_short_time}:{$slots[ix].events[jj].description}" class="link" href="tiki-minical.php?view={$view}&amp;eventId={$slots[ix].events[jj].eventId}#add">{$slots[ix].events[jj].title}</a>
 									[<a class="link" href="tiki-minical.php?view={$view}&amp;remove={$slots[ix].events[jj].eventId}">x</a>]
-									<br />
+									<br>
 								{/section}
 							</td>
 						</tr>

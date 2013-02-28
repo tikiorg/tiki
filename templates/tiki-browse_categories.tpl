@@ -125,7 +125,7 @@
 	<a class="link" href="tiki-browse_categories.php?find={$find|escape:"url"}&amp;type={$type|escape:"url"}&amp;deep=on&amp;parentId={$parentId|escape:"url"}&amp;sort_mode={$sort_mode|escape:"url"}">{tr}Show subcategories objects{/tr}</a>
 {/if}
 
-<br /><br />
+<br><br>
 
 {if isset($p_info)}
 	<div class="treetitle">{tr}Current category:{/tr}
@@ -185,7 +185,7 @@
 				{/if}
 			{/section}
 		</table>
-		<br />
+		<br>
 	{/if}
 </div>
 

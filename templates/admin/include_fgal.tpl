@@ -3,7 +3,7 @@
 	{remarksbox type="errors" title="{tr}Errors{/tr}"}
 		{foreach from=$errors item=error}
 			{$error|escape}
-			<br />
+			<br>
 		{/foreach}
 	{/remarksbox}
 {/if}
@@ -11,7 +11,7 @@
 	{remarksbox type="note" title="{tr}Feedback{/tr}"}
 		{foreach from=$feedbacks item=feedback}
 			{$feedback|escape}
-			<br />
+			<br>
 		{/foreach}
 	{/remarksbox}
 {/if}
@@ -20,7 +20,7 @@
 	{tr}To create or remove file galleries, select{/tr} <a class="rbox-link" href="tiki-list_file_gallery.php">{tr}File Galleries{/tr}</a> {tr}from the application menu{/tr}.
 	<hr />
 	{tr}If you decide to store files in a directory you must ensure that the user cannot access directly to the directory.{/tr}
-	{tr}You have two options to accomplish this:<br /><ul><li>Use a directory outside your document root, make sure your php script can read and write to that directory</li><li>Use a directory inside the document root and use .htaccess to prevent the user from listing the directory contents</li></ul>{/tr}
+	{tr}You have two options to accomplish this:<br><ul><li>Use a directory outside your document root, make sure your php script can read and write to that directory</li><li>Use a directory inside the document root and use .htaccess to prevent the user from listing the directory contents</li></ul>{/tr}
 	{tr}To configure the directory path use UNIX like paths for example files/ or c:/foo/files or /www/files/{/tr}
 {/remarksbox}
 
@@ -234,7 +234,7 @@
 						{remarksbox type=warning title="{tr}Missing Handlers{/tr}"}
 							{foreach from=$missingHandlers item=mime}
 								{$mime|escape}
-								<br />
+								<br>
 							{/foreach}
 						{/remarksbox}
 					{/if}

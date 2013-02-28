@@ -7,6 +7,6 @@
 <img src="tiki-live_support_server.php?operators_online=0" width="120" height="45" alt="image" />
 {/if}
 {if $tiki_p_live_support_admin eq 'y' or $user_is_operator eq 'y'}
-<br /><a class="linkmodule" {jspopup href="tiki-live_support_console.php"}>{tr}Open operator console{/tr}</a>
+<br><a class="linkmodule" {jspopup href="tiki-live_support_console.php"}>{tr}Open operator console{/tr}</a>
 {/if}
 {/tikimodule}

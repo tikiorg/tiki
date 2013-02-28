@@ -18,7 +18,7 @@
 			&nbsp;::&nbsp;
 			<a class="categpath" href="tiki-admin_categories.php?parentId={$id}">{$name|escape}</a>
 		{/foreach}
-		<br />
+		<br>
 		{tr}Current Category ID:{/tr} {$parentId}
 		{/if}
 	</div>
@@ -73,7 +73,7 @@
 		{tab name="{tr}Batch upload{/tr}"}
 			<h2>{tr}Batch upload (CSV file){/tr}<a {popup text='category,description,parent&lt;br /&gt;vegetable,vegetable&lt;br /&gt;potato,,vegetable'}>{icon _id='help'}</a></h2>
 			<form action="tiki-admin_categories.php" method="post" enctype="multipart/form-data">
-				<input type="file" name="csvlist" /><br />
+				<input type="file" name="csvlist" /><br>
 				<input type="submit" name="import" value="{tr}Add{/tr}" />
 			</form>
 		{/tab}

@@ -2,7 +2,7 @@
 
 {include file='tiki-mytiki_bar.tpl'}
 
-{if $parentId>0}[<a class="link" href="tiki-user_bookmarks.php">{tr}top{/tr}</a>] {/if}{tr}Current folder:{/tr} {$path}<br />
+{if $parentId>0}[<a class="link" href="tiki-user_bookmarks.php">{tr}top{/tr}</a>] {/if}{tr}Current folder:{/tr} {$path}<br>
 <h2>{tr}Folders{/tr}</h2>
 <table class="normal">
 	<tr>
@@ -44,7 +44,7 @@
 					(<a href="tiki-user_cached_bookmark.php?urlid={$urls[ix].urlId}" class="link" target="_blank">{tr}Cache{/tr}</a>)
 				{/if}
 			</td>
-			<td class="text">{textformat wrap="60" wrap_cut=true wrap_char="<br />"}{$urls[ix].url}{/textformat}</td>
+			<td class="text">{textformat wrap="60" wrap_cut=true wrap_char="<br>"}{$urls[ix].url}{/textformat}</td>
 			<td class="action">
 				<a class="link" href="tiki-user_bookmarks.php?parentId={$parentId}&amp;editurl={$urls[ix].urlId}">{icon _id='page_edit'}</a>
 				{if $tiki_p_cache_bookmarks eq 'y' and $urls[ix].datalen > 0}

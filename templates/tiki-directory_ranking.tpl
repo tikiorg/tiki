@@ -1,8 +1,8 @@
 {title url="tiki-directory_ranking.php?sort_mode=$sort_mode"}{tr}Directory ranking{/tr}{/title}
 
 {* Display the title using parent *}
-{include file='tiki-directory_bar.tpl'}<br />
-<br />
+{include file='tiki-directory_bar.tpl'}<br>
+<br>
 {* Navigation bar to admin, admin related, etc *}
 
 {* Display the list of categories (items) using pagination *}

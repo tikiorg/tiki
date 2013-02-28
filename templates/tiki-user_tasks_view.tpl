@@ -17,7 +17,7 @@
 		{icon _id='basket_put' title="{tr}Move to trash{/tr}" alt="{tr}Move to trash{/tr}"}
 	</a>&nbsp;
 {/if}
-<br /><br />
+<br><br>
 <div class="tabcontent" style="width:99%">
 	{if ($tiki_view_mode eq 'preview')}
 		<div align="center" class="attention" style="font-weight:bold">
@@ -109,9 +109,9 @@
 	{if ($info.task_version > 0 ) and ($info.creator ne $info.user)}
 		{tr}Last modified by:{/tr} {$info.lasteditor|escape|userlink} on {$info.changes|tiki_short_date}&nbsp;--&nbsp;{$info.changes|tiki_short_time}
 	{/if}
-	<br />
+	<br>
 	{if $info.public_for_group ne ''}
-		{tr}Public for group:{/tr}{$info.public_for_group|escape}<br />
+		{tr}Public for group:{/tr}{$info.public_for_group|escape}<br>
 	{/if}
 	{if $info.creator ne $info.user}
 		{tr}Accepted by User:{/tr}
@@ -123,7 +123,7 @@
 				{else}
 					 {tr}Waiting{/tr}
 				{/if}
-			{/if}<br />
+			{/if}<br>
 		{tr}Accepted by Creator:{/tr}
 		{if $info.accepted_creator eq 'y'}
 			 {tr}Yes{/tr}
@@ -133,9 +133,9 @@
 			{else}
 				 {tr}Waiting{/tr}
 			{/if}
-		{/if}<br />
+		{/if}<br>
 	{/if}
 </div>
-<br />
-<br />
+<br>
+<br>
 {* end ************ Task list ***************}

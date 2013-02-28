@@ -86,26 +86,26 @@
         {if $num_objects > 0}
         {foreach from=$subgals key=key item=item}
           <td align="center" {if (($key / $rowImages) % 2)}class="oddthumb"{else}class="eventhumb"{/if}>
-          &nbsp;&nbsp;<br />
+          &nbsp;&nbsp;<br>
           <a href="{$item.galleryId|sefurl:gallery}"><img alt="{tr}subgallery{/tr} {$item.name}" class="athumb" src="show_image.php?id={$item.imageId}&amp;thumb=1" /></a>
-	  <br />
+	  <br>
 	  <small class="caption">
 		{tr}Subgallery:{/tr} 
-			{if $showname=='y' || $showfilename=='y'}{$item.name}<br />{/if}
-			{if $showimageid=='y'}{tr}ID:{/tr} {$item.galleryId}<br />{/if}
+			{if $showname=='y' || $showfilename=='y'}{$item.name}<br>{/if}
+			{if $showimageid=='y'}{tr}ID:{/tr} {$item.galleryId}<br>{/if}
 			{if $showcategories=='y'}
 				{tr}Categories:{/tr}
 					<ul>
 					{section name=categ loop=$item.categories}
 						<li>{$item.categories[categ]}</li>
 					{/section}
-					</ul><br />
+					</ul><br>
 			{/if}
-			{if $showdescription=='y'}{$item.description}<br />{/if}
-			{if $showcreated=='y'}{tr}Created:{/tr} {$item.created|tiki_short_date}<br />{/if}
-			{if $showuser=='y'}{tr}User:{/tr} {$item.user|userlink}<br />{/if}
+			{if $showdescription=='y'}{$item.description}<br>{/if}
+			{if $showcreated=='y'}{tr}Created:{/tr} {$item.created|tiki_short_date}<br>{/if}
+			{if $showuser=='y'}{tr}User:{/tr} {$item.user|userlink}<br>{/if}
 			{if $showxysize=='y' || $showfilesize=='y'}({$item.images} Images){/if}
-			{if $showhits=='y'}[{$item.hits} {if $item.hits == 1}{tr}Hit{/tr}{else}{tr}Hits{/tr}{/if}]<br />{/if}
+			{if $showhits=='y'}[{$item.hits} {if $item.hits == 1}{tr}Hit{/tr}{else}{tr}Hits{/tr}{/if}]<br>{/if}
 		</small>
 	  </td>
          {if $key%$rowImages eq $rowImages2}
@@ -114,7 +114,7 @@
         {/foreach}
         {foreach from=$images key=key item=item}
           <td align="center" {if ((($key +$num_subgals) / $rowImages) % 2)}class="oddthumb"{else}class="eventhumb"{/if}>
-          &nbsp;&nbsp;<br />
+          &nbsp;&nbsp;<br>
 {if $prefs.feature_shadowbox eq 'y'}
 	<a href="show_image.php?id={$item.imageId}&amp;scalesize={$defaultscale}" rel="lightbox[gallery];type=img" title="{if $item.description neq ''}{$item.description}{elseif $item.name neq ''}{$item.name}{else}{$item.filename}{/if}" {if $prefs.gal_image_mouseover neq 'n'}{popup fullhtml="1" text=$over_info.$key|escape:"javascript"|escape:"html"}{/if} class="linkmenu">
 	   <img class="athumb" src="show_image.php?id={$item.imageId}&amp;thumb=1" />
@@ -124,30 +124,30 @@
 		<img class="athumb" src="show_image.php?id={$item.imageId}&amp;thumb=1" />
 	</a>
 {/if}
-          <br />
+          <br>
 	  <small class="caption">
 	  {if $prefs.gal_image_mouseover neq 'only'}
-		{if $showname=='y'}{$item.name}<br />{/if}
-		{if $showfilename=='y'}{tr}Filename:{/tr} {$item.filename}<br />{/if}
-		{if $showimageid=='y'}{tr}ID:{/tr} {$item.imageId}<br />{/if}
+		{if $showname=='y'}{$item.name}<br>{/if}
+		{if $showfilename=='y'}{tr}Filename:{/tr} {$item.filename}<br>{/if}
+		{if $showimageid=='y'}{tr}ID:{/tr} {$item.imageId}<br>{/if}
 		{if $showcategories=='y'}
 		    	{tr}Categories:{/tr}
                         <ul class='categories'>
                         {section name=categ loop=$item.categories}
                         	<li>{$item.categories[categ]}</li>
                         {/section}
-                        </ul><br />
+                        </ul><br>
                 {/if}
-		{if $showdescription=='y'}{$item.description}<br />{/if}
-		{if $showcreated=='y'}{tr}Created:{/tr} {$item.created|tiki_short_date}<br />{/if}
-		{if $showuser=='y'}{tr}User:{/tr} {$item.user|userlink}<br />{/if}
+		{if $showdescription=='y'}{$item.description}<br>{/if}
+		{if $showcreated=='y'}{tr}Created:{/tr} {$item.created|tiki_short_date}<br>{/if}
+		{if $showuser=='y'}{tr}User:{/tr} {$item.user|userlink}<br>{/if}
 		{if $showxysize=='y'}({$item.xsize}x{$item.ysize}){/if}
 		{if $showfilesize=='y'}({$item.filesize} Bytes){/if}
 		{if $showhits=='y'}[{$item.hits} {if $item.hits == 1}{tr}Hit{/tr}{else}{tr}Hits{/tr}{/if}]{/if}
 	  {else}
 	  	{if $showname=='y' and $item.name neq ''}{$item.name}{else}{$item.filename}{/if}
 	  {/if}
-	  <br />
+	  <br>
           {if $tiki_p_admin_galleries eq 'y' or ($user and $user eq $owner)}
 	    		{if $nextx!=0}
             		<a class="gallink" href="tiki-browse_image.php?galleryId={$galleryId}&amp;sort_mode={$sort_mode}&amp;imageId={$item.imageId}&amp;scalesize=0" title="{tr}Original Size{/tr}"><img src='img/icons/nav_dot.gif' width='8' height='11' alt="{tr}Original Size{/tr}" title="{tr}Original Size{/tr}" /></a>
@@ -161,7 +161,7 @@
           <a class="gallink" href="tiki-browse_image.php?galleryId={$galleryId}&amp;sort_mode={$sort_mode}&amp;imageId={$item.imageId}&amp;scalesize={$defaultscale}" {if $prefs.gal_image_mouseover neq 'n'}{popup fullhtml="1" text=$over_info.$key|escape:"javascript"|escape:"html"}{/if}>{icon _id='magnifier' alt="{tr}Details{/tr}"}</a>
           <a {jspopup href="tiki-browse_image.php?galleryId=$galleryId&amp;sort_mode=$sort_mode&amp;imageId="|cat:$item.imageId|cat:"&amp;scalesize=$defaultscale&amp;popup=1"} class="gallink">
 {icon _id='layers' alt="{tr}popup{/tr}"}</a>
-          <br />
+          <br>
 	</small>
          </td>
          {if ($key + $num_subgals) % $rowImages eq $rowImages2}
@@ -228,9 +228,9 @@
 		</td>
 		<td class="inline_syntax" style="border:0px; font-size:x-small">
 			{if $resultscale == $defaultscale or !$resultscale}
-				{literal}{{/literal}img src=show_image.php?galleryId={$galleryId} {literal}}{/literal}<br />
+				{literal}{{/literal}img src=show_image.php?galleryId={$galleryId} {literal}}{/literal}<br>
 			{else}
-				{literal}{{/literal}img src={$base_url}show_image.php?galleryId={$galleryId} {literal}}{/literal}<br />
+				{literal}{{/literal}img src={$base_url}show_image.php?galleryId={$galleryId} {literal}}{/literal}<br>
 			{/if}
   		</td>
 	</tr>

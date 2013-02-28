@@ -1,7 +1,7 @@
 {if $field.options_array[0] eq 'password'}
 	{if ($prefs.auth_method neq 'cas' || ($prefs.cas_skip_admin eq 'y' && $user eq 'admin')) and $prefs.change_password neq 'n'}
 		<input type="password" name="{$field.ins_id}" />
-		<br /><i>Leave empty if password is to remain unchanged</i>
+		<br><i>Leave empty if password is to remain unchanged</i>
 	{/if}
 {elseif $field.options_array[0] eq 'language'}
 	<select name="{$field.ins_id}">

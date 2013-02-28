@@ -42,7 +42,7 @@
 	</table>
 </form>
 
-<br />
+<br>
 
 <h2>{tr}Cookies{/tr}</h2>
 {if $channels}

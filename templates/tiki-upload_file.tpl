@@ -39,7 +39,7 @@
 	<div class="simplebox highlight">
 	<h2>{tr}Errors detected{/tr}</h2>
 	{section name=ix loop=$errors}
-		{$errors[ix]}<br />
+		{$errors[ix]}<br>
 	{/section}
 	{button href="#upload" _text="{tr}Retry{/tr}"}
 	</div>
@@ -92,7 +92,7 @@
 		</tr>
 	{/section}
 	</table>
-	<br />
+	<br>
 
 	<h2>{tr}Upload File{/tr}</h2>
 {elseif isset($fileChangedMessage)}
@@ -142,7 +142,7 @@
 						<td>
 							<textarea style="width:100%" rows="2" cols="40" id="description" name="description[]">{if isset($fileInfo.description)}{$fileInfo.description|escape}{/if}</textarea>
 							{if isset($gal_info.type) and ($gal_info.type eq "podcast" or $gal_info.type eq "vidcast")}
-								<br /><em>{tr}Required for podcasts{/tr}.</em>
+								<br><em>{tr}Required for podcasts{/tr}.</em>
 							{/if}
 						</td>
 					</tr>
@@ -164,7 +164,7 @@
 								</div>
 								<noscript>
 									<div style="background-color: #FFFF66; border-top: solid 4px #FF9966; border-bottom: solid 4px #FF9966; padding: 10px 15px;">
-										{tr}We're sorry.{/tr}<br />
+										{tr}We're sorry.{/tr}<br>
 										{tr}Upload interface could not load.  You must have JavaScript enabled to enjoy Upload interface.{/tr}
 									</div>
 								</noscript>
@@ -175,19 +175,19 @@
 								</div>
 								<div id="divLongLoading" style="display: none;">
 									{remarksbox type="warning"}
-										{tr}Upload interface is taking a long time to load or the load has failed.{/tr}<br />
+										{tr}Upload interface is taking a long time to load or the load has failed.{/tr}<br>
 										{tr}Please make sure that the Flash Plugin is enabled and that a working version of the Adobe Flash Player is installed.{/tr}
 									{/remarksbox}
 								</div>
 								<div id="divAlternateContent" style="display: none;">
 									{remarksbox type="errors"}
-										{tr}We are sorry: Upload interface could not load.  You may need to install or upgrade Flash Player.{/tr}<br />
+										{tr}We are sorry: Upload interface could not load.  You may need to install or upgrade Flash Player.{/tr}<br>
 										<a href="http://www.adobe.com/shockwave/download/download.cgi?P1_Prod_Version=ShockwaveFlash">{tr}Visit the Adobe Website to get the Flash Player.{/tr}</a>
 									{/remarksbox}
 								</div>
 								{* Table and BR are there to avoid the Browse button to overlap next cell when a file has been selected by the user *}
 								</td></tr></table>
-								<br />
+								<br>
 							{else}
 								<input id="userfile" name="userfile[]" type="file" size="40"/>
 							{/if}
@@ -297,7 +297,7 @@
 					<label>
 						<label for="hit_limit">{tr}Maximum number of downloads:{/tr}</label>
 						<input type="text" id="hit_limit" name="hit_limit[]" value="{$hit_limit|default:0}"/>
-						<br /><em>{tr}Use{/tr} {tr}-1 for no limit{/tr}.</em>
+						<br><em>{tr}Use{/tr} {tr}-1 for no limit{/tr}.</em>
 					</label>
 					<br/>
 				{else}
@@ -390,14 +390,14 @@
 	{icon _id="lock" class="" alt=""}
 	<span class="attention">{tr}The file is locked by {$fileInfo.lockedby}{/tr}</span>
 {/if}
-<br />
+<br>
 {if !$editFileId}
 	{remarksbox type="note"}
 		{tr}Maximum file size is around:{/tr}
 		{if $tiki_p_admin eq 'y'}<a title="{$max_upload_size_comment}">{/if}
 			{$max_upload_size|kbsize:true:0}
 		{if $tiki_p_admin eq 'y'}</a>
-			{if $is_iis}<br />{tr}Note: You are running IIS{/tr}. {tr}maxAllowedContentLength also limits upload size{/tr}. {tr}Please check web.config in the Tiki root folder{/tr}{/if}
+			{if $is_iis}<br>{tr}Note: You are running IIS{/tr}. {tr}maxAllowedContentLength also limits upload size{/tr}. {tr}Please check web.config in the Tiki root folder{/tr}{/if}
 		{/if}
 	{/remarksbox}
 {/if}

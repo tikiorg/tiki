@@ -14,18 +14,18 @@
 	<tr>
 		<td>
 			{tr _0=$invoice.$invoiceNumber}Invoice %0{/tr}
-			<br />
+			<br>
 			{tr _0=$invoice.$dateIssued}Date Issued %0{/tr} 
-			<br />
-			<br />
+			<br>
+			<br>
 			{tr}Status{/tr} 
 		</td>
 		<td>
-			{if $setting.Logo neq ''}<img src='{$setting.Logo}' /><br />{/if}
-			{$setting.$companyName}<br />
-			{$setting.$address1}<br />
-			{if $setting.$address2 neq ''}{$setting.address2}<br />{/if}
-			{if $setting.Website neq ''}<a href='{$setting.Website}'>{$setting.Website}</a><br />{/if}
+			{if $setting.Logo neq ''}<img src='{$setting.Logo}' /><br>{/if}
+			{$setting.$companyName}<br>
+			{$setting.$address1}<br>
+			{if $setting.$address2 neq ''}{$setting.address2}<br>{/if}
+			{if $setting.Website neq ''}<a href='{$setting.Website}'>{$setting.Website}</a><br>{/if}
 		</td>
 	</tr>
 </table>
@@ -49,9 +49,9 @@
 {/foreach}
 
 </table>
-{tr _0=$amount}Amount: %0{/tr}<br />
-{tr _0=$amount}Total: %0{/tr}<br />
+{tr _0=$amount}Amount: %0{/tr}<br>
+{tr _0=$amount}Total: %0{/tr}<br>
 {tr _0=$invoice.$paymentTerm}Payment Terms: %0{/tr}
-<br />
-<br />
+<br>
+<br>
 <a href="tiki-edit_invoice.php?InvoiceId={$InvoiceId}">{tr}Edit Invoice{/tr}</a>
