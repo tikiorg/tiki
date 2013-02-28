@@ -33,7 +33,13 @@ function module_menupage($mod_reference, $module_params)
 	
 	if (!empty($pagemenu)) {
 		global $wikilib; include_once('lib/wiki/wikilib.php');
-		$content = $wikilib->get_parse($pagemenu, $dummy, true);
+		$perms = Perms::get(array('object' => $pagemenu, 'type' => 'wiki page'));
+
+		if ($perms->view) {
+			$content = $wikilib->get_parse($pagemenu, $dummy, true);
+		} else {
+			$content = '<label class="error">' . tra("You are not logged in") . '</label>';
+		}
 		$smarty->assign('tpl_module_title', $pagemenu);
 		$smarty->assign_by_ref('contentmenu', $content);
 		$smarty->assign('pagemenu', $pagemenu);
