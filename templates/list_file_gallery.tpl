@@ -61,7 +61,7 @@
 				</div>
 			{/if}
 
-			<form name="fgalformid" id="fgalform" method="post" action="{$smarty.server.PHP_SELF}{if !empty($filegals_manager)}?filegals_manager={$filegals_manager|escape}{/if}" enctype="multipart/form-data">
+			<form name="fgalformid" id="fgalform" method="post" action="{if !empty($filegals_manager)}{query _type='relative' filegals_manager=$filegals_manager|escape}{else}{query _type='relative'}{/if}" enctype="multipart/form-data">
 				<input type="hidden" name="galleryId" value="{$gal_info.galleryId|escape}" />
 				<input type="hidden" name="find" value="{$find|escape}" />
 				{if !empty($smarty.request.show_details)}<input type="hidden" name="show_details" value="{$smarty.request.show_details}" />{/if}
