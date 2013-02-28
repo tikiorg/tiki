@@ -1157,7 +1157,8 @@ class FileGalLib extends TikiLib
 			$executables = array();
 			foreach ($possibilities as $type => $options) {
 				foreach ($options as $opt) {
-					$exec = reset(explode(' ', $opt, 2));
+					$optArray = explode(' ', $opt, 2);
+					$exec = reset($optArray);
 
 					if (! isset($executables[$exec])) {
 						$executables[$exec] = (bool) `which $exec`;
