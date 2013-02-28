@@ -65,7 +65,13 @@ function module_menupage($mod_reference, $module_params)
 			$pagemenu = $wikilib->include_default_namespace($pagemenu);
 		}
 	
-		$content = $wikilib->get_parse($pagemenu, $dummy, true);
+		$perms = Perms::get(array('object' => $pagemenu, 'type' => 'wiki page'));
+
+		if ($perms->view) {
+			$content = $wikilib->get_parse($pagemenu, $dummy, true);
+		} else {
+			$content = '<label class="error">' . tra("You are not logged in") . '</label>';
+		}
 
 		if (! empty($content) && ! empty($module_params['menu_type']) && in_array($module_params['menu_type'], array('horiz', 'vert'))) {
 			$class = 'cssmenu_' . $module_params['menu_type'];
