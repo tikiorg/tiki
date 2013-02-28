@@ -516,7 +516,7 @@ $("#export_type").change(function(){
 					</select>{$empty_cache}
 				</div>
 				<div>
-					<textarea data-codemirror="true" data-syntx="tiki" id="profile_tester" name="profile_tester" rows="5" cols="40" style="width:95%;">{if isset($test_source)}{$test_source}{/if}</textarea>
+					<textarea data-codemirror="true" data-syntax="yaml" id="profile_tester" name="profile_tester" rows="5" cols="40" style="width:95%;">{if isset($test_source)}{$test_source}{/if}</textarea>
 				</div>
 			</div>
 			<div align="center" style="padding:1em;"><input type="submit" name="test" value="{tr}Test{/tr}" /></div>
