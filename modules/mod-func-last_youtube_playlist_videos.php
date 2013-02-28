@@ -71,6 +71,23 @@ function module_last_youtube_playlist_videos_info()
 					array('text' => tra('No'), 'value' => 'n'), 
 				),
 			),
+			'orderby' => array(
+				'required' => false,
+				'name' => tra('Order by'),
+				'description' => tra('Criteria to order by the videos in the list. Default is \'position\''),
+				'default' => 'position',
+				'filter' => 'striptags',
+				'options' => array(
+					array('text' => tra(''), 'value' => ''), 
+					array('text' => tra('position'), 'value' => 'position'), 
+					array('text' => tra('commentCount'), 'value' => 'commentCount'), 
+					array('text' => tra('duration'), 'value' => 'duration'), 
+					array('text' => tra('published'), 'value' => 'published'), 
+					array('text' => tra('reversedPosition'), 'value' => 'reversedPosition'), 
+					array('text' => tra('title'), 'value' => 'title'), 
+					array('text' => tra('viewCount'), 'value' => 'viewCount'), 
+				),
+			),
 		)
 	);
 }
@@ -88,7 +105,12 @@ function module_last_youtube_playlist_videos($mod_reference, $module_params)
 	if (!empty($module_params['id'])) {
 		$id = $module_params['id'];
 		require_once('lib/wiki-plugins/wikiplugin_youtube.php');
-		$feedUrl = 'http://gdata.youtube.com/feeds/api/playlists/' . $id . '?orderby=published';
+		if (!empty($module_params['orderby'])) {
+			$orderby = $module_params['orderby'];
+			$feedUrl = 'http://gdata.youtube.com/feeds/api/playlists/' . $id . '?orderby='. $orderby;
+		} else {
+			$feedUrl = 'http://gdata.youtube.com/feeds/api/playlists/' . $id . '?orderby=position';
+		}
 		$yt = new Zend_Gdata_YouTube();
 		$yt->setMajorProtocolVersion(2);
 		$yt->setHttpClient($tikilib->get_http_client());
