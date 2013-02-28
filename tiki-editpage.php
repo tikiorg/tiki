@@ -256,12 +256,12 @@ if (isset($_REQUEST['cancel_edit'])) {
 	} else {
 		$url = "location:".$wikilib->sefurl($page);
 		if (!empty($_REQUEST['page_ref_id'])) {
-			$url .= '&page_ref_id='.$_REQUEST['page_ref_id'];
+			$url .= (strpos('?', $url) === false ? '?' : '&') . 'page_ref_id='.$_REQUEST['page_ref_id'];
 		}
 	}
 
 	if ($prefs['feature_multilingual'] === 'y' && $prefs['feature_best_language'] === 'y' && isset($info['lang']) && $info['lang'] !== $prefs['language']) {
-		$url .= '&no_bl=y';
+		$url .= (strpos('?', $url) === false ? '?' : '&') . 'no_bl=y';
 	}
 
 	if ($dieInsteadOfForwardingWithHeader) die ("-- tiki-editpage: Dying before first call to header(), so we can see traces. Forwarding to: \$url='$url'");
@@ -335,7 +335,7 @@ if ($prefs['feature_warn_on_edit'] === 'y') {
 		$msg = tr("This page is being edited by %0. Please check with the user before editing the page,	otherwise the changes will be stored as two separate versions in the history and you will have to manually merge them later.", $semUser);
 		$msg .= '<br /><br /><a href="tiki-editpage.php?page=';
 		$msg .= urlencode($page);
-		$msg .= '&conflictoverride=y">' . tra('Override lock and carry on with edit') . '</a>';
+		$msg .= (strpos('?', $url) === false ? '?' : '&') . 'conflictoverride=y">' . tra('Override lock and carry on with edit') . '</a>';
 		$smarty->assign('msg', $msg);
 		$smarty->assign('errortitle', tra('Page is currently being edited'));
 		$smarty->display("error.tpl");
@@ -488,7 +488,7 @@ if (isset($_FILES['userfile1']) && is_uploaded_file($_FILES['userfile1']['tmp_na
 			$url = $wikilib->sefurl($page);
 		}
 		if ($prefs['feature_best_language'] === 'y') {
-			$url .= '&no_bl=y';
+			$url .= (strpos('?', $url) === false ? '?' : '&') . 'no_bl=y';
 		}
 
 
@@ -496,7 +496,7 @@ if (isset($_FILES['userfile1']) && is_uploaded_file($_FILES['userfile1']['tmp_na
 			global $flaggedrevisionlib; require_once 'lib/wiki/flaggedrevisionlib.php';
 
 			if ($flaggedrevisionlib->page_requires_approval($page)) {
-				$url .= '&latest=1';
+				$url .= (strpos('?', $url) === false ? '?' : '&') . 'latest=1';
 			}
 		}
 		if ($dieInsteadOfForwardingWithHeader) die ("-- tiki-editpage: Dying before second call to header(), so we can see traces. Forwarding to: '$url'");
@@ -1298,14 +1298,14 @@ if (
 		$url = $wikilib->sefurl($page);
 	}
 	if ($prefs['feature_multilingual'] === 'y' && $prefs['feature_best_language'] === 'y' && isset($info['lang']) && $info['lang'] !== $prefs['language']) {
-		$url .= '&no_bl=y';
+		$url .= (strpos('?', $url) === false ? '?' : '&') . 'no_bl=y';
 	}
 
 	if ($prefs['flaggedrev_approval'] == 'y' && $tiki_p_wiki_approve == 'y') {
 		global $flaggedrevisionlib; require_once 'lib/wiki/flaggedrevisionlib.php';
 
 		if ($flaggedrevisionlib->page_requires_approval($page)) {
-			$url .= '&latest=1';
+			$url .= (strpos('?', $url) === false ? '?' : '&') . 'latest=1';
 		}
 	}
 
