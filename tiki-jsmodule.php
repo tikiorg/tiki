@@ -38,12 +38,15 @@ ob_start();
 ?>if ( typeof tiki_module_params == 'undefined' ) { var tiki_module_params = {}; }
 <?php
 foreach ( $mods as $mod ) {
-	include_once('modules/mod-func-' . $mod . '.php');
-	$info_func = "module_{$mod}_info";
-	if (function_exists($info_func)) {
-		$info = $info_func();
-	} else {
-		$info = false;
+	$file = 'modules/mod-func-' . $mod . '.php';
+	if (file_exists($file)) {
+		include_once($file);
+		$info_func = "module_{$mod}_info";
+		if (function_exists($info_func)) {
+			$info = $info_func();
+		} else {
+			$info = false;
+		}
 	}
 ?>
 tiki_module_params.<?php echo TikiLib::remove_non_word_characters_and_accents($mod) ?> = <?php echo json_encode($info) ?>;
