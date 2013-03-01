@@ -143,7 +143,7 @@
 {else}
 {tr}No such user{/tr}
 {/if}
-<hr />
+<hr>
 <h1>{tr}Manage Credit Types{/tr}</h1>
 <form method="post" action="tiki-admin_credits.php">
 	<table class="normal">

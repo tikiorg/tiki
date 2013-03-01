@@ -124,14 +124,14 @@
 			<form method="get" action="tiki-admin_categories.php" name="move">
 				<input type="hidden" name="parentId" value="{$parentId|escape}" />
 				<input type="submit" name="unassign" value="{tr}Unassign all objects from this category{/tr}" />
-				<hr />
+				<hr>
 				<select name="toId">
 				{foreach $categories as $category}
 					<option value="{$category.categId}" {if $category.categId eq $parentId}selected="selected"{/if}>{$category.categpath|escape}</option>
 				{/foreach}
 				</select>
 				<input type="submit" name="move_to" value="{tr}Move all the objects from this category to this one{/tr}" />
-				<hr />
+				<hr>
 				<select name="to">
 				{foreach $categories as $category}
 					<option value="{$category.categId}" {if $category.categId eq $parentId}selected="selected"{/if}>{$category.categpath|escape}</option>

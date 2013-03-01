@@ -151,7 +151,7 @@
 			<div class="floatleft"><input type="radio" id="begin1" name="begin" value="1" checked="checked" {if $structures|@count eq '1'} disabled="disabled"{/if} /></div>
 			<label class="floatleft" for="begin2">{tr}at the end{/tr}</label>
 			<div class="floatleft"><input type="radio" id="begin2" name="begin" value="0" {if $structures|@count eq '1'}disabled="disabled"{/if} /></div>
-			<hr />
+			<hr>
 			<div class="floatleft input_submit_container">
 				<input type="submit" name="move_to" value="{tr}Move{/tr}" {if $structures|@count eq '1'} disabled="disabled"{/if} />
 			</div>

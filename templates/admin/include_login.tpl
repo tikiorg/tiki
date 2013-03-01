@@ -130,7 +130,7 @@
 					{preference name=cookie_name}
 					{preference name=cookie_domain}
 					{preference name=cookie_path}
-					<hr />
+					<hr>
 					<strong>{tr}Cookie Consent{/tr}</strong>
 					{preference name=cookie_consent_feature}
 					<div class="adminoptionboxchild" id="cookie_consent_feature_childcontainer">

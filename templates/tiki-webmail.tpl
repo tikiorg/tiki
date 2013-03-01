@@ -162,7 +162,7 @@
 								<td></td>
 							</tr>
 							<tr><td colspan="4">
-								<hr />
+								<hr>
 								<h3>{tr}Incoming servers (used in this order){/tr}</h3>
 							</td></tr>
 							<tr>
@@ -198,7 +198,7 @@
 								</td>
 							</tr>
 							<tr><td colspan="4">
-								<hr />
+								<hr>
 								<h3>{tr}Outgoing server{/tr}</h3>
 							</td></tr>
 							<tr>
@@ -228,7 +228,7 @@
 								</td>
 							</tr>
 							<tr><td colspan="4">
-								<hr />
+								<hr>
 								<h3>{tr}Account details{/tr}</h3>
 							</td></tr>
 							<tr>

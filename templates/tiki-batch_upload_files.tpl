@@ -36,7 +36,7 @@
 			</tr>
 		{/foreach}
 	</table>
-	<hr />
+	<hr>
 	<table class="formcolor">
 		<tr><td><input type="checkbox" name="removeExt" value="true" id="removeExt" checked="checked" /></td><td>{tr}Remove extension from filename{/tr}</td>
 		<tr><td/><td>{tr}eg. from "digicam0001.jpg" then name digicam0001 will be used for the name field{/tr}</td></tr>

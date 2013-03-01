@@ -29,7 +29,7 @@
 		</td>
 	</tr>
 </table>
-<hr />
+<hr>
 <h2>{$client.Name}</h2>
 <table class='invoiceItems'>
 	<tr>

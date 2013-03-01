@@ -2,7 +2,7 @@
 
 {remarksbox type="tip" title="{tr}Tip{/tr}"}
 {tr}To add/remove image galleries, go to "Image Galleries" on the application menu, or{/tr} <a class="rbox-link" href="tiki-galleries.php">{tr}Click Here{/tr}</a>.
-<hr />
+<hr>
 {tr}You can upload images of a size of {/tr}{$max_img_upload_size|kbsize}. {tr}Alter the php.ini variables file_uploads, upload_max_filesize, post_max_size and database variables (max_allowed_packet for mysql) to change this value{/tr}.
 {/remarksbox}
 

@@ -381,7 +381,7 @@
 									</select>
 									&nbsp;&nbsp;
 									<span id="errorDateOfYear" style="color:#900;"></span>
-									<br><br><hr />
+									<br><br><hr>
 								{/if}
 								<br>
 								{if $recurrence.id gt 0}

@@ -14,7 +14,7 @@
 </p>
 {/if}
  
-<hr />
+<hr>
 <p>
 	{icon _id="star"} {tr}The WYSIWYG editor in Tiki 6+ is
 	<a href="http://ckeditor.com">CKEditor</a>,

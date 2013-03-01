@@ -27,6 +27,6 @@
 	{if $show_location eq 'y' and $infocals.$cellcalendarId.customlocations eq 'y' and $celllocation}<span class='box-title'>{tr}Location:{/tr}</span> {$evt.location}<br>{/if}
 	{if $show_url eq 'y' and $infocals.$cellcalendarId.customurl eq 'y' and $evt.url}<span class='box-title'><a href="{$cellurl|escape:'url'}" title="{$evt.url|escape:'url'}">{$url|truncate:32:'...'}</a></span><br>{/if}
 		</div>
-		  <hr />
+		  <hr>
 {/foreach}
 </div>

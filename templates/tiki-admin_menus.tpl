@@ -116,7 +116,7 @@
 
 							{remarksbox type="tip" title="{tr}Note{/tr}"}
 								{tr}To use custom folder icons in menus, enter the path to the icon for the <strong>closed</strong> folder.{/tr} {tr}In the same directory, include an icon for the opened folder.{/tr} {tr}The "opened folder" icon name must be identical to the "closed folder" icon name, prefixed with the letter <strong>o</strong>.{/tr}
-								<hr />
+								<hr>
 								{tr}For example, the default icon is: img/icons/folder.png{/tr} {icon _id="folder"}
 								<br>
 								{tr}The name of the "open folder" icon is: img/icons/ofolder.png{/tr} {icon _id="ofolder"}
@@ -148,7 +148,7 @@
 		{remarksbox type="tip" title="{tr}Tip{/tr}"}
 			
 			{tr}You can use menus by assigning the menu <a href="tiki-admin_modules.php">module</a> (to the top, left, right, etc.), or you can customize a template, using {literal}{menu id=x}{/literal}, where x is the ID of the menu.{/tr}
-			<hr />
+			<hr>
 			{tr}To use a menu in a tiki format:{/tr} {literal}{menu id=X}{/literal}
 			<br>
 			{if $prefs.feature_cssmenus eq 'y'}

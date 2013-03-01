@@ -4,7 +4,7 @@
   {$data}
 </div>
 
-<hr />
+<hr>
 <div class="navbar">
 	{assign var=thisrepID value=$repID|escape}
 	{if $cached eq 'y'}

@@ -135,7 +135,7 @@
 	{/jq}
 </form>
 
-<hr />
+<hr>
 
 <h2>{tr}Templates{/tr}</h2>
 {if $channels or ($find ne '')}

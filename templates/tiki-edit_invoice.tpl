@@ -29,7 +29,7 @@
 			</td>
 		</tr>
 	</table>
-	<hr />
+	<hr>
 
 	<table id='InvoiceItems'>
 		<tr>

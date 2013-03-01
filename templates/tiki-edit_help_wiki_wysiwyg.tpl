@@ -14,7 +14,7 @@
 </p>
 {/if}
  
-<hr />
+<hr>
 <p>
 	{icon _id="star"} {tr}WYSIWYG in wiki mode is an experimental feature in Tiki 7+ and uses
 	<a href="http://ckeditor.com">CKEditor</a>{/tr}</p>

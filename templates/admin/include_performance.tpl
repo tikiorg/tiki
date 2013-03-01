@@ -56,7 +56,7 @@
 					</td>
 					</tr>
 					</table>
-					<hr />
+					<hr>
 				</p>
 
 				{if $opcode_stats.warning_fresh}

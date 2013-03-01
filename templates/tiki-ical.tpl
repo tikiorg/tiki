@@ -1,5 +1,5 @@
 <h2>{tr}Ical import / Export{/tr}</h2>
-<hr />
+<hr>
 <h3>{tr}Select The calendar to export{/tr}</h3>
 <form class="forms" method="get" action="tiki-ical.php">
     <input  name="export" type="hidden"  value="y" />
@@ -44,7 +44,7 @@
     <br><br>
 
 
-<hr />
+<hr>
 <h3>{tr}Calendar Import{/tr}</h3>
 {if $updated}
 {tr}Calendar has been updated{/tr}
@@ -65,7 +65,7 @@
 </td></tr></table>
 </form>
 <p>{$filedata}</p>
-<hr />
+<hr>
 <p>{$iCal}</p>
-<hr />
+<hr>
 

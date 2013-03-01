@@ -187,16 +187,16 @@ if $pagetop_msg}
 	<a href="tiki-admin_system.php">{tr}TikiCache/System{/tr}</a> 
 	<a href="tiki-syslog.php">{tr}SysLogs{/tr}</a> 
 	<a href="tiki-mods.php">{tr}Mods{/tr}</a>
-	<hr />
+	<hr>
 
 	{tr}Transversal features{/tr} ({tr}which apply to more than one section{/tr}):<br>
 	<a href="tiki-admin_notifications.php">{tr}Mail Notifications{/tr}</a> 
-	<hr />
+	<hr>
 
 	{tr}Navigation features:{/tr}<br>
 	<a href="tiki-admin_menus.php">{tr}Menus{/tr}</a> 
 	<a href="tiki-admin_modules.php">{tr}Modules{/tr}</a>
-	<hr />
+	<hr>
 
 	{tr}Text area features{/tr} ({tr}features you can use in all text areas, like wiki pages, blogs, articles, forums, etc{/tr}):<br>
 	<a href="tiki-admin_cookies.php">{tr}Cookies{/tr}</a> 
@@ -204,6 +204,6 @@ if $pagetop_msg}
 	<a href="tiki-admin_toolbars.php">{tr}Toolbars{/tr}</a> 
 	<a href="tiki-admin_dsn.php">{tr}DSN{/tr}</a> 
 	<a href="tiki-admin_external_wikis.php">{tr}External Wikis{/tr}</a> 
-	<hr />
+	<hr>
 
 {/remarksbox}

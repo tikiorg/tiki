@@ -53,7 +53,7 @@
 		</div>
 		{/foreach}
 	</div>
-	<hr />
+	<hr>
 	{/section}
 {/if}
 

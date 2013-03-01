@@ -106,7 +106,7 @@
 
 
 {if $tiki_p_map_delete eq 'y'}
-<hr />
+<hr>
 <div align="center">
 <form class="wikiaction" action="tiki-map_edit.php" method="get" id='editpageform'>
 <input type="hidden" name="mapfile" value="{$mapfile}" />

@@ -44,7 +44,7 @@
 								{button href="tiki-invoice_edit_client_contact.php?contact=$contactId" _text="{tr}View{/tr}"}
 								{button href="tiki-invoice_edit_client_contact.php?contact=$contactId" _text="{tr}Edit{/tr}"}
 								{button href="tiki-invoice_edit_client_contact.php?contact=$contactId" _text="{tr}Delete{/tr}"}
-								<hr />
+								<hr>
 							{/if}
 						{/foreach}
 					</td>

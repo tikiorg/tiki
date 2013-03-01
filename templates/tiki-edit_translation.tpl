@@ -37,7 +37,7 @@
 	<li><a href="#change_language">{tr}Change language for this page{/tr}</a></li>
 </ul>
 
-<hr />
+<hr>
 
 <a name="translate_updates"></a>
 <h3>{tr}Translate updates made on this page or one of its translations{/tr}</h3>
@@ -47,7 +47,7 @@
 </div>
 
 <br>
-<hr />
+<hr>
 <br>
 
 <a name="new_translation"></a>
@@ -117,7 +117,7 @@ function validate_translation_request() {
 {/jq}
 {/if}
 
-<hr />
+<hr>
 
 <a name="change_language"></a>
 <h3>{tr}Change language for this page{/tr}</h3>

@@ -25,7 +25,7 @@
 		<strong>{tr}To customize the menu{/tr}</strong>:<br>
 		{tr}Select{/tr} <a class="link" href="tiki-admin_menus.php" title="{tr}Admin Menus{/tr}">{tr}Admin{/tr} &gt; {tr}Menus{/tr}</a> {tr}and edit menu ID 42{/tr}.<br>{tr}Or, create your own menu and add it to a module{/tr}.
 	</p>
-	<hr />
+	<hr>
 	{else}
 	<p>
 		<a href="tiki-login.php" title="{tr}Login{/tr}"><img src="img/icons/accept.png" alt="{tr}Login{/tr}" style="border:0;margin-right:2px;vertical-align:middle" align="left" /></a>{tr}To begin configuring Tiki, please{/tr} <a href="tiki-login.php" title="{tr}Login{/tr}">{tr}login{/tr}</a> {tr}as admin{/tr}.

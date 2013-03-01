@@ -80,7 +80,7 @@
 						<tr>
 							<td align="center" colspan=3>
 								{include file='find.tpl' find_show_num_rows='y'}
-								<hr />
+								<hr>
 							</td>
 						</tr>
 						{foreach from=$translations name=translations item=item}

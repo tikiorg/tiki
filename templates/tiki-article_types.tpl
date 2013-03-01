@@ -127,7 +127,7 @@
 			</table>
 		{/if}
 		<input type="submit" name="update_type" value="{tr}Save{/tr}" /><br>
-		<hr />
+		<hr>
 		<br>
 		{/section}
 	{/tab}
