@@ -129,7 +129,7 @@
 	<tr>
 		<td>&nbsp;</td>
 		<td>
-			<input type="submit" name="adduser" value="{tr}Set as Operator{/tr}" />
+			<input type="submit" name="adduser" value="{tr}Set as Operator{/tr}">
 		</td>
 	</tr>
 </table>

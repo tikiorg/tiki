@@ -11,16 +11,16 @@
 	{/literal}
 	{$headerlib->output_headers()}
   </head>
-  <body onunload="client_close();" style="background-color: white">
+  <body onUnload="client_close();" style="background-color: white">
   	<div id='request_chat' align="center">
-  		<input type="hidden" id="reqId" />
-		<input type="hidden" id="tiki_user" value="{$user|escape}" />
+  		<input type="hidden" id="reqId">
+		<input type="hidden" id="tiki_user" value="{$user|escape}">
 		
 		<h2>{tr}Request live support{/tr}</h2>
 		<table>
 			{if $user}
-				<input type="hidden" id="username" value="{$user|escape}" />
-				<input type="hidden" id="emailaddress" value="{$user_email|escape}" />
+				<input type="hidden" id="username" value="{$user|escape}">
+				<input type="hidden" id="emailaddress" value="{$user_email|escape}">
 				<tr>
 					<td>{tr}User{/tr}</td>
 					<td>
@@ -37,13 +37,13 @@
 				<tr>
 					<td>{tr}User{/tr}</td>
 					<td>
-						<input type="text" id="username" />			
+						<input type="text" id="username">			
 					</td>
 				</tr>
 				<tr>
 					<td>{tr}Email{/tr}</td>
 					<td>
-						<input type="text" id="emailaddress" />
+						<input type="text" id="emailaddress">
 					</td>
 				</tr>
 			{/if}
@@ -57,7 +57,7 @@
 		</table>
 		
 		<br><br>				
-		<input onclick="request_chat(document.getElementById('username').value,document.getElementById('tiki_user').value,document.getElementById('emailaddress').value,document.getElementById('reason').value);" type="button" value="{tr}Request support{/tr}" />
+		<input onClick="request_chat(document.getElementById('username').value,document.getElementById('tiki_user').value,document.getElementById('emailaddress').value,document.getElementById('reason').value);" type="button" value="{tr}Request support{/tr}">
 		<br><br>
 		<!--<a href="tiki-live_support_message.php" class="link">{tr}Open a support ticket instead{/tr}</a>-->
 	</div>

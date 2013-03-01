@@ -127,10 +127,10 @@
 
 	<a class="link" href="tiki-minical.php?view={$view}&amp;removeold=1">{tr}Remove old events{/tr}</a>
 	<form action="tiki-minical.php" method="post">
-		<input type="hidden" name="view" value="{$view|escape}" />
+		<input type="hidden" name="view" value="{$view|escape}">
 		<table class="normal">
 			<tr>
-				<th><input type="submit" name="delete" value="x " /></th>
+				<th><input type="submit" name="delete" value="x "></th>
 				<th>
 					<a href="tiki-minical.php?view={$view}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'title_desc'}title_asc{else}title_desc{/if}">{tr}Title{/tr}</a>
 				</th>
@@ -148,7 +148,7 @@
 			{section name=user loop=$channels}
 				<tr class="{cycle}">
 					<td style="text-align:center;">
-						<input type="checkbox" name="event[{$channels[user].eventId}]" />
+						<input type="checkbox" name="event[{$channels[user].eventId}]">
 					</td>
 					<td>
 						<a class="link" href="tiki-minical.php?view={$view}&amp;eventId={$channels[user].eventId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}#add">{$channels[user].title}</a>
@@ -177,14 +177,14 @@
 <a name="add"></a>
 <h2>{if $eventId}{tr}Edit Event{/tr}{else}{tr}Add Event{/tr}{/if}</h2>
 <form action="tiki-minical.php" method="post">
-	<input type="hidden" name="eventId" value="{$eventId|escape}" />
-	<input type="hidden" name="view" value="{$view|escape}" />
-	<input type="hidden" name="duration" value="60*60" />
+	<input type="hidden" name="eventId" value="{$eventId|escape}">
+	<input type="hidden" name="view" value="{$view|escape}">
+	<input type="hidden" name="duration" value="60*60">
 	<table class="formcolor">
 		<tr>
 			<td>{tr}Title{/tr}</td>
 			<td>
-				<input type="text" name="title" value="{$info.title|escape}" style="width:95%"/>
+				<input type="text" name="title" value="{$info.title|escape}" style="width:95%">
 			</td>
 		</tr>
 		<tr>
@@ -225,9 +225,9 @@
 		<tr>
 			<td>&nbsp;</td>
 			<td>
-				<input type="submit" name="save" value="{tr}Save{/tr}" />
+				<input type="submit" name="save" value="{tr}Save{/tr}">
 				{if $eventId}
-					<input type="submit" name="remove2" value="{tr}Delete{/tr}" />
+					<input type="submit" name="remove2" value="{tr}Delete{/tr}">
 				{/if}
 			</td>
 		</tr>

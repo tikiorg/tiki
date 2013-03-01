@@ -45,7 +45,7 @@
 	{cycle values="odd,even" print=false}
 	{section name=changes loop=$posts}{assign var=id value=$posts[changes].postId}
 		<tr class="{cycle}">
-			<td class="checkbox"><input type="checkbox" name="checked[]" value="{$id}" /></td>
+			<td class="checkbox"><input type="checkbox" name="checked[]" value="{$id}"></td>
 			<td class="text">{object_link type="blog post" id=$posts[changes].postId title=$posts[changes].title}</td>
 			{if !isset($blogId)}
 				<td class="text">

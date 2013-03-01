@@ -5,7 +5,7 @@
 <h2>{tr}Support requests{/tr}</h2>
 
 <form method="get" action="tiki-live_support_transcripts.php">
-<input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
+<input type="hidden" name="sort_mode" value="{$sort_mode|escape}">
 <table>
 <tr>
 	<td>{tr}Find{/tr}</td>
@@ -15,7 +15,7 @@
 </tr>
 
 <tr>
-	<td><input type="text" name="find" value="{$find|escape}" /></td>
+	<td><input type="text" name="find" value="{$find|escape}"></td>
 	<td>
 		<select name="filter_user">
 			<option value="" {if $filter_user eq ''}selected="selected"{/if}>{tr}All{/tr}</option>
@@ -32,7 +32,7 @@
 			{/section}
 		</select>
 	</td>
-	<td><input type="submit" value="{tr}Find{/tr}" name="filter" /></td>
+	<td><input type="submit" value="{tr}Find{/tr}" name="filter"></td>
 </tr>
 </table>
 </form>

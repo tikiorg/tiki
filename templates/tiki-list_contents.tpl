@@ -61,12 +61,12 @@
 		{/if}
 		<form action="tiki-list_contents.php" method="post">
 		  {query _type='form_input'}
-		  <input type="hidden" name="contentId" value="{$contentId|escape}" />
+		  <input type="hidden" name="contentId" value="{$contentId|escape}">
 		  <table class="formcolor">
 		    <tr>
 		      <td>{tr}Label:{/tr}</td>
 		      <td>
-		        <input type="text" name="contentLabel" style="width:40%" value="{$contentLabel|escape}" />
+		        <input type="text" name="contentLabel" style="width:40%" value="{$contentLabel|escape}">
 		      </td>
 		    </tr>
 		    <tr>
@@ -78,7 +78,7 @@
 		    <tr>
 		      <td>&nbsp;</td>
 		      <td>
-		        <input type="submit" name="save" value="{tr}Save{/tr}" />
+		        <input type="submit" name="save" value="{tr}Save{/tr}">
 		      </td>
 		    </tr>
 		  </table>

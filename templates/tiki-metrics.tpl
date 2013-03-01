@@ -8,14 +8,14 @@
 			<option value="monthof" {if $smarty.request.range eq 'monthof'}selected="selected"{/if}>month of...</option>
 			<option value="custom" {if $smarty.request.range eq 'custom'}selected="selected"{/if}>custom range...</option>
 		</select>
-		<input type="submit" name="update" value="Update" /><br/>
+		<input type="submit" name="update" value="Update"><br/>
 		<div id="range-inputs">
 			<span class="range-weekof-text">{tr}Week containing:{/tr}</span>
 			<span class="range-monthof-text">{tr}Month containing:{/tr}</span>
 			<span class="range-custom-text">{tr}From:{/tr}</span>
-			<input type="text" name="date_from" maxlength="10" value="{$date_from}" id="range-date-from" class="range-date-from" />
+			<input type="text" name="date_from" maxlength="10" value="{$date_from}" id="range-date-from" class="range-date-from">
 			<span class="range-custom-text">{tr}To:{/tr}</span>
-			<input type="text" name="date_to" maxlength="10" value="{$date_to}" id="range-date-to" class="range-date-to" />
+			<input type="text" name="date_to" maxlength="10" value="{$date_to}" id="range-date-to" class="range-date-to">
 		</div>
 		</form>
 	</div>

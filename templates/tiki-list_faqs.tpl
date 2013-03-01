@@ -65,14 +65,14 @@
 	{/if}
 
 	<form action="tiki-list_faqs.php" method="post">
-		<input type="hidden" name="faqId" value="{$faqId|escape}" />
+		<input type="hidden" name="faqId" value="{$faqId|escape}">
 		<table class="formcolor">
 			<tr>
 				<td>
 					{tr}Title:{/tr}
 				</td>
 				<td>
-					<input type="text" name="title" value="{$title|escape}" />
+					<input type="text" name="title" value="{$title|escape}">
 				</td>
 			</tr>
 			<tr>
@@ -89,15 +89,15 @@
 					{tr}Users can suggest questions:{/tr}
 				</td>
 				<td>
-					<input type="checkbox" name="canSuggest" {if $canSuggest eq 'y'}checked="checked"{/if} />
+					<input type="checkbox" name="canSuggest" {if $canSuggest eq 'y'}checked="checked"{/if}>
 				</td>
 			</tr>
 			<tr>
-				<td>
-					&nbsp;
+				<td>&nbsp;
+					
 				</td>
 				<td>
-					<input type="submit" name="save" value="{tr}Save{/tr}" />
+					<input type="submit" name="save" value="{tr}Save{/tr}">
 				</td>
 			</tr>
 		</table>

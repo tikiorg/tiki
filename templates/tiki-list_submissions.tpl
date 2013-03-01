@@ -9,7 +9,7 @@
 
 {include file='find.tpl' find_show_num_rows='y'}
 <form name="checkform" method="get" action="{$smarty.server.PHP_SELF}">
-	<input type="hidden" name="maxRecords" value="{$maxRecords|escape}" />
+	<input type="hidden" name="maxRecords" value="{$maxRecords|escape}">
 	<table class="normal">
 		{assign var=numbercol value=0}
 		<tr>
@@ -68,7 +68,7 @@
 			<tr class="{cycle}">
 				{if $tiki_p_remove_submission eq 'y' or $tiki_p_approve_submission eq 'y'}
 					<td class="checkbox">
-						<input type="checkbox" name="checked[]" value="{$listpages[changes].subId|escape}" {if $listpages[changes].checked eq 'y'}checked="checked" {/if}/>
+						<input type="checkbox" name="checked[]" value="{$listpages[changes].subId|escape}" {if $listpages[changes].checked eq 'y'}checked="checked" {/if}>
 					</td>
 				{/if}
 				{if $prefs.art_list_title eq 'y'}
@@ -125,7 +125,7 @@
 									{if $tiki_p_approve_submission eq 'y'}<option value="approve_subs" >{tr}Approve{/tr}</option>{/if}
 								</select>
 							</label>
-							<input type="submit" value="{tr}Ok{/tr}" />
+							<input type="submit" value="{tr}Ok{/tr}">
 						</p>
 					{/if}
 				</td>

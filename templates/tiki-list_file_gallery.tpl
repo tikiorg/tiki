@@ -141,9 +141,9 @@
 	{remarksbox type="note" title="{tr}Note{/tr}"}
 		{$fileChangedMessage}
 		<form method="post" action="{$smarty.server.PHP_SELF}{if !empty($filegals_manager) and $filegals_manager neq ''}?filegals_manager={$filegals_manager|escape}{/if}">
-			<input type="hidden" name="galleryId" value="{$galleryId|escape}" />
-			<input type="hidden" name="fileId" value="{$fileId|escape}" />
-			{tr}Your comment{/tr} ({tr}optional{/tr}): <input type="text" name="comment" size="40" />
+			<input type="hidden" name="galleryId" value="{$galleryId|escape}">
+			<input type="hidden" name="fileId" value="{$fileId|escape}">
+			{tr}Your comment{/tr} ({tr}optional{/tr}): <input type="text" name="comment" size="40">
 			{icon _id='accept' _tag='input_image'}
 		</form>
 	{/remarksbox}
@@ -181,12 +181,12 @@
 			{if $view neq 'page'}
 				<div class="findtable">
 					<form id="search-form" class="forms" method="get" action="tiki-search{if $prefs.feature_forum_local_tiki_search eq 'y'}index{else}results{/if}.php">
-						<input type="hidden" name="where" value="files" />
-						<input type="hidden" name="galleryId" value="{$galleryId}" />
+						<input type="hidden" name="where" value="files">
+						<input type="hidden" name="galleryId" value="{$galleryId}">
 						<label class="find_content">{tr}Search in content{/tr}
-							<input name="highlight" size="30" type="text" />
+							<input name="highlight" size="30" type="text">
 						</label>
-						<input type="submit" class="wikiaction" name="search" value="{tr}Go{/tr}"/>
+						<input type="submit" class="wikiaction" name="search" value="{tr}Go{/tr}">
 					</form>
 				</div>
 			{/if}
@@ -196,14 +196,14 @@
 	{if $view eq 'page'}
 		<div class="pageview">
 			<form id="size-form" class="forms" action="tiki-list_file_gallery.php">
-				<input type="hidden" name="view" value="page" />
-				<input type="hidden" name="galleryId" value="{$galleryId}" />
-				<input type="hidden" name="maxRecords" value=1 />
-				<input type="hidden" name="offset" value="{$offset}" />
+				<input type="hidden" name="view" value="page">
+				<input type="hidden" name="galleryId" value="{$galleryId}">
+				<input type="hidden" name="maxRecords" value=1>
+				<input type="hidden" name="offset" value="{$offset}">
 				<label for="maxWidth">
-					{tr}Max width{/tr}&nbsp;<input id="maxWidth" type="text" name="maxWidth" value="{$maxWidth}" />
+					{tr}Max width{/tr}&nbsp;<input id="maxWidth" type="text" name="maxWidth" value="{$maxWidth}">
 				</label>
-				<input type="submit" class="wikiaction" name="setSize" value="{tr}Go{/tr}"/>
+				<input type="submit" class="wikiaction" name="setSize" value="{tr}Go{/tr}">
 			</form>
 		</div><br>
 		{pagination_links cant=$cant step=$maxRecords offset=$offset}

@@ -40,7 +40,7 @@
 					{if $element->repository eq 'unavailable'}
 						<li>{$element->name|escape} ({$element->type|escape}) but is not in any repository</li>
 					{else}
-						<li><input type='checkbox' onchange='update_button_install();' name='install-wants[]' value='{$element->modname|escape}' checked />{$element->name|escape} {$element->revision} ({$element->type|escape})</li>
+						<li><input type='checkbox' onchange='update_button_install();' name='install-wants[]' value='{$element->modname|escape}' checked >{$element->name|escape} {$element->revision} ({$element->type|escape})</li>
 					{/if}
 				{/foreach}</ul>
 			</li>
@@ -49,7 +49,7 @@
 			<li>You asked to <strong>remove</strong> these mods:
 				<ul>{foreach from=$installask.wantedtoremove item=element}
 					{if $element->repository eq 'installed'}
-						<li><input type='checkbox' onchange='update_button_install();' name='install-wants[]' value='{$element->modname|escape}' checked />{$element->name|escape} {$element->revision} ({$element->type|escape})</li>
+						<li><input type='checkbox' onchange='update_button_install();' name='install-wants[]' value='{$element->modname|escape}' checked >{$element->name|escape} {$element->revision} ({$element->type|escape})</li>
 					{else}
 						<li>{$element->name|escape} ({$element->type|escape}) but is not installed</li>
 					{/if}
@@ -117,7 +117,7 @@
 				{if $element->repository eq 'unavailable'}
 					<li>{$element[0]->name|escape} ({$element[0]->type|escape}) but is not in any repository</li>
 				{else}
-					<li><input type='checkbox' onchange='update_button_install();' name='install-wants[]' value='{$element[0]->modname|escape}' />{$element[0]->name|escape} ({$element[0]->type|escape})</li>
+					<li><input type='checkbox' onchange='update_button_install();' name='install-wants[]' value='{$element[0]->modname|escape}'>{$element[0]->name|escape} ({$element[0]->type|escape})</li>
 				{/if}
 			{/foreach}</ul>
 			</li>
@@ -126,9 +126,9 @@
 
 		<br>
 		{if $installask.wanted}
-			<input type='submit' id='button_install' name='button-install' value="{tr}Install{/tr}"{if $installask.unavailable} style='display: none;'{/if} />
+			<input type='submit' id='button_install' name='button-install' value="{tr}Install{/tr}"{if $installask.unavailable} style='display: none;'{/if}>
 		{elseif $installask.wantedtoremove}
-			<input type='submit' id='button_install' name='button-remove' value="{tr}Remove{/tr}"{if $installask.unavailable} style='display: none;'{/if} />
+			<input type='submit' id='button_install' name='button-remove' value="{tr}Remove{/tr}"{if $installask.unavailable} style='display: none;'{/if}>
 		{/if}
 {jq}
 function update_button_install() {
@@ -154,8 +154,8 @@ function update_button_install() {
 {if not $installask}
 	<form method="get" action="tiki-mods.php">
 		{tr}Find{/tr}
-		<input type="text" name="find" value="{$find|escape}" />
-		<input type="submit" name="f" value="{tr}Find{/tr}" />
+		<input type="text" name="find" value="{$find|escape}">
+		<input type="submit" name="f" value="{tr}Find{/tr}">
 		{tr}in{/tr} <select name="type" onchange="this.form.submit();">
 			<option value="">{tr}all types{/tr}</option>
 			{foreach key=it item=i from=$types}

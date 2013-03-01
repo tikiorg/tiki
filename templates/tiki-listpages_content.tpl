@@ -173,7 +173,7 @@
 	<tr class="{cycle}">
 		{if $checkboxes_on eq 'y'}
 			<td class="checkbox">
-				<input type="checkbox" name="checked[]" value="{$listpages[changes].pageName|escape}"/>
+				<input type="checkbox" name="checked[]" value="{$listpages[changes].pageName|escape}">
 			</td>
 		{/if}
 
@@ -400,7 +400,7 @@
 		//-->
 	</script>
 	<noscript>
-		<input type="submit" value="{tr}OK{/tr}" />
+		<input type="submit" value="{tr}OK{/tr}">
 	</noscript>
 {/if}
 

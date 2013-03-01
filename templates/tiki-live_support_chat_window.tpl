@@ -11,15 +11,15 @@
 	{/literal}
 	{$headerlib->output_headers()}
   </head>
-  <body onunload="javascript:chat_close(document.getElementById('role').value,document.getElementById('username').value);" style="background-color: white">
-  	<input type="hidden" id="reqId" value="{$reqId|escape}" />
-  	<input type="hidden" id="senderId" value="{$senderId|escape}" />
-  	<input type="hidden" id="role" value="{$role|escape}" />
+  <body onUnload="javascript:chat_close(document.getElementById('role').value,document.getElementById('username').value);" style="background-color: white">
+  	<input type="hidden" id="reqId" value="{$reqId|escape}">
+  	<input type="hidden" id="senderId" value="{$senderId|escape}">
+  	<input type="hidden" id="role" value="{$role|escape}">
 	{if $role eq 'user'}
 	{if $req_info.tiki_user}
-	  	<input type="hidden" id="username" value="{$req_info.tiki_user|escape}" />
+	  	<input type="hidden" id="username" value="{$req_info.tiki_user|escape}">
 	{else}
-		<input type="hidden" id="username" value="{$req_info.user|escape}" />
+		<input type="hidden" id="username" value="{$req_info.user|escape}">
 	{/if}
 		<table>
 			<tr>
@@ -33,7 +33,7 @@
 			</tr>
 		</table>
 	{elseif $role eq 'operator'}
-	  	<input type="hidden" id="username" value="{$req_info.operator|escape}" />
+	  	<input type="hidden" id="username" value="{$req_info.operator|escape}">
 
 		{if $req_info.tiki_user}
 			<table>
@@ -86,9 +86,9 @@
   	<iframe name='chat_data' src='tiki-live_support_chat_frame.php' width="290" height="300" scrolling="yes">
   	</iframe>
   	{literal}
-  	<input type="text" id="data" size="30" width="290" style="width:290px;" onKeyPress="javascript:if(event.keyCode == 13) {write_msg(document.getElementById('data').value,document.getElementById('role').value,document.getElementById('username').value);}" />
-	<br/>
-  	<input type="button" value="send" onclick="javascript:write_msg(document.getElementById('data').value,document.getElementById('role').value,document.getElementById('username').value);" />
+  	<input type="text" id="data" size="30" width="290" style="width:290px;" onKeyPress="javascript:if(event.keyCode == 13) {write_msg(document.getElementById('data').value,document.getElementById('role').value,document.getElementById('username').value);}">
+	<br>
+  	<input type="button" value="send" onClick="javascript:write_msg(document.getElementById('data').value,document.getElementById('role').value,document.getElementById('username').value);">
   	{/literal}
   	<script type='text/javascript'>
         /* Activate polling of requests */

@@ -78,7 +78,7 @@
 		{/capture}
 
 		<tr class="{cycle}{if $prefs.feature_comments_moderation eq 'y'} post-approved-{$comments[ix].approved}{/if}">
-			<td class="checkbox"><input type="checkbox" name="checked[]" value="{$id}" {if isset($rejected[$id]) }checked="checked"{/if}/></td>
+			<td class="checkbox"><input type="checkbox" name="checked[]" value="{$id}" {if isset($rejected[$id]) }checked="checked"{/if}></td>
 			<td class="action">
 				<a title="{tr}Actions{/tr}" href="#" {popup trigger="onClick" sticky=1 mouseoff=1 fullhtml="1" center=true text=$smarty.capture.over_actions|escape:"javascript"|escape:"html"} style="padding:0; margin:0; border:0">{icon _id='wrench' alt="{tr}Actions{/tr}"}</a>
 			</td>

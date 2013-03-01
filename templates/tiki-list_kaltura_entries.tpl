@@ -15,11 +15,11 @@
 <form method="post" action="{$smarty.server.PHP_SELF}" class="findtable">
 	<label class="findtitle">
 	{tr}Find{/tr}
-		<input type="text" name="find" value="{$find|escape}" />
+		<input type="text" name="find" value="{$find|escape}">
 	</label>
-	<input type="hidden" name="list" value="{$entryType}" />
+	<input type="hidden" name="list" value="{$entryType}">
 	<label class="findsubmit">
-		<input type="submit" name="search" value="{tr}Go{/tr}" />
+		<input type="submit" name="search" value="{tr}Go{/tr}">
 	</label>
 </form>
 

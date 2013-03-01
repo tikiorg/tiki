@@ -11,19 +11,19 @@
 	{if $tiki_p_admin eq 'y'}
 		<label>
 			{tr}Inviter:{/tr}
-			<input type="text"  name="inviter" value="{$inviter|escape}" />
+			<input type="text"  name="inviter" value="{$inviter|escape}">
 		</label>
 	{/if}
 	<label>
 		{tr}Only successful invitations:{/tr}
-		<input type="checkbox" name="only_success"{if $only_success eq 'y'} checked="checked"{/if} />
+		<input type="checkbox" name="only_success"{if $only_success eq 'y'} checked="checked"{/if}>
 	</label>
 	<label>
 		{tr}Only pending invitations:{/tr}
-		<input type="checkbox" name="only_pending"{if $only_pending eq 'y'} checked="checked"{/if} />
+		<input type="checkbox" name="only_pending"{if $only_pending eq 'y'} checked="checked"{/if}>
 	</label>
 	<br>
-	<input type="submit" name="filter" value="{tr}Filter{/tr}" />
+	<input type="submit" name="filter" value="{tr}Filter{/tr}">
 	</form>
 </div>
 

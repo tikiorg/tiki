@@ -99,7 +99,7 @@
 	{pagination_links cant=$cant step=$maxRecords offset=$offset}{/pagination_links}
 	{if $tiki_p_admin_trackers eq 'y'}
 		<form class="create-tracker" method="post" action="{service controller=tracker action=replace}">
-			<input type="submit" value="{tr}Create tracker{/tr}"/>
+			<input type="submit" value="{tr}Create tracker{/tr}">
 		</form>
 	{/if}
 	{if !empty($trackerId)}
@@ -215,7 +215,7 @@
 	<form class="simple" action="{service controller=tracker action=duplicate}" method="post">
 		<label>
 			{tr}Name{/tr}
-			<input type="text" name="name" />
+			<input type="text" name="name">
 		</label>
 		<label>
 			{tr}Tracker{/tr}
@@ -227,16 +227,16 @@
 		</label>
 		{if $prefs.feature_categories eq 'y'}
 			<label>
-				<input type="checkbox" name="dupCateg" value="1"/>
+				<input type="checkbox" name="dupCateg" value="1">
 				{tr}Duplicate categories{/tr}
 			</label>
 		{/if}
 		<label>
-			<input type="checkbox" name="dupPerms" value="1"/>
+			<input type="checkbox" name="dupPerms" value="1">
 			{tr}Duplicate permissions{/tr}
 		</label>
 		<div class="submit">
-			<input type="submit" value="{tr}Duplicate{/tr}"/>
+			<input type="submit" value="{tr}Duplicate{/tr}">
 		</div>
 	</form>
 	
@@ -245,10 +245,10 @@
 		<form class="simple" method="post" action="{service controller=tracker_sync action=clone_remote}">
 			<label>
 				{tr}URL:{/tr}
-				<input type="url" name="url" required="required"/>
+				<input type="url" name="url" required="required">
 			</label>
 			<div>
-				<input type="submit" value="{tr}Search for trackers to clone{/tr}"/>
+				<input type="submit" value="{tr}Search for trackers to clone{/tr}">
 			</div>
 		</form>
 	{/if}
@@ -262,12 +262,12 @@
 				<textarea name="raw" rows="20"></textarea>
 			</label>
 			<label>
-				<input type="checkbox" name="preserve" value="1"/>
+				<input type="checkbox" name="preserve" value="1">
 				{tr}Preserve tracker ID{/tr}
 			</label>
 			{remarksbox close='n' title='{tr}Note{/tr}'}{tr}Use "Tracker -> Export -> Structure" to produce this data.{/tr}{/remarksbox}
 			<div class="submit">
-				<input type="submit" value="{tr}Import{/tr}"/>
+				<input type="submit" value="{tr}Import{/tr}">
 			</div>
 		</form>
 
@@ -282,7 +282,7 @@
 	            </label>
 	            <textarea name="yaml" id="importFromProfileYaml" data-codemirror="true" data-syntax="yaml" data-line-numbers="true" style="height: 400px;"></textarea>
                 <div class="submit">
-                    <input type="submit" value="{tr}Import{/tr}"/>
+                    <input type="submit" value="{tr}Import{/tr}">
                 </div>
             </form>
         </div>

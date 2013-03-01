@@ -9,10 +9,10 @@
 		{include file='find.tpl' find_show_languages='y' find_show_languages_excluded='y' find_show_categories_multi='y' find_show_num_rows='y' find_in="<ul><li>{tr}Page name{/tr}</li></ul>" }
 
 <form name="checkform" method="get" action="{$smarty.server.PHP_SELF}">
-	<input type="hidden" name="offset" value="{$offset|escape}" />
-	<input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
-	<input type="hidden" name="find" value="{$find|escape}" />
-	<input type="hidden" name="maxRecords" value="{$maxRecords|escape}" />
+	<input type="hidden" name="offset" value="{$offset|escape}">
+	<input type="hidden" name="sort_mode" value="{$sort_mode|escape}">
+	<input type="hidden" name="find" value="{$find|escape}">
+	<input type="hidden" name="maxRecords" value="{$maxRecords|escape}">
 </form>
 		{if isset($error) and $error}
 <div class="simplebox highlight">
@@ -43,16 +43,16 @@
 <div class="center" style="text-align: center">
 	<strong>{tr}Insert name of the page you wish to create{/tr}</strong>
 	<form method="get" action="tiki-editpage.php">
-		<input id="pagename" type="text" size="30" name="page" /><br>
+		<input id="pagename" type="text" size="30" name="page"><br>
 		{if $prefs.namespace_enabled == 'y' && $prefs.namespace_default}
 			<div>
 				<label>
-					<input type="checkbox" name="namespace" value="{$prefs.namespace_default|escape}" checked="checked" />
+					<input type="checkbox" name="namespace" value="{$prefs.namespace_default|escape}" checked="checked">
 					{tr _0=$prefs.namespace_default}Create page within %0{/tr}
 				</label>
 			</div>
 		{/if}
-		<input class="submit button" type="submit" name="quickedit" value="{tr}Create Page{/tr}" />
+		<input class="submit button" type="submit" name="quickedit" value="{tr}Create Page{/tr}">
 	</form>
 </div>
 		{/tab}

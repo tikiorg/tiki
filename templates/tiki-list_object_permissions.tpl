@@ -24,7 +24,7 @@
 				{/foreach}
 		</select>
 	  </div>
-	  <div style="float:left;"><input type="submit" name="filter" value="{tr}Filter{/tr}" /></div>
+	  <div style="float:left;"><input type="submit" name="filter" value="{tr}Filter{/tr}"></div>
 	  </div>
 </form>
 
@@ -43,7 +43,7 @@
 				{tab name=$tablabel}
 					<div class="tabs-1">
 					<form method="post">
-					{foreach from=$filterGroup item=f}<input type="hidden" name="filterGroup[]" value="{$f|escape}" />{/foreach}
+					{foreach from=$filterGroup item=f}<input type="hidden" name="filterGroup[]" value="{$f|escape}">{/foreach}
 					<table class="normal">
 					<tr>
 						<th class="checkbox">{select_all checkbox_names='groupPerm[]'}</th>
@@ -53,7 +53,7 @@
 					{cycle values="even,odd" print=false}
 					{foreach from=$content.default item=default}
 						<tr class="{cycle}">
-							<td class="checkbox"><input type="checkbox" name="groupPerm[]" value='{$default|json_encode|escape}' /></td>
+							<td class="checkbox"><input type="checkbox" name="groupPerm[]" value='{$default|json_encode|escape}'></td>
 							<td class="text">{$default.group|escape}</td>
 							<td class="text">{$default.perm|escape}</td>
 						</tr>
@@ -64,7 +64,7 @@
 						<div style="float:left">
 						{icon _id='cross' _tag='input_image' _confirm="{tr}Delete the selected permissions?{/tr}" name='delsel' alt="{tr}Delete the selected permissions{/tr}"}
 							 <br>						
-							 <input type="text" name="toGroup" /><input type="submit" name="dupsel" value="{tr}Duplicate the selected permissions on this group{/tr}" />
+							 <input type="text" name="toGroup"><input type="submit" name="dupsel" value="{tr}Duplicate the selected permissions on this group{/tr}">
 	  					</div>
 					{/if}
 					</form>
@@ -75,7 +75,7 @@
 					<div class="tabs-2">
 					{remarksbox}{tr}If an object is not listed in this section nor in the Category Permissions section, then only the global permissions apply to it.{/tr}{/remarksbox}
 					<form method="post">
-					{foreach from=$filterGroup item=f}<input type="hidden" name="filterGroup[]" value="{$f|escape}" />{/foreach}
+					{foreach from=$filterGroup item=f}<input type="hidden" name="filterGroup[]" value="{$f|escape}">{/foreach}
 					<table class="normal">
 					<tr>
 						<th class="checkbox">{select_all checkbox_names='objectPerm[]'}</th>
@@ -88,7 +88,7 @@
 						{if !empty($object.special)}
 							{foreach from=$object.special item=special}
 								<tr class="{cycle}">
-									<td class="checkbox"><input type="checkbox" name="objectPerm[]" value='{$special|json_encode|escape}' /></td>
+									<td class="checkbox"><input type="checkbox" name="objectPerm[]" value='{$special|json_encode|escape}'></td>
 									<td class="text">{$special.objectName|escape}</td>
 									<td class="text">{$special.group|escape}</td>
 									<td class="text">{$special.perm|escape}</td>
@@ -110,7 +110,7 @@
 						<div style="float:left">
 							 {icon _id='cross' _tag='input_image' _confirm="{tr}Delete the selected permissions?{/tr}" name='delsel' alt="{tr}Delete the selected permissions{/tr}" style='vertical-align: middle;'}
 							 <br>						
-							 <input type="text" name="toGroup" /><input type="submit" name="dupsel" value="{tr}Duplicate the selected permissions on this group{/tr}" />
+							 <input type="text" name="toGroup"><input type="submit" name="dupsel" value="{tr}Duplicate the selected permissions on this group{/tr}">
 						</div>
 					{/if}
 					</form>
