@@ -52,14 +52,14 @@
 		</select>
     <br>
     <br>
-		<input type="file" name="file" />
-		<input type="submit" value="{tr}Import{/tr}" />
+		<input type="file" name="file">
+		<input type="submit" value="{tr}Import{/tr}">
 	</form>
 	<form method="post" action="tiki-import_sheet.php?mode=import&sheetId={$sheetId}">
 		<h2>{tr}Grab Wiki Tables{/tr}</h2>
-		<input id="querypage" type="text" name="page"/>
-		<input type="hidden" name="handler" value="TikiSheetWikiTableHandler"/>
-		<input type="submit" value="Import"/>
+		<input id="querypage" type="text" name="page">
+		<input type="hidden" name="handler" value="TikiSheetWikiTableHandler">
+		<input type="submit" value="Import">
 	</form>
 	{if $prefs.javascript_enabled eq 'y' and $prefs.feature_jquery_autocomplete eq 'y'}
 		{jq}

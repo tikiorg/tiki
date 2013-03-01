@@ -10,7 +10,7 @@
 
  {if $user}
   You are currently logged as "{$user|escape}", if you want to validate this invitation on this account, click here :
-  <form method='POST'><input type='submit' name='validate-existing-account' value='Validate'/></form>
+  <form method='POST'><input type='submit' name='validate-existing-account' value='Validate'></form>
  {else}
   <div>
    If you want to validate this invitation on an already existing account, please login first: : <a href='tiki-login_scr.php'>login</a>

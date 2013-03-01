@@ -47,16 +47,16 @@
 					{if $prefs.site_language eq $languages[ix].value}selected="selected"{/if}>{$languages[ix].name}</option>
 			{/section}
 		</select></label>
-		<input type="hidden" name="install_step" value="0" />
-		{if $multi}		<input type="hidden" name="multi" value="{$multi}" />{/if}
+		<input type="hidden" name="install_step" value="0">
+		{if $multi}		<input type="hidden" name="multi" value="{$multi}">{/if}
 	</form>
 </div>
 <div align="center" style="margin-top: 1em;">
 	<form action="tiki-install.php" method="post">
-{if $multi}		<input type="hidden" name="multi" value="{$multi}" />{/if}
-{if $lang}		<input type="hidden" name="lang" value="{$lang}" />{/if}
-		<input type="hidden" name="install_step" value="1" />
-		<input type="submit" value=" {tr}Continue{/tr} " />
+{if $multi}		<input type="hidden" name="multi" value="{$multi}">{/if}
+{if $lang}		<input type="hidden" name="lang" value="{$lang}">{/if}
+		<input type="hidden" name="install_step" value="1">
+		<input type="submit" value=" {tr}Continue{/tr} ">
 	</form>
 </div>
 
@@ -66,10 +66,10 @@
 <div align="center" style="margin-top:1em;">
 <iframe src="license.txt" width="700" height="300" style="width:700px;height:300px"> </iframe>
 	<form action="tiki-install.php" method="post">
-{if $multi}			<input type="hidden" name="multi" value="{$multi}" />{/if}
-{if $lang}			<input type="hidden" name="lang" value="{$lang}" />{/if}
-		<input type="hidden" name="install_step" value="2" />
-		<input type="submit" value=" {tr}Continue{/tr} " />
+{if $multi}			<input type="hidden" name="multi" value="{$multi}">{/if}
+{if $lang}			<input type="hidden" name="lang" value="{$lang}">{/if}
+		<input type="hidden" name="install_step" value="2">
+		<input type="submit" value=" {tr}Continue{/tr} " >
 	</form>
 </div>
 
@@ -111,20 +111,20 @@
 	<form action="tiki-install.php#mail" method="post">
 		<div style="padding:1em 7em;">
 			<label for="email_test_to">{tr}Test email:{/tr}</label>
-			<input type="text" size="40" name="email_test_to" id="email_test_to" value="{if isset($email_test_to)}{$email_test_to}{/if}" />
+			<input type="text" size="40" name="email_test_to" id="email_test_to" value="{if isset($email_test_to)}{$email_test_to}{/if}">
 			{if isset($email_test_err)}<span class="attention"><em>{$email_test_err}</em></span>
 			{else}<em>{tr}Email address to send test to.{/tr}</em>{/if}
 			<br><br>
-			<input type="checkbox" name="email_test_cc" checked="checked" value="1" />
+			<input type="checkbox" name="email_test_cc" checked="checked" value="1">
 			<em>{tr}Copy test mail to {/tr} {$email_test_tw}?</em>
 		</div>
-		<input type="hidden" name="install_step" value="2" />
-		<input type="hidden" name="perform_mail_test" value="y" />
+		<input type="hidden" name="install_step" value="2">
+		<input type="hidden" name="perform_mail_test" value="y">
 		<div align="center">
-			<input type="submit" value=" {tr}Send Test Message{/tr} " />
+			<input type="submit" value=" {tr}Send Test Message{/tr} ">
 		</div>
-{if $multi}		<input type="hidden" name="multi" value="{$multi}" />{/if}
-{if $lang}		<input type="hidden" name="lang" value="{$lang}" />{/if}
+{if $multi}		<input type="hidden" name="multi" value="{$multi}">{/if}
+{if $lang}		<input type="hidden" name="lang" value="{$lang}">{/if}
 		
 	</form>
 	</div>
@@ -166,10 +166,10 @@
 
 <div align="center" style="margin-top:1em;">
 <form action="tiki-install.php" method="post">
-	<input type="hidden" name="install_step" value="3" />
-	<input type="submit" value=" {tr}Continue{/tr} " />
-{if $multi}		<input type="hidden" name="multi" value="{$multi}" />{/if}
-{if $lang}		<input type="hidden" name="lang" value="{$lang}" />{/if}
+	<input type="hidden" name="install_step" value="3">
+	<input type="submit" value=" {tr}Continue{/tr} ">
+{if $multi}		<input type="hidden" name="multi" value="{$multi}">{/if}
+{if $lang}		<input type="hidden" name="lang" value="{$lang}">{/if}
 </form>
 </div>
 
@@ -191,10 +191,10 @@
 			<em>{tr _0=$dbname}Database name: &quot;%0&quot;{/tr}</em>
 		</p>
 		<form action="tiki-install.php" method="post">
-			<input type="hidden" name="install_step" value="4" />
-			{if $multi}<input type="hidden" name="multi" value="{$multi}" />{/if}
-			{if $lang}<input type="hidden" name="lang" value="{$lang}" />{/if}
-			<input type="submit" value=" {tr}Use Existing Connection{/tr} " />
+			<input type="hidden" name="install_step" value="4">
+			{if $multi}<input type="hidden" name="multi" value="{$multi}">{/if}
+			{if $lang}<input type="hidden" name="lang" value="{$lang}">{/if}
+			<input type="submit" value=" {tr}Use Existing Connection{/tr} ">
 		</form>
 		or<br>
 		<a href="#" onclick="$('#installer_3_new_db_form').toggle();return false;" class="button">{tr}Modify database connection{/tr}</a>
@@ -212,9 +212,9 @@
   <div id="installer_3_new_db_form"{if $dbcon eq 'y'} style="display:none;"{/if}>
 	<p>{tr}Use this page to create a new database connection, or use the <a href="http://doc.tiki.org/Manual+Installation" target="_blank" title="manual installation">manual installation process</a>.{/tr} <a href="http://doc.tiki.org/Manual+Installation" target="_blank" title="{tr}Help{/tr}"><img src="img/icons/help.png" alt="{tr}Help{/tr}" /></a></p>
 	<form action="tiki-install.php" method="post">
-		<input type="hidden" name="install_step" value="4" />
-{if $multi}		<input type="hidden" name="multi" value="{$multi}" />{/if}
-{if $lang}		<input type="hidden" name="lang" value="{$lang}" />{/if}
+		<input type="hidden" name="install_step" value="4">
+{if $multi}		<input type="hidden" name="multi" value="{$multi}">{/if}
+{if $lang}		<input type="hidden" name="lang" value="{$lang}">{/if}
 		<fieldset><legend>{tr}Database information{/tr}</legend>
 		<p>{tr}Enter your database connection information.{/tr}</p>
 		<div style="padding:5px">
@@ -236,7 +236,7 @@
 		<div style="padding:5px">
 			<label for="host">{tr}Host name:{/tr}</label>
 			<div style="margin-left:1em">
-			<input type="text" name="host" id="host" value="{if isset($smarty.request.host)}{$smarty.request.host|escape:"html"}{else}localhost{/if}" size="40" /> <a href="javascript:void(0)" onclick="flip('host_help');" title="{tr}Help{/tr}"><img src="img/icons/help.png" alt="{tr}Help{/tr}" /></a>
+			<input type="text" name="host" id="host" value="{if isset($smarty.request.host)}{$smarty.request.host|escape:"html"}{else}localhost{/if}" size="40" /> <a href="javascript:void(0)" onclick="flip('host_help');" title="{tr}Help{/tr}"><img src="img/icons/help.png" alt="{tr}Help{/tr}"></a>
 			<br><em>{tr}Enter the host name or IP for your database.{/tr}</em>
 			<div style="display:none;" id="host_help">
 				<p>{tr}Use <strong>localhost</strong> if the database is running on the same machine as Tiki.{/tr}</p>
@@ -247,7 +247,7 @@
 		<div style="padding:5px;">
 			<label for="name">{tr}Database name:{/tr}</label>
 			<div style="margin-left:1em;">
-			<input type="text" id="name" name="name" size="40" value="{if isset($smarty.request.name)}{$smarty.request.name|escape:"html"}{/if}" /> <a href="javascript:void(0)" onclick="flip('name_help');" title="{tr}Help{/tr}"><img src="img/icons/help.png" alt="{tr}Help{/tr}" /></a>
+			<input type="text" id="name" name="name" size="40" value="{if isset($smarty.request.name)}{$smarty.request.name|escape:"html"}{/if}" /> <a href="javascript:void(0)" onclick="flip('name_help');" title="{tr}Help{/tr}"><img src="img/icons/help.png" alt="{tr}Help{/tr}"></a>
 		
 			<br><em>{tr}Enter the name of the database that Tiki will use (if already created) or create (if permitted).{/tr}</em> 
 			<div style="margin-left:1em;display:none;" id="name_help">
@@ -260,21 +260,21 @@
 		<fieldset><legend>{tr}Database user{/tr}</legend>
 		<p>{tr}Enter a database user with administrator permission for the Database.{/tr}</p>
 		<div style="padding:5px;">
-			<label for="user">{tr}User name:{/tr}</label> <input type="text" id="user" name="user" value="{if (isset($smarty.request.user))}{$smarty.request.user|escape:"html"}{/if}" />
+			<label for="user">{tr}User name:{/tr}</label> <input type="text" id="user" name="user" value="{if (isset($smarty.request.user))}{$smarty.request.user|escape:"html"}{/if}">
 		</div>
 		<div style="padding:5px;">
-			<label for="pass">{tr}Password:{/tr}</label> <input type="password" id="pass" name="pass" />
+			<label for="pass">{tr}Password:{/tr}</label> <input type="password" id="pass" name="pass">
 		</div>
 		</fieldset>
-		<input type="hidden" name="resetdb" value="y" />
+		<input type="hidden" name="resetdb" value="y">
 		<fieldset>
 			<legend>{tr}Character set{/tr}</legend>
 			<p>{tr}Highly recommended for new installations. However, if you are upgrading or migrating a previous tiki database, you are recommended to uncheck this box{/tr}</p>
-			<input type="checkbox" name="force_utf8" id="force_utf8" value="y" checked="checked"/>
+			<input type="checkbox" name="force_utf8" id="force_utf8" value="y" checked="checked">
 			<label for="force_utf8">{tr}Always force connection to use UTF-8{/tr}</label>
 		<p><a href="http://doc.tiki.org/Understanding+Encoding" onclick="window.open(this.href); return false;">{tr}More information{/tr}</a></p>
 		</fieldset>
-		<div align="center" style="margin-top:1em;"><input type="submit" name="dbinfo" value=" {tr}Continue{/tr} " /></div>	 
+		<div align="center" style="margin-top:1em;"><input type="submit" name="dbinfo" value=" {tr}Continue{/tr} "></div>	 
 	</form>
   </div>
 </div>
@@ -309,8 +309,8 @@
 					<legend>{tr}Character Set Conversion{/tr}</legend>
 					<p>{tr}Use at your own risk. If the data in the database currently contains improperly converted data, this may make matters worse. Suitable for new installations. Requires ALTER privilege on the database.{/tr}</p>
 					<p>
-						<input type="submit" name="convert_to_utf8" value="{tr}Convert database and tables to UTF-8{/tr}"/>
-						<input type="hidden" name="install_step" value="4"/>
+						<input type="submit" name="convert_to_utf8" value="{tr}Convert database and tables to UTF-8{/tr}">
+						<input type="hidden" name="install_step" value="4">
 					</p>
 				</fieldset>
 			</form>
@@ -320,9 +320,9 @@
 		  {if $logged eq 'y'}
 		    {* we are logged if no admin account is found or if the admin user is logged in*}
 		    <form method="post" action="tiki-install.php">
-		    	<input type="hidden" name="install_step" value="5" />
-				{if $multi}<input type="hidden" name="multi" value="{$multi}" />{/if}
-				{if $lang}<input type="hidden" name="lang" value="{$lang}" />{/if}
+		    	<input type="hidden" name="install_step" value="5">
+				{if $multi}<input type="hidden" name="multi" value="{$multi}">{/if}
+				{if $lang}<input type="hidden" name="lang" value="{$lang}">{/if}
 	  <br>
 <table class="formcolor">
 	<tr>
@@ -354,10 +354,10 @@
 							</select>
 						</label>
 					{else}
-						<input type="hidden" name="useInnoDB" value="0" />
+						<input type="hidden" name="useInnoDB" value="0">
 					{/if}
 				<p align="center">
-					<input type="submit" name="scratch" value=" {if $tikidb_created}{tr}Reinstall{/tr}{else}{tr}Install{/tr}{/if} " style="margin: 32px;" />
+					<input type="submit" name="scratch" value=" {if $tikidb_created}{tr}Reinstall{/tr}{else}{tr}Install{/tr}{/if} " style="margin: 32px;">
 				</p>
 			</div>
 			</fieldset>
@@ -371,7 +371,7 @@
 				{/remarksbox}
 			{/if}
 			<p>{tr}Automatically upgrade your existing database to v{/tr}{$tiki_version_name}.</p>
-			<p align="center"><input type="submit" name="update" value=" {tr}Upgrade{/tr} " /></p>
+			<p align="center"><input type="submit" name="update" value=" {tr}Upgrade{/tr} "></p>
 			</fieldset>
 			</td>
 			{/if}
@@ -383,13 +383,13 @@
 		   <p>{tr}Please log in with your admin password to continue.{/tr}</p>
 
      <form name="loginbox" action="tiki-install.php" method="post">
-			<input type="hidden" name="login" value="admin" />
-			{if $multi}<input type="hidden" name="multi" value="{$multi}" />{/if}
-			{if $lang}<input type="hidden" name="lang" value="{$lang}" />{/if}
+			<input type="hidden" name="login" value="admin">
+			{if $multi}<input type="hidden" name="multi" value="{$multi}">{/if}
+			{if $lang}<input type="hidden" name="lang" value="{$lang}">{/if}
           <table>
-          <tr><td class="module">{tr}User:{/tr}</td><td><input value="admin" disabled="disabled" size="20" /></td></tr>
-          <tr><td class="module">{tr}Pass:{/tr}</td><td><input type="password" name="pass" size="20" /></td></tr>
-          <tr><td colspan="2"><p align="center"><input type="submit" name="login" value="{tr}Log in{/tr}" /></p></td></tr>
+          <tr><td class="module">{tr}User:{/tr}</td><td><input value="admin" disabled="disabled" size="20"></td></tr>
+          <tr><td class="module">{tr}Pass:{/tr}</td><td><input type="password" name="pass" size="20"></td></tr>
+          <tr><td colspan="2"><p align="center"><input type="submit" name="login" value="{tr}Log in{/tr}"></p></td></tr>
           </table>
       </form>
 
@@ -444,7 +444,7 @@
 			</textarea>
 		{/if}
 		<p>
-			<input type="checkbox" name="validPatches[]" value="{$item[2]|escape}" id="ignore_{$item[2]|escape}" />
+			<input type="checkbox" name="validPatches[]" value="{$item[2]|escape}" id="ignore_{$item[2]|escape}">
 			<label for="ignore_{$item[2]|escape}">{$item[2]|escape}</label>
 		</p>
 		<textarea rows="6" cols="80">{assign var='patch' value=$item[2]}
@@ -466,11 +466,11 @@
 
 <p>&nbsp;</p>
 <div align="center">
-	<input type="hidden" name="install_step" value="6" />
-	<input type="hidden" name="install_type" value="{$install_type}" />
-	<input type="submit" value=" {tr}Continue{/tr} " />
-{if $multi}		<input type="hidden" name="multi" value="{$multi}" />{/if}
-{if $lang}		<input type="hidden" name="lang" value="{$lang}" />{/if}
+	<input type="hidden" name="install_step" value="6">
+	<input type="hidden" name="install_type" value="{$install_type}">
+	<input type="submit" value=" {tr}Continue{/tr} ">
+{if $multi}		<input type="hidden" name="multi" value="{$multi}">{/if}
+{if $lang}		<input type="hidden" name="lang" value="{$lang}">{/if}
 </div>
 </form>
 
@@ -485,11 +485,11 @@
 	<br>
 	<fieldset><legend>{tr}General{/tr} <a href="http://doc.tiki.org/general+admin" target="_blank" title="{tr}Help{/tr}"><img src="img/icons/help.png" alt="{tr}Help{/tr}" /></a></legend>
 <div style="padding:5px; clear:both"><label for="browsertitle">{tr}Browser title:{/tr}</label>
-		<div style="margin-left:1em"><input type="text" size="40" name="browsertitle" id="browsertitle" onclick="if (this.value=='{tr}My Tiki{/tr}') this.value='';" onfocus="origval=this.value;" onblur="if (this.value=='') this.value=origval;" value="{if $prefs.browsertitle eq ''}{tr}My Tiki{/tr}{else}{$prefs.browsertitle|escape}{/if}" />
+		<div style="margin-left:1em"><input type="text" size="40" name="browsertitle" id="browsertitle" onclick="if (this.value=='{tr}My Tiki{/tr}') this.value='';" onfocus="origval=this.value;" onblur="if (this.value=='') this.value=origval;" value="{if $prefs.browsertitle eq ''}{tr}My Tiki{/tr}{else}{$prefs.browsertitle|escape}{/if}">
 			<br><em>{tr}This will appear in the browser title bar.{/tr}</em></div>
 		</div>
 		<div style="padding:5px; clear:both"><label for="sender_email">{tr}Sender email:{/tr}</label>
-			<div style="margin-left:1em"><input type="text" size="40" name="sender_email" id="sender_email" value="{$prefs.sender_email|escape}" />
+			<div style="margin-left:1em"><input type="text" size="40" name="sender_email" id="sender_email" value="{$prefs.sender_email|escape}">
 			<br><em>{tr}Email sent by your site will use this address.{/tr}</em>
 			</div>
 		</div>
@@ -510,14 +510,14 @@
 	</div>
 	<div id="httpsoptions" style="display:{if $prefs.https_login eq 'disabled' or ( $prefs.https_login eq '' and $detected_https eq '')}none{else}block{/if};">
 		<div style="padding:5px">
-			<label for="https_port">{tr}HTTPS port:{/tr}</label> <input type="text" name="https_port" id="https_port" size="5" value="{$prefs.https_port|escape}" />
+			<label for="https_port">{tr}HTTPS port:{/tr}</label> <input type="text" name="https_port" id="https_port" size="5" value="{$prefs.https_port|escape}">
 		</div>
 		<div style="padding:5px;clear:both">
-			<div style="float:left"><input type="checkbox" id="feature_show_stay_in_ssl_mode" name="feature_show_stay_in_ssl_mode" {if $prefs.feature_show_stay_in_ssl_mode eq 'y'}checked="checked"{/if}/></div>
+			<div style="float:left"><input type="checkbox" id="feature_show_stay_in_ssl_mode" name="feature_show_stay_in_ssl_mode" {if $prefs.feature_show_stay_in_ssl_mode eq 'y'}checked="checked"{/if}></div>
 			<div style="margin-left:20px;"><label for="feature_show_stay_in_ssl_mode"> {tr}Users can choose to stay in SSL mode after an HTTPS login.{/tr}</label></div>
 		</div>
 		<div style="padding:5px;clear:both">
-			<div style="float:left"><input type="checkbox" id="feature_switch_ssl_mode" name="feature_switch_ssl_mode" {if $prefs.feature_switch_ssl_mode eq 'y'}checked="checked"{/if}/></div>
+			<div style="float:left"><input type="checkbox" id="feature_switch_ssl_mode" name="feature_switch_ssl_mode" {if $prefs.feature_switch_ssl_mode eq 'y'}checked="checked"{/if}></div>
 			<div style="margin-left:20px;"><label for="feature_switch_ssl_mode">{tr}Users can switch between secured or standard mode at login.{/tr}</label></div>
 		</div>
 	</div>
@@ -537,15 +537,15 @@
 		<div style="padding:5px;clear:both">
 			<div style="padding:5px;clear:both">
 				<label for="error_reporting_adminonly">{tr}Visible to Admin only{/tr}.</label>
-				<input type="checkbox" id="error_reporting_adminonly" name="error_reporting_adminonly"{if $prefs.error_reporting_adminonly eq 'y'} checked="checked"{/if} />
+				<input type="checkbox" id="error_reporting_adminonly" name="error_reporting_adminonly"{if $prefs.error_reporting_adminonly eq 'y'} checked="checked"{/if}>
 			</div>
 			<div style="padding:5px;clear:both">
 				<label for="smarty_notice_reporting">{tr}Include Smarty notices{/tr}</label>.
-				<input type="checkbox" id="smarty_notice_reporting" name="smarty_notice_reporting"{if $prefs.smarty_notice_reporting eq 'y'} checked="checked"{/if} />
+				<input type="checkbox" id="smarty_notice_reporting" name="smarty_notice_reporting"{if $prefs.smarty_notice_reporting eq 'y'} checked="checked"{/if}>
 			</div>
 			<div style="padding:5px;clear:both">	  
 				<label for="log_tpl">{tr}Add HTML comment at start and end of each Smarty template (TPL){/tr}.</label>
-				<input type="checkbox" id="log_tpl" name="log_tpl"{if $prefs.log_tpl eq 'y'} checked="checked"{/if}" />
+				<input type="checkbox" id="log_tpl" name="log_tpl"{if $prefs.log_tpl eq 'y'} checked="checked"{/if}">
 				<br><em><img src="img/icons/error.png" alt="{tr}Alert{/tr}" style="vertical-align:middle" /> {tr}Use only for development, not in production because these warnings are added to emails as well, and visible to the users{/tr}.</em>
 			</div>
 		</div>
@@ -554,7 +554,7 @@
 <br>
 	<fieldset><legend>{tr}Administrator{/tr}</legend>
 		<div style="padding:5px"><label for="admin_email">{tr}Admin email:{/tr}</label>
-			<div style="margin-left:1em"><input type="text" size="40" name="admin_email" id="admin_email" value="{if isset($admin_email)}{$admin_email}{/if}" />
+			<div style="margin-left:1em"><input type="text" size="40" name="admin_email" id="admin_email" value="{if isset($admin_email)}{$admin_email}{/if}">
 			<br><em>{tr}This is the email address for your administrator account.{/tr}</em></div>
 		</div>
 	</fieldset>
@@ -569,11 +569,11 @@
 				<li>{tr}Add the administrator account to the group, if missing{/tr}</li>
 			</ol>
 			<p><strong>{tr}To do so enter the name of the main admin account in the field below{/tr}</strong></p>
-			<p>{tr}Administrator account (optional): <input type="text" name="admin_account"/> <em>The default account is <strong>admin</strong></em>{/tr}</p>
+			<p>{tr}Administrator account (optional): <input type="text" name="admin_account"> <em>The default account is <strong>admin</strong></em>{/tr}</p>
 			{if !empty($disableAccounts)}
 				<hr>
 				<label for="fix_disable_accounts">{tr}Check this box if you have a lot of disabled accounts after an upgrade to tiki4.{/tr}</label>
-				<input type="checkbox" id="fix_disable_accounts" name="fix_disable_accounts" />
+				<input type="checkbox" id="fix_disable_accounts" name="fix_disable_accounts">
 				<br/>
 				{tr}List of accounts that will be enabled:{/tr}
 				<ul>
@@ -587,12 +587,12 @@
 </div>
 
 <div align="center" style="margin-top:1em;">
-{if $multi}		<input type="hidden" name="multi" value="{$multi}" />{/if}
-{if $lang}		<input type="hidden" name="lang" value="{$lang}" />{/if}
-	<input type="hidden" name="install_step" value="7" />
-	<input type="hidden" name="install_type" value="{$install_type}" />
-	<input type="hidden" name="general_settings" value="y" />
-	<input type="submit" value=" {tr}Continue{/tr} " />
+{if $multi}		<input type="hidden" name="multi" value="{$multi}">{/if}
+{if $lang}		<input type="hidden" name="lang" value="{$lang}">{/if}
+	<input type="hidden" name="install_step" value="7">
+	<input type="hidden" name="install_type" value="{$install_type}">
+	<input type="hidden" name="general_settings" value="y">
+	<input type="submit" value=" {tr}Continue{/tr} ">
 </div>
 </form>
 
@@ -684,8 +684,8 @@
 							<option value="ucs2" title="Unicode (multilingual), Binary">ucs2</option>
 							<option value="ujis" title="Japanese, Binary">ujis</option>
 						</select>
-						<input type="submit" name="fix_double_encoding" value="{tr}Dangerous: Fix double encoding{/tr}"/>
-						<input type="hidden" name="install_step" value="7"/>
+						<input type="submit" name="fix_double_encoding" value="{tr}Dangerous: Fix double encoding{/tr}">
+						<input type="hidden" name="install_step" value="7">
 					</p>
 				{else}
 					<p>{tr}Oops. You need to make sure client charset is forced to UTF-8. Reset the database connection to continue.{/tr}</p>

@@ -7,13 +7,13 @@
 {if ($mode eq 'graph')}
 <h2>{tr}Select Graphic Type{/tr}</h2>
 <form method="get" action="tiki-graph_sheet.php">
-<input type="hidden" name="sheetId" value="{$sheetId}"/>
+<input type="hidden" name="sheetId" value="{$sheetId}">
 <table>
 <tr>
-	<td><input type="radio" name="graphic" id="g_pie" value="PieChartGraphic"/> <label for='g_pie'>{tr}Pie Chart{/tr}</label></td>
-	<td><input type="radio" name="graphic" id="g_mline" value="MultilineGraphic"/> <label for='g_mline'>{tr}Multiline{/tr}</label></td>
-	<td><input type="radio" name="graphic" id="g_mbar" value="MultibarGraphic"/> <label for='g_mbar'>{tr}Multibar{/tr}</label></td>
-	<td><input type="radio" name="graphic" id="g_stack" value="BarStackGraphic"/> <label for='g_stack'>{tr}Bar Stack{/tr}</label></td>
+	<td><input type="radio" name="graphic" id="g_pie" value="PieChartGraphic"> <label for='g_pie'>{tr}Pie Chart{/tr}</label></td>
+	<td><input type="radio" name="graphic" id="g_mline" value="MultilineGraphic"> <label for='g_mline'>{tr}Multiline{/tr}</label></td>
+	<td><input type="radio" name="graphic" id="g_mbar" value="MultibarGraphic"> <label for='g_mbar'>{tr}Multibar{/tr}</label></td>
+	<td><input type="radio" name="graphic" id="g_stack" value="BarStackGraphic"> <label for='g_stack'>{tr}Bar Stack{/tr}</label></td>
 </tr>
 <tr>
 	<td><label for="g_pie"><img src="img/graph.pie.png" alt="Pie Chart"/></label></td>
@@ -35,19 +35,19 @@
 		<option value="portrait">{tr}Portrait{/tr}</option>
 	</select>
 {if $haspdflib}
-	<input type="submit" name="renderer" value="PDF"/>
+	<input type="submit" name="renderer" value="PDF">
 {/if}
 {if $hasps}
-	<input type="submit" name="renderer" value="PS"/>
+	<input type="submit" name="renderer" value="PS">
 {/if}
 </div>
 {/if}
 {if $hasgd}
 <div>
-	<input type="text" name="width" value="500" size="4"/>
-	<input type="text" name="height" value="400" size="4"/>
-	<input type="submit" name="renderer" value="PNG"/>
-	<input type="submit" name="renderer" value="JPEG"/>
+	<input type="text" name="width" value="500" size="4">
+	<input type="text" name="height" value="400" size="4">
+	<input type="submit" name="renderer" value="PNG">
+	<input type="submit" name="renderer" value="JPEG">
 </div>
 {/if}
 </form>
@@ -103,43 +103,43 @@ function _renValRad( name )
 {/jq}
 
 <form name="chartParam" method="get" action="tiki-graph_sheet.php">
-<input type="hidden" name="sheetId" value="{$sheetId}"/>
-<input type="hidden" name="graphic" value="{$graph}"/>
-<input type="hidden" name="renderer" value="{$renderer}"/>
-<input type="hidden" name="format" value="{$format}"/>
-<input type="hidden" name="orientation" value="{$orientation}"/>
-<input type="hidden" name="width" value="{$im_width}"/>
-<input type="hidden" name="height" value="{$im_height}"/>
+<input type="hidden" name="sheetId" value="{$sheetId}">
+<input type="hidden" name="graphic" value="{$graph}">
+<input type="hidden" name="renderer" value="{$renderer}">
+<input type="hidden" name="format" value="{$format}">
+<input type="hidden" name="orientation" value="{$orientation}">
+<input type="hidden" name="width" value="{$im_width}">
+<input type="hidden" name="height" value="{$im_height}">
 <table class="formcolor">
 	<tr>
 		<td>{tr}Title:{/tr}</td>
-		<td><input type="text" name="title" value="{$title}" onchange="renderWikiPlugin()"/></td>
+		<td><input type="text" name="title" value="{$title}" onchange="renderWikiPlugin()"></td>
 	</tr>
 {if $showgridparam}
 	<tr>
 		<td>{tr}Independant Scale:{/tr}</td>
 		<td>
-			<input type="radio" name="independant" value="horizontal" id="ind_ori_hori" checked="checked" onchange="renderWikiPlugin()" />
+			<input type="radio" name="independant" value="horizontal" id="ind_ori_hori" checked="checked" onchange="renderWikiPlugin()">
 			<label for="ind_ori_hori">{tr}Horizontal{/tr}</label>
-			<input type="radio" name="independant" value="vertical" id="ind_ori_verti" onchange="renderWikiPlugin()" />
+			<input type="radio" name="independant" value="vertical" id="ind_ori_verti" onchange="renderWikiPlugin()">
 			<label for="ind_ori_verti">{tr}Vertical{/tr}</label>
 		</td>
 	</tr>
 	<tr>
 		<td>{tr}Horizontal Scale:{/tr}</td>
 		<td>
-			<input type="radio" name="horizontal" value="bottom" id="hori_pos_bottom" checked="checked" onchange="renderWikiPlugin()" />
+			<input type="radio" name="horizontal" value="bottom" id="hori_pos_bottom" checked="checked" onchange="renderWikiPlugin()">
 			<label for="hori_pos_bottom">{tr}Bottom{/tr}</label>
-			<input type="radio" name="horizontal" value="top" id="hori_pos_top" onchange="renderWikiPlugin()" />
+			<input type="radio" name="horizontal" value="top" id="hori_pos_top" onchange="renderWikiPlugin()">
 			<label for="hori_pos_top">{tr}Top{/tr}</label>
 		</td>
 	</tr>
 	<tr>
 		<td>{tr}Vertical Scale:{/tr}</td>
 		<td>
-			<input type="radio" name="vertical" value="left" id="verti_pos_left" checked="checked" onchange="renderWikiPlugin()" />
+			<input type="radio" name="vertical" value="left" id="verti_pos_left" checked="checked" onchange="renderWikiPlugin()">
 			<label for="verti_pos_left">{tr}Left{/tr}</label>
-			<input type="radio" name="vertical" value="right" id="verti_pos_right" onchange="renderWikiPlugin()" />
+			<input type="radio" name="vertical" value="right" id="verti_pos_right" onchange="renderWikiPlugin()">
 			<label for="verti_pos_right">{tr}Right{/tr}</label>
 		</td>
 	</tr>
@@ -150,11 +150,11 @@ function _renValRad( name )
 {section name=i loop=$series}
 	<tr>
 		<td>{$series[i]}</td>
-		<td><input type="text" name="series[{$series[i]}]" onchange="renderWikiPlugin()"/></td>
+		<td><input type="text" name="series[{$series[i]}]" onchange="renderWikiPlugin()"></td>
 	</tr>
 {/section}
 	<tr>
-		<td colspan="2"><input type="submit" value="{tr}Show{/tr}" class="button" /></td>
+		<td colspan="2"><input type="submit" value="{tr}Show{/tr}" class="button"></td>
 	</tr>
 </table>
 <div class="tiki_sheet">

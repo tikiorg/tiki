@@ -22,7 +22,7 @@
 {/if}
 
 <form name="checkform" method="get" action="{$smarty.server.PHP_SELF}">
-	<input type="hidden" name="maxRecords" value="{$maxRecords|escape}" />
+	<input type="hidden" name="maxRecords" value="{$maxRecords|escape}">
 	{assign var=numbercol value=1}
 	<table class="normal">
 		<tr>
@@ -101,7 +101,7 @@
 		{section name=changes loop=$listpages}
 			<tr class="{cycle}">
 				<td class="checkbox">
-					<input type="checkbox" name="checked[]" value="{$listpages[changes].articleId|escape}" {if $listpages[changes].checked eq 'y'}checked="checked" {/if}/>
+					<input type="checkbox" name="checked[]" value="{$listpages[changes].articleId|escape}" {if $listpages[changes].checked eq 'y'}checked="checked" {/if}>
 				</td>
 				{if $prefs.art_list_title eq 'y'}
 					<td class="text">
@@ -183,7 +183,7 @@
 								<option value="remove_articles" >{tr}Remove{/tr}</option>
 							</select>
 						</label>
-						<input type="submit" value="{tr}OK{/tr}" />
+						<input type="submit" value="{tr}OK{/tr}">
 					</p>
 				{/if}
 			</td>

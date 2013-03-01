@@ -61,8 +61,8 @@
 					<th>{tr}User{/tr}</th>
 					<th>{tr}Actions{/tr}</th>
 					<th colspan="2">
-						<input type="hidden" name="sheetId" id="sheetId" value="{$sheetId}" />
-						<input type="submit" id="compareSheetsSubmit" value="compare" return false;" />
+						<input type="hidden" name="sheetId" id="sheetId" value="{$sheetId}">
+						<input type="submit" id="compareSheetsSubmit" value="compare" return false;">
 					</th>
 				</tr>
 				{section name=revision_date loop=$history}
@@ -79,10 +79,10 @@
 			    			<a href="tiki-view_sheets.php?sheetId={$sheetId}&readdate={$history[revision_date].stamp}&parse=rollback" title="{tr}Roll Back Spreadsheet{/tr}">{tr}Roll-Back{/tr}</a>
 			    		</td>
 			    		<td style="vertical-align: middle; text-align: center;">
-						   	<input type="radio" name="idx_0" class="compareSheet1" value="{$smarty.section.revision_date.index}" onclick="$.sheet.compareSheetClick($('input.compareSheet1'), $('input.compareSheet2'));" />
+						   	<input type="radio" name="idx_0" class="compareSheet1" value="{$smarty.section.revision_date.index}" onclick="$.sheet.compareSheetClick($('input.compareSheet1'), $('input.compareSheet2'));">
 				    	</td>
 			    		<td style="vertical-align: middle; text-align: center;">
-						   	<input type="radio" name="idx_1" class="compareSheet2" value="{$smarty.section.revision_date.index}" onclick="$.sheet.compareSheetClick($('input.compareSheet1'), $('input.compareSheet2'));" />
+						   	<input type="radio" name="idx_1" class="compareSheet2" value="{$smarty.section.revision_date.index}" onclick="$.sheet.compareSheetClick($('input.compareSheet1'), $('input.compareSheet2'));">
 				    	</td>
 			    	</tr>
 				{/section}

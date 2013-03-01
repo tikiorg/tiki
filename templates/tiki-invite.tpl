@@ -15,20 +15,20 @@
 {elseif $smarty.request.send && !$smarty.request.confirm && !$smarty.request.back}
  <div class="highlight">{tr}You are about to send an invitation to theses people, please confirm{/tr}</div>
  <form method='POST' action='tiki-invite.php'>
-  <input type='hidden' name='emailslist' value='{$smarty.request.emailslist|escape}'/>
-  <input type='hidden' name='emailslist_format' value='{$smarty.request.emailslist_format|escape}'/>
-  <input type='hidden' name='emailsubject' value='{$smarty.request.emailsubject|escape}'/>
-  <input type='hidden' name='emailcontent' value='{$smarty.request.emailcontent|escape}'/>
-  <input type='hidden' name='wikicontent' value='{$smarty.request.wikicontent|escape}'/>
-  <input type='hidden' name='wikipageafter' value='{$smarty.request.wikipageafter|escape}'/>
-  <input type='hidden' name='send' value='{$smarty.request.send|escape}'/>
+  <input type='hidden' name='emailslist' value='{$smarty.request.emailslist|escape}'>
+  <input type='hidden' name='emailslist_format' value='{$smarty.request.emailslist_format|escape}'>
+  <input type='hidden' name='emailsubject' value='{$smarty.request.emailsubject|escape}'>
+  <input type='hidden' name='emailcontent' value='{$smarty.request.emailcontent|escape}'>
+  <input type='hidden' name='wikicontent' value='{$smarty.request.wikicontent|escape}'>
+  <input type='hidden' name='wikipageafter' value='{$smarty.request.wikipageafter|escape}'>
+  <input type='hidden' name='send' value='{$smarty.request.send|escape}'>
   {foreach from=$smarty.request.invitegroups item=g}
-   <input type='hidden' name='invitegroups[]' value='{$g|escape}'/>
+   <input type='hidden' name='invitegroups[]' value='{$g|escape}'>
   {/foreach}
   
 
-  <input type='submit' name='confirm' value="{tr}Ok{/tr}"/>
-  <input type='submit' name='back' value="{tr}Go back{/tr}"/>
+  <input type='submit' name='confirm' value="{tr}Ok{/tr}">
+  <input type='submit' name='back' value="{tr}Go back{/tr}">
  </form>
  <ul>
   {foreach from=$emails item=mail}
@@ -58,7 +58,7 @@
 
   <br>
   <div>{tr}Type here the e-mail subject you'll want to be sent to them :{/tr}</div>
-  <div><input name='emailsubject' style='width: 100%;' value='{if isset($smarty.request.emailsubject)}{$smarty.request.emailsubject|escape}{else}Invitation{/if}' /></div>
+  <div><input name='emailsubject' style='width: 100%;' value='{if isset($smarty.request.emailsubject)}{$smarty.request.emailsubject|escape}{else}Invitation{/if}'></div>
 
   <br>
   <div>{tr}Type here the e-mail content you'll want to be sent to them (and let the {literal}{link}{/literal} word, it will be replaced with the good link for registering) :{/tr}</div>
@@ -89,11 +89,11 @@ You are here because you have just clicked on the link from my invitation email.
    {/foreach}
   </select></div>
 {else}
-<input type='hidden' name='invitegroups' value=''/>
+<input type='hidden' name='invitegroups' value=''>
 {/if} 
   <br>
-  <div>Redirect to this wiki page after invitation acceptance (let it blank if unwanted) : <input type='text' name='wikipageafter' value='{$smarty.request.wikipageafter|escape}' /></div>
+  <div>Redirect to this wiki page after invitation acceptance (let it blank if unwanted) : <input type='text' name='wikipageafter' value='{$smarty.request.wikipageafter|escape}'></div>
   <br>
-  <div><input type='submit' name='send' value="{tr}Send{/tr}" /></div>
+  <div><input type='submit' name='send' value="{tr}Send{/tr}"></div>
  </form>
 {/if}

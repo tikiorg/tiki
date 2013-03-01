@@ -40,7 +40,7 @@
 					<td class="even">{tr}Video Title{/tr}</td>
 					<td class="even">
 						{if $kmode eq 'edit'}
-						<input style="width:99%" type="text" name="name" {if $videoInfo->name}value="{$videoInfo->name}"{/if} size="40" />
+						<input style="width:99%" type="text" name="name" {if $videoInfo->name}value="{$videoInfo->name}"{/if} size="40">
 						{else}
 						{$videoInfo->name}
 						{/if}
@@ -60,7 +60,7 @@
 					<td class="even">{tr}Tags{/tr}</td>
 					<td class="even">
 						{if $kmode eq 'edit'}
-						<input style="width:99%" type="text" name="tags" {if $videoInfo->tags}value="{$videoInfo->tags}"{/if} size="40" />
+						<input style="width:99%" type="text" name="tags" {if $videoInfo->tags}value="{$videoInfo->tags}"{/if} size="40">
 						{else}
 						{$videoInfo->tags}
 						{/if}
@@ -115,8 +115,8 @@
 	<form  action='tiki-kaltura_video.php' enctype='multipart/form-data' method='post' style='margin:0px; padding:0px'>
 		{$edit_info}
 		<input type="hidden" name="action" value="edit">
-		<input type="hidden" name="{$entryType}Id" value="{$videoInfo->id}"/>
-		<input name="update" type="submit" value="{tr}Save{/tr}"/>
+		<input type="hidden" name="{$entryType}Id" value="{$videoInfo->id}">
+		<input name="update" type="submit" value="{tr}Save{/tr}">
 	</form>
 	</div>
 	{elseif $kmode eq 'view'}

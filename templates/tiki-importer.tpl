@@ -29,19 +29,19 @@
                 <option value="{$softwareClassName}">{$softwareName}</option>
             {/foreach}
         </select>
-        <input type="submit" value="{tr}OK{/tr}"/>
+        <input type="submit" value="{tr}OK{/tr}">
     </form>
 	<br>
 	<a href="tiki-import_xml_zip.php">Import wiki pages in an XML Zip file from another Tiki</a>
 {elseif isset($softwareSpecificOptions)}
     <h2>Options:</h2>
     <form method="post" enctype="multipart/form-data" action="tiki-importer.php" onsubmit="return confirm('{tr}WARNING: make sure to have a backup before running the script. If you do not have a backup this is the last chance to cancel the importer by clicking on the cancel button.{/tr}');";>
-        <input type="hidden" name="importerClassName" value="{$importerClassName}"/>
+        <input type="hidden" name="importerClassName" value="{$importerClassName}">
         {foreach from=$importerOptions item=option}
             {if $option.type eq 'checkbox'}
-                <input type="checkbox" name="{$option.name}" id="{$option.name}"/><label for="{$option.name}">{$option.label}</label><br>
+                <input type="checkbox" name="{$option.name}" id="{$option.name}"><label for="{$option.name}">{$option.label}</label><br>
             {elseif $option.type eq 'text'}
-                <label>{$option.label}<input type="text" name="{$option.name}" {if isset($option.value)}value="{$option.value}"{/if}/></label><br>
+                <label>{$option.label}<input type="text" name="{$option.name}" {if isset($option.value)}value="{$option.value}"{/if}></label><br>
             {elseif $option.type eq 'select'}
 		        <label for="{$option.name}">{$option.label}</label><br>
 		        <select id="{$option.name}" name="{$option.name}">
@@ -52,8 +52,8 @@
             {/if}
         {/foreach}
         <br><br>
-        <input type="file" name="importFile"/><br>
-        <input type="submit" value="{tr}Import{/tr}"/>
+        <input type="file" name="importFile"><br>
+        <input type="submit" value="{tr}Import{/tr}">
     </form>
 {elseif !empty($importFeedback)}
     <h4>{tr}Congratulations! You have successful imported your data to Tiki.{/tr}</h4>
