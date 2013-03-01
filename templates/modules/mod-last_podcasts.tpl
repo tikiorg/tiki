@@ -22,7 +22,7 @@
 					{if $mediaplayer ne ""}
 						{if $modLastFiles[ix].path ne ""}
 							<object type="application/x-shockwave-flash" data="{$mediaplayer}?mp3={$prefs.fgal_podcast_dir}/{$modLastFiles[ix].path}" width="190" height="20">
-								<param name="movie" value="{$mediaplayer}?mp3=files/{$modLastFiles[ix].path}" />
+								<param name="movie" value="{$mediaplayer}?mp3=files/{$modLastFiles[ix].path}">
 							</object>
 							{if $verbose eq 'y'}
 								<div class="moduledescription" >

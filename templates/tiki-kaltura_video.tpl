@@ -25,12 +25,12 @@
 		<tr>
 			<td width="50%" align="center">
 			<object name="kaltura_player" id="kaltura_player" type="application/x-shockwave-flash" height="365" width="595" data="{$prefs.kaltura_kServiceUrl}index.php/kwidget/wid/_{$prefs.kaltura_partnerId}/uiconf_id/{$kaltura_kdpId}/entry_id/{$videoInfo->id}">
-			<param name="allowScriptAccess" value="always" />
-			<param name="allowNetworking" value="all" />
-			<param name="allowFullScreen" value="true" />
-			<param name="movie" value="{$prefs.kaltura_kServiceUrl}index.php/kwidget/wid/_{$prefs.kaltura_partnerId}/uiconf_id/{$kaltura_kdpId}/entry_id/{$videoInfo->id}"/>
-			<param name="flashVars" value="entry_id={$videoInfo->id}&ks={$kalturaSession}"/>
-			<param name="wmode" value="opaque"/>
+			<param name="allowScriptAccess" value="always">
+			<param name="allowNetworking" value="all">
+			<param name="allowFullScreen" value="true">
+			<param name="movie" value="{$prefs.kaltura_kServiceUrl}index.php/kwidget/wid/_{$prefs.kaltura_partnerId}/uiconf_id/{$kaltura_kdpId}/entry_id/{$videoInfo->id}">
+			<param name="flashVars" value="entry_id={$videoInfo->id}&ks={$kalturaSession}">
+			<param name="wmode" value="opaque">
 			</object>			
 			</td>
 		</tr>
