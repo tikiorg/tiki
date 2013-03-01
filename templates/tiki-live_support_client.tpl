@@ -3,7 +3,7 @@
 <html>
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"> 
-    <link rel="StyleSheet"  href="styles/{$prefs.style}" type="text/css" />
+    <link rel="StyleSheet"  href="styles/{$prefs.style}" type="text/css">
     <title>{tr}Live support:User window{/tr}</title>
     {literal}
 	<script type="text/javascript" src="lib/live_support/live-support.js">

@@ -96,7 +96,7 @@
 {if (($html eq 'y') or ($code eq 'y')) and (strlen($preview_data) gt 0)}
   <h2>{tr}Preview Results{/tr}</h2>
   {if strlen($css_file) > 0}
-    <link rel="StyleSheet"  href="{$css_file}" type="text/css" />
+    <link rel="StyleSheet"  href="{$css_file}" type="text/css">
   {/if}
   <div class="integration_preview">
   {if $code eq 'y'}
