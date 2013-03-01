@@ -44,7 +44,7 @@
 		{tr}Subscribe to Newsletter{/tr}
 	</h2>
 	<form method="post" action="tiki-newsletters.php">
-		<input type="hidden" name="nlId" value="{$nlId|escape}" />
+		<input type="hidden" name="nlId" value="{$nlId|escape}">
 		<table class="formcolor">
 			<tr>
 				<td class="even">{tr}Name:{/tr}</td>
@@ -58,10 +58,10 @@
 				{if $tiki_p_subscribe_email eq 'y' and (($nl_info.allowAnySub eq 'y' and $user) || !$user)}
 					<tr>
 						<td class="even">{tr}Email:{/tr}</td>
-						<td class="even"><input type="text" name="email" size="40" value="{$email|escape}" /></td>
+						<td class="even"><input type="text" name="email" size="40" value="{$email|escape}"></td>
 					</tr>
 				{else}
-					<input type="hidden" name="email" value="{$email|escape}" />
+					<input type="hidden" name="email" value="{$email|escape}">
 				{/if}
 				{if !$user and $prefs.feature_antibot eq 'y'}
 					{include file='antibot.tpl' tr_style="formcolor"}
@@ -69,7 +69,7 @@
 				<tr>
 					<td class="even">&nbsp;</td>
 					<td class="even">
-						<input type="submit" name="subscribe" value="{tr}Subscribe to this Newsletter{/tr}" />
+						<input type="submit" name="subscribe" value="{tr}Subscribe to this Newsletter{/tr}">
 					</td>
 				</tr>
 			{/if}

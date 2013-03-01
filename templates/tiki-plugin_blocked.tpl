@@ -52,13 +52,13 @@
 				{/if}
 				<form method="post" action="{$smarty.server.REQUEST_URI|escape}">
 					<p>
-					<input type="hidden" name="plugin_fingerprint" value="{$plugin_fingerprint|escape}"/>
+					<input type="hidden" name="plugin_fingerprint" value="{$plugin_fingerprint|escape}">
 					{if $plugin_preview}
-						<input type="submit" name="plugin_preview" value="{tr}Preview{/tr}"/>
+						<input type="submit" name="plugin_preview" value="{tr}Preview{/tr}">
 					{/if}
 					{if $plugin_approve}
-						<input type="submit" name="plugin_accept" value="{tr}Approve{/tr}"/>
-						<input type="submit" name="plugin_reject" value="{tr}Reject{/tr}"/>
+						<input type="submit" name="plugin_accept" value="{tr}Approve{/tr}">
+						<input type="submit" name="plugin_reject" value="{tr}Reject{/tr}">
 					{/if}
 					</p>
 				</form>

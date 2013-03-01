@@ -11,23 +11,23 @@
 </div>
 
 <form method="post" action="{$smarty.server.PHP_SELF}"  class="findtable">
-{if !empty($sort_mode)}<input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />{/if}
-{if !empty($pollId)}<input type="hidden" name="pollId" value="{$pollId|escape}" />{/if}
-{if !empty($list)}<input type="hidden" name="list" value="{$list|escape}" />{/if}
-{if !empty($offset)}<input type="hidden" name="list" value="{$offset|escape}" />{/if}
+{if !empty($sort_mode)}<input type="hidden" name="sort_mode" value="{$sort_mode|escape}">{/if}
+{if !empty($pollId)}<input type="hidden" name="pollId" value="{$pollId|escape}">{/if}
+{if !empty($list)}<input type="hidden" name="list" value="{$list|escape}">{/if}
+{if !empty($offset)}<input type="hidden" name="list" value="{$offset|escape}">{/if}
 {if empty($pollId) and !isset($list_votes)}
 	<label>
 		{if empty($what)}{tr}Find the poll{/tr}{else}{tr}{$what}{/tr}{/if}
-		<input type="text" name="find" value="{$find|escape}" />
+		<input type="text" name="find" value="{$find|escape}">
 	</label>
 	<label>
 		{tr}Number of top voted polls to show{/tr}
-		<input type="text" name="maxRecords" value="{$maxRecords|escape}" size="3" />
+		<input type="text" name="maxRecords" value="{$maxRecords|escape}" size="3">
 	</label>
 	<br>
 {/if}
 <label>
-	<input type="radio" name="which_date" value="between"{if $which_date eq 'between'} checked="checked"{/if} />{tr}Vote range displayed:{/tr} 
+	<input type="radio" name="which_date" value="between"{if $which_date eq 'between'} checked="checked"{/if}>{tr}Vote range displayed:{/tr} 
 </label>
 <label>
 	{tr}Start:{/tr} {html_select_date prefix="from_" time="$vote_from_date" start_year="$start_year"}
@@ -38,22 +38,22 @@
 <br>
 {if empty($pollId) or $poll_info.voteConsiderationSpan > 0}
 	<label>
-		<input type="radio" name="which_date" value="all"{if $which_date eq 'all'} checked="checked"{/if} />
+		<input type="radio" name="which_date" value="all"{if $which_date eq 'all'} checked="checked"{/if}>
 		{tr}All votes with no span consideration{/tr}
 	</label>
 	<br>
 	<label>
-		<input type="radio" name="which_date" value="consideration"{if $which_date eq 'consideration' or $which_date eq ''} checked="checked"{/if} />
+		<input type="radio" name="which_date" value="consideration"{if $which_date eq 'consideration' or $which_date eq ''} checked="checked"{/if}>
 		{tr}All votes with span consideration{/tr}
 	</label>
 {else}
 	<label>
-		<input type="radio" name="which_date" value="all"{if $which_date eq 'all' or $which_date eq ''} checked="checked"{/if} />
+		<input type="radio" name="which_date" value="all"{if $which_date eq 'all' or $which_date eq ''} checked="checked"{/if}>
 		{tr}All votes{/tr}
 	</label>		
 {/if}
 <br>
-<input type="submit" name="search" value="{tr}Find{/tr}" />
+<input type="submit" name="search" value="{tr}Find{/tr}">
 </form>
 
 {section name=x loop=$poll_info_arr}
@@ -89,15 +89,15 @@
 <tr><td class="findtable">{tr}Find{/tr}</td>
    <td class="findtable">
    <form method="get" action="tiki-poll_results.php">
-     <input type="text" name="find" value="{$find|escape}" />
-     <input type="submit" value="{tr}Find{/tr}" name="search" />
-     <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
-	 <input type="hidden" name="pollId" value="{$pollId|escape}" />
-	 <input type="hidden" name="list" value="y" />
-	 {if $vote_from_date}<input type="hidden" name="vote_from_date" value="{$vote_from_date|escape} /">{/if}
-	 {if $vote_to_date}<input type="hidden" name="vote_to_date" value="{$vote_to_date|escape}" />{/if}
-	 {if $which_date}<input type="hidden" name="which_date" value="{$which_date|escape}" />{/if}
-	 {if $maxRecords}<input type="hidden" name="maxRecords" value="{$maxRecords|escape}" />{/if}
+     <input type="text" name="find" value="{$find|escape}">
+     <input type="submit" value="{tr}Find{/tr}" name="search">
+     <input type="hidden" name="sort_mode" value="{$sort_mode|escape}">
+	 <input type="hidden" name="pollId" value="{$pollId|escape}">
+	 <input type="hidden" name="list" value="y">
+	 {if $vote_from_date}<input type="hidden" name="vote_from_date" value="{$vote_from_date|escape}">{/if}
+	 {if $vote_to_date}<input type="hidden" name="vote_to_date" value="{$vote_to_date|escape}">{/if}
+	 {if $which_date}<input type="hidden" name="which_date" value="{$which_date|escape}">{/if}
+	 {if $maxRecords}<input type="hidden" name="maxRecords" value="{$maxRecords|escape}">{/if}
    </form>
    </td>
 </tr>

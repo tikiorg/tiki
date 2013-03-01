@@ -48,8 +48,8 @@
 {/if}
 
 <form method="post" action="{$smarty.server.REQUEST_URI|escape}">
-<input type="hidden" name="referer" value="{$referer|escape}" />
-<div style="float: left; margin-right: 10px;"><input type="submit" name="assign" value="{tr}Apply{/tr}" /></div>
+<input type="hidden" name="referer" value="{$referer|escape}">
+<div style="float: left; margin-right: 10px;"><input type="submit" name="assign" value="{tr}Apply{/tr}"></div>
 {if $isTop ne 'y'}
 	<p>{tr}Groups watching:{/tr} {$group_watches|@count}</p>
 {else}
@@ -78,25 +78,25 @@
 					<td class="text"><label for="group_watch{$i}">{$g|escape}</label></td>
 					{if $isTop ne 'y'}
 						<td class="checkbox"><input id="group_watch{$i}"type="checkbox" name="checked[]" 
-						value="{$g|escape}"{if in_array($g, $group_watches)} checked="checked"{/if} /></td>
+						value="{$g|escape}"{if in_array($g, $group_watches)} checked="checked"{/if}></td>
 					{/if}
 					<td class="text">
-						<input id="group_watch{$i}" type="radio" name="{$g|escape}" value="cat_leave_desc" checked="checked" /> 
+						<input id="group_watch{$i}" type="radio" name="{$g|escape}" value="cat_leave_desc" checked="checked"> 
 						<label for="group_watch{$i}">Leave unchanged &nbsp;&nbsp;&nbsp;</label>
-						<input id="group_watch{$i}" type="radio" name="{$g|escape}" value="cat_add_desc" /> 
+						<input id="group_watch{$i}" type="radio" name="{$g|escape}" value="cat_add_desc"> 
 						<label for="group_watch{$i}">Add &nbsp;&nbsp;&nbsp;</label>
-						<input id="group_watch{$i}" type="radio" name="{$g|escape}" value="cat_remove_desc" /> 
+						<input id="group_watch{$i}" type="radio" name="{$g|escape}" value="cat_remove_desc"> 
 						<label for="group_watch{$i}">Remove</label>
 					</td>
 					
 				{else}
 				<td class="checkbox"><input id="group_watch{$i}" type="checkbox" name="checked[]" value="{$g|escape}"
-					{if in_array($g, $group_watches)} checked="checked"{/if} /></td>
+					{if in_array($g, $group_watches)} checked="checked"{/if}></td>
 				<td class="text"><label for="group_watch{$i}">{$g|escape}</label></td>
 				{/if}
 			</tr>
 		{/if}
 	{/foreach}
 </table>
-	<p><div style="float: left; margin-right: 10px;"><input type="submit" name="assign" value="{tr}Apply{/tr}" /></div></p>
+	<p><div style="float: left; margin-right: 10px;"><input type="submit" name="assign" value="{tr}Apply{/tr}"></div></p>
 </form>

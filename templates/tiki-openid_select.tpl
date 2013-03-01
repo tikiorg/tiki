@@ -8,12 +8,12 @@
 
 		{foreach item=username from=$openid_userlist}
 		<div>
-			<input type="radio" name="select" id="oid_{$username}" value="{$username}"/>
+			<input type="radio" name="select" id="oid_{$username}" value="{$username}">
 			<label for="oid_{$username}">{$username}</label>
 		</div>
 		{/foreach}
 
-		<input type="hidden" name="action" value="select"/>
-		<input type="submit" value="{tr}Select{/tr}"/>
+		<input type="hidden" name="action" value="select">
+		<input type="submit" value="{tr}Select{/tr}">
 	</fieldset>
 </form>

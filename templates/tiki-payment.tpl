@@ -33,7 +33,7 @@
 				{/if}
 				<fieldset>
 					<label for="description">{tr}Description:{/tr}</label>
-					<input type="text" id="description" name="description"/>
+					<input type="text" id="description" name="description">
 				</fieldset>
 
 				<fieldset>
@@ -43,17 +43,17 @@
 
 				<fieldset>
 					<label for="amount">{tr}Amount:{/tr}</label>
-					<input type="text" id="amount" name="amount" class="right"/>
+					<input type="text" id="amount" name="amount" class="right">
 					{$prefs.payment_currency|escape}
 				</fieldset>
 
 				<fieldset>
 					<label for="payable">{tr}Payable within:{/tr}</label>
-					<input type="text" id="payable" class="right" name="payable" value="{$prefs.payment_default_delay|escape}"/>
+					<input type="text" id="payable" class="right" name="payable" value="{$prefs.payment_default_delay|escape}">
 					{tr}days{/tr}
 				</fieldset>
 				
-				<p><input type="submit" name="request" value="{tr}Request{/tr}"/></p>
+				<p><input type="submit" name="request" value="{tr}Request{/tr}"></p>
 			</form>
 		{/tab}
 	{/permission}

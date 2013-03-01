@@ -14,7 +14,7 @@
 </div>
 
 <form enctype="multipart/form-data" method="post" action="tiki-quiz_edit.php">
-	<input type="hidden" name="quiz.id" value="{$quiz->id}" />
+	<input type="hidden" name="quiz.id" value="{$quiz->id}">
 	<table class="formcolor">
 		<tr>
 			<td>{tr}Status{/tr}</td>
@@ -57,11 +57,11 @@
 					<table class="formcolor">
 						<tr>
 							<td><label for="quiz-name">{tr}Name:{/tr}</label></td>
-							<td><input type="text" name=quiz.name id="quiz-name" value="{$quiz->name|escape}" size="60" /></td>
+							<td><input type="text" name=quiz.name id="quiz-name" value="{$quiz->name|escape}" size="60"></td>
 						</tr>
 						<tr>
 							<td><label for="quiz-desc">Description:</label></td>
-							<td><input type="text" name=quiz.description id="quiz-desc" value="{$quiz->description|escape}" size="60" /></td>
+							<td><input type="text" name=quiz.description id="quiz-desc" value="{$quiz->description|escape}" size="60"></td>
 						</tr>
 						<tr>
       				<td>{tr}Publication Date{/tr}</td>
@@ -79,7 +79,7 @@
 						</tr>
 						<tr>
 							<td>{tr}Questions{/tr}</td>
-  						<td><input type="checkbox" name=quiz.nQuestion id="nQuestion" {if $quiz->nQuestion eq 'y'}checked="checked"{/if} /><label for="nQuestions">{tr}Use {/tr}</label><select name=quiz.nQuestions id="nQuestions">{html_options values=$tpl.mins selected=$quiz->nQuestions output=$tpl.mins}</select> {tr}randomly selected questions.{/tr}</td>
+  						<td><input type="checkbox" name=quiz.nQuestion id="nQuestion" {if $quiz->nQuestion eq 'y'}checked="checked"{/if}><label for="nQuestions">{tr}Use {/tr}</label><select name=quiz.nQuestions id="nQuestions">{html_options values=$tpl.mins selected=$quiz->nQuestions output=$tpl.mins}</select> {tr}randomly selected questions.{/tr}</td>
 						</tr>
 					</table>
 			  </div>
@@ -94,22 +94,22 @@
  				<div id="test-time" style="display:none;">
 					<table class="normal">
 						<tr>
-  						<td><input type="checkbox" name=quiz.shuffleQuestions id="shuffle-questions" {if $quiz->shuffleQuestions eq 'y'}checked="checked"{/if} /><label for="shuffle-questions">{tr}Shuffle questions{/tr}</td>
+  						<td><input type="checkbox" name=quiz.shuffleQuestions id="shuffle-questions" {if $quiz->shuffleQuestions eq 'y'}checked="checked"{/if}><label for="shuffle-questions">{tr}Shuffle questions{/tr}</td>
 						</tr>
 						<tr>
-  						<td><input type="checkbox" name=quiz.shuffleAnswers id="shuffle-answers" {if $quiz->shuffleAnswers eq 'y'}checked="checked"{/if} /><label for="shuffle-answers">{tr}Shuffle answers{/tr}</td>
+  						<td><input type="checkbox" name=quiz.shuffleAnswers id="shuffle-answers" {if $quiz->shuffleAnswers eq 'y'}checked="checked"{/if}><label for="shuffle-answers">{tr}Shuffle answers{/tr}</td>
 						</tr>
 						<tr>
-  						<td><input type="checkbox" name=quiz.limitDisplay id="quiz-display-limit" {if $quiz->limitDisplay eq 'y'}checked="checked"{/if} /><label for="quiz-display-limit">{tr}Limit questions displayed per page to {/tr}</label><select name=quiz.questionsPerPage id="quiz-perpage">{html_options values=$tpl.qpp selected=$quiz->questionsPerPage output=$tpl.qpp}</select>{tr}  question(s).{/tr}</td>
+  						<td><input type="checkbox" name=quiz.limitDisplay id="quiz-display-limit" {if $quiz->limitDisplay eq 'y'}checked="checked"{/if}><label for="quiz-display-limit">{tr}Limit questions displayed per page to {/tr}</label><select name=quiz.questionsPerPage id="quiz-perpage">{html_options values=$tpl.qpp selected=$quiz->questionsPerPage output=$tpl.qpp}</select>{tr}  question(s).{/tr}</td>
 						</tr>
 						<tr>
-  						<td><input type="checkbox" name=quiz.timeLimited id="timelimit" {if $quiz->timeLimited eq 'y'}checked="checked"{/if} /><label for="timelimit">{tr}Impose a time limit of {/tr}</label><select name=quiz.timeLimit id="quiz-maxtime">{html_options values=$tpl.mins selected=$quiz->timeLimit output=$tpl.mins}</select> {tr}minutes{/tr}</td>
+  						<td><input type="checkbox" name=quiz.timeLimited id="timelimit" {if $quiz->timeLimited eq 'y'}checked="checked"{/if}><label for="timelimit">{tr}Impose a time limit of {/tr}</label><select name=quiz.timeLimit id="quiz-maxtime">{html_options values=$tpl.mins selected=$quiz->timeLimit output=$tpl.mins}</select> {tr}minutes{/tr}</td>
 						</tr>
 						<tr>
-							<td><input type="checkbox" name=quiz.multiSession id="quiz-multi-session" {if $quiz->multiSession eq 'y'}checked="checked"{/if} /><label for="quiz-multi-session">{tr}Allow students to store partial results and return to quiz.{/tr}</td>
+							<td><input type="checkbox" name=quiz.multiSession id="quiz-multi-session" {if $quiz->multiSession eq 'y'}checked="checked"{/if}><label for="quiz-multi-session">{tr}Allow students to store partial results and return to quiz.{/tr}</td>
 						</tr>
 						<tr>
-							<td><input type="checkbox" name="quiz.canRepeat" id="repeat"{if $quiz->canRepeat eq 'y'} checked="checked"{/if} /><label for="repeat">{tr}Allow students to retake this quiz {/tr}</label>
+							<td><input type="checkbox" name="quiz.canRepeat" id="repeat"{if $quiz->canRepeat eq 'y'} checked="checked"{/if}><label for="repeat">{tr}Allow students to retake this quiz {/tr}</label>
 							<select name=quiz.repetitions id="quiz-repeat">{html_options values=$tpl.repetitions selected=$quiz->repetitions output=$tpl.repetitions}</select> {tr}times{/tr}</td>
 						</tr>
 					</table>
@@ -151,12 +151,12 @@
  				<div id="after-test" style="display:none;">
 					<table class="formcolor">
 						<tr>
-							<td><input type='checkbox' name='quiz.additionalQuestions' {if $quiz->additionalQuestions eq 'y'}checked="checked"{/if} /><label for="additional-questions">{tr}Solicit additional questions from students{/tr}</td>
+							<td><input type='checkbox' name='quiz.additionalQuestions' {if $quiz->additionalQuestions eq 'y'}checked="checked"{/if}><label for="additional-questions">{tr}Solicit additional questions from students{/tr}</td>
 						</tr>
 					</table>
 					<table class="normal">
 						<tr>
-							<td><input type="checkbox" name="quiz.forum" id="forum" {if $quiz->forum eq 'y'}checked="checked"{/if} /><label>{tr}Link quiz to forum named: {/tr}</label><input type="text" name="quiz.forumName" value="{$quiz->nameForum|escape}" size="40" /></td>
+							<td><input type="checkbox" name="quiz.forum" id="forum" {if $quiz->forum eq 'y'}checked="checked"{/if}><label>{tr}Link quiz to forum named: {/tr}</label><input type="text" name="quiz.forumName" value="{$quiz->nameForum|escape}" size="40"></td>
 						</tr>
 				  </table>
 			  </div>
@@ -186,7 +186,7 @@
       <td>
       </td>
       <td>
-				<input type="submit" class="wikiaction" name="save" value="{tr}Save{/tr}" /> <a class="link" href="tiki-index.php?page={$page|escape:"url"}">{tr}Cancel Edit{/tr}</a>
+				<input type="submit" class="wikiaction" name="save" value="{tr}Save{/tr}"> <a class="link" href="tiki-index.php?page={$page|escape:"url"}">{tr}Cancel Edit{/tr}</a>
       </td>
     </tr>
   </table>

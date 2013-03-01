@@ -74,8 +74,8 @@ function subavt() {
 
 <h2>{tr}Pick avatar from the library{/tr} <a href="tiki-pick_avatar.php?showall=y">{tr}Show all{/tr}</a> {$numav} {tr}Items{/tr}</h2>
 <form action="tiki-pick_avatar.php" method="post">
-<input id="avatar" type="hidden" name="avatar" value="{$yours|escape}" />
-{if $user ne $userwatch}<input type="hidden" name="view_user" value="{$userwatch|escape}" />{/if}
+<input id="avatar" type="hidden" name="avatar" value="{$yours|escape}">
+{if $user ne $userwatch}<input type="hidden" name="view_user" value="{$userwatch|escape}">{/if}
 <table class="formcolor">
 <tr>
  <td>
@@ -89,9 +89,9 @@ function subavt() {
 <tr>
  <td>
    <div align="center">
-	 <input type="submit" name="rand" value="{tr}random{/tr}" />
-	 <input type="submit" name="uselib" value="{tr}Use{/tr}" /> 
-	 <input type="submit" name="reset" value="{tr}no avatar{/tr}" /> 
+	 <input type="submit" name="rand" value="{tr}random{/tr}">
+	 <input type="submit" name="uselib" value="{tr}Use{/tr}"> 
+	 <input type="submit" name="reset" value="{tr}no avatar{/tr}"> 
 	 </div>
  </td>
 </tr>
@@ -105,11 +105,11 @@ function subavt() {
 <form enctype="multipart/form-data" action="tiki-pick_avatar.php" method="post">
 <fieldset>
 <legend><strong>{tr}Upload your own avatar{/tr}</strong></legend>
-{if $user ne $userwatch}<input type="hidden" name="view_user" value="{$userwatch|escape}" />{/if}
+{if $user ne $userwatch}<input type="hidden" name="view_user" value="{$userwatch|escape}">{/if}
 <label for="userfile1">{if $prefs.user_store_file_gallery_picture neq 'y'}{tr}File (only .gif, .jpg and .png images approximately 45px × 45px){/tr}{else}{tr}File (only .gif, .jpg and .png images){/tr}{/if}:</label>
-<input type="hidden" name="MAX_FILE_SIZE" value="10000000" />
-<input id="userfile1" name="userfile1" type="file" />
-<input type="submit" name="upload" value="{tr}Upload{/tr}" />
+<input type="hidden" name="MAX_FILE_SIZE" value="10000000">
+<input id="userfile1" name="userfile1" type="file">
+<input type="submit" name="upload" value="{tr}Upload{/tr}">
 </fieldset>
 </form>
 </div>

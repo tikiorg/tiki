@@ -93,28 +93,28 @@
 				{if $prefs.payment_system eq 'paypal' && $prefs.payment_paypal_business neq ''}
 					<legend style="font-style: italic">{tr}Pay with PayPal{/tr}</legend>
 					<form action="{$prefs.payment_paypal_environment|escape}" method="post">
-						<input type="hidden" name="business" value="{$prefs.payment_paypal_business|escape}" />
-						<input type="hidden" name="cmd" value="_xclick" />
-						<input type="hidden" name="item_name" value="{$payment_info.description|escape}" />
+						<input type="hidden" name="business" value="{$prefs.payment_paypal_business|escape}">
+						<input type="hidden" name="cmd" value="_xclick">
+						<input type="hidden" name="item_name" value="{$payment_info.description|escape}">
 						<input type="hidden" name="charset" value="utf-8">
-						<input type="hidden" name="amount" value="{$payment_info.amount_remaining_raw|escape}" />
-						<input type="hidden" name="currency_code" value="{$prefs.payment_currency|escape}" />
-						<input type="hidden" name="invoice" value="{$prefs.payment_invoice_prefix|escape}{$payment_info.paymentRequestId|escape}" />
-						<input type="hidden" name="return" value="{$payment_info.returnurl|escape}" />
-						{*<input type="hidden" name="rm" value="2" />*}
+						<input type="hidden" name="amount" value="{$payment_info.amount_remaining_raw|escape}">
+						<input type="hidden" name="currency_code" value="{$prefs.payment_currency|escape}">
+						<input type="hidden" name="invoice" value="{$prefs.payment_invoice_prefix|escape}{$payment_info.paymentRequestId|escape}">
+						<input type="hidden" name="return" value="{$payment_info.returnurl|escape}">
+						{*<input type="hidden" name="rm" value="2">*}
 						{if $prefs.payment_paypal_ipn eq 'y'}
-							<input type="hidden" name="notify_url" value="{$payment_info.paypal_ipn|escape}" />
+							<input type="hidden" name="notify_url" value="{$payment_info.paypal_ipn|escape}">
 						{/if}
-						<br><input type="image" style="display:block; margin-left: 15px" name="submit" border="0" src="https://www.paypal.com/en_US/i/btn/btn_paynow_LG.gif" alt="PayPal" title="{tr}Pay with Paypal{/tr}"/>
-						<br><input type="image" name="submit" border="0" src="https://www.paypal.com/en_US/i/bnr/horizontal_solution_PPeCheck.gif" border="0" alt="PayPal" />
+						<br><input type="image" style="display:block; margin-left: 15px" name="submit" border="0" src="https://www.paypal.com/en_US/i/btn/btn_paynow_LG.gif" alt="PayPal" title="{tr}Pay with Paypal{/tr}">
+						<br><input type="image" name="submit" border="0" src="https://www.paypal.com/en_US/i/bnr/horizontal_solution_PPeCheck.gif" border="0" alt="PayPal">
 					</form>
 				{elseif $prefs.payment_system eq 'cclite' && $prefs.payment_cclite_gateway neq ''}
 					<legend style="font-style: italic">{tr}Pay With Cclite{/tr}</legend>
 					{if (!empty($ccresult) or !empty($ccresult2)) and $ccresult_ok}
 						<form action="{query _type='relative'}" method="post">
-							<input type="hidden" name="invoice" value="{$payment_info.paymentRequestId|escape}" />
-							<input type="hidden" name="cookietab" value="1" />
-							<input type="submit" value="{tr}Refresh page{/tr}" />
+							<input type="hidden" name="invoice" value="{$payment_info.paymentRequestId|escape}">
+							<input type="hidden" name="cookietab" value="1">
+							<input type="submit" value="{tr}Refresh page{/tr}">
 						</form>
 						{remarksbox title="{tr}Payment info{/tr}" type="info"}
 							{$ccresult}<br>
@@ -122,9 +122,9 @@
 						{/remarksbox}
 					{else}
 						<form action="{query _type='relative'}" method="post">
-							<input type="hidden" name="invoice" value="{$payment_info.paymentRequestId|escape}" />
-							<input type="hidden" name="cclite_payment_amount" value="{$payment_info.amount_remaining|escape}" />
-							<input type="submit" value="{tr}Trade with Cclite{/tr}" />
+							<input type="hidden" name="invoice" value="{$payment_info.paymentRequestId|escape}">
+							<input type="hidden" name="cclite_payment_amount" value="{$payment_info.amount_remaining|escape}">
+							<input type="submit" value="{tr}Trade with Cclite{/tr}">
 						</form>
 						{if (!empty($ccresult) or !empty($ccresult2))}
 							{remarksbox title="{tr}Payment problem{/tr}" type="info"}
@@ -154,9 +154,9 @@
 							{/foreach}
 							<tr>
 								<td colspan="4">
-									<input type="hidden" name="invoice" value="{$payment_info.paymentRequestId|escape}" />
-									<input type="hidden" name="tiki_credit_amount" value="{$payment_info.amount_remaining|escape}" />
-									<input type="submit" name="tiki_credit_pay" value="{tr}Pay with Tiki User Credits{/tr}" />
+									<input type="hidden" name="invoice" value="{$payment_info.paymentRequestId|escape}">
+									<input type="hidden" name="tiki_credit_amount" value="{$payment_info.amount_remaining|escape}">
+									<input type="submit" name="tiki_credit_pay" value="{tr}Pay with Tiki User Credits{/tr}">
 								</td>
 							</tr>
 						</table>
@@ -198,16 +198,16 @@
 						<legend style="font-style: italic">{tr}Enter a Manual Payment{/tr}</legend>
 
 						<p>
-							<input type="text" name="manual_amount" class="right" />&nbsp;<span style="font-style: italic">{$payment_info.currency|escape}</span>
+							<input type="text" name="manual_amount" class="right">&nbsp;<span style="font-style: italic">{$payment_info.currency|escape}</span>
 						</p>
 						<p>
 							<label for="payment-note" style="font-style: italic">{tr}Note{/tr}</label>
 							<textarea id="payment-note" name="note" style="width: 98%;" rows="6"></textarea>
                         </p>
 						<p>
-							<input type="hidden" name="returnurl" value="{$payment_info.returnurl|escape}" />
-							<input type="submit" value="{tr}Enter payment{/tr}" />
-							<input type="hidden" name="invoice" value="{$payment_info.paymentRequestId|escape}" />
+							<input type="hidden" name="returnurl" value="{$payment_info.returnurl|escape}">
+							<input type="submit" value="{tr}Enter payment{/tr}">
+							<input type="hidden" name="invoice" value="{$payment_info.paymentRequestId|escape}">
 						</p>
 					</fieldset>
 				</form>

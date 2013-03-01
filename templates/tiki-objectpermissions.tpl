@@ -57,25 +57,25 @@
 		<h2>{if $objectType eq 'global'}{tr}Assign global permissions{/tr}{elseif $objectType eq 'category'}{tr}Assign permissions to this category{/tr}{else}{tr}Assign permissions to this object{/tr}{/if} {icon _id="img/loading-light.gif" id="perms_busy" style="vertical-align:top; display:none;"}</h2>
 
 		<div>
-		<input type="hidden" name="referer" value="{$referer|escape}" />
-		<input type="hidden" name="objectName" value="{$objectName|escape}" />
-		<input type="hidden" name="objectType" value="{$objectType|escape}" />
-		<input type="hidden" name="objectId" value="{$objectId|escape}" />
-		<input type="hidden" name="permType" value="{$permType|escape}" />
-		<input type="hidden" name="show_disabled_features" value="{$show_disabled_features}" />
+		<input type="hidden" name="referer" value="{$referer|escape}">
+		<input type="hidden" name="objectName" value="{$objectName|escape}">
+		<input type="hidden" name="objectType" value="{$objectType|escape}">
+		<input type="hidden" name="objectId" value="{$objectId|escape}">
+		<input type="hidden" name="permType" value="{$permType|escape}">
+		<input type="hidden" name="show_disabled_features" value="{$show_disabled_features}">
 		
 		<div class="input_submit_container" style="text-align: center">
-			<input type="submit" name="assign" value="{tr}Assign{/tr}" />
+			<input type="submit" name="assign" value="{tr}Assign{/tr}">
 			{if $permissions_displayed eq 'direct' and $objectType neq 'global'}
-				<input type="submit" name="remove" value="{if $objectType eq 'category'}{tr}Delete category permissions{/tr}{else}{tr}Delete object permissions{/tr}{/if}" class="tips" title="{tr}Reset Perms{/tr}|{if $objectType neq 'category'}{tr}This will remove all the settings here and permissions will be reset to inherit any category permissions that are set, or the global sitewide permissions.{/tr}{else}{tr}This will remove all the settings here and permissions will be reset to inherit the global sitewide permissions.{/tr}{/if}"/>
+				<input type="submit" name="remove" value="{if $objectType eq 'category'}{tr}Delete category permissions{/tr}{else}{tr}Delete object permissions{/tr}{/if}" class="tips" title="{tr}Reset Perms{/tr}|{if $objectType neq 'category'}{tr}This will remove all the settings here and permissions will be reset to inherit any category permissions that are set, or the global sitewide permissions.{/tr}{else}{tr}This will remove all the settings here and permissions will be reset to inherit the global sitewide permissions.{/tr}{/if}">
 			{/if}
-			<input type="submit" name="copy" value="{tr}Copy{/tr}" class="tips" title="{tr}Permissions Clipboard{/tr}|{tr}Copy the permissions set here{/tr}" />
+			<input type="submit" name="copy" value="{tr}Copy{/tr}" class="tips" title="{tr}Permissions Clipboard{/tr}|{tr}Copy the permissions set here{/tr}">
 			{if !empty($perms_clipboard_source)}<input type="submit" name="paste" value="{tr}Paste{/tr}" class="tips" title="{tr}Permissions Clipboard{/tr}|{tr}Paste copied permissions from {/tr}<em>{$perms_clipboard_source}</em>" />{/if}
 		</div>
 		
 		{if $objectType eq 'category'}
 			<p>
-				<input type="checkbox" id="propagate_category" name="propagate_category" value="1"/>
+				<input type="checkbox" id="propagate_category" name="propagate_category" value="1">
 				<label for="propagate_category">{tr}Assign or remove permissions on <em>all</em> child categories{/tr}</label>
 			</p>
 			{jq}$("input[name='assign'],input[name='remove']").click(function(){
@@ -85,7 +85,7 @@ if ($("#propagate_category").attr("checked")) {
 		{/if}
 		
 		{if ($objectType eq 'wiki' or $objectType eq 'wiki page') and !empty($inStructure)}
-			<input name="assignstructure" id="assignstructure" type="checkbox" />
+			<input name="assignstructure" id="assignstructure" type="checkbox">
 			<label for="assignstructure">{tr}Assign or remove permissions on all pages of the sub-structure{/tr}</label>
 			{jq}$("input[name='assign'],input[name='remove']").click(function(){
 if ($("#assignstructure").attr("checked")) {
@@ -103,9 +103,9 @@ if ($("#assignstructure").attr("checked")) {
 		{if ($perms|@count) eq '0'}{remarksbox type="warning" title="{tr}Warning{/tr}"}{tr}You must select at least one feature{/tr}.{/remarksbox}{/if}
 
 		<div class="input_submit_container" style="text-align: center">
-			<input type="submit" name="assign" value="{tr}Assign{/tr}" />
+			<input type="submit" name="assign" value="{tr}Assign{/tr}">
 			{if $permissions_displayed eq 'direct' and $objectType neq 'global'}
-				<input type="submit" name="remove" value="{if $objectType eq 'category'}{tr}Delete category permissions{/tr}{else}{tr}Delete object permissions{/tr}{/if}" class="tips" title="{tr}Reset Perms{/tr}|{tr}This will remove all the settings here and permissions will be reset to inherit the global sitewide permissions.{/tr}"/>
+				<input type="submit" name="remove" value="{if $objectType eq 'category'}{tr}Delete category permissions{/tr}{else}{tr}Delete object permissions{/tr}{/if}" class="tips" title="{tr}Reset Perms{/tr}|{tr}This will remove all the settings here and permissions will be reset to inherit the global sitewide permissions.{/tr}">
 			{/if}
 		</div>
 	</form>
@@ -128,7 +128,7 @@ if ($("#assignstructure").attr("checked")) {
 	{tab name="{tr}Select groups{/tr}"}
 		<form method="post" action="{$smarty.server.PHP_SELF}?{query}">
 		<div>
-			<input type="hidden" name="referer" value="{$referer|escape}" />
+			<input type="hidden" name="referer" value="{$referer|escape}">
 			{if isset($groupsFiltered)}
 				{remarksbox type="warning" title="{tr}Note{/tr}"}
 					{tr}Some of your groups have been automatically hidden.<br> Select the groups below to assign permissions for.{/tr}
@@ -141,7 +141,7 @@ if ($("#assignstructure").attr("checked")) {
 			{/if}
 			{if $objectId}
 			<div class="navbar">
-				 <input type="submit" name="used_groups" value="{tr}Select only groups that have a perm with the object{/tr}" />
+				 <input type="submit" name="used_groups" value="{tr}Select only groups that have a perm with the object{/tr}">
 			</div>
 			{/if}
 
@@ -152,7 +152,7 @@ if ($("#assignstructure").attr("checked")) {
 			</div>
 			
 			<div class="input_submit_container" style="text-align: center">
-				<input type="submit" name="group_select" value="{tr}Select{/tr}" />
+				<input type="submit" name="group_select" value="{tr}Select{/tr}">
 			</div>
 		</div>
 		</form>
@@ -161,7 +161,7 @@ if ($("#assignstructure").attr("checked")) {
 	{tab name="{tr}Select features{/tr}"}
 		<form method="post" action="{$smarty.server.PHP_SELF}?{query}">
 		<div>
-			<input type="hidden" name="referer" value="{$referer|escape}" />
+			<input type="hidden" name="referer" value="{$referer|escape}">
 			{if isset($featuresFiltered)}
 				{remarksbox type="warning" title="{tr}Warning{/tr}"}
 					{tr}Some of your features have been automatically hidden.<br> Select the features below to assign permissions for.{/tr}
@@ -169,7 +169,7 @@ if ($("#assignstructure").attr("checked")) {
 			{/if}
 
 			<label for="show_disabled_features2">{tr}Show permissions for disabled features{/tr}</label>
-			<input type="checkbox" name="show_disabled_features" id="show_disabled_features2" {if isset($show_disabled_features) and $show_disabled_features eq 'y'}checked="checked"{/if} onchange="this.form.submit();" />
+			<input type="checkbox" name="show_disabled_features" id="show_disabled_features2" {if isset($show_disabled_features) and $show_disabled_features eq 'y'}checked="checked"{/if} onchange="this.form.submit();">
 
 			<h2>{tr}Features{/tr}</h2>
 			
@@ -178,7 +178,7 @@ if ($("#assignstructure").attr("checked")) {
 			</div>
 			
 			<div class="input_submit_container" style="text-align: center">
-				<input type="submit" name="feature_select" value="{tr}Select{/tr}" />
+				<input type="submit" name="feature_select" value="{tr}Select{/tr}">
 			</div>
 		</div>
 		</form>
@@ -190,7 +190,7 @@ if ($("#assignstructure").attr("checked")) {
 		{tab name="{tr}Quick Permissions{/tr}"}
 		<form name="allperms" method="post" action="{$smarty.server.PHP_SELF}?{query}">
 		<div>
-		<input type="hidden" name="quick_perms" value="true"/>
+		<input type="hidden" name="quick_perms" value="true">
 
 
 		{if $prefs.feature_tabs neq 'y'}
@@ -218,24 +218,24 @@ if ($("#assignstructure").attr("checked")) {
 				</td>
 				{foreach item=permgroup from=$quickperms}
 				<td>
-					<input type="radio" name="perm_{$groups[grp].groupName|escape:url}" value="{$permgroup.name}" {if $groups[grp].groupSumm eq $permgroup.name}checked{/if} />
+					<input type="radio" name="perm_{$groups[grp].groupName|escape:url}" value="{$permgroup.name}" {if $groups[grp].groupSumm eq $permgroup.name}checked{/if}>
 				</td>
 				{/foreach}
 				<td>
-					<input type="radio" name="perm_{$groups[grp].groupName|escape:url}" value="userdefined" {if $groups[grp].groupSumm eq 'userdefined'}checked{/if} disabled />
+					<input type="radio" name="perm_{$groups[grp].groupName|escape:url}" value="userdefined" {if $groups[grp].groupSumm eq 'userdefined'}checked{/if} disabled>
 				</td>
 			</tr>
 			{/section}
 		</table>
 	
-		<input type="hidden" name="referer" value="{$referer|escape}" />
-		<input type="hidden" name="objectName" value="{$objectName|escape}" />
-		<input type="hidden" name="objectType" value="{$objectType|escape}" />
-		<input type="hidden" name="objectId" value="{$objectId|escape}" />
-		<input type="hidden" name="permType" value="{$permType|escape}" />
-		<input type="hidden" name="show_disabled_features" value="{$show_disabled_features}" />
+		<input type="hidden" name="referer" value="{$referer|escape}">
+		<input type="hidden" name="objectName" value="{$objectName|escape}">
+		<input type="hidden" name="objectType" value="{$objectType|escape}">
+		<input type="hidden" name="objectId" value="{$objectId|escape}">
+		<input type="hidden" name="permType" value="{$permType|escape}">
+		<input type="hidden" name="show_disabled_features" value="{$show_disabled_features}">
 		<div class="input_submit_container" style="text-align: center">
-			<input type="submit" name="assign" value="{tr}Assign{/tr}" />
+			<input type="submit" name="assign" value="{tr}Assign{/tr}">
 		</div>
 		
 		{if empty($filegals_manager)}

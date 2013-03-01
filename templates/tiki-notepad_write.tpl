@@ -7,13 +7,13 @@
 </div>
 
 <form action="tiki-notepad_write.php" method="post">
-  <input type="hidden" name="parse_mode" value="{$info.parse_mode|escape}" />
-  <input type="hidden" name="noteId" value="{$noteId|escape}" />
+  <input type="hidden" name="parse_mode" value="{$info.parse_mode|escape}">
+  <input type="hidden" name="noteId" value="{$noteId|escape}">
   <table class="formcolor">
     <tr>
       <td>{tr}Name{/tr}</td>
       <td>
-        <input type="text" name="name" size="40" value="{$info.name|escape}" />
+        <input type="text" name="name" size="40" value="{$info.name|escape}">
       </td>
     </tr>
       <tr>
@@ -25,7 +25,7 @@
     <tr>
       <td>&nbsp;</td>
       <td>
-        <input type="submit" name="save" value="{tr}Save{/tr}" />
+        <input type="submit" name="save" value="{tr}Save{/tr}">
       </td>
     </tr>
   </table>

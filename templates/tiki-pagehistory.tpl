@@ -38,14 +38,14 @@
 				{if $flaggedrev_preview_approved}
 					<p>{tr}This revision is currently marked as approved.{/tr}<p>
 					<div class="submit">
-						<input type="hidden" name="unapprove" value="{$preview|escape}"/>
-						<input type="submit" name="flaggedrev" value="{tr}Remove Approval{/tr}"/>
+						<input type="hidden" name="unapprove" value="{$preview|escape}">
+						<input type="submit" name="flaggedrev" value="{tr}Remove Approval{/tr}">
 					</div>
 				{else}
 					<p>{tr}This revision has not been approved.{/tr}<p>
 					<div class="submit">
-						<input type="hidden" name="approve" value="{$preview|escape}"/>
-						<input type="submit" name="flaggedrev" value="{tr}Approve Revision{/tr}"/>
+						<input type="hidden" name="approve" value="{$preview|escape}">
+						<input type="submit" name="flaggedrev" value="{tr}Approve Revision{/tr}">
 					</div>
 				{/if}
 			</form>
@@ -82,8 +82,8 @@
 		<form method="post" action="tiki-pagehistory.php?page={$page|escape:'url'}&amp;preview={$new.version|escape:'url'}">
 			<p>{tr}This revision has not been approved.{/tr}<p>
 			<div class="submit">
-				<input type="hidden" name="approve" value="{$new.version|escape}"/>
-				<input type="submit" name="flaggedrev" value="{tr}Approve Revision{/tr}"/>
+				<input type="hidden" name="approve" value="{$new.version|escape}">
+				<input type="submit" name="flaggedrev" value="{tr}Approve Revision{/tr}">
 			</div>
 		</form>
 	{/remarksbox}
@@ -96,8 +96,8 @@
 {if !isset($noHistory)}
 	{if $preview || $source || $diff_style}<h2>{tr}History{/tr}</h2>{/if}
 	<form action="tiki-pagehistory.php" method="get">
-		<input type="hidden" name="page" value="{$page|escape}" />
-		<input type="hidden" name="history_offset" value="{$history_offset}" />
+		<input type="hidden" name="page" value="{$page|escape}">
+		<input type="hidden" name="history_offset" value="{$history_offset}">
 		<div style="text-align:center;">
 			{if ($prefs.default_wiki_diff_style ne "old") and $history}
 				<div style=" text-align:right;">
@@ -134,8 +134,8 @@ $("#toggle_diffs a").click(function(){
 						<option value="htmldiff" {if $diff_style == "htmldiff"}selected="selected"{/if}>{tr}HTML diff{/tr}</option>
 						<option value="sidediff" {if $diff_style == "sidediff"}selected="selected"{/if}>{tr}Side-by-side diff{/tr}</option>
 					</select>{/if}
-					<input type="hidden" name="show_all_versions" value="{$show_all_versions}"/>
-					<input type="submit" name="compare" value="{tr}Compare{/tr}" />
+					<input type="hidden" name="show_all_versions" value="{$show_all_versions}">
+					<input type="submit" name="compare" value="{tr}Compare{/tr}">
 				</div>
 			{/if}
 			<div class="simplebox">
@@ -146,7 +146,7 @@ $("#toggle_diffs a").click(function(){
 			</div>
 			<table class="formcolor" width="100%">
 				<tr>
-					{if $tiki_p_remove eq 'y'}<th><input type="submit" name="delete" value="{tr}Del{/tr}" /></th>{/if}
+					{if $tiki_p_remove eq 'y'}<th><input type="submit" name="delete" value="{tr}Del{/tr}"></th>{/if}
 					<th>{tr}Information{/tr}</th>
 					{if $prefs.feature_contribution eq 'y'}<th>{tr}Contribution{/tr}</th>{/if}
 					{if $prefs.feature_contribution eq 'y' and $prefs.feature_contributor_wiki eq 'y'}<th>{tr}Contributors{/tr}</th>{/if}
@@ -155,7 +155,7 @@ $("#toggle_diffs a").click(function(){
 					<th>{tr}Action{/tr}</th>
 					{if $prefs.default_wiki_diff_style != "old" and $history}
 						<th colspan="2">
-							<input type="submit" name="compare" value="{tr}Compare{/tr}" />
+							<input type="submit" name="compare" value="{tr}Compare{/tr}">
 						</th>
 					{/if}
 				</tr>
@@ -207,12 +207,12 @@ $("#toggle_diffs a").click(function(){
 						{if $prefs.default_wiki_diff_style ne "old" and $history}
 							<td class="button_container">
 								<input type="radio" name="oldver" value="0" title="{tr}Compare{/tr}" {if isset($old.version)
-									and $old.version == $info.version}checked="checked"{/if} />
+									and $old.version == $info.version}checked="checked"{/if}>
 							</td>
 							<td class="button_container">
 								<input type="radio" name="newver" value="0" title="{tr}Compare{/tr}" {if (isset($new.version)
 									and $new.version == $info.version) or (!isset($smarty.request.diff_style)
-									or !$smarty.request.diff_style)}checked="checked"{/if} />
+									or !$smarty.request.diff_style)}checked="checked"{/if}>
 							</td>
 						{/if}
 					{/if}
@@ -221,7 +221,7 @@ $("#toggle_diffs a").click(function(){
 				{foreach name=hist item=element from=$history}
 					<tr class="{cycle}">
 						{if $tiki_p_remove eq 'y'}
-							<td class="button_container"><input type="checkbox" name="hist[{$element.version}]" /></td>
+							<td class="button_container"><input type="checkbox" name="hist[{$element.version}]"></td>
 						{/if}
 						<td class="left">
 							{$element.lastModif|tiki_short_datetime}
@@ -286,18 +286,18 @@ $("#toggle_diffs a").click(function(){
 								<input type="radio" name="oldver" value="{$element.session}"
 									title="{tr}Older Version{/tr}" {if (isset($old.version) and isset($element.session) and $old.version == $element.session)
 									or ((!isset($smarty.request.diff_style) or !$smarty.request.diff_style)
-									and $smarty.foreach.hist.first)}checked="checked"{/if}/>
+									and $smarty.foreach.hist.first)}checked="checked"{/if}>
 							{else}
 								<input type="radio" name="oldver" value="{$element.version}"
 									title="{tr}Older Version{/tr}" {if (isset($old.version) and isset($element.session) and $old.version == $element.session)
 									or ((!isset($smarty.request.diff_style) or !$smarty.request.diff_style)
-									and $smarty.foreach.hist.first)}checked="checked"{/if}/>
+									and $smarty.foreach.hist.first)}checked="checked"{/if}>
 							{/if}
 						</td>
 						<td class="button_container">
 							{* if $smarty.foreach.hist.last &nbsp; *}
 							<input type="radio" name="newver" value="{$element.version}" title="Select a newer version for comparison"
-								{if isset($new.version) and $new.version == $element.version}checked="checked"{/if} />
+								{if isset($new.version) and $new.version == $element.version}checked="checked"{/if} >
 						</td>
 						{/if}
 					</tr>
@@ -312,7 +312,7 @@ $("#toggle_diffs a").click(function(){
 						</select>
 						<input type="submit" name="update_translation" value="{tr}Update Translation{/tr}"/>
 						{if $show_translation_history}
-							<input type="hidden" name="show_translation_history" value="1"/>
+							<input type="hidden" name="show_translation_history" value="1">
 							{button show_translation_history=0 _text="{tr}Hide translation history{/tr}" _auto_args="*"}
 						{else}
 							{button show_translation_history=1 _text="{tr}Show translation history{/tr}" _auto_args="*"}
@@ -328,10 +328,10 @@ $("#toggle_diffs a").click(function(){
 					{pagination_links cant=$history_cant offset_arg="history_offset" step=$maxRecords}{/pagination_links}
 				{/if}
 			{/if}
-			<input type="checkbox" name="paginate" id="paginate"{if $paginate} checked="checked"{/if} onchange="this.form.submit();" />
+			<input type="checkbox" name="paginate" id="paginate"{if $paginate} checked="checked"{/if} onchange="this.form.submit();">
 			<label for="paginate">{tr}Enable pagination{/tr}</label>
 			{if $paginate}
-				<input type="text" name="history_pagesize" id="history_pagesize" value="{$history_pagesize}" size="5" />
+				<input type="text" name="history_pagesize" id="history_pagesize" value="{$history_pagesize}" size="5">
 				<label for="history_pagesize">{tr}per page{/tr}</label>
 			{/if}
 		</div>
