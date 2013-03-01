@@ -50,7 +50,7 @@
 <h2>{tr}Import questions from text{/tr}
 	{if $prefs.feature_help eq 'y'}
 		<a href="{$prefs.helpurl}Quiz+Question+Import" target="tikihelp" class="tikihelp">
-			<img src="img/icons/help.gif" alt="{tr}Help{/tr}" />
+			<img src="img/icons/help.gif" alt="{tr}Help{/tr}">
 		</a>
 	{/if}
 </h2>

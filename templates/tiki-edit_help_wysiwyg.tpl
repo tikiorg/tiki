@@ -31,7 +31,7 @@
 <div style="background-color: #fff; padding: 1em;">
 <div class="tiki_plugin" plugin="box" style="position:relative; background-color: #eee; border: 1px solid #666;">
 	<div contenteditable="false">
-		<img src="img/icons/wiki_plugin_edit.png" width="16" height="16" style="float:left;position:absolute;z-index:10001"/>
+		<img src="img/icons/wiki_plugin_edit.png" width="16" height="16" style="float:left;position:absolute;z-index:10001">
 		<table align="center" width="80%">
 			<tr><td>
 				<div class='cbox ' style=' background:#fffff0'><div class='cbox-data' style=" background:#fffff0">

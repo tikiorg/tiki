@@ -248,8 +248,7 @@ the section loop so that the vars are not replaced by nested pretty tracker exec
 			{/if}
 			{if $tracker_info.useAttachments eq 'y' and $tracker_info.showAttachments eq 'y'}
 		<td style="text-align:center;"><a href="tiki-view_tracker_item.php?trackerId={$listTrackerId}&amp;itemId={$items[user].itemId}&amp;show=att" 
-link="{tr}List Attachments{/tr}"><img src="img/icons/folderin.gif" alt="{tr}List Attachments{/tr}" 
-/></a>{$items[user].attachments}</td>
+link="{tr}List Attachments{/tr}"><img src="img/icons/folderin.gif" alt="{tr}List Attachments{/tr}"></a>{$items[user].attachments}</td>
 			{/if}
 			{if ($showdelete eq 'y' || $showpenditem eq 'y' || $showopenitem eq 'y' || $showcloseitem eq 'y') && ($tiki_p_admin_trackers eq 'y' or $perms.tiki_p_remove_tracker_items eq 'y' or $perms.tiki_p_remove_tracker_items_pending eq 'y' or $perms.tiki_p_remove_tracker_items_closed eq 'y')}
 		<td>

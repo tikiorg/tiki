@@ -184,7 +184,7 @@
 							<tr>
 								<td>{tr}Current Image{/tr}</td>
 								<td>
-									{$imageName}: <img src="{$tempimg}" alt="{tr}Current Image{/tr}"/>
+									{$imageName}: <img src="{$tempimg}" alt="{tr}Current Image{/tr}">
 								</td>
 							</tr>
 						{/if}

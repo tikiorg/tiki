@@ -35,7 +35,7 @@
 					</td>
 				{else}
 					<td>
-						{icon _id=accept alt="{tr}Upload successful!{/tr}" style="vertical-align:middle"}{tr}Upload successful!{/tr}</td><td>{$batchRes[ix].imageId}</td><td><img src="{$url_show}?id={$batchRes[ix].imageId}&amp;thumb=1" alt="{$batchRes[ix].filename}" />
+						{icon _id=accept alt="{tr}Upload successful!{/tr}" style="vertical-align:middle"}{tr}Upload successful!{/tr}</td><td>{$batchRes[ix].imageId}</td><td><img src="{$url_show}?id={$batchRes[ix].imageId}&amp;thumb=1" alt="{$batchRes[ix].filename}">
 					</td>
 				{/if}
 			</tr>
@@ -47,11 +47,11 @@
 	<h2>{tr}Upload successful!{/tr}</h2>
 	<h3>{tr}The following image was successfully uploaded:{/tr}</h3>
 	<div align="center">
-		<img src="show_image.php?id={$imageId}" alt="{tr}Image ID{/tr}" />
+		<img src="show_image.php?id={$imageId}" alt="{tr}Image ID{/tr}">
 		<br>
 		<b>{tr}Thumbnail:{/tr}</b>
 		<br>
-		<img src="show_image.php?id={$imageId}&amp;thumb=1" alt="{tr}Image ID thumb{/tr}" />
+		<img src="show_image.php?id={$imageId}&amp;thumb=1" alt="{tr}Image ID thumb{/tr}">
 		<br><br>
 		<div class="wikitext">
 			{tr}You can view this image in your browser using:{/tr}&nbsp;

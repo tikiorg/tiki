@@ -26,25 +26,25 @@
 						<li>
 							<a href="#fragment-{$fragment}">
 								{if $pos eq "blogs" or $pos eq "blogPosts"}
-									<img src="img/icons/large/blogs.png" alt="{tr}Blogs{/tr}" title="{tr}Blogs{/tr}"/>
+									<img src="img/icons/large/blogs.png" alt="{tr}Blogs{/tr}" title="{tr}Blogs{/tr}">
 								{elseif $pos eq "articles"}
-									<img src="img/icons/large/stock_bold.png" alt="{tr}Articles{/tr}" title="{tr}Articles{/tr}"/>
+									<img src="img/icons/large/stock_bold.png" alt="{tr}Articles{/tr}" title="{tr}Articles{/tr}">
 								{elseif $pos eq "posts"}
-									<img src="img/icons/large/stock_index.png" alt="{tr}Forums{/tr}" title="{tr}Forums{/tr}"/>
+									<img src="img/icons/large/stock_index.png" alt="{tr}Forums{/tr}" title="{tr}Forums{/tr}">
 								{elseif $pos eq "fileGalleries" or $pos eq "files"}
-									<img src="img/icons/large/file-manager.png" alt="{tr}File Gallery{/tr}" title="{tr}File Gallery{/tr}"/>
+									<img src="img/icons/large/file-manager.png" alt="{tr}File Gallery{/tr}" title="{tr}File Gallery{/tr}">
 								{elseif $pos eq "poll"}
-									<img src="img/icons/large/stock_missing-image.png" alt="{tr}Poll{/tr}" title="{tr}Poll{/tr}"/>
+									<img src="img/icons/large/stock_missing-image.png" alt="{tr}Poll{/tr}" title="{tr}Poll{/tr}">
 								{elseif $pos eq "pages"}
-									<img src="img/icons/large/wikipages.png" alt="{tr}Wiki{/tr}" title="{tr}Wiki{/tr}"/>
+									<img src="img/icons/large/wikipages.png" alt="{tr}Wiki{/tr}" title="{tr}Wiki{/tr}">
 								{elseif $pos eq "comments"}
-									<img src="img/icons/large/comments.png" alt="{tr}Comments{/tr}" title="{tr}Comments{/tr}"/>
+									<img src="img/icons/large/comments.png" alt="{tr}Comments{/tr}" title="{tr}Comments{/tr}">
 								{elseif $pos eq "forums"}
-									<img src="img/icons/large/stock_index.png" alt="{tr}Forums{/tr}" title="{tr}Forums{/tr}"/>
+									<img src="img/icons/large/stock_index.png" alt="{tr}Forums{/tr}" title="{tr}Forums{/tr}">
 								{elseif $pos eq "trackers"}
-									<img src="img/icons/large/gnome-settings-font.png" alt="{tr}Trackers{/tr}" title="{tr}Trackers{/tr}"/>
+									<img src="img/icons/large/gnome-settings-font.png" alt="{tr}Trackers{/tr}" title="{tr}Trackers{/tr}">
 								{elseif $pos eq "users"}
-									<img src="img/icons/large/vcard.png" alt="{tr}Users{/tr}" title="{tr}Users{/tr}"/>
+									<img src="img/icons/large/vcard.png" alt="{tr}Users{/tr}" title="{tr}Users{/tr}">
 								{else}
 									{$pos}
 								{/if}

@@ -21,7 +21,7 @@
 			{tr}Status{/tr} 
 		</td>
 		<td>
-			{if $setting.Logo neq ''}<img src='{$setting.Logo}' /><br>{/if}
+			{if $setting.Logo neq ''}<img src='{$setting.Logo}'><br>{/if}
 			{$setting.$companyName}<br>
 			{$setting.$address1}<br>
 			{if $setting.$address2 neq ''}{$setting.address2}<br>{/if}

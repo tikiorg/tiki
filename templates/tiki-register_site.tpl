@@ -45,7 +45,7 @@
     <b>{tr}If your site is private or inside your intranet, you should not register!{/tr}</b><br><br>
     </div>
   </td><td align="center" width="30%"><br><br><br>
-  <a href="http://tiki.org/" target="_tikiwiki"><img src="img/tiki/Tiki_WCG.png" /></a><br>
+  <a href="http://tiki.org/" target="_tikiwiki"><img src="img/tiki/Tiki_WCG.png"></a><br>
   <br>
   {tr}tiki.org{/tr}
   </td></tr>

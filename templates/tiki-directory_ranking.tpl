@@ -20,7 +20,7 @@
     <td class="text"><a class="link" href="tiki-directory_redirect.php?siteId={$items[user].siteId}" {if $prefs.directory_open_links eq 'n'}target='_blank'{/if}>{$items[user].name}</a></td>
     <td class="text">{$items[user].url}</td>
     {if $prefs.directory_country_flag eq 'y'}
-    <td class="icon"><img src='img/flags/{$items[user].country}.gif' alt='{$items[user].country}'/></td>
+    <td class="icon"><img src='img/flags/{$items[user].country}.gif' alt='{$items[user].country}'></td>
     {/if}
     <td class="integer">{$items[user].hits}</td>
   </tr>

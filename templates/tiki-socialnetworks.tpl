@@ -15,7 +15,7 @@
 <form action="tiki-socialnetworks.php" method="post">
 <table class="formcolor" style="width:100%;">
 <tr>
- <th colspan="2"><img src="img/icons/twitter_t_logo_32.png" alt="Twitter" width="16" height="16" /> Twitter</th>
+ <th colspan="2"><img src="img/icons/twitter_t_logo_32.png" alt="Twitter" width="16" height="16"> Twitter</th>
 </tr>
 <tr class="{cycle}">
  <td colspan="2">
@@ -36,7 +36,7 @@
  </td>
 </tr>
 <tr>
- <th colspan="2"><img src="img/icons/facebook-logo_32.png" alt="Facebook" width="16" height="16" /> Facebook</th>
+ <th colspan="2"><img src="img/icons/facebook-logo_32.png" alt="Facebook" width="16" height="16"> Facebook</th>
 </tr>
 <tr class="{cycle}">
  <td colspan="2">

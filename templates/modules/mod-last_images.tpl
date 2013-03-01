@@ -7,7 +7,7 @@
 		{if $content eq "thumbnails"}
 			<span class="module">
 				<a class="linkmodule" href="tiki-browse_image.php?imageId={$modLastImages[ix].imageId}">
-					<img src="show_image.php?id={$modLastImages[ix].imageId}&amp;thumb=1" title="{$modLastImages[ix].name|escape}" alt="{$modLastImages[ix].description|escape}" />
+					<img src="show_image.php?id={$modLastImages[ix].imageId}&amp;thumb=1" title="{$modLastImages[ix].name|escape}" alt="{$modLastImages[ix].description|escape}">
 				</a>
 			</span>
 			{if strstr($smarty.server.PHP_SELF, 'tiki-editpage.php')}

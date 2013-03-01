@@ -375,8 +375,8 @@ $("#repository, #categories").change(function(){
 		{foreach key=k item=entry from=$sources}
 			<tr>
 				<td>{$entry.short}</td>
-				<td><img id="profile-status-{$k}" alt="{tr}Status{/tr}" src="img/icons/status_{$entry.status}.gif"/></td>
-				<td><span id="profile-date-{$k}">{$entry.formatted}</span> <a href="javascript:refreshCache({$k})" class="icon"><img src="img/icons/arrow_refresh.png" class="icon" alt="{tr}Refresh{/tr}"/></a></td>
+				<td><img id="profile-status-{$k}" alt="{tr}Status{/tr}" src="img/icons/status_{$entry.status}.gif"></td>
+				<td><span id="profile-date-{$k}">{$entry.formatted}</span> <a href="javascript:refreshCache({$k})" class="icon"><img src="img/icons/arrow_refresh.png" class="icon" alt="{tr}Refresh{/tr}"></a></td>
 			</tr>
 		{/foreach}
 	</table>

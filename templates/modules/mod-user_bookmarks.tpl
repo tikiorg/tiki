@@ -8,7 +8,7 @@
 <ul>
     {section name=ix loop=$modb_folders}
 	<li>
-        <a href="{$ownurl}{$modb_sep}bookmarks_directory={$modb_folders[ix].folderId}"><img src="img/icons/folderin.gif" /></a>&nbsp;{$modb_folders[ix].name|escape}
+        <a href="{$ownurl}{$modb_sep}bookmarks_directory={$modb_folders[ix].folderId}"><img src="img/icons/folderin.gif"></a>&nbsp;{$modb_folders[ix].name|escape}
 	</li>
     {/section}
 </ul>

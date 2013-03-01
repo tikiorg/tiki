@@ -9,7 +9,7 @@
 					<td>
 						<div class="{$stdata.class}">
 							<a href="tiki-view_tracker.php?trackerId={$trackerId}{if $filtervalue}&amp;filtervalue={$filtervalue|escape:"url"}{/if}{if $filterfield}&amp;filterfield={$filterfield|escape:"url"}{/if}{if $sort_mode}&amp;sort_mode={$sort_mode}{/if}&amp;status={$stdata.statuslink}" class="statusimg">
-								<img src="{$stdata.image}" title="{$stdata.label}" alt="{$stdata.label}" align="top" width="12" height="12" />
+								<img src="{$stdata.image}" title="{$stdata.label}" alt="{$stdata.label}" align="top" width="12px" height="12px">
 							</a>
 						</div>
 					</td>

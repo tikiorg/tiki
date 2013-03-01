@@ -94,7 +94,7 @@
 														{$style=$style|cat:"max-height:"|cat:$listpages[ix].image_y|cat:"px;"}
 													{/if}
 													style="{$style}"
-											/>{/strip}
+											>{/strip}
 										</a>
 									{else}
 										{* Intentionally left blank to allow user add an image from somewhere else through the img tag and no other extra image *}
@@ -105,7 +105,7 @@
 												title="{if $listpages[ix].show_image_caption and $listpages[ix].image_caption}{$listpages[ix].image_caption|escape}{else}{tr}{$listpages[ix].topicName}{/tr}{/if}">
 											<img {if $listpages[ix].isfloat eq 'y'}style="margin-right:4px;float:left;"{else}class="articleimage"{/if} 
 													alt="{if $listpages[ix].show_image_caption and $listpages[ix].image_caption}{$listpages[ix].image_caption|escape}{else}{tr}{$listpages[ix].topicName}{/tr}{/if}"
-													src="article_image.php?image_type=topic&amp;id={$listpages[ix].topicId}" />
+													src="article_image.php?image_type=topic&amp;id={$listpages[ix].topicId}">
 										</a>
 									{/if}
 								{/if}

@@ -374,13 +374,13 @@
 							{/if}
 						{/if}
 						{if $list[ix].isReplied eq 'y'}
-							<img src="img/webmail/replied.gif" alt="{tr}Replied{/tr}"/>
+							<img src="img/webmail/replied.gif" alt="{tr}Replied{/tr}">
 						{/if}
 					</td>
 					<td class="email">{$list[ix].sender.name}</td>
 					<td class="text">
 						{self_link msgid=$list[ix].msgid locSection='read'}{$list[ix].subject}{/self_link}
-						{if $list[ix].has_attachment}<img src="img/webmail/clip.gif" alt="{tr}Clip{/tr}"/>{/if}
+						{if $list[ix].has_attachment}<img src="img/webmail/clip.gif" alt="{tr}Clip{/tr}">{/if}
 					</td>
 					<td class="date">{$list[ix].timestamp|tiki_short_datetime}</td>
 					<td class="integer">{$list[ix].size|kbsize}</td>

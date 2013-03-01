@@ -85,11 +85,11 @@
 					</div>
 					</div>
 					<img id="queryClose" src="img/icons/close.gif" height="13" width="13" alt="{tr}Scroll Up{/tr}"
-						style="position:absolute; top:0px; left:257px" />
+						style="position:absolute; top:0px; left:257px">
 					<img id="queryUp" src="img/icons/up.gif" height="8" width="10" alt="{tr}Scroll Up{/tr}"
-						style="position:absolute; top:15px; left:257px" />
+						style="position:absolute; top:15px; left:257px">
 					<img id="queryDown" src="img/icons/down.gif" height="8" width="10" alt="{tr}Scroll Down{/tr}"
-						style="position:absolute; top:188px; left:257px" />
+						style="position:absolute; top:188px; left:257px">
 				  <script type="text/javascript">
 				  	var scrollActive = false, scrollStop = true, scrollIncrement = 10, scrollInterval = 60;
 				  	xAddEventListener(xGetElementById('queryClose'),'click',query_close,false);
@@ -104,39 +104,39 @@
 				
 		  </td></tr>
 		  <tr><td align="center">
-		 	<img id="scale" src="{$image_scale_url}" alt="{tr}Scale{/tr}" title="{tr}Scale{/tr}" />
+		 	<img id="scale" src="{$image_scale_url}" alt="{tr}Scale{/tr}" title="{tr}Scale{/tr}">
 		 	<div align="center">
 		 	<input type="text" id="xx"><input type="text" id="yy">
 			</div>
 		  </td></tr>
 		  <tr><td align="center">	
 			{if $zoom eq -2}
-			<img id="imgzoom2" src="img/icons/zoom-2.gif" onclick="zoomin(0)" alt="-x2" title="{tr}Zoom out{/tr}" border="1" />
+			<img id="imgzoom2" src="img/icons/zoom-2.gif" onclick="zoomin(0)" alt="-x2" title="{tr}Zoom out{/tr}" border="1">
 			{else}
-			<img id="imgzoom2" src="img/icons/zoom-2.gif" onclick="zoomin(0)" alt="-x2" title="{tr}Zoom out{/tr}" />
+			<img id="imgzoom2" src="img/icons/zoom-2.gif" onclick="zoomin(0)" alt="-x2" title="{tr}Zoom out{/tr}">
 			{/if}
 			{if $zoom eq 0}
-			<img id="imgzoom3" src="img/icons/info.gif" onclick="zoomin(1)" alt="Q" title="{tr}Query{/tr}" border="1" />
+			<img id="imgzoom3" src="img/icons/info.gif" onclick="zoomin(1)" alt="Q" title="{tr}Query{/tr}" border="1">
 			<script type="text/javascript">
   			var map=xGetElementById('map');
   			map.style.cursor='help';
 			</script>
 			{else}
-			<img id="imgzoom3" src="img/icons/info.gif" onclick="zoomin(1)" alt="Q" title="{tr}Query{/tr}" />
+			<img id="imgzoom3" src="img/icons/info.gif" onclick="zoomin(1)" alt="Q" title="{tr}Query{/tr}">
 			{/if}
 			{if $zoom eq 1}
-			<img id="imgzoom4" src="img/icons/move.gif" onclick="zoomin(2)" alt="P" title="{tr}Pan{/tr}" border="1" />
+			<img id="imgzoom4" src="img/icons/move.gif" onclick="zoomin(2)" alt="P" title="{tr}Pan{/tr}" border="1">
 			<script type="text/javascript">
   			var map=xGetElementById('map');
   			map.style.cursor='move';
 			</script>
 			{else}
-			<img id="imgzoom4" src="img/icons/move.gif" onclick="zoomin(2)" alt="P" title="{tr}Pan{/tr}" />
+			<img id="imgzoom4" src="img/icons/move.gif" onclick="zoomin(2)" alt="P" title="{tr}Pan{/tr}">
 			{/if}
 			{if $zoom eq 2}
-			<img id="imgzoom5" src="img/icons/zoom+2.gif" onclick="zoomin(3)" alt="x2" title="{tr}Zoom in{/tr}" border="1" />
+			<img id="imgzoom5" src="img/icons/zoom+2.gif" onclick="zoomin(3)" alt="x2" title="{tr}Zoom in{/tr}" border="1">
 			{else}
-			<img id="imgzoom5" src="img/icons/zoom+2.gif" onclick="zoomin(3)" alt="x2" title="{tr}Zoom in{/tr}" />
+			<img id="imgzoom5" src="img/icons/zoom+2.gif" onclick="zoomin(3)" alt="x2" title="{tr}Zoom in{/tr}">
 			{/if}
 			&nbsp;
 			<select id="zoom" name="zoom" size="1" onchange="cbzoomchange()">
@@ -162,7 +162,7 @@
 			{if $tiki_p_map_edit eq 'y'}
 				&nbsp; 
 				<a class="link" href="tiki-map_edit.php?mapfile={$mapfile}&amp;mode=editing">
-				<img src="img/icons/wrench.png" alt="{tr}Edit{/tr}" title="{tr}Edit{/tr}" width="16" height="16" /></a>
+				<img src="img/icons/wrench.png" alt="{tr}Edit{/tr}" title="{tr}Edit{/tr}" width="16" height="16"></a>
 			{/if}
 			&nbsp;
 			<a href="tiki-map.php?mapfile={$mapfile}" ><small>{tr}Reset Map{/tr}</small></a><br> 
@@ -184,13 +184,13 @@
 		<table class="normal">
 		   <tr><th align="center"><b>{tr}Overview{/tr}</b></th></tr>
 		   <tr><td align="center" valign="middle" bgcolor="FFFFFF">
-		   <img id="ref" src="{$image_ref_url}" border="1" alt="{tr}Overview{/tr}" title="{tr}Overview{/tr}" /></td ></tr>
+		   <img id="ref" src="{$image_ref_url}" border="1" alt="{tr}Overview{/tr}" title="{tr}Overview{/tr}"></td ></tr>
 		   <tr><th align="center"><b>{tr}Legend{/tr}</b></th></tr>
-		   <tr><td align="center" bgcolor="FFFFFF"><img id="leg" src="{$image_leg_url}" alt="{tr}Legend{/tr}" title="{tr}Legend{/tr}" /></td></tr>
+		   <tr><td align="center" bgcolor="FFFFFF"><img id="leg" src="{$image_leg_url}" alt="{tr}Legend{/tr}" title="{tr}Legend{/tr}"></td></tr>
 		   <tr><td>
     			<div class="separator">
 			{if $prefs.feature_menusfolderstyle eq 'y'}
-				<a class="separator" href="javascript:toggle('layermenu');"><img src="img/icons/fo.gif" name="layermenuicn" alt=""/>&nbsp;</a>
+				<a class="separator" href="javascript:toggle('layermenu');"><img src="img/icons/fo.gif" name="layermenuicn" alt="">&nbsp;</a>
 			{else}
 			<a class="separator" href="javascript:toggle('layermenu');"><b>[+/-]</b></a>
 			{/if}
@@ -202,10 +202,10 @@
 				<th><b>{tr}Layer{/tr}</b></th>
 		  		<th><b>{tr}On{/tr}</b></th>
 		  		<th>
-				<img src="img/icons/edit.gif" alt="{tr}Label{/tr}" title="{tr}Label{/tr}" /></th>
+				<img src="img/icons/edit.gif" alt="{tr}Label{/tr}" title="{tr}Label{/tr}"></th>
 		  		<th>
 				<img src="img/icons/question.gif" alt="{tr}Query{/tr}" title="{tr}Query{/tr}" /></th>
-		  		<th><img src="img/icons/disk.png" width="16" height="16" alt="{tr}Download{/tr}" title="{tr}Download{/tr}" /></th>
+		  		<th><img src="img/icons/disk.png" width="16" height="16" alt="{tr}Download{/tr}" title="{tr}Download{/tr}"></th>
 			</tr>
 			{section name=j loop=$my_layers}
 			{if $my_layers[j]->group neq ""}
@@ -218,7 +218,7 @@
 				{/if}
 				<div class="separator">
 					{if $prefs.feature_menusfolderstyle eq 'y'}
-					<a class="separator" href="javascript:icntoggle('submenu{$unique_layer_group[j]}');"><img src="img/icons/fo.gif" name="layermenuicn" alt=""/>&nbsp;</a>
+					<a class="separator" href="javascript:icntoggle('submenu{$unique_layer_group[j]}');"><img src="img/icons/fo.gif" name="layermenuicn" alt="">&nbsp;</a>
 					{else}
 					
 					&nbsp;&nbsp;<a class="separator" href="javascript:toggle('submenu{$unique_layer_group[j]}');">[+/-]</a>
@@ -263,7 +263,7 @@
 						<td class="even" width=20px>
 						{/if}
 						{if $layer_query[i] eq "On"}
-						<img src="img/icons/question.gif" alt="{tr}Query{/tr}" title="{tr}Query{/tr}" />
+						<img src="img/icons/question.gif" alt="{tr}Query{/tr}" title="{tr}Query{/tr}">
 						{else}
 						&nbsp;
 						{/if}
@@ -276,7 +276,7 @@
 						{if $layer_download[i] eq "T"}
 						<small>
 						<a href="tiki-map_download.phtml?mapfile={$mapfile}&amp;layer={$my_layers[i]->name}">
-						<img src="img/icons/disk.png" alt="{tr}Download{/tr}" title="{tr}Download{/tr}" width="16" height="16" /></a>
+						<img src="img/icons/disk.png" alt="{tr}Download{/tr}" title="{tr}Download{/tr}" width="16" height="16"></a>
 						</small>
 						{/if}
 						</td>
@@ -322,7 +322,7 @@
 				<td class="even">
 				{/if}
 				{if $layer_query[j] eq "On"}
-				<img src="img/icons/question.gif" alt="{tr}Query{/tr}" title="{tr}Query{/tr}" />
+				<img src="img/icons/question.gif" alt="{tr}Query{/tr}" title="{tr}Query{/tr}">
 				{else}
 				&nbsp;
 				{/if}
@@ -335,7 +335,7 @@
 				{if $layer_download[j] eq "T"}
 				<small>
 				<a href="tiki-map_download.phtml?mapfile={$mapfile}&amp;layer={$my_layers[j]->name}">
-				<img src="img/icons/disk.png" alt="{tr}Download{/tr}" title="{tr}Download{/tr}" width="16" height="16" /></a>
+				<img src="img/icons/disk.png" alt="{tr}Download{/tr}" title="{tr}Download{/tr}" width="16" height="16"></a>
 				</small>
 				{/if}
 				</td>

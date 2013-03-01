@@ -81,7 +81,7 @@
 				{if $style_local eq 'y'}
 					<a href="tiki-edit_templates.php?template={$template|escape}&amp;delete=y">
 						<img src="img/icons/cross.png" alt="{tr}Delete the copy in the theme:{/tr} {$prefs.style|replace:'.css':''}" 
-							title="{tr}Delete the copy in the theme:{/tr} {$prefs.style|replace:'.css':''}" />
+							title="{tr}Delete the copy in the theme:{/tr} {$prefs.style|replace:'.css':''}">
 					</a>
 				{/if}
 			{/if}

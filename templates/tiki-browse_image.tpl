@@ -84,7 +84,7 @@
 {if $scaleinfo.clickscale >= 0}
   <a href="{$url_base}{$imageId}&amp;scalesize={$scaleinfo.clickscale}" title="{tr}Click to zoom{/tr}">
 {/if}
-<img src="show_image.php?id={$imageId}&amp;scalesize={$resultscale}&amp;nocount=y" alt="{tr}Image{/tr}" id="thepix" />
+<img src="show_image.php?id={$imageId}&amp;scalesize={$resultscale}&amp;nocount=y" alt="{tr}Image{/tr}" id="thepix">
 {if $scaleinfo.clickscale >= 0}
 </a>
 {/if}

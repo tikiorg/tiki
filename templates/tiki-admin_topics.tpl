@@ -46,7 +46,7 @@
 			</td>
 			<td class="text">
 				{if $topics[user].image_size}
-					<img alt="{tr}topic image{/tr}" src="article_image.php?image_type=topic&amp;id={$topics[user].topicId}&amp;reload=1" />
+					<img alt="{tr}topic image{/tr}" src="article_image.php?image_type=topic&amp;id={$topics[user].topicId}&amp;reload=1">
 				{else}
 					&nbsp;
 				{/if}

@@ -13,9 +13,9 @@
 			<tr>
 				<td valign="top">
 					{if $useImage eq 'y'}
-						<img alt="{tr}Article image{/tr}" src="received_article_image.php?id={$receivedArticleId}" />
+						<img alt="{tr}Article image{/tr}" src="received_article_image.php?id={$receivedArticleId}">
 					{else}
-						<img alt="{tr}Topic image{/tr}" src="article_image.php?image_type=topic&amp;id={$topic}" />
+						<img alt="{tr}Topic image{/tr}" src="article_image.php?image_type=topic&amp;id={$topic}">
 					{/if}
 				</td>
 				<td valign="top">
@@ -119,7 +119,7 @@
 				<tr>
 					<td>{tr}Image:{/tr}</td>
 					<td>
-						<img alt="article image" width="{$image_x}" height="{$image_y}" src="received_article_image.php?id={$receivedArticleId}" />
+						<img alt="article image" width="{$image_x}" height="{$image_y}" src="received_article_image.php?id={$receivedArticleId}">
 					</td>
 				</tr>
 			{/if}

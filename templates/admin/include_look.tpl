@@ -10,7 +10,7 @@
 
 			<div style="position:relative;">
 				<div style="position:absolute;right:.5em;top:0.5em;">
-					<img src="{$thumbfile}" alt="{tr}Theme Screenshot{/tr}" id="style_thumb" width="160" height="120" />
+					<img src="{$thumbfile}" alt="{tr}Theme Screenshot{/tr}" id="style_thumb" width="160px" height="120px">
 				</div>
 
 				<div class="adminoptionbox">

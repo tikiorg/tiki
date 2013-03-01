@@ -67,10 +67,10 @@
 			{/if}
 			>{$cell[w][d].items[item].name|truncate:$trunc:".."|escape|default:"..."}</a>
 			{if $cell[w][d].items[item].web}
-			<a href="{$cell[w][d].items[item].web}" target="_other" class="calweb" title="{$cell[w][d].items[item].web}"><img src="img/icons/external_link.gif" width="7" height="7" alt="&gt;" /></a>
+			<a href="{$cell[w][d].items[item].web}" target="_other" class="calweb" title="{$cell[w][d].items[item].web}"><img src="img/icons/external_link.gif" width="7" height="7" alt="&gt;"></a>
 			{/if}
 			{if $cell[w][d].items[item].nl}
-			<a href="tiki-newsletters.php?nlId={$cell[w][d].items[item].nl}&info=1" class="calweb" title="Subscribe"><img src="img/icons/external_link.gif" width="7" height="7" alt="&gt;" /></a>
+			<a href="tiki-newsletters.php?nlId={$cell[w][d].items[item].nl}&info=1" class="calweb" title="Subscribe"><img src="img/icons/external_link.gif" width="7" height="7" alt="&gt;"></a>
 			{/if}
 			{else}&nbsp;
 			{/if}

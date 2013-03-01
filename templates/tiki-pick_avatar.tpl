@@ -25,7 +25,7 @@
 </div>
 {if isset($user_picture_id)}
 <div>{tr}Full size{/tr}<br>
-<img src="tiki-download_file.php?fileId={$user_picture_id|escape}&amp;display=y"/>
+<img src="tiki-download_file.php?fileId={$user_picture_id|escape}&amp;display=y">
 </div>
 {/if}
 {else}{tr}no avatar{/tr}{/if}
@@ -39,7 +39,7 @@
 <h2>{if $user eq $userwatch}{tr}Pick avatar from the library{/tr}{else}{tr}Pick user Avatar{/tr}{/if} <a href="tiki-pick_avatar.php?showall=n">{tr}Hide all{/tr}</a> {$numav} {tr}icons{/tr}</h2>
 <div class="normal">
 {section name=im loop=$avatars}
-<a href="tiki-pick_avatar.php?showall=n&amp;avatar={$avatars[im]|escape:"url"}&amp;uselib=use"><img src="{$avatars[im]}" alt=''/></a>
+<a href="tiki-pick_avatar.php?showall=n&amp;avatar={$avatars[im]|escape:"url"}&amp;uselib=use"><img src="{$avatars[im]}" alt=''></a>
 {/section}
 </div>
 {else} 
@@ -81,7 +81,7 @@ function subavt() {
  <td>
  <div align="center">
 <a class="link" href="javascript:subavt();">{tr}Prev{/tr}</a>
-<img id='avtimg' src="{$yours}" alt="{tr}Avatar Image{/tr}"/>
+<img id='avtimg' src="{$yours}" alt="{tr}Avatar Image{/tr}">
 <a class="link" href="javascript:addavt();">{tr}Next{/tr}</a>
 </div>
  </td>

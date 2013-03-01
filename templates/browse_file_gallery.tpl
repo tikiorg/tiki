@@ -171,7 +171,7 @@
 										{if empty($files[changes].icon_fileId)}
 											{icon _id="img/icons/large/fileopen48x48.png" width="48" height="48"}
 										{else}
-											<img src="{$files[changes].icon_fileId|sefurl:thumbnail}" alt="" />
+											<img src="{$files[changes].icon_fileId|sefurl:thumbnail}" alt="">
 										{/if}
 									</a>
 								{else}
@@ -192,12 +192,12 @@
 													title="{if $files[changes].name neq ''}{$files[changes].name|escape}{/if}{if $files[changes].description neq ''}{$files[changes].description|escape}{/if}"{/if}>
 										{if  $key_type neq "image/svg"}
 											{if $view eq 'page'}
-												<img src="tiki-download_file.php?fileId={$files[changes].id}" alt="" style="max-width:{$maxWidth}"/>
+												<img src="tiki-download_file.php?fileId={$files[changes].id}" alt="" style="max-width:{$maxWidth}">
 												{else}
-												<img src="{$files[changes].id|sefurl:thumbnail}" alt="" />
+												<img src="{$files[changes].id|sefurl:thumbnail}" alt="">
 											{/if}
 											{else} {*Since we can't resize an svg thumbnail at this time, we just show and scale it down *}
-											<img src="{$files[changes].id|sefurl:display}" alt=""  style="width:{$thumbnail_size}px;height:{$thumbnailcontener_size}px;" />
+											<img src="{$files[changes].id|sefurl:display}" alt=""  style="width:{$thumbnail_size}px;height:{$thumbnailcontener_size}px;">
 										{/if}
 									</a>
 								{/if}

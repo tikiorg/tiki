@@ -110,9 +110,9 @@
 				{section name=numloop loop=$topics}
 					<td>
 						{if $topics[numloop].isIcon eq 'y'}
-							<img src="{$topics[numloop].path}" alt="{tr}topic image{/tr}" />
+							<img src="{$topics[numloop].path}" alt="{tr}topic image{/tr}">
 						{else}
-							<img src="tiki-view_minical_topic.php?topicId={$topics[numloop].topicId}" alt="{tr}topic image{/tr}" />
+							<img src="tiki-view_minical_topic.php?topicId={$topics[numloop].topicId}" alt="{tr}topic image{/tr}">
 						{/if}
 						{$topics[numloop].name}
 						[<a class="link" href="tiki-minical_prefs.php?removetopic={$topics[numloop].topicId}">x</a>]

@@ -31,7 +31,7 @@
 			<div class="scrollable"> 
 				<div class="items"> 
 					{foreach from=$klist key=key item=item}					
-						<a href="#" onclick="loadMedia('{$item->id}'); return false"><img class="athumb" src="{$item->thumbnailUrl}" alt="{$item->description}" height="80" width="120" /></a>					
+						<a href="#" onclick="loadMedia('{$item->id}'); return false"><img class="athumb" src="{$item->thumbnailUrl}" alt="{$item->description}" height="80" width="120"></a>					
 					{/foreach}
 				</div>
 			</div>

@@ -18,7 +18,7 @@
 	<div id="main">
 	<div id="siteheader" style="margin: 1em auto; max-width: 800px">
 			<div id="sitelogo">
-				<img style="border: medium none ;" alt="Site Logo" src="img/tiki/Tiki_WCG.png" />
+				<img style="border: medium none ;" alt="Site Logo" src="img/tiki/Tiki_WCG.png">
 			</div>
 	</div>
 
@@ -104,7 +104,7 @@
 {* Can be restored when we'll have a new http://branding.tiki.org/Badge
 			<p align="center">
 				<a target="_blank" href="http://tiki.org" title="Tiki Wiki CMS Groupware">
-				<img src="img/tiki/tikibutton2.png" alt="Tiki Wiki CMS Groupware" height="31" width="80"/>
+				<img src="img/tiki/tikibutton2.png" alt="Tiki Wiki CMS Groupware" height="31" width="80">
 				</a>
 			</p>
 *}

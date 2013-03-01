@@ -70,7 +70,7 @@
 	{section name=ix loop=$uploads}
 		<tr class="{cycle values="odd,even"}">
 			<td style="text-align: center">
-				<img src="{$uploads[ix].fileId|sefurl:thumbnail}" />
+				<img src="{$uploads[ix].fileId|sefurl:thumbnail}">
 			</td>
 			<td>
 				{if !empty($filegals_manager)}

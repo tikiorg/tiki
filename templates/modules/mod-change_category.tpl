@@ -6,10 +6,10 @@
 			{foreach key=k item=i from=$modcatlist}{* Smarty hack to access $modcatlist's first key. This should only access one element. *}
 				{if $modcatlist[$k].incat eq 'n'}
 					{capture name='title'}{tr}Assign into category:{/tr} {tr}{$modcatlist[$k].name|escape}{/tr}{/capture}
-					{self_link modcatid=$modcatid modcatchange=$k _title=$smarty.capture.title}<img src="{$module_params.imgUrlNotIn}" />{/self_link}
+					{self_link modcatid=$modcatid modcatchange=$k _title=$smarty.capture.title}<img src="{$module_params.imgUrlNotIn}">{/self_link}
 				{else}
 					{capture name='title'}{tr}Unassign category:{/tr} {tr}{$modcatlist[$k].name|escape}{/tr}{/capture}
-					{self_link remove=$k _title=$smarty.capture.title}<img src="{$module_params.imgUrlIn}" />{/self_link}
+					{self_link remove=$k _title=$smarty.capture.title}<img src="{$module_params.imgUrlIn}">{/self_link}
 				{/if}
 			{/foreach}
 		{else}

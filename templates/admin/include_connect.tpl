@@ -42,7 +42,7 @@
 			<legend><strong>{tr}Make a financial contribution to the Tiki Association{/tr}</strong></legend>
 			<p>
 				<a href="http://tiki.org/Donation">
-					<img src="img/tiki/Tiki_Contribute_Button.png" alt="{tr}Contribute to Tiki{/tr}" />
+					<img src="img/tiki/Tiki_Contribute_Button.png" alt="{tr}Contribute to Tiki{/tr}">
 				</a>
 			</p>
 		</fieldset>

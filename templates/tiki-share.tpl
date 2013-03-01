@@ -14,13 +14,13 @@
 		{/if}
 		{if isset($tweetId)}
 			<div>
-				<a href="http://www.twitter.com/"><img src="img/icons/twitter_t_logo_32.png" /> </a>
+				<a href="http://www.twitter.com/"><img src="img/icons/twitter_t_logo_32.png"> </a>
 				{tr}The link was sent via Twitter{/tr}
 			</div>
 		{/if}
 		{if isset($facebookId) and $facebookId!=false}
 			<div>
-				<img src="img/icons/facebook-logo_32.png" /> </a>{tr}The link was posted on your Facebook wall{/tr}
+				<img src="img/icons/facebook-logo_32.png"> </a>{tr}The link was posted on your Facebook wall{/tr}
 			</div>
 		{/if}
 		{if isset($messageSent)}
@@ -85,7 +85,7 @@
 	
 			<tr>
 				<td rowspan="2">
-					<img src="img/icons/large/evolution48x48.png" alt="{tr}e-Mail{/tr}"/>
+					<img src="img/icons/large/evolution48x48.png" alt="{tr}e-Mail{/tr}">
 					<br>
 					{tr}Send via e-Mail{/tr}
 				</td>
@@ -150,7 +150,7 @@
 			{if $twitterRegistered}
 				<tr>
 					<td rowspan="2">
-						<img src="img/icons/twitter_t_logo_32.png" alt="Twitter" />
+						<img src="img/icons/twitter_t_logo_32.png" alt="Twitter">
 						<br>
 						{tr}Tweet via Twitter{/tr}
 					</td>
@@ -188,7 +188,7 @@
 			{if $facebookRegistered}
 				<tr>
 					<td rowspan="2">
-						<img src="img/icons/facebook-logo_32.png" alt="Facebook" />
+						<img src="img/icons/facebook-logo_32.png" alt="Facebook">
 						<br>
 							{tr}Put on my Facebook wall{/tr}
 					</td>
@@ -262,7 +262,7 @@
 			{if $prefs.feature_messages eq 'y' && $report != 'y'}
 				<tr>
 					<td rowspan="2">
-						<img src="img/icons/large/messages48x48.png" alt="{tr}Messages{/tr}" />
+						<img src="img/icons/large/messages48x48.png" alt="{tr}Messages{/tr}">
 						<br>
 						{tr}Send message{/tr}
 					</td>
@@ -317,7 +317,7 @@
 			{if $prefs.feature_forums eq 'y' && $report != 'y'}
 				<tr>
 					<td rowspan="2">
-						<img src="img/icons/large/stock_index48x48.png" alt="{tr}Forums{/tr}" />
+						<img src="img/icons/large/stock_index48x48.png" alt="{tr}Forums{/tr}">
 						<br>
 						{tr}Post on forum{/tr}
 					</td>

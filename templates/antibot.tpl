@@ -17,7 +17,7 @@
 			{else}
 				<input type="hidden" name="captcha[id]" id="captchaId" value="{$captchalib->generate()}">
 				{if $captchalib->type eq 'default'}
-					<img id="captchaImg" src="{$captchalib->getPath()}" alt="{tr}Anti-Bot verification code image{/tr}" height="50" />
+					<img id="captchaImg" src="{$captchalib->getPath()}" alt="{tr}Anti-Bot verification code image{/tr}" height="50">
 				{else}
 					{* dumb captcha *}
 					{$captchalib->render()}

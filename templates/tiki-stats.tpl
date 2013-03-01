@@ -380,11 +380,11 @@
 
 {if $usage_chart eq 'y'}
 	<div align="center">
-		<img src="tiki-usage_chart.php" alt="{tr}Usage chart image{/tr}"/>
+		<img src="tiki-usage_chart.php" alt="{tr}Usage chart image{/tr}">
 	</div>
 	<br>
 	<div align="center">
-		<img src="tiki-usage_chart.php?type=daily" alt="{tr}Daily Usage{/tr}"/>
+		<img src="tiki-usage_chart.php?type=daily" alt="{tr}Daily Usage{/tr}">
 	</div>
 {/if}
 

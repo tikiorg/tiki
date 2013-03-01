@@ -49,7 +49,7 @@
 		{if $prefs.feed_file_gallery eq 'y'}
 			{if $gal_info.type eq "podcast" or $gal_info.type eq "vidcast"}
 				<a href="tiki-file_gallery_rss.php?galleryId={$galleryId}&amp;ver=PODCAST">
-					<img src='img/rss_podcast_80_15.png' alt="{tr}RSS feed{/tr}" title="{tr}RSS feed{/tr}" align='right' />
+					<img src='img/rss_podcast_80_15.png' alt="{tr}RSS feed{/tr}" title="{tr}RSS feed{/tr}" align='right'>
 				</a>
 			{else}
 				<a href="tiki-file_gallery_rss.php?galleryId={$galleryId}">

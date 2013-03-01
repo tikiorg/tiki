@@ -36,7 +36,7 @@
 					{/if}
 				{/if}
 
-			><img src="img/icons/more_info.gif" alt="{tr}Details{/tr}" /></a></span>
+			><img src="img/icons/more_info.gif" alt="{tr}Details{/tr}"></a></span>
 			{if $myurl eq "tiki-action_calendar.php"}
 			<a href="{$event.url}" class="url" title="{$event.web|escape}" class="linkmenu summary" style="color:#{$infocals.$calendarId.customfgcolor};{if $event.status eq '2'}text-decoration:line-through{/if}">{$event.name}</a>
 			{else}

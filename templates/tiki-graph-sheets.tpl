@@ -16,10 +16,10 @@
 	<td><input type="radio" name="graphic" id="g_stack" value="BarStackGraphic"> <label for='g_stack'>{tr}Bar Stack{/tr}</label></td>
 </tr>
 <tr>
-	<td><label for="g_pie"><img src="img/graph.pie.png" alt="Pie Chart"/></label></td>
-	<td><label for="g_mline"><img src="img/graph.multiline.png" alt="Multiline"/>
-	<td><label for="g_mbar"><img src="img/graph.multibar.png" alt="Multibar"/>
-	<td><label for="g_stack"><img src="img/graph.barstack.png" alt="Bar Stack"/>
+	<td><label for="g_pie"><img src="img/graph.pie.png" alt="Pie Chart"></label></td>
+	<td><label for="g_mline"><img src="img/graph.multiline.png" alt="Multiline">
+	<td><label for="g_mbar"><img src="img/graph.multibar.png" alt="Multibar">
+	<td><label for="g_stack"><img src="img/graph.barstack.png" alt="Bar Stack">
 </tr>
 </table>
 {if $haspdflib or $hasps}

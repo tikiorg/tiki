@@ -14,7 +14,7 @@
 	<tr{if ($key % 2)} class="odd"{else} class="even"{/if}>	
 			{include file='tiki-list_kaltura_entries_actions.tpl'}
 
-		<td class="text"><a href="#" {popup trigger="onclick" sticky=1 fullhtml="1" text=$smarty.capture.actions|escape:"javascript"|escape:"html"}><img class="athumb" src="{$item->thumbnailUrl}" alt="{$item->description}" height="80" width="120" /></a></td>
+		<td class="text"><a href="#" {popup trigger="onclick" sticky=1 fullhtml="1" text=$smarty.capture.actions|escape:"javascript"|escape:"html"}><img class="athumb" src="{$item->thumbnailUrl}" alt="{$item->description}" height="80" width="120"></a></td>
 		<td class="text">{if $tiki_p_view_videos eq 'y'}<a href="tiki-kaltura_video.php?{$entryType}Id={$item->id}" title="{tr}View{/tr}">{/if}{$item->name}{if $tiki_p_view_videos eq 'y'}</a>{/if}</td>
 		<td class="date">{$item->createdAt|tiki_short_datetime}</td>
 		<td class="text">{$item->userId}</td>

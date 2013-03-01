@@ -45,6 +45,6 @@
 {/if}
 
 {if $tiki_p_add_events eq 'y' && (empty($module_params.showaction) || $module_params.showaction ne 'n')}
-	<p><a href="tiki-calendar_edit_item.php"><img src="img/icons/add.png" alt="" /> {tr}Add Event{/tr}</a></p>
+	<p><a href="tiki-calendar_edit_item.php"><img src="img/icons/add.png" alt=""> {tr}Add Event{/tr}</a></p>
 {/if}
 {/tikimodule}

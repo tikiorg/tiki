@@ -14,10 +14,10 @@
 	</div>
 	{if !isset($module_params.icons) or $module_params.icons neq 'n'}
 		<div class="power_icons">
-			<a href="http://tiki.org/" title="Tiki"><img alt="{tr}Powered by{/tr} Tiki" src="img/tiki/tikibutton2.png" /></a>
-			<a href="http://php.net/" title="PHP"><img alt="{tr}Powered by{/tr} PHP" src="img/php.png" /></a>
-			<a href="http://smarty.net/" title="Smarty"><img alt="{tr}Powered by{/tr} Smarty" src="img/smarty.gif"  /></a>
-			<a href="http://www.w3.org/Style/CSS/" title="CSS"><img alt="{tr}Made with{/tr} CSS" src="img/css1.png" /></a>
+			<a href="http://tiki.org/" title="Tiki"><img alt="{tr}Powered by{/tr} Tiki" src="img/tiki/tikibutton2.png"></a>
+			<a href="http://php.net/" title="PHP"><img alt="{tr}Powered by{/tr} PHP" src="img/php.png"></a>
+			<a href="http://smarty.net/" title="Smarty"><img alt="{tr}Powered by{/tr} Smarty" src="img/smarty.gif"></a>
+			<a href="http://www.w3.org/Style/CSS/" title="CSS"><img alt="{tr}Made with{/tr} CSS" src="img/css1.png"></a>
 		</div>
 	{/if}
 {/tikimodule}

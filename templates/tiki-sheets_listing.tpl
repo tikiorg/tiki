@@ -15,7 +15,7 @@
 	<td class="action">
 		{if $chart_enabled eq 'y'}
 			<a class="gallink" href="tiki-graph_sheet.php?sheetId={$sheet.sheetId}">
-				<img src='img/icons/chart_curve.png' width='16' height='16' alt="{tr}Graph{/tr}" title="{tr}Graph{/tr}" />
+				<img src='img/icons/chart_curve.png' width='16' height='16' alt="{tr}Graph{/tr}" title="{tr}Graph{/tr}">
 			</a>
 		{/if}
 		{if $tiki_p_view_sheet_history eq 'y'}

@@ -44,8 +44,8 @@
 				<p>
 					<table style="width=520px;border: 0px;text-align:center">
 					<tr>
-					<td><img src="{$memory_graph|escape}" width="250" height="100"/></td>
-					<td><img src="{$hits_graph|escape}" width="250" height="100"/></td>
+					<td><img src="{$memory_graph|escape}" width="250" height="100"></td>
+					<td><img src="{$hits_graph|escape}" width="250" height="100"></td>
 					</tr>
 					<tr>
 					<td style="width=260px">

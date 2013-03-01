@@ -521,7 +521,7 @@
 				{if $forum_info.topic_smileys eq 'y'}
 					<td class="icon">
 						{if strlen($comments_coms[ix].smiley) > 0}
-							<img src='img/smiles/{$comments_coms[ix].smiley}' alt=''/>
+							<img src='img/smiles/{$comments_coms[ix].smiley}' alt=''>
 						{else}
 							&nbsp;{$comments_coms[ix].smiley}
 						{/if}
@@ -550,7 +550,7 @@
 				{if $forum_info.topics_list_lastpost eq 'y'}
 					<td class="text">
 						{if $forum_info.topics_list_lastpost_avatar eq 'y' and $prefs.feature_userPreferences eq 'y'}
-							<div style="float:left;padding-right:2px"><img src="tiki-show_user_avatar.php?user={$comments_coms[ix].lastPostData.userName|escape:"url"}&amp;always" title="{$comments_coms[ix].lastPostData.userName|username}" /></div>
+							<div style="float:left;padding-right:2px"><img src="tiki-show_user_avatar.php?user={$comments_coms[ix].lastPostData.userName|escape:"url"}&amp;always" title="{$comments_coms[ix].lastPostData.userName|username}"></div>
 						{/if}
 						<div style="float:left;">
 							{$comments_coms[ix].lastPost|tiki_short_datetime} {* date_format:"%b %d [%H:%M]" *}
@@ -562,14 +562,14 @@
 					</td>
 				{elseif $forum_info.topics_list_lastpost_avatar eq 'y' and $prefs.feature_userPreferences eq 'y'}
 					<td class="text">
-						<img src="tiki-show_user_avatar.php?user={$comments_coms[ix].lastPostData.userName|escape:"url"}$amp;always" title="{$comments_coms[ix].lastPostData.userName|username}" />
+						<img src="tiki-show_user_avatar.php?user={$comments_coms[ix].lastPostData.userName|escape:"url"}$amp;always" title="{$comments_coms[ix].lastPostData.userName|username}">
 					</td>
 				{/if}
 				{if $forum_info.topics_list_author eq 'y'}
 					<td class="text">
 						{if $forum_info.topics_list_author_avatar eq 'y' and $prefs.feature_userPreferences eq 'y'}
 							<div style="float:left;padding-right:2px">
-								<img src="tiki-show_user_avatar.php?user={$comments_coms[ix].userName|escape:"url"}" title="{$comments_coms[ix].userName|username}" />
+								<img src="tiki-show_user_avatar.php?user={$comments_coms[ix].userName|escape:"url"}" title="{$comments_coms[ix].userName|username}">
 							</div>
 						{/if}
 						<div style="float:left">
@@ -577,7 +577,7 @@
 						</div>
 				{elseif $forum_info.topics_list_author_avatar eq 'y' and $prefs.feature_userPreferences eq 'y'}
 					<td class="text">
-						<img src="tiki-show_user_avatar.php?user={$comments_coms[ix].userName|escape:"url"}" title="{$comments_coms[ix].userName|username}" />
+						<img src="tiki-show_user_avatar.php?user={$comments_coms[ix].userName|escape:"url"}" title="{$comments_coms[ix].userName|username}">
 					</td>
 				{/if}
 				
@@ -603,7 +603,7 @@
 					{if (isset($comments_coms[ix].attachments) and count($comments_coms[ix].attachments))
 						or $tiki_p_admin_forum eq 'y'}
 						{if isset($comments_coms[ix].attachments) and count($comments_coms[ix].attachments)}
-							<img src='img/icons/attachment.gif' alt='attachments' />
+							<img src='img/icons/attachment.gif' alt='attachments'>
 						{/if}
 					{else}
 						&nbsp;

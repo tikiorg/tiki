@@ -37,7 +37,7 @@
   <br>
   {/if}
   {section name=ix loop=$items}
-  <div class="dirsite"> {if $prefs.directory_country_flag eq 'y'} <img alt="flag" src="img/flags/{$items[ix].country}.gif" /> {/if} <a class="dirsitelink" href="tiki-directory_redirect.php?siteId={$items[ix].siteId}" {if $prefs.directory_open_links eq 'n'}target='_blank'{/if}>{$items[ix].name}</a> {if $tiki_p_admin_directory_sites eq 'y'} [<a class="dirsitelink" href="tiki-directory_admin_sites.php?siteId={$items[ix].siteId}">edit</a>]{/if} <br>
+  <div class="dirsite"> {if $prefs.directory_country_flag eq 'y'} <img alt="flag" src="img/flags/{$items[ix].country}.gif"> {/if} <a class="dirsitelink" href="tiki-directory_redirect.php?siteId={$items[ix].siteId}" {if $prefs.directory_open_links eq 'n'}target='_blank'{/if}>{$items[ix].name}</a> {if $tiki_p_admin_directory_sites eq 'y'} [<a class="dirsitelink" href="tiki-directory_admin_sites.php?siteId={$items[ix].siteId}">edit</a>]{/if} <br>
     <span class="dirsitedesc">{$items[ix].description}</span><br>
     {assign var=fsfs value=1} <span class="dirsitecats"> {tr}Directory Categories:{/tr}
     {section name=ii loop=$items[ix].cats}

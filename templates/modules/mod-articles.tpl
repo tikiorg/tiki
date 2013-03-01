@@ -22,7 +22,7 @@
 			<li>
 				{if isset($module_params.img)}
 					<div class="image">
-						<img alt="" src="article_image.php?{if $modArticles[ix].hasImage eq 'y'}id={$modArticles[ix].articleId}{elseif $modArticles[ix].topicId}image_type=topic&amp;id={$modArticles[ix].topicId}{/if}" width="{$module_params.img}" />
+						<img alt="" src="article_image.php?{if $modArticles[ix].hasImage eq 'y'}id={$modArticles[ix].articleId}{elseif $modArticles[ix].topicId}image_type=topic&amp;id={$modArticles[ix].topicId}{/if}" width="{$module_params.img}">
 					</div>
 				{/if}
 				<a class="linkmodule" href="{if $absurl == 'y'}{$base_url}{/if}{$modArticles[ix].articleId|sefurl:article}" title="{$modArticles[ix].created|tiki_short_date}, {tr}by{/tr} {$modArticles[ix].author|escape}">

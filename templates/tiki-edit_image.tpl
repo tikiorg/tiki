@@ -14,7 +14,7 @@
 <hr/>
 <br>
 {/if}
-<img src="show_image.php?id={$imageId}" alt="{tr}Image{/tr}" /><br><br>
+<img src="show_image.php?id={$imageId}" alt="{tr}Image{/tr}"><br><br>
 <form enctype="multipart/form-data" action="tiki-edit_image.php" method="post">
 <input type="hidden" name="edit" value="{$imageId|escape}">
 <input type="hidden" name="sort_mode" value="{$sort_mode|escape}">
