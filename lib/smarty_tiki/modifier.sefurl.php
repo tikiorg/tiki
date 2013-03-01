@@ -100,7 +100,11 @@ function smarty_modifier_sefurl($source, $type='wiki', $with_next = '', $all_lan
 			break;
 
 		case 'tracker':
-			$href = 'tiki-view_tracker.php?trackerId='.$source;
+			if ($source) {
+				$href = 'tiki-view_tracker.php?trackerId=' . $source;
+			} else {
+				$href = 'tiki-list_trackers.php';
+			}
 			break;
 
 		case 'filegallery':
