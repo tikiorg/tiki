@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<title>{tr}System error.{/tr}</title>
 	<link rel="stylesheet" href="styles/fivealive.css" type="text/css"/>
 	<style type="text/css" media="screen">

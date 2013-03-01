@@ -4,57 +4,57 @@
 {/if}
 
 <!--Latest IE Compatibility-->
-<meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
 
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="generator" content="Tiki Wiki CMS Groupware - http://tiki.org" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="generator" content="Tiki Wiki CMS Groupware - http://tiki.org">
 
 {* --- Canonical URL --- *}
 {include file="canonical.tpl"}	
 
 {if !empty($forum_info.name) & $prefs.metatag_threadtitle eq 'y'}
-	<meta name="keywords" content="{tr}Forum{/tr} {$forum_info.name|escape} {$thread_info.title|escape} {if $prefs.feature_freetags eq 'y'}{foreach from=$freetags.data item=taginfo}{$taginfo.tag|escape} {/foreach}{/if}" />
+	<meta name="keywords" content="{tr}Forum{/tr} {$forum_info.name|escape} {$thread_info.title|escape} {if $prefs.feature_freetags eq 'y'}{foreach from=$freetags.data item=taginfo}{$taginfo.tag|escape} {/foreach}{/if}">
 {elseif isset($galleryId) && $galleryId neq '' && $prefs.metatag_imagetitle neq 'n'}
-	<meta name="keywords" content="{tr}Images Galleries{/tr} {$title|escape} {if $prefs.feature_freetags eq 'y'}{foreach from=$freetags.data item=taginfo}{$taginfo.tag|escape} {/foreach}{/if}" />
+	<meta name="keywords" content="{tr}Images Galleries{/tr} {$title|escape} {if $prefs.feature_freetags eq 'y'}{foreach from=$freetags.data item=taginfo}{$taginfo.tag|escape} {/foreach}{/if}">
 {elseif $prefs.metatag_keywords neq '' or !empty($metatag_local_keywords)}
-	<meta name="keywords" content="{$prefs.metatag_keywords|escape} {if $prefs.feature_freetags eq 'y'}{foreach from=$freetags.data item="taginfo"}{$taginfo.tag|escape} {/foreach}{/if} {$metatag_local_keywords|escape}" />
+	<meta name="keywords" content="{$prefs.metatag_keywords|escape} {if $prefs.feature_freetags eq 'y'}{foreach from=$freetags.data item="taginfo"}{$taginfo.tag|escape} {/foreach}{/if} {$metatag_local_keywords|escape}">
 {/if}
 {if $prefs.metatag_author neq ''}
-	<meta name="author" content="{$prefs.metatag_author|escape}" />
+	<meta name="author" content="{$prefs.metatag_author|escape}">
 {/if}
 {if isset($section) and $section eq "blogs"}
 	{if empty($blog_data.title)}
-	<meta name="description" content="Blog listing" />
+	<meta name="description" content="Blog listing">
 	{elseif empty($postId)}
-	<meta name="description" content="{$blog_data.title|escape}" />
+	<meta name="description" content="{$blog_data.title|escape}">
 	{else} 
-	<meta name="description" content="{$post_info.title|escape} - {$blog_data.title|escape}" />
+	<meta name="description" content="{$post_info.title|escape} - {$blog_data.title|escape}">
 	{/if}
 {elseif $prefs.metatag_pagedesc eq 'y' and $description ne ''}
-	<meta name="description" content="{$description|escape}" />
+	<meta name="description" content="{$description|escape}">
 {elseif $prefs.metatag_description ne '' or (isset($description) and $description eq '')}
-	<meta name="description" content="{$prefs.metatag_description|escape}" />
+	<meta name="description" content="{$prefs.metatag_description|escape}">
 {/if}
 {if $prefs.metatag_geoposition neq ''}
-	<meta name="geo.position" content="{$prefs.metatag_geoposition|escape}" />
+	<meta name="geo.position" content="{$prefs.metatag_geoposition|escape}">
 {/if}
 {if $prefs.metatag_georegion neq ''}
-	<meta name="geo.region" content="{$prefs.metatag_georegion|escape}" />
+	<meta name="geo.region" content="{$prefs.metatag_georegion|escape}">
 {/if}
 {if $prefs.metatag_geoplacename neq ''}
-	<meta name="geo.placename" content="{$prefs.metatag_geoplacename|escape}" />
+	<meta name="geo.placename" content="{$prefs.metatag_geoplacename|escape}">
 {/if}
 {if (isset($prefs.metatag_robots) and $prefs.metatag_robots neq '') and (!isset($metatag_robots) or $metatag_robots eq '')}
-        <meta name="robots" content="{$prefs.metatag_robots|escape}" />
+        <meta name="robots" content="{$prefs.metatag_robots|escape}">
 {/if}
 {if (!isset($prefs.metatag_robots) or $prefs.metatag_robots eq '') and (isset($metatag_robots) and $metatag_robots neq '')}
-        <meta name="robots" content="{$metatag_robots|escape}" />
+        <meta name="robots" content="{$metatag_robots|escape}">
 {/if}
 {if (isset($prefs.metatag_robots) and $prefs.metatag_robots neq '') and (isset($metatag_robots) and $metatag_robots neq '')}
-        <meta name="robots" content="{$prefs.metatag_robots|escape}, {$metatag_robots|escape}" />
+        <meta name="robots" content="{$prefs.metatag_robots|escape}, {$metatag_robots|escape}">
 {/if}
 {if $prefs.metatag_revisitafter neq ''}
-	<meta name="revisit-after" content="{$prefs.metatag_revisitafter|escape}" />
+	<meta name="revisit-after" content="{$prefs.metatag_revisitafter|escape}">
 {/if}
 
 {* --- tiki block --- *}

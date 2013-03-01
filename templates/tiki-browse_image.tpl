@@ -1,7 +1,7 @@
 {* $Id$ *}{if $popup}<!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link rel="StyleSheet"  href="styles/{$prefs.style}" type="text/css" />
 <script type="text/javascript" src="lib/imagegals/imagegallib.js"></script>
 </head>

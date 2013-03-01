@@ -3,7 +3,7 @@
 
 <html>
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<link rel="StyleSheet" href="styles/{$prefs.style}" type="text/css" />
 	<title>{tr}Address book{/tr}</title>
 </head>
@@ -43,7 +43,7 @@
 					<td class="text">{$channels[user].firstName}</td>
 					<td class="text">{$channels[user].lastName}</td>
 					<td class="email">
-						<a class="link" href="#" onclick="javascript:window.opener.document.getElementById('{$element}').value=window.opener.document.getElementById('{$element}').value + '{$channels[user].email}' + ' ';">
+						<a class="link" href="#" onClick="javascript:window.opener.document.getElementById('{$element}').value=window.opener.document.getElementById('{$element}').value + '{$channels[user].email}' + ' ';">
 							{$channels[user].email}
 						</a>
 						[&nbsp;&nbsp;
