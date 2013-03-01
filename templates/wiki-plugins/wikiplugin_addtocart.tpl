@@ -1,6 +1,6 @@
 {* $Id$ *}
 <form method="post" action="{query _type=relative _keepall=y}" style="display: inline;">
-	<input type="hidden" name="code" value="{$code|escape}"/>
+	<input type="hidden" name="code" value="{$code|escape}">
 	{if $onbehalf == 'y'}
 		{tr}Buy on behalf of:{/tr}
 		<select name="buyonbehalf">
@@ -23,23 +23,23 @@
 		{if $giftcertificate == 'y'}
 			<tr>
 				<th style="text-align: right;">{tr}Gift Certificate:{/tr}</th>
-				<td><input type="text" name="gift_certificate" size="2"/></td>
+				<td><input type="text" name="gift_certificate" size="2"></td>
 			</tr>
 		{/if}
 
 		{if $hideamountfield eq 'y'}
-		<input type="hidden" name="quantity" value="1" />
+		<input type="hidden" name="quantity" value="1">
 		{else}			
 		<tr>
 			<th style="text-align: right;">{tr}Qty:{/tr}</th>
-			<td><input type="text" name="quantity" value="1" size="2"/></td>
+			<td><input type="text" name="quantity" value="1" size="2"></td>
 		</tr>
 		{/if}
 	</table>
-	<input type="submit" value="{$add_label|escape}" class="addProductToCartSubmit" />
+	<input type="submit" value="{$add_label|escape}" class="addProductToCartSubmit">
 	{if $exchangeorderitemid && $exchangetoproductid}
-		<input type="hidden" value="{$exchangeorderitemid|escape}" name="exchangeorderitemid" />
-		<input type="hidden" value="{$exchangetoproductid|escape}" name="exchangetoproductid" />
+		<input type="hidden" value="{$exchangeorderitemid|escape}" name="exchangeorderitemid">
+		<input type="hidden" value="{$exchangetoproductid|escape}" name="exchangetoproductid">
 	{/if}
 </form>
 

@@ -1,6 +1,6 @@
 {if $field.options_array[0] eq 'password'}
 	{if ($prefs.auth_method neq 'cas' || ($prefs.cas_skip_admin eq 'y' && $user eq 'admin')) and $prefs.change_password neq 'n'}
-		<input type="password" name="{$field.ins_id}" />
+		<input type="password" name="{$field.ins_id}">
 		<br><i>Leave empty if password is to remain unchanged</i>
 	{/if}
 {elseif $field.options_array[0] eq 'language'}
@@ -15,5 +15,5 @@
 		<option value='' {if !$field.value}selected="selected"{/if}>{tr}Site default{/tr}</option>
 	</select>
 {else}
-	<input type="text" name="{$field.ins_id}" value="{$field.value}" />
+	<input type="text" name="{$field.ins_id}" value="{$field.value}">
 {/if}

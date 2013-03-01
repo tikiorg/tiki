@@ -12,18 +12,18 @@
 		</li>
 	{/foreach}
 </ol>
-<input class="input" type="text" name="{$field.ins_id|escape}" value="{$field.value|escape}"/>
+<input class="input" type="text" name="{$field.ins_id|escape}" value="{$field.value|escape}">
 {if $field.canUpload}
 	<fieldset id="{$field.ins_id|escape}-drop" class="file-drop">
 		<legend>{tr}Upload files{/tr}</legend>
 		<p style="display:none;">{tr}Drop files from your desktop here or browse for them{/tr}</p>
-		<input class="ignore" type="file" name="{$field.ins_id|escape}[]" accept="{$field.filter|escape}" multiple="multiple"/>
+		<input class="ignore" type="file" name="{$field.ins_id|escape}[]" accept="{$field.filter|escape}" multiple="multiple">
 	</fieldset>
 {/if}
 {if $prefs.fgal_tracker_existing_search eq 'y'}
 	<fieldset>
 		<legend>{tr}Existing files{/tr}</legend>
-		<input type="text" class="search" placeholder="{tr}Search query{/tr}"/>
+		<input type="text" class="search" placeholder="{tr}Search query{/tr}">
 		{if $prefs.fgal_elfinder_feature eq 'y'}
 			{button href='tiki-list_file_gallery.php' _text="{tr}Browse files{/tr}"
 				_onclick="return openElFinderDialog(this, {ldelim}defaultGalleryId:{if !isset($field.options_array[8]) or $field.options_array[8] eq ''}{if empty($field.options_array[0])}0{else}{$field.options_array[0]|escape}{/if}{else}{$field.options_array[8]|escape}{/if},deepGallerySearch:{if empty($field.options_array[6])}0{else}{$field.options_array[6]|escape}{/if},getFileCallback:function(file,elfinder){ldelim}window.handleFinderFile(file,elfinder){rdelim}{rdelim});"
@@ -36,7 +36,7 @@
 {if $prefs.fgal_upload_from_source eq 'y' and $field.canUpload}
 	<fieldset>
 		<legend>{tr}Upload from URL{/tr}</legend>
-		<label>{tr}URL:{/tr} <input class="url" name="url" placeholder="http://"/></label>
+		<label>{tr}URL:{/tr} <input class="url" name="url" placeholder="http://"></label>
 		{tr}Type or paste the URL and press ENTER{/tr}
 	</fieldset>
 {/if}

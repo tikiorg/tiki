@@ -22,19 +22,19 @@
 	{/if}
 	</p>
 	<p>
-		<input type="hidden" name="wp_member_offset" value="{$wp_member_offset|escape}"/>
+		<input type="hidden" name="wp_member_offset" value="{$wp_member_offset|escape}">
 		{if $wp_member_currentuser ne 'y'}
-			{tr}Users:{/tr} <input type="text" id="user{$wp_member_offset|escape}" name="wp_member_users" value="{$user|escape}"/> ({tr}separated by |{/tr})
+			{tr}Users:{/tr} <input type="text" id="user{$wp_member_offset|escape}" name="wp_member_users" value="{$user|escape}"> ({tr}separated by |{/tr})
 		{/if}
 	</p>
 	<p>
 		{if isset($hideperiod) && $hideperiod eq 'y'}
-			<input type="hidden" name="wp_member_periods" value="1"/>
+			<input type="hidden" name="wp_member_periods" value="1">
 		{else}
 			{tr}{$periodslabel}{/tr}
-			<input type="text" name="wp_member_periods" value="1"/>
+			<input type="text" name="wp_member_periods" value="1">
 		{/if}
-		<input type="submit" value="{tr}Continue{/tr}"/>
+		<input type="submit" value="{tr}Continue{/tr}">
 	</p>
 	{jq}
 		$('#user{{$wp_member_offset|escape}}').tiki("autocomplete", "username", {multiple: true, multipleSeparator: "|"});

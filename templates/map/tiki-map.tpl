@@ -11,7 +11,7 @@
 <h1>{$pagelink}</h1>
 <div align="center">
   <form name="frmmap" id="frmmap" action="tiki-map.php" method="get">
-   <input type="hidden" name="mapfile" value="{$mapfile}" />
+   <input type="hidden" name="mapfile" value="{$mapfile}">
 	<table border="0" cellpadding="0" cellspacing="0" >
 	  <tr>
 	     <td align="center" valign="middle">
@@ -30,7 +30,7 @@
 						{if $ysize != ""}height="{$ysize}"{/if}
 					alt="{tr}click on the map to zoom or pan, do not drag{/tr}" 
 					  title="{tr}click on the map to zoom or pan, do not drag{/tr}"
-					  style="z-index:20;position:relative" /> 
+					  style="z-index:20;position:relative"> 
 			</div>		  
 		  <script type="text/javascript">	
 		    var minx={$minx};
@@ -106,7 +106,7 @@
 		  <tr><td align="center">
 		 	<img id="scale" src="{$image_scale_url}" alt="{tr}Scale{/tr}" title="{tr}Scale{/tr}" />
 		 	<div align="center">
-		 	<input type="text" id="xx"/><input type="text" id="yy"/>
+		 	<input type="text" id="xx"><input type="text" id="yy">
 			</div>
 		  </td></tr>
 		  <tr><td align="center">	
@@ -145,7 +145,7 @@
 			<select name="size" size="1">
 				{html_options values=$possiblesizes selected=$size output=$displaysizes}
 			</select><br>
-			<input name="Redraw" value="{tr}Redraw{/tr}" type="Submit" /><br>
+			<input name="Redraw" value="{tr}Redraw{/tr}" type="Submit"><br>
 			<small>{tr}select zoom/pan/query and image size{/tr}</small>
 		</td></tr>
 			<tr><td align="center"> 
@@ -156,9 +156,9 @@
 			<option selected value="#">Select Location and Go!
 				{html_options values=$view_name name=$view output=$view_name}
 			</select>
-				<input type="submit" name="Go" value="{tr}Go{/tr}" />&nbsp;
+				<input type="submit" name="Go" value="{tr}Go{/tr}">&nbsp;
 			{/if}
-			 <input type="image" name="maponly" value="yes" src="img/icons/image.png" alt="{tr}View the Map Only{/tr}" title="{tr}View the Map Only{/tr}" />
+			 <input type="image" name="maponly" value="yes" src="img/icons/image.png" alt="{tr}View the Map Only{/tr}" title="{tr}View the Map Only{/tr}">
 			{if $tiki_p_map_edit eq 'y'}
 				&nbsp; 
 				<a class="link" href="tiki-map_edit.php?mapfile={$mapfile}&amp;mode=editing">
@@ -167,11 +167,11 @@
 			&nbsp;
 			<a href="tiki-map.php?mapfile={$mapfile}" ><small>{tr}Reset Map{/tr}</small></a><br> 
 			<small>{tr}Click on the map or click redraw{/tr}</small>
-			<input id="minx" type="hidden" name="minx" value="{$minx}" />
-			<input id="miny" type="hidden" name="miny" value="{$miny}" />
-			<input id="maxx" type="hidden" name="maxx" value="{$maxx}" />
-			<input id="maxy" type="hidden" name="maxy" value="{$maxy}" />
-			<input id="size" type="hidden" name="oldsize" value="{$size}" />
+			<input id="minx" type="hidden" name="minx" value="{$minx}">
+			<input id="miny" type="hidden" name="miny" value="{$miny}">
+			<input id="maxx" type="hidden" name="maxx" value="{$maxx}">
+			<input id="maxy" type="hidden" name="maxy" value="{$maxy}">
+			<input id="size" type="hidden" name="oldsize" value="{$size}">
 			<a href="tiki-index.php?page={$prefs.map_help}"><small>{tr}Help{/tr}</small></a>&nbsp;
 			<a href="tiki-index.php?page={$prefs.map_comments}"><small>{tr}Comments{/tr}</small></a><br>
 		</td></tr>
@@ -244,7 +244,7 @@
 						{else}
 						<td class="even" width=20px>
 						{/if}
-						<input type="checkbox" onclick="changelayer({$smarty.section.i.index})" name="{$my_layers[i]->name}" value="1" {$my_layers_checked[i]} />
+						<input type="checkbox" onclick="changelayer({$smarty.section.i.index})" name="{$my_layers[i]->name}" value="1" {$my_layers_checked[i]}>
 						</td>
 						{if $smarty.section.i.index % 2}
 						<td class="odd" width=20px>
@@ -252,7 +252,7 @@
 						<td class="even" width=20px>
 						{/if}
 						{if $layer_label[i] eq "On"}
-						<input type="checkbox" onclick="changelabel({$smarty.section.i.index})" name="{$my_layers[i]->name}_label" value="1" {$my_layers_label_checked[i]} />
+						<input type="checkbox" onclick="changelabel({$smarty.section.i.index})" name="{$my_layers[i]->name}_label" value="1" {$my_layers_label_checked[i]}>
 						{else}
 						&nbsp;
 						{/if}
@@ -303,7 +303,7 @@
 				{else}
 				<td class="even">
 				{/if}
-				<input type="checkbox" onclick="changelayer({$smarty.section.j.index})" name="{$my_layers[j]->name}" value="1" {$my_layers_checked[j]} />
+				<input type="checkbox" onclick="changelayer({$smarty.section.j.index})" name="{$my_layers[j]->name}" value="1" {$my_layers_checked[j]}>
 				</td>
 				{if $smarty.section.j.index % 2}
 				<td class="odd">
@@ -311,7 +311,7 @@
 				<td class="even">
 				{/if}
 				{if $layer_label[j] eq "On"}
-				<input type="checkbox" onclick="changelabel({$smarty.section.j.index})" name="{$my_layers[j]->name}_label" value="1" {$my_layers_label_checked[j]} />
+				<input type="checkbox" onclick="changelabel({$smarty.section.j.index})" name="{$my_layers[j]->name}_label" value="1" {$my_layers_label_checked[j]}>
 				{else}
 				&nbsp;
 				{/if}

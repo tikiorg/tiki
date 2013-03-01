@@ -1,8 +1,8 @@
 <form method="post" action="">
-	<input type="hidden" name="wp_transition_obj" value="{$wp_transition_obj|escape}" />
+	<input type="hidden" name="wp_transition_obj" value="{$wp_transition_obj|escape}">
 	{foreach from=$wp_transitions item=trans}
 		<div>
-			<input id="transition-{$trans.transitionId|escape}" type="radio" name="wp_transition" value="{$trans.transitionId|escape}" {if ! $trans.enabled}disabled="disabled"{/if} />
+			<input id="transition-{$trans.transitionId|escape}" type="radio" name="wp_transition" value="{$trans.transitionId|escape}" {if ! $trans.enabled}disabled="disabled"{/if}>
 			<label for="transition-{$trans.transitionId|escape}">{$trans.name|escape}</label>
 			{if ! $trans.enabled}
 				<a href="#trans{$trans.transitionId|escape}" class="mouseover">Why?</a>
@@ -38,6 +38,6 @@
 				$(this.href.substr(this.href.lastIndexOf('#'))).toggle('fast');
 			} );
 	{/literal}{/jq}
-	<div><input type="submit" value="{tr}Apply{/tr}"/></div>
+	<div><input type="submit" value="{tr}Apply{/tr}"></div>
 </form>
 

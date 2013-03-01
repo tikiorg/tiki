@@ -8,24 +8,24 @@
 		<form{if $gmaptype eq 'locator'} onsubmit="showAddress{$gmapname|escape}(this.address.value);return false;"{/if}>
 	{/if}
 	{if $gmaptype eq 'locator'}
-		<input type="text" size="{$gmapaddresslength}" name="address" value="{tr}enter address{/tr}" />
+		<input type="text" size="{$gmapaddresslength}" name="address" value="{tr}enter address{/tr}">
 		{jq}
 			var $addr = $("input[name=address]");
 			$addr.focus(function(){ if ($addr.val() === "{tr}enter address{/tr}") { $addr.val(""); } }).blur(function(){ if ($addr.val() === "") { $addr.val("{tr}enter address{/tr}"); } });
 		{/jq}
-		<input type="submit" name="cancel" value="{tr}Find address{/tr}" onclick="showAddress{$gmapname|escape}(this.form.address.value);return false;" /><br>
-		{tr}Lon.:{/tr} <input type="text" name="point[x]" value="{$pointx}" id="{$gmapname|escape}pointx" size="6" />
-		{tr}Lat.:{/tr} <input type="text" name="point[y]" value="{$pointy}" id="{$gmapname|escape}pointy" size="6" />
-		{tr}Zoom:{/tr} <input type="text" name="point[z]" value="{$pointz}" id="{$gmapname|escape}pointz" size="2" />
+		<input type="submit" name="cancel" value="{tr}Find address{/tr}" onclick="showAddress{$gmapname|escape}(this.form.address.value);return false;"><br>
+		{tr}Lon.:{/tr} <input type="text" name="point[x]" value="{$pointx}" id="{$gmapname|escape}pointx" size="6">
+		{tr}Lat.:{/tr} <input type="text" name="point[y]" value="{$pointy}" id="{$gmapname|escape}pointy" size="6">
+		{tr}Zoom:{/tr} <input type="text" name="point[z]" value="{$pointz}" id="{$gmapname|escape}pointz" size="2">
 	{/if}
 	{if $gmap_defaultset && $user}
-		<input type="submit" name="cancel" onclick="document.getElementById('gmap{$gmapname|escape}_ajax_msg').innerHTML = '{tr}saving...{/tr}';saveGmapDefaultxyz{$gmapname|escape}();return false;" value="{tr}Save current map view as user default{/tr}" />
+		<input type="submit" name="cancel" onclick="document.getElementById('gmap{$gmapname|escape}_ajax_msg').innerHTML = '{tr}saving...{/tr}';saveGmapDefaultxyz{$gmapname|escape}();return false;" value="{tr}Save current map view as user default{/tr}">
 	{/if}
 	{if $gmaptype eq 'locator' && $gmapitemtype eq 'user'}
-		<input type="submit" name="cancel" onclick="document.getElementById('gmap{$gmapname|escape}_ajax_msg').innerHTML = '{tr}saving...{/tr}';saveGmapUser{$gmapname|escape}();return false;" value="{tr}Save as user location{/tr}" />
+		<input type="submit" name="cancel" onclick="document.getElementById('gmap{$gmapname|escape}_ajax_msg').innerHTML = '{tr}saving...{/tr}';saveGmapUser{$gmapname|escape}();return false;" value="{tr}Save as user location{/tr}">
 	{/if}
 	{if $gmaptype eq 'locator' && $gmapitemtype neq 'user' && $gmapitemtype neq 'trackeritem'}
-		<input type="submit" name="cancel" onclick="document.getElementById('gmap{$gmapname|escape}_ajax_msg').innerHTML = '{tr}saving...{/tr}';saveGmapItem{$gmapname|escape}();return false;" value="{tr}Save as object location{/tr}" />
+		<input type="submit" name="cancel" onclick="document.getElementById('gmap{$gmapname|escape}_ajax_msg').innerHTML = '{tr}saving...{/tr}';saveGmapItem{$gmapname|escape}();return false;" value="{tr}Save as object location{/tr}">
 	{/if}
 	{if !$gmap_in_form && ($gmaptype eq 'locator' || $gmap_defaultset && $user)}
 		</form>

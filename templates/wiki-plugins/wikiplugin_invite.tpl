@@ -14,7 +14,7 @@
 		<label for="email">{tr}Email address the person you want to invite{/tr}</label>
 	</td>
 	<td>
-		<input name="email" id="email" type="text" value="{$email}" />
+		<input name="email" id="email" type="text" value="{$email}">
 	</td>
 </tr>
 <tr>
@@ -39,7 +39,7 @@
 </tr>
 <tr>
 	<td>&nbsp;</td>
-	<td><input type="submit" name="invite" value="{tr}Invite{/tr}" /></td>
+	<td><input type="submit" name="invite" value="{tr}Invite{/tr}"></td>
 </tr>
 </table>
 </form>

@@ -5,6 +5,6 @@
 		{else}
 			<div class="map-container" style="width: 500px; height: 400px;" data-target-field="location"></div>
 		{/if}
-		<input type="hidden" name="location" value="{$field.value|escape}" disabled="disabled"/>
+		<input type="hidden" name="location" value="{$field.value|escape}" disabled="disabled">
 	</form>
 {/if}

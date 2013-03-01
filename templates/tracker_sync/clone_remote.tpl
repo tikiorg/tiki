@@ -10,12 +10,12 @@
 						<option value="{$id|escape}">{$label|escape}</option>
 					{/foreach}
 				</select>
-				<input type="hidden" name="url" value="{$url|escape}"/>
+				<input type="hidden" name="url" value="{$url|escape}">
 			</label>
 		{else}
 			<label>
 				{tr}URL:{/tr}
-				<input type="url" name="url" value="{$url|escape}" required="required"/>
+				<input type="url" name="url" value="{$url|escape}" required="required">
 				<div class="description">
 					{tr}It is very likely that authentication will be required to access this data on the remote site. Configure the authentication source from Admin DSN.{/tr}
 				</div>
@@ -23,9 +23,9 @@
 		{/if}
 		<div>
 			{if $list}
-				<input type="submit" value="{tr}Clone{/tr}"/>
+				<input type="submit" value="{tr}Clone{/tr}">
 			{else}
-				<input type="submit" value="{tr}Search for trackers to clone{/tr}"/>
+				<input type="submit" value="{tr}Search for trackers to clone{/tr}">
 			{/if}
 		</div>
 	</form>

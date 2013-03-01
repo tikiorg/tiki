@@ -29,7 +29,7 @@
 	<div class="trackerlistsort">
 		<form method="post">
 			{include file='tracker_sort_input.tpl'}
-			<input type="submit" name="sort" value="{tr}Sort{/tr}" />
+			<input type="submit" name="sort" value="{tr}Sort{/tr}">
 		</form>
 	</div>
 {/if}
@@ -148,7 +148,7 @@ the section loop so that the vars are not replaced by nested pretty tracker exec
 			{if $checkbox.tpl}{include file="$checkbox.tpl"}{/if}
 			{if !empty($checkbox.submit) and !empty($checkbox.title)}
 				<br>
-				<input type="submit" name="{$checkbox.submit}" value="{tr}{$checkbox.title}{/tr}" />
+				<input type="submit" name="{$checkbox.submit}" value="{tr}{$checkbox.title}{/tr}">
 			{/if}
 			</form>
 		{/if}
@@ -203,7 +203,7 @@ the section loop so that the vars are not replaced by nested pretty tracker exec
 
 	<tr class="{cycle}">
 			{if $checkbox}
-		<td><input type="{$checkbox.type}" name="{$checkbox.name}[]" value="{if $checkbox.ix > -1}{$items[user].field_values[$checkbox.ix].value|escape}{else}{$items[user].itemId}{/if}" /></td>
+		<td><input type="{$checkbox.type}" name="{$checkbox.name}[]" value="{if $checkbox.ix > -1}{$items[user].field_values[$checkbox.ix].value|escape}{else}{$items[user].itemId}{/if}"></td>
 			{/if}
 			{if ($showstatus ne 'n') and ($tracker_info.showStatus eq 'y' or ($tracker_info.showStatusAdminOnly eq 'y' and $tiki_p_admin_trackers eq 'y'))}
 		<td class="auto" style="width:20px;">

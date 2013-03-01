@@ -73,8 +73,8 @@
 {if $tiki_p_map_create eq 'y'}
 <h3>{tr}Create a new mapfile{/tr}</h3>
 <form action="tiki-map_edit.php" method="post">
-<input type="text" name="newmapfile" size="20" />
-<input type="submit" name="create" value="{tr}Create{/tr}" />
+<input type="text" name="newmapfile" size="20">
+<input type="submit" name="create" value="{tr}Create{/tr}">
 {/if}
 {/if}
 {if $mode eq 'editing'}
@@ -91,15 +91,15 @@
 		{toolbars area_id='mapdata'}
 	</div>
 	<textarea id='mapdata' class='wikiedit' name='pagedata' rows='20' wrap='virtual' style='width:99%'>{$pagedata|escape}</textarea>
-	<input type="hidden" name="mapfile" value="{$mapfile}" />
-	<input type="hidden" name="mode" value="{$mode}" />
+	<input type="hidden" name="mapfile" value="{$mapfile}">
+	<input type="hidden" name="mode" value="{$mode}">
 </div>
 </td>
 </tr>
 </table>
 
 <div align="center">
-<input type="submit" class="wikiaction" name="save" value="{tr}Save{/tr}" /> 
+<input type="submit" class="wikiaction" name="save" value="{tr}Save{/tr}"> 
 </div>
 </form>
 
@@ -109,8 +109,8 @@
 <hr>
 <div align="center">
 <form class="wikiaction" action="tiki-map_edit.php" method="get" id='editpageform'>
-<input type="hidden" name="mapfile" value="{$mapfile}" />
-<input type="submit" name="delete" value="{tr}Delete{/tr}" />
+<input type="hidden" name="mapfile" value="{$mapfile}">
+<input type="submit" name="delete" value="{tr}Delete{/tr}">
 </form>
 </div>
 {/if}

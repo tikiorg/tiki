@@ -178,7 +178,7 @@
 															{preference name=$pref_error.pref_name}
 														{/foreach}
 														<div class="submit">
-															<input type="submit" value="{tr}Change{/tr}"/>
+															<input type="submit" value="{tr}Change{/tr}">
 														</div>
 													</form>
 												{/remarksbox}

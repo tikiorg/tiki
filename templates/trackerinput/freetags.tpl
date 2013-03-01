@@ -2,7 +2,7 @@
 	{tr}Put tags separated by spaces. For tags with more than one word, use no spaces and put words together or enclose them with double quotes.{/tr}
 {/if}
 <div>
-<input type="text" id="{$field.ins_id|replace:'[':'_'|replace:']':''}" name="{$field.ins_id}" {if $field.options_array[0]}size="{$field.options_array[0]}"{/if} value="{$field.value|escape}" />
+<input type="text" id="{$field.ins_id|replace:'[':'_'|replace:']':''}" name="{$field.ins_id}" {if $field.options_array[0]}size="{$field.options_array[0]}"{/if} value="{$field.value|escape}">
 {if $field.options_array[2] neq 'y'}
 	<div class="{$field.ins_id|escape}">
 		{foreach from=$field.tag_suggestion item=t}

@@ -1,5 +1,5 @@
 <form method="post" action="" id="{$execution_key|escape}_form">
-	<input type="hidden" name="{$execution_key|escape}" value="1"/>
+	<input type="hidden" name="{$execution_key|escape}" value="1">
 	<div class="memberlist">
 		{tabset}
 			{foreach from=$memberlist_groups key=groupName item=groupData}
@@ -29,7 +29,7 @@
 									<li>
 										{if $groupData.can_remove && $memberName != $user}
 											<label>
-												<input type="checkbox" name="remove[{$groupName|escape}][]" value="{$memberName|escape}"/>
+												<input type="checkbox" name="remove[{$groupName|escape}][]" value="{$memberName|escape}">
 												{$memberName|userlink}
 											</label>
 										{else}
@@ -49,20 +49,20 @@
 							</ul>
 						{/if}
 						{if $groupData.can_add && $defaultGroup ne 'y' }
-							<p class="action">{tr}Add in group:{/tr} <input type="text" name="add[{$groupName|escape}]" class="username-input"/> (comma separated)</p>
+							<p class="action">{tr}Add in group:{/tr} <input type="text" name="add[{$groupName|escape}]" class="username-input"> (comma separated)</p>
 						{/if}
 						{if $groupData.can_add && ($defaultGroup eq 'both' || $defaultGroup eq 'y' ) }
-							<p class="action">{tr}Set as default group for users:{/tr} <input type="text" name="defgroup[{$groupName|escape}]" class="username-input"/> (comma separated)</p>
+							<p class="action">{tr}Set as default group for users:{/tr} <input type="text" name="defgroup[{$groupName|escape}]" class="username-input"> (comma separated)</p>
 						{/if}
 						{if $groupData.can_join}
 							<p class="action">
-								<input type="checkbox" name="join[]" value="{$groupName|escape}" id="join-{$groupName|escape}"/>
+								<input type="checkbox" name="join[]" value="{$groupName|escape}" id="join-{$groupName|escape}">
 								<label for="join-{$groupName|escape}">{tr}Join myself{/tr}</label>
 							</p>
 						{/if}
 						{if $groupData.can_leave}
 							<p class="action">
-								<input type="checkbox" name="leave[]" value="{$groupName|escape}" id="leave-{$groupName|escape}"/>
+								<input type="checkbox" name="leave[]" value="{$groupName|escape}" id="leave-{$groupName|escape}">
 								<label for="leave-{$groupName|escape}">{tr}Leave myself{/tr}</label>
 							</p>
 						{/if}
@@ -72,7 +72,7 @@
 		{/tabset}
 	</div>
 	{if $can_apply}
-		<input type="submit" value="{tr}Apply{/tr}"/>
+		<input type="submit" value="{tr}Apply{/tr}">
 	{/if}
 </form>
 {jq}

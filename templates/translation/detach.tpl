@@ -7,10 +7,10 @@
 		{/if}
 	</ul>
 	<p>
-		<input type="hidden" name="type" value="{$type|escape}"/>
-		<input type="hidden" name="source" value="{$source|escape}"/>
-		<input type="hidden" name="target" value="{$target|escape}"/>
-		<input type="hidden" name="confirm" value="1"/>
-		<input type="submit" value="{tr}Confirm{/tr}"/>
+		<input type="hidden" name="type" value="{$type|escape}">
+		<input type="hidden" name="source" value="{$source|escape}">
+		<input type="hidden" name="target" value="{$target|escape}">
+		<input type="hidden" name="confirm" value="1">
+		<input type="submit" value="{tr}Confirm{/tr}">
 	</p>
 </form>

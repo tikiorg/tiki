@@ -1,7 +1,7 @@
 <form target="_blank" method="post" action="{service controller=bigbluebutton action=join}">
 	<div style="overflow: hidden; width: 78px; float: left;">
-		<input type="hidden" name="params" value="{$bbb_params|escape}"/>
-		<input type="image" name="join" src="{$bbb_image|escape}" title="{tr}Join{/tr}"/>
+		<input type="hidden" name="params" value="{$bbb_params|escape}">
+		<input type="image" name="join" src="{$bbb_image|escape}" title="{tr}Join{/tr}">
 	</div>
 
 	{tr}Meeting ID:{/tr} {$bbb_meeting|escape}
@@ -13,12 +13,12 @@
 	{if ! $user}
 		<div>
 			{tr}Name:{/tr} 
-			<input type="text" name="bbb_name"/>
-			<input type="submit" value="{tr}Join{/tr}"/>
+			<input type="text" name="bbb_name">
+			<input type="submit" value="{tr}Join{/tr}">
 		</div>
 	{else}
 		<div>
-			<input type="submit" class="button" value="{tr}Join{/tr}"/>
+			<input type="submit" class="button" value="{tr}Join{/tr}">
 		</div>
 	{/if}
 

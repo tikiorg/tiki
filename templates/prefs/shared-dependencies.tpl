@@ -1,4 +1,4 @@
-<input class="system" type="hidden" name="lm_preference[]" value="{$p.preference|escape}" />
+<input class="system" type="hidden" name="lm_preference[]" value="{$p.preference|escape}">
 {if $p.dependencies}
 	{foreach from=$p.dependencies item=dep}
 		{if $dep.met}

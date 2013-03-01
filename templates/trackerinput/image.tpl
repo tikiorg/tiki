@@ -1,4 +1,4 @@
-<input type="file" name="{$field.ins_id}"{if isset($input_err)} value="{$field.value}"{/if} />
+<input type="file" name="{$field.ins_id}"{if isset($input_err)} value="{$field.value}"{/if}>
 {if $field.value ne ''}
 	<br>
 	{$data.image_tag}

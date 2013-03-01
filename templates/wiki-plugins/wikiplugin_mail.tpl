@@ -21,12 +21,12 @@
 		<li>{tr}Subject:{/tr} {$mail_subject|truncate:100:"..."}</li>
 		<li>{tr}Message:{/tr}  {$mail_mess|truncate:100:"..."}</li>
 	</ul>
-	<input type="hidden" name="mail_subject" value="{$mail_subject|escape}" />
-	<input type="hidden" name="mail_mess" value="{$mail_mess|escape}" />
-	<input type="submit" name="mail_send{$ipluginmail}" value="{tr}Send Mail{/tr}" />
+	<input type="hidden" name="mail_subject" value="{$mail_subject|escape}">
+	<input type="hidden" name="mail_mess" value="{$mail_mess|escape}">
+	<input type="submit" name="mail_send{$ipluginmail}" value="{tr}Send Mail{/tr}">
 	</form>
 	<form method="post">
-	<input type="submit" name="mail_cancel{$ipluginmail}" value="{tr}Cancel{/tr}" />
+	<input type="submit" name="mail_cancel{$ipluginmail}" value="{tr}Cancel{/tr}">
 	</form>
 {else}
 <form method="post">
@@ -62,7 +62,7 @@
 	</td>
 	<td>
 		{if $params.showuser eq 'y'}
-			<input type="text" size="80" name="mail_user" value="{$mail_user}"/>
+			<input type="text" size="80" name="mail_user" value="{$mail_user}">
 			{remarksbox type='tip' title="{tr}Tip{/tr}"}{tr}Email separated by comma{/tr}{/remarksbox}
 		{/if}
 	</td>
@@ -105,7 +105,7 @@
 		<label for="mail_subject{$ipluginmail}">{tr}Subject:{/tr}</label>
 	</td>
 	<td>
-		<input type="text" id="mail_subject{$ipluginmail}" name="mail_subject" value="{$mail_subject}" size="80" />
+		<input type="text" id="mail_subject{$ipluginmail}" name="mail_subject" value="{$mail_subject}" size="80">
 	</td>
 	</tr>
 	<tr>
@@ -119,7 +119,7 @@
 	<tr>
 	<td></td>
 	<td>
-		<input type="submit" name="mail_preview{$ipluginmail}" value="{tr}Preview Mail{/tr}" />
+		<input type="submit" name="mail_preview{$ipluginmail}" value="{tr}Preview Mail{/tr}">
 	</td>
 	</tr>
 </table>

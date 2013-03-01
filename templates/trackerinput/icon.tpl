@@ -1,5 +1,5 @@
 <div class="icon-selector-container">
-	<input type="hidden" name="{$field.ins_id|escape}" value="{$field.value|escape}"/>
+	<input type="hidden" name="{$field.ins_id|escape}" value="{$field.value|escape}">
 	<img class="icon" src="{$field.value|escape}" alt="{tr}Select Icon{/tr}"/>
 	<div class="selector" style="display: none;">
 		<div class="sections" style="float: left; width: 25%;">

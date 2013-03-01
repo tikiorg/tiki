@@ -50,13 +50,13 @@
 {foreach from=$possibleGroups item=gr}
 	<tr>
 	<td class="{cycle}">
-	<input name="assign[]" type="checkbox" value="{$gr|escape}" /> 
+	<input name="assign[]" type="checkbox" value="{$gr|escape}"> 
 	{if !in_array($gr, $privategroups)}<a href="{$allGroups.$gr.groupHome|escape:url}" class="groupLink">{else}<span class="groupLink">{/if}{if isset($basegroupnames.$gr)}{$basegroupnames.$gr|escape} <i>{tr}This group requires approval to join{/tr}</i>{else}{$gr|escape}{/if}{if !in_array($gr, $privategroups)}</a>{else}</span>{/if}
 	{if $showgroupdescription eq 'y'}<div style="padding-left: 25px;">{$allGroups.$gr.groupDesc|escape}</div>{/if}
 	</td>
 	</tr>
 {/foreach}
 </table>
-<input type="submit" value="{if !empty($subscribe)}{$subscribe|escape}{else}{tr}Subscribe to groups{/tr}{/if}" />
+<input type="submit" value="{if !empty($subscribe)}{$subscribe|escape}{else}{tr}Subscribe to groups{/tr}{/if}">
 </form>{/if}
 </div>

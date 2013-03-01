@@ -22,9 +22,9 @@
 				{object_selector _name=target _filter=$filters}
 			</label>
 			<div>
-				<input type="hidden" name="type" value="{$type|escape}"/>
-				<input type="hidden" name="source" value="{$source|escape}"/>
-				<input type="submit" value="{tr}Add{/tr}"/>
+				<input type="hidden" name="type" value="{$type|escape}">
+				<input type="hidden" name="source" value="{$source|escape}">
+				<input type="submit" value="{tr}Add{/tr}">
 			</div>
 		</form>
 	{else}

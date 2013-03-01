@@ -6,7 +6,7 @@
 	<div id="kcwFlashObject" class="kcwFlashObject kcwUIConf"></div>
 
 	<form name="kcw_{$identifier|escape}" id="kcw_{$identifier|escape}" action="{service controller=kaltura action=upload}" method="post" enctype="multipart/form-data" style="margin:0px; padding:0px">
-		<input type="hidden" name="kcw" value="true"/>
+		<input type="hidden" name="kcw" value="true">
 	</form>
 
 	{jq notonready=true}
@@ -14,7 +14,7 @@ function afterAddEntry_{{$identifier|escape}} (entries) {
 
 	var $f = $("#kcw_{{$identifier|escape}}");
 	$.each(entries, function (k, item) {
-		$f.append($('<input type="hidden" name="entryId[]"/>').val(item.entryId));
+		$f.append($('<input type="hidden" name="entryId[]">').val(item.entryId));
 	});
 	if ($("input[name=from]", $f).val() === "picker") {
 		if (entries.length) {

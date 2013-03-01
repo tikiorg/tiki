@@ -20,18 +20,18 @@ function tf_export_submit(fm) {
 		<form action="tiki-export_tracker.php" method="post" onsubmit="tf_export_submit(this);">
 			{query _type='form_input' listfields=$export_fields showItemId=$export_itemid showStatus=$export_status showCreated=$export_created showLastModif=$export_modif encoding=$export_charset}
 			{foreach from=$f_fields item=f_v key=f_k}
-				<input type="hidden" name="{$f_k}" value="{$f_v}" />
+				<input type="hidden" name="{$f_k}" value="{$f_v}">
 			{/foreach}
 	{/if}
 {/if}
 {if isset($mapview) && $mapview}
-<input type="hidden" name="mapview" value="y" />
+<input type="hidden" name="mapview" value="y">
 {else}
-<input type="hidden" name="mapview" value="n" />
+<input type="hidden" name="mapview" value="n">
 {/if}
-<input type="hidden" name="trackerId" value="{$trackerId}" />
-<input type="hidden" name="iTrackerFilter" value="{$iTrackerFilter}" />
-{if !empty($count_item)}<input type="hidden" name="count_item" value="{$count_item}" />{/if}
+<input type="hidden" name="trackerId" value="{$trackerId}">
+<input type="hidden" name="iTrackerFilter" value="{$iTrackerFilter}">
+{if !empty($count_item)}<input type="hidden" name="count_item" value="{$count_item}">{/if}
 <table class="normal">
 {if isset($line) && $line eq 'y'}<tr>{/if}
 {cycle values="even,odd" print=false}
@@ -69,13 +69,13 @@ function tf_export_submit(fm) {
 				{capture name=i_f}f_{$filter.fieldId}{/capture}
 				{initials_filter_links _initial=$smarty.capture.i_f}
 			{/if}
-			<input id="f_{$filter.fieldId}" type="text" name="f_{$filter.fieldId}" value="{$filter.selected}"/>
+			<input id="f_{$filter.fieldId}" type="text" name="f_{$filter.fieldId}" value="{$filter.selected}">
 {*------sqlsearch *}
 		{elseif $filter.format eq 'sqlsearch'}
 			{capture name=tpl_advanced_search_help}
 				{include file='advanced_search_help.tpl'}
 			{/capture}
-			<input id="f_{$filter.fieldId}" type="text" name="f_{$filter.fieldId}" value="{$filter.selected}"/>
+			<input id="f_{$filter.fieldId}" type="text" name="f_{$filter.fieldId}" value="{$filter.selected}">
 			{add_help show='y' title="{tr}Help{/tr}" id="advanced_search_help_filter"}
 				{$smarty.capture.tpl_advanced_search_help}
 			{/add_help}
@@ -91,13 +91,13 @@ function tf_export_submit(fm) {
 		{else}
 			<label><input {if $filter.format eq "c"}type="checkbox"{else}type="radio"{/if}
 					name="f_{$filter.fieldId}{if $filter.format eq "c"}[]{/if}"
-					value=""{if !$filter.selected} checked="checked"{/if} />
+					value=""{if !$filter.selected} checked="checked"{/if}>
 			{tr}Any{/tr}</label>{if !isset($line) || $line ne 'y'}<br>{/if}
 			{section name=io loop=$filter.opts}
 				<label><input {if $filter.format eq "c"}type="checkbox"{else}type="radio"{/if}
 						name="f_{$filter.fieldId}{if $filter.format eq "c"}[]{/if}"
 						value="{$filter.opts[io].id|escape:url}"
-						{if $filter.opts[io].selected eq "y"} checked="checked"{/if} /></label>
+						{if $filter.opts[io].selected eq "y"} checked="checked"{/if}></label>
 				{$filter.opts[io].name|tr_if}
 				{if !isset($line) || $line ne 'y'}<br>{/if}
 			{/section}
@@ -111,18 +111,18 @@ function tf_export_submit(fm) {
 <td>
 	<div id="trackerFilter{$iTrackerFilter}-result"><div>
 	{if !empty($export_action)}
-		<input class="button submit" type="submit" name="export_filter" value="{tr}{$export_action}{/tr}" />
+		<input class="button submit" type="submit" name="export_filter" value="{tr}{$export_action}{/tr}">
 	{elseif $action and $action neq " "}
-		<input class="button submit" type="submit" name="filter" value="{if empty($action)}{tr}Filter{/tr}{else}{tr}{$action}{/tr}{/if}" />
-		<input class="button submit" type="submit" name="reset_filter" value="{tr}Reset{/tr}" />
+		<input class="button submit" type="submit" name="filter" value="{if empty($action)}{tr}Filter{/tr}{else}{tr}{$action}{/tr}{/if}">
+		<input class="button submit" type="submit" name="reset_filter" value="{tr}Reset{/tr}">
 	{else}
 		&nbsp;
 	{/if}
 	{if $googlemapButtons && $googlemapButtons eq 'y'}
         {if isset($mapview) && $mapview}
-        <br><input class="button submit" type="submit" name="searchlist" value="{tr}List View{/tr}" />
+        <br><input class="button submit" type="submit" name="searchlist" value="{tr}List View{/tr}">
         {else}
-        <br><input class="button submit" type="submit" name="searchmap" value="{tr}Map View{/tr}" />
+        <br><input class="button submit" type="submit" name="searchmap" value="{tr}Map View{/tr}">
         {/if}
 	{/if}
 </td>

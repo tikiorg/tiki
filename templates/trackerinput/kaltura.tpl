@@ -2,7 +2,7 @@
 	{foreach from=$data.movies item=movie}
 		<li>
 			<label>
-				<input type="checkbox" name="{$field.ins_id|escape}[]" value="{$movie.id|escape}" checked="checked"/>
+				<input type="checkbox" name="{$field.ins_id|escape}[]" value="{$movie.id|escape}" checked="checked">
 				{$movie.name|escape}
 			</label>
 		</li>
@@ -10,7 +10,7 @@
 	<li>
 		<a class="add-kaltura-media" href="{service controller=kaltura action=upload}" data-target-name="{$field.ins_id|escape}[]">{tr}Add Media{/tr}</a>
 		{foreach from=$data.extras item=entryId}
-			<input type="hidden" name="{$field.ins_id|escape}[]" value="{$entryId|escape}"/>
+			<input type="hidden" name="{$field.ins_id|escape}[]" value="{$entryId|escape}">
 		{/foreach}
 		{if $data.extras|count}
 			<span class="highlight">+{$data.extras|count}</span>
@@ -28,7 +28,7 @@ $('.add-kaltura-media').click(function () {
 		hideButtons: true,
 		success: function (data) {
 			$.each(data.entries, function (k, entry) {
-				var hidden = $('<input type="hidden"/>')
+				var hidden = $('<input type="hidden">')
 					.attr('name', $(link).data('target-name'))
 					.attr('value', entry)
 					;

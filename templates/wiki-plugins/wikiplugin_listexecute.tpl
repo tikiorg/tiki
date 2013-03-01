@@ -19,5 +19,5 @@
 			<option value="{$action|escape}">{$action|escape}</option>
 		{/foreach}
 	</select>
-	<input type="submit" value="{tr}Apply{/tr}"/>
+	<input type="submit" value="{tr}Apply{/tr}">
 </form>

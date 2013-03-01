@@ -1,5 +1,5 @@
 <div id="{$field.ins_id|escape}_container">
-	<input type="hidden" name="{$field.ins_id|escape}[]" value="" />
+	<input type="hidden" name="{$field.ins_id|escape}[]" value="">
 	<ul>
 		{foreach from=$data.labels item=label key=id}
 			<li>{$label|escape}</li>
@@ -19,7 +19,7 @@
 
 		if (-1 === $.inArray(id, inverts)) {
 			item.prepend(
-				$('<input type="hidden"/>')
+				$('<input type="hidden">')
 					.attr('name', "{{$field.ins_id|escape}}[]")
 					.val(id)
 			);

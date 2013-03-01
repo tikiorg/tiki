@@ -11,5 +11,5 @@
 	</select>
 {elseif $field.options}
 	{$field.defvalue}
-	<input type="hidden" name="{$field.ins_id}" value="{$field.defvalue}" />
+	<input type="hidden" name="{$field.ins_id}" value="{$field.defvalue}">
 {/if}

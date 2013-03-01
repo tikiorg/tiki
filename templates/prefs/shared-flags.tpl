@@ -15,8 +15,8 @@
 {/if}
 
 {if $p.modified and $p.available}
-	<input class="pref-reset system" type="checkbox" name="lm_reset[]" value="{$p.preference|escape}" style="display:none" />
-	<input type="hidden" id="{$p.preference|escape}_default" value="{$p.default|escape}" />
+	<input class="pref-reset system" type="checkbox" name="lm_reset[]" value="{$p.preference|escape}" style="display:none">
+	<input type="hidden" id="{$p.preference|escape}_default" value="{$p.default|escape}">
 {/if}
 
 {if !empty($p.popup_html)}

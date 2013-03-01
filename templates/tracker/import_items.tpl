@@ -17,7 +17,7 @@
 	{/remarksbox}
 	<label style="display: block">
 		{tr}File{/tr}
-		<input type="file" name="importfile" />
+		<input type="file" name="importfile">
 	</label>
 	<label style="display: block">
 		{tr}Date format{/tr}
@@ -37,22 +37,22 @@
 	</label>
 	<label style="display: block">
 		{tr}Separator{/tr}
-		<input type="text" name="separator" value="," size="2" />
+		<input type="text" name="separator" value="," size="2">
 	</label>
 	<label style="display: block">
-		<input type="checkbox" name="add_items" value="1" />
+		<input type="checkbox" name="add_items" value="1">
 		{tr}Create as new items{/tr}
 	</label>
 	<label style="display: block">
-		<input type="checkbox" name="updateLastModif" checked="checked" value="1" />
+		<input type="checkbox" name="updateLastModif" checked="checked" value="1">
 		{tr}Update lastModif date if updating items (status and created are updated only if the fields are specified in the csv){/tr}
 	</label>
 	<label style="display: block">
-		<input type="checkbox" name="convertItemLinkValues" value="1" />
+		<input type="checkbox" name="convertItemLinkValues" value="1">
 		{tr}Convert values of ItemLink type fields from the value in the CSV file to the itemId of the linked item. Requires the linked item to be correctly set up in advance.{/tr}
 	</label>
 	<div class="submit">
-		<input type="hidden" name="trackerId" value="{$trackerId|escape}" />
-		<input type="submit" value="{tr}Import{/tr}" />
+		<input type="hidden" name="trackerId" value="{$trackerId|escape}">
+		<input type="submit" value="{tr}Import{/tr}">
 	</div>
 </form>

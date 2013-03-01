@@ -3,15 +3,15 @@
 		{if !empty($wp_trade_title)}
 			{wiki}{$wp_trade_title}{/wiki}
 		{/if}
-		<input type="hidden" name="wp_trade_offset" value="{$wp_trade_offset|escape}"/>
+		<input type="hidden" name="wp_trade_offset" value="{$wp_trade_offset|escape}">
 		{if $wp_trade_other_user_set eq "n"}
-			<input type="text" id="other_user{$wp_trade_offset|escape}" name="wp_trade_other_user" value="{$wp_trade_other_user.login|escape}"/> ({tr}separated by |{/tr})
+			<input type="text" id="other_user{$wp_trade_offset|escape}" name="wp_trade_other_user" value="{$wp_trade_other_user.login|escape}"> ({tr}separated by |{/tr})
 			{jq}
 				$('#other_user{{$wp_trade_offset|escape}}').tiki("autocomplete", "username", {multiple: true, multipleSeparator: "|"});
 			{/jq}
 		{/if}
 		{if $user}
-			<input type="submit" value="{$wp_trade_action}"/>
+			<input type="submit" value="{$wp_trade_action}">
 		{else}
 			{remarksbox type="info" title="{tr}Login{/tr}"}
 				{tr}Please login first{/tr} 

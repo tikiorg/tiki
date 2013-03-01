@@ -8,17 +8,17 @@
 <form method="post" action="#{$datachannel_execution}"{$form_class_attr}{$datachannel_form_onsubmit}>
 	{foreach from=$datachannel_fields key=name item=label}
 		{if $label eq "external"}
-			<input type="hidden" name="{$name|escape}" value="" />
+			<input type="hidden" name="{$name|escape}" value="">
 		{elseif $datachannel_inputfields.$name eq "hidden"}
-			<input type="hidden" name="{$name|escape}" value="{$label}" />
+			<input type="hidden" name="{$name|escape}" value="{$label}">
 		{else}
 			<div>
-				{$label|escape}: <input type="text" name="{$name|escape}"/>
+				{$label|escape}: <input type="text" name="{$name|escape}">
 			</div>
 		{/if}
 	{/foreach}
 	<div class="submit_row">
-		<input type="hidden" name="datachannel_execution" value="{$datachannel_execution|escape}"/>
-		<input type="submit" value="{tr}{$button_label}{/tr}"/>
+		<input type="hidden" name="datachannel_execution" value="{$datachannel_execution|escape}">
+		<input type="submit" value="{tr}{$button_label}{/tr}">
 	</div>
 </form>
