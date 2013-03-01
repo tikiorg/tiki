@@ -21,14 +21,14 @@
 	{if $prefs.feature_search_show_search_box eq 'y' or  $searchStyle eq "menu"}
 		<form action="tiki-searchresults.php" method="get" id="search-form" class="findtable">
 			<label class="findtitle">
-				{tr}Search{/tr} <input id="highlight{$iSearch}" name="highlight" style="width:300px" type="text" accesskey="s" value="{$words|escape}" />
+				{tr}Search{/tr} <input id="highlight{$iSearch}" name="highlight" style="width:300px" type="text" accesskey="s" value="{$words|escape}">
 			</label>
 			{if $prefs.search_autocomplete eq 'y'}
 				{autocomplete element="#highlight$iSearch" type='pagename'}
 			{/if}			
 				{if !( $searchStyle eq "menu" )}
 				<label class="searchboolean" for="boolean">
-					{tr}Advanced search:{/tr}<input type="checkbox" name="boolean" id="boolean" {if $boolean eq 'y'} checked="checked"{/if} />
+					{tr}Advanced search:{/tr}<input type="checkbox" name="boolean" id="boolean" {if $boolean eq 'y'} checked="checked"{/if}>
 				</label>
 				{add_help show='y' title="{tr}Search Help{/tr}" id="advanced_search_help"}
 					{$smarty.capture.advanced_search_help}
@@ -151,15 +151,15 @@
 						</select>
 					</span>
 				{else}
-					<input type="hidden" name="where" value="{$where|escape}" />
-					{if $forumId}<input type="hidden" name="forumId" value="{$forumId|escape}" />{/if}
+					<input type="hidden" name="where" value="{$where|escape}">
+					{if $forumId}<input type="hidden" name="forumId" value="{$forumId|escape}">{/if}
 				{/if}
 			{elseif !empty($where)}
-				<input type="hidden" name="where" value="{$where|escape}" />
-				{if $forumId}<input type="hidden" name="forumId" value="{$forumId|escape}" />{/if}	
+				<input type="hidden" name="where" value="{$where|escape}">
+				{if $forumId}<input type="hidden" name="forumId" value="{$forumId|escape}">{/if}	
 			{/if}
 			<label class="findsubmit">
-				<input type="submit" name="search" value="{tr}Go{/tr}" />
+				<input type="submit" name="search" value="{tr}Go{/tr}">
 			</label>
 			{if !$searchNoResults}
 				{button _auto_args='highlight' href="tiki-searchresults.php?highlight=" _text="{tr}Clear Filter{/tr}"}

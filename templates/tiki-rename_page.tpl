@@ -6,7 +6,7 @@
 </div>
 
 <form action="tiki-rename_page.php" method="post">
-  <input type="hidden"  name="page" value="{$page|escape}" />
+  <input type="hidden"  name="page" value="{$page|escape}">
 	{if isset($page_badchars_display)}
 		{if $prefs.wiki_badchar_prevent eq 'y'}
 			{remarksbox type=errors title="{tr}Invalid page name{/tr}"}
@@ -16,8 +16,8 @@
 			{remarksbox type=tip title="{tr}Tip{/tr}"}
 				{tr _0=$page_badchars_display|escape}The page name specified contains characters that may render the page hard to access. You may want to consider removing those: <strong>%0</strong>{/tr}
 			{/remarksbox}
-			<input type="hidden" name="badname" value="{$newname|escape}" />
-			<input type="submit" name="confirm" value="{tr}Use this name anyway{/tr}" />
+			<input type="hidden" name="badname" value="{$newname|escape}">
+			<input type="submit" name="confirm" value="{tr}Use this name anyway{/tr}">
 		{/if}
 	{elseif isset($msg)}		
 		{remarksbox type=errors}
@@ -28,8 +28,8 @@
     <tr>
       <td><label for='newpage'>{tr}New name:{/tr}</label></td>
       <td>
-        <input type='text' id='newpage' name='newpage' size='40' value='{$newname|escape}'/>
-        <input type="submit" name="rename" value="{tr}Rename{/tr}" />
+        <input type='text' id='newpage' name='newpage' size='40' value='{$newname|escape}'>
+        <input type="submit" name="rename" value="{tr}Rename{/tr}">
       </td>
     </tr>
   </table>

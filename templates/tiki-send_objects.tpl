@@ -22,7 +22,7 @@
 			{tr}Filter{/tr}
 		</div>
 		<div class="cbox-data">
-			{tr}Filter:{/tr}<input type="text" name="find" value="{$find|escape}"/><input type="submit" name="filter" value="{tr}Filter{/tr}" /><br>
+			{tr}Filter:{/tr}<input type="text" name="find" value="{$find|escape}"><input type="submit" name="filter" value="{tr}Filter{/tr}"><br>
 		</div>
 	</div>
 	
@@ -46,8 +46,8 @@
 						<option value="{$pages[ix].pageName|escape}">{$pages[ix].pageName|escape}</option>
 					{/section}
 				</select>
-				<input type="submit" name="addpage" value="{tr}Add Page{/tr}" />
-				<input type="submit" name="clearpages" value="{tr}Clear{/tr}" />
+				<input type="submit" name="addpage" value="{tr}Add Page{/tr}">
+				<input type="submit" name="clearpages" value="{tr}Clear{/tr}">
 			</div>
 		</div>
 
@@ -71,8 +71,8 @@
 							<option value="{$struct.page_ref_id|escape}">{$struct.pageName|escape}{if $struct.page_alias} (alias: {$struct.page_alias}){/if}</option>
 						{/foreach}
 					</select>
-					<input type="submit" name="addstructure" value="{tr}Add Structure{/tr}" />
-					<input type="submit" name="clearstructures" value="{tr}Clear{/tr}" />
+					<input type="submit" name="addstructure" value="{tr}Add Structure{/tr}">
+					<input type="submit" name="clearstructures" value="{tr}Clear{/tr}">
 				</div>
 			</div>
 		{/if}
@@ -98,8 +98,8 @@
 						<option value="{$articles[ix].articleId|escape}">{$articles[ix].articleId}: {$articles[ix].title|escape}</option>
 					{/section}
 				</select>
-				<input type="submit" name="addarticle" value="{tr}Add Article{/tr}" />
-				<input type="submit" name="cleararticles" value="{tr}Clear{/tr}" />
+				<input type="submit" name="addarticle" value="{tr}Add Article{/tr}">
+				<input type="submit" name="cleararticles" value="{tr}Clear{/tr}">
 			</div>
 		</div>
 	{/if}
@@ -112,14 +112,14 @@
 			{tr}Send objects to this site{/tr}
 		</div>
 		<div class="cbox-data">
-			<input type="hidden" name="sendpages" value="{$form_sendpages|escape}" />
-			<input type="hidden" name="sendstructures" value="{$form_sendstructures|escape}" />
-			<input type="hidden" name="sendarticles" value="{$form_sendarticles|escape}" />
+			<input type="hidden" name="sendpages" value="{$form_sendpages|escape}">
+			<input type="hidden" name="sendstructures" value="{$form_sendstructures|escape}">
+			<input type="hidden" name="sendarticles" value="{$form_sendarticles|escape}">
 			<table class="formcolor">
 				<tr>
 					<td>{tr}Site:{/tr}</td>
 					<td>
-						<input type="text" name="site" value="{$site|escape}" />
+						<input type="text" name="site" value="{$site|escape}">
 						<br>
 						<i>{tr}Ex: http://tiki.org or localhost{/tr}</i>
 					</td>
@@ -127,25 +127,25 @@
 				<tr>
 					<td>{tr}Path:{/tr}</td>
 					<td>
-						<input type="text" name="path" value="{$path|escape}" />
+						<input type="text" name="path" value="{$path|escape}">
 						<br>
 						<i>{tr}Use /commxmlrpc.php if your Tiki site is installed at the root, otherwise adapt /tiki to your need{/tr}</i>
 					</td>
 				</tr>
 				<tr>
 					<td>{tr}Username:{/tr}</td>
-					<td><input type="text" name="username" value="{$username|escape}" /></td>
+					<td><input type="text" name="username" value="{$username|escape}"></td>
 				</tr>
 				<tr>
 					<td>{tr}Password:{/tr}</td>
-					<td><input type="password" name="password" value="{$password|escape}" /></td>
+					<td><input type="password" name="password" value="{$password|escape}"></td>
 				</tr>
 				<tr>
 					<td>{tr}Debug:{/tr}</td>
-					<td><input type="checkbox" name="dbg"{if $dbg eq 'on'} checked="checked"{/if} /></td>
+					<td><input type="checkbox" name="dbg"{if $dbg eq 'on'} checked="checked"{/if}></td>
 				</tr>
 				<tr>
-					<td align="center" colspan="2"><input type="submit" name="send" value="{tr}Send{/tr}" /></td>
+					<td align="center" colspan="2"><input type="submit" name="send" value="{tr}Send{/tr}"></td>
 				</tr>
 			</table>
 		</div>

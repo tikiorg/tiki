@@ -52,16 +52,16 @@
 			</a>
 		{/if}
 		<form action="tiki-sheets.php" method="post">
-			<input type="hidden" name="sheetId" value="{$sheetId|escape}" />
+			<input type="hidden" name="sheetId" value="{$sheetId|escape}">
 			<table class="formcolor">
-				<tr><td>{tr}Title:{/tr}</td><td><input type="text" name="title" value="{$title|escape}"/></td></tr>
+				<tr><td>{tr}Title:{/tr}</td><td><input type="text" name="title" value="{$title|escape}"></td></tr>
 				<tr><td>{tr}Description:{/tr}</td><td><textarea rows="5" cols="40" name="description">{$description|escape}</textarea></td></tr>
-				<!--<tr><td>{tr}Class Name:{/tr}</td><td><input type="text" name="className" value="{$className|escape}"/></td></tr>
-				<tr><td>{tr}Header Rows:{/tr}</td><td><input type="text" name="headerRow" value="{$headerRow|escape}"/></td></tr>
-				<tr><td>{tr}Footer Rows:{/tr}</td><td><input type="text" name="footerRow" value="{$footerRow|escape}"/></td></tr>-->
+				<!--<tr><td>{tr}Class Name:{/tr}</td><td><input type="text" name="className" value="{$className|escape}"></td></tr>
+				<tr><td>{tr}Header Rows:{/tr}</td><td><input type="text" name="headerRow" value="{$headerRow|escape}"></td></tr>
+				<tr><td>{tr}Footer Rows:{/tr}</td><td><input type="text" name="footerRow" value="{$footerRow|escape}"></td></tr>-->
 				<tr>
 					<td>{tr}Wiki Parse Values:{/tr}</td><td>
-						<input type="checkbox" name="parseValues"{if $parseValues eq 'y'} checked="checked"{/if}/>
+						<input type="checkbox" name="parseValues"{if $parseValues eq 'y'} checked="checked"{/if}>
 					</td>
 				</tr>
 				{include file='categorize.tpl'}
@@ -86,7 +86,7 @@
 						<em>{tr}Makes this sheet a "child" sheet of a multi-sheet set{/tr}</em>
 					</td>
 				</tr>
-				<tr><td>&nbsp;</td><td><input type="submit" value="{tr}Save{/tr}" name="edit" /></td></tr>
+				<tr><td>&nbsp;</td><td><input type="submit" value="{tr}Save{/tr}" name="edit"></td></tr>
 			</table>
 		</form>
 		

@@ -1,6 +1,6 @@
 <form name="aform" formId='editpageform' action="{$form_action|default:'tiki-take_survey.php'}" method="post">
-<input type="hidden" name="surveyId" value="{$surveyId|escape}" />
-<input type="hidden" name="vote" value="yes" />
+<input type="hidden" name="surveyId" value="{$surveyId|escape}">
+<input type="hidden" name="vote" value="yes">
   {if !isset($show_name) or $show_name eq 'y'}{title}{$survey_info.name}{/title}{/if}
 	{if $error_msg neq ''}
 		{remarksbox type="warning" title="{tr}Warning{/tr}"}{$error_msg}{/remarksbox}
@@ -12,7 +12,7 @@
       {if $questions[ix].type eq 'c'}
         <div class="quizoptions">
           {section name=jx loop=$questions[ix].qoptions}
-            <input type="radio" value="{$questions[ix].qoptions[jx].optionId|escape}" name="question_{$questions[ix].questionId}" />{$questions[ix].qoptions[jx].qoption}<br>
+            <input type="radio" value="{$questions[ix].qoptions[jx].optionId|escape}" name="question_{$questions[ix].questionId}">{$questions[ix].qoptions[jx].qoption}<br>
           {/section}
         </div>  
       {elseif $questions[ix].type eq 't'}
@@ -22,7 +22,7 @@
 			{else}
 				{assign var='textcols' value=80}
 			{/if}
-			<input type="text" size="{$textcols}" name="question_{$questions[ix].questionId}" />
+			<input type="text" size="{$textcols}" name="question_{$questions[ix].questionId}">
         </div>  
       {elseif $questions[ix].type eq 'x'}
         {assign var='area' value=$questions[ix].questionId}
@@ -42,8 +42,8 @@
         <div class="quizoptions">
           <table class="formcolor">
             <tr>
-              <td valign="top">
-              	&nbsp;
+              <td valign="top">&nbsp;
+              	
               </td>
               <td valign="top">
                 {if $showToolBars}{toolbars area_id="question_$area" qtnum='2'}{/if}
@@ -55,32 +55,32 @@
       {elseif $questions[ix].type eq 'm'}
         <div class="quizoptions">
           {section name=jx loop=$questions[ix].qoptions}
-            <input type="checkbox" value="{$questions[ix].qoptions[jx].optionId|escape}" name="question_{$questions[ix].questionId}[{$questions[ix].qoptions[jx].optionId}]" />{$questions[ix].qoptions[jx].qoption}<br>
+            <input type="checkbox" value="{$questions[ix].qoptions[jx].optionId|escape}" name="question_{$questions[ix].questionId}[{$questions[ix].qoptions[jx].optionId}]">{$questions[ix].qoptions[jx].qoption}<br>
           {/section}
         </div>  
       {elseif $questions[ix].type eq 'r' or $questions[ix].type eq 's'}
         <div class="quizoptions">
           {if $questions[ix].options}
             {foreach from=$questions[ix].explode key=k item=j}
-              {$k}<input type="radio" value="{$k}" name="question_{$questions[ix].questionId}" />
+              {$k}<input type="radio" value="{$k}" name="question_{$questions[ix].questionId}">
             {/foreach}
           {elseif $questions[ix].type eq 'r'}
-            1<input type="radio" value="1" name="question_{$questions[ix].questionId}" />
-            <input type="radio" value="2" name="question_{$questions[ix].questionId}" />
-            <input type="radio" value="3" name="question_{$questions[ix].questionId}" />
-            <input type="radio" value="4" name="question_{$questions[ix].questionId}" />
-            <input type="radio" value="5" name="question_{$questions[ix].questionId}" />5
+            1<input type="radio" value="1" name="question_{$questions[ix].questionId}">
+            <input type="radio" value="2" name="question_{$questions[ix].questionId}">
+            <input type="radio" value="3" name="question_{$questions[ix].questionId}">
+            <input type="radio" value="4" name="question_{$questions[ix].questionId}">
+            <input type="radio" value="5" name="question_{$questions[ix].questionId}">5
           {elseif $questions[ix].type eq 's'}
-            1<input type="radio" value="1" name="question_{$questions[ix].questionId}" />
-            <input type="radio" value="2" name="question_{$questions[ix].questionId}" />
-            <input type="radio" value="3" name="question_{$questions[ix].questionId}" />
-            <input type="radio" value="4" name="question_{$questions[ix].questionId}" />
-            <input type="radio" value="5" name="question_{$questions[ix].questionId}" />
-            <input type="radio" value="6" name="question_{$questions[ix].questionId}" />
-            <input type="radio" value="7" name="question_{$questions[ix].questionId}" />
-            <input type="radio" value="8" name="question_{$questions[ix].questionId}" />
-            <input type="radio" value="9" name="question_{$questions[ix].questionId}" />
-            <input type="radio" value="10" name="question_{$questions[ix].questionId}" />10
+            1<input type="radio" value="1" name="question_{$questions[ix].questionId}">
+            <input type="radio" value="2" name="question_{$questions[ix].questionId}">
+            <input type="radio" value="3" name="question_{$questions[ix].questionId}">
+            <input type="radio" value="4" name="question_{$questions[ix].questionId}">
+            <input type="radio" value="5" name="question_{$questions[ix].questionId}">
+            <input type="radio" value="6" name="question_{$questions[ix].questionId}">
+            <input type="radio" value="7" name="question_{$questions[ix].questionId}">
+            <input type="radio" value="8" name="question_{$questions[ix].questionId}">
+            <input type="radio" value="9" name="question_{$questions[ix].questionId}">
+            <input type="radio" value="10" name="question_{$questions[ix].questionId}">10
           {/if}
         </div>
       {elseif $questions[ix].type eq 'g'}
@@ -88,5 +88,5 @@
       {/if}
     </div>
   {/section}
-<input type="submit" value="{tr}Send Answers{/tr}" name="ans" />
+<input type="submit" value="{tr}Send Answers{/tr}" name="ans">
 </form>

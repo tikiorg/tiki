@@ -67,15 +67,15 @@
  </td>
 {else}
 <td>{tr}bit.ly Login{/tr}</td>
-<td><input type="text" name="bitly_login" value="{$bitly_login}" style="width:95%;" /></td>
+<td><input type="text" name="bitly_login" value="{$bitly_login}" style="width:95%;"></td>
 </tr>
 <tr class="{cycle}">
 <td>{tr}bit.ly Key{/tr}</td>
-<td><input type="text" name="bitly_key" value="{$bitly_key}" style="width:95%;" /></td>
+<td><input type="text" name="bitly_key" value="{$bitly_key}" style="width:95%;"></td>
 {/if}
 </tr>
 <tr>
-<td colspan="2" class="input_submit_container"><input type="submit" name="accounts" value="{tr}Save changes{/tr}" /></td>
+<td colspan="2" class="input_submit_container"><input type="submit" name="accounts" value="{tr}Save changes{/tr}"></td>
 </tr>
 </table>
 </form>

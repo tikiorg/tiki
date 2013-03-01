@@ -19,12 +19,12 @@
 {if $receivedPageId > 0}
 	<h2>{tr}Edit Received Page{/tr}</h2>
 	<form action="tiki-received_pages.php" method="post">
-		<input type="hidden" name="receivedPageId" value="{$receivedPageId|escape}" />
+		<input type="hidden" name="receivedPageId" value="{$receivedPageId|escape}">
 		<table class="formcolor">
 			<tr>
 				<td>{tr}Name:{/tr}</td>
 				<td>
-					<input type="text" name="pageName" value="{$pageName|escape}" />
+					<input type="text" name="pageName" value="{$pageName|escape}">
 				</td>
 			</tr>
 			<tr>
@@ -36,15 +36,15 @@
 			<tr>
 				<td>{tr}Comment:{/tr}</td>
 				<td>
-					<input type="text" name="comment" value="{$comment|escape}" />
+					<input type="text" name="comment" value="{$comment|escape}">
 				</td>
 			</tr>
 			<tr>
 				<td>&nbsp;</td>
 				<td>
-					<input type="submit" name="preview" value="{tr}Preview{/tr}" />
+					<input type="submit" name="preview" value="{tr}Preview{/tr}">
 					&nbsp;
-					<input type="submit" name="save" value="{tr}Save{/tr}" />
+					<input type="submit" name="save" value="{tr}Save{/tr}">
 				</td>
 			</tr>
 		</table>
@@ -155,7 +155,7 @@
 					{if $structures[ix].structureName eq $structures[user].structureName}
 						<tr class="{cycle}">
 							<td class="checkbox">
-								<input type="checkbox" name="checked[]" value="{$structures[ix].pageName|escape}" />
+								<input type="checkbox" name="checked[]" value="{$structures[ix].pageName|escape}" >
 							</td>
 							<td class="id">{$structures[ix].receivedPageId}</td>
 							<td class="text">&nbsp;</td>
@@ -182,6 +182,6 @@
 		{/section}
 		{select_all checkbox_names='checked[]' label="{tr}Select All{/tr}"}
 	</table>
-	{tr}Prefix the checked:{/tr}<input type="text" name="prefix" />
-	{tr}Postfix the checked:{/tr}<input type="text" name="postfix" />&nbsp;<input type="submit" value="{tr}OK{/tr}" />
+	{tr}Prefix the checked:{/tr}<input type="text" name="prefix">
+	{tr}Postfix the checked:{/tr}<input type="text" name="postfix">&nbsp;<input type="submit" value="{tr}OK{/tr}">
 </form>

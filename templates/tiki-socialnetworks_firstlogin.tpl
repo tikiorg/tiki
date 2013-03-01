@@ -20,7 +20,7 @@ window.parent.location = 'tiki-index.php';
 {if $msg}<p>{$msg|escape}</p>{/if}
 <tr>
 <td>&nbsp;</td>
-<td><input type="submit" name="localinfosubmit" value="{tr}Submit{/tr}" /></td>
+<td><input type="submit" name="localinfosubmit" value="{tr}Submit{/tr}"></td>
 </tr>
 </table>
 </form>
@@ -30,15 +30,15 @@ window.parent.location = 'tiki-index.php';
 <table class="formcolor">
 <tr>
 <td>{tr}Login:{/tr}</td>
-<td><input type="text" name="userlogin" /> </td>
+<td><input type="text" name="userlogin"> </td>
 </tr>
 <tr>
 <td>{tr}Password:{/tr}</td>
-<td><input type="password" name="userpass" /> </td>
+<td><input type="password" name="userpass"> </td>
 </tr>
 <tr>
 <td>&nbsp;</td>
-<td><input type="submit" name="linkaccount" value="{tr}Link to Existing Account{/tr}" /></td>
+<td><input type="submit" name="linkaccount" value="{tr}Link to Existing Account{/tr}"></td>
 </tr>
 </table>
 </form>

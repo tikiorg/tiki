@@ -338,7 +338,7 @@
 	<form method="post" action="tiki-stats.php">
 		{html_select_date time=$startDate prefix="startDate_" start_year=$start_year end_year=$end_year day_value_format="%02d" field_order=$prefs.display_field_order}
 	 	&rarr; {html_select_date time=$endDate prefix="endDate_" start_year=$start_year end_year=$end_year day_value_format="%02d" field_order=$prefs.display_field_order}
-		<input type="submit" name="modify" value="{tr}Filter{/tr}"/>
+		<input type="submit" name="modify" value="{tr}Filter{/tr}">
 	</form>
 	<table class="normal">
 		<tr>

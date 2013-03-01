@@ -17,13 +17,13 @@ function test_xpath(index) {
 <fieldset>
 <legend>{tr}Options{/tr}</legend>
 <form name='tiki_tests' action="tiki_tests/tiki-tests_edit.php" method="post">
-<input type="checkbox" name="summary" value="y" {if $summary eq 'y'} checked="checked"{/if}/>{tr}Summary mode{/tr}<br/>
-<input type="checkbox" name="show_page" value="y" {if $show_page eq 'y'} checked="checked"{/if}/>{tr}Show Page Differences{/tr}<br/>
-<input type="checkbox" name="show_tidy" value="y" {if $show_tidy eq 'y'} checked="checked"{/if}/>{tr}Show Tidy Errors and Warnings{/tr}<br/>
-<input type="checkbox" name="show_post" value="y" {if $show_post eq 'y'} checked="checked"{/if}/>{tr}Show POST Data{/tr}<br/>
-<input type="checkbox" name="current_session" value="y" {if $current_session eq 'y'} checked="checked"{/if}/>{tr}Use Current Session/Log out{/tr}<br/>
-<input type="hidden" name="filename" value="{$filename}" />
-<center><input type="submit" name="action" value="{tr}Refresh{/tr}" /></center>
+<input type="checkbox" name="summary" value="y" {if $summary eq 'y'} checked="checked"{/if}>{tr}Summary mode{/tr}<br/>
+<input type="checkbox" name="show_page" value="y" {if $show_page eq 'y'} checked="checked"{/if}>{tr}Show Page Differences{/tr}<br/>
+<input type="checkbox" name="show_tidy" value="y" {if $show_tidy eq 'y'} checked="checked"{/if}>{tr}Show Tidy Errors and Warnings{/tr}<br/>
+<input type="checkbox" name="show_post" value="y" {if $show_post eq 'y'} checked="checked"{/if}>{tr}Show POST Data{/tr}<br/>
+<input type="checkbox" name="current_session" value="y" {if $current_session eq 'y'} checked="checked"{/if}>{tr}Use Current Session/Log out{/tr}<br/>
+<input type="hidden" name="filename" value="{$filename}">
+<center><input type="submit" name="action" value="{tr}Refresh{/tr}"></center>
 {if $result}
 </fieldset>
 <fieldset>
@@ -35,7 +35,7 @@ function test_xpath(index) {
 	</tr>
 	<tr><td colspan="2">
   <table style="width:100%" >
-		<tr><th colspan="2">{tr}Element to compare (Xpath expression):{/tr}&nbsp;<input type="text" style="width:50%;" id="xpath_{$smarty.foreach.url.index}" name="xpath[{$smarty.foreach.url.index}]" value="{$r.xpath}" />&nbsp;<input type="button" value="{tr}Test Xpath Expression{/tr}" onclick="javascript:test_xpath({$smarty.foreach.url.index}); return false" /></th>
+		<tr><th colspan="2">{tr}Element to compare (Xpath expression):{/tr}&nbsp;<input type="text" style="width:50%;" id="xpath_{$smarty.foreach.url.index}" name="xpath[{$smarty.foreach.url.index}]" value="{$r.xpath}" />&nbsp;<input type="button" value="{tr}Test Xpath Expression{/tr}" onclick="javascript:test_xpath({$smarty.foreach.url.index}); return false"></th>
 	</tr>
 	{if isset($r.post) and $show_post and sizeof($r.post) gt 0}
 		<tr>
@@ -64,6 +64,6 @@ function test_xpath(index) {
 	{/foreach}
 </table>
 </fieldset>
-<center><input type="submit" name="action" value="{tr}Edit{/tr}" /></center>
+<center><input type="submit" name="action" value="{tr}Edit{/tr}"></center>
 {/if}
 </form>

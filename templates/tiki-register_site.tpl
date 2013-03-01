@@ -54,11 +54,11 @@
   <br><br>
   <b>{tr}Information about your site:{/tr}</b><br>
   <form action="http://tiki.org/tiki-directory_add_tiki_site.php" method="post">
-  <input type="hidden" name="registertiki" value="true" />
+  <input type="hidden" name="registertiki" value="true">
   <table class="formcolor">
   <tr>
     <td>{tr}Name:{/tr}</td>
-    <td><input type="text" name="name" size="60" value="{$info.name|escape}" /></td>
+    <td><input type="text" name="name" size="60" value="{$info.name|escape}"></td>
   </tr>
   <tr>
     <td>{tr}Description:{/tr}</td>
@@ -66,7 +66,7 @@
   </tr>
   <tr>
     <td>{tr}URL:{/tr}</td>
-    <td><input type="hidden" name="url" value="{$info.url|escape}" />{$info.url|escape}</td>
+    <td><input type="hidden" name="url" value="{$info.url|escape}">{$info.url|escape}</td>
   </tr>
   <tr>
     <td>{tr}Country:{/tr}</td>
@@ -78,10 +78,10 @@
       </select>
     </td>
   </tr>
-  <input name="isValid" type="hidden" value="" />
+  <input name="isValid" type="hidden" value="">
   <tr>
     <td>&nbsp;</td>
-    <td><input type="submit" name="save" value="{tr}Save{/tr}" /></td>
+    <td><input type="submit" name="save" value="{tr}Save{/tr}"></td>
   </tr>
   </table>
   </form>

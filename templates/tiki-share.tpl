@@ -51,8 +51,8 @@
 
 {if !isset($sent) && empty($errors)}
 	<form method="post" action="tiki-share.php?url={$url|escape:url}" id="share-form">
-		<input type="hidden" name="url" value="{$url|escape:url}" />
-		<input type="hidden" name="report" value="{$report}" />
+		<input type="hidden" name="url" value="{$url|escape:url}">
+		<input type="hidden" name="report" value="{$report}">
 		<table class="formcolor">
 			{if $prefs.share_display_links eq 'y'}
 				<tr>
@@ -69,7 +69,7 @@
 			<tr>
 				<td>{tr}Subject{/tr}</td>
 				<td>
-					<input style="width:95%;" type="text" name="subject" value="{$subject|escape|default:"{tr}Have a look at this page{/tr}"}" />
+					<input style="width:95%;" type="text" name="subject" value="{$subject|escape|default:"{tr}Have a look at this page{/tr}"}">
 				</td>
 			</tr>
 	
@@ -91,12 +91,12 @@
 				</td>
 				<td>
 					{if $report !='y' && !$twitterRegistered && !$facebookRegistered && !$prefs.feature_forums}
-						<input type="radio" name="do_email" value="1" checked="checked" {if $prefs.disableJavascript!='y'}onclick="toggleBlock('emailtable')" {/if}/>
+						<input type="radio" name="do_email" value="1" checked="checked" {if $prefs.disableJavascript!='y'}onclick="toggleBlock('emailtable')" {/if}>
 						{tr}Yes{/tr}
-						<input type="radio" name="do_email" value="0" {if $prefs.disableJavascript!='y'}onclick="toggleBlock('emailtable')" {/if}/>
+						<input type="radio" name="do_email" value="0" {if $prefs.disableJavascript!='y'}onclick="toggleBlock('emailtable')" {/if}>
 						{tr}No{/tr}
 					{else}
-						<input type="hidden" name="do_email" value="1" />&nbsp;
+						<input type="hidden" name="do_email" value="1">&nbsp;
 					{/if}
 				</td>
 			</tr>
@@ -112,7 +112,7 @@
 										<br>
 										<em>{tr}Separate multiple email addresses with a comma and a space{/tr}</em>
 									{else}
-										<input style="width:95%;" type="text" size="60" name="addresses" value="{$addresses|escape}"/>
+										<input style="width:95%;" type="text" size="60" name="addresses" value="{$addresses|escape}">
 										<br>
 										<em>{tr}Separate multiple email addresses with a comma.{/tr}</em>
 									{/if}
@@ -123,7 +123,7 @@
 								<tr>
 									<td>{tr}Your name{/tr}</td>
 									<td>
-										<input style="width:95%;" type="text" name="name" value="{$name}" />
+										<input style="width:95%;" type="text" name="name" value="{$name}">
 									</td>
 								</tr>
 								<tr>
@@ -132,15 +132,15 @@
 									</td>
 									<td>
 										<div class="mandatory_field">
-											<input style="width:95%;" type="text" name="email" value="{$email}" />
+											<input style="width:95%;" type="text" name="email" value="{$email}">
 										</div>
 									</td>
 								</tr>
 						{else}
 								<tr>
 									<td colspan="2">
-										<input type="hidden" value="{$name}" name="name" />
-										<input type="hidden" value="{$email}" name="email" />
+										<input type="hidden" value="{$name}" name="name">
+										<input type="hidden" value="{$email}" name="email">
 									</td>
 								</tr>
 						{/if}
@@ -156,9 +156,9 @@
 					</td>
 					<td>
 						{if $twitter}
-							<input type="radio" name="do_tweet" value="1" checked="checked" {if $prefs.disableJavascript!='y'}onclick="toggleBlock('twittertable')" {/if}/>
+							<input type="radio" name="do_tweet" value="1" checked="checked" {if $prefs.disableJavascript!='y'}onclick="toggleBlock('twittertable')" {/if}>
 							{tr}Yes{/tr} 	
-							<input type="radio" name="do_tweet" value="0" {if $prefs.disableJavascript!='y'}onclick="toggleBlock('twittertable')" {/if}/>
+							<input type="radio" name="do_tweet" value="0" {if $prefs.disableJavascript!='y'}onclick="toggleBlock('twittertable')" {/if}>
 							{tr}No{/tr}
 						{else}
 							{remarksbox type="note" title="{tr}Note{/tr}"}
@@ -174,7 +174,7 @@
 								<tr>
 									<td>{tr}Tweet{/tr}</td>
 									<td>
-										<input type="text" name="tweet" maxlength="140" style="width:95%;" id="tweet" value="{$subject|escape|default:"{tr}Have a look at {/tr}"} {$shorturl}" />
+										<input type="text" name="tweet" maxlength="140" style="width:95%;" id="tweet" value="{$subject|escape|default:"{tr}Have a look at {/tr}"} {$shorturl}">
 									</td>
 								</tr>
 							</table>
@@ -194,9 +194,9 @@
 					</td>
 					<td>
 						{if $facebook}
-							<input type="radio" name="do_fb" value="1" checked="checked" {if $prefs.disableJavascript!='y'}onclick="toggleBlock('fbtable')" {/if}/>
+							<input type="radio" name="do_fb" value="1" checked="checked" {if $prefs.disableJavascript!='y'}onclick="toggleBlock('fbtable')" {/if}>
 							{tr}Yes{/tr}
-							<input type="radio" name="do_fb" value="0" {if $prefs.disableJavascript!='y'}onclick="toggleBlock('fbtable')" {/if}/>
+							<input type="radio" name="do_fb" value="0" {if $prefs.disableJavascript!='y'}onclick="toggleBlock('fbtable')" {/if}>
 							{tr}No{/tr}
 						{else}
 							{remarksbox type="note" title="{tr}Note{/tr}"}
@@ -212,7 +212,7 @@
 								<tr>
 									<td>{tr}Link text{/tr}</td>
 									<td>
-										<input type="text" name="fblinktitle" id="fblinktitle" value="{$fblinktitle|escape}" style="width: 95%;" />
+										<input type="text" name="fblinktitle" id="fblinktitle" value="{$fblinktitle|escape}" style="width: 95%;">
 										<br>
 										<em>{tr}This will be the title for the URL{/tr}</em>
 									</td>
@@ -220,9 +220,9 @@
 								<tr>
 									<td>{tr}Like this post{/tr}</td>
 									<td>
-										<input type="radio" name="fblike" value="1" {if $fblike==1}checked="checked" {/if}/>
+										<input type="radio" name="fblike" value="1" {if $fblike==1}checked="checked" {/if}>
 										{tr}Yes{/tr}
-										<input type="radio" name="fblike" value="0" {if $fblike==0}checked="checked" {/if}/>
+										<input type="radio" name="fblike" value="0" {if $fblike==0}checked="checked" {/if}>
 										{tr}No{/tr}
 									</td>
 								</tr>
@@ -237,7 +237,7 @@
 			{if $prefs.share_token_notification eq 'y'}
 				<tr>
 					<td>{tr}Subscribe notification{/tr}</td>
-					<td><input type="checkbox" value="y" name="share_token_notification" {if $share_token_notification eq 'y'}checked="checked" {/if} /></td>
+					<td><input type="checkbox" value="y" name="share_token_notification" {if $share_token_notification eq 'y'}checked="checked" {/if}></td>
 				</tr>
 			{/if}
 			
@@ -246,7 +246,7 @@
 					<td>{tr}How much time recipients can access to this page{/tr}</td>
 					<td>
 						{if $prefs.share_max_access_time eq -1}
-							<input type="text" name="how_much_time_access" value="{$how_much_time_access|default:1}"/>
+							<input type="text" name="how_much_time_access" value="{$how_much_time_access|default:1}">
 						{else}
 							<select id="how_much_time_access" name="how_much_time_access">
 								{section name=share_max_access start=1 loop=$prefs.share_max_access_time+1}
@@ -268,9 +268,9 @@
 					</td>
 					<td>
 						{if $send_msg=='y'}
-							<input type="radio" name="do_message" value="1" checked="checked" {if $prefs.disableJavascript!='y'}onclick="toggleBlock('messagetable')" {/if}/>
+							<input type="radio" name="do_message" value="1" checked="checked" {if $prefs.disableJavascript!='y'}onclick="toggleBlock('messagetable')" {/if}>
 							{tr}Yes{/tr}
-							<input type="radio" name="do_message" value="0" {if $prefs.disableJavascript!='y'}onclick="toggleBlock('messagetable')" {/if}/>
+							<input type="radio" name="do_message" value="0" {if $prefs.disableJavascript!='y'}onclick="toggleBlock('messagetable')" {/if}>
 							{tr}No{/tr}
 						{else}
 							{remarksbox type="note" title="{tr}Note{/tr}"}
@@ -289,7 +289,7 @@
 										{if $prefs.feature_jquery_autocomplete == 'y'}
 											{user_selector user = '' editable='y' multiple='true' name='messageto' style='width:95%' user_selector_threshold=0}
 										{else}
-											<input style="width:95%;" type="text" size="60" name="messageto" value="{$messageto|escape}"/>
+											<input style="width:95%;" type="text" size="60" name="messageto" value="{$messageto|escape}">
 										{/if}
 										<br>
 										<em>{tr}Separate multiple recipients with a semicolon.{/tr}</em>
@@ -323,9 +323,9 @@
 					</td>
 					<td>
 						{if count($forums)>0}
-							<input type="radio" name="do_forum" value="1" checked="checked" {if $prefs.disableJavascript!='y'}onclick="toggleBlock('forumtable')" {/if}/>
+							<input type="radio" name="do_forum" value="1" checked="checked" {if $prefs.disableJavascript!='y'}onclick="toggleBlock('forumtable')" {/if}>
 							{tr}Yes{/tr}
-							<input type="radio" name="do_forum" value="0" {if $prefs.disableJavascript!='y'}onclick="toggleBlock('forumtable')" {/if}/>
+							<input type="radio" name="do_forum" value="0" {if $prefs.disableJavascript!='y'}onclick="toggleBlock('forumtable')" {/if}>
 							{tr}No{/tr}
 						{else}
 							{remarksbox type="note" title="{tr}Note{/tr}"}
@@ -353,7 +353,7 @@
 								<tr>
 									<td>{tr}Password{/tr}</td>
 									<td>
-										<input type="password" name="forum_password" style="width:95%;"/>
+										<input type="password" name="forum_password" style="width:95%;">
 									</td>
 								</tr>
 								{if $prefs.feature_contribution eq 'y'}
@@ -372,12 +372,12 @@
 			<tr>
 				<td></td>
 				<td>
-					<input type="submit" class="button" name="send" value="{tr}Share{/tr}" />
+					<input type="submit" class="button" name="send" value="{tr}Share{/tr}">
 					{if $share_access}
-						<input type="hidden" name="share_access" value="1" />
+						<input type="hidden" name="share_access" value="1">
 					{/if}
 					{if $prefs.auth_tokens_share eq 'y' and $user!='' and $report !='y'}
-						<input type="checkbox" name="share_access" value="1" id="share_access" {if $share_access}checked="checked" {/if}/>
+						<input type="checkbox" name="share_access" value="1" id="share_access" {if $share_access}checked="checked" {/if}>
 						<label for="share_access">{tr}Share access rights{/tr}</label>
 					{/if}
 				</td>

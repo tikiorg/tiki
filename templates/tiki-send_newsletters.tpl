@@ -62,20 +62,20 @@
 	{/remarksbox}
 	<p>
 		<form method="post" action="tiki-send_newsletters.php" target="resultIframe" id='confirmForm'>
-			<input type="hidden" name="nlId" value="{$nlId|escape}" />
-			<input type="hidden" name="sendingUniqId" value="{$sendingUniqId|escape}" />
-			<input type="hidden" name="editionId" value="{$info.editionId}"/>
-			<input type="hidden" name="subject" value="{$subject|escape}" />
-			<input type="hidden" name="data" value="{$data|escape}" />
-			<input type="hidden" name="dataparsed" value="{$dataparsed|escape}" />
-			<input type="hidden" name="cookietab" value="3" />
-			<input type="hidden" name="datatxt" value="{$info.datatxt|escape}" />
-			<input type="hidden" name="replyto" value="{$replyto|escape}" />
-			<input type="hidden" name="wysiwyg" value="{$info.wysiwyg|escape}" />
-			<input type="submit" name="send" value="{tr}Send{/tr}" onclick="document.getElementById('confirmArea').style.display = 'none'; document.getElementById('sendingArea').style.display = 'block';" />
-			<input type="submit" name="cancel" value="{tr}Cancel{/tr}" />
+			<input type="hidden" name="nlId" value="{$nlId|escape}">
+			<input type="hidden" name="sendingUniqId" value="{$sendingUniqId|escape}">
+			<input type="hidden" name="editionId" value="{$info.editionId}">
+			<input type="hidden" name="subject" value="{$subject|escape}">
+			<input type="hidden" name="data" value="{$data|escape}">
+			<input type="hidden" name="dataparsed" value="{$dataparsed|escape}">
+			<input type="hidden" name="cookietab" value="3">
+			<input type="hidden" name="datatxt" value="{$info.datatxt|escape}">
+			<input type="hidden" name="replyto" value="{$replyto|escape}">
+			<input type="hidden" name="wysiwyg" value="{$info.wysiwyg|escape}">
+			<input type="submit" name="send" value="{tr}Send{/tr}" onclick="document.getElementById('confirmArea').style.display = 'none'; document.getElementById('sendingArea').style.display = 'block';">
+			<input type="submit" name="cancel" value="{tr}Cancel{/tr}">
 			{foreach from=$info.files item=newsletterfile key=fileid}
-				<input type='hidden' name='newsletterfile[{$fileid}]' value='{$newsletterfile.id}'/>
+				<input type='hidden' name='newsletterfile[{$fileid}]' value='{$newsletterfile.id}'>
 			{/foreach}
 		</form>
 	</p>
@@ -180,12 +180,12 @@
 	{* --- tab with editor --- *}
 		<h2>{tr}Prepare a newsletter to be sent{/tr}</h2>
 		<form action="tiki-send_newsletters.php" method="post" id='editpageform' enctype='multipart/form-data'>
-			<input type="hidden" name="editionId" value="{$info.editionId}"/>
+			<input type="hidden" name="editionId" value="{$info.editionId}">
 			<table class="formcolor" id="newstable">
 				<tr>
 					<td><label for="subject">{tr}Subject:{/tr}</label></td>
 					<td>
-						<input type="text" maxlength="250" size="80" id="subject" name="subject" value="{$info.subject|escape}" />
+						<input type="text" maxlength="250" size="80" id="subject" name="subject" value="{$info.subject|escape}">
 					</td>
 				</tr>
 				<tr>
@@ -205,7 +205,7 @@
 					<tr>
 						<td>{tr}Apply content template{/tr}</td>
 						<td>
-							<input type="hidden" name="previousTemplateId" value="{$templateId}" />
+							<input type="hidden" name="previousTemplateId" value="{$templateId}">
 							<select name="templateId" onchange="javascript:document.getElementById('editpageform').submit();">
 								<option value="0">{tr}none{/tr}</option>
 								{section name=ix loop=$templates}
@@ -241,8 +241,8 @@
 				<tr>
 					<td colspan="2">
 						{textarea name='data' id='editwiki'}{$info.data}{/textarea}
-						<label>{tr}Must be wiki parsed:{/tr} <input type="checkbox" name="wikiparse" {if empty($info.wikiparse) or $info.wikiparse eq 'y'} checked="checked"{/if} /></label>
-						<label>{tr}Is HTML.{/tr} <input type="checkbox" name="is_html" {if $info.is_html} checked="checked"{/if} /></label>
+						<label>{tr}Must be wiki parsed:{/tr} <input type="checkbox" name="wikiparse" {if empty($info.wikiparse) or $info.wikiparse eq 'y'} checked="checked"{/if}></label>
+						<label>{tr}Is HTML.{/tr} <input type="checkbox" name="is_html" {if $info.is_html} checked="checked"{/if}></label>
 					</td>
 				</tr>
 
@@ -258,7 +258,7 @@
 				<tr>
 					<td id="clipcol1">
 						{tr}Article Clip (read only):{/tr}
-						<input type="submit" name="clipArticles" value="{tr}Clip Now{/tr}" class="wikiaction tips" title="{tr}Clip Articles{/tr}" onclick="needToConfirm=false" />
+						<input type="submit" name="clipArticles" value="{tr}Clip Now{/tr}" class="wikiaction tips" title="{tr}Clip Articles{/tr}" onclick="needToConfirm=false">
 					</td>
 					<td id="clipcol2" >
 						{tr}To include the article clipping into your newsletter, cut and paste it into the contents.{/tr}
@@ -283,7 +283,7 @@
 								<div id='newsletterfileid_{$fileid}'>
 									<a href="javascript:remove_newsletter_file('{$fileid}');">[{tr}remove{/tr}]</a>
 									{$newsletterfile.name|escape} ({$newsletterfile.type|escape}, {$newsletterfile.size|escape} {tr}octets{/tr})
-									<input type='hidden' name='newsletterfile[{$fileid}]' value='{$newsletterfile.id}'/>
+									<input type='hidden' name='newsletterfile[{$fileid}]' value='{$newsletterfile.id}'>
 								</div>
 							{/foreach}
 						</div>
@@ -293,21 +293,21 @@
 
 				<tr>
 					<td><label for="replyto">{tr}Reply To Email{/tr}</label></td>
-					<td><input type="text" name="replyto" id="replyto" value="{$replyto|escape}" /> {tr}if not:{/tr} {$prefs.sender_email|escape|default:"<em>{tr}Sender email not set{/tr}</em>"}</td>
+					<td><input type="text" name="replyto" id="replyto" value="{$replyto|escape}"> {tr}if not:{/tr} {$prefs.sender_email|escape|default:"<em>{tr}Sender email not set{/tr}</em>"}</td>
 				</tr>
 
 				<tr>
 					<td>&nbsp;</td>
 					<td>
-						<input type="submit" name="preview" value="{tr}Preview{/tr}" class="wikiaction tips" title="{tr}Send Newsletters{/tr}|{tr}Preview your changes.{/tr}" onclick="needToConfirm=false" />
+						<input type="submit" name="preview" value="{tr}Preview{/tr}" class="wikiaction tips" title="{tr}Send Newsletters{/tr}|{tr}Preview your changes.{/tr}" onclick="needToConfirm=false">
 						&nbsp;
-						<input type="submit" name="save_only" value="{tr}Save as Draft{/tr}" class="wikiaction tips" title="{tr}Send Newsletters{/tr}|{tr}Save your changes.{/tr}" onclick="needToConfirm=false" />
+						<input type="submit" name="save_only" value="{tr}Save as Draft{/tr}" class="wikiaction tips" title="{tr}Send Newsletters{/tr}|{tr}Save your changes.{/tr}" onclick="needToConfirm=false">
 					</td>
 				</tr>
 
 				<tr>
 					<td>&nbsp;</td>
-					<td>&nbsp;<input type="submit" name="save" value="{tr}Send Newsletter{/tr}" class="wikiaction tips" title="{tr}Send Newsletters{/tr}|{tr}Save any changes and send to all subscribers.{/tr}" onclick="needToConfirm=false" /></td>
+					<td>&nbsp;<input type="submit" name="save" value="{tr}Send Newsletter{/tr}" class="wikiaction tips" title="{tr}Send Newsletters{/tr}|{tr}Save any changes and send to all subscribers.{/tr}" onclick="needToConfirm=false"></td>
 				</tr>
 			</table>
 		</form>
@@ -373,7 +373,7 @@ document.getElementById('clipcol2').style.display='none';
 
 var newsletterfileid={{$info.files|@count}};
 function add_newsletter_file() {
-	document.getElementById('newsletterfileshack').innerHTML='<div id="newsletterfileid_'+newsletterfileid+'"><a href="javascript:remove_newsletter_file('+newsletterfileid+');">[{{tr}remove{/tr}}]</a> <input type="file" name="newsletterfile['+newsletterfileid+']"/></div>';
+	document.getElementById('newsletterfileshack').innerHTML='<div id="newsletterfileid_'+newsletterfileid+'"><a href="javascript:remove_newsletter_file('+newsletterfileid+');">[{{tr}remove{/tr}}]</a> <input type="file" name="newsletterfile['+newsletterfileid+']"></div>';
 	document.getElementById('newsletterfiles').appendChild(document.getElementById('newsletterfileid_'+newsletterfileid));
 	newsletterfileid++;
 }
