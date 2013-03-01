@@ -20,8 +20,8 @@
 							<p>{tr}This page has no prior approved revision. <strong>All of the content must be reviewed.</strong>{/tr}</p>
 						{/if}
 						<div class="submit">
-							<input type="hidden" name="revision" value="{$revision_displayed|escape}"/>
-							<input type="submit" name="approve" value="{tr}Approve current revision{/tr}"/>
+							<input type="hidden" name="revision" value="{$revision_displayed|escape}">
+							<input type="submit" name="approve" value="{tr}Approve current revision{/tr}">
 						</div>
 					</form>
 				{/if}

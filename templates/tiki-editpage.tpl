@@ -121,23 +121,23 @@
 
 <form  enctype="multipart/form-data" method="post" action="tiki-editpage.php?page={$page|escape:'url'}" id='editpageform' name='editpageform'>
 
-	<input type="hidden" name="no_bl" value="y" />
-	{if !empty($smarty.request.returnto)}<input type="hidden" name="returnto" value="{$smarty.request.returnto}" />{/if}
+	<input type="hidden" name="no_bl" value="y">
+	{if !empty($smarty.request.returnto)}<input type="hidden" name="returnto" value="{$smarty.request.returnto}">{/if}
 	{if isset($diff_style)}
 		<select name="diff_style" class="wikiaction"title="{tr}Edit wiki page{/tr}|{tr}Select the style used to display differences to be translated.{/tr}">
 			<option value="htmldiff"{if isset($diff_style) && $diff_style eq "htmldiff"} selected="selected"{/if}>{tr}html{/tr}</option>
 			<option value="inlinediff"{if isset($diff_style) && $diff_style eq "inlinediff"} selected="selected"{/if} >{tr}text{/tr}</option>			  
 			<option value="inlinediff-full"{if isset($diff_style) && $diff_style eq "inlinediff-full"} selected="selected"{/if} >{tr}text full{/tr}</option>			  
 		</select>
-		<input type="submit" class="wikiaction tips" title="{tr}Edit wiki page{/tr}|{tr}Change the style used to display differences to be translated.{/tr}" name="preview" value="{tr}Change diff styles{/tr}" onclick="needToConfirm=false;" />
+		<input type="submit" class="wikiaction tips" title="{tr}Edit wiki page{/tr}|{tr}Change the style used to display differences to be translated.{/tr}" name="preview" value="{tr}Change diff styles{/tr}" onclick="needToConfirm=false;">
 	{/if}
 	
-	{if $page_ref_id}<input type="hidden" name="page_ref_id" value="{$page_ref_id}" />{/if}
-	{if isset($hdr)}<input type="hidden" name="hdr" value="{$hdr}" />{/if}
-	{if isset($cell)}<input type="hidden" name="cell" value="{$cell}" />{/if}
-	{if isset($pos)}<input type="hidden" name="pos" value="{$pos}" />{/if}
-	{if $current_page_id}<input type="hidden" name="current_page_id" value="{$current_page_id}" />{/if}
-	{if $add_child}<input type="hidden" name="add_child" value="true" />{/if}
+	{if $page_ref_id}<input type="hidden" name="page_ref_id" value="{$page_ref_id}">{/if}
+	{if isset($hdr)}<input type="hidden" name="hdr" value="{$hdr}">{/if}
+	{if isset($cell)}<input type="hidden" name="cell" value="{$cell}">{/if}
+	{if isset($pos)}<input type="hidden" name="pos" value="{$pos}">{/if}
+	{if $current_page_id}<input type="hidden" name="current_page_id" value="{$current_page_id}">{/if}
+	{if $add_child}<input type="hidden" name="add_child" value="true">{/if}
 	
 	{if $preview or $prefs.wiki_actions_bar eq 'top' or $prefs.wiki_actions_bar eq 'both'}
 		<div class='top_actions'>
@@ -158,11 +158,11 @@
 							{tr _0=$page_badchars_display|escape}The page name specified contains characters that may render the page hard to access. You may want to consider removing those: <strong>%0</strong>{/tr}
 						{/remarksbox}
 					{/if}
-						<p>{tr}Page name:{/tr} <input type="text" name="page" value="{$page|escape}" />
-							<input type="submit" name="rename" value="{tr}Rename{/tr}" />
+						<p>{tr}Page name:{/tr} <input type="text" name="page" value="{$page|escape}">
+							<input type="submit" name="rename" value="{tr}Rename{/tr}">
 						</p>
 				{else}
-					<input type="hidden" name="page" value="{$page|escape}" /> 
+					<input type="hidden" name="page" value="{$page|escape}"> 
 					{* the above hidden field is needed for auto-save to work *}
 				{/if}
 				{tabset name='tabs_editpage' cookietab=1}
@@ -177,10 +177,10 @@
 						{if $page|lower neq 'sandbox'}
 							<fieldset>
 								<label for="comment">{tr}Describe the change you made:{/tr} {help url='Editing+Wiki+Pages' desc="{tr}Edit comment: Enter some text to describe the changes you are currently making{/tr}"}</label>
-								<input style="width:98%;" class="wikiedit" type="text" id="comment" name="comment" value="{$commentdata|escape}" />
+								<input style="width:98%;" class="wikiedit" type="text" id="comment" name="comment" value="{$commentdata|escape}">
 								{if isset($show_watch) && $show_watch eq 'y'}
 									<label for="watch">{tr}Monitor this page:{/tr}</label>
-									<input type="checkbox" id="watch" name="watch" value="1"{if $watch_checked eq 'y'} checked="checked"{/if} />
+									<input type="checkbox" id="watch" name="watch" value="1"{if $watch_checked eq 'y'} checked="checked"{/if}>
 								{/if}
 							</fieldset>
 							{if $prefs.feature_contribution eq 'y'}
@@ -194,10 +194,10 @@
 							{if (!isset($wysiwyg) || $wysiwyg neq 'y') and $prefs.feature_wiki_pictures eq 'y' and $tiki_p_upload_picture eq 'y' and $prefs.feature_filegals_manager neq 'y'}
 								<fieldset>
 									<legend>{tr}Upload picture:{/tr}</legend>
-									<input type="hidden" name="MAX_FILE_SIZE" value="1000000000" />
-									<input type="hidden" name="hasAlreadyInserted" value="" />
-									<input type="hidden" name="prefix" value="/img/wiki_up/{if $tikidomain}{$tikidomain}/{/if}" />
-									<input name="picfile1" type="file" onchange="javascript:insertImgFile('editwiki','picfile1','hasAlreadyInserted','img')"/>
+									<input type="hidden" name="MAX_FILE_SIZE" value="1000000000">
+									<input type="hidden" name="hasAlreadyInserted" value="">
+									<input type="hidden" name="prefix" value="/img/wiki_up/{if $tikidomain}{$tikidomain}/{/if}">
+									<input name="picfile1" type="file" onchange="javascript:insertImgFile('editwiki','picfile1','hasAlreadyInserted','img')">
 									<div id="new_img_form"></div>
 									<a href="javascript:addImgForm()" onclick="needToConfirm = false;">{tr}Add another image{/tr}</a>
 								</fieldset>
@@ -212,9 +212,9 @@
 								<strong>{tr}Categorization has been preset for this edit{/tr}</strong>
 								{/remarksbox}
 								{section name=o loop=$categIds}
-									<input type="hidden" name="cat_categories[]" value="{$categIds[o]}" />
+									<input type="hidden" name="cat_categories[]" value="{$categIds[o]}">
 								{/section}
-								<input type="hidden" name="cat_categorize" value="on" />
+								<input type="hidden" name="cat_categorize" value="on">
 								
 								{if $prefs.feature_wiki_categorize_structure eq 'y'}
 									{tr}Categories will be inherited from the structure top page{/tr}
@@ -245,13 +245,13 @@
 							{if $prefs.feature_wiki_usrlock eq 'y' && ($tiki_p_lock eq 'y' || $tiki_p_admin_wiki eq 'y')}
 								<fieldset>
 									<legend>{tr}Lock this page{/tr}</legend>
-									<input type="checkbox" id="lock_it" name="lock_it" {if $lock_it eq 'y'}checked="checked"{/if}/>
+									<input type="checkbox" id="lock_it" name="lock_it" {if $lock_it eq 'y'}checked="checked"{/if}>
 								</fieldset>
 							{/if}
 							{if $prefs.wiki_comments_allow_per_page neq 'n'}
 								<fieldset>
 									<legend>{tr}Allow comments on this page{/tr}</legend>
-									<input type="checkbox" id="comments_enabled" name="comments_enabled" {if $comments_enabled eq 'y'}checked="checked"{/if}/>
+									<input type="checkbox" id="comments_enabled" name="comments_enabled" {if $comments_enabled eq 'y'}checked="checked"{/if}>
 								</fieldset>
 							{/if}
 				
@@ -259,7 +259,7 @@
 								{if $wysiwyg neq 'y' or $prefs.wysiwyg_htmltowiki eq 'y'}
 									<fieldset>
 										<legend>{tr}Allow HTML:{/tr}</legend>
-										<input type="checkbox" id="allowhtml" name="allowhtml" {if $allowhtml eq 'y'}checked="checked"{/if}/>
+										<input type="checkbox" id="allowhtml" name="allowhtml" {if $allowhtml eq 'y'}checked="checked"{/if}>
 									</fieldset>
 									{if $prefs.ajax_autosave eq "y"}{jq}
 $("#allowhtml").change(function() {
@@ -267,15 +267,15 @@ $("#allowhtml").change(function() {
 });
 									{/jq}{/if}
 								{elseif $wysiwyg eq 'y'}
-									<input type="hidden" id="allowhtml" name="allowhtml" value="{if $allowhtml eq 'y'}on{/if}"/>
+									<input type="hidden" id="allowhtml" name="allowhtml" value="{if $allowhtml eq 'y'}on{/if}">
 								{/if}
 							{/if}
 							{if $prefs.feature_wiki_import_html eq 'y'}
 								<fieldset>
 									<legend>{tr}Import HTML:{/tr}</legend>
-									<input class="wikiedit" type="text" id="suck_url" name="suck_url" value="{$suck_url|escape}" />&nbsp;
-									<input type="submit" class="wikiaction" name="do_suck" value="{tr}Import{/tr}" onclick="needToConfirm=false;" />&nbsp;
-									<label><input type="checkbox" name="parsehtml" {if $parsehtml eq 'y'}checked="checked"{/if}/>&nbsp;
+									<input class="wikiedit" type="text" id="suck_url" name="suck_url" value="{$suck_url|escape}">&nbsp;
+									<input type="submit" class="wikiaction" name="do_suck" value="{tr}Import{/tr}" onclick="needToConfirm=false;">&nbsp;
+									<label><input type="checkbox" name="parsehtml" {if $parsehtml eq 'y'}checked="checked"{/if}>&nbsp;
 									{tr}Try to convert HTML to wiki{/tr}. </label>
 								</fieldset>
 							{/if}
@@ -283,8 +283,8 @@ $("#allowhtml").change(function() {
 							{if $tiki_p_export_wiki eq 'y' && $prefs.feature_wiki_import_page eq 'y'}
 								<fieldset>
 									<legend>{tr}Import page:{/tr}</legend>
-									<input type="hidden" name="MAX_FILE_SIZE" value="1000000000" />
-									<input id="userfile1" name="userfile1" type="file" />
+									<input type="hidden" name="MAX_FILE_SIZE" value="1000000000">
+									<input id="userfile1" name="userfile1" type="file">
 									{if $prefs.feature_wiki_export eq 'y' and $tiki_p_export_wiki eq 'y'}
 										<a href="tiki-export_wiki_pages.php?page={$page|escape:"url"}&amp;all=1" class="link">{tr}export all versions{/tr}</a>
 									{/if}
@@ -295,12 +295,12 @@ $("#allowhtml").change(function() {
 								{if $prefs.feature_wiki_attachments == 'y' and ($tiki_p_wiki_attach_files eq 'y' or $tiki_p_wiki_admin_attachments eq 'y')}
 									<fieldset>
 										<legend>{tr}Upload file:{/tr}</legend>
-										<input type="hidden" name="MAX_FILE_SIZE" value="1000000000" />
-										<input type="hidden" name="hasAlreadyInserted2" value="" />
-										<input type="hidden" id="page2" name="page2" value="{$page}" />
-										<input name="userfile2" type="file" id="attach-upload" />
-										 <label>{tr}Comment:{/tr}<input type="text" name="attach_comment" maxlength="250" id="attach-comment" /></label>
-										<input type="submit" class="wikiaction" name="attach" value="{tr}Attach{/tr}" onclick="javascript:needToConfirm=false;insertImgFile('editwiki','userfile2','hasAlreadyInserted2','file', 'page2', 'attach_comment'); return true;" />
+										<input type="hidden" name="MAX_FILE_SIZE" value="1000000000">
+										<input type="hidden" name="hasAlreadyInserted2" value="">
+										<input type="hidden" id="page2" name="page2" value="{$page}">
+										<input name="userfile2" type="file" id="attach-upload">
+										 <label>{tr}Comment:{/tr}<input type="text" name="attach_comment" maxlength="250" id="attach-comment"></label>
+										<input type="submit" class="wikiaction" name="attach" value="{tr}Attach{/tr}" onclick="javascript:needToConfirm=false;insertImgFile('editwiki','userfile2','hasAlreadyInserted2','file', 'page2', 'attach_comment'); return true;">
 									</fieldset>
 								{/if}
 	
@@ -313,22 +313,22 @@ $("#allowhtml").change(function() {
 										<table class="formcolor" border="0">
 											<tr>
 												<td><label for="copyrightTitle">{tr}Title:{/tr}</label></td>
-												<td><input size="40" class="wikiedit" type="text" id="copyrightTitle" name="copyrightTitle" value="{$copyrightTitle|escape}" /></td>
+												<td><input size="40" class="wikiedit" type="text" id="copyrightTitle" name="copyrightTitle" value="{$copyrightTitle|escape}"></td>
 												{if !empty($copyrights)}
 													<td rowspan="3"><a href="copyrights.php?page={$page|escape}">{tr}To edit the copyright notices{/tr}</a></td>
 												{/if}
 											</tr>
 											<tr>
 												<td><label for="copyrightYear">{tr}Year:{/tr}</label></td>
-												<td><input size="4" class="wikiedit" type="text" id="copyrightYear" name="copyrightYear" value="{$copyrightYear|escape}" /></td>
+												<td><input size="4" class="wikiedit" type="text" id="copyrightYear" name="copyrightYear" value="{$copyrightYear|escape}"></td>
 											</tr>
 											<tr>
 												<td><label for="copyrightAuthors">{tr}Authors:{/tr}</label></td>
-												<td><input size="40" class="wikiedit" id="copyrightAuthors" name="copyrightAuthors" type="text" value="{$copyrightAuthors|escape}" /></td>
+												<td><input size="40" class="wikiedit" id="copyrightAuthors" name="copyrightAuthors" type="text" value="{$copyrightAuthors|escape}"></td>
 											</tr>
 											<tr>
 												<td><label for="copyrightHolder">{tr}Copyright Holder :{/tr}</label></td>
-												<td><input size="40" class="wikiedit" id="copyrightHolder" name="copyrightHolder" type="text" value="{$copyrightHolder|escape}" /></td>
+												<td><input size="40" class="wikiedit" id="copyrightHolder" name="copyrightHolder" type="text" value="{$copyrightHolder|escape}"></td>
 											</tr>
 										</table>
 									</fieldset>
@@ -406,7 +406,7 @@ $("#allowhtml").change(function() {
 									{else}
 										<legend>{tr}Description:{/tr}</legend>
 									{/if}
-									<input style="width:98%;" type="text" id="description" name="description" value="{$description|escape}" />
+									<input style="width:98%;" type="text" id="description" name="description" value="{$description|escape}">
 								</fieldset>
 							{/if}
 							{if $prefs.feature_wiki_footnotes eq 'y'}
@@ -445,7 +445,7 @@ $("#allowhtml").change(function() {
 													{/foreach}
 												</select>
 												{tr}Title{/tr}
-												<input type="text" name="poll_title" size="22" />
+												<input type="text" name="poll_title" size="22">
 											{else}
 												{tr}There is no available poll template.{/tr}
 												{if $tiki_p_admin_polls ne 'y'}
@@ -469,18 +469,18 @@ $("#allowhtml").change(function() {
 									{tr _0="tiki-edit_translation.php?no_bl=y&amp;page={$page|escape:url}"}To translate, do not change the language and the content.
 									Instead, <a href="%0">create a new translation</a> in the new language.{/tr}
 									{if $translationOf}
-										<input type="hidden" name="translationOf" value="{$translationOf|escape}"/>
+										<input type="hidden" name="translationOf" value="{$translationOf|escape}">
 									{/if}
 								</fieldset>
 								{if $trads|@count > 1 and $urgent_allowed}
 									<fieldset {if $prefs.feature_urgent_translation neq 'y' or $diff_style} style="display:none;"{/if}>
 										<legend>{tr}Translation request:{/tr}</legend>
-										<input type="hidden" name="lang" value="{$lang|escape}"/>
-										<input type="checkbox" id="translation_critical" name="translation_critical" id="translation_critical"{if $translation_critical} checked="checked"{/if}/>
+										<input type="hidden" name="lang" value="{$lang|escape}">
+										<input type="checkbox" id="translation_critical" name="translation_critical" id="translation_critical"{if $translation_critical} checked="checked"{/if}>
 										<label for="translation_critical">{tr}Send urgent translation request.{/tr}</label>
 										{if $diff_style}
-											<input type="hidden" name="oldver" value="{$diff_oldver|escape}"/>
-											<input type="hidden" name="newver" value="{$diff_newver|escape}"/>
+											<input type="hidden" name="oldver" value="{$diff_oldver|escape}">
+											<input type="hidden" name="newver" value="{$diff_newver|escape}">
 										{/if}
 									</fieldset>
 								{/if}
@@ -488,7 +488,7 @@ $("#allowhtml").change(function() {
 							{if $prefs.geo_locate_wiki eq 'y'}
 								{$headerlib->add_map()}
 								<div class="map-container" data-target-field="geolocation" style="height: 250px; width: 250px;"></div>
-								<input type="hidden" name="geolocation" value="{$geolocation_string}" />
+								<input type="hidden" name="geolocation" value="{$geolocation_string}">
 							{/if}
 							{if $prefs.namespace_enabled eq 'y'}
 								<fieldset>
@@ -498,7 +498,7 @@ $("#allowhtml").change(function() {
 									{/remarksbox}
 									<label>
 										{tr}Explicit Namespace{/tr}
-										<input type="text" name="explicit_namespace" value="{$explicit_namespace|escape}" />
+										<input type="text" name="explicit_namespace" value="{$explicit_namespace|escape}">
 									</label>
 								</fieldset>
 							{/if}
@@ -508,7 +508,7 @@ $("#allowhtml").change(function() {
 						{/tab}{* end properties tab *}
 					{else}
 						{if $wysiwyg eq 'y'}{* include hidden allowhtml for wysiwyg if the properties tab isn't needed *}
-							<input type="hidden" id="allowhtml" name="allowhtml" value="{if $allowhtml eq 'y'}on{/if}"/>
+							<input type="hidden" id="allowhtml" name="allowhtml" value="{if $allowhtml eq 'y'}on{/if}">
 						{/if}
 					{/if}
 				{/tabset}

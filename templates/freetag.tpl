@@ -12,7 +12,7 @@
 					{tr}Put tags separated by spaces. For tags with more than one word, use no spaces and put words together or enclose them with double quotes.{/tr}
 				{/if}
 
-				<input type="text" id="tagBox" name="freetag_string" value="{$taglist|escape}" style="width:98%" />
+				<input type="text" id="tagBox" name="freetag_string" value="{$taglist|escape}" style="width:98%">
 				<br>
 				{foreach from=$tag_suggestion item=t}
 					{capture name=tagurl}{if (strstr($t, ' '))}"{$t}"{else}{$t}{/if}{/capture}

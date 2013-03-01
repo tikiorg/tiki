@@ -72,12 +72,12 @@
 			{$data|escape}
 		</textarea>
 		<div align="center">
-			<input type="hidden" name="template" value="{$template|escape}" />
+			<input type="hidden" name="template" value="{$template|escape}">
 			{if $prefs.feature_edit_templates eq 'y' and $tiki_p_edit_templates eq 'y'}
 				{if $style_local eq 'n'}
-					<input type="submit" name="save" value="{tr}Save{/tr}" />
+					<input type="submit" name="save" value="{tr}Save{/tr}">
 				{/if}
-				<input type="submit" name="saveTheme" value="{tr}Save Only in the Theme:{/tr} {$prefs.style|replace:'.css':''}" />
+				<input type="submit" name="saveTheme" value="{tr}Save Only in the Theme:{/tr} {$prefs.style|replace:'.css':''}">
 				{if $style_local eq 'y'}
 					<a href="tiki-edit_templates.php?template={$template|escape}&amp;delete=y">
 						<img src="img/icons/cross.png" alt="{tr}Delete the copy in the theme:{/tr} {$prefs.style|replace:'.css':''}" 

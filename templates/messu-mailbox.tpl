@@ -39,24 +39,24 @@
 		<option value="5" {if $priority eq 5}selected="selected"{/if}>{tr}5{/tr}</option>
 	</select>
 	<label for="mess-mailcont">{tr}Containing:{/tr}</label>
-	<input type="text" name="find" id="mess-mailcont" value="{$find|escape}" />
-	<input type="submit" name="filter" value="{tr}Filter{/tr}" />
+	<input type="text" name="find" id="mess-mailcont" value="{$find|escape}">
+	<input type="submit" name="filter" value="{tr}Filter{/tr}">
 </form>
 <br>
 
 <form action="messu-mailbox.php" method="post" name="form_messu_mailbox">
-	<input type="hidden" name="offset" value="{$offset|escape}" />
-	<input type="hidden" name="find" value="{$find|escape}" />
-	<input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
-	<input type="hidden" name="flag" value="{$flag|escape}" />
-	<input type="hidden" name="flagval" value="{$flagval|escape}" />
-	<input type="hidden" name="priority" value="{$priority|escape}" />
+	<input type="hidden" name="offset" value="{$offset|escape}">
+	<input type="hidden" name="find" value="{$find|escape}">
+	<input type="hidden" name="sort_mode" value="{$sort_mode|escape}">
+	<input type="hidden" name="flag" value="{$flag|escape}">
+	<input type="hidden" name="flagval" value="{$flagval|escape}">
+	<input type="hidden" name="priority" value="{$priority|escape}">
 {jq notonready=true}
 var CHECKBOX_LIST = [{{section name=user loop=$items}'msg[{$items[user].msgId}]'{if not $smarty.section.user.last},{/if}{/section}}];
 {/jq}
 	<table class="normal">
 		<tr>
-			<th>{if $items}<input title="{tr}Select All{/tr}" type="checkbox" name="checkall" onclick="checkbox_list_check_all('form_messu_mailbox',CHECKBOX_LIST,this.checked);" />{/if}</th>
+			<th>{if $items}<input title="{tr}Select All{/tr}" type="checkbox" name="checkall" onclick="checkbox_list_check_all('form_messu_mailbox',CHECKBOX_LIST,this.checked);">{/if}</th>
 			<th style="width:18px">&nbsp;</th>
 			<th><a href="messu-mailbox.php?flag={$flag}&amp;priority={$priority}&amp;flagval={$flagval}&amp;find={$find}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'user_from_desc'}user_from_asc{else}user_from_desc{/if}">{tr}Sender{/tr}</a></th>
 			<th><a href="messu-mailbox.php?flag={$flag}&amp;priority={$priority}&amp;flagval={$flagval}&amp;find={$find}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'subject_desc'}subject_asc{else}subject_desc{/if}">{tr}Subject{/tr}</a></th>
@@ -67,7 +67,7 @@ var CHECKBOX_LIST = [{{section name=user loop=$items}'msg[{$items[user].msgId}]'
 		{cycle values="odd,even" print=false}
 		{section name=user loop=$items}
 			<tr>
-				<td class="prio{$items[user].priority}"><input type="checkbox" name="msg[{$items[user].msgId}]" /></td>
+				<td class="prio{$items[user].priority}"><input type="checkbox" name="msg[{$items[user].msgId}]"></td>
 				<td class="prio{$items[user].priority}">{if $items[user].isFlagged eq 'y'}{icon _id='flag_blue' alt="{tr}Flagged{/tr}"}{/if}</td>
 				<td {if $items[user].isRead eq 'n'}style="font-weight:bold"{/if} class="prio{$items[user].priority}">{$items[user].user_from|userlink}</td>
 				<td {if $items[user].isRead eq 'n'}style="font-weight:bold"{/if} class="prio{$items[user].priority}"><a class="readlink" href="messu-read.php?offset={$offset}&amp;flag={$flag}&amp;priority={$items[user].priority}&amp;flagval={$flagval}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;msgId={$items[user].msgId}">{$items[user].subject|escape}</a></td>
@@ -87,16 +87,16 @@ var CHECKBOX_LIST = [{{section name=user loop=$items}'msg[{$items[user].msgId}]'
 	</table>
 	{if $items}
 		<p>{tr}Perform action with checked:{/tr}
-		<input type="submit" name="delete" value="{tr}Delete{/tr}" />
-		<input type="submit" name="archive" value="{tr}Archive{/tr}" />
-		<input type="submit" name="download" value="{tr}Download{/tr}" />
+		<input type="submit" name="delete" value="{tr}Delete{/tr}">
+		<input type="submit" name="archive" value="{tr}Archive{/tr}">
+		<input type="submit" name="download" value="{tr}Download{/tr}">
 		<select name="action">
 			<option value="isRead_y">{tr}Mark as read{/tr}</option>
 			<option value="isRead_n">{tr}Mark as unread{/tr}</option>
 			<option value="isFlagged_y">{tr}Mark as flagged{/tr}</option>
 			<option value="isFlagged_n">{tr}Mark as unflagged{/tr}</option>
 		</select>
-		<input type="submit" name="mark" value="{tr}Mark{/tr}" />
+		<input type="submit" name="mark" value="{tr}Mark{/tr}">
 		</p>
 	{/if}
 </form>

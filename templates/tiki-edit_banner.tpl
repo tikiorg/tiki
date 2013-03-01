@@ -6,13 +6,13 @@
 </div>
 
 <form action="tiki-edit_banner.php" method="post" enctype="multipart/form-data">
-	<input type="hidden" name="bannerId" value="{$bannerId|escape}" />
+	<input type="hidden" name="bannerId" value="{$bannerId|escape}">
 	<div class="simplebox">
 		<table class="formcolor">
 			<tr>
 				<td>{tr}URL to link the banner{/tr}</td>
 				<td>
-					<input type="text" name="url" value="{$url|escape}" />
+					<input type="text" name="url" value="{$url|escape}">
 				</td>
 			</tr>
 			<tr>
@@ -28,28 +28,28 @@
 			<tr>
 				<td>{tr}Max impressions:{/tr}</td>
 				<td>
-					<input type="text" name="maxImpressions" value="{$maxImpressions|escape}" size="7" /> <i>{tr}-1 for unlimited{/tr}</i>
+					<input type="text" name="maxImpressions" value="{$maxImpressions|escape}" size="7"> <i>{tr}-1 for unlimited{/tr}</i>
 				</td>
 			</tr>
 			<tr>
 				<td>{tr}Max impressions for a user:{/tr}</td>
 				<td>
-					<input type="text" name="maxUserImpressions" value="{$maxUserImpressions|escape}" size="7" /> <i>{tr}-1 for unlimited{/tr}</i>
+					<input type="text" name="maxUserImpressions" value="{$maxUserImpressions|escape}" size="7"> <i>{tr}-1 for unlimited{/tr}</i>
 				</td>
 			</tr>
 			<tr>
 				<td>{tr}Max clicks:{/tr}</td>
 				<td>
-					<input type="text" name="maxClicks" value="{$maxClicks|escape}" size="7" /><i>{tr}-1 for unlimited{/tr}</i>
+					<input type="text" name="maxClicks" value="{$maxClicks|escape}" size="7"><i>{tr}-1 for unlimited{/tr}</i>
 				</td>
 			</tr>
 			<tr>
 				<td>{tr}URIs where the banner appears only{/tr}</td>
-				<td><input type="text" name="onlyInURIs" value="{$onlyInURIs|escape}" /><br><i>{tr}Type each URI enclosed with the # character. Exemple:#/this_page#/tiki-index.php?page=this_page#{/tr}</i>
+				<td><input type="text" name="onlyInURIs" value="{$onlyInURIs|escape}"><br><i>{tr}Type each URI enclosed with the # character. Exemple:#/this_page#/tiki-index.php?page=this_page#{/tr}</i>
 			</tr>
 			<tr>
 				<td>{tr}URIs where the banner will not appear {/tr}</td>
-				<td><input type="text" name="exceptInURIs" value="{$exceptInURIs|escape}" /><br><i>{tr}Type each URI enclosed with the # character. Exemple:#/this_page#/tiki-index.php?page=this_page#{/tr}</i>
+				<td><input type="text" name="exceptInURIs" value="{$exceptInURIs|escape}"><br><i>{tr}Type each URI enclosed with the # character. Exemple:#/this_page#/tiki-index.php?page=this_page#{/tr}</i>
 			</tr>
 			<tr>
 				<td>{tr}Zone:{/tr}</td>
@@ -64,8 +64,8 @@
 					<br>
 					{tr}Or, create a new zone:{/tr}
 					<br>
-					<input type="text" name="zoneName" size="10" />
-					<input type="submit" name="create_zone" value="{tr}Create{/tr}" />
+					<input type="text" name="zoneName" size="10">
+					<input type="submit" name="create_zone" value="{tr}Create{/tr}">
 				</td>
 			</tr>
 		</table>
@@ -91,7 +91,7 @@
 			<tr>
 				<td>{tr}Use dates{/tr}</td>
 				<td>
-					<input type="checkbox" name="useDates" {if $useDates eq 'y'}checked='checked'{/if}/>
+					<input type="checkbox" name="useDates" {if $useDates eq 'y'}checked='checked'{/if}>
 				</td>
 			</tr>
 		</table>
@@ -120,25 +120,25 @@
 			</tr>
 			<tr>
 				<td>
-					{tr}Mon:{/tr}<input type="checkbox" name="Dmon" {if $Dmon eq 'y'}checked="checked"{/if} />
+					{tr}Mon:{/tr}<input type="checkbox" name="Dmon" {if $Dmon eq 'y'}checked="checked"{/if}>
 				</td>
 				<td>
-					{tr}Tue:{/tr}<input type="checkbox" name="Dtue" {if $Dtue eq 'y'}checked="checked"{/if} />
+					{tr}Tue:{/tr}<input type="checkbox" name="Dtue" {if $Dtue eq 'y'}checked="checked"{/if}>
 				</td>
 				<td>
-					{tr}Wed:{/tr}<input type="checkbox" name="Dwed" {if $Dwed eq 'y'}checked="checked"{/if} />
+					{tr}Wed:{/tr}<input type="checkbox" name="Dwed" {if $Dwed eq 'y'}checked="checked"{/if}>
 				</td>
 				<td>
-					{tr}Thu:{/tr}<input type="checkbox" name="Dthu" {if $Dthu eq 'y'}checked="checked"{/if} />
+					{tr}Thu:{/tr}<input type="checkbox" name="Dthu" {if $Dthu eq 'y'}checked="checked"{/if}>
 				</td>
 				<td>
-					{tr}Fri:{/tr}<input type="checkbox" name="Dfri" {if $Dfri eq 'y'}checked="checked"{/if} />
+					{tr}Fri:{/tr}<input type="checkbox" name="Dfri" {if $Dfri eq 'y'}checked="checked"{/if}>
 				</td>
 				<td>
-					{tr}Sat:{/tr}<input type="checkbox" name="Dsat" {if $Dsat eq 'y'}checked="checked"{/if} />
+					{tr}Sat:{/tr}<input type="checkbox" name="Dsat" {if $Dsat eq 'y'}checked="checked"{/if}>
 				</td>
 				<td>
-					{tr}Sun:{/tr}<input type="checkbox" name="Dsun" {if $Dsun eq 'y'}checked="checked"{/if} />
+					{tr}Sun:{/tr}<input type="checkbox" name="Dsun" {if $Dsun eq 'y'}checked="checked"{/if}>
 				</td>
 			</tr>
 		</table>
@@ -149,7 +149,7 @@
 		<table class="formcolor">
 			<tr>
 				<td>
-					<input type="radio" name="use" value="useHTML" {if $use eq 'useHTML'}checked="checked"{/if}/>
+					<input type="radio" name="use" value="useHTML" {if $use eq 'useHTML'}checked="checked"{/if}>
 				</td>
 				<td>
 					{tr}Use HTML{/tr}
@@ -165,7 +165,7 @@
 			</tr>
 			<tr>
 				<td>
-					<input type="radio" name="use" value="useImage" {if $use eq 'useImage'}checked="checked"{/if}/>
+					<input type="radio" name="use" value="useImage" {if $use eq 'useImage'}checked="checked"{/if}>
 				</td>
 				<td>
 					{tr}Use image{/tr}
@@ -173,11 +173,11 @@
 						<tr>
 							<td>{tr}Image:{/tr}</td>
 							<td>
-								<input type="hidden" name="imageData" value="{$imageData|escape}" />
-								<input type="hidden" name="imageName" value="{$imageName|escape}" />
-								<input type="hidden" name="imageType" value="{$imageType|escape}" />
-								<input type="hidden" name="MAX_FILE_SIZE" value="1000000" />
-								<input name="userfile1" type="file" />
+								<input type="hidden" name="imageData" value="{$imageData|escape}">
+								<input type="hidden" name="imageName" value="{$imageName|escape}">
+								<input type="hidden" name="imageType" value="{$imageType|escape}">
+								<input type="hidden" name="MAX_FILE_SIZE" value="1000000">
+								<input name="userfile1" type="file">
 							</td>
 						</tr>
 						{if $hasImage eq 'y'}
@@ -193,7 +193,7 @@
 			</tr>
 			<tr>
 				<td>
-					<input type="radio" name="use" value="useFixedURL" {if $use eq 'useFixedURL'}checked="checked"{/if}/>
+					<input type="radio" name="use" value="useFixedURL" {if $use eq 'useFixedURL'}checked="checked"{/if}>
 				</td>
 				<td>
 					{tr}Use image generated by URL (the image will be requested at the URL for each impression){/tr}
@@ -201,7 +201,7 @@
 						<tr>
 							<td>{tr}URL:{/tr}</td>
 							<td>
-								<input type="text" name="fixedURLData" value="{$fixedURLData|escape}" />
+								<input type="text" name="fixedURLData" value="{$fixedURLData|escape}">
 							</td>
 						</tr>
 					</table>
@@ -209,7 +209,7 @@
 			</tr>
 			<tr>
 				<td>
-					<input type="radio" name="use" value="useFlash" {if $use eq 'useFlash'}checked="checked"{/if}/>
+					<input type="radio" name="use" value="useFlash" {if $use eq 'useFlash'}checked="checked"{/if}>
 				</td>
 				<td>
 					{tr}Use Flash{/tr}
@@ -223,11 +223,11 @@
 							{/if}
 						<tr>
 							<td>
-								{tr}Movie URL{/tr} <input type="text" size="50" name="movieUrl" value="{$movie.movie|escape}" />
+								{tr}Movie URL{/tr} <input type="text" size="50" name="movieUrl" value="{$movie.movie|escape}">
 								<br>
-								{tr}Movie Size:{/tr} <input type="text" size="4" name="movieWidth" value="{$movie.width|escape}" /> {tr}Pixels{/tr} x <input type="text" size="4" name="movieHeight" value="{$movie.height|escape}" /> {tr}Pixels{/tr}
+								{tr}Movie Size:{/tr} <input type="text" size="4" name="movieWidth" value="{$movie.width|escape}"> {tr}Pixels{/tr} x <input type="text" size="4" name="movieHeight" value="{$movie.height|escape}"> {tr}Pixels{/tr}
 								<br>
-								{tr}FlashPlugin min version:{/tr} <input type="text" name="movieVersion" value="{$movie.version|escape}" />({tr}ex:{/tr}9.0.0)
+								{tr}FlashPlugin min version:{/tr} <input type="text" name="movieVersion" value="{$movie.version|escape}">({tr}ex:{/tr}9.0.0)
 								<br>
 								Note: To be managed with tiki , your flash banner link should be: <a class="link" href="banner_click.php?id={$bannerId}&amp;url={$url}">banner_click.php?id={$bannerId}&amp;url={$url}</a> 
 							</td>
@@ -237,7 +237,7 @@
 			</tr>
 			<tr>
 				<td>
-					<input type="radio" name="use" value="useText" {if $use eq 'useText'}checked="checked"{/if}/>
+					<input type="radio" name="use" value="useText" {if $use eq 'useText'}checked="checked"{/if}>
 				</td>
 				<td>
 					{tr}Use text{/tr}
@@ -254,7 +254,7 @@
 		</table>
 	</div>
 
-	<input type="submit" name="save" value="{tr}Save the Banner{/tr}" />
+	<input type="submit" name="save" value="{tr}Save the Banner{/tr}">
 </form>
 
 {if $zones}

@@ -40,9 +40,9 @@
 
 <form method="post" action="tiki-change_password.php" >
 {if !empty($oldpass) and $new_user_validation eq 'y'}
-	<input type="hidden" name="oldpass" value="{$oldpass|escape}" />
+	<input type="hidden" name="oldpass" value="{$oldpass|escape}">
 {elseif !empty($smarty.request.actpass)}
-	<input type="hidden" name="actpass" value="{$smarty.request.actpass|escape}" />
+	<input type="hidden" name="actpass" value="{$smarty.request.actpass|escape}">
 {/if}
 <fieldset>{if $new_user_validation neq 'y'}<legend>{tr}Change your password{/tr}</legend>{/if}
 	<div class="simplebox highlight" id="divRegCapson" style="visibility:hidden">{icon _id=error style="vertical-align:middle"} {tr}CapsLock is on.{/tr}</div>
@@ -51,9 +51,9 @@
   <td><label for="user">{tr}Username:{/tr}</label></td>
   <td>
   	{if empty($userlogin)}
-		<input type="text" id="user" name="user"/ >
+		<input type="text" id="user" name="user">
 	{else}
-		<input type="hidden" id="user" name="user" value="{$userlogin|escape}" />
+		<input type="hidden" id="user" name="user" value="{$userlogin|escape}">
 		<strong>{$userlogin}</strong>
 	{/if}
   </td>
@@ -61,7 +61,7 @@
 {if empty($smarty.request.actpass) and $new_user_validation neq 'y'}
 <tr>
   <td><label for="oldpass">{tr}Old password:{/tr}</label></td>
-  <td><input type="password" name="oldpass" id="oldpass" value="{$oldpass|escape}" /></td>
+  <td><input type="password" name="oldpass" id="oldpass" value="{$oldpass|escape}"></td>
 </tr>
 {/if}     
 <tr>
@@ -71,7 +71,7 @@
 							<div id="mypassword_text"></div>
 							<div id="mypassword_bar" style="font-size: 5px; height: 2px; width: 0px;"></div> 
 						</div>
-  <input type="password" name="pass" id="pass1" onkeypress="regCapsLock(event)" onkeyup="runPassword(this.value, 'mypassword');{if 0 and $prefs.feature_ajax eq 'y'}check_pass();{/if}" />
+  <input type="password" name="pass" id="pass1" onkeypress="regCapsLock(event)" onkeyup="runPassword(this.value, 'mypassword');{if 0 and $prefs.feature_ajax eq 'y'}check_pass();{/if}">
 	{if 1 || $prefs.feature_ajax ne 'y'}{* AJAX_TODO *}
 		{include file='password_help.tpl'}
 	{/if}
@@ -80,17 +80,17 @@
 </tr>
 <tr>
   <td><label for="pass2">{tr}Repeat password:{/tr}</label></td>
-  <td><input type="password" name="pass2" id="pass2" /></td>
+  <td><input type="password" name="pass2" id="pass2"></td>
 </tr>
 {if empty($email)}
 <tr>
   <td><label for="email">{tr}Email:{/tr}</label></td>
-  <td><input type="text" name="email" id="email" /></td>
+  <td><input type="text" name="email" id="email"></td>
 </tr>
 {/if}
 <tr>
   <td>&nbsp;</td>
-  <td><input type="submit" name="change" value="{tr}Change{/tr}" onclick="return match_pass();"/><span id="validate"></span></td>
+  <td><input type="submit" name="change" value="{tr}Change{/tr}" onclick="return match_pass();"><span id="validate"></span></td>
 </tr>
 </table>
 </fieldset>

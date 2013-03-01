@@ -21,8 +21,8 @@
 {/if}
 
 <form action="tiki-edit_programmed_content.php" method="post">
-	<input type="hidden" name="contentId" value="{$contentId|escape}" />
-	<input type="hidden" name="pId" value="{$pId|escape}" />
+	<input type="hidden" name="contentId" value="{$contentId|escape}">
+	<input type="hidden" name="pId" value="{$pId|escape}">
 	<table class="formcolor">
 		<tr>
 			<td>{tr}Content Type:{/tr}</td>
@@ -37,7 +37,7 @@
 		<tr class="type-cond for-page">
 			<td>{tr}Page Name:{/tr}</td>
 			<td>
-				<input type="text" name="page_name" value="{$info.page_name|escape}"/>
+				<input type="text" name="page_name" value="{$info.page_name|escape}">
 			</td>
 		</tr>
 
@@ -57,7 +57,7 @@
 		<tr>
 			<td>&nbsp;</td>
 			<td>
-				<input type="submit" name="save" value="{tr}Save{/tr}" />
+				<input type="submit" name="save" value="{tr}Save{/tr}">
 			</td>
 		</tr>
 	</table>

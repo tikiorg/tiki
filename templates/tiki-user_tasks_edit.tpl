@@ -42,7 +42,7 @@
 	{/if}
 {/if}
 <table class="formcolor">
-<colgroup><col width="25%" span="4" /></colgroup>
+<colgroup><col width="25%" span="4"></colgroup>
   <tr>
   	{if ($saved)} 
 	<td colspan="4" class="highlight"><div align="center"><h3>{tr}Task saved{/tr}</h3></div></td>

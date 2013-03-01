@@ -30,40 +30,40 @@
 
 <a name="add" ></a><h2>{if $accountId eq 0}{tr}Add new Mail-in account{/tr}{else}{tr}Edit Mail-in account:{/tr} <i>{$info.account}</i>{/if}</h2>
 <form action="tiki-admin_mailin.php" method="post">
-  <input type="hidden" name="accountId" value="{$accountId|escape}" />
+  <input type="hidden" name="accountId" value="{$accountId|escape}">
   <table class="formcolor">
     <tr>
       <td>{tr}Account name{/tr}</td>
-      <td colspan="3"><input type="text" name="account" value="{$info.account|escape}" /></td>
+      <td colspan="3"><input type="text" name="account" value="{$info.account|escape}"></td>
     </tr>
     <tr>
       <td>{tr}POP server{/tr}</td>
-      <td><input type="text" name="pop" value="{$info.pop|escape}" /></td>
+      <td><input type="text" name="pop" value="{$info.pop|escape}"></td>
       <td>{tr}Port{/tr}</td>
-      <td><input type="text" name="port" size="7" value="{$info.port}" /></td>
+      <td><input type="text" name="port" size="7" value="{$info.port}"></td>
     </tr>
     <tr>
       <td>{tr}SMTP server{/tr}</td>
-      <td><input type="text" name="smtp" value="{$info.smtp|escape}" /></td>
+      <td><input type="text" name="smtp" value="{$info.smtp|escape}"></td>
       <td>{tr}Port{/tr}</td>
-      <td><input type="text" name="smtpPort" size="7" value="{$info.smtpPort}" /></td>
+      <td><input type="text" name="smtpPort" size="7" value="{$info.smtpPort}"></td>
     </tr>
     <tr>
       <td>{tr}SMTP requires authentication{/tr}</td>
       <td colspan="3">
         {tr}Yes{/tr}
-        <input type="radio" name="useAuth" value="y" {if $info.useAuth eq 'y'}checked="checked"{/if} />
+        <input type="radio" name="useAuth" value="y" {if $info.useAuth eq 'y'}checked="checked"{/if}>
         {tr}No{/tr}
-        <input type="radio" name="useAuth" value="n" {if $info.useAuth eq 'n'}checked="checked"{/if} />
+        <input type="radio" name="useAuth" value="n" {if $info.useAuth eq 'n'}checked="checked"{/if}>
       </td>
     </tr>
     <tr>
       <td>{tr}Username{/tr}</td>
-      <td colspan="3"><input type="text" name="username" value="{$info.username|escape}" /></td>
+      <td colspan="3"><input type="text" name="username" value="{$info.username|escape}"></td>
     </tr>
     <tr>
       <td>{tr}Password{/tr}</td>
-      <td colspan="3"><input type="password" name="pass" value="{$info.pass|escape}" /></td>
+      <td colspan="3"><input type="password" name="pass" value="{$info.pass|escape}"></td>
     </tr>
     <tr>
       <td>{tr}Type{/tr}</td>
@@ -101,38 +101,38 @@
       <td>{tr}Active{/tr}</td>
       <td colspan="3">
         {tr}Yes{/tr}
-        <input type="radio" name="active" {if $info.active eq 'y'}checked="checked"{/if} value="y" />
+        <input type="radio" name="active" {if $info.active eq 'y'}checked="checked"{/if} value="y">
         {tr}No{/tr}
-        <input type="radio" name="active" {if $info.active eq 'n'}checked="checked"{/if} value="n" />
+        <input type="radio" name="active" {if $info.active eq 'n'}checked="checked"{/if} value="n">
       </td>
     </tr>
     <tr>
       <td>{tr}Allow anonymous access{/tr}</td>
       <td colspan="3">
         {tr}Yes{/tr}
-        <input type="radio" name="anonymous" {if $info.anonymous eq 'y'}checked="checked"{/if} value="y" />
+        <input type="radio" name="anonymous" {if $info.anonymous eq 'y'}checked="checked"{/if} value="y">
         {tr}No{/tr}
-        <input type="radio" name="anonymous" {if $info.anonymous eq 'n'}checked="checked"{/if} value="n" />
+        <input type="radio" name="anonymous" {if $info.anonymous eq 'n'}checked="checked"{/if} value="n">
       </td>
     </tr>
     <tr>
       <td>{tr}Allow attachments{/tr}</td>
       <td colspan="3">
         {tr}Yes{/tr}
-        <input type="radio" name="attachments" {if $info.attachments eq 'y'}checked="checked"{/if} value="y" />
+        <input type="radio" name="attachments" {if $info.attachments eq 'y'}checked="checked"{/if} value="y">
         {tr}No{/tr}
-        <input type="radio" name="attachments" {if $info.attachments eq 'n'}checked="checked"{/if} value="n" />
+        <input type="radio" name="attachments" {if $info.attachments eq 'n'}checked="checked"{/if} value="n">
       </td>
     </tr>
     <tr>
       <td>{tr}Discard to the end from{/tr}</td>
       <td colspan="3">
-      <input type="text" name="discard_after" value="{$info.discard_after|escape}" />
+      <input type="text" name="discard_after" value="{$info.discard_after|escape}">
       </td>
    </tr>
     <tr>
       <td>&nbsp;</td>
-      <td colspan="3"><input type="submit" name="new_acc" value="{if $accountId eq 0}{tr}Add{/tr}{else}{tr}Edit{/tr}{/if}" /></td>
+      <td colspan="3"><input type="submit" name="new_acc" value="{if $accountId eq 0}{tr}Add{/tr}{else}{tr}Edit{/tr}{/if}"></td>
     </tr>
   </table>
 </form>
@@ -144,18 +144,18 @@
       <td>{tr}Check automatically{/tr}</td>
       <td>
         {tr}Yes{/tr}
-        <input type="radio" name="mailin_autocheck" {if $prefs.mailin_autocheck eq 'y'}checked="checked"{/if} value="y" />
+        <input type="radio" name="mailin_autocheck" {if $prefs.mailin_autocheck eq 'y'}checked="checked"{/if} value="y">
         {tr}No{/tr}
-        <input type="radio" name="mailin_autocheck" {if $prefs.mailin_autocheck eq 'n'}checked="checked"{/if} value="n" />
+        <input type="radio" name="mailin_autocheck" {if $prefs.mailin_autocheck eq 'n'}checked="checked"{/if} value="n">
       </td>
     </tr>
     <tr>
       <td>{tr}Frequency{/tr}</td>
-      <td><input type="text" name="mailin_autocheckFreq" size="6" value="{$prefs.mailin_autocheckFreq}" />&nbsp;{tr}mn{/tr}</td>
+      <td><input type="text" name="mailin_autocheckFreq" size="6" value="{$prefs.mailin_autocheckFreq}">&nbsp;{tr}mn{/tr}</td>
     </tr>
     <tr>
       <td>&nbsp;</td>
-      <td><input type="submit" name="set_auto" value="{tr}Set{/tr}" /></td>
+      <td><input type="submit" name="set_auto" value="{tr}Set{/tr}"></td>
     </tr>
   </table>
 </form>

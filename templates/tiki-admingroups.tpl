@@ -57,7 +57,7 @@
 			<tr class="{cycle}">
 				<td class="checkbox">
 					{if $users[user].groupName ne 'Admins' and $users[user].groupName ne 'Anonymous' and $users[user].groupName ne 'Registered'}
-						<input type="checkbox" name="checked[]" value="{$users[user].groupName|escape}" />
+						<input type="checkbox" name="checked[]" value="{$users[user].groupName|escape}">
 					{/if}
 				</td>
 				<td class="id">{$users[user].id|escape}</td>
@@ -100,7 +100,7 @@
 				<option value="remove_groups" >{tr}Remove{/tr}</option>
 			</select>
 		</label>
-		<input type="submit" value="{tr}OK{/tr}" />
+		<input type="submit" value="{tr}OK{/tr}">
 	</p>
 	</form>
 	{pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links}
@@ -136,9 +136,9 @@
 				<td><label for="groups_group">{tr}Group:{/tr}</label></td>
 				<td>
 					{if $groupname neq 'Anonymous' and $groupname neq 'Registered' and $groupname neq 'Admins'}
-						<input type="text" name="name" id="groups_group" value="{$groupname|escape}" style="width:95%" />
+						<input type="text" name="name" id="groups_group" value="{$groupname|escape}" style="width:95%">
 					{else}
-						<input type="hidden" name="name" id="groups_group" value="{$groupname|escape}" />{$groupname}
+						<input type="hidden" name="name" id="groups_group" value="{$groupname|escape}">{$groupname}
 					{/if}
 				</td>
 			</tr>
@@ -192,7 +192,7 @@
 						<label for="groups_home">{tr}Group Homepage or Url:{/tr}</label>
 					</td>
 					<td>
-						<input type="text" style="width:95%" name="home" id="groups_home" value="{$grouphome|escape}" {if $prefs.useGroupHome ne 'y'}disabled="disabled" {/if}/>
+						<input type="text" style="width:95%" name="home" id="groups_home" value="{$grouphome|escape}" {if $prefs.useGroupHome ne 'y'}disabled="disabled" {/if}>
 						{remarksbox type="tip" title="{tr}Tip{/tr}"}
 							{tr}Use wiki page name or full URL{/tr}. {tr}For other Tiki features, use links relative to the Tiki root (such as <em>/tiki-forums.php</em>).{/tr}
 						{/remarksbox}
@@ -287,23 +287,23 @@
 				</tr>
 				<tr>
 					<td>{tr}Users Information Tracker Fields Asked at Registration Time<br>(fieldIds separated with :){/tr}</td>
-					<td><input type="text" style="width:95%" name="registrationUsersFieldIds" value="{$registrationUsersFieldIds|escape}" /></td>
+					<td><input type="text" style="width:95%" name="registrationUsersFieldIds" value="{$registrationUsersFieldIds|escape}"></td>
 				</tr>
 			{/if}
 
 		{if $groupname neq 'Anonymous' and $groupname neq 'Registered' and $groupname neq 'Admins'}
 			<tr>
 				<td>{tr}User can assign to the group himself{/tr}</td>
-				<td><input type="checkbox" name="userChoice"{if $userChoice eq 'y'} checked="checked"{/if}/></td>
+				<td><input type="checkbox" name="userChoice"{if $userChoice eq 'y'} checked="checked"{/if}></td>
 			</tr>
 
 			<tr>
 				<td>{tr}Users are automatically unassigned from the group after{/tr}</td>
-				<td><input type="text" name="expireAfter" value="{$group_info.expireAfter|escape}" />{tr}Days{/tr}<br><i>{tr}0 or empty for never{/tr}</i></td>
+				<td><input type="text" name="expireAfter" value="{$group_info.expireAfter|escape}">{tr}Days{/tr}<br><i>{tr}0 or empty for never{/tr}</i></td>
 			</tr>
 			<tr>
 				<td>{tr}Or, users are automatically unassigned from the group at an anniversary date{/tr}</td>
-				<td><input type="text" name="anniversary" value="{$group_info.anniversary|escape}" /><br><i>{tr}MMDD for annual or DD for monthly{/tr}</i></td>
+				<td><input type="text" name="anniversary" value="{$group_info.anniversary|escape}"><br><i>{tr}MMDD for annual or DD for monthly{/tr}</i></td>
 			</tr>
 			<tr>
 				<td>{tr}Payment for membership extension is prorated at a minimum interval of a{/tr}</td>
@@ -315,7 +315,7 @@
 			</tr>
 			<tr>
 				<td>{tr}Users are automatically assigned at registration in the group if their emails match the pattern{/tr}</td>
-				<td><input type="text" size="40" name="emailPattern" value="{$group_info.emailPattern|escape}" /><br>{tr}Example: {/tr}/@tw\.org$/ <br>{tr}Example:{/tr} /@(tw.org$)|(tw\.com$)/</td>
+				<td><input type="text" size="40" name="emailPattern" value="{$group_info.emailPattern|escape}"><br>{tr}Example: {/tr}/@tw\.org$/ <br>{tr}Example:{/tr} /@(tw.org$)|(tw\.com$)/</td>
 			</tr>
 		{/if}
 
@@ -336,14 +336,14 @@
 				<tr>
 					<td>
 						&nbsp;
-						<input type="hidden" name="olgroup" value="{$group|escape}" />
+						<input type="hidden" name="olgroup" value="{$group|escape}">
 					</td>
-					<td><input type="submit" name="save" value="{tr}Save{/tr}" /></td>
+					<td><input type="submit" name="save" value="{tr}Save{/tr}"></td>
 				</tr>
 			{else}
 				<tr>
 					<td >&nbsp;</td>
-					<td><input type="submit" name="newgroup" value="{tr}Add{/tr}" /></td>
+					<td><input type="submit" name="newgroup" value="{tr}Add{/tr}"></td>
 				</tr>
 			{/if}
 		</table>
@@ -372,7 +372,7 @@
 	{* ----------------------- tab with memberlist --------------------------------------- *}
 		<h2>{tr}Members List:{/tr} {$groupname|escape}</h2>
 		<form name="checkform" method="post" action="{$smarty.server.PHP_SELF}">
-		<input type="hidden" name="group" value="{$group|escape}" />
+		<input type="hidden" name="group" value="{$group|escape}">
 		<table class="normal">
 			<tr>
 				<th class="auto">{if $memberslist}{select_all checkbox_names='members[]'}{/if}</th>
@@ -385,7 +385,7 @@
 			<tr>
 				{foreach from=$memberslist item=member}
 					<tr class="{cycle}">
-					<td class="checkbox"><input type="checkbox" name="members[]" value="{$member.userId}" /></td>
+					<td class="checkbox"><input type="checkbox" name="members[]" value="{$member.userId}"></td>
 					<td class="username">{$member.login|userlink}</td>
 					<td class="date">{$member.created|tiki_short_datetime}</td>
 					<td class="date">{if !empty($member.expire)}{$member.expire|tiki_short_datetime}{/if}</td>
@@ -406,7 +406,7 @@
 				<option value="unassign">{tr}Unassign{/tr}</option>
 			</select>
 		</label>
-		<input type="submit" name="unassign_members" value="{tr}OK{/tr}" />
+		<input type="submit" name="unassign_members" value="{tr}OK{/tr}">
 		</form>
 		{/if}
 
@@ -437,14 +437,14 @@
 			<h2>{tr}Add or Ban members to:{/tr} {$groupname|escape}</h2>
 			<form method="post" action="tiki-admingroups.php">
 				<p>
-					<input type="hidden" name="group" value="{$groupname|escape}"/>
+					<input type="hidden" name="group" value="{$groupname|escape}">
 					<select name="user">
 						{foreach from=$userslist item=iuser}
 							<option>{$iuser|escape}</option>
 						{/foreach}
 					</select>
-					<input type="submit" name="adduser" value="{tr}Add to group{/tr}"/>
-					<input type="submit" name="banuser" value="{tr}Ban user from group{/tr}"/>
+					<input type="submit" name="adduser" value="{tr}Add to group{/tr}">
+					<input type="submit" name="banuser" value="{tr}Ban user from group{/tr}">
 				</p>
 			</form>
 		{/if}
@@ -455,7 +455,7 @@
 	{tab name="{tr}Import/Export{/tr}"}
 		{* ----------------------- tab with import/export --------------------------------------- *}
 		<form method="post" action="tiki-admingroups.php" enctype="multipart/form-data">
-			<input type="hidden" name="group" value="{$groupname|escape}" />
+			<input type="hidden" name="group" value="{$groupname|escape}">
 			{if $errors}
 				<div class="simple highlight">
 					{foreach from=$errors item=e}
@@ -478,17 +478,17 @@
 				<tr>
 					<td class="auto">{tr}Fields:{/tr}</td>
 					<td class="auto">
-						<input type="checkbox" name="username" checked="checked" />
+						<input type="checkbox" name="username" checked="checked">
 						{tr}Username{/tr}
 						<br>
-						<input type="checkbox" name="email"/>{tr}Email{/tr}
+						<input type="checkbox" name="email">{tr}Email{/tr}
 						<br>
-						<input type="checkbox" name="lastLogin" />{tr}Last login{/tr}
+						<input type="checkbox" name="lastLogin">{tr}Last login{/tr}
 					</td>
 				</tr>
 				<tr>
 					<td class="auto"></td>
-					<td class="auto"><input type="submit" name="export" value="{tr}Export{/tr}" /></td>
+					<td class="auto"><input type="submit" name="export" value="{tr}Export{/tr}"></td>
 				</tr>
 			</table>
 
@@ -502,11 +502,11 @@
 					<td class="auto">
 						{tr}CSV File{/tr}<a {popup text='user<br>user1<br>user2'}>{icon _id='help'}</a>
 					</td>
-					<td class="auto"><input name="csvlist" type="file" /></td>
+					<td class="auto"><input name="csvlist" type="file"></td>
 				</tr>
 				<tr>
 					<td class="auto"></td>
-					<td class="auto"><input type="submit" name="import" value="{tr}Import{/tr}" /></td>
+					<td class="auto"><input type="submit" name="import" value="{tr}Import{/tr}"></td>
 				</tr>
 			</table>
 		</form>

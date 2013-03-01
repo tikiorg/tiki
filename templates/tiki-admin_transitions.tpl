@@ -8,11 +8,11 @@
 
 				<p>
 					{if $prefs.feature_categories eq 'y'}
-					<input type="radio" name="transition_mode" value="category" id="transition-mode-category"{if $transition_mode eq 'category'} checked="checked"{/if}/>
+					<input type="radio" name="transition_mode" value="category" id="transition-mode-category"{if $transition_mode eq 'category'} checked="checked"{/if}>
 					<label for="transition-mode-category">{tr}Category{/tr}</label>
 					{/if}
 
-					<input type="radio" name="transition_mode" value="group" id="transition-mode-group"{if $transition_mode eq 'group' or $prefs.feature_categories ne 'y'} checked="checked"{/if}/>
+					<input type="radio" name="transition_mode" value="group" id="transition-mode-group"{if $transition_mode eq 'group' or $prefs.feature_categories ne 'y'} checked="checked"{/if}>
 					<label for="transition-mode-group">{tr}Group{/tr}</label>
 				</p>
 			</fieldset>
@@ -30,7 +30,7 @@
 					{if $transition_mode eq 'group'}
 						{foreach from=$available_states item=state}
 							<li>
-								<input type="hidden" name="groups[]" value="{$state|escape}"/>
+								<input type="hidden" name="groups[]" value="{$state|escape}">
 								{$state|escape}
 								{icon _id=cross class="removeitem"}
 							</li>
@@ -39,12 +39,12 @@
 				</ul>
 				<p>
 					<label for="transition-group-auto">{tr}Type in a group name and click "enter"{/tr}</label>
-					<input type="text" id="transition-group-auto"/> 
+					<input type="text" id="transition-group-auto"> 
 				</p>
 			</fieldset>
 
 			<p>
-				{tr}Once you have selected at least two, click:{/tr} <input type="submit" value="{tr}Select{/tr}"/> {tr}and then, click the "New/Edit" tab which will appear above.{/tr}
+				{tr}Once you have selected at least two, click:{/tr} <input type="submit" value="{tr}Select{/tr}"> {tr}and then, click the "New/Edit" tab which will appear above.{/tr}
 			</p>
 		</form>
 		{jq}
@@ -68,7 +68,7 @@
 					}
 					$('#transition-group-list').append( 
 						$('<li/>').text( $(this).val() )
-							.append( $('<input type="hidden" name="groups[]"/>').val( $(this).val() ) )
+							.append( $('<input type="hidden" name="groups[]">').val( $(this).val() ) )
 							.append( $('{{icon _id=cross class="removeitem"}}') )
 					);
 					$(this).val('');
@@ -129,7 +129,7 @@
 			{if $selected_transition}
 				<h2>
 					{tr _0=$selected_transition.name}Edit <em>%0</em>{/tr}
-					<input type="hidden" name="transitionId" value="{$selected_transition.transitionId|escape}"/>
+					<input type="hidden" name="transitionId" value="{$selected_transition.transitionId|escape}">
 					(<a href="tiki-admin_transitions.php">{tr}Create new{/tr}</a>)
 				</h2>
 			{else}
@@ -140,10 +140,10 @@
 				<p>
 					<label for="new-transition-name">{tr}Label{/tr}</label>
 					<br/>
-					<input type="text" name="label" {if $selected_transition}value="{$selected_transition.name|escape}"{/if}/>
+					<input type="text" name="label" {if $selected_transition}value="{$selected_transition.name|escape}"{/if}>
 				</p>
 				<p>
-					<input type="checkbox" name="preserve" value="y" id="new-transition-preserve" {if $selected_transition && $selected_transition.preserve}checked="checked"{/if}/>
+					<input type="checkbox" name="preserve" value="y" id="new-transition-preserve" {if $selected_transition && $selected_transition.preserve}checked="checked"{/if}>
 					<label for="new-transition-preserve">{tr}Upon trigger, preserve the initial state{/tr}</label>
 				</p>
 			</fieldset>
@@ -151,7 +151,7 @@
 				<legend>{tr}From{/tr}</legend>
 				{foreach from=$available_states item=label key=value}
 					<p>
-						<input type="radio" name="from" value="{$value|escape}" id="state-from-{$value|escape}"{if $selected_transition && $selected_transition.from eq $value} checked="checked"{/if}/>
+						<input type="radio" name="from" value="{$value|escape}" id="state-from-{$value|escape}"{if $selected_transition && $selected_transition.from eq $value} checked="checked"{/if}>
 						<label for="state-from-{$value|escape}">{$label|escape}</label>
 					</p>
 				{/foreach}
@@ -160,13 +160,13 @@
 				<legend>{tr}To{/tr}</legend>
 				{foreach from=$available_states item=label key=value}
 					<p>
-						<input type="radio" name="to" value="{$value|escape}" id="state-to-{$value|escape}"{if $selected_transition && $selected_transition.to eq $value} checked="checked"{/if}/>
+						<input type="radio" name="to" value="{$value|escape}" id="state-to-{$value|escape}"{if $selected_transition && $selected_transition.to eq $value} checked="checked"{/if}>
 						<label for="state-to-{$value|escape}">{$label|escape}</label>
 					</p>
 				{/foreach}
 			</fieldset>
 			<p>
-				<input type="submit" value="{tr}Save{/tr}"/>
+				<input type="submit" value="{tr}Save{/tr}">
 			</p>
 		</form>
 	{/tab}
@@ -219,20 +219,20 @@
 					</p>
 					<p>
 						<label for="guard-count">{tr}Count{/tr}</label>
-						<input type="text" name="count"/>
+						<input type="text" name="count">
 					</p>
 				</fieldset>
 				<fieldset>
 					<legend>{tr}States{/tr}</legend>
 					{foreach from=$available_states item=label key=value}
 						<p>
-							<input type="checkbox" name="states[]" value="{$value|escape}" id="guard-state-{$value|escape}"/>
+							<input type="checkbox" name="states[]" value="{$value|escape}" id="guard-state-{$value|escape}">
 							<label for="guard-state-{$value|escape}">{$label|escape}</label>
 						</p>
 					{/foreach}
 				</fieldset>
 				<p>
-					<input type="submit" value="{tr}Add{/tr}"/>
+					<input type="submit" value="{tr}Add{/tr}">
 				</p>
 			</form>
 		{/tab}

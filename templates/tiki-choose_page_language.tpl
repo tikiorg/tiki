@@ -13,6 +13,6 @@
 			{/section}
 	
 		</select>
-		<input type="submit" name="select_language" value="{tr}Choose language{/tr}" onclick="needToConfirm=false;" />
+		<input type="submit" name="select_language" value="{tr}Choose language{/tr}" onclick="needToConfirm=false;">
 	</form>
 </div>

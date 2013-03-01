@@ -26,7 +26,7 @@
 		{cycle print=false values="even,odd"}
 		{foreach key=k item=it from=$imgstring}
 			<tr class="{cycle}">
-				<td><input type="checkbox" name="imgs[]" value="{$it[0]}" id="box_{$k}" /></td>
+				<td><input type="checkbox" name="imgs[]" value="{$it[0]}" id="box_{$k}"></td>
 				<td><label for="box_{$k}">{$it[0]}</label></td>
 				<td>{$it[1]}</td>
 				<td>{$it[2]}</td>
@@ -36,15 +36,15 @@
 		{/foreach}
 	</table>
 <br>
-&nbsp;&nbsp;&nbsp;&nbsp; <input type="checkbox" name="removeExt" value="true" id="removeExt" /> {tr}Remove File Extension from Image Name{/tr}<br>
+&nbsp;&nbsp;&nbsp;&nbsp; <input type="checkbox" name="removeExt" value="true" id="removeExt"> {tr}Remove File Extension from Image Name{/tr}<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {tr}eg. from "digicam0001.jpg" then name digicam0001 will be used for the name field{/tr}<br>
 <br>
 {if $permAddGallery eq "y"}
-&nbsp;&nbsp;&nbsp;&nbsp; <input type="checkbox" name="subdirToSubgal" value="true" id="subdirToSubgal" /> {tr}Convert the last sub directory to a sub gallery{/tr}<br>
+&nbsp;&nbsp;&nbsp;&nbsp; <input type="checkbox" name="subdirToSubgal" value="true" id="subdirToSubgal"> {tr}Convert the last sub directory to a sub gallery{/tr}<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {tr}eg. from "misc/screenshots/digicam0001.jpg" a gallery named "screenshots" will be created{/tr}<br>
 <br>
 {/if}
-&nbsp;&nbsp;&nbsp;&nbsp; <input type="checkbox" name="subToDesc" value="true" id="subToDesc" /> {tr}Use the last sub directory name as description{/tr}<br>
+&nbsp;&nbsp;&nbsp;&nbsp; <input type="checkbox" name="subToDesc" value="true" id="subToDesc"> {tr}Use the last sub directory name as description{/tr}<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {tr}eg. from "misc/screenshots/digicam0001.jpg" a description "screenshots" will be created{/tr}<br>
 <br>
 &nbsp;&nbsp;&nbsp;&nbsp; {tr}Select a Gallery{/tr}
@@ -55,7 +55,7 @@
 {/if}
 {/section}
 </select>
-&nbsp;&nbsp;&nbsp;&nbsp; <input type="submit" name="batch_upload" value="{tr}Process{/tr}" />
+&nbsp;&nbsp;&nbsp;&nbsp; <input type="submit" name="batch_upload" value="{tr}Process{/tr}">
 </form>
 <br>
 

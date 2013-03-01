@@ -78,36 +78,36 @@
 						<th>{tr}Units{/tr}</th>
 						<td>
 							{tr}bytes{/tr}
-							<input type="radio" name="unit" value="bytes"{if $unit ne 'kb'} checked="checked"{/if} /> {tr}kb{/tr}
-							<input type="radio" name="unit" value="kb"{if $unit eq 'kb'} checked="checked"{/if} />
+							<input type="radio" name="unit" value="bytes"{if $unit ne 'kb'} checked="checked"{/if}> {tr}kb{/tr}
+							<input type="radio" name="unit" value="kb"{if $unit eq 'kb'} checked="checked"{/if}>
 						</td>
 					</tr>
 					<tr>
 						<th>{tr}Contibution Time{/tr}</th>
 						<td>
 							{tr}Week{/tr}
-							<input type="radio" name="contribTime" value="w"{if $contribTime ne 'd'} checked="checked"{/if} /> 
+							<input type="radio" name="contribTime" value="w"{if $contribTime ne 'd'} checked="checked"{/if}> 
 							{tr}Day{/tr}
-							<input type="radio" name="contribTime" value="d"{if $contribTime eq 'd'} checked="checked"{/if} />
+							<input type="radio" name="contribTime" value="d"{if $contribTime eq 'd'} checked="checked"{/if}>
 						</td>
 					</tr>
 					<tr>
 						<th>{tr}Search{/tr}</th>
 						<td>
-							<input type="text" name="find" value="{$find}" /> 
+							<input type="text" name="find" value="{$find}"> 
 						</td>
 					</tr>
 				
 					{if $prefs.feature_contribution eq 'y'}
 						<tr>
 							<td colspan="2">
-								<input type="submit" name="graph" value="{tr}Graph Contributions{/tr}" />
+								<input type="submit" name="graph" value="{tr}Graph Contributions{/tr}">
 								{if $prefs.feature_jpgraph eq 'y'}
 									<br>
 									{tr}Group Bar Plot:{/tr}
-									<input type="radio" name="barPlot" value="group" /> 
+									<input type="radio" name="barPlot" value="group"> 
 									{tr}Accumulated Bar Plot:{/tr}
-									<input type="radio" name="barPlot" value="acc" checked="checked" />
+									<input type="radio" name="barPlot" value="acc" checked="checked">
 									<br>
 									{tr}Background color:{/tr} 
 									<select name="bgcolor">
@@ -137,13 +137,13 @@
 				</table>
 				</fieldset>
 
-				<input type="hidden" name="max" value="{$maxRecords}" />
+				<input type="hidden" name="max" value="{$maxRecords}">
 				<span class="input_submit_container">
-					<input type="submit" name="list" value="{tr}Report{/tr}" /></td>
+					<input type="submit" name="list" value="{tr}Report{/tr}"></td>
 				</span>
 				{if $tiki_p_admin eq 'y'}
 					<span class="input_submit_container">
-						<input type="submit" name="export" value="{tr}Export{/tr}" />
+						<input type="submit" name="export" value="{tr}Export{/tr}">
 					</span>
 				{/if}
 
@@ -237,7 +237,7 @@
 				{cycle values="even,odd" print=false}
 				{foreach from=$actionlogs item=actionlog}
 					<tr class="{cycle}">
-						<td class="checkbox"><input type="checkbox" name="checked[]" value="{$actionlog.actionId}" /></td>
+						<td class="checkbox"><input type="checkbox" name="checked[]" value="{$actionlog.actionId}"></td>
 						<td class="username">
 							{if $actionlog.user}{$actionlog.user|escape}{else}{tr}Anonymous{/tr}{/if}
 						</td>
@@ -313,12 +313,12 @@
 			<a name="action">
 			<h2>{tr}Edit Action{/tr}</h2>
 			<form method="post" action="tiki-admin_actionlog.php">
-				<input type="hidden" name="actionId" value="{$action.actionId}" />
-				<input type="hidden" name="list" value="y" />
-				{if $selectedUsers}<input type="hidden" name="selectedUsers" value="{$selectedUsers}" />{/if}
-				{if $selectedGroups}<input type="hidden" name="selectedGroups" value="{$selectedGroups}" />{/if}
-				{if $startDate}<input type="hidden" name="startDate" value="{$startDate}" />{/if}
-				{if $endDate}<input type="hidden" name="endDate" value="{$endDate}" />{/if}
+				<input type="hidden" name="actionId" value="{$action.actionId}">
+				<input type="hidden" name="list" value="y">
+				{if $selectedUsers}<input type="hidden" name="selectedUsers" value="{$selectedUsers}">{/if}
+				{if $selectedGroups}<input type="hidden" name="selectedGroups" value="{$selectedGroups}">{/if}
+				{if $startDate}<input type="hidden" name="startDate" value="{$startDate}">{/if}
+				{if $endDate}<input type="hidden" name="endDate" value="{$endDate}">{/if}
 				{$action.action} / {$action.objectType} / {$action.object} 
 				<table class="normal">
 					{if $prefs.feature_contribution eq 'y'}
@@ -330,7 +330,7 @@
 					<tr>
 						<td>&nbsp;</td>
 						<td>
-							<input type="submit" name="saveAction" value="{tr}Save Action{/tr}" />
+							<input type="submit" name="saveAction" value="{tr}Save Action{/tr}">
 						</td>
 					</tr>
 				</table>
@@ -623,7 +623,7 @@
 		{tr}You need to check out the recorded box for each action type we may be interested to have some report later. To see a report of some action types, select the reported checkboxes of these action types, goto the Report tab and select additional filters. The report will only contains the actions that occurred since the action type has been set to recorded.{/tr} {tr}Wiki page actions except viewed will always be recorded but can be not reported.{/tr}
 		{/remarksbox}
 	<form method="post" action="tiki-admin_actionlog.php">
-		{if !empty($sort_mode)}<input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />{/if}
+		{if !empty($sort_mode)}<input type="hidden" name="sort_mode" value="{$sort_mode|escape}">{/if}
 		<fieldset>
 		<legend>{tr}Filter{/tr}</legend>
 		<label for="action_log_type">{tr}Type{/tr}</label>
@@ -642,12 +642,12 @@
 			{/foreach}
 		</select>
 			<span class="input_submit_container">
-				<input type="submit" name="search" value="{tr}Search{/tr}" />
+				<input type="submit" name="search" value="{tr}Search{/tr}">
 			</span>
 		</fieldset>
 		<br>
 		<span class="input_submit_container" style="float: right">
-			<input type="submit" name="save" value="{tr}Set{/tr}" />
+			<input type="submit" name="save" value="{tr}Set{/tr}">
 		</span>
 				<br class="clearfix" />
 		<table class="formcolor">
@@ -664,12 +664,12 @@
 				<tr class="{cycle}">
 					{if $tiki_p_admin eq 'y'}
 						<td class="checkbox">
-							<input type="checkbox" name="{$actionlog.code}" {if $actionlog.status eq 'y' or $actionlog.status eq 'v'}checked="checked"{/if} />
+							<input type="checkbox" name="{$actionlog.code}" {if $actionlog.status eq 'y' or $actionlog.status eq 'v'}checked="checked"{/if}>
 						</td>
 					{/if}
 					{if $tiki_p_admin eq 'y' or $actionlog.status eq 'y' or $actionlog.status eq 'v'}
 						<td class="checkbox">
-							<input type="checkbox" name="v_{$actionlog.code}" {if $actionlog.status eq 'v'}checked="checked"{/if} />
+							<input type="checkbox" name="v_{$actionlog.code}" {if $actionlog.status eq 'v'}checked="checked"{/if}>
 						</td>
 						<td class="text">{tr}{$actionlog.action}{/tr}</td>
 						<td class="text">{tr}{$actionlog.objectType}{/tr}</td>
@@ -678,7 +678,7 @@
 			{/foreach}
 			<tr>
 				<td colspan="4" class="input_submit_container">
-					<input type="submit" name="save" value="{tr}Set{/tr}" />
+					<input type="submit" name="save" value="{tr}Set{/tr}">
 				</td>
 			</tr>
 		</table>

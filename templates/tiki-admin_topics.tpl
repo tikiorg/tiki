@@ -8,19 +8,19 @@
 	<table class="formcolor">
 		<tr>
 			<td>{tr}Name{/tr}</td>
-			<td><input type="text" name="name" /></td>
+			<td><input type="text" name="name"></td>
 		</tr>
 		<tr>
 			<td>{tr}Image{/tr}</td>
 			<td>
-				<input type="hidden" name="MAX_FILE_SIZE" value="1000000" />
-				<input name="userfile1" type="file" />
+				<input type="hidden" name="MAX_FILE_SIZE" value="1000000">
+				<input name="userfile1" type="file">
 			</td>
 		</tr>
 		<tr>
 			<td>&nbsp;</td>
 			<td>
-				<input type="submit" name="addtopic" value="{tr}Add{/tr}" />
+				<input type="submit" name="addtopic" value="{tr}Add{/tr}">
 			</td>
 		</tr>
 	</table>

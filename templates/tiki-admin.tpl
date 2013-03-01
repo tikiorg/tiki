@@ -11,16 +11,16 @@
 		<legend>{tr}Preference Filters{/tr}</legend>
 		{foreach from=$pref_filters key=name item=info}
 			<label>
-				<input type="checkbox" class="preffilter {$info.type|escape}" name="pref_filters[]" value="{$name|escape}" {if $info.selected}checked="checked"{/if}/>
+				<input type="checkbox" class="preffilter {$info.type|escape}" name="pref_filters[]" value="{$name|escape}" {if $info.selected}checked="checked"{/if}>
 				{$info.label|escape}
 			</label>
 		{/foreach}
 
-		<input type="submit" value="{tr}Set as my default{/tr}"/>
+		<input type="submit" value="{tr}Set as my default{/tr}">
 
 		{if $prefs.connect_feature eq "y"}
 			<label>
-				<input type="checkbox" id="connect_feedback_cbx" {if !empty($connect_feedback_showing)}checked="checked"{/if}/>
+				<input type="checkbox" id="connect_feedback_cbx" {if !empty($connect_feedback_showing)}checked="checked"{/if}>
 				{tr}Feedback{/tr}
 			</label>
 			{$headerlib->add_jsfile("lib/jquery_tiki/tiki-connect.js")}
@@ -75,9 +75,9 @@
 		{tr}This search feature and the <a href="tiki-edit_perspective.php">perspectives GUI</a> need <a href="http://dev.tiki.org/Dynamic+Preferences">dev.tiki.org/Dynamic+Preferences</a>. If you search for something and it's not appearing, please help improve keywords/descriptions.{/tr}
 	{/remarksbox*}
 	<p>
-		<label>{tr}Configuration search:{/tr} <input type="text" name="lm_criteria" value="{$lm_criteria|escape}"/></label>
+		<label>{tr}Configuration search:{/tr} <input type="text" name="lm_criteria" value="{$lm_criteria|escape}"></label>
 		<input type="submit" value="{tr}Search{/tr}" {if $indexNeedsRebuilding} class="tips" title="{tr}Configuration search{/tr}|{tr}Note: The search index needs rebuilding, this will take a few minutes.{/tr}"{/if} />
-		<input type="hidden" name="filters"/>
+		<input type="hidden" name="filters">
 	</p>
 </form>
 {if $lm_error}
@@ -89,8 +89,8 @@
 		{foreach from=$lm_searchresults item=prefName}
 			{preference name=$prefName get_pages="y"}
 		{/foreach}
-		<input type="submit" value="{tr}Change{/tr}" class="clear"/>
-		<input type="hidden" name="lm_criteria" value="{$lm_criteria|escape}"/>
+		<input type="submit" value="{tr}Change{/tr}" class="clear">
+		<input type="hidden" name="lm_criteria" value="{$lm_criteria|escape}">
 	</form>
 </fieldset>
 {elseif $lm_criteria}

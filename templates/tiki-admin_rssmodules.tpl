@@ -88,11 +88,11 @@
 			</h2>
 		{/if}
 		<form action="tiki-admin_rssmodules.php" method="post">
-			<input type="hidden" name="rssId" value="{$rssId|escape}" />
+			<input type="hidden" name="rssId" value="{$rssId|escape}">
 			<table class="formcolor">
 				<tr>
 					<td>{tr}Name:{/tr}</td>
-					<td><input type="text" name="name" value="{$name|escape}" /></td>
+					<td><input type="text" name="name" value="{$name|escape}"></td>
 				</tr>
 				<tr>
 					<td>{tr}Description:{/tr}</td>
@@ -100,7 +100,7 @@
 				</tr>
 				<tr>
 					<td>{tr}URL:{/tr}</td>
-					<td><input size="47" type="text" name="url" value="{$url|escape}" /></td>
+					<td><input size="47" type="text" name="url" value="{$url|escape}"></td>
 				</tr>
 				<tr>
 					<td>{tr}Refresh rate:{/tr}</td>
@@ -124,15 +124,15 @@
 				</tr>
 				<tr>
 					<td>{tr}show feed title:{/tr}</td>
-					<td><input type="checkbox" name="showTitle" {if $showTitle eq 'y'}checked="checked"{/if} /></td>
+					<td><input type="checkbox" name="showTitle" {if $showTitle eq 'y'}checked="checked"{/if}></td>
 				</tr>
 				<tr>
 					<td>{tr}show publish date:{/tr}</td>
-					<td><input type="checkbox" name="showPubDate" {if $showPubDate eq 'y'}checked="checked"{/if} /></td>
+					<td><input type="checkbox" name="showPubDate" {if $showPubDate eq 'y'}checked="checked"{/if}></td>
 				</tr>
 				<tr>
 					<td>&nbsp;</td>
-					<td><input type="submit" name="save" value="{tr}Save{/tr}" /></td>
+					<td><input type="submit" name="save" value="{tr}Save{/tr}"></td>
 				</tr>
 			</table>
 		</form>
@@ -144,23 +144,23 @@
 
 			<form method="post" action="">
 				<p>
-					<input id="article_active" type="checkbox" name="enable" value="1"{if $articleConfig.active} checked="checked"{/if}/>
+					<input id="article_active" type="checkbox" name="enable" value="1"{if $articleConfig.active} checked="checked"{/if}>
 					<label for="article_active">{tr}Enable{/tr}</label>
 				</p>
 				{if $prefs.feature_submissions eq 'y'}
 				<p>
-					<input id="article_submission" type="checkbox" name="submission" value="1"{if $articleConfig.submission} checked="checked"{/if}/>
+					<input id="article_submission" type="checkbox" name="submission" value="1"{if $articleConfig.submission} checked="checked"{/if}>
 					<label for="article_submission">{tr}Use Article Submission System{/tr}</label>
 				</p>
 				{/if}
 				<p>
 					<label for="article_expiry">{tr}Expiration{/tr}</label>
-					<input type="text" name="expiry" id="article_expiry" value="{$articleConfig.expiry|escape}" size="3"/> {tr}days{/tr}
+					<input type="text" name="expiry" id="article_expiry" value="{$articleConfig.expiry|escape}" size="3"> {tr}days{/tr}
 				</p>
 				</p>
 				<p>
 					<label for="article_future_publish">{tr}Publish in the future{/tr}</label>
-					<input type="text" name="future_publish" id="article_future_publish" value="{$articleConfig.future_publish|escape}" size="4"/> {tr}minutes{/tr} ({tr}-1 to use original publishing date from the feed{/tr})
+					<input type="text" name="future_publish" id="article_future_publish" value="{$articleConfig.future_publish|escape}" size="4"> {tr}minutes{/tr} ({tr}-1 to use original publishing date from the feed{/tr})
 				</p>
 				<p>
 					<label for="article_type">{tr}Type{/tr}</label>
@@ -191,7 +191,7 @@
 					{include file='categorize.tpl'}
 				</p>
 				<p>
-					<input type="submit" value="{tr}Configure{/tr}"/>
+					<input type="submit" value="{tr}Configure{/tr}">
 				</p>
 			</form>
 		{/tab}

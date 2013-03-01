@@ -15,17 +15,17 @@
 		{/section}
 	
   </select>
-  <input type="submit" name="go" value="{tr}Go{/tr}" />
+  <input type="submit" name="go" value="{tr}Go{/tr}">
 </form>
 {* Dislay a form to add or edit a site *}
 <h2>{if $siteId}{tr}Edit a site{/tr}{else}{tr}Add a Site{/tr}{/if}</h2>
 <form action="tiki-directory_admin_sites.php" method="post">
-  <input type="hidden" name="parent" value="{$parent|escape}" />
-  <input type="hidden" name="siteId" value="{$siteId|escape}" />
+  <input type="hidden" name="parent" value="{$parent|escape}">
+  <input type="hidden" name="siteId" value="{$siteId|escape}">
   <table class="formcolor">
     <tr>
       <td>{tr}Name:{/tr}</td>
-      <td><input type="text" name="name" value="{$info.name|escape}" /></td>
+      <td><input type="text" name="name" value="{$info.name|escape}"></td>
     </tr>
     <tr>
       <td>{tr}Description:{/tr}</td>
@@ -33,7 +33,7 @@
     </tr>
     <tr>
       <td>{tr}URL:{/tr}</td>
-      <td><input type="text" name="url" value="{$info.url|escape}" /></td>
+      <td><input type="text" name="url" value="{$info.url|escape}"></td>
     </tr>
     <tr>
       <td>{tr}Directory Categories:{/tr}</td>
@@ -67,11 +67,11 @@
     {/if}
     <tr>
       <td>{tr}Is valid:{/tr}</td>
-      <td><input name="isValid" type="checkbox" {if $info.isValid eq 'y'}checked="checked"{/if} /></td>
+      <td><input name="isValid" type="checkbox" {if $info.isValid eq 'y'}checked="checked"{/if}></td>
     </tr>
     <tr>
       <td>&nbsp;</td>
-      <td><input type="submit" name="save" value="{tr}Save{/tr}" /></td>
+      <td><input type="submit" name="save" value="{tr}Save{/tr}"></td>
     </tr>
   </table>
 </form>
@@ -94,7 +94,7 @@
     {cycle values="odd,even" print=false}
     {section name=user loop=$items}
     <tr class="{cycle advance=false}">
-      <td class="checkbox"><input type="checkbox" name="remove[]" value="{$items[user].siteId}" /></td>
+      <td class="checkbox"><input type="checkbox" name="remove[]" value="{$items[user].siteId}"></td>
       <td class="text">{$items[user].name|escape}</td>
       <td class="text"><a href="{$items[user].url}" target="_new">{$items[user].url}</a></td>
       {if $prefs.directory_country_flag eq 'y'}
@@ -122,7 +122,7 @@
   </table>
   {if $items}
   {tr}Perform action with selected:{/tr}
-  <input type="submit" name="groupdel" value=" {tr}Delete{/tr} " />
+  <input type="submit" name="groupdel" value=" {tr}Delete{/tr} ">
   {/if}
 </form>
 {pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links} 

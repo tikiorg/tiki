@@ -16,11 +16,11 @@
 	{/if}
 	{tab name=$title}
 		<form action="tiki-admin_polls.php" method="post">
-			<input type="hidden" name="pollId" value="{$pollId|escape}" />
+			<input type="hidden" name="pollId" value="{$pollId|escape}">
 			<table class="formcolor">
 				<tr>
 					<td>{tr}Title:{/tr}</td>
-					<td><input type="text" name="title" value="{$info.title|escape}" /></td>
+					<td><input type="text" name="title" value="{$info.title|escape}"></td>
 				</tr>
 				<tr>
 					<td>{tr}Active:{/tr}</td>
@@ -44,11 +44,11 @@
 							<div id="tikiPollsOptions">
 								{section name=opt loop=$options}
 									<div>
-										<input type="hidden" name="optionsId[]" value="{$options[opt].optionId}" />
-										<input type="text" name="options[]" value="{$options[opt].title}" />
+										<input type="hidden" name="optionsId[]" value="{$options[opt].optionId}">
+										<input type="text" name="options[]" value="{$options[opt].title}">
 									</div>
 								{/section}
-								<div><input type="text" name="options[]" /></div>
+								<div><input type="text" name="options[]"></div>
 							</div>
 							<a href="javascript://Add Option"	onclick="pollsAddOption()">{tr}Add Option{/tr}</a>
 							{remarksbox type="tip" title="{tr}Tip{/tr}"}
@@ -70,14 +70,14 @@
 						<label id="voteConsiderationSpan">{tr}Votes older than these days are not considered{/tr}</label>
 					</td>
 					<td>
-						<input type="text" id="voteConsiderationSpan" name="voteConsiderationSpan" size="5" value="{$info.voteConsiderationSpan|escape}"/>
+						<input type="text" id="voteConsiderationSpan" name="voteConsiderationSpan" size="5" value="{$info.voteConsiderationSpan|escape}">
 						<br>
 						<i>{tr}0 for no limit{/tr}</i>
 					</td>
 				</tr>
 				<tr>
 					<td>&nbsp;</td>
-					<td><input type="submit" name="save" value="{tr}Save{/tr}" /></td>
+					<td><input type="submit" name="save" value="{tr}Save{/tr}"></td>
 				</tr>
 			</table>
 		</form>
@@ -165,7 +165,7 @@
 				</tr>
 				<tr>
 					<td>{tr}Title{/tr}</td>
-					<td><input type="text" name="poll_title" /></td>
+					<td><input type="text" name="poll_title"></td>
 				</tr>
 				<tr>
 					<td>{tr}Wiki pages{/tr}</td>
@@ -180,11 +180,11 @@
 				</tr>
 				<tr>
 					<td>{tr}Lock the pages{/tr}</td>
-					<td><input type="checkbox" name="locked" /></td>
+					<td><input type="checkbox" name="locked"></td>
 				</tr>
 				<tr>
 					<td></td>
-					<td><input type="submit" name="addPoll" value="{tr}Add{/tr}" /></td>
+					<td><input type="submit" name="addPoll" value="{tr}Add{/tr}"></td>
 				</tr>
 			</table>
 		</form>

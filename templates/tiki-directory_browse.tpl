@@ -24,18 +24,18 @@
 {if count($items) > 0}
 <div class="findtable">
   <form action="tiki-directory_search.php" method="post">
-    <input type="hidden" name="parent" value="{$parent|escape}" />
+    <input type="hidden" name="parent" value="{$parent|escape}">
     {tr}Find:{/tr}
     <select name="how">
       <option value="or">{tr}any{/tr}</option>
       <option value="and">{tr}All{/tr}</option>
     </select>
-    <input type="text" name="words" size="30" />
+    <input type="text" name="words" size="30">
     <select name="where">
       <option value="all">{tr}in entire directory{/tr}</option>
       <option value="cat">{tr}in current directory category{/tr}</option>
     </select>
-    <input type="submit" value="{tr}Search{/tr}" />
+    <input type="submit" value="{tr}Search{/tr}">
   </form>
 </div>
 {/if}
@@ -83,7 +83,7 @@
 <div class="dirlistsites">
   <div class="findtable">
   <form method="post" action="tiki-directory_browse.php">
-    <input type="hidden" name="parent" value="{$parent|escape}" />
+    <input type="hidden" name="parent" value="{$parent|escape}">
     {tr}Sort by:{/tr}&nbsp;
     <select name="sort_mode">
       <option value="name_desc" {if $sort_mode eq 'name_desc'}selected="selected"{/if}>{tr}Name (desc){/tr}</option>
@@ -95,7 +95,7 @@
       <option value="lastModif_desc" {if $sort_mode eq 'lastModif_desc'}selected="selected"{/if}>{tr}Last updated (desc){/tr}</option>
       <option value="lastModif_asc" {if $sort_mode eq 'lastModif_asc'}selected="selected"{/if}>{tr}Last updated (asc){/tr}</option>
     </select>
-    <input type="submit" name="xx" value="{tr}sort{/tr}" />
+    <input type="submit" name="xx" value="{tr}sort{/tr}">
   </form>
   </div>
   {section name=ix loop=$items}

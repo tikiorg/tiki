@@ -17,8 +17,8 @@
 <h2>{tr}Create/edit questions for quiz:{/tr} <a href="tiki-edit_quiz.php?quizId={$quiz_info.quizId}" >{$quiz_info.name|escape}</a></h2>
 
 <form action="tiki-edit_quiz_questions.php" method="post">
-	<input type="hidden" name="quizId" value="{$quizId|escape}" />
-	<input type="hidden" name="questionId" value="{$questionId|escape}" />
+	<input type="hidden" name="quizId" value="{$quizId|escape}">
+	<input type="hidden" name="questionId" value="{$questionId|escape}">
 
 	<table class="formcolor">
 		<tr>
@@ -42,7 +42,7 @@
 		</tr>
 		<tr>
 			<td>&nbsp;</td>
-			<td><input type="submit" name="save" value="{tr}Save{/tr}" /></td>
+			<td><input type="submit" name="save" value="{tr}Save{/tr}"></td>
 		</tr>
 	</table>
 </form>
@@ -73,7 +73,7 @@
 		</tr>
 	</table>
 	<div align="center">
-		<input type="submit" class="wikiaction" name="import" value="Import" />
+		<input type="submit" class="wikiaction" name="import" value="Import">
 	</div>
 </form>
 

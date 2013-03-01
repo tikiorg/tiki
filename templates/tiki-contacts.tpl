@@ -15,15 +15,15 @@
 </div>
 
 <form action="tiki-contacts.php" method="post" id="editform" name='editform_contact' style="clear:both;margin:5px;display:{if $contactId}block{else}none{/if};">
-	<input type="hidden" name="locSection" value="contacts" />
-	<input type="hidden" name="contactId" value="{$contactId|escape}" />
+	<input type="hidden" name="locSection" value="contacts">
+	<input type="hidden" name="contactId" value="{$contactId|escape}">
 	
 	<table class="formcolor">
 		<tbody id='tbody_editcontact'>
 			<tr>
 				<td>{tr}First Name:{/tr}</td>
 				<td>
-					<input type="text" maxlength="80" size="20" name="firstName" value="{$info.firstName|escape}" />
+					<input type="text" maxlength="80" size="20" name="firstName" value="{$info.firstName|escape}">
 				</td>
 				<td rowspan="5">
 					{tr}Publish this contact to groups:{/tr}<br>
@@ -38,19 +38,19 @@
 			<tr>
 				<td>{tr}Last Name:{/tr}</td>
 				<td>
-					<input type="text" maxlength="80" size="20" name="lastName" value="{$info.lastName|escape}" />
+					<input type="text" maxlength="80" size="20" name="lastName" value="{$info.lastName|escape}">
 				</td>
 			</tr>
 			<tr>
 				<td>{tr}Email:{/tr}</td>
 				<td>
-					<input type="text" maxlength="80" size="20" name="email" value="{$info.email|escape}" />
+					<input type="text" maxlength="80" size="20" name="email" value="{$info.email|escape}">
 				</td>
 			</tr>
 			<tr>
 				<td>{tr}Nickname:{/tr}</td>
 				<td>
-					<input type="text" maxlength="80" size="20" name="nickname" value="{$info.nickname|escape}" />
+					<input type="text" maxlength="80" size="20" name="nickname" value="{$info.nickname|escape}">
 				</td>
 			</tr>
 			<tr id='tr_exts'>
@@ -66,7 +66,7 @@
 				<td>
 				</td>
 				<td>
-					<input type="submit" name="save" value="{tr}Save{/tr}" />
+					<input type="submit" name="save" value="{tr}Save{/tr}">
 				</td>
 			</tr>
 		</tbody>

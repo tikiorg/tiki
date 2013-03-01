@@ -21,7 +21,7 @@
   <td>{tr}Source repository{/tr}</td>
   <td>
     <select name="srcrep">{html_options options=$reps}</select> &nbsp; &nbsp;
-    <input type="submit" name="copy" value="{tr}Copy{/tr}" />
+    <input type="submit" name="copy" value="{tr}Copy{/tr}">
   </td>
 </tr> </table>
 </form>
@@ -31,34 +31,34 @@
 
 {* Add form *}
 <form action="tiki-admin_integrator_rules.php?repID={$repID|escape}" method="post">
-<input type="hidden" name="ruleID" value="{$ruleID|escape}" />
-<input type="hidden" name="repID" value="{$repID|escape}" />
+<input type="hidden" name="ruleID" value="{$ruleID|escape}">
+<input type="hidden" name="repID" value="{$repID|escape}">
 
 <table class="formcolor">
   <tr>
     <td><span title="{tr}According this order rules will be applied ('0' or empty = auto){/tr}">{tr}Rule order{/tr}</span></td>
-    <td><input type="text" maxlength="2" size="2" name="ord" value="{$ord|escape}" title="{tr}According this order rules will be applied ('0' or empty = auto){/tr}" />
+    <td><input type="text" maxlength="2" size="2" name="ord" value="{$ord|escape}" title="{tr}According this order rules will be applied ('0' or empty = auto){/tr}">
     </td>
   </tr><tr>
     <td><span title="{tr}Text to search for{/tr}">{tr}Search{/tr}</span></td>
-    <td><input type="text" name="srch" value="{$srch|escape}" title="{tr}Text to search for{/tr}" /></td>
+    <td><input type="text" name="srch" value="{$srch|escape}" title="{tr}Text to search for{/tr}"></td>
   </tr><tr>
     <td><span title="{tr}Text to replace{/tr}">{tr}Replace{/tr}</span></td>
-    <td><input type="text" name="repl" value="{$repl|escape}" title="{tr}Text to replace{/tr}" /></td>
+    <td><input type="text" name="repl" value="{$repl|escape}" title="{tr}Text to replace{/tr}"></td>
   </tr><tr>
     <td><span title="{tr}Is this regular expression or simple search/replacer{/tr}">{tr}Regex{/tr}</span></td>
     <td>
-      <input type="checkbox" name="type" {if $type eq 'y'}checked="checked"{/if} title="{tr}Is this regular expression or simple search/replacer{/tr}" />
+      <input type="checkbox" name="type" {if $type eq 'y'}checked="checked"{/if} title="{tr}Is this regular expression or simple search/replacer{/tr}">
     </td>
   </tr><tr>
     <td><span title="{tr}Is case sensitive (for simple replacer){/tr}">{tr}Case sensitive{/tr}</td>
     <td>
-      <input type="checkbox" name="casesense" {if $casesense eq 'y'}checked="checked"{/if} title="{tr}Is case sensitive (for simple replacer){/tr}" />
+      <input type="checkbox" name="casesense" {if $casesense eq 'y'}checked="checked"{/if} title="{tr}Is case sensitive (for simple replacer){/tr}">
     </td>
   </tr><tr>
     <td><span title="{tr}subset of chars: imsxeADSXUu, which is regex modifiers{/tr}">{tr}Regex modifiers{/tr}</span></td>
     <td>
-      <input type="text" maxlength="20" size="20" name="rxmod" value="{$rxmod|escape}" title="{tr}subset of chars: imsxeADSXUu, which is regex modifiers{/tr}" />
+      <input type="text" maxlength="20" size="20" name="rxmod" value="{$rxmod|escape}" title="{tr}subset of chars: imsxeADSXUu, which is regex modifiers{/tr}">
     </td>
   </tr><tr>
     <td><span title="{tr}Human-readable text description of rule{/tr}">{tr}Description{/tr}</td>
@@ -66,29 +66,29 @@
   </tr><tr>
     <td>&nbsp;</td>
     <td>
-      <input type="submit" name="save" value="{tr}Save{/tr}" />&nbsp;&nbsp;
-      <input type="checkbox" name="enabled" {if $enabled eq 'y'}checked="checked"{/if} title="{tr}Check to enable this rule{/tr}" />&nbsp;
+      <input type="submit" name="save" value="{tr}Save{/tr}">&nbsp;&nbsp;
+      <input type="checkbox" name="enabled" {if $enabled eq 'y'}checked="checked"{/if} title="{tr}Check to enable this rule{/tr}">&nbsp;
       {tr}Enabled{/tr}
     </td>
   </tr><tr>
     <td colspan="2">{tr}Preview options{/tr}</td>
   </tr><tr>
     <td><span title="{tr}Apply all rules or just this to generate preview{/tr}">{tr}Apply all rules{/tr}</td>
-    <td><input type="checkbox" name="all" {if $all eq 'y'}checked="checked"{/if} title="{tr}Apply all rules or just this to generate preview{/tr}" /></td>
+    <td><input type="checkbox" name="all" {if $all eq 'y'}checked="checked"{/if} title="{tr}Apply all rules or just this to generate preview{/tr}"></td>
   </tr><tr>
     <td><span title="{tr}View source code after rules applied{/tr}">{tr}Code preview{/tr}</td>
-    <td><input type="checkbox" name="code" {if $code eq 'y'}checked="checked"{/if} title="{tr}View source code after rules applied{/tr}" /></td>
+    <td><input type="checkbox" name="code" {if $code eq 'y'}checked="checked"{/if} title="{tr}View source code after rules applied{/tr}"></td>
   </tr><tr>
     <td><span title="{tr}Generate HTML preview{/tr}">{tr}HTML preview{/tr}</td>
-    <td><input type="checkbox" name="html" {if $html eq 'y'}checked="checked"{/if} title="{tr}Generate HTML preview{/tr}" /></td>
+    <td><input type="checkbox" name="html" {if $html eq 'y'}checked="checked"{/if} title="{tr}Generate HTML preview{/tr}"></td>
   </tr><tr>
     <td><span title="{tr}Test file from repository to generate preview for (empty = configured start page){/tr}">{tr}File{/tr}</td>
     <td>
-      <input type="text" name="file" value="{$file|escape}" title="{tr}Test file from repository to generate preview for (empty = configured start page){/tr}" />
+      <input type="text" name="file" value="{$file|escape}" title="{tr}Test file from repository to generate preview for (empty = configured start page){/tr}">
     </td>
   </tr><tr>
     <td>&nbsp;</td>
-    <td><input type="submit" name="preview" value="{tr}Preview{/tr}" /></td>
+    <td><input type="submit" name="preview" value="{tr}Preview{/tr}"></td>
   </tr>
 </table>
 </form>

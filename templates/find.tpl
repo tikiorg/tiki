@@ -23,7 +23,7 @@
 	* filters               : array( filter_field1 => array( option1_value => option1_text, ... ), filter_field2 => ... )
 	*		filter_names          : array( filter_field1 => filter_field1_name, ... )
 	*		filter_values         : array( filter_fieldX => filter_fieldX_selected_value, ... )
-	* autocomplete						: name of the variable you want for autocomplete of the input field (only for <input type="text" ... />
+	* autocomplete						: name of the variable you want for autocomplete of the input field (only for <input type="text" ... >
 	* find_other : If value != '', show an input box label with find_other
 	* find_in :	 popup to eplain on what is the find
 	*
@@ -33,7 +33,7 @@
 
 <div class="clearfix">
 		<form method="post" action="{$smarty.server.PHP_SELF}" class="findtable">
-		{if !empty($filegals_manager)}<input type="hidden" name="filegals_manager" value="{$filegals_manager|escape}" />{/if}
+		{if !empty($filegals_manager)}<input type="hidden" name="filegals_manager" value="{$filegals_manager|escape}">{/if}
 
 		{query _type='form_input' maxRecords='NULL' type='NULL' types='NULL' find='NULL' topic='NULL' lang='NULL' exact_match='NULL' categId='NULL' cat_categories='NULL' filegals_manager='NULL' save='NULL' offset='NULL' searchlist='NULL' searchmap='NULL'}
 
@@ -43,7 +43,7 @@
 		{else}
 			{tr}{$whatlabel}{/tr}
 		{/if}
-		<input type="text" name="find" id="find" value="{$find|escape}" />
+		<input type="text" name="find" id="find" value="{$find|escape}">
 		{if isset($autocomplete)}
 			{jq}$("#find").tiki("autocomplete", "{{$autocomplete}}"){/jq}
 		{/if}
@@ -53,14 +53,14 @@
 {if isset($exact_match)}
 	<label class="findexactmatch" for="findexactmatch" style="white-space: nowrap">
 			{tr}Exact match{/tr}
-		<input type="checkbox" name="exact_match" id="findexactmatch" {if $exact_match ne 'n'}checked="checked"{/if}/>
+		<input type="checkbox" name="exact_match" id="findexactmatch" {if $exact_match ne 'n'}checked="checked"{/if}>
 	</label>
 {/if}
 
 {if !empty($find_show_sub) and $find_show_sub eq 'y'}
 	<label class="findsub">
 		{tr}and all the sub-objects{/tr}
-		<input type="checkbox" name="find_sub" id="find_sub" {if !empty($find_sub) and $find_sub eq 'y'}checked="checked"{/if}/>
+		<input type="checkbox" name="find_sub" id="find_sub" {if !empty($find_sub) and $find_sub eq 'y'}checked="checked"{/if}>
 	</label>
 {/if}
 
@@ -173,7 +173,7 @@
 			</li>
 			{foreach key=key item=value from=$types}
 				<li>
-					<input type="checkbox" name="types[]" value="{$key|escape}" {if is_array($find_type) && in_array($key, $find_type)}checked="checked"{/if} /> {tr}{$value}{/tr}
+					<input type="checkbox" name="types[]" value="{$key|escape}" {if is_array($find_type) && in_array($key, $find_type)}checked="checked"{/if}> {tr}{$value}{/tr}
 			</li>
 		{/foreach}
 		</ul>
@@ -208,37 +208,37 @@
 {if !empty($show_find_orphans) and $show_find_orphans eq 'y'}
 	<label class="find_orphans" for="find_orphans">
 		   {tr}Orphans{/tr}
-		   <input type="checkbox" name="find_orphans" id="find_orphans" {if isset($find_orphans) and $find_orphans eq 'y'}checked="checked"{/if}/>
+		   <input type="checkbox" name="find_orphans" id="find_orphans" {if isset($find_orphans) and $find_orphans eq 'y'}checked="checked"{/if}>
 	</label>
 {/if}
 
 {if !empty($find_other)}
 	<label class="find_other" for="find_other">
 		   {tr}{$find_other}{/tr}
-		   <input type="text" name="find_other" id="find_other" value="{if !empty($find_other_val)}{$find_other_val|escape}{/if}"/>
+		   <input type="text" name="find_other" id="find_other" value="{if !empty($find_other_val)}{$find_other_val|escape}{/if}">
 	</label>
 {/if}
 
 {if isset($find_show_num_rows) && $find_show_num_rows eq 'y'}
 	<label class="findnumrows" for="findnumrows">
 			{tr}Number of displayed rows{/tr}
-			<input type="text" name="maxRecords" id="findnumrows" value="{$maxRecords|escape}" size="3" />
+			<input type="text" name="maxRecords" id="findnumrows" value="{$maxRecords|escape}" size="3">
 	</label>
 {/if}
 
 <label class="findsubmit">
-	<input type="submit" name="search" value="{tr}Go{/tr}" />
+	<input type="submit" name="search" value="{tr}Go{/tr}">
 	{if $find ne ''}
 		<span class="button">
 			<a href="{$smarty.server.PHP_SELF}?{query find='' type='' types='' topic='' lang='' langOrphan='' exact_match='' categId='' maxRecords='' find_from_Month='' find_from_Day='' find_from_Year='' find_to_Month='' find_to_Day='' find_to_Year=''}" title="{tr}Clear Filter{/tr}">{tr}Clear Filter{/tr}</a>
 		</span>
 	{/if}
 	{if (isset($gmapbuttons) && $gmapbuttons) and (isset($mapview) && $mapview)}
-		<input type="submit" name="searchlist" value="{tr}List View{/tr}" />
-		<input type="hidden" name="mapview" value="y" />
+		<input type="submit" name="searchlist" value="{tr}List View{/tr}">
+		<input type="hidden" name="mapview" value="y">
 	{elseif (isset($gmapbuttons) && $gmapbuttons)}
-		<input type="submit" name="searchmap" value="{tr}Map View{/tr}" />
-		<input type="hidden" name="mapview" value="n" />
+		<input type="submit" name="searchmap" value="{tr}Map View{/tr}">
+		<input type="hidden" name="mapview" value="n">
 	{/if}
 </label>
 

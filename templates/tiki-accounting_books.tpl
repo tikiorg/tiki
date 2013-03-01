@@ -46,21 +46,21 @@
 {tab name="{tr}Create a book{/tr}"}
 <div id="createbookform">
  <form action="tiki-accounting_books.php" method="post">
- 	<input type="hidden" name="action" value="create" />
+ 	<input type="hidden" name="action" value="create">
  	<h1>{tr}Create a book{/tr}</h1>
 	<fieldset>
 		<legend>{tr}Book properties{/tr}</legend>
 		<div><label class="aclabel">{tr}Name of the book{/tr}</label>
-		<input type="text" name="bookName" id="bookName" value="{$bookName}" /></div>
+		<input type="text" name="bookName" id="bookName" value="{$bookName}"></div>
 		<div><label class="aclabel">{tr}First date in journal{/tr}</label>
-		<input type="text" name="bookStartDate" id="bookStartDate" value="{$bookStartDate}" /></div>
+		<input type="text" name="bookStartDate" id="bookStartDate" value="{$bookStartDate}"></div>
 		<div><label class="aclabel">{tr}Last date in journal{/tr}</label>
-		<input type="text" name="bookEndDate" id="bookEndDate" value="{$bookEndDate}" /></div>
+		<input type="text" name="bookEndDate" id="bookEndDate" value="{$bookEndDate}"></div>
 	</fieldset>
 	<fieldset>
 		<legend>{tr}Currency settings{/tr}</legend>
 		<div><label class="aclabel">{tr}Currency (up to 3 letters) {/tr}</label>
-		<input type="text" name="bookCurrency" id="bookCurrency" value="{$bookCurrency}" /></div>
+		<input type="text" name="bookCurrency" id="bookCurrency" value="{$bookCurrency}"></div>
 		<div><label class="aclabel">{tr}Position of the currency {/tr}</label>
 		<select name="bookCurrencyPos" id="bookCurrencyPos">
 			<option value="0"{if $bookCurrencyPos==0} selected="selected"{/if}>{tr}Show no currency{/tr}</option>
@@ -68,28 +68,28 @@
 			<option value="1"{if $bookCurrencyPos==1} selected="selected"{/if}>{tr}Show currency behind numbers{/tr}</option>
 		</select></div>
 		<div><label class="aclabel">{tr}Decimals{/tr}</label>
-		<input type="text" name="bookDecimals" id="bookDecimals" value="{$bookDecimals}" /></div>
+		<input type="text" name="bookDecimals" id="bookDecimals" value="{$bookDecimals}"></div>
 		<div><label class="aclabel">{tr}Decimal point{/tr}</label>
 		<select name="bookDecPoint" id="bookDecPoint">
 			<option value="," {if $bookDecPoint eq ','}selected="selected"{/if}>{tr}Comma{/tr}</option>
 			<option value="." {if empty($bookDecPoint) or $bookDecPoint eq '.'}selected="selected"{/if}>{tr}Decimal{/tr}</option>
 			<option value=" " {if $bookDecPoint eq ' '}selected="selected"{/if}>{tr}Space{/tr}</option>
 		</select></div>
-		{*<input type="text" name="bookDecPoint" id="bookDecPoint" value="{$bookDecPoint}" /></div>*}
+		{*<input type="text" name="bookDecPoint" id="bookDecPoint" value="{$bookDecPoint}"></div>*}
 		<div><label class="aclabel">{tr}Thousands separator{/tr}</label>
 		<select name="bookThousand" id="bookThousand" >
 			<option value="," {if empty($bookThousand) or $bookThousand eq ','}selected="selected"{/if}>{tr}Comma{/tr}</option>
 			<option value="." {if $bookThousand eq '.'}selected="selected"{/if}>{tr}Decimal point{/tr}</option>
 			<option value=" " {if $bookThousand eq ' '}selected="selected"{/if}>{tr}Space{/tr}</option>
 		</select></div>
-		{*<input type="text" name="bookThousand" id="bookThousand" value="{$bookThousand}" /></div>*}
+		{*<input type="text" name="bookThousand" id="bookThousand" value="{$bookThousand}"></div>*}
 	</fieldset>
 	<fieldset>
 		<legend>CSV export settings</legend>
 		<div><label class="aclabel">{tr}Separator{/tr}</label>
-		<input type="text" name="exportSeparator" id="exportSeparator" value="{$exportSeparator}" /></div>
+		<input type="text" name="exportSeparator" id="exportSeparator" value="{$exportSeparator}"></div>
 		<div><label class="aclabel">{tr}Quote strings with{/tr}</label>
-		<input type="text" name="exportQuote" id="exportQuote" value="{$exportQuote}" /></div>
+		<input type="text" name="exportQuote" id="exportQuote" value="{$exportQuote}"></div>
 		<div><label class="aclabel">{tr}End of Line{/tr}</label>
 		<select name="exportEOL" id="exportEOL">
 			<option value="CR"{if $exportEOL=='CR'} selected="selected"{/if}>{tr}Carriage return{/tr}</option>
@@ -102,12 +102,12 @@
 		<div>
 			<div class="aclabel"><label class="aclabel">{tr}Allow automatic tax calculation{/tr}</label><br>&nbsp;</div>
 			<div>
-				<input type="radio" name="bookAutoTax" id="bookAutoTaxY"{if $bookAutoTax!='n'} checked="checked"{/if} />{tr}Yes{/tr}<br>
-				<input type="radio" name="bookAutoTax" id="bookAutoTaxN"{if $bookAutoTax=='n'} checked="checked"{/if} />{tr}No{/tr}<br>
+				<input type="radio" name="bookAutoTax" id="bookAutoTaxY"{if $bookAutoTax!='n'} checked="checked"{/if}>{tr}Yes{/tr}<br>
+				<input type="radio" name="bookAutoTax" id="bookAutoTaxN"{if $bookAutoTax=='n'} checked="checked"{/if}>{tr}No{/tr}<br>
 			</div>
 		</div>
 	</fieldset>
-	<input type="submit" name="create" value="{tr}Create a new book{/tr}" />
+	<input type="submit" name="create" value="{tr}Create a new book{/tr}">
  </form>
 </div>
 {/tab}

@@ -9,9 +9,9 @@
 <form method="post" action="tiki-edit_css.php">
 	{tr}Style Sheet{/tr} : 
 {if $action eq "edit"}
-	<input type="text" name="editstyle" value="{$editstyle}" />
-	<input type="submit" name="save" value="{tr}Save{/tr}" />
-	<input type="submit" name="save2" value="{tr}Save{/tr} &amp; {tr}Display{/tr}" />
+	<input type="text" name="editstyle" value="{$editstyle}">
+	<input type="submit" name="save" value="{tr}Save{/tr}">
+	<input type="submit" name="save2" value="{tr}Save{/tr} &amp; {tr}Display{/tr}">
 	{button  href="tiki-edit_css.php?editstyle=$editstyle" _text="{tr}Cancel{/tr}"}
 	{if $tikidomain}
 		{tr}The file will be saved in:{/tr} styles/{$tikidomain}
@@ -32,9 +32,9 @@
 		<option value="{$list[t]|escape}"{if $list[t] eq $editstyle or (empty($editstyle) and $list[t] eq $shortStyle)} selected="selected"{/if}>{$list[t]|escape}</option>
 	{/section}
 	</select>
-	<input type="submit" name="try" value="{tr}Try{/tr}" />
-	<input type="submit" name="display" value="{tr}Display{/tr}" />
-	<input type="submit" name="edit" value="{tr}Edit{/tr}" />
+	<input type="submit" name="try" value="{tr}Try{/tr}">
+	<input type="submit" name="display" value="{tr}Display{/tr}">
+	<input type="submit" name="edit" value="{tr}Edit{/tr}">
 
 	{section name=l loop=$css}
 	<div style="padding:4px;text-align:left">

@@ -1,6 +1,6 @@
 {* $Id$ *}
 {if $base_uri and ($dir_level gt 0 or $prefs.feature_html_head_base_tag eq 'y')}
-	<base href="{$base_uri|escape}" />
+	<base href="{$base_uri|escape}">
 {/if}
 
 <!--Latest IE Compatibility-->

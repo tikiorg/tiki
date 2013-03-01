@@ -104,7 +104,7 @@
 		<h2>{$edtab}</h2>
 
 		<form action="tiki-admin_calendars.php" method="post">
-			<input type="hidden" name="calendarId" value="{$calendarId|escape}" />
+			<input type="hidden" name="calendarId" value="{$calendarId|escape}">
 			<table class="formcolor">
 				{if $tiki_p_modify_object_categories eq 'y'}
 					{include file='categorize.tpl'}
@@ -112,9 +112,9 @@
 				<tr>
 					<td>{tr}Name:{/tr}</td>
 					<td>
-						<input type="text" name="name" value="{$name|escape}" />
+						<input type="text" name="name" value="{$name|escape}">
 						{tr}Show in popup box{/tr}
-						<input type="checkbox" name="show[calname]" value="on"{if $show_calname eq 'y'} checked="checked"{/if} />
+						<input type="checkbox" name="show[calname]" value="on"{if $show_calname eq 'y'} checked="checked"{/if}>
 					</td>
 				</tr>
 				<tr>
@@ -123,7 +123,7 @@
 						<textarea name="description" rows="5" wrap="virtual" style="width:100%;">{$description|escape}</textarea>
 						<br>
 						{tr}Show in popup box{/tr}
-						<input type="checkbox" name="show[description]" value="on"{if $show_description eq 'y'} checked="checked"{/if} />
+						<input type="checkbox" name="show[description]" value="on"{if $show_description eq 'y'} checked="checked"{/if}>
 					</td>
 				</tr>
 				<tr>
@@ -134,7 +134,7 @@
 							<option value='n' {if $customlocations eq 'n'}selected="selected"{/if}>{tr}No{/tr}</option>
 						</select>
 						{tr}Show in popup box{/tr}
-						<input type="checkbox" name="show[location]" value="on"{if $show_location eq 'y'} checked="checked"{/if} />
+						<input type="checkbox" name="show[location]" value="on"{if $show_location eq 'y'} checked="checked"{/if}>
 					</td>
 				</tr>
 				<tr>
@@ -145,7 +145,7 @@
 							<option value='n' {if $customparticipants eq 'n'}selected="selected"{/if}>{tr}No{/tr}</option>
 						</select>
 						{tr}Show in popup box{/tr}
-						<input type="checkbox" name="show[participants]" value="on"{if $show_participants eq 'y'} checked="checked"{/if} />
+						<input type="checkbox" name="show[participants]" value="on"{if $show_participants eq 'y'} checked="checked"{/if}>
 					</td>
 				</tr>
 				<tr>
@@ -156,7 +156,7 @@
 							<option value='n' {if $customcategories eq 'n'}selected="selected"{/if}>{tr}No{/tr}</option>
 						</select>
 						{tr}Show in popup box{/tr}
-						<input type="checkbox" name="show[category]" value="on"{if $show_category eq 'y'} checked="checked"{/if} />
+						<input type="checkbox" name="show[category]" value="on"{if $show_category eq 'y'} checked="checked"{/if}>
 					</td>
 				</tr>
 				<tr>
@@ -167,7 +167,7 @@
 							<option value='n' {if $customlanguages eq 'n'}selected="selected"{/if}>{tr}No{/tr}</option>
 						</select>
 						{tr}Show in popup box{/tr}
-						<input type="checkbox" name="show[language]" value="on"{if $show_language eq 'y'} checked="checked"{/if} />
+						<input type="checkbox" name="show[language]" value="on"{if $show_language eq 'y'} checked="checked"{/if}>
 					</td>
 				</tr>
 				<tr>
@@ -178,7 +178,7 @@
 							<option value='n' {if $customurl eq 'n'}selected="selected"{/if}>{tr}No{/tr}</option>
 						</select>
 						{tr}Show in popup box{/tr}
-						<input type="checkbox" name="show[url]" value="on"{if $show_url eq 'y'} checked="checked"{/if} />
+						<input type="checkbox" name="show[url]" value="on"{if $show_url eq 'y'} checked="checked"{/if}>
 					</td>
 				</tr>
 				{if $prefs.feature_newsletters eq 'y'}
@@ -226,7 +226,7 @@
 					<td>{tr}Days to display:{/tr}</td>
 					<td>
 						{section name="viewdays" start=0 loop=7}
-							{$days_names[$smarty.section.viewdays.index]}&nbsp;<input type="checkbox" name="viewdays[]" value="{$smarty.section.viewdays.index}" {if !empty($info.viewdays) && in_array($smarty.section.viewdays.index,$info.viewdays)} checked="checked" {/if} />
+							{$days_names[$smarty.section.viewdays.index]}&nbsp;<input type="checkbox" name="viewdays[]" value="{$smarty.section.viewdays.index}" {if !empty($info.viewdays) && in_array($smarty.section.viewdays.index,$info.viewdays)} checked="checked" {/if}>
 						{/section}
 					</td>
 				</tr>
@@ -247,13 +247,13 @@
 				<tr>
 					<td>{tr}Custom foreground color:{/tr}</td>
 					<td>
-						<input id="fgColorField" type="text" name="options[customfgcolor]" value="{$customfgcolor}" size="6" /><i>{tr}Ex:{/tr} FFFFFF</i>
+						<input id="fgColorField" type="text" name="options[customfgcolor]" value="{$customfgcolor}" size="6"><i>{tr}Ex:{/tr} FFFFFF</i>
 					</td>
 				</tr>
 				<tr>
 					<td>{tr}Custom background color:{/tr}</td>
 					<td>
-						<input id="bgColorField" type="text" name="options[custombgcolor]" value="{$custombgcolor}" size="6" /><i>{tr}Ex:{/tr} 000000</i>
+						<input id="bgColorField" type="text" name="options[custombgcolor]" value="{$custombgcolor}" size="6"><i>{tr}Ex:{/tr} 000000</i>
 					</td>
 				</tr>
 				<tr>
@@ -267,8 +267,8 @@
 						{tr}Default event status:{/tr}
 						{html_options name='options[defaulteventstatus]' options=$eventstatus selected=$defaulteventstatus}
 						<br>
-						{tr}Show in popup box{/tr}<input type="checkbox" name="show[status]" value="on"{if $info.show_status eq 'y'} checked="checked"{/if} />
-						{tr}Show in calendar view{/tr}<input type="checkbox" name="show[status_calview]" value="on"{if $info.show_status_calview ne 'n'} checked="checked"{/if} />
+						{tr}Show in popup box{/tr}<input type="checkbox" name="show[status]" value="on"{if $info.show_status eq 'y'} checked="checked"{/if}>
+						{tr}Show in calendar view{/tr}<input type="checkbox" name="show[status_calview]" value="on"{if $info.show_status_calview ne 'n'} checked="checked"{/if}>
 					</td>
 				</tr>
 				{if $prefs.feature_groupalert eq 'y'}
@@ -286,28 +286,28 @@
 					<tr>
 						<td>{tr}Allows to select each user for small groups{/tr}</td>
 						<td>
-							<input type="checkbox" name="showeachuser" {if $showeachuser eq 'y'}checked="checked"{/if} />
+							<input type="checkbox" name="showeachuser" {if $showeachuser eq 'y'}checked="checked"{/if}>
 						</td>
 					</tr>
 				{/if}
 				<tr>
 					<td>{tr}Default event to all day{/tr}</td>
-					<td><input type="checkbox" name="allday"{if $info.allday eq 'y'} checked="checked"{/if} /></td>
+					<td><input type="checkbox" name="allday"{if $info.allday eq 'y'} checked="checked"{/if}></td>
 				</tr>
 				<tr>
 					<td>{tr}Event name on each day in calendar view{/tr}</td>
-					<td><input type="checkbox" name="nameoneachday"{if $info.nameoneachday eq 'y'}  checked="checked"{/if} /></td>
+					<td><input type="checkbox" name="nameoneachday"{if $info.nameoneachday eq 'y'}  checked="checked"{/if}></td>
 				</tr>
 				<tr>
 					<td>&nbsp;</td>
 					<td>
-						<input type="submit" name="save" value="{tr}Save{/tr}" />
+						<input type="submit" name="save" value="{tr}Save{/tr}">
 					</td>
 				</tr>
 			</table>
 			<br>
 			{if $calendarId ne 0}{$name|escape} : {/if}
-			{tr}Delete events older than:{/tr} <input type="text" name="days" value="0"/> {tr}days{/tr} <input type="submit" name="clean" value="{tr}Delete{/tr}" />
+			{tr}Delete events older than:{/tr} <input type="text" name="days" value="0"> {tr}days{/tr} <input type="submit" name="clean" value="{tr}Delete{/tr}">
 		</form>
 	{/tab}
 {/tabset}

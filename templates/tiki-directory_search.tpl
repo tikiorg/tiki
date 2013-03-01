@@ -5,22 +5,22 @@
 <br>
 <div align="center">
   <form action="tiki-directory_search.php" method="post">
-    <input type="hidden" name="parent" value="{$parent|escape}" />
+    <input type="hidden" name="parent" value="{$parent|escape}">
     {tr}Search:{/tr}
     <select name="how">
       <option value="or" {if $how eq 'or'}selected="selected"{/if}>{tr}any{/tr}</option>
       <option value="and" {if $how eq 'and'}selected="selected"{/if}>{tr}All{/tr}</option>
     </select>
-    <input type="text" name="words" value="{$words|escape}" size="30" />
-    <input type="hidden" name="where" value="all" />
-    <input type="submit" value="search" />
+    <input type="text" name="words" value="{$words|escape}" size="30">
+    <input type="hidden" name="where" value="all">
+    <input type="submit" value="search">
   </form>
 </div>
 <div class="dirlistsites"> {if $items}
   <form method="post" action="tiki-directory_search.php">
-    <input type="hidden" name="how" value="{$how|escape}" />
-    <input type="hidden" name="words" value="{$words|escape}" />
-    <input type="hidden" name="where" value="{$where|escape}" />
+    <input type="hidden" name="how" value="{$how|escape}">
+    <input type="hidden" name="words" value="{$words|escape}">
+    <input type="hidden" name="where" value="{$where|escape}">
     {tr}Sort by:{/tr}
     <select name="sort_mode">
       <option value="name_desc" {if $sort_mode eq 'name_desc'}selected="selected"{/if}>{tr}Name (desc){/tr}</option>
@@ -32,7 +32,7 @@
       <option value="lastModif_desc" {if $sort_mode eq 'lastModif_desc'}selected="selected"{/if}>{tr}Last updated (desc){/tr}</option>
       <option value="lastModif_asc" {if $sort_mode eq 'lastModif_asc'}selected="selected"{/if}>{tr}Last updated (asc){/tr}</option>
     </select>
-    <input type="submit" name="xx" value="sort" />
+    <input type="submit" name="xx" value="sort">
   </form>
   <br>
   {/if}

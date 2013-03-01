@@ -59,7 +59,7 @@
 		{section name=user loop=$channels}
 			<tr class="{cycle}">
 				<td style="text-align:center">
-					<input type="checkbox" name="checked[]" value="{$channels[user].forumId|escape}" {if isset($smarty.request.checked) and $smarty.request.checked and in_array($channels[user].forumId,$smarty.request.checked)}checked="checked"{/if} />
+					<input type="checkbox" name="checked[]" value="{$channels[user].forumId|escape}" {if isset($smarty.request.checked) and $smarty.request.checked and in_array($channels[user].forumId,$smarty.request.checked)}checked="checked"{/if}>
 				</td>
 				<td>
 					<a class="link" href="tiki-view_forum.php?forumId={$channels[user].forumId}" title="{tr}View{/tr}">{$channels[user].name|escape}</a>
@@ -112,7 +112,7 @@
 					<option value="delsel_x">{tr}Delete{/tr}</option>
 				{/if}
 			</select>
-			<input type="submit" name="batchaction" value="{tr}OK{/tr}" />
+			<input type="submit" name="batchaction" value="{tr}OK{/tr}">
 		</div>
 	{/if}
 </form>
@@ -131,12 +131,12 @@
 	{/if}
 
 	<form action="tiki-admin_forums.php" method="post">
-		<input type="hidden" name="forumId" value="{$forumId|escape}" />
+		<input type="hidden" name="forumId" value="{$forumId|escape}">
 		<table class="formcolor">
 			<tr>
 				<td>{tr}Name:{/tr}</td>
 				<td>
-					<input type="text" name="name" size="50" value="{$name|escape}" />
+					<input type="text" name="name" size="50" value="{$name|escape}">
 				</td>
 			</tr>
 			<tr>
@@ -148,13 +148,13 @@
 			<tr>
 				<td>{tr}Show description:{/tr}</td>
 				<td>
-					<input type="checkbox" name="show_description" {if $show_description eq 'y'}checked="checked"{/if} />
+					<input type="checkbox" name="show_description" {if $show_description eq 'y'}checked="checked"{/if}>
 				</td>
 			</tr>
 			<tr>
 				<td>{tr}Prevent flooding:{/tr}</td>
 				<td>
-					<input type="checkbox" name="controlFlood" {if $controlFlood eq 'y'}checked="checked"{/if} />
+					<input type="checkbox" name="controlFlood" {if $controlFlood eq 'y'}checked="checked"{/if}>
 					{tr}Minimum time between posts:{/tr}
 					{html_options name=floodInterval options=$flood_options selected=$floodInterval}
 				</td>
@@ -169,20 +169,20 @@
 							<option {if $forumSection eq $sections[ix]}selected="selected"{/if} value="{$sections[ix]|escape}">{$sections[ix]|escape}</option>
 						{/section}
 					</select>
-					<input name="new_section" type="text" />
+					<input name="new_section" type="text">
 				</td>
 			</tr>
 			<tr>
 				<td>{tr}Moderator user:{/tr}</td>
 				<td>
-					<input id="moderator_user" type="text" name="moderator" value="{$moderator|escape}"/>
+					<input id="moderator_user" type="text" name="moderator" value="{$moderator|escape}">
 					{autocomplete element='#moderator_user' type='username'}
 				</td>
 			</tr>
 			<tr>
 				<td>{tr}Moderator group:{/tr}</td>
 				<td>
-					<input id="moderator_group" type="text" name="moderator_group" value="{$moderator_group|escape}"/>
+					<input id="moderator_group" type="text" name="moderator_group" value="{$moderator_group|escape}">
 					{autocomplete element='#moderator_group' type='groupname'}
 				</td>
 			</tr>
@@ -195,13 +195,13 @@
 			<tr>
 				<td>{tr}Forum password{/tr}</td>
 				<td>
-					<input type="text" name="forum_password" value="{$forum_password|escape}" />
+					<input type="text" name="forum_password" value="{$forum_password|escape}">
 				</td>
 			</tr>
 			<tr>
 				<td>{tr}Only allow replies to the first message (flat forum):{/tr}</td>
 				<td>
-					<input type="checkbox" name="is_flat" {if $is_flat eq 'y'}checked="checked"{/if} />
+					<input type="checkbox" name="is_flat" {if $is_flat eq 'y'}checked="checked"{/if}>
 				</td>
 			</tr>
 
@@ -209,15 +209,15 @@
 
 			<tr>
 				<td>
-					<input type="checkbox" name="useMail" {if $useMail eq 'y'}checked="checked"{/if} /> {tr}Send this forums posts to this email:{/tr}
+					<input type="checkbox" name="useMail" {if $useMail eq 'y'}checked="checked"{/if}> {tr}Send this forums posts to this email:{/tr}
 				</td>
 				<td>
-					<input type="text" name="mail" value="{$mail|escape}" />
+					<input type="text" name="mail" value="{$mail|escape}">
 					</td>
 			</tr>
 			<tr>
 				<td>
-					<input type="checkbox" name="usePruneUnreplied" {if $usePruneUnreplied eq 'y'}checked="checked"{/if} /> {tr}Prune unreplied messages after:{/tr}
+					<input type="checkbox" name="usePruneUnreplied" {if $usePruneUnreplied eq 'y'}checked="checked"{/if}> {tr}Prune unreplied messages after:{/tr}
 				</td>
 				<td>
 					{html_options name=pruneUnrepliedAge options=$pruneUnrepliedAge_options selected=$pruneUnrepliedAge}
@@ -225,7 +225,7 @@
 			</tr>
 			<tr>
 				<td>
-					<input type="checkbox" name="usePruneOld" {if $usePruneOld eq 'y'}checked="checked"{/if} /> {tr}Prune old messages after:{/tr}</td>
+					<input type="checkbox" name="usePruneOld" {if $usePruneOld eq 'y'}checked="checked"{/if}> {tr}Prune old messages after:{/tr}</td>
 				<td>
 					{html_options name=pruneMaxAge options=$pruneMaxAge_options selected=$pruneMaxAge}
 				</td>
@@ -246,28 +246,28 @@
 						</tr>
 						<tr>
 							<td>
-								<input type="checkbox" name="topics_list_replies" {if $topics_list_replies eq 'y'}checked="checked"{/if} />
+								<input type="checkbox" name="topics_list_replies" {if $topics_list_replies eq 'y'}checked="checked"{/if}>
 							</td>
 							<td>
-								<input type="checkbox" name="topics_list_reads" {if $topics_list_reads eq 'y'}checked="checked"{/if} />
+								<input type="checkbox" name="topics_list_reads" {if $topics_list_reads eq 'y'}checked="checked"{/if}>
 							</td>
 							<td>
-								<input type="checkbox" name="topics_list_pts" {if $topics_list_pts eq 'y'}checked="checked"{/if} />
+								<input type="checkbox" name="topics_list_pts" {if $topics_list_pts eq 'y'}checked="checked"{/if}>
 							</td>
 							<td>
-								<input type="checkbox" name="topics_list_lastpost" {if $topics_list_lastpost eq 'y'}checked="checked"{/if} />
+								<input type="checkbox" name="topics_list_lastpost" {if $topics_list_lastpost eq 'y'}checked="checked"{/if}>
 							</td>
 							<td>
-								<input type="checkbox" name="topics_list_lastpost_title" {if $topics_list_lastpost_title eq 'y'}checked="checked"{/if} />
+								<input type="checkbox" name="topics_list_lastpost_title" {if $topics_list_lastpost_title eq 'y'}checked="checked"{/if}>
 							</td>
 							<td>
-								<input type="checkbox" name="topics_list_lastpost_avatar" {if $topics_list_lastpost_avatar eq 'y'}checked="checked"{/if} />
+								<input type="checkbox" name="topics_list_lastpost_avatar" {if $topics_list_lastpost_avatar eq 'y'}checked="checked"{/if}>
 							</td>
 							<td>
-								<input type="checkbox" name="topics_list_author" {if $topics_list_author eq 'y'}checked="checked"{/if} />
+								<input type="checkbox" name="topics_list_author" {if $topics_list_author eq 'y'}checked="checked"{/if}>
 							</td>
 							<td>
-								<input type="checkbox" name="topics_list_author_avatar" {if $topics_list_author_avatar eq 'y'}checked="checked"{/if} />
+								<input type="checkbox" name="topics_list_author_avatar" {if $topics_list_author_avatar eq 'y'}checked="checked"{/if}>
 							</td>
 
 						</tr>
@@ -277,7 +277,7 @@
 			<tr>
 				<td>{tr}Posts can be rated{/tr}</td>
 				<td>
-					<input type="checkbox" name="vote_threads" {if $vote_threads eq 'y'}checked="checked"{/if} />
+					<input type="checkbox" name="vote_threads" {if $vote_threads eq 'y'}checked="checked"{/if}>
 				</td>
 			</tr>
 			<tr>
@@ -291,25 +291,25 @@
 					{tr}Forward messages to this forum to this e-mail address, in a format that can be used for sending back to the inbound forum e-mail address{/tr}
 				</td>
 				<td>
-					<input type="text" name="outbound_address" size="50" value="{$outbound_address|escape}" />
+					<input type="text" name="outbound_address" size="50" value="{$outbound_address|escape}">
 				</td>
 			</tr>
 			<tr>
 				<td>{tr}Send mails even when the post is generated by inbound mail{/tr}</td>
 				<td>
-					<input type="checkbox" name="outbound_mails_for_inbound_mails" {if $outbound_mails_for_inbound_mails eq 'y'}checked="checked"{/if} />
+					<input type="checkbox" name="outbound_mails_for_inbound_mails" {if $outbound_mails_for_inbound_mails eq 'y'}checked="checked"{/if}>
 				</td>
 			</tr>
 			<tr>
 				<td>{tr}Append a reply link to outbound mails{/tr}</td>
 				<td>
-					<input type="checkbox" name="outbound_mails_reply_link" {if $outbound_mails_reply_link eq 'y'}checked="checked"{/if} />
+					<input type="checkbox" name="outbound_mails_reply_link" {if $outbound_mails_reply_link eq 'y'}checked="checked"{/if}>
 				</td>
 			</tr>
 			<tr>
 				<td>{tr}Originating e-mail address for mails from this forum{/tr}</td>
 				<td>
-					<input type="text" name="outbound_from" size="50" value="{$outbound_from|escape}" />
+					<input type="text" name="outbound_from" size="50" value="{$outbound_from|escape}">
 				</td>
 			</tr>
 			<tr>
@@ -319,19 +319,19 @@
 						<tr>
 							<td>{tr}POP3 server:{/tr}</td>
 							<td>
-								<input type="text" name="inbound_pop_server" value="{$inbound_pop_server|escape}" />
+								<input type="text" name="inbound_pop_server" value="{$inbound_pop_server|escape}">
 							</td>
 						</tr>
 						<tr>
 							<td>{tr}User:{/tr}</td>
 							<td>
-								<input type="text" name="inbound_pop_user" value="{$inbound_pop_user|escape}" autocomplete="off" />
+								<input type="text" name="inbound_pop_user" value="{$inbound_pop_user|escape}" autocomplete="off">
 							</td>
 						</tr>
 						<tr>
 							<td>{tr}Password:{/tr}</td>
 							<td>
-								<input type="password" name="inbound_pop_password" value="{$inbound_pop_password|escape}" autocomplete="off" />
+								<input type="password" name="inbound_pop_password" value="{$inbound_pop_password|escape}" autocomplete="off">
 							</td>
 						</tr>
 					</table>
@@ -340,13 +340,13 @@
 			<tr>
 				<td>{tr}Use topic smileys{/tr}</td>
 				<td>
-					<input type="checkbox" name="topic_smileys" {if $topic_smileys eq 'y'}checked="checked"{/if} />
+					<input type="checkbox" name="topic_smileys" {if $topic_smileys eq 'y'}checked="checked"{/if}>
 				</td>
 			</tr>
 			<tr>
 				<td>{tr}Show topic summary{/tr}</td>
 				<td>
-					<input type="checkbox" name="topic_summary" {if $topic_summary eq 'y'}checked="checked"{/if} />
+					<input type="checkbox" name="topic_summary" {if $topic_summary eq 'y'}checked="checked"{/if}>
 				</td>
 			</tr>
 
@@ -364,22 +364,22 @@
 						</tr>
 					<tr>
 						<td>
-							<input type="checkbox" name="ui_avatar" {if $ui_avatar eq 'y'}checked="checked"{/if} />
+							<input type="checkbox" name="ui_avatar" {if $ui_avatar eq 'y'}checked="checked"{/if}>
 						</td>
 						<td>
-							<input type="checkbox" name="ui_flag" {if $ui_flag eq 'y'}checked="checked"{/if} />
+							<input type="checkbox" name="ui_flag" {if $ui_flag eq 'y'}checked="checked"{/if}>
 						</td>
 						<td>
-							<input type="checkbox" name="ui_posts" {if $ui_posts eq 'y'}checked="checked"{/if} />
+							<input type="checkbox" name="ui_posts" {if $ui_posts eq 'y'}checked="checked"{/if}>
 						</td>
 						<td>
-							<input type="checkbox" name="ui_level" {if $ui_level eq 'y'}checked="checked"{/if} />
+							<input type="checkbox" name="ui_level" {if $ui_level eq 'y'}checked="checked"{/if}>
 						</td>
 						<td>
-							<input type="checkbox" name="ui_email" {if $ui_email eq 'y'}checked="checked"{/if} />
+							<input type="checkbox" name="ui_email" {if $ui_email eq 'y'}checked="checked"{/if}>
 						</td>
 						<td>
-							<input type="checkbox" name="ui_online" {if $ui_online eq 'y'}checked="checked"{/if} />
+							<input type="checkbox" name="ui_online" {if $ui_online eq 'y'}checked="checked"{/if}>
 						</td>
 					</tr>		
 				</table>
@@ -400,22 +400,22 @@
 				<table class="formcolor">
 					<tr>
 						<td>
-							<input type="radio" name="att_store" value="db" {if $att_store eq 'db'}checked="checked"{/if} /> {tr}Database{/tr}
+							<input type="radio" name="att_store" value="db" {if $att_store eq 'db'}checked="checked"{/if}> {tr}Database{/tr}
 						</td>
 					</tr>
 					<tr>
 						<td>
-							<input type="radio" name="att_store" value="dir" {if $att_store eq 'dir'}checked="checked"{/if} /> {tr}Path:{/tr} <input type="text" name="att_store_dir" value="{$att_store_dir|escape}" size="14" />
+							<input type="radio" name="att_store" value="dir" {if $att_store eq 'dir'}checked="checked"{/if}> {tr}Path:{/tr} <input type="text" name="att_store_dir" value="{$att_store_dir|escape}" size="14" />
 							</td>
 						</tr>
 						<tr>
 							<td>
-								{tr}Max attachment size (bytes):{/tr} <input type="text" name="att_max_size" value="{$att_max_size|escape}" /><br><i>{tr}Max:{/tr} {$maxAttachSize|escape} ({$maxAttachSize|kbsize})</i>
+								{tr}Max attachment size (bytes):{/tr} <input type="text" name="att_max_size" value="{$att_max_size|escape}"><br><i>{tr}Max:{/tr} {$maxAttachSize|escape} ({$maxAttachSize|kbsize})</i>
 							</td>
 						</tr>
 						<tr>
 							<td>
-								<input type="checkbox" name="att_list_nb"{if $att_list_nb eq 'y'} checked="checked"{/if} id="att_list_nb" /><label for="att_list_nb">{tr}Shows number of attachments of the all thread in forum list{/tr}</label>
+								<input type="checkbox" name="att_list_nb"{if $att_list_nb eq 'y'} checked="checked"{/if} id="att_list_nb"><label for="att_list_nb">{tr}Shows number of attachments of the all thread in forum list{/tr}</label>
 							</td>
 						</tr>
 					</table>
@@ -459,7 +459,7 @@
 						<tr>
 							<td>{tr}Topics per page:{/tr}</td>
 							<td>
-								<input type="text" name="topicsPerPage" value="{$topicsPerPage|escape}" />
+								<input type="text" name="topicsPerPage" value="{$topicsPerPage|escape}">
 							</td>
 						</tr>
 					</table>
@@ -505,7 +505,7 @@
 			{/if}
 			<tr>
 				<td>&nbsp;</td>
-				<td><input type="submit" name="save" value="{tr}Save{/tr}" /></td>
+				<td><input type="submit" name="save" value="{tr}Save{/tr}"></td>
 			</tr>
 		</table>
 	</form>
@@ -516,7 +516,7 @@
 		<table class="formcolor">
 			<tr>
 				<td>{tr}Name{/tr}</td>
-				<td><input type="text" size="50" name="name" value="{$name|escape}" /></td>
+				<td><input type="text" size="50" name="name" value="{$name|escape}"></td>
 			</tr>
 			<tr>
 				<td>{tr}Description{/tr}</td>
@@ -534,15 +534,15 @@
 			</tr>
 			<tr>
 				<td>{tr}Duplicate categories{/tr}</td>
-				<td><input type="checkbox" name="dupCateg" /></td>
+				<td><input type="checkbox" name="dupCateg"></td>
 			</tr>
 			<tr>
 				<td>{tr}Duplicate perms{/tr}</td>
-				<td><input type="checkbox" name="dupPerms" /></td>
+				<td><input type="checkbox" name="dupPerms"></td>
 			</tr>
 			<tr>
 				<td></td>
-				<td><input type="submit" name="duplicate" value="{tr}Duplicate{/tr}" /></td>
+				<td><input type="submit" name="duplicate" value="{tr}Duplicate{/tr}"></td>
 			</tr>
 		</table>
 	</form>

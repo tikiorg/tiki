@@ -44,12 +44,12 @@
 
 			<div class="admin2cols adminoptionbox clearfix">
 				<label for="assign_cache">{tr}Cache Time{/tr} ({tr}secs{/tr})</label>
-				<input type="text" id="assign_cache" name="assign_cache" value="{$assign_cache|escape}" />
+				<input type="text" id="assign_cache" name="assign_cache" value="{$assign_cache|escape}">
 			</div>
 			{if !isset($assign_info.type) or $assign_info.type neq 'function'}
 				<div class="admin2cols adminoptionbox clearfix">
 					<label for="assign_rows">{tr}Rows{/tr}</label>
-					<input type="text" id="assign_rows" name="assign_rows" value="{$assign_rows|escape}" />
+					<input type="text" id="assign_rows" name="assign_rows" value="{$assign_rows|escape}">
 				</div>
 			{/if}
 			<div class="admin2cols adminoptionbox clearfix">
@@ -103,7 +103,7 @@
 									<label for="assign_params[{$name|escape}]">{$param.name|escape}{if $param.required} <span class="attention">({tr}required{/tr})</span>{/if}</label>
 								</div>
 								<div class="description q234">
-									<input type="text" id="assign_params[{$name|escape}]" name="assign_params[{$name|escape}]" value="{$param.value|escape}"{if !empty($param.filter)} class="{$param.filter}" {/if}/>
+									<input type="text" id="assign_params[{$name|escape}]" name="assign_params[{$name|escape}]" value="{$param.value|escape}"{if !empty($param.filter)} class="{$param.filter}" {/if}>
 									<br>
 									{$param.description|escape}
 									{if !empty($param.default)} - {tr}Default:{/tr} {$param.default|escape}{/if}
@@ -129,8 +129,8 @@
 				</div>
 			{/if}
 		<div class="input_submit_container">
-			<input type="submit" name="preview" value="{tr}Preview{/tr}" onclick="needToConfirm=false;" />
-			<input type="submit" name="assign" value="{tr}Assign{/tr}" onclick="needToConfirm=false;" />
+			<input type="submit" name="preview" value="{tr}Preview{/tr}" onclick="needToConfirm=false;">
+			<input type="submit" name="assign" value="{tr}Assign{/tr}" onclick="needToConfirm=false;">
 		</div>
 	{/if}
 </div>

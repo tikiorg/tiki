@@ -14,7 +14,7 @@ var CHECKBOX_LIST = [{{section name=user loop=$items}'sites[{$items[user].siteId
   <table class="normal">
     <tr>
       <th>{if $items}
-        <input type="checkbox" name="checkall" onclick="checkbox_list_check_all('form_validate_sites',CHECKBOX_LIST,this.checked);" />
+        <input type="checkbox" name="checkall" onclick="checkbox_list_check_all('form_validate_sites',CHECKBOX_LIST,this.checked);">
         {/if}</th>
       <th><a href="tiki-directory_validate_sites.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}Name{/tr}</a></th>
       <th><a href="tiki-directory_validate_sites.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'url_desc'}url_asc{else}url_desc{/if}">{tr}Url{/tr}</a></th>
@@ -27,7 +27,7 @@ var CHECKBOX_LIST = [{{section name=user loop=$items}'sites[{$items[user].siteId
     {cycle values="odd,even" print=false}
     {section name=user loop=$items}
     <tr class="{cycle advance=false}">
-      <td class="checkbox"><input type="checkbox" name="sites[{$items[user].siteId}]" /></td>
+      <td class="checkbox"><input type="checkbox" name="sites[{$items[user].siteId}]"></td>
       <td class="text">{$items[user].name}</td>
       <td class="text"><a href="{$items[user].url}" target="_blank">{$items[user].url}</a></td>
       {if $prefs.directory_country_flag eq 'y'}
@@ -50,8 +50,8 @@ var CHECKBOX_LIST = [{{section name=user loop=$items}'sites[{$items[user].siteId
   </table>
   {if $items} <br>
   {tr}Perform action with selected:{/tr}
-  <input type="submit" name="del" value="{tr}Remove{/tr}" />
-  <input type="submit" name="validate" value="{tr}Validate{/tr}" />
+  <input type="submit" name="del" value="{tr}Remove{/tr}">
+  <input type="submit" name="validate" value="{tr}Validate{/tr}">
   {/if}
 </form>
 {pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links} 

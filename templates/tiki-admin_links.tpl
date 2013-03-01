@@ -43,12 +43,12 @@
 <form action="tiki-admin_links.php" method="post">
 	<table class="formcolor">
 		{if $editurl eq 'n'}
-			<tr><td>URL</td><td><input type="text" name="url" /></td></tr>
+			<tr><td>URL</td><td><input type="text" name="url"></td></tr>
 		{else}
-			<tr><td>URL</td><td>{$editurl}<input type="hidden" name="url" value="{$editurl|escape}" /></td></tr>
+			<tr><td>URL</td><td>{$editurl}<input type="hidden" name="url" value="{$editurl|escape}"></td></tr>
 		{/if}
-		<tr><td>{tr}Title{/tr}</td><td><input type="text" name="title" value="{$title|escape}" /></td></tr>
-		<tr><td>{tr}Position{/tr}</td><td><input type="text" size="3" name="position" value="{$position|escape}" /> (0 {tr}disables the link{/tr})</td></tr>
+		<tr><td>{tr}Title{/tr}</td><td><input type="text" name="title" value="{$title|escape}"></td></tr>
+		<tr><td>{tr}Position{/tr}</td><td><input type="text" size="3" name="position" value="{$position|escape}"> (0 {tr}disables the link{/tr})</td></tr>
 		<tr><td>{tr}Link type{/tr}</td><td>
 			<select name="type">
 				<option value="r" {if $type eq 'r'}selected="selected"{/if}>{tr}replace current page{/tr}</option>
@@ -57,6 +57,6 @@
 			</select>
 			</td>
 		</tr>
-		<tr><td>&nbsp;</td><td><input type="submit" name="add" value="{tr}Save{/tr}" /></td></tr>
+		<tr><td>&nbsp;</td><td><input type="submit" name="add" value="{tr}Save{/tr}"></td></tr>
 	</table>
 </form>

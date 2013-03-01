@@ -24,13 +24,13 @@
 {/if}
 
 <form method="post" action="tiki-edit_blog.php" id="blog-edit-form">
-  <input type="hidden" name="blogId" value="{$blogId|escape}" />
+  <input type="hidden" name="blogId" value="{$blogId|escape}">
   {tabset name='tabs_editblog'}
     {tab name="{tr}General Settings{/tr}"}
       <table class="formcolor">
         <tr class="editblogform">
           <td><label for="blog-title">{tr}Title{/tr}</label></td>
-          <td><input type="text" size="61" maxlength="200" name="title" id="blog-title" value="{$title|escape}" /></td>
+          <td><input type="text" size="61" maxlength="200" name="title" id="blog-title" value="{$title|escape}"></td>
         </tr>
         <tr class="editblogform">
           <td>
@@ -55,20 +55,20 @@
           </td>
         </tr>
         <tr class="editblogform">
-          <td class="checkbox"><input type="checkbox" name="public" id="blogs-allow_others" {if $public eq 'y'}checked='checked'{/if}/></td>
+          <td class="checkbox"><input type="checkbox" name="public" id="blogs-allow_others" {if $public eq 'y'}checked='checked'{/if}></td>
           <td><label for="blogs-allow_others">{tr}Allow other users to post in this blog{/tr}</label></td>
         </tr>	
         <tr class="editblogform">
-          <td class="checkbox"><input type="checkbox" name="alwaysOwner" id="blogs-always_owner" {if isset($alwaysOwner) and $alwaysOwner eq 'y'}checked='checked'{/if}/></td>
+          <td class="checkbox"><input type="checkbox" name="alwaysOwner" id="blogs-always_owner" {if isset($alwaysOwner) and $alwaysOwner eq 'y'}checked='checked'{/if}></td>
           <td><label for="blogs-always_owner">{tr}If others post to blog, author should always be owner{/tr}</label></td>
         </tr>
         <tr class="editblogform">
-          <td class="checkbox"><input type="checkbox" name="use_find" id="blogs-search" {if $use_find eq 'y'}checked='checked'{/if}/></td>
+          <td class="checkbox"><input type="checkbox" name="use_find" id="blogs-search" {if $use_find eq 'y'}checked='checked'{/if}></td>
           <td><label for="blogs-search">{tr}Allow search{/tr}</label></td>
         </tr>
         <tr class="editblogform">
           <td class="checkbox">
-            <input type="checkbox" name="allow_comments" id="blogs-comments" {if $allow_comments eq 'y' or $allow_comments eq 'c'}checked='checked'{/if}{if $prefs.feature_blogposts_comments ne 'y'} disabled="disabled"{/if} />
+            <input type="checkbox" name="allow_comments" id="blogs-comments" {if $allow_comments eq 'y' or $allow_comments eq 'c'}checked='checked'{/if}{if $prefs.feature_blogposts_comments ne 'y'} disabled="disabled"{/if}>
             {if $prefs.feature_blogposts_comments ne 'y'}Global post-level comments is disabled.{/if}
           </td>
           <td><label for="blogs-comments">{tr}Allow comments{/tr}</label></td>
@@ -82,40 +82,40 @@
       <table class="formcolor">
         <tr class="editblogform">
           <td><label for="blogs-number">{tr}Number of posts to show per page{/tr}</label></td>
-          <td><input type="text" name="maxPosts" id="blogs-number" value="{$maxPosts|escape}" /></td>
+          <td><input type="text" name="maxPosts" id="blogs-number" value="{$maxPosts|escape}"></td>
         </tr>
     	<tr class="editblogform">
           <td><label for="blogs-title">{tr}Display blog title in posts list page{/tr}</label></td>	 
-          <td><input type="checkbox" name="use_title" id="blogs-title" {if $use_title eq 'y'}checked='checked'{/if}/></td>	 
+          <td><input type="checkbox" name="use_title" id="blogs-title" {if $use_title eq 'y'}checked='checked'{/if}></td>	 
         </tr>
     	<tr class="editblogform">
           <td><label for="blogs-title-post">{tr}Display blog title in post page{/tr}</label></td>	 
-          <td><input type="checkbox" name="use_title_in_post" id="blogs-title-post" {if $use_title_in_post eq 'y'}checked='checked'{/if}/></td>	 
+          <td><input type="checkbox" name="use_title_in_post" id="blogs-title-post" {if $use_title_in_post eq 'y'}checked='checked'{/if}></td>	 
         </tr>
     	<tr class="editblogform">
           <td><label for="blogs-description">{tr}Display blog description{/tr}</label></td>	 
-          <td><input type="checkbox" name="use_description" id="blogs-description" {if $use_description eq 'y'}checked='checked'{/if}/></td>	 
+          <td><input type="checkbox" name="use_description" id="blogs-description" {if $use_description eq 'y'}checked='checked'{/if}></td>	 
         </tr>
     	<tr class="editblogform">
           <td><label for="blogs-breadcrumbs">{tr}Display breadcrumbs{/tr}</label></td>	 
-          <td><input type="checkbox" name="use_breadcrumbs" id="blogs-breadcrumbs" {if $use_breadcrumbs eq 'y'}checked='checked'{/if}/></td>	 
+          <td><input type="checkbox" name="use_breadcrumbs" id="blogs-breadcrumbs" {if $use_breadcrumbs eq 'y'}checked='checked'{/if}></td>	 
         </tr>
     	<tr class="editblogform">
           <td><label for="blogs-author">{tr}Display author in blog posts{/tr}</label></td>	 
-          <td><input type="checkbox" name="use_author" id="blogs-author" {if $use_author eq 'y'}checked='checked'{/if}/></td>	 
+          <td><input type="checkbox" name="use_author" id="blogs-author" {if $use_author eq 'y'}checked='checked'{/if}></td>	 
         </tr>
         <tr class="editblogform">
           <td><label for="blogs-date">{tr}Display published date in blog posts{/tr}</label></td>	 
-          <td><input type="checkbox" name="add_date" id="blogs-date" {if $add_date eq 'y'}checked='checked'{/if}/></td>	 
+          <td><input type="checkbox" name="add_date" id="blogs-date" {if $add_date eq 'y'}checked='checked'{/if}></td>	 
         </tr>	
         <tr class="editblogform">
           <td><label for="blogs-avatar">{tr}Show user avatar{/tr}</label></td>
-          <td><input type="checkbox" name="show_avatar" id="blogs-avatar" {if $show_avatar eq 'y'}checked='checked'{/if} /></td>
+          <td><input type="checkbox" name="show_avatar" id="blogs-avatar" {if $show_avatar eq 'y'}checked='checked'{/if}></td>
         </tr>
         <tr class="editblogform">
           <td><label for="blogs-post-related">{tr}Show post related content{/tr}</label></td>
           <td>
-		    <input type="checkbox" name="show_related" id="blogs-post-related" {if $show_related eq 'y'}checked='checked'{/if} {if $prefs.feature_freetags ne 'y'}disabled="disabled"{/if}/>
+		    <input type="checkbox" name="show_related" id="blogs-post-related" {if $show_related eq 'y'}checked='checked'{/if} {if $prefs.feature_freetags ne 'y'}disabled="disabled"{/if}>
   		    {if $prefs.feature_freetags neq 'y'}
 		  	  <em>{tr}The checkbox is disabled because feature_freetags is disabled globally.{/tr}</em>
 	    	{/if}
@@ -124,13 +124,13 @@
         <tr class="editblogform">
           <td><label for="blogs-post-max-related">{tr}Maximum number of related posts to display{/tr}</label></td>
           <td>
-		    <input type="text" name="related_max" id="blogs-post-max-related" value="{$related_max|escape}"/>
+		    <input type="text" name="related_max" id="blogs-post-max-related" value="{$related_max|escape}">
 		  </td>
         </tr>
         <tr class="editblogform">
           <td><label for="blogs-post-use-excerpt">{tr}Use post excerpt{/tr}</label></td>
           <td>
-		    <input type="checkbox" name="use_excerpt" id="blogs-post-use-excerpt" {if $use_excerpt eq 'y'}checked='checked'{/if}/>
+		    <input type="checkbox" name="use_excerpt" id="blogs-post-use-excerpt" {if $use_excerpt eq 'y'}checked='checked'{/if}>
 		  </td>
         </tr>
 
@@ -174,8 +174,8 @@
     {/tab}
   {/tabset}
   {if $prefs.feature_blog_heading eq 'y' and $tiki_p_edit_templates eq 'y'}
-    <input type="submit" class="wikiaction" name="preview" value="{tr}Heading preview{/tr}" />
+    <input type="submit" class="wikiaction" name="preview" value="{tr}Heading preview{/tr}">
   {/if}
-  <input type="submit" class="wikiaction" name="save" value="{tr}Save{/tr}" />
+  <input type="submit" class="wikiaction" name="save" value="{tr}Save{/tr}">
 </form>
 <br>

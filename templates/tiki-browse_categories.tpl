@@ -109,14 +109,14 @@
 </div>
 
 <form method="post" action="tiki-browse_categories.php">
-	<label>{tr}Find:{/tr} {if $parentId ne 0}{$p_info.name|escape} {/if}<input type="text" name="find" value="{$find|escape}" size="35" /></label>
+	<label>{tr}Find:{/tr} {if $parentId ne 0}{$p_info.name|escape} {/if}<input type="text" name="find" value="{$find|escape}" size="35"></label>
 	{help url="#" desc="{tr}Find in:{/tr} <ul><li>{tr}Name{/tr}</li><li>{tr}Description{/tr}</li></ul>"}
-	<input type="submit" value="{tr}Find{/tr}" name="search" />
-	<label>{tr}in the current category - and its subcategories: {/tr}<input type="checkbox" name="deep" {if $deep eq 'on'}checked="checked"{/if}/></label>
-	<input type="hidden" name="parentId" value="{$parentId|escape}" />
-	<input type="hidden" name="type" value="{$type|escape}" />
+	<input type="submit" value="{tr}Find{/tr}" name="search">
+	<label>{tr}in the current category - and its subcategories: {/tr}<input type="checkbox" name="deep" {if $deep eq 'on'}checked="checked"{/if}></label>
+	<input type="hidden" name="parentId" value="{$parentId|escape}">
+	<input type="hidden" name="type" value="{$type|escape}">
 	
-	<input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
+	<input type="hidden" name="sort_mode" value="{$sort_mode|escape}">
 </form>
 
 {if $deep eq 'on'}

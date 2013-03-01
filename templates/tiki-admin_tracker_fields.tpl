@@ -34,15 +34,15 @@
 					<option value="remove_fields">{tr}Remove Selected{/tr}</option>
 					<option value="export_fields">{tr}Export Selected{/tr}</option>
 				</select>
-				<input type="submit" name="submit" value="{tr}Go{/tr}"/>
-				<input type="hidden" name="trackerId" value="{$trackerId|escape}"/>
-				<input type="hidden" name="confirm" value="0"/>
+				<input type="submit" name="submit" value="{tr}Go{/tr}">
+				<input type="hidden" name="trackerId" value="{$trackerId|escape}">
+				<input type="hidden" name="confirm" value="0">
 			</div>
 		</form>
 
 		<form class="add-field" method="post" action="{service controller=tracker action=add_field}">
-			<input type="hidden" name="trackerId" value="{$trackerId|escape}"/>
-			<input type="submit" value="{tr}Add Field{/tr}"/>
+			<input type="hidden" name="trackerId" value="{$trackerId|escape}">
+			<input type="submit" value="{tr}Add Field{/tr}">
 		</form>
 		{jq}
 			var trackerId = {{$trackerId|escape}};
@@ -131,13 +131,13 @@
 			</label>
 			
 			<label>
-				<input type="checkbox" name="preserve_ids" value="1"/>
+				<input type="checkbox" name="preserve_ids" value="1">
 				{tr}Preserve Field IDs{/tr}
 			</label>
 
 			<div class="submit">
-				<input type="hidden" name="trackerId" value="{$trackerId|escape}"/>
-				<input type="submit" value="{tr}Import{/tr}"/>
+				<input type="hidden" name="trackerId" value="{$trackerId|escape}">
+				<input type="submit" value="{tr}Import{/tr}">
 			</div>
 		</form>
 	{/tab}

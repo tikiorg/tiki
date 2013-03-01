@@ -31,14 +31,14 @@
 {/remarksbox}
 
 <form enctype="multipart/form-data" method="post" action="tiki-edit_submission.php" id='editpageform'>
-	<input type="hidden" name="subId" value="{$subId|escape}" />
-	<input type="hidden" name="previewId" value="{$previewId|escape}" />
-	<input type="hidden" name="imageIsChanged" value="{$imageIsChanged|escape}" />
-	<input type="hidden" name="image_data" value="{$image_data|escape}" />
-	<input type="hidden" name="useImage" value="{$useImage|escape}" />
-	<input type="hidden" name="image_type" value="{$image_type|escape}" />
-	<input type="hidden" name="image_name" value="{$image_name|escape}" />
-	<input type="hidden" name="image_size" value="{$image_size|escape}" />
+	<input type="hidden" name="subId" value="{$subId|escape}">
+	<input type="hidden" name="previewId" value="{$previewId|escape}">
+	<input type="hidden" name="imageIsChanged" value="{$imageIsChanged|escape}">
+	<input type="hidden" name="image_data" value="{$image_data|escape}">
+	<input type="hidden" name="useImage" value="{$useImage|escape}">
+	<input type="hidden" name="image_type" value="{$image_type|escape}">
+	<input type="hidden" name="image_name" value="{$image_name|escape}">
+	<input type="hidden" name="image_size" value="{$image_size|escape}">
 	<div class="simplebox">
 		{tr}<b>*</b>=optional{/tr}
 		{if $types.$type.show_topline eq 'y'}, {tr}<b>Topline</b>=small line above Title{/tr}{/if} 
@@ -50,25 +50,25 @@
 		<tr id='show_topline' {if $types.$type.show_topline eq 'y'}style="display:;"{else}style="display:none;"{/if}>
 			<td>{tr}Topline{/tr} *</td>
 			<td>
-				<input type="text" name="topline" value="{$topline|escape}" size="60" />
+				<input type="text" name="topline" value="{$topline|escape}" size="60">
 			</td>
 		</tr>
 		<tr>
 			<td>{tr}Title{/tr}</td>
 			<td>
-				<input type="text" name="title" value="{$arttitle|escape}" maxlength="255" size="60" />
+				<input type="text" name="title" value="{$arttitle|escape}" maxlength="255" size="60">
 			</td>
 		</tr>
 		<tr id='show_subtitle' {if $types.$type.show_subtitle eq 'y'}style="display:;"{else}style="display:none;"{/if}>
 			<td>{tr}Subtitle{/tr} *</td>
 			<td>
-				<input type="text" name="subtitle" value="{$subtitle|escape}" size="60" />
+				<input type="text" name="subtitle" value="{$subtitle|escape}" size="60">
 			</td>
 		</tr>
 		<tr id='show_linkto' {if $types.$type.show_linkto eq 'y'}style="display:;"{else}style="display:none;"{/if}>
 			<td>{tr}Source{/tr} ({tr}URL{/tr}) *</td>
 			<td>
-				<input type="text" name="linkto" value="{$linkto|escape}" size="60" /> {if $linkto neq ''}<a href="{$linkto|escape}" target="_blank">{tr}View{/tr}</a>{/if}
+				<input type="text" name="linkto" value="{$linkto|escape}" size="60"> {if $linkto neq ''}<a href="{$linkto|escape}" target="_blank">{tr}View{/tr}</a>{/if}
 			</td>
 		</tr>
 		{if $prefs.feature_multilingual eq 'y'}
@@ -87,7 +87,7 @@
 		<tr id='show_author' {if $types.$type.show_author eq 'y'}style="display:;"{else}style="display:none;"{/if}>
 			<td>{tr}Author Name{/tr}</td>
 			<td>
-				<input type="text" name="authorName" value="{$authorName|escape}" />
+				<input type="text" name="authorName" value="{$authorName|escape}">
 			</td>
 		</tr>
 		<tr>
@@ -147,8 +147,8 @@
 		<tr id='show_image_1' {if $types.$type.show_image eq 'y'}style="display:;"{else}style="display:none;"{/if}>
 			<td>{tr}Own Image{/tr} *</td>
 			<td>
-				<input type="hidden" name="MAX_FILE_SIZE" value="1000000" />
-				<input name="userfile1" type="file" onchange="document.getElementById('useImage').checked = true;"/>
+				<input type="hidden" name="MAX_FILE_SIZE" value="1000000">
+				<input name="userfile1" type="file" onchange="document.getElementById('useImage').checked = true;">
 			</td>
 		</tr>
 		{if $hasImage eq 'y'}
@@ -172,33 +172,33 @@
 		<tr id='show_image_2' {if $types.$type.show_image eq 'y'}style="display:;"{else}style="display:none;"{/if}>
 			<td>{tr}Use own image{/tr} *</td>
 			<td>
-				<input type="checkbox" name="useImage" id="useImage" {if $useImage eq 'y'}checked='checked'{/if}/>
+				<input type="checkbox" name="useImage" id="useImage" {if $useImage eq 'y'}checked='checked'{/if}>
 			</td>
 		</tr>
 		<tr id='show_image_3' {if $types.$type.show_image eq 'y'}style="display:;"{else}style="display:none;"{/if}>
 			<td>{tr}Float text around image{/tr} *</td>
 			<td>
-				<input type="checkbox" name="isfloat" {if $isfloat eq 'y'}checked='checked'{/if}/>
+				<input type="checkbox" name="isfloat" {if $isfloat eq 'y'}checked='checked'{/if}>
 			</td>
 		</tr>
 		<tr id='show_image_4' {if $types.$type.show_image eq 'y'}style="display:;"{else}style="display:none;"{/if}>
 			<td>{tr}Own image size x{/tr} *</td>
 			<td>
-				<input type="text" name="image_x" value="{$image_x|escape}" />
+				<input type="text" name="image_x" value="{$image_x|escape}">
 				{tr}pixels{/tr}
 			</td>
 		</tr>
 		<tr id='show_image_5' {if $types.$type.show_image eq 'y'}style="display:;"{else}style="display:none;"{/if}>
 			<td>{tr}Own image size y{/tr} *</td>
 			<td>
-				<input type="text" name="image_y" value="{$image_y|escape}" />
+				<input type="text" name="image_y" value="{$image_y|escape}">
 				{tr}pixels{/tr}
 			</td>
 		</tr>
 		<tr id='show_image_caption' {if $types.$type.show_image_caption eq 'y'}style="display:;"{else}style="display:none;"{/if}>
 			<td>{tr}Image caption{/tr} *</td>
 			<td>
-				<input type="text" name="image_caption" value="{$image_caption|escape}" size="60" />
+				<input type="text" name="image_caption" value="{$image_caption|escape}" size="60">
 			</td>
 		</tr>
 
@@ -273,7 +273,7 @@
 			{assign var='attfullname' value=$att.itemId}
 			<tr id={$attid} {if $types.$type.$attid eq 'y'}style="display:;"{else}style="display:none;"{/if}>
 				<td>{$attname|escape}</td>
-				<td><input type="text" name="{$attfullname}" value="{$article_attributes.$attfullname|escape}" size="60" maxlength="255" /></td>
+				<td><input type="text" name="{$attfullname}" value="{$article_attributes.$attfullname|escape}" size="60" maxlength="255"></td>
 			</tr>
 			{/foreach}
 		{/if}
@@ -281,18 +281,18 @@
 	
 	{if $tiki_p_use_HTML eq 'y'}
 		{if $smarty.session.wysiwyg neq 'y'}
-			<div align="center">{tr}Allow HTML:{/tr} <input type="checkbox" name="allowhtml" {if $allowhtml eq 'y'}checked="checked"{/if}/></div>
+			<div align="center">{tr}Allow HTML:{/tr} <input type="checkbox" name="allowhtml" {if $allowhtml eq 'y'}checked="checked"{/if}></div>
 		{else}
-			<input type="checkbox" name="allowhtml" {if $allowhtml eq 'y'}checked="checked"{/if} style="display: none;"/>
+			<input type="checkbox" name="allowhtml" {if $allowhtml eq 'y'}checked="checked"{/if} style="display: none;">
 		{/if}
 	{/if}
 
 	<div align="center">
 		{if $prefs.feature_antibot eq 'y'}<br><div align="center">{include file='antibot.tpl' antibot_table='y'}</div><br>{/if}
-		<input type="submit" class="wikiaction" name="preview" value="{tr}Preview{/tr}" onclick="needToConfirm=false;" />
-		<input type="submit" class="wikiaction" name="submitarticle" value="{tr}Submit Article{/tr}" onclick="needToConfirm=false;" />
+		<input type="submit" class="wikiaction" name="preview" value="{tr}Preview{/tr}" onclick="needToConfirm=false;">
+		<input type="submit" class="wikiaction" name="submitarticle" value="{tr}Submit Article{/tr}" onclick="needToConfirm=false;">
 		{if $tiki_p_autoapprove_submission eq 'y'}
-			<input type="submit" class="wikiaction" name="save" value="{tr}Auto-Approve Article{/tr}" onclick="needToConfirm=false;" />
+			<input type="submit" class="wikiaction" name="save" value="{tr}Auto-Approve Article{/tr}" onclick="needToConfirm=false;">
 		{/if}
 	</div>
 </form>

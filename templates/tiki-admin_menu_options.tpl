@@ -22,10 +22,10 @@
 				{/if}
 
 				<form method="get" action="tiki-admin_menu_options.php">
-					<input type="hidden" name="find" value="{$find|escape}" />
-					<input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
-					<input type="hidden" name="menuId" value="{$menuId}" />
-					<input type="hidden" name="offset" value="{$offset}" />
+					<input type="hidden" name="find" value="{$find|escape}">
+					<input type="hidden" name="sort_mode" value="{$sort_mode|escape}">
+					<input type="hidden" name="menuId" value="{$menuId}">
+					<input type="hidden" name="offset" value="{$offset}">
 					<table class="normal">
 						{assign var=numbercol value=0}
 						<tr>
@@ -54,7 +54,7 @@
 						{section name=user loop=$channels}
 							<tr class="{cycle}">
 								<td class="checkbox">
-									<input type="checkbox" name="checked[]" value="{$channels[user].optionId|escape}"  {if $smarty.request.checked and in_array($channels[user].optionId,$smarty.request.checked)}checked="checked"{/if} />
+									<input type="checkbox" name="checked[]" value="{$channels[user].optionId|escape}"  {if $smarty.request.checked and in_array($channels[user].optionId,$smarty.request.checked)}checked="checked"{/if}>
 								</td>
 								<td class="id">{$channels[user].optionId}</td>
 								<td class="id">{$channels[user].position}</td>
@@ -95,7 +95,7 @@
 					{if $channels}
 						<div align="left">
 							{tr}Perform action with checked:{/tr}
-							<input type="image" name="delsel" src='img/icons/cross.png' alt="{tr}Delete{/tr}" title="{tr}Delete{/tr}" />
+							<input type="image" name="delsel" src='img/icons/cross.png' alt="{tr}Delete{/tr}" title="{tr}Delete{/tr}">
 						</div>
 					{/if}
 				</form>
@@ -284,22 +284,22 @@
 		<tr>
 			<td valign="top" class="odd">
 				<form action="tiki-admin_menu_options.php" method="post">
-					<input type="hidden" name="optionId" value="{$optionId|escape}" />
-					<input type="hidden" name="menuId" value="{$menuId|escape}" />
-					<input type="hidden" name="offset" value="{$offset|escape}" />
-					{if !empty($nbRecords)}<input type="hidden" name="nbRecords" value="{$nbRecords|escape}" />{/if}
+					<input type="hidden" name="optionId" value="{$optionId|escape}">
+					<input type="hidden" name="menuId" value="{$menuId|escape}">
+					<input type="hidden" name="offset" value="{$offset|escape}">
+					{if !empty($nbRecords)}<input type="hidden" name="nbRecords" value="{$nbRecords|escape}">{/if}
 					<table class="formcolor">
 						<tr>
 							<td>{tr}Name:{/tr}</td>
 							<td colspan="3">
-								<input id="menu_name" type="text" name="name" value="{$name|escape}" size="34" />
+								<input id="menu_name" type="text" name="name" value="{$name|escape}" size="34">
 							</td>
 						</tr>
 						<tr>
 							<td>{tr}URL:{/tr}</td>
 							<td colspan="3">
 								{autocomplete element="#menu_url" type='pagename' options="select:function(event,ui){ldelim}ui.item.value='(('+ui.item.value+'))';{rdelim}"}
-								<input id="menu_url" type="text" name="url" value="{$url|escape}" size="34" />
+								<input id="menu_url" type="text" name="url" value="{$url|escape}" size="34">
 								<br><em>{tr}For wiki page, use ((PageName)).{/tr}</em>
 							</td>
 						</tr>
@@ -318,7 +318,7 @@
 							</td>
 							<td>{tr}Position:{/tr}</td>
 							<td>
-								<input type="text" name="position" value="{$position|escape}" size="6" />
+								<input type="text" name="position" value="{$position|escape}" size="6">
 							</td>
 						</tr>
 						<tr>
@@ -336,7 +336,7 @@
 						<tr>
 							<td>{tr}Sections:{/tr}</td>
 							<td colspan="3">
-								<input id="menu_section" type="text" name="section" value="{$section|escape}" size="34" /><br>
+								<input id="menu_section" type="text" name="section" value="{$section|escape}" size="34"><br>
 								{autocomplete element="#menu_section" type="array" options="source:prefNames,multiple:true,multipleSeparator:','"}{* note, multiple doesn't work in jquery-ui 1.8 *}
 								<em>{tr}Separate multiple feature/preferences with a comma ( , ) for an AND or a vertical bar ( | ) for an OR.{/tr}</em>
 							</td>
@@ -344,7 +344,7 @@
 						<tr>
 							<td>{tr}Permissions:{/tr}</td>
 							<td colspan="3">
-								<input id="menu_perm" type="text" name="perm" value="{$perm|escape}" size="34" /><br>
+								<input id="menu_perm" type="text" name="perm" value="{$perm|escape}" size="34"><br>
 								{autocomplete element="#menu_perm" type="array" options="source:permNames,multiple:true,multipleSeparator:','"}{* note, multiple doesn't work in jquery-ui 1.8 *}
 								<em>{tr}Separate multiple permissions with a comma ( , ) for an AND or a vertical bar ( | ) for an OR.{/tr}</em>
 							</td>
@@ -361,12 +361,12 @@
 						</tr>
 						{/if}
 						{if $prefs.menus_items_icons eq 'y'}
-							<tr><td>{tr}Icon:{/tr}</td><td colspan="3"><input type="text" name="icon" value="{$icon|escape}" size="20" /></td></tr>
+							<tr><td>{tr}Icon:{/tr}</td><td colspan="3"><input type="text" name="icon" value="{$icon|escape}" size="20"></td></tr>
 						{/if}
 						<tr>
 							<td>&nbsp;</td>
 							<td colspan="3">
-								<input type="submit" name="save" value="{tr}Save{/tr}" />
+								<input type="submit" name="save" value="{tr}Save{/tr}">
 							</td>
 						</tr>
 					</table>
@@ -378,7 +378,7 @@
 {/tab}
 {tab name="{tr}Preview{/tr}"}
 	<form action="tiki-admin_menu_options.php">
-		<input type="hidden" name="menuId" value="{$menuId}" />
+		<input type="hidden" name="menuId" value="{$menuId}">
 		<h2>{tr}Preview menu{/tr}</h2>
 		<fieldset style="padding:1em;margin-bottom: 1em;">
 			<legend>{tr}Appearance{/tr}</legend>
@@ -407,8 +407,8 @@
 <a name="export"></a>
 <h2>{tr}Export CSV data{/tr}</h2>
 <form action="tiki-admin_menu_options.php" method="post">
-	<input type="hidden" name="menuId" value="{$menuId}" />
-	<input type="submit" name="export" value="{tr}Export{/tr}" />
+	<input type="hidden" name="menuId" value="{$menuId}">
+	<input type="submit" name="export" value="{tr}Export{/tr}">
 </form>
 
 <br>
@@ -416,9 +416,9 @@
 <h2>{tr}Import CSV data{/tr}</h2>
 {remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}To add new options to the menu set the optionId field to 0. To remove an option set the remove field to 'y'.{/tr}{/remarksbox}
 <form action="tiki-admin_menu_options.php" method="post" enctype="multipart/form-data">
-	<input type="hidden" name="menuId" value="{$menuId}" />
-	{tr}File:{/tr} <input name="csvfile" type="file" />
-	<input type="submit" name="import" value="{tr}Import{/tr}" />
+	<input type="hidden" name="menuId" value="{$menuId}">
+	{tr}File:{/tr} <input name="csvfile" type="file">
+	<input type="submit" name="import" value="{tr}Import{/tr}">
 </form>
 {/tab}
 {/tabset}

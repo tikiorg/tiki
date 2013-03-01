@@ -14,12 +14,12 @@
 	<h2>{tr}Create new template{/tr}</h2>
 {/if}
 <form action="tiki-admin_content_templates.php" method="post">
-	<input type="hidden" name="templateId" value="{$templateId|escape}" />
+	<input type="hidden" name="templateId" value="{$templateId|escape}">
 	<table class="formcolor">
 		<tr>
 			<td><label for="name">{tr}Name:{/tr} (*)</label></td>
 			<td>
-				<input type="text" maxlength="255" size="40" id="name" name="name" value="{$info.name|escape}" /> 
+				<input type="text" maxlength="255" size="40" id="name" name="name" value="{$info.name|escape}"> 
 				{if $emptyname}
 					<span class="attention">{tr}Name field is mandatory{/tr}</span>
 				{/if}
@@ -30,37 +30,37 @@
 			<td>
 				{$toolbar_section='admin'}
 				{if $prefs.feature_cms_templates eq 'y'}
-					<input type="checkbox" name="section_cms" {if $info.section_cms eq 'y'}checked="checked"{/if} /> 
+					<input type="checkbox" name="section_cms" {if $info.section_cms eq 'y'}checked="checked"{/if}> 
 					{tr}CMS{/tr} ({tr}Articles{/tr})
 					{if $info.section_cms eq 'y'}{$toolbar_section='cms'}{/if}
 					<br>
 				{/if}
 				{if $prefs.feature_wiki_templates eq 'y'}
-					<label><input type="checkbox" name="section_wiki" {if $info.section_wiki eq 'y'}checked="checked"{/if} />
+					<label><input type="checkbox" name="section_wiki" {if $info.section_wiki eq 'y'}checked="checked"{/if}>
 					{tr}Wiki{/tr}</label>
 					{if $info.section_wiki eq 'y'}{$toolbar_section='wiki page'}{/if}
 					<br>
 				{/if}
 				{if $prefs.feature_file_galleries_templates eq 'y'}
-					<label><input type="checkbox" name="section_file_galleries" {if $info.section_file_galleries eq 'y'}checked="checked"{/if} />
+					<label><input type="checkbox" name="section_file_galleries" {if $info.section_file_galleries eq 'y'}checked="checked"{/if}>
 					{if $info.section_file_galleries eq 'y'}{$toolbar_section='admin'}{/if}
 					{tr}File Galleries{/tr}</label>
 					<br>
 				{/if}
 				{if $prefs.feature_newsletters eq 'y'}
-					<label><input type="checkbox" name="section_newsletters" {if $info.section_newsletters eq 'y'}checked="checked"{/if} />
+					<label><input type="checkbox" name="section_newsletters" {if $info.section_newsletters eq 'y'}checked="checked"{/if}>
 					{if $info.section_newsletters eq 'y'}{$toolbar_section='newsletters'}{/if}
 					{tr}Newsletters{/tr}</label>
 					<br>
 				{/if}
 				{if $prefs.feature_events eq 'y'}
-					<label><input type="checkbox" name="section_events" {if $info.section_events eq 'y'}checked="checked"{/if} />
+					<label><input type="checkbox" name="section_events" {if $info.section_events eq 'y'}checked="checked"{/if}>
 					{if $info.section_events eq 'y'}{$toolbar_section='calendar'}{/if}
 					{tr}Events{/tr}</label>
 					<br>
 				{/if}
 				{if $prefs.feature_html_pages eq 'y'}
-					<label><input type="checkbox" name="section_html" {if $info.section_html eq 'y'}checked="checked"{/if} />
+					<label><input type="checkbox" name="section_html" {if $info.section_html eq 'y'}checked="checked"{/if}>
 					{if $info.section_html eq 'y'}{$toolbar_section='wiki page'}{/if}
 					{tr}HTML Pages{/tr}</label>
 					<br>
@@ -86,14 +86,14 @@
 				{tr}Is HTML{/tr}
 			</td>
 			<td>
-				<input type="checkbox" name="section_wiki_html" {if $info.section_wiki_html eq 'y'}checked="checked"{/if} />
+				<input type="checkbox" name="section_wiki_html" {if $info.section_wiki_html eq 'y'}checked="checked"{/if}>
 			</td>
 		</tr>
 		
 		<tr class="type-cond for-page">
 			<td>{tr}Page Name:{/tr}</td>
 			<td>
-				<input type="text" name="page_name" value="{$info.page_name}"/>
+				<input type="text" name="page_name" value="{$info.page_name}">
 				{autocomplete element='input[name=page_name]' type='pagename'}
 			</td>
 		</tr>
@@ -107,7 +107,7 @@
 			<td colspan="2">
 				{if $prefs.feature_wysiwyg eq 'y' and $info.section_wiki_html eq 'y'}
 					{$use_wysiwyg='y'}
-					<input type="hidden" id="allowhtml" value="y"/>
+					<input type="hidden" id="allowhtml" value="y">
 					{if $prefs.wysiwyg_htmltowiki eq 'y'}{$is_html = 'y'}{else}{$is_html = 'n'}{/if}
 				{else}
 					{$use_wysiwyg='n'}
@@ -120,8 +120,8 @@
 		<tr>
 			<td/>
 			<td>
-				<input type="submit" name="save" value="{tr}Save{/tr}" onclick="needToConfirm=false;" />
-				<input type="submit" name="preview" value="{tr}Preview{/tr}" onclick="needToConfirm=false;" />
+				<input type="submit" name="save" value="{tr}Save{/tr}" onclick="needToConfirm=false;">
+				<input type="submit" name="preview" value="{tr}Preview{/tr}" onclick="needToConfirm=false;">
 			</td>
 		</tr>
 	</table>

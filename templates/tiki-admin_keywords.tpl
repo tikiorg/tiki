@@ -16,11 +16,11 @@
 				<tbody>
 					<tr>
 						<td style="padding-right: 25px;">{tr}Keywords:{/tr}</td>
-						<td><input name="new_keywords" size="65" value="{$edit_keywords|escape}"/></td>
+						<td><input name="new_keywords" size="65" value="{$edit_keywords|escape}"></td>
 					</tr>
 					<tr>
 						<td></td>
-						<td><input type="submit" name="save_keywords" value="{tr}Save{/tr}"/></td>
+						<td><input type="submit" name="save_keywords" value="{tr}Save{/tr}"></td>
 					</tr>
 				</tbody>
 			</table>
@@ -31,8 +31,8 @@
 <h2>{tr}Current Page Keywords{/tr}</h2>
 <form method="get" action="tiki-admin_keywords.php">
 	<label for="q">{tr}Search by page:{/tr}</label>
-	<input type="text" name="q" value="{if $smarty.request.q}{$smarty.request.q|escape}{/if}"/>
-	<input type="submit" name="search" value="{tr}Go{/tr}"/>
+	<input type="text" name="q" value="{if $smarty.request.q}{$smarty.request.q|escape}{/if}">
+	<input type="submit" name="search" value="{tr}Go{/tr}">
 </form>
 {if $search_on}
 	<div style="font-weight:bold;">{$search_cant|escape} {tr}results found!{/tr}</div>

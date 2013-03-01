@@ -8,7 +8,7 @@
 					<label for="name">{tr}Name:{/tr}</label>
 				</td>
 				<td>
-					<input type="text" size="50" id="name" name="name" value="" />
+					<input type="text" size="50" id="name" name="name" value="">
 				</td>
 			</tr>
 			<tr>
@@ -42,7 +42,7 @@
 					<label for="dupCateg">{tr}Duplicate categories:{/tr}</label>
 				</td>
 				<td>
-					<input type="checkbox" id="dupCateg" name="dupCateg" />
+					<input type="checkbox" id="dupCateg" name="dupCateg">
 				</td>
 			</tr>
 			<tr>
@@ -50,13 +50,13 @@
 					<label for="dupPerms">{tr}Duplicate permissions:{/tr}</label>
 				</td>
 				<td>
-					<input type="checkbox" id="dupPerms" name="dupPerms" />
+					<input type="checkbox" id="dupPerms" name="dupPerms">
 				</td>
 			</tr>
 			<tr>
 				<td></td>
 				<td>
-					<input type="submit" name="duplicate" value="{tr}Duplicate{/tr}" />
+					<input type="submit" name="duplicate" value="{tr}Duplicate{/tr}">
 				</td>
 			</tr>
 		</table>

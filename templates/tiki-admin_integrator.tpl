@@ -24,26 +24,26 @@
 
 {* Add form *}
 <form action="tiki-admin_integrator.php" method="post">
-<input type="hidden" name="repID" value="{$repID|escape}" />
+<input type="hidden" name="repID" value="{$repID|escape}">
 <table class="formcolor">
   <tr><td><span title="{tr}Human-readable repository name{/tr}">{tr}Name{/tr}</span></td>
-    <td><input type="text" name="name" value="{$name|escape}" title="{tr}Human-readable repository name{/tr}" /></td>
+    <td><input type="text" name="name" value="{$name|escape}" title="{tr}Human-readable repository name{/tr}"></td>
   </tr><tr>
     <td><span title="{tr}Path to repository (local filesystem: relative/absolute web root, remote: prefixed with 'http://'){/tr}">{tr}Path{/tr}</span></td>
-    <td><input type="text" name="path" value="{$path|escape}" title="{tr}Path to repository (local filesystem: relative/absolute web root, remote: prefixed with 'http://'){/tr}" /></td>
+    <td><input type="text" name="path" value="{$path|escape}" title="{tr}Path to repository (local filesystem: relative/absolute web root, remote: prefixed with 'http://'){/tr}"></td>
   </tr><tr>
     <td><span title="{tr}File name of start page{/tr}">{tr}Start page{/tr}</span></td>
-    <td><input type="text" name="start" value="{$start|escape}" title="{tr}File name of start page{/tr}" /></td>
+    <td><input type="text" name="start" value="{$start|escape}" title="{tr}File name of start page{/tr}"></td>
   </tr><tr>
     <td><span title="{tr}CSS file to load when browse this repository{/tr}">{tr}CSS File{/tr}</span></td>
-    <td><input type="text" name="cssfile" value="{$cssfile|escape}" title="{tr}CSS file to load when browse this repository{/tr}" /></td>
+    <td><input type="text" name="cssfile" value="{$cssfile|escape}" title="{tr}CSS file to load when browse this repository{/tr}"></td>
   </tr><tr>
     <td><span title="{tr}Is repository visible to users{/tr}">{tr}Visible{/tr}</span></td>
-    <td><input type="checkbox" name="vis" {if $vis eq 'y'}checked="checked"{/if} title="{tr}Is repository visible to users{/tr}" /></td>
+    <td><input type="checkbox" name="vis" {if $vis eq 'y'}checked="checked"{/if} title="{tr}Is repository visible to users{/tr}"></td>
   </tr><tr>
     <td><span title="{tr}Can files from repository be cached{/tr}">{tr}Cacheable{/tr}</span></td>
     <td>
-      <input type="checkbox" name="cacheable" {if $cacheable eq 'y'}checked="checked"{/if} title="{tr}Are files from repository can be cached{/tr}" />
+      <input type="checkbox" name="cacheable" {if $cacheable eq 'y'}checked="checked"{/if} title="{tr}Are files from repository can be cached{/tr}">
       {if isset($repID) and $repID ne '0'}
         &nbsp;&nbsp;
         <a href="tiki-admin_integrator.php?action=clear&amp;repID={$repID|escape}" title="{tr}Clear all cached pages of this repository{/tr}">
@@ -53,13 +53,13 @@
     </td>
   </tr><tr>
     <td><span title="{tr}Seconds count 'till cached page will be expired{/tr}">{tr}Cache expiration{/tr}</span></td>
-    <td><input type="text" maxlength="14" size="14" name="expiration" value="{$expiration|escape}" title="{tr}Seconds count 'till cached page will be expired{/tr}" /></td>
+    <td><input type="text" maxlength="14" size="14" name="expiration" value="{$expiration|escape}" title="{tr}Seconds count 'till cached page will be expired{/tr}"></td>
   </tr><tr>
     <td><span title="{tr}Human-readable text description of repository{/tr}">{tr}Description{/tr}</span></td>
     <td><textarea name="description" rows="4" title="{tr}Human-readable text description of repository{/tr}">{$description|escape}</textarea></td>
   </tr><tr>
     <td></td>
-    <td><input type="submit" name="save" value="{tr}Save{/tr}" /></td>
+    <td><input type="submit" name="save" value="{tr}Save{/tr}"></td>
   </tr>
 </table>
 </form>

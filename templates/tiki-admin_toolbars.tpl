@@ -21,7 +21,7 @@
 			</div>
 			<div class="adminoptionbox">
 				<label for="comments">{tr}Comments{/tr}</label>
-				<input id="comments" name="comments" type="checkbox" onchange="javascript:toolbars_autoreload()" {if $comments eq 'on'}checked="checked" {/if}/>
+				<input id="comments" name="comments" type="checkbox" onchange="javascript:toolbars_autoreload()" {if $comments eq 'on'}checked="checked" {/if}>
 			</div>
 			<div class="adminoptionbox" style="float: right;">
 				<label for="view_mode">{tr}View mode{/tr}</label>
@@ -34,14 +34,14 @@
 				</select>
 			</div>
 			<div class="adminoptionbox">
-				<input name="load" type="submit" value="{tr}Load{/tr}"/>
-				<input type="submit" name="save" value="{tr}Save{/tr}"/>
-				{if $loaded neq 'global' and $not_global}<input type="submit" name="reset" value="{tr}Reset to Global{/tr}"/>{/if}
-				{if $loaded eq 'global' and $not_default}<input type="submit" name="reset_global" value="{tr}Reset to defaults{/tr}"/>{/if}
+				<input name="load" type="submit" value="{tr}Load{/tr}">
+				<input type="submit" name="save" value="{tr}Save{/tr}">
+				{if $loaded neq 'global' and $not_global}<input type="submit" name="reset" value="{tr}Reset to Global{/tr}">{/if}
+				{if $loaded eq 'global' and $not_default}<input type="submit" name="reset_global" value="{tr}Reset to defaults{/tr}">{/if}
 				<label for="autoreload">{tr}Auto Reloading{/tr}</label>
-				<input id="autoreload" name="autoreload" type="checkbox" {if $autoreload eq 'on'}checked="checked"{/if}/>
+				<input id="autoreload" name="autoreload" type="checkbox" {if $autoreload eq 'on'}checked="checked"{/if}>
 			</div>
-			<input id="qt-form-field" type="hidden" name="pref" value=""/>
+			<input id="qt-form-field" type="hidden" name="pref" value="">
 		</div>
 	</form>
 	<div class="rows">
@@ -86,15 +86,15 @@
 				<h2>{tr}Edit tool{/tr}</h2>
 				<fieldset>
 					<label for="tool_name">{tr}Name:{/tr}<small class="dialog_tips error">&nbsp;</small></label>
-					<input type="text" name="tool_name" id="tool_name" class="text ui-widget-content ui-corner-all" />
+					<input type="text" name="tool_name" id="tool_name" class="text ui-widget-content ui-corner-all">
 					<label for="tool_label">{tr}Label:{/tr}<small class="dialog_tips error">&nbsp;</small></label><small class="dialog_tips error">&nbsp;</small>
-					<input type="text" name="tool_label" id="tool_label" class="text ui-widget-content ui-corner-all" />
+					<input type="text" name="tool_label" id="tool_label" class="text ui-widget-content ui-corner-all">
 					<label for="tool_icon">{tr}Icon:{/tr}</label>
-					<input type="text" name="tool_icon" id="tool_icon" class="text ui-widget-content ui-corner-all" />
+					<input type="text" name="tool_icon" id="tool_icon" class="text ui-widget-content ui-corner-all">
 					<label for="tool_token">{tr}Wysiwyg Token:{/tr}</label>
-					<input type="text" name="tool_token" id="tool_token" class="text ui-widget-content ui-corner-all" />
+					<input type="text" name="tool_token" id="tool_token" class="text ui-widget-content ui-corner-all">
 					<label for="tool_syntax">{tr}Syntax:{/tr}</label>
-					<input type="text" name="tool_syntax" id="tool_syntax" class="text ui-widget-content ui-corner-all" />
+					<input type="text" name="tool_syntax" id="tool_syntax" class="text ui-widget-content ui-corner-all">
 					<label for="tool_type">{tr}Type:{/tr}</label>
 					<select name="tool_type" id="tool_type" class="select ui-widget-content ui-corner-all">
 						<option value="Inline">Inline</option>
@@ -116,11 +116,11 @@
 							<option value="{$plugin|escape}">{$info.name|escape}</option>
 						{/foreach}
 					</select>
-					<input type="hidden" value="" name="save_tool" id="save_tool" />
-					<input type="hidden" value="" name="delete_tool" id="delete_tool" />
-					<input type="hidden" name="section" value="{$loaded}"/>
-					<input type="hidden" name="comments" value="{if $comments}on{/if}"/>
-					<input type="hidden" name="autoreload" value="{if $autoreload}on{/if}"/>
+					<input type="hidden" value="" name="save_tool" id="save_tool">
+					<input type="hidden" value="" name="delete_tool" id="delete_tool">
+					<input type="hidden" name="section" value="{$loaded}">
+					<input type="hidden" name="comments" value="{if $comments}on{/if}">
+					<input type="hidden" name="autoreload" value="{if $autoreload}on{/if}">
 				</fieldset>
 			</form>
 			{autocomplete element='#tool_icon' type='icon'}

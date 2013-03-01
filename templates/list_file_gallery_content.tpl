@@ -18,8 +18,8 @@
 			{else}
 				{assign var=nbCols value=1}
 			{/if}
-			<th style="width:1%">
-				&nbsp;
+			<th style="width:1%">&nbsp;
+				
 			</th>
 		{/if}
 
@@ -105,7 +105,7 @@
 						<div class='box-data'>
 							{if !empty($other_columns_selected)}
 								{self_link sort_mode='NULL'}{tr}No Additional Sort{/tr}{/self_link}
-								<hr />
+								<hr>
 							{/if}
 							{$other_columns}
 						</div>
@@ -269,7 +269,7 @@
 					{/if}
 					<input type="checkbox" name="{$checkname}[]" value="{$files[changes].id|escape}"
 						{if isset($smarty.request.$checkname) and $smarty.request.$checkname
-							and in_array($files[changes].id,$smarty.request.$checkname)}checked="checked"{/if} />
+							and in_array($files[changes].id,$smarty.request.$checkname)}checked="checked"{/if}>
 				</td>
 			{/if}
 

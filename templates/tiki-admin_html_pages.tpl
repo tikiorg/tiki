@@ -20,12 +20,12 @@
 {/if}
 
 <form action="tiki-admin_html_pages.php" method="post" id='editpageform'>
-	<input type="hidden" name="pageName" value="{$pageName|escape}" />
+	<input type="hidden" name="pageName" value="{$pageName|escape}">
 	<table class="formcolor">
 		<tr>
 			<td style="width:150px;">{tr}Page name:{/tr}</td>
 			<td>
-				<input type="text" maxlength="255" size="40" name="pageName" value="{$info.pageName|escape}" />
+				<input type="text" maxlength="255" size="40" name="pageName" value="{$info.pageName|escape}">
 			</td>
 		</tr>
 
@@ -55,7 +55,7 @@
 		<tr>
 			<td>{tr}Refresh rate (if dynamic):{/tr}</td>
 			<td>
-				<input type="text" size="5" name="refresh" value="{$info.refresh|escape}" /> {tr}seconds{/tr}
+				<input type="text" size="5" name="refresh" value="{$info.refresh|escape}"> {tr}seconds{/tr}
 			</td>
 		</tr>
 
@@ -70,8 +70,8 @@
 		<tr>
 			<td></td>
 			<td>
-				<input type="submit" name="preview" value="{tr}Preview{/tr}" /> 
-				<input type="submit" name="save" value="{tr}Save{/tr}" />
+				<input type="submit" name="preview" value="{tr}Preview{/tr}"> 
+				<input type="submit" name="save" value="{tr}Save{/tr}">
 			</td>
 		</tr>
 	</table>

@@ -101,7 +101,7 @@
 {/if}
 
 <form method="post" action="tiki-admin_metrics.php#assign">
-	<input type="hidden" name="assigned_id" value="{$assigned_id}" />
+	<input type="hidden" name="assigned_id" value="{$assigned_id}">
 	<table class="formcolor">
 		<tr>
 			<td>{tr}Metric Name{/tr}</td>
@@ -125,7 +125,7 @@
 		</tr>
 		<tr>
 			<td>&nbsp;</td>
-			<td><input type="submit" name="assign" value="{tr}Assign{/tr}" /></td>
+			<td><input type="submit" name="assign" value="{tr}Assign{/tr}"></td>
 		</tr>
 	</table>
 </form>
@@ -151,7 +151,7 @@
 	<table id="admin_metrics_add" class="formcolor">
 		<tr>
 			<td>{tr}Name (must be unique){/tr}</td>
-			<td><input type="text" name="metric_name" value="{$metric_name|escape}" /></td>
+			<td><input type="text" name="metric_name" value="{$metric_name|escape}"></td>
 		</tr>
 		<tr>
 			<td>{tr}Range{/tr}</td>
@@ -192,7 +192,7 @@
 		</tr>
 		<tr>
 			<td>&nbsp;</td>
-			<td><input type="submit" name="metric_submit" value="{if !isset($metric_id)}{tr}Create Metric{/tr}{else}{tr}Edit Metric{/tr}{/if}" /></td>
+			<td><input type="submit" name="metric_submit" value="{if !isset($metric_id)}{tr}Create Metric{/tr}{else}{tr}Edit Metric{/tr}{/if}"></td>
 		</tr>
 	</table>
 	<input type="hidden" name="metric_id" value="{$metric_id|escape}">
@@ -210,11 +210,11 @@
 	<table id="admin_metrics_add_tab" class="formcolor">
 		<tr>
 			<td>{tr}Name (must be unique){/tr}</td>
-			<td><input type="text" name="tab_name" value="{$tab_name|escape}" /></td>
+			<td><input type="text" name="tab_name" value="{$tab_name|escape}"></td>
 		</tr>
 		<tr>
 			<td>{tr}Weight (must be integer){/tr}</td>
-			<td><input type="text" name="tab_order" value="{$tab_order|escape}" /></td>
+			<td><input type="text" name="tab_order" value="{$tab_order|escape}"></td>
 		</tr>
 		<tr>
 			<td>{tr}Content{/tr}</td>
@@ -224,7 +224,7 @@
 		</tr>
 		<tr>
 			<td>&nbsp;</td>
-			<td><input type="submit" name="tab_submit" value="{if !isset($tab_id)}{tr}Create Tab{/tr}{else}{tr}Edit Tab{/tr}{/if}" /></td>
+			<td><input type="submit" name="tab_submit" value="{if !isset($tab_id)}{tr}Create Tab{/tr}{else}{tr}Edit Tab{/tr}{/if}"></td>
 		</tr>
 	</table>
 	<input type="hidden" name="tab_id" value="{$tab_id|escape}">

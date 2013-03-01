@@ -6,5 +6,5 @@
  width="320" height="260" allowfullscreen="true" allowscriptaccess="always"
  id="{$wsd_objectId|escape}"" name="{$wsd_embedName|escape}""
  src="http://www.ustream.tv/flash/live/{$wsd_brandId|escape}/{$wsd_channelCode|escape}"
- type="application/x-shockwave-flash" />
+ type="application/x-shockwave-flash">
 </object>

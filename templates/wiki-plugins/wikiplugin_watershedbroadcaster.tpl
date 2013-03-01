@@ -7,7 +7,7 @@
  width="100%" height="100%" allowfullscreen="true" allowscriptaccess="always"
  id="{$wsd_objectId|escape}" name="{$wsd_embedName|escape}"
  src="http://www.ustream.tv/flash/broadcaster.swf?r=api&v=5"
- type="application/x-shockwave-flash" />
+ type="application/x-shockwave-flash">
 </object>
 </div>
 {jq notonready=true}

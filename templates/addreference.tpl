@@ -355,7 +355,7 @@ function delete_ref(ref_id){
 						{/section}
 					</select>
 					<br>
-					<input class="wikiaction" type="submit" value="{tr}Use{/tr}" id="u_lib" name="u_lib" />
+					<input class="wikiaction" type="submit" value="{tr}Use{/tr}" id="u_lib" name="u_lib">
 					<br><span id="u_lib_status"></span>
 				{/if}
 			{/if}
@@ -367,49 +367,49 @@ function delete_ref(ref_id){
 		
 		<td id="ref_edit_block" style="display:none;">
 			<div>
-				<input type="hidden" name="e_ref_id" id="e_ref_id" value="" />
-				<input type="hidden" name="page" value="{$page|escape}" />
+				<input type="hidden" name="e_ref_id" id="e_ref_id" value="">
+				<input type="hidden" name="page" value="{$page|escape}">
 				<table class="formcolor">
 					<tr>
 						<td>{tr}Biblio Code{/tr}:</td>
-						<td><input type="text" size="30"  class="wikiedit" name="e_ref_biblio_code" id="e_ref_biblio_code" maxlength="50" value="" /></td>
+						<td><input type="text" size="30"  class="wikiedit" name="e_ref_biblio_code" id="e_ref_biblio_code" maxlength="50" value=""></td>
 					</tr>
 					<tr>
 						<td>{tr}Author{/tr}:</td>
-						<td><input type="text" size="30"  class="wikiedit" name="e_ref_author" id="e_ref_author" value="" /></td>
+						<td><input type="text" size="30"  class="wikiedit" name="e_ref_author" id="e_ref_author" value=""></td>
 					</tr>
 					<tr>
 						<td>{tr}Title{/tr}:</td>
-						<td><input type="text" size="30"  class="wikiedit" name="e_ref_title" id="e_ref_title" value="" /></td>
+						<td><input type="text" size="30"  class="wikiedit" name="e_ref_title" id="e_ref_title" value=""></td>
 					</tr>
 					<tr>
 						<td>{tr}Year{/tr}:</td>
-						<td><input type="text" size="30"  class="wikiedit" name="e_ref_year" id="e_ref_year" value="" /></td>
+						<td><input type="text" size="30"  class="wikiedit" name="e_ref_year" id="e_ref_year" value=""></td>
 					</tr>
 					<tr>
 						<td>{tr}Part{/tr}:</td>
-						<td><input type="text" size="30"  class="wikiedit" name="e_ref_part" id="e_ref_part" value="" /></td>
+						<td><input type="text" size="30"  class="wikiedit" name="e_ref_part" id="e_ref_part" value=""></td>
 					</tr>
 					<tr>
 						<td>{tr}URI{/tr}:</td>
-						<td><input type="text" size="30"  class="wikiedit" name="e_ref_uri" id="e_ref_uri" value="" /></td>
+						<td><input type="text" size="30"  class="wikiedit" name="e_ref_uri" id="e_ref_uri" value=""></td>
 					</tr>
 					<tr>
 						<td>{tr}Code{/tr}:</td>
-						<td><input type="text" size="30"  class="wikiedit" name="e_ref_code" id="e_ref_code" value="" /></td>
+						<td><input type="text" size="30"  class="wikiedit" name="e_ref_code" id="e_ref_code" value=""></td>
 					</tr>
 					<tr>
 						<td>{tr}Publisher{/tr}:</td>
-						<td><input type="text" size="30"  class="wikiedit" name="e_ref_publisher" id="e_ref_publisher" value="" /></td>
+						<td><input type="text" size="30"  class="wikiedit" name="e_ref_publisher" id="e_ref_publisher" value=""></td>
 					</tr>
 					<tr>
 						<td>{tr}Location{/tr}:</td>
-						<td><input type="text" size="30"  class="wikiedit" name="e_ref_location" id="e_ref_location" value="" /></td>
+						<td><input type="text" size="30"  class="wikiedit" name="e_ref_location" id="e_ref_location" value=""></td>
 					</tr>
 					<tr>
 						<td>{tr}Style{/tr}:</td>
 						<td>
-							<input type="text" size="30"  class="wikiedit" name="e_ref_style" id="e_ref_style" value="" />
+							<input type="text" size="30"  class="wikiedit" name="e_ref_style" id="e_ref_style" value="">
 							<br>
 							<small>{tr}Enter the CSS class name to be added in the 'li' tag for listing this reference.{/tr}</small>
 						</td>
@@ -417,7 +417,7 @@ function delete_ref(ref_id){
 					<tr>
 						<td>{tr}Template{/tr}:</td>
 						<td>
-							<input type="text" size="30"  class="wikiedit" name="e_ref_template" id="e_ref_template" value="" />
+							<input type="text" size="30"  class="wikiedit" name="e_ref_template" id="e_ref_template" value="">
 							<br>
 							<small>
 								{tr}Enter template format in which you want to display the reference details in the bibliography listing. For example{/tr}: ~title~ (~year~) ~author~
@@ -429,13 +429,13 @@ function delete_ref(ref_id){
 					<tr>
 						<td colspan="2">
 							<div id="e_btns">
-								<input class="wikiaction" type="submit" value="Save" id="e_submit" name="e_submit" />
-								<input class="wikiaction" type="reset" value="Cancel" id="e_cancel" name="e_cancel" />
+								<input class="wikiaction" type="submit" value="Save" id="e_submit" name="e_submit">
+								<input class="wikiaction" type="reset" value="Cancel" id="e_cancel" name="e_cancel">
 								<span id="e_status" style="margin: 0 0 0 10px;"></span>
 							</div>
 							<div id="a_btns">
-								<input class="wikiaction" type="submit" value="{tr}Add{/tr}" id="a_submit" name="a_submit" />
-								<input class="wikiaction" type="reset" value="{tr}Cancel{/tr}" id="a_cancel" name="a_cancel" />
+								<input class="wikiaction" type="submit" value="{tr}Add{/tr}" id="a_submit" name="a_submit">
+								<input class="wikiaction" type="reset" value="{tr}Cancel{/tr}" id="a_cancel" name="a_cancel">
 								<span id="a_status" style="margin: 0 0 0 10px;"></span>
 							</div>
 						</td>

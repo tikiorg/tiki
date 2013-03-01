@@ -25,7 +25,7 @@
 		<ol>
 			{foreach from=$result item=object}
 				<li{permission type=$object.type object=$object.object_id name="modify_object_categories"} class="available"{/permission}>
-					<input type="checkbox" name="object[]" value="{$object.object_type|escape}:{$object.object_id|escape}"/>
+					<input type="checkbox" name="object[]" value="{$object.object_type|escape}:{$object.object_id|escape}">
 					{object_link type=$object.object_type id=$object.object_id}
 				</li>
 			{/foreach}

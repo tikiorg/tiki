@@ -15,7 +15,7 @@
 			{if $captchalib->type eq 'recaptcha'}
 				{$captchalib->render()}
 			{else}
-				<input type="hidden" name="captcha[id]" id="captchaId" value="{$captchalib->generate()}" />
+				<input type="hidden" name="captcha[id]" id="captchaId" value="{$captchalib->generate()}">
 				{if $captchalib->type eq 'default'}
 					<img id="captchaImg" src="{$captchalib->getPath()}" alt="{tr}Anti-Bot verification code image{/tr}" height="50" />
 				{else}
@@ -44,7 +44,7 @@
 			</div>
 			<div class="antibot4">
 		{/if}
-				<input type="text" maxlength="8" size="22" name="captcha[input]" id="antibotcode" />
+				<input type="text" maxlength="8" size="22" name="captcha[input]" id="antibotcode">
 			{if $captchalib->type eq 'default'}
 				{button _id='captchaRegenerate' href='#antibot' _text="{tr}Try another code{/tr}" _onclick="generateCaptcha()"}
 			{/if}

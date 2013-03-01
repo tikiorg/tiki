@@ -14,7 +14,7 @@
 	</span>
 	<input type="checkbox" name="cookie_consent_checkbox">&nbsp;
 	{if $prefs.javascript_enabled neq 'y'}
-			<input type="submit" name="cookie_consent_button" value="{tr}{$prefs.cookie_consent_button}{/tr}" />
+			<input type="submit" name="cookie_consent_button" value="{tr}{$prefs.cookie_consent_button}{/tr}">
 		</form>
 	{else}
 		{button _text=$prefs.cookie_consent_button|tr_if _id='cookie_consent_button'}

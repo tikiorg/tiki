@@ -16,15 +16,15 @@
 					{/if}
 					<form method="post" action="tiki-index.php">
 						{if $page}
-							<input type="hidden" name="wikipoll" value="1" />
-							<input type="hidden" name="page" value="{$page|escape}" />
+							<input type="hidden" name="wikipoll" value="1">
+							<input type="hidden" name="page" value="{$page|escape}">
 						{/if}
-						<input type="hidden" name="polls_pollId" value="{$r.info.pollId|escape}" />
+						<input type="hidden" name="polls_pollId" value="{$r.info.pollId|escape}">
 						<table>
 							{foreach from=$r.options item=option}
 								<tr>
 									<td valign="top" {if $r.vote eq $option.optionId}class="highlight"{/if}>
-										<input type="radio" name="polls_optionId" value="{$option.optionId|escape}" id="poll{$r.info.pollId|escape}{$option.optionId|escape}" {if $r.vote eq $option.optionId} checked="checked"{/if} />
+										<input type="radio" name="polls_optionId" value="{$option.optionId|escape}" id="poll{$r.info.pollId|escape}{$option.optionId|escape}" {if $r.vote eq $option.optionId} checked="checked"{/if}>
 									</td>
 									<td valign="top" {if $r.vote eq $option.optionId}class="highlight"{/if}> 
 										<label for="poll{$r.info.pollId|escape}{$option.optionId|escape}">{$option.title|escape}</label>
@@ -36,7 +36,7 @@
 							{/foreach}
 						</table>
 						<div align="center">
-							<input type="submit" name="pollVote" value="{tr}vote{/tr}" style="border:1px solid #666666;font-size:.8em;"/>
+							<input type="submit" name="pollVote" value="{tr}vote{/tr}" style="border:1px solid #666666;font-size:.8em;">
 						</div>
 					</form>
 				{/foreach}

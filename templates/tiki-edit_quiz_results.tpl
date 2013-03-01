@@ -13,13 +13,13 @@
 </h2>
 
 <form action="tiki-edit_quiz_results.php" method="post">
-	<input type="hidden" name="quizId" value="{$quizId|escape}" />
-	<input type="hidden" name="resultId" value="{$resultId|escape}" />
+	<input type="hidden" name="quizId" value="{$quizId|escape}">
+	<input type="hidden" name="resultId" value="{$resultId|escape}">
 	<table class="formcolor">
 		<tr>
 			<td>{tr}From Points:{/tr}</td>
 			<td>
-				<input type="text" name="fromPoints" value="{$fromPoints|escape}" />
+				<input type="text" name="fromPoints" value="{$fromPoints|escape}">
 			</td>
 		</tr>
 		<tr>
@@ -27,7 +27,7 @@
 				{tr}To Points:{/tr}
 			</td>
 			<td>
-				<input type="text" name="toPoints" value="{$toPoints|escape}" />
+				<input type="text" name="toPoints" value="{$toPoints|escape}">
 			</td>
 		</tr>
 		<tr>
@@ -39,11 +39,11 @@
 			</td>
 		</tr>
 		<tr>
-			<td>
-				&nbsp;
+			<td>&nbsp;
+				
 			</td>
 			<td>
-				<input type="submit" name="save" value="{tr}Save{/tr}" />
+				<input type="submit" name="save" value="{tr}Save{/tr}">
 			</td>
 		</tr>
 	</table>

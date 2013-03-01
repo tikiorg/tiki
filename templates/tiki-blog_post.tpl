@@ -40,8 +40,8 @@
 {/strip}{/capture}
 
 <form enctype="multipart/form-data" name='blogpost' method="post" action="tiki-blog_post.php{$smarty.capture.actionUrlParam}" id ='editpageform'>
-	<input type="hidden" name="wysiwyg" value="{$wysiwyg|escape}" />
-	<input type="hidden" name="postId" value="{$postId|escape}" />
+	<input type="hidden" name="wysiwyg" value="{$wysiwyg|escape}">
+	<input type="hidden" name="postId" value="{$postId|escape}">
 
 	<fieldset class="tabcontent">
 		<table class="formcolor">
@@ -57,12 +57,12 @@
 					</td>
 				</tr>
 			{else}
-				<input type="hidden" name="blogId" value="{$blogId|escape}" />
+				<input type="hidden" name="blogId" value="{$blogId|escape}">
 			{/if}
 
 			<tr>
 				<td class="editblogform">{tr}Title:{/tr}</td><td class="editblogform">
-					<input type="text" size="80" maxlength="255" name="title" {if isset($post_info.title)}value="{$post_info.title|escape}"{/if} />
+					<input type="text" size="80" maxlength="255" name="title" {if isset($post_info.title)}value="{$post_info.title|escape}"{/if}>
 				</td>
 			</tr>
 
@@ -122,14 +122,14 @@
 					<td>
 						{$headerlib->add_map()}
 						<div class="map-container" data-target-field="geolocation" style="height: 250px; width: 250px;"></div>
-						<input type="hidden" name="geolocation" value="{$geolocation_string}" />
+						<input type="hidden" name="geolocation" value="{$geolocation_string}">
 					</td>
 				</tr>
 			{/if}
 
 			<tr>
 				<td class="editblogform">{tr}Mark entry as private:{/tr}</td>
-				<td class="editblogform"><input type="checkbox" name="blogpriv" {if $blogpriv eq 'y'}checked="checked"{/if} /></td>
+				<td class="editblogform"><input type="checkbox" name="blogpriv" {if $blogpriv eq 'y'}checked="checked"{/if}></td>
 			</tr>
 			{if $prefs.feature_blog_edit_publish_date eq 'y'}
 				<tr id='show_pubdate' class="editblogform">
@@ -156,8 +156,8 @@
 
 		</table>
 	</fieldset>
-	<input type="submit" class="wikiaction" name="preview" value="{tr}Preview{/tr}" onclick="needToConfirm=false" />
-	<input type="submit" class="wikiaction" name="save" value="{tr}Save{/tr}" onclick="needToConfirm=false" />
-	<input type="hidden" name="referer" value="{$referer|escape}" />
-	<input type="submit" name="cancel" onclick='document.location="{$referer|escape:'html'}";needToConfirm=false;return false;' value="{tr}Cancel{/tr}"/>
+	<input type="submit" class="wikiaction" name="preview" value="{tr}Preview{/tr}" onclick="needToConfirm=false">
+	<input type="submit" class="wikiaction" name="save" value="{tr}Save{/tr}" onclick="needToConfirm=false">
+	<input type="hidden" name="referer" value="{$referer|escape}">
+	<input type="submit" name="cancel" onclick='document.location="{$referer|escape:'html'}";needToConfirm=false;return false;' value="{tr}Cancel{/tr}">
 </form>

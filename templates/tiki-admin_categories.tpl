@@ -35,7 +35,7 @@
 			<h2>{tr}Add new category{/tr}</h2>
 		{/if}
 		<form action="tiki-admin_categories.php" method="post">
-			<input type="hidden" name="categId" value="{$categId|escape}" />
+			<input type="hidden" name="categId" value="{$categId|escape}">
 			<table class="formcolor">
 				<tr>
 					<td>{tr}Parent:{/tr}</td>
@@ -50,7 +50,7 @@
 				</tr>
 				<tr>
 					<td>{tr}Name:{/tr}</td>
-					<td><input type="text" size="40" name="name" value="{$categoryName|escape}" /></td>
+					<td><input type="text" size="40" name="name" value="{$categoryName|escape}"></td>
 				</tr>
 				<tr>
 					<td>{tr}Description:{/tr}</td>
@@ -59,11 +59,11 @@
 				{if $tiki_p_admin_categories == 'y'}
 				<tr>
 					<td>{tr}Apply parent category permissions{/tr}</td>
-					<td><input type="checkbox" name="parentPerms" {if empty($categId)}checked="checked"{/if} /></td>
+					<td><input type="checkbox" name="parentPerms" {if empty($categId)}checked="checked"{/if}></td>
 				</tr>
 				{/if}
 				<tr>
-					<td align="center" colspan="2"><input type="submit" name="save" value="{tr}Save{/tr}" /></td>
+					<td align="center" colspan="2"><input type="submit" name="save" value="{tr}Save{/tr}"></td>
 				</tr>
 			</table>
 		</form>
@@ -73,8 +73,8 @@
 		{tab name="{tr}Batch upload{/tr}"}
 			<h2>{tr}Batch upload (CSV file){/tr}<a {popup text='category,description,parent&lt;br /&gt;vegetable,vegetable&lt;br /&gt;potato,,vegetable'}>{icon _id='help'}</a></h2>
 			<form action="tiki-admin_categories.php" method="post" enctype="multipart/form-data">
-				<input type="file" name="csvlist" /><br>
-				<input type="submit" name="import" value="{tr}Add{/tr}" />
+				<input type="file" name="csvlist"><br>
+				<input type="submit" name="import" value="{tr}Add{/tr}">
 			</form>
 		{/tab}
 	{/if}
@@ -83,11 +83,11 @@
 		<h2>{tr}Objects in category:{/tr} {$categ_name|escape}</h2>
 		{if $objects}
 			<form method="get" action="tiki-admin_categories.php">
-				<label>{tr}Find:{/tr}<input type="text" name="find" /></label>
-				<input type="hidden" name="parentId" value="{$parentId|escape}" />
-				<input type="submit" value="{tr}Filter{/tr}" name="search" />
-				<input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
-				<input type="hidden" name="find_objects" value="{$find_objects|escape}" />
+				<label>{tr}Find:{/tr}<input type="text" name="find"></label>
+				<input type="hidden" name="parentId" value="{$parentId|escape}">
+				<input type="submit" value="{tr}Filter{/tr}" name="search">
+				<input type="hidden" name="sort_mode" value="{$sort_mode|escape}">
+				<input type="hidden" name="find_objects" value="{$find_objects|escape}">
 			</form>
 		{/if}
 		<table class="normal">
@@ -122,37 +122,37 @@
 		{tab name="{tr}Moving objects between categories{/tr}"}
 			<h2>{tr}Moving objects between categories{/tr}</h2>
 			<form method="get" action="tiki-admin_categories.php" name="move">
-				<input type="hidden" name="parentId" value="{$parentId|escape}" />
-				<input type="submit" name="unassign" value="{tr}Unassign all objects from this category{/tr}" />
+				<input type="hidden" name="parentId" value="{$parentId|escape}">
+				<input type="submit" name="unassign" value="{tr}Unassign all objects from this category{/tr}">
 				<hr>
 				<select name="toId">
 				{foreach $categories as $category}
 					<option value="{$category.categId}" {if $category.categId eq $parentId}selected="selected"{/if}>{$category.categpath|escape}</option>
 				{/foreach}
 				</select>
-				<input type="submit" name="move_to" value="{tr}Move all the objects from this category to this one{/tr}" />
+				<input type="submit" name="move_to" value="{tr}Move all the objects from this category to this one{/tr}">
 				<hr>
 				<select name="to">
 				{foreach $categories as $category}
 					<option value="{$category.categId}" {if $category.categId eq $parentId}selected="selected"{/if}>{$category.categpath|escape}</option>
 				{/foreach}				</select>
-				<input type="submit" name="copy_from" value="{tr}Assign all objects of this category to this one{/tr}" />
+				<input type="submit" name="copy_from" value="{tr}Assign all objects of this category to this one{/tr}">
 			</form>
 		{/tab}
 				
 		{tab name="{tr}Add objects to category{/tr}"}
 			<h2>{tr}Add objects to category:{/tr} <b>{$categ_name|escape}</b></h2>
 			<form method="get" action="tiki-admin_categories.php">
-				<label>{tr}Find:{/tr}<input type="text" name="find_objects" /></label>
-				<input type="hidden" name="parentId" value="{$parentId|escape}" />
-				<input type="submit" value="{tr}Filter{/tr}" name="search_objects" />
-				<input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
-				<input type="hidden" name="offset" value="{$offset|escape}" />
-				<input type="hidden" name="find" value="{$find|escape}" />
+				<label>{tr}Find:{/tr}<input type="text" name="find_objects"></label>
+				<input type="hidden" name="parentId" value="{$parentId|escape}">
+				<input type="submit" value="{tr}Filter{/tr}" name="search_objects">
+				<input type="hidden" name="sort_mode" value="{$sort_mode|escape}">
+				<input type="hidden" name="offset" value="{$offset|escape}">
+				<input type="hidden" name="find" value="{$find|escape}">
 			</form>
 			{pagination_links cant=$maximum step=$maxRecords offset=$offset}{/pagination_links}
 			<form action="tiki-admin_categories.php" method="post">
-				<input type="hidden" name="parentId" value="{$parentId|escape}" />
+				<input type="hidden" name="parentId" value="{$parentId|escape}">
 				<table class="formcolor">
 					{if $prefs.feature_wiki eq 'y' and $pages}
 						<tr>
@@ -165,7 +165,7 @@
 								</select>
 							</td>
 							<td>
-								<input type="submit" name="addpage" value="{tr}Add{/tr}" />
+								<input type="submit" name="addpage" value="{tr}Add{/tr}">
 							</td>
 						</tr>
 					{/if}
@@ -180,7 +180,7 @@
 									{/section}
 								</select>
 							</td>
-							<td><input type="submit" name="addarticle" value="{tr}Add{/tr}" /></td>
+							<td><input type="submit" name="addarticle" value="{tr}Add{/tr}"></td>
 						</tr>
 					{/if}
 						
@@ -194,7 +194,7 @@
 									{/section}
 								</select>
 							</td>
-							<td><input type="submit" name="addblog" value="{tr}Add{/tr}" /></td>
+							<td><input type="submit" name="addblog" value="{tr}Add{/tr}"></td>
 						</tr>
 					{/if}
 					
@@ -208,7 +208,7 @@
 									{/section}
 								</select>
 							</td>
-							<td><input type="submit" name="adddirectory" value="{tr}Add{/tr}" /></td>
+							<td><input type="submit" name="adddirectory" value="{tr}Add{/tr}"></td>
 						</tr>
 					{/if}
 
@@ -222,7 +222,7 @@
 									{/section}
 								</select>
 							</td>
-							<td><input type="submit" name="addgallery" value="{tr}Add{/tr}" /></td>
+							<td><input type="submit" name="addgallery" value="{tr}Add{/tr}"></td>
 						</tr>
 					{/if}
 			
@@ -236,7 +236,7 @@
 									{/section}
 								</select>
 							</td>
-							<td><input type="submit" name="addfilegallery" value="{tr}Add{/tr}" /></td>
+							<td><input type="submit" name="addfilegallery" value="{tr}Add{/tr}"></td>
 						</tr>
 					{/if}
 			
@@ -250,7 +250,7 @@
 									{/section}
 								</select>
 							</td>
-							<td><input type="submit" name="addforum" value="{tr}Add{/tr}" /></td>
+							<td><input type="submit" name="addforum" value="{tr}Add{/tr}"></td>
 						</tr>
 					{/if}
 				
@@ -264,7 +264,7 @@
 									{/section}
 								</select>
 							</td>
-							<td><input type="submit" name="addpoll" value="{tr}Add{/tr}" /></td>
+							<td><input type="submit" name="addpoll" value="{tr}Add{/tr}"></td>
 						</tr>
 					{/if}
 					
@@ -278,7 +278,7 @@
 									{/section}
 								</select>
 							</td>
-							<td><input type="submit" name="addfaq" value="{tr}Add{/tr}" /></td>
+							<td><input type="submit" name="addfaq" value="{tr}Add{/tr}"></td>
 						</tr> 
 					{/if}
 				
@@ -292,7 +292,7 @@
 									{/section}
 								</select>
 							</td>
-							<td><input type="submit" name="addtracker" value="{tr}Add{/tr}" /></td>
+							<td><input type="submit" name="addtracker" value="{tr}Add{/tr}"></td>
 						</tr>
 					{/if}
 						
@@ -306,7 +306,7 @@
 									{/section}
 								</select>
 							</td>
-							<td><input type="submit" name="addquiz" value="{tr}Add{/tr}" /></td>
+							<td><input type="submit" name="addquiz" value="{tr}Add{/tr}"></td>
 						</tr>
 					{/if}
 				</table>

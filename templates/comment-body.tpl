@@ -100,8 +100,8 @@
 				{$deliberation.data}
 				<form class="forumDeliberationRatingForm" method="post" action="" style="float: right;">
 					{rating type="comment" id=$deliberation.threadId}
-					<input type="hidden" name="id" value="{$deliberation.threadId}" />
-					<input type="hidden" name="type" value="comment" />
+					<input type="hidden" name="id" value="{$deliberation.threadId}">
+					<input type="hidden" name="type" value="comment">
 				</form>
 			</div>
 		{/foreach}

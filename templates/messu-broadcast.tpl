@@ -17,12 +17,12 @@
 		{if $preview eq '1'}
 			<br>
 			<form method="post">
-				<input type="hidden" name="groupbr" value="{$groupbr|escape}" />
-				<input type="hidden" name="priority" value="{$priority|escape}" />
-				<input type="hidden" name="replyto_hash" value="{$replyto_hash|escape}" />
-				<input type="hidden" name="subject" value="{$subject|escape}" />
-				<input type="hidden" name="body" value="{$body|escape}" />
-				<input type="submit" name="send" value="{tr}Please Confirm{/tr}" />
+				<input type="hidden" name="groupbr" value="{$groupbr|escape}">
+				<input type="hidden" name="priority" value="{$priority|escape}">
+				<input type="hidden" name="replyto_hash" value="{$replyto_hash|escape}">
+				<input type="hidden" name="subject" value="{$subject|escape}">
+				<input type="hidden" name="body" value="{$body|escape}">
+				<input type="submit" name="send" value="{tr}Please Confirm{/tr}">
 			</form>
 		{/if}
 	</div>
@@ -61,7 +61,7 @@
 						<option value="4" {if $priority eq 4}selected="selected"{/if}>4 -{tr}High{/tr}-</option>
 						<option value="5" {if $priority eq 5}selected="selected"{/if}>5 -{tr}Very High{/tr}-</option>
 					</select>
-					<input type="hidden" name="replyto_hash" value="{$replyto_hash}" />
+					<input type="hidden" name="replyto_hash" value="{$replyto_hash}">
 				</td>
 			</tr>
 			<tr>
@@ -69,7 +69,7 @@
 					<label for="broadcast-subject">{tr}Subject:{/tr}</label>
 				</td>
 				<td>
-					<input type="text" name="subject" id="broadcast-subject" value="{$subject|escape}" size="80" maxlength="255"/>
+					<input type="text" name="subject" id="broadcast-subject" value="{$subject|escape}" size="80" maxlength="255">
 				</td>
 			</tr>
 		</table>
@@ -77,7 +77,7 @@
 		<table class="normal" >
 			<tr>
 				<td style="text-align: center;">
-					<textarea rows="20" cols="80" name="body">{$body|escape}</textarea><br><input type="submit" name="preview" value="{tr}Send{/tr}" />
+					<textarea rows="20" cols="80" name="body">{$body|escape}</textarea><br><input type="submit" name="preview" value="{tr}Send{/tr}">
 				</td>
 			</tr>
 		</table>

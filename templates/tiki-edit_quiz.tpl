@@ -83,14 +83,14 @@
 {/if}
 
 <form action="tiki-edit_quiz.php" method="post">
-	<input type="hidden" name="quizId" value="{$quizId|escape}" />
+	<input type="hidden" name="quizId" value="{$quizId|escape}">
 	<table class="formcolor">
 		<tr>
 			<td>
 				<label for="quiz-name">{tr}Name:{/tr}</label>
 			</td>
 			<td>
-				<input type="text" size ="80" name="name" id="quiz-name" value="{$name|escape}" />
+				<input type="text" size ="80" name="name" id="quiz-name" value="{$name|escape}">
 			</td>
 		</tr>
 		<tr>
@@ -129,7 +129,7 @@
 				<label for="quiz-repeat">{tr}Quiz can be repeated{/tr}</label>
 			</td>
 			<td>
-				<input type="checkbox" name="canRepeat" id="quiz-repeat" {if $canRepeat eq 'y'}checked="checked"{/if} />
+				<input type="checkbox" name="canRepeat" id="quiz-repeat" {if $canRepeat eq 'y'}checked="checked"{/if}>
 			</td>
 		</tr>
 		<tr>
@@ -137,7 +137,7 @@
 				<label for="quiz-results">{tr}Store quiz results{/tr}</label>
 			</td>
 			<td>
-				<input type="checkbox" name="storeResults" id="quiz-results" {if $storeResults eq 'y'}checked="checked"{/if} />
+				<input type="checkbox" name="storeResults" id="quiz-results" {if $storeResults eq 'y'}checked="checked"{/if}>
 			</td>
 		</tr>
 		{* Not implemented
@@ -146,7 +146,7 @@
 				<label for="immediate-feedback">{tr}Immediate feedback{/tr}</label>
 			</td>
 			<td>
-				<input type="checkbox" name="immediateFeedback" id="immediate-feedback" {if $immediateFeedback eq 'y'}checked="checked"{/if} />
+				<input type="checkbox" name="immediateFeedback" id="immediate-feedback" {if $immediateFeedback eq 'y'}checked="checked"{/if}>
 			</td>
 		</tr>
 		<tr>
@@ -154,7 +154,7 @@
 				<label for="show-answers">{tr}Show correct answers{/tr}</label>
 			</td>
 			<td>
-				<input type="checkbox" name="showAnswers" id="show-answers" {if $showAnswers eq 'y'}checked="checked"{/if} />
+				<input type="checkbox" name="showAnswers" id="show-answers" {if $showAnswers eq 'y'}checked="checked"{/if}>
 			</td>
 		</tr>
 		<tr>
@@ -162,7 +162,7 @@
 				<label for="shuffle-questions">{tr}Shuffle questions{/tr}</label>
 			</td>
 			<td>
-				<input type="checkbox" name="shuffleQuestions" id="shuffle-questions" {if $shuffleQuestions eq 'y'}checked="checked"{/if} />
+				<input type="checkbox" name="shuffleQuestions" id="shuffle-questions" {if $shuffleQuestions eq 'y'}checked="checked"{/if}>
 			</td>
 		</tr>
 		<tr>
@@ -170,7 +170,7 @@
 				<label for="shuffle-answers">{tr}Shuffle answers{/tr}</label>
 			</td>
 			<td>
-				<input type="checkbox" name="shuffleAnswers" id="shuffle-answers" {if $shuffleAnswers eq 'y'}checked="checked"{/if} />
+				<input type="checkbox" name="shuffleAnswers" id="shuffle-answers" {if $shuffleAnswers eq 'y'}checked="checked"{/if}>
 			</td>
 		</tr>*}
 		<tr>
@@ -178,7 +178,7 @@
 				<label for="quiz-timelimit">{tr}Quiz is time limited{/tr}</label>
 			</td>
 			<td>
-				<input type="checkbox" name="timeLimited" id="quiz-timelimit" {if $timeLimited eq 'y'}checked="checked"{/if} />
+				<input type="checkbox" name="timeLimited" id="quiz-timelimit" {if $timeLimited eq 'y'}checked="checked"{/if}>
 			</td>
 		</tr>
 		<tr>
@@ -195,14 +195,14 @@
 				<label for="quiz-passingperct">{tr}Passing Percentage{/tr}</label>
 			</td>
 			<td>
-				<input type="text" name="passingperct" id="quiz-passingperct" size='3' maxlength='3' value="{$passingperct}" />
+				<input type="text" name="passingperct" id="quiz-passingperct" size='3' maxlength='3' value="{$passingperct}">
 				{tr}%{/tr}
 			</td>
 		</tr>
 		<tr>
 			<td>&nbsp;</td>
 			<td>
-				<input type="submit" name="save" value="{tr}Save{/tr}" />
+				<input type="submit" name="save" value="{tr}Save{/tr}">
 			</td>
 		</tr>
 	</table>

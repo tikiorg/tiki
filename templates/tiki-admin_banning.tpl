@@ -43,8 +43,8 @@
 
 <div class="navbar">
 	<form action="tiki-admin_banning.php" method="post">
-	<input type="hidden" name="export" value="y"/>
-		<input type="submit" name="csv" value="{tr}Export as CSV{/tr}" class="button"/>
+	<input type="hidden" name="export" value="y">
+		<input type="submit" name="csv" value="{tr}Export as CSV{/tr}" class="button">
 		{button _text="{tr}Import as CSV{/tr}" href="#Import_rules_as_CSV" class="button"}
 	</form>
 </div>
@@ -57,35 +57,35 @@
 
 <h2>{tr}Add or edit rules{/tr}</h2>
 <form action="tiki-admin_banning.php" name="banningform" method="post">
-	<input type="hidden" name="banId" value="{$banId|escape}" />
+	<input type="hidden" name="banId" value="{$banId|escape}">
 	<table class="formcolor">
 		<tr>
 			<td><label for="banning-title">{tr}Rule title{/tr}</label></td>
 			<td>
-				<input type="text" name="title" id="banning-title" value="{$info.title|escape}" maxlength="200" />
+				<input type="text" name="title" id="banning-title" value="{$info.title|escape}" maxlength="200">
 			</td>
 		</tr>
 		<tr>
 			<td><label for="banning-userregex">{tr}Username regex matching:{/tr}</label></td>
 			<td>
-				<input type="radio" name="mode" value="user" {if $info.mode eq 'user'}checked="checked"{/if} />
-				<input type="text" name="userreg" id="banning-userregex" value="{$info.user|escape}" />
+				<input type="radio" name="mode" value="user" {if $info.mode eq 'user'}checked="checked"{/if}>
+				<input type="text" name="userreg" id="banning-userregex" value="{$info.user|escape}">
 			</td>
 		</tr>
 		{if isset($mass_ban_ip)}
 		<tr>
 			<td><label for="banning-ipregex">{tr}Multiple IP regex matching:{/tr}</label></td>
 			<td>
-				<input type="radio" name="mode" value="mass_ban_ip" {if $info.mode eq 'mass_ban_ip'}checked="checked"{/if} />
+				<input type="radio" name="mode" value="mass_ban_ip" {if $info.mode eq 'mass_ban_ip'}checked="checked"{/if}>
 				<div class="toggle">
-					<input type="checkbox" name="checkmultiip" checked="checked" onclick="CheckMultiIP();" />
+					<input type="checkbox" name="checkmultiip" checked="checked" onclick="CheckMultiIP();">
 					<label for="sectionswitch">{tr}Check / Uncheck All{/tr}</label>
 				</div>
 				<table>
 					{foreach key=ip item=comment from=$ban_comments_list}
 						<tr>
 							<td>
-								<input type="checkbox" name="multi_banned_ip[{$ip|escape}]" id="multi-banning-section" checked="checked" /> <label for="multi-banning-section">{$ip|escape}</label>
+								<input type="checkbox" name="multi_banned_ip[{$ip|escape}]" id="multi-banning-section" checked="checked"> <label for="multi-banning-section">{$ip|escape}</label>
 							</td>
 							<td>
 								{foreach key=id item=user from=$comment}
@@ -101,11 +101,11 @@
 		<tr>
 			<td><label for="banning-ipregex">{tr}IP regex matching:{/tr}</label></td>
 			<td>
-				<input type="radio" name="mode" value="ip" {if $info.mode eq 'ip'}checked="checked"{/if} />
-				<input type="text" name="ip1" id="banning-ipregex" value="{$info.ip1|escape}" size="3" />.
-				<input type="text" name="ip2" value="{$info.ip2|escape}" size="3" />.
-				<input type="text" name="ip3" value="{$info.ip3|escape}" size="3" />.
-				<input type="text" name="ip4" value="{$info.ip4|escape}" size="3" />
+				<input type="radio" name="mode" value="ip" {if $info.mode eq 'ip'}checked="checked"{/if}>
+				<input type="text" name="ip1" id="banning-ipregex" value="{$info.ip1|escape}" size="3">.
+				<input type="text" name="ip2" value="{$info.ip2|escape}" size="3">.
+				<input type="text" name="ip3" value="{$info.ip3|escape}" size="3">.
+				<input type="text" name="ip4" value="{$info.ip4|escape}" size="3">
 			</td>
 		</tr>
 		{/if}
@@ -113,14 +113,14 @@
 			<td>{tr}Banned from sections:{/tr}</td>
 			<td>
 				<div class="toggle">
-					<input type="checkbox" name="checkall" {if (!$banId)}checked="checked"{/if} onclick="CheckAll();" />
+					<input type="checkbox" name="checkall" {if (!$banId)}checked="checked"{/if} onclick="CheckAll();">
 					<label for="sectionswitch">{tr}Check / Uncheck All{/tr}</label>
 				</div>
 				<table>
 					<tr>
 						{foreach key=sec name=ix item=it from=$sections}
 							<td>
-								<input type="checkbox" name="section[{$sec}]" id="banning-section" {if ((!$banId) || in_array($sec,$info.sections))}checked="checked"{/if} /> <label for="banning-section">{tr}{$sec}{/tr}</label>
+								<input type="checkbox" name="section[{$sec}]" id="banning-section" {if ((!$banId) || in_array($sec,$info.sections))}checked="checked"{/if}> <label for="banning-section">{tr}{$sec}{/tr}</label>
 							</td>
 							{if $smarty.foreach.ix.index mod 2}
 								</tr>
@@ -133,7 +133,7 @@
 		<tr>
 			<td><label for="banning-actdates">{tr}Rule activated by dates{/tr}</label></td>
 			<td>
-				<input type="checkbox" name="use_dates" id="banning-actdates" {if $info.use_dates eq 'y'}checked="checked"{/if} onclick="CheckUseDates();" />
+				<input type="checkbox" name="use_dates" id="banning-actdates" {if $info.use_dates eq 'y'}checked="checked"{/if} onclick="CheckUseDates();">
 				<div id="usedates_date" style="display: {if $info.use_dates eq 'y'}block{else}none{/if};" >
 					<table class="formcolor">
 						<tr>
@@ -161,7 +161,7 @@
 		<tr>
 			<td>&nbsp;</td>
 			<td>
-				<input type="submit" name="save" value="{tr}Save{/tr}" />
+				<input type="submit" name="save" value="{tr}Save{/tr}">
 			</td>
 		</tr>
 	</table>
@@ -177,12 +177,12 @@
         <a {popup text=$smarty.capture.help|escape}>{icon _id='help'}</a>
       </td>
       <td>
-        <input type="file" name="fileCSV" size="50" />
+        <input type="file" name="fileCSV" size="50">
         <label>
-        	<input type="checkbox" name="import_as_new" />
+        	<input type="checkbox" name="import_as_new">
         	{tr}Import as new rules{/tr}
         </label>
-        <input type="submit" name="import" value="{tr}import{/tr}" />
+        <input type="submit" name="import" value="{tr}import{/tr}">
       </td>
     </tr>
   </table>
@@ -191,19 +191,19 @@
 {if $items}
 <h2>{tr}Find{/tr}</h2>
 	<form method="post" action="tiki-admin_banning.php">
-		<input type="hidden" name="offset" value="{$offset|escape}" />
-		<input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
-		<label for="banning-find">{tr}Find:{/tr}</label><input type="text" name="find" id="banning-find" value="{$find|escape}" />
+		<input type="hidden" name="offset" value="{$offset|escape}">
+		<input type="hidden" name="sort_mode" value="{$sort_mode|escape}">
+		<label for="banning-find">{tr}Find:{/tr}</label><input type="text" name="find" id="banning-find" value="{$find|escape}">
 	</form>
 {/if}
 <h2>{tr}Rules:{/tr}</h2>
 <form method="post" action="tiki-admin_banning.php">
-	<input type="hidden" name="offset" value="{$offset|escape}" />
-	<input type="hidden" name="find" value="{$find|escape}" />
-	<input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
+	<input type="hidden" name="offset" value="{$offset|escape}">
+	<input type="hidden" name="find" value="{$find|escape}">
+	<input type="hidden" name="sort_mode" value="{$sort_mode|escape}">
 	<table class="normal">
 		<tr>
-			<th><input type="submit" name="del" value="{tr}x{/tr} " /></th>
+			<th><input type="submit" name="del" value="{tr}x{/tr} "></th>
 			<th>{tr}Title{/tr}</th>
 			<th>{tr}User/IP{/tr}</th>
 			<th>{tr}Sections{/tr}</th>
@@ -213,7 +213,7 @@
 		{section name=user loop=$items}
 			<tr class="{cycle}">
 				<td class="checkbox">
-					<input type="checkbox" name="delsec[{$items[user].banId}]" />
+					<input type="checkbox" name="delsec[{$items[user].banId}]">
 				</td>
 				<td class="text">
 					<a href="tiki-admin_banning.php?banId={$items[user].banId}" class="link">{$items[user].title|escape}</a>

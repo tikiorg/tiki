@@ -9,7 +9,7 @@
 	{/if}
 	<form method="post" action="tiki-contact.php">
 		{ticket}
-		<input type="hidden" name="to" value="{$prefs.contact_user|escape}" />
+		<input type="hidden" name="to" value="{$prefs.contact_user|escape}">
 		<table class="formcolor">
 		{if $prefs.contact_priority_onoff eq 'y'}
 			<tr>
@@ -29,14 +29,14 @@
 			<tr>
 				<td>{tr}Your email{/tr}:</td>
 				<td>
-					<input type="text" name="from" value="{$from}" maxlength="255" style="width:25%" />
+					<input type="text" name="from" value="{$from}" maxlength="255" style="width:25%">
 				</td>
 			</tr>
 			{/if}
 			<tr>
 				<td>{tr}Subject:{/tr}</td>
 				<td>
-					<input type="text" name="subject" value="{$subject}" maxlength="255" style="width:99%" />
+					<input type="text" name="subject" value="{$subject}" maxlength="255" style="width:99%">
 				</td>
 			</tr>
 			<tr>
@@ -51,7 +51,7 @@
 			<tr>
 				<td></td>
 				<td>
-					<input type="submit" name="send" value="{tr}Send{/tr}" />
+					<input type="submit" name="send" value="{tr}Send{/tr}">
 				</td>
 			</tr>
 		</table>

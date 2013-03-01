@@ -16,9 +16,9 @@
 				{if $prefs.feature_forums_name_search eq 'y'}
 					<td class="findtable">
 						<form method="get" action="tiki-forums.php">
-							<input type="text" name="find" value="{$find|escape}" />
-							<input type="submit" value="{tr}Search by name{/tr}" name="search" />
-							<input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
+							<input type="text" name="find" value="{$find|escape}">
+							<input type="submit" value="{tr}Search by name{/tr}" name="search">
+							<input type="hidden" name="sort_mode" value="{$sort_mode|escape}">
 						</form>
 					</td>
 				{/if}
@@ -26,10 +26,10 @@
 				{if $prefs.feature_forums_search eq 'y' and $prefs.feature_search eq 'y'}
 					<td>
 						<form class="forms" method="get" action="{if $prefs.feature_search_fulltext neq 'y'}tiki-searchindex.php{else}tiki-searchresults.php{/if}">
-							<input name="highlight" size="30" type="text" />
-							<input type="hidden" name="where" value="forums" />
-							<input type="hidden" name="filter~type" value="forum post"/>
-							<input type="submit" class="wikiaction" name="search" value="{tr}Search in content{/tr}"/>
+							<input name="highlight" size="30" type="text">
+							<input type="hidden" name="where" value="forums">
+							<input type="hidden" name="filter~type" value="forum post">
+							<input type="submit" class="wikiaction" name="search" value="{tr}Search in content{/tr}">
 						</form>
 					</td>
 				{/if}

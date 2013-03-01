@@ -10,11 +10,11 @@
 	<table class="formcolor">
 		<tr>
 			<td>{tr}Word{/tr}</td>
-			<td><input type="text" name="word" /></td>
+			<td><input type="text" name="word"></td>
 		</tr>
 		<tr>
 			<td>&nbsp;</td>
-			<td><input type="submit" name="add" value="{tr}Add{/tr}" /></td>
+			<td><input type="submit" name="add" value="{tr}Add{/tr}"></td>
 		</tr>
 	</table>
 </form>

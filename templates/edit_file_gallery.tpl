@@ -8,13 +8,13 @@
 	{/if}
 	<div>
 		<form class="admin" action="{$smarty.server.PHP_SELF}?{query}" method="post">
-			<input type="hidden" name="galleryId" value="{$galleryId|escape}" />
-			<input type="hidden" name="filegals_manager" {if isset($filegals_manager)}value="{$filegals_manager}"{/if} />
+			<input type="hidden" name="galleryId" value="{$galleryId|escape}">
+			<input type="hidden" name="filegals_manager" {if isset($filegals_manager)}value="{$filegals_manager}"{/if}>
 
 			<div class="input_submit_container" style="text-align: right">
-				<input type="submit" value="{tr}Save{/tr}" name="edit" />
+				<input type="submit" value="{tr}Save{/tr}" name="edit">
 				&nbsp;
-				<input type="checkbox" name="viewitem" checked="checked"/> {tr}View inserted gallery{/tr}
+				<input type="checkbox" name="viewitem" checked="checked"> {tr}View inserted gallery{/tr}
 			</div>
 			{tabset name="list_file_gallery"}
 				{tab name="{tr}Properties{/tr}"}
@@ -26,9 +26,9 @@
 							<td>
 								{if $galleryId eq $treeRootId}
 									<b>{tr}{$gal_info.name}{/tr}</b>
-									<input type="hidden" name="name" value="{$gal_info.name|escape}" />
+									<input type="hidden" name="name" value="{$gal_info.name|escape}">
 								{else}
-									<input type="text" size="50" id="name" name="name" value="{$gal_info.name|escape}" style="width:100%"/>
+									<input type="text" size="50" id="name" name="name" value="{$gal_info.name|escape}" style="width:100%">
 									<br/>
 									<em>{tr}Required for podcasts{/tr}.</em>
 								{/if}
@@ -78,7 +78,7 @@ $('#fgal_template').change( function() {
 									{else}
 										{tr _0=$gal_info.type}Other (%0){/tr}
 									{/if}
-									<input type="hidden" name="fgal_type" value="{$gal_info.type}" />
+									<input type="hidden" name="fgal_type" value="{$gal_info.type}">
 								{else}
 									<select name="fgal_type" id="fgal_type">
 										<option value="default" {if $gal_info.type eq 'default'}selected="selected"{/if}>{tr}Any file{/tr}</option>
@@ -103,7 +103,7 @@ $('#fgal_template').change( function() {
 								<label for="visible">{tr}Gallery is visible to non-admin users{/tr}.<label>
 							</td>
 							<td>
-								<input type="checkbox" id="visible" name="visible" {if $gal_info.visible eq 'y'}checked="checked"{/if} />
+								<input type="checkbox" id="visible" name="visible" {if $gal_info.visible eq 'y'}checked="checked"{/if}>
 							</td>
 						</tr>
 
@@ -113,7 +113,7 @@ $('#fgal_template').change( function() {
 							</td>
 							<td>
 								<input type="checkbox" id="public" name="public" {if isset($gal_info.public)
-									and $gal_info.public eq 'y'}checked="checked"{/if}/>
+									and $gal_info.public eq 'y'}checked="checked"{/if}>
 								<br>
 								<em>{tr}Any user with permission (not only the gallery owner) can upload files{/tr}.</em>
 							</td>
@@ -123,7 +123,7 @@ $('#fgal_template').change( function() {
 								<label for="backlinkPerms">{tr}Perms of the backlinks are checked to view a file{/tr}</label>
 							</td>
 							<td>
-								<input type="checkbox" id="backlinkPerms" name="backlinkPerms" {if $gal_info.backlinkPerms eq 'y'}checked="checked"{/if}/>
+								<input type="checkbox" id="backlinkPerms" name="backlinkPerms" {if $gal_info.backlinkPerms eq 'y'}checked="checked"{/if}>
 							</td>
 						</tr>
 						<tr>
@@ -131,7 +131,7 @@ $('#fgal_template').change( function() {
 								<label for="lockable">{tr}Files can be locked at download{/tr}.</label>
 							</td>
 							<td>
-								<input type="checkbox" id="lockable" name="lockable" {if $gal_info.lockable eq 'y'}checked="checked"{/if}/>
+								<input type="checkbox" id="lockable" name="lockable" {if $gal_info.lockable eq 'y'}checked="checked"{/if}>
 							</td>
 						</tr>
 						<tr>
@@ -139,7 +139,7 @@ $('#fgal_template').change( function() {
 								<label for="archives">{tr}Maximum number of archives for each file:{/tr}</label>
 							</td>
 							<td>
-								<input size="5" type="text" id="archives" name="archives" value="{$gal_info.archives|escape}" />
+								<input size="5" type="text" id="archives" name="archives" value="{$gal_info.archives|escape}">
 								<br>
 								<em>{tr}Use{/tr} 0={tr}unlimited{/tr}, -1={tr}none{/tr}.</em>
 								{if $galleryId neq $treeRootId}
@@ -159,7 +159,7 @@ $('#fgal_template').change( function() {
 									{/foreach}
 								</select>
 								{else}
-								<input type="hidden" name="parentId" value="{$parentId|escape}" />
+								<input type="hidden" name="parentId" value="{$parentId|escape}">
 								{/if}
 							</td>
 						</tr>
@@ -176,7 +176,7 @@ $('#fgal_template').change( function() {
 								<tr>
 									<td>{tr}Quota{/tr}</td>
 									<td>
-										<input type="text" id="quota" name="quota" value="{$gal_info.quota}" size="5" />{tr}Mb{/tr} <i>{tr}(0 for unlimited){/tr}</i>
+										<input type="text" id="quota" name="quota" value="{$gal_info.quota}" size="5">{tr}Mb{/tr} <i>{tr}(0 for unlimited){/tr}</i>
 										{if $gal_info.usedSize}<br>{tr}Used:{/tr} {$gal_info.usedSize|kbsize}{/if}
 										{if !empty($gal_info.quota)}
 											{capture name='use'}
@@ -205,7 +205,7 @@ $('#fgal_template').change( function() {
 
 								<tr>
 									<td>{tr}Allows to select each user for small groups{/tr}</td>
-									<td><input type="checkbox" name="showeachuser" {if $showeachuser eq 'y'}checked="checked"{/if}/ ></td>
+									<td><input type="checkbox" name="showeachuser" {if $showeachuser eq 'y'}checked="checked"{/if}></td>
 								</tr>
 							{/if}
 
@@ -216,7 +216,7 @@ $('#fgal_template').change( function() {
 								{tr}Maximum width for images in gallery:{/tr}
 							</td>
 							<td>
-								<input size="5" type="text" name="image_max_size_x" value="{$gal_info.image_max_size_x|escape}" /> px
+								<input size="5" type="text" name="image_max_size_x" value="{$gal_info.image_max_size_x|escape}"> px
 								<br>
 								<i>{tr}If an image is wider than this, it will be resized.{/tr} {tr}Attention: In this case, the original image will be lost.{/tr} (0={tr}unlimited{/tr})</i>
 							</td>
@@ -226,7 +226,7 @@ $('#fgal_template').change( function() {
 								{tr}Maximum height for images in gallery:{/tr}
 							</td>
 							<td>
-								<input size="5" type="text" name="image_max_size_y" value="{$gal_info.image_max_size_y|escape}" /> px
+								<input size="5" type="text" name="image_max_size_y" value="{$gal_info.image_max_size_y|escape}"> px
 								<br>
 								<i>{tr}If an image is higher than this, it will be resized.{/tr} {tr}Attention: In this case, the original image will be lost.{/tr} (0={tr}unlimited{/tr})</i>
 							</td>
@@ -236,7 +236,7 @@ $('#fgal_template').change( function() {
 								{tr}Wiki markup to enter when image selected from "file gallery manager":{/tr}
 							</td>
 							<td>
-								<input size="80" type="text" name="wiki_syntax" value="{$gal_info.wiki_syntax|escape}" />
+								<input size="80" type="text" name="wiki_syntax" value="{$gal_info.wiki_syntax|escape}">
 								<br>
 								<i>{tr}The default is {/tr}"{literal}{img fileId="%fileId%" thumb="y" rel="box[g]"}{/literal}")</i>
 								<i>{tr}Field names will be replaced when enclosed in % chars. e.g. %fileId%, %name%, %filename%, %description%{/tr}</i>
@@ -260,10 +260,10 @@ $('#fgal_template').change( function() {
 									{/foreach}
 								</select>
 								<br>
-								<input type="radio" id="sortdirection2" name="sortdirection" value="asc" {if $sortdirection == 'asc'}checked="checked"{/if} />
+								<input type="radio" id="sortdirection2" name="sortdirection" value="asc" {if $sortdirection == 'asc'}checked="checked"{/if}>
 								<label for="sortdirection2">{tr}Ascending{/tr}</label>
 								<br>
-								<input type="radio" id="sortdirection1" name="sortdirection" value="desc" {if $sortdirection == 'desc'}checked="checked"{/if} />
+								<input type="radio" id="sortdirection1" name="sortdirection" value="desc" {if $sortdirection == 'desc'}checked="checked"{/if}>
 								<label for="sortdirection1">{tr}Descending{/tr}</label>
 							</td>
 						</tr>
@@ -272,13 +272,13 @@ $('#fgal_template').change( function() {
 								<label for="max_desc">{tr}Max description display size:{/tr}</label>
 							</td>
 							<td>
-								<input type="text" id="max_desc" name="max_desc" value="{$max_desc|escape}" />
+								<input type="text" id="max_desc" name="max_desc" value="{$max_desc|escape}">
 							</td>
 							<td>
 								<label for="maxRows">{tr}Max rows per page:{/tr}</label>
 							</td>
 							<td>
-								<input type="text" id="maxRows" name="maxRows" value="{$maxRows|escape}" />
+								<input type="text" id="maxRows" name="maxRows" value="{$maxRows|escape}">
 							</td>
 						</tr>
 						<tr>
@@ -291,7 +291,7 @@ $('#fgal_template').change( function() {
 					</table>
 				{/tab}
 			{/tabset}
-			<input type="submit" value="{tr}Save{/tr}" name="edit" />
+			<input type="submit" value="{tr}Save{/tr}" name="edit">
 		</form>
 	</div>
 	<br>

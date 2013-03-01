@@ -8,13 +8,13 @@
 		<textarea id="fileData">{$data}</textarea>
 	</span>
 	
-	<input type="hidden" id="fileId" value="{$fileId}" />
-	<input type="hidden" id="galleryId" value="{$galleryId}" />
-	<input type="hidden" id="fileName" value="{$name}" />
-	<input type="hidden" id="fileWidth" value="{$width}" />
-	<input type="hidden" id="fileHeight" value="{$height}" />
-	<input type="hidden" id="archive" value="{$archive}" />
-	<input type="hidden" name="action" value="replace" />
+	<input type="hidden" id="fileId" value="{$fileId}">
+	<input type="hidden" id="galleryId" value="{$galleryId}">
+	<input type="hidden" id="fileName" value="{$name}">
+	<input type="hidden" id="fileWidth" value="{$width}">
+	<input type="hidden" id="fileHeight" value="{$height}">
+	<input type="hidden" id="archive" value="{$archive}">
+	<input type="hidden" name="action" value="replace">
 	
 	<div id="drawEditor">
 		<div id="drawMenu">
@@ -25,7 +25,7 @@
 				<button id="drawBack">{tr}Back{/tr}</button>
 				<button id="drawFullscreen">{tr}Toggle Fullscreen{/tr}</button>
 			{else}
-				<input type="submit" style="display: none;" value="{tr}Save{/tr}" />
+				<input type="submit" style="display: none;" value="{tr}Save{/tr}">
 			{/if}
 		</div>
 	</div>

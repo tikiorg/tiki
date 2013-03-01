@@ -8,8 +8,8 @@
 	</fieldset>
 </form>
 <table width="100%">
-	<col width="50%"/>
-	<col width="50%"/>
+	<col width="50%">
+	<col width="50%">
 	<tr>
 		<td>
 			<h2>{tr}Known Types{/tr}</h2>

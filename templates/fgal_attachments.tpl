@@ -31,16 +31,16 @@
 		and (empty($attach_box) or $attach_box ne 'n')}
 		<form enctype="multipart/form-data" action="tiki-index.php?page={$page|escape:"url"}" method="post">
 			{if $page_ref_id}
-				<input type="hidden" name="page_ref_id" value="{$page_ref_id}" />
+				<input type="hidden" name="page_ref_id" value="{$page_ref_id}">
 			{/if}
 			<table class="formcolor">
 				<tr>
 					<td>
 						<label for="attach-upload">{tr}Upload file:{/tr}</label>
-						<input size="16" name="userfile[0]" type="file" id="attach-upload" />
-						<label for="attach-comment">{tr}Comment:{/tr}</label><input type="text" name="s_f_attachments-comment" maxlength="250" id="attach-comment" />
-						<input type="submit" name="s_f_attachments-upload" value="{tr}Attach{/tr}"/>
-						<input type="hidden" name="s_f_attachments-page" value="{$page|escape}"/>
+						<input size="16" name="userfile[0]" type="file" id="attach-upload">
+						<label for="attach-comment">{tr}Comment:{/tr}</label><input type="text" name="s_f_attachments-comment" maxlength="250" id="attach-comment">
+						<input type="submit" name="s_f_attachments-upload" value="{tr}Attach{/tr}">
+						<input type="hidden" name="s_f_attachments-page" value="{$page|escape}">
 					</td>
 				</tr>
 			</table>

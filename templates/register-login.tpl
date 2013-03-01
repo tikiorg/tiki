@@ -1,5 +1,5 @@
 {if $prefs.user_register_prettytracker eq 'y' and $prefs.user_register_prettytracker_tpl and $prefs.socialnetworks_user_firstlogin != 'y'}
-	<input type="text" name="name" id="name" />
+	<input type="text" name="name" id="name">
 	&nbsp;<strong class='mandatory_star'>*</strong>
 {else}
 	<tr>
@@ -8,7 +8,7 @@
 			{if $trackerEditFormId}&nbsp;<strong class='mandatory_star'>*</strong>&nbsp;{/if}
 		</td>
 		<td>
-			<input type="text" name="name" id="name" value="{if !empty($smarty.post.name)}{$smarty.post.name}{/if}" />
+			<input type="text" name="name" id="name" value="{if !empty($smarty.post.name)}{$smarty.post.name}{/if}">
 			{if $prefs.login_is_email eq 'y'}
 				<br><em>{tr}Use your email as login{/tr}</em>.
 			{else}

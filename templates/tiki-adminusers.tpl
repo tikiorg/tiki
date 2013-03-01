@@ -73,10 +73,10 @@
 		<table class="findtable">
 			<tr>
 				<td><label for="find">{tr}Find{/tr}</label></td>
-				<td><input type="text" id="find" name="find" value="{$find|escape}" /></td>
-				<td><input type="submit" value="{tr}Find{/tr}" name="search" /></td>
+				<td><input type="text" id="find" name="find" value="{$find|escape}"></td>
+				<td><input type="submit" value="{tr}Find{/tr}" name="search"></td>
 				<td><label for="numrows">{tr}Number of displayed rows{/tr}</label></td>
-				<td><input type="text" size="4" id="numrows" name="numrows" value="{$numrows|escape}" /></td>
+				<td><input type="text" size="4" id="numrows" name="numrows" value="{$numrows|escape}"></td>
 			</tr>
 			<tr>
 				<td colspan="2"></td>
@@ -102,21 +102,21 @@
 						</select>
 					</td>
 					<td><label for="filterEmailNotConfirmed">{tr}Email not confirmed{/tr}</label></td>
-					<td><input id="filterEmailNotConfirmed" name="filterEmailNotConfirmed" type="checkbox"{if !empty($smarty.request.filterEmailNotConfirmed)} checked="checked"{/if} /></td>
+					<td><input id="filterEmailNotConfirmed" name="filterEmailNotConfirmed" type="checkbox"{if !empty($smarty.request.filterEmailNotConfirmed)} checked="checked"{/if}></td>
 					<td><label for="filterNeverLoggedIn">{tr}Never logged in{/tr}</label></td>
-					<td><input id="filterNeverLoggedIn" name="filterNeverLoggedIn" type="checkbox"{if !empty($smarty.request.filterNeverLoggedIn)} checked="checked"{/if}  /></td>
+					<td><input id="filterNeverLoggedIn" name="filterNeverLoggedIn" type="checkbox"{if !empty($smarty.request.filterNeverLoggedIn)} checked="checked"{/if}></td>
 				</tr>
 				<tr>
 					<td><label for="filterEmail">{tr}Email{/tr}</label></td>
-					<td><input type="text" id="filterEmail" name="filterEmail" value="{$filterEmail}" /></td>
+					<td><input type="text" id="filterEmail" name="filterEmail" value="{$filterEmail}"></td>
 					<td><label for="filterNotValidated">{tr}User not validated{/tr}</label></td>
-					<td><input id="filterNotValidated" name="filterNotValidated" type="checkbox"{if !empty($smarty.request.filterNotValidated)} checked="checked"{/if}  /></td>
+					<td><input id="filterNotValidated" name="filterNotValidated" type="checkbox"{if !empty($smarty.request.filterNotValidated)} checked="checked"{/if}></td>
 					<td></td>
 					<td></td>
 				</tr>
 			</table>
 
-			<input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
+			<input type="hidden" name="sort_mode" value="{$sort_mode|escape}">
 		</div>
 	</form>
 
@@ -151,7 +151,7 @@
 					<tr class="{cycle}">
 						<td class="checkbox">
 							{if $users[user].user ne 'admin'}
-								<input type="checkbox" name="checked[]" value="{$users[user].user|escape}" {if $users[user].checked eq 'y'}checked="checked" {/if}/>
+								<input type="checkbox" name="checked[]" value="{$users[user].user|escape}" {if $users[user].checked eq 'y'}checked="checked" {/if}>
 							{/if}
 						</td>
 	
@@ -271,7 +271,7 @@
 									{/if}
 								</select>
 								</label>
-								<input type="submit" value="{tr}OK{/tr}" />
+								<input type="submit" value="{tr}OK{/tr}">
 							{elseif $group_management_mode eq 'y'}
 								<select name="group_management">
 									<option value="add">{tr}Assign selected to{/tr}</option>
@@ -287,7 +287,7 @@
 									{/section}
 								</select></label>
 								<br>
-								<input type="submit" value="{tr}OK{/tr}" />
+								<input type="submit" value="{tr}OK{/tr}">
 								{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Use Ctrl+Click to select multiple options{/tr}{/remarksbox}
 							{elseif $set_default_groups_mode eq 'y'}
 								<label>{tr}Set the default group of the selected users to:{/tr}
@@ -300,16 +300,16 @@
 									{/section}
 								</select></label>
 								<br>
-								<input type="submit" value="{tr}OK{/tr}" />
-								<input type="hidden" name="set_default_groups" value="{$set_default_groups_mode}" />
+								<input type="submit" value="{tr}OK{/tr}">
+								<input type="hidden" name="set_default_groups" value="{$set_default_groups_mode}">
 							{elseif $email_mode eq 'y'}
 								<label>{tr}Template wiki page{/tr} 
-								<input type="text" name="wikiTpl" /></label>
+								<input type="text" name="wikiTpl"></label>
 								<br>
 								<label>{tr}bcc{/tr} 
-								<input type="text" name="bcc" /></label>
-								<input type="submit" value="{tr}OK{/tr}" />
-								<input type="hidden" name="emailChecked" value="{$email_mode}" />
+								<input type="text" name="bcc"></label>
+								<input type="submit" value="{tr}OK{/tr}">
+								<input type="hidden" name="emailChecked" value="{$email_mode}">
 							{/if}
 						</p>
 					{/if}
@@ -317,10 +317,10 @@
 			</tr>
 		</table>
 
-		<input type="hidden" name="find" value="{$find|escape}" />
-		<input type="hidden" name="numrows" value="{$numrows|escape}" />
-		<input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
-		<input type="hidden" name="offset" value="{$offset|escape}" />
+		<input type="hidden" name="find" value="{$find|escape}">
+		<input type="hidden" name="numrows" value="{$numrows|escape}">
+		<input type="hidden" name="sort_mode" value="{$sort_mode|escape}">
+		<input type="hidden" name="offset" value="{$offset|escape}">
 	</form>
 
 	{pagination_links cant=$cant step=$numrows offset=$offset}{/pagination_links}
@@ -359,7 +359,7 @@
 					</td>
 					<td>
 						{if $userinfo.login neq 'admin'}
-							<input type="text" id='login' name='login' value="{$userinfo.login|escape}" />
+							<input type="text" id='login' name='login' value="{$userinfo.login|escape}">
 							<br> 
 							{if $prefs.login_is_email eq 'y'}
 								<em>{tr}Use the email as username{/tr}.</em>
@@ -377,7 +377,7 @@
 								{/if}
 							{/if}
 						{else}
-							<input type="hidden" name='login' value="{$userinfo.login|escape}" />{$userinfo.login}
+							<input type="hidden" name='login' value="{$userinfo.login|escape}">{$userinfo.login}
 						{/if}
 					</td>
 				</tr>
@@ -399,7 +399,7 @@
 					<tr>
 						<td><label for="pass1">{tr}Password:{/tr}</label>{if !$userinfo.userId}<br>({tr}required{/tr}){/if}</td>
 						<td>
-							<input type="password" name="pass" id="pass1" onkeyup="runPassword(this.value, 'mypassword');checkPasswordsMatch('#pass2', '#pass1', '#mypassword2_text')" />
+							<input type="password" name="pass" id="pass1" onkeyup="runPassword(this.value, 'mypassword');checkPasswordsMatch('#pass2', '#pass1', '#mypassword2_text')">
 							<div style="float:right;margin-left:5px;">
 								<div id="mypassword_text"></div>
 								<div id="mypassword_bar" style="font-size: 5px; height: 2px; width: 0px;"></div> 
@@ -411,7 +411,7 @@
 					<tr>
 						<td><label for="pass2">{tr}Repeat Password:{/tr}</label>{if !$userinfo.userId}<br>({tr}required{/tr}){/if}</td>
 						<td>
-							<input type="password" name="pass2" id="pass2" onkeyup="checkPasswordsMatch('#pass2', '#pass1', '#mypassword2_text')" />
+							<input type="password" name="pass2" id="pass2" onkeyup="checkPasswordsMatch('#pass2', '#pass1', '#mypassword2_text')">
 							<div style="float:right;margin-left:5px;">
 								<div id="mypassword2_text"></div>
 							</div>
@@ -419,7 +419,7 @@
 					</tr>
 					{if ! ( $prefs.auth_method eq 'ldap' and ( $prefs.ldap_create_user_tiki eq 'n' or $prefs.ldap_skip_admin eq 'y' ) and $prefs.ldap_create_user_ldap eq 'n' )}
 						<tr><td>&nbsp;</td><td>
-							<input id='genepass' name="genepass" type="text" tabindex="0" style="display: none" />
+							<input id='genepass' name="genepass" type="text" tabindex="0" style="display: none">
 							{jq}
 								$("#genPass span").click(function () {
 									$('#pass1, #pass2').val('');
@@ -439,7 +439,7 @@
 						<tr>
 							<td>&nbsp;</td>
 							<td>
-								<label><input type="checkbox" name="pass_first_login"{if $userinfo.pass_confirm eq '0'} checked="checked"{/if} /> 
+								<label><input type="checkbox" name="pass_first_login"{if $userinfo.pass_confirm eq '0'} checked="checked"{/if}> 
 								{tr}User must change password at next login{/tr}.</label>
 							</td>
 						</tr>
@@ -450,7 +450,7 @@
 					<tr>
 						<td><label for="email">{tr}Email:{/tr}</label></td>
 						<td>
-							<input type="text" id="email" name="email" size="30" value="{$userinfo.email|escape}" />
+							<input type="text" id="email" name="email" size="30" value="{$userinfo.email|escape}">
 						</td>
 					</tr>
 				{/if}
@@ -458,7 +458,7 @@
 					<tr>
 						<td>&nbsp;</td>
 						<td>
-							<label><input type="checkbox" name="need_email_validation" {if ($userinfo.login eq '' and ($prefs.validateUsers eq 'y' or $prefs.validateRegistration eq 'y')) or $userinfo.provpass neq ''}checked="checked" {/if}/> 
+							<label><input type="checkbox" name="need_email_validation" {if ($userinfo.login eq '' and ($prefs.validateUsers eq 'y' or $prefs.validateRegistration eq 'y')) or $userinfo.provpass neq ''}checked="checked" {/if}> 
 							{tr}Send an email to the user in order to allow him to validate his account.{/tr}</label> 
 							
 							{if empty($prefs.sender_email)}<br><span class="highlight">{tr}You need to set <a href="tiki-admin.php?page=general">Sender Email</a>{/tr}</span>{/if}						
@@ -518,11 +518,11 @@
 					<td>&nbsp;</td>
 					<td>
 						{if $userinfo.userId}
-							<input type="hidden" name="user" value="{$userinfo.userId|escape}" />
-							<input type="hidden" name="edituser" value="1" />
-							<input type="submit" name="save" value="{tr}Save{/tr}" />
+							<input type="hidden" name="user" value="{$userinfo.userId|escape}">
+							<input type="hidden" name="edituser" value="1">
+							<input type="submit" name="save" value="{tr}Save{/tr}">
 						{else}
-							<input type="submit" name="newuser" value="{tr}Add{/tr}" />
+							<input type="submit" name="newuser" value="{tr}Add{/tr}">
 						{/if}
 					</td>
 				</tr>
@@ -559,27 +559,27 @@
 					</label>
 				</td>
 				<td>
-					<input type="file" id="csvlist" name="csvlist"/>
+					<input type="file" id="csvlist" name="csvlist">
 					<br>
-					<label><input type="radio" name="overwrite" value="y" />&nbsp;{tr}Overwrite{/tr}</label>
+					<label><input type="radio" name="overwrite" value="y">&nbsp;{tr}Overwrite{/tr}</label>
 					<br>
-					<label><input type="radio" name="overwrite" value="n" checked="checked" />&nbsp;{tr}Don't overwrite{/tr}</label>
+					<label><input type="radio" name="overwrite" value="n" checked="checked">&nbsp;{tr}Don't overwrite{/tr}</label>
 					<br>
-					<label>{tr}Overwrite groups:{/tr} <input type="checkbox" name="overwriteGroup" /></label>
+					<label>{tr}Overwrite groups:{/tr} <input type="checkbox" name="overwriteGroup"></label>
                     <br>
-					<label>{tr}Create groups:{/tr} <input type="checkbox" name="createGroup" /></label>
+					<label>{tr}Create groups:{/tr} <input type="checkbox" name="createGroup"></label>
                     <br>
 					{if $prefs.change_password neq 'n'}
-                     <label>{tr}User must change password at first login:{/tr} <input type="checkbox" name="forcePasswordChange" /></label>
+                     <label>{tr}User must change password at first login:{/tr} <input type="checkbox" name="forcePasswordChange"></label>
 					<br>
 					{/if}
-                    <label>{tr}Send an email to the user in order to allow him to validate his account.{/tr} <input type="checkbox" name="notification" /></label>
+                    <label>{tr}Send an email to the user in order to allow him to validate his account.{/tr} <input type="checkbox" name="notification"></label>
 				</td>
 			</tr>
 			<tr>
 				<td>&nbsp;</td>
 				<td>
-					<input type="submit" name="batch" value="{tr}Add{/tr}" />
+					<input type="submit" name="batch" value="{tr}Add{/tr}">
 				</td>
 			</tr>
 		</table>

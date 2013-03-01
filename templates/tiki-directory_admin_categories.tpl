@@ -16,7 +16,7 @@
 {/section}
 
   </select>
-  <input type="submit" name="go" value="{tr}Go{/tr}" />
+  <input type="submit" name="go" value="{tr}Go{/tr}">
 </form>
 {* Dislay a form to add or edit a category *} <br>
 {if $categId eq 0}
@@ -25,12 +25,12 @@
 <h2>{tr}Edit this directory category:{/tr} {$info.name}</h2>
 <a href="tiki-directory_admin_categories.php">{tr}Add a Directory Category{/tr}</a> {/if}
 <form action="tiki-directory_admin_categories.php" method="post">
-  <input type="hidden" name="parent" value="{$parent|escape}" />
-  <input type="hidden" name="categId" value="{$categId|escape}" />
+  <input type="hidden" name="parent" value="{$parent|escape}">
+  <input type="hidden" name="categId" value="{$categId|escape}">
   <table class="formcolor">
     <tr>
       <td>{tr}Name:{/tr}</td>
-      <td><input type="text" name="name" value="{$info.name|escape}" />
+      <td><input type="text" name="name" value="{$info.name|escape}">
     </tr>
     <tr>
       <td>{tr}Description:{/tr}</td>
@@ -59,11 +59,11 @@
     </tr>
     <tr>
       <td>{tr}Allow sites in this directory category:{/tr}</td>
-      <td><input name="allowSites" type="checkbox" {if $info.allowSites eq 'y'}checked="checked"{/if} /></td>
+      <td><input name="allowSites" type="checkbox" {if $info.allowSites eq 'y'}checked="checked"{/if}></td>
     </tr>
     <tr>
       <td>{tr}Show number of sites in this directory category:{/tr}</td>
-      <td><input name="showCount" type="checkbox" {if $info.showCount eq 'y'}checked="checked"{/if} /></td>
+      <td><input name="showCount" type="checkbox" {if $info.showCount eq 'y'}checked="checked"{/if}></td>
     </tr>
     <tr>
       <td>{tr}Editor group:{/tr}</td>
@@ -82,7 +82,7 @@
     {include file='categorize.tpl'}
     <tr>
       <td>&nbsp;</td>
-      <td><input type="submit" name="save" value="{tr}Save{/tr}" />
+      <td><input type="submit" name="save" value="{tr}Save{/tr}">
     </tr>
   </table>
 </form>

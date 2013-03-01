@@ -62,15 +62,15 @@
 			{/if}
 
 			<form name="fgalformid" id="fgalform" method="post" action="{if !empty($filegals_manager)}{query _type='relative' filegals_manager=$filegals_manager|escape}{else}{query _type='relative'}{/if}" enctype="multipart/form-data">
-				<input type="hidden" name="galleryId" value="{$gal_info.galleryId|escape}" />
-				<input type="hidden" name="find" value="{$find|escape}" />
-				{if !empty($smarty.request.show_details)}<input type="hidden" name="show_details" value="{$smarty.request.show_details}" />{/if}
+				<input type="hidden" name="galleryId" value="{$gal_info.galleryId|escape}">
+				<input type="hidden" name="find" value="{$find|escape}">
+				{if !empty($smarty.request.show_details)}<input type="hidden" name="show_details" value="{$smarty.request.show_details}">{/if}
 
-				{if $prefs.fgal_asynchronous_indexing eq 'y'}<input type="hidden" name="fast" value="y" />{/if}
-				{if !empty($sort_mode)}<input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />{/if}
-				{if isset($file_info)}<input type="hidden" name="fileId" value="{$file_info.fileId|escape}" />{/if}
-				{if isset($page)}<input type="hidden" name="page" value="{$page|escape}" />{/if}
-				{if isset($view)}<input type="hidden" name="view" value="{$view|escape}" />{/if}
+				{if $prefs.fgal_asynchronous_indexing eq 'y'}<input type="hidden" name="fast" value="y">{/if}
+				{if !empty($sort_mode)}<input type="hidden" name="sort_mode" value="{$sort_mode|escape}">{/if}
+				{if isset($file_info)}<input type="hidden" name="fileId" value="{$file_info.fileId|escape}">{/if}
+				{if isset($page)}<input type="hidden" name="page" value="{$page|escape}">{/if}
+				{if isset($view)}<input type="hidden" name="view" value="{$view|escape}">{/if}
 
 				{assign var=nbCols value=0}
 				{assign var=other_columns value=''}
@@ -103,7 +103,7 @@
 								{tr}Perform action with checked:{/tr}
 							{/if}
 							{if !isset($file_info)}
-								{if $offset}<input type="hidden" name="offset" value="{$offset}" />{/if}
+								{if $offset}<input type="hidden" name="offset" value="{$offset}">{/if}
 								{if $tiki_p_admin_file_galleries eq 'y'}
 									{icon _id='arrow_right' _tag='input_image' name='movesel' alt="{tr}Move{/tr}" title="{tr}Move Selected Files{/tr}" style='vertical-align: middle;'}
 								{/if}
@@ -141,7 +141,7 @@
 										{/if}
 									{/section}
 								</select>
-								<input type='submit' name='movesel' value="{tr}Move{/tr}" />
+								<input type='submit' name='movesel' value="{tr}Move{/tr}">
 							</div>
 						{/if}
 					</div>
@@ -161,7 +161,7 @@
 									</option>
 								{/section}
 							</select>
-							<input type="submit" name="permsel" value="{tr}Assign{/tr}" />
+							<input type="submit" name="permsel" value="{tr}Assign{/tr}">
 						</div>
 					{/if}
 					<br style="clear:both"/>

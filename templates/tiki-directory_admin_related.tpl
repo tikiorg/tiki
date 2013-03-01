@@ -15,12 +15,12 @@
 {/section}
 
   </select>
-  <input type="submit" name="go" value="{tr}Go{/tr}" />
+  <input type="submit" name="go" value="{tr}Go{/tr}">
 </form>
 <br>
 <h2>{tr}Add a related directory category{/tr}</h2>
 <form action="tiki-directory_admin_related.php" method="post">
-  <input type="hidden" name="parent" value="{$parent|escape}" />
+  <input type="hidden" name="parent" value="{$parent|escape}">
   <table class="formcolor">
     <tr>
       <td>{tr}Directory Category:{/tr}</td>
@@ -37,11 +37,11 @@
     </tr>
     <tr>
       <td>{tr}Mutual:{/tr}</td>
-      <td><input type="checkbox" name="mutual" /></td>
+      <td><input type="checkbox" name="mutual"></td>
     </tr>
     <tr>
       <td>&nbsp;</td>
-      <td><input type="submit" name="add" value="{tr}Save{/tr}" /></td>
+      <td><input type="submit" name="add" value="{tr}Save{/tr}"></td>
     </tr>
   </table>
 </form>
@@ -50,8 +50,8 @@
 {* Display the list of categories (items) using pagination *}
 {* Links to edit, remove, browse the categories *}
 <form action="tiki-directory_admin_related.php">
-  <input type="hidden" name="parent" value="{$parent|escape}" />
-  <input type="hidden" name="oldcategId" value="{$items[user].relatedTo|escape}" />
+  <input type="hidden" name="parent" value="{$parent|escape}">
+  <input type="hidden" name="oldcategId" value="{$items[user].relatedTo|escape}">
   <table class="formcolor">
     <tr>
       <th>{tr}Directory Category{/tr}</th>
@@ -67,7 +67,7 @@
 				{/section}
 			</select>
       </td>
-      <td><input type="submit" name="remove" value="{tr}Remove{/tr}" /><input type="submit" name="update" value="{tr}Update{/tr}" /></td>
+      <td><input type="submit" name="remove" value="{tr}Remove{/tr}" /><input type="submit" name="update" value="{tr}Update{/tr}"></td>
     </tr>
     {sectionelse}
 		{norecords _colspan=2}

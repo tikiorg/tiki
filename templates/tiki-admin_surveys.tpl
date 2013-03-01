@@ -83,11 +83,11 @@
 {/if}
 
 <form action="tiki-admin_surveys.php" method="post">
-	<input type="hidden" name="surveyId" value="{$info.surveyId|escape}" />
+	<input type="hidden" name="surveyId" value="{$info.surveyId|escape}">
 	<table class="formcolor">
 		<tr>
 			<td>{tr}Name:{/tr}</td>
-			<td><input type="text" name="name" size="80" value="{$info.name|escape}" /></td>
+			<td><input type="text" name="name" size="80" value="{$info.name|escape}"></td>
 		</tr>
 		<tr>
 			<td>{tr}Description:{/tr}</td>
@@ -106,7 +106,7 @@
 		<tr>
 			<td>&nbsp;</td>
 			<td>
-				<input type="submit" name="save" value="{tr}Save{/tr}" />
+				<input type="submit" name="save" value="{tr}Save{/tr}">
 			</td>
 		</tr>
 	</table>

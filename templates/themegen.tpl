@@ -24,11 +24,11 @@
 
 			<div id="tg_section_{$tg_section}">
 				<div class="clearfix tgTools">
-					<input type="checkbox" class="tgToggle" id="tgToggle_{$tg_section}" />
+					<input type="checkbox" class="tgToggle" id="tgToggle_{$tg_section}">
 					<label for="tgToggle_{$tg_section}">{tr}Toggle checkboxes{/tr}</label>
-					<input type="checkbox" class="tgToggleChanged" id="tgToggleChanged_{$tg_section}" />
+					<input type="checkbox" class="tgToggleChanged" id="tgToggleChanged_{$tg_section}">
 					<label for="tgToggleChanged_{$tg_section}">{tr}Toggle changed{/tr}</label>
-					<input type="checkbox" class="tgLivePreview" checked="checked" id="tgLivePreview_{$tg_section}" />
+					<input type="checkbox" class="tgLivePreview" checked="checked" id="tgLivePreview_{$tg_section}">
 					<label for="tgLivePreview_{$tg_section}">{tr}Live preview{/tr}</label>
 					{button _text="{tr}Reset selected{/tr}" _class="tgResetSection" href="#"}
 				</div>
@@ -50,13 +50,13 @@
 											<div style="background-color:{$tg_item.new};">&nbsp;</div>
 										</div>
 										<input type="text" name="tg_swaps[{$tg_type}][{$tg_item.old}]"
-												value="{$tg_item.new}" class="tgValue" />
+												value="{$tg_item.new}" class="tgValue">
 									{elseif $tg_data_type.selector eq 'size'}
 										 <div class="tgLabel">
 											{$tg_item.old}
 										</div>
 										<input type="text" name="tg_swaps[{$tg_type}][{$tg_item.old}]"
-												value="{$tg_item.new}" class="tgValue tgSize" />
+												value="{$tg_item.new}" class="tgValue tgSize">
 									{elseif $tg_data_type.selector eq 'borderstyle'}
 										 <div class="tgLabel">
 											{$tg_item.old}
@@ -77,10 +77,10 @@
 											{$tg_item.old|truncate:999}
 										</div>
 										<input type="text" name="tg_swaps[{$tg_type}][{$tg_item.old}]"
-												value="{$tg_item.new}" class="tgValue tgWide" />
+												value="{$tg_item.new}" class="tgValue tgWide">
 									{/if}
 								</div>
-								<input type="checkbox" value="{$tg_item.old}" />
+								<input type="checkbox" value="{$tg_item.old}">
 							</li>
 						{foreachelse}
 							{tr}No definitions found{/tr}

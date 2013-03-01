@@ -115,17 +115,17 @@
 			</td>
 			<td class="odd">
 				<form action="tiki-browse_image.php" method="post">
-					<input type="hidden" name="scalesize" value="{$scalesize|escape}" />
-					<input type="hidden" name="sort_mode" value="{$sort_mode|escape}"/>
-					<input type="hidden" name="imageId" value="{$imageId|escape}"/>
-					<input type="hidden" name="galleryId" value="{$galleryId|escape}"/>
-					<input type="text" name="newname" value="{$name}" />
+					<input type="hidden" name="scalesize" value="{$scalesize|escape}">
+					<input type="hidden" name="sort_mode" value="{$sort_mode|escape}">
+					<input type="hidden" name="imageId" value="{$imageId|escape}">
+					<input type="hidden" name="galleryId" value="{$galleryId|escape}">
+					<input type="text" name="newname" value="{$name}">
 					<select name="newgalleryId">
 				    {section name=idx loop=$galleries}
 				      <option value="{$galleries[idx].id|escape}" {if $galleries[idx].id eq $galleryId}selected="selected"{/if}>{$galleries[idx].name}</option>
 				    {/section}
 					</select>
-					<input type="submit" name="move_image" value="{tr}Move{/tr}" />
+					<input type="submit" name="move_image" value="{tr}Move{/tr}">
 			  </form>
 			</td>
 		</tr>

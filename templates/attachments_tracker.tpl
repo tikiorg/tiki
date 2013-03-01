@@ -3,27 +3,27 @@
 {if $print_page ne 'y' and $tiki_p_attach_trackers eq 'y'}
 	<h2>{tr}Attach a file to this item{/tr}</h2>
 	<form enctype="multipart/form-data" action="tiki-view_tracker_item.php" method="post">
-		<input type="hidden" name="trackerId" value="{$trackerId|escape}" />
-		<input type="hidden" name="itemId" value="{$itemId|escape}" />
-		<input type="hidden" name="attId" value="{$attId|escape}" />
+		<input type="hidden" name="trackerId" value="{$trackerId|escape}">
+		<input type="hidden" name="itemId" value="{$itemId|escape}">
+		<input type="hidden" name="attId" value="{$attId|escape}">
 		<table class="formcolor">
 			<tr>
 				<td>{tr}Upload file{/tr}</td>
-				<td>{if $attach_file}{tr}Edit:{/tr} {/if}<input type="hidden" name="MAX_FILE_SIZE" value="1000000000" /><input name="userfile1" type="file"  />{if $attach_file}<br>{$attach_file|escape}{/if}</td>
+				<td>{if $attach_file}{tr}Edit:{/tr} {/if}<input type="hidden" name="MAX_FILE_SIZE" value="1000000000"><input name="userfile1" type="file">{if $attach_file}<br>{$attach_file|escape}{/if}</td>
 			</tr>
 			<tr>
 				<td>{tr}Comment{/tr}</td>
-				<td><input type="text" name="attach_comment" maxlength="250" value="{$attach_comment|escape}" /></td></tr>
+				<td><input type="text" name="attach_comment" maxlength="250" value="{$attach_comment|escape}"></td></tr>
 			<tr>
 				<td>{tr}Version{/tr}</td>
-				<td><input type="text" name="attach_version" size="5" maxlength="10" value="{$attach_version|escape}" /></td></tr>
+				<td><input type="text" name="attach_version" size="5" maxlength="10" value="{$attach_version|escape}"></td></tr>
 			<tr>
 				<td>{tr}Description{/tr}</td>
 				<td><textarea name="attach_longdesc" style="width:100%;" rows="10" >{$attach_longdesc|escape}</textarea></td></tr>
 
 			<tr>
 				<td></td>
-				<td><input type="submit" name="attach" value={if $attach_file}"{tr}Edit{/tr}"{else}"{tr}Attach{/tr}"{/if} /></td>
+				<td><input type="submit" name="attach" value={if $attach_file}"{tr}Edit{/tr}"{else}"{tr}Attach{/tr}"{/if}></td>
 			</tr>
 		</table>
 	</form>

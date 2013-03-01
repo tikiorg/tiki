@@ -6,24 +6,24 @@
 
 <h2>{tr}Create/edit DSN{/tr}</h2>
 <form action="tiki-admin_dsn.php" method="post">
-	<input type="hidden" name="dsnId" value="{$dsnId|escape}" />
+	<input type="hidden" name="dsnId" value="{$dsnId|escape}">
 	<table class="formcolor">
 		<tr>
 		<td>{tr}Name:{/tr}</td>
 		 <td>
-			<input type="text" maxlength="255" size="10" name="name" value="{$info.name|escape}" />
+			<input type="text" maxlength="255" size="10" name="name" value="{$info.name|escape}">
 			</td>
 		</tr>
 		<tr>
 			<td>{tr}DSN:{/tr}</td>
 			<td>
-				<input type="text" maxlength="255" size="40" name="dsn" value="{$info.dsn|escape}" />
+				<input type="text" maxlength="255" size="40" name="dsn" value="{$info.dsn|escape}">
 			</td>
 		</tr>
 		<tr>
 			<td>&nbsp;</td>
 			<td>
-				<input type="submit" name="save" value="{tr}Save{/tr}" />
+				<input type="submit" name="save" value="{tr}Save{/tr}">
 			</td>
 		</tr>
 	</table>
@@ -75,7 +75,7 @@
 				<option value="">{tr}New{/tr}</option>
 			</select>
 		</label>
-		<input type="text" name="identifier"/>
+		<input type="text" name="identifier">
 		<label>{tr}URL:{/tr} <input type="url" name="url"/></label>
 		<label>
 			{tr}Type:{/tr}
@@ -88,21 +88,21 @@
 	</fieldset>
 	<fieldset class="method basic">
 		<legend>{tr}HTTP Basic{/tr}</legend>
-		<label>{tr}Username:{/tr} <input type="text" name="basic_username"/></label>
-		<label>{tr}Password:{/tr} <input type="password" name="basic_password"/></label>
+		<label>{tr}Username:{/tr} <input type="text" name="basic_username"></label>
+		<label>{tr}Password:{/tr} <input type="password" name="basic_password"></label>
 	</fieldset>
 	<fieldset class="method post">
 		<legend>{tr}HTTP Session / Login{/tr}</legend>
-		<label>{tr}URL:{/tr} <input type="url" name="post_url"/></label>
+		<label>{tr}URL:{/tr} <input type="url" name="post_url"></label>
 		<table>
 			<thead>
 				<tr><th>{tr}Name{/tr}</th><th>{tr}Value{/tr}</th></tr>
 			</thead>
 			<tfoot>
 				<tr>
-					<td><input type="text" name="post_new_field"/></td>
-					<td><input type="text" name="post_new_value"/></td>
-					<td><input type="submit" name="post_new_add" value="{tr}Add{/tr}"/></td>
+					<td><input type="text" name="post_new_field"></td>
+					<td><input type="text" name="post_new_value"></td>
+					<td><input type="submit" name="post_new_add" value="{tr}Add{/tr}"></td>
 				</tr>
 			</tfoot>
 			<tbody>
@@ -111,11 +111,11 @@
 	</fieldset>
 	<fieldset class="method get">
 		<legend>{tr}HTTP Session / Visit{/tr}</legend>
-		<label>{tr}URL:{/tr} <input type="url" name="get_url"/></label>
+		<label>{tr}URL:{/tr} <input type="url" name="get_url"></label>
 	</fieldset>
 	<fieldset>
-		<input type="submit" name="save" value="{tr}Save{/tr}"/>
-		<input type="submit" name="delete" value="{tr}Delete{/tr}"/>
+		<input type="submit" name="save" value="{tr}Save{/tr}">
+		<input type="submit" name="delete" value="{tr}Delete{/tr}">
 	</fieldset>
 </form>
 {jq}

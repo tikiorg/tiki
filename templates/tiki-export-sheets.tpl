@@ -45,7 +45,7 @@
 		</select>
 		<br>
 		{tr}Format:{/tr}
-		<input type="hidden" value="{$sheetId}" name="sheetId" />
+		<input type="hidden" value="{$sheetId}" name="sheetId">
 		<select name="handler">
 			{section name=key loop=$handlers}
 				<option value="{$handlers[key].class}">{$handlers[key].name} V. {$handlers[key].version}</option>
@@ -60,6 +60,6 @@
 		{/section}
 		</select>
 		<br>
-		<input type="submit" value="{tr}Export{/tr}" />
+		<input type="submit" value="{tr}Export{/tr}">
 	</form>
 {/if}

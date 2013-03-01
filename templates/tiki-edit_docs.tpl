@@ -10,7 +10,7 @@
 	{button _id="editButton" _class="editButton" _text="{tr}Edit{/tr}" _template="tiki-edit_docs.tpl" edit="edit" _auto_args="*" _htmlelement="role_main" _title="{tr}Tiki Docs{/tr} | {tr}Editing file{/tr}"}
 </span>
 
-<input id="fileId" type="hidden" value="{$fileId}" />
+<input id="fileId" type="hidden" value="{$fileId}">
 
 <div id="tiki_doc" class="" style="border-style:outset;border-width:2px;">
 </div>

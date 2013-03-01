@@ -13,21 +13,21 @@
   <table>
   <tr><td>
     <form method="post" action="messu-read_archive.php">
-    <input type="hidden" name="offset" value="{$offset|escape}" />
-    <input type="hidden" name="find" value="{$find|escape}" />
-    <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
-    <input type="hidden" name="flag" value="{$flag|escape}" />
-    <input type="hidden" name="flagval" value="{$flagval|escape}" />
-    <input type="hidden" name="priority" value="{$priority|escape}" />
-    <input type="hidden" name="msgdel" value="{$msgId|escape}" />
+    <input type="hidden" name="offset" value="{$offset|escape}">
+    <input type="hidden" name="find" value="{$find|escape}">
+    <input type="hidden" name="sort_mode" value="{$sort_mode|escape}">
+    <input type="hidden" name="flag" value="{$flag|escape}">
+    <input type="hidden" name="flagval" value="{$flagval|escape}">
+    <input type="hidden" name="priority" value="{$priority|escape}">
+    <input type="hidden" name="msgdel" value="{$msgId|escape}">
     {if $next}
-    <input type="hidden" name="msgId" value="{$next|escape}" />
+    <input type="hidden" name="msgId" value="{$next|escape}">
     {elseif $prev}
-    <input type="hidden" name="msgId" value="{$prev|escape}" />
+    <input type="hidden" name="msgId" value="{$prev|escape}">
     {else}
-    <input type="hidden" name="msgId" value="" />
+    <input type="hidden" name="msgId" value="">
     {/if}
-    <input type="submit" name="delete" value="{tr}Delete{/tr}" />
+    <input type="submit" name="delete" value="{tr}Delete{/tr}">
     </form>
   </td>
 </tr>

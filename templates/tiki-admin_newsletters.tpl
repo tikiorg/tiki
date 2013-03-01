@@ -69,13 +69,13 @@
 {/if}
 
 <form action="tiki-admin_newsletters.php" method="post">
-	<input type="hidden" name="nlId" value="{$info.nlId|escape}" />
-	<input type="hidden" name="author" value="{$user|escape}" />
+	<input type="hidden" name="nlId" value="{$info.nlId|escape}">
+	<input type="hidden" name="author" value="{$user|escape}">
 	<table class="formcolor">
 		<tr>
 			<td>{tr}Name:{/tr}</td>
 			<td>
-				<input type="text" name="name" value="{$info.name|escape}" />
+				<input type="text" name="name" value="{$info.name|escape}">
 			</td>
 		</tr>
 		<tr>
@@ -87,49 +87,49 @@
 		<tr>
 			<td>{tr}Users can subscribe/unsubscribe to this list{/tr}</td>
 			<td>
-				<input type="checkbox" name="allowUserSub" {if $info.allowUserSub eq 'y'}checked="checked"{/if} />
+				<input type="checkbox" name="allowUserSub" {if $info.allowUserSub eq 'y'}checked="checked"{/if}>
 			</td>
 		</tr>
 		<tr>
 			<td>{tr}Users can subscribe any email address{/tr}</td>
 			<td>
-				<input type="checkbox" name="allowAnySub" {if $info.allowAnySub eq 'y'}checked="checked"{/if} />
+				<input type="checkbox" name="allowAnySub" {if $info.allowAnySub eq 'y'}checked="checked"{/if}>
 			</td>
 		</tr>
 		<tr>
 			<td>{tr}Add unsubscribe instructions to each newsletter{/tr}</td>
 			<td>
-				<input type="checkbox" name="unsubMsg" {if $info.unsubMsg eq 'y'}checked="checked"{/if} />
+				<input type="checkbox" name="unsubMsg" {if $info.unsubMsg eq 'y'}checked="checked"{/if}>
 			</td>
 		</tr>
 		<tr>
 			<td>{tr}Validate email addresses{/tr}</td>
 			<td>
-				<input type="checkbox" name="validateAddr" {if $info.validateAddr eq 'y'}checked="checked"{/if} />
+				<input type="checkbox" name="validateAddr" {if $info.validateAddr eq 'y'}checked="checked"{/if}>
 			</td>
 		</tr>
 		<tr>
 			<td>{tr}Allow customized text message to be sent with the HTML version{/tr}</td>
 			<td>
-				<input type="checkbox" name="allowTxt" {if $info.allowTxt eq 'y'}checked="checked"{/if} />
+				<input type="checkbox" name="allowTxt" {if $info.allowTxt eq 'y'}checked="checked"{/if}>
 			</td>
 		</tr>
 		<tr>
 			<td>{tr}Allow clipping of articles into newsletter{/tr}</td>
 			<td>
-				<input type="checkbox" name="allowArticleClip" {if $info.allowArticleClip eq 'y'}checked="checked"{/if} />
+				<input type="checkbox" name="allowArticleClip" {if $info.allowArticleClip eq 'y'}checked="checked"{/if}>
 			</td>
 		</tr>
 		<tr>
 			<td>{tr}Automatically clip articles into newsletter{/tr}</td>
 			<td>
-				<input type="checkbox" name="autoArticleClip" {if $info.autoArticleClip eq 'y'}checked="checked"{/if} />
+				<input type="checkbox" name="autoArticleClip" {if $info.autoArticleClip eq 'y'}checked="checked"{/if}>
 			</td>
 		</tr>
 		<tr>
 			<td>{tr}Clip articles published in the past number of days{/tr}</td>
 			<td>
-				<input type="text" size="4" name="articleClipRangeDays" value="{$info.articleClipRangeDays|escape}" />
+				<input type="text" size="4" name="articleClipRangeDays" value="{$info.articleClipRangeDays|escape}">
 			</td>
 		</tr>
 		<tr>
@@ -145,7 +145,7 @@
 		<tr>
 			<td>&nbsp;</td>
 			<td>
-				<input type="submit" name="save" value="{tr}Save{/tr}" />
+				<input type="submit" name="save" value="{tr}Save{/tr}">
 			</td>
 		</tr>
 	</table>

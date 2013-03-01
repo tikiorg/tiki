@@ -37,27 +37,27 @@
 		<option value="5" {if $priority eq 5}selected="selected"{/if}>{tr}5{/tr}</option>
 	</select>
 	<label for="mess-mailcont">{tr}Containing:{/tr}</label>
-	<input type="text" name="find" id="mess-mailcont" value="{$find|escape}" />
-	<input type="submit" name="filter" value="{tr}Filter{/tr}" />
+	<input type="text" name="find" id="mess-mailcont" value="{$find|escape}">
+	<input type="submit" name="filter" value="{tr}Filter{/tr}">
 </form>
 <br>
 
 <form action="messu-sent.php" method="post" name="form_messu_sent">
-	<input type="hidden" name="offset" value="{$offset|escape}" />
-	<input type="hidden" name="find" value="{$find|escape}" />
-	<input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
-	<input type="hidden" name="flag" value="{$flag|escape}" />
-	<input type="hidden" name="flagval" value="{$flagval|escape}" />
-	<input type="hidden" name="priority" value="{$priority|escape}" />
-	<input type="submit" name="delete" value="{tr}Delete{/tr}" />
-	<input type="submit" name="archive" value="{tr}move to archive{/tr}" />
-	<input type="submit" name="download" value="{tr}Download{/tr}" />
+	<input type="hidden" name="offset" value="{$offset|escape}">
+	<input type="hidden" name="find" value="{$find|escape}">
+	<input type="hidden" name="sort_mode" value="{$sort_mode|escape}">
+	<input type="hidden" name="flag" value="{$flag|escape}">
+	<input type="hidden" name="flagval" value="{$flagval|escape}">
+	<input type="hidden" name="priority" value="{$priority|escape}">
+	<input type="submit" name="delete" value="{tr}Delete{/tr}">
+	<input type="submit" name="archive" value="{tr}move to archive{/tr}">
+	<input type="submit" name="download" value="{tr}Download{/tr}">
 {jq notonready=true}
 var CHECKBOX_LIST = [{{section name=user loop=$items}'msg[{$items[user].msgId}]'{if not $smarty.section.user.last},{/if}{/section}}];
 {/jq}
 	<table class="normal" >
 		<tr>
-			<th><input type="checkbox" name="checkall" onclick="checkbox_list_check_all('form_messu_sent',CHECKBOX_LIST,this.checked);" /></th>
+			<th><input type="checkbox" name="checkall" onclick="checkbox_list_check_all('form_messu_sent',CHECKBOX_LIST,this.checked);"></th>
 			<th style="width:18px">&nbsp;</th>
 			<th><a href="messu-sent.php?flag={$flag}&amp;priority={$priority}&amp;flagval={$flagval}&amp;find={$find}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'user_to_desc'}user_to_asc{else}user_to_desc{/if}">{tr}receiver{/tr}</a></th>
 			<th><a href="messu-sent.php?flag={$flag}&amp;priority={$priority}&amp;flagval={$flagval}&amp;find={$find}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'subject_desc'}subject_asc{else}subject_desc{/if}">{tr}Subject{/tr}</a></th>
@@ -68,7 +68,7 @@ var CHECKBOX_LIST = [{{section name=user loop=$items}'msg[{$items[user].msgId}]'
 		{cycle values="odd,even" print=false}
 		{section name=user loop=$items}
 			<tr>
-				<td class="prio{$items[user].priority}"><input type="checkbox" name="msg[{$items[user].msgId}]" /></td>
+				<td class="prio{$items[user].priority}"><input type="checkbox" name="msg[{$items[user].msgId}]"></td>
 				<td class="prio{$items[user].priority}">{if $items[user].isFlagged eq 'y'}{icon _id='flag_blue' alt="{tr}Flagged{/tr}"}{/if}</td>
 				<td {if $items[user].isRead eq 'n'}style="font-weight:bold"{/if} class="prio{$items[user].priority}">{$items[user].user_to|username}</td>
 				<td {if $items[user].isRead eq 'n'}style="font-weight:bold"{/if} class="prio{$items[user].priority}"><a class="readlink" href="messu-read_sent.php?offset={$offset}&amp;flag={$flag}&amp;priority={$items[user].priority}&amp;flagval={$flagval}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;msgId={$items[user].msgId}">{$items[user].subject|escape}</a></td>

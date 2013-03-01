@@ -28,7 +28,7 @@
 		{foreach key=k item=it from=$filestring}
 			<tr class="{cycle}">
 				<td class="checkbox">
-					<input type="checkbox" name="files[]" value="{$it[0]}" id="box_{$k}" />
+					<input type="checkbox" name="files[]" value="{$it[0]}" id="box_{$k}">
 				</td>
 				<td><label for="box_{$k}">{$it[0]}</label></td>
 				<td>{$it[1]|kbsize}</td>
@@ -38,17 +38,17 @@
 	</table>
 	<hr>
 	<table class="formcolor">
-		<tr><td><input type="checkbox" name="removeExt" value="true" id="removeExt" checked="checked" /></td><td>{tr}Remove extension from filename{/tr}</td>
+		<tr><td><input type="checkbox" name="removeExt" value="true" id="removeExt" checked="checked"></td><td>{tr}Remove extension from filename{/tr}</td>
 		<tr><td/><td>{tr}eg. from "digicam0001.jpg" then name digicam0001 will be used for the name field{/tr}</td></tr>
 	</table>
 <!--
 {if $permAddGallery eq "y"}
-&nbsp;&nbsp;&nbsp;&nbsp; <input type="checkbox" name="subdirToSubgal" value="true" id="subdirToSubgal" /> {tr}Convert the last sub directory to a sub gallery{/tr}<br>
+&nbsp;&nbsp;&nbsp;&nbsp; <input type="checkbox" name="subdirToSubgal" value="true" id="subdirToSubgal"> {tr}Convert the last sub directory to a sub gallery{/tr}<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {tr}eg. from "misc/screenshots/digicam0001.jpg" a gallery named "screenshots" will be created{/tr}<br>
 {/if}
 -->
 	<table class="formcolor">
-		<tr><td><input type="checkbox" name="subToDesc" value="true" id="subToDesc" /></td><td>{tr}Use the last sub directory name as description{/tr}</td></tr>
+		<tr><td><input type="checkbox" name="subToDesc" value="true" id="subToDesc"></td><td>{tr}Use the last sub directory name as description{/tr}</td></tr>
 		<tr><td/><td>{tr}eg. from "misc/screenshots/digicam0001.jpg" a description "screenshots" will be created{/tr}</td></tr>
 	</table>
 	<table class="formcolor">
@@ -64,7 +64,7 @@
 					{/section}
 				</select>
 			</td>
-			<td><input type="submit" name="batch_upload" value="{tr}Process files{/tr}" /></td>
+			<td><input type="submit" name="batch_upload" value="{tr}Process files{/tr}"></td>
 		</tr>
 	</table>
 </form>

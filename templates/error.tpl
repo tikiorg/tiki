@@ -80,7 +80,7 @@ close();
 							{foreach from=$required_preferences item=pref}
 								{preference name=$pref}
 							{/foreach}
-							<input type="submit" value="{tr}Set{/tr}"/>
+							<input type="submit" value="{tr}Set{/tr}">
 						</form>
 						{/remarksbox}
 					{/if}

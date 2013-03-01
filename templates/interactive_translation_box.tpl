@@ -1,5 +1,5 @@
 <div class="intertrans" id="intertrans-indicator">
-	<input type="checkbox" id="intertrans-active"/>
+	<input type="checkbox" id="intertrans-active">
 	<label for="intertrans-active">{tr}Interactive Translation{/tr}</label>
 	<div>{tr}Once checked, click on any string to translate it.{/tr}</div>
 </div>
@@ -11,9 +11,9 @@
 		<table>
 		</table>
 		<p class="center">
-			<input id="intertrans-submit" type="submit" value="{tr}Save translations{/tr}"/>
-			<input id="intertrans-cancel" type="reset" value="{tr}Cancel{/tr}"/>
-			<input id="intertrans-close" type="reset" value="{tr}Close{/tr}" style="display: none;"/>
+			<input id="intertrans-submit" type="submit" value="{tr}Save translations{/tr}">
+			<input id="intertrans-cancel" type="reset" value="{tr}Cancel{/tr}">
+			<input id="intertrans-close" type="reset" value="{tr}Close{/tr}" style="display: none;">
 		</p>
 		<p id="intertrans-help" class="description center">{tr}Changes will be applied on next page load only.{/tr}</p>
 	</form>

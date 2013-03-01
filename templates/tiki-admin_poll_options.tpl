@@ -19,20 +19,20 @@
 
 <h2>{if $optionId eq ''}{tr}Add poll option{/tr}{else}{tr}Edit poll option{/tr}{/if}</h2>
 <form action="tiki-admin_poll_options.php" method="post">
-	<input type="hidden" name="optionId" value="{$optionId|escape}" />
-	<input type="hidden" name="pollId" value="{$pollId|escape}" />
+	<input type="hidden" name="optionId" value="{$optionId|escape}">
+	<input type="hidden" name="pollId" value="{$pollId|escape}">
 	<table class="formcolor">
 		<tr>
 			<td>{tr}Option:{/tr}</td>
 			<td>
-				<input type="text" name="title" value="{$title|escape}" size=40/>
+				<input type="text" name="title" value="{$title|escape}" size="40">
 			</td>
 			<td>{tr}Position:{/tr}</td>
 			<td>
-				<input type="text" name="position" value="{$position|escape}" size="4" />
+				<input type="text" name="position" value="{$position|escape}" size="4">
 			</td>
 			<td colspan="2">
-				<input type="submit" name="save" value="{tr}Save{/tr}" />
+				<input type="submit" name="save" value="{tr}Save{/tr}">
 			</td>
 		</tr>
 	</table>

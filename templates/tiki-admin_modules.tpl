@@ -99,7 +99,7 @@
 		{/tabset}
 	</div>
 	<form method="post" action="#">
-		<input id="module-order" type="hidden" name="module-order" value=""/>
+		<input id="module-order" type="hidden" name="module-order" value="">
 	</form>
 {/tab}
 {if isset($smarty.request.edit_assign) or $preview eq "y"}
@@ -118,16 +118,16 @@
 		<form method="post" action="tiki-admin_modules.php{if empty($assign_name)}#assign{/if}">
 			{* on the initial selection of a new module, reload the page to the #assign anchor *}
 			{if !empty($info.moduleId)}
-				<input type="hidden" name="moduleId" value="{$info.moduleId}" />
+				<input type="hidden" name="moduleId" value="{$info.moduleId}">
 			{elseif !empty($moduleId)}
-				<input type="hidden" name="moduleId" value="{$moduleId}" />
+				<input type="hidden" name="moduleId" value="{$moduleId}">
 			{/if}
 			<fieldset>
 					{* because changing the module name will auto-submit the form, no reason to display these fields until a module is selected *}
 					{include file='admin_modules_form.tpl'}
 				{if empty($assign_name)}
 					<div class="input_submit_container">
-						<input type="submit" name="preview" value="{tr}Module Options{/tr}" onclick="needToConfirm=false;" />
+						<input type="submit" name="preview" value="{tr}Module Options{/tr}" onclick="needToConfirm=false;">
 					</div>
 				{/if}
 			</fieldset>
@@ -183,16 +183,16 @@
 					<table>
 						<tr>
 							<td><label for="um_name">{tr}Name{/tr}</label></td>
-							<td><input type="text" id="um_name" name="um_name" value="{$um_name|escape}" /></td>
+							<td><input type="text" id="um_name" name="um_name" value="{$um_name|escape}"></td>
 						</tr>
 						<tr>
 							<td><label for="um_title">{tr}Title{/tr}</label></td>
-							<td><input type="text" id="um_title" name="um_title" value="{$um_title|escape}" /></td>
+							<td><input type="text" id="um_title" name="um_title" value="{$um_title|escape}"></td>
 						</tr>
 						<tr>
 							<td></td>
 							<td>
-								<label><input type="checkbox" name="um_parse" value="y" {if $um_parse eq "y"}checked="checked"{/if} /> {tr}Must be wiki parsed{/tr}.</label>
+								<label><input type="checkbox" name="um_parse" value="y" {if $um_parse eq "y"}checked="checked"{/if}> {tr}Must be wiki parsed{/tr}.</label>
 							</td>
 						</tr>
 					</table>
@@ -348,7 +348,7 @@
 					<a name="editcreate"></a>
 					{textarea name='um_data' id='um_data' rows="6" cols="80" _toolbars='y' _previewConfirmExit='n' _wysiwyg="n"}{$um_data}{/textarea}
 					<br>
-					<input type="submit" name="um_update" value="{if empty($um_name)}{tr}Create{/tr}{else}{tr}Save{/tr}{/if}" onclick="needToConfirm=false" />
+					<input type="submit" name="um_update" value="{if empty($um_name)}{tr}Create{/tr}{else}{tr}Save{/tr}{/if}" onclick="needToConfirm=false">
 				</td>
 			</tr>
 		</table>
@@ -361,13 +361,13 @@
 		<div style="height:400px;overflow:auto;">
 			<div class="navbar">
 				{listfilter selectors='#module_list li'}
-				<input type="checkbox" name="module_list_show_all" id="module_list_show_all"{if $module_list_show_all} checked="checked"{/if} />
+				<input type="checkbox" name="module_list_show_all" id="module_list_show_all"{if $module_list_show_all} checked="checked"{/if}>
 				<label for="module_list_show_all">{tr}Show all modules{/tr}</label>
 			</div>
 			<ul id="module_list">
 				{foreach key=name item=info from=$all_modules_info}
 					<li class="{if $info.enabled}enabled{else}disabled{/if} clearfix">
-						<input type="hidden" value="{$name}" />
+						<input type="hidden" value="{$name}">
 						<div class="q1 tips"
 								title="{$info.name} &lt;em&gt;({$name})&lt;/em&gt;|{$info.description}
 								{if not $info.enabled}&lt;br /&gt;&lt;small&gt;&lt;em&gt;({tr}Requires{/tr} {' &amp; '|implode:$info.prefs})&lt;/em&gt;&lt;/small&gt;{/if}">

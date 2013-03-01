@@ -10,8 +10,8 @@
 <h2>{if $questionId}{tr}Edit FAQ question{/tr}{else}{tr}Add FAQ question{/tr}{/if}</h2>
 
 <form action="tiki-faq_questions.php" method="post" id="editpageform">
-<input type="hidden" name="questionId" value="{$questionId|escape}" />
-<input type="hidden" name="faqId" value="{$faqId|escape}" />
+<input type="hidden" name="questionId" value="{$questionId|escape}">
+<input type="hidden" name="faqId" value="{$faqId|escape}">
 
 {* begin table *}
 <table class="formcolor">
@@ -34,7 +34,7 @@
   <tr>
     <td >&nbsp;</td>
     <td >
-      <input type="submit" name="save" value="{tr}Save{/tr}" />
+      <input type="submit" name="save" value="{tr}Save{/tr}">
       {* set your changes and save 'em *}
     </td>
   </tr>
@@ -46,14 +46,14 @@
 {if $allq}
 <br><h2> {tr}Use a question from another FAQ{/tr}</h2>
 <form action="tiki-faq_questions.php" method="post">
-<input type="hidden" name="questionId" value="{$questionId|escape}" />
-<input type="hidden" name="faqId" value="{$faqId|escape}" />
+<input type="hidden" name="questionId" value="{$questionId|escape}">
+<input type="hidden" name="faqId" value="{$faqId|escape}">
 <table class="formcolor">
 <tr>
 <td>{tr}Filter{/tr}</td>
 <td>
-<input type="text" name="filter" value="{$filter|escape}" />
-<input type="submit" name="filteruseq" value="{tr}Filter{/tr}" />
+<input type="text" name="filter" value="{$filter|escape}">
+<input type="submit" name="filteruseq" value="{tr}Filter{/tr}">
 </td>
 </tr>
 <tr>
@@ -70,7 +70,7 @@
 <tr>
 <td>&nbsp;</td>
 <td>
-<input type="submit" name="useq" value="{tr}Use{/tr}" />
+<input type="submit" name="useq" value="{tr}Use{/tr}">
 </td>
 </tr>
 </table>

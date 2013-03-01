@@ -8,14 +8,14 @@
 {if $smarty.request.qId and $form eq 'y'}
 <h3>{tr}Edit queued message{/tr}</h3>
 <form method="post" action="tiki-forum_queue.php">
-<input type="hidden" name="forumId" value="{$forumId|escape}" />
-<input type="hidden" name="in_reply_to" value="{$msg_info.in_reply_to|escape}" />
-<input type="hidden" name="qId" value="{$smarty.request.qId|escape}" />
+<input type="hidden" name="forumId" value="{$forumId|escape}">
+<input type="hidden" name="in_reply_to" value="{$msg_info.in_reply_to|escape}">
+<input type="hidden" name="qId" value="{$smarty.request.qId|escape}">
 <table class="formcolor">
 <tr>
 	<td>{tr}Title{/tr}</td>
 	<td>
-		<input type="text" name="title" value="{$msg_info.title|escape}" />
+		<input type="text" name="title" value="{$msg_info.title|escape}">
 	</td>
 </tr>
 {if $msg_info.parentId > 0}
@@ -46,7 +46,7 @@
 	<tr>
 		<td>{tr}summary{/tr}</td>
 		<td>
-			<input type="text" name="summary" value="{$msg_info.summary|escape}" />
+			<input type="text" name="summary" value="{$msg_info.summary|escape}">
 		</td>
 	</tr>
 {/if}
@@ -87,10 +87,10 @@
 <tr>
 	<td>&nbsp;</td>
 	<td>
-		<input type="submit" name="save" value="{tr}Save{/tr}" />
-		<input type="submit" name="saveapp" value="{tr}Save and Approve{/tr}" />
-		<input type="submit" name="remove" value="{tr}Remove{/tr}" />
-		<input type="submit" name="topicize" value="{tr}convert to topic{/tr}" />
+		<input type="submit" name="save" value="{tr}Save{/tr}">
+		<input type="submit" name="saveapp" value="{tr}Save and Approve{/tr}">
+		<input type="submit" name="remove" value="{tr}Remove{/tr}">
+		<input type="submit" name="topicize" value="{tr}convert to topic{/tr}">
 	</td>
 </tr>
 </table>
@@ -102,15 +102,15 @@
 {* FILTERING FORM *}
 {if $items or ($find ne '')}
 <form action="tiki-forum_queue.php" method="post">
-<input type="hidden" name="forumId" value="{$forumId|escape}" />
-<input type="hidden" name="offset" value="{$offset|escape}" />
-<input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
+<input type="hidden" name="forumId" value="{$forumId|escape}">
+<input type="hidden" name="offset" value="{$offset|escape}">
+<input type="hidden" name="sort_mode" value="{$sort_mode|escape}">
 <table>
 <tr>
 <td>
 	<small>{tr}Find{/tr}</small>
-	<input size="8" type="text" name="find" value="{$find|escape}" />
-	<input type="submit" name="filter" value="{tr}Filter{/tr}" />
+	<input size="8" type="text" name="find" value="{$find|escape}">
+	<input type="submit" name="filter" value="{tr}Filter{/tr}">
 </td>
 </tr>
 </table>	
@@ -120,10 +120,10 @@
 
 {*LISTING*}
 <form action="tiki-forum_queue.php" method="post">
-<input type="hidden" name="forumId" value="{$forumId|escape}" />
-<input type="hidden" name="offset" value="{$offset|escape}" />
-<input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
-<input type="hidden" name="find" value="{$find|escape}" />
+<input type="hidden" name="forumId" value="{$forumId|escape}">
+<input type="hidden" name="offset" value="{$offset|escape}">
+<input type="hidden" name="sort_mode" value="{$sort_mode|escape}">
+<input type="hidden" name="find" value="{$find|escape}">
 <table class="normal">
 <tr>
 {if $items}<th>&nbsp;</th>
@@ -134,7 +134,7 @@
 {section name=ix loop=$items}
 <tr class="{cycle}">
 	<td class="checkbox">
-	  <input type="checkbox" name="msg[{$items[ix].qId}]" />
+	  <input type="checkbox" name="msg[{$items[ix].qId}]">
 	</td>
   
 	<td class="text">
@@ -174,8 +174,8 @@
 {if $items}
 <br>
 {tr}Perform action with checked:{/tr} 
-		<input type="submit" name="rej" value="{tr}Reject{/tr}" />
-		<input type="submit" name="app" value="{tr}Approve{/tr}" />
+		<input type="submit" name="rej" value="{tr}Reject{/tr}">
+		<input type="submit" name="app" value="{tr}Approve{/tr}">
 {/if}
 </form>
 {* END OF LISTING *}

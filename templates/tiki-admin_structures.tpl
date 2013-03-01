@@ -83,7 +83,7 @@
 					<tr class="{cycle}">
 						{if $tiki_p_admin eq 'y'}
 							<td class="checkbox">
-								<input type="checkbox" name="action[]" value='{$channels[ix].page_ref_id}' style="border:1px;font-size:80%;" />
+								<input type="checkbox" name="action[]" value='{$channels[ix].page_ref_id}' style="border:1px;font-size:80%;">
 							</td>
 						{/if}
 						<td class="text">
@@ -133,7 +133,7 @@
 						<option value="delete">{tr}Delete{/tr}</option>
 						<option value="delete_with_page">{tr}Delete with the pages{/tr}</option>
 					</select>
-					<input type="submit" name="act" value="{tr}OK{/tr}" />
+					<input type="submit" name="act" value="{tr}OK{/tr}">
 				</form>
 			</div>
 		{/if}
@@ -147,11 +147,11 @@
 				<table class="formcolor">
 					<tr>
 						<td><label for="name">{tr}Structure ID:{/tr}</label></td>
-						<td><input type="text" name="name" id="name" /></td>
+						<td><input type="text" name="name" id="name"></td>
 					</tr>
 					<tr>
 						<td><label for="alias">{tr}Alias:{/tr}</label></td>
-						<td><input type="text" name="alias" id="alias" /></td>
+						<td><input type="text" name="alias" id="alias"></td>
 					</tr>
 					<tr>
 						<td><label for="tree">{tr}Tree:{/tr}</label><br>(optional)</td>
@@ -164,7 +164,7 @@
 					<tr>
 						<td>&nbsp;</td>
 						<td colspan="2">
-							<input type="submit" value="{tr}Create New Structure{/tr}" name="create" />
+							<input type="submit" value="{tr}Create New Structure{/tr}" name="create">
 						</td>
 					</tr>
 				</table>

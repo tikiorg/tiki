@@ -2,7 +2,7 @@
 
 <html>
   <head>
-  <base href="{$info.url}" />
+  <base href="{$info.url}">
 	<title>{tr}Cached:{/tr} {$info.url}</title>
   </head>
   <body>

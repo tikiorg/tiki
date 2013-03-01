@@ -3,7 +3,7 @@
 		<div>
 			{if $toc_type eq 'admin'}
 				<div class="actions">
-					<input type="text" class="page-alias-input" value="{$structure_tree.page_alias|escape}" placeholder="{tr}Page alias...{/tr}" />
+					<input type="text" class="page-alias-input" value="{$structure_tree.page_alias|escape}" placeholder="{tr}Page alias...{/tr}">
 					{self_link _script='tiki-index.php' page=$structure_tree.pageName structure=$structure_name _title="{tr}View{/tr}" _noauto="y"}
 						{icon _id='magnifier' alt="{tr}View{/tr}"}
 					{/self_link}

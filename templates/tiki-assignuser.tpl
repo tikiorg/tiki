@@ -46,11 +46,11 @@
 						<option value="{$name|escape}" {if $name eq $user_info.default_group}selected="selected"{/if}>{$name|escape}</option>
 					{/foreach}
 				</select>
-				<input type="hidden" value="{$user_info.login|escape}" name="login" />
-				<input type="hidden" value="{$prefs.maxRecords}" name="maxRecords" />
-				<input type="hidden" value="{$offset}" name="offset" />
-				<input type="hidden" value="{$sort_mode}" name="sort_mode" />
-				<input type="submit" value="{tr}Set{/tr}" name="set_default" />
+				<input type="hidden" value="{$user_info.login|escape}" name="login">
+				<input type="hidden" value="{$prefs.maxRecords}" name="maxRecords">
+				<input type="hidden" value="{$offset}" name="offset">
+				<input type="hidden" value="{$sort_mode}" name="sort_mode">
+				<input type="submit" value="{tr}Set{/tr}" name="set_default">
 			</td>
 		</tr>
 	</form>

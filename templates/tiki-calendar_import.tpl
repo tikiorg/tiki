@@ -28,8 +28,8 @@
         <a {popup text=$smarty.capture.help|escape}>{icon _id='help'}</a>
       </td>
       <td>
-        <input type="file" name="fileCSV" size="50" />
-        <input type="submit" name="import" value="{tr}import{/tr}" />
+        <input type="file" name="fileCSV" size="50">
+        <input type="submit" name="import" value="{tr}import{/tr}">
       </td>
     </tr>
   </table>

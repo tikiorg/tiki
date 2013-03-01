@@ -6,18 +6,18 @@
 
 <h2>{tr}Create/edit cookies{/tr}</h2>
 <form action="tiki-admin_cookies.php" method="post">
-	<input type="hidden" name="cookieId" value="{$cookieId|escape}" />
+	<input type="hidden" name="cookieId" value="{$cookieId|escape}">
 	<table class="formcolor">
 		<tr>
 			<td>{tr}Cookie:{/tr}</td>
 			<td>
-				<input type="text" maxlength="255" size="40" name="cookie" value="{$cookie|escape}" />
+				<input type="text" maxlength="255" size="40" name="cookie" value="{$cookie|escape}">
 			</td>
 		</tr>
 		<tr>
 			<td>&nbsp;</td>
 			<td>
-				<input type="submit" name="save" value="{tr}Save{/tr}" />
+				<input type="submit" name="save" value="{tr}Save{/tr}">
 			</td>
 		</tr>
 	</table>
@@ -29,14 +29,14 @@
 		<tr>
 			<td>{tr}Upload from disk:{/tr}</td>
 			<td>
-				<input type="hidden" name="MAX_FILE_SIZE" value="1000000000" />
-				<input name="userfile1" type="file" />
+				<input type="hidden" name="MAX_FILE_SIZE" value="1000000000">
+				<input name="userfile1" type="file">
 			</td>
 		</tr>
 		<tr>
 			<td>&nbsp;</td>
 			<td>
-				<input type="submit" name="upload" value="{tr}Upload{/tr}" />
+				<input type="submit" name="upload" value="{tr}Upload{/tr}">
 			</td>
 		</tr>
 	</table>

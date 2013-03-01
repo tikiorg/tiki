@@ -11,8 +11,8 @@
 
 <h2>{if $questionId gt 0}{tr}Edit Survey Question{/tr}{else}{tr}Add a New Question to this survey{/tr}{/if}</h2>
 <form action="tiki-admin_survey_questions.php" method="post">
-	<input type="hidden" name="surveyId" value="{$surveyId|escape}" />
-	<input type="hidden" name="questionId" value="{$questionId|escape}" />
+	<input type="hidden" name="surveyId" value="{$surveyId|escape}">
+	<input type="hidden" name="questionId" value="{$questionId|escape}">
 	<table class="formcolor">
 		<tr><td>{tr}Question:{/tr}</td><td><textarea name="question" rows="5" cols="40">{$info.question|escape}</textarea></td></tr>
 		<tr><td>{tr}Position:{/tr}</td><td><select name="position">{html_options values=$positions output=$positions selected=$info.position}</select></td></tr>
@@ -31,11 +31,11 @@
 				</select>
 			</td>
 		</tr>
-		<tr><td>{tr}Answer is mandatory:{/tr}</td><td><input type="checkbox" name="mandatory" {if $info.mandatory eq 'y'}checked="checked"{/if}/></td></tr>
+		<tr><td>{tr}Answer is mandatory:{/tr}</td><td><input type="checkbox" name="mandatory" {if $info.mandatory eq 'y'}checked="checked"{/if}></td></tr>
 		<tr><td>{tr}Number of required answers (for multiple choices):{/tr}</td>
 			<td>
-				{tr}Min:{/tr}<input type="text" name="min_answers" size="4" value="{$info.min_answers}" />
-				{tr}Max:{/tr}<input type="text" name="max_answers" size="4" value="{$info.max_answers}" />
+				{tr}Min:{/tr}<input type="text" name="min_answers" size="4" value="{$info.min_answers}">
+				{tr}Max:{/tr}<input type="text" name="max_answers" size="4" value="{$info.max_answers}">
 			</td>
 		</tr>
 		<tr><td>&nbsp;</td>
@@ -49,8 +49,8 @@
 				{/remarksbox}
 			</td>
 		</tr>
-		<tr><td>{tr}Options (if apply):{/tr}</td><td><input type="text" name="options" value="{$info.options|escape}" size="80" /></td></tr>
-		<tr><td >&nbsp;</td><td><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
+		<tr><td>{tr}Options (if apply):{/tr}</td><td><input type="text" name="options" value="{$info.options|escape}" size="80"></td></tr>
+		<tr><td >&nbsp;</td><td><input type="submit" name="save" value="{tr}Save{/tr}"></td></tr>
 	</table>
 </form>
 <h2>{tr}Questions{/tr}</h2>
