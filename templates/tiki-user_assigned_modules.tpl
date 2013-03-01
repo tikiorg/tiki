@@ -124,7 +124,7 @@
 			</tr>
 			<tr>
 				<td>&nbsp;</td>
-				<td><input type="submit" name="assign" value="{tr}Assign{/tr}" /></td>
+				<td><input type="submit" name="assign" value="{tr}Assign{/tr}"></td>
 			</tr>
 		</table>
 	</form>

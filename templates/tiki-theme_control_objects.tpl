@@ -21,7 +21,7 @@
 			<option value="{$objectypes[ix]|escape}" {if $type eq $objectypes[ix]}selected="selected"{/if}>{$objectypes[ix]}</option>
 		{/section}
 	</select>
-<!--<input type="submit" name="settype" value="{tr}Set{/tr}" />-->
+<!--<input type="submit" name="settype" value="{tr}Set{/tr}">-->
 	<table class="formcolor">
 		<tr>
 			<td>{tr}Object{/tr}</td>
@@ -53,7 +53,7 @@
 				</select>
 			</td>
 			<td>
-				<input type="submit" name="assign" value="{tr}Assign{/tr}" />
+				<input type="submit" name="assign" value="{tr}Assign{/tr}">
 			</td>
 		</tr>
 	</table>
@@ -64,10 +64,10 @@
 {include file='find.tpl'}
 
 <form action="tiki-theme_control_objects.php" method="post">
-	<input type="hidden" name="type" value="{$type|escape}" />
+	<input type="hidden" name="type" value="{$type|escape}">
 	<table class="normal">
 		<tr>
-			<th><input type="submit" name="delete" value="{tr}Del{/tr}" /></th>
+			<th><input type="submit" name="delete" value="{tr}Del{/tr}"></th>
 			<th>
 				<a href="tiki-theme_control_objects.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'type_desc'}type_asc{else}type_desc{/if}">
 					{tr}Type{/tr}
@@ -87,7 +87,7 @@
 		{section name=user loop=$channels}
 			<tr class="{cycle}">
 				<td class="checkbox">
-					<input type="checkbox" name="obj[{$channels[user].objId}]" />
+					<input type="checkbox" name="obj[{$channels[user].objId}]">
 				</td>
 				<td class="text">{$channels[user].type}</td>
 				<td class="text">{$channels[user].name}</td>

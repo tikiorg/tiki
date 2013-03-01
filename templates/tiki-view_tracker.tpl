@@ -148,7 +148,7 @@
 								{/if}
 								{if $tiki_p_admin_trackers eq 'y'}
 									<td class="checkbox">
-								  		<input type="checkbox" name="action[]" value='{$items[user].itemId}' style="border:1px;font-size:80%;" />
+								  		<input type="checkbox" name="action[]" value='{$items[user].itemId}' style="border:1px;font-size:80%;">
 									</td>
 								{/if}
 								
@@ -202,8 +202,8 @@
 									<option value="p">{tr}Pending{/tr}</option>
 								{/if}
 							</select>
-							<input type="hidden" name="trackerId" value="{$trackerId}" />
-							<input type="submit" name="act" value="{tr}OK{/tr}" />
+							<input type="hidden" name="trackerId" value="{$trackerId}">
+							<input type="submit" name="act" value="{tr}OK{/tr}">
 						</div>
 					{/if}
 				</form>
@@ -225,7 +225,7 @@
 				{/jq}
 			{/if}
 			<form enctype="multipart/form-data" action="tiki-view_tracker.php" id="newItemForm" method="post">
-			<input type="hidden" name="trackerId" value="{$trackerId|escape}" />
+			<input type="hidden" name="trackerId" value="{$trackerId|escape}">
 			
 			<h2>{tr}Insert New Item{/tr}</h2>
 			{remarksbox type="note"}<strong class='mandatory_note'>{tr}Fields marked with a * are mandatory.{/tr}</strong>{/remarksbox}
@@ -281,10 +281,10 @@
 			<tr>
 				<td class="formlabel">&nbsp;</td>
 				<td class="formcontent">
-					<input type="submit" name="save" value="{tr}Save{/tr}" onclick="needToConfirm = false;" /> 
+					<input type="submit" name="save" value="{tr}Save{/tr}" onclick="needToConfirm = false;"> 
 					<input type="radio" name="viewitem" value="view" /> {tr}View inserted item{/tr}
 					{* --------------------------- to continue inserting items after saving --------- *}
-					<input type="radio" name="viewitem" value="new" checked="checked"  /> {tr}Insert new item{/tr}
+					<input type="radio" name="viewitem" value="new" checked="checked"> {tr}Insert new item{/tr}
 				</td>
 			</tr>
 			</table>
@@ -302,13 +302,13 @@
 			</p>
 			{permission name=tiki_p_admin_trackers}
 				<form class="sync-refresh" method="post" action="{service controller=tracker_sync action=sync_meta trackerId=$trackerId}">
-					<p><input type="submit" value="{tr}Reload field definitions{/tr}"/></p>
+					<p><input type="submit" value="{tr}Reload field definitions{/tr}"></p>
 				</form>
 				<form class="sync-refresh" method="post" action="{service controller=tracker_sync action=sync_new trackerId=$trackerId}">
 					<p>{tr}Items added locally{/tr}</p>
 					<ul class="load-items items">
 					</ul>
-					<p><input type="submit" value="{tr}Push new items{/tr}"/></p>
+					<p><input type="submit" value="{tr}Push new items{/tr}"></p>
 				</form>
 				<form class="sync-refresh" method="post" action="{service controller=tracker_sync action=sync_edit trackerId=$trackerId}">
 					<div class="item-block">
@@ -322,7 +322,7 @@
 						</ul>
 					</div>
 					<p>{tr}On push, local items will be removed until data reload.{/tr}</p>
-					<p><input type="submit" value="{tr}Push local changes{/tr}"/></p>
+					<p><input type="submit" value="{tr}Push local changes{/tr}"></p>
 				</form>
 				<form class="sync-refresh" method="post" action="{service controller=tracker_sync action=sync_refresh trackerId=$trackerId}">
 					{if $tracker_sync.modified}
@@ -341,8 +341,8 @@
 						{/remarksbox}
 					{/if}
 					<div class="submit">
-						<input type="hidden" name="confirm" value="1"/>
-						<input type="submit" name="submit" value="{tr}Reload data from source{/tr}"/>
+						<input type="hidden" name="confirm" value="1">
+						<input type="submit" name="submit" value="{tr}Reload data from source{/tr}">
 					</div>
 				</form>
 				{jq}
@@ -373,7 +373,7 @@
 									var li = $('<li/>');
 									li.append($('<label/>')
 										.text(info.title)
-										.prepend($('<input type="checkbox" name="' + name + '[]"/>').attr('value', info.itemId))
+										.prepend($('<input type="checkbox" name="' + name + '[]">').attr('value', info.itemId))
 									);
 
 									$.each({localUrl: "{tr}Local{/tr}", remoteUrl: "{tr}Remote{/tr}"}, function (key, label) {

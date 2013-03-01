@@ -47,7 +47,7 @@
 				</select>
 			</td>
 			<td>
-				<input type="submit" name="assign" value="{tr}Assign{/tr}" />
+				<input type="submit" name="assign" value="{tr}Assign{/tr}">
 			</td>
 		</tr>
 	</table>
@@ -57,7 +57,7 @@
 <form action="tiki-theme_control_sections.php" method="post">
 	<table class="normal">
 		<tr>
-			<th><input type="submit" name="delete" value="{tr}Del{/tr}" /></th>
+			<th><input type="submit" name="delete" value="{tr}Del{/tr}"></th>
 			<th>
 				<a href="tiki-theme_control_sections.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'section_desc'}section_asc{else}section_desc{/if}">
 					{tr}Section{/tr}
@@ -73,7 +73,7 @@
 		{section name=user loop=$channels}
 			<tr class="{cycle}">
 				<td class="checkbox">
-					<input type="checkbox" name="sec[{$channels[user].section}]" />
+					<input type="checkbox" name="sec[{$channels[user].section}]">
 				</td>
 				<td class="text">{$channels[user].section}</td>
 				<td class="text">{$channels[user].theme}</td>

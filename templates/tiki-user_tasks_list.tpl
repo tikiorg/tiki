@@ -40,7 +40,7 @@
 		{section name=task_i loop=$tasklist}
 			<tr>
 				<td class="prio{$tasklist[task_i].priority}">
-					<input {if $tasklist[task_i].disabled} disabled = "disabled" {/if}  type="checkbox" name="task[{$tasklist[task_i].taskId}]" />
+					<input {if $tasklist[task_i].disabled} disabled = "disabled" {/if}  type="checkbox" name="task[{$tasklist[task_i].taskId}]">
 					{if $tasklist[task_i].deleted} 
 						{if $tasklist[task_i].creator ne $user}
 							{icon _id='cross'}
@@ -136,23 +136,23 @@
 					<option value="move_marked_to_trash">{tr}Trash{/tr}</option>
 					<option value="remove_marked_from_trash">{tr}Undo Trash{/tr}</option>
 				</select>
-				<input type="submit" name="update_tasks" value="{tr}Go{/tr}" style="vertical-align:bottom;" />
+				<input type="submit" name="update_tasks" value="{tr}Go{/tr}" style="vertical-align:bottom;">
 			</td>
 			<td colspan="3" style="text-align:right;">
-				<input type="submit" name="update_percentage" value="{tr}Go{/tr}" style="vertical-align:bottom;" />
+				<input type="submit" name="update_percentage" value="{tr}Go{/tr}" style="vertical-align:bottom;">
 				{icon _id='arrow_turn_down_left' title="{tr}Go{/tr}" alt="{tr}Go{/tr}" style="margin-bottom:8px; margin-right:8px"}
 			</td>
 		</tr>
 		<tr>
 			<td colspan="6" style="text-align:center;">
 				&nbsp;&nbsp;{tr}Show:{/tr}
-				&nbsp;<input  name="show_private" {if $show_private} checked="checked" {/if} type="checkbox" />{tr}Private{/tr}
-			{if $tiki_p_tasks_receive eq 'y'}&nbsp;<input  name="show_received" {if $show_received} checked="checked" {/if} type="checkbox" />{tr}Received{/tr}{/if}
-			{if $tiki_p_tasks_send eq 'y'}&nbsp;<input  name="show_submitted" {if $show_submitted} checked="checked" {/if} type="checkbox" />{tr}Submitted{/tr}{/if}
-			{if $tiki_p_tasks_receive eq 'y' or $tiki_p_tasks_send eq 'y'}&nbsp;<input  name="show_shared" {if $show_shared} checked="checked" {/if} type="checkbox" />{tr}Shared{/tr}{/if}
+				&nbsp;<input  name="show_private" {if $show_private} checked="checked" {/if} type="checkbox">{tr}Private{/tr}
+			{if $tiki_p_tasks_receive eq 'y'}&nbsp;<input  name="show_received" {if $show_received} checked="checked" {/if} type="checkbox">{tr}Received{/tr}{/if}
+			{if $tiki_p_tasks_send eq 'y'}&nbsp;<input  name="show_submitted" {if $show_submitted} checked="checked" {/if} type="checkbox">{tr}Submitted{/tr}{/if}
+			{if $tiki_p_tasks_receive eq 'y' or $tiki_p_tasks_send eq 'y'}&nbsp;<input  name="show_shared" {if $show_shared} checked="checked" {/if} type="checkbox">{tr}Shared{/tr}{/if}
 			&nbsp;&nbsp;&nbsp;&nbsp;
-			&nbsp;<input  name="show_trash" {if $show_trash} checked="checked" {/if} type="checkbox" />{tr}Trash{/tr}
-			&nbsp;<input  name="show_completed" {if $show_completed} checked="checked" {/if} type="checkbox" />{tr}Completed{/tr}
+			&nbsp;<input  name="show_trash" {if $show_trash} checked="checked" {/if} type="checkbox">{tr}Trash{/tr}
+			&nbsp;<input  name="show_completed" {if $show_completed} checked="checked" {/if} type="checkbox">{tr}Completed{/tr}
 			{if ($admin_mode)}
 			&nbsp;&nbsp;
 			<a class="highlight" >
@@ -162,7 +162,7 @@
 		</tr>
 		<tr>
 			<td colspan="6" style="text-align:center;">
-				<input type="submit" name="reload" value="{tr}Reload{/tr}" />
+				<input type="submit" name="reload" value="{tr}Reload{/tr}">
 			</td>
 		</tr>
 	</table>

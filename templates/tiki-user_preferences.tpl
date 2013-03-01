@@ -30,7 +30,7 @@
 {if $prefs.feature_userPreferences eq 'y'}
 {tab name="{tr}Personal Information{/tr}"}
 <form action="tiki-user_preferences.php" method="post">
-  <input type="hidden" name="view_user" value="{$userwatch|escape}" />
+  <input type="hidden" name="view_user" value="{$userwatch|escape}">
 
 
   <table class="formcolor">
@@ -50,7 +50,7 @@
       </td>
       <td>
         {if $prefs.auth_ldap_nameattr eq '' || $prefs.auth_method ne 'ldap'}
-          <input type="text" name="realName" value="{$user_prefs.realName|escape}" style="width:20em;font-size:1.1em;" />{else}{$user_prefs.realName|escape}
+          <input type="text" name="realName" value="{$user_prefs.realName|escape}" style="width:20em;font-size:1.1em;">{else}{$user_prefs.realName|escape}
         {/if}
       </td>
     </tr>
@@ -66,9 +66,9 @@
 	{if $prefs.feature_community_gender eq 'y'}
       <tr><td>{tr}Gender:{/tr}</td>
         <td>
-          <input type="radio" name="gender" value="Male" {if $user_prefs.gender eq 'Male'}checked="checked"{/if}/> {tr}Male{/tr}
-          <input type="radio" name="gender" value="Female" {if $user_prefs.gender eq 'Female'}checked="checked"{/if}/> {tr}Female{/tr}
-          <input type="radio" name="gender" value="Hidden" {if $user_prefs.gender ne 'Male' and $user_prefs.gender ne 'Female'}checked="checked"{/if}/> {tr}Hidden{/tr}
+          <input type="radio" name="gender" value="Male" {if $user_prefs.gender eq 'Male'}checked="checked"{/if}> {tr}Male{/tr}
+          <input type="radio" name="gender" value="Female" {if $user_prefs.gender eq 'Female'}checked="checked"{/if}> {tr}Female{/tr}
+          <input type="radio" name="gender" value="Hidden" {if $user_prefs.gender ne 'Male' and $user_prefs.gender ne 'Female'}checked="checked"{/if}> {tr}Hidden{/tr}
         </td>
       </tr>
 	{/if}
@@ -97,14 +97,14 @@
       <td>
 	  	<div class="map-container" style="height: 250px;" data-target-field="location">
 		</div>
-		<input type="hidden" name="location" value="{$location|escape}"/>
+		<input type="hidden" name="location" value="{$location|escape}">
       </td>
     </tr>
 
     <tr>
       <td>{tr}Homepage URL:{/tr}</td>
       <td>
-        <input type="text" size="40" name="homePage" value="{$user_prefs.homePage|escape}" />
+        <input type="text" size="40" name="homePage" value="{$user_prefs.homePage|escape}">
       </td>
     </tr>
   
@@ -146,7 +146,7 @@
         <tr>
           <td>{$customfields[ir].label}:</td>
           <td>
-            <input type="{$customfields[ir].type}" name="{$customfields[ir].prefName}" value="{$customfields[ir].value}" size="{$customfields[ir].size}" />
+            <input type="{$customfields[ir].type}" name="{$customfields[ir].prefName}" value="{$customfields[ir].value}" size="{$customfields[ir].size}">
           </td>
         </tr>
       {/if}
@@ -165,7 +165,7 @@
       <td><span class="description">{$userinfo.lastLogin|tiki_long_datetime}</span></td>
     </tr>
   
-    <td colspan="2" class="input_submit_container"><input type="submit" name="new_prefs" value="{tr}Save changes{/tr}" /></td>
+    <td colspan="2" class="input_submit_container"><input type="submit" name="new_prefs" value="{tr}Save changes{/tr}"></td>
   
   </table>
 {/tab}
@@ -255,7 +255,7 @@
               {/section}
             </select>
 			&nbsp;=&gt;&nbsp;
-		  	<input id="read-language-input" type="text" name="read_language" value="{$user_prefs.read_language}"/>
+		  	<input id="read-language-input" type="text" name="read_language" value="{$user_prefs.read_language}">
             <br/>&nbsp;
 		  </div>
 		  {/if}
@@ -293,14 +293,14 @@
       <tr>
         <td>{tr}Use 12-hour clock in time selectors:{/tr}</td>
         <td>
-          <input type="checkbox" name="display_12hr_clock" {if $user_prefs.display_12hr_clock eq 'y'}checked="checked"{/if} />
+          <input type="checkbox" name="display_12hr_clock" {if $user_prefs.display_12hr_clock eq 'y'}checked="checked"{/if}>
         </td>
       </tr>
           {if $prefs.feature_community_mouseover eq 'y'}
       <tr>
         <td>{tr}Display info tooltip on mouseover for every user who allows his/her information to be public{/tr}</td>
         <td>
-          <input type="checkbox" name="show_mouseover_user_info" {if $show_mouseover_user_info eq 'y'}checked="checked"{/if} />
+          <input type="checkbox" name="show_mouseover_user_info" {if $show_mouseover_user_info eq 'y'}checked="checked"{/if}>
         </td>
       </tr>
     {/if}
@@ -309,7 +309,7 @@
       <tr>
         <td>{tr}Use double-click to edit pages:{/tr}</td>
         <td>
-          <input type="checkbox" name="user_dbl" {if $user_prefs.user_dbl eq 'y'}checked="checked"{/if} />
+          <input type="checkbox" name="user_dbl" {if $user_prefs.user_dbl eq 'y'}checked="checked"{/if}>
         </td>
       </tr>
     {/if}
@@ -337,14 +337,14 @@
       {if $prefs.allowmsg_is_optional eq 'y'}
         <tr>
           <td>{tr}Allow messages from other users{/tr}</td>
-          <td><input type="checkbox" name="allowMsgs" {if $user_prefs.allowMsgs eq 'y'}checked="checked"{/if}/></td>
+          <td><input type="checkbox" name="allowMsgs" {if $user_prefs.allowMsgs eq 'y'}checked="checked"{/if}></td>
         </tr>
       {/if}
 
       <tr>
         <td>{tr}Notify sender when reading his mail{/tr}</td>
         <td>
-          <input type="checkbox" name="mess_sendReadStatus" {if $user_prefs.mess_sendReadStatus eq 'y'}checked="checked"{/if}/>
+          <input type="checkbox" name="mess_sendReadStatus" {if $user_prefs.mess_sendReadStatus eq 'y'}checked="checked"{/if}>
         </td>
       </tr>
 
@@ -410,7 +410,7 @@
       <tr>
         <td>{tr}My pages{/tr}</td>
         <td>
-          <input type="checkbox" name="mytiki_pages" {if $user_prefs.mytiki_pages eq 'y'}checked="checked"{/if} />
+          <input type="checkbox" name="mytiki_pages" {if $user_prefs.mytiki_pages eq 'y'}checked="checked"{/if}>
         </td>
       </tr>
     {/if}
@@ -419,7 +419,7 @@
       <tr>
         <td>{tr}My blogs{/tr}</td>
         <td>
-          <input type="checkbox" name="mytiki_blogs" {if $user_prefs.mytiki_blogs eq 'y'}checked="checked"{/if} />
+          <input type="checkbox" name="mytiki_blogs" {if $user_prefs.mytiki_blogs eq 'y'}checked="checked"{/if}>
         </td>
       </tr>
     {/if}
@@ -428,7 +428,7 @@
       <tr>
         <td>{tr}My galleries{/tr}</td>
         <td>
-          <input type="checkbox" name="mytiki_gals" {if $user_prefs.mytiki_gals eq 'y'}checked="checked"{/if} />
+          <input type="checkbox" name="mytiki_gals" {if $user_prefs.mytiki_gals eq 'y'}checked="checked"{/if}>
         </td>
       </tr>
     {/if}
@@ -437,7 +437,7 @@
       <tr>
         <td>{tr}My messages{/tr}</td>
         <td>
-          <input type="checkbox" name="mytiki_msgs" {if $user_prefs.mytiki_msgs eq 'y'}checked="checked"{/if} />
+          <input type="checkbox" name="mytiki_msgs" {if $user_prefs.mytiki_msgs eq 'y'}checked="checked"{/if}>
         </td>
       </tr>
     {/if}
@@ -446,7 +446,7 @@
       <tr>
         <td>{tr}My tasks{/tr}</td>
         <td>
-          <input type="checkbox" name="mytiki_tasks" {if $user_prefs.mytiki_tasks eq 'y'}checked="checked"{/if} />
+          <input type="checkbox" name="mytiki_tasks" {if $user_prefs.mytiki_tasks eq 'y'}checked="checked"{/if}>
         </td>
       </tr>
     {/if}
@@ -455,13 +455,13 @@
       <tr>
         <td>{tr}My forum topics{/tr}</td>
         <td>
-          <input type="checkbox" name="mytiki_forum_topics" {if $user_prefs.mytiki_forum_topics eq 'y'}checked="checked"{/if} />
+          <input type="checkbox" name="mytiki_forum_topics" {if $user_prefs.mytiki_forum_topics eq 'y'}checked="checked"{/if}>
         </td>
       </tr>
       <tr>
         <td>{tr}My forum replies{/tr}</td>
         <td>
-          <input type="checkbox" name="mytiki_forum_replies" {if $user_prefs.mytiki_forum_replies eq 'y'}checked="checked"{/if} />
+          <input type="checkbox" name="mytiki_forum_replies" {if $user_prefs.mytiki_forum_replies eq 'y'}checked="checked"{/if}>
         </td>
       </tr>
     {/if}
@@ -470,7 +470,7 @@
       <tr>
         <td>{tr}My user items{/tr}</td>
         <td>
-          <input type="checkbox" name="mytiki_items" {if $user_prefs.mytiki_items eq 'y'}checked="checked"{/if} />
+          <input type="checkbox" name="mytiki_items" {if $user_prefs.mytiki_items eq 'y'}checked="checked"{/if}>
         </td>
       </tr>
     {/if}
@@ -479,7 +479,7 @@
       <tr>
         <td>{tr}My Articles{/tr}</td>
         <td>
-          <input type="checkbox" name="mytiki_articles" {if $user_prefs.mytiki_articles eq 'y'}checked="checked"{/if} />
+          <input type="checkbox" name="mytiki_articles" {if $user_prefs.mytiki_articles eq 'y'}checked="checked"{/if}>
         </td>
       </tr>
     {/if}
@@ -498,7 +498,7 @@
     {/if}
 
     <tr>
-      <td colspan="2" class="input_submit_container"><input type="submit" name="new_prefs" value="{tr}Save changes{/tr}" /></td>
+      <td colspan="2" class="input_submit_container"><input type="submit" name="new_prefs" value="{tr}Save changes{/tr}"></td>
     </tr>
   </table>
 </form>
@@ -508,7 +508,7 @@
 {if $prefs.change_password neq 'n' or ! ($prefs.login_is_email eq 'y' and $userinfo.login neq 'admin')}
 	{tab name="{tr}Account Information{/tr}"}
   <form action="tiki-user_preferences.php" method="post">
-  <input type="hidden" name="view_user" value="{$userwatch|escape}" />
+  <input type="hidden" name="view_user" value="{$userwatch|escape}">
   <table class="formcolor">
     {if $prefs.auth_method neq 'cas' || ($prefs.cas_skip_admin eq 'y' && $user eq 'admin')}
       {if $prefs.change_password neq 'n' and ($prefs.login_is_email ne 'y' or $userinfo.login eq 'admin')}
@@ -519,11 +519,11 @@
     {/if}
   
       {if $prefs.login_is_email eq 'y' and $userinfo.login neq 'admin'}
-        <input type="hidden" name="email" value="{$userinfo.email|escape}" />
+        <input type="hidden" name="email" value="{$userinfo.email|escape}">
       {else}
         <tr>
           <td>{tr}Email address:{/tr}</td>
-          <td><input type="text" name="email" value="{$userinfo.email|escape}" /></td>
+          <td><input type="text" name="email" value="{$userinfo.email|escape}"></td>
         </tr>
       {/if}
 
@@ -531,25 +531,25 @@
         {if $prefs.change_password neq 'n'}
           <tr>
             <td>{tr}New password:{/tr}</td>
-            <td><input type="password" name="pass1" /></td>
+            <td><input type="password" name="pass1"></td>
           </tr>
   
           <tr>
             <td>{tr}Confirm new password:{/tr}</td>
-            <td><input type="password" name="pass2" /></td>
+            <td><input type="password" name="pass2"></td>
           </tr>
         {/if}
       
         {if $tiki_p_admin ne 'y' or $userwatch eq $user}
           <tr>
             <td>{tr}Current password (required):{/tr}</td>
-            <td><input type="password" name="pass" /></td>
+            <td><input type="password" name="pass"></td>
           </tr>
         {/if}
       {/if}
     
       <tr>
-        <td colspan="2" class="input_submit_container"><input type="submit" name="chgadmin" value="{tr}Save changes{/tr}" /></td>
+        <td colspan="2" class="input_submit_container"><input type="submit" name="chgadmin" value="{tr}Save changes{/tr}"></td>
       </tr>
     </table>
   </form>
@@ -559,14 +559,14 @@
 {if $tiki_p_delete_account eq 'y' and $userinfo.login neq 'admin'}
 {tab name="{tr}Account Deletion{/tr}"}
 <form action="tiki-user_preferences.php" method="post" onsubmit='return confirm("{tr _0=$userwatch|escape}Are you really sure you want to delete the account %0?{/tr}");'>
-{if !empty($userwatch)}<input type="hidden" name="view_user" value="{$userwatch|escape}" />{/if}
+{if !empty($userwatch)}<input type="hidden" name="view_user" value="{$userwatch|escape}">{/if}
  <table class="formcolor">
   <tr class="{cycle}">
    <td></td>
-   <td><input type='checkbox' name='deleteaccountconfirm' value='1' /> {tr}Check this box if you really want to delete the account{/tr}</td>
+   <td><input type='checkbox' name='deleteaccountconfirm' value='1'> {tr}Check this box if you really want to delete the account{/tr}</td>
   </tr>
     <tr>
-      <td colspan="2"  class="input_submit_container"><input type="submit" name="deleteaccount" value="{if !empty($userwatch)}{tr}Delete the account:{/tr} {$userwatch|escape}{else}{tr}Delete my account{/tr}{/if}" /></td>
+      <td colspan="2"  class="input_submit_container"><input type="submit" name="deleteaccount" value="{if !empty($userwatch)}{tr}Delete the account:{/tr} {$userwatch|escape}{else}{tr}Delete my account{/tr}{/if}"></td>
     </tr>
  </table>
 </form>

@@ -14,15 +14,15 @@
 						<tr>
 							<td>{tr}Default View:{/tr}</td>
 							<td>
-								<input type='radio' name='user_contacts_default_view' value='list' {if $user_contacts_default_view eq 'list'}checked="checked"{/if}/>
+								<input type='radio' name='user_contacts_default_view' value='list' {if $user_contacts_default_view eq 'list'}checked="checked"{/if}>
 								{tr}List View{/tr}
-								<input type='radio' name='user_contacts_default_view' value='group' {if $user_contacts_default_view neq 'list'}checked="checked"{/if}/>
+								<input type='radio' name='user_contacts_default_view' value='group' {if $user_contacts_default_view neq 'list'}checked="checked"{/if}>
 								{tr}Group View{/tr}
 							</td>
 						</tr>
 						<tr>
 							<td colspan="2">
-								<input type='submit' name='prefs' value="{tr}Change preferences{/tr}" />
+								<input type='submit' name='prefs' value="{tr}Change preferences{/tr}">
 							</td>
 						</tr>
 					</table>
@@ -71,7 +71,7 @@
 							</tr>
 						{/foreach}
 					</table>
-					<div>{tr}Add:{/tr} <input type='text' name='ext_add' /> <input type='submit' name='add_fields' value="{tr}Add{/tr}" /></div>
+					<div>{tr}Add:{/tr} <input type='text' name='ext_add' /> <input type='submit' name='add_fields' value="{tr}Add{/tr}"></div>
 				</form>
 			</div>
 		</div>

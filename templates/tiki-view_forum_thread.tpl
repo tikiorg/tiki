@@ -88,16 +88,16 @@
 	<td style="text-align:left;">
 		<form id='time_control' method="get" action="tiki-view_forum_thread.php">
 
-			<input type="hidden" name="comments_offset" value="{$comments_offset|escape}" />
-			<input type="hidden" name="comments_threadId" value="{$comments_threadId|escape}" />
-			<input type="hidden" name="comments_parentId" value="{$comments_parentId|escape}" />
+			<input type="hidden" name="comments_offset" value="{$comments_offset|escape}">
+			<input type="hidden" name="comments_threadId" value="{$comments_threadId|escape}">
+			<input type="hidden" name="comments_parentId" value="{$comments_parentId|escape}">
 			<input type="hidden" name="comments_threshold" value="{$comments_threshold|escape}" />
-			<input type="hidden" name="thread_sort_mode" value="{$thread_sort_mode|escape}" />
-			<input type="hidden" name="topics_offset" value="{$smarty.request.topics_offset|escape}" />
-			<input type="hidden" name="topics_find" value="{$smarty.request.topics_find|escape}" />
-			<input type="hidden" name="topics_sort_mode" value="{$smarty.request.topics_sort_mode|escape}" />    
-			<input type="hidden" name="topics_threshold" value="{$smarty.request.topics_threshold|escape}" />    
-			<input type="hidden" name="forumId" value="{$forumId|escape}" />
+			<input type="hidden" name="thread_sort_mode" value="{$thread_sort_mode|escape}">
+			<input type="hidden" name="topics_offset" value="{$smarty.request.topics_offset|escape}">
+			<input type="hidden" name="topics_find" value="{$smarty.request.topics_find|escape}">
+			<input type="hidden" name="topics_sort_mode" value="{$smarty.request.topics_sort_mode|escape}">    
+			<input type="hidden" name="topics_threshold" value="{$smarty.request.topics_threshold|escape}">    
+			<input type="hidden" name="forumId" value="{$forumId|escape}">
 
 			<small>{tr}Show posts:{/tr}</small>
 			<select name="time_control" onchange="javascript:document.getElementById('time_control').submit();">

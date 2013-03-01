@@ -10,8 +10,8 @@
 </div>
 
 {if isset($diff_style) and $diff_style}
-	<input type="hidden" name="oldver" value="{$diff_oldver|escape}" />
-	<input type="hidden" name="newver" value="{$diff_newver|escape}" />
-	<input type="hidden" name="source_page" value="{$source_page|escape}" />
+	<input type="hidden" name="oldver" value="{$diff_oldver|escape}">
+	<input type="hidden" name="newver" value="{$diff_newver|escape}">
+	<input type="hidden" name="source_page" value="{$source_page|escape}">
 {/if}
 

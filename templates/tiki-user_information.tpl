@@ -333,8 +333,8 @@
 		{else}
 				<h2 class="center">{tr}Send me a message !{/tr}</h2>
 				<form method="post" action="tiki-user_information.php" name="f">
-					<input type="hidden" name="to" value="{$userwatch|escape}" />
-					<input type="hidden" name="view_user" value="{$userwatch|escape}" />
+					<input type="hidden" name="to" value="{$userwatch|escape}">
+					<input type="hidden" name="view_user" value="{$userwatch|escape}">
 					<div class="normalnoborder">
 						<p>{tr}The following message will be sent to user{/tr} {$userinfo.login|userlink}&hellip;</p>
 						<div class="clearfix">
@@ -349,23 +349,23 @@
 								</select>
 							</div>
 							<div class="floatright input_submit_container">
-								<input type="submit" name="send" value="{tr}Send{/tr}" />
+								<input type="submit" name="send" value="{tr}Send{/tr}">
 							</div>
 						</div>
 						<div class="clearfix">
-							<label><span>{tr}Subject{/tr}</span>: <input type="text" name="subject" value="" maxlength="255" style="width:100%;" /></label>
+							<label><span>{tr}Subject{/tr}</span>: <input type="text" name="subject" value="" maxlength="255" style="width:100%;"></label>
 						</div>
 						<div>
 							<label><span>{tr}Message Body{/tr}</span>:
 								<textarea rows="20" cols="80" name="body" style="border: solid 1px #000; width: 100%;"></textarea>
 							</label>
 						</div>
-						<input type="checkbox" name="replytome" id="replytome" />
+						<input type="checkbox" name="replytome" id="replytome">
 						<label for="replytome">
 							{tr}Reply-to my email{/tr}
 							{help url="User+Information" desc="{tr}Reply-to my email:{/tr}{tr}The user will be able to reply to you directly via email.{/tr}"}
 						</label>
-						<input type="checkbox" name="bccme" id="bccme" />
+						<input type="checkbox" name="bccme" id="bccme">
 						<label for="bccme">
 							{tr}Send me a copy{/tr}
 							{help url="User+Information" desc="{tr}Send me a copy:{/tr}{tr}You will be sent a copy of this email.{/tr}"}

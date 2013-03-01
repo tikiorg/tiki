@@ -70,16 +70,16 @@
 			{* form to add a category *}
 			<table class="formcolor">
 				<form action="tiki-user_bookmarks.php" method="post">
-					<input type="hidden" name="editfolder" value="{$editfolder|escape}" />
-					<input type="hidden" name="parentId" value="{$parentId|escape}" />
+					<input type="hidden" name="editfolder" value="{$editfolder|escape}">
+					<input type="hidden" name="parentId" value="{$parentId|escape}">
 					<tr>
 						<td>{tr}Name:{/tr}</td>
-						<td><input type="text" size = "40" name="foldername" value="{$foldername|escape}" /></td>
+						<td><input type="text" size = "40" name="foldername" value="{$foldername|escape}"></td>
 					</tr>
 					<tr>
 						<td>&nbsp;</td>
 						<td>
-							<input type="submit" name="addfolder"  value="{tr}Add{/tr}" /></td>
+							<input type="submit" name="addfolder"  value="{tr}Add{/tr}"></td>
 					</tr>
 				</form>
 			</table>
@@ -92,19 +92,19 @@
 			{/if}
 			<table class="formcolor">
 				<form action="tiki-user_bookmarks.php" method="post">
-					<input type="hidden" name="editurl" value="{$editurl|escape}" />
-					<input type="hidden" name="parentId" value="{$parentId|escape}" />
+					<input type="hidden" name="editurl" value="{$editurl|escape}">
+					<input type="hidden" name="parentId" value="{$parentId|escape}">
    				<tr>
 						<td>{tr}Name:{/tr}</td>
-						<td><input type="text" size = "40"  name="urlname" value="{$urlname|escape}" /></td>
+						<td><input type="text" size = "40"  name="urlname" value="{$urlname|escape}"></td>
 					</tr>
 					<tr>
 						<td>{tr}URL:{/tr}</td>
-						<td><input type="text" size = "40" name="urlurl" value="{$urlurl|escape}" /></td>
+						<td><input type="text" size = "40" name="urlurl" value="{$urlurl|escape}"></td>
 					</tr>
 					<tr>
 						<td>&nbsp;</td>
-						<td><input type="submit" name="addurl" value="{tr}Add{/tr}" /></td>
+						<td><input type="submit" name="addurl" value="{tr}Add{/tr}"></td>
 					</tr>
 				</form>
 			</table>

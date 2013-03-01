@@ -1,14 +1,14 @@
 <form action="tiki-user_tasks.php" method="post">
 
-<input type="hidden" name="taskId" value="{$taskId|escape}" />
-<input type="hidden" name="task_version" value="{$info.task_version|escape}" />
-<input type="hidden" name="last_version" value="{$info.last_version|escape}" />
-<input type="hidden" name="date_Day" value="{$date_Day|escape}" />
-<input type="hidden" name="date_Month" value="{$date_Month|escape}" />
-<input type="hidden" name="date_Year" value="{$date_Year|escape}" />
-<input type="hidden" name="date_Hour" value="{$date_Hour|escape}" />
-<input type="hidden" name="date_Minute" value="{$date_Minute|escape}" />
-<input type="hidden" name="creator" value="{$info.creator|escape}" />
+<input type="hidden" name="taskId" value="{$taskId|escape}">
+<input type="hidden" name="task_version" value="{$info.task_version|escape}">
+<input type="hidden" name="last_version" value="{$info.last_version|escape}">
+<input type="hidden" name="date_Day" value="{$date_Day|escape}">
+<input type="hidden" name="date_Month" value="{$date_Month|escape}">
+<input type="hidden" name="date_Year" value="{$date_Year|escape}">
+<input type="hidden" name="date_Hour" value="{$date_Hour|escape}">
+<input type="hidden" name="date_Minute" value="{$date_Minute|escape}">
+<input type="hidden" name="creator" value="{$info.creator|escape}">
 {if ($tiki_view_mode eq 'view')}
  <span class="tabbut">
     <a href="tiki-user_tasks.php?taskId={$taskId}&amp;tiki_view_mode=edit" class="tablink">{tr}Edit Task{/tr}</a>
@@ -103,7 +103,7 @@
 						{$info.user}
 					</option>
 				</select>
-				<input type="hidden" name="task_user" value="{$info.user}" />
+				<input type="hidden" name="task_user" value="{$info.user}">
 			{else}
 				>
 				{section name=user_i loop=$receive_users} 
@@ -115,12 +115,12 @@
 				</select>
 				{/if}
 			{else}
-			<input type="text" name="task_user" value="{$info.user|escape}" />
+			<input type="text" name="task_user" value="{$info.user|escape}">
 			{/if}
 			{if (($info.user ne $info.creator) or ($taskId eq 0))} 
 				&nbsp;
 				<input {if $info.creator ne $user} disabled="disabled" {/if} 
-				{if $info.rights_by_creator eq 'y'} checked="checked" {/if}  name="rights_by_creator" type="checkbox" />
+				{if $info.rights_by_creator eq 'y'} checked="checked" {/if}  name="rights_by_creator" type="checkbox">
 				&nbsp;{tr}Only the creator can delete this task{/tr} 
 			 {/if}
 		</td>
@@ -128,7 +128,7 @@
 	<tr>
 		<td>{tr}Title{/tr}</td>
 		<td colspan="3">
-			<input  style="width:98%;" type="text" name="title" value="{$info.title|escape}" />
+			<input  style="width:98%;" type="text" name="title" value="{$info.title|escape}">
 		</td>
     </tr>
     <tr>
@@ -144,7 +144,7 @@
 			{html_select_date time=$start_date prefix="start_" end_year="+4" field_order=$prefs.display_field_order}
 			&nbsp;-&nbsp;
 			{html_select_time minute_interval=10 time=$start_date prefix="start_" display_seconds=false use_24_hours=$use_24hr_clock}
-			&nbsp;<input name="use_start_date" {if $info.start or $taskId eq  0} checked="checked" {/if} type="checkbox" />
+			&nbsp;<input name="use_start_date" {if $info.start or $taskId eq  0} checked="checked" {/if} type="checkbox">
 			&nbsp;{tr}Use start date and time{/tr}
 		</td>
 	</tr>
@@ -153,7 +153,7 @@
 			{html_select_date time=$end_date prefix="end_" end_year="+4" field_order=$prefs.display_field_order}
 			&nbsp;-&nbsp;
 			{html_select_time minute_interval=10 time=$end_date prefix="end_" display_seconds=false use_24_hours=$use_24hr_clock}
-			&nbsp;<input name="use_end_date" {if $info.end} checked="checked" {/if} type="checkbox" />
+			&nbsp;<input name="use_end_date" {if $info.end} checked="checked" {/if} type="checkbox">
 			&nbsp;{tr}Use end date and time{/tr}
 		</td>
 	</tr>
@@ -228,7 +228,7 @@
 		<td colspan="3">
 			{tr}This message will be send to users if you are makeing changes of assigned tasks{/tr}<br>
 			<textarea style="width:98%;" rows="2" cols="80" name="task_info_message">{$info.info|escape}</textarea>
-			<input checked="checked" type="checkbox" name="task_send_changes_message" />{tr}Send message with changes{/tr}
+			<input checked="checked" type="checkbox" name="task_send_changes_message">{tr}Send message with changes{/tr}
 		</td>
 	</tr>
 	{/if} 
@@ -252,7 +252,7 @@
 {if $info.taskId eq 0}
 	<td colspan="4">
         <div align="center">
-			<input checked="checked" type="checkbox" name="send_email_newtask" />{tr}Inform task user by email{/tr}
+			<input checked="checked" type="checkbox" name="send_email_newtask">{tr}Inform task user by email{/tr}
         </div>
     </td>
 	</tr>
@@ -260,9 +260,9 @@
 	{/if}
 	<td colspan="4">
 		<div align="center">
-			<input type="submit" name="save" value="{tr}Save{/tr}" />
-			<input type="submit" name="preview" value="{tr}Preview{/tr}" /> 
-			<input type="submit" name="reload" value="{tr}Reload{/tr}" />
+			<input type="submit" name="save" value="{tr}Save{/tr}">
+			<input type="submit" name="preview" value="{tr}Preview{/tr}"> 
+			<input type="submit" name="reload" value="{tr}Reload{/tr}">
 		</div>
 	</td>
 	{else}

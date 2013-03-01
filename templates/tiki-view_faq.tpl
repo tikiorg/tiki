@@ -75,7 +75,7 @@
 		{/if}
 		<br>
 		<form action="tiki-view_faq.php" method="post">
-			<input type="hidden" name="faqId" value="{$faqId|escape}" />
+			<input type="hidden" name="faqId" value="{$faqId|escape}">
 			<table class="formcolor">
 				<tr>
 					<td>{tr}Question:{/tr}</td>
@@ -97,7 +97,7 @@
 				<tr>
 					<td>&nbsp;</td>
 					<td>
-						<input type="submit" name="sugg" value="{tr}Add{/tr}" />
+						<input type="submit" name="sugg" value="{tr}Add{/tr}">
 					</td>
 				</tr>
 			</table>
