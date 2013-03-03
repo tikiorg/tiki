@@ -101,7 +101,7 @@ function prefs_user_list($partial = false)
 			'name' => tra('Number of days to consider who viewed my stuff'),
 			'description' => tra('Number of days before current time to consider when showing who viewed my stuff'),
 			'type' => 'text',
-			'filter' => 'digit',
+			'filter' => 'digits',
 			'size' => '4',
 			'default' => 90,
 		),

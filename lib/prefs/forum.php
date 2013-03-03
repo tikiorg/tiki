@@ -39,7 +39,7 @@ function prefs_forum_list()
             'description' => tra(''),
 			'type' => 'text',
 			'size' => '5',
-			'filter' => 'digit',
+			'filter' => 'digits',
 			'default' => 10,
                 ),
 		'forum_thread_user_settings_keep' => array(
@@ -53,7 +53,7 @@ function prefs_forum_list()
             'description' => tra(''),
 			'type' => 'text',
 			'size' => '5',
-			'filter' => 'digit',
+			'filter' => 'digits',
 			'default' => 20,
 		),
 		'forum_thread_style' => array(
