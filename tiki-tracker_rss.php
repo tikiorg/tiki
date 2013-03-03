@@ -68,7 +68,7 @@ if ($output["data"] == "EMPTY") {
 	$listfields = $trklib->list_tracker_fields($_REQUEST[$id]);
 	$fields = array();
 	foreach ($listfields['data'] as $f) {
-		if ($f['isHidden'] == 'y' || $f['isHidden'] == 'c') {
+		if ($f['isHidden'] == 'y' || $f['isHidden'] == 'c' || $f['isHidden'] == 'r') {
 			continue;
 		}
 		$fields[$f['fieldId']] = $f;
