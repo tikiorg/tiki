@@ -22,9 +22,9 @@ define('TITLE_SEPARATOR', '-');
  * @param string $tpl_output	original "unfriendly" url
  * @param string $type			type of object (article|blog|blogpost etc)
  * @param string $title			title of object
- * @param null $with_next		unknown
- * @param string $with_title	unknown
- * @return string			sefurl
+ * @param null $with_next		Appends '?' or a '&amp;' to the end of the returned URL so you join further parameters
+ * @param string $with_title	Add the object title to the end of the URL
+ * @return string				sefurl
  */
 
 
