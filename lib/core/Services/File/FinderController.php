@@ -102,7 +102,9 @@ class Services_File_FinderController
 
 		if ($input->cmd->text() === 'tikiFileFromHash') {	// intercept tiki only commands
 			$fileId = $elFinder->realpath($input->hash->text());
-			$info = TikiLib::lib('filegal')->get_file(str_replace('f_', '', $fileId));
+			$filegallib = TikiLib::lib('filegal');
+			$info = $filegallib->get_file(str_replace('f_', '', $fileId));
+			$info['wiki_syntax'] = $filegallib->getWikiSyntax($info['galleryId'], $info);
 			return $info;
 		}
 

@@ -238,6 +238,28 @@ var elfoptions = initElFinder({
 	});
 
 $(".elFinderDialog").elfinder(elfoptions).elfinder('instance');
+
+window.handleFinderFile = function (file, elfinder) {
+	var m = file.match(/target=([^&]*)/);
+	if (!m || m.length < 2) {
+		return false;	// error?
+	}
+	$.ajax({
+		type: 'GET',
+		url: $.service('file_finder', 'finder'),
+		dataType: 'json',
+		data: {
+			cmd: "tikiFileFromHash",
+			hash: m[1]
+		},
+		success: function (data) {
+			{{if !empty($filegals_manager)}}
+				window.opener.insertAt('{{$filegals_manager}}', data.wiki_syntax);
+				checkClose();
+			{{/if}}
+		}
+	});
+};
 		{/jq}
 	{else}
 		{include file='list_file_gallery.tpl'}
