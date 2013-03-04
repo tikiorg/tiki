@@ -1675,7 +1675,7 @@ class ToolbarWikiplugin extends Toolbar
 	{
 		switch ($this->pluginName) {
 			case 'img':
-				$this->wysiwyg = 'tikiimage';	// don't use ckeditor's html image dialog
+				$this->wysiwyg = 'wikiplugin_img';	// don't use ckeditor's html image dialog
 				break;
 			default:
 		}
