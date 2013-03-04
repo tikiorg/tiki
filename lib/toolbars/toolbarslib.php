@@ -1661,9 +1661,6 @@ class ToolbarWikiplugin extends Toolbar
 			if ($this->wysiwyg === 'Image') {	// cke's own image tool overrides this so set it up to use our filegal
 				global $headerlib,  $smarty, $prefs;
 				// can't do upload the cke way yet
-				//$smarty->loadPlugin('smarty_function_filegal_manager_url');
-				//$url =  smarty_function_filegal_manager_url(array('area_id'=> 'fgal_picker'), $smarty);
-				//$headerlib->add_js('CKEDITOR.config.filebrowserUploadUrl = "'.$url.'"', 5);
 				$url = 'tiki-list_file_gallery.php?galleryId='.$prefs['home_file_gallery'].'&filegals_manager=fgal_picker';
 				$headerlib->add_js('if (typeof window.CKEDITOR !== "undefined") {window.CKEDITOR.config.filebrowserBrowseUrl = "'.$url.'"}', 5);
 			} else {
@@ -1678,7 +1675,7 @@ class ToolbarWikiplugin extends Toolbar
 	{
 		switch ($this->pluginName) {
 			case 'img':
-				$this->wysiwyg = '';	// don't use ckeditor's html image dialog
+				$this->wysiwyg = 'tikiimage';	// don't use ckeditor's html image dialog
 				break;
 			default:
 		}
