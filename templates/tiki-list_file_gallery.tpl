@@ -250,6 +250,9 @@ window.handleFinderFile = function (file, elfinder) {
 		dataType: 'json',
 		data: {
 			cmd: "tikiFileFromHash",
+			{{if !empty($filegals_manager)}}
+				filegals_manager: "{{$filegals_manager}}",
+			{{/if}}
 			hash: m[1]
 		},
 		success: function (data) {
