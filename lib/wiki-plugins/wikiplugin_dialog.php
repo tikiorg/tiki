@@ -28,7 +28,7 @@ function wikiplugin_dialog_info()
 				'description' => tra('Button labels separated by commas.'),
 				'filter' => 'text',
 				'separator' => ',',
-				'default' => tra('Ok') . ',' . tra('Cancel'),
+				'default' => array(tra('Ok')),
 			),
 			'actions' => array(
 				'required' => false,
