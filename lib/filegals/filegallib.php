@@ -2220,37 +2220,50 @@ class FileGalLib extends TikiLib
 			$this->remove_file($fileInfo, $galInfo, false);
 		}
 	}
-	// get the wiki_syntax - use parent's if none
-	function getWikiSyntax($galleryId=0)
+
+	/**
+	 * get the wiki_syntax - use parent's if none
+	 *
+	 * @param int $galleryId	gallery to get syntax from
+	 * @param array $fileinfo	optional file info to process syntax on
+	 * @return string			wiki markup
+	 */
+
+	function getWikiSyntax($galleryId=0, $fileinfo =null)
 	{
 		if (isset($_REQUEST['insertion_syntax']) && $_REQUEST['insertion_syntax'] == 'file') {	// for use in 'Choose or Upload' toolbar item (tikifile)
-			return '{file type="gallery" fileId="%fileId%" showicon="y"}';
-		}
-		if (isset($_REQUEST['filegals_manager'])) {		// for use in plugin edit popup
+			$syntax = '{file type="gallery" fileId="%fileId%" showicon="y"}';
+		} else if (isset($_REQUEST['filegals_manager'])) {		// for use in plugin edit popup
 			if ($_REQUEST['filegals_manager'] === 'fgal_picker_id') {
-				return '%fileId%';		// for use in plugin edit popup
+				$syntax = '%fileId%';		// for use in plugin edit popup
 			} else if ($_REQUEST['filegals_manager'] === 'fgal_picker') {
 				$href = 'tiki-download_file.php?fileId=123&amp;display';	// dummy id as sefurl expects a (/d+) pattern
 				global $smarty; include_once('tiki-sefurl.php');
 				$href = filter_out_sefurl($href);
-				return str_replace('123', '%fileId%', $href);
+				$syntax =  str_replace('123', '%fileId%', $href);
 			}
 		}
 
-		$syntax = $this->table('tiki_file_galleries')->fetchOne('wiki_syntax', array('galleryId' => $galleryId));
+		if (empty($syntax)) {
+			$syntax = $this->table('tiki_file_galleries')->fetchOne('wiki_syntax', array('galleryId' => $galleryId));
 
-		if (!empty($syntax)) {
-			return $syntax;
-		}
-
-		$list = $this->getGalleryParentsColumns($galleryId, array('wiki_syntax'));
-		foreach ($list as $fgal) {
-			if (!empty($fgal['wiki_syntax'])) {
-				return $fgal['wiki_syntax'];
+			$list = $this->getGalleryParentsColumns($galleryId, array('wiki_syntax'));
+			foreach ($list as $fgal) {
+				if (!empty($fgal['wiki_syntax'])) {
+					$syntax = $fgal['wiki_syntax'];
+					break;
+				}
 			}
 		}
 		// and no syntax set, return default
-		$syntax = '{img fileId="%fileId%" thumb="y" rel="box[g]"}';	// should be a pref
+		if (empty($syntax)) {
+			$syntax = '{img fileId="%fileId%" thumb="y" rel="box[g]"}';	// should be a pref
+		}
+
+		if ($fileinfo) {	// if fileinfo provided then process it now
+			$syntax = $this->process_fgal_syntax($syntax, $fileinfo);
+		}
+
 		return $syntax;
 	}
 
