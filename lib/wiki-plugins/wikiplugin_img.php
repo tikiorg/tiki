@@ -8,7 +8,7 @@
 function wikiplugin_img_info()
 {
 	global $prefs;
-	return array(
+	$info = array(
 		'name' => tra('Image'),
 		'documentation' => 'PluginImg',
 		'description' => tra('Display custom formatted images. One of "fileId", "src", "attId", id" or "randomGalleryId" required.'),
@@ -16,45 +16,72 @@ function wikiplugin_img_info()
 		'icon' => 'img/icons/picture.png',
 		'tags' => array( 'basic' ),
 		'params' => array(
+			'type' => array(
+				'required' => true,
+				'name' => tra('Image Source'),
+				'description' => tra('Choose where to get your image from'),
+				'default' => '',
+				'options' => array(
+					array('text' => tra('Select an option'), 'value' => ''),
+					array('text' => tra('An image in the File Galleries'), 'value' => 'fileId'),
+					array('text' => tra('An image attached to a wiki page'), 'value' => 'url'),
+					array('text' => tra('An image anywhere on the internet'), 'value' => 'src'),
+					array('text' => tra('All the images in a File Gallery'), 'value' => 'fgalId'),
+					array('text' => tra('One random image from a File Gallery'), 'value' => 'randomGalleryId'),
+				),
+			),
 			'fileId' => array(
-				'required' => false,
+				'required' => true,
 				'name' => tra('File ID'),
 				'type' => 'image',
 				'area' => 'fgal_picker_id',
 				'description' => tra('Numeric ID of an image in a File Gallery (or list separated by commas or |).'),
 				'filter' => 'striptags',
 				'default' => '',
+				'parent' => array('name' => 'type', 'value' => 'fileId'),
 			),
 			'id' => array(
-				'required' => false,
+				'required' => true,
 				'name' => tra('Image ID'),
 				'description' => tra('Numeric ID of an image in an Image Gallery (or list separated by commas or |).'),
 				'filter' => 'striptags',
 				'advanced' => $prefs['feature_galleries'] !== 'y',
 				'default' => '',
+				'parent' => array('name' => 'type', 'value' => 'id'),
 			),
 			'src' => array(
-				'required' => false,
+				'required' => true,
 				'name' => tra('Image source'),
 				'description' => tra('Full URL to the image to display.'),
 				'filter' => 'url',
 				'default' => '',
+				'parent' => array('name' => 'type', 'value' => 'src'),
 			),
 			'randomGalleryId' => array(
-				'required' => false,
+				'required' => true,
 				'name' => tra('Gallery ID'),
 				'description' => tra('Numeric ID of a file gallery. Displays a random image from that gallery.'),
 				'filter' => 'int',
 				'advanced' => true,
 				'default' => '',
+				'parent' => array('name' => 'type', 'value' => 'randomGalleryId'),
 			),
 			'fgalId' => array(
-				'required' => false,
+				'required' => true,
 				'name' => tra('File Gallery ID'),
 				'description' => tra('Numeric ID of a file gallery. Displays all images from that gallery.'),
 				'filter' => 'int',
 				'advanced' => true,
 				'default' => '',
+				'parent' => array('name' => 'type', 'value' => 'fgalId'),
+			),
+			'attId' => array(
+				'required' => true,
+				'name' => tra('Attachment ID'),
+				'description' => tra('Numeric ID of an image attached to a wiki page (or list separated by commas or |).'),
+				'filter' => 'striptags',
+				'default' => '',
+				'parent' => array('name' => 'type', 'value' => 'attId'),
 			),
 			'sort_mode' => array(
 				'required' => false,
@@ -106,13 +133,6 @@ function wikiplugin_img_info()
 					array('text' => tra('Archive ID Ascending'), 'value' => 'archiveId_asc'),
 					array('text' => tra('Archive ID Descending'), 'value' => 'archiveId_desc'),
 				),
-			),
-			'attId' => array(
-				'required' => false,
-				'name' => tra('Attachment ID'),
-				'description' => tra('Numeric ID of an image attached to a wiki page (or list separated by commas or |).'),
-				'filter' => 'striptags',
-				'default' => '',
 			),
 			'thumb' => array(
 				'required' => false,
@@ -315,6 +335,10 @@ function wikiplugin_img_info()
 			),
 		),
 	);
+	if ($prefs['feature_galleries'] === 'y') {
+		$info['params']['type']['options'][] = array('text' => tra('An image in the Image Galleries'), 'value' => 'id');
+	}
+	return $info;
 }
 
 function wikiplugin_img( $data, $params )
