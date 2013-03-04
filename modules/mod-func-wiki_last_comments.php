@@ -63,7 +63,7 @@ function module_wiki_last_comments($mod_reference, $module_params)
          */
         function module_last_comments($limit, array $params)
 		{
-			global $tikilib, $user, $prefs;
+			global $tikilib, $user;
 			$bindvars = array($params['type']);
 			$where = '';
 			switch ($params['type']) {
@@ -106,13 +106,7 @@ function module_wiki_last_comments($mod_reference, $module_params)
 						return null;
 				}
 				if ($tikilib->user_has_perm_on_object($user, $res['object'], $res['type'], $perm)) {
-					if ($prefs['comments_notitle'] === 'y') {
-						TikiLib::lib('smarty')->loadPlugin('smarty_modifier_truncate');
-						$res['title'] = '"' .
-								smarty_modifier_truncate(
-									strip_tags(TikiLib::lib('parser')->parse_data($res['data'])), $params['commentlength']) .
-								'"';
-					}
+					$res['title'] = TikiLib::lib('comments')->process_comment_title($res, $params['commentlength']);
 					if ($params['avatars'] === 'y') {
 						$res['avatar'] = $tikilib->get_user_avatar($res['userName'], 'right');
 						$res['avatar'] = preg_replace('/(:?width|height)=[\'"]?\d+[\'"]?/', '', $res['avatar']);
