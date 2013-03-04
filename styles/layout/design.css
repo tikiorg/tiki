@@ -2625,6 +2625,7 @@ body.wikitext {
 
 .editable-inline {
 	background: transparent url(../../img/icons/database_lightning.png) no-repeat top right;
+	padding-right: 20px;
 }
 
 .editable-inline.loaded {
