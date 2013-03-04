@@ -23,12 +23,20 @@ function module_wiki_last_comments_info()
 		'params' => array(
 			'moretooltips' => array(
 				'name' => tra('More in tooltips'),
-				'description' => tra('If set to "y", the name of the object on which a comment is made is not displayed in the module box, but instead moved in the item\'s tooltip.') . " " . tr('Default: "n".')
+				'description' => tra('If set to "y", the name of the object on which a comment is made is not displayed in the module box, but instead moved in the item\'s tooltip.') . " " . tr('Default: "n".'),
+				'default' => 'n',
 			),
 			'type' => array(
 				'name' => tra('Object type'),
 				'description' => tra('Type of the objects from which comments will be listed. Possible values:') . '  wiki page, article. ' . tra('Default value:') . ' wiki page',
-				'filter' => 'word'
+				'filter' => 'word',
+				'default' => 'wiki page',
+			),
+			'commentlength' => array(
+				'name' => tra('Maximum comment length'),
+				'description' => tra("If comments don't use titles this sets the maximum length for the comment snippet.") . tra('Default value:') . ' 40',
+				'filter' => 'digits',
+				'default' => 40,
 			)
 		),
 		'common_params' => array('rows', 'nonums')
@@ -47,9 +55,9 @@ function module_wiki_last_comments($mod_reference, $module_params)
          * @param string $type
          * @return array|null
          */
-        function module_last_comments($limit, $type='wiki page')
+        function module_last_comments($limit, $type='wiki page', $commentlength = 40)
 		{
-			global $tikilib, $user;
+			global $tikilib, $user, $prefs;
 			$bindvars = array($type);
 			$where = '';
 			switch ($type) {
@@ -92,6 +100,10 @@ function module_wiki_last_comments($mod_reference, $module_params)
 						return null;
 				}
 				if ($tikilib->user_has_perm_on_object($user, $res['object'], $res['type'], $perm)) {
+					if ($prefs['comments_notitle'] === 'y') {
+						TikiLib::lib('smarty')->loadPlugin('smarty_modifier_truncate');
+						$res['title'] = smarty_modifier_truncate(strip_tags(TikiLib::lib('parser')->parse_data($res['data'])), $commentlength);
+					}
 					$ret[] = $res;
 				}
 			}
@@ -100,6 +112,7 @@ function module_wiki_last_comments($mod_reference, $module_params)
 	}
 	global $smarty, $prefs;
 	if (!isset($module_params['type'])) $module_params['type'] = "wiki page";
+	if (!isset($module_params['commentlength'])) $module_params['commentlength'] = 40;
 	switch ($module_params['type']) {
 		case 'cms': case 'article': case 'articles':
 			if (!$prefs['feature_articles']) {
@@ -118,7 +131,7 @@ function module_wiki_last_comments($mod_reference, $module_params)
 			break;
 	}
 
-	$comments = module_last_comments($mod_reference['rows'], $module_params['type']);
+	$comments = module_last_comments($mod_reference['rows'], $module_params['type'], $module_params['commentlength']);
 	$smarty->assign_by_ref('comments', $comments);
 	$smarty->assign('moretooltips', isset($module_params['moretooltips']) ? $module_params['moretooltips'] : 'n');
 	$smarty->assign('type', $module_params['type']);
