@@ -212,6 +212,7 @@ if (is_null($base) || is_null($path)) {
 tiki_route($path);
 
 if ($inclusion) {
+	$_SERVER['PHP_SELF'] = $inclusion;
 	include __DIR__ . '/' . $inclusion;
 } else {
 	header('HTTP/1.0 Not Found');
