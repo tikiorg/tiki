@@ -87,17 +87,55 @@
 			{/if}
 		{/if}
 		{if $edit_mode neq 'y' and $dup_mode neq 'y'}
-			{if $view neq 'list'}
-				{button _keepall='y' _text="{tr}List Gallery{/tr}" view="list" galleryId=$galleryId}
-			{/if}
-			{if $view neq 'browse'}
-				{button _text="{tr}Browse Images{/tr}" view="browse" galleryId=$galleryId}
-			{/if}
-			{if $view neq 'page' and $filescount gt 0}
-				{button _text="{tr}Page View{/tr}" view="page" galleryId=$galleryId maxRecords=1}
-			{/if}
-			{if $view neq 'admin' and $tiki_p_admin_file_galleries eq 'y'}
-				{button _keepall='y' _text="{tr}Admin View{/tr}" view="admin" galleryId=$galleryId}
+			{if $prefs.javascript_enabled eq 'y'}
+				<select style="float:right;margin-top:0;" id="viewSwitcher">
+					<option value="list"{if $view eq 'list'} selected="selected"{/if}>
+						{tr}List Gallery{/tr}
+					</option>
+					<option value="browse"{if $view eq 'browse'} selected="selected"{/if}>
+						{tr}Browse Images{/tr}
+					</option>
+					{if $filescount gt 0}
+						<option value="page"{if $view eq 'page'} selected="selected"{/if}>
+							{tr}Page View{/tr}
+						</option>
+					{/if}
+					{if $tiki_p_admin_file_galleries eq 'y'}
+						<option value="admin"{if $view eq 'admin'} selected="selected"{/if}>
+							{tr}Admin View{/tr}
+						</option>
+					{/if}
+					{if $prefs.fgal_elfinder_feature eq 'y'}
+						<option value="finder"{if $view eq 'finder'} selected="selected"{/if}>
+							{tr}Finder View{/tr}
+						</option>
+					{/if}
+				</select>
+				{jq}
+$("#viewSwitcher").change(function() {
+				var loc = location.href;
+				if (loc.indexOf("view=") > -1) {
+					loc = loc.replace(/view=([^&])+/, "view=" + $(this).find(':selected').val());
+				} else {
+					loc += loc.indexOf("?") > -1 ? "&" : "?";
+					loc += "view=" + $(this).find(':selected').val();
+				}
+	location.replace(loc);
+});
+				{/jq}
+			{else}
+				{if $view neq 'list'}
+					{button _keepall='y' _text="{tr}List Gallery{/tr}" view="list" galleryId=$galleryId}
+				{/if}
+				{if $view neq 'browse'}
+					{button _text="{tr}Browse Images{/tr}" view="browse" galleryId=$galleryId}
+				{/if}
+				{if $view neq 'page' and $filescount gt 0}
+					{button _text="{tr}Page View{/tr}" view="page" galleryId=$galleryId maxRecords=1}
+				{/if}
+				{if $view neq 'admin' and $tiki_p_admin_file_galleries eq 'y'}
+					{button _keepall='y' _text="{tr}Admin View{/tr}" view="admin" galleryId=$galleryId}
+				{/if}
 			{/if}
 		{/if}
 		{if $tiki_p_assign_perm_file_gallery eq 'y'}
@@ -173,7 +211,7 @@
 {elseif $dup_mode eq 'y'}
 	{include file='duplicate_file_gallery.tpl'}
 {else}
-	{if $prefs.fgal_elfinder_feature neq 'y' or $view neq 'browse'}
+	{if $prefs.fgal_elfinder_feature neq 'y' or $view neq 'finder'}
 		{if $prefs.fgal_search eq 'y' and $view neq 'page'}
 			{include file='find.tpl' find_show_num_rows = 'y' find_show_categories_multi='y' find_durations=$find_durations find_show_sub='y' find_other="{tr}Gallery of this fileId{/tr}" find_in="<ul><li>{tr}Name{/tr}</li><li>{tr}Filename{/tr}</li><li>{tr}Description{/tr}</li></ul>"}
 		{/if}
@@ -226,7 +264,7 @@
 			{/if}			
 		</div>
 	{/if}
-	{if $prefs.fgal_elfinder_feature eq 'y' and $view eq 'browse'}
+	{if $prefs.fgal_elfinder_feature eq 'y' and $view eq 'finder'}
 		<div class="elFinderDialog" style="height: 100%"></div>
 		{jq}
 

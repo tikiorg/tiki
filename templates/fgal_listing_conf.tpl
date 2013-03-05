@@ -10,6 +10,9 @@
 			<option value="list"{if $item.value eq 'list'} selected="selected"{/if}>{tr}List{/tr}</option>
 			<option value="browse"{if $item.value eq 'browse'} selected="selected"{/if}>{tr}Browse{/tr}</option>
 			<option value="page"{if $item.value eq 'page'} selected="selected"{/if}>{tr}Page{/tr}</option>
+			{if $prefs.fgal_elfinder_feature eq 'y'}
+				<option value="finder"{if $item.value eq 'finder'} selected="selected"{/if}>{tr}Finder View{/tr}</option>
+			{/if}
 		</select>
 	</td>
 </tr>
