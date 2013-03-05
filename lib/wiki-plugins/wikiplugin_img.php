@@ -792,8 +792,10 @@ function wikiplugin_img( $data, $params )
 				$imgdata_dim = '';
 				$height = $fheight;
 				$width = $fwidth;
-				$imgdata_dim .= ' width="' . $width . '"';
-				$imgdata_dim .= ' height="' . $height . '"';
+				if (!empty($width) && !empty($height)) {
+					$imgdata_dim .= ' width="' . $width . '"';
+					$imgdata_dim .= ' height="' . $height . '"';
+				}
 			}
 		} else {
 			if (!empty($height)) {
