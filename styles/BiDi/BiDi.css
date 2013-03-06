@@ -288,22 +288,13 @@ ul.sf-shadow ul {background-image:none}
 	background: url(../../lib/jquery/superfish/images/shadow.png) no-repeat bottom right;
 }
 
-/***** MyTiki User Preferences *****/
+/***** Tabs *****/
+
 .tabcontent .floatleft {
     float: right !important;
 }
 
 .tabcontent .floatright {
-    float: left !important;
-}
-
-#user_information .tabcontent .floatright {
-	float: none !important;
-	padding-right: 15em;
-}
-
-/***** Wiki page *****/
-div.tabstoggle {
     float: left !important;
 }
 
@@ -313,13 +304,69 @@ div.tabstoggle {
 	margin-right: -6px
 }
 
-.tabs .tabstoggle.floatright .button {
-    right:59px;
+.tabs span {
+	float: right !important;
+}
+
+.tabs {
+	margin: 0 .3em 0 0 !important;
+}
+
+.tabmark {
+	margin: 0 0 0 .2em !important;
+}
+
+.tabcontent {
+	border-top-right-radius: 0 !important;
+	-webkit-border-top-right-radius: 0 !important;
+	-moz-border-radius-topright: 0 !important;
+	border-top-left-radius: 4px;
+	-webkit-border-top-left-radius: 4px;
+	-moz-border-radius-topleft: 4px;
 }
 
 .tabcontent table {
     text-align: right !important;
 }
+
+/** Tab Toggle **/
+
+div.tabstoggle {
+    float: left !important;
+}
+
+/** Admin Modules **/
+
+#assigned_modules .tabset {
+	padding: 4px;
+}
+
+#assigned_modules .tabs {
+	padding: 0 !important;
+	margin-right: 11px !important;
+}
+
+#assigned_modules .tabcontent {
+	padding: 0 4px !important;
+}
+
+#assigned_modules .tabmark {
+	margin: 0 !important;
+}
+
+#assigned_modules .tabstoggle .button {
+	right: 8px;
+	top: -25px;
+}
+
+/***** MyTiki User Preferences *****/
+
+#user_information .tabcontent .floatright {
+	float: none !important;
+	padding-right: 15em;
+}
+
+/***** Wiki page *****/
 
 #page-bar {
     float: right !important;
