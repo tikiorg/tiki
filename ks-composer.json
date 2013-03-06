@@ -1,0 +1,61 @@
+{
+	"name": "tiki/tiki",
+	"license": "LGPL-2.1",
+	"description": "Tiki CMS Groupware",
+	"homepage": "https://tiki.org",
+	"minimum-stability": "stable",
+	"require": {
+		"ext-gd": "Required for Image manipulation",
+		"adodb/adodb": "5.18",
+		"phpcas/phpcas": "1.3.2",
+		"phpseclib/phpseclib": "0.3.1",
+		"smarty/smarty": "3.1.13",
+		"zetacomponents/base": "1.8",
+		"zetacomponents/webdav": "1.1.3",
+		"zendframework/zendframework1": "1.12.1"
+	},
+	"require-dev": {
+	},
+	"config": {
+		"process-timeout": 5000
+	},
+	"autoload": {
+		"psr-0": {
+			"Horde": "lib/core/",
+			"TikiFilter": "lib/core/",
+			"DeclFilter": "lib/core/",
+			"JisonParser": "lib/core/",
+			"JitFilter": "lib/core/",
+			"Search": "lib/core/",
+			"Perms": "lib/core/",
+			"Math": "lib/core/",
+			"Category": "lib/core/",
+			"WikiParser": "lib/core/",
+			"Multilingual": "lib/core/",
+			"Tracker": "lib/core/",
+			"Event": "lib/core/",
+			"Services": "lib/core/",
+			"Tiki": "lib/core/",
+			"TikiDb": "lib/core/",
+			"Report": "lib/core/",
+			"Feed": "lib/core/",
+			"FileGallery": "lib/core/",
+			"WikiPlugin": "lib/core/",
+			"Zend": "vendor/zendframework/zendframework1/library"
+		},
+		"classmap": [
+			"lib/pear/",
+			"lib/openpgp/",
+			"lib/language/",
+			"lib/TikiWebdav/",
+			"lib/rating/formula/",
+			"lib/core/StandardAnalyzer/",
+			"vendor/smarty/smarty/libs/sysplugins/smarty_security.php",
+			"vendor/adodb/adodb/",
+			"vendor/phpcas/phpcas/"
+		]
+	},
+	"repositories": [
+		{ "type": "composer", "url": "http://packages.kstingel.com" }
+	]
+}
