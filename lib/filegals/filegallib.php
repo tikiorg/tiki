@@ -134,6 +134,35 @@ class FileGalLib extends TikiLib
 		return $idGallery;
 	}
 
+	/**
+	 * Calculate gallery name for user galleries
+	 *
+	 * @param array $gal_info	gallery info array
+	 * @param string $auser		optional user (global used if not supplied)
+	 * @return string			name of gallery modified if a "top level" user galley
+	 */
+	public function get_user_gallery_name($gal_info, $auser = null)
+	{
+		global $user, $prefs;
+
+		if ($auser === null) {
+			$auser = $user;
+		}
+		$name = $gal_info['name'];
+
+		if ( !empty($auser) && $prefs['feature_use_fgal_for_user_files'] == 'y' ) {
+
+			if ($gal_info['type'] === 'user' && $gal_info['parentId'] == $prefs['fgal_root_user_id']) {
+				if ($gal_info['user'] === $auser) {
+					$name = tra('My Files');
+				} else {
+					$name = tr('Files of %0', TikiLib::lib('user')->clean_user($gal_info['user']));
+				}
+			}
+		}
+		return $name;
+	}
+
 	function remove_file($fileInfo, $galInfo='', $disable_notifications = false)
 	{
 		global $prefs, $user;
@@ -2750,12 +2779,9 @@ class FileGalLib extends TikiLib
 					}
 					$res['share']['nb'] = count($share_result);
 				}
-			} else if ($res['type'] === 'user') {
-				if ($res['user'] === $user) {
-					$res['name'] = tra('My Files');
-				} else {
-					$res['name'] = tr('Files of %0', $res['user']);
-				}
+			} else {	// a gallery
+
+				$res['name'] = $this->get_user_gallery_name($res);
 			}
 
 			$n++;
@@ -2864,14 +2890,7 @@ class FileGalLib extends TikiLib
 			}
 		}
 
-		global $user;
-		if ($res['type'] === 'user') {
-			if ($res['user'] === $user) {
-				$res['name'] = tra('My Files');
-			} else {
-				$res['name'] = tr('Files of %0', $res['user']);
-			}
-		}
+		$res['name'] = $this->get_user_gallery_name($res);
 
 		return $res;
 	}
