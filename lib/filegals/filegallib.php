@@ -116,7 +116,6 @@ class FileGalLib extends TikiLib
 
 		$conditions = array(
 			'type' => 'user',
-			'name' => $userId,
 			'user' => $user,
 			'parentId' => $prefs['fgal_root_user_id']
 		);
@@ -691,6 +690,18 @@ class FileGalLib extends TikiLib
 		$galleriesTable = $this->table('tiki_file_galleries');
 		$objectsTable = $this->table('tiki_objects');
 		$fgal_info = array_merge($this->default_file_gallery(), $fgal_info);
+
+		// ensure gallery name is userId for root user gallery
+		if ($prefs['feature_use_fgal_for_user_files'] === 'y' &&
+				$fgal_info['type'] === 'user' &&
+				$fgal_info['parentId'] == $prefs['fgal_root_user_id']) {
+
+			$userId = TikiLib::lib('user')->get_user_id($fgal_info['user']);
+
+			if ($userId) {
+				$fgal_info['name'] = $userId;
+			}
+		}
 
 		// if the user is admin or the user is the same user and the gallery exists
 		// then replace if not then create the gallary if the name is unused.
