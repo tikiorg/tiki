@@ -66,10 +66,10 @@
 		{if $tiki_p_create_file_galleries eq 'y' and $edit_mode ne 'y'}
 			{button _keepall='y' _text="{tr}Create a Gallery{/tr}" edit_mode=1 parentId=$galleryId cookietab=1}
 		{/if}
-		{if $tiki_p_create_file_galleries eq 'y' and $dup_mode ne 'y'}
+		{if $tiki_p_create_file_galleries eq 'y' and $dup_mode ne 'y' and $gal_info.type neq 'user'}
 			{button _text="{tr}Duplicate Gallery{/tr}" dup_mode=1 galleryId=$galleryId}
 		{/if}
-		{if $tiki_p_admin_file_galleries eq 'y' or $user eq $gal_info.user}
+		{if $tiki_p_admin_file_galleries eq 'y' or ($user eq $gal_info.user and $gal_info.type eq 'user' and $tiki_p_userfiles)}
 			{if $edit_mode eq 'y' or $dup_mode eq 'y'}
 				{button _keepall='y' _text="{tr}Browse Gallery{/tr}" galleryId=$galleryId}
 			{else}

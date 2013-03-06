@@ -1,5 +1,5 @@
 {* $Id$ *}
-{if $tiki_p_create_file_galleries eq 'y'}
+{if $tiki_p_create_file_galleries eq 'y' or ($user eq $gal_info.user and $gal_info.type eq 'user' and $tiki_p_userfiles)}
 	{if isset($individual) and $individual eq 'y'}
 		<br>
 		<a class="fgallink" href="tiki-objectpermissions.php?objectName={$name|escape:"url"}&amp;objectType=file+gallery&amp;permType=file+galleries&amp;objectId={$galleryId}">
@@ -70,7 +70,7 @@ $('#fgal_template').change( function() {
 								<label for="fgal_type">{tr}Type:{/tr}</label>
 							</td>
 							<td>
-								{if $galleryId eq $treeRootId}
+								{if $galleryId eq $treeRootId or $gal_info.type eq 'user'}
 									{if $gal_info.type eq 'system'}
 										{tr}System{/tr}
 									{elseif $gal_info.type eq 'user'}
