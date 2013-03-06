@@ -335,7 +335,7 @@ if ($prefs['feature_warn_on_edit'] === 'y') {
 		$msg = tr("This page is being edited by %0. Please check with the user before editing the page,	otherwise the changes will be stored as two separate versions in the history and you will have to manually merge them later.", $semUser);
 		$msg .= '<br /><br /><a href="tiki-editpage.php?page=';
 		$msg .= urlencode($page);
-		$msg .= (strpos('?', $url) === false ? '?' : '&') . 'conflictoverride=y">' . tra('Override lock and carry on with edit') . '</a>';
+		$msg .= '&conflictoverride=y">' . tra('Override lock and carry on with edit') . '</a>';
 		$smarty->assign('msg', $msg);
 		$smarty->assign('errortitle', tra('Page is currently being edited'));
 		$smarty->display("error.tpl");
