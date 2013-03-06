@@ -23,13 +23,19 @@ function smarty_modifier_avatarize($user)
 {
 	global $tikilib;
 	global $userlib;
+	global $prefs;
 	$avatar = $tikilib->get_user_avatar($user);
 	if ( $avatar != '' && $tikilib->get_user_preference($user, 'user_information', 'public') == 'public' ) {
 		$id = $userlib->get_user_id($user);
+		$realn = $userlib->clean_user($user);
 		include_once('tiki-sefurl.php');
 		$url = "tiki-user_information.php?userId=$id";
 		$url = filter_out_sefurl($url);	
-		$avatar = "<a title=\"" . htmlspecialchars($user, ENT_QUOTES) . "\" href=\"$url\">".$avatar.'</a>';
+		if ( $prefs['user_show_realnames'] == 'y' ) {
+			$avatar = "<a title=\"" . htmlspecialchars($realn, ENT_QUOTES) . "\" href=\"$url\">".$avatar.'</a>';
+		} else {
+			$avatar = "<a title=\"" . htmlspecialchars($user, ENT_QUOTES) . "\" href=\"$url\">".$avatar.'</a>';
+		}
 	}
 	return $avatar;	
 }
