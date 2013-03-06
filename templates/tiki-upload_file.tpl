@@ -223,7 +223,7 @@
 							{/if}
 						</td></tr>
 					{/if}
-				
+
 					{if $editFileId}
 						<input type="hidden" name="galleryId" value="{$galleryId}">
 						<input type="hidden" name="fileId" value="{$editFileId}">
@@ -238,7 +238,7 @@
 								<select id="galleryId" name="galleryId[]">
 									<option value="{$treeRootId}" {if $treeRootId eq $galleryId}selected="selected"{/if} style="font-style:italic; border-bottom:1px dashed #666;">{tr}Root{/tr}</option>
 									{section name=idx loop=$galleries}
-										{if $galleries[idx].id neq $treeRootId and $galleries[idx].perms.tiki_p_upload_files eq 'y'}
+										{if $galleries[idx].id neq $treeRootId and ($galleries[idx].perms.tiki_p_upload_files eq 'y' or $tiki_p_userfiles eq 'y')}
 											<option value="{$galleries[idx].id|escape}" {if $galleries[idx].id eq $galleryId}selected="selected"{/if}>{$galleries[idx].name|escape}</option>
 										{/if}
 									{/section}

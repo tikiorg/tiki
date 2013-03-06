@@ -187,7 +187,11 @@ $smarty->assign('editFileId', (int) $fileId);
 $smarty->assign('galleryId', empty( $_REQUEST['galleryId'][0] ) ? '' : $_REQUEST['galleryId'][0]);
 
 if ( empty( $fileId ) ) {
-	$galleries = $filegallib->getSubGalleries($requestGalleryId, true, 'upload_files');
+	if ($gal_info['type'] == 'user') {
+		$galleries = $filegallib->getSubGalleries($requestGalleryId, true, 'userfiles');
+	} else {
+		$galleries = $filegallib->getSubGalleries($requestGalleryId, true, 'upload_files');
+	}
 	$smarty->assign_by_ref('galleries', $galleries["data"]);
 	$smarty->assign('treeRootId', $galleries['parentId']);
 
