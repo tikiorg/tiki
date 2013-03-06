@@ -7,17 +7,7 @@
 		{if $edit_mode eq 'y'}
 			{tr}Edit Gallery:{/tr}
 		{/if}
-		{strip} 
-			{if $gal_info.type eq 'user'}
-				{if $gal_info.user eq $user}
-					{tr}My Files{/tr}
-				{else}
-					{tr}Files of {$gal_info.user}{/tr}
-				{/if}
-			{else}
-				{$name}
-			{/if}
-		{/strip}
+		{$name}
 	{/if}
 {/title}
 

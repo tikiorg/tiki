@@ -2739,6 +2739,12 @@ class FileGalLib extends TikiLib
 					}
 					$res['share']['nb'] = count($share_result);
 				}
+			} else if ($res['type'] === 'user') {
+				if ($res['user'] === $user) {
+					$res['name'] = tra('My Files');
+				} else {
+					$res['name'] = tr('Files of %0', $res['user']);
+				}
 			}
 
 			$n++;
@@ -2844,6 +2850,15 @@ class FileGalLib extends TikiLib
 				if ( !isset($res[$k]) || $res[$k] === null ) {
 					$res[$k] = $v;
 				}
+			}
+		}
+
+		global $user;
+		if ($res['type'] === 'user') {
+			if ($res['user'] === $user) {
+				$res['name'] = tra('My Files');
+			} else {
+				$res['name'] = tr('Files of %0', $res['user']);
 			}
 		}
 

@@ -356,13 +356,6 @@
 							{/if}
 							{assign var=propval value="$propval<br><span class=\"description\">`$desc`</span>"}
 						{/if}
-						{if $files[changes].isgal eq 1 and $files[changes].type eq 'user'}
-							{if $files[changes].user eq $user}
-								{assign var=propval value="<strong>{tr}My Files{/tr}</strong>"}
-							{else}
-								{assign var=propval value="{tr}Files of {/tr}"|cat:$files[changes].user}
-							{/if}
-						{/if}
 					{elseif $propname eq 'created' or $propname eq 'lastModif' or $propname eq 'lastDownload'}
 						{if empty($propval)}
 							{assign var=propval value=''}
