@@ -63,14 +63,14 @@
 					<a href="tiki-edit_translation.php?page={$trads[0].objName|escape:url}&no_bl=y" title="{tr}Translate page{/tr}">
 						{tr}Translate{/tr}
 					</a>
-					<a href="#" onclick="attach_detach_translation('wiki page', '{$page|escape:"quotes"}')" title="{tr}Manage page translations{/tr}">
+					<a href="#" onclick="attach_detach_translation('wiki page', '{$page|escape:"quotes"}'); return false;" title="{tr}Manage page translations{/tr}">
 						{tr}Manage translations{/tr}
 					</a>
 				{elseif $object_type eq 'article' and $tiki_p_edit_article eq 'y'}
 					<a href="tiki-edit_article.php?translationOf={$articleId}" title="{tr}Translate article{/tr}">
 						{tr}Translate{/tr}
 					</a>
-					<a href="#" onclick="attach_detach_translation('article', '{$articleId|escape:"quotes"}')" title="{tr}Manage article translations{/tr}">
+					<a href="#" onclick="attach_detach_translation('article', '{$articleId|escape:"quotes"}'); return false;" title="{tr}Manage article translations{/tr}">
 						{tr}Manage translations{/tr}
 					</a>
 				{/if}{/capture}
