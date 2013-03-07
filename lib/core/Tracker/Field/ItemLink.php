@@ -317,7 +317,7 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 	function getDocumentPart($baseKey, Search_Type_Factory_Interface $typeFactory)
 	{
 		$item = $this->getValue();
-		$label = TikiLib::lib('object')->get_title('trackeritem', $item);
+		$label = $this->getItemLabel($item);
 
 		$out = array(
 			$baseKey => $typeFactory->identifier($item),
