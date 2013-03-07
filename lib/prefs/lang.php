@@ -24,6 +24,7 @@ function prefs_lang_list()
 				'google' => tr('Google Translate'),
 				'bing' => tr('Bing Translate'),
 			),
+			'default' => '',
 		),
 		'lang_machine_translate_wiki' => array(
 			'name' => tr('Enable machine translation on wiki pages'),

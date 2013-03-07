@@ -12,6 +12,7 @@ function prefs_metrics_list()
 			'name' => tra('Show past metrics results'),
 			'description' => tra('In the metrics dashboard, identify if the previously collected metrics should be displayed.'),
 			'type' => 'flag',
+			'default' => 'n',
 		),
 		'metrics_pastresults_count' => array(
 			'name' => tra('Past metrics count'),
