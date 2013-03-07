@@ -68,7 +68,7 @@ class Services_File_FinderController
 			'roots' => array(
 				array(
 					'driver'        => 'TikiFiles',   								// driver for accessing file system (REQUIRED)
-					'path'          => '1',					// only tiki root filegal so far - path to files (REQUIRED)
+					'path'          => $prefs['fgal_root_id'],						// tiki root filegal - path to files (REQUIRED)
 					'disabled'		=> $disabled,
 
 //					'URL'           => 												// URL to files (seems not to be REQUIRED)
@@ -80,16 +80,24 @@ class Services_File_FinderController
 		if ($user != '' && $prefs['feature_use_fgal_for_user_files'] == 'y') {
 			$opts['roots'][] = array(
 				'driver'        => 'TikiFiles',
-				'path' => $prefs['fgal_root_user_id'],
+				'path'			=> $prefs['fgal_root_user_id'],
 				'disabled'		=> $disabled,
 				'accessControl' => array($this, 'elFinderAccess'),
 				'uploadMaxSize' => ini_get('upload_max_filesize'),
 			);
 		}
 		if ($input->defaultGalleryId->int()) {
-			$d = $input->defaultGalleryId->int() != $this->fileController->defaultGalleryId ? 'd_' : '';
-			$opts['roots'][0]['startPath'] = "$d{$input->defaultGalleryId->int()}";	// needs to be the cached name in elfinder (with 'd_' in front) unless it's the root id
-			$opts['roots'][0]['accessControlData'] = array('startPath' => $input->defaultGalleryId->int(), 'deepGallerySearch' => $input->deepGallerySearch->int(), 'parentIds' => $parentIds);
+			//$rootId = TikiLib::lib('filegal')->getGallerySpecialRoot($input->defaultGalleryId->int());	// doesn't seem to work for user gals?
+			$gal_info = TikiLib::lib('filegal')->get_file_gallery_info($input->defaultGalleryId->int());
+			if ($gal_info['type'] == 'user') {
+				$root = 1;
+				$d = $input->defaultGalleryId->int() != $prefs['fgal_root_user_id'] ? 'd_' : '';
+			} else {
+				$root = 0;
+				$d = $input->defaultGalleryId->int() != $this->fileController->defaultGalleryId ? 'd_' : '';
+			}
+			$opts['roots']['startPath'] = "$d{$input->defaultGalleryId->int()}";	// needs to be the cached name in elfinder (with 'd_' in front) unless it's the root id
+			$opts['roots'][$root]['accessControlData'] = array('startPath' => $input->defaultGalleryId->int(), 'deepGallerySearch' => $input->deepGallerySearch->int(), 'parentIds' => $parentIds);
 		} else if (!$input->deepGallerySearch->int()) {
 			$opts['roots'][0]['startPath'] = $this->fileController->defaultGalleryId;	// root path just needs the id
 			$opts['roots'][0]['accessControlData'] = array('startPath' => $this->fileController->defaultGalleryId, 'deepGallerySearch' => $input->deepGallerySearch->int(), 'parentIds' => $parentIds);
@@ -167,20 +175,20 @@ class Services_File_FinderController
 			$galleryId = $data['parentIds']['files'][$id];
 		}
 
-		$perms = Perms::get(array( 'type' => 'file gallery', 'object' => $galleryId ));
+		$perms = TikiLib::lib('tiki')->get_perm_object($galleryId, 'file gallery', TikiLib::lib('filegal')->get_file_gallery_info($galleryId));
 
 		switch($attr) {
 			case 'read':
 				if ($isgal) {
-					return $visible && $perms->view_file_gallery;
+					return $visible && $perms['tiki_p_view_file_gallery'] === 'y';
 				} else {
-					return $visible && $perms->download_files;
+					return $visible && $perms['tiki_p_download_files'] === 'y';
 				}
 			case 'write':
 				if ($isgal) {
-					return $visible && ($perms->admin_file_galleries || $perms->upload_files);
+					return $visible && ($perms['tiki_p_admin_file_galleries'] === 'y' || $perms['tiki_p_upload_files'] === 'y');
 				} else {
-					return $visible && ($perms->edit_gallery_file || $perms->remove_files);
+					return $visible && ($perms['tiki_p_edit_gallery_file'] === 'y' || $perms['tiki_p_remove_files'] === 'y');
 				}
 			case 'locked':
 			case 'hidden':
