@@ -155,32 +155,32 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 
 	function renderInput($context = array())
 	{
-		if ($this->getOption(6) && !$context['in_ajax_form']) {
+		if ($this->getOption('addItems') && !$context['in_ajax_form']) {
 
 			$context['in_ajax_form'] = true;
 
 			require_once 'lib/wiki-plugins/wikiplugin_tracker.php';
 
 			$params = array(
-				'trackerId' => $this->getOption(0),
+				'trackerId' => $this->getOption('trackerId'),
 				'ignoreRequestItemId' => 'y',
 				'_ajax_form_ins_id' => $this->getInsertId(),
 			);
 
-			if ($this->getOption(7)) {
-				$params['wiki'] = $this->getOption(7);
+			if ($this->getOption('addItemsWikiTpl')) {
+				$params['wiki'] = $this->getOption('addItemsWikiTpl');
 			}
 			$form = wikiplugin_tracker('', $params);
 
 			$form = preg_replace(array('/<!--.*?-->/', '/\s+/', '/^~np~/', '/~\/np~/'), array('', ' ', '', ''), $form);	// remove comments etc
 
-			if ($this->getOption(3)) {
-				$displayFieldId = $this->getOption(3);
+			if ($this->getOption('displayFieldsList')) {
+				$displayFieldId = $this->getOption('displayFieldsList');
 				if (strpos($displayFieldId, '|') !== false) {
 					$displayFieldId = substr($displayFieldId, 0, strpos($displayFieldId, '|'));
 				}
 			} else {
-				$displayFieldId = $this->getOption(1);
+				$displayFieldId = $this->getOption('fieldId');
 			}
 
 			TikiLib::lib('header')->add_jq_onready(
@@ -201,7 +201,7 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 		$d.dialog({
 				width: w,
 				height: h,
-				title: "'.$this->getOption(6).'",
+				title: "'.$this->getOption('addItems').'",
 				modal: true,
 				buttons: {
 					"Add": function() {
@@ -242,11 +242,7 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 
 		}
 
-		if ($this->getOption(12)) {
-			$context['selectMultipleValues'] = true;
-		} else {
-			$context['selectMultipleValues'] = false;
-		}
+		$context['selectMultipleValues'] = (bool) $this->getOption('selectMultipleValues');
 
 		if ($preselection = $this->getPreselection()) {
 			$context['preselection'] = $preselection;
@@ -295,14 +291,14 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 
 		$label = implode(', ', $labels);
 
-		if ($item && !is_array($item) && $context['list_mode'] !== 'csv' && $this->getOption(2)) {
+		if ($item && !is_array($item) && $context['list_mode'] !== 'csv' && $this->getOption('fieldId')) {
 			$smarty->loadPlugin('smarty_function_object_link');
 
-			if ( $this->getOption(5) ) {
+			if ( $this->getOption('linkPage') ) {
 				$link = smarty_function_object_link(
 					array(
 						'type' => 'wiki page',
-						'id' => $this->getOption(5) . '&itemId=' . $item,	// add itemId param TODO properly
+						'id' => $this->getOption('linkPage') . '&itemId=' . $item,	// add itemId param TODO properly
 						'title' => $label,
 					),
 					$smarty
@@ -389,14 +385,14 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 			'value' => isset($requestData[$string_id]) ? $requestData[$string_id] : $this->getValue(),
 		);
 
-		if (!$this->getOption(3)) {	//no displayedFieldsList
+		if (!$this->getOption('displayFieldsList')) {
 			$data['list'] = TikiLib::lib('trk')->get_all_items(
-				$this->getOption(0),
-				$this->getOption(1),
-				$this->getOption(4, 'opc'),
+				$this->getOption('trackerId'),
+				$this->getOption('fieldId'),
+				$this->getOption('status', 'opc'),
 				false
 			);
-			if (!$this->getOption(11) || $this->getOption(11) != 'multi') {
+			if (! $this->getOption('displayOneItem') || $this->getOption('displayOneItem') != 'multi') {
 				// This silently modifies tracker items when an item name is used multiple times, which really isn't impossible.
 				// If you want it, make it optional.
 				//$data['list'] = array_unique($data['list']);
@@ -412,19 +408,19 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 			}
 		} else {
 			$data['list'] = TikiLib::lib('trk')->get_all_items(
-				$this->getOption(0),
-				$this->getOption(1),
-				$this->getOption(4, 'opc'),
+				$this->getOption('trackerId'),
+				$this->getOption('fieldId'),
+				$this->getOption('status', 'opc'),
 				false
 			);
 			$data['listdisplay'] = array_unique(
 				TikiLib::lib('trk')->concat_all_items_from_fieldslist(
-					$this->getOption(0),
-					$this->getOption(3),
-					$this->getOption(4, 'opc')
+					$this->getOption('trackerId'),
+					$this->getOption('linkToItem'),
+					$this->getOption('status', 'opc')
 				)
 			);
-			if (!$this->getOption(11) || $this->getOption(11) != 'multi') {
+			if (!$this->getOption('displayOneItem') || $this->getOption('displayOneItem') != 'multi') {
 				$data['list'] = array_unique($data['list']);
 				$data['listdisplay'] = array_unique($data['listdisplay']);
 			} elseif (array_unique($data['listdisplay']) != $data['listdisplay']) {
@@ -439,15 +435,15 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 			}
 		}
 
-		if ($this->getOption(6)) {	// addItems
-			$data['list']['-1'] = $this->getOption(6);
+		if ($this->getOption('addItems')) {
+			$data['list']['-1'] = $this->getOption('addItems');
 			if (isset($data['listdisplay'])) {
-				$data['listdisplay']['-1'] = $this->getOption(6);
+				$data['listdisplay']['-1'] = $this->getOption('addItems');
 			}
 		}
 
 		// selectMultipleValues
-		if ($this->getOption(12) && !is_array($data['value'])) {
+		if ($this->getOption('selectMultipleValues') && !is_array($data['value'])) {
 			$data['value'] = explode(',', $data['value']);
 		}
 
@@ -500,11 +496,11 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 	{
 		$trklib = TikiLib::lib('trk');
 
-		$localField = $this->getOption(8);
-		$remoteField = $this->getOption(9);
-		$method = $this->getOption(10);
+		$localField = $this->getOption('preSelectFieldHere');
+		$remoteField = $this->getOption('preSelectFieldThere');
+		$method = $this->getOption('preSelectFieldMethod');
 		$localTrackerId = $this->getConfiguration('trackerId');
-		$remoteTrackerId = $this->getOption(0);
+		$remoteTrackerId = $this->getOption('trackerId');
 
 		$localValue = $trklib->get_item_value($localTrackerId, $this->getItemId(), $localField);
 
@@ -536,7 +532,7 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 	{
 		// if selectMultipleValues is enabled, convert the array
 		// of options to string before saving the field value in the db
-		if ($this->getOption(12)) {
+		if ($this->getOption('selectMultipleValues')) {
 			$value = implode(',', $value);
 		}
 
