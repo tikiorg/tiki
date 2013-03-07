@@ -1572,7 +1572,7 @@ class FileGalLib extends TikiLib
 				if ( $result = $this->getGallerySpecialRoot($galleryId, $subGalleryId, $childs) ) {
 					if ( is_integer($result) ) {
 						return $result;
-					} elseif ( $treeParentId == $prefs['fgal_root_user_id'] || $treeParentId == -1 ) {
+					} elseif ($treeParentId == -1 ) {
 						//
 						// If the parent is :
 						//   - either the User File Gallery, stop here to keep only the user gallery instead of all users galleries
@@ -1664,7 +1664,7 @@ class FileGalLib extends TikiLib
 		for ($node = $this->get_file_gallery_info($galleryIdentifier); $node && $node['galleryId'] != $rootIdentifier; $node = $this->get_file_gallery_info($node['parentId'])) {
 			$path[$node['galleryId']] = $node['name'];
 		}
-		if (isset($userGallery) && $rootIdentifier == $userGallery) {
+		if (isset($userGallery) && $rootIdentifier == $userGallery || $rootIdentifier == $galleryIdentifier) {
 			$path[$rootIdentifier] = tra('User File Galleries');
 		} elseif ($rootIdentifier == $prefs['fgal_root_wiki_attachments_id']) {
 			$path[$rootIdentifier] = tra('Wiki Attachment File Galleries');
