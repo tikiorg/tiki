@@ -1525,6 +1525,7 @@ function prefs_feature_list($partial = false)
 			'default' => 'n',
 			'tags' => array('experimental'),
 			'warning' => tra('experimental'),
+			'keywords' => tra('userfiles'),
 		),
 		'feature_use_fgal_for_wiki_attachments' =>array(
 			'name' => tra('Use file galleries for wiki attachments'),

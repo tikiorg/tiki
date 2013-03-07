@@ -6,8 +6,12 @@
 	<fieldset class="admin">
 		<legend>{tr}Activate the feature{/tr}</legend>
 		{preference name=feature_userfiles visible="always"}
-	</fieldset>		
+		<div class="adminoptionboxchild" id="feature_userfiles_childcontainer">
+			{preference name=feature_use_fgal_for_user_files}
+		</div>
+	</fieldset>
 
+	{if $prefs.feature_use_fgal_for_user_files eq 'n'}
 	<fieldset class="admin">
 		<legend>{tr}Settings{/tr}</legend>
 		{preference name=userfiles_quota}
@@ -31,6 +35,11 @@
 			</tr>
 		</table>
 	</fieldset>
+	{else}
+		{remarksbox type="tip" title="{tr}Tip{/tr}"}
+			{tr}Use <a href="tiki-admin.php?page=fgal&alt=File+Galleries">file gallery admin</a> and <a href="{'tiki-list_file_gallery.php?galleryId='|cat:$prefs.fgal_root_user_id|sefurl}">the file galleries</a> themselves to manage user files settings.{/tr}
+		{/remarksbox}
+	{/if}
 	<div class="heading input_submit_container" style="text-align: center">
  		<input type="submit" name="userfilesprefs" value="{tr}Change preferences{/tr}" />
 	</div>
