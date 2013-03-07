@@ -3805,17 +3805,24 @@ class TikiLib extends TikiDb_Bridge
 				}
 				break;
 			case 'file gallery':
-				global $tiki_p_userfiles, $tiki_p_download_files, $tiki_p_upload_files, $tiki_p_view_file_gallery, $tiki_p_create_file_galleries;
+				global $tiki_p_userfiles;
+
 				if ($prefs['feature_use_fgal_for_user_files'] === 'y' &&
 						$info['type'] === 'user' && $info['user'] === $user && $tiki_p_userfiles === 'y') {
 
-					$tiki_p_download_files = $tiki_p_upload_files = $tiki_p_view_file_gallery = $tiki_p_remove_files = $tiki_p_create_file_galleries = 'y';
+					foreach (array('tiki_p_download_files',
+									'tiki_p_upload_files',
+									'tiki_p_view_file_gallery',
+									'tiki_p_remove_files',
+									'tiki_p_create_file_galleries',
+									'tiki_p_edit_gallery_file',
+								) as $perm) {
 
-					$smarty->assign('tiki_p_download_files', $tiki_p_download_files);
-					$smarty->assign('tiki_p_upload_files', $tiki_p_upload_files);
-					$smarty->assign('tiki_p_view_file_gallery', $tiki_p_view_file_gallery);
-					$smarty->assign('tiki_p_remove_files', $tiki_p_remove_files);
-					$smarty->assign('tiki_p_create_file_galleries', $tiki_p_create_file_galleries);
+						$GLOBALS[$perm] = 'y';
+						$smarty->assign($perm, 'y');
+						$ret[$perm] = 'y';
+					}
+					return $ret;
 				}
 				break;
 			default:
