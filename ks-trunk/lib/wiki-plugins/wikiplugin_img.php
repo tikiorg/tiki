@@ -7,54 +7,81 @@
 
 function wikiplugin_img_info()
 {
-	return array(
+	global $prefs;
+	$info = array(
 		'name' => tra('Image'),
 		'documentation' => 'PluginImg',
-		'description' => tra('Display custom formatted images'),
+		'description' => tra('Display custom formatted images. One of "fileId", "src", "attId", id" or "randomGalleryId" required.'),
 		'prefs' => array( 'wikiplugin_img'),
 		'icon' => 'img/icons/picture.png',
 		'tags' => array( 'basic' ),
 		'params' => array(
-			'src' => array(
-				'required' => false,
-				'name' => tra('Image source'),
-				'type' => 'image',
-				'area' => 'fgal_picker',
-				'description' => tra('Full URL to the image to display. "src", id", "fileId", "attId" or "randomGalleryId" required.'),
-				'filter' => 'url',
+			'type' => array(
+				'required' => true,
+				'name' => tra('Image Source'),
+				'description' => tra('Choose where to get your image from'),
 				'default' => '',
-			),
-			'id' => array(
-				'required' => false,
-				'name' => tra('Image ID'),
-				'description' => tra('Numeric ID of an image in an Image Gallery (or list separated by commas or |).'),
-				'filter' => 'striptags',
-				'default' => '',
+				'options' => array(
+					array('text' => tra('Select an option'), 'value' => ''),
+					array('text' => tra('An image in the File Galleries'), 'value' => 'fileId'),
+					array('text' => tra('An image attached to a wiki page'), 'value' => 'url'),
+					array('text' => tra('An image anywhere on the internet'), 'value' => 'src'),
+					array('text' => tra('All the images in a File Gallery'), 'value' => 'fgalId'),
+					array('text' => tra('One random image from a File Gallery'), 'value' => 'randomGalleryId'),
+				),
 			),
 			'fileId' => array(
-				'required' => false,
+				'required' => true,
 				'name' => tra('File ID'),
 				'type' => 'image',
 				'area' => 'fgal_picker_id',
 				'description' => tra('Numeric ID of an image in a File Gallery (or list separated by commas or |).'),
 				'filter' => 'striptags',
 				'default' => '',
+				'parent' => array('name' => 'type', 'value' => 'fileId'),
+			),
+			'id' => array(
+				'required' => true,
+				'name' => tra('Image ID'),
+				'description' => tra('Numeric ID of an image in an Image Gallery (or list separated by commas or |).'),
+				'filter' => 'striptags',
+				'advanced' => $prefs['feature_galleries'] !== 'y',
+				'default' => '',
+				'parent' => array('name' => 'type', 'value' => 'id'),
+			),
+			'src' => array(
+				'required' => true,
+				'name' => tra('Image source'),
+				'description' => tra('Full URL to the image to display.'),
+				'filter' => 'url',
+				'default' => '',
+				'parent' => array('name' => 'type', 'value' => 'src'),
 			),
 			'randomGalleryId' => array(
-				'required' => false,
+				'required' => true,
 				'name' => tra('Gallery ID'),
 				'description' => tra('Numeric ID of a file gallery. Displays a random image from that gallery.'),
 				'filter' => 'int',
 				'advanced' => true,
 				'default' => '',
+				'parent' => array('name' => 'type', 'value' => 'randomGalleryId'),
 			),
 			'fgalId' => array(
-				'required' => false,
+				'required' => true,
 				'name' => tra('File Gallery ID'),
 				'description' => tra('Numeric ID of a file gallery. Displays all images from that gallery.'),
 				'filter' => 'int',
 				'advanced' => true,
 				'default' => '',
+				'parent' => array('name' => 'type', 'value' => 'fgalId'),
+			),
+			'attId' => array(
+				'required' => true,
+				'name' => tra('Attachment ID'),
+				'description' => tra('Numeric ID of an image attached to a wiki page (or list separated by commas or |).'),
+				'filter' => 'striptags',
+				'default' => '',
+				'parent' => array('name' => 'type', 'value' => 'attId'),
 			),
 			'sort_mode' => array(
 				'required' => false,
@@ -64,6 +91,7 @@ function wikiplugin_img_info()
 				'accepted' => 'fieldname_asc or fieldname_desc with actual table field name in place of \'fieldname\'.',
 				'default' => 'created_desc',
 				'since' => '8.0',
+				'advanced' => true,
 				'options' => array (
 					array('text' => tra(''), 'value' => ''),
 					array('text' => tra('Created Ascending'), 'value' => 'created_asc'),
@@ -106,27 +134,19 @@ function wikiplugin_img_info()
 					array('text' => tra('Archive ID Descending'), 'value' => 'archiveId_desc'),
 				),
 			),
-			'attId' => array(
-				'required' => false,
-				'name' => tra('Attachment ID'),
-				'description' => tra('Numeric ID of an image attached to a wiki page (or list separated by commas or |).'),
-				'filter' => 'striptags',
-				'default' => '',
-			),
 			'thumb' => array(
 				'required' => false,
 				'name' => tra('Thumbnail'),
-				'description' => tra('Makes the image a thumbnail that enlarges to full size when clicked or moused over (unless "link" is set to another target). "browse" and "browsepopup" only work with image gallery and "download" only works with file gallery or attachments.'),
+				'description' => tra('Makes the image a thumbnail that enlarges to full size when clicked or moused over (unless "link" is set to another target). "download" only works with file gallery or attachments.'),
 				'filter' => 'alpha',
 				'default' => '',
 				'options' => array(
 					array('text' => tra('None'), 'value' => ''),
 					array('text' => tra('Yes'), 'value' => 'y', 'description' => tra('Full size image appears when thumbnail is clicked.')),
+					array('text' => tra('Overlay'), 'value' => 'box', 'description' => tra('Full size image appears in a "Colorbox" overlay when thumbnail is clicked.')),
 					array('text' => tra('Mouseover'), 'value' => 'mouseover', 'description' => tra('Full size image will pop up while cursor is over the thumbnail (and disappear when not).')),
 					array('text' => tra('Mouseover (Sticky)'), 'value' => 'mousesticky', 'description' => tra('Full size image will pop up once cursor passes over thumbnail and will remain up unless cursor passes over full size popup.')),
 					array('text' => tra('Popup'), 'value' => 'popup', 'description' => tra('Full size image will open in a separate winow or tab (depending on browser settings) when thumbnail is clicked.')),
-					array('text' => tra('Browse'), 'value' => 'browse', 'description' => tra('Image gallery browse window for the image will open when the thumbnail is clicked if the image is in a Tiki image gallery')),
-					array('text' => tra('Browse Popup'), 'value' => 'browsepopup', 'description' => tra('Same as "browse" except that the page opens in a new window or tab.')),
 					array('text' => tra('Download'), 'value' => 'download', 'description' => tra('Download dialog box will appear for file gallery and attachment images when thumbnail is clicked.')),
 				),
 			),
@@ -136,6 +156,7 @@ function wikiplugin_img_info()
 				'description' => tra('Button for enlarging image.'),
 				'filter' => 'alpha',
 				'default' => '',
+				'advanced' => true,
 				'options' => array(
 					array('text' => tra('None'), 'value' => ''),
 					array('text' => tra('Yes'), 'value' => 'y'),
@@ -313,11 +334,18 @@ function wikiplugin_img_info()
 			),
 		),
 	);
+	if ($prefs['feature_galleries'] === 'y') {
+		$info['params']['type']['options'][] = array('text' => tra('An image in the Image Galleries'), 'value' => 'id');
+		$info['params']['thumb']['options'][] = array('text' => tra('Browse'), 'value' => 'browse', 'description' => tra('Image gallery browse window for the image will open when the thumbnail is clicked if the image is in a Tiki image gallery'));
+		$info['params']['thumb']['options'][] = array('text' => tra('Browse Popup'), 'value' => 'browsepopup', 'description' => tra('Same as "browse" except that the page opens in a new window or tab.'));
+		$info['params']['thumb']['description'] = tra('Makes the image a thumbnail that enlarges to full size when clicked or moused over (unless "link" is set to another target). "browse" and "browsepopup" only work with image gallery and "download" only works with file gallery or attachments.');
+	}
+	return $info;
 }
 
 function wikiplugin_img( $data, $params )
 {
-	 global $tikidomain, $prefs, $section, $smarty, $tikiroot, $tikilib, $userlib, $user, $tiki_p_upload_files;
+	global $tikidomain, $prefs, $smarty, $userlib, $user;
 
 	$imgdata = array();
 
@@ -351,220 +379,11 @@ function wikiplugin_img( $data, $params )
 	$imgdata['default'] = '';
 	$imgdata['mandatory'] = '';
 
-	/*Admin default and mandatory settings (must be set by changing this fle or using plugin alias). Default will be used if not overridden
-	by user. Mandatory will override user settings. Examples below set parameters depending on whether the image is in an article, a module, or
-	whether mobile mode is set, etc.*/
-	//Uncomment the following line to set the default parameter. Later items have priority. To override align default, put align parameter first
-//	$imgdata['default'] = 'default ? max = 200, align = right, styledesc = text-align: center; section_cms_article ? max= 400, width= , height=';
-	// Uncomment the following line to set the default parameter. Force certain max and ignore any specified width or height. Later items have priority
-//	$imgdata['mandatory'] = 'section_cms_article ? max = 400; module_* ? max = 150, width= , height=; mode_mobile ? max = 150, width= , height=;';
-
 	$imgdata = array_merge($imgdata, $params);
-//////////////////////////////////////////////////Function for processing default and mandatory parameters//////////////////////////////////////
-	//function calls are just below function
-	if (!function_exists('apply_default_and_mandatory')) {
-		function apply_default_and_mandatory($imgdata, $default)
-		{
-			global $section, $smarty;
-			$imgdata[$default] = trim($imgdata[$default]) . ';'; // trim whitespace and ensure at least one semicolon
-			$img_conditions_array = explode(';', $imgdata[$default]); // conditions separated by semicolons
-			if ( !empty($img_conditions_array) ) {
-				foreach ($img_conditions_array as $key => $var) { // for each condition
-					if ( !empty($var) ) {
-						$img_condition = explode('?', $var); // condition separated from parameters by question mark
-						if ( !empty($img_condition) ) {
-							$img_condition_name = trim($img_condition[0]);
-							if ( !empty($img_condition[1]) ) { // if there is at least one parameter
-								$img_condition[1] = trim($img_condition[1]) . ',';	// at least one comma
-								$img_parameters_array = explode(',', $img_condition[1]); // separate multiple parameters
-								if ( !empty($img_parameters_array) ) {  // if a parameter has been extracted
-									foreach ($img_parameters_array as $param_key => $param_var) {	// for each parameter
-										if ( !empty($param_var) ) {	// if a parameter exists
-											$img_parameter_array = explode('=', trim($param_var)); // separate parameters and values
-											if ( !empty($img_parameter_array[0]) ) {  // if a parameter with a value has been extracted
 
-												$img_condition_status = false;	// initialise condition as not being true
-
-												$img_condition_name = strtolower(trim($img_condition_name));
-												switch ($img_condition_name) {
-													case 'default':
-														$img_condition_status = true; // default is always true
-    													break;
-													case 'mode_mobile':
-														if ( isset($_REQUEST['mode']) && $_REQUEST['mode'] == 'mobile' ) $img_condition_status = true;
-	    												break;
-													case 'module_*':
-														if ( !empty($smarty) ) {
-															$image_module_params = $smarty->getTemplateVars('module_params');
-															if ( !empty($image_module_params) ) $img_condition_status = true;
-														}
-    													break;
-													case 'section_*':
-														if ( !empty($section) ) $img_condition_status = true;
-	    												break;
-													case 'section_cms_article':
-														if ( !empty($section) ) {
-															if ( $section == 'cms' ) {
-																if ( !empty($smarty) ) {
-																	$image_article_type = $smarty->getTemplateVars('type');
-																	if ( !empty($image_article_type) ) {
-																		if ( strtolower(trim($image_article_type)) == 'article' ) $img_condition_status = true;
-																	} // if (!empty($image_article_type))
-																} // if (!empty($smarty))
-															}
-														}
-		    											break;
-													case 'section_cms_review':
-														if ( !empty($section) ) {
-															if ( $section == 'cms' ) {
-																if ( !empty($smarty) ) {
-																	$image_article_type = $smarty->getTemplateVars('type');
-																	if ( !empty($image_article_type) ) {
-																		if ( strtolower(trim($image_article_type)) == 'review' ) $img_condition_status = true;
-																	} // if (!empty($image_article_type))
-																} // if (!empty($smarty))
-															}
-														}
-			    										break;
-													case 'section_cms_event':
-														if ( !empty($section) ) {
-															if ( $section == 'cms' ) {
-																if ( !empty($smarty) ) {
-																	$image_article_type = $smarty->getTemplateVars('type');
-																	if ( !empty($image_article_type) ) {
-																		if ( strtolower(trim($image_article_type)) == 'event' ) $img_condition_status = true;
-																	} // if (!empty($image_article_type))
-																} // if (!empty($smarty))
-															}
-														}
-    													break;
-													case 'section_cms_classified':
-														if ( !empty($section) ) {
-															if ( $section == 'cms' ) {
-																if ( !empty($smarty) ) {
-																	$image_article_type = $smarty->getTemplateVars('type');
-																	if ( !empty($image_article_type) ) {
-																		if ( strtolower(trim($image_article_type)) == 'classified' ) $img_condition_status = true;
-																	} // if (!empty($image_article_type))
-																} // if (!empty($smarty))
-															}
-														}
-	    												break;
-												} // switch ($img_condition_name)
-
-												if ( $img_condition_status != true ) {
-													// if match not found yet, examine more specific conditions
-													if ( !empty($section) ) {	// if we have a section name
-														if ( substr($img_condition_name, 0, 8) == 'section_' ) {
-															if ( strlen($img_condition_name) > 8 ) {
-																$img_condition_part = substr($img_condition, 8); // get part after "section_"
-																$img_condition_part = strtolower($img_condition_part);
-																$img_condition_part = trim(strtr($img_condition_part, '_', ' ')); // replace underscore with spaces
-																if ( $section == $img_condition_part ) $img_condition_status = true;
-															} // if ( length($img_condition_name) > 8 )
-														} // if ( substr($img_condition_name,0,8) == "section_" )
-													} // if ( !empty($section) )
-												}
-
-												if ( $img_condition_status == true ) {
-													// set the parameters to their values
-													switch (strtolower(trim($img_parameter_array[0]))) {
-														case 'src':
-															$imgdata['src'] = trim($img_parameter_array[1]);
-	     													break;
-														case 'id':
-															$imgdata['id'] = trim($img_parameter_array[1]);
-		     												break;
-														case 'fileId':
-															$imgdata['fileId'] = trim($img_parameter_array[1]);
-															break;
-														case 'randomGalleryId':
-															$imgdata['randomGalleryId'] = trim($img_parameter_array[1]);
-					     									break;
-														case 'fgalId':
-															$imgdata['fgalId'] = trim($img_parameter_array[1]);
-						     								break;
-														case 'sort_mode':
-															$imgdata['sort_mode'] = trim($img_parameter_array[1]);
-     														break;
-														case 'attId':
-															$imgdata['attId'] = trim($img_parameter_array[1]);
-     														break;
-														case 'thumb':
-															$imgdata['thumb'] = trim($img_parameter_array[1]);
-     														break;
-														case 'button':
-															$imgdata['button'] = trim($img_parameter_array[1]);
-	     													break;
-														case 'link':
-															$imgdata['link'] = trim($img_parameter_array[1]);
-     														break;
-														case 'rel':
-															$imgdata['rel'] = trim($img_parameter_array[1]);
-															break;
-														case 'usemap':
-															$imgdata['usemap'] = trim($img_parameter_array[1]);
-			     											break;
-														case 'height':
-															$imgdata['height'] = trim($img_parameter_array[1]);
-				     										break;
-														case 'width':
-															$imgdata['width'] = trim($img_parameter_array[1]);
-	 					    								break;
-														case 'max':
-															$imgdata['max'] = trim($img_parameter_array[1]);
- 						    								break;
-														case 'imalign':
-															$imgdata['imalign'] = trim($img_parameter_array[1]);
- 						    								break;
-														case 'styleimage':
-															$imgdata['styleimage'] = trim($img_parameter_array[1]);
- 						    								break;
-														case 'align':
-															$imgdata['align'] = trim($img_parameter_array[1]);
- 						    								break;
-														case 'stylebox':
-															$imgdata['stylebox'] = trim($img_parameter_array[1]);
- 						    								break;
-														case 'styledesc':
-															$imgdata['styledesc'] = trim($img_parameter_array[1]);
-															break;
-														case 'block':
-															$imgdata['block'] = trim($img_parameter_array[1]);
- 					    									break;
-														case 'class':
-															$imgdata['class'] = trim($img_parameter_array[1]);
- 					    									break;
-														case 'desc':
-															$imgdata['desc'] = trim($img_parameter_array[1]);
- 					    									break;
-														case 'title':
-															$imgdata['title'] = trim($img_parameter_array[1]);
- 					    									break;
-														case 'metadata':
-															$imgdata['metadata'] = trim($img_parameter_array[1]);
- 					    									break;
-														case 'alt':
-															$imgdata['alt'] = trim($img_parameter_array[1]);
-	 					    								break;
-													} // switch ($img_parameter_array[0])
-												} // if ( $img_condition_status == true )
-
-											} // if ( !empty($img_parameter_array[0] )
-										} // if a parameter exists
-									} // for each parameter
-								} // if ( !empty($img_parameters_array) )
-							} // if ( !empty($img_condition[1]) )
-						}  // if ( !empty($img_condition) )
-					} // if ( !empty($var) )
-				} // for each condition
-			} // if ( !empty($img_conditions_array) )
-		return $imgdata;
-		}
-	}
-////////////////////////////////////End of function for processing default and mandatory parameters////////////////////
 	//function calls
 	if ( !empty($imgdata['default']) || !empty($imgdata['mandatory'])) {
+		require_once('lib/images/img_plugin_default_and_mandatory.php');
 		if (!empty($imgdata['default'])) {
 			$imgdata = apply_default_and_mandatory($imgdata, 'default');	//first process defaults
 			$imgdata = array_merge($imgdata, $params);					//then apply user settings, overriding defaults
@@ -973,8 +792,10 @@ function wikiplugin_img( $data, $params )
 				$imgdata_dim = '';
 				$height = $fheight;
 				$width = $fwidth;
-				$imgdata_dim .= ' width="' . $width . '"';
-				$imgdata_dim .= ' height="' . $height . '"';
+				if (!empty($width) && !empty($height)) {
+					$imgdata_dim .= ' width="' . $width . '"';
+					$imgdata_dim .= ' height="' . $height . '"';
+				}
 			}
 		} else {
 			if (!empty($height)) {
@@ -1167,6 +988,9 @@ function wikiplugin_img( $data, $params )
 			} else {
 				$link = $browse_full_image;
 			}
+		}
+		if ($imgdata['thumb'] == 'box' && empty($imgdata['rel'])) {
+			$imgdata['rel'] = 'box';
 		}
 		// Set other link-related attributes
 		// target

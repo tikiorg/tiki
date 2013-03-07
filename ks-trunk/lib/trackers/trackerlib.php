@@ -1032,7 +1032,7 @@ class TrackerLib extends TikiLib
 				$cat_table .= " INNER JOIN `tiki_tracker_item_fields` ttif$i ON (ttif$i.`itemId` = ttif$j.`itemId`)";
 				$last++;
 
-				if (is_array($ff['sqlsearch'])) {
+				if (isset($ff['sqlsearch']) && is_array($ff['sqlsearch'])) {
 					$mid .= " AND ttif$i.`fieldId` in (".implode(',', array_fill(0, count($ff['sqlsearch']), '?')).')';
 					$bindvars = array_merge($bindvars, $ff['sqlsearch']);
 				} elseif ( $ff ) {
@@ -1149,7 +1149,7 @@ class TrackerLib extends TikiLib
 							$mid .= " AND ttif$i.`value` in (".implode(',', array_fill(0, count($ev), '?')).")";
 							$bindvars = array_merge($bindvars, array_values($ev));
 						}
-					} elseif (is_array($ff['sqlsearch'])) {
+					} elseif (isset($ff['sqlsearch']) && is_array($ff['sqlsearch'])) {
 						$mid .= " AND MATCH(ttif$i.`value`) AGAINST(? IN BOOLEAN MODE)";
 						$bindvars[] = $ev;
 					} else {

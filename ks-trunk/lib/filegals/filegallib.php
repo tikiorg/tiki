@@ -116,7 +116,6 @@ class FileGalLib extends TikiLib
 
 		$conditions = array(
 			'type' => 'user',
-			'name' => $userId,
 			'user' => $user,
 			'parentId' => $prefs['fgal_root_user_id']
 		);
@@ -133,6 +132,35 @@ class FileGalLib extends TikiLib
 		$idGallery = $this->replace_file_gallery($fgal_info);
 
 		return $idGallery;
+	}
+
+	/**
+	 * Calculate gallery name for user galleries
+	 *
+	 * @param array $gal_info	gallery info array
+	 * @param string $auser		optional user (global used if not supplied)
+	 * @return string			name of gallery modified if a "top level" user galley
+	 */
+	public function get_user_gallery_name($gal_info, $auser = null)
+	{
+		global $user, $prefs;
+
+		if ($auser === null) {
+			$auser = $user;
+		}
+		$name = $gal_info['name'];
+
+		if ( !empty($auser) && $prefs['feature_use_fgal_for_user_files'] == 'y' ) {
+
+			if ($gal_info['type'] === 'user' && $gal_info['parentId'] == $prefs['fgal_root_user_id']) {
+				if ($gal_info['user'] === $auser) {
+					$name = tra('My Files');
+				} else {
+					$name = tr('Files of %0', TikiLib::lib('user')->clean_user($gal_info['user']));
+				}
+			}
+		}
+		return $name;
 	}
 
 	function remove_file($fileInfo, $galInfo='', $disable_notifications = false)
@@ -692,6 +720,18 @@ class FileGalLib extends TikiLib
 		$objectsTable = $this->table('tiki_objects');
 		$fgal_info = array_merge($this->default_file_gallery(), $fgal_info);
 
+		// ensure gallery name is userId for root user gallery
+		if ($prefs['feature_use_fgal_for_user_files'] === 'y' &&
+				$fgal_info['type'] === 'user' &&
+				$fgal_info['parentId'] == $prefs['fgal_root_user_id']) {
+
+			$userId = TikiLib::lib('user')->get_user_id($fgal_info['user']);
+
+			if ($userId) {
+				$fgal_info['name'] = $userId;
+			}
+		}
+
 		// if the user is admin or the user is the same user and the gallery exists
 		// then replace if not then create the gallary if the name is unused.
 		$fgal_info['name'] = strip_tags($fgal_info['name']);
@@ -1157,7 +1197,8 @@ class FileGalLib extends TikiLib
 			$executables = array();
 			foreach ($possibilities as $type => $options) {
 				foreach ($options as $opt) {
-					$exec = reset(explode(' ', $opt, 2));
+					$optArray = explode(' ', $opt, 2);
+					$exec = reset($optArray);
 
 					if (! isset($executables[$exec])) {
 						$executables[$exec] = (bool) `which $exec`;
@@ -2219,37 +2260,50 @@ class FileGalLib extends TikiLib
 			$this->remove_file($fileInfo, $galInfo, false);
 		}
 	}
-	// get the wiki_syntax - use parent's if none
-	function getWikiSyntax($galleryId=0)
+
+	/**
+	 * get the wiki_syntax - use parent's if none
+	 *
+	 * @param int $galleryId	gallery to get syntax from
+	 * @param array $fileinfo	optional file info to process syntax on
+	 * @return string			wiki markup
+	 */
+
+	function getWikiSyntax($galleryId=0, $fileinfo =null)
 	{
 		if (isset($_REQUEST['insertion_syntax']) && $_REQUEST['insertion_syntax'] == 'file') {	// for use in 'Choose or Upload' toolbar item (tikifile)
-			return '{file type="gallery" fileId="%fileId%" showicon="y"}';
-		}
-		if (isset($_REQUEST['filegals_manager'])) {		// for use in plugin edit popup
+			$syntax = '{file type="gallery" fileId="%fileId%" showicon="y"}';
+		} else if (isset($_REQUEST['filegals_manager'])) {		// for use in plugin edit popup
 			if ($_REQUEST['filegals_manager'] === 'fgal_picker_id') {
-				return '%fileId%';		// for use in plugin edit popup
+				$syntax = '%fileId%';		// for use in plugin edit popup
 			} else if ($_REQUEST['filegals_manager'] === 'fgal_picker') {
 				$href = 'tiki-download_file.php?fileId=123&amp;display';	// dummy id as sefurl expects a (/d+) pattern
 				global $smarty; include_once('tiki-sefurl.php');
 				$href = filter_out_sefurl($href);
-				return str_replace('123', '%fileId%', $href);
+				$syntax =  str_replace('123', '%fileId%', $href);
 			}
 		}
 
-		$syntax = $this->table('tiki_file_galleries')->fetchOne('wiki_syntax', array('galleryId' => $galleryId));
+		if (empty($syntax)) {
+			$syntax = $this->table('tiki_file_galleries')->fetchOne('wiki_syntax', array('galleryId' => $galleryId));
 
-		if (!empty($syntax)) {
-			return $syntax;
-		}
-
-		$list = $this->getGalleryParentsColumns($galleryId, array('wiki_syntax'));
-		foreach ($list as $fgal) {
-			if (!empty($fgal['wiki_syntax'])) {
-				return $fgal['wiki_syntax'];
+			$list = $this->getGalleryParentsColumns($galleryId, array('wiki_syntax'));
+			foreach ($list as $fgal) {
+				if (!empty($fgal['wiki_syntax'])) {
+					$syntax = $fgal['wiki_syntax'];
+					break;
+				}
 			}
 		}
 		// and no syntax set, return default
-		$syntax = '{img fileId="%fileId%" thumb="y" rel="box[g]"}';	// should be a pref
+		if (empty($syntax)) {
+			$syntax = '{img fileId="%fileId%" thumb="y" rel="box[g]"}';	// should be a pref
+		}
+
+		if ($fileinfo) {	// if fileinfo provided then process it now
+			$syntax = $this->process_fgal_syntax($syntax, $fileinfo);
+		}
+
 		return $syntax;
 	}
 
@@ -2725,6 +2779,9 @@ class FileGalLib extends TikiLib
 					}
 					$res['share']['nb'] = count($share_result);
 				}
+			} else {	// a gallery
+
+				$res['name'] = $this->get_user_gallery_name($res);
 			}
 
 			$n++;
@@ -2832,6 +2889,8 @@ class FileGalLib extends TikiLib
 				}
 			}
 		}
+
+		$res['name'] = $this->get_user_gallery_name($res);
 
 		return $res;
 	}

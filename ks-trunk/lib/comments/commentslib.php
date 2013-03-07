@@ -1876,6 +1876,26 @@ class Comments extends TikiLib
 		return nl2br($data);
 	}
 
+	/**
+	 * Deal with titles if comments_notitle to avoid them all appearing as "Unitled"
+	 *
+	 * @param & $comment		array contianing comment title and data
+	 * @param $commentlength	length to truncate to
+	 */
+	function process_comment_title($comment, $commentlength)
+	{
+		global $prefs;
+		if ($prefs['comments_notitle'] === 'y') {
+			TikiLib::lib('smarty')->loadPlugin('smarty_modifier_truncate');
+			return '"' .
+					smarty_modifier_truncate(
+						strip_tags(TikiLib::lib('parser')->parse_data($comment['data'])), $commentlength) .
+					'"';
+		} else {
+			return $comment['title'];
+		}
+	}
+
 	/*****************/
     /**
      * @param $time

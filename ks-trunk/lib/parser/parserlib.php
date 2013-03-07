@@ -427,7 +427,7 @@ class ParserLib extends TikiDb_Bridge
 			$start = $match->getStart();
 
 			$pluginOutput = null;
-			if ( $this->plugin_enabled($plugin_name, $pluginOutput) ) {
+			if ( $this->plugin_enabled($plugin_name, $pluginOutput) || $this->option['ck_editor'] ) {
 
 				static $plugin_indexes = array();
 
@@ -1043,7 +1043,11 @@ if ( \$('#$id') ) {
 		$icon = isset($info['icon']) ? $info['icon'] : 'img/icons/wiki_plugin_edit.png';
 
 		// some plugins are just too flakey to do wysiwyg, so show the "source" for them ;(
-		if (in_array($name, array('tracker', 'trackerlist', 'trackerfilter', 'kaltura', 'toc', 'freetagged', 'draw', 'googlemap', 'include', 'module'))) {
+		$excluded = array('tracker', 'trackerlist', 'trackerfilter', 'kaltura', 'toc', 'freetagged', 'draw', 'googlemap', 'include', 'module');
+
+		$ignore = null;
+		$enabled = $this->plugin_enabled($name, $ignore);
+		if (in_array($name, $excluded) || !$enabled) {
 			$plugin_result = '&nbsp;&nbsp;&nbsp;&nbsp;' . $ck_editor_plugin;
 		} else {
 			// Tiki 7+ adds ~np~ to plugin output so remove them
@@ -1070,6 +1074,9 @@ if ( \$('#$id') ) {
 			$elem = 'span';
 		}
 		$elem_style = 'position:relative;';
+		if (!$enabled) {
+			$elem_style .= 'opacity:0.3;';
+		}
 		if (in_array($name, array('img', 'div')) && preg_match('/<'.$name.'[^>]*style="(.*?)"/i', $plugin_result, $m)) {
 			if (count($m)) {
 				$elem_style .= $m[1];

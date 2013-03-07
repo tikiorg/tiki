@@ -42,7 +42,7 @@ class Services_File_FinderController
 
 	public function action_finder($input)
 	{
-		global $prefs, $tikidomainslash;
+		global $prefs, $user;
 
 		static $parentIds = null;
 
@@ -77,6 +77,15 @@ class Services_File_FinderController
 				)
 			)
 		);
+		if ($user != '' && $prefs['feature_use_fgal_for_user_files'] == 'y') {
+			$opts['roots'][] = array(
+				'driver'        => 'TikiFiles',
+				'path' => $prefs['fgal_root_user_id'],
+				'disabled'		=> $disabled,
+				'accessControl' => array($this, 'elFinderAccess'),
+				'uploadMaxSize' => ini_get('upload_max_filesize'),
+			);
+		}
 		if ($input->defaultGalleryId->int()) {
 			$d = $input->defaultGalleryId->int() != $this->fileController->defaultGalleryId ? 'd_' : '';
 			$opts['roots'][0]['startPath'] = "$d{$input->defaultGalleryId->int()}";	// needs to be the cached name in elfinder (with 'd_' in front) unless it's the root id
@@ -102,7 +111,9 @@ class Services_File_FinderController
 
 		if ($input->cmd->text() === 'tikiFileFromHash') {	// intercept tiki only commands
 			$fileId = $elFinder->realpath($input->hash->text());
-			$info = TikiLib::lib('filegal')->get_file(str_replace('f_', '', $fileId));
+			$filegallib = TikiLib::lib('filegal');
+			$info = $filegallib->get_file(str_replace('f_', '', $fileId));
+			$info['wiki_syntax'] = $filegallib->getWikiSyntax($info['galleryId'], $info);
 			return $info;
 		}
 

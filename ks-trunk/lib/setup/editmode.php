@@ -65,7 +65,7 @@ if ($_SESSION['wysiwyg'] == 'y') {
 if (isset($jitRequest['edit'])) {
 	// Restore the property for the rest of the script
 	if ($is_html) {
-		$data = $jitRequest->edit->raw();
+		$data = $jitRequest->edit->none();
 
 		$parserlib = TikiLib::lib('parser');
 		$noparsed = array();

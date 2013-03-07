@@ -36,7 +36,7 @@ class Tiki_Render_Editable
 		global $prefs;
 
 		if ($prefs['ajax_inline_edit'] != 'y') {
-			return $this->inner;
+			return $this->inner === null ? '' : $this->inner;
 		}
 
 		$tag = ($this->layout == 'block') ? 'div' : 'span';
