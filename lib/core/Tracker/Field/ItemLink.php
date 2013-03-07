@@ -104,11 +104,11 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 					),
 					'displayOneItem' => array(
 						'name' => tr('One item per value'),
-						'description' => tr('Display only one random item per value'),
+						'description' => tr('Display only one random item per label'),
 						'filter' => 'alpha',
 						'options' => array(
-							'one' => tr('Only one random item for each value'),
-							'multi' => tr('Displays all the items for a same value with a notation value (itemId)'),
+							'multi' => tr('Displays all the items for a same label with a notation value (itemId)'),
+							'one' => tr('Only one random item for each label'),
 						),
 					),
 					'selectMultipleValues' => array(
@@ -148,14 +148,25 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 
 	function getFieldData(array $requestData = array())
 	{
-		$data = $this->getLinkData($requestData, $this->getInsertId());
+		$string_id = $this->getInsertId();
+		$data = array(
+			'value' => isset($requestData[$string_id]) ? $requestData[$string_id] : $this->getValue(),
+		);
+
+		if ($this->getOption('selectMultipleValues') && ! is_array($data['value'])) {
+			$data['value'] = explode(',', $data['value']);
+		}
 
 		return $data;
 	}
 
 	function renderInput($context = array())
 	{
-		if ($this->getOption('addItems') && !$context['in_ajax_form']) {
+		$data = array(
+			'list' => $this->getItemList(),
+		);
+
+		if ($this->getOption('addItems') && ! $context['in_ajax_form']) {
 
 			$context['in_ajax_form'] = true;
 
@@ -242,17 +253,17 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 
 		}
 
-		$context['selectMultipleValues'] = (bool) $this->getOption('selectMultipleValues');
+		$data['selectMultipleValues'] = (bool) $this->getOption('selectMultipleValues');
 
 		if ($preselection = $this->getPreselection()) {
-			$context['preselection'] = $preselection;
+			$data['preselection'] = $preselection;
 		} else {
-			$context['preselection'] = '';
+			$data['preselection'] = '';
 		}
 
-		$context['filter'] = $this->buildFilter();
+		$data['filter'] = $this->buildFilter();
 
-		return $this->renderTemplate('trackerinput/itemlink.tpl', $context);
+		return $this->renderTemplate('trackerinput/itemlink.tpl', $context, $data);
 	}
 
 	private function buildFilter()
@@ -268,10 +279,7 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 
 		$item = $this->getValue();
 
-		$dlist = $this->getConfiguration('listdisplay');
-		$list = $this->getConfiguration('list');
-
-		if (!is_array($item)) {
+		if (! is_array($item)) {
 			// single value item field
 			$items = array($item);
 		} else {
@@ -279,16 +287,7 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 			$items = $item;
 		}
 
-		$labels = array();
-
-		foreach ($items as $key => $value) {
-			if (!empty($dlist) && isset($dlist[$value])) {
-				$labels[] = $dlist[$value];
-			} else if (isset($list[$value])) {
-				$labels[] = $list[$value];
-			}
-		}
-
+		$labels = array_map(array($this, 'getItemLabel'), $items);
 		$label = implode(', ', $labels);
 
 		if ($item && !is_array($item) && $context['list_mode'] !== 'csv' && $this->getOption('fieldId')) {
@@ -369,85 +368,82 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 		return array();
 	}
 
-	/**
-	 * Return both the current values and the list of available values
-	 * for this field. When creating or updating a tracker item this
-	 * function is called twice. First before the data is saved and then
-	 * before displaying the changed tracker item to the user.
-	 *
-	 * @param array $requestData
-	 * @param $string_id
-	 * @return array
-	 */
-	private function getLinkData($requestData, $string_id)
+	function getItemLabel($itemId)
 	{
-		$data = array(
-			'value' => isset($requestData[$string_id]) ? $requestData[$string_id] : $this->getValue(),
-		);
+		$trklib = TikiLib::lib('trk');
+		$item = $trklib->get_tracker_item($itemId);
 
-		if (!$this->getOption('displayFieldsList')) {
-			$data['list'] = TikiLib::lib('trk')->get_all_items(
-				$this->getOption('trackerId'),
-				$this->getOption('fieldId'),
-				$this->getOption('status', 'opc'),
-				false
-			);
-			if (! $this->getOption('displayOneItem') || $this->getOption('displayOneItem') != 'multi') {
-				// This silently modifies tracker items when an item name is used multiple times, which really isn't impossible.
-				// If you want it, make it optional.
-				//$data['list'] = array_unique($data['list']);
-			} elseif (array_unique($data['list']) != $data['list']) {
-				$newlist = array();
-				foreach ($data['list'] as $k => $dl) {
-					if (in_array($dl, $newlist)) {
-						$dl = $dl . " ($k)";
-					}
-					$newlist[$k] = $dl;
+		if (! $item) {
+			return '';
+		}
+
+		$parts = array();
+
+		if ($fields = $this->getOption('displayFieldsList')) {
+			foreach(explode('|', $fields) as $fieldId) {
+				if (isset($item[$fieldId])) {
+					$parts[] = $item[$fieldId];
 				}
-				$data['list'] = $newlist;
 			}
 		} else {
-			$data['list'] = TikiLib::lib('trk')->get_all_items(
+			$fieldId = $this->getOption('fieldId');
+
+			if (isset($item[$fieldId])) {
+				$parts[] = $item[$fieldId];
+			}
+		}
+
+
+		if (count($parts)) {
+			return implode(' ', $parts);
+		} else {
+			return TikiLib::lib('object')->get_title('trackeritem', $itemId);
+		}
+	}
+
+	private function getItemList()
+	{
+		if ($this->getOption('displayFieldsList')) {
+			$list = TikiLib::lib('trk')->concat_all_items_from_fieldslist(
+				$this->getOption('trackerId'),
+				$this->getOption('displayFieldsList'),
+				$this->getOption('status', 'opc')
+			);
+		} else {
+			$list = TikiLib::lib('trk')->get_all_items(
 				$this->getOption('trackerId'),
 				$this->getOption('fieldId'),
 				$this->getOption('status', 'opc'),
 				false
 			);
-			$data['listdisplay'] = array_unique(
-				TikiLib::lib('trk')->concat_all_items_from_fieldslist(
-					$this->getOption('trackerId'),
-					$this->getOption('linkToItem'),
-					$this->getOption('status', 'opc')
-				)
-			);
-			if (!$this->getOption('displayOneItem') || $this->getOption('displayOneItem') != 'multi') {
-				$data['list'] = array_unique($data['list']);
-				$data['listdisplay'] = array_unique($data['listdisplay']);
-			} elseif (array_unique($data['listdisplay']) != $data['listdisplay']) {
-				$newlist = array();
-				foreach ($data['listdisplay'] as $k => $dl) {
-					if (in_array($dl, $newlist)) {
-						$dl = $dl . " ($k)";
-					}
-					$newlist[$k] = $dl;
-				}
-				$data['listdisplay'] = $newlist;
-			}
 		}
+
+		$list = $this->handleDuplicates($list);
 
 		if ($this->getOption('addItems')) {
-			$data['list']['-1'] = $this->getOption('addItems');
-			if (isset($data['listdisplay'])) {
-				$data['listdisplay']['-1'] = $this->getOption('addItems');
+			$list['-1'] = $this->getOption('addItems');
+		}
+
+		return $list;
+	}
+
+	private function handleDuplicates($list)
+	{
+		if ($this->getOption('displayOneItem') != 'multi') {
+			return array_unique($list);
+		} elseif (array_unique($list) != $list) {
+			$newlist = array();
+			foreach ($list as $itemId => $label) {
+				if (in_array($label, $newlist)) {
+					$label = $label . " ($k)";
+				}
+				$newlist[$itemId] = $label;
 			}
-		}
 
-		// selectMultipleValues
-		if ($this->getOption('selectMultipleValues') && !is_array($data['value'])) {
-			$data['value'] = explode(',', $data['value']);
+			return $newlist;
+		} else {
+			return $list;
 		}
-
-		return $data;
 	}
 
 	function importRemote($value)
@@ -584,18 +580,8 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 
 	function watchCompare($old, $new)
 	{
-
-		$data = $this->getLinkData(array(), 0);		// get old and new values directly from the list(s)
-		$dlist = $data['listdisplay'];
-		$list = $data['list'];
-
-		if (!empty($dlist)) {
-			$o = isset($dlist[$old]) ? $dlist[$old] : '';
-			$n = isset($dlist[$new]) ? $dlist[$new] : '';
-		} else {
-			$o = isset($list[$old]) ? $list[$old] : '';
-			$n = isset($list[$new]) ? $list[$new] : '';
-		}
+		$o = $this->getItemLabel($old);
+		$n = $this->getItemLabel($new);
 
 		return parent::watchCompare($o, $n);	// then compare as text
 	}
