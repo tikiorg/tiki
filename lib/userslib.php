@@ -2408,7 +2408,7 @@ class UsersLib extends TikiLib
 
 			$query = 'SELECT `userId`, `login`, `email`, `lastLogin`, `currentLogin`,' .
 							' `registrationDate`, `created`, `avatarName`, `avatarSize`,' .
-							' `avatarFileType`, `avatarLibName`, `avatarType`' .
+							' `avatarFileType`, `avatarLibName`, `avatarType`, `waiting`' .
 							' FROM `users_users` WHERE `login` = ?';
 
 			$result = $this->query($query, array($login));

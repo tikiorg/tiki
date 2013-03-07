@@ -75,6 +75,10 @@ class Search_ContentSource_UserSource implements Search_ContentSource_Interface
 
 	private function userIsIndexed($detail)
 	{
+		if (! empty($detail['info']['waiting'])) {
+			return false;
+		}
+
 		if ($this->visibility == 'all') {
 			return true;
 		} else {
