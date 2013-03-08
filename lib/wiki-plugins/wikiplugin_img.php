@@ -24,7 +24,7 @@ function wikiplugin_img_info()
 				'options' => array(
 					array('text' => tra('Select an option'), 'value' => ''),
 					array('text' => tra('An image in the File Galleries'), 'value' => 'fileId'),
-					array('text' => tra('An image attached to a wiki page'), 'value' => 'url'),
+					array('text' => tra('An image attached to a wiki page'), 'value' => 'attId'),
 					array('text' => tra('An image anywhere on the internet'), 'value' => 'src'),
 					array('text' => tra('All the images in a File Gallery'), 'value' => 'fgalId'),
 					array('text' => tra('One random image from a File Gallery'), 'value' => 'randomGalleryId'),
