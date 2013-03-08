@@ -2143,6 +2143,8 @@ class UsersLib extends TikiLib
 				}
 			}
 			$cachelib->invalidate('userslist');
+			TikiLib::events()->trigger('tiki.user.update', array('type' => 'user', 'object' => $from));
+			TikiLib::events()->trigger('tiki.user.update', array('type' => 'user', 'object' => $to));
 			return true;
 		} else {
 			return false;
@@ -5741,6 +5743,7 @@ class UsersLib extends TikiLib
 		$query = 'update `users_users` set `provpass`=?, valid=?, `email_confirm`=?, `waiting`=? where `login`=?';
 		$result = $this->query($query, array('', NULL, $this->now, NULL, $user));
 		$cachelib->invalidate('userslist');
+		TikiLib::events()->trigger('tiki.user.update', array('type' => 'user', 'object' => $user));
 	}
 
 	function invalidate_account($user)
@@ -5750,12 +5753,14 @@ class UsersLib extends TikiLib
 		$query = 'update `users_users` set valid=?, `waiting`=? where `login`=?';
 		$result = $this->query($query, array(md5($tikilib->genPass()), 'u', $user));
 		$cachelib->invalidate('userslist');
+		TikiLib::events()->trigger('tiki.user.update', array('type' => 'user', 'object' => $user));
 	}
 
 	function change_user_waiting($user, $who)
 	{
 		$query = 'update `users_users` set `waiting`=? where `login`=?';
 		$this->query($query, array($who, $user));
+		TikiLib::events()->trigger('tiki.user.update', array('type' => 'user', 'object' => $user));
 	}
 
 	function add_user($user, $pass, $email, $provpass = '', $pass_first_login = false, $valid = NULL, $openid_url = NULL, $waiting=NULL)
@@ -6738,6 +6743,7 @@ class UsersLib extends TikiLib
 	{
 		$query = 'update `users_users` set `email_confirm`=?, `waiting`=? where `login`=?';
 		$this->query($query, array(0, 'u', $user));
+		TikiLib::events()->trigger('tiki.user.update', array('type' => 'user', 'object' => $user));
 	}
 
 	function confirm_email($user, $pass)
