@@ -1067,6 +1067,18 @@ function prefs_feature_list($partial = false)
 			'type' => 'textarea',
 			'default' => '',
 		),
+		'feature_draw_replace_base_image' => array(
+			'name' => tra('Replace Base Image'),
+			'description' => tra('Leaves the initially edited image as a separate file and stores the drawing separately'),
+			'help' => 'Draw',
+			'dependencies' => array(
+				'feature_draw',
+				'feature_file_galleries',
+			),
+			'tags' => array('experimental'),
+			'type' => 'flag',
+			'default' => 'y',
+		),
 		'feature_docs' => array(
 			'name' => tra('Docs (WebODF)'),
 			'description' => tra('Docs gives you the ability to view/edit Open Document Format'),

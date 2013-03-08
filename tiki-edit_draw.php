@@ -86,7 +86,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_REQUEST['data'])) {
 
 	$type = $mimetypes["svg"];
 	$fileId = '';
-	if (empty($_REQUEST["fileId"]) == false && $_REQUEST["fileId"] > 0) {
+	$isConversion = $fileInfo['filetype'] != $mimetypes["svg"];
+
+	if (empty($_REQUEST["fileId"]) == false && $_REQUEST["fileId"] > 0 &&
+			($prefs['feature_draw_replace_base_image'] !== 'n' || !$isConversion)) {
+
 		//existing file
 		$fileId = $filegallib->save_archive(
 			$_REQUEST["fileId"],
@@ -104,7 +108,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_REQUEST['data'])) {
 			$user
 		);
 		// this is a conversion from an image other than svg
-		if ($fileInfo['filetype'] != $mimetypes["svg"] && $prefs['fgal_keep_fileId'] == 'y') {
+		if ($isConversion && $prefs['fgal_keep_fileId'] == 'y') {
 			$newFileInfo = $filegallib->get_file_info($fileId);
 
 			$archiveFileId = $tikilib->getOne(
@@ -137,6 +141,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_REQUEST['data'])) {
 		}
 	} else {
 		//new file
+		if ($isConversion) {
+			$_REQUEST['name'] = preg_replace('/\.(:?jpg|gif|png|tif[f]?)$/', '', $_REQUEST['name']);	// strip extension
+		}
 		$fileId = $filegallib->insert_file(
 			$_REQUEST["galleryId"],
 			$_REQUEST['name'],
