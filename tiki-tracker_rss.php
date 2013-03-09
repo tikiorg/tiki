@@ -119,7 +119,11 @@ if ($output["data"] == "EMPTY") {
 		$first_text_field = null;
 		$aux_subject = null;
 		foreach ($data["field_values"] as $data2) {
-			if (isset($data2["name"]) && !empty($data2['value']) || !$doNotShowEmptyField) {
+			$showEvenIfEmpty = array('s', 'STARS', 'h', 'l', 'W');	// this duplicates the logic in tiki-view_tracker_item.tpl
+			if (isset($data2["name"]) && !empty($data2['value']) || !$doNotShowEmptyField || in_array($data2['type'], $showEvenIfEmpty)) {
+				if (!isset($data[$data2['fieldId']])) {
+					$data[$data2['fieldId']] = $data2['value'];
+				}
 				$data2['value'] = $trklib->field_render_value(
 					array(
 						'field' => $data2,
