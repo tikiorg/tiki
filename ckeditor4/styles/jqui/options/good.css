@@ -1,0 +1,236 @@
+/* $Id: jqui.css 41353 2012-05-05 04:33:56Z chibaguy $
+	Jqui (jqui.css) for Tiki Wiki CMS Groupware.
+	Visit http://themes.tiki.org for more information.
+	"good" option by jonnyb
+*/
+
+/**** general *****/
+
+body, a, a:visited {
+	color: #395BB0;
+}
+
+#c1c2 #wrapper #col1 #tiki-center {
+	padding: 10px 20px 5px 40px;
+}
+
+#c1c2 #col2 .content {
+	margin-left: 10px;
+}
+
+#page-data a {
+	font-weight: bold;
+}
+
+#page-data {
+	font-size: 115%;
+}
+
+/***** buttons ****/
+
+.button a,
+.button a:visited,
+button,
+input[type="reset"],
+input[type="submit"],
+.button input,
+.calbuttonBox a {
+	border-color: #395BB0;
+	background: #395BB0 url(../../../lib/jquery/jquery-ui/themes/start/images/ui-bg_gloss-wave_75_2191c0_500x100.png) 50% 50% repeat-x;
+	background-image: none;
+	color: #fff;
+}
+
+.button a:hover,
+button:hover,
+input[type="reset"]:hover,
+input[type="submit"]:hover,
+.button input:hover,
+.calbuttonBox:hover {
+	border-color: #395BB0;
+	background: #fff url(../../../lib/jquery/jquery-ui/themes/start/images/ui-bg_gloss-wave_75_2191c0_500x100.png) 50% 0% repeat-x;
+	background-image: none;
+	color: #395BB0;
+}
+
+.highlight,
+.highlight a {
+	border-color: #395BB0;
+	background: #395BB0 url(../../../lib/jquery/jquery-ui/themes/start/images/ui-bg_gloss-wave_75_2191c0_500x100.png) 50% 50% repeat-x;
+	background-image: none;
+	color: #fff;
+}
+
+/*.ui-widget-header {
+	border: 1px solid #4297d7;
+	background: #2191c0 url(images/ui-bg_gloss-wave_75_2191c0_500x100.png) 50% 50% repeat-x;
+	color: #eaf5f7;
+	font-weight: bold;
+}
+
+.ui-widget-content {
+	border: 1px solid #a6c9e2;
+	background: #fcfdfd url(images/ui-bg_inset-hard_100_fcfdfd_1x100.png) 50% bottom repeat-x;
+	color: #222222;
+}*/
+
+h3.box-title, .cbox-title {
+	border-color: #395BB0;
+	background: #395BB0 url(../../../lib/jquery/jquery-ui/themes/start/images/ui-bg_gloss-wave_75_2191c0_500x100.png) 50% 50% repeat-x;
+	background-image: none;
+	color: #fff;
+}
+
+h3.box-title a {
+	color: #fff;
+}
+
+module.box, .box, .cbox {
+	border-color: #395BB0;
+	padding: 0;
+}
+
+#left_modules, #right_modules {
+	padding-top: 8px;
+}
+
+#tiki-top {
+	padding: 0 .3em .3em 1em;
+	border-color: #395BB0;
+	background: #395BB0 url(../../../lib/jquery/jquery-ui/themes/start/images/ui-bg_glass_45_0078ae_1x400.png) 50% 50% repeat-x;
+	background-image: none;
+	color: #fff;
+	margin: 0 10px 10px;
+}
+
+#tiki-top .cssmenu_horiz li a {
+	color: #fff;
+    border-right: 1px solid #395BB0;
+}
+
+#tiki-top .cssmenu_horiz li:hover a {
+    text-decoration: none;
+	background: #fff url(../../../lib/jquery/jquery-ui/themes/start/images/ui-bg_glass_45_0078ae_1x400.png) 50% 55% repeat-x;
+	background-image: none;
+	color: #395BB0;
+}
+
+#tiki-top .cssmenu_horiz li li:hover a {
+	color: #fff;
+	background-color: #395BB0 !important;
+}
+
+#tiki-top .cssmenu_horiz li li a,
+#tiki-top .cssmenu_horiz li li li a,
+#tiki-top .cssmenu_horiz li li:hover li a {
+	color: #395BB0;
+	background: #fff none !important;
+}
+
+#tiki-top .sf-sub-indicator {
+	background: url(good/arrows-ffffff.png) no-repeat -10px -100px;
+}
+
+#tiki-top li:hover .sf-sub-indicator {
+	background: url(good/arrows-005faa.png) no-repeat -10px -100px;
+}
+
+/* blogs */
+
+.postbody-title {
+	padding: .1em .3em .2em 1em;
+	border-color: #395BB0;
+	background: #395BB0 url(../../../lib/jquery/jquery-ui/themes/start/images/ui-bg_glass_45_0078ae_1x400.png) 50% 50% repeat-x;
+	background-image: none;
+	color: #fff;
+}
+
+.postbody-title h2 {
+	margin: .2em 0;
+	color: #fff;
+}
+
+.postbody-title h2 a {
+	color: #fff;
+}
+
+.post .author_info,
+.forum_actions {
+    background: #fff none;
+    border: 0 none;
+    color: #395BB0;
+    padding: 3px;
+    margin: 2px 0 0;
+	font-size: .9em;
+	font-style: italic;
+}
+/***** border radius definitions                   *****
+ ***** remove if you require strict css validation *****/
+
+.footerbgtrap,
+.rbox-title,
+.tabs,
+.tabmark,
+.postbody-title {
+	border-top-left-radius: 2px;
+	border-top-right-radius: 2px;
+	-moz-border-radius-topleft: 2px;
+	-moz-border-radius-topright: 2px;
+	-webkit-border-top-left-radius: 2px;
+	-webkit-border-top-right-radius: 2px;
+}
+
+fieldset,
+input,
+textarea,
+.button a,
+.button a:visited,
+button,
+input[type="reset"],
+input[type="submit"],
+.button input,
+.calbuttonBox a,
+#tiki-top,
+.box,
+.cbox,
+.simplebox,
+.cbox-title,
+.post .postbody,
+body.tiki_admin .simplebox,
+a.admbox,
+a.admbox.off,
+.forum_actions,
+.admintoclevel {
+	border-radius: 2px;
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 2px;
+}
+
+.rbox-title {
+	border-top-left-radius: 2px;
+	border-top-right-radius: 2px;
+	border-bottom: none !important;
+	-moz-border-radius-topleft: 2px;
+	-moz-border-radius-topright: 2px;
+	-webkit-border-top-left-radius: 2px;
+	-webkit-border-top-right-radius: 2px;
+}
+
+.rbox-data {
+	border-top-right-radius: 2px;
+	border-bottom-left-radius: 2px;
+	border-bottom-right-radius: 2px;
+	-moz-border-radius-topright: 2px;
+	-moz-border-radius-bottomleft: 2px;
+	-moz-border-radius-bottomright: 2px;
+	-webkit-border-top-right-radius: 2px;
+	-webkit-border-bottom-left-radius: 2px;
+	-webkit-border-bottom-right-radius: 2px;
+}
+
+h3.box-title {
+	border-radius: 0;
+	-moz-border-radius: 0;
+	-webkit-border-radius: 0;
+}
+/* end of file */

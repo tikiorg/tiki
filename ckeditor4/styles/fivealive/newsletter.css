@@ -1,0 +1,285 @@
+/* $Id$
+	FiveAlive theme newsletter css (fivealive/newsletter.css) for Tiki Wiki CMS/Groupware.
+	Visit http://themes.tiki.org for more information.
+*/
+ 
+/***** XHTML Elements (body tag here,
+			others follow Layout) *****/ 
+body {
+	background-color: #fff;
+	font: 76%/1.5em Arial, Helvetica, sans-serif;
+	color: #000;
+}
+
+
+/***** XHTML Elements (other than body tag) ******/
+a,
+a:visited {
+	color: #1174a5;
+	text-decoration: none;
+}
+ 
+a:active, a:hover {
+	color: #26a6dd;
+	text-decoration: none;
+}
+
+fieldset {
+	border: 1px solid #1174a5;
+}
+
+h1,
+h2 {
+	line-height: 110%;
+}
+
+pre,
+tt {
+	font-size: 1.2em;
+}
+
+hr {
+	background: #74c0e2;
+	color: #74c0e2;
+	height: 2px;
+}
+
+
+.button a,
+.button a:visited,
+button,
+input[type="reset"],
+input[type="submit"],
+.button input,
+.calbuttonBox a,
+#genPass .button a,
+#genPass .button a:visited,
+.daterow {
+	color: #fff;
+	background: #2098cd;
+	border: 1px solid #11597e;
+	font-weight: bold;
+	line-height: 150%;
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+}
+
+.button a:hover,
+button:hover,
+input[type="reset"]:hover,
+input[type="submit"]:hover,
+.button input:hover,
+.calbuttonBox a:hover,
+#genPass .button a:hover,
+.daterow:hover {
+	background: #1173a5;
+	border: 1px solid #11597e;
+	text-decoration: none;
+}
+
+.highlight,
+.highlight a {
+	border: #9ae8fa;
+	color: #000;
+}
+
+.button.highlight a {
+	background: #d6f3fa;
+	color: #000;
+}
+
+select,
+input[type="text"],
+input[type="password"],
+input[type="file"],
+input#login-pass,
+textarea,
+.adminoptionbox option {
+	background-color: #d6f3fa;
+	color: #000;
+	border: 1px solid;
+	border-color: #9ae8fa #e3f7fb #e3f7fb #9ae8fa;
+}
+
+select[multiple="multiple"] {
+	height: 120px;
+}
+
+input[type="text"],
+select {
+	margin: 2px;
+}
+
+/***** Icons *****/
+img.icon {
+	margin: 1px 2px 2px 1px;
+}
+
+/***** Boxes *****/
+.cbox {
+	border: none;
+	background: #d6f3fa;
+	color: #2098cd;
+	padding: 10px;
+}
+
+.cbox-title {
+	border-bottom: 3px solid #74c0e2;
+	font-weight: bold;
+}
+.rbox-title, 
+.rbox-data {
+	border: #2098cd;
+	background: #c2eef8;
+	color: #143c64;
+}
+
+.rbox-title {
+	border-top-left-radius: 3px;
+	border-top-right-radius: 3px;
+	-moz-border-radius-topleft: 3px;
+	-moz-border-radius-topright: 3px;
+	-webkit-border-top-left-radius: 3px;
+	-webkit-border-top-right-radius: 3px;
+}
+
+.rbox-data {
+	border-top-right-radius: 3px;
+	border-bottom-left-radius: 3px;
+	border-bottom-right-radius: 3px;
+	-moz-border-radius-topright: 3px;
+	-moz-border-radius-bottomleft: 3px;
+	-moz-border-radius-bottomright: 3px;
+	-webkit-border-top-right-radius: 3px;
+	-webkit-border-bottom-left-radius: 3px;
+	-webkit-border-bottom-right-radius: 3px;
+}
+
+.error {
+	background: none;
+}
+
+.simplebox {
+	border: 2px solid #74c0e2;
+}
+
+/***** Tables, Tabs *****/
+/** Tables **/
+
+.normal,
+.wikitable {
+	border: 2px solid #1d90c5;
+	border-collapse: collapse;
+}
+
+form .normal,
+.tabcontent .normal {
+	border: none;
+}
+
+.caltable .odd,
+.caltable .even,
+.wikicell {
+	border: 2px solid #c2eef8;
+}
+
+.odd {
+	background: #e3f7fb;
+}
+
+.even {
+	background: #d6f3fa;
+}
+
+	  
+th,
+td.heading,
+tr.diffheader,
+.calHeading,
+.weeks {
+	background: #1d90c5;
+	color: #d6f3fa;
+}
+
+th a,
+th a:visited,
+td.heading a,
+td.heading a:visited,
+.normal th a.link, 
+.normal th a {
+	color: #fff
+}
+
+.admin a.link,
+.admin a,
+.admin label,
+fieldset.admin label,
+.cbox fieldset.admin a {
+	color: #1174a5;
+}
+
+.tabstoggle .button a,
+.tabstoggle .button a:visited {
+	color: #fff;
+}
+
+/***** Wiki *****/
+.titlebar {
+	border: #2098cd;
+	background: #c2eef8;
+	color: #143c64;
+	font-weight: bold;
+	padding: 1px 8px;
+}
+	
+.code {
+	padding: 3px;
+	border: 1px dashed #a9a9a9;
+	background: #f5f5f5;
+	font: 90% "Courier New", Courier, monospace;
+}
+
+.codelisting {
+	font-family: "Courier New", Courier, monospace;
+	padding: 10px;
+	background: #f5f5f5;
+	margin: 4px 0;
+	border: 1px dashed #696969;
+	overflow: auto;
+}
+
+.codecaption {
+	font-size: 90%;
+	padding: 0 10px;
+	position: relative;
+	bottom: -5px;
+	display: inline;
+	border: 1px solid #696969;
+	border-bottom: 0;
+	margin: 0;
+	color: #696969;
+	background: #f5f5f5;
+	font-weight: bold;
+}
+
+/* Quote plugin */
+.quoteheader {
+	margin-left: 30px;
+	border-bottom: 2px solid #c2eef8;
+}
+
+.quotebody {
+	margin: 0 15px 10px 30px;
+	font-style: italic;
+	border-left: 8px solid #c2eef8;
+	padding-left: 6px;
+}
+
+/***** Articles ****/
+body.tiki_cms h1 a.pagetitle,
+body.tiki_cms h1 a.pagetitle:visited,
+body.tiki_cms h1 a.pagetitle:hover {border-bottom: 0}
+
+
+/* End of File */
