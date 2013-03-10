@@ -694,6 +694,22 @@ if ($s) {
 	);
 }
 
+// intl
+$s = extension_loaded('intl');
+if ($s) {
+	$php_properties['intl'] = array(
+		'fitness' => tra('good'),
+		'setting' => 'Loaded',
+		'message' => tra("intl extension will be needed in future versions of Tiki.")
+	);
+} else {
+	$php_properties['intl'] = array(
+		'fitness' => tra('info'),
+		'setting' => 'Not available',
+		'message' => tra("intl extension will be needed in future versions of Tiki.")
+	);
+}
+
 // GD
 $s = extension_loaded('gd');
 if ( $s && function_exists('gd_info') ) {
