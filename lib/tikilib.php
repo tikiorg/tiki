@@ -6440,8 +6440,8 @@ class TikiLib extends TikiDb_Bridge
 
 		$need_autonumbering = ( preg_match('/^\!+[\-\+]?#/m', $data) > 0 );
 
+        global $anch;
 		$anch = array();
-		global $anch;
 		$pageNum = 1;
 
 		// 08-Jul-2003, by zaufi
