@@ -77,7 +77,7 @@
 				{preference name=feature_draw}
 				<div class="adminoptionboxchild" id="feature_draw_childcontainer">
 					{preference name=feature_draw_hide_buttons}
-					{preference name=feature_draw_replace_base_image}
+					{preference name=feature_draw_separate_base_image}
 				</div>
 
 				{preference name=feature_jcapture}

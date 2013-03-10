@@ -82,14 +82,18 @@ $_REQUEST['name'] = htmlspecialchars(str_replace(".svg", "", $_REQUEST['name']))
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_REQUEST['data'])) {
 	$_REQUEST["galleryId"] = (int)$_REQUEST["galleryId"];
 	$_REQUEST["fileId"] = (int)$_REQUEST["fileId"];
-	$_REQUEST['description'] = htmlspecialchars(isset($_REQUEST['description']) ? $_REQUEST['description'] : $_REQUEST['name']);
+	if (isset($_REQUEST['imgParams'])) {
+		$_REQUEST['fromFieldId'] = (int)$_REQUEST['imgParams']['fromFieldId'];
+		$_REQUEST['fromItemId'] = (int)$_REQUEST['imgParams']['fromItemId'];
+	}
+	$_REQUEST['description'] = htmlspecialchars(isset($_REQUEST['description']) ? $_REQUEST['description'] : '');
 
 	$type = $mimetypes["svg"];
 	$fileId = '';
 	$isConversion = $fileInfo['filetype'] != $mimetypes["svg"];
 
 	if (empty($_REQUEST["fileId"]) == false && $_REQUEST["fileId"] > 0 &&
-			($prefs['feature_draw_replace_base_image'] !== 'n' || !$isConversion)) {
+			($prefs['feature_draw_separate_base_image'] !== 'y' || !$isConversion)) {
 
 		//existing file
 		$fileId = $filegallib->save_archive(
@@ -157,6 +161,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_REQUEST['data'])) {
 		);
 	}
 
+	if (!empty($_REQUEST['fromItemId'])) {		// a tracker item, so update the item field
+		$item = Tracker_Item::fromId($_REQUEST['fromItemId']);
+		if ($item->canModifyField($_REQUEST['fromFieldId'])) {
+			$definition = $item->getDefinition();
+			$field = $definition->getField($_REQUEST['fromFieldId']);
+			$trackerInput = $item->prepareFieldInput($field, array($_REQUEST['fromFieldId'] -> $fileId));
+			$trackerInput['value'] = $fileId;
+
+			TikiLib::lib('trk')->replace_item($field['trackerId'], $_REQUEST['fromItemId'], array('data' => array($trackerInput)));
+		}
+
+	}
+
 	echo $fileId;
 	die;
 }
@@ -165,8 +182,8 @@ if ($fileInfo['filetype'] == $mimetypes["svg"]) {
 	$data = $fileInfo["data"];
 } else { //we already confirmed that this is an image, here we make it compatible with svg
 	$src = $tikilib->tikiUrl() . 'tiki-download_file.php?fileId=' . $fileInfo['fileId'];
-	$w = imagesx($image);
-	$h = imagesy($image);
+	$w = @imagesx($src);		// can't see how this can ever work - imagesx param is a resource not a string url (jb)
+	$h = @imagesy($src);
 
 	if (empty($w) || empty($h)) { //go ahead and download the image, it may exist off-site, copywrited content
 		$image = imagecreatefromstring(file_get_contents($src));

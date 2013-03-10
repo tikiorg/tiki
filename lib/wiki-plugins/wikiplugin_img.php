@@ -378,6 +378,8 @@ function wikiplugin_img( $data, $params )
 	$imgdata['alt'] = '';
 	$imgdata['default'] = '';
 	$imgdata['mandatory'] = '';
+	$imgdata['fromFieldId'] = 0;	// "private" params set by Tracker_Field_Files
+	$imgdata['fromItemId']  = 0;	// ditto
 
 	$imgdata = array_merge($imgdata, $params);
 
@@ -1178,7 +1180,7 @@ function wikiplugin_img( $data, $params )
 	}
 
 	if (!empty($dbinfo['galleryId'])) {
-		global $tiki_p_edit, $fromTracker;
+		global $tiki_p_edit;
 		$globalperms = Perms::get(array( 'type' => 'file gallery', 'object' => $dbinfo['galleryId'] ));
 
 		if (
@@ -1189,16 +1191,22 @@ function wikiplugin_img( $data, $params )
 				$srcIsEditable == true
 			) && (
 				$tiki_p_edit == 'y' ||
-				$fromTracker == true
+				($imgdata['fromItemId'] &&
+					Perms::get(array(
+						'type' => 'tracker item',
+						'object' => $imgdata['fromItemId'])
+					)->modify_tracker_items)
 			)
 		) {
-			if ($prefs['wiki_edit_icons_toggle'] == 'y' && !isset($_COOKIE['wiki_plugin_edit_view'])) {
+			if ($prefs['wiki_edit_icons_toggle'] == 'y' && !isset($_COOKIE['wiki_plugin_edit_view']) && !$imgdata['fromItemId']) {
 				$iconDisplayStyle = " style=\"display:none;\"";
 			} else {
 				$iconDisplayStyle = '';
 			}
+			$jsonParams = json_encode(array_filter($imgdata));
 			$repl .= "<br /><a href=\"tiki-edit_draw.php?fileId={$imgdata['fileId']}\" onclick=\"return $(this).ajaxEditDraw();\" title=\"".tr("Draw on the Image") . "\"" .
-						" class=\"editplugin pluginImgEdit{$imgdata['fileId']}\" data-fileid=\"{$imgdata['fileId']}\" data-galleryid=\"{$dbinfo['galleryId']}\"{$iconDisplayStyle}>" .
+						" class=\"editplugin pluginImgEdit{$imgdata['fileId']}\" data-fileid=\"{$imgdata['fileId']}\" " .
+						"data-galleryid=\"{$dbinfo['galleryId']}\"{$iconDisplayStyle} data-imgparams='$jsonParams'>" .
 						"<img width='16' height='16' class='icon' alt='Edit' src='img/icons/page_edit.png' /></a>";
 		}
 	}

@@ -1067,8 +1067,8 @@ function prefs_feature_list($partial = false)
 			'type' => 'textarea',
 			'default' => '',
 		),
-		'feature_draw_replace_base_image' => array(
-			'name' => tra('Replace Base Image'),
+		'feature_draw_separate_base_image' => array(
+			'name' => tra('Separate Base Image'),
 			'description' => tra('Leaves the initially edited image as a separate file and stores the drawing separately'),
 			'help' => 'Draw',
 			'dependencies' => array(
@@ -1077,7 +1077,7 @@ function prefs_feature_list($partial = false)
 			),
 			'tags' => array('experimental'),
 			'type' => 'flag',
-			'default' => 'y',
+			'default' => 'n',
 		),
 		'feature_docs' => array(
 			'name' => tra('Docs (WebODF)'),
