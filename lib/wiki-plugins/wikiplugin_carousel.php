@@ -222,9 +222,16 @@ function wikiplugin_carousel( $body, $params )
 	$html = '<div id="'.$unique.'" class="clearfix carousel" style="width: 1px; height: 1px; overflow: hidden"><ul>';
 	foreach ($files['data'] as $file) {
 		$html .= '<li><img src="tiki-download_file.php?fileId='.$file['fileId'].'&amp;display';
-		if (!empty($params['displaySize']) && $params['displaySize'] != 1)
-			$html .= '&amp;scale='.$params['displaySize'];
-		$html .= ' alt="'.htmlentities($file['description']).'" />';
+        if (!empty($params['displaySize'])) {
+            if ($params['displaySize'] > 10){
+                $html .= '&amp;max='.$params['displaySize'];
+                }
+            else if ( $params['displaySize'] <= 1){
+                $html .= '&amp;scale='.$params['displaySize'];
+                }
+        }
+
+		$html .= '" alt="'.htmlentities($file['description']).'" />';
 			
 		$caption = '';
 		if (!empty($file['name'])) {
