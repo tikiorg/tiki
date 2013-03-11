@@ -80,7 +80,10 @@ class PdfGenerator
 			die(tra('Required function shell_exec is not enabled.'));
 		}
 
-		$arg = escapeshellarg($url);
+		// escapeshellarg will replace all % characters with spaces on Windows
+		// So, decode the URL before sending it to the commandline
+		$urlDecoded = urldecode($url);
+		$arg = escapeshellarg($urlDecoded);
 
 		// Write a temporary file, instead of using stdout
 		// There seemed to be encoding issues when using stdout (on Windows 7 64 bit).
