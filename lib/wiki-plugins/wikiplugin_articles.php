@@ -126,8 +126,8 @@ function wikiplugin_articles_info()
 			),
 			'fullbody' => array(
 				'required' => false,
-				'name' => tra('Body Only'),
-				'description' => tra('Whether to only show the body of the articles or just the heading and title. (not set to body only by default)'),
+				'name' => tra('Show Article Body'),
+				'description' => tra('Whether to show the body of the articles instead of the heading. (not set by default)'),
 				'filter' => 'alpha',
 				'default' => 'n',
 				'options' => array(

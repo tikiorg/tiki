@@ -4791,6 +4791,7 @@ $lang = array(
 // "Whether to only show the title of the articles (not set to title only by default)" => "Whether to only show the title of the articles (not set to title only by default)",
 "Body Only" => "본문 만",
 "Whether to only show the body of the articles or just the heading and title. (not set to body only by default)" => "기사의 본문 혹은 제목과 타이틀만 볼지 여부. (기본에 의하여서만 본문으로 설정되지 않음)",
+"Whether to show the body of the articles instead of the heading. (not set by default)" => "기사의 본문 혹은 제목과 타이틀만 볼지 여부. (기본에 의하여서만 본문으로 설정되지 않음)",
 "Starting Article" => "시작 기사",
 // "The article number that the list should start with (starts with first article by default)" => "The article number that the list should start with (starts with first article by default)",
 "This will not work if Pagination is used" => "페이지 매김이 사용되었다면 작동하지 않을 것입니다",

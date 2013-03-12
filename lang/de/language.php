@@ -4790,6 +4790,7 @@ $lang = array(
 "Whether to only show the title of the articles (not set to title only by default)" => "Ob nur Titel der Artikel angezeigt werden sollen (standardmäßig werden nicht nur Titel angezeigt)",
 "Body Only" => "Nur Hauptteil",
 "Whether to only show the body of the articles or just the heading and title. (not set to body only by default)" => "Ob nur die Hauptteile der Artikel (oder nur Kopf und Titel) angezeigt werden sollen (standardmäßig wird nicht nur der Hauptteil angezeigt)",
+"Whether to show the body of the articles instead of the heading. (not set by default)" => "Ob nur die Hauptteile der Artikel (oder nur Kopf und Titel) angezeigt werden sollen (standardmäßig wird nicht nur der Hauptteil angezeigt)",
 "Starting Article" => "Startartikel",
 "The article number that the list should start with (starts with first article by default)" => "Die Artikelnummer, die zuerst aufgelistet wird (standardmäßig der erste Artikel)",
 "This will not work if Pagination is used" => "Dies funktioniert nicht, wenn Paginierung benutzt wird",
