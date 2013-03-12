@@ -440,6 +440,7 @@ if (typeof window.CKEDITOR !== "undefined" && !window.CKEDITOR.plugins.get("{$na
 			var command = editor.addCommand( '{$name}', new window.CKEDITOR.command( editor , {
 				modes: { wysiwyg:1 },
 				exec: function (elem, editor, data) {
+				    CurrentEditorName=editor.name;
 					{$js}
 				},
 				canUndo: false
@@ -1238,6 +1239,7 @@ if (typeof window.CKEDITOR !== "undefined" && !window.CKEDITOR.plugins.get("{$th
 			var command = editor.addCommand( '{$this->name}', new window.CKEDITOR.command( editor , {
 				modes: { wysiwyg:1 },
 				exec: function(elem, editor, data) {
+				    CurrentEditorName=editor.name;
 					{$this->getSyntax( $areaId )};
 				},
 				canUndo: false
@@ -1367,6 +1369,7 @@ if (typeof window.CKEDITOR !== "undefined" && !window.CKEDITOR.plugins.get("{$na
 			var command = editor.addCommand( '{$name}', new window.CKEDITOR.command( editor , {
 				modes: { wysiwyg:1 },
 				exec: function(elem, editor, data) {
+				    CurrentEditorName=editor.name;
 					$.openEditHelp();
 					return false;
 				},
@@ -1502,6 +1505,7 @@ if (typeof window.CKEDITOR !== "undefined" && !window.CKEDITOR.plugins.get("{$th
 			var command = editor.addCommand( '{$this->name}', new window.CKEDITOR.command( editor , {
 				modes: { wysiwyg:1 },
 				exec: function(elem, editor, data) {
+				    CurrentEditorName=editor.name;
 					switchEditor('wiki', $('#$areaId').parents('form')[0]);
 				},
 				canUndo: false
@@ -1945,12 +1949,14 @@ class ToolbarsList
 			foreach ( $line as $bit ) {
 				foreach ( $bit as $group) {
 					$group_count = 0;
-					foreach ( $group as $tag ) {
-						if ($isHtml) {
-							if ( $token = $tag->getWysiwygToken($areaId) ) {
-								$lineOut[] = $token; $group_count++;
-							}
-						} else {
+                    if ($isHtml) {
+					        foreach ( $group as $tag ) {
+								if ( $token = $tag->getWysiwygToken($areaId) ) {
+								    $lineOut[] = $token; $group_count++;
+							    }
+                            }
+					} else {
+                        foreach ( $group as $tag ) {
 							if ( $token = $tag->getWysiwygWikiToken($areaId) ) {
 								$lineOut[] = $token; $group_count++;
 							}

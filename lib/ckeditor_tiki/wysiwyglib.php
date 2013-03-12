@@ -13,12 +13,13 @@ class WYSIWYGLib
 {
 	function setUpEditor($is_html, $dom_id, $params = array(), $auto_save_referrer = '', $full_page = true)
 	{
+        static $notallreadyloaded =true;
 		$ckEditor = 'ckeditor4';
 		// $ckEditor = 'ckeditor'; ... to revert also fix CKEDITOR.addCss in the plugin.js files
-		
+
 		global $tikiroot, $prefs;
 		$headerlib = TikiLib::lib('header');
-		$headerlib->add_js_config('window.CKEDITOR_BASEPATH = "'. $tikiroot . 'lib/'.$ckEditor.'/";')
+        if ($notallreadyloaded) $headerlib->add_js_config('window.CKEDITOR_BASEPATH = "'. $tikiroot . 'lib/'.$ckEditor.'/";')
 				//// for js debugging - copy _source from ckeditor distribution to libs/ckeditor to use
 				//// note, this breaks ajax page load via wikitopline edit icon
 				//->add_jsfile('lib/ckeditor/ckeditor_source.js');
@@ -26,7 +27,7 @@ class WYSIWYGLib
 				->add_jsfile('lib/'.$ckEditor.'/adapters/jquery.js', 0, true)
 				->add_js('window.CKEDITOR.config._TikiRoot = "'.$tikiroot.'";', 1);
 
-		if ($full_page) {
+		if ($notallreadyloaded && $full_page) {
 			$headerlib->add_jsfile('lib/ckeditor_tiki/tikilink_dialog.js');
 			$headerlib->add_js(
 				'window.CKEDITOR.config.extraPlugins += (window.CKEDITOR.config.extraPlugins ? ",tikiplugin" : "tikiplugin" );
@@ -34,7 +35,7 @@ class WYSIWYGLib
 				5
 			);
 		}
-		if (!$is_html && $full_page) {
+		if ($notallreadyloaded && !$is_html && $full_page) {
 			$headerlib->add_js(
 				'window.CKEDITOR.config.extraPlugins += (window.CKEDITOR.config.extraPlugins ? ",tikiwiki" : "tikiwiki" );
 				window.CKEDITOR.plugins.addExternal( "tikiwiki", "'.$tikiroot.'lib/ckeditor_tiki/plugins/tikiwiki/");',
@@ -105,7 +106,7 @@ ajaxLoadingShow("'.$dom_id.'");
 	'. (empty($params['cols']) ? 'height: 400,' : '') .'
 }';
 
-
+        $notallreadyloaded=false;
 		return $ckoptions;
 	}
 
