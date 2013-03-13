@@ -14,6 +14,10 @@
 	var container = $('#{{$field.ins_id}}_container')[0];
 
 	var createItem = function (id, label) {
+		if (!id) {
+			return false;
+		}
+
 		var item = $('<li/>');
 		item.text(label);
 
