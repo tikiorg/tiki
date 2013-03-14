@@ -36,6 +36,7 @@ if (php_sapi_name() != 'cli') {
 	$access->check_permission('tiki_p_admin');
 }
 
+require_once('lib/init/initlib.php');
 require_once('lib/setup/timer.class.php');
 
 $timer = new timer();
