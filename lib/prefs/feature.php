@@ -2481,7 +2481,7 @@ function prefs_feature_list($partial = false)
 			'help' => 'Syntax+Highlighter',
 			'keywords' => 'Code Mirror Syntax Highlighter',
 			'description' => tra('Enables syntax highlighting with the use of CodeMirror'),
-			'default' => 'y',
+			'default' => 'n',
 		),
 		'feature_syntax_highlighter_theme' => array(
 			'name' => tra('Syntax Highlighter (CodeMirror) Theme'),
