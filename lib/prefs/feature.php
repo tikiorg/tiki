@@ -2640,7 +2640,7 @@ function prefs_feature_list($partial = false)
 			'type' => 'flag',
 			'help' => 'Syntax+Highlighter',
 			'keywords' => 'Code Mirror Syntax Highlighter',
-			'default' => 'y',
+			'default' => 'n',
 		),
 		'feature_syntax_highlighter_theme' => array(
 			'name' => tra('Syntax Highlighter (CodeMirror) Theme'),
