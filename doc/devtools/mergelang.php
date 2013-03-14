@@ -6,10 +6,10 @@
 // $Id$
 
 /*
- *  A problem with having to maintain translations of several versions of Tiki is
+ * A problem with having to maintain translations of several versions of Tiki is
  * that the same strings have the same translations, but is not desirable to change
  * them for each branch. This utility takes the translations from a source version
- * and add to a target version if the string exists in the targe language files. 
+ * and add to a target version if the string exists in the target language files. 
  */
 
 if ($argc < 3) {
