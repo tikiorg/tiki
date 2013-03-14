@@ -27,7 +27,9 @@ class Services_Draw_Controller
 		
 		$_REQUEST['fileId'] = $input->fileId->int();
 		$_REQUEST['galleryId'] = $input->galleryId->int();
-		
+		$_REQUEST['fromFieldId'] = $input->imgParams->fromFieldId->int();
+		$_REQUEST['fromItemId'] = $input->imgParams->fromItemId->int();
+
 		include_once 'tiki-edit_draw.php';
 	}
 	

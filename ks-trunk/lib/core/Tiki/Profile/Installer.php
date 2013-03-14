@@ -132,6 +132,10 @@ class Tiki_Profile_Installer
 
 	function getInstallOrder( Tiki_Profile $profile ) // {{{
 	{
+		if ($profile == null) {
+			return false;
+		}
+		
 		// Obtain the list of all required profiles
 		$dependencies = $profile->getRequiredProfiles(true);
 		$dependencies[$profile->getProfileKey()] = $profile;

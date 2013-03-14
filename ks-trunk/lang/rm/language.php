@@ -4786,6 +4786,7 @@ $lang = array(
 // "Whether to only show the title of the articles (not set to title only by default)" => "Whether to only show the title of the articles (not set to title only by default)",
 // "Body Only" => "Body Only",
 // "Whether to only show the body of the articles or just the heading and title. (not set to body only by default)" => "Whether to only show the body of the articles or just the heading and title. (not set to body only by default)",
+// "Whether to show the body of the articles instead of the heading. (not set by default)" => "Whether to only show the body of the articles or just the heading and title. (not set to body only by default)",
 // "Starting Article" => "Starting Article",
 // "The article number that the list should start with (starts with first article by default)" => "The article number that the list should start with (starts with first article by default)",
 // "This will not work if Pagination is used" => "This will not work if Pagination is used",

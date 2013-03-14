@@ -68,7 +68,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		$profile = Tiki_Profile::fromNames($_POST['pd'], $_POST['pp']);
 		$installer->install($profile);
 
-		if ($target = $profile->getInstructionPage()) {
+		if (($profile != null) && ($target = $profile->getInstructionPage())) {
 			global $wikilib;
 			require_once 'lib/wiki/wikilib.php';
 			$target = $wikilib->sefurl($target);

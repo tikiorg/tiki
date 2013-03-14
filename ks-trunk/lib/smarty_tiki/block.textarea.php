@@ -31,12 +31,26 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 
 function smarty_block_textarea($params, $content, $smarty, $repeat)
 {
+    static $included=false;
 	global $prefs, $headerlib, $smarty, $is_html;
 
 	if ( $repeat ) {
 		return;
 	}
-
+    if (!$included){
+        $headerlib->add_js(
+            <<<JS
+                function GetCurrentEditorAreaId(ob){
+        var p;
+        p=ob.parentNode;
+        while(p.className != "edit-zone"){p=p.parentNode;}
+        areaid=p.id.substring(10);
+        //alert ("areaid="+areaid);
+        return areaid;
+    }
+JS
+        );
+    }
 	// some defaults
 	$params['_toolbars'] = isset($params['_toolbars']) ? $params['_toolbars'] : 'y';
 	if ($prefs['mobile_feature'] === 'y' && $prefs['mobile_mode'] === 'y') {
@@ -93,7 +107,7 @@ function smarty_block_textarea($params, $content, $smarty, $repeat)
 		$params['style'] = 'width:99%';
 	}
 	$html = '';
-	$html .= '<input type="hidden" name="mode_wysiwyg" value="" /><input type="hidden" name="mode_normal" value="" />';
+    if (!$included) $html .= '<input type="hidden" name="mode_wysiwyg" value="" /><input type="hidden" name="mode_normal" value="" />';
 
 	$auto_save_referrer = '';
 	$auto_save_warning = '';
@@ -156,7 +170,7 @@ function smarty_block_textarea($params, $content, $smarty, $repeat)
 		if ($prefs['feature_jison_wiki_parser'] == 'y') {
 			global $wysiwyglib; include_once('lib/ckeditor_tiki/wysiwyglib.php');
 			$html .= $wysiwyglib->setUpJisonEditor($params['_is_html'], $as_id, $params, $auto_save_referrer);
-			$html .= '<input name="jisonWyisywg" type="hidden" value="true" />';
+            if (!$included) $html .= '<input name="jisonWyisywg" type="hidden" value="true" />';
 			$html .= '<div class="wikiedit ui-widget-content" name="'.$params['name'].'" id="'.$as_id.'">' . ($content) . '</div>';
 		} else {
 			// new ckeditor implementation 2010
@@ -191,8 +205,9 @@ function smarty_block_textarea($params, $content, $smarty, $repeat)
 			global $wysiwyglib; include_once('lib/ckeditor_tiki/wysiwyglib.php');
 			$ckoptions = $wysiwyglib->setUpEditor($params['_is_html'], $as_id, $params, $auto_save_referrer);
 
-			$html .= '<input type="hidden" name="wysiwyg" value="y" />';
-
+            if (!$included) {
+                $html .= '<input type="hidden" name="wysiwyg" value="y" />';
+                }
 			$html .= '<textarea class="wikiedit ckeditor" name="'.$params['name'].'" id="'.$as_id.'" style="visibility:hidden;';	// missing closing quotes, closed in condition
 
 			if (empty($params['cols'])) {
@@ -242,7 +257,8 @@ function smarty_block_textarea($params, $content, $smarty, $repeat)
 		$smarty->assignByRef('textareadata', $content);
 		$html .= $smarty->fetch('wiki_edit.tpl');
 
-		$html .= "\n".'<input type="hidden" name="wysiwyg" value="n" />';
+        if (!$included)
+            $html .= "\n".'<input type="hidden" name="wysiwyg" value="n" />';
 
 	}	// wiki or wysiwyg
 
@@ -376,6 +392,7 @@ function switchEditor(mode, form) {
 		}
 		$headerlib->add_js($js_editconfirm);
 	}	// end if ($params['_simple'] == 'n')
+    $included=true;
 
 	return $auto_save_warning.$html;
 }

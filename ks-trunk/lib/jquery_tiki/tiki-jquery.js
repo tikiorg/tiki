@@ -2838,6 +2838,7 @@ $.fn.ajaxEditDraw = function(options) {
 			action: 'edit',
 			fileId: me.data('fileid'),
 			galleryId: me.data('galleryid'),
+			imgParams: me.data('imgparams'),
 			raw: true
 		},
 		modal: true,
@@ -2854,6 +2855,7 @@ $.fn.ajaxEditDraw = function(options) {
 					fileId: me.data('fileid'),
 					galleryId: me.data('galleryid'),
 					name: me.data('name'),
+					imgParams: me.data('imgparams'),
 					data: $('#fileData').val()
 				})
 				.bind('savedDraw', function(e, o) {

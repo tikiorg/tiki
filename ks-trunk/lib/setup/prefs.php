@@ -250,21 +250,20 @@ function get_default_prefs()
 			// toolbars
 			// comma delimited items, / delimited rows and | denotes items right justified in toolbar (in reverse order)
 			// full list in lib/toolbars/toolbarslib.php Toolbar::getList()
-			// cannot contain spaces, commas, forward-slash or pipe chars
+			// cannot contain spaces, commas, forward-slash or pipe chars within tool names
 			'toolbar_global' => '
-				bold,italic,underline,strike, sub, sup,-,color,-,wikiplugin_img,tikiimage,wikiplugin_file,tikifile,tikilink,link, unlink, anchor,-,
-				undo, redo,-,find,replace,-, removeformat,specialchar,smiley|help,switcheditor,autosave/
-				templates, cut, copy, paste, pastetext, pasteword,-,h1,h2,h3, left,center,-,
-				blockquote,list,numlist,wikiplugin_mouseover,wikiplugin_module,wikiplugin_html,wikiplugin_wysiwyg,wikiplugin_draw, outdent, indent,-,
-				pagebreak,rule,-,table,-,wikiplugin_code,source,showblocks,nonparsed,screencapture|fullscreen/
-				format,style,-,fontname,fontsize/
+				bold, italic, underline, strike, sub, sup,-, color, -, tikiimage, tikilink, link, unlink, anchor, -,
+				undo, redo, -, find, replace, -, removeformat, specialchar, smiley | help, switcheditor, autosave /
+				format, templates, cut, copy, paste, pastetext, pasteword, -, h1, h2, h3, left, center, -,
+				blockquote, list, numlist, -, pagebreak, rule, -, table, -, source, showblocks, screencapture | fullscreen /
+				style, fontname, fontsize, outdent, indent /
 			',
 			'toolbar_global_comments' => '
 				bold, italic, underline, strike , - , link, smiley | help
 			',
-			'toolbar_sheet' => 'addrow,addrowbefore,addrowmulti,deleterow,-,addcolumn,addcolumnbefore,addcolumnmulti,deletecolumn,-,
-								sheetgetrange,sheetrefresh,-,sheetfind|sheetclose,sheetsave,help/
-								bold,italic,underline,strike,center,-,color,bgcolor,-,tikilink,nonparsed|fullscreen/',
+			'toolbar_sheet' => 'addrow, addrowbefore, addrowmulti, deleterow,-, addcolumn, addcolumnbefore, addcolumnmulti, deletecolumn,-,
+								sheetgetrange, sheetrefresh, -, sheetfind | sheetclose, sheetsave, help/
+								bold, italic, underline, strike, center, -, color, bgcolor, -, tikilink, nonparsed | fullscreen /',
 
 			// unified search
 			'unified_forum_deepindexing' => 'y',

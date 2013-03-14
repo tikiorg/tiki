@@ -440,6 +440,7 @@ if (typeof window.CKEDITOR !== "undefined" && !window.CKEDITOR.plugins.get("{$na
 			var command = editor.addCommand( '{$name}', new window.CKEDITOR.command( editor , {
 				modes: { wysiwyg:1 },
 				exec: function (elem, editor, data) {
+				    CurrentEditorName=editor.name;
 					{$js}
 				},
 				canUndo: false
@@ -822,13 +823,18 @@ class ToolbarLineBased extends ToolbarInline // Will change in the future
 			$syntax = '#text';
 			break;
 		case 'indent':
-			$label = tra('Indent');
-			$icon = tra('img/icons/arrow_right.png');
-			$wysiwyg = null;
-			$syntax = '  text';
+			global $prefs;
+			if ($prefs['feature_jison_wiki_parser'] === 'y') {	// leading spaces does nothing in the current parser, maybe it was for jison?
+				$label = tra('Indent');
+				$icon = tra('img/icons/arrow_right.png');
+				$wysiwyg = null;
+				$syntax = '  text';
+			} else {
+				return null;
+			}
 			break;
 		default:
-			return;
+			return null;
 		}
 
 		$tag = new self;
@@ -1233,6 +1239,7 @@ if (typeof window.CKEDITOR !== "undefined" && !window.CKEDITOR.plugins.get("{$th
 			var command = editor.addCommand( '{$this->name}', new window.CKEDITOR.command( editor , {
 				modes: { wysiwyg:1 },
 				exec: function(elem, editor, data) {
+				    CurrentEditorName=editor.name;
 					{$this->getSyntax( $areaId )};
 				},
 				canUndo: false
@@ -1362,6 +1369,7 @@ if (typeof window.CKEDITOR !== "undefined" && !window.CKEDITOR.plugins.get("{$na
 			var command = editor.addCommand( '{$name}', new window.CKEDITOR.command( editor , {
 				modes: { wysiwyg:1 },
 				exec: function(elem, editor, data) {
+				    CurrentEditorName=editor.name;
 					$.openEditHelp();
 					return false;
 				},
@@ -1497,6 +1505,7 @@ if (typeof window.CKEDITOR !== "undefined" && !window.CKEDITOR.plugins.get("{$th
 			var command = editor.addCommand( '{$this->name}', new window.CKEDITOR.command( editor , {
 				modes: { wysiwyg:1 },
 				exec: function(elem, editor, data) {
+				    CurrentEditorName=editor.name;
 					switchEditor('wiki', $('#$areaId').parents('form')[0]);
 				},
 				canUndo: false
@@ -1940,12 +1949,14 @@ class ToolbarsList
 			foreach ( $line as $bit ) {
 				foreach ( $bit as $group) {
 					$group_count = 0;
-					foreach ( $group as $tag ) {
-						if ($isHtml) {
-							if ( $token = $tag->getWysiwygToken($areaId) ) {
-								$lineOut[] = $token; $group_count++;
-							}
-						} else {
+                    if ($isHtml) {
+					        foreach ( $group as $tag ) {
+								if ( $token = $tag->getWysiwygToken($areaId) ) {
+								    $lineOut[] = $token; $group_count++;
+							    }
+                            }
+					} else {
+                        foreach ( $group as $tag ) {
 							if ( $token = $tag->getWysiwygWikiToken($areaId) ) {
 								$lineOut[] = $token; $group_count++;
 							}
