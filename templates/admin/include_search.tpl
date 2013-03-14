@@ -21,9 +21,23 @@
 
 	{tabset name=admin_search}
 		{tab name="{tr}General Settings{/tr}"}
+		
 			<fieldset>
 				<legend>
-					{tr}Unified Search{/tr}
+					{tr}Full Text Search (Classic search){/tr}{help url="Search"}
+				</legend>
+				{preference name=feature_search_fulltext}
+				<div class="adminoptionboxchild" id="feature_search_fulltext_childcontainer">				
+					{preference name=feature_referer_highlight}
+
+					{preference name=feature_search_show_forbidden_obj}
+					{preference name=feature_search_show_forbidden_cat}
+				</div>
+			</fieldset>
+		
+			<fieldset>
+				<legend>
+					{tr}Unified Search{/tr} {tr}(Advanced){/tr}
 				</legend>
 
 				{preference name=feature_search visible="always"}
@@ -114,18 +128,7 @@ $("#log-rebuild").click(function(){
 					{/if}
 				</div>
 			</fieldset>
-			<fieldset>
-				<legend>
-					{tr}MySQL Search (legacy){/tr}{help url="Search"}
-				</legend>
-				{preference name=feature_search_fulltext}
-				<div class="adminoptionboxchild" id="feature_search_fulltext_childcontainer">				
-					{preference name=feature_referer_highlight}
 
-					{preference name=feature_search_show_forbidden_obj}
-					{preference name=feature_search_show_forbidden_cat}
-				</div>
-			</fieldset>
 			<fieldset>
 				<legend>{tr}Features{/tr}</legend>
 				{preference name=search_autocomplete}
