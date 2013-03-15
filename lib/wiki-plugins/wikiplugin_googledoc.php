@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2013 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -15,7 +15,7 @@ function wikiplugin_googledoc_info()
 		'body' => tra('Leave this empty.'),
 //		'validate' => 'all',
 		'icon' => 'img/icons/google.png',
-		'tags' => array( 'basic' ),		
+		'tags' => array( 'basic' ),
 		'params' => array(
 			'type' => array(
 				'safe' => true,
@@ -25,9 +25,9 @@ function wikiplugin_googledoc_info()
 				'filter' => 'alpha',
 				'default' => '',
 				'options' => array(
-					array('text' => '', 'value' => ''), 
-					array('text' => tra('Document'), 'value' => 'document'), 
-					array('text' => tra('Presentation'), 'value' => 'presentation'), 
+					array('text' => '', 'value' => ''),
+					array('text' => tra('Document'), 'value' => 'document'),
+					array('text' => tra('Presentation'), 'value' => 'presentation'),
 					array('text' => tra('Spreadsheet'), 'value' => 'speadsheet')
 				)
 			),
@@ -52,9 +52,9 @@ function wikiplugin_googledoc_info()
 				'filter' => 'alpha',
 				'default' => '',
 				'options' => array(
-					array('text' => '', 'value' => ''), 
-					array('text' => tra('Small'), 'value' => 'small'), 
-					array('text' => tra('Medium'), 'value' => 'medium'), 
+					array('text' => '', 'value' => ''),
+					array('text' => tra('Small'), 'value' => 'small'),
+					array('text' => tra('Medium'), 'value' => 'medium'),
 					array('text' => tra('Large'), 'value' => 'large')
 				)
 			),
@@ -81,12 +81,12 @@ function wikiplugin_googledoc_info()
 				'description' => 'top|middle|bottom|left|right',
 				'default' => '',
 				'options' => array(
-					array('text' => '', 'value' => ''), 
-					array('text' => tra('Top'), 'value' => 'top'), 
-					array('text' => tra('Middle'), 'value' => 'middle'), 
-					array('text' => tra('Bottom'), 'value' => 'bottom'), 
-					array('text' => tra('Left'), 'value' => 'left'), 
-					array('text' => tra('Right'), 'value' => 'right') 
+					array('text' => '', 'value' => ''),
+					array('text' => tra('Top'), 'value' => 'top'),
+					array('text' => tra('Middle'), 'value' => 'middle'),
+					array('text' => tra('Bottom'), 'value' => 'bottom'),
+					array('text' => tra('Left'), 'value' => 'left'),
+					array('text' => tra('Right'), 'value' => 'right')
 				)
 			),
 			'frameborder' => array(
@@ -96,8 +96,8 @@ function wikiplugin_googledoc_info()
 				'description' => tra('Choose whether to show a border around the iframe'),
 				'default' => 0,
 				'options' => array(
-					array('text' => '', 'value' => ''), 
-					array('text' => tra('Yes'), 'value' => 1), 
+					array('text' => '', 'value' => ''),
+					array('text' => tra('Yes'), 'value' => 1),
 					array('text' => tra('No'), 'value' => 0)
 				)
 			),
@@ -122,8 +122,8 @@ function wikiplugin_googledoc_info()
 				'description' => tra('Choose whether to add a scroll bar'),
 				'default' => '',
 				'options' => array(
-					array('text' => '', 'value' => ''), 
-					array('text' => tra('Yes'), 'value' => 'yes'), 
+					array('text' => '', 'value' => ''),
+					array('text' => tra('Yes'), 'value' => 'yes'),
 					array('text' => tra('No'), 'value' => 'no'),
 					array('text' => tra('Auto'), 'value' => 'auto')
 				)
@@ -136,8 +136,8 @@ function wikiplugin_googledoc_info()
 				'filter' => 'alpha',
 				'default' => '',
 				'options' => array(
-					array('text' => '', 'value' => ''), 
-					array('text' => tra('Top'), 'value' => 'top'), 
+					array('text' => '', 'value' => ''),
+					array('text' => tra('Top'), 'value' => 'top'),
 					array('text' => tra('Bottom'), 'value' => 'bottom'),
 					array('text' => tra('Both'), 'value' => 'both')
 				)
@@ -149,7 +149,7 @@ function wikiplugin_googledoc_info()
 function wikiplugin_googledoc($data, $params)
 {
 	extract($params, EXTR_SKIP);
-	
+
 	if (empty($type)) {
 		return tra('Required parameter "type" missing');
 	}
@@ -158,8 +158,9 @@ function wikiplugin_googledoc($data, $params)
 	}
 
 	if ($type =="sheet" or $type=="spreadsheet") {
-		$srcUrl="\"http://spreadsheets.google.com/pub?key=$key &output=html&widget=true\"";
-		$editHtml=" <P><A HREF=$srcUrl Target=\"$frameName\">Edit this Google Document</A></P>";
+		$srcUrl="\"https://docs.google.com/spreadsheet/pub?key=$key &output=html&widget=true\"";
+		$editSrcUrl="\"https://docs.google.com/spreadsheet/ccc?key=$key &output=html&widget=true\"";
+		$editHtml=" <p><a href=$editSrcUrl target=\"$frameName\">Edit this Google Document</a></p>";
 	}
 	if ($type =="doc" or $type=="document") {
 		$srcUrl="\"http://docs.google.com/View?docid=$key\"";
@@ -169,9 +170,9 @@ function wikiplugin_googledoc($data, $params)
 		$srcUrl="\"http://docs.google.com/EmbedSlideshow?docid=$key\"";
 		$editHtml="";
 	}
-	
+
 	$ret = "";
-	
+
 	if (isset($name)) {
 		$frameName=$name;
 	} else {
@@ -183,7 +184,7 @@ function wikiplugin_googledoc($data, $params)
 
 	$ret .= '<iframe ';
 	$ret .= " name=\"$frameName\"";
-	
+
 	if ($size == 'small') {
 		$width= 410; $height= 342;
 	}
@@ -193,7 +194,7 @@ function wikiplugin_googledoc($data, $params)
 	if ($size == 'large') {
 		$width= 700; $height= 559;
 	}
-	
+
 	if (isset($width)) {
 		$ret .= " width=\"$width\"";
 	} else {
