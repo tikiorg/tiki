@@ -56,6 +56,10 @@ function smarty_modifier_sefurl($source, $type='wiki', $with_next = '', $all_lan
 			$href = $sefurl ? "article$source" : "tiki-read_article.php?articleId=$source";
 			break;
 
+		case 'topic':
+			$href = "tiki-view_articles.php?topic=$source";
+			break;
+
 		case 'file':
 		case 'thumbnail':
 		case 'display':
