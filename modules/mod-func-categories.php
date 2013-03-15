@@ -62,7 +62,7 @@ function module_categories($mod_reference, &$module_params)
 	global $categlib; include_once ('lib/categories/categlib.php');
 	if (isset($module_params['type'])) {
 		$type = $module_params['type'];
-		$urlEnd = '&amp;type='.urlencode($type);
+		$urlEnd = 'type='.urlencode($type);
 	} else {
 		$type = '';
 		$urlEnd = '';
@@ -71,7 +71,10 @@ function module_categories($mod_reference, &$module_params)
 		$deep = $module_params['deep'];
 	else
 		$deep= 'on';
-	$urlEnd .= "?deep=$deep";
+	if (empty($urlEnd)) {
+		$urlEnd .= '&amp;';
+	}
+	$urlEnd .= "deep=$deep";
 	$name = "";
 
 
@@ -111,7 +114,7 @@ function module_categories($mod_reference, &$module_params)
 		if (isset($module_params['selflink']) && $module_params['selflink'] == 'y') {
 			$url = filter_out_sefurl('tiki-index.php?page=' . urlencode($cat['name']));
 		} else {
-			$url = filter_out_sefurl('tiki-browse_categories.php?parentId=' . $cat['categId'], 'category', $cat['name']) .$urlEnd;
+			$url = filter_out_sefurl('tiki-browse_categories.php?parentId=' . $cat['categId'], 'category', $cat['name'], true) .$urlEnd;
 		}
 		$tree_nodes[] = array(
 			"id" => $cat["categId"],
