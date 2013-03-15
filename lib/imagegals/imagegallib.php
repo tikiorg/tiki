@@ -719,14 +719,21 @@ class ImageGalsLib extends TikiLib
 					`imageId`=? and `type`=? and
 					`xsize`=? and `ysize`=?";
 			$bindvars = array($this->filetype, $this->filename, ($prefs['gal_use_db'] == 'y') ? $this->image : '', (int)$size, (int)$this->xsize, (int)$this->ysize, (int)$this->imageId, $this->type, (int)$this->oldxsize, (int)$this->oldysize);
-		} else {
-			$query = "insert into `tiki_images_data`(`imageId`,`xsize`,`ysize`,
-				`type`,`filesize`,`filetype`,`filename`,`data`)
-					values (?,?,?,?,?,?,?,?)";
-			$bindvars = array((int)$this->imageId, (int)$this->xsize, (int)$this->ysize, $this->type, (int)$size, $this->filetype, $this->filename, ($prefs['gal_use_db'] == 'y') ? $this->image : '');
-		}
 
-		$result = $this->query($query, $bindvars);
+			$result = $this->query($query, $bindvars);
+		} else {
+			$table = $this->table('tiki_images_data')->insertOrUpdate(array(
+				'xsize' => (int)$this->xsize,
+				'ysize' => (int)$this->ysize,
+				'type' => $this->type,
+				'filesize' => (int)$size,
+				'filetype' => $this->filetype,
+				'filename' => $this->filename,
+				'data' => ($prefs['gal_use_db'] == 'y') ? $this->image : '',
+			), array(
+				'imageId' => (int) $this->imageId,
+			));
+		}
 		return true;
 	}
 
