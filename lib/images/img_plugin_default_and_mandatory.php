@@ -1,4 +1,10 @@
 <?php
+// (c) Copyright 2002-2013 by authors of the Tiki Wiki CMS Groupware Project
+//
+// All Rights Reserved. See copyright.txt for details and a complete list of authors.
+// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+// $Id$
+
 /*Admin default and mandatory settings (must be set by changing this fle or using plugin alias). Default will be used if not overridden
 by user. Mandatory will override user settings. Examples below set parameters depending on whether the image is in an article, a module, or
 whether mobile mode is set, etc.*/
@@ -133,19 +139,19 @@ if (!function_exists('apply_default_and_mandatory')) {
 					     								break;
 													case 'sort_mode':
 														$imgdata['sort_mode'] = trim($img_parameter_array[1]);
-    														break;
+    													break;
 													case 'attId':
 														$imgdata['attId'] = trim($img_parameter_array[1]);
-    														break;
+    													break;
 													case 'thumb':
 														$imgdata['thumb'] = trim($img_parameter_array[1]);
-    														break;
+    													break;
 													case 'button':
 														$imgdata['button'] = trim($img_parameter_array[1]);
      													break;
 													case 'link':
 														$imgdata['link'] = trim($img_parameter_array[1]);
-    														break;
+    													break;
 													case 'rel':
 														$imgdata['rel'] = trim($img_parameter_array[1]);
 														break;
@@ -160,37 +166,37 @@ if (!function_exists('apply_default_and_mandatory')) {
  					    								break;
 													case 'max':
 														$imgdata['max'] = trim($img_parameter_array[1]);
-						    								break;
+						    							break;
 													case 'imalign':
 														$imgdata['imalign'] = trim($img_parameter_array[1]);
-						    								break;
+						    							break;
 													case 'styleimage':
 														$imgdata['styleimage'] = trim($img_parameter_array[1]);
-						    								break;
+						    							break;
 													case 'align':
 														$imgdata['align'] = trim($img_parameter_array[1]);
-						    								break;
+						    							break;
 													case 'stylebox':
 														$imgdata['stylebox'] = trim($img_parameter_array[1]);
-						    								break;
+						    							break;
 													case 'styledesc':
 														$imgdata['styledesc'] = trim($img_parameter_array[1]);
 														break;
 													case 'block':
 														$imgdata['block'] = trim($img_parameter_array[1]);
-					    									break;
+					    								break;
 													case 'class':
 														$imgdata['class'] = trim($img_parameter_array[1]);
-					    									break;
+					    								break;
 													case 'desc':
 														$imgdata['desc'] = trim($img_parameter_array[1]);
-					    									break;
+					    								break;
 													case 'title':
 														$imgdata['title'] = trim($img_parameter_array[1]);
-					    									break;
+					    								break;
 													case 'metadata':
 														$imgdata['metadata'] = trim($img_parameter_array[1]);
-					    									break;
+					    								break;
 													case 'alt':
 														$imgdata['alt'] = trim($img_parameter_array[1]);
  					    								break;

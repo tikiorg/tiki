@@ -71,11 +71,15 @@ function tiki_route($path)
 	tiki_route_attempt('|^cat(\d+)(\-.*)?$|', 'tiki-browse_categories.php', tiki_route_single(1, 'parentId'));
 	tiki_route_attempt_prefix('browseimage', 'tiki-browse_image.php', 'imageId');
 
-	tiki_route_attempt('|^cal(\d[\d,]*)$|', 'tiki-calendar.php', function ($parts) {
-		$ids = explode(',', $parts[1]);
-		$ids = array_filter($ids);
-		return array('calIds' => $ids);
-	});
+	tiki_route_attempt(
+		'|^cal(\d[\d,]*)$|',
+		'tiki-calendar.php',
+		function ($parts) {
+			$ids = explode(',', $parts[1]);
+			$ids = array_filter($ids);
+			return array('calIds' => $ids);
+		}
+	);
 
 	tiki_route_attempt_prefix('directory', 'tiki-directory_browse.php', 'parent');
 	tiki_route_attempt_prefix('dirlink', 'tiki-directory_redirect.php', 'siteId');
@@ -87,12 +91,16 @@ function tiki_route($path)
 	tiki_route_attempt_prefix('gallery', 'tiki-browse_gallery.php', 'galleryId');
 	tiki_route_attempt_prefix('img', 'show_image.php', 'id');
 	tiki_route_attempt_prefix('image', 'show_image.php', 'id');
-	tiki_route_attempt('|^imagescale(\d+)/(\d+)$|', 'show_image.php', function ($parts) {
-		return array(
-			'id' => $parts[1],
-			'scalesize' => $parts[2],
-		);
-	});
+	tiki_route_attempt(
+		'|^imagescale(\d+)/(\d+)$|',
+		'show_image.php',
+		function ($parts) {
+			return array(
+				'id' => $parts[1],
+				'scalesize' => $parts[2],
+			);
+		}
+	);
 	tiki_route_attempt_prefix('int', 'tiki-integrator.php', 'repID');
 	tiki_route_attempt_prefix('item', 'tiki-view_tracker_item.php', 'itemId');
 	tiki_route_attempt_prefix('newsletter', 'tiki-newsletters.php', 'nlId=1', array('info' => '1'));
@@ -109,22 +117,34 @@ function tiki_route($path)
 	tiki_route_attempt_prefix('display', 'tiki-download_file.php', 'fileId', array('display' => ''));
 	tiki_route_attempt_prefix('preview', 'tiki-download_file.php', 'fileId', array('preview' => ''));
 
-	tiki_route_attempt('/^(wiki|page)\-(.+)$/', 'tiki-index.php', function ($parts) {
-		return array('page' => $parts[2]);
-	});
-	tiki_route_attempt('/^show:(.+)$/', 'tiki-slideshow.php', function ($parts) {
-		return array('page' => $parts[2]);
-	});
-
-	tiki_route_attempt('|^tiki\-(\w+)(\-(\w+))?$|', 'tiki-ajax_services.php', function ($parts) {
-		$params = array('controller' => $parts[1]);
-
-		if (isset($parts[3])) {
-			$params['action'] = $parts[3];
+	tiki_route_attempt(
+		'/^(wiki|page)\-(.+)$/',
+		'tiki-index.php',
+		function ($parts) {
+			return array('page' => $parts[2]);
 		}
+	);
+	tiki_route_attempt(
+		'/^show:(.+)$/',
+		'tiki-slideshow.php',
+		function ($parts) {
+			return array('page' => $parts[2]);
+		}
+	);
 
-		return $params;
-	});
+	tiki_route_attempt(
+		'|^tiki\-(\w+)(\-(\w+))?$|',
+		'tiki-ajax_services.php',
+		function ($parts) {
+			$params = array('controller' => $parts[1]);
+
+			if (isset($parts[3])) {
+				$params['action'] = $parts[3];
+			}
+
+			return $params;
+		}
+	);
 
 	if (false !== $dot = strrpos($path, '.')) {
 		// Prevent things that look like filenames from being considered for wiki page names
@@ -134,9 +154,13 @@ function tiki_route($path)
 		}
 	}
 
-	tiki_route_attempt('|.*|', 'tiki-index.php', function ($parts) {
-		return array('page' => str_replace('+', ' ', $parts[0]));
-	});
+	tiki_route_attempt(
+		'|.*|',
+		'tiki-index.php',
+		function ($parts) {
+			return array('page' => str_replace('+', ' ', $parts[0]));
+		}
+	);
 }
 
 function tiki_route_attempt($pattern, $file, $callback = null, $extra = array())
