@@ -28,7 +28,7 @@ function wikiplugin_googledoc_info()
 					array('text' => '', 'value' => ''),
 					array('text' => tra('Document'), 'value' => 'document'),
 					array('text' => tra('Presentation'), 'value' => 'presentation'),
-					array('text' => tra('Spreadsheet'), 'value' => 'speadsheet')
+					array('text' => tra('Spreadsheet'), 'value' => 'spreadsheet')
 				)
 			),
 			'key' => array(
