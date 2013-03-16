@@ -28,10 +28,10 @@ html[dir=ltr]>body {
 	width: auto;
 }
 
-/* Make HTML 5 elements display block-level */  
-header, nav, article, section, footer, address {  
-    display: block;  
-} 
+/* Make HTML 5 elements display block-level */
+header, nav, article, section, footer, address {
+    display: block;
+}
 
 /* general #fixedwidth wrapper when fixed width is off */
 .fixedwidth {
@@ -72,7 +72,7 @@ body.fixed_width .fixedwidth .fixedwidth {
 
 .fullscreen #c1c2 #wrapper #col1.marginright {
 	margin-right: 30px;
-}	
+}
 
 .button {
 	display: inline-block;
@@ -142,10 +142,6 @@ form {
 	padding: 0;
 }
 
-fieldset {
-	clear: both;	
-}
-
 input, legend {
 	vertical-align: middle;
 }
@@ -156,7 +152,7 @@ hr {
 	border-width: 0;
 	padding: 0;
 }
-	
+
 img {
 	border: 0;
 }
@@ -173,7 +169,7 @@ img {
 }
 
 #sitetitle,
-#sitesubtitle { 
+#sitesubtitle {
 	line-height: 1;
 }
 
@@ -195,11 +191,6 @@ img {
 
 .siteloginbar div {
 	display: inline-block;
-}
-
-#top_modules .siteloginbar_poppedup {
-/*	margin-left: -20%;*/
-/*	margin-top: -2px;*/
 }
 
 .siteloginbar_popup .tabcontent fieldset {
@@ -258,6 +249,7 @@ li#logout_link a {
 .siteloginbar_poppedup {
 	padding: 0;
 	margin: 2px 2px 3px 1px;
+	display: none;
 }
 
 .siteloginbar_poppedup * {
@@ -478,8 +470,9 @@ li#logout_link a {
 
 #power {
 	padding: 0 1em 1em;
+	font-size: .9em;
 }
-	
+
 #credits {
 	display: inline;
 }
@@ -507,7 +500,7 @@ ul.jumplinks {
 	font-size: 0.8em;
 	list-style-type: none;
 }
-	
+
 ul.jumplinks,
 .jumplinks {
 	position: absolute;
@@ -526,7 +519,7 @@ ul.jumplinks,
 	z-index: 9;
 }
 
-.fullscreenbutton, 
+.fullscreenbutton,
 #fullscreenbutton {
 	position: absolute;
 	top: 2px;
@@ -534,10 +527,12 @@ ul.jumplinks,
 	z-index: 10;
 	font-size: 80%;
 }
-	
+
 #tiki-clean {
 	text-align: left;
 	padding: 1em;
+	background: #fff;
+	color: #000;
 }
 
 /****** Misc. Global Classes (layout and style) ****/
@@ -562,7 +557,7 @@ ul.jumplinks,
 	display: block;
 	margin-top: 10px;
 }
-	
+
 #attzone {
 	margin-top: 10px;
 }
@@ -599,15 +594,6 @@ ul.jumplinks,
 	margin: 10px 5px;
 }
 
-#debugconsole {
-	position: absolute;
-	top: 0;
-	left: 20px;
-	width: 60%;
-	height: auto;
-	z-index: 1000;
-}
-	
 #debugconsole table {
 	width: 100%;
 }
@@ -659,25 +645,20 @@ img.icon {
 .findtable {
   text-align: center;
   margin-bottom: 10px;
- }
- 
+}
+
 .findtitle,
 .findexactmatch,
 .findnumrows,
 .findtypes,
 .findlang {
-	display: inline; 
+	display: inline;
 	vertical-align: middle;
+	margin: 0 1px;
 }
 
 .findtable ul li {
 	float: left;
-}
-
-.alphafilter {
-	display: block;
-	margin: 10px 0;
-	text-align: center;
 }
 
 /* New Toolbars */
@@ -714,6 +695,9 @@ a.toolbar {			/* each tool button */
 	width: 128px;
 	z-index: 300;
 	line-height: 12px;
+	background: #fff;
+	border: thin solid #000;
+	color: #000;
 }
 
 .toolbars-picker.specialchar {	/* colours, smilies etc */
@@ -726,6 +710,7 @@ a.toolbar {			/* each tool button */
 	display: inline-block;
 	border: #fff 1px solid;
 	overflow: hidden;
+	color: #000;
 }
 
 .toolbars-picker.color a ,.toolbars-picker.bgcolor a {
@@ -735,6 +720,8 @@ a.toolbar {			/* each tool button */
 
 .toolbars-picker a:hover {
 	border: #f00 1px solid;
+	background: #ccc;
+	color: #000;
 }
 
 .toolbars-picker-reset {
@@ -753,6 +740,8 @@ a.toolbar {			/* each tool button */
 	width: 360px;
 	overflow: hidden !important;	/* override jq-ui's scroll bar as we use one on the div inside so the tabs stay in view */
 	height: 500px;
+	padding:  2px;
+	background: #aac9e9;
 }
 
 .help_sections > div {
@@ -765,7 +754,7 @@ a.toolbar {			/* each tool button */
 .simple_inlinehelp {
 	font-style: italic;
 	font-size: small;
-	font-family: sans-serif; 
+	font-family: sans-serif;
 }
 
 .box-share > div {
@@ -780,6 +769,10 @@ a.toolbar {			/* each tool button */
 	max-height: 90%;
 	overflow: auto;
 	z-index: 1000;
+	background: white;
+	color: black;
+	padding: 10px;
+	border: solid 2px black;
 }
 
 .icon_edit_section {
@@ -902,15 +895,18 @@ h3.box-title {
 	z-index: 1;
 	position: relative;
 	margin-bottom: -0.33em;
+	padding: 0.35em 0.9em 0.1em;
+	font-weight: bold;
+	border-bottom: none;
 }
-	
+
 .rbox-title .icon {
 	padding: 0 .35em 0 0;
 	vertical-align: top;
 }
-	
+
 .rbox-data {
-	position: relative;	
+	position: relative;
 	z-index: 0;
 }
 
@@ -920,7 +916,7 @@ h3.box-title {
 }
 
 /* For wikitext or custom code areas, editors can add, for example, a div class="halffloat"
-and put two modules or other divs between its tags;, each of these will use just under half of the width of the 
+and put two modules or other divs between its tags;, each of these will use just under half of the width of the
 wikitext or custom content area. Similarly for three or four modules (or divs) across the page. */
 .halffloat .box,
 .wikitext .halffloat .box {
@@ -940,8 +936,8 @@ wikitext or custom content area. Similarly for three or four modules (or divs) a
 
 .quarterfloat .box,
 .wikitext .quarterfloat .box {
-	float: left !important; 
-	clear: none; 
+	float: left !important;
+	clear: none;
 	width: 22%;
 	margin: 0 2% 0 0;
 }
@@ -956,7 +952,7 @@ wikitext or custom content area. Similarly for three or four modules (or divs) a
 /** Tables **/
 
 .normal,
-.normalnoborder, 
+.normalnoborder,
 .admin {
 	padding: 0;
 	margin: 0;
@@ -1034,7 +1030,7 @@ tr.diffheader {
 	padding: 1px 0;
 	white-space: nowrap;
 }
-	
+
 .tabmark a {
 	border-bottom: 0;
 	padding: 1px 5px;
@@ -1048,13 +1044,13 @@ tr.diffheader {
 	position: relative;
 	top: 0;
 }
-	
+
 .tabinactive {
 	border-bottom: none;
 	position: relative;
 	top: 0;
 }
-	
+
 .tabcontent {
 	z-index: 1;
 	position: relative;
@@ -1067,6 +1063,7 @@ tr.diffheader {
 .tabcontent table {
 	text-align: left;
 	width: auto;
+	background: transparent;
 }
 
 .tabcontent .normal {
@@ -1082,10 +1079,6 @@ tr.diffheader {
 #pageid {
 	float: left;
 	clear: both;
-}
-
-#cachedpage {
-	float: right;
 }
 
 .wikiactions {
@@ -1105,7 +1098,7 @@ tr.diffheader {
 	float: left;
 }
 
-/*Information below the wiki content must not overlap the wiki 
+/*Information below the wiki content must not overlap the wiki
 		content that could contain floated elements */
 .hrwikibottom {
 	clear: both;
@@ -1130,7 +1123,7 @@ tr.diffheader {
 /* wikiplugin_convene */
 
 .conveneHeaderRow td {
-	text-align: center; 
+	text-align: center;
 }
 
 .conveneVotes td,
@@ -1139,21 +1132,21 @@ tr.diffheader {
 	vertical-align: middle;
 }
 
-.convene-ok {    
+.convene-ok {
 	background-color: #D1F3D1 !important;
 	background-image: none !important;
-	text-align: center; 
+	text-align: center;
 }
 .convene-no {
 	background-color: #FFCCCA !important;
 	background-image: none !important;
-	text-align: center; 
+	text-align: center;
 }
-.convene-no img { 
-	display: none;   
+.convene-no img {
+	display: none;
 }
 .convene-unconfirmed {
-	text-align: center; 
+	text-align: center;
 }
 .conveneFooter, .conveneHeader {
 	text-align: center;
@@ -1171,7 +1164,7 @@ tr.diffheader {
 	border: 0;
 	margin-bottom: -1px;
 }
-	
+
 .versionav .button {
 	margin-bottom: 0;
 }
@@ -1185,7 +1178,7 @@ table.wikiplugin_tracker td {
 	vertical-align: top;
 	padding-bottom:1.2em;
 }
-	
+
 /* wikiplugin edit */
 .wikiplugin_edit textarea {
 	width: 99%;
@@ -1205,7 +1198,7 @@ ul.floatleft li {
 	float: left;
 	padding: 4px 2px;
 }
-	
+
 .editdate ul.floatleft {
 	margin-top: 8px;
 }
@@ -1216,6 +1209,8 @@ ul.floatleft li {
 	z-index: 500;
 	display:none;
 	padding: .4em;
+	background: #F5F5F5;
+	border: 1px solid #bbb;
 }
 
 /* fancytable (sortable) plugin */
@@ -1249,13 +1244,13 @@ ul.floatleft li {
 #right_modules .jtrack-form, #left_modules .jtrack-form  {
   height:245px !important;
 }
- 
+
 /** Wiki tocs **/
 .tocnav {
 	margin-bottom: 4px;
 	clear: both;
 }
- 
+
 #tocnavicons {
 	float: left;
 }
@@ -1266,17 +1261,6 @@ ul.floatleft li {
 
 #tocnavlinks {
 	clear: both;
-}
-
-/* TOC */
-.toc * {
-	list-style: none;
-}
-
-/* Wiki diff layout */
-.diff td {
-	white-space: normal;
-	
 }
 
 /***** Articles ****/
@@ -1315,7 +1299,7 @@ img.articleimage {
 	text-align: center;
 	margin-top: 1.1em
 }
-	
+
 .articletrailer .wikitopline {
 	float: left;
 }
@@ -1351,10 +1335,13 @@ img.articleimage {
 	width: 100%;
 	clear: both;
 }
-	
+
 .blogdesc {
 	display: block;
 	width: 40%;
+	padding: 8px;
+	margin-top: 8px;
+	margin-left: 6px;
 }
 
 .bloginfo {
@@ -1372,10 +1359,6 @@ img.articleimage {
 
 .postinfo div {
 	margin-top: 30%;
-}
-
-small.description {
-	display: block;
 }
 
 div.posthead {
@@ -1423,13 +1406,13 @@ body.tiki_forums .normal {
 	margin: 5px 0 0;
 	padding: 0;
 }
-	
+
 .post .postbody .content {
 	padding: 0 3px 3px 3px;
 	margin: 0;
 	text-align: left;
 }
-	
+
 .post .postbody-title {
 	overflow: hidden;
 }
@@ -1442,7 +1425,7 @@ body.tiki_forums .normal {
 	margin-left: 5px;
 	margin-top: 3px;
 }
-	
+
 .post .author {
 	float: right;
 	text-align: right;
@@ -1561,6 +1544,7 @@ body.tiki_forums .normal {
 
 .sub_comment_area {
 	clear: both;
+	background: url("../../img/edge.gif") no-repeat top left;
 }
 
 .forum_actions .actions {
@@ -1607,13 +1591,13 @@ body.tiki_forums .normal {
 	margin: 5px 0;
 	padding: 0;
 }
- 
+
 #comzoneopen {
 	display: block;
 	margin: 5px 0;
 	padding: 0;
 }
- 
+
 .commentstitle {
 	font-weight: bold;
 	font-size: 1.2em;
@@ -1625,11 +1609,6 @@ body.tiki_forums .normal {
 	font-size: x-small;
 }
 
-/* Comment Annotations */
-dl.note-list {
-	margin: .5em;
-}
-
 #note-editor-comment,
 .note-list .postbody-title {
 	padding: .5em;
@@ -1638,6 +1617,7 @@ dl.note-list {
 .note-list .title a {
 	font-size: larger;
 	font-weight: bold;
+	color: #000;
 }
 
 .note-list .actions {
@@ -1797,6 +1777,8 @@ body.filegal_popup #tiki-center {
 	float: left;
 	margin: 0;
 	padding: 0;
+	border: 1px solid transparent;
+	background: #fff;
 }
 
 /***** Categories, Tags *****/
@@ -1825,6 +1807,8 @@ a.categpath {
 .catfeatures {
 	margin-left: 0;
 	padding: 0;
+	font-weight: bold;
+	list-style: none
 }
 
 .catfeatures .catitems li {
@@ -1833,6 +1817,7 @@ a.categpath {
 }
 
 .catitems li {
+	margin-right: 7px;
 	display: inline;
 }
 
@@ -1881,15 +1866,6 @@ a.categpath {
 
 .freetagitemlist a:hover {
 	text-decoration: none;
-}
-
-.freetagitemlist .type {
-	margin-left: 10px;
-}
-
-a.freetag,
-a.freetag:hover {/* freetags.css (line 8)*/
-	margin: auto;
 }
 
 li.freetag {
@@ -1979,10 +1955,6 @@ ul.freetagged li {
 	border: 1px solid #909090;
 }
 
-.plugin-desc {
-	padding: 5px;
-}
-
 .plugin-sample {
 	padding: 5px;
 	font-family: "Courier New", Courier, monospace;
@@ -1993,7 +1965,7 @@ ul.freetagged li {
 }
 
 /***** Calendar *****/
-/* Properties are in css/calendar.css, 
+/* Properties are in css/calendar.css,
 	which can be overridden
 	in theme stylesheets.  */
 
@@ -2024,6 +1996,7 @@ ul.freetagged li {
 	display: none;
 	z-index: 9999;
 	position: absolute;
+	background: transparent url(../../img/overlay-light.png);
 }
 #ajaxLoading {
 	display: none;
@@ -2033,6 +2006,10 @@ ul.freetagged li {
 	vertical-align: top;
 	height: 80px;
 	width: 220px;
+	font-size: 2em;
+	font-weight: bold;
+	color: #333;
+	background: transparent url(../../img/loading-light.gif) no-repeat 50% 50%;
 }
 
 /* ColorBox */
@@ -2041,19 +2018,16 @@ ul.freetagged li {
 	margin: 3px 100px 0;
 }
 
-/* Autosave Preview handle */
-#autosave_preview_grippy {
-	z-index: 3;
-}
-
 /* Cluetip - JQuery tooltips
    =cluetipClass: 'default' */
-#cluetip-close { 
+#cluetip-close {
 	text-align: right;
 	margin: 0;
 	padding-right: .5em;
+	background: #fff;
+	color: #900;
 }
-	
+
 .cluetip-fullhtml {
 	margin: 0;
 	padding: 0;
@@ -2080,14 +2054,6 @@ ul.freetagged li {
 	vertical-align: middle;
 }
 
-.webmail_message_headers {
-	width: 100%;
-}
-
-.webmail_message_headers th {
-	width: 6em;
-}
-
 @media print {
 	.tikihelp, .navbar, .categbar, .tabstoggle, .tabs, #show-errors-button {display:none;}
 }
@@ -2101,14 +2067,6 @@ ul.freetagged li {
 
 .treeTable .checkBoxHeader {
 	font-size: .8em;
-}
-
-.treeTable .subHeader td {
-	font-weight: bold;
-}
-
-.treeTable .parent td {
-	font-style: italic;
 }
 
 /* tree browser */
@@ -2200,6 +2158,8 @@ img.pref_dependency {
 	height: 40px;
 	padding: 1em;
 	z-index: 1000;
+	background-color: #ade;
+	color: #000;
 }
 
 #intertrans-form {
@@ -2212,6 +2172,9 @@ img.pref_dependency {
 	display: none;
 	z-index: 2000;
 	padding: 1em;
+	background-color: #eff;
+	border: #799 solid 2px;
+	color: #000;
 }
 #intertrans-form table {
 	width: 98%;
@@ -2242,16 +2205,16 @@ img.pref_dependency {
 
 /* Kaltura browse entries */
 
-/* remove margins from the image */ 
-.kaltura .items img { 
-    margin: 0; 
+/* remove margins from the image */
+.kaltura .items img {
+    margin: 0;
 }
- 
-/* make A tags our floating scrollable items */ 
-.kaltura .items a { 
-    display: block; 
-    float: left; 
-    margin: 20px 15px; 
+
+/* make A tags our floating scrollable items */
+.kaltura .items a {
+    display: block;
+    float: left;
+    margin: 20px 15px;
 }
 
 /***** Accounting *****/
@@ -2601,26 +2564,10 @@ body.fullscreen {
 	background: #fff;
 }
 
-#tiki-clean {
-	background: #fff;
-	color: #000;
-}
-
 /* CKeditor contrast */
 body.wikitext {
 	background: #fff;
 	color: #000;
-}
-
-/* Ajax Loading Overlay */
-#ajaxLoadingBG {
-	background: transparent url(../../img/overlay-light.png);
-}
-#ajaxLoading {
-	font-size: 2em;
-	font-weight: bold;
-	color: #333;
-	background: transparent url(../../img/loading-light.gif) no-repeat 50% 50%;
 }
 
 .editable-inline {
@@ -2653,6 +2600,7 @@ body.wikitext {
 #autosave_preview_grippy {
 	background-color: #ccc;
 	background-image: url("../../img/icons/shading.png");
+	z-index: 3;
 }
 
 /* allow disabled elements to show up - FIXME
@@ -2668,6 +2616,7 @@ fieldset {
 	border: solid 1px #999;
 	margin-bottom: 2px;
 	padding: 0.3em;
+	clear: both;
 }
 
 /* margin and padding for span surrounding the "button" links, same definition for button form element */
@@ -2801,10 +2750,6 @@ a.flip:hover,
 	text-decoration: none;
 }
 
-#power {
-	font-size: .9em;
-}
-
 /****** Misc. Global Classes (layout and style) ****/
 
 #edithelpzone code {
@@ -2830,8 +2775,14 @@ a.flip:hover,
 	padding: 5px;
 	border: 2px solid #aaa;
 	font-size: 1em;
+	position: absolute;
+	top: 0;
+	left: 20px;
+	width: 60%;
+	height: auto;
+	z-index: 1000;
 }
-	
+
 #debugconsole form {
 	color: #dd6;
 }
@@ -2859,19 +2810,6 @@ a.flip:hover,
 	width: 190px;
 	text-align: left;
 	margin: auto;
-}
-
-.findtable {
-  text-align: center;
-  margin-bottom: 10px;
- }
- 
-.findtitle,
-.findexactmatch,
-.findnumrows,
-.findtypes,
-.findlang {
-	margin: 0 1px;
 }
 
 .findtitle input {
@@ -2926,20 +2864,6 @@ a.flip:hover,
 	border: #eee outset 1px;
 }
 
-.toolbars-picker {
-	background: #fff;
-	border: thin solid #000;
-	color: #000;
-}
-
-.toolbars-picker a {
-	color: #000;
-}
-
-.toolbars-picker a:hover {
-	background: #ccc;
-	color: #000;
-}
 
 /* New Help section */
 
@@ -2958,18 +2882,9 @@ a.flip:hover,
 	color: #000;
 }
 
-.help_sections {
-	padding:  2px;
-	background: #aac9e9;
-}
-
 .help_section {
 	background: #eee;
 	color: #000;
-}
-
-.box-share > div {
-	text-align: center;
 }
 
 .site_report a {
@@ -2982,22 +2897,6 @@ a.flip:hover,
 /* default look for editplugin icon links */
 .plugin-desc {
 	padding: 5px;
-}
-
-.plugin-sample {
-	padding: 5px;
-	font-family: monospace;
-}
-
-.plugin-sample .plugin-param {
-	padding-left: 15px;
-}
-
-.plugin-form-float {
-	background: white;
-	color: black;
-	padding: 10px;
-	border: solid 2px black;
 }
 
 .wikitext .plugin_gauge,
@@ -3050,11 +2949,6 @@ img.icon {
 	background: transparent;
 }
 
-/* Tabs */
-.tabcontent table {
-	background: transparent;
-}
-
 div #metadata fieldset.tabcontent, div #metadata div.tabs {
 	background-color: transparent;
 }
@@ -3087,19 +2981,13 @@ div #metadata fieldset.tabcontent, div #metadata div.tabs {
 .rbox {
 	margin: 1em .3em .3em .3em;
 }
-	
+
 .rbox-title,
 .rbox-data {
 	padding: .3em .6em;
 	border: 1px solid #000;
 	background: #eee;
 	color: #000;
-}
-
-.rbox-title {
-	padding: 0.35em 0.9em 0.1em;
-	font-weight: bold;
-	border-bottom: none;
 }
 
 .error .rbox-title,
@@ -3166,7 +3054,7 @@ td.italiclabel {
 	font-style: italic;
 }
 
-.normal, 
+.normal,
 .admin {
 	border-collapse: collapse;
 }
@@ -3201,7 +3089,7 @@ td.date {
 }
 td.checkbox {
 	text-align: center;
-	width: 20px;	
+	width: 20px;
 }
 td.action {
 	white-space: nowrap;
@@ -3226,6 +3114,7 @@ caption {
 /***** Wiki *****/
 
 #cachedpage {
+	float: right;
 	font-size: small;
 }
 
@@ -3250,14 +3139,14 @@ body.tiki_wiki #comments {
 .wpfade-hidden {
 	background-repeat: no-repeat;
 	background-image: url(../../img/toggle-expand-dark.png);
-	margin-left: -19px; 
+	margin-left: -19px;
 	padding-left: 19px;
 }
 
 .wpfade-shown {
 	background-repeat: no-repeat;
 	background-image: url(../../img/toggle-collapse-dark.png);
-	margin-left: -19px; 
+	margin-left: -19px;
 	padding-left: 19px;
 }
 
@@ -3267,7 +3156,7 @@ body.tiki_wiki #comments {
 
 .wpfade-span-icon {
 	cursor:pointer;
-	margin-left:19px;	
+	margin-left:19px;
 }
 
 .wpfade-div-plain {
@@ -3322,7 +3211,7 @@ body.tiki_wiki #comments {
 .wikitext .rbox-data ul {
 	list-style-type: disc;
 	margin-left: 15px;
-	padding-left: 15px;	
+	padding-left: 15px;
 }
 
 /* wikiplugin tracker */
@@ -3339,13 +3228,6 @@ body.tiki_wiki #comments {
 .charCount {
 	color: #BEBCBC;
 	font-style: italic;
-}
-
-/* mouseover plugin */
-
-.plugin-mouseover {
-	background: #F5F5F5;
-	border: 1px solid #bbb;
 }
 
 /* img plugin */
@@ -3390,12 +3272,14 @@ body.tiki_wiki #comments {
 }
 
 .toc * {
+	list-style: none;
 	border: none;
 }
 
 /* Wiki diff styles */
 .diff td {
 	border: 1px solid #696969;
+	white-space: normal;
 }
 
 .diff div {
@@ -3449,12 +3333,6 @@ body.tiki_wiki #comments {
 	font-style: italic;
 }
 
-.blogdesc {
-	padding: 8px;
-	margin-top: 8px;
-	margin-left: 6px;
-}
-
 .blogtools {
 	padding: 3px;
 	text-align: right
@@ -3502,6 +3380,7 @@ dl.note-list {
 	background: #fff;
 	color: #000;
 	border: solid thin black;
+	margin: .5em;
 }
 
 #note-editor-comment {
@@ -3517,10 +3396,6 @@ dl.note-list {
 
 .note-list .postbody-title {
 	background: #ccc;
-	color: #000;
-}
-
-.note-list .title a {
 	color: #000;
 }
 
@@ -3604,17 +3479,6 @@ p.norecords {
 	border: 1px solid #80b1e2;
 }
 
-.multiselect .selection {
-	border: 1px solid #80b1e2;
-	background: #fff;
-}
-
-/* transparent border added to keep content from shifting on hover */
-.multiselect,
-.multiselect .selection {
-	border: 1px solid transparent;
-}
-
 .multiselect:hover,
 .multiselect .selection:hover {
 	border: 1px solid #80b1e2;
@@ -3622,19 +3486,10 @@ p.norecords {
 
 /***** Categories, Tags *****/
 
-.catfeatures {
-	font-weight: bold;
-	list-style: none
-}
-
 .catitems {
 	margin-left: 15px;
 	padding: 0;
 	list-style: none;
-}
-
-.catitems li {
-	margin-right: 7px;
 }
 
 /***** Tags (freetags) *****/
@@ -3646,12 +3501,14 @@ p.norecords {
 .freetagitemlist .type {
 	font-weight: bold;
 	font-size: 0.8em;
+	margin-left: 10px;
 }
 
 a.freetag,
 a.freetag:hover {
 	background: none;
 	border: 0;
+	margin: auto;
 }
 
 a.freetag_1 {
@@ -3663,7 +3520,7 @@ a.freetag_2 {
 	text-decoration: none;
 	font-size: .9em;
 }
-	
+
 a.freetag_3 {
 	text-decoration: none;
 	font-size: 1em;
@@ -3711,11 +3568,6 @@ a.freetag_7 {
 
 .faqanswer {
 	padding: 0 12px 4px 12px;
-}
-
-/***** Forums *****/
-.sub_comment_area {
-	background: url("../../img/edge.gif") no-repeat top left;
 }
 
 /***** Quizzes *****/
@@ -3904,22 +3756,13 @@ textarea.tshoutbox{
 	color: #bed8f1;
 	font-size: 0.95em;
 }
-  
+
 .cluetip-default #cluetip-inner {
 	padding: .9em;
 }
 
-#cluetip-close { 
-	background: #fff;
-	color: #900;
-}
 .cluetip-close {
 	text-align: right;
-}
-	
-.cluetip-fullhtml {
-	margin: 0;
-	padding: 0;
 }
 
 /* webmail & groupmail */
@@ -3970,6 +3813,7 @@ textarea.tshoutbox{
 	background: #fff;
 	width: 100%;
 	padding: 0 5em .5em 0;
+	width: 100%;
 }
 
 .webmail_message_headers th {
@@ -3977,14 +3821,10 @@ textarea.tshoutbox{
 	text-align: right;
 	border: none;
 	background: transparent;
+	width: 6em;
 }
 
 /* treeTable definitions - used in object-perms so far */
-
-.treeTable .checkBoxHeader {
-	font-size: .8em;
-}
-
 .treeTable .subHeader td {
 	font-weight: bold;
 }
@@ -4036,7 +3876,7 @@ textarea.tshoutbox{
 
 .dropzone > div:hover {
 	background-color: #eee;
-} 
+}
 
 /* page contribution by author / wikiplugin_author */
 
@@ -4130,18 +3970,6 @@ textarea.tshoutbox{
 
 .ui-tabs .ui-tabs-nav li a {
 	padding: 0.3em 0.8em 0.1em;
-}
-/* interactive translations */
-
-#intertrans-indicator {
-	background-color: #ade;
-	color: #000;
-}
-
-#intertrans-form {
-	background-color: #eff;
-	border: #799 solid 2px;
-	color: #000;
 }
 
 .tree.root .object-count {
@@ -4284,7 +4112,7 @@ form.simple textarea.export {
 
 /* $.fn.modal */
 .mask {
-	position:absolute; 
+	position:absolute;
 	z-index:999;
 	background-color:#FFFFFF;
 	display:none;
@@ -4318,16 +4146,10 @@ form.simple textarea.export {
 }
 
 /* Site Login Bar Pop-up */
-.siteloginbar_poppedup {
-	display: none;
-}
-.siteloginbar_poppedup .tabcontent {
-/*	box-shadow: 0 5px 5px -3px rgba(0, 0, 0, .5);*/
-}
 .siteloginbar_poppedup .user,
 .siteloginbar_poppedup .pass {
 	display: table-row;
-} 
+}
 .siteloginbar_poppedup .user label,
 .siteloginbar_poppedup .pass label,
 .siteloginbar_poppedup .user input,
@@ -4388,8 +4210,6 @@ form.simple textarea.export {
 /* Facebook module styling */
 .fb-story {
 	font-style: italic;
-}
-.fb-message {
 }
 .fb-date a {
 	font-size: 0.8em;

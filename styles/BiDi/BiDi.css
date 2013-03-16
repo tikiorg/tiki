@@ -2,7 +2,7 @@
 
 /* GENERAL LAYOUT EXPLANATION
  *
- * BiDi layout modifications relay on the fact that the Tiki application is 
+ * BiDi layout modifications relay on the fact that the Tiki application is
  * enclosed as a whole in tiki-main or tiki-clean. Thus it mirrors the entire
  * output by setting the directionality property of this DIV element.
  * Other modifications include overriding all left text-alignments and
@@ -183,13 +183,15 @@ ul.sf-shadow ul {background-image:none}
 }
 
 /***** CSS menu *****/
-/* Menu alignment */ 
+/* Menu alignment */
 .cssmenu_horiz li, .cssmenu_vert li {
     float: right !important;
 }
 
 .cssmenu_horiz a, .cssmenu_vert a, .cssmenu_horiz ul li a {
     padding-right: 0.5em;
+    line-height: 16px;
+    text-decoration: none !important;
 }
 
 /* Hebrew and Arabic are smaller so we reset font size */
@@ -201,11 +203,6 @@ ul.sf-shadow ul {background-image:none}
 /* moving away menu item from indicator and keep text in the center */
 #tiki-top .cssmenu_horiz li a {
 	background-position: 0% 50% !important;
-}
-
-.cssmenu_horiz a, .cssmenu_vert a, .cssmenu_horiz ul li a {
-    line-height: 16px;
-    text-decoration: none !important;
 }
 
 /** Vertical Menu **/
@@ -250,7 +247,7 @@ ul.sf-shadow ul {background-image:none}
 .sf-sub-indicator {
     text-indent: 999em;
 }
-	
+
 /* Submenu alignment */
 
 .cssmenu_horiz li:hover ul,

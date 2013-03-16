@@ -45,17 +45,17 @@ body {
 	font-family: "Trebuchet MS", "Luxi Sans", "Lucida Grande", Tahoma, helvetica, sans-serif;
 	font-size: 80% !important;
 }
-	
+
 html>body {
 	font-size: 0.75em !important;
 }
 
-	
+
 #tiki-top {
 	background: #e1ebf0;
 	border: 1px solid #6699cc;
 }
-	
+
 .header,
 #c1c2,
 #c1c2 #wrapper,
@@ -80,11 +80,11 @@ html>body {
 	width: 180px;
 	padding: 0;
 }
-	
+
 #col3 {
 	margin-left: -180px;
 }
-	
+
 #centercolumn {padding: 5px}
 #tiki-center {padding: 5px 0}
 
@@ -141,6 +141,8 @@ input[type="number"] {
 
 textarea {
 	border: solid 1px #abcdef;
+	padding: 0.1em;
+	width: 98%
 }
 
 input[type="submit"],
@@ -193,12 +195,6 @@ input[type=submit]:hover,
 
 select {text-align: start}
 
-textarea {
-	padding: 0.1em;
-	width: 98%
-}
-
-
 #tiki-top a,
 #tiki-top a:visited {
 	color: #0077cc;
@@ -219,7 +215,7 @@ textarea {
     top: 1.1em;
     right: 1em;
 }
-	
+
 h3.box-title {
 	color: #0077cc;
 	background: #abcdef;
@@ -624,7 +620,7 @@ body.wikitext {
 	color: black;
 	background: #f0f9ff;
 }
-	
+
 .tabinactive:hover,
 .tabactive {
 	background: #f0f9ff;
