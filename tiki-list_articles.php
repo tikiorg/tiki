@@ -126,6 +126,10 @@ if (!isset($_REQUEST["topic"])) {
 
 $filter['categId'] = 0;
 if ($prefs['feature_categories'] == 'y') {
+	if ( $_REQUEST['find_show_categories_multi'] == 'n' ) {
+		// There category selection was done with the single category drop-down. We ignore any value from the multiple category selector which was hidden
+		unset($_REQUEST['cat_categories']);
+	}
 	if (!empty($_REQUEST['cat_categories'])) {
 		if (count($_REQUEST['cat_categories']) > 1) {
 			unset($_REQUEST['categId']);
