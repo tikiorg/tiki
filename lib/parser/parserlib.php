@@ -15,7 +15,7 @@
  * @package		Tiki
  * @subpackage		Parser
  * @author		Robert Plummer
- * @copyright		Copyright (c) 2002-2012, All Rights Reserved.
+ * @copyright		Copyright (c) 2002-2013, All Rights Reserved.
  * 			See copyright.txt for details and a complete list of authors.
  * @license		LGPL - See license.txt for details.
  * @version		SVN $Rev$
