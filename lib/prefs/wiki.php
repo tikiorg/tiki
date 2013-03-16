@@ -251,8 +251,12 @@ function prefs_wiki_list($partial = false)
 			'default' => 'n',
 		),
 		'wiki_edit_minor' => array(
-			'name' => tra('Allow minor edits'),
+			'name' => tra('Allow minor edits of wiki pages'),
 			'type' => 'flag',
+			'description' => tra('Minor edits do not flag new content for translation and do not send watch notifications (unless "Watch minor edits" is enabled).'),			
+			'permission' => array(
+				'textFilter' => 'tiki_p_minor',
+			),		
 			'default' => 'n',
 		),
 		'wiki_comments_displayed_default' => array(

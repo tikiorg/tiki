@@ -107,13 +107,6 @@
 
 				{preference name=wiki_edit_icons_toggle}
 				{preference name=wiki_edit_minor}
-				<div class="adminoptionboxchild" id="wiki_edit_minor_childcontainer">
-					{remarksbox type=note title="{tr}Note{/tr}"}{tr}Minor edits do not flag new content for translation and do not send watch notifications (unless "Watch minor edits" is enabled).{/tr}
-						<br>
-						{tr}Only user groups granted the tiki_p_minor permission (and admins) will be able to save minor edits when this is enabled.{/tr}
-						<a class="link" href="tiki-objectpermissions.php?permType=wiki&amp;textFilter=minor&amp;show_disabled_features=y" title="{tr}Permission{/tr}">{icon _id="key" alt="{tr}Permission{/tr}"}</a>
-					{/remarksbox}
-				</div>
 				{preference name=feature_wiki_mandatory_category}
 				{preference name=feature_actionlog_bytes}
 				{preference name=wiki_mandatory_edit_summary}
