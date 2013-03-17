@@ -45,8 +45,8 @@ if (isset($_REQUEST["topic"])) {
 }
 
 if (isset($_REQUEST["type"])) {
-        $uniqueid .= '-'.$type;
         $type = $_REQUEST["type"];
+        $uniqueid .= '-'.$type;
 } else {
         $type = '';
 }
