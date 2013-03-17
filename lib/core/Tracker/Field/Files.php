@@ -189,9 +189,9 @@ class Tracker_Field_Files extends Tracker_Field_Abstract
 				if ($context['list_mode'] === 'y') {
 					$params['thumb'] = $context['list_mode'];
 					$params['rel'] = 'box[' . $this->getInsertId() . ']';
-					$otherParams = $this->getOption(5);
+					$otherParams = $this->getOption('imageParamsForLists');
 				} else {
-					$otherParams = $this->getOption(4);
+					$otherParams = $this->getOption('imageParams');
 				}
 				if ($otherParams) {
 					parse_str($otherParams, $otherParams);
