@@ -7,8 +7,13 @@
 <ol class="tracker-item-files current-list">
 	{foreach from=$field.files item=info}
 		<li data-file-id="{$info.fileId|escape}">
+			{if $field.options_array[3]}
+				<img src="tiki-download_file.php?fileId={$info.fileId|escape}&display&height=24" height="24">
+			{/if}
 			{$info.name|escape}
-			<label>{icon _id=cross}</label>
+			<label>
+				{icon _id=cross}
+			</label>
 		</li>
 	{/foreach}
 </ol>
@@ -88,8 +93,9 @@ var handleFiles = function (files) {
 
 						$field.input_csv('add', ',', fileId);
 
+						li.prepend($('<img src="tiki-download_file.php?fileId=' + fileId + '&display&height=24" height="24">'));
 						li.append($('<label>{{icon _id=cross}}</label>'));
-						li.find('img').click(function () {
+						li.find('img.icon').click(function () {
 							$field.input_csv('delete', ',', fileId);
 							$(this).closest('li').remove();
 						});
@@ -189,8 +195,9 @@ $url.keypress(function (e) {
 
 				$field.input_csv('add', ',', fileId);
 
+				li.prepend($('<img src="tiki-download_file.php?fileId=' + fileId + '&display&height=24" height="24">'));
 				li.append($('<label>{{icon _id=cross}}</label>'));
-				li.find('img').click(function () {
+				li.find('img.icon').click(function () {
 					$field.input_csv('delete', ',', fileId);
 					$(this).closest('li').remove();
 				});
@@ -228,8 +235,9 @@ $search.keypress(function (e) {
 				icon.click(function () {
 					var li = $('<li/>');
 					li.text(item.text());
+					li.prepend($('<img src="tiki-download_file.php?fileId=' + fileId + '&display&height=24" height="24">'));
 					li.append($('<label>{{icon _id=cross}}</label>'));
-					li.find('img').click(function () {
+					li.find('img.icon').click(function () {
 						$field.input_csv('delete', ',', data.object_id);
 						$(this).closest('li').remove();
 					});
@@ -267,8 +275,9 @@ window.handleFinderFile = function (file, elfinder) {
 
 			$field.input_csv('add', ',', fileId);
 
+			li.prepend($('<img src="tiki-download_file.php?fileId=' + fileId + '&display&height=24" height="24">'));
 			li.append($('<label>{{icon _id=cross}}</label>'));
-			li.find('img').click(function () {
+			li.find('img.icon').click(function () {
 				$field.input_csv('delete', ',', fileId);
 				$(this).closest('li').remove();
 			});
