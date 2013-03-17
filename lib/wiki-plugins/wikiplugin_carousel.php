@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2013 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -14,7 +14,7 @@ function wikiplugin_carousel_info()
 		'introduced' => 8.0,
 		'prefs' => array('wikiplugin_carousel', 'feature_file_galleries', 'feature_jquery_carousel'),
 		'icon' => 'img/icons/wand.png',
-		'tags' => array( 'basic' ),		
+		'tags' => array( 'basic' ),
 		'params' => array(
 			'fgalId' => array(
 				'required' => true,
@@ -173,7 +173,7 @@ function wikiplugin_carousel( $body, $params )
 	$params = array_merge($default, $params);
 
 	$unique = 'wpcarousel-' . ++$id;
-		
+
 	$filegallib = TikiLib::lib('filegal');
 	$files = $filegallib->get_files(0, -1, $params['sort_mode'], '', $params['fgalId']);
 	if (empty($files['cant'])) {
@@ -216,23 +216,22 @@ function wikiplugin_carousel( $body, $params )
 		$params['thumbnailHeight'],
 		$params['thumbnailFontSize']
 	);
-	
+
 	TikiLib::lib('header')->add_jq_onready('setTimeout( function() { $("#' . $unique . '").tiki("carousel", "", '. json_encode($params).'); }, 1000);');
 
 	$html = '<div id="'.$unique.'" class="clearfix carousel" style="width: 1px; height: 1px; overflow: hidden"><ul>';
 	foreach ($files['data'] as $file) {
 		$html .= '<li><img src="tiki-download_file.php?fileId='.$file['fileId'].'&amp;display';
-        if (!empty($params['displaySize'])) {
-            if ($params['displaySize'] > 10){
-                $html .= '&amp;max='.$params['displaySize'];
-                }
-            else if ( $params['displaySize'] <= 1){
-                $html .= '&amp;scale='.$params['displaySize'];
-                }
-        }
+		if (!empty($params['displaySize'])) {
+			if ($params['displaySize'] > 10) {
+				$html .= '&amp;max='.$params['displaySize'];
+			} elseif ( $params['displaySize'] <= 1) {
+				$html .= '&amp;scale='.$params['displaySize'];
+			}
+		}
 
 		$html .= '" alt="'.htmlentities($file['description']).'" />';
-			
+
 		$caption = '';
 		if (!empty($file['name'])) {
 			$caption .= '<strong>'.htmlentities($file['name']).'</strong>';

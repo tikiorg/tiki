@@ -5798,21 +5798,23 @@ class UsersLib extends TikiLib
 		}
 		$new_email_confirm = $this->now;
 		$userTable = $this->table('users_users');
-		$userTable->insert(array(
-			'login' => $user,
-			'password' => $pass,
-			'email' => $email,
-			'provpass' => $provpass,
-			'registrationDate' => (int) $this->now,
-			'hash' => $hash,
-			'pass_confirm' => (int) $new_pass_confirm,
-			'email_confirm' => (int) $new_email_confirm,
-			'created' => (int) $this->now,
-			'valid' => $valid,
-			'openid_url' => $openid_url,
-			'lastLogin' => $lastLogin,
-			'waiting' => $waiting,
-		));
+		$userTable->insert(
+			array(
+				'login' => $user,
+				'password' => $pass,
+				'email' => $email,
+				'provpass' => $provpass,
+				'registrationDate' => (int) $this->now,
+				'hash' => $hash,
+				'pass_confirm' => (int) $new_pass_confirm,
+				'email_confirm' => (int) $new_email_confirm,
+				'created' => (int) $this->now,
+				'valid' => $valid,
+				'openid_url' => $openid_url,
+				'lastLogin' => $lastLogin,
+				'waiting' => $waiting,
+			)
+		);
 
 		$this->assign_user_to_group($user, 'Registered');
 
@@ -6586,16 +6588,30 @@ class UsersLib extends TikiLib
 		$smarty->assign('mail_apass', $apass);
 		$smarty->assign('mail_email', $email);
 		$smarty->assign('mail_again', $again);
-		$smarty->assign('validation_url', TikiLib::tikiUrl('tiki-login_validate.php', array(
-			'user' => $name,
-			'pass' => $apass,
-		)));
-		$smarty->assign('assignuser_url', TikiLib::tikiUrl('tiki-assignuser.php', array(
-			'assign_user' => $name,
-		)));
-		$smarty->assign('userpref_url', TikiLib::tikiUrl('tiki-user_preferences.php', array(
-			'view_user' => $name,
-		)));
+		$smarty->assign(
+			'validation_url',
+			TikiLib::tikiUrl(
+				'tiki-login_validate.php',
+				array(
+					'user' => $name,
+					'pass' => $apass,
+				)
+			)
+		);
+		$smarty->assign(
+			'assignuser_url',
+			TikiLib::tikiUrl(
+				'tiki-assignuser.php',
+				array('assign_user' => $name)
+			)
+		);
+		$smarty->assign(
+			'userpref_url',
+			TikiLib::tikiUrl(
+				'tiki-user_preferences.php',
+				array('view_user' => $name)
+			)
+		);
 
 		include_once('lib/webmail/tikimaillib.php');
 
@@ -6695,10 +6711,16 @@ class UsersLib extends TikiLib
 				$mailTemplate = 'user_validation_mail';
 			}
 
-			$smarty->assign('validation_url', TikiLib::tikiUrl('tiki-login_validate.php', array(
-				'user' => $name,
-				'pass' => $apass,
-			)));
+			$smarty->assign(
+				'validation_url',
+				TikiLib::tikiUrl(
+					'tiki-login_validate.php',
+					array(
+						'user' => $name,
+						'pass' => $apass,
+					)
+				)
+			);
 
 			$smarty->assign('mail_pass', $pass);
 			$mail_data = $smarty->fetch("mail/$mailTemplate.tpl");

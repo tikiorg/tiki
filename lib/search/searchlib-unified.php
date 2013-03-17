@@ -102,12 +102,12 @@ class UnifiedSearchLib
 	{
 		$tempName = $this->getIndexLocation() . '-new';
 		$file_exists = file_exists($tempName);
-		if($file_exists) {
+		if ($file_exists) {
 			$this->destroyDirectory($tempName);
 		}
 		$tempName = $this->getIndexLocation() . '-old';
 		$file_exists = file_exists($tempName);
-		if($file_exists) {
+		if ($file_exists) {
 			$this->destroyDirectory($tempName);
 		}
 	}
@@ -130,12 +130,14 @@ class UnifiedSearchLib
 		}
 
 		$unifiedsearchlib = $this;
-		register_shutdown_function(function () use ($tempName, $unifiedsearchlib) {
-			if (file_exists($tempName)) {
-				$unifiedsearchlib->destroyDirectory($tempName);
-				echo "Abnormal termination. Unless it was killed manually, it likely ran out of memory.\n";
+		register_shutdown_function(
+			function () use ($tempName, $unifiedsearchlib) {
+				if (file_exists($tempName)) {
+					$unifiedsearchlib->destroyDirectory($tempName);
+					echo "Abnormal termination. Unless it was killed manually, it likely ran out of memory.\n";
+				}
 			}
-		});
+		);
 
 		// Build in -new
 		TikiLib::lib('queue')->clear(self::INCREMENT_QUEUE);
@@ -469,7 +471,7 @@ class UnifiedSearchLib
 
 		if (isset($filter['content']) && $filter['content']) {
 			$o = TikiLib::lib('tiki')->get_preference('unified_default_content', array('contents'), true);
-			if(count($o) == 1 && empty($o[0])) {
+			if (count($o) == 1 && empty($o[0])) {
 				// Use "contents" field by default, if no default is specified
 				$query->filterContent($filter['content'], array('contents'));
 			} else {
