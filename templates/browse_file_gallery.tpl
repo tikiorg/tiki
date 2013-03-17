@@ -188,16 +188,17 @@
 										{/if}
 										{if $over_infos neq ''}
 											{popup fullhtml="1" text=$over_infos|escape:"javascript"|escape:"html"}
-											{else}
-													title="{if $files[changes].name neq ''}{$files[changes].name|escape}{/if}{if $files[changes].description neq ''}{$files[changes].description|escape}{/if}"{/if}>
-										{if  $key_type neq "image/svg"}
+										{else}
+											title="{if $files[changes].name neq ''}{$files[changes].name|escape}{/if}{if $files[changes].description neq ''}{$files[changes].description|escape}{/if}"
+										{/if}>
+										{if $key_type neq 'image/svg' and $key_type neq 'image/svg+xml'}
 											{if $view eq 'page'}
 												<img src="tiki-download_file.php?fileId={$files[changes].id}" alt="" style="max-width:{$maxWidth}">
-												{else}
+											{else}
 												<img src="{$files[changes].id|sefurl:thumbnail}" alt="">
 											{/if}
-											{else} {*Since we can't resize an svg thumbnail at this time, we just show and scale it down *}
-											<img src="{$files[changes].id|sefurl:display}" alt=""  style="width:{$thumbnail_size}px;height:{$thumbnailcontener_size}px;">
+										{else}
+											<object data="{$files[changes].id|sefurl:thumbnail}" alt=""  style="width:{$thumbnail_size}px;height:{$thumbnailcontener_size}px;" type="{$key_type}"></object>
 										{/if}
 									</a>
 								{/if}

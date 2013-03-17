@@ -69,7 +69,7 @@ class Image extends ImageAbstract
 				$this->data = imagecreatefromstring($this->data);
 				$this->loaded = true;
 			} else {
-				$this->data = null;
+				parent::_load_data();
 			}
 		}
 	}
@@ -81,15 +81,20 @@ class Image extends ImageAbstract
     function _resize($x, $y)
 	{
 		if ($this->data) {
-			$t = imagecreatetruecolor($x, $y);
-			// trick to have a transparent background for png instead of black
-			imagesavealpha($t, true);			
-			$trans_colour = imagecolorallocatealpha($t, 0, 0, 0, 127);
-			imagefill($t, 0, 0, $trans_colour);
+			if ($this->format == 'svg') {
+				$svgAttributes = ' width="' . $x . '" height="' . $y . '" viewBox="0 0 ' . $this->width . ' ' . $this->height . '" preserveAspectRatio="xMinYMin meet"';
+				$this->data = preg_replace('/width="'.$this->width.'" height="'.$this->height.'"/', $svgAttributes, $this->data);
+			} else {
+				$t = imagecreatetruecolor($x, $y);
+				// trick to have a transparent background for png instead of black
+				imagesavealpha($t, true);
+				$trans_colour = imagecolorallocatealpha($t, 0, 0, 0, 127);
+				imagefill($t, 0, 0, $trans_colour);
 
-			imagecopyresampled($t, $this->data, 0, 0, 0, 0, $x, $y, $this->get_width(), $this->get_height());
-			$this->data = $t;
-			unset($t);
+				imagecopyresampled($t, $this->data, 0, 0, 0, 0, $x, $y, $this->get_width(), $this->get_height());
+				$this->data = $t;
+				unset($t);
+			}
 		}
 	}
 
@@ -127,6 +132,9 @@ class Image extends ImageAbstract
     				break;
 				case 'wbmp':
 					imagewbmp($this->data);
+    				break;
+				case 'svg':
+					echo $this->data;
     				break;
 				default:
 					ob_end_clean();
@@ -232,6 +240,8 @@ class Image extends ImageAbstract
 				} else {
 					return ( imagetypes() & IMG_XPM );
 				}
+			case 'svg':
+				return true;
 		}
 
 		return false;
@@ -243,7 +253,13 @@ class Image extends ImageAbstract
     function _get_height()
 	{
 		if ($this->loaded && $this->data) {
-			return imagesy($this->data);
+			if ($this->format == 'svg') {
+				if (preg_match('/height="(\d+)"/', $this->data, $match)) {
+					return $match[1];
+				}
+			} else {
+				return imagesy($this->data);
+			}
 		} else if ($this->height) {
 			return $this->height;
 		} else if ($this->filename) {
@@ -266,7 +282,13 @@ class Image extends ImageAbstract
     function _get_width()
 	{
 		if ($this->loaded && $this->data) {
-			return imagesx($this->data);
+			if ($this->format == 'svg') {
+				if (preg_match('/width="(\d+)"/', $this->data, $match)) {
+					return $match[1];
+				}
+			} else {
+				return imagesx($this->data);
+			}
 		} else if ($this->width) {
 			return $this->width;
 		} else if ($this->filename) {
