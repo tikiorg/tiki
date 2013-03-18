@@ -77,8 +77,6 @@ function wikiplugin_listexecute($data, $params)
 		$dataSource = $unifiedsearchlib->getDataSource();
 		$formatter = new Search_Formatter($plugin);
 		$formatter->setDataSource($dataSource);
-		$builder = new Search_Formatter_Builder($formatter);
-		$builder->apply($matches);
 
 		$reportSource = new Search_GlobalSource_Reporting;
 
