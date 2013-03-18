@@ -235,7 +235,7 @@ $search.keypress(function (e) {
 				icon.click(function () {
 					var li = $('<li/>');
 					li.text(item.text());
-					li.prepend($('<img src="tiki-download_file.php?fileId=' + fileId + '&display&height=24" height="24">'));
+					li.prepend($('<img src="tiki-download_file.php?fileId=' + data.object_id + '&display&height=24" height="24">'));
 					li.append($('<label>{{icon _id=cross}}</label>'));
 					li.find('img.icon').click(function () {
 						$field.input_csv('delete', ',', data.object_id);
