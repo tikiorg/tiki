@@ -1,0 +1,200 @@
+/* $Id$
+	Uses lib/jquery/tablesorter/css/theme.default.css as a starting point
+*/
+
+.tablesorter .header,
+.tablesorter .tablesorter-header {
+	background-image: url(data:image/gif;base64,R0lGODlhFQAJAIAAACMtMP///yH5BAEAAAEALAAAAAAVAAkAAAIXjI+AywnaYnhUMoqt3gZXPmVg94yJVQAAOw==);
+	background-position: center right;
+	background-repeat: no-repeat;
+	cursor: pointer;
+	white-space: normal;
+	padding: 4px 20px 4px 4px;
+}
+.tablesorter thead .headerSortUp,
+.tablesorter-default thead .tablesorter-headerSortUp,
+.tablesorter-default thead .tablesorter-headerAsc {
+	background-image: url(data:image/gif;base64,R0lGODlhFQAEAIAAACMtMP///yH5BAEAAAEALAAAAAAVAAQAAAINjI8Bya2wnINUMopZAQA7);
+	border-bottom: #000 2px solid;
+}
+.tablesorter thead .headerSortDown,
+.tablesorter thead .tablesorter-headerSortDown,
+.tablesorter thead .tablesorter-headerDesc {
+	background-image: url(data:image/gif;base64,R0lGODlhFQAEAIAAACMtMP///yH5BAEAAAEALAAAAAAVAAQAAAINjB+gC+jP2ptn0WskLQA7);
+	border-bottom: #000 2px solid;
+}
+.tablesorter thead .sorter-false {
+	background-image: none;
+	padding: 4px;
+}
+
+/* Zebra Widget */
+/* follows base odd/even colors from syles/layout/design.css */
+.tablesorter tr.odd td {
+	background: #f0f0f0;
+	color: #000;
+}
+.tablesorter tr.even td {
+	background: #fff;
+	color: #000;
+}
+
+/* filter widget */
+.tablesorter .tablesorter-filter-row td {
+	border-bottom: #ccc 1px solid;
+	line-height: normal;
+	text-align: center; /* center the input */
+	-webkit-transition: line-height 0.1s ease;
+	-moz-transition: line-height 0.1s ease;
+	-o-transition: line-height 0.1s ease;
+	transition: line-height 0.1s ease;
+}
+/* optional disabled input styling */
+.tablesorter .tablesorter-filter-row .disabled {
+	opacity: 0.5;
+	filter: alpha(opacity=50);
+	cursor: not-allowed;
+}
+/* hidden filter row */
+.tablesorter .tablesorter-filter-row.hideme td {
+	/*** *********************************************** ***/
+	/*** change this padding to modify the thickness     ***/
+	/*** of the closed filter row (height = padding x 2) ***/
+	padding: 2px;
+	/*** *********************************************** ***/
+	margin: 0;
+	line-height: 0;
+	cursor: pointer;
+}
+.tablesorter .tablesorter-filter-row.hideme .tablesorter-filter {
+	height: 1px;
+	min-height: 0;
+	border: 0;
+	padding: 0;
+	margin: 0;
+	/* don't use visibility: hidden because it disables tabbing */
+	opacity: 0;
+	filter: alpha(opacity=0);
+}
+/* filters */
+/*.tablesorter .tablesorter-filter {
+	width: 95%;
+	height: inherit;
+	margin: 4px;
+	padding: 4px;
+	background-color: #fff;
+	border: 1px solid #bbb;
+	color: #333;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	-webkit-transition: height 0.1s ease;
+	-moz-transition: height 0.1s ease;
+	-o-transition: height 0.1s ease;
+	transition: height 0.1s ease;*/
+}
+
+
+
+/***************************** Filter Formatter Elements ***************************/
+/* subset of styes in lib/jquery/tablesorter/css/filter.formatter.css, slightly modified*/
+
+.tablesorter .tablesorter-filter-row td {
+	text-align: center;
+	font-size: 0.9em;
+	font-weight: normal;
+}
+
+/**** Sliders ****/
+/* shrink the ui sliders to look nicer inside of a table cell */
+.ui-slider {
+	width: 90%;
+	margin: 13px auto 2px auto; /* add enough top margin so the tooltips will fit */
+	font-size: 0.9em;
+}
+.ui-slider .ui-slider-handle{
+	width: 0.8em;
+	height: 0.8em;
+}
+.ui-datepicker {
+	font-size: 0.8em;
+}
+
+span.currange {
+	font-size: smaller;
+	font-weight: normal;
+}
+
+/* Add tooltips to slider handles */
+.value-popup:after {
+	content : attr(data-value);
+	position: absolute;
+	bottom: 15px;
+	left: -3px;
+	min-width: 14px;
+	height: 12px;
+	background-color: #444;
+	background-image: -webkit-gradient(linear, left top, left bottom, from(#444444), to(#999999));
+	background-image: -webkit-linear-gradient(top, #444, #999);
+	background-image: -moz-linear-gradient(top, #444, #999);
+	background-image: -o-linear-gradient(top, #444, #999);
+	background-image: linear-gradient(to bottom, #444, #999);
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+	-webkit-background-clip: padding-box; background-clip: padding-box;
+	-webkit-box-shadow: 0px 0px 4px 0px #777;
+	box-shadow: 0px 0px 4px 0px #777;
+	border: #444 1px solid;
+	color: #fff;
+	font: bold 0.9em/1em Arial;
+	padding: 1px;
+	text-align: center;
+}
+.value-popup:before {
+	content: "";
+	position: absolute;
+	width: 0;
+	height: 0;
+	border-top: 8px solid #777;
+	border-left: 8px solid transparent;
+	border-right: 8px solid transparent;
+	top: -8px;
+	left: 50%;
+	margin-left: -8px;
+	margin-top: -1px;
+}
+
+/**** Date Picker ****/
+.dateFrom, .dateTo {
+	width: 80px;
+	margin: 2px 5px;
+}
+
+div.pager span.arrow {
+	background-repeat: no-repeat;
+	height:16px;
+	width:8px;
+	font-size: 10px;
+	cursor:pointer;
+	color:transparent;
+}
+
+div.pager span.first {
+	background-position: left;
+	background-image: url('../../../img/icons/control_start.png');
+}
+
+div.pager span.prev {
+	background-position: left;
+	background-image: url('../../../img/icons/control_rewind.png');
+}
+
+div.pager span.next {
+	background-position: right;
+	background-image: url('../../../img/icons/control_fastforward.png');
+}
+
+div.pager span.last {
+	background-position: right;
+	background-image: url('../../../img/icons/control_end.png');
+}
