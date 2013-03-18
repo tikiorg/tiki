@@ -173,6 +173,7 @@ input[type=text],
 input[type=password],
 input[type="email"],
 input[type="file"],
+input[type="search"],
 input[type="number"] {
 	background-color: #f3fcfe;
 	border: 1px solid;
@@ -1013,13 +1014,15 @@ table {
 }
 
 .odd,
-table.normal tr:nth-child(2n+1) {
+table.normal tr:nth-child(2n+1),
+.tablesorter tr.odd td {
 	background: #f0f0f0;
 	color: #000;
 }
 
 .even,
-table.normal tr:nth-child(2n) {
+table.normal tr:nth-child(2n),
+.tablesorter tr.even td {
 	background: #dcdcdc;
 	color: #000;
 }
@@ -1029,7 +1032,9 @@ table.normal tr:nth-child(2n) {
 td.odd,
 td.even,
 table.normal tr:nth-child(2n+1),
-table.normal tr:nth-child(2n) {
+table.normal tr:nth-child(2n),
+.tablesorter tr.odd td,
+.tablesorter tr.even td {
 	padding: 0.2em;
 	vertical-align: top;
 }

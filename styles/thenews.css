@@ -721,7 +721,9 @@ body.tiki_mytiki #tiki-center .normal form {
 td.odd,
 td.even,
 table.normal tr:nth-child(2n+1),
-table.normal tr:nth-child(2n) {
+table.normal tr:nth-child(2n),
+.tablesorter tr.odd td,
+.tablesorter tr.even td {
 	margin: 0;
 	padding: 0.2em;
 	vertical-align: top;
@@ -729,13 +731,15 @@ table.normal tr:nth-child(2n) {
 
 tr.odd td,
 td.odd,
-table.normal tr:nth-child(2n+1) {
+table.normal tr:nth-child(2n+1),
+.tablesorter tr.odd td {
 	background: #eee;
 }
 
 tr.even td,
 td.even,
-table.normal tr:nth-child(2n) {
+table.normal tr:nth-child(2n),
+.tablesorter tr.even td {
 	background: #f9f9f9;
 }
 

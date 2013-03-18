@@ -274,6 +274,7 @@ input[type="password"],
 input[type="file"],
 input[type="email"],
 input[type="file"],
+input[type="search"],
 input[type="number"],
 select {
 	margin: 1px 0;
@@ -292,6 +293,7 @@ input[type="text"],
 input[type="file"],
 input[type="email"],
 input[type="file"],
+input[type="search"],
 input[type="number"],
 div.fancyfilter,
 textarea {

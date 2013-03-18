@@ -144,6 +144,7 @@ input[type="text"],
 input[type="password"],
 input[type="email"],
 input[type="file"],
+input[type="search"],
 input[type="number"] {
 	font-size: 0.9em;
 	border: solid 1px #aaa;
@@ -513,14 +514,16 @@ h3.box-title {
 
 td.odd,
 tr.odd,
-table.normal tr:nth-child(2n+1) {
+table.normal tr:nth-child(2n+1),
+.tablesorter tr.odd td {
 	background: #F7F9FA;
 	border-collapse: collapse;
 	color: #393e51}
 
 td.even,
 tr.even,
-table.normal tr:nth-child(2n) {
+table.normal tr:nth-child(2n),
+.tablesorter tr.even td {
 	background: #E7E9EA;
 	border-collapse: collapse;
 	color: #393e51}
@@ -529,7 +532,9 @@ table.normal tr:nth-child(2n) {
 td.odd,
 td.even,
 table.normal tr:nth-child(2n+1),
-table.normal tr:nth-child(2n) {
+table.normal tr:nth-child(2n),
+.tablesorter tr.odd td,
+.tablesorter tr.even td {
 	margin: 0;
 	padding: 0.2em;
 	vertical-align: top}

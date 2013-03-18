@@ -691,14 +691,16 @@ td {
 
 tr.odd td,
 .odd,
-table.normal tr:nth-child(2n+1) {
+table.normal tr:nth-child(2n+1),
+.tablesorter tr.odd td {
 	border-right: 1px solid #909090;
 	background: #F5F5F5;
 }
 
 tr.even td,
 .even,
-table.normal tr:nth-child(2n) {
+table.normal tr:nth-child(2n),
+.tablesorter tr.even td {
 	background: #ECECEC;
 	border-right: 1px solid #909090;
 }

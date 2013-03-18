@@ -478,7 +478,8 @@ tr.odd,
 td.odd,
 tr.odd td,
 li.odd,
-table.normal tr:nth-child(2n+1) {
+table.normal tr:nth-child(2n+1),
+.tablesorter tr.odd td {
 	background: #030511;
 	color: #f4f4f4;
 }
@@ -487,7 +488,8 @@ tr.even,
 td.even,
 tr.even td,
 li.even,
-table.normal tr:nth-child(2n) {
+table.normal tr:nth-child(2n),
+.tablesorter tr.even td {
 	background: #313131;
 	color: #f4f4f4;
 }

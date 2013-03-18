@@ -115,6 +115,7 @@ input[type="email"],
 input[type="file"],
 input[type="number"],
 input[type="password"],
+input[type="search"],
 textarea,
 .adminoptionbox option {
 	color: #fff;
@@ -356,7 +357,8 @@ tr.diffheader {
 tr.odd td,
 td.odd,
 li.odd,
-table.normal tr:nth-child(2n+1) {
+table.normal tr:nth-child(2n+1),
+.tablesorter tr.odd td {
 	background: #121212;
 	color: #aeaeae;
 }
@@ -364,7 +366,8 @@ table.normal tr:nth-child(2n+1) {
 tr.even td,
 td.even,
 li.even,
-table.normal tr:nth-child(2n) {
+table.normal tr:nth-child(2n),
+.tablesorter tr.even td {
 	background: #222;
 	color: #aeaeae;
 }

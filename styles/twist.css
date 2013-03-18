@@ -688,7 +688,9 @@ ol.module {
 td.odd,
 td.even,
 table.normal tr:nth-child(2n+1) td,
-table.normal tr:nth-child(2n) td {
+table.normal tr:nth-child(2n) td,
+.tablesorter tr.odd td,
+.tablesorter tr.even td {
 	margin: 0;
 	padding: 0.2em;
 	vertical-align: top;
@@ -696,13 +698,15 @@ table.normal tr:nth-child(2n) td {
 	border-collapse: collapse}
 
 tr.odd,
-table.normal tr:nth-child(2n+1) {
+table.normal tr:nth-child(2n+1),
+.tablesorter tr.odd td {
 	color: black;
 	background: #efefef;
 	text-align: left}
 
 tr.odd:hover,
-table.normal tr:nth-child(2n+1):hover {
+table.normal tr:nth-child(2n+1):hover,
+.tablesorter tr.odd td:hover {
 	background: #fff7e6;
 }
 
@@ -711,25 +715,29 @@ tr.odddark {
 	border: 1px solid #fff}
 
 tr.even,
-table.normal tr:nth-child(2n) {
+table.normal tr:nth-child(2n),
+.tablesorter tr.even td {
 	color: black;
 	background: #fff;
 	text-align: left}
 
 tr.even:hover,
-table.normal tr:nth-child(2n):hover {
+table.normal tr:nth-child(2n):hover,
+.tablesorter tr.even td:hover {
 	background: #fff7e6
 }
 
 td.odd,
-table.normal tr:nth-child(2n+1) {
+table.normal tr:nth-child(2n+1),
+.tablesorter tr.odd td {
 	vertical-align: middle;
 	color: black;
 	background: #efefef;
 	text-align: left}
 
 td.even,
-table.normal tr:nth-child(2n) {
+table.normal tr:nth-child(2n),
+.tablesorter tr.even td {
 	vertical-align: middle;
 	color: black;
 	background: #fff;

@@ -92,6 +92,7 @@ input[type="password"],
 input[type="url"],
 input[type="email"],
 input[type="file"],
+input[type="search"],
 input[type="number"],
 input.url, textarea {
 	border: solid 1px #cfcfcf;

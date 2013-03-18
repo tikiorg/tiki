@@ -3833,25 +3833,6 @@ textarea.tshoutbox{
 	font-style: italic;
 }
 
-/* jq tablesorter */
-.fancysort th.headerSortUp {
-	background-repeat: no-repeat;
-	background-position: right;
-	background-image: url(../../img/icons/resultset_up.png) !important;
-}
-
-.fancysort th.headerSortDown {
-	background-repeat: no-repeat;
-	background-position: right;
-	background-image: url(../../img/icons/resultset_down.png) !important;
-}
-
-.fancysort th.header {
-	background-repeat: no-repeat;
-	background-position: right;
-	background-image: url(../../img/icons/resultset.png);
-}
-
 /* jq tracker header */
 .trackerHeaderOpen {
 	background-repeat: no-repeat;

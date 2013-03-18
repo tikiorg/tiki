@@ -96,7 +96,8 @@ input[type='text'],
 input[type='password'],
 input[type='email'],
 input[type='file'],
-input[type='number'] {
+input[type='number'],
+input[type='search'] {
 	font-size: 1em;
 	border: solid 1px #24880c;
 }
@@ -466,11 +467,13 @@ h1.pagetitle a:hover {
 	color: #fff;
 }
 .normal .even, /* table with class normal, even cells */
-table.normal tr:nth-child(2n) {
+table.normal tr:nth-child(2n),
+.tablesorter tr.even td {
 	background-color: #fff;
 }
 .normal .odd, /* table with class normal, odd cells */
-table.normal tr:nth-child(2n+1) {
+table.normal tr:nth-child(2n+1),
+.tablesorter tr.odd td {
 	background-color: #fff;
 }
 .simplebox { /* simple box wiki syntax */

@@ -173,6 +173,7 @@ input[type=checkbox],
 input[type=radio] {border: 0}
 
 input[type="text"],
+input[type="search"],
 input[type="password"] {
 	background-color: #d2d9e3;
 	color: #000;

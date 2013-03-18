@@ -169,9 +169,11 @@ input[type=radio] {border: 0}
 input[type="text"],
 input[type="password"],
 input[type="email"],
+input[type="search"],
 input[type="number"] {
 	background-color: #d2d9e3;
-	color: #000}
+	color: #000
+}
 
 input[type="submit"],
 input[type="file"],
@@ -550,18 +552,28 @@ h3.box-title {
 	vertical-align: top}
 
 td.odd:hover,
-td.even:hover {border-right: 1px solid #e0e0e0}
+td.even:hover,
+.tablesorter tr.odd td:hover,
+.tablesorter tr.even td: hover {
+	border-right: 1px solid #e0e0e0
+}
 
 .normal td.heading {font-size: 1em}
 
 .normal td.odd:hover,
 .normal td.even:hover,
-.normal tr:hover {background: #f3f3f4}
+.tablesorter tr.odd td:hover,
+.tablesorter tr.even td:hover,
+.normal tr:hover {
+	background: #f3f3f4
+}
 
 .normal td,
 .wikitable td,
 td.odd,
 td.even,
+.tablesorter tr.odd td,
+.tablesorter tr.even td,
 .form,
 .formcolor td,
 .editblogform td {
