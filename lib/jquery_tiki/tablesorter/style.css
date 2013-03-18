@@ -174,9 +174,13 @@ div.pager span.arrow {
 	background-repeat: no-repeat;
 	height:16px;
 	width:8px;
-	font-size: 10px;
+	font-size: 12px;
 	cursor:pointer;
 	color:transparent;
+}
+
+div.pager span.disabled {
+	opacity: 0.5;
 }
 
 div.pager span.first {
