@@ -9,6 +9,8 @@ class Tracker_Field_Files extends Tracker_Field_Abstract
 {
 	public static function getTypes()
 	{
+		global $prefs;
+
 		return array(
 			'FG' => array(
 				'name' => tr('Files'),
@@ -83,9 +85,17 @@ class Tracker_Field_Files extends Tracker_Field_Abstract
 
 	function getFieldData(array $requestData = array())
 	{
+		global $prefs;
+		$filegallib = TikiLib::lib('filegal');
+
 		$galleryId = (int) $this->getOption('galleryId');
 		$count = (int) $this->getOption('count');
 		$deepGallerySearch = (boolean) $this->getOption('deepGallerySearch');
+
+		// to use the user's userfiles gallery enter the fgal_root_user_id which is often (but not always) 2
+		if ($prefs['feature_use_fgal_for_user_files'] === 'y' && $galleryId == $prefs['fgal_root_user_id']) {
+			$galleryId = (int) $filegallib->get_user_file_gallery();
+		}
 
 		$value = '';
 		$ins_id = $this->getInsertId();
@@ -134,7 +144,7 @@ class Tracker_Field_Files extends Tracker_Field_Abstract
 
 		if ($deepGallerySearch) {
 			$gallery_list = null;
-			TikiLib::lib('filegal')->getGalleryIds($gallery_list, $galleryId, 'list');
+			$filegallib->getGalleryIds($gallery_list, $galleryId, 'list');
 			$gallery_list = implode(' or ', $gallery_list);
 		} else {
 			$gallery_list = $galleryId;
@@ -146,11 +156,20 @@ class Tracker_Field_Files extends Tracker_Field_Abstract
 			$firstfile = 0;
 		}
 
-		$perms = Perms::get('file gallery', $galleryId);
+		$galinfo = $filegallib->get_file_gallery($galleryId);
+		if ($prefs['feature_use_fgal_for_user_files'] !== 'y' || $galinfo['type'] !== 'user') {
+			$perms = Perms::get('file gallery', $galleryId);
+			$canUpload = $perms->upload_files;
+		} else {
+			global $user;
+			$perms = TikiLib::lib('tiki')->get_local_perms($user, $galleryId, 'file gallery', $galinfo, false);		//get_perm_object($galleryId, 'file gallery', $galinfo);
+			$canUpload = $perms['tiki_p_upload_files'] === 'y';
+		}
+
 
 		return array(
 			'galleryId' => $galleryId,
-			'canUpload' => $perms->upload_files,
+			'canUpload' => $canUpload,
 			'limit' => $count,
 			'files' => $fileInfo,
 			'firstfile' => $firstfile,
