@@ -302,7 +302,7 @@ customsearch._load = function (receive) {
 	}
 	$.ajax({
 		type: 'POST',
-		url: $.service('tracker_search', 'customsearch'),
+		url: $.service('search_customsearch', 'customsearch'),
 		data: datamap,
 		dataType: 'html',
 		success: function(data) {

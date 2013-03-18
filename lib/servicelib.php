@@ -63,7 +63,7 @@ class ServiceLib
 			'rating'=>  'Services_Rating_Controller',
 			'report' => 'Services_Report_Controller',
 			'tracker_calendar' => 'Services_Tracker_CalendarController',
-			'tracker_search' => 'Services_Tracker_SearchController',
+			'search_customsearch' => 'Services_Search_CustomSearchController',
 			'tracker' => 'Services_Tracker_Controller',
 			'tracker_sync' => 'Services_Tracker_SyncController',
 			'tracker_todo' => 'Services_Tracker_TodoController',

@@ -9,24 +9,13 @@
 // Refactored from customsearch_ajax.php for Tiki
 
 
-class Services_Tracker_SearchController
+class Services_Search_CustomSearchController
 {
 	function setUp()
 	{
-		global $prefs;
-
-		if ($prefs['feature_trackers'] !== 'y') {
-			throw new Services_Exception_Disabled('feature_trackers');
-		}
-
-		if ($prefs['wikiplugin_list'] !== 'y') {
-			throw new Services_Exception_Disabled('wikiplugin_list');
-		}
-
-		if ($prefs['wikiplugin_customsearch'] !== 'y') {
-			throw new Services_Exception_Disabled('wikiplugin_customsearch');
-		}
-
+		Services_Exception_Disabled::check('wikiplugin_list');
+		Services_Exception_Disabled::check('wikiplugin_customsearch');
+		Services_Exception_Disabled::check('feature_search');
 	}
 
 	function action_customsearch($input)
