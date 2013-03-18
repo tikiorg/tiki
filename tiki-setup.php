@@ -433,14 +433,19 @@ if ($prefs['mobile_feature'] === 'y' && $prefs['mobile_mode'] === 'y') {
 		$headerlib->add_jsfile('lib/jquery/jquery.media.js');
 	}
 	if ( $prefs['feature_jquery_tablesorter'] == 'y' ) {
-		$headerlib->add_cssfile('lib/jquery_tiki/tablesorter/themes/tiki/style.css');
 		$headerlib->add_jsfile('lib/jquery/tablesorter/addons/pager/jquery.tablesorter.pager.js');
-
+		$headerlib->add_cssfile('lib/jquery_tiki/tablesorter/style.css');
 		if ( $prefs['tiki_minify_javascript'] === 'y' ) {
 			//tablesorter has bad syntax in the non-min file, however the min file seems to work fine when double minned :)
-			$headerlib->add_jsfile('lib/jquery/tablesorter/jquery.tablesorter.min.js');
+			$headerlib->add_jsfile('lib/jquery/tablesorter/js/jquery.tablesorter.min.js');
+			$headerlib->add_jsfile('lib/jquery/tablesorter/js/jquery.tablesorter.widgets.min.js');
+			$headerlib->add_jsfile('lib/jquery/tablesorter/js/jquery.tablesorter.widgets-filter-formatter.min.js');
+			$headerlib->add_jsfile('lib/jquery/tablesorter/addons/pager/jquery.tablesorter.pager.min.js');
 		} else {
-			$headerlib->add_jsfile('lib/jquery/tablesorter/jquery.tablesorter.js');
+			$headerlib->add_jsfile('lib/jquery/tablesorter/js/jquery.tablesorter.js');
+			$headerlib->add_jsfile('lib/jquery/tablesorter/addons/pager/jquery.tablesorter.pager.js');
+			$headerlib->add_jsfile('lib/jquery/tablesorter/js/jquery.tablesorter.widgets.js');
+			$headerlib->add_jsfile('lib/jquery/tablesorter/js/jquery.tablesorter.widgets-filter-formatter.js');
 		}
 	}
 	if ( $prefs['feature_shadowbox'] == 'y' ) {
