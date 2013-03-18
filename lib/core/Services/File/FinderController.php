@@ -15,6 +15,8 @@ class Services_File_FinderController
 {
 	private $fileController;
 
+	private $parentIds;
+
 	function setUp()
 	{
 		global $prefs;
@@ -26,6 +28,8 @@ class Services_File_FinderController
 			throw new Services_Exception_Disabled('fgal_elfinder_feature');
 		}
 		$this->fileController = new Services_File_Controller();
+
+		$this->parentIds = null;
 	}
 
 	/**********************
@@ -44,18 +48,17 @@ class Services_File_FinderController
 	{
 		global $prefs, $user;
 
-		static $parentIds = null;
 
-		if ($parentIds === null) {
+		if ($this->parentIds === null) {
 			$ids = TikiLib::lib('filegal')->getGalleriesParentIds();
-			$parentIds = array( 'galleries' => array(), 'files' => array() );
+			$this->parentIds = array( 'galleries' => array(), 'files' => array() );
 			foreach ($ids as $id) {
 				if ($id['parentId'] > 0) {
-					$parentIds['galleries'][(int) $id['galleryId']] = (int) $id['parentId'];
+					$this->parentIds['galleries'][(int) $id['galleryId']] = (int) $id['parentId'];
 				}
 			}
 			$tiki_files = TikiDb::get()->table('tiki_files');
-			$parentIds['files'] = $tiki_files->fetchMap('fileId', 'galleryId', array());
+			$this->parentIds['files'] = $tiki_files->fetchMap('fileId', 'galleryId', array());
 
 		}
 
@@ -97,10 +100,10 @@ class Services_File_FinderController
 				$d = $input->defaultGalleryId->int() != $this->fileController->defaultGalleryId ? 'd_' : '';
 			}
 			$opts['roots']['startPath'] = "$d{$input->defaultGalleryId->int()}";	// needs to be the cached name in elfinder (with 'd_' in front) unless it's the root id
-			$opts['roots'][$root]['accessControlData'] = array('startPath' => $input->defaultGalleryId->int(), 'deepGallerySearch' => $input->deepGallerySearch->int(), 'parentIds' => $parentIds);
+			$opts['roots'][$root]['accessControlData'] = array('startPath' => $input->defaultGalleryId->int(), 'deepGallerySearch' => $input->deepGallerySearch->int(), 'parentIds' => $this->parentIds);
 		} else if (!$input->deepGallerySearch->int()) {
 			$opts['roots'][0]['startPath'] = $this->fileController->defaultGalleryId;	// root path just needs the id
-			$opts['roots'][0]['accessControlData'] = array('startPath' => $this->fileController->defaultGalleryId, 'deepGallerySearch' => $input->deepGallerySearch->int(), 'parentIds' => $parentIds);
+			$opts['roots'][0]['accessControlData'] = array('startPath' => $this->fileController->defaultGalleryId, 'deepGallerySearch' => $input->deepGallerySearch->int(), 'parentIds' => $this->parentIds);
 		}
 
 /* thumb size not working due to css issues - tried this in setup/javascript.php but needs extensive css overhaul to get looking right
@@ -159,7 +162,7 @@ class Services_File_FinderController
 			if ($isgal) {
 				$visible = $this->isVisible($id, $data, $isgal);
 			} else {
-				$visible = $this->isVisible($data['parentIds']['files'][$id], $data, $isgal);
+				$visible = $this->isVisible($this->parentIds['files'][$id], $data, $isgal);
 			}
 		} else {
 			$isgal = true;
@@ -172,7 +175,7 @@ class Services_File_FinderController
 		} else {
 			$objectType = 'file';
 			// Seems individual file perms aren't set so use the gallery ones
-			$galleryId = $data['parentIds']['files'][$id];
+			$galleryId = $this->parentIds['files'][$id];
 		}
 
 		$perms = TikiLib::lib('tiki')->get_perm_object($galleryId, 'file gallery', TikiLib::lib('filegal')->get_file_gallery_info($galleryId));
@@ -208,7 +211,7 @@ class Services_File_FinderController
 				$visible = true;
 				return $visible;
 			} else {
-				$isParentOf = $this->isParentOf($id, $data['startPath'], $data['parentIds']['galleries']);
+				$isParentOf = $this->isParentOf($id, $data['startPath'], $this->parentIds['galleries']);
 
 				if (isset($data['deepGallerySearch']) && $data['deepGallerySearch'] == 0) { // not startPath and not deep
 					if ($isParentOf && $isgal) {
@@ -224,13 +227,13 @@ class Services_File_FinderController
 					} else {
 						$visible = false;
 					}
-					$pid = $data['parentIds']['galleries'][$id];
+					$pid = $this->parentIds['galleries'][$id];
 					while ($pid) {
 						if ($pid == $data['startPath']) {
 							$visible = true;
 							break;
 						}
-						$pid = $data['parentIds']['galleries'][$pid];
+						$pid = $this->parentIds['galleries'][$pid];
 					}
 					return $visible;
 				}
