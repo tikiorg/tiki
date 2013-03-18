@@ -48,27 +48,15 @@ function wikiplugin_list($data, $params)
 
 	$result = $query->search($index);
 
-	if (count($result)) {
-		$paginationArguments = $builder->getPaginationArguments();
-		$builder = new Search_Formatter_Builder;
-		$builder->setPaginationArguments($paginationArguments);
-		$builder->apply($matches);
+	$paginationArguments = $builder->getPaginationArguments();
+	$builder = new Search_Formatter_Builder;
+	$builder->setPaginationArguments($paginationArguments);
+	$builder->apply($matches);
 
-		$formatter = $builder->getFormatter();
-		$formatter->setDataSource($unifiedsearchlib->getDataSource());
-		$out = $formatter->format($result);
+	$formatter = $builder->getFormatter();
+	$formatter->setDataSource($unifiedsearchlib->getDataSource());
+	$out = $formatter->format($result);
 
-		return $out;
-	} else {
-		foreach ($matches as $match) {
-			$name = $match->getName();
-
-			if ($name == 'alternate') {
-				return $match->getBody();
-			}
-		}
-
-		return '^' . tra('No results for query.') . '^';
-	}
+	return $out;
 }
 

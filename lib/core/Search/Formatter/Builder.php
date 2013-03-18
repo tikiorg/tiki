@@ -12,6 +12,7 @@ class Search_Formatter_Builder
 
 	private $formatterPlugin;
 	private $subFormatters = array();
+	private $alternateOutput;
 
 	function __construct()
 	{
@@ -27,6 +28,11 @@ class Search_Formatter_Builder
 		$this->paginationArguments = $arguments;
 	}
 
+	function setFormatterPlugin(Search_Formatter_Plugin_Interface $plugin)
+	{
+		$this->formatterPlugin = $plugin;
+	}
+
 	function apply($matches)
 	{
 		foreach ($matches as $match) {
@@ -39,6 +45,10 @@ class Search_Formatter_Builder
 			if ($name == 'format') {
 				$this->handleFormat($match);
 			}
+
+			if ($name == 'alternate') {
+				$this->handleAlternate($match);
+			}
 		}
 	}
 
@@ -50,6 +60,12 @@ class Search_Formatter_Builder
 		}
 
 		$formatter = new Search_Formatter($plugin);
+
+		if ($this->alternateOutput) {
+			$formatter->setAlternateOutput($this->alternateOutput);
+		} else {
+			$formatter->setAlternateOutput('^' . tra('No results for query.') . '^');
+		}
 
 		foreach ($this->subFormatters as $name => $plugin) {
 			$formatter->addSubFormatter($name, $plugin);
@@ -66,6 +82,11 @@ class Search_Formatter_Builder
 			$plugin = new Search_Formatter_Plugin_WikiTemplate($match->getBody());
 			$this->subFormatters[$arguments['name']] = $plugin;
 		}
+	}
+
+	private function handleAlternate($match)
+	{
+		$this->alternateOutput = $match->getBody();
 	}
 
 	private function handleOutput($output)
