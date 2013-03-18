@@ -59,6 +59,34 @@ if (isset($_REQUEST['lang'])) {
 }
 $uniqueid .= '/'.$articleLang;
 
+$categId = '';
+if (isset($_REQUEST["category"])) {
+	$categlib = TikiLib::lib('categ');
+	if (is_array($_REQUEST["category"]) ) {
+		foreach ( $_REQUEST["category"] as $categname ) {
+			$categIds[] = $categlib->get_category_id($categname);
+		}
+		sort($categIds);
+		$categId = array('AND'=>$categIds);
+		$uniqueid .= '-' . implode('-',$categIds);;
+	} else {
+		$categId = $categlib->get_category_id($_REQUEST["category"]);
+		$uniqueid .= '-'.$categId;
+	}
+}
+// Specifying categories by ID takes precedence, as it is more reliable
+if (isset($_REQUEST["categId"])) {
+	if (is_array($_REQUEST["categId"]) ) {
+		sort($_REQUEST["categId"]);
+		$categId = (int) $_REQUEST["categId"];
+		$categId = array('AND'=>$_REQUEST["categId"]);
+		$uniqueid .= '-' . implode('-',$_REQUEST["categId"]);;
+	} else {
+		$categId = (int) $_REQUEST["categId"];
+		$uniqueid .= '-'.$categId;
+	}
+}
+
 if ($topic and !$tikilib->user_has_perm_on_object($user, $topic, 'topic', 'tiki_p_topic_read')) {
 	$smarty->assign('errortype', 401);
 	$errmsg=tra("You do not have permission to view this section");
@@ -86,7 +114,7 @@ if ($output["data"]=="EMPTY") {
 		$desc = $tmp;
 	}
 
-	$changes = $artlib -> list_articles(0, $prefs['feed_articles_max'], $dateId.'_desc', '', 0, $tikilib->now, $user, $type, $topic, 'y', '', '', '', '', $articleLang, '', '', false, 'y');
+	$changes = $artlib -> list_articles(0, $prefs['feed_articles_max'], $dateId.'_desc', '', 0, $tikilib->now, $user, $type, $topic, 'y', '', $categId, '', '', $articleLang, '', '', false, 'y');
 	$tmp = array();
 	include_once('tiki-sefurl.php');
 	foreach ($changes["data"] as $data) {
