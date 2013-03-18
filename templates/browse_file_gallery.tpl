@@ -195,7 +195,7 @@
 											{if $view eq 'page'}
 												<img src="tiki-download_file.php?fileId={$files[changes].id}" alt="" style="max-width:{$maxWidth}">
 											{else}
-												<img src="{$files[changes].id|sefurl:thumbnail}" alt="">
+												<img src="{$files[changes].id|sefurl:thumbnail}" alt="" style="max-height:{$thumbnailcontener_size}px">
 											{/if}
 										{else}
 											<object data="{$files[changes].id|sefurl:thumbnail}" alt=""  style="width:{$thumbnail_size}px;height:{$thumbnailcontener_size}px;" type="{$key_type}"></object>
