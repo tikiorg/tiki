@@ -20,10 +20,14 @@ class Services_Search_CustomSearchController
 
 	function action_customsearch($input)
 	{
-		$data = $input->basedata->text();
-		if (empty($data)) {
-			throw new Services_Exception(tra('Error in search query'));
+		$cachelib = TikiLib::lib('cache');
+		$definition = $input->definition->word();
+		if (empty($definition) || ! $definition = $cachelib->getSerialized($definition, 'customsearch')) {
+			throw new Services_Exception(tra('Search expired.'));
 		}
+
+		$query = $definition['query'];
+		$formatter = $definition['formatter'];
 
 		$adddata = json_decode($input->adddata->text(), true);
 
@@ -113,232 +117,97 @@ class Services_Search_CustomSearchController
 				}
 
 				$function = "cs_dataappend_{$filter}";
-				if (method_exists($this, $function) && $line = $this->$function($config, addslashes($value))) {
-					$dataappend[$fieldid] .= $line;
+				if (method_exists($this, $function)) {
+					$this->$function($query, $config, $value);
 				}
 			}
-
-			// Reconstruct using boolean OR for grouped filters
-			$grouped = $this->cs_get_grouped($dataappend, $groups);
-			$grouping_keys = array('categories', 'content', 'language'); // only these can be grouped
-			$to_reconstruct = $this->cs_process_group($dataappend, $grouped, $id, $grouping_keys);
-			$this->cs_reconstruct_group($dataappend, $to_reconstruct, $grouped, $id, $grouping_keys);
-
-			// Reconstruct textrange from-to filters
-			$grouped = $this->cs_get_grouped($dataappend, $textrangegroups);
-			$grouping_keys = array('content');
-			$to_reconstruct = $this->cs_process_group($dataappend, $grouped, $id, $grouping_keys, 2, 2, false, true);
-			$this->cs_reconstruct_rangegroup($dataappend, $to_reconstruct, $grouped, $id, $grouping_keys, 'text');
-
-			// Reconstruct daterange from-to filters
-			$grouped = $this->cs_get_grouped($dataappend, $daterangegroups);
-			$grouping_keys = array('content');
-			$to_reconstruct = $this->cs_process_group($dataappend, $grouped, $id, $grouping_keys, 2, 2, false, true);
-			$this->cs_reconstruct_rangegroup($dataappend, $to_reconstruct, $grouped, $id, $grouping_keys, 'date');
 		}
 
-		// Finally combine base filters with appended filters
-		foreach ($dataappend as $d) {
-			$data .= $d;
-		}
+		$unifiedsearchlib = TikiLib::lib('unifiedsearch');
+		$query->setWeightCalculator($unifiedsearchlib->getWeightCalculator());
+		$index = $unifiedsearchlib->getIndex();
+		$resultSet = $query->search($index);
 
-		require_once('lib/wiki-plugins/wikiplugin_list.php');
-		$results = wikiplugin_list($data, array());
+		$formatter->setDataSource($unifiedsearchlib->getDataSource());
+		$results = $formatter->format($resultSet);
+
 		$results = TikiLib::lib('tiki')->parse_data($results, array('is_html' => true, 'skipvalidation' => true));
 
 		return array('html' => $results);
 	}
 
-	private function cs_get_grouped($dataappend, $groups)
-	{
-		$grouped = array();
-		foreach ($dataappend as $fieldid => $data) {
-			if (isset($groups[$fieldid]) && !isset($groupedids[$groups[$fieldid]])) {
-				$grouped[$groups[$fieldid]] = array_keys($groups, $groups[$fieldid]);
-			}
-		}
-		return $grouped;
-	}
-
-	private function cs_process_group(&$dataappend, $grouped, $id, $grouping_keys, $min_match = 2, $max_match = 99, $checksimilar = true, $drop_if_no_match = false)
-	{
-		$parser = new WikiParser_PluginArgumentParser;
-		$to_reconstruct = array();
-		foreach ($grouped as $group_id => $grp) {
-			if (count($grp) > 1) {
-				$args = array();
-				$args_checked = array(); // just for consistency checking
-				$query_vals = array();
-				foreach ($grp as $g) {
-					$matches = WikiParser_PluginMatcher::match($dataappend[$g]);
-					foreach ($matches as $match) {
-						if ($match->getName() != 'filter') {
-							$query_vals = array();
-							break 2;
-						}
-						$args = $parser->parse($match->getArguments());
-						// double check that they are the same filter other than the query itself, to avoid errornous mixing
-						if ($checksimilar) {
-							$args_to_check = $args;
-							foreach ($grouping_keys as $k) {
-								unset($args_to_check[$k]);
-							}
-							if (!empty($args_checked) && $args_checked != $args_to_check) {
-								$query_vals = array();
-								break 2;
-							} else {
-								$args_checked = $args_to_check;
-							}
-						}
-						foreach ($grouping_keys as $k) {
-							if (array_key_exists($k, $args)) {
-								$query_vals[] = $args[$k];
-								break;
-							}
-						}
-					}
-				}
-				if (count($query_vals) >= $min_match && count($query_vals) <= $max_match) {
-					$to_reconstruct[$group_id] = array('args' => $args, 'query_vals' => $query_vals);
-				} elseif ($drop_if_no_match) {
-					foreach ($grouped[$group_id] as $to_drop) {
-						unset($dataappend[$to_drop]);
-					}
-				}
-			}
-		}
-		return $to_reconstruct;
-	}
-
-	private function cs_reconstruct_group(&$dataappend, $to_reconstruct, $grouped, $id, $grouping_keys)
-	{
-		foreach ($to_reconstruct as $group_id => $recon) {
-			$new_query_val = implode(' ', $recon['query_vals']);
-			foreach ($grouping_keys as $k) {
-				if (array_key_exists($k, $recon['args'])) {
-					$recon['args'][$k] = $new_query_val;
-					break;
-				}
-			}
-			foreach ($grouped[$group_id] as $to_drop) {
-				unset($dataappend[$to_drop]);
-			}
-			$filter = '{filter ';
-			foreach ($recon['args'] as $k => $v) {
-				$filter .= $k . '="' . $v . '" ';
-			}
-			$filter .= '}';
-			$dataappend["customsearch_$id" . "_gr$group_id"] = $filter;
-		}
-	}
-
-	private function cs_reconstruct_rangegroup(&$dataappend, $to_reconstruct, $grouped, $id, $grouping_keys, $mode = 'text')
-	{
-		foreach ($to_reconstruct as $group_id => $recon) {
-			sort($recon['query_vals'], SORT_NUMERIC); // Lucene is a string only engine but date ranges are converted from timestamp ints
-			$from = $recon['query_vals'][0];
-			$to = $recon['query_vals'][1];
-			if (!empty($recon['args']['field'])) {
-				$field = $recon['args']['field'];
-			} else {
-				$field = 'content';
-			}
-			foreach ($grouped[$group_id] as $to_drop) {
-				unset($dataappend[$to_drop]);
-			}
-			if ($mode == 'date') {
-				$filter = '{filter range="';
-			} else {
-				$filter = '{filter textrange="';
-			}
-			$filter .= $field . '" from="' . $from . '" to="' . $to . '"}';
-			$dataappend["customsearch_$id" . "_$mode" . "range$group_id"] = $filter;
-		}
-	}
-
-	private function cs_dataappend_language($config, $value)
+	private function cs_dataappend_language(Search_Query $query, $config, $value)
 	{
 		if ($config['type'] != 'text') {
 			if (!empty($config['_value'])) {
 				$value = $config['_value'];
-				return '{filter language="' . $value . '"}';
+				$query->filterLanguage($value);
 			} elseif ($value) {
-				return '{filter language="' . $value . '"}';
-			} else {
-				return false;
+				$query->filterLanguage($value);
 			}
 		}
-		return false;
 	}
 
-	private function cs_dataappend_type($config, $value)
+	private function cs_dataappend_type(Search_Query $query, $config, $value)
 	{
 		if ($config['type'] != 'text') {
 			if (!empty($config['_value'])) {
 				$value = $config['_value'];
-				return '{filter type="' . $value . '"}';
+				$query->filterType($value);
 			} elseif ($value) {
-				return '{filter type="' . $value . '"}';
-			} else {
-				return false;
+				$query->filterType($value);
 			}
 		}
-		return false;
 	}
 
-	private function cs_dataappend_content($config, $value)
+	private function cs_dataappend_content(Search_Query $query, $config, $value)
 	{
 		if ($value) {
 			if ($config['type'] == 'checkbox') {
 				if (empty($config['_field'])) {
-					return false;
+					return;
 				}
 				if (!empty($config['_value'])) {
 					if ($config['_value'] == 'n') {
 						$config['_value'] = 'NOT y';
 					}
-					return '{filter content="' . $config['_value'] . '" field="' . $config['_field'] . '"}';
+					$query->filterContent($config['_value'], $config['_field']);
 				} else {
-					return '{filter content="y" field="' . $config['_field'] . '"}';
+					$query->filterContent('y', $config['_field']);
 				}
 			} elseif ($config['type'] == 'radio' && !empty($config['_value'])) {
 				if (empty($config['_field'])) {
-					return '{filter content="' . $config['_value'] . '"}';
+					$query->filterContent($config['_value']);
 				} else {
-					return '{filter content="' . $config['_value'] . '" field="' . $config['_field'] . '"}';
+					$query->filterContent($config['_value'], $config['_field']);
 				}
 			} else {
 				// covers everything else including radio that have no _value set (use sent value)
 				if (empty($config['_field'])) {
-					return '{filter content="' . $value . '"}';
+					$query->filterContent($value);
 				} else {
-					return '{filter content="' . $value . '" field="' . $config['_field'] . '"}';
+					$query->filterContent($value, $config['_field']);
 				}
 			}
 		}
 		return false;
 	}
 
-	private function cs_dataappend_categories($config, $value)
+	private function cs_dataappend_categories(Search_Query $query, $config, $value)
 	{
 		if (isset($config['_filter']) && $config['_filter'] == 'categories' && $config['type'] != 'text') {
 			if (!empty($config['_value'])) {
 				$value = $config['_value'];
 			}
 		} elseif (!isset($config['_style'])) {
-			return false;
+			return;
+		} elseif ($value) {
+			$deep = isset($config['_showdeep']) && $config['_showdeep'] != 'n';
+			$query->filterCategory($value, $deep);
 		}
-		if ($value) {
-			if (isset($config['_showdeep']) && $config['_showdeep'] != 'n') {
-				return '{filter deepcategories="' . $value . '"}';
-			} else {
-				return '{filter categories="' . $value . '"}';
-			}
-		}
-		return false;
 	}
 
-	function cs_dataappend_daterange($config, $value)
+	private function cs_dataappend_daterange(Search_Query $query, $config, $value)
 	{
 		if ($vals = preg_split('/,/', $value)) {
 			if (count($vals) == 2) {
@@ -349,13 +218,9 @@ class Services_Search_CustomSearchController
 				} else {
 					$field = 'modification_date';
 				}
-				$filter = '{filter range="' . $field . '" from="' . $from . '" to="' . $to . '"}';
-				return $filter;
-			} else {
-				return false;
+				$query->filterRange($from, $to, $field);
 			}
 		}
-		return false;
 	}
 
 }

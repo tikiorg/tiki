@@ -131,14 +131,30 @@ function wikiplugin_customsearch($data, $params)
 		$params['searchonload'] = 1;
 	}
 
+	$definitionKey = md5($data);
+	$matches = WikiParser_PluginMatcher::match($data);
+	$query = new Search_Query;
+	$builder = new Search_Query_WikiBuilder($query);
+	$builder->apply($matches);
+
+	$builder = new Search_Formatter_Builder;
+	$builder->apply($matches);
+	$formatter = $builder->getFormatter();
+
+	$cachelib = TikiLib::lib('cache');
+	$cachelib->cacheItem($definitionKey, serialize(array(
+		'query' => $query,
+		'formatter' => $formatter,
+	)), 'customsearch');
+
 	$wikitpl = "tplwiki:" . $params['wiki'];
 	$wikicontent = TikiLib::lib('smarty')->fetch($wikitpl);
 	TikiLib::lib('parser')->parse_wiki_argvariable($wikicontent);
 
 	$matches = WikiParser_PluginMatcher::match($wikicontent);
 
-	$parser = new WikiParser_PluginArgumentParser;
-	$fingerprint = md5(print_r($matches, true));
+	$fingerprint = md5($wikicontent);
+
 	$sessionprint = "customsearch_{$id}_$fingerprint";
 	if (isset($_SESSION[$sessionprint]) && $_SESSION[$sessionprint] != $fingerprint) {
 		unset($_SESSION["customsearch_$id"]);
@@ -168,7 +184,7 @@ var customsearch = {
 	offset: 0,
 	quiet: false,
 	searchdata: {},
-	basedata: " . json_encode((string) $data) . ",
+	definition: " . json_encode((string) $definitionKey) . ",
 	autoTimeout: null,
 	add: function (fieldId, filter) {
 		this.stop();
@@ -222,6 +238,7 @@ $('#customsearch_$id').submit(function() {
 customsearch_$id = customsearch;
 ";
 
+	$parser = new WikiParser_PluginArgumentParser;
 	foreach ($matches as $match) {
 		$name = $match->getName();
 		$arguments = $parser->parse($match->getArguments());
@@ -286,7 +303,7 @@ customsearch_$id = customsearch;
 	$script .= "
 customsearch._load = function (receive) {
 	var datamap = {
-		basedata: this.basedata,
+		definition: this.definition,
 		adddata: $.toJSON(this.searchdata),
 		searchid: this.id,
 		groups: '" . json_encode($groups) . "',
