@@ -169,7 +169,7 @@ function wikiplugin_file( $data, $params )
 		if (empty($data)) { // to avoid problem with parsing
 			$data = empty($info['name'])?$info['filename']: $info['name'];
 		}
-		if (isset($params['showicon']) & $params['showicon'] == "y") {
+		if (isset($params['showicon']) && $params['showicon'] == "y") {
 			return "{img src=tiki-download_file.php?fileId=$fileId&amp;thumbnail=y&amp;x=16 link=tiki-download_file.php?fileId=$fileId} [tiki-download_file.php?fileId=$fileId|$data]";
 		} else {
 			return "[tiki-download_file.php?fileId=$fileId|$data]";
