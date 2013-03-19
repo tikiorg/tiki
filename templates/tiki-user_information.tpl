@@ -25,7 +25,7 @@
 					{if $tiki_p_admin eq 'y' or $userinfo.login eq $user}
 						{if $tiki_p_admin eq 'y'}
 							<a class="link" href="tiki-assignuser.php?assign_user={$userinfo.login|escape:"url"}" title="{tr}Assign Group{/tr}">
-								{icon _id='key' align="right" alt="{tr}Assign Group{/tr}"}
+								{icon _id='group_key' align="right" alt="{tr}Assign Group{/tr}"}
 							</a>
 						{/if}
 						<a class="link" href="tiki-user_preferences.php?userId={$userinfo.userId}" title="{tr}Change user preferences{/tr}">
