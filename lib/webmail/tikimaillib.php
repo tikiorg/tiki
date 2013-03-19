@@ -6,7 +6,7 @@
 // $Id$
 
 /**
- * set some default params (mainly utf8 as titi is utf8) + use the mailCharset pref from a user
+ * set some default params (mainly utf8 as tiki is utf8) + use the mailCharset pref from a user
  */
 global $access;
 $access->check_script($_SERVER["SCRIPT_NAME"], basename(__FILE__));
@@ -15,11 +15,25 @@ class TikiMail
 {
 	private $mail;
 
-	/* $user = user you send the mail
-		 $from = email you send from*/
+	/**
+	 * @param null $user	to username
+	 * @param null $from	from email
+	 */
 	function __construct($user = null, $from=null)
 	{
 		require_once 'lib/mail/maillib.php';
+
+		$userlib = TikiLib::lib('user');
+
+		$to = '';
+		if (!empty($user)) {
+			if ($userlib->user_exists($user)) {
+				$to = $userlib->get_user_email($user);
+			} else {
+				trigger_error('User not found');
+				return;
+			}
+		}
 
 		if (! empty($from)) {
 			$this->mail = tiki_get_basic_mail();
@@ -31,6 +45,9 @@ class TikiMail
 			}
 		} else {
 			$this->mail = tiki_get_admin_mail();
+		}
+		if (! empty($to)) {
+			$this->mail->addTo($to);
 		}
 	}
 
