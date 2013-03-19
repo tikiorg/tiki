@@ -260,9 +260,10 @@
 						<div class="{cycle}">
 							<a class="link" href="{$user_galleries[ix].galleryId|sefurl:gallery}">
 								{$user_galleries[ix].name|escape}
-							</a>{/section}
+							</a>
 						</div>
 					</div>
+				{/section}
 			</div>
 		{/if}
 		{if $user_blogs|@count > 0}
