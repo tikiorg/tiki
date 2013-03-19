@@ -366,7 +366,7 @@
 					<select name="mess_maxRecords">
 						<option value="2" {if $user_prefs.mess_maxRecords eq 2}selected="selected"{/if}>2</option>
 						<option value="5" {if $user_prefs.mess_maxRecords eq 5}selected="selected"{/if}>5</option>
-						<option value="10" {if $user_prefs.mess_maxRecords eq 10}selected="selected"{/if}>10</option>
+						<option value="10" {if empty($user_prefs.mess_maxRecords) or $user_prefs.mess_maxRecords eq 10}selected="selected"{/if}>10</option>
 						<option value="20" {if $user_prefs.mess_maxRecords eq 20}selected="selected"{/if}>20</option>
 						<option value="30" {if $user_prefs.mess_maxRecords eq 30}selected="selected"{/if}>30</option>
 						<option value="40" {if $user_prefs.mess_maxRecords eq 40}selected="selected"{/if}>40</option>
