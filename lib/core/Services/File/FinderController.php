@@ -63,8 +63,8 @@ class Services_File_FinderController
 		}
 
 		// turn off most elfinder commands here too (stops the back-end methods being accessible)
-		$disabled = array('mkdir', 'mkfile', 'edit', 'extract', 'archive', 'resize');
-		// done so far: 'rename', 'rm', 'duplicate', 'upload', 'copy', 'cut', 'paste',
+		$disabled = array('mkfile', 'edit', 'extract', 'archive', 'resize');
+		// done so far: 'rename', 'rm', 'duplicate', 'upload', 'copy', 'cut', 'paste', 'mkdir',
 
 		// check for a "userfiles" gallery - currently although elFinder can support more than one root, it always starts in the first one
 		$opts = array(

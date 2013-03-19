@@ -584,6 +584,28 @@ class elFinderVolumeTikiFiles extends elFinderVolumeDriver
 	 **/
 	protected function _mkdir($path, $name)
 	{
+		global $user;
+
+		$parentDirId = $this->pathToId($path);
+		$parentPerms = TikiLib::lib('tiki')->get_perm_object($parentDirId, 'file gallery', TikiLib::lib('filegal')->get_file_gallery_info($parentDirId));
+		if ($parentPerms['tiki_p_admin_file_galleries'] === 'y' || $parentPerms['tiki_p_create_file_galleries'] === 'y') {
+
+			$parent_info = $this->filegallib->get_file_gallery($parentDirId);
+
+			$gal_info = array();		// replace_file_gallery merges with default
+
+			$gal_info['name'] = $name;
+			$gal_info['type'] = $parent_info['type'] === 'user' ? 'user' : $gal_info['type'];
+			$gal_info['user'] = $user;
+			$gal_info['parentId'] = $parentDirId;
+
+			$result = $this->filegallib->replace_file_gallery($gal_info);
+
+			if ($result) {
+				return 'd_' . $result;
+			}
+		}
+		return false;
 	}
 
 	/**
@@ -653,7 +675,7 @@ class elFinderVolumeTikiFiles extends elFinderVolumeDriver
 		if ($srcDirId == $targetDirId) {
 			$targetPerms = $srcPerms;
 		} else {
-			$targetPerms = TikiLib::lib('tiki')->get_perm_object($targetDir, 'file gallery', TikiLib::lib('filegal')->get_file_gallery_info($targetDir));
+			$targetPerms = TikiLib::lib('tiki')->get_perm_object($targetDirId, 'file gallery', TikiLib::lib('filegal')->get_file_gallery_info($targetDirId));
 		}
 		$canMove = ($srcPerms['tiki_p_admin_file_galleries'] === 'y' && $targetPerms['tiki_p_admin_file_galleries'] === 'y') ||
 				($srcPerms['tiki_p_remove_files'] === 'y' && $targetPerms['tiki_p_upload_files'] === 'y');
@@ -719,6 +741,16 @@ class elFinderVolumeTikiFiles extends elFinderVolumeDriver
 	 **/
 	protected function _rmdir($path)
 	{
+		$galleryId = $this->pathToId($path);
+		$gal_info = TikiLib::lib('filegal')->get_file_gallery_info($galleryId);
+		$perms = TikiLib::lib('tiki')->get_perm_object($galleryId, 'file gallery', $gal_info);
+		if ($perms['tiki_p_admin_file_galleries'] === 'y' ||
+				($gal_info['type'] === 'user' && $perms['tiki_p_create_file_galleries'])) {		// users can create and remove their own gals only
+
+			return $this->filegallib->remove_file_gallery($this->pathToId($path), $this->pathToId($path));
+		} else {
+			return false;
+		}
 	}
 
 	/**
