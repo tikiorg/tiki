@@ -66,44 +66,60 @@ class Services_File_FinderController
 		$disabled = array('mkdir', 'mkfile', 'edit', 'extract', 'archive', 'resize');
 		// done so far: 'rename', 'rm', 'duplicate', 'upload', 'copy', 'cut', 'paste',
 
+		// check for a "userfiles" gallery - currently although elFinder can support more than one root, it always starts in the first one
 		$opts = array(
 			'debug' => true,
-			'roots' => array(
-				array(
-					'driver'        => 'TikiFiles',   								// driver for accessing file system (REQUIRED)
-					'path'          => $prefs['fgal_root_id'],						// tiki root filegal - path to files (REQUIRED)
-					'disabled'		=> $disabled,
-
-//					'URL'           => 												// URL to files (seems not to be REQUIRED)
-					'accessControl' => array($this, 'elFinderAccess'),				// obey tiki perms
-					'uploadMaxSize' => ini_get('upload_max_filesize'),
-				)
-			)
+			'roots' => array(),
 		);
-		if ($user != '' && $prefs['feature_use_fgal_for_user_files'] == 'y') {
-			$opts['roots'][] = array(
-				'driver'        => 'TikiFiles',
-				'path'			=> $prefs['fgal_root_user_id'],
-				'disabled'		=> $disabled,
-				'accessControl' => array($this, 'elFinderAccess'),
-				'uploadMaxSize' => ini_get('upload_max_filesize'),
-			);
+
+		// gallery to start in
+		$galleryId = $input->defaultGalleryId->int();
+		$rootId = 0;
+
+		if (!$galleryId) {
+			$galleryId = $this->fileController->defaultGalleryId;
 		}
-		if ($input->defaultGalleryId->int()) {
-			//$rootId = TikiLib::lib('filegal')->getGallerySpecialRoot($input->defaultGalleryId->int());	// doesn't seem to work for user gals?
-			$gal_info = TikiLib::lib('filegal')->get_file_gallery_info($input->defaultGalleryId->int());
-			if ($gal_info['type'] == 'user') {
-				$root = 1;
-				$d = $input->defaultGalleryId->int() != $prefs['fgal_root_user_id'] ? 'd_' : '';
-			} else {
-				$root = 0;
-				$d = $input->defaultGalleryId->int() != $this->fileController->defaultGalleryId ? 'd_' : '';
+
+		if ($user != '' && $prefs['feature_use_fgal_for_user_files'] == 'y' && $galleryId) {
+
+			if ($galleryId == $prefs['fgal_root_user_id'] && ! Perms::get('file gallery', $galleryId)->admin_trackers) {
+				$galleryId = (int) TikiLib::lib('filegal')->get_user_file_gallery();
 			}
-			$opts['roots']['startPath'] = "$d{$input->defaultGalleryId->int()}";	// needs to be the cached name in elfinder (with 'd_' in front) unless it's the root id
-			$opts['roots'][$root]['accessControlData'] = array('startPath' => $input->defaultGalleryId->int(), 'deepGallerySearch' => $input->deepGallerySearch->int(), 'parentIds' => $this->parentIds);
-		} else if (!$input->deepGallerySearch->int()) {
-			$opts['roots'][0]['startPath'] = $this->fileController->defaultGalleryId;	// root path just needs the id
-			$opts['roots'][0]['accessControlData'] = array('startPath' => $this->fileController->defaultGalleryId, 'deepGallerySearch' => $input->deepGallerySearch->int(), 'parentIds' => $this->parentIds);
+
+			if ($galleryId == $prefs['fgal_root_user_id']) {
+				$rootId = $prefs['fgal_root_user_id'];
+			} else {
+				$gal_info = TikiLib::lib('filegal')->get_file_gallery_info($galleryId);
+
+				if ($gal_info['type'] == 'user') {
+					$rootId = $prefs['fgal_root_user_id'];
+				}
+			}
+		}
+
+		if (!$rootId) {
+			$rootId = $this->fileController->defaultGalleryId;		// should be $prefs['fgal_root_id'];
+		}
+
+		// 'startParth' not functioning with multiple roots as yet (https://github.com/Studio-42/elFinder/issues/351)
+		// so only have one volume at a time (shame)
+
+		$opts['roots'][] = array(
+			'driver'        => 'TikiFiles',   					// driver for accessing file system (REQUIRED)
+			'path'          => $rootId,							// tiki root filegal - path to files (REQUIRED)
+			'disabled'		=> $disabled,
+//			'URL'           => 									// URL to files (seems not to be REQUIRED)
+			'accessControl' => array($this, 'elFinderAccess'),	// obey tiki perms
+			'uploadMaxSize' => ini_get('upload_max_filesize'),
+		);
+
+		if ($galleryId) {
+			$d = $galleryId != $rootId ? 'd_' : '';				// needs to be the cached name in elfinder (with 'd_' in front) unless it's the root id
+			$opts['roots'][0]['startPath'] = $d . $galleryId;
+			$opts['roots'][0]['accessControlData'] = array(
+				'deepGallerySearch' => $input->deepGallerySearch->int(),
+				'parentIds' => $this->parentIds,
+			);
 		}
 
 /* thumb size not working due to css issues - tried this in setup/javascript.php but needs extensive css overhaul to get looking right
