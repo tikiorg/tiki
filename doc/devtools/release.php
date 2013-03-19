@@ -23,6 +23,7 @@ define('CHANGELOG', ROOT . '/' . CHANGELOG_FILENAME);
 define('COPYRIGHTS_FILENAME', 'copyright.txt');
 define('COPYRIGHTS', ROOT . '/' . COPYRIGHTS_FILENAME);
 define('SF_TW_MEMBERS_URL', 'http://sourceforge.net/project/memberlist.php?group_id=64258');
+define('DEV_TW_MEMBERS_URL', 'http://dev.tiki.org/getTikiUser.php');
 define('README_FILENAME', 'README');
 define('README', ROOT . '/' . README_FILENAME);
 define('LICENSE_FILENAME', 'license.txt');
@@ -975,23 +976,26 @@ function get_contributors_sf_data(&$contributors)
 		error("PHP 'iconv' function is not available on this system. Impossible to get SF.net data.");
 	}
 
-	$html = $options['http-proxy'] ? file_get_contents(SF_TW_MEMBERS_URL, 0, $options['http-proxy']) : file_get_contents(SF_TW_MEMBERS_URL);
+	#$html = $options['http-proxy'] ? file_get_contents(SF_TW_MEMBERS_URL, 0, $options['http-proxy']) : file_get_contents(SF_TW_MEMBERS_URL);
+	$html = $options['http-proxy'] ? file_get_contents(DEV_TW_MEMBERS_URL, 0, $options['http-proxy']) : file_get_contents(DEV_TW_MEMBERS_URL);
 
-	if (!empty($html) && preg_match('/(<table.*<\/\s*table>)/sim', $html, $matches)) {
-		$usersInfo = array();
-		if (preg_match_all('/<tr[^>]*>' . str_repeat('\s*<td[^>]*>(.*)<\/td>\s*', 4).'<\/\s*tr>/Usim', $matches[0], $usersInfo, PREG_SET_ORDER)) {
-			foreach ($usersInfo as $k => $userInfo) {
-				$userInfo = array_map('trim', array_map('strip_tags', $userInfo));
-				$user = strtolower($userInfo['2']);
-				if (empty($user)) {
-					continue;
-				}
-				$contributors[$user] = array(
-					'Name' => html_entity_decode(iconv("ISO-8859-15", "UTF-8", $userInfo['1']), ENT_COMPAT, 'UTF-8'),
-					'SF Role' => $userInfo['3']
-				);
-			}
-		}
+#	if (!empty($html) && preg_match('/(<table.*<\/\s*table>)/sim', $html, $matches)) {
+#		$usersInfo = array();
+#		if (preg_match_all('/<tr[^>]*>' . str_repeat('\s*<td[^>]*>(.*)<\/td>\s*', 4).'<\/\s*tr>/Usim', $matches[0], $usersInfo, PREG_SET_ORDER)) {
+#			foreach ($usersInfo as $k => $userInfo) {
+#				$userInfo = array_map('trim', array_map('strip_tags', $userInfo));
+#				$user = strtolower($userInfo['2']);
+#				if (empty($user)) {
+#					continue;
+#				}
+#				$contributors[$user] = array(
+#					'Name' => html_entity_decode(iconv("ISO-8859-15", "UTF-8", $userInfo['1']), ENT_COMPAT, 'UTF-8'),
+#					'SF Role' => $userInfo['3']
+#				);
+#			}
+#		}
+	if (!empty($html)) {
+		$contributors = json_decode($html, true);
 	} else {
 		error('Impossible to get SF.net users information. If you need to use a web proxy, try the --http-proxy option.');
 		die;
