@@ -171,13 +171,10 @@ class Messu extends TikiLib
 						}
 					}
 
-					if (!empty($from_email)) {
-						$mail->setFrom($from_email);
-					}
-
 					if (!$mail->send(array($email), 'mail')) {
 						return false; //TODO echo $mail->errors;
 					}
+
 				} catch (Zend_Mail_Exception $e) {
 					TikiLib::lib('errorreport')->report($e->getMessage());
 					return false;
