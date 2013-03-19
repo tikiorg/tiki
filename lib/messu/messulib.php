@@ -62,6 +62,18 @@ class Messu extends TikiLib
 
 	/**
 	 * Send a message to a user
+	 *
+	 * @param string $user		username
+	 * @param string $from		from username
+	 * @param string $to		to username (again?)
+	 * @param string $cc		cc username
+	 * @param string $subject
+	 * @param string $body
+	 * @param int    $priority
+	 * @param string $replyto_hash
+	 * @param string $replyto_email y/n
+	 * @param string $bcc_sender	y/n send blind copy email to from user's
+	 * @return bool				success
 	 */
 	function post_message($user, $from, $to, $cc, $subject, $body, $priority, $replyto_hash = '', $replyto_email = '', $bcc_sender = '')
 	{
@@ -115,6 +127,11 @@ class Messu extends TikiLib
 				$_SERVER['SERVER_NAME'] = $_SERVER['HTTP_HOST'];
 			}
 			$email = $userlib->get_user_email($user);
+			if ($userlib->user_exists($from)) {
+				$from_email = $userlib->get_user_email($from);		// $from_email required for TikiMail constructor
+			} else {
+				return false;										// non-existent users can't send messages (etc)
+			}
 			if ($email) {
 				include_once('lib/webmail/tikimaillib.php');
 				$smarty->assign('mail_site', $_SERVER['SERVER_NAME']);
@@ -124,41 +141,46 @@ class Messu extends TikiLib
 				$smarty->assign('mail_from', stripslashes($from));
 				$smarty->assign('mail_subject', stripslashes($subject));
 				$smarty->assign('mail_body', stripslashes($body));
-				$mail = new TikiMail($user);
-				$lg = $this->get_user_preference($user, 'language', $prefs['site_language']);
 
-				if (empty($subject)) {
-					$s = $smarty->fetchLang($lg, 'mail/messu_message_notification_subject.tpl');
-					$mail->setSubject(sprintf($s, $_SERVER['SERVER_NAME']));
-				} else {
-					$mail->setSubject($subject);
-				}
+				try {
+					$mail = new TikiMail($user, $from_email);
+					$lg = $this->get_user_preference($user, 'language', $prefs['site_language']);
 
-				$mail_data = $smarty->fetchLang($lg, 'mail/messu_message_notification.tpl');
-				$mail->setText($mail_data);
-
-				if ($userlib->user_exists($from)) {
-					$from_email = $userlib->get_user_email($from);
-
-					if ($bcc_sender === 'y' && !empty($from_email)) {
-						$mail->setBcc($from_email);
+					if (empty($subject)) {
+						$s = $smarty->fetchLang($lg, 'mail/messu_message_notification_subject.tpl');
+						$mail->setSubject(sprintf($s, $_SERVER['SERVER_NAME']));
+					} else {
+						$mail->setSubject($subject);
 					}
 
-					if ($replyto_email !== 'y' && $userlib->get_user_preference($from, 'email is public', 'n') == 'n') {
-						$from_email = '';	// empty $from_email if not to be used - saves getting it twice
+					$mail_data = $smarty->fetchLang($lg, 'mail/messu_message_notification.tpl');
+					$mail->setText($mail_data);
+
+					if ($from_email) {
+
+						if ($bcc_sender === 'y' && !empty($from_email)) {
+							$mail->setBcc($from_email);
+						}
+
+						if ($replyto_email !== 'y' && $userlib->get_user_preference($from, 'email is public', 'n') == 'n') {
+							$from_email = '';	// empty $from_email if not to be used - saves getting it twice
+						}
+
+						if (!empty($from_email)) {
+							$mail->setReplyTo($from_email);
+						}
 					}
 
 					if (!empty($from_email)) {
-						$mail->setReplyTo($from_email);
+						$mail->setFrom($from_email);
 					}
-				}
 
-				if (!empty($from_email)) {
-					$mail->setFrom($from_email);
-				}
-
-				if (!$mail->send(array($email), 'mail')) {
-					return false; //TODO echo $mail->errors;
+					if (!$mail->send(array($email), 'mail')) {
+						return false; //TODO echo $mail->errors;
+					}
+				} catch (Zend_Mail_Exception $e) {
+					TikiLib::lib('errorreport')->report($e->getMessage());
+					return false;
 				}
 			}
 		}
