@@ -1,17 +1,17 @@
 <?php
 // (c) Copyright 2002-2013 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 // Note for translators about translation of text ending with punctuation
-// 
+//
 // The current list of concerned punctuation can be found in 'lib/init/tra.php'
 // On 2009-03-02, it is: (':', '!', ';', '.', ',', '?')
 // For clarity, we explain here only for colons: ':' but it is the same for the rest
-// 
+//
 // Short version: it is not a problem that string "Login:" has no translation. Only "Login" needs to be translated.
-// 
+//
 // Technical justification:
 // If a string ending with colon needs translating (like "{tr}Login:{/tr}")
 // then Tiki tries to translate 'Login' and ':' separately.
@@ -7569,7 +7569,7 @@ $lang = array(
 "If set to \"cloud\", links are displayed as a cloud" => "Si défini sur \"cloud\", les liens sont affichés sous forme de nuage de mots-clés",
 "Default: \"list\"" => "Défaut : \"list\"",
 "Maximum elements" => "Maximum d'éléments",
-"If set to a number, limits the number of tags displayed" => "Si défini comme un nimbre, limite le nombre de mots-clés affichés",
+"If set to a number, limits the number of tags displayed" => "Si défini comme un nombre, limite le nombre de mots-clés affichés",
 "My Preferred Tags" => "Mes Mots-Clés Préférés",
 "Displays to registered users the freetags they prefer, based on the number of objects they added the tag to. More preference is indicated by a larger font" => "Affiche pour les utilisateurs enregistrés les mots-clés qu'ils préfèrent, basé sur le nombre d'objets auquels ils ont ajouté le mot-clé. Les plus utilisés sont indiqués par une police plus grande",
 "My preferred tags" => "Mes mots-clés préférés",
