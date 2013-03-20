@@ -1,6 +1,6 @@
 /* $Id$
 /*	This file (layout.css) is to be imported by theme stylesheets. */
-	
+
 
 /***** XHTML Elements *****/
 body {
@@ -23,10 +23,10 @@ html[dir=ltr]>body {
 	width: auto;
 }
 
-/* Make HTML 5 elements display block-level */  
-header, nav, article, section, footer, address {  
-    display: block;  
-} 
+/* Make HTML 5 elements display block-level */
+header, nav, article, section, footer, address {
+    display: block;
+}
 
 /* general #fixedwidth wrapper when fixed width is off */
 .fixedwidth {
@@ -67,7 +67,7 @@ body.fixed_width .fixedwidth .fixedwidth {
 
 .fullscreen #c1c2 #wrapper #col1.marginright {
 	margin-right: 30px;
-}	
+}
 
 .button {
 	display: inline-block;
@@ -138,7 +138,7 @@ form {
 }
 
 fieldset {
-	clear: both;	
+	clear: both;
 }
 
 input, legend {
@@ -151,7 +151,7 @@ hr {
 	border-width: 0;
 	padding: 0;
 }
-	
+
 img {
 	border: 0;
 }
@@ -168,7 +168,7 @@ img {
 }
 
 #sitetitle,
-#sitesubtitle { 
+#sitesubtitle {
 	line-height: 1;
 }
 
@@ -468,7 +468,7 @@ li#logout_link a {
 #power {
 	padding: 0 1em 1em;
 }
-	
+
 #credits {
 	display: inline;
 }
@@ -496,7 +496,7 @@ ul.jumplinks {
 	font-size: 0.8em;
 	list-style-type: none;
 }
-	
+
 ul.jumplinks,
 .jumplinks {
 	position: absolute;
@@ -515,7 +515,7 @@ ul.jumplinks,
 	z-index: 9;
 }
 
-.fullscreenbutton, 
+.fullscreenbutton,
 #fullscreenbutton {
 	position: absolute;
 	top: 2px;
@@ -523,7 +523,7 @@ ul.jumplinks,
 	z-index: 10;
 	font-size: 80%;
 }
-	
+
 #tiki-clean {
 	text-align: left;
 	padding: 1em;
@@ -551,7 +551,7 @@ ul.jumplinks,
 	display: block;
 	margin-top: 10px;
 }
-	
+
 #attzone {
 	margin-top: 10px;
 }
@@ -596,7 +596,7 @@ ul.jumplinks,
 	height: auto;
 	z-index: 1000;
 }
-	
+
 #debugconsole table {
 	width: 100%;
 }
@@ -649,13 +649,13 @@ img.icon {
   text-align: center;
   margin-bottom: 10px;
  }
- 
+
 .findtitle,
 .findexactmatch,
 .findnumrows,
 .findtypes,
 .findlang {
-	display: inline; 
+	display: inline;
 	vertical-align: middle;
 }
 
@@ -754,7 +754,7 @@ a.toolbar {			/* each tool button */
 .simple_inlinehelp {
 	font-style: italic;
 	font-size: small;
-	font-family: sans-serif; 
+	font-family: sans-serif;
 }
 
 .box-share > div {
@@ -892,14 +892,14 @@ h3.box-title {
 	position: relative;
 	margin-bottom: -0.33em;
 }
-	
+
 .rbox-title .icon {
 	padding: 0 .35em 0 0;
 	vertical-align: top;
 }
-	
+
 .rbox-data {
-	position: relative;	
+	position: relative;
 	z-index: 0;
 }
 
@@ -909,7 +909,7 @@ h3.box-title {
 }
 
 /* For wikitext or custom code areas, editors can add, for example, a div class="halffloat"
-and put two modules or other divs between its tags;, each of these will use just under half of the width of the 
+and put two modules or other divs between its tags;, each of these will use just under half of the width of the
 wikitext or custom content area. Similarly for three or four modules (or divs) across the page. */
 .halffloat .box,
 .wikitext .halffloat .box {
@@ -929,8 +929,8 @@ wikitext or custom content area. Similarly for three or four modules (or divs) a
 
 .quarterfloat .box,
 .wikitext .quarterfloat .box {
-	float: left !important; 
-	clear: none; 
+	float: left !important;
+	clear: none;
 	width: 22%;
 	margin: 0 2% 0 0;
 }
@@ -945,7 +945,7 @@ wikitext or custom content area. Similarly for three or four modules (or divs) a
 /** Tables **/
 
 .normal,
-.normalnoborder, 
+.normalnoborder,
 .admin {
 	padding: 0;
 	margin: 0;
@@ -1023,7 +1023,7 @@ tr.diffheader {
 	padding: 1px 0;
 	white-space: nowrap;
 }
-	
+
 .tabmark a {
 	border-bottom: 0;
 	padding: 1px 5px;
@@ -1037,13 +1037,13 @@ tr.diffheader {
 	position: relative;
 	top: 0;
 }
-	
+
 .tabinactive {
 	border-bottom: none;
 	position: relative;
 	top: 0;
 }
-	
+
 .tabcontent {
 	z-index: 1;
 	position: relative;
@@ -1094,7 +1094,7 @@ tr.diffheader {
 	float: left;
 }
 
-/*Information below the wiki content must not overlap the wiki 
+/*Information below the wiki content must not overlap the wiki
 		content that could contain floated elements */
 .hrwikibottom {
 	clear: both;
@@ -1119,7 +1119,7 @@ tr.diffheader {
 /* wikiplugin_convene */
 
 .conveneHeaderRow td {
-	text-align: center; 
+	text-align: center;
 }
 
 .conveneVotes td,
@@ -1128,21 +1128,21 @@ tr.diffheader {
 	vertical-align: middle;
 }
 
-.convene-ok {    
+.convene-ok {
 	background-color: #D1F3D1 !important;
 	background-image: none !important;
-	text-align: center; 
+	text-align: center;
 }
 .convene-no {
 	background-color: #FFCCCA !important;
 	background-image: none !important;
-	text-align: center; 
+	text-align: center;
 }
-.convene-no img { 
-	display: none;   
+.convene-no img {
+	display: none;
 }
 .convene-unconfirmed {
-	text-align: center; 
+	text-align: center;
 }
 .conveneFooter, .conveneHeader {
 	text-align: center;
@@ -1160,7 +1160,7 @@ tr.diffheader {
 	border: 0;
 	margin-bottom: -1px;
 }
-	
+
 .versionav .button {
 	margin-bottom: 0;
 }
@@ -1174,7 +1174,7 @@ table.wikiplugin_tracker td {
 	vertical-align: top;
 	padding-bottom:1.2em;
 }
-	
+
 /* wikiplugin edit */
 .wikiplugin_edit textarea {
 	width: 99%;
@@ -1194,7 +1194,7 @@ ul.floatleft li {
 	float: left;
 	padding: 4px 2px;
 }
-	
+
 .editdate ul.floatleft {
 	margin-top: 8px;
 }
@@ -1238,13 +1238,13 @@ ul.floatleft li {
 #right_modules .jtrack-form, #left_modules .jtrack-form  {
   height:245px !important;
 }
- 
+
 /** Wiki tocs **/
 .tocnav {
 	margin-bottom: 4px;
 	clear: both;
 }
- 
+
 #tocnavicons {
 	float: left;
 }
@@ -1265,7 +1265,7 @@ ul.floatleft li {
 /* Wiki diff layout */
 .diff td {
 	white-space: normal;
-	
+
 }
 
 /***** Articles ****/
@@ -1304,7 +1304,7 @@ img.articleimage {
 	text-align: center;
 	margin-top: 1.1em
 }
-	
+
 .articletrailer .wikitopline {
 	float: left;
 }
@@ -1340,7 +1340,7 @@ img.articleimage {
 	width: 100%;
 	clear: both;
 }
-	
+
 .blogdesc {
 	display: block;
 	width: 40%;
@@ -1412,13 +1412,13 @@ body.tiki_forums .normal {
 	margin: 5px 0 0;
 	padding: 0;
 }
-	
+
 .post .postbody .content {
 	padding: 0 3px 3px 3px;
 	margin: 0;
 	text-align: left;
 }
-	
+
 .post .postbody-title {
 	overflow: hidden;
 }
@@ -1431,7 +1431,7 @@ body.tiki_forums .normal {
 	margin-left: 5px;
 	margin-top: 3px;
 }
-	
+
 .post .author {
 	float: right;
 	text-align: right;
@@ -1596,13 +1596,13 @@ body.tiki_forums .normal {
 	margin: 5px 0;
 	padding: 0;
 }
- 
+
 #comzoneopen {
 	display: block;
 	margin: 5px 0;
 	padding: 0;
 }
- 
+
 .commentstitle {
 	font-weight: bold;
 	font-size: 1.2em;
@@ -1883,7 +1883,6 @@ a.freetag:hover {/* freetags.css (line 8)*/
 
 li.freetag {
 	list-style: none;
-	display: inline;
 	margin: 0;
 	padding: 0;
 }
@@ -1982,7 +1981,7 @@ ul.freetagged li {
 }
 
 /***** Calendar *****/
-/* Properties are in css/calendar.css, 
+/* Properties are in css/calendar.css,
 	which can be overridden
 	in theme stylesheets.  */
 
@@ -2037,12 +2036,12 @@ ul.freetagged li {
 
 /* Cluetip - JQuery tooltips
    =cluetipClass: 'default' */
-#cluetip-close { 
+#cluetip-close {
 	text-align: right;
 	margin: 0;
 	padding-right: .5em;
 }
-	
+
 .cluetip-fullhtml {
 	margin: 0;
 	padding: 0;
@@ -2222,16 +2221,16 @@ img.pref_dependency {
 
 /* Kaltura browse entries */
 
-/* remove margins from the image */ 
-.kaltura .items img { 
-    margin: 0; 
+/* remove margins from the image */
+.kaltura .items img {
+    margin: 0;
 }
- 
-/* make A tags our floating scrollable items */ 
-.kaltura .items a { 
-    display: block; 
-    float: left; 
-    margin: 20px 15px; 
+
+/* make A tags our floating scrollable items */
+.kaltura .items a {
+    display: block;
+    float: left;
+    margin: 20px 15px;
 }
 
 /***** Accounting *****/
