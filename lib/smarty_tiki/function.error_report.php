@@ -15,17 +15,17 @@ function smarty_function_error_report($params, $smarty)
 
 	TikiLib::lib('header')->add_js(
 		'
-	$("#error_report").ajaxComplete(function (e, jqxhr) {
+	$(document).ajaxComplete(function (e, jqxhr) {
 		var error = jqxhr.getResponseHeader("X-Tiki-Error");
 		if (error) {
 			if ($("ul", this).length === 0) {
-				$(this).append($(error)[0].childNodes);
+				$("#error_report").append($(error)[0].childNodes);
 			} else {
-				$("ul", this).append($(error).find("li"));
+				$("ul", "#error_report").append($(error).find("li"));
 			}
 		}
 	});
-	$("#error_report .clear").live("click", function () {
+	$("#error_report .clear").on("click", function () {
 		$("#error_report").empty();
 		return false;
 	});
