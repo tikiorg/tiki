@@ -4309,4 +4309,40 @@ form.simple textarea.export {
     background-color: rgba(255, 255, 255, 0.5);
 }
 
+.ui-selectmenu {
+	position: relative;
+	padding-right: 0 !important;
+}
+.ui-selectmenu span.ui-selectmenu-status {
+	display: block;
+	font-size: 1.1em !important;
+	margin-right: 0%;
+	position: absolute;
+	overflow: hidden;
+	padding-left: 0 !important;
+	left: .3em !important;
+	text-shadow: none !important;
+	white-space: nowrap !important;
+	width: inherit !important;
+}
+.ui-selectmenu-icon {
+	width: 16px !important;
+	right: 16px !important;
+	margin-right: -16px !important;
+	margin-top: -12px !important;
+	background-color: inherit;
+	border: solid 5px transparent !important;
+	box-shadow: -5px 0 5px 2px rgba(0,0,0,.1), -1px 0 0 rgba(0,0,0,.1), -2px 0 0 rgba(255,255,255,.25);
+}
+.ui-selectmenu-menu ul {
+	padding-right: 0 !important;
+}
+.ul-selectmenu-menu li {
+	padding-right: 1em !important;
+}
+.ui-selectmenu-menu ul li a {
+	padding-right: 0 !important;
+	white-space: normal !important;
+}
+
 /* End of file */
