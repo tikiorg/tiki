@@ -2497,14 +2497,26 @@ div.aclabel, span.aclabel, label.aclabel {
 }
 .TextArea-fullscreen .actions, .CodeMirror-fullscreen .actions {
 	bottom: 0 !important;
+	left: 50%;
+	margin-left: -25%;
 	position: absolute;
 	text-align: center;
-	width: 100%;
+	width: 50%;
 	z-index: 1;
 }
+.TextArea-fullscreen .actions input, .CodeMirror-fullscreen .actions input {
+	/*margin: 1px !important;*/
+}
+.TextArea-fullscreen .button, .CodeMirror-fullscreen .button {
+	position: absolute;
+	bottom: 0;
+	z-index: 2;
+}
 
-.TextArea-fullscreen .cm-remove {
-	display: none;
+.TextArea-fullscreen .cm-remove, .CodeMirror-fullscreen .cm-remove {
+	display: none; /* do not display until functionality in fullscreen fixed */
+	right: 22px;
+	float: none !important;
 }
 
 .olLayerGoogleV3.olLayerGooglePoweredBy {
