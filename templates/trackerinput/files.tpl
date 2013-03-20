@@ -31,7 +31,7 @@
 		<input type="text" class="search" placeholder="{tr}Search query{/tr}">
 		{if $prefs.fgal_elfinder_feature eq 'y'}
 			{button href='tiki-list_file_gallery.php' _text="{tr}Browse files{/tr}"
-				_onclick="return openElFinderDialog(this, {ldelim}defaultGalleryId:{if !isset($field.options_array[8]) or $field.options_array[8] eq ''}{if empty($field.options_array[0])}0{else}{$field.options_array[0]|escape}{/if}{else}{$field.options_array[8]|escape}{/if},deepGallerySearch:{if empty($field.options_array[6])}0{else}{$field.options_array[6]|escape}{/if},getFileCallback:function(file,elfinder){ldelim}window.handleFinderFile(file,elfinder){rdelim}{rdelim});"
+				_onclick="return openElFinderDialog(this, {ldelim}defaultGalleryId:{if !isset($field.options_array[8]) or $field.options_array[8] eq ''}{if empty($field.options_array[0])}0{else}{$field.options_array[0]|escape}{/if}{else}{$field.options_array[8]|escape}{/if},deepGallerySearch:{if empty($field.options_array[6])}0{else}{$field.options_array[6]|escape}{/if},getFileCallback:function(file,elfinder){ldelim}window.handleFinderFile(file,elfinder){rdelim},eventOrigin:this{rdelim});"
 				title="{tr}Browse files{/tr}"}
 		{/if}
 		<ol class="results tracker-item-files">
@@ -271,6 +271,14 @@ window.handleFinderFile = function (file, elfinder) {
 		},
 		success: function (data) {
 			var fileId = data.fileId, li = $('<li/>');
+
+			var eventOrigin = $("body").data("eventOrigin");
+			if (eventOrigin) {
+				var $ff = $(eventOrigin).parents(".files-field");
+				$field = $(".input", $ff);
+				$files = $(".current-list", $ff);
+			}
+
 			li.text(data.name);
 
 			$field.input_csv('add', ',', fileId);
@@ -281,6 +289,7 @@ window.handleFinderFile = function (file, elfinder) {
 				$field.input_csv('delete', ',', fileId);
 				$(this).closest('li').remove();
 			});
+
 			$files.append(li);
 		},
 		error: function (jqxhr) {
