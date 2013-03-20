@@ -18,7 +18,7 @@ class FlaggedRevisionLib extends TikiDb_Bridge
 		if ($version_info = $histlib->get_version($pageName, $version)) {
 			if ($prefs['feature_actionlog'] == 'y') {
 				$logslib = TikiLib::lib('logs');
-				$logslib->add_action(self::FLAGGED, $pageName, 'wiki page', "flag=$flag&version=$version&value=$value");
+				$logslib->add_action(self::ACTION, $pageName, 'wiki page', "flag=$flag&version=$version&value=$value");
 			}
 
 			$attribute = $this->get_attribute_for_flag($flag);
