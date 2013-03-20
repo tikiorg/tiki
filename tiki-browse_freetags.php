@@ -97,7 +97,7 @@ if (empty($_REQUEST['maxPopular'])) {
 if (empty($_REQUEST['tsort_mode'])) {
 	$tsort_mode = 'tag_asc';
 } else {
-	$tsort_mode = $_REQUEST['sort_mode'];
+	$tsort_mode = $_REQUEST['tsort_mode'];
 	$smarty->assign_by_ref('tsort_mode', $tsort_mode);
 }
 if (!empty($_REQUEST['objectId'])) {
@@ -111,7 +111,7 @@ if ($prefs['feature_blogs'] == 'y' && $type == 'blog post') {
 	$smarty->assign('blogs', $blogs['data']);
 }
 
-$most_popular_tags = $freetaglib->get_most_popular_tags('', 0, $maxPopular, $tsort_mode, $objectId);
+$most_popular_tags = $freetaglib->get_most_popular_tags('', 0, $maxPopular, $type, $objectId);
 if (!empty($prefs['freetags_cloud_colors'])) {
 	$colors = explode(',', $prefs['freetags_cloud_colors']);
 	$prev = '';
