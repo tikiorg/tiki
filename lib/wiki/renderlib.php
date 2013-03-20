@@ -359,7 +359,7 @@ class WikiRenderer
 				$pdata = new Tiki_Render_Lazy(
 					function () use ($content, $parse_options) {
 						$wikilib = TikiLib::lib('wiki');
-						return $wikilib->parse_data($this->content_to_render, $parse_options);
+						return $wikilib->parse_data($content, $parse_options);
 					}
 				);
 			}
