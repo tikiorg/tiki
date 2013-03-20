@@ -2500,6 +2500,7 @@ div.aclabel, span.aclabel, label.aclabel {
 	position: absolute;
 	text-align: center;
 	width: 100%;
+	z-index: 1;
 }
 
 .TextArea-fullscreen .cm-remove {
@@ -2600,6 +2601,11 @@ body.wikitext {
 }
 
 /* Autosave Preview handle */
+#autosave_preview {
+	background-color: #FFFFFF;
+	color: #000000;
+	z-index: 500001; /* ensure the preview is not partly covered even by #diff_outer in fullscreen side-by-side translation mode */
+}
 #autosave_preview_grippy {
 	background-color: #ccc;
 	background-image: url("../../img/icons/shading.png");
