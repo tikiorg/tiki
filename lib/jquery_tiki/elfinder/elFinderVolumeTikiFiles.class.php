@@ -595,7 +595,7 @@ class elFinderVolumeTikiFiles extends elFinderVolumeDriver
 			$gal_info = array();		// replace_file_gallery merges with default
 
 			$gal_info['name'] = $name;
-			$gal_info['type'] = $parent_info['type'] === 'user' ? 'user' : $gal_info['type'];
+			$gal_info['type'] = $parent_info['type'] === 'user' ? 'user' : 'default';
 			$gal_info['user'] = $user;
 			$gal_info['parentId'] = $parentDirId;
 
