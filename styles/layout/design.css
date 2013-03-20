@@ -4315,12 +4315,13 @@ form.simple textarea.export {
 }
 .ui-selectmenu span.ui-selectmenu-status {
 	display: block;
-	font-size: 1.1em !important;
+	font-size: .8em !important;
 	margin-right: 0%;
 	position: absolute;
 	overflow: hidden;
 	padding-left: 0 !important;
 	left: .3em !important;
+	line-height: 1.5em !important;
 	text-shadow: none !important;
 	white-space: nowrap !important;
 	width: inherit !important;
@@ -4341,6 +4342,7 @@ form.simple textarea.export {
 	padding-right: 1em !important;
 }
 .ui-selectmenu-menu ul li a {
+	margin-left: -.5em;
 	padding-right: 0 !important;
 	white-space: normal !important;
 }
