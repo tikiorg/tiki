@@ -111,7 +111,7 @@ if ($prefs['feature_blogs'] == 'y' && $type == 'blog post') {
 	$smarty->assign('blogs', $blogs['data']);
 }
 
-$most_popular_tags = $freetaglib->get_most_popular_tags('', 0, $maxPopular, $type, $objectId);
+$most_popular_tags = $freetaglib->get_most_popular_tags('', 0, $maxPopular, $type, $objectId, $tsort_mode);
 if (!empty($prefs['freetags_cloud_colors'])) {
 	$colors = explode(',', $prefs['freetags_cloud_colors']);
 	$prev = '';
