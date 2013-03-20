@@ -122,7 +122,7 @@ function wikiplugin_kaltura($data, $params)
 			$json_title = json_encode(tr('Upload Media'));
 			TikiLib::lib('header')->add_jq_onready(
 <<<REG
-$("#kaltura_upload_btn$instance a").live("click", function() {
+$("#kaltura_upload_btn$instance a").on("click", function() {
 	$(this).serviceDialog({
 		title: $json_title,
 		width: 710,
