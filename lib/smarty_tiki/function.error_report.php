@@ -18,7 +18,7 @@ function smarty_function_error_report($params, $smarty)
 	$(document).ajaxComplete(function (e, jqxhr) {
 		var error = jqxhr.getResponseHeader("X-Tiki-Error");
 		if (error) {
-			if ($("ul", this).length === 0) {
+			if ($("ul", "#error_report").length === 0) {
 				$("#error_report").append($(error)[0].childNodes);
 			} else {
 				$("ul", "#error_report").append($(error).find("li"));
