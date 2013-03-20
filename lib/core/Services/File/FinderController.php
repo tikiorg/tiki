@@ -72,54 +72,63 @@ class Services_File_FinderController
 			'roots' => array(),
 		);
 
-		// gallery to start in
-		$galleryId = $input->defaultGalleryId->int();
-		$rootId = 0;
-
-		if (!$galleryId) {
-			$galleryId = $this->fileController->defaultGalleryId;
-		}
-
-		if ($user != '' && $prefs['feature_use_fgal_for_user_files'] == 'y' && $galleryId) {
-
-			if ($galleryId == $prefs['fgal_root_user_id'] && ! Perms::get('file gallery', $galleryId)->admin_trackers) {
-				$galleryId = (int) TikiLib::lib('filegal')->get_user_file_gallery();
-			}
-
-			if ($galleryId == $prefs['fgal_root_user_id']) {
-				$rootId = $prefs['fgal_root_user_id'];
-			} else {
-				$gal_info = TikiLib::lib('filegal')->get_file_gallery_info($galleryId);
-
-				if ($gal_info['type'] == 'user') {
-					$rootId = $prefs['fgal_root_user_id'];
-				}
-			}
-		}
-
-		if (!$rootId) {
-			$rootId = $this->fileController->defaultGalleryId;		// should be $prefs['fgal_root_id'];
-		}
-
-		// 'startParth' not functioning with multiple roots as yet (https://github.com/Studio-42/elFinder/issues/351)
-		// so only have one volume at a time (shame)
-
-		$opts['roots'][] = array(
-			'driver'        => 'TikiFiles',   					// driver for accessing file system (REQUIRED)
-			'path'          => $rootId,							// tiki root filegal - path to files (REQUIRED)
-			'disabled'		=> $disabled,
+		$rootDefaults = array(
+			'driver' => 'TikiFiles', // driver for accessing file system (REQUIRED)
+//			'path' => $rootId, // tiki root filegal - path to files (REQUIRED) - to be filled in later
+			'disabled' => $disabled,
 //			'URL'           => 									// URL to files (seems not to be REQUIRED)
-			'accessControl' => array($this, 'elFinderAccess'),	// obey tiki perms
+			'accessControl' => array($this, 'elFinderAccess'), // obey tiki perms
 			'uploadMaxSize' => ini_get('upload_max_filesize'),
-		);
-
-		if ($galleryId) {
-			$d = $galleryId != $rootId ? 'd_' : '';				// needs to be the cached name in elfinder (with 'd_' in front) unless it's the root id
-			$opts['roots'][0]['startPath'] = $d . $galleryId;
-			$opts['roots'][0]['accessControlData'] = array(
+			'accessControlData' => array(
 				'deepGallerySearch' => $input->deepGallerySearch->int(),
 				'parentIds' => $this->parentIds,
+			),
+		);
+
+		// gallery to start in
+		$startGallery = $input->defaultGalleryId->int();
+
+		// 'startPath' not functioning with multiple roots as yet (https://github.com/Studio-42/elFinder/issues/351)
+		// so work around it for now with startRoot
+
+		$opts['roots'][] = array_merge(		// normal file gals
+			array(
+				'path' => $this->fileController->defaultGalleryId,		// should be $prefs['fgal_root_id']?
+			),
+			$rootDefaults
+		);
+		$startRoot = 0;
+
+		if (!empty($user) && $prefs['feature_use_fgal_for_user_files'] == 'y') {
+
+			if ($startGallery && $startGallery == $prefs['fgal_root_user_id'] && ! Perms::get('file gallery', $startGallery)->admin_trackers) {
+				$startGallery = (int) TikiLib::lib('filegal')->get_user_file_gallery();
+			}
+			$userRootId = $prefs['fgal_root_user_id'];
+
+			if ($startGallery != $userRootId) {
+
+				$gal_info = TikiLib::lib('filegal')->get_file_gallery_info($startGallery);
+				if ($gal_info['type'] == 'user') {
+					$startRoot = count($opts['roots']);
+				}
+			} else {
+				$startRoot = count($opts['roots']);
+			}
+			$opts['roots'][] = array_merge(
+				array(
+					'path' => $userRootId,		// should be $prefs['fgal_root_id']?
+					'startPath' => 'd_15',
+				),
+				$rootDefaults
 			);
+
+		}
+
+		if ($startGallery) {
+			$opts['startRoot'] = $startRoot;
+			$d = $opts['roots'][$startRoot]['path'] == $startGallery ? '' : 'd_';	// needs to be the cached name in elfinder (with 'd_' in front) unless it's the root id
+			$opts['roots'][$startRoot]['startPath'] = $d . $startGallery;
 		}
 
 /* thumb size not working due to css issues - tried this in setup/javascript.php but needs extensive css overhaul to get looking right
