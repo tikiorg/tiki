@@ -94,7 +94,7 @@ if (empty($_REQUEST['maxPopular'])) {
 if (empty($_REQUEST['tsort_mode'])) {
 	$tsort_mode = 'tag_asc';
 } else {
-	$tsort_mode = $_REQUEST['sort_mode'];
+	$tsort_mode = $_REQUEST['tsort_mode'];
 	$smarty->assign_by_ref('tsort_mode', $tsort_mode);
 }
 $most_popular_tags = $freetaglib->get_most_popular_tags('', 0, $maxPopular, $tsort_mode);

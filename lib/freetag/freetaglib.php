@@ -971,7 +971,7 @@ class FreetagLib extends ObjectLib
 	 *	 - 'count' => The number of objects tagged with this tag.
 	 */
 
-	function get_most_popular_tags($user = '', $offset = 0, $maxRecords = 25)
+	function get_most_popular_tags($user = '', $offset = 0, $maxRecords = 25, $tsort_mode = 'tag_asc')
 	{
 
 		// get top tag popularity
@@ -1017,7 +1017,15 @@ class FreetagLib extends ObjectLib
 			$ret[] = $row;
 		}
 
-		array_multisort($tag, SORT_ASC, $count, SORT_DESC, $ret);
+		switch ($tsort_mode) {
+			case 'count_desc':
+				array_multisort($count, SORT_DESC,$tag, SORT_ASC, $ret);
+				break;
+			case 'tag_asc':
+			default:
+				array_multisort($tag, SORT_ASC, $count, SORT_DESC, $ret);
+				break;
+		}
 
 		return $ret;
 	}
