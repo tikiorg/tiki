@@ -1,1 +1,0 @@
-{rating type=$type id=$id}
