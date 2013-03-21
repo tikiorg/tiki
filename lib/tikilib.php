@@ -307,14 +307,18 @@ class TikiLib extends TikiDb_Bridge
 		global $prefs;
 
 		if (! isset($prefs['internal_site_hash'])) {
-			require_once 'lib/phpsec/phpsec/phpsec.rand.php';
-
-			$hash = base64_encode(phpsecRand::bytes(100));
+			$hash = $this->generate_unique_sequence();
 
 			$this->set_preference('internal_site_hash', $hash);
 		}
 
 		return $prefs['internal_site_hash'];
+	}
+
+    public function generate_unique_sequence($entropy = 100)
+	{
+		require_once 'lib/phpsec/phpsec/phpsec.rand.php';
+		return base64_encode(phpsecRand::bytes($entropy));
 	}
 
 	// DB param left for interface compatibility, although not considered
