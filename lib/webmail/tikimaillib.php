@@ -57,6 +57,7 @@ class TikiMail
 
 	function setFrom($email)
 	{
+		$this->mail->clearFrom();		// Zend mail throws an exception if from is set twice, Tiki does that quite a bit
 		$this->mail->setFrom($email);
 	}
 
