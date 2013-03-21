@@ -1,17 +1,17 @@
 <?php
 // (c) Copyright 2002-2013 by authors of the Tiki Wiki CMS Groupware Project
-//
+// 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 // Note for translators about translation of text ending with punctuation
-//
+// 
 // The current list of concerned punctuation can be found in 'lib/init/tra.php'
 // On 2009-03-02, it is: (':', '!', ';', '.', ',', '?')
 // For clarity, we explain here only for colons: ':' but it is the same for the rest
-//
+// 
 // Short version: it is not a problem that string "Login:" has no translation. Only "Login" needs to be translated.
-//
+// 
 // Technical justification:
 // If a string ending with colon needs translating (like "{tr}Login:{/tr}")
 // then Tiki tries to translate 'Login' and ':' separately.
@@ -883,7 +883,7 @@ $lang = array(
 // "Version %0 is no longer supported" => "Version %0 is no longer supported",
 // "A minor upgrade to %0 is required" => "A minor upgrade to %0 is required",
 // "A major upgrade to %0 is required" => "A major upgrade to %0 is required",
-// "Version %0 is still supported. However, a major upgrade to 9.0 is available" => "Version %0 is still supported. However, a major upgrade to 9.0 is available",
+// "Version %0 is still supported. However, a major upgrade to %1 is available" => "Version %0 is still supported. However, a major upgrade to %1 is available",
 "Create a form which will be posted somewhere, not necessarily trackers or even Tiki" => "Créer un formulaire qui sera publié quelque part, pas nécessairement dans les formulaires, ou même Tiki",
 // "The title of the button" => "The title of the button",
 "Post" => "Publier",
@@ -1123,8 +1123,8 @@ $lang = array(
 // "Match domain, used for URL fields" => "Match domain, used for URL fields",
 // "One item per value" => "One item per value",
 // "Display only one random item per value" => "Display only one random item per value",
-// "Only one random item for each value" => "Only one random item for each value",
 // "Displays all the items for a same value with a notation value (itemId)" => "Displays all the items for a same value with a notation value (itemId)",
+// "Only one random item for each value" => "Only one random item for each value",
 // "Select multiple values" => "Select multiple values",
 // "Allow the user to select multiple values" => "Allow the user to select multiple values",
 // "Index remote fields" => "Index remote fields",
@@ -4911,6 +4911,7 @@ $lang = array(
 "CSS Class to add to the container DIV.article. (Default=\"wikiplugin_bloglist\")" => "Classe CSS à ajouter au conteneur DIV.article. (Par défaut = \"wikiplugin_bloglist\")",
 // "Contains Html" => "Contains Html",
 // "Body of the blog posts should be parsed as containing HTML (default=n)" => "Body of the blog posts should be parsed as containing HTML (default=n)",
+// "missing blog Id for BLOGLIST plugins" => "missing blog Id for BLOGLIST plugins",
 "Creates a formatted box with a title bar" => "Crée une boîte formatée avec une barre de titre",
 "Box title" => "Titre de la boîte",
 "Displayed above the content" => "Affiché au-dessus du contenu",
@@ -5500,6 +5501,8 @@ $lang = array(
 "High" => "Prioritaire",
 "Medium" => "Médium",
 "Low" => "Peu prioritaire",
+// "Alternative image URL" => "Alternative image URL",
+// "Image to display if Flash is not available" => "Image to display if Flash is not available",
 "Invalid URL" => "URL non valide",
 "Missing parameter movie to the plugin flash" => "Paramètre manquant au plugiciel flash",
 "FONT" => "Police de caractères",
@@ -7691,6 +7694,15 @@ $lang = array(
 // "Text for link if link_url is set, otherwise 'More Videos'" => "Text for link if link_url is set, otherwise 'More Videos'",
 // "Video Descriptions" => "Video Descriptions",
 // "Display description of video on title mouseover if 'y'. Default is 'y'" => "Display description of video on title mouseover if 'y'. Default is 'y'",
+// "Order by" => "Order by",
+// "Criteria to order by the videos in the list. Default is 'position'" => "Criteria to order by the videos in the list. Default is 'position'",
+// "position" => "position",
+// "commentCount" => "commentCount",
+"duration" => "durée",
+// "published" => "published",
+// "reversedPosition" => "reversedPosition",
+// "title" => "title",
+// "viewCount" => "viewCount",
 "No Playlist found" => "Aucune liste d'écoute trouvée",
 "No Playlist ID was provided" => "Aucun ID de liste d'écoute n'a été fourni",
 "Live Support" => "Assistance en ligne",
@@ -11753,14 +11765,13 @@ $lang = array(
 "Be careful to set the right permissions on the files you link to" => "Attention, il faut définir les droits suffisants sur le fichier lié pour qu'il soit lisible",
 "You can access the file gallery using the following URL" => "Vous pouvez accéder à cette galerie de fichiers par cette adresse Web",
 "Size (width x height)" => "Dimensions (largeur x hauteur)",
-"Newer content available" => "Contenu plus récent disponible",
+"Content waiting for approval" => "Contenu en attente d'approbation",
 "You are currently viewing the latest version of the page" => "Vous voyez actuellement la dernière version de la page",
 "You can also view the {self_link}latest approved version{/self_link}" => "Vous pouvez aussi voir la {self_link}dernière version approuvée{/self_link}",
 "You can approve this revision and make it available to a wider audience. Make sure you review all the changes before approving" => "Vous pouvez approuver cette révision et la rendre disponible à une plus grande audience. Assurer vous de revoir toutes les modifications avant d'approuver",
 "Show changes since last approved revision" => "Afficher les modifications depuis la dernière version approuvée",
 "This page has no prior approved revision. <strong>All of the content must be reviewed.</strong>" => "Cette page n'a pas de version précédente approuvée. <strong>Tout le contenu doit être revu.</strong>",
 "Approve current revision" => "Approuver la révision courante",
-"Content waiting for approval" => "Contenu en attente d'approbation",
 "You are currently viewing the approved version of the page" => "Vous voyez actuellement la version approuvée de la page",
 "You can also view the {self_link latest=1}latest version{/self_link}" => "Vous pouvez aussi voir la {self_link latest=1}plus récente version{/self_link}",
 "View the {self_link latest=1}latest version{/self_link}" => "Voir la {self_link latest=1}dernère version{/self_link}",
@@ -12346,7 +12357,6 @@ $lang = array(
 "Daily" => "Journalier",
 "Weekly" => "Hebdomadaire",
 "Remove old events" => "Supprimer les vieux évènements",
-"duration" => "durée",
 "h" => "h",
 "mins" => "mins",
 "Edit Event" => "Éditer l'évènement",
@@ -14232,6 +14242,7 @@ $lang = array(
 // "Nothing wrong with that, but some users might want to upload something bigger" => "Nothing wrong with that, but some users might want to upload something bigger",
 // "Your post_max_size is at" => "Your post_max_size is at",
 // "The GD extension is needed for manipulation of images, e.g. also for CAPTCHAs" => "The GD extension is needed for manipulation of images, e.g. also for CAPTCHAs",
+// "The GD extension is loaded, and Tiki can create images, but the FreeType extension is needed for CAPTCHA text generation" => "The GD extension is loaded, and Tiki can create images, but the FreeType extension is needed for CAPTCHA text generation",
 // "The GD extension is loaded, but Tiki is unable to create images. Please check your GD library configuration" => "The GD extension is loaded, but Tiki is unable to create images. Please check your GD library configuration",
 // "ImageMagick is used as a fallback in case that GD is not available" => "ImageMagick is used as a fallback in case that GD is not available",
 // "ImageMagick is available, but unable to create images. Please check your ImageMagick configuration" => "ImageMagick is available, but unable to create images. Please check your ImageMagick configuration",
