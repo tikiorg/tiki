@@ -149,7 +149,7 @@ if (jqueryTiki.no_cookie) {
 			<div class="siteloginbar_popup">
 				<ul class="clearfix{if $prefs.feature_jquery_tooltips ne 'y'} cssmenu_horiz{/if}">
 					<li id="logout_link_{$module_logo_instance}"><div class="tabmark"><a href="tiki-login.php" class="login_link" onclick="return false;" rel=".siteloginbar_poppedup">{tr}Log in{/tr}</a></div>
-						<ul class="siteloginbar_poppedup">
+						<ul class="siteloginbar_poppedup cbox">
 							<li class="tabcontent">
 								{capture assign="close_tags"}</li></ul></li></ul></div>{$close_tags}{/capture}
 		{/if}
