@@ -304,7 +304,6 @@ class WikiRenderer
 
 					if ($this->content_to_render === null) {
 						$this->content_to_render = $version_info['data'];
-					} else {
 						$revision_displayed = $version_info['version'];
 					}
 
