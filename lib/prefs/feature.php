@@ -1809,7 +1809,6 @@ function prefs_feature_list($partial = false)
 		'feature_endbody_code' => array(
 			'name' => tra('Custom code just before the closing </body> tag'),
             'description' => tra(''),
-			'hint' => tra('Example:') . ' ' . "{wiki}{literal}{GOOGLEANALYTICS(account=xxxx) /}{/literal}{/wiki}",
 			'type' => 'textarea',
 			'size' => '6',
 			'filter' => 'rawhtml_unsafe',

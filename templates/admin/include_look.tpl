@@ -234,6 +234,7 @@
 
 				{preference name=feature_custom_html_head_content syntax="htmlmixed"}
 				{preference name=feature_endbody_code syntax="tiki"}
+				{preference name=site_google_analytics_account}
 				
 				{preference name="header_custom_js" syntax="javascript"}
 				

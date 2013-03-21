@@ -158,7 +158,10 @@
 			{include file='tiki-socialnetworks_firstlogin_launcher.tpl'}
 		{/if}
 
-		{if $prefs.feature_endbody_code}{*this code must be added just before </body>: needed by google analytics *}
+		{if $prefs.site_google_analytics_account}
+			{wikiplugin _name=googleanalytics account=$prefs.site_google_analytics_account}{/wikiplugin}
+		{/if}
+		{if $prefs.feature_endbody_code}
 			{eval var=$prefs.feature_endbody_code}
 		{/if}
 		{interactivetranslation}

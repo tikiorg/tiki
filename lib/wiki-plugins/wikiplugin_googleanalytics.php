@@ -13,6 +13,7 @@ function wikiplugin_googleanalytics_info()
 		'description' => tra('Add the tracking code for Google Analytics'),
 		'prefs' => array( 'wikiplugin_googleanalytics' ),
 		'icon' => 'img/icons/chart_line.png',
+		'format' => 'html',
 		'params' => array(
 			'account' => array(
 				'required' => true,
@@ -43,5 +44,5 @@ function wikiplugin_googleanalytics($data, $params)
 </script>
 JS
 ;
-	return "~np~" . $ret . "~/np~";
+	return $ret;
 }
