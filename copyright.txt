@@ -12,7 +12,7 @@ This is how we implement the Tiki Social Contract.
 http://tiki.org/Social+Contract
 
 List of members of the Community
-As of 2013-03-19, the community has:
+As of 2013-03-21, the community has:
   * 553 members on SourceForge.net,
   * 278 of those people who made at least one code commit
 
@@ -439,8 +439,8 @@ SF Role: Developer
 Nickname: changi67
 Name: Jean-François B.
 First Commit: 2009-04-23
-Last Commit: 2013-03-19
-Number of Commits: 1357
+Last Commit: 2013-03-21
+Number of Commits: 1372
 SF Role: Admin
 
 Nickname: chealer
@@ -1338,8 +1338,8 @@ SF Role: Developer
 Nickname: jonnybradley
 Name: jonny Bradley
 First Commit: 2007-08-15
-Last Commit: 2013-03-19
-Number of Commits: 5274
+Last Commit: 2013-03-21
+Number of Commits: 5292
 SF Role: Admin
 
 Nickname: jorgercosta
@@ -1404,8 +1404,8 @@ SF Role: Developer
 Nickname: jyhem
 Name: Jean-Marc Libs
 First Commit: 2006-12-11
-Last Commit: 2013-03-18
-Number of Commits: 722
+Last Commit: 2013-03-20
+Number of Commits: 725
 SF Role: Admin
 
 Nickname: k2s
@@ -1474,8 +1474,8 @@ SF Role: Developer
 Nickname: kstingel
 Name: Karen Stingel
 First Commit: 2011-07-15
-Last Commit: 2013-03-14
-Number of Commits: 166
+Last Commit: 2013-03-21
+Number of Commits: 167
 SF Role: Developer
 
 Nickname: ksumacgyver
@@ -1584,8 +1584,8 @@ SF Role: Developer
 Nickname: lphuberdeau
 Name: Louis-Philippe Huberdeau
 First Commit: 2004-04-10
-Last Commit: 2013-03-18
-Number of Commits: 3113
+Last Commit: 2013-03-21
+Number of Commits: 3126
 SF Role: Developer
 
 Nickname: lrargerich
@@ -1628,8 +1628,8 @@ SF Role: Developer
 Nickname: luciash
 Name: luciash d' being
 First Commit: 2003-08-05
-Last Commit: 2013-02-28
-Number of Commits: 1036
+Last Commit: 2013-03-20
+Number of Commits: 1042
 SF Role: Admin
 
 Nickname: lueders
