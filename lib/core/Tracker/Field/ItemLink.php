@@ -435,7 +435,7 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 			$newlist = array();
 			foreach ($list as $itemId => $label) {
 				if (in_array($label, $newlist)) {
-					$label = $label . " ($k)";
+					$label = $label . " ($itemId)";
 				}
 				$newlist[$itemId] = $label;
 			}
