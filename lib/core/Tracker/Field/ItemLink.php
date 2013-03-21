@@ -102,8 +102,8 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 						'description' => tr('Display only one random item per value'),
 						'filter' => 'alpha',
 						'options' => array(
-							'one' => tr('Only one random item for each value'),
 							'multi' => tr('Displays all the items for a same value with a notation value (itemId)'),
+							'one' => tr('Only one random item for each value'),
 						),
 					),
 					'selectMultipleValues' => array(
@@ -373,10 +373,8 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 				$this->getOption(4, 'opc'),
 				false
 			);
-			if (!$this->getOption(11) || $this->getOption(11) != 'multi') {
-				// This silently modifies tracker items when an item name is used multiple times, which really isn't impossible.
-				// If you want it, make it optional.
-				//$data['list'] = array_unique($data['list']);
+			if ($this->getOption(11) && $this->getOption(11) != 'multi') {
+				$data['list'] = array_unique($data['list']);
 			} elseif (array_unique($data['list']) != $data['list']) {
 				$newlist = array();
 				foreach ($data['list'] as $k => $dl) {
