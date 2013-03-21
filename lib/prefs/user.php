@@ -286,6 +286,13 @@ function prefs_user_list($partial = false)
 			),
 			'default' => 'none',
 		),
+		'user_use_gravatar' => array(
+			'name' => tr('Use Gravatar for user avatars'),
+			'description' => tr('Always request the gravatar picture for the user avatar.'),
+			'hint' => tr('See [http://gravatar.com/|Gravatar].'),
+			'type' => 'flag',
+			'default' => 'n',
+		),
 	);
 }
 

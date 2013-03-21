@@ -62,9 +62,15 @@
 				<td>{tr}Avatar:{/tr}</td>
 				<td>
 					{$avatar}
-					<a href="tiki-pick_avatar.php{if $userwatch ne $user}?view_user={$userwatch}{/if}" class="link">
-						{tr}Pick user Avatar{/tr}
-					</a>
+					{if $prefs.user_use_gravatar eq 'y'}
+						<a href="http://www.gravatar.com" class="link">
+							{tr}Pick user Avatar{/tr}
+						</a>
+					{else}
+						<a href="tiki-pick_avatar.php{if $userwatch ne $user}?view_user={$userwatch}{/if}" class="link">
+							{tr}Pick user Avatar{/tr}
+						</a>
+					{/if}
 				</td>
 			</tr>
 

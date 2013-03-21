@@ -1621,16 +1621,29 @@ class TikiLib extends TikiDb_Bridge
 			$res = $user;
 			$user = $user['login'];
 		} else {
-			$res = $this->table('users_users')->fetchRow(array('login', 'avatarType', 'avatarLibName'), array('login' => $user));
+			$res = $this->table('users_users')->fetchRow(array('login', 'avatarType', 'avatarLibName', 'email'), array('login' => $user));
 		}
 
 		if (!$res) {
 			return '';
 		}
 
-		$type = $res["avatarType"];
-		$libname = $res["avatarLibName"];
-		$ret = '';
+		if ($prefs['user_use_gravatar'] == 'y' && $res['email']) {
+			$https_mode = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on';
+			$hash = md5(strtolower(trim($res['email'])));
+
+			if ($https_mode) {
+				$url = "https://secure.gravatar.com/avatar/$hash?s=45";
+			} else {
+				$url = "http://www.gravatar.com/avatar/$hash?s=45";
+			}
+			$type = 'g';
+		} else {
+			$type = $res["avatarType"];
+			$libname = $res["avatarLibName"];
+			$ret = '';
+		}
+
 		$style = '';
 
 		if (strcasecmp($float, "left") == 0) {
@@ -1638,6 +1651,7 @@ class TikiLib extends TikiDb_Bridge
 		} else if (strcasecmp($float, "right") == 0) {
 			$style = "style='float:right;margin-left:5px;'";
 		}
+
 		switch ($type)	{
 			case 'l':
 				if ($libname) {
@@ -1651,6 +1665,9 @@ class TikiLib extends TikiDb_Bridge
 				if ($path) {
 					$ret = "<img src='" . htmlspecialchars($path, ENT_NOQUOTES) . "' " . $style . " alt='" . htmlspecialchars($user, ENT_NOQUOTES) . "'>";
 				}
+				break;
+			case 'g':
+				$ret = "<img src='" . htmlspecialchars($url, ENT_NOQUOTES) . "' " . $style . " alt='" . htmlspecialchars($user, ENT_NOQUOTES) . "'>";
 				break;
 			case 'n':
 			default:
