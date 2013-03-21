@@ -24,6 +24,9 @@ class FlaggedRevisionLib extends TikiDb_Bridge
 			$attribute = $this->get_attribute_for_flag($flag);
 			$attributelib->set_attribute('wiki history', $version_info['historyId'], $attribute, $value);
 
+			require_once('lib/search/refresh-functions.php');
+			refresh_index('pages', $pageName);
+
 			return true;
 		} else {
 			return false;
