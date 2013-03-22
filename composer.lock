@@ -1,5 +1,5 @@
 {
-    "hash": "d5b9b9d8e89c2009c029a08cbc07ee21",
+    "hash": "e7ccc71210ccd02004cdadf7a303a635",
     "packages": [
         {
             "name": "adodb/adodb",
@@ -13,54 +13,61 @@
             "type": "library"
         },
         {
-            "name": "emagister/zendframework1",
-            "version": "1.12.1",
+            "name": "bombayworks/zendframework1",
+            "version": "v1.12.3",
             "source": {
                 "type": "git",
-                "url": "git://github.com/Emagister/zendframework1.git",
-                "reference": "v1.12.1"
+                "url": "https://github.com/bombayworks/zendframework1.git",
+                "reference": "v1.12.3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/Emagister/zendframework1/archive/v1.12.1.zip",
-                "reference": "v1.12.1",
+                "url": "https://api.github.com/repos/bombayworks/zendframework1/zipball/v1.12.3",
+                "reference": "v1.12.3",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.2.4"
+                "php": ">=5.2.11"
             },
             "bin": [
-                "bin/classmap_generator.php",
-                "bin/zf.bat",
-                "bin/zf.php",
-                "bin/zf.sh"
+                "bin/zf.sh",
+                "bin/zf.php"
             ],
             "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-trunk": "1.12.x-dev",
+                    "dev-release-1.0": "1.0.x-dev",
+                    "dev-release-1.5": "1.5.x-dev",
+                    "dev-release-1.6": "1.6.x-dev",
+                    "dev-release-1.7": "1.7.x-dev",
+                    "dev-release-1.8": "1.8.x-dev",
+                    "dev-release-1.9": "1.9.x-dev",
+                    "dev-release-1.10": "1.10.x-dev",
+                    "dev-release-1.11": "1.11.x-dev"
+                }
+            },
             "autoload": {
                 "psr-0": {
-                    "Zend": "src/",
-                    "ZendX": "src/"
+                    "Zend_": "library/",
+                    "ZendX_": "extras/library/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
+            "include-path": [
+                "library/",
+                "extras/library/"
+            ],
             "license": [
-                "New BSD"
+                "BSD-3-Clause"
             ],
-            "authors": [
-                {
-                    "name": "Emagister Tech",
-                    "email": "php@emagister.com",
-                    "homepage": "http://engineering.emagister.com",
-                    "role": "Developer"
-                }
-            ],
-            "description": "A Zend Framework 1.12.x mirror for Emagister",
+            "description": "Zend Framework 1",
+            "homepage": "http://framework.zend.com/",
             "keywords": [
-                "Zend Framework",
-                "emagister",
-                "zend"
+                "ZF1",
+                "framework"
             ],
-            "time": "2012-11-16 09:20:16"
+            "time": "2013-03-13 17:09:28"
         },
         {
             "name": "phpcas/phpcas",
