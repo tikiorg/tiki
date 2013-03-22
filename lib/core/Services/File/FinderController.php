@@ -118,7 +118,6 @@ class Services_File_FinderController
 			$opts['roots'][] = array_merge(
 				array(
 					'path' => $userRootId,		// should be $prefs['fgal_root_id']?
-					'startPath' => 'd_15',
 				),
 				$rootDefaults
 			);
