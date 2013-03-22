@@ -2876,7 +2876,7 @@ class TrackerLib extends TikiLib
 	{
 		$categlib = TikiLib::lib('categ');
 		$cat_desc = '';
-		$cat_name = $this->get_isMain_value(null, $id);
+		$cat_name = $this->get_isMain_value(null, $itemId);
 
 		// The following needed to ensure category field exist for item (to be readable by list_items)
 		$smarty = TikiLib::lib('smarty');
