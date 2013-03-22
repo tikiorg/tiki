@@ -672,7 +672,7 @@ class FileGalLib extends TikiLib
 			'visible' => 'y',
 			'public' => 'n',
 			'type' => 'default',
-			'parentId' => -1,
+			'parentId' => $prefs['fgal_root_id'],
 			'lockable' => 'n',
 			'archives' => 0,
 			'quota' => $prefs['fgal_quota_default'],
