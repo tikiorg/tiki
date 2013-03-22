@@ -113,7 +113,7 @@ function prefs_site_list()
 		),
 		'site_google_analytics_account' => array(
 			'name' => tr('Google Analytics Account Number'),
-			'description' => tra('The account number for the site. Your account number from google looks like UA-XXXXXXX-YY. All you need to enter is XXXXXXX-YY'),
+			'description' => tra('The account number for the site. Your account number from Google looks like UA-XXXXXXX-YY. All you need to enter is XXXXXXX-YY'),
 			'type' => 'text',
 			'size' => 15,
 			'default' => '',
