@@ -30,8 +30,6 @@ if (!isset($_REQUEST["page"])) {
 
 $auto_query_args = array('page', 'oldver', 'newver', 'compare', 'diff_style', 'show_translation_history', 'show_all_versions', 'history_offset', 'paginate', 'history_pagesize');
 
-$tikilib->get_perm_object($_REQUEST['page'], 'wiki page');
-
 // Now check permissions to access this page
 if (!isset($_REQUEST["source"])) {
 	$access->check_permission('tiki_p_wiki_view_history', '', 'wiki page', $_REQUEST['page']);
@@ -44,6 +42,8 @@ if (empty($info)) {
 	$smarty->display('error.tpl');
 	die;
 }
+
+$tikilib->get_perm_object($_REQUEST['page'], 'wiki page', $info);
 
 if (isset($_REQUEST['preview'], $_REQUEST['flaggedrev'], $_REQUEST['page']) && $prefs['flaggedrev_approval'] == 'y' && $tiki_p_wiki_approve == 'y') {
 	$targetFlag = null;
