@@ -107,16 +107,18 @@ class Tracker_Field_Files extends Tracker_Field_Abstract
 			$fileIds = explode(',', $value);
 
 			// Add manually uploaded files (non-HTML5 browsers only)
-			foreach (array_keys($_FILES[$ins_id]['name']) as $index) {
-				$fileIds[] = $this->handleUpload(
-					$galleryId,
-					array(
-						'name' => $_FILES[$ins_id]['name'][$index],
-						'type' => $_FILES[$ins_id]['type'][$index],
-						'size' => $_FILES[$ins_id]['size'][$index],
-						'tmp_name' => $_FILES[$ins_id]['tmp_name'][$index],
-					)
-				);
+			if (isset($_FILES[$ins_id]['name']) && is_array($_FILES[$ins_id]['name'])) {
+				foreach (array_keys($_FILES[$ins_id]['name']) as $index) {
+					$fileIds[] = $this->handleUpload(
+						$galleryId,
+						array(
+							'name' => $_FILES[$ins_id]['name'][$index],
+							'type' => $_FILES[$ins_id]['type'][$index],
+							'size' => $_FILES[$ins_id]['size'][$index],
+							'tmp_name' => $_FILES[$ins_id]['tmp_name'][$index],
+						)
+					);
+				}
 			}
 
 			// Remove missed uploads
