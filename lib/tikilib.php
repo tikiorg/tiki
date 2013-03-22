@@ -3771,7 +3771,7 @@ class TikiLib extends TikiDb_Bridge
 		$ret = array();
 		switch ($objectType) {
 			case 'wiki page': case 'wiki':
-				if ( $prefs['wiki_creator_admin'] == 'y' && !empty($user) && isset($info) && $info['creator'] == $user ) { //can admin his page
+				if ( $prefs['wiki_creator_admin'] == 'y' && !empty($user) && !empty($info) && $info['creator'] == $user ) { //can admin his page
 					$perms = $userlib->get_permission_names_for($this->get_permGroup_from_objectType($objectType));
 					foreach ($perms as $perm) {
 						$ret[$perm] = 'y';
