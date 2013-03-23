@@ -37,7 +37,7 @@
 	</fieldset>
 	{else}
 		{remarksbox type="tip" title="{tr}Tip{/tr}"}
-			{tr}Use <a href="tiki-admin.php?page=fgal&alt=File+Galleries">file gallery admin</a> and <a href="{'tiki-list_file_gallery.php?galleryId='|cat:$prefs.fgal_root_user_id|sefurl}">the file galleries</a> themselves to manage user files settings.{/tr}
+			{tr}Use <a href="tiki-admin.php?page=fgal&alt=File+Galleries">file gallery admin</a> and <a href="{$prefs.fgal_root_user_id|sefurl:'file gallery'}">the file galleries</a> themselves to manage user files settings.{/tr}
 		{/remarksbox}
 	{/if}
 	<div class="heading input_submit_container" style="text-align: center">
