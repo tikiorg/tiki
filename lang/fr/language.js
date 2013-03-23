@@ -28,7 +28,7 @@ lang = {
 	"Pick a file." : "Choisir un fichier.",
 	"Add Field" : "Ajouter un champ",
 	"Edit Field" : "Modifier le champ",
-	"Removing the field will result in data loss. Are you sure?" : "La suppression du champ entrainera la perte des données. Êtes-vous sûr(e) ?",
+	"Removing the field will result in data loss. Are you sure?" : "La suppression du champ entraînera la perte des données. Êtes-vous sûr(e) ?",
 	"Save" : "Enregistrer",
 	"Cancel" : "Annuler",
 	"Delete" : "Supprimer",	
