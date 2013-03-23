@@ -268,14 +268,34 @@
 								<option value="{$tid}"{if $tid eq $userstrackerid} {assign var="ugr" value="$tit"}selected="selected"{/if}>{$tit|escape}</option>
 							{/foreach}
 						</select>
-						{if $userstrackerid}
+						{if $userstrackerid or $prefs.javascript_enabled eq 'y'}
 							<br>
-							<select name="usersfield">
+							<select name="usersfield"{if empty($userstrackerid) and $prefs.javascript_enabled eq 'y'} style="display: none;"{/if}>
 								<option value="0">{tr}choose a field ...{/tr}</option>
 								{section name=ix loop=$usersFields}
 									<option value="{$usersFields[ix].fieldId}"{if $usersFields[ix].fieldId eq $usersfieldid} selected="selected"{/if}>{$usersFields[ix].fieldId} - {$usersFields[ix].name|escape}</option>
 								{/section}
 							</select>
+								{jq}
+$("#userstracker").change(function () {
+	$.getJSON($.service('tracker', 'list_fields'), {trackerId: $(this).val()}, function (data) {
+		if (data && data.fields) {
+			var $usersfield = $('select[name=usersfield]');
+			$usersfield.empty().append('<option value="0">{tr}choose a field ...{/tr}</option>');
+			var sel = '';
+			$(data.fields).each(function () {
+				if (this.type === 'u' && this.options_array[0] == 1) {
+					sel = ' selected="selected"';
+				} else {
+					sel = '';
+				}
+				$usersfield.append('<option value="' + this.fieldId + '"' + sel + '>' + this.fieldId + ' - ' + this.name + '</option>');
+			});
+			$usersfield.show();
+		}
+	});
+});
+{/jq}
 						{/if}
 
 						{if $userstrackerid}
