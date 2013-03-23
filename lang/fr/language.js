@@ -40,6 +40,8 @@ lang = {
 	"Filter:" : "Filtre :",
 	"Please enter a page name" : "Veuillez entrer un nom de page",
 	"Are you sure you want to unassign this module?" : "Êtes-vous sûr(e) de vouloir désattribuer ce module ?",
+	"Search Location" : "Chercher une adresse",
+	"To My Location" : "Localiser ma position",
 	"StreetView is not available at this specific point on the map. Zoom in as needed and make sure to click on a blue line." : "La fonction StreetView n'est pas disponible à cet endroit précis sur la carte. Approchez votre zoom au besoin et assurez-vous de cliquer sur une ligne bleue."
 
 	// remember the IE does not support ending comma on last item
