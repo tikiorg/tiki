@@ -2200,6 +2200,20 @@ img.pref_dependency {
 	border-bottom: #74C0E2 solid 2px;
 }
 
+/* all_languages */
+
+ul.all_languages {
+	list-style: none;
+	padding-left: 0;
+}
+
+ul.all_languages > li {
+	border: #aaa 1px solid;
+	padding: 1em;
+	margin-bottom: 1ex;
+}
+
+
 /***** Kaltura *****/
 
 /* Kaltura browse entries */
