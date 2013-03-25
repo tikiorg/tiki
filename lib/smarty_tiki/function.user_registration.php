@@ -71,21 +71,26 @@ function smarty_function_user_registration($params, $smarty)
 		}
 
 		$smarty->assign('errortype', 'no_redirect_login');
-
+		//result is empty if fields (including antibot) validate and new user is successfully created
+		//no user notification at this stage if user tracker is used
 		$result = $registrationlib->register_new_user($_REQUEST);
 
-		if (is_array($result)) {
-			foreach ($result as $r) {
-				$errorreportlib->report($r->msg);
+		if (empty($result)) {
+			$_REQUEST['valerror'] = false;
+		} else {
+			$_REQUEST['valerror'] = $result;
+			if (is_array($result)) {
+				foreach ($result as $r) {
+					$errorreportlib->report($r->msg);
+				}
+			} elseif (is_a($result, 'RegistrationError')) {
+				$errorreportlib->report($result->msg);
+			} elseif (is_string($result) && $registrationlib->merged_prefs['userTracker'] !== 'y') {	// more to do for usertrackers
+				return $result;
+			} elseif (!empty($result['msg']) && $registrationlib->merged_prefs['userTracker'] !== 'y') {
+				return $result['msg'];
 			}
-		} else if (is_a($result, 'RegistrationError')) {
-			$errorreportlib->report($result->msg);
-		} else if (is_string($result) && $registrationlib->merged_prefs['userTracker'] !== 'y') {	// more to do for usertrackers
-			return $result;
-		} elseif (!empty($result['msg']) && $registrationlib->merged_prefs['userTracker'] !== 'y') {
-			return $result['msg'];
 		}
-
 	}
 	$outputtowiki='';
 	$outputwiki='';
