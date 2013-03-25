@@ -53,6 +53,7 @@
 						<span id="genPass">
 								{button href="#" _onclick="" _text="{tr}Generate a passcode{/tr}"}
 						</span>
+						{preference name=showRegisterPasscode}
 					</div>
 
 					{if $gd_lib_found neq 'y'}
