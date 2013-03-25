@@ -174,56 +174,64 @@ function wikiplugin_customsearch($data, $params)
 		'searchfadetext' => tr('Loading...'),
 		'searchfadediv' => $searchfadediv,
 		'results' => empty($params['destdiv']) ? "#customsearch_{$id}_results" : "#{$params['destdiv']}",
-		'autosearchdelay' => isset($params['autosearchdelay']) ? (int) $params['autosearchdelay'] : 0,
+		'autosearchdelay' => isset($params['autosearchdelay']) ? max(1500, (int) $params['autosearchdelay']) : 0,
+		'searchonload' => (int) $params['searchonload'],
 	);
 
+	/**
+	 * NOTES: Search Execution
+	 *
+	 * There is a global delay on execution of 1 second. This makes sure
+	 * multiple submissions will never trigger multiple requests.
+	 *
+	 * There is an additional autosearchdelay configuration that can trigger the search
+	 * on field change rather than explicit request. Explicit requests will still work.
+	 */
 	$script = "
 var customsearch = {
 	options: " . json_encode($options) . ",
 	id: " . json_encode($id) . ",
 	offset: 0,
-	quiet: false,
 	searchdata: {},
 	definition: " . json_encode((string) $definitionKey) . ",
 	autoTimeout: null,
 	add: function (fieldId, filter) {
-		this.stop();
 		this.searchdata[fieldId] = filter;
-		this.start();
+		this.auto();
 	},
 	remove: function (fieldId) {
-		this.stop();
 		delete this.searchdata[fieldId];
-		this.start();
+		this.auto();
 	},
 	load: function () {
-		var selector = '#' + this.options.searchfadediv;
-		var that = this;
-		if (this.options.searchfadediv.length <= 1 && $(selector).length === 0) {
+		this._executor(this);
+	},
+	auto: function () {
+	},
+	_executor: delayedExecutor(1000, function (cs) {
+		var selector = '#' + cs.options.searchfadediv;
+		if (cs.options.searchfadediv.length <= 1 && $(selector).length === 0) {
 			selector = '#customsearch_$id';
 		}
 
-		$(selector).modal(this.options.searchfadetext);
+		$(selector).modal(cs.options.searchfadetext);
 
-		this._load(function (data) {
+		cs._load(function (data) {
 			$(selector).modal();
-			$(that.options.results).html(data);
-			customsearch.quiet = false;
+			$(cs.options.results).html(data);
 			$(document).trigger('pageSearchReady');
 		});
-	},
-	stop: function () {
-		if (this.autoTimeout) {
-			clearTimeout(this.autoTimeout);
-			this.autoTimeout = null;
-		}
-	},
-	start: function () {
+	}),
+	init: function () {
 		var that = this;
-		if (this.options.autosearchdelay && ! this.quiet) {
-			this.autoTimeout = setTimeout(function () {
+		if (that.options.searchonload) {
+			that.load();
+		}
+
+		if (that.options.autosearchdelay) {
+			that.auto = delayedExecutor(that.options.autosearchdelay, function () {
 				that.load();
-			}, this.options.autosearchdelay);
+			});
 		}
 	}
 };
@@ -331,11 +339,8 @@ customsearch._load = function (receive) {
 customsearch.sort_mode = " . json_encode($sort_mode) . ";
 customsearch.offset = $offset;
 customsearch.maxRecords = $maxRecords;
+customsearch.init();
 ";
-
-	if ($params['searchonload']) {
-		$script .= "customsearch.load();";
-	}
 
 	TikiLib::lib('header')->add_jq_onready($script);
 
@@ -391,17 +396,6 @@ function cs_design_input($id, $fieldname, $fieldid, $arguments, $default, &$scri
 
 		customsearch.add($(this).attr('id'), filter);
 	});
-
-	if (customsearch.options.autosearchdelay) {
-		// prevent enter from submitting form since the change itself will do so
-		field.keydown(function(event) {
-			if (event.keyCode === 13) {
-				event.preventDefault();
-				$(this).trigger('change');
-				return false;
-			}
-		});
-	}
 
 	if (config.default || $(field).attr('type') === 'hidden') {
 		field.change();
