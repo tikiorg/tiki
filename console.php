@@ -27,14 +27,17 @@ $local_php = TikiInit::getCredentialsFile();
 
 $console = new Tiki\Command\Application;
 
-if (! is_file($local_php)) {
-	$console->add(new Tiki\Command\ConfigureCommand);
-} else {
-	$local_php = null;
+$console->add(new Tiki\Command\ConfigureCommand);
+if (is_file($local_php)) {
 	require 'db/tiki-db.php';
-	$console->add(new Tiki\Command\ConfigureCommand);
 	$console->add(new Tiki\Command\InstallCommand);
 	$console->add(new Tiki\Command\UpdateCommand);
+
+	$installer = new Installer;
+	if (! $installer->requiresUpdate()) {
+		require 'tiki-setup.php';
+		$console->add(new Tiki\Command\CacheClearCommand);
+	}
 }
 
 $console->run();
