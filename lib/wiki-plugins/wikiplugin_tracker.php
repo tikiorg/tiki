@@ -704,10 +704,28 @@ function wikiplugin_tracker($data, $params)
 				/* ------------------------------------- Check field values for each type and presence of mandatory ones ------------------- */
 				$field_errors = $trklib->check_field_values($ins_fields, $categorized_fields, $trackerId, empty($itemId)?'':$itemId);
 
-				if ((empty($user) || $user === $_REQUEST['name']) && $prefs['feature_antibot'] === 'y' && $registration === 'y') {
+				if ($prefs['feature_antibot'] === 'y' && $registration === 'y' && isset($_REQUEST['valerror'])) {
 					// in_tracker session var checking is for tiki-register.php
-					if (!$captchalib->validate()) {
-						$field_errors['err_antibot'] = 'y';
+					if (isset($_REQUEST['valerror'])) {
+						$rve = $_REQUEST['valerror'];
+						if (is_array($rve)) {
+							foreach ($rve as $ve) {
+								if (is_a($ve, 'RegistrationError')) {
+									if (isset($ve->field) && $ve->field == 'antibotcode') {
+										$field_errors['err_antibot'] = 'y';
+										continue;
+									}
+								}
+							}
+						} elseif (is_a($rve, 'RegistrationError')) {
+							if (isset($rve->field) && $rve->field == 'antibotcode') {
+								$field_errors['err_antibot'] = 'y';
+							}
+						}
+					} else {
+						if (!$captchalib->validate()) {
+							$field_errors['err_antibot'] = 'y';
+						}
 					}
 				}
 
@@ -737,7 +755,10 @@ function wikiplugin_tracker($data, $params)
 						unset($outputtowiki);
 					}
 				}
-				if ( count($field_errors['err_mandatory']) == 0  && count($field_errors['err_value']) == 0 && empty($field_errors['err_antibot']) && empty($field_errors['err_outputwiki']) && !isset($_REQUEST['tr_preview'])) {
+				if ( count($field_errors['err_mandatory']) == 0  && count($field_errors['err_value']) == 0
+					&& empty($field_errors['err_antibot']) && empty($field_errors['err_outputwiki'])
+					&& !isset($_REQUEST['tr_preview']))
+				{
 					/* ------------------------------------- save the item ---------------------------------- */
 					if (isset($_REQUEST['status'])) {
 						$status = $_REQUEST['status'];
@@ -748,7 +769,7 @@ function wikiplugin_tracker($data, $params)
 					} else {
 						$status = '';
 					}
-
+					//tracker item created here
 					if (!empty($fieldsfill) && !empty($_REQUEST['ins_fill']) ) {	// We create multiple items
 						$fill_lines = explode("\n", $_REQUEST['ins_fill']);
 						foreach ($fill_lines as $fill_line) {
@@ -1059,7 +1080,9 @@ function wikiplugin_tracker($data, $params)
 					TikiLib::lib('errorreport')->report($msg);
 				}
 
-				if ($registration && !empty($userField) && isset($_REQUEST['name']) && $_REQUEST['name'] === $userField['value'] && $_REQUEST['name'] === $user) {
+				if ($registration && !empty($userField) && isset($_REQUEST['name'])
+					&& $_REQUEST['name'] === $userField['value'] && $_REQUEST['name'] === $user)
+				{
 					// if in registration and creating a user tracker item for the new user
 					// remove the user if they did not complete the tracker correctly
 					$userlib->remove_user($userField['value']);
@@ -1073,9 +1096,6 @@ function wikiplugin_tracker($data, $params)
 				}
 			}
 			if (isset($field_errors['err_antibot'])) {
-				$back.= '<div class="simplebox highlight"><img src="img/icons/exclamation.png" alt=" '.tra('Error').'" style="vertical-align:middle" /> ';
-				$back .= $captchalib->getErrors();
-				$back.= '</div><br />';
 				$_REQUEST['error'] = 'y';
 			}
 			if (isset($field_errors['err_outputwiki'])) {
@@ -1375,6 +1395,9 @@ FILL;
 				$back .= '</div>';
 				$back .= '</td></tr>';
 			}
+			if ($prefs['feature_antibot'] == 'y' && (empty($user) || (!empty($user) && $_REQUEST['error'] == 'y'))) {
+				$smarty->assign('showantibot', true);
+			}
 			if (!empty($tpl)) {
 				$smarty->security = true;
 				$back .= $smarty->fetch($tpl);
@@ -1389,8 +1412,12 @@ FILL;
 			include_once('lib/smarty_tiki/function.trackerheader.php');
 			$back .= smarty_function_trackerheader(array('level'=>-1, 'title'=>'', 'inTable' =>(empty($tpl) && empty($wiki))?'wikiplugin_tracker':'' ), $smarty);
 
-			if ($prefs['feature_antibot'] == 'y' && empty($user) && $params['formtag'] != 'n'
-				&& ($registration != 'y' || $prefs["user_register_prettytracker"] != 'y') ) {
+
+			if ($prefs['feature_antibot'] == 'y' && (empty($user) || (!empty($user) && $_REQUEST['error'] == 'y'))
+				&& $params['formtag'] != 'n'
+				&& ($registration != 'y' || $prefs["user_register_prettytracker"] != 'y')
+				)
+			{
 				// in_tracker session var checking is for tiki-register.php
 				$smarty->assign('showmandatory', $showmandatory);
 				$smarty->assign('antibot_table', empty($wiki) && empty($tpl)?'n': 'y');
