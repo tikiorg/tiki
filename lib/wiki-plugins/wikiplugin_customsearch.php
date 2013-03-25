@@ -111,14 +111,14 @@ function wikiplugin_customsearch($data, $params)
 	if (!isset($_REQUEST["offset"])) {
 		$offset = 0;
 	} else {
-		$offset = $_REQUEST["offset"];
+		$offset = (int) $_REQUEST["offset"];
 	}
 	if (isset($_REQUEST['maxRecords'])) {
-		$maxRecords = $_REQUEST['maxRecords'];
+		$maxRecords = (int) $_REQUEST['maxRecords'];
 	} elseif ($recalllastsearch && !empty($_SESSION["customsearch_$id"]['maxRecords'])) {
-		$maxRecords = $_SESSION["customsearch_$id"]['maxRecords'];
+		$maxRecords = (int) $_SESSION["customsearch_$id"]['maxRecords'];
 	} else {
-		$maxRecords = $prefs['maxRecords'];
+		$maxRecords = (int) $prefs['maxRecords'];
 	}
 	if (!empty($_REQUEST['sort_mode'])) {
 		$sort_mode = $_REQUEST['sort_mode'];
@@ -163,7 +163,7 @@ function wikiplugin_customsearch($data, $params)
 
 	// important that offset from session is set after fingerprint check otherwise blank page might show
 	if ($recalllastsearch && !isset($_REQUEST['offset']) && !empty($_SESSION["customsearch_$id"]["offset"])) {
-		$offset = $_SESSION["customsearch_$id"]["offset"];
+		$offset = (int) $_SESSION["customsearch_$id"]["offset"];
 	}
 
 	$groups = array();
@@ -306,12 +306,12 @@ customsearch._load = function (receive) {
 		definition: this.definition,
 		adddata: $.toJSON(this.searchdata),
 		searchid: this.id,
-		groups: '" . json_encode($groups) . "',
-		textrangegroups: '" . json_encode($textrangegroups) . "',
-		daterangegroups: '" . json_encode($daterangegroups) . "',
+		groups: " . json_encode($groups) . ",
+		textrangegroups: " . json_encode($textrangegroups) . ",
+		daterangegroups: " . json_encode($daterangegroups) . ",
 		offset: customsearch.offset,
 		maxRecords: this.maxRecords,
-		page: '$page'
+		page: " . json_encode($page) . "
 	};
 	if (customsearch.sort_mode) {
 		// blank sort_mode is not allowed by Tiki input filter
@@ -328,7 +328,7 @@ customsearch._load = function (receive) {
 		}
 	});
 };
-customsearch.sort_mode = '$sort_mode';
+customsearch.sort_mode = " . json_encode($sort_mode) . ";
 customsearch.offset = $offset;
 customsearch.maxRecords = $maxRecords;
 ";
@@ -348,7 +348,7 @@ customsearch.maxRecords = $maxRecords;
 	return $out;
 }
 
-function cs_design_setbasic(&$element, $fieldid, $fieldname, $arguments)
+function cs_design_setbasic($element, $fieldid, $fieldname, $arguments)
 {
 	$element->setAttribute('id', $fieldid);
 	$element->setAttribute('name', $fieldname);
@@ -364,43 +364,54 @@ function cs_design_input($id, $fieldname, $fieldid, $arguments, $default, &$scri
 	$document = new DOMDocument;
 	$element = $document->createElement('input');
 	cs_design_setbasic($element, $fieldid, $fieldname, $arguments);
-	extract($arguments, EXTR_SKIP);
-
-	if ($type == 'checkbox' || $type == 'radio') {
-		$val_selector = "$(this).is(':checked')";
-	} else {
-		$val_selector = "$(this).val()";
-	}
-	if ($type == 'radio') {
-		$radioreset = "$('input[type=radio][name=$fieldname]').each(function() {
-				customsearch.remove($(this).attr('id'));
-			});";
-	} else {
-		$radioreset = '';
-	}
 
 	$script .= "
-$('#$fieldid').change(function() {
-	var filter = {
-		config: " . json_encode($arguments) . ",
-		name: 'input',
-		value: $val_selector
-	};
-	$radioreset
-	customsearch.add('$fieldid', filter);
-});
+(function (id, config, fieldname) {
+	var field = $('#' + id);
+	field.change(function() {
+		var filter = {
+			config: config,
+			name: 'input',
+			value: $(this).val()
+		};
 
-if (customsearch.options.autosearchdelay) {
-	// prevent enter from submitting form since the change itself will do so
-	$('#$fieldid').keydown(function(event) {
-		if (event.keyCode == '13') {
-			event.preventDefault();
-			$('#$fieldid').trigger('change');
-			return false;
+		if ($(this).is(':checkbox, :radio')) {
+			filter.value = $(this).is(':checked');
 		}
+
+		if ($(this).is(':radio')) {
+			$(this).closest('form').find(':radio')
+				.filter(function () {
+					return $(this).attr('name') == fieldname
+				})
+				.each(function() {
+					customsearch.remove($(this).attr('id'));
+				});
+		}
+
+		customsearch.add($(this).attr('id'), filter);
 	});
-}
+
+	if (customsearch.options.autosearchdelay) {
+		// prevent enter from submitting form since the change itself will do so
+		field.keydown(function(event) {
+			if (event.keyCode === 13) {
+				event.preventDefault();
+				$(this).trigger('change');
+				return false;
+			}
+		});
+	}
+
+	if (config.default || $(field).attr('type') === 'hidden') {
+		field.change();
+	}
+})('$fieldid', " . json_encode($arguments) . ", " . json_encode($fieldname) . ");
 ";
+
+	$arguments = new JitFilter($arguments);
+	$default = $arguments->default->text();
+	$type = $arguments->type->word();
 
 	if ($default && $type != "hidden") {
 		if ((string) $default != 'n' && ($type == 'checkbox' || $type == 'radio')) {
@@ -408,9 +419,6 @@ if (customsearch.options.autosearchdelay) {
 		} else {
 			$element->setAttribute('value', $default);
 		}
-		$script .= 	"customsearch.quiet = true; $('#$fieldid').trigger('change');\ncustomsearch.quiet = false;\n";
-	} elseif ($type == "hidden") {
-		$script .= 	"customsearch.quiet = true; $('#$fieldid').trigger('change');\ncustomsearch.quiet = false;\n";
 	}
 
 	$document->appendChild($element);
@@ -502,9 +510,7 @@ $('#$fieldid').change(function() {
 			if ($default && in_array($c['categId'], (array) $default)) {
 				$element->setAttribute('checked', 'checked');
 				$script .= "
-customsearch.quiet = true;
 $('#$fieldid').trigger('change');
-customsearch.quiet = false;
 ";
 			}
 		}
@@ -537,9 +543,7 @@ $('#$fieldid').change(function() {
 			if ($default && in_array($c['categId'], (array) $default)) {
 				$option->setAttribute('selected', 'selected');
 				$script .= "
-customsearch.quiet = true;
 $('#$fieldid').trigger('change');
-customsearch_quiet = false;
 ";
 			}
 		}
@@ -603,9 +607,7 @@ $('#$fieldid').change(function() {
 		if ($default && in_array($opt, (array) $default)) {
 			$option->setAttribute('selected', 'selected');
 			$script .= "
-customsearch.quiet = true;
 $('#$fieldid').trigger('change');
-customsearch.quiet = false;
 ";
 		}
 		$element->appendChild($option);
