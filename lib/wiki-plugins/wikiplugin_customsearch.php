@@ -211,7 +211,7 @@ var customsearch = {
 	_executor: delayedExecutor(1000, function (cs) {
 		var selector = '#' + cs.options.searchfadediv;
 		if (cs.options.searchfadediv.length <= 1 && $(selector).length === 0) {
-			selector = '#customsearch_$id';
+			selector = '#customsearch_' + cs.id;
 		}
 
 		$(selector).modal(cs.options.searchfadetext);
