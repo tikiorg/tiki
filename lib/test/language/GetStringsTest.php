@@ -119,8 +119,6 @@ class Language_GetStringsTest extends TikiTestCase
 
 	public function testCollectString_shouldNotConsiderEmptyCallsToTra()
 	{
-		require_once('vfsStream/vfsStream.php');
-
 		$this->obj->addFileType(new Language_FileType_Php);
 
 		$fileName = 'file1.php';
