@@ -7,6 +7,20 @@
 
 use Symfony\Component\Console\Input\ArgvInput;
 
+declare(ticks = 1); // how often to check for signals
+
+if (function_exists('pcntl_signal')) {
+	$exit = function () {
+		error_reporting(0); // Disable error reporting, misleading backtrace on kill
+		exit;
+	};
+
+	pcntl_signal(SIGTERM, $exit);
+	pcntl_signal(SIGHUP,  $exit);
+	pcntl_signal(SIGINT, $exit);
+}
+
+
 if (isset($_SERVER['REQUEST_METHOD'])) {
 	die('Only available through command-line.');
 }
@@ -37,6 +51,9 @@ if (is_file($local_php)) {
 	if (! $installer->requiresUpdate()) {
 		require 'tiki-setup.php';
 		$console->add(new Tiki\Command\CacheClearCommand);
+		$console->add(new Tiki\Command\IndexRebuildCommand);
+		$console->add(new Tiki\Command\IndexOptimizeCommand);
+		$console->add(new Tiki\Command\IndexCatchUpCommand);
 	}
 }
 

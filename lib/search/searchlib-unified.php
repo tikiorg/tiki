@@ -119,9 +119,15 @@ class UnifiedSearchLib
     function rebuild($loggit = false)
 	{
 		global $prefs;
+		$errlib = TikiLib::lib('errorreport');
 		$index_location = $this->getIndexLocation();
 		$tempName = $index_location . '-new';
 		$swapName = $index_location . '-old';
+		
+		if ($this->rebuildInProgress()) {
+			$errlib->report(tr('Rebuild in progress.'));
+			return false;
+		}
 
 		if ($prefs['unified_engine'] == 'lucene') {
 			$index = new Search_Index_Lucene($tempName);
@@ -157,7 +163,6 @@ class UnifiedSearchLib
 		unset($indexer);
 		unset($index);
 
-		$errlib = TikiLib::lib('errorreport');
 		if ($prefs['unified_engine'] == 'lucene') {
 			// Current to -old
 			if (file_exists($index_location)) {
