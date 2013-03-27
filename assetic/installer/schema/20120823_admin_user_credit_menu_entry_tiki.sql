@@ -1,0 +1,1 @@
+INSERT INTO `tiki_menu_options` (`menuId`, `type`, `name`, `url`, `position`, `section`, `perm`, `groupname`, `userlevel`) VALUES (42,'o','Admin credits','tiki-admin_credits.php',1067,'payment_feature','tiki_p_admin_users','',0);

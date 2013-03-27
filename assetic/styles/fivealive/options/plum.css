@@ -1,0 +1,301 @@
+/* $Id$ 
+	Plum theme option for FiveAlive themes for Tiki Wiki CMS Groupware.
+*/
+
+a,
+a:visited,tr.even a:link,
+tr.even a:visited,
+tr.odd a:link,
+tr.odd a:visited {
+	color: #7a04b5;
+}
+ 
+a:active,
+a:hover,
+tr.even a:active,
+tr.even a:hover,
+tr.odd a:active,
+tr.odd a:hover {
+	color: #7a04b5;
+}
+
+fieldset {
+	border: 1px solid #7a04b5;
+}
+
+hr {
+	background: #7a04b5;
+	color: #7a04b5;
+}
+
+#main .header_outer {
+	background: url(plum/siteheadertile.png) 0 0 no-repeat;
+}
+
+#header {
+	background: url(plum/siteheader.jpg) -250px 0 no-repeat;
+}
+
+#sitetitle,
+#sitesubtitle {
+	text-shadow: #7a04b5 3px 2px 0;
+}
+
+.footer_liner {
+	border-top: 1px solid #7a04b5;
+	border-bottom: 1px solid #7a04b5;
+}
+
+#footer h3 {
+	border-bottom: 1px dotted #7a04b5;
+}
+
+#loadstats {
+	background: #7a04b5;
+}
+
+#power a {
+	color: #ce57df;
+}
+
+.button a,
+.button a:visited,
+button,
+input[type="reset"],
+input[type="submit"],
+.button input,
+.calbuttonBox a,
+#genPass .button a,
+#genPass .button a:visited,
+.daterow {
+	color: #fff;
+	background: #7001a7;
+	border-color: #8e01d4 #4c0172 #4c0172 #8e01d4;
+	font-weight: bold;
+}
+	
+.button a:hover,
+button:hover,
+input[type="reset"]:hover,
+input[type="submit"]:hover,
+.button input:hover,
+.calbuttonBox:hover,
+#genPass .button a:hover,
+.daterow:hover {
+	background: #470169;
+	border-color: #4c0172 #8e01d4 #8e01d4 #4c0172;
+}
+
+.highlight,
+.button.highlight a,
+.calfocuson {
+	border-color: #fac5b1;
+	color: #8e01d4;
+	background: #f1f8de;
+}
+
+.button.highlight a {
+	background: #f8e4dd;
+	color: #c74b23;
+}
+
+.cssmenu_vert li ul a,
+.cssmenu_horiz li ul a,
+.header .cssmenu_horiz li ul a,
+.header .cssmenu_horiz li:hover ul a,
+#main #topbar_modules .cssmenu_horiz li ul a,
+#main #topbar_modules .cssmenu_horiz li:hover ul a  {
+	background: #49006c;
+	color: #fff;
+}
+
+#tiki-top .cssmenu_horiz li a {
+	background: #33014e url(plum/siteheader.jpg) no-repeat -600px -40px;
+}
+
+#tiki-top .cssmenu_horiz li a:hover,
+.cssmenu_vert li ul a:hover,
+.cssmenu_horiz li ul a:hover,
+.header .cssmenu_horiz li ul a:hover,
+#main #topbar_modules .cssmenu_horiz li ul a:hover  {
+	background: #300149;
+}
+
+#top_modules #secondary_site_menu .cssmenu_horiz li.selected a,
+#topbar_modules .cssmenu_horiz li.selected a,
+.cssmenu_horiz li.selected a,
+.cssmenu_vert li.selected a {
+	color: #bb4ef3;
+}
+
+.header .cssmenu_horiz li.selected li a,
+#top_modules #secondary_site_menu .cssmenu_horiz li.selected li a,
+#topbar_modules .cssmenu_horiz li.selected li a,
+.cssmenu_horiz li.selected li a,
+.cssmenu_vert li.selected li a {
+	font-style: normal;
+	color: #fff;
+}
+
+.cssmenu_vert .sf-sub-indicator {
+	background: url(plum/arrows-8e01d4.png) no-repeat 10px 0;
+}
+
+select,
+input[type="text"],
+input[type="password"],
+input[type="file"],
+input[type="email"],
+input[type="file"],
+input[type="search"],
+input[type="number"],
+input#login-pass,
+textarea,
+.adminoptionbox option {
+	background: #f4e1ff;
+	border-color: #db9fff #f9f0ff #f9f0ff #db9fff;
+}
+
+.titlebar,
+.rbox-title, 
+.rbox-data {
+	border-color: #c564f5;
+	background: #e5caf5;
+	color: #881d98;
+}
+
+.cbox {
+	background: #e1b4f5;
+	color: #370e49;
+}
+
+.cbox-title {
+	border-bottom: 3px solid #c564f5;
+}
+
+.simplebox {
+	border: 2px solid #c564f5;
+}
+
+h3.box-title,
+.postbody-title,
+#top_modules .module.secondary_site_menu {
+	background: #1c0029 url(plum/siteheader.jpg) no-repeat -1000px -200px;
+}
+
+.adminanchors {
+	background: #c564f5;
+}
+
+.normal,
+.wikitable {
+	border: 2px solid #c564f5;
+}
+
+th,
+td.heading,
+tr.diffheader,
+.calHeading,
+.weeks,
+th.header {
+	background: #c564f5;
+	color: #eeddf9;
+}
+
+.caltable .odd,
+.caltable .even,
+.wikicell {
+	border: 1px solid #ce57df;
+}
+
+.odd,
+table.normal tr:nth-child(2n+1),
+.tablesorter tr.odd td {
+	background: #efcaf5;
+}
+
+.even,
+table.normal tr:nth-child(2n),
+.tablesorter tr.even td {
+	background: #f3e1fb;
+}
+
+.tabmark {
+	border: 1px solid #8e01d4;
+	background: #7001a7;
+}
+
+.tabmark a {
+	color: #fff;
+}
+
+.tabinactive:hover,
+.tabactive {
+	border: 1px solid #d185f7;
+	background: #dc95fe;
+}
+
+.tabinactive:hover a,
+.tabactive a,
+.tabactive a:visited {
+	color: #6c01a0;	
+}
+
+.tabcontent,
+form.admin fieldset,
+#siteloginbar_popup .cssmenu_horiz ul li {
+	background: #dc95fe;
+}
+
+/* Quote plugin */
+.quoteheader {
+	border-bottom: 2px solid #efcaf5;
+}
+
+.quotebody {
+	border-left: 8px solid #efcaf5;
+}
+
+.postbody-title {
+	background: #320143 url(plum/siteheader.jpg) -550px -90px no-repeat;
+}
+
+.postbody-title > br {
+	display: none;
+}
+
+.post .author,
+.dirsite {
+	background: #efcaf5;
+}
+
+.postbody-content {
+	border: 1px solid #1c0029;
+	border-top: none;
+}
+
+.post .author {
+	border: 1px solid #1c0029;
+	border-top: none;
+	border-bottom: none;
+}
+
+/* cluptip tooltips */
+
+.cluetip-default {
+	background: #f3e1fb;
+	color: #000;
+}
+
+.cluetip-default #cluetip-outer {
+	background: #f3e1fb;
+}
+.cluetip-default h3#cluetip-title {
+	background: #852a1c;
+	color: #fff;
+}
+
+.cluetip-default #cluetip-title a {
+	color: #f3e1fb;
+}
+  
