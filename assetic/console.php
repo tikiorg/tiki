@@ -28,6 +28,8 @@ $local_php = TikiInit::getCredentialsFile();
 $console = new Tiki\Command\Application;
 
 $console->add(new Tiki\Command\ConfigureCommand);
+$console->add(new Tiki\Command\DevelopmentCompileCommand);
+
 if (is_file($local_php)) {
 	require 'db/tiki-db.php';
 	$console->add(new Tiki\Command\InstallCommand);
