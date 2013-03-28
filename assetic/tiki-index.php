@@ -651,9 +651,8 @@ TikiLib::events()->trigger(
 );
 
 $smarty->assign('info', $info);
-$smarty->assign('mid', 'tiki-show_page.tpl');
 
-$smarty->display('tiki.tpl');
+$smarty->display('tiki-show_page.tpl');
 
 // xdebug_dump_function_profile(XDEBUG_PROFILER_CPU);
 // debug: print all objects

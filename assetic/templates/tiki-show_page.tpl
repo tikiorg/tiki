@@ -1,4 +1,8 @@
 {* $Id$ *}
+{extends 'layout_classic.tpl'}
+
+{block name=mid_content}
+
 {if !isset($pageLang)}
 	{if isset($info.lang)}
 		{assign var='pageLang' value=$info.lang}
@@ -186,3 +190,5 @@
 		{include file='tiki-page_bar.tpl'}
 	{/if}
 {/if}
+
+{/block}
