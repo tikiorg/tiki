@@ -4,6 +4,8 @@
 	"homepage": "https://tiki.org",
 	"minimum-stability": "stable",
 	"require": {
+		"twitter/bootstrap": "2.3.1",
+
 		"adodb/adodb": "5.18",
 		"bombayworks/zendframework1": "1.12.3",
 		"ezyang/htmlpurifier": "4.5.0",
@@ -79,6 +81,17 @@
 				"dist": {
 					"url": "http://downloads.sourceforge.net/project/adodb/adodb-php5-only/adodb-518-for-php5/adodb518a.tgz",
 					"type": "tar"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "twitter/bootstrap",
+				"version": "2.3.1",
+				"dist": {
+					"url": "http://twitter.github.com/bootstrap/assets/bootstrap.zip",
+					"type": "zip"
 				}
 			}
 		}

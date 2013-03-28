@@ -56,7 +56,7 @@
 
 	<div id="assigned_modules">
 		{tabset}
-		{foreach from=$module_zones key=zone_initial item=zone_info}
+		{foreach from=$module_zone_list key=zone_initial item=zone_info}
 			{tab name=$zone_info.name|capitalize}
 				<div id="{$zone_info.id}_modules">
 					<table class="normal" id="assigned_zone_{$zone_initial}">

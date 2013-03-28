@@ -1,5 +1,5 @@
 {
-    "hash": "d7d37aeb1dbde01e9e3236feba9fa263",
+    "hash": "c0aa9b4b2c939a83a075ecb6cbb828b0",
     "packages": [
         {
             "name": "adodb/adodb",
@@ -365,6 +365,17 @@
             "time": "2013-03-01 06:43:14"
         },
         {
+            "name": "twitter/bootstrap",
+            "version": "2.3.1",
+            "dist": {
+                "type": "zip",
+                "url": "http://twitter.github.com/bootstrap/assets/bootstrap.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "library"
+        },
+        {
             "name": "zetacomponents/base",
             "version": "1.8",
             "source": {
@@ -485,38 +496,7 @@
             "time": "2009-11-09 05:34:07"
         }
     ],
-    "packages-dev": [
-        {
-            "name": "mikey179/vfsStream",
-            "version": "v1.1.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/mikey179/vfsStream",
-                "reference": "v1.1.0"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://github.com/mikey179/vfsStream/zipball/v1.1.0",
-                "reference": "v1.1.0",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "org\\bovigo\\vfs": "src/main/php"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD"
-            ],
-            "homepage": "http://vfs.bovigo.org/",
-            "time": "2012-08-25 05:49:29"
-        }
-    ],
+    "packages-dev": null,
     "aliases": [
 
     ],

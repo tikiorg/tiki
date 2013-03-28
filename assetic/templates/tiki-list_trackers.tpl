@@ -1,4 +1,7 @@
 {* $Id$ *}
+{extends 'layout_bootstrap.tpl'}
+
+{block name=mid_content}
 
 {title help="Trackers" admpage="trackers"}{tr}Trackers{/tr}{/title}
 
@@ -316,3 +319,6 @@
 		return false;
 	});
 {/jq}
+
+{/block}
+

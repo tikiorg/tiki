@@ -421,15 +421,15 @@ $smarty->assign('offset', $offset);
 $smarty->assign('maximum', $maximum);
 
 $assigned_modules = $modlib->get_assigned_modules();
-$module_zones = array();
+$module_zone_list = array();
 foreach ( $modlib->module_zones as $initial => $zone) {
-	$module_zones[$initial] = array(
+	$module_zone_list[$initial] = array(
 			'id' => $zone,
 			'name' => tra(substr($zone, 0, strpos($zone, '_')))
 			);
 }
-$smarty->assign_by_ref('assigned_modules', $assigned_modules);
-$smarty->assign_by_ref('module_zones', $module_zones);
+$smarty->assign('assigned_modules', $assigned_modules);
+$smarty->assign('module_zone_list', $module_zone_list);
 
 $prefs['module_zones_top'] = 'fixed';
 $prefs['module_zones_topbar'] = 'fixed';
