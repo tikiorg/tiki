@@ -46,18 +46,8 @@ function smarty_block_tab($params, $content, $smarty, &$repeat)
 			}
 		}
 		
-		$ret = "<a name='tab_a_$smarty_tabset_i_tab'></a>";
-		$ret .= "<fieldset ";
-		if ($prefs['feature_tabs'] == 'y' && $cookietab != 'n' && $print_page != 'y') {
-   			$ret .= "class='tabcontent content$smarty_tabset_i_tab' style='clear:both;display:".($smarty_tabset_i_tab == $cookietab ? 'block' : 'none').";'>";
-		} else {
-			$ret .= "id='content$smarty_tabset_i_tab'>";
-		}
-		if ($prefs['feature_tabs'] != 'y' || $cookietab == 'n' || $print_page == 'y') {
-     		$ret .= '<legend class="heading"><a href="#"' . ($prefs['javascript_enabled'] === 'y' ? ' onclick="$(\'>:not(legend)\', $(this).parents(\'fieldset\')).toggle();return false;"' : '') . '><span>'.$params['name'].'</span></a></legend>';
-		}
-	
-		$ret .= "$content</fieldset>";
+		$active = ($smarty_tabset_i_tab == $cookietab) ? 'active' : '';
+		$ret = "<div id='content$smarty_tabset_i_tab' class='tab-pane $active'>$content</div>";
 		
 		return $ret;
 	}

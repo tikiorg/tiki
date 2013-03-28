@@ -171,7 +171,15 @@ function smarty_function_button($params, $smarty)
 
 	$auto_query_args = $auto_query_args_orig;
 	if ($prefs['mobile_feature'] !== 'y' || $prefs['mobile_mode'] !== 'y') {
-		$html = '<span class="'.(!empty($params['_noborder']) ? '' : 'button').(!empty($class)?" $class":'').'"'.$id.'>'.$html.'</span>';
+		if (empty($params['_noborder'])) {
+			$class .= ' btn';
+		}
+
+		if (isset($params['_size']) && in_array($params['_size'], array('large', 'small', 'mini'))) {
+			$class .= ' btn-' . $params['_size'];
+		}
+
+		$html = str_replace('<a ', "<a class=\"$class\" ", $html);
 	} else {
 		$html = preg_replace('/<a /', '<a  data-role="button" ', $html);
 	}
