@@ -989,23 +989,23 @@ table.normal tr:nth-child(2n),
 }
 
 	  
-th,
-td.heading,
-tr.diffheader,
-.calHeading,
-.weeks,
-th.header {
+table.normal th,
+table.normal td.heading,
+table.normal tr.diffheader,
+table.normal .calHeading,
+table.normal .weeks,
+table.normal th.header {
 	background-color: #1d90c5;
 	color: #d6f3fa;
 }
 
-th a,
-th a:visited,
-td.heading a,
-td.heading a:visited,
-.normal th a.link, 
-.normal th a,
-th.header {
+table.normal th a,
+table.normal th a:visited,
+table.normal td.heading a,
+table.normal td.heading a:visited,
+table.normal th a.link, 
+table.normal th a,
+table.normal th.header {
 	color: #fff
 }
 
