@@ -240,6 +240,15 @@ function prefs_user_list($partial = false)
 			),
 			'default' => 'n',
 		),
+		'user_tracker_auto_assign_item_field' => array(
+			'name' => tra('Assign a user tracker item when registering if email equals this field'),
+			'type' => 'text',
+			'filter' => 'digits',
+			'dependencies' => array(
+				'userTracker',
+			),
+			'default' => '',
+		),
 		'user_selector_threshold' => array(
 			'name' => tra('Maximum number of users to show in drop down lists'),
 			'description' => tra('Prevents out of memory and performance issues when user list is very large by using a jQuery autocomplete text input box.'),

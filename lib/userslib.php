@@ -5828,6 +5828,11 @@ class UsersLib extends TikiLib
 
 		$this->set_user_default_preferences($user, false); // do not force
 
+		if ( !empty($prefs['user_tracker_auto_assign_item_field']) ) {
+			// try to assign the user tracker item if exists
+			TikiLib::lib('trk')->update_user_item($user, $email, $prefs['user_tracker_auto_assign_item_field']);
+		}
+
 		$cachelib->invalidate('userslist');
 
 		TikiLib::events()->trigger('tiki.user.create', array('type' => 'user', 'object' => $user));
