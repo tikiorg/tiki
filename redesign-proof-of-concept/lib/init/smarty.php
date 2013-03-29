@@ -432,7 +432,12 @@ class Smarty_Tiki extends Smarty
 			$lang = 'default';
 		}
 		
-		$layout = $prefs['site_layout'];
+		if (! empty($prefs['site_layout'])) {
+			$layout = $prefs['site_layout'];
+		} else {
+			$layout = 'default';
+		}
+
 
 		$this->setCompileDir(realpath("templates_c") . "/$lang/$tikidomain/$layout");
 	}
