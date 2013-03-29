@@ -262,7 +262,10 @@ class Smarty_Tiki extends Smarty
 
 		}
 
-		include_once('tiki-modules.php');
+		if (! function_exists('createPage')) {
+			// Don't include this when in the installer.
+			include_once('tiki-modules.php');
+		}
 
 		if (isset($style_base)) {
 			if ($tikidomain and file_exists("templates/$tikidomain/styles/$style_base/$_smarty_tpl_file")) {
