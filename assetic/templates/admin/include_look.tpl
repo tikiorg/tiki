@@ -9,6 +9,8 @@
 		{tab name="{tr}Theme{/tr}"}
 
 			<div style="position:relative;">
+				{preference name=site_layout}
+
 				<div style="position:absolute;right:.5em;top:0.5em;">
 					<img src="{$thumbfile}" alt="{tr}Theme Screenshot{/tr}" id="style_thumb" width="160px" height="120px">
 				</div>

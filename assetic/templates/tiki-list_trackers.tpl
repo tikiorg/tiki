@@ -1,5 +1,5 @@
 {* $Id$ *}
-{extends 'layout_bootstrap.tpl'}
+{extends 'layout_view.tpl'}
 
 {block name=mid_content}
 

@@ -128,6 +128,8 @@ class Smarty_Tiki extends Smarty
 			$this->addTemplatedir($this->main_template_dir.'/'.$tikidomain.'/');
 		}
 		$this->addTemplateDir($this->main_template_dir.'/styles/'.$style_base.'/');
+		$this->addTemplateDir($this->main_template_dir.'/layouts/'.$prefs['site_layout'].'/');
+		$this->addTemplateDir($this->main_template_dir.'/layouts/');
 		$this->addTemplateDir($this->main_template_dir);
 
 		
@@ -426,8 +428,10 @@ class Smarty_Tiki extends Smarty
 		if (empty($lang)) {
 			$lang = 'default';
 		}
+		
+		$layout = $prefs['site_layout'];
 
-		$this->setCompileDir(realpath("templates_c") . "/$lang/$tikidomain");
+		$this->setCompileDir(realpath("templates_c") . "/$lang/$tikidomain/$layout");
 	}
 }
 
