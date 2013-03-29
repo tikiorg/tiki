@@ -193,12 +193,52 @@ function wikiplugin_paypal_info() {
 				'default' => tra('PayPal — The safer, easier way to pay online.'),
 				'advanced' => true,
 			),
+			'stringButton' => array(
+				'required' => false,
+				'name' => tra('Button text'),
+				'description' => tra('The checkout button text'),
+				'filter' => 'text',
+				'default' => 'Checkout',
+				'advanced' => true,
+			),
+			'stringSubtotal' => array(
+				'required' => false,
+				'name' => tra('Subtotal text'),
+				'description' => tra('The subtotal text'),
+				'filter' => 'text',
+				'default' => 'Subtotal: ',
+				'advanced' => true,
+			),
+			'stringDiscount' => array(
+				'required' => false,
+				'name' => tra('Discount text'),
+				'description' => tra('The discount text'),
+				'filter' => 'text',
+				'default' => 'Discount: ',
+				'advanced' => true,
+			),
+			'stringShipping' => array(
+				'required' => false,
+				'name' => tra('Shipping text'),
+				'description' => tra('The shipping text'),
+				'filter' => 'text',
+				'default' => 'does not include shipping &amp; tax',
+				'advanced' => true,
+			),
+			'stringProcessing' => array(
+				'required' => false,
+				'name' => tra('Processing text'),
+				'description' => tra('The processing text'),
+				'filter' => 'text',
+				'default' => 'Processing...',
+				'advanced' => true,
+			),
 		),
 	);
 }
 
 function wikiplugin_paypal($data, $params) {
-	global $prefs, $language, $base_uri;
+	global $prefs, $language, $base_uri, $base_host;
 	static $id = 0;
 
 	$unique = 'wppaypal-' . ++$id;
@@ -279,25 +319,57 @@ function wikiplugin_paypal($data, $params) {
 	unset($params['custom_image_url']);
 	unset($params['paypal_button']);
 
-	// just add javascript?
-	$jsfile = 'lib/jquery/minicart/minicart' . ($prefs['tiki_minify_javascript'] === 'y' ? '.min' : '') . '.js';
-	if ($params['minicart'] === 'y' && file_exists($jsfile)) {
-		TikiLib::lib('header')->add_jq_onready('
-$.getScript("' . $jsfile . '", function() {
-	// summon the minicart!
-	PAYPAL.apps.MiniCart.render();
-});');
-	}
-	unset($params['minicart']);
-
 	// return params
+	if (!empty($_SERVER['REQUEST_URI'])) {
+		$returnUrl = $base_host . $_SERVER['REQUEST_URI'];
+	} else {
+		$returnUrl = $base_uri;
+	}
+	if (strpos($returnUrl, 'tiki-ajax_services.php') !== false ||
+		$_REQUEST['controller'] === 'search_customsearch') {
+		$csearchEvent = 'pageSearchReady';
+		if (!empty($_SERVER['HTTP_REFERER'])) {
+			$returnUrl = $_SERVER['HTTP_REFERER'];
+		}
+	} else {
+		$csearchEvent = 'ready';
+	}
 	foreach (array('return', 'shopping_url', 'cancel_return') as $ret) {
 		if (empty($params[$ret])) {
-			$params[$ret] = $base_uri;
+			$params[$ret] = $returnUrl;
 		} else if ($params[$ret] === 'n') {
 			unset($params[$ret]);
 		}
 	}
+
+	// just add javascript?
+	$jsfile = 'lib/jquery/minicart/minicart' . ($prefs['tiki_minify_javascript'] === 'y' ? '.min' : '') . '.js';
+	if ($params['minicart'] === 'y' && file_exists($jsfile)) {
+		// it appears currently if you set any of these all must be set
+		$miniParams = array('strings' => array());
+		$miniParams['strings']['button']     = tra($params['stringButton']);
+		$miniParams['strings']['subtotal']   = tra($params['stringSubtotal']);
+		$miniParams['strings']['discount']   = tra($params['stringDiscount']);
+		$miniParams['strings']['shipping']   = tra($params['stringShipping']);
+		$miniParams['strings']['processing'] = tra($params['stringProcessing']);
+		$miniParamStr = json_encode($miniParams);
+
+		TikiLib::lib('header')->add_js('
+$(document).bind("' . $csearchEvent . '", function () {
+	var renderMinicart = function () { PAYPAL.apps.MiniCart.render(' . $miniParamStr . '); };
+	if (typeof PAYPAL === "undefined") {
+		$.getScript("' . $jsfile . '", function() {
+			renderMinicart();
+		});
+	} else {
+		PAYPAL.apps.MiniCart.isRendered = false;
+		PAYPAL.apps.MiniCart.minicart = {};
+		renderMinicart();
+	}
+});');
+	}
+	unset($params['minicart']);
+
 
 	//$params['item_name'] = htmlentities($params['item_name']);	// FIXME encoding problems!
 
