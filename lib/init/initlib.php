@@ -222,7 +222,7 @@ class TikiInit
 		return isset($_SERVER['IIS_UrlRewriteModule']) == true;
 	}
 
-	function getCredentialsFile()
+	static function getCredentialsFile()
 	{
 		global $default_api_tiki, $api_tiki, $db_tiki, $dbversion_tiki, $host_tiki, $user_tiki, $pass_tiki, $dbs_tiki, $tikidomain, $tikidomainslash;
 		// Please use the local.php file instead containing these variables
