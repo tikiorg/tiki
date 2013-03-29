@@ -99,6 +99,7 @@
 				{preference name=user_trackersync_groups}
 				{preference name=user_trackersync_parentgroup}
 				{preference name=user_trackersync_lang}
+				{preference name=user_tracker_auto_assign_item_field}
 				</div>
 				{preference name=groupTracker}
 				{preference name=email_due}
