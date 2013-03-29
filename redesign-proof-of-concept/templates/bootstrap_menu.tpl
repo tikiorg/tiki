@@ -8,7 +8,7 @@
 				</a>
 				<ul class="dropdown-menu">
 					{foreach from=$item.children item=sub}
-						<li{if $sub.selected} class="active"{/if}><a href="{$item.url|escape}">{$sub.name|escape}</a></li>
+						<li{if $sub.selected} class="active"{/if}><a href="{$sub.url|escape}">{$sub.name|escape}</a></li>
 					{/foreach}
 				</ul>
 			</li>

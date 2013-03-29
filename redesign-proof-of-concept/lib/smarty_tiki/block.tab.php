@@ -47,7 +47,7 @@ function smarty_block_tab($params, $content, $smarty, &$repeat)
 		}
 		
 		$active = ($smarty_tabset_i_tab == $cookietab) ? 'active' : '';
-		$ret = "<div id='content$smarty_tabset_i_tab' class='tab-pane $active'>$content</div>";
+		$ret = "<div id='content$tabset_index-$smarty_tabset_i_tab' class='tab-pane $active'>$content</div>";
 		
 		return $ret;
 	}

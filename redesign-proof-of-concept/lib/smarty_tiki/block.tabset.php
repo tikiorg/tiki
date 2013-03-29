@@ -122,12 +122,13 @@ function smarty_block_tabset($params, $content, $smarty, &$repeat)
 
 			$ret .= '<ul class="nav nav-tabs">';
 			foreach ($smarty_tabset[$tabset_index]['tabs'] as $value) {
-				$ret .= '<li class="'.($count == $cookietab ? 'active' : '').'"><a href="#content'.$count.'" data-toggle="tab">'.$value.'</a></li>';
+				$ret .= '<li class="'.($count == $cookietab ? 'active' : '').'"><a href="#content' . $tabset_index . '-' . $count.'" data-toggle="tab">'.$value.'</a></li>';
 				++$count;
 			}
 			$ret .= '</ul>';
 		}
 		$ret .= "</div>";
+		$tabset_index--;
 
 		return $ret . '<div class="tab-content">' . $content . '</div>';
 	}
