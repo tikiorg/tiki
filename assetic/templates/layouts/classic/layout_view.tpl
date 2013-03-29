@@ -25,15 +25,35 @@
 			</div>
 
 			<div class="row">
-				<div class="span2">
-					{modulelist zone=left}
-				</div>
-				<div class="span8">
-					{block name=mid_content}{/block}
-				</div>
-				<div class="span2">
-					{modulelist zone=right}
-				</div>
+				{if zone_is_empty('left') and zone_is_empty('right')}
+					<div class="span12">
+						{block name=mid_content}{/block}
+					</div>
+				{elseif zone_is_empty('left')}
+					<div class="span10">
+						{block name=mid_content}{/block}
+					</div>
+					<div class="span2">
+						{modulelist zone=right}
+					</div>
+				{elseif zone_is_empty('right')}
+					<div class="span2">
+						{modulelist zone=left}
+					</div>
+					<div class="span10">
+						{block name=mid_content}{/block}
+					</div>
+				{else}
+					<div class="span2">
+						{modulelist zone=left}
+					</div>
+					<div class="span8">
+						{block name=mid_content}{/block}
+					</div>
+					<div class="span2">
+						{modulelist zone=right}
+					</div>
+				{/if}
 			</div>
 
 			<div class="row">
