@@ -33,6 +33,30 @@ class Tracker_Field_Location extends Tracker_Field_Abstract implements Tracker_F
 							1 => tr('Yes'),
 						),
 					),
+					'list_width' => array(
+						'name' => tr('List View Width'),
+						'description' => tr('Width of map in pixels when tracker items is shown in list view'),
+						'filter' => 'int',
+						'default' => 200,
+					),
+					'list_height' => array(
+						'name' => tr('List View Height'),
+						'description' => tr('Height of map in pixels when tracker items is shown in list view'),
+						'filter' => 'int',
+						'default' => 200,
+					),
+					'item_width' => array(
+						'name' => tr('Item View Width'),
+						'description' => tr('Width of map in pixels when single tracker items is shown'),
+						'filter' => 'int',
+						'default' => 500,
+					),
+					'item_height' => array(
+						'name' => tr('Item View Height'),
+						'description' => tr('Height of map in pixels when single tracker items is shown'),
+						'filter' => 'int',
+						'default' => 400,
+					),
 				),
 			),
 		);
