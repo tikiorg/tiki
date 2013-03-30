@@ -52,8 +52,12 @@ abstract class Tracker_Field_Abstract implements Tracker_Field_Interface, Tracke
 				'class' => implode(' ', $classList),
 				'href' => $href,
 			);
-			if (!empty($context['url']) && strpos($context['url'], 'itemId') !== false) {
-				$context['url'] = preg_replace('/([&|\?])itemId=?[^&]*/', '\\1itemId=' . $itemId, $context['url']);
+			if (!empty($context['url'])) {
+				if (strpos($context['url'], 'itemId') !== false) {
+					$context['url'] = preg_replace('/([&|\?])itemId=?[^&]*/', '\\1itemId=' . $itemId, $context['url']);
+				} elseif (isset($context['reloff']) && strpos($context['url'], 'offset') !== false) {
+					$context['url'] = preg_replace('/([&|\?])tr_offset=?[^&]*/', '\\1tr_offset=' . $context['reloff'], $context['url']);
+				}
 				$arguments['href'] = $context['url'];
 			}
 
