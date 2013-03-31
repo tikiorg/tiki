@@ -2630,7 +2630,7 @@ class UsersLib extends TikiLib
 		$res = $this->query('select `usersTrackerId`,`usersFieldId` from `users_groups` where `groupName`=?', array($group));
 		$ret = $res->fetchRow();
 
-		if (!$ret['usersTrackerId'] or !isset($ret['usersFieldId'])) {
+		if (!$ret['usersTrackerId'] or !$ret['usersFieldId']) {
 			$groups = $this->get_included_groups($group);
 			foreach ($groups as $gr) {
 				$res = $this->query('select `usersTrackerId`,`usersFieldId` from `users_groups` where `groupName`=?', array($gr));

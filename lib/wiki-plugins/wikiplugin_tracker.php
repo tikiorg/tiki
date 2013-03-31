@@ -405,13 +405,6 @@ function wikiplugin_tracker($data, $params)
 		return $smarty->fetch("wiki-plugins/error_tracker.tpl");
 	}
 
-	if ($prefs['useRegisterPasscode'] == 'y' && !empty($prefs['registerPasscode']) && isset ($_REQUEST['register'])) {
-		$regtracker = $userlib->get_usertrackerid('Registered');
-		if ($trackerId == $regtracker['usersTrackerId'] && $_REQUEST['passcode'] != $prefs['registerPasscode']) {
-			return false;
-		}
-	}
-
 	if (!isset($action)) {
 		$action = array('Save');
 	}
