@@ -64,6 +64,7 @@
 				<div class="adminoptionboxchild" id="recaptcha_enabled_childcontainer">
 					{preference name=recaptcha_pubkey}
 					{preference name=recaptcha_privkey}
+					{preference name=recaptcha_theme}
 				</div>
 			</div>
 			</fieldset>
