@@ -231,7 +231,7 @@ JQ
 		global $headerlib, $smarty;
 		//TODO - not sure the tablesorter js and css files need to be loaded since they are loaded in tiki-setup
 		$headerlib
-			->add_jsfile('lib/jquery/tablesorter/js/jquery.tablesorter.js')
+			->add_jsfile('lib/jquery/plugins/tablesorter/js/jquery.tablesorter.js')
 			->add_cssfile('lib/jquery_tiki/tablesorter/style.css')
 			->add_jq_onready(
 <<<JQ

@@ -18,9 +18,9 @@ body {
 	font: normal 76% arial, verdana, helvetica, sans-serif;
 	line-height: 1.5;
 }
- 
+
 html>body {font-size: 72% !important}
-	
+
 body.fullscreen {
 	background: #90140C url(darkshine/stripes.png) repeat-x;
 	background-position: 50% 20px;
@@ -32,20 +32,20 @@ body.fullscreen #tiki-center {
 	padding-top: 0;
 	margin: 1em;
 	margin-top: 0}
-	
-/* Enable header and footer content to widen when middle has wide content. */ 
+
+/* Enable header and footer content to widen when middle has wide content. */
 body.fixed_width .fixedwidth .fixedwidth {
 	width: 100%;
 	padding: 0;
 }
-	
+
 .fixed_width .fixedwidth {
 	width: 880px;
 }
 
  /***** Layout (overrides layout.css;
 		also styling of page layout divs)  *****/
-		
+
 
 
 .fixed_width #main,
@@ -156,7 +156,7 @@ input[type="submit"],
 	border: 1px solid #783C1C;
 	font-size: 94%;
 	font-weight: bold}
-	
+
 .button a:hover,
 button:hover,
 input[type="reset"]:hover,
@@ -197,7 +197,7 @@ tt {font-size: 110%}
 	padding-top: 66px;
 	background: url(darkshine/title_background.jpg) no-repeat 0 100%;
 }
-	
+
 #top_modules .box-logo .floatleft {
 	float: none !important;
 }
@@ -213,7 +213,7 @@ tt {font-size: 110%}
 	color: #FE9B27;
 	letter-spacing: 8px;
 }
-	
+
 #top_modules #sitetitle a {
 	color: #FE9B27;
 }
@@ -227,7 +227,7 @@ tt {font-size: 110%}
 	text-align: center}
 
 /***** Dark Shine-specific page top *****/
-	
+
 #topbar_modules {
 	width: 100% !important;
 	background: url(darkshine/stripes_small.gif) repeat-x;
@@ -298,7 +298,7 @@ tt {font-size: 110%}
 	border-right: 1px solid #5B1D1B;
 	border-top: 1px solid #CA807C;
 	border-bottom: 1px solid #3E1B19}
-	
+
 #top_modules .box-menu {
 	text-align: center;
 	background: #000;
@@ -396,7 +396,7 @@ select[name="where"],
 .cssmenu_vert li ul li,
 .cssmenu_horiz li ul li {
 	background: #f3f3f3}
-	
+
 /* left column width */
 #col2 ul.cssmenu_vert {
 	padding-left: 0;
@@ -585,7 +585,7 @@ h3.box-title a:hover {color: #000}
 .cbox-data {padding: 1px 3px}
 
 .rbox {margin: 5px 10px 5px}
-	
+
 .rbox-title,
 .rbox-data {
 	padding: 1px 3px;
@@ -600,7 +600,7 @@ h3.box-title a:hover {color: #000}
 	font-weight: bold;
 	margin-bottom: -.55em;
 }
-	
+
 .rbox-data {
 	display: block;
 	border: 2px solid #90140c;
@@ -686,7 +686,7 @@ table.normal tr:nth-child(2n) {
 	border-bottom-width: 0 !important;
 	margin: 0 .2em -1px 0;
 }
-	
+
 .tabmark a {
 	display: block;
 	padding: 0.5em 1em;
@@ -699,7 +699,7 @@ table.normal tr:nth-child(2n) {
 .tabactive a {
 	color: #000;
 }
-	
+
 .tabactive {
 	padding-bottom: 1px;
 	border: 1px solid #7c7b7d;
@@ -722,7 +722,7 @@ table.normal tr:nth-child(2n) {
 	margin-left: 5px;
 	margin-bottom: 0;
 	background: transparent}
-	
+
 .iconmenutext {white-space: nowrap;}
 
 /***** Wiki *****/
@@ -926,7 +926,7 @@ body.tiki_forums .normal {margin: auto}
 	padding: 0;
 	background: #F3F3F3;;
 	font-size: 1.1em}
-	
+
 * html .post .postbody {font-size: 11px}
 
 .post .postbody .content {
@@ -953,12 +953,12 @@ body.tiki_forums .normal {margin: auto}
 	margin-left: 5px;
 	margin-top: 3px;
 	margin-bottom: 3px}
-	
+
 .post .postbody-title .title {font-weight: bold}
 
 .postbody-title .title a,
 .postbody-title .title a:visited {color: #000}
-	
+
 .postbody-title br.clear {display: none}
 
 .post .author {
@@ -1214,7 +1214,7 @@ img.athumb {
 #caltable .calfocuson a {
 	color: #000;
 	text-decoration: none}
-	
+
 #caltable .calfocuson a:hover {text-decoration: underline }
 
 .calinput {background: #82e641}
@@ -1233,7 +1233,7 @@ img.athumb {
 .addevent {
 	padding: 0 5px;
 	float: right}
-	
+
 .calnavigation a:hover {background: #FD9339 url(darkshine/hover_list.jpg) repeat-x; }
 * html .addevent {padding: 0}
 .caltable .odd, .caltable .even {border: 1px solid #999}
@@ -1248,7 +1248,7 @@ img.athumb {
 .calfocuson {
 	font-size: 100%;
 	background: #f3e498}
-	
+
 .calHeadingOn, .calHeadingOn a {
 	background: #f3e498;
 }
@@ -1275,7 +1275,7 @@ a.admbox.off:active {
 
 /** tree **/
 .ui-icon {
-background-image:url('../lib/jquery/jquery-ui/themes/smoothness/images/ui-icons_888888_256x240.png');
+background-image:url('../lib/jquery/ui/themes/smoothness/images/ui-icons_888888_256x240.png');
 }
 
 /* End of File */

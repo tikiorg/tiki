@@ -3,7 +3,7 @@
  * @package tikiwiki
  */
 // (c) Copyright 2002-2013 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -110,7 +110,7 @@ if ( ! empty( $fileId ) ) {
 		$smarty->assign('msg', tra("You do not have permission to edit this file"));
 		$smarty->display('error.tpl');
 		die;
-	}		
+	}
 	if (isset($_REQUEST['lockedby']) && $fileInfo['lockedby'] != $_REQUEST['lockedby']) {
 		if (empty($fileInfo['lockedby'])) {
 			$smarty->assign('msg', tra(sprintf('The file has been unlocked meanwhile')));
@@ -200,7 +200,7 @@ if ( empty( $fileId ) ) {
 		$headerlib->add_jsfile('lib/swfupload/js/swfupload.swfobject.js');
 		$headerlib->add_jsfile('lib/swfupload/js/swfupload.queue.js');
 		$headerlib->add_jsfile('lib/swfupload/js/fileprogress.js');
-		$headerlib->add_jsfile('lib/swfupload/js/handlers.js');								
+		$headerlib->add_jsfile('lib/swfupload/js/handlers.js');
 		$smarty->assign('PHPSESSID', session_id());
 	}
 }
@@ -215,7 +215,7 @@ if (!empty($fileInfo['fileId'])) {
 
 $is_iis = TikiInit::isIIS();
 $smarty->assign('is_iis', $is_iis);
-	
+
 $cat_type = 'file';
 $cat_objid = (int) $fileId;
 include_once ('categorize_list.php');
@@ -229,7 +229,7 @@ $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 
 // Display the template
 if ( $prefs['javascript_enabled'] != 'y' or ! $isUpload ) {
-	$headerlib->add_jsfile('lib/jquery/jquery.form.js');
+	$headerlib->add_jsfile('lib/jquery/plugins/jquery.form.js');
 	$smarty->assign('mid', 'tiki-upload_file.tpl');
 	if ( ! empty( $_REQUEST['filegals_manager'] ) ) {
 		$smarty->assign('filegals_manager', $_REQUEST['filegals_manager']);
