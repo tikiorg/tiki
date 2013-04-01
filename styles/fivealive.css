@@ -3,7 +3,7 @@
 	Visit http://themes.tiki.org for more information.
 	*
 */
- 
+
 /* Import foundation CSS files. */
 @import url("lite/lite.css");
 @import url("layout/layout.css");
@@ -15,7 +15,7 @@ html {
 }
 
 /***** XHTML Elements (body tag here,
-			others follow Layout) *****/ 
+			others follow Layout) *****/
 body {
 	background-color: #fff;
 	font: 76% Arial, Helvetica, sans-serif;
@@ -99,7 +99,7 @@ body.fixed_width .fixedwidth {
 #middle[id] {
 	height: auto;
 }
- 
+
 #main {
 	text-align: left;
 	background: #fff;
@@ -203,7 +203,7 @@ body.fixed_width .fixedwidth {
 	font-size: 1.2em;
 	margin: 0;
 	margin-bottom: 6px;
-	padding-bottom: 6px; 
+	padding-bottom: 6px;
 }
 
 #footer h3#keepintouch {
@@ -294,7 +294,7 @@ body.fixed_width .fixedwidth {
 .button.highlight a,
 .calfocuson {
 	background: #fad5e0;
-	
+
 }
 
 /***** XHTML Elements (other than body tag) ******/
@@ -303,7 +303,7 @@ a:visited {
 	color: #1174a5;
 	text-decoration: none;
 }
- 
+
 a:active, a:hover {
 	color: #26a6dd;
 	text-decoration: none;
@@ -368,7 +368,7 @@ input[type="submit"]:hover,
 #genPass .button:hover {
 	border-width: 1px !important;
 }
-	
+
 .highlight,
 .highlight a {
 	border: 1px solid #9ae8fa;
@@ -890,7 +890,7 @@ li.login_link ul li a {
 }
 
 .cssmenu_vert li ul li a .sf-sub-indicator {
-	background: url(../lib/jquery/superfish/images/arrows-ffffff.png);
+	background: url(../lib/jquery/plugins/superfish/images/arrows-ffffff.png);
 }
 
 /***** Icons *****/
@@ -914,7 +914,7 @@ img.icon {
 	border-bottom: 3px solid #74c0e2;
 	font-weight: bold;
 }
-.rbox-title, 
+.rbox-title,
 .rbox-data {
 	border-color: #2098cd;
 	background: #c2eef8;
@@ -988,7 +988,7 @@ table.normal tr:nth-child(2n),
 	background: #d6f3fa;
 }
 
-	  
+
 th,
 td.heading,
 tr.diffheader,
@@ -1003,7 +1003,7 @@ th a,
 th a:visited,
 td.heading a,
 td.heading a:visited,
-.normal th a.link, 
+.normal th a.link,
 .normal th a,
 th.header {
 	color: #fff
@@ -1102,7 +1102,7 @@ a.register_link {
 .statuson {
 	background: white;
 }
-	
+
 legend.heading {
 	background: transparent;
 }
@@ -1120,7 +1120,7 @@ fieldset.admin .adminoptionlabel {
 	font-weight: bold;
 	padding: 1px 8px;
 }
-	
+
 .code {
 	padding: 3px;
 	border: 1px dashed #a9a9a9;
@@ -1240,12 +1240,12 @@ a.dirsublink {
 }
 
 .calfocuson {
-	font-size: 100%; 
+	font-size: 100%;
 	background: #f3e498;
 }
 
 .calfocuson a {
-	font-size: 90%; 
+	font-size: 90%;
 }
 
 .calHeadingOn, .calHeadingOn a {
@@ -1282,7 +1282,7 @@ a.dirsublink {
 /*.cluetip-transparent {
 	top: 168px !important;
 }*/
-  
+
 
 /***** End New (unsorted) *****/
 

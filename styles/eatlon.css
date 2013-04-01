@@ -34,7 +34,7 @@ body.fixed_width #fixedwidth {
 body.fixed_width *:first-child+html #c1c2 {
 	margin-left: 0;
 	padding-left: 0}
-	
+
 body.fixed_width #main[id] {
 	margin-bottom:0;
 	margin-top: 0;
@@ -42,8 +42,8 @@ body.fixed_width #main[id] {
 
  /***** Layout (overrides layout.css;
 		also styling of page layout divs)  *****/
-		
-/* Enable header and footer content to widen when middle has wide content. */ 
+
+/* Enable header and footer content to widen when middle has wide content. */
 body.fixed_width .fixedwidth .fixedwidth {
 	width: 100%;
 	padding: 0;
@@ -82,7 +82,7 @@ body.fixed_width .fixedwidth .fixedwidth {
 
 #footer {
 	min-height: 163px}
-	
+
 .footerbgtrap {
 	background: #fff url(eatlon/bottom_bg.png) no-repeat 100% 100%;
 	min-height: 163px;
@@ -106,7 +106,7 @@ a:visited {
 	text-decoration: none;
 	color: #6d819d;
 	border-bottom: 1px solid transparent}
-	
+
 * html a,
 * html a:link,
 * html a:visited {border-bottom: 1px solid #fff}
@@ -221,7 +221,7 @@ input[type="submit"]:hover,
 	padding: 2px 4px;
 }
 
-/* Needed for Opera (11) 
+/* Needed for Opera (11)
 input[type="reset"],
 input[type="submit"],
 input[type="reset"]:hover,
@@ -250,9 +250,9 @@ tt {font-size: 1.2em}
 }
 
 .header {
-	background: url(eatlon/banner.gif) no-repeat 100% 100%;	
+	background: url(eatlon/banner.gif) no-repeat 100% 100%;
 }
-	
+
 /*#top_modules { */
 /*	min-height: 126px; */
 /*	background: url(eatlon/banner.gif) no-repeat 100% 0} */
@@ -292,7 +292,7 @@ tt {font-size: 1.2em}
 	font-size: 320%;
 	font-weight: 100;
 }
-	
+
 #sitetitle a,
 #sitetitle a:visited {color: #8f8f8f}
 
@@ -402,16 +402,16 @@ input[id="sl-login-pass"] {background: #e1e1e2}
 }
 
 #tiki-top ul.cssmenu_horiz {margin-left: 30px}
-	
+
 #tiki-top .cssmenu_horiz a {
 	padding: 12px 1em;
 	font-weight: bold;
 	color: #fff}
-	
+
 #tiki-top .cssmenu_horiz li.menuSection0 a {
 	padding-right: 2.0em;
 }
-	
+
 .cssmenu_horiz li a:hover,
 .cssmenu_vert ul li a:link,
 .cssmenu_vert ul li a:visited,
@@ -423,7 +423,7 @@ input[id="sl-login-pass"] {background: #e1e1e2}
 	font-weight: normal;
 	padding-top: 3px;
 	padding-bottom: 3px}
-	
+
 .secondary_site_menu li.menuLevel0 a:hover {
 	color: #506887;
 }
@@ -452,7 +452,7 @@ input[id="sl-login-pass"] {background: #e1e1e2}
 }
 
 .cssmenu_vert li ul li a .sf-sub-indicator {
-	background: url(../lib/jquery/superfish/images/arrows-ffffff.png);
+	background: url(../lib/jquery/plugins/superfish/images/arrows-ffffff.png);
 }
 
 #tiki-top .cssmenu_horiz li a .sf-sub-indicator {top: 1.3em}
@@ -495,10 +495,10 @@ a.flip:hover,
 .box {
 	margin-bottom: 16px;
 	display: block}
-	
+
 #leftcolumn .box,
 #rightcolumn .box {width: 160px}
-	
+
 .wikitext .box {width: 96%}
 
 h3.box-title {
@@ -532,7 +532,7 @@ h3.box-title {
 	border-color: #506887;
 	background: #cecece;
 	color: #000}
-	
+
 .rbox-title {
 	margin-bottom: -.45em;
 }
@@ -594,7 +594,7 @@ td.even,
 	padding: .2em .2em 0;
 	margin:0 0.2em 1px 0;
 	border-bottom: 1px solid #ccc}
-	
+
 .tabs br {
 	display: none;
 }
@@ -707,7 +707,7 @@ textarea.wikiedit {font-size: 1.1em}
 	border: 1px dashed #ADACAF;
 	overflow: auto;
 }
-	
+
 .codecaption {
 	font-size: 90%;
 	padding: 0 10px;
@@ -802,7 +802,7 @@ a.blogt:hover {
 .post .postbody {
 	background: white;
 	font-size: 1em}
-	
+
 * html .post .postbody {font-size: 11px}
 
 .post .postbody .content {
@@ -822,7 +822,7 @@ a.blogt:hover {
 	font-weight: bold}
 
 .postbody-title br.clear {display: none}
-	
+
 .title a.link {
 	color: #29677B;
 	text-decoration: none}
@@ -834,7 +834,7 @@ a.blogt:hover {
 	margin-left: -3px;
 	margin-right: 4px;
 	background: url(eatlon/head_bg.gif) repeat-x}
-	
+
 .post .author_post_info {padding: 2px}
 .post .author_post_info:first-letter {text-transform: uppercase}
 
@@ -964,7 +964,7 @@ div.dirfooter {margin-top: 10px}
 .box-data td a.today {
 	background: #d2d9e3;
 	border: 0}
-	
+
 .caltable .calfocuson {
 	background: #d2d9e3;
 }
@@ -983,7 +983,7 @@ div.dirfooter {margin-top: 10px}
 .days {
 	background: #9faec2;
 	color: white}
-	
+
 #caltable .weeks {
 	font-weight: bold;
 	padding: 2px;
