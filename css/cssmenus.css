@@ -118,7 +118,7 @@
 	text-indent: -999em;
 	overflow: hidden;
 	/* 8-bit indexed alpha png. IE6 gets solid image only. use url(arrows-000000.png) for black arrows */
-	background: url(../lib/jquery/superfish/images/arrows-ffffff.png) no-repeat -10px -100px; 
+	background: url(../lib/jquery/plugins/superfish/images/arrows-ffffff.png) no-repeat -10px -100px;
 }
 
 a > .sf-sub-indicator {  /* give all except IE6 the correct values */
@@ -172,7 +172,7 @@ ul.sf-shadow ul.sf-shadow-off {
 
 /*** alter arrow directions ***/
 .cssmenu_vert .sf-sub-indicator {
-	background-position: -10px 0; 
+	background-position: -10px 0;
 } /* IE6 gets solid image only */
 
 .cssmenu_vert a > .sf-sub-indicator {
@@ -296,8 +296,8 @@ ul.sf-shadow ul.sf-shadow-off {
 		background-position: -10px -100px;
 }
 
-.navbar .cssmenu_horiz ul a > .sf-sub-indicator { 
-	background-position: 0 -100px; 
+.navbar .cssmenu_horiz ul a > .sf-sub-indicator {
+	background-position: 0 -100px;
 }
 
 /* apply hovers to modern browsers */
