@@ -1102,6 +1102,7 @@ function get_default_prefs() {
 		'eponymousGroups' => 'n',
 		'useRegisterPasscode' => 'n',
 		'registerPasscode' => isset($tikilib) ? md5($tikilib->genPass()) : md5(mt_rand()),
+		'showRegisterPasscode' => 'n',
 		'rememberme' => 'disabled',
 		'remembertime' => 7200,
 		'feature_clear_passwords' => 'n',

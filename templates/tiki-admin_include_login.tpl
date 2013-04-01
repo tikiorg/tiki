@@ -33,6 +33,7 @@
 					{preference name=useRegisterPasscode}
 					<div class="adminoptionboxchild" id="useRegisterPasscode_childcontainer">
 						{preference name=registerPasscode}
+						{preference name=showRegisterPasscode}
 					</div>
 
 					{if $gd_lib_found neq 'y'}

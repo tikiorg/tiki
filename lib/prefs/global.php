@@ -228,7 +228,13 @@ function prefs_global_list() {
 			'size' => 15,
 			'hint' =>  tra('Alphanumeric code requierd to complete the registration'),
 		),
-		'userTracker' => array(
+		'showRegisterPasscode' => array(
+			'name' => tra('Show passcode on registration form'),
+			'description' => tra('Displays the required passcode on the registration form.'),
+			'type' => 'flag',
+		),
+		'userTracker' 
+=> array(
 			'name' => tra('Use tracker to collect more user information'),
 			'type' => 'flag',
 			'help' => 'User+Tracker',
