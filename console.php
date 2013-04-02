@@ -46,15 +46,22 @@ if (is_file($local_php)) {
 	require 'db/tiki-db.php';
 	$console->add(new Tiki\Command\InstallCommand);
 	$console->add(new Tiki\Command\UpdateCommand);
+} else {
+	$console->add(new Tiki\Command\UnavailableCommand('database:install'));
+	$console->add(new Tiki\Command\UnavailableCommand('database:update'));
+}
 
-	$installer = new Installer;
-	if (! $installer->requiresUpdate()) {
-		require 'tiki-setup.php';
-		$console->add(new Tiki\Command\CacheClearCommand);
-		$console->add(new Tiki\Command\IndexRebuildCommand);
-		$console->add(new Tiki\Command\IndexOptimizeCommand);
-		$console->add(new Tiki\Command\IndexCatchUpCommand);
-	}
+if (is_file($local_php) && ($installer = new Installer) && ! $installer->requiresUpdate()) {
+	require 'tiki-setup.php';
+	$console->add(new Tiki\Command\CacheClearCommand);
+	$console->add(new Tiki\Command\IndexRebuildCommand);
+	$console->add(new Tiki\Command\IndexOptimizeCommand);
+	$console->add(new Tiki\Command\IndexCatchUpCommand);
+} else {
+	$console->add(new Tiki\Command\UnavailableCommand('cache:clear'));
+	$console->add(new Tiki\Command\UnavailableCommand('index:rebuild'));
+	$console->add(new Tiki\Command\UnavailableCommand('index:optimize'));
+	$console->add(new Tiki\Command\UnavailableCommand('index:catch-up'));
 }
 
 $console->run();
