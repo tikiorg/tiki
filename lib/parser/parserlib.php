@@ -1062,6 +1062,8 @@ if ( \$('#$id') ) {
 			$plugin_result = preg_replace('/\shref\=/i', ' tiki_href=', $plugin_result);
 			$plugin_result = preg_replace('/\sonclick\=/i', ' tiki_onclick=', $plugin_result);
 			$plugin_result = preg_replace('/<script.*?<\/script>/mi', '', $plugin_result);
+			// remove hidden inputs
+			$plugin_result = preg_replace('/<input.*?type=[\'"]?hidden[\'"]?.*>/mi', '', $plugin_result);
 		}
 		if (!in_array($name, array('html'))) {		// remove <p> and <br>s from non-html
 			$data = str_replace(array('<p>', '</p>', "\t"), '', $data);
