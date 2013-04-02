@@ -17,7 +17,7 @@ function wikiplugin_paypal_info() {
 		'description' => tra('Display a PayPal button'),
 		'introduced' => 11.0,
 		'prefs' => array('wikiplugin_paypal'),		// not dependent on 'payment_feature', would be annoying if you just want one donate button for instance
-		'icon' => 'img/icons/payment.png',
+		'icon' => 'img/icons/basket.png',
 		'format' => 'html',
 		'extraparams' => true,
 		'validate' => 'all',
