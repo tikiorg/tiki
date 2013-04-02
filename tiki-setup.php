@@ -307,18 +307,21 @@ if ( $prefs['feature_bidi'] == 'y' ) {
 	$headerlib->add_cssfile('styles/BiDi/BiDi.css');
 }
 
+// using jquery-migrate-1.1.1.js plugin for tiki 11, to be removed for tiki 12 LTS
 
 if ( isset($prefs['javascript_cdn']) && $prefs['javascript_cdn'] == 'google' ) {
 	$headerlib->add_jsfile_dependancy("$url_scheme://ajax.googleapis.com/ajax/libs/jquery/$headerlib->jquery_version/jquery.min.js");
+	$headerlib->add_jsfile_dependancy("lib/jquery/plugins/jquery-migrate-1.1.1.min.js");
 } else if ( isset($prefs['javascript_cdn']) && $prefs['javascript_cdn'] == 'jquery' ) {
 	$headerlib->add_jsfile_dependancy("http://code.jquery.com/jquery-$headerlib->jquery_version.min.js");
-// If you want to check if everything is alright.
-//	$headerlib->add_jsfile_dependancy("http://code.jquery.com/jquery-migrate-1.1.1.js");
+	$headerlib->add_jsfile_dependancy("http://code.jquery.com/jquery-migrate-1.1.1.js");
 } else {
 	if ( $prefs['tiki_minify_javascript'] === 'y' ) {
 		$headerlib->add_jsfile_dependancy("lib/jquery/jquery-$headerlib->jquery_version.min.js");
+		$headerlib->add_jsfile_dependancy("lib/jquery/plugins/jquery-migrate-1.1.1.min.js");
 	} else {
 		$headerlib->add_jsfile_dependancy("lib/jquery/jquery-$headerlib->jquery_version.js");
+		$headerlib->add_jsfile_dependancy("lib/jquery/plugins/jquery-migrate-1.1.1.js");
 	}
 }
 
