@@ -79,7 +79,7 @@ if (!$skip) {
 		$access->display_error(NULL, tra('File has been deleted'), 404);
 	}
 
-	if ( $prefs['auth_tokens'] == 'n' || !$is_token_access ) {
+	if ( $prefs['auth_token_access'] != 'y' || !$is_token_access ) {
 		// Check permissions except if the user comes with a valid Token
 
 		if ( !$zip && $tiki_p_admin_file_galleries != 'y' && !$userlib->user_has_perm_on_object($user, $info['galleryId'], 'file gallery', 'tiki_p_download_files') && !($info['backlinkPerms'] == 'y' && !$filegallib->hasOnlyPrivateBacklinks($info['fileId']))) {
@@ -143,7 +143,9 @@ if ( ! isset($_GET['thumbnail']) && ! isset($_GET['icon']) ) {
 
 session_write_close(); // close the session in case of large downloads to enable further browsing
 error_reporting(E_ALL);
-if ( ob_get_level() ) while (@ob_end_clean()); // Be sure output buffering is turned off
+while (ob_get_level()) {
+	ob_end_clean();
+}// Be sure output buffering is turned off
 
 $content_changed = false;
 $content = &$info['data'];
