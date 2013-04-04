@@ -2101,7 +2101,7 @@ function dialogReplaceReplace( area_id ) {
 			url = $.service(controller, action);
 		}
 
-		$dialog.modal(tr("Loading..."));
+		$dialog.modalMessage(tr("Loading..."));
 
 		$.ajax(url, {
 			data: data,
@@ -2175,7 +2175,7 @@ function dialogReplaceReplace( area_id ) {
 				});
 			},
 			complete: function () {
-				$dialog.modal();
+				$dialog.modalMessage();
 				if ($dialog.find('form').size() == 0) {
 					// If the result contains no form, skip OK/Cancel, and just allow to close
 					var buttons = $dialog.dialog('option', 'buttons'), n = {};
@@ -2270,7 +2270,7 @@ function dialogReplaceReplace( area_id ) {
 	$.fn.object_selector = function (filter, threshold) {
 		var input = this;
 		this.each(function () {
-			var $spinner = $(this).parent().modal(" ");
+			var $spinner = $(this).parent().modalMessage(" ");
 			$.getJSON('tiki-searchindex.php', {
 				filter: filter
 			}, function (data) {
@@ -2295,7 +2295,7 @@ function dialogReplaceReplace( area_id ) {
 						.tiki("selectmenu");
 					$hidden.hide();
 				}
-				$spinner.modal();
+				$spinner.modalMessage();
 
 				if ($select.children().length > threshold) {
 					var filterField = $('<input type="text"/>').width(120).css('marginRight', '1em');
@@ -2318,7 +2318,7 @@ function dialogReplaceReplace( area_id ) {
 						if (this.ajax) {
 							this.ajax.abort();
 							this.ajax = null;
-							$spinner.modal();
+							$spinner.modalMessage();
 						}
 
 						if (jqueryTiki.selectmenu) {
@@ -2332,7 +2332,7 @@ function dialogReplaceReplace( area_id ) {
 								loaded = "*";
 							}
 							if ((loaded === "*" || loaded.length >= 3) && loaded !== $select.data('loaded')) {
-								$spinner = $(field).parent().modal(" ");
+								$spinner = $(field).parent().modalMessage(" ");
 								field.ajax = $.getJSON('tiki-searchindex.php', {
 									filter: $.extend(filter, {autocomplete: loaded})
 								}, function (data) {
@@ -2347,7 +2347,7 @@ function dialogReplaceReplace( area_id ) {
 										$select.selectmenu('open');
 										$(field).focus();
 									}
-									$spinner.modal();
+									$spinner.modalMessage();
 								});
 							}
 						}, 500);
@@ -2540,14 +2540,14 @@ if ( window.attachEvent && !window.addEventListener ) {
 	});
 }
 
-$.modal = function(msg) {
-	return $('body').modal(msg, {
+$.modalMessage = function(msg) {
+	return $('body').modalMessage(msg, {
 		isEverything: true
 	});
 };
 
 //Makes modal over window or object so ajax can load and user can't prevent action
-$.fn.modal = function(msg, s) {
+$.fn.modalMessage = function(msg, s) {
 	var obj = $(this);
 	if (!obj.length) {
 		return;			// happens after search index rebuild in some conditions
@@ -2842,7 +2842,7 @@ $.fn.ajaxEditDraw = function(options) {
 		closed: function() {}
 	}, options);
 
-	$.modal(tr('Loading editor'));
+	$.modalMessage(tr('Loading editor'));
 
 	me.serviceDialog({
 		title: me.attr('title'),
@@ -2944,7 +2944,7 @@ $.fn.ajaxEditDraw = function(options) {
 							.trigger('dialogresize');
 					}
 
-					$.modal();
+					$.modalMessage();
 				});
 
 			me.drawing.find('#drawMenu').remove();
