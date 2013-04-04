@@ -296,6 +296,7 @@ window.handleFinderFile = function (file, elfinder) {
 		},
 		complete: function () {
 			$(window).data("elFinderDialog").dialog("close");
+			$($(window).data("elFinderDialog")).remove();
 			$(window).data("elFinderDialog", null);
 			return false;
 		}

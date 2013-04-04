@@ -4,14 +4,14 @@
 	solution by luci (http://sourceforge.net/projects/litecss). For more
 	information, please visit http://themes.tiki.org or http://zukakakina.com.
 */
- 
+
 /* Import layout foundation CSS files: */
 @import url("lite/lite.css");
 @import url("layout/layout.css");
 @import url("layout/design.css");
 
 /***** XHTML Elements (body tag here,
-			others follow Layout) *****/ 
+			others follow Layout) *****/
 
 body {
 	background: #000 url(abse/wgreenwall.png) fixed;
@@ -22,8 +22,8 @@ html>body {font-size: .7em !important}
 
  /***** Layout (overrides layout.css
 		and styles page layout divs)  *****/
-		
-/* Enable header and footer content to widen when middle has wide content. */ 
+
+/* Enable header and footer content to widen when middle has wide content. */
 body.fixed_width .fixedwidth .fixedwidth {
 	width: 100%;
 	padding: 0;
@@ -56,7 +56,7 @@ body.fixed_width .fixedwidth .fixedwidth {
 
 html>body #c1c2 #wrapper #col1 #tiki-center:hover {
 	background: #0E1D10 url(abse/titlebgon.png) repeat-x}
-	
+
 #c1c2 #col2 {
 	background: transparent;
 	width: 200px;
@@ -121,7 +121,7 @@ img {border: 0}
 fieldset {
 	border: solid 1px #3f6041;
 	padding: 10px}
-	
+
 hr {
 	color: #bdcec3;
 	background: #bdcec3}
@@ -155,7 +155,7 @@ option {
 	text-decoration: none;
 	color: #ccccff;
 	background: #586858 url(abse/menubg.jpg) repeat-y}
-	
+
 .button a,
 .button a:visited,
 button,
@@ -194,7 +194,7 @@ input[type=submit]:hover {
 	text-decoration: none;
 	padding: 0 4px
 }
-	
+
 select:hover,
 option:hover {
 	text-decoration: none;
@@ -220,12 +220,12 @@ body.cke_show_borders {
 	font-size: 1.3em}
 
 /***** Site Header & Identity *****/
-/* Enable header and footer content to widen when middle has wide content. */ 
+/* Enable header and footer content to widen when middle has wide content. */
 
 .header {
 	background: transparent;
 	padding-top: 0}
-	
+
 #top_modules {
 	height: 100%;
 }
@@ -276,7 +276,7 @@ body.cke_show_borders {
 	width: 100%;
 	clear: both;
 }
-	
+
 #tiki-top form.findtable {
 	vertical-align: bottom;
 }
@@ -301,14 +301,14 @@ body.cke_show_borders {
 .cssmenu_vert li a {
 	color: #bdcec3;
 	text-decoration: none}
-	
+
 .cssmenu li a:hover,
 .cssmenu_horiz li a:hover,
 .cssmenu_vert li a:hover  {
 	background: #010101 url(abse/menubg.jpg) repeat-y;
 	color: #ccccff;
 	text-decoration: none}
-	
+
 .cssmenu_vert li {padding-bottom: 4px}
 .cssmenu_ver li a ul {border: 0}
 .cssmenu_vert li.selected > a {background: #86a48a url(abse/menubg.jpg) repeat-y}
@@ -381,7 +381,7 @@ option:hover,
 	text-decoration: none;
 	color: #ccccff;
 	background: #010101 url(abse/menubg.jpg) repeat-y}
-	
+
 .separator a:link,
 .separator a:visited,
 .separator a:hover {text-decoration: none}
@@ -419,7 +419,7 @@ a.flip:hover,
 
 /** tree **/
 .ui-icon {
-background-image:url('../lib/jquery/jquery-ui/themes/ui-darkness/images/ui-icons_cccccc_256x240.png');
+background-image:url('../lib/jquery/ui/themes/ui-darkness/images/ui-icons_cccccc_256x240.png');
 }
 
 /***** Boxes *****/
@@ -440,7 +440,7 @@ html>body .box:hover {background: #0e1d10}
 	font-size: 1em;
 	font-weight: normal;
 	margin: 0 0 12px}
-	
+
 .box:hover .box-title,
 * html .box-title {
 	background: #4f5d50 url(abse/titlebgon.png) repeat-x}
@@ -482,9 +482,9 @@ img.flipmodimage:hover {border: 1px solid #55914E !important}
 	background: inherit;
 	border: 1px solid #909090;
 	margin: 6px}
-	
-* html .cbox {background: #192919} 
- 
+
+* html .cbox {background: #192919}
+
 .cbox-title {
 	text-align: left;
 	text-indent: 1em;
@@ -525,13 +525,13 @@ img.flipmodimage:hover {border: 1px solid #55914E !important}
 .simplebox {
 	border: 1px solid #666;
 	padding: 4px}
- 
+
 /***** Tables, Tabs ****/
 /** Tables **/
 
 table {font-size: 1em}
 
-.normal, 
+.normal,
 .admin {border: solid 1px #909090}
 
 tr.odd td {
@@ -563,7 +563,7 @@ td.even {
 td.heading {
 	background: #495149;
 	text-align: center}
-	
+
 .xdebug-error tr th,
 .xdebug-error tr td {
 	color: black;
@@ -608,7 +608,7 @@ td.heading {
 	position: relative;
 	padding: .2em .2em 0;
 	margin:0 0.2em 1px 0;}
-	
+
 .tabs br {
 	display: none;
 }
@@ -645,8 +645,8 @@ li.tabmark {
 
 #sitelogin_popup ul.cssmenu_horiz li {
 	background: none;
-}	
-	
+}
+
 .tabcontent {
 	padding: 2px;
 	background: #192f1c;
@@ -687,7 +687,7 @@ li.tabmark {
 	border-right: 1px solid #696969;
 	border-bottom: 1px solid #696969;
 	vertical-align: top}
- 
+
 .wikicell {
 	padding: 3px;
 	border-right: 1px solid #a9a9a9;
@@ -771,20 +771,20 @@ textarea.wikiedit {font-size: 1.25em}
 	padding: 3px;
 	background: #010101 url(abse/menubg.jpg) repeat-y;
 	margin-bottom: 1em}
- 
+
 .articletitle h2 {font-size: 1.4em}
 
 .articletitle h2 a,
 .articletitle h2 a:visited {text-decoration: none}
- 
+
 .articlesubtitle {
 	font-size: 90%;
 	font-style: italic}
- 
+
 .articleheading {
 	margin-top: 6px;
 	line-height:1.5em}
- 
+
 .articleheadingtext {color: #D8D8D8}
 
 img.topicimage,
@@ -803,16 +803,16 @@ img.articleimage {
 	border: 1px solid #989898}
 
 .articletrailer .wikitopline {float: left}
- 
+
 .articlebody {
 	color: #D8D8D8;
 	line-height: 1.5em}
- 
+
 .articlesource {
 	margin-top: 5px;
 	font-style: italic;
 	font-size: 90%}
- 
+
 /***** Blogs *****/
 .blogtitle {
 	font-size: 1.5em;
@@ -840,7 +840,7 @@ h1.blogtitle {
 .blogpost {
 	margin-top: 2em;
 	margin-bottom: 2em}
- 
+
 a.blogt,
 a.blog:visited {
 	border: 0;
@@ -866,7 +866,7 @@ a.blogt:hover {
 	margin-bottom: 1em;
 	font-weight: bold;
 	letter-spacing: .4pt}
- 
+
 .posthead h3 {
 	text-align: left;
 	margin-bottom: 10px;
@@ -875,7 +875,7 @@ a.blogt:hover {
 	letter-spacing: -1px;
 	margin: 0 0 15px;
 	padding: 0}
- 
+
 .postbody {
 	margin-right: 8px;
 	line-height: 1.5em}
@@ -887,7 +887,7 @@ a.blogt:hover {
 	background: #000 url(abse/menubg.jpg) repeat-y;
 	font-size: 1em;
 	border: solid 1px #909090}
-	
+
 * html .post .postbody {font-size: 1em}
 /* *:first-child+html .postbody {min-width: 100% !important} */
 
@@ -896,7 +896,7 @@ a.blogt:hover {
 	margin-bottom: 4px;
 	padding-top: 2px;
 	background: #000}
-	
+
 .post .postbody-title .checkbox {float: left}
 
 .post .postbody-title .title {
@@ -947,19 +947,19 @@ a.blogt:hover {
 	padding: 0 3px 3px 3px;
 	text-align: left;
 	color: #BDCEC3}
-	
+
 .post .postbody .attachments {
 	clear: both;
 	border-top: 1px dotted #d9d9d9;
 	margin-top: 5px}
-	
+
 .post .postbody .attachments img {vertical-align: text-bottom}
 
 .post .postfooter .actions, .post .postfooter .status {
 	display: inline;
 	margin-left: 5px;
 	vertical-align: top}
-	
+
 .post .postfooter .status {font-size: .9em}
 
 .post .postfooter {
@@ -972,7 +972,7 @@ a.blogt:hover {
 	background: #f0f8ff;
 	border: 1px solid #d7e5f3;
 	padding: 0 2px}
-	
+
 .post .avatar {
 	float: right;
 	margin-bottom: 5px;
@@ -1017,7 +1017,7 @@ a.blogt:hover {
 .oddthumb {
 	background: #0E150E;
 	border: 3px solid black}
- 
+
 .eventhumb {
 	background: #0E150E;
 	border: 3px solid black}
@@ -1028,7 +1028,7 @@ a.blogt:hover {
 	color: #bdcec3;
 	margin-left: 3px;
 	text-decoration: none}
-	
+
 .gallerypath a:hover {color: #ccccff}
 .fgalexplorer {border: 1px solid #3f6041}
 
@@ -1154,7 +1154,7 @@ td.dirfooter {font-size: .95em}
 .box-data td a.today {
 	background: #586858 url(abse/titlebgoff.png) repeat-x;
 	color: #b3b3b3}
-	
+
 #caltable .calfocuson a {color: #000}
 
 #caltable .calfocus a,
@@ -1188,14 +1188,14 @@ td.dirfooter {font-size: .95em}
 .caldark .calfocus {background: #3f3f3f}
 
 .calfocuson {
-	font-size: 100%; 
-	color: #636f65; 
+	font-size: 100%;
+	color: #636f65;
 	font-weight: bold;
 	background: #f3e498;
 }
 
 .calfocuson a {
-	font-size: 90%; 
+	font-size: 90%;
 	color: #0c2809
 }
 
@@ -1223,20 +1223,20 @@ td.dirfooter {font-size: .95em}
 .tab-wrapper {border: 1px solid #eee}
 
 .tab-menu li a {
-	background: #586858; 
-	color: #fff; 
-	font-weight: bold; 
-	text-decoration: none} 
+	background: #586858;
+	color: #fff;
+	font-weight: bold;
+	text-decoration: none}
 
-.tab-menu li a:hover, 
+.tab-menu li a:hover,
 .tab-menu li a:focus {
-	background: #faec8f; 
+	background: #faec8f;
 	color: #000;
-	border-bottom-color: #999} 
+	border-bottom-color: #999}
 
 .tab-menu li a:hover {
-	background: #faec8f; 
-	border-bottom-color: #999} 
+	background: #faec8f;
+	border-bottom-color: #999}
 
 .tab-menu li.tab-selected a {
 	background: #bcec8f;

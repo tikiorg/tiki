@@ -1037,8 +1037,8 @@ class ToolbarPicker extends Toolbar
 		global $headerlib, $prefs;
 		$headerlib->add_js("window.pickerData['$this->name'] = " . str_replace('\/', '/', json_encode($this->list)) . ";");
 		if ($prefs['feature_jquery_ui'] != 'y') {
-			$headerlib->add_jsfile("lib/jquery/jquery-ui/ui/jquery-ui-$headerlib->jqueryui_version.js");
-			$headerlib->add_cssfile('lib/jquery/jquery-ui/themes/' . $prefs['feature_jquery_ui_theme'] . '/jquery-ui.css');
+			$headerlib->add_jsfile("lib/jquery/ui/ui/ui-$headerlib->jqueryui_version.js");
+			$headerlib->add_cssfile('lib/jquery/ui/themes/' . $prefs['feature_jquery_ui_theme'] . '/ui.css');
 		}
 
 		return $this->getSelfLink(

@@ -404,6 +404,15 @@ function wikiplugin_tracker($data, $params)
 	if (!isset($trackerId)) {
 		return $smarty->fetch("wiki-plugins/error_tracker.tpl");
 	}
+	//test registration passcode if used and if this is the user tracker being called during a registration
+	if ($prefs['useRegisterPasscode'] == 'y' && !empty($prefs['registerPasscode']) && isset ($_REQUEST['register'])
+		&& $_REQUEST['register'] == 'Register')
+	{
+		$regtracker = $userlib->get_usertrackerid('Registered');
+		if ($trackerId == $regtracker['usersTrackerId'] && $_REQUEST['passcode'] != $prefs['registerPasscode']) {
+			return false;
+		}
+	}
 
 	if (!isset($action)) {
 		$action = array('Save');
@@ -522,7 +531,10 @@ function wikiplugin_tracker($data, $params)
 					$smarty->assign('register_pass2', $smarty->fetch('register-pass2.tpl'));
 					$smarty->assign('register_passcode', $smarty->fetch('register-passcode.tpl'));
 					$smarty->assign('register_groupchoice', $smarty->fetch('register-groupchoice.tpl'));
-					$smarty->assign('register_antibot', $smarty->fetch('antibot.tpl'));
+					if ($prefs['feature_antibot'] == 'y') {
+						$smarty->assign('showantibot', true);
+						$smarty->assign('register_antibot', $smarty->fetch('antibot.tpl'));
+					}
 					$wiki = $prefs["user_register_prettytracker_tpl"];
 				}
 				if (!empty($wiki)) {

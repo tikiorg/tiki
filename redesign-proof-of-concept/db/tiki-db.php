@@ -21,7 +21,8 @@ if (!empty($_REQUEST['lang'])) {
 }
 include_once('lib/init/tra.php');
 
-$local_php = TikiInit::getCredentialsFile();
+$local_init = new TikiInit();
+$local_php = $local_init->getCredentialsFile();
 $re = false;
 if ( file_exists($local_php) ) {
 	$re = include($local_php);

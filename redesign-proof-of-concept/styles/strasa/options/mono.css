@@ -93,7 +93,7 @@ input[type=submit]:hover,
 	color: #fff;
 }
 
-.button a:active,	
+.button a:active,
 button:active,
 input[type=reset]:active,
 input[type=submit]:active,
@@ -206,7 +206,7 @@ a.flip,
 a.flip:visited {
 	color: #e5e5e5;
 	font-size: 90%}
-	
+
 a.flip:hover {
 	color: #666666;
 	text-decoration: none}
@@ -288,7 +288,7 @@ a.flip:hover {
 	background: none;
 	border: none;
 	color: #fff;
-	padding: 3px 5px 6px 
+	padding: 3px 5px 6px
 }
 
 .header .cssmenu_horiz a:hover {
@@ -316,19 +316,19 @@ a.flip:hover {
 }
 
 .cssmenu_horiz li a .sf-sub-indicator {
-	background: url(mono/arrows-000000.png) no-repeat -10px -100px;	
+	background: url(mono/arrows-000000.png) no-repeat -10px -100px;
 }
 
 .cssmenu_horiz li ul li a .sf-sub-indicator {
-	background: url(mono/arrows-000000.png) no-repeat 0 0;	
+	background: url(mono/arrows-000000.png) no-repeat 0 0;
 }
 
 .header .cssmenu_horiz li a .sf-sub-indicator {
-	background: url(../../../lib/jquery/superfish/images/arrows-ffffff.png) no-repeat -10px -100px;
+	background: url(../../../lib/jquery/plugins/superfish/images/arrows-ffffff.png) no-repeat -10px -100px;
 }
 
 .header .cssmenu_horiz li ul li a .sf-sub-indicator {
-	background: url(../../../lib/jquery/superfish/images/arrows-ffffff.png) no-repeat 0 0;
+	background: url(../../../lib/jquery/plugins/superfish/images/arrows-ffffff.png) no-repeat 0 0;
 }
 
 /** Links in other menus **/
@@ -559,7 +559,7 @@ a.forumnameread {
 	color: #666666;
 }
 
-.tab-menu li a:hover, 
+.tab-menu li a:hover,
 .tab-menu li a:focus {
 	background: transparent;
 	border-bottom-color: #f8f8f8;
@@ -577,7 +577,7 @@ a.forumnameread {
 .statuson {
 	background: #565656;
 	border: 1px inset #343434;
-	
+
 }
 /*** Feature-specific selectors ***/
 /***** Wiki *****/
@@ -704,7 +704,7 @@ a.pagetitle:hover {
 .articlesubtitle {
 	background: #343434;
 	color: #fff}
-	
+
 .articletitle h2 {
 	background: #666 url(mono/lightbg.jpg) repeat-x 0 100%;
 	color: #fff;
@@ -715,7 +715,7 @@ a.pagetitle:hover {
 .articletitle h2 a:visited {
 	color: #fff;
 	text-decoration: none}
-	
+
 .titleb {
 	color: #fff;
 	background: url('mono/login.jpg') 0 0 no-repeat;}
@@ -1098,6 +1098,6 @@ body.fixed_width #c1c2 #col2 .content {
 	margin-left: 0;
 	background: url(mono/box_bottom_fw.gif) no-repeat 100% 100%;
 }
-  
+
 
 /* end of file */

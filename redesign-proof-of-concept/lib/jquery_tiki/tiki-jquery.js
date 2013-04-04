@@ -32,11 +32,7 @@ function show(foo, f, section) {
 	} else if ($("#" + foo).hasClass("tabcontent")) {		// different anim prefs for tabs
 		showJQ("#" + foo, jqueryTiki.effect_tabs, jqueryTiki.effect_tabs_speed, jqueryTiki.effect_tabs_direction);
 	} else {
-		if ($.browser.webkit && !jqueryTiki.effect && $("#role_main #" + foo).length) {	// safari/chrome does strange things with default amination in central column
-			showJQ("#" + foo, "slide", jqueryTiki.effect_speed, jqueryTiki.effect_direction);
-		} else {
-			showJQ("#" + foo, jqueryTiki.effect, jqueryTiki.effect_speed, jqueryTiki.effect_direction);
-		}
+		showJQ("#" + foo, jqueryTiki.effect, jqueryTiki.effect_speed, jqueryTiki.effect_direction);
 	}
 	if (f) {setCookie(foo, "o", section);}
 }
@@ -235,8 +231,8 @@ $(function() { // JQuery's DOM is ready event - before onload
 
 	// superfish setup (CSS menu effects)
 	if (jqueryTiki.superfish) {
-		$('ul.cssmenu_horiz').supersubs({ 
-            minWidth:    11,   // minimum width of sub-menus in em units 
+		$('ul.cssmenu_horiz').supersubs({
+            minWidth:    11,   // minimum width of sub-menus in em units
             maxWidth:    20,   // maximum width of sub-menus in em units 
             extraWidth:  1     // extra width can ensure lines don't sometimes turn over 
                                // due to slight rounding differences and font-family 

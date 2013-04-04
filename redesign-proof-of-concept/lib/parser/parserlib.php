@@ -1043,7 +1043,7 @@ if ( \$('#$id') ) {
 		$icon = isset($info['icon']) ? $info['icon'] : 'img/icons/wiki_plugin_edit.png';
 
 		// some plugins are just too flakey to do wysiwyg, so show the "source" for them ;(
-		$excluded = array('tracker', 'trackerlist', 'trackerfilter', 'kaltura', 'toc', 'freetagged', 'draw', 'googlemap', 'include', 'module');
+		$excluded = array('tracker', 'trackerlist', 'trackerfilter', 'kaltura', 'toc', 'freetagged', 'draw', 'googlemap', 'include', 'module', 'list', 'custom_search');
 
 		$ignore = null;
 		$enabled = $this->plugin_enabled($name, $ignore);
@@ -1062,6 +1062,8 @@ if ( \$('#$id') ) {
 			$plugin_result = preg_replace('/\shref\=/i', ' tiki_href=', $plugin_result);
 			$plugin_result = preg_replace('/\sonclick\=/i', ' tiki_onclick=', $plugin_result);
 			$plugin_result = preg_replace('/<script.*?<\/script>/mi', '', $plugin_result);
+			// remove hidden inputs
+			$plugin_result = preg_replace('/<input.*?type=[\'"]?hidden[\'"]?.*>/mi', '', $plugin_result);
 		}
 		if (!in_array($name, array('html'))) {		// remove <p> and <br>s from non-html
 			$data = str_replace(array('<p>', '</p>', "\t"), '', $data);

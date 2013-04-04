@@ -240,7 +240,7 @@ FORM;
 	$n = '\n';
 	$regexN = '/[\r\n]+/g';
 
-	$headerlib->add_jsfile("lib/jquery/jquery-ui-timepicker-addon.js");
+	$headerlib->add_jsfile("lib/jquery/ui/plugins/jquery-ui-timepicker-addon.js");
 	$headerlib->add_jq_onready(
 <<<JQ
 

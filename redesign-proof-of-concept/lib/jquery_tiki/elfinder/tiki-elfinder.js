@@ -19,7 +19,8 @@
 openElFinderDialog = function(element, options) {
 	var $dialog = $('<div/>'), buttons = {};
 	options = options ? options : {};
-	$(this).append($dialog).data('elFinderDialog', $dialog);
+	$(document.body).append($dialog);
+	$(window).data('elFinderDialog', $dialog);	// needed for select handler later
 
 	options = $.extend({
 		title : tr("Browse Files"),

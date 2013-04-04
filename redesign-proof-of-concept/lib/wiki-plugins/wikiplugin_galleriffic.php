@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2013 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -122,9 +122,9 @@ function wikiplugin_galleriffic($data, $params)
 		return '';
 	}
 	$headerlib = TikiLib::lib('header');
-	$headerlib->add_cssfile('lib/jquery/galleriffic/css/galleriffic-2.css');
-	$headerlib->add_jsfile('lib/jquery/galleriffic/js/jquery.galleriffic.js');
-	$headerlib->add_jsfile('lib/jquery/galleriffic/js/jquery.opacityrollover.js');
+	$headerlib->add_cssfile('lib/jquery/plugins/galleriffic/css/galleriffic-2.css');
+	$headerlib->add_jsfile('lib/jquery/plugins/galleriffic/js/jquery.galleriffic.js');
+	$headerlib->add_jsfile('lib/jquery/plugins/galleriffic/js/jquery.opacityrollover.js');
 	$playLinkText = tra('Play Slideshow');
 	$pauseLinkText = tra('Pause SlideShow');
 	$prevLinkText = '&lsaquo; '.tra('Previous Photo');

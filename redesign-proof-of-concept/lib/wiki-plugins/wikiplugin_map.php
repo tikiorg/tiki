@@ -327,8 +327,8 @@ function init() {
 }
 METHOD;
 	} else {
-		$headerlib->add_jsfile('lib/jquery/colorpicker/js/colorpicker.js');
-		$headerlib->add_cssfile('lib/jquery/colorpicker/css/colorpicker.css');
+		$headerlib->add_jsfile('lib/jquery/plugins/colorpicker/js/colorpicker.js');
+		$headerlib->add_cssfile('lib/jquery/plugins/colorpicker/css/colorpicker.css');
 		$methods = <<<METHOD
 function setColor(color) {
 	$(dialog).ColorPickerSetColor(color);
