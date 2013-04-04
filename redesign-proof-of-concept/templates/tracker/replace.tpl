@@ -1,7 +1,6 @@
 <form method="post" class="simple" action="{service controller=tracker action=replace}">
-	<div class="accordion">
-		<h4>{tr}General{/tr}</h4>
-		<div>
+	{accordion}
+		{accordion_group title="{tr}General{/tr}"}
 			<label>
 				{tr}Name{/tr}
 				<input type="text" name="name" value="{$info.name|escape}" required="required">
@@ -15,9 +14,8 @@
 				<input type="checkbox" name="descriptionIsParsed" {if $info.descriptionIsParsed eq 'y'}checked="checked"{/if} value="1">
 				{tr}Description is wiki-parsed{/tr}
 			</label>
-		</div>
-		<h4>{tr}Features{/tr}</h4>
-		<div>
+		{/accordion_group}
+		{accordion_group title="{tr}Features{/tr}"}
 			<label>
 				<input type="checkbox" name="useRatings" value="1"
 					{if $info.useRatings eq 'y'} checked="checked"{/if}>
@@ -66,9 +64,8 @@
 					</label>
 				{/foreach}
 			</fieldset>
-		</div>
-		<h4>{tr}Display{/tr}</h4>
-		<div>
+		{/accordion_group}
+		{accordion_group title="{tr}Display{/tr}"}
 			<label>
 				{tr}Section format{/tr}
 				<select name="sectionFormat">
@@ -182,9 +179,8 @@
 					{tr}Only users with admin tracker permission (tiki_p_admin_trackers) can use the built-in tracker interfaces (tiki-view_tracker.php and tiki-view_tracker_item.php). This is useful if you want the users of these trackers to only access them via wiki pages, where you can use the various tracker plugins to embed forms and reports.{/tr}
 				</div>
 			</label>
-		</div>
-		<h4>{tr}Status{/tr}</h4>
-		<div>
+		{/accordion_group}
+		{accordion_group title="{tr}Status{/tr}"}
 			<label>
 				{tr}New item status{/tr}
 				<select name="newItemStatus">
@@ -217,9 +213,8 @@
 					</label>
 				{/foreach}
 			</fieldset>
-		</div>
-		<h4>{tr}Notifications{/tr}</h4>
-		<div>
+		{/accordion_group}
+		{accordion_group title="{tr}Notifications{/tr}"}
 			<label>
 				{tr}Copy activity to email{/tr}
 				<input type="email" name="outboundEmail" value="{$info.outboundEmail|escape}">
@@ -266,9 +261,8 @@
 					{tr}Allow user selection for small groups{/tr}
 				</label>
 			{/if}
-		</div>
-		<h4>{tr}Permissions{/tr}</h4>
-		<div>
+		{/accordion_group}
+		{accordion_group title="{tr}Permissions{/tr}"}
 			<label>
 				<input type="checkbox" name="writerCanModify" value="1"
 					{if $info.writerCanModify eq 'y'}checked="checked"{/if}>
@@ -343,21 +337,19 @@
 					<input type="time" name="endTime" value="{$endTime|default:'00:00'|escape}">
 				</label>
 			</fieldset>
-		</div>
+		{/accordion_group}
 		{if $prefs.feature_categories eq 'y'}
-			<h4>{tr}Categories{/tr}</h4>
-			<div>
+			{accordion_group title="{tr}Categories{/tr}"}
 				{include file='categorize.tpl' colsCategorize=2 auto=y}
 				<label>
 					<input type="checkbox" name="autoCreateCategories" value="1"
 						{if $info.autoCreateCategories eq 'y'}checked="checked"{/if}>
 					{tr}Auto-create corresponding categories{/tr}
 				</label>
-			</div>
+			{/accordion_group}
 		{/if}
 		{if $prefs.groupTracker eq 'y'}
-			<h4>{tr}Groups{/tr}</h4>
-			<div>
+			{accordion_group title="{tr}Groups{/tr}"}
 				<label>
 					<input type="checkbox" name="autoCreateGroup" value="1"
 						{if $info.autoCreateGroup eq 'y'} checked="checked"{/if}>
@@ -392,9 +384,9 @@
 						{if $info.autoCopyGroup eq 'y'} checked="checked"{/if}>
 					{tr}Copy the default group in the field ID before updating the group{/tr}
 				</label>
-			</div>
+			{/accordion_group}
 		{/if}
-	</div>
+	{/accordion}
 	<div class="submit">
 		<input type="hidden" name="confirm" value="1">
 		<input type="hidden" name="trackerId" value="{$trackerId|escape}">
@@ -402,10 +394,6 @@
 	</div>
 </form>
 {jq}
-$('.accordion').removeClass('accordion').accordion({
-	header: 'h4',
-	autoHeight: false
-});
 $('.simple .depends:not(.done)').each(function () {
 	var current = this;
 	var primary = $(this).data('on');
