@@ -21,11 +21,11 @@
 
 {foreach from=$p.options key=value item=label name=loop}
 	{jq}
-if( ! $('#{{$p.id|cat:'_'|cat:$smarty.foreach.loop.index|escape}}').attr('checked') ) {
+if( ! $('#{{$p.id|cat:'_'|cat:$smarty.foreach.loop.index|escape}}').prop('checked') ) {
 	$('#{{$p.preference|escape}}_childcontainer_{{$smarty.foreach.loop.index}}').hide();
 }
 $('#{{$p.id|cat:'_'|cat:$smarty.foreach.loop.index|escape}}').change( function() {
-	if( $('#{{$p.id|cat:'_'|cat:$smarty.foreach.loop.index|escape}}').attr('checked') ) {
+	if( $('#{{$p.id|cat:'_'|cat:$smarty.foreach.loop.index|escape}}').prop('checked') ) {
 		show('#{{$p.preference|escape}}_childcontainer_{{$smarty.foreach.loop.index}}');
 	}
 } );

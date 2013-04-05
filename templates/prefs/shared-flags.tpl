@@ -31,13 +31,13 @@
 {jq}
 $('.pref-reset')
 	.change( function() {
-		var c = $(this).attr('checked') === "checked";
+		var c = $(this).prop('checked') === "checked";
 		var $el = $(this).closest('.adminoptionbox').find('input:not(:hidden),select,textarea')
 			.not('.system').attr( 'disabled', c )
 			.css("opacity", c ? .6 : 1 );
 		var defval = $("#" + $(this).val() + "_default").val();
 		if ($el.attr("type") == "checkbox") {
-			$el.attr('checked', defval === "y" ? c : !c);
+			$el.prop('checked', defval === "y" ? c : !c);
 		} else {
 			var temp = $("[name=" + $(this).val() + "]").val();
 			$el.val( defval );
@@ -51,7 +51,7 @@ $('.pref-reset')
 	.find('a')
 	.click( function() {
 		var box = $(this).closest('span').find(':checkbox');
-		box.attr('checked', box.filter(':checked').length == 0).change();
+		box.prop('checked', box.filter(':checked').length == 0).change();
 		var $i = $(this).find("img");
 		if ($i.attr("src").indexOf("undo") > -1) {
 			$i.attr({

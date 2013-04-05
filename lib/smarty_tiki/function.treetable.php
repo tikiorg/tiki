@@ -240,7 +240,7 @@ $("#'.$id.'_openall").click( function () {
 		$headerlib->add_jq_onready(
 			'
 $("#'.$id.'_showSelected").click( function () {
-	if (!$(this).attr("checked")) {
+	if (!$(this).prop("checked")) {
 		$("#treetable_1 tr td.checkBoxCell input:checkbox").parent().parent().show()
 	} else {
 		$("#treetable_1 tr td.checkBoxCell input:checkbox").parent().parent().hide()

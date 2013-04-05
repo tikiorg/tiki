@@ -383,7 +383,7 @@
 	</form>
 	{jq}
 $("#module_list_show_all").click(function(){
-	$("#module_list li.disabled").toggle($(this).attr("checked"));
+	$("#module_list li.disabled").toggle($(this).prop("checked"));
 });
 {/jq}
 {/tab}

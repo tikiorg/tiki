@@ -79,7 +79,7 @@
 				<label for="propagate_category">{tr}Assign or remove permissions on <em>all</em> child categories{/tr}</label>
 			</p>
 			{jq}$("input[name='assign'],input[name='remove']").click(function(){
-if ($("#propagate_category").attr("checked")) {
+if ($("#propagate_category").prop("checked")) {
 	return confirm("{tr}Are you sure you want to affect all child categories?\nThere is no undo.{/tr}");
 } }); {/jq}
 		{/if}
@@ -88,7 +88,7 @@ if ($("#propagate_category").attr("checked")) {
 			<input name="assignstructure" id="assignstructure" type="checkbox">
 			<label for="assignstructure">{tr}Assign or remove permissions on all pages of the sub-structure{/tr}</label>
 			{jq}$("input[name='assign'],input[name='remove']").click(function(){
-if ($("#assignstructure").attr("checked")) {
+if ($("#assignstructure").prop("checked")) {
 	return confirm("{tr}Are you sure you want to affect all pages in this sub-structure?\nThere is no undo.{/tr}");
 } }); {/jq}
 		{/if}

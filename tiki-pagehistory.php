@@ -407,8 +407,8 @@ if (\$("input[name=newver][checked=checked]").length) {
 	\$("input[name=newver][checked=checked]").change();
 	\$("input[name=oldver][checked=checked]").change();
 } else if ($not_comparing) {
-	\$("input[name=newver]:eq(0)").attr("checked", "checked").change();
-	\$("input[name=oldver]:eq(1)").attr("checked", "checked").change();
+	\$("input[name=newver]:eq(0)").prop("checked", "checked").change();
+	\$("input[name=oldver]:eq(1)").prop("checked", "checked").change();
 }
 JS
 );

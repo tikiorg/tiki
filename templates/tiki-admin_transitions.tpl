@@ -50,7 +50,7 @@
 		{jq}
 			var blocks = $('#transition-group-selection, #transition-category-selection');
 			$(':radio[name=transition_mode]').change( function( e ) {
-				if( $(this).attr('checked') ) {
+				if( $(this).prop('checked') ) {
 					blocks.hide();
 					blocks.filter( '#transition-' + $(this).val() + '-selection' ).show();
 				}
