@@ -218,11 +218,6 @@ foreach ($xfields['data'] as $i => $current_field) {
 	$fieldIsVisible = $itemObject->canViewField($fid);
 	$fieldIsEditable = $itemObject->canModifyField($fid);
 
-	//exclude fields that should not be listed
-	if ($fieldIsVisible && ($current_field['isTblVisible'] == 'y' or in_array($fid, $popupFields))) {
-		$listfields[$fid] = $current_field;
-	}
-
 	if ($fieldIsVisible || $fieldIsEditable) {
 		$handler = $fieldFactory->getHandler($current_field);
 
@@ -230,6 +225,11 @@ foreach ($xfields['data'] as $i => $current_field) {
 			$field_values = $insert_values = $handler->getFieldData($_REQUEST);
 			$current_field_ins = array_merge($current_field, $insert_values);
 		}
+	}
+
+	//exclude fields that should not be listed
+	if ($fieldIsVisible && ($current_field_ins['isTblVisible'] == 'y' or in_array($fid, $popupFields))) {
+		$listfields[$fid] = $current_field_ins;
 	}
 
 	if (! empty($current_field_ins)) {
