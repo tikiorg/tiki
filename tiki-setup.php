@@ -393,7 +393,9 @@ if ($prefs['mobile_feature'] === 'y' && $prefs['mobile_mode'] === 'y') {
 				$headerlib->add_jsfile_dependancy("lib/jquery/ui/ui/jquery-ui-$headerlib->jqueryui_version.js");
 			}
 		}
-		$headerlib->add_jsfile('lib/jquery/ui/external/jquery.bgiframe-2.1.2.js');
+		if (strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE 6') !== false) {
+			$headerlib->add_jsfile('lib/jquery/ui/external/jquery.bgiframe-2.1.2.js');
+		}
 
 		if ( isset($prefs['javascript_cdn']) && $prefs['javascript_cdn'] == 'jquery' ) {
 			$headerlib->add_cssfile("http://code.jquery.com/ui/$headerlib->jqueryui_version/themes/{$prefs['feature_jquery_ui_theme']}/jquery-ui.css");
