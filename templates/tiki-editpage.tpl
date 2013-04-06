@@ -174,6 +174,16 @@
 							</div>
 						{/if}
 						{textarea codemirror='true' syntax='tiki'}{$pagedata}{/textarea}
+						{if $prefs.wiki_freetags_edit_position eq 'edit'}
+								{if $prefs.feature_freetags eq 'y' and $tiki_p_freetags_tag eq 'y'}
+									<fieldset>
+										<legend>{tr}Freetags{/tr}</legend>
+										<table>
+											{include file='freetag.tpl'}
+										</table>
+									</fieldset>
+								{/if}
+						{/if}
 						{if $page|lower neq 'sandbox'}
 							<fieldset>
 								<label for="comment">{tr}Describe the change you made:{/tr} {help url='Editing+Wiki+Pages' desc="{tr}Edit comment: Enter some text to describe the changes you are currently making{/tr}"}</label>
@@ -225,6 +235,18 @@
 								{/if}{* sandbox *}
 							{/if}
 						{/tab}
+					{/if}
+					{if $prefs.wiki_freetags_edit_position eq 'freetagstab'}
+						{if $prefs.feature_freetags eq 'y' and $tiki_p_freetags_tag eq 'y'}
+							{tab name="{tr}Freetags{/tr}"}
+								<fieldset>
+									<legend>{tr}Freetags{/tr}</legend>
+									<table>
+										{include file='freetag.tpl'}
+									</table>
+								</fieldset>
+							{/tab}
+						{/if}
 					{/if}
 					{if !empty($showPropertiesTab)}
 						{tab name="{tr}Properties{/tr}"}
@@ -339,13 +361,15 @@ $("#allowhtml").change(function() {
 											{include file='addreference.tpl'}
 									</fieldset>
 								{/if}
-								{if $prefs.feature_freetags eq 'y' and $tiki_p_freetags_tag eq 'y'}
-									<fieldset>
-										<legend>{tr}Freetags{/tr}</legend>
-										<table>
-											{include file='freetag.tpl'}
-										</table>
-									</fieldset>
+								{if $prefs.wiki_freetags_edit_position eq 'properties' or $prefs.wiki_freetags_edit_position eq ''}
+									{if $prefs.feature_freetags eq 'y' and $tiki_p_freetags_tag eq 'y'}
+										<fieldset>
+											<legend>{tr}Freetags{/tr}</legend>
+											<table>
+												{include file='freetag.tpl'}
+											</table>
+										</fieldset>
+									{/if}
 								{/if}
 								{if $prefs.feature_wiki_icache eq 'y'}
 									<fieldset>
