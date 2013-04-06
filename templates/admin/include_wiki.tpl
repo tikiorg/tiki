@@ -110,6 +110,7 @@
 				{preference name=feature_wiki_mandatory_category}
 				{preference name=feature_actionlog_bytes}
 				{preference name=wiki_mandatory_edit_summary}
+				{preference name=wiki_freetags_edit_position}
 			</fieldset>
 		{/tab}
 
