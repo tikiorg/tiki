@@ -331,8 +331,10 @@ function wikiplugin_paypal($data, $params) {
 		if (!empty($_SERVER['HTTP_REFERER'])) {
 			$returnUrl = $_SERVER['HTTP_REFERER'];
 		}
+		$csearchInit = 'PAYPAL = {}; $("#PPMiniCart").fadeOut().remove();';
 	} else {
 		$csearchEvent = 'ready';
+		$csearchInit = '';
 	}
 	foreach (array('return', 'shopping_url', 'cancel_return') as $ret) {
 		if (empty($params[$ret])) {
@@ -356,16 +358,9 @@ function wikiplugin_paypal($data, $params) {
 
 		TikiLib::lib('header')->add_js('
 $(document).bind("' . $csearchEvent . '", function () {
-	var renderMinicart = function () { PAYPAL.apps.MiniCart.render(' . $miniParamStr . '); };
-	if (typeof PAYPAL === "undefined") {
-		$.getScript("' . $jsfile . '", function() {
-			renderMinicart();
+	' . $csearchInit . ' $.getScript("' . $jsfile . '", function() {
+			PAYPAL.apps.MiniCart.render(' . $miniParamStr . ');
 		});
-	} else {
-		PAYPAL.apps.MiniCart.isRendered = false;
-		PAYPAL.apps.MiniCart.minicart = {};
-		renderMinicart();
-	}
 });');
 	}
 	unset($params['minicart']);
