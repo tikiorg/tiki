@@ -33,6 +33,7 @@ $auto_query_args = array(
 	'initial',
 	'filterfield',
 	'filtervalue',
+	'view',
 	'exactvalue'
 );
 $special = false;
