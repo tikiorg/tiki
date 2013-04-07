@@ -319,7 +319,8 @@ customsearch._load = function (receive) {
 		daterangegroups: " . json_encode($daterangegroups) . ",
 		offset: customsearch.offset,
 		maxRecords: this.maxRecords,
-		page: " . json_encode($page) . "
+		page: " . json_encode($page) . ",
+		recalllastsearch: $recalllastsearch
 	};
 	if (customsearch.sort_mode) {
 		// blank sort_mode is not allowed by Tiki input filter

@@ -33,7 +33,7 @@ class Services_Search_CustomSearchController
 
 		$dataappend = array();
 
-		$record_session = $input->ignoresession->int() ? false : true;
+		$recalllastsearch = $input->recalllastsearch->int() ? true : false;
 
 		$id = $input->searchid->text();
 		if (empty($id)) {
@@ -59,23 +59,23 @@ class Services_Search_CustomSearchController
 		} else {
 			$datarangegroups = array();
 		}
-		if ($record_session && isset($_SESSION["customsearch_$id"])) {
+		if ($recalllastsearch && isset($_SESSION["customsearch_$id"])) {
 			unset($_SESSION["customsearch_$id"]);
 		}
 		if ($input->maxRecords->int()) {
-			if ($record_session) {
+			if ($recalllastsearch) {
 				$_SESSION["customsearch_$id"]["maxRecords"] = $input->maxRecords->int();
 			}
 			$_REQUEST['maxRecords'] = $input->maxRecords->int();	// pass request data required by list
 		}
 		if ($input->sort_mode->text()) {
-			if ($record_session) {
+			if ($recalllastsearch) {
 				$_SESSION["customsearch_$id"]["sort_mode"] = $input->sort_mode->text();
 			}
 			$_REQUEST['sort_mode'] = $input->sort_mode->text();
 		}
 		if ($input->offset->int()) {
-			if ($record_session) {
+			if ($recalllastsearch) {
 				$_SESSION["customsearch_$id"]["offset"] = $input->offset->int();
 			}
 			$_REQUEST['offset'] = $input->offset->int();
@@ -90,7 +90,7 @@ class Services_Search_CustomSearchController
 				if (empty($value) && $value != 0) {
 					$value = '';		// remove false or null
 				}
-				if ($record_session) {
+				if ($recalllastsearch) {
 					$_SESSION["customsearch_$id"][$fieldid] = $value;
 				}
 
