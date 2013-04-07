@@ -20,6 +20,8 @@ class Services_Search_CustomSearchController
 
 	function action_customsearch($input)
 	{
+		global $prefs;
+
 		$cachelib = TikiLib::lib('cache');
 		$definition = $input->definition->word();
 		if (empty($definition) || ! $definition = $cachelib->getSerialized($definition, 'customsearch')) {
@@ -62,24 +64,30 @@ class Services_Search_CustomSearchController
 		if ($recalllastsearch && isset($_SESSION["customsearch_$id"])) {
 			unset($_SESSION["customsearch_$id"]);
 		}
-		if ($input->maxRecords->int()) {
-			if ($recalllastsearch) {
-				$_SESSION["customsearch_$id"]["maxRecords"] = $input->maxRecords->int();
-			}
-			$_REQUEST['maxRecords'] = $input->maxRecords->int();	// pass request data required by list
-		}
 		if ($input->sort_mode->text()) {
 			if ($recalllastsearch) {
 				$_SESSION["customsearch_$id"]["sort_mode"] = $input->sort_mode->text();
 			}
-			$_REQUEST['sort_mode'] = $input->sort_mode->text();
+			$query->setOrder($input->sort_mode->text());
+		}
+		if ($input->maxRecords->int()) {
+			if ($recalllastsearch) {
+				$_SESSION["customsearch_$id"]["maxRecords"] = $input->maxRecords->int();
+			}
+			$maxRecords = $input->maxRecords->int();	// pass request data required by list
+		} else {
+			$maxRecords = $prefs['maxRecords'];
 		}
 		if ($input->offset->int()) {
 			if ($recalllastsearch) {
 				$_SESSION["customsearch_$id"]["offset"] = $input->offset->int();
 			}
-			$_REQUEST['offset'] = $input->offset->int();
+			$offset = $input->offset->int();
+		} else {
+			$offset = 0;
 		}
+		$query->setRange($offset, $maxRecords);
+
 		if ($adddata) {
 			foreach ($adddata as $fieldid => $d) {
 				$config = $d['config'];
