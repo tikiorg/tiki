@@ -10,6 +10,10 @@
 </style>
 </head>
 <?php
+$tiki_zip_url["tiki-9.4"] = 'http://sourceforge.net/projects/tikiwiki/files/Tiki_9.x_Herbig_Haro/9.4/tiki-9.4.zip/download';
+$tiki_zip_url["tiki-10.2"] = 'http://sourceforge.net/projects/tikiwiki/files/Tiki_10.x_Sun/10.2/tiki-10.2.zip/download';
+//$tiki_zip_url["tiki-."] = '';
+
 function pagebottom()
 {
 	$LF="\n";
@@ -112,7 +116,7 @@ function checkmyfile_exists($filename)
  <p>PHP delete check: <?php
 		unlink($filename) or die('cannot delete testfile - ERROR');
 		echo 'testfile deleted';
-?></p>
+?> (should be deleted)</p>
  <p>PHP file check: <?php
 		checkmyfile_exists($filename);
 ?> (should not exist now)</p>
@@ -128,7 +132,39 @@ function checkmyfile_exists($filename)
 	//	echo "no choice\n";
 	}
 	echo "<p>Your Choice: $x</p>\n";
-	if ( $x=='tiki-9.4.zip' ) {
+
+	switch($x) {
+		case 'tiki-9.4.zip':
+			$download = true;
+			$download_url = $tiki_zip_url["tiki-9.4"];
+			$download_name = $x;
+			break;
+		case 'tiki-10.2.zip':
+			$download = true;
+			$download_url = $tiki_zip_url["tiki-10.2"];
+			$download_name = $x;
+			break;
+		case 'no choice':
+			$download = false;
+			break;
+		default:
+			$download = false;
+			break;
+	}
+	if ($download) {
+		echo "$x to be downloaded from Sourceforge to server\n";
+		$ch = curl_init($download_url);
+		$fp = fopen($download_name, "w");
+		curl_setopt($ch, CURLOPT_FILE, $fp);
+		curl_setopt($ch, CURLOPT_HEADER, 0);
+		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
+		curl_exec($ch);
+		curl_close($ch);
+		fclose($fp);
+	} else {
+		$dummy = 'foo';
+	}
+	/*if ( $x=='tiki-9.4.zip' ) {
 		echo "$x to be downloaded from sourceforge to server\n";
 		$ch = curl_init("http://sourceforge.net/projects/tikiwiki/files/Tiki_9.x_Herbig_Haro/9.4/tiki-9.4.zip/download");
 		$fp = fopen("tikinew.zip", "w");
@@ -142,14 +178,17 @@ function checkmyfile_exists($filename)
 	//	echo $info."\n";
 		curl_close($ch);
 		fclose($fp);
-	}
+	}*/
 ?>
  <p><form method="post">
- <input type="radio" name="choice" value="a">a
- <input type="radio" name="choice" value="b">b
- <input type="radio" name="choice" value="tiki-9.4.zip">tiki-9.4.zip
+ <?php /*
+ <input type="radio" name="choice" value="a">a<br />
+ <input type="radio" name="choice" value="b">b<br />
+ */ ?>
+ <input type="radio" name="choice" value="tiki-9.4.zip">tiki-9.4.zip<br />
+ <input type="radio" name="choice" value="tiki-10.2.zip">tiki-10.2.zip<br />
  <input type="reset" value="RESET">
- <button name="choose" value="zipfile" type="submit">GO</button></form>
+ <button name="choose" value="zipfile" type="submit">DOWNLOAD</button></form>
  <!--</p>-->
  <?php //<p><input name="foo" value="caramba" type="submit">INPUT</p> ?>
 
