@@ -326,7 +326,8 @@ function wikiplugin_paypal($data, $params) {
 		$returnUrl = $base_uri;
 	}
 	if (strpos($returnUrl, 'tiki-ajax_services.php') !== false ||
-		$_REQUEST['controller'] === 'search_customsearch') {
+			(isset($_REQUEST['controller']) && $_REQUEST['controller'] === 'search_customsearch')) {
+
 		$csearchEvent = 'pageSearchReady';
 		if (!empty($_SERVER['HTTP_REFERER'])) {
 			$returnUrl = $_SERVER['HTTP_REFERER'];
@@ -369,7 +370,8 @@ $(document).bind("' . $csearchEvent . '", function () {
 	//$params['item_name'] = htmlentities($params['item_name']);	// FIXME encoding problems!
 
 	// all remaining non-empty params get turned into hidden form inputs
-	$smarty->assign_by_ref('wppaypal_hiddens', array_filter($params));
+	$params = array_filter($params);
+	$smarty->assign_by_ref('wppaypal_hiddens', $params);
 
 	return $smarty->fetch('wiki-plugins/wikiplugin_paypal.tpl');
 
