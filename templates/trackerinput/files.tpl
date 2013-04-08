@@ -257,9 +257,15 @@ $search.keypress(function (e) {
 	}
 });
 window.handleFinderFile = function (file, elfinder) {
-	var m = file.match(/target=([^&]*)/);
-	if (!m || m.length < 2) {
-		return false;	// error?
+	var hash = "";
+	if (typeof file === "string") {
+		var m = file.match(/target=([^&]*)/);
+		if (!m || m.length < 2) {
+			return false;	// error?
+		}
+		hash = m[1];
+	} else {
+		hash = file.hash;
 	}
 	$.ajax({
 		type: 'GET',
@@ -267,7 +273,7 @@ window.handleFinderFile = function (file, elfinder) {
 		dataType: 'json',
 		data: {
 			cmd: "tikiFileFromHash",
-			hash: m[1]
+			hash: hash
 		},
 		success: function (data) {
 			var fileId = data.fileId, li = $('<li/>');

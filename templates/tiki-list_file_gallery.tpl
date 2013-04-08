@@ -268,10 +268,16 @@ var elfoptions = initElFinder({
 $(".elFinderDialog").elfinder(elfoptions).elfinder('instance');
 
 window.handleFinderFile = function (file, elfinder) {
-	var m = file.match(/target=([^&]*)/);
-	if (!m || m.length < 2) {
-		return false;	// error?
-	}
+		var hash = "";
+		if (typeof file === "string") {
+			var m = file.match(/target=([^&]*)/);
+			if (!m || m.length < 2) {
+				return false;	// error?
+			}
+			hash = m[1];
+		} else {
+			hash = file.hash;
+		}
 	$.ajax({
 		type: 'GET',
 		url: $.service('file_finder', 'finder'),
@@ -281,7 +287,7 @@ window.handleFinderFile = function (file, elfinder) {
 			{{if !empty($filegals_manager)}}
 				filegals_manager: "{{$filegals_manager}}",
 			{{/if}}
-			hash: m[1]
+			hash: hash
 		},
 		success: function (data) {
 			{{if !empty($filegals_manager)}}
