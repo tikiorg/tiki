@@ -48,7 +48,7 @@
 							baseLayers.append($('<option/>')
 								.attr('value', k)
 								.text(thisLayer.name)
-								.attr('selected', thisLayer === map.map.baseLayer));
+								.prop('selected', thisLayer === map.map.baseLayer));
 						} else {
 							var label, checkbox;
 							optionalLayers.append(label = $('<label/>').text(thisLayer.name).prepend(
