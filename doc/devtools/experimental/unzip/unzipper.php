@@ -183,6 +183,56 @@ function checkmyfile_exists($filename)
  <!--</p>-->
  <?php //<p><input name="foo" value="caramba" type="submit">INPUT</p> ?>
 
+<br /><hr>
+<h3>Unzip Tiki Version</h3>
+
+<?php
+	if (isset($_POST['unzip'])) {
+		$x = $_POST['unzip'];
+		switch($x) {
+			case 'tiki-9.4.zip':
+				$unzip = true;
+				//$download_url = $tiki_zip_url["tiki-9.4"];
+				$unzip_name = $x;
+				break;
+			case 'tiki-10.2.zip':
+				$unzip = true;
+				//$download_url = $tiki_zip_url["tiki-10.2"];
+				$unzip_name = $x;
+				break;
+			case 'no unzip':
+				$unzip = false;
+				break;
+			default:
+				$unzip = false;
+				break;
+		}
+		if ($unzip and (file_exists($unzip_name))) {
+		//	system("unzip $unzip_name");
+			$zip = new ZipArchive;
+			$res = $zip->open("$unzip_name");
+			if ($res === TRUE) {
+			$zip->extractTo('./');
+				$zip->close();
+				echo 'unzip ok';
+			} else {
+				echo 'unzip failed';
+			}
+		} else {
+			echo 'unzip not successful - does the file exist?';
+		}
+	} else {
+		$x = 'no unzip';
+	}
+?>
+ <p><form method="post">
+ <input type="radio" name="unzip" value="tiki-9.3.zip"> tiki-9.3.zip<br />
+ <input type="radio" name="unzip" value="tiki-9.4.zip"> tiki-9.4.zip<br />
+ <input type="radio" name="unzip" value="tiki-10.2.zip"> tiki-10.2.zip<br />
+ <br />
+ <input type="reset" value="RESET">
+ <button name="unzipper" value="zipfile" type="submit">UNZIP</button></form>
+
 <?php
 pagebottom();
 ?>
