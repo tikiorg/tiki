@@ -121,7 +121,7 @@ function module_categories($mod_reference, &$module_params)
 			"parent" => $cat["parentId"],
 			'parentId' => $cat['parentId'],
 			'categId' => $cat['categId'],
-			"data" => '<a class="catname" href="'.$url.'">' . htmlspecialchars($cat['name']) . '</a><br />'
+			"data" => '<span style="float: left; cursor: pointer;" class="ui-icon ui-icon-triangle-1-e"></span><a class="catname" href="'.$url.'">' . htmlspecialchars($cat['name']) . '</a><br />'
 		);
 	}
 	$res = '';
