@@ -676,6 +676,8 @@ function prefs_feature_list($partial = false)
 				'feature_ajax',
 				'ajax_autosave',
 				'feature_wiki_paragraph_formatting',
+				'feature_wiki_paragraph_formatting_add_br',
+				'wysiwyg_wiki_parsed',
 			),
 			'tags' => array('experimental'),
 		),

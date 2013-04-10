@@ -173,30 +173,6 @@ JS
             if (!$included) $html .= '<input name="jisonWyisywg" type="hidden" value="true" />';
 			$html .= '<div class="wikiedit ui-widget-content" name="'.$params['name'].'" id="'.$as_id.'">' . ($content) . '</div>';
 		} else {
-			// new ckeditor implementation 2010
-			if ($prefs['feature_ajax'] !== 'y' || $prefs['ajax_autosave'] !== 'y' ||
-					$prefs['feature_wiki_paragraph_formatting'] !== 'y' || $prefs['feature_wiki_paragraph_formatting_add_br'] === 'y' ||
-					$prefs['wysiwyg_wiki_parsed'] !== 'y') {
-
-				// show dev notice
-				$smarty->loadPlugin('smarty_block_remarksbox');
-				$msg = '';
-
-				global $tiki_p_admin;
-				if ($tiki_p_admin) {
-					// TODO: Create the up-to-date profile for it (WYSIWYG_CKEditor4)
-					$profile_link = 'tiki-admin.php?profile=WYSIWYG_CKEditor4&repository=http%3A%2F%2Fprofiles.tiki.org%2Fprofiles&page=profiles&list=List';
-					// TODO: Put check of what prefs are actually set up wrongly and list them in the msg
-					$msg .= tra("Some of your preferences should be set differently for this to work at it's best. Please click this to apply the recommended profile:") .
-					   ' <a href="'.$profile_link.'">WYSIWYG CKEditor4 Profile</a>';
-				} else {
-					$msg .= tra('Some of the settings at this site should be set differently for this to work best. Please ask the administrator to try this.');
-				}
-
-				$remrepeat = false;
-				$html .= smarty_block_remarksbox(array( 'type'=>'info', 'icon'=>'bricks', 'title'=>tra('CKEditor Development Notice')), $msg, $smarty, $remrepeat)."\n";
-			}
-
 			// set up ckeditor
 			if (!isset($params['name'])) {
 				$params['name'] = 'edit';
