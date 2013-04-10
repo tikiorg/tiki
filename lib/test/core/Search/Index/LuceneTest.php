@@ -12,7 +12,7 @@ class Search_Index_LuceneTest extends PHPUnit_Framework_TestCase
 {
 	const DOCUMENT_DATE = 1234567890;
 	private $dir;
-	private $index;
+	protected $index;
 
 	function setUp()
 	{
@@ -20,6 +20,12 @@ class Search_Index_LuceneTest extends PHPUnit_Framework_TestCase
 		$this->tearDown();
 
 		$index = new Search_Index_Lucene($this->dir);
+		$this->populate($index);
+		$this->index = $index;
+	}
+
+	protected function populate($index)
+	{
 		$typeFactory = $index->getTypeFactory();
 		$index->addDocument(
 			array(
@@ -43,7 +49,6 @@ class Search_Index_LuceneTest extends PHPUnit_Framework_TestCase
 			)
 		);
 
-		$this->index = $index;
 	}
 
 	function tearDown()
