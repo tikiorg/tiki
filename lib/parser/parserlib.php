@@ -1053,8 +1053,9 @@ if ( \$('#$id') ) {
 			// Tiki 7+ adds ~np~ to plugin output so remove them
 			$plugin_result = preg_replace('/~[\/]?np~/ms', '', $plugin_result);
 
+			$oldOptions = $this->option;
 			$plugin_result = $this->parse_data($plugin_result, array('is_html' => false, 'suppress_icons' => true, 'ck_editor' => true, 'noparseplugins' => true));
-
+			$this->setOptions($oldOptions);
 			// reset the noparseplugins option, to allow for proper display in CkEditor
 			$this->option['noparseplugins'] = false;
 
@@ -2557,6 +2558,7 @@ if ( \$('#$id') ) {
 										}
 									}
 
+									$add_brs = $prefs['feature_wiki_paragraph_formatting_add_br'] === 'y' && !$this->option['is_html'];
 									if ($in_paragraph && ((empty($tline) && !$in_empty_paragraph) || $contains_block)) {
 										// If still in paragraph, on meeting first blank line or end of div or start of div created by plugins; close a paragraph
 										$this->close_blocks($data, $in_paragraph, $listbeg, $divdepth, 1, 0, 0);
@@ -2564,8 +2566,8 @@ if ( \$('#$id') ) {
 										// If not in paragraph, first non-blank line; start a paragraph; if not start of div created by plugins
 										$data .= "<p>";
 										$in_paragraph = 1;
-										$in_empty_paragraph = empty($tline) && $prefs['feature_wiki_paragraph_formatting_add_br'] === 'y';
-									} elseif ($in_paragraph && $prefs['feature_wiki_paragraph_formatting_add_br'] == 'y' && !$contains_block) {
+										$in_empty_paragraph = empty($tline) && $add_brs;
+									} elseif ($in_paragraph && $add_brs && !$contains_block) {
 										// A normal in-paragraph line if not close of div created by plugins
 										if (!empty($tline)) {
 											$in_empty_paragraph = false;
