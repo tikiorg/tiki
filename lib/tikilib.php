@@ -347,7 +347,7 @@ class TikiLib extends TikiDb_Bridge
      * @param $withReltype
      * @return array
      */
-    function get_pages($data, $withReltype)
+    function get_pages($data, $withReltype = false)
 	{
 		//to make migration easier
 		$parserlib = TikiLib::lib('parser');
