@@ -798,8 +798,6 @@ $smarty->assign('cookietab', $cookietab);
 
 ask_ticket('calendar');
 
-include_once('tiki-jscalendar.php');
-
 if (!empty($prefs['calendar_fullcalendar']) && $prefs['calendar_fullcalendar'] === 'y') {
 	$headerlib->add_cssfile('lib/fullcalendar/fullcalendar.css');
 	$headerlib->add_jsfile('lib/fullcalendar/fullcalendar.min.js');
