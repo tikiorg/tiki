@@ -2638,6 +2638,32 @@ class TrackerLib extends TikiLib
 	}
 
 	/**
+	 * get_trackers_containing
+	 *
+	 * \brief Get tracker names containing ... (useful for auto-complete)
+	 * 
+	 * @author luci
+	 * @param mixed $name
+	 * @access public
+	 * @return
+	 */
+	function get_trackers_containing($name)
+	{
+		if (empty($name)) {
+			return array();
+		}
+		//FIXME: perm filter ?
+		$result = $this->fetchAll(
+			'SELECT `name` FROM `tiki_trackers` WHERE `name` LIKE ?',
+			array($name . '%'),10);
+		$names = array();
+		foreach ( $result as $row ) {
+			$names[] = $row['name'];
+		}
+		return $names;
+	}
+	
+	/**
 	 * Returns the trackerId of the tracker possessing the item ($itemId)
 	 */
 	public function get_tracker_for_item($itemId)
