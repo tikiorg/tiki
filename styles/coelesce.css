@@ -971,7 +971,6 @@ li.tabmark ul li a {
 }
 
 .tabcontent {
-	z-index: 200;
 	border: 1px solid #abcdef;
 	padding: 26px 0 2px 0;
 	background: #fff;
