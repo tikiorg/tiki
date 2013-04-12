@@ -182,7 +182,7 @@ function wikiplugin_gauge($data, $params)
 	$html .='</td>' . ($showvalue ? $perc_td : '') . '<td>&nbsp;</td></tr>';
 
 	if (!empty($data)) {
-		$html .= '<tr><td><small>' . $data . '</small></td></tr>';
+		$html .= '<tr><td colspan="3"><small>' . $data . '</small></td></tr>';
 	}
 
 	$html .= "</table>";
