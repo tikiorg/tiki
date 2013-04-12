@@ -569,7 +569,7 @@ $icons = array(
 	"video" => array(
 		'icon' => 'img/icons/large/gnome-camera-video-32.png',
 		'position' => '-100px -715px;',
-		'title' => tr('Video streaming integration'),
+		'title' => tr('Video'),
 		'disabled' => $prefs['feature_kaltura'] != 'y' && $prefs['feature_watershed'] != 'y',
 		'description' => tr('Video integration configuration'),
 		'help' => 'Kaltura+Config',
