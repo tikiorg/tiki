@@ -103,7 +103,7 @@ class Tracker_Field_Math extends Tracker_Field_Abstract implements Tracker_Field
 
 			return $runner->evaluate();
 		} catch (Math_Formula_Exception $e) {
-			return -1;
+			return $e->getMessage();
 		}
 	}
 }
