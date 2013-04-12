@@ -12,10 +12,10 @@ $inputConfiguration = array(
 	array( 'staticKeyFilters' => array(
 				'date' => 'digits',
 				'maxRecords' => 'digits',
-				'highlight' => 'xss',
+				'highlight' => 'text',
 				'where' => 'word',
-				'find' => 'xss',
-				'words' =>'xss',
+				'find' => 'text',
+				'words' =>'text',
 				'boolean' =>'word',
 		)
 	)
@@ -211,6 +211,14 @@ if (($where == 'wikis' || $where == 'articles') && $prefs['feature_multilingual'
 	$languages = $tikilib->list_languages(false, 'y');
 	$smarty->assign_by_ref('languages', $languages);
 }
+
+array_walk($results['data'], function (& $entry) {
+	if (strpos($entry['href'], '?') !== false) {
+		$entry['href'] .= '&highlight=' . rawurlencode($_REQUEST['words']);
+	} else {
+		$entry['href'] .= '?highlight=' . rawurlencode($_REQUEST['words']);
+	}
+});
 
 $smarty->assign_by_ref('where_list', $where_list);
 $smarty->assign_by_ref('results', $results["data"]);
