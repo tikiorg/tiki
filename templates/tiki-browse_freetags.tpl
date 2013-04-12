@@ -32,7 +32,9 @@
 		</applet>
 	</div>
 {/if}
-
+{jq}
+	$('#tagBox').tiki('autocomplete', 'tag', {multiple: true, multipleSeparator: " "} );
+{/jq}
 <form class="freetagsearch" action="tiki-browse_freetags.php" method="get">
 	<div class="freetagskeywords">
 		<b>{tr}Tags{/tr}</b> 
