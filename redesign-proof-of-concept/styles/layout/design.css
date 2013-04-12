@@ -2646,13 +2646,6 @@ textarea:disabled {
 	color: #888 !important;
 }
 
-fieldset {
-	border: solid 1px #999;
-	margin-bottom: 2px;
-	padding: 0.3em;
-	clear: both;
-}
-
 /* margin and padding for span surrounding the "button" links, same definition for button form element */
 /*button,
 .button,

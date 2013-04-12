@@ -87,6 +87,7 @@ function smarty_function_button($params, $smarty)
 		unset($params['_disabled']);
 	}
 
+	$class = '';
 	//apply class only to the button
 	if (!empty($params['_class'])) {
 		$class = $params['_class'];

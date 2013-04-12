@@ -102,7 +102,7 @@
 	{pagination_links cant=$cant step=$maxRecords offset=$offset}{/pagination_links}
 	{if $tiki_p_admin_trackers eq 'y'}
 		<form class="create-tracker" method="post" action="{service controller=tracker action=replace}">
-			<input type="submit" value="{tr}Create tracker{/tr}">
+			<input type="submit" class="btn" value="{tr}Create tracker{/tr}">
 		</form>
 	{/if}
 	{if !empty($trackerId)}
@@ -213,13 +213,14 @@
 {if $tiki_p_admin_trackers eq 'y'}
 {tab name="{tr}Duplicate/Import Tracker{/tr}"}
 {* --- tab with raw form --- *}
-	<h2>{tr}Duplicate Tracker{/tr}</h2>
 
 	<form class="simple" action="{service controller=tracker action=duplicate}" method="post">
-		<label>
-			{tr}Name{/tr}
-			<input type="text" name="name">
-		</label>
+		<fieldset>
+			<legend>{tr}Duplicate Tracker{/tr}</legend>
+			<label>
+				{tr}Name{/tr}
+				<input type="text" name="name">
+			</label>
 		<label>
 			{tr}Tracker{/tr}
 			<select name="trackerId">
@@ -238,69 +239,58 @@
 			<input type="checkbox" name="dupPerms" value="1">
 			{tr}Duplicate permissions{/tr}
 		</label>
-		<div class="submit">
-			<input type="submit" value="{tr}Duplicate{/tr}">
-		</div>
+			<input class="btn btn-primary" type="submit" value="{tr}Duplicate{/tr}">
+		</fieldset>
 	</form>
 	
 	{if $prefs.tracker_remote_sync eq 'y'}
-		<h2>{tr}Duplicate Remote Tracker{/tr}</h2>
 		<form class="simple" method="post" action="{service controller=tracker_sync action=clone_remote}">
-			<label>
-				{tr}URL:{/tr}
-				<input type="url" name="url" required="required">
-			</label>
-			<div>
-				<input type="submit" value="{tr}Search for trackers to clone{/tr}">
-			</div>
+			<fieldset>
+				<legend>{tr}Duplicate Remote Tracker{/tr}</legend>
+				<label for="url">
+					{tr}URL:{/tr}
+					<input type="url" id="url" name="url" required="required">
+				</label>
+				<input type="submit" class="btn btn-primary" value="{tr}Search for trackers to clone{/tr}">
+			</fieldset>
 		</form>
 	{/if}
 
-	<div class="importFromExport">
-		<h2>{tr}Import{/tr}</h2>
-		<h4>{tr}Import Structure{/tr}</h4>
-		<form class="simple" method="post" action="{service controller=tracker action=import}">
+	<form class="simple" method="post" action="{service controller=tracker action=import}">
+		<fieldset>
+			<legend>{tr}Import Structure{/tr}</legend>
 			<label>
 				{tr}Raw data{/tr}
-				<textarea name="raw" rows="20"></textarea>
+				<textarea name="raw" rows="20" class="input-block-level"></textarea>
 			</label>
-			<label>
+			<label class="checkbox">
 				<input type="checkbox" name="preserve" value="1">
 				{tr}Preserve tracker ID{/tr}
 			</label>
 			{remarksbox close='n' title='{tr}Note{/tr}'}{tr}Use "Tracker -> Export -> Structure" to produce this data.{/tr}{/remarksbox}
-			<div class="submit">
-				<input type="submit" value="{tr}Import{/tr}">
-			</div>
-		</form>
+			<input type="submit" class="btn btn-primary" value="{tr}Import{/tr}">
+		</fieldset>
+	</form>
 
-        <h4>{tr}Import From Profile/YAML{/tr}</h4>
-        <div>
-	        <form id="forumImportFromProfile" action="{service controller=tracker action=import_profile trackerId=$trackerId}" method="post" enctype="multipart/form-data">
-				{remarksbox type="info" title="{tr}New Feature{/tr}" icon="bricks"}
-	                <p><em>{tr}Please note: Experimental - work in progress{/tr}</em></p>
-				{/remarksbox}
-	            <label style="display: block">
-					{tr}YAML{/tr}
-	            </label>
-	            <textarea name="yaml" id="importFromProfileYaml" data-codemirror="true" data-syntax="yaml" data-line-numbers="true" style="height: 400px;"></textarea>
-                <div class="submit">
-                    <input type="submit" value="{tr}Import{/tr}">
-                </div>
-            </form>
-        </div>
-	</div>
+	<form id="forumImportFromProfile" action="{service controller=tracker action=import_profile trackerId=$trackerId}" method="post" enctype="multipart/form-data">
+		<fieldset>
+			<legend>{tr}Import From Profile/YAML{/tr}</legend>
+			{remarksbox type="info" title="{tr}New Feature{/tr}" icon="bricks"}
+				<p><em>{tr}Please note: Experimental - work in progress{/tr}</em></p>
+			{/remarksbox}
+			<label style="display: block">
+				{tr}YAML{/tr}
+			</label>
+			<textarea name="yaml" id="importFromProfileYaml" class="input-block-level" data-codemirror="true" data-syntax="yaml" data-line-numbers="true" style="height: 400px;"></textarea>
+			<input class="btn btn-primary" type="submit" value="{tr}Import{/tr}">
+		</fieldset>
+	</form>
 {/tab}
 {/if}
 
 {/tabset}
 
 {jq}
-	$('.importFromExport').visible(function() {
-		$(this).accordion({
-			header: 'h4'
-		});
-	});
 	$('#forumImportFromProfile').submit(function() {
 		$.modal(tr('Loading...'));
 		$.post($(this).attr('action'), {yaml: $('#importFromProfileYaml').val()}, function(feedback) {
