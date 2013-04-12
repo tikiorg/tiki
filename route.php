@@ -158,7 +158,7 @@ function tiki_route($path)
 		'|.*|',
 		'tiki-index.php',
 		function ($parts) {
-			return array('page' => str_replace('+', ' ', $parts[0]));
+			return array('page' => str_replace(array('+', '%20'), ' ', $parts[0]));
 		}
 	);
 }
