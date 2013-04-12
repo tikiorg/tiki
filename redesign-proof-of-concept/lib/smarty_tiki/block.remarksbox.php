@@ -53,18 +53,14 @@ function smarty_block_remarksbox($params, $content, $smarty, &$repeat)
 		$highlightClass = '';
 	}
 	if (!isset($icon) || $icon=='') {
-		if ($type=='tip') {//get_strings tra('tip')
-			$icon='book_open';
-		} else if ($type=='comment') {//get_strings tra('comment')
-			$icon='comments';
-		} else if ($type=='warning' || $type == 'confirm') {//get_strings tra('warning') tra('confirm')
-			$icon='exclamation';
-		} else if ($type=='note') {//get_strings tra('note')
-			$icon='information';
-		} else if ($type == 'errors') {//get_strings tra('errors')
-			$icon = 'delete';
+		if ($type=='warning') {
+			$type = 'alert-error';
+		} elseif ($type == 'confirm') {//get_strings tra('warning') tra('confirm')
+			$type = 'alert-success';
+		} elseif ($type == 'error') {//get_strings tra('errors')
+			$type = 'alert-error';
 		} else {//get_strings tra('information')
-			$icon = 'information';
+			$icon = 'alert-info';
 		}
 	}
 	
@@ -75,7 +71,6 @@ function smarty_block_remarksbox($params, $content, $smarty, &$repeat)
 	$smarty->assign('remarksbox_title', $title);
 	$smarty->assign('remarksbox_type', $type);
 	$smarty->assign('remarksbox_highlight', $highlightClass);
-	$smarty->assign('remarksbox_icon', $icon);
 	$smarty->assign('remarksbox_close', $close);
 	$smarty->assign('remarksbox_width', $width);
 	$smarty->assignByRef('remarksbox_content', $content);
