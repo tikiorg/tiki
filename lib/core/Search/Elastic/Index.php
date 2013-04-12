@@ -23,6 +23,13 @@ class Search_Elastic_Index implements Search_Index_Interface
 
 	function addDocument(array $data)
 	{
+		$factory = $this->getTypeFactory();
+		$data = array_map(function ($entry) use ($factory) {
+			return $entry->getValue($factory);
+		}, $data);
+		$objectType = $data['object_type'];
+		$objectId = $data['object_id'];
+		$this->connection->index($this->index, $objectType, $objectId, $data);
 	}
 
 	function optimize()
@@ -37,11 +44,22 @@ class Search_Elastic_Index implements Search_Index_Interface
 	{
 		$builder = new Search_Elastic_QueryBuilder;
 		$query = $builder->build($expr);
+
+		$result = $this->connection->search($this->index, $query, $resultStart, $resultCount);
+		$hits = $result->hits;
+
+		$entries = array_map(function ($entry) {
+			return (array) $entry->_source;
+		}, $hits->hits);
+
+		$resultSet = new Search_ResultSet($entries, $hits->total, $resultStart, $resultCount);
+
+		return $resultSet;
 	}
 
 	function getTypeFactory()
 	{
-		return new Search_Type_Factory_Direct;
+		return new Search_Elastic_TypeFactory;
 	}
 
 	private function buildQuery($expr)

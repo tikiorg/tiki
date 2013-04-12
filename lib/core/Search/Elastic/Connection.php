@@ -16,44 +16,96 @@ class Search_Elastic_Connection
 
 	function getStatus()
 	{
-		return $this->get('/');
+		try {
+			return $this->get('/');
+		} catch (Exception $e) {
+			return (object) array(
+				'ok' => false,
+				'status' => 0,
+			);
+		}
 	}
 
 	function deleteIndex($index)
 	{
-		return $this->delete("/$index");
+		try {
+			return $this->delete("/$index");
+		} catch (Search_Elastic_Exception $e) {
+			if ($e->getCode() !== 404) {
+				throw $e;
+			}
+		}
 	}
 
-	private function get($path)
+	function search($index, array $query, $resultStart, $resultCount)
+	{
+		return $this->get("/$index/_search", json_encode($query));
+	}
+
+	function index($index, $type, $id, $data)
+	{
+		$type = preg_replace('/[^a-z]/', '', $type);
+		$id = rawurlencode($id);
+
+		return $this->put("/$index/$type/$id?refresh=true", json_encode($data));
+	}
+
+	private function get($path, $data = null)
 	{
 		try {
-			$full = "{$this->dsn}$path";
-
-			$tikilib = TikiLib::lib('tiki');
-			$client = $tikilib->get_http_client($full);
-			$response = $client->request('GET');
-
-			if ($response->isSuccessful()) {
-				return json_decode($response->getBody());
+			$client = $this->getClient($path);
+			if ($data) {
+				$client->setRawData($data);
 			}
-		} catch (Exception $e) {
+			$response = $client->request('GET');
+			return $this->handleResponse($response);
+		} catch (Zend_Http_Exception $e) {
+			throw new Search_Elastic_TransportException($e->getMessage());
+		}
+	}
+
+	private function put($path, $data)
+	{
+		try {
+			$client = $this->getClient($path);
+			$client->setRawData($data);
+			$response = $client->request('PUT');
+
+			return $this->handleResponse($response);
+		} catch (Zend_Http_Exception $e) {
+			throw new Search_Elastic_TransportException($e->getMessage());
 		}
 	}
 
 	private function delete($path)
 	{
 		try {
-			$full = "{$this->dsn}$path";
-
-			$tikilib = TikiLib::lib('tiki');
-			$client = $tikilib->get_http_client($full);
+			$client = $this->getClient($path);
 			$response = $client->request('DELETE');
 
-			if ($response->isSuccessful()) {
-				return json_decode($response->getBody());
-			}
-		} catch (Exception $e) {
+			return $this->handleResponse($response);
+		} catch (Zend_Http_Exception $e) {
+			throw new Search_Elastic_TransportException($e->getMessage());
 		}
+	}
+
+	private function handleResponse($response)
+	{
+		$content = json_decode($response->getBody());
+
+		if ($response->isSuccessful()) {
+			return $content;
+		} else {
+			throw new Search_Elastic_Exception($content->error, $content->status);
+		}
+	}
+
+	private function getClient($path)
+	{
+		$full = "{$this->dsn}$path";
+
+		$tikilib = TikiLib::lib('tiki');
+		return $tikilib->get_http_client($full);
 	}
 }
 

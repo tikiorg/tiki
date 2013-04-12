@@ -9,12 +9,16 @@ class Search_Elastic_IndexTest extends Search_Index_LuceneTest
 {
 	function setUp()
 	{
-		$this->markTestSkipped('None of this works just yet.');
+		static $count = 0;
+
+		if ($count++ > 1) {
+			$this->markTestSkipped('None of this works just yet.');
+		}
 
 		$connection = new Search_Elastic_Connection('http://localhost:9200');
 
 		$status = $connection->getStatus();
-		if (! $status) {
+		if (! $status->ok) {
 			$this->markTestSkipped('ElasticSearch needs to be available on localhost:9200 for the test to run.');
 		}
 
