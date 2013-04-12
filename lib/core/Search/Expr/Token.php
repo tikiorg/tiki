@@ -55,5 +55,10 @@ class Search_Expr_Token implements Search_Expr_Interface
 	{
 		return $this->field;
 	}
+
+	function traverse($callback)
+	{
+		return call_user_func($callback, $callback, $this, array());
+	}
 }
 

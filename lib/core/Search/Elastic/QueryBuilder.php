@@ -13,14 +13,27 @@ class Search_Elastic_QueryBuilder
 {
 	function build(Search_Expr_Interface $expr) {
 		$factory = new Search_Type_Factory_Direct;
-		$query = $expr->walk(function ($node, $childNodes) use ($factory) {
+		$getTerm = function ($node) use ($factory) {
+			$value = $node->getValue($factory);
+			return strtolower($value->getValue());
+		};
+
+		$query = $expr->traverse(function ($callback, $node, $childNodes) use ($getTerm) {
 			if ($node instanceof Token) {
-				$value = $node->getValue($factory);
 				return array("term" => array(
-					$node->getField() => array("value" => strtolower($value->getValue()), "boost" => $node->getWeight()),
+					$node->getField() => array("value" => $getTerm($node), "boost" => $node->getWeight()),
 				));
 			} elseif (count($childNodes) === 1 && ($node instanceof AndX || $node instanceof OrX)) {
-				return reset($childNodes);
+				return reset($childNodes)->traverse($callback);
+			} elseif ($node instanceof OrX) {
+				return array(
+					'bool' => array(
+						'should' => array_map(function ($expr) use ($callback) {
+							return $expr->traverse($callback);
+						}, $childNodes),
+						"minimum_number_should_match" => 1,
+					),
+				);
 			}
 		});
 

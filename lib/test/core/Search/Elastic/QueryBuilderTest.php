@@ -39,5 +39,33 @@ class Search_Elastic_QueryBuilderTest extends PHPUnit_Framework_TestCase
 			),
 		)), $query);
 	}
+
+	function testBuildOrQueryWithMultipleTermsInSameField()
+	{
+		$builder = new QueryBuilder;
+
+		$query = $builder->build(new OrX(array(
+			new Token('Hello', 'plaintext', 'contents', 1.5),
+			new Token('World', 'plaintext', 'contents', 1.0),
+		)));
+
+		$this->assertEquals(array("query" => array(
+			"bool" => array(
+				"should" => array(
+					array(
+						"term" => array(
+							"contents" => array("value" => "hello", "boost" => 1.5),
+						),
+					),
+					array(
+						"term" => array(
+							"contents" => array("value" => "world", "boost" => 1.0),
+						),
+					),
+				),
+				"minimum_number_should_match" => 1,
+			),
+		)), $query);
+	}
 }
 

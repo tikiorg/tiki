@@ -11,7 +11,7 @@ class Search_Elastic_IndexTest extends Search_Index_LuceneTest
 	{
 		static $count = 0;
 
-		if ($count++ > 1) {
+		if ($count++ > 2) {
 			$this->markTestSkipped('None of this works just yet.');
 		}
 

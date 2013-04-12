@@ -90,9 +90,11 @@ class Search_Index_LuceneTest extends PHPUnit_Framework_TestCase
 
 	function testWithOrCondition()
 	{
-		$query = new Search_Query('foobar or hello');
+		$positive = new Search_Query('foobar or hello');
+		$negative = new Search_Query('foobar or baz');
 
-		$this->assertGreaterThan(0, count($query->search($this->index)));
+		$this->assertGreaterThan(0, count($positive->search($this->index)));
+		$this->assertEquals(0, count($negative->search($this->index)));
 	}
 
 	function testWithNotCondition()
