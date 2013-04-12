@@ -214,55 +214,54 @@
 {tab name="{tr}Duplicate/Import Tracker{/tr}"}
 {* --- tab with raw form --- *}
 
-	<form class="simple" action="{service controller=tracker action=duplicate}" method="post">
+	<form action="{service controller=tracker action=duplicate}" method="post">
 		<fieldset>
 			<legend>{tr}Duplicate Tracker{/tr}</legend>
 			<label>
 				{tr}Name{/tr}
-				<input type="text" name="name">
 			</label>
-		<label>
-			{tr}Tracker{/tr}
+			<input type="text" name="name">
+			<label>
+				{tr}Tracker{/tr}
+			</label>
 			<select name="trackerId">
 				{foreach from=$trackers item=tr}
 					<option value="{$tr.trackerId|escape}">{$tr.name|escape}</option>
 				{/foreach}
 			</select>
-		</label>
-		{if $prefs.feature_categories eq 'y'}
-			<label>
-				<input type="checkbox" name="dupCateg" value="1">
-				{tr}Duplicate categories{/tr}
+			{if $prefs.feature_categories eq 'y'}
+				<label class="checkbox">
+					<input type="checkbox" name="dupCateg" value="1">
+					{tr}Duplicate categories{/tr}
+				</label>
+			{/if}
+			<label class="checkbox">
+				<input type="checkbox" name="dupPerms" value="1">
+				{tr}Duplicate permissions{/tr}
 			</label>
-		{/if}
-		<label>
-			<input type="checkbox" name="dupPerms" value="1">
-			{tr}Duplicate permissions{/tr}
-		</label>
 			<input class="btn btn-primary" type="submit" value="{tr}Duplicate{/tr}">
 		</fieldset>
 	</form>
 	
 	{if $prefs.tracker_remote_sync eq 'y'}
-		<form class="simple" method="post" action="{service controller=tracker_sync action=clone_remote}">
+		<form method="post" action="{service controller=tracker_sync action=clone_remote}">
 			<fieldset>
 				<legend>{tr}Duplicate Remote Tracker{/tr}</legend>
-				<label for="url">
-					{tr}URL:{/tr}
-					<input type="url" id="url" name="url" required="required">
-				</label>
-				<input type="submit" class="btn btn-primary" value="{tr}Search for trackers to clone{/tr}">
+				<div class="input-append">
+					<input type="url" id="url" name="url" required="required" placeholder="{tr}URL{/tr}" class="input-xlarge">
+					<button type="submit" class="btn btn-primary">{tr}Search for trackers to clone{/tr}</button>
+				</div>
 			</fieldset>
 		</form>
 	{/if}
 
-	<form class="simple" method="post" action="{service controller=tracker action=import}">
+	<form method="post" action="{service controller=tracker action=import}">
 		<fieldset>
 			<legend>{tr}Import Structure{/tr}</legend>
 			<label>
 				{tr}Raw data{/tr}
-				<textarea name="raw" rows="20" class="input-block-level"></textarea>
 			</label>
+			<textarea name="raw" rows="20" class="input-block-level"></textarea>
 			<label class="checkbox">
 				<input type="checkbox" name="preserve" value="1">
 				{tr}Preserve tracker ID{/tr}
@@ -278,7 +277,7 @@
 			{remarksbox type="info" title="{tr}New Feature{/tr}" icon="bricks"}
 				<p><em>{tr}Please note: Experimental - work in progress{/tr}</em></p>
 			{/remarksbox}
-			<label style="display: block">
+			<label>
 				{tr}YAML{/tr}
 			</label>
 			<textarea name="yaml" id="importFromProfileYaml" class="input-block-level" data-codemirror="true" data-syntax="yaml" data-line-numbers="true" style="height: 400px;"></textarea>
