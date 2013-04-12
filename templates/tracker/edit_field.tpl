@@ -140,6 +140,6 @@
 {jq}
 $('.accordion').removeClass('accordion').accordion({
 	header: 'h4',
-	autoHeight: false
+	heightStyle: "content"
 });
 {/jq}
