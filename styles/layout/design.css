@@ -2034,6 +2034,7 @@ ul.freetagged li {
 
 #cluetip {
 	display: none;
+	width: auto !important; /* FIXME: to be removed workaround until someone finds why cluetips render with width: 0 now after jQuery upgrade in trunk */
 }
 
 /* fake 'transparent' theme (for ClueTip login box popup) */
