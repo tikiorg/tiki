@@ -92,7 +92,6 @@ html>body #c1c2 #wrapper #col1 #tiki-center:hover {
 
 /***** XHTML Elements (other than body tag) ******/
 a,
-a:link,
 a:visited {
 	color: #bdcec3;
 	font-weight: normal;
@@ -101,6 +100,11 @@ a:visited {
 a:hover {
 	color: #ccccff;
 	text-decoration: underline}
+	
+.highlight, .button.highlight a, .button a.highlight, a.highlight:hover { 
+background: #FFCC00;
+color: #000000;
+}
 
 h1, h2, h3, h4, h5 {
 	color: #bdcec3 !important;
