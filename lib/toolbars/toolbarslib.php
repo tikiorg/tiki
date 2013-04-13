@@ -316,7 +316,7 @@ abstract class Toolbar
 						->setType($data['type']);
 
 		return $tag;
-	}	// {{{
+	}	// }}}
 
 	abstract function getWikiHtml( $areaId );
 
