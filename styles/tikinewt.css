@@ -401,6 +401,11 @@ label {
 	border-left: 0;
 }
 
+#col2 .box-data .cssmenu_vert,
+#col2 .box-data .cssmenu_vert ul {
+	padding-left: 0;
+}
+
 .sf-sub-indicator {
 	background: url(tikinewt/arrows-6d819d.png) no-repeat -10px -100px;
 }

@@ -854,6 +854,10 @@ li.login_link ul li a {
 	text-decoration: none;
 }
 
+#col2 .box-data .cssmenu_vert ul {
+	padding-left: 0;
+}
+
 /* left column width */
 #col2 .cssmenu_vert,
 #col2 .cssmenu_vert li {

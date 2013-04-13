@@ -554,6 +554,10 @@ small.date {
 	z-index: 700;
 }
 
+#col2 .box-data .cssmenu_vert ul {
+	padding-left: 0;
+}
+
 .cssmenu_vert li.menuLevel1,
 .cssmenu_horiz li.menuLevel1 {
         z-index: 991;

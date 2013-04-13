@@ -500,6 +500,10 @@ cssmenu_horiz a,
 	top: -1px !important;
 }
 
+#col2 .box-data .cssmenu_vert ul {
+	padding-left: 0;
+}
+
 /* Special to match #col2 width */
 #col2 .cssmenu_vert,
 #col2 .cssmenu_vert li {

@@ -372,19 +372,19 @@ input[id="sl-login-pass"] {background: #e1e1e2}
 }
 
 /* left column width */
-#col2 ul.cssmenu_vert {
+#col2 .box-data .cssmenu_vert ul {
 	padding-left: 0;
 }
 
 #col2 .cssmenu_vert,
 #col2 .cssmenu_vert li {
-	width: 160px;
+	width: 150px;
 }
 
 /* offset from left column (matches above) */
 #col2 .cssmenu_vert li:hover ul,
 #col2 .cssmenu_vert li.sfHover ul {
-	left: 160px;
+	left: 150px;
 }
 
 /* return ul ul ... to default */

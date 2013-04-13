@@ -308,7 +308,8 @@ label {margin: 0 2px}
 }
 
 /* for wider menu in left col */
-#col2 ul.cssmenu_vert {
+#col2 .box-data .cssmenu_vert,
+#col2 .box-data .cssmenu_vert ul {
 	padding-left: 0;
 }
 

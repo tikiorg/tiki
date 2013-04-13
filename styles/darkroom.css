@@ -582,7 +582,7 @@ a.flip:hover,
 }
 
 /* left column width */
-#col2 ul.cssmenu_vert {
+#col2 .box-data .cssmenu_vert ul {
 	padding-left: 0;
 }
 

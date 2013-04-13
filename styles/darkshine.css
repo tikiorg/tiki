@@ -398,7 +398,7 @@ select[name="where"],
 	background: #f3f3f3}
 
 /* left column width */
-#col2 ul.cssmenu_vert {
+#col2 .box-data .cssmenu_vert ul {
 	padding-left: 0;
 }
 

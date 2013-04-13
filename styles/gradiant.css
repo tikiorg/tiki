@@ -419,3 +419,6 @@ a:hover .icon {
 	height: 400px;
 }
 
+#col2 .box-data .cssmenu_vert ul {
+	padding-left: 0;
+}
