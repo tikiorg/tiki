@@ -33,10 +33,14 @@ body.fullscreen #tiki-center {
 	margin: 1em;
 	margin-top: 0}
 
-/* Enable header and footer content to widen when middle has wide content. */
+/* Enable header and footer content to widen when middle has wide content.
 body.fixed_width .fixedwidth .fixedwidth {
 	width: 100%;
 	padding: 0;
+}*/
+
+#header {
+	width: 100%;
 }
 
 .fixed_width .fixedwidth {
@@ -53,11 +57,15 @@ body.fixed_width .fixedwidth .fixedwidth {
     margin-top: 0;
 }
 
+.middle_outer {
+	background: #600000;
+	padding: 15px;
+	padding-bottom: 0;
+}
+
 #middle {
 	background: #F3F3F3;
 	text-align: left;
-	border: 15px solid #600000;
-	border-bottom: none;
 }
 
 #c1c2 #wrapper #col1.marginleft {margin-left: 200px}
@@ -521,9 +529,9 @@ select[name="where"],
 
 /***** Misc. Center Col. *****/
 #tiki-center {background: #F3F3F3;}
-#role_main {
+/*#role_main {
 	margin: 0 30px 0 0;
-}
+}*/
 
 /***** Boxes *****/
 .box {
