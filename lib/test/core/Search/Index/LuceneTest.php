@@ -99,17 +99,18 @@ class Search_Index_LuceneTest extends PHPUnit_Framework_TestCase
 
 	function testWithNotCondition()
 	{
-		$query = new Search_Query('not world and hello');
-		$result = $query->search($this->index);
+		$negative = new Search_Query('not world and hello');
+		$positive = new Search_Query('not foobar and hello');
 
-		$this->assertEquals(0, count($result));
+		$this->assertEquals(0, count($negative->search($this->index)));
+		$this->assertGreaterThan(0, count($positive->search($this->index)));
 	}
 
 	function testFilterType()
 	{
+		$this->assertResultCount(1, 'filterType', 'wiki page');
 		$this->assertResultCount(0, 'filterType', 'wiki');
 		$this->assertResultCount(0, 'filterType', 'blog post');
-		$this->assertResultCount(1, 'filterType', 'wiki page');
 	}
 
 	function testFilterCategories()

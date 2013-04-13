@@ -24,6 +24,23 @@ class Search_Elastic_Index implements Search_Index_Interface
 	function addDocument(array $data)
 	{
 		$factory = $this->getTypeFactory();
+		$objectType = $data['object_type']->getValue($factory);
+		$objectId = $data['object_id']->getValue($factory);
+
+		// Note: Sending the mapping on every request is not terribly efficient. Profiling required before the feature is production-ready
+		$mapping = array_map(function ($entry) {
+			if ($entry instanceof Search_Type_Whole) {
+				return array(
+					"type" => "string",
+					"index" => "not_analyzed",
+				);
+			}
+		}, $data);
+		$mapping = array_filter($mapping);
+
+		$this->connection->mapping($this->index, $objectType, $mapping);
+
+		$factory = $this->getTypeFactory();
 		$data = array_map(function ($entry) use ($factory) {
 			return $entry->getValue($factory);
 		}, $data);

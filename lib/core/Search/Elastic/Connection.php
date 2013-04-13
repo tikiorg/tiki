@@ -42,12 +42,25 @@ class Search_Elastic_Connection
 		return $this->get("/$index/_search", json_encode($query));
 	}
 
-	function index($index, $type, $id, $data)
+	function index($index, $type, $id, array $data)
 	{
-		$type = preg_replace('/[^a-z]/', '', $type);
+		$type = $this->simplifyType($type);
 		$id = rawurlencode($id);
 
 		return $this->put("/$index/$type/$id?refresh=true", json_encode($data));
+	}
+
+	function mapping($index, $type, array $mapping)
+	{
+		$type = $this->simplifyType($type);
+		$data = array($type => array(
+			"properties" => $mapping,
+		));
+
+		$this->put("/$index", '');
+		$result = $this->put("/$index/$type/_mapping", json_encode($data));
+
+		return $result;
 	}
 
 	private function get($path, $data = null)
@@ -106,6 +119,11 @@ class Search_Elastic_Connection
 
 		$tikilib = TikiLib::lib('tiki');
 		return $tikilib->get_http_client($full);
+	}
+
+	private function simplifyType($type)
+	{
+		return preg_replace('/[^a-z]/', '', $type);
 	}
 }
 
