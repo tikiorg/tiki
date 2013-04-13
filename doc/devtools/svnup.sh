@@ -34,7 +34,7 @@
 
 rm -f last.log
 svn update > last.log
-bash setup.sh -n fix
+bash setup.sh -n fix > /dev/null
 php console.php database:update
 
 # uncomment the line below to see the list of all files updated. (ex.: if running manually)
