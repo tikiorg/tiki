@@ -11,14 +11,15 @@ class Search_Expr_Range implements Search_Expr_Interface
 	private $to;
 	private $type;
 	private $field;
-	private $weight = 1.0;
+	private $weight;
 
-	function __construct($from, $to, $type = null, $field = null)
+	function __construct($from, $to, $type = null, $field = null, $weight = 1.0)
 	{
 		$this->from = $from;
 		$this->to = $to;
 		$this->type = $type;
 		$this->field = $field;
+		$this->weight = (float) $weight;
 	}
 
 	function getToken($which)

@@ -9,6 +9,7 @@ use Search_Expr_Token as Token;
 use Search_Expr_And as AndX;
 use Search_Expr_Or as OrX;
 use Search_Expr_Not as NotX;
+use Search_Expr_Range as Range;
 
 class Search_Elastic_QueryBuilder
 {
@@ -55,6 +56,17 @@ class Search_Elastic_QueryBuilder
 				'bool' => array(
 					'must_not' => array(
 						reset($childNodes)->traverse($callback),
+					),
+				),
+			);
+		} elseif ($node instanceof Range) {
+			return array(
+				'range' => array(
+					$node->getField() => array(
+						"from" => $this->getTerm($node->getToken('from')),
+						"to" => $this->getTerm($node->getToken('to')),
+						"boost" => $node->getWeight(),
+						"include_upper" => false,
 					),
 				),
 			);

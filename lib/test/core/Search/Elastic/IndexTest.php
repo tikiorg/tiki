@@ -11,10 +11,6 @@ class Search_Elastic_IndexTest extends Search_Index_LuceneTest
 	{
 		static $count = 0;
 
-		if ($count++ > 7) {
-			$this->markTestSkipped('None of this works just yet.');
-		}
-
 		$connection = new Search_Elastic_Connection('http://localhost:9200');
 
 		$status = $connection->getStatus();

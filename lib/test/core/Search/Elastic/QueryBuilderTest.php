@@ -10,6 +10,7 @@ use Search_Expr_Token as Token;
 use Search_Expr_And as AndX;
 use Search_Expr_Or as OrX;
 use Search_Expr_Not as NotX;
+use Search_Expr_Range as Range;
 
 class Search_Elastic_QueryBuilderTest extends PHPUnit_Framework_TestCase
 {
@@ -127,6 +128,24 @@ class Search_Elastic_QueryBuilderTest extends PHPUnit_Framework_TestCase
 			"match" => array(
 				"username" => array(
 					"query" => "Some entry",
+				),
+			),
+		)), $query);
+	}
+
+	function testRangeFilter()
+	{
+		$builder = new QueryBuilder;
+
+		$query = $builder->build(new Range('Hello', 'World', 'plaintext', 'title', 1.5));
+
+		$this->assertEquals(array("query" => array(
+			"range" => array(
+				"title" => array(
+					"from" => "hello",
+					"to" => "world",
+					"boost" => 1.5,
+					"include_upper" => false,
 				),
 			),
 		)), $query);
