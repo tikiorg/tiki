@@ -1,5 +1,9 @@
 {
-    "hash": "6ab7e8a0f52d151e5a999df06b9556e3",
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
+    ],
+    "hash": "a127bf08961fca065e470c0c758e7741",
     "packages": [
         {
             "name": "adodb/adodb",
@@ -112,6 +116,28 @@
                 "html"
             ],
             "time": "2013-02-18 00:04:08"
+        },
+        {
+            "name": "jquery/jquery-ui",
+            "version": "1.10.2",
+            "dist": {
+                "type": "zip",
+                "url": "http://jqueryui.com/resources/download/jquery-ui-1.10.2.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "library"
+        },
+        {
+            "name": "jquery/jquery-ui-themes",
+            "version": "1.10.2",
+            "dist": {
+                "type": "zip",
+                "url": "http://jqueryui.com/resources/download/jquery-ui-themes-1.10.2.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "library"
         },
         {
             "name": "phpcas/phpcas",

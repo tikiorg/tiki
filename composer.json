@@ -7,6 +7,8 @@
 		"adodb/adodb": "5.18",
 		"bombayworks/zendframework1": "1.12.3",
 		"ezyang/htmlpurifier": "4.5.0",
+		"jquery/jquery-ui": "1.10.2",
+		"jquery/jquery-ui-themes": "1.10.2",
 		"phpcas/phpcas": "1.3.1",
 		"phpseclib/phpseclib": "0.3.1",
 		"smarty/smarty": "3.1.13",
@@ -57,6 +59,14 @@
 			"lib/test"
 		]
 	},
+	"scripts": {
+		"post-install-cmd": [
+			"Tiki\\Composer\\CleanVendors::clean"
+		],
+		"post-update-cmd": [
+			"Tiki\\Composer\\CleanVendors::clean"
+		]
+	},
 	"repositories": [
 		{
 			"type": "package",
@@ -77,6 +87,28 @@
 				"dist": {
 					"url": "http://downloads.sourceforge.net/project/adodb/adodb-php5-only/adodb-518-for-php5/adodb518a.tgz",
 					"type": "tar"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "jquery/jquery-ui",
+				"version": "1.10.2",
+				"dist": {
+					"url": "http://jqueryui.com/resources/download/jquery-ui-1.10.2.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "jquery/jquery-ui-themes",
+				"version": "1.10.2",
+				"dist": {
+					"url": "http://jqueryui.com/resources/download/jquery-ui-themes-1.10.2.zip",
+					"type": "zip"
 				}
 			}
 		}

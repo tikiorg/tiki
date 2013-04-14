@@ -388,9 +388,9 @@ if ($prefs['mobile_feature'] === 'y' && $prefs['mobile_mode'] === 'y') {
 			$headerlib->add_jsfile_dependancy("http://code.jquery.com/ui/$headerlib->jqueryui_version/jquery-ui.min.js");
 		} else {
 			if ( $prefs['tiki_minify_javascript'] === 'y' ) {
-				$headerlib->add_jsfile_dependancy("lib/jquery/ui/ui/minified/jquery-ui-$headerlib->jqueryui_version.min.js");
+				$headerlib->add_jsfile_dependancy("vendor/jquery/jquery-ui/ui/minified/jquery-ui.min.js");
 			} else {
-				$headerlib->add_jsfile_dependancy("lib/jquery/ui/ui/jquery-ui-$headerlib->jqueryui_version.js");
+				$headerlib->add_jsfile_dependancy("vendor/jquery/jquery-ui/ui/jquery-ui.js");
 			}
 		}
 		if (strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE 6') !== false) {
@@ -400,12 +400,12 @@ if ($prefs['mobile_feature'] === 'y' && $prefs['mobile_mode'] === 'y') {
 		if ( isset($prefs['javascript_cdn']) && $prefs['javascript_cdn'] == 'jquery' ) {
 			$headerlib->add_cssfile("http://code.jquery.com/ui/$headerlib->jqueryui_version/themes/{$prefs['feature_jquery_ui_theme']}/jquery-ui.css");
 		} else {
-			$headerlib->add_cssfile('lib/jquery/ui/themes/' . $prefs['feature_jquery_ui_theme'] . '/jquery-ui.css');
+			$headerlib->add_cssfile('vendor/jquery/jquery-ui-themes/themes/' . $prefs['feature_jquery_ui_theme'] . '/jquery-ui.css');
 		}
 
 		if ( $prefs['feature_jquery_autocomplete'] == 'y' ) {
 			$headerlib->add_css(
-				'.ui-autocomplete-loading { background: white url("lib/jquery/ui/themes/' .
+				'.ui-autocomplete-loading { background: white url("vendor/jquery/jquery-ui-themes/themes/' .
 				'base/images/ui-anim_basic_16x16.gif") right center no-repeat; }'
 			);
 		}
