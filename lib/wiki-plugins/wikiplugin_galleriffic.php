@@ -170,7 +170,7 @@ $jq = <<<JQ
 		nextPageLinkText:          '$nextPageLinkText',
 		prevPageLinkText:          '$prevPageLinkText',
         enableHistory:             false, // Specifies whether the url's hash and the browser's history cache should update when the current slideshow image changes
-        enableKeyboardNavigation:  true, // Specifies whether keyboard navigation is enabled
+        enableKeyboardNavigation:  false, // Specifies whether keyboard navigation is enabled
         autoStart:                 $autoStart, // Specifies whether the slideshow should be playing or paused when the page first loads
         syncTransitions:           false, // Specifies whether the out and in transitions occur simultaneously or distinctly
         defaultTransitionDuration: 1000, // If using the default transitions, specifies the duration of the transitions
