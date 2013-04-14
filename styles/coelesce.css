@@ -367,7 +367,6 @@ body.fixed_width .fixedwidth .fixedwidth {
 	padding-top: 8px;
 	margin-right: 8px;
 	font-size: 12px;
-	white-space: nowrap;
 }
 
 .box-search ul.cssmenu * {
