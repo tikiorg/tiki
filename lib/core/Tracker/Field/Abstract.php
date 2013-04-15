@@ -236,6 +236,8 @@ abstract class Tracker_Field_Abstract implements Tracker_Field_Interface, Tracke
 			$value = $this->itemData[$key];
 		} else if (isset($this->definition['value'])) {
 			$value = $this->definition['value'];
+		} else if (isset($this->itemData['fields'][$this->getConfiguration('permName')])) {
+			$value = $this->itemData['fields'][$this->getConfiguration('permName')];
 		} else {
 			$value = null;
 		}
