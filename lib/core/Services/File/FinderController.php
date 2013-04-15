@@ -28,6 +28,7 @@ class Services_File_FinderController
 			throw new Services_Exception_Disabled('fgal_elfinder_feature');
 		}
 		$this->fileController = new Services_File_Controller();
+		$this->fileController->setUp();
 
 		$this->parentIds = null;
 	}
