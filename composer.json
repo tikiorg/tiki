@@ -9,6 +9,7 @@
 		"ezyang/htmlpurifier": "4.5.0",
 		"jquery/jquery-ui": "1.10.2",
 		"jquery/jquery-ui-themes": "1.10.2",
+		"jquery/jquery-timepicker-addon": "1.2.2",
 		"phpcas/phpcas": "1.3.1",
 		"phpseclib/phpseclib": "0.3.1",
 		"smarty/smarty": "3.1.13",
@@ -108,6 +109,17 @@
 				"version": "1.10.2",
 				"dist": {
 					"url": "http://jqueryui.com/resources/download/jquery-ui-themes-1.10.2.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "jquery/jquery-timepicker-addon",
+				"version": "1.2.2",
+				"dist": {
+					"url": "http://github.com/trentrichardson/jQuery-Timepicker-Addon/archive/v1.2.2.zip",
 					"type": "zip"
 				}
 			}

@@ -326,7 +326,7 @@ if ( isset($prefs['javascript_cdn']) && $prefs['javascript_cdn'] == 'google' ) {
 }
 
 if ( $prefs['fgal_elfinder_feature'] === 'y' ) {
-	$headerlib->add_jsfile("lib/jquery/elfinder/js/elfinder.min.js")
+	$headerlib->add_jsfile("lib/jquery/elfinder/js/elfinder.full.js")
 			->add_cssfile("lib/jquery/elfinder/css/elfinder.min.css")
 			->add_jsfile("lib/jquery_tiki/elfinder/tiki-elfinder.js");
 }
@@ -421,7 +421,8 @@ if ($prefs['mobile_feature'] === 'y' && $prefs['mobile_mode'] === 'y') {
 				.ui-selectmenu-status { line-height: .8em; margin-right: 16px; }'
 			);
 		}
-		$headerlib->add_jsfile('lib/jquery/ui/plugins/jquery-ui-timepicker-addon.js');
+		$headerlib->add_jsfile('vendor/jquery/jquery-timepicker-addon/jquery-ui-timepicker-addon.js');
+		$headerlib->add_cssfile('vendor/jquery/jquery-timepicker-addon/jquery-ui-timepicker-addon.css');
 	}
 
 	if ( $prefs['feature_jquery_tooltips'] == 'y' ) {
