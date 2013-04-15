@@ -410,8 +410,8 @@ if ($prefs['mobile_feature'] === 'y' && $prefs['mobile_mode'] === 'y') {
 			);
 		}
 		if ( $prefs['jquery_ui_selectmenu'] == 'y' ) {
-			$headerlib->add_jsfile('lib/jquery/ui/plugins/jquery-ui-selectmenu/ui/jquery.ui.selectmenu.js');
-			$headerlib->add_cssfile('lib/jquery/ui/plugins/jquery-ui-selectmenu/themes/base/jquery.ui.selectmenu.css');
+			$headerlib->add_jsfile('vendor/jquery/jquery-ui-selectmenu/ui/jquery.ui.selectmenu.js');
+			$headerlib->add_cssfile('vendor/jquery/jquery-ui-selectmenu/themes/base/jquery.ui.selectmenu.css');
 			// standard css for selectmenu seems way too big for tiki - to be added to layout.css when not so experimental
 			$headerlib->add_css(
 				'.ui-selectmenu-menu ul li a, .ui-selectmenu-status { white-space: nowrap; }

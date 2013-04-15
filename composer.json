@@ -10,6 +10,7 @@
 		"jquery/jquery-ui": "1.10.2",
 		"jquery/jquery-ui-themes": "1.10.2",
 		"jquery/jquery-timepicker-addon": "1.2.2",
+		"jquery/jquery-ui-selectmenu": "1.3.999",
 		"phpcas/phpcas": "1.3.2",
 		"phpseclib/phpseclib": "0.3.1",
 		"smarty/smarty": "3.1.13",
@@ -120,6 +121,17 @@
 				"version": "1.2.2",
 				"dist": {
 					"url": "http://github.com/trentrichardson/jQuery-Timepicker-Addon/archive/v1.2.2.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "jquery/jquery-ui-selectmenu",
+				"version": "1.3.999",
+				"dist": {
+					"url": "https://github.com/fnagel/jquery-ui/archive/selectmenu.zip",
 					"type": "zip"
 				}
 			}
