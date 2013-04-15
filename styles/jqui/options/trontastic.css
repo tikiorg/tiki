@@ -34,7 +34,7 @@ input[type="submit"],
 .calbuttonBox a {
 	border: 1px solid #1b1613;
 	color: #b8ec79;
-	background: #0a0a0a url(../../../lib/jquery/ui/themes/trontastic/images/ui-bg_glass_40_0a0a0a_1x400.png) 50% 50% repeat-x;
+	background: #0a0a0a url(../../../vendor/jquery/jquery-ui-themes/themes/trontastic/images/ui-bg_glass_40_0a0a0a_1x400.png) 50% 50% repeat-x;
 }
 
 .button a:hover,
@@ -45,7 +45,7 @@ input[type="submit"]:hover,
 .button input:hover,
 .calbuttonBox:hover {
 	border: 1px solid #000;
-	background: #000000 url(../../../lib/jquery/ui/themes/trontastic/images/ui-bg_glass_60_000000_1x400.png) 50% 50% repeat-x;
+	background: #000000 url(../../../vendor/jquery/jquery-ui-themes/themes/trontastic/images/ui-bg_glass_60_000000_1x400.png) 50% 50% repeat-x;
 	color: #96f226;
 }
 
@@ -68,17 +68,17 @@ body.cke_show_borders {
 }
 #tiki-top {
 	border: 1px solid #aaaaaa;
-	background: #000 url(../../../lib/jquery/ui/themes/trontastic/images/ui-bg_gloss-wave_55_000000_500x100.png) 50% 50% repeat-x;
+	background: #000 url(../../../vendor/jquery/jquery-ui-themes/themes/trontastic/images/ui-bg_gloss-wave_55_000000_500x100.png) 50% 50% repeat-x;
 	color: #c6e99c;
 	font-size: 1.1em;
 }
 
 #middle {
-	background: #9fda58 url(../../../lib/jquery/ui/themes/trontastic/images/ui-bg_gloss-wave_85_9fda58_500x100.png) repeat-x;
+	background: #9fda58 url(../../../vendor/jquery/jquery-ui-themes/themes/trontastic/images/ui-bg_gloss-wave_85_9fda58_500x100.png) repeat-x;
 }
 
 .footerbgtrap {
-	background: #000 url(../../../lib/jquery/ui/themes/trontastic/images/ui-bg_gloss-wave_55_000000_500x100.png) 50% 50% repeat-x;
+	background: #000 url(../../../vendor/jquery/jquery-ui-themes/themes/trontastic/images/ui-bg_gloss-wave_55_000000_500x100.png) 50% 50% repeat-x;
 	color: #c6e99c;
 }
 
@@ -143,14 +143,14 @@ body.cke_show_borders {
 	padding: .2em;
 	margin: 0 .5em 10px;
 	border: 1px solid #4a4a4a;
-	background: #000 url(../../../lib/jquery/ui/themes/trontastic/images/ui-bg_gloss-wave_55_000000_500x100.png) 50% top repeat-x;
+	background: #000 url(../../../vendor/jquery/jquery-ui-themes/themes/trontastic/images/ui-bg_gloss-wave_55_000000_500x100.png) 50% top repeat-x;
 	color: #f3fce8;
 }
 
 .box,
 .cbox {
 	border: 1px solid #4a4a4a;
-	background: #000 url(../../../lib/jquery/ui/themes/trontastic/images/ui-bg_gloss-wave_55_000000_500x100.png) 50% top repeat-x;
+	background: #000 url(../../../vendor/jquery/jquery-ui-themes/themes/trontastic/images/ui-bg_gloss-wave_55_000000_500x100.png) 50% top repeat-x;
 	color: #f3fce8;
 }
 
@@ -169,7 +169,7 @@ th,
 td.heading,
 tr.diffheader {
 	border: 1px solid #000;
-	background: #9fda58 url(../../../lib/jquery/ui/themes/trontastic/images/ui-bg_gloss-wave_85_9fda58_500x100.png) 50% 50% repeat-x;
+	background: #9fda58 url(../../../vendor/jquery/jquery-ui-themes/themes/trontastic/images/ui-bg_gloss-wave_85_9fda58_500x100.png) 50% 50% repeat-x;
 	color: #222222;
 	font-weight: bold;
 	color: #222;
@@ -202,7 +202,7 @@ tr.diffheader {
 
 .rbox-title,
 .rbox-data {
-	background: #FBF9EE url(../../../lib/jquery/ui/themes/trontastic/images/ui-bg_gloss-wave_95_f6ecd5_500x100.png) repeat-x 50% 50%;
+	background: #FBF9EE url(../../../vendor/jquery/jquery-ui-themes/themes/trontastic/images/ui-bg_gloss-wave_95_f6ecd5_500x100.png) repeat-x 50% 50%;
 	border: 1px solid #FCEFA1;
 	color: #363636;
 }
@@ -214,7 +214,7 @@ tr.diffheader {
 .highlight, .highlight a,
 .warning .rbox-title,
 .warning .rbox-data {
-	background: #F1FBE5 url(../../../lib/jquery/ui/themes/trontastic/images/ui-bg_gloss-wave_95_f6ecd5_500x100.png) 50% 50% repeat-x;
+	background: #F1FBE5 url(../../../vendor/jquery/jquery-ui-themes/themes/trontastic/images/ui-bg_gloss-wave_95_f6ecd5_500x100.png) 50% 50% repeat-x;
 	border:1px solid #F1AC88;
 	color:#74736D;
 }
@@ -241,13 +241,13 @@ table.normal tr:nth-child(2n),
 
 .tabs {
 	border: 1px solid #d3d3d3;
-	background:#9fda58 url(../../../lib/jquery/ui/themes/trontastic/images/ui-bg_gloss-wave_85_9fda58_500x100.png) 50% 50% repeat-x;
+	background:#9fda58 url(../../../vendor/jquery/jquery-ui-themes/themes/trontastic/images/ui-bg_gloss-wave_85_9fda58_500x100.png) 50% 50% repeat-x;
 }
 
 .tabmark,
 .statuson {
 	border: 1px solid #1b1613;
-	background: #0a0a0a url(../../../lib/jquery/ui/themes/trontastic/images/ui-bg_glass_40_0a0a0a_1x400.png) 50% 50% repeat-x;
+	background: #0a0a0a url(../../../vendor/jquery/jquery-ui-themes/themes/trontastic/images/ui-bg_glass_40_0a0a0a_1x400.png) 50% 50% repeat-x;
 	font-weight: bold;
 	color: #b8ec79;
 	outline: none;
@@ -259,7 +259,7 @@ table.normal tr:nth-child(2n),
 
 .tabactive {
 	border: 1px solid #696969;
-	background: #4c4c4c url(../../../lib/jquery/ui/themes/trontastic/images/ui-bg_flat_0_4c4c4c_40x100.png) 50% 50% repeat-x;
+	background: #4c4c4c url(../../../vendor/jquery/jquery-ui-themes/themes/trontastic/images/ui-bg_flat_0_4c4c4c_40x100.png) 50% 50% repeat-x;
 	font-weight: bold;
 	color: #fff !important;
 	outline: none;
@@ -270,25 +270,25 @@ table.normal tr:nth-child(2n),
 }
 
 #tiki-top .cssmenu_horiz li {
-	background:#9fda58 url(../../../lib/jquery/ui/themes/trontastic/images/ui-bg_gloss-wave_85_9fda58_500x100.png) 50% 50% repeat-x;
+	background:#9fda58 url(../../../vendor/jquery/jquery-ui-themes/themes/trontastic/images/ui-bg_gloss-wave_85_9fda58_500x100.png) 50% 50% repeat-x;
 	margin-right: 5px;
 }
 
 .post .postbody {
 	border: 1px solid #4a4a4a;
-	background: #000000 url(../../../lib/jquery/ui/themes/trontastic/images/ui-bg_gloss-wave_55_000000_500x100.png) 50% top repeat-x;
+	background: #000000 url(../../../vendor/jquery/jquery-ui-themes/themes/trontastic/images/ui-bg_gloss-wave_55_000000_500x100.png) 50% top repeat-x;
 	color: #fff;
 }
 
 .postbody-title {
 /* border: 1px solid #aaaaaa; */
-	background:#9fda58 url(../../../lib/jquery/ui/themes/trontastic/images/ui-bg_gloss-wave_85_9fda58_500x100.png) 50% 50% repeat-x;
+	background:#9fda58 url(../../../vendor/jquery/jquery-ui-themes/themes/trontastic/images/ui-bg_gloss-wave_85_9fda58_500x100.png) 50% 50% repeat-x;
 	color: #222;
 }
 
 .caltable .even,
 .caltable .odd {
-	background: #0A0A0A url(../../../lib/jquery/ui/themes/trontastic/images/ui-bg_gloss-wave_55_000000_500x100.png) repeat-x scroll 50% 50%;
+	background: #0A0A0A url(../../../vendor/jquery/jquery-ui-themes/themes/trontastic/images/ui-bg_gloss-wave_55_000000_500x100.png) repeat-x scroll 50% 50%;
 	border:1px solid #1B1613;
 	color:#B8EC79;
 }

@@ -69,7 +69,7 @@ input[type="submit"],
 	width: auto;
 	overflow: visible;
 	border: 1px solid #d3d3d3;
-	background: #e6e6e6 url(../lib/jquery/ui/themes/base/images/ui-bg_glass_75_e6e6e6_1x400.png) 50% 50% repeat-x;
+	background: #e6e6e6 url(../vendor/jquery/jquery-ui-themes/themes/smoothness/images/ui-bg_glass_75_e6e6e6_1x400.png) 50% 50% repeat-x;
 	font-weight: normal;
 	color: #555555;
 	outline: none;
@@ -83,7 +83,7 @@ input[type="submit"]:hover,
 .calbuttonBox:hover {
 	margin: .5em .4em .5em 0;
 	border: 1px solid #999999;
-	background: #dadada url(../lib/jquery/ui/themes/base/images/ui-bg_glass_75_e6e6e6_1x400.png) 50% 50% repeat-x;
+	background: #dadada url(../vendor/jquery/jquery-ui-themes/themes/smoothness/images/ui-bg_glass_75_e6e6e6_1x400.png) 50% 50% repeat-x;
 	font-weight: normal;
 	color: #212121;
 	outline: none;
@@ -92,7 +92,7 @@ input[type="submit"]:hover,
 .highlight,
 .highlight a {
 	border: 1px solid #fcefa1;
-	background: #fbf9ee url(../lib/jquery/ui/themes/base/images/ui-bg_glass_75_e6e6e6_1x400.png) 50% 50% repeat-x;
+	background: #fbf9ee url(../vendor/jquery/jquery-ui-themes/themes/smoothness/images/ui-bg_glass_75_e6e6e6_1x400.png) 50% 50% repeat-x;
 	color: #363636;
 }
 
@@ -102,7 +102,7 @@ input[type="submit"]:hover,
 
 .button.highlight a {
 	border: 1px solid #fcefa1;
-	background: #fbf9ee url(../lib/jquery/ui/themes/base/images/ui-bg_flat_0_aaaaaa_40x100.png) 50% 50% repeat-x;
+	background: #fbf9ee url(../vendor/jquery/jquery-ui-themes/themes/smoothness/images/ui-bg_flat_0_aaaaaa_40x100.png) 50% 50% repeat-x;
 	color: #363636;
 }
 
@@ -116,7 +116,7 @@ input[type="submit"]:hover,
 .cbox {
 	padding: .2em;
 	margin: 0 .5em 10px;
-	background: #ffffff url(../lib/jquery/ui/themes/base/images/ui-bg_flat_75_ffffff_40x100.png) 50% 50% repeat-x;
+	background: #ffffff url(../vendor/jquery/jquery-ui-themes/themes/smoothness/images/ui-bg_flat_75_ffffff_40x100.png) 50% 50% repeat-x;
 	color: #222222;
 	border: 1px solid #aaaaaa;
 }
@@ -135,7 +135,7 @@ input[type="submit"]:hover,
 /* -moz-background-clip: border;
 	-moz-background-inline-policy: continuous;
 	-moz-background-origin :padding;*/
-	background: #fbf9ee url(../lib/jquery/ui/themes/base/images/ui-bg_glass_75_e6e6e6_1x400.png) repeat-x scroll 50% 50%;
+	background: #fbf9ee url(../vendor/jquery/jquery-ui-themes/themes/smoothness/images/ui-bg_glass_75_e6e6e6_1x400.png) repeat-x scroll 50% 50%;
 	border: 1px solid #ccc;
 	color: #363636;
 }
@@ -170,14 +170,14 @@ input[type="submit"]:hover,
 .errors .rbox-title,
 .errors .rbox-data {
 	color: #cd0a0a;
-	background:#fef1ec url(../lib/jquery/ui/themes/base/images/ui-bg_glass_55_fbf9ee_1x400.png) repeat-x scroll 50% bottom;
+	background:#fef1ec url(../vendor/jquery/jquery-ui-themes/themes/smoothness/images/ui-bg_glass_55_fbf9ee_1x400.png) repeat-x scroll 50% bottom;
 	border:1px solid #cd0a0a;
 }
 
 .warning .rbox-title,
 .warning .rbox-data {
 	color: #cd0a0a;
-	background: #fef1ec url(../lib/jquery/ui/themes/base/images/ui-bg_glass_55_fbf9ee_1x400.png) repeat-x scroll 50% bottom;
+	background: #fef1ec url(../vendor/jquery/jquery-ui-themes/themes/smoothness/images/ui-bg_glass_55_fbf9ee_1x400.png) repeat-x scroll 50% bottom;
 	border:1px solid #cd0a0a;
 }
 

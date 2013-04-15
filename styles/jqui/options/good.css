@@ -36,7 +36,7 @@ input[type="submit"],
 .button input,
 .calbuttonBox a {
 	border-color: #395BB0;
-	background: #395BB0 url(../../../lib/jquery/ui/themes/start/images/ui-bg_gloss-wave_75_2191c0_500x100.png) 50% 50% repeat-x;
+	background: #395BB0 url(../../../vendor/jquery/jquery-ui-themes/themes/start/images/ui-bg_gloss-wave_75_2191c0_500x100.png) 50% 50% repeat-x;
 	background-image: none;
 	color: #fff;
 }
@@ -48,7 +48,7 @@ input[type="submit"]:hover,
 .button input:hover,
 .calbuttonBox:hover {
 	border-color: #395BB0;
-	background: #fff url(../../../lib/jquery/ui/themes/start/images/ui-bg_gloss-wave_75_2191c0_500x100.png) 50% 0% repeat-x;
+	background: #fff url(../../../vendor/jquery/jquery-ui-themes/themes/start/images/ui-bg_gloss-wave_75_2191c0_500x100.png) 50% 0% repeat-x;
 	background-image: none;
 	color: #395BB0;
 }
@@ -56,7 +56,7 @@ input[type="submit"]:hover,
 .highlight,
 .highlight a {
 	border-color: #395BB0;
-	background: #395BB0 url(../../../lib/jquery/ui/themes/start/images/ui-bg_gloss-wave_75_2191c0_500x100.png) 50% 50% repeat-x;
+	background: #395BB0 url(../../../vendor/jquery/jquery-ui-themes/themes/start/images/ui-bg_gloss-wave_75_2191c0_500x100.png) 50% 50% repeat-x;
 	background-image: none;
 	color: #fff;
 }
@@ -76,7 +76,7 @@ input[type="submit"]:hover,
 
 h3.box-title, .cbox-title {
 	border-color: #395BB0;
-	background: #395BB0 url(../../../lib/jquery/ui/themes/start/images/ui-bg_gloss-wave_75_2191c0_500x100.png) 50% 50% repeat-x;
+	background: #395BB0 url(../../../vendor/jquery/jquery-ui-themes/themes/start/images/ui-bg_gloss-wave_75_2191c0_500x100.png) 50% 50% repeat-x;
 	background-image: none;
 	color: #fff;
 }
@@ -97,7 +97,7 @@ module.box, .box, .cbox {
 #tiki-top {
 	padding: 0 .3em .3em 1em;
 	border-color: #395BB0;
-	background: #395BB0 url(../../../lib/jquery/ui/themes/start/images/ui-bg_glass_45_0078ae_1x400.png) 50% 50% repeat-x;
+	background: #395BB0 url(../../../vendor/jquery/jquery-ui-themes/themes/start/images/ui-bg_glass_45_0078ae_1x400.png) 50% 50% repeat-x;
 	background-image: none;
 	color: #fff;
 	margin: 0 10px 10px;
@@ -110,7 +110,7 @@ module.box, .box, .cbox {
 
 #tiki-top .cssmenu_horiz li:hover a {
     text-decoration: none;
-	background: #fff url(../../../lib/jquery/ui/themes/start/images/ui-bg_glass_45_0078ae_1x400.png) 50% 55% repeat-x;
+	background: #fff url(../../../vendor/jquery/jquery-ui-themes/themes/start/images/ui-bg_glass_45_0078ae_1x400.png) 50% 55% repeat-x;
 	background-image: none;
 	color: #395BB0;
 }
@@ -140,7 +140,7 @@ module.box, .box, .cbox {
 .postbody-title {
 	padding: .1em .3em .2em 1em;
 	border-color: #395BB0;
-	background: #395BB0 url(../../../lib/jquery/ui/themes/start/images/ui-bg_glass_45_0078ae_1x400.png) 50% 50% repeat-x;
+	background: #395BB0 url(../../../vendor/jquery/jquery-ui-themes/themes/start/images/ui-bg_glass_45_0078ae_1x400.png) 50% 50% repeat-x;
 	background-image: none;
 	color: #fff;
 }

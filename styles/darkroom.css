@@ -788,7 +788,7 @@ a.tikihelp:hover {
 
 /**tree**/
 .ui-icon {
-background-image: url('../lib/jquery/ui/themes/ui-darkness/images/ui-icons_cccccc_256x240.png');
+background-image: url('../vendor/jquery/jquery-ui-themes/themes/ui-darkness/images/ui-icons_cccccc_256x240.png');
 }
 
 /** input widget **/
@@ -1149,8 +1149,8 @@ a.admbox.off:active {
 /*.ui-icon-closethick,*/
 .ui-dialog .ui-dialog-titlebar-close span/*,
 .ui-widget-content .ui-icon*/ {
-background-image: url(../lib/jquery/ui/themes/dark-hive/images/ui-icons_222222_256x240.png);
-background-image: url(../lib/jquery/ui/themes/dark-hive/images/ui-icons_cccccc_256x240.png);
+background-image: url(../vendor/jquery/jquery-ui-themes/themes/dark-hive/images/ui-icons_222222_256x240.png);
+background-image: url(../vendor/jquery/jquery-ui-themes/themes/dark-hive/images/ui-icons_cccccc_256x240.png);
 }
 
 .ui-dialog .ui-dialog-titlebar-close span:hover {

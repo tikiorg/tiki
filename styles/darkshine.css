@@ -1283,7 +1283,7 @@ a.admbox.off:active {
 
 /** tree **/
 .ui-icon {
-background-image:url('../lib/jquery/ui/themes/smoothness/images/ui-icons_888888_256x240.png');
+background-image:url('../vendor/jquery/jquery-ui-themes/themes/smoothness/images/ui-icons_888888_256x240.png');
 }
 
 /* End of File */
