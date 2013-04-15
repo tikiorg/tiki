@@ -356,13 +356,6 @@ body.fixed_width .fixedwidth .fixedwidth {
 	padding-top: 8px;
 }
 
-
-.box-search form .ac_input,
-.box-search form input[type=text] {
-	border: none;
-	background: none;
-}
-
 .box-search form {
 	padding-top: 8px;
 	margin-right: 8px;
@@ -373,8 +366,14 @@ body.fixed_width .fixedwidth .fixedwidth {
 	width: 40px;
 }
 
-.box-search .findtitle input,
-.box-search input#search_mod_input_1 {
+#top_modules .box-search form .ac_input,
+#top_modules .box-search form input[type=text],
+#topbar_modules .box-search form .ac_input,
+#topbar_modules .box-search form input[type=text],
+#top_modules .box-search .findtitle input,
+#top_modules .box-search input#search_mod_input_1,
+#topbar_modules .box-search .findtitle input,
+#topbar_modules .box-search input#search_mod_input_1 {
 	border: none;
 	background: none;
 }
