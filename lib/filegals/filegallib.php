@@ -1664,7 +1664,7 @@ class FileGalLib extends TikiLib
 		for ($node = $this->get_file_gallery_info($galleryIdentifier); $node && $node['galleryId'] != $rootIdentifier; $node = $this->get_file_gallery_info($node['parentId'])) {
 			$path[$node['galleryId']] = $node['name'];
 		}
-		if (isset($userGallery) && $rootIdentifier == $userGallery || $rootIdentifier == $galleryIdentifier) {
+		if (isset($userGallery) && $rootIdentifier == $prefs['fgal_root_user_id']) {
 			$path[$rootIdentifier] = tra('User File Galleries');
 		} elseif ($rootIdentifier == $prefs['fgal_root_wiki_attachments_id']) {
 			$path[$rootIdentifier] = tra('Wiki Attachment File Galleries');
