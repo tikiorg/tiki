@@ -953,6 +953,51 @@ class FileGalLib extends TikiLib
 		return $result;
 	}
 
+	function duplicate_file($id, $galleryId = null, $newName = false) {
+		global $user;
+
+		$file = $this->get_file($id);
+		if (!$galleryId) {
+			$galleryId = $file['galleryId'];
+		}
+
+		$path = $file['path'];
+		$savedir = $this->get_gallery_save_dir($galleryId);
+
+		if ($savedir !== false) {
+			$fhash = $this->find_unique_name($savedir, $path);
+			if (copy($savedir . $file['path'], $savedir . $fhash)) {
+				$path = $fhash;
+			} else {
+				$path = '';		// something wrong?
+				if (empty($file['data'])) {
+					TikiLib::lib('errorreport')->report(tr('Error duplicating file %0', $id));
+				}
+			}
+		}
+
+		$id = $this->insert_file(
+			$galleryId,
+			$file['name'] . ($newName ? tra(' copy') : ''),
+			$file['description'],
+			$file['filename'],
+			$file['data'],
+			$file['size'],
+			$file['type'],
+			$user,
+			$path,
+			$file['comment'],
+			$file['author'],
+			'',						// created now
+			$file['lockedby'],
+			$file['deleteAfter'],
+			0,						// id
+			$file['metadata']
+		);
+
+		return $id;
+	}
+
 	function replace_file(
 		$id, $name, $description, $filename, $data, $size, $type, $creator, $path, $comment='',
 		$gal_info, $didFileReplace, $author='', $created='', $lockedby = null, $deleteAfter = null,

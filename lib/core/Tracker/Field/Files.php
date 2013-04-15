@@ -78,6 +78,11 @@ class Tracker_Field_Files extends Tracker_Field_Abstract
 						'description' => tr('File gallery browse files. Use 0 for root file gallery. (requires elFinder feature - experimental)'),
 						'filter' => 'int',
 					),
+					'duplicateGalleryId' => array(
+						'name' => tr('Duplicate Gallery ID'),
+						'description' => tr('File gallery to duplicate files into when copying the tracker item. 0 or empty means do not duplicate (default).'),
+						'filter' => 'int',
+					),
 				),
 			),
 		);
@@ -283,6 +288,32 @@ class Tracker_Field_Files extends Tracker_Field_Abstract
 		return array(
 			'value' => $value,
 		);
+	}
+
+	/**
+	 * called from action_clone_item and duplicates the related files if option duplicateGalleryID is set
+	 */
+	function handleClone()
+	{
+		global $prefs;
+
+		if ($galleryId = $this->getOption('duplicateGalleryId')) {
+
+			$filegallib = TikiLib::lib('filegal');
+			$oldValue = $this->getValue();
+
+			// to use the user's userfiles gallery enter the fgal_root_user_id which is often (but not always) 2 TODO refactor
+			if ($prefs['feature_use_fgal_for_user_files'] === 'y' && $galleryId == $prefs['fgal_root_user_id']) {
+				$galleryId = (int) $filegallib->get_user_file_gallery();
+			}
+			$newIds = array();
+
+			foreach (array_filter(explode(',', $oldValue)) as $fileId) {
+				$newIds[] = $filegallib->duplicate_file($fileId, $galleryId);
+			}
+
+			$this->handleSave(implode(',', $newIds), $oldValue);
+		}
 	}
 
 	function watchCompare($old, $new)

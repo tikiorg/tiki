@@ -509,6 +509,13 @@ class Services_Tracker_Controller
 
 			$id = $this->utilities->insertItem($definition, $itemData);
 
+			foreach($definition->getFields() as $field) {
+				$handler = $definition->getFieldFactory()->getHandler($field, $itemData);
+				if (method_exists($handler, 'handleClone')) {
+					$handler->handleClone();
+				}
+			}
+
 			$itemObject = Tracker_Item::fromId($id);
 
 			$trklib = TikiLib::lib('trk');
@@ -520,7 +527,19 @@ class Services_Tracker_Controller
 					$data = $childItem->getData();
 					$data['fields'][$info['field']] = $id;
 
-					$new = $this->utilities->insertItem($childItem->getDefinition(), $data);
+					$childDefinition = $childItem->getDefinition();
+					$new = $this->utilities->insertItem($childDefinition, $data);
+
+					if ($new) {	// handle specific cloning actions
+
+						foreach($childDefinition->getFields() as $field) {
+							$handler = $childDefinition->getFieldFactory()->getHandler($field, $data);
+							if (method_exists($handler, 'handleClone')) {
+								$handler->handleClone();
+							}
+						}
+					}
+
 				}
 			}
 
