@@ -405,8 +405,7 @@ if ($prefs['mobile_feature'] === 'y' && $prefs['mobile_mode'] === 'y') {
 
 		if ( $prefs['feature_jquery_autocomplete'] == 'y' ) {
 			$headerlib->add_css(
-				'.ui-autocomplete-loading { background: white url("vendor/jquery/jquery-ui-themes/themes/' .
-				'base/images/ui-anim_basic_16x16.gif") right center no-repeat; }'
+				'.ui-autocomplete-loading { background: white url("img/spinner.gif") right center no-repeat; }'
 			);
 		}
 		if ( $prefs['jquery_ui_selectmenu'] == 'y' ) {
