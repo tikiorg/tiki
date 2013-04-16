@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "7f476dde9045accca414f540eace21c6",
+    "hash": "736faf02fcf5087c7f1318e177313009",
     "packages": [
         {
             "name": "aFarkas/html5shiv",
@@ -335,6 +335,17 @@
                 "templating"
             ],
             "time": "2013-01-26 12:03:52"
+        },
+        {
+            "name": "svg-edit/svg-edit",
+            "version": "2.6",
+            "dist": {
+                "type": "zip",
+                "url": "http://svg-edit.googlecode.com/files/svg-edit-2.6.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "library"
         },
         {
             "name": "symfony/console",
