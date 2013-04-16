@@ -6,7 +6,7 @@
 // $Id$
 
 /*
- * Shared functions for tiki implementation of ckeditor (v3.6.2)
+ * Shared functions for tiki implementation of nkeditor (v3.6.2)
  */
 
 class WYSIWYGLib
@@ -15,14 +15,12 @@ class WYSIWYGLib
 	{
         static $notallreadyloaded =true;
 		$ckEditor = 'ckeditor4';
-		// $ckEditor = 'ckeditor'; ... to revert also fix CKEDITOR.addCss in the plugin.js files
 
 		global $tikiroot, $prefs;
 		$headerlib = TikiLib::lib('header');
         if ($notallreadyloaded) $headerlib->add_js_config('window.CKEDITOR_BASEPATH = "'. $tikiroot . 'lib/'.$ckEditor.'/";')
 				//// for js debugging - copy _source from ckeditor distribution to libs/ckeditor to use
 				//// note, this breaks ajax page load via wikitopline edit icon
-				//->add_jsfile('lib/ckeditor/ckeditor_source.js');
 				->add_jsfile('lib/'.$ckEditor.'/ckeditor.js', 0, true)
 				->add_jsfile('lib/'.$ckEditor.'/adapters/jquery.js', 0, true)
 				->add_js('window.CKEDITOR.config._TikiRoot = "'.$tikiroot.'";', 1);
