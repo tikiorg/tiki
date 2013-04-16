@@ -14,16 +14,30 @@ class CleanVendors
 	{
 		$vendors = __DIR__ . '/../../../../vendor/';
 
+		self::deleteDirectory($vendors . 'adodb/adodb/docs');
+		self::deleteDirectory($vendors . 'adodb/adodb/tests');
 		self::deleteDirectory($vendors . 'aFarkas/html5shiv/build');
 		self::deleteDirectory($vendors . 'aFarkas/html5shiv/test');
+		self::deleteDirectory($vendors . 'codemirror/codemirror/demo');
+		self::deleteDirectory($vendors . 'codemirror/codemirror/doc');
+		self::deleteDirectory($vendors . 'codemirror/codemirror/test');
+		self::deleteDirectory($vendors . 'jquery/jquery-ui-selectmenu/demos');
+		self::deleteDirectory($vendors . 'jquery/jquery-ui-selectmenu/tests');
 		self::deleteDirectory($vendors . 'jquery/jquery-ui/demos');
 		self::deleteDirectory($vendors . 'jquery/jquery-ui/tests');
 		self::deleteDirectory($vendors . 'jquery/jquery-ui/themes');
+		self::deleteDirectory($vendors . 'ezyang/htmlpurifier/docs');
 		self::deleteDirectory($vendors . 'ezyang/htmlpurifier/tests');
+		self::deleteDirectory($vendors . 'phpcas/phpcas/CAS-1.3.2/docs');
+		self::deleteDirectory($vendors . 'phpseclib/phpseclib/tests');
 		self::deleteDirectory($vendors . 'smarty/smarty/development');
 		self::deleteDirectory($vendors . 'smarty/smarty/documentation');
-		self::deleteDirectory($vendors . 'zetacomponents/webdav/docs');
+		self::deleteDirectory($vendors . 'smarty/smarty/distribution/demo');
+		self::deleteDirectory($vendors . 'zetacomponents/base/design');
+		self::deleteDirectory($vendors . 'zetacomponents/base/docs');
+		self::deleteDirectory($vendors . 'zetacomponents/base/tests');
 		self::deleteDirectory($vendors . 'zetacomponents/webdav/design');
+		self::deleteDirectory($vendors . 'zetacomponents/webdav/docs');
 		self::deleteDirectory($vendors . 'zetacomponents/webdav/tests');
 	}
 
