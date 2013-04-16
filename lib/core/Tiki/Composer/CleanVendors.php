@@ -14,6 +14,8 @@ class CleanVendors
 	{
 		$vendors = __DIR__ . '/../../../../vendor/';
 
+		self::deleteDirectory($vendors . 'aFarkas/html5shiv/build');
+		self::deleteDirectory($vendors . 'aFarkas/html5shiv/test');
 		self::deleteDirectory($vendors . 'jquery/jquery-ui/demos');
 		self::deleteDirectory($vendors . 'jquery/jquery-ui/tests');
 		self::deleteDirectory($vendors . 'jquery/jquery-ui/themes');

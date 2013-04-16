@@ -5,6 +5,7 @@
 	"minimum-stability": "stable",
 	"require": {
 		"adodb/adodb": "5.18",
+		"aFarkas/html5shiv": "3.6.2",
 		"bombayworks/zendframework1": "1.12.3",
 		"ckeditor/ckeditor": "4.0.3",
 		"codemirror/codemirror": "2.25",
@@ -77,10 +78,10 @@
 		{
 			"type": "package",
 			"package": {
-				"name": "phpcas/phpcas",
-				"version": "1.3.2",
+				"name": "adodb/adodb",
+				"version": "5.18",
 				"dist": {
-					"url": "http://downloads.jasig.org/cas-clients/php/1.3.2/CAS-1.3.2.tgz",
+					"url": "http://downloads.sourceforge.net/project/adodb/adodb-php5-only/adodb-518-for-php5/adodb518a.tgz",
 					"type": "tar"
 				}
 			}
@@ -88,11 +89,11 @@
 		{
 			"type": "package",
 			"package": {
-				"name": "adodb/adodb",
-				"version": "5.18",
+				"name": "aFarkas/html5shiv",
+				"version": "3.6.2",
 				"dist": {
-					"url": "http://downloads.sourceforge.net/project/adodb/adodb-php5-only/adodb-518-for-php5/adodb518a.tgz",
-					"type": "tar"
+					"url": "https://github.com/aFarkas/html5shiv/archive/3.6.2.zip",
+					"type": "zip"
 				}
 			}
 		},
@@ -170,6 +171,17 @@
 				"dist": {
 					"url": "https://github.com/fnagel/jquery-ui/archive/selectmenu.zip",
 					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "phpcas/phpcas",
+				"version": "1.3.2",
+				"dist": {
+					"url": "http://downloads.jasig.org/cas-clients/php/1.3.2/CAS-1.3.2.tgz",
+					"type": "tar"
 				}
 			}
 		},

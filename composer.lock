@@ -3,8 +3,19 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "50589c6c3ca7e15e3194810bb0af92e8",
+    "hash": "7f476dde9045accca414f540eace21c6",
     "packages": [
+        {
+            "name": "aFarkas/html5shiv",
+            "version": "3.6.2",
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/aFarkas/html5shiv/archive/3.6.2.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "library"
+        },
         {
             "name": "adodb/adodb",
             "version": "5.18",
