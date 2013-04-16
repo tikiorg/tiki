@@ -98,9 +98,7 @@ class Tracker_Field_Files extends Tracker_Field_Abstract
 		$deepGallerySearch = (boolean) $this->getOption('deepGallerySearch');
 
 		// to use the user's userfiles gallery enter the fgal_root_user_id which is often (but not always) 2
-		if ($prefs['feature_use_fgal_for_user_files'] === 'y' && $galleryId == $prefs['fgal_root_user_id']) {
-			$galleryId = (int) $filegallib->get_user_file_gallery();
-		}
+		$galleryId = $filegallib->check_user_file_gallery($galleryId);
 
 		$value = '';
 		$ins_id = $this->getInsertId();
@@ -304,10 +302,9 @@ class Tracker_Field_Files extends Tracker_Field_Abstract
 
 			$filegallib = TikiLib::lib('filegal');
 
-			// to use the user's userfiles gallery enter the fgal_root_user_id which is often (but not always) 2 TODO refactor
-			if ($prefs['feature_use_fgal_for_user_files'] === 'y' && $galleryId == $prefs['fgal_root_user_id']) {
-				$galleryId = (int) $filegallib->get_user_file_gallery();
-			}
+			// to use the user's userfiles gallery enter the fgal_root_user_id which is often (but not always) 2
+			$galleryId = $filegallib->check_user_file_gallery($galleryId);
+
 			$newIds = array();
 
 			foreach (array_filter(explode(',', $oldValue)) as $fileId) {

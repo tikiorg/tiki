@@ -104,6 +104,12 @@ class FileGalLib extends TikiLib
 		return $return;
 	}
 
+	/**
+	 * Looks for and returns a user's file gallery, depending on the various prefs
+	 *
+	 * @return bool|int		false if none found, id of user's filegal otherwise
+	 */
+
 	function get_user_file_gallery()
 	{
 		global $user, $prefs;
@@ -162,6 +168,24 @@ class FileGalLib extends TikiLib
 			}
 		}
 		return $name;
+	}
+
+	/**
+	 * Checks if a galleryId is the user filegal root and converts it to the correct user gallery for that user
+	 * Otherwise just passes through
+	 *
+	 * @param $galleryId	gallery id to check and change if necessary
+	 * @return int			user's gallery id if applicable
+	 */
+
+	function check_user_file_gallery($galleryId) {
+		global $prefs;
+
+		if ($prefs['feature_use_fgal_for_user_files'] === 'y' && $galleryId == $prefs['fgal_root_user_id']) {
+			$galleryId = $this->get_user_file_gallery();
+		}
+
+		return (int) $galleryId;
 	}
 
 	function remove_file($fileInfo, $galInfo='', $disable_notifications = false)
@@ -995,6 +1019,11 @@ class FileGalLib extends TikiLib
 			0,						// id
 			$file['metadata']
 		);
+
+		$attributes = TikiLib::lib('attribute')->get_attributes('file', $file['fileId']);
+		if ($url = $attributes['tiki.content.url']) {
+			$this->attach_file_source($id, $url, $file, true);
+		}
 
 		return $id;
 	}
