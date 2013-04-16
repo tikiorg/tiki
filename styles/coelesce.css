@@ -406,6 +406,10 @@ input[name="search"] {
 	color: #FFFFFF;
 }
 
+.siteloginbar_popup .tabmark:hover a {
+	background: none;
+}
+
 #sitelocbar {
 	float: left;
 }
