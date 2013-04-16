@@ -528,17 +528,18 @@ class Services_Tracker_Controller
 					$data['fields'][$info['field']] = $id;
 
 					$childDefinition = $childItem->getDefinition();
-					$new = $this->utilities->insertItem($childDefinition, $data);
 
-					if ($new) {	// handle specific cloning actions
+					// handle specific cloning actions
 
-						foreach($childDefinition->getFields() as $field) {
-							$handler = $childDefinition->getFieldFactory()->getHandler($field, $data);
-							if (method_exists($handler, 'handleClone')) {
-								$handler->handleClone();
-							}
+					foreach($childDefinition->getFields() as $field) {
+						$handler = $childDefinition->getFieldFactory()->getHandler($field, $data);
+						if (method_exists($handler, 'handleClone')) {
+							$newData = $handler->handleClone();
+							$data['fields'][$field['permName']] = $newData['value'];
 						}
 					}
+
+					$new = $this->utilities->insertItem($childDefinition, $data);
 
 				}
 			}
