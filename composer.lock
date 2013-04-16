@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "c335905c163ce45ef69497fbeac8d0c7",
+    "hash": "bc79f98cc4d01c8111f2bb560dd76527",
     "packages": [
         {
             "name": "adodb/adodb",
@@ -127,6 +127,17 @@
                 "html"
             ],
             "time": "2013-02-18 00:04:08"
+        },
+        {
+            "name": "jquery/jquery-sheet",
+            "version": "2.0.1",
+            "dist": {
+                "type": "zip",
+                "url": "http://jquerysheet.googlecode.com/files/jquery.sheet-2.0.1.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "library"
         },
         {
             "name": "jquery/jquery-timepicker-addon",
