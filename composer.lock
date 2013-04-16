@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "e2af64b60473fdb8880d563facf4729f",
+    "hash": "50589c6c3ca7e15e3194810bb0af92e8",
     "packages": [
         {
             "name": "adodb/adodb",
@@ -270,6 +270,17 @@
                 "x509"
             ],
             "time": "2012-11-20 03:10:22"
+        },
+        {
+            "name": "rangy/rangy",
+            "version": "1.2.3",
+            "dist": {
+                "type": "tar",
+                "url": "http://rangy.googlecode.com/files/rangy-1.2.3.tar.gz",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "library"
         },
         {
             "name": "smarty/smarty",

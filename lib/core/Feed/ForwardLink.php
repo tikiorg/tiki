@@ -550,9 +550,9 @@ JQ
 		$version = $args['version'];
 
 		$headerlib
-			->add_jsfile('lib/rangy/uncompressed/rangy-core.js')
-			->add_jsfile('lib/rangy/uncompressed/rangy-cssclassapplier.js')
-			->add_jsfile('lib/rangy/uncompressed/rangy-selectionsaverestore.js')
+			->add_jsfile('vendor/rangy/rangy/uncompressed/rangy-core.js')
+			->add_jsfile('vendor/rangy/rangy/uncompressed/rangy-cssclassapplier.js')
+			->add_jsfile('vendor/rangy/rangy/uncompressed/rangy-selectionsaverestore.js')
 			->add_jsfile('lib/rangy_tiki/rangy-phraser.js')
 			->add_jsfile('lib/ZeroClipboard.js')
 			->add_jsfile('lib/core/JisonParser/Phraser.js')
