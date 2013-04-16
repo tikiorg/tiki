@@ -10,6 +10,7 @@ use Search_Expr_And as AndX;
 use Search_Expr_Or as OrX;
 use Search_Expr_Not as NotX;
 use Search_Expr_Range as Range;
+use Search_Expr_Initial as Initial;
 
 class Search_Elastic_QueryBuilder
 {
@@ -59,6 +60,15 @@ class Search_Elastic_QueryBuilder
 					),
 				),
 			);
+		} elseif ($node instanceof Initial) {
+			return array(
+				'prefix' => array(
+					$node->getField() => array(
+						"value" => $this->getTerm($node),
+						"boost" => $node->getWeight(),
+					),
+				),
+			);
 		} elseif ($node instanceof Range) {
 			return array(
 				'range' => array(
@@ -92,8 +102,8 @@ class Search_Elastic_QueryBuilder
 				$node->getField() => array("query" => reset($value)),
 			));
 		} else {
-			return array("term" => array(
-				$node->getField() => array("value" => $this->getTerm($node), "boost" => $node->getWeight()),
+			return array("match" => array(
+				$node->getField() => array("query" => $this->getTerm($node), "boost" => $node->getWeight()),
 			));
 		}
 	}

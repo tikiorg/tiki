@@ -174,7 +174,7 @@ class Search_Index_LuceneTest extends PHPUnit_Framework_TestCase
 
 	function testMatchInitial()
 	{
-		$this->assertResultCount(1, 'filterInitial', 'HomePage');
+		$this->assertResultCount(1, 'filterInitial', 'HomePag');
 		$this->assertResultCount(1, 'filterInitial', 'Home');
 		$this->assertResultCount(0, 'filterInitial', 'Fuzzy');
 		$this->assertResultCount(0, 'filterInitial', 'Ham');
