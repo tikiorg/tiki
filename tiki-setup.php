@@ -342,9 +342,9 @@ if ( $prefs['tiki_minify_javascript'] === 'y' ) {
 if ($prefs['feature_syntax_highlighter'] == 'y') {
 	//add codemirror stuff
 	$headerlib
-		->add_cssfile('lib/codemirror/lib/codemirror.css')
-		->add_jsfile_dependancy('lib/codemirror/lib/codemirror.js')
-		->add_jsfile_dependancy('lib/codemirror/lib/util/searchcursor.js')
+		->add_cssfile('vendor/codemirror/codemirror/lib/codemirror.css')
+		->add_jsfile_dependancy('vendor/codemirror/codemirror/lib/codemirror.js')
+		->add_jsfile_dependancy('vendor/codemirror/codemirror/lib/util/searchcursor.js')
 	//add tiki stuff
 		->add_cssfile('lib/codemirror_tiki/codemirror_tiki.css')
 		->add_jsfile_dependancy('lib/codemirror_tiki/codemirror_tiki.js');

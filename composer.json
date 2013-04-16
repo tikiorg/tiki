@@ -7,6 +7,7 @@
 		"adodb/adodb": "5.18",
 		"bombayworks/zendframework1": "1.12.3",
 		"ckeditor/ckeditor": "4.0.3",
+		"codemirror/codemirror": "2.25",
 		"ezyang/htmlpurifier": "4.5.0",
 		"jquery/jquery-sheet": "2.0.1",
 		"jquery/jquery-ui": "1.10.2",
@@ -101,6 +102,17 @@
 				"version": "4.0.3",
 				"dist": {
 					"url": "http://download.cksource.com/CKEditor/CKEditor/CKEditor%204.0.3/ckeditor_4.0.3_standard.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "codemirror/codemirror",
+				"version": "2.25",
+				"dist": {
+					"url": "http://codemirror.net/codemirror-2.25.zip",
 					"type": "zip"
 				}
 			}

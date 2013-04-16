@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "bc79f98cc4d01c8111f2bb560dd76527",
+    "hash": "e2af64b60473fdb8880d563facf4729f",
     "packages": [
         {
             "name": "adodb/adodb",
@@ -79,6 +79,17 @@
             "dist": {
                 "type": "zip",
                 "url": "http://download.cksource.com/CKEditor/CKEditor/CKEditor%204.0.3/ckeditor_4.0.3_standard.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "library"
+        },
+        {
+            "name": "codemirror/codemirror",
+            "version": "2.25",
+            "dist": {
+                "type": "zip",
+                "url": "http://codemirror.net/codemirror-2.25.zip",
                 "reference": null,
                 "shasum": null
             },
