@@ -126,7 +126,7 @@ class FileGalLib extends TikiLib
 
 		$fgal_info =& $conditions;
 		$fgal_info['public'] = 'n';
-		$fgal_info['visible'] = $prefs['userfiles_private'] === 'n' ? 'y' : 'n';
+		$fgal_info['visible'] = $prefs['userfiles_private'] === 'y' || $prefs['userfiles_hidden'] === 'y' ? 'n' : 'y';
 		$fgal_info['quota'] = $prefs['userfiles_quota'];
 
 		// Create the user gallery if it does not exist yet

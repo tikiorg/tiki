@@ -15,6 +15,7 @@
 		<legend>{tr}Settings{/tr}</legend>
 		{preference name=userfiles_quota}
 		{preference name=userfiles_private}
+		{preference name=userfiles_hidden}
 
 		{if $prefs.feature_use_fgal_for_user_files eq 'n'}
 			<table class="admin">

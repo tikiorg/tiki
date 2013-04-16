@@ -16,7 +16,13 @@ function prefs_userfiles_list()
 		),
 		'userfiles_private' => array(
 			'name' => tra('Private'),
-			'description' => tra("Users can see each other's files"),
+			'description' => tra("Users cannot see each other's files or galleries"),
+			'type' => 'flag',
+			'default' => 'n',
+		),
+		'userfiles_hidden' => array(
+			'name' => tra('Hidden'),
+			'description' => tra("Users can see each other's files, but don't see the galleries in listings"),
 			'type' => 'flag',
 			'default' => 'n',
 		),
