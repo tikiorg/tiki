@@ -6,6 +6,7 @@
 	"require": {
 		"adodb/adodb": "5.18",
 		"bombayworks/zendframework1": "1.12.3",
+		"ckeditor/ckeditor": "4.0.3",
 		"ezyang/htmlpurifier": "4.5.0",
 		"jquery/jquery-ui": "1.10.2",
 		"jquery/jquery-ui-themes": "1.10.2",
@@ -89,6 +90,17 @@
 				"dist": {
 					"url": "http://downloads.sourceforge.net/project/adodb/adodb-php5-only/adodb-518-for-php5/adodb518a.tgz",
 					"type": "tar"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "ckeditor/ckeditor",
+				"version": "4.0.3",
+				"dist": {
+					"url": "http://download.cksource.com/CKEditor/CKEditor/CKEditor%204.0.3/ckeditor_4.0.3_standard.zip",
+					"type": "zip"
 				}
 			}
 		},

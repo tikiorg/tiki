@@ -14,15 +14,13 @@ class WYSIWYGLib
 	function setUpEditor($is_html, $dom_id, $params = array(), $auto_save_referrer = '', $full_page = true)
 	{
         static $notallreadyloaded =true;
-		$ckEditor = 'ckeditor4';
 
 		global $tikiroot, $prefs;
 		$headerlib = TikiLib::lib('header');
-        if ($notallreadyloaded) $headerlib->add_js_config('window.CKEDITOR_BASEPATH = "'. $tikiroot . 'lib/'.$ckEditor.'/";')
+        if ($notallreadyloaded) $headerlib->add_js_config('window.CKEDITOR_BASEPATH = "'. $tikiroot . 'vendor/ckeditor/ckeditor/";')
 				//// for js debugging - copy _source from ckeditor distribution to libs/ckeditor to use
 				//// note, this breaks ajax page load via wikitopline edit icon
-				->add_jsfile('lib/'.$ckEditor.'/ckeditor.js', 0, true)
-				->add_jsfile('lib/'.$ckEditor.'/adapters/jquery.js', 0, true)
+				->add_jsfile('vendor/ckeditor/ckeditor/ckeditor.js', 0, true)
 				->add_js('window.CKEDITOR.config._TikiRoot = "'.$tikiroot.'";', 1);
 
 		if ($notallreadyloaded && $full_page) {

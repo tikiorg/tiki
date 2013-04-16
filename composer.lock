@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "c06afe2378c4b9c34590d3d884f62012",
+    "hash": "c335905c163ce45ef69497fbeac8d0c7",
     "packages": [
         {
             "name": "adodb/adodb",
@@ -57,7 +57,7 @@
                     "ZendX_": "extras/library/"
                 }
             },
-            "notification-url": "http://packagist.org/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "include-path": [
                 "library/",
                 "extras/library/"
@@ -72,6 +72,17 @@
                 "framework"
             ],
             "time": "2013-03-13 17:09:28"
+        },
+        {
+            "name": "ckeditor/ckeditor",
+            "version": "4.0.3",
+            "dist": {
+                "type": "zip",
+                "url": "http://download.cksource.com/CKEditor/CKEditor/CKEditor%204.0.3/ckeditor_4.0.3_standard.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "library"
         },
         {
             "name": "ezyang/htmlpurifier",
@@ -99,7 +110,7 @@
                     "library/HTMLPurifier.composer.php"
                 ]
             },
-            "notification-url": "http://packagist.org/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "LGPL"
             ],
@@ -310,7 +321,7 @@
                     "Symfony\\Component\\Console\\": ""
                 }
             },
-            "notification-url": "http://packagist.org/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
