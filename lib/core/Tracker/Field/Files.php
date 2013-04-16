@@ -227,6 +227,8 @@ class Tracker_Field_Files extends Tracker_Field_Abstract
 				include_once('lib/wiki-plugins/wikiplugin_img.php');
 				$params['fromFieldId'] = $this->getConfiguration('fieldId');
 				$params['fromItemId'] = $this->getItemId();
+				$item = Tracker_Item::fromInfo($this->getItemData());
+				$params['checkItemPerms'] = $item->canModify() ? 'n' : 'y';
 				$ret = wikiplugin_img('', $params, 0);
 				$ret = preg_replace('/~\/?np~/', '', $ret);
 			} else {

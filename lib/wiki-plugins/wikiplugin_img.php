@@ -391,8 +391,9 @@ function wikiplugin_img( $data, $params )
 	$imgdata['alt'] = '';
 	$imgdata['default'] = '';
 	$imgdata['mandatory'] = '';
-	$imgdata['fromFieldId'] = 0;	// "private" params set by Tracker_Field_Files
-	$imgdata['fromItemId']  = 0;	// ditto
+	$imgdata['fromFieldId'] = 0;		// "private" params set by Tracker_Field_Files
+	$imgdata['fromItemId']  = 0;		// ditto
+	$imgdata['checkItemPerms']  = 'y';	// ditto
 	$imgdata['noDrawIcon']  = 'n';
 
 	$imgdata = array_merge($imgdata, $params);
@@ -1209,21 +1210,21 @@ function wikiplugin_img( $data, $params )
 	if ($prefs['feature_draw'] == 'y' && !empty($dbinfo['galleryId']) && $imgdata['noDrawIcon'] !== 'y') {
 		global $tiki_p_edit;
 		$globalperms = Perms::get(array( 'type' => 'file gallery', 'object' => $dbinfo['galleryId'] ));
+		if ($imgdata['fromItemId']) {
+			if ($imgdata['checkItemPerms'] !== 'n') {
+				$perms_Accessor = Perms::get(array('type' => 'tracker item', 'object' => $imgdata['fromItemId']));
+				$trackerItemPerms = $perms_Accessor->modify_tracker_items;
+			} else {
+				$trackerItemPerms = true;
+			}
+		} else {
+			$trackerItemPerms = false;
+		}
 
-		if (
-			$globalperms->upload_files == 'y' &&
-			(
-				empty($src) == true ||
-				$srcIsEditable == true
-			) && (
-				$tiki_p_edit == 'y' ||
-				($imgdata['fromItemId'] &&
-					Perms::get(array(
-						'type' => 'tracker item',
-						'object' => $imgdata['fromItemId'])
-					)->modify_tracker_items)
-			)
-		) {
+		if ($globalperms->upload_files == 'y' &&
+			(empty($src) == true || $srcIsEditable == true) &&
+			($tiki_p_edit == 'y' || $trackerItemPerms)) {
+
 			if ($prefs['wiki_edit_icons_toggle'] == 'y' && !isset($_COOKIE['wiki_plugin_edit_view']) && !$imgdata['fromItemId']) {
 				$iconDisplayStyle = " style=\"display:none;\"";
 			} else {
