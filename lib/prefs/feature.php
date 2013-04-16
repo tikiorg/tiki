@@ -1082,6 +1082,21 @@ function prefs_feature_list($partial = false)
 			'type' => 'flag',
 			'default' => 'n',
 		),
+		'feature_draw_in_userfiles' => array(
+			'name' => tra('Draw in User File Gallery'),
+			'description' => tra("User's drawings are stored in their user files gallery"),
+			'help' => 'Draw',
+			'dependencies' => array(
+				'feature_draw',
+				'feature_file_galleries',
+				'feature_userfiles',
+				'feature_use_fgal_for_user_files',
+				'feature_draw_separate_base_image',
+			),
+			'tags' => array('experimental'),
+			'type' => 'flag',
+			'default' => 'n',
+		),
 		'feature_docs' => array(
 			'name' => tra('Docs (WebODF)'),
 			'description' => tra('Docs gives you the ability to view/edit Open Document Format'),
