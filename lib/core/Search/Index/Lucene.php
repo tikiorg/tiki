@@ -258,6 +258,11 @@ class Search_Index_Lucene implements Search_Index_Interface
 	{
 		$term = null;
 
+		if ($node instanceof Search_Expr_Initial) {
+			$initial = $node->getContent();
+			$node = new Search_Expr_Range($initial, substr($initial, 0, -1) . chr(ord(substr($initial, -1)) + 1), $node->getType(), $node->getField());
+		}
+
 		if ($node instanceof Search_Expr_And) {
 			$term = $this->buildCondition($childNodes, true);
 		} elseif ($node instanceof Search_Expr_Or) {

@@ -126,7 +126,7 @@ class Search_Query
 
 	function filterInitial($initial, $field = 'title')
 	{
-		$this->addPart(new Search_Expr_Range($initial, substr($initial, 0, -1) . chr(ord(substr($initial, -1)) + 1)), 'plaintext', $field);
+		$this->addPart(new Search_Expr_Initial($initial), 'plaintext', $field);
 	}
 
 	function filterRelation($query, array $invertable = array())
