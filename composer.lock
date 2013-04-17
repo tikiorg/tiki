@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "736faf02fcf5087c7f1318e177313009",
+    "hash": "67227e04fae380df52afbfdd531f4c4e",
     "packages": [
         {
             "name": "aFarkas/html5shiv",
@@ -68,7 +68,7 @@
                     "ZendX_": "extras/library/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "notification-url": "http://packagist.org/downloads/",
             "include-path": [
                 "library/",
                 "extras/library/"
@@ -132,7 +132,7 @@
                     "library/HTMLPurifier.composer.php"
                 ]
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "notification-url": "http://packagist.org/downloads/",
             "license": [
                 "LGPL"
             ],
@@ -200,6 +200,17 @@
             "dist": {
                 "type": "zip",
                 "url": "http://jqueryui.com/resources/download/jquery-ui-themes-1.10.2.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "library"
+        },
+        {
+            "name": "jquery/plugins/anythingslider",
+            "version": "1.8.18",
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/CSS-Tricks/AnythingSlider/archive/v1.8.18.zip",
                 "reference": null,
                 "shasum": null
             },
@@ -376,7 +387,7 @@
                     "Symfony\\Component\\Console\\": ""
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "notification-url": "http://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
