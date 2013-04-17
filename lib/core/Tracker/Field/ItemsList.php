@@ -124,7 +124,7 @@ class Tracker_Field_ItemsList extends Tracker_Field_Abstract
 
 		return array(
 			$baseKey => $typeFactory->multivalue($items),
-			"{$baseKey}_text" => $typeFactory->plaintext($listtext),
+			"{$baseKey}_text" => $typeFactory->sortable($listtext),
 		);
 	}
 
