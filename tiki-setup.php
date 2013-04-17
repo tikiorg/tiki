@@ -606,6 +606,10 @@ if ( isset($token_error) ) {
 
 require_once( 'lib/setup/plugins_actions.php' );
 
+if ($tiki_p_admin == 'y') {
+	$headerlib->add_jsfile('lib/jquery_tiki/tiki-admin.js', 'external');
+}
+
 //////////////////////////////////////////////////////////////////////////
 // ******************************************************************** //
 // ** IMPORTANT NOTE:                                                ** //

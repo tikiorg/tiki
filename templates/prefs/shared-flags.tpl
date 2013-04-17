@@ -15,8 +15,7 @@
 {/if}
 
 {if $p.modified and $p.available}
-	<input class="pref-reset system" type="checkbox" name="lm_reset[]" value="{$p.preference|escape}" style="display:none">
-	<input type="hidden" id="{$p.preference|escape}_default" value="{$p.default|escape}">
+	<input class="pref-reset system" type="checkbox" name="lm_reset[]" value="{$p.preference|escape}" style="display:none" data-preference-default="{$p.default|escape}">
 {/if}
 
 {if !empty($p.popup_html)}
@@ -28,46 +27,5 @@
 {if !empty($p.voting_html)}
 	{$p.voting_html}
 {/if}
-{jq}
-$('.pref-reset')
-	.change( function() {
-		var c = $(this).prop('checked') === "checked";
-		var $el = $(this).closest('.adminoptionbox').find('input:not(:hidden),select,textarea')
-			.not('.system').attr( 'disabled', c )
-			.css("opacity", c ? .6 : 1 );
-		var defval = $("#" + $(this).val() + "_default").val();
-		if ($el.attr("type") == "checkbox") {
-			$el.prop('checked', defval === "y" ? c : !c);
-		} else {
-			var temp = $("[name=" + $(this).val() + "]").val();
-			$el.val( defval );
-			$("#" + $(this).val() + "_default").val( temp );
-		}
-		$el.change();
-	})
-	.wrap('<span/>')
-	.closest('span')
-	.append('{{icon _id=arrow_undo alt="{tr}Reset to default{/tr}" href="#"}}')
-	.find('a')
-	.click( function() {
-		var box = $(this).closest('span').find(':checkbox');
-		box.prop('checked', box.filter(':checked').length == 0).change();
-		var $i = $(this).find("img");
-		if ($i.attr("src").indexOf("undo") > -1) {
-			$i.attr({
-				"src": $i.attr("src").replace("undo", "redo"),
-				"title": "{tr}Restore current value{/tr}",
-				"alt": "{tr}Restore current value{/tr}"
-			});
-		} else {
-			$i.attr({
-				"src": $i.attr("src").replace("redo", "undo"),
-				"title": "{tr}Reset to default{/tr}",
-				"alt": "{tr}Reset to default{/tr}"
-			});
-		}
-		return false;
-	});
-{/jq}
 
 {$p.pages}
