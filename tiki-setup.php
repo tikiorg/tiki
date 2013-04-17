@@ -426,10 +426,10 @@ if ($prefs['mobile_feature'] === 'y' && $prefs['mobile_mode'] === 'y') {
 
 	if ( $prefs['feature_jquery_tooltips'] == 'y' ) {
 		if ( $prefs['feature_jquery_ui'] !== 'y' ) {
-			$headerlib->add_jsfile('lib/jquery/plugins/cluetip/lib/jquery.bgiframe.min.js');
+			$headerlib->add_jsfile('vendor/jquery/plugins/cluetip/lib/jquery.bgiframe.min.js');
 		}
-		$headerlib->add_jsfile('lib/jquery/plugins/cluetip/jquery.cluetip.js');
-		$headerlib->add_cssfile('lib/jquery/plugins/cluetip/jquery.cluetip.css');
+		$headerlib->add_jsfile('vendor/jquery/plugins/cluetip/jquery.cluetip.js');
+		$headerlib->add_cssfile('vendor/jquery/plugins/cluetip/jquery.cluetip.css');
 	}
 
 	if ( $prefs['feature_jquery_superfish'] == 'y' ) {

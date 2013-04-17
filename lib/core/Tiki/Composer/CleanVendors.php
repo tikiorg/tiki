@@ -27,6 +27,8 @@ class CleanVendors
 		self::deleteDirectory($vendors . 'jquery/jquery-ui/tests');
 		self::deleteDirectory($vendors . 'jquery/jquery-ui/themes');
 		self::deleteDirectory($vendors . 'jquery/plugins/brosho/__MACOSX');
+		self::deleteDirectory($vendors . 'jquery/plugins/cluetip/demo');
+		self::deleteDirectory($vendors . 'jquery/plugins/cluetip/test');
 		self::deleteDirectory($vendors . 'ezyang/htmlpurifier/docs');
 		self::deleteDirectory($vendors . 'ezyang/htmlpurifier/tests');
 		self::deleteDirectory($vendors . 'phpcas/phpcas/CAS-1.3.2/docs');

@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "7df612a0459994887f2a8ff28179877d",
+    "hash": "71f8b89651cb2a3c8469d9a7221dfe08",
     "packages": [
         {
             "name": "aFarkas/html5shiv",
@@ -222,6 +222,17 @@
             "dist": {
                 "type": "zip",
                 "url": "https://github.com/downloads/mustardamus/brosho-plugin/brosho-0.1.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "library"
+        },
+        {
+            "name": "jquery/plugins/cluetip",
+            "version": "1.2.8",
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/kswedberg/jquery-cluetip/archive/1.2.8.zip",
                 "reference": null,
                 "shasum": null
             },
