@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "67227e04fae380df52afbfdd531f4c4e",
+    "hash": "7df612a0459994887f2a8ff28179877d",
     "packages": [
         {
             "name": "aFarkas/html5shiv",
@@ -211,6 +211,17 @@
             "dist": {
                 "type": "zip",
                 "url": "https://github.com/CSS-Tricks/AnythingSlider/archive/v1.8.18.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "library"
+        },
+        {
+            "name": "jquery/plugins/brosho",
+            "version": "0.1",
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/downloads/mustardamus/brosho-plugin/brosho-0.1.zip",
                 "reference": null,
                 "shasum": null
             },
