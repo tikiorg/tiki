@@ -21,11 +21,16 @@ class CleanVendors
 		self::deleteDirectory($vendors . 'codemirror/codemirror/demo');
 		self::deleteDirectory($vendors . 'codemirror/codemirror/doc');
 		self::deleteDirectory($vendors . 'codemirror/codemirror/test');
+		self::deleteDirectory($vendors . 'jarnokurlin/fullcalendar/demos');
+		self::deleteFile($vendors . 'jquery/jquery-sheet/jquery-1.5.2.js');
+		self::deleteFile($vendors . 'jquery/jquery-sheet/jquery-1.5.2.min.js');
+		self::deleteDirectory($vendors . 'jquery/jquery-sheet/jquery-ui');
 		self::deleteDirectory($vendors . 'jquery/jquery-ui-selectmenu/demos');
 		self::deleteDirectory($vendors . 'jquery/jquery-ui-selectmenu/tests');
 		self::deleteDirectory($vendors . 'jquery/jquery-ui/demos');
 		self::deleteDirectory($vendors . 'jquery/jquery-ui/tests');
 		self::deleteDirectory($vendors . 'jquery/jquery-ui/themes');
+		self::deleteDirectory($vendors . 'jquery/plugins/anythingslider/demos');
 		self::deleteDirectory($vendors . 'jquery/plugins/brosho/__MACOSX');
 		self::deleteDirectory($vendors . 'jquery/plugins/cluetip/demo');
 		self::deleteDirectory($vendors . 'jquery/plugins/cluetip/test');
@@ -67,6 +72,15 @@ class CleanVendors
 		}
 
 		rmdir($path);
+	}
+
+	private static function deleteFile($path)
+	{
+		if (! file_exists($path)) {
+			return;
+		}
+
+		unlink($path);
 	}
 }
 
