@@ -10,6 +10,7 @@
 		"ckeditor/ckeditor": "4.0.3",
 		"codemirror/codemirror": "2.25",
 		"ezyang/htmlpurifier": "4.5.0",
+		"jarnokurlin/fullcalendar": "1.5.2",
 		"jquery/jquery-sheet": "2.0.1",
 		"jquery/jquery-ui": "1.10.2",
 		"jquery/jquery-ui-themes": "1.10.2",
@@ -120,6 +121,17 @@
 				"version": "2.25",
 				"dist": {
 					"url": "http://codemirror.net/codemirror-2.25.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "jarnokurlin/fullcalendar",
+				"version": "1.5.2",
+				"dist": {
+					"url": "http://tux.fi/~jarnok/fullcalendar-resourceviews/fullcalendar-resourceviews-1.5.3.4.zip",
 					"type": "zip"
 				}
 			}

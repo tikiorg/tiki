@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "afff9a5959f9e4e6fe32945bf6d2cf4c",
+    "hash": "f4acd138cc661ce725e6f83f7bed98e4",
     "packages": [
         {
             "name": "aFarkas/html5shiv",
@@ -68,7 +68,7 @@
                     "ZendX_": "extras/library/"
                 }
             },
-            "notification-url": "http://packagist.org/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "include-path": [
                 "library/",
                 "extras/library/"
@@ -132,7 +132,7 @@
                     "library/HTMLPurifier.composer.php"
                 ]
             },
-            "notification-url": "http://packagist.org/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "LGPL"
             ],
@@ -149,6 +149,17 @@
                 "html"
             ],
             "time": "2013-02-18 00:04:08"
+        },
+        {
+            "name": "jarnokurlin/fullcalendar",
+            "version": "1.5.2",
+            "dist": {
+                "type": "zip",
+                "url": "http://tux.fi/~jarnok/fullcalendar-resourceviews/fullcalendar-resourceviews-1.5.3.4.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "library"
         },
         {
             "name": "jquery/jquery-sheet",
@@ -420,7 +431,7 @@
                     "Symfony\\Component\\Console\\": ""
                 }
             },
-            "notification-url": "http://packagist.org/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
