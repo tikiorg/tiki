@@ -115,5 +115,22 @@ function prefs_jquery_list($partial = false)
 				'jquery_ui_selectmenu',
 			),
 		),
+		'jquery_colorbox_theme' => array(
+			'name' => tra('CSS to use in Colorbox (a.k.a. "Shadowbox")'),
+            'description' => tra(''),
+			'type' => 'list',
+			'perspective' => false,
+			'options' => array(
+				'example1' => tra('One'),
+				'example2' => tra('Two'),
+				'example3' => tra('Three'),
+				'example4' => tra('Four'),
+				'example5' => tra('Five'),
+			),
+			'default' => 'y',
+			'dependencies' => array(
+				'feature_shadowbox',
+			),
+		),
 	);
 }

@@ -463,7 +463,7 @@ if ($prefs['mobile_feature'] === 'y' && $prefs['mobile_mode'] === 'y') {
 	}
 	if ( $prefs['feature_shadowbox'] == 'y' ) {
 		$headerlib->add_jsfile('vendor/jquery/plugins/colorbox/jquery.colorbox.js');
-		$headerlib->add_cssfile('vendor/jquery/plugins/colorbox/example1/colorbox.css');
+		$headerlib->add_cssfile('vendor/jquery/plugins/colorbox/' . $prefs['jquery_colorbox_theme'] . '/colorbox.css');
 	}
 	if ( $prefs['feature_jquery_carousel'] == 'y' ) {
 		$headerlib->add_jsfile('lib/jquery/plugins/infinitecarousel/jquery.infinitecarousel3.js');
