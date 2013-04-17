@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "71f8b89651cb2a3c8469d9a7221dfe08",
+    "hash": "afff9a5959f9e4e6fe32945bf6d2cf4c",
     "packages": [
         {
             "name": "aFarkas/html5shiv",
@@ -233,6 +233,17 @@
             "dist": {
                 "type": "zip",
                 "url": "https://github.com/kswedberg/jquery-cluetip/archive/1.2.8.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "library"
+        },
+        {
+            "name": "jquery/plugins/colorbox",
+            "version": "1.4.14",
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/jackmoore/colorbox/archive/1.4.14.zip",
                 "reference": null,
                 "shasum": null
             },
