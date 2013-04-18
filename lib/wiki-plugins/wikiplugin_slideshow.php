@@ -210,7 +210,7 @@ function wikiplugin_slideshow($data, $params)
 			listItemHighlightColor: '$listitemhighlightcolor',
 			textSide: '$textside',
 			themeName: '$themeName',
-			basePath: 'lib/jquery.s5/'
+			basePath: 'vendor/jquery/jquery-s5/lib/'
 		};"
 	);
 

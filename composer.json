@@ -13,6 +13,7 @@
 		"ezyang/htmlpurifier": "4.5.0",
 		"jarnokurlin/fullcalendar": "1.5.2",
 		"jcapture-applet/jcapture-applet": "dev-master",
+		"jquery/jquery-s5": "dev-master",
 		"jquery/jquery-sheet": "2.0.1",
 		"jquery/jquery-ui": "1.10.2",
 		"jquery/jquery-ui-themes": "1.10.2",
@@ -320,6 +321,10 @@
 		{
 			"type": "svn",
 			"url": "http://svn.code.sf.net/p/jcapture-applet/code/trunk@46"
+		},
+		{
+			"type": "svn",
+			"url": "http://jquerys5.googlecode.com/svn/trunk@65"
 		}
 
 	]

@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "f3f5d623fed7094ffe64f75782e1195c",
+    "hash": "e32da5a945efd987a03c88eb9a66f9fa",
     "packages": [
         {
             "name": "aFarkas/html5shiv",
@@ -68,7 +68,7 @@
                     "ZendX_": "extras/library/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "notification-url": "http://packagist.org/downloads/",
             "include-path": [
                 "library/",
                 "extras/library/"
@@ -143,7 +143,7 @@
                     "library/HTMLPurifier.composer.php"
                 ]
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "notification-url": "http://packagist.org/downloads/",
             "license": [
                 "LGPL"
             ],
@@ -209,6 +209,37 @@
             "time": "2013-04-17 19:48:36"
         },
         {
+            "name": "jquery/jquery-s5",
+            "version": "dev-trunk",
+            "source": {
+                "type": "svn",
+                "url": "http://jquerys5.googlecode.com/svn",
+                "reference": "/trunk/@65"
+            },
+            "type": "library",
+            "license": [
+                "LGPL"
+            ],
+            "authors": [
+                {
+                    "name": "Robert Plummer",
+                    "homepage": "http://visop-dev.com/"
+                },
+                {
+                    "name": "Marc Laporte",
+                    "homepage": "http://marclaporte.com"
+                }
+            ],
+            "description": "jQuery's s5 implementation. Used to create sideshows in web browsers",
+            "homepage": "http://code.google.com/p/jquerys5/",
+            "keywords": [
+                "javascript",
+                "s5",
+                "slideshow"
+            ],
+            "time": "2013-04-18 13:40:40"
+        },
+        {
             "name": "jquery/jquery-sheet",
             "version": "2.0.1",
             "dist": {
@@ -224,7 +255,7 @@
             "version": "1.2.2",
             "dist": {
                 "type": "zip",
-                "url": "http://github.com/trentrichardson/jQuery-Timepicker-Addon/archive/v1.2.2.zip",
+                "url": "https://github.com/trentrichardson/jQuery-Timepicker-Addon/archive/v1.2.2.zip",
                 "reference": null,
                 "shasum": null
             },
@@ -511,7 +542,7 @@
                     "Symfony\\Component\\Console\\": ""
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "notification-url": "http://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -687,7 +718,8 @@
     ],
     "minimum-stability": "stable",
     "stability-flags": {
-        "jcapture-applet/jcapture-applet": 20
+        "jcapture-applet/jcapture-applet": 20,
+        "jquery/jquery-s5": 20
     },
     "platform": [
 
