@@ -467,7 +467,7 @@ class ImageGalsLib extends TikiLib
 		global $prefs;
 
 		$numimages = 0;
-		include_once ('lib/pclzip/pclzip.lib.php');
+		include_once ('vendor_extra/pclzip/pclzip.lib.php');
 		$archive = new PclZip($file);
 		// Read Archive contents
 		$ziplist = $archive->listContent();

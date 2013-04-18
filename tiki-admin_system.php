@@ -86,7 +86,7 @@ $smarty->assign_by_ref('dirs', $dirs);
 $smarty->assign_by_ref('dirsWritable', $dirsWritable);
 $smarty->assign('zipPath', '');
 if (isset($_REQUEST['zip']) && isset($_REQUEST['zipPath']) && $tiki_p_admin == 'y') {
-	include_once ('lib/pclzip/pclzip.lib.php');
+	include_once ('vendor_extra/pclzip/pclzip.lib.php');
 	if (!$archive = new PclZip($_REQUEST['zipPath'])) {
 		$smarty->assign('msg', tra('Error:') . $archive->errorInfo(true));
 		$smarty->display('error.tpl');
