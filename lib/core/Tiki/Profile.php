@@ -149,10 +149,15 @@ class Tiki_Profile
 
 			// Find content start (strip headers)
 			$begin = strpos($content, "\n\n");
-			if ( ! $begin )
+			if ( ! $begin ) {
 				return false;
+			}
 
-			$content = substr($content, $begin + 2);
+			$content = trim(substr($content, $begin + 2));
+
+			if (empty($content)) {
+				return false;
+			}
 
 			$profile->loadYaml($content);
 		}

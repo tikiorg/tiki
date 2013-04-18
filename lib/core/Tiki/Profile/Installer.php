@@ -115,9 +115,10 @@ class Tiki_Profile_Installer
 	{
 		global $tikilib;
 
-		$result = $tikilib->query("SELECT DISTINCT `domain`, `profile` FROM `tiki_profile_symbols`");
-		if ( $result ) while ( $row = $result->fetchRow() )
+		$result = $tikilib->fetchAll("SELECT DISTINCT `domain`, `profile` FROM `tiki_profile_symbols`");
+		foreach ($result as $row) {
 			$this->installed[Tiki_Profile::getProfileKeyFor($row['domain'], $row['profile'])] = true;
+		}
 	} // }}}
 
 	function setUserData( $userData ) // {{{

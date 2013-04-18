@@ -57,11 +57,15 @@ if (is_file($local_php) && ($installer = new Installer) && ! $installer->require
 	$console->add(new Tiki\Command\IndexRebuildCommand);
 	$console->add(new Tiki\Command\IndexOptimizeCommand);
 	$console->add(new Tiki\Command\IndexCatchUpCommand);
+	$console->add(new Tiki\Command\ProfileForgetCommand);
+	$console->add(new Tiki\Command\ProfileInstallCommand);
 } else {
 	$console->add(new Tiki\Command\UnavailableCommand('cache:clear'));
 	$console->add(new Tiki\Command\UnavailableCommand('index:rebuild'));
 	$console->add(new Tiki\Command\UnavailableCommand('index:optimize'));
 	$console->add(new Tiki\Command\UnavailableCommand('index:catch-up'));
+	$console->add(new Tiki\Command\UnavailableCommand('profile:forget'));
+	$console->add(new Tiki\Command\UnavailableCommand('profile:install'));
 }
 
 $console->run();
