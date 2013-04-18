@@ -1000,13 +1000,14 @@ class WikiLib extends TikiLib
 
 		if ($with_help) {
 			global $cachelib, $prefs;
-			$cachetag = 'plugindesc' . $this->get_language() . $area_id . '_js=' . $prefs['javascript_enabled'];
+			$commonKey = '{{{area-id}}}';
+			$cachetag = 'plugindesc' . $this->get_language() . '_js=' . $prefs['javascript_enabled'];
 			if (! $plugins = $cachelib->getSerialized($cachetag) ) {
 				$list = $parserlib->plugin_get_list();
 
 				$plugins = array();
 				foreach ($list as $name) {
-					$pinfo['help'] = $this->get_plugin_description($name, $enabled, $area_id);
+					$pinfo['help'] = $this->get_plugin_description($name, $enabled, $commonKey);
 					$pinfo['name'] = TikiLib::strtoupper($name);
 
 					if ( $enabled ) {
@@ -1015,6 +1016,9 @@ class WikiLib extends TikiLib
 				}
 				$cachelib->cacheItem($cachetag, serialize($plugins));
 			}
+			array_walk_recursive($plugins, function (& $item) use ($commonKey, $area_id) {
+				$item = str_replace($commonKey, $area_id, $item);
+			});
 			return $plugins;
 		} else {
 			// Only used by PluginManager ... what is that anyway?
