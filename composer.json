@@ -18,6 +18,7 @@
 		"jquery/jquery-ui-themes": "1.10.2",
 		"jquery/jquery-timepicker-addon": "1.2.2",
 		"jquery/jquery-ui-selectmenu": "1.3.999",
+        "jquery/minicart": "2.6",
 		"jquery/plugins/anythingslider": "1.8.18",
 		"jquery/plugins/brosho": "0.1",
 		"jquery/plugins/cluetip": "1.2.8",
@@ -279,6 +280,17 @@
 				"version": "1.4.14",
 				"dist": {
 					"url": "https://github.com/jackmoore/colorbox/archive/1.4.14.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "jquery/minicart",
+				"version": "2.6",
+				"dist": {
+					"url": "https://github.com/jeffharrell/MiniCart/archive/2.6.zip",
 					"type": "zip"
 				}
 			}

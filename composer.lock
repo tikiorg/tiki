@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "2a32d4ed30b0f4eddec2b59dba739253",
+    "hash": "f3f5d623fed7094ffe64f75782e1195c",
     "packages": [
         {
             "name": "aFarkas/html5shiv",
@@ -68,7 +68,7 @@
                     "ZendX_": "extras/library/"
                 }
             },
-            "notification-url": "http://packagist.org/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "include-path": [
                 "library/",
                 "extras/library/"
@@ -86,10 +86,21 @@
         },
         {
             "name": "ckeditor/ckeditor",
-            "version": "4.0.3",
+            "version": "4.1",
             "dist": {
                 "type": "zip",
-                "url": "http://download.cksource.com/CKEditor/CKEditor/CKEditor%204.0.3/ckeditor_4.0.3_standard.zip",
+                "url": "https://github.com/ckeditor/ckeditor-releases/archive/4.1.x/full.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "library"
+        },
+        {
+            "name": "ckeditor/ckeditor/skins/kama",
+            "version": "4.1",
+            "dist": {
+                "type": "zip",
+                "url": "http://download.ckeditor.com/kama/releases/kama_4.1.zip",
                 "reference": null,
                 "shasum": null
             },
@@ -132,7 +143,7 @@
                     "library/HTMLPurifier.composer.php"
                 ]
             },
-            "notification-url": "http://packagist.org/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "LGPL"
             ],
@@ -213,7 +224,7 @@
             "version": "1.2.2",
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/trentrichardson/jQuery-Timepicker-Addon/archive/v1.2.2.zip",
+                "url": "http://github.com/trentrichardson/jQuery-Timepicker-Addon/archive/v1.2.2.zip",
                 "reference": null,
                 "shasum": null
             },
@@ -247,6 +258,17 @@
             "dist": {
                 "type": "zip",
                 "url": "http://jqueryui.com/resources/download/jquery-ui-themes-1.10.2.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "library"
+        },
+        {
+            "name": "jquery/minicart",
+            "version": "2.6",
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/jeffharrell/MiniCart/archive/2.6.zip",
                 "reference": null,
                 "shasum": null
             },
@@ -489,7 +511,7 @@
                     "Symfony\\Component\\Console\\": ""
                 }
             },
-            "notification-url": "http://packagist.org/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
