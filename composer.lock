@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "f4acd138cc661ce725e6f83f7bed98e4",
+    "hash": "a1a5ae7d7efa96de2309e4fc6d838abe",
     "packages": [
         {
             "name": "aFarkas/html5shiv",
@@ -68,7 +68,7 @@
                     "ZendX_": "extras/library/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "notification-url": "http://packagist.org/downloads/",
             "include-path": [
                 "library/",
                 "extras/library/"
@@ -132,7 +132,7 @@
                     "library/HTMLPurifier.composer.php"
                 ]
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "notification-url": "http://packagist.org/downloads/",
             "license": [
                 "LGPL"
             ],
@@ -349,6 +349,17 @@
             "type": "library"
         },
         {
+            "name": "simile_timeline/simile_timeline",
+            "version": "2.3.0",
+            "dist": {
+                "type": "zip",
+                "url": "http://simile-widgets.googlecode.com/files/timeline_libraries_v2.3.0.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "library"
+        },
+        {
             "name": "smarty/smarty",
             "version": "v3.1.13",
             "source": {
@@ -431,7 +442,7 @@
                     "Symfony\\Component\\Console\\": ""
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "notification-url": "http://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
