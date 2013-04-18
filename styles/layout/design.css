@@ -4358,4 +4358,11 @@ form.simple textarea.export {
 	white-space: normal !important;
 }
 
+a.cke_button span.cke_icon {
+    display: inline-block;
+    height: 16px;
+    width: 16px;
+    margin-top: -5px;
+}
+
 /* End of file */

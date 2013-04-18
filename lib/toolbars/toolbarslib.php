@@ -609,15 +609,14 @@ class ToolbarCkOnly extends Toolbar
 
 		$headerlib->add_cssfile('vendor/ckeditor/ckeditor/skins/kama/editor.css');
 		$cls = strtolower($this->wysiwyg);
-		$cls = str_replace(array('selectall', 'removeformat', 'spellchecker'), array('selectAll', 'removeFormat', 'checkspell'), $cls);	// work around some "features" in ckeditor icons.css
 		$headerlib->add_css(
 			'span.cke_skin_kama {border: none;background: none;padding:0;margin:0;}'.
 			'.toolbars-admin .row li.toolbar > span.cke_skin_kama {display: inline-block;}'
 		);
-		return '<span class="cke_skin_kama"><span class="cke_button"><span class="cke_button_' . htmlentities($cls, ENT_QUOTES, 'UTF-8') . '"' .
+		return '<span class="cke_skin_kama"><a class="cke_button cke_ltr"><span class="cke_button__' . htmlentities($cls, ENT_QUOTES, 'UTF-8') . '_icon"' .
 			' title="' . htmlentities($this->getLabel(), ENT_QUOTES, 'UTF-8') . '">'.
 			'<span class="cke_icon"> </span>'.
-			'</span></span></span>';
+			'</span></a></span>';
 	} // }}}
 }
 
