@@ -230,9 +230,8 @@
 				<legend>{tr}Custom Codes{/tr}</legend>
 				{preference name="header_custom_css" syntax="css"}
 				<div class="adminoptionboxchild">
-					{self_link _onclick="toggle_brosho();return false;" _ajax="n"}{icon _id="bricks"}{tr}Experimental: CSS assistant (work in progress - click the x to remove){/tr}{/self_link}
+					{self_link _onclick="show_brosho();return false;" _ajax="n"}{icon _id="bricks"}{tr}Experimental: CSS assistant (work in progress - click the x to remove){/tr}{/self_link}
 				</div>
-				{$headerlib->add_jsfile('vendor/jquery/plugins/brosho/brosho/jquery.brosho.js')}
 				{$headerlib->add_jsfile('lib/jquery_tiki/brosho/tiki_brosho.js')}
 
 				{preference name=feature_custom_html_head_content syntax="htmlmixed"}
