@@ -326,8 +326,8 @@ if ( isset($prefs['javascript_cdn']) && $prefs['javascript_cdn'] == 'google' ) {
 }
 
 if ( $prefs['fgal_elfinder_feature'] === 'y' ) {
-	$headerlib->add_jsfile("lib/jquery/elfinder/js/elfinder.full.js")
-			->add_cssfile("lib/jquery/elfinder/css/elfinder.min.css")
+	$headerlib->add_jsfile("vendor_extra/elfinder/js/elfinder.min.js")
+			->add_cssfile("vendor_extra/elfinder/css/elfinder.min.css")
 			->add_jsfile("lib/jquery_tiki/elfinder/tiki-elfinder.js");
 }
 

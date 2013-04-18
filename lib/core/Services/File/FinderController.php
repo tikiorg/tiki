@@ -5,9 +5,9 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-include_once "lib/jquery/elfinder/php/elFinderConnector.class.php";
-include_once "lib/jquery/elfinder/php/elFinder.class.php";
-include_once "lib/jquery/elfinder/php/elFinderVolumeDriver.class.php";
+include_once "vendor_extra/elfinder/php/elFinderConnector.class.php";
+include_once "vendor_extra/elfinder/php/elFinder.class.php";
+include_once "vendor_extra/elfinder/php/elFinderVolumeDriver.class.php";
 
 include_once 'lib/jquery_tiki/elfinder/elFinderVolumeTikiFiles.class.php';
 
