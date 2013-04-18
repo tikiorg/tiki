@@ -109,7 +109,7 @@ input.url, textarea {
 }
 .menuLevel1 a:hover, .menuLevel1 a:focus, .menuLevel1 a:active {
 	background: transparent;
-	border-radius: none;
+	border-radius: 0;
 	color: #fff;
 	text-shadow: none;
 }

@@ -554,7 +554,7 @@ h3.box-title {
 td.odd:hover,
 td.even:hover,
 .tablesorter tr.odd td:hover,
-.tablesorter tr.even td: hover {
+.tablesorter tr.even td:hover {
 	border-right: 1px solid #e0e0e0
 }
 

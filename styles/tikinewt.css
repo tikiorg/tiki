@@ -10,7 +10,7 @@
 			others follow Layout) *****/
 body {
 	background: #e9ecef;
-	font-family: 76% Corbel, "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", "DejaVu Sans", "Bitstream Vera Sans", "Liberation Sans", Verdana, sans-serif;
+	font: 76% Corbel, "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", "DejaVu Sans", "Bitstream Vera Sans", "Liberation Sans", Verdana, sans-serif;
 	line-height: 1.6;
 	color: #000;
 }
