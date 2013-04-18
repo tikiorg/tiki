@@ -23,15 +23,6 @@
  */
 
 /**
- * Include Auth_Container base class
- */
-require_once "lib/pear/Auth/Container.php";
-/**
- * Include PEAR package for error handling
- */
-require_once "lib/pear/PEAR.php";
-
-/**
  * Storage driver for fetching authentication data from a PHP Array
  *
  * This container takes two options when configuring:

@@ -26,15 +26,6 @@
  */
 
 /**
- * Include Auth_Container base class
- */
-require_once 'lib/pear/Auth/Container.php';
-/**
- * Include PEAR for error handling
- */
-require_once 'lib/pear/PEAR.php';
-
-/**
  * Performs authentication against a SAP system using the SAPRFC PHP extension.
  *
  * When the option GETSSO2 is TRUE (default)

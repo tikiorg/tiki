@@ -20,12 +20,6 @@
  * @since      File available since Release 0.1
  */
 
-/**
- * base class
- */
-require_once 'lib/pear/PEAR.php';
-require_once 'lib/pear/Console/Getopt.php';
-
 $GLOBALS['_System_temp_files'] = array();
 
 /**

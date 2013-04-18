@@ -21,12 +21,6 @@
  * @since      File available since Release 1.3.3
  */
 
-/**
- * for error handling
- */
-require_once 'lib/pear/PEAR.php';
-require_once 'lib/pear/PEAR/Config.php';
-
 define('DETAILED', 1);
 putenv("PHP_PEAR_RUNTESTS=1");
 

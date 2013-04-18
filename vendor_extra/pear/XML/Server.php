@@ -38,12 +38,6 @@
 
 
 /**
- * Pull in the XML_RPC class
- */
-require_once 'lib/pear/XML/RPC.php';
-
-
-/**
  * signature for system.listMethods: return = array,
  * parameters = a string or nothing
  * @global array $GLOBALS['XML_RPC_Server_listMethods_sig']

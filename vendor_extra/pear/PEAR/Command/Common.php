@@ -22,11 +22,6 @@
  */
 
 /**
- * base class
- */
-require_once 'lib/pear/PEAR.php';
-
-/**
  * PEAR commands base class
  *
  * @category   pear

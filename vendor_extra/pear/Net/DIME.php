@@ -22,9 +22,6 @@
  * @example    test/dime_record_test.php For example of usage.
  */
 
-/** PEAR */
-require_once 'lib/pear/PEAR.php';
-
 define('NET_DIME_TYPE_UNCHANGED', 0x00);
 define('NET_DIME_TYPE_MEDIA', 0x01);
 define('NET_DIME_TYPE_URI', 0x02);

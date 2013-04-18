@@ -24,15 +24,6 @@
  */
 
 /**
- * Include Auth_Container base class
- */
-require_once 'lib/pear/Auth/Container.php';
-/**
- * Include PEAR for error handling
- */
-require_once 'lib/pear/PEAR.php';
-
-/**
  * Storage driver for Authentication on a Kerberos V server.
  *
  * Available options:

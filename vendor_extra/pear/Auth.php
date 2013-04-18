@@ -319,7 +319,6 @@ class Auth {
             @session_start();
             if(!session_id()) {
                 // Throw error
-                include_once 'lib/pear/PEAR.php';
                 PEAR::throwError('Session could not be started by Auth, '
                         .'possibly headers are already sent, try putting '
                         .'ob_start in the beginning of your script');

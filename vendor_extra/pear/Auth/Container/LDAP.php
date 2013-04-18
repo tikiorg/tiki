@@ -24,15 +24,6 @@
  */
 
 /**
- * Include Auth_Container base class
- */
-require_once "lib/pear/Auth/Container.php";
-/**
- * Include PEAR package for error handling
- */
-require_once "lib/pear/PEAR.php";
-
-/**
  * Storage driver for fetching login data from LDAP
  *
  * This class is heavily based on the DB and File containers. By default it

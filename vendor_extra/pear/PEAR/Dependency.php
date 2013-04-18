@@ -23,9 +23,6 @@
  * @since      File available since Release 1.4.0a1
  */
 
-require_once "lib/pear/PEAR.php";
-require_once "lib/pear/OS/Guess.php";
-
 define('PEAR_DEPENDENCY_MISSING',        -1);
 define('PEAR_DEPENDENCY_CONFLICT',       -2);
 define('PEAR_DEPENDENCY_UPGRADE_MINOR',  -3);

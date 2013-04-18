@@ -26,19 +26,6 @@
  */
 
 /**
- * Include Auth_Container base class
- */
-require_once 'lib/pear/Auth/Container.php';
-/**
- * Include PEAR package for error handling
- */
-require_once 'lib/pear/PEAR.php';
-/**
- * Include PEAR Net_POP3 package
- */
-require_once 'lib/pear/Net/POP3.php';
-
-/**
  * Storage driver for Authentication on a POP3 server.
  *
  * @category   Authentication

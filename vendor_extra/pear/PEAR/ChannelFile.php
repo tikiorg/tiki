@@ -21,13 +21,6 @@
  */
 
 /**
- * Needed for error handling
- */
-require_once 'lib/pear/PEAR/ErrorStack.php';
-require_once 'lib/pear/PEAR/XMLParser.php';
-require_once 'lib/pear/PEAR/Common.php';
-
-/**
  * Error code if the channel.xml <channel> tag does not contain a valid version
  */
 define('PEAR_CHANNELFILE_ERROR_NO_VERSION', 1);
@@ -393,7 +386,6 @@ class PEAR_ChannelFile {
     {
         if (!file_exists($descfile) || !is_file($descfile) || !is_readable($descfile) ||
              (!$fp = fopen($descfile, 'r'))) {
-            require_once 'lib/pear/PEAR.php';
             return PEAR::raiseError("Unable to open $descfile");
         }
 
@@ -429,7 +421,6 @@ class PEAR_ChannelFile {
                 }
             }
             if (PEAR::isError($info)) {
-                require_once 'lib/pear/PEAR.php';
                 return PEAR::raiseError($info);
             }
         }

@@ -23,11 +23,6 @@
  * @deprecated File deprecated since Release 1.4.0a1
  */
 
-/**
- * Include error handling
- */
-require_once 'lib/pear/PEAR.php';
-
 // {{{ constants and globals
 
 /**

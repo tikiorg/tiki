@@ -21,12 +21,6 @@
  * @since      File available since Release 1.4.0a1
  */
 
-/**
- * Needed for error handling
- */
-require_once 'lib/pear/PEAR.php';
-require_once 'lib/pear/PEAR/Config.php';
-
 $GLOBALS['_PEAR_DEPENDENCYDB_INSTANCE'] = array();
 /**
  * Track dependency relationships between installed packages

@@ -24,15 +24,6 @@
  */
 
 /**
- * Include Auth_Container base class
- */
-require_once "lib/pear/Auth/Container.php";
-/**
- * Include PEAR package for error handling
- */
-require_once "lib/pear/PEAR.php";
-
-/**
  * Storage driver for fetching login data from SOAP using the PHP5 Builtin SOAP
  * functions. This is a modification of the SOAP Storage driver from Bruno Pedro
  * thats using the PEAR SOAP Package.

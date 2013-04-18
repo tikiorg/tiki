@@ -19,8 +19,6 @@
 //
 // $Id: Socket.php,v 1.38 2008/02/15 18:24:17 chagenbu Exp $
 
-require_once 'lib/pear/PEAR.php';
-
 define('NET_SOCKET_READ',  1);
 define('NET_SOCKET_WRITE', 2);
 define('NET_SOCKET_ERROR', 4);

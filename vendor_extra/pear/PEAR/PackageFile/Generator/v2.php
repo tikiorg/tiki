@@ -20,10 +20,7 @@
  * @link       http://pear.php.net/package/PEAR
  * @since      File available since Release 1.4.0a1
  */
-/**
- * file/dir manipulation routines
- */
-require_once 'lib/pear/System.php';
+
 /**
  * This class converts a PEAR_PackageFile_v2 object into any output format.
  *
@@ -1524,7 +1521,6 @@ class PEAR_PackageFile_Generator_v2_XML_Util {
     */
     function raiseError($msg, $code)
     {
-        require_once 'lib/pear/PEAR.php';
         return PEAR::raiseError($msg, $code);
     }
 }

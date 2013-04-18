@@ -25,11 +25,6 @@
  */
 
 /**
- * Obtain the PEAR class so it can be extended from
- */
-require_once 'lib/pear/PEAR.php';
-
-/**
  * DB_common is the base class from which each database driver class extends
  *
  * All common methods are declared here.  If a given DBMS driver contains

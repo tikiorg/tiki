@@ -57,7 +57,7 @@ if ($request->hasProperty('outputFiles')) {
 $excludeDirs = array(
 	'dump' , 'img', 'lang',
 	'lib/htmlpurifier', 'lib/jquery', 'lib/jquery.s5', 'lib/jquery.sheet', 'vendor', 'vendor_extra',
-	'lib/pear', 'lib/svg-edit', 'lib/test',	'temp',
+	'lib/svg-edit', 'lib/test',	'temp',
 	'temp/cache',	'templates_c', 'vendor'
 );
 

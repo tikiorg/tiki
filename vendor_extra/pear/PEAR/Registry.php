@@ -22,12 +22,6 @@
  * @since      File available since Release 0.1
  */
 
-/**
- * for PEAR_Error
- */
-require_once 'lib/pear/PEAR.php';
-require_once 'lib/pear/PEAR/DependencyDB.php';
-
 define('PEAR_REGISTRY_ERROR_LOCK',   -2);
 define('PEAR_REGISTRY_ERROR_FORMAT', -3);
 define('PEAR_REGISTRY_ERROR_FILE',   -4);
