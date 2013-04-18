@@ -776,13 +776,12 @@ class elFinderVolumeTikiFiles extends elFinderVolumeDriver
 	 * @param  string    $name file name
 	 * @return bool|string
 	 **/
-	protected function _save($fp, $dir, $name, $mime, $w, $h)
+	protected function _save($fp, $dir, $name, $stat)
 	{
 		$this->clearcache();
 
 		$id = $this->_joinPath($dir, $name);
 		rewind($fp);
-		$stat = fstat($fp);
 		$size = $stat['size'];
 
 		$data = '';
@@ -804,7 +803,7 @@ class elFinderVolumeTikiFiles extends elFinderVolumeDriver
 				),
 				$name,
 				$size,
-				$mime,
+				$stat['mime'],
 				$data
 			);
 		}
