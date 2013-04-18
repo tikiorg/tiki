@@ -377,7 +377,15 @@ input[type="submit"]:hover,
 
 .button.highlight a {
 	background: #d6f3fa;
-	color: #000;
+	color: #0c0c0c;
+}
+
+.button.highlight {
+	border: none;
+}
+
+.button.highlight a:hover {
+	border: 1px solid #000;
 }
 
 select,
