@@ -553,7 +553,7 @@ small.date {
 
 .box-data .cssmenu_vert {
 	position: relative;
-	z-index: 700;
+	z-index: 70;
 }
 
 #col2 .box-data .cssmenu_vert ul {
@@ -562,7 +562,7 @@ small.date {
 
 .cssmenu_vert li.menuLevel1,
 .cssmenu_horiz li.menuLevel1 {
-        z-index: 991;
+        z-index: 91;
 }
 
 .cssmenu_horiz ul li {
