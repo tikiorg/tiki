@@ -316,7 +316,7 @@ if (isset($_REQUEST['assign'])) {
 		);
 		$logslib->add_log('adminmodules', 'assigned module ' . $assign_name);
 		$modlib->reorder_modules();
-		header('location: tiki-admin_modules.php');
+		header('location: tiki-admin_modules.php?cookietab=1'); // forcing return to 1st tab
 	} else {
 		$modlib->dispatchValues($_REQUEST['assign_params'], $modinfo['params']);
 		$smarty->assign('assign_info', $modinfo);
