@@ -127,7 +127,7 @@ function prefs_jquery_list($partial = false)
 				'example4' => tra('Four'),
 				'example5' => tra('Five'),
 			),
-			'default' => 'y',
+			'default' => 'example1',
 			'dependencies' => array(
 				'feature_shadowbox',
 			),
