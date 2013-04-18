@@ -11,6 +11,7 @@
 		"codemirror/codemirror": "2.25",
 		"ezyang/htmlpurifier": "4.5.0",
 		"jarnokurlin/fullcalendar": "1.5.2",
+		"jcapture-applet/jcapture-applet": "dev-master",
 		"jquery/jquery-sheet": "2.0.1",
 		"jquery/jquery-ui": "1.10.2",
 		"jquery/jquery-ui-themes": "1.10.2",
@@ -291,6 +292,10 @@
 					"type": "zip"
 				}
 			}
+		},
+		{
+			"type": "svn",
+			"url": "http://svn.code.sf.net/p/jcapture-applet/code/trunk@46"
 		}
 
 	]

@@ -1,6 +1,6 @@
 
 <applet type="application/x-java-applet"
-		archive="lib/jcapture/lib/jcapture.jar"
+		archive="vendor/jcapture-applet/jcapture-applet/lib/jcapture.jar"
 		code = "com.hammurapi.jcapture.JCaptureApplet"
 		id="jCapture" height="387" width="482">
 	<param name = "scriptable"	value = "true">

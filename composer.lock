@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "42f0bf0a1dd548fc5d97a0c0f8b5ff63",
+    "hash": "2a32d4ed30b0f4eddec2b59dba739253",
     "packages": [
         {
             "name": "aFarkas/html5shiv",
@@ -160,6 +160,42 @@
                 "shasum": null
             },
             "type": "library"
+        },
+        {
+            "name": "jcapture-applet/jcapture-applet",
+            "version": "dev-trunk",
+            "source": {
+                "type": "svn",
+                "url": "http://svn.code.sf.net/p/jcapture-applet/code",
+                "reference": "/trunk/@46"
+            },
+            "type": "library",
+            "license": [
+                "LGPL"
+            ],
+            "authors": [
+                {
+                    "name": "Pavel Vlasov",
+                    "homepage": "http://www.hammurapi.com/"
+                },
+                {
+                    "name": "Jonny Bradley",
+                    "homepage": "http://tiki.org/UserPageJonnyBradley"
+                },
+                {
+                    "name": "Marc Laporte",
+                    "homepage": "http://marclaporte.com"
+                }
+            ],
+            "description": "jCapture is an applet to capture screenshots or record audio/screen",
+            "homepage": "http://sourceforge.net/p/jcapture-applet/",
+            "keywords": [
+                "applet",
+                "java",
+                "screencapture",
+                "screenshot"
+            ],
+            "time": "2013-04-17 19:48:36"
         },
         {
             "name": "jquery/jquery-sheet",
@@ -628,9 +664,9 @@
 
     ],
     "minimum-stability": "stable",
-    "stability-flags": [
-
-    ],
+    "stability-flags": {
+        "jcapture-applet/jcapture-applet": 20
+    },
     "platform": [
 
     ],
