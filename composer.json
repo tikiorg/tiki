@@ -63,7 +63,7 @@
 			"WikiPlugin": "lib/core/"
 		},
 		"classmap": [
-			"lib/pear/",
+			"vendor_extra/pear/",
 			"lib/openpgp/",
 			"lib/language/",
 			"lib/TikiWebdav/",
