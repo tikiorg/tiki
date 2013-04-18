@@ -109,6 +109,10 @@ hr {
 	color: #000;
 }
 
+.button.highlight a:hover {
+	border: 1px solid #000;
+}
+
 select,
 input[type="text"],
 input[type="password"],
