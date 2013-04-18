@@ -600,9 +600,7 @@ select {
 	right: 10px;
 	bottom: -1px;
 	width: 10em;
-/*	height: 26px;*/
 	line-height: 1;
-	z-index: 1;
 }
 
 .siteloginbar_popup fieldset {
