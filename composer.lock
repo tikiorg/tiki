@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "e32da5a945efd987a03c88eb9a66f9fa",
+    "hash": "96ef33564f34097b3c091b458a41b635",
     "packages": [
         {
             "name": "aFarkas/html5shiv",
@@ -68,7 +68,7 @@
                     "ZendX_": "extras/library/"
                 }
             },
-            "notification-url": "http://packagist.org/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "include-path": [
                 "library/",
                 "extras/library/"
@@ -143,7 +143,7 @@
                     "library/HTMLPurifier.composer.php"
                 ]
             },
-            "notification-url": "http://packagist.org/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "LGPL"
             ],
@@ -207,6 +207,17 @@
                 "screenshot"
             ],
             "time": "2013-04-17 19:48:36"
+        },
+        {
+            "name": "jquery/jquery-mobile",
+            "version": "1.3.1",
+            "dist": {
+                "type": "zip",
+                "url": "http://code.jquery.com/mobile/1.3.1/jquery.mobile-1.3.1.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "library"
         },
         {
             "name": "jquery/jquery-s5",
@@ -542,7 +553,7 @@
                     "Symfony\\Component\\Console\\": ""
                 }
             },
-            "notification-url": "http://packagist.org/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],

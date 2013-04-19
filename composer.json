@@ -16,6 +16,7 @@
 		"jquery/jquery-s5": "dev-master",
 		"jquery/jquery-sheet": "2.0.1",
 		"jquery/jquery-ui": "1.10.2",
+		"jquery/jquery-mobile": "1.3.1",
 		"jquery/jquery-ui-themes": "1.10.2",
 		"jquery/jquery-timepicker-addon": "1.2.2",
 		"jquery/jquery-ui-selectmenu": "1.3.999",
@@ -160,6 +161,17 @@
 				"version": "2.0.1",
 				"dist": {
 					"url": "http://jquerysheet.googlecode.com/files/jquery.sheet-2.0.1.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "jquery/jquery-mobile",
+				"version": "1.3.1",
+				"dist": {
+					"url": "http://code.jquery.com/mobile/1.3.1/jquery.mobile-1.3.1.zip",
 					"type": "zip"
 				}
 			}

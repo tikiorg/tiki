@@ -365,8 +365,8 @@ if ($prefs['mobile_feature'] === 'y' && $prefs['mobile_mode'] === 'y') {
 		$headerlib->add_cssfile("http://code.jquery.com/mobile/latest/jquery.mobile$cssmin.css");
 	} else {
 		// TODO add jQuery CDN when 1.1 is available there
-		$headerlib->add_jsfile("lib/jquery/mobile/jquery.mobile-$headerlib->jquerymobile_version$jsmin.js");
-		$headerlib->add_cssfile("lib/jquery/mobile/jquery.mobile-$headerlib->jquerymobile_version$cssmin.css");
+		$headerlib->add_jsfile("vendor/jquery/jquery-mobile/jquery.mobile-$headerlib->jquerymobile_version$jsmin.js");
+		$headerlib->add_cssfile("vendor/jquery/jquery-mobile/jquery.mobile-$headerlib->jquerymobile_version$cssmin.css");
 	}
 
 	$headerlib->drop_cssfile('css/cssmenus.css');
