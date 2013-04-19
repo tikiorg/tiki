@@ -197,14 +197,16 @@ JS
 			$html .= '>'.htmlspecialchars($content).'</textarea>';
 
 			$headerlib->add_jq_onready(
-				'var ckEditorInstances = new Array();
+'var ckEditorInstances = new Array();
 
-				$("#' . $as_id . '").ckeditor(function() {
-					if (typeof ajaxLoadingHide == "function") { ajaxLoadingHide(); }
-					ckEditorInstances[ckEditorInstances.length] = this;
-					this.resetDirty();
-					$(this.element.$).hide();
-				}, ' . $ckoptions . ');',
+CKEDITOR.replace( "'.$as_id.'",' . $ckoptions . ');
+
+CKEDITOR.on("instanceReady", function(event) {
+	if (typeof ajaxLoadingHide == "function") { ajaxLoadingHide(); }
+	ckEditorInstances[ckEditorInstances.length] = this.instances.'.$as_id.';
+	this.instances.'.$as_id.'.resetDirty();
+	//$(this.instances.'.$as_id.'.element.$).hide();
+});',
 				20
 			);	// after dialog tools init (10)
 		}

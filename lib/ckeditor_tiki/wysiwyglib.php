@@ -85,8 +85,7 @@ ajaxLoadingShow("'.$dom_id.'");
 
 		// js to initiate the editor
 		$ckoptions = '{
-	toolbar_Tiki: ' .$cktools.',
-	toolbar: "Tiki",
+	toolbar: ' .$cktools.',
 	language: "'.$prefs['language'].'",
 	customConfig: "",
 	autoSaveSelf: "'.addcslashes($auto_save_referrer, '"').'",		// unique reference for each page set up in ensureReferrer()
