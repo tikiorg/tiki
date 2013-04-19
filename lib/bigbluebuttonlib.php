@@ -157,10 +157,68 @@ class BigBlueButtonLib
 		$cachelib->invalidate('bbb_meetinglist');
 	}
 
+	public function configureRoom($meetingName, $configuration)
+	{
+		global $prefs;
+
+		if (empty($configuration) || ! $this->isDynamicConfigurationSupported()) {
+			return null;
+		}
+
+		$baseUrl = $this->getBaseUrl('/client/conf/config.xml');
+		$tikilib = TikiLib::lib('tiki');
+
+		$content = $tikilib->httprequest($baseUrl);
+
+		if (! $content) {
+			return null;
+		}
+
+		// FIXME : This code needs refactoring, currently only a proof of concept
+		$dom = new DOMDocument;
+		$dom->loadXML($content);
+		$modules = $dom->getElementsByTagName('module');
+		$toRemove = array();
+
+		foreach ($modules as $module) {
+			$name = $module->getAttribute('name');
+
+			if (($name == 'PresentModule' || $name == 'WhiteboardModule') && isset($configuration['presentation']['active']) && ! $configuration['presentation']['active']) {
+				$toRemove[] = $module;
+			}
+		}
+
+		foreach ($toRemove as $node) {
+			$node->parentNode->removeChild($node);
+		}
+
+		$content = $dom->saveXML();
+
+		$tikilib = TikiLib::lib('tiki');
+		$client = $tikilib->get_http_client($this->getBaseUrl('/bigbluebutton/api/setConfigXML.xml'));
+		$client->setParameterPost(array(
+			'meetingID' => $meetingName,
+			'checksum' => sha1($meetingName . rawurlencode($content) . $prefs['bigbluebutton_server_salt']),
+			'configXML' => rawurlencode($content),
+		));
+
+		$response = $client->request('POST');
+		$document = $response->getBody();
+		
+		$dom = new DOMDocument;
+		$dom->loadXML($document);
+
+		$values = $this->grabValues($dom->documentElement);
+
+		if ($values['returncode'] == 'SUCCESS') {
+			return $values['configToken'];
+		}
+	}
+
     /**
      * @param $room
      */
-    public function joinMeeting( $room )
+    public function joinMeeting( $room, $configToken = null )
 	{
 		$version = $this->getVersion();
 
@@ -168,7 +226,7 @@ class BigBlueButtonLib
 		$password = $this->getAttendeePassword($room);
 
 		if ( $name && $password ) {
-			$this->joinRawMeeting($room, $name, $password);
+			$this->joinRawMeeting($room, $name, $password, $configToken);
 		}
 	}
 
@@ -240,16 +298,19 @@ class BigBlueButtonLib
      * @param $name
      * @param $password
      */
-    public function joinRawMeeting( $room, $name, $password )
+    public function joinRawMeeting( $room, $name, $password, $configToken = null )
 	{
-		$url = $this->buildUrl(
-			'join',
-			array(
-				'meetingID' => $room,
-				'fullName' => $name,
-				'password' => $password,
-			)
+		$parameters = array(
+			'meetingID' => $room,
+			'fullName' => $name,
+			'password' => $password,
 		);
+
+		if ($configToken) {
+			$parameters['configToken'] = $configToken;
+		}
+
+		$url = $this->buildUrl('join', $parameters);
 
 		header('Location: ' . $url);
 		exit;
@@ -285,21 +346,29 @@ class BigBlueButtonLib
      */
     private function buildUrl( $action, array $parameters )
 	{
-		global $prefs;
-
 		if ( $action ) {
 			if ( $checksum = $this->generateChecksum($action, $parameters) ) {
 				$parameters['checksum'] = $checksum;
 			}
 		}
 
-		$base = rtrim($prefs['bigbluebutton_server_location'], '/');
+		$url = $this->getBaseUrl("/bigbluebutton/api/$action");
+		$url .= "?" . http_build_query($parameters, '', '&');
+		return $url;
+	}
 
-		if (parse_url($base, PHP_URL_PATH)) {
-			$url = "$base/api/$action?" . http_build_query($parameters, '', '&');
-		} else {
-			$url = "$base/bigbluebutton/api/$action?" . http_build_query($parameters, '', '&');
+	private function getBaseUrl($path)
+	{
+		global $prefs;
+
+		$base = rtrim($prefs['bigbluebutton_server_location'], '/');
+		$length = strlen('/bigbluebutton');
+		if (substr($base, -$length) === '/bigbluebutton') {
+			$base = substr($base, 0, -$length);
 		}
+
+		$url = "$base$path";
+
 		return $url;
 	}
 
@@ -332,6 +401,15 @@ class BigBlueButtonLib
 	{
 		$version = $this->getVersion();
 		return version_compare($version, '0.8') >= 0;
+	}
+
+    /**
+     * @return bool
+     */
+    private function isDynamicConfigurationSupported()
+	{
+		global $prefs;
+		return $prefs['bigbluebutton_dynamic_configuration'] == 'y';
 	}
 
     /**
