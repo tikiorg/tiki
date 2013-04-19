@@ -40,6 +40,7 @@ if ( !isset($_REQUEST['mobile_mode']) || $_REQUEST['mobile_mode'] === 'y' ) {
 		$prefs['jquery_ui_selectmenu'] = 'n';
 		$prefs['fgal_show_explorer'] = 'n';
 		$prefs['feature_fixed_width'] = 'n';
+		$prefs['fgal_elfinder_feature'] = 'n';
 
 		$headerlib->add_js('function sfHover() {alert("not working?");}', 100);	// try and override the css menu func
 
@@ -52,7 +53,8 @@ if ( !isset($_REQUEST['mobile_mode']) || $_REQUEST['mobile_mode'] === 'y' ) {
 
 		// a few requirements
 		$prefs['feature_html_head_base_tag'] = 'y';
-		$prefs['style'] = 'mobile.css'; // set in perspectives but seems to need a nudge here
+		$prefs['site_style'] = 'mobile.css'; // set in perspectives but seems to need a nudge here
+		$prefs['site'] = $prefs['site_style'];
 
 		if (!is_array($prefs['mobile_perspectives'])) {
 			$prefs['mobile_perspectives'] = unserialize($prefs['mobile_perspectives']);

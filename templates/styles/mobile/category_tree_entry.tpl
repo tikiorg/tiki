@@ -1,4 +1,4 @@
-<span class="tips"{if !empty($category_data.description)} title="{$category_data.description|escape}"{/if}>
+<span{if !empty($category_data.description)} class="tips" title="{$category_data.name|escape} | {$category_data.description|escape}"{/if}>
 	{if $category_data.children gt 0}
 		<a href="#">{$category_data.name|escape}</a>
 	{/if}
