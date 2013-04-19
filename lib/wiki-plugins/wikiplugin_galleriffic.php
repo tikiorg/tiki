@@ -122,9 +122,9 @@ function wikiplugin_galleriffic($data, $params)
 		return '';
 	}
 	$headerlib = TikiLib::lib('header');
-	$headerlib->add_cssfile('lib/jquery/plugins/galleriffic/css/galleriffic-2.css');
-	$headerlib->add_jsfile('lib/jquery/plugins/galleriffic/js/jquery.galleriffic.js');
-	$headerlib->add_jsfile('lib/jquery/plugins/galleriffic/js/jquery.opacityrollover.js');
+	$headerlib->add_cssfile('lib/jquery_tiki/galleriffic/css/galleriffic-2.css');		// tiki needs modified css otherwise .content gets hidden
+	$headerlib->add_jsfile('vendor/jquery/plugins/galleriffic/js/jquery.galleriffic.js');
+	$headerlib->add_jsfile('vendor/jquery/plugins/galleriffic/js/jquery.opacityrollover.js');
 	$playLinkText = tra('Play Slideshow');
 	$pauseLinkText = tra('Pause SlideShow');
 	$prevLinkText = '&lsaquo; '.tra('Previous Photo');

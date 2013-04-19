@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "7a46866051830e577dbf22027ae2663f",
+    "hash": "92a91d3eddcfe19b5f5d641041a22169",
     "packages": [
         {
             "name": "aFarkas/html5shiv",
@@ -388,6 +388,17 @@
             "dist": {
                 "type": "zip",
                 "url": "http://www.eyecon.ro/colorpicker/colorpicker.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "library"
+        },
+        {
+            "name": "jquery/plugins/galleriffic",
+            "version": "2.0.1",
+            "dist": {
+                "type": "zip",
+                "url": "http://www.twospy.com/galleriffic/galleriffic-2.0.zip",
                 "reference": null,
                 "shasum": null
             },
