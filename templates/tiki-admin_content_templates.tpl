@@ -131,7 +131,7 @@
 			var val = $('#type-selector').val();
 			$('.for-' + val).show();
 		} ).trigger('change');
-		window.editorDirty = false;
+		needToConfirm = false;
 	{/jq}
 </form>
 

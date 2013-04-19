@@ -197,16 +197,12 @@ JS
 			$html .= '>'.htmlspecialchars($content).'</textarea>';
 
 			$headerlib->add_jq_onready(
-'var ckEditorInstances = new Array();
-
-CKEDITOR.replace( "'.$as_id.'",' . $ckoptions . ');
-
+'CKEDITOR.replace( "'.$as_id.'",' . $ckoptions . ');
 CKEDITOR.on("instanceReady", function(event) {
 	if (typeof ajaxLoadingHide == "function") { ajaxLoadingHide(); }
-	ckEditorInstances[ckEditorInstances.length] = this.instances.'.$as_id.';
 	this.instances.'.$as_id.'.resetDirty();
-	//$(this.instances.'.$as_id.'.element.$).hide();
-});',
+});
+',
 				20
 			);	// after dialog tools init (10)
 		}
@@ -274,7 +270,7 @@ function editTimerTick() {
 		}
 	}
 
-	if (editTimerWarnings == 0 && seconds <= 60 && window.editorDirty) {
+	if (editTimerWarnings == 0 && seconds <= 60 && editorDirty) {
 		alert('".addslashes(tra('Your edit session will expire in:')).' 1 '.tra('minute').'. '.
 				addslashes(tra('You must PREVIEW or SAVE your work now, to avoid losing your edits.'))."');
 		editTimerWarnings++;
@@ -297,34 +293,39 @@ function editTimerTick() {
 ";
 
 		$js_editconfirm .= "
-function confirmExit() {
+\$(window).on('beforeunload', function(e) {
 	if (window.needToConfirm) {
-		if (typeof window.ckEditorInstances != 'undefined' && window.ckEditorInstances) {
-			for( var e = 0; e < window.ckEditorInstances.length; e++ ) {
-				if (window.ckEditorInstances[e].mayBeDirty && window.ckEditorInstances[e].checkDirty()) {
-					window.editorDirty = true;
+		if (typeof CKEDITOR === 'object') {
+			for(var ed in CKEDITOR.instances ) {
+				if (CKEDITOR.instances.hasOwnProperty(ed)) {
+					if ( CKEDITOR.instances[ed].checkDirty()) {
+						editorDirty = true;
+					}
 				}
 			}
 		}
-		if (window.editorDirty) {
-			return '".tra('You are about to leave this page. Changes since your last save will be lost. Are you sure you want to exit this page?')."';
+		if (editorDirty) {
+			var msg = '" . addslashes(tra('You are about to leave this page. Changes since your last save may be lost. Are you sure you want to exit this page?')) . "';
+			if (e) {
+				e.returnValue = msg;
+			}
+			return msg;
 		}
 	}
-}
+});
 
-window.onbeforeunload = confirmExit;
 
 \$('document').ready( function() {
 	// attach dirty function to all relevant inputs etc for wiki/newsletters, blog, article and trackers (trackers need {teaxtarea} implementing)
 	if ('$as_id' === 'editwiki' || '$as_id' === 'blogedit' || '$as_id' === 'body' || '$as_id'.indexOf('area_') > -1) {
-		\$(\$('#$as_id').prop('form')).find('input, textarea, select').change( function () { if (!window.editorDirty) { window.editorDirty = true; } });
+		\$(\$('#$as_id').prop('form')).find('input, textarea, select').change( function () { if (!editorDirty) { editorDirty = true; } });
 	} else {	// modules admin exception, only attach to this textarea, although these should be using _simple mode
-		\$('#$as_id').change( function () { if (!window.editorDirty) { window.editorDirty = true; } });
+		\$('#$as_id').change( function () { if (!editorDirty) { editorDirty = true; } });
 	}
 });
 
-window.needToConfirm = true;
-window.editorDirty = ".(isset($_REQUEST["preview"]) && $params['_previewConfirmExit'] == 'y' ? 'true' : 'false').";
+needToConfirm = true;
+editorDirty = ".(isset($_REQUEST["preview"]) && $params['_previewConfirmExit'] == 'y' ? 'true' : 'false').";
 ";
 
 		if ($prefs['feature_wysiwyg'] == 'y' && $prefs['wysiwyg_optional'] == 'y') {
