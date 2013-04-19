@@ -1,14 +1,14 @@
-div.content {
+div.gcontent {
 	/* The display of content is enabled using jQuery so that the slideshow content won't display unless javascript is enabled. */
 	display: none;
 	float: right;
 	width: 550px; 
 }
-div.content a, div.navigation a {
+div.gcontent a, div.navigation a {
 	text-decoration: none;
 	color: #777;
 }
-div.content a:focus, div.content a:hover, div.content a:active {
+div.gcontent a:focus, div.gcontent a:hover, div.gcontent a:active {
 	text-decoration: underline;
 }
 div.controls {
