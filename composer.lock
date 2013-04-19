@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "8a631df7cc455e09f96fde5b711a5b79",
+    "hash": "3767a812e872650b00421bf132e6efbc",
     "packages": [
         {
             "name": "aFarkas/html5shiv",
@@ -311,6 +311,17 @@
             "dist": {
                 "type": "zip",
                 "url": "https://github.com/jeffharrell/MiniCart/archive/2.6.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "library"
+        },
+        {
+            "name": "jquery/photoswipe",
+            "version": "3.0.5",
+            "dist": {
+                "type": "zip",
+                "url": "http://github.com/downloads/codecomputerlove/PhotoSwipe/code.photoswipe-3.0.5.zip",
                 "reference": null,
                 "shasum": null
             },

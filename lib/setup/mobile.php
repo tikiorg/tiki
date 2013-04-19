@@ -46,15 +46,15 @@ if ( !isset($_REQUEST['mobile_mode']) || $_REQUEST['mobile_mode'] === 'y' ) {
 
 		if ($prefs['feature_shadowbox'] === 'y') {
 			$headerlib
-				->add_jsfile('lib/jquery/code.photoswipe/lib/klass.min.js')
-				->add_jsfile("lib/jquery/code.photoswipe/code.photoswipe.jquery-3.0.4.js")
-				->add_cssfile('lib/jquery/code.photoswipe/photoswipe.css');
+				->add_jsfile('vendor/jquery/photoswipe/lib/klass.min.js')
+				->add_jsfile("vendor/jquery/photoswipe/code.photoswipe.jquery-3.0.5.min.js")
+				->add_cssfile('vendor/jquery/photoswipe/photoswipe.css');
 		}
 
 		// a few requirements
 		$prefs['feature_html_head_base_tag'] = 'y';
 		$prefs['site_style'] = 'mobile.css'; // set in perspectives but seems to need a nudge here
-		$prefs['site'] = $prefs['site_style'];
+		$prefs['style'] = $prefs['site_style'];
 
 		if (!is_array($prefs['mobile_perspectives'])) {
 			$prefs['mobile_perspectives'] = unserialize($prefs['mobile_perspectives']);
