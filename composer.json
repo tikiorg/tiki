@@ -26,6 +26,7 @@
 		"jquery/plugins/cluetip": "1.2.8",
 		"jquery/plugins/colorbox": "1.4.14",
 		"jquery/plugins/colorpicker": "0.5",
+        "jquery/plugins/infinitecarousel": "3.0.3",
 		"phpcas/phpcas": "1.3.2",
 		"phpseclib/phpseclib": "0.3.1",
 		"rangy/rangy": "1.2.3",
@@ -293,6 +294,17 @@
 				"version": "1.4.14",
 				"dist": {
 					"url": "https://github.com/jackmoore/colorbox/archive/1.4.14.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "jquery/plugins/infinitecarousel",
+				"version": "3.0.3",
+				"dist": {
+					"url": "http://www.catchmyfame.com/jquery/jquery.infinitecarousel3.zip",
 					"type": "zip"
 				}
 			}
