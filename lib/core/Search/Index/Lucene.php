@@ -251,6 +251,9 @@ class Search_Index_Lucene implements Search_Index_Interface
 	private function buildQuery($expr)
 	{
 		$query = (string) $expr->walk(array($this, 'walkCallback'));
+
+		// FIX : Depending on the locale, decimals may be rendered as 1,2 instead of 1.2, causing lucene to go crazy
+		$query = preg_replace('/\^(\d+),(\d+)/', '^$1.$2', $query);
 		return Zend_Search_Lucene_Search_QueryParser::parse($query, 'UTF-8');
 	}
 
