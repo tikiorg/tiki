@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "3767a812e872650b00421bf132e6efbc",
+    "hash": "7a46866051830e577dbf22027ae2663f",
     "packages": [
         {
             "name": "aFarkas/html5shiv",
@@ -300,6 +300,17 @@
             "dist": {
                 "type": "zip",
                 "url": "http://jqueryui.com/resources/download/jquery-ui-themes-1.10.2.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "library"
+        },
+        {
+            "name": "jquery/jtrack",
+            "version": "1.0",
+            "dist": {
+                "type": "zip",
+                "url": "http://jtrack.googlecode.com/files/jtrack-1.0.zip",
                 "reference": null,
                 "shasum": null
             },
