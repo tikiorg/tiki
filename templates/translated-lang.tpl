@@ -5,6 +5,18 @@
 	{* For all object types: First show the world icon and on hover the language of the current object *}
 		{icon _id=world class="icon" title="{tr}Current language:{/tr} {$trads[0].langName|escape} ({$trads[0].lang|escape})"}
 	{* ..than on hover first show the list of translations including the current language highlighted *}
+        {if empty($trads[0].lang)}
+        <ul>
+            <li class="tabcontent">
+                <h1>{tr}No language is assigned to this page.{/tr}</h1>
+                {if $object_type eq 'wiki page' and ($tiki_p_edit eq 'y' or (!$user and $prefs.wiki_encourage_contribution eq 'y')) and !$lock}
+                    <a href="tiki-edit_translation.php?page={$page|escape}">{tr}Please select a language before performing translation.{/tr}</a>
+                {elseif $object_type eq 'article' and $tiki_p_edit_article eq 'y'}
+                    <a href="tiki-edit_article.php?articleId={$articleId|escape}">{tr}Please select a language before performing translation.{/tr}</a>
+                {/if}
+            </li>
+        </ul>
+        {else}
 		<ul>
 			<li class="tabcontent">
 			{* First the language of the object *}
@@ -82,6 +94,7 @@
 				{/if}				
 			</li>
 		</ul>
+        {/if}
 	</li>
 </ul>
 {* this section is for the related javascripts *}
