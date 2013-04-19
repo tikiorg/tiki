@@ -19,7 +19,7 @@ function module_translation_info()
 	return array(
 		'name' => tra('Translate Updates'),
 		'description' => tra('Links to versions of the wiki page being viewed in other languages, distinguishing between better, equivalent or worse translations. Optionally displays the up-to-dateness of the translation being viewed.'),
-		'prefs' => array('feature_translation'),
+		'prefs' => array('feature_multilingual'),
 		'params' => array(
 			'pivot_language' => array(
 				'name' => tra('Reference language'),
