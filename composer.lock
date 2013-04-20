@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "a6429545e843909684f4d0e2f17d464c",
+    "hash": "7577db033e88ba03d59c4a0fb2f1d544",
     "packages": [
         {
             "name": "aFarkas/html5shiv",
@@ -432,6 +432,17 @@
             "dist": {
                 "type": "zip",
                 "url": "http://jquery.bassistance.de/validate/jquery-validation-1.11.1.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "library"
+        },
+        {
+            "name": "jquery/plugins/reflection-jquery",
+            "version": "1.1",
+            "dist": {
+                "type": "zip",
+                "url": "http://www.digitalia.be/file_download/14/reflection-jquery.zip",
                 "reference": null,
                 "shasum": null
             },

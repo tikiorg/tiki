@@ -436,7 +436,7 @@ if ($prefs['mobile_feature'] === 'y' && $prefs['mobile_mode'] === 'y') {
 		$headerlib->add_jsfile('lib/jquery/plugins/superfish/js/hoverIntent.js');
 	}
 	if ( $prefs['feature_jquery_reflection'] == 'y' ) {
-		$headerlib->add_jsfile('lib/jquery/plugins/reflection-jquery/js/reflection.js');
+		$headerlib->add_jsfile('vendor/jquery/plugins/reflection-jquery/js/reflection.js');
 	}
 	if ( $prefs['feature_jquery_media'] == 'y' ) {
 		$headerlib->add_jsfile('lib/jquery/plugins/jquery.media.js');
