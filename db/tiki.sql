@@ -1597,6 +1597,7 @@ CREATE TABLE `tiki_newsletters` (
   `autoArticleClip` char(1) default 'n',
   `articleClipTypes` text,
   `articleClipRange` int(14) default NULL,
+  `emptyClipBlocksSend` char(1) default 'n',
   PRIMARY KEY (`nlId`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
