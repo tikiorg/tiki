@@ -80,7 +80,12 @@ class CleanVendors
 			}
 		}
 
-		if (is_writable($path)) {
+		$remaining = scandir($path);
+		$remaining = array_filter($remaining, function ($filename) {
+			return $file !== '.' && $file !== '..';
+		});
+
+		if (is_writable($path) && ! count($remaining)) {
 			rmdir($path);
 		}
 	}
