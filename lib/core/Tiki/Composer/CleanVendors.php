@@ -64,6 +64,10 @@ class CleanVendors
 			return;
 		}
 
+		if (! is_readable($path)) {
+			return;
+		}
+
 		foreach (scandir($path) as $file) {
 			if ($file === '.' || $file === '..') {
 				continue;
