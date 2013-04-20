@@ -22,8 +22,8 @@ class CleanVendors
 		self::deleteDirectory($vendors . 'codemirror/codemirror/doc');
 		self::deleteDirectory($vendors . 'codemirror/codemirror/test');
 		self::deleteDirectory($vendors . 'jarnokurlin/fullcalendar/demos');
-		self::deleteFile($vendors . 'jquery/jquery-sheet/jquery-1.5.2.js');
-		self::deleteFile($vendors . 'jquery/jquery-sheet/jquery-1.5.2.min.js');
+		self::deleteFile(     $vendors . 'jquery/jquery-sheet/jquery-1.5.2.js');
+		self::deleteFile(     $vendors . 'jquery/jquery-sheet/jquery-1.5.2.min.js');
 		self::deleteDirectory($vendors . 'jquery/jquery-sheet/jquery-ui');
 		self::deleteDirectory($vendors . 'jquery/jquery-ui-selectmenu/demos');
 		self::deleteDirectory($vendors . 'jquery/jquery-ui-selectmenu/tests');
@@ -34,6 +34,9 @@ class CleanVendors
 		self::deleteDirectory($vendors . 'jquery/plugins/brosho/__MACOSX');
 		self::deleteDirectory($vendors . 'jquery/plugins/cluetip/demo');
 		self::deleteDirectory($vendors . 'jquery/plugins/cluetip/test');
+		self::deleteDirectory($vendors . 'jquery/plugins/jquery-validation/demo');
+		self::deleteDirectory($vendors . 'jquery/plugins/jquery-validation/lib');
+		self::deleteDirectory($vendors . 'jquery/plugins/jquery-validation/test');
 		self::deleteDirectory($vendors . 'ezyang/htmlpurifier/docs');
 		self::deleteDirectory($vendors . 'ezyang/htmlpurifier/tests');
 		self::deleteDirectory($vendors . 'phpcas/phpcas/CAS-1.3.2/docs');
