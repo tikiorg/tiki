@@ -35,6 +35,7 @@
 		"jquery/plugins/reflection-jquery": "1.1",
 		"jquery/plugins/superfish": "1.7.2",
 		"jquery/plugins/tablesorter": "2.9.1",
+		"jquery/plugins/treetable": "3.0.1",
 		"phpcas/phpcas": "1.3.2",
 		"phpseclib/phpseclib": "0.3.1",
 		"rangy/rangy": "1.2.3",
@@ -401,6 +402,17 @@
 				"version": "2.9.1",
 				"dist": {
 					"url": "https://github.com/Mottie/tablesorter/archive/v2.9.1.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "jquery/plugins/treetable",
+				"version": "3.0.1",
+				"dist": {
+					"url": "https://github.com/ludo/jquery-treetable/archive/3.0.1.zip",
 					"type": "zip"
 				}
 			}

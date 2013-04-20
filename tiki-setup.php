@@ -494,8 +494,8 @@ if ( $prefs['feature_jquery_validation'] == 'y' ) {
 }
 
 $headerlib->add_jsfile('lib/jquery/plugins/jquery.async.js', 10);
-$headerlib->add_jsfile('lib/jquery/plugins/treeTable/src/javascripts/jquery.treeTable.js');
-$headerlib->add_cssfile('lib/jquery/plugins/treeTable/src/stylesheets/jquery.treeTable.css');
+$headerlib->add_jsfile('vendor/jquery/plugins/treetable/javascripts/src/jquery.treetable.js');
+$headerlib->add_cssfile('vendor/jquery/plugins/treetable/stylesheets/jquery.treetable.css');
 
 if (empty($user) && $prefs['feature_antibot'] == 'y') {
 	$headerlib->add_jsfile('lib/captcha/captchalib.js');
