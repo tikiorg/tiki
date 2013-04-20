@@ -85,7 +85,7 @@ class CleanVendors
 		}
 
 		$remaining = scandir($path);
-		$remaining = array_filter($remaining, function ($filename) {
+		$remaining = array_filter($remaining, function ($file) {
 			return $file !== '.' && $file !== '..';
 		});
 
