@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "8db406ae46b4f2ce11af8fde0207cc93",
+    "hash": "a6429545e843909684f4d0e2f17d464c",
     "packages": [
         {
             "name": "aFarkas/html5shiv",
@@ -410,6 +410,17 @@
             "dist": {
                 "type": "zip",
                 "url": "http://www.catchmyfame.com/jquery/jquery.infinitecarousel3.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "library"
+        },
+        {
+            "name": "jquery/plugins/jquery-json",
+            "version": "2.4",
+            "dist": {
+                "type": "file",
+                "url": "http://jquery-json.googlecode.com/files/jquery.json-2.4.js",
                 "reference": null,
                 "shasum": null
             },

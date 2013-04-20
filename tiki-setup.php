@@ -333,11 +333,7 @@ if ( $prefs['fgal_elfinder_feature'] === 'y' ) {
 
 $headerlib->add_jsfile('lib/jquery_tiki/tiki-jquery.js');
 $headerlib->add_jsfile('lib/jquery_tiki/tiki-maps.js');
-if ( $prefs['tiki_minify_javascript'] === 'y' ) {
-	$headerlib->add_jsfile('lib/jquery/plugins/json/jquery.json-2.4.min.js');
-} else {
-	$headerlib->add_jsfile('lib/jquery/plugins/json/jquery.json-2.4.js');
-}
+$headerlib->add_jsfile('vendor/jquery/plugins/jquery-json/jquery.json-2.4.js');
 
 if ($prefs['feature_syntax_highlighter'] == 'y') {
 	//add codemirror stuff
