@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "5ce16dac513150dcd120023a7e017831",
+    "hash": "8ceedaa51739b9e250bd34dc30113257",
     "packages": [
         {
             "name": "aFarkas/html5shiv",
@@ -454,6 +454,17 @@
             "dist": {
                 "type": "zip",
                 "url": "https://github.com/joeldbirch/superfish/archive/1.7.2.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "library"
+        },
+        {
+            "name": "jquery/plugins/tablesorter",
+            "version": "2.9.1",
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/Mottie/tablesorter/archive/v2.9.1.zip",
                 "reference": null,
                 "shasum": null
             },
