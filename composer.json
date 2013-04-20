@@ -24,6 +24,7 @@
 		"jquery/minicart": "2.6",
 		"jquery/photoswipe": "3.0.5",
 		"jquery/plugins/anythingslider": "1.8.18",
+		"jquery/plugins/async": "1.0",
 		"jquery/plugins/brosho": "0.1",
 		"jquery/plugins/cluetip": "1.2.8",
 		"jquery/plugins/colorbox": "1.4.14",
@@ -304,6 +305,17 @@
 				"dist": {
 					"url": "http://svg-edit.googlecode.com/files/svg-edit-2.6.zip",
 					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "jquery/plugins/async",
+				"version": "1.0",
+				"dist": {
+					"url": "http://mess.genezys.net/jquery/jquery.async.js",
+					"type": "file"
 				}
 			}
 		},

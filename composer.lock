@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "b35ad3fc0b972feeaff6eeda03c71fd1",
+    "hash": "797bb0bee9f622a18d4b07fc73d46630",
     "packages": [
         {
             "name": "aFarkas/html5shiv",
@@ -344,6 +344,17 @@
             "dist": {
                 "type": "zip",
                 "url": "https://github.com/CSS-Tricks/AnythingSlider/archive/v1.8.18.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "library"
+        },
+        {
+            "name": "jquery/plugins/async",
+            "version": "1.0",
+            "dist": {
+                "type": "file",
+                "url": "http://mess.genezys.net/jquery/jquery.async.js",
                 "reference": null,
                 "shasum": null
             },

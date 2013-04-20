@@ -493,7 +493,7 @@ if ( $prefs['feature_jquery_validation'] == 'y' ) {
 	$headerlib->add_jsfile('lib/validators/validator_required_in_group.js');
 }
 
-$headerlib->add_jsfile('lib/jquery/plugins/jquery.async.js', 10);
+$headerlib->add_jsfile('vendor/jquery/plugins/async/jquery.async.js', 10);
 $headerlib->add_jsfile('vendor/jquery/plugins/treetable/javascripts/src/jquery.treetable.js');
 $headerlib->add_cssfile('vendor/jquery/plugins/treetable/stylesheets/jquery.treetable.css');
 
