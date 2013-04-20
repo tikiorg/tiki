@@ -22,6 +22,9 @@ class CleanVendors
 		self::deleteDirectory($vendors . 'codemirror/codemirror/doc');
 		self::deleteDirectory($vendors . 'codemirror/codemirror/test');
 		self::deleteDirectory($vendors . 'jarnokurlin/fullcalendar/demos');
+		self::deleteDirectory($vendors . 'jcapture-applet/jcapture-applet/src');
+		self::deleteDirectory($vendors . 'jquery/jquery-mobile/demos');
+		self::deleteDirectory($vendors . 'jquery/jquery-s5/lib/dompdf/www');
 		self::deleteFile(     $vendors . 'jquery/jquery-sheet/jquery-1.5.2.js');
 		self::deleteFile(     $vendors . 'jquery/jquery-sheet/jquery-1.5.2.min.js');
 		self::deleteDirectory($vendors . 'jquery/jquery-sheet/jquery-ui');
@@ -30,10 +33,13 @@ class CleanVendors
 		self::deleteDirectory($vendors . 'jquery/jquery-ui/demos');
 		self::deleteDirectory($vendors . 'jquery/jquery-ui/tests');
 		self::deleteDirectory($vendors . 'jquery/jquery-ui/themes');
+		self::deleteDirectory($vendors . 'jquery/photoswipe/examples');
 		self::deleteDirectory($vendors . 'jquery/plugins/anythingslider/demos');
 		self::deleteDirectory($vendors . 'jquery/plugins/brosho/__MACOSX');
 		self::deleteDirectory($vendors . 'jquery/plugins/cluetip/demo');
 		self::deleteDirectory($vendors . 'jquery/plugins/cluetip/test');
+		self::deleteDirectory($vendors . 'jquery/plugins/colorbox/content');
+		self::deleteDirectory($vendors . 'jquery/plugins/tablesorter/docs');
 		self::deleteDirectory($vendors . 'jquery/plugins/jquery-validation/demo');
 		self::deleteDirectory($vendors . 'jquery/plugins/jquery-validation/lib');
 		self::deleteDirectory($vendors . 'jquery/plugins/jquery-validation/test');
@@ -66,20 +72,22 @@ class CleanVendors
 			$full = "$path/$file";
 
 			if (is_link($full)) {
-				unlink($full);
+				self::deleteFile($full);
 			} elseif (is_dir($full)) {
 				self::deleteDirectory($full);
 			} else {
-				unlink($full);
+				self::deleteFile($full);
 			}
 		}
 
-		rmdir($path);
+		if (is_writable($path)) {
+			rmdir($path);
+		}
 	}
 
 	private static function deleteFile($path)
 	{
-		if (! file_exists($path)) {
+		if (! file_exists($path) || ! is_writable($path)) {
 			return;
 		}
 
