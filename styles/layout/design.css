@@ -4358,6 +4358,8 @@ form.simple textarea.export {
 	white-space: normal !important;
 }
 
+/* tiki-admin_toolbars.php toolbar icon alignment */
+
 a.cke_button span.cke_icon {
     display: inline-block;
     height: 16px;
