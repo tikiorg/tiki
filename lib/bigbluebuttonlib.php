@@ -174,25 +174,12 @@ class BigBlueButtonLib
 			return null;
 		}
 
-		// FIXME : This code needs refactoring, currently only a proof of concept
-		$dom = new DOMDocument;
-		$dom->loadXML($content);
-		$modules = $dom->getElementsByTagName('module');
-		$toRemove = array();
+		$config = new Tiki\BigBlueButton\Configuration($content);
 
-		foreach ($modules as $module) {
-			$name = $module->getAttribute('name');
-
-			if (($name == 'PresentModule' || $name == 'WhiteboardModule') && isset($configuration['presentation']['active']) && ! $configuration['presentation']['active']) {
-				$toRemove[] = $module;
-			}
+		if (isset($configuration['presentation']['active']) && ! $configuration['presentation']['active']) {
+			$config->removeModule('PresentModule');
 		}
-
-		foreach ($toRemove as $node) {
-			$node->parentNode->removeChild($node);
-		}
-
-		$content = $dom->saveXML();
+		$content = $config->getXml();
 
 		$tikilib = TikiLib::lib('tiki');
 		$client = $tikilib->get_http_client($this->getBaseUrl('/bigbluebutton/api/setConfigXML.xml'));

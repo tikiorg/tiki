@@ -28,10 +28,12 @@ if (!is_file(dirname(__FILE__) . '/local.php')) {
 	die("\nYou need to setup a new database and create a local.php file for the test suite inside " . dirname(__FILE__) . "\n\n");
 }
 
-global $local_php, $api_tiki;
+global $local_php, $api_tiki, $style_base;
 $api_tiki = 'adodb';
 $local_php = dirname(__FILE__) . '/local.php';
 require_once($local_php);
+
+$style_base = 'skeleton';
 
 // Force autoloading
 if (! class_exists('ADOConnection')) {

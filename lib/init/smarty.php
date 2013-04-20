@@ -415,7 +415,7 @@ class Smarty_Tiki extends Smarty
 
 	function initializePaths()
 	{
-		global $prefs, $base_style, $tikidomain;
+		global $prefs, $style_base, $tikidomain;
 		if (empty($style_base) && class_exists('TikiLib')) {	// TikiLib doesn't exist in the installer
 			$tikilib = TikiLib::lib('tiki');
 			if (method_exists($tikilib, "get_style_base")) {
