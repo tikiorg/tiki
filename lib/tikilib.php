@@ -282,6 +282,9 @@ class TikiLib extends TikiDb_Bridge
 			case 'kalturaadmin':
 				require_once 'lib/videogals/kalturalib.php';
 				return self::$libraries[$name] = new KalturaLib(KalturaLib::SESSION_ADMIN);
+			case 'registration':
+				global $registrationlib; require_once 'lib/registration/registrationlib.php';
+				return self::$libraries[$name] = $registrationlib;
 		}
 	}
 

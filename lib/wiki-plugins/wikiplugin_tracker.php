@@ -525,6 +525,9 @@ function wikiplugin_tracker($data, $params)
 			$hidden_fieldId = array();
 			if (!empty($fields)  || !empty($wiki) || !empty($tpl)) {
 				if ($registration == 'y' && $prefs["user_register_prettytracker"] == 'y' && !empty($prefs["user_register_prettytracker_tpl"])) {
+					$registrationlib = TikiLib::lib('registration');
+					$smarty->assign('listgroups', $registrationlib->merged_prefs['choosable_groups']);
+
 					$smarty->assign('register_login', $smarty->fetch('register-login.tpl'));
 					$smarty->assign('register_email', $smarty->fetch('register-email.tpl'));
 					$smarty->assign('register_pass', $smarty->fetch('register-pass.tpl'));
