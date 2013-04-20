@@ -429,11 +429,11 @@ if ($prefs['mobile_feature'] === 'y' && $prefs['mobile_mode'] === 'y') {
 	}
 
 	if ( $prefs['feature_jquery_superfish'] == 'y' ) {
-		$headerlib->add_jsfile('lib/jquery/plugins/superfish/js/superfish.js');
-		$headerlib->add_jsfile('lib/jquery/plugins/superfish/js/supersubs.js');
+		$headerlib->add_jsfile('vendor/jquery/plugins/superfish/js/superfish.js');
+		$headerlib->add_jsfile('vendor/jquery/plugins/superfish/js/supersubs.js');
 	}
 	if ( $prefs['feature_jquery_tooltips'] === 'y' || $prefs['feature_jquery_superfish'] === 'y' ) {
-		$headerlib->add_jsfile('lib/jquery/plugins/superfish/js/hoverIntent.js');
+		$headerlib->add_jsfile('vendor/jquery/plugins/superfish/js/hoverIntent.js');
 	}
 	if ( $prefs['feature_jquery_reflection'] == 'y' ) {
 		$headerlib->add_jsfile('vendor/jquery/plugins/reflection-jquery/js/reflection.js');

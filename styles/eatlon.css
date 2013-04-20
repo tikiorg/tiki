@@ -452,7 +452,7 @@ input[id="sl-login-pass"] {background: #e1e1e2}
 }
 
 .cssmenu_vert li ul li a .sf-sub-indicator {
-	background: url(../lib/jquery/plugins/superfish/images/arrows-ffffff.png);
+	background: url(../img/superfish/arrows-ffffff.png);
 }
 
 #tiki-top .cssmenu_horiz li a .sf-sub-indicator {top: 1.3em}

@@ -118,7 +118,7 @@
 	text-indent: -999em;
 	overflow: hidden;
 	/* 8-bit indexed alpha png. IE6 gets solid image only. use url(arrows-000000.png) for black arrows */
-	background: url(../lib/jquery/plugins/superfish/images/arrows-ffffff.png) no-repeat -10px -100px;
+	background: url(../img/superfish/arrows-ffffff.png) no-repeat -10px -100px;
 }
 
 a > .sf-sub-indicator {  /* give all except IE6 the correct values */

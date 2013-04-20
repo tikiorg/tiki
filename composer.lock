@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "7577db033e88ba03d59c4a0fb2f1d544",
+    "hash": "5ce16dac513150dcd120023a7e017831",
     "packages": [
         {
             "name": "aFarkas/html5shiv",
@@ -443,6 +443,17 @@
             "dist": {
                 "type": "zip",
                 "url": "http://www.digitalia.be/file_download/14/reflection-jquery.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "library"
+        },
+        {
+            "name": "jquery/plugins/superfish",
+            "version": "1.7.2",
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/joeldbirch/superfish/archive/1.7.2.zip",
                 "reference": null,
                 "shasum": null
             },

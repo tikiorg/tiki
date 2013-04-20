@@ -227,7 +227,7 @@ input[type=submit]:hover {
 
 /* special arrows and arrow top padding */
 .cssmenu_vert li a .sf-sub-indicator {
-	background: url(../../../lib/jquery/plugins/superfish/images/arrows-ffffff.png) no-repeat 0 0;
+	background: url(../../../img/superfish/arrows-ffffff.png) no-repeat 0 0;
 }
 
 .separator {
