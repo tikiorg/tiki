@@ -126,7 +126,7 @@ class Search_Index_Lucene implements Search_Index_Interface
 
 	private function internalFind(& $query, $sortOrder)
 	{
-		if ($this->cache) {
+		if (false && $this->cache) {
 			$args = func_get_args();
 			$cacheKey = serialize($args);
 

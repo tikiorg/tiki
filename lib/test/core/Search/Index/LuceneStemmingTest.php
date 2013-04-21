@@ -39,6 +39,7 @@ class Search_Index_LuceneStemmingTest extends PHPUnit_Framework_TestCase
 				'object_id' => $typeFactory->identifier('Comité Wiki'),
 				'description' => $typeFactory->plaintext('a descriptions for the pages éducation Case'),
 				'contents' => $typeFactory->plaintext('a descriptions for the pages éducation Case'),
+				'hebrew' => $typeFactory->plaintext('מחשב הוא מכונה המעבדת נתונים על פי תוכנית, כלומר על פי רצף פקודות נתון מראש. מחשבים הם חלק בלתי נפרד מחיי היומיום '),
 			)
 		);
 	}
@@ -105,6 +106,13 @@ class Search_Index_LuceneStemmingTest extends PHPUnit_Framework_TestCase
 	{
 		$query = new Search_Query('a for the');
 		$this->assertEquals(0, count($query->search($this->index)));
+	}
+
+	function testHebrewString()
+	{
+		$query = new Search_Query;
+		$query->filterContent('מחשב', 'hebrew');
+		$this->assertEquals(1, count($query->search($this->index)));
 	}
 }
 
