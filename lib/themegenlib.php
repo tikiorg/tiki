@@ -186,7 +186,7 @@ class ThemeGenLib
 		$headerlib->add_jsfile('vendor/jquery/plugins/colorpicker/js/colorpicker.js');
 
 		// units converter
-		$headerlib->add_jsfile('lib/jquery/plugins/pxem.jQuery.js');
+		$headerlib->add_jsfile('vendor/jquery/plugins/pxem/pxem.jQuery.js');
 
 		if (!empty($_COOKIE['themegen'])) {
 			if (strpos($_COOKIE['themegen'], 'state:open') !== false) {

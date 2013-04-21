@@ -35,6 +35,7 @@
 		"jquery/plugins/jquery-validation": "1.11.1",
 		"jquery/plugins/jquery-json": "2.4",
 		"jquery/plugins/media": "0.98",
+		"jquery/plugins/pxem": "0.1",
 		"jquery/plugins/reflection-jquery": "1.1",
 		"jquery/plugins/superfish": "1.7.2",
 		"jquery/plugins/tablesorter": "2.9.1",
@@ -406,6 +407,17 @@
 				"dist": {
 					"url": "https://github.com/malsup/media/archive/master.zip",
 					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "jquery/plugins/pxem",
+				"version": "0.1",
+				"dist": {
+					"url": "http://jquery-ui.googlecode.com/svn-history/r2618/branches/labs/projects/pxem/pxem.jQuery.js",
+					"type": "file"
 				}
 			}
 		},

@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "90768655404c7eb44ad843972017dbb8",
+    "hash": "2f34aa475cdcf3f0ec7ed6a9e57e9760",
     "packages": [
         {
             "name": "aFarkas/html5shiv",
@@ -465,6 +465,17 @@
             "dist": {
                 "type": "zip",
                 "url": "https://github.com/malsup/media/archive/master.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "library"
+        },
+        {
+            "name": "jquery/plugins/pxem",
+            "version": "0.1",
+            "dist": {
+                "type": "file",
+                "url": "http://jquery-ui.googlecode.com/svn-history/r2618/branches/labs/projects/pxem/pxem.jQuery.js",
                 "reference": null,
                 "shasum": null
             },
