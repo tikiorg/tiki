@@ -1,0 +1,188 @@
+/* 
+ * Variation of utopian - only minimal changes here
+ *
+ * $Id$
+ */
+
+/***** XHTML Elements ******/
+
+h1, h2, h3, h4, h5, h6 {
+	color: #09c;
+}
+
+hr {
+	background-color: #09c;
+}
+
+
+/***** Basic Page Layout 
+	Including Site Header *****/
+
+/** Look & Feel (Site Identity) **/
+
+#sitetitles { color: #fff; }
+
+#sitetitle a {
+	color: #fff;
+}
+
+#siteheader {
+	background-image: url(attainable/banner-repeat.jpg);
+	background-repeat: repeat-x;
+}
+
+div#sitead {}
+
+#siteloginbar {
+	background-image:url(attainable/logged-out-cloud.png);
+	background-position: right;
+	background-repeat: no-repeat;
+	width: 400px;
+	height: 70px;
+	color: #038;
+}
+
+#siteloginbar.logged-in {
+	background-image:url(attainable/logged-in-cloud.png);
+	width: 170px;
+	height: 39px;
+	color: #038;
+}
+
+#siteloginbar a {
+	color: #038;
+}
+
+#sitesearchbar {
+	color: #666;
+	position: static;
+	width: 176px;
+	background-color: #eee;
+}
+
+#sitesearchbar input, #sitesearchbar select {
+	font-size: .7em;
+}
+#header-top {
+	height: 100px;
+}
+
+/* globals */
+
+#tiki-center {
+	padding:0 1em 1em 2.3em;
+}
+
+/***** Feature-specific styles ****/
+/***** Wiki ******/
+
+body.wikitext a {
+	color: #f90 !important;
+}
+
+body.wikitext a:hover {
+	color: #f90 !important;
+	/*background-color: #09c;*/
+}
+
+#tiki-center a {
+	color: #f90 !important;
+	font-weight: bold;
+}
+
+#tiki-center a:hover {
+	color: #f90 !important;
+}
+
+#tiki-center h1 {
+	color: #000 !important;
+	font-size: 3em;
+}
+
+#tiki-center h1 a {
+	color: #000 !important;
+}
+
+#tiki-center .tabmark a {
+	color:#666 !important;
+}
+
+#tiki-center span.button a,
+#tiki-center span.button a:visited,
+#tiki-center .normal a,
+#tiki-center .cbox a {
+	color: #555 !important;
+}
+
+#tiki-center .button a:hover {
+	color: #000 !important;
+}
+
+
+img.flipmodimage {
+	width: 11px;
+	height: 11px;
+	padding: 4px 2px 0 0;
+}
+
+
+.wikitext {
+	border-bottom: 1px #09c solid;
+}
+
+.wikitopline {
+	float: right;
+}
+
+.wikitext li {
+	list-style-image: url(attainable/bullet.gif);
+}
+
+.wikitext ul li ul li {
+	list-style-image: url(attainable/bullet-grey.gif);
+}
+
+.wikitext div.articletrailer {
+	display: none;
+}
+
+a.categpath {
+	color: #038;
+}
+
+/*Definition lists*/
+.wikitext dl {}
+
+.wikitext dt {
+	list-style-image: url(attainable/bullet.gif);
+	color: #09c;
+	font-style: italic;
+}
+
+.wikitext dd {}
+
+/* css menus */
+
+.cssmenu_horiz li a {
+	color: #666 !important;
+}
+
+.cssmenu_horiz li ul li > a {
+	background: #eee;
+	color: #fff;
+}
+
+.cssmenu_horiz li.selectedAscendant > a,
+.cssmenu_horiz li.selected > a {
+	background: #b5e5f3;
+	color: #6ad !important;
+}
+
+.cssmenu_horiz li a:hover {
+	background: #6ad;
+	color: #fff !important;
+}
+
+
+
+/***** End of file ******/

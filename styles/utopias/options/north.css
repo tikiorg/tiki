@@ -1,0 +1,170 @@
+/* 
+ *Variation of utopias - only minimal changes here
+ *
+ * $Id$
+ */
+
+/***** XHTML Elements ******/
+
+html > body {
+	font-size:0.75em;
+}
+
+body {
+	font-family: Verdana,sans-serif;
+	color: #000;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	color: #333;
+	font-weight: bold;
+}
+
+h1 {
+	font-size: 220%;
+	margin: 0.2em 0 0.1em;
+}
+
+h2 {
+	font-size: 160%;
+	margin: 0.3em 0 0.1em;
+}
+
+h3 {
+	font-size: 150%;
+	margin: 0.4em 0 0.1em;
+}
+
+h4 {
+	font-size: 130%;
+	margin: 0.5em 0 0.2em;
+}
+
+h5 {
+	font-size: 120%;
+	margin: 0.5em 0 0.2em;
+}
+
+h6 {
+	font-size: 110%;
+	margin: 0.5em 0 0.2em;
+}
+
+hr {
+	background-color: #6f9898;
+}
+
+/***** Feature-specific styles ****/
+/***** Wiki ******/
+
+/* old one #84AF89 */
+
+.wikitext a {
+	color: #9b2434 !important;
+}
+
+.wikitext a:hover {
+	color: #9b2434 !important;
+}
+
+body.wikitext a {
+	color: #9b2434 !important;
+}
+
+body.wikitext a:hover {
+	color: #9b2434 !important;
+}
+
+
+.wikitext ul {}
+
+.wikitext li {
+	/*list-style-image: url(north/bullet.gif);*/
+}
+
+.wikitext ul li ul li {
+	/*list-style-image: url(north/bullet-grey.gif);*/
+}
+
+/*Definition lists*/
+.wikitext dl {}
+
+.wikitext dt {
+	/*list-style-image: url(north/bullet.gif);*/
+	color: #eef;
+	font-style: italic;
+}
+
+.wikitext dd {}
+
+
+/***** lite bites ****/
+
+#middle {
+	background-color: #fff;
+}
+
+#c1c2 #wrapper #col1 {
+	background-color: transparent;
+}
+
+#c1c2 #wrapper #col1 #tiki-center {
+	background: transparent;
+}
+
+div.wikitext {
+	background-color: transparent;
+	font-size: 1.1em;
+}
+
+body.wikitext {
+	background: transparent;
+}
+
+
+/***** Basic Page Layout 
+	Including Site Header *****/
+
+/** Look & Feel (Site Identity) **/
+#header {
+	background-color: #000;
+}
+
+#siteheader {}
+
+#siteloginbar a {
+	color: #9b2434;
+}
+#siteloginbar.logged-in {
+	color:#9b2434;
+}
+#siteloginbar.logged-out {
+	color:#9b2434;
+}
+#siteloginbar {
+	color:#9b2434;
+}
+
+
+#sitesearchbar {
+	color: #fff;
+}
+
+#sitesearchbar input, #sitesearchbar select {
+	font-size: .8em;
+}
+
+#tiki-top {
+	color: #fff;
+	background-color: transparent;
+}
+
+div#sitetitles {
+	color:#555;
+	left:330px;
+	top:-45px;
+}
+
+#footer {}
+
+/***** End of file ******/

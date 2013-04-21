@@ -1,0 +1,137 @@
+/**
+ * Variation of utopian - only minimal changes here
+ *
+ * $Id$
+ */
+
+/***** XHTML Elements ******/
+
+h1, h2, h3, h4, h5, h6 {
+	color: #387e29;
+}
+
+hr {
+	background-color: #387e29;
+}
+
+.wikitext ul {}
+
+.wikitext li {
+	list-style-image: url(foundation/bullet-brown.gif);
+}
+
+.wikitext ul li ul li {
+	list-style-image: url(foundation/bullet-brown.gif);
+}
+
+/*Definition lists*/
+.wikitext dl {}
+
+.wikitext dt {
+	list-style-image: url(foundation/bullet.gif);
+	color: #387e29;
+	font-style: italic;
+}
+
+.wikitext dd {}
+
+/***** Basic Page Layout 
+	Including Site Header *****/
+
+/** Look & Feel (Site Identity) **/
+#siteheader {
+	background-image: url(foundation/banner-repeat.jpg);
+	background-repeat: repeat-x;
+	background-position: -4px 0;
+}
+
+#sitetitle a {
+	color: #387e29;
+}
+
+#siteloginbar {
+	width: 400px;
+	height: 70px;
+	color: #fff;
+}
+
+#siteloginbar.logged-in {
+	width: 170px;
+	height: 39px;
+}
+
+#siteloginbar a {
+	color: #fff;
+}
+
+#sitesearchbar {
+	color: #fff;
+}
+
+#sitesearchbar input, #sitesearchbar select {
+	font-size: .8em;
+}
+
+#tiki-top {
+	color: #000;
+	border-bottom: 1px #eee solid;
+}
+
+body.tiki_wiki .navbar {
+	display: none;
+}
+
+/* Gold: ##bb9b62 */
+
+/****** Menus ******/
+/* phplayers style */
+.horbar {
+	margin-left: 0;
+	text-align: left;
+	color: #000 !important;
+	height: 14px;
+}
+
+.horbaritem a {
+	color: #231E1B !important;
+	font-weight: normal;
+}
+
+.horbaritem a:hover {
+	color: #bb9b62 !important;
+}
+
+.mdksubframe {
+	background-color: #fff;
+}
+
+.mdkitem {
+	font-size: 0.9em;
+}
+
+.mdkitem a {
+	color: #231E1B;
+	font-weight: normal;
+}
+
+.mdkitem a:hover {
+	color: #bb9b62;
+}
+
+
+/***** Feature-specific styles ****/
+/***** Wiki ******/
+
+/* old one #84AF89 */
+
+.wikitext a {
+	color: #387e29 !important;
+}
+
+.wikitext a:hover {
+	color: #88eb57 !important;
+}
+
+
+
+/***** End of file ******/

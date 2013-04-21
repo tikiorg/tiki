@@ -1,0 +1,382 @@
+/* 
+ * Variation of utopian - only minimal colour changes here
+ *
+ * As seem on nospaces.net
+ *
+ * $Id$
+*/
+
+/***** XHTML Elements ******/
+
+html {
+	background: #fffecf;
+	color: #39392f;
+}
+
+body {
+	font-family: Verdana,sans-serif;
+	background: #fffecf;
+	color: #39392f;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	color: #6f9898;
+	font-weight: bold;
+}
+
+h1 {
+	font-size: 220%;
+	margin: 0.2em 0 0.1em;
+}
+
+h2 {
+	font-size: 160%;
+	margin: 0.3em 0 0.1em;
+}
+
+h3 {
+	font-size: 150%;
+	margin: 0.4em 0 0.1em;
+}
+
+h4 {
+	font-size: 130%;
+	margin: 0.5em 0 0.2em;
+}
+
+h5 {
+	font-size: 120%;
+	margin: 0.5em 0 0.2em;
+}
+
+h6 {
+	font-size: 110%;
+	margin: 0.5em 0 0.2em;
+}
+
+hr {
+	background-color: #6f9898;
+}
+
+#middle {
+	background-color: #fffecf;
+}
+
+/***** Feature-specific styles ****/
+/***** Wiki ******/
+
+/* old one #84AF89 */
+
+.wikitext a {
+	color: #4b6767 !important;
+}
+
+.wikitext a:hover {
+	color: #4b6767 !important;
+}
+
+body.wikitext a {
+	color: #4b6767 !important;
+}
+
+body.wikitext a:hover {
+	color: #4b6767 !important;
+}
+
+
+.wikitext ul {}
+
+.wikitext li {
+	/*list-style-image: url(spaces/bullet.gif);*/
+}
+
+.wikitext ul li ul li {
+	/*list-style-image: url(spaces/bullet-grey.gif);*/
+}
+
+div.simplebox {
+	background-color: #6f9898 !important;
+	color: #fffecf !important;
+}
+/*Definition lists*/
+.wikitext dl {}
+
+.wikitext dt {
+	/*list-style-image: url(spaces/bullet.gif);*/
+	color: #6f9898;
+	font-style: italic;
+}
+
+.wikitext dd {}
+
+
+/***** lite bites ****/
+
+#c1c2 #wrapper #col1 {
+	background-color: #fffecf;
+}
+
+#c1c2 #wrapper #col1 #tiki-center {
+	background: #fffecf;
+}
+
+div.wikitext {
+	background-color: #fffecf;
+	font-size: 1.1em;
+}
+
+body.wikitext {
+	background: #fffecf;
+}
+
+
+/***** Basic Page Layout  *****/
+
+/* Links in buttons */
+span.button a,
+span.button a:visited,
+button,
+input[type=reset],
+input[type=submit],
+span.button input,
+.calbuttonBox a {
+	color: #7e7d66;
+	background: #f3f2c5;
+	border: 1px solid #cbcaa5;
+}
+	
+.button a:hover,
+button:hover,
+input[type=reset]:hover,
+input[type=submit]:hover,
+.button input:hover,
+.calbuttonBox:hover {
+	color: #6f9898;
+	background: #fffecf;
+	border: 1px solid #999;
+}
+
+
+/** Look & Feel (Site Identity) **/
+#header {
+	background-color: #fffecf;
+}
+
+#siteheader {
+	/*background-image: url(spaces/banner-repeat.gif);*/
+	background-repeat: repeat-x;
+}
+
+div#sitead {}
+
+#siteloginbar {
+	width: 400px;
+	height: 70px;
+	color: #6f9898;
+}
+
+#siteloginbar.logged-in {
+	width: 170px;
+	height: 39px;
+	color: #6f9898;
+}
+
+#siteloginbar a {
+	color: #6f9898;
+}
+
+#sitesearchbar {
+	color: #000;
+}
+
+#sitesearchbar input, #sitesearchbar select {
+	font-size: .8em;
+}
+
+#tiki-top {
+	color: #6f9898;
+	background-color: #D9D8B0;
+	margin-right: 4px;
+}
+
+#tiki-top .cssmenu_horiz > li {
+	width: 7em;
+}
+
+div#sitetitles {
+	color:#555;
+	left:330px;
+	top:-45px;
+}
+
+#footer {
+	background-color: #f3f2c5;
+}
+
+/* cssmenus */
+
+.cssmenu_horiz li a {
+	border-right: #f3f2c5;
+	color: #6f9898 !important;
+}
+
+.cssmenu_horiz li a:hover {
+	background-color: #f3f2c5;
+	color: #6f9898;
+}
+
+.cssmenu_horiz li ul li,
+.cssmenu_horiz li ul li > a {
+	background-color: #f3f2c5;
+}
+
+.cssmenu_horiz li ul li > a:hover {
+	background-color: #fffecf;
+}
+
+.cssmenu_horiz li.selected a,
+.cssmenu_vert li.selected a,
+.cssmenu_horiz li ul li.selected a:link,
+.cssmenu_vert li ul li.selected a:link,
+.cssmenu_horiz li ul li.selected a:visited,
+.cssmenu_vert li ul li.selected a:visited,
+li.menuoption a {
+	background-color: #6f9898;
+	color: #fffecf;
+}
+
+.cssmenu_vert li a,
+.cssmenu_vert li ul a,
+.cssmenu_horiz li ul a,
+.cssmenu_horiz li ul a,
+.box-menu .cssmenu_horiz li a,
+.box-menu .cssmenu_horiz li ul a,
+.box-menu .cssmenu_horiz li:hover ul a {
+	background-color: #f3f2c5;
+	color: #6f9898;
+	border: none;
+}
+
+.cssmenu_vert li ul a:hover,
+.cssmenu_horiz li ul a:hover,
+.box-menu .cssmenu_horiz li ul a:hover {
+	background-color: #6f9898;
+    color: #F5F5F5;
+}
+
+#topbar_modules .cssmenu_horiz li ul a,
+#topbar_modules .cssmenu_horiz li:hover ul a {
+	background-color: #D9D8B0;
+	color: #6f9898;
+	border: none;
+}
+
+#topbar_modules .cssmenu_horiz li ul a:hover {
+	background-color: #6f9898;
+    color: #F5F5F5;
+}
+/* Modules */
+
+div.box {
+	background-color: #f3f2c5;
+	border: 1px solid #d9d8b0;
+	color: #7f7e67;
+}
+	
+h3.box-title {
+	color: #6f9898;
+	background-color: #fffecf;
+	border-bottom: #d9d8b0 solid 1px;
+}
+	
+.box-data a {
+	color: #6f9898;
+}
+.box-data a:hover {
+	color: #6f9898;
+}
+a.linkmodule {
+	color: #6f9898;
+	font-size: .9em;
+}
+a.linkmodule:hover {
+	color: #6f9898;
+}
+
+#col3 input[type=text],
+#col2 input[type=text],
+#col3 input[type=password],
+#col2 input[type=password],
+#col3 select, #col2 select {
+	color: #7f7e67;
+	background-color: #fffecf;
+}
+
+/* remarksbox */
+
+.rbox-title {
+	background-color: #d9d8b0;
+	border-color: #cbcaa5;
+}
+
+.rbox-data {
+	border: .1em #d9d8b0 solid;
+	background-color: #f3f2c5;
+}
+
+.warning .rbox-title {
+	color: #f00;
+	background-color: #333;
+	border-color: #000;
+}
+
+.warning .rbox-data {
+	background-color: #fff;
+}
+
+.note .rbox-title {
+	background-color: #cbcaa5;
+	color: #06F;
+}
+
+.note .rbox-data {
+	background-color: #f3f2c5;
+}
+
+/** Specific Tables **/
+table.normal, 
+table.admin,
+table.bloglist {
+	border: 1px #cbcaa5 solid;
+	background-color: #f3f2c5;
+}
+
+/* Odd rows in several listings */
+tr.odd {
+	background-color: #f3f2c5;
+}
+
+tr.odd:hover {
+	background-color: #d9d8b0;
+}
+
+tr.even {
+	background-color: #fffecf;
+}
+
+tr.even:hover {
+	background-color: #eee;
+}
+
+td.odd {
+	background-color: #f3f2c5;
+}
+
+td.even {
+	background-color: #fffecf;
+}
+
+
+
+
+/***** End of file ******/

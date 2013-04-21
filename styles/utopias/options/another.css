@@ -1,0 +1,101 @@
+/* 
+ * Variation of utopias.css - only minimal changes here
+ * Grey and blue simple theme
+ *
+ * $Id$
+ */
+
+/***** XHTML Elements ******/
+
+h1, h2, h3, h4, h5, h6 {
+	color: #4393b0;
+}
+
+hr {
+	background-color: #4393b0;
+}
+
+ul {}
+
+li {
+	list-style-image: url(another/bullet.gif);
+}
+
+ul li ul li {
+	list-style-image: url(another/bullet-grey.gif);
+}
+
+/*Definition lists*/
+dl {}
+
+dt {
+	list-style-image: url(another/bullet.gif);
+	color: #4393b0;
+	font-style: italic;
+}
+
+dd {}
+
+/***** Basic Page Layout 
+	Including Site Header *****/
+
+/** Look & Feel (Site Identity) **/
+#siteheader {
+	background-color: #fff;
+}
+
+div#sitead {}
+
+#siteloginbar {
+	width: 400px;
+	height: 70px;
+	color: #038;
+}
+
+#siteloginbar.logged-in {
+	width: 170px;
+	height: 39px;
+	color: #038;
+}
+
+#siteloginbar a {
+	color: #038;
+}
+
+#sitesearchbar {
+	color: #fff;
+}
+
+#sitesearchbar input, #sitesearchbar select {
+	font-size: .8em;
+}
+
+#tiki-top {}
+
+div#sitetitles {
+	color:#555;
+	left:330px;
+	top:-45px;
+}
+
+/***** Feature-specific styles ****/
+/***** Wiki ******/
+
+body.wikitext a {
+	color: #e49326 !important;
+}
+
+body.wikitext a:hover {
+	color: #e49326 !important;
+}
+
+.wikitext a {
+	color: #e49326 !important;
+	font-weight: bold;
+}
+
+.wikitext a:hover {
+	color: #e49326 !important;
+}
+
+/***** End of file ******/

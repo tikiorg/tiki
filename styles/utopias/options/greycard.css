@@ -1,0 +1,362 @@
+/* 
+ *Variation of utopian - only minimal changes here
+ *
+ * $Id$
+ */
+
+/***** XHTML Elements ******/
+
+html {
+	background-color: #999;
+}
+
+html > body {
+	font-size:0.75em;
+}
+
+body {
+	font-family: Verdana,sans-serif;
+	background: #999;
+	color: #000;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	color: #ccc;
+	font-weight: bold;
+}
+
+h1 {
+	font-size: 220%;
+	margin: 0.2em 0 0.1em;
+}
+
+h2 {
+	font-size: 160%;
+	margin: 0.3em 0 0.1em;
+}
+
+h3 {
+	font-size: 150%;
+	margin: 0.4em 0 0.1em;
+}
+
+h4 {
+	font-size: 130%;
+	margin: 0.5em 0 0.2em;
+}
+
+h5 {
+	font-size: 120%;
+	margin: 0.5em 0 0.2em;
+}
+
+h6 {
+	font-size: 110%;
+	margin: 0.5em 0 0.2em;
+}
+
+hr {
+	background-color: #333;
+}
+
+#main {
+	background-color: #7f7f7f;
+}
+
+/***** Feature-specific styles ****/
+/***** Wiki ******/
+
+/* old one #84AF89 */
+
+.wikitext a {
+	color: #fff !important;
+}
+
+.wikitext a:hover {
+	color: #abc !important;
+}
+
+body.wikitext a {
+	color: #fff !important;
+}
+
+body.wikitext a:hover {
+	color: #abc !important;
+}
+
+
+.wikitext ul {}
+
+.wikitext li {
+	/*list-style-image: url(greycard/bullet.gif);*/
+}
+
+.wikitext ul li ul li {
+	/*list-style-image: url(greycard/bullet-grey.gif);*/
+}
+
+div.simplebox {
+	background-color: #333 !important;
+	color: #d0d0d0 !important;
+}
+/*Definition lists*/
+.wikitext dl {}
+
+.wikitext dt {
+	/*list-style-image: url(greycard/bullet.gif);*/
+	color: #333;
+	font-style: italic;
+}
+
+.wikitext dd {}
+
+
+/***** lite bites ****/
+
+#c1c2 #wrapper #col1 {
+}
+
+#c1c2 #wrapper #col1 #tiki-center {
+}
+
+div.wikitext {
+	background-color: #d0d0d0;
+	font-size: 1.1em;
+}
+
+body.wikitext {
+	background: #d0d0d0;
+}
+
+
+/***** Basic Page Layout  *****/
+
+/* Links in buttons */
+
+.button a,
+.button a:visited,
+button,
+input[type=reset],
+input[type=submit],
+span.button input,
+.calbuttonBox a {
+	font-weight: bold;
+	color: #333;
+	background: #888;
+	border: 1px solid #777;
+	padding: 0.1em 0.5em
+}
+
+.button a:hover,
+button:hover,
+input[type=reset]:hover,
+input[type=submit]:hover,
+span.button input:hover,
+.calbuttonBox a:hover {
+	color: #000;
+	background: #abc;
+	padding: 0.1em 0.5em
+}
+
+
+
+/** Look & Feel (Site Identity) **/
+#header {
+}
+
+#siteheader {
+/*	background-image: url(greycard/banner-repeat.gif);
+	background-repeat: repeat-x;*/
+}
+
+div#sitead {}
+
+#siteloginbar {
+	width: 400px;
+	height: 70px;
+	color: #333;
+}
+
+#siteloginbar.logged-in {
+	width: 170px;
+	height: 39px;
+	color: #333;
+}
+
+#siteloginbar a {
+	color: #333;
+}
+
+#sitesearchbar {
+	color: #000;
+}
+
+#sitesearchbar input, #sitesearchbar select {
+	font-size: .8em;
+}
+
+div#sitetitles {
+	color:#555;
+	left:330px;
+	top:-45px;
+}
+
+#footer {
+	background: #7f7f7f;
+}
+
+#tiki-top {
+	color: #000;
+	background-color: #999;
+}
+
+#tiki-top a {
+	color: #333;
+	background-color: #999;
+}
+#tiki-top .cssmenu_horiz li {
+	color: #000;
+	background-color: #888;
+	width: auto;
+	border-right: 1px #7f7f7f solid;
+}
+
+/* cssmenus */
+
+.cssmenu_horiz li a,
+.cssmenu_vert li a,
+.cssmenu_horiz li ul li a:link,
+.cssmenu_vert li ul li a:link,
+.cssmenu_horiz li ul li a:visited,
+.cssmenu_vert li ul li a:visited,
+li.menuoption a {
+	background-color: #999;
+	border-right: #aaa;
+	color: #333;
+}
+
+.cssmenu_horiz li a:hover,
+.cssmenu_vert li a:hover,
+.cssmenu_horiz li ul li a:hover,
+.cssmenu_vert li ul li a:hover,
+li.menuSection:hover a {
+	background-color: #aaa;
+	color: #333;
+}
+
+.cssmenu_horiz li.selected a,
+.cssmenu_vert li.selected a,
+.cssmenu_horiz li ul li.selected a:link,
+.cssmenu_vert li ul li.selected a:link,
+.cssmenu_horiz li ul li.selected a:visited,
+.cssmenu_vert li ul li.selected a:visited,
+li.menuoption a {
+	background-color: #999;
+	color: #ddd !important;
+}
+
+/* Modules */
+
+div.box {
+	background: #989898;
+	border: 1px solid #888;
+	color: #7f7e67;
+}
+	
+h3.box-title {
+	color: #006;
+	background-color: #abc;
+	border-bottom: #888 solid 1px;
+}
+	
+.box-data a {
+	color: #333;
+}
+.box-data a:hover {
+	color: #333;
+}
+a.linkmodule {
+	color: #333;
+	font-size: .9em;
+}
+a.linkmodule:hover {
+	color: #333;
+}
+
+#col3 input[type=text], #col2 input[type=text],
+#col3 select, #col2 select {
+	color: #7f7e67;
+	background-color: #d0d0d0;
+}
+
+/* remarksbox */
+
+.rbox-title {
+	background-color: #888;
+	border-color: #cbcaa5;
+}
+
+.rbox-data {
+	border: .1em #888 solid;
+	background-color: #d0d0d0;
+}
+
+.warning .rbox-title {
+	color: #f00;
+	background-color: #333;
+	border-color: #000;
+}
+
+.warning .rbox-data {
+	background-color: #fff;
+}
+
+.note .rbox-title {
+	background-color: #cbcaa5;
+	color: #06F;
+}
+
+.note .rbox-data {
+	background-color: #d0d0d0;
+}
+
+/** Specific Tables **/
+table.normal, 
+table.admin,
+table.bloglist {
+	border: 1px #cbcaa5 solid;
+	background-color: #d0d0d0;
+}
+
+/* Odd rows in several listings */
+tr.odd {
+	background: #d0d0d0;
+}
+
+tr.odd:hover {
+	background: #888;
+}
+
+tr.even {
+	background: #d0d0d0;
+}
+
+tr.even:hover {
+	background: #eee;
+}
+
+td.odd {
+	background: #d0d0d0;
+}
+
+td.even {
+	background: #d0d0d0;
+}
+
+.thumb {
+	border: 1px #999 solid;
+	margin: 18px;
+}
+
+
+/***** End of file ******/
