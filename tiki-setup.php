@@ -311,16 +311,16 @@ if ( $prefs['feature_bidi'] == 'y' ) {
 
 if ( isset($prefs['javascript_cdn']) && $prefs['javascript_cdn'] == 'google' ) {
 	$headerlib->add_jsfile_dependancy("$url_scheme://ajax.googleapis.com/ajax/libs/jquery/$headerlib->jquery_version/jquery.min.js");
-	$headerlib->add_jsfile_dependancy("lib/jquery/plugins/jquery-migrate-1.1.1.min.js");
+	$headerlib->add_jsfile_dependancy("vendor/jquery/plugins/jquery-migrate-1.1.1.min.js");
 } else if ( isset($prefs['javascript_cdn']) && $prefs['javascript_cdn'] == 'jquery' ) {
 	$headerlib->add_jsfile_dependancy("http://code.jquery.com/jquery-$headerlib->jquery_version.min.js");
 	$headerlib->add_jsfile_dependancy("http://code.jquery.com/jquery-migrate-1.1.1.js");
 } else {
 	if ( $prefs['tiki_minify_javascript'] === 'y' ) {
-		$headerlib->add_jsfile_dependancy("lib/jquery/jquery-$headerlib->jquery_version.min.js");
-		$headerlib->add_jsfile_dependancy("lib/jquery/plugins/jquery-migrate-1.1.1.min.js");
+		$headerlib->add_jsfile_dependancy("vendor/jquery/jquery/-min/jquery-$headerlib->jquery_version.min.js");
+		$headerlib->add_jsfile_dependancy("vendor/jquery/plugins/jquery-migrate-1.1.1.min.js");
 	} else {
-		$headerlib->add_jsfile_dependancy("lib/jquery/jquery-$headerlib->jquery_version.js");
+		$headerlib->add_jsfile_dependancy("vendor/jquery/jquery/jquery-$headerlib->jquery_version.js");
 		$headerlib->add_jsfile_dependancy("vendor/jquery/plugins/migrate/jquery-migrate-1.1.1.js");
 	}
 }
@@ -390,7 +390,7 @@ if ($prefs['mobile_feature'] === 'y' && $prefs['mobile_mode'] === 'y') {
 			}
 		}
 		if (strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE 6') !== false) {
-			$headerlib->add_jsfile('lib/jquery/ui/external/jquery.bgiframe-2.1.2.js');
+			$headerlib->add_jsfile('vendor/jquery/plugins/cluetip/lib/jquery.bgiframe.js');
 		}
 
 		if ( isset($prefs['javascript_cdn']) && $prefs['javascript_cdn'] == 'jquery' ) {
