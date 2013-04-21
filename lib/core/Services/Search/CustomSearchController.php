@@ -11,6 +11,9 @@
 
 class Services_Search_CustomSearchController
 {
+	private $textranges = array();
+	private $dateranges = array();
+
 	function setUp()
 	{
 		Services_Exception_Disabled::check('wikiplugin_list');
@@ -21,6 +24,9 @@ class Services_Search_CustomSearchController
 	function action_customsearch($input)
 	{
 		global $prefs;
+
+		$this->textranges = array();
+		$this->dateranges = array();
 
 		$cachelib = TikiLib::lib('cache');
 		$definition = $input->definition->word();
@@ -46,21 +52,6 @@ class Services_Search_CustomSearchController
 		$onclick = "$('#customsearch_$id').submit();return false;";
 		$dataappend['pagination'] = "{pagination offset_jsvar=\"$offset_jsvar\" onclick=\"$onclick\"}";
 
-		if ($input->groups->text()) {
-			$groups = $input->groups->text();
-		} else {
-			$groups = array();
-		}
-		if ($input->textrangegroups->text()) {
-			$textrangegroups = $input->textrangegroups->text();
-		} else {
-			$textrangegroups = array();
-		}
-		if ($input->daterangegroups->text()) {
-			$daterangegroups = $input->daterangegroups->text();
-		} else {
-			$datarangegroups = array();
-		}
 		if ($recalllastsearch && isset($_SESSION["customsearch_$id"])) {
 			unset($_SESSION["customsearch_$id"]);
 		}
@@ -131,20 +122,20 @@ class Services_Search_CustomSearchController
 				}
 			}
 
-			// Reconstruct textrange from-to filters
-			$grouped = $this->cs_get_grouped($adddata, $textrangegroups);
-			$grouping_keys = array('content');
-			$to_reconstruct = $this->cs_process_group($adddata, $grouped, $id, $grouping_keys, 2, 2, false, true);
-			foreach($to_reconstruct as $field) {
-				$query->filterTextRange($field['query_vals'][0], $field['query_vals'][1], $field['args']['_field']);
+			foreach ($this->textranges as $info) {
+				if (count($info['values']) >= 2) {
+					$from = array_shift($info['values']);
+					$to = array_shift($info['values']);
+					$info['query']->filterTextRange($from, $to, $info['config']['_field']);
+				}
 			}
 
-			// Reconstruct daterange from-to filters
-			$grouped = $this->cs_get_grouped($dataappend, $daterangegroups);
-			$grouping_keys = array('content');
-			$to_reconstruct = $this->cs_process_group($dataappend, $grouped, $id, $grouping_keys, 2, 2, false, true);
-			foreach($to_reconstruct as $field) {
-				$query->filterRange($field['query_vals'][0], $field['query_vals'][1], $field['args']['_field']);
+			foreach ($this->dateranges as $info) {
+				if (count($info['values']) >= 2) {
+					$from = array_shift($info['values']);
+					$to = array_shift($info['values']);
+					$info['query']->filterRange($from, $to, $info['config']['_field']);
+				}
 			}
 		}
 
@@ -188,7 +179,11 @@ class Services_Search_CustomSearchController
 	private function cs_dataappend_content(Search_Query $query, $config, $value)
 	{
 		if ($value) {
-			if ($config['type'] == 'checkbox') {
+			if (isset($config['_textrange'])) {
+				$this->cs_handle_textrange($config['_textrange'], $query, $config, $value);
+			} elseif (isset($config['_daterange'])) {
+				$this->cs_handle_daterange($config['_daterange'], $query, $config, $value);
+			} elseif ($config['type'] == 'checkbox') {
 				if (empty($config['_field'])) {
 					return;
 				}
@@ -216,6 +211,32 @@ class Services_Search_CustomSearchController
 			}
 		}
 		return false;
+	}
+
+	private function cs_handle_textrange($rangeName, Search_Query $query, $config, $value)
+	{
+		if (! isset($this->textranges[$rangeName])) {
+			$this->textranges[$rangeName] = array(
+				'query' => $query,
+				'config' => $config,
+				'values' => array(),
+			);
+		}
+
+		$this->textranges[$rangeName]['values'][] = $value;
+	}
+
+	private function cs_handle_daterange($rangeName, Search_Query $query, $config, $value)
+	{
+		if (! isset($this->dateranges[$rangeName])) {
+			$this->dateranges[$rangeName] = array(
+				'query' => $query,
+				'config' => $config,
+				'values' => array(),
+			);
+		}
+
+		$this->dateranges[$rangeName]['values'][] = $value;
 	}
 
 	private function cs_dataappend_categories(Search_Query $query, $config, $value)
@@ -246,65 +267,5 @@ class Services_Search_CustomSearchController
 				$query->filterRange($from, $to, $field);
 			}
 		}
-	}
-
-	// grouping functions
-
-	private function cs_get_grouped($dataappend, $groups)
-	{
-		$grouped = array();
-		foreach ($dataappend as $fieldid => $data) {
-			if (isset($groups[$fieldid]) && !isset($groupedids[$groups[$fieldid]])) {
-				$grouped[$groups[$fieldid]] = array_keys($groups, $groups[$fieldid]);
-			}
-		}
-		return $grouped;
-	}
-
-	private function cs_process_group(&$dataappend, $grouped, $id, $grouping_keys, $min_match = 2, $max_match = 99, $checksimilar = true, $drop_if_no_match = false)
-	{
-		$to_reconstruct = array();
-		foreach ($grouped as $group_id => $grp) {
-			if (count($grp) > 1) {
-				$args = array();
-				$args_checked = array(); // just for consistency checking
-				$query_vals = array();
-				foreach ($grp as $g) {
-					$field = isset($dataappend[$g]) ? $dataappend[$g] : false;
-					if (!$field || !isset($field['config']['_filter'])) {
-						$query_vals = array();
-						break;
-					}
-					$args = $field['config'];
-					// double check that they are the same filter other than the query itself, to avoid errornous mixing
-					if ($checksimilar) {
-						$args_to_check = $args;
-						foreach ($grouping_keys as $k) {
-							unset($args_to_check[$k]);
-						}
-						if (!empty($args_checked) && $args_checked != $args_to_check) {
-							$query_vals = array();
-							break 2;
-						} else {
-							$args_checked = $args_to_check;
-						}
-					}
-					foreach ($grouping_keys as $k) {
-						if ($args['_filter'] === $k) {
-							$query_vals[] = $field['value'];
-							break;
-						}
-					}
-				}
-				if (count($query_vals) >= $min_match && count($query_vals) <= $max_match) {
-					$to_reconstruct[$group_id] = array('args' => $args, 'query_vals' => $query_vals);
-				} elseif ($drop_if_no_match) {
-					foreach ($grouped[$group_id] as $to_drop) {
-						unset($dataappend[$to_drop]);
-					}
-				}
-			}
-		}
-		return $to_reconstruct;
 	}
 }
