@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "56a655d13b4585adb3e64f7eb342d7f7",
+    "hash": "3a33dff9f447cfedaf246e395dd9fc6b",
     "packages": [
         {
             "name": "aFarkas/html5shiv",
@@ -790,6 +790,17 @@
             "description": "Symfony Console Component",
             "homepage": "http://symfony.com",
             "time": "2013-03-01 06:43:14"
+        },
+        {
+            "name": "twitter/bootstrap",
+            "version": "2.3.1",
+            "dist": {
+                "type": "zip",
+                "url": "http://twitter.github.com/bootstrap/assets/bootstrap.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "library"
         },
         {
             "name": "zetacomponents/base",
