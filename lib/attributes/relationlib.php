@@ -17,7 +17,7 @@ class RelationLib extends TikiDb_Bridge
 	 * Optionally, the relation searched for can be specified. If the
 	 * relation ends with a dot, it will be used as a wildcard.
 	 */
-	function get_relations_from( $type, $object, $relation = null )
+	function get_relations_from( $type, $object, $relation = null, $orderby = '' )
 	{
 		if ( substr($relation, -7) === '.invert' ) {
 			return $this->get_relations_to($type, $object, substr($relation, 0, -7));
@@ -26,11 +26,16 @@ class RelationLib extends TikiDb_Bridge
 		$cond = array('source_type = ?', 'source_itemId = ?');
 		$vars = array($type, $object);
 
+		if ( $orderby != '' ) {
+			// Note that you can pass any valid string such as 'relationId ASC'
+			$orderby = " ORDER BY $orderby ";
+		}
+
 		$this->apply_relation_condition($relation, $cond, $vars);
 
 		return $this->fetchAll(
 			'SELECT `relationId`, `relation`, `target_type` `type`, `target_itemId` `itemId` FROM `tiki_object_relations` WHERE ' .
-			implode(' AND ', $cond),
+			implode(' AND ', $cond) . $orderby, 
 			$vars
 		);
 	}

@@ -493,7 +493,7 @@ if ($prefs['article_custom_attributes'] == 'y') {
 
 	foreach ($types as &$t) {
 		// javascript needs htmlid to show/hide to be properties of basic array
-		$type_attributes = $artlib->get_article_type_attributes($t['type']);
+		$type_attributes = $artlib->get_article_type_attributes($t['type'], 'relationId ASC');
 		$all_attributes = array_merge($all_attributes, $type_attributes);
 		foreach ($type_attributes as $att) {
 			$htmlid = str_replace('.', '_', $att['itemId']);
