@@ -144,6 +144,10 @@ class WikiLib extends TikiLib
 	// See http://dev.tiki.org/Bad+characters
 	public function contains_badchars($name)
 	{
+		if (preg_match('/^tiki\-(\w+)\-(\w+)$/', $name)) {
+			return true;
+		}
+
 		$badchars = $this->get_badchars();
 		$badchars = preg_quote($badchars, '/');
 		return preg_match("/[$badchars]/", $name);

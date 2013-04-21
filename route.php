@@ -133,16 +133,13 @@ function tiki_route($path)
 	);
 
 	tiki_route_attempt(
-		'|^tiki\-(\w+)(\-(\w+))?$|',
+		'|^tiki\-(\w+)\-(\w+)$|',
 		'tiki-ajax_services.php',
 		function ($parts) {
-			$params = array('controller' => $parts[1]);
-
-			if (isset($parts[3])) {
-				$params['action'] = $parts[3];
-			}
-
-			return $params;
+			return array(
+				'controller' => $parts[1],
+				'action' => $parts[2],
+			);
 		}
 	);
 
