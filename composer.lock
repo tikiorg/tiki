@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "2740b00e998fe71f1f026de83d198230",
+    "hash": "56a655d13b4585adb3e64f7eb342d7f7",
     "packages": [
         {
             "name": "aFarkas/html5shiv",
@@ -207,6 +207,28 @@
                 "screenshot"
             ],
             "time": "2013-04-17 19:48:36"
+        },
+        {
+            "name": "jquery/jquery",
+            "version": "1.9.1",
+            "dist": {
+                "type": "file",
+                "url": "http://code.jquery.com/jquery-1.9.1.js",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "library"
+        },
+        {
+            "name": "jquery/jquery-min",
+            "version": "1.9.1",
+            "dist": {
+                "type": "file",
+                "url": "http://code.jquery.com/jquery-1.9.1.min.js",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "library"
         },
         {
             "name": "jquery/jquery-mobile",
@@ -487,6 +509,17 @@
             "dist": {
                 "type": "file",
                 "url": "http://code.jquery.com/jquery-migrate-1.1.1.js",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "library"
+        },
+        {
+            "name": "jquery/plugins/nestedsortable",
+            "version": "1.3.4",
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/mjsarfatti/nestedSortable/archive/v1.3.4.zip",
                 "reference": null,
                 "shasum": null
             },
