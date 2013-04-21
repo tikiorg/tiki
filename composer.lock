@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "2f34aa475cdcf3f0ec7ed6a9e57e9760",
+    "hash": "2fb25482e625b59b09dd0713b01bb922",
     "packages": [
         {
             "name": "aFarkas/html5shiv",
@@ -311,6 +311,17 @@
             "dist": {
                 "type": "zip",
                 "url": "http://jtrack.googlecode.com/files/jtrack-1.0.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "library"
+        },
+        {
+            "name": "jquery/md5",
+            "version": "1.0",
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/blueimp/JavaScript-MD5/archive/master.zip",
                 "reference": null,
                 "shasum": null
             },

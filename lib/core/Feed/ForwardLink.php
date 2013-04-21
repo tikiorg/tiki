@@ -556,7 +556,7 @@ JQ
 			->add_jsfile('lib/rangy_tiki/rangy-phraser.js')
 			->add_jsfile('lib/ZeroClipboard.js')
 			->add_jsfile('lib/core/JisonParser/Phraser.js')
-			->add_jsfile('lib/jquery/md5.js');
+			->add_jsfile('vendor/jquery/md5/md5.js');
 
 		$me = new Feed_ForwardLink($page);
 
