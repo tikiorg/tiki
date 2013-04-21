@@ -440,6 +440,11 @@ class Smarty_Tiki extends Smarty
 			$this->addTemplateDir($this->main_template_dir.'/'.$tikidomain.'/styles/'.$style_base.'/');
 			$this->addTemplatedir($this->main_template_dir.'/'.$tikidomain.'/');
 		}
+
+		if (empty($prefs['site_layout'])) {
+			$prefs['site_layout'] = 'classic';
+		}
+
 		$this->addTemplateDir($this->main_template_dir.'/styles/'.$style_base.'/');
 		$this->addTemplateDir($this->main_template_dir.'/layouts/'.$prefs['site_layout'].'/');
 		$this->addTemplateDir($this->main_template_dir.'/layouts/');
