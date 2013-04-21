@@ -1964,6 +1964,17 @@ ul.freetagged li {
 /* Properties are in css/calendar.css,
 	which can be overridden
 	in theme stylesheets.  */
+	
+.viewmode { 
+	line-height: 1em;
+	padding: 1px;
+	text-align: center;
+	width: 100%;
+}
+
+.viewmode div { 
+	display: inline;
+}
 
 /***** Admin *****/
 
