@@ -12,9 +12,13 @@
 /***** XHTML Elements (body tag here, others follow Layout) *****/
 
 body {
-	background: url('greenvalley/background.jpg') repeat;
+    background: #fff;
 	font: 90% Century Gothic,Lucida Grande,Arial,Helvetcia,sans-serif;
-	color: rgb(30, 30, 30);
+    color: rgb(30, 30, 30);
+}
+
+.tiki {
+    background: url('greenvalley/background.jpg') repeat;
 }
 
 html > body {
@@ -188,7 +192,7 @@ ul.siteloginbar_poppedup {
 #topbar_modules {
 	height: 35px;
     font-size: 0.9em;
-	background: url('greenvalley/menubar-wood2.jpg') 50% 50% no-repeat;
+	background: url('greenvalley/menubar-wood.jpg') 50% 50% no-repeat;
 	background-color: #473119;
 	-moz-box-shadow: inset 0 -3px 10px #331A00;
 	-webkit-box-shadow: inset 0 -3px 10px #331A00;
@@ -210,7 +214,6 @@ ul.siteloginbar_poppedup {
 	padding-bottom: 0.7em;
 	padding-right: 0.95em;
 	padding-left: 0.95em;
-	background: url('greenvalley/menu_divider.jpg') 100% 50% no-repeat;
 }
 
 #tiki-top .cssmenu_horiz li ul a:hover, #topbar_modules .cssmenu_horiz li ul a:hover {
@@ -240,16 +243,21 @@ ul.siteloginbar_poppedup {
 
 /** Buttons, Tab **/
 
-.button {
-    background: url('greenvalley/button_bck.jpg') 100% 50% no-repeat;
+.button, .button:hover, button, button:hover, input[type="reset"], input[type="submit"], input[type="reset"]:hover, input[type="submit"]:hover {
+    margin-top: 10px;
+}
+
+.button, input[type="reset"], input[type="submit"] {
+    background: url('greenvalley/button_bck.jpg') 100% 50% repeat;
 	-webkit-border-radius: 4px;
 	-moz-border-radius: 4px;
 	border-radius: 4px;
+    border: solid 1px rgba(84, 60, 27, 0.64);
     box-shadow: 2px 2px 3px 1px rgba(43, 43, 43, 0.65);
     text-shadow: #f2e4ab 0px 1px 1px;
 }
 
-.button a {
+.button a, input[type="reset"], input[type="submit"] {
     padding: .3em .5em;
 }
 
@@ -258,14 +266,14 @@ ul.siteloginbar_poppedup {
 	text-decoration: none;
 }
 
-.button a:active, .button a:hover, .highlight a:active, .highlight a:hover {
+.button a:active, .button a:hover, .highlight a:active, .highlight a:hover, input[type="reset"]:hover, input[type="submit"]:hover {
 	color: #E0D6CC;
 	text-decoration: none;
 }
 
-.button:hover {
+.button:hover, input[type="reset"]:hover, input[type="submit"]:hover {
     color: #a99278;
-	background: url('greenvalley/button_bck_hover.jpg') 100% 50% no-repeat;
+	background: url('greenvalley/button_bck_hover.jpg') 100% 50% repeat;
     box-shadow: 1px 1px 2px 1px rgba(84, 60, 27, 0.64);
     text-shadow: #2b2b2b 0px 1px 1px;
 }
@@ -277,7 +285,7 @@ ul.siteloginbar_poppedup {
 
 .button.highlight a {
     color: #fff;
-    background: url('greenvalley/button_bck_hover.jpg') 100% 50% no-repeat;
+    background: url('greenvalley/button_bck_hover.jpg') 100% 50% repeat;
 }
 
 .button, .button:hover, input[type="reset"], input[type="submit"], input[type="reset"]:hover, input[type="submit"]:hover {
@@ -323,7 +331,7 @@ span.highlight {
     -moz-border-radius-topright: 6px;
     -moz-border-radius-bottomleft: 0px;
     -moz-border-radius-bottomright: 0px;
-    background: url('greenvalley/button_bck_hover.jpg') 100% 50% no-repeat;
+    background: url('greenvalley/button_bck_hover.jpg') 100% 50% repeat;
     box-shadow: none;
 }
 
@@ -345,7 +353,7 @@ fieldset {
 }
 
 .tabmark {
-    display: inline;
+    display: inline-block;
     margin: 0 2px 0 0;
     padding: 2px 5px 2px 5px;
     top: -2px;
@@ -439,14 +447,30 @@ h3.box-title .moduletitle em {
 	line-height: 135%;
 	height: 28px;
 	font-size: .95em;
+    overflow: hidden;
 }
 
 .box-switch_lang {
     text-align: center !important;
 }
 
+.rbox-title, .rbox-data {
+    padding: 0.3em 0.6em;
+    border: 1px solid rgb(0, 0, 0);
+    background: none repeat scroll 0% 0% rgb(238, 238, 238);
+    color: rgb(0, 0, 0);
+}
+
 .box form {
-    margin: 10px;
+    margin: 2px;
+}
+
+#mod-login_box {
+    margin: 10px 20px;
+}
+
+.box .pass {
+    text-align: center;
 }
 
 .box select {
@@ -503,10 +527,6 @@ h3.box-title .moduletitle em {
     margin-top: -20px;
 }
 
-#col2 .box-data .cssmenu_vert ul {
-	padding-left: 0;
-}
-
 /** Login Box **/
 
 #mod-login_box fieldset {
@@ -524,6 +544,52 @@ h3.box-title .moduletitle em {
 .ui-widget-header {
     background: #53B042;
     color: #fff;
+}
+
+/** Tacker Filter **/
+
+.trackerfilter {
+    background: url('greenvalley/menubar-wood2.jpg') 100% 50% no-repeat;
+}
+
+.trackerfilter table {
+    border: none;
+}
+
+.trackerfilter table.normal tr:first-child {
+    background: none !important;
+}
+
+.trackerfilter table.normal tr:nth-child(2n+1) {
+    background: none !important;}
+
+.trackerfilter table td {
+    vertical-align: middle;
+    font-size: 1.1em;
+    color: #fff;
+}
+
+.trackerfilter select {
+    margin: 0 10px;
+    color: #cda256;
+    background-color : #42281d;
+    height: 20px;
+    font-size: 1em;
+    border: none;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    border-radius: 20px;
+    text-shadow: 0 2px 2px rgba(0, 0, 0, 0.3);
+    -webkit-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 3px rgba(0, 0, 0, 0.2) inset;
+    -moz-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 3px rgba(0, 0, 0, 0.2) inset;
+    -o-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 3px rgba(0, 0, 0, 0.2) inset;
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 3px rgba(0, 0, 0, 0.2) inset;
+    -webkit-background-clip: padding-box;
+    -webkit-transition: all 0.7s ease-out 0s;  /* Saf3.2+, Chrome */
+    -moz-transition: all 0.7s ease-out 0s;  /* FF4+ */
+    -ms-transition: all 0.7s ease-out 0s;  /* IE10? */
+    -o-transition: all 0.7s ease-out 0s;  /* Opera 10.5+ */
+    transition: all 0.7s ease-out 0s;
 }
 
 /***** Tables *****/
@@ -544,6 +610,11 @@ table.normal tr:nth-child(2n+1) {
 
 th {
     color: #66C285;
+    text-shadow: 1px 1px 3px #000;
+}
+
+th.checkBoxHeader {
+    text-shadow: 1px 1px 3px rgb(185, 230, 185);
 }
 
 td.third a, th a, td.heading a, tr.diffheader a {
@@ -561,6 +632,10 @@ td.third a:hover, th a:hover, td.heading a:hover, tr.diffheader a:hover {
 
 td.action {
     text-align: right;
+}
+
+table.formcolor td, table.findtable td {
+    vertical-align: middle;
 }
 
 /***** Articles *****/
@@ -593,6 +668,11 @@ img.articleimage {
     margin-bottom: 10px;
 }
 
+/** Subheading Toolbar **/
+div#subheading_toolbar.textarea-toolbar {
+    width: 645px;
+}
+
 /***** Files Gallery *****/
 
 .thumbnailframe {
@@ -609,43 +689,49 @@ img.articleimage {
 	float: right;
 }
 
+select#viewSwitcher {
+    margin: 0.6em 0.3em !important;
+    color: #cda256;
+    background-color : #42281d;
+    height: 20px;
+    font-size: 1em;
+    border: none;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    border-radius: 20px;
+    text-shadow: 0 2px 2px rgba(0, 0, 0, 0.3);
+    -webkit-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 3px rgba(0, 0, 0, 0.2) inset;
+    -moz-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 3px rgba(0, 0, 0, 0.2) inset;
+    -o-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 3px rgba(0, 0, 0, 0.2) inset;
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 3px rgba(0, 0, 0, 0.2) inset;
+    -webkit-background-clip: padding-box;
+    -webkit-transition: all 0.7s ease-out 0s;  /* Saf3.2+, Chrome */
+    -moz-transition: all 0.7s ease-out 0s;  /* FF4+ */
+    -ms-transition: all 0.7s ease-out 0s;  /* IE10? */
+    -o-transition: all 0.7s ease-out 0s;  /* Opera 10.5+ */
+    transition: all 0.7s ease-out 0s;
+}
+
 /***** Trackers *****/
+
+/***** Surveys *****/
+
+.quizquestion {
+	margin: 3em 0 1em 0;
+	background: rgb(187, 231, 179);
+	text-shadow: 1px 1px 0 rgb(109, 207, 92);
+	padding: .4em;
+}
+
+.quizoptions br {
+	display: none;
+}	
 
 /***** Miscellaneous *****/
 
 .description {
 	margin: 2em 0;
 	color: #3A7B2E;
-}
-
-/***** My custom tags *****/
-
-/** Design **/
-
-.menu_hebrew {
-    letter-spacing:0.1em;
-    font:tahoma;
-}
-/** Home Div **/
-
-#homefloat_right {
-	float: right;
-	width: 48%;
-    font-size: 0.9em;
-}
-
-#homefloat_right br {
-	display: none;
-}
-
-#homefloat_right h2 {
-    margin-top: 0;
-}
-
-#homefloat_left {
-	float: left;
-	width: 320px;
-	height: 240px;
 }
 
 /** Infinite carousel **/
@@ -693,230 +779,5 @@ img.articleimage {
 
 .infiniteCarousel br {display: none}
 
-/** Home Pictures Frame **/
-#home_pict {
-	width: 700px;
-	height:	170px;
-	margin: 0 auto;
-    padding-top: 3.5em;
-}
 
-#home_pictmask {
-	position:relative;
-	left:62px;
-	z-index: 100;
-}
-
-#home_pict_box {
-    text-align: center;
-	position:relative;
-	top:-132px;
-	left:11px;
-	background: #000;
-}
-
-#home_pict img {
-	margin-left: 51px;
-	margin-right: 51px;
-}
-/** Trackerfilter **/
-
-.trackerfilter {
-    background: url('greenvalley/menubar-wood2.jpg') 100% 50% no-repeat;
-}
-
-.trackerfilter table {
-    border: none;
-}
-
-.trackerfilter table.normal tr:first-child {
-    background: none !important;
-}
-
-.trackerfilter table.normal tr:nth-child(2n+1) {
-    background: none !important;}
-
-.trackerfilter table td {
-    vertical-align: middle;
-    font-size: 1.1em;
-    color: #fff;
-}
-
-.trackerfilter select {
-    margin: 0 10px;
-    color: #cda256;
-    background-color : #42281d;
-    height: 20px;
-    font-size: 1em;
-    border: none;
-    -webkit-border-radius: 20px;
-    -moz-border-radius: 20px;
-    border-radius: 20px;
-    text-shadow: 0 2px 2px rgba(0, 0, 0, 0.3);
-    -webkit-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 3px rgba(0, 0, 0, 0.2) inset;
-    -moz-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 3px rgba(0, 0, 0, 0.2) inset;
-    -o-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 3px rgba(0, 0, 0, 0.2) inset;
-    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 3px rgba(0, 0, 0, 0.2) inset;
-    -webkit-background-clip: padding-box;
-    -webkit-transition: all 0.7s ease-out 0s;  /* Saf3.2+, Chrome */
-    -moz-transition: all 0.7s ease-out 0s;  /* FF4+ */
-    -ms-transition: all 0.7s ease-out 0s;  /* IE10? */
-    -o-transition: all 0.7s ease-out 0s;  /* Opera 10.5+ */
-    transition: all 0.7s ease-out 0s;
-}
-
-/** Phonebook **/
-.phonebook {
-    width: 680px;
-    margin: 1em auto;
-    background: url('greenvalley/phonebook_ltr.jpg') no-repeat;
-    min-height: 800px;
-}
-
-.phonebook .normal {
-    width: 680px;
-    border: none;
-    margin-top: 10px;
-    margin-bottom: 10px;
-}
-
-.phonebook_listing {
-    width: 100%;
-}
-
-.phonebook_item {
-    float:left;
-    width: 100%;
-    margin: 1.33em auto 0 auto;
-    background: transparent !important;
-    font-size: 1em;
-}
-
-.phonebook_cell {
-    padding: 0 4px 0 10px;
-    width: 25%;
-    display:inline;
-    float: left;
-}
-
-.phonebook_tel {
-    padding: 0 4px 0 10px;
-    width: 15%;
-    display:inline;
-    float: left;
-}
-
-.phonebook_name {
-    font-weight: bold;
-    font-size: 120%;
-}
-
-.phonebook .mini {padding-top:0.6em;}
-.phonebook p {display:none;}
-
-/* Business tracker */
-.business_right {
-    float:right;
-    width:48%;
-}
-
-#business_left {
-    float:left;
-    width:45%;
-}
-
-.business_type {
-    position: relative;
-    top:14px;
-    right:15px;
-    color: #bbb;
-}
-
-.business_type a {
-    color: #777;
-    font-size:1.1em;
-}
-
-.business_card {
-    border: 1px dashed #f2e4ab;
-    margin:15px;
-    padding:4px;
-    background: #fff;
-    height:270px;
-}
-
-.business_header {
-    float:right;
-    height: 75px;
-}
-
-.business_header h3 {
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 1.6em;
-    font-weight: bold;
-    color: #E23996;
-    -ms-transform:scale(1,1.8); /* IE 9 */
-    -moz-transform:scale(1,1.8); /* Firefox */
-    -webkit-transform:scale(1,1.8); /* Safari and Chrome */
-    -o-transform:scale(1,1.8); /* Opera */
-    transform:scale(1,1.8);
-    letter-spacing: .1em;
-}
-
-.business_header h4 {
-    font-size: 1em;
-    margin-bottom: 0.4em;
-    margin-top: 0.7em;
-}
-
-.business_picture {
-    float:left;
-}
-
-.business_picture p {
-    margin:0;
-}
-
-.business_picture img {
-    position:relative;
-    top:2px;
-    left:2px;
-}
-
-.business_text {
-    height: 120px;
-    position:relative;
-    top: 1em;
-    padding-bottom: 4px;
-    overflow: hidden;
-    clear:both;
-    font-size: .96em;
-}
-
-.business_bottom {
-    padding: 4px 0;
-    border-top: #f2e4ab 1px dashed;
-    background: #fff;
-    font-size: 1.05em;
-}
-
-.business_bottom p {
-    margin:0;
-    font-size:0.9em;
-}
-
-.business_bottom_right {
-    float:right;
-    width:40%;
-}
-
-.business_bottom_left {
-    text-align:left !important;
-    float:left;
-    width:60%;
-}
-
-.business_clear {
-    clear:both;
-}
 /* End of File */
