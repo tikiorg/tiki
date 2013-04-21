@@ -5,7 +5,7 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-class Tiki_Profile_InstallHandler_Topic extends Tiki_Profile_InstallHandler
+class Tiki_Profile_InstallHandler_ArticleTopic extends Tiki_Profile_InstallHandler
 {
 	function getData()
 	{
