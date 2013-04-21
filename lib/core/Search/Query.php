@@ -14,6 +14,8 @@ class Search_Query
 	private $count = 50;
 	private $weightCalculator = null;
 
+	private $subQueries = array();
+
 	function __construct($query = null)
 	{
 		$this->expr = new Search_Expr_And(array());
@@ -224,5 +226,22 @@ class Search_Query
 		);
 
 		return $terms;
+	}
+
+	function getSubQuery($name)
+	{
+		if (empty($name)) {
+			return $this;
+		}
+
+		if (! isset($this->subQueries[$name])) {
+			$subquery = new self;
+			$subquery->expr = new Search_Expr_Or(array());
+			$this->expr->addPart($subquery->expr);
+
+			$this->subQueries[$name] = $subquery;
+		}
+
+		return $this->subQueries[$name];
 	}
 }

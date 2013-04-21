@@ -93,6 +93,7 @@ class Services_Search_CustomSearchController
 				$config = $d['config'];
 				$name = $d['name'];
 				$value = $d['value'];
+				$group = empty($config['_group']) ? null : $config['_group'];
 
 				// save values entered as defaults while session lasts
 				if (empty($value) && $value != 0) {
@@ -126,21 +127,14 @@ class Services_Search_CustomSearchController
 
 				$function = "cs_dataappend_{$filter}";
 				if (method_exists($this, $function)) {
-					$this->$function($query, $config, $value);
+					$this->$function($query->getSubQuery($group), $config, $value);
 				}
 			}
-
-			// Reconstruct using boolean OR for grouped filters
-			$grouped = $this->cs_get_grouped($dataappend, $groups);
-			$grouping_keys = array('categories', 'content', 'language'); // only these can be grouped
-			$to_reconstruct = $this->cs_process_group($dataappend, $grouped, $id, $grouping_keys);
-			$this->cs_reconstruct_group($dataappend, $to_reconstruct, $grouped, $id, $grouping_keys);
 
 			// Reconstruct textrange from-to filters
 			$grouped = $this->cs_get_grouped($adddata, $textrangegroups);
 			$grouping_keys = array('content');
 			$to_reconstruct = $this->cs_process_group($adddata, $grouped, $id, $grouping_keys, 2, 2, false, true);
-			//$this->cs_reconstruct_rangegroup($adddata, $to_reconstruct, $grouped, $id, $grouping_keys, 'text');
 			foreach($to_reconstruct as $field) {
 				$query->filterTextRange($field['query_vals'][0], $field['query_vals'][1], $field['args']['_field']);
 			}
@@ -149,7 +143,6 @@ class Services_Search_CustomSearchController
 			$grouped = $this->cs_get_grouped($dataappend, $daterangegroups);
 			$grouping_keys = array('content');
 			$to_reconstruct = $this->cs_process_group($dataappend, $grouped, $id, $grouping_keys, 2, 2, false, true);
-			//$this->cs_reconstruct_rangegroup($dataappend, $to_reconstruct, $grouped, $id, $grouping_keys, 'date');
 			foreach($to_reconstruct as $field) {
 				$query->filterRange($field['query_vals'][0], $field['query_vals'][1], $field['args']['_field']);
 			}
@@ -314,51 +307,4 @@ class Services_Search_CustomSearchController
 		}
 		return $to_reconstruct;
 	}
-
-	private function cs_reconstruct_group(&$dataappend, $to_reconstruct, $grouped, $id, $grouping_keys)
-	{
-		foreach ($to_reconstruct as $group_id => $recon) {
-			$new_query_val = implode(' ', $recon['query_vals']);
-			foreach ($grouping_keys as $k) {
-				if (array_key_exists($k, $recon['args'])) {
-					$recon['args'][$k] = $new_query_val;
-					break;
-				}
-			}
-			foreach ($grouped[$group_id] as $to_drop) {
-				unset($dataappend[$to_drop]);
-			}
-			$filter = '{filter ';
-			foreach ($recon['args'] as $k => $v) {
-				$filter .= $k . '="' . $v . '" ';
-			}
-			$filter .= '}';
-			$dataappend["customsearch_$id" . "_gr$group_id"] = $filter;
-		}
-	}
-
-	private function cs_reconstruct_rangegroup(&$dataappend, $to_reconstruct, $grouped, $id, $grouping_keys, $mode = 'text')
-	{
-		foreach ($to_reconstruct as $group_id => $recon) {
-			sort($recon['query_vals'], SORT_NUMERIC); // Lucene is a string only engine but date ranges are converted from timestamp ints
-			$from = $recon['query_vals'][0];
-			$to = $recon['query_vals'][1];
-			if (!empty($recon['args']['field'])) {
-				$field = $recon['args']['field'];
-			} else {
-				$field = 'content';
-			}
-			foreach ($grouped[$group_id] as $to_drop) {
-				unset($dataappend[$to_drop]);
-			}
-			if ($mode == 'date') {
-				$filter = '{filter range="';
-			} else {
-				$filter = '{filter textrange="';
-			}
-			$filter .= $field . '" from="' . $from . '" to="' . $to . '"}';
-			$dataappend["customsearch_$id" . "_$mode" . "range$group_id"] = $filter;
-		}
-	}
-
 }
