@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "2fb25482e625b59b09dd0713b01bb922",
+    "hash": "4d5225f831e49f5583183b2f5dac1719",
     "packages": [
         {
             "name": "aFarkas/html5shiv",
@@ -498,6 +498,17 @@
             "dist": {
                 "type": "zip",
                 "url": "http://www.digitalia.be/file_download/14/reflection-jquery.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "library"
+        },
+        {
+            "name": "jquery/plugins/sparkline",
+            "version": "2.1.1",
+            "dist": {
+                "type": "file",
+                "url": "http://omnipotent.net/jquery.sparkline/2.1.1/jquery.sparkline.min.js",
                 "reference": null,
                 "shasum": null
             },

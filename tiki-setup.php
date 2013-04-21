@@ -475,7 +475,7 @@ if ($prefs['mobile_feature'] === 'y' && $prefs['mobile_mode'] === 'y') {
 
 	if ( $prefs['feature_metrics_dashboard'] == 'y' ) {
 		$headerlib->add_cssfile("css/metrics.css");
-		$headerlib->add_jsfile("lib/jquery/plugins/jquery.sparkline.min.js");
+		$headerlib->add_jsfile("vendor/jquery/plugins/sparkline/jquery.sparkline.min.js");
 		$headerlib->add_jsfile("lib/metrics.js");
 	}
 

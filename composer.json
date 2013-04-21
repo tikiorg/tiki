@@ -41,6 +41,7 @@
 		"jquery/plugins/superfish": "1.7.2",
 		"jquery/plugins/tablesorter": "2.9.1",
 		"jquery/plugins/treetable": "3.0.1",
+		"jquery/plugins/sparkline": "2.1.1",
 		"phpcas/phpcas": "1.3.2",
 		"phpseclib/phpseclib": "0.3.1",
 		"rangy/rangy": "1.2.3",
@@ -474,6 +475,17 @@
 				"dist": {
 					"url": "https://github.com/ludo/jquery-treetable/archive/3.0.1.zip",
 					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "jquery/plugins/sparkline",
+				"version": "2.1.1",
+				"dist": {
+					"url": "http://omnipotent.net/jquery.sparkline/2.1.1/jquery.sparkline.min.js",
+					"type": "file"
 				}
 			}
 		},
