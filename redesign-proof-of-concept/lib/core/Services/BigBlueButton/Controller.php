@@ -40,6 +40,12 @@ class Services_BigBlueButton_Controller
 			$_SESSION['bbb_name'] = $params['prefix'] . $input->bbb_name->text();
 		}
 
+		$configuration = null;
+		if (! empty($params['configuration'])) {
+			$configuration = $params['configuration'];
+			unset($params['configuration']);
+		}
+
 		// Attempt to create room made before joining as the BBB server has no persistency.
 		// Prior check ensures that the user has appropriate rights to create the room in the
 		// first place or that the room was already officially created and this is only a
@@ -50,7 +56,13 @@ class Services_BigBlueButton_Controller
 		// and tiki cache gets flushed. To cover that one, create can be granted to everyone for
 		// the specific object.
 		$bigbluebuttonlib->createRoom($meetingName, $params);
-		$bigbluebuttonlib->joinMeeting($meetingName);
+		$token = null;
+
+		if ($configuration) {
+			$token = $bigbluebuttonlib->configureRoom($meetingName, $configuration);
+		}
+
+		$bigbluebuttonlib->joinMeeting($meetingName, $token);
 	}
 
 	function action_delete_recording($input)

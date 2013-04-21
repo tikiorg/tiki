@@ -78,6 +78,11 @@ class Tracker_Field_Files extends Tracker_Field_Abstract
 						'description' => tr('File gallery browse files. Use 0 for root file gallery. (requires elFinder feature - experimental)'),
 						'filter' => 'int',
 					),
+					'duplicateGalleryId' => array(
+						'name' => tr('Duplicate Gallery ID'),
+						'description' => tr('File gallery to duplicate files into when copying the tracker item. 0 or empty means do not duplicate (default).'),
+						'filter' => 'int',
+					),
 				),
 			),
 		);
@@ -93,9 +98,7 @@ class Tracker_Field_Files extends Tracker_Field_Abstract
 		$deepGallerySearch = (boolean) $this->getOption('deepGallerySearch');
 
 		// to use the user's userfiles gallery enter the fgal_root_user_id which is often (but not always) 2
-		if ($prefs['feature_use_fgal_for_user_files'] === 'y' && $galleryId == $prefs['fgal_root_user_id']) {
-			$galleryId = (int) $filegallib->get_user_file_gallery();
-		}
+		$galleryId = $filegallib->check_user_file_gallery($galleryId);
 
 		$value = '';
 		$ins_id = $this->getInsertId();
@@ -222,6 +225,8 @@ class Tracker_Field_Files extends Tracker_Field_Abstract
 				include_once('lib/wiki-plugins/wikiplugin_img.php');
 				$params['fromFieldId'] = $this->getConfiguration('fieldId');
 				$params['fromItemId'] = $this->getItemId();
+				$item = Tracker_Item::fromInfo($this->getItemData());
+				$params['checkItemPerms'] = $item->canModify() ? 'n' : 'y';
 				$ret = wikiplugin_img('', $params, 0);
 				$ret = preg_replace('/~\/?np~/', '', $ret);
 			} else {
@@ -283,6 +288,35 @@ class Tracker_Field_Files extends Tracker_Field_Abstract
 		return array(
 			'value' => $value,
 		);
+	}
+
+	/**
+	 * called from action_clone_item and duplicates the related files if option duplicateGalleryID is set
+	 */
+	function handleClone()
+	{
+		global $prefs;
+
+		$oldValue = $this->getValue();
+		if ($galleryId = $this->getOption('duplicateGalleryId')) {
+
+			$filegallib = TikiLib::lib('filegal');
+
+			// to use the user's userfiles gallery enter the fgal_root_user_id which is often (but not always) 2
+			$galleryId = $filegallib->check_user_file_gallery($galleryId);
+
+			$newIds = array();
+
+			foreach (array_filter(explode(',', $oldValue)) as $fileId) {
+				$newIds[] = $filegallib->duplicate_file($fileId, $galleryId);
+			}
+
+			return $this->handleSave(implode(',', $newIds), $oldValue);
+		}
+		return array(
+			'value' => $oldValue,
+		);
+
 	}
 
 	function watchCompare($old, $new)

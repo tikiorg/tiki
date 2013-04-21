@@ -26,7 +26,7 @@ class Tiki_Profile_Installer
 		'webservice' => 'Tiki_Profile_InstallHandler_Webservice',
 		'webservice_template' => 'Tiki_Profile_InstallHandler_WebserviceTemplate',
 		'rss' => 'Tiki_Profile_InstallHandler_Rss',
-		'topic' => 'Tiki_Profile_InstallHandler_Topic',
+		'article_topic' => 'Tiki_Profile_InstallHandler_ArticleTopic',
 		'article_type' => 'Tiki_Profile_InstallHandler_ArticleType',
 		'article' => 'Tiki_Profile_InstallHandler_Article',
 		'forum' => 'Tiki_Profile_InstallHandler_Forum',
@@ -115,9 +115,10 @@ class Tiki_Profile_Installer
 	{
 		global $tikilib;
 
-		$result = $tikilib->query("SELECT DISTINCT `domain`, `profile` FROM `tiki_profile_symbols`");
-		if ( $result ) while ( $row = $result->fetchRow() )
+		$result = $tikilib->fetchAll("SELECT DISTINCT `domain`, `profile` FROM `tiki_profile_symbols`");
+		foreach ($result as $row) {
 			$this->installed[Tiki_Profile::getProfileKeyFor($row['domain'], $row['profile'])] = true;
+		}
 	} // }}}
 
 	function setUserData( $userData ) // {{{

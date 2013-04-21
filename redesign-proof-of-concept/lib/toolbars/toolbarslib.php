@@ -316,7 +316,7 @@ abstract class Toolbar
 						->setType($data['type']);
 
 		return $tag;
-	}	// {{{
+	}	// }}}
 
 	abstract function getWikiHtml( $areaId );
 
@@ -607,17 +607,16 @@ class ToolbarCkOnly extends Toolbar
 			return parent::getIconHtml();
 		}
 
-		$headerlib->add_cssfile('lib/ckeditor4/skins/kama/editor.css');
+		$headerlib->add_cssfile('vendor/ckeditor/ckeditor/skins/kama/editor.css');
 		$cls = strtolower($this->wysiwyg);
-		$cls = str_replace(array('selectall', 'removeformat', 'spellchecker'), array('selectAll', 'removeFormat', 'checkspell'), $cls);	// work around some "features" in ckeditor icons.css
 		$headerlib->add_css(
 			'span.cke_skin_kama {border: none;background: none;padding:0;margin:0;}'.
 			'.toolbars-admin .row li.toolbar > span.cke_skin_kama {display: inline-block;}'
 		);
-		return '<span class="cke_skin_kama"><span class="cke_button"><span class="cke_button_' . htmlentities($cls, ENT_QUOTES, 'UTF-8') . '"' .
+		return '<span class="cke_skin_kama"><a class="cke_button cke_ltr"><span class="cke_button__' . htmlentities($cls, ENT_QUOTES, 'UTF-8') . '_icon"' .
 			' title="' . htmlentities($this->getLabel(), ENT_QUOTES, 'UTF-8') . '">'.
 			'<span class="cke_icon"> </span>'.
-			'</span></span></span>';
+			'</span></a></span>';
 	} // }}}
 }
 
@@ -1036,10 +1035,6 @@ class ToolbarPicker extends Toolbar
 	{
 		global $headerlib, $prefs;
 		$headerlib->add_js("window.pickerData['$this->name'] = " . str_replace('\/', '/', json_encode($this->list)) . ";");
-		if ($prefs['feature_jquery_ui'] != 'y') {
-			$headerlib->add_jsfile("lib/jquery/ui/ui/ui-$headerlib->jqueryui_version.js");
-			$headerlib->add_cssfile('lib/jquery/ui/themes/' . $prefs['feature_jquery_ui_theme'] . '/ui.css');
-		}
 
 		return $this->getSelfLink(
 			$this->getSyntax($areaId),
@@ -1981,12 +1976,6 @@ class ToolbarsList
 	{
 		global $tiki_p_admin, $tiki_p_admin_toolbars, $smarty, $section, $prefs, $headerlib;
 		$html = '';
-
-		// $.selection() is in jquery.autocomplete.min.js
-
-		if ($prefs['feature_jquery_autocomplete'] != 'y') {
-			$headerlib->add_jsfile('lib/jquery/jquery-autocomplete/jquery.autocomplete.min.js');
-		}
 
 		$c = 0;
 		foreach ( $this->lines as $line ) {

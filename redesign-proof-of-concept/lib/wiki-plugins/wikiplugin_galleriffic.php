@@ -122,9 +122,9 @@ function wikiplugin_galleriffic($data, $params)
 		return '';
 	}
 	$headerlib = TikiLib::lib('header');
-	$headerlib->add_cssfile('lib/jquery/plugins/galleriffic/css/galleriffic-2.css');
-	$headerlib->add_jsfile('lib/jquery/plugins/galleriffic/js/jquery.galleriffic.js');
-	$headerlib->add_jsfile('lib/jquery/plugins/galleriffic/js/jquery.opacityrollover.js');
+	$headerlib->add_cssfile('lib/jquery_tiki/galleriffic/css/galleriffic-2.css');		// tiki needs modified css otherwise .content gets hidden
+	$headerlib->add_jsfile('vendor/jquery/plugins/galleriffic/js/jquery.galleriffic.js');
+	$headerlib->add_jsfile('vendor/jquery/plugins/galleriffic/js/jquery.opacityrollover.js');
 	$playLinkText = tra('Play Slideshow');
 	$pauseLinkText = tra('Pause SlideShow');
 	$prevLinkText = '&lsaquo; '.tra('Previous Photo');
@@ -170,7 +170,7 @@ $jq = <<<JQ
 		nextPageLinkText:          '$nextPageLinkText',
 		prevPageLinkText:          '$prevPageLinkText',
         enableHistory:             false, // Specifies whether the url's hash and the browser's history cache should update when the current slideshow image changes
-        enableKeyboardNavigation:  true, // Specifies whether keyboard navigation is enabled
+        enableKeyboardNavigation:  false, // Specifies whether keyboard navigation is enabled
         autoStart:                 $autoStart, // Specifies whether the slideshow should be playing or paused when the page first loads
         syncTransitions:           false, // Specifies whether the out and in transitions occur simultaneously or distinctly
         defaultTransitionDuration: 1000, // If using the default transitions, specifies the duration of the transitions

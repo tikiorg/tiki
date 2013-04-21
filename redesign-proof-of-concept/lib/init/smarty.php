@@ -112,28 +112,8 @@ class Smarty_Tiki extends Smarty
 		parent::__construct();
 		global $prefs, $style_base;
 
-		if (empty($style_base) && class_exists('TikiLib')) {	// TikiLib doesn't exist in the installer
-			$tikilib = TikiLib::lib('tiki');
-			if (method_exists($tikilib, "get_style_base")) {
-				$style_base = TikiLib::lib('tiki')->get_style_base($prefs['style']);
-			}
-		}
-		if ($tikidomain) {
-			$tikidomain.= '/';
-		}
-		$this->main_template_dir = realpath('templates/');
-		$this->setTemplateDir(null);
-		if ( !empty($tikidomain) && $tikidomain !== '/' ) {
-			$this->addTemplateDir($this->main_template_dir.'/'.$tikidomain.'/styles/'.$style_base.'/');
-			$this->addTemplatedir($this->main_template_dir.'/'.$tikidomain.'/');
-		}
-		$this->addTemplateDir($this->main_template_dir.'/styles/'.$style_base.'/');
-		$this->addTemplateDir($this->main_template_dir.'/layouts/'.$prefs['site_layout'].'/');
-		$this->addTemplateDir($this->main_template_dir.'/layouts/');
-		$this->addTemplateDir($this->main_template_dir);
+		$this->initializePaths();
 
-		
-		$this->refreshLanguage();
 		$this->setConfigDir(null);
 		if (! isset($prefs['smarty_compilation'])) {
 			$prefs['smarty_compilation'] = '';
@@ -440,6 +420,33 @@ class Smarty_Tiki extends Smarty
 
 
 		$this->setCompileDir(realpath("templates_c") . "/$lang/$tikidomain/$layout");
+	}
+
+	function initializePaths()
+	{
+		global $prefs, $style_base, $tikidomain;
+		if (empty($style_base) && class_exists('TikiLib')) {	// TikiLib doesn't exist in the installer
+			$tikilib = TikiLib::lib('tiki');
+			if (method_exists($tikilib, "get_style_base")) {
+				$style_base = TikiLib::lib('tiki')->get_style_base($prefs['style']);
+			}
+		}
+		if ($tikidomain) {
+			$tikidomain.= '/';
+		}
+		$this->main_template_dir = realpath('templates/');
+		$this->setTemplateDir(null);
+		if ( !empty($tikidomain) && $tikidomain !== '/' ) {
+			$this->addTemplateDir($this->main_template_dir.'/'.$tikidomain.'/styles/'.$style_base.'/');
+			$this->addTemplatedir($this->main_template_dir.'/'.$tikidomain.'/');
+		}
+		$this->addTemplateDir($this->main_template_dir.'/styles/'.$style_base.'/');
+		$this->addTemplateDir($this->main_template_dir.'/layouts/'.$prefs['site_layout'].'/');
+		$this->addTemplateDir($this->main_template_dir.'/layouts/');
+		$this->addTemplateDir($this->main_template_dir);
+
+		
+		$this->refreshLanguage();
 	}
 }
 

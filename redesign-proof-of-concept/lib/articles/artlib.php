@@ -1595,7 +1595,7 @@ class ArtLib extends TikiLib
 		return true;
 	}
 
-	function get_article_type_attributes($artType)
+	function get_article_type_attributes($artType, $orderby = '')
 	{
 		global $relationlib, $attributelib;
 
@@ -1606,7 +1606,7 @@ class ArtLib extends TikiLib
 			include_once('lib/attributes/attributelib.php');
 		}
 
-		$attributes = $relationlib->get_relations_from('articletype', $artType, 'tiki.article.attribute');
+		$attributes = $relationlib->get_relations_from('articletype', $artType, 'tiki.article.attribute', $orderby);
 		$ret = array();
 		foreach ($attributes as $att) {
 			$relationAtt = $attributelib->get_attributes('relation', $att['relationId']);

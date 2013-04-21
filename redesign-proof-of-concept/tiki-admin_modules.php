@@ -316,7 +316,7 @@ if (isset($_REQUEST['assign'])) {
 		);
 		$logslib->add_log('adminmodules', 'assigned module ' . $assign_name);
 		$modlib->reorder_modules();
-		header('location: tiki-admin_modules.php');
+		header('location: tiki-admin_modules.php?cookietab=1'); // forcing return to 1st tab
 	} else {
 		$modlib->dispatchValues($_REQUEST['assign_params'], $modinfo['params']);
 		$smarty->assign('assign_info', $modinfo);
@@ -428,8 +428,17 @@ foreach ( $modlib->module_zones as $initial => $zone) {
 			'name' => tra(substr($zone, 0, strpos($zone, '_')))
 			);
 }
-$smarty->assign('assigned_modules', $assigned_modules);
 $smarty->assign('module_zone_list', $module_zone_list);
+
+$assigned_modules = array_map(function ($list) {
+	return array_map(function ($entry) {
+		$entry['params_presentable'] = str_replace('&', '<br>', urldecode($entry['params']));
+		return $entry;
+	}, $list);
+}, $assigned_modules);
+
+$smarty->assign('assigned_modules', $assigned_modules);
+$smarty->assign('module_zones', $module_zones);
 
 $prefs['module_zones_top'] = 'fixed';
 $prefs['module_zones_topbar'] = 'fixed';

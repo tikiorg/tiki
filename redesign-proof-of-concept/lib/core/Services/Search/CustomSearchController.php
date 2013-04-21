@@ -11,6 +11,9 @@
 
 class Services_Search_CustomSearchController
 {
+	private $textranges = array();
+	private $dateranges = array();
+
 	function setUp()
 	{
 		Services_Exception_Disabled::check('wikiplugin_list');
@@ -20,6 +23,11 @@ class Services_Search_CustomSearchController
 
 	function action_customsearch($input)
 	{
+		global $prefs;
+
+		$this->textranges = array();
+		$this->dateranges = array();
+
 		$cachelib = TikiLib::lib('cache');
 		$definition = $input->definition->word();
 		if (empty($definition) || ! $definition = $cachelib->getSerialized($definition, 'customsearch')) {
@@ -33,7 +41,7 @@ class Services_Search_CustomSearchController
 
 		$dataappend = array();
 
-		$record_session = $input->ignoresession->int() ? false : true;
+		$recalllastsearch = $input->recalllastsearch->int() ? true : false;
 
 		$id = $input->searchid->text();
 		if (empty($id)) {
@@ -44,53 +52,45 @@ class Services_Search_CustomSearchController
 		$onclick = "$('#customsearch_$id').submit();return false;";
 		$dataappend['pagination'] = "{pagination offset_jsvar=\"$offset_jsvar\" onclick=\"$onclick\"}";
 
-		if ($input->groups->text()) {
-			$groups = json_decode($input->groups->text(), true);
-		} else {
-			$groups = array();
-		}
-		if ($input->textrangegroups->text()) {
-			$textrangegroups = json_decode($input->textrangegroups->text(), true);
-		} else {
-			$textrangegroups = array();
-		}
-		if ($input->daterangegroups->text()) {
-			$daterangegroups = json_decode($input->daterangegroups->text(), true);
-		} else {
-			$datarangegroups = array();
-		}
-		if ($record_session && isset($_SESSION["customsearch_$id"])) {
+		if ($recalllastsearch && isset($_SESSION["customsearch_$id"])) {
 			unset($_SESSION["customsearch_$id"]);
 		}
-		if ($input->maxRecords->int()) {
-			if ($record_session) {
-				$_SESSION["customsearch_$id"]["maxRecords"] = $input->maxRecords->int();
-			}
-			$_REQUEST['maxRecords'] = $input->maxRecords->int();	// pass request data required by list
-		}
 		if ($input->sort_mode->text()) {
-			if ($record_session) {
+			if ($recalllastsearch) {
 				$_SESSION["customsearch_$id"]["sort_mode"] = $input->sort_mode->text();
 			}
-			$_REQUEST['sort_mode'] = $input->sort_mode->text();
+			$query->setOrder($input->sort_mode->text());
+		}
+		if ($input->maxRecords->int()) {
+			if ($recalllastsearch) {
+				$_SESSION["customsearch_$id"]["maxRecords"] = $input->maxRecords->int();
+			}
+			$maxRecords = $input->maxRecords->int();	// pass request data required by list
+		} else {
+			$maxRecords = $prefs['maxRecords'];
 		}
 		if ($input->offset->int()) {
-			if ($record_session) {
+			if ($recalllastsearch) {
 				$_SESSION["customsearch_$id"]["offset"] = $input->offset->int();
 			}
-			$_REQUEST['offset'] = $input->offset->int();
+			$offset = $input->offset->int();
+		} else {
+			$offset = 0;
 		}
+		$query->setRange($offset, $maxRecords);
+
 		if ($adddata) {
 			foreach ($adddata as $fieldid => $d) {
 				$config = $d['config'];
 				$name = $d['name'];
 				$value = $d['value'];
+				$group = empty($config['_group']) ? null : $config['_group'];
 
 				// save values entered as defaults while session lasts
 				if (empty($value) && $value != 0) {
 					$value = '';		// remove false or null
 				}
-				if ($record_session) {
+				if ($recalllastsearch) {
 					$_SESSION["customsearch_$id"][$fieldid] = $value;
 				}
 
@@ -110,7 +110,7 @@ class Services_Search_CustomSearchController
 					$filter = 'content'; //default
 				}
 
-				if (is_array($value) && count($value > 1)) {
+				if (is_array($value) && count($value) > 1) {
 					$value = implode(' ', $value);
 				} elseif (is_array($value)) {
 					$value = current($value);
@@ -118,7 +118,23 @@ class Services_Search_CustomSearchController
 
 				$function = "cs_dataappend_{$filter}";
 				if (method_exists($this, $function)) {
-					$this->$function($query, $config, $value);
+					$this->$function($query->getSubQuery($group), $config, $value);
+				}
+			}
+
+			foreach ($this->textranges as $info) {
+				if (count($info['values']) >= 2) {
+					$from = array_shift($info['values']);
+					$to = array_shift($info['values']);
+					$info['query']->filterTextRange($from, $to, $info['config']['_field']);
+				}
+			}
+
+			foreach ($this->dateranges as $info) {
+				if (count($info['values']) >= 2) {
+					$from = array_shift($info['values']);
+					$to = array_shift($info['values']);
+					$info['query']->filterRange($from, $to, $info['config']['_field']);
 				}
 			}
 		}
@@ -163,7 +179,11 @@ class Services_Search_CustomSearchController
 	private function cs_dataappend_content(Search_Query $query, $config, $value)
 	{
 		if ($value) {
-			if ($config['type'] == 'checkbox') {
+			if (isset($config['_textrange'])) {
+				$this->cs_handle_textrange($config['_textrange'], $query, $config, $value);
+			} elseif (isset($config['_daterange'])) {
+				$this->cs_handle_daterange($config['_daterange'], $query, $config, $value);
+			} elseif ($config['type'] == 'checkbox') {
 				if (empty($config['_field'])) {
 					return;
 				}
@@ -191,6 +211,32 @@ class Services_Search_CustomSearchController
 			}
 		}
 		return false;
+	}
+
+	private function cs_handle_textrange($rangeName, Search_Query $query, $config, $value)
+	{
+		if (! isset($this->textranges[$rangeName])) {
+			$this->textranges[$rangeName] = array(
+				'query' => $query,
+				'config' => $config,
+				'values' => array(),
+			);
+		}
+
+		$this->textranges[$rangeName]['values'][] = $value;
+	}
+
+	private function cs_handle_daterange($rangeName, Search_Query $query, $config, $value)
+	{
+		if (! isset($this->dateranges[$rangeName])) {
+			$this->dateranges[$rangeName] = array(
+				'query' => $query,
+				'config' => $config,
+				'values' => array(),
+			);
+		}
+
+		$this->dateranges[$rangeName]['values'][] = $value;
 	}
 
 	private function cs_dataappend_categories(Search_Query $query, $config, $value)
@@ -222,5 +268,4 @@ class Services_Search_CustomSearchController
 			}
 		}
 	}
-
 }

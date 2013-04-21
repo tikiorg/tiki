@@ -14,7 +14,6 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 ini_set( 'include_path', ini_get( 'include_path' ) . ":lib/sheet" );
 
 // Nice dependencies, mostly for excel support. Don't try changing the order.
-require_once( "lib/pear/PEAR.php" );
 require_once( "lib/sheet/excel/reader_ole.php" );
 require_once( "lib/sheet/excel/reader.php" );
 require_once( "lib/sheet/excel/writer/format.php" );

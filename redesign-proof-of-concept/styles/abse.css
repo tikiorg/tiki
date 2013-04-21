@@ -92,7 +92,6 @@ html>body #c1c2 #wrapper #col1 #tiki-center:hover {
 
 /***** XHTML Elements (other than body tag) ******/
 a,
-a:link,
 a:visited {
 	color: #bdcec3;
 	font-weight: normal;
@@ -101,6 +100,11 @@ a:visited {
 a:hover {
 	color: #ccccff;
 	text-decoration: underline}
+	
+.highlight, .button.highlight a, .button a.highlight, a.highlight:hover { 
+background: #FFCC00;
+color: #000000;
+}
 
 h1, h2, h3, h4, h5 {
 	color: #bdcec3 !important;
@@ -419,7 +423,7 @@ a.flip:hover,
 
 /** tree **/
 .ui-icon {
-background-image:url('../lib/jquery/ui/themes/ui-darkness/images/ui-icons_cccccc_256x240.png');
+background-image:url('../vendor/jquery/jquery-ui-themes/themes/ui-darkness/images/ui-icons_cccccc_256x240.png');
 }
 
 /***** Boxes *****/
@@ -575,20 +579,20 @@ td.heading {
 .tablesorter .tablesorter-header {
 	padding: 4px 20px 4px 4px;
 	cursor: pointer;
-	background-image: url(data:image/gif;base64,R0lGODlhFQAJAIAAAP///////yH5BAEAAAEALAAAAAAVAAkAAAIXjI+AywnaYnhUMoqt3gZXPmVg94yJVQAAOw==);
+/*	background-image: url(data:image/gif;base64,R0lGODlhFQAJAIAAAP///////yH5BAEAAAEALAAAAAAVAAkAAAIXjI+AywnaYnhUMoqt3gZXPmVg94yJVQAAOw==);
 	background-position: center right;
-	background-repeat: no-repeat;
+	background-repeat: no-repeat;*/
 }
 .tablesorter thead .headerSortUp,
 .tablesorter thead .tablesorter-headerSortUp,
 .tablesorter thead .tablesorter-headerAsc {
-	background-image: url(data:image/gif;base64,R0lGODlhFQAEAIAAAP///////yH5BAEAAAEALAAAAAAVAAQAAAINjI8Bya2wnINUMopZAQA7);
+/*	background-image: url(data:image/gif;base64,R0lGODlhFQAEAIAAAP///////yH5BAEAAAEALAAAAAAVAAQAAAINjI8Bya2wnINUMopZAQA7); */
 	border-bottom: #888 1px solid;
 }
 .tablesorter thead .headerSortDown,
 .tablesorter thead .tablesorter-headerSortDown,
 .tablesorter thead .tablesorter-headerDesc {
-	background-image: url(data:image/gif;base64,R0lGODlhFQAEAIAAAP///////yH5BAEAAAEALAAAAAAVAAQAAAINjB+gC+jP2ptn0WskLQA7);
+/*	background-image: url(data:image/gif;base64,R0lGODlhFQAEAIAAAP///////yH5BAEAAAEALAAAAAAVAAQAAAINjB+gC+jP2ptn0WskLQA7); */
 	border-bottom: #888 1px solid;
 }
 

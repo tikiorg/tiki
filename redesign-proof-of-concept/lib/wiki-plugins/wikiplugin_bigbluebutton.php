@@ -86,6 +86,12 @@ function wikiplugin_bigbluebutton( $data, $params )
 		$perms = Perms::get('bigbluebutton', $meeting);
 
 		$params = array_merge(array('prefix' => ''), $params);
+		// This is incomplete, will only apply if the dynamic feature is enabled. To be completed.
+		$params['configuration'] = array(
+			'presentation' => array(
+				'active' => false,
+			),
+		);
 		$smarty->assign('bbb_params', Tiki_Security::get()->encode($params));
 
 		if ( ! $bigbluebuttonlib->roomExists($meeting) ) {

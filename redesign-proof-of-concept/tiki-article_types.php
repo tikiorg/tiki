@@ -83,7 +83,7 @@ if ($prefs["article_custom_attributes"] == 'y') {
 		$artlib->delete_article_type_attribute($_REQUEST["att_type"], $_REQUEST["att_remove"]);
 	}
 	foreach ($types as &$t) {
-		$t["attributes"] = $artlib->get_article_type_attributes($t["type"]);
+		$t["attributes"] = $artlib->get_article_type_attributes($t["type"], 'relationId ASC');
 	}
 }
 

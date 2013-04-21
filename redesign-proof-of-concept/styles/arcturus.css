@@ -305,6 +305,10 @@ input[type="submit"]:hover {
 	background: #ded6c6;
 }
 
+#col2 .box-data .cssmenu_vert ul {
+	padding-left: 0;
+}
+
 /* next two, dropdown background and border */
 .cssmenu_horiz li ul li,
 .cssmenu_vert li ul li {

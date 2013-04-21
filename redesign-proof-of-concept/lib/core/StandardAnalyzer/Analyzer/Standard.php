@@ -74,8 +74,13 @@ abstract class StandardAnalyzer_Analyzer_Standard extends Zend_Search_Lucene_Ana
         }
 
 		// convert input into ascii
-		$this->_input = iconv($this->_encoding, 'ASCII//TRANSLIT', $this->_input);
-		$this->_encoding = 'ASCII';
+		$from = 'àáâãäçèéêëìíîïñòóôõöùúûüýÿÀÁÂÃÄÇÈÉÊËÌÍÎÏÑÒÓÔÕÖÙÚÛÜÝ';
+		$to = 'aaaaaceeeeiiiinooooouuuuyyAAAAACEEEEIIIINOOOOOUUUUY';
+		$mb_str_split = function ($str) {
+			return preg_split('~~u', $str, null, PREG_SPLIT_NO_EMPTY);
+		};
+		$this->_input = str_replace($mb_str_split($from), str_split($to), $this->_input);
+		$this->_encoding = 'UTF-8';
     }
 
     /**

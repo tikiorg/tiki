@@ -356,26 +356,24 @@ body.fixed_width .fixedwidth .fixedwidth {
 	padding-top: 8px;
 }
 
-
-.box-search form .ac_input,
-.box-search form input[type=text] {
-	border: none;
-	background: none;
-}
-
 .box-search form {
 	padding-top: 8px;
 	margin-right: 8px;
 	font-size: 12px;
-	white-space: nowrap;
 }
 
 .box-search ul.cssmenu * {
 	width: 40px;
 }
 
-.box-search .findtitle input,
-.box-search input#search_mod_input_1 {
+#top_modules .box-search form .ac_input,
+#top_modules .box-search form input[type=text],
+#topbar_modules .box-search form .ac_input,
+#topbar_modules .box-search form input[type=text],
+#top_modules .box-search .findtitle input,
+#top_modules .box-search input#search_mod_input_1,
+#topbar_modules .box-search .findtitle input,
+#topbar_modules .box-search input#search_mod_input_1 {
 	border: none;
 	background: none;
 }
@@ -406,6 +404,10 @@ input[name="search"] {
 
 #siteloginbar a {
 	color: #FFFFFF;
+}
+
+.siteloginbar_popup .tabmark:hover a {
+	background: none;
 }
 
 #sitelocbar {
@@ -551,12 +553,16 @@ small.date {
 
 .box-data .cssmenu_vert {
 	position: relative;
-	z-index: 700;
+	z-index: 70;
+}
+
+#col2 .box-data .cssmenu_vert ul {
+	padding-left: 0;
 }
 
 .cssmenu_vert li.menuLevel1,
 .cssmenu_horiz li.menuLevel1 {
-        z-index: 991;
+        z-index: 91;
 }
 
 .cssmenu_horiz ul li {
@@ -971,7 +977,6 @@ li.tabmark ul li a {
 }
 
 .tabcontent {
-	z-index: 200;
 	border: 1px solid #abcdef;
 	padding: 26px 0 2px 0;
 	background: #fff;

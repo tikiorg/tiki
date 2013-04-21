@@ -262,7 +262,7 @@ ul.sf-shadow ul {background-image:none}
 	left:-13em !important;
 	padding: 0 8px 9px 0;
 	width: 13em !important;
-	background: url(../../lib/jquery/plugins/superfish/images/shadow.png) no-repeat bottom right;
+	background: url(../../img/superfish/shadow.png) no-repeat bottom right;
 }
 
 /***** MyTiki User Preferences *****/

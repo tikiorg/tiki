@@ -109,6 +109,10 @@ hr {
 	color: #000;
 }
 
+.button.highlight a:hover {
+	border: 1px solid #000;
+}
+
 select,
 input[type="text"],
 input[type="password"],
@@ -561,7 +565,7 @@ select {
 }
 
 .cssmenu_vert li ul li a .sf-sub-indicator {
-	background: url(../lib/jquery/plugins/superfish/images/arrows-ffffff.png);
+	background: url(../img/superfish/arrows-ffffff.png);
 }
 
 

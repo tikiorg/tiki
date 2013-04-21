@@ -36,7 +36,7 @@ class ModLib extends TikiLib
 		global $prefs;
 
 		if (! empty($prefs['module_zone_available_extra'])) {
-			foreach ((array) $prefs['module_zone_available_extra'] as $name) {
+			foreach (array_filter((array) $prefs['module_zone_available_extra']) as $name) {
 				$this->module_zones[$name] = $name . '_modules';
 			}
 		}

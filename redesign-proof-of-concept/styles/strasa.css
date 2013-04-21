@@ -716,7 +716,8 @@ a.flip:hover {
 	color: #000000;
 }
 
-#col2 .cssmenu_vert {
+#col2 .box-data .cssmenu_vert,
+#col2 .box-data .cssmenu_vert ul {
 	padding-left: 0;
 }
 

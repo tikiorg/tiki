@@ -24,6 +24,7 @@ class Search_Index_Lucene implements Search_Index_Interface
 				Zend_Search_Lucene_Search_QueryParser::setDefaultEncoding('UTF-8');
 		}
 
+		Zend_Search_Lucene_Storage_Directory_Filesystem::setDefaultFilePermissions(0660);
 		$this->directory = $directory;
 		$this->lastModif = file_exists($directory) ? filemtime($directory) : 0;
 
@@ -126,7 +127,7 @@ class Search_Index_Lucene implements Search_Index_Interface
 
 	private function internalFind(& $query, $sortOrder)
 	{
-		if ($this->cache) {
+		if (false && $this->cache) {
 			$args = func_get_args();
 			$cacheKey = serialize($args);
 
@@ -251,12 +252,20 @@ class Search_Index_Lucene implements Search_Index_Interface
 	private function buildQuery($expr)
 	{
 		$query = (string) $expr->walk(array($this, 'walkCallback'));
+
+		// FIX : Depending on the locale, decimals may be rendered as 1,2 instead of 1.2, causing lucene to go crazy
+		$query = preg_replace('/\^(\d+),(\d+)/', '^$1.$2', $query);
 		return Zend_Search_Lucene_Search_QueryParser::parse($query, 'UTF-8');
 	}
 
 	function walkCallback($node, $childNodes)
 	{
 		$term = null;
+
+		if ($node instanceof Search_Expr_Initial) {
+			$initial = $node->getContent();
+			$node = new Search_Expr_Range($initial, substr($initial, 0, -1) . chr(ord(substr($initial, -1)) + 1), $node->getType(), $node->getField());
+		}
 
 		if ($node instanceof Search_Expr_And) {
 			$term = $this->buildCondition($childNodes, true);

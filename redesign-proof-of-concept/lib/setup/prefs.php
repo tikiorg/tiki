@@ -340,7 +340,8 @@ function initialize_prefs()
 {
 	global $prefs, $user_overrider_prefs, $in_installer, $section, $systemConfiguration;
 
-	if (!empty($in_installer)) {
+
+	if (defined('TIKI_IN_INSTALLER') || defined('TIKI_IN_TEST')) {
 		$prefs = get_default_prefs();
 		return;
 	}

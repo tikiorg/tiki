@@ -60,3 +60,5 @@ if ( !empty($custom_css)) {
 	$headerlib->add_cssfile($custom_css, 53);
 }
 
+$smarty->initializePaths();
+

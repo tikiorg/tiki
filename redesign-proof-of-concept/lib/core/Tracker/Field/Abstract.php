@@ -34,10 +34,10 @@ abstract class Tracker_Field_Abstract implements Tracker_Field_Interface, Tracke
 			$query = array_merge(
 				$_GET,
 				array(
-					'itemId' => $itemId,
 					'show' => 'view',
 				)
 			);
+			unset($query['trackerId']);
 
 
 			$classList = array('tablename');
@@ -45,7 +45,7 @@ abstract class Tracker_Field_Abstract implements Tracker_Field_Interface, Tracke
 
 			require_once ('lib/smarty_tiki/modifier.sefurl.php');
 			$href = smarty_modifier_sefurl($itemId, 'trackeritem');
-			$href = strpos($href, '?') === false ? $href . '?' : $href;
+			$href .= (strpos($href, '?') === false) ? '?' : '&';
 			$href .= http_build_query($query, '', '&');
 
 			$arguments = array(
@@ -236,6 +236,8 @@ abstract class Tracker_Field_Abstract implements Tracker_Field_Interface, Tracke
 			$value = $this->itemData[$key];
 		} else if (isset($this->definition['value'])) {
 			$value = $this->definition['value'];
+		} else if (isset($this->itemData['fields'][$this->getConfiguration('permName')])) {
+			$value = $this->itemData['fields'][$this->getConfiguration('permName')];
 		} else {
 			$value = null;
 		}

@@ -598,7 +598,10 @@ if (isset($_REQUEST['save']) && empty($errors)) {
 	@$artlib->delete_image_cache('preview', $previewId);
 
 	include_once('tiki-sefurl.php');
-	header('location: '.	filter_out_sefurl("tiki-read_article.php?articleId=$artid", 'article', $_REQUEST['title']));
+	$smarty->loadPlugin('smarty_modifier_sefurl');
+	$url = smarty_modifier_sefurl($artid, 'article');
+	header('location: '.$url);
+	exit;
 }
 $smarty->assign_by_ref('errors', $errors);
 

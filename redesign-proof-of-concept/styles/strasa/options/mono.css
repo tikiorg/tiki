@@ -324,11 +324,11 @@ a.flip:hover {
 }
 
 .header .cssmenu_horiz li a .sf-sub-indicator {
-	background: url(../../../lib/jquery/plugins/superfish/images/arrows-ffffff.png) no-repeat -10px -100px;
+	background: url(../../../img/superfish/arrows-ffffff.png) no-repeat -10px -100px;
 }
 
 .header .cssmenu_horiz li ul li a .sf-sub-indicator {
-	background: url(../../../lib/jquery/plugins/superfish/images/arrows-ffffff.png) no-repeat 0 0;
+	background: url(../../../img/superfish/arrows-ffffff.png) no-repeat 0 0;
 }
 
 /** Links in other menus **/

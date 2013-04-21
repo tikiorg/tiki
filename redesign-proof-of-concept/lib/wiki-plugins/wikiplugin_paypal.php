@@ -326,13 +326,16 @@ function wikiplugin_paypal($data, $params) {
 		$returnUrl = $base_uri;
 	}
 	if (strpos($returnUrl, 'tiki-ajax_services.php') !== false ||
-		$_REQUEST['controller'] === 'search_customsearch') {
+			(isset($_REQUEST['controller']) && $_REQUEST['controller'] === 'search_customsearch')) {
+
 		$csearchEvent = 'pageSearchReady';
 		if (!empty($_SERVER['HTTP_REFERER'])) {
 			$returnUrl = $_SERVER['HTTP_REFERER'];
 		}
+		$csearchInit = 'PAYPAL = {}; $("#PPMiniCart").fadeOut().remove();';
 	} else {
 		$csearchEvent = 'ready';
+		$csearchInit = '';
 	}
 	foreach (array('return', 'shopping_url', 'cancel_return') as $ret) {
 		if (empty($params[$ret])) {
@@ -343,7 +346,7 @@ function wikiplugin_paypal($data, $params) {
 	}
 
 	// just add javascript?
-	$jsfile = 'lib/jquery/minicart/minicart' . ($prefs['tiki_minify_javascript'] === 'y' ? '.min' : '') . '.js';
+	$jsfile = 'vendor/jquery/minicart/dist/minicart' . ($prefs['tiki_minify_javascript'] === 'y' ? '.min' : '') . '.js';
 	if ($params['minicart'] === 'y' && file_exists($jsfile)) {
 		// it appears currently if you set any of these all must be set
 		$miniParams = array('strings' => array());
@@ -356,16 +359,9 @@ function wikiplugin_paypal($data, $params) {
 
 		TikiLib::lib('header')->add_js('
 $(document).bind("' . $csearchEvent . '", function () {
-	var renderMinicart = function () { PAYPAL.apps.MiniCart.render(' . $miniParamStr . '); };
-	if (typeof PAYPAL === "undefined") {
-		$.getScript("' . $jsfile . '", function() {
-			renderMinicart();
+	' . $csearchInit . ' $.getScript("' . $jsfile . '", function() {
+			PAYPAL.apps.MiniCart.render(' . $miniParamStr . ');
 		});
-	} else {
-		PAYPAL.apps.MiniCart.isRendered = false;
-		PAYPAL.apps.MiniCart.minicart = {};
-		renderMinicart();
-	}
 });');
 	}
 	unset($params['minicart']);
@@ -374,7 +370,8 @@ $(document).bind("' . $csearchEvent . '", function () {
 	//$params['item_name'] = htmlentities($params['item_name']);	// FIXME encoding problems!
 
 	// all remaining non-empty params get turned into hidden form inputs
-	$smarty->assign_by_ref('wppaypal_hiddens', array_filter($params));
+	$params = array_filter($params);
+	$smarty->assign_by_ref('wppaypal_hiddens', $params);
 
 	return $smarty->fetch('wiki-plugins/wikiplugin_paypal.tpl');
 

@@ -627,6 +627,17 @@ function prefs_wiki_list($partial = false)
 			'type' => 'flag',
 			'default' => 'n',
 		),
+		'wiki_freetags_edit_position' => array(
+			'name' => tra('Choose position of freetags selection'),
+			'description' => tra('If you wish to place freetags selection more prominently than in the properties tab.'),
+			'type' => 'list',
+			'options' => array(
+				'properties' => tra('Properties tab'),
+				'edit' => tra('Edit tab'),
+				'freetagstab' => tra('Freetags tab'),
+			),
+			'default' => 'properties',
+		),
 		'wiki_structure_bar_position' => array(
 			'name' => tra('Structure navigation bar location'),
 			'description' => tra('Displays Next/Back buttons, breadcrumbs, and form to add a new page.'),

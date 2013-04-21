@@ -166,10 +166,6 @@ function wikiplugin_customsearch($data, $params)
 		$offset = (int) $_SESSION["customsearch_$id"]["offset"];
 	}
 
-	$groups = array();
-	$textrangegroups = array();
-	$daterangegroups = array();
-
 	$options = array(
 		'searchfadetext' => tr('Loading...'),
 		'searchfadediv' => $searchfadediv,
@@ -286,18 +282,15 @@ customsearch_$id = customsearch;
 		$function = "cs_design_{$name}";
 		if (function_exists($function)) {
 			if (isset($arguments['_group'])) {
-				$groups[$fieldid] = $arguments['_group'];
 				$fieldname = "customsearch_{$id}_gr" . $arguments['_group'];
 			} elseif (isset($arguments['_textrange'])) {
-				$textrangegroups[$fieldid] = $arguments['_textrange'];
 				$fieldname = "customsearch_{$id}_textrange" . $arguments['_textrange'];
 			} elseif (isset($arguments['_daterange'])) {
-				$daterangegroups[$fieldid] = $arguments['_daterange'];
 				$fieldname = "customsearch_{$id}_daterange" . $arguments['_daterange'];
 			} else {
 				$fieldname = $fieldid;
 			}
-			$match->replaceWith($function($id, $fieldname, $fieldid, $arguments, $default, $script, $groups));
+			$match->replaceWith($function($id, $fieldname, $fieldid, $arguments, $default, $script));
 		}
 	}
 
@@ -314,12 +307,10 @@ customsearch._load = function (receive) {
 		definition: this.definition,
 		adddata: $.toJSON(this.searchdata),
 		searchid: this.id,
-		groups: " . json_encode($groups) . ",
-		textrangegroups: " . json_encode($textrangegroups) . ",
-		daterangegroups: " . json_encode($daterangegroups) . ",
 		offset: customsearch.offset,
 		maxRecords: this.maxRecords,
-		page: " . json_encode($page) . "
+		page: " . json_encode($page) . ",
+		recalllastsearch: $recalllastsearch
 	};
 	if (customsearch.sort_mode) {
 		// blank sort_mode is not allowed by Tiki input filter
@@ -364,7 +355,7 @@ function cs_design_setbasic($element, $fieldid, $fieldname, $arguments)
 	}
 }
 
-function cs_design_input($id, $fieldname, $fieldid, $arguments, $default, &$script, &$groups)
+function cs_design_input($id, $fieldname, $fieldid, $arguments, $default, &$script)
 {
 	$document = new DOMDocument;
 	$element = $document->createElement('input');
@@ -419,7 +410,7 @@ function cs_design_input($id, $fieldname, $fieldid, $arguments, $default, &$scri
 	return $document->saveHTML();
 }
 
-function cs_design_categories($id, $fieldname, $fieldid, $arguments, $default, &$script, &$groups)
+function cs_design_categories($id, $fieldname, $fieldid, $arguments, $default, &$script)
 {
 	$document = new DOMDocument;
 	extract($arguments, EXTR_SKIP);
@@ -453,7 +444,6 @@ function cs_design_categories($id, $fieldname, $fieldid, $arguments, $default, &
 		foreach ($cats as $c) {
 			$categId = $c['categId'];
 			$fieldid = $orig_fieldid . "_cat$categId";
-			$groups[$fieldid] = $arguments['_group']; // add new "subfield" to groups list
 			$level = count($c['tepath']);
 			if ($level > $currentlevel) {
 				$ul{$level} = $document->createElement('ul');
@@ -548,7 +538,7 @@ $('#$fieldid').trigger('change');
 	return '~np~' . $document->saveHTML() . '~/np~';
 }
 
-function cs_design_select($id, $fieldname, $fieldid, $arguments, $default, &$script, &$groups)
+function cs_design_select($id, $fieldname, $fieldid, $arguments, $default, &$script)
 {
 	$document = new DOMDocument;
 	$element = $document->createElement('select');
@@ -609,7 +599,7 @@ $('#$fieldid').trigger('change');
 	return $document->saveHTML();
 }
 
-function cs_design_daterange($id, $fieldname, $fieldid, $arguments, $default, &$script, &$groups)
+function cs_design_daterange($id, $fieldname, $fieldid, $arguments, $default, &$script)
 {
 	extract($arguments, EXTR_SKIP);
 

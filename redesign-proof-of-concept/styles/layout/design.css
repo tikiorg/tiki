@@ -93,9 +93,6 @@ body.fixed_width .fixedwidth .fixedwidth {
 	padding-left: .5em;
 	text-decoration: none;
 }
-.cssmenu_vert .sf-sub-indicator {
-	top: 3px; /* the default arrow is 10px high, so 16px-10px/2 */
-}
 
 .iconmenu {
 	display: inline;
@@ -1952,6 +1949,25 @@ ul.freetagged li {
 /* Properties are in css/calendar.css,
 	which can be overridden
 	in theme stylesheets.  */
+	
+.viewmode { 
+	line-height: 1em;
+	padding: 1px;
+	text-align: center;
+	width: 100%;
+}
+
+.viewmode div { 
+	display: inline;
+}
+
+.box-data .calnavigation {
+	font-size: 1.1em;
+	font-weight: 700;
+	margin: -20px 0 0;
+	padding: 4px;
+	text-align: center;
+}
 
 /***** Admin *****/
 
@@ -2019,6 +2035,7 @@ ul.freetagged li {
 
 #cluetip {
 	display: none;
+	width: auto !important; /* FIXME: to be removed workaround until someone finds why cluetips render with width: 0 now after jQuery upgrade in trunk */
 }
 
 /* fake 'transparent' theme (for ClueTip login box popup) */
@@ -4319,6 +4336,15 @@ form.simple textarea.export {
 	margin-left: -.5em;
 	padding-right: 0 !important;
 	white-space: normal !important;
+}
+
+/* tiki-admin_toolbars.php toolbar icon alignment */
+
+a.cke_button span.cke_icon {
+    display: inline-block;
+    height: 16px;
+    width: 16px;
+    margin-top: -5px;
 }
 
 /* End of file */

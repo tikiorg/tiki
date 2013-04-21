@@ -180,15 +180,13 @@ class ThemeGenLib
 		$headerlib->add_cssfile('css/admin.css');
 
 		// set up colorpicker
-		$headerlib->add_cssfile('lib/jquery/plugins/colorpicker/css/colorpicker.css');
+		$headerlib->add_cssfile('vendor/jquery/plugins/colorpicker/css/colorpicker.css');
 		$headerlib->add_cssfile('lib/jquery_tiki/colorpicker/layout.css');
 
-		$headerlib->add_jsfile('lib/jquery/plugins/colorpicker/js/colorpicker.js');
+		$headerlib->add_jsfile('vendor/jquery/plugins/colorpicker/js/colorpicker.js');
 
-		// colour lib
-		$headerlib->add_jsfile('lib/jquery/jquery.color.js');
 		// units converter
-		$headerlib->add_jsfile('lib/jquery/plugins/pxem.jQuery.js');
+		$headerlib->add_jsfile('vendor/jquery/plugins/pxem/pxem.jQuery.js');
 
 		if (!empty($_COOKIE['themegen'])) {
 			if (strpos($_COOKIE['themegen'], 'state:open') !== false) {

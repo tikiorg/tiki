@@ -1447,12 +1447,22 @@ class TrackerLib extends TikiLib
 			}
 		}
 
+		$final = array();
+
 		foreach ($ins_fields["data"] as $i => $array) {
 			// Old values were prefilled at the begining of the function and only replaced at the end of the iteration
 			$fieldId = $array['fieldId'];
 			$old_value = isset($fil[$fieldId]) ? $fil[$fieldId] : null;
 
 			$handler = $this->get_field_handler($array, array_merge($item_info, $fil));
+
+			if (method_exists($handler, 'handleFinalSave')) {
+				$final[] = array(
+					'field' => $array,
+					'handler' => $handler,
+				);
+				continue;
+			}
 
 			if (method_exists($handler, 'handleSave')) {
 				$array = array_merge($array, $handler->handleSave($array['value'], $old_value));
@@ -1535,6 +1545,21 @@ class TrackerLib extends TikiLib
 				}
 
 				$fil[$fieldId] = $value;
+			}
+		}
+
+		if (count($final)) {
+			$data = array();
+			foreach ($fil as $fieldId => $value) {
+				$field = $tracker_definition->getField($fieldId);
+				$permName = $field['permName'];
+
+				$data[$permName] = $value;
+			}
+
+			foreach ($final as $job) {
+				$value = $job['handler']->handleFinalSave($data);
+				$this->modify_field($currentItemId, $job['field']['fieldId'], $value);
 			}
 		}
 
@@ -2612,6 +2637,32 @@ class TrackerLib extends TikiLib
 		return true;
 	}
 
+	/**
+	 * get_trackers_containing
+	 *
+	 * \brief Get tracker names containing ... (useful for auto-complete)
+	 * 
+	 * @author luci
+	 * @param mixed $name
+	 * @access public
+	 * @return
+	 */
+	function get_trackers_containing($name)
+	{
+		if (empty($name)) {
+			return array();
+		}
+		//FIXME: perm filter ?
+		$result = $this->fetchAll(
+			'SELECT `name` FROM `tiki_trackers` WHERE `name` LIKE ?',
+			array($name . '%'),10);
+		$names = array();
+		foreach ( $result as $row ) {
+			$names[] = $row['name'];
+		}
+		return $names;
+	}
+	
 	/**
 	 * Returns the trackerId of the tracker possessing the item ($itemId)
 	 */

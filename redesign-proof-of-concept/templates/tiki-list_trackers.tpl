@@ -15,7 +15,7 @@
 {tab name="{tr}Trackers{/tr}"}
 <a name="view"></a>
 	{if ($trackers) or ($find)}
-		{include file='find.tpl' filters=''}
+		{include autocomplete='trackername' file='find.tpl' filters=''}
 		{if ($find) and ($trackers)}
 			<p>{tr}Found{/tr} {$trackers|@count} {tr}trackers:{/tr}</p>
 		{/if}
@@ -308,6 +308,4 @@
 		return false;
 	});
 {/jq}
-
-{/block}
 

@@ -79,7 +79,7 @@ if (!$skip) {
 		$access->display_error(NULL, tra('File has been deleted'), 404);
 	}
 
-	if ( $prefs['auth_tokens'] == 'n' || !$is_token_access ) {
+	if ( $prefs['auth_token_access'] != 'y' || !$is_token_access ) {
 		// Check permissions except if the user comes with a valid Token
 
 		if ( !$zip && $tiki_p_admin_file_galleries != 'y' && !$userlib->user_has_perm_on_object($user, $info['galleryId'], 'file gallery', 'tiki_p_download_files') && !($info['backlinkPerms'] == 'y' && !$filegallib->hasOnlyPrivateBacklinks($info['fileId']))) {
@@ -93,7 +93,7 @@ if (!$skip) {
 				$access->display_error('', tra('Permission denied'), 401);
 			}
 		}
-		if ($prefs['feature_use_fgal_for_user_files'] === 'y' && $tiki_p_admin_file_galleries !== 'y') {
+		if ($prefs['feature_use_fgal_for_user_files'] === 'y' && $tiki_p_admin_file_galleries !== 'y' && $prefs['userfiles_private'] === 'y') {
 			$gal_info = $filegallib->get_file_gallery_info($info['galleryId']);
 			if ($gal_info['type'] === 'user' && $gal_info['visible'] !== 'y' && $gal_info['user'] !== $user ) {
 				$access->display_error('', tra('Permission denied'), 401);
@@ -143,7 +143,9 @@ if ( ! isset($_GET['thumbnail']) && ! isset($_GET['icon']) ) {
 
 session_write_close(); // close the session in case of large downloads to enable further browsing
 error_reporting(E_ALL);
-if ( ob_get_level() ) while (@ob_end_clean()); // Be sure output buffering is turned off
+while (ob_get_level()) {
+	ob_end_clean();
+}// Be sure output buffering is turned off
 
 $content_changed = false;
 $content = &$info['data'];

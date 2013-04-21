@@ -401,7 +401,7 @@ class PreferencesLib
 	private function getFileData( $file, $partial = false )
 	{
 		if ( ! isset( $this->files[$file] ) ) {
-   		$inc_file = "lib/prefs/{$file}.php";
+   		$inc_file = __DIR__ . "/prefs/{$file}.php";
 			if (file_exists($inc_file)) {
 				require_once $inc_file;
 				$function = "prefs_{$file}_list";
@@ -470,16 +470,14 @@ class PreferencesLib
 			}
 		}
 
-		$index->optimize();
 		return $index;
 	}
 
 	private function getIndex()
 	{
 		global $prefs;
-		if ( $prefs['language'] == 'en' ) {
-			Zend_Search_Lucene_Analysis_Analyzer::setDefault(new StandardAnalyzer_Analyzer_Standard_English());
-		}
+		Zend_Search_Lucene_Storage_Directory_Filesystem::setDefaultFilePermissions(0660);
+		Zend_Search_Lucene_Analysis_Analyzer::setDefault(new StandardAnalyzer_Analyzer_Standard_English());
 
 		if ( $this->indexNeedsRebuilding()) {
 			return $this->rebuildIndex();
@@ -738,8 +736,8 @@ class PreferencesLib
 	private function getAvailableFiles()
 	{
 		$files = array();
-		foreach ( glob('lib/prefs/*.php') as $file ) {
-			if ($file === "lib/prefs/index.php")
+		foreach ( glob(__DIR__ . '/prefs/*.php') as $file ) {
+			if (basename($file) === "index.php")
 				continue;
 			$files[] = substr(basename($file), 0, -4);
 		}

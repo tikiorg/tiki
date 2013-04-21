@@ -53,5 +53,10 @@ class Search_Expr_Or implements Search_Expr_Interface
 
 		return call_user_func($callback, $this, $results);
 	}
+
+	function traverse($callback)
+	{
+		return call_user_func($callback, $callback, $this, $this->parts);
+	}
 }
 

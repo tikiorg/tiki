@@ -50,6 +50,7 @@ if (jqueryTiki.no_cookie) {
 {if $prefs.feature_jquery_tooltips eq 'y'}
 	{assign var="closeText" value="{tr}Close{/tr}"}
 	{jq}
+if (jqueryTiki.tooltips) {
 	$('.login_link').cluetip({
 		activation: 'click',
 		arrows: false,
@@ -75,6 +76,7 @@ if (jqueryTiki.no_cookie) {
 			})
 		}
 	});
+}
 	{/jq}
 {/if}
 {if !isset($tpl_module_title)}{assign var=tpl_module_title value="{tr}Log in{/tr}"}{/if}{* Left for performance, since tiki-login_scr.php includes this template directly. *}

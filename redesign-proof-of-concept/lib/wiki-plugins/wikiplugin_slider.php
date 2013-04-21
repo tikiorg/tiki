@@ -321,16 +321,16 @@ function wikiplugin_slider($data, $params)
 	global $tikilib, $headerlib;
 	extract($params, EXTR_SKIP);
 
-	$headerlib->add_jsfile('lib/jquery/plugins/anythingslider/js/swfobject.js');
-	$headerlib->add_jsfile('lib/jquery/plugins/anythingslider/js/jquery.anythingslider.js');
-	$headerlib->add_jsfile('lib/jquery/plugins/anythingslider/js/jquery.anythingslider.fx.js');
-	$headerlib->add_jsfile('lib/jquery/plugins/anythingslider/js/jquery.anythingslider.video.js');
-	$headerlib->add_cssfile('lib/jquery/plugins/anythingslider/css/anythingslider.css');
-	$headerlib->add_cssfile('lib/jquery/plugins/anythingslider/css/theme-construction.css');
-	$headerlib->add_cssfile('lib/jquery/plugins/anythingslider/css/theme-cs-portfolio.css');
-	$headerlib->add_cssfile('lib/jquery/plugins/anythingslider/css/theme-metallic.css');
-	$headerlib->add_cssfile('lib/jquery/plugins/anythingslider/css/theme-minimalist-round.css');
-	$headerlib->add_cssfile('lib/jquery/plugins/anythingslider/css/theme-minimalist-square.css');
+	$headerlib->add_jsfile('vendor/jquery/plugins/anythingslider/js/swfobject.js');
+	$headerlib->add_jsfile('vendor/jquery/plugins/anythingslider/js/jquery.anythingslider.js');
+	$headerlib->add_jsfile('vendor/jquery/plugins/anythingslider/js/jquery.anythingslider.fx.js');
+	$headerlib->add_jsfile('vendor/jquery/plugins/anythingslider/js/jquery.anythingslider.video.js');
+	$headerlib->add_cssfile('vendor/jquery/plugins/anythingslider/css/anythingslider.css');
+	$headerlib->add_cssfile('vendor/jquery/plugins/anythingslider/css/theme-construction.css');
+	$headerlib->add_cssfile('vendor/jquery/plugins/anythingslider/css/theme-cs-portfolio.css');
+	$headerlib->add_cssfile('vendor/jquery/plugins/anythingslider/css/theme-metallic.css');
+	$headerlib->add_cssfile('vendor/jquery/plugins/anythingslider/css/theme-minimalist-round.css');
+	$headerlib->add_cssfile('vendor/jquery/plugins/anythingslider/css/theme-minimalist-square.css');
 
 	if (isset($theme) && !empty($theme)) {
 		switch (strtolower($theme)) {

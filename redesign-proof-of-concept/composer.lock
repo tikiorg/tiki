@@ -1,6 +1,21 @@
 {
-    "hash": "c0aa9b4b2c939a83a075ecb6cbb828b0",
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
+    ],
+    "hash": "56a655d13b4585adb3e64f7eb342d7f7",
     "packages": [
+        {
+            "name": "aFarkas/html5shiv",
+            "version": "3.6.2",
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/aFarkas/html5shiv/archive/3.6.2.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "library"
+        },
         {
             "name": "adodb/adodb",
             "version": "5.18",
@@ -53,7 +68,7 @@
                     "ZendX_": "extras/library/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "notification-url": "http://packagist.org/downloads/",
             "include-path": [
                 "library/",
                 "extras/library/"
@@ -68,6 +83,39 @@
                 "framework"
             ],
             "time": "2013-03-13 17:09:28"
+        },
+        {
+            "name": "ckeditor/ckeditor",
+            "version": "4.1",
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/ckeditor/ckeditor-releases/archive/4.1.x/full.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "library"
+        },
+        {
+            "name": "ckeditor/ckeditor/skins/kama",
+            "version": "4.1",
+            "dist": {
+                "type": "zip",
+                "url": "http://download.ckeditor.com/kama/releases/kama_4.1.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "library"
+        },
+        {
+            "name": "codemirror/codemirror",
+            "version": "2.25",
+            "dist": {
+                "type": "zip",
+                "url": "http://codemirror.net/codemirror-2.25.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "library"
         },
         {
             "name": "ezyang/htmlpurifier",
@@ -95,7 +143,7 @@
                     "library/HTMLPurifier.composer.php"
                 ]
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "notification-url": "http://packagist.org/downloads/",
             "license": [
                 "LGPL"
             ],
@@ -114,95 +162,441 @@
             "time": "2013-02-18 00:04:08"
         },
         {
-            "name": "kriswallsmith/assetic",
-            "version": "v1.0.4",
-            "source": {
-                "type": "git",
-                "url": "http://github.com/kriswallsmith/assetic.git",
-                "reference": "v1.0.4"
-            },
+            "name": "jarnokurlin/fullcalendar",
+            "version": "1.5.2",
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/kriswallsmith/assetic/zipball/v1.0.4",
-                "reference": "v1.0.4",
-                "shasum": ""
+                "url": "http://tux.fi/~jarnok/fullcalendar-resourceviews/fullcalendar-resourceviews-1.5.3.4.zip",
+                "reference": null,
+                "shasum": null
             },
-            "require": {
-                "php": ">=5.3.1"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "Assetic": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Kris Wallsmith",
-                    "email": "kris.wallsmith@gmail.com",
-                    "homepage": "http://kriswallsmith.net/"
-                }
-            ],
-            "description": "Asset Management for PHP",
-            "homepage": "https://github.com/kriswallsmith/assetic",
-            "keywords": [
-                "assets",
-                "compression",
-                "minification"
-            ],
-            "time": "2012-08-28 05:18:28"
+            "type": "library"
         },
         {
-            "name": "leafo/lessphp",
-            "version": "v0.3.9",
+            "name": "jcapture-applet/jcapture-applet",
+            "version": "dev-trunk",
             "source": {
-                "type": "git",
-                "url": "https://github.com/leafo/lessphp.git",
-                "reference": "v0.3.9"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/leafo/lessphp/zipball/v0.3.9",
-                "reference": "v0.3.9",
-                "shasum": ""
+                "type": "svn",
+                "url": "http://svn.code.sf.net/p/jcapture-applet/code",
+                "reference": "/trunk/@46"
             },
             "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "0.3-dev"
-                }
-            },
-            "autoload": {
-                "classmap": [
-                    "lessc.inc.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "MIT",
-                "GPL-3.0"
+                "LGPL"
             ],
             "authors": [
                 {
-                    "name": "Leaf Corcoran",
-                    "email": "leafot@gmail.com",
-                    "homepage": "http://leafo.net"
+                    "name": "Pavel Vlasov",
+                    "homepage": "http://www.hammurapi.com/"
+                },
+                {
+                    "name": "Jonny Bradley",
+                    "homepage": "http://tiki.org/UserPageJonnyBradley"
+                },
+                {
+                    "name": "Marc Laporte",
+                    "homepage": "http://marclaporte.com"
                 }
             ],
-            "description": "lessphp is a compiler for LESS written in PHP.",
-            "homepage": "http://leafo.net/lessphp/",
-            "time": "2013-03-02 16:13:31"
+            "description": "jCapture is an applet to capture screenshots or record audio/screen",
+            "homepage": "http://sourceforge.net/p/jcapture-applet/",
+            "keywords": [
+                "applet",
+                "java",
+                "screencapture",
+                "screenshot"
+            ],
+            "time": "2013-04-17 19:48:36"
+        },
+        {
+            "name": "jquery/jquery",
+            "version": "1.9.1",
+            "dist": {
+                "type": "file",
+                "url": "http://code.jquery.com/jquery-1.9.1.js",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "library"
+        },
+        {
+            "name": "jquery/jquery-min",
+            "version": "1.9.1",
+            "dist": {
+                "type": "file",
+                "url": "http://code.jquery.com/jquery-1.9.1.min.js",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "library"
+        },
+        {
+            "name": "jquery/jquery-mobile",
+            "version": "1.3.1",
+            "dist": {
+                "type": "zip",
+                "url": "http://code.jquery.com/mobile/1.3.1/jquery.mobile-1.3.1.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "library"
+        },
+        {
+            "name": "jquery/jquery-s5",
+            "version": "dev-trunk",
+            "source": {
+                "type": "svn",
+                "url": "http://jquerys5.googlecode.com/svn",
+                "reference": "/trunk/@65"
+            },
+            "type": "library",
+            "license": [
+                "LGPL"
+            ],
+            "authors": [
+                {
+                    "name": "Robert Plummer",
+                    "homepage": "http://visop-dev.com/"
+                },
+                {
+                    "name": "Marc Laporte",
+                    "homepage": "http://marclaporte.com"
+                }
+            ],
+            "description": "jQuery's s5 implementation. Used to create sideshows in web browsers",
+            "homepage": "http://code.google.com/p/jquerys5/",
+            "keywords": [
+                "javascript",
+                "s5",
+                "slideshow"
+            ],
+            "time": "2013-04-18 13:40:40"
+        },
+        {
+            "name": "jquery/jquery-sheet",
+            "version": "2.0.1",
+            "dist": {
+                "type": "zip",
+                "url": "http://jquerysheet.googlecode.com/files/jquery.sheet-2.0.1.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "library"
+        },
+        {
+            "name": "jquery/jquery-timepicker-addon",
+            "version": "1.2.2",
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/trentrichardson/jQuery-Timepicker-Addon/archive/v1.2.2.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "library"
+        },
+        {
+            "name": "jquery/jquery-ui",
+            "version": "1.10.2",
+            "dist": {
+                "type": "zip",
+                "url": "http://jqueryui.com/resources/download/jquery-ui-1.10.2.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "library"
+        },
+        {
+            "name": "jquery/jquery-ui-selectmenu",
+            "version": "1.3.999",
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/fnagel/jquery-ui/archive/selectmenu.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "library"
+        },
+        {
+            "name": "jquery/jquery-ui-themes",
+            "version": "1.10.2",
+            "dist": {
+                "type": "zip",
+                "url": "http://jqueryui.com/resources/download/jquery-ui-themes-1.10.2.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "library"
+        },
+        {
+            "name": "jquery/jtrack",
+            "version": "1.0",
+            "dist": {
+                "type": "zip",
+                "url": "http://jtrack.googlecode.com/files/jtrack-1.0.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "library"
+        },
+        {
+            "name": "jquery/md5",
+            "version": "1.0",
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/blueimp/JavaScript-MD5/archive/master.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "library"
+        },
+        {
+            "name": "jquery/minicart",
+            "version": "2.6",
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/jeffharrell/MiniCart/archive/2.6.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "library"
+        },
+        {
+            "name": "jquery/photoswipe",
+            "version": "3.0.5",
+            "dist": {
+                "type": "zip",
+                "url": "http://github.com/downloads/codecomputerlove/PhotoSwipe/code.photoswipe-3.0.5.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "library"
+        },
+        {
+            "name": "jquery/plugins/anythingslider",
+            "version": "1.8.18",
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/CSS-Tricks/AnythingSlider/archive/v1.8.18.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "library"
+        },
+        {
+            "name": "jquery/plugins/async",
+            "version": "1.0",
+            "dist": {
+                "type": "file",
+                "url": "http://mess.genezys.net/jquery/jquery.async.js",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "library"
+        },
+        {
+            "name": "jquery/plugins/brosho",
+            "version": "0.1",
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/downloads/mustardamus/brosho-plugin/brosho-0.1.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "library"
+        },
+        {
+            "name": "jquery/plugins/cluetip",
+            "version": "1.2.8",
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/kswedberg/jquery-cluetip/archive/1.2.8.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "library"
+        },
+        {
+            "name": "jquery/plugins/colorbox",
+            "version": "1.4.14",
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/jackmoore/colorbox/archive/1.4.14.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "library"
+        },
+        {
+            "name": "jquery/plugins/colorpicker",
+            "version": "0.5",
+            "dist": {
+                "type": "zip",
+                "url": "http://www.eyecon.ro/colorpicker/colorpicker.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "library"
+        },
+        {
+            "name": "jquery/plugins/form",
+            "version": "3.25.0",
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/malsup/form/archive/3.25.0-2013.01.18.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "library"
+        },
+        {
+            "name": "jquery/plugins/galleriffic",
+            "version": "2.0.1",
+            "dist": {
+                "type": "zip",
+                "url": "http://www.twospy.com/galleriffic/galleriffic-2.0.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "library"
+        },
+        {
+            "name": "jquery/plugins/infinitecarousel",
+            "version": "3.0.3",
+            "dist": {
+                "type": "zip",
+                "url": "http://www.catchmyfame.com/jquery/jquery.infinitecarousel3.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "library"
+        },
+        {
+            "name": "jquery/plugins/jquery-json",
+            "version": "2.4",
+            "dist": {
+                "type": "file",
+                "url": "http://jquery-json.googlecode.com/files/jquery.json-2.4.js",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "library"
+        },
+        {
+            "name": "jquery/plugins/jquery-validation",
+            "version": "1.11.1",
+            "dist": {
+                "type": "zip",
+                "url": "http://jquery.bassistance.de/validate/jquery-validation-1.11.1.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "library"
+        },
+        {
+            "name": "jquery/plugins/media",
+            "version": "0.98",
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/malsup/media/archive/master.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "library"
+        },
+        {
+            "name": "jquery/plugins/migrate",
+            "version": "1.1.1",
+            "dist": {
+                "type": "file",
+                "url": "http://code.jquery.com/jquery-migrate-1.1.1.js",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "library"
+        },
+        {
+            "name": "jquery/plugins/nestedsortable",
+            "version": "1.3.4",
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/mjsarfatti/nestedSortable/archive/v1.3.4.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "library"
+        },
+        {
+            "name": "jquery/plugins/pxem",
+            "version": "0.1",
+            "dist": {
+                "type": "file",
+                "url": "http://jquery-ui.googlecode.com/svn-history/r2618/branches/labs/projects/pxem/pxem.jQuery.js",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "library"
+        },
+        {
+            "name": "jquery/plugins/reflection-jquery",
+            "version": "1.1",
+            "dist": {
+                "type": "zip",
+                "url": "http://www.digitalia.be/file_download/14/reflection-jquery.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "library"
+        },
+        {
+            "name": "jquery/plugins/sparkline",
+            "version": "2.1.1",
+            "dist": {
+                "type": "file",
+                "url": "http://omnipotent.net/jquery.sparkline/2.1.1/jquery.sparkline.min.js",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "library"
+        },
+        {
+            "name": "jquery/plugins/superfish",
+            "version": "1.7.2",
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/joeldbirch/superfish/archive/1.7.2.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "library"
+        },
+        {
+            "name": "jquery/plugins/tablesorter",
+            "version": "2.9.1",
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/Mottie/tablesorter/archive/v2.9.1.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "library"
+        },
+        {
+            "name": "jquery/plugins/treetable",
+            "version": "3.0.1",
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/ludo/jquery-treetable/archive/3.0.1.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "library"
         },
         {
             "name": "phpcas/phpcas",
-            "version": "1.3.1",
+            "version": "1.3.2",
             "dist": {
                 "type": "tar",
-                "url": "http://downloads.jasig.org/cas-clients/php/1.3.1/CAS-1.3.1.tgz",
+                "url": "http://downloads.jasig.org/cas-clients/php/1.3.2/CAS-1.3.2.tgz",
                 "reference": null,
                 "shasum": null
             },
@@ -275,6 +669,28 @@
             "time": "2012-11-20 03:10:22"
         },
         {
+            "name": "rangy/rangy",
+            "version": "1.2.3",
+            "dist": {
+                "type": "tar",
+                "url": "http://rangy.googlecode.com/files/rangy-1.2.3.tar.gz",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "library"
+        },
+        {
+            "name": "simile_timeline/simile_timeline",
+            "version": "2.3.0",
+            "dist": {
+                "type": "zip",
+                "url": "http://simile-widgets.googlecode.com/files/timeline_libraries_v2.3.0.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "library"
+        },
+        {
             "name": "smarty/smarty",
             "version": "v3.1.13",
             "source": {
@@ -318,6 +734,17 @@
             "time": "2013-01-26 12:03:52"
         },
         {
+            "name": "svg-edit/svg-edit",
+            "version": "2.6",
+            "dist": {
+                "type": "zip",
+                "url": "http://svg-edit.googlecode.com/files/svg-edit-2.6.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "library"
+        },
+        {
             "name": "symfony/console",
             "version": "v2.2.0",
             "target-dir": "Symfony/Component/Console",
@@ -346,7 +773,7 @@
                     "Symfony\\Component\\Console\\": ""
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "notification-url": "http://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -363,17 +790,6 @@
             "description": "Symfony Console Component",
             "homepage": "http://symfony.com",
             "time": "2013-03-01 06:43:14"
-        },
-        {
-            "name": "twitter/bootstrap",
-            "version": "2.3.1",
-            "dist": {
-                "type": "zip",
-                "url": "http://twitter.github.com/bootstrap/assets/bootstrap.zip",
-                "reference": null,
-                "shasum": null
-            },
-            "type": "library"
         },
         {
             "name": "zetacomponents/base",
@@ -496,14 +912,46 @@
             "time": "2009-11-09 05:34:07"
         }
     ],
-    "packages-dev": null,
+    "packages-dev": [
+        {
+            "name": "mikey179/vfsStream",
+            "version": "v1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mikey179/vfsStream",
+                "reference": "v1.1.0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/mikey179/vfsStream/zipball/v1.1.0",
+                "reference": "v1.1.0",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "org\\bovigo\\vfs": "src/main/php"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD"
+            ],
+            "homepage": "http://vfs.bovigo.org/",
+            "time": "2012-08-25 05:49:29"
+        }
+    ],
     "aliases": [
 
     ],
     "minimum-stability": "stable",
-    "stability-flags": [
-
-    ],
+    "stability-flags": {
+        "jcapture-applet/jcapture-applet": 20,
+        "jquery/jquery-s5": 20
+    },
     "platform": [
 
     ],

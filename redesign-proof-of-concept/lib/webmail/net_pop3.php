@@ -39,8 +39,6 @@
 // | Co-Author: Damian Fernandez Sosa <damlists@cnba.uba.ar>               |
 // +-----------------------------------------------------------------------+
 
-require_once('lib/pear/Net/Socket.php');
-
 /**
  *  +----------------------------- IMPORTANT ------------------------------+
  *  | Usage of this class compared to native php extensions such as IMAP   |
@@ -183,7 +181,6 @@ class Net_POP3
 
 	function _raiseError($msg, $code =-1)
 	{
-		include_once 'lib/pear/PEAR.php';
 		return PEAR::raiseError($msg, $code);
 	}
 

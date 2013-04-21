@@ -898,7 +898,7 @@ if ( !isset($_REQUEST['preview']) && !isset($_REQUEST['save']) ) {
 		}
 		$info['wysiwyg'] = true;
 	} elseif ($_SESSION['wysiwyg'] === 'y') {
-		if ($prefs['wysiwyg_htmltowiki'] === 'y') {
+		if (empty($info['is_html'])) {
 			if ($edit_data == 'ajax error') {
 				unset($_REQUEST['save']);	// don't save an ajax error
 			}

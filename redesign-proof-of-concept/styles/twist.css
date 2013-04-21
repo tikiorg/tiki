@@ -398,6 +398,10 @@ button[type="submit"]:hover {
 }
 	
 /* left column width */
+#col2 .box-data .cssmenu_vert ul {
+	padding-left: 0;
+}
+
 #col2 .cssmenu_vert,
 #col2 .cssmenu_vert li {
 	width: 146px;

@@ -142,7 +142,6 @@ function sendForumEmailNotification(
 
 	if (count($nots)) {
 		include_once('lib/webmail/tikimaillib.php');
-		$mail = new TikiMail();
 		$smarty->assign('mail_forum', $forum_info["name"]);
 		$smarty->assign('mail_title', $title);
 		$smarty->assign('mail_date', $tikilib->now);
@@ -165,6 +164,7 @@ function sendForumEmailNotification(
 		$smarty->assign('topicId', $threadId);
 		$smarty->assign('mail_topic', $topicName);
 		foreach ($nots as $not) {
+			$mail = new TikiMail();
 			$mail->setUser($not['user']);
 			$mail_data = $smarty->fetchLang($not['language'], "mail/user_watch_forum_subject.tpl");
 			$mail->setSubject($mail_data);
@@ -377,7 +377,6 @@ function sendEmailNotification($watches, $dummy, $subjectTpl, $subjectParam, $tx
 	global $smarty, $tikilib;
 	include_once('lib/webmail/tikimaillib.php');
 	$sent = 0;
-	$mail = new TikiMail(null, $from);
 	$smarty->assign('mail_date', $tikilib->now);
 
 	$foo = parse_url($_SERVER["REQUEST_URI"]);
@@ -392,6 +391,8 @@ function sendEmailNotification($watches, $dummy, $subjectTpl, $subjectParam, $tx
 	$smarty->assign('mail_machine_site', $tikilib->httpPrefix(true));
 
 	foreach ($watches as $watch) {
+		$mail = new TikiMail(null, $from);
+
 		$smarty->assign('watchId', $watch['watchId']);
 		if ($watch['user']) {
 			$mail->setUser($watch['user']);
@@ -484,7 +485,6 @@ function sendFileGalleryEmailNotification($event, $galleryId, $galleryName, $nam
 
 	if (count($nots)) {
 		include_once('lib/webmail/tikimaillib.php');
-		$mail = new TikiMail();
 		$smarty->assign('galleryName', $galleryName);
 		$smarty->assign('galleryId', $galleryId);
 		$smarty->assign('fname', $name);
@@ -497,6 +497,7 @@ function sendFileGalleryEmailNotification($event, $galleryId, $galleryName, $nam
 		$smarty->assign('mail_machine', $machine);
 
 		foreach ($nots as $not) {
+			$mail = new TikiMail();
 			$mail->setUser($not['user']);
 			$mail_data = $smarty->fetchLang($not['language'], "mail/user_watch_file_gallery_changed_subject.tpl");
 			$mail->setSubject(sprintf($mail_data, $galleryName));
@@ -572,7 +573,6 @@ function sendCategoryEmailNotification($values)
 
 	if (count($nots)) {
 		include_once('lib/webmail/tikimaillib.php');
-		$mail = new TikiMail();
 
 		$smarty->assign('categoryId', $categoryId);
 		$smarty->assign('categoryName', $categoryName);
@@ -595,6 +595,7 @@ function sendCategoryEmailNotification($values)
 				break;
 			}
 
+			$mail = new TikiMail();
 			$nots_send[$not['user']] = true;
 			$mail->setUser($not['user']);
 

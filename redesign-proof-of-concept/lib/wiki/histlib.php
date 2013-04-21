@@ -166,11 +166,11 @@ class HistLib extends TikiLib
 	}
 
 	// Get page info for a specified version
-	function get_hist_page_info($pageName, $version)
+	function get_hist_page_info($pageName, $version = null)
 	{
 		$info = parent::get_page_info($pageName);
 
-		if (!isset($version)) {
+		if (empty($version)) {
 			// No version = last version
 			return $info;
 		}

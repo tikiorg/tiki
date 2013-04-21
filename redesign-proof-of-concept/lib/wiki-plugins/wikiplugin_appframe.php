@@ -183,7 +183,7 @@ $('#appframe .tab').parent().each(function () {
 });
 $('#appframe .accordion').parent().each(function () {
 	$('.accordion', this).wrapAll('<div/>').parent().accordion({
-		autoHeight: false
+		heightStyle: "content"
 	});
 });
 $('#appframe .anchor').wrapAll('<div/>').parent()

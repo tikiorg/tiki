@@ -69,6 +69,8 @@ function wikiplugin_listexecute($data, $params)
 
 	$plugin = new Search_Formatter_Plugin_SmartyTemplate('templates/wiki-plugins/wikiplugin_listexecute.tpl');
 
+	$paginationArguments = $builder->getPaginationArguments();
+
 	$dataSource = $unifiedsearchlib->getDataSource();
 	$builder = new Search_Formatter_Builder;
 	$builder->setPaginationArguments($paginationArguments);

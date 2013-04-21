@@ -23,7 +23,7 @@ function codemirrorModes($minify = true)
 		$js .= @file_get_contents("lib/codemirror_tiki/mode/tiki/tiki.js");
 		$css .= @file_get_contents("lib/codemirror_tiki/mode/tiki/tiki.css");
 
-		foreach (glob('lib/codemirror/mode/*', GLOB_ONLYDIR) as $dir) {
+		foreach (glob('vendor/codemirror/codemirror/mode/*', GLOB_ONLYDIR) as $dir) {
 			foreach (glob($dir.'/*.js') as $jsFile) {
 				$js .= "//" . $jsFile . "\n";
 				$js .= "try{" . @file_get_contents($jsFile) . "}catch(e){}";
@@ -35,7 +35,7 @@ function codemirrorModes($minify = true)
 		}
 
 		//load themes
-		foreach (glob('lib/codemirror/theme/*.css') as $cssFile) {
+		foreach (glob('vendor/codemirror/codemirror/theme/*.css') as $cssFile) {
 			$css .= @file_get_contents($cssFile);
 		}
 

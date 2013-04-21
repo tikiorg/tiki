@@ -93,6 +93,17 @@ function wikiplugin_kaltura_info()
 				'description' => tra('Text to display on button for adding new media.'),
 				'default' => tra('Add media'),
 			),
+			'type' => array(
+				'required' => false,
+				'name' => tra('Player type'),
+				'description' => tra('"kdp" or "html5"'),
+				'default' => 'kdp',
+				'filter' => 'word',
+				'options' => array(
+					array('text' => tra('KDP'), 'value' => 'kdp'),
+					array('text' => tra('HTML5'), 'value' => 'html5'),
+				),
+			),
 		),
 	);
 }
@@ -198,8 +209,6 @@ REG
 
 	$smarty = TikiLib::lib('smarty');
 	$smarty->assign('kaltura', $params);
-	$code = $smarty->fetch('wiki-plugins/wikiplugin_kaltura.tpl');
-
 	$style = '';
 	if (!empty($params['align'])) {
 		$style .= "text-align:{$params['align']};";
@@ -207,9 +216,44 @@ REG
 	if (!empty($params['float'])) {
 		$style .= "float:{$params['float']};";
 	}
-	if (!empty($style)) {
-		$code = "<div style=\"$style\">$code</div>";
+	if ($params['type'] === 'html5') {
+		$embedIframeJs = '/embedIframeJs';	// TODO add as params?
+		$leadWithHTML5 = 'true';
+		$autoPlay = 'false';
+
+		TikiLib::lib('header')
+			->add_jsfile("{$prefs['kaltura_kServiceUrl']}/p/{$prefs['kaltura_partnerId']}/sp/{$prefs['kaltura_partnerId']}00{$embedIframeJs}/uiconf_id/{$params['player_id']}/partner_id/{$prefs['kaltura_partnerId']}")
+			->add_jq_onready("
+mw.setConfig('Kaltura.LeadWithHTML5', $leadWithHTML5);
+
+kWidget.embed({
+	targetId: 'kaltura_player$instance',
+	wid: '_{$prefs['kaltura_partnerId']}',
+	uiconf_id: '{$params['player_id']}',
+	entry_id: '{$params['id']}',
+	flashvars: { // flashvars allows you to set runtime uiVar configuration overrides.
+		//autoPlay: $autoPlay
+	},
+	params: { // params allows you to set flash embed params such as wmode, allowFullScreen etc
+		wmode: 'transparent'
+	},
+	readyCallback: function (playerId) {
+		\$ = \$jq;	// restore our jQuery after Kaltura has finished with it
+		console.log('Player:' + playerId + ' is ready ');
+	}
+});");
+		return "<div id='kaltura_player$instance' style='width:{$params['width']}px;height:{$params['height']}px;$style'></div>";
+
+	} elseif ($params['type'] === 'kdp') {
+		$code = $smarty->fetch('wiki-plugins/wikiplugin_kaltura.tpl');
+		if (!empty($style)) {
+			$code = "<div style='$style'>$code</div>";
+		}
+		return $code;
+
+	} else {
+		TikiLib::lib('erroreport')->report(tra('Kaltura player: unsupported type.'));
+		return '';
 	}
 
-	return $code;
 }

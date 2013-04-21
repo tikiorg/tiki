@@ -60,7 +60,7 @@ $.fn.reportBuilder = function(o, prefix) {
 						.toggle(function() {
 							obj.find(':checkbox').removeAttr('checked');
 						}, function() {
-							obj.find(':checkbox').attr('checked', true);
+							obj.find(':checkbox').prop('checked', true);
 						})
 						.appendTo(this);
 				},
@@ -409,7 +409,7 @@ $.fn.reportBuilderImport = function(data, o) {
 					input
 						.each(function() {
 							if ($(this).val() == dataItem[type]) {
-								$(this).attr('checked', true);
+								$(this).prop('checked', true);
 							}
 						})
 						.change();

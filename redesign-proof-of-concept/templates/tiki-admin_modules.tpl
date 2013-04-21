@@ -76,7 +76,7 @@
 								<td>{$module.ord}</td>
 								<td>{$module.cache_time}</td>
 								<td>{$module.rows}</td>
-								<td style="font-size:smaller;">{$module.params|escape:unescape|replace:"+":" "|replace:"&":"<br>"}</td>
+								<td style="font-size:smaller;">{$module.params_presentable}</td>
 								<td style="font-size:smaller;">{$module.module_groups}</td>
 								<td>
 									<a class="link" href="tiki-admin_modules.php?edit_assign={$module.moduleId}&cookietab=2" title="{tr}Edit{/tr}">{icon _id='page_edit'}</a>
@@ -383,7 +383,7 @@
 	</form>
 	{jq}
 $("#module_list_show_all").click(function(){
-	$("#module_list li.disabled").toggle($(this).attr("checked"));
+	$("#module_list li.disabled").toggle($(this).prop("checked"));
 });
 {/jq}
 {/tab}

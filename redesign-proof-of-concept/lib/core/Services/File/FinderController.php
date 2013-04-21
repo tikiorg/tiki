@@ -5,9 +5,9 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-include_once "lib/jquery/elfinder/php/elFinderConnector.class.php";
-include_once "lib/jquery/elfinder/php/elFinder.class.php";
-include_once "lib/jquery/elfinder/php/elFinderVolumeDriver.class.php";
+include_once "vendor_extra/elfinder/php/elFinderConnector.class.php";
+include_once "vendor_extra/elfinder/php/elFinder.class.php";
+include_once "vendor_extra/elfinder/php/elFinderVolumeDriver.class.php";
 
 include_once 'lib/jquery_tiki/elfinder/elFinderVolumeTikiFiles.class.php';
 
@@ -28,6 +28,7 @@ class Services_File_FinderController
 			throw new Services_Exception_Disabled('fgal_elfinder_feature');
 		}
 		$this->fileController = new Services_File_Controller();
+		$this->fileController->setUp();
 
 		$this->parentIds = null;
 	}

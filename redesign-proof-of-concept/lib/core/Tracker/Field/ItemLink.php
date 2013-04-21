@@ -321,7 +321,7 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 
 		$out = array(
 			$baseKey => $typeFactory->identifier($item),
-			"{$baseKey}_text" => $typeFactory->plaintext($label),
+			"{$baseKey}_text" => $typeFactory->sortable($label),
 		);
 
 		$indexRemote = array_filter(explode('|', $this->getOption('indexRemote')));
@@ -335,7 +335,7 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 				$field = $definition->getField($fieldId);
 				$permName = $field['permName'];
 
-				$out["{$baseKey}_{$permName}"] = $typeFactory->plaintext($itemData['fields'][$permName]);
+				$out["{$baseKey}_{$permName}"] = $typeFactory->sortable($itemData['fields'][$permName]);
 			}
 		}
 

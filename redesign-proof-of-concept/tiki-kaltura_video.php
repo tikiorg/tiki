@@ -33,6 +33,7 @@ try {
 		$kentryType = 'media';
 	}
 
+	$mode = null;
 	if (!empty($videoId) && isset($_REQUEST['action'])) {
 		$mode = $_REQUEST['action'];
 		$smarty->assign('kmode', $mode);

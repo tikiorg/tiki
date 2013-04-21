@@ -94,11 +94,11 @@ $('.object-list :checkbox').change(function () {
 $('.object-list li:not(.available) :checkbox').attr('disabled', true);
 
 $('.select-all').click(function () {
-	$('.object-list :unchecked').attr('checked', true).change();
+	$('.object-list :unchecked').prop('checked', true).change();
 	return false;
 });
 $('.unselect-all').click(function () {
-	$('.object-list :checked').attr('checked', false).change();
+	$('.object-list :checked').prop('checked', false).change();
 	return false;
 });
 {/jq}

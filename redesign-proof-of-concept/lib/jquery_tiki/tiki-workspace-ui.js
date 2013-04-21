@@ -20,10 +20,10 @@
 				.attr('name', 'groups~' + name + '~name')
 				.val("{group} " + name)
 				.parent().show();
-			$('.managingGroup', item).attr('checked', false);
+			$('.managingGroup', item).prop('checked', false);
 			$('.autojoin', item)
 				.attr('name', 'groups~' + name + '~autojoin')
-				.attr('checked', false);
+				.prop('checked', false);
 			$('.permissions', item)
 				.attr('name', 'groups~' + name + '~permissions')
 				.val('');

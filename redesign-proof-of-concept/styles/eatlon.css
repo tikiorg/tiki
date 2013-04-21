@@ -372,19 +372,19 @@ input[id="sl-login-pass"] {background: #e1e1e2}
 }
 
 /* left column width */
-#col2 ul.cssmenu_vert {
+#col2 .box-data .cssmenu_vert ul {
 	padding-left: 0;
 }
 
 #col2 .cssmenu_vert,
 #col2 .cssmenu_vert li {
-	width: 160px;
+	width: 150px;
 }
 
 /* offset from left column (matches above) */
 #col2 .cssmenu_vert li:hover ul,
 #col2 .cssmenu_vert li.sfHover ul {
-	left: 160px;
+	left: 150px;
 }
 
 /* return ul ul ... to default */
@@ -452,7 +452,7 @@ input[id="sl-login-pass"] {background: #e1e1e2}
 }
 
 .cssmenu_vert li ul li a .sf-sub-indicator {
-	background: url(../lib/jquery/plugins/superfish/images/arrows-ffffff.png);
+	background: url(../img/superfish/arrows-ffffff.png);
 }
 
 #tiki-top .cssmenu_horiz li a .sf-sub-indicator {top: 1.3em}
@@ -554,7 +554,7 @@ h3.box-title {
 td.odd:hover,
 td.even:hover,
 .tablesorter tr.odd td:hover,
-.tablesorter tr.even td: hover {
+.tablesorter tr.even td:hover {
 	border-right: 1px solid #e0e0e0
 }
 

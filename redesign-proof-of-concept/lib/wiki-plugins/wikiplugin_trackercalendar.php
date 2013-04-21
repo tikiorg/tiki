@@ -52,8 +52,8 @@ function wikiplugin_trackercalendar($data, $params)
 {
 	static $id = 0;
 	$headerlib = TikiLib::lib('header');
-	$headerlib->add_cssfile('lib/fullcalendar/fullcalendar.css');
-	$headerlib->add_jsfile('lib/fullcalendar/fullcalendar.min.js');
+	$headerlib->add_cssfile('vendor/jarnokurlin/fullcalendar/fullcalendar/fullcalendar.css');
+	$headerlib->add_jsfile('vendor/jarnokurlin/fullcalendar/fullcalendar/fullcalendar.min.js');
 
 	$jit = new JitFilter($params);
 	$definition = Tracker_Definition::get($jit->trackerId->int());

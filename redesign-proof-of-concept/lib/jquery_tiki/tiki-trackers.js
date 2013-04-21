@@ -22,10 +22,14 @@
 				load: function () {
 					var dialog = this;
 					$('select', dialog).change(function () {
-						$(this).closest('label').find('.description')
-							.hide()
-							.filter('.' + $(this).val())
-							.show();
+						var descriptions = $(this).closest('label').find('.description')
+							.hide();
+
+						if ($(this).val()) {
+							descriptions
+								.filter('.' + $(this).val())
+								.show();
+						}
 					}).change();
 					$('form', dialog).each(function () {
 						var form = this;
@@ -130,7 +134,7 @@
 							var addCheckbox = function (name) {
 								$row.append($('<td class="checkbox"/>').append(
 									$('<input type="checkbox" name="field~' + field.fieldId + '~' + name + '" value="1"/>')
-										.attr('checked', field[name] === 'y')
+										.prop('checked', field[name] === 'y')
 								));
 							};
 

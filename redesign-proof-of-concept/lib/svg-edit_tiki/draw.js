@@ -143,7 +143,7 @@ $.fn.loadDraw = function(o) {
 		options.push('lang=' + $.lang);
 	}
 
-	var drawFrame = $('<iframe src="lib/svg-edit/svg-editor.html?' + options.join('&') + '" id="svgedit"></iframe>')
+	var drawFrame = $('<iframe src="vendor/svg-edit/svg-edit/svg-editor.html?' + options.join('&') + '" id="svgedit"></iframe>')
 		.appendTo(me)
 		.load(function() {
 			me

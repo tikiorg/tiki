@@ -146,10 +146,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_REQUEST['data'])) {
 	} else {
 		//new file
 		if ($isConversion) {
-			$_REQUEST['name'] = preg_replace('/\.(:?jpg|gif|png|tif[f]?)$/', '', $_REQUEST['name']);	// strip extension
+			$_REQUEST['name'] = preg_replace('/\.(:?jpg|gif|png|tif[f]?)$/', '', $_REQUEST['name']) . tra(' drawing');	// strip extension
+		}
+		$galleryId = $_REQUEST["galleryId"];
+		if ($prefs['feature_draw_in_userfiles'] === 'y') {
+			$galleryId = TikiLib::lib('filegal')->get_user_file_gallery();
 		}
 		$fileId = $filegallib->insert_file(
-			$_REQUEST["galleryId"],
+			$galleryId,
 			$_REQUEST['name'],
 			$_REQUEST['description'],
 			$_REQUEST['name'].".svg",

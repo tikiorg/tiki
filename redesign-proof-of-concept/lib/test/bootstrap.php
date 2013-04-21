@@ -5,6 +5,7 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
+define('TIKI_IN_TEST', 1);
 define('CUSTOM_ERROR_LEVEL', defined('E_DEPRECATED') ? E_ALL ^ E_DEPRECATED : E_ALL);
 
 ini_set('display_errors', 'on');
@@ -27,10 +28,12 @@ if (!is_file(dirname(__FILE__) . '/local.php')) {
 	die("\nYou need to setup a new database and create a local.php file for the test suite inside " . dirname(__FILE__) . "\n\n");
 }
 
-global $local_php, $api_tiki;
+global $local_php, $api_tiki, $style_base;
 $api_tiki = 'adodb';
 $local_php = dirname(__FILE__) . '/local.php';
 require_once($local_php);
+
+$style_base = 'skeleton';
 
 // Force autoloading
 if (! class_exists('ADOConnection')) {
@@ -100,8 +103,9 @@ $systemConfiguration = new Zend_Config(
 
 global $user_overrider_prefs;
 $user_overrider_prefs = array();
-require_once 'lib/setup/prefs.php';
 $prefs['language'] = 'en';
+$prefs['site_language'] = 'en';
+require_once 'lib/setup/prefs.php';
 
 ini_set('display_errors', 'on');
 error_reporting(CUSTOM_ERROR_LEVEL);

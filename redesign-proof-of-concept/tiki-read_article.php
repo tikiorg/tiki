@@ -148,7 +148,7 @@ if ( $prefs['article_paginate'] == 'y' ) {
 }
 if ($prefs["article_custom_attributes"] == 'y') {
 	$t_article_attributes = $artlib->get_article_attributes($article_data["articleId"]);
-	$type_attributes = $artlib->get_article_type_attributes($article_data["type"]);
+	$type_attributes = $artlib->get_article_type_attributes($article_data["type"], 'relationId ASC');
 	$article_attributes = array();
 	foreach ($type_attributes as $attname => $att) {
 		if (in_array($att["itemId"], array_keys($t_article_attributes))) {

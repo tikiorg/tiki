@@ -1237,7 +1237,9 @@
 					this.activePopup.myclose = null;
 					f();
 				} else {
-					handler.remove(this.activePopup);
+					try {
+						handler.remove(this.activePopup);
+					} catch (e) {}	// catch error when dialog not initialised
 				}
 
 				this.activePopup = null;
