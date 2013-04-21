@@ -321,7 +321,7 @@ if ( isset($prefs['javascript_cdn']) && $prefs['javascript_cdn'] == 'google' ) {
 		$headerlib->add_jsfile_dependancy("lib/jquery/plugins/jquery-migrate-1.1.1.min.js");
 	} else {
 		$headerlib->add_jsfile_dependancy("lib/jquery/jquery-$headerlib->jquery_version.js");
-		$headerlib->add_jsfile_dependancy("lib/jquery/plugins/jquery-migrate-1.1.1.js");
+		$headerlib->add_jsfile_dependancy("vendor/jquery/plugins/migrate/jquery-migrate-1.1.1.js");
 	}
 }
 

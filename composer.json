@@ -36,6 +36,7 @@
 		"jquery/plugins/jquery-validation": "1.11.1",
 		"jquery/plugins/jquery-json": "2.4",
 		"jquery/plugins/media": "0.98",
+		"jquery/plugins/migrate": "1.1.1",
 		"jquery/plugins/pxem": "0.1",
 		"jquery/plugins/reflection-jquery": "1.1",
 		"jquery/plugins/superfish": "1.7.2",
@@ -420,6 +421,17 @@
 				"dist": {
 					"url": "https://github.com/malsup/media/archive/master.zip",
 					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "jquery/plugins/migrate",
+				"version": "1.1.1",
+				"dist": {
+					"url": "http://code.jquery.com/jquery-migrate-1.1.1.js",
+					"type": "file"
 				}
 			}
 		},
