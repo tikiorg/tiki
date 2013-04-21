@@ -317,7 +317,7 @@ if ( isset($prefs['javascript_cdn']) && $prefs['javascript_cdn'] == 'google' ) {
 	$headerlib->add_jsfile_dependancy("http://code.jquery.com/jquery-migrate-1.1.1.js");
 } else {
 	if ( $prefs['tiki_minify_javascript'] === 'y' ) {
-		$headerlib->add_jsfile_dependancy("vendor/jquery/jquery/-min/jquery-$headerlib->jquery_version.min.js");
+		$headerlib->add_jsfile_dependancy("vendor/jquery/jquery-min/jquery-$headerlib->jquery_version.min.js");
 		$headerlib->add_jsfile_dependancy("vendor/jquery/plugins/jquery-migrate-1.1.1.min.js");
 	} else {
 		$headerlib->add_jsfile_dependancy("vendor/jquery/jquery/jquery-$headerlib->jquery_version.js");
