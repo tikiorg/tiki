@@ -127,7 +127,7 @@ class Search_Index_Lucene implements Search_Index_Interface
 
 	private function internalFind(& $query, $sortOrder)
 	{
-		if (false && $this->cache) {
+		if ($this->cache) {
 			$args = func_get_args();
 			$cacheKey = serialize($args);
 
@@ -339,7 +339,7 @@ class Search_Index_Lucene implements Search_Index_Interface
 			$whole = str_replace(array('*', '?', '~', '+'), '', $whole);
 			$whole = str_replace(array('[', ']', '{', '}', '(', ')', ':', '-'), ' ', $whole);
 
-			$parts = explode(' ', $whole);
+			$parts = explode(' ', $this->leftToRight($whole));
 			if (count($parts) === 1) {
 				return new Zend_Search_Lucene_Search_Query_Term(new Zend_Search_Lucene_Index_Term($parts[0], $field), true);
 			} else {
@@ -352,6 +352,11 @@ class Search_Index_Lucene implements Search_Index_Interface
 			$parts = explode(' ', $value->getValue());
 			return new Zend_Search_Lucene_Search_Query_Phrase($parts, array_keys($parts), $field);
 		}
+	}
+
+	private function leftToRight($string)
+	{
+		return $string . "\xE2\x80\x8E";
 	}
 }
 
