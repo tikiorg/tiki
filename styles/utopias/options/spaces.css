@@ -169,19 +169,19 @@ input[type=submit]:hover,
 
 div#sitead {}
 
-#siteloginbar {
+.siteloginbar {
 	width: 400px;
 	height: 70px;
 	color: #6f9898;
 }
 
-#siteloginbar.logged-in {
+.siteloginbar.logged-in {
 	width: 170px;
 	height: 39px;
 	color: #6f9898;
 }
 
-#siteloginbar a {
+.siteloginbar a {
 	color: #6f9898;
 }
 

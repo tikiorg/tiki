@@ -46,19 +46,19 @@ dd {}
 
 div#sitead {}
 
-#siteloginbar {
+.siteloginbar {
 	width: 400px;
 	height: 70px;
 	color: #038;
 }
 
-#siteloginbar.logged-in {
+.siteloginbar.logged-in {
 	width: 170px;
 	height: 39px;
 	color: #038;
 }
 
-#siteloginbar a {
+.siteloginbar a {
 	color: #038;
 }
 

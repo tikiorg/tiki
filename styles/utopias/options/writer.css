@@ -57,15 +57,15 @@ hr {
 
 div#sitead {}
 
-#siteloginbar {
+.siteloginbar {
 	color: #038;
 }
 
-#siteloginbar.logged-in {
+.siteloginbar.logged-in {
 	color: #038;
 }
 
-#siteloginbar a {
+.siteloginbar a {
 	color: #038;
 }
 

@@ -49,18 +49,18 @@ hr {
 	color: #387e29;
 }
 
-#siteloginbar {
+.siteloginbar {
 	width: 400px;
 	height: 70px;
 	color: #fff;
 }
 
-#siteloginbar.logged-in {
+.siteloginbar.logged-in {
 	width: 170px;
 	height: 39px;
 }
 
-#siteloginbar a {
+.siteloginbar a {
 	color: #fff;
 }
 

@@ -132,16 +132,16 @@ body.wikitext {
 
 #siteheader {}
 
-#siteloginbar a {
+.siteloginbar a {
 	color: #9b2434;
 }
-#siteloginbar.logged-in {
+.siteloginbar.logged-in {
 	color:#9b2434;
 }
-#siteloginbar.logged-out {
+.siteloginbar.logged-out {
 	color:#9b2434;
 }
-#siteloginbar {
+.siteloginbar {
 	color:#9b2434;
 }
 
