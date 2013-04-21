@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "ee7b59b24d90beb3f1b047f37f263a96",
+    "hash": "90768655404c7eb44ad843972017dbb8",
     "packages": [
         {
             "name": "aFarkas/html5shiv",
@@ -454,6 +454,17 @@
             "dist": {
                 "type": "zip",
                 "url": "http://jquery.bassistance.de/validate/jquery-validation-1.11.1.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "library"
+        },
+        {
+            "name": "jquery/plugins/media",
+            "version": "0.98",
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/malsup/media/archive/master.zip",
                 "reference": null,
                 "shasum": null
             },

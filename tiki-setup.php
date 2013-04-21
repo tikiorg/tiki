@@ -439,7 +439,7 @@ if ($prefs['mobile_feature'] === 'y' && $prefs['mobile_mode'] === 'y') {
 		$headerlib->add_jsfile('vendor/jquery/plugins/reflection-jquery/js/reflection.js');
 	}
 	if ( $prefs['feature_jquery_media'] == 'y' ) {
-		$headerlib->add_jsfile('lib/jquery/plugins/jquery.media.js');
+		$headerlib->add_jsfile('vendor/jquery/plugins/media/jquery.media.js');
 	}
 	if ( $prefs['feature_jquery_tablesorter'] == 'y' ) {
 		$headerlib->add_jsfile('vendor/jquery/plugins/tablesorter/addons/pager/jquery.tablesorter.pager.js');

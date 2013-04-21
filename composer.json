@@ -34,6 +34,7 @@
 		"jquery/plugins/infinitecarousel": "3.0.3",
 		"jquery/plugins/jquery-validation": "1.11.1",
 		"jquery/plugins/jquery-json": "2.4",
+		"jquery/plugins/media": "0.98",
 		"jquery/plugins/reflection-jquery": "1.1",
 		"jquery/plugins/superfish": "1.7.2",
 		"jquery/plugins/tablesorter": "2.9.1",
@@ -393,6 +394,17 @@
 				"version": "3.0.3",
 				"dist": {
 					"url": "http://www.catchmyfame.com/jquery/jquery.infinitecarousel3.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "jquery/plugins/media",
+				"version": "0.98",
+				"dist": {
+					"url": "https://github.com/malsup/media/archive/master.zip",
 					"type": "zip"
 				}
 			}
