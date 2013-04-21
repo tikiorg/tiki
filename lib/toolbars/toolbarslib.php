@@ -1977,12 +1977,6 @@ class ToolbarsList
 		global $tiki_p_admin, $tiki_p_admin_toolbars, $smarty, $section, $prefs, $headerlib;
 		$html = '';
 
-		// $.selection() is in jquery.autocomplete.min.js
-
-		if ($prefs['feature_jquery_autocomplete'] != 'y') {
-			$headerlib->add_jsfile('lib/jquery/jquery-autocomplete/jquery.autocomplete.min.js');
-		}
-
 		$c = 0;
 		foreach ( $this->lines as $line ) {
 			$lineHtml = '';
