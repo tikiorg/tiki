@@ -24,6 +24,7 @@ class Search_Index_Lucene implements Search_Index_Interface
 				Zend_Search_Lucene_Search_QueryParser::setDefaultEncoding('UTF-8');
 		}
 
+		Zend_Search_Lucene_Storage_Directory_Filesystem::setDefaultFilePermissions(0660);
 		$this->directory = $directory;
 		$this->lastModif = file_exists($directory) ? filemtime($directory) : 0;
 

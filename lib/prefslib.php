@@ -470,16 +470,14 @@ class PreferencesLib
 			}
 		}
 
-		$index->optimize();
 		return $index;
 	}
 
 	private function getIndex()
 	{
 		global $prefs;
-		if ( $prefs['language'] == 'en' ) {
-			Zend_Search_Lucene_Analysis_Analyzer::setDefault(new StandardAnalyzer_Analyzer_Standard_English());
-		}
+		Zend_Search_Lucene_Storage_Directory_Filesystem::setDefaultFilePermissions(0660);
+		Zend_Search_Lucene_Analysis_Analyzer::setDefault(new StandardAnalyzer_Analyzer_Standard_English());
 
 		if ( $this->indexNeedsRebuilding()) {
 			return $this->rebuildIndex();
