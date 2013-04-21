@@ -222,7 +222,7 @@ if ( isset( $_REQUEST['lm_criteria'] ) ) {
 
 $smarty->assign('indexNeedsRebuilding', $prefslib->indexNeedsRebuilding());
 
-if (isset($_REQUEST['rebuild'])) {
+if (isset($_REQUEST['prefrebuild'])) {
 	$prefslib->rebuildIndex();
 }
 
