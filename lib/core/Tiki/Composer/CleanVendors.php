@@ -40,6 +40,8 @@ class CleanVendors
 		self::deleteDirectory($vendors . 'jquery/plugins/cluetip/test');
 		self::deleteDirectory($vendors . 'jquery/plugins/colorbox/content');
 		self::deleteDirectory($vendors . 'jquery/plugins/tablesorter/docs');
+		self::deleteDirectory($vendors . 'jquery/plugins/tablesorter/testing');
+		self::deleteFile(     $vendors . 'jquery/plugins/tablesorter/test.html');
 		self::deleteDirectory($vendors . 'jquery/plugins/jquery-validation/demo');
 		self::deleteDirectory($vendors . 'jquery/plugins/jquery-validation/lib');
 		self::deleteDirectory($vendors . 'jquery/plugins/jquery-validation/test');
