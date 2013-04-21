@@ -29,6 +29,7 @@
 		"jquery/plugins/cluetip": "1.2.8",
 		"jquery/plugins/colorbox": "1.4.14",
 		"jquery/plugins/colorpicker": "0.5",
+		"jquery/plugins/form": "3.25.0",
 		"jquery/plugins/galleriffic": "2.0.1",
 		"jquery/plugins/infinitecarousel": "3.0.3",
 		"jquery/plugins/jquery-validation": "1.11.1",
@@ -359,6 +360,17 @@
 				"version": "1.4.14",
 				"dist": {
 					"url": "https://github.com/jackmoore/colorbox/archive/1.4.14.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "jquery/plugins/form",
+				"version": "3.25.0",
+				"dist": {
+					"url": "https://github.com/malsup/form/archive/3.25.0-2013.01.18.zip",
 					"type": "zip"
 				}
 			}

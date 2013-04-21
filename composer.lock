@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "797bb0bee9f622a18d4b07fc73d46630",
+    "hash": "ee7b59b24d90beb3f1b047f37f263a96",
     "packages": [
         {
             "name": "aFarkas/html5shiv",
@@ -399,6 +399,17 @@
             "dist": {
                 "type": "zip",
                 "url": "http://www.eyecon.ro/colorpicker/colorpicker.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "library"
+        },
+        {
+            "name": "jquery/plugins/form",
+            "version": "3.25.0",
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/malsup/form/archive/3.25.0-2013.01.18.zip",
                 "reference": null,
                 "shasum": null
             },
