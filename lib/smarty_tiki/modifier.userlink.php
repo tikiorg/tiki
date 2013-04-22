@@ -85,7 +85,7 @@ function smarty_modifier_userlink($other_user, $class='link', $idletime='not_set
 	}
 	$ou = htmlspecialchars($ou);
 
-	if ($userlib->user_exists($other_user)&&(!empty($friend) || $tikilib->get_user_preference($other_user, 'user_information', 'public')=='public')) {
+	if ($userlib->user_exists($other_user)&&(!empty($friend) || $tikilib->get_user_preference($other_user, 'user_information', 'public')=='public' || $user == $other_user)) {
 		if (isset($info) and is_array($info) and $prefs['highlight_group'] and in_array($prefs['highlight_group'], $info['groups'])) {
 			$ou = '<i class="highlightgroup"><b>' . $ou . '</b></i>';
 		}
