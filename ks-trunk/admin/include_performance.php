@@ -90,17 +90,17 @@ if ( function_exists('apc_sma_info') && ini_get('apc.enabled') ) {
 		'hit_miss' => 0,
 		'hit_total' => 0,
 		);
-	
+
 	$info = wincache_ocache_fileinfo();
 	$opcode_stats['hit_hit'] = $info['total_hit_count'];
 	$opcode_stats['hit_miss'] = $info['total_miss_count'];
 	$opcode_stats['hit_total'] = $info['total_hit_count'] + $info['total_miss_count'];
-	
+
 	$memory = wincache_ocache_meminfo();
 	$opcode_stats['memory_avail'] = $memory['memory_free'];
 	$opcode_stats['memory_total'] = $memory['memory_total'];
 	$opcode_stats['memory_used'] = $memory['memory_total'] - $memory['memory_free'];
-	
+
 	$opcode_stats['memory_used'] /= $opcode_stats['memory_total'];
 	$opcode_stats['memory_avail'] /= $opcode_stats['memory_total'];
 	$opcode_stats['hit_hit'] /= $opcode_stats['hit_total'];
@@ -108,10 +108,10 @@ if ( function_exists('apc_sma_info') && ini_get('apc.enabled') ) {
 }
 
 // Make results easier to read
-$opcode_stats['memory_used'] = round($opcode_stats['memory_used'],2);
-$opcode_stats['memory_avail'] = round($opcode_stats['memory_avail'],2);
-$opcode_stats['hit_hit'] = round($opcode_stats['hit_hit'],2);
-$opcode_stats['hit_miss'] = round($opcode_stats['hit_miss'],2);
+$opcode_stats['memory_used'] = round($opcode_stats['memory_used'], 2);
+$opcode_stats['memory_avail'] = round($opcode_stats['memory_avail'], 2);
+$opcode_stats['hit_hit'] = round($opcode_stats['hit_hit'], 2);
+$opcode_stats['hit_miss'] = round($opcode_stats['hit_miss'], 2);
 
 
 if ( $stat_flag ) {
@@ -149,13 +149,20 @@ if ($opcode_cache == 'WinCache') {
 	$txtAvailable = tr('Used');
 	$txtUsed = tr('Available');
 }
-$smarty->assign('memory_graph', $tikilib->httpScheme() . '://chart.apis.google.com/chart?' . http_build_query(array(
-	'cht' => 'p3',
-	'chs' => '250x100',
-	'chd' => "t:{$opcode_stats['memory_used']},{$opcode_stats['memory_avail']}",
-	'chl' => $txtUsed . '|' .$txtAvailable,
-	'chtt' => tr('Memory'),
-), '', '&'));
+$smarty->assign(
+	'memory_graph',
+	$tikilib->httpScheme() . '://chart.apis.google.com/chart?' . http_build_query(
+		array(
+			'cht' => 'p3',
+			'chs' => '250x100',
+			'chd' => "t:{$opcode_stats['memory_used']},{$opcode_stats['memory_avail']}",
+			'chl' => $txtUsed . '|' .$txtAvailable,
+			'chtt' => tr('Memory'),
+		),
+		'',
+		'&'
+	)
+);
 
 $txtHit = tr('Hit');
 $txtMiss = tr('Miss');
@@ -164,11 +171,18 @@ if ($opcode_cache == 'WinCache') {
 	$txtHit = tr('Miss');
 	$txtMiss = tr('Hit');
 }
-$smarty->assign('hits_graph', $tikilib->httpScheme() . '://chart.apis.google.com/chart?' . http_build_query(array(
-	'cht' => 'p3',
-	'chs' => '250x100',
-	'chd' => "t:{$opcode_stats['hit_hit']},{$opcode_stats['hit_miss']}",
-	'chl' => $txtHit . '|' . $txtMiss,
-	'chtt' => tr('Cache'),
-), '', '&'));
+$smarty->assign(
+	'hits_graph',
+	$tikilib->httpScheme() . '://chart.apis.google.com/chart?' . http_build_query(
+		array(
+			'cht' => 'p3',
+			'chs' => '250x100',
+			'chd' => "t:{$opcode_stats['hit_hit']},{$opcode_stats['hit_miss']}",
+			'chl' => $txtHit . '|' . $txtMiss,
+			'chtt' => tr('Cache'),
+		),
+		'',
+		'&'
+	)
+);
 
