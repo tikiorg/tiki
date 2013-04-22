@@ -21,8 +21,6 @@
  *       HTMLPurifier_Config::create()
  */
 
-require_once('lib/htmlpurifier/HTMLPurifier.auto.php');
-
 /**
  * @param $html
  * @param null $config

@@ -266,7 +266,7 @@ class ImageAbstract
 			$name = "lib/images/icons/unknown.$format";
 		}
 
-		if ( ! $keep_original ) {
+		if ( ! $keep_original && $format != 'svg' ) {
 			$icon = new $class($name, true);
 			if ( $format != $icon_format ) {
 				$icon->convert($icon_format);

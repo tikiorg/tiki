@@ -26,9 +26,9 @@ class HeaderLib
 	public $wysiwyg_parsing;
 	public $lockMinifiedJs;
 
-	public $jquery_version = '1.7.2';
-	public $jqueryui_version = '1.8.21';
-	public $jquerymobile_version = '1.2.0';
+	public $jquery_version = '1.9.1';
+	public $jqueryui_version = '1.10.2';
+	public $jquerymobile_version = '1.3.1';
 
 
 	function __construct()
@@ -693,7 +693,6 @@ class HeaderLib
 	public function minify_css( $file )
 	{
 		global $tikipath, $tikiroot;
-		require_once 'lib/pear/Minify/CSS.php';
 		if (strpos($file, $tikiroot) === 0) {
 			$file = substr($file, strlen($tikiroot));
 		}

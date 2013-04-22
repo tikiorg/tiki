@@ -1,13 +1,13 @@
 <?php
 // (c) Copyright 2002-2013 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 /**
  * Handler class for kaltura video integration
- * 
+ *
  * Letter key: ~kaltura~
  *
  */
@@ -48,20 +48,34 @@ class Tracker_Field_Kaltura extends Tracker_Field_Abstract implements Tracker_Fi
 		$movies = array_filter(explode(',', $this->getValue()));
 
 		$movieList = $kalturalib->getMovieList($movies);
-		$extra = array_diff($movies, array_map(function ($movie) {
-			return $movie['id'];
-		}, $movieList));
-		return $this->renderTemplate('trackerinput/kaltura.tpl', $context, array(
-			'movies' => $movieList,
-			'extras' => $extra,
-		));
+		$extra = array_diff(
+			$movies,
+			array_map(
+				function ($movie) {
+					return $movie['id'];
+				},
+				$movieList
+			)
+		);
+		return $this->renderTemplate(
+			'trackerinput/kaltura.tpl',
+			$context,
+			array(
+				'movies' => $movieList,
+				'extras' => $extra,
+			)
+		);
 	}
 
 	function renderOutput($context = array())
 	{
-		return $this->renderTemplate('trackeroutput/kaltura.tpl', $context, array(
-			'movieIds' => array_filter(explode(',', $this->getValue())),
-		));
+		return $this->renderTemplate(
+			'trackeroutput/kaltura.tpl',
+			$context,
+			array(
+				'movieIds' => array_filter(explode(',', $this->getValue())),
+			)
+		);
 	}
 
 	function importRemote($value)

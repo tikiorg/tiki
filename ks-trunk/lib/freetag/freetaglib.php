@@ -981,7 +981,7 @@ class FreetagLib extends ObjectLib
 	 *	 - 'count' => The number of objects tagged with this tag.
 	 */
 
-	function get_most_popular_tags($user = '', $offset = 0, $maxRecords = 25, $type=null, $objectId=null)
+	function get_most_popular_tags($user = '', $offset = 0, $maxRecords = 25, $type=null, $objectId=null, $tsort_mode='tag_asc')
 	{
 
 		$join = '';
@@ -990,7 +990,7 @@ class FreetagLib extends ObjectLib
 		if (!empty($type) || !empty($objectId)) {
 			$join .= ' LEFT JOIN `tiki_objects` tob on (tob.`objectId`= tfo.`objectId`)';
 			$mid .= ' AND `type` = ?';
-			$mid2 = 'WHERE `type`=?'; 
+			$mid2 = 'WHERE `type`=?';
 			$bindvals[] = $type;
 			if (!empty($objectId)) {
 				$join .= ' LEFT JOIN `tiki_blog_posts` tbp on (tob.`itemId` = tbp.`postId`)';
@@ -1038,9 +1038,15 @@ class FreetagLib extends ObjectLib
 
 			$ret[] = $row;
 		}
-
-		array_multisort($tag, SORT_ASC, $count, SORT_DESC, $ret);
-
+		switch ($tsort_mode) {
+			case 'count_desc':
+				array_multisort($count, SORT_DESC,$tag, SORT_ASC, $ret);
+				break;
+			case 'tag_asc':
+			default:
+				array_multisort($tag, SORT_ASC, $count, SORT_DESC, $ret);
+				break;
+		}
 		return $ret;
 	}
 
