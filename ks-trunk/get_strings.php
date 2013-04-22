@@ -36,6 +36,7 @@ if (php_sapi_name() != 'cli') {
 	$access->check_permission('tiki_p_admin');
 }
 
+require_once('lib/init/initlib.php');
 require_once('lib/setup/timer.class.php');
 
 $timer = new timer();
@@ -54,11 +55,10 @@ if ($request->hasProperty('outputFiles')) {
 }
 
 $excludeDirs = array(
-	'dump' , 'img', 'lang', 'lib/ckeditor',
-	'lib/codemirror', 'lib/html5shim', 
-	'lib/htmlpurifier', 'lib/jquery', 'lib/jquery.s5', 'lib/jquery.sheet', 'lib/jscalendar', 'lib/mobileesp', 'lib/pclzip',
-	'lib/pear', 'lib/svg-edit', 'lib/test',	'temp',
-	'temp/cache',	'templates_c', 'vendor'
+	'dump' , 'img', 'lang',
+	 'lib/jquery', 'vendor', 'vendor_extra',
+	 'lib/test',	'temp',
+	'temp/cache',	'templates_c',
 );
 
 $includeFiles = array(
