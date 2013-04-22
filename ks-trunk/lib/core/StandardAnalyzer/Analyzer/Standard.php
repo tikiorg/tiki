@@ -6,7 +6,7 @@
  * in this standard analyzer package, provide a method for indexing documents with word Stemming,
  * lower-casing, and number handling. The lower-case and number handling is provided by the pre-
  * existing filters from Zend.
- * 
+ *
  * License: see License.txt for a copy of the Zend License.
  *
  *Ref:
@@ -77,7 +77,7 @@ abstract class StandardAnalyzer_Analyzer_Standard extends Zend_Search_Lucene_Ana
 		$this->_input = iconv($this->_encoding, 'ASCII//TRANSLIT', $this->_input);
 		$this->_encoding = 'ASCII';
     }
-	
+
     /**
      * Apply filters to the token. Can return null when the token was removed.
      *
@@ -97,7 +97,7 @@ abstract class StandardAnalyzer_Analyzer_Standard extends Zend_Search_Lucene_Ana
 
         return $token;
     }
-	
+
 	public function nextToken()
 	{
 		if ($this->_input === null) {
@@ -120,10 +120,14 @@ abstract class StandardAnalyzer_Analyzer_Standard extends Zend_Search_Lucene_Ana
 
             // character position of the matched word in the input stream
             $startPos = $this->_position +
-                        iconv_strlen(substr($this->_input,
-                                            $this->_bytePosition,
-                                            $binStartPos - $this->_bytePosition),
-                                     'UTF-8');
+								iconv_strlen(
+									substr(
+										$this->_input,
+										$this->_bytePosition,
+										$binStartPos - $this->_bytePosition
+									),
+									'UTF-8'
+								);
             // character postion of the end of matched word in the input stream
             $endPos = $startPos + iconv_strlen($matchedWord, 'UTF-8');
 
