@@ -12,8 +12,6 @@ require_once('lib/language/FileType.php');
 require_once('lib/language/FileType/Php.php');
 require_once('lib/language/FileType/Tpl.php');
 
-require_once('vfsStream/vfsStream.php');
-
 class Language_GetStringsEndToEndTest extends TikiTestCase
 {
 	protected function setUp()

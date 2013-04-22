@@ -11,7 +11,7 @@
 class Search_Index_LuceneStemmingTest extends PHPUnit_Framework_TestCase
 {
 	private $dir;
-	private $index;
+	protected $index;
 
 	function setUp()
 	{
@@ -19,15 +19,7 @@ class Search_Index_LuceneStemmingTest extends PHPUnit_Framework_TestCase
 		$this->tearDown();
 
 		$index = new Search_Index_Lucene($this->dir, 'en');
-		$typeFactory = $index->getTypeFactory();
-		$index->addDocument(
-			array(
-				'object_type' => $typeFactory->identifier('wikipage?!'),
-				'object_id' => $typeFactory->identifier('Comité Wiki'),
-				'description' => $typeFactory->plaintext('a description for the pages éducation Case'),
-				'contents' => $typeFactory->plaintext('a description for the pages éducation Case'),
-			)
-		);
+		$this->populate($index);
 
 		$this->index = $index;
 	}
@@ -38,9 +30,22 @@ class Search_Index_LuceneStemmingTest extends PHPUnit_Framework_TestCase
 		`rm -Rf $dir`;
 	}
 
+	protected function populate($index)
+	{
+		$typeFactory = $index->getTypeFactory();
+		$index->addDocument(
+			array(
+				'object_type' => $typeFactory->identifier('wikipage?!'),
+				'object_id' => $typeFactory->identifier('Comité Wiki'),
+				'description' => $typeFactory->plaintext('a descriptions for the pages éducation Case'),
+				'contents' => $typeFactory->plaintext('a descriptions for the pages éducation Case'),
+			)
+		);
+	}
+
 	function testSearchWithAdditionalS()
 	{
-		$query = new Search_Query('descriptions');
+		$query = new Search_Query('description');
 
 		$this->assertGreaterThan(0, count($query->search($this->index)));
 	}

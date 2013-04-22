@@ -12,7 +12,7 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 }
 
 /*
- * smarty_function_button: Display a Tikiwiki button
+ * smarty_function_button: Display a Tiki button
  *
  * params will be used as params for as smarty self_link params, except those special params specific to smarty button :
  *	- _text: Text that will be shown in the button
@@ -171,9 +171,9 @@ function smarty_function_button($params, $smarty)
 
 	$auto_query_args = $auto_query_args_orig;
 	if ($prefs['mobile_feature'] !== 'y' || $prefs['mobile_mode'] !== 'y') {
-		$html = '<span class="'.(!empty($params['_noborder']) ? '' : 'button').(!empty($class)?" $class":'').'"'.$id.'>'.$html.'</span>';
+		$html = '<span class="'.(!empty($params['_noborder']) ? '' : 'btn button').(!empty($class)?" $class":'').'"'.$id.'>'.$html.'</span>';
 	} else {
-		$html = preg_replace('/<a /', '<a  data-role="button" ', $html);
+		$html = preg_replace('/<a /', '<a class="btn" data-role="button" ', $html);
 	}
 	return $html;
 }

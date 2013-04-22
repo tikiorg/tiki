@@ -7,14 +7,14 @@
 // hook in timeline libs which need to be in the head - may have to alter headerlib to allow this to be done serverside.
 
 (function() {
-	Timeline_ajax_url = "lib/simile_timeline/timeline_ajax/simile-ajax-api.js";
-	Timeline_urlPrefix = "lib/simile_timeline/timeline_js/";
+	Timeline_ajax_url = "vendor/simile_timeline/simile_timeline/timeline_ajax/simile-ajax-api.js";
+	Timeline_urlPrefix = "vendor/simile_timeline/simile_timeline/timeline_js/";
 	Timeline_parameters = "bundle=true";
 	var head = document.getElementsByTagName("head")[0];
 	var script = document.createElement("script");
 	script.type = "text/javascript";
 	script.language = "JavaScript";
-	script.src = "lib/simile_timeline/timeline_js/timeline-api.js?bundle=true;";
+	script.src = "vendor/simile_timeline/simile_timeline/timeline_js/timeline-api.js?bundle=true;";
 	head.appendChild(script);
 })();
 

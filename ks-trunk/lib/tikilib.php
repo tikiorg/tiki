@@ -282,6 +282,9 @@ class TikiLib extends TikiDb_Bridge
 			case 'kalturaadmin':
 				require_once 'lib/videogals/kalturalib.php';
 				return self::$libraries[$name] = new KalturaLib(KalturaLib::SESSION_ADMIN);
+			case 'registration':
+				global $registrationlib; require_once 'lib/registration/registrationlib.php';
+				return self::$libraries[$name] = $registrationlib;
 		}
 	}
 
@@ -307,14 +310,18 @@ class TikiLib extends TikiDb_Bridge
 		global $prefs;
 
 		if (! isset($prefs['internal_site_hash'])) {
-			require_once 'lib/phpsec/phpsec/phpsec.rand.php';
-
-			$hash = base64_encode(phpsecRand::bytes(100));
+			$hash = $this->generate_unique_sequence();
 
 			$this->set_preference('internal_site_hash', $hash);
 		}
 
 		return $prefs['internal_site_hash'];
+	}
+
+    public function generate_unique_sequence($entropy = 100)
+	{
+		require_once 'lib/phpsec/phpsec/phpsec.rand.php';
+		return base64_encode(phpsecRand::bytes($entropy));
 	}
 
 	// DB param left for interface compatibility, although not considered
@@ -343,7 +350,7 @@ class TikiLib extends TikiDb_Bridge
      * @param $withReltype
      * @return array
      */
-    function get_pages($data, $withReltype)
+    function get_pages($data, $withReltype = false)
 	{
 		//to make migration easier
 		$parserlib = TikiLib::lib('parser');
@@ -1617,16 +1624,29 @@ class TikiLib extends TikiDb_Bridge
 			$res = $user;
 			$user = $user['login'];
 		} else {
-			$res = $this->table('users_users')->fetchRow(array('login', 'avatarType', 'avatarLibName'), array('login' => $user));
+			$res = $this->table('users_users')->fetchRow(array('login', 'avatarType', 'avatarLibName', 'email'), array('login' => $user));
 		}
 
 		if (!$res) {
 			return '';
 		}
 
-		$type = $res["avatarType"];
-		$libname = $res["avatarLibName"];
-		$ret = '';
+		if ($prefs['user_use_gravatar'] == 'y' && $res['email']) {
+			$https_mode = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on';
+			$hash = md5(strtolower(trim($res['email'])));
+
+			if ($https_mode) {
+				$url = "https://secure.gravatar.com/avatar/$hash?s=45";
+			} else {
+				$url = "http://www.gravatar.com/avatar/$hash?s=45";
+			}
+			$type = 'g';
+		} else {
+			$type = $res["avatarType"];
+			$libname = $res["avatarLibName"];
+			$ret = '';
+		}
+
 		$style = '';
 
 		if (strcasecmp($float, "left") == 0) {
@@ -1634,6 +1654,7 @@ class TikiLib extends TikiDb_Bridge
 		} else if (strcasecmp($float, "right") == 0) {
 			$style = "style='float:right;margin-left:5px;'";
 		}
+
 		switch ($type)	{
 			case 'l':
 				if ($libname) {
@@ -1647,6 +1668,9 @@ class TikiLib extends TikiDb_Bridge
 				if ($path) {
 					$ret = "<img src='" . htmlspecialchars($path, ENT_NOQUOTES) . "' " . $style . " alt='" . htmlspecialchars($user, ENT_NOQUOTES) . "'>";
 				}
+				break;
+			case 'g':
+				$ret = "<img src='" . htmlspecialchars($url, ENT_NOQUOTES) . "' " . $style . " alt='" . htmlspecialchars($user, ENT_NOQUOTES) . "'>";
 				break;
 			case 'n':
 			default:
@@ -3750,7 +3774,7 @@ class TikiLib extends TikiDb_Bridge
 		$ret = array();
 		switch ($objectType) {
 			case 'wiki page': case 'wiki':
-				if ( $prefs['wiki_creator_admin'] == 'y' && !empty($user) && isset($info) && $info['creator'] == $user ) { //can admin his page
+				if ( $prefs['wiki_creator_admin'] == 'y' && !empty($user) && !empty($info) && $info['creator'] == $user ) { //can admin his page
 					$perms = $userlib->get_permission_names_for($this->get_permGroup_from_objectType($objectType));
 					foreach ($perms as $perm) {
 						$ret[$perm] = 'y';
@@ -6486,7 +6510,7 @@ JS;
 		switch ($theme) {
 			case "uilightness":
 				$result['backgroundColor'] = '#F6A828';
-				$result['backgroundImage'] = 'lib/jquery.s5/images/bg.png';
+				$result['backgroundImage'] = 'vendor/jquery/jquery-s5/images/bg.png';
 				$result['headerFontColor'] = '#1C94C4';
 				$result['headerBackgroundColor'] = '';
 				$result['slideFontColor'] = '#333';
@@ -6494,7 +6518,7 @@ JS;
     			break;
 			case "uidarkness":
 				$result['backgroundColor'] = '#333';
-				$result['backgroundImage'] = 'lib/jquery.s5/images/bg.png';
+				$result['backgroundImage'] = 'vendor/jquery/jquery-s5/images/bg.png';
 				$result['headerFontColor'] = 'white';
 				$result['headerBackgroundColor'] = '';
 				$result['slideFontColor'] = 'white';
@@ -6502,7 +6526,7 @@ JS;
     			break;
 			case "smoothness":
 				$result['backgroundColor'] = '#E6E6E6';
-				$result['backgroundImage'] = 'lib/jquery.s5/images/bg.png';
+				$result['backgroundImage'] = 'vendor/jquery/jquery-s5/images/bg.png';
 				$result['headerFontColor'] = '#212121';
 				$result['headerBackgroundColor'] = '';
 				$result['slideFontColor'] = '#222';
@@ -6510,7 +6534,7 @@ JS;
     			break;
 			case "start":
 				$result['backgroundColor'] = '#2191c0';
-				$result['backgroundImage'] = 'lib/jquery.s5/images/bg.png';
+				$result['backgroundImage'] = 'vendor/jquery/jquery-s5/images/bg.png';
 				$result['headerFontColor'] = '#acdd4a';
 				$result['headerBackgroundColor'] = '';
 				$result['slideFontColor'] = 'white';
@@ -6518,7 +6542,7 @@ JS;
     			break;
 			case "redmond":
 				$result['backgroundColor'] = '#C5DBEC';
-				$result['backgroundImage'] = 'lib/jquery.s5/images/bg.png';
+				$result['backgroundImage'] = 'vendor/jquery/jquery-s5/images/bg.png';
 				$result['headerFontColor'] = '#2E6E9E';
 				$result['headerBackgroundColor'] = '';
 				$result['slideFontColor'] = '#222';
@@ -6526,7 +6550,7 @@ JS;
     			break;
 			case "sunny":
 				$result['backgroundColor'] = '#FEEEBD';
-				$result['backgroundImage'] = 'lib/jquery.s5/images/bg.png';
+				$result['backgroundImage'] = 'vendor/jquery/jquery-s5/images/bg.png';
 				$result['headerFontColor'] = '#0074C7';
 				$result['headerBackgroundColor'] = '';
 				$result['slideFontColor'] = '#383838';
@@ -6534,7 +6558,7 @@ JS;
     			break;
 			case "overcast":
 				$result['backgroundColor'] = '#C9C9C9';
-				$result['backgroundImage'] = 'lib/jquery.s5/images/bg.png';
+				$result['backgroundImage'] = 'vendor/jquery/jquery-s5/images/bg.png';
 				$result['headerFontColor'] = '#212121';
 				$result['headerBackgroundColor'] = '';
 				$result['slideFontColor'] = '#333';
@@ -6542,7 +6566,7 @@ JS;
     			break;
 			case "lefrog":
 				$result['backgroundColor'] = '#285C00';
-				$result['backgroundImage'] = 'lib/jquery.s5/images/bg.png';
+				$result['backgroundImage'] = 'vendor/jquery/jquery-s5/images/bg.png';
 				$result['headerFontColor'] = 'white';
 				$result['headerBackgroundColor'] = '';
 				$result['slideFontColor'] = 'white';
@@ -6550,7 +6574,7 @@ JS;
     			break;
 			case "flick":
 				$result['backgroundColor'] = '#DDD';
-				$result['backgroundImage'] = 'lib/jquery.s5/images/bg.png';
+				$result['backgroundImage'] = 'vendor/jquery/jquery-s5/images/bg.png';
 				$result['headerFontColor'] = '#0073EA';
 				$result['headerBackgroundColor'] = '';
 				$result['slideFontColor'] = '#444';
@@ -6558,7 +6582,7 @@ JS;
     			break;
 			case "peppergrinder":
 				$result['backgroundColor'] = '#ECEADF';
-				$result['backgroundImage'] = 'lib/jquery.s5/images/bg.png';
+				$result['backgroundImage'] = 'vendor/jquery/jquery-s5/images/bg.png';
 				$result['headerFontColor'] = '#654B24';
 				$result['headerBackgroundColor'] = '';
 				$result['slideFontColor'] = '#1F1F1F';
@@ -6566,7 +6590,7 @@ JS;
     			break;
 			case "eggplant":
 				$result['backgroundColor'] = '#3D3644';
-				$result['backgroundImage'] = 'lib/jquery.s5/images/bg.png';
+				$result['backgroundImage'] = 'vendor/jquery/jquery-s5/images/bg.png';
 				$result['headerFontColor'] = 'white';
 				$result['headerBackgroundColor'] = '';
 				$result['slideFontColor'] = 'white';
@@ -6574,7 +6598,7 @@ JS;
     			break;
 			case "darkhive":
 				$result['backgroundColor'] = '#444';
-				$result['backgroundImage'] = 'lib/jquery.s5/images/bg.png';
+				$result['backgroundImage'] = 'vendor/jquery/jquery-s5/images/bg.png';
 				$result['headerFontColor'] = '#0972A5';
 				$result['headerBackgroundColor'] = '';
 				$result['slideFontColor'] = 'white';
@@ -6582,7 +6606,7 @@ JS;
     			break;
 			case "cupertino":
 				$result['backgroundColor'] = '#D7EBF9';
-				$result['backgroundImage'] = 'lib/jquery.s5/images/bg.png';
+				$result['backgroundImage'] = 'vendor/jquery/jquery-s5/images/bg.png';
 				$result['headerFontColor'] = '#2694E8';
 				$result['headerBackgroundColor'] = '';
 				$result['slideFontColor'] = '#362B36';
@@ -6590,7 +6614,7 @@ JS;
     			break;
 			case "southstreet":
 				$result['backgroundColor'] = '#F5F3E5';
-				$result['backgroundImage'] = 'lib/jquery.s5/images/bg.png';
+				$result['backgroundImage'] = 'vendor/jquery/jquery-s5/images/bg.png';
 				$result['headerFontColor'] = '#459E00';
 				$result['headerBackgroundColor'] = '';
 				$result['slideFontColor'] = '#312E25';
@@ -6598,7 +6622,7 @@ JS;
     			break;
 			case "blitzer":
 				$result['backgroundColor'] = '#EEE';
-				$result['backgroundImage'] = 'lib/jquery.s5/images/bg.png';
+				$result['backgroundImage'] = 'vendor/jquery/jquery-s5/images/bg.png';
 				$result['headerFontColor'] = '#C00';
 				$result['headerBackgroundColor'] = '';
 				$result['slideFontColor'] = '#333';
@@ -6606,7 +6630,7 @@ JS;
     			break;
 			case "humanity":
 				$result['backgroundColor'] = '#EDE4D4';
-				$result['backgroundImage'] = 'lib/jquery.s5/images/bg.png';
+				$result['backgroundImage'] = 'vendor/jquery/jquery-s5/images/bg.png';
 				$result['headerFontColor'] = '#B85700';
 				$result['headerBackgroundColor'] = '';
 				$result['slideFontColor'] = '#1E1B1D';
@@ -6614,7 +6638,7 @@ JS;
     			break;
 			case "hotsneaks":
 				$result['backgroundColor'] = '#35414F';
-				$result['backgroundImage'] = 'lib/jquery.s5/images/bg.png';
+				$result['backgroundImage'] = 'vendor/jquery/jquery-s5/images/bg.png';
 				$result['headerFontColor'] = '#E1E463';
 				$result['headerBackgroundColor'] = '';
 				$result['slideFontColor'] = '#93C3CD';
@@ -6622,7 +6646,7 @@ JS;
     			break;
 			case "excitebike":
 				$result['backgroundColor'] = '#EEE';
-				$result['backgroundImage'] = 'lib/jquery.s5/images/bg.png';
+				$result['backgroundImage'] = 'vendor/jquery/jquery-s5/images/bg.png';
 				$result['headerFontColor'] = '#E69700';
 				$result['headerBackgroundColor'] = '';
 				$result['slideFontColor'] = '#1484E6';
@@ -6630,7 +6654,7 @@ JS;
     			break;
 			case "vader":
 				$result['backgroundColor'] = '#121212';
-				$result['backgroundImage'] = 'lib/jquery.s5/images/bg.png';
+				$result['backgroundImage'] = 'vendor/jquery/jquery-s5/images/bg.png';
 				$result['headerFontColor'] = '#ADADAD';
 				$result['headerBackgroundColor'] = '';
 				$result['slideFontColor'] = '#EEE';
@@ -6638,7 +6662,7 @@ JS;
     			break;
 			case "dotluv":
 				$result['backgroundColor'] = '#111';
-				$result['backgroundImage'] = 'lib/jquery.s5/images/bg.png';
+				$result['backgroundImage'] = 'vendor/jquery/jquery-s5/images/bg.png';
 				$result['headerFontColor'] = '#0b3e6f';
 				$result['headerBackgroundColor'] = '';
 				$result['slideFontColor'] = '#D9D9D9';
@@ -6646,7 +6670,7 @@ JS;
     			break;
 			case "mintchoc":
 				$result['backgroundColor'] = '#453326';
-				$result['backgroundImage'] = 'lib/jquery.s5/images/bg.png';
+				$result['backgroundImage'] = 'vendor/jquery/jquery-s5/images/bg.png';
 				$result['headerFontColor'] = '#BAEC7E';
 				$result['headerBackgroundColor'] = '';
 				$result['slideFontColor'] = '#ffffff';
@@ -6654,7 +6678,7 @@ JS;
     			break;
 			case "blacktie":
 				$result['backgroundColor'] = '#333333';
-				$result['backgroundImage'] = 'lib/jquery.s5/images/bg.png';
+				$result['backgroundImage'] = 'vendor/jquery/jquery-s5/images/bg.png';
 				$result['headerFontColor'] = '#a3a3a3';
 				$result['headerBackgroundColor'] = '';
 				$result['slideFontColor'] = '#eeeeee';
@@ -6662,7 +6686,7 @@ JS;
     			break;
 			case "trontastic":
 				$result['backgroundColor'] = '#222222';
-				$result['backgroundImage'] = 'lib/jquery.s5/images/bg.png';
+				$result['backgroundImage'] = 'vendor/jquery/jquery-s5/images/bg.png';
 				$result['headerFontColor'] = '#9fda58';
 				$result['headerBackgroundColor'] = '';
 				$result['slideFontColor'] = '#ffffff';
@@ -6670,7 +6694,7 @@ JS;
     			break;
 			case "swankypurse":
 				$result['backgroundColor'] = '#261803';
-				$result['backgroundImage'] = 'lib/jquery.s5/images/bg.png';
+				$result['backgroundImage'] = 'vendor/jquery/jquery-s5/images/bg.png';
 				$result['headerFontColor'] = '#eacd86';
 				$result['headerBackgroundColor'] = '';
 				$result['slideFontColor'] = '#efec9f';

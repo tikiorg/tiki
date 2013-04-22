@@ -17,7 +17,7 @@ function switchSoapRest() {
 
 var wsType = $('select[name=wstype]');
 
-wsType.live('change', switchSoapRest);
+wsType.on('change', switchSoapRest);
 wsType.ready(function() {
 	wsType.trigger('change');
 });

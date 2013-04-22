@@ -298,6 +298,13 @@ function prefs_global_list($partial = false)
 			'default' => '',
 			'tags' => array('basic'),
 		),
+		'showRegisterPasscode' => array(
+			'name' => tra('Show passcode on registration form'),
+			'description' => tra('Displays the required passcode on the registration form.'),
+			'type' => 'flag',
+			'default' => 'n',
+			'tags' => array('basic'),
+		),
 		'userTracker' => array(
 			'name' => tra('Use tracker to collect more user information'),
             'description' => tra('Display a tracker (form) for the user to complete, as part of the registration process. Use this tracker to store additional information about each user.'),

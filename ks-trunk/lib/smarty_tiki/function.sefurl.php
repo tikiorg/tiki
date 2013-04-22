@@ -23,14 +23,14 @@ if (!function_exists('smarty_function_sefurl')) {
 				$url = 'tiki-index.php?page=' . urlencode($params['page']) . '&amp;structure=' . urlencode($params['structure']);
 			} else {
 				$url = $wikilib->sefurl($params['page']);
-				$url .= (strpos('?', $url) === false ? '?' : '&amp;') . 'structure=' . urlencode($params['structure']);
+				$url .= (strpos($url, '?') === false ? '?' : '&amp;') . 'structure=' . urlencode($params['structure']);
 			}
 			if (isset($_REQUEST['no_bl']) && $_REQUEST['no_bl'] === 'y') {
-				$url .= (strpos('?', $url) === false ? '?' : '&amp;') . 'latest=1';
+				$url .= (strpos($url, '?') === false ? '?' : '&amp;') . 'latest=1';
 			}
 		}
 		if ($prefs['page_n_times_in_a_structure'] == 'y') {
-			$url .= (strpos('?', $url) === false ? '?' : '&amp;') . 'page_ref_id=' . $params['page_ref_id'];
+			$url .= (strpos($url, '?') === false ? '?' : '&amp;') . 'page_ref_id=' . $params['page_ref_id'];
 		}
 		return $url;
 	}

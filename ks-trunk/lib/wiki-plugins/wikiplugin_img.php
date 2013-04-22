@@ -340,6 +340,19 @@ function wikiplugin_img_info()
 		$info['params']['thumb']['options'][] = array('text' => tra('Browse Popup'), 'value' => 'browsepopup', 'description' => tra('Same as "browse" except that the page opens in a new window or tab.'));
 		$info['params']['thumb']['description'] = tra('Makes the image a thumbnail that enlarges to full size when clicked or moused over (unless "link" is set to another target). "browse" and "browsepopup" only work with image gallery and "download" only works with file gallery or attachments.');
 	}
+	if ($prefs['feature_draw'] === 'y') {
+		$info['params']['noDrawIcon'] = array(
+			'required' => false,
+			'name' => tra('Hide Draw Icon'),
+			'description' => tra('Do not show draw/edit icon button under image.'),
+			'advanced' => true,
+			'options' => array(
+				array('text' => tra('No'), 'value' => 'n'),
+				array('text' => tra('Yes'), 'value' => 'y'),
+			),
+			'default' => 'n',
+		);
+	}
 	return $info;
 }
 
@@ -378,8 +391,10 @@ function wikiplugin_img( $data, $params )
 	$imgdata['alt'] = '';
 	$imgdata['default'] = '';
 	$imgdata['mandatory'] = '';
-	$imgdata['fromFieldId'] = 0;	// "private" params set by Tracker_Field_Files
-	$imgdata['fromItemId']  = 0;	// ditto
+	$imgdata['fromFieldId'] = 0;		// "private" params set by Tracker_Field_Files
+	$imgdata['fromItemId']  = 0;		// ditto
+	$imgdata['checkItemPerms']  = 'y';	// ditto
+	$imgdata['noDrawIcon']  = 'n';
 
 	$imgdata = array_merge($imgdata, $params);
 
@@ -648,10 +663,20 @@ function wikiplugin_img( $data, $params )
 			if (!empty($urlimthumb[0]) && $urlimthumb[0] > 0) $imgalthumb = true;
 		}
 
+		include_once ('lib/mime/mimetypes.php');
+		global $mimetypes;
+
 		//Now set dimensions based on plugin parameter settings
 		if (!empty($imgdata['max']) || !empty($imgdata['height']) || !empty($imgdata['width'])
 			|| !empty($imgdata['thumb'])
 		) {
+			// find svg image size
+			if (!empty($dbinfo['filetype'])  && !empty($mimetypes['svg']) && $dbinfo['filetype'] == $mimetypes['svg']) {
+				if (preg_match('/width="(\d+)" height="(\d+)"/', $dbinfo['data'], $svgdim)) {
+					$fwidth = $svgdim[1];
+					$fheight = $svgdim[2];
+				}
+			}
 			//Convert % and px in height and width
 			$scale = '';
 			if (strpos($imgdata['height'], '%') !== false || strpos($imgdata['width'], '%') !== false) {
@@ -775,6 +800,8 @@ function wikiplugin_img( $data, $params )
 					&& (empty($urlthumb) && empty($urlmax[0]) && empty($urlprev))
 			) {
 				$src .= '&max=' . $imgdata['max'];
+				$imgdata_dim .= ' width="' . $width . '"';
+				$imgdata_dim .= ' height="' . $height . '"';
 			} elseif (!empty($width) || !empty($height)) {
 				if ((!empty($width) && !empty($height)) && (empty($urlx[0]) && empty($urly[0]) && empty($urlscale[0]))) {
 					$src .= '&x=' . $width . '&y=' . $height;
@@ -819,13 +846,14 @@ function wikiplugin_img( $data, $params )
 	//Start tag with src and dimensions
 	$src = filter_out_sefurl($src);
 
-	include_once ('lib/mime/mimetypes.php');
-	global $mimetypes;
-
 	$tagName = '';
 	if (!empty($dbinfo['filetype'])  && !empty($mimetypes['svg']) && $dbinfo['filetype'] == $mimetypes['svg']) {
 		$tagName = 'div';
 		$repldata = $dbinfo['data'];
+		if (!empty($fwidth) && !empty($fheight) && !empty($imgdata_dim)) {		// change svg attributes to show at the correct size
+			$svgAttributes = $imgdata_dim . ' viewBox="0 0 ' . $fwidth . ' ' . $fheight . '" preserveAspectRatio="xMinYMin meet"';
+			$repldata = preg_replace('/width="'.$fwidth.'" height="'.$fheight.'"/', $svgAttributes, $repldata);
+		}
 		$replimg = '<div type="image/svg+xml" ';
 		$imgdata['class'] .= ' svgImage pluginImg' . $imgdata['fileId'];
 		$imgdata['class'] = trim($imgdata['class']);
@@ -1179,25 +1207,24 @@ function wikiplugin_img( $data, $params )
 		$repl = '{img src=' . $src . "\"}\n<p>" . $imgdata['desc'] . '</p>';
 	}
 
-	if (!empty($dbinfo['galleryId'])) {
+	if ($prefs['feature_draw'] == 'y' && !empty($dbinfo['galleryId']) && $imgdata['noDrawIcon'] !== 'y') {
 		global $tiki_p_edit;
 		$globalperms = Perms::get(array( 'type' => 'file gallery', 'object' => $dbinfo['galleryId'] ));
+		if ($imgdata['fromItemId']) {
+			if ($imgdata['checkItemPerms'] !== 'n') {
+				$perms_Accessor = Perms::get(array('type' => 'tracker item', 'object' => $imgdata['fromItemId']));
+				$trackerItemPerms = $perms_Accessor->modify_tracker_items;
+			} else {
+				$trackerItemPerms = true;
+			}
+		} else {
+			$trackerItemPerms = false;
+		}
 
-		if (
-			$prefs['feature_draw'] == 'y' &&
-			$globalperms->upload_files == 'y' &&
-			(
-				empty($src) == true ||
-				$srcIsEditable == true
-			) && (
-				$tiki_p_edit == 'y' ||
-				($imgdata['fromItemId'] &&
-					Perms::get(array(
-						'type' => 'tracker item',
-						'object' => $imgdata['fromItemId'])
-					)->modify_tracker_items)
-			)
-		) {
+		if ($globalperms->upload_files == 'y' &&
+			(empty($src) == true || $srcIsEditable == true) &&
+			($tiki_p_edit == 'y' || $trackerItemPerms)) {
+
 			if ($prefs['wiki_edit_icons_toggle'] == 'y' && !isset($_COOKIE['wiki_plugin_edit_view']) && !$imgdata['fromItemId']) {
 				$iconDisplayStyle = " style=\"display:none;\"";
 			} else {

@@ -6,7 +6,6 @@
 // $Id$
 
 require_once 'lib/language/CollectFiles.php';
-require_once('vfsStream/vfsStream.php');
 
 class Language_CollectFilesTest extends TikiTestCase
 {

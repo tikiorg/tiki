@@ -50,6 +50,7 @@ class KalturaLib
 	private function storedKey($key = null)
 	{
 		global $user;
+		$tikilib = TikiLib::lib('tiki');
 		$session = "kaltura_session_{$this->sessionType}_$user";
 
 		if (is_null($key)) {
@@ -328,7 +329,7 @@ class KalturaLib
 			$kpager->pageIndex = $page;
 			$kpager->pageSize = $page_size;
 
-			$kfilter = new KalturaMixEntryFilter();
+			$kfilter = new KalturaMediaEntryFilter();
 			$kfilter->orderBy = $sort_mode;
 			$kfilter->nameMultiLikeOr = $find;
 			$kfilter->statusIn = '-1,-2,0,1,2';

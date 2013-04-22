@@ -111,14 +111,14 @@ function wikiplugin_customsearch($data, $params)
 	if (!isset($_REQUEST["offset"])) {
 		$offset = 0;
 	} else {
-		$offset = $_REQUEST["offset"];
+		$offset = (int) $_REQUEST["offset"];
 	}
 	if (isset($_REQUEST['maxRecords'])) {
-		$maxRecords = $_REQUEST['maxRecords'];
+		$maxRecords = (int) $_REQUEST['maxRecords'];
 	} elseif ($recalllastsearch && !empty($_SESSION["customsearch_$id"]['maxRecords'])) {
-		$maxRecords = $_SESSION["customsearch_$id"]['maxRecords'];
+		$maxRecords = (int) $_SESSION["customsearch_$id"]['maxRecords'];
 	} else {
-		$maxRecords = $prefs['maxRecords'];
+		$maxRecords = (int) $prefs['maxRecords'];
 	}
 	if (!empty($_REQUEST['sort_mode'])) {
 		$sort_mode = $_REQUEST['sort_mode'];
@@ -131,14 +131,30 @@ function wikiplugin_customsearch($data, $params)
 		$params['searchonload'] = 1;
 	}
 
+	$definitionKey = md5($data);
+	$matches = WikiParser_PluginMatcher::match($data);
+	$query = new Search_Query;
+	$builder = new Search_Query_WikiBuilder($query);
+	$builder->apply($matches);
+
+	$builder = new Search_Formatter_Builder;
+	$builder->apply($matches);
+	$formatter = $builder->getFormatter();
+
+	$cachelib = TikiLib::lib('cache');
+	$cachelib->cacheItem($definitionKey, serialize(array(
+		'query' => $query,
+		'formatter' => $formatter,
+	)), 'customsearch');
+
 	$wikitpl = "tplwiki:" . $params['wiki'];
 	$wikicontent = TikiLib::lib('smarty')->fetch($wikitpl);
 	TikiLib::lib('parser')->parse_wiki_argvariable($wikicontent);
 
 	$matches = WikiParser_PluginMatcher::match($wikicontent);
 
-	$parser = new WikiParser_PluginArgumentParser;
-	$fingerprint = md5(print_r($matches, true));
+	$fingerprint = md5($wikicontent);
+
 	$sessionprint = "customsearch_{$id}_$fingerprint";
 	if (isset($_SESSION[$sessionprint]) && $_SESSION[$sessionprint] != $fingerprint) {
 		unset($_SESSION["customsearch_$id"]);
@@ -147,67 +163,71 @@ function wikiplugin_customsearch($data, $params)
 
 	// important that offset from session is set after fingerprint check otherwise blank page might show
 	if ($recalllastsearch && !isset($_REQUEST['offset']) && !empty($_SESSION["customsearch_$id"]["offset"])) {
-		$offset = $_SESSION["customsearch_$id"]["offset"];
+		$offset = (int) $_SESSION["customsearch_$id"]["offset"];
 	}
-
-	$groups = array();
-	$textrangegroups = array();
-	$daterangegroups = array();
 
 	$options = array(
 		'searchfadetext' => tr('Loading...'),
 		'searchfadediv' => $searchfadediv,
 		'results' => empty($params['destdiv']) ? "#customsearch_{$id}_results" : "#{$params['destdiv']}",
-		'autosearchdelay' => isset($params['autosearchdelay']) ? (int) $params['autosearchdelay'] : 0,
+		'autosearchdelay' => isset($params['autosearchdelay']) ? max(1500, (int) $params['autosearchdelay']) : 0,
+		'searchonload' => (int) $params['searchonload'],
 	);
 
+	/**
+	 * NOTES: Search Execution
+	 *
+	 * There is a global delay on execution of 1 second. This makes sure
+	 * multiple submissions will never trigger multiple requests.
+	 *
+	 * There is an additional autosearchdelay configuration that can trigger the search
+	 * on field change rather than explicit request. Explicit requests will still work.
+	 */
 	$script = "
 var customsearch = {
 	options: " . json_encode($options) . ",
 	id: " . json_encode($id) . ",
 	offset: 0,
-	quiet: false,
 	searchdata: {},
-	basedata: " . json_encode((string) $data) . ",
+	definition: " . json_encode((string) $definitionKey) . ",
 	autoTimeout: null,
 	add: function (fieldId, filter) {
-		this.stop();
 		this.searchdata[fieldId] = filter;
-		this.start();
+		this.auto();
 	},
 	remove: function (fieldId) {
-		this.stop();
 		delete this.searchdata[fieldId];
-		this.start();
+		this.auto();
 	},
 	load: function () {
-		var selector = '#' + this.options.searchfadediv;
-		var that = this;
-		if (this.options.searchfadediv.length <= 1 && $(selector).length === 0) {
-			selector = '#customsearch_$id';
+		this._executor(this);
+	},
+	auto: function () {
+	},
+	_executor: delayedExecutor(1000, function (cs) {
+		var selector = '#' + cs.options.searchfadediv;
+		if (cs.options.searchfadediv.length <= 1 && $(selector).length === 0) {
+			selector = '#customsearch_' + cs.id;
 		}
 
-		$(selector).modal(this.options.searchfadetext);
+		$(selector).modal(cs.options.searchfadetext);
 
-		this._load(function (data) {
+		cs._load(function (data) {
 			$(selector).modal();
-			$(that.options.results).html(data);
-			customsearch.quiet = false;
+			$(cs.options.results).html(data);
 			$(document).trigger('pageSearchReady');
 		});
-	},
-	stop: function () {
-		if (this.autoTimeout) {
-			clearTimeout(this.autoTimeout);
-			this.autoTimeout = null;
-		}
-	},
-	start: function () {
+	}),
+	init: function () {
 		var that = this;
-		if (this.options.autosearchdelay && ! this.quiet) {
-			this.autoTimeout = setTimeout(function () {
+		if (that.options.searchonload) {
+			that.load();
+		}
+
+		if (that.options.autosearchdelay) {
+			that.auto = delayedExecutor(that.options.autosearchdelay, function () {
 				that.load();
-			}, this.options.autosearchdelay);
+			});
 		}
 	}
 };
@@ -222,6 +242,7 @@ $('#customsearch_$id').submit(function() {
 customsearch_$id = customsearch;
 ";
 
+	$parser = new WikiParser_PluginArgumentParser;
 	foreach ($matches as $match) {
 		$name = $match->getName();
 		$arguments = $parser->parse($match->getArguments());
@@ -261,18 +282,15 @@ customsearch_$id = customsearch;
 		$function = "cs_design_{$name}";
 		if (function_exists($function)) {
 			if (isset($arguments['_group'])) {
-				$groups[$fieldid] = $arguments['_group'];
 				$fieldname = "customsearch_{$id}_gr" . $arguments['_group'];
 			} elseif (isset($arguments['_textrange'])) {
-				$textrangegroups[$fieldid] = $arguments['_textrange'];
 				$fieldname = "customsearch_{$id}_textrange" . $arguments['_textrange'];
 			} elseif (isset($arguments['_daterange'])) {
-				$daterangegroups[$fieldid] = $arguments['_daterange'];
 				$fieldname = "customsearch_{$id}_daterange" . $arguments['_daterange'];
 			} else {
 				$fieldname = $fieldid;
 			}
-			$match->replaceWith($function($id, $fieldname, $fieldid, $arguments, $default, $script, $groups));
+			$match->replaceWith($function($id, $fieldname, $fieldid, $arguments, $default, $script));
 		}
 	}
 
@@ -286,15 +304,13 @@ customsearch_$id = customsearch;
 	$script .= "
 customsearch._load = function (receive) {
 	var datamap = {
-		basedata: this.basedata,
+		definition: this.definition,
 		adddata: $.toJSON(this.searchdata),
 		searchid: this.id,
-		groups: '" . json_encode($groups) . "',
-		textrangegroups: '" . json_encode($textrangegroups) . "',
-		daterangegroups: '" . json_encode($daterangegroups) . "',
 		offset: customsearch.offset,
 		maxRecords: this.maxRecords,
-		page: '$page'
+		page: " . json_encode($page) . ",
+		recalllastsearch: $recalllastsearch
 	};
 	if (customsearch.sort_mode) {
 		// blank sort_mode is not allowed by Tiki input filter
@@ -302,7 +318,7 @@ customsearch._load = function (receive) {
 	}
 	$.ajax({
 		type: 'POST',
-		url: $.service('tracker_search', 'customsearch'),
+		url: $.service('search_customsearch', 'customsearch'),
 		data: datamap,
 		dataType: 'html',
 		success: function(data) {
@@ -311,14 +327,11 @@ customsearch._load = function (receive) {
 		}
 	});
 };
-customsearch.sort_mode = '$sort_mode';
+customsearch.sort_mode = " . json_encode($sort_mode) . ";
 customsearch.offset = $offset;
 customsearch.maxRecords = $maxRecords;
+customsearch.init();
 ";
-
-	if ($params['searchonload']) {
-		$script .= "customsearch.load();";
-	}
 
 	TikiLib::lib('header')->add_jq_onready($script);
 
@@ -331,7 +344,7 @@ customsearch.maxRecords = $maxRecords;
 	return $out;
 }
 
-function cs_design_setbasic(&$element, $fieldid, $fieldname, $arguments)
+function cs_design_setbasic($element, $fieldid, $fieldname, $arguments)
 {
 	$element->setAttribute('id', $fieldid);
 	$element->setAttribute('name', $fieldname);
@@ -342,48 +355,48 @@ function cs_design_setbasic(&$element, $fieldid, $fieldname, $arguments)
 	}
 }
 
-function cs_design_input($id, $fieldname, $fieldid, $arguments, $default, &$script, &$groups)
+function cs_design_input($id, $fieldname, $fieldid, $arguments, $default, &$script)
 {
 	$document = new DOMDocument;
 	$element = $document->createElement('input');
 	cs_design_setbasic($element, $fieldid, $fieldname, $arguments);
-	extract($arguments, EXTR_SKIP);
-
-	if ($type == 'checkbox' || $type == 'radio') {
-		$val_selector = "$(this).is(':checked')";
-	} else {
-		$val_selector = "$(this).val()";
-	}
-	if ($type == 'radio') {
-		$radioreset = "$('input[type=radio][name=$fieldname]').each(function() {
-				customsearch.remove($(this).attr('id'));
-			});";
-	} else {
-		$radioreset = '';
-	}
 
 	$script .= "
-$('#$fieldid').change(function() {
-	var filter = {
-		config: " . json_encode($arguments) . ",
-		name: 'input',
-		value: $val_selector
-	};
-	$radioreset
-	customsearch.add('$fieldid', filter);
-});
+(function (id, config, fieldname) {
+	var field = $('#' + id);
+	field.change(function() {
+		var filter = {
+			config: config,
+			name: 'input',
+			value: $(this).val()
+		};
 
-if (customsearch.options.autosearchdelay) {
-	// prevent enter from submitting form since the change itself will do so
-	$('#$fieldid').keydown(function(event) {
-		if (event.keyCode == '13') {
-			event.preventDefault();
-			$('#$fieldid').trigger('change');
-			return false;
+		if ($(this).is(':checkbox, :radio')) {
+			filter.value = $(this).is(':checked');
 		}
+
+		if ($(this).is(':radio')) {
+			$(this).closest('form').find(':radio')
+				.filter(function () {
+					return $(this).attr('name') == fieldname
+				})
+				.each(function() {
+					customsearch.remove($(this).attr('id'));
+				});
+		}
+
+		customsearch.add($(this).attr('id'), filter);
 	});
-}
+
+	if (config.default || $(field).attr('type') === 'hidden') {
+		field.change();
+	}
+})('$fieldid', " . json_encode($arguments) . ", " . json_encode($fieldname) . ");
 ";
+
+	$arguments = new JitFilter($arguments);
+	$default = $arguments->default->text();
+	$type = $arguments->type->word();
 
 	if ($default && $type != "hidden") {
 		if ((string) $default != 'n' && ($type == 'checkbox' || $type == 'radio')) {
@@ -391,16 +404,13 @@ if (customsearch.options.autosearchdelay) {
 		} else {
 			$element->setAttribute('value', $default);
 		}
-		$script .= 	"customsearch.quiet = true; $('#$fieldid').trigger('change');\ncustomsearch.quiet = false;\n";
-	} elseif ($type == "hidden") {
-		$script .= 	"customsearch.quiet = true; $('#$fieldid').trigger('change');\ncustomsearch.quiet = false;\n";
 	}
 
 	$document->appendChild($element);
 	return $document->saveHTML();
 }
 
-function cs_design_categories($id, $fieldname, $fieldid, $arguments, $default, &$script, &$groups)
+function cs_design_categories($id, $fieldname, $fieldid, $arguments, $default, &$script)
 {
 	$document = new DOMDocument;
 	extract($arguments, EXTR_SKIP);
@@ -434,7 +444,6 @@ function cs_design_categories($id, $fieldname, $fieldid, $arguments, $default, &
 		foreach ($cats as $c) {
 			$categId = $c['categId'];
 			$fieldid = $orig_fieldid . "_cat$categId";
-			$groups[$fieldid] = $arguments['_group']; // add new "subfield" to groups list
 			$level = count($c['tepath']);
 			if ($level > $currentlevel) {
 				$ul{$level} = $document->createElement('ul');
@@ -485,9 +494,7 @@ $('#$fieldid').change(function() {
 			if ($default && in_array($c['categId'], (array) $default)) {
 				$element->setAttribute('checked', 'checked');
 				$script .= "
-customsearch.quiet = true;
 $('#$fieldid').trigger('change');
-customsearch.quiet = false;
 ";
 			}
 		}
@@ -520,9 +527,7 @@ $('#$fieldid').change(function() {
 			if ($default && in_array($c['categId'], (array) $default)) {
 				$option->setAttribute('selected', 'selected');
 				$script .= "
-customsearch.quiet = true;
 $('#$fieldid').trigger('change');
-customsearch_quiet = false;
 ";
 			}
 		}
@@ -533,7 +538,7 @@ customsearch_quiet = false;
 	return '~np~' . $document->saveHTML() . '~/np~';
 }
 
-function cs_design_select($id, $fieldname, $fieldid, $arguments, $default, &$script, &$groups)
+function cs_design_select($id, $fieldname, $fieldid, $arguments, $default, &$script)
 {
 	$document = new DOMDocument;
 	$element = $document->createElement('select');
@@ -586,9 +591,7 @@ $('#$fieldid').change(function() {
 		if ($default && in_array($opt, (array) $default)) {
 			$option->setAttribute('selected', 'selected');
 			$script .= "
-customsearch.quiet = true;
 $('#$fieldid').trigger('change');
-customsearch.quiet = false;
 ";
 		}
 		$element->appendChild($option);
@@ -596,7 +599,7 @@ customsearch.quiet = false;
 	return $document->saveHTML();
 }
 
-function cs_design_daterange($id, $fieldname, $fieldid, $arguments, $default, &$script, &$groups)
+function cs_design_daterange($id, $fieldname, $fieldid, $arguments, $default, &$script)
 {
 	extract($arguments, EXTR_SKIP);
 
