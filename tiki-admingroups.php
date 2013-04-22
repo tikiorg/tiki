@@ -381,6 +381,7 @@ $smarty->assign('bannedlist', $bannedlist);
 
 $userslist=$userlib->list_all_users();
 if (!empty($memberslist)) {
+    $cookietab = '3';
 	foreach ($memberslist as $key => $values) {
 		if ( in_array($values["login"], $userslist) ) {
 			unset($userslist[array_search($values["login"], $userslist, true)]);
