@@ -82,6 +82,11 @@ h3.box-title {
 	color: #fff;
 }
 
+.box-title a,
+.box-title a:link {
+	color: #fff;
+}
+
 /***** Feature-specific styles ****/
 /***** Wiki ******/
 

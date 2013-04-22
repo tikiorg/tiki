@@ -288,6 +288,11 @@ h3.box-title {
 	background-color: #fffecf;
 	border-bottom: #d9d8b0 solid 1px;
 }
+
+.box-title a,
+.box-title a:link {
+	color: #6f9898;
+}
 	
 .box-data a {
 	color: #6f9898;
