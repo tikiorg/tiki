@@ -227,7 +227,8 @@ tr.odd td,
 td.odd,
 li.odd,
 .oddthumb,
-table.normal tr:nth-child(2n+1) {
+table.normal tr:nth-child(2n+1),
+.tablesorter tr.odd td {
 	background: #d9d9b0;
 }
 
@@ -235,7 +236,8 @@ tr.even td,
 td.even,
 li.even,
 .eventhumb,
-table.normal tr:nth-child(2n) {
+table.normal tr:nth-child(2n),
+.tablesorter tr.even td {
 	background: #d1d2a9;
 }
 

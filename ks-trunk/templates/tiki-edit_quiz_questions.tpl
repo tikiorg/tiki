@@ -7,10 +7,10 @@
 {title help="Quiz" url="tiki-edit_quiz_questions.php?quizId=$quizId"}{tr}Edit quiz questions{/tr}{/title}
 
 <div class="navbar">
-	{button href="tiki-list_quizzes.php" _text="{tr}List Quizzes{/tr}"} 
+	{button href="tiki-list_quizzes.php" _text="{tr}List Quizzes{/tr}"}
 	{button href="tiki-quiz_stats.php" _text="{tr}Quiz Stats{/tr}"}
 	{button href="tiki-quiz_stats_quiz.php?quizId=$quizId" _text="{tr}This Quiz Stats{/tr}"}
-	{button href="tiki-edit_quiz.php?quizId=$quizId" _text="{tr}Edit this Quiz{/tr}"} 
+	{button href="tiki-edit_quiz.php?quizId=$quizId" _text="{tr}Edit this Quiz{/tr}"}
 	{button href="tiki-edit_quiz.php" _text="{tr}Admin Quizzes{/tr}"}
 </div>
 
@@ -112,7 +112,7 @@
 			</td>
 		</tr>
 	{sectionelse}
-		{norecords _colpan=6}
+		{norecords _colspan=6}
 	{/section}
 </table>
 

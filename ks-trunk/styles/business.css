@@ -399,6 +399,10 @@ body.fixed_width .fixedwidth .fixedwidth {
 	margin-top: -1px;
 }
 
+#col2 .box-data .cssmenu_vert ul {
+	padding-left: 0;
+}
+
 /* left column width */
 #col2 .cssmenu_vert,
 #col2 .cssmenu_vert li {
@@ -630,7 +634,7 @@ th a.sortheader:visited {
 tr.odd td,
 td.odd,
 table.normal tr:nth-child(2n+1),
-table.normal tr:nth-child(2n+1) td {
+.tablesorter tr.odd td {
 	background: #f0f0f0;
 	color: #000;
 	border-right: 1px solid #3273c4;
@@ -639,7 +643,7 @@ table.normal tr:nth-child(2n+1) td {
 tr.even td,
 td.even,
 table.normal tr:nth-child(2n),
-table.normal tr:nth-child(2n) td {
+.tablesorter tr.even td {
 	background: #dcdcdc;
 	color: #000;
 	border-right: 1px solid #3273c4;

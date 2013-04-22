@@ -141,14 +141,16 @@
 					{if ($prefs.feature_article_comments eq 'y') and ($tiki_p_read_comments eq 'y') and ($listpages[ix].allow_comments eq 'y')}
 						<span>
 							<a href="{$listpages[ix].articleId|sefurl:article:with_next}show_comzone=y{if !empty($urlparam)}&amp;{$urlparam}{/if}#comments"{if $listpages[ix].comments_cant > 0} class="highlight"{/if}>
-								{if $listpages[ix].comments_cant == 0 or ($tiki_p_read_comments == 'n' and $tiki_p_post_comments == 'y')}
+								{if $listpages[ix].comments_cant == 0 and $tiki_p_post_comments == 'y'}
 									{if !isset($actions) or $actions eq "y"}
 										{tr}Add Comment{/tr}
 									{/if}
-								{elseif $listpages[ix].comments_cant == 1}
-									{tr}1 comment{/tr}
-								{else}
-									{$listpages[ix].comments_cant}&nbsp;{tr}comments{/tr}
+								{elseif $tiki_p_read_comments eq 'y'}
+									{if $listpages[ix].comments_cant == 1}
+										{tr}1 comment{/tr}
+									{else}
+										{$listpages[ix].comments_cant}&nbsp;{tr}comments{/tr}
+									{/if}
 								{/if}
 							</a>
 						</span>

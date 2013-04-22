@@ -1,11 +1,11 @@
 /*
  * The Darkroom theme for Tiki Wiki CMS Groupware.
- * Released under the LGPL license. 
+ * Released under the LGPL license.
  * For more information on Darkroom, please visit http://themes.tiki.org.
  */
- 
+
  /* import *lite as the base: */
-@import url("lite/lite.css"); 
+@import url("lite/lite.css");
 
 /* Then import the default layout properties file: */
 @import url("layout/layout.css");
@@ -13,7 +13,7 @@
 /* And design defaults: */
 @import url("layout/design.css");
 
-/***** XHTML Elements ******/ 
+/***** XHTML Elements ******/
 
 html {
 	background: #474747 url(darkroom/474747_5e5e5e_40.png);
@@ -120,6 +120,7 @@ input[type="text"],
 input[type="password"],
 input[type="email"],
 input[type="file"],
+input[type="search"],
 input[type="number"] {
 	border: solid 1px #aaa;
 	background-color: #292929; /* use background-color here; background only shorthand property overrides the background image of .openid_url login field specified in styles/layout/design.css */
@@ -235,7 +236,7 @@ small {
 	font-size: 1em;
 }
 
-/* Enable header and footer content to widen when middle has wide content. */ 
+/* Enable header and footer content to widen when middle has wide content. */
 body.fixed_width .fixedwidth .fixedwidth {
 	width: 100%;
 	padding: 0;
@@ -251,7 +252,7 @@ body.fixed_width .fixedwidth .fixedwidth {
 	text-align: left;
 	font-size: 1em;
 }
-					
+
 #c1c2 #wrapper .marginleft {
 	margin-left: 200px;
 }
@@ -343,7 +344,7 @@ body.fixed_width .fixedwidth .fixedwidth {
 .floatright img {
 	margin-right: 40px;
 }
-	
+
 #sitetitle,
 #sitesubtitle {
 	color: #a7a7a7;
@@ -489,7 +490,7 @@ a.flip:hover,
 }
 
 /** Border boxes (if any) **/
-	
+
 /****** Menus ******/
 /** CSS (suckerfish) menus **/
 
@@ -518,7 +519,7 @@ a.flip:hover,
 	color: #d8d8d8;
 }
 
-.cssmenu_vert a:hover,	
+.cssmenu_vert a:hover,
 .cssmenu_horiz a:hover,
 #tiki-top .cssmenu_horiz li ul li a:hover {
 	color: #3f3f3f;
@@ -581,7 +582,7 @@ a.flip:hover,
 }
 
 /* left column width */
-#col2 ul.cssmenu_vert {
+#col2 .box-data .cssmenu_vert ul {
 	padding-left: 0;
 }
 
@@ -660,7 +661,7 @@ a.separator:hover {
 a.linkmodule {
 	font-weight: bold;
 }
- 
+
 .option,
 .optionline {
 	color: #5F5F5F;
@@ -780,14 +781,14 @@ a.tikihelp:hover {
 }
 
 /*
-a.tikihelp, 
+a.tikihelp,
 a.tikihelp:hover {
 	color: #292929;
 }*/
 
 /**tree**/
 .ui-icon {
-background-image: url('../lib/jquery/jquery-ui/themes/ui-darkness/images/ui-icons_cccccc_256x240.png');
+background-image: url('../vendor/jquery/jquery-ui-themes/themes/ui-darkness/images/ui-icons_cccccc_256x240.png');
 }
 
 /** input widget **/
@@ -951,7 +952,7 @@ table {
 	border-collapse: collapse;
 }
 
-.normal, 
+.normal,
 .admin {
 	border: solid 1px #696969;
 	margin-top: 1em;
@@ -998,7 +999,8 @@ tr.even {
 
 tr.odd td,
 td.odd,
-table.normal tr:nth-child(2n+1) {
+table.normal tr:nth-child(2n+1),
+.tablesorter tr.odd td {
 	color: #fff;
 	background: #292929;
 	border-right: 1px solid #696969;
@@ -1006,7 +1008,8 @@ table.normal tr:nth-child(2n+1) {
 
 tr.even td,
 td.even,
-table.normal tr:nth-child(2n) {
+table.normal tr:nth-child(2n),
+.tablesorter tr.even td {
 	color: #fff;
 	background: #232323;
 	border-right: 1px solid #696969;
@@ -1023,6 +1026,29 @@ td.form {
 
 .xdebug-error tr td {
 	color: #292929;
+}
+
+/** Tablesorter **/
+
+.tablesorter .header,
+.tablesorter .tablesorter-header {
+	padding: 4px 20px 4px 4px;
+	cursor: pointer;
+	background-image: url(data:image/gif;base64,R0lGODlhFQAJAIAAAP///////yH5BAEAAAEALAAAAAAVAAkAAAIXjI+AywnaYnhUMoqt3gZXPmVg94yJVQAAOw==);
+	background-position: center right;
+	background-repeat: no-repeat;
+}
+.tablesorter thead .headerSortUp,
+.tablesorter thead .tablesorter-headerSortUp,
+.tablesorter thead .tablesorter-headerAsc {
+	background-image: url(data:image/gif;base64,R0lGODlhFQAEAIAAAP///////yH5BAEAAAEALAAAAAAVAAQAAAINjI8Bya2wnINUMopZAQA7);
+	border-bottom: #888 1px solid;
+}
+.tablesorter thead .headerSortDown,
+.tablesorter thead .tablesorter-headerSortDown,
+.tablesorter thead .tablesorter-headerDesc {
+	background-image: url(data:image/gif;base64,R0lGODlhFQAEAIAAAP///////yH5BAEAAAEALAAAAAAVAAQAAAINjB+gC+jP2ptn0WskLQA7);
+	border-bottom: #888 1px solid;
 }
 
 /***** Admin *****/
@@ -1123,8 +1149,8 @@ a.admbox.off:active {
 /*.ui-icon-closethick,*/
 .ui-dialog .ui-dialog-titlebar-close span/*,
 .ui-widget-content .ui-icon*/ {
-background-image: url(../lib/jquery/jquery-ui/themes/dark-hive/images/ui-icons_222222_256x240.png);
-background-image: url(../lib/jquery/jquery-ui/themes/dark-hive/images/ui-icons_cccccc_256x240.png);
+background-image: url(../vendor/jquery/jquery-ui-themes/themes/dark-hive/images/ui-icons_222222_256x240.png);
+background-image: url(../vendor/jquery/jquery-ui-themes/themes/dark-hive/images/ui-icons_cccccc_256x240.png);
 }
 
 .ui-dialog .ui-dialog-titlebar-close span:hover {
@@ -1415,7 +1441,7 @@ form.wikiplugin_edit table#plugin_params_advanced.normal div {
 .titleb {
 	font-size: 1.0em;
 }
- 
+
 .articlesubtitle {
 	font-size: 90%;
 	font-style: italic;
@@ -1545,7 +1571,7 @@ body.tiki_blogs .postbody-title {
 body.tiki_blogs .postfooter {
 	width: 100%;
 }
-	
+
 body.tiki_blogs .postfooter .actions {
 	float: left;
 }
@@ -1569,7 +1595,7 @@ body.tiki_blogs .postfooter .actions {
 	min-width: 100% !important;
 	height: 100%;*/
 }
-	
+
 .post .postbody .content p {
 	margin: 5px 10px;
 }

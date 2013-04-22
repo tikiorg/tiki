@@ -82,6 +82,7 @@
 			{preference name=highlight_group}
 			{preference name=feature_display_my_to_others}
 			{preference name=user_tracker_infos}
+			{preference name=user_use_gravatar}
 
 			{preference name=user_who_viewed_my_stuff}
 			{preference name=user_who_viewed_my_stuff_days}

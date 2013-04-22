@@ -39,7 +39,7 @@
 				</ul>
 				<p>
 					<label for="transition-group-auto">{tr}Type in a group name and click "enter"{/tr}</label>
-					<input type="text" id="transition-group-auto"> 
+					<input type="text" id="transition-group-auto">
 				</p>
 			</fieldset>
 
@@ -50,7 +50,7 @@
 		{jq}
 			var blocks = $('#transition-group-selection, #transition-category-selection');
 			$(':radio[name=transition_mode]').change( function( e ) {
-				if( $(this).attr('checked') ) {
+				if( $(this).prop('checked') ) {
 					blocks.hide();
 					blocks.filter( '#transition-' + $(this).val() + '-selection' ).show();
 				}
@@ -66,14 +66,14 @@
 					if( $(this).val() === '' ) {
 						return;
 					}
-					$('#transition-group-list').append( 
+					$('#transition-group-list').append(
 						$('<li/>').text( $(this).val() )
 							.append( $('<input type="hidden" name="groups[]">').val( $(this).val() ) )
 							.append( $('{{icon _id=cross class="removeitem"}}') )
 					);
 					$(this).val('');
 				} );
-			$('#transition-group-list .removeitem').live( 'click', function( e ) {
+			$('#transition-group-list .removeitem').on( 'click', function( e ) {
 				$(this).parent().remove();
 			} );
 		{/jq}
@@ -123,7 +123,7 @@
 			</tbody>
 		</table>
 	{/tab}
-		
+
 	{tab name="{tr}New / Edit{/tr}"}
 		<form method="post" action="tiki-admin_transitions.php?action={if $selected_transition}edit{else}new{/if}&amp;cookietab=2" style="text-align: left;">
 			{if $selected_transition}

@@ -428,7 +428,6 @@ tr.diffheader {
 	font-size: inherit;
 	color: #90ee90;
 	background-color: #000;
-	background-image: url("matrix/red.png");
 }
 
 .normal,
@@ -459,6 +458,29 @@ li.even,
 table.normal tr:nth-child(2n) td {
 	color: #90ee90;
 	background: #507050;
+}
+
+/** Tablesorter **/
+
+.tablesorter .header,
+.tablesorter .tablesorter-header {
+	padding: 4px 20px 4px 4px;
+	cursor: pointer;
+	background-image: url(data:image/gif;base64,R0lGODlhFQAJAIAAAP///////yH5BAEAAAEALAAAAAAVAAkAAAIXjI+AywnaYnhUMoqt3gZXPmVg94yJVQAAOw==);
+	background-position: center right;
+	background-repeat: no-repeat;
+}
+.tablesorter thead .headerSortUp,
+.tablesorter thead .tablesorter-headerSortUp,
+.tablesorter thead .tablesorter-headerAsc {
+	background-image: url(data:image/gif;base64,R0lGODlhFQAEAIAAAP///////yH5BAEAAAEALAAAAAAVAAQAAAINjI8Bya2wnINUMopZAQA7);
+	border-bottom: #888 1px solid;
+}
+.tablesorter thead .headerSortDown,
+.tablesorter thead .tablesorter-headerSortDown,
+.tablesorter thead .tablesorter-headerDesc {
+	background-image: url(data:image/gif;base64,R0lGODlhFQAEAIAAAP///////yH5BAEAAAEALAAAAAAVAAQAAAINjB+gC+jP2ptn0WskLQA7);
+	border-bottom: #888 1px solid;
 }
 
 .tabs {

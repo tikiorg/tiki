@@ -147,6 +147,7 @@ input[type="password"],
 input[type="file"],
 input[type="email"],
 input[type="file"],
+input[type="search"],
 input[type="number"],
 input#login-pass,
 textarea,
@@ -208,12 +209,14 @@ th.header {
 }
 
 .odd,
-table.normal tr:nth-child(2n+1) {
+table.normal tr:nth-child(2n+1),
+.tablesorter tr.odd td {
 	background: #efcaf5;
 }
 
 .even,
-table.normal tr:nth-child(2n) {
+table.normal tr:nth-child(2n),
+.tablesorter tr.even td {
 	background: #f3e1fb;
 }
 

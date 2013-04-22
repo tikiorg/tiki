@@ -54,7 +54,7 @@
 	{foreach from=$configurations item=config}
 		<form class="config" method="post" action="">
 			<fieldset>
-				<legend>{$config.name|escape}</legend>
+				<legend>{$config.name|escape} (ID: {$config.ratingConfigId|escape}, Search Field: <em>adv_rating_{$config.ratingConfigId|escape}</em>)</legend>
 				<input type="hidden" name="config" value="{$config.ratingConfigId|escape}"/>
 				<div>
 					<label for="rating_name_{$config.ratingConfigId|escape}">{tr}Name{/tr}</label>

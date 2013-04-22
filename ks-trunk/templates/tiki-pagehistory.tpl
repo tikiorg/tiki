@@ -289,7 +289,7 @@ $("#toggle_diffs a").click(function(){
 									and $smarty.foreach.hist.first)}checked="checked"{/if}>
 							{else}
 								<input type="radio" name="oldver" value="{$element.version}"
-									title="{tr}Older Version{/tr}" {if (isset($old.version) and isset($element.session) and $old.version == $element.session)
+									title="{tr}Older Version{/tr}" {if (isset($old.version) and isset($element.version) and $old.version == $element.version)
 									or ((!isset($smarty.request.diff_style) or !$smarty.request.diff_style)
 									and $smarty.foreach.hist.first)}checked="checked"{/if}>
 							{/if}

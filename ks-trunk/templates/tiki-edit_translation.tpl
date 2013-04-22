@@ -33,7 +33,7 @@
 <ul>
 	<li><a href="#translate_updates">{tr}Translate updates made on this page or one of its translations{/tr}</a></li>
 	<li><a href="#new_translation">{tr}Translate this page to a new language{/tr}</a></li>
-	<li><a href="#" onclick="attach_detach_translation('wiki page', '{$page|escape:"quotes"}')">{tr}Attach or detach existing translations of this page{/tr}</a></li>
+	<li><a href="{service controller=translation action=manage type='wiki page' source=$page}" class="attach_detach_translation" data-object_type="wiki page" data-object_id="{$page|escape:'quotes'}">{tr}Attach or detach existing translations of this page{/tr}</a></li>
 	<li><a href="#change_language">{tr}Change language for this page{/tr}</a></li>
 </ul>
 
@@ -154,17 +154,19 @@ function validate_translation_request() {
 		</p>
 	</form>
 {/if}
-{jq notonready=true}
-function attach_detach_translation( object_type, object_to_translate ) {
-	$(document).serviceDialog({
-		title: '{tr}Manage translations{/tr}', 
-		data: {
-			controller: 'translation',
-			action: 'manage',
-			type: object_type,
-			source: object_to_translate
-		}
-	});
-	return;
-}
+{jq}
+$('a.attach_detach_translation').click(function() {
+    var object_type = $(this).data('object_type');
+    var object_to_translate = $(this).data('object_id');
+    $(this).serviceDialog({
+        title: '{tr}Manage translations{/tr}',
+        data: {
+        controller: 'translation',
+        action: 'manage',
+        type: object_type,
+        source: object_to_translate
+        }
+    });
+    return false;
+});
 {/jq}

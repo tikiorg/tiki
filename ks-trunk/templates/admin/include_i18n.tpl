@@ -46,6 +46,11 @@
 	{preference name=feature_translation_incomplete_notice}
 	{preference name=feature_multilingual_one_page}
 	{preference name=quantify_changes}
+	
+	{preference name=wiki_edit_minor}
+	
+	{preference name=feature_user_watches_translations}
+	
 	{preference name=feature_multilingual_structures}
 	{preference name=freetags_multilingual}
 	{preference name=category_i18n_sync}

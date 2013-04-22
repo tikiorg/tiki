@@ -1,9 +1,10 @@
 {* $Id$ *}
 {* override for mobile module layoutas a list *}
 {* Module layout with controls *}
-{if !isset($module_position)}{assign var=module_position value=' '}{/if}
-{if !isset($module_ord)}{assign var=module_ord value=' '}{/if}
+{if !isset($module_position)}{assign var=module_position value=''}{/if}
+{if !isset($module_ord)}{assign var=module_ord value=''}{/if}
 {capture name=name}{$module_name|replace:"+":"_"|cat:$module_position|cat:$module_ord|escape}{/capture}
+{if !empty($module_params.topclass)}<div class="{$module_params.topclass}">{/if}
 {if 0 and $module_nobox neq 'y'}{* mobile *}
 	{if $prefs.feature_layoutshadows eq 'y'}
 		<div class="box-shadow">{$prefs.box_shadow_start}
@@ -29,7 +30,7 @@
 			</span>
 		{/if}
 		{if $module_notitle ne 'y'}
-		<span class="moduletitle">{$module_title}</span>
+			<span class="moduletitle">{$module_title}</span>
 		{/if}
 		{if $module_flip eq 'y' and $prefs.javascript_enabled ne 'n'}
 			<span class="moduleflip" id="moduleflip-{$smarty.capture.name}">
@@ -38,14 +39,14 @@
 				</a>
 			</span>
 			{if $prefs.menus_items_icons eq 'y'}
-			<span class="moduleflip moduleflip-vert" id="moduleflip-vert-{$smarty.capture.name}">
-				<a title="{tr}Toggle module contents{/tr}" class="flipmodtitle" href="javascript:flip_class('main','minimize-modules-left','maximize-modules');icntoggle('modv-{$smarty.capture.name}','vmodule.png');">
+				<span class="moduleflip moduleflip-vert" id="moduleflip-vert-{$smarty.capture.name}">
+					<a title="{tr}Toggle module contents{/tr}" class="flipmodtitle" href="javascript:flip_class('main','minimize-modules-left','maximize-modules');icntoggle('modv-{$smarty.capture.name}','vmodule.png');">
 						{capture name='name'}
-						icnmodv-{$smarty.capture.name}
-					{/capture}
-					{icon name="icnmod-"|cat:$smarty.capture.name class="flipmodimage" _id="trans" alt="[{tr}Toggle Vertically{/tr}]" _defaultdir="pics"}
-				</a>
-			</span>
+							icnmodv-{$smarty.capture.name}
+						{/capture}
+						{icon name="icnmod-"|cat:$smarty.capture.name class="flipmodimage" _id="trans" alt="[{tr}Toggle Vertically{/tr}]" _defaultdir="pics"}
+					</a>
+				</span>
 			{/if}
 		{/if}
 		<!--[if IE]><br class="clear" style="height: 1px !important" /><![endif]--></h3>
@@ -75,14 +76,13 @@
 	{*<div id="module_{$moduleId}" style="{$module_params.style}{$tpl_module_style}" class="module{if !empty($module_params.class)} {$module_params.class}{/if} box-{$module_name}">*}
 
 	{assign var=module_close_tags value=""}
-	{if ($module_position eq "l" or $module_position eq "r")}{* mobile - do the list thing for left and right *}
+	{if ($module_position eq 'left' or $module_position eq 'right')}{* mobile - do the list thing for left and right *}
 		<div data-role="collapsible" data-theme="{$prefs.mobile_theme_modules}" data-collapsed="{if !isset($module_display) or !$module_display}false{else}true{/if}" id="module_{$moduleId}" style="{$module_params.style}{$tpl_module_style}" class="module{if !empty($module_params.class)} {$module_params.class}{/if} box-{$module_name}">
 		{capture assign=module_close_tags}</div>{$module_close_tags}{/capture}
 			<h3 href="#">{$module_title}</h3>
 			<div id="mod-{$smarty.capture.name}{*FIXME*}" class="clearfix box-data{if !empty($module_params.class)} {$module_params.class}{/if}">
 			{capture assign=module_close_tags}</div>{$module_close_tags}{/capture}
 	{/if}
-
 {/if}{* mobile *}
 {$module_content}
 {$module_error}
@@ -92,8 +92,9 @@
 
 		</div>
 	</div>
-{if $prefs.feature_layoutshadows eq 'y'}{$prefs.box_shadow_end}</div>{/if}
+	{if $prefs.feature_layoutshadows eq 'y'}{$prefs.box_shadow_end}</div>{/if}
 {else}
 	{$module_close_tags}{* mobile *}
 {*</div>*}
 {/if}
+{if !empty($module_params.topclass)}</div>{/if}

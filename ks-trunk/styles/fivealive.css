@@ -3,7 +3,7 @@
 	Visit http://themes.tiki.org for more information.
 	*
 */
- 
+
 /* Import foundation CSS files. */
 @import url("lite/lite.css");
 @import url("layout/layout.css");
@@ -15,7 +15,7 @@ html {
 }
 
 /***** XHTML Elements (body tag here,
-			others follow Layout) *****/ 
+			others follow Layout) *****/
 body {
 	background-color: #fff;
 	font: 76% Arial, Helvetica, sans-serif;
@@ -99,7 +99,7 @@ body.fixed_width .fixedwidth {
 #middle[id] {
 	height: auto;
 }
- 
+
 #main {
 	text-align: left;
 	background: #fff;
@@ -203,7 +203,7 @@ body.fixed_width .fixedwidth {
 	font-size: 1.2em;
 	margin: 0;
 	margin-bottom: 6px;
-	padding-bottom: 6px; 
+	padding-bottom: 6px;
 }
 
 #footer h3#keepintouch {
@@ -294,7 +294,7 @@ body.fixed_width .fixedwidth {
 .button.highlight a,
 .calfocuson {
 	background: #fad5e0;
-	
+
 }
 
 /***** XHTML Elements (other than body tag) ******/
@@ -303,7 +303,7 @@ a:visited {
 	color: #1174a5;
 	text-decoration: none;
 }
- 
+
 a:active, a:hover {
 	color: #26a6dd;
 	text-decoration: none;
@@ -368,7 +368,7 @@ input[type="submit"]:hover,
 #genPass .button:hover {
 	border-width: 1px !important;
 }
-	
+
 .highlight,
 .highlight a {
 	border: 1px solid #9ae8fa;
@@ -377,7 +377,15 @@ input[type="submit"]:hover,
 
 .button.highlight a {
 	background: #d6f3fa;
-	color: #000;
+	color: #0c0c0c;
+}
+
+.button.highlight {
+	border: none;
+}
+
+.button.highlight a:hover {
+	border: 1px solid #000;
 }
 
 select,
@@ -386,6 +394,7 @@ input[type="password"],
 input[type="file"],
 input[type="email"],
 input[type="file"],
+input[type="search"],
 input[type="number"],
 input#login-pass,
 textarea,
@@ -591,9 +600,7 @@ select {
 	right: 10px;
 	bottom: -1px;
 	width: 10em;
-/*	height: 26px;*/
 	line-height: 1;
-	z-index: 1;
 }
 
 .siteloginbar_popup fieldset {
@@ -853,6 +860,10 @@ li.login_link ul li a {
 	text-decoration: none;
 }
 
+#col2 .box-data .cssmenu_vert ul {
+	padding-left: 0;
+}
+
 /* left column width */
 #col2 .cssmenu_vert,
 #col2 .cssmenu_vert li {
@@ -889,7 +900,7 @@ li.login_link ul li a {
 }
 
 .cssmenu_vert li ul li a .sf-sub-indicator {
-	background: url(../lib/jquery/superfish/images/arrows-ffffff.png);
+	background: url(../img/superfish/arrows-ffffff.png);
 }
 
 /***** Icons *****/
@@ -913,7 +924,7 @@ img.icon {
 	border-bottom: 3px solid #74c0e2;
 	font-weight: bold;
 }
-.rbox-title, 
+.rbox-title,
 .rbox-data {
 	border-color: #2098cd;
 	background: #c2eef8;
@@ -976,16 +987,18 @@ form .normal,
 }
 
 .odd,
-table.normal tr:nth-child(2n+1) {
+table.normal tr:nth-child(2n+1),
+.tablesorter tr.odd td {
 	background: #e3f7fb;
 }
 
 .even,
-table.normal tr:nth-child(2n) {
+table.normal tr:nth-child(2n),
+.tablesorter tr.even td {
 	background: #d6f3fa;
 }
 
-	  
+
 th,
 td.heading,
 tr.diffheader,
@@ -1000,7 +1013,7 @@ th a,
 th a:visited,
 td.heading a,
 td.heading a:visited,
-.normal th a.link, 
+.normal th a.link,
 .normal th a,
 th.header {
 	color: #fff
@@ -1099,7 +1112,7 @@ a.register_link {
 .statuson {
 	background: white;
 }
-	
+
 legend.heading {
 	background: transparent;
 }
@@ -1117,7 +1130,7 @@ fieldset.admin .adminoptionlabel {
 	font-weight: bold;
 	padding: 1px 8px;
 }
-	
+
 .code {
 	padding: 3px;
 	border: 1px dashed #a9a9a9;
@@ -1237,12 +1250,12 @@ a.dirsublink {
 }
 
 .calfocuson {
-	font-size: 100%; 
+	font-size: 100%;
 	background: #f3e498;
 }
 
 .calfocuson a {
-	font-size: 90%; 
+	font-size: 90%;
 }
 
 .calHeadingOn, .calHeadingOn a {
@@ -1279,7 +1292,7 @@ a.dirsublink {
 /*.cluetip-transparent {
 	top: 168px !important;
 }*/
-  
+
 
 /***** End New (unsorted) *****/
 

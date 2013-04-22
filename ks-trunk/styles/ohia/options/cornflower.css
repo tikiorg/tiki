@@ -311,7 +311,8 @@ tr.odd,
 td.odd,
 tr.odd td,
 li.odd,
-table.normal tr:nth-child(2n+1) {
+table.normal tr:nth-child(2n+1),
+.tablesorter tr.odd td {
 	background: #94BBC4;
 	color: #004354;
 }
@@ -320,7 +321,8 @@ tr.even,
 td.even,
 tr.even td,
 li.even,
-table.normal tr:nth-child(2n) {
+table.normal tr:nth-child(2n),
+.tablesorter tr.even td {
 	background: #A3BFC9;
 	color: #004354;
 }
@@ -330,7 +332,9 @@ td.odd,
 tr.even td,
 td.even,
 table.normal tr:nth-child(2n+1),
-table.normal tr:nth-child(2n) {
+table.normal tr:nth-child(2n),
+.tablesorter tr.odd td,
+.tablesorter tr.even td {
 	border-right: none;
 }
 

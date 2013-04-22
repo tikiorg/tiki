@@ -484,5 +484,5 @@
 
 </table>
 {if $prefs.feature_jquery_tooltips eq 'y'}
-	{jq}$('a.fgalbacklink').cluetip({showTitle:false, sticky:true});{/jq}
+	{jq}if (jqueryTiki.tooltips) { $('a.fgalbacklink').cluetip({showTitle:false, sticky:true}); }{/jq}
 {/if}

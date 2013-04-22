@@ -232,7 +232,7 @@
 			</td>
 		</tr>
 
-		{if $prefs.feature_cms_templates eq 'y' and $tiki_p_use_content_templates eq 'y'}
+		{if $prefs.feature_cms_templates eq 'y' and $tiki_p_use_content_templates eq 'y' and $templates|@count ne 0}
 			<tr>
 				<td>{tr}Apply template{/tr}</td>
 				<td>

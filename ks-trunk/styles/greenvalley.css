@@ -503,6 +503,10 @@ h3.box-title .moduletitle em {
     margin-top: -20px;
 }
 
+#col2 .box-data .cssmenu_vert ul {
+	padding-left: 0;
+}
+
 /** Login Box **/
 
 #mod-login_box fieldset {
