@@ -433,6 +433,11 @@ class ObjectLib extends TikiLib
 		return $result->fetchRow();
 	}
 
+	/**
+	 * @param string $type
+	 * @param $id
+	 * @return void|string
+	 */
 	function get_title($type, $id)
 	{
 		switch ($type) {
@@ -440,6 +445,9 @@ class ObjectLib extends TikiLib
 				return TikiLib::lib('trk')->get_isMain_value(null, $id);
 			case 'category':
 				return TikiLib::lib('categ')->get_category_name($id);
+			case 'topic':
+				$meta=TikiLib::lib('art')->get_topic($id);
+				return $meta['name'];
 		}
 
 		$title = $this->table('tiki_objects')->fetchOne(

@@ -9,7 +9,7 @@ $(document).bind("mobileinit", function() {
 	// sadly (Tiki 9 jqm 1.1 RC) most of the time we get stuch it's due to ajax loading, so disable globally again for noe :(
 	$.mobile.ajaxEnabled = false;
 
-	$('[data-role=page]').live('pageinit', function(e) {
+	$('[data-role=page]').on('pageinit', function(e) {
 		$("#fixedwidth").show();
 		ajaxLoadingHide();
 
@@ -22,7 +22,7 @@ $(document).bind("mobileinit", function() {
 			} );
 		}
 
-	}).live("pageshow", function(e) {
+	}).on("pageshow", function(e) {
 
 		var currentPage = $(e.target), options = {};
 		var $images = $("a[rel*=\'box\'][rel*=\'type=img\'], a[rel*=\'box\'][rel!=\'type=\']", e.target);
@@ -31,7 +31,7 @@ $(document).bind("mobileinit", function() {
 		}
 		return true;
 
-	}).live("pagehide", function(e) {
+	}).on("pagehide", function(e) {
 
 		if (typeof PhotoSwipe !== "undefined") {
 			var currentPage = $(e.target), photoSwipeInstance = PhotoSwipe.getInstance(currentPage.attr("id"));

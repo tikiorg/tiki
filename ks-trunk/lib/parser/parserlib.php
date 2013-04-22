@@ -15,7 +15,7 @@
  * @package		Tiki
  * @subpackage		Parser
  * @author		Robert Plummer
- * @copyright		Copyright (c) 2002-2012, All Rights Reserved.
+ * @copyright		Copyright (c) 2002-2013, All Rights Reserved.
  * 			See copyright.txt for details and a complete list of authors.
  * @license		LGPL - See license.txt for details.
  * @version		SVN $Rev$
@@ -1043,7 +1043,7 @@ if ( \$('#$id') ) {
 		$icon = isset($info['icon']) ? $info['icon'] : 'img/icons/wiki_plugin_edit.png';
 
 		// some plugins are just too flakey to do wysiwyg, so show the "source" for them ;(
-		$excluded = array('tracker', 'trackerlist', 'trackerfilter', 'kaltura', 'toc', 'freetagged', 'draw', 'googlemap', 'include', 'module');
+		$excluded = array('tracker', 'trackerlist', 'trackerfilter', 'kaltura', 'toc', 'freetagged', 'draw', 'googlemap', 'include', 'module', 'list', 'custom_search');
 
 		$ignore = null;
 		$enabled = $this->plugin_enabled($name, $ignore);
@@ -1053,8 +1053,9 @@ if ( \$('#$id') ) {
 			// Tiki 7+ adds ~np~ to plugin output so remove them
 			$plugin_result = preg_replace('/~[\/]?np~/ms', '', $plugin_result);
 
+			$oldOptions = $this->option;
 			$plugin_result = $this->parse_data($plugin_result, array('is_html' => false, 'suppress_icons' => true, 'ck_editor' => true, 'noparseplugins' => true));
-
+			$this->setOptions($oldOptions);
 			// reset the noparseplugins option, to allow for proper display in CkEditor
 			$this->option['noparseplugins'] = false;
 
@@ -1062,6 +1063,8 @@ if ( \$('#$id') ) {
 			$plugin_result = preg_replace('/\shref\=/i', ' tiki_href=', $plugin_result);
 			$plugin_result = preg_replace('/\sonclick\=/i', ' tiki_onclick=', $plugin_result);
 			$plugin_result = preg_replace('/<script.*?<\/script>/mi', '', $plugin_result);
+			// remove hidden inputs
+			$plugin_result = preg_replace('/<input.*?type=[\'"]?hidden[\'"]?.*>/mi', '', $plugin_result);
 		}
 		if (!in_array($name, array('html'))) {		// remove <p> and <br>s from non-html
 			$data = str_replace(array('<p>', '</p>', "\t"), '', $data);
@@ -2555,6 +2558,7 @@ if ( \$('#$id') ) {
 										}
 									}
 
+									$add_brs = $prefs['feature_wiki_paragraph_formatting_add_br'] === 'y' && !$this->option['is_html'];
 									if ($in_paragraph && ((empty($tline) && !$in_empty_paragraph) || $contains_block)) {
 										// If still in paragraph, on meeting first blank line or end of div or start of div created by plugins; close a paragraph
 										$this->close_blocks($data, $in_paragraph, $listbeg, $divdepth, 1, 0, 0);
@@ -2562,8 +2566,8 @@ if ( \$('#$id') ) {
 										// If not in paragraph, first non-blank line; start a paragraph; if not start of div created by plugins
 										$data .= "<p>";
 										$in_paragraph = 1;
-										$in_empty_paragraph = empty($tline) && $prefs['feature_wiki_paragraph_formatting_add_br'] === 'y';
-									} elseif ($in_paragraph && $prefs['feature_wiki_paragraph_formatting_add_br'] == 'y' && !$contains_block) {
+										$in_empty_paragraph = empty($tline) && $add_brs;
+									} elseif ($in_paragraph && $add_brs && !$contains_block) {
 										// A normal in-paragraph line if not close of div created by plugins
 										if (!empty($tline)) {
 											$in_empty_paragraph = false;
