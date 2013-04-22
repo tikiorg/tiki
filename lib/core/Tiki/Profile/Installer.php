@@ -26,7 +26,7 @@ class Tiki_Profile_Installer
 		'webservice' => 'Tiki_Profile_InstallHandler_Webservice',
 		'webservice_template' => 'Tiki_Profile_InstallHandler_WebserviceTemplate',
 		'rss' => 'Tiki_Profile_InstallHandler_Rss',
-		'topic' => 'Tiki_Profile_InstallHandler_Topic',
+		'article_topic' => 'Tiki_Profile_InstallHandler_ArticleTopic',
 		'article_type' => 'Tiki_Profile_InstallHandler_ArticleType',
 		'article' => 'Tiki_Profile_InstallHandler_Article',
 		'forum' => 'Tiki_Profile_InstallHandler_Forum',
