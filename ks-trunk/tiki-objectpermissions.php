@@ -475,7 +475,7 @@ JS;
 	if (\$(this).is(':checked')) {
 		\$('input[value="'+\$(this).val()+'"]').					// other checkboxes of same value (perm)
 			filter('$beneficiaries').									// which inherit from this
-			attr('checked',\$(this).is(':checked')).					// check and disable
+			prop('checked',\$(this).is(':checked')).					// check and disable
 			attr('disabled',\$(this).is(':checked'));
 	}
 
@@ -484,12 +484,12 @@ JS;
 		if (\$(this).is(':checked')) {
 			\$('input[value="'+\$(this).val()+'"]').			// same...
 				filter('$beneficiaries').
-				attr('checked',true).							// check?
+				prop('checked',true).							// check?
 				attr('disabled',true);						// disable
 		} else {
 			\$('input[value="'+\$(this).val()+'"]').			// same...
 				filter('$beneficiaries').
-				attr('checked',false).									// check?
+				prop('checked',false).									// check?
 				attr('disabled',false);								// disable
 }
 	});

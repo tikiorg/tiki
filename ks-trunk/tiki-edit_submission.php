@@ -81,8 +81,7 @@ $smarty->assign('edit_data', 'n');
 
 if (isset($_REQUEST['templateId']) && $_REQUEST['templateId'] > 0) {
 	global $templateslib; require_once 'lib/templates/templateslib.php';
-	$template_data = $templateslib->get_template($_REQUEST['templateId']);
-
+	$template_data = $templateslib->get_template($_REQUEST['templateId'],$prefs['language']);
 	$_REQUEST['preview'] = 1;
 	$_REQUEST['body'] = $template_data['content'];
 }
@@ -494,7 +493,7 @@ if ($prefs['article_custom_attributes'] == 'y') {
 
 	foreach ($types as &$t) {
 		// javascript needs htmlid to show/hide to be properties of basic array
-		$type_attributes = $artlib->get_article_type_attributes($t['type']);
+		$type_attributes = $artlib->get_article_type_attributes($t['type'], 'relationId ASC');
 		$all_attributes = array_merge($all_attributes, $type_attributes);
 		foreach ($type_attributes as $att) {
 			$htmlid = str_replace('.', '_', $att['itemId']);

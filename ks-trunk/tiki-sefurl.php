@@ -22,7 +22,7 @@ define('TITLE_SEPARATOR', '-');
  * @param string $tpl_output	original "unfriendly" url
  * @param string $type			type of object (article|blog|blogpost etc)
  * @param string $title			title of object
- * @param null $with_next		Appends '?' or a '&amp;' to the end of the returned URL so you join further parameters
+ * @param null $with_next		Appends '?' or a '&amp;' to the end of the returned URL so you can join further parameters
  * @param string $with_title	Add the object title to the end of the URL
  * @return string				sefurl
  */
@@ -130,7 +130,7 @@ function filter_out_sefurl($tpl_output, $type = null, $title = '', $with_next = 
 	}
 
 	if (strpos($tpl_output, '?') === false) {	// historically tiki has coped with malformed short urls with no ?
-		$amppos = strpos($tpl_output, '&');		// route.php rquires that we no longer do that
+		$amppos = strpos($tpl_output, '&');		// route.php requires that we no longer do that
 		$eqpos = strpos($tpl_output, '=');
 		if ( $amppos !== false && ($eqpos === false || $eqpos > $amppos)) {
 			if (substr($tpl_output, $amppos, 5) !== '&amp;') {
@@ -138,6 +138,14 @@ function filter_out_sefurl($tpl_output, $type = null, $title = '', $with_next = 
 			} else {
 				$tpl_output = substr($tpl_output, 0, $amppos) . '?' . substr($tpl_output, $amppos + 5);
 			}
+		}
+	}
+
+	if ($with_next) {
+		if (strpos($tpl_output, '?') === false) {
+			$tpl_output .= '?';
+		} else {
+			$tpl_output .= '&amp;';
 		}
 	}
 

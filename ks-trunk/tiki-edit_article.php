@@ -75,8 +75,7 @@ $smarty->assign(
 
 if (isset($_REQUEST['templateId']) && $_REQUEST['templateId'] > 0) {
 	global $templateslib; require_once 'lib/templates/templateslib.php';
-	$template_data = $templateslib->get_template($_REQUEST['templateId']);
-
+	$template_data = $templateslib->get_template($_REQUEST['templateId'],$prefs['language']);
 	$_REQUEST['preview'] = 1;
 	$_REQUEST['body'] = $template_data['content'];
 	if ($templateslib->template_is_in_section($_REQUEST['templateId'], 'wiki_html')) {
@@ -599,7 +598,10 @@ if (isset($_REQUEST['save']) && empty($errors)) {
 	@$artlib->delete_image_cache('preview', $previewId);
 
 	include_once('tiki-sefurl.php');
-	header('location: '.	filter_out_sefurl("tiki-read_article.php?articleId=$artid", 'article', $_REQUEST['title']));
+	$smarty->loadPlugin('smarty_modifier_sefurl');
+	$url = smarty_modifier_sefurl($artid, 'article');
+	header('location: '.$url);
+	exit;
 }
 $smarty->assign_by_ref('errors', $errors);
 
