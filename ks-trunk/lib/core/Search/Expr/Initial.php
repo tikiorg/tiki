@@ -5,7 +5,7 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-class Search_Expr_Token implements Search_Expr_Interface
+class Search_Expr_Initial implements Search_Expr_Interface
 {
 	private $string;
 	private $type;
@@ -48,6 +48,11 @@ class Search_Expr_Token implements Search_Expr_Interface
 	function walk($callback)
 	{
 		return call_user_func($callback, $this, array());
+	}
+
+	function getContent()
+	{
+		return $this->string;
 	}
 
 	function getValue(Search_Type_Factory_Interface $typeFactory)

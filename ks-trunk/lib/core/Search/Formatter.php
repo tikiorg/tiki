@@ -10,6 +10,7 @@ class Search_Formatter
 	private $plugin;
 	private $subFormatters = array();
 	private $dataSource;
+	private $alternateOutput;
 
 	function __construct(Search_Formatter_Plugin_Interface $plugin)
 	{
@@ -21,6 +22,11 @@ class Search_Formatter
 		$this->dataSource = $dataSource;
 	}
 
+	function setAlternateOutput($output)
+	{
+		$this->alternateOutput = $output;
+	}
+
 	function addSubFormatter($name, $formatter)
 	{
 		$this->subFormatters[$name] = $formatter;
@@ -28,6 +34,10 @@ class Search_Formatter
 
 	function format($list)
 	{
+		if (0 == count($list) && $this->alternateOutput) {
+			return $this->alternateOutput;
+		}
+
 		$list = $this->getPopulatedList($list);
 		return $this->render($this->plugin, $list, Search_Formatter_Plugin_Interface::FORMAT_WIKI);
 	}
