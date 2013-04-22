@@ -19,7 +19,8 @@
 openElFinderDialog = function(element, options) {
 	var $dialog = $('<div/>'), buttons = {};
 	options = options ? options : {};
-	$(this).append($dialog).data('elFinderDialog', $dialog);
+	$(document.body).append($dialog);
+	$(window).data('elFinderDialog', $dialog);	// needed for select handler later
 
 	options = $.extend({
 		title : tr("Browse Files"),
@@ -27,7 +28,8 @@ openElFinderDialog = function(element, options) {
 		height : 520,
 		width: 800,
 		zIndex : 9999,
-		modal: true
+		modal: true,
+		eventOrigin: this
 	}, options);
 
 	buttons[tr('Close')] = function () {
@@ -35,6 +37,12 @@ openElFinderDialog = function(element, options) {
 			.dialog('close')
 			.dialog('destroy');
 	};
+
+
+	if (options.eventOrigin) {	// save it for later
+		$("body").data("eventOrigin", options.eventOrigin);	// sadly adding data to the dialog kills elfinder :(
+		delete options.eventOrigin;
+	}
 
 	var elfoptions = initElFinder(options);
 
@@ -53,6 +61,7 @@ openElFinderDialog = function(element, options) {
 			$elf.elfinder(elfoptions).elfinder('instance');
 		},
 		close: function () {
+			$("body").data("eventOrigin", "");
 			$(this).dialog('destroy');
 		}
 	});
@@ -93,12 +102,13 @@ function initElFinder(options) {
 	delete options.deepGallerySearch;
 
 
-//	// turn off most elfinder commands as at this stage it will be read-only in tiki (tiki 10)
-//	var remainingCommands = elFinder.prototype._options.commands, idx;
-//	var disabled = ['rm', 'duplicate', 'rename', 'mkdir', 'mkfile', 'upload', 'copy', 'cut', 'paste', 'edit', 'extract', 'archive', 'resize'];
-//	$.each(disabled, function (i, cmd) {
-//		(idx = $.inArray(cmd, remainingCommands)) !== -1 && remainingCommands.splice(idx, 1);
-//	});
+	// turn off most elfinder commands as at this stage it will be read-only in tiki (tiki 10)
+	var remainingCommands = elFinder.prototype._options.commands, idx;
+	var disabled = ['mkfile', 'edit', 'extract', 'archive', 'resize'];
+	// done 'rm', 'duplicate', 'rename', 'mkdir', 'upload', 'copy', 'cut', 'paste',
+	$.each(disabled, function (i, cmd) {
+		(idx = $.inArray(cmd, remainingCommands)) !== -1 && remainingCommands.splice(idx, 1);
+	});
 	return options;
 }
 
