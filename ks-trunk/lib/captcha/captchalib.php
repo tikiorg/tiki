@@ -57,7 +57,7 @@ class Captcha
 				array(
 					'privkey' => $prefs['recaptcha_privkey'],
 					'pubkey' => $prefs['recaptcha_pubkey'],
-					'theme' => 'clean'
+					'theme' => isset($prefs['recaptcha_theme']) ? $prefs['recaptcha_theme'] : 'clean',
 				)
 			);
 
