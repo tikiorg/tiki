@@ -1200,6 +1200,10 @@ ul.floatleft li {
 	margin-top: 8px;
 }
 
+.editplugin {
+    vertical-align: bottom;
+}
+
 /* mouseover plugin */
 .plugin-mouseover {
 	position: absolute;

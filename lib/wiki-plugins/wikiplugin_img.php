@@ -1231,7 +1231,7 @@ function wikiplugin_img( $data, $params )
 				$iconDisplayStyle = '';
 			}
 			$jsonParams = json_encode(array_filter($imgdata));
-			$repl .= "<br /><a href=\"tiki-edit_draw.php?fileId={$imgdata['fileId']}\" onclick=\"return $(this).ajaxEditDraw();\" title=\"".tr("Draw on the Image") . "\"" .
+			$repl .= "<a href=\"tiki-edit_draw.php?fileId={$imgdata['fileId']}\" onclick=\"return $(this).ajaxEditDraw();\" title=\"".tr("Draw on the Image") . "\"" .
 						" class=\"editplugin pluginImgEdit{$imgdata['fileId']}\" data-fileid=\"{$imgdata['fileId']}\" " .
 						"data-galleryid=\"{$dbinfo['galleryId']}\"{$iconDisplayStyle} data-imgparams='$jsonParams'>" .
 						"<img width='16' height='16' class='icon' alt='Edit' src='img/icons/page_edit.png' /></a>";
