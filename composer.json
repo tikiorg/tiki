@@ -29,6 +29,7 @@
 		"jquery/plugins/anythingslider": "1.8.18",
 		"jquery/plugins/async": "1.0",
 		"jquery/plugins/brosho": "0.1",
+		"jquery/plugins/chosen": "0.9.13",
 		"jquery/plugins/cluetip": "1.2.8",
 		"jquery/plugins/colorbox": "1.4.14",
 		"jquery/plugins/colorpicker": "0.5",
@@ -379,6 +380,17 @@
 				"version": "0.1",
 				"dist": {
 					"url": "https://github.com/downloads/mustardamus/brosho-plugin/brosho-0.1.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "jquery/plugins/chosen",
+				"version": "0.9.13",
+				"dist": {
+					"url": "https://github.com/harvesthq/chosen/archive/v0.9.13.zip",
 					"type": "zip"
 				}
 			}
