@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "56a655d13b4585adb3e64f7eb342d7f7",
+    "hash": "f39fce33bbe22f04a72c564c7ee62298",
     "packages": [
         {
             "name": "aFarkas/html5shiv",
@@ -68,7 +68,7 @@
                     "ZendX_": "extras/library/"
                 }
             },
-            "notification-url": "http://packagist.org/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "include-path": [
                 "library/",
                 "extras/library/"
@@ -143,7 +143,7 @@
                     "library/HTMLPurifier.composer.php"
                 ]
             },
-            "notification-url": "http://packagist.org/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "LGPL"
             ],
@@ -399,6 +399,17 @@
             "dist": {
                 "type": "zip",
                 "url": "https://github.com/downloads/mustardamus/brosho-plugin/brosho-0.1.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "library"
+        },
+        {
+            "name": "jquery/plugins/chosen",
+            "version": "0.9.13",
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/harvesthq/chosen/archive/v0.9.13.zip",
                 "reference": null,
                 "shasum": null
             },
@@ -773,7 +784,7 @@
                     "Symfony\\Component\\Console\\": ""
                 }
             },
-            "notification-url": "http://packagist.org/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
