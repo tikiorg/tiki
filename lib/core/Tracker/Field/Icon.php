@@ -28,6 +28,12 @@ class Tracker_Field_Icon extends Tracker_Field_Abstract
 						'description' => tr('Path to the default icon used.'),
 						'filter' => 'url',
 					),
+					'maxIcons' => array(
+						'name' => tr('Max Icons'),
+						'description' => tr('Number of icons to display in each gallery (default 120).'),
+						'filter' => 'int',
+						'default' => 120,
+					),
 				),
 			),
 		);
@@ -59,6 +65,7 @@ class Tracker_Field_Icon extends Tracker_Field_Abstract
 				'filter~type' => 'file',
 				'filter~gallery_id' => $galleryId,
 				'filter~filetype' => 'image',
+				'maxRecords' => $this->getOption('maxIcons', 120),
 			),
 			'',
 			'&'
