@@ -30,19 +30,24 @@ if (is_readable('.svn/entries')) {
 				// Assign svnrev
 				$query = "select max(changed_revision) as svnrev from nodes";
 				$result = $handle->query($query);
-				$resx = $result->fetchArray(SQLITE3_ASSOC);
-				$svnrev = $resx['svnrev'];
-				$smarty->assign('svnrev', $svnrev);
+				$svnrev = $lastupTime = $strDT = '';
+				if ($results) {
+					$resx = $result->fetchArray(SQLITE3_ASSOC);
+					$svnrev = $resx['svnrev'];
+					$smarty->assign('svnrev', $svnrev);
+				}
 
 				// Assign lastup
 				$query = "select max(changed_date)/1000000 as lastup from nodes";
 				$result = $handle->query($query);
-				$resx = $result->fetchArray(SQLITE3_ASSOC);
-				$lastupTime = intval($resx['lastup']);
-				$dt = new DateTime();
-				$dt->setTimestamp($lastupTime);
-				$strDT = $dt->format(DateTime::ISO8601);
-				$smarty->assign('lastup', $strDT);
+				if ($results) {
+					$resx = $result->fetchArray(SQLITE3_ASSOC);
+					$lastupTime = intval($resx['lastup']);
+					$dt = new DateTime();
+					$dt->setTimestamp($lastupTime);
+					$strDT = $dt->format(DateTime::ISO8601);
+					$smarty->assign('lastup', $strDT);
+				}
 			}
 		}
 	}
