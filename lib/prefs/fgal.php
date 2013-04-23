@@ -265,6 +265,22 @@ function prefs_fgal_list()
 			'size' => 5,
 			'default' => 40,
 		),
+		'fgal_image_max_size_x' => array(
+			'name' => tra('Maximum width for images'),
+			'description' => tra('Default maximum width for images in gallery.') . ' ' . tra('(Default: 0=unlimited)'),
+			'type' => 'text',
+			'filter' => 'int',
+			'size' => 5,
+			'default' => 0,
+		),
+		'fgal_image_max_size_y' => array(
+			'name' => tra('Maximum height for images'),
+			'description' => tra('Default maximum height for images in gallery.') . ' ' . tra('(Default: 0=unlimited)'),
+			'type' => 'text',
+			'filter' => 'int',
+			'size' => 5,
+			'default' => 0,
+		),
 		'fgal_for_jcapture' => array(
 			'name' => tra('File Gallery for jCapture'),
 			'description' => tra('Id of gallery to store files captured by jCapture. Default:0 uses the default "root" gallery.'),

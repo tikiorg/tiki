@@ -188,6 +188,8 @@
 			{preference name='fgal_show_thumbactions'}
 			{preference name='fgal_thumb_max_size'}
 			{preference name='fgal_browse_name_max_length'}
+			{preference name='fgal_image_max_size_x'}
+			{preference name='fgal_image_max_size_y'}
 			{preference name='fgal_list_ratio_hits'}
 			{preference name='fgal_display_properties'}
 			{preference name='fgal_display_replace'}

@@ -130,7 +130,7 @@ class FileGalLib extends TikiLib
 			return $idGallery;
 		}
 
-		$fgal_info =& $conditions;
+		$fgal_info = $conditions;
 		$fgal_info['public'] = 'n';
 		$fgal_info['visible'] = $prefs['userfiles_private'] === 'y' || $prefs['userfiles_hidden'] === 'y' ? 'n' : 'y';
 		$fgal_info['quota'] = $prefs['userfiles_quota'];
@@ -701,8 +701,8 @@ class FileGalLib extends TikiLib
 			'lockable' => 'n',
 			'archives' => 0,
 			'quota' => $prefs['fgal_quota_default'],
-			'image_max_size_x' => 0,
-			'image_max_size_y' => 0,
+			'image_max_size_x' => $prefs['fgal_image_max_size_x'],
+			'image_max_size_y' => $prefs['fgal_image_max_size_y'],
 			'backlinkPerms' => 'n',
 			'show_backlinks' => 'n',
 			'show_deleteAfter' => $prefs['fgal_list_deleteAfter'],
