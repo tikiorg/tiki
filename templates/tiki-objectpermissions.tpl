@@ -97,7 +97,10 @@ if ($("#assignstructure").prop("checked")) {
 		<h3>{tr}Permissions{/tr}</h3>
 
 		<div>
-		{treetable _data=$perms _checkbox=$permGroups _checkboxTitles=$groupNames _checkboxColumnIndex=$permGroupCols _valueColumnIndex="permName" _columns="\"label\"=\"{tr}Permission{/tr}\"" _groupColumn='type' _openall='y' _showSelected='y' _columnsContainHtml='y'}
+		{treetable _data=$perms _checkbox=$permGroups _checkboxTitles=$groupNames
+				_checkboxColumnIndex=$permGroupCols _valueColumnIndex="permName"
+				_columns="\"label\"=\"{tr}Permission{/tr}\"" _groupColumn='type' _openall='y'
+				_showSelected='y' _columnsContainHtml='y' class='objectperms'}
 		</div>
 
 		{if ($perms|@count) eq '0'}{remarksbox type="warning" title="{tr}Warning{/tr}"}{tr}You must select at least one feature{/tr}.{/remarksbox}{/if}
@@ -135,7 +138,7 @@ if ($("#assignstructure").prop("checked")) {
 					{tr}These groups are not the groups that have permissions on the object. It is only the groups you can see in the columns of the first tab.{/tr}
 				{/remarksbox}
 			{else}
-				{remarksbox type="warning" title="{tr}Note{/tr}"}
+				{remarksbox type="note" title="{tr}Note{/tr}"}
 					{tr}These groups are not the groups that have permissions on the object. It is only the groups you can see in the columns of the first tab.{/tr}
 				{/remarksbox}
 			{/if}
