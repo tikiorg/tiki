@@ -131,9 +131,9 @@ function wikiplugin_galleriffic($data, $params)
 	$nextLinkText = tra('Next Photo').' &rsaquo;';
 	$nextPageLinkText = tra('Next').' &rsaquo;';
 	$prevPageLinkText = '&lsaquo; '.tra('Prev');
-	$autoStart = $autoStart === n ? 'false' : 'true';
-	$topPager = $topPager === n ? 'false' : 'true';
-	$bottomPager = $bottomPager === n ? 'false' : 'true';
+	$autoStart = $autoStart === 'n' ? 'false' : 'true';
+	$topPager = $topPager === 'n' ? 'false' : 'true';
+	$bottomPager = $bottomPager === 'n' ? 'false' : 'true';
 
 $jq = <<<JQ
 	// We only want these styles applied when javascript is enabled
