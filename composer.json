@@ -8,7 +8,7 @@
 		"aFarkas/html5shiv": "3.6.2",
 		"bombayworks/zendframework1": "1.12.3",
 		"ckeditor/ckeditor": "4.1.1",
-		"ckeditor/ckeditor/skins/kama": "4.1",
+		"ckeditor/ckeditor/skins/kama": "4.1.1",
 		"codemirror/codemirror": "2.25",
 		"ezyang/htmlpurifier": "4.5.0",
 		"jarnokurlin/fullcalendar": "1.5.2",
@@ -146,9 +146,9 @@
 			"type": "package",
 			"package": {
 				"name": "ckeditor/ckeditor/skins/kama",
-				"version": "4.1",
+				"version": "4.1.1",
 				"dist": {
-					"url": "http://download.ckeditor.com/kama/releases/kama_4.1.zip",
+					"url": "http://download.ckeditor.com/kama/releases/kama_4.1.1.zip",
 					"type": "zip"
 				}
 			}
