@@ -7,7 +7,7 @@
 		"adodb/adodb": "5.18",
 		"aFarkas/html5shiv": "3.6.2",
 		"bombayworks/zendframework1": "1.12.3",
-		"ckeditor/ckeditor": "4.1",
+		"ckeditor/ckeditor": "4.1.1",
 		"ckeditor/ckeditor/skins/kama": "4.1",
 		"codemirror/codemirror": "2.25",
 		"ezyang/htmlpurifier": "4.5.0",
@@ -135,9 +135,9 @@
 			"type": "package",
 			"package": {
 				"name": "ckeditor/ckeditor",
-				"version": "4.1",
+				"version": "4.1.1",
 				"dist": {
-					"url": "https://github.com/ckeditor/ckeditor-releases/archive/4.1.x/full.zip",
+					"url": "https://github.com/ckeditor/ckeditor-releases/archive/4.1.1/full.zip",
 					"type": "zip"
 				}
 			}

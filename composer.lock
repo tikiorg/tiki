@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "f39fce33bbe22f04a72c564c7ee62298",
+    "hash": "72cc624e9ee4f4d8f0fc6d399c4ba647",
     "packages": [
         {
             "name": "aFarkas/html5shiv",
@@ -86,10 +86,10 @@
         },
         {
             "name": "ckeditor/ckeditor",
-            "version": "4.1",
+            "version": "4.1.1",
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/ckeditor/ckeditor-releases/archive/4.1.x/full.zip",
+                "url": "https://github.com/ckeditor/ckeditor-releases/archive/4.1.1/full.zip",
                 "reference": null,
                 "shasum": null
             },
