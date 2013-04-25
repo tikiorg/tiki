@@ -258,7 +258,7 @@ class Image extends ImageAbstract
 					return $match[1];
 				}
 			} else {
-				return imagesy($this->data);
+				return @imagesy($this->data);
 			}
 		} else if ($this->height) {
 			return $this->height;
@@ -272,7 +272,7 @@ class Image extends ImageAbstract
 			$this->_load_data();
 		}
 		if ($this->data) {
-			return imagesy($this->data);
+			return @imagesy($this->data);
 		}
 	}
 
@@ -287,7 +287,7 @@ class Image extends ImageAbstract
 					return $match[1];
 				}
 			} else {
-				return imagesx($this->data);
+				return @imagesx($this->data);
 			}
 		} else if ($this->width) {
 			return $this->width;
@@ -301,7 +301,7 @@ class Image extends ImageAbstract
 			$this->_load_data();
 		}
 		if ($this->data) {
-			return imagesx($this->data);
+			return @imagesx($this->data);
 		}
 	}
 

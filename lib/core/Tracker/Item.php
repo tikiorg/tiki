@@ -410,7 +410,7 @@ class Tracker_Item
 		}
 
 		return array(
-			'itemId' => $this->isNew() ? null : $this->getItemId(),
+			'itemId' => $this->isNew() ? null : $this->info['itemId'],
 			'status' => $this->isNew() ? 'o' : $this->data['status'],
 			'fields' => $out,
 		);

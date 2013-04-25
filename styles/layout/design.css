@@ -2081,13 +2081,37 @@ ul.freetagged li {
 
 /* treeTable definitions - used in object-perms so far */
 
-.treeTable {
+table.treetable {
 	padding-left: 19px;
+	width: 100%;
 }
 
-.treeTable .checkBoxHeader {
+.treetable .checkBoxHeader {
 	font-size: .8em;
 }
+
+table.treetable.objectperms span.indenter {
+	display: inline;
+	width: auto;
+}
+
+table.treetable.objectperms .subHeader td {
+	font-weight: bold;
+}
+
+table.treetable .checkBoxHeader {
+	width: 5em;
+	white-space: nowrap;
+}
+
+table.treetable tr.collapsed span.indenter a {
+  background-image: url(../../img/toggle-expand-dark.png);
+}
+
+table.treetable tr.expanded span.indenter a {
+  background-image: url(../../img/toggle-collapse-dark.png);
+}
+
 
 /* tree browser */
 

@@ -31,7 +31,7 @@ if (is_readable('.svn/entries')) {
 				$query = "select max(changed_revision) as svnrev from nodes";
 				$result = $handle->query($query);
 				$svnrev = $lastupTime = $strDT = '';
-				if ($results) {
+				if ($result) {
 					$resx = $result->fetchArray(SQLITE3_ASSOC);
 					$svnrev = $resx['svnrev'];
 					$smarty->assign('svnrev', $svnrev);
@@ -40,7 +40,7 @@ if (is_readable('.svn/entries')) {
 				// Assign lastup
 				$query = "select max(changed_date)/1000000 as lastup from nodes";
 				$result = $handle->query($query);
-				if ($results) {
+				if ($result) {
 					$resx = $result->fetchArray(SQLITE3_ASSOC);
 					$lastupTime = intval($resx['lastup']);
 					$dt = new DateTime();

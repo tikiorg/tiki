@@ -172,7 +172,7 @@ function smarty_function_treetable($params, $smarty)
 		$_sortColumn = $_groupColumn;
 	}
 
-	$class = empty($class) ? 'treeTable' : $class;	// treetable
+	$class = empty($class) ? 'treetable' : $class;	// treetable
 
 /*
 	if ($prefs['feature_jquery_tablesorter'] == 'y' && strpos($class, 'sortable') === false) {
@@ -195,37 +195,44 @@ function smarty_function_treetable($params, $smarty)
 
 	if ($_openall == 'y') {
 		$smarty->loadPlugin('smarty_function_icon');
-		$html .= '&nbsp;' . smarty_function_icon(
+		$html .= '&nbsp;<label id="' . $id . '_openall">' . smarty_function_icon(
 			array(
 				'_id' => 'folder',
-				'id' => $id.'_openall',
 				'title' => tra('Toggle sections')
 			),
 			$smarty
-		) . ' ' . tra('Toggle sections');
+		) . ' ' . tra('Toggle sections') . '</label>';
 
 		$headerlib->add_jq_onready(
 			'
 $("#'.$id.'_openall").click( function () {
-	if (this.src.indexOf("ofolder.png") > -1) {
+	$this = $(this).modal(" ");
+	var img = $("img:first", this)[0];
+	if (img.src.indexOf("ofolder.png") > -1) {
 
-		$(".expanded .expander").eachAsync({
+		$(".expanded .indenter", "#'.$id.'").eachAsync({
 			delay: 20,
 			bulk: 0,
 			loop: function () {
 				$(this).click();
+			},
+			end: function ()  {
+				$this.modal();
 			}
 		});
-		this.src = this.src.replace("ofolder", "folder");
+		img.src = img.src.replace("ofolder", "folder");
 	} else {
-		$(".collapsed .expander").eachAsync({
+		$(".collapsed .indenter", "#'.$id.'").eachAsync({
 			delay: 20,
 			bulk: 0,
 			loop: function () {
 				$(this).click();
+			},
+			end: function ()  {
+				$this.modal();
 			}
 		});
-		this.src = this.src.replace("folder", "ofolder");
+		img.src = img.src.replace("folder", "ofolder");
 	}
 	return false;
 });'
@@ -235,7 +242,7 @@ $("#'.$id.'_openall").click( function () {
 	if ($_showSelected == 'y') {
 		$smarty->loadPlugin('smarty_function_icon');
 		$html .= ' <input type="checkbox" id="'.$id.'_showSelected" title="'.tra('Show only selected').'" />';
-		$html .= ' ' . tra('Show only selected');
+		$html .= ' <label for="'.$id.'_showSelected">' . tra('Show only selected') . '</label>';
 
 		$headerlib->add_jq_onready(
 			'
@@ -310,25 +317,22 @@ $("#'.$id.'_showSelected").click( function () {
 					$tt_id = $id . '_' . $treeTypeId;
 				}
 				$treeSectionsAdded[] = $treeTypeId;
-				$rowId = ' id="' . $id . '_' . $treeTypeId . '"';
 
-				//$childRowClass = ' child-of-'.$id.'_'.$treeTypeId;
 			} else {
 				$treeTypeId = preg_replace('/\s+/', '_', $treeType);
-				//$childRowClass = ' child-of-' . $id . '_' . $treeTypeId;
 				$tt_parent_id = $id . '_' . $treeTypeId;
 				$tt_id = 'child_of_' . $id . '_' . $treeTypeId . '_' . $oddEvenCounter;
-				$rowId = '';
 
 				if (!empty($treeType) && !in_array($treeTypeId, $treeSectionsAdded)) {
 					$html .= '<tr data-tt-id="' . $tt_parent_id . '"><td colspan="' . (count($_columns) + count($_checkbox)) . '">';
 					$html .= $treeType.'</td></tr>'.$nl;
 
 					// Courtesy message to help category perms configurators
-//					if ($treeType == 'category') {
-//						$html .= '<tr class="subHeader' . $childRowClass . '"><td colspan="' . (count($_columns) + count($_checkbox)) . '">';
-//						$html .= tra('You might want to also set the tiki_p_modify_object_categories permission under the tiki section') . '</td></tr>' . $nl;
-//					}
+					if ($treeType == 'category') {
+						$html .= '<tr class="' . $childRowClass . '" data-tt-parent-id="' . $tt_parent_id . '" data-tt-id="cat_subHeader_'.$rowCounter.'">' .
+							'<td colspan="' . (count($_columns) + count($_checkbox)) . '">';
+						$html .= '<em>' . tra('You might want to also set the tiki_p_modify_object_categories permission under the tiki section') . '</em></td></tr>' . $nl;
+					}
 					$treeSectionsAdded[] = $treeTypeId;
 
 					// write a sub-header
@@ -349,7 +353,6 @@ $("#'.$id.'_showSelected").click( function () {
 				}
 			}
 		} else {
-			$rowId = '';
 			$childRowClass = '';
 			$tt_parent_id = '';
 			$tt_id = '';
@@ -363,7 +366,9 @@ $("#'.$id.'_showSelected").click( function () {
 			$rowClass = $childRowClass;
 		}
 
-		$html .= '<tr data-tt-id="'.$tt_id.'" data-tt-parent-id="'.$tt_parent_id.'" class="' . $rowClass . '"' . $rowId.'>';
+		$html .= '<tr data-tt-id="'.$tt_id . '"' .
+			(!empty($tt_parent_id) ? ' data-tt-parent-id="' . $tt_parent_id . '"' : '') .
+			' class="' . $rowClass . '">';
 		// add the checkbox
 		if (!empty($_checkbox)) {
 			for ($i = 0, $icount_checkbox = count($_checkbox); $i < $icount_checkbox; $i++) {
@@ -400,7 +405,7 @@ $("#'.$id.'_showSelected").click( function () {
 	if (count($treeSectionsAdded) < $_collapseMaxSections) {
 		$headerlib->add_jq_onready('$("#' . $id . '").treetable({clickableNodeNames:' . $expanable . ',initialState: "expanded"});');
 	} else {
-		$headerlib->add_jq_onready('$("#' . $id . '").treetable({clickableNodeNames:' . $expanable . ',initialState: "collapsed"});');
+		$headerlib->add_jq_onready('$("#' . $id . '").treetable({clickableNodeNames:' . $expanable . ',initialState: "collapsed", expandable:true});');
 	}
 	// TODO refilter when .parent is opened - seems to prevent the click propagating
 //		$headerlib->add_jq_onready('$("tr.parent").click(function(event) {

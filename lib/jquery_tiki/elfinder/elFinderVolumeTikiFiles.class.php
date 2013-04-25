@@ -545,6 +545,14 @@ class elFinderVolumeTikiFiles extends elFinderVolumeDriver
 				$res['data'] = file_get_contents($filepath);
 			}
 
+			if ($res['data'] === 'REFERENCE') {
+				$attributes = TikiLib::lib('attribute')->get_attributes('file', $res['fileId']);
+				if ($url = $attributes['tiki.content.url']) {
+					$data = $this->filegallib->get_info_from_url($url);
+					$res['data'] = $data['data'];
+				}
+			}
+
 			if ($r = $res['data']) {
 				fwrite($fp, $r);
 				rewind($fp);

@@ -119,7 +119,9 @@ function wikiplugin_kaltura($data, $params)
 	$defaults = array();
 	$plugininfo = wikiplugin_kaltura_info();
 	foreach ($plugininfo['params'] as $key => $param) {
-		$defaults[$key] = $param['default'];
+		if (isset($param['default'])) {
+			$defaults[$key] = $param['default'];
+		}
 	}
 
 	if (empty($params['id'])) {
