@@ -31,17 +31,6 @@ class ModLib extends TikiLib
 		'bottom' => 'bottom_modules',
 	);
 
-	public $cssfiles  = array(
-		'calendar_new'	=> array (
-			'csspath'	=> 'css/calendar.css',
-			'rank'		=> 20,
-		),
-		'action_calendar'	=> array (
-			'csspath'	=> 'css/calendar.css',
-			'rank'		=> 20,
-		),
-	);
-
 	function __construct()
 	{
 		global $prefs;

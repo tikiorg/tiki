@@ -31,7 +31,6 @@ if (Perms::get()->admin) {
 
 $show_columns = array_fill_keys(array_keys($modules), 'n');
 
-$modnames = array();
 foreach ( $modules as $zone => & $moduleList ) {
 	if ($prefs['feature_fullscreen'] != 'y' || empty($_SESSION['fullscreen']) || $_SESSION['fullscreen'] != 'y' ||
 			strpos($zone, 'page') === 0) {	// pagetop and pagebottom zones appear in fullscreen
@@ -46,20 +45,9 @@ foreach ( $modules as $zone => & $moduleList ) {
 					return $modlib->execute_module($ref);
 				}
 			);
-			$modnames[$ref['name']] = '';
 		}
 
 		$smarty->assign($zone, $moduleList);
-	}
-}
-
-//add necessary css files to header as required for specific modules
-//TODO only add css when module will actually be showing
-$cssadd = array_intersect_key($modlib->cssfiles, $modnames);
-if (count($cssadd > 0)) {
-	$headerlib = TikiLib::lib('header');
-	foreach ($cssadd as $add) {
-		$headerlib->add_cssfile($add['csspath'], $add['rank']);
 	}
 }
 

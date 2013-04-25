@@ -88,8 +88,7 @@ function module_calendar_new($mod_reference, $module_params)
 	global $prefs, $user, $tiki_p_admin_calendars, $tikilib, $smarty;
 	global $calendarlib; include_once('lib/calendar/calendarlib.php');
 	global $userlib; include_once('lib/userslib.php');
-//	Note: calendar css file now loaded in tiki-modules.php
-//	global $headerlib; $headerlib->add_cssfile('css/calendar.css', 20);
+	global $headerlib; $headerlib->add_cssfile('css/calendar.css', 20);
 	global $calendarViewMode, $focusdate;
 	$default = array('viewnavbar' => 'y', 'viewmodelink' => 'week', 'showaction' => 'y', 'linkall' => 'n');
 	$module_params = array_merge($default, $module_params);
