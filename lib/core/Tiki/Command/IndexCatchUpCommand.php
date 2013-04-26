@@ -15,22 +15,21 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class IndexCatchUpCommand extends Command
 {
-    protected function configure()
-    {
-        $this
-            ->setName('index:catch-up')
-            ->setDescription('Catch-up on incremental indexing.')
-            ->addArgument(
-               'amount',
-               InputArgument::OPTIONAL,
-               'Amount of queue entries to catch-up on',
-			   10
-            )
-        ;
-    }
+	protected function configure()
+	{
+		$this
+			->setName('index:catch-up')
+			->setDescription('Catch-up on incremental indexing.')
+			->addArgument(
+				'amount',
+				InputArgument::OPTIONAL,
+				'Amount of queue entries to catch-up on',
+				10
+			);
+	}
 
-    protected function execute(InputInterface $input, OutputInterface $output)
-    {
+	protected function execute(InputInterface $input, OutputInterface $output)
+	{
 		$amount = (int) $input->getArgument('amount');
 
 		$unifiedsearchlib = \TikiLib::lib('unifiedsearch');
@@ -53,5 +52,5 @@ class IndexCatchUpCommand extends Command
 		foreach ($errlib->get_errors() as $message) {
 			$output->writeln("<error>$message</error>");
 		}
-    }
+	}
 }

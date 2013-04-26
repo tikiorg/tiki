@@ -15,22 +15,21 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class UpdateCommand extends Command
 {
-    protected function configure()
-    {
-        $this
-            ->setName('database:update')
-            ->setDescription('Update the database to the latest schema')
-            ->addOption(
-               'auto-register',
-               null,
-               InputOption::VALUE_NONE,
-               'Record any failed patch as applied.'
-            )
-        ;
-    }
+	protected function configure()
+	{
+		$this
+			->setName('database:update')
+			->setDescription('Update the database to the latest schema')
+			->addOption(
+				'auto-register',
+				null,
+				InputOption::VALUE_NONE,
+				'Record any failed patch as applied.'
+			);
+	}
 
-    protected function execute(InputInterface $input, OutputInterface $output)
-    {
+	protected function execute(InputInterface $input, OutputInterface $output)
+	{
 		$autoRegister = $input->getOption('auto-register');
 		$installer = new \Installer;
 		$installed = $installer->tableExists('users_users');
@@ -47,7 +46,7 @@ class UpdateCommand extends Command
 				foreach ( $installer->executed as $script )
 					$output->writeln("<info>Executed: $script</info>");
 			}
-			
+
 			$output->writeln('<info>Queries executed successfully: ' . count($installer->success) . '</info>');
 
 			if ( count($installer->failures) ) {
@@ -67,5 +66,5 @@ class UpdateCommand extends Command
 		} else {
 			$output->writeln('<error>Database not found.</error>');
 		}
-    }
+	}
 }

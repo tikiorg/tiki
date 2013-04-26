@@ -37,7 +37,7 @@ function smarty_block_textarea($params, $content, $smarty, $repeat)
 	if ( $repeat ) {
 		return;
 	}
-    if (!$included){
+    if (!$included) {
         $headerlib->add_js(
             <<<JS
                 function GetCurrentEditorAreaId(ob){
@@ -181,9 +181,9 @@ JS
 			global $wysiwyglib; include_once('lib/ckeditor_tiki/wysiwyglib.php');
 			$ckoptions = $wysiwyglib->setUpEditor($params['_is_html'], $as_id, $params, $auto_save_referrer);
 
-            if (!$included) {
-                $html .= '<input type="hidden" name="wysiwyg" value="y" />';
-                }
+			if (!$included) {
+				$html .= '<input type="hidden" name="wysiwyg" value="y" />';
+			}
 			$html .= '<textarea class="wikiedit" name="'.$params['name'].'" id="'.$as_id.'" style="visibility:hidden;';	// missing closing quotes, closed in condition
 
 			if (empty($params['cols'])) {
@@ -197,7 +197,8 @@ JS
 			$html .= '>'.htmlspecialchars($content).'</textarea>';
 
 			$headerlib->add_jq_onready(
-'CKEDITOR.replace( "'.$as_id.'",' . $ckoptions . ');
+				'
+CKEDITOR.replace( "'.$as_id.'",' . $ckoptions . ');
 CKEDITOR.on("instanceReady", function(event) {
 	if (typeof ajaxLoadingHide == "function") { ajaxLoadingHide(); }
 	this.instances.'.$as_id.'.resetDirty();

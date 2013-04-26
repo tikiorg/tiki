@@ -38,18 +38,22 @@ class Search_Elastic_QueryBuilder
 		} elseif ($node instanceof OrX) {
 			return array(
 				'bool' => array(
-					'should' => array_map(function ($expr) use ($callback) {
-						return $expr->traverse($callback);
-					}, $childNodes),
+					'should' => array_map(
+						function ($expr) use ($callback) {
+							return $expr->traverse($callback);
+						}, $childNodes
+					),
 					"minimum_number_should_match" => 1,
 				),
 			);
 		} elseif ($node instanceof AndX) {
 			return array(
 				'bool' => array(
-					'must' => array_map(function ($expr) use ($callback) {
-						return $expr->traverse($callback);
-					}, $childNodes),
+					'must' => array_map(
+						function ($expr) use ($callback) {
+							return $expr->traverse($callback);
+						}, $childNodes
+					),
 				),
 			);
 		} elseif ($node instanceof NotX) {

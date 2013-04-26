@@ -3,7 +3,7 @@
  * Developed in part in association with http://attainable-utopias.org by jonnybradley
  * © 2003-2013 Jonny Bradley licensed under LGPL/MIT in accordance with Tiki licensing practices
  * Options; another, attainable, foundation, north, spaces, writer
- * 
+ *
  * Adapted to layout.css for Tiki 3.x
  *
  * $Id$
@@ -43,8 +43,8 @@ body > .fixedwidth {
 
 /* general #fixedwidth wrapper when fixed width is off */
 
-body > .fixed_width > .fixedwidth {
-}
+/*body > .fixed_width > .fixedwidth {
+}*/
 
 a, a:visited {
 	color: #aaa;
@@ -217,9 +217,9 @@ input[type=submit]:hover,
 	text-decoration: none;
 }
 
-.sf-sub-indicator {
-	/*display: none;*/
-}
+/*.sf-sub-indicator {
+	display: none;
+}*/
 
 .cssmenu_vert li a,
 .cssmenu_vert li ul a,
@@ -295,7 +295,7 @@ div.box {
 	overflow: visible;
 	margin: 0 0 .2em;
 }
-	
+
 #col3 div.box,
 #col2 div.box {width: 174px}
 
@@ -323,7 +323,7 @@ h3.box-title {
 #bottom_modules {
 	text-align: center
 }
-	
+
 .box:hover .moduleflip {
 	opacity: 1;
 	border: 0 none;
@@ -337,10 +337,21 @@ h3.box-title {
 .box-data table {width: 100%}
 
 .box-data ol,
-.box-data ul {padding-right: 0; list-style: none;}
+.box-data ul {
+	padding-right: 0;
+	list-style: none;
+}
 
-.box-data ol {padding-left: 0; margin-top: 0; margin-bottom: 0}
-.box-data ul {padding-left: 0; margin-top: 0; margin-bottom: 0}
+.box-data ol {
+	padding-left: 0;
+	margin-top: 0;
+	margin-bottom: 0
+}
+.box-data ul {
+	padding-left: 0;
+	margin-top: 0;
+	margin-bottom: 0
+}
 * html .box-data ol {margin-left: 0em}
 * html .box-data ul {margin-left: 1em}
 *:first-child+html .box-data ol {margin-left: 0}
@@ -369,11 +380,6 @@ h3.box-title {
 li.rssitem {
 	padding: 1em;
 	margin: 1;
-}
-
-li.rssitem a {
-	font-weight: normal;
-	color: #888;
 }
 
 li.rssitem a {
@@ -412,29 +418,11 @@ div.simplebox {
 
 /* rbox: remarks box (note/warning/tip/comment) */
 
-.rbox {}
-
-.rbox-title {
-	font-weight: bold;
-	font-size: 1.1em;
-	text-align: center;
-	white-space: nowrap;
-	background-color: #ddd;
-	border-color: #CCC;
-	border-style: solid;
-	padding: .2em .5em .5em;
-}
+/*.rbox {}*/
 
 .rbox img {
 	padding-right: .3em;
 	vertical-align: middle;
-}
-
-.rbox-data {
-	padding: .4em;
-	font-style: italic;
-	border: .1em #ddd solid;
-	background-color: #eee;
 }
 
 .warning .rbox-title {
@@ -460,16 +448,16 @@ div.simplebox {
 	border: .1em solid #ccc;
 }
 
-.comment .rbox-title, .tip .rbox-title .rbox-title.tip {
-}
+/*.comment .rbox-title, .tip .rbox-title .rbox-title.tip {
+}*/
 
-.comment .rbox-data, .tip .rbox-data, .rbox-data.tip {
-}
+/*.comment .rbox-data, .tip .rbox-data, .rbox-data.tip {
+}*/
 
 /* end rbox */
 /***** Tables, Tabs and Lists ****/
 /** Tables **/
-table {}
+/*table {}*/
 
 td {
 	padding: .2em;
@@ -483,7 +471,7 @@ th {
 
 /** Specific Tables **/
 
-table.normal, 
+table.normal,
 table.admin {
 	background-color: #eee;
 	border: 1px solid #ddd;
@@ -503,12 +491,12 @@ td.form,
 
 
 /* Odd rows in several listings */
-tr.odd, td.odd {}
-tr.odd:hover {}
+/*tr.odd, td.odd {}
+tr.odd:hover {}*/
 tr.even, td.even {
 	background: #f8f8f8;
 }
-tr.even:hover, td.even:hover {}
+/*tr.even:hover, td.even:hover {}*/
 
 
 /* headings */
@@ -529,8 +517,8 @@ form.admin fieldset {
 
 /** Tabs **/
 
-.tabs {
-}
+/*.tabs {
+}*/
 
 .tabstoggle {
 	display: none;
@@ -575,8 +563,8 @@ form.admin fieldset {
 	background: #eee;
 }
 
-.tabactive a {
-}
+/*.tabactive a {
+}*/
 
 .tabinactive {
 	border: solid .1em #bbb !important;
@@ -714,8 +702,8 @@ table.wikitable {
 	border-collapse: collapse;
 }
 
-td.wikicell {
-}
+/*td.wikicell {
+}*/
 
 div.wikitext {
 	margin-bottom: .6em;
@@ -777,8 +765,8 @@ div.description {
 	font-size: .8em;
 }
 
-.wiki {
-}
+/*.wiki {
+}*/
 
 .wikiinfo {
 	font-size: 0.9em;
@@ -869,8 +857,8 @@ div.article {
 	margin: 0;
 }
 
-.wikitext .article {
-}
+/*.wikitext .article {
+}*/
 
 div.articletitle {
 	padding: .5em 0;
@@ -915,8 +903,8 @@ div.article .status {
 	position: static;;
 }
 
-div.articletrailer span {
-}
+/*div.articletrailer span {
+}*/
 
 div.article .actions {
 	position: static;
@@ -1053,8 +1041,8 @@ div.shoutboxmodmsg {
 	padding-bottom: .1em;
 }
 
-div.shoutboxmsg:last-child {
-}
+/*div.shoutboxmsg:last-child {
+}*/
 
 textarea.tshoutbox {
 	background-color: #eee;
@@ -1143,9 +1131,9 @@ div.messureadbody {
 }
 
 
-#shadowbox_title {}
+/*#shadowbox_title {}
 #shadowbox_title_inner {}
-#shadowbox_content {}
+#shadowbox_content {}*/
 
 /* Cluetip - JQuery tooltips
    =cluetipClass: 'default' */
@@ -1165,15 +1153,15 @@ div.messureadbody {
 	color: #eee;
 	font-size: 0.95em;
 }
-  
+
 .cluetip-default #cluetip-inner {padding: .9em}
 
-.cluetip-default div#cluetip-close { 
+.cluetip-default div#cluetip-close {
 	text-align: right;
 	margin: -10px 0 0 0;
 	color: #900;
 }
-	
+
 
 /***** File Galleries *****/
 
@@ -1190,8 +1178,8 @@ div.messureadbody {
 }
 
 /** User Menu **/
-.option {
-}
+/*.option {
+}*/
 
 .optionline {
 	border-top: .1em dashed #fafafa;
@@ -1253,11 +1241,11 @@ ul.autocompleter-choices {
 }
 
 /* edit icons */
-div.icon_edit_section, .editplugin img {
+/*div.icon_edit_section, .editplugin img {
 }
 
 div.icon_edit_section:hover, .editplugin img:hover {
-}
+}*/
 
 /***** border radius definitions                   *****
  ***** remove if you require strict css validation *****/
@@ -1303,6 +1291,14 @@ a.admbox.off,
 }
 
 .rbox-title {
+	font-weight: bold;
+	font-size: 1.1em;
+	text-align: center;
+	white-space: nowrap;
+	background-color: #ddd;
+	border-color: #CCC;
+	border-style: solid;
+	padding: .2em .5em .5em;
 	border-top-left-radius: 2px;
 	border-top-right-radius: 2px;
 	border-bottom: none !important;
@@ -1313,6 +1309,10 @@ a.admbox.off,
 }
 
 .rbox-data {
+	padding: .4em;
+	font-style: italic;
+	border: .1em #ddd solid;
+	background-color: #eee;
 	border-top-right-radius: 2px;
 	border-bottom-left-radius: 2px;
 	border-bottom-right-radius: 2px;

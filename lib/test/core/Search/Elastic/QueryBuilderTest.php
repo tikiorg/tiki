@@ -21,38 +21,54 @@ class Search_Elastic_QueryBuilderTest extends PHPUnit_Framework_TestCase
 
 		$query = $builder->build(new Token('Hello', 'plaintext', 'contents', 1.5));
 
-		$this->assertEquals(array("query" => array(
-			"match" => array(
-				"contents" => array("query" => "hello", "boost" => 1.5),
-			),
-		)), $query);
+		$this->assertEquals(
+			array("query" => array(
+				"match" => array(
+						"contents" => array("query" => "hello", "boost" => 1.5),
+					),
+				)
+			), $query
+		);
 	}
 
 	function testQueryWithSinglePart()
 	{
 		$builder = new QueryBuilder;
 
-		$query = $builder->build(new AndX(array(
-			new Token('Hello', 'plaintext', 'contents', 1.5),
-		)));
+		$query = $builder->build(
+			new AndX(
+				array(
+					new Token('Hello', 'plaintext', 'contents', 1.5),
+				)
+			)
+		);
 
-		$this->assertEquals(array("query" => array(
-			"match" => array(
-				"contents" => array("query" => "hello", "boost" => 1.5),
-			),
-		)), $query);
+		$this->assertEquals(
+			array(
+				"query" => array(
+				"match" => array(
+						"contents" => array("query" => "hello", "boost" => 1.5),
+					),
+				)
+			), $query
+		);
 	}
 
 	function testBuildOrQuery()
 	{
 		$builder = new QueryBuilder;
 
-		$query = $builder->build(new OrX(array(
-			new Token('Hello', 'plaintext', 'contents', 1.5),
-			new Token('World', 'plaintext', 'contents', 1.0),
-		)));
+		$query = $builder->build(
+			new OrX(
+				array(
+					new Token('Hello', 'plaintext', 'contents', 1.5),
+					new Token('World', 'plaintext', 'contents', 1.0),
+				)
+			)
+		);
 
-		$this->assertEquals(array("query" => array(
+		$this->assertEquals(
+			array("query" => array(
 			"bool" => array(
 				"should" => array(
 					array(
@@ -68,55 +84,69 @@ class Search_Elastic_QueryBuilderTest extends PHPUnit_Framework_TestCase
 				),
 				"minimum_number_should_match" => 1,
 			),
-		)), $query);
+		)), $query
+		);
 	}
 
 	function testAndQuery()
 	{
 		$builder = new QueryBuilder;
 
-		$query = $builder->build(new AndX(array(
-			new Token('Hello', 'plaintext', 'contents', 1.5),
-			new Token('World', 'plaintext', 'contents', 1.0),
-		)));
+		$query = $builder->build(
+			new AndX(
+				array(
+					new Token('Hello', 'plaintext', 'contents', 1.5),
+					new Token('World', 'plaintext', 'contents', 1.0),
+				)
+			)
+		);
 
-		$this->assertEquals(array("query" => array(
-			"bool" => array(
-				"must" => array(
-					array(
-						"match" => array(
-							"contents" => array("query" => "hello", "boost" => 1.5),
+		$this->assertEquals(
+			array(
+				"query" => array(
+					"bool" => array(
+						"must" => array(
+							array(
+								"match" => array(
+									"contents" => array("query" => "hello", "boost" => 1.5),
+								),
+							),
+							array(
+								"match" => array(
+									"contents" => array("query" => "world", "boost" => 1.0),
+								),
+							),
 						),
 					),
-					array(
-						"match" => array(
-							"contents" => array("query" => "world", "boost" => 1.0),
-						),
-					),
-				),
-			),
-		)), $query);
+				)
+			), $query
+		);
 	}
 
 	function testNotBuild()
 	{
 		$builder = new QueryBuilder;
 
-		$query = $builder->build(new NotX(
-			new Token('Hello', 'plaintext', 'contents', 1.5)
-		));
+		$query = $builder->build(
+			new NotX(
+				new Token('Hello', 'plaintext', 'contents', 1.5)
+			)
+		);
 
-		$this->assertEquals(array("query" => array(
-			"bool" => array(
-				"must_not" => array(
-					array(
-						"match" => array(
-							"contents" => array("query" => "hello", "boost" => 1.5),
+		$this->assertEquals(
+			array("query" => array(
+				"bool" => array(
+					"must_not" => array(
+						array(
+							"match" => array(
+								"contents" => array("query" => "hello", "boost" => 1.5),
+							),
 						),
 					),
 				),
-			),
-		)), $query);
+			)
+			), $query
+		);
 	}
 
 	function testFilterWithIdentifier()
@@ -125,13 +155,16 @@ class Search_Elastic_QueryBuilderTest extends PHPUnit_Framework_TestCase
 
 		$query = $builder->build(new Token('Some entry', 'identifier', 'username', 1.5));
 
-		$this->assertEquals(array("query" => array(
-			"match" => array(
-				"username" => array(
-					"query" => "Some entry",
+		$this->assertEquals(
+			array("query" => array(
+				"match" => array(
+					"username" => array(
+						"query" => "Some entry",
+					),
 				),
-			),
-		)), $query);
+				)
+			), $query
+		);
 	}
 
 	function testRangeFilter()
@@ -140,16 +173,18 @@ class Search_Elastic_QueryBuilderTest extends PHPUnit_Framework_TestCase
 
 		$query = $builder->build(new Range('Hello', 'World', 'plaintext', 'title', 1.5));
 
-		$this->assertEquals(array("query" => array(
-			"range" => array(
-				"title" => array(
-					"from" => "hello",
-					"to" => "world",
-					"boost" => 1.5,
-					"include_upper" => false,
+		$this->assertEquals(
+			array("query" => array(
+				"range" => array(
+					"title" => array(
+						"from" => "hello",
+						"to" => "world",
+						"boost" => 1.5,
+						"include_upper" => false,
+					),
 				),
-			),
-		)), $query);
+			)), $query
+		);
 	}
 
 	function testInitialMatchFilter()
@@ -158,14 +193,17 @@ class Search_Elastic_QueryBuilderTest extends PHPUnit_Framework_TestCase
 
 		$query = $builder->build(new Initial('Hello', 'plaintext', 'title', 1.5));
 
-		$this->assertEquals(array("query" => array(
-			"prefix" => array(
-				"title" => array(
-					"value" => "hello",
-					"boost" => 1.5,
-				),
-			),
-		)), $query);
+		$this->assertEquals(
+			array("query" => array(
+				"prefix" => array(
+					"title" => array(
+						"value" => "hello",
+						"boost" => 1.5,
+						),
+					),
+				)
+			), $query
+		);
 	}
 }
 

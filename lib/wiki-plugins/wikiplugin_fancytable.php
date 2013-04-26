@@ -82,8 +82,11 @@ function wikiplugin_fancytable($data, $params)
 	if ((isset($sortable) && $sortable != 'n')) {
 		include_once('lib/jquery_tiki/tablesorter/tablesorter-helper.php');
 		$tshelper = new tablesorterHelper();
-		$tshelper->createCode('fancytable_' . $iFancytable, $sortable, isset($sortList) ? $sortList : null,
-			isset($tsfilters) ? $tsfilters : null, isset($tsfilteroptions) ? $tsfilteroptions : null,
+		$tshelper->createCode(
+			'fancytable_' . $iFancytable, $sortable,
+			isset($sortList) ? $sortList : null,
+			isset($tsfilters) ? $tsfilters : null,
+			isset($tsfilteroptions) ? $tsfilteroptions : null,
 			isset($tspaginate) ? $tspaginate : null
 		);
 		$sort = $tshelper->code !== false ? true : false;
@@ -133,9 +136,15 @@ function wikiplugin_fancytable($data, $params)
 			$type = 'h';
 		}
 		//now create header table rows
-		$headrows = process_section($head, $type, '>>', $tdhdr, '</th>', isset($colwidths) ? $colwidths : '',
-			isset($headaligns) ? $headaligns : '', isset($headvaligns) ? $headvaligns : '',
-			isset($tshelper) ? $tshelper : null);
+		$headrows = process_section(
+			$head,
+			$type, '>>',
+			$tdhdr, '</th>',
+			isset($colwidths) ? $colwidths : '',
+			isset($headaligns) ? $headaligns : '',
+			isset($headvaligns) ? $headvaligns : '',
+			isset($tshelper) ? $tshelper : null
+		);
 
 		//restore original tags and plugin syntax
 		postprocess_section($headrows, $tagremove, $pluginremove);
@@ -159,8 +168,16 @@ function wikiplugin_fancytable($data, $params)
 		$type = 'b';	//plain body rows
 	}
 	//now create table body rows
-	$bodyrows = process_section($data, $type, "\n", "\r\t\t\t" . '<td', '</td>', isset($colwidths) ? $colwidths : '',
-		isset($colaligns) ? $colaligns : '', isset($colvaligns) ? $colvaligns : '');
+	$bodyrows = process_section(
+		$data,
+		$type,
+		"\n",
+		"\r\t\t\t" . '<td',
+		'</td>',
+		isset($colwidths) ? $colwidths : '',
+		isset($colaligns) ? $colaligns : '',
+		isset($colvaligns) ? $colvaligns : ''
+	);
 
 	//restore original tags and plugin syntax
 	postprocess_section($bodyrows, $tagremove, $pluginremove);
@@ -316,7 +333,7 @@ function process_section ($data, $type, $line_sep, $cellbeg, $cellend, $widths, 
 				}
 				//don't set odd/even class if tablesorter is on because jquery will add it
 				//and the classes won't alternate correctly if added here too
-			} elseif($type == 'bs') {
+			} elseif ($type == 'bs') {
 				$cellbeg = "\r\t\t\t" . '<td';
 			}
 			$c = 0;
@@ -369,7 +386,7 @@ function process_section ($data, $type, $line_sep, $cellbeg, $cellend, $widths, 
 						if (strpos($cellbeg, 'class="') === false) {
 							$cellbeg .= ' class="';
 						}
-						foreach($fcols[$c]['classes'] as $class) {
+						foreach ($fcols[$c]['classes'] as $class) {
 							$cellbeg .= ' ' . $class;
 						}
 						$cellbeg .= '"';
@@ -412,8 +429,7 @@ function postprocess_section (&$data, &$tagremove, &$pluginremove)
 	//first restore tag strings
 	$parserlib = TikiLib::lib('parser');
 	if (isset($tagremove['key']) and count($tagremove['key'])
-		and count($tagremove['key']) == count($tagremove['data']))
-	{
+		and count($tagremove['key']) == count($tagremove['data'])) {
 		$data = str_replace($tagremove['key'], $tagremove['data'], $data);
 	}
 	//then restore plugin strings

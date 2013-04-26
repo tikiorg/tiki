@@ -15,27 +15,26 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class ProfileForgetCommand extends Command
 {
-    protected function configure()
-    {
-        $this
-            ->setName('profile:forget')
-            ->setDescription('Forget a profile installation')
-            ->addArgument(
-               'profile',
-               InputArgument::REQUIRED,
-               'Profile name'
-            )
-            ->addArgument(
-               'repository',
-               InputArgument::OPTIONAL,
-               'Repository',
-			   'profiles.tiki.org'
-            )
-        ;
-    }
+	protected function configure()
+	{
+		$this
+			->setName('profile:forget')
+			->setDescription('Forget a profile installation')
+			->addArgument(
+				'profile',
+				InputArgument::REQUIRED,
+				'Profile name'
+			)
+			->addArgument(
+				'repository',
+				InputArgument::OPTIONAL,
+				'Repository',
+				'profiles.tiki.org'
+			);
+	}
 
-    protected function execute(InputInterface $input, OutputInterface $output)
-    {
+	protected function execute(InputInterface $input, OutputInterface $output)
+	{
 		$profileName = $input->getArgument('profile');
 		$repository = $input->getArgument('repository');
 
@@ -59,5 +58,5 @@ class ProfileForgetCommand extends Command
 		} else {
 			$output->writeln('<info>Profile was not installed.</info>');
 		}
-    }
+	}
 }

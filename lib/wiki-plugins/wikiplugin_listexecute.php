@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2013 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -27,13 +27,15 @@ function wikiplugin_listexecute($data, $params)
 	$unifiedsearchlib = TikiLib::lib('unifiedsearch');
 
 	$actions = array();
-	
+
 	$factory = new Search_Action_Factory;
-	$factory->register(array(
-		'change_status' => 'Search_Action_ChangeStatusAction',
-		'email' => 'Search_Action_EmailAction',
-		'wiki_approval' => 'Search_Action_WikiApprovalAction',
-	));
+	$factory->register(
+		array(
+			'change_status' => 'Search_Action_ChangeStatusAction',
+			'email' => 'Search_Action_EmailAction',
+			'wiki_approval' => 'Search_Action_WikiApprovalAction',
+		)
+	);
 
 	$query = new Search_Query;
 	$query->setWeightCalculator($unifiedsearchlib->getWeightCalculator());
@@ -108,9 +110,11 @@ function wikiplugin_listexecute($data, $params)
 
 	$plugin = new Search_Formatter_Plugin_SmartyTemplate('templates/wiki-plugins/wikiplugin_listexecute.tpl');
 	$plugin->setFields(array('report_status' => null));
-	$plugin->setData(array(
-		'actions' => array_keys($actions),
-	));
+	$plugin->setData(
+		array(
+			'actions' => array_keys($actions),
+		)
+	);
 	$dataSource = new Search_Formatter_DataSource_Declarative;
 	$dataSource->addGlobalSource($reportSource);
 

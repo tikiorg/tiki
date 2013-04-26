@@ -57,22 +57,26 @@ class Search_Elastic_Connection
 			"properties" => $mapping,
 		));
 
-		$this->put("/$index", json_encode(array(
-			'analysis' => array(
-				'analyzer' => array(
-					'default' => array(
-						'tokenizer' => 'standard',
-						'filter' => array('standard', 'lowercase', 'asciifolding', 'tiki_stop', 'porterStem'),
+		$this->put(
+			"/$index", json_encode(
+				array(
+					'analysis' => array(
+						'analyzer' => array(
+							'default' => array(
+								'tokenizer' => 'standard',
+								'filter' => array('standard', 'lowercase', 'asciifolding', 'tiki_stop', 'porterStem'),
+							),
+						),
+						'filter' => array(
+							'tiki_stop' => array(
+								'type' => 'stop',
+								'stopwords' => array ("a", "an", "and", "are", "as", "at", "be", "but", "by", "for", "if", "in", "into", "is", "it", "no", "not", "of", "on", "or", "s", "such", "t", "that", "the", "their", "then", "there", "these", "they", "this", "to", "was", "will", "with"),
+							),
+						),
 					),
-				),
-				'filter' => array(
-					'tiki_stop' => array(
-						'type' => 'stop',
-						'stopwords' => array ("a", "an", "and", "are", "as", "at", "be", "but", "by", "for", "if", "in", "into", "is", "it", "no", "not", "of", "on", "or", "s", "such", "t", "that", "the", "their", "then", "there", "these", "they", "this", "to", "was", "will", "with"),
-					),
-				),
-			),
-		)));
+				)
+			)
+		);
 		$result = $this->put("/$index/$type/_mapping", json_encode($data));
 
 		return $result;

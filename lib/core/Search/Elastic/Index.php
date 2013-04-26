@@ -28,22 +28,26 @@ class Search_Elastic_Index implements Search_Index_Interface
 		$objectId = $data['object_id']->getValue($factory);
 
 		// Note: Sending the mapping on every request is not terribly efficient. Profiling required before the feature is production-ready
-		$mapping = array_map(function ($entry) {
-			if ($entry instanceof Search_Type_Whole) {
-				return array(
-					"type" => "string",
-					"index" => "not_analyzed",
-				);
-			}
-		}, $data);
+		$mapping = array_map(
+			function ($entry) {
+				if ($entry instanceof Search_Type_Whole) {
+					return array(
+						"type" => "string",
+						"index" => "not_analyzed",
+					);
+				}
+			}, $data
+		);
 		$mapping = array_filter($mapping);
 
 		$this->connection->mapping($this->index, $objectType, $mapping);
 
 		$factory = $this->getTypeFactory();
-		$data = array_map(function ($entry) use ($factory) {
-			return $entry->getValue($factory);
-		}, $data);
+		$data = array_map(
+			function ($entry) use ($factory) {
+				return $entry->getValue($factory);
+			}, $data
+		);
 		$objectType = $data['object_type'];
 		$objectId = $data['object_id'];
 		$this->connection->index($this->index, $objectType, $objectId, $data);
@@ -65,9 +69,11 @@ class Search_Elastic_Index implements Search_Index_Interface
 		$result = $this->connection->search($this->index, $query, $resultStart, $resultCount);
 		$hits = $result->hits;
 
-		$entries = array_map(function ($entry) {
-			return (array) $entry->_source;
-		}, $hits->hits);
+		$entries = array_map(
+			function ($entry) {
+				return (array) $entry->_source;
+			}, $hits->hits
+		);
 
 		$resultSet = new Search_ResultSet($entries, $hits->total, $resultStart, $resultCount);
 

@@ -7,7 +7,8 @@
 
 // NB, all PayPal supported "HTML Variables" will be passed on to the button, even if not mentioned here
 
-function wikiplugin_paypal_info() {
+function wikiplugin_paypal_info()
+{
 
 	global $prefs;
 
@@ -237,7 +238,8 @@ function wikiplugin_paypal_info() {
 	);
 }
 
-function wikiplugin_paypal($data, $params) {
+function wikiplugin_paypal($data, $params)
+{
 	global $prefs, $language, $base_uri, $base_host;
 	static $id = 0;
 
@@ -261,7 +263,7 @@ function wikiplugin_paypal($data, $params) {
 		if (empty($params['item_name'])) {
 			return '<span class="error">' . tra('PayPal button:') . ' ' . tra('Item name (item_name) required') . '</span>';
 		}
-		if(empty($params['amount'])) {
+		if (empty($params['amount'])) {
 			return '<span class="error">' . tra('PayPal button:') . ' ' . tra('Price (amount) required') . '</span>';
 		}
 
@@ -357,12 +359,14 @@ function wikiplugin_paypal($data, $params) {
 		$miniParams['strings']['processing'] = tra($params['stringProcessing']);
 		$miniParamStr = json_encode($miniParams);
 
-		TikiLib::lib('header')->add_js('
+		TikiLib::lib('header')->add_js(
+			'
 $(document).bind("' . $csearchEvent . '", function () {
-	' . $csearchInit . ' $.getScript("' . $jsfile . '", function() {
+	' .  $csearchInit . ' $.getScript("' . $jsfile . '", function() {
 			PAYPAL.apps.MiniCart.render(' . $miniParamStr . ');
 		});
-});');
+});'
+		);
 	}
 	unset($params['minicart']);
 

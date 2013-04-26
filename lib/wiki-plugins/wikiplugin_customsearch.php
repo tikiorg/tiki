@@ -142,10 +142,15 @@ function wikiplugin_customsearch($data, $params)
 	$formatter = $builder->getFormatter();
 
 	$cachelib = TikiLib::lib('cache');
-	$cachelib->cacheItem($definitionKey, serialize(array(
-		'query' => $query,
-		'formatter' => $formatter,
-	)), 'customsearch');
+	$cachelib->cacheItem(
+		$definitionKey, serialize(
+			array(
+				'query' => $query,
+				'formatter' => $formatter,
+			)
+		),
+		'customsearch'
+	);
 
 	$wikitpl = "tplwiki:" . $params['wiki'];
 	$wikicontent = TikiLib::lib('smarty')->fetch($wikitpl);

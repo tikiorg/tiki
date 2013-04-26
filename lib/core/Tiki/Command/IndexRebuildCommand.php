@@ -15,28 +15,27 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class IndexRebuildCommand extends Command
 {
-    protected function configure()
-    {
-        $this
-            ->setName('index:rebuild')
-            ->setDescription('Fully rebuild the unified search index')
-            ->addOption(
-               'force',
-               null,
-               InputOption::VALUE_NONE,
-               'Destroy failed indexes prior to rebuild'
-            )
-            ->addOption(
-               'log',
-               null,
-               InputOption::VALUE_NONE,
-               'Generate a log of the indexed documents, useful to track down failures or memory issues'
-            )
-        ;
-    }
+	protected function configure()
+	{
+		$this
+			->setName('index:rebuild')
+			->setDescription('Fully rebuild the unified search index')
+			->addOption(
+				'force',
+				null,
+				InputOption::VALUE_NONE,
+				'Destroy failed indexes prior to rebuild'
+			)
+			->addOption(
+				'log',
+				null,
+				InputOption::VALUE_NONE,
+				'Generate a log of the indexed documents, useful to track down failures or memory issues'
+			);
+	}
 
-    protected function execute(InputInterface $input, OutputInterface $output)
-    {
+	protected function execute(InputInterface $input, OutputInterface $output)
+	{
 		$force = $input->getOption('force');
 		$log = $input->getOption('log');
 
@@ -60,5 +59,5 @@ class IndexRebuildCommand extends Command
 				$output->writeln("<error>$message</error>");
 			}
 		}
-    }
+	}
 }
