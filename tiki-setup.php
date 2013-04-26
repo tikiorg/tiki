@@ -311,14 +311,14 @@ if ( $prefs['feature_bidi'] == 'y' ) {
 
 if ( isset($prefs['javascript_cdn']) && $prefs['javascript_cdn'] == 'google' ) {
 	$headerlib->add_jsfile_dependancy("$url_scheme://ajax.googleapis.com/ajax/libs/jquery/$headerlib->jquery_version/jquery.min.js");
-	$headerlib->add_jsfile_dependancy("vendor/jquery/plugins/jquery-migrate-1.1.1.min.js");
+	$headerlib->add_jsfile_dependancy("vendor/jquery/plugins/migrate-min/jquery-migrate-1.1.1.min.js");
 } else if ( isset($prefs['javascript_cdn']) && $prefs['javascript_cdn'] == 'jquery' ) {
 	$headerlib->add_jsfile_dependancy("http://code.jquery.com/jquery-$headerlib->jquery_version.min.js");
-	$headerlib->add_jsfile_dependancy("http://code.jquery.com/jquery-migrate-1.1.1.js");
+	$headerlib->add_jsfile_dependancy("http://code.jquery.com/jquery-migrate-1.1.1.min.js");
 } else {
 	if ( $prefs['tiki_minify_javascript'] === 'y' ) {
 		$headerlib->add_jsfile_dependancy("vendor/jquery/jquery-min/jquery-$headerlib->jquery_version.min.js");
-		$headerlib->add_jsfile_dependancy("vendor/jquery/plugins/jquery-migrate-1.1.1.min.js");
+		$headerlib->add_jsfile_dependancy("vendor/jquery/plugins/migrate-min/jquery-migrate-1.1.1.min.js");
 	} else {
 		$headerlib->add_jsfile_dependancy("vendor/jquery/jquery/jquery-$headerlib->jquery_version.js");
 		$headerlib->add_jsfile_dependancy("vendor/jquery/plugins/migrate/jquery-migrate-1.1.1.js");
