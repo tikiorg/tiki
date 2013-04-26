@@ -1086,10 +1086,10 @@ if ( \$('#$id') ) {
 			}
 		}
 
-		$ret = '~np~<'.$elem.' class="tiki_plugin" plugin="' . $name . '" style="' . $elem_style . '"' .
-				' syntax="' . htmlentities($ck_editor_plugin, ENT_QUOTES, 'UTF-8') . '"' .
-				' args="' . htmlentities($arg_str, ENT_QUOTES, 'UTF-8') . '"' .
-				' body="' . htmlentities($data, ENT_QUOTES, 'UTF-8') . '">'.	// not <!--{cke_protected}
+		$ret = '~np~<'.$elem.' contenteditable="false" unselectable="on" class="tiki_plugin" data-plugin="' . $name . '" style="' . $elem_style . '"' .
+				' data-syntax="' . htmlentities($ck_editor_plugin, ENT_QUOTES, 'UTF-8') . '"' .
+				' data-args="' . htmlentities($arg_str, ENT_QUOTES, 'UTF-8') . '"' .
+				' data-body="' . htmlentities($data, ENT_QUOTES, 'UTF-8') . '">'.	// not <!--{cke_protected}
 				'<img src="'.$icon.'" width="16" height="16" style="float:left;position:relative;z-index:10001" />' .
 				$plugin_result.'<!-- end tiki_plugin --></'.$elem.'>~/np~';
 

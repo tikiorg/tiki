@@ -184,7 +184,7 @@ JS
             if (!$included) {
                 $html .= '<input type="hidden" name="wysiwyg" value="y" />';
                 }
-			$html .= '<textarea class="wikiedit ckeditor" name="'.$params['name'].'" id="'.$as_id.'" style="visibility:hidden;';	// missing closing quotes, closed in condition
+			$html .= '<textarea class="wikiedit" name="'.$params['name'].'" id="'.$as_id.'" style="visibility:hidden;';	// missing closing quotes, closed in condition
 
 			if (empty($params['cols'])) {
 				$html .= 'width:100%;'. (empty($params['rows']) ? 'height:500px;' : '') .'"';
