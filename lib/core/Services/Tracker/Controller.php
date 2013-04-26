@@ -509,7 +509,7 @@ class Services_Tracker_Controller
 
 			$id = $this->utilities->insertItem($definition, $itemData);
 
-			foreach($definition->getFields() as $field) {
+			foreach ($definition->getFields() as $field) {
 				$handler = $definition->getFieldFactory()->getHandler($field, $itemData);
 				if (method_exists($handler, 'handleClone')) {
 					$handler->handleClone();
@@ -531,7 +531,7 @@ class Services_Tracker_Controller
 
 					// handle specific cloning actions
 
-					foreach($childDefinition->getFields() as $field) {
+					foreach ($childDefinition->getFields() as $field) {
 						$handler = $childDefinition->getFieldFactory()->getHandler($field, $data);
 						if (method_exists($handler, 'handleClone')) {
 							$newData = $handler->handleClone();
@@ -834,7 +834,7 @@ class Services_Tracker_Controller
 					$childDefinition = $childItem->getDefinition();
 
 					// handle specific deleting actions
-					foreach($childDefinition->getFields() as $field) {
+					foreach ($childDefinition->getFields() as $field) {
 						$handler = $childDefinition->getFieldFactory()->getHandler($field, $data);
 						if (method_exists($handler, 'handleDelete')) {
 							$handler->handleDelete();
@@ -845,7 +845,7 @@ class Services_Tracker_Controller
 				}
 			}
 
-			foreach($definition->getFields() as $field) {
+			foreach ($definition->getFields() as $field) {
 				$itemData = $itemObject->getData();
 				$handler = $definition->getFieldFactory()->getHandler($field, $itemData);
 				if (method_exists($handler, 'handleDelete')) {

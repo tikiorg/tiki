@@ -329,14 +329,10 @@ class elFinderVolumeTikiFiles extends elFinderVolumeDriver
 	 **/
 	protected function _joinPath($dir, $name)
 	{
-		if ($fileId = $this->filesTable->fetchOne('fileId',
-				array ('name' => $name, 'galleryId' => $this->pathToId($dir))
-		)) {
+		if ($fileId = $this->filesTable->fetchOne('fileId', array('name' => $name, 'galleryId' => $this->pathToId($dir)))) {
 			return 'f_' . $fileId;
 		} else {
-			if ($galleryId = $this->fileGalleriesTable->fetchOne('galleryId',
-					array ('name' => $name, 'parentId' => $this->pathToId($dir))
-			)) {
+			if ($galleryId = $this->fileGalleriesTable->fetchOne('galleryId', array('name' => $name, 'parentId' => $this->pathToId($dir)))) {
 				return 'd_' . $galleryId;
 			}
 		}

@@ -216,9 +216,11 @@ if (isset($_REQUEST['preview'])) {
 		} catch (Exception $e) {
 			$smarty->assign(
 				'msg',
-				tr('There is a problem with your custom module "%0": ' . '<br><br><em>' . $e->getMessage() . '</em><br><br>' .
+				tr(
+					'There is a problem with your custom module "%0": ' . '<br><br><em>' . $e->getMessage() . '</em><br><br>' .
 					'<span class="button"><a href="tiki-admin_modules.php?um_edit=' . $_REQUEST['assign_name'] . '&cookietab=2#editcreate">' .
-					tr('Click here to edit the module') . '</a></span>', $_REQUEST['assign_name'])
+					tr('Click here to edit the module') . '</a></span>', $_REQUEST['assign_name']
+				)
 			);
 			$smarty->display('error.tpl');
 			die;
@@ -429,12 +431,16 @@ foreach ( $modlib->module_zones as $initial => $zone) {
 			);
 }
 
-$assigned_modules = array_map(function ($list) {
-	return array_map(function ($entry) {
-		$entry['params_presentable'] = str_replace('&', '<br>', urldecode($entry['params']));
-		return $entry;
-	}, $list);
-}, $assigned_modules);
+$assigned_modules = array_map(
+	function ($list) {
+		return array_map(
+			function ($entry) {
+				$entry['params_presentable'] = str_replace('&', '<br>', urldecode($entry['params']));
+				return $entry;
+			}, $list
+		);
+	}, $assigned_modules
+);
 
 $smarty->assign('assigned_modules', $assigned_modules);
 $smarty->assign('module_zones', $module_zones);

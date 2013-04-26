@@ -1,4 +1,4 @@
-/* 
+/*
  *Variation of utopian - only minimal changes here
  *
  * $Id$
@@ -85,22 +85,22 @@ body.wikitext a:hover {
 }
 
 
-.wikitext ul {}
+/*.wikitext ul {}
 
 .wikitext li {
-	/*list-style-image: url(greycard/bullet.gif);*/
+	list-style-image: url(greycard/bullet.gif);
 }
 
 .wikitext ul li ul li {
-	/*list-style-image: url(greycard/bullet-grey.gif);*/
-}
+	list-style-image: url(greycard/bullet-grey.gif);
+}*/
 
 div.simplebox {
 	background-color: #333 !important;
 	color: #d0d0d0 !important;
 }
 /*Definition lists*/
-.wikitext dl {}
+/*.wikitext dl {}*/
 
 .wikitext dt {
 	/*list-style-image: url(greycard/bullet.gif);*/
@@ -108,16 +108,16 @@ div.simplebox {
 	font-style: italic;
 }
 
-.wikitext dd {}
+/*.wikitext dd {}*/
 
 
 /***** lite bites ****/
 
-#c1c2 #wrapper #col1 {
-}
+/*#c1c2 #wrapper #col1 {
+}*/
 
-#c1c2 #wrapper #col1 #tiki-center {
-}
+/*#c1c2 #wrapper #col1 #tiki-center {
+}*/
 
 div.wikitext {
 	background-color: #d0d0d0;
@@ -161,16 +161,16 @@ span.button input:hover,
 
 
 /** Look & Feel (Site Identity) **/
-#header {
-}
+/*#header {
+}*/
 
-#siteheader {
-/*	background-image: url(greycard/banner-repeat.gif);
-	background-repeat: repeat-x;*/
+/*#siteheader {
+	background-image: url(greycard/banner-repeat.gif);
+	background-repeat: repeat-x;
 }
 
 div#sitead {}
-
+*/
 .siteloginbar {
 	width: 400px;
 	height: 70px;
@@ -262,13 +262,13 @@ div.box {
 	border: 1px solid #888;
 	color: #7f7e67;
 }
-	
+
 h3.box-title {
 	color: #006;
 	background-color: #abc;
 	border-bottom: #888 solid 1px;
 }
-	
+
 .box-data a {
 	color: #333;
 }
@@ -321,7 +321,7 @@ a.linkmodule:hover {
 }
 
 /** Specific Tables **/
-table.normal, 
+table.normal,
 table.admin,
 table.bloglist {
 	border: 1px #cbcaa5 solid;

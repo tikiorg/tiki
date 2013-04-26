@@ -15,22 +15,21 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class InstallCommand extends Command
 {
-    protected function configure()
-    {
-        $this
-            ->setName('database:install')
-            ->setDescription('Clean Tiki install')
-            ->addOption(
-               'force',
-               null,
-               InputOption::VALUE_NONE,
-               'Force installation. Overwrite any current database.'
-            )
-        ;
-    }
+	protected function configure()
+	{
+		$this
+			->setName('database:install')
+			->setDescription('Clean Tiki install')
+			->addOption(
+				'force',
+				null,
+				InputOption::VALUE_NONE,
+				'Force installation. Overwrite any current database.'
+			);
+	}
 
-    protected function execute(InputInterface $input, OutputInterface $output)
-    {
+	protected function execute(InputInterface $input, OutputInterface $output)
+	{
 		$force = $input->getOption('force');
 		$installer = new \Installer;
 		$installed = $installer->tableExists('users_users');
@@ -53,5 +52,5 @@ class InstallCommand extends Command
 		} else {
 			$output->writeln('<error>Database already exists.</error>');
 		}
-    }
+	}
 }

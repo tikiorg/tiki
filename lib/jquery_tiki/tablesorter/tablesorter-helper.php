@@ -41,10 +41,12 @@ class tablesorterHelper
 			'sortable' => array(
 				'required' => false,
 				'name' => tra('Column Sort'),
-				'description' => tr('Enter %0y%1 to allow sorting and %0n%1 to disallow (n is the default). Enter type:%0save%1
+				'description' => tr(
+					'Enter %0y%1 to allow sorting and %0n%1 to disallow (n is the default). Enter type:%0save%1
 					to allow sorts to be saved between page refreshes. Enter type:%0reset%1;text:***** to allow sorting and
 					show an unsort button with custom text. Enter %0type:savereset%1;text:buttontext to allow the same for saved sorts.',
-					'<b>', '</b>'),
+					'<b>', '</b>'
+				),
 				'default' => 'n',
 				'filter' => 'striptags',
 				'subparams' => array(
@@ -60,25 +62,31 @@ class tablesorterHelper
 			'sortList' => array(
 				'required' => false,
 				'name' => tra('Pre-sorted Columns'),
-				'description' => tra('Bracketed numbers for column number (first column = 0) and sort direction
-					(0 = ascending, 1 = descending), for example: [0,0],[1,0]'),
+				'description' => tra(
+					'Bracketed numbers for column number (first column = 0) and sort direction
+					(0 = ascending, 1 = descending), for example: [0,0],[1,0]'
+				),
 				'default' => '',
 				'filter' => 'striptags',
 			),
 			'tsfilters' => array(
 				'required' => false,
 				'name' => tra('Column Filters'),
-				'description' => tra('Enter y to have a text filter on all columns. Or set custom column filters
-					separated by | for each column for the following filter choices and parameters:') . '<br>
-					<b>Text - </b>type:text;placeholder:xxxx<br>
+				'description' => tra(
+					'Enter y to have a text filter on all columns. Or set custom column filters
+					separated by | for each column for the following filter choices and parameters:'
+				)
+					. '<br> <b>Text - </b>type:text;placeholder:xxxx<br>
 					<b>Dropdown - </b>type:dropdown;placeholder:****;option:****;option:****;option:**** <br>' .
 					tra('(options generated automatically if not set)') . '<br>
 					<b>' . tra('Date range - ') . '</b>type:date;format:yyyy-mm-dd;from:2013-06-30;to:2013-12-31<br>' .
 					tra('(from and to values set defaults for these fields when user clicks on the input field)') . '<br>
 					<b>' . tra('Numeric range - ') . '</b>type:range;from:0;to:50<br>
 					<b>' . tra('No filter - ') . '</b>type:nofilter<br>' .
-					tra('For example: tsfilters="type:dropdown;placeholder:Type to filter..." would result in a dropdown
-					filter on the first column with all unique values in that column in the dropdown list.'),
+					tra(
+						'For example: tsfilters="type:dropdown;placeholder:Type to filter..." would result in a dropdown
+						filter on the first column with all unique values in that column in the dropdown list.'
+					),
 				'default' => '',
 				'filter' => 'striptags',
 				'subparams' => array(
@@ -107,9 +115,11 @@ class tablesorterHelper
 			'tsfilteroptions' => array(
 				'required' => false,
 				'name' => tra('Filter Options'),
-				'description' => tr('The following options are available: %0reset%1 (adds button to take off filters), and %0hide%1
+				'description' => tr(
+					'The following options are available: %0reset%1 (adds button to take off filters), and %0hide%1
 					(Filters are revealed upon mouseover. Hide doesn\'t work when date and range filters are used.). To use both, set
-					tsfilteroptions="type:reset;text:button text;style:hide"', '<b>', '</b>'),
+					tsfilteroptions="type:reset;text:button text;style:hide"', '<b>', '</b>'
+				),
 				'default' => '',
 				'filter' => 'striptags',
 				'subparams' => array(
@@ -123,8 +133,10 @@ class tablesorterHelper
 			'tspaginate' => array(
 				'required' => false,
 				'name' => tra('Paginate'),
-				'description' => tra('Enter y to set default values: 20 rows max and expand dropdown with values from
-				 	10-200. Set custom values as in the following example: ') .
+				'description' => tra(
+					'Enter y to set default values: 20 rows max and expand dropdown with values from
+				 	10-200. Set custom values as in the following example: '
+				) .
 					'<b>max</b>:40;<b>expand</b>:60;expand:100;expand:140',
 				'default' => '',
 				'filter' => 'striptags',
@@ -167,7 +179,7 @@ class tablesorterHelper
 						$btext = isset($sp['text']) ? $sp['text'] : $spsub['type'][$sp['type']]['text'];
 						$this->code['buttons'][0] = '<button id="sort-reset-' . $id . '">' . $btext . '</button>';
 					}
-					if($sp['type'] == 'savereset' || $sp['type'] == 'save') {
+					if ($sp['type'] == 'savereset' || $sp['type'] == 'save') {
 						$this->widgets[] = 'saveSort';
 						$this->widgetOptions[] = 'saveSort : true';
 					}
@@ -183,11 +195,11 @@ class tablesorterHelper
 					$crop = substr($sortList, 1);
 					$crop = substr($crop, 0, -1);
 					$slarray = explode('],[', $crop);
-					foreach($slarray as $l) {
+					foreach ($slarray as $l) {
 						if (strpos($l, 'n') === false) {
 							$newlist[] = '[' . $l . ']';
 						} else {
-							$lpieces = explode(',',$l);
+							$lpieces = explode(',', $l);
 							$this->code['columns'][$lpieces[0]]['classes'][] = 'sorter-false';
 						}
 					}
@@ -220,7 +232,7 @@ class tablesorterHelper
 
 				//create div
 				if (is_array($tsp) && isset($tsp['expand'])) {
-					foreach($tsp['expand'] as $key => $value) {
+					foreach ($tsp['expand'] as $key => $value) {
 						$select[] = $value;
 					}
 					sort($select);
@@ -235,7 +247,7 @@ class tablesorterHelper
 						<span class="next arrow">img</span>
 						<span class="last arrow">mg</span>
 						<select class="pagesize">';
-				foreach($select as $option) {
+				foreach ($select as $option) {
 					$div .= '<option';
 					if ($max == $option) {
 						$div .= ' selected="selected"';
@@ -256,7 +268,7 @@ class tablesorterHelper
 				$this->widgetOptions[] = 'filter_cssFilter : \'tablesorter-filter\'';
 				$this->widgetOptions[] = 'filter_searchDelay : 300';
 				if (is_array($tsf)) {
-					foreach($tsf as $key => $filter) {
+					foreach ($tsf as $key => $filter) {
 						$def = '';
 						switch($filter['type']) {
 							case 'nofilter' :
@@ -265,7 +277,7 @@ class tablesorterHelper
 							case 'dropdown' :
 								//add any dropdown options set by user, which start at the [1] index
 								if (isset($filter['option'])) {
-									foreach($filter['option'] as $num => $val) {
+									foreach ($filter['option'] as $num => $val) {
 										$this->filter_functions[$key][] = '\'' . $val . '\' : function(e, n, f, i) { return /' .
 											$val . '/.test(e); }';
 									}
@@ -327,7 +339,7 @@ class tablesorterHelper
 			//add widgets
 			if (is_array($this->widgets) && count($this->widgets) > 0) {
 				$jq .= 'widgets : [';
-				foreach($this->widgets as $widget) {
+				foreach ($this->widgets as $widget) {
 					$jq .= '"' . $widget . '",';
 				}
 				//take off the last comma
@@ -336,25 +348,25 @@ class tablesorterHelper
 			}
 			//add options
 			if (is_array($this->options) && count($this->options) > 0) {
-				foreach($this->options as $option) {
+				foreach ($this->options as $option) {
 					$jq .= $option . ',' . "\n\t\t";
 				}
 			}
 			//add widget options
 			if (is_array($this->widgetOptions) && count($this->widgetOptions) > 0) {
 				$jq .= 'widgetOptions : {';
-				foreach($this->widgetOptions as $widgetopt) {
+				foreach ($this->widgetOptions as $widgetopt) {
 					$jq .= ' ' . $widgetopt . ',';
 				}
 				//add filter functions
 				if (is_array($this->filter_functions) && count($this->filter_functions) > 0) {
 					$jq .= "\n\t\t\t" . 'filter_functions: { ';
-					foreach($this->filter_functions as $col => $functions) {
+					foreach ($this->filter_functions as $col => $functions) {
 						$jq .= $col . ' : ';
 						if (isset($functions[0]) && $functions[0] != 'true') {
 							$jq .= '{';
 						}
-						foreach($functions as $func) {
+						foreach ($functions as $func) {
 							$jq .= $func . ',';
 						}
 						//take off the last comma and close column
@@ -369,7 +381,7 @@ class tablesorterHelper
 				//add filter_formatter options
 				if (is_array($this->filter_formatter) && count($this->filter_formatter) > 0) {
 					$jq .= "\n\t\t\t" . 'filter_formatter: { ';
-					foreach($this->filter_formatter as $col => $formats) {
+					foreach ($this->filter_formatter as $col => $formats) {
 						$jq .= $formats;
 					}
 					//take off the last comma and close column
@@ -401,7 +413,7 @@ class tablesorterHelper
 	{
 		if (!empty($param)) {
 			$ret = explode('|', $param);
-			foreach($ret as $key => $pipe) {
+			foreach ($ret as $key => $pipe) {
 				$ret[$key] = strpos($pipe, ';') !== false ? explode(';', $pipe) : $pipe;
 				if (!is_array($ret[$key])) {
 					if (strpos($ret[$key], ':') !== false) {
@@ -410,7 +422,7 @@ class tablesorterHelper
 						$ret[$key][$colon[0]] = $colon[1];
 					}
 				} elseif (is_array($ret[$key])) {
-					foreach($ret[$key] as $key2 => $subparam) {
+					foreach ($ret[$key] as $key2 => $subparam) {
 						if (strpos($subparam, ':') !== false) {
 							$colon = explode(':', $subparam);
 							unset($ret[$key][$key2]);

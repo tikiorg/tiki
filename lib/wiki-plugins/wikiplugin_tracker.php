@@ -406,8 +406,7 @@ function wikiplugin_tracker($data, $params)
 	}
 	//test registration passcode if used and if this is the user tracker being called during a registration
 	if ($prefs['useRegisterPasscode'] == 'y' && !empty($prefs['registerPasscode']) && isset ($_REQUEST['register'])
-		&& $_REQUEST['register'] == 'Register')
-	{
+		&& $_REQUEST['register'] == 'Register') {
 		$regtracker = $userlib->get_usertrackerid('Registered');
 		if ($trackerId == $regtracker['usersTrackerId'] && $_REQUEST['passcode'] != $prefs['registerPasscode']) {
 			return false;
@@ -772,8 +771,7 @@ function wikiplugin_tracker($data, $params)
 				}
 				if ( count($field_errors['err_mandatory']) == 0  && count($field_errors['err_value']) == 0
 					&& empty($field_errors['err_antibot']) && empty($field_errors['err_outputwiki'])
-					&& !isset($_REQUEST['tr_preview']))
-				{
+					&& !isset($_REQUEST['tr_preview'])) {
 					/* ------------------------------------- save the item ---------------------------------- */
 					if (isset($_REQUEST['status'])) {
 						$status = $_REQUEST['status'];
@@ -1096,8 +1094,7 @@ function wikiplugin_tracker($data, $params)
 				}
 
 				if ($registration && !empty($userField) && isset($_REQUEST['name'])
-					&& $_REQUEST['name'] === $userField['value'] && $_REQUEST['name'] === $user)
-				{
+					&& $_REQUEST['name'] === $userField['value'] && $_REQUEST['name'] === $user) {
 					// if in registration and creating a user tracker item for the new user
 					// remove the user if they did not complete the tracker correctly
 					$userlib->remove_user($userField['value']);
@@ -1341,7 +1338,7 @@ function wikiplugin_tracker($data, $params)
 							$isTextOnSameRow = ($f['options_array'][0] == 0) ? false : true;
 							break;
 						case 'a':	// Text area
-							if(!isset($f['options_array'][8])) {
+							if (!isset($f['options_array'][8])) {
 								$isTextOnSameRow = true;
 							} else {
 								$isTextOnSameRow = ($f['options_array'][8] == 0) ? false : true;
@@ -1431,8 +1428,7 @@ FILL;
 			if ($prefs['feature_antibot'] == 'y' && (empty($user) || (!empty($user) && $_REQUEST['error'] == 'y'))
 				&& $params['formtag'] != 'n'
 				&& ($registration != 'y' || $prefs["user_register_prettytracker"] != 'y')
-				)
-			{
+				) {
 				// in_tracker session var checking is for tiki-register.php
 				$smarty->assign('showmandatory', $showmandatory);
 				$smarty->assign('antibot_table', empty($wiki) && empty($tpl)?'n': 'y');

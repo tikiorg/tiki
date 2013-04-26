@@ -15,40 +15,39 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class ConfigureCommand extends Command
 {
-    protected function configure()
-    {
-        $this
-            ->setName('database:configure')
-            ->setDescription('Database: Configure (write local.php)')
-            ->addArgument(
-                'username',
-                InputArgument::REQUIRED,
-                'Username'
-            )
-            ->addArgument(
-                'password',
-                InputArgument::REQUIRED,
-                'Password'
-            )
-            ->addArgument(
-                'database',
-                InputArgument::REQUIRED,
-                'Database name'
-            )
-            ->addOption(
-               'host',
-               null,
-               InputOption::VALUE_REQUIRED,
-               'Database hostname, localhost otherwise'
-            )
-        ;
-    }
+	protected function configure()
+	{
+		$this
+			->setName('database:configure')
+			->setDescription('Database: Configure (write local.php)')
+			->addArgument(
+				'username',
+				InputArgument::REQUIRED,
+				'Username'
+			)
+			->addArgument(
+				'password',
+				InputArgument::REQUIRED,
+				'Password'
+			)
+			->addArgument(
+				'database',
+				InputArgument::REQUIRED,
+				'Database name'
+			)
+			->addOption(
+				'host',
+				null,
+				InputOption::VALUE_REQUIRED,
+				'Database hostname, localhost otherwise'
+			);
+	}
 
-    protected function execute(InputInterface $input, OutputInterface $output)
-    {
-        $username = $input->getArgument('username');
-        $password = $input->getArgument('password');
-        $database = $input->getArgument('database');
+	protected function execute(InputInterface $input, OutputInterface $output)
+	{
+		$username = $input->getArgument('username');
+		$password = $input->getArgument('password');
+		$database = $input->getArgument('database');
 		if (! $hostname = $input->getOption('host', 'localhost')) {
 			$hostname = 'localhost';
 		}
@@ -71,7 +70,7 @@ class ConfigureCommand extends Command
 \$pass_tiki=$export_password;
 \$dbs_tiki=$export_database;
 \$client_charset='utf8';
-// If you experience text encoding issues after updating (e.g. apostrophes etc showing up as strange characters) 
+// If you experience text encoding issues after updating (e.g. apostrophes etc showing up as strange characters)
 // \$client_charset='latin1';
 // \$client_charset='utf8';
 // See http://tiki.org/ReleaseNotes5.0#Known_Issues and http://doc.tiki.org/Understanding+Encoding for more info
@@ -84,9 +83,9 @@ class ConfigureCommand extends Command
 // \$system_configuration_identifier = 'example.com';
 
 LOCALPHP;
-        $local_php = \TikiInit::getCredentialsFile();
+		$local_php = \TikiInit::getCredentialsFile();
 		file_put_contents($local_php, $out);
 
 		$output->writeln("Wrote $local_php");
-    }
+	}
 }

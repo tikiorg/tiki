@@ -166,10 +166,12 @@ REG
 				array(	// default for add_button_label already tra but not merged yet
 					'_text' => !empty($params['add_button_label']) ? tra($params['add_button_label']) : $defaults['add_button_label'],
 					'_id' => 'kaltura_upload_btn' . $instance,
-					'href' => TikiLib::lib('service')->getUrl(array(
-						'controller' => 'kaltura',
-						'action' => 'upload'
-					)),
+					'href' => TikiLib::lib('service')->getUrl(
+						array(
+							'controller' => 'kaltura',
+							'action' => 'upload'
+						)
+					),
 				),
 				$smarty
 			);
@@ -225,7 +227,8 @@ REG
 
 		TikiLib::lib('header')
 			->add_jsfile("{$prefs['kaltura_kServiceUrl']}/p/{$prefs['kaltura_partnerId']}/sp/{$prefs['kaltura_partnerId']}00{$embedIframeJs}/uiconf_id/{$params['player_id']}/partner_id/{$prefs['kaltura_partnerId']}")
-			->add_jq_onready("
+			->add_jq_onready(
+				"
 mw.setConfig('Kaltura.LeadWithHTML5', $leadWithHTML5);
 
 kWidget.embed({
@@ -243,7 +246,8 @@ kWidget.embed({
 		\$ = \$jq;	// restore our jQuery after Kaltura has finished with it
 		console.log('Player:' + playerId + ' is ready ');
 	}
-});");
+});"
+			);
 		return "<div id='kaltura_player$instance' style='width:{$params['width']}px;height:{$params['height']}px;$style'></div>";
 
 	} elseif ($params['type'] === 'kdp') {

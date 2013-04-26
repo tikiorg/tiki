@@ -84,24 +84,29 @@ try {
 				if ($kentryType == 'mix') {
 					$kentry = $kalturaadminlib->getMix($videoId[0]);
 					if ($_REQUEST['update']) {
-						$knewentry = $kalturaadminlib->updateMix($videoId[0], array(
-							'name' => $_REQUEST['name'],
-							'description' => $_REQUEST['description'],
-							'tags' => $_REQUEST['tags'],
-							'editorType' => $_REQUEST['editor'] === 'kse' ? 1 : 2,
-							'adminTags' => $_REQUEST['adminTags'],
-						));
+						$knewentry = $kalturaadminlib->updateMix(
+							$videoId[0],
+							array(
+								'name' => $_REQUEST['name'],
+								'description' => $_REQUEST['description'],
+								'tags' => $_REQUEST['tags'],
+								'editorType' => $_REQUEST['editor'] === 'kse' ? 1 : 2,
+								'adminTags' => $_REQUEST['adminTags'],
+							)
+						);
 					}
 				}
 				if ($kentryType == 'media') {
 					$kentry = $kalturaadminlib->getMedia($videoId[0]);
 					if ($_REQUEST['update']) {
-						$knewentry = $kalturaadminlib->updateMedia($videoId[0], array(
-							'name' => $_REQUEST['name'],
-							'description' => $_REQUEST['description'],
-							'tags' => $_REQUEST['tags'],
-							'adminTags' => $_REQUEST['adminTags'],
-						));
+						$knewentry = $kalturaadminlib->updateMedia(
+							$videoId[0], array(
+								'name' => $_REQUEST['name'],
+								'description' => $_REQUEST['description'],
+								'tags' => $_REQUEST['tags'],
+								'adminTags' => $_REQUEST['adminTags'],
+							)
+						);
 					}
 				}
 				if ($_REQUEST['update']) {
