@@ -99,6 +99,13 @@ ajaxLoadingShow("'.$dom_id.'");
  	contentsLangDirection: "' . ($prefs['feature_bidi'] === 'y' ? 'rtl' : 'ltr') . '",
 	language: "' . ($prefs['feature_detect_language'] === 'y' ? '' : $prefs['language']) . '"
 	'. (empty($params['cols']) ? ',height: 400' : '') .'
+	, allowedContent: true
+//	, extraAllowedContent: {		// TODO one day, currently disabling the "Advanced Content Filter" as tiki plugins are too complex
+//		"div span": {
+//			classes: "tiki_plugin",
+//			attributes: "data-plugin data-syntax data-args data-body"
+//		}
+//	}
 }';
 
         $notallreadyloaded=false;
