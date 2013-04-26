@@ -97,8 +97,8 @@ ajaxLoadingShow("'.$dom_id.'");
 	skin: "' . ($prefs['wysiwyg_toolbar_skin'] != 'default' ? $prefs['wysiwyg_toolbar_skin'] : 'moono') . '",
 	defaultLanguage: "' . $prefs['language'] . '",
  	contentsLangDirection: "' . ($prefs['feature_bidi'] === 'y' ? 'rtl' : 'ltr') . '",
-	language: "' . ($prefs['feature_detect_language'] === 'y' ? '' : $prefs['language']) . '",
-	'. (empty($params['cols']) ? 'height: 400,' : '') .'
+	language: "' . ($prefs['feature_detect_language'] === 'y' ? '' : $prefs['language']) . '"
+	'. (empty($params['cols']) ? ',height: 400' : '') .'
 }';
 
         $notallreadyloaded=false;
