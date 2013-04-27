@@ -15575,4 +15575,5 @@ $lang=Array(
 "TikiTest Replay" => "Rejouer TikiTest",
 "The page is empty" => "La page est vide",
 "You do not have permissions to view the maps" => "Vous n'avez pas les droits pour voir les cartes",
+"Paste this passcode into this field:" => "Le code d'enregistrement est:",
 "###end###"=>"###end###");
