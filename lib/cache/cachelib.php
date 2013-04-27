@@ -190,6 +190,7 @@ class Cachelib
 	{
 		global $tikidomain;
 
+		$path = rtrim($path, '/');
 		if (!$path or !is_dir($path)) return 0;
 		if ($dir = opendir($path)) {
 			// If using multiple Tikis but flushing cache on default install...
