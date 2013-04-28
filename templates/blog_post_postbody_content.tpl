@@ -1,7 +1,7 @@
 {* $Id$ *}
-{if $blog_post_context eq 'view_blog' && $use_excerpt eq 'y' && !empty($post_info.parsed_excerpt)}
+{if $blog_post_context eq 'view_blog' && $use_excerpt eq 'y' && !empty($post_info.excerpt)}
 	<div class="postbody-content postbody-excerpt">
-	{$post_info.parsed_excerpt}
+	{$post_info.excerpt}
 	</div>
 	{self_link _script=$post_info.postId|sefurl:blogpost _noauto='y'}{tr}Read more{/tr}{/self_link}
 {else}
@@ -27,12 +27,15 @@
 	</div>
 {/if}
 
-{capture name='copyright_section'}
-	{include file='show_copyright.tpl'}
-{/capture}
-{* When copyright section is not empty show it *}
-{if $smarty.capture.copyright_section neq ''}
-	<footer class="editdate">
-		{$smarty.capture.copyright_section}
-	</footer>
+{* Copyright display is being turned off if being called through the "BLOG" plugin with "simple" mode turned off and a max character count supplied (preview mode). If in preview mode end user most likely is wantingto conserve space with a smaller display of information *}
+{if $blog_post_context neq 'plugin_preview'}
+	{capture name='copyright_section'}
+		{include file='show_copyright.tpl'}
+	{/capture}
+	{* When copyright section is not empty show it *}
+	{if $smarty.capture.copyright_section neq ''}
+		<footer class="editdate">
+			{$smarty.capture.copyright_section}
+		</footer>
+	{/if}
 {/if}

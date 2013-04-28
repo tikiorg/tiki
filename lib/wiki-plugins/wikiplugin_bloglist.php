@@ -45,6 +45,59 @@ function wikiplugin_bloglist_info()
 					array('text' => tra('No'), 'value' => 'n')
 				),
 			),
+                        'charCount' => array(
+                                'required' => false,
+                                'name' => tra('Char Count'),
+                                'description' => tra('Number of characters to display if not a simple list. (defaults to all)'),
+                                'filter' => 'digits',
+                                'parent' => array('name' => 'simpleList', 'value' => 'n'),
+                                'default' => ''
+                        ),
+                        'wordBoundary' => array(
+                                'required' => false,
+                                'name' => tra('Word Boundary'),
+                                'description' => tra('If not a simple list and Char Count is non-zero, then marking this as yes will break on word boundaries only.'),
+                                'default' => 'y',
+                                'options' => array(
+                                        array('text' => tra('Yes'), 'value' => 'y'),
+                                        array('text' => tra('No'), 'value' => 'n')
+                                ),
+                                'parent' => array('name' => 'simpleList', 'value' => 'n'),
+                        ),
+                        'ellipsis' => array(
+                                'required' => false,
+                                'name' => tra('Ellipsis'),
+                                'description' => tra('If not a simple list and Char Count is non-zero, then marking this as yes will put ellipsis (...) at end of text (default=y).'),
+                                'default' => 'y',
+                                'options' => array(
+                                        array('text' => '', 'value' => ''),
+                                        array('text' => tra('Yes'), 'value' => 'y'),
+                                        array('text' => tra('No'), 'value' => 'n')
+                                ),
+                                'parent' => array('name' => 'simpleList', 'value' => 'n'),
+                        ),
+                        'more' => array(
+                                'required' => false,
+                                'name' => tra('More'),
+                                'description' => tra('If not a simple list and Char Count is non-zero, then marking this as yes will put a More link to the full entry (default=y).'),
+                                'default' => 'y',
+                                'options' => array(
+                                        array('text' => tra('Yes'), 'value' => 'y'),
+                                        array('text' => tra('No'), 'value' => 'n')
+                                ),
+                                'parent' => array('name' => 'simpleList', 'value' => 'n'),
+                        ),
+                        'showIcons' => array(
+                                'required' => false,
+                                'name' => tra('Show Icons'),
+                                'description' => tra('If not a simple list marking this as no will prevent the "edit" and "print" type icons from displaying (default=y)'),
+                                'default' => 'y',
+                                'options' => array(
+					array('text' => tra('Yes'), 'value' => 'y'),
+                                        array('text' => tra('No'), 'value' => 'n')
+                                ),
+                                'parent' => array('name' => 'simpleList', 'value' => 'n'),
+                        ),
 			'dateStart' => array(
 				'required' => false,
 				'name' => tra('Start Date'),
@@ -111,10 +164,19 @@ function wikiplugin_bloglist($data, $params)
 		
 		$blogItems = $bloglib->list_blog_posts($params['Id'], false, $params['offset'], $params['Items'], $params['sort_mode'], $params['find'], $dateStartTS, $dateEndTS);
 
+		if ( $params['charCount'] > 0 )
+		{
+			$blogItems = $bloglib->mod_blog_posts( $blogItems, $params['charCount'], $params['wordBoundary'], $params['ellipsis'], $params['more']);
+		}
+
 		$blog_data = TikiLib::lib('blog')->get_blog($params['Id']);
 		$smarty->assign('blog_data', $blog_data);
 
 		$smarty->assign('ownsblog', $user && $user == $blog_data["user"] ? 'y' : 'n');
+
+		if ($params['showIcons'] == 'n') {
+                        $smarty->assign('excerpt', 'y');
+                }
 
 		$smarty->assign('show_heading', 'n');
 		$smarty->assign('use_author', 'y');
