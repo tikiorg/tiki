@@ -549,7 +549,7 @@
 	"archive": {
 		"directory": "dist",
 		"format": "zip",
-		"prefix-url": "http://composer.tiki.org/trunk",
+		"prefix-url": "https://composer.tiki.org/trunk",
 		"skip-dev": false
 	}
 }
