@@ -110,6 +110,6 @@
 		]
 	},
 	"repositories": [
-		{ "type": "composer", "url": "http://composer.tiki.org" }
+		{ "type": "composer", "url": "https://composer.tiki.org" }
 	]
 }
