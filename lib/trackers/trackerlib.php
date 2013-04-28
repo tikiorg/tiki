@@ -4643,12 +4643,13 @@ class TrackerLib extends TikiLib
 			);
 		}
 	}
+	// connect a user to his user item on the email field / email user
 	public function update_user_item($user, $email, $emailFieldId) {
 		$field = $this->get_tracker_field($emailFieldId);
 		$trackerId = $field['trackerId'];
 		$userFieldId =  $this->get_field_id_from_type($trackerId, 'u', '1%');
 		$listfields[$userFieldId] = $this->get_tracker_field($userFieldId);
-		$filterfields[0] = $fieldId; // Email field in the user tracker
+		$filterfields[0] = $emailFieldId; // Email field in the user tracker
 		$exactvalue[0] = $email;
 		$items = $this->list_items($trackerId, 0, -1, 'created', $listfields, $filterfields, '', 'opc', '', $exactvalue);
 		$found = false;
