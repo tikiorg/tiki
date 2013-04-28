@@ -16,7 +16,7 @@
 {if $prefs.useRegisterPasscode eq 'y' and !empty($prefs.registerPasscode) and $prefs.showRegisterPasscode eq 'y'}
 	{jq}
 		$('span#passcode-help')
-		.html('{tr}Paste this passcode into this field:{/tr} <b>{{$prefs.registerPasscode}}</b>').css('display', 'inline');
+		.html("{tr}The passcode (to block robots from registration) is:{/tr} <b>{{$prefs.registerPasscode}}</b>").css('display', 'inline');
 	{/jq}
 {else}
 	{jq}
