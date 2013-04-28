@@ -1,1 +1,0 @@
-ALTER TABLE `users_groups` ADD `emailPattern`  varchar(255) default '';

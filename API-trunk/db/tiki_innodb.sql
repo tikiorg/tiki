@@ -1,1 +1,0 @@
--- tiki_innodb.sql is run after tiki.sql if InnoDB is being installed

@@ -1,2 +1,0 @@
-INSERT INTO `users_permissions` (`permName`, `permDesc`, `level`, `type`, `admin`, `feature_check`) VALUES('tiki_p_blog_post_view_ref', 'Can view in module and feed the blog posts', 'basic', 'blogs', NULL, 'feature_blogs');
-INSERT INTO `users_permissions` (`permName`, `permDesc`, `level`, `type`, `admin`, `feature_check`) VALUES('tiki_p_blog_view_ref', 'Can view in module and feed the blog', 'basic', 'blogs', NULL, 'feature_blogs');
