@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "1481d9a8030603e582979ab25689cd0e",
+    "hash": "b6e4f6a0ebd917ab46406cdd4f4fe9ca",
     "packages": [
         {
             "name": "aFarkas/html5shiv",
@@ -180,6 +180,12 @@
                 "url": "http://svn.code.sf.net/p/jcapture-applet/code",
                 "reference": "/trunk/@46"
             },
+            "dist": {
+                "type": "zip",
+                "url": "https://composer.tiki.org//dist/jcapture-applet-jcapture-applet-dev-trunk-f04408.zip",
+                "reference": "dev-trunk",
+                "shasum": "99359f87c4472e26605dc4989fd7624506ed6701"
+            },
             "type": "library",
             "license": [
                 "LGPL"
@@ -206,7 +212,7 @@
                 "screencapture",
                 "screenshot"
             ],
-            "time": "2013-04-17 19:48:36"
+            "time": "2013-04-18 04:48:36"
         },
         {
             "name": "jquery/jquery",
@@ -249,6 +255,12 @@
                 "url": "http://jquerys5.googlecode.com/svn",
                 "reference": "/trunk/@65"
             },
+            "dist": {
+                "type": "zip",
+                "url": "https://composer.tiki.org//dist/jquery-jquery-s5-dev-trunk-69fe1a.zip",
+                "reference": "dev-trunk",
+                "shasum": "6dc24d69e98599a3a8985f7b00c2c881e1973a28"
+            },
             "type": "library",
             "license": [
                 "LGPL"
@@ -270,7 +282,7 @@
                 "s5",
                 "slideshow"
             ],
-            "time": "2013-04-18 13:40:40"
+            "time": "2013-04-18 22:40:40"
         },
         {
             "name": "jquery/jquery-sheet",
