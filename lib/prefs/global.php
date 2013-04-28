@@ -300,7 +300,7 @@ function prefs_global_list($partial = false)
 		),
 		'showRegisterPasscode' => array(
 			'name' => tra('Show passcode on registration form'),
-			'description' => tra('Displays the required passcode on the registration form.'),
+			'description' => tra("Displays the required passcode on the registration form. This is helpful for legitimate users who want to register while making it difficult for automated robots because the passcode is unique for each site and because it is displayed in JavaScript."),
 			'type' => 'flag',
 			'default' => 'n',
 			'tags' => array('basic'),

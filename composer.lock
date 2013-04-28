@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "de9b28ef0b4ff87d04bb4d147b62ac6d",
+    "hash": "1481d9a8030603e582979ab25689cd0e",
     "packages": [
         {
             "name": "aFarkas/html5shiv",
@@ -520,6 +520,17 @@
             "dist": {
                 "type": "file",
                 "url": "http://code.jquery.com/jquery-migrate-1.1.1.js",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "library"
+        },
+        {
+            "name": "jquery/plugins/migrate-min",
+            "version": "1.1.1",
+            "dist": {
+                "type": "file",
+                "url": "http://code.jquery.com/jquery-migrate-1.1.1.min.js",
                 "reference": null,
                 "shasum": null
             },

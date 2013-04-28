@@ -226,8 +226,8 @@ class elFinder {
 					$id = $volume->id();
 					
 					$this->volumes[$id] = $volume;
-					if (!$this->default && $volume->isReadable()) {
-						$this->default = $this->volumes[$id]; 
+					if ((!$this->default && !isset($opts['startRoot']) || $opts['startRoot'] === $i) && $volume->isReadable()) {
+						$this->default = $this->volumes[$id];
 					}
 				} else {
 					$this->mountErrors[] = 'Driver "'.$class.'" : '.implode(' ', $volume->error());

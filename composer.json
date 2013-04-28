@@ -41,6 +41,7 @@
 		"jquery/plugins/jquery-json": "2.4",
 		"jquery/plugins/media": "0.98",
 		"jquery/plugins/migrate": "1.1.1",
+		"jquery/plugins/migrate-min": "1.1.1",
 		"jquery/plugins/nestedsortable": "1.3.4",
 		"jquery/plugins/pxem": "0.1",
 		"jquery/plugins/reflection-jquery": "1.1",
