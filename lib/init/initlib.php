@@ -16,8 +16,9 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
 }
 
 if (! file_exists('vendor/autoload.php')) {
-	echo "Your Tiki is not completely set-up.\n";
-	echo "Composer has not been run to fetch dependencies. See http://dev.tiki.org/Composer for details.\n";
+	echo "Your Tiki is not completely installed because Composer has not been run to fetch package dependencies.\n";
+	echo "You need to run 'sh setup.sh' from the command line.\n";
+	echo "See http://dev.tiki.org/Composer for details.\n";
 	exit;
 }
 
