@@ -929,15 +929,6 @@ div.dirfooter {margin-top: 10px}
 .default td {border: solid 1px #a9a9a9}
 
 /***** Calendar *****/
-.calcontent a.linkmenu,
-.calcontent a.linkmenu:hover {
-	background: none;
-	padding: 0}
-
-.calfocus {
-	font-size: 90%;
-	background: inherit}
-
 .calprio1 a,
 .calprio2 a,
 .calprio3 a,
@@ -959,23 +950,12 @@ div.dirfooter {margin-top: 10px}
 .opaque .box-title {border-bottom: 1px solid black}
 .searchresults {display: inline}
 
-#caltable .calfocuson,
 .box-data .fc a.today,
 .box-data td a.today {
 	background: #d2d9e3;
 	border: 0}
 
-.caltable .calfocuson {
-	background: #d2d9e3;
-}
-
-#caltable .calfocuson a {color:#000}
-
-#caltable .calfocus a,
-#caltable .calfocuson a {text-decoration:none}
-
 .calinput {background: #9faec2}
-.calfocuson + .calcontent {background: #F5F5F5}
 
 #caltable td {padding: 0}
 
@@ -1020,32 +1000,14 @@ div.dirfooter {margin-top: 10px}
 	padding: 0;
 }
 
-.caldark {
-	background: #c4cdda;
+/*today focus*/
+.caltable td.calhighlight,
+td.calheadhighlight {
+	background: #fad4e0;
 }
 
-.caldark .calfocus {
-	background: #c4cdda;
-}
-
-* html .caldark {
-	padding: 0;
-}
-
-div#calscreen .calfocuson {
-	background: #d2d9e3;
-}
-
-.calfocuson {
-	font-size: 100%;
-}
-
-.calfocuson a {
-	font-size: 90%;
-}
-
-.calHeadingOn, .calHeadingOn a {
-	background: #d2d9e3;
+.caltable .calborder {
+	border: 1px solid #a9a9a9;
 }
 
 .daterow {

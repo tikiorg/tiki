@@ -564,7 +564,6 @@ a.blogt:hover {
 	color: #666;
 }
 
-#caltable .calfocuson,
 .box-data .fc a.today,
 .box-data td a.today {
 	background: #888;
@@ -572,18 +571,55 @@ a.blogt:hover {
 	font-weight: bold;
 }
 
-.caltable .calfocuson {
-	color: #ffffff;
-	background: #888;
+/* today focus */
+.caltable td.calhighlight,
+.caltable td.calhighlight,
+td#month_title.calheadhighlight,
+td.calheadhighlight {
+	background: #ffc;
+}
+
+.caltable td.calhighlight a:link,
+.caltable td.calhighlight a:visited,
+td.calheadhighlight.calHeading a:link,
+td.calheadhighlight.calHeading a:visited,
+.caltable td.odd td.focus a:link,
+.caltable td.odd td.focus a:visited,
+.caltable td.even td.focus a:link,
+.caltable td.even td.focus a:visited,
+td#month_title.calheadhighlight {
+	color: #000;
+}
+
+.caltable td.calhighlight a:hover,
+td.calheadhighlight a:hover,
+td.calheadhighlight.calHeading a:hover,
+td.heading.calHeading a:hover,
+.caltable td.odd td.focus a:hover,
+.caltable td.even td.focus a:hover {
+	color: #666;
+}
+
+.caltable .calborder {
+	color: #666;
+	border: 1px solid #aaa;
+}
+
+/* end today focus*/
+
+.caltable td.calmodfocus a:link,
+.caltable td.calmodfocus a:visited {
+	color: #000;
+}
+
+td.calHeading a:link,
+td.calHeading a:visited {
+	color: #fff;
 }
 
 .calnavigation {
 	border: 1px solid #777;
 	text-align: center;
-}
-
-.calfocuson + .calcontent {
-	border: 1px solid #777;
 }
 
 #caltable .days {
@@ -599,22 +635,6 @@ a.blogt:hover {
 .caltable .odd, .caltable .even {border: 1px solid #aaa}
 .caltable .odd {background: #bbb}
 .caltable .even {background: #989898}
-
-.caldark {
-	background: #878787;
-	color: #666;
-	border: 1px solid #aaa;
-}
-
-.caldark .calfocus {background: #878787}
-
-div#calscreen .calfocuson {
-	background: #878787;
-}
-
-.calHeadingOn, .calHeadingOn a {
-	background: #888;
-}
 
 .daterow {
 	background-color: #989898;

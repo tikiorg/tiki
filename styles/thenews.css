@@ -1299,42 +1299,6 @@ body.tiki_blogs .postfooter .actions {
 	padding: 0;
 }
 
-#calscreen .calfocuson {
-	background: #D4D0C8;
-}
-
-.calfocuson {
-	font-size: 100%;
-}
-
-.calfocuson a {
-	font-size: 90%;
-}
-
-.calHeadingOn, .calHeadingOn a {
-	background: #D4D0C8;
-}
-
-
-/*
-.calfocus {
-	font-size: 90%;
-	background: inherit;
-}
-
-*/
-.caldark .calfocus {
-	background: inherit;
-}
-
-/*
-.calodd .calfocuson,
-.caleven .calfocuson,
-*/
-.calfocuson + .calcontent {
-	background: #e6eff8;
-}
-
 .calprio1 a,
 .calprio2 a,
 .calprio3 a,
@@ -1386,13 +1350,17 @@ body.tiki_blogs .postfooter .actions {
 	border: solid 1px #696969;
 }
 
-.caltable .calfocuson {
-	background: #D4D0C8;
+.caltable td.calhighlight,
+td.calheadhighlight {
+	background: #e6eff8;
+}
+
+.calendarweek td.calHeading {
+	border: 1px solid #999;
 }
 
 .buttonon a,
-.calbuttonon a,
-.calheadingon a {
+.calbuttonon a {
 	font-weight: bold;
 }
 

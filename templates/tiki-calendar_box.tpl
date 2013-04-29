@@ -52,7 +52,7 @@
 	<a href="tiki-calendar_edit_item.php?viewcalitemId={$cellid}" title="{tr}Details{/tr}"{if isset($cellstatus) and $cellstatus eq '2'} style="text-decoration:line-through"{/if}>
 		{$cellname|escape}
 	</a>
-	<br>
+	<br><br>
 	{if $show_description eq 'y'}
 		<div class="box-data">
 			{$celldescription|truncate:250:'...'}
@@ -111,7 +111,7 @@
 		<span class='box-title'>
 			{tr}Calendar:{/tr}
 		</span>
-		<span style="height:12px;width:12px;{if !empty($infocals.$cellcalendarId.custombgcolor)}background-color:#{$infocals.$cellcalendarId.custombgcolor};{/if}{if !empty($infocals.$cellcalendarId.customfgcolor)}border-color:#{$infocals.$cellcalendarId.customfgcolor};{/if}border-width:1px;border-style:solid;">
+		<span style="height:12px;width:12px;color:#{$infocals.$cellcalendarId.customfgcolor};{if !empty($infocals.$cellcalendarId.custombgcolor)}background-color:#{$infocals.$cellcalendarId.custombgcolor};{/if}{if !empty($infocals.$cellcalendarId.customfgcolor)}border-color:#{$infocals.$cellcalendarId.customfgcolor};{/if}border-width:1px;border-style:solid;">
 			&nbsp;{$cellcalname|escape}&nbsp;
 		</span>
 		<br>

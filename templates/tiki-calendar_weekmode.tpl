@@ -9,7 +9,7 @@
 			</td>
 			{section name=dn loop=$daysnames}
 				{if in_array($smarty.section.dn.index,$viewdays)}
-					<td id="top_{$smarty.section.dn.index}" class="calHeading heading{if $today eq $viewWeekDays[dn]}On{/if}" width="13%">
+					<td id="top_{$smarty.section.dn.index}" class="{if $today eq $viewWeekDays[dn]}calheadhighlight{else}heading{/if} calHeading" width="13%">
 						<a href="{$myurl}?viewmode=day&amp;todate={$viewWeekDays[dn]}" title="{tr}View this Day{/tr}">
 							{$daysnames[dn]}
 						</a><br>
@@ -62,7 +62,7 @@
 						{assign var=calendarId value=$event.calendarId}
 						{assign var=over value=$event.over|escape:"javascript"|escape:"html"}
 						{if !empty($event.calitemId)}
-							<div id="event_{$smarty.section.weekday.index}_{$event.calitemId}" {if $event.calname ne ""}class="Cal{$event.type} vevent"{/if} style="overflow:visible;position:absolute;top:{$event.top}px;height:{$event.duree-1}px;left:{$event.left}%;width:{$event.width}%;background-color:#{$infocals.$calendarId.custombgcolor};border-color:#{$infocals.$calendarId.customfgcolor};opacity:{if $event.status eq '0'}0.6{else}0.8{/if};filter:Alpha(opacity={if $event.status eq '0'}60{else}80{/if});text-align:center;overflow:hidden;cursor:pointer"
+							<div id="event_{$h}_{$smarty.section.weekday.index}_{$event.calitemId}" {if $event.calname ne ""}class="Cal{$event.type} vevent"{/if} style="overflow:visible;position:absolute;top:{$event.top}px;height:{$event.duree-1}px;left:{$event.left}%;width:{$event.width}%;background-color:#{$infocals.$calendarId.custombgcolor};border-color:#{$infocals.$calendarId.customfgcolor};color:#{$infocals.$cellcalendarId.customfgcolor};opacity:{if $event.status eq '0'}0.8{else}1{/if};filter:alpha(opacity={if $event.status eq '0'}80{else}100{/if});text-align:center;overflow:hidden;cursor:pointer;{if $prefs.feature_jquery_ui eq 'y'}display:none;{/if}"
 								{if $prefs.calendar_sticky_popup eq "y"}
 									{popup vauto=true hauto=true sticky=true fullhtml="1" trigger="onClick" text=$over}
 								{else}
@@ -81,10 +81,28 @@
 										<img src="img/icons/more_info.gif" alt="{tr}Details{/tr}">
 									</a>
 								</span>
-								<abbr class="dtstart" title="{if $event.result.allday eq '1'}{tr}All day{/tr}{else}{$event.startTimeStamp|isodate}{/if}" {if $event.status eq '2'}style="text-decoration:line-through"{/if}>
+								<abbr class="dtstart" title="{if $event.result.allday eq '1'}{tr}All day{/tr}{else}{$event.startTimeStamp|isodate}{/if}" style="{if $event.status eq '2'}text-decoration:line-through;{/if}{if isset($infocals.$cellcalendarId.customfgcolor)}color:#{$infocals.$cellcalendarId.customfgcolor};{/if}">
 									{$event.name|escape}
 								</abbr>
 							</div>
+							{jq}
+								var id = '#event_{{$h}}_{{$smarty.section.weekday.index}}_{{$event.calitemId}}';
+								var cell = '#row_{{$h}}_{{$smarty.section.weekday.index}}';
+								var pos = $(cell).position();
+								var eventwidth = ($(cell).width() + parseInt($(cell).css('padding-left'))
+									+ parseInt($(cell).css('padding-right'))) / {{$event.concurrences}}
+								var leftadd = {{$smarty.section.hr.index}} * eventwidth;
+								var mins = parseInt({{$event.mins}});
+								if (parseInt(mins) > 0) {
+									var topadd = $(id).height() / (60 / mins);
+								} else {
+									var topadd = 0;
+								}
+								$(id).css('top', pos.top + topadd);
+								$(id).css('left', pos.left + leftadd);
+								$(id).css('width', eventwidth);
+								$(id).css('display', 'inline');
+							{/jq}
 						{/if}
 					{/section}
 				{elseif $smarty.foreach.hours.first}

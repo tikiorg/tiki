@@ -1153,6 +1153,11 @@ td.dirfooter {font-size: .95em}
 
 .opaque .box-data {background: #000}
 
+.opaque a,
+.opaque a:visited {
+	color: white;
+}
+
 #caltable .calfocuson,
 .box-data .fc a.today,
 .box-data td a.today {
@@ -1174,7 +1179,7 @@ td.dirfooter {font-size: .95em}
 
 .calinput {background: #3f3f3f}
 .calfocuson + .calcontent {background: #586858}
-.days {color: #d8d8d8}
+.caltable .days {color: #bdcec3}
 #caltable .weeks {color: #d8d8d8}
 
 .addevent {
@@ -1182,7 +1187,7 @@ td.dirfooter {font-size: .95em}
 	float: right}
 
 * html .addevent {padding: 0}
-.caltable .odd, .caltable .even {border: 1px solid #636f65}
+.caltable .odd, .caltable .even, .calborder {border: 1px solid #636f65}
 .caltable .odd {background: #000 url(abse/menubg.jpg) repeat-y}
 * html .caltable .odd {padding: 0}
 .caltable .even {background: #0e150e}
@@ -1191,21 +1196,14 @@ td.dirfooter {font-size: .95em}
 * html .caldark {padding: 0}
 .caldark .calfocus {background: #3f3f3f}
 
-.calfocuson {
+.caltable td.calhighlight,
+.caltable td.calhighlight a,
+td.calheadhighlight,
+td.calheadhighlight a  {
 	font-size: 100%;
-	color: #636f65;
-	font-weight: bold;
-	background: #f3e498;
-}
-
-.calfocuson a {
-	font-size: 90%;
-	color: #0c2809
-}
-
-.calHeadingOn, .calHeadingOn a {
-	background: #f3e498;
-	color: #636f65;
+	color: #586858;
+	background: #aaa;
+	text-align: center;
 }
 
 .daterow {

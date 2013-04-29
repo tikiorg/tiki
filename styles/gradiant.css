@@ -422,3 +422,8 @@ a:hover .icon {
 #col2 .box-data .cssmenu_vert ul {
 	padding-left: 0;
 }
+
+.caltable td.calhighlight,
+td.calheadhighlight {
+	background: #f9f6df;
+}

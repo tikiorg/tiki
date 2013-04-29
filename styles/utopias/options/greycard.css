@@ -136,8 +136,15 @@ body.wikitext {
 .button a,
 .button a:visited,
 button,
-input[type=reset],
-input[type=submit],
+input[type="reset"],
+input[type="submit"],
+input[type="text"],
+input[type="password"],
+input[type="file"],
+input[type="email"],
+input[type="file"],
+input[type="search"],
+input[type="number"],
 span.button input,
 .calbuttonBox a {
 	font-weight: bold;
@@ -326,6 +333,28 @@ table.admin,
 table.bloglist {
 	border: 1px #cbcaa5 solid;
 	background-color: #d0d0d0;
+}
+
+.div.heading,
+.normal td.heading,
+.caltable td.heading,
+td.heading {
+	background: #888;
+	color: #000;
+	border: none:
+}
+
+.caltable .odd {
+	background: #999;
+}
+
+.caltable .even {
+	background: #d0d0d0;
+}
+
+.caltable .even .focus a,
+.caltable .odd .focus a{
+	color: #000;
 }
 
 /* Odd rows in several listings */

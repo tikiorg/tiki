@@ -90,8 +90,7 @@ input[type="submit"]:hover,
 }
 
 .highlight,
-.button.highlight a,
-.calfocuson {
+.button.highlight a {
 	border-color: #f5fb86;
 	color: #638637;
 	background: #d4f9d5;
@@ -206,8 +205,14 @@ th.header {
 
 .caltable .odd,
 .caltable .even,
+.caltable .calborder,
 .wikicell {
 	border: 2px solid #f5f6c1;
+}
+
+.caltable td.calhighlight,
+td.calheadhighlight {
+	background: #d4f9d5;
 }
 
 .odd,

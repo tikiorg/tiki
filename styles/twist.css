@@ -170,7 +170,7 @@ input[type="submit"],
 	font-size: 10px;
 	font-weight: normal;
 	color: #fff;
-	background: #1b5880 url(twist/header.jpg) -30px -40px no-repeat;
+	background: #1b5880 url(twist/header_bg.jpg) -30px -40px no-repeat;
 	padding: 2px 4px;
 }
 
@@ -182,7 +182,7 @@ input[type="submit"]:hover,
 .submitbutton:hover,
 .calbuttonoff:hover,
 .calbuttonon:hover {
-	background: #619cc4 url(twist/header.jpg) -400px -40px no-repeat;
+	background: #619cc4 url(twist/header_bg.jpg) -400px -40px no-repeat;
 	color: #fff;
 	text-decoration: none;
 	padding: 2px 4px;
@@ -1204,13 +1204,6 @@ td.dirfooter {font-size: .95em}
 /***** TikiSheets *****/
 
 /***** Calendar *****/
-.calcontent a.linkmenu,
-.calcontent a.linkmenu:hover {
-	background: 0;
-	padding: 0}
-
-.calfocus {font-size: 90%}
-
 .calprio1 a,
 .calprio2 a,
 .calprio3 a,
@@ -1225,22 +1218,28 @@ td.dirfooter {font-size: .95em}
 .opaque .box-title {border-bottom: 1px solid black}
 .searchresults {display: inline}
 
-.caltable .calfocuson,
 .box-data .fc a.today,
 .box-data td a.today {
 	background: #D4D0C8;
 	border: solid 1px #696969}
-	
-.caltable .calfocuson {
+
+.caltable td.calhighlight,
+td.calheadhighlight {
 	background: #D4D0C8;
 }
 
-#caltable .calfocuson a {color: #000}
+.caltable .calborder,
+.calendarweek td.calHeading {
+	border: 1px solid #999;
+}
+
+.calendarweek td.calheadhighlight a:link,
+.calendarweek td.calheadhighlight a:visited {
+	color: #000;
+}
+
 #caltable, #calscreen .normal {font-size: 1em}
-#caltable .calfocus a,
-#caltable .calfocuson a {text-decoration:none}
 .calinput {background: #002C5E}
-.calfocuson + .calcontent {background: #F5F5F5}
 
 #caltable .days,
 #caltable .weeks {
@@ -1258,23 +1257,7 @@ td.dirfooter {font-size: .95em}
 .caltable .even {border: 1px solid #999}
 .caltable .odd {background: #efefef}
 .caltable .even {background: white}
-.caldark {background: #002C5E}
-.caldark .calfocus {background: #002C5E}
 .calnavigation a:hover {background: #85c4ed}
-
-.calfocuson {
-	background: #D4D0C8;
-	font-size: 100%;
-}
-
-.calfocuson a {
-	font-size: 90%;
-}
-
-.calHeadingOn, .calHeadingOn a {
-	background: #D4D0C8;
-}
-
 
 /***** Admin *****/
 a.admbox span {color: white}

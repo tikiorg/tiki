@@ -759,12 +759,6 @@ body.tiki_cms h1 a.pagetitle:hover {border-bottom: 0}
 	border: none;
 }
 
-.caldark {
-	border: 0;
-}
-
-.caldark .calfocus {background: none;}
-
 .caltable .odd,
 .caltable .even {
 	border-color: #aaa;
@@ -778,21 +772,16 @@ body.tiki_cms h1 a.pagetitle:hover {border-bottom: 0}
 	background: #d4d4d4;
 }
 
-.calfocuson {
-	font-size: 100%; 
-	background: #f3e498;
-}
-
-.calfocuson a {
-	font-size: 90%; 
-}
-
-.calHeadingOn, .calHeadingOn a {
-	background: #f3e498;
-}
-
 .box-data .caltable {
 	margin-left: -3px;
+}
+
+.caltable td.calhighlight,
+td.calheadhighlight {
+	font-size: 10px;
+	color: #000;
+	background: #fff;
+	font-weight: bold;
 }
 
 /***** Admin *****/

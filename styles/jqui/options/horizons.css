@@ -89,3 +89,8 @@ h3.box-title, .cbox-title {
 #top_modules .box-quickadmin {
 	background-color: #fff;
 }
+
+.caltable td.calhighlight,
+td.calheadhighlight {
+	background: #c8e3ea;
+}

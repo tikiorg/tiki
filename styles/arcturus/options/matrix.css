@@ -616,23 +616,48 @@ h1.pagetitle a:hover,
     background: url(matrix/ltgreen.png) repeat;
 }
 
+body.tiki_admin .simplebox,
+a.admbox,
+a.admbox.off {
+	background-color: #507050;
+}
+
+/***Calendar***/
 .caltable .odd,
 .caltable .even {
 	border: 1px outset #00a000 !important;
 }
 
+.caltable .odd {
+	background: url(matrix/ltltgreen.png) repeat;
+}
+
+.caltable td.calhighlight,
+#month_title.calheadhighlight {
+	background: #000;
+	color: #90ee90;
+}
+
+td.calheadhighlight {
+	background: transparent;
+	border: 1px outset #00b000;
+}
 .caltable .odd:hover,
 .caltable .even:hover {
 	border: 1px outset #00ff00 !important;
 }
 
-.calfocus a,
-.calfocus a:visited {
-	color: #00e000;
+.opaque {
+	background: #000;
 }
 
-body.tiki_admin .simplebox,
-a.admbox,
-a.admbox.off {
-	background-color: #507050;
+.opaque span.box-title {
+	color: #00a000;
+}
+
+.focus a,
+.focus a:visited,
+.calmodfocus a,
+.calmodfocus a:visited {
+	color: #00e000;
 }

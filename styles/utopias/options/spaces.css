@@ -356,6 +356,16 @@ table.bloglist {
 	background-color: #f3f2c5;
 }
 
+td.heading {
+	background: #6f9898;
+}
+
+td.heading,
+td.heading a:link,
+td.heading a:visited {
+	color: #fffecf;
+}
+
 /* Odd rows in several listings */
 tr.odd {
 	background-color: #f3f2c5;
@@ -381,7 +391,39 @@ td.even {
 	background-color: #fffecf;
 }
 
+/*** Calendar ***/
+.caltable td.calhighlight,
+td.calheadhighlight {
+	color: #000;
+	background: #d9d8b0;
+}
 
+.caltable td.calhighlight a:link,
+.caltable td.calhighlight a:visited {
+	color: #000;
+}
 
+.calendarweek td.calheadhighlight {
+	border: .1em solid #eee;
+}
+
+.calendarweek td.calheadhighlight a:link,
+.calendarweek td.calheadhighlight a:visited {
+	color: #000;
+}
+
+.calendarweek td.calHeading a:link,
+.calendarweek td.calHeading a:visited, {
+	color: #fffecf;
+}
+
+.calendarweek td.calheadhighlight.calHeading {
+	background: #d9d8b0;
+}
+
+.calendarweek td.calheadhighlight a:link,
+.calendarweek td.calheadhighlight a:visited {
+	color: #000;
+}
 
 /***** End of file ******/

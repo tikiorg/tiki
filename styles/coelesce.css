@@ -1650,20 +1650,6 @@ a.freetag_7:hover {
 
 /***** Calendar *****/
 /* Overrides calendar.css, etc. */
-.calfocus {
-	font-size: 90%;
-	background: #ccdceb;
-}
-
-.calfocuson {
-	font-size: 100%;
-	background: #8df378;
-}
-
-.calHeadingOn, .calHeadingOn a {
-	background: #8df378;
-}
-
 .calprio1 a,
 .calprio2 a,
 .calprio3 a,
@@ -1718,41 +1704,17 @@ a.freetag_7:hover {
 	border: solid 1px #696969;
 }
 
-.caltable .calfocuson {
-	background: #8df378;
-}
-
-.caltable .calfocuson a {
-	color: #000;
-}
-
-.caltable .calfocus a,
-.caltable .calfocuson a {
-	text-decoration: none;
-}
-
 .buttonon a, .calbuttonon a {
 	color: #295c8e !important;
 }
 
-.calheadingon {
+.caltable td.calhighlight,
+td.calheadhighlight {
 	background: #ccdceb;
 }
 
 .calinput {
 	background: #4a6a90;
-}
-
-.calfocuson + .calcontent {
-	background: #8df378;
-}
-
-#calscreen .calfocuson {
-	background: #8df378;
-}
-
-.calfocuson a {
-	font-size: 90%;
 }
 
 .days {
@@ -1787,10 +1749,6 @@ a.viewthisday:hover {
 
 .caltable .even {
 	background: #f0f0f0;
-}
-
-.caldark .calfocus {
-	background: none;
 }
 
 .viewmode div {

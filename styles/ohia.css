@@ -275,7 +275,7 @@ label {margin: 0 2px}
 	border-left: 1px solid #333;
 	border-bottom: 1px solid #696969}
 
-#top_modules .box-search sitesearchbar form {margin-right: 40px}
+#top_modules .box-search .sitesearchbar form {margin-right: 40px}
 
 /****** Menus, Links ******/
 /** CSS (suckerfish) menus **/
@@ -950,7 +950,7 @@ body.tiki_forums .normal {margin: auto}
 
 .sub_comment_area {
 	clear: both;
-	background: url("../../img/edge.gif") no-repeat top left}
+	background: url("../img/edge.gif") no-repeat top left}
 
 .forum_actions .actions {
 	clear: both;
@@ -1145,7 +1145,6 @@ td.dirfooter {font-size: .95em}
 	background: black}
 
 /***** Calendar *****/
-
 .caltoggle {font-size: 90%}
 
 .opaque {
@@ -1166,41 +1165,29 @@ td.dirfooter {font-size: .95em}
 	text-decoration: underline;
 	color: #f4f4f4}
 
-#caltable .calfocuson,
 .box-data .fc a.today,
 .box-data td a.today {
 	background: #5e0000;
 	border: solid 1px #990000}
 
-.caltable .calfocuson {
-	color: #ffffff;
+.caltable td.calhighlight,
+.caltable td.calhighlight,
+td#month_title.calheadhighlight {
 	background: #5e0000;
 }
 
-#caltable .calfocuson a {color: #000}
-
-#caltable .calfocus a,
-#caltable .calfocuson a {
-	text-decoration: none;
-	color: #fff}
-
-.calfocus a {
-	color: red;
-}
-
-.caltable .calfocuson a {
+.caltable td.calhighlight a:link,
+.caltable td.calhighlight a:visited,
+td.calheadhighlight {
 	color: #ffffff;
 }
 
-.calfocus {border-bottom: 0}
+.caltable .calborder {
+	border: 1px solid #000;
+}
 
 .calnavigation {border: 1px solid #4c4c4c}
-.calnavigation a:hover {background: url(ohia/body.png)}
 .calinput {background: #000}
-
-.calfocuson + .calcontent {
-	background: #000;
-	border: 1px solid #990000}
 
 #caltable .days {
 	color: #f4f4f4;
@@ -1220,29 +1207,6 @@ td.dirfooter {font-size: .95em}
 .caltable .odd, .caltable .even {border: 1px solid #000}
 .caltable .odd {background: #030511}
 .caltable .even {background: #313131}
-
-.caldark {
-	background: #000;
-	border: 1px dotted #5e0000}
-
-.caldark .calfocus {background: #000}
-
-div#calscreen .calfocuson {
-	background: #5e0000;
-}
-
-.calfocuson {
-	font-size: 100%;
-	border-bottom: 0px;
-}
-
-.calfocuson a {
-	font-size: 90%;
-}
-
-.calHeadingOn, .calHeadingOn a {
-	background: #5e0000;
-}
 
 .daterow {
 	background-color: #313131;

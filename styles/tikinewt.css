@@ -2081,17 +2081,14 @@ div.dirfooter {
 	font-weight: bold;
 }
 
-.calfocuson {
-	font-size: 100%; 
-	background: #f3e498;
+.caltable td.calhighlight,
+td.calheadhighlight {
+	background: #ffc;
 }
 
-.calfocuson a {
-	font-size: 90%; 
-}
-
-.calHeadingOn, .calHeadingOn a {
-	background: #f3e498;
+.caltable .calborder,
+.calendarweek td.calHeading {
+	border: 1px solid #8cacbb;
 }
 
 /* Style for OverBox */

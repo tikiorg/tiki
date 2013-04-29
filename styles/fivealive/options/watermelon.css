@@ -89,8 +89,7 @@ span#genPass .button a:hover,
 }
 
 .highlight,
-.button.highlight a,
-.calfocuson {
+.button.highlight a {
 	border-color: #fb999e;
 	color: #b51360;
 	background: #f9f6df;
@@ -214,8 +213,14 @@ th.header {
 }
 
 .caltable .odd,
-.caltable .even {
+.caltable .even,
+.caltable .calborder {
 	border: 1px solid #8b1932;
+}
+
+.caltable td.calhighlight,
+td.calheadhighlight {
+	background: #f9f6df;
 }
 
 .odd,
