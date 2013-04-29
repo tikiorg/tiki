@@ -263,6 +263,14 @@ function prefs_feature_list($partial = false)
 			'admin' => 'score',
 			'module' => 'score',				
 		),
+		'feature_score_expday' => array(
+		  'name' => tra('Expire score older than certain days'),
+		  'description' => tra(''),
+		  'help' => 'Score',
+		  'type' => 'text',
+		  'admin' => 'score',
+		  'module' => 'score',        
+		),
 		'feature_search' => array(
 			'name' => tra('Search'),
 			'description' => tra('Enables searching for content on the website, using Tiki-managed index.'),
