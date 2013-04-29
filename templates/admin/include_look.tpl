@@ -17,6 +17,8 @@
 					{preference name=style}
 					{preference name=style_option}
 
+					{preference name=site_layout}
+
 					{preference name=style_admin}
 					{preference name=style_admin_option}
 

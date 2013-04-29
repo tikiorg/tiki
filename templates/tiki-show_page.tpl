@@ -1,4 +1,6 @@
 {* $Id$ *}
+{extends 'layout_view.tpl'}
+
 {if !isset($pageLang)}
 	{if isset($info.lang)}
 		{assign var='pageLang' value=$info.lang}
@@ -7,6 +9,7 @@
 	{/if}
 {/if}
 		
+{block name=title}
 {if !isset($hide_page_header) or !$hide_page_header}
 	{if $prefs.feature_siteloc eq 'page' and $prefs.feature_breadcrumbs eq 'y'}
 		{if $prefs.feature_siteloclabel eq 'y'}{tr}Location : {/tr}{/if}
@@ -15,10 +18,13 @@
 			{breadcrumbs type="pagetitle" loc="page" crumbs=$crumbs machine_translate=$machine_translate_to_lang source_lang=$pageLang target_lang=$machine_translate_to_lang}
 		{/if}
 	{/if}
+{/if}
+{/block}
 
-{include file='tiki-flaggedrev_approval_header.tpl'}
-
-{/if} {*hide_page_header*}
+{block name=content}
+{if !isset($hide_page_header) or !$hide_page_header}
+	{include file='tiki-flaggedrev_approval_header.tpl'}
+{/if}
 
 {if !$prefs.wiki_topline_position or $prefs.wiki_topline_position eq 'top' or $prefs.wiki_topline_position eq 'both'}
 	{include file='tiki-wiki_topline.tpl'}
@@ -186,3 +192,4 @@
 		{include file='tiki-page_bar.tpl'}
 	{/if}
 {/if}
+{/block}

@@ -411,6 +411,7 @@ class Smarty_Tiki extends Smarty
 		}
 
 		$this->setCompileId("$lang-$tikidomain-$layout");
+		$this->initializePaths();
 	}
 
 	function initializePaths()
@@ -440,9 +441,6 @@ class Smarty_Tiki extends Smarty
 		$this->addTemplateDir($this->main_template_dir.'/layouts/'.$prefs['site_layout'].'/');
 		$this->addTemplateDir($this->main_template_dir.'/layouts/');
 		$this->addTemplateDir($this->main_template_dir);
-
-		
-		$this->refreshLanguage();
 	}
 }
 
