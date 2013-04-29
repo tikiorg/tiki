@@ -35,7 +35,7 @@ class Services_Favorite_Controller
 
 	function action_toggle($input)
 	{
-		global $user;
+		global $user, $tikilib, $prefs, $artlib;
 
 		if (! $user) {
 			throw new Services_Exception(tr('Must be authenticated'), 403);
@@ -66,7 +66,23 @@ class Services_Favorite_Controller
 				}
 			}
 		}
-
+		if ($prefs['feature_score'] == 'y' && $target) {
+			if ($type == 'forum post') {
+			  require_once 'lib/comments/commentslib.php';
+			  $commentslib = new Comments();
+			  $forum_id = $commentslib->get_comment_forum_id($object);
+			  $forum_info = $commentslib->get_forum($forum_id);
+			  $thread_info = $commentslib->get_comment($object, null, $forum_info);
+			  $item_user = $thread_info['userName'];
+			} elseif($type == 'article') {
+			  require_once 'lib/articles/artlib.php';
+			  $artlib = new ArtLib();
+			  $res = $artlib->get_article($object);
+			  $item_user = $res['author'];
+			}  
+			$tikilib->score_event($user, 'item_favorited', "$type:$object");
+			$tikilib->score_event($item_user, 'item_is_favorited', "$user:$type:$object");
+		}
 		return array(
 			'list' => $relations,
 		);
