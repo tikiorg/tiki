@@ -3,6 +3,10 @@
 	"homepage": "http://composer.tiki.org",
 	"repositories": [
 		{
+			"type": "composer",
+			"url": "https://packagist.org"
+		},
+		{
 			"type": "package",
 			"package": {
 				"name": "adodb/adodb",
