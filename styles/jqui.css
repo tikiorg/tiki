@@ -722,7 +722,6 @@ body.tiki_cms h1 a.pagetitle:hover {border-bottom: none}
 
 
 /***** Calendar *****/
-
 .caltable {
 	border-bottom: none;
 }
@@ -731,14 +730,12 @@ body.tiki_cms h1 a.pagetitle:hover {border-bottom: none}
 	border: none;
 }
 
-.caldark {
-/* background: ;*/
-	border: 0;
+.caltable .odd,
+.caltable .even,
+.caltable .calborder {
+	border-color: #aaa
 }
 
-.caldark .calfocus {background: none;}
-.caltable .odd, .caltable .even {border-color: #aaa}
-/*.calodd .calfocus {background: }*/
 .caltable .odd {
 	background: #e2e2e2;
 }
@@ -746,25 +743,12 @@ body.tiki_cms h1 a.pagetitle:hover {border-bottom: none}
 	background: #cccccc;
 }
 
-.calfocuson {
-	font-size: 1em;
+.caltable td.calhighlight,
+td.calheadhighlight {
 	background: #fcefa1;
 }
 
-.calfocuson a {
-	font-size: 90%;
-}
-
-.calHeadingOn, .calHeadingOn a {
-	background: #fcefa1;
-}
-
-/*.calodd .calfocus, .calodd .calfocuson*/
-/*.caleven .calfocus, .caleven .calfocuson {background: ;}*/
-
-/* Cluetip - JQuery tooltips
-   =cluetipClass: 'default' */
-
+/*** Cluetip ***/
 .cluetip-default {
 	background: #aaa;
 	color: #000;

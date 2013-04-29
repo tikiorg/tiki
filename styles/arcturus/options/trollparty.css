@@ -524,7 +524,7 @@ a.admbox:active {
 	color: black;
 }
 
-.calHeadingOn a, .calfocuson, .calfocuson a, .focus a {
+.calmodfocus a, .focus a {
 	color: #4477cc;
 }
 
@@ -532,7 +532,36 @@ a.admbox:active {
 	color: #27408B;
 }
 
-.focus a:hover, .Cal1 a:hover {
+.calmodfocus a:hover, .focus a:hover, .Cal1 a:hover {
 	color: white;
 }
+
+.caltable .odd {
+	background: #424242;
+}
+
+.caltable .even {
+	background: #222;
+}
+
+.caltable td.calhighlight,
+.caltable td.calhighlight a:link,
+.caltable td.calhighlight a:visited,
+.caltable .even,
+.caltable .odd {
+	color: #dede98;
+	font-weight: normal;
+}
+
+.calendarweek td.calheadhighlight.calHeading,
+.caltable td.calhighlight,
+#month_title.calheadhighlight {
+	background: #336699;
+}
+
+#month_title.calheadhighlight {
+	font-size: 12px;
+	font-weight: bold;
+}
+
 

@@ -367,3 +367,14 @@ body.cke_show_borders,
 .post .postbody {
 	font-size: 11px;
 }
+
+/*** Calendar ***/
+
+.calmodfocus {
+	text-decoration: underline;
+}
+
+.calendarweek td.calheadhighlight {
+	background: #fff;
+	border: 1px solid #676767;
+}

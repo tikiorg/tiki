@@ -1805,20 +1805,21 @@ ul.catitems li {
 	padding: 0;
 }
 
-.calfocus {
-	font-size: 1em;
-	background: inherit;
-	border-bottom: none;
+.calmodfocus {
+	text-decoration: underline;
 }
 
-#calscreen .calfocus a {
-	color: #f5f5f5;
-}
-
-.caltable .odd .calfocuson,
-.caltable .even .calfocuson,
-.calfocuson {
+.caltable .odd,
+.caltable .even {
 	font-size: 90%;
+	background: #292929;
+}
+
+.caltable td.calhighlight {
+	background: #292929;
+}
+
+#month_title.calheadhighlight {
 	background: #292929;
 }
 
@@ -1850,11 +1851,6 @@ ul.catitems li {
 	text-decoration: underline;
 }
 
-.calheadingon a {
-	text-decoration: underline !important;
-	color: #d8d8d8 !important;
-}
-
 .opaque {
 	font-size: .9em;
 	background: #3f3f3f;
@@ -1864,8 +1860,8 @@ ul.catitems li {
 	border-bottom: 1px solid #696969;
 }
 
-.opaque .box-title {
-	border-bottom: 1px solid #d8d8d8;
+.opaque span.box-title {
+	color: #d8d8d8;
 }
 
 .opaque .box-data {

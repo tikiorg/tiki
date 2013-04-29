@@ -331,6 +331,7 @@ td.heading,
 tr.diffheader {
 	background: #abcdef;
 	font-size: 1em;
+	color: #000;
 }
 
 .email .closeButton {width: 100%}
@@ -696,16 +697,22 @@ body.wikitext {
 	padding: 0.1em;
 	vertical-align: top}
 
-#caltable .calfocuson {
-	background: #fc0;
-	border: solid 1px #000}
+.caltable td.calhighlight {
+	background: #abcdef;
+}
 
-#caltable .calfocuson a {
-	color: #000}
+td.calheadhighlight {
+	background: #ddeeff;
+}
 
-#caltable .calfocus a,
-#caltable .calfocuson a {
-	text-decoration: none}
+td.calHeading a {
+	color: #000;
+	font-size: 12px;
+}
+
+#month_title {
+	font-size: 12px;
+}
 
 .calcontent {
 	min-height: 7em;

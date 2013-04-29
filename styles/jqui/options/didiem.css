@@ -202,8 +202,7 @@ button,
 input[type="reset"],
 input[type="submit"],
 .button input,
-.calbuttonBox a,
-.Cal1 {
+.calbuttonBox a {
 	margin: 0 4px 1px 0;
 	cursor: pointer;
 	padding: 4px .8em;
@@ -627,7 +626,8 @@ td.heading {
 	border-collapse: collapse;
 }
 
-.caltable .focus {
+.caltable .focus,
+.calmodtable .focus{
 	border: none;
 }
 /* End of File */

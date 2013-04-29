@@ -334,3 +334,18 @@ a.pagetitle {
 	margin: 1px;
 	font-weight: bold;
 }
+
+/*** Calendar ***/
+
+.caltable .even {
+	background: #d1d2a9;
+}
+
+.caltable .odd {
+	background: #f1f1c9;
+}
+
+.caltable td.calhighlight,
+td.calheadhighlight {
+	background: #f1f8de;
+}

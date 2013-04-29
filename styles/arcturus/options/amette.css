@@ -697,11 +697,14 @@ table.normal tr:nth-child(2n+1),
 	vertical-align: top;
 }
 
-#caltable .calfocuson {
-	background: #000;
-	border: solid 1px #000;
+.caltable td.calhighlight {
+	background: #fbf9ee;
 }
 
-#caltable .calfocuson a {
-	color: #000;
+td.calheadhighlight {
+	background: #eef5ee;
+}
+
+td.calheadhighlight {
+	border: solid 1px #24880c;
 }

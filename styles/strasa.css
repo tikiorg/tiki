@@ -1042,7 +1042,9 @@ table.normal tr:nth-child(2n),
 
  /* headings */
 th,
-.normal td.heading {
+.normal td.heading,
+.caltable td.heading,
+.calendarweek td.heading {
 	font-size: 1em;
 	font-weight: normal;
 	color: #5ae0ff;
@@ -1689,11 +1691,6 @@ body.tiki_blogs .post .author_actions {
 
 /***** Calendar *****/
 /* Overrides calendar.css, etc. */
-.calfocus {
-	font-size: 90%;
-	background: #cce5ff;
-}
-
 .calprio1 a,
 .calprio2 a,
 .calprio3 a,
@@ -1747,34 +1744,6 @@ body.tiki_blogs .post .author_actions {
 	border-color: transparent;
 }
 
-.calheadingleft {
-	height: 36px;
-	text-align: center;
-	vertical-align: middle;
-}
-
-.calheading,
-.calheadingon {
-	height: 36px;
-	text-align: center;
-	vertical-align: middle;
-}
-
-.calheading a,
-.calheading a:visited {
-	text-decoration: none;
-}
-
-.calheadingon a {
-	color: #06f;
-	text-decoration: none;
-}
-
-.calheading a:hover,
-.calheadingon a:hover {
-	text-decoration: underline;
-}
-
 .calhours {
 	vertical-align: middle;
 	text-align: center;
@@ -1813,44 +1782,20 @@ body.tiki_blogs .post .author_actions {
 	border: solid 1px #696969;
 }
 
-.caltable .calfocuson {
-	background: #D4D0C8;
+.caltable td.calhighlight,
+td.calheadhighlight {
+	background: #ffc;
 }
 
-.caltable .calfocuson a {
-	color: #000;
-}
-
-.caltable .calfocus a,
-.caltable .calfocuson a {
-	text-decoration: none;
+.caltable .calborder {
+	border: 1px solid #a9a9a9;
 }
 
 .calinput {
 	background: #223845;
 }
 
-.calfocuson + .calcontent {
-	background: #F5F5F5;
-}
-
-#calscreen .calfocuson {
-	background: #D4D0C8;
-}
-
-.calfocuson {
-	font-size: 100%;
-}
-
-.calfocuson a {
-	font-size: 90%;
-}
-
-.calHeadingOn, .calHeadingOn a {
-	background: #D4D0C8;
-}
-
-.days {
+th.days {
 	color: #cce5ff;
 }
 
@@ -1874,14 +1819,6 @@ body.tiki_blogs .post .author_actions {
 
 .caltable .even {
 	background: #dcdcdc;
-}
-
-.caldark {
-	background: #cce5ff;
-}
-
-.caldark .calfocus {
-	background: #cce5ff;
 }
 
 /*****  Polls  *****/

@@ -695,12 +695,23 @@ form .normal,
 	border: none;
 }
 
+/***Calendar****/
+
 .caltable .odd,
 .caltable .even,
+.caltable .calborder,
 .wikicell {
 	border: 2px solid #c2eef8;
 }
 
+/*today focus*/
+.caltable td.calhighlight,
+td.calheadhighlight {
+	background: #f9f0f0;
+	text-align: center;
+}
+
+/****Tables***/
 .odd,
 table.normal tr:nth-child(2n+1),
 .tablesorter tr.odd td {

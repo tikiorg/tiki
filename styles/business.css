@@ -131,7 +131,7 @@ input[type="reset"],
 input[type="submit"],
 .button input,
 .calbuttonBox a {
-	color: #fff !important;
+	color: #fff;
 	background: url(business/nav.gif) repeat-x;
 	border: 1px solid;
 	border-color: #3676c4 #1957aa #1957aa #3676c4;
@@ -839,15 +839,6 @@ body.tiki_blogs .postbody {
 /***** Messages *****/
 /***** TikiSheets *****/
 /***** Calendar *****/
-.caldark {
-	background: #2f70c3;
-	border: 0;
-}
-
-.caldark .calfocus {
-	background: inherit !important;
-}
-
 .caltable .odd {
 	background: #eeeeee;
 }
@@ -856,17 +847,18 @@ body.tiki_blogs .postbody {
 	background: #f9f9f9;
 }
 
-.calfocuson {
-	font-size: 100%;
-	background: #f3e498;
+.caltable .calhighlight,
+td.calheadhighlight {
+	background: #ffc;
 }
 
-.calfocuson a {
-	font-size: 90%;
+.caltable .calborder {
+	border-right: 1px solid #3273c4;
 }
 
-.calHeadingOn, .calHeadingOn a {
-	background: #f3e498;
+.opaque a,
+.opaque a:visited {
+	color: white;
 }
 
 /***** Admin *****/

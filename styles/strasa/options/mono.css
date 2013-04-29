@@ -462,7 +462,9 @@ td.even {
 /* headings */
 
 th,
-.normal td.heading {
+.normal td.heading,
+.caltable td.heading,
+.calendarweek td.heading {
 	color: #ebebeb;
 	background: #444;
 }
@@ -470,7 +472,9 @@ th,
 th a:link,
 th a:visited,
 td.heading a:link,
-td.heading a:visited {
+td.heading a:visited,
+.caltable td.heading a:link,
+.caltable td.heading a:visited {
 	color: #ebebeb;
 }
 
@@ -841,15 +845,6 @@ body.tiki_blogs .postbody-title,
 
 /***** Calendar *****/
 /* Overrides calendar.css, etc. */
-
-.calfocus {
-	background: #e5e5e5;
-}
-
-.calfocuson {
-	font-size: 90%;
-}
-
 .calprio1 a,
 .calprio2 a,
 .calprio3 a,
@@ -872,10 +867,6 @@ body.tiki_blogs .postbody-title,
 	background: #212121;
 }
 
-.calHeadingOn a {
-	color: #06f;
-}
-
 .calbuttonBox {
 	color: #fff;
 	background: #565656;
@@ -888,7 +879,6 @@ body.tiki_blogs .postbody-title,
 	color: #fff;
 }
 
-.caltable .calfocuson,
 .box-data .fc a.today,
 .box-data td a.today {
 	background: #D4D0C8;
@@ -907,7 +897,7 @@ body.tiki_blogs .postbody-title,
 	background: #F5F5F5;
 }
 
-.days {
+th.days {
 	color: #e5e5e5;
 }
 

@@ -291,10 +291,8 @@ body.fixed_width .fixedwidth {
 }
 
 .highlight,
-.button.highlight a,
-.calfocuson {
+.button.highlight a {
 	background: #fad5e0;
-
 }
 
 /***** XHTML Elements (other than body tag) ******/
@@ -980,8 +978,6 @@ form .normal,
 	border: none;
 }
 
-.caltable .odd,
-.caltable .even,
 .wikicell {
 	border: 2px solid #c2eef8;
 }
@@ -1002,7 +998,6 @@ table.normal tr:nth-child(2n),
 th,
 td.heading,
 tr.diffheader,
-.calHeading,
 .weeks,
 th.header {
 	background-color: #1d90c5;
@@ -1249,17 +1244,16 @@ a.dirsublink {
 	color: #fff;
 }
 
-.calfocuson {
-	font-size: 100%;
-	background: #f3e498;
+.caltable .odd,
+.caltable .even,
+.calborder {
+	border: 2px solid #c2eef8;
 }
 
-.calfocuson a {
-	font-size: 90%;
-}
-
-.calHeadingOn, .calHeadingOn a {
-	background: #f3e498;
+.caltable td.calhighlight,
+td.calheadhighlight {
+	background: #f9f0f0;
+	text-align: center;
 }
 
 /***** Admin *****/

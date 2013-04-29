@@ -300,6 +300,30 @@ table.normal tr:nth-child(2n),
 	color: #B8EC79;
 }
 
+.caltable td.calhighlight,
+.caltable td.calhighlight a:link,
+.caltable td.calhighlight a:visited,
+td.calheadhighlight {
+	background: #9fda58 url(../../../vendor/jquery/jquery-ui-themes/themes/trontastic/images/ui-bg_gloss-wave_85_9fda58_500x100.png) 50% 50% repeat-x;
+	color: #000;
+}
+
+td.calheadhighlight,
+td.calheadhighlight a:link,
+td.calheadhighlight a:visited {
+	background: #0A0A0A url(../../../vendor/jquery/jquery-ui-themes/themes/trontastic/images/ui-bg_gloss-wave_55_000000_500x100.png) repeat-x scroll 50% 50%;
+	font-weight: bold;
+	color: #b8ec79;
+}
+
+.caltable .calborder {
+	border: 1px solid #1B1613;
+}
+
+.caltable .calmodfocus {
+	text-decoration: underline;
+}
+
 body.tiki_admin .simplebox,
 a.admbox,
 a.admbox.off {

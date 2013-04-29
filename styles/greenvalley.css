@@ -638,6 +638,16 @@ table.formcolor td, table.findtable td {
     vertical-align: middle;
 }
 
+/***** Calendar *****/
+.caltable td.calhighlight,
+td.calheadhighlight {
+	background: #ffc;
+}
+
+.caltable .odd {
+	background: #ebffeb;
+}
+
 /***** Articles *****/
 
 .article {

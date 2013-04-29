@@ -1103,7 +1103,19 @@ div.messureadbody {
 /***** TikiSheets *****/
 
 /***** Calendar *****/
+.caltable td.calhighlight,
+td.calheadhighlight {
+	background: #ffc;
+}
 
+.calendarweek td.calheadhighlight {
+	border: .1em solid #eee;
+}
+
+.calendarweek td.calheadhighlight a:link,
+.calendarweek td.calheadhighlight a:visited {
+	color: #000;
+}
 /***** Admin *****/
 
 /***** Ajax, jquery. etc. *****/

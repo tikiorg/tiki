@@ -1069,17 +1069,6 @@ textarea.tshoutbox{
 /***** Messages *****/
 /***** TikiSheets *****/
 /***** Calendar *****/
-calcontent a.linkmenu,
-.calcontent a.linkmenu:hover {
-	background: none;
-	padding: 0}
-
-.calfocus {font-size: 90%}
-
-.calfocuson {
-	font-size: 100%;
-}
-
 .calprio1 a,
 .calprio2 a,
 .calprio3 a,
@@ -1104,23 +1093,24 @@ calcontent a.linkmenu,
 
 #caltable td {padding: 0}
 
-#caltable .calfocuson,
 .box-data .fc a.today,
 .box-data td a.today {
 	background: #cde4f3;
 	border: 1px solid #d3e6f4;
-	border-collapse: collapse}
-	
-.caltable .calfocuson {
-	background: #cde4f3;
+	border-collapse: collapse
 }
 
-#caltable .calfocuson a {
-  color:#000}
+td.calheadhighlight {
+	background: transparent;
+}
 
-#caltable .calfocus a,
-#caltable .calfocuson a {
-  text-decoration:none;
+#month_title.calheadhighlight,
+.caltable td.calhighlight {
+	background: #cde4f3;
+}
+	
+.caltable .calborder {
+	border: 1px solid #999;
 }
 
 .calinput {background: #3f3f3f}
@@ -1137,24 +1127,9 @@ calcontent a.linkmenu,
 * html .caltable .odd {padding: 0}
 .caltable .even {background: #e7e9ea}
 * html .caltable .even {padding: 0}
-.caldark {background: url(snow/flakesptn.jpg)}
-* html .caldark {padding: 0}
-.caldark .calfocus {background: url(snow/flakesptn.jpg)}
 .calnavigation a:hover {background: url(snow/boxbtm.jpg) }
 .box-data .viewmode {
 	line-height: 1.3;
-}
-
-#calscreen .calfocuson {
-	background: #cde4f3;
-}
-
-.calfocuson a {
-	font-size: 90%;
-}
-
-.calHeadingOn, .calHeadingOn a {
-	background: #cde4f3;
 }
 
 /***** Admin *****/
