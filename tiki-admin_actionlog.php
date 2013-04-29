@@ -301,8 +301,10 @@ if (isset($_REQUEST['list']) || isset($_REQUEST['export']) || isset($_REQUEST['g
 	$smarty->assign('showCateg', $showCateg ? 'y' : 'n');
 	$showLogin = $logslib->action_is_viewed('login', 'system');
 	$smarty->assign('showLogin', $showLogin ? 'y' : 'n');
+	$showbigbluebutton = $logslib->action_is_viewed('Joined Room', 'bigbluebutton');
+	$smarty->assign('showbigbluebutton', $showbigbluebutton ? 'y' : 'n');
 	if (isset($_REQUEST['startDate_Month'])) {
-		$startDate = $tikilib->make_time(0, 0, 0, $_REQUEST['startDate_Month'], $_REQUEST['startDate_Day'], $_REQUEST['startDate_Year']);
+		$startDate = $tikilib->make_time($_REQUEST['Time_Hour'], $_REQUEST['Time_Minute'], $_REQUEST['Time_Second'], $_REQUEST['startDate_Month'], $_REQUEST['startDate_Day'], $_REQUEST['startDate_Year']);
 		$url.= "&amp;start=$startDate";
 	} elseif (isset($_REQUEST['startDate'])) {
 		$startDate = $_REQUEST['startDate'];
@@ -311,7 +313,7 @@ if (isset($_REQUEST['list']) || isset($_REQUEST['export']) || isset($_REQUEST['g
 	}
 	$smarty->assign('startDate', $startDate);
 	if (isset($_REQUEST['endDate_Month'])) {
-		$endDate = $tikilib->make_time(23, 59, 59, $_REQUEST['endDate_Month'], $_REQUEST['endDate_Day'], $_REQUEST['endDate_Year']);
+		$endDate = $tikilib->make_time($_REQUEST['end_Hour'], $_REQUEST['end_Minute'], $_REQUEST['end_Second'], $_REQUEST['endDate_Month'], $_REQUEST['endDate_Day'], $_REQUEST['endDate_Year']);
 		$url.= "&amp;end=$endDate";
 	} elseif (isset($_REQUEST['endDate'])) {
 		$endDate = $_REQUEST['endDate'];
@@ -332,6 +334,19 @@ if (isset($_REQUEST['list']) || isset($_REQUEST['export']) || isset($_REQUEST['g
 		}
 		die();
 	}
+	if (isset($_REQUEST['export_bbb'])) {
+	    header('Content-type: application/octet-stream');
+	    header('Content-Disposition: attachment; filename="tiki-actionlogs_bbb_stats.csv"');
+	    echo "user,object,Time in bigbluebutton (in minutes)\r\n";
+	    $logins = $logslib->list_actions('', 'bigbluebutton', $_REQUEST['selectedUsers'], 0, -1, 'lastModif_asc', $find, $startDate, $endDate, false);
+	    $stay_in_big_Times = $logslib->get_bigblue_login_time($logins['data'], $startDate, $endDate, $actions);
+	    if (empty($logins['data']))
+	      break;
+	    $csv = $logslib->export_bbb($stay_in_big_Times);
+	    echo $csv;
+	    $offset += $maxRecords;
+	    die();
+  	}
 	$results = $logslib->list_actions('', '', $_REQUEST['selectedUsers'], $offset, $maxRecords, 'lastModif_desc', $find, $startDate, $endDate, $_REQUEST['categId']);
 	$actions = &$results['data'];
 	$actions_cant = $results['cant'];
@@ -371,6 +386,11 @@ if (isset($_REQUEST['list']) || isset($_REQUEST['export']) || isset($_REQUEST['g
 		$logins = $logslib->list_logs('login', $_REQUEST['selectedUsers'], 0, -1, 'lastModif_asc', '', $startDate, $endDate, $actions);
 		$logTimes = $logslib->get_login_time($logins['data'], $startDate, $endDate, $actions);
 		$smarty->assign_by_ref('logTimes', $logTimes);
+	}
+	if ($showbigbluebutton) {
+		$logins = $logslib->list_actions('', 'bigbluebutton', $_REQUEST['selectedUsers'], 0, -1, 'lastModif_asc', $find, $startDate, $endDate, false);
+		$stay_in_big_Times = $logslib->get_bigblue_login_time($logins['data'], $startDate, $endDate, $actions);
+		$smarty->assign_by_ref('stay_in_big_Times', $stay_in_big_Times);
 	}
 	if (isset($_REQUEST['unit']) && $_REQUEST['unit'] == 'kb') {
 		for ($i = count($actions) - 1; $i >= 0; --$i) {
@@ -735,6 +755,12 @@ if (isset($_REQUEST['graph'])) {
 	$smarty->assign('galleries', $galleries['data']);
 }
 
+if (empty($_REQUEST)) {
+  $startDate = $tikilib->make_time(0, 0, 0, $tikilib->date_format('%m'), $tikilib->date_format('%d'), $tikilib->date_format('%Y'));
+  $endDate = $tikilib->make_time(23, 59, 59, $tikilib->date_format('%m'), $tikilib->date_format('%d'), $tikilib->date_format('%Y'));
+  $smarty->assign('startDate', $startDate);
+  $smarty->assign('endDate', $endDate);
+}
 $smarty->assign_by_ref('offset', $offset);
 $smarty->assign_by_ref('cant', $actions_cant);
 $smarty->assign_by_ref('maxRecords', $maxRecords);
