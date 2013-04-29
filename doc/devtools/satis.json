@@ -98,6 +98,28 @@
 			"type": "package",
 			"package": {
 				"name": "jquery/jquery",
+				"version": "2.0.0",
+				"dist": {
+					"url": "http://code.jquery.com/jquery-2.0.0.js",
+					"type": "file"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "jquery/jquery-min",
+				"version": "2.0.0",
+				"dist": {
+					"url": "http://code.jquery.com/jquery-2.0.0.min.js",
+					"type": "file"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "jquery/jquery",
 				"version": "1.9.1",
 				"dist": {
 					"url": "http://code.jquery.com/jquery-1.9.1.js",
@@ -531,8 +553,8 @@
 		"ezyang/htmlpurifier": "4.5.0",
 		"jarnokurlin/fullcalendar": "1.5.2",
 		"jcapture-applet/jcapture-applet": "dev-master",
-		"jquery/jquery": "1.9.1",
-		"jquery/jquery-min": "1.9.1",
+		"jquery/jquery": "*",
+		"jquery/jquery-min": "*",
 		"jquery/jquery-s5": "dev-master",
 		"jquery/jquery-sheet": "2.0.1",
 		"jquery/jquery-ui": "1.10.2",
