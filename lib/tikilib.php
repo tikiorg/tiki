@@ -1491,13 +1491,14 @@ class TikiLib extends TikiDb_Bridge
      */
     function score_event($user, $event_type, $id = '', $multiplier=false)
 	{
-		global $prefs;
+		global $prefs, $trklib;
+    	$trklib = TikiLib::lib('trk');
 		$scorelib = TikiLib::lib('score');
 
 		if ($user == 'admin' || !$user) {
 			return true;
 		}
-
+		
 		$event = $scorelib->get_event($event_type);
 		if (!$event || !$event['score']) {
 			return true;
@@ -1534,17 +1535,45 @@ class TikiLib extends TikiDb_Bridge
 				)
 			);
 		}
-		// Perform check to make sure score does not go below 0 with negative scores
-		if ( $prefs['fgal_prevent_negative_score'] == 'y' && strpos($event_type, 'fgallery') === 0 ) {
-			$result = $this->query("select `userId` from `users_users` where `score` + ? >= 0 and `login` = ?", array($score, $user));
-			if ( ! $row = $result->fetchRow($result))
-				return false;
+		$allevent = $scorelib->get_all_events();
+    	$feach_array = array($user);
+		$query = "SELECT event_id  FROM `tiki_users_score` WHERE `user`=?";
+    	if (isset($prefs['feature_score_expday']) && $prefs['feature_score_expday'] != 0){$query .= " AND `tstamp` >= NOW() - INTERVAL ? DAY"; $feach_array[1] =$prefs['feature_score_expday'];}
+		$sco_result = $this->fetchAll($query, $feach_array);
+    	if ($sco_result) {
+			$score = 0;
+			foreach($allevent as $val) {
+				foreach($sco_result as $value ) {
+					if( strstr($value['event_id'], $val['event'])) {
+						if(isset($val['validObjectIds']) && $val['validObjectIds'] !=0) {
+						  $matches = array();
+						  $val_ids = explode(',', $val['validObjectIds']);
+						  preg_match("/(\d+)/", $value['event_id'], $matches);
+							if (strstr($val['event'], "trackeritem") && !empty($matches)) {
+							  $matches[0] = $trklib->get_tracker_for_item($matches[0]);
+							}
+							$result = array_intersect($matches, $val_ids);
+							if (!empty($result)) {
+							  $score += $val['score'];
+							}
+						} else {
+							$score += $val['score'];
+						}
+					}
+				}
+			}		
+			// Perform check to make sure score does not go below 0 with negative scores
+			if ( $prefs['fgal_prevent_negative_score'] == 'y' && strpos($event_type, 'fgallery') === 0 ) {
+				$result = $this->query("select `userId` from `users_users` where `score` + ? >= 0 and `login` = ?", array($score, $user));
+				if ( ! $row = $result->fetchRow($result))
+					return false;
+			}
 		}
 
 		$event['id'] = $id; // just for debug
 
 		$table = $this->table('users_users');
-		$table->update(array('score' => $table->increment($score)), array('login' => $user));
+		$table->update(array('score' => $score), array('login' => $user));
 
 		return true;
 	}
