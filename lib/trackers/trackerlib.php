@@ -1575,6 +1575,19 @@ class TrackerLib extends TikiLib
 				'bulk_import' => $bulk_import,
 			)
 		);
+		    
+		if ($prefs['feature_score'] == 'y') {
+			if ($final_event == 'tiki.trackeritem.create') {
+				$tikilib->score_event($user, 'trackeritem_create', $currentItemId);
+			} elseif($final_event == 'tiki.trackeritem.update') {
+				$tikilib->score_event($user, 'trackeritem_edit', $currentItemId);
+			}
+			foreach($fil as $key=>$value) {
+				if (empty($old_values[$key]) && !empty($fil[$key])) {
+					$tikilib->score_event($user, 'tracker_field_entered', "$key:$currentItemId");
+				}
+			}
+		}
 
 		$transaction->commit();
 
