@@ -3117,7 +3117,7 @@ class Comments extends TikiLib
      */
     function post_in_forum($forum_info, &$params, &$feedbacks, &$errors)
 	{
-		global $smarty, $tiki_p_admin_forum, $tiki_p_forum_post_topic;
+		global $smarty, $tiki_p_admin_forum, $tiki_p_forum_post_topic, $tikilib;
 		global  $tiki_p_forum_post, $prefs, $user, $tiki_p_forum_autoapp, $captchalib;
 
 		if (!empty($params['comments_grandParentId'])) {
@@ -3249,7 +3249,14 @@ class Comments extends TikiLib
 						isset($params['contributions']) ? $params['contributions']: '',	$params['anonymous_name']
 					);
 					// The thread *WAS* successfully created.
-
+         
+					if ($prefs['feature_score'] == 'y') {
+					  if($parent_id) {
+						$tikilib->score_event($user, 'forum_topic_reply', $threadId);
+					  } else {
+						$tikilib->score_event($user, 'forum_topic_post', $threadId);
+					  }
+					}
 					if ($threadId) {
 						// Deal with mail notifications.
 						include_once('lib/notifications/notificationemaillib.php');
