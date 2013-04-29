@@ -140,6 +140,7 @@ class Smarty_Tiki extends Smarty
 		} else {
 			$this->error_reporting = E_ALL ^ E_NOTICE;
 		}
+		$this->setCompileDir(realpath("templates_c"));
 	}
 
 	/**
@@ -189,11 +190,6 @@ class Smarty_Tiki extends Smarty
 	public function fetch($_smarty_tpl_file = null, $_smarty_cache_id = null, $_smarty_compile_id = null, $parent = null, $_smarty_display = false, $merge_tpl_vars = true, $no_output_filter = false)
 	{
 		global $prefs, $style_base, $tikidomain;
-
-    if ( empty($_smarty_cache_id) )
-		    $_smarty_cache_id = $prefs['language'] . $_smarty_cache_id . md5($_smarty_tpl_file);
-    if ( empty($_smarty_compile_id) )
-    		$_smarty_compile_id = $prefs['language'] . $_smarty_compile_id . md5($_smarty_tpl_file);
 
 		if ( ($tpl = $this->getTemplateVars('mid')) && ( $_smarty_tpl_file == 'tiki.tpl' || $_smarty_tpl_file == 'tiki-print.tpl' || $_smarty_tpl_file == 'tiki_full.tpl' ) ) {
 
@@ -302,9 +298,6 @@ class Smarty_Tiki extends Smarty
 			}
 		}
 
-		$_smarty_cache_id = $lg . $_smarty_cache_id;
-		$_smarty_compile_id = $lg . $_smarty_compile_id;
-
 		$lgSave = $prefs['language'];
 		$prefs['language'] = $lg;
 		$this->refreshLanguage();
@@ -410,7 +403,7 @@ class Smarty_Tiki extends Smarty
 			$lang = 'default';
 		}
 
-		$this->setCompileDir(realpath("templates_c") . "/$lang/$tikidomain");
+		$this->setCompileId($lang . $tikidomain);
 	}
 
 	function initializePaths()
