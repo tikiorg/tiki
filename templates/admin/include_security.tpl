@@ -73,6 +73,12 @@
 					{preference name=comments_akismet_check_users}
 				</div>
 			{preference name=http_referer_registration_check}			
+
+			{preference name=useRegisterPasscode}
+				<div class="adminoptionboxchild" id="useRegisterPasscode_childcontainer">
+					{preference name=registerPasscode}
+					{preference name=showRegisterPasscode}
+				</div>
 		{/tab}
 	
 		{tab name="{tr}Search results{/tr}"}
