@@ -118,7 +118,7 @@ $("#log-rebuild").click(function(){
 							{if $queue_count > 20}
 								<li><a  href="tiki-admin.php?page=search&amp;process=20">20</a></li>
 							{/if}
-							{if !empty($smarty.request.process) and $smarty.request.process eq 'all' and $prefs.javascript_enabled eq "y"}
+							{if $queue_count > 0 and !empty($smarty.request.process) and $smarty.request.process eq 'all' and $prefs.javascript_enabled eq "y"}
 								{jq} setTimeout(function() { history.go(0); }, 1000); {/jq}
 								<li><strong><a  href="tiki-admin.php?page=search&amp;process=">{tr}Stop{/tr}</a></strong></li>
 							{else}
