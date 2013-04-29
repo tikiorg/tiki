@@ -7,6 +7,13 @@
 
 function prefs_site_list()
 {
+    $available_layouts = array();
+	foreach (scandir('templates/layouts/') as $layoutName) {
+		if ($layoutName[0] != '.' && $layoutName != 'index.php') {
+			$available_layouts[$layoutName] = ucfirst($layoutName);
+		}   
+	}   
+
 	return array (
 		'site_closed' => array(
 			'name' => tra('Close site (except for those with permission)'),
@@ -122,5 +129,12 @@ function prefs_site_list()
 				'wikiplugin_googleanalytics',
 			),
 		),
+		'site_layout' => array(
+			'name' => tr('Site Layout'),
+			'description' => tr('Changes the overall site layout templates'),
+			'type' => 'list',
+			'default' => 'classic',
+			'options' => $available_layouts,
+		),  
 	);
 }

@@ -322,6 +322,7 @@ class Smarty_Tiki extends Smarty
 
 		global $prefs;
 
+		$this->refreshLanguage();
 		if ( !empty($prefs['feature_htmlpurifier_output']) and $prefs['feature_htmlpurifier_output'] == 'y' ) {
 			static $loaded = false;
 			static $purifier = null;
@@ -403,7 +404,13 @@ class Smarty_Tiki extends Smarty
 			$lang = 'default';
 		}
 
-		$this->setCompileId($lang . $tikidomain);
+		if (! empty($prefs['site_layout'])) {
+			$layout = $prefs['site_layout'];
+		} else {
+			$layout = 'classic';
+		}
+
+		$this->setCompileId("$lang-$tikidomain-$layout");
 	}
 
 	function initializePaths()
@@ -418,6 +425,11 @@ class Smarty_Tiki extends Smarty
 		if ($tikidomain) {
 			$tikidomain.= '/';
 		}
+
+		if (empty($prefs['site_layout'])) {
+			$prefs['site_layout'] = 'classic';
+		}
+
 		$this->main_template_dir = realpath('templates/');
 		$this->setTemplateDir(null);
 		if ( !empty($tikidomain) && $tikidomain !== '/' ) {
@@ -425,6 +437,8 @@ class Smarty_Tiki extends Smarty
 			$this->addTemplatedir($this->main_template_dir.'/'.$tikidomain.'/');
 		}
 		$this->addTemplateDir($this->main_template_dir.'/styles/'.$style_base.'/');
+		$this->addTemplateDir($this->main_template_dir.'/layouts/'.$prefs['site_layout'].'/');
+		$this->addTemplateDir($this->main_template_dir.'/layouts/');
 		$this->addTemplateDir($this->main_template_dir);
 
 		
