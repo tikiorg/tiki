@@ -35,6 +35,31 @@ function smarty_function_rating( $params, $smarty )
 					$commentslib = new Comments();
 					$commentslib->vote_comment($id, $user, $value);
 				}
+			} elseif($type == 'article' ) {
+				global $artlib, $user; require_once 'lib/articles/artlib.php';
+				if ( $user ) {
+				  $artlib->vote_comment($id, $user, $value);
+				}
+	        }
+			
+			if ($prefs['feature_score'] == 'y' && $id) {
+				global $tikilib;
+				if ($type == 'comment') {
+				  $forum_id = $commentslib->get_comment_forum_id($id);
+				  $forum_info = $commentslib->get_forum($forum_id);
+				  $thread_info = $commentslib->get_comment($id, null, $forum_info);
+				  $item_user = $thread_info['userName'];
+				} elseif($type == 'article') {
+				  require_once 'lib/articles/artlib.php';
+				  $artlib = new ArtLib();
+				  $res = $artlib->get_article($id);
+				  $item_user = $res['author'];
+				}
+				if ($value == '1') {
+				  $tikilib->score_event($item_user, 'item_is_rated', "$user:$type:$id");
+				} elseif($value == '2') {
+				  $tikilib->score_event($item_user, 'item_is_unrated', "$user:$type:$id");
+				}
 			}
 		} elseif ( $value != $prev ) {
 			return tra('An error occurred.');
