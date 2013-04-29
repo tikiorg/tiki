@@ -230,17 +230,18 @@ class Smarty_Tiki extends Smarty
 
 			$this->assign('mid_data', $data);
 
-			include_once('tiki-modules.php');
-
 		} elseif ($_smarty_tpl_file == 'confirm.tpl' || $_smarty_tpl_file == 'error.tpl' || $_smarty_tpl_file == 'error_ticket.tpl' || $_smarty_tpl_file == 'error_simple.tpl') {
 			ob_end_clean(); // Empty existing Output Buffer that may have been created in smarty before the call of this confirm / error* template
 			if ( $prefs['feature_obzip'] == 'y' ) {
 				ob_start('ob_gzhandler');
 			}
 
-			include_once('tiki-modules.php');
-
 		}
+
+		if (! defined('TIKI_IN_INSTALLER')) {
+			require 'tiki-modules.php';
+		}
+		
 		if (isset($style_base)) {
 			if ($tikidomain and file_exists("templates/$tikidomain/styles/$style_base/$_smarty_tpl_file")) {
 				$_smarty_tpl_file = "$tikidomain/styles/$style_base/$_smarty_tpl_file";

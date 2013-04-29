@@ -1496,16 +1496,15 @@ ask_ticket('edit-page');
 // disallow robots to index page:
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 // Display the Edit Template or language check
-if ($need_lang) {
-	$smarty->assign('mid', 'tiki-choose_page_language.tpl');
-} else {
-	$smarty->assign('mid', 'tiki-editpage.tpl');
-}
 $smarty->assign('showtags', 'n');
 $smarty->assign('qtnum', '1');
 $smarty->assign('qtcycle', '');
-$smarty->display("tiki.tpl");
 
+if ($need_lang) {
+	$smarty->display('tiki-choose_page_language.tpl');
+} else {
+	$smarty->display('tiki-editpage.tpl');
+}
 /**
  * @param $chkURL
  * @return bool
