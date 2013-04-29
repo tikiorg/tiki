@@ -1740,7 +1740,16 @@ function wikiplugin_trackerlist($data, $params)
 			} else {
 				$smarty->assign('trackerlistmapview', false);
 			}
-
+      
+			if ($prefs['feature_score'] == 'y' && isset($items['data'])) {
+				foreach($items['data'] as $score_item) {
+				  $item_info = $trklib->get_tracker_item($score_item['itemId']);
+				  $currentItemId = $score_item['itemId'];
+				  $tikilib->score_event($user, 'trackeritem_read', $currentItemId);
+				  $tikilib->score_event($item_info['createdBy'], 'trackeritem_is_read', "$user:$currentItemId");
+				}
+			}
+			
 			$tracker = $trklib->get_tracker($trackerId, 0, -1);
 			/*foreach ($query_array as $k=>$v) {
 				if (!is_array($v)) { //only to avoid an error: eliminate the params that are not simple (ex: if you have in the same page a tracker list plugin and a tracker plugin, filling the tracker plugin interfers with the tracker list. In any case this is buggy if two tracker list plugins in the same page and if one needs the query value....
