@@ -82,12 +82,12 @@
 
 					<h4>{tr}Index maintenance{/tr}</h4>
 					<ul>
-						<li><a href="tiki-admin.php?page=search&amp;optimize=now">{tr}Optimize{/tr}</a> {tr}From the command line:{/tr} <kbd>php lib/search/shell.php optimize</kbd></li>
+						<li><a href="tiki-admin.php?page=search&amp;optimize=now">{tr}Optimize{/tr}</a> {tr}From the command line:{/tr} <kbd>php console.php index:optimize</kbd></li>
 						<li>
-							<a href="tiki-admin.php?page=search&amp;rebuild=now" id="rebuild-link">{tr}Rebuild Index{/tr}</a> {tr}From the command line:{/tr} <kbd>php lib/search/shell.php rebuild</kbd><br>
+							<a href="tiki-admin.php?page=search&amp;rebuild=now" id="rebuild-link">{tr}Rebuild Index{/tr}</a> {tr}From the command line:{/tr} <kbd> php console.php index:rebuild</kbd><br>
 							<label for="log-rebuild">{tr}Log rebuild?{/tr}</label>
 							<input type="checkbox" id="log-rebuild" />
-							<span class="description">{tr}Log file is saved as temp/Search_Indexer.log{/tr}</span> <br> {tr}From the command line:{/tr} <kbd>php lib/search/shell.php rebuild log</kbd><br>
+							<span class="description">{tr}Log file is saved as temp/Search_Indexer.log{/tr}</span> <br> {tr}From the command line:{/tr} <kbd>php console.php index:rebuild --log</kbd><br>
 							{jq}
 $("#log-rebuild").click(function(){
 	if ($(this).prop("checked")) {
