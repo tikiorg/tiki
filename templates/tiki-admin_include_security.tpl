@@ -51,6 +51,12 @@
 			{preference name=feature_wiki_protect_email}
 			{preference name=feature_wiki_ext_rel_nofollow}
 			{preference name=feature_banning}
+			
+			{preference name=useRegisterPasscode}
+				<div class="adminoptionboxchild" id="useRegisterPasscode_childcontainer">
+					{preference name=registerPasscode}
+					{preference name=showRegisterPasscode}
+				</div>			
 		{/tab}
 	
 		{tab name="{tr}Search results{/tr}"}
