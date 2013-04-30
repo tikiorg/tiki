@@ -2772,5 +2772,25 @@ function prefs_feature_list($partial = false)
 				'feature_file_galleries',
 			),
 		),
+		'feature_community_send_mail_join' => array(
+			'name' => tra('Send email notification to group leaders on user join'),
+			'type' => 'flag',
+			'help' => 'User+Preferences',
+			'default' => 'n',
+		),
+		'feature_community_send_mail_leave' => array(
+			'name' => tra('Send email notification to group leaders on user leave'),
+			'type' => 'flag',
+			'help' => 'User+Preferences',
+			'default' => 'n',
+		),
+		'feature_community_Strings_to_ignore' => array(
+			'name' => tra('Strings to ignore to get group basename'),
+			'type' => 'text',
+		),
+		'feature_community_String_to_append' => array(
+			'name' => tra('String to append to the group name to get Group Leaders group'),
+			'type' => 'text',
+		),
 	);
 }
