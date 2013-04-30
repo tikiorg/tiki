@@ -1851,6 +1851,24 @@ class UsersLib extends TikiLib
 		if ($prefs['user_trackersync_groups'] == 'y') {
 			$this->uncategorize_user_tracker_item($user, $group);
 		}
+		
+		if ($prefs['feature_community_send_mail_leave'] == 'y') {
+		  $group_base = trim(str_replace(array_map('trim',explode(",", $prefs['feature_community_Strings_to_ignore'])), '', $group));
+		  if(!empty($prefs['feature_community_String_to_append'])) {
+				$grouplead = $group_base . " " . $prefs['feature_community_String_to_append'];
+				$groupleaders = $this->get_users_created_group($grouplead);
+				unset($groupleaders[$user]);
+				if (isset($groupleaders[$_SESSION['u_info']['login']])) {
+					unset($groupleaders[$_SESSION['u_info']['login']]);
+				}
+				if(!empty($groupleaders)) {
+				$par_data['gname'] = $group_base;
+				$par_data['user'] = $user;			
+				require_once ("lib/notifications/notificationemaillib.php");
+					sendEmailNotification($groupleaders, 'group_lead_mail', 'user_left_group_notification_to_leads_subject.tpl', $par_data, 'user_left_group_notification_to_leads.tpl');
+				}		
+			}
+		}
 
 		$_SESSION['u_info']['group'] = 'Registered';
 	}
@@ -5617,7 +5635,26 @@ class UsersLib extends TikiLib
 			}
 		}
 		$this->update_anniversary_expiry();
-
+		
+		if ($prefs['feature_community_send_mail_join'] == 'y') { 
+			$group_base = trim(str_replace(array_map('trim',explode(",", $prefs['feature_community_Strings_to_ignore'])), '', $group));
+			if(!empty($prefs['feature_community_String_to_append'])) {
+				$grouplead = $group_base . " " . trim($prefs['feature_community_String_to_append']);
+				$groupleaders = $this->get_users_created_group($grouplead);
+				unset($groupleaders[$user]);
+				if (isset($groupleaders[$_SESSION['u_info']['login']])) {
+					unset($groupleaders[$_SESSION['u_info']['login']]);
+				}
+				if(!empty($groupleaders)) {
+				  $par_data['gname'] = $group_base;
+				  $par_data['user'] = $user;
+				  if(strpos($group, ' (Needs Approval)')) { $mail_temp = 'user_joins_group_notification_to_leads_need_app.tpl'; } else { $mail_temp = 'user_joins_group_notification_to_leads.tpl'; }	  		
+				  require_once ("lib/notifications/notificationemaillib.php");
+				  sendEmailNotification($groupleaders, 'group_lead_mail', 'user_joins_group_notification_to_leads_subject.tpl', $par_data, $mail_temp);
+				}		
+			}
+		}
+		
 		if ($group_ret) {
 			$watches = $tikilib->get_event_watches('user_joins_group', $group);
 			if (count($watches)) {
