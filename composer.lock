@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "137f739a8cbc74d7a76ee99bf7bbf04f",
+    "hash": "104f7237aaa1024e046605257bd44348",
     "packages": [
         {
             "name": "aFarkas/html5shiv",
@@ -162,17 +162,6 @@
             "time": "2013-02-18 00:04:08"
         },
         {
-            "name": "jarnokurlin/fullcalendar",
-            "version": "1.5.2",
-            "dist": {
-                "type": "zip",
-                "url": "http://tux.fi/~jarnok/fullcalendar-resourceviews/fullcalendar-resourceviews-1.5.3.4.zip",
-                "reference": null,
-                "shasum": null
-            },
-            "type": "library"
-        },
-        {
             "name": "jcapture-applet/jcapture-applet",
             "version": "dev-trunk",
             "source": {
@@ -182,7 +171,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org//dist/jcapture-applet-jcapture-applet-dev-trunk-f04408.zip",
+                "url": "https://composer.tiki.org/dist/jcapture-applet-jcapture-applet-dev-trunk-f04408.zip",
                 "reference": "dev-trunk",
                 "shasum": "99359f87c4472e26605dc4989fd7624506ed6701"
             },
@@ -218,10 +207,10 @@
             "name": "jquery/jquery",
             "version": "1.9.1",
             "dist": {
-                "type": "file",
-                "url": "http://code.jquery.com/jquery-1.9.1.js",
-                "reference": null,
-                "shasum": null
+                "type": "zip",
+                "url": "https://composer.tiki.org/dist/jquery-jquery-1.9.1.zip",
+                "reference": "1.9.1",
+                "shasum": "40a2008ac3deb7673bbab767058f41faa5d4bb59"
             },
             "type": "library"
         },
@@ -229,10 +218,10 @@
             "name": "jquery/jquery-min",
             "version": "1.9.1",
             "dist": {
-                "type": "file",
-                "url": "http://code.jquery.com/jquery-1.9.1.min.js",
-                "reference": null,
-                "shasum": null
+                "type": "zip",
+                "url": "https://composer.tiki.org/dist/jquery-jquery-min-1.9.1.zip",
+                "reference": "1.9.1",
+                "shasum": "c681e41f2dd0df711abdd04cc6f96a4fb6af7afb"
             },
             "type": "library"
         },
@@ -241,9 +230,9 @@
             "version": "1.3.1",
             "dist": {
                 "type": "zip",
-                "url": "http://code.jquery.com/mobile/1.3.1/jquery.mobile-1.3.1.zip",
-                "reference": null,
-                "shasum": null
+                "url": "https://composer.tiki.org/dist/jquery-jquery-mobile-1.3.1.zip",
+                "reference": "1.3.1",
+                "shasum": "782c19b969f40c2034e9c862cd45df51d664e511"
             },
             "type": "library"
         },
@@ -257,7 +246,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org//dist/jquery-jquery-s5-dev-trunk-69fe1a.zip",
+                "url": "https://composer.tiki.org/dist/jquery-jquery-s5-dev-trunk-69fe1a.zip",
                 "reference": "dev-trunk",
                 "shasum": "6dc24d69e98599a3a8985f7b00c2c881e1973a28"
             },
@@ -289,9 +278,9 @@
             "version": "2.0.1",
             "dist": {
                 "type": "zip",
-                "url": "http://jquerysheet.googlecode.com/files/jquery.sheet-2.0.1.zip",
-                "reference": null,
-                "shasum": null
+                "url": "https://composer.tiki.org/dist/jquery-jquery-sheet-2.0.1.zip",
+                "reference": "2.0.1",
+                "shasum": "c74cdaf7e96137ef248967f3455f077ac4210941"
             },
             "type": "library"
         },
@@ -300,9 +289,9 @@
             "version": "1.2.2",
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/trentrichardson/jQuery-Timepicker-Addon/archive/v1.2.2.zip",
-                "reference": null,
-                "shasum": null
+                "url": "https://composer.tiki.org/dist/jquery-jquery-timepicker-addon-1.2.2.zip",
+                "reference": "1.2.2",
+                "shasum": "8bd4fd896fc167b1805c532c4789a178b7b17efc"
             },
             "type": "library"
         },
@@ -311,9 +300,9 @@
             "version": "1.10.2",
             "dist": {
                 "type": "zip",
-                "url": "http://jqueryui.com/resources/download/jquery-ui-1.10.2.zip",
-                "reference": null,
-                "shasum": null
+                "url": "https://composer.tiki.org/dist/jquery-jquery-ui-1.10.2.zip",
+                "reference": "1.10.2",
+                "shasum": "51f3b9b3a118663796a1869a5396bee816a795ed"
             },
             "type": "library"
         },
@@ -322,9 +311,9 @@
             "version": "1.3.999",
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/fnagel/jquery-ui/archive/selectmenu.zip",
-                "reference": null,
-                "shasum": null
+                "url": "https://composer.tiki.org/dist/jquery-jquery-ui-selectmenu-1.3.999.zip",
+                "reference": "1.3.999",
+                "shasum": "b4f24effc891eaabbfc90e5824913640b22a29c4"
             },
             "type": "library"
         },
@@ -333,9 +322,9 @@
             "version": "1.10.2",
             "dist": {
                 "type": "zip",
-                "url": "http://jqueryui.com/resources/download/jquery-ui-themes-1.10.2.zip",
-                "reference": null,
-                "shasum": null
+                "url": "https://composer.tiki.org/dist/jquery-jquery-ui-themes-1.10.2.zip",
+                "reference": "1.10.2",
+                "shasum": "c879d75815da46d00f1800ae868ecaa4aacc34ae"
             },
             "type": "library"
         },
@@ -344,9 +333,9 @@
             "version": "1.0",
             "dist": {
                 "type": "zip",
-                "url": "http://jtrack.googlecode.com/files/jtrack-1.0.zip",
-                "reference": null,
-                "shasum": null
+                "url": "https://composer.tiki.org/dist/jquery-jtrack-1.0.zip",
+                "reference": "1.0",
+                "shasum": "09351f8405d48e5c4da2d5bfb579855d80c864f1"
             },
             "type": "library"
         },
@@ -355,9 +344,9 @@
             "version": "1.0",
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/blueimp/JavaScript-MD5/archive/master.zip",
-                "reference": null,
-                "shasum": null
+                "url": "https://composer.tiki.org/dist/jquery-md5-1.0.zip",
+                "reference": "1.0",
+                "shasum": "b34b4cc794488f431374d0ca6b90fc634441e40f"
             },
             "type": "library"
         },
@@ -366,9 +355,9 @@
             "version": "2.6",
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/jeffharrell/MiniCart/archive/2.6.zip",
-                "reference": null,
-                "shasum": null
+                "url": "https://composer.tiki.org/dist/jquery-minicart-2.6.zip",
+                "reference": "2.6",
+                "shasum": "5d36c9822b65a08eb7922205d09cb34b4b83cbbd"
             },
             "type": "library"
         },
@@ -377,9 +366,9 @@
             "version": "3.0.5",
             "dist": {
                 "type": "zip",
-                "url": "http://github.com/downloads/codecomputerlove/PhotoSwipe/code.photoswipe-3.0.5.zip",
-                "reference": null,
-                "shasum": null
+                "url": "https://composer.tiki.org/dist/jquery-photoswipe-3.0.5.zip",
+                "reference": "3.0.5",
+                "shasum": "f6f88d581a3c274557b116a5a0408cc17617560e"
             },
             "type": "library"
         },
@@ -388,9 +377,9 @@
             "version": "1.8.18",
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/CSS-Tricks/AnythingSlider/archive/v1.8.18.zip",
-                "reference": null,
-                "shasum": null
+                "url": "https://composer.tiki.org/dist/jquery-plugins-anythingslider-1.8.18.zip",
+                "reference": "1.8.18",
+                "shasum": "0bf7e65fa5cb389f6835156485d507253cddb806"
             },
             "type": "library"
         },
@@ -398,10 +387,10 @@
             "name": "jquery/plugins/async",
             "version": "1.0",
             "dist": {
-                "type": "file",
-                "url": "http://mess.genezys.net/jquery/jquery.async.js",
-                "reference": null,
-                "shasum": null
+                "type": "zip",
+                "url": "https://composer.tiki.org/dist/jquery-plugins-async-1.0.zip",
+                "reference": "1.0",
+                "shasum": "5f3a84f9831bd7eaa16ae6f7c4819d0373c92e1b"
             },
             "type": "library"
         },
@@ -410,9 +399,9 @@
             "version": "0.1",
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/downloads/mustardamus/brosho-plugin/brosho-0.1.zip",
-                "reference": null,
-                "shasum": null
+                "url": "https://composer.tiki.org/dist/jquery-plugins-brosho-0.1.zip",
+                "reference": "0.1",
+                "shasum": "6ca0f96cf6d732f3b550bc8bf537e12db15b31e8"
             },
             "type": "library"
         },
@@ -421,9 +410,9 @@
             "version": "0.9.13",
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/harvesthq/chosen/archive/v0.9.13.zip",
-                "reference": null,
-                "shasum": null
+                "url": "https://composer.tiki.org/dist/jquery-plugins-chosen-0.9.13.zip",
+                "reference": "0.9.13",
+                "shasum": "4be4071383432cbdd22e3edd46710d638b8c2f0e"
             },
             "type": "library"
         },
@@ -432,9 +421,9 @@
             "version": "1.2.8",
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/kswedberg/jquery-cluetip/archive/1.2.8.zip",
-                "reference": null,
-                "shasum": null
+                "url": "https://composer.tiki.org/dist/jquery-plugins-cluetip-1.2.8.zip",
+                "reference": "1.2.8",
+                "shasum": "cc697a4ec0f3374a6d635d4418673d7d28b2789e"
             },
             "type": "library"
         },
@@ -443,9 +432,9 @@
             "version": "1.4.14",
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/jackmoore/colorbox/archive/1.4.14.zip",
-                "reference": null,
-                "shasum": null
+                "url": "https://composer.tiki.org/dist/jquery-plugins-colorbox-1.4.14.zip",
+                "reference": "1.4.14",
+                "shasum": "94807af360601f18b4a2cfb37d9113bc7e0ac1ee"
             },
             "type": "library"
         },
@@ -454,9 +443,9 @@
             "version": "0.5",
             "dist": {
                 "type": "zip",
-                "url": "http://www.eyecon.ro/colorpicker/colorpicker.zip",
-                "reference": null,
-                "shasum": null
+                "url": "https://composer.tiki.org/dist/jquery-plugins-colorpicker-0.5.zip",
+                "reference": "0.5",
+                "shasum": "a70c77b79387fb5145939586c56afda0b5d00aa7"
             },
             "type": "library"
         },
@@ -465,9 +454,9 @@
             "version": "3.25.0",
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/malsup/form/archive/3.25.0-2013.01.18.zip",
-                "reference": null,
-                "shasum": null
+                "url": "https://composer.tiki.org/dist/jquery-plugins-form-3.25.0.zip",
+                "reference": "3.25.0",
+                "shasum": "8b21b31d293d48c66bd49b97a9f3f9baa5dcd02c"
             },
             "type": "library"
         },
@@ -476,9 +465,9 @@
             "version": "2.0.1",
             "dist": {
                 "type": "zip",
-                "url": "http://www.twospy.com/galleriffic/galleriffic-2.0.zip",
-                "reference": null,
-                "shasum": null
+                "url": "https://composer.tiki.org/dist/jquery-plugins-galleriffic-2.0.1.zip",
+                "reference": "2.0.1",
+                "shasum": "d6b79df16e647980d1e860ebabc7d6bfbfb5e0e0"
             },
             "type": "library"
         },
@@ -487,9 +476,9 @@
             "version": "3.0.3",
             "dist": {
                 "type": "zip",
-                "url": "http://www.catchmyfame.com/jquery/jquery.infinitecarousel3.zip",
-                "reference": null,
-                "shasum": null
+                "url": "https://composer.tiki.org/dist/jquery-plugins-infinitecarousel-3.0.3.zip",
+                "reference": "3.0.3",
+                "shasum": "2391a4c2aa4879a9b9055bbb98afd5240546dded"
             },
             "type": "library"
         },
@@ -497,10 +486,10 @@
             "name": "jquery/plugins/jquery-json",
             "version": "2.4",
             "dist": {
-                "type": "file",
-                "url": "http://jquery-json.googlecode.com/files/jquery.json-2.4.js",
-                "reference": null,
-                "shasum": null
+                "type": "zip",
+                "url": "https://composer.tiki.org/dist/jquery-plugins-jquery-json-2.4.zip",
+                "reference": "2.4",
+                "shasum": "0862952c0d2b7b073db97913160709b5542e752e"
             },
             "type": "library"
         },
@@ -509,9 +498,9 @@
             "version": "1.11.1",
             "dist": {
                 "type": "zip",
-                "url": "http://jquery.bassistance.de/validate/jquery-validation-1.11.1.zip",
-                "reference": null,
-                "shasum": null
+                "url": "https://composer.tiki.org/dist/jquery-plugins-jquery-validation-1.11.1.zip",
+                "reference": "1.11.1",
+                "shasum": "d213520877538e49c35bf862b24358bf417e495e"
             },
             "type": "library"
         },
@@ -520,9 +509,9 @@
             "version": "0.98",
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/malsup/media/archive/master.zip",
-                "reference": null,
-                "shasum": null
+                "url": "https://composer.tiki.org/dist/jquery-plugins-media-0.98.zip",
+                "reference": "0.98",
+                "shasum": "f1ba62b7965dd7e3bb0dac666cbfb3fa891ac1e8"
             },
             "type": "library"
         },
@@ -530,21 +519,10 @@
             "name": "jquery/plugins/migrate",
             "version": "1.1.1",
             "dist": {
-                "type": "file",
-                "url": "http://code.jquery.com/jquery-migrate-1.1.1.js",
-                "reference": null,
-                "shasum": null
-            },
-            "type": "library"
-        },
-        {
-            "name": "jquery/plugins/migrate-min",
-            "version": "1.1.1",
-            "dist": {
-                "type": "file",
-                "url": "http://code.jquery.com/jquery-migrate-1.1.1.min.js",
-                "reference": null,
-                "shasum": null
+                "type": "zip",
+                "url": "https://composer.tiki.org/dist/jquery-plugins-migrate-1.1.1.zip",
+                "reference": "1.1.1",
+                "shasum": "0dd73fc1c5a04867035ee342e910c5b8a187bcb7"
             },
             "type": "library"
         },
@@ -553,9 +531,9 @@
             "version": "1.3.4",
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/mjsarfatti/nestedSortable/archive/v1.3.4.zip",
-                "reference": null,
-                "shasum": null
+                "url": "https://composer.tiki.org/dist/jquery-plugins-nestedsortable-1.3.4.zip",
+                "reference": "1.3.4",
+                "shasum": "76d798260a614fedf546cfb95a75edd9a0e5783d"
             },
             "type": "library"
         },
@@ -563,10 +541,10 @@
             "name": "jquery/plugins/pxem",
             "version": "0.1",
             "dist": {
-                "type": "file",
-                "url": "http://jquery-ui.googlecode.com/svn-history/r2618/branches/labs/projects/pxem/pxem.jQuery.js",
-                "reference": null,
-                "shasum": null
+                "type": "zip",
+                "url": "https://composer.tiki.org/dist/jquery-plugins-pxem-0.1.zip",
+                "reference": "0.1",
+                "shasum": "7eb40412a43f3746b63b090605da712077b02314"
             },
             "type": "library"
         },
@@ -575,9 +553,9 @@
             "version": "1.1",
             "dist": {
                 "type": "zip",
-                "url": "http://www.digitalia.be/file_download/14/reflection-jquery.zip",
-                "reference": null,
-                "shasum": null
+                "url": "https://composer.tiki.org/dist/jquery-plugins-reflection-jquery-1.1.zip",
+                "reference": "1.1",
+                "shasum": "43d8608f4cea0f0b0d87c08276dce2707fb7ef00"
             },
             "type": "library"
         },
@@ -585,10 +563,10 @@
             "name": "jquery/plugins/sparkline",
             "version": "2.1.1",
             "dist": {
-                "type": "file",
-                "url": "http://omnipotent.net/jquery.sparkline/2.1.1/jquery.sparkline.min.js",
-                "reference": null,
-                "shasum": null
+                "type": "zip",
+                "url": "https://composer.tiki.org/dist/jquery-plugins-sparkline-2.1.1.zip",
+                "reference": "2.1.1",
+                "shasum": "1c201e3344717864f986d9f9b9ad3139b6350e04"
             },
             "type": "library"
         },
@@ -597,9 +575,9 @@
             "version": "1.7.2",
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/joeldbirch/superfish/archive/1.7.2.zip",
-                "reference": null,
-                "shasum": null
+                "url": "https://composer.tiki.org/dist/jquery-plugins-superfish-1.7.2.zip",
+                "reference": "1.7.2",
+                "shasum": "f23fa28d6b0c330207b6e8f54d291db23b310899"
             },
             "type": "library"
         },
@@ -608,9 +586,9 @@
             "version": "2.9.1",
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/Mottie/tablesorter/archive/v2.9.1.zip",
-                "reference": null,
-                "shasum": null
+                "url": "https://composer.tiki.org/dist/jquery-plugins-tablesorter-2.9.1.zip",
+                "reference": "2.9.1",
+                "shasum": "ed1e16ad35a98fd8ae8352dc61ac238eaa58fd80"
             },
             "type": "library"
         },
@@ -619,9 +597,9 @@
             "version": "3.0.1",
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/ludo/jquery-treetable/archive/3.0.1.zip",
-                "reference": null,
-                "shasum": null
+                "url": "https://composer.tiki.org/dist/jquery-plugins-treetable-3.0.1.zip",
+                "reference": "3.0.1",
+                "shasum": "fb3995745592552d96b3f98ed51da7294f515df8"
             },
             "type": "library"
         },
@@ -629,10 +607,10 @@
             "name": "phpcas/phpcas",
             "version": "1.3.2",
             "dist": {
-                "type": "tar",
-                "url": "http://downloads.jasig.org/cas-clients/php/1.3.2/CAS-1.3.2.tgz",
-                "reference": null,
-                "shasum": null
+                "type": "zip",
+                "url": "https://composer.tiki.org/dist/phpcas-phpcas-1.3.2.zip",
+                "reference": "1.3.2",
+                "shasum": "577d74b5a193fc011d99898f037b1198c93073f3"
             },
             "type": "library"
         },
@@ -646,9 +624,9 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/phpseclib/phpseclib/archive/0.3.1.zip",
+                "url": "https://composer.tiki.org/dist/phpseclib-phpseclib-0.3.1-0.3.1-7668ac.zip",
                 "reference": "0.3.1",
-                "shasum": ""
+                "shasum": "82063eb9067f58cefe4de8cf5ec19c3f8068e6d4"
             },
             "require": {
                 "php": ">=5.0.0"
@@ -667,7 +645,6 @@
                     "Net": "phpseclib/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "include-path": [
                 "phpseclib/"
             ],
@@ -706,10 +683,10 @@
             "name": "rangy/rangy",
             "version": "1.2.3",
             "dist": {
-                "type": "tar",
-                "url": "http://rangy.googlecode.com/files/rangy-1.2.3.tar.gz",
-                "reference": null,
-                "shasum": null
+                "type": "zip",
+                "url": "https://composer.tiki.org/dist/rangy-rangy-1.2.3.zip",
+                "reference": "1.2.3",
+                "shasum": "3e1798e4c1561d0ef36d8393eac9207d3e6e09dd"
             },
             "type": "library"
         },
@@ -718,9 +695,9 @@
             "version": "2.3.0",
             "dist": {
                 "type": "zip",
-                "url": "http://simile-widgets.googlecode.com/files/timeline_libraries_v2.3.0.zip",
-                "reference": null,
-                "shasum": null
+                "url": "https://composer.tiki.org/dist/simile_timeline-simile_timeline-2.3.0.zip",
+                "reference": "2.3.0",
+                "shasum": "29a4399dce38056095438cb3355dc2f8bc083da4"
             },
             "type": "library"
         },
@@ -732,6 +709,12 @@
                 "url": "http://smarty-php.googlecode.com/svn",
                 "reference": "/tags/v3.1.13/@4699"
             },
+            "dist": {
+                "type": "zip",
+                "url": "https://composer.tiki.org/dist/smarty-smarty-v3.1.13-830af7.zip",
+                "reference": "v3.1.13",
+                "shasum": "ea62ab58198626e50c2c246fc476c9a7d15b7577"
+            },
             "require": {
                 "php": ">=5.2"
             },
@@ -742,7 +725,6 @@
                     "distribution/libs/SmartyBC.class.php"
                 ]
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "LGPL-3.0"
             ],
@@ -772,9 +754,9 @@
             "version": "2.6",
             "dist": {
                 "type": "zip",
-                "url": "http://svg-edit.googlecode.com/files/svg-edit-2.6.zip",
-                "reference": null,
-                "shasum": null
+                "url": "https://composer.tiki.org/dist/svg-edit-svg-edit-2.6.zip",
+                "reference": "2.6",
+                "shasum": "5c62748fdcc7cd4115e7bd59be12ba589d47d9ee"
             },
             "type": "library"
         },
