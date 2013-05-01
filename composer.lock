@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "61ac850905eb114e1fcfe10c795788bb",
+    "hash": "0fda33d6eab527663258edb4d92e3c30",
     "packages": [
         {
             "name": "aFarkas/html5shiv",
@@ -160,17 +160,6 @@
                 "html"
             ],
             "time": "2013-02-18 00:04:08"
-        },
-        {
-            "name": "jarnokurlin/fullcalendar",
-            "version": "1.5.3.4",
-            "dist": {
-                "type": "zip",
-                "url": "https://composer.tiki.org/dist/jarnokurlin-fullcalendar-1.5.3.4.zip",
-                "reference": "1.5.3.4",
-                "shasum": "3e0df30665d00e81675236a97ad7608737fd9022"
-            },
-            "type": "library"
         },
         {
             "name": "jcapture-applet/jcapture-applet",

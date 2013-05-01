@@ -11,7 +11,6 @@
 		"ckeditor/ckeditor/skins/kama": "4.1.1",
 		"codemirror/codemirror": "2.25",
 		"ezyang/htmlpurifier": "4.5.0",
-		"jarnokurlin/fullcalendar": "1.5.3.4",
 		"jcapture-applet/jcapture-applet": "dev-master",
 		"jquery/jquery": "1.9.1",
 		"jquery/jquery-min": "1.9.1",
