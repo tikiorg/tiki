@@ -87,7 +87,7 @@
 			"type": "package",
 			"package": {
 				"name": "jarnokurlin/fullcalendar",
-				"version": "1.5.2",
+				"version": "1.5.3.4",
 				"dist": {
 					"url": "http://tux.fi/~jarnok/fullcalendar-resourceviews/fullcalendar-resourceviews-1.5.3.4.zip",
 					"type": "zip"
@@ -551,7 +551,7 @@
 		"ckeditor/ckeditor/skins/kama": "*",
 		"codemirror/codemirror": "2.25",
 		"ezyang/htmlpurifier": "4.5.0",
-		"jarnokurlin/fullcalendar": "1.5.2",
+		"jarnokurlin/fullcalendar": "1.5.3.4",
 		"jcapture-applet/jcapture-applet": "dev-master",
 		"jquery/jquery": "*",
 		"jquery/jquery-min": "*",
