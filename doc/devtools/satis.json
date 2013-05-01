@@ -100,7 +100,7 @@
 				"name": "jarnokurlin/fullcalendar",
 				"version": "1.5.3.4",
 				"dist": {
-					"url": "http://tux.fi/~jarnok/fullcalendar-resourceviews/fullcalendar-resourceviews-1.5.3.4.zip",
+					"url": "https://github.com/jarnokurlin/fullcalendar/archive/v1.5.3.4.zip",
 					"type": "zip"
 				}
 			}
