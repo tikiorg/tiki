@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "104f7237aaa1024e046605257bd44348",
+    "hash": "61ac850905eb114e1fcfe10c795788bb",
     "packages": [
         {
             "name": "aFarkas/html5shiv",
@@ -160,6 +160,17 @@
                 "html"
             ],
             "time": "2013-02-18 00:04:08"
+        },
+        {
+            "name": "jarnokurlin/fullcalendar",
+            "version": "1.5.3.4",
+            "dist": {
+                "type": "zip",
+                "url": "https://composer.tiki.org/dist/jarnokurlin-fullcalendar-1.5.3.4.zip",
+                "reference": "1.5.3.4",
+                "shasum": "3e0df30665d00e81675236a97ad7608737fd9022"
+            },
+            "type": "library"
         },
         {
             "name": "jcapture-applet/jcapture-applet",
@@ -523,6 +534,17 @@
                 "url": "https://composer.tiki.org/dist/jquery-plugins-migrate-1.1.1.zip",
                 "reference": "1.1.1",
                 "shasum": "0dd73fc1c5a04867035ee342e910c5b8a187bcb7"
+            },
+            "type": "library"
+        },
+        {
+            "name": "jquery/plugins/migrate-min",
+            "version": "1.1.1",
+            "dist": {
+                "type": "zip",
+                "url": "https://composer.tiki.org/dist/jquery-plugins-migrate-min-1.1.1.zip",
+                "reference": "1.1.1",
+                "shasum": "8fbcafbcce24ff95c80cf2940981b1e7f04a39cb"
             },
             "type": "library"
         },
