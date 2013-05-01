@@ -141,7 +141,7 @@ if ($output["data"] == "EMPTY") {
 						'process' => 'y',
 					)
 				);
-				if ($data2['value'] == '') {
+				if (empty($data2['value'])) {
 					$data2['value'] = '(' . tra('empty') . ')';
 				} else {
 					$data2['value'] = htmlspecialchars_decode($data2['value']);
