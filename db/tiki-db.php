@@ -30,7 +30,13 @@ if ( file_exists($local_php) ) {
 global $systemConfiguration;
 $systemConfiguration = new Zend_Config(
 	array(
-		'preference' => array(),
+		'preference' => array(
+			'feature_jison_wiki_parser' => 'n',		// hard code json parser off, as it's more than just "experimental"
+													// Developer Notice:
+													// if you want to help improve this feature then either comment out the line above
+													// or add 'feature_jison_wiki_parser' = 'y' to your tiki.ini file
+													// and enable that in your db/local.php
+		),
 		'rules' => array(),
 	),
 	array('readOnly' => false)
