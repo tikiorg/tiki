@@ -5,6 +5,14 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
+// File name: Search.php
+// Required path: /lib/core/Feed/ForwardLink
+//
+// Programmer: Robert Plummer
+//
+// Purpose: Locate, highlight, and scroll to requested ForwardLink destination.  Add superscripted ForwardLink
+//          indicators wherever ForwardLinks exist within displayed page.
+
 class Feed_ForwardLink_Search
 {
 	var $type = "forwardlink";
@@ -31,16 +39,17 @@ class Feed_ForwardLink_Search
 
 		if (empty($phrase)) return;
 
-		$newestRevision = self::findWikiRevision($phrase);
+        // if successful, will return an array with page, version, data, date, and phrase
+        $newestRevision = self::findWikiRevision($phrase);
 
 		if ($newestRevision == false) {
 			TikiLib::lib("header")->add_jq_onready(
 <<<JQ
 				$('<div />')
 					.html(
-						tr('This can happen if the page you are linking to has changed since you obtained the forwardlink or if the rights to see it are different that what you have set at the moment.') +
+						tr('This can happen if the page you are linking to has changed since you obtained the forwardlink or if the rights to see it are different from what you have set at the moment.') +
 						'&nbsp;&nbsp;' +
-						tr('If you are logged in, try loggin out and then recreate the forwardlink.')
+						tr('If you are logged in, try logging out and then recreate the forwardlink.')
 					)
 					.dialog({
 						title: tr('Phrase not found'),
@@ -65,12 +74,18 @@ JQ
 
 		$phrase = JisonParser_Phraser_Handler::superSanitize($phrase);
 
+        // This query will *ALWAYS* fail if the destination page had been created/edited *PRIOR* to applying the 'Simple Wiki Attributes' profile!
+        // Just recreate the destination page after having applied the profile in order to load it with the proper attributes.
 		$query = Tracker_Query::tracker('Wiki Attributes')
 			->byName()
 			->filterFieldByValueLike('Value', $phrase)
 			->render(false)
 			->getLast();
 
+        // TODO: consider adding a test on query failure in order to determine whether:
+        //       1) the phrase isn't found, or
+        //       2) the Simple Wiki Attributes profile wasn't in place at page-creation
+        // ...then display a more meaningful error message
 		if (empty($query)) return false; //couldn't find it
 
 		$query = end($query); //query has a key of itemId, we just need it's details

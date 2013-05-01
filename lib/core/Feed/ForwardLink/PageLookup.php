@@ -5,6 +5,13 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
+// File name: PageLookup.php
+// Required path: /lib/core/Feed/ForwardLink
+//
+// Programmer: Robert Plummer
+//
+// Purpose: Generates URI to reach destination for passed ForwardLink and redirects browser to that URI.
+
 class Feed_ForwardLink_PageLookup extends Feed_Abstract
 {
 	var $type = 'forwardlink';

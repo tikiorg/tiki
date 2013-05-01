@@ -5,6 +5,14 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
+// File name: ForwardLink.php
+// Required path: /lib/core/Feed
+//
+// Programmer: Robert Plummer
+//
+// Purpose: Inject ForwardLink UI components into Wiki editing screens.  Managed page's saved attributes per
+//          ForwardLink UI interaction.  Generates and presents ForwardLink text string to user.
+
 Class Feed_ForwardLink extends Feed_Abstract
 {
 	var $type = 'forwardlink';
@@ -49,6 +57,7 @@ Class Feed_ForwardLink extends Feed_Abstract
 		$perms = Perms::get();
 
 		//check if profile is created
+        // TODO: implement this or similar checks in search.php to explain why phrase query fails -- 2013-04-09 LDG
 		$trackerId = TikiLib::lib('trk')->get_tracker_by_name('Wiki Attributes');
 		if ($trackerId < 1 && $perms->admin == 'y') {
 			TikiLib::lib('header')->add_jq_onready(
