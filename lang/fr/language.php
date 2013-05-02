@@ -14982,4 +14982,5 @@ $lang = array(
 "TikiTest Replay" => "Rejouer TikiTest",
 "The page is empty" => "La page est vide",
 "You do not have permissions to view the maps" => "Vous n'avez pas les droits pour voir les cartes",
+"Users File Galleries" => "Fichiers des utilisateurs",
 );
