@@ -71,11 +71,19 @@ class Search_Elastic_Index implements Search_Index_Interface
 
 		$entries = array_map(
 			function ($entry) {
-				return (array) $entry->_source;
+				$data = (array) $entry->_source;
+
+				if (isset($entry->highlight->contents)) {
+					$data['_highlight'] = implode('...', $entry->highlight->contents);
+				} else {
+					$data['_highlight'] = '';
+				}
+
+				return $data;
 			}, $hits->hits
 		);
 
-		$resultSet = new Search_ResultSet($entries, $hits->total, $resultStart, $resultCount);
+		$resultSet = new Search_Elastic_ResultSet($entries, $hits->total, $resultStart, $resultCount);
 
 		return $resultSet;
 	}

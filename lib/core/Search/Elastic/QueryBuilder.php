@@ -24,7 +24,16 @@ class Search_Elastic_QueryBuilder
 	function build(Search_Expr_Interface $expr)
 	{
 		$query = $expr->traverse($this);
-		$query = array("query" => $query);
+		$query = array(
+			"query" => $query,
+			"highlight" => array(
+				"fields" => array(
+					'contents' => array(
+						"number_of_fragments" => 5,
+					),
+				),
+			),
+		);
 
 		return $query;
 	}
