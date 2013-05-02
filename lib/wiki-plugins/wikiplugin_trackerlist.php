@@ -1409,26 +1409,23 @@ function wikiplugin_trackerlist($data, $params)
 			$smarty->assign('urlquery', '');
 		}
 		if (!empty($export) && $export != 'n' && $tiki_p_export_tracker == 'y') {
-			$exportUrl = "tiki-tracker-export?trackerId=$trackerId";
+			$smarty->loadPlugin('smarty_function_service');
+			$exportParams = array(
+				'controller' => 'tracker',
+				'action' => 'export',
+				'trackerId' => $trackerId,
+			);
 			if (!empty($fields)) {
-				$exportUrl .= '&amp;displayedFields='.(is_array($fields)? implode(':', $fields): $fields);
+				$exportParams['displayedFields'] = is_array($fields)? implode(':', $fields) : $fields;
 			}
 			if (is_array($filterfield)) {
 				foreach ($filterfield as $i=>$fieldId) {
-					$exportUrl .= "&amp;f_$fieldId=";
-					if (empty($filtervalue[$i])) {
-						$exportUrl .= $exactvalue[$i];
-					} else {
-						$exportUrl .= $filtervalue[$i];
-					}
+					$exportParams["f_$fieldId"] = empty($filtervalue[$i]) ? $exactvalue[$i] : $filtervalue[$i];
 				}
 			} elseif (!empty($filterfield)) {
-				$exportUrl .= "&amp;f_$filterfield=";
-				if (empty($filtervalue))
-					$exportUrl .= $exactvalue;
-				else
-					$exportUrl .= $filtervalue;
+				$exportParams["f_$filterfield"] = empty($filtervalue) ? $exactvalue : $filtervalue;
 			}
+			$exportUrl = smarty_function_service($exportParams, $smarty);
 			$smarty->assign('exportUrl', $exportUrl);
 		}
 

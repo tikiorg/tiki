@@ -75,12 +75,12 @@ class Tracker_Field_WebService extends Tracker_Field_Abstract
 			parse_str($this->getOption(2), $ws_params);
 			foreach ($ws_params as $ws_param_name => &$ws_param_value) {
 				if (preg_match('/(.*)%(.*)%(.*)/', $ws_param_value, $matches)) {
-					$ws_param_field_name = $matches[2]; 
+					$ws_param_field_name = $matches[2];
 				}
 				$field = $this->getTrackerDefinition()->getFieldFromName($ws_param_field_name);
 				if ($field) {
 					$value = TikiLib::lib('trk')->get_field_value($field, $this->getItemData());
-					$ws_param_value = preg_replace('/%'. $ws_param_field_name .'%/', $value, $ws_param_value);
+					$ws_params[$ws_param_name] = preg_replace('/%' . $ws_param_field_name . '%/', $value, $ws_param_value);
 				}
 			}
 		}

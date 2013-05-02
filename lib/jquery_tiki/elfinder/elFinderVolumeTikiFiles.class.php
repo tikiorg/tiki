@@ -240,7 +240,7 @@ class elFinderVolumeTikiFiles extends elFinderVolumeDriver
 
 		}
 		$r['ts'] = $row['lastModif'];
-		$r['name'] = empty($row['name']) ? $row['filename'] : $row['name'];
+		$r['name'] = tra(empty($row['name']) ? $row['filename'] : $row['name']);
 		if ($row['parentId'] > 0) {
 			$r['phash'] = $this->encode(
 				($row['parentId'] == $this->options['path'] ? '' : 'd_') . $row['parentId']

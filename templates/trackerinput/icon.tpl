@@ -24,7 +24,8 @@ $('.icon-selector-container').removeClass('icon-selector-container').each(functi
 			title: icon.attr('alt'),
 			width: 600,
 			autoOpen: false,
-			modal: true
+			modal: true,
+			open: function () { $(document).trigger('iconsloaded'); }
 		})
 		.each(function () {
 			var contents = $('.contents', this);
@@ -39,6 +40,7 @@ $('.icon-selector-container').removeClass('icon-selector-container').each(functi
 					contents.empty();
 					$.each(data, function (k, v) {
 						var link = $(v.link);
+						link.attr('title', tr(v.title));
 						link.empty().append($('<img/>').attr('src', link.attr('href')));
 						link.click(function () {
 							field.val($(this).attr('href'));

@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "104f7237aaa1024e046605257bd44348",
+    "hash": "0fda33d6eab527663258edb4d92e3c30",
     "packages": [
         {
             "name": "aFarkas/html5shiv",
@@ -523,6 +523,17 @@
                 "url": "https://composer.tiki.org/dist/jquery-plugins-migrate-1.1.1.zip",
                 "reference": "1.1.1",
                 "shasum": "0dd73fc1c5a04867035ee342e910c5b8a187bcb7"
+            },
+            "type": "library"
+        },
+        {
+            "name": "jquery/plugins/migrate-min",
+            "version": "1.1.1",
+            "dist": {
+                "type": "zip",
+                "url": "https://composer.tiki.org/dist/jquery-plugins-migrate-min-1.1.1.zip",
+                "reference": "1.1.1",
+                "shasum": "8fbcafbcce24ff95c80cf2940981b1e7f04a39cb"
             },
             "type": "library"
         },

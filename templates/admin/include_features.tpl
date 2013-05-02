@@ -84,8 +84,6 @@
 				{preference name=feature_galleries}
 				{preference name=feature_html_pages}	
 				
-				{preference name=feature_jison_wiki_parser}
-				
 				{preference name=feature_htmlfeed}
 				{preference name=feature_forwardlinkprotocol}
 
