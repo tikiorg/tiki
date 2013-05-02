@@ -273,6 +273,7 @@ function prefs_feature_list($partial = false)
 			'admin' => 'search',
 			'warning' => tra("This requires that you properly set the server permissions and it's recommend to set a cron job to periodically rebuild the search index."),
 			'module' => 'search',			
+			'view' => 'tiki-searchindex.php',
 			'permission' => array(
 				'textFilter' => 'search',
 			),
@@ -1420,6 +1421,7 @@ function prefs_feature_list($partial = false)
 			'tags' => array('basic'),
 			'dbfeatures' => array('mysql_fulltext'),
 			'admin' => 'search',
+			'view' => 'tiki-searchresults.php',			
 			'module' => 'search',			
 			'permission' => array(
 				'textFilter' => 'search',
