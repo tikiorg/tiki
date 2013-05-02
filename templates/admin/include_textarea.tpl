@@ -34,7 +34,6 @@
 				{preference name=feature_wiki_argvariable}
 				{preference name=wiki_dynvar_style}
 				{preference name=wiki_dynvar_multilingual}
-				{preference name=feature_jison_wiki_parser}	
 			</fieldset>
 
 			<fieldset class="admin featurelist">
