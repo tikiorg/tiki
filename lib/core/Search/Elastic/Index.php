@@ -70,6 +70,8 @@ class Search_Elastic_Index implements Search_Index_Interface
 		$order = $builder->build($sortOrder);
 
 		$query = array_merge($query, $order, array(
+			"from" => $resultStart,
+			"size" => $resultCount,
 			"highlight" => array(
 				"fields" => array(
 					'contents' => array(
