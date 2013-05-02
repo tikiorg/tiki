@@ -17,7 +17,17 @@ class Search_Index_LuceneIncrementalUpdateTest extends PHPUnit_Framework_TestCas
 		$this->dir = dirname(__FILE__) . '/test_index';
 		$this->tearDown();
 
-		$index = new Search_Index_Lucene($this->dir);
+		$index = $this->getIndex();
+		$this->populate($index);
+	}
+
+	protected function getIndex()
+	{
+		return new Search_Index_Lucene($this->dir);
+	}
+
+	protected function populate($index)
+	{
 		$this->addDocument($index, 'wiki page', 'HomePage', 'Hello World');
 		$this->addDocument($index, 'wiki page', 'SomePage', 'No content yet.');
 	}
@@ -33,7 +43,7 @@ class Search_Index_LuceneIncrementalUpdateTest extends PHPUnit_Framework_TestCas
 		$query = new Search_Query;
 		$query->addObject('wiki page', 'NewPage');
 
-		$index = new Search_Index_Lucene($this->dir);
+		$index = $this->getIndex();
 		$query->invalidate($index);
 		$this->addDocument($index, 'wiki page', 'NewPage', 'Testing out');
 
@@ -47,7 +57,7 @@ class Search_Index_LuceneIncrementalUpdateTest extends PHPUnit_Framework_TestCas
 		$query = new Search_Query;
 		$query->addObject('wiki page', 'SomePage');
 
-		$index = new Search_Index_Lucene($this->dir);
+		$index = $this->getIndex();
 		$query->invalidate($index);
 		$this->addDocument($index, 'wiki page', 'SomePage', 'Foobar');
 
