@@ -6068,8 +6068,8 @@ class TikiLib extends TikiDb_Bridge
 			$data = preg_replace('/{(:?make)?toc[^}]*}/', '', $data);
 			$_REQUEST['redirectpage'] = 'y'; //do not interpret redirect
 			$data = $this->parse_data($data, array('is_html' => $is_html, 'stripplugins' => true, 'parsetoc' => true));
-			$data = strip_tags($data, '<b><i><em><strong><pre><code><span>');
 		}
+		$data = strip_tags($data);
 		if ($length > 0) {
 			if (function_exists('mb_substr'))
 				return mb_substr($data, 0, $length);
