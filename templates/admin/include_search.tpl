@@ -67,6 +67,12 @@
 						</fieldset>
 					</div>
 
+					<div class="adminoptionboxchild unified_engine_childcontainer elastic">
+						{preference name="unified_elastic_url"}
+						{preference name="unified_elastic_index_prefix"}
+						{preference name="unified_elastic_index_current"}
+					</div>
+
 					{preference name=unified_excluded_categories}
 					{preference name=unified_forum_deepindexing}
 

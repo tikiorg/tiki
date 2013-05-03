@@ -14,6 +14,7 @@ function prefs_unified_list()
 			'type' => 'list',
 			'options' => array(
 				'lucene' => tra('Lucene (PHP Implementation)'),
+				'elastic' => tra('ElasticSearch'),
 			),
 			'default' => 'lucene',
 		),
@@ -168,6 +169,31 @@ function prefs_unified_list()
 			'type' => 'text',
 			'separator' => ',',
 			'default' => array(),
+		),
+		'unified_elastic_url' => array(
+			'name' => tra('ElasticSearch URL'),
+			'description' => tra('URL of any node in the cluster.'),
+			'type' => 'text',
+			'filter' => 'url',
+			'default' => 'http://localhost:9200',
+			'size' => 40,
+		),
+		'unified_elastic_index_prefix' => array(
+			'name' => tra('ElasticSearch Index Prefix'),
+			'description' => tra('Prefix used for all indexes for this installation in ElasticSearch.'),
+			'type' => 'text',
+			'filter' => 'word',
+			'default' => 'tiki_',
+			'size' => 10,
+		),
+		'unified_elastic_index_current' => array(
+			'name' => tra('ElasticSearch Current Index'),
+			'description' => tra('A new index is created upon rebuild and the old one is then destroyed. This setting allows you to see the currently active one.'),
+			'hint' => tra('Do not change this value unless you know what you are doing.'),
+			'type' => 'text',
+			'filter' => 'word',
+			'size' => '20',
+			'default' => '',
 		),
 	);
 }

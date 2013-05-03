@@ -89,26 +89,32 @@ class UnifiedSearchLib
      */
     function rebuildInProgress()
 	{
-		$tempName = $this->getIndexLocation() . '-new';
-		$new_exists = file_exists($this->getIndexLocation() . '-new');
-		$old_exists = file_exists($this->getIndexLocation() . '-old');
+		if ($prefs['unified_engine'] == 'lucene') {
+			$tempName = $this->getIndexLocation() . '-new';
+			$new_exists = file_exists($this->getIndexLocation() . '-new');
+			$old_exists = file_exists($this->getIndexLocation() . '-old');
 
-		return $new_exists || $old_exists;
+			return $new_exists || $old_exists;
+		}
+
+		return false;
 	}
 
 	/**
 	 */
 	function stopRebuild()
 	{
-		$tempName = $this->getIndexLocation() . '-new';
-		$file_exists = file_exists($tempName);
-		if ($file_exists) {
-			$this->destroyDirectory($tempName);
-		}
-		$tempName = $this->getIndexLocation() . '-old';
-		$file_exists = file_exists($tempName);
-		if ($file_exists) {
-			$this->destroyDirectory($tempName);
+		if ($prefs['unified_engine'] == 'lucene') {
+			$tempName = $this->getIndexLocation() . '-new';
+			$file_exists = file_exists($tempName);
+			if ($file_exists) {
+				$this->destroyDirectory($tempName);
+			}
+			$tempName = $this->getIndexLocation() . '-old';
+			$file_exists = file_exists($tempName);
+			if ($file_exists) {
+				$this->destroyDirectory($tempName);
+			}
 		}
 	}
 
@@ -120,30 +126,48 @@ class UnifiedSearchLib
 	{
 		global $prefs;
 		$errlib = TikiLib::lib('errorreport');
-		$index_location = $this->getIndexLocation();
-		$tempName = $index_location . '-new';
-		$swapName = $index_location . '-old';
-		
-		if ($this->rebuildInProgress()) {
-			$errlib->report(tr('Rebuild in progress.'));
-			return false;
-		}
 
-		if ($prefs['unified_engine'] == 'lucene') {
+		switch ($prefs['unified_engine']) {
+		case 'lucene':
+			$index_location = $this->getIndexLocation();
+			$tempName = $index_location . '-new';
+			$swapName = $index_location . '-old';
+			
+			if ($this->rebuildInProgress()) {
+				$errlib->report(tr('Rebuild in progress.'));
+				return false;
+			}
+
 			$index = new Search_Index_Lucene($tempName);
-		} else {
+
+			$unifiedsearchlib = $this;
+			register_shutdown_function(
+				function () use ($tempName, $unifiedsearchlib) {
+					if (file_exists($tempName)) {
+						$unifiedsearchlib->destroyDirectory($tempName);
+						echo "Abnormal termination. Unless it was killed manually, it likely ran out of memory.\n";
+					}
+				}
+			);
+			break;
+		case 'elastic':
+			$connection = $this->getElasticConnection();
+			$indexName = $prefs['unified_elastic_index_prefix'] . uniqid();
+			$index = new Search_Elastic_Index($connection, $indexName);
+
+			register_shutdown_function(
+				function () use ($indexName, $index) {
+					global $prefs;
+					if ($prefs['unified_elastic_index_current'] !== $indexName) {
+						$index->destroy();
+					}
+				}
+			);
+			break;
+		default:
 			die('Unsupported');
 		}
 
-		$unifiedsearchlib = $this;
-		register_shutdown_function(
-			function () use ($tempName, $unifiedsearchlib) {
-				if (file_exists($tempName)) {
-					$unifiedsearchlib->destroyDirectory($tempName);
-					echo "Abnormal termination. Unless it was killed manually, it likely ran out of memory.\n";
-				}
-			}
-		);
 
 		// Build in -new
 		TikiLib::lib('queue')->clear(self::INCREMENT_QUEUE);
@@ -163,7 +187,8 @@ class UnifiedSearchLib
 		unset($indexer);
 		unset($index);
 
-		if ($prefs['unified_engine'] == 'lucene') {
+		switch ($prefs['unified_engine']) {
+		case 'lucene':
 			// Current to -old
 			if (file_exists($index_location)) {
 				if (! rename($index_location, $swapName)) {
@@ -181,6 +206,18 @@ class UnifiedSearchLib
 			if (file_exists($swapName)) {
 				$errlib->report(tr('Failed to destroy the old index. Likely a file permission issue.'));
 			}
+			break;
+		case 'elastic':
+			// Obtain the old index and destroy it after permanently replacing it.
+			$oldIndex = $this->getIndex();
+
+			$tikilib = TikiLib::lib('tiki');
+			$tikilib->set_preference('unified_elastic_index_current', $indexName);
+
+			if ($oldIndex) {
+				$oldIndex->destroy();
+			}
+			break;
 		}
 
 		// Process the documents updated while we were processing the update
@@ -389,7 +426,8 @@ class UnifiedSearchLib
 	{
 		global $prefs;
 
-		if ($prefs['unified_engine'] == 'lucene') {
+		switch ($prefs['unified_engine']) {
+		case 'lucene':
 			Zend_Search_Lucene::setTermsPerQueryLimit($prefs['unified_lucene_terms_limit']);
 			$index = new Search_Index_Lucene($this->getIndexLocation(), $prefs['language'], $prefs['unified_lucene_highlight'] == 'y');
 			$index->setCache(TikiLib::lib('cache'));
@@ -397,7 +435,21 @@ class UnifiedSearchLib
 			$index->setResultSetLimit($prefs['unified_lucene_max_resultset_limit']);
 
 			return $index;
+		case 'elastic':
+			if (empty($prefs['unified_elastic_index_current'])) {
+				return null;
+			}
+
+			$connection = $this->getElasticConnection();
+			$index = new Search_Elastic_Index($connection, $prefs['unified_elastic_index_current']);
+			return $index;
 		}
+	}
+
+	private function getElasticConnection()
+	{
+		global $prefs;
+		return new Search_Elastic_Connection($prefs['unified_elastic_url']);
 	}
 
     /**

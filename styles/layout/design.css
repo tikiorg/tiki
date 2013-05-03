@@ -2744,6 +2744,7 @@ input {
 
 /* highlight on interface text to draw attention; also
 highlight on "button" links, e.g. if there are some comments it highlights the "button" link in #page-bar under the content of the wiki pages */
+.searchresults blockquote em,
 .highlight,
 .button.highlight a,
 .button a.highlight {
