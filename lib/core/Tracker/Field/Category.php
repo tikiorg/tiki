@@ -196,7 +196,7 @@ class Tracker_Field_Category extends Tracker_Field_Abstract implements Tracker_F
 		if ($parentId > 0) {
 			return TikiLib::lib('categ')->getCategories(array('identifier'=>$parentId, 'type'=>$descends ? 'descendants' : 'children'));
 		} else {
-			return array();
+			return TikiLib::lib('categ')->getCategories(array('type' => $descends ? 'all' : 'roots'));
 		}
 	}
 
