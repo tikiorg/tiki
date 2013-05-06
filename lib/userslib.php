@@ -7182,17 +7182,17 @@ class UsersLib extends TikiLib
 		return array('timestamp' => $timestamp, 'ratio_prorated_first_period' => $ratio_prorated_first_period);
 	}
 
-	function get_users_created_group($group, $user=null)
+	function get_users_created_group($group, $user=null, $with_expire=false)
 	{
 		if (!empty($user)) {
-			$query = 'SELECT `users_usergroups`.`created` FROM `users_usergroups`' .
-								' LEFT JOIN `users_users` on (`users_users`.`userId`=`users_usergroups`.`userId`)' .
-								' WHERE `groupName`=? AND `user`=?';
+			$query = 'SELECT uug.`created`,uug.`expire` FROM `users_usergroups` uug' .
+								' LEFT JOIN `users_users` on (`users_users`.`userId`=uug.`userId`)' .
+								' WHERE `groupName`=? AND `login`=?';
 
 			$bindvars = array($group, $user);
 		} else {
-			$query = 'SELECT `login`, `users_usergroups`.`created` FROM `users_usergroups`' .
-								' LEFT JOIN `users_users` on (`users_users`.`userId`=`users_usergroups`.`userId`)' .
+			$query = 'SELECT `login`, uug.`created`,uug.`expire` FROM `users_usergroups` uug' .
+								' LEFT JOIN `users_users` on (`users_users`.`userId`=uug.`userId`)' .
 								' WHERE `groupName`=?';
 
 			$bindvars = array($group);
@@ -7201,7 +7201,16 @@ class UsersLib extends TikiLib
 		$ret = array();
 
 		while ($res = $result->fetchRow()) {
-			$ret[$res['login']]= $res['created'];
+			if ($with_expire) {
+				$ret[$res['login']]['created'] = $res['created'];
+				if (empty($res['expire']))
+					$re = $this->get_group_info($group);
+					if ($re['expireAfter'] > 0) {
+						$res['expire'] = $res['created'] + ($re['expireAfter'] * 24*60*60);
+					}
+				$ret[$res['login']]['expire'] = $res['expire'];
+			} else
+				$ret[$res['login']]= $res['created'];
 		}
 
 		return $ret;

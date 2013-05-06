@@ -37,6 +37,7 @@ class Tracker_Field_InGroup extends Tracker_Field_Abstract
 						'options' => array(
 							'' => tr('Yes/No'),
 							'date' => tr('Join date'),
+							'expire'=>tr('Expiration date')
 						),
 					),
 				),
@@ -62,16 +63,18 @@ class Tracker_Field_InGroup extends Tracker_Field_Abstract
 		if (!empty($itemUser)) {
 			if (!isset($trklib->tracker_infocache['users_group'][$this->getOption(0)])) {
 				$userlib = TikiLib::lib('user');
-				$trklib->tracker_infocache['users_group'][$this->getOption(0)] = $userlib->get_users_created_group($this->getOption(0));
+				$trklib->tracker_infocache['users_group'][$this->getOption(0)] = $userlib->get_users_created_group($this->getOption(0), null, true);
 			}
 			if (isset($trklib->tracker_infocache['users_group'][$this->getOption(0)][$itemUser])) {
 				if ($this->getOption(1) == 'date') {
-					$value = $trklib->tracker_infocache['users_group'][$this->getOption(0)][$itemUser];
+					$value = $trklib->tracker_infocache['users_group'][$this->getOption(0)][$itemUser]['created'];
+				} elseif ($this->getOption(1) == 'expire') {
+					$value = $trklib->tracker_infocache['users_group'][$this->getOption(0)][$itemUser]['expire'];
 				} else {
 					$value = 'Yes';
 				}
 			} else {
-				if ($this->getOption(1) == 'date') {
+				if ($this->getOption(1) == 'date' || $this->getOption(1) == 'expire') {
 					$value = '';
 				} else {
 					$value = 'No';
@@ -79,7 +82,7 @@ class Tracker_Field_InGroup extends Tracker_Field_Abstract
 			}
 		}
 		
-		if ($this->getOption(1) === 'date') {
+		if ($this->getOption(1) === 'date' || $this->getOption(1) == 'expire') {
 			if (!empty($value)) {
 				return TikiLib::lib('tiki')->get_short_date($value);
 			}
