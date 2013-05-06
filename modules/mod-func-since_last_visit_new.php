@@ -274,10 +274,10 @@ function module_since_last_visit_new($mod_reference, $params = null)
 		$ret['items']['articles']['cname'] = 'slvn_articles_menu';
 
 		if ($userlib->user_has_permission($user, 'tiki_p_edit_article')) {
-			$query = 'select `articleId`,`title`,`publishDate`,`authorName` from `tiki_articles` where `created`>? and `expireDate`>?';
+			$query = 'select `articleId`,`title`,`publishDate`,`authorName` from `tiki_articles` where `created`>? and `expireDate`>? order by `articleId` desc';
 			$bindvars = array((int) $last, time());
 		} else {
-			$query = 'select `articleId`,`title`,`publishDate`,`authorName` from `tiki_articles` where `publishDate`>? and `publishDate`<=? and `expireDate`>?';
+			$query = 'select `articleId`,`title`,`publishDate`,`authorName` from `tiki_articles` where `publishDate`>? and `publishDate`<=? and `expireDate`>? order by `articleId` desc';
 			$bindvars = array((int) $last,time(),time());
 		}
 		$result = $tikilib->query($query, $bindvars, $resultCount);
