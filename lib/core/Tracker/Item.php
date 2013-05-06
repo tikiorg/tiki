@@ -119,6 +119,10 @@ class Tracker_Item
 	private function canFromSpecialPermissions($operation)
 	{
 		global $user;
+		if (! $this->definition) {
+			return false;
+		}
+
 		if ($this->definition->getConfiguration('writerCan' . $operation, 'n') == 'y' && $user && $this->owner && $user === $this->owner) {
 			return true;
 		}

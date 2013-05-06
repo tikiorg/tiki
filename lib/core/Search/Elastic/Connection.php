@@ -10,6 +10,8 @@ class Search_Elastic_Connection
 	private $dsn;
 	private $dirty = false;
 
+	private $indices = array();
+
 	function __construct($dsn)
 	{
 		$this->dsn = rtrim($dsn, '/');
@@ -30,6 +32,7 @@ class Search_Elastic_Connection
 	function deleteIndex($index)
 	{
 		try {
+			unset($this->indices[$index]);
 			return $this->delete("/$index");
 		} catch (Search_Elastic_Exception $e) {
 			if ($e->getCode() !== 404) {
@@ -80,6 +83,18 @@ class Search_Elastic_Connection
 			"properties" => $mapping,
 		));
 
+		if (empty($this->indices[$index])) {
+			$this->createIndex($index);
+			$this->indices[$index] = true;
+		}
+
+		$result = $this->put("/$index/$type/_mapping", json_encode($data));
+
+		return $result;
+	}
+
+	private function createIndex($index)
+	{
 		try {
 			$this->put(
 				"/$index", json_encode(
@@ -104,10 +119,6 @@ class Search_Elastic_Connection
 		} catch (Search_Elastic_Exception $e) {
 			// Index already exists: ignore
 		}
-
-		$result = $this->put("/$index/$type/_mapping", json_encode($data));
-
-		return $result;
 	}
 
 	private function get($path, $data = null)

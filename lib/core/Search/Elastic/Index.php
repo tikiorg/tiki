@@ -11,6 +11,8 @@ class Search_Elastic_Index implements Search_Index_Interface
 	private $index;
 	private $invalidateList = array();
 
+	private $providedMappings = array();
+
 	function __construct(Search_Elastic_Connection $connection, $index)
 	{
 		$this->connection = $connection;
@@ -30,7 +32,27 @@ class Search_Elastic_Index implements Search_Index_Interface
 
 		unset($this->invalidateList[$objectType . ':' . $objectId]);
 
-		// Note: Sending the mapping on every request is not terribly efficient. Profiling required before the feature is production-ready
+		$this->generateMapping($objectType, $data);
+
+		$factory = $this->getTypeFactory();
+		$data = array_map(
+			function ($entry) use ($factory) {
+				return $entry->getValue($factory);
+			}, $data
+		);
+		$objectType = $data['object_type'];
+		$objectId = $data['object_id'];
+		$this->connection->index($this->index, $objectType, $objectId, $data);
+	}
+
+	private function generateMapping($type, $data)
+	{
+		if (isset($this->providedMappings[$type])) {
+			return;
+		}
+
+		$this->providedMappings[$type] = true;
+
 		$mapping = array_map(
 			function ($entry) {
 				if ($entry instanceof Search_Type_Whole) {
@@ -43,17 +65,7 @@ class Search_Elastic_Index implements Search_Index_Interface
 		);
 		$mapping = array_filter($mapping);
 
-		$this->connection->mapping($this->index, $objectType, $mapping);
-
-		$factory = $this->getTypeFactory();
-		$data = array_map(
-			function ($entry) use ($factory) {
-				return $entry->getValue($factory);
-			}, $data
-		);
-		$objectType = $data['object_type'];
-		$objectId = $data['object_id'];
-		$this->connection->index($this->index, $objectType, $objectId, $data);
+		$this->connection->mapping($this->index, $type, $mapping);
 	}
 
 	function endUpdate()
