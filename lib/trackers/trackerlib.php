@@ -2005,10 +2005,10 @@ class TrackerLib extends TikiLib
 					$erroneous_values[] = $f;
 				}
 				if ($f['type'] != 'q' and isset($f['isMandatory']) && $f['isMandatory'] == 'y') {
-					if ($f['type'] == 'e' && empty($f['value'])) {					// category: value is now categ id's
-						if (!in_array($f['fieldId'], $categorized_fields)) {
-							$mandatory_fields[] = $f;
-						}
+					if (($f['type'] == 'e' || in_array($f['fieldId'], $categorized_fields)) && empty($f['value'])) {	// category: value is now categ id's
+
+						$mandatory_fields[] = $f;
+
 					} elseif (in_array($f['type'], array('a', 't')) && ($this->is_multilingual($f['fieldId']) == 'y')) {
 						if (!isset($multi_languages)) {
 							$multi_languages=$prefs['available_languages'];
