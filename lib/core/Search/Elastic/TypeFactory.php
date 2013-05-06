@@ -33,7 +33,7 @@ class Search_Elastic_TypeFactory implements Search_Type_Factory_Interface
 
 	function multivalue($values)
 	{
-		return new Search_Type_Whole((array) $values);
+		return new Search_Type_Whole(array_values((array) $values));
 	}
 
 	function sortable($value)
