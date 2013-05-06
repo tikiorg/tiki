@@ -8,6 +8,7 @@
 class Search_Elastic_Connection
 {
 	private $dsn;
+	private $dirty = false;
 
 	function __construct($dsn)
 	{
@@ -39,23 +40,37 @@ class Search_Elastic_Connection
 
 	function search($index, array $query, $resultStart, $resultCount)
 	{
+		if ($this->dirty) {
+			$this->refresh($index);
+		}
+
 		return $this->get("/$index/_search", json_encode($query));
 	}
 
 	function index($index, $type, $id, array $data)
 	{
+		$this->dirty = true;
+
 		$type = $this->simplifyType($type);
 		$id = rawurlencode($id);
 
-		return $this->put("/$index/$type/$id?refresh=true", json_encode($data));
+		return $this->put("/$index/$type/$id", json_encode($data));
 	}
 
 	function unindex($index, $type, $id)
 	{
+		$this->dirty = true;
+
 		$type = $this->simplifyType($type);
 		$id = rawurlencode($id);
 
-		return $this->delete("/$index/$type/$id?refresh=true");
+		return $this->delete("/$index/$type/$id");
+	}
+
+	function refresh($index)
+	{
+		$this->post("/$index/_refresh", '');
+		$this->dirty = false;
 	}
 
 	function mapping($index, $type, array $mapping)
@@ -115,6 +130,19 @@ class Search_Elastic_Connection
 			$client = $this->getClient($path);
 			$client->setRawData($data);
 			$response = $client->request('PUT');
+
+			return $this->handleResponse($response);
+		} catch (Zend_Http_Exception $e) {
+			throw new Search_Elastic_TransportException($e->getMessage());
+		}
+	}
+
+	private function post($path, $data)
+	{
+		try {
+			$client = $this->getClient($path);
+			$client->setRawData($data);
+			$response = $client->request('POST');
 
 			return $this->handleResponse($response);
 		} catch (Zend_Http_Exception $e) {
