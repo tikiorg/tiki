@@ -30,6 +30,7 @@ class Search_Index_LuceneIncrementalUpdateTest extends PHPUnit_Framework_TestCas
 	{
 		$this->addDocument($index, 'wiki page', 'HomePage', 'Hello World');
 		$this->addDocument($index, 'wiki page', 'SomePage', 'No content yet.');
+		$index->endUpdate();
 	}
 
 	function tearDown()

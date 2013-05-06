@@ -74,6 +74,8 @@ class Search_Elastic_Index implements Search_Index_Interface
 			$this->connection->unindex($this->index, $object['object_type'], $object['object_id']);
 		}
 
+		$this->connection->flush();
+
 		$this->invalidateList = array();
 	}
 

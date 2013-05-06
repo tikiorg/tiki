@@ -449,7 +449,10 @@ class UnifiedSearchLib
 	private function getElasticConnection()
 	{
 		global $prefs;
-		return new Search_Elastic_Connection($prefs['unified_elastic_url']);
+		$connection = new Search_Elastic_Connection($prefs['unified_elastic_url']);
+		$connection->startBulk();
+
+		return $connection;
 	}
 
     /**

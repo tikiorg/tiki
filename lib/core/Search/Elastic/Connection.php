@@ -12,9 +12,24 @@ class Search_Elastic_Connection
 
 	private $indices = array();
 
+	private $bulk;
+
 	function __construct($dsn)
 	{
 		$this->dsn = rtrim($dsn, '/');
+	}
+
+	function __destruct()
+	{
+		$this->flush();
+	}
+
+	function startBulk($size = 500)
+	{
+		$self = $this;
+		$this->bulk = new Search_Elastic_BulkOperation($size, function ($data) use ($self) {
+			$self->postBulk($data);
+		});
 	}
 
 	function getStatus()
@@ -31,6 +46,8 @@ class Search_Elastic_Connection
 
 	function deleteIndex($index)
 	{
+		$this->flush();
+
 		try {
 			unset($this->indices[$index]);
 			return $this->delete("/$index");
@@ -53,25 +70,42 @@ class Search_Elastic_Connection
 	function index($index, $type, $id, array $data)
 	{
 		$this->dirty = true;
-
 		$type = $this->simplifyType($type);
-		$id = rawurlencode($id);
 
-		return $this->put("/$index/$type/$id", json_encode($data));
+		if ($this->bulk) {
+			$this->bulk->index($index, $type, $id, $data);
+		} else {
+			$id = rawurlencode($id);
+
+			return $this->put("/$index/$type/$id", json_encode($data));
+		}
 	}
 
 	function unindex($index, $type, $id)
 	{
 		$this->dirty = true;
-
 		$type = $this->simplifyType($type);
-		$id = rawurlencode($id);
 
-		return $this->delete("/$index/$type/$id");
+		if ($this->bulk) {
+			$this->bulk->unindex($index, $type, $id);
+		} else {
+			$id = rawurlencode($id);
+
+			return $this->delete("/$index/$type/$id");
+		}
+	}
+
+	function flush()
+	{
+		if ($this->bulk) {
+			$this->bulk->flush();
+		}
 	}
 
 	function refresh($index)
 	{
+		$this->flush();
+
 		$this->post("/$index/_refresh", '');
 		$this->dirty = false;
 	}
@@ -91,6 +125,11 @@ class Search_Elastic_Connection
 		$result = $this->put("/$index/$type/_mapping", json_encode($data));
 
 		return $result;
+	}
+
+	function postBulk($data)
+	{
+		$this->post("/_bulk", $data);
 	}
 
 	private function createIndex($index)

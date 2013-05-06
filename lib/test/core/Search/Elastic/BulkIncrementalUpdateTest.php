@@ -5,12 +5,20 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-class Search_Elastic_PaginationTest extends Search_Index_LucenePaginationTest
+class Search_Elastic_BulkIncrementalUpdateTest extends Search_Index_LuceneIncrementalUpdateTest
 {
+	protected $index;
+
 	function setUp()
 	{
-		static $count = 0;
+		$this->index = $this->getIndex();
+		$this->index->destroy();
 
+		$this->populate($this->index);
+	}
+
+	protected function getIndex()
+	{
 		$connection = new Search_Elastic_Connection('http://localhost:9200');
 		$connection->startBulk(100);
 
@@ -19,8 +27,7 @@ class Search_Elastic_PaginationTest extends Search_Index_LucenePaginationTest
 			$this->markTestSkipped('ElasticSearch needs to be available on localhost:9200 for the test to run.');
 		}
 
-		$this->index = new Search_Elastic_Index($connection, 'test_index');
-		$this->index->destroy();
+		return new Search_Elastic_Index($connection, 'test_index');
 	}
 
 	function tearDown()
