@@ -40,12 +40,15 @@ class Search_Index_LuceneIncrementalUpdateTest extends PHPUnit_Framework_TestCas
 
 	function testAddNewDocument()
 	{
-		$query = new Search_Query;
-		$query->addObject('wiki page', 'NewPage');
-
 		$index = $this->getIndex();
-		$query->invalidate($index);
+		$index->invalidateMultiple(array(
+			array(
+				'object_type' => 'wiki page',
+				'object_id' => 'NewPage',
+			),
+		));
 		$this->addDocument($index, 'wiki page', 'NewPage', 'Testing out');
+		$index->endUpdate();
 
 		$this->assertResultFound('out', $index);
 		$this->assertResultFound('content', $index);
@@ -54,14 +57,32 @@ class Search_Index_LuceneIncrementalUpdateTest extends PHPUnit_Framework_TestCas
 
 	function testReplaceDocument()
 	{
-		$query = new Search_Query;
-		$query->addObject('wiki page', 'SomePage');
-
 		$index = $this->getIndex();
-		$query->invalidate($index);
+		$index->invalidateMultiple(array(
+			array(
+				'object_type' => 'wiki page',
+				'object_id' => 'SomePage',
+			),
+		));
 		$this->addDocument($index, 'wiki page', 'SomePage', 'Foobar');
+		$index->endUpdate();
 
 		$this->assertResultFound('foobar', $index);
+		$this->assertResultFound('content', $index, 0);
+	}
+
+	function testRemoveDocument()
+	{
+		$index = $this->getIndex();
+		$index->invalidateMultiple(array(
+			array(
+				'object_type' => 'wiki page',
+				'object_id' => 'SomePage',
+			),
+		));
+		$index->endUpdate();
+
+		$this->assertResultFound('foobar', $index, 0);
 		$this->assertResultFound('content', $index, 0);
 	}
 

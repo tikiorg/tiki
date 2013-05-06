@@ -64,27 +64,36 @@ class Search_Index_Lucene implements Search_Index_Interface
 		$this->getLucene()->addDocument($document);
 	}
 
+	function endUpdate()
+	{
+	}
+
 	function optimize()
 	{
 		$this->getLucene()->optimize();
 	}
 
-	function invalidateMultiple(Search_Expr_Interface $expr)
+	function invalidateMultiple(array $objectList)
 	{
-		$documents = array();
+		$expr = $this->buildExpr($objectList);
 
 		$lucene = $this->getLucene();
 		$query = $this->buildQuery($expr);
 		foreach ($lucene->find($query) as $hit) {
 			$document = $hit->getDocument();
-			$documents[] = array(
-				'object_type' => $document->object_type,
-				'object_id' => $document->object_id,
-			);
 			$lucene->delete($hit->id);
 		}
+	}
 
-		return $documents;
+	private function buildExpr(array $objectList)
+	{
+		$query = new Search_Query;
+		foreach ($objectList as $object) {
+			$object = (array) $object;
+			$query->addObject($object['object_type'], $object['object_id']);
+		}
+
+		return $query->getExpr();
 	}
 
 	function find(Search_Expr_Interface $query, Search_Query_Order $sortOrder, $resultStart, $resultCount)

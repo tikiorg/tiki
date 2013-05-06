@@ -70,25 +70,15 @@ class Search_Indexer
 		return $stat;
 	}
 
-	public function update($searchArgument)
+	public function update(array $objectList)
 	{
-		if (is_array($searchArgument)) {
-			$query = new Search_Query;
-			foreach ($searchArgument as $object) {
-				$obj2array=(array) $object;
-				$query->addObject($obj2array['object_type'], $obj2array['object_id']);
-			}
-
-			$result = $query->invalidate($this->searchIndex);
-			$objectList = $searchArgument;
-		} elseif ($searchArgument instanceof Search_Query) {
-			$objectList = $searchArgument->invalidate($this->searchIndex);
-		}
+		$this->searchIndex->invalidateMultiple($objectList);
 
 		foreach ($objectList as $object) {
-			$obj2array=(array) $object;
-			$this->addDocument($obj2array['object_type'], $obj2array['object_id']);
+			$this->addDocument($object['object_type'], $object['object_id']);
 		}
+
+		$this->searchIndex->endUpdate();
 	}
 
 	private function addDocument($objectType, $objectId)

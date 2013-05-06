@@ -18,9 +18,12 @@ class Search_Index_Memory implements Search_Index_Interface
 		$this->data[] = $data;
 	}
 
-	function invalidateMultiple(Search_Expr_Interface $query)
+	function endUpdate()
 	{
-		return array();
+	}
+
+	function invalidateMultiple(array $objectList)
+	{
 	}
 
 	function find(Search_Expr_Interface $query, Search_Query_Order $sortOrder, $resultStart, $resultCount)

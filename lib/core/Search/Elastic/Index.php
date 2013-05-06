@@ -9,6 +9,7 @@ class Search_Elastic_Index implements Search_Index_Interface
 {
 	private $connection;
 	private $index;
+	private $invalidateList = array();
 
 	function __construct(Search_Elastic_Connection $connection, $index)
 	{
@@ -26,6 +27,8 @@ class Search_Elastic_Index implements Search_Index_Interface
 		$factory = $this->getTypeFactory();
 		$objectType = $data['object_type']->getValue($factory);
 		$objectId = $data['object_id']->getValue($factory);
+
+		unset($this->invalidateList[$objectType . ':' . $objectId]);
 
 		// Note: Sending the mapping on every request is not terribly efficient. Profiling required before the feature is production-ready
 		$mapping = array_map(
@@ -53,12 +56,25 @@ class Search_Elastic_Index implements Search_Index_Interface
 		$this->connection->index($this->index, $objectType, $objectId, $data);
 	}
 
+	function endUpdate()
+	{
+		foreach ($this->invalidateList as $object) {
+			$this->connection->unindex($this->index, $object['object_type'], $object['object_id']);
+		}
+
+		$this->invalidateList = array();
+	}
+
 	function optimize()
 	{
 	}
 
-	function invalidateMultiple(Search_Expr_Interface $expr)
+	function invalidateMultiple(array $objectList)
 	{
+		foreach ($objectList as $object) {
+			$key = $object['object_type'] . ':' . $object['object_id'];
+			$this->invalidateList[$key] = $object;
+		}
 	}
 
 	function find(Search_Expr_Interface $expr, Search_Query_Order $sortOrder, $resultStart, $resultCount)

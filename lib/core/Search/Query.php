@@ -194,9 +194,9 @@ class Search_Query
 		return $index->find($this->expr, $sortOrder, $this->start, $this->count);
 	}
 
-	function invalidate(Search_Index_Interface $index)
+	function getExpr()
 	{
-		return $index->invalidateMultiple($this->expr);
+		return $this->expr;
 	}
 
 	private function parse($query)

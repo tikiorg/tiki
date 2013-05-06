@@ -50,6 +50,14 @@ class Search_Elastic_Connection
 		return $this->put("/$index/$type/$id?refresh=true", json_encode($data));
 	}
 
+	function unindex($index, $type, $id)
+	{
+		$type = $this->simplifyType($type);
+		$id = rawurlencode($id);
+
+		return $this->delete("/$index/$type/$id?refresh=true");
+	}
+
 	function mapping($index, $type, array $mapping)
 	{
 		$type = $this->simplifyType($type);
