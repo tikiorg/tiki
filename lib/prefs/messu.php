@@ -41,5 +41,16 @@ function prefs_messu_list()
 			),
 			'default' => '200',
 		),
+		'messu_truncate_internal_message' => array(
+			'name' => tra('Truncate internal message notification to number of characters'),
+			'description' => tra('Truncate internal message notification to number of characters'),
+			'type' => 'text',
+			'size' => '10',
+			'filter' => 'digits',
+			'dependencies' => array(
+				'feature_messages',
+			),
+			'default' => '250',
+		),		
 	);
 }
