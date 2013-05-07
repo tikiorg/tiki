@@ -40,7 +40,7 @@
 					js = d.createElement(s); js.id = id;
 					js.src = "//connect.facebook.net/{{$fb_locale}}/all.js#xfbml=1{{$fb_app_id_param}}";
 					fjs.parentNode.insertBefore(js, fjs);
-				}(document, 'script', 'facebook-jssdk_{{$share_mod_usage_counter}}'));
+				}(document, 'script', 'facebook-jssdk'));
 			{/jq}
 			<div class="fb-like" {$fb_data_attributes}></div>
 		</div>
