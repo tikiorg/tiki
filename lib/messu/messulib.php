@@ -117,6 +117,7 @@ class Messu extends TikiLib
 		);
 
 		// Now check if the user should be notified by email
+		$magId = $this->getOne('select LAST_INSERT_ID() from `messu_messages`',array());
 		$foo = parse_url($_SERVER['REQUEST_URI']);
 		$machine = $this->httpPrefix(true) . $foo['path'];
 		$machine = str_replace('messu-compose', 'messu-mailbox', $machine);
@@ -141,6 +142,8 @@ class Messu extends TikiLib
 				$smarty->assign('mail_from', stripslashes($from));
 				$smarty->assign('mail_subject', stripslashes($subject));
 				$smarty->assign('mail_body', stripslashes($body));
+				$smarty->assign('mail_truncate', $prefs['messu_truncate_internal_message']);
+				$smarty->assign('messageid', $magId);
 
 				try {
 					$mail = new TikiMail($user, $from_email);
