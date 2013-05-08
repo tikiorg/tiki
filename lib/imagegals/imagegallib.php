@@ -749,6 +749,8 @@ class ImageGalsLib extends TikiLib
 		global $prefs;
 
 		$galid = $this->get_gallery_from_image($imageid);
+		if (empty($galid))
+			return false;
 		if ($ysize == 0) {
 			$ysize = $xsize;
 		}
