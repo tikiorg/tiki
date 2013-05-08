@@ -18,7 +18,7 @@ class Tiki_Profile_InstallHandler_Article extends Tiki_Profile_InstallHandler
 			'author' => 'Anonymous',
 			'heading' => '',
 			'publication_date' => time(),
-			'expiration_date' => time() + 3600*24*30,
+			'expiration_date' => time() + 3600*24*365,
 			'type' => 'Article',
 			'topline' => '',
 			'subtitle' => '',
