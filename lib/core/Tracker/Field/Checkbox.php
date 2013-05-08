@@ -33,10 +33,12 @@ class Tracker_Field_Checkbox extends Tracker_Field_Abstract implements Tracker_F
 	{
 		$ins_id = $this->getInsertId();
 
-		if (isset($requestData[$ins_id]) && $requestData[$ins_id] == 'on') {
-			$val = 'y';
-		} elseif (!empty($requestData)) {
-			$val = 'n';
+		if (isset($requestData[$ins_id])) {
+			if ($requestData[$ins_id] == 'on') {
+				$val = 'y';
+			} else {
+				$val = 'n';
+			}
 		} else {
 			$val = $this->getValue();
 			if (empty($val)) {
