@@ -17,6 +17,7 @@ class Tiki_Profile_InstallHandler_WikiPage extends Tiki_Profile_InstallHandler
 	private $structure;
 	private $wysiwyg;
 	private $wiki_authors_style;
+	private $geolocation;
 	
 	private $mode = 'create_or_update';
 	private $exists;
@@ -53,6 +54,8 @@ class Tiki_Profile_InstallHandler_WikiPage extends Tiki_Profile_InstallHandler
 			$this->wysiwyg = $data['wysiwyg'];
 		if ( array_key_exists('wiki_authors_style', $data) )
 			$this->wiki_authors_style = $data['wiki_authors_style'];
+		if ( array_key_exists('geolocation', $data) )
+			$this->geolocation = $data['geolocation'];
 	}
 
 	function canInstall()
@@ -114,6 +117,7 @@ class Tiki_Profile_InstallHandler_WikiPage extends Tiki_Profile_InstallHandler
 		$this->replaceReferences($this->structure);
 		$this->replaceReferences($this->wysiwyg);
 		$this->replaceReferences($this->wiki_authors_style);
+		$this->replaceReferences($this->geolocation);
 	
 		$this->mode = $this->convertMode();
 
@@ -171,6 +175,11 @@ class Tiki_Profile_InstallHandler_WikiPage extends Tiki_Profile_InstallHandler
 			}
 
 			$tikilib->update_page($finalName, $this->content, $this->message, 'admin', '0.0.0.0', $this->description, 0, $this->lang, $is_html, null, null, $this->wysiwyg, $this->wiki_authors_style);
+		}
+
+		global $prefs;
+		if (! empty($prefs['geo_locate_wiki']) && $prefs['geo_locate_wiki'] == 'y' && ! empty($this->geolocation)) {
+			TikiLib::lib('geo')->set_coordinates('wiki page', $this->name, $this->geolocation);
 		}
 
 		global $multilinguallib;
