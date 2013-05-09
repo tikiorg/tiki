@@ -2766,5 +2766,15 @@ function prefs_feature_list($partial = false)
 				'feature_file_galleries',
 			),
 		),
+		'feature_inline_comments' => array(
+			'name' => tra('Inline Comments'),
+			'description' => tra('Enable/disable inline comments.'),
+			'dependencies' => array(
+				'feature_wiki_comments',
+				),
+			'type' => 'flag',
+			'default' => 'n',
+			),
+		);
 	);
 }
