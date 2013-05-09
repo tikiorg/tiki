@@ -2771,10 +2771,9 @@ function prefs_feature_list($partial = false)
 			'description' => tra('Enable/disable inline comments.'),
 			'dependencies' => array(
 				'feature_wiki_comments',
-				),
+			),
 			'type' => 'flag',
 			'default' => 'n',
-			),
-		);
+		),
 	);
 }
