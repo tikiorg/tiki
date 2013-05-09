@@ -136,8 +136,13 @@ class Tracker_Field_Files extends Tracker_Field_Abstract
 			$fileInfo = $this->getFileInfo($fileIds);
 			$fileInfo = array_filter($fileInfo, array($this, 'filterFile'));
 
-			// Rebuild the database value
-			$value = implode(',', array_keys($fileInfo));
+			// Rebuild the database value, but preserve the order the files have been attached to the item
+			foreach ($fileIds as & $fileId) {
+				if (!isset($fileInfo[$fileId])) {
+					$fileId = 0;
+				}
+			}
+			$value = implode(',', array_filter($fileIds));
 		} else {
 			$value = $this->getValue();
 
