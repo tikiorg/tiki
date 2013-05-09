@@ -482,21 +482,10 @@ if ($tracker_info['useAttachments'] == 'y' && $tracker_info['showAttachments'] =
 		$items["data"][$itkey]['hits'] = $res['hits'];
 	}
 }
-foreach ($xfields['data'] as $xfd) {
-	$fid = $xfd["fieldId"];
-	if ($xfd['isSearchable'] == 'y' and !isset($listfields[$fid]) and $itemObject->canViewField($fid)) {
-		$listfields[$fid]['type'] = $xfd["type"];
-		$listfields[$fid]['name'] = $xfd["name"];
-		$listfields[$fid]['options'] = $xfd["options"];
-		$listfields[$fid]['options_array'] = $xfd['options_array'];
-		$listfields[$fid]['isMain'] = $xfd["isMain"];
-		$listfields[$fid]['isTblVisible'] = $xfd["isTblVisible"];
-		$listfields[$fid]['isHidden'] = $xfd["isHidden"];
-		$listfields[$fid]['isSearchable'] = $xfd["isSearchable"];
-		$listfields[$fid]['isMandatory'] = $xfd["isMandatory"];
-		$listfields[$fid]['description'] = $xfd["description"];
-		$listfields[$fid]['visibleBy'] = $xfd['visibleBy'];
-		$listfields[$fid]['editableBy'] = $xfd['editableBy'];
+foreach ($fields['data'] as $fd) {	// add field info for searchable fields not shown in the list
+	$fid = $fd["fieldId"];
+	if ($fd['isSearchable'] == 'y' and !isset($listfields[$fid]) and $itemObject->canViewField($fid)) {
+		$listfields[$fid] = $fd;
 	}
 }
 

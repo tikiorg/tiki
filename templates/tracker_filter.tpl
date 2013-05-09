@@ -79,8 +79,9 @@
 										{cycle name=rows values=",</tr><tr>" advance=false print=false}
 										{foreach key=ku item=iu from=$field.list name=eforeach}
 											<td width="50%" nowrap="nowrap">
-												<input type="checkbox" name="filtervalue[{$fid}][]" value="{$iu.categId}" id="cat{$iu.categId}" {if $fid == $filterfield && is_array($filtervalue) && in_array($iu.categId,$filtervalue)} checked="checked"{/if}>
-												<label for="cat{$i.categId}">{$iu.name|escape}</label>
+												<input type="checkbox" name="filtervalue[{$fid}][]" value="{$iu.categId}" id="cat{$iu.categId}"
+														{if $fid == $filterfield && is_array($filtervalue) && in_array($iu.categId,$filtervalue)} checked="checked"{/if}>
+												<label for="cat{$iu.categId}">{$iu.name|escape}</label>
 											</td>
 											{if !$smarty.foreach.eforeach.last}
 												{cycle name=rows}
