@@ -3142,7 +3142,7 @@ class TrackerLib extends TikiLib
 		$watchers_local = $this->get_local_notifications($itemId, $status, $oldStatus);
 		$watchers_item = $itemId ? $this->get_event_watches('tracker_item_modified', $itemId, array('trackerId'=>$trackerId)) : array();
 
-		if ($prefs['user_tracker_watch_editor'] != "y") {
+		if ($tikilib->get_user_preference($user, 'user_tracker_watch_editor') != "y") {
 			for ($i = count($watchers_global) - 1; $i >=0; --$i) {
 				if ($watchers_global[$i]['user'] == $user) {
 					unset($watchers_global[$i]);
