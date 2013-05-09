@@ -6,7 +6,7 @@
 	<input type="hidden" name="rss" />
 	<div class="heading input_submit_container" style="text-align: right">
 		<input type="submit" value="{tr}Change preferences{/tr}" />
-	</div><!-- test comment sourceforge checkout problem -->
+	</div>
 
 	{tabset name="admin_rss"}
 		{tab name="{tr}General Preferences{/tr}"}
