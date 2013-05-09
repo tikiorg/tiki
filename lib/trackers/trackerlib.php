@@ -1385,6 +1385,9 @@ class TrackerLib extends TikiLib
 			if ($status != $oldStatus) {
 				$this->change_status(array($itemId), $status);
 			}
+
+			$version = $this->last_log_version($itemId) + 1;
+
 		} else {
 			if (empty($status) && isset($tracker_info['newItemStatus'])) {
 				// set status based on tracker setting of status not explicitly requested
@@ -1395,6 +1398,7 @@ class TrackerLib extends TikiLib
 			}
 			$fil['status'] = $status;
 			$old_values['status'] = '';
+			$oldStatus = '';
 
 			$new_itemId = $items->insert(
 				array(
