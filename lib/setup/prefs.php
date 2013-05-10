@@ -1571,7 +1571,7 @@ function get_default_prefs() {
 		'sender_email' => '',
 		'feature_site_report_email' => '',
 		'session_storage' => 'default',
-		'session_lifetime' => 0,
+		'session_lifetime' => 10080,
 		'session_silent' => 'n',
 		'session_cookie_name' => session_name(),
 		'session_protected' => 'n',
