@@ -59,9 +59,9 @@ class Tiki_Profile_InstallHandler_Tracker extends Tiki_Profile_InstallHandler
 		);
 	} // }}}
 
-	private function getDefaults() // {{{
+	private static function getDefaults() // {{{
 	{
-		$defaults = array_fill_keys(array_keys($this->getOptionMap()), 'n');
+		$defaults = array_fill_keys(array_keys(self::getOptionMap()), 'n');
 		$defaults['name'] = '';
 		$defaults['description'] = '';
 		$defaults['creation_date_format'] = '';
@@ -78,7 +78,7 @@ class Tiki_Profile_InstallHandler_Tracker extends Tiki_Profile_InstallHandler
 		return $defaults;
 	} // }}}
 	
-	public function getOptionConverters() // {{{
+	public static function getOptionConverters() // {{{
 	{
 		// Also used by TrackerOption
 		return array(
@@ -114,12 +114,12 @@ class Tiki_Profile_InstallHandler_Tracker extends Tiki_Profile_InstallHandler
 
 	function _install() // {{{
 	{
-		$values = $this->getDefaults();
+		$values = self::getDefaults();
 
 		$input = $this->getData();
 		$this->replaceReferences($input);
 
-		$conversions = $this->getOptionConverters();
+		$conversions = self::getOptionConverters();
 		foreach ( $input as $key => $value ) {
 			if ( array_key_exists($key, $conversions) )
 				$values[$key] = $conversions[$key]->convert($value);
@@ -147,58 +147,97 @@ class Tiki_Profile_InstallHandler_Tracker extends Tiki_Profile_InstallHandler
 		return $trklib->replace_tracker($trackerId, $name, $description, $options, 'y');
 	} // }}}
 
-	function _export($trackerId, $profileObject) // {{{
+	function export(Tiki_Profile_Writer $writer, $trackerId)
 	{
-		global $trklib; require_once 'lib/trackers/trackerlib.php';
+		$trklib = TikiLib::lib('trk');
 		$info = $trklib->get_tracker($trackerId);
-		if (empty($info)) {
-			return '';
+
+		if (! $info) {
+			return false;
 		}
+
 		if ($options = $trklib->get_tracker_options($trackerId)) {
 			$info = array_merge($info, $options);
 		}
-		$optionMap = array_flip($this->getOptionMap());
-		$defaults = $this->getDefaults();
-		$conversions = $this->getOptionConverters();
-		$ref = 'tracker_'.$trackerId;
-		$res = array();
+
+		$data = array(
+			'name' => $info['name'],
+			'description' => $info['description'],
+		);
+
+		$optionMap = array_flip(self::getOptionMap());
+		$defaults = self::getDefaults();
+		$conversions = self::getOptionConverters();
+
 		$allow = array();
 		$show = array();
-		$res[] = 'objects:';
-		$res[] = ' -';
-		$res[] = '  type: tracker';
-		$res[] = '  ref: '.$ref;
-		$res[] = '  data:';
-		$tab = '   ';
-		$res[] = $tab.'name: '.$info['name'];
-		if (!empty($info['description']))
-			$res[] = $tab.'description: '.$info['description'];
+
 		foreach ($info as $key => $value) {
-			if (!empty($optionMap[$key]) && (!isset($defaults[$optionMap[$key]]) || $value != $defaults[$optionMap[$key]])) {
-				if (strstr($optionMap[$key], 'allow_')) {
-					$allow[] = str_replace('allow_', '', $optionMap[$key]);
-				} elseif (strstr($optionMap[$key], 'show_')) {
-					$show[] = str_replace('show_', '', $optionMap[$key]);
-				} else if (isset($conversions[$optionMap[$key]]) && method_exists($conversions[$optionMap[$key]], 'reverse')) {
-					$res[] = $tab.$optionMap[$key].': '.$conversions[$optionMap[$key]]->reverse($value);
+			if (empty($optionMap[$key])) {
+				continue;
+			}
+
+			$optionKey = $optionMap[$key];
+			$default = '';
+			if (isset($defaults[$optionKey])) {
+				$default = $defaults[$optionKey];
+			}
+
+			if ($value != $default) {
+				if (strstr($optionKey, 'allow_')) {
+					$allow[] = str_replace('allow_', '', $optionKey);
+				} elseif (strstr($optionKey, 'show_')) {
+					$show[] = str_replace('show_', '', $optionKey);
+				} else if (isset($conversions[$optionKey]) && method_exists($conversions[$optionKey], 'reverse')) {
+					$data[$optionKey] = $conversions[$optionKey]->reverse($value);
 				} else {
-					$res[] = $tab.$optionMap[$key] . ': ' . $value;
+					$data[$optionKey] = $value;
 				}
 			}
 		}
-		if (!empty($allow)) {
-			$res[] .= $tab.'allow: ['.implode(', ', $allow).']';
+
+		if (! empty($allow)) {
+			$data['allow'] = $allow;
 		}
-		if (!empty($show)) {
-			$res[] .= $tab.'show: ['.implode(', ', $show).']';
+		if (! empty($show)) {
+			$data['show'] = $show;
 		}
 
-		$fields = $trklib->list_tracker_fields($trackerId);
-		$prof = new Tiki_Profile_InstallHandler_TrackerField($profileObject, array());
-		foreach ($fields['data'] as $field) {
-			$res = array_merge($res, $prof->_export($field, $profileObject));
+		$fieldReferences = array();
+		foreach (array('sort_default_field', 'popup_fields') as $key) {
+			if (isset($data[$key])) {
+				$fieldReferences[$key] = $data[$key];
+				unset($data[$key]);
+			}
 		}
-		return implode("\n", $res);
+
+		$reference = $writer->addObject('tracker', $trackerId, $data);
+
+		$fields = $trklib->list_tracker_fields($trackerId);
+		foreach ($fields['data'] as $field) {
+			$writer->pushReference("{$reference}_{$field['permName']}");
+			Tiki_Profile_InstallHandler_TrackerField::export($writer, $field);
+		}
+
+		foreach ($fieldReferences as $key => $value) {
+			$value = preg_replace_callback('/(\d+)/', function ($match) use ($writer) {
+				return $writer->getReference('tracker_field', $match[1]);
+			}, $value);
+			$writer->pushReference("{$reference}_{$key}");
+			$writer->addObject('tracker_option', "$key-$trackerId", array(
+				'name' => $key,
+				'value' => $value,
+			));
+		}
+
+		return true;
+	}
+
+	function _export($trackerId, $profileObject) // {{{
+	{
+		$writer = new Tiki_Profile_Writer('temp', 'none');
+		self::export($writer, $trackerId);
+		return $writer->dump();
 	} // }}}
 
 }

@@ -67,12 +67,19 @@ if (is_file($local_php) && ! $installer->requiresUpdate()) {
 	$console->add(new Tiki\Command\IndexCatchUpCommand);
 	$console->add(new Tiki\Command\ProfileForgetCommand);
 	$console->add(new Tiki\Command\ProfileInstallCommand);
+	$console->add(new Tiki\Command\ProfileExport\Init);
 } else {
 	$console->add(new Tiki\Command\UnavailableCommand('index:rebuild'));
 	$console->add(new Tiki\Command\UnavailableCommand('index:optimize'));
 	$console->add(new Tiki\Command\UnavailableCommand('index:catch-up'));
 	$console->add(new Tiki\Command\UnavailableCommand('profile:forget'));
 	$console->add(new Tiki\Command\UnavailableCommand('profile:install'));
+	$console->add(new Tiki\Command\UnavailableCommand('profile:export:init'));
+}
+
+if (file_exists('profiles/info.ini')) {
+	$console->add(new Tiki\Command\ProfileExport\WikiPage);
+	$console->add(new Tiki\Command\ProfileExport\Tracker);
 }
 
 $console->run();

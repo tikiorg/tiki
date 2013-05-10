@@ -19,25 +19,35 @@ class Tiki_Profile_ValueMapConverter
 	function convert( $value )
 	{
 		if ( is_array($value) ) {
-			foreach ( $value as &$v )
-				if ( isset( $this->map[$v] ) )
-					$v = $this->map[$v];
+			foreach ( $value as &$v ) {
+				if ( isset( $this->map[$v] ) ) {
+					$v = $this->map[$v]; 
+				}
+			}
 			
-			if ( $this->implode )
+			if ( $this->implode ) {
 				return implode('', $value);
-			else
+			} else {
 				return $value;
+			}
 		} else {
-			if ( isset( $this->map[$value] ) )
+			if ( isset( $this->map[$value] ) ) {
 				return $this->map[$value];
-			else
+			} else {
 				return $value;
+			}
 		}
 	}
-	function reverse( $key)
+
+	function reverse($key)
 	{
 		$tab = array_flip($this->map);
-		return $tab[$key];
+
+		if (isset($tab[$key])) {
+			return $tab[$key];
+		} else {
+			return $key;
+		}
 	}
 
 }
