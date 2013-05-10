@@ -51,16 +51,23 @@ if (is_file($local_php)) {
 	$console->add(new Tiki\Command\UnavailableCommand('database:update'));
 }
 
-if (is_file($local_php) && ($installer = new Installer) && ! $installer->requiresUpdate()) {
-	require 'tiki-setup.php';
+$installer = $installer = new Installer;
+
+if (is_file($local_php)) {
+	require_once 'tiki-setup.php';
 	$console->add(new Tiki\Command\CacheClearCommand);
+} else {
+	$console->add(new Tiki\Command\UnavailableCommand('cache:clear'));
+}
+
+if (is_file($local_php) && ! $installer->requiresUpdate()) {
+	require_once 'tiki-setup.php';
 	$console->add(new Tiki\Command\IndexRebuildCommand);
 	$console->add(new Tiki\Command\IndexOptimizeCommand);
 	$console->add(new Tiki\Command\IndexCatchUpCommand);
 	$console->add(new Tiki\Command\ProfileForgetCommand);
 	$console->add(new Tiki\Command\ProfileInstallCommand);
 } else {
-	$console->add(new Tiki\Command\UnavailableCommand('cache:clear'));
 	$console->add(new Tiki\Command\UnavailableCommand('index:rebuild'));
 	$console->add(new Tiki\Command\UnavailableCommand('index:optimize'));
 	$console->add(new Tiki\Command\UnavailableCommand('index:catch-up'));

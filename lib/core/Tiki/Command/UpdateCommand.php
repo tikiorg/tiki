@@ -38,13 +38,15 @@ class UpdateCommand extends Command
 			$installer->update();
 			$output->writeln('Update completed.');
 			if (count($installer->installed)) {
-				foreach ($installer->installed as $patch)
+				foreach ($installer->installed as $patch) {
 					$output->writeln("<info>Installed: $patch</info>");
+				}
 			}
 
 			if ( count($installer->executed) ) {
-				foreach ( $installer->executed as $script )
+				foreach ( $installer->executed as $script ) {
 					$output->writeln("<info>Executed: $script</info>");
+				}
 			}
 
 			$output->writeln('<info>Queries executed successfully: ' . count($installer->success) . '</info>');

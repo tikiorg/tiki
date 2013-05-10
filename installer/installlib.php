@@ -19,16 +19,16 @@ require_once 'lib/setup/twversion.class.php';
  */
 class Installer extends TikiDb_Bridge
 {
-	var $patches = array();
-	var $scripts = array();
+	public $patches = array();
+	public $scripts = array();
 
-	var $installed = array();
-	var $executed = array();
+	public $installed = array();
+	public $executed = array();
 
-	var $success = array();
-	var $failures = array();
+	public $success = array();
+	public $failures = array();
 	
-	var $useInnoDB = false;
+	public $useInnoDB = false;
 
     /**
      *
@@ -87,16 +87,18 @@ class Installer extends TikiDb_Bridge
 		$dbversion_tiki = $TWV->getBaseVersion();
 
 		$secdb = dirname(__FILE__) . '/../db/tiki-secdb_' . $dbversion_tiki . '_mysql.sql';
-		if ( file_exists($secdb) )
+		if ( file_exists($secdb) ) {
 			$this->runFile($secdb);
+		}
 		
 		$patches = $this->patches;
 		foreach ($patches as $patch) {
 			$this->installPatch($patch);
 		}
 
-		foreach ( $this->scripts as $script )
+		foreach ( $this->scripts as $script ) {
 			$this->runScript($script);
+		}
 	} // }}}
 
     /**
@@ -104,11 +106,13 @@ class Installer extends TikiDb_Bridge
      */
     function installPatch( $patch ) // {{{
 	{
-		if ( ! in_array($patch, $this->patches) )
+		if ( ! in_array($patch, $this->patches) ) {
 			return;
+		}
 
 		$schema = dirname(__FILE__) . "/schema/$patch.sql";
 		$script = dirname(__FILE__) . "/schema/$patch.php";
+		$profile = dirname(__FILE__) . "/schema/$patch.yml";
 
 		$pre = "pre_$patch";
 		$post = "post_$patch";
@@ -118,16 +122,22 @@ class Installer extends TikiDb_Bridge
 			require $script;
 		}
 
-		if ( function_exists($standalone) )
+		if ( function_exists($standalone) ) {
 			$standalone($this);
-		else {
-			if ( function_exists($pre) )
+		} else {
+			if ( function_exists($pre) ) {
 				$pre( $this );
+			}
 	
-			$status = $this->runFile($schema);
+			if (file_exists($profile)) {
+				$status = $this->applyProfile($profile);
+			} else {
+				$status = $this->runFile($schema);
+			}
 	
-			if ( function_exists($post) )
+			if ( function_exists($post) ) {
 				$post( $this );
+			}
 		}
 
 		if (!isset($status) || $status ) {
@@ -161,6 +171,23 @@ class Installer extends TikiDb_Bridge
 		$this->query("INSERT INTO tiki_schema (patch_name, install_date) VALUES(?, NOW())", array($patch));
 		$this->patches = array_diff($this->patches, array($patch));
 	} // }}}
+
+	private function applyProfile($profileFile)
+	{
+		// By the time a profile install is requested, the installation should be functional enough to work
+		require_once 'tiki-setup.php';
+		$directory = dirname($profileFile);
+		$profile = substr(basename($profileFile), 0, -4);
+
+		$profile = Tiki_Profile::fromFile($directory, $profile);
+
+		$tx = $this->begin();
+
+		$installer = new Tiki_Profile_Installer;
+		$installer->install($profile);
+
+		$tx->commit();
+	}
 
     /**
      * @param $file
@@ -228,14 +255,20 @@ class Installer extends TikiDb_Bridge
 			$this->patches[] = substr($filename, 0, -4);
 		}
 
+		$files = glob(dirname(__FILE__) . '/schema/*_*.yml');
+		foreach ( $files as $file ) {
+			$filename = basename($file);
+			$this->patches[] = substr($filename, 0, -4);
+		}
+
 		// Add standalone PHP scripts
 		$files = glob(dirname(__FILE__) . '/schema/*_*.php');
 		foreach ( $files as $file ) {
-			if ($file === "installer/schema/index.php")
-				continue;
 			$filename = basename($file);
 			$patch = substr($filename, 0, -4);
-			if (!in_array($patch, $this->patches)) $this->patches[] = $patch;
+			if (!in_array($patch, $this->patches)) {
+				$this->patches[] = $patch;
+			}
 		}
 
 		$installed = array();
