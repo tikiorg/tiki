@@ -30,13 +30,21 @@ class ProfileInstallCommand extends Command
 				InputArgument::OPTIONAL,
 				'Repository',
 				'profiles.tiki.org'
-			);
+			)
+			->addOption(
+				'force',
+				null,
+				InputOption::VALUE_NONE,
+				'Re-apply profiles when already installed.'
+			)
+			;
 	}
 
 	protected function execute(InputInterface $input, OutputInterface $output)
 	{
 		$profileName = $input->getArgument('profile');
 		$repository = $input->getArgument('repository');
+		$force = $input->getOption('force');
 
 		$profile = \Tiki_Profile::fromNames($repository, $profileName);
 
@@ -49,6 +57,11 @@ class ProfileInstallCommand extends Command
 
 		$installer = new \Tiki_Profile_Installer;
 		$isInstalled = $installer->isInstalled($profile);
+
+		if ($isInstalled && $force) {
+			$installer->forget($profile);
+			$isInstalled = false;
+		}
 
 		if (! $isInstalled) {
 			$transaction = $tikilib->begin();
