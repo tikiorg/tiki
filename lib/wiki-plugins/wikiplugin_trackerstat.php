@@ -28,6 +28,18 @@ function wikiplugin_trackerstat_info()
 				'description' => tra('Colon-separated list of field IDs to be displayed. Example: 2:4:5'),
 				'default' => ''
 			),
+            'show_count' => array(
+                'required' => false,
+                'name' => tra('Show Count'),
+                'description' => tra('Choose whether to show the count of votes each option received (shown by default)'),
+                'filter' => 'alpha',
+                'default' => 'y',
+                'options' => array(
+                    array('text' => '', 'value' => ''),
+                    array('text' => tra('Yes'), 'value' => 'y'),
+                    array('text' => tra('No'), 'value' => 'n')
+                )
+            ),
 			'show_percent' => array(
 				'required' => false,
 				'name' => tra('Show Percentage'),
@@ -123,6 +135,11 @@ function wikiplugin_trackerstat($data, $params)
 		return tra('invalid status');
 	}
 
+    if (isset($show_count) && $show_count == 'n') {
+        $smarty->assign('show_count', 'n');
+    } else {
+        $smarty->assign('show_count', 'y');
+    }
 	if (isset($show_percent) && $show_percent == 'y') {
 		$average = 'y';
 		$smarty->assign('show_percent', 'y');
