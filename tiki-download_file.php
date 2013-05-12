@@ -79,7 +79,7 @@ if (!$skip) {
 		$access->display_error(NULL, tra('File has been deleted'), 404);
 	}
 
-	if ( ( isset($prefs['auth_tokens']) && $prefs['auth_tokens'] == 'n' ) || !$is_token_access ) {
+	if ( $prefs['auth_token_access'] != 'y' || !$is_token_access ) {
 		// Check permissions except if the user comes with a valid Token
 
 		if ( !$zip && $tiki_p_admin_file_galleries != 'y' && !$userlib->user_has_perm_on_object($user, $info['galleryId'], 'file gallery', 'tiki_p_download_files') && !($info['backlinkPerms'] == 'y' && !$filegallib->hasOnlyPrivateBacklinks($info['fileId']))) {
