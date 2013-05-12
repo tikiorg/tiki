@@ -106,12 +106,14 @@ function module_months_links($mod_reference, $module_params)
 			$month_expanded = $month_names[$current_month_num-1];
 		}
 		$archives = array();
+		$archives[$current_year]['cant'] = 0;
 		$numrows = $mod_reference['rows'] > 0 ? $mod_reference['rows'] : 12;
 
 		for ($i = 0 ; $i < $numrows ; $i++, $current_month_num--) {
 			if ($current_month_num == 0) {
 				$current_month_num = 12;
 				$current_year--;
+				$archives[$current_year]['cant'] = 0;
 			}
 
 			$real_month_name = ucfirst(tra($month_names[$current_month_num - 1]));
