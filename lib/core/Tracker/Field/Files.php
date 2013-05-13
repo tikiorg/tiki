@@ -24,16 +24,19 @@ class Tracker_Field_Files extends Tracker_Field_Abstract
 						'name' => tr('Gallery ID'),
 						'description' => tr('File gallery to upload new files into.'),
 						'filter' => 'int',
+						'legacy_index' => 0,
 					),
 					'filter' => array(
 						'name' => tr('MIME Type Filter'),
 						'description' => tr('Mask for accepted MIME types in the field'),
 						'filter' => 'text',
+						'legacy_index' => 1,
 					),
 					'count' => array(
 						'name' => tr('File Count'),
 						'description' => tr('Maximum number of files to be attached on the field.'),
 						'filter' => 'int',
+						'legacy_index' => 2,
 					),
 					'displayImages' => array(
 						'name' => tr('Display Images'),
@@ -43,16 +46,19 @@ class Tracker_Field_Files extends Tracker_Field_Abstract
 							0 => tr('Links'),
 							1 => tr('Images'),
 						),
+						'legacy_index' => 3,
 					),
 					'imageParams' => array(
 						'name' => tr('Image parameters'),
 						'description' => tr('URL encoded params used as in the {img} plugin. e.g.') . ' "max=400&desc=namedesc&stylebox=block"',
 						'filter' => 'text',
+						'legacy_index' => 4,
 					),
 					'imageParamsForLists' => array(
 						'name' => tr('Image parameters for lists'),
 						'description' => tr('URL encoded params used as in the {img} plugin. e.g.') . ' "thumb=mouseover&rel="',
 						'filter' => 'text',
+						'legacy_index' => 5,
 					),
 					'deepGallerySearch' => array(
 						'name' => tr('Include Child Galleries'),
@@ -62,6 +68,7 @@ class Tracker_Field_Files extends Tracker_Field_Abstract
 							0 => tr('No'),
 							1 => tr('Yes'),
 						),
+						'legacy_index' => 6,
 					),
 					'replace' => array(
 						'name' => tr('Replace Existing File'),
@@ -72,16 +79,19 @@ class Tracker_Field_Files extends Tracker_Field_Abstract
 							'n' => tr('No'),
 							'y' => tr('Yes'),
 						),
+						'legacy_index' => 7,
 					),
 					'browseGalleryId' => array(
 						'name' => tr('Browse Gallery ID'),
 						'description' => tr('File gallery browse files. Use 0 for root file gallery. (requires elFinder feature - experimental)'),
 						'filter' => 'int',
+						'legacy_index' => 8,
 					),
 					'duplicateGalleryId' => array(
 						'name' => tr('Duplicate Gallery ID'),
 						'description' => tr('File gallery to duplicate files into when copying the tracker item. 0 or empty means do not duplicate (default).'),
 						'filter' => 'int',
+						'legacy_index' => 9,
 					),
 				),
 			),

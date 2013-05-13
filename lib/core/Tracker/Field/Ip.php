@@ -33,6 +33,7 @@ class Tracker_Field_Ip extends Tracker_Field_Abstract implements Tracker_Field_S
 							1 => tr('Creator'),
 							2 => tr('Modifier'),
 						),
+						'legacy_index' => 0,
 					),
 				),
 			),

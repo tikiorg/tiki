@@ -28,6 +28,7 @@ class Tracker_Field_Math extends Tracker_Field_Abstract implements Tracker_Field
 						'name' => tr('Calculation'),
 						'description' => tr('Calculation in the Rating Language'),
 						'filter' => 'text',
+						'legacy_index' => 0,
 					),
 				),
 			),

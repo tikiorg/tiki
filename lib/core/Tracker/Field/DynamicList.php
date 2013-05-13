@@ -29,21 +29,25 @@ class Tracker_Field_DynamicList extends Tracker_Field_Abstract
 						'name' => tr('Tracker ID'),
 						'description' => tr('Tracker to link with'),
 						'filter' => 'int',
+						'legacy_index' => 0,
 					),
 					'filterFieldIdThere' => array(
 						'name' => tr('Field ID (Other tracker)'),
 						'description' => tr('Field ID to link with in the other tracker'),
 						'filter' => 'int',
+						'legacy_index' => 1,
 					),
 					'filterFieldIdHere' => array(
 						'name' => tr('Field ID (This tracker)'),
 						'description' => tr('Field ID to link with in the current tracker'),
 						'filter' => 'int',
+						'legacy_index' => 2,
 					),
 					'listFieldIdThere' => array(
 						'name' => tr('Listed Field'),
 						'description' => tr('Field ID to be displayed in the drop list.'),
 						'filter' => 'int',
+						'legacy_index' => 3,
 					),
 					'statusThere' => array(
 						'name' => tr('Status Filter'),
@@ -57,6 +61,7 @@ class Tracker_Field_DynamicList extends Tracker_Field_Abstract
 							'op' => tr('open, pending'),
 							'pc' => tr('pending, closed'),
 						),
+						'legacy_index' => 4,
 					),
 				),
 			),

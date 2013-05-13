@@ -33,6 +33,7 @@ class Tracker_Field_Url extends Tracker_Field_Abstract implements Tracker_Field_
 							2 => tr('Site title as link'),
 							3 => tr('URL as link plus site title'),
 						),
+						'legacy_index' => 0,
 					),
 				),
 			),

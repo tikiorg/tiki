@@ -33,11 +33,13 @@ class Tracker_Field_StaticText extends Tracker_Field_Abstract implements Tracker
 							0 => tr('Handle line breaks as new lines only'),
 							1 => tr('Wiki Parse'),
 						),
+						'legacy_index' => 0,
 					),
 					'max' => array(
 						'name' => tr('Maximum Length (List)'),
 						'description' => tr('Maximum amount of characters to be displayed in list mode'),
 						'filter' => 'int',
+						'legacy_index' => 1,
 					),
 				),
 			),

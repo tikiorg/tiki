@@ -33,11 +33,13 @@ class Tracker_Field_GroupSelector extends Tracker_Field_Abstract
 							1 => tr('Creator'),
 							2 => tr('Modifier'),
 						),
+						'legacy_index' => 0,
 					),
 					'groupId' => array(
 						'name' => tr('Group Filter'),
 						'description' => tr('Limit listed groups to those including the specified group.'),
 						'filter' => 'int',
+						'legacy_index' => 1,
 					),
 					'assign' => array(
 						'name' => tr('Assign to the group'),
@@ -48,6 +50,7 @@ class Tracker_Field_GroupSelector extends Tracker_Field_Abstract
 							1 => tr('Assign'),
 						),
 						'default' => 0,
+						'legacy_index' => 2,
 					)
 				),
 			),

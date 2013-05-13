@@ -34,6 +34,7 @@ class Tracker_Field_UserSelector extends Tracker_Field_Abstract implements Track
 							1 => tr('Creator'),
 							2 => tr('Modifier'),
 						),
+						'legacy_index' => 0,
 					),
 					'notify' => array(
 						'name' => tr('Email Notification'),
@@ -44,12 +45,14 @@ class Tracker_Field_UserSelector extends Tracker_Field_Abstract implements Track
 							1 => tr('Yes'),
 							2 => tr('Only when other users modify the item'),
 						),
+						'legacy_index' => 1,
 					),
 					'groupIds' => array(
 						'name' => tr('Group IDs'),
 						'description' => tr('Limit the list of users to members of specific groups.'),
 						'separator' => '|',
 						'filter' => 'int',
+						'legacy_index' => 2,
 					),
 				),
 			),

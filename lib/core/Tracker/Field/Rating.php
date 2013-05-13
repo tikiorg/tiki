@@ -24,6 +24,7 @@ class Tracker_Field_Rating extends Tracker_Field_Abstract
 						'description' => tr('The possible options (comma separated integers) for the rating.'),
 						'filter' => 'int',
 						'count' => '*',
+						'legacy_index' => 0,
 					),
 					'mode' => array(
 						'name' => tr('Mode'),
@@ -34,12 +35,14 @@ class Tracker_Field_Rating extends Tracker_Field_Abstract
 							'radio' => tr('Radio Buttons'),
 							'like' => tr('Single Option: e.g. Like'),
 						),
+						'legacy_index' => 1,
 					),
 					'labels' => array(
 						'name' => tr('Labels'),
 						'description' => tr('The text labels (comma separated) for the possible options.'),
 						'filter' => 'text',
 						'count' => '*',
+						'legacy_index' => 2,
 					),
 				),
 			),
@@ -57,6 +60,7 @@ class Tracker_Field_Rating extends Tracker_Field_Abstract
 						'description' => tr('A possible option for the rating.'),
 						'filter' => 'int',
 						'count' => '*',
+						'legacy_index' => 0,
 					),
 				),
 			),
@@ -74,6 +78,7 @@ class Tracker_Field_Rating extends Tracker_Field_Abstract
 						'description' => tr('A possible option for the rating.'),
 						'filter' => 'int',
 						'count' => '*',
+						'legacy_index' => 0,
 					),
 				),
 			),
@@ -158,7 +163,7 @@ class Tracker_Field_Rating extends Tracker_Field_Abstract
 
 		$mode = 'stars'; // default is stars for legacy reasons
 
-		$options_array = $this->getConfiguration('options_array');
+		$options_array = $this->getOption('option');
 		foreach ($options_array as $k => $v) {
 			if (!is_numeric($v)) {
 				$mode = $v;

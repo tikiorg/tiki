@@ -33,6 +33,7 @@ class Tracker_Field_CountrySelector extends Tracker_Field_Abstract implements Tr
 							1 => tr('Name only'),
 							2 => tr('Flag only'),
 						),
+						'legacy_index' => 0,
 					),
 					'sortorder' => array(
 						'name' => tr('Sort Order'),
@@ -42,6 +43,7 @@ class Tracker_Field_CountrySelector extends Tracker_Field_Abstract implements Tr
 							0 => tr('Translated name'),
 							1 => tr('English name'),
 						),
+						'legacy_index' => 1,
 					),
 				),
 			),

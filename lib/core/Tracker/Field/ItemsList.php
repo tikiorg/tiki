@@ -29,22 +29,26 @@ class Tracker_Field_ItemsList extends Tracker_Field_Abstract
 						'name' => tr('Tracker ID'),
 						'description' => tr('Tracker to list items from'),
 						'filter' => 'int',
+						'legacy_index' => 0,
 					),
 					'fieldIdThere' => array(
 						'name' => tr('Link Field ID'),
 						'description' => tr('Field ID from the other tracker containing an item link pointing to the item in this tracker or some other value to be matched.'),
 						'filter' => 'int',
+						'legacy_index' => 1,
 					),
 					'fieldIdHere' => array(
 						'name' => tr('Value Field ID'),
 						'description' => tr('Field ID from this tracker matching the value in the link field ID from the other tracker if the field above is not an item link.'),
 						'filter' => 'int',
+						'legacy_index' => 2,
 					),
 					'displayFieldIdThere' => array(
 						'name' => tr('Fields to display'),
 						'description' => tr('Display alternate fields from the other tracker instead of the item title'),
 						'filter' => 'int',
 						'separator' => '|',
+						'legacy_index' => 3,
 					),
 					'linkToItems' => array(
 						'name' => tr('Display'),
@@ -54,6 +58,7 @@ class Tracker_Field_ItemsList extends Tracker_Field_Abstract
 							0 => tr('Value'),
 							1 => tr('Link'),
 						),
+						'legacy_index' => 4,
 					),
 					'status' => array(
 						'name' => tr('Status Filter'),
@@ -67,6 +72,7 @@ class Tracker_Field_ItemsList extends Tracker_Field_Abstract
 							'op' => tr('open, pending'),
 							'pc' => tr('pending, closed'),
 						),
+						'legacy_index' => 5,
 					),
 				),
 			),

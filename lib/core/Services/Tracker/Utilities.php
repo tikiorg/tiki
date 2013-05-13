@@ -384,60 +384,15 @@ EXPORT;
 			$input = new JitFilter($input);
 		}
 
-		$parts = array();
-
-		foreach ($typeInfo['params'] as $key => $info) {
-			$filter = $info['filter'];
-
-			if (isset($info['count']) && $info['count'] === '*') {
-				$values = explode(',', $input->$key->none());
-				$filter = TikiFilter::get($filter);
-				$values = array_map(array($filter, 'filter'), $values);
-			} elseif (isset($info['separator'])) {
-				$input->replaceFilter($key, $filter);
-				$values = $input->asArray($key, $info['separator']);
-				$values = array(implode($info['separator'], $values));
-			} else {
-				$values = array($input->$key->$filter());
-			}
-
-			foreach ($values as $value) {
-				if (isset($info['options']) && ! isset($info['options'][$value])) {
-					$value = null;
-				}
-
-				$parts[] = $value;
-			}
-		}
-
-		$rawOptions = implode(',', $parts);
-		return rtrim($rawOptions, ',');
+		$options = Tracker_Options::fromInput($input, $typeInfo);
+		return $options->serialize();
 	}
 
 	function parseOptions($raw, $typeInfo)
 	{
-		$out = array();
+		$options = Tracker_Options::fromSerialized($raw, $typeInfo);
 
-		foreach ($typeInfo['params'] as $key => $info) {
-			if (isset($info['count']) && $info['count'] === '*') {
-				// There is a possibility that * does not mean all of the remaining, to apply reasonable heuristic
-				$filter = TikiFilter::get($info['filter']);
-				$outarray = array();
-				foreach ($raw as $r) {
-					$filtered = $filter->filter($r);
-					if (strcmp($filtered, $r) == 0) {
-						$outarray[] = array_shift($raw);
-					} else {
-						break;
-					}
-				}
-				$out[$key] = implode(',', $outarray);
-			} else {
-				$out[$key] = array_shift($raw);
-			}
-		}
-
-		return $out;
+		return $options->getAllParameters();
 	}
 
 	function getFieldTypesDisabled()

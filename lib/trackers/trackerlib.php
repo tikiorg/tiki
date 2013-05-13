@@ -1518,7 +1518,7 @@ class TrackerLib extends TikiLib
 					}
 					$fil[$fieldId] = $value;
 					if (!$this->page_exists($array['value'])) {
-						$opts = preg_split('/,/', $array['options']);
+						$opts = $array['options_array'];
 						if (!empty($opts[2])) {
 							$IP = $this->get_ip_address();
 							$info = $this->get_page_info($opts[2]);
@@ -2323,8 +2323,11 @@ class TrackerLib extends TikiLib
 		$result = $fieldsTable->fetchAll($fieldsTable->all(), $conditions, $maxRecords, $offset, $fieldsTable->sortMode($sort_mode));
 		$cant = $fieldsTable->fetchCount($conditions);
 
+		$factory = new Tracker_Field_Factory;
 		foreach ($result as & $res) {
-			$res['options_array'] = preg_split('/\s*,\s*/', trim($res['options']));
+			$typeInfo = $factory->getFieldInfo($res['type']);
+			$options = Tracker_Options::fromSerialized($res['options'], $typeInfo);
+			$res['options_array'] = $options->buildOptionsArray();
 			$res['itemChoices'] = ( $res['itemChoices'] != '' ) ? unserialize($res['itemChoices']) : array();
 			$res['visibleBy'] = ($res['visibleBy'] != '') ? unserialize($res['visibleBy']) : array();
 			$res['editableBy'] = ($res['editableBy'] != '') ? unserialize($res['editableBy']) : array();
@@ -2720,7 +2723,9 @@ class TrackerLib extends TikiLib
 	public function get_tracker_field($fieldId)
 	{
 		if ($res = $this->fields()->fetchFullRow(array('fieldId' => (int) $fieldId))) {
-			$res['options_array'] = preg_split('/,/', $res['options']);
+			$factory = new Tracker_Field_Factory;
+			$options = Tracker_Options::fromSerialized($res['options'], $factory->getFieldInfo($res['type']));
+			$res['options_array'] = $options->buildOptionsArray();
 			$res['itemChoices'] = ! empty($res['itemChoices']) ? unserialize($res['itemChoices']) : array();
 			$res['visibleBy'] = ! empty($res['visibleBy']) ? unserialize($res['visibleBy']) : array();
 			$res['editableBy'] = ! empty($res['editableBy']) ? unserialize($res['editableBy']) : array();
@@ -3281,8 +3286,11 @@ class TrackerLib extends TikiLib
 		$query = "select ttif.`value`, ttf.`options` from `tiki_tracker_fields` ttf, `tiki_tracker_item_fields` ttif";
 		$query .= " where ttif.`itemId`=? and ttf.`type`=? and ttf.`fieldId`=ttif.`fieldId`";
 		$ret = $this->fetchAll($query, array($itemId, $typeField));
+		$factory = new Tracker_Field_Factory;
+		$typeInfo = $factory->getFieldInfo($typeField);
 		foreach ($ret as &$res) {
-			$res['options_array'] = preg_split('/,/', $res['options']);
+			$options = Tracker_Options::fromSerialized($res['options'], $typeInfo);
+			$res['options_array'] = $options->buildOptionsArray();
 		}
 		return $ret;
 	}
@@ -3798,8 +3806,12 @@ class TrackerLib extends TikiLib
 		$query = 'select ttif.*, ttf.`type`, ttf.`options` from `tiki_tracker_item_fields` ttif left join `tiki_tracker_fields` ttf on (ttif.`fieldId` = ttf.`fieldId`) where `itemId`=?';
 		$result = $this->fetchAll($query, array($from));
 		$clean = array();
+		$factory = new Tracker_Field_Factory;
 		foreach ($result as $res) {
-			$res['options_array'] = preg_split('/\s*,\s*/', $res['options']);
+			$typeInfo = $factory->getFieldInfo($res['type']);
+			$options = Tracker_Options::fromSerialized($res['options'], $typeInfo);
+			$res['options_array'] = $options->buildOptionsArray();
+
 			if ($prefs['feature_categories'] == 'y' && $res['type'] == 'e') {
 				//category
 				if ((!empty($except) && in_array($res['fieldId'], $except))

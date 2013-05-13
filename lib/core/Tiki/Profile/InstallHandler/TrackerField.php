@@ -149,9 +149,11 @@ class Tiki_Profile_InstallHandler_TrackerField extends Tiki_Profile_InstallHandl
 		$converters = self::getConverters();
 		$this->replaceReferences($data);
 
-		foreach ( $data as $key => &$value )
-			if ( isset( $converters[$key] ) )
+		foreach ( $data as $key => &$value ) {
+			if ( isset( $converters[$key] ) ) {
 				$value = $converters[$key]->convert($value);
+			}
+		}
 
 		$data = array_merge(self::getDefaultValues(), array(
 			'permname' => $this->obj->getRef(), // Use the profile reference as the name by default
@@ -160,6 +162,14 @@ class Tiki_Profile_InstallHandler_TrackerField extends Tiki_Profile_InstallHandl
 		$trklib = TikiLib::lib('trk');
 
 		$fieldId = $trklib->get_field_id($data['tracker'], $data['name']);
+
+		$factory = new Tracker_Field_Factory;
+		$fieldInfo = $factory->getFieldInfo($data['type']);
+		if (is_string($data['options'])) {
+			$options = Tracker_Options::fromString($data['options'], $fieldInfo);
+		} else {
+			$options = Tracker_Options::fromArray($data['options'], $fieldInfo);
+		}
 
 		return $trklib->replace_tracker_field(
 			$data['tracker'],
@@ -173,7 +183,7 @@ class Tiki_Profile_InstallHandler_TrackerField extends Tiki_Profile_InstallHandl
 			$data['visible'],
 			$data['mandatory'],
 			$data['order'],
-			$data['options'],
+			$options->serialize(),
 			$data['description'],
 			$data['multilingual'],
 			$data['choices'],
@@ -190,11 +200,13 @@ class Tiki_Profile_InstallHandler_TrackerField extends Tiki_Profile_InstallHandl
 
 	static function export(Tiki_Profile_Writer $writer, $field)
 	{
+		$factory = new Tracker_Field_Factory;
+		$options = Tracker_Options::fromSerialized($field['options'], $factory->getFieldInfo($field['type']));
 		$data = array(
 			'name' => $field['name'],
 			'permname' => $field['permName'],
 			'tracker' => $writer->getReference('tracker', $field['trackerId']),
-			'options' => $field['options'],
+			'options' => array_filter($options->getAllParameters()),
 		);
 
 		$optionMap = array_flip(self::getOptionMap());

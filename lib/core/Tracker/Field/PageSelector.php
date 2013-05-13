@@ -33,16 +33,19 @@ class Tracker_Field_PageSelector extends Tracker_Field_Abstract
 							0 => tr('No'),
 							1 => tr('Yes'),
 						),
+						'legacy_index' => 0,
 					),
 					'size' => array(
 						'name' => tr('Display Size'),
 						'description' => tr('Visible size of the input in characters.'),
 						'filter' => 'int',
+						'legacy_index' => 1,
 					),
 					'create' => array(
 						'name' => tr('Create Page'),
 						'description' => tr('Create missing pages using the page name in this file as the template.'),
 						'filter' => 'pagename',
+						'legacy_index' => 2,
 					),
 					'link' => array(
 						'name' => tr('Link'),
@@ -53,6 +56,7 @@ class Tracker_Field_PageSelector extends Tracker_Field_Abstract
 							'y' => tr('Yes'),
 							'n' => tr('No'),
 						),
+						'legacy_index' => 3,
 					),
 				),
 			),

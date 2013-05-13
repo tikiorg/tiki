@@ -27,6 +27,7 @@ class Tracker_Field_Freetags extends Tracker_Field_Abstract implements Tracker_F
 						'name' => tr('Size'),
 						'description' => tr('Visible size of the input field'),
 						'filter' => 'int',
+						'legacy_index' => 0,
 					),
 					'hidehelp' => array(
 						'name' => tr('Help'),
@@ -37,6 +38,7 @@ class Tracker_Field_Freetags extends Tracker_Field_Abstract implements Tracker_F
 							'' => tr('Show'),
 							'y' => tr('Hide'),
 						),
+						'legacy_index' => 1,
 					),
 					'hidesuggest' => array(
 						'name' => tr('Suggest'),
@@ -47,6 +49,7 @@ class Tracker_Field_Freetags extends Tracker_Field_Abstract implements Tracker_F
 							'' => tr('Show'),
 							'y' => tr('Hide'),
 						),
+						'legacy_index' => 2,
 					),
 				),
 			),

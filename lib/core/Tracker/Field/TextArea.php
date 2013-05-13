@@ -32,31 +32,37 @@ class Tracker_Field_TextArea extends Tracker_Field_Text
 							0 => tr('Disable'),
 							1 => tr('Enable'),
 						),
+						'legacy_index' => 0,
 					),
 					'width' => array(
 						'name' => tr('Width'),
 						'description' => tr('Size of the text area in characters.'),
 						'filter' => 'int',
+						'legacy_index' => 1,
 					),
 					'height' => array(
 						'name' => tr('Height'),
 						'description' => tr('Size of the text area in lines.'),
 						'filter' => 'int',
+						'legacy_index' => 2,
 					),
 					'max' => array(
 						'name' => tr('Character Limit'),
 						'description' => tr('Maximum amount of characters to be stored.'),
 						'filter' => 'int',
+						'legacy_index' => 3,
 					),
 					'listmax' => array(
 						'name' => tr('Display Limit (List)'),
 						'description' => tr('Maximum amount of characters to be displayed in list mode before the value gets truncated.'),
 						'filter' => 'int',
+						'legacy_index' => 4,
 					),
 					'wordmax' => array(
 						'name' => tr('Word Count'),
 						'description' => tr('Limit the length of the text in words.'),
 						'filter' => 'int',
+						'legacy_index' => 5,
 					),
 					'distinct' => array(
 						'name' => tr('Distinct Values'),
@@ -67,6 +73,7 @@ class Tracker_Field_TextArea extends Tracker_Field_Text
 							'n' => tr('No'),
 							'y' => tr('Yes'),
 						),
+						'legacy_index' => 6,
 					),
 					'wysiwyg' => array(
 						'name' => tr('Use WYSIWYG'),
@@ -77,6 +84,7 @@ class Tracker_Field_TextArea extends Tracker_Field_Text
 							'n' => tr('No'),
 							'y' => tr('Yes'),
 						),
+						'legacy_index' => 7,
 					),
 					'samerow' => array(
 						'name' => tr('Same Row'),
@@ -88,6 +96,7 @@ class Tracker_Field_TextArea extends Tracker_Field_Text
 							0 => tr('No'),
 							1 => tr('Yes'),
 						),
+						'legacy_index' => 8,
 					),
 				),
 			),

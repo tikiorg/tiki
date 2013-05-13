@@ -25,6 +25,7 @@ class Tracker_Field_JsCalendar extends Tracker_Field_DateTime
 							'dt' => tr('Date and Time'),
 							'd' => tr('Date only'),
 						),
+						'legacy_index' => 0,
 					),
 					'useNow' => array(
 						'name' => tr('Default value'),
@@ -34,6 +35,7 @@ class Tracker_Field_JsCalendar extends Tracker_Field_DateTime
 							0 => tr('None (undefined)'),
 							1 => tr('Item creation date and time'),
 						),
+						'legacy_index' => 1,
 					),
 				),
 			),

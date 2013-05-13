@@ -33,11 +33,13 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 						'name' => tr('Tracker ID'),
 						'description' => tr('Tracker to link to'),
 						'filter' => 'int',
+						'legacy_index' => 0,
 					),
 					'fieldId' => array(
 						'name' => tr('Field ID'),
 						'description' => tr('Default field to display'),
 						'filter' => 'int',
+						'legacy_index' => 1,
 					),
 					'linkToItem' => array(
 						'name' => tr('Display'),
@@ -47,12 +49,14 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 							0 => tr('Value'),
 							1 => tr('Link'),
 						),
+						'legacy_index' => 2,
 					),
 					'displayFieldsList' => array(
 						'name' => tr('Multiple Fields'),
 						'description' => tr('Display the values from multiple fields instead of a single one, separated by |'),
 						'separator' => '|',
 						'filter' => 'int',
+						'legacy_index' => 3,
 					),
 					'status' => array(
 						'name' => tr('Status Filter'),
@@ -66,31 +70,37 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 							'op' => tr('open, pending'),
 							'pc' => tr('pending, closed'),
 						),
+						'legacy_index' => 4,
 					),
 					'linkPage' => array(
 						'name' => tr('Link Page'),
 						'description' => tr('Link to a wiki page instead of directly to the item'),
 						'filter' => 'pagename',
+						'legacy_index' => 5,
 					),
 					'addItems' => array(
 						'name' => tr('Add Items'),
 						'description' => tr('Display text to allow new items to be added - e.g. "Add item..." (requires jQuery-UI)'),
 						'filter' => 'text',
+						'legacy_index' => 6,
 					),
 					'addItemsWikiTpl' => array(
 						'name' => tr('Add Item Template Page'),
 						'description' => tr('Wiki page to use as a Pretty Tracker template'),
 						'filter' => 'pagename',
+						'legacy_index' => 7,
 					),
 					'preSelectFieldHere' => array(
 						'name' => tr('Preselect item based on value in this field'),
 						'description' => tr('Preselect item based on value in specified field ID of item being edited'),
 						'filter' => 'int',
+						'legacy_index' => 8,
 					),
 					'preSelectFieldThere' => array(
 						'name' => tr('Preselect based on value in this remote field'),
 						'description' => tr('Match preselect item with this field ID in tracker that is being linked to'),
 						'filter' => 'int',
+						'legacy_index' => 9,
 					),
 					'preSelectFieldMethod' => array(
 						'name' => tr('Preselection matching method'),
@@ -101,6 +111,7 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 							'partial' => tr('Field here is part of field there'),
 							'domain' => tr('Match domain, used for URL fields'),
 						),
+						'legacy_index' => 10,
 					),
 					'displayOneItem' => array(
 						'name' => tr('One item per value'),
@@ -110,6 +121,7 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 							'multi' => tr('Displays all the items for a same label with a notation value (itemId)'),
 							'one' => tr('Only one random item for each label'),
 						),
+						'legacy_index' => 11,
 					),
 					'selectMultipleValues' => array(
 						'name' => tr('Select multiple values'),
@@ -118,13 +130,15 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 						'options' => array(
 							0 => tr('No'),
 							1 => tr('Yes'),
-						)
+						),
+						'legacy_index' => 12,
 					),
 					'indexRemote' => array(
 						'name' => tr('Index remote fields'),
 						'description' => tr('Index one or multiple fields from the master tracker along with the child, separated by |'),
 						'separator' => '|',
 						'filter' => 'int',
+						'legacy_index' => 13,
 					),
 					'cascade' => array(
 						'name' => tr('Cascade actions'),
@@ -140,6 +154,7 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 							(self::CASCADE_DELETE | self::CASCADE_STATUS) => tr('Delete and status'),
 							(self::CASCADE_CATEG | self::CASCADE_STATUS | self::CASCADE_DELETE) => tr('All'),
 						),
+						'legacy_index' => 14,
 					),
 				),
 			),

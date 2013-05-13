@@ -30,16 +30,19 @@ class Tracker_Field_AutoIncrement extends Tracker_Field_Abstract
 						'description' => tr('The starting value for the field'),
 						'default' => 1,
 						'filter' => 'int',
+						'legacy_index' => 0,
 					),
 					'prepend' => array(
 						'name' => tr('Prepend'),
 						'description' => tr('Text that will be displayed before the field'),
 						'filter' => 'text',
+						'legacy_index' => 1,
 					),
 					'append' => array(
 						'name' => tr('Append'),
 						'description' => tr('Text that will be displayed after the field'),
 						'filter' => 'text',
+						'legacy_index' => 2,
 					),
 					'itemId' => array(
 						'name' => tr('Item ID'),
@@ -49,6 +52,7 @@ class Tracker_Field_AutoIncrement extends Tracker_Field_Abstract
 							'' => '',
 							'itemId' => 'itemId',
 						),
+						'legacy_index' => 3,
 					),
 				),
 			),

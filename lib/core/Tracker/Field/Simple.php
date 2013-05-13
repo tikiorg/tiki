@@ -34,6 +34,7 @@ class Tracker_Field_Simple extends Tracker_Field_Abstract implements Tracker_Fie
 							1 => tr('Encoded mailto link'),
 							2 => tr('Simple mailto link'),
 						),
+						'legacy_index' => 0,
 					),
 					'watchopen' => array(
 						'name' => tr('Watch Open'),
@@ -43,6 +44,7 @@ class Tracker_Field_Simple extends Tracker_Field_Abstract implements Tracker_Fie
 							'' => tr('No'),
 							'o' => tr('Yes'),
 						),
+						'legacy_index' => 1,
 					),
 					'watchpending' => array(
 						'name' => tr('Watch Pending'),
@@ -52,6 +54,7 @@ class Tracker_Field_Simple extends Tracker_Field_Abstract implements Tracker_Fie
 							'' => tr('No'),
 							'p' => tr('Yes'),
 						),
+						'legacy_index' => 2,
 					),
 					'watchopen' => array(
 						'name' => tr('Watch Closed'),
@@ -61,6 +64,7 @@ class Tracker_Field_Simple extends Tracker_Field_Abstract implements Tracker_Fie
 							'' => tr('No'),
 							'c' => tr('Yes'),
 						),
+						'legacy_index' => 3,
 					),
 				),
 			),

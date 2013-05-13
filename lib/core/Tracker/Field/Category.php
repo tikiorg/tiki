@@ -28,6 +28,7 @@ class Tracker_Field_Category extends Tracker_Field_Abstract implements Tracker_F
 						'name' => tr('Parent Category'),
 						'description' => tr('Child categories will be provided as options for the field.'),
 						'filter' => 'int',
+						'legacy_index' => 0,
 					),
 					'inputtype' => array(
 						'name' => tr('Input Type'),
@@ -40,6 +41,7 @@ class Tracker_Field_Category extends Tracker_Field_Abstract implements Tracker_F
 							'm' => tr('List box'),
 							'checkbox' => tr('Multiple-selection check-boxes'),
 						),
+						'legacy_index' => 1,
 					),
 					'selectall' => array(
 						'name' => tr('Select All'),
@@ -49,6 +51,7 @@ class Tracker_Field_Category extends Tracker_Field_Abstract implements Tracker_F
 							0 => tr('No controls'),
 							1 => tr('Include controls'),
 						),
+						'legacy_index' => 2,
 					),
 					'descendants' => array(
 						'name' => tr('All descendants'),
@@ -59,6 +62,7 @@ class Tracker_Field_Category extends Tracker_Field_Abstract implements Tracker_F
 							1 => tr('All descendants'),
 							2 => tr('All descendants and display full path'),
 						),
+						'legacy_index' => 3,
 					),
 					'help' => array(
 						'name' => tr('Help'),
@@ -68,6 +72,7 @@ class Tracker_Field_Category extends Tracker_Field_Abstract implements Tracker_F
 							0 => tr('No help'),
 							1 => tr('Tooltip'),
 						),
+						'legacy_index' => 4,
 					),
 				),
 			),

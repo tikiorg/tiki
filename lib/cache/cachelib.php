@@ -18,7 +18,7 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 
 class Cachelib
 {
-	public $implementation;
+	private $implementation;
 
 	function __construct()
 	{
@@ -29,6 +29,14 @@ class Cachelib
 		} else {
 			$this->implementation = new CacheLibFileSystem;
 		}
+	}
+
+	function replaceImplementation($implementation)
+	{
+		$old = $this->implementation;
+		$this->implementation = $implementation;
+
+		return $old;
 	}
 
 	function cacheItem($key, $data, $type='')
@@ -360,6 +368,34 @@ class CacheLibMemcache
 	function empty_type_cache( $type )
 	{
 		return TikiLib::lib("memcache")->flush();
+	}
+}
+
+class CacheLibNoCache
+{
+	function cacheItem($key, $data, $type='')
+	{
+		return false;
+	}
+
+	function isCached($key, $type='')
+	{
+		return false;
+	}
+
+	function getCached($key, $type='', $lastModif = false)
+	{
+		return false;
+	}
+
+	function invalidate($key, $type='')
+	{
+		return false;
+	}
+
+	function empty_type_cache( $type )
+	{
+		return false;
 	}
 }
 

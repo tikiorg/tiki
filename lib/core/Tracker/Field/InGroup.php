@@ -28,7 +28,8 @@ class Tracker_Field_InGroup extends Tracker_Field_Abstract
 					'groupName' => array(
 						'name' => tr('Group Name'),
 						'description' => tr('Name of the group to verify'),
-						'filter' => 'groupname'
+						'filter' => 'groupname',
+						'legacy_index' => 0,
 					),
 					'type' => array(
 						'name' => tr('Display'),
@@ -39,6 +40,7 @@ class Tracker_Field_InGroup extends Tracker_Field_Abstract
 							'date' => tr('Join date'),
 							'expire'=>tr('Expiration date')
 						),
+						'legacy_index' => 1,
 					),
 				),
 			),

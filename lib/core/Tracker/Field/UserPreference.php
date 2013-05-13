@@ -28,6 +28,7 @@ class Tracker_Field_UserPreference extends Tracker_Field_Abstract
 						'name' => tr('Preference Name'),
 						'description' => tr('Name of the preference to manipulate. password and email are not preferences, but are also valid values that will modify the user\'s profile.'),
 						'filter' => 'word',
+						'legacy_index' => 0,
 					),
 				),
 			),

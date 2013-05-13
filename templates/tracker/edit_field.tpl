@@ -45,6 +45,10 @@
 								</option>
 							{/foreach}
 						</select>
+					{elseif $def.separator}
+						<input type="text" name="option~{$param|escape}" value="{$options[$param]|implode:$def.separator|escape}">
+					{elseif $def.count eq '*'}
+						<input type="text" name="option~{$param|escape}" value="{$options[$param]|implode:','|escape}">
 					{else}
 						<input type="text" name="option~{$param|escape}" value="{$options[$param]|escape}">
 					{/if}

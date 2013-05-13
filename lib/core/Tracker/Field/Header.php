@@ -30,6 +30,7 @@ class Tracker_Field_Header extends Tracker_Field_Abstract implements Tracker_Fie
 						'description' => tr('Level of the header to use for complex tracker structures needing multiple heading levels.'),
 						'default' => 1,
 						'filter' => 'int',
+						'legacy_index' => 0,
 					),
 					'toggle' => array(
 						'name' => tr('Default State'),
@@ -40,6 +41,7 @@ class Tracker_Field_Header extends Tracker_Field_Abstract implements Tracker_Fie
 							'o' => tr('Open'),
 							'c' => tr('Closed'),
 						),
+						'legacy_index' => 1,
 					),
 				),
 			),
