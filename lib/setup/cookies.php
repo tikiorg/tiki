@@ -49,7 +49,7 @@ function getCookie($name, $section = null, $default = null)
 		}
 	} else if ($section) {
 		if (isset($_COOKIE[$section])) {
-			if (preg_match("/@" . $name . "\:([^@;]*)/", $_COOKIE[$section], $matches))
+			if (preg_match("/@" . preg_quote($name, '/') . "\:([^@;]*)/", $_COOKIE[$section], $matches))
 				return $matches[1];
 			else
 				return $default;
