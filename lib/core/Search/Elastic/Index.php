@@ -30,8 +30,6 @@ class Search_Elastic_Index implements Search_Index_Interface
 		$objectType = $data['object_type']->getValue($factory);
 		$objectId = $data['object_id']->getValue($factory);
 
-		unset($this->invalidateList[$objectType . ':' . $objectId]);
-
 		$this->generateMapping($objectType, $data);
 
 		$factory = $this->getTypeFactory();
@@ -42,6 +40,13 @@ class Search_Elastic_Index implements Search_Index_Interface
 		);
 		$objectType = $data['object_type'];
 		$objectId = $data['object_id'];
+
+		if (! empty($data['hash'])) {
+			$objectId .= "~~{$data['hash']}";
+		}
+
+		unset($this->invalidateList[$objectType . ':' . $objectId]);
+
 		$this->connection->index($this->index, $objectType, $objectId, $data);
 	}
 
