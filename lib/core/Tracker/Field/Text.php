@@ -103,12 +103,12 @@ class Tracker_Field_Text extends Tracker_Field_Abstract implements Tracker_Field
 		$post = '';
 
 		if ($this->getConfiguration('type') == 't') {
-			if ($this->getOption(2)) {
-				$pre = '<span class="formunit">' . $this->getOption(2) . '</span>';
+			if ($this->getOption('prepend')) {
+				$pre = '<span class="formunit">' . $this->getOption('prepend') . '</span>';
 			}
 
-			if ($this->getOption(3)) {
-				$post = '<span class="formunit">' . $this->getOption(3) . '</span>';
+			if ($this->getOption('append')) {
+				$post = '<span class="formunit">' . $this->getOption('append') . '</span>';
 			}
 		}
 

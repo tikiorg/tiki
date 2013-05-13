@@ -61,21 +61,21 @@ class Tracker_Field_WebService extends Tracker_Field_Abstract
 	function renderOutput($context = array())
 	{
 			
-		if (!$this->getOption(0) || !$this->getOption(1)) {
+		if (!$this->getOption('service') || !$this->getOption('template')) {
 			return false;
 		}
 	
 		require_once 'lib/webservicelib.php';
 
-		if (!($webservice = Tiki_Webservice::getService($this->getOption(0)))  ||
-			!($template = $webservice->getTemplate($this->getOption(1))) ) {
+		if (!($webservice = Tiki_Webservice::getService($this->getOption('service')))  ||
+			!($template = $webservice->getTemplate($this->getOption('template'))) ) {
 				return false;
 		}
 
 		$ws_params = array();
 		
-		if ( $this->getOption(2) ) {
-			parse_str($this->getOption(2), $ws_params);
+		if ( $this->getOption('params') ) {
+			parse_str($this->getOption('params'), $ws_params);
 			foreach ($ws_params as $ws_param_name => &$ws_param_value) {
 				if (preg_match('/(.*)%(.*)%(.*)/', $ws_param_value, $matches)) {
 					$ws_param_field_name = $matches[2];

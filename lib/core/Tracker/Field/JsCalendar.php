@@ -69,13 +69,13 @@ class Tracker_Field_JsCalendar extends Tracker_Field_DateTime
 		$smarty->loadPlugin('smarty_function_jscalendar');
 
 		$params = array( 'fieldname' => $this->getInsertId());
-		$params['showtime'] = $this->getOption(0) === 'd' ? 'n' : 'y';
+		$params['showtime'] = $this->getOption('datetime') === 'd' ? 'n' : 'y';
 		if ( empty($context['inForm'])) {
 			$params['date'] = $this->getValue();
 			if (empty($params['date'])) {
 				$params['date'] = $this->getConfiguration('value');
 			}
-			if (empty($params['date']) && $this->getOption(1)) {
+			if (empty($params['date']) && $this->getOption('useNow')) {
 				$params['date'] = TikiLib::lib('tiki')->now;
 			}
 		} else {

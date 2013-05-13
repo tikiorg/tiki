@@ -79,7 +79,7 @@ class Tracker_Field_Icon extends Tracker_Field_Abstract
 	{
 		$filegallib = TikiLib::lib('filegal');
 
-		$galleryId = (int) $this->getOption(0);
+		$galleryId = (int) $this->getOption('galleryId');
 		$info = $filegallib->get_file_gallery_info($galleryId);
 
 		$galleries = array(

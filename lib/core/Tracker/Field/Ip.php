@@ -46,7 +46,7 @@ class Tracker_Field_Ip extends Tracker_Field_Abstract implements Tracker_Field_S
 		
 		$ins_id = $this->getInsertId();
 		$data = $this->getItemData();
-		$autoAssign = $this->getOption(0);
+		$autoAssign = $this->getOption('autoassign');
  
 		if (empty($data) && $tiki_p_admin_trackers == 'n' && $autoAssign == '1') {
 			// if it is a new tracker item, ip auto assign is enabled and user doesn't

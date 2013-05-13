@@ -52,7 +52,7 @@ class Tracker_Field_StaticText extends Tracker_Field_Abstract implements Tracker
 		
 		$value = $this->getConfiguration('description');
 
-		if ($this->getOption(0) == 1) {
+		if ($this->getOption('wikiparse') == 1) {
 			$value = $tikilib->parse_data($value);
 		}
 		

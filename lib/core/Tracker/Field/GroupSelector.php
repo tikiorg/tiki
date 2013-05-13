@@ -65,7 +65,7 @@ class Tracker_Field_GroupSelector extends Tracker_Field_Abstract
 
 		$data = array();
 		
-		$groupId = $this->getOption(1);
+		$groupId = $this->getOption('groupId');
 		if (empty($groupId)) {
 			$data['list'] = TikiLib::lib('user')->list_all_groups();
 		} else {
@@ -74,13 +74,13 @@ class Tracker_Field_GroupSelector extends Tracker_Field_Abstract
 		}
 
 		if ( isset($requestData[$ins_id])) {
-			if ($this->getOption(0) < 1 || $tiki_p_admin_trackers === 'y') {
+			if ($this->getOption('autoassign') < 1 || $tiki_p_admin_trackers === 'y') {
 				$data['value'] = in_array($requestData[$ins_id], $data['list'])? $requestData[$ins_id]: '';
 			} else {
-				if ($this->getOption(0) == 2) {
+				if ($this->getOption('autoassign') == 2) {
 					$data['defvalue'] = $group;
 					$data['value'] = $group;
-				} elseif ($this->getOption(0) == 1) {
+				} elseif ($this->getOption('autoassign') == 1) {
 					$data['value'] = $group;
 				} else {
 					$data['value'] = '';
@@ -103,13 +103,13 @@ class Tracker_Field_GroupSelector extends Tracker_Field_Abstract
 	{
 		global $prefs, $user;
 
-		if ($this->getOption(0) && is_null($oldValue)) {
+		if ($this->getOption('autoassign') && is_null($oldValue)) {
 			$definition = $this->getTrackerDefinition();
 			if ($prefs['groupTracker'] == 'y' && $definition->isEnabled('autoCreateGroup')) {
 				$value = TikiLib::lib('trk')->groupName($definition->getInformation(), $this->getItemId());
 			}
 		}
-		if ($this->getOption(2)) {
+		if ($this->getOption('assign')) {
 			$creator = TikiLib::lib('trk')->get_item_creator($this->getConfiguration('trackerId'), $this->getItemId());
 			if (empty($creator)) $creator = $user;
 			$ginfo = TikiLib::lib('user')->get_group_info($value);

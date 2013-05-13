@@ -69,11 +69,11 @@ class Tracker_Field_Header extends Tracker_Field_Abstract implements Tracker_Fie
 		$headerlib = TikiLib::lib('header');
 
 		$class = null;
-		$level = intval($this->getOption(0, 2));
+		$level = intval($this->getOption('level', 2));
 		if ($level <= 0) {
 			$level = 2;
 		}
-		$toggle = $this->getOption(1);
+		$toggle = $this->getOption('toggle');
 		$inTable = isset($context['inTable']) ? $context['inTable'] : '';
 		$name =  htmlspecialchars(tra($this->getConfiguration('name')));
 

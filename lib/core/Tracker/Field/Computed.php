@@ -47,7 +47,7 @@ class Tracker_Field_Computed extends Tracker_Field_Abstract
 		} else if ($this->getItemId()) {
 			$fields = $this->getTrackerDefinition()->getFields();
 			$values = $this->getItemData();
-			$option = $this->getOption(0);
+			$option = $this->getOption('formula');
 
 			if ($option) {
 				$calc = preg_replace('/#([0-9]+)/', '$values[\1]', $option);
@@ -58,7 +58,7 @@ class Tracker_Field_Computed extends Tracker_Field_Abstract
 				$trklib = TikiLib::lib('trk');
 
 				$infoComputed = $trklib->get_computed_info(
-					$this->getOption(0),
+					$this->getOption('formula'),
 					$this->getTrackerDefinition()->getConfiguration('trackerId'),
 					$fields
 				);

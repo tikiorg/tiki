@@ -114,23 +114,23 @@ class Tracker_Field_TextArea extends Tracker_Field_Text
 	{
 		static $firstTime = true;
 
-		$cols = $this->getOption(1);
-		$rows = $this->getOption(2);
+		$cols = $this->getOption('width');
+		$rows = $this->getOption('height');
 
 		$data = array(
-			'toolbar' => $this->getOption(0) ? 'y' : 'n',
+			'toolbar' => $this->getOption('toolbars') ? 'y' : 'n',
 			'cols' => ($cols >= 1) ? $cols : 50,
 			'rows' => ($rows >= 1) ? $rows : 15,
 			'keyup' => '',
 		);
 
-		if ($this->getOption(5)) {
-			$data['keyup'] = "wordCount({$this->getOption(5)}, this, 'cpt_{$this->getConfiguration('fieldId')}', '" . tr('Word Limit Exceeded') . "')";
-		} elseif ($this->getOption(3)) {
-			$data['keyup'] = "charCount({$this->getOption(3)}, this, 'cpt_{$this->getConfiguration('fieldId')}', '" . tr('Character Limit Exceeded') . "')";
+		if ($this->getOption('wordwrap')) {
+			$data['keyup'] = "wordCount({$this->getOption('wordwrap')}, this, 'cpt_{$this->getConfiguration('fieldId')}', '" . tr('Word Limit Exceeded') . "')";
+		} elseif ($this->getOption('max')) {
+			$data['keyup'] = "charCount({$this->getOption('max')}, this, 'cpt_{$this->getConfiguration('fieldId')}', '" . tr('Character Limit Exceeded') . "')";
 		}
 		$data['element_id'] = 'area_' . uniqid();
-		if ($firstTime && $this->getOption(7) === 'y') {	// wysiwyg
+		if ($firstTime && $this->getOption('wysiwyg') === 'y') {	// wysiwyg
 			$is_html = '<input type="hidden" id="allowhtml" value="1" />';
 			$firstTime = false;
 		} else {
@@ -155,7 +155,7 @@ class Tracker_Field_TextArea extends Tracker_Field_Text
 	protected function attemptParse($text)
 	{
 		$parseOptions = array();
-		if ($this->getOption(7) === 'y') {
+		if ($this->getOption('wysiwyg') === 'y') {
 			$parseOptions['is_html'] = true;
 		}
 		return TikiLib::lib('tiki')->parse_data($text, $parseOptions);

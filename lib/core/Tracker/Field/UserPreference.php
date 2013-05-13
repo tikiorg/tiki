@@ -51,10 +51,10 @@ class Tracker_Field_UserPreference extends Tracker_Field_Abstract
 				$itemUser = $this->getTrackerDefinition()->getItemUser($itemId);
 		
 				if (!empty($itemUser)) {
-					if ($this->getOption(0) == 'email') {
+					if ($this->getOption('type') == 'email') {
 						$value = $userlib->get_user_email($itemUser);
 					} else {
-						$value = $userlib->get_user_preference($itemUser, $this->getOption(0));
+						$value = $userlib->get_user_preference($itemUser, $this->getOption('type'));
 					}
 				}
 			}

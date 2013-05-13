@@ -51,15 +51,15 @@ class Tracker_Field_Ldap extends Tracker_Field_Abstract
 
 	function getFieldData(array $requestData = array())
 	{
-		if ($this->getOption(2)) {
+		if ($this->getOption('dsn')) {
 			$adminlib = TikiLib::lib('admin');
 			$ldaplib = TikiLib::lib('ldap');
 
 			// Retrieve DSN
-			$info_ldap = $adminlib->get_dsn_from_name($this->getOption(2));
+			$info_ldap = $adminlib->get_dsn_from_name($this->getOption('dsn'));
 
 			if ($info_ldap) {
-				$ldap_filter = $this->getOption(0);
+				$ldap_filter = $this->getOption('filter');
 
 				// Replace %field_name% by real value
 				preg_match('/%([^%]+)%/', $ldap_filter, $ldap_filter_field_names);
@@ -74,7 +74,7 @@ class Tracker_Field_Ldap extends Tracker_Field_Abstract
 
 						// Get LDAP field value
 						return array(
-							'value' => $ldaplib->get_field($info_ldap['dsn'], $ldap_filter, $this->getOption(1)),
+							'value' => $ldaplib->get_field($info_ldap['dsn'], $ldap_filter, $this->getOption('field')),
 						);
 					}
 				}

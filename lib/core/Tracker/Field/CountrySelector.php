@@ -58,7 +58,7 @@ class Tracker_Field_CountrySelector extends Tracker_Field_Abstract implements Tr
 			'value' => isset($requestData[$ins_id])
 				? $requestData[$ins_id]
 				: $this->getValue(),
-			'flags' => TikiLib::lib('trk')->get_flags(true, true, ($this->getOption(1) != 1)),
+			'flags' => TikiLib::lib('trk')->get_flags(true, true, ($this->getOption('sortorder') != 1)),
 			'defaultvalue' => 'None',
 		);
 		
@@ -77,14 +77,14 @@ class Tracker_Field_CountrySelector extends Tracker_Field_Abstract implements Tr
 		$out = '';
 		
 		if ($context['list_mode'] != 'csv') {
-			if ($this->getOption(0) != 1) {
+			if ($this->getOption('name_flag') != 1) {
 				$out .= '<img src="img/flags/'.$current.'.gif" title="'.$label.'" alt="'.$label.'" />';
 			}
-			if ($this->getOption(0) == 0) {
+			if ($this->getOption('name_flag') == 0) {
 				$out .= ' ';
 			}
 		}
-		if ($this->getOption(0) != 2) {
+		if ($this->getOption('name_flag') != 2) {
 			$out .= $label;
 		}
 		

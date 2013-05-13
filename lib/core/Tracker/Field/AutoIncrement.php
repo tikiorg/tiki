@@ -64,12 +64,12 @@ class Tracker_Field_AutoIncrement extends Tracker_Field_Abstract
 		$ins_id = $this->getInsertId();
 		$value = isset($requestData[$ins_id]) ? $requestData[$ins_id] : $this->getValue();
 
-		$append = $this->getOption(1);
+		$append = $this->getOption('prepend');
 		if (!empty($append)) {
 			$value = "<span class='formunit'>$append</span>" . $value;
 		}
 	
-		$prepend = $this->getOption(2);
+		$prepend = $this->getOption('append');
 		if (!empty($prepend)) {
 			$value .= "<span class='formunit'>$prepend</span>";
 		}
@@ -85,12 +85,12 @@ class Tracker_Field_AutoIncrement extends Tracker_Field_Abstract
 	function handleSave($value, $oldValue)
 	{
 		$value = false;
-		if ($this->getOption(3) == 'itemId') {
+		if ($this->getOption('itemId') == 'itemId') {
 			$value = $this->getItemId();
 		} elseif (is_null($oldValue)) {
 			$value = TikiLib::lib('trk')->get_maximum_value($this->getConfiguration('fieldId'));
 			if (! $value) {
-				$value = $this->getOption(0, 1);
+				$value = $this->getOption('start', 1);
 			} else {
 				$value += 1;
 			}

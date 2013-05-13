@@ -85,14 +85,14 @@ class Tracker_Field_DynamicList extends Tracker_Field_Abstract
 
 		TikiLib::lib('header')->add_jq_onready(
 			'
-$("select[name=ins_' . $this->getOption(2) . ']").change(function(e, val) {
+$("select[name=ins_' . $this->getOption('filterFieldIdHere') . ']").change(function(e, val) {
 	$.getJSON(
 		"tiki-tracker_http_request.php",
 		{
-			trackerIdList: ' . $this->getOption(0) . ',
-			fieldlist: ' . $this->getOption(3) . ',
-			filterfield: ' . $this->getOption(1) . ',
-			status: "' . $this->getOption(4) . '",
+			trackerIdList: ' . $this->getOption('trackerId') . ',
+			fieldlist: ' . $this->getOption('listFieldIdThere') . ',
+			filterfield: ' . $this->getOption('filterFieldIdThere') . ',
+			status: "' . $this->getOption('statusThere') . '",
 			mandatory: "' . $this->getConfiguration('isMandatory') . '",
 			item: $(this).val() // We need the field value for the fieldId filterfield for the item $(this).val
 		},

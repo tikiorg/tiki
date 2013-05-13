@@ -71,8 +71,8 @@ class Tracker_Field_PageSelector extends Tracker_Field_Abstract
 			'value' => isset($requestData[$ins_id])
 				? $requestData[$ins_id]
 				: $this->getValue(),
-			'defaultvalue' => $this->getOption(2)
-				? $this->getOption(2)
+			'defaultvalue' => $this->getOption('create')
+				? $this->getOption('create')
 				: $this->getValue(),
 		);
 	}
@@ -86,7 +86,7 @@ class Tracker_Field_PageSelector extends Tracker_Field_Abstract
 	{
 		$value = $this->getConfiguration('value');
 		if ($value) {
-			if ($this->getOption(3) === 'n' || $context['list_mode'] === 'csv') {
+			if ($this->getOption('link') === 'n' || $context['list_mode'] === 'csv') {
 				return $value;
 			} else {
 				$smarty = TikiLib::lib('smarty');

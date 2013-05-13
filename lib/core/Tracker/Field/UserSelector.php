@@ -67,7 +67,7 @@ class Tracker_Field_UserSelector extends Tracker_Field_Abstract implements Track
 
 		$data = array();
 
-		$autoassign = (int) $this->getOption(0);
+		$autoassign = (int) $this->getOption('autoassign');
 
 		if ( isset($requestData[$ins_id])) {
 			if ($autoassign == 0 || $tiki_p_admin_trackers === 'y') {
@@ -101,12 +101,12 @@ class Tracker_Field_UserSelector extends Tracker_Field_Abstract implements Track
 		$smarty = TikiLib::lib('smarty');
 
 		$value = $this->getConfiguration('value');
-		$autoassign = (int) $this->getOption(0);
+		$autoassign = (int) $this->getOption('autoassign');
 		if ((empty($value) && $autoassign == 1) || $autoassign == 2) {	// always use $user for last mod autoassign
 			$value = $user;
 		}
 		if ($autoassign == 0 || $tiki_p_admin_trackers === 'y') {
-			$groupIds = $this->getOption(2, '');
+			$groupIds = $this->getOption('groupIds', '');
 
 			$smarty->loadPlugin('smarty_function_user_selector');
 			return smarty_function_user_selector(
@@ -150,7 +150,7 @@ class Tracker_Field_UserSelector extends Tracker_Field_Abstract implements Track
 
 	function importRemoteField(array $info, array $syncInfo)
 	{
-		$groupIds = $this->getOption(2, '');
+		$groupIds = $this->getOption('groupIds', '');
 		$groupIds = array_filter(explode('|', $groupIds));
 		$groupIds = array_map('intval', $groupIds);
 

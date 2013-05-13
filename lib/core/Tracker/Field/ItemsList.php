@@ -111,8 +111,8 @@ class Tracker_Field_ItemsList extends Tracker_Field_Abstract
 				'trackeroutput/itemslist.tpl',
 				$context,
 				array(
-					'links' => (bool) $this->getOption(4),
-					'raw' => (bool) $this->getOption(3),
+					'links' => (bool) $this->getOption('linkToItems'),
+					'raw' => (bool) $this->getOption('displayFieldIdThere'),
 					'itemIds' => implode(',', $items),
 					'items' => $list,
 					'num' => count($list),
@@ -149,15 +149,15 @@ class Tracker_Field_ItemsList extends Tracker_Field_Abstract
 
 	private function getItemIds()
 	{
-		$trackerId = (int) $this->getOption(0);
-		$remoteField = (int) $this->getOption(1);
-		$displayFields = $this->getOption(3);
-		$status = $this->getOption(5, 'opc');
+		$trackerId = (int) $this->getOption('trackerId');
+		$remoteField = (int) $this->getOption('fieldIdThere');
+		$displayFields = $this->getOption('displayFieldIdThere');
+		$status = $this->getOption('status', 'opc');
 
 		$tracker = Tracker_Definition::get($trackerId);
 		$technique = 'value';
 
-		if ($tracker && ($field = $tracker->getField($remoteField)) && !$this->getOption(2)) {
+		if ($tracker && ($field = $tracker->getField($remoteField)) && !$this->getOption('fieldIdHere')) {
 			if ($field['type'] == 'r' || $field['type'] == 'q' && $field['options_array'][3] == 'itemId') {
 				$technique = 'id';
 			}
@@ -167,7 +167,7 @@ class Tracker_Field_ItemsList extends Tracker_Field_Abstract
 		if ($technique == 'id') {
 			$items = $trklib->get_items_list($trackerId, $remoteField, $this->getItemId(), $status);
 		} else {
-			$localField = (int) $this->getOption(2);
+			$localField = (int) $this->getOption('fieldIdHere');
 			$localValue = $this->getData($localField);
 			if (!$localValue) {
 				// in some cases e.g. pretty tracker $this->getData($localField) is not reliable as the info is not there
@@ -190,9 +190,9 @@ class Tracker_Field_ItemsList extends Tracker_Field_Abstract
 
 	private function getItemLabels($items)
 	{
-		$displayFields = $this->getOption(3);
-		$trackerId = (int) $this->getOption(0);
-		$status = $this->getOption(5, 'opc');
+		$displayFields = $this->getOption('displayFieldIdThere');
+		$trackerId = (int) $this->getOption('trackerId');
+		$status = $this->getOption('status', 'opc');
 
 		$definition = Tracker_Definition::get($trackerId);
 		if (! $definition) {

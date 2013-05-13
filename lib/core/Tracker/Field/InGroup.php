@@ -63,20 +63,20 @@ class Tracker_Field_InGroup extends Tracker_Field_Abstract
 		$itemUser = $trklib->get_item_creator($this->getConfiguration('trackerId'), $this->getItemId());
 		
 		if (!empty($itemUser)) {
-			if (!isset($trklib->tracker_infocache['users_group'][$this->getOption(0)])) {
+			if (!isset($trklib->tracker_infocache['users_group'][$this->getOption('groupName')])) {
 				$userlib = TikiLib::lib('user');
-				$trklib->tracker_infocache['users_group'][$this->getOption(0)] = $userlib->get_users_created_group($this->getOption(0), null, true);
+				$trklib->tracker_infocache['users_group'][$this->getOption('groupName')] = $userlib->get_users_created_group($this->getOption('groupName'), null, true);
 			}
-			if (isset($trklib->tracker_infocache['users_group'][$this->getOption(0)][$itemUser])) {
-				if ($this->getOption(1) == 'date') {
-					$value = $trklib->tracker_infocache['users_group'][$this->getOption(0)][$itemUser]['created'];
-				} elseif ($this->getOption(1) == 'expire') {
-					$value = $trklib->tracker_infocache['users_group'][$this->getOption(0)][$itemUser]['expire'];
+			if (isset($trklib->tracker_infocache['users_group'][$this->getOption('groupName')][$itemUser])) {
+				if ($this->getOption('type') == 'date') {
+					$value = $trklib->tracker_infocache['users_group'][$this->getOption('groupName')][$itemUser]['created'];
+				} elseif ($this->getOption('type') == 'expire') {
+					$value = $trklib->tracker_infocache['users_group'][$this->getOption('groupName')][$itemUser]['expire'];
 				} else {
 					$value = 'Yes';
 				}
 			} else {
-				if ($this->getOption(1) == 'date' || $this->getOption(1) == 'expire') {
+				if ($this->getOption('type') == 'date' || $this->getOption('type') == 'expire') {
 					$value = '';
 				} else {
 					$value = 'No';
@@ -84,7 +84,7 @@ class Tracker_Field_InGroup extends Tracker_Field_Abstract
 			}
 		}
 		
-		if ($this->getOption(1) === 'date' || $this->getOption(1) == 'expire') {
+		if ($this->getOption('type') === 'date' || $this->getOption('type') == 'expire') {
 			if (!empty($value)) {
 				return TikiLib::lib('tiki')->get_short_date($value);
 			}
