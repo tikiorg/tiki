@@ -27,9 +27,14 @@ function wikiplugin_googleanalytics_info()
 
 function wikiplugin_googleanalytics($data, $params)
 {
+	global $feature_no_cookie;	// set according to cookie_consent_feature pref in tiki-setup.php
+
 	extract($params, EXTR_SKIP);
 	if (empty($account)) {
 		return tra('Missing parameter');
+	}
+	if ($feature_no_cookie) {
+		return '';
 	}
 	$ret = <<<JS
 <script type="text/javascript">
