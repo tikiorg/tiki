@@ -164,6 +164,11 @@ jqueryTiki.no_cookie = false;
 jqueryTiki.language = "' . $prefs['language'] . '";
 ';	// NB replace "normal" speeds with int to workaround issue with jQuery 1.4.2
 
+	//Set inline comments on/off
+	if ($prefs['feature_inline_comments'] === 'y') {
+		$js .= 'jqueryTiki.useInlineComment = true;';
+	}
+	
 	if ($prefs['mobile_feature'] === 'y' && $prefs['mobile_mode'] === 'y') {
 		$js .= '
 // overrides for prefs for jq in mobile mode

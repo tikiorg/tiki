@@ -106,11 +106,12 @@ $("#' . $exec_key . '").each(function(){
 			return;
 		}
 
-		$this.ckeditor(function() {
+		CKEDITOR.replace( $this.attr("id"),' . $ckoption . ');
+		CKEDITOR.on("instanceReady", function(event) {
 			// close others
-			var editor = CKEDITOR.instances[$this.attr("id")];
+			var editor = event.editor;
 
-			var editorSelector = "#cke_" + this.element.getId();
+			var editorSelector = "#cke_" + editor.element.getId();
 
 			$(editorSelector).after(
 				$("<button class=\"button_' . $exec_key . '\">" + tr("Cancel") + "</button>").button()
@@ -136,8 +137,7 @@ $("#' . $exec_key . '").each(function(){
 						return false;
 					})
 			);
-		}' . (!empty($ckoption) ? ', ' . $ckoption : '') .'
-		);
+		});
 	});
 });
 ';

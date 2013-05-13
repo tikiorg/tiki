@@ -1,4 +1,4 @@
-{* $Id$ *}
+{* $Id: include_comments.tpl 44059 2012-11-22 16:13:24Z lphuberdeau $ *}
 
 <div class="navbar">
 	{button href="tiki-list_comments.php" _text="{tr}List comments{/tr}"}

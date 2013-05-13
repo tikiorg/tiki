@@ -29,7 +29,6 @@
 		{/tab}
 
 		{tab name="{tr}Feeds{/tr}"}
-
 			{preference name=feed_articles}
 			<div class="adminoptionboxchild" id="feed_articles_childcontainer">
 				<a href="tiki-articles_rss.php" title="{tr}Feed for articles{/tr}"> {icon _id=feed}</a>

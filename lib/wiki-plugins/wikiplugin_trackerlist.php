@@ -1408,7 +1408,7 @@ function wikiplugin_trackerlist($data, $params)
 		} else {
 			$smarty->assign('urlquery', '');
 		}
-		if (!empty($export) && $export != 'n' && $tiki_p_export_tracker == 'y') {
+		if (!empty($export) && $export != 'n' && $perms['tiki_p_export_tracker'] == 'y') {
 			$smarty->loadPlugin('smarty_function_service');
 			$exportParams = array(
 				'controller' => 'tracker',
