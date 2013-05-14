@@ -2045,6 +2045,8 @@ class UsersLib extends TikiLib
 		$result = $this->query($query, array($user));
 		$query = 'delete from `tiki_newsletter_subscriptions` where binary `email`=? and `isUser`=?';
 		$result = $this->query($query, array($user, 'y'));
+		$this->query('delete from `tiki_user_reports` where `user` = ?', array($user));
+		$this->query('delete from `tiki_user_reports_cache` where `user` = ?', array($user));
 
 		$cachelib->invalidate('userslist');
 		return true;
