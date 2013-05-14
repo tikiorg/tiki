@@ -65,7 +65,7 @@ function prefs_cookie_list()
 		),
 		'cookie_consent_question' => array(
 			'name' => tra('Cookie Consent Question'),
-			'description' => tra('Specific question next to the checkbox for agreement.'),
+			'description' => tra('Specific question next to the checkbox for agreement. Leave empty to not display a checkbox.'),
 			'hint' => tra('Wiki parsed'),
 			'type' => 'text',
 			'size' => 35,
@@ -80,7 +80,7 @@ function prefs_cookie_list()
 		),
 		'cookie_consent_alert' => array(
 			'name' => tra('Cookie Consent Alert'),
-			'description' => tra('Alert displayed whn user tries to access a feature requiring cooies.'),
+			'description' => tra('Alert displayed when user tries to access a feature requiring cooies.'),
 			'type' => 'text',
 			'size' => 35,
 			'default' => tra('Sorry, cookie consent required'),

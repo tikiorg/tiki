@@ -86,6 +86,8 @@ class Tracker_Field_Category extends Tracker_Field_Abstract implements Tracker_F
 
 		if (isset($requestData[$key]) && is_array($requestData[$key])) {
 			$selected = $requestData[$key];
+		} else if (isset($requestData['cat_managed'])) {
+			$selected = array();
 		} elseif ($this->getItemId() && !isset($requestData[$key])) {
 			// only show existing category of not receiving request, otherwise might be uncategorization in progress
 			$selected = $this->getCategories();
