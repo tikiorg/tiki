@@ -753,18 +753,16 @@ function wikiplugin_trackerlist($data, $params)
 			$sort = 'n';
 		}
 
-		if ($tiki_p_admin_trackers != 'y') {
-			$perms = $tikilib->get_perm_object($trackerId, 'tracker', $tracker_info, false);
-			if ($perms['tiki_p_view_trackers'] != 'y' && !$user) {
-				return;
-			}
-			$userCreatorFieldId = $trklib->get_field_id_from_type($trackerId, 'u', '1%');
-			$groupCreatorFieldId = $trklib->get_field_id_from_type($trackerId, 'g', '1%');
-			if ($perms['tiki_p_view_trackers'] != 'y' && $tracker_info['writerCanModify'] != 'y' && empty($userCreatorFieldId) && empty($groupCreatorFieldId)) {
-				return;
-			}
-			$smarty->assign_by_ref('perms', $perms);
+		$perms = $tikilib->get_perm_object($trackerId, 'tracker', $tracker_info, false);
+		if ($perms['tiki_p_view_trackers'] != 'y' && !$user) {
+			return;
 		}
+		$userCreatorFieldId = $trklib->get_field_id_from_type($trackerId, 'u', '1%');
+		$groupCreatorFieldId = $trklib->get_field_id_from_type($trackerId, 'g', '1%');
+		if ($perms['tiki_p_view_trackers'] != 'y' && $tracker_info['writerCanModify'] != 'y' && empty($userCreatorFieldId) && empty($groupCreatorFieldId)) {
+			return;
+		}
+		$smarty->assign_by_ref('perms', $perms);
 
 		global $trklib; require_once("lib/trackers/trackerlib.php");
 		if (!empty($fields)) {
