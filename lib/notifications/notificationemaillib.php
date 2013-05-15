@@ -679,10 +679,17 @@ function sendStructureEmailNotification($params)
 	global $tikilib, $smarty, $prefs;
 	global $structlib; include_once('lib/structures/structlib.php');
 
+	$params['event'] = 'structure_' . $params['action'];
+
 	if ($params['action'] == 'move_up' || $params['action'] == 'move_down') {
 		$nots = $structlib->get_watches('', $params['parent_id'], false);
 	} else {
 		$nots = $structlib->get_watches('', $params['page_ref_id']);
+	}
+
+	if ($prefs['feature_daily_report_watches'] == 'y') {
+		$reportsManager = Reports_Factory::build('Reports_Manager');
+		$reportsManager->addToCache($nots, $params);
 	}
 
 	if (!empty($nots)) {
