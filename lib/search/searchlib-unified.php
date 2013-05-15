@@ -186,6 +186,7 @@ class UnifiedSearchLib
 		// Process the documents updated while we were processing the update
 		$this->processUpdateQueue(1000);
 
+		$tikilib->set_preference('unified_last_rebuild', $tikilib->now);
 		return $stat;
 	}
 

@@ -40,6 +40,12 @@
 					{tr}Unified Search{/tr} {tr}(Advanced){/tr}
 				</legend>
 
+				{if $prefs.unified_last_rebuild}
+					{remarksbox _icon=info title="{tr}Last rebuild{/tr}"}
+						<p>{tr _0=$prefs.unified_last_rebuild|tiki_long_datetime}Your index was last fully rebuilt on %0.{/tr}</p>
+					{/remarksbox}
+				{/if}
+
 				{preference name=feature_search visible="always"}
 				<div class="adminoptionboxchild" id="feature_search_childcontainer">				
 					{preference name=feature_search_stats}
