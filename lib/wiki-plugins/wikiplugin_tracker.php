@@ -1431,13 +1431,16 @@ FILL;
 			$back .= smarty_function_trackerheader(array('level'=>-1, 'title'=>'', 'inTable' =>(empty($tpl) && empty($wiki))?'wikiplugin_tracker':'' ), $smarty);
 
 
-			if ($prefs['feature_antibot'] == 'y' && (empty($user) || (!empty($user) && $_REQUEST['error'] == 'y'))
+			$smarty->assign('showmandatory', $showmandatory);
+
+			if ($prefs['feature_antibot'] == 'y' && empty($user)
 				&& $params['formtag'] != 'n'
 				&& ($registration != 'y' || $prefs["user_register_prettytracker"] != 'y')
 				) {
 				// in_tracker session var checking is for tiki-register.php
-				$smarty->assign('showmandatory', $showmandatory);
 				$smarty->assign('antibot_table', empty($wiki) && empty($tpl)?'n': 'y');
+				include_once('lib/captcha/captchalib.php');
+				$smarty->assign('captchalib', $captchalib);
 				$back .= $smarty->fetch('antibot.tpl');
 			}
 			if (empty($tpl) && empty($wiki)) {
