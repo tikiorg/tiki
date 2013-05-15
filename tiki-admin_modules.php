@@ -443,7 +443,7 @@ $assigned_modules = array_map(
 );
 
 $smarty->assign('assigned_modules', $assigned_modules);
-$smarty->assign('module_zones', $module_zones);
+$smarty->assign('module_zone_list', $module_zones);
 
 $prefs['module_zones_top'] = 'fixed';
 $prefs['module_zones_topbar'] = 'fixed';
