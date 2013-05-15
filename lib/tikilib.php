@@ -285,6 +285,9 @@ class TikiLib extends TikiDb_Bridge
 			case 'registration':
 				global $registrationlib; require_once 'lib/registration/registrationlib.php';
 				return self::$libraries[$name] = $registrationlib;
+			case 'login':
+				require_once 'lib/loginlib.php';
+				return self::$libraries[$name] = new LoginLib;
 		}
 	}
 
