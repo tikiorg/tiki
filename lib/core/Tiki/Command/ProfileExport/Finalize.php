@@ -19,12 +19,34 @@ class Finalize extends ObjectWriter
 		$this
 			->setName('profile:export:finalize')
 			->setDescription('Clean-up the working profile of intermediate data')
+			->addOption(
+				'force',
+				null,
+				InputOption::VALUE_NONE,
+				'Write static references even if they are unknown'
+			)
 			;
 	}
 
 	protected function execute(InputInterface $input, OutputInterface $output)
 	{
+		$force = $input->getOption('force');
+
 		$writer = $this->getProfileWriter($input);
+		$remaining = $writer->getUnknownObjects();
+
+		if ($force) {
+			foreach ($remaining as $entry) {
+				$writer->removeUnknown($entry['type'], $entry['id'], $entry['id']);
+			}
+		} else {
+			$objects = implode("\n", array_map(function ($entry) {
+				return "* {$entry['type']} - {$entry['id']}";
+			}, $remaining));
+			$output->writeln("<error>Some of the remaining objects are unknown:\n$objects\n\nConsider adding them to the profile or use --force to write them directly (profile may not work in all environments).</error>");
+			return;
+		}
+
 		$writer->clean();
 		$writer->save();
 

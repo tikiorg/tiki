@@ -40,10 +40,6 @@ class Init extends Command
 profile.name = $profileName
 INI;
 		file_put_contents("profiles/info.ini", $definition);
-		file_put_contents("profiles/$profileName.yml", \Horde_Yaml::dump(array(
-			'preferences' => array(),
-			'objects' => array(),
-		)));
 		mkdir("profiles/$profileName");
 	}
 }

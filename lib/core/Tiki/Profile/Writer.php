@@ -23,6 +23,7 @@ class Tiki_Profile_Writer
 			$this->data = array(
 				'preferences' => array(),
 				'objects' => array(),
+				'unknown_objects' => array(),
 			);
 		}
 	}
@@ -54,7 +55,36 @@ class Tiki_Profile_Writer
 			'data' => $data,
 		);
 
+		// Search through currently unknown reference for this item
+		$ref = $this->getReference($type, $currentId);
+		$this->removeUnknown($type, $currentId, $ref);
+
 		return $reference;
+	}
+
+	function removeUnknown($type, $id, $replacement)
+	{
+		foreach ($this->data['unknown_objects'] as $key => $entry) {
+			if ($entry['type'] == $type && $entry['id'] == $id) {
+				$token = $entry['token'];
+				array_walk_recursive($this->data['objects'], function (& $entry) use ($token, $replacement) {
+					if (is_string($entry)) {
+						$entry = str_replace($token, $replacement, $entry);
+					}
+				});
+
+				unset($this->data['unknown_objects'][$key]);
+				break;
+			}
+		}
+	}
+
+	function getUnknownObjects()
+	{
+		return array_map(function ($entry) {
+			unset($entry['token']);
+			return $entry;
+		}, $this->data['unknown_objects']);
 	}
 
 	function getReference($type, $id)
@@ -72,7 +102,7 @@ class Tiki_Profile_Writer
 			}
 		}
 
-		return $id;
+		return $this->generateTemporaryReference($type, $id);
 	}
 
 	private function clearObject($type, $id)
@@ -80,6 +110,26 @@ class Tiki_Profile_Writer
 		$this->data['objects'] = array_filter($this->data['objects'], function ($item) use ($type, $id) {
 			return $item['type'] != $type || $item['_id'] != $id;
 		});
+	}
+
+	private function generateTemporaryReference($type, $id)
+	{
+		// Find existing entry for unknown reference
+		foreach ($this->data['unknown_objects'] as $entry) {
+			if ($entry['type'] == $type && $entry['id'] == $id) {
+				return $entry['token'];
+			}
+		}
+
+		// Or generate a new one
+		$token = '$unknownobject:' . uniqid() . '$';
+		$this->data['unknown_objects'][] = array(
+			'type' => $type,
+			'id' => $id,
+			'token' => $token,
+		);
+
+		return $token;
 	}
 
 	function save()
@@ -92,6 +142,7 @@ class Tiki_Profile_Writer
 		array_walk($this->data['objects'], function (& $entry) {
 			unset($entry['_id']);
 		});
+		unset($this->data['unknown_objects']);
 	}
 
 	function dump()
