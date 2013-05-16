@@ -34,12 +34,14 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 						'description' => tr('Tracker to link to'),
 						'filter' => 'int',
 						'legacy_index' => 0,
+						'profile_reference' => 'tracker',
 					),
 					'fieldId' => array(
 						'name' => tr('Field ID'),
 						'description' => tr('Default field to display'),
 						'filter' => 'int',
 						'legacy_index' => 1,
+						'profile_reference' => 'tracker_field',
 					),
 					'linkToItem' => array(
 						'name' => tr('Display'),
@@ -57,6 +59,7 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 						'separator' => '|',
 						'filter' => 'int',
 						'legacy_index' => 3,
+						'profile_reference' => 'tracker_field',
 					),
 					'status' => array(
 						'name' => tr('Status Filter'),
@@ -77,6 +80,7 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 						'description' => tr('Link to a wiki page instead of directly to the item'),
 						'filter' => 'pagename',
 						'legacy_index' => 5,
+						'profile_reference' => 'wiki_page',
 					),
 					'addItems' => array(
 						'name' => tr('Add Items'),
@@ -89,6 +93,7 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 						'description' => tr('Wiki page to use as a Pretty Tracker template'),
 						'filter' => 'pagename',
 						'legacy_index' => 7,
+						'profile_reference' => 'wiki_page',
 					),
 					'preSelectFieldHere' => array(
 						'name' => tr('Preselect item based on value in this field'),
@@ -101,6 +106,7 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 						'description' => tr('Match preselect item with this field ID in tracker that is being linked to'),
 						'filter' => 'int',
 						'legacy_index' => 9,
+						'profile_reference' => 'tracker_field',
 					),
 					'preSelectFieldMethod' => array(
 						'name' => tr('Preselection matching method'),
@@ -139,6 +145,7 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 						'separator' => '|',
 						'filter' => 'int',
 						'legacy_index' => 13,
+						'profile_reference' => 'tracker_field',
 					),
 					'cascade' => array(
 						'name' => tr('Cascade actions'),

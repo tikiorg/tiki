@@ -59,6 +59,13 @@ class Tiki_Profile_Writer
 
 	function getReference($type, $id)
 	{
+		if (is_array($id)) {
+			$parent = $this;
+			return array_map(function ($value) use ($type, $parent) {
+				return $parent->getReference($type, $value);
+			}, $id);
+		}
+
 		foreach ($this->data['objects'] as $object) {
 			if ($object['type'] == $type && $object['_id'] == $id) {
 				return "\$profileobject:{$object['ref']}\$";

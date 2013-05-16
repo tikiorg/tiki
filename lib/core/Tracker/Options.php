@@ -109,7 +109,7 @@ class Tracker_Options
 		}
 	}
 
-	private function getParamDefinition($key)
+	function getParamDefinition($key)
 	{
 		if (isset($this->info['params'][$key])) {
 			$data = $this->info['params'][$key];

@@ -201,12 +201,23 @@ class Tiki_Profile_InstallHandler_TrackerField extends Tiki_Profile_InstallHandl
 	static function export(Tiki_Profile_Writer $writer, $field)
 	{
 		$factory = new Tracker_Field_Factory;
-		$options = Tracker_Options::fromSerialized($field['options'], $factory->getFieldInfo($field['type']));
+		$fieldInfo = $factory->getFieldInfo($field['type']);
+
+		$options = Tracker_Options::fromSerialized($field['options'], $fieldInfo);
+		$optionsData = array_filter($options->getAllParameters());
+
+		foreach ($optionsData as $key => $value) {
+			$paramInfo = $options->getParamDefinition($key);
+			if (isset($paramInfo['profile_reference'])) {
+				$optionsData[$key] = $writer->getReference($paramInfo['profile_reference'], $value);
+			}
+		}
+
 		$data = array(
 			'name' => $field['name'],
 			'permname' => $field['permName'],
 			'tracker' => $writer->getReference('tracker', $field['trackerId']),
-			'options' => array_filter($options->getAllParameters()),
+			'options' => $optionsData,
 		);
 
 		$optionMap = array_flip(self::getOptionMap());
