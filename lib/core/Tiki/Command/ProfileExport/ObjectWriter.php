@@ -19,6 +19,8 @@ abstract class ObjectWriter extends Command
 
 	protected function configure()
 	{
+		$this->initialized = true;
+
 		$this
 			->addOption(
 				'reference',
