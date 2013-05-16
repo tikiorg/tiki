@@ -5,7 +5,7 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-class Tiki_Profile_Builder
+class Services_Workspace_ProfileBuilder
 {
 	private $objects = array();
 	private $groups = array();

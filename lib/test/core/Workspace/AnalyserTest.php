@@ -4,7 +4,7 @@ class Profile_AnalyserTest extends PHPUnit_Framework_TestCase
 {
 	function testReadGroupList()
 	{
-		$builder = new Tiki_Profile_Builder;
+		$builder = new Services_Workspace_ProfileBuilder;
 		$builder->addGroup('Base', $builder->user('group'));
 		$builder->addGroup('World', $builder->user('group') . ' World', true);
 		$builder->setManagingGroup('Base');
@@ -25,7 +25,7 @@ class Profile_AnalyserTest extends PHPUnit_Framework_TestCase
 		);
 
 		$profile = Tiki_Profile::fromString($builder->getContent());
-		$analyser = new Tiki_Profile_Analyser($profile);
+		$analyser = new Services_Workspace_ProfileAnalyser($profile);
 
 		$this->assertEquals(
 			array(
@@ -47,7 +47,7 @@ class Profile_AnalyserTest extends PHPUnit_Framework_TestCase
 
 	function testGetObjects()
 	{
-		$builder = new Tiki_Profile_Builder;
+		$builder = new Services_Workspace_ProfileBuilder;
 		$builder->addObject(
 			'wiki_page',
 			'foo',
@@ -70,7 +70,7 @@ class Profile_AnalyserTest extends PHPUnit_Framework_TestCase
 		);
 
 		$profile = Tiki_Profile::fromString($builder->getContent());
-		$analyser = new Tiki_Profile_Analyser($profile);
+		$analyser = new Services_Workspace_ProfileAnalyser($profile);
 
 		$this->assertEquals(
 			array(
