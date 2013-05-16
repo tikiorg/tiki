@@ -190,7 +190,7 @@ class RSSLib extends TikiDb_Bridge
 			$URLPrefix .= "/"; // Append a slash unless Tiki is in the document root. dirname() removes a slash except in that case.
 		}
 
-		if ($prefs['feed_'.$section.'_index'] != '') {
+		if (isset($prefs['feed_'.$section.'_index']) && $prefs['feed_'.$section.'_index'] != '') {
 			$feedLink = $prefs['feed_'.$section.'_index'];
 		} else {
 			$feedLink = htmlspecialchars($tikilib->httpPrefix().$_SERVER["REQUEST_URI"]);
