@@ -39,7 +39,7 @@ class Finalize extends ObjectWriter
 			foreach ($remaining as $entry) {
 				$writer->removeUnknown($entry['type'], $entry['id'], $entry['id']);
 			}
-		} else {
+		} elseif (count($remaining)) {
 			$objects = implode("\n", array_map(function ($entry) {
 				return "* {$entry['type']} - {$entry['id']}";
 			}, $remaining));
