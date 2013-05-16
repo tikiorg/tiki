@@ -200,6 +200,15 @@ class Tiki_Profile_InstallHandler_TrackerField extends Tiki_Profile_InstallHandl
 
 	static function export(Tiki_Profile_Writer $writer, $field)
 	{
+		if (! is_array($field)) {
+			$trklib = TikiLib::lib('trk');
+			$field = $trklib->get_tracker_field($field);
+
+			if (! $field) {
+				return false;
+			}
+		}
+
 		$factory = new Tracker_Field_Factory;
 		$fieldInfo = $factory->getFieldInfo($field['type']);
 
@@ -256,5 +265,7 @@ class Tiki_Profile_InstallHandler_TrackerField extends Tiki_Profile_InstallHandl
 		}
 
 		$writer->addObject('tracker_field', $field['fieldId'], $data);
+
+		return true;
 	}
 }

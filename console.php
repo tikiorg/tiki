@@ -80,6 +80,8 @@ if (is_file($local_php) && ! $installer->requiresUpdate()) {
 if (file_exists('profiles/info.ini')) {
 	$console->add(new Tiki\Command\ProfileExport\WikiPage);
 	$console->add(new Tiki\Command\ProfileExport\Tracker);
+	$console->add(new Tiki\Command\ProfileExport\TrackerField);
+	$console->add(new Tiki\Command\ProfileExport\IncludeProfile);
 	$console->add(new Tiki\Command\ProfileExport\Finalize);
 }
 

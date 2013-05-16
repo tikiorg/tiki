@@ -105,6 +105,15 @@ class Tiki_Profile_Writer
 		return $this->generateTemporaryReference($type, $id);
 	}
 
+	function formatExternalReference($symbol, $profile, $repository = null)
+	{
+		if ($repository) {
+			$repository .= ':';
+		}
+
+		return "\$profileobject:$repository$profile:$symbol\$";
+	}
+
 	private function clearObject($type, $id)
 	{
 		$this->data['objects'] = array_filter($this->data['objects'], function ($item) use ($type, $id) {

@@ -43,7 +43,20 @@ class Finalize extends ObjectWriter
 			$objects = implode("\n", array_map(function ($entry) {
 				return "* {$entry['type']} - {$entry['id']}";
 			}, $remaining));
-			$output->writeln("<error>Some of the remaining objects are unknown:\n$objects\n\nConsider adding them to the profile or use --force to write them directly (profile may not work in all environments).</error>");
+			$output->writeln("<error>Some of the remaining objects are unknown:\n$objects\n\nConsider adding them to the profile or use --force to write them directly (profile may not work in all environments).\n</error>");
+
+			$profileFinder = new \Tiki_Profile_Finder;
+			foreach ($remaining as $entry) {
+				$profileFinder->lookup($entry['type'], $entry['id']);
+			}
+			$profiles = $profileFinder->getProfiles();
+
+			if (count($profiles)) {
+				$commands = implode("\n", array_map(function ($profile) {
+					return "* <info>profile:export:include-profile</info> {$profile['repository']} {$profile['profile']}";
+				}, $profiles));
+				$output->writeln("\n<info>It would seem like some pre-installed profiles cover unknown objects.</info>\n\nYou can run the following commands to include the references (try one at a time):\n$commands\n\nAdd the <info>--full-references</info> flag if the current profile will not be hosted in the same repository.");
+			}
 			return;
 		}
 
