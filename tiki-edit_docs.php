@@ -129,8 +129,7 @@ $smarty->assign('page', $page);
 $smarty->assign('isFromPage', isset($page));
 $smarty->assign('fileId', $fileId);
 
-$headerlib->add_jsfile('lib/webodf/webodf.js');
-$headerlib->add_cssfile('lib/webodf/webodf.css');
+$headerlib->add_jsfile('vendor_extra/webodf/webodf.js');
 
 $savingText = json_encode(tr('Saving...'));
 
@@ -140,7 +139,7 @@ $headerlib->add_jq_onready(
 
 	//make editable
 	$('.editButton').click(function() {
-		odfcanvas.setEditable();
+		odfcanvas.setEditable(true);
 
 		$('.editState,.viewState').toggle();
 
@@ -168,7 +167,7 @@ $headerlib->add_jq_onready(
 
 if (isset($_REQUEST['edit'])) {
 	$smarty->assign('edit', 'true');
-	$headerlib->add_jq_onready('odfcanvas.setEditable();');
+	$headerlib->add_jq_onready('odfcanvas.setEditable(true);');
 } else {
 	$smarty->assign('edit', 'false');
 }
