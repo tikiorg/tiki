@@ -219,12 +219,13 @@ class Tiki_Profile_InstallHandler_Tracker extends Tiki_Profile_InstallHandler
 			Tiki_Profile_InstallHandler_TrackerField::export($writer, $field);
 		}
 
-		foreach ($fieldReferences as $key => $value) {
+		foreach (array_filter($fieldReferences) as $key => $value) {
 			$value = preg_replace_callback('/(\d+)/', function ($match) use ($writer) {
 				return $writer->getReference('tracker_field', $match[1]);
 			}, $value);
 			$writer->pushReference("{$reference}_{$key}");
 			$writer->addObject('tracker_option', "$key-$trackerId", array(
+				'tracker' => $writer->getReference('tracker', $trackerId),
 				'name' => $key,
 				'value' => $value,
 			));

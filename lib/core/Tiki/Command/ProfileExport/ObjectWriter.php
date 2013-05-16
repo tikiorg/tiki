@@ -15,6 +15,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 abstract class ObjectWriter extends Command
 {
+	private $initialized = false;
+
 	protected function configure()
 	{
 		$this
@@ -34,7 +36,7 @@ abstract class ObjectWriter extends Command
 
 		$writer = new \Tiki_Profile_Writer("profiles", $activeProfile);
 
-		if ($ref = $input->getOption('reference')) {
+		if ($this->initialized && $ref = $input->getOption('reference')) {
 			$writer->pushReference($ref);
 		}
 

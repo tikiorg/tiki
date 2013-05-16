@@ -87,13 +87,18 @@ class Tiki_Profile_Writer
 		file_put_contents($this->filePath, Horde_Yaml::dump($this->data));
 	}
 
-	function dump()
+	function clean()
 	{
-		$data = $this->data;
-		array_walk($data['objects'], function (& $entry) {
+		array_walk($this->data['objects'], function (& $entry) {
 			unset($entry['_id']);
 		});
+	}
 
-		return Horde_Yaml::dump($data);
+	function dump()
+	{
+		$clone = clone $this;
+		$clone->clean();
+
+		return Horde_Yaml::dump($clone->data);
 	}
 }
