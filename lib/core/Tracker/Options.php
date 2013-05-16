@@ -163,7 +163,8 @@ class Tracker_Options
 	function buildOptionsArray()
 	{
 		$out = array();
-		foreach ($this->info as $key => $info) {
+		foreach ($this->getLegacySort() as $key) {
+			$info = $this->getParamDefinition($key);
 			$value = $this->getParam($key);
 			if (isset($info['count']) && $info['count'] == '*') {
 				$values = $value;
@@ -178,7 +179,21 @@ class Tracker_Options
 			}
 		}
 		
-		return $v;
+		return $out;
+	}
+
+	private function getLegacySort()
+	{
+		$out = array();
+		foreach ($this->info['params'] as $key => $info) {
+			if (isset($info['legacy_index'])) {
+				$out[$key] = $info['legacy_index'];
+			}
+		}
+
+		asort($out);
+
+		return array_keys($out);
 	}
 }
 
