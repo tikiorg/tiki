@@ -3335,6 +3335,22 @@ body.tiki_wiki #comments {
     border: 2px solid #800;
 }
 
+/* wikiplugin_sign */
+
+.wp-sign {
+	display: inline-block;
+	background-image: url(../../img/icons/text_signature.png);
+	background-repeat: no-repeat;
+	padding-left: 20px;
+	vertical-align: bottom;
+	width: 0;
+	height: 2.75ex;
+	overflow: hidden;
+}
+
+.wp-sign:hover {
+	width: auto;
+}
 /* end plugins */
 
 .magnify {
