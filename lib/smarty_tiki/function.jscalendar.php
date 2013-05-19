@@ -125,21 +125,11 @@ function smarty_function_jscalendar($params, $smarty)
 
 		$command = 'datetimepicker';
 
-		/* css for timepicker */
-		$headerlib->add_css(
-			'
-.ui-timepicker-div .ui-widget-header{ margin-bottom: 8px; }
-.ui-timepicker-div dl{ text-align: left; }
-.ui-timepicker-div dl dt{ height: 25px; }
-.ui-timepicker-div dl dd{ margin: -25px 0 10px 65px; }
-.ui-timepicker-div td { font-size: 90%; }'
-		);
-
 		$js_val1 = empty($params['date']) ? '' : '
 var dt = new Date('.$params['date'].'* 1000);
 var tm = { hour: dt.getHours(), minute: dt.getMinutes(), second: dt.getSeconds() };
 ';
-		$js_val2 = empty($params['date']) ? '""' : '$.datepicker.formatDate( "yy-mm-dd", dt) + " " + $.timepicker._formatTime(tm)';
+		$js_val2 = empty($params['date']) ? '""' : '$.datepicker.formatDate( "yy-mm-dd", dt) + " " + $.datepicker.formatTime("HH:mm", tm)';
 		$headerlib->add_jq_onready(
 			$js_val1 . '$("#' . $params['id'] . '_dptxt").val(' . $js_val2 . ').tiki("' . 
 			$command . '", "jscalendar", ' . $datepicker_options . ');'
