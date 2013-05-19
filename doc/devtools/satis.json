@@ -318,9 +318,9 @@
 			"type": "package",
 			"package": {
 				"name": "jquery/plugins/anythingslider",
-				"version": "1.8.18",
+				"version": "1.9.1",
 				"dist": {
-					"url": "https://github.com/CSS-Tricks/AnythingSlider/archive/v1.8.18.zip",
+					"url": "https://github.com/CSS-Tricks/AnythingSlider/archive/v1.9.1.zip",
 					"type": "zip"
 				}
 			}
@@ -588,7 +588,7 @@
 		"jquery/minicart": "2.6",
 		"jquery/photoswipe": "3.0.5",
 		"jquery/md5": "1.0",
-		"jquery/plugins/anythingslider": "1.8.18",
+		"jquery/plugins/anythingslider": "1.9.1",
 		"jquery/plugins/async": "1.0",
 		"jquery/plugins/brosho": "0.1",
 		"jquery/plugins/chosen": "0.9.13",
