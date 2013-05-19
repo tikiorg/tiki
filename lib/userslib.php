@@ -7056,7 +7056,7 @@ class UsersLib extends TikiLib
 		}
 	}
 
-	function extend_membership($user, $group, $periods = 1 )
+	function extend_membership($user, $group, $periods = 1, $date = null )
 	{
 		global $tikilib;
 		$this->update_expired_groups();
@@ -7065,14 +7065,18 @@ class UsersLib extends TikiLib
 			$this->assign_user_to_group($user, $group);
 			if ($periods > 1) {
 				$periods--;
-			} else {
+			} elseif (empty($date)) {
 				return;
 			}
 		}
 
 		$info = $this->get_group_info($group);
 		$userInfo = $this->get_user_info($user);
-		$extend_until_info = $this->get_extend_until_info($user, $group, $periods);
+		if (empty($date)) {
+			$extend_until_info = $this->get_extend_until_info($user, $group, $periods);
+		} else {
+			$extend_until_info['timestamp'] = $date;
+		}
 
 		$this->query(
 			'UPDATE `users_usergroups` SET `expire` = ? WHERE `userId` = ? AND `groupName` = ?',
@@ -7369,6 +7373,27 @@ class UsersLib extends TikiLib
 
 		$this->query($query, $groups);
 	}
+	function get_user_groups_date($userId)
+	{
+		$query = 'select * from `users_usergroups` where `userId`=?';
+		$result = $this->query($query, array($userId));
+		$ret = array();
+		while ($res = $result->fetchRow()) {
+			$g = $res['groupName'];
+			$ret[$g]['created'] = $res['created'];
+			$ret[$g]['defaultExpire'] = false;
+			if (empty($res['expire'])) {
+				$re = $this->get_group_info($g);
+				if ($re['expireAfter'] > 0) {
+					$res['expire'] = $res['created'] + ($re['expireAfter'] * 24*60*60);
+					$ret[$g]['defaultExpire'] = true;
+				}
+			}
+			$ret[$g]['expire'] = $res['expire'];
+		} 
+		return $ret;
+	}
+
 
 }
 

@@ -72,6 +72,23 @@ if (isset($_REQUEST['set_default'])) {
 
 $user_info = $userlib->get_user_info($assign_user, true);
 $smarty->assign_by_ref('user_info', $user_info);
+if (!empty($_REQUEST['save'])) {
+	foreach ($_REQUEST as $r => $v) {
+		if (strpos($r, 'new_') === 0) {
+			$g = substr($r, 4);
+			if ($_REQUEST['new_'.$g] != $_REQUEST['old_'.$g]) {
+				$t = strtotime($_REQUEST['new_'.$g]);
+				$t = $tikilib->make_time(date('H',$t), date('i',$t), 0, date('m',$t), date('d', $t), date('Y', $t));
+				if ($t !== false) {
+					$g_info = $userlib->get_groupId_info($g);
+					$userlib->extend_membership($assign_user, $g_info['groupName'], 0, $t);
+				}
+			}
+		}	
+	}	
+}
+$dates = $userlib->get_user_groups_date($user_info['userId']);
+$smarty->assign_by_ref('dates', $dates);
 
 if (!isset($_REQUEST["sort_mode"])) {
 	$sort_mode = 'groupName_asc';
@@ -119,7 +136,7 @@ foreach ($users['data'] as $key=>$gr) {
 		$users['data'][$key]['what'] = $user_info['groups'][$gr['groupName']];
 	}
 }
-			
+
 $smarty->assign_by_ref('cant_pages', $users["cant"]);
 
 // Get users (list of users)
