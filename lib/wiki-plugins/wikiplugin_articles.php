@@ -72,7 +72,7 @@ function wikiplugin_articles_info()
 			'sort' => array(
 				'required' => false,
 				'name' => tra('Sort order'),
-				'description' => tra('The column and order of the sort in columnName_asc or columnName_desc format. Defaults to "publishDate_desc" (other column examples are "title", "lang", "authorName" & "topicName")').'. '.tra('Use random to have random items.'),
+				'description' => tra('The column and order of the sort in columnName_asc or columnName_desc format. Defaults to "publishDate_desc" (other column examples are "title", "lang", "articleId", "authorName" & "topicName")').'. '.tra('Use random to have random items.'),
 				'filter' => 'word',
 				'default' => 'publishDate_desc'
 			),
