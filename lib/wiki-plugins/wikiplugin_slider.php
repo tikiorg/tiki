@@ -358,7 +358,7 @@ function wikiplugin_slider($data, $params)
 	$headerlib->add_jq_onready(
 		"function formatText(i, p) {
 			var possibleText = $('.tiki-slider-title').eq(i - 1).text();
-			return (possibleText ? possibleText : i);
+			return (possibleText ? possibleText : 'slide_' + i);
 		}
 
 		$('.tiki-slider').anythingSlider({
