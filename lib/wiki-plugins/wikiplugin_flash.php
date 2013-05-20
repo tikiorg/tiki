@@ -43,6 +43,7 @@ function wikiplugin_flash_info()
 				'description' => tra('Id of a file from a podcast gallery - will work only with podcast gallery'),
 				'parent' => array('name' => 'type', 'value' => 'fileId'),
 				'default' => '',
+				'profile_reference' => 'file',
 			),
 			'youtube' => array(
 				'required' => true,

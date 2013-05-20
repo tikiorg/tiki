@@ -19,6 +19,7 @@ function wikiplugin_trackercalendar_info()
 				'required' => false,
 				'default' => 0,
 				'filter' => 'int',
+				'profile_reference' => 'tracker',
 			),
 			'begin' => array(
 				'name' => tr('Begin date field'),

@@ -21,6 +21,7 @@ function wikiplugin_include_info()
 				'description' => tra('Wiki page name to include.'),
 				'filter' => 'pagename',
 				'default' => '',
+				'profile_reference' => 'wiki_page',
 			),
 			'start' => array(
 				'required' => false,

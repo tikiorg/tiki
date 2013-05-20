@@ -28,6 +28,7 @@ function wikiplugin_toc_info()
 				'required' => false,
 				'filter' => 'digits',
 				'default' => '',
+				'profile_reference' => 'structure',
 			),
 			'order' => array(
 				'name' => tra('Order'),
@@ -81,6 +82,7 @@ function wikiplugin_toc_info()
 				'description' => tra('By default, the table of contents for the current page will be displayed. Alternate page may be provided.'),
 				'required' => false,
 				'default' => '',
+				'profile_reference' => 'wiki_page',
 			),
 		),
 	);

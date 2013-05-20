@@ -22,6 +22,7 @@ function wikiplugin_redirect_info()
 				'description' => tra('Wiki page name to redirect to.'),
 				'filter' => 'pagename',
 				'default' => '',
+				'profile_reference' => 'wiki_page',
 			),
 			'url' => array(
 				'required' => false,
@@ -36,6 +37,7 @@ function wikiplugin_redirect_info()
 				'description' => tra('The ID of a perspective to switch to (requires feature_perspective).'),
 				'filter' => 'int',
 				'default' => '',
+				'profile_reference' => 'perspective',
 			),
 		),
 	);

@@ -21,12 +21,15 @@ function wikiplugin_trackerstat_info()
 				'description' => tra('Numeric value representing the tracker ID'),
 				'filter' => 'digits',
 				'default' => '',
+				'profile_reference' => 'tracker',
 			),
 			'fields' => array(
 				'required' => true,
 				'name' => tra('Fields'),
 				'description' => tra('Colon-separated list of field IDs to be displayed. Example: 2:4:5'),
-				'default' => ''
+				'default' => '',
+				'separator' => ':',
+				'profile_reference' => 'tracker_field',
 			),
             'show_count' => array(
                 'required' => false,
@@ -37,8 +40,8 @@ function wikiplugin_trackerstat_info()
                 'options' => array(
                     array('text' => '', 'value' => ''),
                     array('text' => tra('Yes'), 'value' => 'y'),
-                    array('text' => tra('No'), 'value' => 'n')
-                )
+                    array('text' => tra('No'), 'value' => 'n'),
+                ),
             ),
 			'show_percent' => array(
 				'required' => false,
@@ -49,8 +52,8 @@ function wikiplugin_trackerstat_info()
 				'options' => array(
 					array('text' => '', 'value' => ''), 
 					array('text' => tra('Yes'), 'value' => 'y'), 
-					array('text' => tra('No'), 'value' => 'n')
-				)
+					array('text' => tra('No'), 'value' => 'n'),
+				),
 			),
 			'show_bar' => array(
 				'required' => false,
@@ -61,8 +64,8 @@ function wikiplugin_trackerstat_info()
 				'options' => array(
 					array('text' => '', 'value' => ''), 
 					array('text' => tra('Yes'), 'value' => 'y'), 
-					array('text' => tra('No'), 'value' => 'n')
-				)
+					array('text' => tra('No'), 'value' => 'n'),
+				),
 			),
 			'status' => array(
 				'required' => false,
@@ -78,8 +81,8 @@ function wikiplugin_trackerstat_info()
 					array('text' => tra('Open & Pending'), 'value' => 'op'), 
 					array('text' => tra('Open & Closed'), 'value' => 'oc'), 
 					array('text' => tra('Pending & Closed'), 'value' => 'pc'), 
-					array('text' => tra('Open, Pending & Closed'), 'value' => 'opc')
-				)
+					array('text' => tra('Open, Pending & Closed'), 'value' => 'opc'),
+				),
 			),
 			'show_link' => array(
 				'required' => false,
@@ -90,8 +93,8 @@ function wikiplugin_trackerstat_info()
 				'options' => array(
 					array('text' => '', 'value' => ''), 
 					array('text' => tra('Yes'), 'value' => 'y'), 
-					array('text' => tra('No'), 'value' => 'n')
-				)
+					array('text' => tra('No'), 'value' => 'n'),
+				),
 			),
 			'show_lastmodif' => array(
 				'required' => false,
@@ -99,7 +102,7 @@ function wikiplugin_trackerstat_info()
 				'description' => tra('Show last modification date of a tracker. Set to y to use site setting or use PHP\s format (www.php.net/strftime).'),
 				'filter' => 'text',
 				'default' => '',
-				'accepted' => tra('y to use the site setting for short date format. Otherwise, use PHP format (www.php.net/strftime), Example: "%A %d of %B, %Y"')
+				'accepted' => tra('y to use the site setting for short date format. Otherwise, use PHP format (www.php.net/strftime), Example: "%A %d of %B, %Y"'),
 			)
 		)
 	);
@@ -172,7 +175,7 @@ function wikiplugin_trackerstat($data, $params)
 		}
 	}
 	if (!empty($fields)) {
-		$listFields = explode(':', $fields);
+		$listFields = $fields;
 	} else {
 		foreach ($allFields['data'] as $f) {
 			$listFields[] = $f['fieldId'];

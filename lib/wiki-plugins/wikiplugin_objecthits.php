@@ -19,6 +19,7 @@ function wikiplugin_objecthits_info()
 				'name' => tra('Object'),
 				'description' => tra('For a wiki page, the page name, for other object types: ID number + ? + object title'),
 				'default' => '',
+				'profile_reference' => 'type_in_param',
 			),
 			'type' => array(
 				'required' => false,

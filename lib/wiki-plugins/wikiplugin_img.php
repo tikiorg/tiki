@@ -39,6 +39,7 @@ function wikiplugin_img_info()
 				'filter' => 'striptags',
 				'default' => '',
 				'parent' => array('name' => 'type', 'value' => 'fileId'),
+				'profile_reference' => 'file',
 			),
 			'id' => array(
 				'required' => true,
@@ -74,6 +75,7 @@ function wikiplugin_img_info()
 				'advanced' => true,
 				'default' => '',
 				'parent' => array('name' => 'type', 'value' => 'fgalId'),
+				'profile_reference' => 'file_gallery',
 			),
 			'attId' => array(
 				'required' => true,

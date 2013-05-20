@@ -33,10 +33,7 @@ function wikiplugin_file_info()
 			'name' => array(
 				'required' => true,
 				'name' => tra('Name'),
-				'description' => tra(
-					'Identify an attachment by entering its file name, which will show as a link to the file.
-					 If the page parameter is empty, it must be a file name of an attachment to the page where the plugin is used.'
-				),
+				'description' => tra('Identify an attachment by entering its file name, which will show as a link to the file. If the page parameter is empty, it must be a file name of an attachment to the page where the plugin is used.'),
 				'default' => '',
 				'parent' => array('name' => 'type', 'value' => 'attachment'),
 			),
@@ -55,6 +52,7 @@ function wikiplugin_file_info()
 				'parent' => array('name' => 'type', 'value' => 'attachment'),
 				'default' => '',
 				'advanced' => true,
+				'profile_reference' => 'wiki_page',
 			),
 			'showdesc' => array(
 				'required' => false,
@@ -91,6 +89,7 @@ function wikiplugin_file_info()
 				'filter' => 'digits',
 				'default' => '',
 				'parent' => array('name' => 'type', 'value' => 'gallery'),
+				'profile_reference' => 'file',
 			),
 			'date' => array(
 				'required' => false,

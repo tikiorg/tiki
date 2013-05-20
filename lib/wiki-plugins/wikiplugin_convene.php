@@ -29,6 +29,7 @@ function wikiplugin_convene_info()
 				'description' => tra('ID number for the site calendar where to store the date for the events with maximum votes'),
 				'filter' => 'digits',
 				'default' => '',
+				'profile_reference' => 'calendar',
 			),
 			'minvotes' => array(
 				'required' => false,

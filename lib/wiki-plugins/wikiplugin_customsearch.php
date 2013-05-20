@@ -23,6 +23,7 @@ function wikiplugin_customsearch_info()
 				'description' => tra('Wiki page where search user interface template is found'),
 				'filter' => 'pagename',
 				'default' => '',
+				'profile_reference' => 'wiki_page',
 			),
 			'id' => array(
 				'required' => false,

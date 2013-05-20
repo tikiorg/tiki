@@ -52,6 +52,14 @@ class Tiki_Profile_Installer
 		'tracker_item' => 'trackeritem',
 	);
 
+	private static $typeMapInvert = array(
+		'wiki page' => 'wiki_page',
+		'wiki' => 'wiki_page',
+		'fgal' => 'file_gallery',
+		'trackeritem' => 'tracker_item',
+		'tracker item' => 'tracker_item',
+	);
+
 	private $userData = false;
 	private $debug = false;
 	
@@ -88,10 +96,25 @@ class Tiki_Profile_Installer
 	
 	public static function convertType( $type ) // {{{
 	{
-		if ( array_key_exists($type, self::$typeMap) )
+		if (isset(self::$typeMap[$type])) {
 			return self::$typeMap[$type];
-		else
+		} else {
 			return $type;
+		}
+	} // }}}
+
+	/**
+	 * Converts a Tiki object type to a profile object type.
+	 */
+	public static function convertTypeInvert( $type ) // {{{
+	{
+		$typeMap = self::$typeMapInvert;
+
+		if (isset($typeMap[$type])) {
+			return $typeMap[$type];
+		} else {
+			return $type;
+		}
 	} // }}}
 
 	public static function convertObject( $type, $id, $contextualizedInfo = array() ) // {{{

@@ -9,13 +9,13 @@ function wikiplugin_trackerfilter_info()
 {
 	require_once 'lib/wiki-plugins/wikiplugin_trackerlist.php';
 	$list = wikiplugin_trackerlist_info();
-	$params = array_merge(
-		array(
-			'filters' => array(
+	$params = array_merge(array(
+		'filters' => array(
 			'required' => true,
 			'name' => tra('Filters'),
 			'description' => tra('The list of fields that can be used as filters along with their formats. The field number and format are separated by a / and multile fields are separated by ":". Format choices are: d - dropdown; r - radio buttons; m - multiple choice dropdown; c - checkbox; t - text with wild characters; T - exact text match; i - initials; sqlsearch - advanced search; >, <, >=, <= - greater than, less than, greater than or equal, less than or equal. Example:') . '2/d:4/r:5:(6:7)/sqlsearch',
-			'default' => ''
+			'default' => '',
+			'profile_reference' => 'tracker_field_string',
 		),
 		'action' => array(
 			'required' => false,
@@ -35,52 +35,51 @@ function wikiplugin_trackerfilter_info()
 				array('text' => tra('No'), 'value' => 'n')
 			)
 		),
-					'line' => array(
-						'required' => false,
-						'name' => tra('Line'),
-						'description' => tra('Displays all the filters on the same line (not shown on same line by default)'),
-						'filter' => 'alpha',
-						'default' => 'n',
-						'options' => array(
-							array('text' => '', 'value' => ''),
-							array('text' => tra('Yes'), 'value' => 'y'),
-							array('text' => tra('Yes with field label in dropdown'), 'value' => 'in'),
-							array('text' => tra('No'), 'value' => 'n')
-						)
-					),
-					'noflipflop' => array(
-						'required' => false,
-						'name' => tra('No Toggle'),
-						'description' => tra('The toggle button to show/hide filters will not be shown if set to y (Yes). Default is to show the toggle.'),
-						'filter' => 'alpha',
-						'default' => 'n',
-						'options' => array(
-							array('text' => '', 'value' => ''),
-							array('text' => tra('Yes'), 'value' => 'y'),
-							array('text' => tra('No'), 'value' => 'n')
-						)
-					),
-					'export_action' => array(
-						'required' => false,
-						'name' => tra('Export CSV.'),
-						'description' => tra('Label for an export button. Leave blank to show the usual "Filter" button instead.'),
-						'default' => '',
-						'advanced' => true,
-					),
-					'googlemapButtons' => array(
-						'required' => false,
-						'name' => tra('Google Map Buttons'),
-						'description' => tra('Display Mapview and Listview buttons'),
-						'filter' => 'alpha',
-						'default' => '',
-						'options' => array(
-							array('text' => '', 'value' => ''),
-							array('text' => tra('Yes'), 'value' => 'y'),
-							array('text' => tra('No'), 'value' => 'n')
-						)
-					)
-				), $list['params']
-	);
+		'line' => array(
+			'required' => false,
+			'name' => tra('Line'),
+			'description' => tra('Displays all the filters on the same line (not shown on same line by default)'),
+			'filter' => 'alpha',
+			'default' => 'n',
+			'options' => array(
+				array('text' => '', 'value' => ''),
+				array('text' => tra('Yes'), 'value' => 'y'),
+				array('text' => tra('Yes with field label in dropdown'), 'value' => 'in'),
+				array('text' => tra('No'), 'value' => 'n')
+			)
+		),
+		'noflipflop' => array(
+			'required' => false,
+			'name' => tra('No Toggle'),
+			'description' => tra('The toggle button to show/hide filters will not be shown if set to y (Yes). Default is to show the toggle.'),
+			'filter' => 'alpha',
+			'default' => 'n',
+			'options' => array(
+				array('text' => '', 'value' => ''),
+				array('text' => tra('Yes'), 'value' => 'y'),
+				array('text' => tra('No'), 'value' => 'n')
+			)
+		),
+		'export_action' => array(
+			'required' => false,
+			'name' => tra('Export CSV.'),
+			'description' => tra('Label for an export button. Leave blank to show the usual "Filter" button instead.'),
+			'default' => '',
+			'advanced' => true,
+		),
+		'googlemapButtons' => array(
+			'required' => false,
+			'name' => tra('Google Map Buttons'),
+			'description' => tra('Display Mapview and Listview buttons'),
+			'filter' => 'alpha',
+			'default' => '',
+			'options' => array(
+				array('text' => '', 'value' => ''),
+				array('text' => tra('Yes'), 'value' => 'y'),
+				array('text' => tra('No'), 'value' => 'n')
+			)
+		),
+	), $list['params']);
 
 	return array(
 		'name' => tra('Tracker Filter'),

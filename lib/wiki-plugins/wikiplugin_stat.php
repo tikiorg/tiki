@@ -43,6 +43,7 @@ function wikiplugin_stat_info()
 				'required' => false,
 				'name' => tra('Parent ID'),
 				'description' => tra('Enter a tracker ID to restrict stats to that tracker (for use with trackeritems only).'),
+				'profile_reference' => 'tracker',
 			),
 			'lastday' => array(
 				'required' => false,

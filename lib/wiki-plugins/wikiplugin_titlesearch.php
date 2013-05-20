@@ -38,6 +38,8 @@ function wikiplugin_titlesearch_info()
 				'name' => tra('Exclude'),
 				'description' => tra('Pipe-separated list of page names to exclude from results.'),
 				'default' => '',
+				'separator' => '|',
+				'profile_reference' => 'wiki_page',
 			),
 			'noheader' => array(
 				'required' => false,

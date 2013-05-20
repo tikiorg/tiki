@@ -32,50 +32,53 @@ function wikiplugin_articles_info()
 				'name' => tra('Maximum Displayed'),
 				'description' => tra('The number of articles to display in the list (no max set by default)') . '. ' . tra('If Pagination is set to y (Yes), this will determine the amount of articles per page'),
 				'filter' => 'int',
-				'default' => -1
+				'default' => -1,
 			),
 			'topic' => array(
 				'required' => false,
 				'name' => tra('Topic Name Filter'),
 				'description' => tra('Filter the list of articles by topic. Example: ') . '[!]topic+topic+topic',
 				'filter' => 'striptags',
-				'default' => ''
+				'default' => '',
 			),
 			'topicId' => array(
 				'required' => false,
 				'name' => tra('Topic ID Filter'),
 				'description' => tra('Filter the list of articles by topic ID. Example: ') . '[!]topicId+topicId+topicId',
 				'filter' => 'striptags',
-				'default' => ''
+				'default' => '',
+				'profile_reference' => 'article_topic',
 			),
 			'type' => array(
 				'required' => false,
 				'name' => tra('Type Filter'),
 				'description' => tra('Filter the list of articles by types. Example: ') . '[!]type+type+type',
 				'filter' => 'striptags',
-				'default' => ''
+				'default' => '',
+				'profile_reference' => 'article_type',
 			),
 			'categId' => array(
 				'required' => false,
 				'name' => tra('Category ID'),
 				'description' => tra('List of category IDs, separated by |. Only articles in all these categories are listed'),
 				'filter' => 'digits',
+				'default' => '',
+				'profile_reference' => 'category',
 				'separator' => '|',
-				'default' => ''
 			),
 			'lang' => array(
 				'required' => false,
 				'name' => tra('Language'),
 				'description' => tra('List only articles in this language'),
 				'filter' => 'lang',
-				'default' => ''
+				'default' => '',
 			),
 			'sort' => array(
 				'required' => false,
 				'name' => tra('Sort order'),
 				'description' => tra('The column and order of the sort in columnName_asc or columnName_desc format. Defaults to "publishDate_desc" (other column examples are "title", "lang", "articleId", "authorName" & "topicName")').'. '.tra('Use random to have random items.'),
 				'filter' => 'word',
-				'default' => 'publishDate_desc'
+				'default' => 'publishDate_desc',
 			),
 			'order' => array(
 				'required' => false,
@@ -83,7 +86,7 @@ function wikiplugin_articles_info()
 				'description' => tra('List of ArticleId that must appear in this order if present'),
 				'filter' => 'digits',
 				'separator' => '|',
-				'default' => ''
+				'default' => '',
 			),
 			'articleId' => array(
 				'required' => false,
@@ -91,7 +94,8 @@ function wikiplugin_articles_info()
 				'description' => tra('List of ArticleId to display separated by |'),
 				'filter' => 'digits',
 				'separator' => '|',
-				'default' => ''
+				'default' => '',
+				'profile_reference' => 'article',
 			),
 			'notArticleId' => array(
 				'required' => false,
@@ -99,7 +103,8 @@ function wikiplugin_articles_info()
 				'description' => tra('List of ArticleId that can not be displayed separated by |'),
 				'filter' => 'digits',
 				'separator' => '|',
-				'default' => ''
+				'default' => '',
+				'profile_reference' => 'article',
 			),
 			'quiet' => array(
 				'required' => false,
@@ -110,7 +115,7 @@ function wikiplugin_articles_info()
 				'options' => array(
 					array('text' => '', 'value' => ''),
 					array('text' => tra('Yes'), 'value' => 'y'),
-					array('text' => tra('No'), 'value' => 'n')
+					array('text' => tra('No'), 'value' => 'n'),
 				),
 			),
 			'titleonly' => array(
@@ -122,7 +127,7 @@ function wikiplugin_articles_info()
 				'options' => array(
 					array('text' => '', 'value' => ''),
 					array('text' => tra('Yes'), 'value' => 'y'),
-					array('text' => tra('No'), 'value' => 'n')
+					array('text' => tra('No'), 'value' => 'n'),
 				),
 			),
 			'fullbody' => array(
@@ -134,7 +139,7 @@ function wikiplugin_articles_info()
 				'options' => array(
 					array('text' => '', 'value' => ''),
 					array('text' => tra('Yes'), 'value' => 'y'),
-					array('text' => tra('No'), 'value' => 'n')
+					array('text' => tra('No'), 'value' => 'n'),
 				),
 			),
 			'start' => array(
@@ -142,21 +147,21 @@ function wikiplugin_articles_info()
 				'name' => tra('Starting Article'),
 				'description' => tra('The article number that the list should start with (starts with first article by default)') . '. ' . tra('This will not work if Pagination is used.'),
 				'filter' => 'int',
-				'default' => 0
+				'default' => 0,
 			),
 			'dateStart' => array(
 				'required' => false,
 				'name' => tra('Start Date'),
 				'description' => tra('Earliest date to select articles from.') . tra(' (YYYY-MM-DD)'),
 				'filter' => 'date',
-				'default' => ''
+				'default' => '',
 			),
 			'dateEnd' => array(
 				'required' => false,
 				'name' => tra('End date'),
 				'description' => tra('Latest date to select articles from.') . tra(' (YYYY-MM-DD)'),
 				'filter' => 'date',
-				'default' => ''
+				'default' => '',
 			),
 			'periodQuantity' => array(
 				'required' => false,
@@ -187,7 +192,7 @@ function wikiplugin_articles_info()
 				'options' => array(
 					array('text' => '', 'value' => ''),
 					array('text' => tra('Yes'), 'value' => 'y'),
-					array('text' => tra('No'), 'value' => 'n')
+					array('text' => tra('No'), 'value' => 'n'),
 				),
 			),
 			'containerClass' => array(
@@ -195,7 +200,7 @@ function wikiplugin_articles_info()
 				'name' => tra('Container class'),
 				'description' => tra('CSS Class to add to the container DIV.article. (Default="wikiplugin_articles")'),
 				'filter' => 'striptags',
-				'default' => 'wikiplugin_articles'
+				'default' => 'wikiplugin_articles',
 			),
 			'largefirstimage' => array(
 				'required' => false,
@@ -206,14 +211,14 @@ function wikiplugin_articles_info()
 				'options' => array(
 					array('text' => '', 'value' => ''),
 					array('text' => tra('Yes'), 'value' => 'y'),
-					array('text' => tra('No'), 'value' => 'n')
+					array('text' => tra('No'), 'value' => 'n'),
 				),
 			),
 			'urlparam' => array(
 				'required' => false,
 				'name' => tra('Additional URL Param to the link to read article'),
 				'filter' => 'striptags',
-				'default' => ''
+				'default' => '',
 			),
 			'actions' => array(
 				'required' => false,
@@ -227,7 +232,7 @@ function wikiplugin_articles_info()
 				'description' => tra('User or pipe separated list of two letter language codes for additional languages to display. List pages with no language or with a missing translation in one of the language'),
 				'filter' => 'alpha',
 				'separator' => '|',
-				'default' => ''
+				'default' => '',
 			),
 		),
 	);

@@ -20,63 +20,71 @@ function wikiplugin_groupmailcore_info()
 				'required' => true,
 				'name' => tra('From Email'),
 				'description' => tra('Email address to report.'),
-				'default' => ''
+				'default' => '',
 			),
 			'trackerId' => array(
 				'required' => true,
 				'name' => tra('Tracker Id'),
 				'description' => tra('Id of GroupMail Logs tracker (set up in alias by profile).'),
 				'filter' => 'digits',
-				'default' => ''
+				'default' => '',
+				'profile_reference' => 'tracker',
 			),
 			'fromFId' => array(
 				'required' => true,
 				'name' => tra('From Field Id'),
 				'description' => tra('Id of GroupMail Logs tracker field (usually set up in alias by profile).'),
 				'filter' => 'digits',
-				'default' => ''
+				'default' => '',
+				'profile_reference' => 'tracker_field',
 			),
 			'operatorFId' => array(
 				'required' => true,
 				'name' => tra('Operator Field Id'),
 				'description' => tra('Id of GroupMail Logs tracker field (usually set up in alias by profile).'),
 				'filter' => 'digits',
-				'default' => ''
+				'default' => '',
+				'profile_reference' => 'tracker_field',
 			),
 			'subjectFId' => array(
 				'required' => true,
 				'name' => tra('Subject Field Id'),
 				'description' => tra('Id of GroupMail Logs tracker field (usually set up in alias by profile).'),
 				'filter' => 'digits',
-				'default' => ''
+				'default' => '',
+				'profile_reference' => 'tracker_field',
 			),
 			'messageFId' => array(
 				'required' => true,
 				'name' => tra('Message Field Id'),
 				'description' => tra('Id of GroupMail Logs tracker field (usually set up in alias by profile).'),
 				'filter' => 'digits',
-				'default' => ''
+				'default' => '',
+				'profile_reference' => 'tracker_field',
 			),
 			'contentFId' => array(
 				'required' => true,
 				'name' => tra('Content Field Id'),
 				'description' => tra('Id of GroupMail Logs tracker field (usually set up in alias by profile).'),
 				'filter' => 'digits',
-				'default' => ''
+				'default' => '',
+				'profile_reference' => 'tracker_field',
 			),
 			'accountFId' => array(
 				'required' => true,
 				'name' => tra('Account Field Id'),
 				'description' => tra('Id of GroupMail Logs tracker field (usually set up in alias by profile).'),
 				'filter' => 'digits',
-				'default' => ''
+				'default' => '',
+				'profile_reference' => 'tracker_field',
 			),
 			'datetimeFId' => array(
 				'required' => true,
 				'name' => tra('Datetime Field Id'),
 				'description' => tra('Id of GroupMail Logs tracker field (usually set up in alias by profile).'),
 				'filter' => 'digits',
-				'default' => ''
+				'default' => '',
+				'profile_reference' => 'tracker_field',
 			),
 		),
 	);

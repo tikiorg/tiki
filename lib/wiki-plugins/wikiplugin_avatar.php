@@ -18,11 +18,9 @@ function wikiplugin_avatar_info()
 			'page' => array(
 				'required' => false,
 				'name' => tra('Page'),
-				'description' => tra(
-					'The wiki page the avatar will link to. If empty and the user\'s information is public,
-					then the avatar will link automatically the that user\'s user information page'
-				),
-				'default' => ''
+				'description' => tra('The wiki page the avatar will link to. If empty and the user\'s information is public, then the avatar will link automatically the that user\'s user information page'),
+				'default' => '',
+				'profile_reference' => 'wiki_page',
 			),
 			'float' => array(
 				'required' => false,
@@ -32,14 +30,14 @@ function wikiplugin_avatar_info()
 				'options' => array(
 					array('text' => '', 'value' => ''),
 					array('text' => tra('Right'), 'value' => 'right'),
-					array('text' => tra('Left'), 'value' => 'left')
+					array('text' => tra('Left'), 'value' => 'left'),
 				),
 			),
 			'fullsize' => array(
 				'required' => false,
 				'name' => tra('Show fullsize File Gallery image'),
 				'description' => tra('If fullsize images are stored in the File Gallery, show the full size one.'),
-				'default' => 'n'
+				'default' => 'n',
 			),
 		),
 	);

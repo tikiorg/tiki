@@ -23,7 +23,8 @@ function wikiplugin_colorbox_info()
 				'filter' => 'digits',
 				'accepted' => 'ID',
 				'default' => '',
-				'since' => '5.0'
+				'since' => '5.0',
+				'profile_reference' => 'file_gallery',
 				),
 			'galId' => array(
 				'required' => false,

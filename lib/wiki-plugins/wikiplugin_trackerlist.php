@@ -265,6 +265,7 @@ function wikiplugin_trackerlist_info()
 				'filter' => 'digits',
 				'separator' => ':',
 				'default' => '',
+				'profile_reference' => 'tracker_field',
 			),
 			'filtervalue' => array(
 				'required' => false,
@@ -350,6 +351,7 @@ function wikiplugin_trackerlist_info()
 				'filter' => 'pagename',
 				'advanced' => true,
 				'default' => '',
+				'profile_reference' => 'wiki_page',
 			),
 			'tplwiki' => array(
 				'required' => false,
@@ -358,6 +360,7 @@ function wikiplugin_trackerlist_info()
 				'filter' => 'pagename',
 				'advanced' => true,
 				'default' => '',
+				'profile_reference' => 'wiki_page',
 			),
 			'view_user' => array(
 				'required' => false,
@@ -372,6 +375,7 @@ function wikiplugin_trackerlist_info()
 				'filter' => 'digits',
 				'separator' => ':',
 				'default' => '',
+				'profile_reference' => 'tracker_item',
 			),
 			'ignoreRequestItemId' => array(
 				'required' => false,
@@ -443,6 +447,7 @@ function wikiplugin_trackerlist_info()
 				'filter' => 'text',
 				'advanced' => true,
 				'default' => '',
+				'profile_reference' => 'tracker_field_string',
 			),
 			'silent' => array(
 				'required' => false,
@@ -562,6 +567,7 @@ function wikiplugin_trackerlist_info()
 				'separator' => ':',
 				'filter' => 'digits',
 				'default' => '',
+				'profile_reference' => 'tracker_field',
 			),
 			'calendarviewmode' => array(
 				'required' => false,

@@ -24,6 +24,7 @@ function wikiplugin_rss_info()
 				'filter' => 'int',
 				'description' => tra('List of feed IDs separated by colons. ex: feedId:feedId2'),
 				'default' => '',
+				'profile_reference' => 'rss',
 			),
 			'max' => array(
 				'required' => false,

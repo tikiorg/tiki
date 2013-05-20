@@ -20,14 +20,15 @@ function wikiplugin_article_info()
 				'name' => tra('Field'),
 				'description' => tra('The article field to display. Default field is Heading.'),
 				'filter' => 'word',
-				'default' => 'heading'
+				'default' => 'heading',
 			),
 			'Id' => array(
 				'required' => false,
 				'name' => tra('Article ID'),
 				'description' => tra('The article to display. If no value is provided, most recent article will be used.'),
 				'filter' => 'digits',
-				'default' => ''
+				'default' => '',
+				'profile_reference' => 'article',
 			),
 		),
 	);

@@ -27,6 +27,7 @@ function wikiplugin_objectlink_info()
 				'name' => tra('Object ID'),
 				'description' => tra('The item to display'),
 				'filter' => 'text',
+				'profile_reference' => 'type_in_param',
 			),
 		),
 	);

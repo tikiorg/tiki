@@ -21,42 +21,42 @@ function wikiplugin_bigbluebutton_info()
 				'name' => tra('Meeting'),
 				'description' => tra('MeetingID for BigBlueButton. This is a 5 digit number, starting with a 7. Ex.: 77777 or 71111.'),
 				'filter' => 'text',
-				'default' => ''
+				'default' => '',
 			),
 			'prefix' => array(
 				'required' => false,
 				'name' => tra('Anonymous prefix'),
 				'description' => tra('Unregistered users will get this token prepended to their name.'),
 				'filter' => 'text',
-				'default' => ''
+				'default' => '',
 			),
 			'welcome' => array(
 				'required' => false,
 				'name' => tra('Welcome Message'),
 				'description' => tra('A message to be provided when someone enters the room.'),
 				'filter' => 'text',
-				'default' => ''
+				'default' => '',
 			),
 			'number' => array(
 				'required' => false,
 				'name' => tra('Dial Number'),
 				'description' => tra('The phone-in support number to join from traditional phones.'),
 				'filter' => 'text',
-				'default' => ''
+				'default' => '',
 			),
 			'voicebridge' => array(
 				'required' => false,
 				'name' => tra('Voice Bridge'),
 				'description' => tra('Code to enter for phone attendees to join the room. Typically, the same 5 digits of the MeetingID.'),
 				'filter' => 'digits',
-				'default' => ''
+				'default' => '',
 			),
 			'logout' => array(
 				'required' => false,
 				'name' => tra('Log-out URL'),
 				'description' => tra('URL to which the user will be redirected when logging out from BigBlueButton.'),
 				'filter' => 'url',
-				'default' => ''
+				'default' => '',
 			),
 			'recording' => array(
 				'required' => false,

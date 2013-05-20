@@ -30,6 +30,7 @@ function wikiplugin_sf_info()
 				'description' => tra('SourceForge tracker ID (shows as atid in the URL of a tracker item'),
 				'filter' => 'digits',
 				'default' => '',
+				'profile_reference' => 'tracker',
 			),
 			'itemid' => array(
 				'required' => true,
@@ -37,6 +38,7 @@ function wikiplugin_sf_info()
 				'description' => tra('SourceForge item ID (shows as aid in the URL of a tracker item'),
 				'filter' => 'digits',
 				'default' => '',
+				'profile_reference' => 'tracker_item',
 			),
 			'title' => array(
 				'required' => false,

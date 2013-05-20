@@ -20,6 +20,7 @@ function wikiplugin_calendar_info()
 				'filter' => 'digits',
 				'separator' => ',',
 				'default' => '',
+				'profile_reference' => 'calendar',
 			),
 			'viewlist' => array(
 				'required' => false,

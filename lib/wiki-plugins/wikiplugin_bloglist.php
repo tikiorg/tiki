@@ -19,20 +19,21 @@ function wikiplugin_bloglist_info()
 				'name' => tra('Blog ID'),
 				'description' => tra('The ID number of the blog on the site you wish to list posts from'),
 				'filter' => 'digits',
-				'default' => ''
+				'default' => '',
+				'profile_reference' => 'blog',
 			),
 			'Items' => array(
 				'required' => false,
 				'name' => tra('Maximum Items'),
 				'description' => tra('Maximum number of entries to list (no maximum set by default)'),
 				'filter' => 'digits',
-				'default' => ''
+				'default' => '',
 			),
 			'author' => array(
 				'required' => false,
 				'name' => tra('Author'),
 				'description' => tra('Only display posts created by this user (all posts listed by default)'),
-				'default' => ''
+				'default' => '',
 			),
 			'simpleList' => array(
 				'required' => false,
@@ -45,79 +46,79 @@ function wikiplugin_bloglist_info()
 					array('text' => tra('No'), 'value' => 'n')
 				),
 			),
-                        'charCount' => array(
-                                'required' => false,
-                                'name' => tra('Char Count'),
-                                'description' => tra('Number of characters to display if not a simple list. (defaults to all)'),
-                                'filter' => 'digits',
-                                'parent' => array('name' => 'simpleList', 'value' => 'n'),
-                                'default' => ''
-                        ),
-                        'wordBoundary' => array(
-                                'required' => false,
-                                'name' => tra('Word Boundary'),
-                                'description' => tra('If not a simple list and Char Count is non-zero, then marking this as yes will break on word boundaries only.'),
-                                'default' => 'y',
-                                'options' => array(
-                                        array('text' => tra('Yes'), 'value' => 'y'),
-                                        array('text' => tra('No'), 'value' => 'n')
-                                ),
-                                'parent' => array('name' => 'simpleList', 'value' => 'n'),
-                        ),
-                        'ellipsis' => array(
-                                'required' => false,
-                                'name' => tra('Ellipsis'),
-                                'description' => tra('If not a simple list and Char Count is non-zero, then marking this as yes will put ellipsis (...) at end of text (default=y).'),
-                                'default' => 'y',
-                                'options' => array(
-                                        array('text' => '', 'value' => ''),
-                                        array('text' => tra('Yes'), 'value' => 'y'),
-                                        array('text' => tra('No'), 'value' => 'n')
-                                ),
-                                'parent' => array('name' => 'simpleList', 'value' => 'n'),
-                        ),
-                        'more' => array(
-                                'required' => false,
-                                'name' => tra('More'),
-                                'description' => tra('If not a simple list and Char Count is non-zero, then marking this as yes will put a More link to the full entry (default=y).'),
-                                'default' => 'y',
-                                'options' => array(
-                                        array('text' => tra('Yes'), 'value' => 'y'),
-                                        array('text' => tra('No'), 'value' => 'n')
-                                ),
-                                'parent' => array('name' => 'simpleList', 'value' => 'n'),
-                        ),
-                        'showIcons' => array(
-                                'required' => false,
-                                'name' => tra('Show Icons'),
-                                'description' => tra('If not a simple list marking this as no will prevent the "edit" and "print" type icons from displaying (default=y)'),
-                                'default' => 'y',
-                                'options' => array(
+			'charCount' => array(
+				'required' => false,
+				'name' => tra('Char Count'),
+				'description' => tra('Number of characters to display if not a simple list. (defaults to all)'),
+				'filter' => 'digits',
+				'parent' => array('name' => 'simpleList', 'value' => 'n'),
+				'default' => '',
+			),
+			'wordBoundary' => array(
+				'required' => false,
+				'name' => tra('Word Boundary'),
+				'description' => tra('If not a simple list and Char Count is non-zero, then marking this as yes will break on word boundaries only.'),
+				'default' => 'y',
+				'options' => array(
 					array('text' => tra('Yes'), 'value' => 'y'),
-                                        array('text' => tra('No'), 'value' => 'n')
-                                ),
-                                'parent' => array('name' => 'simpleList', 'value' => 'n'),
-                        ),
+					array('text' => tra('No'), 'value' => 'n')
+				),
+				'parent' => array('name' => 'simpleList', 'value' => 'n'),
+			),
+			'ellipsis' => array(
+				'required' => false,
+				'name' => tra('Ellipsis'),
+				'description' => tra('If not a simple list and Char Count is non-zero, then marking this as yes will put ellipsis (...) at end of text (default=y).'),
+				'default' => 'y',
+				'options' => array(
+					array('text' => '', 'value' => ''),
+					array('text' => tra('Yes'), 'value' => 'y'),
+					array('text' => tra('No'), 'value' => 'n')
+				),
+				'parent' => array('name' => 'simpleList', 'value' => 'n'),
+			),
+			'more' => array(
+				'required' => false,
+				'name' => tra('More'),
+				'description' => tra('If not a simple list and Char Count is non-zero, then marking this as yes will put a More link to the full entry (default=y).'),
+				'default' => 'y',
+				'options' => array(
+					array('text' => tra('Yes'), 'value' => 'y'),
+					array('text' => tra('No'), 'value' => 'n')
+				),
+				'parent' => array('name' => 'simpleList', 'value' => 'n'),
+			),
+			'showIcons' => array(
+				'required' => false,
+				'name' => tra('Show Icons'),
+				'description' => tra('If not a simple list marking this as no will prevent the "edit" and "print" type icons from displaying (default=y)'),
+				'default' => 'y',
+				'options' => array(
+					array('text' => tra('Yes'), 'value' => 'y'),
+					array('text' => tra('No'), 'value' => 'n')
+				),
+				'parent' => array('name' => 'simpleList', 'value' => 'n'),
+			),
 			'dateStart' => array(
 				'required' => false,
 				'name' => tra('Start Date'),
 				'description' => tra('Earliest date to select posts from.') . ' (YYYY-MM-DD)',
 				'filter' => 'date',
-				'default' => ''
+				'default' => '',
 			),
 			'dateEnd' => array(
 				'required' => false,
 				'name' => tra('End Date'),
 				'description' => tra('Latest date to select posts from.') . ' (YYYY-MM-DD)',
 				'filter' => 'date',
-				'default' => ''
+				'default' => '',
 			),
 			'containerClass' => array(
 				'required' => false,
 				'name' => tra('Container Class'),
 				'description' => tra('CSS Class to add to the container DIV.article. (Default="wikiplugin_bloglist")'),
 				'filter' => 'striptags',
-				'default' => 'wikiplugin_bloglist'
+				'default' => 'wikiplugin_bloglist',
 			),
 		),
 	);

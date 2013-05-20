@@ -25,13 +25,14 @@ function wikiplugin_datachannel_info()
 				'name' => tra('Channel Name'),
 				'description' => tra('Name of the channel as registered by the administrator.'),
 				'default' => '',
+				'profile_reference' => 'datachannel',
 			),
 			'returnURI' => array(
 				'required' => false,
 				'name' => tra('Return URL'),
 				'description' => tra('URL to go to after data channel has run. Defaults to current page.'),
 				'filter' => 'pagename',
-				'default' => '$_SERVER[\'HTTP_REFERER\']',
+				'default' => '',
 			),
 			'quietReturn' => array(
 				'required' => false,

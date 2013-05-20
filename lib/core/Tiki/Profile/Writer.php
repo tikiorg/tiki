@@ -93,17 +93,28 @@ class Tiki_Profile_Writer
 		}, $this->data['unknown_objects']);
 	}
 
-	function getReference($type, $id)
+	/**
+	 * Obtain the replacement string for the given type and id. Type can also be a callback
+	 * or a helper name for complex transformations that require parsing and are called through
+	 * the declarative interfaces (plugins, field types, preferences, ...). Extra parameters are
+	 * provided in those cases since the type may depend on other arguments.
+	 */
+	function getReference($type, $id, array $parameters = array())
 	{
 		// If we are provided with an anonymous function to handle special cases
 		if (is_callable($type)) {
-			return call_user_func($type, $this, $id);
+			return call_user_func($type, $this, $id, $parameters);
+		} elseif (method_exists('Tiki_Profile_WriterHelper', $type)) {
+			return Tiki_Profile_WriterHelper::$type($this, $id, $parameters);
 		}
+
+		// Let 'wiki page' or 'tracker item' be provided as type, no effect when profile types used
+		$type = Tiki_Profile_Installer::convertTypeInvert($type);
 
 		if (is_array($id)) {
 			$parent = $this;
 			return array_map(function ($value) use ($type, $parent) {
-				return $parent->getReference($type, $value);
+				return $parent->getReference($type, $value, $parameters);
 			}, $id);
 		}
 

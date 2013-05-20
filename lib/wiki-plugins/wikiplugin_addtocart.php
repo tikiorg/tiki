@@ -22,14 +22,14 @@ function wikiplugin_addtocart_info()
 				'name' => tra('Product code'),
 				'description' => tra('Unique identifier for the product. Two products with the same code will be the same and the information used will be the one of the first in.'),
 				'filter' => 'text',
-				'default' => ''
+				'default' => '',
 			),
 			'description' => array(
 				'required' => true,
 				'name' => tra('Description'),
 				'description' => tra('Label for the product in the cart.'),
 				'filter' => 'text',
-				'default' => ''
+				'default' => '',
 			),
 			'producttype' => array(
 				'required' => false,
@@ -43,77 +43,77 @@ function wikiplugin_addtocart_info()
 				'name' => tra('Product Class'),
 				'description' => tra('The class the product belongs to, can be used to limit how gift cards are used'),
 				'filter' => 'text',
-				'default' => ''
+				'default' => '',
 			),
 			'productbundle' => array(
 				'required' => false,
 				'name' => tra('Product Bundle'),
 				'description' => tra('The bundle the product belongs to, can be used to limit how gift cards are used, will automatically add other products in same class to cart'),
 				'filter' => 'text',
-				'default' => ''
+				'default' => '',
 			),
 			'bundleclass' => array(
 				'required' => false,
 				'name' => tra('Bundle Class'),
 				'description' => tra('The class the bundle belongs to, can be used to limit how gift cards are used'),
 				'filter' => 'text',
-				'default' => ''
+				'default' => '',
 			),
 			'price' => array(
 				'required' => true,
 				'name' => tra('Price'),
 				'description' => tra('The price to charge for the item.'),
 				'filter' => 'text',
-				'default' => ''
+				'default' => '',
 			),
 			'href' => array(
 				'required' => false,
 				'name' => tra('Location'),
 				'description' => tra('URL of the product\'s information. The URL may be relative or absolute (begin with http://).'),
 				'filter' => 'url',
-				'default' => ''
+				'default' => '',
 			),
 			'label' => array(
 				'required' => false,
 				'name' => tra('Button label'),
 				'description' => tra('Text for the submit button. default: "Add to cart"'),
 				'filter' => 'text',
-				'default' => 'Add to cart'
+				'default' => 'Add to cart',
 			),
 			'eventcode' => array(
-                                'required' => false,
-                                'name' => tra('Associated event code'),
-                                'description' => tra('Unique identifier for the event that is associated to the product.'),
-                                'filter' => 'text',
-                                'default' => ''
-                        ),
+				'required' => false,
+				'name' => tra('Associated event code'),
+				'description' => tra('Unique identifier for the event that is associated to the product.'),
+				'filter' => 'text',
+				'default' => '',
+			),
 			'autocheckout' => array(
 				'required' => false,
 				'name' => tra('Automatically checkout'),
 				'description' => tra('Automatically checkout for purchase and send user to pay (this is disabled when there is already something in the cart)'),
 				'filter' => 'text',
-				'default' => 'n'
+				'default' => 'n',
 			),
 			'onbehalf' => array(
 				'required' => false,
 				'name' => tra('Buy on behalf of'),
 				'description' => tra('Allows the selection of user to make purchase on behalf of'),
 				'filter' => 'text',
-				'default' => 'n'
+				'default' => 'n',
 			),
 			'forceanon' => array(
 				'required' => false,
 				'name' => tra('Shop as anonymous always'),
 				'description' => tra('Add to cart as anonymous shopper even if logged in'),
 				'filter' => 'text',
-				'default' => 'n'
+				'default' => 'n',
 			),
 			'forwardafterfree' => array(
 				'required' => false,
 				'name' => tra('Forward to this URL after free purchase'),
 				'description' => tra('Forward to this URL after free purchase'),
 				'filter' => 'url',
-				'default' => ''
+				'default' => '',
 			),
 			'giftcertificate'=> array(
 				'required' => false,
@@ -125,28 +125,29 @@ function wikiplugin_addtocart_info()
 					array('text' => '', 'value' => ''),
 					array('text' => tra('Yes'), 'value' => 'y'),
 					array('text' => tra('No'), 'value' => 'n')
-				)
+				),
 			),
 			'exchangeorderitemid' => array(
 				'required' => false,
 				'name' => tra('Order Item ID to exchange product'),
 				'description' => tra('Used in conjunction with exchange feature'),
 				'filter' => 'int',
-				'default' => ''
+				'default' => '',
+				'profile_reference' => 'tracker_item',
 			),
 			'exchangetoproductid' => array(
 				'required' => false,
 				'name' => tra('Product ID to exchange to'),
 				'desctiption' => tra('Used in conjunction with exchange feature'),
 				'filter' => 'int',
-				'default' => ''
+				'default' => '',
 			),
 			'exchangeorderamount' => array(
 				'required' => false,
 				'name' => tra('Amount of new product to exchange for'),
 				'description' => tra('Should normally be set to the amount of products in the order being exchanged'),
 				'filter' => 'int',
-				'default' => 1
+				'default' => 1,
 			),
 			'ajaxaddtocart' => array(
 				'required' => false,
@@ -158,7 +159,7 @@ function wikiplugin_addtocart_info()
 					array('text' => '', 'value' => ''),
 					array('text' => tra('Yes'), 'value' => 'y'),
 					array('text' => tra('No'), 'value' => 'n')
-				)
+				),
 			),
 		),
 	);

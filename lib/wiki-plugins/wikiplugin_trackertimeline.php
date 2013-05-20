@@ -21,6 +21,7 @@ function wikiplugin_trackertimeline_info()
 				'description' => tra('Numeric value representing the tracker ID'),
 				'filter' => 'digits',
 				'default' => '',
+				'profile_reference' => 'tracker',
 			),
 			'title' => array(
 				'required' => true,
@@ -41,14 +42,16 @@ function wikiplugin_trackertimeline_info()
 				'name' => tra('Start Date'),
 				'description' => tra('Tracker Field ID containing the element start date. The field must be a datetime/jscalendar field.'),
 				'filter' => 'digits',
-				'default' => ''
+				'default' => '',
+				'profile_reference' => 'tracker_field',
 			),
 			'end' => array(
 				'required' => true,
 				'name' => tra('End Date'),
 				'description' => tra('Tracker Field ID containing the element end date. The field must be a datetime/jscalendar field.'),
 				'filter' => 'digits',
-				'default' => ''
+				'default' => '',
+				'profile_reference' => 'tracker_field',
 			),
 			'group' => array(
 				'required' => true,
@@ -56,6 +59,7 @@ function wikiplugin_trackertimeline_info()
 				'description' => tra('Tracker Field ID containing the element\'s group. Elements of a same group are displayed on the same row.'),
 				'filter' => 'digits',
 				'default' => '',
+				'profile_reference' => 'tracker_field',
 			),
 			'lower' => array(
 				'required' => true,
@@ -139,6 +143,7 @@ function wikiplugin_trackertimeline_info()
 				'description' => tra('Tracker Field ID containing the page name for item details.'),
 				'filter' => 'digits',
 				'default' => '',
+				'profile_reference' => 'tracker_field',
 			),
 			'simile_timeline' => array(
 				'required' => false,
@@ -157,6 +162,7 @@ function wikiplugin_trackertimeline_info()
 				'description' => tra('Tracker Field ID containing in image.'),
 				'filter' => 'digits',
 				'default' => '',
+				'profile_reference' => 'tracker_field',
 			),
 		)
 	);
