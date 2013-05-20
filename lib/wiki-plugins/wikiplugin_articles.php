@@ -58,8 +58,9 @@ function wikiplugin_articles_info()
 			'categId' => array(
 				'required' => false,
 				'name' => tra('Category ID'),
-				'description' => tra('The ID of the category that articles need to be in to be listed'),
+				'description' => tra('List of category IDs, separated by |. Only articles in all these categories are listed'),
 				'filter' => 'digits',
+				'separator' => '|',
 				'default' => ''
 			),
 			'lang' => array(
@@ -336,7 +337,18 @@ function wikiplugin_articles($data, $params)
 	include_once("lib/comments/commentslib.php");
 	$commentslib = new Comments($dbTiki);
 
-	$listpages = $artlib->list_articles($start, $max, $sort, '', $dateStartTS, $dateEndTS, 'admin', $type, $topicId, 'y', $topic, $categId, '', '', $lang, '', '', ($overrideDates == 'y'), 'y', $filter);
+	if ( count($categId) == 0 ) {
+		$categIds = '';
+	} elseif ( count($categId) == 1 ) {
+		// For performance reasons, if there is only one value, the SQL query should not return IN () as it does with arrays
+		// So we send a single value instead of a single-value array
+		$categIds = $categId[0];
+	} else {
+		// We want the list of articles which are in all categories
+		$categIds = array( 'AND' => $categId);
+	}
+
+	$listpages = $artlib->list_articles($start, $max, $sort, '', $dateStartTS, $dateEndTS, 'admin', $type, $topicId, 'y', $topic, $categIds, '', '', $lang, '', '', ($overrideDates == 'y'), 'y', $filter);
 	if ($prefs['feature_multilingual'] == 'y' && empty($translationOrphan)) {
 		global $multilinguallib;
 		include_once("lib/multilingual/multilinguallib.php");
