@@ -1385,7 +1385,7 @@ class Comments extends TikiLib
 			$old = $this->now - $maxAge;
 
 			// this aims to make it safer, by pruning only those with no children that are younger than age threshold
-			$result = $comments->fetchColumn(
+			$results = $comments->fetchColumn(
 				'threadId',
 				array('object' => $forumId, 'objectType' => 'forum', 'commentDate' => $comments->lesserThan($old))
 			);
@@ -2567,7 +2567,7 @@ class Comments extends TikiLib
 		$postDate = '', $anonymous_email = '', $anonymous_website = ''
 	)
 	{
-		global $prefs;
+		global $user;
 
 		if ($postDate == '') $postDate = $this->now;
 
@@ -2647,7 +2647,7 @@ class Comments extends TikiLib
 			array(
 				'type' => $object[0],
 				'author' => $userName,
-				'email' => $user ? TikiLib::lib('tiki')->get_user_email($user) : $anonymous_email,
+				'email' => $user ? TikiLib::lib('user')->get_user_email($user) : $anonymous_email,
 				'website' => $anonymous_website,
 				'content' => $data,
 			)

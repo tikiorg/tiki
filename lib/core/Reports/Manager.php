@@ -91,7 +91,7 @@ class Reports_Manager
 	 * @param array $data information about the changed object
 	 * @return null
 	 */
-	public function addToCache($watches, $data)
+	public function addToCache(&$watches, $data)
 	{
 		$users = $this->reportsUsers->getAllUsers();
 		$this->reportsCache->add($watches, $data, $users);

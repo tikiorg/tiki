@@ -120,7 +120,7 @@ class Tracker_Field_TextArea extends Tracker_Field_Text
 		$data = array(
 			'toolbar' => $this->getOption('toolbars') ? 'y' : 'n',
 			'cols' => ($cols >= 1) ? $cols : 50,
-			'rows' => ($rows >= 1) ? $rows : 15,
+			'rows' => ($rows >= 1) ? $rows : 6,
 			'keyup' => '',
 		);
 

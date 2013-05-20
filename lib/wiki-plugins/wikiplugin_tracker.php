@@ -1324,7 +1324,13 @@ function wikiplugin_tracker($data, $params)
 							$smarty->assign('f_'.$f['fieldId'], '<span class="outputPretty" id="track_'.$f['fieldId'].'" name="track_'.$f['fieldId'].'">'. wikiplugin_tracker_render_value($f, $item) . '</span>');
 						} else {
 							$mand =  ($showmandatory == 'y' and $f['isMandatory'] == 'y')? "&nbsp;<strong class='mandatory_star'>*</strong>&nbsp;":'';
-							$smarty->assign('f_'.$f['fieldId'], wikiplugin_tracker_render_input($f, $item, $dynamicSave).$mand);
+							$smarty->assign('f_'.$f['fieldId'],
+									wikiplugin_tracker_render_input($f, $item, $dynamicSave) .
+									$mand .
+									'<div class="trackerplugindesc">' .
+									($f['descriptionIsParsed'] == 'y' ? $tikilib->parse_data($f['description']) : tra($f['description'])) .
+									'</div>'
+							);
 						}
 					} else {
 						$back.= '<tr><td class="tracker_input_label"';
@@ -1369,7 +1375,7 @@ function wikiplugin_tracker($data, $params)
 						$back .= "</td></tr>";
 					}
 
-					if ($f['type'] != 'S') {
+					if ($f['type'] != 'S' && empty($tpl) && empty($wiki)) {
 						$back .= '<tr><td class="plugindesc_cell" colspan="2">';
 						$back .= '<span class="trackerplugindesc">';
 
@@ -1425,13 +1431,16 @@ FILL;
 			$back .= smarty_function_trackerheader(array('level'=>-1, 'title'=>'', 'inTable' =>(empty($tpl) && empty($wiki))?'wikiplugin_tracker':'' ), $smarty);
 
 
-			if ($prefs['feature_antibot'] == 'y' && (empty($user) || (!empty($user) && $_REQUEST['error'] == 'y'))
+			$smarty->assign('showmandatory', $showmandatory);
+
+			if ($prefs['feature_antibot'] == 'y' && empty($user)
 				&& $params['formtag'] != 'n'
 				&& ($registration != 'y' || $prefs["user_register_prettytracker"] != 'y')
 				) {
 				// in_tracker session var checking is for tiki-register.php
-				$smarty->assign('showmandatory', $showmandatory);
 				$smarty->assign('antibot_table', empty($wiki) && empty($tpl)?'n': 'y');
+				include_once('lib/captcha/captchalib.php');
+				$smarty->assign('captchalib', $captchalib);
 				$back .= $smarty->fetch('antibot.tpl');
 			}
 			if (empty($tpl) && empty($wiki)) {

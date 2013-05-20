@@ -94,7 +94,7 @@
 												{block name=content}No content specified{/block}
 											</div>
 											{if $prefs.module_zones_pagebottom eq 'fixed' or ($prefs.module_zones_pagebottom ne 'n' && $pagebottom_modules|@count > 0)}
-												{modulelist zone=pagebotton}
+												{modulelist zone=pagebottom}
 											{/if}
 											{show_help}
 										</div>{* end #tiki-center *}

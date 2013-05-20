@@ -99,6 +99,7 @@ ajaxLoadingShow("'.$dom_id.'");
  	contentsLangDirection: "' . ($prefs['feature_bidi'] === 'y' ? 'rtl' : 'ltr') . '",
 	language: "' . ($prefs['feature_detect_language'] === 'y' ? '' : $prefs['language']) . '"
 	'. (empty($params['cols']) ? ',height: 400' : '') .'
+	, resize_dir: "both"
 	, allowedContent: true
 //	, extraAllowedContent: {		// TODO one day, currently disabling the "Advanced Content Filter" as tiki plugins are too complex
 //		"div span": {

@@ -47,8 +47,15 @@ include_once ('tiki-section_options.php');
 
 $gal_info = $filegallib->get_file_gallery($_REQUEST['galleryId']);
 
-if ( substr($fileInfo['filetype'], 0, strlen($mimetypes['odt'])) != $mimetypes['odt'] || end(explode('.', $fileInfo['filename'])) != 'odt') {
-	$smarty->assign('msg', tr('Wrong file type, expected %0', $mimetypes['odt']));
+$fileType = reset(explode(';', $fileInfo['filetype']));
+$extension = end(explode('.', $fileInfo['filename']));
+$supportedExtensions = array('odt', 'ods', 'odp');
+$supportedTypes = array_map(function ($type) use ($mimetypes) {
+	return $mimetypes[$type];
+}, $supportedExtensions);
+
+if (! in_array($extension, $supportedExtensions) && ! in_array($fileType, $supportedTypes)) {
+	$smarty->assign('msg', tr('Wrong file type, expected one of %0', implode(', ', $supportedTypes)));
 	$smarty->display('error.tpl');
 	die;
 }
@@ -122,10 +129,9 @@ $smarty->assign('page', $page);
 $smarty->assign('isFromPage', isset($page));
 $smarty->assign('fileId', $fileId);
 
-$headerlib->add_jsfile('lib/webodf/webodf.js');
-$headerlib->add_cssfile('lib/webodf/webodf.css');
+$headerlib->add_jsfile('vendor_extra/webodf/webodf.js');
 
-$savingText = tr('Saving...');
+$savingText = json_encode(tr('Saving...'));
 
 $headerlib->add_jq_onready(
     "window.odfcanvas = new odf.OdfCanvas($('#tiki_doc')[0]);
@@ -133,7 +139,7 @@ $headerlib->add_jq_onready(
 
 	//make editable
 	$('.editButton').click(function() {
-		odfcanvas.setEditable();
+		odfcanvas.setEditable(true);
 
 		$('.editState,.viewState').toggle();
 
@@ -141,7 +147,7 @@ $headerlib->add_jq_onready(
 	});
 
 	runtime.writeFile = function(path, data) {
-		$.modal('$savingText');
+		$.modal($savingText);
 		var base64 = new core.Base64();
 		data = base64.convertUTF8ArrayToBase64(data);
 		$.post('tiki-edit_docs.php', {
@@ -161,7 +167,7 @@ $headerlib->add_jq_onready(
 
 if (isset($_REQUEST['edit'])) {
 	$smarty->assign('edit', 'true');
-	$headerlib->add_jq_onready('odfcanvas.setEditable();');
+	$headerlib->add_jq_onready('odfcanvas.setEditable(true);');
 } else {
 	$smarty->assign('edit', 'false');
 }
