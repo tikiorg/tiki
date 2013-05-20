@@ -33,22 +33,12 @@ class WikiPage extends ObjectWriter
 	{
 		$page = $input->getArgument('page');
 
-		$tikilib = \TikiLib::lib('tiki');
-		$info = $tikilib->get_page_info($page);
-
-		if (! $info) {
+		$writer = $this->getProfileWriter($input);
+		if (\Tiki_Profile_InstallHandler_WikiPage::export($writer, $page)) {
+			$writer->save();
+		} else {
 			$output->writeln("<error>Page not found: $page</error>");
 			return;
 		}
-
-		$writer = $this->getProfileWriter($input);
-		$writer->writeExternal($page, $info['data']);
-		$writer->addObject('wiki_page', $page, array(
-			'name' => $page,
-			'content' => "wikicontent:$page",
-			'description' => $info['description'],
-			'lang' => $info['lang'],
-		));
-		$writer->save();
 	}
 }

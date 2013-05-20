@@ -9,13 +9,13 @@ class Tiki_Profile_Writer
 {
 	private $data;
 	private $filePath;
-	private $dataPath;
+	private $externalWriter;
 	private $references = array();
 
 	function __construct($directory, $profileName)
 	{
 		$this->filePath = "$directory/$profileName.yml";
-		$this->dataPath = "$directory/$profileName";
+		$this->externalWriter = new Tiki_Profile_ExternalWriter("$directory/$profileName");
 		if (file_exists($this->filePath)) {
 			$content = file_get_contents($this->filePath);
 			$this->data = Horde_Yaml::load($content);
@@ -35,7 +35,7 @@ class Tiki_Profile_Writer
 
 	function writeExternal($page, $content)
 	{
-		file_put_contents("{$this->dataPath}/$page.wiki", $content);
+		$this->externalWriter->write("$page.wiki", $content);
 	}
 
 	function addObject($type, $currentId, array $data)
@@ -72,6 +72,12 @@ class Tiki_Profile_Writer
 						$entry = str_replace($token, $replacement, $entry);
 					}
 				});
+
+				$writer = $this->externalWriter;
+				foreach ($writer->getFiles() as $file => $content) {
+					$content = str_replace($token, $replacement, $content);
+					$writer->write($file, $content);
+				}
 
 				unset($this->data['unknown_objects'][$key]);
 				break;
@@ -149,6 +155,7 @@ class Tiki_Profile_Writer
 	function save()
 	{
 		file_put_contents($this->filePath, Horde_Yaml::dump($this->data));
+		$this->externalWriter->apply();
 	}
 
 	function clean()

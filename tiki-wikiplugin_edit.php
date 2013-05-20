@@ -49,33 +49,16 @@ foreach ( $matches as $match ) {
 	if ( $_POST['index'] == $count ) {
 		//by using content of "~same~", it will not replace the body that is there
 		$content = ($content == "~same~" ? $match->getBody() : $content);
-		$hasBody = !empty($content) && !ctype_space($content);
 		$params = $match->getArguments();
 
 		// If parameters are provided, rebuild the parameter line
 		if ( isset( $_POST['params'] ) && is_array($_POST['params']) ) {
 			// $values was relaxed to accept any argument rather than those defined up front 
 			// in the plugin's parameter list. This facilitates the use of modules as plugins.
-			$values = $_POST['params'];
-
-			$parts = array();
-			foreach ( $values as $key => $value ) {
-				if ($value || $value === '0') {
-					$parts[] = "$key=\"" . str_replace('"', "\\\"", $value) . '"';
-				}
-			}
-
-			$params = implode(' ', $parts);
+			$params = $_POST['params'];
 		}
 
-		// Replace the content
-		if ( $hasBody ) {
-			$content = "{{$type}($params)}$content{{$type}}";
-		} else {
-			$content = "{{$plugin} $params}";
-		}
-
-		$match->replaceWith($content);
+		$match->replaceWithPlugin($plugin, $params, $content);
 
 		$tikilib->update_page($page, $matches->getText(), $_POST['message'], $user, $tikilib->get_ip_address());
 		break;

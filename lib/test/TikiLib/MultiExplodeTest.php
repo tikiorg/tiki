@@ -42,5 +42,12 @@ class TikiLib_MultiExplodeTest extends PHPUnit_Framework_TestCase
 		$this->assertEquals(array('A', '+', 'B', '+', 'C', 'A', '+', 'B'), $lib->multi_explode(':', 'A:+:B:+:C:A:+:B'));
 		$this->assertEquals(array('A:-:B', '+', 'C', 'A', '+', 'B'), $lib->multi_explode(':', 'A:-:B:+:C:A:+:B'));
 	}
+
+	function testSimpleImplode()
+	{
+		$lib = TikiLib::lib('tiki');
+		$this->assertEquals('A:B', $lib->multi_implode(':', array('A', 'B')));
+		$this->assertEquals('A+C:B+D', $lib->multi_implode(array(':', '+'), array(array('A', 'C'), array('B', 'D'))));
+	}
 }
 

@@ -630,16 +630,18 @@ if ( \$('#$id') ) {
 			return $known[$name] = $class->info();
 		}
 
-		if ( ! $this->plugin_exists($name, true) )
+		if (! $this->plugin_exists($name, true)) {
 			return $known[$name] = false;
+		}
 
 		$func_name_info = "wikiplugin_{$name}_info";
 
 		if ( ! function_exists($func_name_info) ) {
-			if ( $info = WikiPlugin_Negotiator_Wiki_Alias::info($name) )
+			if ($info = WikiPlugin_Negotiator_Wiki_Alias::info($name)) {
 				return $known[$name] = $info['description'];
-			else
+			} else {
 				return $known[$name] = false;
+			}
 		}
 
 		return $known[$name] = $func_name_info();

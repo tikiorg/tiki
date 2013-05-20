@@ -6411,6 +6411,26 @@ JS;
 	}
 
     /**
+     * @param $delimiters
+     * @param $string
+     * @return string
+     */
+    function multi_implode($delimiters, $array)
+	{
+		$delimiters = (array) $delimiters;
+		$delimiter = array_shift($delimiters);
+
+		if (count($delimiters)) {
+			$self = $this;
+			$array = array_map(function ($value) use ($delimiters, $self) {
+				return $self->multi_implode($delimiters, $value);
+			}, $array);
+		}
+
+		return implode($delimiter, $array);
+	}
+
+    /**
      * @param $vals
      * @param $filter
      * @return string

@@ -214,4 +214,67 @@ class Tiki_Profile_InstallHandler_WikiPage extends Tiki_Profile_InstallHandler
 
 		return $name;
 	}
+
+	public static function export(Tiki_Profile_Writer $writer, $page)
+	{
+		$tikilib = \TikiLib::lib('tiki');
+		if (! $info = $tikilib->get_page_info($page)) {
+			return false;
+		}
+
+		$content = self::exportWikiContent($writer, $info['data']);
+		$writer->writeExternal($page, $content);
+		$writer->addObject('wiki_page', $page, array(
+			'name' => $page,
+			'content' => "wikicontent:$page",
+			'description' => $info['description'],
+			'lang' => $info['lang'],
+		));
+
+		return true;
+	}
+
+	public static function exportWikiContent($writer, $content)
+	{
+		$tikilib = TikiLib::lib('tiki');
+		$parserlib = TikiLib::lib('parser');
+		$argumentParser = new WikiParser_PluginArgumentParser;
+		$matches = WikiParser_PluginMatcher::match($content);
+
+		$justReplace = false;
+		foreach ($matches as $match) {
+			if ($justReplaced) {
+				$justReplaced = false;
+				continue;
+			}
+
+			$pluginName = $match->getName();
+			$params = $argumentParser->parse($match->getArguments());
+			$params = preg_replace(array('/^&quot;/', '/&quot;$/'), '', $params);
+			$body = $match->getBody();
+
+			if ($info = $parserlib->plugin_info($pluginName)) {
+				foreach ($params as $paramName => & $paramValue) {
+					if (isset($info['params'][$paramName]['profile_reference'])) {
+						$paramInfo = $info['params'][$paramName];
+
+						if (isset($paramInfo['separator'])) {
+							$paramValue = $tikilib->multi_explode($paramInfo['separator'], $paramValue);
+						}
+
+						$paramValue = $writer->getReference($paramInfo['profile_reference'], $paramValue);
+
+						if (isset($paramInfo['separator'])) {
+							$paramValue = $tikilib->multi_implode($paramInfo['separator'], $paramValue);
+						}
+					}
+				}
+
+				$match->replaceWithPlugin($pluginName, $params, $body);
+				$justReplaced = true;
+			}
+		}
+
+		return $matches->getText();
+	}
 }

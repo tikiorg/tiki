@@ -24,6 +24,7 @@ function wikiplugin_trackerlist_info()
 				'description' => tra('Numeric value representing the tracker ID'),
 				'filter' => 'digits',
 				'default' => '',
+				'profile_reference' => 'tracker',
 			),
 			'fields' => array(
 				'required' => false,
@@ -32,6 +33,7 @@ function wikiplugin_trackerlist_info()
 				'filter' => 'digits',
 				'separator' => ':',
 				'default' => '',
+				'profile_reference' => 'tracker_field',
 			),
 			'sort' => array(
 				'required' => false,

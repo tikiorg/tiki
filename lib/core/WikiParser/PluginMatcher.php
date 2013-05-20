@@ -457,6 +457,33 @@ class WikiParser_PluginMatcher_Match
 		$this->matcher->performReplace($this, $string);
 	}
 
+	function replaceWithPlugin($name, $params, $body)
+	{
+		$hasBody = !empty($content) && !ctype_space($content);
+
+		if (is_array($params)) {
+			$parts = array();
+			foreach ( $params as $key => $value ) {
+				if ($value || $value === '0') {
+					$parts[] = "$key=\"" . str_replace('"', "\\\"", $value) . '"';
+				}
+			}
+
+			$params = implode(' ', $parts);
+		}
+
+		// Replace the content
+		if ($hasBody) {
+			$type = strtoupper($name);
+			$replacement = "{{$type}($params)}$content{{$type}}";
+		} else {
+			$plugin = strtolower($name);
+			$replacement = "{{$plugin} $params}";
+		}
+
+		$this->replaceWith($replacement);
+	}
+
 	function getName()
 	{
 		return $this->name;

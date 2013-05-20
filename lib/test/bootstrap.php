@@ -55,6 +55,7 @@ TikiDb::set(new TikiDb_Adodb($dbTiki));
 
 global $tikilib;
 require_once 'lib/tikilib.php';
+$tikilib = new TikiLib;
 
 // update db if needed
 include_once ('installer/installlib.php');
