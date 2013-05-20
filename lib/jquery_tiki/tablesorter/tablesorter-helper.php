@@ -17,6 +17,7 @@ class tablesorterHelper
 	public $params = array();
 	public $totalcols = '';
 	public $html = '';
+	private $headers = array();
 	private $options = array();
 	private $widgets = array();
 	private $widgetOptions = array();
@@ -64,7 +65,7 @@ class tablesorterHelper
 				'name' => tra('Pre-sorted Columns'),
 				'description' => tra(
 					'Bracketed numbers for column number (first column = 0) and sort direction
-					(0 = ascending, 1 = descending), for example: [0,0],[1,0]'
+					(0 = ascending, 1 = descending, n = no sort), for example: [0,0],[1,0],[2,n]'
 				),
 				'default' => '',
 				'filter' => 'striptags',
@@ -200,12 +201,14 @@ class tablesorterHelper
 							$newlist[] = '[' . $l . ']';
 						} else {
 							$lpieces = explode(',', $l);
-							$this->code['columns'][$lpieces[0]]['classes'][] = 'sorter-false';
+							$this->headers[$lpieces[0]][] = 'sorter: false';
 						}
 					}
-					$liststring = implode(',', $newlist);
 				}
-				$this->options[] = 'sortList : [' . $liststring . ']';
+				if (!empty($newlist)) {
+					$liststring = implode(',', $newlist);
+					$this->options[] = 'sortList : [' . $liststring . ']';
+				}
 			}
 
 			//set paginate code
@@ -272,7 +275,7 @@ class tablesorterHelper
 						$def = '';
 						switch($filter['type']) {
 							case 'nofilter' :
-								$this->code['columns'][$key]['classes'][] = 'filter-false';
+								$this->headers[$key][] = 'filter: false';
 								break;
 							case 'dropdown' :
 								//add any dropdown options set by user, which start at the [1] index
@@ -294,7 +297,7 @@ class tablesorterHelper
 								$def = array_merge($tsfsub['type'][$filter['type']], $filter);
 								//min is at [0] array index; max is at [1] and popup is at [2]
 								$valuetoheader = $def['style'] == 'popup' ? 'false' : 'true';
-								$range = ' ' . $key . ' : function($cell, indx){return $.tablesorter.filterFormatter.uiRange( $cell, indx, {';
+								$range = "\n\t\t\t\t" . $key . ' : function($cell, indx){return $.tablesorter.filterFormatter.uiRange( $cell, indx, {';
 								$range .= 'values: [' . $def['from'] . ', ' . $def['to'] . '],';
 								$range .= ' min: ' . $def['from'] . ',';
 								$range .= ' max: ' . $def['to'] . ',';
@@ -306,7 +309,7 @@ class tablesorterHelper
 							case 'date' :
 								$def = array_merge($tsfsub['type'][$filter['type']], $filter);
 								//from date is at [0] array index; to date is at [1]
-								$date = ' ' . $key . ' : function($cell, indx){return $.tablesorter.filterFormatter.uiDatepicker( $cell, indx, {';
+								$date = "\n\t\t\t\t" . $key . ' : function($cell, indx){return $.tablesorter.filterFormatter.uiDatepicker( $cell, indx, {';
 								$date .= 'from : \'' . $def['from'] . '\',';
 								$date .= ' to : \'' . $def['to'] . '\',';
 								$date .= ' dateFormat: \'' . $def['format'] . '\',';
@@ -336,6 +339,22 @@ class tablesorterHelper
 
 			//create jquery
 			$jq = "\t" . '$("#' . $id . '").tablesorter({' . "\n\t\t";
+			//add headers
+			if (is_array($this->headers) && count($this->headers) > 0) {
+				$jq .= 'headers: {';
+				foreach ($this->headers as $col => $header) {
+					$jq .= "\n\t\t\t" . $col . ' : {';
+					foreach ($header as $onehead) {
+						$jq .= $onehead . ',';
+					}
+					//take off the last comma
+					$jq = substr($jq, 0, -1);
+					$jq .= '},';
+				}
+				//take off the last comma
+				$jq = substr($jq, 0, -1);
+				$jq .= "\n\t\t" . '},' . "\n\t\t";
+			}
 			//add widgets
 			if (is_array($this->widgets) && count($this->widgets) > 0) {
 				$jq .= 'widgets : [';
@@ -440,5 +459,23 @@ class tablesorterHelper
 		} else {
 			return $param;
 		}
+	}
+
+	function loadJq()
+	{
+		if ($this->code !== false) {
+			global $headerlib;
+			$headerlib->add_jq_onready(implode("\n", $this->code['jq']));
+		}
+	}
+
+	function createThead()
+	{
+		$tshead = '';
+		if (isset($this) && is_array($this->code['buttons']) && count($this->code['buttons']) > 0) {
+			$tshead = implode("\n\t", $this->code['buttons']);
+		}
+		$tshead .= !empty($this->code['div']) ? $this->code['div'] : '';
+		return $tshead;
 	}
 }
