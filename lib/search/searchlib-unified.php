@@ -59,7 +59,7 @@ class UnifiedSearchLib
 			try {
 				$indexer = $this->buildIndexer($this->getIndex());
 				$indexer->update($toProcess);
-			} catch (Zend_Search_Lucene_Exception $e) {
+			} catch (Exception $e) {
 				// Re-queue pulled messages for next update
 				foreach ($toProcess as $message) {
 					$queuelib->push(self::INCREMENT_QUEUE, $message);
