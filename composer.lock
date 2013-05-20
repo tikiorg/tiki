@@ -3,16 +3,16 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "0fda33d6eab527663258edb4d92e3c30",
+    "hash": "5ab588081094be7314eb6d65e8140620",
     "packages": [
         {
             "name": "aFarkas/html5shiv",
             "version": "3.6.2",
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/aFarkas/html5shiv/archive/3.6.2.zip",
-                "reference": null,
-                "shasum": null
+                "url": "https://composer.tiki.org/dist/afarkas-html5shiv-3.6.2.zip",
+                "reference": "3.6.2",
+                "shasum": "0d97a15270ac17492daa8a6df676154d43a22726"
             },
             "type": "library"
         },
@@ -20,10 +20,10 @@
             "name": "adodb/adodb",
             "version": "5.18",
             "dist": {
-                "type": "tar",
-                "url": "http://downloads.sourceforge.net/project/adodb/adodb-php5-only/adodb-518-for-php5/adodb518a.tgz",
-                "reference": null,
-                "shasum": null
+                "type": "zip",
+                "url": "https://composer.tiki.org/dist/adodb-adodb-5.18.zip",
+                "reference": "5.18",
+                "shasum": "82a31ec99c0c4dd28ebd5afc2a41cb971e9c376c"
             },
             "type": "library"
         },
@@ -37,9 +37,9 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bombayworks/zendframework1/zipball/v1.12.3",
+                "url": "https://composer.tiki.org/dist/bombayworks-zendframework1-v1.12.3-v1.12.3-2cceec.zip",
                 "reference": "v1.12.3",
-                "shasum": ""
+                "shasum": "ae2001e5c24db10ee1aed63f224b07720327df92"
             },
             "require": {
                 "php": ">=5.2.11"
@@ -89,9 +89,9 @@
             "version": "4.1.1",
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/ckeditor/ckeditor-releases/archive/4.1.1/full.zip",
-                "reference": null,
-                "shasum": null
+                "url": "https://composer.tiki.org/dist/ckeditor-ckeditor-4.1.1.zip",
+                "reference": "4.1.1",
+                "shasum": "53fab63173ba6dc6981be14cb1ce2cc02ceb47f7"
             },
             "type": "library"
         },
@@ -100,9 +100,9 @@
             "version": "4.1.1",
             "dist": {
                 "type": "zip",
-                "url": "http://download.ckeditor.com/kama/releases/kama_4.1.1.zip",
-                "reference": null,
-                "shasum": null
+                "url": "https://composer.tiki.org/dist/ckeditor-ckeditor-skins-kama-4.1.1.zip",
+                "reference": "4.1.1",
+                "shasum": "1fc456f7627069c9e6451b827c0c5439ddba123f"
             },
             "type": "library"
         },
@@ -111,9 +111,9 @@
             "version": "2.25",
             "dist": {
                 "type": "zip",
-                "url": "http://codemirror.net/codemirror-2.25.zip",
-                "reference": null,
-                "shasum": null
+                "url": "https://composer.tiki.org/dist/codemirror-codemirror-2.25.zip",
+                "reference": "2.25",
+                "shasum": "9e2354bcfa135e1dad7acb82e5ea06483922fcf7"
             },
             "type": "library"
         },
@@ -127,9 +127,9 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ezyang/htmlpurifier/zipball/v4.5.0",
+                "url": "https://composer.tiki.org/dist/ezyang-htmlpurifier-v4.5.0-v4.5.0-7aaaa0.zip",
                 "reference": "v4.5.0",
-                "shasum": ""
+                "shasum": "eb80571c5396656e933ae00ddbf74c661e9a5407"
             },
             "require": {
                 "php": ">=5.2"
@@ -374,12 +374,12 @@
         },
         {
             "name": "jquery/plugins/anythingslider",
-            "version": "1.8.18",
+            "version": "1.9.1",
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/jquery-plugins-anythingslider-1.8.18.zip",
-                "reference": "1.8.18",
-                "shasum": "0bf7e65fa5cb389f6835156485d507253cddb806"
+                "url": "https://composer.tiki.org/dist/jquery-plugins-anythingslider-1.9.1.zip",
+                "reference": "1.9.1",
+                "shasum": "5314f2a957749de7b7b1518bb4b9d437caaf9afb"
             },
             "type": "library"
         },
@@ -656,6 +656,7 @@
                     "Net": "phpseclib/"
                 }
             },
+            "notification-url": "https://packagist.org/downloads/",
             "include-path": [
                 "phpseclib/"
             ],
@@ -736,6 +737,7 @@
                     "distribution/libs/SmartyBC.class.php"
                 ]
             },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "LGPL-3.0"
             ],
@@ -782,9 +784,9 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Console/zipball/v2.2.0",
+                "url": "https://composer.tiki.org/dist/symfony-console-v2.2.0-v2.2.0-12a657.zip",
                 "reference": "v2.2.0",
-                "shasum": ""
+                "shasum": "90e38e0d7734b8ed8807eddced63293c800aef07"
             },
             "require": {
                 "php": ">=5.3.3"
@@ -828,9 +830,9 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/zetacomponents/Base/zipball/1.8",
+                "url": "https://composer.tiki.org/dist/zetacomponents-base-1.8-1.8-93ec1d.zip",
                 "reference": "1.8",
-                "shasum": ""
+                "shasum": "7592e7b62d5e837955440c006c1d4a0cd9b009f7"
             },
             "type": "library",
             "autoload": {
