@@ -25,6 +25,7 @@ class Tracker_Field_Files extends Tracker_Field_Abstract
 						'description' => tr('File gallery to upload new files into.'),
 						'filter' => 'int',
 						'legacy_index' => 0,
+						'profile_reference' => 'file_gallery',
 					),
 					'filter' => array(
 						'name' => tr('MIME Type Filter'),
@@ -86,12 +87,14 @@ class Tracker_Field_Files extends Tracker_Field_Abstract
 						'description' => tr('File gallery browse files. Use 0 for root file gallery. (requires elFinder feature - experimental)'),
 						'filter' => 'int',
 						'legacy_index' => 8,
+						'profile_reference' => 'file_gallery',
 					),
 					'duplicateGalleryId' => array(
 						'name' => tr('Duplicate Gallery ID'),
 						'description' => tr('File gallery to duplicate files into when copying the tracker item. 0 or empty means do not duplicate (default).'),
 						'filter' => 'int',
 						'legacy_index' => 9,
+						'profile_reference' => 'file_gallery',
 					),
 				),
 			),

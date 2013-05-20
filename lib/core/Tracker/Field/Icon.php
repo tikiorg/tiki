@@ -23,6 +23,7 @@ class Tracker_Field_Icon extends Tracker_Field_Abstract
 						'description' => tr('File gallery to upload new files into.'),
 						'filter' => 'int',
 						'legacy_index' => 0,
+						'profile_reference' => 'file_gallery',
 					),
 					'default' => array(
 						'name' => tr('Default image'),

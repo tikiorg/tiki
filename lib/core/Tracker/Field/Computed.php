@@ -31,6 +31,7 @@ class Tracker_Field_Computed extends Tracker_Field_Abstract
 						'example' => '#3*(#4+5)',
 						'filter' => 'text',
 						'legacy_index' => 0,
+						'profile_reference' => array(__CLASS__, 'profileReference'),
 					),
 				),
 			),
@@ -100,11 +101,18 @@ class Tracker_Field_Computed extends Tracker_Field_Abstract
 			$fieldId = $field['fieldId'];
 
 			if ($field['type'] == 'C') {
-				$calc = preg_replace('/#([0-9]+)/', '$args[\'values\'][\1]', $field['options'][0]);
+				$calc = preg_replace('/#([0-9]+)/', '$args[\'values\'][\1]', $field['options_array'][0]);
 				eval('$value = '.$calc.';');
 				$args['values'][$fieldId] = $value;
 				$trklib->modify_field($args['itemId'], $fieldId, $value);
 			}
 		}
+	}
+
+	public static function profileReference(Tiki_Profile_Writer $writer, $value) {
+		return preg_replace_callback('/#([0-9]+)/', function ($args) use ($writer) {
+			return $writer->getReference('tracker_field', $args[1]);
+		}, $value);
+		
 	}
 }

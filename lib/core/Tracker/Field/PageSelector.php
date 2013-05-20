@@ -46,6 +46,7 @@ class Tracker_Field_PageSelector extends Tracker_Field_Abstract
 						'description' => tr('Create missing pages using the page name in this file as the template.'),
 						'filter' => 'pagename',
 						'legacy_index' => 2,
+						'profile_reference' => 'wiki_page',
 					),
 					'link' => array(
 						'name' => tr('Link'),

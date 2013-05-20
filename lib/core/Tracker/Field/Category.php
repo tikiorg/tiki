@@ -29,6 +29,7 @@ class Tracker_Field_Category extends Tracker_Field_Abstract implements Tracker_F
 						'description' => tr('Child categories will be provided as options for the field.'),
 						'filter' => 'int',
 						'legacy_index' => 0,
+						'profile_reference' => 'category',
 					),
 					'inputtype' => array(
 						'name' => tr('Input Type'),

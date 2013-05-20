@@ -10,7 +10,7 @@
  * 
  * - email key ~m~
  */
-class Tracker_Field_Simple extends Tracker_Field_Abstract implements Tracker_Field_Synchronizable
+class Tracker_Field_Email extends Tracker_Field_Abstract implements Tracker_Field_Synchronizable
 {
 	private $type;
 

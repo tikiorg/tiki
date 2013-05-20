@@ -89,6 +89,11 @@ class Tiki_Profile_Writer
 
 	function getReference($type, $id)
 	{
+		// If we are provided with an anonymous function to handle special cases
+		if (is_callable($type)) {
+			return call_user_func($type, $this, $id);
+		}
+
 		if (is_array($id)) {
 			$parent = $this;
 			return array_map(function ($value) use ($type, $parent) {

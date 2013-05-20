@@ -30,18 +30,21 @@ class Tracker_Field_ItemsList extends Tracker_Field_Abstract
 						'description' => tr('Tracker to list items from'),
 						'filter' => 'int',
 						'legacy_index' => 0,
+						'profile_reference' => 'tracker',
 					),
 					'fieldIdThere' => array(
 						'name' => tr('Link Field ID'),
 						'description' => tr('Field ID from the other tracker containing an item link pointing to the item in this tracker or some other value to be matched.'),
 						'filter' => 'int',
 						'legacy_index' => 1,
+						'profile_reference' => 'tracker_field',
 					),
 					'fieldIdHere' => array(
 						'name' => tr('Value Field ID'),
 						'description' => tr('Field ID from this tracker matching the value in the link field ID from the other tracker if the field above is not an item link.'),
 						'filter' => 'int',
 						'legacy_index' => 2,
+						'profile_reference' => 'tracker_field',
 					),
 					'displayFieldIdThere' => array(
 						'name' => tr('Fields to display'),
@@ -49,6 +52,7 @@ class Tracker_Field_ItemsList extends Tracker_Field_Abstract
 						'filter' => 'int',
 						'separator' => '|',
 						'legacy_index' => 3,
+						'profile_reference' => 'tracker_field',
 					),
 					'linkToItems' => array(
 						'name' => tr('Display'),
