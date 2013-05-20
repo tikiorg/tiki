@@ -2647,7 +2647,7 @@ class Comments extends TikiLib
 			array(
 				'type' => $object[0],
 				'author' => $userName,
-				'email' => $user ? TikiLib::lib('tiki')->get_user_email($user) : $anonymous_email,
+				'email' => $user ? TikiLib::lib('user')->get_user_email($user) : $anonymous_email,
 				'website' => $anonymous_website,
 				'content' => $data,
 			)
