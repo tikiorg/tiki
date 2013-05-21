@@ -182,7 +182,7 @@
 		{if $tiki_p_edit_article eq 'y'}<a href="tiki-edit_article.php">{tr}Add an article{/tr}</a>{/if}
 	{/if}
 {/section}
-{if !empty($listpages) && (isset($usePagination) and $usePagination ne 'n')}
+{if !empty($listpages) && (!isset($usePagination) or $usePagination ne 'n')}
 	{pagination_links cant=$cant step=$maxArticles offset=$offset}{if isset($urlnext)}{$urlnext}{/if}{/pagination_links}
 {/if}
 
