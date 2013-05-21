@@ -27,6 +27,9 @@
 	background-image: none;
 	padding: 4px;
 }
+.tablesorter thead .disabled {
+	display: none;
+}
 
 /* Zebra Widget */
 /* follows base odd/even colors from syles/layout/design.css */
