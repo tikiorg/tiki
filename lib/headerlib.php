@@ -186,7 +186,7 @@ class HeaderLib
 
 	function output_headers()
 	{
-		global $style_ie6_css, $style_ie7_css, $style_ie8_css, $smarty;
+		global $style_ie6_css, $style_ie7_css, $style_ie8_css, $style_ie9_css, $smarty;
 
     $smarty->loadPlugin('smarty_modifier_escape');
 
@@ -240,6 +240,9 @@ class HeaderLib
 		$back .= "<![endif]-->\n";
 		$back .= "<!--[if IE 9]>\n"
 				.'<link rel="stylesheet" href="css/ie9.css" type="text/css" />'."\n";
+		if ( $style_ie9_css != '' ) {
+			$back .= '<link rel="stylesheet" href="'.smarty_modifier_escape($this->convert_cdn($style_ie9_css)).'" type="text/css" />'."\n";
+		}
 		$back .= "<![endif]-->\n";
 
 		if (count($this->rssfeeds)) {

@@ -45,6 +45,7 @@ $style_base = $tikilib->get_style_base($prefs['style']);
 $style_ie6_css = $tikilib->get_style_path($prefs['style'], $prefs['style_option'], 'ie6.css');
 $style_ie7_css = $tikilib->get_style_path($prefs['style'], $prefs['style_option'], 'ie7.css');
 $style_ie8_css = $tikilib->get_style_path($prefs['style'], $prefs['style_option'], 'ie8.css');
+$style_ie9_css = $tikilib->get_style_path($prefs['style'], $prefs['style_option'], 'ie9.css');
 
 // include optional "options" cascading stylesheet if set
 if ( !empty($prefs['style_option'])) {
