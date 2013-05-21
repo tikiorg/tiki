@@ -708,6 +708,15 @@ function prefs_feed_list()
 			'size' => 2,
 			'default' => tra('Last shoutbox messages.'),
 		),
+		'feed_tracker_labels' => array(
+			'name' => tra('Tracker labels'),
+			'description' => tra('Include tracker field labels in the RSS output'),
+			'type' => 'flag',
+			'dependencies' => array(
+				'feature_trackers',
+			),
+			'default' => 'y',
+		),
 	);
 }
 
