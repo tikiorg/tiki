@@ -6902,19 +6902,7 @@ function compare_names($ar1, $ar2)
 
 function chkgd2()
 {
-	if (!isset($_SESSION['havegd2'])) {
-#   TODO test this logic in PHP 4.3
-#   if (version_compare(phpversion(), "4.3.0") >= 0) {
-#  $_SESSION['havegd2'] = true;
-#   } else {
-	ob_start();
-	phpinfo(INFO_MODULES);
-	$_SESSION['havegd2'] = preg_match('/GD Version.*2.0/', ob_get_contents());
-	ob_end_clean();
-# }
-	}
-
-	return $_SESSION['havegd2'];
+	return function_exists('imagecreatetruecolor');
 }
 
 
