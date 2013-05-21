@@ -90,22 +90,8 @@ function wikiplugin_fancytable($data, $params)
 			isset($tspaginate) ? $tspaginate : null
 		);
 		$sort = $tshelper->code !== false ? true : false;
-		if ($sort) {
-			$js1 = '$(".wikiplugin_trackerlist").tablesorter({
-					widgets: ["zebra", "filter"],
-					theme : \'dark\',
-					widgetOptions : {
-						filter_cssFilter   : \'tablesorter-filter\',
-						filter_hideFilters : false,
-						filter_reset : \'.reset\',
-						filter_searchDelay : 300,
-						filter_functions: {1: true}
-					}
-				});';
-			global $headerlib;
-			$headerlib->add_jq_onready(implode("\n", $tshelper->code['jq']));
-			$headerlib->add_jq_onready($js1);
-		} else {
+		$tshelper->loadJq();
+		if ($sort === false) {
 			$msg = tra('The JQuery Sortable Tables feature must be activated for the sort feature to work.');
 		}
 	} else {
@@ -148,13 +134,9 @@ function wikiplugin_fancytable($data, $params)
 
 		//restore original tags and plugin syntax
 		postprocess_section($headrows, $tagremove, $pluginremove);
-		$buttons = '';
-		if (isset($tshelper) && is_array($tshelper->code['buttons']) && count($tshelper->code['buttons']) > 0) {
-			$buttons = implode("\n\t", $tshelper->code['buttons']);
-		}
-		$div = !empty($tshelper->code['div']) ? $tshelper->code['div'] : '';
+		$buttons = isset($tshelper) ? $tshelper->createThead() : '';
 
-		$wret .= '<thead>' . $buttons . $div . $headrows . "\r\t" . '</thead>' . "\r\t" . '<tbody>';
+		$wret .= '<thead>' . $buttons . $headrows . "\r\t" . '</thead>' . "\r\t" . '<tbody>';
 	}
 
 	//Body
@@ -381,15 +363,6 @@ function process_section ($data, $type, $line_sep, $cellbeg, $cellend, $widths, 
 					}
 					if (isset($fcols[$c]['placeholder'])) {
 						$ph = ' ' . $fcols[$c]['placeholder'];
-					}
-					if (isset($fcols[$c]['classes'])) {
-						if (strpos($cellbeg, 'class="') === false) {
-							$cellbeg .= ' class="';
-						}
-						foreach ($fcols[$c]['classes'] as $class) {
-							$cellbeg .= ' ' . $class;
-						}
-						$cellbeg .= '"';
 					}
 				}
 
