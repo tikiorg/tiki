@@ -41,6 +41,11 @@
 					{if $allow_post && $comment.locked neq 'y'}
 						<div class="button comment-form">{self_link controller=comment action=post type=$type objectId=$objectId parentId=$comment.threadId}{tr}Reply{/tr}{/self_link}</div>
 					{/if}
+							<td>
+							{if $comment.can_edit}
+								<div class="button comment-form">{self_link controller=comment action=edit threadId=$comment.threadId}{tr}Edit{/tr}{/self_link}</div>
+							{/if}
+							</td>
 
 					{if $comment.replies_info.numReplies gt 0}
 						{include file='comment/list.tpl' comments=$comment.replies_info.replies cant=$comment.replies_info.numReplies parentId=$comment.threadId}
@@ -61,4 +66,117 @@
 
 {if ! $parentId && $prefs.feature_wiki_paragraph_formatting eq 'y'}
 	<a id="note-editor-comment" href="#" style="display:none;">{tr}Add Comment{/tr}</a>
+{/if}
+
+<script type="text/javascript">
+var ajax_url = '{$base_url}';
+var objectId = '{$objectId}';
+</script>
+{if $prefs.wiki_comments_form_displayed_default eq 'y'}
+{jq}
+function comment_load(url) {
+	$('#top .note-list').remove();
+
+	this.each(function () {
+		var comment_container = this;
+		$(this).load(url, function (response, status) {
+			$(this).show();
+			$('.comment.inline dt:contains("note")', this)
+				.closest('.comment')
+				.addnotes( $('#top') );
+
+            if(jqueryTiki.useInlineComment) {
+				$('#top').noteeditor($('.comment-form:last a', comment_container), '#note-editor-comment');
+			} 
+
+			$('.comment-form a', this).click(function () {
+				$(this).parent().empty().removeClass('button').load($(this).attr('href'), function () {
+					var form = $('form', this).submit(function () {
+						var errors;
+						$.post(form.attr('action'), $(this).serialize(), function (data, st) {
+							if (data.threadId) {
+								$(comment_container).empty().comment_load(url);
+								$comm_counter = $('span.count_comments');
+								if ($comm_counter.length != 0) {
+									var comment_count = parseInt($comm_counter.text()) + 1;
+									$comm_counter.text(comment_count);
+								}
+							} else {
+								errors = $('ol.errors', form).empty();
+								if (! errors.length) {
+									$(':submit', form).after(errors = $('<ol class="errors"/>'));
+								}
+								
+								$.each(data.errors, function (k, v) {
+									errors.append($('<li/>').text(v));
+								});
+							}
+						}, 'json');
+						return false;
+					});
+
+					//allow syntax highlighting
+					if ($.fn.flexibleSyntaxHighlighter) {
+						// console.log(form.find('textarea.wikiedit'));
+						form.find('textarea.wikiedit').flexibleSyntaxHighlighter();
+					}
+				});
+				return false;
+			});
+
+			$('.button.comment-form.autoshow a').click(); // allow autoshowing of comment forms through autoshow css class 
+
+			$('.confirm-prompt', this).requireConfirm({
+				success: function (data) { 
+					if (data.status === 'DONE') {
+						$(comment_container).empty().comment_load(url);
+						$comm_counter = $('span.count_comments');
+						if ($comm_counter.length != 0) {
+							var comment_count = parseInt($comm_counter.text()) - 1;
+							$comm_counter.text(comment_count);
+						}
+					}
+				}
+			});
+		});
+	});
+
+	return this;
+};
+
+var comm_href =  ajax_url + "tiki-ajax_services.php?controller=comment&action=post&type="+encodeURIComponent("wiki page")+"&objectId="+encodeURIComponent(objectId);
+var url = 'tiki-ajax_services.php?controller=comment&action=list&type=wiki+page&objectId='+encodeURIComponent(objectId)+'#comment-container';
+$this = $('.comment-form').last().find('a');
+$this.parent().empty().removeClass('button').load($this.attr('href'), function () {
+	var form = $('form', this).submit(function () {
+		var errors;
+		$.post(form.attr('action'), $(this).serialize(), function (data, st) {
+			if (data.threadId) {
+				$("#comment-container").empty().comment_load(url);
+				$comm_counter = $('span.count_comments');
+				if ($comm_counter.length != 0) {
+					var comment_count = parseInt($comm_counter.text()) + 1;
+					$comm_counter.text(comment_count);
+				}
+			} else {
+				errors = $('ol.errors', form).empty();
+				if (! errors.length) {
+					$(':submit', form).after(errors = $('<ol class="errors"/>'));
+				}
+				
+				$.each(data.errors, function (k, v) {
+					errors.append($('<li/>').text(v));
+				});
+			}
+		}, 'json');
+		return false;
+	});
+
+	//allow syntax highlighting
+	if ($.fn.flexibleSyntaxHighlighter) {
+		// console.log(form.find('textarea.wikiedit'));
+		form.find('textarea.wikiedit').flexibleSyntaxHighlighter();
+	}
+});
+{/jq}
 {/if}
