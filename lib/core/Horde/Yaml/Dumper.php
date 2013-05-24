@@ -6,19 +6,19 @@
  * implementation (http://spyc.sourceforge.net/), and portions are
  * copyright 2005-2006 Chris Wanstrath.
  *
- * @author   Chris Wanstrath (chris@ozmm.org)
- * @author   Chuck Hagenbuch (chuck@horde.org)
- * @author   Mike Naberezny (mike@maintainable.com)
- * @license  http://opensource.org/licenses/bsd-license.php BSD
+ * @author   Chris Wanstrath <chris@ozmm.org>
+ * @author   Chuck Hagenbuch <chuck@horde.org>
+ * @author   Mike Naberezny <mike@maintainable.com>
+ * @license  http://www.horde.org/licenses/bsd BSD
  * @category Horde
- * @package  Horde_Yaml
+ * @package  Yaml
  */
 
 /**
  * Dump PHP data structures to YAML.
  *
  * @category Horde
- * @package  Horde_Yaml
+ * @package  Yaml
  */
 class Horde_Yaml_Dumper
 {
@@ -130,11 +130,13 @@ class Horde_Yaml_Dumper
      */
     protected function _dumpNode($key, $value, $indent)
     {
+        $literal = false;
         // Do some folding here, for blocks.
         if (strpos($value, "\n") !== false
             || strpos($value, ': ') !== false
             || strpos($value, '- ') !== false) {
             $value = $this->_doLiteralBlock($value, $indent);
+            $literal = true;
         } else {
             $value = $this->_fold($value, $indent);
         }
@@ -152,6 +154,11 @@ class Horde_Yaml_Dumper
         }
 
         $spaces = str_repeat(' ', $indent);
+
+        // Quote strings if necessary, and not folded
+        if (!$literal && strpos($value, "\n") === false && strchr($value, '#')) {
+            $value = "'{$value}'";
+        }
 
         if (is_int($key)) {
             // It's a sequence.
