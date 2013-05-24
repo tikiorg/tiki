@@ -75,7 +75,7 @@ class TikiDb_Pdo extends TikiDb
 				$result = $pq->execute($values);
 			}
 		} else {
-			$result = $this->db->query($query);
+			$result = @ $this->db->query($query);
 		}
 
 		$this->stopTimer($starttime);
