@@ -132,6 +132,18 @@ class Tiki_Profile_Writer
 		return $this->generateTemporaryReference($type, $id);
 	}
 
+	function isKnown($type, $id)
+	{
+		$type = Tiki_Profile_Installer::convertTypeInvert($type);
+		foreach ($this->data['objects'] as $object) {
+			if ($object['type'] == $type && $object['_id'] == $id) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	function formatExternalReference($symbol, $profile, $repository = null)
 	{
 		if ($repository) {
