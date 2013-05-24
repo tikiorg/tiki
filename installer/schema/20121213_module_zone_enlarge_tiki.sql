@@ -1,4 +1,3 @@
-DROP INDEX `namePosOrdParam` ON `tiki_modules`;
 ALTER TABLE `tiki_modules` MODIFY COLUMN `position` VARCHAR(20);
 ALTER TABLE `tiki_user_assigned_modules` MODIFY COLUMN `position` VARCHAR(20);
 
