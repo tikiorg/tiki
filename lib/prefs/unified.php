@@ -169,6 +169,7 @@ function prefs_unified_list()
 			'type' => 'text',
 			'separator' => ',',
 			'default' => array(),
+			'profile_reference' => 'category',
 		),
 		'unified_elastic_url' => array(
 			'name' => tra('ElasticSearch URL'),

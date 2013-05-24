@@ -82,6 +82,7 @@ if (file_exists('profiles/info.ini')) {
 	$console->add(new Tiki\Command\ProfileExport\Tracker);
 	$console->add(new Tiki\Command\ProfileExport\TrackerField);
 	$console->add(new Tiki\Command\ProfileExport\IncludeProfile);
+	$console->add(new Tiki\Command\ProfileExport\Preference);
 	$console->add(new Tiki\Command\ProfileExport\Finalize);
 }
 

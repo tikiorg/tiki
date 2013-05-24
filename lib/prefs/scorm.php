@@ -25,6 +25,7 @@ function prefs_scorm_list()
 			'filter' => 'int',
 			'default' => 0,
 			'size' => 5,
+			'profile_reference' => 'tracker',
 		),
 	);
 }

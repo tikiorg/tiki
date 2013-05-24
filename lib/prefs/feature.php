@@ -36,6 +36,7 @@ function prefs_feature_list($partial = false)
 				'feature_blogs',
 			),
 			'default' => '-1',
+			'profile_reference' => 'category',
 		),
 		'feature_areas' => array(
 			'name' => tra('Areas'),

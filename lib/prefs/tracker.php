@@ -33,6 +33,7 @@ function prefs_tracker_list()
 			'filter' => 'int',
 			'separator' => ',',
 			'default' => array(),
+			'profile_reference' => 'tracker',
 		),
 	);
 }

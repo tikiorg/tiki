@@ -38,6 +38,11 @@ class Tiki_Profile_Writer
 		$this->externalWriter->write("$page.wiki", $content);
 	}
 
+	function setPreference($name, $value)
+	{
+		$this->data['preferences'][$name] = $value;
+	}
+
 	function addObject($type, $currentId, array $data)
 	{
 		$this->clearObject($type, $currentId);
