@@ -35,7 +35,7 @@ class UserPrefsLib extends TikiLib
 			$userlib->interSendUserInfo($prefs['interlist'][$prefs['feature_intertiki_mymaster']], $user);
 		}
 
-		$image = 'temp/public/' . $tikidomainslash . 'avatar_' . $user . '.*';
+		$image = 'temp/public/' . $tikidomainslash . 'avatar_' . md5($user) . '.*';
 		foreach ( glob($image) as $file ) {
 			unlink($file);
 		}
@@ -56,14 +56,12 @@ class UserPrefsLib extends TikiLib
 
 	function get_public_avatar_path($user)
 	{
-		global $prefs, $tikidomain;
+		global $prefs, $tikidomainslash;
 
 		if ( $prefs['users_serve_avatar_static'] == 'y' ) {
 			$domain = '';
-			if (! empty($tikidomain)) {
-				$domain = "/$tikidomain";
-			}
-			$files = glob("temp/public$domain/avatar_$user.{jpg,gif,png}", GLOB_BRACE);
+			$hash = md5($user);
+			$files = glob("temp/public/{$tikidomainslash}avatar_$hash.{jpg,gif,png}", GLOB_BRACE);
 
 			if (! empty($files[0])) {
 				return $files[0];
@@ -83,7 +81,7 @@ class UserPrefsLib extends TikiLib
 
 	private function generate_avatar_file($user)
 	{
-		global $tikidomain;
+		global $tikidomainslash;
 
 		$info = $this->get_user_avatar_img($user);
 		$type = $info["avatarFileType"];
@@ -96,7 +94,8 @@ class UserPrefsLib extends TikiLib
 		global $mimeextensions;
 		require_once('lib/mime/mimeextensions.php');
 		$ext = $mimeextensions[$type];
-		$image = "temp/public/$tikidomain/avatar_{$user}.$ext";
+		$hash = md5($user);
+		$image = "temp/public/{$tikidomainslash}avatar_{$hash}.$ext";
 
 		file_put_contents($image, $info['avatarData']);
 		chmod($image, 0644);
