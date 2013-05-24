@@ -15,6 +15,7 @@ function wikiplugin_listexecute_info()
 		'body' => tra('List configuration information'),
 		'validate' => 'all',
 		'filter' => 'wikicontent',
+		'profile_reference' => 'search_plugin_content',
 		'icon' => 'img/icons/text_list_bullets.png',
 		'tags' => array( 'advanced' ),
 		'params' => array(

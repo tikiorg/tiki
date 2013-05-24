@@ -63,6 +63,10 @@ class Tiki_Profile_WriterHelper
 					}
 				}
 
+				if (isset($info['profile_reference'])) {
+					$body = $writer->getReference($info['profile_reference'], $body);
+				}
+
 				$match->replaceWithPlugin($pluginName, $params, $body);
 				$justReplaced = true;
 			}
@@ -73,9 +77,42 @@ class Tiki_Profile_WriterHelper
 
 	public static function tracker_field_string(Tiki_Profile_Writer $writer, $value)
 	{
-		return preg_replace_callback('/(\d+)/', function ($args) use ($writer) {
-			return $writer->getReference('tracker_field', $args[1]);
+		return self::uniform_string('tracker_field', $writer, $value);
+	}
+
+	public function uniform_string($type, Tiki_Profile_Writer $writer, $value)
+	{
+		return preg_replace_callback('/(\d+)/', function ($args) use ($writer, $type) {
+			return $writer->getReference($type, $args[1]);
 		}, $value);
+	}
+
+	public static function search_plugin_content(Tiki_Profile_Writer $writer, $content)
+	{
+		$searchlib = TikiLib::lib('unifiedsearch');
+		$dataSource = $searchlib->getProfileExportHelper();
+
+		$argumentParser = new WikiParser_PluginArgumentParser;
+		$matches = WikiParser_PluginMatcher::match($content);
+		
+		$justReplace = false;
+		foreach ($matches as $match) {
+			if ($justReplaced) {
+				$justReplaced = false;
+				continue;
+			}
+
+			$name = $match->getName();
+			$args = $argumentParser->parse($match->getArguments());
+			
+			if ($name === 'filter') {
+				$args = $dataSource->replaceFilterReferences($writer, $args);
+				$match->replaceWithPlugin('filter', $args, $match->getBody());
+				$justReplaced = true;
+			}
+		}
+
+		return $matches->getText();
 	}
 }
 

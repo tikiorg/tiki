@@ -14,6 +14,7 @@ function wikiplugin_list_info()
 		'prefs' => array('wikiplugin_list'),
 		'body' => tra('List configuration information'),
 		'filter' => 'wikicontent',
+		'profile_reference' => 'search_plugin_content',
 		'icon' => 'img/icons/text_list_bullets.png',
 		'tags' => array( 'basic' ),
 		'params' => array(

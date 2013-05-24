@@ -5,13 +5,20 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-class Search_ContentSource_FileSource implements Search_ContentSource_Interface
+class Search_ContentSource_FileSource implements Search_ContentSource_Interface, Tiki_Profile_Writer_ReferenceProvider
 {
 	private $db;
 
 	function __construct()
 	{
 		$this->db = TikiDb::get();
+	}
+
+	function getReferenceMap()
+	{
+		return array(
+			'gallery_id' => 'file_gallery',
+		);
 	}
 
 	function getDocuments()

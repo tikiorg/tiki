@@ -457,7 +457,7 @@ class WikiParser_PluginMatcher_Match
 		$this->matcher->performReplace($this, $string);
 	}
 
-	function replaceWithPlugin($name, $params, $body)
+	function replaceWithPlugin($name, $params, $content)
 	{
 		$hasBody = !empty($content) && !ctype_space($content);
 

@@ -468,6 +468,14 @@ class UnifiedSearchLib
 		return $dataSource;
 	}
 
+	function getProfileExportHelper()
+	{
+		$helper = new Tiki_Profile_Writer_SearchFieldHelper;
+		$this->addSources($helper);
+
+		return $helper;
+	}
+
     /**
      * @return Search_Query_WeightCalculator_Field
      */

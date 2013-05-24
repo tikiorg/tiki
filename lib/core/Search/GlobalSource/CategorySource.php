@@ -5,7 +5,7 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-class Search_GlobalSource_CategorySource implements Search_GlobalSource_Interface
+class Search_GlobalSource_CategorySource implements Search_GlobalSource_Interface, Tiki_Profile_Writer_ReferenceProvider
 {
 	private $categlib;
 	private $parentCategories = array();
@@ -13,6 +13,14 @@ class Search_GlobalSource_CategorySource implements Search_GlobalSource_Interfac
 	function __construct()
 	{
 		$this->categlib = TikiLib::lib('categ');
+	}
+
+	function getReferenceMap()
+	{
+		return array(
+			'categories' => 'category',
+			'deep_categories' => 'category',
+		);
 	}
 
 	function getProvidedFields()
