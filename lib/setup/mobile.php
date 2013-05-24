@@ -42,12 +42,13 @@ if ( !isset($_REQUEST['mobile_mode']) || $_REQUEST['mobile_mode'] === 'y' ) {
 		$prefs['feature_fixed_width'] = 'n';
 		$prefs['fgal_elfinder_feature'] = 'n';
 
+		$headerlib = TikiLib::lib('header');
 		$headerlib->add_js('function sfHover() {alert("not working?");}', 100);	// try and override the css menu func
 
 		if ($prefs['feature_shadowbox'] === 'y') {
 			$headerlib
-				->add_jsfile('vendor/jquery/photoswipe/lib/klass.min.js')
-				->add_jsfile("vendor/jquery/photoswipe/code.photoswipe.jquery-3.0.5.min.js")
+				->add_jsfile('vendor/jquery/photoswipe/lib/klass.min.js', 'external')
+				->add_jsfile('vendor/jquery/photoswipe/code.photoswipe.jquery-3.0.5.min.js', 'external')
 				->add_cssfile('vendor/jquery/photoswipe/photoswipe.css');
 		}
 
