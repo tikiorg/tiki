@@ -7,10 +7,10 @@
 
 class Tracker_Field_Relation extends Tracker_Field_Abstract
 {
-	const OPT_RELATION = 0;
-	const OPT_FILTER = 1;
-	const OPT_READONLY = 2;
-	const OPT_INVERT = 3;
+	const OPT_RELATION = 'relation';
+	const OPT_FILTER = 'filter';
+	const OPT_READONLY = 'readonly';
+	const OPT_INVERT = 'invert';
 
 	public static function getTypes()
 	{
@@ -33,6 +33,7 @@ class Tracker_Field_Relation extends Tracker_Field_Abstract
 						'description' => tr('URL-encoded list of filters to be applied on object selection.'),
 						'filter' => 'url',
 						'legacy_index' => 1,
+						'profile_reference' => 'search_urlencoded',
 					),
 					'readonly' => array(
 						'name' => tr('Read-only'),

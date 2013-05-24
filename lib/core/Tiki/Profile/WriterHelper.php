@@ -114,5 +114,25 @@ class Tiki_Profile_WriterHelper
 
 		return $matches->getText();
 	}
+
+	public static function search_urlencoded(Tiki_Profile_Writer $writer, $value)
+	{
+		$searchlib = TikiLib::lib('unifiedsearch');
+		$dataSource = $searchlib->getProfileExportHelper();
+
+		$data = array();
+		parse_str($value, $data);
+		foreach ($data as $key => & $value) {
+			if ($type = $dataSource->getTypeForField($key)) {
+				$value = self::uniform_string($type, $writer, $value);
+			}
+		}
+
+		$string = http_build_query($data, '', '&');
+		// Un-encode the reference portions which need to be left plain
+		$string = preg_replace('/%24(profileobject|unknownobject)%3A(\w+)%24/', '\$$1:$2\$', $string);
+
+		return $string;
+	}
 }
 
