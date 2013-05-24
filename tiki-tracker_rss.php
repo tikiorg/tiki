@@ -146,7 +146,12 @@ if ($output["data"] == "EMPTY") {
 				} else {
 					$data2['value'] = htmlspecialchars_decode($data2['value']);
 				}
-				$data[$descId].= $data2["name"] . ": " . $data2["value"] . "<br />";
+				if ($prefs['feed_tracker_labels'] === 'y') {
+					$data[$descId] .= $data2["name"] . ": ";
+				} else if (preg_match_all('/(<img[^>]*>)/', $data2['value'], $m)) {
+					$data2['value'] = implode('', $m[1]);
+				}
+				$data[$descId] .= $data2["value"] . "<br />";
 				$field_name_check = strtolower($data2["name"]);
 				if ($field_name_check == "subject") {
 					$aux_subject = " - " . $data2["value"];

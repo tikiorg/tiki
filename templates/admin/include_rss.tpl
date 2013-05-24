@@ -138,6 +138,7 @@
 				{preference name=feed_tracker_max}
 				{preference name=feed_tracker_showAuthor}
 				{preference name=feed_tracker_homepage}
+				{preference name=feed_tracker_labels}
 			</div>
 
 			{preference name=feed_calendar}

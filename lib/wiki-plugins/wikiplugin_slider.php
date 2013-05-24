@@ -358,7 +358,7 @@ function wikiplugin_slider($data, $params)
 	$headerlib->add_jq_onready(
 		"function formatText(i, p) {
 			var possibleText = $('.tiki-slider-title').eq(i - 1).text();
-			return (possibleText ? possibleText : i);
+			return (possibleText ? possibleText : 'slide_' + i);
 		}
 
 		$('.tiki-slider').anythingSlider({
@@ -412,7 +412,6 @@ function wikiplugin_slider($data, $params)
 		});"
 	);
 
-	$titles = array();
 	if (!empty($titles)) {
 		$titles = $tikilib->parse_data($titles, array('suppress_icons' => true));
 		$titles = explode('|', $titles);
@@ -421,6 +420,7 @@ function wikiplugin_slider($data, $params)
 	$sliderData = array();
 	if (!empty($data)) {
 		$data = $tikilib->parse_data($data, array('suppress_icons' => true));
+		$data = preg_replace('/<p>\/\/\/\/\/\s*<\/p>/', '/////', $data);	// remove surrounding <p> tags on slide boundaries
 		$sliderData = explode('/////', $data);
 	}
 

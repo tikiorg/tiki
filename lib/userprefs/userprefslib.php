@@ -93,7 +93,8 @@ class UserPrefsLib extends TikiLib
 			return 'img/noavatar.png';
 		}
 
-		require 'lib/mime/mimeextensions.php';
+		global $mimeextensions;
+		require_once('lib/mime/mimeextensions.php');
 		$ext = $mimeextensions[$type];
 		$image = "temp/public/$tikidomain/avatar_{$user}.$ext";
 
