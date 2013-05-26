@@ -92,7 +92,7 @@ ajaxLoadingShow("'.$dom_id.'");
 	font_names: "' . trim($prefs['wysiwyg_fonts']) . '",
 	format_tags: "' . $ckeformattags . '",
 	stylesSet: "tikistyles:' . $tikiroot . 'lib/ckeditor_tiki/tikistyles.js",
-	templates_files: "' . $tikiroot . 'lib/ckeditor_tiki/tikitemplates.js",
+	templates_files: ["' . $tikiroot . 'lib/ckeditor_tiki/tikitemplates.js"],
 	contentsCss: ["' . $ckstyle . '"],
 	skin: "' . ($prefs['wysiwyg_toolbar_skin'] != 'default' ? $prefs['wysiwyg_toolbar_skin'] : 'moono') . '",
 	defaultLanguage: "' . $prefs['language'] . '",
