@@ -94,12 +94,20 @@ $("select[name=ins_' . $this->getOption(2) . ']").change(function(e, val) {
 		function(data, status) {
 			$ddl = $("select[name=' . $this->getInsertId() . ']");
 			$ddl.empty();
+			var v, l;
 			if (data) {
-				$.each( data, function (i,v) {
+				$.each( data, function (i,data) {
+					if (data && data.length > 1) {
+						v = data[0];
+						l = data[1];
+					} else {
+						v = ""
+						l = "";
+					}
 					$ddl.append(
 						$("<option/>")
-							.attr("value", v)
-							.text(v)
+							.val(v)
+							.text(l)
 					);
 				});
 				if (val) {
