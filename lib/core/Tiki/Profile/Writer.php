@@ -56,13 +56,9 @@ class Tiki_Profile_Writer
 	 */
 	function addObject($type, $currentId, array $data)
 	{
+		$reference = $this->getInternalReference($type, $currentId, $data);
+
 		$this->clearObject($type, $currentId);
-
-		$reference = array_shift($this->references);
-
-		if (! $reference) {
-			$reference = $type . '_' . preg_replace('/[^\w]+/', '', strtolower($currentId));
-		}
 
 		$this->data['objects'][] = array(
 			'type' => $type,
@@ -76,6 +72,56 @@ class Tiki_Profile_Writer
 		$this->removeUnknown($type, $currentId, $ref);
 
 		return $reference;
+	}
+
+	private function getInternalReference($type, $currentId, array $data)
+	{
+		// Objects already in use need to preserve their reference to preserve internal consistency
+		if ($reference = $this->getUsedReference($type, $currentId)) {
+			array_shift($this->references);
+			return $reference;
+		}
+
+		// Use the name specified by the user
+		if ($reference = array_shift($this->references)) {
+			return $reference;
+		}
+
+		// Find the object name property
+		$candidates = array();
+		$currentId = preg_replace('/[^\w]+/', '', strtolower($currentId));
+
+		foreach (array('name', 'title') as $key) {
+			if (! empty($data[$key])) {
+				$basename = preg_replace('/\W+/', '_', strtolower($data[$key]));
+				$candidates[] = $basename;
+				$candidates[] = $type . '_' . $basename;
+				$candidates[] = $type . '_' . $basename . '_' . $currentId;
+			}
+		}
+
+		$candidates[] = $type . '_' . $currentId;
+
+		// Find the first suitable candidate
+		foreach ($candidates as $candidate) {
+			if (! $this->isReferenceInUse($candidate)) {
+				return $candidate;
+			}
+		}
+
+		// Fall back to something unique, which should never really happen
+		return uniqid();
+	}
+
+	private function isReferenceInUse($ref)
+	{
+		foreach ($this->data['objects'] as $info) {
+			if ($info['ref'] == $ref) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	/**
@@ -150,16 +196,21 @@ class Tiki_Profile_Writer
 		return $this->generateTemporaryReference($type, $id);
 	}
 
-	function isKnown($type, $id)
+	private function getUsedReference($type, $id)
 	{
 		$type = Tiki_Profile_Installer::convertTypeInvert($type);
 		foreach ($this->data['objects'] as $object) {
 			if ($object['type'] == $type && $object['_id'] == $id) {
-				return true;
+				return $object['ref'];
 			}
 		}
 
-		return false;
+		return null;
+	}
+
+	function isKnown($type, $id)
+	{
+		return (bool) $this->getUsedReference($type, $id);
 	}
 
 	function formatExternalReference($symbol, $profile, $repository = null)
