@@ -5,7 +5,7 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-class Tiki_Profile_WriterHelper
+class Tiki_Profile_Writer_Helper
 {
 	public static function type_colon_object(Tiki_Profile_Writer $writer, $object)
 	{

@@ -46,7 +46,7 @@ class IncludeProfile extends ObjectWriter
 
 		$writer = $this->getProfileWriter($input);
 
-		$finder = new \Tiki_Profile_Finder;
+		$finder = new \Tiki_Profile_Writer_ProfileFinder;
 		$symbols = $finder->getSymbols($repository, $profile);
 
 		foreach ($symbols as $entry) {

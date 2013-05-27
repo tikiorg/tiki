@@ -15,7 +15,7 @@ class Tiki_Profile_Writer
 	function __construct($directory, $profileName)
 	{
 		$this->filePath = "$directory/$profileName.yml";
-		$this->externalWriter = new Tiki_Profile_ExternalWriter("$directory/$profileName");
+		$this->externalWriter = new Tiki_Profile_Writer_ExternalWriter("$directory/$profileName");
 		if (file_exists($this->filePath)) {
 			$content = file_get_contents($this->filePath);
 			$this->data = Horde_Yaml::load($content);
@@ -28,11 +28,17 @@ class Tiki_Profile_Writer
 		}
 	}
 
+	/** 
+	 * Set the reference name for the next object to be added.
+	 */
 	function pushReference($name)
 	{
 		$this->references[] = $name;
 	}
 
+	/**
+	 * Write an external page content.
+	 */
 	function writeExternal($page, $content)
 	{
 		$this->externalWriter->write("$page.wiki", $content);
@@ -43,6 +49,11 @@ class Tiki_Profile_Writer
 		$this->data['preferences'][$name] = $value;
 	}
 
+	/**
+	 * Adds an object to the profile based on the data in the current instance. If the added
+	 * object already exists within the profile, it will first be removed, allowing objects to
+	 * be refreshed in the profile under construction.
+	 */
 	function addObject($type, $currentId, array $data)
 	{
 		$this->clearObject($type, $currentId);
@@ -67,6 +78,10 @@ class Tiki_Profile_Writer
 		return $reference;
 	}
 
+	/**
+	 * When an object is being added, the previously unknown references within the object may be
+	 * resolved. This removed the unknwn object references and replaces them with a permanent key.
+	 */
 	function removeUnknown($type, $id, $replacement)
 	{
 		foreach ($this->data['unknown_objects'] as $key => $entry) {
@@ -90,6 +105,9 @@ class Tiki_Profile_Writer
 		}
 	}
 
+	/**
+	 * Provides the list of currently unknown objects.
+	 */
 	function getUnknownObjects()
 	{
 		return array_map(function ($entry) {
@@ -109,8 +127,8 @@ class Tiki_Profile_Writer
 		// If we are provided with an anonymous function to handle special cases
 		if (is_callable($type)) {
 			return call_user_func($type, $this, $id, $parameters);
-		} elseif (method_exists('Tiki_Profile_WriterHelper', $type)) {
-			return Tiki_Profile_WriterHelper::$type($this, $id, $parameters);
+		} elseif (method_exists('Tiki_Profile_Writer_Helper', $type)) {
+			return Tiki_Profile_Writer_Helper::$type($this, $id, $parameters);
 		}
 
 		// Let 'wiki page' or 'tracker item' be provided as type, no effect when profile types used
@@ -180,12 +198,18 @@ class Tiki_Profile_Writer
 		return $token;
 	}
 
+	/**
+	 * Write in-memory changes to the disk.
+	 */
 	function save()
 	{
 		file_put_contents($this->filePath, Horde_Yaml::dump($this->data));
 		$this->externalWriter->apply();
 	}
 
+	/**
+	 * Removes all of the meta-data used while the profile is under construction.
+	 */
 	function clean()
 	{
 		array_walk($this->data['objects'], function (& $entry) {

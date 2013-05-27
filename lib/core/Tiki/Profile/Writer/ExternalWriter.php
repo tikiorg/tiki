@@ -5,7 +5,7 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-class Tiki_Profile_ExternalWriter
+class Tiki_Profile_Writer_ExternalWriter
 {
 	private $dataPath;
 	private $files;
