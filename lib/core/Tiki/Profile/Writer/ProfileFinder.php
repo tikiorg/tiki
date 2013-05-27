@@ -47,5 +47,13 @@ class Tiki_Profile_Writer_ProfileFinder
 			'profile' => $profile,
 		));
 	}
+
+	function checkProfileAndFlush()
+	{
+		$count = count($this->profiles);
+
+		$this->profiles = array();
+		return $count > 0;
+	}
 }
 

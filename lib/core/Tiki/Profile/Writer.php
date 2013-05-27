@@ -64,6 +64,7 @@ class Tiki_Profile_Writer
 			'type' => $type,
 			'ref' => $reference,
 			'_id' => $currentId,
+			'_timestamp' => time(),
 			'data' => $data,
 		);
 
@@ -77,9 +78,9 @@ class Tiki_Profile_Writer
 	private function getInternalReference($type, $currentId, array $data)
 	{
 		// Objects already in use need to preserve their reference to preserve internal consistency
-		if ($reference = $this->getUsedReference($type, $currentId)) {
+		if ($reference = $this->getObject($type, $currentId)) {
 			array_shift($this->references);
-			return $reference;
+			return $reference['ref'];
 		}
 
 		// Use the name specified by the user
@@ -196,12 +197,12 @@ class Tiki_Profile_Writer
 		return $this->generateTemporaryReference($type, $id);
 	}
 
-	private function getUsedReference($type, $id)
+	private function getObject($type, $id)
 	{
 		$type = Tiki_Profile_Installer::convertTypeInvert($type);
 		foreach ($this->data['objects'] as $object) {
 			if ($object['type'] == $type && $object['_id'] == $id) {
-				return $object['ref'];
+				return $object;
 			}
 		}
 
@@ -210,7 +211,16 @@ class Tiki_Profile_Writer
 
 	function isKnown($type, $id)
 	{
-		return (bool) $this->getUsedReference($type, $id);
+		return ! is_null($this->getObject($type, $id));
+	}
+
+	function getInclusionTimestamp($type, $id)
+	{
+		$object = $this->getObject($type, $id);
+
+		if (! empty($object['_timestamp'])) {
+			return $object['_timestamp'];
+		}
 	}
 
 	function formatExternalReference($symbol, $profile, $repository = null)
@@ -265,6 +275,7 @@ class Tiki_Profile_Writer
 	{
 		array_walk($this->data['objects'], function (& $entry) {
 			unset($entry['_id']);
+			unset($entry['_timestamp']);
 		});
 		unset($this->data['unknown_objects']);
 	}

@@ -863,9 +863,16 @@ class PreferencesLib
 		global $prefs;
 
 		if ($info = $this->getPreference($preferenceName)) {
+			if (! $info['modified']) {
+				return false;
+			}
+
 			if (isset($info['profile_reference'])) {
 				$writer->setPreference($preferenceName, $writer->getReference($info['profile_reference'], $info['value']));
 
+				return true;
+			} else {
+				$writer->setPreference($preferenceName, $info['value']);
 				return true;
 			}
 		}
