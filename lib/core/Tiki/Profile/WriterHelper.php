@@ -34,6 +34,7 @@ class Tiki_Profile_WriterHelper
 		$argumentParser = new WikiParser_PluginArgumentParser;
 		$matches = WikiParser_PluginMatcher::match($content);
 
+		// Handle known parameters for plugins
 		$justReplace = false;
 		foreach ($matches as $match) {
 			if ($justReplaced) {
@@ -72,7 +73,13 @@ class Tiki_Profile_WriterHelper
 			}
 		}
 
-		return $matches->getText();
+		// Handle pretty tracker references
+		$content = $matches->getText();
+		$content = preg_replace_callback('/{\$f_(\d+)}/', function ($args) use ($writer) {
+			return '{$f_' . $writer->getReference('tracker_field', $args[1]) . '}';
+		}, $content);
+
+		return $content;
 	}
 
 	public static function tracker_field_string(Tiki_Profile_Writer $writer, $value)
