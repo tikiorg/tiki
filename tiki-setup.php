@@ -255,6 +255,12 @@ if ($prefs['feature_credits'] == 'y') {
 	require_once('lib/setup/credits.php');
 }
 
+if ( $prefs['https_external_links_for_users'] == 'y' ) {
+	$base_url_canonical = $base_url_https;
+} else {
+	$base_url_canonical = $base_url_http;
+}
+
 $smarty->assign_by_ref('phpErrors', $phpErrors);
 $smarty->assign_by_ref('num_queries', $num_queries);
 $smarty->assign_by_ref('elapsed_in_db', $elapsed_in_db);
@@ -275,6 +281,7 @@ $smarty->assign('base_host', $base_host);
 $smarty->assign('base_url', $base_url);
 $smarty->assign('base_url_http', $base_url_http);
 $smarty->assign('base_url_https', $base_url_https);
+$smarty->assign('base_url_canonical', $base_url_canonical);
 $smarty->assign('show_stay_in_ssl_mode', $show_stay_in_ssl_mode);
 $smarty->assign('stay_in_ssl_mode', $stay_in_ssl_mode);
 $smarty->assign('tiki_version', $TWV->version);
