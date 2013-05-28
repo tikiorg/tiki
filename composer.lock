@@ -594,11 +594,11 @@
         },
         {
             "name": "jquery/plugins/tablesorter",
-            "version": "2.10.0",
+            "version": "2.10.3",
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/jquery-plugins-tablesorter-2.10.0.zip",
-                "reference": "2.10.0",
+                "url": "https://composer.tiki.org/dist/jquery-plugins-tablesorter-2.10.3.zip",
+                "reference": "2.10.3",
                 "shasum": "089b67cb9187d49ec086a3df5f06d9ecfeaf67c7"
             },
             "type": "library"
