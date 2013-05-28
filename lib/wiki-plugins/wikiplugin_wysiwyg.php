@@ -113,6 +113,8 @@ $("#' . $exec_key . '").each(function(){
 
 			var editorSelector = "#cke_" + editor.element.getId();
 
+			$(".button_' . $exec_key . '").remove();
+
 			$(editorSelector).after(
 				$("<button class=\"button_' . $exec_key . '\">" + tr("Cancel") + "</button>").button()
 					.click(function() {
