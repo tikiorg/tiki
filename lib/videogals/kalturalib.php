@@ -187,7 +187,7 @@ class KalturaLib
 			// first check if there is an existing one
 			$pager = null;
 			$filter = new KalturaUiConfFilter();
-			$filter->nameLike = 'Tiki.org Standard';
+			$filter->nameLike = 'Tiki.org Standard 2013';
 			$filter->objTypeEqual = KalturaUiConfObjType::CONTRIBUTION_WIZARD;
 			$existing = $client->uiConf->listAction($filter, $pager);
 			if (count($existing->objects) > 0) {
@@ -199,7 +199,7 @@ class KalturaLib
 
 			global $tikipath;
 			$uiConf = new KalturaUiConf();
-			$uiConf->name = 'Tiki.org Standard';
+			$uiConf->name = 'Tiki.org Standard 2013';
 			$uiConf->objType = KalturaUiConfObjType::CONTRIBUTION_WIZARD;
 			$filename = $tikipath . "lib/videogals/standardTikiKcw.xml";
 			$fh = fopen($filename, 'r');
