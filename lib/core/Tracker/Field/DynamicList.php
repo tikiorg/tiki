@@ -103,12 +103,20 @@ $("select[name=ins_' . $this->getOption('filterFieldIdHere') . ']").change(funct
 		function(data, status) {
 			$ddl = $("select[name=' . $this->getInsertId() . ']");
 			$ddl.empty();
+			var v, l;
 			if (data) {
-				$.each( data, function (i,v) {
+				$.each( data, function (i,data) {
+					if (data && data.length > 1) {
+						v = data[0];
+						l = data[1];
+					} else {
+						v = ""
+						l = "";
+					}
 					$ddl.append(
 						$("<option/>")
-							.attr("value", v)
-							.text(v)
+							.val(v)
+							.text(l)
 					);
 				});
 				if (val) {
@@ -124,5 +132,27 @@ $("select[name=ins_' . $this->getOption('filterFieldIdHere') . ']").change(funct
 		return '<select name="' . $this->getInsertId() . '"></select>';
 
 	}
+
+	public function renderInnerOutput($context = array()) {
+
+		$definition = Tracker_Definition::get($this->getOption('trackerId'));
+		$field = $definition->getField($this->getOption('listFieldIdThere'));
+
+		if ($field['type'] === 'e') {
+			$item = $this->getItemData();
+			$item['ins_' . $this->getOption('listFieldIdThere')] = array($this->getValue());
+			$field['value'] = $this->getValue();
+
+			$handler = TikiLib::lib('trk')->get_field_handler($field, $item);
+
+			$field = array_merge($field, $handler->getFieldData($item));	// get category field to build it's data arrays
+			$handler = TikiLib::lib('trk')->get_field_handler($field, $item);
+
+			return $handler->renderOutput($context);
+		} else {
+			return parent::renderInnerOutput($context);
+		}
+	}
+
 }
 
