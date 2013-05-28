@@ -59,6 +59,7 @@ $field.hide();
 
 var handleFiles = function (files) {
 	$fileinput.clearError();
+	var uploadUrl = $.service('file', 'upload');
 	$.each(files, function (k, file) {
 		var reader = new FileReader();
 		var li = $('<li/>').appendTo($files);
@@ -84,7 +85,7 @@ var handleFiles = function (files) {
 
 				$.ajax({
 					type: 'POST',
-					url: $.service('file', 'upload'),
+					url: uploadUrl,
 					xhr: provider,
 					dataType: 'json',
 					success: function (data) {
