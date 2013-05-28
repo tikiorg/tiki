@@ -35,20 +35,16 @@
 	<table class="normal">
 		<tr>
 			<th style="width: 20px;">{select_all checkbox_names='checked[]'}</th>
-			<th>{tr}ID{/tr}</th>
-			<th>
-				<a href="tiki-admingroups.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'groupName_desc'}groupName_asc{else}groupName_desc{/if}">{tr}Name{/tr}</a>
-			</th>
-			<th>
-				<a href="tiki-admingroups.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'groupDesc_desc'}groupDesc_asc{else}groupDesc_desc{/if}">{tr}Description{/tr}</a>
-			</th>
+			<th>{self_link _sort_arg='sort_mode' _sort_field='id'}{tr}ID{/tr}{/self_link}</th>
+			<th>{self_link _sort_arg='sort_mode' _sort_field='groupName'}{tr}Name{/tr}{/self_link}</th>
+			<th>{self_link _sort_arg='sort_mode' _sort_field='groupDesc'}{tr}Description{/tr}{/self_link}</th>
 			<th>{tr}Inherits Permissions from{/tr}</th>
 
 			{if $prefs.useGroupHome eq 'y'}
-			<th>{tr}Homepage{/tr}</th>
+			<th>{self_link _sort_arg='sort_mode' _sort_field='groupHome'}{tr}Homepage{/tr}{/self_link}</th>
 			{/if}			
 
-			<th>{tr}User Choice{/tr}</th>
+			<th>{self_link _sort_arg='sort_mode' _sort_field='userChoice'}{tr}User Choice{/tr}{/self_link}</th>
 			<th>{tr}Permissions{/tr}</th>
 			<th style="width: 20px;">&nbsp;</th>
 		</tr>
