@@ -205,10 +205,11 @@ class Cachelib
 			}
 
 			// Next case is needed to clean also cached data created through mod PluginR
-			if ($prefs['wikiplugin_rr'] == 'y' OR $prefs['wikiplugin_r'] == 'y') {
-				$extracheck = ".RData";
+			if ((isset($prefs['wikiplugin_rr']) && $prefs['wikiplugin_rr'] == 'y') ||
+				(isset($prefs['wikiplugin_r']) && $prefs['wikiplugin_r'] == 'y')) {
+				$extracheck = '.RData';
 			} else {
-				$extracheck = "";
+				$extracheck = '';
 			}
 			while (false !== ($file = readdir($dir))) {
 				if (
