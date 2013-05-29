@@ -308,7 +308,11 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 				return smarty_function_object_link(array('type' => 'trackeritem',	'id' => $item,	'title' => $label), $smarty);
 			}
 		} elseif ($context['list_mode'] == 'csv' && $item) {
-			return $item;
+			if ($label) {
+				return $label;
+			} else {
+				return $item;
+			}
 		} elseif ($label) {
 			return $label;
 		}
