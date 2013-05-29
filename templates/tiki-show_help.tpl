@@ -16,10 +16,5 @@
 			</div>
 		{/foreach}
 	</div>
-	{if $prefs.feature_jquery_ui eq "y"}
-		{jq}
-			$("#help_sections").tabs();
-		{/jq}
-	{/if}
 </div>
 <br>
