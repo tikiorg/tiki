@@ -89,15 +89,17 @@ class TikiDb_LegacyErrorHandler implements TikiDb_ErrorHandler
 
 		$msg = $db->getErrorMessage();
 		$q=$query;
-		foreach ($values as $v) {
-			if (is_null($v)) {
-				$v='NULL';
-			} else {
-				$v="'".addslashes($v)."'";
-			}
-			$pos=strpos($q, '?');
-			if ($pos !== false) {
-				$q=substr($q, 0, $pos)."$v".substr($q, $pos+1);
+		if (is_array($values)) {
+			foreach ($values as $v) {
+				if (is_null($v)) {
+					$v = 'NULL';
+				} else {
+					$v = "'" . addslashes($v) . "'";
+				}
+				$pos = strpos($q, '?');
+				if ($pos !== false) {
+					$q = substr($q, 0, $pos) . "$v" . substr($q, $pos + 1);
+				}
 			}
 		}
 

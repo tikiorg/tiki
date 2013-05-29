@@ -78,8 +78,8 @@ class Cachelib
 	 */
 	function empty_cache( $dir_names = array('all'), $log_section = 'system' )
 	{
-		global $tikidomain, $logslib, $tikilib;
-
+		global $tikidomain, $logslib, $tikilib, $prefs;
+		
 		if (!is_array($dir_names)) {
 			$dir_names = array($dir_names);
 		}
@@ -103,6 +103,10 @@ class Cachelib
 		}
 		if (in_array('temp_cache', $dir_names)) {
 			$this->erase_dir_content("temp/cache/$tikidomain");
+			// Next case is needed to clean also cached data created through mod PluginR
+			if ($prefs['wikiplugin_rr'] == 'y' OR $prefs['wikiplugin_r'] == 'y') { 
+				$this->erase_dir_content("temp/cache/$tikidomain/R_*/");
+			}
 			if (is_object($logslib)) {
 				$logslib->add_log($log_section, 'erased temp/cache content');
 			}
@@ -196,7 +200,7 @@ class Cachelib
 
 	function erase_dir_content($path)
 	{
-		global $tikidomain;
+		global $tikidomain, $prefs;
 
 		$path = rtrim($path, '/');
 		if (!$path or !is_dir($path)) return 0;
@@ -208,15 +212,23 @@ class Cachelib
 				$virtuals = false;
 			}
 
+			// Next case is needed to clean also cached data created through mod PluginR
+			if ((isset($prefs['wikiplugin_rr']) && $prefs['wikiplugin_rr'] == 'y') ||
+				(isset($prefs['wikiplugin_r']) && $prefs['wikiplugin_r'] == 'y')) {
+				$extracheck = '.RData';
+			} else {
+				$extracheck = '';
+			}
 			while (false !== ($file = readdir($dir))) {
 				if (
-							substr($file, 0, 1) == "." or
-							$file == 'CVS' or
-							$file == '.svn' or
-							$file == "index.php" or
-							$file == "README" or
-							$file == "web.config" or
-							($virtuals && in_array($file, $virtuals))
+							// .RData case needed to clean also cached data created through mod PluginR
+							( substr($file, 0, 1) == "." &&	$file != $extracheck ) or 
+							$file == 'CVS' or 
+							$file == '.svn' or 
+							$file == "index.php" or 
+							$file == "README" or 
+							$file == "web.config" or 
+							($virtuals && in_array($file, $virtuals)) 
 				)
 					continue;
 

@@ -1,0 +1,110 @@
+/* 
+ * Variation of utopias family - only minimal changes here
+ * $Id$
+ */
+
+/***** XHTML Elements ******/
+
+body {
+	font-family: Verdana, Geneva, sans-serif;
+	color: #4C4949;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	color: #704126;
+}
+
+hr {
+	background-color: #654a44;
+}
+
+a, a:visited {
+	color: #008cb4;
+	font-weight: bold;
+	outline: none;
+	text-decoration: none;
+}
+
+a:hover {
+	color: #008cb4;
+	text-decoration: underline;
+}
+
+.wikitext ul {}
+
+.wikitext li {
+	list-style-image: url(attainable/bullet.gif);
+}
+
+.wikitext ul li ul li {
+	list-style-image: url(attainable/bullet-grey.gif);
+}
+
+/*Definition lists*/
+.wikitext dl {}
+
+.wikitext dt {
+	list-style-image: url(attainable/bullet.gif);
+	color: #654a44;
+	font-style: italic;
+}
+
+.wikitext dd {}
+
+/***** Basic Page Layout 
+	Including Site Header *****/
+
+/** Look & Feel (Site Identity) **/
+#siteheader {
+	background-color: #F1592A;
+}
+
+
+div#sitead {}
+
+#siteloginbar {
+	width: 400px;
+	height: 70px;
+	color: #fff;
+	right: 0;
+	top: 125px;
+}
+
+#siteloginbar.logged-in {
+	width: 170px;
+	height: 39px;
+}
+
+#siteloginbar a {
+	color: #F1592A;
+}
+
+#sitesearchbar {
+	color: #654a44;
+}
+
+#sitesearchbar input, #sitesearchbar select {
+	font-size: .8em;
+}
+
+#tiki-top {
+	color: #000;
+	background-color: #fff;
+	border-bottom: 1px #eee solid;
+}
+
+body.tiki_wiki .navbar {
+	display: none;
+}
+
+
+.wikitext a {
+	color: #F1592A !important;
+}
+
+.wikitext a:hover {
+	color: #F1592A !important;
+}
+
+
+/***** End of file ******/

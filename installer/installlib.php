@@ -122,6 +122,12 @@ class Installer extends TikiDb_Bridge
 			require $script;
 		}
 
+		global $dbs_tiki;
+		if (empty($dbs_tiki)) {
+			require(TikiInit::getCredentialsFile());
+			unset($db_tiki, $host_tiki, $user_tiki, $pass_tiki);
+		}
+
 		if ( function_exists($standalone) ) {
 			$standalone($this);
 		} else {

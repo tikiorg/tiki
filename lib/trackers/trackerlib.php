@@ -1826,7 +1826,7 @@ class TrackerLib extends TikiLib
 								}
 								break;
 							case 'r':
-								if ($convertItemLinkValues) {
+								if ($convertItemLinkValues && $data[$i]) {
 									$val = $this->get_item_id(
 										$itemlink_options[$field['fieldId']][0], // other trackerId (option 0)
 										$itemlink_options[$field['fieldId']][1], // other fieldId (option 1)

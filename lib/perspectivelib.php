@@ -48,6 +48,9 @@ class PerspectiveLib
 
 		$currentDomain = isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : '';
 		foreach ( $this->get_domain_map($prefs) as $domain => $perspective ) {
+			if (($p = strpos($domain, '/')) !== false) {
+				$domain = substr($domain, 0, $p);
+			}
 			if ( $domain == $currentDomain ) {
 				$_SESSION['current_perspective'] = trim($perspective);
 				return $perspective;
