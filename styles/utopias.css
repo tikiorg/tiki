@@ -256,6 +256,15 @@ li.menuoption a {
 	background-color: #c8c8c8;
 }
 
+.cssmenu_horiz li a.sf-with-ul {
+    padding-right: 2.5em;
+}
+
+.sf-arrows .sf-with-ul:after {
+	border-color: #888 transparent transparent; /* IE8 */
+	border-color: rgba(0,0,0,.5) transparent transparent;
+}
+
 .box .cssmenu_vert,
 .box .cssmenu_vert li {
     width: 174px;
