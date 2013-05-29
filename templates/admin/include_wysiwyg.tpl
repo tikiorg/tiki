@@ -10,7 +10,7 @@
 		<input type="submit" name="wysiwygfeatures" value="{tr}Change preferences{/tr}" />
 	</div>
 	{if $prefs.wysiwyg_htmltowiki neq 'y'}
-		{remarksbox type="warning" title="{tr}Page links{/tr}"}{tr}Note that if the SEFURL feature is on, page links created using wysiwyg might not be automatically updated when pages are renamed. This is planned to be addressed through the future "Use Wiki syntax in WYSIWYG" feature.{/tr}{/remarksbox}
+		{remarksbox type="warning" title="{tr}Page links{/tr}"}{tr}Note that if the SEFURL feature is on, page links created using wysiwyg might not be automatically updated when pages are renamed. This is addressed through the "Use Wiki syntax in WYSIWYG" feature.{/tr}{/remarksbox}
 	{/if}
 
 	<fieldset class="admin">
