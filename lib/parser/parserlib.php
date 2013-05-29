@@ -1637,8 +1637,8 @@ if ( \$('#$id') ) {
 		$data = $this->parse_data_tables($data, $simple_wiki);
 
 		if (!$simple_wiki && $this->option['parsetoc']) {
-			$this->parse_data_process_maketoc($data, $noparsed);
-
+			$formattingAddBR = isset($option['formatting_add_br']) ? $option['formatting_add_br'] : '';
+			$this->parse_data_process_maketoc($data, $noparsed, $formattingAddBR);
 		} else {
 			$data = $this->parse_data_simple($data);
 		}
@@ -2087,7 +2087,7 @@ if ( \$('#$id') ) {
 	}
 
 	//*
-	private function parse_data_process_maketoc( &$data, $noparsed)
+	private function parse_data_process_maketoc( &$data, $noparsed, $formattingAddBR = '')
 	{
 
 		global $tikilib, $prefs;
@@ -2560,12 +2560,15 @@ if ( \$('#$id') ) {
 											}
 										}
 									}
-
-									$add_brs = $prefs['feature_wiki_paragraph_formatting_add_br'] === 'y' && !$this->option['is_html'];
+									$addBR = $this->isFormattingAddBR() ? 'y' : 'n';
+									if (!empty($formattingAddBR)) {
+										$addBR = $formattingAddBR;
+									}
+									$add_brs = ($addBR === 'y') && !$this->option['is_html'];
 									if ($in_paragraph && ((empty($tline) && !$in_empty_paragraph) || $contains_block)) {
 										// If still in paragraph, on meeting first blank line or end of div or start of div created by plugins; close a paragraph
 										$this->close_blocks($data, $in_paragraph, $listbeg, $divdepth, 1, 0, 0);
-									} elseif (!$in_paragraph && !$contains_block && !$contains_br && (!empty($tline) || $prefs['feature_wiki_paragraph_formatting_add_br'] === 'y')) {
+									} elseif (!$in_paragraph && !$contains_block && !$contains_br && (!empty($tline) || ($addBR === 'y'))) {
 										// If not in paragraph, first non-blank line; start a paragraph; if not start of div created by plugins
 										$data .= "<p>";
 										$in_paragraph = 1;
@@ -3084,6 +3087,23 @@ if ( \$('#$id') ) {
 		}
 		$cache_hotwords = $ret;
 		return $ret;
+	}
+
+	/*
+	* isFormattingAddBR
+	*	Replaces feature_wiki_paragraph_formatting_add_br.
+	*/
+	private function isFormattingAddBR()
+	{
+		global $prefs;
+		
+		if($prefs['feature_wysiwyg'] === 'y') {
+			if($prefs['wysiwyg_htmltowiki'] === 'y') {
+				return true; // yes AddBR for wiki mode
+			}
+			return false;	// No, don't AddBR for html mode
+		}
+		return true; // It is on by default
 	}
 }
 

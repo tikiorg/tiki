@@ -41,7 +41,6 @@
 		
 		{preference name=feature_wiki_paragraph_formatting}
 		<div class="adminoptionboxchild" id="feature_wiki_paragraph_formatting_childcontainer">
-			{preference name=feature_wiki_paragraph_formatting_add_br}
 		</div>
 		
 		<p class="description">
