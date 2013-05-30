@@ -2368,6 +2368,7 @@ class TrackerLib extends TikiLib
 			'lastModif' => $this->now,
 		);
 
+		$logOption = 'Updated';
 		if ($trackerId) {
 			$conditions = array('trackerId' => (int) $trackerId);
 			if ($trackers->fetchCount($conditions)) {
@@ -2377,6 +2378,7 @@ class TrackerLib extends TikiLib
 				$data['items'] = 0;
 				$data['created'] = $this->now;
 				$trackers->insert($data);
+				$logOption = 'Created';
 			}
 		} else {
 			$data['created'] = $this->now;
@@ -2404,7 +2406,13 @@ class TrackerLib extends TikiLib
 		$this->clear_tracker_cache($trackerId);
 		$this->update_tracker_summary(array('trackerId' => $trackerId));
 
-		global $prefs;
+		if ($logOption) {
+			$logslib = TikiLib::lib('logs');
+			$logslib->add_action($logOption, $trackerId, 'tracker', array(
+				'name' => $data['name'],
+			));
+		}
+
 		require_once('lib/search/refresh-functions.php');
 		refresh_index('trackers', $trackerId);
 
@@ -2477,6 +2485,8 @@ class TrackerLib extends TikiLib
 			'validationMessage' => $validationMessage,
 		);
 
+		$logOption = null;
+
 		if ($fieldId) {
 			// -------------------------------------
 			// remove images when needed
@@ -2487,14 +2497,19 @@ class TrackerLib extends TikiLib
 				}
 
 				$fields->update($data, array('fieldId' => (int) $fieldId));
+				$logOption = 'modify_field';
+
+				$data['trackerId'] = (int) $old_field['trackerId'];
 			} else {
 				$data['trackerId'] = (int) $trackerId;
 				$data['fieldId'] = (int) $fieldId;
 				$fields->insert($data);
+				$logOption = 'add_field';
 			}
 		} else {
 			$data['trackerId'] = (int) $trackerId;
 			$fieldId = $fields->insert($data);
+			$logOption = 'add_field';
 
 			if (! $permName) {
 				// Apply a default value to perm name when not specified
@@ -2506,6 +2521,15 @@ class TrackerLib extends TikiLib
 				$itemFields->deleteMultiple(array('itemId' => (int) $itemId, 'fieldId' => $fieldId));
 				$itemFields->insert(array('itemId' => (int) $itemId, 'fieldId' => (int) $fieldId, 'value' => ''));
 			}
+		}
+
+		if ($logOption) {
+			$logslib = TikiLib::lib('logs');
+			$logslib->add_action('Updated', $data['trackerId'], 'tracker', array(
+				'operation' => $logOption,
+				'fieldId' => $fieldId,
+				'name' => $data['name'],
+			));
 		}
 
 		$this->clear_tracker_cache($trackerId);
@@ -2627,6 +2651,9 @@ class TrackerLib extends TikiLib
 
 		$this->remove_object('tracker', $trackerId);
 
+		$logslib = TikiLib::lib('logs');
+		$logslib->add_action('Removed', $trackerId, 'tracker');
+
 		$this->clear_tracker_cache($trackerId);
 		$transaction->commit();
 
@@ -2662,7 +2689,12 @@ class TrackerLib extends TikiLib
 		$cachelib->invalidate(md5('trackerfield'.$fieldId.'poc'));
 
 		$this->clear_tracker_cache($trackerId);
-		$logslib->add_log('admintrackerfields', 'removed tracker field ' . $fieldId . ' from tracker ' . $trackerId);
+
+		$logslib = TikiLib::lib('logs');
+		$logslib->add_action('Updated', $trackerId, 'tracker', array(
+			'operation' => 'remove_field',
+			'fieldId' => $fieldId,
+		));
 
 		return true;
 	}

@@ -277,8 +277,6 @@ class Services_Tracker_Utilities
 		unset($data['description']);
 		unset($data['descriptionIsParsed']);
 
-		$logslib = TikiLib::lib('logs');
-		$logslib->add_log('admintrackers', 'changed or created tracker ' . $name);
 		return $trklib->replace_tracker($trackerId, $name, $description, $data, $descriptionIsParsed);
 	}
 
@@ -467,9 +465,6 @@ EXPORT;
 	{
 		$trklib = TikiLib::lib('trk');
 		$trklib->remove_tracker($trackerId);
-
-		$logslib = TikiLib::lib('logs');
-		$logslib->add_log('admintrackers', 'removed tracker ' . $trackerId);
 	}
 
 	function duplicateTracker($trackerId, $name, $duplicateCategories, $duplicatePermissions)

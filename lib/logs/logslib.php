@@ -142,6 +142,10 @@ class LogsLib extends TikiLib
 	{
 		global $user, $prefs;
 
+		if (is_array($param)) {
+			$param = http_build_query($param, '', '&');
+		}
+
 		if ($objectType == 'wiki page' && $action != 'Viewed') {
 			$logObject = true; // to have the tiki_my_edit, history and mod-last_modif_pages
 		} else {
