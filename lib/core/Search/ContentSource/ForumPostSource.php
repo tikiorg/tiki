@@ -64,7 +64,7 @@ class Search_ContentSource_ForumPostSource implements Search_ContentSource_Inter
 			'modification_date' => $typeFactory->timestamp($lastModification),
 			'contributors' => $typeFactory->multivalue(array_unique($author)),
 
-			'forum_id' => $comment['object'],
+			'forum_id' => $typeFactory->identifier($comment['object']),
 			'post_content' => $typeFactory->wikitext($content),
 			'parent_thread_id' => $typeFactory->identifier($comment['parentId']),
 
