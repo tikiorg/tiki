@@ -137,6 +137,11 @@ class CategLib extends ObjectLib
 
 		$this->remove_category_from_watchlists($categId);
 
+		$logslib = TikiLib::lib('logs');
+		$logslib->add_action('Removed', $categId, 'category', array(
+			'name' => $categoryName,
+		));
+
 		return true;
 	}
 
@@ -181,6 +186,11 @@ class CategLib extends ObjectLib
 			"action"=>"category updated","oldCategoryName"=>$oldCategoryName, "oldCategoryPath"=>$oldCategoryPath,
 			"oldDescription"=>$oldDescription, "oldParentId" => $parentId, "oldParentName" => $oldParentName);
 		$this->notify($values);
+
+		$logslib = TikiLib::lib('logs');
+		$logslib->add_action('Updated', $categId, 'category', array(
+			'name' => $name,
+		));
 	}
 
 	// Throws an Exception if the category name conflicts
@@ -215,6 +225,12 @@ class CategLib extends ObjectLib
 			"description"=>$description, "parentId" => $parentId, "parentName" => $this->get_category_name($parentId),
 			"action"=>"category created");
 		$this->notify($values);
+
+		$logslib = TikiLib::lib('logs');
+		$logslib->add_action('Created', $id, 'category', array(
+			'name' => $name,
+		));
+
 		return $id;
 	}
 

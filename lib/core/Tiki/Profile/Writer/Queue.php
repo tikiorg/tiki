@@ -13,7 +13,12 @@ class Tiki_Profile_Writer_Queue
 	{
 		if ($info = $this->findInfo($data)) {
 			$hash = "{$info['type']}:{$info['object']}";
-			$this->entries[$hash] = $info;
+
+			if ($info['remove']) {
+				unset($this->entries[$hash]);
+			} else {
+				$this->entries[$hash] = $info;
+			}
 		}
 	}
 
@@ -46,12 +51,21 @@ class Tiki_Profile_Writer_Queue
 				'type' => 'wiki_page',
 				'object' => $data['object'],
 				'timestamp' => $data['timestamp'],
+				'remove' => $data['action'] == 'Removed',
+			);
+		} elseif ($data['type'] == 'category') {
+			return array(
+				'type' => 'category',
+				'object' => $data['object'],
+				'timestamp' => $data['timestamp'],
+				'remove' => $data['action'] == 'Removed',
 			);
 		} elseif ($data['action'] == 'feature') {
 			return array(
 				'type' => 'preference',
 				'object' => $data['object'],
 				'timestamp' => $data['timestamp'],
+				'remove' => false,
 			);
 		} elseif ($data['type'] == 'tracker') {
 			$extra = parse_str($data['detail'], $parts);
@@ -60,12 +74,14 @@ class Tiki_Profile_Writer_Queue
 					'type' => 'tracker_field',
 					'object' => $parts['fieldId'],
 					'timestamp' => $data['timestamp'],
+					'remove' => $parts['operation'] == 'remove_field',
 				);
 			} else {
 				return array(
 					'type' => 'tracker',
 					'object' => $data['object'],
 					'timestamp' => $data['timestamp'],
+					'remove' => $data['action'] == 'Removed',
 				);
 			}
 		}

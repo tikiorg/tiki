@@ -468,9 +468,11 @@ class Tiki_Profile
 			$profiles[$key] = self::fromNames($ext['domain'], $ext['profile']);
 		}
 
-		if ( $recursive )
-			foreach ( $profiles as $profile )
+		if ( $recursive ) {
+			foreach ( $profiles as $profile ) {
 				$profiles = array_merge($profiles, $profile->getRequiredProfiles(true, $profiles));
+			}
+		}
 
 		return $profiles;
 	} // }}}
