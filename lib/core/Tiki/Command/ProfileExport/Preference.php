@@ -39,7 +39,7 @@ class Preference extends ObjectWriter
 		if ($result) {
 			$writer->save();
 		} else {
-			$output->writeln("Preference not found or at default value: $preference");
+			$output->writeln("Preference not found: $preference");
 		}
 	}
 }
