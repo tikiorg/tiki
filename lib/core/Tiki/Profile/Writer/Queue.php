@@ -53,6 +53,21 @@ class Tiki_Profile_Writer_Queue
 				'object' => $data['object'],
 				'timestamp' => $data['timestamp'],
 			);
+		} elseif ($data['type'] == 'tracker') {
+			$extra = parse_str($data['detail'], $parts);
+			if (isset($parts['fieldId'])) {
+				return array(
+					'type' => 'tracker_field',
+					'object' => $parts['fieldId'],
+					'timestamp' => $data['timestamp'],
+				);
+			} else {
+				return array(
+					'type' => 'tracker',
+					'object' => $data['object'],
+					'timestamp' => $data['timestamp'],
+				);
+			}
 		}
 	}
 
