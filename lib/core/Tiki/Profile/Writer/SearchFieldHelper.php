@@ -31,23 +31,23 @@ class Tiki_Profile_Writer_SearchFieldHelper
 	function replaceFilterReferences(Tiki_Profile_Writer $writer, $args)
 	{
 		if (isset($args['categories'])) {
-			$args['categories'] = Tiki_Profile_WriterHelper::uniform_string('category', $writer, $args['categories']);
+			$args['categories'] = Tiki_Profile_Writer_Helper::uniform_string('category', $writer, $args['categories']);
 		}
 
 		if (isset($args['deepcategories'])) {
-			$args['deepcategories'] = Tiki_Profile_WriterHelper::uniform_string('category', $writer, $args['deepcategories']);
+			$args['deepcategories'] = Tiki_Profile_Writer_Helper::uniform_string('category', $writer, $args['deepcategories']);
 		}
 
 		if (isset($args['content'], $args['field'])) {
 			// Expect all fields to be compatible, use the first one
 			$field = reset(explode(',', $args['field']));
 			if ($type = $this->getTypeForField($field)) {
-				$args['content'] = Tiki_Profile_WriterHelper::uniform_string($type, $writer, $args['content']);
+				$args['content'] = Tiki_Profile_Writer_Helper::uniform_string($type, $writer, $args['content']);
 			}
 		}
 
 		if (isset($args['relation'], $args['objecttype'])) {
-			$args['relation'] = Tiki_Profile_WriterHelper::uniform_string($args['objecttype'], $writer, $args['relation']);
+			$args['relation'] = Tiki_Profile_Writer_Helper::uniform_string($args['objecttype'], $writer, $args['relation']);
 		}
 
 		return $args;
