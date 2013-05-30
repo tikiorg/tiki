@@ -47,6 +47,15 @@ class Tiki_Profile_Writer
 	function setPreference($name, $value)
 	{
 		$this->data['preferences'][$name] = $value;
+		// Add a fake entry to record the inclusion timestamp, removed during clean-up
+		$this->addRawObject('preference', null, $name, array());
+	}
+
+	function getPreference($name)
+	{
+		if (isset($this->data['preferences'][$name])) {
+			return $this->data['preferences'][$name];
+		}
 	}
 
 	/**
@@ -58,6 +67,17 @@ class Tiki_Profile_Writer
 	{
 		$reference = $this->getInternalReference($type, $currentId, $data);
 
+		$this->addRawObject($type, $reference, $currentId, $data);
+
+		// Search through currently unknown reference for this item
+		$ref = $this->getReference($type, $currentId);
+		$this->removeUnknown($type, $currentId, $ref);
+
+		return $reference;
+	}
+	
+	private function addRawObject($type, $reference, $currentId, $data)
+	{
 		$this->clearObject($type, $currentId);
 
 		$this->data['objects'][] = array(
@@ -67,12 +87,6 @@ class Tiki_Profile_Writer
 			'_timestamp' => time(),
 			'data' => $data,
 		);
-
-		// Search through currently unknown reference for this item
-		$ref = $this->getReference($type, $currentId);
-		$this->removeUnknown($type, $currentId, $ref);
-
-		return $reference;
 	}
 
 	private function getInternalReference($type, $currentId, array $data)
@@ -278,6 +292,11 @@ class Tiki_Profile_Writer
 			unset($entry['_timestamp']);
 		});
 		unset($this->data['unknown_objects']);
+
+		// Remove fake preference entries
+		$this->data['objects'] = array_filter($this->data['objects'], function ($entry) {
+			return $entry['type'] != 'preference';
+		});
 	}
 
 	function dump()
