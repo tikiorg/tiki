@@ -184,7 +184,13 @@ function wikiplugin_colorbox($data, $params)
 			global $tikilib, $prefs;
 			$str .= empty($str) ? '' : '<br />';
 			if ($params['parsedescriptions'] == 'y') {
-				$str .= $tikilib->parse_data($file['description'], array( 'suppress_icons' => true, 'formatting_add_br' => 'n' ));
+				$op = $prefs['feature_wiki_paragraph_formatting'];
+				$op2 = $prefs['feature_wiki_paragraph_formatting_add_br'];
+				$prefs['feature_wiki_paragraph_formatting'] = 'n';
+				$prefs['feature_wiki_paragraph_formatting_add_br'] = 'n';
+				$str .= $tikilib->parse_data($file['description'], array( 'suppress_icons' => true ));
+				$prefs['feature_wiki_paragraph_formatting'] = $op;
+				$prefs['feature_wiki_paragraph_formatting_add_br'] = $op2;
 			} else {
 				$str .= preg_replace('/[\n\r]/', '', nl2br($file['description']));
 			}

@@ -686,6 +686,7 @@ function prefs_feature_list($partial = false)
 				'feature_ajax',
 				'ajax_autosave',
 				'feature_wiki_paragraph_formatting',
+				'feature_wiki_paragraph_formatting_add_br',
 				'wysiwyg_wiki_parsed',
 			),
 			'tags' => array('experimental'),
@@ -2369,6 +2370,12 @@ function prefs_feature_list($partial = false)
 			'description' => tra('Because the Wiki paragraph formatting feature is on, all groups of non-blank lines are collected into paragraphs.  Lines can be of any length, and will be wrapped together with the next line.  Paragraphs are separated by blank lines.').' '.tra('Because the Wiki paragraph formatting feature is off, each line will be presented as you write it.  This means that if you want paragraphs to be wrapped properly, a paragraph should be all together on one line.'),
 			'type' => 'flag',
 			'default' => 'n',
+		),
+		'feature_wiki_paragraph_formatting_add_br' => array(
+			'name' => tra('...but still create line breaks within paragraphs'),
+            'description' => tra(''),
+			'type' => 'flag',
+			'default' => 'y',
 		),
 		'feature_wiki_monosp' => array(
 			'name' => tra('Automonospaced text'),
