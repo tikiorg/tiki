@@ -25,6 +25,18 @@ class Finalize extends ObjectWriter
 				InputOption::VALUE_NONE,
 				'Write static references even if they are unknown'
 			)
+			->addOption(
+				'dry-run',
+				null,
+				InputOption::VALUE_NONE,
+				'Do not save changes. Only verify integrity.'
+			)
+			->addOption(
+				'dump',
+				null,
+				InputOption::VALUE_NONE,
+				'Write the profile content to the output.'
+			)
 			;
 	}
 
@@ -34,6 +46,8 @@ class Finalize extends ObjectWriter
 
 		$writer = $this->getProfileWriter($input);
 		$remaining = $writer->getUnknownObjects();
+
+		$process = true;
 
 		if ($force) {
 			foreach ($remaining as $entry) {
@@ -57,12 +71,18 @@ class Finalize extends ObjectWriter
 				}, $profiles));
 				$output->writeln("\n<info>It would seem like some pre-installed profiles cover unknown objects.</info>\n\nYou can run the following commands to include the references (try one at a time):\n$commands\n\nAdd the <info>--full-references</info> flag if the current profile will not be hosted in the same repository.");
 			}
-			return;
+			$process = false;
 		}
 
-		$writer->clean();
-		$writer->save();
+		if ($process && ! $input->getOption('dry-run')) {
+			$writer->clean();
+			$writer->save();
 
-		unlink("profiles/info.ini");
+			unlink("profiles/info.ini");
+		}
+
+		if ($input->getOption('dump')) {
+			$output->writeln($writer->dump());
+		}
 	}
 }
