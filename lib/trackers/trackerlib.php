@@ -1386,6 +1386,16 @@ class TrackerLib extends TikiLib
 				$this->change_status(array($itemId), $status);
 			}
 
+			$items->update(
+				array(
+					'lastModif' => $this->now,
+					'lastModifBy' => $user,
+				),
+				array(
+					'itemId' => $itemId,
+				)
+			);
+
 			$version = $this->last_log_version($itemId) + 1;
 
 		} else {
