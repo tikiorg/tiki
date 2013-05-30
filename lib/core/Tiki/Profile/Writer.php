@@ -48,7 +48,7 @@ class Tiki_Profile_Writer
 	{
 		$this->data['preferences'][$name] = $value;
 		// Add a fake entry to record the inclusion timestamp, removed during clean-up
-		$this->addRawObject('preference', null, $name, array());
+		$this->addFake('preference', $name);
 	}
 
 	function getPreference($name)
@@ -56,6 +56,11 @@ class Tiki_Profile_Writer
 		if (isset($this->data['preferences'][$name])) {
 			return $this->data['preferences'][$name];
 		}
+	}
+
+	function addFake($type, $id)
+	{
+		$this->addRawObject($type, null, $id, array('_is_fake' => true));
 	}
 
 	/**
@@ -295,7 +300,7 @@ class Tiki_Profile_Writer
 
 		// Remove fake preference entries
 		$this->data['objects'] = array_filter($this->data['objects'], function ($entry) {
-			return $entry['type'] != 'preference';
+			return empty($entry['data']['_is_fake']);
 		});
 	}
 

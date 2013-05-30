@@ -25,6 +25,12 @@ class RecentChanges extends ObjectWriter
 				InputOption::VALUE_REQUIRED,
 				'Date from which the actions should be read in the log, can either be a date or a relative time period'
 			)
+			->addOption(
+				'ignore',
+				null,
+				InputOption::VALUE_IS_ARRAY | InputOption::VALUE_REQUIRED,
+				'Adds an object to the ignore list. Format: object_type:object_id'
+			)
 			;
 	}
 
@@ -32,6 +38,13 @@ class RecentChanges extends ObjectWriter
 	{
 		if ($since = $input->getOption('since')) {
 			$since = strtotime($since);
+		}
+
+		$ignoreList = array();
+		foreach ($input->getOption('ignore') as $object) {
+			if (preg_match("/^(?P<type>\w+):(?P<object>.+)$/", $object, $parts)) {
+				$ignoreList[] = $parts;
+			}
 		}
 
 		$since = $since ?: 0;
@@ -53,6 +66,15 @@ class RecentChanges extends ObjectWriter
 		}
 
 		$writer = $this->getProfileWriter($input);
+
+		if (count($ignoreList)) {
+			foreach ($ignoreList as $entry) {
+				$writer->addFake($entry['type'], $entry['object']);
+			}
+
+			$writer->save();
+		}
+
 		$queue->filterIncluded($writer);
 		$queue->filterInstalled(new \Tiki_Profile_Writer_ProfileFinder);
 
