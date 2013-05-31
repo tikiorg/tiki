@@ -719,6 +719,7 @@ function wikiplugin_trackerlist_info()
 				'description' => tr('List of fields for which inline editing will be enabled.'),
 				'filter' => 'digits',
 				'separator' => ':',
+				'profile_reference' => 'tracker_field',
 				'default' => array(),
 			),
 		)
