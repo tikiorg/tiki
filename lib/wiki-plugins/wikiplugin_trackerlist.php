@@ -713,6 +713,19 @@ function wikiplugin_trackerlist_info()
 				'separator' => ':',
 				'default' => array(),
 			),
+			'editableall' => array(
+				'required' => false,
+				'name' => tr('Inline edit All'),
+				'description' => tr('Allow all displayed fields to be editable'),
+				'default' => 'y',
+				'advanced' => true,
+				'filter' => 'alpha',
+				'options' => array(
+					array('text' => '', 'value' => ''),
+					array('text' => tra('Yes'), 'value' => 'y'),
+					array('text' => tra('No'), 'value' => 'n')
+				)
+			),
 		)
 	);
 }
@@ -737,6 +750,7 @@ function wikiplugin_trackerlist($data, $params)
 		'calendardelta' => '',
 		'force_compile' => 'n',
 		'editable' => array(),
+		'editableall' => 'y',
 	);
 
 	$params = array_merge($default, $params);
@@ -778,6 +792,9 @@ function wikiplugin_trackerlist($data, $params)
 			$limit = $fields;
 		} else {
 			$limit = '';
+		}
+		if ($editableall=='y') {
+			$editable = $fields;
 		}
 		if (!empty($filterfield) && !empty($limit)) {
 			$limit = array_unique(array_merge($limit, $filterfield));
