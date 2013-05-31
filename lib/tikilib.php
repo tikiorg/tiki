@@ -5539,9 +5539,6 @@ class TikiLib extends TikiDb_Bridge
 		if (!empty($stl)) {
 			$sbase = $this->get_style_base($stl).'/';
 		}
-		if (!is_dir('styles/'.$dbase.$sbase)) {	// if the style dir doesn't exist in tikidomain, use root/styles
-			$dbase = '';
-		}
 
 		$obase = '';
 		if (!empty($opt)) {
@@ -5551,25 +5548,28 @@ class TikiLib extends TikiDb_Bridge
 			}
 		}
 
-		if (is_dir('styles/'.$dbase.$sbase)) {
-			if (empty($filename)) {
-				if (is_dir('styles/'.$dbase.$sbase.$obase)) {
-					$path = 'styles/'.$dbase.$sbase.$obase;
-				} else {
-					$path = 'styles/'.$dbase.$sbase;	// fall back to "parent" style dir if no option one
-				}
+		if (empty($filename)) {
+			if (is_dir('styles/'.$dbase.$sbase.$obase)) {
+				$path = 'styles/'.$dbase.$sbase.$obase;
 			} else {
-				if (is_file('styles/'.$dbase.$sbase.$obase.$filename)) {
-					$path = 'styles/'.$dbase.$sbase.$obase.$filename;
-				} else if (is_file('styles/'.$dbase.$sbase.$filename)) {	// try "parent" style dir if no option one
-					$path = 'styles/'.$dbase.$sbase.$filename;
-				} else if (is_file('styles/'.$sbase.$obase.$filename)) {	// try non-tikidomain dirs if not found
-					$path = 'styles/'.$sbase.$obase.$filename;
-				} else if (is_file('styles/'.$sbase.$filename)) {
-					$path = 'styles/'.$sbase.$filename;	// fall back to "parent" style dir if no option one
-				}
+				$path = 'styles/'.$dbase.$sbase;	// fall back to "parent" style dir if no option one
+			}
+		} else {
+			if (is_file('styles/'.$dbase.$sbase.$obase.$filename)) {
+				$path = 'styles/'.$dbase.$sbase.$obase.$filename;
+			} else if (is_file('styles/'.$dbase.$sbase.$filename)) {	// try "parent" style dir if no option one
+				$path = 'styles/'.$dbase.$sbase.$filename;
+			} else if (is_file('styles/'.$sbase.$obase.$filename)) {	// try non-tikidomain dirs if not found
+				$path = 'styles/'.$sbase.$obase.$filename;
+			} else if (is_file('styles/'.$sbase.$filename)) {
+				$path = 'styles/'.$sbase.$filename;				// fall back to "parent" style dir if no option
+			} else if (is_file('styles/'.$dbase.$filename)) {
+				$path = 'styles/'.$dbase.$filename;				// tikidomain root style dir?
+			} else if (is_file('styles/'.$dbase.$filename)) {
+				$path = 'styles/'.$filename;					// root style dir?
 			}
 		}
+
 		return $path;
 	}
 
