@@ -25,7 +25,7 @@ class Services_BigBlueButton_Controller
 		$bigbluebuttonlib = TikiLib::lib('bigbluebutton');
 		$perms = Perms::get('bigbluebutton', $meetingName);
 
-		if (! $bigbluebuttonlib->roomExists($meeting)) {
+		if (! $bigbluebuttonlib->roomExists($meetingName)) {
 			if (! $perms->bigbluebutton_create) {
 				throw new Services_Exception_NotFound;
 			}
@@ -72,7 +72,7 @@ class Services_BigBlueButton_Controller
 		}
 
 		$bigbluebuttonlib = TikiLib::lib('bigbluebutton');
-		$bigbluebuttonlib->removeRecording($input->id->text());
+		$bigbluebuttonlib->removeRecording($input->recording_id->text());
 
 		return array(
 		);
