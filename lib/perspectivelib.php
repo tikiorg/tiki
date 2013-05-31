@@ -177,6 +177,9 @@ class PerspectiveLib
 						}
 						$targetUrl = $url_scheme . '://' . $domain . $path;
 
+						if ($prefs['feature_areas'] === 'y') {
+							header('HTTP/1.0 301 Found');
+						}
 						header('Location: ' . $targetUrl);
 						exit;
 					}
