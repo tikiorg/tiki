@@ -6,7 +6,7 @@
 			<li>
 				{tr _0=$recording.startTime|tiki_long_date _1=$recording.startTime|tiki_short_time _2=$recording.endTime|tiki_short_time}On %0 from %1 to %2{/tr}
 				{permission name=admin}
-					<a data-confirm="{tr}This will permanently remove the recording{/tr}" class="bbb-remove-link" href="{service controller=bigbluebutton action=delete_recording id=$recording.recordID}">{icon _id=cross}</a>
+					<a data-confirm="{tr}This will permanently remove the recording{/tr}" class="bbb-remove-link" href="{service controller=bigbluebutton action=delete_recording recording_id=$recording.recordID}">{icon _id=cross}</a>
 				{/permission}
 				<ul>
 					{foreach from=$recording.playback key=type item=url}
