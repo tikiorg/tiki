@@ -713,6 +713,14 @@ function wikiplugin_trackerlist_info()
 				),
 				'default' => '',
 			),
+			'editable' => array(
+				'required' => false,
+				'name' => tr('Inline edit'),
+				'description' => tr('List of fields for which inline editing will be enabled.'),
+				'filter' => 'digits',
+				'separator' => ':',
+				'default' => array(),
+			),
 		)
 	);
 }
@@ -735,7 +743,8 @@ function wikiplugin_trackerlist($data, $params)
 		'calendarviewnavbar' => 'y',
 		'calendartitle'=>'',
 		'calendardelta' => '',
-		'force_compile' => 'n'
+		'force_compile' => 'n',
+		'editable' => array(),
 	);
 
 	$params = array_merge($default, $params);
@@ -1402,6 +1411,7 @@ function wikiplugin_trackerlist($data, $params)
 		$smarty->assign_by_ref('exactvalue', $exactvalue);
 		$smarty->assign_by_ref('listfields', $listfields);
 		$smarty->assign_by_ref('popupfields', $popupfields);
+		$smarty->assign('editableFields', $editable);
 		if (!empty($filterfield)) {
 			$urlquery['filterfield'] =  is_array($filtervalue) ? implode(':', $filterfield) : $filterfield;
 			if (!is_array($filtervalue)) {
