@@ -30,7 +30,8 @@ a:hover {
 	text-decoration: underline;
 }
 
-.wikitext ul {}
+.wikitext ul {
+}
 
 .wikitext li {
 	list-style-image: url(attainable/bullet.gif);
@@ -41,7 +42,8 @@ a:hover {
 }
 
 /*Definition lists*/
-.wikitext dl {}
+.wikitext dl {
+}
 
 .wikitext dt {
 	list-style-image: url(attainable/bullet.gif);
@@ -49,7 +51,8 @@ a:hover {
 	font-style: italic;
 }
 
-.wikitext dd {}
+.wikitext dd {
+}
 
 /***** Basic Page Layout 
 	Including Site Header *****/
@@ -59,8 +62,8 @@ a:hover {
 	background-color: #F1592A;
 }
 
-
-div#sitead {}
+div#sitead {
+}
 
 #siteloginbar {
 	width: 400px;
@@ -97,14 +100,12 @@ body.tiki_wiki .navbar {
 	display: none;
 }
 
-
 .wikitext a {
-	color: #F1592A !important;
+	color: #008cb4 !important;
 }
 
 .wikitext a:hover {
-	color: #F1592A !important;
+	color: #008cb4 !important;
 }
-
 
 /***** End of file ******/
