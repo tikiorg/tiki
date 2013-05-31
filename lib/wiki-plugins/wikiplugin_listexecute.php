@@ -34,6 +34,7 @@ function wikiplugin_listexecute($data, $params)
 			'change_status' => 'Search_Action_ChangeStatusAction',
 			'email' => 'Search_Action_EmailAction',
 			'wiki_approval' => 'Search_Action_WikiApprovalAction',
+			'tracker_item_modify' => 'Search_Action_TrackerItemModify',
 		)
 	);
 

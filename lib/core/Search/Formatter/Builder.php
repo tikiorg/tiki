@@ -80,6 +80,7 @@ class Search_Formatter_Builder
 
 		if (isset($arguments['name'])) {
 			$plugin = new Search_Formatter_Plugin_WikiTemplate($match->getBody());
+			$plugin->setRaw(! empty($arguments['mode']) && $arguments['mode'] == 'raw');
 			$this->subFormatters[$arguments['name']] = $plugin;
 		}
 	}
