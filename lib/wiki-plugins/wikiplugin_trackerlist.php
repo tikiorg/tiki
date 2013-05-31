@@ -750,7 +750,7 @@ function wikiplugin_trackerlist($data, $params)
 		'calendardelta' => '',
 		'force_compile' => 'n',
 		'editable' => array(),
-		'editableall' => 'y',
+		'editableall' => 'n',
 	);
 
 	$params = array_merge($default, $params);
