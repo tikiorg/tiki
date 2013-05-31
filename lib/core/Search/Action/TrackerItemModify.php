@@ -35,6 +35,12 @@ class Search_Action_TrackerItemModify implements Search_Action_Action
 			return false;
 		}
 
+		$definition = Tracker_Definition::get($info['trackerId']);
+
+		if (! $definition->getFieldFromPermName($field)) {
+			return false;
+		}
+
 		return true;
 	}
 
