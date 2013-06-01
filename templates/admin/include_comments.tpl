@@ -52,6 +52,7 @@
 			<fieldset>
 				<legend>{tr}Inline comments{/tr}</legend>
 					<a class="link" href="{$prefs.helpurl}Inline+comments">{tr}Inline comments{/tr}</a>
+				{preference name=feature_inline_comments}
 
 				{tr}The feature below must be activated for this feature to work.{/tr}
 				{preference name=feature_wiki_paragraph_formatting}
