@@ -10,9 +10,12 @@ class Search_Elastic_BulkIndexingTest extends PHPUnit_Framework_TestCase
 	function testBasicBulk()
 	{
 		$parts = array();
-		$bulk = new Search_Elastic_BulkOperation(10, function ($data) use (& $parts) {
-			$parts[] = $data;
-		});
+		$bulk = new Search_Elastic_BulkOperation(
+			10,
+			function ($data) use (& $parts) {
+				$parts[] = $data;
+			}
+		);
 
 		$bulk->index('test', 'foo', 1, array('a' => 1));
 		$bulk->index('test', 'foo', 2, array('a' => 2));
@@ -30,9 +33,12 @@ class Search_Elastic_BulkIndexingTest extends PHPUnit_Framework_TestCase
 	function testDoubleFlushHasNoImpact()
 	{
 		$parts = array();
-		$bulk = new Search_Elastic_BulkOperation(10, function ($data) use (& $parts) {
-			$parts[] = $data;
-		});
+		$bulk = new Search_Elastic_BulkOperation(
+			10,
+			function ($data) use (& $parts) {
+				$parts[] = $data;
+			}
+		);
 
 		$bulk->index('test', 'foo', 1, array('a' => 1));
 		$bulk->index('test', 'foo', 2, array('a' => 2));
@@ -47,9 +53,12 @@ class Search_Elastic_BulkIndexingTest extends PHPUnit_Framework_TestCase
 	function testAutomaticFlushWhenLimitReached()
 	{
 		$parts = array();
-		$bulk = new Search_Elastic_BulkOperation(10, function ($data) use (& $parts) {
-			$parts[] = $data;
-		});
+		$bulk = new Search_Elastic_BulkOperation(
+			10,
+			function ($data) use (& $parts) {
+				$parts[] = $data;
+			}
+		);
 
 		foreach (range(1, 15) as $i) {
 			$bulk->index('test', 'foo', $i, array('a' => $i));
@@ -63,9 +72,12 @@ class Search_Elastic_BulkIndexingTest extends PHPUnit_Framework_TestCase
 	function testFlushOnLimit()
 	{
 		$parts = array();
-		$bulk = new Search_Elastic_BulkOperation(15, function ($data) use (& $parts) {
-			$parts[] = $data;
-		});
+		$bulk = new Search_Elastic_BulkOperation(
+			15,
+			function ($data) use (& $parts) {
+				$parts[] = $data;
+			}
+		);
 
 		foreach (range(1, 45) as $i) {
 			$bulk->index('test', 'foo', $i, array('a' => $i));

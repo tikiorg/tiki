@@ -1725,9 +1725,10 @@ class LogsLib extends TikiLib
 
 		return $ret;
 	}
-	
-	function get_log_count($objectType, $action) {
-		$query = "SELECT m.user,m.object,m.action 
+
+	function get_log_count($objectType, $action)
+	{
+		$query = "SELECT m.user,m.object,m.action
 			FROM tiki_actionlog AS m
 			INNER JOIN (
 			  SELECT MAX(i.lastModif) lastModif, i.user
@@ -1737,24 +1738,24 @@ class LogsLib extends TikiLib
 			) AS j ON (j.lastModif = m.lastModif AND j.user = m.user)";
 		return $this->fetchAll($query, array());
 	}
-	
+
 	function get_bigblue_login_time($logins, $startDate, $endDate, $actions)
 	{
 		if ($endDate > $this->now) {
 			$endDate = $this->now;
 		}
 			$logTimes = array();
-	
+
 			foreach ($logins as $login) {
-				if($login['objectType'] == 'bigbluebutton') {
-					if($login['action'] == 'Joined Room') {
-						if(!isset($logTimes[$login['user']][$login['object']]['starttime'])) {
+				if ($login['objectType'] == 'bigbluebutton') {
+					if ($login['action'] == 'Joined Room') {
+						if (!isset($logTimes[$login['user']][$login['object']]['starttime'])) {
 							$logTimes[$login['user']][$login['object']]['starttime'] = $login['lastModif'];
 						}
 					}
-					
-					if($login['action'] == 'Left Room') {
-						if(isset($logTimes[$login['user']][$login['object']]['starttime'])) {
+
+					if ($login['action'] == 'Left Room') {
+						if (isset($logTimes[$login['user']][$login['object']]['starttime'])) {
 							$logTimes[$login['user']][$login['object']]['total'][] = $login['lastModif'] - $logTimes[$login['user']][$login['object']]['starttime'];
 							unset($logTimes[$login['user']][$login['object']]['starttime']);
 						}
@@ -1763,8 +1764,8 @@ class LogsLib extends TikiLib
 			}
 
 		foreach ($logTimes as $user=>$object) {
-			foreach($object as $room=>$times) {
-				foreach($times['total'] as $key => $time) {
+			foreach ($object as $room=>$times) {
+				foreach ($times['total'] as $key => $time) {
 					$nbMin = floor($time/60);
 					$nbHour = floor($nbMin/60);
 					$nbDay = floor($nbHour/24);
@@ -1774,7 +1775,7 @@ class LogsLib extends TikiLib
 		}
 		return $log;
 	}
-	
+
 	function export_bbb($actionlogs)
 	{
 		foreach ($actionlogs as $user=>$room) {
@@ -1785,12 +1786,12 @@ class LogsLib extends TikiLib
 					. '","' . $value
 					.'","'
 					;
-					$csv .= "\"\n";		
+					$csv .= "\"\n";
 				}
 			}
 		}
 		return $csv;
-	}	
+	}
 }
 
 $logslib = new LogsLib;

@@ -28,7 +28,7 @@ class Tiki_Profile_Writer
 		}
 	}
 
-	/** 
+	/**
 	 * Set the reference name for the next object to be added.
 	 */
 	function pushReference($name)
@@ -80,7 +80,7 @@ class Tiki_Profile_Writer
 
 		return $reference;
 	}
-	
+
 	private function addRawObject($type, $reference, $currentId, $data)
 	{
 		$this->clearObject($type, $currentId);
@@ -153,11 +153,14 @@ class Tiki_Profile_Writer
 		foreach ($this->data['unknown_objects'] as $key => $entry) {
 			if ($entry['type'] == $type && $entry['id'] == $id) {
 				$token = $entry['token'];
-				array_walk_recursive($this->data['objects'], function (& $entry) use ($token, $replacement) {
-					if (is_string($entry)) {
-						$entry = str_replace($token, $replacement, $entry);
+				array_walk_recursive(
+					$this->data['objects'],
+					function (& $entry) use ($token, $replacement) {
+						if (is_string($entry)) {
+							$entry = str_replace($token, $replacement, $entry);
+						}
 					}
-				});
+				);
 
 				$writer = $this->externalWriter;
 				foreach ($writer->getFiles() as $file => $content) {
@@ -176,10 +179,13 @@ class Tiki_Profile_Writer
 	 */
 	function getUnknownObjects()
 	{
-		return array_map(function ($entry) {
-			unset($entry['token']);
-			return $entry;
-		}, $this->data['unknown_objects']);
+		return array_map(
+			function ($entry) {
+				unset($entry['token']);
+				return $entry;
+			},
+			$this->data['unknown_objects']
+		);
 	}
 
 	/**
@@ -202,9 +208,12 @@ class Tiki_Profile_Writer
 
 		if (is_array($id)) {
 			$parent = $this;
-			return array_map(function ($value) use ($type, $parent) {
-				return $parent->getReference($type, $value, $parameters);
-			}, $id);
+			return array_map(
+				function ($value) use ($type, $parent) {
+					return $parent->getReference($type, $value, $parameters);
+				},
+				$id
+			);
 		}
 
 		foreach ($this->data['objects'] as $object) {
@@ -253,9 +262,12 @@ class Tiki_Profile_Writer
 
 	private function clearObject($type, $id)
 	{
-		$this->data['objects'] = array_filter($this->data['objects'], function ($item) use ($type, $id) {
-			return $item['type'] != $type || $item['_id'] != $id;
-		});
+		$this->data['objects'] = array_filter(
+			$this->data['objects'],
+			function ($item) use ($type, $id) {
+				return $item['type'] != $type || $item['_id'] != $id;
+			}
+		);
 	}
 
 	private function generateTemporaryReference($type, $id)
@@ -292,16 +304,22 @@ class Tiki_Profile_Writer
 	 */
 	function clean()
 	{
-		array_walk($this->data['objects'], function (& $entry) {
-			unset($entry['_id']);
-			unset($entry['_timestamp']);
-		});
+		array_walk(
+			$this->data['objects'],
+			function (& $entry) {
+				unset($entry['_id']);
+				unset($entry['_timestamp']);
+			}
+		);
 		unset($this->data['unknown_objects']);
 
 		// Remove fake preference entries
-		$this->data['objects'] = array_filter($this->data['objects'], function ($entry) {
-			return empty($entry['data']['_is_fake']);
-		});
+		$this->data['objects'] = array_filter(
+			$this->data['objects'],
+			function ($entry) {
+				return empty($entry['data']['_is_fake']);
+			}
+		);
 	}
 
 	function dump()

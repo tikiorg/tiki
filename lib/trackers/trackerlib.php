@@ -1589,14 +1589,14 @@ class TrackerLib extends TikiLib
 				'bulk_import' => $bulk_import,
 			)
 		);
-		    
+
 		if ($prefs['feature_score'] == 'y') {
 			if ($final_event == 'tiki.trackeritem.create') {
 				$tikilib->score_event($user, 'trackeritem_create', $currentItemId);
-			} elseif($final_event == 'tiki.trackeritem.update') {
+			} elseif ($final_event == 'tiki.trackeritem.update') {
 				$tikilib->score_event($user, 'trackeritem_edit', $currentItemId);
 			}
-			foreach($fil as $key=>$value) {
+			foreach ($fil as $key=>$value) {
 				if (empty($old_values[$key]) && !empty($fil[$key])) {
 					$tikilib->score_event($user, 'tracker_field_entered', "$key:$currentItemId");
 				}
@@ -2408,9 +2408,14 @@ class TrackerLib extends TikiLib
 
 		if ($logOption) {
 			$logslib = TikiLib::lib('logs');
-			$logslib->add_action($logOption, $trackerId, 'tracker', array(
-				'name' => $data['name'],
-			));
+			$logslib->add_action(
+				$logOption,
+				$trackerId,
+				'tracker',
+				array(
+					'name' => $data['name'],
+				)
+			);
 		}
 
 		require_once('lib/search/refresh-functions.php');
@@ -2525,11 +2530,16 @@ class TrackerLib extends TikiLib
 
 		if ($logOption) {
 			$logslib = TikiLib::lib('logs');
-			$logslib->add_action('Updated', $data['trackerId'], 'tracker', array(
-				'operation' => $logOption,
-				'fieldId' => $fieldId,
-				'name' => $data['name'],
-			));
+			$logslib->add_action(
+				'Updated',
+				$data['trackerId'],
+				'tracker',
+				array(
+					'operation' => $logOption,
+					'fieldId' => $fieldId,
+					'name' => $data['name'],
+				)
+			);
 		}
 
 		$this->clear_tracker_cache($trackerId);
@@ -2691,10 +2701,15 @@ class TrackerLib extends TikiLib
 		$this->clear_tracker_cache($trackerId);
 
 		$logslib = TikiLib::lib('logs');
-		$logslib->add_action('Updated', $trackerId, 'tracker', array(
-			'operation' => 'remove_field',
-			'fieldId' => $fieldId,
-		));
+		$logslib->add_action(
+			'Updated',
+			$trackerId,
+			'tracker',
+			array(
+				'operation' => 'remove_field',
+				'fieldId' => $fieldId,
+			)
+		);
 
 		return true;
 	}
@@ -2703,7 +2718,7 @@ class TrackerLib extends TikiLib
 	 * get_trackers_containing
 	 *
 	 * \brief Get tracker names containing ... (useful for auto-complete)
-	 * 
+	 *
 	 * @author luci
 	 * @param mixed $name
 	 * @access public
@@ -2717,14 +2732,15 @@ class TrackerLib extends TikiLib
 		//FIXME: perm filter ?
 		$result = $this->fetchAll(
 			'SELECT `name` FROM `tiki_trackers` WHERE `name` LIKE ?',
-			array($name . '%'),10);
+			array($name . '%'), 10
+		);
 		$names = array();
 		foreach ( $result as $row ) {
 			$names[] = $row['name'];
 		}
 		return $names;
 	}
-	
+
 	/**
 	 * Returns the trackerId of the tracker possessing the item ($itemId)
 	 */
@@ -4715,7 +4731,8 @@ class TrackerLib extends TikiLib
 		}
 	}
 	// connect a user to his user item on the email field / email user
-	public function update_user_item($user, $email, $emailFieldId) {
+	public function update_user_item($user, $email, $emailFieldId)
+	{
 		$field = $this->get_tracker_field($emailFieldId);
 		$trackerId = $field['trackerId'];
 		$userFieldId =  $this->get_field_id_from_type($trackerId, 'u', '1%');
@@ -4728,8 +4745,7 @@ class TrackerLib extends TikiLib
 			if (empty($item['field_values'][0]['value'])) {
 				$found = true;
 				$this->modify_field($item['itemId'], $userFieldId, $user);
-				}
-			elseif ($item['field_values'][0]['value'] == $user) {
+			} elseif ($item['field_values'][0]['value'] == $user) {
 				$found = true;
 			}
 		}

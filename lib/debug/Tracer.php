@@ -29,93 +29,96 @@
   //
   // To deactivate all traces in one go, set $tiki_traces_are_on = false in db/local.php.
   //
-class Tracer {
+class Tracer
+{
 
-  public $traces_are_on = false;
-  public $trace_file_path = NULL;
-  public $tiki_trace_active_ids = NULL;
+	public $traces_are_on = false;
+	public $trace_file_path = NULL;
+	public $tiki_trace_active_ids = NULL;
 
-  public function __construct($trace_file_path, $traces_are_on=false, $traces_active_ids) {
-    $this->trace_file_path = $trace_file_path;
-    $this->traces_are_on = $traces_are_on;
-    $this->tiki_trace_active_ids = array_merge($traces_active_ids, array());
-    if ($trace_file_path != NULL) {
-      file_put_contents ($this->trace_file_path, '');
-    }
-  }
+	public function __construct($trace_file_path, $traces_are_on=false, $traces_active_ids)
+	{
+		$this->trace_file_path = $trace_file_path;
+		$this->traces_are_on = $traces_are_on;
+		$this->tiki_trace_active_ids = array_merge($traces_active_ids, array());
+		if ($trace_file_path != NULL) {
+			file_put_contents($this->trace_file_path, '');
+		}
+	}
 
-  public function trace($trace_id, $message) {
-    if ($this->traces_are_on && $this->trace_file_path != NULL &&
-	in_array($trace_id, $this->tiki_trace_active_ids)) {
-      file_put_contents($this->trace_file_path, "-- $trace_id: $message\n", FILE_APPEND);
-    }
-  }
+	public function trace($trace_id, $message)
+	{
+		if ($this->traces_are_on && $this->trace_file_path != NULL &&
+			in_array($trace_id, $this->tiki_trace_active_ids)) {
+			file_put_contents($this->trace_file_path, "-- $trace_id: $message\n", FILE_APPEND);
+		}
+	}
 
-    //
-    // Method for pretty printing a data structure as a "human readable"
-    // JSON string
-    //
-    function pretty_print($in, $indent = 0, Closure $_escape = null)
-    {
+	//
+	// Method for pretty printing a data structure as a "human readable"
+	// JSON string
+	//
+	function pretty_print($in, $indent = 0, Closure $_escape = null)
+	{
         //
         // Pretty printing of a large data structure can consume time if it is called often.
         // We wouldn't want that to happen in a production context where some traces were
         // left behind in the code.
         // To avoid this, we only do the pretty_print if traces are on.
         //
-        if (!$this->traces_are_on) {
-            return "WARNING: Pretty print not carried out because traces are not active.";
-        }
+		if (!$this->traces_are_on) {
+			return "WARNING: Pretty print not carried out because traces are not active.";
+		}
 
-        if (__CLASS__ && isset($this)) {
-            $_myself = array($this, __FUNCTION__);
-        } elseif (__CLASS__) {
-            $_myself = array('self', __FUNCTION__);
-        } else {
-            $_myself = __FUNCTION__;
-        }
+		if (__CLASS__ && isset($this)) {
+			$_myself = array($this, __FUNCTION__);
+		} elseif (__CLASS__) {
+			$_myself = array('self', __FUNCTION__);
+		} else {
+			$_myself = __FUNCTION__;
+		}
 
-        if (is_null($_escape)) {
-            $_escape = function ($str) {
-                return str_replace(
-                    array('\\', '"', "\n", "\r", "\b", "\f", "\t", '/', '\\\\u'),
-                    array('\\\\', '\\"', "\\n", "\\r", "\\b", "\\f", "\\t", '\\/', '\\u'),
-                    $str);
-            };
-        }
+		if (is_null($_escape)) {
+			$_escape = function ($str) {
+				return str_replace(
+					array('\\', '"', "\n", "\r", "\b", "\f", "\t", '/', '\\\\u'),
+					array('\\\\', '\\"', "\\n", "\\r", "\\b", "\\f", "\\t", '\\/', '\\u'),
+					$str
+				);
+			};
+		}
 
-        $out = '';
+		$out = '';
 
-        foreach ($in as $key => $value) {
-            $out .= str_repeat("\t", $indent + 1);
-            $out .= "\"" . $_escape((string)$key) . "\": ";
+		foreach ($in as $key => $value) {
+			$out .= str_repeat("\t", $indent + 1);
+			$out .= "\"" . $_escape((string)$key) . "\": ";
 
-            if (is_object($value) || is_array($value)) {
-                $out .= "\n";
-                $out .= call_user_func($_myself, $value, $indent + 1, $_escape);
-            } elseif (is_bool($value)) {
-                $out .= $value ? 'true' : 'false';
-            } elseif (is_null($value)) {
-                $out .= 'null';
-            } elseif (is_string($value)) {
-                $out .= "\"" . $_escape($value) . "\"";
-            } else {
-                $out .= $value;
-            }
+			if (is_object($value) || is_array($value)) {
+				$out .= "\n";
+				$out .= call_user_func($_myself, $value, $indent + 1, $_escape);
+			} elseif (is_bool($value)) {
+				$out .= $value ? 'true' : 'false';
+			} elseif (is_null($value)) {
+				$out .= 'null';
+			} elseif (is_string($value)) {
+				$out .= "\"" . $_escape($value) . "\"";
+			} else {
+				$out .= $value;
+			}
 
-            $out .= ",\n";
-        }
+			$out .= ",\n";
+		}
 
-        if (!empty($out)) {
-            $out = substr($out, 0, -2);
-        }
+		if (!empty($out)) {
+			$out = substr($out, 0, -2);
+		}
 
-        $out = str_repeat("\t", $indent) . "{\n" . $out;
-        $out .= "\n" . str_repeat("\t", $indent) . "}";
+		$out = str_repeat("\t", $indent) . "{\n" . $out;
+		$out .= "\n" . str_repeat("\t", $indent) . "}";
 
-        return $out;
-    }
-
+		return $out;
+	}
 }
 
 if (file_exists('db/local.php')) {

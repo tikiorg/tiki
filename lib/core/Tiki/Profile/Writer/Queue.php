@@ -24,24 +24,32 @@ class Tiki_Profile_Writer_Queue
 
 	function filterIncluded(Tiki_Profile_Writer $writer)
 	{
-		array_walk($this->entries, function (& $entry) use ($writer) {
-			$timestamp = $writer->getInclusionTimestamp($entry['type'], $entry['object']);
-			$entry['stored'] = $timestamp;
-			$entry['status'] = $timestamp ? 'MODIFIED' : 'NEW';
-		});
+		array_walk(
+			$this->entries,
+			function (& $entry) use ($writer) {
+				$timestamp = $writer->getInclusionTimestamp($entry['type'], $entry['object']);
+				$entry['stored'] = $timestamp;
+				$entry['status'] = $timestamp ? 'MODIFIED' : 'NEW';
+			}
+		);
 
-		$this->entries = array_filter($this->entries, function ($entry) use ($writer) {
-			return $entry['timestamp'] > $entry['stored'];
-		});
+		$this->entries = array_filter(
+			$this->entries, function ($entry) use ($writer) {
+				return $entry['timestamp'] > $entry['stored'];
+			}
+		);
 	}
 
 	function filterInstalled(Tiki_Profile_Writer_ProfileFinder $finder)
 	{
-		$this->entries = array_filter($this->entries, function ($entry) use ($finder) {
-			$finder->lookup($entry['type'], $entry['object']);
+		$this->entries = array_filter(
+			$this->entries,
+			function ($entry) use ($finder) {
+				$finder->lookup($entry['type'], $entry['object']);
 
-			return ! $finder->checkProfileAndFlush();
-		});
+				return ! $finder->checkProfileAndFlush();
+			}
+		);
 	}
 
 	private function findInfo(array $data)
@@ -90,23 +98,32 @@ class Tiki_Profile_Writer_Queue
 	function __toString()
 	{
 		$entries = $this->entries;
-		usort($entries, function ($a, $b) {
-			return $a['timestamp'] - $b['timestamp'];
-		});
+		usort(
+			$entries,
+			function ($a, $b) {
+				return $a['timestamp'] - $b['timestamp'];
+			}
+		);
 
-		array_walk($entries, function (& $entry) {
-			$entry['timestamp'] = date('Y-m-d H:i:s (D)', $entry['timestamp']);
-		}, $entries);
+		array_walk(
+			$entries,
+			function (& $entry) {
+				$entry['timestamp'] = date('Y-m-d H:i:s (D)', $entry['timestamp']);
+			},
+			$entries
+		);
 
 		$columns = array('timestamp', 'type', 'object', 'status');
 		$widths = array_fill_keys($columns, 0);
-		
-		array_unshift($entries, array(
-			'type' => 'Type',
-			'object' => 'Object',
-			'timestamp' => 'Last Modification',
-			'status' => 'Status',
-		));
+
+		array_unshift(
+			$entries, array(
+				'type' => 'Type',
+				'object' => 'Object',
+				'timestamp' => 'Last Modification',
+				'status' => 'Status',
+			)
+		);
 
 		foreach ($entries as $entry) {
 			foreach ($columns as $column) {

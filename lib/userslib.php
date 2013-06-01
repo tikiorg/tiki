@@ -1851,22 +1851,22 @@ class UsersLib extends TikiLib
 		if ($prefs['user_trackersync_groups'] == 'y') {
 			$this->uncategorize_user_tracker_item($user, $group);
 		}
-		
+
 		if ($prefs['feature_community_send_mail_leave'] == 'y') {
-		  $group_base = trim(str_replace(array_map('trim',explode(",", $prefs['feature_community_Strings_to_ignore'])), '', $group));
-		  if(!empty($prefs['feature_community_String_to_append'])) {
+			$group_base = trim(str_replace(array_map('trim', explode(",", $prefs['feature_community_Strings_to_ignore'])), '', $group));
+			if (!empty($prefs['feature_community_String_to_append'])) {
 				$grouplead = $group_base . " " . $prefs['feature_community_String_to_append'];
 				$groupleaders = $this->get_users_created_group($grouplead);
 				unset($groupleaders[$user]);
 				if (isset($groupleaders[$_SESSION['u_info']['login']])) {
 					unset($groupleaders[$_SESSION['u_info']['login']]);
 				}
-				if(!empty($groupleaders)) {
+				if (!empty($groupleaders)) {
 				$par_data['gname'] = $group_base;
-				$par_data['user'] = $user;			
+				$par_data['user'] = $user;
 				require_once ("lib/notifications/notificationemaillib.php");
 					sendEmailNotification($groupleaders, 'group_lead_mail', 'user_left_group_notification_to_leads_subject.tpl', $par_data, 'user_left_group_notification_to_leads.tpl');
-				}		
+				}
 			}
 		}
 
@@ -5626,14 +5626,14 @@ class UsersLib extends TikiLib
 		$tikilib->invalidate_usergroups_cache($user);
 
 		$group_ret = false;
-		
+
 		//Get the ID from the table directly.
 		$userid = $this->table('users_users')->fetchOne('userId', array('login' => $user));
-		
-		// Maybe it's not best place to do it. 
+
+		// Maybe it's not best place to do it.
 		// If it's not there, the first login with CAS doesn't work well. We will get "You don't have the permission ..."
 		$_SESSION['u_info']['id'] = $userid;
-		
+
 		if ( $userid > 0 ) {
 			$query = "insert ignore into `users_usergroups`(`userId`,`groupName`, `created`) values(?,?,?)";
 			$result = $this->query($query, array($userid, $group, $tikilib->now), -1, -1, false);
@@ -5643,26 +5643,36 @@ class UsersLib extends TikiLib
 			}
 		}
 		$this->update_anniversary_expiry();
-		
-		if ($prefs['feature_community_send_mail_join'] == 'y') { 
-			$group_base = trim(str_replace(array_map('trim',explode(",", $prefs['feature_community_Strings_to_ignore'])), '', $group));
-			if(!empty($prefs['feature_community_String_to_append'])) {
+
+		if ($prefs['feature_community_send_mail_join'] == 'y') {
+			$group_base = trim(str_replace(array_map('trim', explode(",", $prefs['feature_community_Strings_to_ignore'])), '', $group));
+			if (!empty($prefs['feature_community_String_to_append'])) {
 				$grouplead = $group_base . " " . trim($prefs['feature_community_String_to_append']);
 				$groupleaders = $this->get_users_created_group($grouplead);
 				unset($groupleaders[$user]);
 				if (isset($groupleaders[$_SESSION['u_info']['login']])) {
 					unset($groupleaders[$_SESSION['u_info']['login']]);
 				}
-				if(!empty($groupleaders)) {
-				  $par_data['gname'] = $group_base;
-				  $par_data['user'] = $user;
-				  if(strpos($group, ' (Needs Approval)')) { $mail_temp = 'user_joins_group_notification_to_leads_need_app.tpl'; } else { $mail_temp = 'user_joins_group_notification_to_leads.tpl'; }	  		
-				  require_once ("lib/notifications/notificationemaillib.php");
-				  sendEmailNotification($groupleaders, 'group_lead_mail', 'user_joins_group_notification_to_leads_subject.tpl', $par_data, $mail_temp);
-				}		
+				if (!empty($groupleaders)) {
+					$par_data['gname'] = $group_base;
+					$par_data['user'] = $user;
+					if (strpos($group, ' (Needs Approval)')) {
+						$mail_temp = 'user_joins_group_notification_to_leads_need_app.tpl';
+					} else {
+						$mail_temp = 'user_joins_group_notification_to_leads.tpl';
+					}
+					require_once ("lib/notifications/notificationemaillib.php");
+					sendEmailNotification(
+						$groupleaders,
+						'group_lead_mail',
+						'user_joins_group_notification_to_leads_subject.tpl',
+						$par_data,
+						$mail_temp
+					);
+				}
 			}
 		}
-		
+
 		if ($group_ret) {
 			$watches = $tikilib->get_event_watches('user_joins_group', $group);
 			if (count($watches)) {
@@ -7396,7 +7406,7 @@ class UsersLib extends TikiLib
 				}
 			}
 			$ret[$g]['expire'] = $res['expire'];
-		} 
+		}
 		return $ret;
 	}
 

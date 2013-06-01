@@ -1162,7 +1162,7 @@ class BlogLib extends TikiDb_Bridge
 	{
 		global $smarty;
 
-		/* The function takes an argument asking if the break should occur on a 
+		/* The function takes an argument asking if the break should occur on a
 		   word boundary. The truncate function asks if words can be broken.
 		   The same question is asked inversely so the supplied parameter needs
 		   to be reversed to remain accurate. */
@@ -1170,8 +1170,7 @@ class BlogLib extends TikiDb_Bridge
 
 		$etc = ($ellipsis == 'y') ? ' ... ' : ' ';
 		$numBlogs = count($blogItems["data"]);
-		for ($i=0; $i<$numBlogs; $i++)
-		{
+		for ($i=0; $i<$numBlogs; $i++) {
 			$pos = 0;
 			$counter = 'char';
 			$arrString = array();
@@ -1181,28 +1180,27 @@ class BlogLib extends TikiDb_Bridge
 
 			/* We don't want to stop this loop until we've counted sufficient displaying
 			   characters, not just string positions */
-			for($pos=0; $tally['char']<$charCount; $pos++)
-			{
-				if ($arrString[$pos] == '<' && $counter == 'char')
-				{
+			for ($pos=0; $tally['char']<$charCount; $pos++) {
+				if ($arrString[$pos] == '<' && $counter == 'char') {
 					$counter = 'tags';
-				}
-				elseif ($arrString[$pos] == '>' && $counter == 'tags')
-				{
+				} elseif ($arrString[$pos] == '>' && $counter == 'tags') {
 					$counter = 'char';
 				}
 				$tally[$counter]++;
 			}
 			$segLength = $charCount + $tally['tags'];
 			$smarty->loadPlugin('smarty_modifier_truncate');
-			$blogItems['data'][$i]['parsed_data'] = 
-				smarty_modifier_truncate($blogItems['data'][$i]['parsed_data'], 
-							 $segLength, $etc, $breakword);
+			$blogItems['data'][$i]['parsed_data'] =
+				smarty_modifier_truncate(
+					$blogItems['data'][$i]['parsed_data'],
+					$segLength,
+					$etc,
+					$breakword
+				);
 
-			if ($more == 'y') 
-			{
-				$blogItems['data'][$i]['parsed_data'] .= 
-					'<a class="link" href="tiki-view_blog_post.php?postId=' . 
+			if ($more == 'y') {
+				$blogItems['data'][$i]['parsed_data'] .=
+					'<a class="link" href="tiki-view_blog_post.php?postId=' .
 					$blogItems['data'][$i]['postId'] . '"> &#60more&#62</a>';
 			}
 			unset( $arrString );
