@@ -401,7 +401,7 @@ class PreferencesLib
 	private function getFileData( $file, $partial = false )
 	{
 		if ( ! isset( $this->files[$file] ) ) {
-   		$inc_file = __DIR__ . "/prefs/{$file}.php";
+   			$inc_file = __DIR__ . "/prefs/{$file}.php";
 			if (file_exists($inc_file)) {
 				require_once $inc_file;
 				$function = "prefs_{$file}_list";
@@ -413,7 +413,10 @@ class PreferencesLib
 			}
 		}
 
-		$ret = $this->files[$file];
+		$ret = array();
+		if (isset($this->files[$file])) {
+			$ret = $this->files[$file];
+		}
 
 		if ($partial) {
 			unset($this->files[$file]);

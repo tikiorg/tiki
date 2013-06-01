@@ -313,12 +313,18 @@ if (window.location.href.indexOf('plugin_alias_new=true') > -1) {
 			<legend>{tr}Simple Plugin Arguments{/tr}{icon _id="omodule"} {icon _id="add" id="pluginalias_simple_add"}</legend>
 			{jq}
 $('#pluginalias_simple_add').click(function() {
-		var me = $('#pluginalias_simple_new'),
-			lastChild = me.children().last(),
-			clone = lastChild.clone();
+		var me = $('#pluginalias_simple_new'), clone = me.clone(), index = me.parent().children().size();
+		clone.removeAttr('id');
 
-		clone.find(':input').val('');
-		clone.insertAfter(lastChild);
+		clone.find(':input').each(function () {
+			$(this).attr('name', $(this).attr('name').replace('__NEW__', index));
+			$(this).attr('id', $(this).attr('id').replace('__NEW__', index));
+		}).val('');
+		clone.find('label').each(function () {
+			$(this).attr('for', $(this).attr('for').replace('__NEW__', index));
+		});
+		clone.show();
+		me.parent().append(clone);
 
 	return false;
 });
@@ -348,7 +354,7 @@ $('#pluginalias_simple_new').hide();
 		</fieldset>
 		<fieldset id="pluginalias_doc">
 			<legend>{tr}Plugin Parameter Documentation{/tr}{icon _id="omodule"} {icon _id="add" id="pluginalias_doc_add"}</legend>
-			{jq}$('#pluginalias_doc_add').click(function() { $('#pluginalias_doc_new').toggle("fast"); return false; });{/jq}
+			{jq}$('#pluginalias_doc_add').click(function() { $('#pluginalias_doc_new').toggle(); return false; });{/jq}
 			
 			{foreach from=$plugin_admin.description.params key=token item=detail}
 				<div class="clearfix admingroup adminoptionbox{if $token eq '__NEW__'} hidefirst" id="pluginalias_doc_new{/if}">

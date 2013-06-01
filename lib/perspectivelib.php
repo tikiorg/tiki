@@ -48,9 +48,6 @@ class PerspectiveLib
 
 		$currentDomain = isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : '';
 		foreach ( $this->get_domain_map($prefs) as $domain => $perspective ) {
-			if (($p = strpos($domain, '/')) !== false) {
-				$domain = substr($domain, 0, $p);
-			}
 			if ( $domain == $currentDomain ) {
 				$_SESSION['current_perspective'] = trim($perspective);
 				return $perspective;
@@ -164,14 +161,25 @@ class PerspectiveLib
      */
     function set_perspective($perspective)
 	{
-		global $prefs;
+		global $prefs, $url_scheme, $tikiroot;
 
-		if ( $this->perspective_exists($perspective) ) {
+		if ( $this->perspective_exists($perspective) || ($prefs['feature_areas'] === 'y' && $perspective === 0)) {
 			if ($prefs['multidomain_switchdomain'] == 'y') {
 				foreach ( $this->get_domain_map() as $domain => $persp ) {
 					if ( $persp == $perspective && isset($_SERVER['HTTP_HOST']) && $domain != $_SERVER['HTTP_HOST'] ) {
-						$targetUrl = 'http://' . $domain;
+						$path = '';
+						if ($prefs['feature_areas'] === 'y') {
+							if (!empty($_SERVER['REQUEST_URI'])) {
+								$path = $_SERVER['REQUEST_URI'];
+							} else {
+								$path = $tikiroot;
+							}
+						}
+						$targetUrl = $url_scheme . '://' . $domain . $path;
 
+						if ($prefs['feature_areas'] === 'y') {
+							header('HTTP/1.0 301 Found');
+						}
 						header('Location: ' . $targetUrl);
 						exit;
 					}
