@@ -1690,6 +1690,7 @@ img.athumb {
 when module used without decorations. */
 #random_image {
 	text-align: center;
+	overflow: hidden;
 	margin: 1em auto;
 }
 
