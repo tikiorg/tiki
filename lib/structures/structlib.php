@@ -398,7 +398,8 @@ class StructLib extends TikiLib
 		foreach ($structure_path as $key => $value) {
 			if ($prefs['namespace_indicator_in_structure'] === 'y' && !empty($prefs['namespace_separator'])
 				&& strpos($value['pageName'], $prefs['namespace_separator']) !== false) {
-				$structure_path[$key]['stripped_pageName'] = end(explode($prefs['namespace_separator'], $value['pageName']));
+					$arr = explode($prefs['namespace_separator'], $value['pageName']);
+					$structure_path[$key]['stripped_pageName'] = end($arr);
 			} else {
 				$structure_path[$key]['stripped_pageName'] = $value['pageName'];
 			}
@@ -605,7 +606,8 @@ class StructLib extends TikiLib
 					&& !empty($prefs['namespace_separator'])
 					&& !empty($res['pageName'])
 					&& strpos($res['pageName'], $prefs['namespace_separator']) !== false) {
-					$res['short_pageName'] = end(explode($prefs['namespace_separator'], $res['pageName']));
+					$arr = explode($prefs['namespace_separator'], $res['pageName']);
+					$res['short_pageName'] = end($arr);
 				} else {
 					$res['short_pageName'] =  $res['pageName'];
 				}
