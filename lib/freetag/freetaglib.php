@@ -1040,7 +1040,7 @@ class FreetagLib extends ObjectLib
 		}
 		switch ($tsort_mode) {
 			case 'count_desc':
-				array_multisort($count, SORT_DESC,$tag, SORT_ASC, $ret);
+				array_multisort($count, SORT_DESC, $tag, SORT_ASC, $ret);
 				break;
 			case 'tag_asc':
 			default:

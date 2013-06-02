@@ -155,9 +155,13 @@ class Tiki_Profile_InstallHandler_TrackerField extends Tiki_Profile_InstallHandl
 			}
 		}
 
-		$data = array_merge(self::getDefaultValues(), array(
-			'permname' => $this->obj->getRef(), // Use the profile reference as the name by default
-		), $data);
+		$data = array_merge(
+			self::getDefaultValues(),
+			array(
+				'permname' => $this->obj->getRef(), // Use the profile reference as the name by default
+			),
+			$data
+		);
 
 		$trklib = TikiLib::lib('trk');
 

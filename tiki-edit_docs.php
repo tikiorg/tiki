@@ -50,9 +50,12 @@ $gal_info = $filegallib->get_file_gallery($_REQUEST['galleryId']);
 $fileType = reset(explode(';', $fileInfo['filetype']));
 $extension = end(explode('.', $fileInfo['filename']));
 $supportedExtensions = array('odt', 'ods', 'odp');
-$supportedTypes = array_map(function ($type) use ($mimetypes) {
-	return $mimetypes[$type];
-}, $supportedExtensions);
+$supportedTypes = array_map(
+	function ($type) use ($mimetypes) {
+		return $mimetypes[$type];
+	},
+	$supportedExtensions
+);
 
 if (! in_array($extension, $supportedExtensions) && ! in_array($fileType, $supportedTypes)) {
 	$smarty->assign('msg', tr('Wrong file type, expected one of %0', implode(', ', $supportedTypes)));

@@ -151,7 +151,7 @@ function wikiplugin_rss($data,$params)
 	}
 
 	if ($params['desc'] > 0 && $params['desclen'] > 0) {
-		foreach($items as &$item) {
+		foreach ($items as &$item) {
 			$item['description'] = limit_text($item['description'], $params['desclen']);
 		}
 	}
@@ -168,7 +168,8 @@ function wikiplugin_rss($data,$params)
 	return $smarty->fetch('wiki-plugins/wikiplugin_rss.tpl');
 }
 
-function limit_text($text, $limit) {
+function limit_text($text, $limit)
+{
 	if (str_word_count($text, 0) > $limit) {
 		$words = str_word_count($text, 2);
 		$pos = array_keys($words);

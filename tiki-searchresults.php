@@ -45,7 +45,7 @@ if (empty($_REQUEST["where"])) {
 $find_where = 'find_' . $where;
 $smarty->assign('where', $where);
 if ($where == 'wikis') {
-	$where_label = 'wiki pages';	
+	$where_label = 'wiki pages';
 } else {
 	$where_label = $where;
 }
@@ -124,7 +124,7 @@ if ($prefs['feature_categories'] == 'y') {
 		$selectedCategories = array((int) $categId);
 		$smarty->assign('find_categId', $_REQUEST['categId']);
 	}
-	
+
 	global $categlib;
 	include_once ('lib/categories/categlib.php');
 	$categories = $categlib->getCategories();
@@ -212,13 +212,16 @@ if (($where == 'wikis' || $where == 'articles') && $prefs['feature_multilingual'
 	$smarty->assign_by_ref('languages', $languages);
 }
 
-array_walk($results['data'], function (& $entry) {
-	if (strpos($entry['href'], '?') !== false) {
-		$entry['href'] .= '&highlight=' . rawurlencode($_REQUEST['words']);
-	} else {
-		$entry['href'] .= '?highlight=' . rawurlencode($_REQUEST['words']);
+array_walk(
+	$results['data'],
+	function (& $entry) {
+		if (strpos($entry['href'], '?') !== false) {
+			$entry['href'] .= '&highlight=' . rawurlencode($_REQUEST['words']);
+		} else {
+			$entry['href'] .= '?highlight=' . rawurlencode($_REQUEST['words']);
+		}
 	}
-});
+);
 
 $smarty->assign_by_ref('where_list', $where_list);
 $smarty->assign_by_ref('results', $results["data"]);

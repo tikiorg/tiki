@@ -63,13 +63,13 @@ function wikiplugin_convene($data, $params)
 	$i = $conveneI;
 
 	$params = array_merge(
-					array(
-						"title" => "Convene",
-						"calendarid" => "1",
-						"minvotes" => "3",
-						"dateformat" => "short"
-					), 
-					$params
+		array(
+			"title" => "Convene",
+			"calendarid" => "1",
+			"minvotes" => "3",
+			"dateformat" => "short"
+		),
+		$params
 	);
 
 	extract($params, EXTR_SKIP);

@@ -14,9 +14,12 @@ class Tiki_Profile_Writer_ExternalWriter
 	function __construct($dataPath)
 	{
 		$this->dataPath = $dataPath;
-		$files = array_filter(scandir($dataPath), function ($file) {
-			return $file{0} != '.';
-		});
+		$files = array_filter(
+			scandir($dataPath),
+			function ($file) {
+				return $file{0} != '.';
+			}
+		);
 
 		$this->files = array_fill_keys($files, null);
 	}

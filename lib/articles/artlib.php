@@ -1366,10 +1366,13 @@ class ArtLib extends TikiLib
 			`tiki_article_types`.`show_linkto`,
 			`tiki_article_types`.`show_image_caption`,
 			`tiki_article_types`.`creator_edit`
-				from `tiki_articles`
-				$fromSql
-				$join
-				$mid $mid2 order by " . $this->convertSortMode($sort_mode, array(
+			from `tiki_articles`
+			$fromSql
+			$join
+			$mid $mid2 order by " .
+			$this->convertSortMode(
+				$sort_mode,
+				array(
 					'title',
 					'state',
 					'authorName',
@@ -1380,7 +1383,8 @@ class ArtLib extends TikiLib
 					'created',
 					'author',
 					'rating',
-				));
+				)
+			);
 
 		$result = $this->query($query, $bindvars, $maxRecords, $offset);
 		$query_cant = "select distinct count(*) from `tiki_articles` $fromSql $join $mid $mid2";

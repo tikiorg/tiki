@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2013 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -56,13 +56,16 @@ class Search_Action_TrackerItemModify implements Search_Action_Action
 		$definition = Tracker_Definition::get($info['trackerId']);
 
 		$utilities = new Services_Tracker_Utilities;
-		$utilities->updateItem($definition, array(
-			'itemId' => $object_id,
-			'status' => $info['status'],
-			'fields' => array(
-				$field => $value,
-			),
-		));
+		$utilities->updateItem(
+			$definition,
+			array(
+				'itemId' => $object_id,
+				'status' => $info['status'],
+				'fields' => array(
+					$field => $value,
+				),
+			)
+		);
 
 		return true;
 	}

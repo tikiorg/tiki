@@ -167,9 +167,12 @@ class Search_Indexer
 	private function removeTemporaryKeys($data)
 	{
 		$keys = array_keys($data);
-		$toRemove = array_filter($keys, function ($key) {
-			return $key{0} === '_';
-		});
+		$toRemove = array_filter(
+			$keys,
+			function ($key) {
+				return $key{0} === '_';
+			}
+		);
 
 		foreach ($keys as $key) {
 			if ($key{0} === '_') {

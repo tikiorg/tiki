@@ -15,11 +15,14 @@ function upgrade_20130513_convert_tracker_field_parameters_tiki($installer)
 		$info = $factory->getFieldInfo($field['type']);
 		$options = Tracker_Options::fromString($field['options'], $info);
 
-		$table->update(array(
-			'options' => $options->serialize(),
-		), array(
-			'fieldId' => $field['fieldId']
-		));
+		$table->update(
+			array(
+				'options' => $options->serialize(),
+			),
+			array(
+				'fieldId' => $field['fieldId']
+			)
+		);
 	}
 
 	$cachelib->replaceImplementation($oldCache);

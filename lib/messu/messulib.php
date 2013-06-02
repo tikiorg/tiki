@@ -117,7 +117,7 @@ class Messu extends TikiLib
 		);
 
 		// Now check if the user should be notified by email
-		$magId = $this->getOne('select LAST_INSERT_ID() from `messu_messages`',array());
+		$magId = $this->getOne('select LAST_INSERT_ID() from `messu_messages`', array());
 		$foo = parse_url($_SERVER['REQUEST_URI']);
 		$machine = $this->httpPrefix(true) . $foo['path'];
 		$machine = str_replace('messu-compose', 'messu-mailbox', $machine);

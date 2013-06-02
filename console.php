@@ -16,7 +16,7 @@ if (function_exists('pcntl_signal')) {
 	};
 
 	pcntl_signal(SIGTERM, $exit);
-	pcntl_signal(SIGHUP,  $exit);
+	pcntl_signal(SIGHUP, $exit);
 	pcntl_signal(SIGINT, $exit);
 }
 

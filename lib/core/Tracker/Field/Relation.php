@@ -142,9 +142,13 @@ class Tracker_Field_Relation extends Tracker_Field_Abstract
 				$display = 'list';
 			}
 
-			return $this->renderTemplate('trackeroutput/relation.tpl', $context, array(
-				'display' => $display,
-			));
+			return $this->renderTemplate(
+				'trackeroutput/relation.tpl',
+				$context,
+				array(
+					'display' => $display,
+				)
+			);
 		}
 	}
 

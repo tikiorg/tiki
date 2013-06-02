@@ -104,17 +104,21 @@ class Search_Elastic_Index implements Search_Index_Interface
 		$builder = new Search_Elastic_OrderBuilder;
 		$order = $builder->build($sortOrder);
 
-		$query = array_merge($query, $order, array(
-			"from" => $resultStart,
-			"size" => $resultCount,
-			"highlight" => array(
-				"fields" => array(
-					'contents' => array(
-						"number_of_fragments" => 5,
+		$query = array_merge(
+			$query,
+			$order,
+			array(
+				"from" => $resultStart,
+				"size" => $resultCount,
+				"highlight" => array(
+					"fields" => array(
+						'contents' => array(
+							"number_of_fragments" => 5,
+						),
 					),
 				),
-			),
-		));
+			)
+		);
 
 		$result = $this->connection->search($this->index, $query, $resultStart, $resultCount);
 		$hits = $result->hits;

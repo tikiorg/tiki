@@ -1889,8 +1889,8 @@ class Comments extends TikiLib
 			TikiLib::lib('smarty')->loadPlugin('smarty_modifier_truncate');
 			return '"' .
 					smarty_modifier_truncate(
-						strip_tags(TikiLib::lib('parser')->parse_data($comment['data'])), $commentlength) .
-					'"';
+						strip_tags(TikiLib::lib('parser')->parse_data($comment['data'])), $commentlength
+					) .'"';
 		} else {
 			return $comment['title'];
 		}
@@ -3249,9 +3249,9 @@ class Comments extends TikiLib
 						isset($params['contributions']) ? $params['contributions']: '',	$params['anonymous_name']
 					);
 					// The thread *WAS* successfully created.
-         
+
 					if ($prefs['feature_score'] == 'y') {
-					  if($parent_id) {
+					  if ($parent_id) {
 						$tikilib->score_event($user, 'forum_topic_reply', $threadId);
 					  } else {
 						$tikilib->score_event($user, 'forum_topic_post', $threadId);
