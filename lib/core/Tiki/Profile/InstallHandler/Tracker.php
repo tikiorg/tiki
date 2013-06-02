@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2013 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -77,7 +77,7 @@ class Tiki_Profile_InstallHandler_Tracker extends Tiki_Profile_InstallHandler
 		$defaults['restrict_end'] = '';
 		return $defaults;
 	} // }}}
-	
+
 	public static function getOptionConverters() // {{{
 	{
 		// Also used by TrackerOption
@@ -100,7 +100,7 @@ class Tiki_Profile_InstallHandler_Tracker extends Tiki_Profile_InstallHandler
 			$ref = $this->obj->getRef();
 			throw (new Exception('No name for tracker:' . (empty($ref) ? '' : ' ref=' . $ref)));
 		}
-		
+
 		// Check for unknown fields
 		$optionMap = $this->getOptionMap();
 
@@ -108,7 +108,7 @@ class Tiki_Profile_InstallHandler_Tracker extends Tiki_Profile_InstallHandler
 		if ( count($remain) ) {
 			throw (new Exception('Cannot map object options: "' . implode('","', $remain) . '" for tracker:' . $data['name']));
 		}
-		
+
 		return true;
 	} // }}}
 
@@ -142,7 +142,7 @@ class Tiki_Profile_InstallHandler_Tracker extends Tiki_Profile_InstallHandler
 		}
 
 		$trklib = TikiLib::lib('trk');
-		
+
 		$trackerId = $trklib->get_tracker_by_name($name);
 		return $trklib->replace_tracker($trackerId, $name, $description, $options, 'y');
 	} // }}}
@@ -220,15 +220,23 @@ class Tiki_Profile_InstallHandler_Tracker extends Tiki_Profile_InstallHandler
 		}
 
 		foreach (array_filter($fieldReferences) as $key => $value) {
-			$value = preg_replace_callback('/(\d+)/', function ($match) use ($writer) {
-				return $writer->getReference('tracker_field', $match[1]);
-			}, $value);
+			$value = preg_replace_callback(
+				'/(\d+)/',
+				function ($match) use ($writer) {
+					return $writer->getReference('tracker_field', $match[1]);
+				},
+				$value
+			);
 			$writer->pushReference("{$reference}_{$key}");
-			$writer->addObject('tracker_option', "$key-$trackerId", array(
-				'tracker' => $writer->getReference('tracker', $trackerId),
-				'name' => $key,
-				'value' => $value,
-			));
+			$writer->addObject(
+				'tracker_option',
+				"$key-$trackerId",
+				array(
+					'tracker' => $writer->getReference('tracker', $trackerId),
+					'name' => $key,
+					'value' => $value,
+				)
+			);
 		}
 
 		return true;

@@ -17,13 +17,15 @@ class Tiki_Profile_Writer_ProfileFinder
 
 	function lookup($type, $object)
 	{
-		$result = $this->symbols->fetchAll(array(
-			'repository' => 'domain',
-			'profile',
-		), array(
-			'type' => $type,
-			'value' => $object,
-		));
+		$result = $this->symbols->fetchAll(
+			array(
+				'repository' => 'domain',
+				'profile',
+			), array(
+				'type' => $type,
+				'value' => $object,
+			)
+		);
 
 		foreach ($result as $entry) {
 			$hash = $entry['repository'] . ':' . $entry['profile'];
@@ -38,14 +40,16 @@ class Tiki_Profile_Writer_ProfileFinder
 
 	function getSymbols($repository, $profile)
 	{
-		return $this->symbols->fetchAll(array(
-			'type',
-			'id' => 'value',
-			'symbol' => 'object',
-		), array(
-			'domain' => $repository,
-			'profile' => $profile,
-		));
+		return $this->symbols->fetchAll(
+			array(
+				'type',
+				'id' => 'value',
+				'symbol' => 'object',
+			), array(
+				'domain' => $repository,
+				'profile' => $profile,
+			)
+		);
 	}
 
 	function checkProfileAndFlush()

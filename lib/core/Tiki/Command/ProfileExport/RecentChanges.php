@@ -30,8 +30,7 @@ class RecentChanges extends ObjectWriter
 				null,
 				InputOption::VALUE_IS_ARRAY | InputOption::VALUE_REQUIRED,
 				'Adds an object to the ignore list. Format: object_type:object_id'
-			)
-			;
+			);
 	}
 
 	protected function execute(InputInterface $input, OutputInterface $output)
@@ -50,15 +49,17 @@ class RecentChanges extends ObjectWriter
 		$since = $since ?: 0;
 
 		$logs = \TikiDb::get()->table('tiki_actionlog');
-		$actions = $logs->fetchAll(array(
-			'timestamp' => 'lastModif',
-			'action',
-			'type' => 'objectType',
-			'object',
-			'detail' => 'comment',
-		), array(
-			'lastModif' => $logs->greaterThan($since),
-		), -1, -1, 'lastModif_asc');
+		$actions = $logs->fetchAll(
+			array(
+				'timestamp' => 'lastModif',
+				'action',
+				'type' => 'objectType',
+				'object',
+				'detail' => 'comment',
+			), array(
+				'lastModif' => $logs->greaterThan($since),
+			), -1, -1, 'lastModif_asc'
+		);
 
 		$queue = new \Tiki_Profile_Writer_Queue;
 		foreach ($actions as $action) {

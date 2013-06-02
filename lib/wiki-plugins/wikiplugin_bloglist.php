@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2013 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -9,7 +9,7 @@ function wikiplugin_bloglist_info()
 {
 	return array(
 		'name' => tra('Blog List'),
-		'documentation' => 'PluginBlogList',		
+		'documentation' => 'PluginBlogList',
 		'description' => tra('Display posts from a site blog'),
 		'prefs' => array( 'feature_blogs', 'wikiplugin_bloglist' ),
 		'icon' => 'img/icons/text_list_bullets.png',
@@ -41,8 +41,8 @@ function wikiplugin_bloglist_info()
 				'description' => tra('Show simple list of date, title and author (default=y) or formatted list of blog posts (n)'),
 				'default' => 'y',
 				'options' => array(
-					array('text' => '', 'value' => ''), 
-					array('text' => tra('Yes'), 'value' => 'y'), 
+					array('text' => '', 'value' => ''),
+					array('text' => tra('Yes'), 'value' => 'y'),
 					array('text' => tra('No'), 'value' => 'n')
 				),
 			),
@@ -154,7 +154,7 @@ function wikiplugin_bloglist($data, $params)
 		$params['containerClass'] = 'wikiplugin_bloglist';
 	}
 	$smarty->assign('container_class', $params['containerClass']);
-	
+
 	if ($params['simpleList'] == 'y') {
 		global $bloglib; require_once('lib/blogs/bloglib.php');
 		$blogItems = $bloglib->list_posts($params['offset'], $params['Items'], $params['sort_mode'], $params['find'], $params['Id'], $params['author'], '', $dateStartTS, $dateEndTS);
@@ -162,12 +162,11 @@ function wikiplugin_bloglist($data, $params)
 		$template = 'wiki-plugins/wikiplugin_bloglist.tpl';
 	} else {
 		global $bloglib; include_once('lib/blogs/bloglib.php');
-		
+
 		$blogItems = $bloglib->list_blog_posts($params['Id'], false, $params['offset'], $params['Items'], $params['sort_mode'], $params['find'], $dateStartTS, $dateEndTS);
 
-		if ( $params['charCount'] > 0 )
-		{
-			$blogItems = $bloglib->mod_blog_posts( $blogItems, $params['charCount'], $params['wordBoundary'], $params['ellipsis'], $params['more']);
+		if ( $params['charCount'] > 0 ) {
+			$blogItems = $bloglib->mod_blog_posts($blogItems, $params['charCount'], $params['wordBoundary'], $params['ellipsis'], $params['more']);
 		}
 
 		$blog_data = TikiLib::lib('blog')->get_blog($params['Id']);
@@ -176,8 +175,8 @@ function wikiplugin_bloglist($data, $params)
 		$smarty->assign('ownsblog', $user && $user == $blog_data["user"] ? 'y' : 'n');
 
 		if ($params['showIcons'] == 'n') {
-                        $smarty->assign('excerpt', 'y');
-                }
+			$smarty->assign('excerpt', 'y');
+		}
 
 		$smarty->assign('show_heading', 'n');
 		$smarty->assign('use_author', 'y');

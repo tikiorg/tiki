@@ -10,7 +10,7 @@ class Tiki_Profile_Writer_Helper
 	public static function type_colon_object(Tiki_Profile_Writer $writer, $object)
 	{
 		list($type, $id) = explode(':', $object, 2);
-		
+
 		return $type . ':' . $writer->getReference($type, $id);
 	}
 
@@ -75,9 +75,13 @@ class Tiki_Profile_Writer_Helper
 
 		// Handle pretty tracker references
 		$content = $matches->getText();
-		$content = preg_replace_callback('/{\$f_(\d+)}/', function ($args) use ($writer) {
-			return '{$f_' . $writer->getReference('tracker_field', $args[1]) . '}';
-		}, $content);
+		$content = preg_replace_callback(
+			'/{\$f_(\d+)}/',
+			function ($args) use ($writer) {
+				return '{$f_' . $writer->getReference('tracker_field', $args[1]) . '}';
+			},
+			$content
+		);
 
 		return $content;
 	}
@@ -89,9 +93,13 @@ class Tiki_Profile_Writer_Helper
 
 	public function uniform_string($type, Tiki_Profile_Writer $writer, $value)
 	{
-		return preg_replace_callback('/(\d+)/', function ($args) use ($writer, $type) {
-			return $writer->getReference($type, $args[1]);
-		}, $value);
+		return preg_replace_callback(
+			'/(\d+)/',
+			function ($args) use ($writer, $type) {
+				return $writer->getReference($type, $args[1]);
+			},
+			$value
+		);
 	}
 
 	public static function search_plugin_content(Tiki_Profile_Writer $writer, $content)
@@ -101,7 +109,7 @@ class Tiki_Profile_Writer_Helper
 
 		$argumentParser = new WikiParser_PluginArgumentParser;
 		$matches = WikiParser_PluginMatcher::match($content);
-		
+
 		$justReplace = false;
 		foreach ($matches as $match) {
 			if ($justReplaced) {
@@ -111,7 +119,7 @@ class Tiki_Profile_Writer_Helper
 
 			$name = $match->getName();
 			$args = $argumentParser->parse($match->getArguments());
-			
+
 			if ($name === 'filter') {
 				$args = $dataSource->replaceFilterReferences($writer, $args);
 				$match->replaceWithPlugin('filter', $args, $match->getBody());

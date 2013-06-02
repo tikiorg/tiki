@@ -27,9 +27,12 @@ class Search_Elastic_Connection
 	function startBulk($size = 500)
 	{
 		$self = $this;
-		$this->bulk = new Search_Elastic_BulkOperation($size, function ($data) use ($self) {
-			$self->postBulk($data);
-		});
+		$this->bulk = new Search_Elastic_BulkOperation(
+			$size,
+			function ($data) use ($self) {
+				$self->postBulk($data);
+			}
+		);
 	}
 
 	function getStatus()

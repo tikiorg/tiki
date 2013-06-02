@@ -31,25 +31,31 @@ class Search_Elastic_BulkOperation
 
 	function index($index, $type, $id, array $data)
 	{
-		$this->append(array(
-			array('index' => array(
-				'_index' => $index,
-				'_type' => $type,
-				'_id' => $id,
-			)),
-			$data,
-		));
+		$this->append(
+			array(
+				array('index' => array(
+						'_index' => $index,
+						'_type' => $type,
+						'_id' => $id,
+					)
+				),
+				$data,
+			)
+		);
 	}
 
 	function unindex($index, $type, $id)
 	{
-		$this->append(array(
-			array('delete' => array(
-				'_index' => $index,
-				'_type' => $type,
-				'_id' => $id,
-			)),
-		));
+		$this->append(
+			array(
+				array('delete' => array(
+						'_index' => $index,
+						'_type' => $type,
+						'_id' => $id,
+					)
+				),
+			)
+		);
 	}
 
 	private function append($lines)
@@ -58,7 +64,7 @@ class Search_Elastic_BulkOperation
 		foreach ($lines as $line) {
 			$this->buffer .= json_encode($line) . "\n";
 		}
-		
+
 		if ($this->count >= $this->limit) {
 			$this->flush();
 		}

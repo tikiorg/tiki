@@ -109,10 +109,15 @@ class Tracker_Field_Computed extends Tracker_Field_Abstract
 		}
 	}
 
-	public static function profileReference(Tiki_Profile_Writer $writer, $value) {
-		return preg_replace_callback('/#([0-9]+)/', function ($args) use ($writer) {
-			return $writer->getReference('tracker_field', $args[1]);
-		}, $value);
-		
+	public static function profileReference(Tiki_Profile_Writer $writer, $value)
+	{
+		return preg_replace_callback(
+			'/#([0-9]+)/',
+			function ($args) use ($writer) {
+				return $writer->getReference('tracker_field', $args[1]);
+			},
+			$value
+		);
+
 	}
 }

@@ -93,11 +93,11 @@ class BigBlueButtonLib
 			}
 		}
 		if ($username && $values['fullName']) {
-			preg_match( '!\(([^\)]+)\)!', $values['fullName'], $match );
+			preg_match('!\(([^\)]+)\)!', $values['fullName'], $match);
 			$values['fullName'] = $match[1];
 		} else {
-			$values['fullName'] = trim(preg_replace( '!\(([^\)]+)\)!', '', $values['fullName']));
-		}	
+			$values['fullName'] = trim(preg_replace('!\(([^\)]+)\)!', '', $values['fullName']));
+		}
 		return $values;
 	}
 
@@ -188,15 +188,17 @@ class BigBlueButtonLib
 
 		$tikilib = TikiLib::lib('tiki');
 		$client = $tikilib->get_http_client($this->getBaseUrl('/bigbluebutton/api/setConfigXML.xml'));
-		$client->setParameterPost(array(
-			'meetingID' => $meetingName,
-			'checksum' => sha1($meetingName . rawurlencode($content) . $prefs['bigbluebutton_server_salt']),
-			'configXML' => rawurlencode($content),
-		));
+		$client->setParameterPost(
+			array(
+				'meetingID' => $meetingName,
+				'checksum' => sha1($meetingName . rawurlencode($content) . $prefs['bigbluebutton_server_salt']),
+				'configXML' => rawurlencode($content),
+			)
+		);
 
 		$response = $client->request('POST');
 		$document = $response->getBody();
-		
+
 		$dom = new DOMDocument;
 		$dom->loadXML($document);
 

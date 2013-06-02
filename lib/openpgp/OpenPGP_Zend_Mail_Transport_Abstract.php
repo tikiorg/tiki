@@ -26,7 +26,7 @@
  * Avoid direct patching to ZF by bringing/changing into lib/openpgp/ versions
  * which instantiate OpenPGP versions of files/classes.
  *
- * NOTE: All direct required functionality for PGP/MIME encrypted mail in THIS 
+ * NOTE: All direct required functionality for PGP/MIME encrypted mail in THIS
  * 	 class (all in Abstract), but due to need for altered class instantiations,
  *	 Sendmail and Smtp classes (and Mail) need to be pulled from original ZF also.
  *
@@ -255,8 +255,7 @@ abstract class OpenPGP_Zend_Mail_Transport_Abstract
 	////////////////////////////////////////////////////////////////////////
 
         if (($text = $this->_mail->getBodyText())
-            && ($html = $this->_mail->getBodyHtml()))
-        {
+            && ($html = $this->_mail->getBodyHtml())) {
             // Generate unique boundary for multipart/alternative
             $mime = new Zend_Mime(null);
             $boundaryLine = $mime->boundaryLine($this->EOL);
@@ -264,7 +263,7 @@ abstract class OpenPGP_Zend_Mail_Transport_Abstract
 
             $text->disposition = false;
             $html->disposition = false;
-	
+
             $body = $boundaryLine
                   . $text->getHeaders($this->EOL)
                   . $this->EOL
@@ -395,7 +394,7 @@ abstract class OpenPGP_Zend_Mail_Transport_Abstract
 
     	// get from globals (set in tiki-setup.php)
 	global $openpgplib;
-	$pgpmime_msg = $openpgplib->prepareEncryptWithZendMail($this->header,$this->body,$mail->getRecipients());
+	$pgpmime_msg = $openpgplib->prepareEncryptWithZendMail($this->header, $this->body, $mail->getRecipients());
 	$this->header = $pgpmime_msg[0]; // set pgp/mime headers from result array
 	$this->body = $pgpmime_msg[1];    // set pgp/mime encrypted message body from result array
 
@@ -408,5 +407,5 @@ abstract class OpenPGP_Zend_Mail_Transport_Abstract
         // Send to transport!
         $this->_sendMail();
     }
-    
+
 }

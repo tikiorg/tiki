@@ -17,11 +17,11 @@ foreach ($total_log as $row) {
 	$join_log[$row['action']][$row['object']][] = $row;
 }
 if ($join_log['Joined Room']) {
-	foreach($join_log['Joined Room'] as $room => $member) {
+	foreach ($join_log['Joined Room'] as $room => $member) {
 		$users[$room] = array_map(function ($i) {return $i['user']; }, $member);
-		$user_count[$room] = $bigbluebuttonlib->getAttendees( $room, true);
+		$user_count[$room] = $bigbluebuttonlib->getAttendees($room, true);
 		if (isset($user_count[$room])) {
-			foreach($user_count[$room] as $user_room) {
+			foreach ($user_count[$room] as $user_room) {
 				$login_user[$room][] = $user_room['fullName'];
 			}
 		}

@@ -1335,12 +1335,13 @@ function wikiplugin_tracker($data, $params)
 							$smarty->assign('f_'.$f['fieldId'], '<span class="outputPretty" id="track_'.$f['fieldId'].'" name="track_'.$f['fieldId'].'">'. wikiplugin_tracker_render_value($f, $item) . '</span>');
 						} else {
 							$mand =  ($showmandatory == 'y' and $f['isMandatory'] == 'y')? "&nbsp;<strong class='mandatory_star'>*</strong>&nbsp;":'';
-							$smarty->assign('f_'.$f['fieldId'],
-									wikiplugin_tracker_render_input($f, $item, $dynamicSave) .
-									$mand .
-									'<div class="trackerplugindesc">' .
-									($f['descriptionIsParsed'] == 'y' ? $tikilib->parse_data($f['description']) : tra($f['description'])) .
-									'</div>'
+							$smarty->assign(
+								'f_'.$f['fieldId'],
+								wikiplugin_tracker_render_input($f, $item, $dynamicSave) .
+								$mand .
+								'<div class="trackerplugindesc">' .
+								($f['descriptionIsParsed'] == 'y' ? $tikilib->parse_data($f['description']) : tra($f['description'])) .
+								'</div>'
 							);
 						}
 					} else {
