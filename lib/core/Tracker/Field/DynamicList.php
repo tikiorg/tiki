@@ -123,6 +123,9 @@ $("select[name=ins_' . $this->getOption('filterFieldIdHere') . ']").change(funct
 					$ddl.val(val);
 				}
 			}
+			if (jqueryTiki.chosen) {
+				$ddl.trigger("liszt:updated");
+			}
 		}
 	);
 }).trigger("change", ["' . $this->getConfiguration('value') . '"]);

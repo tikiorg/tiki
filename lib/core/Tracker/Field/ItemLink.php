@@ -218,7 +218,8 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 
 			TikiLib::lib('header')->add_jq_onready(
 				'$("select[name=' . $this->getInsertId() . ']").change(function(e, val) {
-	if ($(this).val() == -1) {
+	var $select = $(this);
+	if ($select.val() == -1) {
 		var $d = $("<div id=\'add_dialog_' . $this->getInsertId() . '\' style=\'display:none\'>' . addslashes($form) . '</div>")
 			.appendTo(document.body);
 
@@ -254,7 +255,9 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 								}
 								ajaxLoadingHide();
 								$d.dialog( "close" );
-
+								if (jqueryTiki.chosen) {
+									$select.trigger("liszt:updated");
+								}
 								return;
 							}, "json");
 						}

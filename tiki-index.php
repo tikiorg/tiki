@@ -122,7 +122,7 @@ $smarty->assign('structure', $structure);
 
 if ( $prefs['feature_wiki_structure'] == 'y' ) {
 	// Feature checks made in the function for structure language
-	if (!$use_best_language) {
+	if (!$use_best_language && isset($_REQUEST['page'])) {
 		$info = $tikilib->get_page_info($_REQUEST['page']);
 		$langContext = $info['lang'];
 	} else {

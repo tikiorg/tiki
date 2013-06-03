@@ -148,6 +148,7 @@ jqueryTiki.autosave = '.($prefs['ajax_autosave'] == 'y' ? 'true' : 'false') . ';
 jqueryTiki.sefurl = '.($prefs['feature_sefurl'] == 'y' ? 'true' : 'false') . ';
 jqueryTiki.ajax = '.($prefs['feature_ajax'] == 'y' ? 'true' : 'false') . ';
 jqueryTiki.syntaxHighlighter = '.($prefs['feature_syntax_highlighter'] == 'y' ? 'true' : 'false') . ';
+jqueryTiki.chosen = '.($prefs['jquery_ui_chosen'] == 'y' ? 'true' : 'false') . ';
 jqueryTiki.selectmenu = '.($prefs['jquery_ui_selectmenu'] == 'y' ? 'true' : 'false') . ';
 jqueryTiki.selectmenuAll = '.($prefs['jquery_ui_selectmenu_all'] == 'y' ? 'true' : 'false') . ';
 jqueryTiki.mapTileSets = ' . json_encode($tikilib->get_preference('geo_tilesets', array('openstreetmap'), true)) . ';
