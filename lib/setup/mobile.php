@@ -37,6 +37,7 @@ if ( !isset($_REQUEST['mobile_mode']) || $_REQUEST['mobile_mode'] === 'y' ) {
 		$prefs['ajax_autosave'] = 'n';
 		$prefs['change_theme'] = 'n';
 		$prefs['feature_syntax_highlighter'] = 'n';
+		$prefs['jquery_ui_chosen'] = 'n';
 		$prefs['jquery_ui_selectmenu'] = 'n';
 		$prefs['fgal_show_explorer'] = 'n';
 		$prefs['feature_fixed_width'] = 'n';
