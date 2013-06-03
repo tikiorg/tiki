@@ -4177,6 +4177,11 @@ form.simple label .description {
 	padding-left: 20px;
 }
 
+form.simple label .warning {
+	padding-top: 12px;
+	color: #800;
+}
+
 form.simple textarea,
 form.simple input[type="text"],
 form.simple input[type="file"],
