@@ -1660,6 +1660,10 @@ class TrackerLib extends TikiLib
 			}
 		}
 		$max = count($header);
+		if ($max === 1 and strpos($header, "\t") !== false) {
+			TikiLib::lib('errorreport')->report(tr('No fields found in header, not a comma separated values file?'));
+			return 0;
+		}
 		for ($i = 0; $i < $max; $i++) {
 			if ($encoding == 'ISO-8859-1') {
 				$header[$i] = utf8_encode($header[$i]);
