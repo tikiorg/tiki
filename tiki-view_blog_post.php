@@ -62,13 +62,18 @@ if ($user && $user == $blog_data["user"]) {
 	$ownsblog = 'y';
 }
 
-if ($ownsblog == 'n' && $tiki_p_blog_admin != 'y' && $post_info["priv"] == 'y') {
+$ownspost = 'n';
+if ($user && $user == $post_info["user"]) {
+	$ownspost = 'y';
+}
+
+if ($ownspost == 'n' && $ownsblog == 'n' && $tiki_p_blog_admin != 'y' && $post_info["priv"] == 'y') {
 	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("You do not have permission to view this blog post while it is marked as private"));
 	$smarty->display("error.tpl");
 	die;
 }
-if ($ownsblog == 'n' && $tiki_p_blog_admin != 'y' && $post_info['created'] > $tikilib->now) {
+if ($ownspost == 'n' && $ownsblog == 'n' && $tiki_p_blog_admin != 'y' && $post_info['created'] > $tikilib->now) {
 	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra('Permission denied'));
 	$smarty->display("error.tpl");
