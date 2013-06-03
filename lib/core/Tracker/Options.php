@@ -28,7 +28,7 @@ class Tracker_Options
 		$options = new Tracker_Options;
 		$options->info = $info;
 
-		$parts = preg_split('/\s*,\s*/', trim($options));
+		$parts = preg_split('/\s*,\s*/', trim($string));
 
 		foreach ($parts as $key => $value) {
 			if (empty($value)) {
