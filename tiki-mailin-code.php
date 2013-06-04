@@ -188,6 +188,19 @@ foreach ($accs['data'] as $acc) {
 							} else {
 								$page = trim($aux['Subject']);
 							}
+							
+							// Strip invalid characters from the page name 
+							$wikilib = TikiLib::lib('wiki');
+							if($wikilib->contains_badchars($page)) {
+								$badChars = $wikilib->get_badchars();
+								
+								// Replace bad characters with a '_'
+								for ($i = 0; $i < strlen($badChars); $i++) { 
+									$char = $badChars[$i];
+									$page = str_replace($char, "_", $page);
+								}
+							}
+							
 							if ($acc['type'] == 'wiki-get' || ($acc['type'] == 'wiki' && $method == "GET")) {
 								// A wiki-get account sends a copy of the page to the sender
 								// and also sends the source of the page
