@@ -195,8 +195,8 @@ foreach ($accs['data'] as $acc) {
 								$badChars = $wikilib->get_badchars();
 								
 								// Replace bad characters with a '_'
-								for ($i = 0; $i < strlen($badChars); $i++) { 
-									$char = $badChars[$i];
+								for ($j = 0; $j < strlen($badChars); $j++) { 
+									$char = $badChars[$j];
 									$page = str_replace($char, "_", $page);
 								}
 							}
