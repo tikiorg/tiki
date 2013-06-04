@@ -5551,8 +5551,12 @@ class TikiLib extends TikiDb_Bridge
 		if (empty($filename)) {
 			if (is_dir('styles/'.$dbase.$sbase.$obase)) {
 				$path = 'styles/'.$dbase.$sbase.$obase;
+			} else if (is_dir('styles/'.$dbase.$sbase)) {
+				$path = 'styles/'.$dbase.$sbase;	// try "parent" style dir if no option one
+			} else if (is_dir('styles/'.$sbase.$obase)) {
+				$path = 'styles/'.$sbase.$obase;	// try root style dir if no domain one
 			} else {
-				$path = 'styles/'.$dbase.$sbase;	// fall back to "parent" style dir if no option one
+				$path = 'styles/'.$sbase;			// fall back to "parent" style dir if no option one
 			}
 		} else {
 			if (is_file('styles/'.$dbase.$sbase.$obase.$filename)) {
