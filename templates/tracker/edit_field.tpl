@@ -132,28 +132,29 @@
 					{tr}Changing the permanent name may have consequences in integrated systems.{/tr}
 				</div>
 			</label>
-			<label>
-				{tr}Field Type:{/tr}
-				<select name="type" data-original="{$field.type}" class="confirm-prompt">
-					{foreach from=$types key=k item=info}
-						<option value="{$k|escape}"
-							{if $field.type eq $k}selected="selected"{/if}>
-							{$info.name|escape}
-							{if $info.deprecated}- Deprecated{/if}
-						</option>
+			{if $prefs.tracker_change_field_type eq 'y'}
+				<label>
+					{tr}Field Type:{/tr}
+					<select name="type" data-original="{$field.type}" class="confirm-prompt">
+						{foreach from=$types key=k item=info}
+							<option value="{$k|escape}"
+								{if $field.type eq $k}selected="selected"{/if}>
+								{$info.name|escape}
+								{if $info.deprecated}- Deprecated{/if}
+							</option>
+						{/foreach}
+					</select>
+					{foreach from=$types item=info key=k}
+						<div class="description {$k|escape}" style="display: none;">
+							{$info.description|escape}
+							{if $info.help}
+								<a href="{$prefs.helpurl|escape}{$info.help|escape:'url'}" target="tikihelp" class="tikihelp" title="{$info.name|escape}">
+									{icon _id=help alt=''}
+								</a>
+							{/if}
+						</div>
 					{/foreach}
-				</select>
-				{foreach from=$types item=info key=k}
-					<div class="description {$k|escape}" style="display: none;">
-						{$info.description|escape}
-						{if $info.help}
-							<a href="{$prefs.helpurl|escape}{$info.help|escape:'url'}" target="tikihelp" class="tikihelp" title="{$info.name|escape}">
-								{icon _id=help alt=''}
-							</a>
-						{/if}
-					</div>
-				{/foreach}
-				{jq}
+					{jq}
 $('select[name=type]').change(function () {
 	var descriptions = $(this).closest('label').
 			find('.description:not(.warning)').
@@ -166,10 +167,11 @@ $('select[name=type]').change(function () {
 	}
 }).change();
 {/jq}
-				<div class="description warning">
-					{icon _id='error' alt="{tr}Warning{/tr}"} {tr}Changing the field type may cause irretrievable data loss - use with caution!{/tr}
-				</div>
-			</label>
+					<div class="description warning">
+						{icon _id='error' alt="{tr}Warning{/tr}"} {tr}Changing the field type may cause irretrievable data loss - use with caution!{/tr}
+					</div>
+				</label>
+			{/if}
 		</div>
 	</div>
 
