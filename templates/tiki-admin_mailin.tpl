@@ -143,8 +143,10 @@
     <tr>
       <td>{tr}Check automatically{/tr}</td>
       <td>
+		&nbsp;&nbsp;
         {tr}Yes{/tr}
         <input type="radio" name="mailin_autocheck" {if $prefs.mailin_autocheck eq 'y'}checked="checked"{/if} value="y">
+		&nbsp;&nbsp;
         {tr}No{/tr}
         <input type="radio" name="mailin_autocheck" {if $prefs.mailin_autocheck eq 'n'}checked="checked"{/if} value="n">
       </td>
@@ -156,6 +158,10 @@
     <tr>
       <td>&nbsp;</td>
       <td><input type="submit" name="set_auto" value="{tr}Set{/tr}"></td>
+    </tr>
+    <tr>
+      <td>{tr}Check Manually{/tr}</td>
+      <td><a href="tiki-mailin.php">Check now</a>"</td>
     </tr>
   </table>
 </form>
