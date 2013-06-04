@@ -140,7 +140,18 @@ class Search_Query_WikiBuilder
 		if ($value == 'randommode') {
 			if ( !empty($arguments['modes']) ) {
 				$modes = explode(',', $arguments['modes']);
-				$value = $modes[array_rand($modes)];
+				$value = trim($modes[array_rand($modes)]);
+				// append a direction if not already supplied
+				$last = substr($value, strrpos($value, '_'));
+				$directions = array('_asc', '_desc', '_nasc', '_ndesc');
+				if (!in_array($last, $directions)) {
+					$direction = $directions[array_rand($directions)];
+					if (stripos($value, 'date')) {
+						$value .= $direction;
+					} else {
+						$value .= str_replace('n', '', $direction);
+					}
+				}
 			} else {
 				return;
 			}
