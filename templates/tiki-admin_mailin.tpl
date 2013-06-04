@@ -161,7 +161,7 @@
     </tr>
     <tr>
       <td>{tr}Check Manually{/tr}</td>
-      <td><a href="tiki-mailin.php">Check now</a>"</td>
+      <td><a href="tiki-mailin.php">Check now</a></td>
     </tr>
   </table>
 </form>
