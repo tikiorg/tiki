@@ -1015,9 +1015,15 @@ class WikiLib extends TikiLib
 					$pinfo['name'] = TikiLib::strtoupper($name);
 
 					if ( $enabled ) {
+						$info = $parserlib->plugin_info($name);
+						$pinfo['title'] = $info['name'];
+
 						$plugins[] = $pinfo;
 					}
 				}
+				usort($plugins, function($ar1, $ar2){
+					return strcasecmp($ar1['title'], $ar2['title']);		// sort by translated name
+				});
 				$cachelib->cacheItem($cachetag, serialize($plugins));
 			}
 			array_walk_recursive($plugins, function (& $item) use ($commonKey, $area_id) {
