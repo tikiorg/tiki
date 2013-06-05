@@ -82,6 +82,7 @@ class Captcha
 		} else {		// implied $type==='dumb'
 			$this->captcha = new Zend_Captcha_Dumb;
 			$this->captcha->setWordlen($prefs['captcha_wordLen']);
+			$this->captcha->setLabel(tra('Please type this word backwards'));
 			$this->type = 'dumb';
 		}
 
