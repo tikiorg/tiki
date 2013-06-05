@@ -77,6 +77,31 @@ function wikiplugin_listpages_info()
 					array('text' => tra('No'), 'value' => 'n')
 				)
 			),
+			'includetag' => array(
+				'required' => false,
+				'name' => tra('Include Freetag'),
+				'description' => tra('Only pages with specific tag (separate tags using ;)'),
+				'advanced' => true,
+			),
+			'excludetag' => array(
+				'required' => false,
+				'name' => tra('Exclude Freetag'),
+				'description' => tra('Only pages with specific tag excluded (separate tags using ;)'),
+				'advanced' => true,
+			),
+			'showNumberOfPages' => array(
+				'required' => false,
+				'name' => tra('Show Number of Pages'),
+				'description' => tra('Show the number of pages matching criteria'),
+				'filter' => 'alpha',
+				'default' => 'n',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 'y'), 
+					array('text' => tra('No'), 'value' => 'n')
+				),
+				'advanced' => true,
+			),
 			'find' => array(
 				'required' => false,
 				'name' => tra('Find'),
@@ -192,7 +217,19 @@ function wikiplugin_listpages($data, $params)
 		// the feature is disabled or the user can't read wiki pages
 		return '';
 	}
-	$default = array('offset'=>0, 'max'=>-1, 'sort'=>'pageName_asc', 'find'=>'', 'start'=>'', 'end'=>'', 'length'=>-1, 'translations'=>null, 'translationOrphan'=>null, 'showCheckbox' => 'y');
+	$default = array(
+		'offset'=>0, 
+		'max'=>-1, 
+		'sort'=>'pageName_asc', 
+		'find'=>'', 
+		'start'=>'', 
+		'end'=>'', 
+		'length'=>-1, 
+		'translations'=>null, 
+		'translationOrphan'=>null, 
+		'showCheckbox' => 'y', 
+		'showNumberOfPages' => 'n'
+	);
 	$params = array_merge($default, $params);
 	extract($params, EXTR_SKIP);
 	$filter = array();
@@ -246,6 +283,47 @@ function wikiplugin_listpages($data, $params)
 	$only_cant = false;
 	$listpages = $tikilib->list_pages($offset, $max, $sort, $find, $initial, $exact_match, $only_name, $for_list_pages, $only_orphan_pages, $filter, $only_cant);
 
+	if (!empty($includetag) || !empty($excludetag)) {
+		if (preg_match('/;/', $includetag)) {
+			$aIncludetag = explode(';', $includetag);
+		} else {
+			$aIncludetag[] = $includetag;
+		}
+		if (preg_match('/;/', $excludetag)) {
+			$aExcludetag = explode(';', $excludetag);
+		} else {
+			$aExcludetag[] = $excludetag;
+		}
+		global $freetaglib;
+		require_once 'lib/freetag/freetaglib.php';
+		$i = 0;
+		
+		foreach ( $listpages['data'] as $page ) {
+			$bToRemove = true;
+			$aListTags = $freetaglib->get_tags_on_object($page['pageName'], 'wiki page');
+			if (!empty($aListTags['cant'])) {
+				foreach ($aListTags['data'] as $aListTag) {
+					if (in_array($aListTag['tag'], $aExcludetag) && !empty($aExcludetag[0])) {
+						unset($listpages['data'][$i]);
+						break;
+					}
+					if (in_array($aListTag['tag'], $aIncludetag) === true && !empty($aIncludetag[0])) {
+						$bToRemove = false;
+					}
+				}
+			} elseif (!empty($aIncludetag[0])){
+				unset($listpages['data'][$i]);
+			}
+			if ($bToRemove && !empty($aIncludetag[0])) {
+				unset($listpages['data'][$i]);
+			}
+			$i++;
+		}
+		sort($listpages['data']);
+		unset($aIncludetag);
+		unset($aExcludetag);
+	}
+
 	if ( is_array($translations) ) {
 		$used = array();
 		foreach ( $listpages['data'] as &$page ) {
@@ -264,6 +342,7 @@ function wikiplugin_listpages($data, $params)
 
 	$smarty->assign_by_ref('listpages', $listpages['data']);
 	$smarty->assign_by_ref('checkboxes_on', $showCheckbox);
+	$smarty->assign_by_ref('showNumberOfPages', $showNumberOfPages);
 	if (!empty($showPageAlias) && $showPageAlias == 'y')
 		$smarty->assign_by_ref('showPageAlias', $showPageAlias);
 	if (isset($showNameOnly) && $showNameOnly == 'y') {
