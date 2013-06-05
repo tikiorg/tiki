@@ -2412,10 +2412,15 @@ class TrackerLib extends TikiLib
 
 	public function clear_tracker_cache($trackerId)
 	{
+		global $prefs;
+
 		$cachelib = TikiLib::lib('cache');
 
 		foreach ($this->get_all_tracker_items($trackerId) as $itemId) {
 				$cachelib->invalidate('trackerItemLabel'.$itemId);
+		}
+		if (in_array('trackerrender', $prefs['unified_cached_formatters'])) {
+			$cachelib->empty_type_cache('search_valueformatter');
 		}
 	}
 
