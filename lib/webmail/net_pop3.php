@@ -703,6 +703,13 @@ class Net_POP3
 				if (preg_match('/message-id/i', $name)) {
 					$name  = "Message-ID";
 				}
+
+				// Fix Subject encoding
+				if ($name == 'Subject') {
+					$subject = str_replace("_"," ", mb_decode_mimeheader($value));
+					$value = $subject;
+				}
+
 				if (isset($headers[$name]) AND is_array($headers[$name])) {
 					$headers[$name][] = $value;
 				} elseif (isset($headers[$name])) {
