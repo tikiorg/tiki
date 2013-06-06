@@ -374,8 +374,9 @@ a.admbox.off img {
 	display: none;
 }
 
-#save_modules {
-	display: none;
+#save_modules a {
+	background-color: #faa;
+	background-image: none;
 }
 
 .ui-droppable.modules {
