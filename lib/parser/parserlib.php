@@ -1012,9 +1012,11 @@ if ( \$('#$id') ) {
 					$ck_editor_plugin .= $argKey.'="'.implode($sep, $argValue).'" ';	// process array
 					$arg_str .= $argKey.'='.implode($sep, $argValue).'&';
 				} else {
+					/* Should not be needed now that the plugin arguments are decoded
 					if ($name === 'module') {	// failsafe double-quote prevention for module plugin
 						$argValue =  preg_replace('/^&quot;(.*)&quot;$/', '$1', $argValue);
 					}
+					*/
 					$ck_editor_plugin .= $argKey.'="'.$argValue.'" ';
 					$arg_str .= $argKey.'='.$argValue.'&';
 				}

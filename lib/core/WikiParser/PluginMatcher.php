@@ -406,7 +406,10 @@ class WikiParser_PluginMatcher_Match
 			return false;
 		}
 
-		$arguments = trim($this->matcher->getChunkFrom($this->nameEnd, $pos - $this->nameEnd), '() ');
+		// $arguments =    trim($this->matcher->getChunkFrom($this->nameEnd, $pos - $this->nameEnd), '() ');
+		$rawarguments = trim($this->matcher->getChunkFrom($this->nameEnd, $pos - $this->nameEnd), '() ');
+		// arguments can be html encoded. So, decode first
+		$arguments = html_entity_decode($rawarguments);
 		$this->arguments = trim($arguments);
 
 		if ($this->matchType == self::LEGACY) {
