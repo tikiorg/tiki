@@ -311,6 +311,30 @@ class CategLib extends ObjectLib
 		return $id;
 	}
 
+	/**
+	 * categorizePage will do the required steps to categorize a wiki page
+	 *
+	 * @param mixed $pageName Page to categorize
+	 * @param mixed $categId CategoryId
+	 * @return nothing
+	 *
+	 */	
+	function categorizePage($pageName, $categId)
+	{
+		global $objectlib;
+
+		// Categorize the new page
+		$objectId = $objectlib->add_object('wiki page', $pageName);
+
+		$description = NULL;
+		$name = NULL;
+		$href = NULL;
+		$checkHandled = true;
+		$this->add_categorized_object('wiki page', $pageName, $description, $name, $href, $checkHandled);
+
+		$this->categorize($objectId, $categId);
+	}
+
 	function categorize($catObjectId, $categId)
 	{
 		global $prefs;

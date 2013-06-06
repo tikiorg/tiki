@@ -13,6 +13,7 @@
     <th>{tr}Anonym{/tr}</th>
     <th>{tr}Attach{/tr}</th>
     <th>{tr}Inline{/tr}</th>
+    <th>{tr}Categ{/tr}</th>
   </tr>
   {cycle values="even,odd" print=false}
   {section name=ix loop=$accounts}
@@ -27,6 +28,7 @@
       <td class="text">{tr}{$accounts[ix].anonymous}{/tr}</td>
       <td class="text">{tr}{$accounts[ix].attachments}{/tr}</td>
       <td class="text">{tr}{$accounts[ix].show_inlineImages}{/tr}</td>
+      <td class="text">{tr}{$accounts[ix].categoryId}{/tr}</td>
 	  
 	  
     </tr>
@@ -149,6 +151,12 @@
       <input type="text" name="discard_after" value="{$info.discard_after|escape}">
       </td>
    </tr>
+    <tr>
+      <td>{tr}Auto-assign categoryId{/tr}</td>
+      <td colspan="3">
+        <input type="text" size="10" name="categoryId" value="{$info.categoryId}" />
+      </td>
+    </tr>
     <tr>
       <td>&nbsp;</td>
       <td colspan="3"><input type="submit" name="new_acc" value="{if $accountId eq 0}{tr}Add{/tr}{else}{tr}Edit{/tr}{/if}"></td>

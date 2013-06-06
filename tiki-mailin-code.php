@@ -444,6 +444,27 @@ foreach ($accs['data'] as $acc) {
 									if (!$tikilib->page_exists($page)) {
 										$content.= "Page: $page has been created<br />";
 										$tikilib->create_page($page, 0, $body, $tikilib->now, "Created from " . $acc["account"], $aux["sender"]["user"], '0.0.0.0', '');
+										
+										// Assign category, if specified
+										if (isset($acc['categoryId'])) {
+											try {
+												$categoryId = intval($acc['categoryId']);
+												if ($categoryId > 0) {
+													// Validate the category before adding it
+													$categlib = TikiLib::lib('categ');
+													$categories = $categlib->get_category($categoryId);
+													if ($categories !== false && !empty($categories)) {
+														$categlib->categorizePage($page, $categoryId);
+														$content.= "Page: $page categorized. Id: ".$categoryId."<br />";
+													} else {
+														$content.= "Page: $page not categorized. Invalid categoryId: ".$categoryId."<br />";
+													}
+												}
+											} catch (Exception $e) {
+												$content.= "Failed to categorize page: $page  categoryId: ".$categoryId.". Error: ".$e->getMessage()."<br />";
+											}
+										}
+										
 									} else {
 										$tikilib->update_page($page, $body, "Created from " . $acc["account"], $aux["sender"]["user"], '0.0.0.0', '');
 										$content.= "Page: $page has been updated";
