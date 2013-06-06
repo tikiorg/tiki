@@ -16,9 +16,9 @@ if (! class_exists('ADOConnection')) {
 	die('AdoDb not found');
 }
 
-	define('ADODB_FORCE_NULLS', 1);
-	define('ADODB_ASSOC_CASE', 2);
-	define('ADODB_CASE_ASSOC', 2); // typo in adodb's driver for sybase?
+	if (! defined('ADODB_FORCE_NULLS')) define('ADODB_FORCE_NULLS', 1);
+	if (! defined('ADODB_ASSOC_CASE')) define('ADODB_ASSOC_CASE', 2);
+	if (! defined('ADODB_CASE_ASSOC')) define('ADODB_CASE_ASSOC', 2); // typo in adodb's driver for sybase?
 
 	$ADODB_FETCH_MODE = ADODB_FETCH_ASSOC;
 

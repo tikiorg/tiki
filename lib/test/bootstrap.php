@@ -58,6 +58,7 @@ require_once 'lib/tikilib.php';
 $tikilib = new TikiLib;
 
 // update db if needed
+require_once 'lib/init/initlib.php';
 include_once ('installer/installlib.php');
 $installer = new Installer;
 
@@ -79,7 +80,6 @@ require_once 'lib/wiki/wikilib.php';
 require_once 'lib/userslib.php';
 require_once 'lib/headerlib.php';
 require_once 'lib/init/tra.php';
-require_once 'lib/init/initlib.php';
 require_once 'lib/tikiaccesslib.php';
 
 $userlib = new UsersLib;

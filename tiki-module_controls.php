@@ -29,7 +29,7 @@ if (!$user && $check_req) {
 	$smarty->display("error.tpl");
 	die;
 }
-$url = $_SERVER["REQUEST_URI"];
+$request_uri = $url = isset($_SERVER["REQUEST_URI"]) ? $_SERVER['REQUEST_URI'] : '';
 if ($check_req) {
 	//    global $debugger;
 	//    $debugger->msg('Module control clicked: '.$check_req);
@@ -46,6 +46,9 @@ if ($check_req) {
 	$url = preg_replace('/(.*)(\?|&){1}(mc_up|mc_down|mc_move|mc_unassign)=[^&]*/', '\1', $url);
 }
 // Fix locaton if parameter was removed...
-if ($url != $_SERVER["REQUEST_URI"]) header('location: ' . $url);
+if ($url != $request_uri) {
+	$access = TikiLib::lib('access');
+	$access->redirect($url);
+}
 $smarty->assign('current_location', $url);
 $smarty->assign('mpchar', (strpos($url, '?') ? '&' : '?'));

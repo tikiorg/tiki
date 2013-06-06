@@ -15,14 +15,14 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
   exit;
 }
 
-if (! file_exists('vendor/autoload.php')) {
+if (! file_exists(__DIR__ . '/../../vendor/autoload.php')) {
 	echo "Your Tiki is not completely installed because Composer has not been run to fetch package dependencies.\n";
 	echo "You need to run 'sh setup.sh' from the command line.\n";
 	echo "See http://dev.tiki.org/Composer for details.\n";
 	exit;
 }
 
-require_once 'vendor/autoload.php';
+require_once __DIR__ . '/../../vendor/autoload.php';
 
 /**
  * performs some checks on the underlying system, before initializing Tiki.
