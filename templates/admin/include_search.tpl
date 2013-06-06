@@ -80,6 +80,7 @@
 					</div>
 
 					{preference name=unified_excluded_categories}
+					{preference name=unified_excluded_plugins}
 					{preference name=unified_forum_deepindexing}
 
 					{preference name=unified_tokenize_version_numbers}

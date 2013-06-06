@@ -171,6 +171,14 @@ function prefs_unified_list()
 			'default' => array(),
 			'profile_reference' => 'category',
 		),
+		'unified_excluded_plugins' => array(
+			'name' => tra('Excluded plugins'),
+			'description' => tra('List of plugin names to exclude while indexing.'),
+			'type' => 'text',
+			'filter' => 'word',
+			'separator' => ',',
+			'default' => array(),
+		),
 		'unified_elastic_url' => array(
 			'name' => tra('ElasticSearch URL'),
 			'description' => tra('URL of any node in the cluster.'),

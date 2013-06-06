@@ -16,11 +16,12 @@ class Search_Type_WikiText implements Search_Type_Interface
 
 	function getValue()
 	{
-		global $tikilib;
+		global $tikilib, $prefs;
 		$out = $tikilib->parse_data(
 			$this->value, array(
 				'parsetoc' => false,
 				'indexing' => true,
+				'exclude_plugins' => $prefs['unified_excluded_plugins'],
 			)
 		);
 
