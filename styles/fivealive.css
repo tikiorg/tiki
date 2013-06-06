@@ -617,6 +617,10 @@ select {
 	-moz-border-radius-topleft: 5px;
 	-moz-border-radius-topright: 5px;
 }
+
+.siteloginbar_poppedup.cbox {
+	background: transparent;
+}
 .siteloginbar_poppedup .tabcontent {
 	box-shadow: 0 5px 5px -3px rgba(0, 0, 0, .5);
 }
@@ -662,6 +666,16 @@ select {
 .siteloginbar input[type="text"],
 .siteloginbar input[type="password"] {
 	background: #fff;
+}
+
+.siteloginbar_poppedup + .cluetip-close {
+	background: #a9d6eb;
+	border-radius: 5px;
+	box-shadow: 0px 5px 5px -3px rgba(0, 0, 0, 0.506);
+}
+
+.siteloginbar_poppedup + .cluetip-close a {
+	color: #2098CD
 }
 
 /*** CSS menus shadows for all but IE6 ***/
