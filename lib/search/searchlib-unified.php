@@ -89,6 +89,7 @@ class UnifiedSearchLib
      */
     function rebuildInProgress()
 	{
+		global $prefs;
 		if ($prefs['unified_engine'] == 'lucene') {
 			$tempName = $this->getIndexLocation() . '-new';
 			$new_exists = file_exists($this->getIndexLocation() . '-new');
@@ -104,6 +105,7 @@ class UnifiedSearchLib
 	 */
 	function stopRebuild()
 	{
+		global $prefs;
 		if ($prefs['unified_engine'] == 'lucene') {
 			$tempName = $this->getIndexLocation() . '-new';
 			$file_exists = file_exists($tempName);

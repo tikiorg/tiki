@@ -207,8 +207,9 @@ function prefs_unified_list()
 		'unified_identifier_fields' => array(
 			'name' => tr('Unified index identifier fields (Internal)'),
 			'description' => tr('Used to store the fields to be considered as identifiers. Overwritten after each index rebuild.'),
+			'type' => 'text',
 			'hint' => tra('Do not change this value unless you know what you are doing.'),
-			'separator' => '',
+			'separator' => ',',
 			'default' => array(),
 			'filter' => 'word',
 		),

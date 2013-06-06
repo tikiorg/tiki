@@ -168,7 +168,7 @@ class Tracker_Options
 			$value = $this->getParam($key);
 			if (isset($info['count']) && $info['count'] == '*') {
 				$values = $value;
-			} elseif (isset($info['separator'])) {
+			} elseif (isset($info['separator']) && is_array($value)) {
 				$values = array(implode($info['separator'], $value));
 			} else {
 				$values = array($value);

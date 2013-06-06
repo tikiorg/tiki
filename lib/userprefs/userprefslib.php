@@ -93,6 +93,11 @@ class UserPrefsLib extends TikiLib
 
 		global $mimeextensions;
 		require_once('lib/mime/mimeextensions.php');
+
+		if (! isset($mimeextensions[$type])) {
+			return 'img/noavatar.png';
+		}
+
 		$ext = $mimeextensions[$type];
 		$hash = md5($user);
 		$image = "temp/public/{$tikidomainslash}avatar_{$hash}.$ext";
