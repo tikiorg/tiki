@@ -218,7 +218,7 @@ function showDetails( id, domain, profile ) { // {{{
 {/literal}
 {/jq}
 
-{remarksbox type="tip" title="{tr}Tip{/tr}"}<a class="rbox-link" href="http://profiles.tiki.org">{tr}Tiki Profiles{/tr}</a>{/remarksbox}
+{remarksbox type="tip" title="{tr}Tip{/tr}"}<a class="rbox-link" href="http://profiles.tiki.org">{tr}Tiki Configuration Profiles{/tr}</a>{/remarksbox}
 
 {if isset($profilefeedback)}
 	{remarksbox type="note" title="{tr}Note{/tr}"}
@@ -247,7 +247,7 @@ function showDetails( id, domain, profile ) { // {{{
 				<fieldset><legend>{tr}Profiles{/tr}</legend>
 				<form method="get" action="tiki-admin.php">
 					<div class="adminoptionbox">
-						<b>{tr}Step 1: Use the Quick or Manual Filter option to see a list of Profiles you can apply{/tr}</b>
+						<b>{tr}Step 1: Use the Quick or Manual Filter option to see a list of Configuration Profiles you can apply{/tr}</b>
 						<table class="normal">
 							<tr>
 								<th width="50%" class="quickmode_notes">{tr}Option 1: Quick Filter{/tr}</th>
@@ -290,10 +290,10 @@ function showDetails( id, domain, profile ) { // {{{
 									<div class="adminoptionboxchild">
 										<div class="adminoptionlabel">{tr}Filter the list of profiles:{/tr}</div>
 										<div class="adminoptionlabel">
-											<label for="profile">{tr}Profile:{/tr} </label>
+											<label for="profile">{tr}Profile name:{/tr} </label>
 											<input type="text" name="profile" id="profile" value="{if isset($profile)}{$profile|escape}{/if}" /></div>
 											{if isset($category_list) and count($category_list) gt 0}
-												<div class="adminoptionlabel"><label for="categories">{tr}Categories:{/tr} </label>
+												<div class="adminoptionlabel"><label for="categories">{tr}Profile types:{/tr} </label>
 													<select multiple="multiple" name="categories[]" id="categories" style="max-height: 10em">
 													{foreach item=cat from=$category_list}
 														<option value="{$cat|escape}"{if !empty($categories) and in_array($cat, $categories)} selected="selected"{/if}>{$cat|escape}</option>
@@ -338,12 +338,12 @@ $("#repository, #categories").change(function(){
 		
 	       {if isset($result) && $result|@count != '0'}
 	
-	        <b>{tr}Step 2: Click on a Profile to review and see description{/tr}</b>
+	        <b>{tr}Step 2: Click on a Configuration Profile Name below to review it and to be able to apply it on your Web site{/tr}</b>
 			<table class="normal">
 				<tr>
-					<th>{tr}Profile{/tr}</th>
+					<th>{tr}Profile Name{/tr}</th>
 					<th>{tr}Repository{/tr}</th>
-					<th>{tr}Categories{/tr}</th>
+					<th>{tr}Profile type{/tr}</th>
 				</tr>
 				{foreach key=k item=profile from=$result}
 					<tr id="profile-{$k}">
