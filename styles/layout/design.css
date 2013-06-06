@@ -257,16 +257,6 @@ li#logout_link a {
 	display: table;
 }
 
-.siteloginbar_popup label {
-	clear: both;
-	float: left;
-}
-
-.siteloginbar_popup #sl-login-user,
-.siteloginbar_popup #sl-login-pass {
-	float: right;
-	width: 60%;
-}
 
 .siteloginbar_popup .rme {
 	display: block;
@@ -275,7 +265,6 @@ li#logout_link a {
 }
 
 .siteloginbar_popup .pass {
-	float: left;
 	margin: 0;
 	padding: 0;
 	text-align: left;
@@ -3868,6 +3857,16 @@ textarea.tshoutbox{
 	text-align: right;
 }
 
+.siteloginbar_poppedup + .cluetip-close {
+	display: inline-block;
+	float: right;
+	margin-top: -7px;
+	margin-right: 20px;
+	padding: .2em .8em;
+}
+
+
+
 /* webmail & groupmail */
 .webmail_item {
 	font-size: .9em;
@@ -4253,10 +4252,6 @@ form.simple textarea.export {
 	padding-top: 5px;
 }
 
-.siteloginbar_poppedup .user input,
-.siteloginbar_poppedup .pass input {
-	width: 160px;
-}
 .siteloginbar_popup * {
 	padding: 0;
 }
