@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "e72e6afedde139f401b0c79485792590",
+    "hash": "94db82478ee91be41deaa47323f322a4",
     "packages": [
         {
             "name": "aFarkas/html5shiv",
@@ -92,6 +92,17 @@
                 "url": "https://composer.tiki.org/dist/ckeditor-ckeditor-4.1.1.zip",
                 "reference": "4.1.1",
                 "shasum": "53fab63173ba6dc6981be14cb1ce2cc02ceb47f7"
+            },
+            "type": "library"
+        },
+        {
+            "name": "ckeditor/ckeditor/plugins/divarea",
+            "version": "4.1.1",
+            "dist": {
+                "type": "zip",
+                "url": "https://composer.tiki.org/dist/ckeditor-ckeditor-plugins-divarea-4.1.1.zip",
+                "reference": "4.1.1",
+                "shasum": "a306b71d019fd0a31b29423657e005e0678806bc"
             },
             "type": "library"
         },

@@ -10,6 +10,7 @@
 		"bombayworks/zendframework1": "1.12.3",
 		"ckeditor/ckeditor": "4.1.1",
 		"ckeditor/ckeditor/skins/kama": "4.1.1",
+		"ckeditor/ckeditor/plugins/divarea": "4.1.1",
 		"codemirror/codemirror": "2.25",
 		"ezyang/htmlpurifier": "4.5.0",
 		"jcapture-applet/jcapture-applet": "dev-master",

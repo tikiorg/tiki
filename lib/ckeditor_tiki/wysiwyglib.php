@@ -17,11 +17,18 @@ class WYSIWYGLib
 
 		global $tikiroot, $prefs;
 		$headerlib = TikiLib::lib('header');
-        if ($notallreadyloaded) $headerlib->add_js_config('window.CKEDITOR_BASEPATH = "'. $tikiroot . 'vendor/ckeditor/ckeditor/";')
+        if ($notallreadyloaded) {
+			$headerlib->add_js_config('window.CKEDITOR_BASEPATH = "'. $tikiroot . 'vendor/ckeditor/ckeditor/";')
 				//// for js debugging - copy _source from ckeditor distribution to libs/ckeditor to use
 				//// note, this breaks ajax page load via wikitopline edit icon
 				->add_jsfile('vendor/ckeditor/ckeditor/ckeditor.js', 0, true)
 				->add_js('window.CKEDITOR.config._TikiRoot = "'.$tikiroot.'";', 1);
+
+			$headerlib->add_js(
+				'window.CKEDITOR.config.extraPlugins += (window.CKEDITOR.config.extraPlugins ? ",divarea" : "divarea" );',
+				5
+			);
+		}
 
 		if ($notallreadyloaded && $full_page) {
 			$headerlib->add_jsfile('lib/ckeditor_tiki/tikilink_dialog.js');
@@ -56,20 +63,6 @@ ajaxLoadingShow("'.$dom_id.'");
 			);	// before dialog tools init (10)
 		}
 
-		// work out current theme/option
-		global $tikilib, $tc_theme, $tc_theme_option;
-		if (!empty($tc_theme)) {
-			$ckstyle = $tikiroot . $tikilib->get_style_path('', '', $tc_theme);
-			if (!empty($tc_theme_option)) {
-				$ckstyle .= '","' . $tikiroot . $tikilib->get_style_path($tc_theme, $tc_theme_option, $tc_theme_option);
-			}
-		} else {
-			$ckstyle = $tikiroot . $tikilib->get_style_path('', '', $prefs['style']);
-			if (!empty($prefs['style_option']) && $tikilib->get_style_path($prefs['style'], $prefs['style_option'], $prefs['style_option'])) {
-				$ckstyle .= '","' . $tikiroot . $tikilib->get_style_path($prefs['style'], $prefs['style_option'], $prefs['style_option']);
-			}
-		}
-
 		// finally the toolbar
 		$smarty = TikiLib::lib('smarty');
 
@@ -93,7 +86,6 @@ ajaxLoadingShow("'.$dom_id.'");
 	format_tags: "' . $ckeformattags . '",
 	stylesSet: "tikistyles:' . $tikiroot . 'lib/ckeditor_tiki/tikistyles.js",
 	templates_files: ["' . $tikiroot . 'lib/ckeditor_tiki/tikitemplates.js"],
-	contentsCss: ["' . $ckstyle . '"],
 	skin: "' . ($prefs['wysiwyg_toolbar_skin'] != 'default' ? $prefs['wysiwyg_toolbar_skin'] : 'moono') . '",
 	defaultLanguage: "' . $prefs['language'] . '",
  	contentsLangDirection: "' . ($prefs['feature_bidi'] === 'y' ? 'rtl' : 'ltr') . '",
@@ -101,13 +93,14 @@ ajaxLoadingShow("'.$dom_id.'");
 	'. (empty($params['cols']) ? ',height: 400' : '') .'
 	, resize_dir: "both"
 	, allowedContent: true
+}';
+
 //	, extraAllowedContent: {		// TODO one day, currently disabling the "Advanced Content Filter" as tiki plugins are too complex
 //		"div span": {
 //			classes: "tiki_plugin",
 //			attributes: "data-plugin data-syntax data-args data-body"
 //		}
 //	}
-}';
 
         $notallreadyloaded=false;
 		return $ckoptions;
