@@ -540,7 +540,7 @@ class WikiLib extends TikiLib
 				$query = 'select `attId` from `tiki_wiki_attachments` where `page`=? and `filename`=? and `created`=? and `user`=?';
 				$attId = $this->getOne($query, array($page, $name, $now, $user));
 			}
-			$logslib->add_action('Created', $attId, 'wiki page attachment');
+			$logslib->add_action('Created', $attId, 'wiki page attachment', '', $user);
 		}
 	}
 

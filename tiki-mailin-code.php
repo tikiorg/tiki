@@ -15,17 +15,32 @@ require_once ("lib/webmail/net_pop3.php");
 include_once ("lib/mail/mimelib.php");
 include_once ("lib/webmail/tikimaillib.php");
 include_once ('lib/wiki/wikilib.php');
+
+global $prefs;
+
+$is_html = false;
+$show_inlineImages = 'n';
+$can_addAttachment = 'n';
+
 /**
  * @param $output
  * @param $out
  * @param $page
  * @param $user
+ * @param $body
  */
 function mailin_check_attachments(&$output, &$out, $page, $user)
 {
-	global $wikilib;
+	global $wikilib, $show_inlineImages, $can_addAttachment;
 	$cnt = 0;
-	if (!isset($output["parts"])) return;
+	
+	if ($can_addAttachment !== 'y') {
+		return;
+	}
+	
+	if (!isset($output["parts"])) {
+		return;
+	}
 	
 	for ($it = 0, $count_outputparts = count($output['parts']); $it < $count_outputparts; $it++) {
 		if (isset($output["parts"][$it]["d_parameters"]["filename"])) {
@@ -37,6 +52,16 @@ function mailin_check_attachments(&$output, &$out, $page, $user)
 			$fileSize = strlen($fileData);
 			$wikilib->wiki_attach_file($page, $fileName, $fileType, $fileSize, $fileData, "attached by mail", $user, "");
 			$cnt++;
+			
+			if($show_inlineImages === 'y') {
+				$contentId = $attachmentPart['header']['content-id'];
+				if (!empty($contentId)) {
+					$contentId = str_replace("<", "", $contentId);
+					$contentId = str_replace(">", "", $contentId);
+
+					mailin_insert_inline_image($body, $contentId, $attId, $page);
+				}
+			}
 		}
 	}
 	$out.= $cnt;
@@ -56,6 +81,142 @@ function mailin_get_body($output)
 	return $body;
 }
 /**
+ * @param $output
+ * @return HTML string
+ */
+function mailin_get_html($output)
+{
+	if (isset($output['html'][0])) {
+		$html = $output["html"][0];
+	} elseif (isset($output['parts'][1]) && isset($output['parts'][1]["html"][0])) {
+		$html = $output['parts'][1]["html"][0];
+	} elseif (isset($output['parts'][0]) && isset($output['parts'][0]['parts'][1]) && isset($output['parts'][0]['parts'][1]["html"][0])) {
+		$html = $output['parts'][0]['parts'][1]["html"][0];
+	} elseif (isset($output['parts'][0]) && isset($output['parts'][0]['parts'][0]) && isset($output['parts'][0]['parts'][0]['parts'][1]) && isset($output['parts'][0]['parts'][0]['parts'][1]["html"][0])) {
+		$html = $output['parts'][0]['parts'][0]['parts'][1]["html"][0];
+	} else {
+		$html = '';
+	}
+	return $html;
+}
+
+/**
+ * This is function mailin_extract_inline_images
+ * NOTE: Will force the use the HTML source as the page body
+ * HTML is required in order to be able to identify the image in the email.
+ *
+ * @param string $pageName The name of the wiki page
+ * @param mixed $output Array of email values
+ * @param string $body The email body. Will be used as the wiki page body
+ * @param string $out Log output
+ * @param string $user The user; for logging purposes
+ * @return nothing
+ *
+ */
+function	mailin_extract_inline_images($pageName, $output, &$body, &$out, $user)
+{
+	global $wikilib, $is_html, $show_inlineImages, $can_addAttachment;
+	
+	if($show_inlineImages !== 'y') {
+		return;
+	}
+	if ($can_addAttachment !== 'y') {
+		return;
+	}
+	
+	$cnt = 0;
+	$errCnt = 0;
+	if (!isset($output["parts"])) {
+		return;
+	}
+
+	// Only for HTML email
+	$html = mailin_get_html($output);
+	if(empty($html)) {
+		$out.= "inline attachments are only supported for email in html format<br />";
+		return;
+	}
+	
+	// Replace the text version, and use use the HTML as the page body
+	
+	// Locate the HTML
+	$matches = array();
+	preg_match("/<body[^>]*>(.*?)<\/body>/is", $html, $matches);
+	$htmlBody = $matches[1];
+	if (empty($htmlBody)) {
+		// Assume the html is the body
+		$htmlBody = $html;
+	}
+	
+	// Get rid of "id" attributes, as they may cause a failure to load the image
+	$htmlBody = str_ireplace('id=', 'xid=', $htmlBody);
+	
+	// Assign the HTML as the new body
+	$body = $htmlBody;
+	$is_html = true;
+
+	// Locate the page with inline attachments	
+	$activeParts = array();
+	if (isset($output["parts"][1]) && isset($output["parts"][1]['ctype_parameters']['name'])) {
+		$activeParts = $output["parts"];
+	} elseif (isset($output["parts"][0]['parts'][1]["type"]) && $output["parts"][0]['parts'][1]["type"] == 'text/html') {
+		$activeParts = $output["parts"][0]['parts'][1];
+	}
+	
+	// Scroll the page attachments
+	for ($it = 0, $count_outputparts = count($activeParts); $it < $count_outputparts; $it++) {
+		if (isset($activeParts[$it]["ctype_parameters"]["name"])) {
+			$attachmentPart = $activeParts[$it];
+			$fileName = $attachmentPart["ctype_parameters"]["name"];
+			if (isset($attachmentPart["type"])) {
+				$fileType = $attachmentPart["type"];
+			} else {
+				$fileType = "";
+			}
+			
+			// Only process images
+			if(strpos($fileType,'image/',0) === false) {
+				$errCnt++;
+				continue;
+			}
+			
+			// Process inline image
+			$fileData = $attachmentPart['body'];
+			$fileSize = function_exists('mb_strlen') ? mb_strlen($fileData, '8bit') : strlen($fileData);
+			$attId = $wikilib->wiki_attach_file($pageName, $fileName, $fileType, $fileSize, $fileData, "inline image by mail", $user, "");
+			$cnt++;
+		
+			$contentId = $attachmentPart['header']['content-id'];
+			if (empty($contentId)) {
+				$errCnt++;
+				continue;
+			}
+			$contentId = str_replace("<", "", $contentId);
+			$contentId = str_replace(">", "", $contentId);
+
+			mailin_insert_inline_image($body, $contentId, $attId, $pageName);
+		}
+	}
+	$out.= $cnt;
+	$out.= " inline attachment(s) added. ".$errCnt." failed<br />";
+}
+
+function mailin_insert_inline_image(&$body, $contentId, $attId, $pageName)
+{
+	$search = array();
+	$replace = array();
+	$search[] = 'cid:'.$contentId;		// This string may differ depending on the senders email client, I guess. Tested using Outlook 2010 as the sender
+	$replace[] = 'tiki-download_wiki_attachment.php?attId='.$attId.'&page='.urlencode($pageName);
+	
+	$newBody = str_replace($search, $replace, $body);
+	if($newBody == $body) {
+		$errCnt++;
+		continue;
+	}
+	$body = $newBody;
+}
+
+/**
  * The tiki-mailin.php script is used to get / set wiki pages or articles
  * using a POP email account.
  */
@@ -71,6 +232,13 @@ if (empty($accs['data'])) {
 $content = '<br /><br />';
 // foreach account
 foreach ($accs['data'] as $acc) {
+	
+	$show_inlineImages = $acc['show_inlineImages'];
+	$can_addAttachment = $prefs['feature_wiki_attachments'];
+	if($can_addAttachment === 'y') {
+		$can_addAttachment = $acc['attachments'];
+	}
+	
 	$content.= "<b>Processing account</b><br />";
 	$content.= "Account :" . $acc['account'] . "<br />";
 	$content.= "Type    :" . $acc['type'] . "<br />";
@@ -130,8 +298,14 @@ foreach ($accs['data'] as $acc) {
 						$res = $mail->send(array($email_from), 'mail');
 						$content.= "Response sent<br />";
 					} else {
-						if (empty($aux["sender"]["user"])) $aux["sender"]["user"] = $email_from;
-						if (empty($aux["sender"]["name"])) $aux["sender"]["name"] = $email_from;
+						
+						if (empty($aux["sender"]["user"])) {
+							$aux["sender"]["user"] = $email_from;
+						}
+						if (empty($aux["sender"]["name"])) {
+							$aux["sender"]["name"] = $email_from;
+						}
+						
 						if ($acc['type'] == 'article-put') {
 							// This is used to CREATE articles
 							$title = trim($output['header']['subject']);
@@ -207,6 +381,14 @@ foreach ($accs['data'] as $acc) {
 								$mail = new TikiMail();
 								$mail->setFrom($acc["account"]);
 								if ($tikilib->page_exists($page)) {
+									
+									// Check permissions
+									$chkUser = $aux["sender"]["user"];
+									if(!$wikilib->user_has_perm_on_object($chkUser, $page, 'wiki page', 'tiki_p_view')) {
+										$content.= $chkUser." cannot view the page: ".$page."<br />";
+										continue;
+									}
+									
 									$mail->setSubject($page);
 									$info = $tikilib->get_page_info($page);
 									$data = $tikilib->parse_data($info["data"]);
@@ -221,9 +403,39 @@ foreach ($accs['data'] as $acc) {
 								$content.= "Response sent<br />";
 						   //end if ($acc['type'] == 'wiki-get' || ($acc['type'] == 'wiki' && $method == "GET"))
 							} elseif ($acc['type'] == 'wiki-put' || ($acc['type'] == 'wiki' && $method == "PUT")) {
+								
 								// This is used to UPDATE wiki pages
-								$body = mailin_get_body($output);
-								if (isset($acc['discard_after']) && $body) {
+
+								if ($tikilib->page_exists($page)) {
+									// Check permissions for page
+									$chkUser = $aux["sender"]["user"];
+									if (!$wikilib->user_has_perm_on_object($chkUser, $page, 'wiki page', 'tiki_p_edit')) {
+										$content.= $chkUser." cannot edit the page: ".$page."<br />";
+										continue;
+									}
+									if (!$wikilib->user_has_perm_on_object($chkUser, $page, 'wiki page', 'tiki_p_wiki_attach_files')) {
+										$can_addAttachment = 'n';
+										$show_inlineImages = 'n';
+									}
+								} else {
+									// Check global permissions
+									$userlib = TikiLib::lib('user');
+									if (!$userlib->user_has_permission($chkUser, 'tiki_p_edit')) {
+										$content.= $chkUser." cannot created the page: ".$page."<br />";
+										continue;
+									}
+									if (!$userlib->user_has_permission($chkUser, 'tiki_p_wiki_attach_files')) {
+										$can_addAttachment = 'n';
+										$show_inlineImages = 'n';
+									}
+								}
+								
+								// Attempt to use HTML, if it exists
+								$body = mailin_get_html($output);
+								if (empty($body)) {
+									$body = mailin_get_body($output);
+								}
+								if (!empty($acc['discard_after']) && $body) {
 									$body = preg_replace("/" . $acc['discard_after'] . ".*$/s", "", $body);
 								}
 								if (!empty($body)) {
@@ -237,12 +449,32 @@ foreach ($accs['data'] as $acc) {
 								}
 								mailin_check_attachments($output, $content, $page, $aux["sender"]["user"]);
 							} elseif ($acc['type'] == 'wiki-append' || $acc['type'] == 'wiki-prepend' || ($acc['type'] == 'wiki' && $method == "APPEND") || ($acc['type'] == 'wiki' && $method == "PREPEND")) {
+
 								// This is used to UPDATE wiki pages
-								$body = mailin_get_body($output);
-								if ($body && isset($acc['discard_after'])) {
+
+								// Check permissions
+								$chkUser = $aux["sender"]["user"];
+								if(!$wikilib->user_has_perm_on_object($chkUser, $page, 'wiki page', 'tiki_p_edit')) {
+									$content.= $chkUser." cannot edit the page: ".$page."<br />";
+									continue;
+								}
+								if(!$wikilib->user_has_perm_on_object($chkUser, $page, 'wiki page', 'tiki_p_wiki_attach_files')) {
+									$can_addAttachment = 'n';
+									$show_inlineImages = 'n';
+								}
+
+								// Attempt to use HTML, if it exists
+								$body = mailin_get_html($output);
+								if (empty($body)) {
+									$body = mailin_get_body($output);
+								}
+
+								if ($body && !empty($acc['discard_after'])) {
 									$body = preg_replace("/" . $acc['discard_after'] . ".*$/s", "", $body);
 								}
 								if (isset($body)) {
+									mailin_extract_inline_images($page, $output, $body, $content, $aux["sender"]["user"]);
+									mailin_check_attachments($output, $content, $page, $aux["sender"]["user"], $body);
 									if (!$tikilib->page_exists($page)) {
 										$content.= "Page: $page has been created<br />";
 										$tikilib->create_page($page, 0, $body, $tikilib->now, "Created from " . $acc["account"], $aux["sender"]["user"], '0.0.0.0', '');

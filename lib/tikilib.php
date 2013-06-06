@@ -4471,7 +4471,7 @@ class TikiLib extends TikiDb_Bridge
 		// Update the log
 		if (strtolower($name) != 'sandbox') {
 			$logslib = TikiLib::lib('logs');
-			$logslib->add_action("Created", $name, 'wiki page', 'add='.strlen($data), '', '', '', '', $hash['contributions'], $hash2);
+			$logslib->add_action("Created", $name, 'wiki page', 'add='.strlen($data), $user, '', '', '', $hash['contributions'], $hash2);
 			//get_strings tra("Created");
 
 			//  Deal with mail notifications.
@@ -4513,8 +4513,8 @@ class TikiLib extends TikiDb_Bridge
 		if ($prefs['feature_wysiwyg'] == 'y' && $prefs['wysiwyg_htmltowiki'] != 'y') {
 			$wikilib = TikiLib::lib('wiki');
 			$temppage = md5($this->now . $name);
-			$wikilib->wiki_rename_page($name, $temppage, false);
-			$wikilib->wiki_rename_page($temppage, $name, false);
+			$wikilib->wiki_rename_page($name, $temppage, false, $user);
+			$wikilib->wiki_rename_page($temppage, $name, false, $user);
 		}
 
 		return true;
@@ -6328,7 +6328,7 @@ JS;
 	 * @param $old
 	 * @param $new
 	 */
-	protected function rename_object( $type, $old, $new )
+	protected function rename_object( $type, $old, $new, $user = '' )
 	{
 		global $prefs;
 
@@ -6360,7 +6360,7 @@ JS;
 		// Logs
 		if ($prefs['feature_actionlog'] == 'y') {
 			$logslib = TikiLib::lib('logs');
-			$logslib->add_action('Renamed', $new, 'wiki page', 'old='.$old.'&new='.$new, '', '', '', '', '', array(array('rename'=>$old)));
+			$logslib->add_action('Renamed', $new, 'wiki page', 'old='.$old.'&new='.$new, $user, '', '', '', '', array(array('rename'=>$old)));
 			$logslib->rename($type, $old, $new);
 		}
 

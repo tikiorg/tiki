@@ -125,6 +125,15 @@
       </td>
     </tr>
     <tr>
+      <td>{tr}Show inline images{/tr}</td>
+      <td colspan="3">
+        {tr}Yes{/tr}
+        <input type="radio" name="show_inlineImages" {if $info.show_inlineImages eq 'y'}checked="checked"{/if} value="y">
+        {tr}No{/tr}
+        <input type="radio" name="show_inlineImages" {if $info.show_inlineImages eq 'n' || $info.show_inlineImages eq '' }checked="checked"{/if} value="n">
+      </td>
+    </tr>
+    <tr>
       <td>{tr}Discard to the end from{/tr}</td>
       <td colspan="3">
       <input type="text" name="discard_after" value="{$info.discard_after|escape}">

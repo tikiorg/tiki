@@ -40,11 +40,12 @@ if (!isset($_REQUEST['accountId'])) $_REQUEST['accountId'] = 0;
 $smarty->assign('accountId', $_REQUEST['accountId']);
 if (isset($_REQUEST['new_acc'])) {
 	check_ticket('admin-mailin');
-	if (!account_ok($_REQUEST['pop'], $_REQUEST['username'], $_REQUEST['pass'])) $tikifeedback[] = array(
-		'num' => 1,
-		'mes' => sprintf(tra('Mail-in account %s incorrect'), $_REQUEST['account'])
-	);
-	else {
+	if (!account_ok($_REQUEST['pop'], $_REQUEST['username'], $_REQUEST['pass'])) {
+		$tikifeedback[] = array(
+			'num' => 1,
+			'mes' => sprintf(tra('Mail-in account %s incorrect'), $_REQUEST['account'])
+		);
+	} else {
 		$mailinlib->replace_mailin_account(
 			$_REQUEST['accountId'],
 			$_REQUEST['account'],
@@ -61,7 +62,8 @@ if (isset($_REQUEST['new_acc'])) {
 			$_REQUEST['attachments'],
 			$_REQUEST['article_topicId'],
 			$_REQUEST['article_type'],
-			$_REQUEST['discard_after']
+			$_REQUEST['discard_after'],
+			$_REQUEST['show_inlineImages']
 		);
 
 		$tikifeedback[] = array(
@@ -96,6 +98,7 @@ if ($_REQUEST['accountId']) {
 	$info['attachments'] = 'n';
 	$info['article_topicId'] = '';
 	$info['article_type'] = '';
+	$info['show_inlineImages'] = 'n';
 }
 $smarty->assign('info', $info);
 
