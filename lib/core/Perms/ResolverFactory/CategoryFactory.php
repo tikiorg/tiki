@@ -130,8 +130,12 @@ class Perms_ResolverFactory_CategoryFactory implements Perms_ResolverFactory
 		foreach ( $result as $row ) {
 			$category = (int) $row['categId'];
 			$object = $this->cleanObject($row['itemId']);
-			$key = $objects[$object];
 
+			if (! isset($objects[$object])) {
+				continue; // Some DB corruption combined with MySQL strange casting causes notices
+			}
+
+			$key = $objects[$object];
 			$this->knownObjects[$key][] = $category;
 
 			if ( ! isset($this->knownCategories[$category]) ) {

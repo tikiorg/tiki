@@ -262,7 +262,7 @@ class Image extends ImageAbstract
 			}
 		} else if ($this->height) {
 			return $this->height;
-		} else if ($this->filename) {
+		} else if ($this->filename && is_readable($this->filename)) {
 			list($this->width, $this->height, $type) = getimagesize($this->filename);
 			if ($this->height) {
 				return $this->height;
@@ -291,7 +291,7 @@ class Image extends ImageAbstract
 			}
 		} else if ($this->width) {
 			return $this->width;
-		} else if ($this->filename) {
+		} else if ($this->filename && is_readable($this->filename)) {
 			list($this->width, $this->height, $type) = getimagesize($this->filename);
 			if ($this->width) {
 				return $this->width;

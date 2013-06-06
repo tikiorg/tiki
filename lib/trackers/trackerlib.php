@@ -2881,11 +2881,11 @@ class TrackerLib extends TikiLib
 			$query = "select tif.`value` from `tiki_tracker_item_fields` tif, `tiki_tracker_items` i, `tiki_tracker_fields` tf where i.`itemId`=? and i.`itemId`=tif.`itemId` and tf.`fieldId`=tif.`fieldId` and tf.`isMain`=? ";
 		$result = $this->getOne($query, array( (int) $itemId, "y"));
 
-		if ($result{0} === '{') {
+		if (strlen($result) && $result{0} === '{') {
 			$result = json_decode($result, true);
 			if (isset($result[$prefs['language']])) {
 				return $result[$prefs['language']];
-			} else {
+			} elseif(is_array($result)) {
 				return reset($result);
 			}
 		}

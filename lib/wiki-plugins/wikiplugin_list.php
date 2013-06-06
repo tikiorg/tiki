@@ -44,7 +44,9 @@ function wikiplugin_list($data, $params)
 		$query->setOrder($_REQUEST['sort_mode']);
 	}
 
-	$index = $unifiedsearchlib->getIndex();
+	if (! $index = $unifiedsearchlib->getIndex()) {
+		return '';
+	}
 
 	$result = $query->search($index);
 
