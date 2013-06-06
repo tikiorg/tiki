@@ -528,6 +528,7 @@ class WikiLib extends TikiLib
 		if ($prefs['feature_score'] == 'y') {
 			$this->score_event($user, 'wiki_attach_file');
 		}
+		$attId = 0;
 		if ($prefs['feature_user_watches'] = 'y') {
 			include_once('lib/notifications/notificationemaillib.php');
 			$query = 'select `attId` from `tiki_wiki_attachments` where `page`=? and `filename`=? and `created`=? and `user`=?';
@@ -542,6 +543,7 @@ class WikiLib extends TikiLib
 			}
 			$logslib->add_action('Created', $attId, 'wiki page attachment', '', $user);
 		}
+		return $attId;
 	}
 
 	public function get_wiki_attach_file($page, $name, $type, $size)

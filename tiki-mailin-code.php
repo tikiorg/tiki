@@ -439,6 +439,8 @@ foreach ($accs['data'] as $acc) {
 									$body = preg_replace("/" . $acc['discard_after'] . ".*$/s", "", $body);
 								}
 								if (!empty($body)) {
+									mailin_extract_inline_images($page, $output, $body, $content, $aux["sender"]["user"]);
+									mailin_check_attachments($output, $content, $page, $aux["sender"]["user"], $body);
 									if (!$tikilib->page_exists($page)) {
 										$content.= "Page: $page has been created<br />";
 										$tikilib->create_page($page, 0, $body, $tikilib->now, "Created from " . $acc["account"], $aux["sender"]["user"], '0.0.0.0', '');
@@ -447,7 +449,6 @@ foreach ($accs['data'] as $acc) {
 										$content.= "Page: $page has been updated";
 									}
 								}
-								mailin_check_attachments($output, $content, $page, $aux["sender"]["user"]);
 							} elseif ($acc['type'] == 'wiki-append' || $acc['type'] == 'wiki-prepend' || ($acc['type'] == 'wiki' && $method == "APPEND") || ($acc['type'] == 'wiki' && $method == "PREPEND")) {
 
 								// This is used to UPDATE wiki pages
@@ -486,7 +487,6 @@ foreach ($accs['data'] as $acc) {
 										$content.= "Page: $page has been updated";
 									}
 								}
-								mailin_check_attachments($output, $content, $page, $aux["sender"]["user"]);
 							} else {
 								$mail = new TikiMail();
 								$mail->setFrom($acc["account"]);
