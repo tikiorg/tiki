@@ -94,7 +94,6 @@ if ($_REQUEST['accountId']) {
 	$info['type'] = 'article-put';
 	$info['active'] = 'y';
 	$info['anonymous'] = 'y';
-	$info['anonymous'] = 'y';
 	$info['attachments'] = 'n';
 	$info['article_topicId'] = '';
 	$info['article_type'] = '';
