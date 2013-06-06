@@ -119,9 +119,6 @@ function prefs_calendar_list()
 			'name' => tra('Use FullCalendar to display Calendars'),
             'description' => tra(''),
 			'type' => 'flag',
-			'dependencies' => array(
-				'feature_jquery'
-			),
 			'default' => 'n',
 		),
 		'calendar_description_is_html' => array(
