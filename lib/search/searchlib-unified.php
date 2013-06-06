@@ -174,6 +174,7 @@ class UnifiedSearchLib
 		$tikilib = TikiLib::lib('tiki');
 		$access = TikiLib::lib('access');
 		$access->preventRedirect(true);
+		$index = new Search_Index_TypeAnalysisDecorator($index);
 		$indexer = $this->buildIndexer($index, $loggit);
 		$stat = $tikilib->allocate_extra(
 			'unified_rebuild',
@@ -182,6 +183,8 @@ class UnifiedSearchLib
 			}
 		);
 		$access->preventRedirect(false);
+
+		$tikilib->set_preference('unified_identifier_fields', $index->getIdentifierFields());
 
 		// Force destruction to clear locks
 		unset($indexer);
@@ -211,7 +214,6 @@ class UnifiedSearchLib
 			// Obtain the old index and destroy it after permanently replacing it.
 			$oldIndex = $this->getIndex();
 
-			$tikilib = TikiLib::lib('tiki');
 			$tikilib->set_preference('unified_elastic_index_current', $indexName);
 
 			if ($oldIndex) {
@@ -498,33 +500,31 @@ class UnifiedSearchLib
 		return new Search_Query_WeightCalculator_Field($weights);
 	}
 
+	function initQuery(Search_Query $query)
+	{
+		global $prefs;
+
+		$query->setWeightCalculator($this->getWeightCalculator());
+		$query->setIdentifierFields($prefs['unified_identifier_fields']);
+
+		if (! Perms::get()->admin) {
+			$query->filterPermissions(Perms::get()->getGroups());
+		}
+
+		$categlib = TikiLib::lib('categ');
+		if ($jail = $categlib->get_jail()) {
+			$query->filterCategory(implode(' or ', $jail), true);
+		}
+	}
+
     /**
      * @param array $filter
      * @return Search_Query
      */
     function buildQuery(array $filter)
 	{
-		$categlib = TikiLib::lib('categ');
-
 		$query = new Search_Query;
-		$query->setWeightCalculator($this->getWeightCalculator());
-
-		if (! Perms::get()->admin) {
-			$query->filterPermissions(Perms::get()->getGroups());
-		}
-		$jail_query = '';
-
-		if ($jail = $categlib->get_jail()) {
-			$i = 0;
-			foreach ($jail as $cat) {
-				$i++;
-				$jail_query .= $cat;
-				if ($i < count($jail)) {
-					$jail_query .= ' or ';
-				}
-			}
-			$query->filterCategory($jail_query, true);
-		}
+		$this->initQuery($query);
 
 		if (isset($filter['type']) && $filter['type']) {
 			$query->filterType($filter['type']);

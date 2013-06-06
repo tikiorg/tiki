@@ -30,16 +30,12 @@ function wikiplugin_list($data, $params)
 	$output = null;
 
 	$query = new Search_Query;
-	$query->setWeightCalculator($unifiedsearchlib->getWeightCalculator());
+	$unifiedsearchlib->initQuery($query);
 
 	$matches = WikiParser_PluginMatcher::match($data);
 
 	$builder = new Search_Query_WikiBuilder($query);
 	$builder->apply($matches);
-
-	if (! Perms::get()->admin) {
-		$query->filterPermissions(Perms::get()->getGroups());
-	}
 
 	if (!empty($_REQUEST['sort_mode'])) {
 		$query->setOrder($_REQUEST['sort_mode']);

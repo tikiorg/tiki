@@ -196,6 +196,14 @@ function prefs_unified_list()
 			'size' => '20',
 			'default' => '',
 		),
+		'unified_identifier_fields' => array(
+			'name' => tr('Unified index identifier fields (Internal)'),
+			'description' => tr('Used to store the fields to be considered as identifiers. Overwritten after each index rebuild.'),
+			'hint' => tra('Do not change this value unless you know what you are doing.'),
+			'separator' => '',
+			'default' => array(),
+			'filter' => 'word',
+		),
 	);
 }
 

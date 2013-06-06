@@ -140,7 +140,7 @@ class Services_Search_CustomSearchController
 		}
 
 		$unifiedsearchlib = TikiLib::lib('unifiedsearch');
-		$query->setWeightCalculator($unifiedsearchlib->getWeightCalculator());
+		$unifiedsearchlib->initQuery($query); // Done after cache because permissions vary
 		$index = $unifiedsearchlib->getIndex();
 		$resultSet = $query->search($index);
 

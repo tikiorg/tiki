@@ -13,6 +13,7 @@ class Search_Query
 	private $start = 0;
 	private $count = 50;
 	private $weightCalculator = null;
+	private $identifierFields = null;
 
 	private $subQueries = array();
 
@@ -23,6 +24,11 @@ class Search_Query
 		if ($query) {
 			$this->filterContent($query);
 		}
+	}
+
+	function setIdentifierFields(array $fields)
+	{
+		$this->identifierFields = $fields;
 	}
 
 	function addObject($type, $objectId)
@@ -189,6 +195,15 @@ class Search_Query
 
 		if ($this->weightCalculator) {
 			$this->expr->walk(array($this->weightCalculator, 'calculate'));
+		}
+
+		if ($this->identifierFields) {
+			$fields = $this->identifierFields;
+			$this->expr->walk(function (Search_Expr_Interface $expr) use ($fields) {
+				if (method_exists($expr, 'getField') && in_array($expr->getField(), $fields)) {
+					$expr->setType('identifier');
+				}
+			});
 		}
 
 		return $index->find($this->expr, $sortOrder, $this->start, $this->count);

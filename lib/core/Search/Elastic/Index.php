@@ -60,7 +60,7 @@ class Search_Elastic_Index implements Search_Index_Interface
 
 		$mapping = array_map(
 			function ($entry) {
-				if ($entry instanceof Search_Type_Whole) {
+				if ($entry instanceof Search_Type_Whole || $entry instanceof Search_Type_MultivaluePlain) {
 					return array(
 						"type" => "string",
 						"index" => "not_analyzed",

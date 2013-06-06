@@ -40,7 +40,7 @@ function wikiplugin_listexecute($data, $params)
 	);
 
 	$query = new Search_Query;
-	$query->setWeightCalculator($unifiedsearchlib->getWeightCalculator());
+	$unifiedsearchlib->initQuery($query);
 
 	$matches = WikiParser_PluginMatcher::match($data);
 
@@ -57,10 +57,6 @@ function wikiplugin_listexecute($data, $params)
 				$actions[$action->getName()] = $action;
 			}
 		}
-	}
-
-	if (! Perms::get()->admin) {
-		$query->filterPermissions(Perms::get()->getGroups());
 	}
 
 	if (!empty($_REQUEST['sort_mode'])) {
