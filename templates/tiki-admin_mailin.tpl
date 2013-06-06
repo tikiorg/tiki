@@ -9,6 +9,10 @@
       {tr}Account{/tr}
     </th>
     <th>{tr}Type{/tr}</th>
+    <th>{tr}Active{/tr}</th>
+    <th>{tr}Anonym{/tr}</th>
+    <th>{tr}Attach{/tr}</th>
+    <th>{tr}Inline{/tr}</th>
   </tr>
   {cycle values="even,odd" print=false}
   {section name=ix loop=$accounts}
@@ -19,6 +23,12 @@
       </td>
       <td class="text">{$accounts[ix].account}</td>
       <td class="text">{tr}{$accounts[ix].type}{/tr}</td>
+      <td class="text">{tr}{$accounts[ix].active}{/tr}</td>
+      <td class="text">{tr}{$accounts[ix].anonymous}{/tr}</td>
+      <td class="text">{tr}{$accounts[ix].attachments}{/tr}</td>
+      <td class="text">{tr}{$accounts[ix].show_inlineImages}{/tr}</td>
+	  
+	  
     </tr>
   {/section}
 </table>
