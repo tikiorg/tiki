@@ -124,7 +124,7 @@ function module_upcoming_events($mod_reference, $module_params)
 		$calIds = preg_split('/[\|:\&,]/', $module_params['calendarId']);
 	}
 
-	if (!empty($viewable))
+	if (!empty($viewable)) {
 		$events = $calendarlib->upcoming_events(
 			$mod_reference['rows'],
 			array_intersect($calIds, $viewable),
@@ -133,8 +133,9 @@ function module_upcoming_events($mod_reference, $module_params)
 			isset($module_params['priorDays']) ? (int) $module_params['priorDays'] : 0,
 			isset($module_params['maxDays']) ? (int) $module_params['maxDays'] : 365
 		);
+	}
 
-	$smarty->assign('modUpcomingEvents', $events);
+	$smarty->assign('modUpcomingEvents', $events['data']);
 	$smarty->assign('maxlen', isset($module_params["maxlen"]) ? $module_params["maxlen"] : 0);
 	$smarty->assign('showDescription', isset($module_params['showDescription']) ? $module_params['showDescription'] : 'n');
 	$smarty->assign('showEnd', isset($module_params['showEnd']) ? $module_params['showEnd'] : 'n');
