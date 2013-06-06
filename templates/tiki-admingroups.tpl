@@ -162,7 +162,7 @@
 						{/foreach}
 					</select>
 					<br>
-					{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Use Ctrl+Click to select multiple options{/tr}{/remarksbox}
+					{if $prefs.jquery_ui_chosen neq 'y'}{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Use Ctrl+Click to select multiple options{/tr}{/remarksbox}{/if}
 				</td>
 			</tr>
 

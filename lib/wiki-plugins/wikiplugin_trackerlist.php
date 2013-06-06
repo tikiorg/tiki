@@ -741,7 +741,10 @@ function wikiplugin_trackerlist_info()
 
 function wikiplugin_trackerlist($data, $params)
 {
-	global $smarty, $tikilib, $dbTiki, $userlib, $tiki_p_admin_trackers, $prefs, $_REQUEST, $tiki_p_view_trackers, $user, $page, $tiki_p_tracker_vote_ratings, $tiki_p_tracker_view_ratings, $trklib, $tiki_p_traker_vote_rating, $tiki_p_export_tracker, $tiki_p_watch_trackers;
+	global $smarty, $tikilib, $dbTiki, $userlib, $tiki_p_admin_trackers, $prefs, $_REQUEST, $tiki_p_view_trackers, $user,
+		   $page, $tiki_p_tracker_vote_ratings, $tiki_p_tracker_view_ratings, $trklib,
+		   $tiki_p_export_tracker, $tiki_p_watch_trackers, $tiki_p_edit;
+
 	require_once("lib/trackers/trackerlib.php");
 	global $notificationlib;  include_once('lib/notifications/notificationlib.php');//needed if plugin tracker after plugin trackerlist
 	static $iTRACKERLIST = 0;
@@ -1423,6 +1426,15 @@ function wikiplugin_trackerlist($data, $params)
 				$newItemRateField = $allfields["data"][$i]['fieldId'];
 			}
 		}
+		$nonPublicFieldsWarning = '';
+		if ($tiki_p_edit === 'y') {
+			foreach ($allfields['data'] as $field) {
+				if ($field['isPublic'] !== 'y' && in_array($field['fieldId'], array_merge($listfields, $popupfields))) {
+					$nonPublicFieldsWarning = tra('You have attempted to view data of a tracker field which is not public. You need to ask the admin to change the setting to public for this field.');
+				}
+			}
+		}
+		$smarty->assign('nonPublicFieldsWarning', $nonPublicFieldsWarning);
 		$smarty->assign_by_ref('filterfield', $filterfield);
 		$smarty->assign_by_ref('filtervalue', $filtervalue);
 		$smarty->assign_by_ref('fields', $passfields);

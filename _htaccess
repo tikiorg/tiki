@@ -32,6 +32,11 @@
 	deny from all
 </FilesMatch>
 
+<FilesMatch "^changelog.txt$">
+	order deny,allow
+	deny from all
+</FilesMatch>
+
 # This prevents reading of tags file for developpers who run ctags on their server
 #<Files tags>
 #	order deny,allow
