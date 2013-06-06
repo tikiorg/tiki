@@ -258,7 +258,7 @@ function showDetails( id, domain, profile ) { // {{{
 								<td class="quickmode_notes">
 									<br/>
 									{assign var=profilesFilterUrlStart value='tiki-admin.php?profile=&categories%5B%5D='}
-									{assign var=profilesFilterUrlMid value='x&categories%5B%5D='}
+									{assign var=profilesFilterUrlMid value='.x&categories%5B%5D='}
 									{assign var=profilesFilterUrlEnd value='&repository=http%3a%2f%2fprofiles.tiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2'}
 									
 									<p>
