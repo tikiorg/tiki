@@ -190,7 +190,7 @@ class WikiLib extends TikiLib
 
 	// This method renames a wiki page
 	// If you think this is easy you are very very wrong
-	public function wiki_rename_page($oldName, $newName, $renameHomes = true)
+	public function wiki_rename_page($oldName, $newName, $renameHomes = true, $user = '')
 	{
 		global $prefs, $tikilib;
 		// if page already exists, stop here
@@ -320,7 +320,7 @@ class WikiLib extends TikiLib
 		$query = 'update `tiki_objects` set `itemId`=?,`name`=?,`href`=? where `itemId`=? and `type`=?';
 		$this->query($query, array( $newName, $newName, $newcathref, $oldName, 'wiki page'));
 
-		$this->rename_object('wiki page', $oldName, $newName);
+		$this->rename_object('wiki page', $oldName, $newName, $user);
 
 		// update categories if new name has a category default
 		$categlib = TikiLib::lib('categ');
