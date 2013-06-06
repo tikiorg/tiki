@@ -75,6 +75,28 @@
 		{
 			"type": "package",
 			"package": {
+				"name": "ckeditor/ckeditor/plugins/divarea",
+				"version": "4.1.1",
+				"dist": {
+					"url": "http://download.ckeditor.com/divarea/releases/divarea_4.1.1.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "ckeditor/ckeditor/plugins/divarea",
+				"version": "4.1",
+				"dist": {
+					"url": "http://download.ckeditor.com/divarea/releases/divarea_4.1.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
 				"name": "codemirror/codemirror",
 				"version": "2.25",
 				"dist": {
@@ -571,6 +593,7 @@
 		"bombayworks/zendframework1": "1.12.3",
 		"ckeditor/ckeditor": "*",
 		"ckeditor/ckeditor/skins/kama": "*",
+		"ckeditor/ckeditor/plugins/divarea": "*",
 		"codemirror/codemirror": "*",
 		"ezyang/htmlpurifier": "4.5.0",
 		"jarnokurlin/fullcalendar": "1.5.3.4",
