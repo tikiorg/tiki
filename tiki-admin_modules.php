@@ -475,13 +475,12 @@ if (!empty($_REQUEST['edit_module'])) {	// pick up ajax calls
 	$smarty->display('admin_modules_form.tpl');
 } else {
 	// unfix margins for hidden columns, css previously added in setup/cookies.php
-	if (isset($_SESSION['tiki_cookie_jar']['show_col2']) and $_SESSION['tiki_cookie_jar']['show_col2'] == 'n') {
+	if (getCookie('show_col2') === 'n') {
 		unset($headerlib->css[100][array_search('#c1c2 #wrapper #col1.marginleft { margin-left: 0; }', $headerlib->css[100])]);
 	}
-	if (isset($_SESSION['tiki_cookie_jar']['show_col3']) and $_SESSION['tiki_cookie_jar']['show_col3'] == 'n') {
+	if (getCookie('show_col3') === 'n') {
 		unset($headerlib->css[100][array_search('#c1c2 #wrapper #col1.marginright { margin-right: 0; }', $headerlib->css[100])]);
 	}
-
 
 	$smarty->assign('mid', 'tiki-admin_modules.tpl');
 	$smarty->display('tiki.tpl');

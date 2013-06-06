@@ -374,12 +374,21 @@ a.admbox.off img {
 	display: none;
 }
 
-#save_modules {
-	display: none;
+#save_modules a {
+	background-color: #faa;
+	background-image: none;
 }
 
-.ui-droppable.modules {
-	min-height: 1em;
+/* make empty module zones more "droppable" */
+
+.ui-droppable.modules, .ui-sortable.modules {
+	min-height: 10ex;
+	-webkit-box-shadow: inset 0px 0px 5px 5px rgba(0, 0, 0, .1);
+	box-shadow: inset 0px 0px 5px 5px rgba(0, 0, 0, .1);
+}
+
+#right_left.ui-sortable, #right_modules.ui-sortable {
+	min-height: 100ex;
 }
 
 /* end modules revamp */
