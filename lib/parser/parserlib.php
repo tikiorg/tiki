@@ -87,6 +87,7 @@ class ParserLib extends TikiDb_Bridge
 				'ck_editor'=>   false,
 				'namespace' => false,
 				'protect_email' => true,
+				'exclude_plugins' => array(),
 			), empty($option) ? array() : (array) $this->option, (array)$option
 		);
 	}
@@ -418,6 +419,12 @@ class ParserLib extends TikiDb_Bridge
 			//note parent plugin in case of plugins nested in an include - to suppress plugin edit icons below
 			$plugin_parent = isset($plugin_name) ? $plugin_name : false;
 			$plugin_name = $match->getName();
+
+			if (isset($this->option['exclude_plugins']) && in_array($plugin_name, $this->option['exclude_plugins'])) {
+				$match->replaceWith('');
+				continue;
+			}
+
 			//suppress plugin edit icons for plugins within includes since edit doesn't work for these yet
 			$this->option['suppress_icons'] = $plugin_name != 'include' && $plugin_parent && $plugin_parent == 'include' ?
 				true : $this->option['suppress_icons'];

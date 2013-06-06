@@ -169,6 +169,14 @@ function prefs_unified_list()
 			'separator' => ',',
 			'default' => array(),
 		),
+		'unified_excluded_plugins' => array(
+			'name' => tra('Excluded plugins'),
+			'description' => tra('List of plugin names to exclude while indexing.'),
+			'type' => 'text',
+			'filter' => 'word',
+			'separator' => ',',
+			'default' => array(),
+		),
 	);
 }
 
