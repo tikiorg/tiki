@@ -75,7 +75,7 @@ class Tracker_Field_Email extends Tracker_Field_Abstract implements Tracker_Fiel
 	{
 		switch ($type) {
 			case 'm':
-				return new Tracker_Field_Simple($fieldInfo, $itemData, $trackerDefinition, 'email');
+				return new self($fieldInfo, $itemData, $trackerDefinition, 'email');
 		}
 	}
 	
