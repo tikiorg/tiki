@@ -133,6 +133,8 @@ class Tracker_Options
 				return $def['default'];
 			}
 		}
+
+		return $default;
 	}
 
 	function getParamFromIndex($index, $default = false)
@@ -167,7 +169,7 @@ class Tracker_Options
 			$info = $this->getParamDefinition($key);
 			$value = $this->getParam($key);
 			if (isset($info['count']) && $info['count'] == '*') {
-				$values = $value;
+				$values = (array) $value;
 			} elseif (isset($info['separator']) && is_array($value)) {
 				$values = array(implode($info['separator'], $value));
 			} else {

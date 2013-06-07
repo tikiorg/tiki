@@ -682,9 +682,11 @@ class TrackerLib extends TikiLib
 	public function concat_item_from_fieldslist($trackerId,$itemId,$fieldsId,$status='o',$separator=' ')
 	{
 		$res='';
-		$sts = preg_split('/\|/', $fieldsId, -1, PREG_SPLIT_NO_EMPTY);
+		if (is_string($fieldsId)) {
+			$fieldsId = preg_split('/\|/', $fieldsId, -1, PREG_SPLIT_NO_EMPTY);
+		}
 		$definition = Tracker_Definition::get($trackerId);
-		foreach ($sts as $k => $field) {
+		foreach ($fieldsId as $k => $field) {
 			$myfield = $definition->getField($field);
 
 			$myfield['value'] = $this->get_item_value($trackerId, $itemId, $field);
@@ -699,9 +701,11 @@ class TrackerLib extends TikiLib
 
 	public function concat_all_items_from_fieldslist($trackerId,$fieldsId,$status='o',$separator=' ')
 	{
-		$sts = preg_split('/\|/', $fieldsId, -1, PREG_SPLIT_NO_EMPTY);
+		if (is_string($fieldsId)) {
+			$fieldsId = preg_split('/\|/', $fieldsId, -1, PREG_SPLIT_NO_EMPTY);
+		}
 		$res = array();
-		foreach ($sts as $field) {
+		foreach ($fieldsId as $field) {
 			if ($myfield=$this->get_tracker_field($field)) {
 				$is_date=($myfield['type']=='f');
 				$is_trackerlink=($myfield['type']=='r');
