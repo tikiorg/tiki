@@ -239,7 +239,7 @@ class Smarty_Tiki extends Smarty
 		}
 
 		if (! defined('TIKI_IN_INSTALLER')) {
-			require 'tiki-modules.php';
+			require_once 'tiki-modules.php';
 		}
 		
 		if (isset($style_base)) {
