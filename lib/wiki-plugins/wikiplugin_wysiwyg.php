@@ -12,10 +12,10 @@ function wikiplugin_wysiwyg_info()
 		'documentation' => 'PluginWYSIWYG',
 		'description' => tra('Permits to have a WYSIWYG section for part of a page.'),
 		'prefs' => array('wikiplugin_wysiwyg'),
-		'params' => array(),
 		'icon' => 'img/icons/mime/default.png',
 		'tags' => array( 'experimental' ),
 		'filter' => 'purifier',			/* N.B. uses htmlpurifier to ensure only "clean" html gets in */
+		'format' => 'html',
 		'body' => tra('Content'),
 		'extraparams' => true,
 		'params' => array(
@@ -125,6 +125,8 @@ $("#' . $exec_key . '").each(function(){
 				$("<button class=\"button_' . $exec_key . '\">" + tr("Save") + "</button>").button()
 					.click(function(event) {
 						var data = editor.getData();
+						data = data.replace(/<\/p>\n\n<p/g, "</p>\n<p");	// remove cke4 extra linefeeds
+						data = data.replace(/<\/p>\n$/g, "</p>");
 						$(editorSelector).modal(tr("Saving..."));
 
 						$.post("tiki-wikiplugin_edit.php", {
@@ -145,7 +147,7 @@ $("#' . $exec_key . '").each(function(){
 ';
 		TikiLib::lib('header')->add_jq_onready($js);
 	}
-	return '~np~' . $html . '~/np~';
+	return $html;
 
 }
 
