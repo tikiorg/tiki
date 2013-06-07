@@ -161,28 +161,16 @@ class Tracker_Field_Rating extends Tracker_Field_Abstract
 	{
 		global $user;
 
-		$mode = 'stars'; // default is stars for legacy reasons
+		$mode = $this->getOption('mode', 'stars');
 
-		$options_array = $this->getOption('option');
-		foreach ($options_array as $k => $v) {
-			if (!is_numeric($v)) {
-				$mode = $v;
-				$labelstartkey = $k + 1;
-				$rating_option_num = $k;
-				break;
-			}
-		}
+		$options_array = $this->getOption('option', array(1, 2, 3, 4, 5));
+		$labels_array = $this->getOption('labels', $options_array);
 		if ($mode == 'stars') {
 			$labels_array = array();
-		} else {
-			for ($i = $labelstartkey, $count_options_array = count($options_array); $i < $count_options_array; $i++) {
-				$labels_array[] = $options_array[$i];
-			}
 		}
+
 		if ($mode == 'like') {
 			$rating_options = array(0,1);
-		} elseif (isset($rating_option_num)) {
-			$rating_options = array_slice($options_array, 0, $rating_option_num);
 		} else {
 			$rating_options = $options_array;
 		}
