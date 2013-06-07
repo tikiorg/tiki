@@ -35,12 +35,9 @@ class Memcachelib
 		// preferences are overwritten in local.php (if defined)
 		require("db/{$tikidomainslash}local.php");
 
-		$this->options  = $memcached_options;
-
 		if (!$memcached_servers || (!empty($memcached_options) && !$memcached_options['enabled']) || ! class_exists('Memcache') ) {
 			$this->memcache = FALSE;
-			$this->options['enabled'] = FALSE;
-			TikiLib::lib('errorreport')->report(tra('Memcache could not be initialised, please check your settings.'));
+			$this->options  = array( 'enabled' => FALSE );
 		} else {
 			if ( $memcached_options['compress'] == 'y' ) {
 				$memcached_options['flags'] = MEMCACHE_COMPRESSED;
@@ -49,6 +46,7 @@ class Memcachelib
 				$memcached_options['flags'] = 0;
 			}
 
+			$this->options  = $memcached_options;
 			$this->memcache = new Memcache();
 			foreach ($memcached_servers as $server) {
 				if ( $server['host'] == 'localhost' ) {
@@ -112,11 +110,7 @@ class Memcachelib
 	function get($key, $default=NULL)
 	{
 		$key = $this->buildKey($key);
-		if ($this->memcache) {
-			$val = $this->memcache->get($key);
-		} else {
-			return $default;
-		}
+		$val = $this->memcache->get($key);
 		return ($val !== NULL) ? $val : $default;
 	}
 
@@ -179,10 +173,8 @@ class Memcachelib
 	 */
 	function delete($key)
 	{
-		if ($this->memcache) {
-			$key = $this->buildKey($key);
-			return $this->memcache->delete($key);
-		}
+		$key = $this->buildKey($key);
+		return $this->memcache->delete($key);
 	}
 
 	/**
@@ -190,9 +182,7 @@ class Memcachelib
 	 */
 	function flush()
 	{
-		if ($this->memcache) {
-			return $this->memcache->flush();
-		}
+		return $this->memcache->flush();
 	}
 
 	/**
