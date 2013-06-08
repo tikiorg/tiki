@@ -617,6 +617,9 @@ function prefs_feature_list($partial = false)
 			'description' => tra('Populate wiki pages and articles by email'),
 			'help' => 'Mail-in',
 			'keywords' => 'inbound email',
+			'dependencies' => array(
+				'feature_wiki',
+				),
 			'type' => 'flag',
 			'default' => 'n',
 			'view' => 'tiki-admin_mailin.php',

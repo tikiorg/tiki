@@ -81,7 +81,9 @@
       <td>{tr}Type{/tr}</td>
       <td colspan="3">
         <select name="type" id='mailin_type' onchange='javascript:chgMailinType();'>
-          <option value="article-put" {if $info.type eq 'article-put'}selected="selected"{/if}>{tr}article-put{/tr}</option>
+		  {if $prefs.feature_articles eq 'y'}
+			<option value="article-put" {if $info.type eq 'article-put'}selected="selected"{/if}>{tr}article-put{/tr}</option>
+          {/if}
           <option value="wiki-get" {if $info.type eq 'wiki-get'}selected="selected"{/if}>{tr}wiki-get{/tr}</option>
           <option value="wiki-put" {if $info.type eq 'wiki-put'}selected="selected"{/if}>{tr}wiki-put{/tr}</option>
           <option value="wiki-append" {if $info.type eq 'wiki-append'}selected="selected"{/if}>{tr}wiki-append{/tr}</option>
@@ -90,6 +92,7 @@
       </td>
     </tr>
 
+{if $prefs.feature_articles eq 'y'}
 <tr id='article_topic' {if $info.type ne 'article-put'}style="display:none;"{/if}><td>{tr}Article Topic{/tr}</td><td>
 <select name="article_topicId">
 {section name=t loop=$topics}
@@ -108,7 +111,7 @@
 </select>
 {if $tiki_p_admin_cms eq 'y'}<a href="tiki-article_types.php" class="link">{tr}Admin Types{/tr}</a>{/if}
 </td><td></td><td></td></tr>
-
+{/if}
     <tr>
       <td>{tr}Active{/tr}</td>
       <td colspan="3">
@@ -127,6 +130,7 @@
         <input type="radio" name="anonymous" {if $info.anonymous eq 'n'}checked="checked"{/if} value="n">
       </td>
     </tr>
+   {if $prefs.feature_wiki_attachments eq 'y'}
     <tr>
       <td>{tr}Allow attachments{/tr}</td>
       <td colspan="3">
@@ -145,21 +149,24 @@
         <input type="radio" name="show_inlineImages" {if $info.show_inlineImages eq 'n' || $info.show_inlineImages eq '' }checked="checked"{/if} value="n">
       </td>
     </tr>
+    {/if}
     <tr>
       <td>{tr}Discard to the end from{/tr}</td>
       <td colspan="3">
       <input type="text" name="discard_after" value="{$info.discard_after|escape}">
       </td>
    </tr>
+   {if $prefs.feature_categories eq 'y'}
     <tr>
       <td>{tr}Auto-assign categoryId{/tr}</td>
       <td colspan="3">
         <input type="text" size="10" name="categoryId" value="{$info.categoryId}" />
       </td>
     </tr>
+    {/if}
     <tr>
       <td>&nbsp;</td>
-      <td colspan="3"><input type="submit" name="new_acc" value="{if $accountId eq 0}{tr}Add{/tr}{else}{tr}Edit{/tr}{/if}"></td>
+      <td colspan="3"><input type="submit" name="new_acc" value="{if $accountId eq 0}{tr}Add{/tr}{else}{tr}Save{/tr}{/if}"></td>
     </tr>
   </table>
 </form>

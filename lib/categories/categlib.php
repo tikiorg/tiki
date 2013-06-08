@@ -319,7 +319,7 @@ class CategLib extends ObjectLib
 	 * @return nothing
 	 *
 	 */	
-	function categorizePage($pageName, $categId)
+	function categorizePage($pageName, $categId, $user = '')
 	{
 		global $objectlib;
 
@@ -332,10 +332,10 @@ class CategLib extends ObjectLib
 		$checkHandled = true;
 		$this->add_categorized_object('wiki page', $pageName, $description, $name, $href, $checkHandled);
 
-		$this->categorize($objectId, $categId);
+		$this->categorize($objectId, $categId, $user);
 	}
 
-	function categorize($catObjectId, $categId)
+	function categorize($catObjectId, $categId, $user = '')
 	{
 		global $prefs;
 		if (empty($categId)) {
@@ -352,7 +352,7 @@ class CategLib extends ObjectLib
 		$info = TikiLib::lib('object')->get_object_via_objectid($catObjectId);
 		if ($prefs['feature_actionlog'] == 'y') {
 			global $logslib; include_once('lib/logs/logslib.php');
-			$logslib->add_action('Categorized', $info['itemId'], $info['type'], "categId=$categId");
+			$logslib->add_action('Categorized', $info['itemId'], $info['type'], "categId=$categId", $user);
 		}
 		require_once 'lib/search/refresh-functions.php';
 		refresh_index($info['type'], $info['itemId']);

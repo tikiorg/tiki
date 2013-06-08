@@ -156,12 +156,15 @@ function	mailin_extract_inline_images($pageName, $output, &$body, &$out, $user)
 	$is_html = true;
 
 	// Locate the page with inline attachments	
+	// Check deep level first, to avoid detecting extra, non-inlined attachments
 	$activeParts = array();
-	if (isset($output["parts"][1]) && isset($output["parts"][1]['ctype_parameters']['name'])) {
-		$activeParts = $output["parts"];
+	if (isset($output["parts"][0]["parts"][0]['parts'][1]["type"]) && $output["parts"][0]["parts"][0]['parts'][1]["type"] == 'text/html') {
+		$activeParts = $output["parts"][0]["parts"];
 	} elseif (isset($output["parts"][0]['parts'][1]["type"]) && $output["parts"][0]['parts'][1]["type"] == 'text/html') {
 		$activeParts = $output["parts"][0]['parts'][1];
-	}
+	} elseif (isset($output["parts"][1]) && isset($output["parts"][1]['ctype_parameters']['name'])) {
+		$activeParts = $output["parts"];
+	} 
 	
 	// Scroll the page attachments
 	for ($it = 0, $count_outputparts = count($activeParts); $it < $count_outputparts; $it++) {
@@ -239,6 +242,10 @@ foreach ($accs['data'] as $acc) {
 		$can_addAttachment = $acc['attachments'];
 	}
 	
+	if (empty($acc['account'])) {
+		continue;
+	}
+	
 	$content.= "<b>Processing account</b><br />";
 	$content.= "Account :" . $acc['account'] . "<br />";
 	$content.= "Type    :" . $acc['type'] . "<br />";
@@ -249,6 +256,8 @@ foreach ($accs['data'] as $acc) {
 	if ($pop3->connect($acc["pop"], $acc["port"])) {
 		$content.= "OK.<br />";
 		$content.= "Logging in...";
+		
+		// Login
 		if ($status = ($pop3->login($acc["username"], $acc["pass"], "USER")) !== FALSE) {
 			$content.= "OK (" . $status . ").<br />";
 			if (defined($debugger)) $debugger->msg("Logged in, status " . $status);
@@ -283,7 +292,7 @@ foreach ($accs['data'] as $acc) {
 					$message = $pop3->getMsg($i);
 					$output = mime::decode($message);
 
-					$content.= "Reading a request.<br />From: " . $aux["From"] . "<br />Subject: " . $output['header']['subject'] . "<br />";
+					$content.= "<br />Reading a request.<br />From: " . $aux["From"] . "<br />Subject: " . $output['header']['subject'] . "<br />";
 					$content.= "sender email: " . $email_from . "<br />";
 					$aux["sender"]["user"] = $userlib->get_user_by_email($email_from);
 					$content.= "sender user: " . $aux["sender"]["user"] . "<br />";
@@ -306,7 +315,7 @@ foreach ($accs['data'] as $acc) {
 							$aux["sender"]["name"] = $email_from;
 						}
 						
-						if ($acc['type'] == 'article-put') {
+						if ($prefs['prefs.feature_articles'] && $acc['type'] == 'article-put') {
 							// This is used to CREATE articles
 							$title = trim($output['header']['subject']);
 							$msgbody = mailin_get_body($output);
@@ -439,14 +448,16 @@ foreach ($accs['data'] as $acc) {
 									$body = preg_replace("/" . $acc['discard_after'] . ".*$/s", "", $body);
 								}
 								if (!empty($body)) {
-									mailin_extract_inline_images($page, $output, $body, $content, $aux["sender"]["user"]);
-									mailin_check_attachments($output, $content, $page, $aux["sender"]["user"], $body);
+									if ($prefs['feature_wiki_attachments'] === 'y') {
+										mailin_extract_inline_images($page, $output, $body, $content, $aux["sender"]["user"]);
+										mailin_check_attachments($output, $content, $page, $aux["sender"]["user"], $body);
+									}
 									if (!$tikilib->page_exists($page)) {
-										$content.= "Page: $page has been created<br />";
 										$tikilib->create_page($page, 0, $body, $tikilib->now, "Created from " . $acc["account"], $aux["sender"]["user"], '0.0.0.0', '');
+										$content.= "Page: $page has been created<br />";
 										
 										// Assign category, if specified
-										if (isset($acc['categoryId'])) {
+										if ($prefs['feature_categories'] && isset($acc['categoryId'])) {
 											try {
 												$categoryId = intval($acc['categoryId']);
 												if ($categoryId > 0) {
@@ -454,7 +465,7 @@ foreach ($accs['data'] as $acc) {
 													$categlib = TikiLib::lib('categ');
 													$categories = $categlib->get_category($categoryId);
 													if ($categories !== false && !empty($categories)) {
-														$categlib->categorizePage($page, $categoryId);
+														$categlib->categorizePage($page, $categoryId, $aux["sender"]["user"]);
 														$content.= "Page: $page categorized. Id: ".$categoryId."<br />";
 													} else {
 														$content.= "Page: $page not categorized. Invalid categoryId: ".$categoryId."<br />";
@@ -495,11 +506,13 @@ foreach ($accs['data'] as $acc) {
 									$body = preg_replace("/" . $acc['discard_after'] . ".*$/s", "", $body);
 								}
 								if (isset($body)) {
-									mailin_extract_inline_images($page, $output, $body, $content, $aux["sender"]["user"]);
-									mailin_check_attachments($output, $content, $page, $aux["sender"]["user"], $body);
+									if ($prefs['feature_wiki_attachments'] === 'y') {
+										mailin_extract_inline_images($page, $output, $body, $content, $aux["sender"]["user"]);
+										mailin_check_attachments($output, $content, $page, $aux["sender"]["user"], $body);
+									}
 									if (!$tikilib->page_exists($page)) {
-										$content.= "Page: $page has been created<br />";
 										$tikilib->create_page($page, 0, $body, $tikilib->now, "Created from " . $acc["account"], $aux["sender"]["user"], '0.0.0.0', '');
+										$content.= "Page: $page has been created<br />";
 									} else {
 										$info = $tikilib->get_page_info($page);
 										if ($acc['type'] == 'wiki-append' || $acc['type'] == 'wiki' && $method == "APPEND") $body = $info['data'] . $body;

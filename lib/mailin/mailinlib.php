@@ -43,6 +43,10 @@ class MailinLib extends TikiLib
 		$ret = array();
 
 		while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+			// Decrypt the password
+			$pwd = $this->decryptPassword($res['pass']);
+			$res['pass'] = $pwd;
+
 			$ret[] = $res;
 		}
 
@@ -78,6 +82,10 @@ class MailinLib extends TikiLib
 		$ret = array();
 
 		while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+			// Decrypt the password
+			$pwd = $this->decryptPassword($res['pass']);
+			$res['pass'] = $pwd;
+
 			$ret[] = $res;
 		}
 
@@ -108,8 +116,11 @@ class MailinLib extends TikiLib
 	*  @param 0 $categoryId
 	* @return bool
 	 */
-	function replace_mailin_account($accountId, $account, $pop, $port, $username, $pass, $smtp, $useAuth, $smtpPort, $type, $active, $anonymous, $attachments, $article_topicId = NULL, $article_type = NULL, $discard_after=NULL, $show_inlineImages='n', $categoryId = 0)
+	function replace_mailin_account($accountId, $account, $pop, $port, $username, $clearpass, $smtp, $useAuth, $smtpPort, $type, $active, $anonymous, $attachments, $article_topicId = NULL, $article_type = NULL, $discard_after=NULL, $show_inlineImages='n', $categoryId = 0)
 	{
+		// Encrypt password
+		$pass = $this->encryptPassword($clearpass);
+		
 		if ($accountId) {
 			$bindvars = array($account,$pop,(int)$port,(int)$smtpPort,$username,$pass,$smtp,$useAuth,$type,$active,$anonymous,$attachments,(int)$article_topicId,$article_type,$discard_after,$show_inlineImages, $categoryId, (int)$accountId);
 			$query = "update `tiki_mailin_accounts` set `account`=?, `pop`=?, `port`=?, `smtpPort`=?, `username`=?, `pass`=?, `smtp`=?, `useAuth`=?, `type`=?, `active`=?, `anonymous`=?, `attachments`=?, `article_topicId`=?, `article_type`=? , `discard_after`=?, `show_inlineImages`=?, `categoryId`=? where `accountId`=?";
@@ -147,7 +158,36 @@ class MailinLib extends TikiLib
 			return false;
 		}
 		$res = $result->fetchRow(DB_FETCHMODE_ASSOC);
+		
+		// Decrypt the password
+		$pwd = $this->decryptPassword($res['pass']);
+		$res['pass'] = $pwd;
+
 		return $res;
+	}
+	
+	/**
+	 * encryptPassword the email account password
+	 *
+	 * @param string $pwd Password in clear-text
+	 * @return crypt Encoded password
+	 *
+	 */	
+	function encryptPassword($pwd) {
+		$encoded =  base64_encode($pwd);
+		return $encoded;
+	}
+
+	/**
+	 * decryptPassword the email account password
+	 *
+	 * @param crypt $$encrypted Encoded password
+	 * @return string Return clear text password
+	 *
+	 */	
+	function decryptPassword($encoded) {
+		$plaintext =  base64_decode($encoded);
+		return $plaintext;
 	}
 }
 $mailinlib = new MailinLib;
