@@ -207,8 +207,8 @@
       <td><input type="submit" name="set_auto" value="{tr}Set{/tr}"></td>
     </tr>
     <tr>
-      <td>{tr}Check Manually{/tr}</td>
-      <td><a href="tiki-mailin.php">Check now</a></td>
+      <td>{tr}Check manually{/tr}</td>
+      <td><a href="tiki-mailin.php">Check Now</a></td>
     </tr>
   </table>
 </form>
