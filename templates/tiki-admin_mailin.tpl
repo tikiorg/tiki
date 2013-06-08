@@ -171,10 +171,10 @@
       <td colspan="3">
 		&nbsp;&nbsp;
         {tr}Yes{/tr}
-        <input type="radio" name="respond_email" {if $prefs.mailin_respond_email eq 'y'}checked="checked"{/if} value="y">
+        <input type="radio" name="respond_email" {if $info.respond_email eq 'y'}checked="checked"{/if} value="y">
 		&nbsp;&nbsp;
         {tr}No{/tr}
-        <input type="radio" name="respond_email" {if $prefs.mailin_respond_email eq 'n'}checked="checked"{/if} value="n">
+        <input type="radio" name="respond_email" {if $info.respond_email eq 'n'}checked="checked"{/if} value="n">
       </td>
     </tr>
     <tr>
