@@ -352,14 +352,15 @@ foreach ($accs['data'] as $acc) {
 							
 							if ($prefs['feature_articles'] && $acc['type'] == 'article-put') {
 
-								
+								$title = trim($output['header']['subject']);
+								$topicId = isset($acc['article_topicId']) ? $acc['article_topicId'] : 0;
 								$chkUser = $aux["sender"]["user"];
-								if (!$wikilib->user_has_perm_on_object($chkUser, $page, 'wiki page', 'tiki_p_submit_article', 'tiki_p_edit_submission')) {
-									$content.= $chkUser." cannot edit the page: ".$page."<br />";
+								if (!$wikilib->user_has_perm_on_object($chkUser, $topicId, 'topic', 'tiki_p_submit_article', 'tiki_p_edit_submission')) {
+									$content.= $chkUser." cannot submit the article: ".$title."<br />";
 									$processEmail = false;
 								} if ($tiki_p_autoapprove_submission == 'y') {
-									if (!$wikilib->user_has_perm_on_object($chkUser, $page, 'wiki page', 'tiki_p_autoapprove_submission)')) {
-										$content.= $chkUser." cannot edit the page: ".$page."<br />";
+									if (!$wikilib->user_has_perm_on_object($chkUser, $topicId, 'topic', 'tiki_p_autoapprove_submission)')) {
+										$content.= $chkUser." cannot auto-approve the article: ".$title."<br />";
 										$processEmail = false;
 									}
 								}
