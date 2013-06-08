@@ -92,13 +92,13 @@ if ($_REQUEST['accountId']) {
 	$info['useAuth'] = 'n';
 	$info['port'] = 110;
 	$info['smtpPort'] = 25;
-	$info['type'] = 'article-put';
+	$info['type'] = 'wiki-put';
 	$info['active'] = 'y';
-	$info['anonymous'] = 'y';
-	$info['attachments'] = 'n';
+	$info['anonymous'] = 'n';
+	$info['attachments'] = 'y';
 	$info['article_topicId'] = '';
 	$info['article_type'] = '';
-	$info['show_inlineImages'] = 'n';
+	$info['show_inlineImages'] = 'y';
 	$info['categoryId'] = 0;
 	
 }
