@@ -296,7 +296,8 @@ foreach ($accs['data'] as $acc) {
 					$aux["msgid"] = $i;
 					$aux["realmsgid"] = preg_replace('/[<>]/', '', $aux["Message-ID"]);
 					$message = $pop3->getMsg($i);
-					$output = mime::decode($message);
+					$mimelib = new mime();
+					$output = $mimelib->decode($message);
 
 					$content.= "<br />Reading a request.<br />From: " . $aux["From"] . "<br />Subject: " . $output['header']['subject'] . "<br />";
 					$content.= "sender email: " . $email_from . "<br />";
@@ -349,7 +350,7 @@ foreach ($accs['data'] as $acc) {
 								$aux["sender"]["name"] = $email_from;
 							}
 							
-							if ($prefs['prefs.feature_articles'] && $acc['type'] == 'article-put') {
+							if ($prefs['feature_articles'] && $acc['type'] == 'article-put') {
 								// This is used to CREATE articles
 								$title = trim($output['header']['subject']);
 								$msgbody = mailin_get_body($output);
@@ -357,7 +358,7 @@ foreach ($accs['data'] as $acc) {
 									$msgbody = preg_replace("/" . $acc['discard_after'] . ".*$/s", "", $msgbody);
 								}
 								$heading = $msgbody;
-								$topicId = $acc['article_topicId'];
+								$topicId = isset($acc['article_topicId']) ? $acc['article_topicId'] : 0;
 								$userm = $aux['sender']['user'];
 								$authorName = $userm;
 								$body = '';
@@ -549,8 +550,11 @@ foreach ($accs['data'] as $acc) {
 											$content.= "Page: $page has been created<br />";
 										} else {
 											$info = $tikilib->get_page_info($page);
-											if ($acc['type'] == 'wiki-append' || $acc['type'] == 'wiki' && $method == "APPEND") $body = $info['data'] . $body;
-											else $body = $body . $info['data'];
+											if ($acc['type'] == 'wiki-append' || $acc['type'] == 'wiki' && $method == "APPEND") {
+												$body = $info['data'] . $body;
+											} else {
+												$body = $body . $info['data'];
+											}
 											$tikilib->update_page($page, $body, "Updated from " . $acc["account"], $aux["sender"]["user"], '0.0.0.0', '');
 											$content.= "Page: $page has been updated";
 										}

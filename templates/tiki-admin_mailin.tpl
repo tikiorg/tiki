@@ -87,6 +87,7 @@
           {/if}
           <option value="wiki-get" {if $info.type eq 'wiki-get'}selected="selected"{/if}>{tr}wiki-get{/tr}</option>
           <option value="wiki-put" {if $info.type eq 'wiki-put'}selected="selected"{/if}>{tr}wiki-put{/tr}</option>
+          <option value="wiki-prepend" {if $info.type eq 'wiki-prepend'}selected="selected"{/if}>{tr}wiki-prepend{/tr}</option>
           <option value="wiki-append" {if $info.type eq 'wiki-append'}selected="selected"{/if}>{tr}wiki-append{/tr}</option>
           <option value="wiki" {if $info.type eq 'wiki'}selected="selected"{/if}>{tr}wiki{/tr}</option>
         </select>
