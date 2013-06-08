@@ -156,7 +156,7 @@ class mime
 						$back['attachments'][] = $back['d_parameters'];
 					}
 					$encoding = isset($content_transfer_encoding) ? $content_transfer_encoding['value'] : '7bit';
-					$back['body'] = mime::decodeBody($body, $encoding);
+					$back['body'] = $this->decodeBody($body, $encoding);
 					if ( array_key_exists('ctype_parameters', $back)
 							and isset($back['ctype_parameters'])
 							and $back['ctype_parameters']
@@ -188,23 +188,23 @@ class mime
 					}
 
 					for ($i = 0, $icount_parts = count($parts); $i < $icount_parts; $i++) {
-						$back['parts'][] = mime::decode($parts[$i], $default_ctype);
+						$back['parts'][] = $this->decode($parts[$i], $default_ctype);
 					}
 					break;
 
 				case 'message/rfc822':
-					$back['parts'][] = mime::decode($body);
+					$back['parts'][] = $this->decode($body);
 					break;
 
 				default:
 					if (!isset($content_transfer_encoding['value'])) {
 						$content_transfer_encoding['value'] = '7bit';
 					}
-					$back['body'] = mime::decodeBody($body, $content_transfer_encoding['value']);
+					$back['body'] = $this->decodeBody($body, $content_transfer_encoding['value']);
 					break;
 			}
 		} else {
-			$back['body'] = mime::decodeBody($body);
+			$back['body'] = $this->decodeBody($body);
 		}
 		$ctype = explode('/', $default_ctype);
 		$back['ctype_primary'] = $ctype[0];
