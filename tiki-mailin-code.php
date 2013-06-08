@@ -469,9 +469,9 @@ foreach ($accs['data'] as $acc) {
 									
 									// This is used to UPDATE wiki pages
 
+									$chkUser = $aux["sender"]["user"];
 									if ($tikilib->page_exists($page)) {
 										// Check permissions for page
-										$chkUser = $aux["sender"]["user"];
 										if (!$wikilib->user_has_perm_on_object($chkUser, $page, 'wiki page', 'tiki_p_edit')) {
 											$content.= $chkUser." cannot edit the page: ".$page."<br />";
 											$processEmail = false;
@@ -484,7 +484,7 @@ foreach ($accs['data'] as $acc) {
 										// Check global permissions
 										$userlib = TikiLib::lib('user');
 										if (!$userlib->user_has_permission($chkUser, 'tiki_p_edit')) {
-											$content.= $chkUser." cannot created the page: ".$page."<br />";
+											$content.= $chkUser." cannot create the page: ".$page."<br />";
 											$processEmail = false;
 										}
 										if (!$userlib->user_has_permission($chkUser, 'tiki_p_wiki_attach_files')) {
