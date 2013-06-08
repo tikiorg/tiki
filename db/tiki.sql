@@ -1253,7 +1253,7 @@ CREATE TABLE `tiki_mailin_accounts` (
   `discard_after` varchar(255) default NULL,
   `show_inlineImages` char(1) NULL,
   `categoryId` int(12) NULL,
-  `respond_email` char(1) NOT NULL default 'n',
+  `respond_email` char(1) NOT NULL default 'y',
   PRIMARY KEY (`accountId`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 

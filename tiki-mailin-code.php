@@ -351,47 +351,63 @@ foreach ($accs['data'] as $acc) {
 							}
 							
 							if ($prefs['feature_articles'] && $acc['type'] == 'article-put') {
-								// This is used to CREATE articles
-								$title = trim($output['header']['subject']);
-								$msgbody = mailin_get_body($output);
-								if ($msgbody && isset($acc['discard_after'])) {
-									$msgbody = preg_replace("/" . $acc['discard_after'] . ".*$/s", "", $msgbody);
+
+								
+								$chkUser = $aux["sender"]["user"];
+								if (!$wikilib->user_has_perm_on_object($chkUser, $page, 'wiki page', 'tiki_p_submit_article', 'tiki_p_edit_submission')) {
+									$content.= $chkUser." cannot edit the page: ".$page."<br />";
+									$processEmail = false;
+								} if ($tiki_p_autoapprove_submission == 'y') {
+									if (!$wikilib->user_has_perm_on_object($chkUser, $page, 'wiki page', 'tiki_p_autoapprove_submission)')) {
+										$content.= $chkUser." cannot edit the page: ".$page."<br />";
+										$processEmail = false;
+									}
 								}
-								$heading = $msgbody;
-								$topicId = isset($acc['article_topicId']) ? $acc['article_topicId'] : 0;
-								$userm = $aux['sender']['user'];
-								$authorName = $userm;
-								$body = '';
-								$publishDate = $tikilib->now;
-								$cur_time = explode(',', $tikilib->date_format('%Y,%m,%d,%H,%M,%S', $publishDate));
-								$expireDate = $tikilib->make_time($cur_time[3], $cur_time[4], $cur_time[5], $cur_time[1], $cur_time[2], $cur_time[0] + 1);
-								$subId = 0;
-								$type = $acc['article_type'];
-								$useImage = 'n';
-								$image_x = '';
-								$image_y = '';
-								$imgname = '';
-								$imgsize = '';
-								$imgtype = '';
-								$imgdata = '';
-								$topline = '';
-								$subtitle = '';
-								$linkto = '';
-								$image_caption = '';
-								$lang = '';
-								$rating = 7;
-								$isfloat = 'n';
-								global $artlib;
-								if (!is_object($artlib)) {
-									include_once ('lib/articles/artlib.php');
-								}
-								$subid = $artlib->replace_submission($title, $authorName, $topicId, $useImage, $imgname, $imgsize, $imgtype, $imgdata, $heading, $body, $publishDate, $expireDate, $userm, $subId, $image_x, $image_y, $type, $topline, $subtitle, $linkto, $image_caption, $lang, $rating, $isfloat);
-								global $tiki_p_autoapprove_submission;
-								if ($tiki_p_autoapprove_submission == 'y') {
-									$artlib->approve_submission($subid);
-									$content.= "Article: $title has been submitted<br />";
-								} else {
-									$content.= "Article: $title has been created<br />";
+
+								if ($processEmail) {
+									
+									// This is used to CREATE articles
+									$title = trim($output['header']['subject']);
+									$msgbody = mailin_get_body($output);
+									if ($msgbody && isset($acc['discard_after'])) {
+										$msgbody = preg_replace("/" . $acc['discard_after'] . ".*$/s", "", $msgbody);
+									}
+									$heading = $msgbody;
+									$topicId = isset($acc['article_topicId']) ? $acc['article_topicId'] : 0;
+									$userm = $aux['sender']['user'];
+									$authorName = $userm;
+									$body = '';
+									$publishDate = $tikilib->now;
+									$cur_time = explode(',', $tikilib->date_format('%Y,%m,%d,%H,%M,%S', $publishDate));
+									$expireDate = $tikilib->make_time($cur_time[3], $cur_time[4], $cur_time[5], $cur_time[1], $cur_time[2], $cur_time[0] + 1);
+									$subId = 0;
+									$type = $acc['article_type'];
+									$useImage = 'n';
+									$image_x = '';
+									$image_y = '';
+									$imgname = '';
+									$imgsize = '';
+									$imgtype = '';
+									$imgdata = '';
+									$topline = '';
+									$subtitle = '';
+									$linkto = '';
+									$image_caption = '';
+									$lang = '';
+									$rating = 7;
+									$isfloat = 'n';
+									global $artlib;
+									if (!is_object($artlib)) {
+										include_once ('lib/articles/artlib.php');
+									}
+									$subid = $artlib->replace_submission($title, $authorName, $topicId, $useImage, $imgname, $imgsize, $imgtype, $imgdata, $heading, $body, $publishDate, $expireDate, $userm, $subId, $image_x, $image_y, $type, $topline, $subtitle, $linkto, $image_caption, $lang, $rating, $isfloat);
+									global $tiki_p_autoapprove_submission;
+									if ($tiki_p_autoapprove_submission == 'y') {
+										$artlib->approve_submission($subid);
+										$content.= "Article: $title has been submitted<br />";
+									} else {
+										$content.= "Article: $title has been created<br />";
+									}
 								}
 							} else { //else if ($acc['type'] == 'article-put')
 								if ($acc['type'] == 'wiki') {
@@ -430,14 +446,16 @@ foreach ($accs['data'] as $acc) {
 										$chkUser = $aux["sender"]["user"];
 										if(!$wikilib->user_has_perm_on_object($chkUser, $page, 'wiki page', 'tiki_p_view')) {
 											$content.= $chkUser." cannot view the page: ".$page."<br />";
-											continue;
+											$processEmail = false;
 										}
 										
-										$mail->setSubject($page);
-										$info = $tikilib->get_page_info($page);
-										$data = $tikilib->parse_data($info["data"]);
-										$mail->addAttachment($info['data'], 'source.txt', 'plain/txt');
-										$mail->setHTML($data, strip_tags($data));
+										if ($processEmail) {
+											$mail->setSubject($page);
+											$info = $tikilib->get_page_info($page);
+											$data = $tikilib->parse_data($info["data"]);
+											$mail->addAttachment($info['data'], 'source.txt', 'plain/txt');
+											$mail->setHTML($data, strip_tags($data));
+										}
 									} else {
 										$l = $prefs['language'];
 										$mail_data = $smarty->fetchLang($l, "mail/mailin_reply_subject.tpl");
@@ -455,7 +473,7 @@ foreach ($accs['data'] as $acc) {
 										$chkUser = $aux["sender"]["user"];
 										if (!$wikilib->user_has_perm_on_object($chkUser, $page, 'wiki page', 'tiki_p_edit')) {
 											$content.= $chkUser." cannot edit the page: ".$page."<br />";
-											continue;
+											$processEmail = false;
 										}
 										if (!$wikilib->user_has_perm_on_object($chkUser, $page, 'wiki page', 'tiki_p_wiki_attach_files')) {
 											$can_addAttachment = 'n';
@@ -466,7 +484,7 @@ foreach ($accs['data'] as $acc) {
 										$userlib = TikiLib::lib('user');
 										if (!$userlib->user_has_permission($chkUser, 'tiki_p_edit')) {
 											$content.= $chkUser." cannot created the page: ".$page."<br />";
-											continue;
+											$processEmail = false;
 										}
 										if (!$userlib->user_has_permission($chkUser, 'tiki_p_wiki_attach_files')) {
 											$can_addAttachment = 'n';
@@ -474,46 +492,49 @@ foreach ($accs['data'] as $acc) {
 										}
 									}
 									
-									// Attempt to use HTML, if it exists
-									$body = mailin_get_html($output);
-									if (empty($body)) {
-										$body = mailin_get_body($output);
-									}
-									if (!empty($acc['discard_after']) && $body) {
-										$body = preg_replace("/" . $acc['discard_after'] . ".*$/s", "", $body);
-									}
-									if (!empty($body)) {
-										if ($prefs['feature_wiki_attachments'] === 'y') {
-											mailin_extract_inline_images($page, $output, $body, $content, $aux["sender"]["user"]);
-											mailin_check_attachments($output, $content, $page, $aux["sender"]["user"], $body);
+									if ($processEmail) {
+
+										// Attempt to use HTML, if it exists
+										$body = mailin_get_html($output);
+										if (empty($body)) {
+											$body = mailin_get_body($output);
 										}
-										if (!$tikilib->page_exists($page)) {
-											$tikilib->create_page($page, 0, $body, $tikilib->now, "Created from " . $acc["account"], $aux["sender"]["user"], '0.0.0.0', '');
-											$content.= "Page: $page has been created<br />";
-											
-											// Assign category, if specified
-											if ($prefs['feature_categories'] && isset($acc['categoryId'])) {
-												try {
-													$categoryId = intval($acc['categoryId']);
-													if ($categoryId > 0) {
-														// Validate the category before adding it
-														$categlib = TikiLib::lib('categ');
-														$categories = $categlib->get_category($categoryId);
-														if ($categories !== false && !empty($categories)) {
-															$categlib->categorizePage($page, $categoryId, $aux["sender"]["user"]);
-															$content.= "Page: $page categorized. Id: ".$categoryId."<br />";
-														} else {
-															$content.= "Page: $page not categorized. Invalid categoryId: ".$categoryId."<br />";
-														}
-													}
-												} catch (Exception $e) {
-													$content.= "Failed to categorize page: $page  categoryId: ".$categoryId.". Error: ".$e->getMessage()."<br />";
-												}
+										if (!empty($acc['discard_after']) && $body) {
+											$body = preg_replace("/" . $acc['discard_after'] . ".*$/s", "", $body);
+										}
+										if (!empty($body)) {
+											if ($prefs['feature_wiki_attachments'] === 'y') {
+												mailin_extract_inline_images($page, $output, $body, $content, $aux["sender"]["user"]);
+												mailin_check_attachments($output, $content, $page, $aux["sender"]["user"], $body);
 											}
-											
-										} else {
-											$tikilib->update_page($page, $body, "Created from " . $acc["account"], $aux["sender"]["user"], '0.0.0.0', '');
-											$content.= "Page: $page has been updated";
+											if (!$tikilib->page_exists($page)) {
+												$tikilib->create_page($page, 0, $body, $tikilib->now, "Created from " . $acc["account"], $aux["sender"]["user"], '0.0.0.0', '');
+												$content.= "Page: $page has been created<br />";
+												
+												// Assign category, if specified
+												if ($prefs['feature_categories'] && isset($acc['categoryId'])) {
+													try {
+														$categoryId = intval($acc['categoryId']);
+														if ($categoryId > 0) {
+															// Validate the category before adding it
+															$categlib = TikiLib::lib('categ');
+															$categories = $categlib->get_category($categoryId);
+															if ($categories !== false && !empty($categories)) {
+																$categlib->categorizePage($page, $categoryId, $aux["sender"]["user"]);
+																$content.= "Page: $page categorized. Id: ".$categoryId."<br />";
+															} else {
+																$content.= "Page: $page not categorized. Invalid categoryId: ".$categoryId."<br />";
+															}
+														}
+													} catch (Exception $e) {
+														$content.= "Failed to categorize page: $page  categoryId: ".$categoryId.". Error: ".$e->getMessage()."<br />";
+													}
+												}
+												
+											} else {
+												$tikilib->update_page($page, $body, "Created from " . $acc["account"], $aux["sender"]["user"], '0.0.0.0', '');
+												$content.= "Page: $page has been updated";
+											}
 										}
 									}
 								} elseif ($acc['type'] == 'wiki-append' || $acc['type'] == 'wiki-prepend' || ($acc['type'] == 'wiki' && $method == "APPEND") || ($acc['type'] == 'wiki' && $method == "PREPEND")) {
@@ -524,39 +545,42 @@ foreach ($accs['data'] as $acc) {
 									$chkUser = $aux["sender"]["user"];
 									if(!$wikilib->user_has_perm_on_object($chkUser, $page, 'wiki page', 'tiki_p_edit')) {
 										$content.= $chkUser." cannot edit the page: ".$page."<br />";
-										continue;
+										$processEmail = false;
 									}
 									if(!$wikilib->user_has_perm_on_object($chkUser, $page, 'wiki page', 'tiki_p_wiki_attach_files')) {
 										$can_addAttachment = 'n';
 										$show_inlineImages = 'n';
 									}
 
-									// Attempt to use HTML, if it exists
-									$body = mailin_get_html($output);
-									if (empty($body)) {
-										$body = mailin_get_body($output);
-									}
+									if ($processEmail) {
 
-									if ($body && !empty($acc['discard_after'])) {
-										$body = preg_replace("/" . $acc['discard_after'] . ".*$/s", "", $body);
-									}
-									if (isset($body)) {
-										if ($prefs['feature_wiki_attachments'] === 'y') {
-											mailin_extract_inline_images($page, $output, $body, $content, $aux["sender"]["user"]);
-											mailin_check_attachments($output, $content, $page, $aux["sender"]["user"], $body);
+										// Attempt to use HTML, if it exists
+										$body = mailin_get_html($output);
+										if (empty($body)) {
+											$body = mailin_get_body($output);
 										}
-										if (!$tikilib->page_exists($page)) {
-											$tikilib->create_page($page, 0, $body, $tikilib->now, "Created from " . $acc["account"], $aux["sender"]["user"], '0.0.0.0', '');
-											$content.= "Page: $page has been created<br />";
-										} else {
-											$info = $tikilib->get_page_info($page);
-											if ($acc['type'] == 'wiki-append' || $acc['type'] == 'wiki' && $method == "APPEND") {
-												$body = $info['data'] . $body;
-											} else {
-												$body = $body . $info['data'];
+
+										if ($body && !empty($acc['discard_after'])) {
+											$body = preg_replace("/" . $acc['discard_after'] . ".*$/s", "", $body);
+										}
+										if (isset($body)) {
+											if ($prefs['feature_wiki_attachments'] === 'y') {
+												mailin_extract_inline_images($page, $output, $body, $content, $aux["sender"]["user"]);
+												mailin_check_attachments($output, $content, $page, $aux["sender"]["user"], $body);
 											}
-											$tikilib->update_page($page, $body, "Updated from " . $acc["account"], $aux["sender"]["user"], '0.0.0.0', '');
-											$content.= "Page: $page has been updated";
+											if (!$tikilib->page_exists($page)) {
+												$tikilib->create_page($page, 0, $body, $tikilib->now, "Created from " . $acc["account"], $aux["sender"]["user"], '0.0.0.0', '');
+												$content.= "Page: $page has been created<br />";
+											} else {
+												$info = $tikilib->get_page_info($page);
+												if ($acc['type'] == 'wiki-append' || $acc['type'] == 'wiki' && $method == "APPEND") {
+													$body = $info['data'] . $body;
+												} else {
+													$body = $body . $info['data'];
+												}
+												$tikilib->update_page($page, $body, "Updated from " . $acc["account"], $aux["sender"]["user"], '0.0.0.0', '');
+												$content.= "Page: $page has been updated<br />";
+											}
 										}
 									}
 								} else {
@@ -580,6 +604,7 @@ foreach ($accs['data'] as $acc) {
 					}
 					// Remove the email from the pop3 server
 					$pop3->deleteMsg($i);
+					$content.= "Deleted message<br />";
 				}
 				
 			}
