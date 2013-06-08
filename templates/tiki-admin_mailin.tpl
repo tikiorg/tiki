@@ -97,9 +97,9 @@
 {if $prefs.feature_articles eq 'y'}
 <tr id='article_topic' {if $info.type ne 'article-put'}style="display:none;"{/if}><td>{tr}Article Topic{/tr}</td><td>
 <select name="article_topicId">
-{section name=t loop=$topics}
-<option value="{$topics[t].topicId|escape}" {if $info.article_topicId eq $topics[t].topicId}selected="selected"{/if}>{$topics[t].name}</option>
-{/section}
+{foreach $topics as $topicId=>$topic}
+<option value="{$topicId|escape}" {if $info.article_topicId eq $topicId}selected="selected"{/if}>{$topic.name}</option>
+{/foreach}
 <option value="" {if $info.article_topicId eq 0}selected="selected"{/if}>{tr}None{/tr}</option>
 </select>
 {if $tiki_p_admin_cms eq 'y'}<a href="tiki-admin_topics.php" class="link">{tr}Admin Topics{/tr}</a>{/if}
