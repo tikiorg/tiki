@@ -370,7 +370,7 @@ foreach ($accs['data'] as $acc) {
 									// This is used to CREATE articles
 									$title = trim($output['header']['subject']);
 									$msgbody = mailin_get_body($output);
-									if ($msgbody && isset($acc['discard_after'])) {
+									if ($msgbody && !empty($acc['discard_after'])) {
 										$msgbody = preg_replace("/" . $acc['discard_after'] . ".*$/s", "", $msgbody);
 									}
 									$heading = $msgbody;
