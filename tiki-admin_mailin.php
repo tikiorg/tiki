@@ -64,7 +64,8 @@ if (isset($_REQUEST['new_acc'])) {
 			$_REQUEST['article_type'],
 			$_REQUEST['discard_after'],
 			$_REQUEST['show_inlineImages'],
-			$_REQUEST['categoryId']
+			$_REQUEST['categoryId'],
+			$_REQUEST['respond_email']
 		);
 
 		$tikifeedback[] = array(
@@ -100,7 +101,7 @@ if ($_REQUEST['accountId']) {
 	$info['article_type'] = '';
 	$info['show_inlineImages'] = 'y';
 	$info['categoryId'] = 0;
-	
+	$info['respond_email'] = 'y';
 }
 $smarty->assign('info', $info);
 

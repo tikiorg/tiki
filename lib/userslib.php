@@ -5069,6 +5069,15 @@ class UsersLib extends TikiLib
 				'scope' => 'global',
 			),
 			array(
+				'name' => 'tiki_p_send_mailin',
+				'description' => tra('Can send email to a mail-in accounts, and have the email integrated. Only applies when the mail-in setting "anonymous" = n'),
+				'level' => 'basic',
+				'type' => 'tiki',
+				'admin' => false,
+				'prefs' => array('feature_mailin', 'feature_wiki'),
+				'scope' => 'global',
+			),
+			array(
 				'name' => 'tiki_p_admin_mailin',
 				'description' => tra('Can admin mail-in accounts'),
 				'level' => 'admin',

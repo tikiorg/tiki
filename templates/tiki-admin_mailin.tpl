@@ -1,6 +1,6 @@
 {title help="Webmail"}{tr}Mail-in accounts{/tr}{/title}
 
-<table class="normal">
+<table class="normal" style="text-align:center">
   <tr>
     <th>
       {tr}Action{/tr}
@@ -14,6 +14,7 @@
     <th>{tr}Attach{/tr}</th>
     <th>{tr}Inline{/tr}</th>
     <th>{tr}Categ{/tr}</th>
+    <th>{tr}Email resp{/tr}</th>
   </tr>
   {cycle values="even,odd" print=false}
   {section name=ix loop=$accounts}
@@ -29,7 +30,7 @@
       <td class="text">{tr}{$accounts[ix].attachments}{/tr}</td>
       <td class="text">{tr}{$accounts[ix].show_inlineImages}{/tr}</td>
       <td class="text">{tr}{$accounts[ix].categoryId}{/tr}</td>
-	  
+      <td class="text">{tr}{$accounts[ix].respond_email}{/tr}</td>
 	  
     </tr>
   {/section}
@@ -164,6 +165,17 @@
       </td>
     </tr>
     {/if}
+    <tr>
+      <td>{tr}Email response when no access{/tr}</td>
+      <td colspan="3">
+		&nbsp;&nbsp;
+        {tr}Yes{/tr}
+        <input type="radio" name="mailin_respond_email" {if $prefs.mailin_respond_email eq 'y'}checked="checked"{/if} value="y">
+		&nbsp;&nbsp;
+        {tr}No{/tr}
+        <input type="radio" name="mailin_respond_email" {if $prefs.mailin_respond_email eq 'n'}checked="checked"{/if} value="n">
+      </td>
+    </tr>
     <tr>
       <td>&nbsp;</td>
       <td colspan="3"><input type="submit" name="new_acc" value="{if $accountId eq 0}{tr}Add{/tr}{else}{tr}Save{/tr}{/if}"></td>
