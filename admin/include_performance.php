@@ -28,6 +28,14 @@ $opcode_stats = array(
 );
 
 if ( function_exists('apc_sma_info') && ini_get('apc.enabled') ) {
+
+	if( $_REQUEST['apc_clear']) {
+		check_ticket('admin-inc-performance');
+		apc_clear_cache();
+		apc_clear_cache('user');
+		apc_clear_cache('opcode');
+	}
+
 	$opcode_cache = 'APC';
 
 	$sma = apc_sma_info();
@@ -35,6 +43,10 @@ if ( function_exists('apc_sma_info') && ini_get('apc.enabled') ) {
 
 	$cache = apc_cache_info(null, true);
 	$hit_total = $cache['num_hits'] + $cache['num_misses'];
+	if (!$hit_total) {	// cheat for chart after cache clear
+		$hit_total = 1;
+		$cache['num_misses'] = 1;
+	}
 
 	$stat_flag = 'apc.stat';
 	$opcode_stats = array(
@@ -44,6 +56,7 @@ if ( function_exists('apc_sma_info') && ini_get('apc.enabled') ) {
 		'hit_hit' => $cache['num_hits'] / $hit_total,
 		'hit_miss' => $cache['num_misses'] / $hit_total,
 		'hit_total' => $hit_total,
+		'type' => 'apc',
 	);
 } elseif ( function_exists('xcache_info') && ( ini_get('xcache.cacher') == '1' || ini_get('xcache.cacher') == 'On' ) ) {
 	$opcode_cache = 'XCache';
@@ -59,6 +72,7 @@ if ( function_exists('apc_sma_info') && ini_get('apc.enabled') ) {
 			'hit_hit' => 0,
 			'hit_miss' => 0,
 			'hit_total' => 0,
+			'type' => 'xcache',
 		);
 
 		foreach (range(0, xcache_count(XC_TYPE_PHP) - 1) as $index) {
@@ -89,6 +103,7 @@ if ( function_exists('apc_sma_info') && ini_get('apc.enabled') ) {
 		'hit_hit' => 0,
 		'hit_miss' => 0,
 		'hit_total' => 0,
+		'type' => 'wincache',
 		);
 
 	$info = wincache_ocache_fileinfo();

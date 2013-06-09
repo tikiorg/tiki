@@ -83,6 +83,9 @@
 						{/if}
 					</p>
 				{/if}
+				{if $opcode_stats.warning_check}
+					<p>{tr}Clear all APC caches:{/tr} {self_link apc_clear=true}{tr}Clear Caches{/tr}{/self_link}</p>
+				{/if}
 			{else}
 				{tr}Bytecode cache is not used. Using a bytecode cache (APC, XCache, WinCache) is highly recommended for production environments.{/tr}
 			{/if}
