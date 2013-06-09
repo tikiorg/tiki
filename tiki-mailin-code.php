@@ -159,9 +159,9 @@ function	mailin_extract_inline_images($pageName, $output, &$body, &$out, $user)
 	// Locate the page with inline attachments	
 	// Check deep level first, to avoid detecting extra, non-inlined attachments
 	$activeParts = array();
-	if (isset($output["parts"][0]["parts"][0]['parts'][1]["type"]) && $output["parts"][0]["parts"][0]['parts'][1]["type"] == 'text/html') {
+	if (isset($output["parts"][0]["parts"][0]['parts'][1]["type"]) && isset($output["parts"][0]["parts"][0]["parts"][1]['ctype_parameters']['name'])) {
 		$activeParts = $output["parts"][0]["parts"];
-	} elseif (isset($output["parts"][0]['parts'][1]["type"]) && $output["parts"][0]['parts'][1]["type"] == 'text/html') {
+	} elseif (isset($output["parts"][0]['parts'][1]["type"]) && isset($output["parts"][0]["parts"][1]['ctype_parameters']['name'])) {
 		$activeParts = $output["parts"][0]['parts'][1];
 	} elseif (isset($output["parts"][1]) && isset($output["parts"][1]['ctype_parameters']['name'])) {
 		$activeParts = $output["parts"];
@@ -534,7 +534,7 @@ foreach ($accs['data'] as $acc) {
 												
 											} else {
 												$tikilib->update_page($page, $body, "Created from " . $acc["account"], $aux["sender"]["user"], '0.0.0.0', '');
-												$content.= "Page: $page has been updated";
+												$content.= "Page: $page has been updated<br />";
 											}
 										}
 									}
