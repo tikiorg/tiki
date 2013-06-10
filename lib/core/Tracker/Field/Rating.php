@@ -137,9 +137,9 @@ class Tracker_Field_Rating extends Tracker_Field_Abstract
 		$data = $this->gatherVoteData();
 
 		return array(
-			$baseKey => $typeFactory->sortable($data['voteavg']),
-			"{$baseKey}_count" => $typeFactory->sortable($data['numvotes']),
-			"{$baseKey}_sum" => $typeFactory->sortable($data['total']),
+			$baseKey => $typeFactory->numeric($data['voteavg']),
+			"{$baseKey}_count" => $typeFactory->numeric($data['numvotes']),
+			"{$baseKey}_sum" => $typeFactory->numeric($data['total']),
 		);
 	}
 

@@ -15,6 +15,8 @@ interface Search_Type_Factory_Interface
 	function timestamp($value);
 	// not tokenized - indexed - stored in database
 	function identifier($value);
+	// not tokenized - indexed - stored in database
+	function numeric($value);
 	// tokenized - indexed - unstored in database
 	function multivalue($values);
 	// tokenized - indexed - stored in database
