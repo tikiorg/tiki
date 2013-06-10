@@ -277,20 +277,18 @@
 								</fieldset>
 							{/if}
 				
-							{if $prefs.feature_wiki_allowhtml eq 'y' and $tiki_p_use_HTML eq 'y'}
-								{if $wysiwyg neq 'y' or $prefs.wysiwyg_htmltowiki eq 'y'}
-									<fieldset>
-										<legend>{tr}Allow HTML:{/tr}</legend>
-										<input type="checkbox" id="allowhtml" name="allowhtml" {if $allowhtml eq 'y'}checked="checked"{/if}>
-									</fieldset>
-									{if $prefs.ajax_autosave eq "y"}{jq}
+							{if $prefs.feature_wiki_allowhtml eq 'y' and $tiki_p_use_HTML eq 'y' and ($wysiwyg neq 'y' or $prefs.wysiwyg_htmltowiki eq 'y')}
+								<fieldset>
+									<legend>{tr}Allow HTML:{/tr}</legend>
+									<input type="checkbox" id="allowhtml" name="allowhtml" {if $allowhtml eq 'y'}checked="checked"{/if}>
+								</fieldset>
+								{if $prefs.ajax_autosave eq "y"}{jq}
 $("#allowhtml").change(function() {
 	auto_save( "editwiki", autoSaveId );
 });
-									{/jq}{/if}
-								{elseif $wysiwyg eq 'y'}
-									<input type="hidden" id="allowhtml" name="allowhtml" value="{if $allowhtml eq 'y'}on{/if}">
-								{/if}
+								{/jq}{/if}
+							{else}
+								<input type="hidden" id="allowhtml" name="allowhtml" value="{if $allowhtml eq 'y'}on{/if}">
 							{/if}
 							{if $prefs.feature_wiki_import_html eq 'y'}
 								<fieldset>
