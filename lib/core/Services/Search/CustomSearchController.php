@@ -98,16 +98,17 @@ class Services_Search_CustomSearchController
 					$config['type'] = $name;
 				}
 
-				if ($config['_filter'] == 'language') {
-					$filter = 'language';
-				} elseif ($config['_filter'] == 'type') {
-					$filter = 'type';
-				} elseif ($config['_filter'] == 'categories' || $name == 'categories') {
-					$filter = 'categories';
-				} elseif ($name == 'daterange') {
-					$filter = 'daterange';
-				} else {
-					$filter = 'content'; //default
+				$filter = 'content'; //default
+				if (isset($config['filter'])) {
+					if ($config['_filter'] == 'language') {
+						$filter = 'language';
+					} elseif ($config['_filter'] == 'type') {
+						$filter = 'type';
+					} elseif ($config['_filter'] == 'categories' || $name == 'categories') {
+						$filter = 'categories';
+					} elseif ($name == 'daterange') {
+						$filter = 'daterange';
+					}
 				}
 
 				if (is_array($value) && count($value) > 1) {
