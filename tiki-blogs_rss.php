@@ -62,7 +62,8 @@ if ($output["data"] == "EMPTY") {
 		$data["$descId"] = $tikilib->parse_data(
 			$data[$descId],
 			array(
-				'print' => true
+				'print' => true,
+				'is_html' => ($data['wysiwyg'] == 'y' ? 1 : 0)
 			)
 		);
 		$data['sefurl'] = filter_out_sefurl(sprintf($readrepl, $data['postId'], $data['blogId']), 'blogpost', $data['title']);
