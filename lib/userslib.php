@@ -2867,6 +2867,15 @@ class UsersLib extends TikiLib
 				'scope' => 'object',
 			),
 			array(
+				'name' => 'tiki_p_edit_article_user',
+				'description' => tra('Can edit the user (owner) of articles'),
+				'level' => 'editors',
+				'type' => 'articles',
+				'admin' => false,
+				'prefs' => array('feature_articles'),
+				'scope' => 'object',
+			),
+			array(
 				'name' => 'tiki_p_edit_submission',
 				'description' => tra('Can edit submissions'),
 				'level' => 'editors',

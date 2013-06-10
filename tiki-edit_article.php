@@ -522,6 +522,12 @@ if (isset($_REQUEST['save']) && empty($errors)) {
 	else
 		$ispublished = 'n';
 
+	if ( $tiki_p_edit_article_user == 'y' && isset($_REQUEST['author']) ) {
+		$author = $_REQUEST['author'];
+	} else {
+		$author = $user;
+	}
+
 	$_REQUEST['title'] = strip_tags($_REQUEST['title'], '<a><pre><p><img><hr><b><i>');
 	$artid = $artlib->replace_article(
 		$_REQUEST['title'],
@@ -536,7 +542,7 @@ if (isset($_REQUEST['save']) && empty($errors)) {
 		$body,
 		$publishDate,
 		$expireDate,
-		$user,
+		$author,
 		$articleId,
 		$_REQUEST['image_x'],
 		$_REQUEST['image_y'],
