@@ -13,7 +13,7 @@ interface Search_Index_Interface
 
 	function endUpdate();
 
-	function find(Search_Expr_Interface $query, Search_Query_Order $sortOrder, $resultStart, $resultCount);
+	function find(Search_Query_Interface $query, $resultStart, $resultCount);
 
 	function getTypeFactory();
 

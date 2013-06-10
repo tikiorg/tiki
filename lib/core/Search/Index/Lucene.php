@@ -96,9 +96,10 @@ class Search_Index_Lucene implements Search_Index_Interface
 		return $query->getExpr();
 	}
 
-	function find(Search_Expr_Interface $query, Search_Query_Order $sortOrder, $resultStart, $resultCount)
+	function find(Search_Query_Interface $query, $resultStart, $resultCount)
 	{
-		$data = $this->internalFind($query, $sortOrder);
+		$expr = $query->getExpr();
+		$data = $this->internalFind($expr, $query->getSortOrder());
 
 		$result = array_slice($data['result'], $resultStart, $resultCount);
 
@@ -106,7 +107,7 @@ class Search_Index_Lucene implements Search_Index_Interface
 		$resultSet->setEstimate($data['count']);
 
 		if ($this->highlight) {
-			$resultSet->setHighlightHelper(new Search_Index_Lucene_HighlightHelper($query));
+			$resultSet->setHighlightHelper(new Search_Index_Lucene_HighlightHelper($expr));
 		} else {
 			$resultSet->setHighlightHelper(new Search_ResultSet_SnippetHelper);
 		}

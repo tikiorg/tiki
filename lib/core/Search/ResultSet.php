@@ -13,6 +13,7 @@ class Search_ResultSet extends ArrayObject
 	private $maxRecords;
 
 	private $highlightHelper;
+	private $filters = array();
 
 	public static function create($list)
 	{
@@ -101,6 +102,20 @@ class Search_ResultSet extends ArrayObject
 	function hasMore()
 	{
 		return $this->count > $this->offset + $this->maxRecords;
+	}
+
+	function getFacet(Search_Query_Facet_Interface $facet)
+	{
+		foreach ($this->filters as $filter) {
+			if ($filter->isFacet($facet)) {
+				return $filter;
+			}
+		}
+	}
+
+	function addFacetFilter(Search_ResultSet_FacetFilter $facet)
+	{
+		$this->filters[] = $facet;
 	}
 }
 

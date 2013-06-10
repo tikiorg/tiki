@@ -26,10 +26,10 @@ class Search_Index_Memory implements Search_Index_Interface
 	{
 	}
 
-	function find(Search_Expr_Interface $query, Search_Query_Order $sortOrder, $resultStart, $resultCount)
+	function find(Search_Query_Interface $query, $resultStart, $resultCount)
 	{
-		$this->lastQuery = $query;
-		$this->lastOrder = $sortOrder;
+		$this->lastQuery = $query->getExpr();
+		$this->lastOrder = $query->getSortOrder();
 		$this->lastStart = $resultStart;
 		$this->lastCount = $resultCount;
 		return array();

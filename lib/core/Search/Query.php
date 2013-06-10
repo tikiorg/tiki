@@ -5,7 +5,7 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-class Search_Query
+class Search_Query implements Search_Query_Interface
 {
 	private $objectList;
 	private $expr;
@@ -16,6 +16,7 @@ class Search_Query
 	private $identifierFields = null;
 
 	private $subQueries = array();
+	private $facets = array();
 
 	function __construct($query = null)
 	{
@@ -185,14 +186,17 @@ class Search_Query
 		$this->weightCalculator = $calculator;
 	}
 
-	function search(Search_Index_Interface $index)
+	function getSortOrder()
 	{
 		if ($this->sortOrder) {
-			$sortOrder = $this->sortOrder;
+			return $this->sortOrder;
 		} else {
-			$sortOrder = Search_Query_Order::getDefault();
+			return Search_Query_Order::getDefault();
 		}
+	}
 
+	function search(Search_Index_Interface $index)
+	{
 		if ($this->weightCalculator) {
 			$this->expr->walk(array($this->weightCalculator, 'calculate'));
 		}
@@ -206,7 +210,7 @@ class Search_Query
 			});
 		}
 
-		return $index->find($this->expr, $sortOrder, $this->start, $this->count);
+		return $index->find($this, $this->start, $this->count);
 	}
 
 	function getExpr()
@@ -258,5 +262,15 @@ class Search_Query
 		}
 
 		return $this->subQueries[$name];
+	}
+
+	function requestFacet(Search_Query_Facet_Interface $facet)
+	{
+		$this->facets[] = $facet;
+	}
+
+	function getFacets()
+	{
+		return $this->facets;
 	}
 }

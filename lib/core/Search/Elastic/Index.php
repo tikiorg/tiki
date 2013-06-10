@@ -96,17 +96,21 @@ class Search_Elastic_Index implements Search_Index_Interface
 		}
 	}
 
-	function find(Search_Expr_Interface $expr, Search_Query_Order $sortOrder, $resultStart, $resultCount)
+	function find(Search_Query_Interface $query, $resultStart, $resultCount)
 	{
 		$builder = new Search_Elastic_QueryBuilder;
-		$query = $builder->build($expr);
+		$queryPart = $builder->build($query->getExpr());
 
 		$builder = new Search_Elastic_OrderBuilder;
-		$order = $builder->build($sortOrder);
+		$orderPart = $builder->build($query->getSortOrder());
 
-		$query = array_merge(
-			$query,
-			$order,
+		$builder = new Search_Elastic_FacetBuilder;
+		$facetPart = $builder->build($query->getFacets());
+
+		$fullQuery = array_merge(
+			$queryPart,
+			$orderPart,
+			$facetPart,
 			array(
 				"from" => $resultStart,
 				"size" => $resultCount,
@@ -120,7 +124,7 @@ class Search_Elastic_Index implements Search_Index_Interface
 			)
 		);
 
-		$result = $this->connection->search($this->index, $query, $resultStart, $resultCount);
+		$result = $this->connection->search($this->index, $fullQuery, $resultStart, $resultCount);
 		$hits = $result->hits;
 
 		$entries = array_map(
@@ -138,6 +142,13 @@ class Search_Elastic_Index implements Search_Index_Interface
 		);
 
 		$resultSet = new Search_Elastic_ResultSet($entries, $hits->total, $resultStart, $resultCount);
+
+		$reader = new Search_Elastic_FacetReader($result);
+		foreach ($query->getFacets() as $facet) {
+			if ($filter = $reader->getFacetFilter($facet)) {
+				$resultSet->addFacetFilter($filter);
+			}
+		}
 
 		return $resultSet;
 	}
