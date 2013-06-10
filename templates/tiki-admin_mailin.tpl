@@ -132,40 +132,48 @@
         <input type="radio" name="anonymous" {if $info.anonymous eq 'n'}checked="checked"{/if} value="n">
       </td>
     </tr>
-   {if $prefs.feature_wiki_attachments eq 'y'}
     <tr>
       <td>{tr}Allow attachments{/tr}</td>
       <td colspan="3">
+	   {if $prefs.feature_wiki_attachments eq 'y'}
         {tr}Yes{/tr}
         <input type="radio" name="attachments" {if $info.attachments eq 'y'}checked="checked"{/if} value="y">
         {tr}No{/tr}
         <input type="radio" name="attachments" {if $info.attachments eq 'n'}checked="checked"{/if} value="n">
+	    {else}
+		<a href="tiki-admin.php?page=wiki&cookietab=2&highlight=feature_wiki_attachments">Activate attachments</a>
+		{/if}
       </td>
     </tr>
     <tr>
       <td>{tr}Show inline images{/tr}</td>
       <td colspan="3">
+		{if $prefs.feature_wiki_attachments eq 'y'}
         {tr}Yes{/tr}
         <input type="radio" name="show_inlineImages" {if $info.show_inlineImages eq 'y'}checked="checked"{/if} value="y">
         {tr}No{/tr}
         <input type="radio" name="show_inlineImages" {if $info.show_inlineImages eq 'n' || $info.show_inlineImages eq '' }checked="checked"{/if} value="n">
+	    {else}
+		<a href="tiki-admin.php?page=wiki&cookietab=2&highlight=feature_wiki_attachments">Activate attachments</a>
+		{/if}
       </td>
     </tr>
-    {/if}
     <tr>
       <td>{tr}Discard to the end from{/tr}</td>
       <td colspan="3">
       <input type="text" name="discard_after" value="{$info.discard_after|escape}">
       </td>
    </tr>
-   {if $prefs.feature_categories eq 'y'}
     <tr>
       <td>{tr}Auto-assign categoryId{/tr}</td>
       <td colspan="3">
+	   {if $prefs.feature_categories eq 'y'}
         <input type="text" size="10" name="categoryId" value="{$info.categoryId}" />
+        {else}
+		<a href="tiki-admin.php?page=features&highlight=feature_categories">Activate categories</a>
+		{/if}
       </td>
     </tr>
-    {/if}
     <tr>
       <td>{tr}Email response when no access{/tr}</td>
       <td colspan="3">
