@@ -28,6 +28,20 @@ class WikiParser_PluginMatcher implements Iterator, Countable
 		return $matcher;
 	}
 
+	public function __clone()
+	{
+		$new = $this;
+		$this->starts = array_map(function ($match) use ($new) {
+			$match->changeMatcher($new);
+			return clone $match;
+		}, $this->starts);
+
+		$this->ends = array_map(function ($match) use ($new) {
+			$match->changeMatcher($new);
+			return clone $match;
+		}, $this->ends);
+	}
+
 	private function getSubMatcher($start, $end)
 	{
 		$sub = new self;
