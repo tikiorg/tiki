@@ -89,6 +89,7 @@ class Tracker_Field_Rating extends Tracker_Field_Abstract
 	{
 		$ins_id = $this->getInsertId();
 
+		$result = null;
 		if (isset($requestData['vote']) && isset($requestData['itemId'])) {
 			$trklib = TikiLib::lib('trk');
 			$data = $this->getBaseFieldData();
