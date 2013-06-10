@@ -324,7 +324,7 @@ class UnifiedSearchLib
 	{
 		global $prefs;
 		$indexer = new Search_Indexer($index, $loggit);
-		$this->addSources($indexer);
+		$this->addSources($indexer, 'indexing');
 
 		if ($prefs['unified_tokenize_version_numbers'] == 'y') {
 			$indexer->addContentFilter(new Search_ContentFilter_VersionNumber);
@@ -464,8 +464,14 @@ class UnifiedSearchLib
      * @param string $mode
      * @return Search_Formatter_DataSource_Declarative
      */
-    function getDataSource($mode = 'indexing')
+    function getDataSource($mode = 'formatting')
 	{
+		global $prefs;
+
+		if ($mode === 'formatting' && $prefs['unified_engine'] === 'elastic') {
+			return new Search_Formatter_DataSource_Trusted;
+		}
+
 		$dataSource = new Search_Formatter_DataSource_Declarative;
 		$this->addSources($dataSource, $mode);
 
@@ -475,7 +481,7 @@ class UnifiedSearchLib
 	function getProfileExportHelper()
 	{
 		$helper = new Tiki_Profile_Writer_SearchFieldHelper;
-		$this->addSources($helper);
+		$this->addSources($helper, 'indexing'); // Need all fields, so use indexing
 
 		return $helper;
 	}
