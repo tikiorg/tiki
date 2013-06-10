@@ -12,10 +12,10 @@ function wikiplugin_wysiwyg_info()
 		'documentation' => 'PluginWYSIWYG',
 		'description' => tra('Permits to have a WYSIWYG section for part of a page.'),
 		'prefs' => array('wikiplugin_wysiwyg'),
-		'params' => array(),
 		'icon' => 'img/icons/mime/default.png',
 		'tags' => array( 'experimental' ),
 		'filter' => 'purifier',			/* N.B. uses htmlpurifier to ensure only "clean" html gets in */
+		'format' => 'html',
 		'body' => tra('Content'),
 		'extraparams' => true,
 		'params' => array(
@@ -70,82 +70,105 @@ function wikiplugin_wysiwyg($data, $params)
 
 		$js = '
 
-$("#' . $exec_key . '").each(function(){
+$("#' . $exec_key . '").each(function() {
+	var $this = $(this);
+	var $edit_button = $("<button class=\"edit_button_' . $exec_key . '\">" + tr("Edit") + "</button>")
+		.button()
+		.mouseover(function() {
+			$(this).show();
+			$this.css({
+				backgroundColor: "#eee",
+			});
+		});
 	var wp_bgcol = $(this).css("background-color");
 	$(this).mouseover(function(){
 		$(this).css({
-			backgroundColor: "#ddd",
-			cusor: "crosshair"
+			backgroundColor: "#eee",
 		});
-
+		var bleft = Math.round($this.offset().left + $this.width());
+		var btop = Math.round($this.offset().top + $this.height());
+		$(".edit_button_' . $exec_key . '")
+			.css({ left: bleft - $edit_button.width() - 10 + "px", top: btop - $edit_button.height() - 20 + "px" })
+			.show();
 	}).mouseout(function(){
 		$(this).css({
 			backgroundColor: wp_bgcol,
-			cusor: "inherit"
 		});
-	}).click(function(){
-		var $this = $(this);
-		// TODO set modal somehow?
-		//$("body *:not(#" + $(this).attr("id") + ")").css({backgroundColor: "#ddd"});
+		$(".edit_button_' . $exec_key . '").hide();
+	}).after(
+		$edit_button
+			.css({ position: "absolute", display: "none" })
+			.click(function() {
+				// TODO set modal somehow?
+				//$("body *:not(#" + $(this).attr("id") + ")").css({backgroundColor: "#ddd"});
 
-		var ok = true;
-		$(".' . $class . ':not(#' . $exec_key . ')").each(function () {
-			if (CKEDITOR.instances[$(this).attr("id")]) {
-				if (CKEDITOR.instances[$(this).attr("id")].mayBeDirty) {
-					if (confirm(tr("You have unsaved changes in this WYSIWYG section.\nDo you want to save your changes?"))) {
-						CKEDITOR.instances[$(this).attr("id")].focus();
-						ok = false;
+				$edit_button.hide();
+
+				var ok = true;
+				$(".wp_wysiwyg:not(#' . $exec_key . ')").each(function () {
+					if (CKEDITOR.instances[$(this).attr("id")]) {
+						if (CKEDITOR.instances[$(this).attr("id")].checkDirty()) {
+							if (confirm(tr("You have unsaved changes in this WYSIWYG section.\nDo you want to save your changes?"))) {
+								CKEDITOR.instances[$(this).attr("id")].focus();
+								ok = false;
+								return;
+							}
+						}
+						CKEDITOR.instances[$(this).attr("id")].destroy();
+					}
+					$(".button_" + $(this).attr("id")).remove();
+				});
+				if (!ok) {
+					return;
+				}
+
+				CKEDITOR.replace( $this.attr("id"),' . $ckoption . ');
+				CKEDITOR.on("instanceReady", function(event) {
+					// close others
+					var editor = event.editor;
+
+					if (editor.element.getId() != "' . $exec_key . '") {
 						return;
 					}
-				}
-				CKEDITOR.instances[$(this).attr("id")].destroy();
+					var editorSelector = "#cke_" + editor.element.getId();
+
+					$(".button_' . $exec_key . '").remove();
+
+					$(editorSelector).after(
+						$("<button class=\"button_' . $exec_key . '\">" + tr("Cancel") + "</button>").button()
+							.click(function() {
+								$(".button_' . $exec_key . '").remove();
+								editor.destroy();
+							})
+					).after(
+						$("<button class=\"button_' . $exec_key . '\">" + tr("Save") + "</button>").button()
+							.click(function(event) {
+								var data = editor.getData();
+								data = data.replace(/<\/p>\n\n<p/g, "</p>\n<p");	// remove cke4 extra linefeeds
+								data = data.replace(/<\/p>\n$/g, "</p>");
+								$(editorSelector).modal(tr("Saving..."));
+
+								$.post("tiki-wikiplugin_edit.php", {
+									page: "' . $page . '",
+									type: "wysiwyg",
+									message: "Modified by WYSIWYG Plugin",
+									index: ' . $execution . ',
+									content: data
+								}, function() {
+									location.reload();
+								});
+								return false;
+							})
+					);
+				});
 			}
-			$(".button_" + $(this).attr("id")).remove();
-		});
-		if (!ok) {
-			return;
-		}
-
-		CKEDITOR.replace( $this.attr("id"),' . $ckoption . ');
-		CKEDITOR.on("instanceReady", function(event) {
-			// close others
-			var editor = event.editor;
-
-			var editorSelector = "#cke_" + editor.element.getId();
-
-			$(".button_' . $exec_key . '").remove();
-
-			$(editorSelector).after(
-				$("<button class=\"button_' . $exec_key . '\">" + tr("Cancel") + "</button>").button()
-					.click(function() {
-						$(".button_' . $exec_key . '").remove();
-						editor.destroy();
-					})
-			).after(
-				$("<button class=\"button_' . $exec_key . '\">" + tr("Save") + "</button>").button()
-					.click(function(event) {
-						var data = editor.getData();
-						$(editorSelector).modal(tr("Saving..."));
-
-						$.post("tiki-wikiplugin_edit.php", {
-							page: "' . $page . '",
-							type: "wysiwyg",
-							message: "Modified by WYSIWYG Plugin",
-							index: ' . $execution . ',
-							content: data
-						}, function() {
-							location.reload();
-						});
-						return false;
-					})
-			);
-		});
-	});
+		)
+	);
 });
 ';
 		TikiLib::lib('header')->add_jq_onready($js);
 	}
-	return '~np~' . $html . '~/np~';
+	return $html;
 
 }
 

@@ -201,3 +201,13 @@ $smarty->assign(
 	)
 );
 
+// realpath_cache_size can make considerable difference on php performance apparently
+if (function_exists('realpath_cache_size')) {
+	$rpcs_current = realpath_cache_size();
+	$rpcs_ini = ini_get('realpath_cache_size');
+	$rpc_ttl = ini_get('realpath_cache_ttl');
+	$smarty->assign('realpath_cache_size_current', $rpcs_current);
+	$smarty->assign('realpath_cache_size_ini', $rpcs_ini);
+	$smarty->assign('realpath_cache_ttl', $rpc_ttl);
+	$smarty->assign('realpath_cache_size_percent', round($rpcs_current / TikiLib::lib('tiki')->return_bytes($rpcs_ini) * 100, 2));
+}
