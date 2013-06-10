@@ -98,7 +98,7 @@ ajaxLoadingShow("'.$dom_id.'");
 	defaultLanguage: "' . $prefs['language'] . '",
  	contentsLangDirection: "' . ($prefs['feature_bidi'] === 'y' ? 'rtl' : 'ltr') . '",
 	language: "' . ($prefs['feature_detect_language'] === 'y' ? '' : $prefs['language']) . '"
-	'. (empty($params['cols']) ? ',height: 400' : '') .'
+	'. (empty($params['rows']) ? ',height: "' . (empty($params['height']) ? '400' : $params['height']) . '"' : '') .'
 	, resize_dir: "both"
 	, allowedContent: true
 //	, extraAllowedContent: {		// TODO one day, currently disabling the "Advanced Content Filter" as tiki plugins are too complex
