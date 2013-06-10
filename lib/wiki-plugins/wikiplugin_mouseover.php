@@ -233,7 +233,11 @@ function wikiplugin_mouseover( $data, $params )
 	}
 
 	if ( $parse ) {
-		$text = $tikilib->parse_data($text);
+		$options = array('is_html' => 0);
+		if (containsStringHTML($text)) {
+			$options = array('is_html' => 1);
+		} 
+		$text = $tikilib->parse_data($text, $options);
 	}
 	if ( $params['parselabel'] == 'y' ) {
 		$label = "~/np~$label~np~";
@@ -272,4 +276,9 @@ function wikiplugin_mouseover( $data, $params )
 		"<span id=\"$id\" $class style=\"width: {$width}px; " . (isset($params['height']) ? "height: {$height}px; " : "") ."{$bgcolor} {$textcolor} {$padding} \">$text</span>~/np~";
 
 	return $html;
+}
+
+function containsStringHTML($str) 
+{
+	return preg_match ('/<[^>]*>/', $str) == 1;	
 }
