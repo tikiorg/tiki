@@ -253,7 +253,10 @@ function wikiplugin_mouseover( $data, $params )
 	}
 
 	$js = "\$('#$id-link').mouseover(function(event) {
-	\$('#$id').css('left', event.pageX + $offsetx).css('top', event.pageY + $offsety); showJQ('#$id', '$effect', '$speed'); $closeDelayStr });";
+	var pos = $('#tiki-center').position();
+	var top = event.pageY - pos.top;
+	var left = event.pageX - pos.left;
+	\$('#$id').css('position', 'absolute').css('left', left + $offsetx).css('top', top + $offsety); showJQ('#$id', '$effect', '$speed'); $closeDelayStr });";
 	if ($sticky) {
 		$js .= "\$('#$id').click(function(event) { hideJQ('#$id', '$effect', '$speed'); }).css('cursor','pointer');\n";
 	} else {
