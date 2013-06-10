@@ -1207,7 +1207,9 @@ function wikiplugin_img( $data, $params )
 		$repl = '{img src=' . $src . "\"}\n<p>" . $imgdata['desc'] . '</p>';
 	}
 
-	if ($prefs['feature_draw'] == 'y' && !empty($dbinfo['galleryId']) && $imgdata['noDrawIcon'] !== 'y') {
+	if ( ! TikiLib::lib('parser')->option['suppress_icons'] &&
+			$prefs['feature_draw'] == 'y' && !empty($dbinfo['galleryId']) && $imgdata['noDrawIcon'] !== 'y') {
+
 		global $tiki_p_edit;
 		$globalperms = Perms::get(array( 'type' => 'file gallery', 'object' => $dbinfo['galleryId'] ));
 		if ($imgdata['fromItemId']) {
