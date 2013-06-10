@@ -40,8 +40,8 @@ function prefs_share_list()
 			'default' => 'y',
 		),
 		'share_can_choose_how_much_time_access' => array(
-			'name' => tra('How much time access'),
-			'description' => tra('User can choose how much time the share page can be consult'),
+			'name' => tra('How many times accessed'),
+			'description' => tra('User can choose how many times the share page can be consulted'),
 			'type' => 'flag',
 			'dependencies' => array(
 				'auth_token_access',
@@ -49,8 +49,8 @@ function prefs_share_list()
 			'default' => 'n',
 		),
 		'share_max_access_time' => array(
-			'name' => tra('Max how much time access'),
-			'description' => tra('Maximum for select how much time the share page can be consult'),
+			'name' => tra('Max how many times accessed'),
+			'description' => tra('Maximum number of times that the shared page can be consulted'),
 			'type' => 'text',
 			'default' => '-1',
 		),
