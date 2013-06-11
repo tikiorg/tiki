@@ -118,7 +118,7 @@ if ($postId > 0) {
 
 	$smarty->assign('post_info', $data);
 	$smarty->assign('data', $data['data']);
-	$smarty->assign('parsed_data', $tikilib->parse_data($data['data']), array('is_html' => $is_wysiwyg));
+	$smarty->assign('parsed_data', $tikilib->parse_data($data['data'], array('is_html' => $is_wysiwyg)));
 	$smarty->assign('blogpriv', $data['priv']);
 
 	check_ticket('blog');
