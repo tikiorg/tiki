@@ -41,7 +41,7 @@ lang = {
 	"Please enter a page name" : "Si us plau, introdueix un nom de pàgina",
 	"Change Highlighter" : "Canvia el Ressaltador",
 	"Toggle Highlighter" : "Commuta el Ressaltador",
-	"Are you sure you want to unassign this module?" : "N'estàs segur que vols desassignar aquest mòdul?"
+	"Are you sure you want to unassign this module?" : "N'estàs segur que vols desassignar aquest mòdul?",
 	"Search Location" : "Cerca una adreça",
 	"To My Location" : "Localitza la meva posició",
 	"StreetView is not available at this specific point on the map. Zoom in as needed and make sure to click on a blue line." : "La funció StreetView hi és disponible en aquest punt específic sobre el mapa. Aproxima't amb el zoom el que et calgui i assegura't de fer clic sobre una línia blava.",
