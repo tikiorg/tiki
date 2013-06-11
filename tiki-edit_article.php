@@ -157,7 +157,7 @@ if (isset($_REQUEST["articleId"]) and $_REQUEST["articleId"] > 0) {
 	$smarty->assign('list_image_y', $article_data['list_image_y']);
 	$smarty->assign('reads', $article_data['nbreads']);
 	$smarty->assign('type', $article_data['type']);
-	$smarty->assign('author', $article_data['author']);
+	$smarty->assign('author', ($prefs['article_remembers_creator'] == 'y')?$article_data['author']:$user);
 	$smarty->assign('creator_edit', $article_data['creator_edit']);
 	$smarty->assign('rating', $article_data['rating']);
 	$smarty->assign('ispublished', $article_data['ispublished']);
@@ -522,10 +522,18 @@ if (isset($_REQUEST['save']) && empty($errors)) {
 	else
 		$ispublished = 'n';
 
+	// The field 'user' which is initially the author login is never displayed but it is used in ownership checks and "User Information" → "User contributions" tab
+	// This is not the same as authorName which is just for display and can be edited
+	// Before pref article_remembers_creator it was changed to the last editor at every edition.
+	// With article_remembers_creator == y memory of creator (owner) is kept. With permission tiki_p_edit_article_user it is possible for admins to reattribute the article
 	if ( $tiki_p_edit_article_user == 'y' && isset($_REQUEST['author']) ) {
 		$author = $_REQUEST['author'];
 	} else {
-		$author = $user;
+		if ($prefs['article_remembers_creator'] == 'y') {
+			$author = $_REQUEST['author'];
+		} else {
+			$author = $user;
+		}
 	}
 
 	$_REQUEST['title'] = strip_tags($_REQUEST['title'], '<a><pre><p><img><hr><b><i>');
