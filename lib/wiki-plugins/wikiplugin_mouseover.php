@@ -233,7 +233,11 @@ function wikiplugin_mouseover( $data, $params )
 	}
 
 	if ( $parse ) {
-		$text = $tikilib->parse_data($text);
+		$options = array('is_html' => 0);
+		if (containsStringHTML($text)) {
+			$options = array('is_html' => 1);
+		} 
+		$text = $tikilib->parse_data($text, $options);
 	}
 	if ( $params['parselabel'] == 'y' ) {
 		$label = "~/np~$label~np~";
@@ -253,7 +257,10 @@ function wikiplugin_mouseover( $data, $params )
 	}
 
 	$js = "\$('#$id-link').mouseover(function(event) {
-	\$('#$id').css('left', event.pageX + $offsetx).css('top', event.pageY + $offsety); showJQ('#$id', '$effect', '$speed'); $closeDelayStr });";
+	var pos = $('#tiki-center').position();
+	var top = event.pageY - pos.top;
+	var left = event.pageX - pos.left;
+	\$('#$id').css('position', 'absolute').css('left', left + $offsetx).css('top', top + $offsety); showJQ('#$id', '$effect', '$speed'); $closeDelayStr });";
 	if ($sticky) {
 		$js .= "\$('#$id').click(function(event) { hideJQ('#$id', '$effect', '$speed'); }).css('cursor','pointer');\n";
 	} else {
@@ -269,4 +276,9 @@ function wikiplugin_mouseover( $data, $params )
 		"<span id=\"$id\" $class style=\"width: {$width}px; " . (isset($params['height']) ? "height: {$height}px; " : "") ."{$bgcolor} {$textcolor} {$padding} \">$text</span>~/np~";
 
 	return $html;
+}
+
+function containsStringHTML($str) 
+{
+	return preg_match ('/<[^>]*>/', $str) == 1;	
 }

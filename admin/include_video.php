@@ -16,7 +16,9 @@ if ($prefs['feature_kaltura'] === 'y') {
 
 	if ($kalturaadminlib->getSessionKey()) {
 		// contribution wizard
-		$kcwDefault = $kalturaadminlib->updateStandardTikiKcw();
+		if (empty($kcwDefault) || !empty($_REQUEST['kcw_rebuild'])) {
+			$kcwDefault = $kalturaadminlib->updateStandardTikiKcw();
+		}
 		if ($kcwDefault) {
 			$kcwText = "<div class='adminoptionbox'>KCW Configuration ID: $kcwDefault (automatically configured)</div>";
 		} else {

@@ -189,10 +189,10 @@ JS
 			if (empty($params['cols'])) {
 				$html .= 'width:100%;'. (empty($params['rows']) ? 'height:500px;' : '') .'"';
 			} else {
-				$html .= '" cols="'.$params['cols'].'em"';
+				$html .= '" cols="'.$params['cols'].'"';
 			}
 			if (!empty($params['rows'])) {
-				$html .= ' rows="'.$params['rows'].'em"';
+				$html .= ' rows="'.$params['rows'].'"';
 			}
 			$html .= '>'.htmlspecialchars($content).'</textarea>';
 

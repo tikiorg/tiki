@@ -1055,7 +1055,7 @@ if ( \$('#$id') ) {
 
 		// some plugins are just too fragile to do wysiwyg, so show the "source" for them ;(
 		$excluded = array('tracker', 'trackerlist', 'trackerfilter', 'kaltura', 'toc', 'freetagged', 'draw', 'googlemap',
-			'include', 'module', 'list', 'custom_search', 'iframe', 'map');
+			'include', 'module', 'list', 'custom_search', 'iframe', 'map', 'calendar');
 
 		$ignore = null;
 		$enabled = $this->plugin_enabled($name, $ignore);
@@ -2574,7 +2574,7 @@ if ( \$('#$id') ) {
 									if ($in_paragraph && ((empty($tline) && !$in_empty_paragraph) || $contains_block)) {
 										// If still in paragraph, on meeting first blank line or end of div or start of div created by plugins; close a paragraph
 										$this->close_blocks($data, $in_paragraph, $listbeg, $divdepth, 1, 0, 0);
-									} elseif (!$in_paragraph && !$contains_block && !$contains_br && (!empty($tline) || $prefs['feature_wiki_paragraph_formatting_add_br'] === 'y')) {
+									} elseif (!$in_paragraph && !$contains_block && !$contains_br && (!empty($tline) || $add_brs)) {
 										// If not in paragraph, first non-blank line; start a paragraph; if not start of div created by plugins
 										$data .= "<p>";
 										$in_paragraph = 1;
