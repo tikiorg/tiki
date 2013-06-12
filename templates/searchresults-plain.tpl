@@ -1,4 +1,36 @@
 {* $Id$ *}
+{if $facets|@count}
+	<div class="facets" style="width: 25%; float: right;">
+		{foreach from=$facets item=facet}
+			<h6>{$facet.label|escape}</h6>
+			<select multiple data-for="#search-form input[name='filter~{$facet.name|escape}']" data-join="or">
+				{foreach from=$facet.options key=value item=label}
+					<option value="{$value|escape}">{$label|escape}</option>
+				{/foreach}
+			</select>
+		{/foreach}
+		<p>
+			<button>{tr}Filter{/tr}</button>
+		</p>
+	</div>
+	{jq}
+		$('.facets select').each(function () {
+			$(this).val($($(this).data('for')).val().split(" " + $(this).data('join') + " "))
+				.trigger("liszt:updated"); // for chosen
+		}).change(function () {
+			var value = $(this).val();
+			if (value) {
+				value = value.join(" " + $(this).data('join') + " ");
+			}
+			$($(this).data('for')).val(value).change();
+		});
+		$('.facets button').click(function () {
+			$('#search-form').submit();
+		});
+
+	{/jq}
+{/if}
+<div>
 <ul class="searchresults">
 	{foreach item=result from=$results}
 	<li>
@@ -33,3 +65,4 @@
 	{/foreach}
 </ul>
 {pagination_links resultset=$results}{/pagination_links}
+</div>

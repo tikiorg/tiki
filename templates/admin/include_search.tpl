@@ -161,20 +161,26 @@ $("#log-rebuild").click(function(){
 		{/tab}
 
 		{tab name="{tr}Search Results{/tr}"}
-			{tr}Select the items to display on the search results page:{/tr}
-			{preference name=search_default_interface_language}
-			{preference name=search_default_where}
-			{preference name=search_show_category_filter}
-			{preference name=search_show_tag_filter}
-			{preference name=feature_search_show_object_filter}
-			{preference name=search_show_sort_order}
-			{preference name=feature_search_show_search_box}
-			{tr}Select the information to display for each result:{/tr}
-			{preference name=feature_search_show_visit_count}
-			{preference name=feature_search_show_pertinence}
-			{preference name=feature_search_show_object_type}
-			{preference name=feature_search_show_last_modification}
-			{preference name=search_parsed_snippet}
+			{preference name=search_use_facets}
+			
+			<fieldset>
+				<legend>{tr}Select the items to display on the search results page:{/tr}</legend>
+				{preference name=search_default_interface_language}
+				{preference name=search_default_where}
+				{preference name=search_show_category_filter}
+				{preference name=search_show_tag_filter}
+				{preference name=feature_search_show_object_filter}
+				{preference name=search_show_sort_order}
+				{preference name=feature_search_show_search_box}
+			</fieldset>
+			<fieldset>
+				<legend>{tr}Select the information to display for each result:{/tr}</legend>
+				{preference name=feature_search_show_visit_count}
+				{preference name=feature_search_show_pertinence}
+				{preference name=feature_search_show_object_type}
+				{preference name=feature_search_show_last_modification}
+				{preference name=search_parsed_snippet}
+			</fieldset>
 		{/tab}
 	{/tabset}
 	<div class="heading input_submit_container" style="text-align: right">
