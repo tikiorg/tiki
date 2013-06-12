@@ -8,10 +8,17 @@
 class Search_Query_Facet_Term implements Search_Query_Facet_Interface
 {
 	private $field;
+	private $renderCallback;
+
+	static function fromField($field)
+	{
+		return new self($field);
+	}
 
 	function __construct($field)
 	{
 		$this->field = $field;
+		$this->label = ucfirst($field);
 	}
 
 	function getName()
@@ -26,7 +33,39 @@ class Search_Query_Facet_Term implements Search_Query_Facet_Interface
 
 	function getLabel()
 	{
-		return ucfirst($this->field);
+		return $this->label;
+	}
+
+	function setLabel($label)
+	{
+		$this->label = $label;
+		return $this;
+	}
+
+	function setRenderCallback($callback)
+	{
+		$this->renderCallback = $callback;
+		return $this;
+	}
+
+	function setRenderMap(array $map)
+	{
+		return $this->setRenderCallback(function ($value) use ($map) {
+			if (isset($map[$value])) {
+				return $map[$value];
+			} else {
+				return $value;
+			}
+		});
+	}
+
+	function render($value)
+	{
+		if ($cb = $this->renderCallback) {
+			return call_user_func($cb, $value);
+		}
+
+		return $value;
 	}
 }
 

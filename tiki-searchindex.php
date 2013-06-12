@@ -167,9 +167,13 @@ function tiki_searchindex_get_results($filter, $offset, $maxRecords)
 		}
 	}
 
-	$query->requestFacet(new Search_Query_Facet_Term('categories'));
-	$query->requestFacet(new Search_Query_Facet_Term('language'));
-	$query->requestFacet(new Search_Query_Facet_Term('object_type'));
+	if ($prefs['search_use_facets'] == 'y') {
+		$provider = $unifiedsearchlib->getFacetProvider();
+
+		foreach ($provider->getFacets() as $facet) {
+			$query->requestFacet($facet);
+		}
+	}
 
 	return $query->search($unifiedsearchlib->getIndex());
 }

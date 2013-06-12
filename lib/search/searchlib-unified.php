@@ -619,6 +619,30 @@ class UnifiedSearchLib
 
 		rmdir($path);
 	}
+
+	function getFacetProvider()
+	{
+		global $prefs;
+		$types = $this->getSupportedTypes();
+
+		$facets = array(
+			Search_Query_Facet_Term::fromField('object_type')
+				->setLabel(tr('Object Type'))
+				->setRenderMap($types),
+		);
+
+		if ($prefs['feature_multilingual'] == 'y') {
+			$facets[] = Search_Query_Facet_Term::fromField('language')
+				->setLabel(tr('Language'))
+				->setRenderMap(TikiLib::lib('tiki')->get_language_map());
+		}
+
+		$provider = new Search_FacetProvider;
+		$provider->addFacets($facets);
+		$this->addSources($provider);
+
+		return $provider;
+	}
 }
 
 global $unifiedsearchlib;

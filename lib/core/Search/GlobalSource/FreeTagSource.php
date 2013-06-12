@@ -5,13 +5,22 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-class Search_GlobalSource_FreeTagSource implements Search_GlobalSource_Interface
+class Search_GlobalSource_FreeTagSource implements Search_GlobalSource_Interface, Search_FacetProvider_Interface
 {
 	private $freetaglib;
 
 	function __construct()
 	{
 		$this->freetaglib = TikiLib::lib('freetag');
+	}
+
+	function getFacets()
+	{
+		return array(
+			Search_Query_Facet_Term::fromField('freetags')
+				->setLabel(tr('Tags'))
+				->setRenderCallback(array($this->freetaglib, 'get_tag_from_id')),
+		);
 	}
 
 	function getProvidedFields()

@@ -36,7 +36,7 @@ class Search_ResultSet_FacetFilter
 		$out = array();
 
 		foreach ($this->data as $entry) {
-			$out[$entry['value']] = "{$entry['value']} ({$entry['count']})";
+			$out[$entry['value']] = tr('%0 (%1)', $this->facet->render($entry['value']), $entry['count']);
 		}
 		
 		return $out;

@@ -5,11 +5,7 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-interface Search_Query_Facet_Interface
+interface Search_FacetProvider_Interface
 {
-	function getLabel();
-	function getName();
-	function getField();
-	function render($value);
+	function getFacets();
 }
-

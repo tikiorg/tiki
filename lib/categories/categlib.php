@@ -68,7 +68,8 @@ class CategLib extends ObjectLib
 	}
 	function get_category_name($categId,$real=false)
 	{
-	    if ( $categId==0 ) return 'Top';
+		if ( $categId === 'orphan') return tr('None');
+	    if ( $categId==0 ) return tr('Top');
 		$query = "select `name`,`parentId` from `tiki_categories` where `categId`=?";
 		$result=$this->query($query, array((int) $categId));
 		$res = $result->fetchRow();
