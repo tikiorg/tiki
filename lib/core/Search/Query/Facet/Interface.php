@@ -7,6 +7,7 @@
 
 interface Search_Query_Facet_Interface
 {
+	function getLabel();
 	function getName();
 	function getField();
 }

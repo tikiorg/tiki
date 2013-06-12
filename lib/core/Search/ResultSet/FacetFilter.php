@@ -20,5 +20,26 @@ class Search_ResultSet_FacetFilter
 	{
 		return $this->facet->getName() === $facet->getName();
 	}
+
+	function getName()
+	{
+		return $this->facet->getName();
+	}
+
+	function getLabel()
+	{
+		return $this->facet->getLabel();
+	}
+
+	function getOptions()
+	{
+		$out = array();
+
+		foreach ($this->data as $entry) {
+			$out[$entry['value']] = "{$entry['value']} ({$entry['count']})";
+		}
+		
+		return $out;
+	}
 }
 

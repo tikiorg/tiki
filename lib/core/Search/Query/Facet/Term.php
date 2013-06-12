@@ -23,5 +23,10 @@ class Search_Query_Facet_Term implements Search_Query_Facet_Interface
 	{
 		return $this->field;
 	}
+
+	function getLabel()
+	{
+		return ucfirst($this->field);
+	}
 }
 

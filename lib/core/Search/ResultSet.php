@@ -38,6 +38,7 @@ class Search_ResultSet extends ArrayObject
 	{
 		$return = new self($list, $this->count, $this->offset, $this->maxRecords);
 		$return->estimate = $this->estimate;
+		$return->filters = $this->filters;
 		$return->highlightHelper = $this->highlightHelper;
 
 		return $return;
@@ -111,6 +112,11 @@ class Search_ResultSet extends ArrayObject
 				return $filter;
 			}
 		}
+	}
+
+	function getFacets()
+	{
+		return $this->filters;
 	}
 
 	function addFacetFilter(Search_ResultSet_FacetFilter $facet)

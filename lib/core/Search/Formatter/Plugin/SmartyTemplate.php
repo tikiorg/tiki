@@ -71,6 +71,13 @@ class Search_Formatter_Plugin_SmartyTemplate implements Search_Formatter_Plugin_
 		}
 
 		$smarty->assign('results', $entries);
+		$smarty->assign('facets', array_map(function ($facet) {
+			return array(
+				'name' => $facet->getName(),
+				'label' => $facet->getLabel(),
+				'options' => $facet->getOptions(),
+			);
+		}, $entries->getFacets()));
 		$smarty->assign('count', count($entries));
 		$smarty->assign('offset', $entries->getOffset());
 		$smarty->assign('offsetplusone', $entries->getOffset() + 1);
