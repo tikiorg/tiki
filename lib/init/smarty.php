@@ -75,7 +75,7 @@ class Tiki_Security_Policy extends Smarty_Security
 		$modifiers = (isset($modifiers) ? $modifiers : array());
 
 		$this->php_modifiers = array_merge(array( 'nl2br','escape', 'count', 'addslashes', 'ucfirst', 'ucwords', 'urlencode', 'md5', 'implode', 'explode', 'is_array', 'htmlentities', 'var_dump', 'strip_tags', 'json_encode', 'stristr'), $modifiers);
-		$this->php_functions = array_merge(array('isset', 'empty', 'count', 'sizeof', 'in_array', 'is_array', 'time', 'nl2br', 'tra', 'strlen', 'strstr', 'strtolower', 'basename', 'ereg', 'array_key_exists', 'preg_match', 'json_encode', 'stristr', 'is_numeric', 'array' ), $functions);
+		$this->php_functions = array_merge(array('isset', 'empty', 'count', 'sizeof', 'in_array', 'is_array', 'time', 'nl2br', 'tra', 'strlen', 'strstr', 'strtolower', 'basename', 'ereg', 'array_key_exists', 'preg_match', 'json_encode', 'stristr', 'is_numeric', 'array', 'zone_is_empty' ), $functions);
 	}
 }
 
@@ -91,17 +91,17 @@ class Smarty_Tiki extends Smarty
 	 * needs a proper description
 	 * @var array|null
 	 */
-	var $url_overriding_prefix_stack = null;
+	public $url_overriding_prefix_stack = null;
 	/**
 	 * needs a proper description
 	 * @var null
 	 */
-	var $url_overriding_prefix = null;
+	public $url_overriding_prefix = null;
 	/**
 	 * needs a proper description
 	 * @var null|string
 	 */
-	var $main_template_dir = null;
+	public $main_template_dir = null;
 
 	/**
 	 * needs a proper description

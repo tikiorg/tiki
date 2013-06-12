@@ -32,7 +32,7 @@
 			{if $prefs.feature_layoutshadows eq 'y'}<div id="main-shadow">{eval var=$prefs.main_shadow_start}{/if}
 			<div id="main">
 				{if ($prefs.feature_fullscreen != 'y' or $smarty.session.fullscreen != 'y') and ($prefs.layout_section ne 'y' or $prefs.feature_top_bar ne 'n')}
-					{if $prefs.module_zones_top eq 'fixed' or ($prefs.module_zones_top ne 'n' && $top_modules|@count > 0)}
+					{if $prefs.module_zones_top eq 'fixed' or ($prefs.module_zones_top ne 'n' && ! zone_is_empty('top'))}
 						{if $prefs.feature_layoutshadows eq 'y'}<div id="header-shadow">{eval var=$prefs.header_shadow_start}{/if}
 							<div class="header_outer">
 								<div class="header_container">
@@ -52,18 +52,18 @@
 							{modulelist zone=topbar}
 							<div class="clearfix {if $prefs.feature_fullscreen != 'y' or $smarty.session.fullscreen != 'y'}nofullscreen{else}fullscreen{/if}" id="c1c2">
 								<div class="clearfix" id="wrapper">
-									<div id="col1" class="{if $prefs.feature_left_column eq 'fixed' or ($prefs.feature_left_column ne 'n' && $left_modules|@count > 0 && $show_columns.left_modules ne 'n')}marginleft{/if}{if  $prefs.feature_right_column eq 'fixed' or ($prefs.feature_right_column ne 'n' && $right_modules|@count > 0 && $show_columns.right_modules ne 'n')} marginright{/if}"{if $prefs.feature_bidi eq 'y'} dir="rtl"{/if}>
+									<div id="col1" class="{if $prefs.feature_left_column eq 'fixed' or ($prefs.feature_left_column ne 'n' && ! zone_is_empty('left') && $show_columns.left_modules ne 'n')}marginleft{/if}{if  $prefs.feature_right_column eq 'fixed' or ($prefs.feature_right_column ne 'n' && ! zone_is_empty('right') && $show_columns.right_modules ne 'n')} marginright{/if}"{if $prefs.feature_bidi eq 'y'} dir="rtl"{/if}>
 									{if $prefs.feature_layoutshadows eq 'y'}<div id="tiki-center-shadow">{eval var=$prefs.center_shadow_start}{/if}
 										<div id="tiki-center" {*id needed for ajax editpage link*} class="clearfix content">
 										{if ($prefs.feature_fullscreen != 'y' or $smarty.session.fullscreen != 'y')}
 											{if $prefs.feature_left_column eq 'user' or $prefs.feature_right_column eq 'user'}
 												<div class="clearfix" id="showhide_columns">
-													{if  $prefs.feature_left_column eq 'fixed' or ($prefs.feature_left_column eq 'user' && $left_modules|@count > 0 && $show_columns.left_modules ne 'n')}
+													{if  $prefs.feature_left_column eq 'fixed' or ($prefs.feature_left_column eq 'user' && ! zone_is_empty('left') > 0 && $show_columns.left_modules ne 'n')}
 														<div style="text-align:left;float:left;" id="showhide_left_column">
 															<a class="flip" title="{tr}Show/Hide Left Column{/tr}" href="#" onclick="toggleCols('col2','left'); return false">{icon _name=oleftcol _id="oleftcol" class="colflip" alt="[{tr}Show/Hide Left Column{/tr}]"}</a>
 														</div>
 													{/if}
-													{if  $prefs.feature_right_column eq 'fixed' or ($prefs.feature_right_column eq 'user'&& $right_modules|@count > 0 && $show_columns.right_modules ne 'n')}
+													{if  $prefs.feature_right_column eq 'fixed' or ($prefs.feature_right_column eq 'user'&& ! zone_is_empty('right') && $show_columns.right_modules ne 'n')}
 														<div class="clearfix" style="text-align:right;float:right" id="showhide_right_column">
 															<a class="flip" title="{tr}Show/Hide Right Column{/tr}" href="#" onclick="toggleCols('col3','right'); return false">{icon _name=orightcol _id="orightcol" class="colflip" alt="[{tr}Show/Hide Right Column{/tr}]"}</a>
 														</div>
@@ -72,7 +72,7 @@
 												</div>
 											{/if}
 										{/if}
-										{if $prefs.module_zones_pagetop eq 'fixed' or ($prefs.module_zones_pagetop ne 'n' && $pagetop_modules|@count > 0)}
+										{if $prefs.module_zones_pagetop eq 'fixed' or ($prefs.module_zones_pagetop ne 'n' && ! zone_is_empty('pagetop'))}
 											{modulelist zone=pagetop}
 										{/if}
 										{if (isset($section) && $section neq 'share') && $prefs.feature_share eq 'y' && $tiki_p_share eq 'y' and (!isset($edit_page) or $edit_page ne 'y' and $prefs.feature_site_send_link ne 'y')}
@@ -93,7 +93,7 @@
 												{block name=title}No title specified{/block}
 												{block name=content}No content specified{/block}
 											</div>
-											{if $prefs.module_zones_pagebottom eq 'fixed' or ($prefs.module_zones_pagebottom ne 'n' && $pagebottom_modules|@count > 0)}
+											{if $prefs.module_zones_pagebottom eq 'fixed' or ($prefs.module_zones_pagebottom ne 'n' && ! zone_is_empty('pagebottom'))}
 												{modulelist zone=pagebottom}
 											{/if}
 											{show_help}
@@ -103,7 +103,7 @@
 								</div>{* end #wrapper *}
 
 								{if $prefs.feature_fullscreen != 'y' or $smarty.session.fullscreen != 'y'}
-									{if  $prefs.feature_left_column eq 'fixed' or ($prefs.feature_left_column ne 'n' && $left_modules|@count > 0 && $show_columns.left_modules ne 'n')}
+									{if  $prefs.feature_left_column eq 'fixed' or ($prefs.feature_left_column ne 'n' && ! zone_is_empty('left') && $show_columns.left_modules ne 'n')}
 										<div id="col2"{if $prefs.feature_left_column eq 'user'} style="display:{if isset($cookie.show_col2) and $cookie.show_col2 ne 'y'} none{elseif isset($ie6)} block{else} table-cell{/if};"{/if}{if $prefs.feature_bidi eq 'y'} dir="rtl"{/if}>
 											{modulelist zone=left class="content modules"}
 										</div>
@@ -111,7 +111,7 @@
 								{/if}
 							</div>{* -- END of #c1c2 -- *}
 							{if $prefs.feature_fullscreen != 'y' or $smarty.session.fullscreen != 'y'}
-								{if  $prefs.feature_right_column eq 'fixed' or ($prefs.feature_right_column ne 'n' && $right_modules|@count > 0 && $show_columns.right_modules ne 'n') or (isset($module_pref_errors) and $module_pref_errors)}
+								{if  $prefs.feature_right_column eq 'fixed' or ($prefs.feature_right_column ne 'n' && ! zone_is_empty('right') && $show_columns.right_modules ne 'n') or (isset($module_pref_errors) and $module_pref_errors)}
 									<div class="clearfix" id="col3"{if $prefs.feature_right_column eq 'user'} style="display:{if isset($cookie.show_col3) and $cookie.show_col3 ne 'y'} none{elseif isset($ie6)} block{else} table-cell{/if};"{/if}{if $prefs.feature_bidi eq 'y'} dir="rtl"{/if}>
 										{modulelist zone=right class="content modules"}
 										{if $module_pref_errors}
@@ -139,7 +139,7 @@
 					{if $prefs.feature_layoutshadows eq 'y'}{eval var=$prefs.middle_shadow_end}</div>{/if}
 				</div>{* end .middle_outer *}
 				{if ($prefs.feature_fullscreen != 'y' or $smarty.session.fullscreen != 'y') and ($prefs.layout_section ne 'y' or $prefs.feature_bot_bar ne 'n')}
-					{if $prefs.module_zones_bottom eq 'fixed' or ($prefs.module_zones_bottom ne 'n' && $bottom_modules|@count > 0)}
+					{if $prefs.module_zones_bottom eq 'fixed' or ($prefs.module_zones_bottom ne 'n' && ! zone_is_empty('bottom'))}
 						{if $prefs.feature_layoutshadows eq 'y'}<div id="footer-shadow">{eval var=$prefs.footer_shadow_start}{/if}
 							<footer class="footer" id="footer">
 								<div class="footer_liner">
