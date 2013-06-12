@@ -80,7 +80,7 @@ class HeaderLib
 	function add_jsfile($file,$rank=0,$minified=false)
 	{
 		if ($this->lockMinifiedJs == true) {
-			$rank = 'external';
+			$rank = 'late';
 		}
 
 		if (!$this->wysiwyg_parsing && (empty($this->jsfiles[$rank]) or !in_array($file, $this->jsfiles[$rank]))) {
@@ -306,7 +306,7 @@ class HeaderLib
 
 	public function getMinifiedJs()
 	{
-		global $tikidomainslash;
+		global $prefs;
 
 		$dependancy = array();
 		if ( isset( $this->jsfiles[-1] ) ) {
@@ -326,17 +326,48 @@ class HeaderLib
 			unset( $this->jsfiles['external'] );
 		}
 
-		$hash = md5(serialize($this->jsfiles));
-		$file = 'temp/public/'.$tikidomainslash."minified_$hash.js";
+		$late = array();
+		if ( isset( $this->jsfiles['late'] ) ) {
+			$late = $this->jsfiles['late'];
+			unset( $this->jsfiles['late'] );
+		}
+
 		$minified_files = array();
 
-		if ( ! file_exists($file) ) {
+		$minified_files[] = $this->minifyJSFiles($this->jsfiles, $external);
+
+		if ($prefs['tiki_minify_late_js_files'] === 'y') {
+			$minified_files[] = $this->minifyJSFiles(array($late), $external);
+		} else {
+			$external = array_merge($external, $late);
+		}
+		return array(
+			'dependancy'=> $dependancy,
+			'external' => $external,
+			'dynamic' => $dynamic,
+			$minified_files,
+		);
+	}
+
+	/**
+	 * @param $files	array of file paths
+	 * @param $external	array to put uniminifyable files into
+	 * @return string	path of minified js file
+	 */
+
+	private function minifyJSFiles($fileArrays, & $external)
+	{
+		global $tikidomainslash;
+		$hash = md5(serialize($fileArrays));
+		$file = 'temp/public/' . $tikidomainslash . "minified_$hash.js";
+
+		if (!file_exists($file)) {
 			require_once 'lib/minify/JSMin.php';
-			$minified = '/* ' . print_r($this->jsfiles, true) . ' */';
-			foreach ( $this->jsfiles as $x => $files ) {
-				foreach ( $files as $f ) {
+			$minified = '/* ' . print_r($fileArrays, true) . ' */';
+			foreach ($fileArrays as $x => $files) {
+				foreach ($files as $f) {
 					$content = file_get_contents($f);
-					if ( ! preg_match('/min\.js$/', $f) and $this->minified[$f] !== true) {
+					if (!preg_match('/min\.js$/', $f) and $this->minified[$f] !== true) {
 						set_time_limit(600);
 						try {
 							$minified .= JSMin::minify($content);
@@ -353,14 +384,7 @@ class HeaderLib
 			file_put_contents($file, $minified);
 			chmod($file, 0644);
 		}
-
-		$minified_files[] = $file;
-		return array(
-			'dependancy'=> $dependancy,
-			'external' => $external,
-			'dynamic' => $dynamic,
-			$minified_files,
-		);
+		return $file;
 	}
 
 	private function getJavascript()
