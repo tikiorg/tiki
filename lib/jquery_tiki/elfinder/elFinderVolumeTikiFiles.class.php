@@ -848,12 +848,26 @@ class elFinderVolumeTikiFiles extends elFinderVolumeDriver
 
 	/**
 	 * Detect available archivers
+	 * Only support un/zip in tiki filegals so far
 	 *
 	 * @return void
 	 **/
 	protected function _checkArchivers()
 	{
-		return;
+		global $tiki_p_batch_upload_files;
+		if ($tiki_p_batch_upload_files !== 'y') {
+			$this->options['archivers'] = $this->options['archive'] = array();
+			return;
+		}
+		$arcs = array(
+			'create'  => array(),
+			'extract' => array()
+			);
+
+		$arcs['create']['application/zip']  = array('cmd' => 'tikizip', 'argc' => '', 'ext' => 'zip');
+		$arcs['extract']['application/zip'] = array('cmd' => 'tikiunzip', 'argc' => '',  'ext' => 'zip');
+
+		$this->archivers = $arcs;
 	}
 
 	/**
@@ -893,7 +907,57 @@ class elFinderVolumeTikiFiles extends elFinderVolumeDriver
 	 **/
 	protected function _extract($path, $arc)
 	{
-		return false;
+		$ar = explode('_', $path);
+		if (count($ar) === 2) {
+			$isgal = $ar[0] === 'd';
+			$fileId = $ar[1];
+		} else {
+			$isgal = true;
+		}
+		if (!$isgal) {
+			$dirId = $this->options['accessControlData']['parentIds']['files'][$this->pathToId($fileId)];
+		} else {
+			return false;
+		}
+		$perms = TikiLib::lib('tiki')->get_perm_object($dirId, 'file gallery', TikiLib::lib('filegal')->get_file_gallery_info($dirId));
+
+		if ($perms['tiki_p_upload_files'] === 'y' && $perms['tiki_p_batch_upload_files'] === 'y') {
+			global $user, $prefs;
+			$errors = null;
+			$fp = null;
+			$res = $this->filegallib->get_file($fileId);
+			// check max files size
+			if ($this->options['maxArcFilesSize'] > 0 && $this->options['maxArcFilesSize'] < $res['filesize']) {
+				return $this->setError(elFinder::ERROR_ARC_MAXSIZE);
+			}
+			if ( ! empty($res['path']) ) {
+				$filepath = $prefs['fgal_use_dir'].$res['path'];
+				$res['data'] = file_get_contents($filepath);
+			}
+			// write out to a temp file as process_batch_file_upload deletes the filepath file
+			$filepath = $this->tmpname($path);
+			$filepath = str_replace('temp/', 'temp/cache/', $filepath);	// this one has to be in a different place otherwise unzip fails
+			$fp = $this->tmbPath
+				? @fopen($filepath, 'w+')
+				: @tmpfile();
+
+			if ($fp) {
+				fwrite($fp, $res['data']);
+
+				$this->filegallib->process_batch_file_upload($dirId, $filepath, $user, '', $errors);
+
+				if ($errors) {
+					return $this->setError(elFinder::ERROR_EXTRACT);
+				}
+			}
+		}
+
+		$dirStr = 'd_' . $dirId;
+		$this->clearcache();
+		$this->stat($dirStr);
+		$ret = $this->_scandir($dirStr);
+
+		return $dirStr;
 	}
 
 	/**
