@@ -197,5 +197,115 @@ class Search_Elastic_QueryBuilderTest extends PHPUnit_Framework_TestCase
 			), $query['query']
 		);
 	}
+
+	function testFlattenOr()
+	{
+		$builder = new QueryBuilder;
+
+		$query = $builder->build(
+			new OrX(
+				array(
+					new OrX(
+						array(
+							new Token('Hello', 'plaintext', 'contents', 1.5),
+							new Token('World', 'plaintext', 'contents', 1.0),
+						)
+					),
+					new Token('Test', 'plaintext', 'contents', 1.0),
+				)
+			)
+		);
+
+		$this->assertEquals(
+			array(
+				"bool" => array(
+					"should" => array(
+						array(
+							"match" => array(
+								"contents" => array("query" => "hello", "boost" => 1.5),
+							),
+						),
+						array(
+							"match" => array(
+								"contents" => array("query" => "world", "boost" => 1.0),
+							),
+						),
+						array(
+							"match" => array(
+								"contents" => array("query" => "test", "boost" => 1.0),
+							),
+						),
+					),
+					"minimum_number_should_match" => 1,
+				),
+			), $query['query']
+		);
+	}
+
+	function testFlattenAnd()
+	{
+		$builder = new QueryBuilder;
+
+		$query = $builder->build(
+			new AndX(
+				array(
+					new OrX(
+						array(
+							new Token('Hello', 'plaintext', 'contents', 1.5),
+							new Token('World', 'plaintext', 'contents', 1.0),
+						)
+					),
+					new AndX(
+						array(
+							new Token('Hello', 'plaintext', 'contents', 1.5),
+							new Token('World', 'plaintext', 'contents', 1.0),
+						)
+					),
+					new Token('Test', 'plaintext', 'contents', 1.0),
+				)
+			)
+		);
+
+		$this->assertEquals(
+			array(
+				"bool" => array(
+					"must" => array(
+						array(
+							"bool" => array(
+								"should" => array(
+									array(
+										"match" => array(
+											"contents" => array("query" => "hello", "boost" => 1.5),
+										),
+									),
+									array(
+										"match" => array(
+											"contents" => array("query" => "world", "boost" => 1.0),
+										),
+									),
+								),
+								"minimum_number_should_match" => 1,
+							),
+						),
+						array(
+							"match" => array(
+								"contents" => array("query" => "hello", "boost" => 1.5),
+							),
+						),
+						array(
+							"match" => array(
+								"contents" => array("query" => "world", "boost" => 1.0),
+							),
+						),
+						array(
+							"match" => array(
+								"contents" => array("query" => "test", "boost" => 1.0),
+							),
+						),
+					),
+				),
+			), $query['query']
+		);
+	}
 }
 

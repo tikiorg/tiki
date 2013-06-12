@@ -36,24 +36,27 @@ class Search_Elastic_QueryBuilder
 		} elseif (count($childNodes) === 1 && ($node instanceof AndX || $node instanceof OrX)) {
 			return reset($childNodes)->traverse($callback);
 		} elseif ($node instanceof OrX) {
+			$inner = array_map(
+				function ($expr) use ($callback) {
+					return $expr->traverse($callback);
+				}, $childNodes
+			);
+
 			return array(
 				'bool' => array(
-					'should' => array_map(
-						function ($expr) use ($callback) {
-							return $expr->traverse($callback);
-						}, $childNodes
-					),
+					'should' => $this->flatten($inner, 'should'),
 					"minimum_number_should_match" => 1,
 				),
 			);
 		} elseif ($node instanceof AndX) {
+			$inner = array_map(
+				function ($expr) use ($callback) {
+					return $expr->traverse($callback);
+				}, $childNodes
+			);
 			return array(
 				'bool' => array(
-					'must' => array_map(
-						function ($expr) use ($callback) {
-							return $expr->traverse($callback);
-						}, $childNodes
-					),
+					'must' => $this->flatten($inner, 'must'),
 				),
 			);
 		} elseif ($node instanceof NotX) {
@@ -85,6 +88,20 @@ class Search_Elastic_QueryBuilder
 				),
 			);
 		}
+	}
+
+	private function flatten($list, $type)
+	{
+		$out = array();
+		foreach ($list as $entry) {
+			if (isset($entry['bool'][$type])) {
+				$out = array_merge($out, $entry['bool'][$type]);
+			} else {
+				$out[] = $entry;
+			}
+		}
+
+		return $out;
 	}
 
 	private function getTerm($node)
