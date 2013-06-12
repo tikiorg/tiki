@@ -1,13 +1,13 @@
 /*!
  * elFinder - file manager for web
- * Version 2.x (Nightly: 165409c) (2013-04-18)
+ * Version 2.x github.com/jonnybradley/elFinder (2013-06-12)
  * http://elfinder.org
  * 
  * Copyright 2009-2012, Studio 42
  * Licensed under a 3 clauses BSD license
  */
 
-/* File: /home/osc/elFinder-build/elFinder/css/commands.css */
+/* File: elFinder/css/commands.css */
 /******************************************************************/
 /*                          COMMANDS STYLES                       */
 /******************************************************************/
@@ -265,7 +265,7 @@
 
 
 
-/* File: /home/osc/elFinder-build/elFinder/css/common.css */
+/* File: elFinder/css/common.css */
 /*********************************************/
 /*            COMMON ELFINDER STUFFS         */
 /*********************************************/
@@ -363,7 +363,7 @@
 
 
 
-/* File: /home/osc/elFinder-build/elFinder/css/contextmenu.css */
+/* File: elFinder/css/contextmenu.css */
 /* menu and submenu */
 .elfinder-contextmenu,
 .elfinder-contextmenu-sub {
@@ -434,7 +434,7 @@
 	margin:0 1px;
 }
 
-/* File: /home/osc/elFinder-build/elFinder/css/cwd.css */
+/* File: elFinder/css/cwd.css */
 /******************************************************************/
 /*                     CURRENT DIRECTORY STYLES                   */
 /******************************************************************/
@@ -672,7 +672,7 @@
 
 
 
-/* File: /home/osc/elFinder-build/elFinder/css/dialog.css */
+/* File: elFinder/css/dialog.css */
 /*********************************************/
 /*                DIALOGS STYLES             */
 /*********************************************/
@@ -743,11 +743,11 @@
 
 /*********************** ERROR DIALOG **************************/
 
-.elfinder-dialog-error .ui-dialog-content,
-.elfinder-dialog-confirm .ui-dialog-content { padding-left: 56px; min-height:35px; }
+.ui-dialog.elfinder-dialog-error .ui-dialog-content,
+.ui-dialog.elfinder-dialog-confirm .ui-dialog-content { padding-left: 56px; min-height:35px; }
 
-.elfinder-rtl .elfinder-dialog-error .ui-dialog-content,
-.elfinder-rtl .elfinder-dialog-confirm .ui-dialog-content { padding-left:0; padding-right: 56px; }
+.elfinder-rtl .ui-dialog.elfinder-dialog-error .ui-dialog-content,
+.elfinder-rtl .ui-dialog.elfinder-dialog-confirm .ui-dialog-content { padding-left:0; padding-right: 56px; }
 
 /*********************** NOTIFY DIALOG **************************/
 
@@ -913,7 +913,7 @@
 
 
 
-/* File: /home/osc/elFinder-build/elFinder/css/fonts.css */
+/* File: elFinder/css/fonts.css */
 .elfinder-contextmenu .elfinder-contextmenu-item span { font-size:.76em; }
 
 .elfinder-cwd-view-icons .elfinder-cwd-filename { font-size:.7em; }
@@ -937,7 +937,7 @@
 .elfinder-drag-num { font-size:12px; }
 
 
-/* File: /home/osc/elFinder-build/elFinder/css/navbar.css */
+/* File: elFinder/css/navbar.css */
 /*********************************************/
 /*              NAVIGATION PANEL             */
 /*********************************************/
@@ -1089,9 +1089,9 @@
 
 
 
-/* File: /home/osc/elFinder-build/elFinder/css/places.css */
+/* File: elFinder/css/places.css */
 
-/* File: /home/osc/elFinder-build/elFinder/css/quicklook.css */
+/* File: elFinder/css/quicklook.css */
 /* quicklook window */
 .elfinder-quicklook {
 	position:absolute;
@@ -1357,7 +1357,7 @@ embed.elfinder-quicklook-preview-audio {
 
 
 
-/* File: /home/osc/elFinder-build/elFinder/css/statusbar.css */
+/* File: elFinder/css/statusbar.css */
 /******************************************************************/
 /*                           STATUSBAR STYLES                     */
 /******************************************************************/
@@ -1396,7 +1396,7 @@ embed.elfinder-quicklook-preview-audio {
 
 .elfinder-stat-selected { white-space:nowrap; overflow:hidden; }
 
-/* File: /home/osc/elFinder-build/elFinder/css/toolbar.css */
+/* File: elFinder/css/toolbar.css */
 /*********************************************/
 /*               TOOLBAR STYLES              */
 /*********************************************/
