@@ -15,12 +15,22 @@
 	</div>
 	{jq}
 		$('.facets select').each(function () {
-			$(this).val($($(this).data('for')).val().split(" " + $(this).data('join') + " "))
+			var entries = $($(this).data('for')).val()
+				.split(" " + $(this).data('join') + " ")
+				.map(function (value) {
+					return (value.charAt(0) === '"') ? value.substr(1, value.length - 2) : value;
+				});
+			$(this)
+				.val(entries)
 				.trigger("liszt:updated"); // for chosen
 		}).change(function () {
 			var value = $(this).val();
 			if (value) {
-				value = value.join(" " + $(this).data('join') + " ");
+				value = value
+					.map(function (value) {
+						return (-1 === value.indexOf(' ')) ? value : ('"' + value + '"');
+					})
+					.join(" " + $(this).data('join') + " ");
 			}
 			$($(this).data('for')).val(value).change();
 		});
