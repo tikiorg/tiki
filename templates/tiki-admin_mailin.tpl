@@ -47,23 +47,25 @@
   <table class="formcolor">
     <tr>
       <td>{tr}Account name{/tr}</td>
-      <td colspan="3"><input type="text" name="account" value="{$info.account|escape}"></td>
+      <td colspan="4"><input type="text" name="account" value="{$info.account|escape}"></td>
     </tr>
     <tr>
       <td>{tr}POP server{/tr}</td>
       <td><input type="text" name="pop" value="{$info.pop|escape}"></td>
       <td>{tr}Port{/tr}</td>
       <td><input type="text" name="port" size="7" value="{$info.port}"></td>
+	  <td>&nbsp;</td>
     </tr>
     <tr>
       <td>{tr}SMTP server{/tr}</td>
       <td><input type="text" name="smtp" value="{$info.smtp|escape}"></td>
       <td>{tr}Port{/tr}</td>
       <td><input type="text" name="smtpPort" size="7" value="{$info.smtpPort}"></td>
+	  <td>&nbsp;</td>
     </tr>
     <tr>
       <td>{tr}SMTP requires authentication{/tr}</td>
-      <td colspan="3">
+      <td colspan="4">
         {tr}Yes{/tr}
         <input type="radio" name="useAuth" value="y" {if $info.useAuth eq 'y'}checked="checked"{/if}>
         {tr}No{/tr}
@@ -72,15 +74,15 @@
     </tr>
     <tr>
       <td>{tr}Username{/tr}</td>
-      <td colspan="3"><input type="text" name="username" value="{$info.username|escape}"></td>
+      <td colspan="4"><input type="text" name="username" value="{$info.username|escape}"></td>
     </tr>
     <tr>
       <td>{tr}Password{/tr}</td>
-      <td colspan="3"><input type="password" name="pass" value="{$info.pass|escape}"></td>
+      <td colspan="4"><input type="password" name="pass" value="{$info.pass|escape}"></td>
     </tr>
     <tr>
       <td>{tr}Type{/tr}</td>
-      <td colspan="3">
+      <td colspan="4">
         <select name="type" id='mailin_type' onchange='javascript:chgMailinType();'>
 		  {if $prefs.feature_articles eq 'y'}
 			<option value="article-put" {if $info.type eq 'article-put'}selected="selected"{/if}>{tr}article-put{/tr}</option>
@@ -103,7 +105,9 @@
 <option value="" {if $info.article_topicId eq 0}selected="selected"{/if}>{tr}None{/tr}</option>
 </select>
 {if $tiki_p_admin_cms eq 'y'}<a href="tiki-admin_topics.php" class="link">{tr}Admin Topics{/tr}</a>{/if}
-</td><td></td><td></td></tr>
+</td><td></td><td></td>
+<td>&nbsp;</td>
+</tr>
 <tr id='article_type' {if $info.type ne 'article-put'}style="display:none;"{/if}><td>{tr}Article Type{/tr}</td><td>
 <select id='articletype' name='article_type'>
 <option value="">-</option>
@@ -112,7 +116,9 @@
 {/section}
 </select>
 {if $tiki_p_admin_cms eq 'y'}<a href="tiki-article_types.php" class="link">{tr}Admin Types{/tr}</a>{/if}
-</td><td></td><td></td></tr>
+</td><td></td><td></td>
+ <td>&nbsp;</td>
+</tr>
 {/if}
     <tr>
       <td>{tr}Active{/tr}</td>
@@ -122,6 +128,7 @@
         {tr}No{/tr}
         <input type="radio" name="active" {if $info.active eq 'n'}checked="checked"{/if} value="n">
       </td>
+	  <td>&nbsp;</td>
     </tr>
     <tr>
       <td>{tr}Allow anonymous access{/tr}</td>
@@ -131,10 +138,11 @@
         {tr}No{/tr}
         <input type="radio" name="anonymous" {if $info.anonymous eq 'n'}checked="checked"{/if} value="n">
       </td>
+	  <td>{tr}Warning: Enabling anonymous access<br>will disable all permission checking for mailed-in content{/tr}.</td>
     </tr>
     <tr>
       <td>{tr}Allow attachments{/tr}</td>
-      <td colspan="3">
+      <td colspan="4">
 	   {if $prefs.feature_wiki_attachments eq 'y'}
         {tr}Yes{/tr}
         <input type="radio" name="attachments" {if $info.attachments eq 'y'}checked="checked"{/if} value="y">
@@ -147,7 +155,7 @@
     </tr>
     <tr>
       <td>{tr}Show inline images{/tr}</td>
-      <td colspan="3">
+      <td colspan="4">
 		{if $prefs.feature_wiki_attachments eq 'y'}
         {tr}Yes{/tr}
         <input type="radio" name="show_inlineImages" {if $info.show_inlineImages eq 'y'}checked="checked"{/if} value="y">
@@ -160,13 +168,13 @@
     </tr>
     <tr>
       <td>{tr}Discard to the end from{/tr}</td>
-      <td colspan="3">
+      <td colspan="4">
       <input type="text" name="discard_after" value="{$info.discard_after|escape}">
       </td>
    </tr>
     <tr>
       <td>{tr}Auto-assign categoryId{/tr}</td>
-      <td colspan="3">
+      <td colspan="4">
 	   {if $prefs.feature_categories eq 'y'}
         <input type="text" size="10" name="categoryId" value="{$info.categoryId}" />
         {else}
@@ -176,7 +184,7 @@
     </tr>
     <tr>
       <td>{tr}Email response when no access{/tr}</td>
-      <td colspan="3">
+      <td colspan="4">
 		&nbsp;&nbsp;
         {tr}Yes{/tr}
         <input type="radio" name="respond_email" {if $info.respond_email eq 'y'}checked="checked"{/if} value="y">
@@ -187,7 +195,7 @@
     </tr>
     <tr>
       <td>&nbsp;</td>
-      <td colspan="3"><input type="submit" name="new_acc" value="{if $accountId eq 0}{tr}Add{/tr}{else}{tr}Save{/tr}{/if}"></td>
+      <td colspan="4"><input type="submit" name="new_acc" value="{if $accountId eq 0}{tr}Add{/tr}{else}{tr}Save{/tr}{/if}"></td>
     </tr>
   </table>
 </form>

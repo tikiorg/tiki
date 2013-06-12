@@ -125,6 +125,26 @@ if ($prefs['feature_clear_passwords'] == 'y') {
 		'message' => tra('Store passwords in plain text is activated. You should never set this unless you know what you are doing.')
 	);
 }
+
+// Check if any of the mail-in accounts uses "Allow anonynous access"
+if ($prefs['feature_mailin'] == 'y') {
+	require_once('lib/mailin/mailinlib.php');
+	$accs = $mailinlib->list_active_mailin_accounts(0, -1, 'account_desc', '');
+	$errorCnt = 0;
+	foreach ($accs['data'] as $acc) {
+		if ($acc['anonymous'] === 'y') {
+			$errorCnt++;
+		}
+	}
+	if ($errorCnt > 0) {
+		$tikisettings['feature_mailin-anonymous'] = array(
+			'risk' => tra('unsafe') ,
+			'setting' => tra('Enabled') ,
+			'message' => tra('One or more mail-in accounts have enabled "Allow anonymous access", which disables all permission checking for incoming email. Check tiki-admin_mailin.php')
+		);
+	}
+}
+
 ksort($tikisettings);
 $smarty->assign_by_ref('tikisettings', $tikisettings);
 // array for severity in tiki_secdb table. This can go into a extra table if

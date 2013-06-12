@@ -355,16 +355,17 @@ foreach ($accs['data'] as $acc) {
 								$title = trim($output['header']['subject']);
 								$topicId = isset($acc['article_topicId']) ? $acc['article_topicId'] : 0;
 								$chkUser = $aux["sender"]["user"];
-								if (!$wikilib->user_has_perm_on_object($chkUser, $topicId, 'topic', 'tiki_p_submit_article', 'tiki_p_edit_submission')) {
-									$content.= $chkUser." cannot submit the article: ".$title."<br />";
-									$processEmail = false;
-								} if ($tiki_p_autoapprove_submission == 'y') {
-									if (!$wikilib->user_has_perm_on_object($chkUser, $topicId, 'topic', 'tiki_p_autoapprove_submission)')) {
-										$content.= $chkUser." cannot auto-approve the article: ".$title."<br />";
+								if ($acc["anonymous"] == 'n') {
+									if (!$wikilib->user_has_perm_on_object($chkUser, $topicId, 'topic', 'tiki_p_submit_article', 'tiki_p_edit_submission')) {
+										$content.= $chkUser." cannot submit the article: ".$title."<br />";
 										$processEmail = false;
+									} if ($tiki_p_autoapprove_submission == 'y') {
+										if (!$wikilib->user_has_perm_on_object($chkUser, $topicId, 'topic', 'tiki_p_autoapprove_submission)')) {
+											$content.= $chkUser." cannot auto-approve the article: ".$title."<br />";
+											$processEmail = false;
+										}
 									}
 								}
-
 								if ($processEmail) {
 									
 									// This is used to CREATE articles
@@ -445,11 +446,12 @@ foreach ($accs['data'] as $acc) {
 										
 										// Check permissions
 										$chkUser = $aux["sender"]["user"];
-										if(!$wikilib->user_has_perm_on_object($chkUser, $page, 'wiki page', 'tiki_p_view')) {
-											$content.= $chkUser." cannot view the page: ".$page."<br />";
-											$processEmail = false;
-										}
-										
+										if ($acc["anonymous"] == 'n') {
+											if(!$wikilib->user_has_perm_on_object($chkUser, $page, 'wiki page', 'tiki_p_view')) {
+												$content.= $chkUser." cannot view the page: ".$page."<br />";
+												$processEmail = false;
+											}
+										}										
 										if ($processEmail) {
 											$mail->setSubject($page);
 											$info = $tikilib->get_page_info($page);
@@ -470,41 +472,42 @@ foreach ($accs['data'] as $acc) {
 									// This is used to UPDATE wiki pages
 
 									$chkUser = $aux["sender"]["user"];
-									if ($tikilib->page_exists($page)) {
-										// Check permissions for page
-										if (!$wikilib->user_has_perm_on_object($chkUser, $page, 'wiki page', 'tiki_p_edit')) {
-											$content.= $chkUser." cannot edit the page: ".$page."<br />";
-											$processEmail = false;
-										}
-										if (!$wikilib->user_has_perm_on_object($chkUser, $page, 'wiki page', 'tiki_p_wiki_attach_files')) {
-											$can_addAttachment = 'n';
-											$show_inlineImages = 'n';
-										}
-									} else {
-										// Check category permission, if auto-assigning a category.
-										// Otherwise checkglobal permissions
-										$userlib = TikiLib::lib('user');
-										if ($prefs['feature_categories'] && isset($acc['categoryId'])) {
-											if (!$userlib->object_has_permission($chkUser, $acc['categoryId'], 'category', 'tiki_p_edit')) {
-												$content.= $chkUser." cannot create the page: ".$page."<br />";
+									// Check permissions for page
+									if ($acc["anonymous"] == 'n') {
+										if ($tikilib->page_exists($page)) {
+											if (!$wikilib->user_has_perm_on_object($chkUser, $page, 'wiki page', 'tiki_p_edit')) {
+												$content.= $chkUser." cannot edit the page: ".$page."<br />";
 												$processEmail = false;
 											}
-											if (!$userlib->object_has_permission($chkUser, $acc['categoryId'], 'category', 'tiki_p_wiki_attach_files')) {
+											if (!$wikilib->user_has_perm_on_object($chkUser, $page, 'wiki page', 'tiki_p_wiki_attach_files')) {
 												$can_addAttachment = 'n';
 												$show_inlineImages = 'n';
 											}
 										} else {
-											if (!$userlib->user_has_permission($chkUser, 'tiki_p_edit')) {
-												$content.= $chkUser." cannot create the page: ".$page."<br />";
-												$processEmail = false;
-											}
-											if (!$userlib->user_has_permission($chkUser, 'tiki_p_wiki_attach_files')) {
-												$can_addAttachment = 'n';
-												$show_inlineImages = 'n';
+											// Check category permission, if auto-assigning a category.
+											// Otherwise checkglobal permissions
+											$userlib = TikiLib::lib('user');
+											if ($prefs['feature_categories'] && isset($acc['categoryId'])) {
+												if (!$userlib->object_has_permission($chkUser, $acc['categoryId'], 'category', 'tiki_p_edit')) {
+													$content.= $chkUser." cannot create the page: ".$page."<br />";
+													$processEmail = false;
+												}
+												if (!$userlib->object_has_permission($chkUser, $acc['categoryId'], 'category', 'tiki_p_wiki_attach_files')) {
+													$can_addAttachment = 'n';
+													$show_inlineImages = 'n';
+												}
+											} else {
+												if (!$userlib->user_has_permission($chkUser, 'tiki_p_edit')) {
+													$content.= $chkUser." cannot create the page: ".$page."<br />";
+													$processEmail = false;
+												}
+												if (!$userlib->user_has_permission($chkUser, 'tiki_p_wiki_attach_files')) {
+													$can_addAttachment = 'n';
+													$show_inlineImages = 'n';
+												}
 											}
 										}
-									}
-									
+									}									
 									if ($processEmail) {
 
 										// Attempt to use HTML, if it exists
@@ -556,15 +559,16 @@ foreach ($accs['data'] as $acc) {
 
 									// Check permissions
 									$chkUser = $aux["sender"]["user"];
-									if(!$wikilib->user_has_perm_on_object($chkUser, $page, 'wiki page', 'tiki_p_edit')) {
-										$content.= $chkUser." cannot edit the page: ".$page."<br />";
-										$processEmail = false;
+									if ($acc["anonymous"] == 'n') {
+										if(!$wikilib->user_has_perm_on_object($chkUser, $page, 'wiki page', 'tiki_p_edit')) {
+											$content.= $chkUser." cannot edit the page: ".$page."<br />";
+											$processEmail = false;
+										}
+										if(!$wikilib->user_has_perm_on_object($chkUser, $page, 'wiki page', 'tiki_p_wiki_attach_files')) {
+											$can_addAttachment = 'n';
+											$show_inlineImages = 'n';
+										}
 									}
-									if(!$wikilib->user_has_perm_on_object($chkUser, $page, 'wiki page', 'tiki_p_wiki_attach_files')) {
-										$can_addAttachment = 'n';
-										$show_inlineImages = 'n';
-									}
-
 									if ($processEmail) {
 
 										// Attempt to use HTML, if it exists
