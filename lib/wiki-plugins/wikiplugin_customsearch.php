@@ -255,6 +255,9 @@ customsearch_$id = customsearch;
 		$arguments = $parser->parse($match->getArguments());
 		$key = $match->getInitialStart();
 		$fieldid = "customsearch_{$id}_$key";
+		if (isset($arguments['id'])) {
+			$fieldid = $arguments['id'];
+		}
 		if ($name == 'sort' && !empty($arguments['mode']) && empty($sort_mode)) {
 			$sort_mode = $arguments['mode'];
 			$match->replaceWith('');
