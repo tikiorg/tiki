@@ -323,7 +323,7 @@ foreach ($accs['data'] as $acc) {
 						
 						// Validate user's send permission
 						if ($acc["anonymous"] == 'n') {
-							
+
 							if (!$userlib->user_has_permission($aux["sender"]["user"], 'tiki_p_send_mailin')) {
 								$content.= "Access denied, sending auto-reply to email address:&nbsp;" . $aux["From"] . "<br />";
 								$mail = new TikiMail();
@@ -481,15 +481,27 @@ foreach ($accs['data'] as $acc) {
 											$show_inlineImages = 'n';
 										}
 									} else {
-										// Check global permissions
+										// Check category permission, if auto-assigning a category.
+										// Otherwise checkglobal permissions
 										$userlib = TikiLib::lib('user');
-										if (!$userlib->user_has_permission($chkUser, 'tiki_p_edit')) {
-											$content.= $chkUser." cannot create the page: ".$page."<br />";
-											$processEmail = false;
-										}
-										if (!$userlib->user_has_permission($chkUser, 'tiki_p_wiki_attach_files')) {
-											$can_addAttachment = 'n';
-											$show_inlineImages = 'n';
+										if ($prefs['feature_categories'] && isset($acc['categoryId'])) {
+											if (!$userlib->object_has_permission($chkUser, $acc['categoryId'], 'category', 'tiki_p_edit')) {
+												$content.= $chkUser." cannot create the page: ".$page."<br />";
+												$processEmail = false;
+											}
+											if (!$userlib->object_has_permission($chkUser, $acc['categoryId'], 'category', 'tiki_p_wiki_attach_files')) {
+												$can_addAttachment = 'n';
+												$show_inlineImages = 'n';
+											}
+										} else {
+											if (!$userlib->user_has_permission($chkUser, 'tiki_p_edit')) {
+												$content.= $chkUser." cannot create the page: ".$page."<br />";
+												$processEmail = false;
+											}
+											if (!$userlib->user_has_permission($chkUser, 'tiki_p_wiki_attach_files')) {
+												$can_addAttachment = 'n';
+												$show_inlineImages = 'n';
+											}
 										}
 									}
 									
