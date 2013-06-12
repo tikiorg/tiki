@@ -1,6 +1,6 @@
 /*!
  * elFinder - file manager for web
- * Version 2.x (Nightly: 165409c) (2013-04-18)
+ * Version 2.x github.com/jonnybradley/elFinder (2013-06-12)
  * http://elfinder.org
  * 
  * Copyright 2009-2012, Studio 42
@@ -10,7 +10,7 @@
 
 
 /*
- * File: /home/osc/elFinder-build/elFinder/js/elFinder.js
+ * File: elFinder/js/elFinder.js
  */
 
 /**
@@ -1460,7 +1460,7 @@ window.elFinder = function(node, opts) {
 	});
 	
 	this.dragUpload = false;
-	this.xhrUpload  = typeof XMLHttpRequestUpload != 'undefined' && typeof File != 'undefined' && typeof FormData != 'undefined';
+	this.xhrUpload  = (typeof XMLHttpRequestUpload != 'undefined' || typeof XMLHttpRequestEventTarget != 'undefined') && typeof File != 'undefined' && typeof FormData != 'undefined';
 	
 	// configure transport object
 	this.transport = {}
@@ -1515,7 +1515,7 @@ window.elFinder = function(node, opts) {
 		.enable(function() {
 			if (!enabled && self.visible() && self.ui.overlay.is(':hidden')) {
 				enabled = true;
-				$('texarea:focus,input:focus,button').blur();
+				$('textarea:focus,input:focus,button').blur();
 				node.removeClass('elfinder-disabled');
 			}
 		})
@@ -1981,10 +1981,48 @@ elFinder.prototype = {
 	iframeCnt : 0,
 	
 	uploads : {
+		// check droped contents
+		checkFile : function(data) {
+			if (data.type == 'files') {
+				return data.files;
+			} else {
+				var ret = [];
+				var regex;
+				var str = data.files[0];
+				if (data.type == 'html') {
+					regex = /<img[^>]+src=["']?([^"'> ]+)/ig;
+					var m = [];
+					var url = '';
+					var links;
+					while (m = regex.exec(str)) {
+						url = m[1].replace(/&amp;/g, '&');
+						if (url.match(/^http/) && $.inArray(url, ret) == -1) ret.push(url);
+					}
+					links = str.match(/<\/a>/i);
+					if (links && links.length == 1) {
+						regex = /<a[^>]+href=["']?([^"'> ]+)((?:.|\s)+)<\/a>/i;
+						if (m = regex.exec(str)) {
+							if (! m[2].match(/<img/i)) {
+								url = m[1].replace(/&amp;/g, '&');
+								if (url.match(/^http/) && $.inArray(url, ret) == -1) ret.push(url);
+							}
+						}
+					}
+				} else {
+					regex = /(http[^<>"{}|\\^\[\]`\s]+)/ig;
+					while (m = regex.exec(str)) {
+						url = m[1].replace(/&amp;/g, '&');
+						if ($.inArray(url, ret) == -1) ret.push(url);
+					}
+				}
+				return ret;
+			}
+		},
 		// upload transport using iframe
 		iframe : function(data, fm) { 
 			var self   = fm ? fm : this,
-				input  = data.input,
+				input  = data.input? data.input : false,
+				files  = !input ? self.uploads.checkFile(data) : false,
 				dfrd   = $.Deferred()
 					.fail(function(error) {
 						error && self.error(error);
@@ -2041,14 +2079,18 @@ elFinder.prototype = {
 				cnt, notify, notifyto, abortto
 				
 				;
-			
-			if (input && $(input).is(':file') && $(input).val()) {
+
+			if (files && files.length) {
+				$.each(files, function(i, val) {
+					form.append('<input type="hidden" name="upload[]" value="'+val+'"/>');
+				});
+				cnt = 1;
+			} else if (input && $(input).is(':file') && $(input).val()) {
 				form.append(input);
+				cnt = input.files ? input.files.length : 1;
 			} else {
 				return dfrd.reject();
 			}
-			
-			cnt = input.files ? input.files.length : 1;
 			
 			form.append('<input type="hidden" name="'+(self.newAPI ? 'target' : 'current')+'" value="'+self.cwd().hash+'"/>')
 				.append('<input type="hidden" name="html" value="1"/>')
@@ -2088,7 +2130,7 @@ elFinder.prototype = {
 					}),
 				xhr         = new XMLHttpRequest(),
 				formData    = new FormData(),
-				files       = data.input ? data.input.files : data.files, 
+				files       = data.input ? data.input.files : self.uploads.checkFile(data), 
 				cnt         = files.length,
 				loaded      = 5,
 				notify      = false,
@@ -2876,7 +2918,7 @@ elFinder.prototype = {
 
 
 /*
- * File: /home/osc/elFinder-build/elFinder/js/elFinder.version.js
+ * File: elFinder/js/elFinder.version.js
  */
 
 /**
@@ -2884,12 +2926,12 @@ elFinder.prototype = {
  *
  * @type String
  **/
-elFinder.prototype.version = '2.x (Nightly: 165409c)';
+elFinder.prototype.version = '2.x github.com/jonnybradley/elFinder';
 
 
 
 /*
- * File: /home/osc/elFinder-build/elFinder/js/jquery.elfinder.js
+ * File: elFinder/js/jquery.elfinder.js
  */
 
 $.fn.elfinder = function(o) {
@@ -2939,7 +2981,7 @@ $.fn.getElFinder = function() {
 
 
 /*
- * File: /home/osc/elFinder-build/elFinder/js/elFinder.options.js
+ * File: elFinder/js/elFinder.options.js
  */
 
 /**
@@ -3416,7 +3458,7 @@ elFinder.prototype._options = {
 
 
 /*
- * File: /home/osc/elFinder-build/elFinder/js/elFinder.history.js
+ * File: elFinder/js/elFinder.history.js
  */
 
 /**
@@ -3521,7 +3563,7 @@ elFinder.prototype.history = function(fm) {
 }
 
 /*
- * File: /home/osc/elFinder-build/elFinder/js/elFinder.command.js
+ * File: elFinder/js/elFinder.command.js
  */
 
 /**
@@ -3800,7 +3842,7 @@ elFinder.prototype.command = function(fm) {
 
 
 /*
- * File: /home/osc/elFinder-build/elFinder/js/elFinder.resources.js
+ * File: elFinder/js/elFinder.resources.js
  */
 
 /**
@@ -3951,7 +3993,7 @@ elFinder.prototype.resources = {
 
 
 /*
- * File: /home/osc/elFinder-build/elFinder/js/jquery.dialogelfinder.js
+ * File: elFinder/js/jquery.dialogelfinder.js
  */
 
 /**
@@ -4048,13 +4090,13 @@ $.fn.dialogelfinder = function(opts) {
 
 
 /*
- * File: /home/osc/elFinder-build/elFinder/js/i18n/elfinder.en.js
+ * File: elFinder/js/i18n/elfinder.en.js
  */
 
 /**
  * English translation
  * @author Troex Nevelin <troex@fury.scancode.ru>
- * @version 2012-02-25
+ * @version 2012-05-30
  */
 if (elFinder && elFinder.prototype && typeof(elFinder.prototype.i18) == 'object') {
 	elFinder.prototype.i18.en = {
@@ -4282,6 +4324,7 @@ if (elFinder && elFinder.prototype && typeof(elFinder.prototype.i18) == 'object'
 			'dontforget'      : 'and don\'t forget to take your towel',
 			'shortcutsof'     : 'Shortcuts disabled',
 			'dropFiles'       : 'Drop files here',
+			'dropFilesBrowser': 'Drop or paste files from browser', // added 30.05.2012
 			'or'              : 'or',
 			'selectForUpload' : 'Select files to upload',
 			'moveFiles'       : 'Move files',
@@ -4388,7 +4431,7 @@ if (elFinder && elFinder.prototype && typeof(elFinder.prototype.i18) == 'object'
 
 
 /*
- * File: /home/osc/elFinder-build/elFinder/js/ui/button.js
+ * File: elFinder/js/ui/button.js
  */
 
 /**
@@ -4469,7 +4512,7 @@ $.fn.elfinderbutton = function(cmd) {
 
 
 /*
- * File: /home/osc/elFinder-build/elFinder/js/ui/contextmenu.js
+ * File: elFinder/js/ui/contextmenu.js
  */
 
 /**
@@ -4619,7 +4662,7 @@ $.fn.elfindercontextmenu = function(fm) {
 
 
 /*
- * File: /home/osc/elFinder-build/elFinder/js/ui/cwd.js
+ * File: elFinder/js/ui/cwd.js
  */
 
 /**
@@ -5501,8 +5544,21 @@ $.fn.elfindercwd = function(fm, options) {
 			wrapper[0].addEventListener('drop', function(e) {
 			  	e.preventDefault();
 				wrapper.removeClass(clDropActive);
-
-				e.dataTransfer && e.dataTransfer.files &&  e.dataTransfer.files.length && fm.exec('upload', {files : e.dataTransfer.files})//fm.upload({files : e.dataTransfer.files});
+				var file = false;
+				var type = '';
+				if (e.dataTransfer && e.dataTransfer.files &&  e.dataTransfer.files.length) {
+					file = e.dataTransfer.files;
+					type = 'files';
+				} else if (e.dataTransfer.getData('text/html')) {
+					file = [ e.dataTransfer.getData('text/html') ];
+					type = 'html';
+				} else if (e.dataTransfer.getData('text')) {
+					file = [ e.dataTransfer.getData('text') ];
+					type = 'text';
+				}
+				if (file) {
+					fm.exec('upload', {files : file, type : type});
+				}
 			}, false);
 		}
 
@@ -5668,7 +5724,7 @@ $.fn.elfindercwd = function(fm, options) {
 
 
 /*
- * File: /home/osc/elFinder-build/elFinder/js/ui/dialog.js
+ * File: elFinder/js/ui/dialog.js
  */
 
 /**
@@ -5884,7 +5940,7 @@ $.fn.elfinderdialog.defaults = {
 }
 
 /*
- * File: /home/osc/elFinder-build/elFinder/js/ui/navbar.js
+ * File: elFinder/js/ui/navbar.js
  */
 
 /**
@@ -5941,7 +5997,7 @@ $.fn.elfindernavbar = function(fm, opts) {
 
 
 /*
- * File: /home/osc/elFinder-build/elFinder/js/ui/overlay.js
+ * File: elFinder/js/ui/overlay.js
  */
 
 
@@ -5993,7 +6049,7 @@ $.fn.elfinderoverlay = function(opts) {
 }
 
 /*
- * File: /home/osc/elFinder-build/elFinder/js/ui/panel.js
+ * File: elFinder/js/ui/panel.js
  */
 
 $.fn.elfinderpanel = function(fm) {
@@ -6014,7 +6070,7 @@ $.fn.elfinderpanel = function(fm) {
 }
 
 /*
- * File: /home/osc/elFinder-build/elFinder/js/ui/path.js
+ * File: elFinder/js/ui/path.js
  */
 
 /**
@@ -6051,7 +6107,7 @@ $.fn.elfinderpath = function(fm) {
 }
 
 /*
- * File: /home/osc/elFinder-build/elFinder/js/ui/places.js
+ * File: elFinder/js/ui/places.js
  */
 
 /**
@@ -6342,7 +6398,7 @@ $.fn.elfinderplaces = function(fm, opts) {
 }
 
 /*
- * File: /home/osc/elFinder-build/elFinder/js/ui/searchbutton.js
+ * File: elFinder/js/ui/searchbutton.js
  */
 
 /**
@@ -6433,7 +6489,7 @@ $.fn.elfindersearchbutton = function(cmd) {
 }
 
 /*
- * File: /home/osc/elFinder-build/elFinder/js/ui/sortbutton.js
+ * File: elFinder/js/ui/sortbutton.js
  */
 
 /**
@@ -6527,7 +6583,7 @@ $.fn.elfindersortbutton = function(cmd) {
 
 
 /*
- * File: /home/osc/elFinder-build/elFinder/js/ui/stat.js
+ * File: elFinder/js/ui/stat.js
  */
 
 /**
@@ -6590,7 +6646,7 @@ $.fn.elfinderstat = function(fm) {
 }
 
 /*
- * File: /home/osc/elFinder-build/elFinder/js/ui/toolbar.js
+ * File: elFinder/js/ui/toolbar.js
  */
 
 /**
@@ -6632,7 +6688,7 @@ $.fn.elfindertoolbar = function(fm, opts) {
 }
 
 /*
- * File: /home/osc/elFinder-build/elFinder/js/ui/tree.js
+ * File: elFinder/js/ui/tree.js
  */
 
 /**
@@ -7184,7 +7240,7 @@ $.fn.elfindertree = function(fm, opts) {
 
 
 /*
- * File: /home/osc/elFinder-build/elFinder/js/ui/uploadButton.js
+ * File: elFinder/js/ui/uploadButton.js
  */
 
 /**
@@ -7217,7 +7273,7 @@ $.fn.elfinderuploadbutton = function(cmd) {
 
 
 /*
- * File: /home/osc/elFinder-build/elFinder/js/ui/viewbutton.js
+ * File: elFinder/js/ui/viewbutton.js
  */
 
 /**
@@ -7240,7 +7296,7 @@ $.fn.elfinderviewbutton = function(cmd) {
 }
 
 /*
- * File: /home/osc/elFinder-build/elFinder/js/ui/workzone.js
+ * File: elFinder/js/ui/workzone.js
  */
 
 /**
@@ -7276,7 +7332,7 @@ $.fn.elfinderworkzone = function(fm) {
 
 
 /*
- * File: /home/osc/elFinder-build/elFinder/js/commands/archive.js
+ * File: elFinder/js/commands/archive.js
  */
 
 /**
@@ -7346,7 +7402,7 @@ elFinder.prototype.commands.archive = function() {
 }
 
 /*
- * File: /home/osc/elFinder-build/elFinder/js/commands/back.js
+ * File: elFinder/js/commands/back.js
  */
 
 /**
@@ -7373,7 +7429,7 @@ elFinder.prototype.commands.back = function() {
 }
 
 /*
- * File: /home/osc/elFinder-build/elFinder/js/commands/copy.js
+ * File: elFinder/js/commands/copy.js
  */
 
 /**
@@ -7415,7 +7471,7 @@ elFinder.prototype.commands.copy = function() {
 }
 
 /*
- * File: /home/osc/elFinder-build/elFinder/js/commands/cut.js
+ * File: elFinder/js/commands/cut.js
  */
 
 /**
@@ -7460,7 +7516,7 @@ elFinder.prototype.commands.cut = function() {
 }
 
 /*
- * File: /home/osc/elFinder-build/elFinder/js/commands/download.js
+ * File: elFinder/js/commands/download.js
  */
 
 /**
@@ -7531,7 +7587,7 @@ elFinder.prototype.commands.download = function() {
 }
 
 /*
- * File: /home/osc/elFinder-build/elFinder/js/commands/duplicate.js
+ * File: elFinder/js/commands/duplicate.js
  */
 
 /**
@@ -7585,7 +7641,7 @@ elFinder.prototype.commands.duplicate = function() {
 }
 
 /*
- * File: /home/osc/elFinder-build/elFinder/js/commands/edit.js
+ * File: elFinder/js/commands/edit.js
  */
 
 /**
@@ -7812,7 +7868,7 @@ elFinder.prototype.commands.edit = function() {
 }
 
 /*
- * File: /home/osc/elFinder-build/elFinder/js/commands/extract.js
+ * File: elFinder/js/commands/extract.js
  */
 
 /**
@@ -7893,6 +7949,7 @@ elFinder.prototype.commands.extract = function() {
 					}
 				})
 				.done(function () {
+					fm.exec("reload");
 				});
 			}
 		};
@@ -7973,7 +8030,7 @@ elFinder.prototype.commands.extract = function() {
 }
 
 /*
- * File: /home/osc/elFinder-build/elFinder/js/commands/forward.js
+ * File: elFinder/js/commands/forward.js
  */
 
 /**
@@ -8000,7 +8057,7 @@ elFinder.prototype.commands.forward = function() {
 }
 
 /*
- * File: /home/osc/elFinder-build/elFinder/js/commands/getfile.js
+ * File: elFinder/js/commands/getfile.js
  */
 
 /**
@@ -8110,7 +8167,7 @@ elFinder.prototype.commands.getfile = function() {
 }
 
 /*
- * File: /home/osc/elFinder-build/elFinder/js/commands/help.js
+ * File: elFinder/js/commands/help.js
  */
 
 /**
@@ -8267,7 +8324,7 @@ elFinder.prototype.commands.help = function() {
 
 
 /*
- * File: /home/osc/elFinder-build/elFinder/js/commands/home.js
+ * File: elFinder/js/commands/home.js
  */
 
 
@@ -8295,7 +8352,7 @@ elFinder.prototype.commands.home = function() {
 }
 
 /*
- * File: /home/osc/elFinder-build/elFinder/js/commands/info.js
+ * File: elFinder/js/commands/info.js
  */
 
 /**
@@ -8489,7 +8546,7 @@ elFinder.prototype.commands.info = function() {
 
 
 /*
- * File: /home/osc/elFinder-build/elFinder/js/commands/mkdir.js
+ * File: elFinder/js/commands/mkdir.js
  */
 
 /**
@@ -8517,7 +8574,7 @@ elFinder.prototype.commands.mkdir = function() {
 
 
 /*
- * File: /home/osc/elFinder-build/elFinder/js/commands/mkfile.js
+ * File: elFinder/js/commands/mkfile.js
  */
 
 /**
@@ -8541,7 +8598,7 @@ elFinder.prototype.commands.mkfile = function() {
 
 
 /*
- * File: /home/osc/elFinder-build/elFinder/js/commands/netmount.js
+ * File: elFinder/js/commands/netmount.js
  */
 
 /**
@@ -8643,7 +8700,7 @@ elFinder.prototype.commands.netmount = function() {
 }
 
 /*
- * File: /home/osc/elFinder-build/elFinder/js/commands/open.js
+ * File: elFinder/js/commands/open.js
  */
 
 /**
@@ -8736,7 +8793,7 @@ elFinder.prototype.commands.open = function() {
 }
 
 /*
- * File: /home/osc/elFinder-build/elFinder/js/commands/paste.js
+ * File: elFinder/js/commands/paste.js
  */
 
 /**
@@ -8971,8 +9028,9 @@ elFinder.prototype.commands.paste = function() {
 
 }
 
+
 /*
- * File: /home/osc/elFinder-build/elFinder/js/commands/quicklook.js
+ * File: elFinder/js/commands/quicklook.js
  */
 
 /**
@@ -9408,7 +9466,7 @@ elFinder.prototype.commands.quicklook = function() {
 
 
 /*
- * File: /home/osc/elFinder-build/elFinder/js/commands/quicklook.plugins.js
+ * File: elFinder/js/commands/quicklook.plugins.js
  */
 
 
@@ -9748,7 +9806,7 @@ elFinder.prototype.commands.quicklook.plugins = [
 ]
 
 /*
- * File: /home/osc/elFinder-build/elFinder/js/commands/reload.js
+ * File: elFinder/js/commands/reload.js
  */
 
 /**
@@ -9787,7 +9845,7 @@ elFinder.prototype.commands.reload = function() {
 }
 
 /*
- * File: /home/osc/elFinder-build/elFinder/js/commands/rename.js
+ * File: elFinder/js/commands/rename.js
  */
 
 /**
@@ -9921,7 +9979,7 @@ elFinder.prototype.commands.rename = function() {
 
 
 /*
- * File: /home/osc/elFinder-build/elFinder/js/commands/resize.js
+ * File: elFinder/js/commands/resize.js
  */
 
 /**
@@ -10712,7 +10770,7 @@ elFinder.prototype.commands.resize = function() {
 
 
 /*
- * File: /home/osc/elFinder-build/elFinder/js/commands/rm.js
+ * File: elFinder/js/commands/rm.js
  */
 
 /**
@@ -10802,7 +10860,7 @@ elFinder.prototype.commands.rm = function() {
 }
 
 /*
- * File: /home/osc/elFinder-build/elFinder/js/commands/search.js
+ * File: elFinder/js/commands/search.js
  */
 
 /**
@@ -10851,7 +10909,7 @@ elFinder.prototype.commands.search = function() {
 }
 
 /*
- * File: /home/osc/elFinder-build/elFinder/js/commands/sort.js
+ * File: elFinder/js/commands/sort.js
  */
 
 /**
@@ -10887,7 +10945,7 @@ elFinder.prototype.commands.sort = function() {
 }
 
 /*
- * File: /home/osc/elFinder-build/elFinder/js/commands/up.js
+ * File: elFinder/js/commands/up.js
  */
 
 /**
@@ -10915,7 +10973,7 @@ elFinder.prototype.commands.up = function() {
 }
 
 /*
- * File: /home/osc/elFinder-build/elFinder/js/commands/upload.js
+ * File: elFinder/js/commands/upload.js
  */
 
 /**
@@ -10944,7 +11002,7 @@ elFinder.prototype.commands.upload = function() {
 	 **/
 	this.getstate = function() {
 		return !this._disabled && this.fm.cwd().write ? 0 : -1;
-	}
+	};
 	
 	
 	this.exec = function(data) {
@@ -10959,7 +11017,7 @@ elFinder.prototype.commands.upload = function() {
 						dfrd.resolve(data);
 					});
 			},
-			dfrd, dialog, input, button, dropbox;
+			dfrd, dialog, input, button, dropbox, pastebox;
 		
 		if (this.disabled()) {
 			return $.Deferred().reject();
@@ -10981,16 +11039,42 @@ elFinder.prototype.commands.upload = function() {
 			.append($('<form/>').append(input))
 			.hover(function() {
 				button.toggleClass(hover)
-			})
+			});
 			
 		dialog = $('<div class="elfinder-upload-dialog-wrapper"/>')
 			.append(button);
 		
+		pastebox = $('<div class="ui-corner-all elfinder-upload-dropbox" contenteditable=true></div>')
+			.focus(function() {
+				if (this.innerHTML) {
+					var src = this.innerHTML.replace(/<br[^>]*>/gi, ' ');
+					var type = src.match(/<[^>]+>/)? 'html' : 'text';
+					this.innerHTML = '';
+					upload({files : [ src ], type : type});
+				}
+			})
+			.bind('dragenter mouseover', function(){
+				this.focus();
+				$(pastebox).addClass(hover);
+			})
+			.bind('dragleave mouseout', function(){
+				this.blur();
+				$(pastebox).removeClass(hover);
+			})
+			.bind('mouseup keyup', function() {
+				setTimeout(function(){
+					$(pastebox).focus();
+				}, 100);
+			});
+		
 		if (fm.dragUpload) {
 			dropbox = $('<div class="ui-corner-all elfinder-upload-dropbox">'+fm.i18n('dropFiles')+'</div>')
 				.prependTo(dialog)
+				.after('<div class="elfinder-upload-dialog-or">'+fm.i18n('or')+'</div>')
+				.after(pastebox)
+				.after('<div>'+fm.i18n('dropFilesBrowser')+'</div>')
 				.after('<div class="elfinder-upload-dialog-or">'+fm.i18n('or')+'</div>')[0];
-
+			
 			dropbox.addEventListener('dragenter', function(e) {
 				e.stopPropagation();
 			  	e.preventDefault();
@@ -11006,14 +11090,34 @@ elFinder.prototype.commands.upload = function() {
 			dropbox.addEventListener('dragover', function(e) {
 				e.stopPropagation();
 			  	e.preventDefault();
+			  	$(dropbox).addClass(hover);
 			}, false);
 
 			dropbox.addEventListener('drop', function(e) {
 				e.stopPropagation();
 			  	e.preventDefault();
-			
-				upload({files : e.dataTransfer.files});
+				var file = false;
+				var type = '';
+				if (e.dataTransfer && e.dataTransfer.files &&  e.dataTransfer.files.length) {
+					file = e.dataTransfer.files;
+					type = 'files';
+				} else if (e.dataTransfer.getData('text/html')) {
+					file = [ e.dataTransfer.getData('text/html') ];
+					type = 'html';
+				} else if (e.dataTransfer.getData('text')) {
+					file = [ e.dataTransfer.getData('text') ];
+					type = 'text';
+				}
+				if (file) {
+					upload({files : file, type : type});
+				}
 			}, false);
+			
+		} else {
+			$('<div>'+fm.i18n('dropFilesBrowser')+'</div>')
+				.append(pastebox)
+				.prependTo(dialog)
+				.after('<div class="elfinder-upload-dialog-or">'+fm.i18n('or')+'</div>')[0];
 			
 		}
 		
@@ -11023,14 +11127,14 @@ elFinder.prototype.commands.upload = function() {
 			resizable      : false,
 			destroyOnClose : true
 		});
-			
+		
 		return dfrd;
-	}
+	};
 
-}
+};
 
 /*
- * File: /home/osc/elFinder-build/elFinder/js/commands/view.js
+ * File: elFinder/js/commands/view.js
  */
 
 /**
