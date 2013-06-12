@@ -44,6 +44,13 @@ function prefs_tiki_list()
 			'default' => 'n',
 			'tags' => array('basic'),
 		),
+		'tiki_minify_late_js_files' => array(
+			'name' => tra('Minify Late JavaScript'),
+			'description' => tra('Compress extra JavaScript files used in the page after tiki-setup into a seperate file which may vary from page to page.'),
+			'type' => 'flag',
+			'perspective' => false,
+			'default' => 'n',
+		),
 		'tiki_minify_css' => array(
 			'name' => tra('Minify CSS'),
 			'description' => tra('Compress CSS files by removing additional spaces and grouping multiple files into one. Changes to CSS files will require cache to be cleared. Uses http://code.google.com/p/minify/'),

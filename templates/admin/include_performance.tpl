@@ -11,6 +11,9 @@
 
 		{tab name="{tr}Performance{/tr}"}
 			{preference name=tiki_minify_javascript}
+			<div class="adminoptionboxchild" id="tiki_minify_javascript_childcontainer">
+				{preference name=tiki_minify_late_js_files}
+			</div>
 			{preference name=javascript_cdn}
 			{preference name=tiki_cdn}
 			{preference name=tiki_cdn_ssl}

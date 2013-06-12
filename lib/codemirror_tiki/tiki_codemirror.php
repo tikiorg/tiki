@@ -47,6 +47,6 @@ function codemirrorModes($minify = true)
 	}
 
 	TikiLib::lib("header")
-		->add_jsfile_dependancy($jsModes)
+		->add_jsfile($jsModes)
 		->add_cssfile($cssModes);
 }

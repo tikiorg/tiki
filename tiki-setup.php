@@ -354,10 +354,10 @@ if ($prefs['feature_syntax_highlighter'] == 'y') {
 	$headerlib
 		->add_cssfile('vendor/codemirror/codemirror/lib/codemirror.css')
 		->add_jsfile_dependancy('vendor/codemirror/codemirror/lib/codemirror.js')
-		->add_jsfile_dependancy('vendor/codemirror/codemirror/lib/util/searchcursor.js')
+		->add_jsfile('vendor/codemirror/codemirror/lib/util/searchcursor.js', 3)
 	//add tiki stuff
 		->add_cssfile('lib/codemirror_tiki/codemirror_tiki.css')
-		->add_jsfile_dependancy('lib/codemirror_tiki/codemirror_tiki.js');
+		->add_jsfile('lib/codemirror_tiki/codemirror_tiki.js', 5);
 
 	require_once("lib/codemirror_tiki/tiki_codemirror.php");
 	codemirrorModes($prefs['tiki_minify_javascript'] === 'y');
@@ -560,8 +560,8 @@ if ($prefs['feature_trackers'] == 'y') {
 }
 
 if ($prefs['feature_draw'] == 'y') {
-	//svg-edit/empbedapi.js neededs to be external because it is not minifyable, dirty code
-	$headerlib->add_jsfile("vendor/svg-edit/svg-edit/embedapi.js", "external");
+	//svg-edit/empbedapi.js neededs to be external - why?
+	$headerlib->add_jsfile("vendor/svg-edit/svg-edit/embedapi.js");
 	$headerlib->add_jsfile("lib/svg-edit_tiki/draw.js");
 	$headerlib->add_cssfile("lib/svg-edit_tiki/draw.css");
 }
@@ -625,7 +625,7 @@ if ( isset($token_error) ) {
 require_once( 'lib/setup/plugins_actions.php' );
 
 if ($tiki_p_admin == 'y') {
-	$headerlib->add_jsfile('lib/jquery_tiki/tiki-admin.js', 'external');
+	$headerlib->add_jsfile('lib/jquery_tiki/tiki-admin.js');
 }
 
 //////////////////////////////////////////////////////////////////////////
