@@ -265,7 +265,7 @@
 				{if $types.$type.heading_only eq 'y'}
 					{textarea name="heading" rows="5" cols="80" Height="200px" id="subheading"}{$heading}{/textarea}
 				{else}
-					{textarea _simple="y" name="heading" rows="5" cols="80" Height="200px" id="subheading" comments="y"}{$heading}{/textarea}
+					{textarea _simple="y" name="heading" rows="5" cols="95" Height="200px" id="subheading" comments="y"}{$heading}{/textarea}
 				{/if}
 			</td>
 		</tr>
@@ -318,12 +318,7 @@
 					</td>
 				</tr>
 			{else}
-				<tr>
-					<td></td>
-					<td>
-						<input type="checkbox" name="allowhtml" checked="checked" style="display:none;">
-					</td>
-				</tr>
+				<input type="hidden" name="allowhtml" value="{if $allowhtml eq 'y'}on{/if}">
 			{/if}
 		{/if}
 		
