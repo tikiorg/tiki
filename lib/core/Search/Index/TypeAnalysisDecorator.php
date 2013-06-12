@@ -36,9 +36,9 @@ class Search_Index_TypeAnalysisDecorator implements Search_Index_Interface
 		return $this->parent->endUpdate();
 	}
 
-	function find(Search_Expr_Interface $query, Search_Query_Order $sortOrder, $resultStart, $resultCount)
+	function find(Search_Query_Interface $query, $resultStart, $resultCount)
 	{
-		return $this->parent->find($query, $sortOrder, $resultStart, $resultCount);
+		return $this->parent->find($query, $resultStart, $resultCount);
 	}
 
 	function getTypeFactory()
