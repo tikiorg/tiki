@@ -388,8 +388,6 @@ if ($prefs['flaggedrev_approval'] == 'y' && isset($_REQUEST['latest']) && $objec
 	$pageRenderer->forceLatest();
 }
 
-require_once 'lib/cache/pagecache.php';
-
 $pageCache = Tiki_PageCache::create()
 	->disableForRegistered()
 	->onlyForGet()

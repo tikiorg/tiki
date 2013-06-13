@@ -4769,7 +4769,6 @@ class TikiLib extends TikiDb_Bridge
 		unset( $this->cache_page_info[urlencode($page)] );
 		$this->table('tiki_pages')->update(array('cache_timestamp' => 0), array('pageName' => $page));
 
-		require_once 'lib/cache/pagecache.php';
 		$pageCache = Tiki_PageCache::create()
 			->checkMeta('wiki-page-output-meta-timestamp', array('page' => $page ))
 			->invalidate();

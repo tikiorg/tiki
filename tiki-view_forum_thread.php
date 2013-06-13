@@ -40,7 +40,6 @@ if (empty($forum_info)) {
 		die;
 }
 
-require_once 'lib/cache/pagecache.php';
 $pageCache = Tiki_PageCache::create()
 	->disableForRegistered()
 	->onlyForGet()
