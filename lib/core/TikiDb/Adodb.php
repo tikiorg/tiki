@@ -20,7 +20,9 @@ class TikiDb_Adodb extends TikiDb
 
 	function __destruct() // {{{
 	{
-		$this->db->Close();
+		if ($this->db) {
+			$this->db->Close();
+		}
 	} // }}}
 
 	function qstr( $str ) // {{{

@@ -41,8 +41,8 @@ $credentials = array(
 // Load connection strings from environment variables, as used by Azure and possibly other hosts
 $connectionString = null;
 foreach (array('MYSQLCONNSTR_Tiki', 'MYSQLCONNSTR_DefaultConnection') as $envVar) {
-	if (isset($_ENV[$envVar])) {
-		$connectionString = $_ENV[$envVar];
+	if (isset($_SERVER[$envVar])) {
+		$connectionString = $_SERVER[$envVar];
 		continue;
 	}
 }
@@ -53,28 +53,28 @@ if ($connectionString && preg_match('/^Database=(?P<dbs>.+);Data Source=(?P<host
 
 	$credentials['primary'] = $parts;
 	$re = true;
-}
+} else {
+	if (isset($shadow_host, $shadow_user, $shadow_pass, $shadow_dbs)) {
+		$credentials['shadow'] = array(
+			'host' => $shadow_host,
+			'user' => $shadow_user,
+			'pass' => $shadow_pass,
+			'dbs' => $shadow_dbs,
+			'charset' => $client_charset,
+			'socket' => isset($socket_tiki) ? $socket_tiki : null,
+		);
+	}
 
-if (isset($shadow_host, $shadow_user, $shadow_pass, $shadow_dbs)) {
-	$credentials['shadow'] = array(
-		'host' => $shadow_host,
-		'user' => $shadow_user,
-		'pass' => $shadow_pass,
-		'dbs' => $shadow_dbs,
-		'charset' => $client_charset,
-		'socket' => isset($socket_tiki) ? $socket_tiki : null,
-	);
-}
-
-if (isset($host_tiki, $user_tiki, $pass_tiki, $dbs_tiki)) {
-	$credentials['primary'] = array(
-		'host' => $host_tiki,
-		'user' => $user_tiki,
-		'pass' => $pass_tiki,
-		'dbs' => $dbs_tiki,
-		'charset' => $client_charset,
-		'socket' => null,
-	);
+	if (isset($host_tiki, $user_tiki, $pass_tiki, $dbs_tiki)) {
+		$credentials['primary'] = array(
+			'host' => $host_tiki,
+			'user' => $user_tiki,
+			'pass' => $pass_tiki,
+			'dbs' => $dbs_tiki,
+			'charset' => $client_charset,
+			'socket' => null,
+		);
+	}
 }
 
 unset($host_map, $db_tiki, $host_tiki, $user_tiki, $pass_tiki, $dbs_tiki, $shadow_user, $shadow_pass, $shadow_host, $shadow_dbs);
@@ -246,9 +246,4 @@ if ($credentials['shadow']) {
 	}
 }
 
-/**
- * @param $db
- */
-function init_connection( $db )
-{
-}
+unset($credentials);

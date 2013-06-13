@@ -187,8 +187,12 @@
 	<div align="center" style="padding:1em">
 		<p>
 			<img src="img/icons/information.png" alt="{tr}Information{/tr}" style="vertical-align: bottom;">
-			{tr}Tiki found an existing database connection in your local.php file.{/tr}<br>
-			<em>{tr _0=$dbname}Database name: &quot;%0&quot;{/tr}</em>
+			{if $dbname}
+				{tr}Tiki found an existing database connection in your local.php file.{/tr}<br>
+				<em>{tr _0=$dbname}Database name: &quot;%0&quot;{/tr}</em>
+			{else}
+				{tr}Tiki found an automatic database connection for your environment.{/tr}
+			{/if}
 		</p>
 		<form action="tiki-install.php" method="post">
 			<input type="hidden" name="install_step" value="4">
