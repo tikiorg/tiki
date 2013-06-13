@@ -29,11 +29,15 @@ class Memcachelib
 	function Memcachelib($memcached_servers=FALSE, $memcached_options=FALSE)
 	{
 		global $tikidomainslash;
-		// Should be defined by unserializing $prefs['memcache_options']
-		// and $prefs['memcache_servers']. Currently happens in
-		// /webroot/tiki-setup_base.php
-		// preferences are overwritten in local.php (if defined)
-		require("db/{$tikidomainslash}local.php");
+		$localphp = "db/{$tikidomainslash}local.php";
+
+		if (is_readable($localphp)) {
+			// Should be defined by unserializing $prefs['memcache_options']
+			// and $prefs['memcache_servers']. Currently happens in
+			// /webroot/tiki-setup_base.php
+			// preferences are overwritten in local.php (if defined)
+			require($localphp);
+		}
 
 		if (!$memcached_servers || (!empty($memcached_options) && !$memcached_options['enabled']) || ! class_exists('Memcache') ) {
 			$this->memcache = FALSE;
