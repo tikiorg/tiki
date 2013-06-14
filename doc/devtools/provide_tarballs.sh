@@ -5,14 +5,18 @@
 # You have to configure paths and svn user in the marked section below.
 # Your svn login data must be availabe in ~/.subversion, see svn docs. 
 #
-# Usage: $0 <branch>
+# Usage: $0 <branch, eg trunk or 6 or 7 or 11 ... >
 # Example: $0 trunk
 
-BRANCH=$1
+VERSION=$1
 
-if [ "${BRANCH}" = "" ]; then
-  echo "ERROR: branch parameter missing (eg 'trunk')"
+if [ "${VERSION}" = "" ]; then
+  echo "ERROR: version parameter missing (eg 'trunk', '9', '11')"
   exit
+fi
+BRANCH=${VERSION}
+if [ ! "${VERSION}" = "trunk" ]; then
+    BRANCH=${VERSION}-x
 fi
 
 # --- configuration --- edit here ---
@@ -39,7 +43,11 @@ if [ ! -d "${BASE}/data/${BRANCH}" ]; then
     echo "Folder doesn't exist yet, checking out project ..."
 
     cd ${BASE}/data
-    svn checkout --username ${SVNUSER} https://svn.code.sf.net/p/tikiwiki/code/${BRANCH} ${BRANCH} 2>&1 >> ${LOGFILE}
+    if [ "${BRANCH}" = "trunk" ]; then
+        svn checkout --username ${SVNUSER} https://svn.code.sf.net/p/tikiwiki/code/${BRANCH} ${BRANCH} 2>&1 >> ${LOGFILE}
+    else
+        svn checkout --username ${SVNUSER} https://svn.code.sf.net/p/tikiwiki/code/branches/${VERSION}.x ${BRANCH} 2>&1 >> ${LOGFILE}
+    fi
 
     LINE=`tail -1 ${LOGFILE}`
     RC=`echo "${LINE}" | grep "Checked out revision"`
