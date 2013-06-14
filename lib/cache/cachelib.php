@@ -81,6 +81,7 @@ class Cachelib
 			$this->erase_dir_content("temp/cache/$tikidomain");
 			$this->erase_dir_content("modules/cache/$tikidomain");
 			$this->flush_opcode_cache();
+			$prefs = $this->flush_memcache();
 			$this->invalidate('global_preferences');
 			if (is_object($logslib)) {
 				$logslib->add_log($log_section, 'erased all cache content');
@@ -188,6 +189,24 @@ class Cachelib
 				xcache_clear_cache(XC_TYPE_PHP, $index);
 			}
 		}
+	}
+
+	/**
+	 * Flush memcache if endabled
+	 *
+	 * @return void
+	 */
+	function flush_memcache()
+	{
+		global $prefs;
+
+		if (isset($prefs['memcache_enabled']) && $prefs['memcache_enabled'] == 'y') {
+			$memcachelib = TikiLib::lib("memcache");
+			if ($memcachelib->isEnabled()) {
+				$memcachelib->flush();
+			}
+		}
+		return;
 	}
 
 	function erase_dir_content($path)
