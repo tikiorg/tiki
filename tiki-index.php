@@ -397,7 +397,7 @@ $pageCache = Tiki_PageCache::create()
 	->addValue('role', 'wiki-page-output')
 	->addValue('page', $page)
 	->addValue('locale', $prefs['language'])
-	->addKeys($_REQUEST, array( 'style_mode' ))
+	->addKeys($_GET, array_keys($_GET))
 	->checkMeta('wiki-page-output-meta-timestamp', array('page' => $page,))
 	->applyCache();
 
