@@ -16,7 +16,7 @@ if [ "${VERSION}" = "" ]; then
 fi
 BRANCH=${VERSION}
 if [ ! "${VERSION}" = "trunk" ]; then
-    BRANCH=${VERSION}-x
+    BRANCH=BRANCH-${VERSION}-x
 fi
 
 # --- configuration --- edit here ---
