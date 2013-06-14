@@ -37,7 +37,7 @@
     </fieldset>
 </form>
 </div>
-{if isset($journal)}<div id="account_journal>
+{if isset($journal)}<div id="account_journal">
 {include file='tiki-accounting_journal.tpl'}
 </div>
 {/if}
