@@ -18,6 +18,10 @@ global $cachelib;
 include_once ('lib/cache/cachelib.php');
 if (isset($_GET['do'])) {
 	$cachelib->empty_cache($_GET['do']);
+	if ($_GET['do'] === 'all') {
+		// seems combination of clearing prefs and public now messes up the page, so reload (tiki 11)
+		header('Location: ' . $base_url . 'tiki-admin_system.php');
+	}
 }
 if (isset($_GET['compiletemplates'])) {
 	$ctempl = 'templates';
