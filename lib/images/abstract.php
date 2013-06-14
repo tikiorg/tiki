@@ -252,10 +252,10 @@ class ImageAbstract
 			$icon_format = $format;
 			$class = 'Image';
 
-			if ( call_user_func(array($class, 'is_supported'), 'svg') ) {
-				$format = 'svg';
-			} elseif ( call_user_func(array($class, 'is_supported'), 'png') ) {
+			if ( call_user_func(array($class, 'is_supported'), 'png') ) {
 				$format = 'png';
+			} elseif ( call_user_func(array($class, 'is_supported'), 'svg') ) {
+				$format = 'svg';
 			} else {
 				return false;
 			}
