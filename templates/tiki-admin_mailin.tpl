@@ -13,6 +13,7 @@
     <th>{tr}Anonym{/tr}</th>
     <th>{tr}Attach{/tr}</th>
     <th>{tr}Inline{/tr}</th>
+    <th>{tr}Keep HTML{/tr}</th>
     <th>{tr}Categ{/tr}</th>
     <th>{tr}Email resp{/tr}</th>
   </tr>
@@ -29,6 +30,7 @@
       <td class="text">{tr}{$accounts[ix].anonymous}{/tr}</td>
       <td class="text">{tr}{$accounts[ix].attachments}{/tr}</td>
       <td class="text">{tr}{$accounts[ix].show_inlineImages}{/tr}</td>
+      <td class="text">{tr}{$accounts[ix].save_html}{/tr}</td>
       <td class="text">{tr}{$accounts[ix].categoryId}{/tr}</td>
       <td class="text">{tr}{$accounts[ix].respond_email}{/tr}</td>
 	  
@@ -82,7 +84,7 @@
     </tr>
     <tr>
       <td>{tr}Type{/tr}</td>
-      <td colspan="4">
+      <td colspan="3">
         <select name="type" id='mailin_type' onchange='javascript:chgMailinType();'>
 		  {if $prefs.feature_articles eq 'y'}
 			<option value="article-put" {if $info.type eq 'article-put'}selected="selected"{/if}>{tr}article-put{/tr}</option>
@@ -94,6 +96,7 @@
           <option value="wiki" {if $info.type eq 'wiki'}selected="selected"{/if}>{tr}wiki{/tr}</option>
         </select>
       </td>
+	  <td>{tr}put wiki/article => create/update from email. get wiki => send page to user as email{/tr}</td>
     </tr>
 
 {if $prefs.feature_articles eq 'y'}
@@ -138,7 +141,7 @@
         {tr}No{/tr}
         <input type="radio" name="anonymous" {if $info.anonymous eq 'n'}checked="checked"{/if} value="n">
       </td>
-	  <td>{tr}Warning: Enabling anonymous access<br>will disable all permission checking for mailed-in content{/tr}.</td>
+	  <td>{tr}Warning: Enabling anonymous access will disable all permission checking for mailed-in content{/tr}.</td>
     </tr>
     <tr>
       <td>{tr}Allow attachments{/tr}</td>
@@ -165,6 +168,16 @@
 		<a href="tiki-admin.php?page=wiki&cookietab=2&highlight=feature_wiki_attachments">Activate attachments</a>
 		{/if}
       </td>
+    </tr>
+    <tr>
+		<td>{tr}Keep HTML format{/tr}</td>
+		<td colspan="3">
+		{tr}Yes{/tr}
+		<input type="radio" name="save_html" {if $info.save_html eq 'y'}checked="checked"{/if} value="y">
+		{tr}No{/tr}
+		<input type="radio" name="save_html" {if $info.save_html neq 'y'}checked="checked"{/if} value="n">
+		</td>
+	  <td>{tr}Always save Email in HTML format as a wiki page in HTML format, regardless of editor avaibility or selection{/tr}.</td>
     </tr>
     <tr>
       <td>{tr}Discard to the end from{/tr}</td>

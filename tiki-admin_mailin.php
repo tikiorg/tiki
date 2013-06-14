@@ -64,6 +64,7 @@ if (isset($_REQUEST['new_acc'])) {
 			$_REQUEST['article_type'],
 			$_REQUEST['discard_after'],
 			$_REQUEST['show_inlineImages'],
+			$_REQUEST['save_html'],
 			$_REQUEST['categoryId'],
 			$_REQUEST['respond_email']
 		);
@@ -100,6 +101,7 @@ if ($_REQUEST['accountId']) {
 	$info['article_topicId'] = '';
 	$info['article_type'] = '';
 	$info['show_inlineImages'] = 'y';
+	$info['save_html'] = 'y';
 	$info['categoryId'] = 0;
 	$info['respond_email'] = 'y';
 }

@@ -22,6 +22,7 @@ $is_html = false;
 $show_inlineImages = 'n';
 $can_addAttachment = 'n';
 $respond_email = 'y';
+$save_html = 'y';
 
 /**
  * @param $output
@@ -79,6 +80,7 @@ function mailin_get_body($output)
 	elseif (isset($output['parts'][0]) && isset($output['parts'][0]["text"][0])) $body = $output['parts'][0]["text"][0];
 	elseif (isset($output['parts'][0]) && isset($output['parts'][0]['parts'][0]) && isset($output['parts'][0]['parts'][0]["text"][0])) $body = $output['parts'][0]['parts'][0]["text"][0];
 	else $body = '';
+
 	return $body;
 }
 /**
@@ -100,6 +102,58 @@ function mailin_get_html($output)
 	}
 	return $html;
 }
+/**
+ * @param $body
+ * @return parsed content
+ */
+function mailin_parse_body($body, $acc)
+{
+	global $prefs;
+
+	$is_html = false;
+	$wysiwyg = NULL;
+	if (mailin_containsStringHTML($body)) {
+		$is_html = true;
+		$wysiwyg = 'y';
+	}
+
+	if ($is_html && $acc['save_html'] === 'y') {
+		// Keep HTML setting. Always save as HTML
+		return array(
+			'body'=>$body,
+			'is_html'=>$is_html,
+			'wysiwyg'=>$wysiwyg,
+			);
+	}
+	if ($prefs['feature_wysiwyg'] === 'y' && $prefs['wysiwyg_default'] === 'y' && $prefs['wysiwyg_htmltowiki'] !== 'y' ) {
+		// WYSIWYG HTML editor is active
+		$is_html = true;
+		$wysiwyg = 'y';
+		return array(
+			'body'=>$body,
+			'is_html'=>$is_html,
+			'wysiwyg'=>$wysiwyg,
+			);
+	}
+	
+	if ($is_html) {
+		include_once "lib/wiki/editlib.php";
+		$editlib = new EditLib;
+		$body = $editlib->parseToWiki($body);
+		$is_html = false;
+		$wysiwyg = NULL;
+	}
+	return array(
+		'body'=>$body,
+		'is_html'=>$is_html,
+		'wysiwyg'=>$wysiwyg,
+		);
+}
+
+function mailin_containsStringHTML($str) 
+{
+	return preg_match ('/<[^>]*>/', $str) == 1;	
+}
 
 /**
  * This is function mailin_extract_inline_images
@@ -114,7 +168,7 @@ function mailin_get_html($output)
  * @return nothing
  *
  */
-function	mailin_extract_inline_images($pageName, $output, &$body, &$out, $user)
+function mailin_extract_inline_images($pageName, $output, &$body, &$out, $user)
 {
 	global $wikilib, $is_html, $show_inlineImages, $can_addAttachment;
 	
@@ -355,7 +409,7 @@ foreach ($accs['data'] as $acc) {
 								$title = trim($output['header']['subject']);
 								$topicId = isset($acc['article_topicId']) ? $acc['article_topicId'] : 0;
 								$chkUser = $aux["sender"]["user"];
-								if ($acc["anonymous"] == 'n') {
+								if (($acc["anonymous"] == 'n') && (!$userlib->user_has_permission($chkUser, 'tiki_p_admin'))) {
 									if (!$wikilib->user_has_perm_on_object($chkUser, $topicId, 'topic', 'tiki_p_submit_article', 'tiki_p_edit_submission')) {
 										$content.= $chkUser." cannot submit the article: ".$title."<br />";
 										$processEmail = false;
@@ -446,12 +500,12 @@ foreach ($accs['data'] as $acc) {
 										
 										// Check permissions
 										$chkUser = $aux["sender"]["user"];
-										if ($acc["anonymous"] == 'n') {
+										if (($acc["anonymous"] == 'n') && (!$userlib->user_has_permission($chkUser, 'tiki_p_admin'))) {
 											if(!$wikilib->user_has_perm_on_object($chkUser, $page, 'wiki page', 'tiki_p_view')) {
 												$content.= $chkUser." cannot view the page: ".$page."<br />";
 												$processEmail = false;
 											}
-										}										
+										}
 										if ($processEmail) {
 											$mail->setSubject($page);
 											$info = $tikilib->get_page_info($page);
@@ -471,10 +525,11 @@ foreach ($accs['data'] as $acc) {
 									
 									// This is used to UPDATE wiki pages
 
+									// Check permissions
 									$chkUser = $aux["sender"]["user"];
-									// Check permissions for page
-									if ($acc["anonymous"] == 'n') {
+									if (($acc["anonymous"] == 'n') && (!$userlib->user_has_permission($chkUser, 'tiki_p_admin'))) {
 										if ($tikilib->page_exists($page)) {
+											// Check permissions for page
 											if (!$wikilib->user_has_perm_on_object($chkUser, $page, 'wiki page', 'tiki_p_edit')) {
 												$content.= $chkUser." cannot edit the page: ".$page."<br />";
 												$processEmail = false;
@@ -507,7 +562,7 @@ foreach ($accs['data'] as $acc) {
 												}
 											}
 										}
-									}									
+									}
 									if ($processEmail) {
 
 										// Attempt to use HTML, if it exists
@@ -515,6 +570,7 @@ foreach ($accs['data'] as $acc) {
 										if (empty($body)) {
 											$body = mailin_get_body($output);
 										}
+
 										if (!empty($acc['discard_after']) && $body) {
 											$body = preg_replace("/" . $acc['discard_after'] . ".*$/s", "", $body);
 										}
@@ -523,10 +579,22 @@ foreach ($accs['data'] as $acc) {
 												mailin_extract_inline_images($page, $output, $body, $content, $aux["sender"]["user"]);
 												mailin_check_attachments($output, $content, $page, $aux["sender"]["user"], $body);
 											}
+
+											$parsed_data = mailin_parse_body($body, $acc);
+											$body = $parsed_data['body'];
+
 											if (!$tikilib->page_exists($page)) {
-												$tikilib->create_page($page, 0, $body, $tikilib->now, "Created from " . $acc["account"], $aux["sender"]["user"], '0.0.0.0', '');
+
+												$tikilib->create_page($page, 0, $body, $tikilib->now, "Created from " . $acc["account"], $aux["sender"]["user"],
+																	'0.0.0.0',
+																	'',						//description
+																	'',						//lang
+																	$parsed_data['is_html'],	//is_html
+																	'',						//hash
+																	$parsed_data['wysiwyg']	//wysiwyg
+												);
 												$content.= "Page: $page has been created<br />";
-												
+
 												// Assign category, if specified
 												if ($prefs['feature_categories'] && isset($acc['categoryId'])) {
 													try {
@@ -548,7 +616,17 @@ foreach ($accs['data'] as $acc) {
 												}
 												
 											} else {
-												$tikilib->update_page($page, $body, "Created from " . $acc["account"], $aux["sender"]["user"], '0.0.0.0', '');
+												$tikilib->update_page($page, $body, "Created from " . $acc["account"],
+																		$aux["sender"]["user"],
+																		'0.0.0.0',
+																		'',	//desc
+																		0, 	//edit_minor
+																		'',	//lang
+																		$parsed_data['is_html'],	//is_html
+																		'',	//hash
+																		null,	//saveLastModif
+																		$parsed_data['wysiwyg']	//wysiwyg
+												);
 												$content.= "Page: $page has been updated<br />";
 											}
 										}
@@ -559,7 +637,7 @@ foreach ($accs['data'] as $acc) {
 
 									// Check permissions
 									$chkUser = $aux["sender"]["user"];
-									if ($acc["anonymous"] == 'n') {
+									if (($acc["anonymous"] == 'n') && (!$userlib->user_has_permission($chkUser, 'tiki_p_admin'))) {
 										if(!$wikilib->user_has_perm_on_object($chkUser, $page, 'wiki page', 'tiki_p_edit')) {
 											$content.= $chkUser." cannot edit the page: ".$page."<br />";
 											$processEmail = false;
@@ -580,13 +658,22 @@ foreach ($accs['data'] as $acc) {
 										if ($body && !empty($acc['discard_after'])) {
 											$body = preg_replace("/" . $acc['discard_after'] . ".*$/s", "", $body);
 										}
+										$parsed_data = mailin_parse_body($body, $acc);
+										$body = $parsed_data['body'];
 										if (isset($body)) {
 											if ($prefs['feature_wiki_attachments'] === 'y') {
 												mailin_extract_inline_images($page, $output, $body, $content, $aux["sender"]["user"]);
 												mailin_check_attachments($output, $content, $page, $aux["sender"]["user"], $body);
 											}
 											if (!$tikilib->page_exists($page)) {
-												$tikilib->create_page($page, 0, $body, $tikilib->now, "Created from " . $acc["account"], $aux["sender"]["user"], '0.0.0.0', '');
+												$tikilib->create_page($page, 0, $body, $tikilib->now, "Created from " . $acc["account"], $aux["sender"]["user"],
+																	 '0.0.0.0',
+																	 '',						//description
+																	 '',						//lang
+																	 $parsed_data['is_html'],	//is_html
+																	 '',						//hash
+																	 $parsed_data['wysiwyg']	//wysiwyg
+												);
 												$content.= "Page: $page has been created<br />";
 											} else {
 												$info = $tikilib->get_page_info($page);
@@ -595,7 +682,17 @@ foreach ($accs['data'] as $acc) {
 												} else {
 													$body = $body . $info['data'];
 												}
-												$tikilib->update_page($page, $body, "Updated from " . $acc["account"], $aux["sender"]["user"], '0.0.0.0', '');
+												$tikilib->update_page($page, $body, "Created from " . $acc["account"],
+																	$aux["sender"]["user"],
+																	'0.0.0.0',
+																	'',	//desc
+																	0, 	//edit_minor
+																	'',	//lang
+																	$parsed_data['is_html'],	//is_html
+																	'',	//hash
+																	null,	//saveLastModif
+																	$parsed_data['wysiwyg']	//wysiwyg
+												);
 												$content.= "Page: $page has been updated<br />";
 											}
 										}
