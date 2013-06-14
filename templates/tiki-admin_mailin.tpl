@@ -11,6 +11,7 @@
     <th>{tr}Type{/tr}</th>
     <th>{tr}Active{/tr}</th>
     <th>{tr}Anonym{/tr}</th>
+    <th>{tr}Admin{/tr}</th>
     <th>{tr}Attach{/tr}</th>
     <th>{tr}Inline{/tr}</th>
     <th>{tr}Keep HTML{/tr}</th>
@@ -28,6 +29,7 @@
       <td class="text">{tr}{$accounts[ix].type}{/tr}</td>
       <td class="text">{tr}{$accounts[ix].active}{/tr}</td>
       <td class="text">{tr}{$accounts[ix].anonymous}{/tr}</td>
+      <td class="text">{tr}{$accounts[ix].admin}{/tr}</td>
       <td class="text">{tr}{$accounts[ix].attachments}{/tr}</td>
       <td class="text">{tr}{$accounts[ix].show_inlineImages}{/tr}</td>
       <td class="text">{tr}{$accounts[ix].save_html}{/tr}</td>
@@ -142,6 +144,16 @@
         <input type="radio" name="anonymous" {if $info.anonymous eq 'n'}checked="checked"{/if} value="n">
       </td>
 	  <td>{tr}Warning: Enabling anonymous access will disable all permission checking for mailed-in content{/tr}.</td>
+    </tr>
+    <tr>
+      <td>{tr}Allow admin access{/tr}</td>
+      <td colspan="3">
+        {tr}Yes{/tr}
+        <input type="radio" name="admin" {if $info.admin eq 'y'}checked="checked"{/if} value="y">
+        {tr}No{/tr}
+        <input type="radio" name="admin" {if $info.admin eq 'n'}checked="checked"{/if} value="n">
+      </td>
+	  <td>{tr}Administrators have full access to the system. Disabling admin mail-in is the safest option{/tr}.</td>
     </tr>
     <tr>
       <td>{tr}Allow attachments{/tr}</td>

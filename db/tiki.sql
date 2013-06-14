@@ -1247,6 +1247,7 @@ CREATE TABLE `tiki_mailin_accounts` (
   `useAuth` char(1) default NULL,
   `smtpPort` int(4) default NULL,
   `anonymous` char(1) NOT NULL default 'y',
+  `admin` char(1) NOT NULL default 'y',
   `attachments` char(1) NOT NULL default 'n',
   `article_topicId` int(4) default NULL,
   `article_type` varchar(50) default NULL,

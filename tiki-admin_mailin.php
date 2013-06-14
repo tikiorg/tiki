@@ -59,6 +59,7 @@ if (isset($_REQUEST['new_acc'])) {
 			$_REQUEST['type'],
 			$_REQUEST['active'],
 			$_REQUEST['anonymous'],
+			$_REQUEST['admin'],
 			$_REQUEST['attachments'],
 			$_REQUEST['article_topicId'],
 			$_REQUEST['article_type'],
@@ -97,6 +98,7 @@ if ($_REQUEST['accountId']) {
 	$info['type'] = 'wiki-put';
 	$info['active'] = 'y';
 	$info['anonymous'] = 'n';
+	$info['admin'] = 'y';
 	$info['attachments'] = 'y';
 	$info['article_topicId'] = '';
 	$info['article_type'] = '';

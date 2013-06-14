@@ -1,0 +1,1 @@
+ALTER TABLE `tiki_mailin_accounts` MODIFY COLUMN `admin` CHAR(1) DEFAULT 'y' NULL AFTER `anonymous`;

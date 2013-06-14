@@ -376,9 +376,10 @@ foreach ($accs['data'] as $acc) {
 						$processEmail = true;
 						
 						// Validate user's send permission
-						if ($acc["anonymous"] == 'n') {
+						$chkUser = $aux["sender"]["user"];
+						if (($acc["anonymous"] == 'n') && (!$userlib->user_has_permission($chkUser, 'tiki_p_admin'))) {
 
-							if (!$userlib->user_has_permission($aux["sender"]["user"], 'tiki_p_send_mailin')) {
+							if (!$userlib->user_has_permission($chkUser, 'tiki_p_send_mailin')) {
 								$content.= "Access denied, sending auto-reply to email address:&nbsp;" . $aux["From"] . "<br />";
 								$mail = new TikiMail();
 								$mail->setFrom($acc["account"]);
@@ -394,6 +395,21 @@ foreach ($accs['data'] as $acc) {
 								$processEmail = false;
 							}
 						} 
+						if (($acc["admin"] === 'n') && ($userlib->user_has_permission($chkUser, 'tiki_p_admin'))) {
+								$content.= "Admin access is blocked, sending auto-reply to email address:&nbsp;" . $aux["From"] . "<br />";
+								$mail = new TikiMail();
+								$mail->setFrom($acc["account"]);
+								$l = $prefs['language'];
+								$mail->setSubject(tra('Tiki mail-in auto-reply', $l));
+								$mail->setText(tra("Sorry, you can't use this feature.", $l));
+								if ($acc['respond_email'] === 'y') {
+									$res = $mail->send(array($email_from), 'mail');
+									$content.= "Response sent<br />";
+								} else {
+									$content.= "Response by email is disabled<br />";
+								}
+								$processEmail = false;
+						}
 						
 						if ($processEmail) {
 							
