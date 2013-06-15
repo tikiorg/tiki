@@ -71,12 +71,13 @@ class TWVersion
 				18=>'Electra',		// 7.x
 				19=>'Acubens',		// 8.x
 				20=>'Herbig Haro',	// 9.x
-				21=>'Sun'			// 10.x
+				21=>'Sun',			// 10.x
+				22=>'Vega'			// 11.x
 		);
 	}
 
-	// Returns an array of all valid versions of Tiki.
-	function tikiVersions()
+ 	// Returns an array of all valid versions of Tiki.
+ 	function tikiVersions()
 	{
 		// These are all the valid release versions of Tiki.
 		// Newest version goes at the end.
@@ -185,6 +186,7 @@ class TWVersion
 				'10.0beta',
 				'10.0',
 				'10.1',
+				'11.0beta',
 			);
 	}
 

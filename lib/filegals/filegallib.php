@@ -1005,7 +1005,7 @@ class FileGalLib extends TikiLib
 
 		$id = $this->insert_file(
 			$galleryId,
-			$file['name'] . ($newName ? tra(' copy') : ''),
+			($newName ? $newName : $file['name'] . tra(' copy')),
 			$file['description'],
 			$file['filename'],
 			$file['data'],

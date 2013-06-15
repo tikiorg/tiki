@@ -79,7 +79,7 @@ class Cachelib
 	function empty_cache( $dir_names = array('all'), $log_section = 'system' )
 	{
 		global $tikidomain, $logslib, $tikilib, $prefs;
-		
+
 		if (!is_array($dir_names)) {
 			$dir_names = array($dir_names);
 		}
@@ -89,6 +89,7 @@ class Cachelib
 			$this->erase_dir_content("temp/cache/$tikidomain");
 			$this->erase_dir_content("modules/cache/$tikidomain");
 			$this->flush_opcode_cache();
+			$prefs = $this->flush_memcache();
 			$this->invalidate('global_preferences');
 			if (is_object($logslib)) {
 				$logslib->add_log($log_section, 'erased all cache content');
@@ -104,7 +105,7 @@ class Cachelib
 		if (in_array('temp_cache', $dir_names)) {
 			$this->erase_dir_content("temp/cache/$tikidomain");
 			// Next case is needed to clean also cached data created through mod PluginR
-			if ($prefs['wikiplugin_rr'] == 'y' OR $prefs['wikiplugin_r'] == 'y') { 
+			if ($prefs['wikiplugin_rr'] == 'y' OR $prefs['wikiplugin_r'] == 'y') {
 				$this->erase_dir_content("temp/cache/$tikidomain/R_*/");
 			}
 			if (is_object($logslib)) {
@@ -198,6 +199,24 @@ class Cachelib
 		}
 	}
 
+	/**
+	 * Flush memcache if endabled
+	 *
+	 * @return void
+	 */
+	function flush_memcache()
+	{
+		global $prefs;
+
+		if (isset($prefs['memcache_enabled']) && $prefs['memcache_enabled'] == 'y') {
+			$memcachelib = TikiLib::lib("memcache");
+			if ($memcachelib->isEnabled()) {
+				$memcachelib->flush();
+			}
+		}
+		return;
+	}
+
 	function erase_dir_content($path)
 	{
 		global $tikidomain, $prefs;
@@ -222,13 +241,13 @@ class Cachelib
 			while (false !== ($file = readdir($dir))) {
 				if (
 							// .RData case needed to clean also cached data created through mod PluginR
-							( substr($file, 0, 1) == "." &&	$file != $extracheck ) or 
-							$file == 'CVS' or 
-							$file == '.svn' or 
-							$file == "index.php" or 
-							$file == "README" or 
-							$file == "web.config" or 
-							($virtuals && in_array($file, $virtuals)) 
+							( substr($file, 0, 1) == "." &&	$file != $extracheck ) or
+							$file == 'CVS' or
+							$file == '.svn' or
+							$file == "index.php" or
+							$file == "README" or
+							$file == "web.config" or
+							($virtuals && in_array($file, $virtuals))
 				)
 					continue;
 
