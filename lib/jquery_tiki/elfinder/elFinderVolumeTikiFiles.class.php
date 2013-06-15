@@ -650,7 +650,32 @@ class elFinderVolumeTikiFiles extends elFinderVolumeDriver
 	 **/
 	protected function _copy($source, $targetDir, $name)
 	{
-		$this->clearcache();
+		$ar = explode('_', $source);
+		if (count($ar) === 2) {
+			$isgal = $ar[0] === 'd';
+			$source = $ar[1];
+		} else {
+			$isgal = true;
+		}
+		$name = trim(strip_tags($name));
+		if (!$isgal) {
+			$srcId = $this->pathToId($source);
+		} else {
+			return $this->setError(elFinder::ERROR_COPY, $this->_path($source));
+		}
+		$targetDirId = $this->pathToId($targetDir);
+		$targetPerms = TikiLib::lib('tiki')->get_perm_object($targetDirId, 'file gallery', TikiLib::lib('filegal')->get_file_gallery_info($targetDirId));
+
+		$canCopy = ($targetPerms['tiki_p_admin_file_galleries'] === 'y' || $targetPerms['tiki_p_upload_files'] === 'y');
+
+		if ($canCopy) {
+
+			$result = $this->filegallib->duplicate_file($srcId, $targetDirId, $name);
+			if ($result) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	/**
