@@ -27,7 +27,7 @@ class TWVersion
 		$this->branch 	= 'trunk';
 
 		// Set everything else, including defaults.
-		$this->version 	= '11.0svn';	// needs to have no spaces for releases
+		$this->version 	= '11.0beta';	// needs to have no spaces for releases
 		$this->star	= 'TBA';
 		$this->releases	= array();
 
@@ -75,8 +75,8 @@ class TWVersion
 		);
 	}
 
-	// Returns an array of all valid versions of Tiki.
-	function tikiVersions()
+ 	// Returns an array of all valid versions of Tiki.
+ 	function tikiVersions()
 	{
 		// These are all the valid release versions of Tiki.
 		// Newest version goes at the end.
@@ -185,6 +185,7 @@ class TWVersion
 				'10.0beta',
 				'10.0',
 				'10.1',
+				'11.0beta',
 			);
 	}
 
