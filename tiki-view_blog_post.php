@@ -55,7 +55,7 @@ if (!$blog_data) {
 
 $tikilib->get_perm_object($blogId, 'blog');
 
-$access->check_permission('tiki_p_read_blog');
+$access->check_permission('tiki_p_read_blog', '', 'blog post', $postId);
 
 $ownsblog = 'n';
 if ($user && $user == $blog_data["user"]) {
