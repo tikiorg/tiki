@@ -26,7 +26,7 @@
 								{if $upcoming[ix].topic.isIcon eq 'y'}
 									<img title="{$upcoming[ix].topic.name}" src="{$upcoming[ix].topic.path}" alt="{tr}topic image{/tr}">
 								{else}
-									<img title="{$upcoming[ix].topic.name}" src="tiki-view_minical_topic?topicId={$upcoming[ix].topicId}" alt="{tr}topic image{/tr}">
+									<img title="{$upcoming[ix].topic.name}" src="tiki-view_minical_topic.php?topicId={$upcoming[ix].topicId}" alt="{tr}topic image{/tr}">
 									{/if}
 							{/if}
 							<a title="{$upcoming[ix].start|tiki_short_time}-{$upcoming[ix].end|tiki_short_time}:{$upcoming[ix].description}" class="link" href="tiki-minical.php?view={$view}&amp;eventId={$upcoming[ix].eventId}#add">{$upcoming[ix].title}</a>
@@ -67,7 +67,7 @@
 										{if $slots[ix].events[jj].topic.isIcon eq 'y'}
 											<img title="{$slots[ix].events[jj].topic.name}" src="{$slots[ix].events[jj].topic.path}" alt="{tr}topic image{/tr}">
 										{else}
-										<img title="{$slots[ix].events[jj].topic.name}" src="tiki-view_minical_topic?topicId={$slots[ix].events[jj].topicId}" alt="{tr}topic image{/tr}">
+										<img title="{$slots[ix].events[jj].topic.name}" src="tiki-view_minical_topic.php?topicId={$slots[ix].events[jj].topicId}" alt="{tr}topic image{/tr}">
 										{/if}
 									{/if}
 									<a title="{$slots[ix].events[jj].start|tiki_short_time}-{$slots[ix].events[jj].end|tiki_short_time}:{$slots[ix].events[jj].description}" class="link" href="tiki-minical.php?view={$view}&amp;eventId={$slots[ix].events[jj].eventId}#add">{$slots[ix].events[jj].title|escape}</a>
@@ -105,7 +105,7 @@
 										{if $slots[ix].events[jj].topic.isIcon eq 'y'}
 											<img title="{$slots[ix].events[jj].topic.name}" src="{$slots[ix].events[jj].topic.path}" alt="{tr}topic image{/tr}">
 										{else}
-											<img title="{$slots[ix].events[jj].topic.name}" src="tiki-view_minical_topic?topicId={$slots[ix].events[jj].topicId}" alt="{tr}topic image{/tr}">
+											<img title="{$slots[ix].events[jj].topic.name}" src="tiki-view_minical_topic.php?topicId={$slots[ix].events[jj].topicId}" alt="{tr}topic image{/tr}">
 										{/if}
 									{/if}
 
@@ -162,7 +162,7 @@
 							{if $channels[user].topic.isIcon eq 'y'}
 								<img title="{$channels[user].topic.name}" src="{$channels[user].topic.path}" alt="{tr}topic image{/tr}">
 							{else}
-								<img title="{$channels[user].topic.name}" src="tiki-view_minical_topic?topicId={$channels[user].topicId}" alt="{tr}topic image{/tr}">
+								<img title="{$channels[user].topic.name}" src="tiki-view_minical_topic.php?topicId={$channels[user].topicId}" alt="{tr}topic image{/tr}">
 							{/if}
 						{/if}
 					</td>
