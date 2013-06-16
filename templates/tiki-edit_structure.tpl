@@ -75,7 +75,7 @@
 {/self_link}
 <form action="tiki-edit_structure.php" method="post" style="display: inline-block; margin-left: 1em;">
 	<input type="hidden" name="page_ref_id" value="{$structure_id}">
-	<label for="pageAlias">{tr}Alias:{/tr}</label></td>
+	<label for="pageAlias">{tr}Alias:{/tr}</label>
 	<input type="text" name="pageAlias" id="pageAlias" value="{$topPageAlias}">
 	<small><input type="submit" name="create" value="{tr}Update{/tr}"></small>
 </form>

@@ -4,7 +4,7 @@
 		{if $field.options_array[0] eq 1}
    			{toolbars qtnum=$field.fieldId area_id=$data.element_id section="trackers"}
 		{/if}
-		<input type="text" id="{$data.element_id|escape}" name="{$field.ins_id}"{if $field.options_array[1] > 0} size="{$field.options_array[1]}"{/if}{if $field.options_array[3]>0} maxlength="{$field.options_array[3]}"{/if} value="{$field.value|escape}" onkeyup=$keyup >
+		<input type="text" id="{$data.element_id|escape}" name="{$field.ins_id}"{if $field.options_array[1] > 0} size="{$field.options_array[1]}"{/if}{if $field.options_array[3]>0} maxlength="{$field.options_array[3]}"{/if} value="{$field.value|escape}" onkeyup={$data.keyup} />
 	{else}
 		{if $field.options_array[7] == 'y'}
 			{textarea id=$data.element_id name=$field.ins_id cols=$data.cols rows=$data.rows onkeyup=$data.keyup _wysiwyg='y' section="trackers"}
