@@ -14,9 +14,10 @@
     <th>{tr}Admin{/tr}</th>
     <th>{tr}Attach{/tr}</th>
     <th>{tr}Inline{/tr}</th>
-    <th>{tr}Keep HTML{/tr}</th>
+    <th>{tr}HTML{/tr}</th>
     <th>{tr}Categ{/tr}</th>
-    <th>{tr}Email resp{/tr}</th>
+    <th>{tr}Namespace{/tr}</th>
+    <th>{tr}Email{/tr}</th>
   </tr>
   {cycle values="even,odd" print=false}
   {section name=ix loop=$accounts}
@@ -34,6 +35,7 @@
       <td class="text">{tr}{$accounts[ix].show_inlineImages}{/tr}</td>
       <td class="text">{tr}{$accounts[ix].save_html}{/tr}</td>
       <td class="text">{tr}{$accounts[ix].categoryId}{/tr}</td>
+      <td class="text">{tr}{$accounts[ix].namespace}{/tr}</td>
       <td class="text">{tr}{$accounts[ix].respond_email}{/tr}</td>
 	  
     </tr>
