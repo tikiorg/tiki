@@ -307,7 +307,7 @@ function doChallengeResponse() {
 		</fieldset>
 	</form>
 {/if}
-{if $prefs.socialnetworks_facebook_login eq 'y'}
+{if $prefs.socialnetworks_facebook_login eq 'y' and $mode neq "header" and $mode neq "popup"}
 	<div style="text-align: center"><a href="tiki-socialnetworks.php?request_facebook=true"><img src="http://developers.facebook.com/images/devsite/login-button.png"></a></div>
 {/if}
 {if $mode eq "header"}</div>{/if}

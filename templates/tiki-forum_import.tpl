@@ -210,9 +210,9 @@ End hiding of unfinished section... *}
 	<br>
 	<div align="center">
 		{if $noforumsF eq 'true'}
-			<b><i>There are no forums to migrate!</b></i>
+			<b><i>There are no forums to migrate!</i></b>
 		{elseif $noforumsT eq 'true'}
-			<b><i>There are no forums to migrate into!  Create one first.</b></i>
+			<b><i>There are no forums to migrate into!  Create one first.</i></b>
 		{else}
 			<input type="submit" value="Import Forum">
 			<p> </p>

@@ -1145,6 +1145,8 @@
 	-webkit-border-top-right-radius: 7px; 
 	border-top-right-radius: 7px;
 	cursor:move;
+	z-index: 1;
+	opacity: 0;
 }
 
 /* window title */

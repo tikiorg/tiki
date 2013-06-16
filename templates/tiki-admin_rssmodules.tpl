@@ -157,7 +157,6 @@
 					<label for="article_expiry">{tr}Expiration{/tr}</label>
 					<input type="text" name="expiry" id="article_expiry" value="{$articleConfig.expiry|escape}" size="3"> {tr}days{/tr}
 				</p>
-				</p>
 				<p>
 					<label for="article_future_publish">{tr}Publish in the future{/tr}</label>
 					<input type="text" name="future_publish" id="article_future_publish" value="{$articleConfig.future_publish|escape}" size="4"> {tr}minutes{/tr} ({tr}-1 to use original publishing date from the feed{/tr})

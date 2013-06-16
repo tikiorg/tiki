@@ -22,7 +22,7 @@
 		{/remarksbox}
 	{/if}
 	<div style="padding:4px;border-bottom:1px solid #c3b3a3;">
-		<textarea data-syntax="css" data-codemirror="true" data-line-numbers="true" name="data" rows="42" cols="80" wrap="virtual" style="padding:7px;padding-right:0;">{$data|escape}</textarea>
+		<textarea data-syntax="css" data-codemirror="true" data-line-numbers="true" name="data" rows="42" cols="80" wrap="virtual" style="padding: 7px 0 7px 7px;">{$data|escape}</textarea>
 	</div>
 {else}
 	{assign var=shortStyle value=$prefs.style|replace:'.css':''}
