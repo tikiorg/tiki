@@ -319,7 +319,12 @@ function editTimerTick() {
 \$('document').ready( function() {
 	// attach dirty function to all relevant inputs etc for wiki/newsletters, blog, article and trackers (trackers need {teaxtarea} implementing)
 	if ('$as_id' === 'editwiki' || '$as_id' === 'blogedit' || '$as_id' === 'body' || '$as_id'.indexOf('area_') > -1) {
-		\$(\$('#$as_id').prop('form')).find('input, textarea, select').change( function () { if (!editorDirty) { editorDirty = true; } });
+		\$(\$('#$as_id').prop('form')).find('input, textarea, select').change( function (event, data) {
+			if ($(this).is('select') && '$as_id'.indexOf('area_') > -1 && data !== undefined) {	// tracker dynamic list selects get a change event on load
+				return;
+			}
+			if (!editorDirty) { editorDirty = true; }
+		});
 	} else {	// modules admin exception, only attach to this textarea, although these should be using _simple mode
 		\$('#$as_id').change( function () { if (!editorDirty) { editorDirty = true; } });
 	}
