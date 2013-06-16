@@ -67,6 +67,7 @@ if (isset($_REQUEST['new_acc'])) {
 			$_REQUEST['show_inlineImages'],
 			$_REQUEST['save_html'],
 			$_REQUEST['categoryId'],
+			$_REQUEST['namespace'],
 			$_REQUEST['respond_email']
 		);
 
@@ -105,6 +106,7 @@ if ($_REQUEST['accountId']) {
 	$info['show_inlineImages'] = 'y';
 	$info['save_html'] = 'y';
 	$info['categoryId'] = 0;
+	$info['namespace'] = '';
 	$info['respond_email'] = 'y';
 }
 $smarty->assign('info', $info);

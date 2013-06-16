@@ -170,7 +170,7 @@
     </tr>
     <tr>
       <td>{tr}Show inline images{/tr}</td>
-      <td colspan="4">
+      <td colspan="3">
 		{if $prefs.feature_wiki_attachments eq 'y'}
         {tr}Yes{/tr}
         <input type="radio" name="show_inlineImages" {if $info.show_inlineImages eq 'y'}checked="checked"{/if} value="y">
@@ -180,6 +180,7 @@
 		<a href="tiki-admin.php?page=wiki&cookietab=2&highlight=feature_wiki_attachments">Activate attachments</a>
 		{/if}
       </td>
+	  <td>{tr}For HTML email, attempt to create a WYSIWYG wiki-page{/tr}.</td>
     </tr>
     <tr>
 		<td>{tr}Keep HTML format{/tr}</td>
@@ -189,7 +190,7 @@
 		{tr}No{/tr}
 		<input type="radio" name="save_html" {if $info.save_html neq 'y'}checked="checked"{/if} value="n">
 		</td>
-	  <td>{tr}Always save Email in HTML format as a wiki page in HTML format, regardless of editor avaibility or selection{/tr}.</td>
+	  <td>{tr}Always save Email in HTML format as a wiki page in HTML format, regardless of editor availability or selection{/tr}.</td>
     </tr>
     <tr>
       <td>{tr}Discard to the end from{/tr}</td>
@@ -199,13 +200,25 @@
    </tr>
     <tr>
       <td>{tr}Auto-assign categoryId{/tr}</td>
-      <td colspan="4">
+      <td colspan="3">
 	   {if $prefs.feature_categories eq 'y'}
         <input type="text" size="10" name="categoryId" value="{$info.categoryId}" />
         {else}
 		<a href="tiki-admin.php?page=features&highlight=feature_categories">Activate categories</a>
 		{/if}
       </td>
+      <td>{tr}Only affects wiki-put, when creating a new wiki page{/tr}</td>
+    </tr>
+    <tr>
+      <td>{tr}Auto-assign namespace{/tr}</td>
+      <td colspan="3">
+	   {if $prefs.namespace_enabled eq 'y'}
+        <input type="text" size="20" name="namespace" value="{$info.namespace}" />
+        {else}
+		<a href="tiki-admin.php?page=wiki&cookietab=2&highlight=namespace_enabled">Activate namespaces</a>
+		{/if}
+      </td>
+      <td>{tr}Only affects wiki-put{/tr}</td>
     </tr>
     <tr>
       <td>{tr}Email response when no access{/tr}</td>

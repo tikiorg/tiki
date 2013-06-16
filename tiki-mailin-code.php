@@ -586,6 +586,17 @@ foreach ($accs['data'] as $acc) {
 										if (empty($body)) {
 											$body = mailin_get_body($output);
 										}
+										
+										// Add namespace, if specified
+										if ($prefs['namespace_enabled'] === 'y') {
+											$nsName = trim($acc['namespace']);
+											if (!empty($nsName)) {
+												$ns = $prefs['namespace_separator'];
+												if (!empty($ns)) {
+													$page = $nsName.$ns.$page;
+												}
+											}
+										}
 
 										if (!empty($acc['discard_after']) && $body) {
 											$body = preg_replace("/" . $acc['discard_after'] . ".*$/s", "", $body);
