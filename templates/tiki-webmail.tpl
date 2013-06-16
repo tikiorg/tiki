@@ -451,15 +451,15 @@
 	<table class="webmail_message_headers">
 		{if $fullheaders eq 'n'}
 			<tr>
-				<th><strong>{tr}Subject{/tr}</strong></td>
+				<th><strong>{tr}Subject{/tr}</strong></th>
 				<td><strong>{$headers.subject|escape}</strong></td>
 			</tr>
 			<tr>
-				<th>{tr}From{/tr}</td>
+				<th>{tr}From{/tr}</th>
 				<td>{$headers.from|escape}</td>
 			</tr>
 			<tr>
-				<th>{tr}To{/tr}</td>
+				<th>{tr}To{/tr}</th>
 				<td>{$headers.to|escape}</td>
 			</tr>
 			{if $headers.cc}
@@ -469,14 +469,14 @@
 				</tr>
 			{/if}
 			<tr>
-				<th>{tr}Date{/tr}</td>
+				<th>{tr}Date{/tr}</th>
 				<td>{$headers.timestamp|tiki_short_datetime}</td>
 			</tr>
 		{/if}
 		{if $fullheaders eq 'y'}
 			{foreach key=key item=item from=$headers}
 				<tr>
-					<th>{$key}</td>
+					<th>{$key}</th>
 					<td>
 						{if is_array($item)}
 							{foreach from=$item item=part}
