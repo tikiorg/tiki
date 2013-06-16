@@ -153,10 +153,15 @@
 								{/if}
 								
 								{* ------- list values --- *}
+								{$ajaxedit = $prefs.ajax_inline_edit_trackerlist eq 'y' and
+										($tiki_p_modify_tracker_items eq 'y' and $items[user].status ne 'p' and $items[user].status ne 'c') or
+										($tiki_p_modify_tracker_items_pending eq 'y' and $items[user].status eq 'p') or
+										($tiki_p_modify_tracker_items_closed eq 'y' and $items[user].status eq 'c')
+								}
 								{foreach from=$items[user].field_values key=ix item=field_value}
 									{if $field_value.isTblVisible eq 'y' and $field_value.type ne 'x' and $field_value.type ne 'h' and ($field_value.type ne 'p' or $field_value.options_array[0] ne 'password')}
 										<td class={if $field_value.type eq 'n' or $field_value.type eq 'q' or $field_value.type eq 'b'}"numeric"{else}"auto"{/if}>
-											{trackeroutput field=$field_value showlinks=y showpopup="y" item=$items[user] list_mode=y inTable=formcolor reloff=$itemoff editable=($prefs.ajax_inline_edit_trackerlist == 'y') ? 'block' : ''}
+											{trackeroutput field=$field_value showlinks=y showpopup="y" item=$items[user] list_mode=y inTable=formcolor reloff=$itemoff editable=($ajaxedit and $listfields[$field_value.fieldId].editable) ? 'block' : ''}
 										</td>
 									{/if}
 								{/foreach}

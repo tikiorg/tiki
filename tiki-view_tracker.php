@@ -240,6 +240,11 @@ foreach ($xfields['data'] as $i => $current_field) {
 			$fields['data'][$i] = $current_field_ins;
 		}
 	}
+	if ($fieldIsEditable) {
+		$listfields[$fid]['editable'] = true;
+	} else {
+		$listfields[$fid]['editable'] = false;
+	}
 }
 
 // Collect information from the provided fields
