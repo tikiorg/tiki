@@ -1,6 +1,6 @@
 /*!
  * elFinder - file manager for web
- * Version 2.x github.com/jonnybradley/elFinder (2013-06-12)
+ * Version 2.x github.com/jonnybradley/elFinder (2013-06-16)
  * http://elfinder.org
  * 
  * Copyright 2009-2012, Studio 42
@@ -10,7 +10,7 @@
 
 
 /*
- * File: elFinder/js/elFinder.js
+ * File: /Users/jonny/Code/tikidev/tiki_svn/elFinder/js/elFinder.js
  */
 
 /**
@@ -2918,7 +2918,7 @@ elFinder.prototype = {
 
 
 /*
- * File: elFinder/js/elFinder.version.js
+ * File: /Users/jonny/Code/tikidev/tiki_svn/elFinder/js/elFinder.version.js
  */
 
 /**
@@ -2931,7 +2931,7 @@ elFinder.prototype.version = '2.x github.com/jonnybradley/elFinder';
 
 
 /*
- * File: elFinder/js/jquery.elfinder.js
+ * File: /Users/jonny/Code/tikidev/tiki_svn/elFinder/js/jquery.elfinder.js
  */
 
 $.fn.elfinder = function(o) {
@@ -2981,7 +2981,7 @@ $.fn.getElFinder = function() {
 
 
 /*
- * File: elFinder/js/elFinder.options.js
+ * File: /Users/jonny/Code/tikidev/tiki_svn/elFinder/js/elFinder.options.js
  */
 
 /**
@@ -3458,7 +3458,7 @@ elFinder.prototype._options = {
 
 
 /*
- * File: elFinder/js/elFinder.history.js
+ * File: /Users/jonny/Code/tikidev/tiki_svn/elFinder/js/elFinder.history.js
  */
 
 /**
@@ -3563,7 +3563,7 @@ elFinder.prototype.history = function(fm) {
 }
 
 /*
- * File: elFinder/js/elFinder.command.js
+ * File: /Users/jonny/Code/tikidev/tiki_svn/elFinder/js/elFinder.command.js
  */
 
 /**
@@ -3842,7 +3842,7 @@ elFinder.prototype.command = function(fm) {
 
 
 /*
- * File: elFinder/js/elFinder.resources.js
+ * File: /Users/jonny/Code/tikidev/tiki_svn/elFinder/js/elFinder.resources.js
  */
 
 /**
@@ -3993,7 +3993,7 @@ elFinder.prototype.resources = {
 
 
 /*
- * File: elFinder/js/jquery.dialogelfinder.js
+ * File: /Users/jonny/Code/tikidev/tiki_svn/elFinder/js/jquery.dialogelfinder.js
  */
 
 /**
@@ -4090,7 +4090,7 @@ $.fn.dialogelfinder = function(opts) {
 
 
 /*
- * File: elFinder/js/i18n/elfinder.en.js
+ * File: /Users/jonny/Code/tikidev/tiki_svn/elFinder/js/i18n/elfinder.en.js
  */
 
 /**
@@ -4431,7 +4431,7 @@ if (elFinder && elFinder.prototype && typeof(elFinder.prototype.i18) == 'object'
 
 
 /*
- * File: elFinder/js/ui/button.js
+ * File: /Users/jonny/Code/tikidev/tiki_svn/elFinder/js/ui/button.js
  */
 
 /**
@@ -4512,7 +4512,7 @@ $.fn.elfinderbutton = function(cmd) {
 
 
 /*
- * File: elFinder/js/ui/contextmenu.js
+ * File: /Users/jonny/Code/tikidev/tiki_svn/elFinder/js/ui/contextmenu.js
  */
 
 /**
@@ -4662,7 +4662,7 @@ $.fn.elfindercontextmenu = function(fm) {
 
 
 /*
- * File: elFinder/js/ui/cwd.js
+ * File: /Users/jonny/Code/tikidev/tiki_svn/elFinder/js/ui/cwd.js
  */
 
 /**
@@ -5724,7 +5724,7 @@ $.fn.elfindercwd = function(fm, options) {
 
 
 /*
- * File: elFinder/js/ui/dialog.js
+ * File: /Users/jonny/Code/tikidev/tiki_svn/elFinder/js/ui/dialog.js
  */
 
 /**
@@ -5940,7 +5940,7 @@ $.fn.elfinderdialog.defaults = {
 }
 
 /*
- * File: elFinder/js/ui/navbar.js
+ * File: /Users/jonny/Code/tikidev/tiki_svn/elFinder/js/ui/navbar.js
  */
 
 /**
@@ -5997,7 +5997,7 @@ $.fn.elfindernavbar = function(fm, opts) {
 
 
 /*
- * File: elFinder/js/ui/overlay.js
+ * File: /Users/jonny/Code/tikidev/tiki_svn/elFinder/js/ui/overlay.js
  */
 
 
@@ -6049,7 +6049,7 @@ $.fn.elfinderoverlay = function(opts) {
 }
 
 /*
- * File: elFinder/js/ui/panel.js
+ * File: /Users/jonny/Code/tikidev/tiki_svn/elFinder/js/ui/panel.js
  */
 
 $.fn.elfinderpanel = function(fm) {
@@ -6070,7 +6070,7 @@ $.fn.elfinderpanel = function(fm) {
 }
 
 /*
- * File: elFinder/js/ui/path.js
+ * File: /Users/jonny/Code/tikidev/tiki_svn/elFinder/js/ui/path.js
  */
 
 /**
@@ -6107,7 +6107,7 @@ $.fn.elfinderpath = function(fm) {
 }
 
 /*
- * File: elFinder/js/ui/places.js
+ * File: /Users/jonny/Code/tikidev/tiki_svn/elFinder/js/ui/places.js
  */
 
 /**
@@ -6398,7 +6398,7 @@ $.fn.elfinderplaces = function(fm, opts) {
 }
 
 /*
- * File: elFinder/js/ui/searchbutton.js
+ * File: /Users/jonny/Code/tikidev/tiki_svn/elFinder/js/ui/searchbutton.js
  */
 
 /**
@@ -6489,7 +6489,7 @@ $.fn.elfindersearchbutton = function(cmd) {
 }
 
 /*
- * File: elFinder/js/ui/sortbutton.js
+ * File: /Users/jonny/Code/tikidev/tiki_svn/elFinder/js/ui/sortbutton.js
  */
 
 /**
@@ -6583,7 +6583,7 @@ $.fn.elfindersortbutton = function(cmd) {
 
 
 /*
- * File: elFinder/js/ui/stat.js
+ * File: /Users/jonny/Code/tikidev/tiki_svn/elFinder/js/ui/stat.js
  */
 
 /**
@@ -6646,7 +6646,7 @@ $.fn.elfinderstat = function(fm) {
 }
 
 /*
- * File: elFinder/js/ui/toolbar.js
+ * File: /Users/jonny/Code/tikidev/tiki_svn/elFinder/js/ui/toolbar.js
  */
 
 /**
@@ -6688,7 +6688,7 @@ $.fn.elfindertoolbar = function(fm, opts) {
 }
 
 /*
- * File: elFinder/js/ui/tree.js
+ * File: /Users/jonny/Code/tikidev/tiki_svn/elFinder/js/ui/tree.js
  */
 
 /**
@@ -7240,7 +7240,7 @@ $.fn.elfindertree = function(fm, opts) {
 
 
 /*
- * File: elFinder/js/ui/uploadButton.js
+ * File: /Users/jonny/Code/tikidev/tiki_svn/elFinder/js/ui/uploadButton.js
  */
 
 /**
@@ -7273,7 +7273,7 @@ $.fn.elfinderuploadbutton = function(cmd) {
 
 
 /*
- * File: elFinder/js/ui/viewbutton.js
+ * File: /Users/jonny/Code/tikidev/tiki_svn/elFinder/js/ui/viewbutton.js
  */
 
 /**
@@ -7296,7 +7296,7 @@ $.fn.elfinderviewbutton = function(cmd) {
 }
 
 /*
- * File: elFinder/js/ui/workzone.js
+ * File: /Users/jonny/Code/tikidev/tiki_svn/elFinder/js/ui/workzone.js
  */
 
 /**
@@ -7332,7 +7332,7 @@ $.fn.elfinderworkzone = function(fm) {
 
 
 /*
- * File: elFinder/js/commands/archive.js
+ * File: /Users/jonny/Code/tikidev/tiki_svn/elFinder/js/commands/archive.js
  */
 
 /**
@@ -7402,7 +7402,7 @@ elFinder.prototype.commands.archive = function() {
 }
 
 /*
- * File: elFinder/js/commands/back.js
+ * File: /Users/jonny/Code/tikidev/tiki_svn/elFinder/js/commands/back.js
  */
 
 /**
@@ -7429,7 +7429,7 @@ elFinder.prototype.commands.back = function() {
 }
 
 /*
- * File: elFinder/js/commands/copy.js
+ * File: /Users/jonny/Code/tikidev/tiki_svn/elFinder/js/commands/copy.js
  */
 
 /**
@@ -7471,7 +7471,7 @@ elFinder.prototype.commands.copy = function() {
 }
 
 /*
- * File: elFinder/js/commands/cut.js
+ * File: /Users/jonny/Code/tikidev/tiki_svn/elFinder/js/commands/cut.js
  */
 
 /**
@@ -7516,7 +7516,7 @@ elFinder.prototype.commands.cut = function() {
 }
 
 /*
- * File: elFinder/js/commands/download.js
+ * File: /Users/jonny/Code/tikidev/tiki_svn/elFinder/js/commands/download.js
  */
 
 /**
@@ -7587,7 +7587,7 @@ elFinder.prototype.commands.download = function() {
 }
 
 /*
- * File: elFinder/js/commands/duplicate.js
+ * File: /Users/jonny/Code/tikidev/tiki_svn/elFinder/js/commands/duplicate.js
  */
 
 /**
@@ -7641,7 +7641,7 @@ elFinder.prototype.commands.duplicate = function() {
 }
 
 /*
- * File: elFinder/js/commands/edit.js
+ * File: /Users/jonny/Code/tikidev/tiki_svn/elFinder/js/commands/edit.js
  */
 
 /**
@@ -7868,7 +7868,7 @@ elFinder.prototype.commands.edit = function() {
 }
 
 /*
- * File: elFinder/js/commands/extract.js
+ * File: /Users/jonny/Code/tikidev/tiki_svn/elFinder/js/commands/extract.js
  */
 
 /**
@@ -8030,7 +8030,7 @@ elFinder.prototype.commands.extract = function() {
 }
 
 /*
- * File: elFinder/js/commands/forward.js
+ * File: /Users/jonny/Code/tikidev/tiki_svn/elFinder/js/commands/forward.js
  */
 
 /**
@@ -8057,7 +8057,7 @@ elFinder.prototype.commands.forward = function() {
 }
 
 /*
- * File: elFinder/js/commands/getfile.js
+ * File: /Users/jonny/Code/tikidev/tiki_svn/elFinder/js/commands/getfile.js
  */
 
 /**
@@ -8167,7 +8167,7 @@ elFinder.prototype.commands.getfile = function() {
 }
 
 /*
- * File: elFinder/js/commands/help.js
+ * File: /Users/jonny/Code/tikidev/tiki_svn/elFinder/js/commands/help.js
  */
 
 /**
@@ -8324,7 +8324,7 @@ elFinder.prototype.commands.help = function() {
 
 
 /*
- * File: elFinder/js/commands/home.js
+ * File: /Users/jonny/Code/tikidev/tiki_svn/elFinder/js/commands/home.js
  */
 
 
@@ -8352,7 +8352,7 @@ elFinder.prototype.commands.home = function() {
 }
 
 /*
- * File: elFinder/js/commands/info.js
+ * File: /Users/jonny/Code/tikidev/tiki_svn/elFinder/js/commands/info.js
  */
 
 /**
@@ -8546,7 +8546,7 @@ elFinder.prototype.commands.info = function() {
 
 
 /*
- * File: elFinder/js/commands/mkdir.js
+ * File: /Users/jonny/Code/tikidev/tiki_svn/elFinder/js/commands/mkdir.js
  */
 
 /**
@@ -8574,7 +8574,7 @@ elFinder.prototype.commands.mkdir = function() {
 
 
 /*
- * File: elFinder/js/commands/mkfile.js
+ * File: /Users/jonny/Code/tikidev/tiki_svn/elFinder/js/commands/mkfile.js
  */
 
 /**
@@ -8598,7 +8598,7 @@ elFinder.prototype.commands.mkfile = function() {
 
 
 /*
- * File: elFinder/js/commands/netmount.js
+ * File: /Users/jonny/Code/tikidev/tiki_svn/elFinder/js/commands/netmount.js
  */
 
 /**
@@ -8700,7 +8700,7 @@ elFinder.prototype.commands.netmount = function() {
 }
 
 /*
- * File: elFinder/js/commands/open.js
+ * File: /Users/jonny/Code/tikidev/tiki_svn/elFinder/js/commands/open.js
  */
 
 /**
@@ -8793,7 +8793,7 @@ elFinder.prototype.commands.open = function() {
 }
 
 /*
- * File: elFinder/js/commands/paste.js
+ * File: /Users/jonny/Code/tikidev/tiki_svn/elFinder/js/commands/paste.js
  */
 
 /**
@@ -9030,7 +9030,7 @@ elFinder.prototype.commands.paste = function() {
 
 
 /*
- * File: elFinder/js/commands/quicklook.js
+ * File: /Users/jonny/Code/tikidev/tiki_svn/elFinder/js/commands/quicklook.js
  */
 
 /**
@@ -9285,6 +9285,12 @@ elFinder.prototype.commands.quicklook = function() {
 		.click(function(e) { e.stopPropagation();  })
 		.append(
 			$('<div class="elfinder-quicklook-titlebar"/>')
+				.mouseenter(function () {
+					$(this).css({opacity: 1.0});	// animate seems to mess this up
+				})
+				.mouseleave(function () {
+					$(this).css({opacity: 0.0})
+				})
 				.append(title)
 				.append($('<span class="ui-icon ui-icon-circle-close"/>').mousedown(function(e) {
 					e.stopPropagation();
@@ -9466,7 +9472,7 @@ elFinder.prototype.commands.quicklook = function() {
 
 
 /*
- * File: elFinder/js/commands/quicklook.plugins.js
+ * File: /Users/jonny/Code/tikidev/tiki_svn/elFinder/js/commands/quicklook.plugins.js
  */
 
 
@@ -9806,7 +9812,7 @@ elFinder.prototype.commands.quicklook.plugins = [
 ]
 
 /*
- * File: elFinder/js/commands/reload.js
+ * File: /Users/jonny/Code/tikidev/tiki_svn/elFinder/js/commands/reload.js
  */
 
 /**
@@ -9845,7 +9851,7 @@ elFinder.prototype.commands.reload = function() {
 }
 
 /*
- * File: elFinder/js/commands/rename.js
+ * File: /Users/jonny/Code/tikidev/tiki_svn/elFinder/js/commands/rename.js
  */
 
 /**
@@ -9979,7 +9985,7 @@ elFinder.prototype.commands.rename = function() {
 
 
 /*
- * File: elFinder/js/commands/resize.js
+ * File: /Users/jonny/Code/tikidev/tiki_svn/elFinder/js/commands/resize.js
  */
 
 /**
@@ -10770,7 +10776,7 @@ elFinder.prototype.commands.resize = function() {
 
 
 /*
- * File: elFinder/js/commands/rm.js
+ * File: /Users/jonny/Code/tikidev/tiki_svn/elFinder/js/commands/rm.js
  */
 
 /**
@@ -10860,7 +10866,7 @@ elFinder.prototype.commands.rm = function() {
 }
 
 /*
- * File: elFinder/js/commands/search.js
+ * File: /Users/jonny/Code/tikidev/tiki_svn/elFinder/js/commands/search.js
  */
 
 /**
@@ -10909,7 +10915,7 @@ elFinder.prototype.commands.search = function() {
 }
 
 /*
- * File: elFinder/js/commands/sort.js
+ * File: /Users/jonny/Code/tikidev/tiki_svn/elFinder/js/commands/sort.js
  */
 
 /**
@@ -10945,7 +10951,7 @@ elFinder.prototype.commands.sort = function() {
 }
 
 /*
- * File: elFinder/js/commands/up.js
+ * File: /Users/jonny/Code/tikidev/tiki_svn/elFinder/js/commands/up.js
  */
 
 /**
@@ -10973,7 +10979,7 @@ elFinder.prototype.commands.up = function() {
 }
 
 /*
- * File: elFinder/js/commands/upload.js
+ * File: /Users/jonny/Code/tikidev/tiki_svn/elFinder/js/commands/upload.js
  */
 
 /**
@@ -11134,7 +11140,7 @@ elFinder.prototype.commands.upload = function() {
 };
 
 /*
- * File: elFinder/js/commands/view.js
+ * File: /Users/jonny/Code/tikidev/tiki_svn/elFinder/js/commands/view.js
  */
 
 /**
