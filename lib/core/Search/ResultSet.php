@@ -121,7 +121,7 @@ class Search_ResultSet extends ArrayObject
 
 	function addFacetFilter(Search_ResultSet_FacetFilter $facet)
 	{
-		$this->filters[] = $facet;
+		$this->filters[$facet->getName()] = $facet;
 	}
 }
 
