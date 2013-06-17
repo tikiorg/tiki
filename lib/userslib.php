@@ -5608,14 +5608,8 @@ class UsersLib extends TikiLib
 		$tikilib->invalidate_usergroups_cache($user);
 
 		$group_ret = false;
-		
-		//Get the ID from the table directly.
-		$userid = $this->table('users_users')->fetchOne('userId', array('login' => $user));
-		
-		// Maybe it's not best place to do it. 
-		// If it's not there, the first login with CAS doesn't work well. We will get "You don't have the permission ..."
-		$_SESSION['u_info']['id'] = $userid;
-		
+		$userid = $this->get_user_id($user);
+
 		if ( $userid > 0 ) {
 			$query = "insert ignore into `users_usergroups`(`userId`,`groupName`, `created`) values(?,?,?)";
 			$result = $this->query($query, array($userid, $group, $tikilib->now), -1, -1, false);
