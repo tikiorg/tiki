@@ -19,6 +19,30 @@ if (!empty($_REQUEST['string_in_db_search'])) {
 
 	$smarty->assign('searchString', $searchString);
 	$smarty->assign('searchResult', $result);
+
+} elseif (!empty($_REQUEST['query'])) {
+	$query = $_REQUEST['query'];
+	$table = $_REQUEST['table'];
+	$column = $_REQUEST['column'];
+
+	$headers = array();
+	$sql2 = "SHOW COLUMNS FROM ".$table;
+	$rs2 = $tikilib->fetchAll($sql2);
+	foreach ($rs2 as $key2 => $val2){
+		$vals2 = array_values($val2);
+		$colum = $vals2[0];
+		$type = $vals2[1];
+		$headers[] = $colum;
+	}
+	$smarty->assign('tableHeaders', $headers);
+	
+	$tableData = array();
+	$sql = "select * from `".$table."` where `".$column."` like '%".$query."%'";
+	$rs = $tikilib->fetchAll($sql);
+	foreach ($rs as $row) {
+		$tableData[] = $row;
+	}
+	$smarty->assign('tableData', $tableData);
 }
 $smarty->assign('mid', 'tiki-report_string_in_db.tpl');
 $smarty->display('tiki.tpl');
