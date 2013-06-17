@@ -47,6 +47,15 @@ class Search_Elastic_Connection
 		}
 	}
 
+	function getIndexStatus($index)
+	{
+		try {
+			return $this->get("/$index/_status");
+		} catch (Exception $e) {
+			return null;
+		}
+	}
+
 	function deleteIndex($index)
 	{
 		$this->flush();

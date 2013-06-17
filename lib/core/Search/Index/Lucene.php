@@ -80,6 +80,11 @@ class Search_Index_Lucene implements Search_Index_Interface
 		return (bool) $this->destroyDirectory($this->directory);
 	}
 
+	function exists()
+	{
+		return file_exists($this->directory);
+	}
+
     /**
 	 * Private. Used by a callback, so made public until PHP 5.4.
 	 *

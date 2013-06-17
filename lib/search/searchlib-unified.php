@@ -91,11 +91,10 @@ class UnifiedSearchLib
 	{
 		global $prefs;
 		if ($prefs['unified_engine'] == 'lucene') {
-			$tempName = $this->getIndexLocation() . '-new';
-			$new_exists = file_exists($this->getIndexLocation() . '-new');
-			$old_exists = file_exists($this->getIndexLocation() . '-old');
+			$new = $this->getIndex('data-new');
+			$old = $this->getIndex('data-old');
 
-			return $new_exists || $old_exists;
+			return $new->exists() || $old->exists();
 		}
 
 		return false;
@@ -107,10 +106,8 @@ class UnifiedSearchLib
 	{
 		global $prefs;
 		if ($prefs['unified_engine'] == 'lucene') {
-			$temp = new Search_Index_Lucene($this->getIndexLocation() . '-new');
-			$temp->destroy();
-			$temp = new Search_Index_Lucene($this->getIndexLocation() . '-old');
-			$temp->destroy();
+			$this->getIndex('data-old')->destroy();
+			$this->getIndex('data-new')->destroy();
 		}
 	}
 
@@ -125,9 +122,9 @@ class UnifiedSearchLib
 
 		switch ($prefs['unified_engine']) {
 		case 'lucene':
-			$index_location = $this->getIndexLocation();
-			$tempName = $index_location . '-new';
-			$swapName = $index_location . '-old';
+			$index_location = $this->getIndexLocation('data');
+			$tempName = $this->getIndexLocation('data-new');
+			$swapName = $this->getIndexLocation('data-old');
 			
 			if ($this->rebuildInProgress()) {
 				$errlib->report(tr('Rebuild in progress.'));
@@ -137,8 +134,8 @@ class UnifiedSearchLib
 			$index = new Search_Index_Lucene($tempName);
 
 			register_shutdown_function(
-				function () use ($tempName, $index) {
-					if (file_exists($tempName)) {
+				function () use ($index) {
+					if ($index->exists()) {
 						$index->destroy();
 						echo "Abnormal termination. Unless it was killed manually, it likely ran out of memory.\n";
 					}
@@ -229,16 +226,38 @@ class UnifiedSearchLib
 	 *
 	 * @return string	path to index directory
 	 */
-	private function getIndexLocation()
+	private function getIndexLocation($indexType = 'data')
 	{
 		global $prefs, $tikidomain;
-		$loc = $prefs['unified_lucene_location'];
-		$temp = $prefs['tmpDir'];
-		if (!empty($tikidomain) && strpos($loc, $tikidomain) === false && strpos($loc, "$temp/") === 0) {
-			$loc = str_replace("$temp/", "$temp/$tikidomain/", $loc);
-		}
+		$mapping = array(
+			'lucene' => array(
+				'data' => $prefs['unified_lucene_location'],
+				'data-old' => $prefs['unified_lucene_location'] . '-old',
+				'data-new' => $prefs['unified_lucene_location'] . '-new',
+				'preference' => $prefs['tmpDir'] . '/unified-preference-index-' . $prefs['language'],
+			),
+			'elastic' => array(
+				'data' => $prefs['unified_elastic_index_current'],
+				'preference' => $prefs['unified_elastic_index_prefix'] . 'pref_' . $prefs['language'],
+			),
+		);
 
-		return $loc;
+		$engine = $prefs['unified_engine'];
+
+		if (isset($mapping[$engine][$indexType])) {
+			$index = $mapping[$engine][$indexType];
+
+			if ($engine == 'lucene' && ! empty($tikidomain)) {
+				$temp = $prefs['tmpDir'];
+				if (strpos($index, $tikidomain) === false && strpos($index, "$temp/") === 0) {
+					$index = str_replace("$temp/", "$temp/$tikidomain/", $index);
+				}
+			}
+
+			return $index;
+		} else {
+			throw new Exception('Internal: Invalid index requested: ' . $indexType);
+		}
 	}
 
     /**
@@ -420,26 +439,27 @@ class UnifiedSearchLib
     /**
      * @return Search_Index_Lucene
      */
-    function getIndex()
+    function getIndex($indexType = 'data')
 	{
 		global $prefs;
 
 		switch ($prefs['unified_engine']) {
 		case 'lucene':
 			Zend_Search_Lucene::setTermsPerQueryLimit($prefs['unified_lucene_terms_limit']);
-			$index = new Search_Index_Lucene($this->getIndexLocation(), $prefs['language'], $prefs['unified_lucene_highlight'] == 'y');
+			$index = new Search_Index_Lucene($this->getIndexLocation($indexType), $prefs['language'], $prefs['unified_lucene_highlight'] == 'y');
 			$index->setCache(TikiLib::lib('cache'));
 			$index->setMaxResults($prefs['unified_lucene_max_result']);
 			$index->setResultSetLimit($prefs['unified_lucene_max_resultset_limit']);
 
 			return $index;
 		case 'elastic':
-			if (empty($prefs['unified_elastic_index_current'])) {
+			$index = $this->getIndexLocation($indexType);
+			if (empty($index)) {
 				return null;
 			}
 
 			$connection = $this->getElasticConnection();
-			$index = new Search_Elastic_Index($connection, $prefs['unified_elastic_index_current']);
+			$index = new Search_Elastic_Index($connection, $index);
 			return $index;
 		}
 	}

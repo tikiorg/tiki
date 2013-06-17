@@ -20,5 +20,7 @@ interface Search_Index_Interface
 	function optimize();
 
 	function destroy();
+
+	function exists();
 }
 

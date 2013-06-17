@@ -49,6 +49,11 @@ class Search_Index_Memory implements Search_Index_Interface
 		$this->data = array();
 		return true;
 	}
+	
+	function exists()
+	{
+		return count($this->data) > 0;
+	}
 
 	/**
 	 * For test purposes.

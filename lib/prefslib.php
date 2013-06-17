@@ -16,13 +16,6 @@ class PreferencesLib
 	// prefs with system info etc
 	private $system_info = array( 'fgal_use_dir', 'sender_email' );
 
-	function __construct()
-	{
-		global $prefs;
-
-		$this->file = 'temp/preference-index-' . $prefs['language'];
-	}
-
 	function getPreference( $name, $deps = true, $source = null, $get_pages = false )
 	{
 		global $prefs, $systemConfiguration;
@@ -296,15 +289,15 @@ class PreferencesLib
 	{
 		$index = $this->getIndex();
 
-		// No input means it was a likely a query from a dependency, meaning every result should show
+		$query = new Search_Query($criteria);
 		if ($filters) {
-			$criteria = $this->buildPreferenceFilter($criteria, $filters);
+			$this->buildPreferenceFilter($query, $filters);
 		}
-		$results = $index->find($criteria);
+		$results = $query->search($index);
 
 		$prefs = array();
 		foreach ( $results as $hit ) {
-			$prefs[] = $hit->preference;
+			$prefs[] = $hit['object_id'];
 		}
 
 		return $prefs;
@@ -461,14 +454,17 @@ class PreferencesLib
 
 	public function rebuildIndex()
 	{
-		$index = Zend_Search_Lucene::create($this->file);
+		$index = TikiLib::lib('unifiedsearch')->getIndex('preference');
+		$index->destroy();
+
+		$typeFactory = $index->getTypeFactory();
 
 		foreach ($this->getAvailableFiles() as $file) {
 			$data = $this->getFileData($file);
 
 			foreach ( $data as $pref => $info ) {
 				$info = $this->getPreference($pref);
-				$doc = $this->indexPreference($pref, $info);
+				$doc = $this->indexPreference($typeFactory, $pref, $info);
 				$index->addDocument($doc);
 			}
 		}
@@ -478,20 +474,20 @@ class PreferencesLib
 
 	private function getIndex()
 	{
-		global $prefs;
-		Zend_Search_Lucene_Storage_Directory_Filesystem::setDefaultFilePermissions(0660);
-		Zend_Search_Lucene_Analysis_Analyzer::setDefault(new StandardAnalyzer_Analyzer_Standard_English());
+		$index = TikiLib::lib('unifiedsearch')->getIndex('preference');
 
-		if ( $this->indexNeedsRebuilding()) {
+		if (! $index->exists()) {
+			$index = null;
 			return $this->rebuildIndex();
 		}
 
-		return Zend_Search_Lucene::open($this->file);
+		return $index;
 	}
 
-	public function indexNeedsRebuilding()
+	function indexNeedsRebuilding()
 	{
-		return !file_exists($this->file);
+		$index = TikiLib::lib('unifiedsearch')->getIndex('preference');
+		return ! $index->exists();
 	}
 
 	public function getPreferenceLocations( $name )
@@ -557,25 +553,24 @@ class PreferencesLib
 		$this->usageArray = $prefs_usage_array;
 	}
 
-	private function indexPreference( $pref, $info )
+	private function indexPreference( $typeFactory, $pref, $info )
 	{
-		$doc = new Zend_Search_Lucene_Document();
-		$doc->addField(Zend_Search_Lucene_Field::UnIndexed('preference', $pref));
-		$doc->addField(Zend_Search_Lucene_Field::Text('name', $info['name']));
-		if (!empty($info['description'])) {
-			$doc->addField(Zend_Search_Lucene_Field::Text('description', $info['description']));
-		}
-		if (!empty($info['keywords'])) {
-			$doc->addField(Zend_Search_Lucene_Field::Text('keywords', $info['keywords']));
-		}
+		$contents = array(
+			$info['name'],
+			isset($info['description']) ? $info['description'] : '',
+			isset($info['keywords']) ? $info['keywords'] : '',
+		);
 
-		if ( isset( $info['options'] ) ) {
-			$doc->addField(Zend_Search_Lucene_Field::Text('options', implode(' ', $info['options'])));
+		if (isset($info['options'])) {
+			$contents = array_merge($contents, $info['options']);
 		}
 
-		$doc->addField(Zend_Search_Lucene_Field::Text('tags', implode(' ', $info['tags'])));
-
-		return $doc;
+		return array(
+			'object_type' => $typeFactory->identifier('preference'),
+			'object_id' => $typeFactory->identifier($pref),
+			'contents' => $typeFactory->plaintext(implode(' ', $contents)),
+			'tags' => $typeFactory->plaintext(implode(' ', $info['tags'])),
+		);
 	}
 
 	private function _getFlagValue( $info, $data )
@@ -795,22 +790,23 @@ class PreferencesLib
 		return $out;
 	}
 
-	private function buildPreferenceFilter($criteria, $input = null)
+	private function buildPreferenceFilter($query, $input = null)
 	{
 		$filters = $this->getFilters($input);
-		$positive = array();
-		$negative = array();
 
 		foreach ($filters as $tag => $info) {
 			if ($info['selected']) {
-				$positive[] = "tags:$tag";
+				$positive[] = $tag;
 			} elseif ($info['type'] == 'negative') {
-				$negative[] = "-tags:$tag";
+				$query->filterContent("NOT $tag", 'tags');
 			}
 		}
 
-		$filters = '+(' . implode(' ', $positive) .') ' . implode(' ', $negative);
-		return "+($criteria) +($filters)";
+		if (count($positive)) {
+			$query->filterContent(implode(' OR ', $positive), 'tags');
+		}
+
+		return $query;
 	}
 
 	/***

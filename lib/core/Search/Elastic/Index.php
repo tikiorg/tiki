@@ -25,6 +25,11 @@ class Search_Elastic_Index implements Search_Index_Interface
 		return true;
 	}
 
+	function exists()
+	{
+		return (bool) $this->connection->getIndexStatus($this->index);
+	}
+
 	function addDocument(array $data)
 	{
 		$factory = $this->getTypeFactory();
