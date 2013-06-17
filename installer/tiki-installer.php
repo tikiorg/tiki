@@ -67,6 +67,11 @@ if (empty($_REQUEST['install_step'])) {
 	}
 } else {
 	$install_step = $_REQUEST['install_step'];
+
+	if ($install_step == 3) {	// clear caches after system requirements page
+		global $cachelib; include 'lib/cache/cachelib.php';
+		$cachelib->empty_cache();
+	}
 }
 
 // define the language to use, either from user-setting or default
@@ -582,9 +587,6 @@ $tikidomain = $multi;
 $tikidomainslash = (!empty($tikidomain) ? $tikidomain . '/' : '');
 
 $title = tra('Tiki Installer');
-
-include 'lib/cache/cachelib.php';
-$cachelib->empty_cache();
 
 $_SESSION["install-logged-$multi"] = 'y';
 
