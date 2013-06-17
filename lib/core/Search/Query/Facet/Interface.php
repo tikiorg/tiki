@@ -11,5 +11,7 @@ interface Search_Query_Facet_Interface
 	function getName();
 	function getField();
 	function render($value);
+	function setOperator($operator);
+	function getOperator();
 }
 

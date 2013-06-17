@@ -9,6 +9,7 @@ class Search_Query_Facet_Term implements Search_Query_Facet_Interface
 {
 	private $field;
 	private $renderCallback;
+	private $operator = 'or';
 
 	static function fromField($field)
 	{
@@ -66,6 +67,17 @@ class Search_Query_Facet_Term implements Search_Query_Facet_Interface
 		}
 
 		return $value;
+	}
+
+	function setOperator($operator)
+	{
+		$this->operator = in_array($operator, array('and', 'or')) ? $operator : 'or';
+		return $this;
+	}
+
+	function getOperator()
+	{
+		return $this->operator;
 	}
 }
 

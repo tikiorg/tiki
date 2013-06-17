@@ -3,7 +3,7 @@
 	<div class="facets" style="width: 25%; float: right;">
 		{foreach from=$facets item=facet}
 			<h6>{$facet.label|escape}</h6>
-			<select multiple data-for="#search-form input[name='filter~{$facet.name|escape}']" data-join="or">
+			<select multiple data-for="#search-form input[name='filter~{$facet.name|escape}']" data-join="{$facet.operator|escape}">
 				{foreach from=$facet.options key=value item=label}
 					<option value="{$value|escape}">{$label|escape}</option>
 				{/foreach}

@@ -31,6 +31,11 @@ class Search_ResultSet_FacetFilter
 		return $this->facet->getLabel();
 	}
 
+	function getOperator()
+	{
+		return $this->facet->getOperator();
+	}
+
 	function getOptions()
 	{
 		$out = array();

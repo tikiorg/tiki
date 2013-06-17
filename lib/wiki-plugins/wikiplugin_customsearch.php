@@ -143,12 +143,16 @@ function wikiplugin_customsearch($data, $params)
 	$builder->apply($matches);
 	$formatter = $builder->getFormatter();
 
+	$facets = new Search_Query_FacetWikiBuilder;
+	$facets->apply($matches);
+
 	$cachelib = TikiLib::lib('cache');
 	$cachelib->cacheItem(
 		$definitionKey, serialize(
 			array(
 				'query' => $query,
 				'formatter' => $formatter,
+				'facets' => $facets,
 			)
 		),
 		'customsearch'

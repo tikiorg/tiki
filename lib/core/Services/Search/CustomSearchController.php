@@ -36,6 +36,7 @@ class Services_Search_CustomSearchController
 
 		$query = $definition['query'];
 		$formatter = $definition['formatter'];
+		$facetsBuilder = $definition['facets'];
 
 		$adddata = json_decode($input->adddata->text(), true);
 
@@ -142,6 +143,9 @@ class Services_Search_CustomSearchController
 
 		$unifiedsearchlib = TikiLib::lib('unifiedsearch');
 		$unifiedsearchlib->initQuery($query); // Done after cache because permissions vary
+
+		$facetsBuilder->build($query, $unifiedsearchlib->getFacetProvider());
+
 		$index = $unifiedsearchlib->getIndex();
 		$resultSet = $query->search($index);
 

@@ -76,6 +76,7 @@ class Search_Formatter_Plugin_SmartyTemplate implements Search_Formatter_Plugin_
 				'name' => $facet->getName(),
 				'label' => $facet->getLabel(),
 				'options' => $facet->getOptions(),
+				'operator' => $facet->getOperator(),
 			);
 		}, $entries->getFacets()));
 		$smarty->assign('count', count($entries));

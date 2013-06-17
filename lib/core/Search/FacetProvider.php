@@ -25,12 +25,21 @@ class Search_FacetProvider implements Search_FacetProvider_Interface
 
 	function addFacets(array $facets)
 	{
-		$this->facets = array_merge($this->facets, $facets);
+		foreach ($facets as $facet) {
+			$this->facets[$facet->getName()] = $facet;
+		}
 	}
 
 	function getFacets()
 	{
 		return $this->facets;
+	}
+
+	function getFacet($name)
+	{
+		if (isset($this->facets[$name])) {
+			return $this->facets[$name];
+		}
 	}
 }
 
