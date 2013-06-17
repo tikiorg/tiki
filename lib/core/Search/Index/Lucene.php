@@ -73,6 +73,45 @@ class Search_Index_Lucene implements Search_Index_Interface
 		$this->getLucene()->optimize();
 	}
 
+	function destroy()
+	{
+		unset($this->lucene);
+
+		return (bool) $this->destroyDirectory($this->directory);
+	}
+
+    /**
+	 * Private. Used by a callback, so made public until PHP 5.4.
+	 *
+     * @param $path
+     * @return int
+	 * @private
+     */
+	private function destroyDirectory($path)
+	{
+		if (!$path or !is_dir($path)) return false;
+
+		if ($dir = opendir($path)) {
+			while (false !== ($file = readdir($dir))) {
+				if ($file == '.' || $file == '..') {
+					continue;
+				}
+
+				if (is_dir($path . '/' . $file)) {
+					$this->destroyDirectory($path . '/' . $file);
+				} else {
+					unlink($path . '/' . $file);
+				}
+			}
+			closedir($dir);
+		}
+
+		rmdir($path);
+
+		return ! file_exists($path);
+	}
+
+
 	function invalidateMultiple(array $objectList)
 	{
 		$expr = $this->buildExpr($objectList);

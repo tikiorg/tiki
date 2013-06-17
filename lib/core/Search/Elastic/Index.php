@@ -22,6 +22,7 @@ class Search_Elastic_Index implements Search_Index_Interface
 	function destroy()
 	{
 		$this->connection->deleteIndex($this->index);
+		return true;
 	}
 
 	function addDocument(array $data)

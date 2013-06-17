@@ -51,6 +51,11 @@ class Search_Index_TypeAnalysisDecorator implements Search_Index_Interface
 		return $this->parent->optimize();
 	}
 
+	function destroy()
+	{
+		return $this->parent->destroy();
+	}
+
 	function getIdentifierFields()
 	{
 		return array_keys(array_filter($this->mapping));

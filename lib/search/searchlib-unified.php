@@ -107,16 +107,10 @@ class UnifiedSearchLib
 	{
 		global $prefs;
 		if ($prefs['unified_engine'] == 'lucene') {
-			$tempName = $this->getIndexLocation() . '-new';
-			$file_exists = file_exists($tempName);
-			if ($file_exists) {
-				$this->destroyDirectory($tempName);
-			}
-			$tempName = $this->getIndexLocation() . '-old';
-			$file_exists = file_exists($tempName);
-			if ($file_exists) {
-				$this->destroyDirectory($tempName);
-			}
+			$temp = new Search_Index_Lucene($this->getIndexLocation() . '-new');
+			$temp->destroy();
+			$temp = new Search_Index_Lucene($this->getIndexLocation() . '-old');
+			$temp->destroy();
 		}
 	}
 
@@ -142,11 +136,10 @@ class UnifiedSearchLib
 
 			$index = new Search_Index_Lucene($tempName);
 
-			$unifiedsearchlib = $this;
 			register_shutdown_function(
-				function () use ($tempName, $unifiedsearchlib) {
+				function () use ($tempName, $index) {
 					if (file_exists($tempName)) {
-						$unifiedsearchlib->destroyDirectory($tempName);
+						$index->destroy();
 						echo "Abnormal termination. Unless it was killed manually, it likely ran out of memory.\n";
 					}
 				}
@@ -192,6 +185,7 @@ class UnifiedSearchLib
 		unset($indexer);
 		unset($index);
 
+		$oldIndex = null;
 		switch ($prefs['unified_engine']) {
 		case 'lucene':
 			// Current to -old
@@ -206,11 +200,7 @@ class UnifiedSearchLib
 			}
 
 			// Destroy old
-			$this->destroyDirectory($swapName);
-
-			if (file_exists($swapName)) {
-				$errlib->report(tr('Failed to destroy the old index. Likely a file permission issue.'));
-			}
+			$oldIndex = new Search_Index_Lucene($swapName);
 			break;
 		case 'elastic':
 			// Obtain the old index and destroy it after permanently replacing it.
@@ -218,10 +208,13 @@ class UnifiedSearchLib
 
 			$tikilib->set_preference('unified_elastic_index_current', $indexName);
 
-			if ($oldIndex) {
-				$oldIndex->destroy();
-			}
 			break;
+		}
+
+		if ($oldIndex) {
+			if (! $oldIndex->destroy()) {
+				$errlib->report(tr('Failed to destroy the old index.'));
+			}
 		}
 
 		// Process the documents updated while we were processing the update
@@ -589,35 +582,6 @@ class UnifiedSearchLib
 		}
 
 		return $query;
-	}
-
-    /**
-	 * Private. Used by a callback, so made public until PHP 5.4.
-	 *
-     * @param $path
-     * @return int
-	 * @private
-     */
-	function destroyDirectory($path)
-	{
-		if (!$path or !is_dir($path)) return 0;
-
-		if ($dir = opendir($path)) {
-			while (false !== ($file = readdir($dir))) {
-				if ($file == '.' || $file == '..') {
-					continue;
-				}
-
-				if (is_dir($path . '/' . $file)) {
-					$this->destroyDirectory($path . '/' . $file);
-				} else {
-					unlink($path . '/' . $file);
-				}
-			}
-			closedir($dir);
-		}
-
-		rmdir($path);
 	}
 
 	function getFacetProvider()

@@ -32,8 +32,7 @@ class Search_Index_LuceneSortTest extends PHPUnit_Framework_TestCase
 
 	function tearDown()
 	{
-		$dir = escapeshellarg($this->dir);
-		`rm -Rf $dir`;
+		$this->index->destroy();
 	}
 
 	function sortCases()

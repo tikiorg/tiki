@@ -22,8 +22,7 @@ class Search_Index_LucenePaginationTest extends PHPUnit_Framework_TestCase
 
 	function tearDown()
 	{
-		$dir = escapeshellarg($this->dir);
-		`rm -Rf $dir`;
+		$this->index->destroy();
 	}
 
 	function testNoPagingRequired()

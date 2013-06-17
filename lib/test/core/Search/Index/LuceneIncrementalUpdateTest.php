@@ -35,8 +35,7 @@ class Search_Index_LuceneIncrementalUpdateTest extends PHPUnit_Framework_TestCas
 
 	function tearDown()
 	{
-		$dir = escapeshellarg($this->dir);
-		`rm -Rf $dir`;
+		$this->getIndex()->destroy();
 	}
 
 	function testAddNewDocument()

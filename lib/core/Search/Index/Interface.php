@@ -18,5 +18,7 @@ interface Search_Index_Interface
 	function getTypeFactory();
 
 	function optimize();
+
+	function destroy();
 }
 

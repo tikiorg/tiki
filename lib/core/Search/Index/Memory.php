@@ -44,6 +44,12 @@ class Search_Index_Memory implements Search_Index_Interface
 	{
 	}
 
+	function destroy()
+	{
+		$this->data = array();
+		return true;
+	}
+
 	/**
 	 * For test purposes.
 	 */
