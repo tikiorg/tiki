@@ -1,6 +1,6 @@
 /*!
  * elFinder - file manager for web
- * Version 2.x github.com/jonnybradley/elFinder (2013-06-12)
+ * Version 2.x github.com/jonnybradley/elFinder (2013-06-17)
  * http://elfinder.org
  * 
  * Copyright 2009-2012, Studio 42
@@ -683,6 +683,11 @@
 	position:absolute;
 	left:auto;
 	right:auto;
+}
+
+/* position getting overwritten as relative by jquery-ui 1.10 */
+.std42-dialog.elfinder-dialog {
+	position:absolute;
 }
 
 /* titlebar */
