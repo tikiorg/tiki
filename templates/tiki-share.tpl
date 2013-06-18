@@ -385,5 +385,5 @@
 		</table>
 	</form>
 {else}
-	<a href="javascript:window.history.go(-2);">{tr}Return to previous page{/tr}</a>
+	<p><a href="javascript:window.history.go(-2);">{tr}Return to previous page{/tr}</a></p>
 {/if}

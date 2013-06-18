@@ -151,6 +151,7 @@ if (!empty($_REQUEST['subject'])) {
 	if ($report == 'y') {
 		$subject = tra('Report to the webmaster', $prefs['site_language']);
 	} else {
+		$smarty->assign('mail_site', $_SERVER['SERVER_NAME']);
 		$subject = $smarty->fetch('mail/share_subject.tpl');
 	}
 }
@@ -215,7 +216,7 @@ if (isset($_REQUEST['send'])) {
 				if (is_array($adresses)) {
 					$contactlib = TikiLib::lib('contact');
 					foreach ($adresses as $adresse) {
-						$tokenlist[] = $tokenlib->includeTokenReturn($url_for_friend, $globalperms->getGroups(), $adresse);
+						$tokenlist[] = $tokenlib->includeToken($url_for_friend, $globalperms->getGroups(), $adresse);
 						// if preference share_contact_add_non_existant_contact the add auomaticly to contact
 						if ($prefs['share_contact_add_non_existant_contact'] == 'y' && $prefs['feature_contacts'] == 'y') {
 							// check if email exist for at least one contact in
@@ -240,7 +241,7 @@ if (isset($_REQUEST['send'])) {
 			} else {
 				if ( $prefs['auth_token_share'] == 'y' && ($prefs['auth_token_access'] == 'y' || isset($_POST['share_access']))) {
 					$tokenlib = AuthTokens::build($prefs);
-					$url_for_friend = $tokenlib->includeTokenReturn($url_for_friend, $globalperms->getGroups(), $_REQUEST['addresses']);
+					$url_for_friend = $tokenlib->includeToken($url_for_friend, $globalperms->getGroups(), $_REQUEST['addresses']);
 					$smarty->assign('share_access', true);
 				}
 				$tokenlist[0] = $url_for_friend;
@@ -422,7 +423,11 @@ function sendMail($sender, $recipients, $subject, $tokenlist = array())
 			$mail->setReplyTo("<$from>");
 		}
 
-		$url_for_friend = $tokenlist[$i]['url'];
+		if (count($tokenlist) > 1) {
+			$url_for_friend = $tokenlist[$i];
+		} else {
+			$url_for_friend = $tokenlist[0];		// only one token if not "subscribing"
+		}
 		$smarty->assign('url_for_friend', $url_for_friend);
 		$txt = $smarty->fetch('mail/share.tpl');
 		// Rebuild email message texte
