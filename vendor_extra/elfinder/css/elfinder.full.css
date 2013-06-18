@@ -1,6 +1,6 @@
 /*!
  * elFinder - file manager for web
- * Version 2.x github.com/jonnybradley/elFinder (2013-06-12)
+ * Version 2.x github.com/jonnybradley/elFinder (2013-06-17)
  * http://elfinder.org
  * 
  * Copyright 2009-2012, Studio 42
@@ -683,6 +683,11 @@
 	position:absolute;
 	left:auto;
 	right:auto;
+}
+
+/* position getting overwritten as relative by jquery-ui 1.10 */
+.std42-dialog.elfinder-dialog {
+	position:absolute;
 }
 
 /* titlebar */
@@ -1569,9 +1574,9 @@ embed.elfinder-quicklook-preview-audio {
 	border:0 solid;
 	background:transparent;
 	padding:0;
-	margin: 1px 4px;
+	margin: 4px 4px;
 	height: auto;
-	min-height: 26px;
+	min-height: 30px;
 	float:right;
 	width:202px;
 }

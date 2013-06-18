@@ -500,7 +500,37 @@ class elFinderVolumeTikiFiles extends elFinderVolumeDriver
 	 **/
 	protected function _dimensions($path, $mime)
 	{
-		return ($stat = $this->stat($path)) && isset($stat['width']) && isset($stat['height']) ? $stat['width'].'x'.$stat['height'] : '';
+		global $prefs;
+
+		$ar = explode('_', $path);
+		if (count($ar) === 2) {
+			$isgal = $ar[0] === 'd';
+			$path = $ar[1];
+		} else {
+			$isgal = true;
+		}
+		if ($isgal) {
+			return '';
+		} else {
+			$res = $this->filegallib->get_file($path);
+			if ( ! empty($res['path']) ) {
+				$filepath = $prefs['fgal_use_dir'].$res['path'];
+			} else {
+				$filepath = $this->tmpname($path);
+				$fp = $this->tmbPath
+					? @fopen($filepath, 'w+')
+					: @tmpfile();
+
+				if ($fp) {
+					fwrite($fp, $res['data']);
+					fclose($fp);
+				}
+			}
+			$size = getimagesize($filepath);
+			$str = $size[0] . ' x ' . $size[1];
+			// could add more info here?
+			return $str;
+		}
 	}
 
 	/******************** file/dir content *********************/
@@ -968,6 +998,7 @@ class elFinderVolumeTikiFiles extends elFinderVolumeDriver
 
 			if ($fp) {
 				fwrite($fp, $res['data']);
+				fclose($fp);
 
 				$this->filegallib->process_batch_file_upload($dirId, $filepath, $user, '', $errors);
 

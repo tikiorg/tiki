@@ -253,7 +253,7 @@ class Cachelib
 
 				if (is_dir($path . "/" . $file)) {
 					$this->erase_dir_content($path . "/" . $file);
-					rmdir($path . "/" . $file);
+					@rmdir($path . "/" . $file);	// dir won't be empty if there are multitiki dirs inside
 				} else {
 					unlink($path . "/" . $file);
 				}
