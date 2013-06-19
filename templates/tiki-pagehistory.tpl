@@ -106,15 +106,36 @@
 $("#toggle_diffs a").click(function(){
 	if ($(this).text() == "{tr}Advanced{/tr}") {
 		$(this).text("{tr}Simple{/tr}");
-		$("#diff_style_all").show().attr("name", "diff_style");
-		$("#diff_style_simple").hide().attr("name", "");
+		if (jqueryTiki.chosen) {
+			$("#diff_style_all").next(".chzn-container").show();
+			$("#diff_style_simple").next(".chzn-container").hide();
+			$("#diff_style_all").attr("name", "diff_style");
+			$("#diff_style_simple").attr("name", "");
+		} else {
+			$("#diff_style_all").show().attr("name", "diff_style");
+			$("#diff_style_simple").hide().attr("name", "");
+		}
 	} else {
 		$(this).text("{tr}Advanced{/tr}");
-		$("#diff_style_all").hide().attr("name", "");
-		$("#diff_style_simple").show().attr("name", "diff_style");
+		if (jqueryTiki.chosen) {
+			$("#diff_style_all").next(".chzn-container").hide();
+			$("#diff_style_simple").next(".chzn-container").show();
+			$("#diff_style_all").attr("name", "");
+			$("#diff_style_simple").attr("name", "diff_style");
+		} else {
+			$("#diff_style_all").hide().attr("name", "");
+			$("#diff_style_simple").show().attr("name", "diff_style");
+		}
 	}
 	return false;
 });
+if (jqueryTiki.chosen) {
+	if ($("#diff_style_simple").html().indexOf("{{$diff_style}}") > -1) {
+		$("#diff_style_all").next(".chzn-container").hide().attr("name", "");
+	} else {
+		$("#diff_style_simple").next(".chzn-container").hide();
+	}
+}
 {{if $diff_style neq "htmldiff" and $diff_style neq "sidediff"}$("#toggle_diffs a").click();{/if}}
 					{/jq}{/if}
 					<select name="diff_style" id="diff_style_all"{if $prefs.javascript_enabled eq "y"} style="display: none"{/if}>

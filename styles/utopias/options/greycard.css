@@ -387,5 +387,10 @@ td.even {
 	margin: 18px;
 }
 
+div.heading, td.heading {
+    background: none repeat scroll 0 0 #999;
+    border: 0.1em solid #666;
+    padding: 0 0.2em;
+}
 
 /***** End of file ******/

@@ -169,32 +169,6 @@ class AuthTokens
 		return "{$data['scheme']}://{$data['host']}{$data['path']}$query$anchor";
 	}
 
-	function includeTokenReturn( $url, array $groups = array(), $email = '' )
-	{
-		$data = parse_url($url);
-		if ( isset($data['query']) ) {
-			parse_str($data['query'], $args);
-			unset($args['TOKEN']);
-		} else {
-			$args = array();
-		}
-
-		$token = $this->createToken($data['path'], $args, $groups, array('email'=>$email));
-		$args['TOKEN'] = $token;
-
-		$query = '?' . http_build_query($args, '', '&');
-
-		if ( ! isset($data['fragment']) ) {
-			$anchor = '';
-		} else {
-			$anchor = "#{$data['fragment']}";
-		}
-
-		$token['url'] = "{$data['scheme']}://{$data['host']}{$data['path']}$query$anchor";
-
-		return $token;
-	}
-
 	function deleteToken($tokenId)
 	{
 		$this->table->delete(array('tokenId' => $tokenId));

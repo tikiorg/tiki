@@ -1055,7 +1055,7 @@ if ( \$('#$id') ) {
 
 		// some plugins are just too fragile to do wysiwyg, so show the "source" for them ;(
 		$excluded = array('tracker', 'trackerlist', 'trackerfilter', 'kaltura', 'toc', 'freetagged', 'draw', 'googlemap',
-			'include', 'module', 'list', 'custom_search', 'iframe', 'map', 'calendar', 'file', 'files', 'mouseover');
+			'include', 'module', 'list', 'custom_search', 'iframe', 'map', 'calendar', 'file', 'files', 'mouseover', 'sort');
 
 		$ignore = null;
 		$enabled = $this->plugin_enabled($name, $ignore);
@@ -2234,6 +2234,9 @@ if ( \$('#$id') ) {
 
 			$inComment += substr_count($lineInLowerCase, "<!--");
 			$inComment -= substr_count($lineInLowerCase, "-->");
+			if ($inComment < 0) {	// stop lines containing just --> being detected as comments
+				$inComment = 0;
+			}
 
 			// check if we are inside a ~pre~ block and, if so, ignore
 			// monospaced and do not insert <br />

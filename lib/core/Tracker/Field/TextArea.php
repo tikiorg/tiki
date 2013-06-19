@@ -105,7 +105,24 @@ class Tracker_Field_TextArea extends Tracker_Field_Text
 
 	function getFieldData(array $requestData = array())
 	{
-		$data = $this->processMultilingual($requestData, $this->getInsertId());
+		$ins_id = $this->getInsertId();
+		$data = $this->processMultilingual($requestData, $ins_id);
+
+		global $user;
+		if (isset($requestData[$ins_id])) {
+			$newvalue = TikiLib::lib('parser')->process_save_plugins(
+				$data['value'],
+				array(
+					'type' => 'trackeritem',
+					'itemId' => $this->getItemId(),
+					'user' => $user,
+				)
+			);
+			if ($newvalue !== $data['value']) {
+				$data['value'] = $newvalue;
+				$data['pvalue'] = $this->attemptParse($newvalue);
+			}
+		}
 
 		return $data;
 	}

@@ -69,22 +69,22 @@ h1, h2, h3, h4, h5, h6 {
 h1 {
 	font-size: 250%;
 	color: #000;
-	margin: 0.2em 0 0.1em;
+	margin: .2em 0 .6em;
 }
 
 h2 {
 	font-size: 190%;
-	margin: 0.3em 0 0.1em;
+	margin: 0.3em 0 0.5em;
 }
 
 h3 {
 	font-size: 160%;
-	margin: 0.4em 0 0.1em;
+	margin: 0.4em 0 0.4em;
 }
 
 h4 {
 	font-size: 130%;
-	margin: 0.5em 0 0.2em;
+	margin: 0.5em 0 0.3em;
 }
 
 h5 {
@@ -157,7 +157,7 @@ input[type=submit]:hover,
 }
 
 #sitelogo {
-	height: 130px;	/* accomodates tiki logo */
+	min-height: 100px;
 	padding: 0;
 }
 
@@ -234,6 +234,7 @@ input[type=submit]:hover,
 	background-color: #fafafa;
 	color: #333;
 	font-weight: bold;
+	font-size: 110%;
 }
 
 .cssmenu_vert li ul a:hover,
@@ -315,10 +316,11 @@ div.box {
 }
 
 h3.box-title {
-	padding: .3em;
+	padding: .4em .7em .3em;
 	margin: 0;
 	color: #555;
 	background-color: #f4f4f4;
+	font-size: 125%;
 }
 
 .box-title a,
@@ -339,7 +341,7 @@ h3.box-title {
 }
 
 .box-data {
-	padding: .5em;
+	padding: 0.5em .5em .8em;
 	border: 0;
 }
 
@@ -369,9 +371,11 @@ h3.box-title {
 
 .box-data a, .box-data a:visited {
 	color: #333;
+	font-weight: normal;
 }
 .box-data a:hover {
-	color: #ddd;
+	color: #999;
+	text-decoration: none;
 }
 .box-data a.linkmenu, .box-data a.linkmodule {
 	color: #555;
@@ -469,11 +473,11 @@ div.simplebox {
 /*table {}*/
 
 td {
-	padding: .2em;
+	padding: .4em;
 }
 
 th {
-	padding: .2em;
+	padding: .4em;
 }
 
 
@@ -494,7 +498,7 @@ td.even,
 td.form,
 .formcolor td,
 .editblogform td {
-	padding: .2em;
+	padding: .4em;
 }
 
 
@@ -502,7 +506,8 @@ td.form,
 /* Odd rows in several listings */
 /*tr.odd, td.odd {}
 tr.odd:hover {}*/
-tr.even, td.even {
+tr.even, td.even,
+table.normal tr:nth-child(2n+1) {
 	background: #f8f8f8;
 }
 /*tr.even:hover, td.even:hover {}*/
@@ -529,17 +534,17 @@ form.admin fieldset {
 /*.tabs {
 }*/
 
-.tabstoggle {
-	display: none;
+.tabs {
+    margin: 0;
+    padding: 0;
 }
 
 .tabs .container {
 	float: left;
 	width: 100%;
+	padding: 0.8em 0 0.4em;
 }
 
-
-/* reset what's in layout.css */
 .tabactive,
 .tabinactive,
 [class].tabactive,
@@ -549,7 +554,8 @@ form.admin fieldset {
 	background: #ddd;
 	border: .1em solid #666;
 	margin-right: .5em;
-	padding: 0.4em 0.4em 0;
+	padding: 0.4em 0.4em .4em;
+	border-bottom: none;
 }
 
 .tabmark a {
@@ -560,6 +566,7 @@ form.admin fieldset {
 
 .tabmark a:hover {
 	color: #333;
+	text-decoration: none;
 }
 
 .tabmark:hover {

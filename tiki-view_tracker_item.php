@@ -301,6 +301,7 @@ if ($tracker_info['adminOnlyViewEditItem'] === 'y') {
 	$access->check_permission('tiki_p_admin_trackers', tra('Admin this tracker'), 'tracker', $tracker_info['trackerId']);
 }
 
+include_once('tiki-sefurl.php');
 
 if (!empty($_REQUEST['moveto']) && $tiki_p_admin_trackers == 'y') { // mo to another tracker fields with same name
 	$perms = Perms::get('tracker', $_REQUEST['moveto']);
@@ -452,8 +453,9 @@ if ($itemObject->canModify()) {
 				unset($_REQUEST['save_return']);
 			}
 		}
-		if (isset($_REQUEST['from'])) {
-			header('Location: tiki-index.php?page=' . urlencode($_REQUEST['from']));
+		if (isset($_REQUEST['save_return']) && isset($_REQUEST['from'])) {
+			$fromUrl = filter_out_sefurl('tiki-index.php?page=' . urlencode($_REQUEST['from']));
+			header("Location: {$fromUrl}");
 			exit;
 		}
 	}
