@@ -446,7 +446,7 @@ if ($itemObject->canModify()) {
 				unset($_REQUEST['save_return']);
 			}
 		}
-		if (isset($_REQUEST['from'])) {
+		if (isset($_REQUEST['save_return']) && isset($_REQUEST['from'])) {
 			$fromUrl = filter_out_sefurl('tiki-index.php?page=' . urlencode($_REQUEST['from']));
 			header("Location: {$fromUrl}");
 			exit;
