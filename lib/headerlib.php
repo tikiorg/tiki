@@ -79,7 +79,7 @@ class HeaderLib
 
 	function add_jsfile($file,$rank=0,$minified=false)
 	{
-		if ($this->lockMinifiedJs == true) {
+		if ($this->lockMinifiedJs == true && $rank !== 'external') {
 			$rank = 'late';
 		}
 
