@@ -157,7 +157,7 @@ input[type=submit]:hover,
 }
 
 #sitelogo {
-	height: 130px;	/* accomodates tiki logo */
+	min-height: 100px;
 	padding: 0;
 }
 
