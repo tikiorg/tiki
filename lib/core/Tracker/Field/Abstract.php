@@ -38,6 +38,10 @@ abstract class Tracker_Field_Abstract implements Tracker_Field_Interface, Tracke
 				)
 			);
 			unset($query['trackerId']);
+			if (isset($query['page'])) {
+				$query['from'] = $query['page'];
+				unset($query['page']);
+			}
 
 
 			$classList = array('tablename');
