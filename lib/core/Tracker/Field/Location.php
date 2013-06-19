@@ -74,9 +74,15 @@ class Tracker_Field_Location extends Tracker_Field_Abstract implements Tracker_F
 		$parts = array_map('floatval', $parts);
 
 		if (count($parts) >= 2) {
+			// Always use . as the decimal point in the value, and not comma as used some places
+			$value = '';
+			$value .= str_replace(',', '.', $parts[0]).',';
+			$value .= str_replace(',', '.', $parts[1]).',';
+			$value .= str_replace(',', '.', $parts[2]);
+
 			return array(
-				'value' => implode(',', $parts),
-				'x' => $parts[0],
+				'value' => $value,
+				'x' => $parts[0],	
 				'y' => $parts[1],
 				'z' => isset($parts[2]) ? $parts[2] : 0,
 			);
