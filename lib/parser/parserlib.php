@@ -2232,6 +2232,9 @@ if ( \$('#$id') ) {
 
 			$inComment += substr_count($lineInLowerCase, "<!--");
 			$inComment -= substr_count($lineInLowerCase, "-->");
+			if ($inComment < 0) {	// stop lines containing just --> being detected as comments
+				$inComment = 0;
+			}
 
 			// check if we are inside a ~pre~ block and, if so, ignore
 			// monospaced and do not insert <br />
