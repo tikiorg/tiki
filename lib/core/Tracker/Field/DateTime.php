@@ -63,8 +63,9 @@ class Tracker_Field_DateTime extends Tracker_Field_Abstract implements Tracker_F
 	{
 		$ins_id = $this->getInsertId();
 
+		$value = $this->getValue();
 		$data = array(
-			'value' => $this->getValue($this->getOption(3) == 'blank' ? '' : TikiLib::lib('tiki')->now),
+			'value' => empty($value) ? $this->getOption(3) == 'blank' ? '' : TikiLib::lib('tiki')->now : $value,
 		);
 
 		if (isset($requestData[$ins_id.'Month']) || isset($requestData[$ins_id.'Day']) || isset($requestData[$ins_id.'Year']) || isset($requestData[$ins_id.'Hour']) || isset($requestData[$ins_id.'Minute'])) {
