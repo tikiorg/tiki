@@ -79,6 +79,9 @@ class Tracker_Field_DateTime extends Tracker_Field_Abstract implements Tracker_F
 	
 	function renderInput($context = array())
 	{
+		global $user;
+
+		TikiLib::lib('smarty')->assign('use_24hr_clock', TikiLib::lib('userprefs')->get_user_clock_pref($user));
 		return $this->renderTemplate('trackerinput/datetime.tpl', $context);
 	}
 
