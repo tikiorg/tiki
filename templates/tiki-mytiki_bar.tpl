@@ -62,5 +62,10 @@
 	{button _icon="img/icons/large/socialnetworks.png" _text="{tr}Social networks{/tr}" href="tiki-socialnetworks.php" _menu_text="y"}
 {/if}
 
+{if $prefs.feature_mailin eq 'y' and !empty($user) and ($tiki_p_send_mailin eq 'y' or $tiki_p_admin_mailin eq 'y')}
+	{button _icon="img/icons/large/green_question48x48.png" _text="{tr}Mail-in{/tr}" href="tiki-user_mailin.php" _menu_text="y"}
+{/if}
+
+
 </div>
 <br/>

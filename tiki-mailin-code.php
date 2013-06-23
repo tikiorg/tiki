@@ -15,6 +15,7 @@ require_once ("lib/webmail/net_pop3.php");
 include_once ("lib/mail/mimelib.php");
 include_once ("lib/webmail/tikimaillib.php");
 include_once ('lib/wiki/wikilib.php');
+require_once ('lib/mailin/usermailinlib.php');
 
 global $prefs;
 
@@ -421,6 +422,9 @@ foreach ($accs['data'] as $acc) {
 							}
 							
 							if ($prefs['feature_articles'] && $acc['type'] == 'article-put') {
+								//////////////
+								//	article-put
+								//////////////////////////////////////////////////////////////////////////////////
 
 								$title = trim($output['header']['subject']);
 								$topicId = isset($acc['article_topicId']) ? $acc['article_topicId'] : 0;
@@ -508,6 +512,9 @@ foreach ($accs['data'] as $acc) {
 								}
 								
 								if ($acc['type'] == 'wiki-get' || ($acc['type'] == 'wiki' && $method == "GET")) {
+									//////////////
+									//	wiki-get, wiki GET: Get a new wiki page. System emails page to user
+									//////////////////////////////////////////////////////////////////////////////////
 									// A wiki-get account sends a copy of the page to the sender
 									// and also sends the source of the page
 									$mail = new TikiMail();
@@ -537,12 +544,31 @@ foreach ($accs['data'] as $acc) {
 									$res = $mail->send(array($email_from), 'mail');
 									$content.= "Response sent<br />";
 									//end if ($acc['type'] == 'wiki-get' || ($acc['type'] == 'wiki' && $method == "GET"))
+
 								} elseif ($acc['type'] == 'wiki-put' || ($acc['type'] == 'wiki' && $method == "PUT")) {
+									//////////////
+									//	wiki-put, wiki PUT: Send a wiki page. User emails page to System
+									//////////////////////////////////////////////////////////////////////////////////
 									
-									// This is used to UPDATE wiki pages
+									// This is used to Create/Update wiki pages
+									$chkUser = $aux["sender"]["user"];
+
+									// Attempt to use HTML, if it exists
+									$body = mailin_get_html($output);
+									if (empty($body)) {
+										$body = mailin_get_body($output);
+									}
+									
+									// Load user routing
+									$route = null;
+									$routes = $usermailinlib->locate_struct($chkUser, $aux['Subject'], $body);
+									if (!empty($routes['data'])) {
+										$content.= "User route from pattern: '".$routes['data'][0]['subj_pattern']."' / '".$routes['data'][0]['body_pattern']."'<br />";
+										$route = $routes['data'][0];	// Only use the first route
+									}
+
 
 									// Check permissions
-									$chkUser = $aux["sender"]["user"];
 									if (($acc["anonymous"] == 'n') && (!$userlib->user_has_permission($chkUser, 'tiki_p_admin'))) {
 										if ($tikilib->page_exists($page)) {
 											// Check permissions for page
@@ -567,6 +593,12 @@ foreach ($accs['data'] as $acc) {
 													$can_addAttachment = 'n';
 													$show_inlineImages = 'n';
 												}
+												if (!empty($routes)) {
+													if (!$userlib->object_has_permission($chkUser, $acc['categoryId'], 'category', 'tiki_p_edit_structures')) {
+														$content.= $chkUser." cannot edit structures: ".$page."<br />";
+														$processEmail = false;
+													}
+												}
 											} else {
 												if (!$userlib->user_has_permission($chkUser, 'tiki_p_edit')) {
 													$content.= $chkUser." cannot create the page: ".$page."<br />";
@@ -576,25 +608,36 @@ foreach ($accs['data'] as $acc) {
 													$can_addAttachment = 'n';
 													$show_inlineImages = 'n';
 												}
+												if (!empty($routes)) {
+													if (!$userlib->user_has_permission($chkUser, 'tiki_p_edit_structures')) {
+														$content.= $chkUser." cannot edit structures: ".$page."<br />";
+														$processEmail = false;
+													}
+												}
 											}
 										}
 									}
 									if ($processEmail) {
 
-										// Attempt to use HTML, if it exists
-										$body = mailin_get_html($output);
-										if (empty($body)) {
-											$body = mailin_get_body($output);
-										}
-										
-										// Add namespace, if specified
+										// Add namespace, if specified.
+										// If no explicit namespace is specified, pages routed to structured may inherit, the structure namespace
 										if ($prefs['namespace_enabled'] === 'y') {
 											$nsName = trim($acc['namespace']);
+											$ns = $prefs['namespace_separator'];
 											if (!empty($nsName)) {
-												$ns = $prefs['namespace_separator'];
+												// Use mail-in specified namespace
 												if (!empty($ns)) {
 													$page = $nsName.$ns.$page;
 												}
+											} elseif (!empty($route)) {
+												// Inherit structure namespace
+												$wikilib = TikiLib::lib('wiki');
+												$nsName = $wikilib->get_namespace($route['pageName']);
+												if (!empty($nsName)) {
+													if (!empty($ns)) {
+														$page = $nsName.$ns.$page;
+													}
+												}												
 											}
 										}
 
@@ -612,38 +655,74 @@ foreach ($accs['data'] as $acc) {
 
 											if (!$tikilib->page_exists($page)) {
 
-												$tikilib->create_page($page, 0, $body, $tikilib->now, "Created from " . $acc["account"], $aux["sender"]["user"],
-																	'0.0.0.0',
-																	'',						//description
-																	'',						//lang
-																	$parsed_data['is_html'],	//is_html
-																	'',						//hash
-																	$parsed_data['wysiwyg']	//wysiwyg
-												);
-												$content.= "Page: $page has been created<br />";
+												// Check User structure routing
+												if (!empty($route)) {
+													// Structure routing is active. Create a structure node/page
+													$parent_id = $route['page_ref_id'];
+													$structure_id = $route['structure_id'];
+													$begin = true;
+														
+													$after_ref_id = null;
+													$alias='';
+													$options = array();
+														
+													$options['hide_toc'] = 'y';
+													$options['creator'] = tra('mail-in');
+													$options['creator_msg'] = tra('created from mail-in');
+													$options['ip_source'] = '0.0.0.0';
+														
+													$structlib = TikiLib::lib('struct');
+													$structlib->s_create_page($parent_id, $after_ref_id, $page, $alias, $structure_id, $options);
+													$content.= "Page: $page has been added to structureId: ".$structure_id."<br />";
 
-												// Assign category, if specified
-												if ($prefs['feature_categories'] && isset($acc['categoryId'])) {
-													try {
-														$categoryId = intval($acc['categoryId']);
-														if ($categoryId > 0) {
-															// Validate the category before adding it
-															$categlib = TikiLib::lib('categ');
-															$categories = $categlib->get_category($categoryId);
-															if ($categories !== false && !empty($categories)) {
-																$categlib->categorizePage($page, $categoryId, $aux["sender"]["user"]);
-																$content.= "Page: $page categorized. Id: ".$categoryId."<br />";
-															} else {
-																$content.= "Page: $page not categorized. Invalid categoryId: ".$categoryId."<br />";
+													$tikilib->update_page($page, $body, "Updated from " . $acc["account"],
+																			$aux["sender"]["user"],
+																			$options['ip_source'],
+																			'',	//desc
+																			0, 	//edit_minor
+																			'',	//lang
+																			$parsed_data['is_html'],	//is_html
+																			'',	//hash
+																			null,	//saveLastModif
+																			$parsed_data['wysiwyg']	//wysiwyg
+													);
+													$content.= "Page: $page has been updated<br />";
+												} else {
+													
+													// Create a regular page
+													$tikilib->create_page($page, 0, $body, $tikilib->now, "Created from " . $acc["account"], $aux["sender"]["user"],
+														'0.0.0.0',
+														'',						//description
+														'',						//lang
+														$parsed_data['is_html'],	//is_html
+														'',						//hash
+														$parsed_data['wysiwyg']	//wysiwyg
+														);
+													$content.= "Page: $page has been created<br />";
+
+													// Assign category, if specified
+													if ($prefs['feature_categories'] && isset($acc['categoryId'])) {
+														try {
+															$categoryId = intval($acc['categoryId']);
+															if ($categoryId > 0) {
+																// Validate the category before adding it
+																$categlib = TikiLib::lib('categ');
+																$categories = $categlib->get_category($categoryId);
+																if ($categories !== false && !empty($categories)) {
+																	$categlib->categorizePage($page, $categoryId, $aux["sender"]["user"]);
+																	$content.= "Page: $page categorized. Id: ".$categoryId."<br />";
+																} else {
+																	$content.= "Page: $page not categorized. Invalid categoryId: ".$categoryId."<br />";
+																}
 															}
+														} catch (Exception $e) {
+															$content.= "Failed to categorize page: $page  categoryId: ".$categoryId.". Error: ".$e->getMessage()."<br />";
 														}
-													} catch (Exception $e) {
-														$content.= "Failed to categorize page: $page  categoryId: ".$categoryId.". Error: ".$e->getMessage()."<br />";
 													}
 												}
 												
 											} else {
-												$tikilib->update_page($page, $body, "Created from " . $acc["account"],
+												$tikilib->update_page($page, $body, "Updated from " . $acc["account"],
 																		$aux["sender"]["user"],
 																		'0.0.0.0',
 																		'',	//desc
@@ -659,8 +738,9 @@ foreach ($accs['data'] as $acc) {
 										}
 									}
 								} elseif ($acc['type'] == 'wiki-append' || $acc['type'] == 'wiki-prepend' || ($acc['type'] == 'wiki' && $method == "APPEND") || ($acc['type'] == 'wiki' && $method == "PREPEND")) {
-
-									// This is used to UPDATE wiki pages
+									//////////////
+									//	wiki-append, wiki-prepend, wiki APPEND, wiki PREPEND
+									//////////////////////////////////////////////////////////////////////////////////
 
 									// Check permissions
 									$chkUser = $aux["sender"]["user"];
@@ -725,6 +805,9 @@ foreach ($accs['data'] as $acc) {
 										}
 									}
 								} else {
+									//////////////
+									//	Invalid mail-in type
+									//////////////////////////////////////////////////////////////////////////////////
 									$mail = new TikiMail();
 									$mail->setFrom($acc["account"]);
 									$l = $prefs['language'];

@@ -46,6 +46,34 @@
 {section name=n loop=$tikifeedback}<div class="simplebox {if $tikifeedback[n].num > 0} highlight{/if}">{$tikifeedback[n].mes}</div>{/section}
 {/if}
 <br>
+<a name="check" ></a><h2><a href="tiki-mailin.php#check">{tr}Check Mail-in accounts{/tr}</a></h2>
+<form action="tiki-admin_mailin.php" method="post">
+  <table class="formcolor">
+    <tr>
+      <td>{tr}Check automatically{/tr}</td>
+      <td>
+		&nbsp;&nbsp;
+        {tr}Yes{/tr}
+        <input type="radio" name="mailin_autocheck" {if $prefs.mailin_autocheck eq 'y'}checked="checked"{/if} value="y">
+		&nbsp;&nbsp;
+        {tr}No{/tr}
+        <input type="radio" name="mailin_autocheck" {if $prefs.mailin_autocheck eq 'n'}checked="checked"{/if} value="n">
+      </td>
+    </tr>
+    <tr>
+      <td>{tr}Frequency{/tr}</td>
+      <td><input type="text" name="mailin_autocheckFreq" size="6" value="{$prefs.mailin_autocheckFreq}">&nbsp;{tr}mn{/tr}</td>
+    </tr>
+    <tr>
+      <td>&nbsp;</td>
+      <td><input type="submit" name="set_auto" value="{tr}Set{/tr}"></td>
+    </tr>
+    <tr>
+      <td>{tr}Check manually{/tr}</td>
+      <td><a href="tiki-mailin.php">Check Now</a></td>
+    </tr>
+  </table>
+</form>
 
 <a name="add" ></a><h2>{if $accountId eq 0}{tr}Add new Mail-in account{/tr}{else}{tr}Edit Mail-in account:{/tr} <i>{$info.account}</i>{/if}</h2>
 <form action="tiki-admin_mailin.php" method="post">
@@ -236,35 +264,6 @@
     <tr>
       <td>&nbsp;</td>
       <td colspan="4"><input type="submit" name="new_acc" value="{if $accountId eq 0}{tr}Add{/tr}{else}{tr}Save{/tr}{/if}"></td>
-    </tr>
-  </table>
-</form>
-
-<a name="check" ></a><h2><a href="tiki-mailin.php#check">{tr}Check Mail-in accounts{/tr}</a></h2>
-<form action="tiki-admin_mailin.php" method="post">
-  <table class="formcolor">
-    <tr>
-      <td>{tr}Check automatically{/tr}</td>
-      <td>
-		&nbsp;&nbsp;
-        {tr}Yes{/tr}
-        <input type="radio" name="mailin_autocheck" {if $prefs.mailin_autocheck eq 'y'}checked="checked"{/if} value="y">
-		&nbsp;&nbsp;
-        {tr}No{/tr}
-        <input type="radio" name="mailin_autocheck" {if $prefs.mailin_autocheck eq 'n'}checked="checked"{/if} value="n">
-      </td>
-    </tr>
-    <tr>
-      <td>{tr}Frequency{/tr}</td>
-      <td><input type="text" name="mailin_autocheckFreq" size="6" value="{$prefs.mailin_autocheckFreq}">&nbsp;{tr}mn{/tr}</td>
-    </tr>
-    <tr>
-      <td>&nbsp;</td>
-      <td><input type="submit" name="set_auto" value="{tr}Set{/tr}"></td>
-    </tr>
-    <tr>
-      <td>{tr}Check manually{/tr}</td>
-      <td><a href="tiki-mailin.php">Check Now</a></td>
     </tr>
   </table>
 </form>
