@@ -632,7 +632,7 @@ foreach ($accs['data'] as $acc) {
 											} elseif (!empty($route)) {
 												// Inherit structure namespace
 												$wikilib = TikiLib::lib('wiki');
-												$nsName = $wikilib->get_namespace($route['pageName']);
+												$nsName = $wikilib->get_namespace($route['structName']);
 												if (!empty($nsName)) {
 													if (!empty($ns)) {
 														$page = $nsName.$ns.$page;
