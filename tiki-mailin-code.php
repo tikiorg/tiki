@@ -574,6 +574,29 @@ foreach ($accs['data'] as $acc) {
 										}
 									}
 
+									// Add namespace, if specified.
+									// If no explicit namespace is specified, pages routed to structured may inherit, the structure namespace
+									if ($prefs['namespace_enabled'] === 'y') {
+										$nsName = trim($acc['namespace']);
+										$ns = $prefs['namespace_separator'];
+										if (!empty($nsName)) {
+											// Use mail-in specified namespace
+											if (!empty($ns)) {
+												$page = $nsName.$ns.$page;
+											}
+										} elseif (!empty($route)) {
+											// Inherit structure namespace
+											$wikilib = TikiLib::lib('wiki');
+											$nsName = $wikilib->get_namespace($route['structName']);
+											if (!empty($nsName)) {
+												if (!empty($ns)) {
+													$page = $nsName.$ns.$page;
+												}
+											}												
+										}
+									}
+
+
 									// Check permissions
 									if (($acc["anonymous"] == 'n') && (!$userlib->user_has_permission($chkUser, 'tiki_p_admin'))) {
 										if ($tikilib->page_exists($page)) {
@@ -587,65 +610,65 @@ foreach ($accs['data'] as $acc) {
 												$show_inlineImages = 'n';
 											}
 										} else {
-											// Check category permission, if auto-assigning a category.
-											// Otherwise checkglobal permissions
+
 											$userlib = TikiLib::lib('user');
-											if ($prefs['feature_categories'] && isset($acc['categoryId'])) {
-												if (!$userlib->object_has_permission($chkUser, $acc['categoryId'], 'category', 'tiki_p_edit')) {
-													$content.= $chkUser." cannot create the page: ".$page."<br />";
-													$processEmail = false;
-												}
-												if (!$userlib->object_has_permission($chkUser, $acc['categoryId'], 'category', 'tiki_p_wiki_attach_files')) {
-													$can_addAttachment = 'n';
-													$show_inlineImages = 'n';
-												}
-												if (!empty($route)) {
-													if (!$userlib->object_has_permission($chkUser, $acc['categoryId'], 'category', 'tiki_p_edit_structures')) {
-														$content.= $chkUser." cannot edit structures: ".$page."<br />";
+											
+											// Check the edit structure permissions on the target structure category, if defined for the routed structure
+											$structCateg = array();
+											if (!empty($route)) {
+												if ($prefs['feature_categories'] === 'y') {  
+													
+													$structName = $route['structName'];
+													$categlib = TikiLib::lib('categ');
+													$categParent = $categlib->get_object_categories('wiki page', $structName, -1, false);
+													$catPermOK = false;
+													foreach ($categParent as $c) {
+														$categoryId = $c['categoryId'];
+														if ($userlib->object_has_permission($chkUser, $categoryId, 'category', 'tiki_p_edit_structures')) {
+															$catPermOK = true;
+														}
+														$structCateg[] = $categoryId;
+													}
+													if ($catPermOK == false) {
+														$content.= $chkUser." cannot edit structure: ".$page."<br />";
+														$processEmail = false;
+													}
+												} else {
+													// Check global permissions
+													if (!$userlib->user_has_permission($chkUser, 'tiki_p_edit_structures')) {
+														$content.= $chkUser." cannot edit structure: ".$page."<br />";
 														$processEmail = false;
 													}
 												}
-											} else {
-												if (!$userlib->user_has_permission($chkUser, 'tiki_p_edit')) {
-													$content.= $chkUser." cannot create the page: ".$page."<br />";
-													$processEmail = false;
-												}
-												if (!$userlib->user_has_permission($chkUser, 'tiki_p_wiki_attach_files')) {
-													$can_addAttachment = 'n';
-													$show_inlineImages = 'n';
-												}
-												if (!empty($route)) {
-													if (!$userlib->user_has_permission($chkUser, 'tiki_p_edit_structures')) {
-														$content.= $chkUser." cannot edit structures: ".$page."<br />";
+											}
+
+											
+											// Check category permission, if auto-assigning a category.
+											// Otherwise checkglobal permissions
+											if ($processEmail) {
+												if ($prefs['feature_categories'] === 'y' && isset($acc['categoryId'])) {
+													if (!$userlib->object_has_permission($chkUser, $acc['categoryId'], 'category', 'tiki_p_edit')) {
+														$content.= $chkUser." cannot create the page: ".$page."<br />";
 														$processEmail = false;
+													}
+													if (!$userlib->object_has_permission($chkUser, $acc['categoryId'], 'category', 'tiki_p_wiki_attach_files')) {
+														$can_addAttachment = 'n';
+														$show_inlineImages = 'n';
+													}
+												} else {
+													if (!$userlib->user_has_permission($chkUser, 'tiki_p_edit')) {
+														$content.= $chkUser." cannot create the page: ".$page."<br />";
+														$processEmail = false;
+													}
+													if (!$userlib->user_has_permission($chkUser, 'tiki_p_wiki_attach_files')) {
+														$can_addAttachment = 'n';
+														$show_inlineImages = 'n';
 													}
 												}
 											}
 										}
 									}
 									if ($processEmail) {
-
-										// Add namespace, if specified.
-										// If no explicit namespace is specified, pages routed to structured may inherit, the structure namespace
-										if ($prefs['namespace_enabled'] === 'y') {
-											$nsName = trim($acc['namespace']);
-											$ns = $prefs['namespace_separator'];
-											if (!empty($nsName)) {
-												// Use mail-in specified namespace
-												if (!empty($ns)) {
-													$page = $nsName.$ns.$page;
-												}
-											} elseif (!empty($route)) {
-												// Inherit structure namespace
-												$wikilib = TikiLib::lib('wiki');
-												$nsName = $wikilib->get_namespace($route['structName']);
-												if (!empty($nsName)) {
-													if (!empty($ns)) {
-														$page = $nsName.$ns.$page;
-													}
-												}												
-											}
-										}
 
 										if (!empty($acc['discard_after']) && $body) {
 											$body = preg_replace("/" . $acc['discard_after'] . ".*$/s", "", $body);
@@ -716,23 +739,31 @@ foreach ($accs['data'] as $acc) {
 													$hasError = false;
 												}
 
-												// Assign category, if specified
-												if ($prefs['feature_categories'] && isset($acc['categoryId'])) {
-													try {
-														$categoryId = intval($acc['categoryId']);
-														if ($categoryId > 0) {
-															// Validate the category before adding it
-															$categlib = TikiLib::lib('categ');
-															$categories = $categlib->get_category($categoryId);
-															if ($categories !== false && !empty($categories)) {
-																$categlib->categorizePage($page, $categoryId, $aux["sender"]["user"]);
-																$content.= "Page: $page categorized. Id: ".$categoryId."<br />";
-															} else {
-																$content.= "Page: $page not categorized. Invalid categoryId: ".$categoryId."<br />";
+												// Assign category, if specified.
+												//	Include the routed structure categories, if defined
+												if ($prefs['feature_categories'] === 'y') {
+													
+													$catList = array_merge($structCateg, array($acc['categoryId']));
+													if (!empty($catList)) {
+														try {
+															foreach ($catList as $c) {
+																$categoryId = intval($c);
+
+																// Validate the category before adding it
+																$categlib = TikiLib::lib('categ');
+																$categories = $categlib->get_category($categoryId);
+																if ($categories !== false && !empty($categories)) {
+																	$categlib->categorizePage($page, $categoryId, $aux["sender"]["user"]);
+																	$content.= "Page: $page categorized. Id: ".$categoryId."<br />";
+																} else {
+																	$content.= "Page: $page not categorized. Invalid categoryId: ".$categoryId."<br />";
+																}
 															}
+														} catch (Exception $e) {
+															$content.= "Failed to categorize page: $page  categoryId: ".$categoryId.". Error: ".$e->getMessage()."<br />";
 														}
-													} catch (Exception $e) {
-														$content.= "Failed to categorize page: $page  categoryId: ".$categoryId.". Error: ".$e->getMessage()."<br />";
+													}
+													if (!empty($structCateg)) {
 													}
 												}
 												
