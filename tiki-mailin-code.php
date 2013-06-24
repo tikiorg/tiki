@@ -703,7 +703,7 @@ foreach ($accs['data'] as $acc) {
 													$options = array();
 														
 													$options['hide_toc'] = 'y';
-													$options['creator'] = tra('mail-in');
+													$options['creator'] = $aux["sender"]["user"];
 													$options['creator_msg'] = tra('created from mail-in');
 													$options['ip_source'] = '0.0.0.0';
 														
