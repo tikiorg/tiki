@@ -101,7 +101,7 @@ from `tiki_user_mailin_struct` mailin
         left outer join `tiki_structures` s2 on s2.`structure_id` = mailin.`structure_id` and s2.`page_id` = mailin.`page_id`
         left outer join `users_users` u on u.login = mailin.username
 where mailin.`username` = ? 
-order by p.pageName, p2.pageName";
+order by p2.pageName, p.pageName";
 
 		$result = $this->query($query, $bindvars, $maxRecords, $offset);
 		
@@ -121,7 +121,7 @@ from `tiki_user_mailin_struct` mailin
         left outer join `tiki_pages` p2 on p2.`page_id` = s.`page_id` 
         left outer join `tiki_structures` s2 on s2.`structure_id` = mailin.`structure_id` and s2.`page_id` = mailin.`page_id`
         left outer join `users_users` u on u.login = mailin.username
-order by mailin.username, p.pageName, p2.pageName
+order by mailin.username, p2.pageName, p.pageName
 ";
 		$bindvars = array();
 		$result = $this->query($query, $bindvars, $maxRecords, $offset);
