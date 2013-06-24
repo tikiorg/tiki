@@ -247,7 +247,7 @@ class RSSLib extends TikiDb_Bridge
 			}
 
 			if (!empty($authors)) {
-				$feed->addAuthors($authors);
+				$feed->addAuthors(array($authors));
 			}
 		}
 
