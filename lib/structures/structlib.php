@@ -277,7 +277,13 @@ class StructLib extends TikiLib
 			} else {
 				$max = 0;
 			}
-			if ($after_ref_id != 0) {
+			if (!isset($after_ref_id)) {
+				// after_ref_id		The entry to add this one after. If NULL, put it in position 0.
+				$max = 0;
+				$query = 'update `tiki_structures` set `pos`=`pos`+1 where `pos`>? and `parent_id`=?';
+				$this->query($query, array((int) $max, (int) $parent_id));
+				
+			} elseif ($after_ref_id != 0) {
 				if ($max > 0) {
 					//If max is 5 then we are inserting after position 5 so we'll insert 5 and move all
 					// the others
