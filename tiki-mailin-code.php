@@ -707,25 +707,25 @@ foreach ($accs['data'] as $acc) {
 														);
 													$content.= "Page: $page has been created<br />";
 													$hasError = false;
+												}
 
-													// Assign category, if specified
-													if ($prefs['feature_categories'] && isset($acc['categoryId'])) {
-														try {
-															$categoryId = intval($acc['categoryId']);
-															if ($categoryId > 0) {
-																// Validate the category before adding it
-																$categlib = TikiLib::lib('categ');
-																$categories = $categlib->get_category($categoryId);
-																if ($categories !== false && !empty($categories)) {
-																	$categlib->categorizePage($page, $categoryId, $aux["sender"]["user"]);
-																	$content.= "Page: $page categorized. Id: ".$categoryId."<br />";
-																} else {
-																	$content.= "Page: $page not categorized. Invalid categoryId: ".$categoryId."<br />";
-																}
+												// Assign category, if specified
+												if ($prefs['feature_categories'] && isset($acc['categoryId'])) {
+													try {
+														$categoryId = intval($acc['categoryId']);
+														if ($categoryId > 0) {
+															// Validate the category before adding it
+															$categlib = TikiLib::lib('categ');
+															$categories = $categlib->get_category($categoryId);
+															if ($categories !== false && !empty($categories)) {
+																$categlib->categorizePage($page, $categoryId, $aux["sender"]["user"]);
+																$content.= "Page: $page categorized. Id: ".$categoryId."<br />";
+															} else {
+																$content.= "Page: $page not categorized. Invalid categoryId: ".$categoryId."<br />";
 															}
-														} catch (Exception $e) {
-															$content.= "Failed to categorize page: $page  categoryId: ".$categoryId.". Error: ".$e->getMessage()."<br />";
 														}
+													} catch (Exception $e) {
+														$content.= "Failed to categorize page: $page  categoryId: ".$categoryId.". Error: ".$e->getMessage()."<br />";
 													}
 												}
 												
