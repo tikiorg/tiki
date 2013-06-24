@@ -2,8 +2,6 @@
 {title}{tr}My Mail-in{/tr}{/title}
 
 {include file='tiki-mytiki_bar.tpl'}
-<br>
-
 <script type="text/javascript">
 
 function structSelChanged(itemNr)
@@ -24,13 +22,14 @@ function confirm_delete()
 }
 
 </script>
-
-<br>
 {if $tikifeedback}
+<br>
 {section name=n loop=$tikifeedback}<div class="simplebox {if $tikifeedback[n].num > 0} highlight{/if}">{$tikifeedback[n].mes}</div>{/section}
 <br>
 {/if}
-
+<p>
+Configure how your mailed-in wiki pages are to be linked / organized. 
+</p>
 {tabset name="user_mailin"}
 {tab name="{tr}Structure Routing{/tr}"}
 <p>
@@ -41,11 +40,11 @@ function confirm_delete()
 	<form action="#" method="POST">
 	<table id="table_user_mailin">
 	<tr>
-	<td>Subject pattern</td>
-	<td>Body pattern</td>
-	<td>Structure</td>
-	<td>Parent page name</td>
-	<td>Active</td>
+	<th>Subject pattern</th>
+	<th>Body pattern</th>
+	<th>Structure</th>
+	<th>Parent page name</th>
+	<th>Active</th>
 	</tr>
 	{foreach from=$userStructs item=ustruct name=mstruct}
 		<tr>
