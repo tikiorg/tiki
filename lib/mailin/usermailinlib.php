@@ -112,8 +112,12 @@ order by p2.pageName, p.pageName";
 	}
 	
 	
-	function list_all_user_mailin_struct($maxRecords = -1, $offset = 0)
+	function list_all_user_mailin_struct($onlyActive = true, $maxRecords = -1, $offset = 0)
 	{
+		$sqlOnlyActive = '';
+		if ($onlyActive) {
+			$sqlOnlyActive = " and mailin.is_active = 'y' ";
+		}
 		$query = "select u.email, mailin.*, p.pageName, s2.page_ref_id as page_struct_refid, s2.parent_id as page_struct_parentid, s.page_ref_id, s.parent_id , p2.pageName as structName
 from `tiki_user_mailin_struct` mailin 
         left outer join `tiki_pages` p on p.`page_id` = mailin.`page_id` 
@@ -121,6 +125,8 @@ from `tiki_user_mailin_struct` mailin
         left outer join `tiki_pages` p2 on p2.`page_id` = s.`page_id` 
         left outer join `tiki_structures` s2 on s2.`structure_id` = mailin.`structure_id` and s2.`page_id` = mailin.`page_id`
         left outer join `users_users` u on u.login = mailin.username
+where 1 = 1
+".$sqlOnlyActive."	
 order by mailin.username, p2.pageName, p.pageName
 ";
 		$bindvars = array();
