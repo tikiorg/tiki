@@ -93,11 +93,12 @@ class UserMailinLib extends TikiLib
 	function list_user_mailin_struct($user, $maxRecords = -1, $offset = 0)
 	{
 		$bindvars = array($user);
-		$query = "select mailin.*, p.pageName, s.page_ref_id, s.parent_id , p2.pageName as structName
+		$query = "select mailin.*, p.pageName, s2.page_ref_id as page_struct_refid, s2.parent_id as page_struct_parentid, s.page_ref_id, s.parent_id , p2.pageName as structName
 from `tiki_user_mailin_struct` mailin 
         left outer join `tiki_pages` p on p.`page_id` = mailin.`page_id` 
         left outer join `tiki_structures` s on s.`structure_id` = mailin.`structure_id` and s.`parent_id` = 0
         left outer join `tiki_pages` p2 on p2.`page_id` = s.`page_id` 
+        left outer join `tiki_structures` s2 on s2.`structure_id` = mailin.`structure_id` and s2.`page_id` = mailin.`page_id`
 where mailin.`username` = ? ";
 
 		$result = $this->query($query, $bindvars, $maxRecords, $offset);

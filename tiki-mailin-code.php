@@ -664,7 +664,14 @@ foreach ($accs['data'] as $acc) {
 												// Check User structure routing
 												if (!empty($route)) {
 													// Structure routing is active. Create a structure node/page
-													$parent_id = $route['page_ref_id'];
+													
+													// Use the page structure node, if specified, otherwise link to the rrot of the structure
+													if ($route['page_id'] > 0)  {
+														$parent_id = $route['page_struct_refid'];	// page_ref_id
+													} else {
+														$parent_id = $route['page_ref_id'];	
+													}
+													
 													$structure_id = $route['structure_id'];
 													$begin = true;
 														

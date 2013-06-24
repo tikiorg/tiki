@@ -34,7 +34,8 @@ function confirm_delete()
 {tabset name="user_mailin"}
 {tab name="{tr}Structure Routing{/tr}"}
 <p>
-{tr}Structure routing will only affect newly created pages, using the mail-in wiki-put function.{/tr}
+{tr}Structure routing will link mailed-in pages as a child to the specified structure node. Only email matching the filters are linked.{/tr}<br/>
+{tr}Only newly created pages, using the mail-in wiki-put function, are affected.{/tr}
 </p>
 {if $prefs.feature_wiki_structure eq 'y'}
 	<form action="#" method="POST">
