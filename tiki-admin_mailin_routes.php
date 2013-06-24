@@ -15,7 +15,7 @@ $access->check_permission(array('tiki_p_admin_mailin'));
 $structlib = TikiLib::lib('struct');
 
 // Route display
-$userStructs = $usermailinlib->list_all_user_mailin_struct();
+$userStructs = $usermailinlib->list_all_user_mailin_struct(false);
 $smarty->assign('userStructs', $userStructs['data']);
 
 
