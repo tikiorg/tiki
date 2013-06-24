@@ -1249,6 +1249,7 @@ CREATE TABLE `tiki_mailin_accounts` (
   `anonymous` char(1) NOT NULL default 'y',
   `admin` char(1) NOT NULL default 'y',
   `attachments` char(1) NOT NULL default 'n',
+  `routing` char(1) NOT NULL default 'y',
   `article_topicId` int(4) default NULL,
   `article_type` varchar(50) default NULL,
   `discard_after` varchar(255) default NULL,
@@ -1257,6 +1258,7 @@ CREATE TABLE `tiki_mailin_accounts` (
   `categoryId` int(12) NULL,
   `namespace` varchar(20) default NULL,
   `respond_email` char(1) NOT NULL default 'y',
+  `leave_email` char(1) NOT NULL default 'n',
   PRIMARY KEY (`accountId`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 

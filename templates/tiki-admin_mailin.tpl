@@ -13,11 +13,13 @@
     <th>{tr}Anonym{/tr}</th>
     <th>{tr}Admin{/tr}</th>
     <th>{tr}Attach{/tr}</th>
+    <th>{tr}Route{/tr}</th>
     <th>{tr}Inline{/tr}</th>
     <th>{tr}HTML{/tr}</th>
     <th>{tr}Categ{/tr}</th>
     <th>{tr}Namespace{/tr}</th>
     <th>{tr}Email{/tr}</th>
+    <th>{tr}Leave{/tr}</th>
   </tr>
   {cycle values="even,odd" print=false}
   {section name=ix loop=$accounts}
@@ -32,11 +34,13 @@
       <td class="text">{tr}{$accounts[ix].anonymous}{/tr}</td>
       <td class="text">{tr}{$accounts[ix].admin}{/tr}</td>
       <td class="text">{tr}{$accounts[ix].attachments}{/tr}</td>
+      <td class="text">{tr}{$accounts[ix].routing}{/tr}</td>
       <td class="text">{tr}{$accounts[ix].show_inlineImages}{/tr}</td>
       <td class="text">{tr}{$accounts[ix].save_html}{/tr}</td>
       <td class="text">{tr}{$accounts[ix].categoryId}{/tr}</td>
       <td class="text">{tr}{$accounts[ix].namespace}{/tr}</td>
       <td class="text">{tr}{$accounts[ix].respond_email}{/tr}</td>
+      <td class="text">{tr}{$accounts[ix].leave_email}{/tr}</td>
 	  
     </tr>
   {/section}
@@ -199,6 +203,20 @@
       </td>
     </tr>
     <tr>
+      <td>{tr}Allow Routing{/tr}</td>
+      <td colspan="3">
+	   {if $prefs.feature_wiki eq 'y'}
+        {tr}Yes{/tr}
+        <input type="radio" name="routing" {if $info.routing eq 'y'}checked="checked"{/if} value="y">
+        {tr}No{/tr}
+        <input type="radio" name="routing" {if $info.routing eq 'n'}checked="checked"{/if} value="n">
+	    {else}
+		<a href="tiki-admin.php?page=wiki&cookietab=1&highlight=feature_wiki">Activate wiki</a>
+		{/if}
+      </td>
+	  <td>{tr}Allow per user routing of incoming email to structures{/tr}.</td>
+    </tr>
+    <tr>
       <td>{tr}Show inline images{/tr}</td>
       <td colspan="3">
 		{if $prefs.feature_wiki_attachments eq 'y'}
@@ -260,6 +278,18 @@
         {tr}No{/tr}
         <input type="radio" name="respond_email" {if $info.respond_email eq 'n'}checked="checked"{/if} value="n">
       </td>
+    </tr>
+    <tr>
+      <td>{tr}Leave email on server on error{/tr}</td>
+      <td colspan="3">
+		&nbsp;&nbsp;
+        {tr}Yes{/tr}
+        <input type="radio" name="leave_email" {if $info.leave_email eq 'y'}checked="checked"{/if} value="y">
+		&nbsp;&nbsp;
+        {tr}No{/tr}
+        <input type="radio" name="leave_email" {if $info.leave_email eq 'n'}checked="checked"{/if} value="n">
+      </td>
+	  <td>{tr}Leave the email on the mail server, when an error occurs and the content has not been integrated into Tiki.{/tr}.</td>
     </tr>
     <tr>
       <td>&nbsp;</td>

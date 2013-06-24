@@ -61,6 +61,7 @@ if (isset($_REQUEST['new_acc'])) {
 			$_REQUEST['anonymous'],
 			$_REQUEST['admin'],
 			$_REQUEST['attachments'],
+			$_REQUEST['routing'],
 			$_REQUEST['article_topicId'],
 			$_REQUEST['article_type'],
 			$_REQUEST['discard_after'],
@@ -68,7 +69,8 @@ if (isset($_REQUEST['new_acc'])) {
 			$_REQUEST['save_html'],
 			$_REQUEST['categoryId'],
 			$_REQUEST['namespace'],
-			$_REQUEST['respond_email']
+			$_REQUEST['respond_email'],
+			$_REQUEST['leave_email']
 		);
 
 		$tikifeedback[] = array(
@@ -101,6 +103,7 @@ if ($_REQUEST['accountId']) {
 	$info['anonymous'] = 'n';
 	$info['admin'] = 'y';
 	$info['attachments'] = 'y';
+	$info['routing'] = 'y';
 	$info['article_topicId'] = '';
 	$info['article_type'] = '';
 	$info['show_inlineImages'] = 'y';
@@ -108,6 +111,7 @@ if ($_REQUEST['accountId']) {
 	$info['categoryId'] = 0;
 	$info['namespace'] = '';
 	$info['respond_email'] = 'y';
+	$info['leave_email'] = 'n';
 }
 $smarty->assign('info', $info);
 

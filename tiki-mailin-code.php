@@ -337,6 +337,8 @@ foreach ($accs['data'] as $acc) {
 				$debugger->var_dump('$pop3');
 			}
 		} else {
+			$hasError = true;
+			
 			$content.= "Messages:" . $mailsum . "<br />";
 			for ($i = 1; $i <= $mailsum; $i++) {
 				$aux = $pop3->getParsedHeaders($i);
@@ -484,6 +486,7 @@ foreach ($accs['data'] as $acc) {
 									} else {
 										$content.= "Article: $title has been created<br />";
 									}
+									$hasError = false;
 								}
 							} else { //else if ($acc['type'] == 'article-put')
 								if ($acc['type'] == 'wiki') {
@@ -541,9 +544,11 @@ foreach ($accs['data'] as $acc) {
 										$mail_data = $smarty->fetchLang($l, "mail/mailin_reply_subject.tpl");
 										$mail->setSubject($mail_data . $page);
 									}
-									$res = $mail->send(array($email_from), 'mail');
-									$content.= "Response sent<br />";
-									//end if ($acc['type'] == 'wiki-get' || ($acc['type'] == 'wiki' && $method == "GET"))
+									if ($processEmail) {
+										$res = $mail->send(array($email_from), 'mail');
+										$content.= "Response sent<br />";
+										$hasError = false;
+									}
 
 								} elseif ($acc['type'] == 'wiki-put' || ($acc['type'] == 'wiki' && $method == "PUT")) {
 									//////////////
@@ -560,13 +565,14 @@ foreach ($accs['data'] as $acc) {
 									}
 									
 									// Load user routing
-									$route = null;
-									$routes = $usermailinlib->locate_struct($chkUser, $aux['Subject'], $body);
-									if (!empty($routes['data'])) {
-										$content.= "User route from pattern: '".$routes['data'][0]['subj_pattern']."' / '".$routes['data'][0]['body_pattern']."'<br />";
-										$route = $routes['data'][0];	// Only use the first route
+									$route = array();
+									if ($acc['routing'] === 'y') {
+										$routes = $usermailinlib->locate_struct($chkUser, $aux['Subject'], $body);
+										if (!empty($routes['data'])) {
+											$content.= "User route from pattern: '".$routes['data'][0]['subj_pattern']."' / '".$routes['data'][0]['body_pattern']."'<br />";
+											$route = $routes['data'][0];	// Only use the first route
+										}
 									}
-
 
 									// Check permissions
 									if (($acc["anonymous"] == 'n') && (!$userlib->user_has_permission($chkUser, 'tiki_p_admin'))) {
@@ -593,7 +599,7 @@ foreach ($accs['data'] as $acc) {
 													$can_addAttachment = 'n';
 													$show_inlineImages = 'n';
 												}
-												if (!empty($routes)) {
+												if (!empty($route)) {
 													if (!$userlib->object_has_permission($chkUser, $acc['categoryId'], 'category', 'tiki_p_edit_structures')) {
 														$content.= $chkUser." cannot edit structures: ".$page."<br />";
 														$processEmail = false;
@@ -608,7 +614,7 @@ foreach ($accs['data'] as $acc) {
 													$can_addAttachment = 'n';
 													$show_inlineImages = 'n';
 												}
-												if (!empty($routes)) {
+												if (!empty($route)) {
 													if (!$userlib->user_has_permission($chkUser, 'tiki_p_edit_structures')) {
 														$content.= $chkUser." cannot edit structures: ".$page."<br />";
 														$processEmail = false;
@@ -687,6 +693,7 @@ foreach ($accs['data'] as $acc) {
 																			$parsed_data['wysiwyg']	//wysiwyg
 													);
 													$content.= "Page: $page has been updated<br />";
+													$hasError = false;
 												} else {
 													
 													// Create a regular page
@@ -699,6 +706,7 @@ foreach ($accs['data'] as $acc) {
 														$parsed_data['wysiwyg']	//wysiwyg
 														);
 													$content.= "Page: $page has been created<br />";
+													$hasError = false;
 
 													// Assign category, if specified
 													if ($prefs['feature_categories'] && isset($acc['categoryId'])) {
@@ -734,6 +742,7 @@ foreach ($accs['data'] as $acc) {
 																		$parsed_data['wysiwyg']	//wysiwyg
 												);
 												$content.= "Page: $page has been updated<br />";
+												$hasError = false;
 											}
 										}
 									}
@@ -782,6 +791,7 @@ foreach ($accs['data'] as $acc) {
 																	 $parsed_data['wysiwyg']	//wysiwyg
 												);
 												$content.= "Page: $page has been created<br />";
+												$hasError = false;
 											} else {
 												$info = $tikilib->get_page_info($page);
 												if ($acc['type'] == 'wiki-append' || $acc['type'] == 'wiki' && $method == "APPEND") {
@@ -801,6 +811,7 @@ foreach ($accs['data'] as $acc) {
 																	$parsed_data['wysiwyg']	//wysiwyg
 												);
 												$content.= "Page: $page has been updated<br />";
+												$hasError = false;
 											}
 										}
 									}
@@ -827,8 +838,10 @@ foreach ($accs['data'] as $acc) {
 						}						
 					}
 					// Remove the email from the pop3 server
-					$pop3->deleteMsg($i);
-					$content.= "Deleted message<br />";
+					if (!$hasError || ($hasError && ($acc['leave_email'] !== 'y'))) {
+						$pop3->deleteMsg($i);
+						$content.= "Deleted message<br />";
+					}
 				}
 				
 			}
