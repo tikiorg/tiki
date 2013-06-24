@@ -66,7 +66,7 @@
     </tr>
     <tr>
       <td>{tr}Frequency{/tr}</td>
-      <td><input type="text" name="mailin_autocheckFreq" size="6" value="{$prefs.mailin_autocheckFreq}">&nbsp;{tr}mn{/tr}</td>
+      <td><input type="text" name="mailin_autocheckFreq" size="6" value="{$prefs.mailin_autocheckFreq}">&nbsp;{tr}minutes{/tr}</td>
     </tr>
     <tr>
       <td>&nbsp;</td>
