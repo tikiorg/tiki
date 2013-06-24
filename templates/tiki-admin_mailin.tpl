@@ -1,3 +1,4 @@
+{* $Id$ *}
 {title help="Webmail"}{tr}Mail-in accounts{/tr}{/title}
 
 <table class="normal" style="text-align:center">
@@ -46,9 +47,11 @@
   {/section}
 </table>
 <br>
-{if $tikifeedback}
-{section name=n loop=$tikifeedback}<div class="simplebox {if $tikifeedback[n].num > 0} highlight{/if}">{$tikifeedback[n].mes}</div>{/section}
+{button _icon="img/icons/large/messages.gif" _text="{tr}Admin Mail-in Routes{/tr}" href="tiki-admin_mailin_routes.php" _menu_text="y"}
 <br>
+{if $tikifeedback}
+	{section name=n loop=$tikifeedback}<div class="simplebox {if $tikifeedback[n].num > 0} highlight{/if}">{$tikifeedback[n].mes}</div>{/section}
+	<br>
 {/if}
 <a name="check" ></a><h2><a href="tiki-mailin.php#check">{tr}Check Mail-in accounts{/tr}</a></h2>
 <form action="tiki-admin_mailin.php" method="post">

@@ -93,14 +93,37 @@ class UserMailinLib extends TikiLib
 	function list_user_mailin_struct($user, $maxRecords = -1, $offset = 0)
 	{
 		$bindvars = array($user);
-		$query = "select mailin.*, p.pageName, s2.page_ref_id as page_struct_refid, s2.parent_id as page_struct_parentid, s.page_ref_id, s.parent_id , p2.pageName as structName
+		$query = "select u.email, mailin.*, p.pageName, s2.page_ref_id as page_struct_refid, s2.parent_id as page_struct_parentid, s.page_ref_id, s.parent_id , p2.pageName as structName
 from `tiki_user_mailin_struct` mailin 
         left outer join `tiki_pages` p on p.`page_id` = mailin.`page_id` 
         left outer join `tiki_structures` s on s.`structure_id` = mailin.`structure_id` and s.`parent_id` = 0
         left outer join `tiki_pages` p2 on p2.`page_id` = s.`page_id` 
         left outer join `tiki_structures` s2 on s2.`structure_id` = mailin.`structure_id` and s2.`page_id` = mailin.`page_id`
-where mailin.`username` = ? ";
+        left outer join `users_users` u on u.login = mailin.username
+where mailin.`username` = ? 
+order by p.pageName, p2.pageName";
 
+		$result = $this->query($query, $bindvars, $maxRecords, $offset);
+		
+		$retval = array();
+		$retval["data"] = $result->result;
+		$retval["cant"] = $result->numrows;
+		return $retval;
+	}
+	
+	
+	function list_all_user_mailin_struct($maxRecords = -1, $offset = 0)
+	{
+		$query = "select u.email, mailin.*, p.pageName, s2.page_ref_id as page_struct_refid, s2.parent_id as page_struct_parentid, s.page_ref_id, s.parent_id , p2.pageName as structName
+from `tiki_user_mailin_struct` mailin 
+        left outer join `tiki_pages` p on p.`page_id` = mailin.`page_id` 
+        left outer join `tiki_structures` s on s.`structure_id` = mailin.`structure_id` and s.`parent_id` = 0
+        left outer join `tiki_pages` p2 on p2.`page_id` = s.`page_id` 
+        left outer join `tiki_structures` s2 on s2.`structure_id` = mailin.`structure_id` and s2.`page_id` = mailin.`page_id`
+        left outer join `users_users` u on u.login = mailin.username
+order by mailin.username, p.pageName, p2.pageName
+";
+		$bindvars = array();
 		$result = $this->query($query, $bindvars, $maxRecords, $offset);
 		
 		$retval = array();

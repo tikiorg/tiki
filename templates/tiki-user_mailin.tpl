@@ -39,7 +39,7 @@ function confirm_delete()
 </p>
 {if $prefs.feature_wiki_structure eq 'y'}
 	<form action="#" method="POST">
-	<table>
+	<table id="table_user_mailin">
 	<tr>
 	<td>Subject pattern</td>
 	<td>Body pattern</td>
