@@ -25,6 +25,12 @@ function confirm_delete()
 
 </script>
 
+<br>
+{if $tikifeedback}
+{section name=n loop=$tikifeedback}<div class="simplebox {if $tikifeedback[n].num > 0} highlight{/if}">{$tikifeedback[n].mes}</div>{/section}
+<br>
+{/if}
+
 {tabset name="user_mailin"}
 {tab name="{tr}Structure Routing{/tr}"}
 <p>

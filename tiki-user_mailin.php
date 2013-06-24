@@ -8,6 +8,7 @@ $access->check_feature('feature_mailin');
 
 require_once ('lib/mailin/usermailinlib.php');
 
+$tikifeedback = array();
 
 if ($prefs['feature_wiki_structure'] === 'y') {
 	$structlib = TikiLib::lib('struct');
@@ -38,8 +39,12 @@ if ($prefs['feature_wiki_structure'] === 'y') {
 				$is_active = 'n';
 			}
 			
-			// Add new subject pattern
+			// Add new structure route
 			$usermailinlib->add_user_mailin_struct($user, $subj_pattern, $body_pattern, $structure_id, $page_id, $is_active);
+			$tikifeedback[] = array(
+				'num' => 1,
+				'mes' => tra('Mail-in added new structure route')
+			);
 		}
 	}
 	
@@ -47,6 +52,10 @@ if ($prefs['feature_wiki_structure'] === 'y') {
 	if (isset($_REQUEST['delete']) && $_REQUEST['delete'] == 'y') {
 		if (isset($_REQUEST['mailin_struct_id']) && (int)$_REQUEST['mailin_struct_id'] > 0) {
 			$usermailinlib->delete_user_mailin_struct((int)$_REQUEST['mailin_struct_id']);
+			$tikifeedback[] = array(
+				'num' => 1,
+				'mes' => tra('Deleted structure route')
+			);
 		}
 	}
 	
@@ -81,6 +90,10 @@ if ($prefs['feature_wiki_structure'] === 'y') {
 		$is_active = ($_REQUEST['mailinAct'.$i] == "on") ? 'y' : 'n';
 		
 		$usermailinlib->update_user_mailin_struct($mailin_struct_id, $username, $subj_pattern, $body_pattern, $structure_id, $page_id, $is_active);
+		$tikifeedback[] = array(
+			'num' => 1,
+			'mes' => tra('Updated structure route')
+		);
 	}
 	
 	// Prepare route display
@@ -96,6 +109,7 @@ if ($prefs['feature_wiki_structure'] === 'y') {
 	$smarty->assign('addNewRoute', 'y');
 } 
 
+$smarty->assign_by_ref('tikifeedback', $tikifeedback);
 // disallow robots to index page:
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 $smarty->assign('mid', 'tiki-user_mailin.tpl');

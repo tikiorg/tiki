@@ -48,8 +48,8 @@
 <br>
 {if $tikifeedback}
 {section name=n loop=$tikifeedback}<div class="simplebox {if $tikifeedback[n].num > 0} highlight{/if}">{$tikifeedback[n].mes}</div>{/section}
-{/if}
 <br>
+{/if}
 <a name="check" ></a><h2><a href="tiki-mailin.php#check">{tr}Check Mail-in accounts{/tr}</a></h2>
 <form action="tiki-admin_mailin.php" method="post">
   <table class="formcolor">
