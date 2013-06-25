@@ -11,7 +11,7 @@
  * Letter key: ~d~ ~D~
  *
  */
-class Tracker_Field_Dropdown extends Tracker_Field_Abstract implements Tracker_Field_Synchronizable
+class Tracker_Field_Dropdown extends Tracker_Field_Abstract implements Tracker_Field_Synchronizable, Search_FacetProvider_Interface
 {
 	public static function getTypes()
 	{
@@ -196,6 +196,40 @@ class Tracker_Field_Dropdown extends Tracker_Field_Abstract implements Tracker_F
 		} else {
 			return substr($value, $pos + 1);
 		}
+	}
+
+	function getDocumentPart(Search_Type_Factory_Interface $typeFactory)
+	{
+		$value = $this->getValue();
+		$label = $this->getValueLabel($value);
+		$baseKey = $this->getBaseKey();
+
+		return array(
+			$baseKey => $typeFactory->identifier($value),
+			"{$baseKey}_text" => $typeFactory->sortable($label),
+		);
+	}
+
+	function getProvidedFields()
+	{
+		$baseKey = $this->getBaseKey();
+		return array($baseKey, $baseKey . '_text');
+	}
+
+	function getGlobalFields()
+	{
+		$baseKey = $this->getBaseKey();
+		return array("{$baseKey}_text" => true);
+	}
+
+	function getFacets()
+	{
+		$baseKey = $this->getBaseKey();
+		return array(
+			Search_Query_Facet_Term::fromField($baseKey)
+				->setLabel($this->getConfiguration('name'))
+				->setRenderMap($this->getConfiguration('possibilities')),
+		);
 	}
 }
 

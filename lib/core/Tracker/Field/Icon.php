@@ -138,8 +138,9 @@ class Tracker_Field_Icon extends Tracker_Field_Abstract
 		}
 	}
 
-	function getDocumentPart($baseKey, Search_Type_Factory_Interface $typeFactory)
+	function getDocumentPart(Search_Type_Factory_Interface $typeFactory)
 	{
+		$baseKey = $this->getBaseKey();
 		return array(
 			$baseKey => $typeFactory->identifier($this->getValue()),
 		);

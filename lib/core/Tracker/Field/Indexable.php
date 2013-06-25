@@ -7,10 +7,12 @@
 
 interface Tracker_Field_Indexable extends Tracker_Field_Interface
 {
-	function getDocumentPart($baseKey, Search_Type_Factory_Interface $typeFactory);
+	function getDocumentPart(Search_Type_Factory_Interface $typeFactory);
 
-	function getProvidedFields($baseKey);
+	function getProvidedFields();
 
-	function getGlobalFields($baseKey);
+	function getGlobalFields();
+
+	function getBaseKey();
 }
 

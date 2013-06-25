@@ -178,8 +178,9 @@ class Tracker_Field_UserSelector extends Tracker_Field_Abstract implements Track
 		return $info;
 	}
 
-	function getDocumentPart($baseKey, Search_Type_Factory_Interface $typeFactory)
+	function getDocumentPart(Search_Type_Factory_Interface $typeFactory)
 	{
+		$baseKey = $this->getBaseKey();
 		return array(
 			$baseKey => $typeFactory->identifier($this->getValue()),
 		);

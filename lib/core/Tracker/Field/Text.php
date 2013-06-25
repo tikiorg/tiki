@@ -225,10 +225,11 @@ class Tracker_Field_Text extends Tracker_Field_Abstract implements Tracker_Field
 		return $info;
 	}
 
-	function getDocumentPart($baseKey, Search_Type_Factory_Interface $typeFactory)
+	function getDocumentPart(Search_Type_Factory_Interface $typeFactory)
 	{
 		$value = $this->getValue();
 		$fieldType = $this->getIndexableType();
+		$baseKey = $this->getBaseKey();
 
 		if ($this->getConfiguration('isMultilingual') == 'y') {
 			$decoded = json_decode($value, true);
@@ -253,9 +254,10 @@ class Tracker_Field_Text extends Tracker_Field_Abstract implements Tracker_Field
 		}
 	}
 
-	function getProvidedFields($baseKey)
+	function getProvidedFields()
 	{
 		global $prefs;
+		$baseKey = $this->getBaseKey();
 
 		$data = array($baseKey);
 
@@ -270,9 +272,10 @@ class Tracker_Field_Text extends Tracker_Field_Abstract implements Tracker_Field
 		return $data;
 	}
 
-	function getGlobalFields($baseKey)
+	function getGlobalFields()
 	{
 		global $prefs;
+		$baseKey = $this->getBaseKey();
 
 		$data = array($baseKey => true);
 

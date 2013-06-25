@@ -9,18 +9,23 @@ class Search_FacetProvider implements Search_FacetProvider_Interface
 {
 	private $facets = array();
 
-	function addContentSource(Search_ContentSource_Interface $source)
+	function addContentSource($type, Search_ContentSource_Interface $source)
 	{
 		if ($source instanceof Search_FacetProvider_Interface) {
-			$this->addFacets($source->getFacets());
+			$this->addProvider($source);
 		}
 	}
 
 	function addGlobalSource(Search_GlobalSource_Interface $source)
 	{
 		if ($source instanceof Search_FacetProvider_Interface) {
-			$this->addFacets($source->getFacets());
+			$this->addProvider($source);
 		}
+	}
+
+	function addProvider(Search_FacetProvider_Interface $provider)
+	{
+		$this->addFacets($provider->getFacets());
 	}
 
 	function addFacets(array $facets)

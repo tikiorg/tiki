@@ -110,12 +110,5 @@ class Tracker_Field_CountrySelector extends Tracker_Field_Abstract implements Tr
 	{
 		return $info;
 	}
-
-	function getDocumentPart($baseKey, Search_Type_Factory_Interface $typeFactory)
-	{
-		return array(
-			$baseKey => $typeFactory->sortable($this->getValue()),
-		);
-	}
 }
 

@@ -136,20 +136,22 @@ class Tracker_Field_Language extends Tracker_Field_Abstract implements Tracker_F
 		return $info;
 	}
 
-	function getDocumentPart($baseKey, Search_Type_Factory_Interface $typeFactory)
+	function getDocumentPart(Search_Type_Factory_Interface $typeFactory)
 	{
+		$baseKey = $this->getBaseKey();
 		return array(
 			$baseKey => $typeFactory->sortable($this->getValue()),
 			'language' => $typeFactory->identifier($this->getValue()),
 		);
 	}
 
-	function getProvidedFields($baseKey)
+	function getProvidedFields()
 	{
+		$baseKey = $this->getBaseKey();
 		return array($baseKey, 'language');
 	}
 
-	function getGlobalFields($baseKey)
+	function getGlobalFields()
 	{
 		return array();
 	}

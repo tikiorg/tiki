@@ -306,21 +306,31 @@ abstract class Tracker_Field_Abstract implements Tracker_Field_Interface, Tracke
 		return $smarty->fetch($file, $file);
 	}
 
-	function getDocumentPart($baseKey, Search_Type_Factory_Interface $typeFactory)
+	function getDocumentPart(Search_Type_Factory_Interface $typeFactory)
 	{
+		$baseKey = $this->getBaseKey();
 		return array(
 			$baseKey => $typeFactory->sortable($this->getValue()),
 		);
 	}
 
-	function getProvidedFields($baseKey)
+	function getProvidedFields()
 	{
+		$baseKey = $this->getBaseKey();
 		return array($baseKey);
 	}
 
-	function getGlobalFields($baseKey)
+	function getGlobalFields()
 	{
+		$baseKey = $this->getBaseKey();
 		return array($baseKey => true);
+	}
+
+	function getBaseKey()
+	{
+		global $prefs;
+		$indexKey = $prefs['unified_trackerfield_keys'];
+		return 'tracker_field_' . $this->getConfiguration($indexKey);
 	}
 }
 

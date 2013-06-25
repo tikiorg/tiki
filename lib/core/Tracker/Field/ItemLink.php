@@ -345,10 +345,11 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 		}
 	}
 
-	function getDocumentPart($baseKey, Search_Type_Factory_Interface $typeFactory)
+	function getDocumentPart(Search_Type_Factory_Interface $typeFactory)
 	{
 		$item = $this->getValue();
 		$label = $this->getItemLabel($item);
+		$baseKey = $this->getBaseKey();
 
 		$out = array(
 			$baseKey => $typeFactory->identifier($item),
@@ -373,8 +374,9 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 		return $out;
 	}
 
-	function getProvidedFields($baseKey)
+	function getProvidedFields()
 	{
+		$baseKey = $this->getBaseKey();
 		$fields = array($baseKey, "{$baseKey}_text");
 
 		$trackerId = $this->getOption('trackerId');
@@ -394,7 +396,7 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 		return $fields;
 	}
 
-	function getGlobalFields($baseKey)
+	function getGlobalFields()
 	{
 		return array();
 	}

@@ -133,9 +133,10 @@ class Tracker_Field_Rating extends Tracker_Field_Abstract
 		}
 	}
 
-	function getDocumentPart($baseKey, Search_Type_Factory_Interface $typeFactory)
+	function getDocumentPart(Search_Type_Factory_Interface $typeFactory)
 	{
 		$data = $this->gatherVoteData();
+		$baseKey = $this->getBaseKey();
 
 		return array(
 			$baseKey => $typeFactory->numeric($data['voteavg']),
@@ -144,8 +145,9 @@ class Tracker_Field_Rating extends Tracker_Field_Abstract
 		);
 	}
 
-	function getProvidedFields($baseKey)
+	function getProvidedFields()
 	{
+		$baseKey = $this->getBaseKey();
 		return array(
 			$baseKey,
 			"{$baseKey}_count",
