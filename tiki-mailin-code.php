@@ -275,6 +275,14 @@ function mailin_insert_inline_image(&$body, $contentId, $attId, $pageName)
 	$body = $newBody;
 }
 
+function mailin_preplog($msg)
+{
+	$logMessage = strip_tags($msg);
+	$logMessage = str_replace('&nbsp;',' ',$logMessage);
+	return $logMessage;
+}
+
+
 /**
  * The tiki-mailin.php script is used to get / set wiki pages or articles
  * using a POP email account.
@@ -291,6 +299,11 @@ if (empty($accs['data'])) {
 $content = '<br /><br />';
 
 $userlib = TikiLib::lib('user');
+
+// Logger
+$logUser = $aux["sender"]["user"];
+$logslib = TikiLib::lib('logs');
+
 
 // foreach account
 foreach ($accs['data'] as $acc) {
@@ -348,6 +361,11 @@ foreach ($accs['data'] as $acc) {
 					if (!isset($aux["From"])) {
 						$aux['From'] = $aux['Return-path'];
 					}
+					$fromEmail = $aux["From"];
+					$fromEmail = str_replace('<','',$fromEmail);
+					$fromEmail = str_replace('>','',$fromEmail);
+
+					
 					preg_match('/<?([-!#$%&\'*+\.\/0-9=?A-Z^_`a-z{|}~]+@[-!#$%&\'*+\/0-9=?A-Z^_`a-z{|}~]+\.[-!#$%&\'*+\.\/0-9=?A-Z^_`a-z{|}~]+)>?/', $aux["From"], $mail);
 					$email_from = $mail[1];
 					$aux["msgid"] = $i;
@@ -362,7 +380,10 @@ foreach ($accs['data'] as $acc) {
 					$content.= "sender user: " . $aux["sender"]["user"] . "<br />";
 					$cantUseMailIn = $acc["anonymous"] == 'n' && empty($aux["sender"]["user"]);
 					if ($cantUseMailIn) {
-						$content.= "Anonymous user access denied, sending auto-reply to email address:&nbsp;" . $aux["From"] . "<br />";
+						$errorMsg = "Anonymous user access denied, sending auto-reply to email address:&nbsp;" . $fromEmail . "<br />";
+						$logslib->add_log('mailin', mailin_preplog($errorMsg), $logUser);
+
+						$content.= $errorMsg;
 						$mail = new TikiMail();
 						$mail->setFrom($acc["account"]);
 						$l = $prefs['language'];
@@ -383,7 +404,10 @@ foreach ($accs['data'] as $acc) {
 						if (($acc["anonymous"] == 'n') && (!$userlib->user_has_permission($chkUser, 'tiki_p_admin'))) {
 
 							if (!$userlib->user_has_permission($chkUser, 'tiki_p_send_mailin')) {
-								$content.= "Access denied, sending auto-reply to email address:&nbsp;" . $aux["From"] . "<br />";
+								$errorMsg = "Access denied, sending auto-reply to email address:&nbsp;" . $fromEmail . "<br />";
+								$logslib->add_log('mailin', mailin_preplog($errorMsg), $logUser);
+								
+								$content.= $errorMsg;
 								$mail = new TikiMail();
 								$mail->setFrom($acc["account"]);
 								$l = $prefs['language'];
@@ -399,7 +423,10 @@ foreach ($accs['data'] as $acc) {
 							}
 						} 
 						if (($acc["admin"] === 'n') && ($userlib->user_has_permission($chkUser, 'tiki_p_admin'))) {
-								$content.= "Admin access is blocked, sending auto-reply to email address:&nbsp;" . $aux["From"] . "<br />";
+								$errorMsg = "Admin access is blocked, sending auto-reply to email address:&nbsp;" . $fromEmail . "<br />";
+								$logslib->add_log('mailin', mailin_preplog($errorMsg), $logUser);
+								
+								$content.= $errorMsg;
 								$mail = new TikiMail();
 								$mail->setFrom($acc["account"]);
 								$l = $prefs['language'];
@@ -433,11 +460,17 @@ foreach ($accs['data'] as $acc) {
 								$chkUser = $aux["sender"]["user"];
 								if (($acc["anonymous"] == 'n') && (!$userlib->user_has_permission($chkUser, 'tiki_p_admin'))) {
 									if (!$wikilib->user_has_perm_on_object($chkUser, $topicId, 'topic', 'tiki_p_submit_article', 'tiki_p_edit_submission')) {
-										$content.= $chkUser." cannot submit the article: ".$title."<br />";
+										$errorMsg = $chkUser." cannot submit the article: ".$title."<br />";
+										$logslib->add_log('mailin', mailin_preplog($errorMsg), $logUser);
+										
+										$content.= $errorMsg;
 										$processEmail = false;
 									} if ($tiki_p_autoapprove_submission == 'y') {
 										if (!$wikilib->user_has_perm_on_object($chkUser, $topicId, 'topic', 'tiki_p_autoapprove_submission)')) {
-											$content.= $chkUser." cannot auto-approve the article: ".$title."<br />";
+											$errorMsg = $chkUser." cannot auto-approve the article: ".$title."<br />";
+											$logslib->add_log('mailin', mailin_preplog($errorMsg), $logUser);
+											
+											$content.= $errorMsg;
 											$processEmail = false;
 										}
 									}
@@ -482,9 +515,15 @@ foreach ($accs['data'] as $acc) {
 									global $tiki_p_autoapprove_submission;
 									if ($tiki_p_autoapprove_submission == 'y') {
 										$artlib->approve_submission($subid);
-										$content.= "Article: $title has been submitted<br />";
+										$errorMsg = "Article: $title has been submitted by email: " . $fromEmail . "<br />";
+										$logslib->add_log('mailin', mailin_preplog($errorMsg), $logUser);
+										
+										$content.= $errorMsg;
 									} else {
-										$content.= "Article: $title has been created<br />";
+										$errorMsg = "Article: $title has been created by email: " . $fromEmail . "<br />";
+										$logslib->add_log('mailin', mailin_preplog($errorMsg), $logUser);
+										
+										$content.= $errorMsg;
 									}
 									$hasError = false;
 								}
@@ -528,7 +567,10 @@ foreach ($accs['data'] as $acc) {
 										$chkUser = $aux["sender"]["user"];
 										if (($acc["anonymous"] == 'n') && (!$userlib->user_has_permission($chkUser, 'tiki_p_admin'))) {
 											if(!$wikilib->user_has_perm_on_object($chkUser, $page, 'wiki page', 'tiki_p_view')) {
-												$content.= $chkUser." cannot view the page: ".$page."<br />";
+												$errorMsg = $chkUser." cannot view the page: ".$page."<br />";
+												$logslib->add_log('mailin', mailin_preplog($errorMsg), $logUser);
+												
+												$content.= $errorMsg;
 												$processEmail = false;
 											}
 										}
@@ -602,7 +644,10 @@ foreach ($accs['data'] as $acc) {
 										if ($tikilib->page_exists($page)) {
 											// Check permissions for page
 											if (!$wikilib->user_has_perm_on_object($chkUser, $page, 'wiki page', 'tiki_p_edit')) {
-												$content.= $chkUser." cannot edit the page: ".$page."<br />";
+												$errorMsg = $chkUser." cannot edit the page: ".$page."<br />";
+												$logslib->add_log('mailin', mailin_preplog($errorMsg), $logUser);
+												
+												$content.= $errorMsg;
 												$processEmail = false;
 											}
 											if (!$wikilib->user_has_perm_on_object($chkUser, $page, 'wiki page', 'tiki_p_wiki_attach_files')) {
@@ -648,7 +693,10 @@ foreach ($accs['data'] as $acc) {
 											if ($processEmail) {
 												if ($prefs['feature_categories'] === 'y' && isset($acc['categoryId'])) {
 													if (!$userlib->object_has_permission($chkUser, $acc['categoryId'], 'category', 'tiki_p_edit')) {
-														$content.= $chkUser." cannot create the page: ".$page."<br />";
+														$errorMsg = $chkUser." cannot create the page: ".$page."<br />";
+														$logslib->add_log('mailin', mailin_preplog($errorMsg), $logUser);
+														
+														$content.= $errorMsg;
 														$processEmail = false;
 													}
 													if (!$userlib->object_has_permission($chkUser, $acc['categoryId'], 'category', 'tiki_p_wiki_attach_files')) {
@@ -657,7 +705,10 @@ foreach ($accs['data'] as $acc) {
 													}
 												} else {
 													if (!$userlib->user_has_permission($chkUser, 'tiki_p_edit')) {
-														$content.= $chkUser." cannot create the page: ".$page."<br />";
+														$errorMsg = $chkUser." cannot create the page: ".$page."<br />";
+														$logslib->add_log('mailin', mailin_preplog($errorMsg), $logUser);
+														
+														$content.= $errorMsg;
 														$processEmail = false;
 													}
 													if (!$userlib->user_has_permission($chkUser, 'tiki_p_wiki_attach_files')) {
@@ -722,7 +773,10 @@ foreach ($accs['data'] as $acc) {
 																			null,	//saveLastModif
 																			$parsed_data['wysiwyg']	//wysiwyg
 													);
-													$content.= "Page: $page has been updated<br />";
+													$errorMsg = "Page: $page has been updated by email: " . $fromEmail . "<br />";
+													$logslib->add_log('mailin', mailin_preplog($errorMsg), $logUser);
+													
+													$content.= $errorMsg;
 													$hasError = false;
 												} else {
 													
@@ -735,7 +789,10 @@ foreach ($accs['data'] as $acc) {
 														'',						//hash
 														$parsed_data['wysiwyg']	//wysiwyg
 														);
-													$content.= "Page: $page has been created<br />";
+													$errorMsg = "Page: $page has been created by email: " . $fromEmail . "<br />";
+													$logslib->add_log('mailin', mailin_preplog($errorMsg), $logUser);
+													
+													$content.= $errorMsg;
 													$hasError = false;
 												}
 
@@ -763,8 +820,6 @@ foreach ($accs['data'] as $acc) {
 															$content.= "Failed to categorize page: $page  categoryId: ".$categoryId.". Error: ".$e->getMessage()."<br />";
 														}
 													}
-													if (!empty($structCateg)) {
-													}
 												}
 												
 											} else {
@@ -779,7 +834,10 @@ foreach ($accs['data'] as $acc) {
 																		null,	//saveLastModif
 																		$parsed_data['wysiwyg']	//wysiwyg
 												);
-												$content.= "Page: $page has been updated<br />";
+												$errorMsg = "Page: $page has been updated by email: " . $fromEmail . "<br />";
+												$logslib->add_log('mailin', mailin_preplog($errorMsg), $logUser);
+												
+												$content.= $errorMsg;
 												$hasError = false;
 											}
 										}
@@ -793,7 +851,10 @@ foreach ($accs['data'] as $acc) {
 									$chkUser = $aux["sender"]["user"];
 									if (($acc["anonymous"] == 'n') && (!$userlib->user_has_permission($chkUser, 'tiki_p_admin'))) {
 										if(!$wikilib->user_has_perm_on_object($chkUser, $page, 'wiki page', 'tiki_p_edit')) {
-											$content.= $chkUser." cannot edit the page: ".$page."<br />";
+											$errorMsg = $chkUser." cannot edit the page: ".$page."<br />";
+											$logslib->add_log('mailin', mailin_preplog($errorMsg), $logUser);
+											
+											$content.= $errorMsg;
 											$processEmail = false;
 										}
 										if(!$wikilib->user_has_perm_on_object($chkUser, $page, 'wiki page', 'tiki_p_wiki_attach_files')) {
@@ -828,7 +889,10 @@ foreach ($accs['data'] as $acc) {
 																	 '',						//hash
 																	 $parsed_data['wysiwyg']	//wysiwyg
 												);
-												$content.= "Page: $page has been created<br />";
+												$errorMsg = "Page: $page has been created by email: " . $fromEmail . "<br />";
+												$logslib->add_log('mailin', mailin_preplog($errorMsg), $logUser);
+												
+												$content.= $errorMsg;
 												$hasError = false;
 											} else {
 												$info = $tikilib->get_page_info($page);
@@ -848,7 +912,10 @@ foreach ($accs['data'] as $acc) {
 																	null,	//saveLastModif
 																	$parsed_data['wysiwyg']	//wysiwyg
 												);
-												$content.= "Page: $page has been updated<br />";
+												$errorMsg = "Page: $page has been updated by email: " . $fromEmail . "<br />";
+												$logslib->add_log('mailin', mailin_preplog($errorMsg), $logUser);
+												
+												$content.= $errorMsg;
 												$hasError = false;
 											}
 										}
@@ -871,6 +938,8 @@ foreach ($accs['data'] as $acc) {
 									} else {
 										$content.= "Response by email is disabled<br />";
 									}
+									$errorMsg = "Invalid mail-in type";
+									$logslib->add_log('mailin', mailin_preplog($errorMsg), $logUser);
 								}
 							}
 						}						
@@ -878,14 +947,15 @@ foreach ($accs['data'] as $acc) {
 					// Remove the email from the pop3 server
 					if (!$hasError || ($hasError && ($acc['leave_email'] !== 'y'))) {
 						$pop3->deleteMsg($i);
-						$content.= "Deleted message<br />";
+						$errorMsg = "Deleted message on email server. From: ".$fromEmail." Subject: ".$aux['Subject']."<br />";
+						$content.= $errorMsg;
+	
+						// Cleanup log message and write to log
+						$logslib->add_log('mailin', mailin_preplog($errorMsg), $logUser);
 					}
 				}
-				
 			}
-			
 		}
-		
 	} else {
 		$content.= "FAILED.<br />";
 	}
