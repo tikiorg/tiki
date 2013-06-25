@@ -41,20 +41,25 @@ class Installer extends TikiDb_Bridge
 
 	function cleanInstall() // {{{
 	{
-		$this->runFile(dirname(__FILE__) . '/../db/tiki.sql');
-		if ($this->useInnoDB) {
-			$this->runFile(dirname(__FILE__) . '/../db/tiki_innodb.sql');
+		if ($image = $this->getBaseImage()) {
+			$this->runFile($image);
 		} else {
-			$this->runFile(dirname(__FILE__) . '/../db/tiki_myisam.sql');
-		}
-		$this->buildPatchList();
-		$this->buildScriptList();
+			// No image specified, standard install
+			$this->runFile(dirname(__FILE__) . '/../db/tiki.sql');
+			if ($this->useInnoDB) {
+				$this->runFile(dirname(__FILE__) . '/../db/tiki_innodb.sql');
+			} else {
+				$this->runFile(dirname(__FILE__) . '/../db/tiki_myisam.sql');
+			}
+			$this->buildPatchList();
+			$this->buildScriptList();
 
-		// Base SQL file contains the distribution tiki patches up to this point
-		$patches = $this->patches;
-		foreach ( $patches as $patch ) {
-			if ( preg_match('/_tiki$/', $patch) ) {
-				$this->recordPatch($patch);
+			// Base SQL file contains the distribution tiki patches up to this point
+			$patches = $this->patches;
+			foreach ( $patches as $patch ) {
+				if ( preg_match('/_tiki$/', $patch) ) {
+					$this->recordPatch($patch);
+				}
 			}
 		}
 
@@ -336,5 +341,38 @@ class Installer extends TikiDb_Bridge
 	{
 		return count($this->patches) > 0 ;
 	} // }}}
+
+	private function getBaseImage()
+	{
+		$direct = __DIR__ . '/../db/custom_tiki.sql';
+		$fetch = __DIR__ . '/../db/custom_tiki.txt';
+
+		if (is_readable($direct)) {
+			return $direct;
+		}
+
+		if (is_readable($fetch)) {
+			$path = trim(file_get_contents($fetch));
+			$cacheFile = __DIR__ . '/../temp/cache/' . md5($path);
+
+			if (is_readable($cacheFile)) {
+				return $cacheFile;
+			}
+
+			$read = fopen($path, 'r');
+			$write = fopen($cacheFile, 'w+');
+
+			if ($read && $write) {
+				while (! feof($read)) {
+					fwrite($write, fread($read, 1024 * 100));
+				}
+
+				fclose($read);
+				fclose($write);
+
+				return $cacheFile;
+			}
+		}
+	}
 	
 }
