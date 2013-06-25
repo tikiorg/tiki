@@ -11,12 +11,6 @@ class Search_Elastic_TypeAnalyzerTest extends Search_Index_LuceneTypeAnalyzerTes
 
 	function setUp()
 	{
-		$this->index = $this->getIndex();
-		$this->index->destroy();
-	}
-
-	protected function getIndex()
-	{
 		$connection = new Search_Elastic_Connection('http://localhost:9200');
 		$connection->startBulk(100);
 
@@ -25,7 +19,13 @@ class Search_Elastic_TypeAnalyzerTest extends Search_Index_LuceneTypeAnalyzerTes
 			$this->markTestSkipped('ElasticSearch needs to be available on localhost:9200 for the test to run.');
 		}
 
-		return new Search_Elastic_Index($connection, 'test_index');
+		$this->index = new Search_Elastic_Index($connection, 'test_index');
+		$this->index->destroy();
+	}
+
+	protected function getIndex()
+	{
+		return $this->index;
 	}
 
 	function tearDown()

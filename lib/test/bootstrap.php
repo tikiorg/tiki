@@ -30,7 +30,7 @@ if (!is_file(dirname(__FILE__) . '/local.php')) {
 
 global $local_php, $api_tiki, $style_base;
 $api_tiki = 'adodb';
-$local_php = dirname(__FILE__) . '/local.php';
+$local_php = __DIR__ . '/local.php';
 require_once($local_php);
 
 $style_base = 'skeleton';
@@ -42,16 +42,21 @@ if (! class_exists('ADOConnection')) {
 
 $ADODB_FETCH_MODE = ADODB_FETCH_ASSOC;
 
-// for now the unit test suite only works with adodb
-// using pdo generate an error when phpunit tries to serialize the globals variables
-// since it is not possible to serialize a PDO object
-$dbTiki = ADONewConnection($db_tiki);
+$initializer = new TikiDb_Initializer;
+$initializer->setPreferredConnector($api_tiki);
+$db = $initializer->getConnection(array(
+	'host' => $host_tiki,
+	'user' => $user_tiki,
+	'pass' => $pass_tiki,
+	'dbs' => $dbs_tiki,
+	'charset' => $client_charset,
+));
 
-if (!@$dbTiki->Connect($host_tiki, $user_tiki, $pass_tiki, $dbs_tiki)) {
+if (! $db) {
 	die("\nUnable to connect to the database\n\n");
 }
 
-TikiDb::set(new TikiDb_Adodb($dbTiki));
+TikiDb::set($db);
 
 global $tikilib;
 require_once 'lib/tikilib.php';

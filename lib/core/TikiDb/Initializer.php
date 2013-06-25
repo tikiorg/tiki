@@ -42,8 +42,10 @@ class TikiDb_Initializer
 	private function initialize($connector, $credentials)
 	{
 		if ($db = $connector->getConnection($credentials)) {
-			$callback = $this->initializeCallback;
-			$callback($db);
+			if ($callback = $this->initializeCallback) {
+				$callback($db);
+			}
+
 			return $db;
 		}
 	}
