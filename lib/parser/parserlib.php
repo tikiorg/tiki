@@ -26,6 +26,7 @@
 
 class ParserLib extends TikiDb_Bridge
 {
+	private $makeTocCount = 0;
 	private $pre_handlers = array();
 	private $pos_handlers = array();
 	private $postedit_handlers = array();

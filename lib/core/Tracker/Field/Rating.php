@@ -155,7 +155,7 @@ class Tracker_Field_Rating extends Tracker_Field_Abstract
 		);
 	}
 
-	function getGlobalFields($baseKey)
+	function getGlobalFields()
 	{
 		return array();
 	}

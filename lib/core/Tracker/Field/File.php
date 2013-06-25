@@ -132,18 +132,18 @@ class Tracker_Field_File extends Tracker_Field_Abstract
 		);
 	}
 
-	function getDocumentPart($baseKey, Search_Type_Factory_Interface $typeFactory)
+	function getDocumentPart(Search_Type_Factory_Interface $typeFactory)
 	{
 		return array(
 		);
 	}
 
-	function getProvidedFields($baseKey)
+	function getProvidedFields()
 	{
 		return array();
 	}
 
-	function getGlobalFields($baseKey)
+	function getGlobalFields()
 	{
 		return array();
 	}

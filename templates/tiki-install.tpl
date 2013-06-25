@@ -209,7 +209,11 @@
 	<br>
 {section name=n loop=$tikifeedback}
 	<div class="simplebox {if $tikifeedback[n].num > 0} highlight{/if}">
-		<img src="img/icons/{if $tikifeedback[n].num > 0}delete.png" alt="{tr}Error{/tr}"{else}accept.png" alt="{tr}Success{/tr}"{/if} style="vertical-align:middle"> {$tikifeedback[n].mes}
+		{if $tikifeedback[n].num > 0}
+		<img src="img/icons/delete.png" alt="{tr}Error{/tr}" style="vertical-align:middle"> {$tikifeedback[n].mes}
+		{else}
+		<img src="img/icons/accept.png" alt="{tr}Success{/tr}" style="vertical-align:middle"> {$tikifeedback[n].mes}
+		{/if}
 	</div>
 {/section}
 {/if}

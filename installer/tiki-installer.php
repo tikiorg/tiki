@@ -446,9 +446,9 @@ function list_disable_accounts()
 function initTikiDB( &$api, &$driver, $host, $user, $pass, $dbname, $client_charset, &$dbTiki )
 {
 	$initializer = new TikiDb_Initializer;
-	$initializer->setPreferredConnector($api_tiki);
+	$initializer->setPreferredConnector($driver);
 	$initializer->setInitializeCallback(function ($db) {
-		$db->setServerType($db_tiki);
+		$db->setServerType('pdo');
 		$db->setErrorHandler(new InstallerDatabaseErrorHandler);
 	});
 
@@ -462,10 +462,10 @@ function initTikiDB( &$api, &$driver, $host, $user, $pass, $dbname, $client_char
 			'dbs' => $dbname,
 			'charset' => $client_charset,
 		));
-		$dbcon = ! empty($dbTiki);
 	} catch (Exception $e) {
 		$tikifeedback[] = array( 'num' => 1, 'mes' => $e->getMessage() );
 	}
+	$dbcon = ! empty($dbTiki);
 
 	// Attempt to create database. This might work if the $user has create database permissions.
 	// First check that suggested database name will not cause issues
@@ -477,9 +477,9 @@ function initTikiDB( &$api, &$driver, $host, $user, $pass, $dbname, $client_char
 		$attempt_creation=true;
 	}
 
-	if ( (! $dbcon) && ($attempt_creation == true) ) {
+	if ( ($dbcon) && ($attempt_creation == true) ) {
 		$sql="CREATE DATABASE IF NOT EXISTS `$dbname_clean` DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;";
-		$dbTiki->query($sql, $error);
+		$dbTiki->queryError($sql, $error);
 		if ( empty($error) ) {
 			$tikifeedback[] = array( 'num' => 1, 'mes'=> tra("Database `%0` was created.", '', false, array($dbname_clean)) );
 		} else {

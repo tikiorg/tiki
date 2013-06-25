@@ -21,7 +21,7 @@ class TikiDb_Initializer_Pdo
 		// you can only use one method to connect, not both.  If $socket_tiki
 		// is set in local.php, then it will override the hostname method
 		// of connecting to the database.
-		if ($credentials['socket']) {
+		if (! empty($credentials['socket'])) {
 			$db_hoststring = "unix_socket={$credentials['socket']}";
 		}
 
