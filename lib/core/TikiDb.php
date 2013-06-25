@@ -173,11 +173,16 @@ abstract class TikiDb
 	function convertSortMode( $sort_mode, $fields = null ) // {{{
 	{
 		if ( !$sort_mode ) {
-			return '';
+			return '1';
 		}
 		// parse $sort_mode for evil stuff
 		$sort_mode = str_replace('pref:', '', $sort_mode);
 		$sort_mode = preg_replace('/[^A-Za-z_,.]/', '', $sort_mode);
+
+		// Do not process empty sort modes
+		if ( empty($sort_mode) ) {
+			return '1';
+		}
 
 		if ($sort_mode == 'random') {
 			return "RAND()";
