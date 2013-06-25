@@ -324,10 +324,10 @@ class LogsLib extends TikiLib
 	{
 		$actionlogconf = array();
 		$query = "select * from `tiki_actionlog_conf`" .
-						" where `objectType` like '$type' and `action` like '$action'" .
+						" where `objectType` like ? and `action` like ?" .
 						" order by `objectType` desc, `action` asc"
 						;
-		$result = $this->query($query, array());
+		$result = $this->query($query, array($type, $action));
 
 		while ($res = $result->fetchRow()) {
 			if ( $res['action'] == '%' ) {
