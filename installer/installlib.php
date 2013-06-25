@@ -43,6 +43,8 @@ class Installer extends TikiDb_Bridge
 	{
 		if ($image = $this->getBaseImage()) {
 			$this->runFile($image);
+			$this->buildPatchList();
+			$this->buildScriptList();
 		} else {
 			// No image specified, standard install
 			$this->runFile(dirname(__FILE__) . '/../db/tiki.sql');
@@ -342,37 +344,59 @@ class Installer extends TikiDb_Bridge
 		return count($this->patches) > 0 ;
 	} // }}}
 
-	private function getBaseImage()
+	private function getBaseImage() // {{{
 	{
+		$iniFile = __DIR__ . '/../db/install.ini';
+
+		$ini = array();
+		if (is_readable($iniFile)) {
+			$ini = parse_ini_file($iniFile);
+		}
+
 		$direct = __DIR__ . '/../db/custom_tiki.sql';
-		$fetch = __DIR__ . '/../db/custom_tiki.txt';
+		$check = null;
+
+		if (isset($ini['source.type'])) {
+			switch ($ini['source.type']) {
+			case 'local':
+				$direct = $ini['source.file'];
+				break;
+			case 'http':
+				$fetch = $ini['source.file'];
+				if (isset($ini['source.md5'])) {
+					$check = $ini['source.md5'];
+				}
+				break;
+			}
+		}
 
 		if (is_readable($direct)) {
 			return $direct;
 		}
 
-		if (is_readable($fetch)) {
-			$path = trim(file_get_contents($fetch));
-			$cacheFile = __DIR__ . '/../temp/cache/' . md5($path);
+		$cacheFile = __DIR__ . '/../temp/cache/sql' . md5($fetch);
 
-			if (is_readable($cacheFile)) {
-				return $cacheFile;
+		if (is_readable($cacheFile)) {
+			return $cacheFile;
+		}
+
+		$read = fopen($fetch, 'r');
+		$write = fopen($cacheFile, 'w+');
+
+		if ($read && $write) {
+			while (! feof($read)) {
+				fwrite($write, fread($read, 1024 * 100));
 			}
 
-			$read = fopen($path, 'r');
-			$write = fopen($cacheFile, 'w+');
+			fclose($read);
+			fclose($write);
 
-			if ($read && $write) {
-				while (! feof($read)) {
-					fwrite($write, fread($read, 1024 * 100));
-				}
-
-				fclose($read);
-				fclose($write);
-
+			if (! $check || $check == md5_file($cacheFile)) {
 				return $cacheFile;
+			} else {
+				unlink($cacheFile);
 			}
 		}
-	}
+	} // }}}
 	
 }
