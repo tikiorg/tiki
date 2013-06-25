@@ -1733,10 +1733,10 @@ class LogsLib extends TikiLib
 			INNER JOIN (
 			  SELECT MAX(i.lastModif) lastModif, i.user
 			  FROM tiki_actionlog i
-			  where objectType = '$objectType'
+			  where objectType = ?
 			  GROUP BY i.user, i.object
 			) AS j ON (j.lastModif = m.lastModif AND j.user = m.user)";
-		return $this->fetchAll($query, array());
+		return $this->fetchAll($query, array($objectType));
 	}
 
 	function get_bigblue_login_time($logins, $startDate, $endDate, $actions)
