@@ -18,7 +18,7 @@ class Search_Elastic_FacetReader
 	{
 		$facetName = $facet->getName();
 
-		if (! isset($this->data->facets->$facetName)) {
+		if (empty($this->data->facets->$facetName->total)) {
 			return null;
 		}
 
