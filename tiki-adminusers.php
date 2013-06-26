@@ -587,7 +587,11 @@ if (isset($_REQUEST['filterGroup'])) {
 $smarty->assign('filterGroup', $filterGroup);
 
 if (isset($_REQUEST['filterEmail'])) {
+	// Direct user input. Validate email address
 	$filterEmail = $_REQUEST['filterEmail'];
+	if (!validate_email($filterEmail)) {
+		$filterEmail = '';
+	}
 } else {
 	$filterEmail = '';
 }
