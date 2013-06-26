@@ -12,6 +12,7 @@ use Search_Expr_Or as OrX;
 use Search_Expr_Not as NotX;
 use Search_Expr_Range as Range;
 use Search_Expr_Initial as Initial;
+use Search_Expr_MoreLikeThis as MoreLikeThis;
 
 class Search_Elastic_QueryBuilderTest extends PHPUnit_Framework_TestCase
 {
@@ -135,6 +136,47 @@ class Search_Elastic_QueryBuilderTest extends PHPUnit_Framework_TestCase
 						array(
 							"match" => array(
 								"contents" => array("query" => "hello", "boost" => 1.5),
+							),
+						),
+					),
+				),
+			), $query['query']
+		);
+	}
+
+	function testFlattenNot()
+	{
+		$builder = new QueryBuilder;
+
+		$query = $builder->build(
+			new AndX(
+				array(
+					new NotX(new Token('Hello', 'plaintext', 'contents', 1.5)),
+					new NotX(new Token('World', 'plaintext', 'contents', 1.5)),
+					new Token('Test', 'plaintext', 'contents', 1.0),
+				)
+			)
+		);
+
+		$this->assertEquals(
+			array(
+				"bool" => array(
+					"must" => array(
+						array(
+							"match" => array(
+								"contents" => array("query" => "test", "boost" => 1.0),
+							),
+						),
+					),
+					"must_not" => array(
+						array(
+							"match" => array(
+								"contents" => array("query" => "hello", "boost" => 1.5),
+							),
+						),
+						array(
+							"match" => array(
+								"contents" => array("query" => "world", "boost" => 1.5),
 							),
 						),
 					),
@@ -306,6 +348,83 @@ class Search_Elastic_QueryBuilderTest extends PHPUnit_Framework_TestCase
 				),
 			), $query['query']
 		);
+	}
+
+	function testMoreLikeThisQuery()
+	{
+		$builder = new QueryBuilder;
+		$builder->setDocumentReader(function ($type, $object) {
+			return array(
+				'object_type' => $type,
+				'object_id' => $object,
+				'contents' => 'hello world',
+			);
+		});
+
+		$query = $builder->build(
+			new AndX(
+				array(
+					new MoreLikeThis('wiki page', 'A'),
+				)
+			)
+		);
+
+		$this->assertEquals(array(
+			'more_like_this' => array(
+				'fields' => array('contents'),
+				'like_text' => 'hello world',
+				'boost' => 1.0,
+			),
+		), $query['query']);
+	}
+
+	function testMoreLikeThisThroughAbstraction()
+	{
+		$builder = new QueryBuilder;
+		$builder->setDocumentReader(function ($type, $object) {
+			return array(
+				'object_type' => $type,
+				'object_id' => $object,
+				'contents' => 'hello world',
+			);
+		});
+
+		$q = new Search_Query;
+		$q->filterSimilar('wiki page', 'A');
+
+		$query = $builder->build($q->getExpr());
+
+		$this->assertEquals(array(
+			'bool' => array(
+				'must' => array(
+					array(
+						'more_like_this' => array(
+							'fields' => array('contents'),
+							'like_text' => 'hello world',
+							'boost' => 1.0,
+						),
+					),
+				),
+				'must_not' => array(
+					array(
+						'bool' => array(
+							'must' => array(
+								array(
+									"match" => array(
+										"object_type" => array("query" => "wiki page"),
+									),
+								),
+								array(
+									"match" => array(
+										"object_id" => array("query" => "A"),
+									),
+								),
+							),
+						),
+					),
+				),
+			),
+		), $query['query']);
 	}
 }
 

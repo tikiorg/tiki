@@ -11,14 +11,19 @@ use Search_Expr_Or as OrX;
 use Search_Expr_Not as NotX;
 use Search_Expr_Range as Range;
 use Search_Expr_Initial as Initial;
+use Search_Expr_MoreLikeThis as MoreLikeThis;
 
 class Search_Elastic_QueryBuilder
 {
 	private $factory;
+	private $documentReader;
 
 	function __construct()
 	{
 		$this->factory = new Search_Elastic_TypeFactory;
+		$this->documentReader = function ($type, $object) {
+			return null;
+		};
 	}
 
 	function build(Search_Expr_Interface $expr)
@@ -27,6 +32,11 @@ class Search_Elastic_QueryBuilder
 		$query = array("query" => $query);
 
 		return $query;
+	}
+
+	function setDocumentReader($callback)
+	{
+		$this->documentReader = $callback;
 	}
 
 	function __invoke($callback, $node, $childNodes)
@@ -49,6 +59,28 @@ class Search_Elastic_QueryBuilder
 				),
 			);
 		} elseif ($node instanceof AndX) {
+			$not = array();
+			$inner = array_map(
+				function ($expr) use ($callback) {
+					return $expr->traverse($callback);
+				}, $childNodes
+			);
+
+			$inner = array_filter($inner, function ($part) use (& $not) {
+				if (isset($part['bool']['must_not'])) {
+					$not = array_merge($not, $part['bool']['must_not']);
+					return false;
+				} else {
+					return true;
+				}
+			});
+			return array(
+				'bool' => array_filter(array(
+					'must' => $this->flatten($inner, 'must'),
+					'must_not' => $not,
+				)),
+			);
+		} elseif ($node instanceof NotX) {
 			$inner = array_map(
 				function ($expr) use ($callback) {
 					return $expr->traverse($callback);
@@ -56,15 +88,7 @@ class Search_Elastic_QueryBuilder
 			);
 			return array(
 				'bool' => array(
-					'must' => $this->flatten($inner, 'must'),
-				),
-			);
-		} elseif ($node instanceof NotX) {
-			return array(
-				'bool' => array(
-					'must_not' => array(
-						reset($childNodes)->traverse($callback),
-					),
+					'must_not' => $inner,
 				),
 			);
 		} elseif ($node instanceof Initial) {
@@ -85,6 +109,18 @@ class Search_Elastic_QueryBuilder
 						"boost" => $node->getWeight(),
 						"include_upper" => false,
 					),
+				),
+			);
+		} elseif ($node instanceof MoreLikeThis) {
+			$type = $node->getObjectType();
+			$object = $node->getObjectId();
+
+			$content = $this->getDocumentContent($type, $object);
+			return array(
+				'more_like_this' => array(
+					'fields' => array('contents'),
+					'like_text' => $content,
+					'boost' => $node->getWeight(),
 				),
 			);
 		}
@@ -127,6 +163,18 @@ class Search_Elastic_QueryBuilder
 				$node->getField() => array("query" => $this->getTerm($node), "boost" => $node->getWeight()),
 			));
 		}
+	}
+
+	private function getDocumentContent($type, $object)
+	{
+		$cb = $this->documentReader;
+		$document = $cb($type, $object);
+
+		if (isset($document['contents'])) {
+			return $document['contents'];
+		}
+
+		return '';
 	}
 }
 

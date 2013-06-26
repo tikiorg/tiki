@@ -122,6 +122,22 @@ class Search_Elastic_Connection
 		$this->dirty = false;
 	}
 
+	function document($index, $type, $id)
+	{
+		if ($this->dirty) {
+			$this->refresh($index);
+		}
+
+		$type = $this->simplifyType($type);
+		$id = rawurlencode($id);
+
+		$document = $this->get("/$index/$type/$id");
+
+		if (isset($document->_source)) {
+			return $document->_source;
+		}
+	}
+
 	function mapping($index, $type, array $mapping)
 	{
 		$type = $this->simplifyType($type);

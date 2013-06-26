@@ -146,6 +146,17 @@ class Search_Query implements Search_Query_Interface
 		$this->addPart($query, 'multivalue', 'relations');
 	}
 
+	function filterSimilar($type, $object)
+	{
+		$this->expr->addPart(new Search_Expr_And(array(
+			new Search_Expr_Not(new Search_Expr_And(array(
+				new Search_Expr_Token($type, 'identifier', 'object_type'),
+				new Search_Expr_Token($object, 'identifier', 'object_id'),
+			))),
+			new Search_Expr_MoreLikeThis($type, $object),
+		)));
+	}
+
 	private function addPart($query, $type, $field)
 	{
 		$parts = array();

@@ -105,6 +105,7 @@ class Search_Elastic_Index implements Search_Index_Interface
 	function find(Search_Query_Interface $query, $resultStart, $resultCount)
 	{
 		$builder = new Search_Elastic_QueryBuilder;
+		$builder->setDocumentReader($this->createDocumentReader());
 		$queryPart = $builder->build($query->getExpr());
 
 		$builder = new Search_Elastic_OrderBuilder;
@@ -259,6 +260,15 @@ class Search_Elastic_Index implements Search_Index_Interface
 			$parts = explode(' ', $value->getValue());
 			return new Zend_Search_Lucene_Search_Query_Phrase($parts, array_keys($parts), $field);
 		}
+	}
+
+	private function createDocumentReader()
+	{
+		$connection = $this->connection;
+		$index = $this->index;
+		return function ($type, $object) use ($connection, $index) {
+			return (array) $connection->document($index, $type, $object);
+		};
 	}
 }
 
