@@ -351,6 +351,8 @@ class Search_Index_Lucene implements Search_Index_Interface
 			}
 		} elseif ($node instanceof Search_Expr_Token) {
 			$term = $this->buildTerm($node);
+		} else {
+			throw new Exception(tr('Feature not supported.'));
 		}
 
 		if ($term && method_exists($term, 'getBoost')) {

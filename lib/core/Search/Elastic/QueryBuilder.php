@@ -123,6 +123,8 @@ class Search_Elastic_QueryBuilder
 					'boost' => $node->getWeight(),
 				),
 			);
+		} else {
+			throw new Exception(tr('Feature not supported.'));
 		}
 	}
 
