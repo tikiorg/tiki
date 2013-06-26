@@ -500,15 +500,15 @@ class WikiLib extends TikiLib
 	{
 		global $prefs;
 
-		$path = $this->getOne("select `path` from `tiki_wiki_attachments` where `attId`=$attId");
+		$path = $this->getOne("select `path` from `tiki_wiki_attachments` where `attId`=?", array($attId));
 
 		/* carefull a same file can be attached in different page */
-		if ($path && $this->getOne("select count(*) from `tiki_wiki_attachments` where `path`='$path'") <= 1) {
+		if ($path && $this->getOne("select count(*) from `tiki_wiki_attachments` where `path`=?", array($path)) <= 1) {
 			@unlink($prefs['w_use_dir'] . $path);
 		}
 
-		$query = "delete from `tiki_wiki_attachments` where `attId`='$attId'";
-		$result = $this->query($query);
+		$query = "delete from `tiki_wiki_attachments` where `attId`=?";
+		$result = $this->query($query, array($attId));
 		if ($prefs['feature_actionlog'] == 'y') {
 			global $logslib; include_once('lib/logs/logslib.php');
 			$logslib->add_action('Removed', $attId, 'wiki page attachment');
