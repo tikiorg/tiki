@@ -25,6 +25,55 @@ When possible, it's also nice to indicate what feature is concerned by the chang
 Before 2.0, there was only [MOD] for both [ENH] and [MOD]:
 
 ----------------------------------------------------------------------
+Version 6.11
+<http://tiki.org/ReleaseNotes611>
+------------------
+
+----------------------------------------------
+r45908 | marclaporte | 2013-05-10 23:52:36 +0200 (Fri, 10 May 2013) | 1 line
+
+Extra commit to change default session from unlimited to 1 week. Not a direct backport because structure is different in 9.x Related to r42931 and r44699
+----------------------------------------------
+r45840 | marclaporte | 2013-05-02 08:16:45 +0200 (Thu, 02 May 2013) | 1 line
+
+Some French translations
+----------------------------------------------
+r45764 | marclaporte | 2013-04-29 04:36:18 +0200 (Mon, 29 Apr 2013) | 1 line
+
+[bp/r45751] Various improvements and documentation to Registration Passcode to block automated spammers. Used double-quotes instead of single quotes, which is better for translations
+----------------------------------------------
+r45763 | marclaporte | 2013-04-29 04:26:19 +0200 (Mon, 29 Apr 2013) | 1 line
+
+[bp/r44929] Obvious typo
+----------------------------------------------
+r45739 | marclaporte | 2013-04-27 19:34:50 +0200 (Sat, 27 Apr 2013) | 1 line
+
+add a translation
+----------------------------------------------
+r45369 | lindonb | 2013-04-01 06:49:57 +0200 (Mon, 01 Apr 2013) | 1 line
+
+[bp/r45319][SEC]Login passcode: Add option to show passcode on registration form. Together with r45368, helps avoid unauthorized user trackers from being created upon registration
+----------------------------------------------
+r45368 | lindonb | 2013-04-01 06:17:06 +0200 (Mon, 01 Apr 2013) | 1 line
+
+[bp/r45365][SEC] Register passcode: If passcode fails, also prevent user tracker item from being created.
+----------------------------------------------
+r45109 | c_schmitz | 2013-03-10 20:42:23 +0100 (Sun, 10 Mar 2013) | 1 line
+
+[FIX] TOC duplication when printing structure
+----------------------------------------------
+r44868 | jyhem | 2013-02-12 23:18:34 +0100 (Tue, 12 Feb 2013) | 1 line
+
+[bp/44286] Usability: when viewing someone else's profile, don't show links to one's own profile. This is confusing. Even more so for Anonymous.
+----------------------------------------------
+r44834 | changi67 | 2013-02-08 13:11:57 +0100 (Fri, 08 Feb 2013) | 1 line
+
+[FIX] Use relative path instead of full path for external refs
+----------------------------------------------
+r44827 | kstingel | 2013-02-08 07:10:26 +0100 (Fri, 08 Feb 2013) | 1 line
+
+[FIX] read from new SVN path not old
+----------------------------------------------
 Version 6.10
 <http://tiki.org/ReleaseNotes610>
 ------------------
