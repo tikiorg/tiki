@@ -284,16 +284,19 @@ class LogsLib extends TikiLib
 
 	function get_actionlog_conf($type = '%', $action = '%')
 	{
-			$actionlogconf = array();
-			$query = "select * from `tiki_actionlog_conf` where `objectType` like '$type' and `action` like '$action' order by `objectType` desc, `action` asc";
-			$result = $this->query($query, array());
-			while ($res = $result->fetchRow()) {
-				if ( $res['action'] == '%' ) {
-					 $res['action'] = '*';
-				}
-				$res['code'] = self::encode_actionlog_conf($res['action'], $res['objectType']);
-				$actionlogconf[] = $res;
+		$actionlogconf = array();
+		$query = "select * from `tiki_actionlog_conf`" .
+						" where `objectType` like ? and `action` like ?" .
+						" order by `objectType` desc, `action` asc"
+						;
+		$result = $this->query($query, array($type, $action));
+		while ($res = $result->fetchRow()) {
+			if ( $res['action'] == '%' ) {
+				 $res['action'] = '*';
 			}
+			$res['code'] = self::encode_actionlog_conf($res['action'], $res['objectType']);
+			$actionlogconf[] = $res;
+		}
 		return $actionlogconf;
 	}
 
