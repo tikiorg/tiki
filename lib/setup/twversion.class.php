@@ -27,7 +27,7 @@ class TWVersion
 		$this->branch 	= 'unstable';
 
 		// Set everything else, including defaults.
-		$this->version 	= '10.3svn';	// Never ever put any spaces in this value.  This will appear in tiki-admin.php?page=general
+		$this->version 	= '10.3';	// Never ever put any spaces in this value.  This will appear in tiki-admin.php?page=general
 		$this->star	= 'Sun';
 		$this->releases	= array();
 
@@ -155,6 +155,7 @@ class TWVersion
 				'6.8',
 				'6.9',
 				'6.10',
+				'6.11',
 				'7.0beta1',
 				'7.0beta2',
 				'7.0RC1',
@@ -181,11 +182,14 @@ class TWVersion
 				'9.2',
 				'9.3',
 				'9.4',
+				'9.5',
 				'10.0alpha',
 				'10.0beta',
 				'10.0',
 				'10.1',
 				'10.2',
+				'10.3',
+				'11.0beta',
 			);
 	}
 
