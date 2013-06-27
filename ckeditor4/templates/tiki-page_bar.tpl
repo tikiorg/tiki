@@ -26,6 +26,11 @@
 							{/self_link}
 						</span>
 					{/if}
+					{if $prefs.feature_wysiwyg_inline eq 'y'}
+						{if isset($page)}
+							{button _keepall='y' page=$page href="tiki-inline_edit.php" _class=$thisPageClass _text="{tr}Inline edit{/tr}"}
+						{/if}
+					{/if}
 				{/if}
 
 				{if $prefs.feature_source eq 'y' and $tiki_p_wiki_view_source eq 'y'}

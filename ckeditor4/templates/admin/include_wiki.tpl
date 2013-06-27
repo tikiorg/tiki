@@ -40,6 +40,8 @@
 			<fieldset class="admin">
 				<legend>{tr}Activate the feature{/tr}</legend>
 				{preference name=feature_wiki visible="always"}
+				{preference name=feature_wysiwyg}
+				{preference name=feature_wysiwyg_inline}
 			</fieldset>
 
 			<fieldset class="admin">
@@ -97,7 +99,6 @@
 				{preference name=feature_wiki_undo}
 				{preference name=feature_wiki_footnotes}
 				{preference name=feature_wiki_allowhtml}
-				{preference name=feature_wysiwyg}
 				{preference name=wiki_timeout_warning}
 
 				{preference name=wiki_edit_section}

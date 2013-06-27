@@ -678,6 +678,17 @@ function prefs_feature_list($partial = false)
 			),
 			'tags' => array('experimental'),
 		),
+		'feature_wysiwyg_inline' => array(
+			'name' => tra('Inline Wysiwyg editor'),
+			'description' => tra('Seemless inline editing. Uses CKEditor4.'),
+			'help' => 'Inline Wysiwyg',
+			'type' => 'flag',
+			'default' => 'n',
+			'dependencies' => array(
+				'feature_wysiwyg',
+			),
+			'tags' => array('experimental'),
+		),
 		'feature_kaltura' => array(
 			'name' => tra('Kaltura Video Management'),
 			'description' => tra('Integration to the Kaltura video management platform'),
