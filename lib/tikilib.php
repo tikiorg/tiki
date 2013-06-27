@@ -5641,7 +5641,7 @@ function chkgd2()
 #   } else {
 	ob_start();
 	phpinfo(INFO_MODULES);
-	$_SESSION['havegd2'] = preg_match('/GD Version.*2.0/', ob_get_contents());
+	$_SESSION['havegd2'] = preg_match('/GD Version.*2\.[0-9]/', ob_get_contents());
 	ob_end_clean();
 # }
 	}
