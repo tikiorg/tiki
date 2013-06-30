@@ -206,7 +206,7 @@ if (isset($_REQUEST['preview'])) {
 		$info = $modlib->get_user_module($_REQUEST['assign_name']);
 		$smarty->assign_by_ref('user_title', $info['title']);
 		if ($info['parse'] == 'y') {
-			$parse_data = $tikilib->parse_data($info['data']);
+			$parse_data = $tikilib->parse_data($info['data'], array('is_html' => true, 'suppress_icons' => true));
 			$smarty->assign_by_ref('user_data', $parse_data);
 		} else {
 			$smarty->assign_by_ref('user_data', $info['data']);
