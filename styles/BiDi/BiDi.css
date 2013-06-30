@@ -30,7 +30,7 @@
  */
 
 /* Import RTL Theme specifics CSS files. */
-/* @import url("../greenvalley/rtl/greenvalley_BiDi.css");*/
+/*@import url("../greenvalley/rtl/greenvalley_BiDi.css");*/
 
 /* The following address mainly to fivealive, option blueberry theme which is the
  * default theme for a brand new installation. The theme specific should be set as
@@ -66,7 +66,8 @@ div#tiki-clean {
 }
 
 #c1c2 #wrapper #col1.marginright {
-    margin-left: 200px !important;
+	margin-left: 200px;
+	margin-right: 0;
 }
 
 #col2 {
@@ -93,7 +94,7 @@ ul li div.image {
 /* ===>> This is given as example and used with Tiki <<=== */
 /* ===>>default theme each header should be adapted <<=== */
 
-/** header banner **/
+/** header banner comment or set to none both if you customise theme **/
 #header {
     background: url('../fivealive/options/blueberry/rtl/siteheader_rtl.jpg') 50% 0 no-repeat !important;
 }
