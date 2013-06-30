@@ -28,10 +28,20 @@ class Search_Formatter_ValueFormatter_Wikiplugin extends Search_Formatter_ValueF
 		} else {
 			$content = '';
 		}
+		$defaults = array();
+		if (isset($this->arguments['default'])) {
+			parse_str($this->arguments['default'], $defaults);
+		}
 
 		$params = array();
 		foreach ($this->arguments as $key => $val) {
-			$params[$key] = $entry[$val];
+			if (isset($entry[$val])) {
+				$params[$key] = $entry[$val];
+			} else if (isset($defaults[$key])) {
+				$params[$key] = $defaults[$key];
+			} else if ($key !== 'default') {
+				$params[$key] = $val;
+			}
 		}
 
 		$parserlib = TikiLib::lib('parser');
@@ -44,6 +54,7 @@ class Search_Formatter_ValueFormatter_Wikiplugin extends Search_Formatter_ValueF
 			array(
 				'context_format' => 'html',
 				'ck_editor' => false,
+				'is_html' => 'y'
 			)
 		);
 
