@@ -65,6 +65,7 @@ function prefs_wysiwyg_list()
 		'wysiwyg_htmltowiki' => array(
 			'name' => tra('Use Wiki syntax in WYSIWYG'),
 			'description' => tra('Allow to keep the wiki syntax with the WYSIWYG editor. Sometimes also known as "Visual Wiki".'),
+			'hint' => tra('Using wiki syntax in wysiwyg mode will limit toolbar to Wiki tools'),
 			'type' => 'flag',
 			'dependencies' => array(
 				'feature_wysiwyg',
