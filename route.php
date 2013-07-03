@@ -128,7 +128,7 @@ function tiki_route($path)
 		'/^show:(.+)$/',
 		'tiki-slideshow.php',
 		function ($parts) {
-			return array('page' => $parts[1]);
+			return array('page' => urldecode($parts[1]));
 		}
 	);
 
