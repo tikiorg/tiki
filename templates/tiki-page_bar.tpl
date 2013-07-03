@@ -77,7 +77,7 @@
 
 				{if $prefs.feature_slideshow eq 'y' && $prefs.wiki_uses_slides eq 'y'}
 					{if $show_slideshow eq 'y'}
-						{button _keepall='y' href="tiki-slideshow.php" page=$page _text="{tr}Slideshow{/tr}"}
+						{button _keepall='y' href="./tiki-slideshow.php" page=$page _text="{tr}Slideshow{/tr}"}
 					{elseif $structure eq 'y'}
 						{button _keepall='y' href="tiki-slideshow2.php" page_ref_id=$page_info.page_ref_id _text="{tr}Slideshow{/tr}"}
 					{/if}

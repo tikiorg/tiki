@@ -44,9 +44,22 @@ if (isset($_REQUEST['previewId'])) {
 $smarty->assign('subId', $subId);
 $smarty->assign('articleId', $subId);
 $smarty->assign('previewId', $previewId);
-$smarty->assign('imageIsChanged', (isset($_REQUEST['imageIsChanged']) && $_REQUEST['imageIsChanged']=='y') ? 'y' : 'n');
+$smarty->assign(
+	'imageIsChanged',
+	(isset($_REQUEST['imageIsChanged']) && $_REQUEST['imageIsChanged']=='y') ? 'y' : 'n'
+);
 
-$smarty->assign('allowhtml', 'y');
+if (isset($_REQUEST['templateId']) && $_REQUEST['templateId'] > 0) {
+	global $templateslib; require_once 'lib/templates/templateslib.php';
+	$template_data = $templateslib->get_template($_REQUEST['templateId'],$prefs['language']);
+	$_REQUEST['preview'] = 1;
+	$_REQUEST['body'] = $template_data['content'];
+	if ($templateslib->template_is_in_section($_REQUEST['templateId'], 'wiki_html')) {
+		$_REQUEST['allowhtml'] = 'on';
+	}
+}
+
+$smarty->assign('allowhtml', '');
 $publishDate = $tikilib->now;
 $expireDate = $tikilib->make_time(0, 0, 0, $tikilib->date_format("%m"), $tikilib->date_format("%d"), $tikilib->date_format("%Y") + 1);
 
@@ -127,12 +140,12 @@ if (isset($_REQUEST['subId'])) {
 
 	$body = $article_data['body'];
 	$heading = $article_data['heading'];
-
-	$parsed_body = $tikilib->parse_data($body, array('is_html' => $_SESSION['wysiwyg'] === 'y' && $prefs['wysiwyg_htmltowiki'] !== 'y'));
-	$parsed_heading = $tikilib->parse_data($heading);
-
-	$smarty->assign('parsed_body', $parsed_body);
-	$smarty->assign('parsed_heading', $parsed_heading);
+	$smarty->assign('parsed_body', $tikilib->parse_data($body, array('is_html' => 'y')));
+	$smarty->assign('parsed_heading', $tikilib->parse_data($heading), array('is_html' => 'y'));
+}
+if (!empty($_REQUEST['translationOf'])) {
+	$translationOf = $_REQUEST['translationOf'];
+	$smarty->assign('translationOf', $translationOf);
 }
 
 if (isset($_REQUEST['subId'])) {
@@ -149,7 +162,11 @@ if (isset($_REQUEST['subId'])) {
 if (isset($_REQUEST['allowhtml'])) {
 	if ($_REQUEST['allowhtml'] == 'on') {
 		$smarty->assign('allowhtml', 'y');
+	} else {
+		$smarty->assign('allowhtml', 'n');
 	}
+} else if ($_SESSION['wysiwyg'] === 'y' && $prefs['wysiwyg_htmltowiki'] !== 'y') {
+	$smarty->assign('allowhtml', 'y');
 }
 
 if ((isset($_REQUEST["save"]) || isset($_REQUEST["submitarticle"]))
@@ -300,20 +317,20 @@ if (isset($_REQUEST['preview']) || !empty($errors)) {
 	$smarty->assign('heading', $_REQUEST['heading']);
 	$smarty->assign('edit_data', 'y');
 
-	if (isset($_REQUEST['allowhtml']) && $_REQUEST['allowhtml'] == 'on' || $_SESSION['wysiwyg'] == 'y') {
+	if (isset($_REQUEST['allowhtml']) && $_REQUEST['allowhtml'] == 'on') {
 		$body = $_REQUEST['body'];
 
 		$heading = $_REQUEST['heading'];
 	} else {
-		$body = strip_tags($_REQUEST['body'], '<a><pre><p><img><hr>');
+		$body = strip_tags($_REQUEST['body'], '<a><pre><p><img><hr><b><i>');
 
-		$heading = strip_tags($_REQUEST['heading'], '<a><pre><p><img><hr>');
+		$heading = strip_tags($_REQUEST['heading'], '<a><pre><p><img><hr><b><i>');
 	}
 
 	$smarty->assign('size', strlen($body));
 
-	$parsed_body = $tikilib->parse_data($body, array('is_html' => $_SESSION['wysiwyg'] === 'y' && $prefs['wysiwyg_htmltowiki'] !== 'y'));
-	$parsed_heading = $tikilib->parse_data($heading);
+	$parsed_body = $tikilib->parse_data($body, array('is_html' => 'y'));
+	$parsed_heading = $tikilib->parse_data($heading, array('is_html' => 'y'));
 
 	$smarty->assign('parsed_body', $parsed_body);
 	$smarty->assign('parsed_heading', $parsed_heading);
@@ -355,14 +372,14 @@ if ((isset($_REQUEST['save']) || isset($_REQUEST['submitarticle'])) && empty($er
 		$_REQUEST['expire_Year']
 	);
 
-	if (isset($_REQUEST['allowhtml']) && $_REQUEST['allowhtml'] == 'on') {
+	if (isset($_REQUEST['allowhtml']) && $_REQUEST['allowhtml'] == 'on' || $_SESSION['wysiwyg'] == 'y') {
 		$body = $_REQUEST['body'];
 
 		$heading = $_REQUEST['heading'];
 	} else {
-		$body = strip_tags($_REQUEST['body'], '<a><pre><p><img><hr>');
+		$body = strip_tags($_REQUEST['body'], '<a><pre><p><img><hr><b><i>');
 
-		$heading = strip_tags($_REQUEST['heading'], '<a><pre><p><img><hr>');
+		$heading = strip_tags($_REQUEST['heading'], '<a><pre><p><img><hr><b><i>');
 	}
 
 	if (isset($_REQUEST['useImage']) && $_REQUEST['useImage'] == 'on') {
