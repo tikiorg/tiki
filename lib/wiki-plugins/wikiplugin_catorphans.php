@@ -89,9 +89,11 @@ function wikiplugin_catorphans($data, $params)
 	// currently only supports display of wiki pages
 	if ($objects == 'wiki') {
 		$listpages = $tikilib->list_pages($offset, $max, 'pageName_asc', '', '', true, true, false, false, array('noCateg' => true));
-		$smarty->assign_by_ref('pages', $listpages['data']);
+		$smarty->assign_by_ref('orphans', $listpages['data']);
 		$smarty->assign('pagination', array('cant'=>$listpages['cant'], 'step'=>$max, 'offset'=>$offset));
-		return '~np~'.$smarty->fetch('wiki-plugins/wikiplugin_catorphans.tpl').'~/np~';		
+		$out = '~np~' . $smarty->fetch('wiki-plugins/wikiplugin_catorphans.tpl') . '~/np~';
+		$smarty->assign('pagination', null);
+		return $out;
 	}
 	return '';
 
