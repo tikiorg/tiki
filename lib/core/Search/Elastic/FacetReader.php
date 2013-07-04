@@ -32,7 +32,9 @@ class Search_Elastic_FacetReader
 		$out = array();
 
 		foreach ($entry->terms as $term) {
-			$out[] = array('value' => $term->term, 'count' => $term->count);
+			if ('' !== $term->term) {
+				$out[] = array('value' => $term->term, 'count' => $term->count);
+			}
 		}
 
 		return $out;
