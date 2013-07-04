@@ -59,8 +59,25 @@ class Math_Formula_Runner
 			return (double) $data;
 		} elseif ( isset($this->variables[$data]) ) {
 			return $this->variables[$data];
+		} elseif (false !== $value = $this->findVariable(explode('.', $data), $this->variables)) {
+			return $value;
 		} else {
 			throw new Math_Formula_Exception(tr('Variable not found "%0".', $data));
+		}
+	}
+
+	private function findVariable($path, $variables)
+	{
+		if (count($path) === 0) {
+			return $variables;
+		}
+
+		$first = array_shift($path);
+
+		if (isset($variables[$first])) {
+			return $this->findVariable($path, $variables[$first]);
+		} else {
+			return false;
 		}
 	}
 

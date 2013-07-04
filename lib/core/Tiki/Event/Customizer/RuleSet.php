@@ -36,7 +36,9 @@ class Tiki_Event_Customizer_RuleSet
 		);
 
 		return function ($arguments) use ($rules, $runner) {
-			$runner->setVariables($arguments);
+			$runner->setVariables(array(
+				'args' => $arguments
+			));
 			foreach ($rules as $rule) {
 				$runner->setFormula($rule);
 				$runner->evaluate();
