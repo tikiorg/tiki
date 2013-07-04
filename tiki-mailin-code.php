@@ -56,7 +56,7 @@ function mailin_check_attachments(&$output, &$out, $page, $user)
 			$wikilib->wiki_attach_file($page, $fileName, $fileType, $fileSize, $fileData, "attached by mail", $user, "");
 			$cnt++;
 			
-			if($show_inlineImages === 'y') {
+			if ($show_inlineImages === 'y') {
 				$contentId = $attachmentPart['header']['content-id'];
 				if (!empty($contentId)) {
 					$contentId = str_replace("<", "", $contentId);
@@ -153,7 +153,7 @@ function mailin_parse_body($body, $acc)
 
 function mailin_containsStringHTML($str) 
 {
-	return preg_match ('/<[^>]*>/', $str) == 1;	
+	return preg_match('/<[^>]*>/', $str) == 1;	
 }
 
 /**
@@ -173,7 +173,7 @@ function mailin_extract_inline_images($pageName, $output, &$body, &$out, $user)
 {
 	global $wikilib, $is_html, $show_inlineImages, $can_addAttachment;
 	
-	if($show_inlineImages !== 'y') {
+	if ($show_inlineImages !== 'y') {
 		return;
 	}
 	if ($can_addAttachment !== 'y') {
@@ -188,7 +188,7 @@ function mailin_extract_inline_images($pageName, $output, &$body, &$out, $user)
 
 	// Only for HTML email
 	$html = mailin_get_html($output);
-	if(empty($html)) {
+	if (empty($html)) {
 		$out.= "inline attachments are only supported for email in html format<br />";
 		return;
 	}
@@ -234,7 +234,7 @@ function mailin_extract_inline_images($pageName, $output, &$body, &$out, $user)
 			}
 			
 			// Only process images
-			if(strpos($fileType,'image/',0) === false) {
+			if (strpos($fileType, 'image/', 0) === false) {
 				$errCnt++;
 				continue;
 			}
@@ -268,7 +268,7 @@ function mailin_insert_inline_image(&$body, $contentId, $attId, $pageName)
 	$replace[] = 'tiki-download_wiki_attachment.php?attId='.$attId.'&page='.urlencode($pageName);
 	
 	$newBody = str_replace($search, $replace, $body);
-	if($newBody == $body) {
+	if ($newBody == $body) {
 		$errCnt++;
 		continue;
 	}
@@ -278,7 +278,7 @@ function mailin_insert_inline_image(&$body, $contentId, $attId, $pageName)
 function mailin_preplog($msg)
 {
 	$logMessage = strip_tags($msg);
-	$logMessage = str_replace('&nbsp;',' ',$logMessage);
+	$logMessage = str_replace('&nbsp;', ' ', $logMessage);
 	return $logMessage;
 }
 
@@ -310,7 +310,7 @@ foreach ($accs['data'] as $acc) {
 	
 	$show_inlineImages = $acc['show_inlineImages'];
 	$can_addAttachment = $prefs['feature_wiki_attachments'];
-	if($can_addAttachment === 'y') {
+	if ($can_addAttachment === 'y') {
 		$can_addAttachment = $acc['attachments'];
 	}
 	
@@ -362,8 +362,8 @@ foreach ($accs['data'] as $acc) {
 						$aux['From'] = $aux['Return-path'];
 					}
 					$fromEmail = $aux["From"];
-					$fromEmail = str_replace('<','',$fromEmail);
-					$fromEmail = str_replace('>','',$fromEmail);
+					$fromEmail = str_replace('<', '', $fromEmail);
+					$fromEmail = str_replace('>', '', $fromEmail);
 
 					
 					preg_match('/<?([-!#$%&\'*+\.\/0-9=?A-Z^_`a-z{|}~]+@[-!#$%&\'*+\/0-9=?A-Z^_`a-z{|}~]+\.[-!#$%&\'*+\.\/0-9=?A-Z^_`a-z{|}~]+)>?/', $aux["From"], $mail);
@@ -543,7 +543,7 @@ foreach ($accs['data'] as $acc) {
 								
 								// Strip invalid characters from the page name 
 								$wikilib = TikiLib::lib('wiki');
-								if($wikilib->contains_badchars($page)) {
+								if ($wikilib->contains_badchars($page)) {
 									$badChars = $wikilib->get_badchars();
 									
 									// Replace bad characters with a '_'
@@ -566,7 +566,7 @@ foreach ($accs['data'] as $acc) {
 										// Check permissions
 										$chkUser = $aux["sender"]["user"];
 										if (($acc["anonymous"] == 'n') && (!$userlib->user_has_permission($chkUser, 'tiki_p_admin'))) {
-											if(!$wikilib->user_has_perm_on_object($chkUser, $page, 'wiki page', 'tiki_p_view')) {
+											if (!$wikilib->user_has_perm_on_object($chkUser, $page, 'wiki page', 'tiki_p_view')) {
 												$errorMsg = $chkUser." cannot view the page: ".$page."<br />";
 												$logslib->add_log('mailin', mailin_preplog($errorMsg), $logUser);
 												
@@ -661,7 +661,7 @@ foreach ($accs['data'] as $acc) {
 											// Check the edit structure permissions on the target structure category, if defined for the routed structure
 											$structCateg = array();
 											if (!empty($route)) {
-												if ($prefs['feature_categories'] === 'y') {  
+												if ($prefs['feature_categories'] === 'y') {
 													
 													$structName = $route['structName'];
 													$categlib = TikiLib::lib('categ');
@@ -740,7 +740,7 @@ foreach ($accs['data'] as $acc) {
 													// Structure routing is active. Create a structure node/page
 													
 													// Use the page structure node, if specified, otherwise link to the rrot of the structure
-													if ($route['page_id'] > 0)  {
+													if ($route['page_id'] > 0) {
 														$parent_id = $route['page_struct_refid'];	// page_ref_id
 													} else {
 														$parent_id = $route['page_ref_id'];	
@@ -762,16 +762,19 @@ foreach ($accs['data'] as $acc) {
 													$structlib->s_create_page($parent_id, $after_ref_id, $page, $alias, $structure_id, $options);
 													$content.= "Page: $page has been added to structureId: ".$structure_id."<br />";
 
-													$tikilib->update_page($page, $body, "Updated from " . $acc["account"],
-																			$aux["sender"]["user"],
-																			$options['ip_source'],
-																			'',	//desc
-																			0, 	//edit_minor
-																			'',	//lang
-																			$parsed_data['is_html'],	//is_html
-																			'',	//hash
-																			null,	//saveLastModif
-																			$parsed_data['wysiwyg']	//wysiwyg
+													$tikilib->update_page(
+																	$page, 
+																	$body,
+																	"Updated from " . $acc["account"],
+																	$aux["sender"]["user"],
+																	$options['ip_source'],
+																	'',	//desc
+																	0, 	//edit_minor
+																	'',	//lang
+																	$parsed_data['is_html'],	//is_html
+																	'',	//hash
+																	null,	//saveLastModif
+																	$parsed_data['wysiwyg']	//wysiwyg
 													);
 													$errorMsg = "Page: $page has been updated by email: " . $fromEmail . "<br />";
 													$logslib->add_log('mailin', mailin_preplog($errorMsg), $logUser);
@@ -781,14 +784,20 @@ foreach ($accs['data'] as $acc) {
 												} else {
 													
 													// Create a regular page
-													$tikilib->create_page($page, 0, $body, $tikilib->now, "Created from " . $acc["account"], $aux["sender"]["user"],
-														'0.0.0.0',
-														'',						//description
-														'',						//lang
-														$parsed_data['is_html'],	//is_html
-														'',						//hash
-														$parsed_data['wysiwyg']	//wysiwyg
-														);
+													$tikilib->create_page(
+																	$page, 
+																	0, 
+																	$body, 
+																	$tikilib->now, 
+																	"Created from " . $acc["account"], 
+																	$aux["sender"]["user"],
+																	'0.0.0.0',
+																	'',						//description
+																	'',						//lang
+																	$parsed_data['is_html'],	//is_html
+																	'',						//hash
+																	$parsed_data['wysiwyg']	//wysiwyg
+													);
 													$errorMsg = "Page: $page has been created by email: " . $fromEmail . "<br />";
 													$logslib->add_log('mailin', mailin_preplog($errorMsg), $logUser);
 													
@@ -823,16 +832,19 @@ foreach ($accs['data'] as $acc) {
 												}
 												
 											} else {
-												$tikilib->update_page($page, $body, "Updated from " . $acc["account"],
-																		$aux["sender"]["user"],
-																		'0.0.0.0',
-																		'',	//desc
-																		0, 	//edit_minor
-																		'',	//lang
-																		$parsed_data['is_html'],	//is_html
-																		'',	//hash
-																		null,	//saveLastModif
-																		$parsed_data['wysiwyg']	//wysiwyg
+												$tikilib->update_page(
+																$page,
+																$body,
+																"Updated from " . $acc["account"],
+																$aux["sender"]["user"],
+																'0.0.0.0',
+																'',	//desc
+																0, 	//edit_minor
+																'',	//lang
+																$parsed_data['is_html'],	//is_html
+																'',	//hash
+																null,	//saveLastModif
+																$parsed_data['wysiwyg']	//wysiwyg
 												);
 												$errorMsg = "Page: $page has been updated by email: " . $fromEmail . "<br />";
 												$logslib->add_log('mailin', mailin_preplog($errorMsg), $logUser);
@@ -850,14 +862,14 @@ foreach ($accs['data'] as $acc) {
 									// Check permissions
 									$chkUser = $aux["sender"]["user"];
 									if (($acc["anonymous"] == 'n') && (!$userlib->user_has_permission($chkUser, 'tiki_p_admin'))) {
-										if(!$wikilib->user_has_perm_on_object($chkUser, $page, 'wiki page', 'tiki_p_edit')) {
+										if (!$wikilib->user_has_perm_on_object($chkUser, $page, 'wiki page', 'tiki_p_edit')) {
 											$errorMsg = $chkUser." cannot edit the page: ".$page."<br />";
 											$logslib->add_log('mailin', mailin_preplog($errorMsg), $logUser);
 											
 											$content.= $errorMsg;
 											$processEmail = false;
 										}
-										if(!$wikilib->user_has_perm_on_object($chkUser, $page, 'wiki page', 'tiki_p_wiki_attach_files')) {
+										if (!$wikilib->user_has_perm_on_object($chkUser, $page, 'wiki page', 'tiki_p_wiki_attach_files')) {
 											$can_addAttachment = 'n';
 											$show_inlineImages = 'n';
 										}
@@ -881,13 +893,19 @@ foreach ($accs['data'] as $acc) {
 												mailin_check_attachments($output, $content, $page, $aux["sender"]["user"], $body);
 											}
 											if (!$tikilib->page_exists($page)) {
-												$tikilib->create_page($page, 0, $body, $tikilib->now, "Created from " . $acc["account"], $aux["sender"]["user"],
-																	 '0.0.0.0',
-																	 '',						//description
-																	 '',						//lang
-																	 $parsed_data['is_html'],	//is_html
-																	 '',						//hash
-																	 $parsed_data['wysiwyg']	//wysiwyg
+												$tikilib->create_page(
+																$page,
+																0,
+																$body,
+																$tikilib->now,
+																"Created from " . $acc["account"],
+																$aux["sender"]["user"],
+																'0.0.0.0',
+																'',						//description
+																'',						//lang
+																$parsed_data['is_html'],	//is_html
+																'',						//hash
+																$parsed_data['wysiwyg']	//wysiwyg
 												);
 												$errorMsg = "Page: $page has been created by email: " . $fromEmail . "<br />";
 												$logslib->add_log('mailin', mailin_preplog($errorMsg), $logUser);
@@ -901,16 +919,19 @@ foreach ($accs['data'] as $acc) {
 												} else {
 													$body = $body . $info['data'];
 												}
-												$tikilib->update_page($page, $body, "Created from " . $acc["account"],
-																	$aux["sender"]["user"],
-																	'0.0.0.0',
-																	'',	//desc
-																	0, 	//edit_minor
-																	'',	//lang
-																	$parsed_data['is_html'],	//is_html
-																	'',	//hash
-																	null,	//saveLastModif
-																	$parsed_data['wysiwyg']	//wysiwyg
+												$tikilib->update_page(
+																$page,
+																$body,
+																"Created from " . $acc["account"],
+																$aux["sender"]["user"],
+																'0.0.0.0',
+																'',	//desc
+																0, 	//edit_minor
+																'',	//lang
+																$parsed_data['is_html'],	//is_html
+																'',	//hash
+																null,	//saveLastModif
+																$parsed_data['wysiwyg']	//wysiwyg
 												);
 												$errorMsg = "Page: $page has been updated by email: " . $fromEmail . "<br />";
 												$logslib->add_log('mailin', mailin_preplog($errorMsg), $logUser);

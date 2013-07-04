@@ -28,7 +28,7 @@ if (!empty($_REQUEST['string_in_db_search'])) {
 	$headers = array();
 	$sql2 = "SHOW COLUMNS FROM ".$table;
 	$rs2 = $tikilib->fetchAll($sql2);
-	foreach ($rs2 as $key2 => $val2){
+	foreach ($rs2 as $key2 => $val2) {
 		$vals2 = array_values($val2);
 		$colum = $vals2[0];
 		$type = $vals2[1];
@@ -37,7 +37,7 @@ if (!empty($_REQUEST['string_in_db_search'])) {
 	$smarty->assign('tableHeaders', $headers);
 	
 	$tableData = array();
-	$sql = "select * from `".$table."` where `".$column."` like '%".$query."%'";
+	$sql = "select * from `" . $table . "` where `" . $column . "` like '%" . $query . "%'";
 	$rs = $tikilib->fetchAll($sql);
 	foreach ($rs as $row) {
 		$tableData[] = $row;
@@ -50,27 +50,28 @@ $smarty->display('tiki.tpl');
 /*
 *	return array (table, attribute, occurrence count)
 */
-function searchAllDB($search){
+function searchAllDB($search)
+{
 	global $tikilib;
 
 	$result = array();
-	$out = "";
+	$out = '';
 
 	$sql = "show tables";
 	$rs = $tikilib->fetchAll($sql);
-	foreach ($rs as $key => $val){
+	foreach ($rs as $key => $val) {
 		$vals = array_values($val);
 		$table = $vals[0];
 		$sql2 = "SHOW COLUMNS FROM ".$table;
 		$rs2 = $tikilib->fetchAll($sql2);
-		foreach ($rs2 as $key2 => $val2){
+		foreach ($rs2 as $key2 => $val2) {
 			$vals2 = array_values($val2);
 			$colum = $vals2[0];
 			$type = $vals2[1];
 			if (isTextType($type)) {
 				$sql_search_fields = Array();
-				$sql_search_fields[] = "`".$colum."` like '%".str_replace("'","''",$search)."%'";
-				$sql_search = "select * from ".$table." where ";
+				$sql_search_fields[] = "`" . $colum . "` like '%" . str_replace("'", "''", $search) . "%'";
+				$sql_search = "select * from " . $table . " where ";
 				$sql_search .= implode(" OR ", $sql_search_fields);
 				$rs3 = $tikilib->fetchAll($sql_search);
 				if (!empty($rs3)) {
