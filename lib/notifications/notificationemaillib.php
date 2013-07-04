@@ -408,6 +408,7 @@ function sendEmailNotification($watches, $dummy, $subjectTpl, $subjectParam, $tx
 					$machine = substr($machine, 0, -1);
 				}
 				$smarty->assign('mail_machine', $machine);
+				$mail = new TikiMail(null, $from);
 				if ($key) {
 					$mail->setUser($key);
 				}
@@ -422,7 +423,6 @@ function sendEmailNotification($watches, $dummy, $subjectTpl, $subjectParam, $tx
 					$mail->setSubject($subjectParam);
 				}
 				$mail->setHtml($smarty->fetchLang($pageLang, "mail/".$txtTpl));
-				$mail->buildMessage();
 				if ($mail->send(array($userlib->get_user_email($key)))) {
 					$sent++;
 				}
