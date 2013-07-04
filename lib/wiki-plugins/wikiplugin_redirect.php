@@ -97,8 +97,7 @@ function wikiplugin_redirect($data, $params)
 		}
 		/* SEO: Redirect with HTTP status 301 - Moved Permanently than default 302 - Found */
 		if (isset($page)) {
-			header("Location: tiki-index.php?page=$page&redirectpage=".$_REQUEST['page'], true, 301);
-			exit;
+			TikiLib::lib('access')->redirect("tiki-index.php?page=$page&redirectpage=".$_REQUEST['page'], '', 301);
 		}
 		if (isset($url)) {
 
@@ -117,8 +116,7 @@ function wikiplugin_redirect($data, $params)
 					return '';						// don't redirect if we've already been redirected to the "home page"
 				}
 			}
-			header("Location: $url");
-			exit;
+			TikiLib::lib('access')->redirect($url);
 		}
 	}
 	return $areturn;
