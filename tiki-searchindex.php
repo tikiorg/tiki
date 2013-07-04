@@ -175,6 +175,14 @@ function tiki_searchindex_get_results($filter, $offset, $maxRecords)
 		}
 	}
 
-	return $query->search($unifiedsearchlib->getIndex());
+	try {
+		return $query->search($unifiedsearchlib->getIndex());
+	} catch (Search_Elastic_TransportException $e) {
+		TikiLib::lib('errorreport')->report('Search functionality currently unavailable.');
+	} catch (Exception $e) {
+		TikiLib::lib('errorreport')->report($e->getMessage());
+	}
+
+	return new Search_ResultSet(array());
 }
 
