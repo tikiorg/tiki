@@ -1425,7 +1425,7 @@ FILL;
 				$back .= '</div>';
 				$back .= '</td></tr>';
 			}
-			if ($prefs['feature_antibot'] == 'y' && (empty($user) || (!empty($user) && $_REQUEST['error'] == 'y'))) {
+			if ($prefs['feature_antibot'] == 'y' && (empty($user) || (!empty($user) && isset($_REQUEST['error']) && $_REQUEST['error'] == 'y'))) {
 				$smarty->assign('showantibot', true);
 			}
 			if (!empty($tpl)) {
