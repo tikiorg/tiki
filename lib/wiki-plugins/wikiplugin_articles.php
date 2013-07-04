@@ -365,7 +365,7 @@ function wikiplugin_articles($data, $params)
 				$listpages["data"][$i]["body"],
 				array(
 					'min_one_paragraph' => true,	
-					'is_html' => $prefs['feature_wysiwyg'] === 'y' && $prefs['wysiwyg_htmltowiki'] !== 'y'
+					'is_html' => $artlib->is_html($listpages["data"][$i]),
 				)
 			);
 		}

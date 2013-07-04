@@ -177,7 +177,7 @@ if (isset($_REQUEST["articleId"]) and $_REQUEST["articleId"] > 0) {
 
 	$body = $article_data['body'];
 	$heading = $article_data['heading'];
-	$smarty->assign('parsed_body', $tikilib->parse_data($body, array('is_html' => 'y')));
+	$smarty->assign('parsed_body', $tikilib->parse_data($body, array('is_html' => $artlib->is_html($article_data))));
 	$smarty->assign('parsed_heading', $tikilib->parse_data($heading), array('is_html' => 'y'));
 }
 if (!empty($_REQUEST['translationOf'])) {
@@ -204,7 +204,7 @@ if (isset($_REQUEST['allowhtml'])) {
 	} else {
 		$smarty->assign('allowhtml', 'n');
 	}
-} else if ($_SESSION['wysiwyg'] === 'y' && $prefs['wysiwyg_htmltowiki'] !== 'y') {
+} else if ($_SESSION['wysiwyg'] === 'y' && $artlib->is_html($article_data)) {
 	$smarty->assign('allowhtml', 'y');
 }
 
@@ -389,7 +389,7 @@ if (isset($_REQUEST['preview']) or !empty($errors)) {
 
 	$smarty->assign('size', strlen($body));
 
-	$parsed_body = $tikilib->parse_data($body, array('is_html' => 'y'));
+	$parsed_body = $tikilib->parse_data($body, array('is_html' => $artlib->is_html(array($body))));
 	$parsed_heading = $tikilib->parse_data($heading, array('is_html' => 'y'));
 
 	$smarty->assign('parsed_body', $parsed_body);

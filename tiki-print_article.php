@@ -60,7 +60,7 @@ if (isset($_REQUEST["articleId"])) {
 	$smarty->assign('edit_data', 'y');
 	$body = $article_data["body"];
 	$heading = $article_data["heading"];
-	$smarty->assign('parsed_body', $tikilib->parse_data($body, array('is_html' => $prefs['feature_wysiwyg'] === 'y' && $prefs['wysiwyg_htmltowiki'] !== 'y')));
+	$smarty->assign('parsed_body', $tikilib->parse_data($body, array('is_html' => $artlib->is_html($article_data))));
 	$smarty->assign('parsed_heading', $tikilib->parse_data($heading));
 }
 ask_ticket('print-article');
