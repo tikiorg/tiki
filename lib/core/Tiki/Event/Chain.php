@@ -5,12 +5,12 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-class Event_Chain
+class Tiki_Event_Chain
 {
 	private $event;
 	private $manager;
 
-	function __construct(Event_Manager $manager, $eventName)
+	function __construct(Tiki_Event_Manager $manager, $eventName)
 	{
 		$this->event = $eventName;
 		$this->manager = $manager;

@@ -299,7 +299,7 @@ class TikiLib extends TikiDb_Bridge
 		static $eventManager = null;
 
 		if (! $eventManager) {
-			$eventManager = new Event_Manager;
+			$eventManager = new Tiki_Event_Manager;
 		}
 
 		return $eventManager;

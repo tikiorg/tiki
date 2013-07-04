@@ -5,7 +5,7 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-class Event_Manager
+class Tiki_Event_Manager
 {
 	private $eventRegistry = array();
 	private $priorities = array();
@@ -25,7 +25,7 @@ class Event_Manager
 		$priority = 0;
 
 		if (! is_callable($callback)) {
-			$callback = new Event_Chain($this, $callback);
+			$callback = new Tiki_Event_Chain($this, $callback);
 			$priority = false;
 		}
 
@@ -88,7 +88,7 @@ class Event_Manager
 
 		foreach ($this->eventRegistry as $from => $callbackList) {
 			foreach ($callbackList as $callback) {
-				if ($callback['callback'] instanceof Event_Chain) {
+				if ($callback['callback'] instanceof Tiki_Event_Chain) {
 					$eventName = $callback['callback']->getEventName();
 					$edges[] = array(
 						'from' => $from,

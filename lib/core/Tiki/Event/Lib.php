@@ -5,7 +5,7 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-class Event_Lib
+class Tiki_Event_Lib
 {
 	private $library;
 	private $method;
