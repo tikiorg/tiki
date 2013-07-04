@@ -914,6 +914,13 @@ class FileGalLib extends TikiLib
 		return $file;
 	}
 
+	function get_file_label($fileId)
+	{
+		$info = $this->get_file_info($fileId, false, false, false);
+
+		return reset(array_filter(array($info['name'], $info['filename'])));
+	}
+
 	function get_files_info_from_gallery_id($galleryId, $include_search_data = false, $include_data = false)
 	{
 		return $this->get_files_info((int)$galleryId, null, $include_search_data, $include_data);

@@ -445,6 +445,8 @@ class ObjectLib extends TikiLib
 				return TikiLib::lib('trk')->get_isMain_value(null, $id);
 			case 'category':
 				return TikiLib::lib('categ')->get_category_name($id);
+			case 'file':
+				return TikiLib::lib('filegal')->get_file_label($id);
 			case 'topic':
 				$meta=TikiLib::lib('art')->get_topic($id);
 				return $meta['name'];
