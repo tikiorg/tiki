@@ -353,6 +353,9 @@ function wikiplugin_articles($data, $params)
 		global $multilinguallib;
 		include_once("lib/multilingual/multilinguallib.php");
 		$listpages['data'] = $multilinguallib->selectLangList('article', $listpages['data'], $pageLang);
+		foreach ($listpages['data'] as &$article) {
+			$article['translations'] = $multilinguallib->getTranslations('article', $article['articleId'], $article["title"], $article['lang']);
+		}
 	}
 
 	for ($i = 0, $icount_listpages = count($listpages["data"]); $i < $icount_listpages; $i++) {
