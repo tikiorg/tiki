@@ -11,6 +11,12 @@ require_once ('tiki-setup.php');
 // Validate that the mail-in feature is activated
 $access->check_feature('feature_mailin');
 
+// Validate current user
+$access->check_user($user);
+
+// Validate current user's permissions
+$access->check_permission(array('tiki_p_send_mailin'));
+
 require_once ('lib/mailin/usermailinlib.php');
 
 $tikifeedback = array();
