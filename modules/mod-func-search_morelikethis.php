@@ -41,10 +41,14 @@ function module_search_morelikethis($mod_reference, $module_params)
 		$query->filterSimilar($object['type'], $object['object']);
 		$query->setRange(0, $mod_reference['rows']);
 
-		$morelikethis = $query->search($unifiedsearchlib->getIndex());
+		try {
+			$morelikethis = $query->search($unifiedsearchlib->getIndex());
 
-		$smarty->assign('modMoreLikeThis', $morelikethis);
-		$smarty->assign('module_rows', $mod_reference["rows"]);
+			$smarty->assign('modMoreLikeThis', $morelikethis);
+			$smarty->assign('module_rows', $mod_reference["rows"]);
+		} catch (Search_Elastic_NotFoundException $e) {
+			// Target document not found - excluded from index, ignore module
+		}
 	}
 
 	$smarty->assign('tpl_module_title', tra("Similar pages"));

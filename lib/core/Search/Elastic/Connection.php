@@ -246,6 +246,8 @@ class Search_Elastic_Connection
 
 		if ($response->isSuccessful()) {
 			return $content;
+		} elseif (isset($content->exists) && $content->exists === false) {
+			throw new Search_Elastic_NotFoundException($content->_type, $content->_id);
 		} else {
 			throw new Search_Elastic_Exception($content->error, $content->status);
 		}
