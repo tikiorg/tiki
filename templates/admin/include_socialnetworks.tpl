@@ -6,8 +6,12 @@
 	{tabset}
 		{tab name="{tr}General{/tr}"}
 			<fieldset class="admin">
-				<legend>{tr}Social network integration{/tr}</legend>
+				<legend>{tr}Social Network Integration{/tr}</legend>
 				{preference name=feature_socialnetworks visible="always"}
+			</fieldset>
+			<fieldset class="admin">
+				<legend>{tr}Internal Social Network{/tr}</legend>
+				{preference name=activity_custom_events visible="always"}
 			</fieldset>
 		{/tab}
 		{tab name="{tr}Twitter{/tr}"}
