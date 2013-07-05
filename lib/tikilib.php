@@ -288,6 +288,9 @@ class TikiLib extends TikiDb_Bridge
 			case 'login':
 				require_once 'lib/loginlib.php';
 				return self::$libraries[$name] = new LoginLib;
+			case 'activity':
+				require_once 'lib/activity/activitylib.php';
+				return self::$libraries[$name] = new ActivityLib;
 		}
 	}
 

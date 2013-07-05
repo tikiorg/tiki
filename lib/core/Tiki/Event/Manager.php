@@ -59,11 +59,11 @@ class Tiki_Event_Manager
 		$this->priorities = $priorities;
 
 		foreach ($priorities as $p) {
-			$this->internalTrigger($eventName, $arguments, $p);
+			$this->internalTrigger($eventName, $arguments, $p, $eventName);
 		}
 	}
 
-	function internalTrigger($eventName, array $arguments, $priority)
+	function internalTrigger($eventName, array $arguments, $priority, $originalEvent)
 	{
 		if (isset ($this->eventRegistry[$eventName])) {
 			foreach ($this->eventRegistry[$eventName] as $callback) {
@@ -74,6 +74,7 @@ class Tiki_Event_Manager
 							$callback['arguments'],
 							$arguments
 						),
+						$originalEvent,
 						$priority
 					);
 				}

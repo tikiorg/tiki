@@ -16,9 +16,9 @@ class Tiki_Event_Chain
 		$this->manager = $manager;
 	}
 
-	function __invoke($arguments, $priority)
+	function __invoke($arguments, $eventName, $priority)
 	{
-		$this->manager->internalTrigger($this->event, $arguments, $priority);
+		$this->manager->internalTrigger($this->event, $arguments, $priority, $eventName);
 	}
 
 	function getEventName()

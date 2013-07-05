@@ -17,7 +17,7 @@ class Tiki_Event_Customizer
 	function bind(Tiki_Event_Manager $manager, Math_Formula_Runner $runner)
 	{
 		foreach ($this->ruleSets as $eventName => $ruleSet) {
-			$manager->bind($eventName, $ruleSet->compile($manager, $runner));
+			$manager->bind($eventName, $ruleSet->compile($runner));
 		}
 	}
 

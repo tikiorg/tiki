@@ -19,10 +19,8 @@ class Tiki_Event_Function_EventTrigger extends Math_Formula_Function
 		$arguments = array();
 		$eventName = $element[0];
 
-		if ($element->arguments) {
-			foreach ($element->arguments as $argument) {
-				$arguments[$argument->getType()] = $this->evaluateChild($argument[0]);
-			}
+		if ($element[1]) {
+			$arguments = $this->evaluateChild($element[1]);
 		}
 
 		$this->manager->trigger($eventName, $arguments);

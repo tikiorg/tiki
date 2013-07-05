@@ -118,6 +118,10 @@ function tiki_setup_events()
 
 	$events->bind('tiki.save', $defer('tiki', 'plugin_post_save_actions'));
 
+	if ($prefs['activity_custom_events'] == 'y') {
+		TikiLib::lib('activity')->bindEvents($events);
+	}
+
 	// Chain events
 	$events->bind('tiki.wiki.update', 'tiki.wiki.save');
 	$events->bind('tiki.wiki.create', 'tiki.wiki.save');

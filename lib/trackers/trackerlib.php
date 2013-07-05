@@ -4703,7 +4703,7 @@ class TrackerLib extends TikiLib
 		foreach ($list as $field) {
 			$handler = $this->get_field_handler($field);
 
-			if ($callback($field, $handler)) {
+			if ($handler && $callback($field, $handler)) {
 				$toConsider[] = $field['fieldId'];
 			}
 		}

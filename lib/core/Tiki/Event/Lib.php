@@ -21,9 +21,9 @@ class Tiki_Event_Lib
 		return new self($library, $method);
 	}
 
-	function __invoke($arguments, $priority)
+	function __invoke($arguments, $eventName, $priority)
 	{
-		TikiLib::lib($this->library)->{$this->method}($arguments, $priority);
+		TikiLib::lib($this->library)->{$this->method}($arguments, $eventName, $priority);
 	}
 }
 
