@@ -120,5 +120,70 @@ class Math_Formula_RunnerTest extends TikiTestCase
 		$this->runner->setFormula('(forty-two)');
 		$this->assertEquals(42, $this->runner->evaluate());
 	}
+
+	function testEmptyMap()
+	{
+		$this->runner->setFormula('(map)');
+
+		$this->assertEquals(array(), $this->runner->evaluate());
+	}
+
+	function testGenerateMap()
+	{
+		$this->runner->setFormula('(map (a A) (b B))');
+		$this->runner->setVariables(array('A' => 1, 'B' => 2));
+
+		$this->assertEquals(array('a' => 1, 'b' => 2), $this->runner->evaluate());
+	}
+
+	function testEquals()
+	{
+		$this->runner->setFormula('(equals test 123)');
+
+		$this->runner->setVariables(array('test' => 123));
+		$this->assertEquals(1, $this->runner->evaluate());
+
+		$this->runner->setVariables(array('test' => 456));
+		$this->assertEquals(0, $this->runner->evaluate());
+
+	}
+
+	function testIf()
+	{
+		$this->runner->setFormula('(if condition then else)');
+		$this->runner->setVariables(array(
+			'condition' => 1,
+			'then' => 123,
+			'else' => 456,
+		));
+
+		$this->assertEquals(123, $this->runner->evaluate());
+
+		$this->runner->setVariables(array(
+			'condition' => 0,
+			'then' => 123,
+			'else' => 456,
+		));
+
+		$this->assertEquals(456, $this->runner->evaluate());
+	}
+
+	function testIfWithoutElse()
+	{
+		$this->runner->setFormula('(if condition then)');
+		$this->runner->setVariables(array(
+			'condition' => 1,
+			'then' => 123,
+		));
+
+		$this->assertEquals(123, $this->runner->evaluate());
+
+		$this->runner->setVariables(array(
+			'condition' => 0,
+			'then' => 123,
+		));
+
+		$this->assertEquals(0, $this->runner->evaluate());
+	}
 }
 
