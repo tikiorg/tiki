@@ -411,6 +411,10 @@ class UnifiedSearchLib
 			$aggregator->addContentSource('user', new Search_ContentSource_UserSource($prefs['user_in_search_result']));
 		}
 
+		if ($prefs['activity_custom_events'] == 'y') {
+			$aggregator->addContentSource('activity', new Search_ContentSource_ActivityStreamSource);
+		}
+
 		// Global Sources
 		if ($prefs['feature_categories'] == 'y') {
 			$aggregator->addGlobalSource(new Search_GlobalSource_CategorySource);

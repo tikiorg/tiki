@@ -24,7 +24,7 @@ class ActivityLib
 			'arguments' => json_encode($arguments),
 		));
 
-		TikiLib::lib('unifiedsearch')->invalidateObject('activity', $objectId);
+		TikiLib::lib('unifiedsearch')->invalidateObject('activity', $id);
 	}
 
 	function bindEvents(Tiki_Event_Manager $manager)
@@ -52,7 +52,25 @@ class ActivityLib
 		$customizer->bind($manager, $runner);
 	}
 
-	private function getMapping()
+	function getActivityList()
+	{
+		return $this->streamTable()->fetchColumn('activityId');
+	}
+
+	function getActivity($id, $typeFactory)
+	{
+		$info = $this->streamTable()->fetchFullRow(array(
+			'activityId' => $id,
+		));
+
+		if ($info) {
+			$info['arguments'] = json_decode($info['arguments'], true);
+
+			return $info;
+		}
+	}
+
+	function getMapping()
 	{
 		if ($this->mapping === false) {
 			$table = $this->mappingTable();
