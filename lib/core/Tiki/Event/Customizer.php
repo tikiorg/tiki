@@ -14,10 +14,10 @@ class Tiki_Event_Customizer
 		$this->getRuleSet($eventName)->addRule($function);
 	}
 
-	function bind(Tiki_Event_Manager $manager)
+	function bind(Tiki_Event_Manager $manager, Math_Formula_Runner $runner)
 	{
 		foreach ($this->ruleSets as $eventName => $ruleSet) {
-			$manager->bind($eventName, $ruleSet->compile($manager));
+			$manager->bind($eventName, $ruleSet->compile($manager, $runner));
 		}
 	}
 

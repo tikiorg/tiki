@@ -8,12 +8,24 @@
 class Tiki_Event_CustomizerTest extends PHPUnit_Framework_TestCase
 {
 	private $manager;
+	private $runner;
 	private $called;
 
 	function setUp()
 	{
 		$this->called = 0;
-		$this->manager = new Tiki_Event_Manager;
+		$manager = $this->manager = new Tiki_Event_Manager;
+		$this->runner = new Math_Formula_Runner(
+			array(
+				function ($eventName) use ($manager) {
+					if ($eventName == 'event-trigger') {
+						return new Tiki_Event_Function_EventTrigger($manager);
+					}
+				},
+				'Math_Formula_Function_' => '',
+				'Tiki_Event_Function_' => '',
+			)
+		);
 	}
 
 	function testBindThroughCustomizedEventFilter()
@@ -22,7 +34,7 @@ class Tiki_Event_CustomizerTest extends PHPUnit_Framework_TestCase
 
 		$customizer = new Tiki_Event_Customizer;
 		$customizer->addRule('tiki.trackeritem.save', '(event-trigger custom.event)');
-		$customizer->bind($this->manager);
+		$customizer->bind($this->manager, $this->runner);
 
 		$this->manager->trigger('tiki.trackeritem.save');
 
@@ -39,7 +51,7 @@ class Tiki_Event_CustomizerTest extends PHPUnit_Framework_TestCase
 				(amount (add args.a args.b))
 				(test args.c)
 			))');
-		$customizer->bind($this->manager);
+		$customizer->bind($this->manager, $this->runner);
 
 		$this->manager->trigger('tiki.trackeritem.save', array(
 			'a' => 2,

@@ -20,21 +20,9 @@ class Tiki_Event_Customizer_RuleSet
 		$this->rules[] = $this->parser->parse($function);
 	}
 
-	function compile(Tiki_Event_Manager $manager)
+	function compile(Tiki_Event_Manager $manager, Math_Formula_Runner $runner)
 	{
 		$rules = $this->rules;
-		$runner = new Math_Formula_Runner(
-			array(
-				function ($eventName) use ($manager) {
-					if ($eventName == 'event-trigger') {
-						return new Tiki_Event_Function_EventTrigger($manager);
-					}
-				},
-				'Math_Formula_Function_' => '',
-				'Tiki_Event_Function_' => '',
-			)
-		);
-
 		return function ($arguments) use ($rules, $runner) {
 			$runner->setVariables(array(
 				'args' => $arguments
