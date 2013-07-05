@@ -155,6 +155,11 @@ class Tracker_Field_Dropdown extends Tracker_Field_Abstract implements Tracker_F
 	private function getPossibilities()
 	{
 		$options = $this->getOption('options');
+
+		if (empty($options)) {
+			return array();
+		}
+
 		$out = array();
 		foreach ($options as $value) {
 			$out[$this->getValuePortion($value)] = $this->getLabelPortion($value);
@@ -228,7 +233,7 @@ class Tracker_Field_Dropdown extends Tracker_Field_Abstract implements Tracker_F
 		return array(
 			Search_Query_Facet_Term::fromField($baseKey)
 				->setLabel($this->getConfiguration('name'))
-				->setRenderMap($this->getConfiguration('possibilities')),
+				->setRenderMap($this->getPossibilities())
 		);
 	}
 }
