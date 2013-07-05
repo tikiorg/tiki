@@ -185,5 +185,47 @@ class Math_Formula_RunnerTest extends TikiTestCase
 
 		$this->assertEquals(0, $this->runner->evaluate());
 	}
+
+	function testAnd()
+	{
+		$this->runner->setFormula('(and)');
+		$this->assertEquals(0, $this->runner->evaluate());
+
+		$this->runner->setFormula('(and 0)');
+		$this->assertEquals(0, $this->runner->evaluate());
+
+		$this->runner->setFormula('(and 1 1 0 1 1)');
+		$this->assertEquals(0, $this->runner->evaluate());
+
+		$this->runner->setFormula('(and 1 1 1 1 0)');
+		$this->assertEquals(0, $this->runner->evaluate());
+
+		$this->runner->setFormula('(and 1)');
+		$this->assertEquals(1, $this->runner->evaluate());
+
+		$this->runner->setFormula('(and 1 1 1 2 1)');
+		$this->assertEquals(1, $this->runner->evaluate());
+	}
+
+	function testOr()
+	{
+		$this->runner->setFormula('(or)');
+		$this->assertEquals(0, $this->runner->evaluate());
+
+		$this->runner->setFormula('(or 0)');
+		$this->assertEquals(0, $this->runner->evaluate());
+
+		$this->runner->setFormula('(or 1 1 0 1 1)');
+		$this->assertEquals(1, $this->runner->evaluate());
+
+		$this->runner->setFormula('(or 1 1 1 1 0)');
+		$this->assertEquals(1, $this->runner->evaluate());
+
+		$this->runner->setFormula('(or 1)');
+		$this->assertEquals(1, $this->runner->evaluate());
+
+		$this->runner->setFormula('(or 0 0 0 0 0)');
+		$this->assertEquals(0, $this->runner->evaluate());
+	}
 }
 
