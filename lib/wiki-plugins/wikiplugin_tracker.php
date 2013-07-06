@@ -1341,13 +1341,24 @@ function wikiplugin_tracker($data, $params)
 						case 't':	// Text field
 						case 'n':	// Numeric field
 						case 'b':	// Currency
-							$isTextOnSameRow = ($f['options_array'][0] == 0) ? false : true;
-							break;
-						case 'a':	// Text area
-							if (!isset($f['options_array'][8])) {
+							if (empty($f['options_array']) || empty($f['options_array'][0])) {
+								// Use default
+								//	Pending: Unable to locate the object to check to determine the default (in the tracker field definitions). Hardcode true. Arild 
 								$isTextOnSameRow = true;
 							} else {
-								$isTextOnSameRow = ($f['options_array'][8] == 0) ? false : true;
+								$isTextOnSameRow = ($f['options_array'][0] == 0) ? false : true;
+							}
+							break;
+						case 'a':	// Text area
+							$isTextOnSameRow = true;
+							if(isset($f['options_array'][8])) {
+								if (empty($f['options_array']) || empty($f['options_array'][8])) {
+									// Use default
+									//	Pending: Unable to locate the object to check to determine the default (in the tracker field definitions). Hardcode true. Arild 
+									$isTextOnSameRow = true;
+								} else {
+									$isTextOnSameRow = ($f['options_array'][8] == 0) ? false : true;
+								}
 							}
 							break;
 						}
