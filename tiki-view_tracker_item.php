@@ -718,9 +718,14 @@ $smarty->assign('canRemove', $itemObject->canRemove());
 // Display the template
 $smarty->assign('mid', 'tiki-view_tracker_item.tpl');
 
-if (isset($_REQUEST['print'])) {
-	$smarty->display('tiki-print.tpl');
-	$smarty->assign('print', 'y');
-} else {
-	$smarty->display('tiki.tpl');
+try {
+	if (isset($_REQUEST['print'])) {
+		$smarty->display('tiki-print.tpl');
+		$smarty->assign('print', 'y');
+	} else {
+		$smarty->display('tiki.tpl');
+	}
+} catch (SmartyException $e) {
+	$message = tr('This element cannot be displayed appropriately. Template not found (%0). Contact the administrator.', $tracker_info['viewItemPretty']);
+	$access->redirect(smarty_modifier_sefurl($info['trackerId'], 'tracker'), $message);
 }
