@@ -51,6 +51,7 @@ class Table_Code_Headers extends Table_Code_Manager
 				}
 			}
 		}
+		asort($f);
 		$code = $this->iterate($f, $this->nt2 . 'headers: {', $this->nt2 . '}', $this->nt3, '', ',');
 		parent::$code[self::$level1][self::$level2] = $code;
 	}
