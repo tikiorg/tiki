@@ -99,7 +99,8 @@ function wikiplugin_fancytable($data, $params)
 	}
 
 	//Start the table
-	$wret = '<table class="normal" id="fancytable_'.$iFancytable.'">' . "\r\t";
+	$style = $sort ? ' style="visibility:hidden"' : '';
+	$wret = '<table class="normal" id="fancytable_' . $iFancytable . '"' . $style . '>' . "\r\t";
 
 	//Header
 	if (isset($head)) {
@@ -128,13 +129,12 @@ function wikiplugin_fancytable($data, $params)
 			$tdhdr, '</th>',
 			isset($colwidths) ? $colwidths : '',
 			isset($headaligns) ? $headaligns : '',
-			isset($headvaligns) ? $headvaligns : '',
-			isset($tshelper) ? $tshelper : null
+			isset($headvaligns) ? $headvaligns : ''
 		);
 
 		//restore original tags and plugin syntax
 		postprocess_section($headrows, $tagremove, $pluginremove);
-		$buttons = isset($tshelper) ? $tshelper->createThead() : '';
+		$buttons = isset($tshelper) ? $tshelper->createThead('fancytable_' . $iFancytable) : '';
 
 		$wret .= '<thead>' . $buttons . $headrows . "\r\t" . '</thead>' . "\r\t" . '<tbody>';
 	}
@@ -287,7 +287,7 @@ function preprocess_section (&$data, &$tagremove, &$pluginremove)
  *
  * @return 		string			$wret		HTML string for the header or body rows processed
  */
-function process_section ($data, $type, $line_sep, $cellbeg, $cellend, $widths, $aligns, $valigns, $tshelper = null)
+function process_section ($data, $type, $line_sep, $cellbeg, $cellend, $widths, $aligns, $valigns)
 {
 	$separator = strpos($data, '~|~') === false ? '|' : '~|~';
 	$lines = explode($line_sep, $data);
@@ -355,17 +355,6 @@ function process_section ($data, $type, $line_sep, $cellbeg, $cellend, $widths, 
 					}
 				}
 
-				//set data-placeholder values for tablesorter filters where appropriate
-				$ph = '';
-				if ($type == 'hs') { 	//headers rows where sort is turned on
-					if (is_object($tshelper)) {
-						$fcols = $tshelper->code['columns'];
-					}
-					if (isset($fcols[$c]['placeholder'])) {
-						$ph = ' ' . $fcols[$c]['placeholder'];
-					}
-				}
-
 				//set column style
 				$colstyle = '';
 				if (!empty($widths) || !empty($aligns) || !empty($valigns)) {
@@ -379,7 +368,7 @@ function process_section ($data, $type, $line_sep, $cellbeg, $cellend, $widths, 
 					$colstyle .= !empty($valigns[$c]) ? ' vertical-align: ' . $valigns[$c] : '';
 					$colstyle .= '"';
 				}
-				$row .= $cellbeg . $colspan . $rowspan . $colstyle . $ph . '>' . $column . $cellend;
+				$row .= $cellbeg . $colspan . $rowspan . $colstyle . '>' . $column . $cellend;
 				$c++;//increment column number
 			}
 			$wret .= $trbeg . $row . $trend;

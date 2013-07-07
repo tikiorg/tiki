@@ -11,30 +11,24 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
 	exit;
 }
 
-
 class tablesorterHelper
 {
 	public $params = array();
-	public $totalcols = '';
-	public $html = '';
 	private $headers = array();
 	private $options = array();
 	private $widgets = array();
 	private $widgetOptions = array();
 	private $filter_functions = array();
 	private $filter_formatter = array();
-	private $defaultph = array(
-		'text' => 'Type here to filter...',
-		'' => 'Type here to filter...',
-		'dropdown' => 'Select a value'
-	);
+	private $placeholder = array();
 
 	public $code = array(
 		'buttons' => array(),
-		'columns' => array(),
 		'jq' => array(),
 		'div' => '',
 	);
+
+
 
 	function createParams()
 	{
@@ -144,14 +138,14 @@ class tablesorterHelper
 				'subparams' => array(
 					'y'		=> '',
 					'max'	=> 20,
-					'expand'	=> array(10, 20, 30, 50, 100, 150, 200),
+					'expand'	=> array(20, 30, 50, 100, 150, 200),
 				),
 			),
 		);
 	}
 
 	function createCode ($id = null, $sortable = 'y', $sortList = null, $tsfilters = null,
-						 $tsfilteroptions = null, $tspaginate = null)
+						 $tsfilteroptions = null, $tspaginate = null, $ajaxurl = null, $ajaxtype = null, $total = null)
 	{
 		global $prefs;
 		if (($prefs['disableJavascript'] == 'n' && $prefs['feature_jquery_tablesorter'] == 'y')) {
@@ -163,14 +157,14 @@ class tablesorterHelper
 			$this->createParams();
 			$this->widgets[] = 'zebra';
 
-			//set jquery for sort reset buttons
+				//set jquery for sort reset buttons
 			$sp = $this->parseParam($sortable);
 			$spsub = $this->params['sortable']['subparams'];
 			$sp = $sp[0];
 			if ($sp != 'n') {
 				if (array_key_exists($sp['type'], $spsub['type'])) {
 					if ($sp['type'] == 'reset' || $sp['type'] == 'savereset') {
-						$tempfunc = '$(\'button#sort-reset-' . $id . '\').click(function(){$(\'#' . $id
+						$tempfunc = "\t" . '$(\'button#sort-reset-' . $id . '\').click(function(){$(\'table#' . $id
 							.'\').trigger(\'sortReset\')';
 						if ($sp['type'] == 'savereset') {
 							$tempfunc .= '.trigger(\'saveSortReset\')';
@@ -184,6 +178,10 @@ class tablesorterHelper
 						$this->widgets[] = 'saveSort';
 						$this->widgetOptions[] = 'saveSort : true';
 					}
+				}
+				//TODO make this an input
+				if ($id == 'usertable') {
+					$this->options[] = 'sortMultiSortKey: null';
 				}
 			}
 
@@ -207,8 +205,8 @@ class tablesorterHelper
 				}
 				if (!empty($newlist)) {
 					$liststring = implode(',', $newlist);
-					$this->options[] = 'sortList : [' . $liststring . ']';
 				}
+				$this->options[] = 'sortList : [' . $liststring . ']';
 			}
 
 			//set paginate code
@@ -217,21 +215,47 @@ class tablesorterHelper
 				$tspsub = $this->params['tspaginate']['subparams'];
 				$tsp = $tsp[0];
 				$max = is_array($tsp) && isset($tsp['max']) ? $tsp['max'] : $tspsub['max'];
-				$this->code['jq'][] = '$(function(){var pagerOptions = {size: ' . $max . ', removeRows: false,
-											output: \'{startRow} to {endRow} ({totalRows})\',
-											container: $(".pager"),
-											};';
-				$this->code['jq'][] = "\t" . '$(\'.toggle\').click(function(){
-											var mode = /Disable/.test( $(this).text() );
-											$(\'#' . $id . '\').trigger( (mode ? \'disable\' : \'enable\') + \'.pager\');
-											$(this).text( (mode ? \'Enable\' : \'Disable\') + \'Pager\');
-											});
-										$(\'#' . $id . '\').bind(\'pagerChange\', function(){
-										// pager automatically enables when table is sorted.
-										$(\'.toggle\').text(\'Disable Pager\');
-										});';
-				$this->code['buttons'][3] = '<button class="toggle">Disable Pager</button>';
-				$this->options[] = 'headerTemplate : \'{content} {icon}\'';
+				$urloption = '';
+				$processoption = '';
+				$typeoption = '';
+				if (!empty($ajaxurl)) {
+					$urloption = "\n\t\t" . 'ajaxUrl : \'' . $ajaxurl . '\',';
+					$processoption = "\n\t\t" . 'ajaxProcessing: function(data, table){' .
+						"\n\t\t\t" . 'var parsed = $.parseHTML( data );' .
+						"\n\t\t\t" . 'var test1 = $(parsed).find(\'#usertablebody\');' .
+						"\n\t\t\t" . 'var test = $(parsed).find(\'table#' . $id . ' tbody\');' .
+						"\n\t\t\t" . '$(test).find(\'.username\').append(\' hi\');' .
+						"\n\t\t\t" . 'var data = $(test).html();' .
+						"\n\t\t\t" . '$(table).find(\'tbody\').html( data );' .
+						"\n\t\t\t" . '$(table).find(\'tbody\').css(\'visibility\', \'visible\');' .
+						"\n\t\t\t" . 'var total = \'' .$total . '\';' .
+						"\n\t\t\t" . 'return [ total ];' .
+						"\n\t\t" . '},' .
+						"\n\t\t" . 'customAjaxUrl: function(table, url) {' .
+						"\n\t\t\t" . 'var offset = this.page * this.size;' .
+						"\n\t\t\t" . 'var newurl = url + \'&offset=\' + offset;' .
+						"\n\t\t\t" . 'return newurl;' .
+						"\n\t\t" . '},'
+					;
+				}
+				if (!empty($ajaxtype)) {
+					$typeoption = "\n\t\t" . 'ajaxObject: {dataType: \'' . $ajaxtype . '\'}';
+				}
+				$pageroptions =
+				"\n\t\t" . 'size: ' . $max . ',' .
+				"\n\t\t" . 'removeRows: false,' .
+				"\n\t\t" . 'output: \'{startRow} to {endRow} ({totalRows})\',' .
+				"\n\t\t" . 'container: $("div#pager-' . $id . '"),' . $urloption . $processoption . $typeoption;
+				$this->code['jq'][] = "\t" . '$(\'button#toggle-' . $id . '\').click(function(){' .
+					"\n\t\t" . 'var mode = /Disable/.test( $(this).text() );' .
+					"\n\t\t" . '$(\'table#' . $id . '\').trigger( (mode ? \'disable\' : \'enable\') + \'.pager\');' .
+					"\n\t\t" . '$(this).text( (mode ? \'Enable\' : \'Disable\') + \' Pager\');' .
+					"\n\t" . '});' .
+					"\n\t" . '$(\'table#' . $id . '\').bind(\'pagerChange\', function(){' .
+					// pager automatically enables when table is sorted.
+					"\n\t\t" . '$(\'button#toggle-' . $id . '\').text(\'Disable Pager\');' .
+					"\n\t" . '});';
+				$this->code['buttons'][3] = '<button id="toggle-' . $id . '">Disable Pager</button>';
 
 				//create div
 				if (is_array($tsp) && isset($tsp['expand'])) {
@@ -242,7 +266,7 @@ class tablesorterHelper
 				} else {
 					$select = $tspsub['expand'];
 				}
-				$div = '<div class="pager tablesorter-pager">
+				$div = '<div id="pager-' . $id . '" class="tablesorter-pager" style="visibility:hidden">
 						Page: <select class="gotoPage"></select>
 						<span class="first arrow">mg</span>
 						<span class="prev arrow">img</span>
@@ -259,6 +283,7 @@ class tablesorterHelper
 				}
 				$div .= '</select></div>';
 				$this->code['div'] = $div;
+				$this->options[] = 'showProcessing: true';
 			}
 
 
@@ -290,8 +315,8 @@ class tablesorterHelper
 							case 'text';
 							case '' :
 								$def = array_merge($tsfsub['type'][$filter['type']], $filter);
-								//set placeholder text for text and dropdown filters, which is in the [0] index of the array
-								$this->code['columns'][$key]['placeholder'] = 'data-placeholder="' . htmlspecialchars($def['placeholder']) . '"';
+								//set placeholder text for text and dropdown filters
+								$this->placeholder[$key] = htmlspecialchars($def['placeholder']);
 								break;
 							case 'range' :
 								$def = array_merge($tsfsub['type'][$filter['type']], $filter);
@@ -301,7 +326,7 @@ class tablesorterHelper
 								$range .= 'values: [' . $def['from'] . ', ' . $def['to'] . '],';
 								$range .= ' min: ' . $def['from'] . ',';
 								$range .= ' max: ' . $def['to'] . ',';
-								$range .= ' delayed: true,';
+								$range .= ' delayed: false,';
 								$range .= ' valueToHeader: ' . $valuetoheader . ',';
 								$range .= ' exactMatch: true});},';
 								$this->filter_formatter[$key] = $range;
@@ -329,7 +354,7 @@ class tablesorterHelper
 					if (isset($tsfo['type']) && $tsfo['type'] == 'reset') {
 						$text = !empty($tsfo['text']) ? $tsfo['text'] : $tsfosub['text'];
 						$this->code['buttons'][2] = '<button id="filter-reset-' . $id . '">' . htmlspecialchars($text) . '</button>';
-						$this->widgetOptions[] = 'filter_reset : \'#filter-reset-' . $id . '\'';
+						$this->widgetOptions[] = 'filter_reset : \'button#filter-reset-' . $id . '\'';
 					}
 					if (isset($tsfo['style']) && $tsfo['style'] == 'hide') {
 						$this->widgetOptions[] = 'filter_hideFilters : true';
@@ -338,7 +363,17 @@ class tablesorterHelper
 			}
 
 			//create jquery
-			$jq = "\t" . '$("#' . $id . '").tablesorter({' . "\n\t\t";
+			$jq .= "\t" . '$("table#' . $id . '").tablesorter({' . "\n\t\t";
+			//add data-placeholders for filters
+			if (count($this->placeholder) > 0) {
+				$jq .= 'onRenderTemplate: function (index, template){';
+				$jq .= "\n\t\t\t" . 'var ph = ' . json_encode($this->placeholder) . ';';
+				$jq .= "\n\t\t\t" . 'var dc = $(this).attr(\'data-column\');';
+				$jq .= "\n\t\t\t" . 'if (typeof ph[dc] !== undefined) {';
+				$jq .= "\n\t\t\t" . '$(this).attr(\'data-placeholder\', ph[dc]);';
+				$jq .= "\n\t\t\t" . '}';
+				$jq .= "\n\t\t" . '},' . "\n\t\t";
+			}
 			//add headers
 			if (is_array($this->headers) && count($this->headers) > 0) {
 				$jq .= 'headers: {';
@@ -420,7 +455,17 @@ class tablesorterHelper
 				$jq = substr($jq, 0, -1);
 			}
 			$jq .= "\n\t" . '})';
-			$jq .= !empty($tspaginate) && $tspaginate != 'n' ? '.tablesorterPager(pagerOptions);' . "\n" . '});' : ';';
+			if (!empty($pageroptions)) {
+				$jq .= '.tablesorterPager({' . $pageroptions . "\n\t" . '});';
+			} else {
+				$jq .= ';';
+			}
+			//unhide table at the end of processing
+			$jq .= "\n\t" . '$("div#' . $id . '-buttons").css(\'visibility\', \'visible\');';
+			$jq .= "\n\t" . '$("div#pager-' . $id . '").css(\'visibility\', \'visible\');';
+			$jq .= "\n\t" . '$("table#' . $id . '").css(\'visibility\', \'visible\');';
+
+//			$jq .= !empty($tspaginate) && $tspaginate != 'n' ? '.tablesorterPager(pagerOptions);' . "\n" . '});' : ';';
 			$this->code['jq'][] = $jq;
 			ksort($this->code['buttons']);
 		} else {
@@ -469,13 +514,19 @@ class tablesorterHelper
 		}
 	}
 
-	function createThead()
+	function createThead($id)
 	{
 		$tshead = '';
 		if (isset($this) && is_array($this->code['buttons']) && count($this->code['buttons']) > 0) {
 			$tshead = implode("\n\t", $this->code['buttons']);
 		}
 		$tshead .= !empty($this->code['div']) ? $this->code['div'] : '';
-		return $tshead;
+		if (!empty($tshead)) {
+			$div = '<div id="' . $id . '-buttons" style="display:inline; visibility:hidden">' .
+				$tshead . '</div>';
+		} else {
+			$div = '';
+		}
+		return $div;
 	}
 }
