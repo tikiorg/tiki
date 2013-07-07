@@ -98,10 +98,6 @@ class Table_Settings_Users extends Table_Settings_Abstract
 		),
 		'pager' => array(
 			'type' => true,
-			'max' => 5,
-			'expand' => array(5, 10),
-//			'max' => 25,
-//			'expand' => array(25, 50, 100, 300),
 			'ajax' => array(
 				'url' => 'tiki-adminusers.php?{sort:sort}&{filter:filter}',
 			)
@@ -128,17 +124,6 @@ class Table_Settings_Users extends Table_Settings_Abstract
 
 		$this->ts['sort']['columns'] = array_values($this->ts['sort']['columns']);
 		$this->ts['filters']['columns'] = array_values($this->ts['filters']['columns']);
-
-		//set rows to be global max records if set
-		if (isset($maxRecords)) {
-			$this->ts['pager']['max'] = $maxRecords;
-			$this->ts['pager']['expand'] = array(
-				$maxRecords,
-				2 * $maxRecords,
-				4 * $maxRecords,
-				12 * $maxRecords,
-			);
-		}
 
 		return $this->ts;
 	}

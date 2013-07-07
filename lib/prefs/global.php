@@ -250,7 +250,7 @@ function prefs_global_list($partial = false)
             'description' => tra(''),
 			'type' => 'text',
 			'size' => '3',
-			'default' => 24,
+			'default' => 25,
 			'tags' => array('basic'),
 		),
 		'maxVersions' => array(

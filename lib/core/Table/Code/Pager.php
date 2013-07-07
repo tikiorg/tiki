@@ -26,7 +26,7 @@ class Table_Code_Pager extends Table_Code_Manager
 	public function setCode()
 	{
 		$p = '';
-		if (isset($this->s['pager']) && $this->s['pager'] !== false) {
+		if (isset($this->s['pager']) && $this->s['pager']['type'] !== false) {
 			$p[] = 'size: ' . $this->s['pager']['max'];
 			$p[] = 'output: \'{startRow} to {endRow} ({totalRows})\'';
 			$p[] = 'container: $(\'div#' . $this->s['pagercontrols']['id'] . '\')';

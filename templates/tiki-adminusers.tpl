@@ -125,205 +125,206 @@
 	{/if}
 
 	<form name="checkform" method="post" action="{$smarty.server.PHP_SELF}{if (!isset($group_management_mode) or $group_management_mode ne 'y') and (!isset($set_default_groups_mode) or $set_default_groups_mode ne 'y') and (!isset($email_mode) or $email_mode ne 'y')}#multiple{/if}">
-		<table id="usertable" class="normal">
-			<thead>
-				<tr>
-					<th class="auto">
-						{if $users}
-						   {select_all checkbox_names='checked[]'}
-						{/if}
-					</th>
-					<th>{self_link _sort_arg='sort_mode' _sort_field='login'}{tr}User{/tr}{/self_link}</th>
-					{if $prefs.login_is_email neq 'y'}
-						<th>{self_link _sort_arg='sort_mode' _sort_field='email'}{tr}Email{/tr}{/self_link}</th>
-					{/if}
-					{if $prefs.auth_method eq 'openid'}
-						<th>{self_link _sort_arg='sort_mode' _sort_field='openID'}{tr}OpenID{/tr}{/self_link}</th>
-					{/if}
-					<th>{self_link _sort_arg='sort_mode' _sort_field='currentLogin'}{tr}Last login{/tr}{/self_link}</th>
-					<th>{self_link _sort_arg='sort_mode' _sort_field='created'}{tr}Registered{/tr}{/self_link}</th>
-					<th>{tr}Groups{/tr}</th>
-					<th>{tr}Actions{/tr}</th>
-				</tr>
-			</thead>
-			<tbody>
-			{cycle print=false values="even,odd"}
-			{section name=user loop=$users}
-				{if $users[user].editable}
-					{capture assign=username}{$users[user].user|escape}{/capture}
-					<tr class="{cycle}">
-						<td class="checkbox">
-							{if $users[user].user ne 'admin'}
-								<input type="checkbox" name="checked[]" value="{$users[user].user|escape}" {if $users[user].checked eq 'y'}checked="checked" {/if}>
+		<div id="usertable" {if $ts}style="visibility: hidden"{/if}>
+			<table id="usertable" class="normal">
+				<thead>
+					<tr>
+						<th class="auto">
+							{if $users}
+							   {select_all checkbox_names='checked[]'}
 							{/if}
-						</td>
-
-						<td class="username">
-							{capture name=username}{$users[user].user|username}{/capture}
-							<a class="link" href="tiki-adminusers.php?offset={$offset}&amp;numrows={$numrows}&amp;sort_mode={$sort_mode}&amp;user={$users[user].userId}{if $prefs.feature_tabs ne 'y'}#2{/if}" title="{tr}Edit Account Settings:{/tr} {$smarty.capture.username}">
-							   {$users[user].user|escape}
-							</a>
-							{if $prefs.user_show_realnames eq 'y' and $smarty.capture.username ne $users[user].user}
-								<div class="subcomment">
-									{$smarty.capture.username|escape}
-								</div>
-							{/if}
-						</td>
-
-						{if $prefs.login_is_email ne 'y'}
-							<td class="email">{$users[user].email}</td>
+						</th>
+						<th>{self_link _sort_arg='sort_mode' _sort_field='login'}{tr}User{/tr}{/self_link}</th>
+						{if $prefs.login_is_email neq 'y'}
+							<th>{self_link _sort_arg='sort_mode' _sort_field='email'}{tr}Email{/tr}{/self_link}</th>
 						{/if}
 						{if $prefs.auth_method eq 'openid'}
-							<td class="text">{$users[user].openid_url|default:"{tr}N{/tr}"}</td>
+							<th>{self_link _sort_arg='sort_mode' _sort_field='openID'}{tr}OpenID{/tr}{/self_link}</th>
 						{/if}
-						<td class="text">
-							{if $users[user].currentLogin eq ''}
-								{capture name=when}{$users[user].age|duration_short}{/capture}
-								{tr}Never{/tr} <em>({tr _0=$smarty.capture.when}Registered %0 ago{/tr})</em>
-							{else}
-								{$users[user].currentLogin|tiki_short_datetime}
-							{/if}
-
-							{if $users[user].waiting eq 'u'}
-								<br>
-								{tr}Need to validate email{/tr}
-							{/if}
-						</td>
-						<td class="text">
-							{$users[user].registrationDate|tiki_short_datetime}
-						</td>
-
-						<td class="text">
-							{foreach from=$users[user].groups key=grs item=what name=gr}
-								<div style="white-space:nowrap">
-									{if $grs != "Anonymous" and ($tiki_p_admin eq 'y' || in_array($grs, $all_groups))}
-										{if $what eq 'included'}<i>{/if}
-										{if $tiki_p_admin eq 'y'}
-											<a class="link" {$link_style} href="tiki-admingroups.php?group={$grs|escape:"url"}" title={if $what eq 'included'}"{tr}Edit Included Group{/tr}"{else}"{tr}Edit Group:{/tr} {$grs|escape}"{/if}>
-										{/if}
-										{$grs|escape}
-										{if $tiki_p_admin eq 'y'}
-											</a>
-										{/if}
-										{if $what eq 'included'}</i>{/if}
-										{if $grs eq $users[user].default_group}<small>({tr}default{/tr})</small>{/if}
-										{if $what ne 'included' and $grs != "Registered"}
-											{capture assign=grse}{$grs|escape}{/capture}
-											{capture assign=title}{tr _0=$username _1=$grse}Remove %0 from %1{/tr}{/capture}{*FIXME*}
-											{self_link _class='link' user=$users[user].user action='removegroup' group=$grs _icon='cross' _title=$title}{/self_link}
-										{else}
-											{icon _id='bullet_white'}
-										{/if}
-										{if !$smarty.foreach.gr.last}<br>{/if}
-									{/if}
-								</div>
-							{/foreach}
-						</td>
-
-						<td class="action">
-							<a class="link" href="tiki-assignuser.php?assign_user={$users[user].user|escape:url}" title="{tr}Assign to group{/tr}">{capture assign=alt}{tr _0=$username}Assign %0 to groups{/tr}{/capture}{*FIXME*}{icon _id='group_key' alt=$alt}</a>
-							{capture assign=title}{tr _0=$username}Edit Account Settings: %0{/tr}{/capture}{*FIXME*}
-							{self_link _class="link" user=$users[user].userId _icon="page_edit" _title=$title}{/self_link}
-							{if $prefs.feature_userPreferences eq 'y' || $user eq 'admin'}
-								<a class="link" href="tiki-user_preferences.php?userId={$users[user].userId}" title="{tr _0=$username}Change user preferences: %0{/tr}">{capture assign=alt}{tr _0=$username}Change user preferences: %0{/tr}{/capture}{icon _id='wrench' alt=$alt}</a>
-							{/if}
-							{if $users[user].user eq $user or $users[user].user_information neq 'private' or $tiki_p_admin eq 'y'}
-								{capture assign=title}{tr _0=$username}User Information: %0{/tr}{/capture}{*FIXME*}
-								<a class="link" href="tiki-user_information.php?userId={$users[user].userId}" title="{$title}"{if $users[user].user_information eq 'private'} style="opacity:0.5;"{/if}>{icon _id='help' alt=$title}</a>
-							{/if}
-
-							{if $users[user].user ne 'admin'}
-								<a class="link" href="{$smarty.server.PHP_SELF}?{query action=delete user=$users[user].user}" title="{tr}Delete{/tr}">{icon _id='cross' alt="{tr}Delete{/tr}"}</a>
-								{if $users[user].waiting eq 'a'}
-									<a class="link" href="tiki-login_validate.php?user={$users[user].user|escape:url}&amp;pass={$users[user].valid|escape:url}" title="{tr _0=$users[user].user|username}Validate user: %0{/tr}">{capture assign=alt}{tr _0=$users[user].user|username}Validate user: %0{/tr}{/capture}{*FIXME*}{icon _id='accept' alt=$alt}</a>
-								{/if}
-								{if $users[user].waiting eq 'u'}
-									<a class="link" href="tiki-confirm_user_email.php?user={$users[user].user|escape:url}&amp;pass={$users[user].provpass|md5|escape:url}" title="{tr _0=$users[user].user|username}Confirm user email: %0{/tr}">{capture assign=alt}{tr _0=$username}Confirm user email: %0{/tr}{/capture}{*FIXME*}{icon _id='email_go' alt=$alt}</a>
-								{/if}
-								{if $prefs.email_due > 0 and $users[user].waiting ne 'u' and $users[user].waiting ne 'a'}
-									<a class="link" href="tiki-adminusers.php?user={$users[user].user|escape:url}&amp;action=email_due" title="{tr}Invalidate email{/tr}">{icon _id='email_cross' alt="{tr}Invalidate email{/tr}"}</a>
-								{/if}
-							{/if}
-							{if !empty($users[user].openid_url)}
-								{self_link userId=$users[user].userId action='remove_openid' _title="{tr}Remove link with OpenID account{/tr}" _icon="img/icons/openid_remove"}{/self_link}
-							{/if}
-						</td>
+						<th>{self_link _sort_arg='sort_mode' _sort_field='currentLogin'}{tr}Last login{/tr}{/self_link}</th>
+						<th>{self_link _sort_arg='sort_mode' _sort_field='created'}{tr}Registered{/tr}{/self_link}</th>
+						<th>{tr}Groups{/tr}</th>
+						<th>{tr}Actions{/tr}</th>
 					</tr>
-				{/if}
-			{sectionelse}
-				{norecords _colspan=8}
-			{/section}
-			</tbody>
-		</table>
-		<table>
-			<tr>
-				<td colspan="18">
-					<a name="multiple"></a>
-					{if $users}
-						<p align="left"> {*on the left to have it close to the checkboxes*}
-							{if (!isset($group_management_mode) or $group_management_mode neq 'y')
-								&& (!isset($set_default_groups_mode) or $set_default_groups_mode neq 'y')
-								&& (!isset($email_mode) or $email_mode neq 'y')}
-								<label>{tr}Perform action with checked:{/tr}
-								<select name="submit_mult">
-									<option value="" selected="selected">-</option>
-									<option value="remove_users" >{tr}Remove{/tr}</option>
-									{if $prefs.feature_wiki_userpage == 'y'}
-										<option value="remove_users_with_page">{tr}Remove Users and their Userpages{/tr}</option>
-									{/if}
-									<option value="assign_groups" >{tr}Manage Group Assignments{/tr}</option>
-									<option value="set_default_groups">{tr}Set Default Groups{/tr}</option>
-									{if $prefs.feature_wiki == 'y'}
-										<option value="emailChecked">{tr}Send a wiki page by Email{/tr}</option>
-									{/if}
-								</select>
-								</label>
-								<input type="submit" value="{tr}OK{/tr}">
-							{elseif $group_management_mode eq 'y'}
-								<select name="group_management">
-									<option value="add">{tr}Assign selected to{/tr}</option>
-									<option value="remove">{tr}Remove selected from{/tr}</option>
-								</select></label>
-								<label>{tr}the following groups:{/tr}
-								<br>
-								<select name="checked_groups[]" multiple="multiple" size="20">
-									{section name=ix loop=$all_groups}
-										{if $all_groups[ix] != 'Anonymous' && $all_groups[ix] != 'Registered'}
-										<option value="{$all_groups[ix]|escape}">{$all_groups[ix]|escape}</option>
-										{/if}
-									{/section}
-								</select></label>
-								<br>
-								<input type="submit" value="{tr}OK{/tr}">
-								{if $prefs.jquery_ui_chosen neq 'y'}{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Use Ctrl+Click to select multiple options{/tr}{/remarksbox}{/if}
-							{elseif $set_default_groups_mode eq 'y'}
-								<label>{tr}Set the default group of the selected users to:{/tr}
-								<br>
-								<select name="checked_group" size="20">
-									{section name=ix loop=$all_groups}
-										{if $all_groups[ix] != 'Anonymous'}
-										<option value="{$all_groups[ix]|escape}">{$all_groups[ix]|escape}</option>
-										{/if}
-									{/section}
-								</select></label>
-								<br>
-								<input type="submit" value="{tr}OK{/tr}">
-								<input type="hidden" name="set_default_groups" value="{$set_default_groups_mode}">
-							{elseif $email_mode eq 'y'}
-								<label>{tr}Template wiki page{/tr}
-								<input type="text" name="wikiTpl"></label>
-								<br>
-								<label>{tr}bcc{/tr}
-								<input type="text" name="bcc"></label>
-								<input type="submit" value="{tr}OK{/tr}">
-								<input type="hidden" name="emailChecked" value="{$email_mode}">
-							{/if}
-						</p>
-					{/if}
-				</td>
-			</tr>
-		</table>
+				</thead>
+				<tbody>
+				{cycle print=false values="even,odd"}
+				{section name=user loop=$users}
+					{if $users[user].editable}
+						{capture assign=username}{$users[user].user|escape}{/capture}
+						<tr class="{cycle}">
+							<td class="checkbox">
+								{if $users[user].user ne 'admin'}
+									<input type="checkbox" name="checked[]" value="{$users[user].user|escape}" {if $users[user].checked eq 'y'}checked="checked" {/if}>
+								{/if}
+							</td>
 
+							<td class="username">
+								{capture name=username}{$users[user].user|username}{/capture}
+								<a class="link" href="tiki-adminusers.php?offset={$offset}&amp;numrows={$numrows}&amp;sort_mode={$sort_mode}&amp;user={$users[user].userId}{if $prefs.feature_tabs ne 'y'}#2{/if}" title="{tr}Edit Account Settings:{/tr} {$smarty.capture.username}">
+								   {$users[user].user|escape}
+								</a>
+								{if $prefs.user_show_realnames eq 'y' and $smarty.capture.username ne $users[user].user}
+									<div class="subcomment">
+										{$smarty.capture.username|escape}
+									</div>
+								{/if}
+							</td>
+
+							{if $prefs.login_is_email ne 'y'}
+								<td class="email">{$users[user].email}</td>
+							{/if}
+							{if $prefs.auth_method eq 'openid'}
+								<td class="text">{$users[user].openid_url|default:"{tr}N{/tr}"}</td>
+							{/if}
+							<td class="text">
+								{if $users[user].currentLogin eq ''}
+									{capture name=when}{$users[user].age|duration_short}{/capture}
+									{tr}Never{/tr} <em>({tr _0=$smarty.capture.when}Registered %0 ago{/tr})</em>
+								{else}
+									{$users[user].currentLogin|tiki_short_datetime}
+								{/if}
+
+								{if $users[user].waiting eq 'u'}
+									<br>
+									{tr}Need to validate email{/tr}
+								{/if}
+							</td>
+							<td class="text">
+								{$users[user].registrationDate|tiki_short_datetime}
+							</td>
+
+							<td class="text">
+								{foreach from=$users[user].groups key=grs item=what name=gr}
+									<div style="white-space:nowrap">
+										{if $grs != "Anonymous" and ($tiki_p_admin eq 'y' || in_array($grs, $all_groups))}
+											{if $what eq 'included'}<i>{/if}
+											{if $tiki_p_admin eq 'y'}
+												<a class="link" {$link_style} href="tiki-admingroups.php?group={$grs|escape:"url"}" title={if $what eq 'included'}"{tr}Edit Included Group{/tr}"{else}"{tr}Edit Group:{/tr} {$grs|escape}"{/if}>
+											{/if}
+											{$grs|escape}
+											{if $tiki_p_admin eq 'y'}
+												</a>
+											{/if}
+											{if $what eq 'included'}</i>{/if}
+											{if $grs eq $users[user].default_group}<small>({tr}default{/tr})</small>{/if}
+											{if $what ne 'included' and $grs != "Registered"}
+												{capture assign=grse}{$grs|escape}{/capture}
+												{capture assign=title}{tr _0=$username _1=$grse}Remove %0 from %1{/tr}{/capture}{*FIXME*}
+												{self_link _class='link' user=$users[user].user action='removegroup' group=$grs _icon='cross' _title=$title}{/self_link}
+											{else}
+												{icon _id='bullet_white'}
+											{/if}
+											{if !$smarty.foreach.gr.last}<br>{/if}
+										{/if}
+									</div>
+								{/foreach}
+							</td>
+
+							<td class="action">
+								<a class="link" href="tiki-assignuser.php?assign_user={$users[user].user|escape:url}" title="{tr}Assign to group{/tr}">{capture assign=alt}{tr _0=$username}Assign %0 to groups{/tr}{/capture}{*FIXME*}{icon _id='group_key' alt=$alt}</a>
+								{capture assign=title}{tr _0=$username}Edit Account Settings: %0{/tr}{/capture}{*FIXME*}
+								{self_link _class="link" user=$users[user].userId _icon="page_edit" _title=$title}{/self_link}
+								{if $prefs.feature_userPreferences eq 'y' || $user eq 'admin'}
+									<a class="link" href="tiki-user_preferences.php?userId={$users[user].userId}" title="{tr _0=$username}Change user preferences: %0{/tr}">{capture assign=alt}{tr _0=$username}Change user preferences: %0{/tr}{/capture}{icon _id='wrench' alt=$alt}</a>
+								{/if}
+								{if $users[user].user eq $user or $users[user].user_information neq 'private' or $tiki_p_admin eq 'y'}
+									{capture assign=title}{tr _0=$username}User Information: %0{/tr}{/capture}{*FIXME*}
+									<a class="link" href="tiki-user_information.php?userId={$users[user].userId}" title="{$title}"{if $users[user].user_information eq 'private'} style="opacity:0.5;"{/if}>{icon _id='help' alt=$title}</a>
+								{/if}
+
+								{if $users[user].user ne 'admin'}
+									<a class="link" href="{$smarty.server.PHP_SELF}?{query action=delete user=$users[user].user}" title="{tr}Delete{/tr}">{icon _id='cross' alt="{tr}Delete{/tr}"}</a>
+									{if $users[user].waiting eq 'a'}
+										<a class="link" href="tiki-login_validate.php?user={$users[user].user|escape:url}&amp;pass={$users[user].valid|escape:url}" title="{tr _0=$users[user].user|username}Validate user: %0{/tr}">{capture assign=alt}{tr _0=$users[user].user|username}Validate user: %0{/tr}{/capture}{*FIXME*}{icon _id='accept' alt=$alt}</a>
+									{/if}
+									{if $users[user].waiting eq 'u'}
+										<a class="link" href="tiki-confirm_user_email.php?user={$users[user].user|escape:url}&amp;pass={$users[user].provpass|md5|escape:url}" title="{tr _0=$users[user].user|username}Confirm user email: %0{/tr}">{capture assign=alt}{tr _0=$username}Confirm user email: %0{/tr}{/capture}{*FIXME*}{icon _id='email_go' alt=$alt}</a>
+									{/if}
+									{if $prefs.email_due > 0 and $users[user].waiting ne 'u' and $users[user].waiting ne 'a'}
+										<a class="link" href="tiki-adminusers.php?user={$users[user].user|escape:url}&amp;action=email_due" title="{tr}Invalidate email{/tr}">{icon _id='email_cross' alt="{tr}Invalidate email{/tr}"}</a>
+									{/if}
+								{/if}
+								{if !empty($users[user].openid_url)}
+									{self_link userId=$users[user].userId action='remove_openid' _title="{tr}Remove link with OpenID account{/tr}" _icon="img/icons/openid_remove"}{/self_link}
+								{/if}
+							</td>
+						</tr>
+					{/if}
+				{sectionelse}
+					{norecords _colspan=8}
+				{/section}
+				</tbody>
+			</table>
+			<table>
+				<tr>
+					<td colspan="18">
+						<a name="multiple"></a>
+						{if $users}
+							<p align="left"> {*on the left to have it close to the checkboxes*}
+								{if (!isset($group_management_mode) or $group_management_mode neq 'y')
+									&& (!isset($set_default_groups_mode) or $set_default_groups_mode neq 'y')
+									&& (!isset($email_mode) or $email_mode neq 'y')}
+									<label>{tr}Perform action with checked:{/tr}
+									<select name="submit_mult">
+										<option value="" selected="selected">-</option>
+										<option value="remove_users" >{tr}Remove{/tr}</option>
+										{if $prefs.feature_wiki_userpage == 'y'}
+											<option value="remove_users_with_page">{tr}Remove Users and their Userpages{/tr}</option>
+										{/if}
+										<option value="assign_groups" >{tr}Manage Group Assignments{/tr}</option>
+										<option value="set_default_groups">{tr}Set Default Groups{/tr}</option>
+										{if $prefs.feature_wiki == 'y'}
+											<option value="emailChecked">{tr}Send a wiki page by Email{/tr}</option>
+										{/if}
+									</select>
+									</label>
+									<input type="submit" value="{tr}OK{/tr}">
+								{elseif $group_management_mode eq 'y'}
+									<select name="group_management">
+										<option value="add">{tr}Assign selected to{/tr}</option>
+										<option value="remove">{tr}Remove selected from{/tr}</option>
+									</select></label>
+									<label>{tr}the following groups:{/tr}
+									<br>
+									<select name="checked_groups[]" multiple="multiple" size="20">
+										{section name=ix loop=$all_groups}
+											{if $all_groups[ix] != 'Anonymous' && $all_groups[ix] != 'Registered'}
+											<option value="{$all_groups[ix]|escape}">{$all_groups[ix]|escape}</option>
+											{/if}
+										{/section}
+									</select></label>
+									<br>
+									<input type="submit" value="{tr}OK{/tr}">
+									{if $prefs.jquery_ui_chosen neq 'y'}{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Use Ctrl+Click to select multiple options{/tr}{/remarksbox}{/if}
+								{elseif $set_default_groups_mode eq 'y'}
+									<label>{tr}Set the default group of the selected users to:{/tr}
+									<br>
+									<select name="checked_group" size="20">
+										{section name=ix loop=$all_groups}
+											{if $all_groups[ix] != 'Anonymous'}
+											<option value="{$all_groups[ix]|escape}">{$all_groups[ix]|escape}</option>
+											{/if}
+										{/section}
+									</select></label>
+									<br>
+									<input type="submit" value="{tr}OK{/tr}">
+									<input type="hidden" name="set_default_groups" value="{$set_default_groups_mode}">
+								{elseif $email_mode eq 'y'}
+									<label>{tr}Template wiki page{/tr}
+									<input type="text" name="wikiTpl"></label>
+									<br>
+									<label>{tr}bcc{/tr}
+									<input type="text" name="bcc"></label>
+									<input type="submit" value="{tr}OK{/tr}">
+									<input type="hidden" name="emailChecked" value="{$email_mode}">
+								{/if}
+							</p>
+						{/if}
+					</td>
+				</tr>
+			</table>
+		</div>
 		<input type="hidden" name="find" value="{$find|escape}">
 		<input type="hidden" name="numrows" value="{$numrows|escape}">
 		<input type="hidden" name="sort_mode" value="{$sort_mode|escape}">
