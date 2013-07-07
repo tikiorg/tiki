@@ -7,10 +7,10 @@
 		{button href="tiki-admingroups.php" _text="{tr}Admin Groups{/tr}"}
 	{/if}
 	{button _text="{tr}Admin Users{/tr}"}
-	{if $tiki_p_admin eq 'y'}	
+	{if $tiki_p_admin eq 'y'}
 	{button href="tiki-objectpermissions.php" _text="{tr}Manage permissions{/tr}"}
 	{/if}
-	{if $userinfo.userId}
+	{if isset($userinfo.userId)}
 		{button href="?add=1" _text="{tr}Add a New User{/tr}"}
 	{/if}
 	{if $prefs.feature_invite eq 'y' and $tiki_p_invite eq 'y'}
@@ -68,82 +68,85 @@
 {* ---------------------- tab with list -------------------- *}
 {tab name="{tr}Users{/tr}"}
 	<h2>{tr}Users{/tr}</h2>
-
-	<form method="get" action="tiki-adminusers.php">
-		<table class="findtable">
-			<tr>
-				<td><label for="find">{tr}Find{/tr}</label></td>
-				<td><input type="text" id="find" name="find" value="{$find|escape}"></td>
-				<td><input type="submit" value="{tr}Find{/tr}" name="search"></td>
-				<td><label for="numrows">{tr}Number of displayed rows{/tr}</label></td>
-				<td><input type="text" size="4" id="numrows" name="numrows" value="{$numrows|escape}"></td>
-			</tr>
-			<tr>
-				<td colspan="2"></td>
-				<td colspan="3">
-					<a href="javascript:toggleBlock('search')" class="link">{icon _id='add' alt="{tr}more{/tr}"}&nbsp;{tr}More Criteria{/tr}</a>
-				</td>
-			</tr>
-		</table>
-		{autocomplete element='#find' type='username'}
-
-		<div id="search" {if $filterGroup or $filterEmail}style="display:block;"{else}style="display:none;"{/if}>
+	{if !$ts}
+		<form method="get" action="tiki-adminusers.php">
 			<table class="findtable">
 				<tr>
-					<td><label for="filterGroup">{tr}Group (direct){/tr}</label></td>
-					<td>
-						<select name="filterGroup" id="filterGroup">
-							<option value=""></option>
-							{section name=ix loop=$all_groups}
-								{if $all_groups[ix] != 'Registered' && $all_groups[ix] != 'Anonymous'}
-									<option value="{$all_groups[ix]|escape}" {if $filterGroup eq $all_groups[ix]}selected{/if}>{$all_groups[ix]|escape}</option>
-								{/if}
-							{/section}
-						</select>
-					</td>
-					<td><label for="filterEmailNotConfirmed">{tr}Email not confirmed{/tr}</label></td>
-					<td><input id="filterEmailNotConfirmed" name="filterEmailNotConfirmed" type="checkbox"{if !empty($smarty.request.filterEmailNotConfirmed)} checked="checked"{/if}></td>
-					<td><label for="filterNeverLoggedIn">{tr}Never logged in{/tr}</label></td>
-					<td><input id="filterNeverLoggedIn" name="filterNeverLoggedIn" type="checkbox"{if !empty($smarty.request.filterNeverLoggedIn)} checked="checked"{/if}></td>
+					<td><label for="find">{tr}Find{/tr}</label></td>
+					<td><input type="text" id="find" name="find" value="{$find|escape}"></td>
+					<td><input type="submit" value="{tr}Find{/tr}" name="search"></td>
+					<td><label for="numrows">{tr}Number of displayed rows{/tr}</label></td>
+					<td><input type="text" size="4" id="numrows" name="numrows" value="{$numrows|escape}"></td>
 				</tr>
 				<tr>
-					<td><label for="filterEmail">{tr}Email{/tr}</label></td>
-					<td><input type="text" id="filterEmail" name="filterEmail" value="{$filterEmail}"></td>
-					<td><label for="filterNotValidated">{tr}User not validated{/tr}</label></td>
-					<td><input id="filterNotValidated" name="filterNotValidated" type="checkbox"{if !empty($smarty.request.filterNotValidated)} checked="checked"{/if}></td>
-					<td></td>
-					<td></td>
+					<td colspan="2"></td>
+					<td colspan="3">
+						<a href="javascript:toggleBlock('search')" class="link">{icon _id='add' alt="{tr}more{/tr}"}&nbsp;{tr}More Criteria{/tr}</a>
+					</td>
 				</tr>
 			</table>
+			{autocomplete element='#find' type='username'}
 
-			<input type="hidden" name="sort_mode" value="{$sort_mode|escape}">
-		</div>
-	</form>
+			<div id="search" {if $filterGroup or $filterEmail}style="display:block;"{else}style="display:none;"{/if}>
+				<table class="findtable">
+					<tr>
+						<td><label for="filterGroup">{tr}Group (direct){/tr}</label></td>
+						<td>
+							<select name="filterGroup" id="filterGroup">
+								<option value=""></option>
+								{section name=ix loop=$all_groups}
+									{if $all_groups[ix] != 'Registered' && $all_groups[ix] != 'Anonymous'}
+										<option value="{$all_groups[ix]|escape}" {if $filterGroup eq $all_groups[ix]}selected{/if}>{$all_groups[ix]|escape}</option>
+									{/if}
+								{/section}
+							</select>
+						</td>
+						<td><label for="filterEmailNotConfirmed">{tr}Email not confirmed{/tr}</label></td>
+						<td><input id="filterEmailNotConfirmed" name="filterEmailNotConfirmed" type="checkbox"{if !empty($smarty.request.filterEmailNotConfirmed)} checked="checked"{/if}></td>
+						<td><label for="filterNeverLoggedIn">{tr}Never logged in{/tr}</label></td>
+						<td><input id="filterNeverLoggedIn" name="filterNeverLoggedIn" type="checkbox"{if !empty($smarty.request.filterNeverLoggedIn)} checked="checked"{/if}></td>
+					</tr>
+					<tr>
+						<td><label for="filterEmail">{tr}Email{/tr}</label></td>
+						<td><input type="text" id="filterEmail" name="filterEmail" value="{$filterEmail}"></td>
+						<td><label for="filterNotValidated">{tr}User not validated{/tr}</label></td>
+						<td><input id="filterNotValidated" name="filterNotValidated" type="checkbox"{if !empty($smarty.request.filterNotValidated)} checked="checked"{/if}></td>
+						<td></td>
+						<td></td>
+					</tr>
+				</table>
 
+				<input type="hidden" name="sort_mode" value="{$sort_mode|escape}">
+			</div>
+		</form>
+	{/if}
 	{if $cant > $numrows or !empty($initial)}
 		{initials_filter_links}
 	{/if}
 
 	<form name="checkform" method="post" action="{$smarty.server.PHP_SELF}{if $group_management_mode ne 'y' and $set_default_groups_mode ne 'y' and $email_mode ne 'y'}#multiple{/if}">
-		<table class="normal">
-			<tr>
-				<th class="auto">
-					{if $users}
-					   {select_all checkbox_names='checked[]'}
+		<table id="usertable" class="normal">
+			<thead>
+				<tr>
+					<th class="auto">
+						{if $users}
+						   {select_all checkbox_names='checked[]'}
+						{/if}
+					</th>
+					<th>{self_link _sort_arg='sort_mode' _sort_field='login'}{tr}User{/tr}{/self_link}</th>
+					{if $prefs.login_is_email neq 'y'}
+						<th>{self_link _sort_arg='sort_mode' _sort_field='email'}{tr}Email{/tr}{/self_link}</th>
 					{/if}
-				</th>
-				<th>{self_link _sort_arg='sort_mode' _sort_field='login'}{tr}User{/tr}{/self_link}</th>
-				{if $prefs.login_is_email neq 'y'}
-					<th>{self_link _sort_arg='sort_mode' _sort_field='email'}{tr}Email{/tr}{/self_link}</th>
-				{/if}
-				{if $prefs.auth_method eq 'openid'}
-					<th>{self_link _sort_arg='sort_mode' _sort_field='openID'}{tr}OpenID{/tr}{/self_link}</th>
-				{/if}
-				<th>{self_link _sort_arg='sort_mode' _sort_field='currentLogin'}{tr}Last login{/tr}{/self_link}</th>
-				<th>{self_link _sort_arg='sort_mode' _sort_field='created'}{tr}Registered{/tr}{/self_link}</th>
-				<th>{tr}Groups{/tr}</th>
-				<th>{tr}Actions{/tr}</th>
-			</tr>
+					{if $prefs.auth_method eq 'openid'}
+						<th>{self_link _sort_arg='sort_mode' _sort_field='openID'}{tr}OpenID{/tr}{/self_link}</th>
+					{/if}
+					<th>{self_link _sort_arg='sort_mode' _sort_field='currentLogin'}{tr}Last login{/tr}{/self_link}</th>
+					<th>{self_link _sort_arg='sort_mode' _sort_field='created'}{tr}Registered{/tr}{/self_link}</th>
+					<th>{tr}Groups{/tr}</th>
+					<th>{tr}Actions{/tr}</th>
+				</tr>
+			</thead>
+			<tbody>
 			{cycle print=false values="even,odd"}
 			{section name=user loop=$users}
 				{if $users[user].editable}
@@ -154,7 +157,7 @@
 								<input type="checkbox" name="checked[]" value="{$users[user].user|escape}" {if $users[user].checked eq 'y'}checked="checked" {/if}>
 							{/if}
 						</td>
-	
+
 						<td class="username">
 							{capture name=username}{$users[user].user|username}{/capture}
 							<a class="link" href="tiki-adminusers.php?offset={$offset}&amp;numrows={$numrows}&amp;sort_mode={$sort_mode}&amp;user={$users[user].userId}{if $prefs.feature_tabs ne 'y'}#2{/if}" title="{tr}Edit Account Settings:{/tr} {$smarty.capture.username}">
@@ -166,13 +169,13 @@
 								</div>
 							{/if}
 						</td>
-	
+
 						{if $prefs.login_is_email ne 'y'}
 							<td class="email">{$users[user].email}</td>
 						{/if}
 						{if $prefs.auth_method eq 'openid'}
 							<td class="text">{$users[user].openid_url|default:"{tr}N{/tr}"}</td>
-						{/if}	
+						{/if}
 						<td class="text">
 							{if $users[user].currentLogin eq ''}
 								{capture name=when}{$users[user].age|duration_short}{/capture}
@@ -180,7 +183,7 @@
 							{else}
 								{$users[user].currentLogin|tiki_short_datetime}
 							{/if}
-					
+
 							{if $users[user].waiting eq 'u'}
 								<br>
 								{tr}Need to validate email{/tr}
@@ -201,7 +204,7 @@
 										{$grs|escape}
 										{if $tiki_p_admin eq 'y'}
 											</a>
-										{/if}									
+										{/if}
 										{if $what eq 'included'}</i>{/if}
 										{if $grs eq $users[user].default_group}<small>({tr}default{/tr})</small>{/if}
 										{if $what ne 'included' and $grs != "Registered"}
@@ -216,7 +219,7 @@
 								</div>
 							{/foreach}
 						</td>
-	
+
 						<td class="action">
 							<a class="link" href="tiki-assignuser.php?assign_user={$users[user].user|escape:url}" title="{tr}Assign to group{/tr}">{capture assign=alt}{tr _0=$username}Assign %0 to groups{/tr}{/capture}{*FIXME*}{icon _id='group_key' alt=$alt}</a>
 							{capture assign=title}{tr _0=$username}Edit Account Settings: %0{/tr}{/capture}{*FIXME*}
@@ -228,7 +231,7 @@
 								{capture assign=title}{tr _0=$username}User Information: %0{/tr}{/capture}{*FIXME*}
 								<a class="link" href="tiki-user_information.php?userId={$users[user].userId}" title="{$title}"{if $users[user].user_information eq 'private'} style="opacity:0.5;"{/if}>{icon _id='help' alt=$title}</a>
 							{/if}
-		
+
 							{if $users[user].user ne 'admin'}
 								<a class="link" href="{$smarty.server.PHP_SELF}?{query action=delete user=$users[user].user}" title="{tr}Delete{/tr}">{icon _id='cross' alt="{tr}Delete{/tr}"}</a>
 								{if $users[user].waiting eq 'a'}
@@ -250,7 +253,9 @@
 			{sectionelse}
 				{norecords _colspan=8}
 			{/section}
-		
+			</tbody>
+		</table>
+		<table>
 			<tr>
 				<td colspan="18">
 					<a name="multiple"></a>
@@ -303,10 +308,10 @@
 								<input type="submit" value="{tr}OK{/tr}">
 								<input type="hidden" name="set_default_groups" value="{$set_default_groups_mode}">
 							{elseif $email_mode eq 'y'}
-								<label>{tr}Template wiki page{/tr} 
+								<label>{tr}Template wiki page{/tr}
 								<input type="text" name="wikiTpl"></label>
 								<br>
-								<label>{tr}bcc{/tr} 
+								<label>{tr}bcc{/tr}
 								<input type="text" name="bcc"></label>
 								<input type="submit" value="{tr}OK{/tr}">
 								<input type="hidden" name="emailChecked" value="{$email_mode}">

@@ -734,19 +734,30 @@ if (isset($_REQUEST['user']) and $_REQUEST['user']) {
 	$_REQUEST['user'] = 0;
 }
 
-$users = $userlib->get_users(
-	$offset,
-	$numrows,
-	$sort_mode,
-	$find,
-	$initial,
-	true,
-	$filterGroup,
-	$filterEmail,
-	!empty($_REQUEST['filterEmailNotConfirmed']),
-	!empty($_REQUEST['filterNotValidated']),
-	!empty($_REQUEST['filterNeverLoggedIn'])
-);
+//add tablesorter sorting and filtering
+$tsOn = $prefs['disableJavascript'] == 'n' && $prefs['feature_jquery_tablesorter'] == 'y' ? true : false;
+$smarty->assign('ts', $tsOn);
+$tsAjax = isset($_REQUEST['tsAjax']) && $_REQUEST['tsAjax'] ? true : false;
+
+if ($tsAjax || !$tsOn) {
+	$users = $userlib->get_users(
+		$offset,
+		$numrows,
+		$sort_mode,
+		$find,
+		$initial,
+		true,
+		$filterGroup,
+		$filterEmail,
+		!empty($_REQUEST['filterEmailNotConfirmed']),
+		!empty($_REQUEST['filterNotValidated']),
+		!empty($_REQUEST['filterNeverLoggedIn'])
+	);
+} elseif($tsOn) {
+	$users['cant'] = $userlib->count_users('');
+	$users['data'] = $users['cant'] > 0 ? true : false;
+	Table_Factory::build('users', array('total' => $users['cant']));
+}
 
 if (!empty($group_management_mode) || !empty($set_default_groups_mode) || !empty($email_mode)) {
 	$arraylen = count($users['data']);

@@ -81,6 +81,7 @@
 			"Tracker": "lib/core/",
 			"Event": "lib/core/",
 			"Services": "lib/core/",
+            "Table": "lib/core/",
 			"Tiki": "lib/core/",
 			"TikiDb": "lib/core/",
 			"Report": "lib/core/",

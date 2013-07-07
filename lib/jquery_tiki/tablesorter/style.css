@@ -173,7 +173,7 @@ span.currange {
 	margin: 2px 5px;
 }
 
-div.pager span.arrow {
+div.tablesorter-pager span.arrow {
 	background-repeat: no-repeat;
 	height:16px;
 	width:8px;
@@ -182,26 +182,26 @@ div.pager span.arrow {
 	color:transparent;
 }
 
-div.pager span.disabled {
+div.tablesorter-pager span.disabled {
 	opacity: 0.5;
 }
 
-div.pager span.first {
+div.tablesorter-pager span.first {
 	background-position: left;
 	background-image: url('../../../img/icons/control_start.png');
 }
 
-div.pager span.prev {
+div.tablesorter-pager span.prev {
 	background-position: left;
 	background-image: url('../../../img/icons/control_rewind.png');
 }
 
-div.pager span.next {
+div.tablesorter-pager span.next {
 	background-position: right;
 	background-image: url('../../../img/icons/control_fastforward.png');
 }
 
-div.pager span.last {
+div.tablesorter-pager span.last {
 	background-position: right;
 	background-image: url('../../../img/icons/control_end.png');
 }
