@@ -33,9 +33,9 @@
 	{/section}{/remarksbox}
 {/if}
 
-{if $added != "" or $discarded != "" or $discardlist != ''}
+{if !empty($added) or !empty($discarded) or !empty($discardlist)}
 	{remarksbox type="feedback" title="{tr}Batch Upload Results{/tr}"}
-		{tr}Updated users:{/tr} {$added}
+		{tr}Updated users:{/tr}  {$added}
 		{if $discarded != ""}- {tr}Rejected users:{/tr} {$discarded}{/if}
 		<br>
 		<br>
@@ -124,7 +124,7 @@
 		{initials_filter_links}
 	{/if}
 
-	<form name="checkform" method="post" action="{$smarty.server.PHP_SELF}{if $group_management_mode ne 'y' and $set_default_groups_mode ne 'y' and $email_mode ne 'y'}#multiple{/if}">
+	<form name="checkform" method="post" action="{$smarty.server.PHP_SELF}{if (!isset($group_management_mode) or $group_management_mode ne 'y') and (!isset($set_default_groups_mode) or $set_default_groups_mode ne 'y') and (!isset($email_mode) or $email_mode ne 'y')}#multiple{/if}">
 		<table id="usertable" class="normal">
 			<thead>
 				<tr>
@@ -261,7 +261,9 @@
 					<a name="multiple"></a>
 					{if $users}
 						<p align="left"> {*on the left to have it close to the checkboxes*}
-							{if $group_management_mode neq 'y' && $set_default_groups_mode neq 'y' && $email_mode neq 'y'}
+							{if (!isset($group_management_mode) or $group_management_mode neq 'y')
+								&& (!isset($set_default_groups_mode) or $set_default_groups_mode neq 'y')
+								&& (!isset($email_mode) or $email_mode neq 'y')}
 								<label>{tr}Perform action with checked:{/tr}
 								<select name="submit_mult">
 									<option value="" selected="selected">-</option>
@@ -334,14 +336,14 @@
 
 {* ---------------------- tab with form -------------------- *}
 <a name="2" ></a>
-{if $userinfo.userId}
+{if isset($userinfo.userId) && $userinfo.userId}
 	{capture assign=add_edit_user_tablabel}{tr}Edit user{/tr} <i>{$userinfo.login|escape}</i>{/capture}
 {else}
 	{assign var=add_edit_user_tablabel value="{tr}Add a New User{/tr}"}
 {/if}
 
 {tab name=$add_edit_user_tablabel}
-	{if $userinfo.userId}
+	{if isset($userinfo.userId) && $userinfo.userId}
 		<h2>{tr}Edit user:{/tr} {$userinfo.login|escape}</h2>
 		{if $userinfo.login ne 'admin' and $userinfo.editable}
 			{assign var=thisloginescaped value=$userinfo.login|escape:'url'}
@@ -372,7 +374,7 @@
 								<em>{tr}Lowercase only{/tr}</em>.
 							{/if}
 							<br>
-							{if $userinfo.userId}
+							{if isset($userinfo.userId) && $userinfo.userId}
 								<p>
 									{icon _id='exclamation' alt="{tr}Warning{/tr}" style="vertical-align:middle"} 
 									<em>{tr}Warning: changing the username could require the user to change his password (for user registered with an old Tiki&lt;=1.8){/tr}</em>
@@ -402,7 +404,7 @@
 					</tr>
 				{else}
 					<tr>
-						<td><label for="pass1">{tr}Password:{/tr}</label>{if !$userinfo.userId}<br>({tr}required{/tr}){/if}</td>
+						<td><label for="pass1">{tr}Password:{/tr}</label>{if !isset($userinfo.userId) or !$userinfo.userId}<br>({tr}required{/tr}){/if}</td>
 						<td>
 							<input type="password" name="pass" id="pass1" onkeyup="runPassword(this.value, 'mypassword');checkPasswordsMatch('#pass2', '#pass1', '#mypassword2_text')">
 							<div style="float:right;margin-left:5px;">
@@ -414,7 +416,7 @@
 						</td>
 					</tr>
 					<tr>
-						<td><label for="pass2">{tr}Repeat Password:{/tr}</label>{if !$userinfo.userId}<br>({tr}required{/tr}){/if}</td>
+						<td><label for="pass2">{tr}Repeat Password:{/tr}</label>{if !isset($userinfo.userId) or !$userinfo.userId}<br>({tr}required{/tr}){/if}</td>
 						<td>
 							<input type="password" name="pass2" id="pass2" onkeyup="checkPasswordsMatch('#pass2', '#pass1', '#mypassword2_text')">
 							<div style="float:right;margin-left:5px;">
@@ -444,7 +446,7 @@
 						<tr>
 							<td>&nbsp;</td>
 							<td>
-								<label><input type="checkbox" name="pass_first_login"{if $userinfo.pass_confirm eq '0'} checked="checked"{/if}> 
+								<label><input type="checkbox" name="pass_first_login"{if isset($userinfo.pass_confirm) && $userinfo.pass_confirm eq '0'} checked="checked"{/if}>
 								{tr}User must change password at next login{/tr}.</label>
 							</td>
 						</tr>
@@ -471,7 +473,7 @@
 						</td>
 					</tr>
 				{/if}
-				{if $userinfo.userId != 0}
+				{if isset($userinfo.userId) && $userinfo.userId != 0}
 					{if $userinfo.created neq $userinfo.registrationDate}
 						<tr>
 							<td>{tr}Created:{/tr}</td>
@@ -485,7 +487,7 @@
 					<tr>
 						<td>{tr}Pass confirmed:{/tr}</td>
 						<td>
-							{if $userinfo.pass_confirm}
+							{if isset($userinfo.pass_confirm) && $userinfo.pass_confirm}
 								{$userinfo.pass_confirm|tiki_long_datetime|default:'Never'}
 							{/if}
 						</td>
@@ -522,7 +524,7 @@
 				<tr>
 					<td>&nbsp;</td>
 					<td>
-						{if $userinfo.userId}
+						{if isset($userinfo.userId) && $userinfo.userId}
 							<input type="hidden" name="user" value="{$userinfo.userId|escape}">
 							<input type="hidden" name="edituser" value="1">
 							<input type="submit" name="save" value="{tr}Save{/tr}">
@@ -590,7 +592,7 @@
 		</table>
 	</form>
 	{if $tiki_p_admin eq 'y'} {* only full admins can manage groups, not tiki_p_admin_users *}
-		{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}You can export users of a group in <a href="tiki-admingroups.php">admin->groups->a_group</a>{/tr}{/remarksbox}
+		{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}You can export users of a group by clicking on that group at <a href="tiki-admingroups.php">admin->groups</a>{/tr}{/remarksbox}
 	{/if}
 {/tab}
 
