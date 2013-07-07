@@ -433,7 +433,14 @@ EXPORT;
 				}
 				$out[$key] = implode(',', $outarray);
 			} else {
-				$out[$key] = array_shift($raw);
+				// Hack to fix samerow problem. May apply to other types too.
+				//	The field default value was not used, when the $raw value is empty
+				//	Caused samerow='No' to be displayed in the dialog, when no value is set. But samerow has default value = Yes. Arild
+				if (($key == 'samerow') && (empty($raw['0']))) {
+					$out[$key] = $info['default'];
+				} else {
+					$out[$key] = array_shift($raw);
+				}
 			}
 		}
 
