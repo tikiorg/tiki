@@ -2761,7 +2761,9 @@ class FileGalLib extends TikiLib
 				$bindvars = array_merge($bindvars, $midvars);
 			}
 			//ORDER BY RAND() can be slow on large databases
-			if ($orderby != 'RAND()' && $orderby != '') $orderby = 'tab.'.$orderby;
+			if ($orderby != 'RAND()' && $orderby != '' && $orderby != '1') {
+				$orderby = 'tab.'.$orderby;
+			}
 
 		} else {
 			$query = $f_query;
