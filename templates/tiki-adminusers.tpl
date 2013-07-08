@@ -120,7 +120,7 @@
 			</div>
 		</form>
 	{/if}
-	{if $cant > $numrows or !empty($initial)}
+	{if ($cant > $numrows or !empty($initial)) && !$ts}
 		{initials_filter_links}
 	{/if}
 
@@ -330,8 +330,9 @@
 		<input type="hidden" name="sort_mode" value="{$sort_mode|escape}">
 		<input type="hidden" name="offset" value="{$offset|escape}">
 	</form>
-
-	{pagination_links cant=$cant step=$numrows offset=$offset}{/pagination_links}
+	{if !$ts}
+		{pagination_links cant=$cant step=$numrows offset=$offset}{/pagination_links}
+	{/if}
 {/tab}
 
 
