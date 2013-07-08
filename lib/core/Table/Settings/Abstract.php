@@ -70,10 +70,10 @@ abstract class Table_Settings_Abstract
 */
 		),
 /*		'pager' => array(
-			'type' => 'disable',				//choices: true, false, disable
+			'type' => 'disable',					//choices: true, false, disable
 			'max' => 25,
 			'expand' => array(50, 100, 250, 500),
-			'ajax' => array(
+			'ajax' => array(						//can also be set to false
 				'url' => 'tiki-adminusers.php?{sort:sort}&{filter:filter}',
 			)
 		)*/
@@ -222,26 +222,14 @@ abstract class Table_Settings_Abstract
 	 */
 	private function overrideSettings($default, $settings)
 	{
-		if (is_array($settings)) {
-			foreach($default as $type => $setting) {
-				if (isset($settings[$type])) {
-					if (is_array($settings[$type])) {
-						$this->s[$type] = array_merge($default[$type], $settings[$type]);
-						if ($type == 'filters' && isset($this->s[$type]['columns'])) {
-							foreach ($this->s[$type]['columns'] as $col => $filterinfo) {
-								$ft = $filterinfo['type'];
-								//for filters, merge at the column level
-								if (isset($this->defaultFilters[$ft])) {
-									$this->s[$type]['columns'][$col] =
-										array_merge($this->defaultFilters[$ft], $filterinfo);
-								}
-							}
-						}
-					} else {
-						$this->s[$type] = $settings[$type];
-					}
-				} else {
-					$this->s[$type] = $default[$type];
+		$this->s = array_replace_recursive($default, $settings);
+		if (isset($this->s['filters']['columns'])) {
+			foreach ($this->s['filters']['columns'] as $col => $filterinfo) {
+				$ft = $filterinfo['type'];
+				//add default placeholder text
+				if (isset($this->defaultFilters[$ft])) {
+					$this->s['filters']['columns'][$col] =
+						array_replace_recursive($this->defaultFilters[$ft], $filterinfo);
 				}
 			}
 		}
