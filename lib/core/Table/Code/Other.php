@@ -53,7 +53,7 @@ class Table_Code_Other extends Table_Code_Manager
 			if ($cols !== false) {
 				foreach($cols as $col => $colinfo) {
 					if (isset($colinfo['placeholder'])) {
-						$jq[] = '$(\'.tablesorter th:eq(' . $col . ')\').data(\'placeholder\', \'' .
+						$jq[] = '$(\'table#' . $this->id . ' th:eq(' . $col . ')\').data(\'placeholder\', \'' .
 							$colinfo['placeholder'] . '\');';
 					}
 				}
