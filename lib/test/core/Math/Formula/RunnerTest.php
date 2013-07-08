@@ -148,6 +148,18 @@ class Math_Formula_RunnerTest extends TikiTestCase
 
 	}
 
+	function testNotEquals()
+	{
+		$this->runner->setFormula('(not-equals test 123)');
+
+		$this->runner->setVariables(array('test' => 123));
+		$this->assertEquals(0, $this->runner->evaluate());
+
+		$this->runner->setVariables(array('test' => 456));
+		$this->assertEquals(1, $this->runner->evaluate());
+
+	}
+
 	function testIf()
 	{
 		$this->runner->setFormula('(if condition then else)');
