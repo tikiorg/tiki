@@ -37,6 +37,10 @@ class Search_GlobalSource_FreeTagSource implements Search_GlobalSource_Interface
 
 	function getData($objectType, $objectId, Search_Type_Factory_Interface $typeFactory, array $data = array())
 	{
+		if (isset($data['freetags']) || isset($data['freetags_text'])) {
+			return array();
+		}
+
 		$tags = $this->freetaglib->get_tags_on_object($objectId, $objectType);
 
 		$textual = array();

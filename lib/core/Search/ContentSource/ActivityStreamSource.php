@@ -47,8 +47,12 @@ class Search_ContentSource_ActivityStreamSource implements Search_ContentSource_
 
 			if (count($related)) {
 				$first = reset($related);
-				if (isset($first['allowed_groups'])) {
-					$document['allowed_groups'] = $first['allowed_groups'];
+				$collectedFields = array('allowed_groups', 'categories', 'deep_categories', 'freetags', 'freetags_text', 'geo_located', 'geo_location');
+
+				foreach ($collectedFields as $field) {
+					if (isset($first[$field])) {
+						$document[$field] = $first[$field];
+					}
 				}
 			}
 		}

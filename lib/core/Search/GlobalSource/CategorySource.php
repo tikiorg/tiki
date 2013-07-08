@@ -47,6 +47,10 @@ class Search_GlobalSource_CategorySource implements Search_GlobalSource_Interfac
 
 	function getData($objectType, $objectId, Search_Type_Factory_Interface $typeFactory, array $data = array())
 	{
+		if (isset($data['categories']) || isset($data['deep_categories'])) {
+			return array();
+		}
+
 		$categories = $this->categlib->get_object_categories($objectType, $objectId, -1, false);
 
 		// For forum posts, and 
