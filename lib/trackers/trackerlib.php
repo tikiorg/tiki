@@ -1588,6 +1588,7 @@ class TrackerLib extends TikiLib
 			array(
 				'type' => 'trackeritem',
 				'object' => $currentItemId,
+				'user' => $GLOBALS['user'],
 				'version' => $version,
 				'trackerId' => $trackerId,
 				'values' => $fil,

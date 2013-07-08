@@ -4504,6 +4504,7 @@ class TikiLib extends TikiDb_Bridge
 			array(
 				'type' => 'wiki page',
 				'object' => $name,
+				'user' => $GLOBALS['user'],
 				'page_id' => $page_id,
 				'version' => 1,
 				'data' => $data,
@@ -4996,6 +4997,7 @@ class TikiLib extends TikiDb_Bridge
 			array(
 				'type' => 'wiki page',
 				'object' => $pageName,
+				'user' => $GLOBALS['user'],
 				'page_id' => $info['page_id'],
 				'version' => $version,
 				'data' => $edit_data,

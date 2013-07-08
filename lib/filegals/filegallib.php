@@ -324,7 +324,13 @@ class FileGalLib extends TikiLib
 		if (isset($final_event) && $final_event) {
 			TikiLib::events()->trigger(
 				$final_event,
-				array('type' => 'file', 'object' => $fileId, 'galleryId' => $galleryId, 'filetype' => $type)
+				array(
+					'type' => 'file',
+					'object' => $fileId,
+					'user' => $GLOBALS['user'],
+					'galleryId' => $galleryId,
+					'filetype' => $type,
+				)
 			);
 		}
 
