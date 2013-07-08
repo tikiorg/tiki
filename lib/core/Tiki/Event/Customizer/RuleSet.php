@@ -20,20 +20,9 @@ class Tiki_Event_Customizer_RuleSet
 		$this->rules[] = $this->parser->parse($function);
 	}
 
-	function compile(Math_Formula_Runner $runner)
+	function getRules()
 	{
-		$rules = $this->rules;
-		return function ($arguments, $eventName, $priority) use ($rules, $runner) {
-			$runner->setVariables(array(
-				'args' => $arguments,
-				'event' => $eventName,
-				'priority' => $priority,
-			));
-			foreach ($rules as $rule) {
-				$runner->setFormula($rule);
-				$runner->evaluate();
-			}
-		};
+		return $this->rules;
 	}
 }
 

@@ -5,7 +5,7 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-class Tiki_Event_Chain
+class Tiki_Event_Chain implements Tiki_Event_EdgeProvider
 {
 	private $event;
 	private $manager;
@@ -21,9 +21,9 @@ class Tiki_Event_Chain
 		$this->manager->internalTrigger($this->event, $arguments, $priority, $eventName);
 	}
 
-	function getEventName()
+	function getTargetEvents()
 	{
-		return $this->event;
+		return array($this->event);
 	}
 }
 

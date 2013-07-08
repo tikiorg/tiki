@@ -89,13 +89,14 @@ class Tiki_Event_Manager
 
 		foreach ($this->eventRegistry as $from => $callbackList) {
 			foreach ($callbackList as $callback) {
-				if ($callback['callback'] instanceof Tiki_Event_Chain) {
-					$eventName = $callback['callback']->getEventName();
-					$edges[] = array(
-						'from' => $from,
-						'to' => $eventName,
-					);
-					$nodes[] = $eventName;
+				if ($callback['callback'] instanceof Tiki_Event_EdgeProvider) {
+					foreach ($callback['callback']->getTargetEvents() as $eventName) {
+						$edges[] = array(
+							'from' => $from,
+							'to' => $eventName,
+						);
+						$nodes[] = $eventName;
+					}
 				}
 			}
 		}
