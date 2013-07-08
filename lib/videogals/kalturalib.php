@@ -159,7 +159,12 @@ class KalturaLib
 		$cachelib = TikiLib::lib('cache');
 
 		if (! $configurations = $cachelib->getSerialized(self::CONFIGURATION_LIST)) {
-			$obj = $this->_getPlayersUiConfs()->objects;
+			try {
+				$obj = $this->_getPlayersUiConfs()->objects;
+			} catch (Exception $e) {
+				TikiLib::lib('errorreport')->report($e->getMessage());
+				return array();
+			}
 			$configurations = array();
 			foreach ($obj as $o) {
 				$configurations[] = get_object_vars($o);

@@ -1429,6 +1429,21 @@ class ArtLib extends TikiLib
 		return $retval;
 	}
 
+	/**
+	 * Work out if body should be parsed as html or not
+	 * Currently (tiki 11) tries the prefs but also checks for html in body in case wysiwyg_htmltowiki wasn't enabled previously
+	 *
+	 * @param $article array of article data
+	 * @return bool
+	 */
+	function is_html($article) {
+		global $prefs;
+
+		return $prefs['feature_wysiwyg'] === 'y' &&
+				($prefs['wysiwyg_htmltowiki'] !== 'y' ||
+						preg_match('/(<\/p>|<\/span>|<\/div>|<\/?br>)/', $article['body']));
+	}
+
 	function list_submissions($offset = 0, $maxRecords = -1, $sort_mode = 'publishDate_desc', $find = '', $date = '')
 	{
 		if ($find) {

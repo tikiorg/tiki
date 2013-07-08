@@ -358,16 +358,23 @@ function wikiplugin_articles($data, $params)
 		global $multilinguallib;
 		include_once("lib/multilingual/multilinguallib.php");
 		$listpages['data'] = $multilinguallib->selectLangList('article', $listpages['data'], $pageLang);
+		foreach ($listpages['data'] as &$article) {
+			$article['translations'] = $multilinguallib->getTranslations('article', $article['articleId'], $article["title"], $article['lang']);
+		}
 	}
 
 	for ($i = 0, $icount_listpages = count($listpages["data"]); $i < $icount_listpages; $i++) {
-		$listpages["data"][$i]["parsed_heading"] = $tikilib->parse_data($listpages["data"][$i]["heading"], array('min_one_paragraph' => true));
+		$listpages["data"][$i]["parsed_heading"] = $tikilib->parse_data($listpages["data"][$i]["heading"], array(
+			'min_one_paragraph' => true,
+			'is_html' => $artlib->is_html($listpages["data"][$i]),
+			)
+		);
 		if ($fullbody == 'y') {
 			$listpages["data"][$i]["parsed_body"] = $tikilib->parse_data(
 				$listpages["data"][$i]["body"],
 				array(
 					'min_one_paragraph' => true,	
-					'is_html' => $prefs['feature_wysiwyg'] === 'y' && $prefs['wysiwyg_htmltowiki'] !== 'y'
+					'is_html' => $artlib->is_html($listpages["data"][$i]),
 				)
 			);
 		}

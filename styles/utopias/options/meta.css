@@ -96,6 +96,10 @@ div#sitead {
 	border-bottom: 1px #eee solid;
 }
 
+#tiki-top a {
+    color: #F1592A;
+}
+
 body.tiki_wiki .navbar {
 	display: none;
 }
@@ -107,5 +111,23 @@ body.tiki_wiki .navbar {
 .wikitext a:hover {
 	color: #008cb4 !important;
 }
+
+.box-login_box .rme {
+	text-align: left !important;
+}
+
+.box-login_box .rme label {
+	font-size: 0.8em;
+}
+
+.box-login_box div {
+	text-align: left !important;
+}
+
+.box-login_box fieldset {
+	padding: 0;
+	border: none;
+}
+
 
 /***** End of file ******/

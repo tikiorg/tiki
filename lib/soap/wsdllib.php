@@ -11,7 +11,7 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 	die;
 }
 
-require_once 'nusoap/nusoap.php';
+require_once 'lib/soap/nusoap/nusoap.php';
 
 class Tiki_Wsdl
 {
