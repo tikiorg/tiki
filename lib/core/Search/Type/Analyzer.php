@@ -20,7 +20,7 @@ class Search_Type_Analyzer
 				return '';
 			}
 		} else {
-			if ($key == 'type' || $key == 'object' || $key == 'version') {
+			if ($key == 'type' || $key == 'object' || $key == 'version' || $key == 'user') {
 				return 'identifier';
 			} elseif ($this->hasSuffix($key, '_id')) {
 				return 'identifier';
