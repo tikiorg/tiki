@@ -1391,17 +1391,12 @@ class TrackerLib extends TikiLib
 
 			if ($status != $oldStatus) {
 				$this->change_status(array($itemId), $status);
-			}
-
-			$items->update(
-				array(
-					'lastModif' => $this->now,
+			} else {
+				$this->update_items(array($itemId), array(
+					'lastModif' => $tikilib->now,
 					'lastModifBy' => $user,
-				),
-				array(
-					'itemId' => $itemId,
-				)
-			);
+				));
+			}
 
 			$version = $this->last_log_version($itemId) + 1;
 
@@ -3602,7 +3597,6 @@ class TrackerLib extends TikiLib
 	{
 		global $prefs, $user;
 		$tikilib = TikiLib::lib('tiki');
-		$logslib = TikiLib::lib('logs');
 
 		if (!count($items)) {
 			return;
@@ -3637,21 +3631,30 @@ class TrackerLib extends TikiLib
 			);
 
 			$toUpdate = array_merge($toUpdate, $child);
+		}
 
+		$this->update_items($toUpdate, array(
+			'status' => $status,
+			'lastModif' => $tikilib->now,
+			'lastModifBy' => $user,
+		));
+	}
+
+	private function update_items(array $toUpdate, array $fields)
+	{
+		global $prefs;
+		$logslib = TikiLib::lib('logs');
+		$table = $this->items();
+		$table->updateMultiple(
+			$fields, array('itemId' => $table->in($toUpdate))
+		);
+
+		foreach ($toUpdate as $itemId) {
 			$version = $this->last_log_version($itemId) + 1;
 			if (($logslib->add_action('Updated', $itemId, 'trackeritem', $version)) == 0) {
 				$version = 0;
 			}
 		}
-
-		$table = $this->items();
-		$table->updateMultiple(
-			array(
-				'status' => $status,
-				'lastModif' => $tikilib->now,
-				'lastModifBy' => $user,
-			), array('itemId' => $table->in($toUpdate))
-		);
 
 		if ($prefs['feature_search'] === 'y' && $prefs['unified_incremental_update'] === 'y') {
 			$searchlib = TikiLib::lib('unifiedsearch');
