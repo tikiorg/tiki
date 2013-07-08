@@ -30,11 +30,12 @@ class Table_Code_Pager extends Table_Code_Manager
 			$p[] = 'size: ' . $this->s['pager']['max'];
 			$p[] = 'output: \'{startRow} to {endRow} ({totalRows})\'';
 			$p[] = 'container: $(\'div#' . $this->s['pagercontrols']['id'] . '\')';
-			$p[] = 'ajaxObject: {dataType: \'html\'}';
-			$p[] = 'ajaxUrl : \'' . $this->s['pager']['ajax']['url'] . '\'';
 
-			//ajax processing - this part grabs the html, usually from the smarty template file
+			//ajax settings
 			if (isset($this->s['pager']['ajax']) && $this->s['pager']['ajax'] !== false) {
+				$p[] = 'ajaxObject: {dataType: \'html\'}';
+				$p[] = 'ajaxUrl : \'' . $this->s['pager']['ajax']['url'] . '\'';
+				//ajax processing - this part grabs the html, usually from the smarty template file
 				$ap = array(
 					'var parsed = $.parseHTML( data );',
 					'var parsedtable = $(parsed).find(\'table#' . $this->id . ' tbody\');',
