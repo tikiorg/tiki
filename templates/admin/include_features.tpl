@@ -242,8 +242,17 @@
 				<a href="#" id="graph-draw" class="button">{tr}Draw Event Diagram{/tr}</a>
 				{jq}
 				$('#graph-draw').click( function( e ) {
-					$(this).hide();
-					$('#graph-canvas').drawGraph();
+					$('#graph-canvas')
+						.empty()
+						.css('width', $window.width() - 50)
+						.css('height', $window.height() - 130)
+						.dialog({
+							title: "Events",
+							width: $window.width() - 20,
+							height: $window.height() - 100
+						})
+						.drawGraph();
+					$
 					return false;
 				} );
 				{/jq}
