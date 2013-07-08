@@ -86,7 +86,7 @@ class Table_Code_Other extends Table_Code_Manager
 
 		//TODO - doesn't seem to work with ajax. Don't set tables to 'disable' until this is fixed
 		//disable pager button
-		if (isset($p['type']) && $p['type'] == 'disable' && $p['type'] !== true) {
+/*		if (isset($p['type']) && $p['type'] == 'disable' && $p['type'] !== true) {
 			$b = array(
 				'var mode = /Disable/.test( $(this).text() );',
 				'$(\'table#' . $this->id . '\').trigger( (mode ? \'disable\' : \'enable\') + \'.pager\');',
@@ -101,12 +101,27 @@ class Table_Code_Other extends Table_Code_Manager
 			$jq[] = $this->iterate($b2, '$(\'table#' . $this->id . '\').bind(\'paperChange\', function(){',
 				$this->nt . '});', $this->nt2, '', '');
 			$html[] = '<button id="' . $p['id'] . '" type="button">Disable Pager</button>';
-		}
+		}*/
 
 		//add any reset/disable buttons just above the table
 		if (isset($html)) {
 			$allhtml = $this->iterate($html, '', '', '', '', '');
 			array_unshift($jq, '$(\'table#' . $this->id . '\').before(\'' . $allhtml . '\'' . $this->nt . ');');
+		}
+
+		//bind to ajax event to show processing
+		$bind = '';
+		if (isset($this->s['pager']['ajax']) && $this->s['pager']['ajax'] !== false) {
+			$bind = array(
+				'if (e.type === \'ajaxSend\') {',
+				'	$(\'table#' . $this->id . ' tbody\').css(\'opacity\', 0.5);',
+				'}',
+				'if (e.type === \'ajaxComplete\') {',
+				'	$(\'table#' . $this->id . ' tbody\').css(\'opacity\', 1);',
+				'}'
+			);
+			$jq[] = $this->iterate($bind, '$(document).bind(\'ajaxSend ajaxComplete\', function(e){',
+				$this->nt . '});', $this->nt2, '', '');
 		}
 
 		$code = $this->iterate($jq, '', '', $this->nt, '', '');
