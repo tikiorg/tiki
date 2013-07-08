@@ -5,22 +5,24 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-class Search_Index_TypeAnalysisDecorator extends Search_Index_AbstractIndexDecorator
+class Search_Index_CategoryFilterDecorator extends Search_Index_AbstractIndexDecorator
 {
-	private $identifierClass;
-	private $mapping = array();
+	private $excluded;
 
-	function __construct(Search_Index_Interface $index)
+	function __construct(Search_Index_Interface $index, array $excluded)
 	{
 		parent::__construct($index);
-		$this->identifierClass = get_class($index->getTypeFactory()->identifier(1));
+		$this->excluded = $excluded;
 	}
 
 	function addDocument(array $document)
 	{
-		$new = array_diff_key($document, $this->mapping);
-		foreach ($new as $key => $value) {
-			$this->mapping[$key] = $value instanceof $this->identifierClass;
+		if (isset($document['deep_categories'])) {
+			$categories = $document['deep_categories']->getValue();
+
+			if (array_intersect($this->excluded, $categories)) {
+				return 0;
+			}
 		}
 		return $this->parent->addDocument($document);
 	}

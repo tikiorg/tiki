@@ -335,7 +335,18 @@ class UnifiedSearchLib
     private function buildIndexer($index, $loggit = false)
 	{
 		global $prefs;
-		$indexer = new Search_Indexer($index, $loggit);
+
+		if (! empty($prefs['unified_excluded_categories'])) {
+			$index = new Search_Index_CategoryFilterDecorator($index, array_filter($prefs['unified_excluded_categories']));
+		}
+
+		$logWriter = null;
+
+		if ($loggit) {
+			$logWriter = new Zend_Log_Writer_Stream($prefs['tmpDir'] . '/Search_Indexer.log', 'w');
+		}
+
+		$indexer = new Search_Indexer($index, $logWriter);
 		$this->addSources($indexer, 'indexing');
 
 		if ($prefs['unified_tokenize_version_numbers'] == 'y') {

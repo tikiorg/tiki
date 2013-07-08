@@ -18,17 +18,13 @@ class Search_Indexer
 
 	public $log = null;
 
-	public function __construct(Search_Index_Interface $searchIndex, $loggit = false)
+	public function __construct(Search_Index_Interface $searchIndex, $logWriter = null)
 	{
-		if ($loggit) {
-			// unused externally, set this to true here to enable logging
-			global $prefs;
-			$writer = new Zend_Log_Writer_Stream($prefs['tmpDir'] . '/Search_Indexer.log', 'w');
-		} else {
-			$writer = new Zend_Log_Writer_Null();
+		if (! $logWriter instanceof Zend_Log_Writer_Interface) {
+			$logWriter = new Zend_Log_Writer_Null();
 		}
-		$writer->setFormatter(new Zend_Log_Formatter_Simple(Zend_Log_Formatter_Simple::DEFAULT_FORMAT . ' [%memoryUsage% bytes]' . PHP_EOL));
-		$this->log = new Zend_Log($writer);
+		$logWriter->setFormatter(new Zend_Log_Formatter_Simple(Zend_Log_Formatter_Simple::DEFAULT_FORMAT . ' [%memoryUsage% bytes]' . PHP_EOL));
+		$this->log = new Zend_Log($logWriter);
 
 		$this->searchIndex = $searchIndex;
 	}
@@ -83,15 +79,6 @@ class Search_Indexer
 
 	private function addDocument($objectType, $objectId)
 	{
-		global $prefs;
-		if (!empty( $prefs['unified_excluded_categories'] )) {
-			$categs = TikiLib::lib('categ')->get_object_categories($objectType, $objectId);
-			if (array_intersect($prefs['unified_excluded_categories'], $categs)) {
-				$this->log("addDocument skipped $objectType $objectId");
-				return 0;
-			}
-		}
-
 		$this->log("addDocument $objectType $objectId");
 
 		$typeFactory = $this->searchIndex->getTypeFactory();

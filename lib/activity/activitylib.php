@@ -54,7 +54,7 @@ class ActivityLib
 
 	function getActivityList()
 	{
-		return $this->streamTable()->fetchColumn('activityId');
+		return $this->streamTable()->fetchColumn('activityId', array());
 	}
 
 	function getActivity($id, $typeFactory)
@@ -74,7 +74,7 @@ class ActivityLib
 	{
 		if ($this->mapping === false) {
 			$table = $this->mappingTable();
-			$this->mapping = $table->fetchMap('field_name', 'field_type');
+			$this->mapping = $table->fetchMap('field_name', 'field_type', array());
 		}
 
 		return $this->mapping;
