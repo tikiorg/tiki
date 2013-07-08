@@ -1161,6 +1161,7 @@ class Services_Tracker_Controller
 				$showCreated = $input->showCreated->int();
 				$showLastModif = $input->showLastModif->int();
 				$keepItemlinkId = $input->keepItemlinkId->int();
+				$keepCountryId = $input->keepCountryId->int();
 				$dateFormatUnixTimestamp = $input->dateFormatUnixTimestamp->int();
 
 				$encoding = $input->encoding->text();
@@ -1244,6 +1245,8 @@ class Services_Tracker_Controller
 					}
 					foreach ($row['field_values'] as $val) {
 						if ( ($keepItemlinkId) && ($val['type'] == 'r') ) {
+							$toDisplay[] = $val['value'];
+						} elseif ( ($keepCountryId) && ($val['type'] == 'y') ) {
 							$toDisplay[] = $val['value'];
 						} elseif ( ($dateFormatUnixTimestamp) && ($val['type'] == 'f') ) {
 							$toDisplay[] = $val['value'];

@@ -44,6 +44,10 @@
 			{tr}Export ItemLink type fields as the itemId of the linked item (to facilitate importing){/tr}
 		</label>
 		<label>
+			<input type="checkbox" name="keepCountryId" value="1" >
+			{tr}Export country type fields as the system name of the country (to facilitate importing){/tr}
+		</label>
+		<label>
 			<input type="checkbox" name="parse" value="1">
 			{tr}Parse as wiki text{/tr}
 		</label>
