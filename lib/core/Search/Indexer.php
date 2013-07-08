@@ -81,6 +81,24 @@ class Search_Indexer
 	{
 		$this->log("addDocument $objectType $objectId");
 
+		$data = $this->getDocuments($objectType, $objectId);
+		foreach ($data as $entry) {
+			try {
+				$this->searchIndex->addDocument($entry);
+			} catch (Exception $e) {
+				$msg = tr('Indexing failed while processing "%0" (type %1) with the error "%2"', $objectId, $objectType, $e->getMessage());
+				TikiLib::lib('errorreport')->report($msg);
+				$this->log->err($msg);
+			}
+		}
+
+		return count($data);
+	}
+
+	private function getDocuments($objectType, $objectId)
+	{
+		$out = array();
+
 		$typeFactory = $this->searchIndex->getTypeFactory();
 
 		if (isset($this->contentSources[$objectType])) {
@@ -94,23 +112,15 @@ class Search_Indexer
 				}
 
 				foreach ($data as $entry) {
-					try {
-						$this->addDocumentFromContentData($objectType, $objectId, $entry, $typeFactory, $globalFields);
-					} catch (Exception $e) {
-						$msg = tr('Indexing failed while processing "%0" (type %1) with the error "%2"', $objectId, $objectType, $e->getMessage());
-						TikiLib::lib('errorreport')->report($msg);
-						$this->log->err($msg);
-					}
+					$out[] = $this->augmentDocument($objectType, $objectId, $entry, $typeFactory, $globalFields);
 				}
-
-				return count($data);
 			}
 		}
 
-		return 0;
+		return $out;
 	}
 
-	private function addDocumentFromContentData($objectType, $objectId, $data, $typeFactory, $globalFields)
+	private function augmentDocument($objectType, $objectId, $data, $typeFactory, $globalFields)
 	{
 		$initialData = $data;
 
@@ -133,7 +143,7 @@ class Search_Indexer
 
 		$data = $this->removeTemporaryKeys($data);
 
-		$this->searchIndex->addDocument($data);
+		return $data;
 	}
 
 	private function applyFilters($data)
