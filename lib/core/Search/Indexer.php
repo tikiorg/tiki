@@ -95,7 +95,7 @@ class Search_Indexer
 		return count($data);
 	}
 
-	private function getDocuments($objectType, $objectId)
+	function getDocuments($objectType, $objectId)
 	{
 		$out = array();
 

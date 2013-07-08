@@ -8,10 +8,12 @@
 class Search_ContentSource_ActivityStreamSource implements Search_ContentSource_Interface
 {
 	private $lib;
+	private $source;
 
-	function __construct()
+	function __construct($source = null)
 	{
 		$this->lib = TikiLib::lib('activity');
+		$this->source = $source;
 	}
 
 	function getDocuments()
@@ -37,6 +39,17 @@ class Search_ContentSource_ActivityStreamSource implements Search_ContentSource_
 
 			if ($type) {
 				$document[$key] = $typeFactory->$type($value);
+			}
+		}
+
+		if ($this->source && isset($document['type'], $document['object'])) {
+			$related = $this->source->getDocuments($info['arguments']['type'], $info['arguments']['object']);
+
+			if (count($related)) {
+				$first = reset($related);
+				if (isset($first['allowed_groups'])) {
+					$document['allowed_groups'] = $first['allowed_groups'];
+				}
 			}
 		}
 

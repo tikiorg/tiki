@@ -423,7 +423,7 @@ class UnifiedSearchLib
 		}
 
 		if ($prefs['activity_custom_events'] == 'y') {
-			$aggregator->addContentSource('activity', new Search_ContentSource_ActivityStreamSource);
+			$aggregator->addContentSource('activity', new Search_ContentSource_ActivityStreamSource($aggregator instanceof Search_Indexer ? $aggregator : null));
 		}
 
 		// Global Sources

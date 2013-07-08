@@ -31,6 +31,7 @@ function wikiplugin_activitystream($data, $params)
 	$output = null;
 
 	$query = new Search_Query;
+	$unifiedsearchlib->initQuery($query);
 	$query->filterType('activity');
 
 	$matches = WikiParser_PluginMatcher::match($data);
