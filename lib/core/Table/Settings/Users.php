@@ -69,6 +69,7 @@ class Table_Settings_Users extends Table_Settings_Abstract
 				),
 				2 => array(					//email - only if $prefs.login_is_email != 'y'
 					'type' => 'text',
+					'placeholder' => 'Enter valid email...',
 					'ajax' => 'filterEmail',
 				),
 				3 => array(					//openid - only if $prefs.auth_method == 'openid'

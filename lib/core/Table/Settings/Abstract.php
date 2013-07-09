@@ -45,7 +45,8 @@ abstract class Table_Settings_Abstract
 			'hide' => false,					//to hide filters. choices: true, false
 /*			'columns' => array(
 				0 => array(
-					'type' => '',				//choices: text, dropdown, date, range, none
+					'type' => 'text',					//choices: text, dropdown, date, range, none
+					'placeholder' => 'Enter a value'	//override default placeholder text
 				),
 				4 => array(
 					'type' => 'dropdown',
