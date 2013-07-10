@@ -1,4 +1,5 @@
 -- tiki_myisam.sql is run after tiki.sql if MyISAM is being installed
+-- $Id$
 CREATE FULLTEXT INDEX ft ON tiki_articles(`title`, `heading`, `body`);
 CREATE FULLTEXT INDEX ft ON tiki_blog_posts(`data`, `title`);
 CREATE FULLTEXT INDEX ft ON tiki_blogs(`title`, `description`);
