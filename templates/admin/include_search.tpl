@@ -170,10 +170,6 @@ $("#log-rebuild").click(function(){
 			{preference name=feature_search_show_last_modification}
 			{preference name=search_parsed_snippet}
 		{/tab}
-
-		{tab name="{tr}Tools{/tr}"}
-			<a href="tiki-report_string_in_db.php">{tr}Report all occurences of a string in any table{/tr}</a><br>
-		{/tab}
 	{/tabset}
 	<div class="heading input_submit_container" style="text-align: right">
 		<input type="submit" value="{tr}Change preferences{/tr}" />
