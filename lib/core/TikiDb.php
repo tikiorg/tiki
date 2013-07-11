@@ -295,13 +295,15 @@ abstract class TikiDb
 	*/
 	function getEngines()
 	{
-		$engines = array();
-		$result = $this->query('show engines');
-		if ($result) {
-			while ($res = $result->fetchRow()) {
-				$engines[] = $res['Engine'];
+		static $engines = array();
+		if(empty($engines)) {
+			$result = $this->query('show engines');
+			if ($result) {
+				while ($res = $result->fetchRow()) {
+					$engines[] = $res['Engine'];
+				}		
 			}		
-		}		
+		}
 		return $engines;
 	}
 	
@@ -327,18 +329,23 @@ abstract class TikiDb
 	 */ 
 	function getCurrentEngine()
 	{
-		$engine = '';
-		$result = $this->query('SHOW TABLE STATUS LIKE ?', 'tiki_schema');
-		if ($result) {
-			$res = $result->fetchRow();
-			$engine  = $res['Engine'];
+		static $engine = '';
+		if(empty($engine)) {
+			$result = $this->query('SHOW TABLE STATUS LIKE ?', 'tiki_schema');
+			if ($result) {
+				$res = $result->fetchRow();
+				$engine  = $res['Engine'];
+			}
 		}
 		return $engine;
 	}
 
 	/**
 	 * Determine if MySQL fulltext search is supported by the current DB engine
-	 * Assumes that all tables use the same table engine
+	 * Assumes that all tables use the same table engine.
+	 * Fulltext search is assumed supported if 
+	 * 1) engine = MyISAM
+	 * 2) engine = InnoDB and MySQL version >= 5.6
 	 * @return true if it is supported, otherwise false
 	 */ 
 	function isMySQLFulltextSearchSupported()
@@ -346,7 +353,43 @@ abstract class TikiDb
 		$currentEngine = $this->getCurrentEngine();
 		if (strcasecmp($currentEngine, "MyISAM") == 0) {
 			return true;
+		} elseif (strcasecmp($currentEngine, "INNODB") == 0) {
+			$versionNr = $this->getMySQLVersionNr();
+			if ($versionNr >= 5.6) {
+				return true;
+			} else {
+				return false;
+			}
 		}
 		return false;
+	}
+
+
+	/**
+	 * Read the MySQL version string.
+	 * @return version string
+	 */ 
+	function getMySQLVersion()
+	{
+		static $version = '';
+		if(empty($version)) {
+			$result = $this->query('select version() as Version');
+			if ($result) {
+				$res = $result->fetchRow();
+				$version  = $res['Version'];
+			}
+		}
+		return $version;
+	}
+	/**
+	 * Read the MySQL version number, e.g. 5.5
+	 * @return version float
+	 */ 
+	function getMySQLVersionNr()
+	{
+		$versionNr = 0.0;
+		$version = $this->getMySQLVersion();
+		$versionNr = floatval($version);
+		return $versionNr;
 	}
 }

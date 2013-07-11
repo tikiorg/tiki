@@ -1,4 +1,5 @@
 -- tiki_innodb.sql is run after tiki.sql if InnoDB is being installed
+-- Do not include fulltext index definitions. The installer will include these when the current db engine supports fulltext search
 -- $Id$
 
 -- Force Tiki fulltext search off, when InnoDB is run

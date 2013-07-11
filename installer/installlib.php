@@ -48,6 +48,9 @@ class Installer extends TikiDb_Bridge
 		} else {
 			// No image specified, standard install
 			$this->runFile(dirname(__FILE__) . '/../db/tiki.sql');
+			if ($this->isMySQLFulltextSearchSupported()) {
+				$this->runFile(dirname(__FILE__) . '/../db/tiki_fulltext_indexes.sql');
+			}
 			if ($this->useInnoDB) {
 				$this->runFile(dirname(__FILE__) . '/../db/tiki_innodb.sql');
 			} else {
