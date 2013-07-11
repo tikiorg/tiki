@@ -24,7 +24,7 @@
 		
 			<fieldset>
 				<legend>
-					{tr}Full Text Search (Classic search){/tr}{help url="Search"}
+					{tr}Basic Search{/tr} {help url="Search"}
 				</legend>
 				{preference name=feature_search_fulltext}
 				<div class="adminoptionboxchild" id="feature_search_fulltext_childcontainer">				
@@ -37,7 +37,7 @@
 		
 			<fieldset>
 				<legend>
-					{tr}Unified Search{/tr} {tr}(Advanced){/tr}
+					{tr}Advanced Search{/tr}
 				</legend>
 
 				{if $prefs.unified_last_rebuild}
