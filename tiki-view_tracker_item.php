@@ -56,7 +56,8 @@ if (!isset($_REQUEST['trackerId']) && $prefs['userTracker'] == 'y' && !isset($_R
 					'type' => 'u',
 					'value' => $user,
 				);
-				if ($f = $trklib->get_field_id_from_type($_REQUEST['trackerId'], "u", '1%')) {
+				$definition = Tracker_Definition::get($_REQUEST['trackerId']);
+				if ($definition && $f = $definition->getUserField()) {
 					if ($f != $utid['usersFieldId']) {
 						$addit[] = array(
 							'fieldId' => $f,
@@ -65,7 +66,7 @@ if (!isset($_REQUEST['trackerId']) && $prefs['userTracker'] == 'y' && !isset($_R
 						);
 					}
 				}
-				if ($f = $trklib->get_field_id_from_type($_REQUEST['trackerId'], "g", 1)) {
+				if ($definition && $f = $definition->getWriterGroupField()) {
 					$addit[] = array(
 						'fieldId' => $f,
 						'type' => 'g',
@@ -122,7 +123,10 @@ if ($prefs['userTracker'] == 'y' && isset($_REQUEST['view']) && $_REQUEST['view'
 		}
 	}
 	if (!empty($_REQUEST['trackerId']) && empty($fieldId)) {
-		$fieldId = $trklib->get_field_id_from_type($_REQUEST['trackerId'], 'u', '1%');
+		$definition = Tracker_Definition::get($_REQUEST['trackerId']);
+		if ($definition) {
+			$fieldId = $definition->getUserField();
+		}
 	}
 	if (!empty($_REQUEST['trackerId']) && !empty($fieldId)) {
 		$_REQUEST['itemId'] = $trklib->get_item_id($_REQUEST['trackerId'], $fieldId, $_REQUEST['user']);

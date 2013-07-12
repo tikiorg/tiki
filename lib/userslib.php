@@ -6721,13 +6721,14 @@ class UsersLib extends TikiLib
 						$listfields[$field['fieldId']] = $field;
 					}
 
+					$definition = Tracker_Definition::get($re['usersTrackerId']);
 					$items = $trklib->list_items(
 						$re['usersTrackerId'],
 						0,
 						1,
 						'',
 						$listfields,
-						$trklib->get_field_id_from_type($re['usersTrackerId'], 'u', '1%'),
+						$definition->getUserField(),
 						'',
 						'',
 						'',

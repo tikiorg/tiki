@@ -874,8 +874,9 @@ class TrackerLib extends TikiLib
 	public function group_creator_has_perm($trackerId, $perm)
 	{
 		global $prefs;
-		if ($groupCreatorFieldId = $this->get_field_id_from_type($trackerId, 'g', '1%')) {
-			$tracker_info = $this->get_tracker($trackerId);
+		$definition = Tracker_Definition::get($trackerId);
+		if ($definition && $groupCreatorFieldId = $definition->getWriterGroupField()) {
+			$tracker_info = $definition->getInformation();
 			$perms = $this->get_special_group_tracker_perm($tracker_info);
 			return empty($perms[$perm])? false: true;
 		} else {
@@ -1114,7 +1115,8 @@ class TrackerLib extends TikiLib
 						$mid .= " OR tco$ff.`categId` IS NULL ";
 					}
 				} elseif ( $filter['type'] == 'usergroups' ) {
-					$userFieldId = $this->get_field_id_from_type($trackerId, 'u', '1%'); // user creator field;
+					$definition = Tracker_Definition::get();
+					$userFieldId = $definition->getUserField();
 					$cat_table .= " INNER JOIN `tiki_tracker_item_fields` ttifu ON (tti.`itemId`=ttifu.`itemId`) INNER JOIN `users_users` uu ON (ttifu.`value`=uu.`login`) INNER JOIN `users_usergroups` uug ON (uug.`userId`=uu.`userId`)";
 					$mid .= ' AND ttifu.`fieldId`=? AND uug.`groupName`=? ';
 					$bindvars[] = $userFieldId;
@@ -2405,7 +2407,8 @@ class TrackerLib extends TikiLib
 			$this->replace_tracker_option((int) $trackerId, $kopt, $opt);
 		}
 
-		$ratingId = $this->get_field_id_from_type($trackerId, 's', null, true, 'Rating');
+		$definition = Tracker_Definition::get($trackerId);
+		$ratingId = $definition->getRateField();
 
 		if (isset($options['useRatings']) && $options['useRatings'] == 'y') {
 			if (!$ratingId) {
@@ -3162,9 +3165,11 @@ class TrackerLib extends TikiLib
 			}
 			return $itemId;
 		}
+
+		$definition = Tracker_Definition::get($trackerId);
 		$userreal=$userparam!=null?$userparam:$user;
 		if (!empty($userreal)) {
-			if ($fieldId = $this->get_field_id_from_type($trackerId, 'u', '1%')) {
+			if ($fieldId = $definition->getUserField()) {
 				// user creator field
 				$value = $userreal;
 				$items = $this->get_items_list($trackerId, $fieldId, $value, $status);
@@ -3173,7 +3178,7 @@ class TrackerLib extends TikiLib
 				}
 			}
 		}
-		if ($fieldId = $this->get_field_id_from_type($trackerId, 'I', '1')) {
+		if ($fieldId = $definition->getAuthorIpField()) {
 			// IP creator field
 			$IP = $tikilib->get_ip_address();
 			$items = $this->get_items_list($trackerId, $fieldId, $IP, $status);
@@ -3187,18 +3192,9 @@ class TrackerLib extends TikiLib
 
 	public function get_item_creator($trackerId, $itemId)
 	{
-		if ($fieldId = $this->get_field_id_from_type($trackerId, 'u', '1%')) {
+		$definition = Tracker_Definition::get($trackerId);
+		if ($fieldId = $definition->getUserField()) {
 			// user creator field
-			return $this->get_item_value($trackerId, $itemId, $fieldId);
-		} else {
-			return null;
-		}
-	}
-
-	public function get_item_group_creator($trackerId, $itemId)
-	{
-		if ($fieldId = $this->get_field_id_from_type($trackerId, 'g', '1%')) {
-			// group creator field
 			return $this->get_item_value($trackerId, $itemId, $fieldId);
 		} else {
 			return null;
@@ -4788,8 +4784,9 @@ class TrackerLib extends TikiLib
 	{
 		$field = $this->get_tracker_field($emailFieldId);
 		$trackerId = $field['trackerId'];
-		$userFieldId =  $this->get_field_id_from_type($trackerId, 'u', '1%');
-		$listfields[$userFieldId] = $this->get_tracker_field($userFieldId);
+		$definition = Tracker_Definition::get($trackerId);
+		$userFieldId = $definition->getUserField();
+		$listfields[$userFieldId] = $definition->getField($userFieldId);
 		$filterfields[0] = $emailFieldId; // Email field in the user tracker
 		$exactvalue[0] = $email;
 		$items = $this->list_items($trackerId, 0, -1, 'created', $listfields, $filterfields, '', 'opc', '', $exactvalue);

@@ -380,12 +380,10 @@ function wikiplugin_tracker($data, $params)
 	if ($prefs['feature_trackers'] != 'y') {
 		return $smarty->fetch("wiki-plugins/error_tracker.tpl");
 	}
-	if (empty($trackerId) || !($tracker = $trklib->get_tracker($trackerId))) {
+	if (empty($trackerId) || !($definition = Tracker_Definition::get($trackerId))) {
 		return $smarty->fetch("wiki-plugins/error_tracker.tpl");
 	}
-	if ($t = $trklib->get_tracker_options($trackerId)) {
-		$tracker = array_merge($tracker, $t);
-	}
+	$tracker = $definition->getInformation();
 	if (empty($trackerId) && !empty($view) && $view == 'user' && $prefs['userTracker'] == 'y') { // the user tracker item
 		$utid = $userlib->get_tracker_usergroup($user);
 		if (!empty($utid) && !empty($utid['usersTrackerId'])) {
@@ -568,15 +566,28 @@ function wikiplugin_tracker($data, $params)
 				if (!empty($autosavefields)) {
 					$auto_fieldId = array_merge($auto_fieldId, $autosavefields);
 				}
-				if ($user) {
-					$hidden_fieldId[] = $trklib->get_field_id_from_type($trackerId, 'u', '1%');	// user owner
-					$hidden_fieldId[] = $trklib->get_field_id_from_type($trackerId, 'u', '2%');	// user modifier
-					$hidden_fieldId[] = $trklib->get_field_id_from_type($trackerId, 'g', '1%');	// owner group
-					$hidden_fieldId[] = $trklib->get_field_id_from_type($trackerId, 'g', '2%');	// owner modifier
+				foreach ($definition->getFields() as $field) {
+					// User and group on autoassign create/modify
+					if ($user && ($field['type'] == 'u' || $field['type'] == 'g')) {
+						$autoassign = $field['options_map']['autoassign'];
+						if ($autoassign == 1 || $autoassign == 2) {
+							$hidden_fieldId[] = $field['fieldId'];
+						}
+					}
+
+					// IP and page on autoassign
+					if ($field['type'] == 'I' || $field['type'] == 'k') {
+						$autoassign = $field['options_map']['autoassign'];
+						if ($autoassign == 1) {
+							$hidden_fieldId[] = $field['fieldId'];
+						}
+					}
+
+					// Auto-increment
+					if ($field['type'] == 'q') {
+						$auto_fieldId[] = $field['fieldId'];
+					}
 				}
-				$hidden_fieldId[] = $trklib->get_field_id_from_type($trackerId, 'I', '1%');	// IP auto-assign
-				$hidden_fieldId[] = $trklib->get_field_id_from_type($trackerId, 'k', '1%');	// page creator
-				$auto_fieldId[] = $trklib->get_field_id_from_type($trackerId, 'q');	// auto-increment
 				foreach ($auto_fieldId as $k => $v) {
 					if (empty($v) || in_array($v, $outf)) {
 						unset($auto_fieldId[$k]);

@@ -248,7 +248,8 @@ class TodoLib
 				break;
 		}
 
-		$fieldId = $trklib->get_field_id_from_type($todo['objectId'], 'u', '1%');
+		$definition = Tracker_Definition::get($todo['objectId']);
+		$fieldId = $definition->getUserField();
 
 		$objects = $trklib->list_items(
 			$todo['objectId'],

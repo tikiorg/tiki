@@ -113,9 +113,8 @@ function wikiplugin_invite( $data, $params)
 		$params['itemId'] = $_REQUEST['itemId'];
 	}
 	if (!empty($params['itemId'])) {
-		global $trklib; include_once('lib/trackers/trackerlib.php');
-		$item = $trklib->get_tracker_item($params['itemId']);
-		$params['defaultgroup'] = $trklib->get_item_group_creator($item['trackerId'], $params['itemId']);
+		$item = Tracker_Item::fromId($params['itemId']);
+		$params['defaultgroup'] = $item->getItemGroupOwner();
 	}
 	$smarty->assign_by_ref('params', $params);
 	$smarty->assign_by_ref('userGroups', $userGroups);
