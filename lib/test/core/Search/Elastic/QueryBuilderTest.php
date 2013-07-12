@@ -350,6 +350,97 @@ class Search_Elastic_QueryBuilderTest extends PHPUnit_Framework_TestCase
 		);
 	}
 
+	function testFlattenSingledOutOr()
+	{
+		$builder = new QueryBuilder;
+
+		$query = $builder->build(
+			new AndX(
+				array(
+					new OrX(
+						array(
+							new Token('Foo', 'plaintext', 'contents', 1.0),
+							new Token('Baz', 'plaintext', 'contents', 1.0),
+						)
+					),
+					new NotX(new Token('Bar', 'plaintext', 'contents', 1.0)),
+				)
+			)
+		);
+
+		$this->assertEquals(
+			array(
+				"bool" => array(
+					"should" => array(
+						array(
+							"match" => array(
+								"contents" => array("query" => "foo", "boost" => 1.0),
+							),
+						),
+						array(
+							"match" => array(
+								"contents" => array("query" => "baz", "boost" => 1.0),
+							),
+						),
+					),
+					'must_not' => array(
+						array(
+							"match" => array(
+								"contents" => array("query" => "bar", "boost" => 1.0),
+							),
+						),
+					),
+					"minimum_number_should_match" => 1,
+				),
+			), $query['query']
+		);
+	}
+
+	function testFlattenSingledOutAnd()
+	{
+		$builder = new QueryBuilder;
+
+		$query = $builder->build(
+			new AndX(
+				array(
+					new AndX(
+						array(
+							new Token('Foo', 'plaintext', 'contents', 1.0),
+							new Token('Baz', 'plaintext', 'contents', 1.0),
+						)
+					),
+					new NotX(new Token('Bar', 'plaintext', 'contents', 1.0)),
+				)
+			)
+		);
+
+		$this->assertEquals(
+			array(
+				"bool" => array(
+					"must" => array(
+						array(
+							"match" => array(
+								"contents" => array("query" => "foo", "boost" => 1.0),
+							),
+						),
+						array(
+							"match" => array(
+								"contents" => array("query" => "baz", "boost" => 1.0),
+							),
+						),
+					),
+					'must_not' => array(
+						array(
+							"match" => array(
+								"contents" => array("query" => "bar", "boost" => 1.0),
+							),
+						),
+					),
+				),
+			), $query['query']
+		);
+	}
+
 	function testMoreLikeThisQuery()
 	{
 		$builder = new QueryBuilder;

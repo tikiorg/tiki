@@ -74,12 +74,26 @@ class Search_Elastic_QueryBuilder
 					return true;
 				}
 			});
-			return array(
-				'bool' => array_filter(array(
-					'must' => $this->flatten($inner, 'must'),
-					'must_not' => $not,
-				)),
-			);
+			$inner = $this->flatten($inner, 'must');
+			if (count($inner) == 1 && isset($inner[0]['bool'])) {
+				$base = $inner[0]['bool'];
+				if (! isset($base['must_not'])) {
+					$base['must_not'] = array();
+				}
+
+				$base['must_not'] = array_merge($base['must_not'], $not);
+
+				return array(
+					'bool' => array_filter($base),
+				);
+			} else {
+				return array(
+					'bool' => array_filter(array(
+						'must' => $inner,
+						'must_not' => $not,
+					)),
+				);
+			}
 		} elseif ($node instanceof NotX) {
 			$inner = array_map(
 				function ($expr) use ($callback) {
