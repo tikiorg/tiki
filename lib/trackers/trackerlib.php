@@ -705,20 +705,21 @@ class TrackerLib extends TikiLib
 			$fieldsId = preg_split('/\|/', $fieldsId, -1, PREG_SPLIT_NO_EMPTY);
 		}
 		$res = array();
+		$definition = Tracker_Definition::get($trackerId);
 		foreach ($fieldsId as $field) {
-			if ($myfield=$this->get_tracker_field($field)) {
+			if ($myfield=$definition->getField($field)) {
 				$is_date=($myfield['type']=='f');
 				$is_trackerlink=($myfield['type']=='r');
 				$tmp="";
 				$tmp=$this->get_all_items($trackerId, $field, $status, false);//deliberatly do not check perm on categs on items
-				$options = preg_split('/,/', $myfield["options"]);
+				$options = $myfield['options_map'];
 				foreach ($tmp as $key => $value) {
 					if ($is_date) {
 						$value=$this->date_format("%e/%m/%y", $value);
 					}
-					if ($is_trackerlink && $options[3]) {
+					if ($is_trackerlink && $options['displayFieldsList']) {
 						// If $options[3] is empty, concat_item_from_fieldslist returns nothing
-						$value=$this->concat_item_from_fieldslist($options[0], $value, $options[3]);
+						$value=$this->concat_item_from_fieldslist($options['trackerId'], $value, $options['displayFieldsList']);
 					}
 					if (!empty($res[$key])) {
 						$res[$key].=$separator.$value;
@@ -2349,6 +2350,7 @@ class TrackerLib extends TikiLib
 			$typeInfo = $factory->getFieldInfo($res['type']);
 			$options = Tracker_Options::fromSerialized($res['options'], $typeInfo);
 			$res['options_array'] = $options->buildOptionsArray();
+			$res['options_map'] = $options->getAllParameters();
 			$res['itemChoices'] = ( $res['itemChoices'] != '' ) ? unserialize($res['itemChoices']) : array();
 			$res['visibleBy'] = ($res['visibleBy'] != '') ? unserialize($res['visibleBy']) : array();
 			$res['editableBy'] = ($res['editableBy'] != '') ? unserialize($res['editableBy']) : array();
@@ -2842,7 +2844,7 @@ class TrackerLib extends TikiLib
 		}
 
 		if (!empty($option)) {
-			$conditions['options'] = $fields->like($option);
+			throw new Exception("\$option parameter no longer supported. Code needs fixing.");
 		}
 
 		if (!empty($name)) {
@@ -2856,6 +2858,33 @@ class TrackerLib extends TikiLib
 		} else {
 			return $fields->fetchColumn('fieldId', $conditions);
 		}
+	}
+
+	public function get_page_field($trackerId)
+	{
+		$definition = Tracker_Definition::get($trackerId);
+		$score = 0;
+		$out = null;
+
+		foreach ($definition->getFields() as $field) {
+			if ($field['type'] == 'k') {
+				if ($score < 3 && $field['options_map']['autoassign'] == '1') {
+					$score = 3;
+					$out = $field;
+				} elseif ($score < 2 && $field['options_map']['create'] == '1') {
+					// Not sure about this one, old code used to say "has a 1 somewhere in the options string"
+					// Create seems to be the most likely candidate
+					$score = 2;
+					$out = $field;
+				} else {
+					$score = 1;
+					$out = $field;
+				}
+			}
+		}
+
+		return $out;
+
 	}
 
 	/*
