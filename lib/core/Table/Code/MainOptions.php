@@ -41,7 +41,7 @@ class Table_Code_MainOptions extends Table_Code_Manager
 		if (isset($this->s['sort']['type']) && strpos($this->s['sort']['type'], 'save') !== false) {
 			$w[] = 'saveSort';
 		}
-		//filter`
+		//filter
 		if (isset($this->s['filters']['type']) && $this->s['filters']['type'] !== false) {
 			$w[] = 'filter';
 		}
@@ -51,8 +51,8 @@ class Table_Code_MainOptions extends Table_Code_Manager
 		$mo[] = 'showProcessing: true';
 
 		//Multisort
-		if (isset($this->s['sort']['multisort']) && $this->s['sort']['multisort']) {
-			$mo[] =  'sortMultiSortKey : true,';
+		if (isset($this->s['sort']['multisort']) && $this->s['sort']['multisort'] === false) {
+			$mo[] =  'sortMultiSortKey : \'none\'';
 		}
 
 		//Sort list
