@@ -147,14 +147,19 @@ class Search_Query_WikiBuilder
 	function wpquery_filter_personalize($query, $type, array $arguments)
 	{
 		global $user;
+		$targetUser = $user;
+
+		if (! $targetUser) {
+			$targetUser = "1"; // Invalid user name, make sure nothing matches
+		}
 
 		$subquery = $query->getSubQuery('personalize');
 
 		$types = array_filter(array_map('trim', explode(',', $type)));
 
 		if (in_array('self', $types)) {
-			$subquery->filterContributors($user);
-			$subquery->filterContent($user, 'user');
+			$subquery->filterContributors($targetUser);
+			$subquery->filterContent($targetUser, 'user');
 		}
 	}
 
