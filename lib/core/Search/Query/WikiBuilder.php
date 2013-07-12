@@ -61,6 +61,15 @@ class Search_Query_WikiBuilder
 		$query->filterType($value);
 	}
 
+	function wpquery_filter_nottype($query, $value)
+	{
+		$value = explode(',', $value);
+		$value = array_map(function ($v) {
+			return "NOT \"$v\"";
+		}, $value);
+		$query->filterContent(implode(' AND ', $value), 'object_type');
+	}
+
 	function wpquery_filter_categories($query, $value)
 	{
 		$query->filterCategory($value);
@@ -133,6 +142,20 @@ class Search_Query_WikiBuilder
 			TikiLib::lib('errorreport')->report(tr('Missing from or to for range filter.'));
 		}
 		$query->filterTextRange($arguments['from'], $arguments['to'], $value);
+	}
+
+	function wpquery_filter_personalize($query, $type, array $arguments)
+	{
+		global $user;
+
+		$subquery = $query->getSubQuery('personalize');
+
+		$types = array_filter(array_map('trim', explode(',', $type)));
+
+		if (in_array('self', $types)) {
+			$subquery->filterContributors($user);
+			$subquery->filterContent($user, 'user');
+		}
 	}
 
 	function wpquery_sort_mode($query, $value, array $arguments)
