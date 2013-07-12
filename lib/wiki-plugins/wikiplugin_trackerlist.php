@@ -779,10 +779,8 @@ function wikiplugin_trackerlist($data, $params)
 		$auto_query_args_local = array('trackerId', 'tr_initial',"tr_sort_mode$iTRACKERLIST",'tr_user', 'filterfield', 'filtervalue', 'exactvalue', 'itemId');
 		$auto_query_args = empty($auto_query_args)? $auto_query_args_local: array_merge($auto_query_args, $auto_query_args_local);
 		$smarty->assign('listTrackerId', $trackerId);
-		$tracker_info = $trklib->get_tracker($trackerId);
-		if ($t = $trklib->get_tracker_options($trackerId)) {
-			$tracker_info = array_merge($tracker_info, $t);
-		}
+		$definition = Tracker_Definition::get($trackerId);
+		$tracker_info = $definition->getInformation();
 
 		if (!isset($sort)) {
 			$sort = 'n';
@@ -792,8 +790,8 @@ function wikiplugin_trackerlist($data, $params)
 		if ($perms['tiki_p_view_trackers'] != 'y' && !$user) {
 			return;
 		}
-		$userCreatorFieldId = $trklib->get_field_id_from_type($trackerId, 'u', '1%');
-		$groupCreatorFieldId = $trklib->get_field_id_from_type($trackerId, 'g', '1%');
+		$userCreatorFieldId = $definition->getAuthorField();
+		$groupCreatorFieldId = $definition->getWriterGroupField();
 		if ($perms['tiki_p_view_trackers'] != 'y' && $tracker_info['writerCanModify'] != 'y' && empty($userCreatorFieldId) && empty($groupCreatorFieldId)) {
 			return;
 		}
@@ -1200,7 +1198,7 @@ function wikiplugin_trackerlist($data, $params)
 		$smarty->assign_by_ref('tr_initial', $tr_initial);
 
 		if ((isset($view) && $view == 'user') || isset($view_user) || isset($_REQUEST['tr_user'])) {
-			if ($f = $trklib->get_field_id_from_type($trackerId, 'u', '1%')) {
+			if ($f = $definition->getAuthorField()) {
 				$filterfield[] = $f;
 				$filtervalue[] = '';
 				if (!isset($_REQUEST['tr_user'])) {
@@ -1215,15 +1213,15 @@ function wikiplugin_trackerlist($data, $params)
 			}
 		}
 		if (isset($view) && $view == 'page' && isset($_REQUEST['page'])) {
-			if (($f = $trklib->get_field_id_from_type($trackerId, 'k', '1%')) || ($f = $trklib->get_field_id_from_type($trackerId, 'k', '%,1%')) || ($f =  $trklib->get_field_id_from_type($trackerId, 'k'))) {
-				$filterfield[] = $f;
+			if (($f = $trklib->get_page_field($trackerId))) {
+				$filterfield[] = $f['fieldId'];
 				$filtervalue[] = '';
 				$exactvalue[] = $_REQUEST['page'];
 			}
 		}
 
 		if (isset($view) && $view == 'ip') {
-			if ($f = $trklib->get_field_id_from_type($trackerId, 'I', '1%')) {
+			if ($f = $definition->getAuthorIpField()) {
 				$filterfield[] = $f;
 				$filtervalue[] = '';
 				$ip = $tikilib->get_ip_address();

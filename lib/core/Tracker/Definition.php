@@ -165,6 +165,17 @@ class Tracker_Definition
 		}
 	}
 
+	function getAuthorIpField()
+	{
+		foreach ($this->getFields() as $field) {
+			if ($field['type'] == 'I'
+				&& $field['options_map']['autoassign'] == 1) {
+
+				return $field['fieldId'];
+			}
+		}
+	}
+
 	function getWriterField()
 	{
 		foreach ($this->getFields() as $field) {
