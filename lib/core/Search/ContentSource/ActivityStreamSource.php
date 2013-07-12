@@ -4,15 +4,18 @@
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
+error_reporting(E_ALL);
 
 class Search_ContentSource_ActivityStreamSource implements Search_ContentSource_Interface
 {
 	private $lib;
+	private $userlib;
 	private $source;
 
 	function __construct($source = null)
 	{
 		$this->lib = TikiLib::lib('activity');
+		$this->userlib = TikiLib::lib('user');
 		$this->source = $source;
 	}
 
@@ -35,7 +38,7 @@ class Search_ContentSource_ActivityStreamSource implements Search_ContentSource_
 		);
 
 		foreach ($info['arguments'] as $key => $value) {
-			$type = $mapping[$key];
+			$type = isset($mapping[$key]) ? $mapping[$key] : '';
 
 			if ($type) {
 				$document[$key] = $typeFactory->$type($value);
@@ -55,6 +58,12 @@ class Search_ContentSource_ActivityStreamSource implements Search_ContentSource_
 					}
 				}
 			}
+		}
+
+		if (! empty($info['arguments']['user'])) {
+			$groups = $this->userlib->get_user_groups_inclusion($info['arguments']['user']);
+			unset($groups['Anonymous'], $groups['Registered']);
+			$document['user_groups'] = $typeFactory->multivalue(array_keys($groups));
 		}
 
 		return $document;

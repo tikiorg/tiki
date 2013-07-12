@@ -161,6 +161,16 @@ class Search_Query_WikiBuilder
 			$subquery->filterContributors($targetUser);
 			$subquery->filterContent($targetUser, 'user');
 		}
+
+		if (in_array('groups', $types)) {
+			$part = new Search_Expr_Or(array_map(function ($group) {
+				return new Search_Expr_Token($group, 'multivalue', 'user_groups');
+			}, Perms::get()->getGroups()));
+			$subquery->getExpr()->addPart(new Search_Expr_And(array(
+				$part,
+				new Search_Expr_Not(new Search_Expr_Token($targetUser, 'identifier', 'user')),
+			)));
+		}
 	}
 
 	function wpquery_sort_mode($query, $value, array $arguments)

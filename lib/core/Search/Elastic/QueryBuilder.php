@@ -67,7 +67,8 @@ class Search_Elastic_QueryBuilder
 			);
 
 			$inner = array_filter($inner, function ($part) use (& $not) {
-				if (isset($part['bool']['must_not'])) {
+				// Only merge in the single-part NOT
+				if (isset($part['bool']['must_not']) && count($part['bool']) == 1) {
 					$not = array_merge($not, $part['bool']['must_not']);
 					return false;
 				} else {
