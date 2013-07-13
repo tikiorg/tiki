@@ -25,30 +25,29 @@ class Table_Settings_Users extends Table_Settings_Abstract
 	protected $ts = array(
 		'id' => 'usertable',
 		'sort' => array(
-			'multisort' => false,
 			'columns' => array(
 				0 => array(					//checkbox
 					'type' => false,
 				),
 				1 => array(					//user
 					'type' => 'asc',
-					'ajax' => 'sort_mode=login'
+					'ajax' => 'login'
 				),
 				2 => array(					//email - only if $prefs.login_is_email != 'y'
 					'type' => true,
-					'ajax' =>'sort_mode=email'
+					'ajax' =>'email'
 				),
 				3 => array(					//openid - only if $prefs.auth_method == 'openid'
 					'type' => true,
-					'ajax' => 'sort_mode=openid_url'
+					'ajax' => 'openid_url'
 				),
 				4 => array(					//last login
 					'type' => true,
-					'ajax' => 'sort_mode=currentLogin'
+					'ajax' => 'currentLogin'
 				),
 				5 => array(					//registered
 					'type' => true,
-					'ajax' => 'sort_mode=registrationDate'
+					'ajax' => 'registrationDate'
 				),
 				6 => array(					//group
 					'type' => false,
