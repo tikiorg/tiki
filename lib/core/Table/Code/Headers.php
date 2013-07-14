@@ -26,34 +26,40 @@ class Table_Code_Headers extends Table_Code_Manager
 	{
 		//add info to header when sorter or filter = false
 		//sorter = false
-		$fsorts = $this->getFalses('sort');
-		//filter = false
-		$ffilters = $this->getFalses('filters');
-		$allfalses = array(
-			'both' => array_intersect_key($fsorts, $ffilters),
-			'sortsonly' => array_diff_key($fsorts, $ffilters),
-			'filtersonly' => array_diff_key($ffilters, $fsorts)
-		);
-		$f = '';
-		foreach ($allfalses as $type => $falses) {
-			if (is_array($falses) && count($falses) > 0) {
-				foreach ($falses as $key => $value) {
-					switch ($type) {
-						case 'both':
-							$f[$key] = $key . ' : {sorter: false, filter: false}';
-							break;
-						case 'sortsonly':
-							$f[$key] = $key . ' : {sorter: false}';
-							break;
-						case 'filtersonly':
-							$f[$key] = $key . ' : {filter: false}';
+		if (($this->sort || $this->filters)
+			&& (isset($this->s['sort']['columns']) || isset($this->s['filters']['columns'])))
+		{
+			$fsorts = $this->getFalses('sort');
+			//filter = false
+			$ffilters = $this->getFalses('filters');
+			$allfalses = array(
+				'both' => array_intersect_key($fsorts, $ffilters),
+				'sortsonly' => array_diff_key($fsorts, $ffilters),
+				'filtersonly' => array_diff_key($ffilters, $fsorts)
+			);
+			$f = array();
+			foreach ($allfalses as $type => $falses) {
+				if (is_array($falses) && count($falses) > 0) {
+					foreach ($falses as $key => $value) {
+						switch ($type) {
+							case 'both':
+								$f[$key] = $key . ' : {sorter: false, filter: false}';
+								break;
+							case 'sortsonly':
+								$f[$key] = $key . ' : {sorter: false}';
+								break;
+							case 'filtersonly':
+								$f[$key] = $key . ' : {filter: false}';
+						}
 					}
+				}
+				if (count($f) > 0) {
+					asort($f);
+					$code = $this->iterate($f, $this->nt2 . 'headers: {', $this->nt2 . '}', $this->nt3, '', ',');
+					parent::$code[self::$level1][self::$level2] = $code;
 				}
 			}
 		}
-		asort($f);
-		$code = $this->iterate($f, $this->nt2 . 'headers: {', $this->nt2 . '}', $this->nt3, '', ',');
-		parent::$code[self::$level1][self::$level2] = $code;
 	}
 
 	/**
@@ -66,7 +72,7 @@ class Table_Code_Headers extends Table_Code_Manager
 	private function getFalses($type)
 	{
 		$cols = isset($this->s[$type]['columns']) ? $this->s[$type]['columns'] : false;
-		$falses = '';
+		$falses = array();
 		if ($cols) {
 			foreach($cols as $key => $value) {
 				if ($value['type'] === false) {

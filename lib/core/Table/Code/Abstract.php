@@ -26,6 +26,8 @@ class Table_Code_Abstract
 	protected $s;
 	protected $filters;
 	protected $sort;
+	protected $pager;
+	protected $ajax;
 	public static $code = '';
 	protected static $level1;
 	protected static $level2;
@@ -44,11 +46,17 @@ class Table_Code_Abstract
 	 */
 	public function __construct($settings)
 	{
+		global $prefs;
 		$this->s = $settings;
 		$this->id = $settings['id'];
 
-		$this->sort = $settings['sort']['type'] === false && !isset($settings['sort']['columns']) ? false : true;
-		$this->filters = $settings['filters']['type'] === false && !isset($settings['filters']['columns']) ? false : true;
+		//overall sort on unless sort type set to false
+		$this->sort = isset($settings['sort']['type']) && $settings['sort']['type'] === false ? false : true;
+
+		//filter, pager and ajax off unless type is set and is not false
+		$this->filters = empty($settings['filters']['type']) ? false : true;
+		$this->pager = empty($settings['pager']['type']) ? false : true;
+		$this->ajax = empty($settings['ajax']) || $prefs['feature_ajax'] === 'n'? false : true;
 	}
 
 	/**

@@ -32,18 +32,19 @@ abstract class Table_Settings_Abstract
 		//TODO choosing themes is not yet implemented
 		'theme' => 'tiki',
 		'total' => '',
+//		'selflinks' => true,					//if smarty self_links need to be removed
 		'sort' => array(
 			'type' => 'reset',						//choices: boolean true, boolean false, save, reset, savereset.
 /*			'columns' => array(					//zero-based column index, used only if column-specific settings
 				0 => true, false, asc, desc,
 			),
+			'multisort' => false,				//multisort on by default - set to false to disable
 */
-			'multisort' => true,
 		),
 		'filters' => array(
 			'type' => 'reset',						//choices: boolean true, boolean false, reset
-			'hide' => false,					//to hide filters. choices: true, false
-/*			'columns' => array(
+/*			'hide' => false,					//to hide filters. choices: true, false (default)
+			'columns' => array(
 				0 => array(
 					'type' => 'text',					//choices: text, dropdown, date, range, none
 					'placeholder' => 'Enter a value'	//override default placeholder text
@@ -57,8 +58,8 @@ abstract class Table_Settings_Abstract
 				),
 				2 => array(
 					'type' => 'range',
-					'min' => 10,
-					'max' => 100,
+					'from' => 10,
+					'to' => 100,
 					'style' => popup				//choices: popup or inline
 				),
 				3 => array(
@@ -71,12 +72,12 @@ abstract class Table_Settings_Abstract
 */
 		),
 /*		'pager' => array(
-			'type' => 'disable',					//choices: true, false, disable
+			'type' => true,					//choices: true, false, disable
 			'max' => 25,
 			'expand' => array(50, 100, 250, 500),
-			'ajax' => array(						//can also be set to false
-				'url' => 'tiki-adminusers.php?{sort:sort}&{filter:filter}',
-			)
+		),
+		'ajax' => array(						//can also be set to false
+			'url' => 'tiki-adminusers.php?{sort:sort}&{filter:filter}',
 		)*/
 	);
 
@@ -99,8 +100,8 @@ abstract class Table_Settings_Abstract
 		'date'	=> array(
 			'type' => 'date',
 			'format' => 'yy-mm-dd',
-			'from' => 'from',
-			'to'	=> 'to',
+			'from' => '',
+			'to'	=> '',
 		),
 		'range'	=> array(
 			'type' => 'range',
@@ -223,16 +224,20 @@ abstract class Table_Settings_Abstract
 	 */
 	private function overrideSettings($default, $settings)
 	{
-		$this->s = array_replace_recursive($default, $settings);
-		if (isset($this->s['filters']['columns'])) {
-			foreach ($this->s['filters']['columns'] as $col => $filterinfo) {
-				$ft = $filterinfo['type'];
-				//add default placeholder text
-				if (isset($this->defaultFilters[$ft])) {
-					$this->s['filters']['columns'][$col] =
-						array_replace_recursive($this->defaultFilters[$ft], $filterinfo);
+		if (is_array($default) && is_array($settings)) {
+			$this->s = array_replace_recursive($default, $settings);
+			if (isset($this->s['filters']['columns'])) {
+				foreach ($this->s['filters']['columns'] as $col => $filterinfo) {
+					$ft = $filterinfo['type'];
+					//add default placeholder text
+					if (isset($this->defaultFilters[$ft])) {
+						$this->s['filters']['columns'][$col] =
+							array_replace_recursive($this->defaultFilters[$ft], $filterinfo);
+					}
 				}
 			}
+		} elseif (is_array($default)) {
+			$this->s = $default;
 		}
 	}
 
@@ -241,7 +246,7 @@ abstract class Table_Settings_Abstract
 	 */
 	private function setIds()
 	{
-		if ($this->s['id'] == $this->default['id']) {
+		if (isset($this->s['id']) && isset($this->default['id']) && $this->s['id'] == $this->default['id']) {
 			static $i = 0;
 			++$i;
 			$this->s['id'] .= $i;
@@ -260,7 +265,7 @@ abstract class Table_Settings_Abstract
 	 */
 	private function setMax()
 	{
-		if (isset($this->s['pager']) && $this->s['pager']['type'] !== false) {
+		if (isset($this->s['pager']['type']) && $this->s['pager']['type'] !== false) {
 			if (isset($GLOBALS['maxRecords']) && !isset($this->s['pager']['max']))
 			{
 				$this->s['pager']['max'] = $GLOBALS['maxRecords'];
@@ -284,18 +289,28 @@ abstract class Table_Settings_Abstract
 	 * Tablesorter can be changed to their Tiki equivalents for the specific table
 	 */
 	private function setAjax() {
-		foreach ($this->s['sort']['columns'] as $col => $info) {
-			if (isset($info['ajax'])) {
-				$this->s['ajax']['sort']['sort[' . $col . ']'] = $info['ajax'];
+		if (!empty($this->s['ajax'])) {
+			//sort params
+			if (isset($this->s['sort']['columns']) && is_array($this->s['sort']['columns'])) {
+				foreach ($this->s['sort']['columns'] as $col => $info) {
+					if (isset($info['ajax'])) {
+						//tablesorter url param pattern is sort[0]=0 for ascending sort of first column
+						$this->s['ajax']['sort']['sort[' . $col . ']'] = $info['ajax'];
+					}
+				}
 			}
-		}
-		foreach ($this->s['filters']['columns'] as $col => $info) {
-			if (isset($info['ajax'])) {
-				$this->s['ajax']['filters']['filter[' . $col . ']'] = $info['ajax'];
-			} elseif (isset($info['options'])) {
-				foreach ($info['options'] as $label => $value) {
-					$label = rawurlencode($label);
-					$this->s['ajax']['filters']['filter[' . $col . ']'][$label] = $value;
+			//filter params
+			if (isset($this->s['filters']['columns']) && is_array($this->s['filters']['columns'])) {
+				foreach ($this->s['filters']['columns'] as $col => $info) {
+					if (isset($info['ajax'])) {
+						//tablesorter url param pattern is filter[0]=text for filter on first column
+						$this->s['ajax']['filters']['filter[' . $col . ']'] = $info['ajax'];
+					} elseif (isset($info['options'])) {
+						foreach ($info['options'] as $label => $value) {
+							$label = rawurlencode($label);
+							$this->s['ajax']['filters']['filter[' . $col . ']'][$label] = $value;
+						}
+					}
 				}
 			}
 		}

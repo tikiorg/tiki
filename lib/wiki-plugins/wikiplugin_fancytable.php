@@ -7,9 +7,9 @@
 
 function wikiplugin_fancytable_info()
 {
-	include_once('lib/jquery_tiki/tablesorter/tablesorter-helper.php');
-	$tshelper = new tablesorterHelper();
-	$tshelper->createParams();
+
+	$ts = new Table_Plugin;
+	$ts->createParams();
 	$params = array_merge(
 		array(
 			 'head' => array(
@@ -54,7 +54,7 @@ function wikiplugin_fancytable_info()
 				 'description' => tra('Table body column vertical alignments separated by |. Choices: top, middle, bottom, baseline.'),
 				 'default' => '',
 			 ),
-		), $tshelper->params
+		), $ts->params
 	);
 	return array(
 		'name' => tra('Fancy Table'),
@@ -80,27 +80,37 @@ function wikiplugin_fancytable($data, $params)
 	$msg = '';
 
 	if ((isset($sortable) && $sortable != 'n')) {
-		include_once('lib/jquery_tiki/tablesorter/tablesorter-helper.php');
-		$tshelper = new tablesorterHelper();
-		$tshelper->createCode(
+		$ts = new Table_Plugin;
+		$ts->setSettings(
 			'fancytable_' . $iFancytable, $sortable,
 			isset($sortList) ? $sortList : null,
 			isset($tsfilters) ? $tsfilters : null,
 			isset($tsfilteroptions) ? $tsfilteroptions : null,
 			isset($tspaginate) ? $tspaginate : null
 		);
-		$sort = $tshelper->code !== false ? true : false;
-		$tshelper->loadJq();
+		if (is_array($ts->settings)) {
+			Table_Factory::build('plugin', $ts->settings);
+			$sort = true;
+		} else {
+			$sort = false;
+		}
+
 		if ($sort === false) {
-			$msg = tra('The JQuery Sortable Tables feature must be activated for the sort feature to work.');
+			if ($prefs['feature_jquery_tablesorter'] === 'n') {
+				$msg = tra('The jQuery Sortable Tables feature must be activated for the sort feature to work.');
+			} elseif ($prefs['disableJavascript'] === 'y') {
+				$msg = tra('Javascript must be enabled for the sort feature to work.');
+			} else {
+				$msg = tra('Unable to load the jQuery Sortable Tables feature.');
+			}
 		}
 	} else {
 		$sort = false;
 	}
 
 	//Start the table
-	$style = $sort ? ' style="visibility:hidden"' : '';
-	$wret = '<table class="normal" id="fancytable_' . $iFancytable . '"' . $style . '>' . "\r\t";
+	$wret = '<div id="fancytable_' . $iFancytable . '" style="visibility:hidden">' . "\r\t";
+	$wret .= '<table class="normal" id="fancytable_' . $iFancytable . '">' . "\r\t";
 
 	//Header
 	if (isset($head)) {
@@ -134,9 +144,8 @@ function wikiplugin_fancytable($data, $params)
 
 		//restore original tags and plugin syntax
 		postprocess_section($headrows, $tagremove, $pluginremove);
-		$buttons = isset($tshelper) ? $tshelper->createThead('fancytable_' . $iFancytable) : '';
 
-		$wret .= '<thead>' . $buttons . $headrows . "\r\t" . '</thead>' . "\r\t" . '<tbody>';
+		$wret .= '<thead>' . $headrows . "\r\t" . '</thead>' . "\r\t" . '<tbody>';
 	}
 
 	//Body
@@ -170,7 +179,7 @@ function wikiplugin_fancytable($data, $params)
 	if (isset($head)) {
 		$wret .= "\r\t" . '</tbody>';
 	}
-	$wret .= "\r" . '</table>' . "\r" . $msg;
+	$wret .= "\r" . '</table></div>' . "\r" . $msg;
 	return $wret;
 }
 

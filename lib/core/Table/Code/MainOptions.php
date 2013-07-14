@@ -28,35 +28,43 @@ class Table_Code_MainOptions extends Table_Code_Manager
 	 */
 	public function setCode()
 	{
-		//remove any self-links
-		$mo[] = 'headerTemplate: \'{content}\'';
-		$orh = array(
-			'$(this).find(\'a\').replaceWith($(this).find(\'a\').text());',
-		);
-		$mo[] = $this->iterate($orh, 'onRenderHeader: function(index){', $this->nt2 . '}', $this->nt3, '', '');
+		$mo = array();
+		//onRenderHeader option - remove any self-links
+		if ((isset($this->s['selflinks']) && $this->s['selflinks']) || !$this->sort) {
+			$mo[] = 'headerTemplate: \'{content}\'';
+			if (isset($this->s['selflinks']) && $this->s['selflinks']) {
+				$orh[] = '$(this).find(\'a\').replaceWith($(this).find(\'a\').text());';
+			}
+			if (!$this->sort) {
+				$orh[] = '$(\'table#' . $this->id . ' th\').addClass(\'sorter-false\');';
+			}
+			$mo[] = $this->iterate($orh, 'onRenderHeader: function(index){', $this->nt2 . '}', $this->nt3, '', '');
+		}
 
-		//Widgets option
+		//*** widgets ***//
+		//odd/even formatting
 		$w[] = 'zebra';
 		//saveSort
 		if (isset($this->s['sort']['type']) && strpos($this->s['sort']['type'], 'save') !== false) {
 			$w[] = 'saveSort';
 		}
 		//filter
-		if (isset($this->s['filters']['type']) && $this->s['filters']['type'] !== false) {
+		if ($this->filters) {
 			$w[] = 'filter';
 		}
 		$mo[] = $this->iterate($w, 'widgets : [', ']', '\'', '\'', ',');
 
+
 		//Show processing
 		$mo[] = 'showProcessing: true';
 
-		//Multisort
+		//Turn multi-column sort off (on by default by pressing shift-clicking column headers)
 		if (isset($this->s['sort']['multisort']) && $this->s['sort']['multisort'] === false) {
 			$mo[] =  'sortMultiSortKey : \'none\'';
 		}
 
 		//Sort list
-		if (is_array($this->s['sort']['columns'])) {
+		if ($this->sort && is_array($this->s['sort']['columns'])) {
 			$sl = '';
 			foreach ($this->s['sort']['columns'] as $col => $info) {
 				if ($info['type'] == 'asc' && $info['type'] !== true) {
@@ -69,9 +77,10 @@ class Table_Code_MainOptions extends Table_Code_Manager
 				$mo[] = $this->iterate($sl, 'sortList : [', ']', '[', ']', ',');
 			}
 		}
-
-		$code = $this->iterate($mo, '', '', $this->nt2, '');
-		parent::$code[self::$level1][self::$level2] = $code;
+		if (count($mo) > 0) {
+			$code = $this->iterate($mo, '', '', $this->nt2, '');
+			parent::$code[self::$level1][self::$level2] = $code;
+		}
 	}
 
 

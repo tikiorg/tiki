@@ -50,7 +50,9 @@ class Table_Factory
 					} else {
 						return false;
 					}
-				break;
+					break;
+				case 'plugin':
+					return new Table_Plugin;
 			}
 		} else {
 			return false;

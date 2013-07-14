@@ -25,7 +25,7 @@ class Table_Code_WidgetOptions extends Table_Code_Manager
 
 	public function setCode()
 	{
-		$wo = '';
+		$wo = array();
 		//saveSort
 		if (isset($this->s['sort']['type']) && strpos($this->s['sort']['type'], 'save') !== false) {
 			$wo[] = 'saveSort : true';
@@ -38,17 +38,17 @@ class Table_Code_WidgetOptions extends Table_Code_Manager
 		}
 
 		//hide filters
-		if (isset($this->s['filters']['hide']) && $this->s['filters']['hide'] == true) {
+		if (isset($this->s['filters']['hide']) && $this->s['filters']['hide'] === true) {
 			$wo[] = 'filter_hideFilters : true';
 		}
 
 		//filter reset
-		if (isset($this->s['filters']['type']) && $this->s['filters']['type'] == 'reset') {
+		if ($this->filters && $this->s['filters']['type'] === 'reset') {
 			$wo[] = 'filter_reset : \'button#' . $this->s['filters']['id'] . '\'';
 		}
 
 		//filter_functions and filter_formatter
-		if (isset($this->s['filters']['columns']) && is_array($this->s['filters']['columns'])) {
+		if ($this->filters && isset($this->s['filters']['columns']) && is_array($this->s['filters']['columns'])) {
 			$ffunc = '';
 			$fform = '';
 			foreach ($this->s['filters']['columns'] as $col => $info) {
@@ -67,9 +67,9 @@ class Table_Code_WidgetOptions extends Table_Code_Manager
 						}
 						break;
 					case 'range' :
-						$min = isset($info['min']) ? $info['min'] : 0;
-						$max = isset($info['max']) ? $info['max'] : 100;
-						$valtohead = isset($info['style']) && $info['style'] == 'popup '? false : true;
+						$min = isset($info['from']) ? $info['from'] : 0;
+						$max = isset($info['to']) ? $info['to'] : 100;
+						$valtohead = isset($info['style']) && $info['style'] == 'popup' ? 'false' : 'true';
 						$fform[] = $col . ' : function($cell, indx){return $.tablesorter.filterFormatter.uiRange('
 								. '$cell, indx, {values: [' . $min . ', ' . $max . '], min: ' . $min . ', max: ' . $max
 								. ', delayed: false, valueToHeader: ' . $valtohead . ', exactMatch: true});}';
@@ -91,9 +91,10 @@ class Table_Code_WidgetOptions extends Table_Code_Manager
 				$wo[] = $this->iterate($fform, 'filter_formatter : {', $this->nt3 . '}', $this->nt4, '');
 			}
 		}
-
-		$code = $this->iterate($wo, $this->nt2 . 'widgetOptions : {', $this->nt2 . '}', $this->nt3, '');
-		parent::$code[self::$level1][self::$level2] = $code;
+		if (count($wo) > 0) {
+			$code = $this->iterate($wo, $this->nt2 . 'widgetOptions : {', $this->nt2 . '}', $this->nt3, '');
+			parent::$code[self::$level1][self::$level2] = $code;
+		}
 	}
 
 }

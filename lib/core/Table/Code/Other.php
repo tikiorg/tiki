@@ -25,15 +25,15 @@ class Table_Code_Other extends Table_Code_Manager
 
 	public function setCode()
 	{
-		$jq = '';
+		$jq = array();
 		$code = '';
 		$sr = '';
 		//reset sort button
 		$x = array('reset' => '', 'savereset' => '');
 		$s = $this->s['sort'];
-		$s = isset($s['type']) && array_key_exists($s['type'], $x) ? $s : false;
+		$s = isset($s['type']) && $s['type'] !== true && array_key_exists($s['type'], $x) ? $s : false;
 		if ($s) {
-			if ($s['type'] == 'savereset') {
+			if ($s['type'] === 'savereset') {
 				$sr = '.trigger(\'saveSortReset\')';
 			}
 			$jq[] = '$(\'button#' . $s['id'] . '\').click(function(){$(\'table#' . $this->id
@@ -45,7 +45,7 @@ class Table_Code_Other extends Table_Code_Manager
 		if ($this->filters) {
 			$f = $this->s['filters'];
 			//reset button
-			if ($this->s['filters']['type'] == 'reset') {
+			if ($this->s['filters']['type'] === 'reset') {
 				$html[] = '<button id="' . $f['id'] . '" type="button">' . $f['text'] . '</button>';
 			}
 			//placeholders
@@ -62,7 +62,7 @@ class Table_Code_Other extends Table_Code_Manager
 
 		$p = $this->s['pager'];
 		//pager controls
-		if (isset($p['type']) && $p['type'] !== false) {
+		if ($this->pager) {
 			$div = array(
 				'Page: <select class="gotoPage"></select>',
 				'<span class="first arrow">mg</span>',
@@ -72,7 +72,7 @@ class Table_Code_Other extends Table_Code_Manager
 				'<span class="last arrow">mg</span>',
 			);
 			foreach ($p['expand'] as $option) {
-				$sel = $p['max'] == $option ? ' selected="selected"' : '';
+				$sel = $p['max'] === $option ? ' selected="selected"' : '';
 				$opt[] = $sel . ' value="' . $option . '">' . $option;
 			}
 			if (isset($opt)) {
@@ -84,7 +84,7 @@ class Table_Code_Other extends Table_Code_Manager
 				'</div>', '', '', '') ;
 		}
 
-		//TODO - doesn't seem to work with ajax. Don't set tables to 'disable' until this is fixed
+		//TODO - doesn't work with ajax. Don't set tables to 'disable' until fixed. Bug #353 reported at https://github.com/Mottie/tablesorter/issues
 		//disable pager button
 /*		if (isset($p['type']) && $p['type'] == 'disable' && $p['type'] !== true) {
 			$b = array(
@@ -111,7 +111,7 @@ class Table_Code_Other extends Table_Code_Manager
 
 		//bind to ajax event to show processing
 		$bind = '';
-		if (isset($this->s['pager']['ajax']) && $this->s['pager']['ajax'] !== false) {
+		if ($this->ajax) {
 			$bind = array(
 				'if (e.type === \'ajaxSend\') {',
 				'	$(\'table#' . $this->id . ' tbody\').css(\'opacity\', 0.5);',
@@ -123,8 +123,9 @@ class Table_Code_Other extends Table_Code_Manager
 			$jq[] = $this->iterate($bind, '$(document).bind(\'ajaxSend ajaxComplete\', function(e){',
 				$this->nt . '});', $this->nt2, '', '');
 		}
-
-		$code = $this->iterate($jq, '', '', $this->nt, '', '');
-		parent::$code[self::$level1] = $code;
+		if (count($jq) > 0) {
+			$code = $this->iterate($jq, '', '', $this->nt, '', '');
+			parent::$code[self::$level1] = $code;
+		}
 	}
 }

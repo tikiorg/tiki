@@ -24,6 +24,7 @@ class Table_Settings_Users extends Table_Settings_Abstract
 {
 	protected $ts = array(
 		'id' => 'usertable',
+		'selflinks' => true,
 		'sort' => array(
 			'columns' => array(
 				0 => array(					//checkbox
@@ -98,10 +99,10 @@ class Table_Settings_Users extends Table_Settings_Abstract
 		),
 		'pager' => array(
 			'type' => true,
-			'ajax' => array(
-				'url' => 'tiki-adminusers.php?{sort:sort}&{filter:filter}',
-			)
 		),
+		'ajax' => array(
+			'url' => 'tiki-adminusers.php?{sort:sort}&{filter:filter}',
+		)
 	);
 
 	/**
