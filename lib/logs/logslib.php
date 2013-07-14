@@ -206,7 +206,6 @@ class LogsLib extends TikiLib
 		);
 		if ( $logObject ) {
 			if (function_exists('mb_strcut')) {
-				echo "ca passe ici";
 				$param = mb_strcut($param, 0, 200);
 			} else {
 				$param = substr($param, 0, 200);
