@@ -155,7 +155,7 @@
 						<tr class="{cycle}">
 							<td class="checkbox">
 								{if $users[user].user ne 'admin'}
-									<input type="checkbox" name="checked[]" value="{$users[user].user|escape}" {if $users[user].checked eq 'y'}checked="checked" {/if}>
+									<input type="checkbox" name="checked[]" value="{$users[user].user|escape}" {if isset($users[user].checked) && $users[user].checked eq 'y'}checked="checked" {/if}>
 								{/if}
 							</td>
 
@@ -200,7 +200,7 @@
 										{if $grs != "Anonymous" and ($tiki_p_admin eq 'y' || in_array($grs, $all_groups))}
 											{if $what eq 'included'}<i>{/if}
 											{if $tiki_p_admin eq 'y'}
-												<a class="link" {$link_style} href="tiki-admingroups.php?group={$grs|escape:"url"}" title={if $what eq 'included'}"{tr}Edit Included Group{/tr}"{else}"{tr}Edit Group:{/tr} {$grs|escape}"{/if}>
+												<a class="link" {if isset($link_style)}{$link_style}{/if} href="tiki-admingroups.php?group={$grs|escape:"url"}" title={if $what eq 'included'}"{tr}Edit Included Group{/tr}"{else}"{tr}Edit Group:{/tr} {$grs|escape}"{/if}>
 											{/if}
 											{$grs|escape}
 											{if $tiki_p_admin eq 'y'}
