@@ -774,7 +774,7 @@ if ($tsAjax || !$tsOn) {
 	$ts_groups = array_flip($ts_groups);
 	//set tablesorter code
 	Table_Factory::build(
-		'users',
+		'adminusers',
 		array(
 			 'total' => $users['cant'],
 			 'filters' => array(

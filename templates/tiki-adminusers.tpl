@@ -127,6 +127,8 @@
 	<form name="checkform" method="post" action="{$smarty.server.PHP_SELF}{if (!isset($group_management_mode) or $group_management_mode ne 'y') and (!isset($set_default_groups_mode) or $set_default_groups_mode ne 'y') and (!isset($email_mode) or $email_mode ne 'y')}#multiple{/if}">
 		<div id="usertable" {if $ts}style="visibility: hidden"{/if}>
 			<table id="usertable" class="normal">
+				{* Note: for any changes in the logic determining which columns are shown, corresponding changes will
+				need to be made in the getTableSettings function at /lib/core/Table/Settings/Adminusers.php *}
 				<thead>
 					<tr>
 						<th class="auto">

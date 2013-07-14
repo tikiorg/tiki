@@ -20,7 +20,7 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
  * @subpackage Table
  * @uses Table_Settings_Abstract
  */
-class Table_Settings_Users extends Table_Settings_Abstract
+class Table_Settings_Adminusers extends Table_Settings_Abstract
 {
 	protected $ts = array(
 		'id' => 'usertable',
