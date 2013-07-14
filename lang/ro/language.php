@@ -22,8 +22,8 @@
 // This allows correctly displaying emails and JavaScript messages, not only web pages as would happen with &nbsp;.
 
 $lang = array(
-// "You must specify a directory" => "You must specify a directory",
-// "Creation Date" => "Creation Date",
+"You must specify a directory" => "Trebuie sa specificati un directoriu",
+"Creation Date" => "Data crearii",
 // "Name" => "Name",
 // "Last modification date" => "Last modification date",
 // "Hits" => "Hits",
