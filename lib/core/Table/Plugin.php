@@ -20,7 +20,7 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
  */
 class Table_Plugin
 {
-	public static $params = array();
+	public $params = array();
 	public $settings;
 
 	/**
