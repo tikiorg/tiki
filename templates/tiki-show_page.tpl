@@ -1,16 +1,14 @@
 {* $Id$ *}
 {extends 'layout_view.tpl'}
 
-{if !isset($pageLang)}
-	{if isset($info.lang)}
-		{assign var='pageLang' value=$info.lang}
-	{else}
-		{assign var='pageLang' value=''}
-	{/if}
-{/if}
-		
 {block name=title}
-{if !isset($hide_page_header) or !$hide_page_header}
+	{if !isset($pageLang)}
+		{if isset($info.lang)}
+			{assign var='pageLang' value=$info.lang}
+		{else}
+			{assign var='pageLang' value=''}
+		{/if}
+	{/if}{if !isset($hide_page_header) or !$hide_page_header}
 	{if $prefs.feature_siteloc eq 'page' and $prefs.feature_breadcrumbs eq 'y'}
 		{if $prefs.feature_siteloclabel eq 'y'}{tr}Location : {/tr}{/if}
 		{breadcrumbs type="trail" loc="page" crumbs=$crumbs}
