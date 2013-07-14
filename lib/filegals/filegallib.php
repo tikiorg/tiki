@@ -2557,7 +2557,11 @@ class FileGalLib extends TikiLib
 		$g_table = '`tiki_file_galleries` as tfg';
 		$f_group_by = '';
 		$orderby = $this->convertSortMode($sort_mode);
-
+		// order by must handle "1", which is the convertSortMode error return
+		if ( $orderby == '1' ) {
+			$orderby = '';
+		}
+		
 		$categlib = TikiLib::lib('categ');
 		$f2g_corresp = array(
 				'0 as `isgal`' => '1 as `isgal`',
