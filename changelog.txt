@@ -25,6 +25,23 @@ When possible, it's also nice to indicate what feature is concerned by the chang
 Before 2.0, there was only [MOD] for both [ENH] and [MOD]:
 
 ----------------------------------------------------------------------
+Version 6.12
+<http://tiki.org/ReleaseNotes612>
+------------------
+
+----------------------------------------------
+r46515 | arildb | 2013-06-27 20:35:29 +0200 (Thu, 27 Jun 2013) | 1 line
+
+[bp/r46477][SEC] Validate email to prevent XSS
+----------------------------------------------
+r46513 | arildb | 2013-06-27 20:28:36 +0200 (Thu, 27 Jun 2013) | 1 line
+
+[bp/r46465][SEC] convertSortMode must always return a string which can follow "order by"
+----------------------------------------------
+r46512 | arildb | 2013-06-27 20:24:48 +0200 (Thu, 27 Jun 2013) | 1 line
+
+[bp/r46462][SEC] Always use parameters in queries to prevent XSS
+----------------------------------------------
 Version 6.11
 <http://tiki.org/ReleaseNotes611>
 ------------------
