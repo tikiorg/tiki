@@ -205,7 +205,14 @@ class LogsLib extends TikiLib
 			'proxy_pass'
 		);
 		if ( $logObject ) {
-			$param = substr($param, 0, '200');
+			var_dump($param);
+			if (function_exists('mb_strcut')) {
+				echo "ca passe ici";
+				$param = mb_strcut($param, 0, 200);
+			} else {
+				$param = substr($param, 0, 200);
+			}
+			var_dump($param);
 			if ($logCateg && count($categs) > 0) {
 				foreach ($categs as $categ) {
 					$query = "insert into `tiki_actionlog` " .
