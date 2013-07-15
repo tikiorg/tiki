@@ -44,6 +44,7 @@ class Table_Code_MainOptions extends Table_Code_Manager
 		//*** widgets ***//
 		//odd/even formatting
 		$w[] = 'zebra';
+		$w[] = 'stickyHeaders';
 		//saveSort
 		if (isset($this->s['sort']['type']) && strpos($this->s['sort']['type'], 'save') !== false) {
 			$w[] = 'saveSort';

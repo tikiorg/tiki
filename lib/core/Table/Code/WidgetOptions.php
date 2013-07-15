@@ -25,7 +25,7 @@ class Table_Code_WidgetOptions extends Table_Code_Manager
 
 	public function setCode()
 	{
-		$wo = array();
+		$wo = array('stickyHeaders : \'tablesorter-stickyHeader\'');
 		//saveSort
 		if (isset($this->s['sort']['type']) && strpos($this->s['sort']['type'], 'save') !== false) {
 			$wo[] = 'saveSort : true';
