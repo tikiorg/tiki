@@ -390,6 +390,12 @@ if ($prefs['flaggedrev_approval'] == 'y' && isset($_REQUEST['latest']) && $objec
 
 require_once 'lib/cache/pagecache.php';
 
+if ($prefs['mobile_mode'] === 'y') {
+	$cache_mobile_mode = array('mobile_mode' => $prefs['mobile_mode']);
+} else {
+	$cache_mobile_mode = array();
+}
+
 $pageCache = Tiki_PageCache::create()
 	->disableForRegistered()
 	->onlyForGet()
@@ -398,6 +404,7 @@ $pageCache = Tiki_PageCache::create()
 	->addValue('page', $page)
 	->addValue('locale', $prefs['language'])
 	->addKeys($_GET, array_keys($_GET))
+	->addKeys($cache_mobile_mode, array_keys($cache_mobile_mode))
 	->checkMeta('wiki-page-output-meta-timestamp', array('page' => $page,))
 	->applyCache();
 
