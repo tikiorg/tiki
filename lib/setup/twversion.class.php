@@ -24,10 +24,10 @@ class TWVersion
 		//   stable   : Represents stable releases.
 		//   unstable : Represents candidate and test/development releases.
 		//   trunk     : Represents next generation development version.
-		$this->branch 	= 'unstable';
+		$this->branch 	= 'stable';
 
 		// Set everything else, including defaults.
-		$this->version 	= '10.4svn';	// Never ever put any spaces in this value.  This will appear in tiki-admin.php?page=general
+		$this->version 	= '10.4';	// Never ever put any spaces in this value.  This will appear in tiki-admin.php?page=general
 		$this->star	= 'Sun';
 		$this->releases	= array();
 
@@ -156,6 +156,7 @@ class TWVersion
 				'6.9',
 				'6.10',
 				'6.11',
+				'6.12',
 				'7.0beta1',
 				'7.0beta2',
 				'7.0RC1',
@@ -183,12 +184,14 @@ class TWVersion
 				'9.3',
 				'9.4',
 				'9.5',
+				'9.6',
 				'10.0alpha',
 				'10.0beta',
 				'10.0',
 				'10.1',
 				'10.2',
 				'10.3',
+				'10.4',
 				'11.0beta',
 			);
 	}
