@@ -363,13 +363,6 @@ if (isset($_REQUEST["save"])) {
 			}
 			$cookietab = "1";
 			$smarty->assign('itemId', '');
-			$mainfield = '';
-			foreach ($ins_fields as $f) {
-				if ($f['isMain'] == 'y' && ! empty($f['value'])) {
-					$mainfield = $f['value'];
-					break;
-				}
-			}
 			if (isset($newItemRate)) {
 				$trackerId = $_REQUEST["trackerId"];
 				$trklib->replace_rating($trackerId, $itemid, $newItemRateField, $user, $newItemRate);
