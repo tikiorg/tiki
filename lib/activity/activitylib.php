@@ -9,6 +9,37 @@ class ActivityLib
 {
 	private $mapping = false;
 
+	function getRules()
+	{
+		return $this->rulesTable()->fetchAll(array(
+			'ruleId',
+			'eventType',
+			'ruleType',
+			'rule',
+			'notes',
+		), array());
+	}
+
+	function getRule($id)
+	{
+		return $this->rulesTable()->fetchRow(array(
+			'ruleId',
+			'eventType',
+			'ruleType',
+			'rule',
+			'notes',
+		), array(
+			'ruleId' => $id,
+		));
+	}
+
+	function replaceRule($id, array $data)
+	{
+		return $this->rulesTable()->insertOrUpdate($data, array(
+			'ruleId' => $id,
+		));
+	}
+
 	function recordEvent($event, $arguments)
 	{
 		$mapping = $this->getMapping();
@@ -47,7 +78,9 @@ class ActivityLib
 
 		$customizer = new Tiki_Event_Customizer;
 
-		// TODO : Load rules
+		foreach ($this->getRules() as $rule) {
+			$customizer->addRule($rule['eventType'], $rule['rule']);
+		}
 		
 		$customizer->bind($manager, $runner);
 	}
@@ -93,6 +126,11 @@ class ActivityLib
 			));
 			$this->mapping[$key] = $type;
 		}
+	}
+
+	private function rulesTable()
+	{
+		return TikiDb::get()->table('tiki_activity_stream_rules');
 	}
 
 	private function mappingTable()

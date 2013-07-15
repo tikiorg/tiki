@@ -60,6 +60,7 @@ class ServiceLib
 			'jcapture' => 'Services_JCapture_Controller',
 			'jison'=> 'Services_JisonParser_WikiPlugin',
 			'kaltura'=>  'Services_Kaltura_Controller',
+			'managestream' => 'Services_ActivityStream_ManageController',
 			'object' => 'Services_Object_Controller',
 			'rating'=>  'Services_Rating_Controller',
 			'report' => 'Services_Report_Controller',

@@ -230,33 +230,6 @@
 					{preference name=smarty_security}
 				</fieldset>
 			</div>
-			
-			<fieldset>
-				<legend>{tr}Event Hooks{/tr}</legend>
-				{remarksbox type=note title="{tr}New Feature{/tr}"}
-					{tr}Please note that this is a relatively new feature that still needs to be deployed all around. Expect more events to be added over time.{/tr}
-				{/remarksbox}
-				<p>{tr}If you need to add behaviors to Tiki, there are several event hooks you can attach to. Here are the events and the inheritance.{/tr}</p>
-				{$headerlib->add_dracula()}
-				<div id="graph-canvas" class="graph-canvas" data-graph-nodes="{$event_graph.nodes|@json_encode|escape}" data-graph-edges="{$event_graph.edges|@json_encode|escape}"></div>
-				<a href="#" id="graph-draw" class="button">{tr}Draw Event Diagram{/tr}</a>
-				{jq}
-				$('#graph-draw').click( function( e ) {
-					$('#graph-canvas')
-						.empty()
-						.css('width', $window.width() - 50)
-						.css('height', $window.height() - 130)
-						.dialog({
-							title: "Events",
-							width: $window.width() - 20,
-							height: $window.height() - 100
-						})
-						.drawGraph();
-					$
-					return false;
-				} );
-				{/jq}
-			</fieldset>
 {/tab}
 
 {/tabset}
