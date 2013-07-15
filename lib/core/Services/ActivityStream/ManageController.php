@@ -47,10 +47,58 @@ class Services_ActivityStream_ManageController
 		);
 	}
 	
+	function action_tracker_filter(JitFilter $request)
+	{
+		$id = $request->id->int();
+
+		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+			$tracker = $request->tracker->int();
+			$targetEvent = $request->targetEvent->attribute_type();
+			$customArguments = $request->parameters->text();
+
+			$id = $this->lib->replaceRule($id, array(
+				'rule' => "
+(if (equals args.trackerId $tracker) (event-trigger $targetEvent (map
+$customArguments
+)))
+",
+				'ruleType' => 'tracker_filter',
+				'notes' => $request->notes->text(),
+				'eventType' => $request->sourceEvent->attribute_type(),
+			));
+		}
+
+		$rule = $this->getRule($id);
+		$root = $rule['element'];
+		$parameters = '';
+		$targetTracker = null;
+		$targetEvent = null;
+
+		if ($root) {
+			$targetTracker = (int) $root->equals[1];
+			$targetEvent = $root->{'event-trigger'}[0];
+			foreach ($root->{'event-trigger'}->map as $element) {
+				$parameters .= '(' . $element->getType() . ' ' . $element[0] . ')' . PHP_EOL;
+			}
+		} else {
+			$parameters = "(user args.user)\n(type args.type)\n(object args.object)\n";
+		}
+
+		return array(
+			'rule' => $rule,
+			'eventTypes' => $this->getEventTypes(),
+			'targetEvent' => $targetEvent,
+			'targetTracker' => $targetTracker,
+			'trackers' => TikiLib::lib('trk')->list_trackers(),
+			'parameters' => $parameters,
+		);
+	}
+	
 	private function getRuleTypes()
 	{
 		return array(
 			'record' => tr('Record Event'),
+			'tracker_filter' => tr('Tracker Filter'),
 		);
 	}
 
@@ -62,16 +110,23 @@ class Services_ActivityStream_ManageController
 
 	private function getRule($id)
 	{
-		if ($rule = $this->lib->getRule($id)) {
-			return $rule;
+		if (! $rule = $this->lib->getRule($id)) {
+			$rule = array(
+				'ruleId' => null,
+				'eventType' => '',
+				'notes' => '',
+				'rule' => '',
+			);
 		}
 
-		return array(
-			'ruleId' => null,
-			'eventType' => '',
-			'notes' => '',
-			'rule' => '',
-		);
+		if ($rule['rule']) {
+			$parser = new Math_Formula_Parser;
+			$rule['element'] = $parser->parse($rule['rule']);
+		} else {
+			$rule['element'] = null;
+		}
+
+		return $rule;
 	}
 }
 

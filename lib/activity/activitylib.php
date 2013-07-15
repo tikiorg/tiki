@@ -115,6 +115,8 @@ class ActivityLib
 
 	private function guessMapping($arguments)
 	{
+		$this->getMapping(); // Ensure mapping is loaded.
+
 		$mapper = new Search_Type_Analyzer;
 		$mappingTable = $this->mappingTable();
 		

@@ -2,7 +2,7 @@
 <ol>
 	{foreach from=$rules item=rule}
 		<li>
-			<strong>{$rule.ruleType|ucfirst|escape}:</strong> {$rule.eventType|escape}
+			<strong>{$ruleTypes[$rule.ruleType]|escape}:</strong> {$rule.eventType|escape}
 			<div>{$rule.notes|escape}</div>
 			<button class="rule-edit" data-rule-type="{$rule.ruleType|escape}" data-rule-id="{$rule.ruleId|escape}">{tr}Edit{/tr}</button>
 		</li>
