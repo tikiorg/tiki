@@ -32,7 +32,7 @@
 					{else}
 						<h4 class="title">{$comment.title}</h4>
 						<span class="avatar">{$comment.userName|avatarize}</span>
-						<div class="author_info">{tr _0=$comment.userName|userlink _1=$comment.commentDate|tiki_long_datetime}Comment posted by %0 on %1{/tr}</div>						
+						<div class="author_info">{tr _0=$comment.userName|userlink _1=$comment.commentDate|tiki_long_datetime}Comment posted by %0 on %1{/tr}</div>
 					{/if}
 					<div class="body">
 						{$comment.parsed}
@@ -77,7 +77,7 @@
 					{if $comment.replies_info.numReplies gt 0}
 						{include file='comment/list.tpl' comments=$comment.replies_info.replies cant=$comment.replies_info.numReplies parentId=$comment.threadId}
 					{/if}
-				</article>	
+				</article>
 			</li>
 		{/foreach}
 	</ol>
@@ -99,4 +99,3 @@
 var ajax_url = '{$base_url}';
 var objectId = '{$objectId}';
 </script>
-
