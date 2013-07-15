@@ -58,11 +58,9 @@ class Search_Elastic_Index implements Search_Index_Interface
 
 	private function generateMapping($type, $data)
 	{
-		if (isset($this->providedMappings[$type])) {
-			return;
+		if (! isset($this->providedMappings[$type])) {
+			$this->providedMappings[$type] = array();
 		}
-
-		$this->providedMappings[$type] = true;
 
 		$mapping = array_map(
 			function ($entry) {
@@ -72,8 +70,9 @@ class Search_Elastic_Index implements Search_Index_Interface
 						"index" => "not_analyzed",
 					);
 				}
-			}, $data
+			}, array_diff_key($data, $this->providedMappings[$type])
 		);
+		$this->providedMappings[$type] = array_merge($this->providedMappings[$type], $mapping);
 		$mapping = array_filter($mapping);
 
 		$this->connection->mapping($this->index, $type, $mapping);
