@@ -53,7 +53,7 @@
 		"phpseclib/phpseclib": "0.3.1",
 		"rangy/rangy": "1.2.3",
 		"simile_timeline/simile_timeline": "2.3.0",
-		"smarty/smarty": "3.1.13",
+		"smarty/smarty": "3.1.14",
 		"svg-edit/svg-edit": "2.6",
 		"symfony/console": "2.2.0",
 		"zetacomponents/base": "1.8",
