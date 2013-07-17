@@ -39,7 +39,7 @@ hr {
 	Including Site Header *****/
 
 /** Look & Feel (Site Identity) **/
-#siteheader {
+#header {
 	background-image: url(writer/banner-repeat.jpg);
 	background-repeat: repeat-x;
 }
