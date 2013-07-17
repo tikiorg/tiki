@@ -90,21 +90,13 @@ h3.box-title {
 /***** Feature-specific styles ****/
 /***** Wiki ******/
 
-body.wikitext a {
-	color: #777 !important;
-}
-
-body.wikitext a:hover {
-	color: #777 !important;
-}
-
 .wikitext a {
-	color: #777 !important;
+	color: #038;
 	font-weight: bold;
 }
 
 .wikitext a:hover {
-	color: #777 !important;
+	color: #038;
 	text-decoration: underline;
 }
 

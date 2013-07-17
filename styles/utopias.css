@@ -28,6 +28,7 @@ body {
 	font-family: Helvetica,Arial,sans-serif;
 	background: #eee;
 	color: #000;
+	line-height: 1.5;
 }
 
 html[dir=ltr] {
@@ -733,12 +734,12 @@ body.wikitext {	/* fckeditor */
 }
 
 .wikitext a {
-	color: #888 !important;
+	color: #888;
 	font-weight: bold;
 }
 
 .wikitext a:hover {
-	color: #aaa !important;
+	color: #aaa;
 }
 
 div.wikitext div.img {
