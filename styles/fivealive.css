@@ -187,6 +187,8 @@ body.fixed_width .fixedwidth {
 	color: #fbfbfb;
 }
 
+/* for wiki/html mix tiki.org footer - pre-Tiki 11 and/or non wiki paragraph mode */
+
 #footer .box {
 	float:left;
 	text-align: left;
@@ -214,6 +216,47 @@ body.fixed_width .fixedwidth {
 	margin-bottom: 0;
 	padding: 0;
 }
+
+/* *.tiki.org footer for Tiki 11+ (when using wiki paragraph formatting */
+
+#twfooter ul {
+	list-style: none;
+	width: 100%;
+	text-align: left;
+	padding: 0;
+	margin: 0 2em 0 0;
+}
+
+#twfooter ul ul li {
+	float: left;
+	clear: left;
+}
+
+#twfooter li {
+	float: left;
+}
+
+#twfooter > ul > li {
+	width: 12%;
+}
+
+#twfooter > ul > li > a,
+#twfooter > ul > li > a:visited {
+	border-bottom: 1px dotted #28aae1;
+	font-size: 1.2em;
+	margin: 0 0 .5em;
+	padding-bottom: .5em;
+	color: #fff;
+	font-weight: bold;
+	display: inline-block;
+}
+
+#twfooter > p {
+	clear: both;
+	text-align: left;
+}
+
+/* end t.o footers */
 
 #rss {
 	text-align: left !important;
