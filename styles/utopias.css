@@ -28,6 +28,7 @@ body {
 	font-family: Helvetica,Arial,sans-serif;
 	background: #eee;
 	color: #000;
+	line-height: 1.5;
 }
 
 html[dir=ltr] {
@@ -597,7 +598,9 @@ form.admin fieldset {
 /***** Feature-specific styles ****/
 /***** Wiki ******/
 
-
+#page-data {
+	min-height: 50em;
+}
 
 .wikitext ul {
 	margin: 0.2em 0;
@@ -731,12 +734,12 @@ body.wikitext {	/* fckeditor */
 }
 
 .wikitext a {
-	color: #888 !important;
+	color: #888;
 	font-weight: bold;
 }
 
 .wikitext a:hover {
-	color: #aaa !important;
+	color: #aaa;
 }
 
 div.wikitext div.img {
@@ -794,7 +797,7 @@ div.description {
 }
 
 textarea.wikiedit {
-	font-size: 1.1em;
+	font-size: 1.6em;
 }
 
 p.editdate {
@@ -1073,7 +1076,7 @@ textarea.tshoutbox {
 #top_modules .box-quickadmin {
 	background-color: #fff;
 	background-color: rgba(255,255,255,.5);
-	top: 70%;
+	top: 40%;
 	border-radius: 4px;
 	-moz-border-radius: 4px;
 	-webkit-border-radius: 4px;
