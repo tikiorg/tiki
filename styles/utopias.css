@@ -597,7 +597,9 @@ form.admin fieldset {
 /***** Feature-specific styles ****/
 /***** Wiki ******/
 
-
+#page-data {
+	min-height: 50em;
+}
 
 .wikitext ul {
 	margin: 0.2em 0;
