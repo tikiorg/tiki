@@ -207,9 +207,9 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 
 			$form = preg_replace(array('/<!--.*?-->/', '/\s+/', '/^~np~/', '/~\/np~/'), array('', ' ', '', ''), $form);	// remove comments etc
 
-			if ($this->getOption('displayFieldsList')) {
-				$displayFieldId = $this->getOption('displayFieldsList');
-				if (strpos($displayFieldId, '|') !== false) {
+			if ($displayFieldsList = $this->getDisplayFieldsListArray()) {
+				$displayFieldId = $displayFieldsList[0];
+				if (is_string($displayFieldId) && strpos($displayFieldId, '|') !== false) {
 					$displayFieldId = substr($displayFieldId, 0, strpos($displayFieldId, '|'));
 				}
 			} else {
@@ -412,7 +412,7 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 
 		$parts = array();
 
-		if ($fields = $this->getOption('displayFieldsList')) {
+		if ($fields = $this->getDisplayFieldsListArray()) {
 			foreach(explode('|', $fields) as $fieldId) {
 				if (isset($item[$fieldId])) {
 					$parts[] = $item[$fieldId];
@@ -436,10 +436,10 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 
 	private function getItemList()
 	{
-		if ($this->getOption('displayFieldsList')) {
+		if ($displayFieldsList = $this->getDisplayFieldsListArray()) {
 			$list = TikiLib::lib('trk')->concat_all_items_from_fieldslist(
 				$this->getOption('trackerId'),
-				$this->getOption('displayFieldsList'),
+				$displayFieldsList,
 				$this->getOption('status', 'opc')
 			);
 		} else {
@@ -579,7 +579,7 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 		$usedFields = array_merge(
 			array($this->getOption('fieldId')),
 			explode('|', $this->getOption('indexRemote')),
-			explode('|', $this->getOption('displayFieldsList'))
+			explode('|', $this->getDisplayFieldsListArray())
 		);
 
 		$intersect = array_intersect($usedFields, $modifiedFields);
@@ -617,6 +617,19 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 		$n = $this->getItemLabel($new);
 
 		return parent::watchCompare($o, $n);	// then compare as text
+	}
+
+	/**
+	 * @return mixed
+	 */
+	private function getDisplayFieldsListArray()
+	{
+		$option = $this->getOption('displayFieldsList');
+		if (!empty($option) && (!is_array($option) || !empty($option[0]))) {
+			return $option;
+		} else {
+			return array();
+		}
 	}
 
 }
