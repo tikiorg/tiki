@@ -1115,7 +1115,7 @@ class TrackerLib extends TikiLib
 						$mid .= " OR tco$ff.`categId` IS NULL ";
 					}
 				} elseif ( $filter['type'] == 'usergroups' ) {
-					$definition = Tracker_Definition::get();
+					$definition = Tracker_Definition::get($trackerId);
 					$userFieldId = $definition->getUserField();
 					$cat_table .= " INNER JOIN `tiki_tracker_item_fields` ttifu ON (tti.`itemId`=ttifu.`itemId`) INNER JOIN `users_users` uu ON (ttifu.`value`=uu.`login`) INNER JOIN `users_usergroups` uug ON (uug.`userId`=uu.`userId`)";
 					$mid .= ' AND ttifu.`fieldId`=? AND uug.`groupName`=? ';
