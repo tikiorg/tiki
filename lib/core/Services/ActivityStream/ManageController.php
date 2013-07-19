@@ -46,6 +46,28 @@ class Services_ActivityStream_ManageController
 		);
 	}
 
+	function action_sample(JitFilter $request)
+	{
+		$id = $request->id->int();
+
+		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+			$event = $request->event->attribute_type();
+			$id = $this->lib->replaceRule($id, array(
+				'rule' => "(event-sample (str $event) event args)",
+				'ruleType' => 'sample',
+				'notes' => $request->notes->text(),
+				'eventType' => $event,
+			));
+		}
+
+		$rule = $this->getRule($id);
+		return array(
+			'data' => $this->lib->getSample($rule['eventType']),
+			'rule' => $rule,
+			'eventTypes' => $this->getEventTypes(),
+		);
+	}
+	
 	function action_record(JitFilter $request)
 	{
 		$id = $request->id->int();
@@ -134,6 +156,7 @@ $customArguments
 	private function getRuleTypes()
 	{
 		return array(
+			'sample' => tr('Sample Event'),
 			'record' => tr('Record Event'),
 			'tracker_filter' => tr('Tracker Filter'),
 			'advanced' => tr('Advanced'),

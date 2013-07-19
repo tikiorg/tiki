@@ -76,6 +76,8 @@ class ActivityLib
 						return new Tiki_Event_Function_EventTrigger($manager);
 					case 'event-record':
 						return new Tiki_Event_Function_EventRecord($self);
+					case 'event-sample':
+						return new Tiki_Event_Function_EventSample($self);
 					}
 				},
 				'Math_Formula_Function_' => '',
@@ -118,6 +120,36 @@ class ActivityLib
 		}
 
 		return $this->mapping;
+	}
+
+	function getSample($eventName)
+	{
+		$cachelib = TikiLib::lib('cache');
+		return $cachelib->getCached($eventName, 'event_sample');
+	}
+
+	function setSample($eventName, array $data)
+	{
+		$data = $this->serializeData($data);
+		$cachelib = TikiLib::lib('cache');
+		$cachelib->cacheItem($eventName, $data, 'event_sample');
+	}
+
+	private function serializeData(array $data, $prefix = '')
+	{
+		$out = '';
+		foreach ($data as $key => $value) {
+			if (is_array($value)) {
+				$out .= $this->serializeData($value, "$prefix$key.");
+			} else {
+				if (false !== strpos($value, "\n")) {
+					$value = str_replace("\n", "\n  |", "\n" . $value);
+				}
+				$out .= "$prefix$key = $value\n";
+			}
+		}
+
+		return $out;
 	}
 
 	private function guessMapping($arguments)
