@@ -1395,9 +1395,7 @@ if ($s == 1) {
 if (!$standalone) {
 	// The following is borrowed from tiki-admin_system.php
 	if ($prefs['feature_forums'] == 'y') {
-		include_once ('lib/comments/commentslib.php');
-		$commentslib = new Comments($dbTiki);
-		$dirs = $commentslib->list_directories_to_save();
+		$dirs = TikiLib::lib('comments')->list_directories_to_save();
 	} else {
 		$dirs = array();
 	}
