@@ -93,12 +93,32 @@ $customArguments
 			'parameters' => $parameters,
 		);
 	}
+
+	function action_advanced(JitFilter $request)
+	{
+		$id = $request->id->int();
+
+		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+			$id = $this->lib->replaceRule($id, array(
+				'rule' => $request->rule->text(),
+				'ruleType' => 'advanced',
+				'notes' => $request->notes->text(),
+				'eventType' => $request->event->attribute_type(),
+			));
+		}
+
+		return array(
+			'rule' => $this->getRule($id),
+			'eventTypes' => $this->getEventTypes(),
+		);
+	}
 	
 	private function getRuleTypes()
 	{
 		return array(
 			'record' => tr('Record Event'),
 			'tracker_filter' => tr('Tracker Filter'),
+			'advanced' => tr('Advanced'),
 		);
 	}
 

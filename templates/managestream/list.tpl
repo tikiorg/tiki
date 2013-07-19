@@ -4,7 +4,10 @@
 		<li>
 			<strong>{$ruleTypes[$rule.ruleType]|escape}:</strong> {$rule.eventType|escape}
 			<div>{$rule.notes|escape}</div>
-			<button class="rule-edit" data-rule-type="{$rule.ruleType|escape}" data-rule-id="{$rule.ruleId|escape}">{tr}Edit{/tr}</button>
+			{if $rule.ruleType neq 'advanced'}
+				<button class="rule-edit" data-rule-type="{$rule.ruleType|escape}" data-rule-id="{$rule.ruleId|escape}">{tr}Edit{/tr}</button>
+			{/if}
+			<button class="rule-edit" data-rule-type="advanced" data-rule-id="{$rule.ruleId|escape}">{tr}Advanced{/tr}</button>
 		</li>
 	{/foreach}
 </ol>
