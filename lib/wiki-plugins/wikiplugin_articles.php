@@ -339,9 +339,6 @@ function wikiplugin_articles($data, $params)
 		$filter['notArticleId'] = $notArticleId;
 	}
 
-	include_once("lib/comments/commentslib.php");
-	$commentslib = new Comments($dbTiki);
-
 	if ( count($categId) == 0 ) {
 		$categIds = '';
 	} elseif ( count($categId) == 1 ) {
@@ -381,7 +378,7 @@ function wikiplugin_articles($data, $params)
 		$comments_prefix_var='article:';
 		$comments_object_var=$listpages["data"][$i]["articleId"];
 		$comments_objectId = $comments_prefix_var.$comments_object_var;
-		$listpages["data"][$i]["comments_cant"] = $commentslib->count_comments($comments_objectId);
+		$listpages["data"][$i]["comments_cant"] = TikiLib::lib('comments')->count_comments($comments_objectId);
 		//print_r($listpages["data"][$i]['title']);
 	}
 	global $artlib; require_once ('lib/articles/artlib.php');

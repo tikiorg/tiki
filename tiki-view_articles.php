@@ -12,14 +12,12 @@ $section = 'cms';
 //get_strings tra('Articles Home');
 require_once ('tiki-setup.php');
 include_once ('lib/articles/artlib.php');
-include_once ("lib/comments/commentslib.php");
 if ($prefs['feature_freetags'] == 'y') {
 	include_once ('lib/freetag/freetaglib.php');
 }
 if ($prefs['feature_categories'] == 'y') {
 	include_once ('lib/categories/categlib.php');
 }
-$commentslib = new Comments($dbTiki);
 
 $access->check_feature('feature_articles');
 $access->check_permission_either(array('tiki_p_read_article', 'tiki_p_articles_read_heading'));
@@ -117,7 +115,7 @@ for ($i = 0; $i < $temp_max; $i++) {
 	$comments_prefix_var = 'article:';
 	$comments_object_var = $listpages["data"][$i]["articleId"];
 	$comments_objectId = $comments_prefix_var . $comments_object_var;
-	$listpages["data"][$i]["comments_cant"] = $commentslib->count_comments($comments_objectId);
+	$listpages["data"][$i]["comments_cant"] = TikiLib::lib('comments')->count_comments($comments_objectId);
 	if ($prefs['feature_freetags'] == 'y') { // And get the Tags for the posts
 		$listpages["data"][$i]["freetags"] = $freetaglib->get_tags_on_object($listpages["data"][$i]["articleId"], "article");
 	}

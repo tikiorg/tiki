@@ -427,7 +427,7 @@ function prefs_global_list($partial = false)
  */
 function feature_home_pages($partial = false)
 {
-	global $prefs, $tikilib, $commentslib;
+	global $prefs, $tikilib;
 	$tikiIndex = array();
 
 	//wiki
@@ -470,12 +470,9 @@ function feature_home_pages($partial = false)
 	
 	// Forum
 	if ( ! $partial && $prefs['feature_forums'] == 'y' ) {
-		require_once ('lib/comments/commentslib.php');
-		if (!isset($commentslib)) {
-			$commentslib = new Comments;
-		}
+
 		if ($prefs['home_forum'] != '0') {
-			$hforuminfo = $commentslib->get_forum($prefs['home_forum']);
+			$hforuminfo = TikiLib::lib('comments')->get_forum($prefs['home_forum']);
 			$home_forum_name = substr($hforuminfo['name'], 0, 20);
 		} else {
 			$home_forum_name = tra('Set Forum homepage first');

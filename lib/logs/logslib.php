@@ -1536,8 +1536,7 @@ class LogsLib extends TikiLib
 					}
 
 					if (!isset($forumNames)) {
-						global $commentslib; include_once('lib/comments/commentslib.php');
-						$objects = $commentslib->list_forums(0, -1, 'name_asc', '');
+						$objects = TikiLib::lib('comments')->list_forums(0, -1, 'name_asc', '');
 						$forumNames = array();
 						foreach ($objects['data'] as $object) {
 							$forumNames[$object['forumId']] = $object['name'];

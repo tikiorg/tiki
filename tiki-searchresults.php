@@ -71,9 +71,7 @@ if ($where == 'forums') {
 	$access->check_permission('tiki_p_forum_read');
 	if (!empty($_REQUEST['forumId'])) {
 		$filter['forumId'] = $_REQUEST['forumId'];
-		global $commentslib;
-		include ('lib/comments/commentslib.php');
-		if (!isset($commentslib)) $commentslib = new Comments($dbTiki);
+		$commentslib = TikiLib::lib('comments');
 		$forum_info = $commentslib->get_forum($_REQUEST['forumId']);
 		$where = 'forum';
 		$smarty->assign_by_ref('where_forum', $forum_info['name']);

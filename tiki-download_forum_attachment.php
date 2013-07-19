@@ -11,8 +11,6 @@
 $force_no_compression = true;
 require_once ('tiki-setup.php');
 
-include_once ('lib/comments/commentslib.php');
-
 // roysinn: shouldn't need attach permission for download . . .
 //if ($tiki_p_forum_attach != 'y') {
 //	die;
@@ -22,7 +20,7 @@ if (!isset($_REQUEST["attId"])) {
 	die;
 }
 
-$commentslib = new Comments($dbTiki);
+$commentslib = TikiLib::lib('comments');
 $info = $commentslib->get_thread_attachment($_REQUEST["attId"]);
 
 if ( empty($info['filetype']) || $info['filetype'] == 'application/x-octetstream' || $info['filetype'] == 'application/octet-stream' ) {

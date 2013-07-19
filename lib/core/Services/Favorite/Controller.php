@@ -68,8 +68,7 @@ class Services_Favorite_Controller
 		}
 		if ($prefs['feature_score'] == 'y' && $target) {
 			if ($type == 'forum post') {
-			  require_once 'lib/comments/commentslib.php';
-			  $commentslib = new Comments();
+			  $commentslib = TikiLib::lib('comments');
 			  $forum_id = $commentslib->get_comment_forum_id($object);
 			  $forum_info = $commentslib->get_forum($forum_id);
 			  $thread_info = $commentslib->get_comment($object, null, $forum_info);

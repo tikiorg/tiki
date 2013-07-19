@@ -41,12 +41,7 @@ function module_most_commented_info()
 function module_most_commented($mod_reference, $module_params)
 {
 	global $smarty;
-	global $commentslib;
 
-	if (!isset($commentslib)) {
-		include_once ('lib/comments/commentslib.php');
-		$commentslib = new Comments();
-	}
 	$type = 'wiki';
 	if (isset($module_params['objectType'])) {
 		$type = $module_params['objectType'];
@@ -56,7 +51,7 @@ function module_most_commented($mod_reference, $module_params)
 		}
 	}
 	
-	$result = $commentslib->order_comments_by_count($type, isset($module_params['objectLanguageFilter']) ? $module_params['objectLanguageFilter'] : '', $mod_reference['rows']);
+	$result = TikiLib::lib('comments')->order_comments_by_count($type, isset($module_params['objectLanguageFilter']) ? $module_params['objectLanguageFilter'] : '', $mod_reference['rows']);
 	if ($result === false) {
 		$smarty->assign('module_error', tra('Feature disabled'));
 		return;

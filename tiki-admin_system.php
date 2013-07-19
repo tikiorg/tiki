@@ -56,8 +56,7 @@ foreach ($languages as $clang) {
 }
 $smarty->assign_by_ref('templates', $templates);
 if ($prefs['feature_forums'] == 'y') {
-	include_once ('lib/comments/commentslib.php');
-	$commentslib = new Comments($dbTiki);
+	$commentslib = TikiLib::lib('comments');
 	$dirs = $commentslib->list_directories_to_save();
 } else {
 	$dirs = array();

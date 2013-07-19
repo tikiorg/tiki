@@ -13,8 +13,7 @@ require_once ('tiki-setup.php');
 
 $access->check_feature('feature_forums');
 
-include_once ("lib/comments/commentslib.php");
-$commentslib = new Comments($dbTiki);
+$commentslib = TikiLib::lib('comments');
 if (!isset($_REQUEST['comments_parentId']) && isset($_REQUEST['threadId'])) {
 	$_REQUEST['comments_parentId'] = $_REQUEST['threadId'];
 }

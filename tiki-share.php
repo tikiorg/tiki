@@ -71,8 +71,7 @@ if (empty($_REQUEST['report']) || $_REQUEST['report'] != 'y') {
 	$smarty->assign('messageto', (isset($_REQUEST['messageto'])?$_REQUEST['messageto']:''));
 
 	if (isset($prefs['feature_forums']) and $prefs['feature_forums'] == 'y') {
-		include_once ('lib/comments/commentslib.php');
-		$commentslib = new Comments($dbTiki); // not done in commentslib
+		$commentslib = TikiLib::lib('comments'); // not done in commentslib
 		$sort_mode = $prefs['forums_ordering'];
 		$channels = $commentslib->list_forums(0, -1, $sort_mode, '');
 		Perms::bulk(array( 'type' => 'forum' ), 'object', $channels['data'], 'forumId');

@@ -99,8 +99,7 @@ if (!empty($_REQUEST['banId'])) {
 // Handle case when coming from tiki-list_comments with a list of IPs to ban
 if (!empty($_REQUEST['mass_ban_ip'])) {
 	check_ticket('admin-banning');
-	include_once ('lib/comments/commentslib.php');
-	$commentslib = new Comments;
+	$commentslib = TikiLib::lib('comments');
 	$smarty->assign('mass_ban_ip', $_REQUEST['mass_ban_ip']);
 	$info['mode'] = 'mass_ban_ip';
 	$info['title'] = tr('Multiple IP Banning');

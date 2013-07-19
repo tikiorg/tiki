@@ -14,11 +14,10 @@ if (empty($prefs['feature_jpgraph'])) {
 	$prefs['feature_jpgraph'] = 'n'; //optional package does not go througp prefs
 }
 
-include_once ('lib/comments/commentslib.php');
 include_once ('lib/categories/categlib.php');
 include_once ('lib/contribution/contributionlib.php');
 
-$commentslib = new Comments($dbTiki);
+$commentslib = TikiLib::lib('comments');
 $access->check_user($user);
 $access->check_feature('feature_actionlog');
 $access->check_permission_either(array('tiki_p_view_actionlog', 'tiki_p_view_actionlog_owngroups'));
@@ -340,12 +339,12 @@ if (isset($_REQUEST['list']) || isset($_REQUEST['export']) || isset($_REQUEST['g
 	    echo "user,object,Time in bigbluebutton (in minutes)\r\n";
 	    $logins = $logslib->list_actions('', 'bigbluebutton', $_REQUEST['selectedUsers'], 0, -1, 'lastModif_asc', $find, $startDate, $endDate, false);
 	    $stay_in_big_Times = $logslib->get_bigblue_login_time($logins['data'], $startDate, $endDate, $actions);
-	    if (empty($logins['data']))
-	      break;
-	    $csv = $logslib->export_bbb($stay_in_big_Times);
-	    echo $csv;
-	    $offset += $maxRecords;
-	    die();
+	    if (!empty($logins['data'])) {
+			$csv = $logslib->export_bbb($stay_in_big_Times);
+			echo $csv;
+			$offset += $maxRecords;
+			die();
+		}
   	}
 	$results = $logslib->list_actions('', '', $_REQUEST['selectedUsers'], $offset, $maxRecords, 'lastModif_desc', $find, $startDate, $endDate, $_REQUEST['categId']);
 	$actions = &$results['data'];

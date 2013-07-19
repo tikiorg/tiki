@@ -142,8 +142,7 @@ if ($prefs['feature_display_my_to_others'] == 'y') {
 		$smarty->assign_by_ref('user_articles', $user_articles);
 	}
 	if ($prefs['feature_forums'] == 'y') {
-		include_once ("lib/comments/commentslib.php");
-		$commentslib = new Comments($dbTiki);
+		$commentslib = TikiLib::lib('comments');
 		$user_forum_comments = $commentslib->get_user_forum_comments($userwatch, -1);
 		$smarty->assign_by_ref('user_forum_comments', $user_forum_comments);
 		$user_forum_topics = $commentslib->get_user_forum_comments($userwatch, -1, 'topics');

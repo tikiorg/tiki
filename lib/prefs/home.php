@@ -103,9 +103,7 @@ function listfgal_pref()
  */
 function listforum_pref()
 {
-	include_once ('lib/comments/commentslib.php');
-	$commentslib = new Comments();
-	$allforums = $commentslib->list_forums(0, -1, 'name_desc', '');
+	$allforums = TikiLib::lib('comments')->list_forums(0, -1, 'name_desc', '');
 
 	$listforums = array('' => 'None');
 

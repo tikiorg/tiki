@@ -7,7 +7,7 @@
 
 function smarty_function_rating( $params, $smarty )
 {
-	global $prefs, $ratinglib;
+	global $prefs, $ratinglib, $user;
 	require_once 'lib/rating/ratinglib.php';
 
 	if ( ! isset($params['type'], $params['id']) ) {
@@ -29,10 +29,9 @@ function smarty_function_rating( $params, $smarty )
 
 			// Handle type-specific actions
 			if ( $type == 'comment' ) {
-				global $user; require_once 'lib/comments/commentslib.php';
 
 				if ( $user ) {
-					$commentslib = new Comments();
+					$commentslib = TikiLib::lib('comments');
 					$commentslib->vote_comment($id, $user, $value);
 				}
 			} elseif ($type == 'article' ) {

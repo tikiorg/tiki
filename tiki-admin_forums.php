@@ -28,8 +28,7 @@ $auto_query_args = array(
 			'find',
 );
 
-include_once ("lib/comments/commentslib.php");
-$commentslib = new Comments($dbTiki);
+$commentslib = TikiLib::lib('comments');
 if (isset($_REQUEST["remove"])) {
 	$access->check_authenticity();
 	$commentslib->remove_forum($_REQUEST["remove"]);

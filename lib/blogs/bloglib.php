@@ -500,13 +500,8 @@ class BlogLib extends TikiDb_Bridge
 	)
 	{
 		global $tikilib, $tiki_p_admin, $tiki_p_blog_admin, $tiki_p_blog_post, $user, $prefs;
-		global $commentslib; require_once('lib/comments/commentslib.php');
 
 		$parserlib = TikiLib::lib('parser');
-
-		if (!is_object($commentslib)) {
-			$commentslib = new Comments();
-		}
 
 		$mid = array();
 		$bindvars = array();
@@ -566,7 +561,7 @@ class BlogLib extends TikiDb_Bridge
 		$ret = array();
 
 		while ($res = $result->fetchRow()) {
-			$res["comments"] = $commentslib->count_comments('blog post:' . $res['postId']);
+			$res["comments"] = TikiLib::lib('comments')->count_comments('blog post:' . $res['postId']);
 			$res['pages'] = $this->get_number_of_pages($res['data']);
 			$res['avatar'] = $tikilib->get_user_avatar($res['user']);
 
