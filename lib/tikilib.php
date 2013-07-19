@@ -5125,7 +5125,7 @@ class TikiLib extends TikiDb_Bridge
 		$userlib = TikiLib::lib('user');
 
 		$allGroups = $userlib->get_groups();
-		$accessor = Perms::get($context);
+		$accessor = Perms::get();
 
 		// list of groups with permission to approve plugin on this object
 		$groups = array();
