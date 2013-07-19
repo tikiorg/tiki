@@ -6261,10 +6261,10 @@ JS;
 			$headerlib->add_js($js);
 			return "<div id=\"$myId\">" . $alt . "</div>";
 		} else { // link on the movie will not work with IE6
-			extract($params, EXTR_SKIP);
-			$asetup = "<object classid=\"clsid:D27CDB6E-AE6D-11cf-96B8-444553540000\" codebase=\"http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,29,0\" width=\"$width\" height=\"$height\">";
-			$asetup .= "<param name=\"movie\" value=\"$movie\" />";
-			$asetup .= "<param name=\"quality\" value=\"$quality\" />";
+
+			$asetup = "<object classid=\"clsid:D27CDB6E-AE6D-11cf-96B8-444553540000\" codebase=\"http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,29,0\" width=\"{$params['width']}\" height=\"{$params['height']}\">";
+			$asetup .= "<param name=\"movie\" value=\"{$params['movie']}\" />";
+			$asetup .= "<param name=\"quality\" value=\"{$params['quality']}\" />";
 			$asetup .= "<param name=\"wmode\" value=\"transparent\" />";
 			if (!empty($params['allowscriptaccess'])) {
 				$asetup .= "<param name=\"allowscriptaccess\" value=\"always\" />";
@@ -6273,9 +6273,10 @@ JS;
 				$asetup .= '<param name="allowFullScreen" value="' . $params['allowFullScreen'] . '"></param>';
 			}
 			if (!empty($params['altimg'])) {
-				$asetup .= '<img src="' . $params['altimg'] . '" width="' . $width . '" height="' . $height . '" alt=\"\" />';
+				$asetup .= '<img src="' . $params['altimg'] . '" width="' . $params['width'] . '" height="' . $params['height'] . '" alt=\"\" />';
 			}
-			$asetup .= "<embed src=\"$movie\" quality=\"$quality\" pluginspage=\"http://www.macromedia.com/go/getflashplayer\" type=\"application/x-shockwave-flash\" width=\"$width\" height=\"$height\" wmode=\"transparent\"></embed></object>";
+			$asetup .= "<embed src=\"{$params['movie']}\" quality=\"{$params['quality']}\" pluginspage=\"http://www.macromedia.com/go/getflashplayer\"" .
+				" type=\"application/x-shockwave-flash\" width=\"{$params['width']}\" height=\"{$params['height']}\" wmode=\"transparent\"></embed></object>";
 			return $asetup;
 		}
 	}
