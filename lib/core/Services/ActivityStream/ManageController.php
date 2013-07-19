@@ -28,6 +28,24 @@ class Services_ActivityStream_ManageController
 		);
 	}
 
+	function action_delete(JitRequest $request)
+	{
+		$id = $request->id->int();
+		$rule = $this->getRule($id);
+
+		$removed = false;
+		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+			$this->lib->deleteRule($id);
+			$removed = true;
+		}
+
+		return array(
+			'removed' => $removed,
+			'rule' => $rule,
+			'eventTypes' => $this->getEventTypes(),
+		);
+	}
+
 	function action_record(JitFilter $request)
 	{
 		$id = $request->id->int();

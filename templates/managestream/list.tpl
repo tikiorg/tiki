@@ -1,7 +1,10 @@
-<h3>Rule List</h3>
+<h3>{tr}Rule List{/tr}</h3>
 <ol>
 	{foreach from=$rules item=rule}
 		<li>
+			<span style="float: right">
+				<a class="rule-delete" href="{service controller=managestream action=delete id=$rule.ruleId}" data-rule-id="{$rule.ruleId|escape}">{icon _id=cross alt="{tr}Delete{/tr}"}</a>
+			</span>
 			<strong>{$ruleTypes[$rule.ruleType]|escape}:</strong> {$rule.eventType|escape}
 			<div>{$rule.notes|escape}</div>
 			{if $rule.ruleType neq 'advanced'}

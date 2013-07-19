@@ -40,6 +40,13 @@ class ActivityLib
 		));
 	}
 
+	function deleteRule($id)
+	{
+		return $this->rulesTable()->delete(array(
+			'ruleId' => $id,
+		));
+	}
+
 	function recordEvent($event, $arguments)
 	{
 		$mapping = $this->getMapping();
