@@ -13,6 +13,6 @@
 	</label>
 	<div class="submit">
 		<input type="hidden" name="id" value="{$rule.ruleId|escape}"/>
-		<input type="submit" value="Record Event"/>
+		<input type="submit" value="{tr}Record Event{/tr}"/>
 	</div>
 </form>
