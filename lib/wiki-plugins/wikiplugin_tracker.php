@@ -1048,7 +1048,11 @@ function wikiplugin_tracker($data, $params)
 					if (isset($fl) && ($j = array_search($flds['data'][$i]['fieldId'], $fl)) !== false) {
 						$flds['data'][$i]['value'] = $_REQUEST['values'][$j];
 					} else {
-						$flds['data'][$i]['value'] = ''; // initialize fields with blank values
+						// setting default value prevent dropdown default value working
+						$options = $flds['data'][$i]['options_array'];
+						if ($flds['data'][$i]['type'] !== 'd' || count($options) === count(array_unique($options))) {
+							$flds['data'][$i]['value'] = ''; // initialize fields with blank values
+						}
 					}
 				}
 			}
