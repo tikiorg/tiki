@@ -90,6 +90,7 @@ function smarty_function_popup($params, $smarty)
 	$body = str_replace('\&#039;', '&#039;', $body);	// unescape previous js escapes
 	$body = str_replace('\&quot;', '&quot;', $body);
 	$body = str_replace('&lt;\/', '&lt;/', $body);
+	$retval = '';
 	if ($options['activation'] !== 'click') {
 		$retval = ' class="tips"';		// adds default ct options including 'hover' activation
 	}
