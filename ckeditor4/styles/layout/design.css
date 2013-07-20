@@ -4487,4 +4487,11 @@ form.simple textarea.export {
     background-color: rgba(255, 255, 255, 0.5);
 }
 
+/* Inline CkEditor */
+div[contenteditable="true"]
+{
+    outline-style:solid;
+    outline-color:#aaaa00;    
+}
+
 /* End of file */
