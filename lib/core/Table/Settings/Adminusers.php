@@ -32,23 +32,28 @@ class Table_Settings_Adminusers extends Table_Settings_Abstract
 				),
 				1 => array(					//user
 					'type' => 'asc',
-					'ajax' => 'login'
+					'ajax' => 'login',
+					'group' => 'letter'
 				),
 				2 => array(					//email - only if $prefs.login_is_email != 'y'
 					'type' => true,
-					'ajax' =>'email'
+					'ajax' =>'email',
+					'group' => 'letter'
 				),
 				3 => array(					//openid - only if $prefs.auth_method == 'openid'
 					'type' => true,
-					'ajax' => 'openid_url'
+					'ajax' => 'openid_url',
+					'group' => 'letter'
 				),
 				4 => array(					//last login
-					'type' => true,
-					'ajax' => 'currentLogin'
+					'type' => 'text',
+					'ajax' => 'currentLogin',
+					'group' => 'word'
 				),
 				5 => array(					//registered
 					'type' => true,
-					'ajax' => 'registrationDate'
+					'ajax' => 'registrationDate',
+					'group' => 'date-year'
 				),
 				6 => array(					//group
 					'type' => false,

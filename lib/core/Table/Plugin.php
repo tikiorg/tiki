@@ -22,6 +22,17 @@ class Table_Plugin
 {
 	public $params = array();
 	public $settings;
+	public $perms = true;
+
+
+	public function __construct()
+	{
+		global $prefs;
+		if ($prefs['disableJavascript'] === 'y' || $prefs['feature_jquery_tablesorter'] === 'n') {
+			$this->perms = false;
+		}
+
+	}
 
 	/**
 	 * Creates parameters that can be appended to a plugin's native parameters so the user can
@@ -135,6 +146,9 @@ class Table_Plugin
 					$s['sort']['type'] = $sp[0]['type'];
 				}
 		}
+
+		//TODO add way for users to set row grouping - turn off for now
+		$s['sort']['group'] = false;
 
 		//sortlist
 		if (!empty($sortList) && $s['sort']['type'] !== false) {

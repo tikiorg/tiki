@@ -29,22 +29,46 @@ class Table_Code_MainOptions extends Table_Code_Manager
 	public function setCode()
 	{
 		$mo = array();
-		//onRenderHeader option - remove any self-links
-		if ((isset($this->s['selflinks']) && $this->s['selflinks']) || !$this->sort) {
+		$orh = array();
+		//onRenderHeader option - change html elements before table renders
+		if ((isset($this->s['selflinks']) && $this->s['selflinks']) || !$this->sort
+			|| ($this->sort && is_array($this->s['sort']['columns'])))
+		{
 			$mo[] = 'headerTemplate: \'{content}\'';
+			//remove self-links
 			if (isset($this->s['selflinks']) && $this->s['selflinks']) {
 				$orh[] = '$(this).find(\'a\').replaceWith($(this).find(\'a\').text());';
 			}
+			//no sort on all columns
 			if (!$this->sort) {
 				$orh[] = '$(\'table#' . $this->id . ' th\').addClass(\'sorter-false\');';
 			}
-			$mo[] = $this->iterate($orh, 'onRenderHeader: function(index){', $this->nt2 . '}', $this->nt3, '', '');
+			//row grouping and sorter settings
+			if ($this->sort && is_array($this->s['sort']['columns'])) {
+				foreach ($this->s['sort']['columns'] as $col => $info) {
+					if (!empty($info['group'])) {
+						$orh[] = '$(\'table#' . $this->id . ' th:eq(' . $col . ')\').addClass(\'group-'
+								. $info['group'] . '\');';
+					}
+					if (!empty($info['type']) && $info['type'] !== true) {
+						$orh[] = '$(\'table#' . $this->id . ' th:eq(' . $col . ')\').addClass(\'sorter-'
+								. $info['type'] . '\');';
+					}
+				}
+			}
+			if (count($orh) > 0) {
+				$mo[] = $this->iterate($orh, 'onRenderHeader: function(index){', $this->nt2 . '}', $this->nt3, '', '');
+			}
 		}
 
 		//*** widgets ***//
-		//odd/even formatting
+		//standard ones
 		$w[] = 'zebra';
 		$w[] = 'stickyHeaders';
+		if (!isset($this->s['sort']['group']) || $this->s['sort']['group'] !== false) {
+			$w[] = 'group';
+		}
+
 		//saveSort
 		if (isset($this->s['sort']['type']) && strpos($this->s['sort']['type'], 'save') !== false) {
 			$w[] = 'saveSort';
@@ -53,7 +77,9 @@ class Table_Code_MainOptions extends Table_Code_Manager
 		if ($this->filters) {
 			$w[] = 'filter';
 		}
-		$mo[] = $this->iterate($w, 'widgets : [', ']', '\'', '\'', ',');
+		if (count($w) > 0) {
+			$mo[] = $this->iterate($w, 'widgets : [', ']', '\'', '\'', ',');
+		}
 
 
 		//Show processing
@@ -68,9 +94,9 @@ class Table_Code_MainOptions extends Table_Code_Manager
 		if ($this->sort && is_array($this->s['sort']['columns'])) {
 			$sl = '';
 			foreach ($this->s['sort']['columns'] as $col => $info) {
-				if ($info['type'] == 'asc' && $info['type'] !== true) {
+				if ($info['type'] === 'asc') {
 					$sl[] = $col . ',' . '0';
-				} elseif($info['type'] == 'desc' && $info['type'] !== true) {
+				} elseif($info['type'] === 'desc') {
 					$sl[] = $col . ',' . '1';
 				}
 			}

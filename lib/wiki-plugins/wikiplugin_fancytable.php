@@ -81,13 +81,17 @@ function wikiplugin_fancytable($data, $params)
 
 	if ((isset($sortable) && $sortable != 'n')) {
 		$ts = new Table_Plugin;
-		$ts->setSettings(
-			'fancytable_' . $iFancytable, $sortable,
-			isset($sortList) ? $sortList : null,
-			isset($tsfilters) ? $tsfilters : null,
-			isset($tsfilteroptions) ? $tsfilteroptions : null,
-			isset($tspaginate) ? $tspaginate : null
-		);
+		if ($ts->perms !== false) {
+			$ts->setSettings(
+				'fancytable_' . $iFancytable, $sortable,
+				isset($sortList) ? $sortList : null,
+				isset($tsfilters) ? $tsfilters : null,
+				isset($tsfilteroptions) ? $tsfilteroptions : null,
+				isset($tspaginate) ? $tspaginate : null
+			);
+		} else {
+			$sort = false;
+		}
 		if (is_array($ts->settings)) {
 			Table_Factory::build('plugin', $ts->settings);
 			$sort = true;
@@ -97,11 +101,12 @@ function wikiplugin_fancytable($data, $params)
 
 		if ($sort === false) {
 			if ($prefs['feature_jquery_tablesorter'] === 'n') {
-				$msg = tra('The jQuery Sortable Tables feature must be activated for the sort feature to work.');
+				$msg = '<em>' . tra('The jQuery Sortable Tables feature must be activated for the sort feature to work.')
+					. '</em>';
 			} elseif ($prefs['disableJavascript'] === 'y') {
-				$msg = tra('Javascript must be enabled for the sort feature to work.');
+				$msg =  '<em>' . tra('Javascript must be enabled for the sort feature to work.') . '</em>';
 			} else {
-				$msg = tra('Unable to load the jQuery Sortable Tables feature.');
+				$msg = '<em>' . tra('Unable to load the jQuery Sortable Tables feature.') . '</em>';
 			}
 		}
 	} else {
@@ -109,17 +114,15 @@ function wikiplugin_fancytable($data, $params)
 	}
 
 	//Start the table
-	$wret = '<div id="fancytable_' . $iFancytable . '" style="visibility:hidden">' . "\r\t";
+	$style = $sort === true ? ' style="visibility:hidden"' : '';
+	$wret = '<div id="fancytable_' . $iFancytable . '"' . $style . '>' . "\r\t";
 	$wret .= '<table class="normal" id="fancytable_' . $iFancytable . '">' . "\r\t";
 
 	//Header
 	if (isset($head)) {
 		//set header class
 		if (!empty($headclass)) {
-			$tdhdr = "\r\t\t\t" . '<th class="' . $headclass;
-			if (!$sort) {
-				$tdhdr .= '"';
-			}
+			$tdhdr = "\r\t\t\t" . '<th class="' . $headclass . '"';
 		} else {
 			$tdhdr = "\r\t\t\t<th";
 		}

@@ -25,7 +25,12 @@ class Table_Code_WidgetOptions extends Table_Code_Manager
 
 	public function setCode()
 	{
-		$wo = array('stickyHeaders : \'tablesorter-stickyHeader\'');
+		$wo[] = 'stickyHeaders : \'tablesorter-stickyHeader\'';
+
+		if (isset($this->s['sort']['group']) && $this->s['sort']['group'] !== false) {
+			$wo[] = 'group_collapsible : true';
+			$wo[] = 'group_count : \' ({num})\'';
+		}
 		//saveSort
 		if (isset($this->s['sort']['type']) && strpos($this->s['sort']['type'], 'save') !== false) {
 			$wo[] = 'saveSort : true';
