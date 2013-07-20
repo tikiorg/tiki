@@ -6729,7 +6729,7 @@ JS;
     public function saveEditorToolbars($new_toolbars = array(), $section='global', $action='add')
 	{
 		global $prefs;
-		$prefName = 'toolbar_' . $section . ($comments ? '_comments' : '');
+		$prefName = 'toolbar_' . $section;
 		$toolbars = explode(',', $prefs[$prefName]);
 		if ($action == 'add') {
 			foreach ($new_toolbars as $key => $value) {
