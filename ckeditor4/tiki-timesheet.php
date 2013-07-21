@@ -58,9 +58,9 @@ if (isset($projectList)) {
 TikiLib::lib("sheet")->setup_jquery_sheet();
 
 $headerlib = TikiLib::lib("header")
-	->add_cssfile("lib/jquery/jtrack/css/jtrack.css")
-	->add_jsfile("lib/jquery/jtrack/js/domcached-0.1-jquery.js")
-	->add_jsfile("lib/jquery/jtrack/js/jtrack.js")
+	->add_cssfile("vendor/jquery/jtrack/css/jtrack.css")
+	->add_jsfile("vendor/jquery/jtrack/js/domcached-0.1-jquery.js")
+	->add_jsfile("vendor/jquery/jtrack/js/jtrack.js")
 	->add_jq_onready(
 		"jTask.init();
 
@@ -103,7 +103,7 @@ $headerlib = TikiLib::lib("header")
 		}
 	};
 
-	$('.jtrack-create,.jtrack-update,.jtrack-remove,.jtrack-remove-all,.jtrack-cancel,.jtrack-power,#jtrack-button-remove,#jtrack-button-remove-all,#jtrack-button-create,#jtrack-button-update').live('click', function() {
+	$('.jtrack-create,.jtrack-update,.jtrack-remove,.jtrack-remove-all,.jtrack-cancel,.jtrack-power,#jtrack-button-remove,#jtrack-button-remove-all,#jtrack-button-create,#jtrack-button-update').on('click', function() {
 		$.timesheetSpreadsheet();
 	});
 

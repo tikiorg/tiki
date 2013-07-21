@@ -11,6 +11,9 @@
 
 		{tab name="{tr}Performance{/tr}"}
 			{preference name=tiki_minify_javascript}
+			<div class="adminoptionboxchild" id="tiki_minify_javascript_childcontainer">
+				{preference name=tiki_minify_late_js_files}
+			</div>
 			{preference name=javascript_cdn}
 			{preference name=tiki_cdn}
 			{preference name=tiki_cdn_ssl}
@@ -31,6 +34,22 @@
 			{preference name=tiki_cachecontrol_session}
 			{preference name=smarty_compilation}
 			{preference name=users_serve_avatar_static}
+
+			<fieldset>
+				<legend>{tr}PHP Settings{/tr}</legend>
+				<p>{tr}Some PHP.INI settings that can increase performance{/tr}</p>
+				<div class="adminoptionboxchild">
+					<p>
+						{tr _0=$realpath_cache_size_ini}'realpath_cache_size setting': %0{/tr}
+						{tr _0=$realpath_cache_size_percent}(percentage used %0 %{/tr})
+						{help url='php.ini#Performance'
+							desc='realpath_cache_size : {tr}Determines the size of the realpath cache to be used by PHP.{/tr}'}
+					</p>
+					<p>{tr _0=$realpath_cache_ttl}'realpath_cache_ttl setting': %0 seconds{/tr}
+					{help url='php.ini#Performance'
+					desc='realpath_cache_ttl : {tr}Duration of time (in seconds) for which to cache realpath information for a given file or directory.{/tr}'}
+				</div>
+			</fieldset>
 		{/tab}
 		
 		{tab name="{tr}Bytecode Cache{/tr}"}
@@ -82,6 +101,9 @@
 							{tr _0=$stat_flag}<em>%0</em> should not be disabled due to authentication on XCache.{/tr}
 						{/if}
 					</p>
+				{/if}
+				{if $opcode_stats.warning_check}
+					<p>{tr}Clear all APC caches:{/tr} {self_link apc_clear=true}{tr}Clear Caches{/tr}{/self_link}</p>
 				{/if}
 			{else}
 				{tr}Bytecode cache is not used. Using a bytecode cache (APC, XCache, WinCache) is highly recommended for production environments.{/tr}
@@ -143,6 +165,14 @@
 				{preference name=newsletter_batch_size}
 			</div>
 		{/tab}
+		
+		{tab name="{tr}Time and Memory limits{/tr}"}
+				{preference name=allocate_memory_tracker_export_items}
+				{preference name=allocate_time_tracker_export_items}
+				{preference name="allocate_memory_unified_rebuild"}
+				{preference name="allocate_time_unified_rebuild"}				
+		{/tab}		
+		
 {/tabset}
 		
 	<div class="input_submit_container" style="margin-top: 5px; text-align: center">

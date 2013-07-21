@@ -107,7 +107,7 @@
 			<td colspan="2">
 				{if $prefs.feature_wysiwyg eq 'y' and $info.section_wiki_html eq 'y'}
 					{$use_wysiwyg='y'}
-					<input type="hidden" id="allowhtml" value="y">
+					<input type="hidden" name="allowhtml" value="on">
 					{if $prefs.wysiwyg_htmltowiki eq 'y'}{$is_html = 'y'}{else}{$is_html = 'n'}{/if}
 				{else}
 					{$use_wysiwyg='n'}
@@ -131,7 +131,7 @@
 			var val = $('#type-selector').val();
 			$('.for-' + val).show();
 		} ).trigger('change');
-		window.editorDirty = false;
+		needToConfirm = false;
 	{/jq}
 </form>
 

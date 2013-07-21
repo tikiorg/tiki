@@ -9,7 +9,6 @@
 // $Id$
 
 include_once("tiki-setup.php");
-include_once ("lib/pear/XML/Server.php");
 include_once ('lib/commcenter/commlib.php');
 
 if ($tikilib->get_preference("feature_comm", 'n') != 'y') {

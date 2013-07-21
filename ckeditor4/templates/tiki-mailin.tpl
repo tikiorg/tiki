@@ -1,3 +1,4 @@
+{* $Id$ *}
 {title}{tr}Mail-in feature{/tr}{/title}
 {if !empty($content)}
 	{$content}

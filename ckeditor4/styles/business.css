@@ -131,7 +131,7 @@ input[type="reset"],
 input[type="submit"],
 .button input,
 .calbuttonBox a {
-	color: #fff !important;
+	color: #fff;
 	background: url(business/nav.gif) repeat-x;
 	border: 1px solid;
 	border-color: #3676c4 #1957aa #1957aa #3676c4;
@@ -399,6 +399,10 @@ body.fixed_width .fixedwidth .fixedwidth {
 	margin-top: -1px;
 }
 
+#col2 .box-data .cssmenu_vert ul {
+	padding-left: 0;
+}
+
 /* left column width */
 #col2 .cssmenu_vert,
 #col2 .cssmenu_vert li {
@@ -630,7 +634,7 @@ th a.sortheader:visited {
 tr.odd td,
 td.odd,
 table.normal tr:nth-child(2n+1),
-table.normal tr:nth-child(2n+1) td {
+.tablesorter tr.odd td {
 	background: #f0f0f0;
 	color: #000;
 	border-right: 1px solid #3273c4;
@@ -639,7 +643,7 @@ table.normal tr:nth-child(2n+1) td {
 tr.even td,
 td.even,
 table.normal tr:nth-child(2n),
-table.normal tr:nth-child(2n) td {
+.tablesorter tr.even td {
 	background: #dcdcdc;
 	color: #000;
 	border-right: 1px solid #3273c4;
@@ -835,15 +839,6 @@ body.tiki_blogs .postbody {
 /***** Messages *****/
 /***** TikiSheets *****/
 /***** Calendar *****/
-.caldark {
-	background: #2f70c3;
-	border: 0;
-}
-
-.caldark .calfocus {
-	background: inherit !important;
-}
-
 .caltable .odd {
 	background: #eeeeee;
 }
@@ -852,17 +847,18 @@ body.tiki_blogs .postbody {
 	background: #f9f9f9;
 }
 
-.calfocuson {
-	font-size: 100%;
-	background: #f3e498;
+.caltable .calhighlight,
+td.calheadhighlight {
+	background: #ffc;
 }
 
-.calfocuson a {
-	font-size: 90%;
+.caltable .calborder {
+	border-right: 1px solid #3273c4;
 }
 
-.calHeadingOn, .calHeadingOn a {
-	background: #f3e498;
+.opaque a,
+.opaque a:visited {
+	color: white;
 }
 
 /***** Admin *****/

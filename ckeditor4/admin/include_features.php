@@ -11,7 +11,5 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 	exit;
 }
 
-$smarty->assign('event_graph', TikiLib::events()->getEventGraph());
-
 $smarty->assign('php_major_version', substr(PHP_VERSION, 0, strpos(PHP_VERSION, '.')));
 ask_ticket('admin-inc-features');

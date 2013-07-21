@@ -342,7 +342,7 @@ include_once ('tiki-section_options.php');
 
 if ($prefs['feature_jquery_ui'] === 'y') {
 	$headerlib->add_jsfile('lib/structures/tiki-edit_structure.js');
-	$headerlib->add_jsfile('lib/jquery/jquery.mjs.nestedSortable.js');
+	$headerlib->add_jsfile('vendor/jquery/plugins/nestedsortable/jquery.ui.nestedSortable.js');
 	global $structlib; include_once('lib/structures/structlib.php');
 
 	$structure_id = $structure_info['structure_id'];

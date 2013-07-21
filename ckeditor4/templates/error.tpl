@@ -9,13 +9,14 @@ close();
  * 404: page does not exist
  * no_redirect_login: error antibot, system...
  * login: error login
+ * Usually available variables : $errortitle, $msg, $errortype
  *}
 {if !isset($errortype)}{assign var='errortype' value=''}{/if}
 {capture assign=mid_data}
 
 	{if ($errortype eq "402")}
 		{include file='tiki-login.tpl'}
-	{elseif ($errortype eq 401 or $errortype eq 403) and !empty($prefs.permission_denied_url)}
+	{elseif ($errortype eq 401 or $errortype eq 403) and !empty($prefs.permission_denied_url) and $prefs.permission_denied_login_box ne 'y'}
 		{redirect url=$prefs.permission_denied_url}
 	{else}
 

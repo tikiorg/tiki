@@ -162,8 +162,8 @@
 			<td><input type="text" name="credit_types[{$id|escape}][display_text]" value="{$data.display_text|escape}" size="8"></td>
 			<td><input type="text" name="credit_types[{$id|escape}][unit_text]" value="{$data.unit_text|escape}" size="8"></td>
 			<td><select name="credit_types[{$id|escape}][is_static_level]">
-			<option value='n' />No</option>
-			<option value='y' {if $data.is_static_level == 'y'}selected="selected"{/if}/>Yes</option>
+			<option value='n'>No</option>
+			<option value='y' {if $data.is_static_level == 'y'}selected="selected"{/if}>Yes</option>
 			</select>
 			<td><input type="text" name="credit_types[{$id|escape}][scaling_divisor]" value="{$data.scaling_divisor|escape}" size="6"></td>
 		</tr>
@@ -174,8 +174,8 @@
 			<td><input type="text" name="display_text" value="" size="8"></td>
 			<td><input type="text" name="unit_text" value="" size="8"></td>
 			<td><select name="is_static_level">
-			<option value='n' />No</option>
-			<option value='y' />Yes</option>
+			<option value='n'>No</option>
+			<option value='y'>Yes</option>
 			</select></td>
 			<td><input type="text" name="scaling_divisor" value="1" size="6"></td>
 		</tr>

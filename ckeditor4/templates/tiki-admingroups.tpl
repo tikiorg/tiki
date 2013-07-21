@@ -35,20 +35,16 @@
 	<table class="normal">
 		<tr>
 			<th style="width: 20px;">{select_all checkbox_names='checked[]'}</th>
-			<th>{tr}ID{/tr}</th>
-			<th>
-				<a href="tiki-admingroups.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'groupName_desc'}groupName_asc{else}groupName_desc{/if}">{tr}Name{/tr}</a>
-			</th>
-			<th>
-				<a href="tiki-admingroups.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'groupDesc_desc'}groupDesc_asc{else}groupDesc_desc{/if}">{tr}Description{/tr}</a>
-			</th>
+			<th>{self_link _sort_arg='sort_mode' _sort_field='id'}{tr}ID{/tr}{/self_link}</th>
+			<th>{self_link _sort_arg='sort_mode' _sort_field='groupName'}{tr}Name{/tr}{/self_link}</th>
+			<th>{self_link _sort_arg='sort_mode' _sort_field='groupDesc'}{tr}Description{/tr}{/self_link}</th>
 			<th>{tr}Inherits Permissions from{/tr}</th>
 
 			{if $prefs.useGroupHome eq 'y'}
-			<th>{tr}Homepage{/tr}</th>
+			<th>{self_link _sort_arg='sort_mode' _sort_field='groupHome'}{tr}Homepage{/tr}{/self_link}</th>
 			{/if}			
 
-			<th>{tr}User Choice{/tr}</th>
+			<th>{self_link _sort_arg='sort_mode' _sort_field='userChoice'}{tr}User Choice{/tr}{/self_link}</th>
 			<th>{tr}Permissions{/tr}</th>
 			<th style="width: 20px;">&nbsp;</th>
 		</tr>
@@ -166,7 +162,7 @@
 						{/foreach}
 					</select>
 					<br>
-					{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Use Ctrl+Click to select multiple options{/tr}{/remarksbox}
+					{if $prefs.jquery_ui_chosen neq 'y'}{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Use Ctrl+Click to select multiple options{/tr}{/remarksbox}{/if}
 				</td>
 			</tr>
 
@@ -268,14 +264,34 @@
 								<option value="{$tid}"{if $tid eq $userstrackerid} {assign var="ugr" value="$tit"}selected="selected"{/if}>{$tit|escape}</option>
 							{/foreach}
 						</select>
-						{if $userstrackerid}
+						{if $userstrackerid or $prefs.javascript_enabled eq 'y'}
 							<br>
-							<select name="usersfield">
+							<select name="usersfield"{if empty($userstrackerid) and $prefs.javascript_enabled eq 'y'} style="display: none;"{/if}>
 								<option value="0">{tr}choose a field ...{/tr}</option>
 								{section name=ix loop=$usersFields}
 									<option value="{$usersFields[ix].fieldId}"{if $usersFields[ix].fieldId eq $usersfieldid} selected="selected"{/if}>{$usersFields[ix].fieldId} - {$usersFields[ix].name|escape}</option>
 								{/section}
 							</select>
+								{jq}
+$("#userstracker").change(function () {
+	$.getJSON($.service('tracker', 'list_fields'), {trackerId: $(this).val()}, function (data) {
+		if (data && data.fields) {
+			var $usersfield = $('select[name=usersfield]');
+			$usersfield.empty().append('<option value="0">{tr}choose a field ...{/tr}</option>');
+			var sel = '';
+			$(data.fields).each(function () {
+				if (this.type === 'u' && this.options_array[0] == 1) {
+					sel = ' selected="selected"';
+				} else {
+					sel = '';
+				}
+				$usersfield.append('<option value="' + this.fieldId + '"' + sel + '>' + this.fieldId + ' - ' + this.name + '</option>');
+			});
+			$usersfield.show();
+		}
+	});
+});
+{/jq}
 						{/if}
 
 						{if $userstrackerid}

@@ -9,7 +9,7 @@
 {tabset}
 	<a name="list"></a>
 	{tab name="{tr}Tracker fields{/tr}"}
-		<form class="save-fields" method="post" action="{service controller=tracker}">
+		<form class="save-fields" method="post" action="{service controller=tracker action=save_fields}">
 			<table id="fields" class="normal">
 				<thead>
 					<tr>

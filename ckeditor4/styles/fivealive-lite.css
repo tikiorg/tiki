@@ -109,12 +109,17 @@ hr {
 	color: #000;
 }
 
+.button.highlight a:hover {
+	border: 1px solid #000;
+}
+
 select,
 input[type="text"],
 input[type="password"],
 input[type="file"],
 input[type="email"],
 input[type="file"],
+input[type="search"],
 input[type="number"],
 input#login-pass,
 textarea,
@@ -560,7 +565,7 @@ select {
 }
 
 .cssmenu_vert li ul li a .sf-sub-indicator {
-	background: url(../lib/jquery/superfish/images/arrows-ffffff.png);
+	background: url(../img/superfish/arrows-ffffff.png);
 }
 
 
@@ -690,19 +695,32 @@ form .normal,
 	border: none;
 }
 
+/***Calendar****/
+
 .caltable .odd,
 .caltable .even,
+.caltable .calborder,
 .wikicell {
 	border: 2px solid #c2eef8;
 }
 
+/*today focus*/
+.caltable td.calhighlight,
+td.calheadhighlight {
+	background: #f9f0f0;
+	text-align: center;
+}
+
+/****Tables***/
 .odd,
-table.normal tr:nth-child(2n+1) {
+table.normal tr:nth-child(2n+1),
+.tablesorter tr.odd td {
 	background: #e3f7fb;
 }
 
 .even,
-table.normal tr:nth-child(2n) {
+table.normal tr:nth-child(2n),
+.tablesorter tr.even td {
 	background: #d6f3fa;
 }
 

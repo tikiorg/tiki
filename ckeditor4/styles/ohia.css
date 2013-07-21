@@ -27,7 +27,7 @@ body.cke_show_borders {
  /***** Layout (overrides layout.css;
 		also styling of page layout divs)  *****/
 
-/* Enable header and footer content to widen when middle has wide content. */ 
+/* Enable header and footer content to widen when middle has wide content. */
 body.fixed_width .fixedwidth .fixedwidth {
 	width: 100%;
 	padding: 0;
@@ -36,7 +36,7 @@ body.fixed_width .fixedwidth .fixedwidth {
 #main {
 	background: transparent;
 	color: #f4f4f4}
-	
+
 #middle {background: #222}
 
 #c1c2 #wrapper #col1 > .content {
@@ -70,12 +70,12 @@ body.fixed_width .fixedwidth .fixedwidth {
 	min-height: 90px;
 	color: #f4f4f4;
 	position: relative}
-	
+
 #footer a:link,
 #footer a:visited {
 	color: #f4f4f4;
 	text-decoration: none}
-	
+
 #footer a:hover {
 	color: #f4f4f4;
 	text-decoration: underline}
@@ -89,7 +89,7 @@ a:visited {
 a:hover {
 	text-decoration: underline;
 	color: #f4f4f4}
-	
+
 .wikitext a:link.wiki,
 .wikitext a.link:visited {
 	color: #fd0006 !important;
@@ -98,7 +98,7 @@ a:hover {
 .wikitext a.link:hover {
 	color: #f4f4f4 !important;
 	text-decoration: none !important}
-	
+
 h1, h2, h3, h4, h5, h6 {
 	line-height: 1.1;
 }
@@ -161,7 +161,7 @@ input[type="submit"],
 	border: 1px solid #5f5f5f;
 	border-right: 1px solid #474747;
 	border-bottom: 1px solid #474747}
-	
+
 
 .button a:hover,
 button:hover,
@@ -176,7 +176,7 @@ input[type="submit"]:hover,
 	text-decoration: none;
 	font-size: 11px;
 }
-	
+
 button:active,
 input[type=submit]:active,
 .button input:active {background: #5e0000}
@@ -235,7 +235,7 @@ label {margin: 0 2px}
 	color: #f4f4f4;
 	font-weight: bold;
 	padding-left: 50px}
-	
+
 #sitetitle a,
 #sitetitle a:visited {color: #f4f4f4}
 
@@ -244,12 +244,12 @@ label {margin: 0 2px}
 	font-size: 28px;
 	margin-top: 20px;
 	margin-bottom: 2px}
-	
+
 #sitesubtitle {
 	display: block;
 	margin-top: 3px;
 	padding-top: 6px}
-	
+
 #tiki-top {
 	position: absolute;
 	top: 0;
@@ -274,8 +274,8 @@ label {margin: 0 2px}
 	background: #030511;
 	border-left: 1px solid #333;
 	border-bottom: 1px solid #696969}
-	
-#top_modules .box-search sitesearchbar form {margin-right: 40px}
+
+#top_modules .box-search .sitesearchbar form {margin-right: 40px}
 
 /****** Menus, Links ******/
 /** CSS (suckerfish) menus **/
@@ -291,7 +291,7 @@ label {margin: 0 2px}
 	background: #000;
 	margin-bottom: -1px;
 }
-	
+
 .cssmenu_vert li ul li:first-child {
 	border-top: 1px solid #313131;
 }
@@ -308,7 +308,8 @@ label {margin: 0 2px}
 }
 
 /* for wider menu in left col */
-#col2 ul.cssmenu_vert {
+#col2 .box-data .cssmenu_vert,
+#col2 .box-data .cssmenu_vert ul {
 	padding-left: 0;
 }
 
@@ -379,7 +380,7 @@ a.tikihelp:hover {
 
 /** tree **/
 .ui-icon {
-background-image:url('../lib/jquery/jquery-ui/themes/smoothness/images/ui-icons_888888_256x240.png');
+background-image:url('../vendor/jquery/jquery-ui-themes/themes/smoothness/images/ui-icons_888888_256x240.png');
 }
 
 
@@ -388,7 +389,7 @@ background-image:url('../lib/jquery/jquery-ui/themes/smoothness/images/ui-icons_
 .box {
 	text-align: left;
 	padding-bottom: 4px}
-	
+
 h3.box-title {
 	padding-top: 0;
 	background: #5e0000;
@@ -400,7 +401,7 @@ h3.box-title {
 .box-title a:link {
 	color: #f4f4f4;
 	text-decoration: none}
-	
+
 .box-title a:hover {text-decoration: underline}
 
 .box:hover img.flipmodimage {
@@ -424,7 +425,7 @@ img.flipmodimage:hover {
 	color: #f4f4f4;
 	background: #030511;
 	border: 1px solid #333}
-	
+
 .cbox-title {
 	border-color: #333;
 	text-align: center;
@@ -435,17 +436,17 @@ img.flipmodimage:hover {
 	background: #5e0000;
 	border-color: #990000;
 	color: #fff}
-	
+
 .rbox-title {
 	border-bottom: none;
 	margin-bottom: -.35em;
 }
-	
+
 .simplebox {
 	background: #030511;
 	border: 1px dotted #a9a9a9;
 	color: #f4f4f4}
-	
+
 .rbox-data a:hover {
 	color: #fd0006;
 	text-decoration: underline;
@@ -453,7 +454,7 @@ img.flipmodimage:hover {
 
 /***** Tables, Tabs *****/
 /** Tables **/
-	
+
 .admin {background:#030511}
 
 .normal,
@@ -462,7 +463,7 @@ img.flipmodimage:hover {
 	border-bottom: solid 1px #696969;
 	border-left: solid 1px #696969;
 	border-collapse: collapse}
-	
+
 .normal tr,
 .sortable tr {border-right: solid 1px #696969}
 
@@ -478,7 +479,8 @@ tr.odd,
 td.odd,
 tr.odd td,
 li.odd,
-table.normal tr:nth-child(2n+1) {
+table.normal tr:nth-child(2n+1),
+.tablesorter tr.odd td {
 	background: #030511;
 	color: #f4f4f4;
 }
@@ -487,11 +489,12 @@ tr.even,
 td.even,
 tr.even td,
 li.even,
-table.normal tr:nth-child(2n) {
+table.normal tr:nth-child(2n),
+.tablesorter tr.even td {
 	background: #313131;
 	color: #f4f4f4;
 }
-	
+
 tr.odd td,
 td.odd,
 tr.even td,
@@ -727,7 +730,7 @@ li.toclevel a:hover {
 	margin-top: 6px;
 	margin-bottom: 15px;
 	text-align: left}
-	
+
 .articletitle h2 {
 	display: block;
 	font-size: 1.8em;
@@ -846,7 +849,7 @@ body.tiki_forums .normal {margin: auto}
 	padding: 0;
 	background: #313131;
 	font-size: 1.1em}
-	
+
 * html .post .postbody {font-size: 11px}
 
 .post .postbody .content {
@@ -858,7 +861,7 @@ body.tiki_forums .normal {margin: auto}
 	border: 1px solid #4c4c4c;
 	border-top: 0;
 	background: #313131 !important}
-	
+
 .post .postbody-title {
 	display: block;
 	padding-bottom: .8em;
@@ -873,10 +876,10 @@ body.tiki_forums .normal {margin: auto}
 	font-size: 1em;
 	margin-left: 5px;
 	margin-top: 3px}
-	
+
 .post .postbody-title .title h2 {
 	padding: 0}
-	
+
 .post .postbody-title .title a.link {color: #f4f4f4}
 
 .post .author {
@@ -947,7 +950,7 @@ body.tiki_forums .normal {margin: auto}
 
 .sub_comment_area {
 	clear: both;
-	background: url("../../img/edge.gif") no-repeat top left}
+	background: url("../img/edge.gif") no-repeat top left}
 
 .forum_actions .actions {
 	clear: both;
@@ -1032,14 +1035,14 @@ p.norecords {font-weight: bold}
 .fgallisting table td {
 	padding-left: 2px;
 	padding-right: 2px}
-	
+
 .thumbnailcontener {
 	border: 1px solid #696969;
 }
 
 /***** Trackers *****/
 .statuson {
-	border: 1px inset #990000;	
+	border: 1px inset #990000;
 	background: #5e0000;
 	padding: 1px;
 	margin: 1px;
@@ -1053,7 +1056,7 @@ p.norecords {font-weight: bold}
 /***** Categories, Tags *****/
 
 /***** Tags (freetags) *****/
-	
+
 /*****  Polls  *****/
 
 /***** FAQs *****/
@@ -1142,7 +1145,6 @@ td.dirfooter {font-size: .95em}
 	background: black}
 
 /***** Calendar *****/
-
 .caltoggle {font-size: 90%}
 
 .opaque {
@@ -1163,41 +1165,29 @@ td.dirfooter {font-size: .95em}
 	text-decoration: underline;
 	color: #f4f4f4}
 
-#caltable .calfocuson,
 .box-data .fc a.today,
 .box-data td a.today {
 	background: #5e0000;
 	border: solid 1px #990000}
-	
-.caltable .calfocuson {
-	color: #ffffff;
+
+.caltable td.calhighlight,
+.caltable td.calhighlight,
+td#month_title.calheadhighlight {
 	background: #5e0000;
 }
 
-#caltable .calfocuson a {color: #000}
-
-#caltable .calfocus a,
-#caltable .calfocuson a {
-	text-decoration: none;
-	color: #fff}
-
-.calfocus a {
-	color: red;
-}
-
-.caltable .calfocuson a {
+.caltable td.calhighlight a:link,
+.caltable td.calhighlight a:visited,
+td.calheadhighlight {
 	color: #ffffff;
 }
 
-.calfocus {border-bottom: 0}
+.caltable .calborder {
+	border: 1px solid #000;
+}
 
 .calnavigation {border: 1px solid #4c4c4c}
-.calnavigation a:hover {background: url(ohia/body.png)}
 .calinput {background: #000}
-
-.calfocuson + .calcontent {
-	background: #000;
-	border: 1px solid #990000}
 
 #caltable .days {
 	color: #f4f4f4;
@@ -1217,29 +1207,6 @@ td.dirfooter {font-size: .95em}
 .caltable .odd, .caltable .even {border: 1px solid #000}
 .caltable .odd {background: #030511}
 .caltable .even {background: #313131}
-
-.caldark {
-	background: #000;
-	border: 1px dotted #5e0000}
-
-.caldark .calfocus {background: #000}
-
-div#calscreen .calfocuson {
-	background: #5e0000;
-}
-
-.calfocuson {
-	font-size: 100%;
-	border-bottom: 0px;
-}
-
-.calfocuson a {
-	font-size: 90%;
-}
-
-.calHeadingOn, .calHeadingOn a {
-	background: #5e0000;
-}
 
 .daterow {
 	background-color: #313131;

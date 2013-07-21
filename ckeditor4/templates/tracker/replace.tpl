@@ -404,7 +404,7 @@
 {jq}
 $('.accordion').removeClass('accordion').accordion({
 	header: 'h4',
-	autoHeight: false
+	heightStyle: "content"
 });
 $('.simple .depends:not(.done)').each(function () {
 	var current = this;

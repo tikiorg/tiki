@@ -55,11 +55,13 @@
     <input type="hidden" name="flag" value="{$flag|escape}">
     <input type="hidden" name="priority" value="{$priority|escape}">
     <input type="hidden" name="flagval" value="{$flagval|escape}">
-    <input type="hidden" name="to" value="{$msg.user_from|escape};{$msg.user_cc};{$msg.user_to}">
+    <input type="hidden" name="to" value="{$msg.user_reply_to|escape};{$msg.user_to|escape}" />
+    <input type="hidden" name="cc" value="{$msg.user_cc|escape}" />
     <input type="hidden" name="subject" value="{tr}Re:{/tr} {$msg.subject|escape}">
     <input type="hidden" name="body" value="{$msg.body|quoted:$quote_format:$msg.user_from|escape}">
     <input type="hidden" name="replyto_hash" value="{$msg.hash}">
     <input type="submit" name="replyall" value="{tr}replyall{/tr}">
+    </form>
   </td></tr>
   </table>
   <div class="messureadflag">

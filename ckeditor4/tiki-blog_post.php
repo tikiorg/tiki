@@ -118,7 +118,7 @@ if ($postId > 0) {
 
 	$smarty->assign('post_info', $data);
 	$smarty->assign('data', $data['data']);
-	$smarty->assign('parsed_data', $tikilib->parse_data($data['data']), array('is_html' => $is_wysiwyg));
+	$smarty->assign('parsed_data', $tikilib->parse_data($data['data'], array('is_html' => $is_wysiwyg)));
 	$smarty->assign('blogpriv', $data['priv']);
 
 	check_ticket('blog');
@@ -242,9 +242,10 @@ if (isset($_REQUEST['save']) && !$contribution_needed) {
 	include_once ("categorize.php");
 
 	require_once('tiki-sefurl.php');
-	$url = filter_out_sefurl("tiki-view_blog_post.php?postId=$postId", 'blogpost');
+	$smarty->loadPlugin('smarty_modifier_sefurl');
+	$url = smarty_modifier_sefurl($postId, 'blogpost');
 	header("location: $url");
-	die;
+	exit;
 }
 
 if ($contribution_needed) {

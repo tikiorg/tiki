@@ -10,6 +10,9 @@
 		 {/if}
 </div>
 	{/if}
+	{if $nonPublicFieldsWarning}
+		{remarksbox type='errors' title='{tr}Field error{/tr}'}{$nonPublicFieldsWarning}{/remarksbox}
+	{/if}
 	{if isset($user_watching_tracker)}
 		{if $user_watching_tracker eq 'n'}
 			<a href="{$smarty.server.REQUEST_URI}{if strstr($smarty.server.REQUEST_URI, '?')}&amp;{else}?{/if}trackerId={$listTrackerId}&amp;watch=add" title="{tr}Monitor{/tr}" class="trackerlistwatch">
@@ -168,7 +171,15 @@ the section loop so that the vars are not replaced by nested pretty tracker exec
 		{/pagination_links}
 	{/if}
 	{if $export eq 'y' && ($tiki_p_admin_trackers eq 'y' || $perms.tiki_p_export_tracker eq 'y')}
-		{button href="$exportUrl" _text="{tr}Export{/tr}"}
+		{button href=$exportUrl _text="{tr}Export{/tr}" _class='exportButton'}
+		{jq}
+$('.exportButton a').click(function() {
+	$(this).serviceDialog({
+		title: '{tr}Export Tracker{/tr}'
+	});
+	return false;
+});
+{/jq}
 	{/if}
 {/capture}
 
@@ -184,7 +195,7 @@ the section loop so that the vars are not replaced by nested pretty tracker exec
 				{cycle values="odd,even" print=false}
 				{foreach from=$items[user].field_values item=f}
 					{if in_array($f.fieldId, $popupfields)}
-						{capture name=popupl}{trackeroutput field=$f item=$items[user] url=$url}{/capture}
+						{capture name=popupl}{trackeroutput field=$f item=$items[user] url=$url editable=in_array($f.fieldId, $editableFields)}{/capture}
 						{if !empty($smarty.capture.popupl)}
 							<tr>{if count($popupfields) > 1}<th class="{cycle advance=false}">{$f.name}</th>{/if}<td class="{cycle}">{$smarty.capture.popupl}</td></tr>
 						{/if}
@@ -226,11 +237,11 @@ the section loop so that the vars are not replaced by nested pretty tracker exec
 					{if $field.type eq 'b'} style="padding-right:5px"{/if}>
 					{if $field.isHidden eq 'c' and $fieldr and $tiki_p_admin_trackers ne 'y'}
 					{elseif isset($perms)}
-						{trackeroutput item=$items[user] field=$field list_mode=$list_mode showlinks=$showlinks showpopup=$showpopup url=$url
+						{trackeroutput item=$items[user] field=$field list_mode=$list_mode showlinks=$showlinks showpopup=$showpopup url=$url editable=in_array($field.fieldId, $editableFields)
 								tiki_p_view_trackers=$perms.tiki_p_view_trackers tiki_p_modify_tracker_items=$perms.tiki_p_modify_tracker_items tiki_p_modify_tracker_items_pending=$perms.tiki_p_modify_tracker_items_pending 
 								tiki_p_modify_tracker_items_closed=$perms.tiki_p_modify_tracker_items_closed tiki_p_comment_tracker_items=$perms.tiki_p_comment_tracker_items reloff=$itemoff}
 					{else}
-						{trackeroutput item=$items[user] field=$field list_mode=$list_mode reloff=$itemoff showlinks=$showlinks showpopup=$showpopup url=$url}
+						{trackeroutput item=$items[user] field=$field list_mode=$list_mode reloff=$itemoff showlinks=$showlinks showpopup=$showpopup url=$url editable=in_array($field.fieldId, $editableFields)}
 					{/if}
 		</td>
 				{/if}

@@ -127,6 +127,12 @@
 			</td>
 		</tr>
 		<tr>
+			<td>{tr}Do not send newsletter if clip is empty{/tr}</td>
+			<td>
+				<input type="checkbox" name="emptyClipBlocksSend" {if $info.emptyClipBlocksSend eq 'y'}checked="checked"{/if}>
+			</td>
+		</tr>
+		<tr>
 			<td>{tr}Clip articles published in the past number of days{/tr}</td>
 			<td>
 				<input type="text" size="4" name="articleClipRangeDays" value="{$info.articleClipRangeDays|escape}">

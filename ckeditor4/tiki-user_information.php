@@ -142,8 +142,7 @@ if ($prefs['feature_display_my_to_others'] == 'y') {
 		$smarty->assign_by_ref('user_articles', $user_articles);
 	}
 	if ($prefs['feature_forums'] == 'y') {
-		include_once ("lib/comments/commentslib.php");
-		$commentslib = new Comments($dbTiki);
+		$commentslib = TikiLib::lib('comments');
 		$user_forum_comments = $commentslib->get_user_forum_comments($userwatch, -1);
 		$smarty->assign_by_ref('user_forum_comments', $user_forum_comments);
 		$user_forum_topics = $commentslib->get_user_forum_comments($userwatch, -1, 'topics');
@@ -193,7 +192,8 @@ if ($prefs['user_tracker_infos']) {
 	foreach ($fields['data'] as $field) {
 		$lll[$field['fieldId']] = $field;
 	}
-	$items = $trklib->list_items($userTrackerId, 0, 1, '', $lll, $trklib->get_field_id_from_type($userTrackerId, 'u', '1%'), '', '', '', $userwatch);
+	$definition = Tracker_Definition::get($userTrackerId);
+	$items = $trklib->list_items($userTrackerId, 0, 1, '', $lll, $definition->getUserField(), '', '', '', $userwatch);
 	$smarty->assign_by_ref('userItem', $items['data'][0]);
 }
 ask_ticket('user-information');

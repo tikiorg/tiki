@@ -126,7 +126,7 @@
 				}
 			},
 			close: function () {
-				$(':checked', this).attr('checked', false);
+				$(':checked', this).prop('checked', false);
 			}
 		});
 
@@ -165,7 +165,7 @@
 				}
 			},
 			close: function () {
-				$(':checked', this).attr('checked', false);
+				$(':checked', this).prop('checked', false);
 			}
 		});
 

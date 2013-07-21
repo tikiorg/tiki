@@ -97,7 +97,6 @@
 		</select>
 		</td>
 	</tr>
-	</tr>
 </table>	
 </form>
 {if $printpages}

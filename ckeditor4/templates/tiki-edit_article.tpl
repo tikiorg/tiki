@@ -100,9 +100,16 @@
 			</tr>
 		{/if}
 		<tr id='show_author' {if $types.$type.show_author eq 'y'}style="display:;"{else}style="display:none;"{/if}>
-			<td>{tr}Author Name{/tr}</td>
+			<td>{tr}Author Name (as displayed){/tr}</td>
 			<td>
 				<input type="text" name="authorName" value="{$authorName|escape}">
+			</td>
+		</tr>
+		<tr id='show_user' {if $tiki_p_edit_article_user eq 'y'}style="display:;"{else}style="display: none;"{/if}>
+			<td>{tr}User (article owner){/tr}</td>
+			<td>
+				<input id="author" type="text" name="author" value="{$author|escape}" >
+				{autocomplete element='#author' type='username'}
 			</td>
 		</tr>
 		<tr>
@@ -232,7 +239,7 @@
 			</td>
 		</tr>
 
-		{if $prefs.feature_cms_templates eq 'y' and $tiki_p_use_content_templates eq 'y'}
+		{if $prefs.feature_cms_templates eq 'y' and $tiki_p_use_content_templates eq 'y' and $templates|@count ne 0}
 			<tr>
 				<td>{tr}Apply template{/tr}</td>
 				<td>
@@ -258,7 +265,7 @@
 				{if $types.$type.heading_only eq 'y'}
 					{textarea name="heading" rows="5" cols="80" Height="200px" id="subheading"}{$heading}{/textarea}
 				{else}
-					{textarea _simple="y" name="heading" rows="5" cols="80" Height="200px" id="subheading" comments="y"}{$heading}{/textarea}
+					{textarea _simple="y" name="heading" rows="5" cols="95" Height="200px" id="subheading" comments="y"}{$heading}{/textarea}
 				{/if}
 			</td>
 		</tr>
@@ -311,12 +318,7 @@
 					</td>
 				</tr>
 			{else}
-				<tr>
-					<td></td>
-					<td>
-						<input type="checkbox" name="allowhtml" checked="checked" style="display:none;">
-					</td>
-				</tr>
+				<input type="hidden" name="allowhtml" value="{if $allowhtml eq 'y'}on{/if}">
 			{/if}
 		{/if}
 		

@@ -4,7 +4,6 @@
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
-// $Id$
 
 if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
 	header('location: index.php');
@@ -129,7 +128,7 @@ function module_tracker_input($mod_reference, $module_params)
 
 	$galleryId = null;
 	if ($streetview) {
-		$galleryId = $streetViewField['options_array'][0];
+		$galleryId = TikiLib::lib('filegal')->check_user_file_gallery($streetViewField['options_array'][0]);
 	}
 
 	$operation = null;

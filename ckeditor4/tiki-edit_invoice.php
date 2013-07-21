@@ -184,7 +184,7 @@ $headerlib->add_jq_onready(
 			if (!InvoiceTaxable.is(':checked')) {
 				InvoiceTaxable
 					.val('n')
-					.attr('checked', 'true');
+					.prop('checked', 'true');
 			}
 		});
 

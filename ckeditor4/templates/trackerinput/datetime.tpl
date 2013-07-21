@@ -21,7 +21,7 @@
 {if $field.year > $end}
 	{assign var=end value=$field.year}
 {/if}
-{if $field.value eq '' or ($field.options_array[3] eq 'blank' and empty($item.itemId))}
+{if $field.value eq ''}
 	{assign var=time value="--"}
 {else}
 	{assign var=time value=$field.value}

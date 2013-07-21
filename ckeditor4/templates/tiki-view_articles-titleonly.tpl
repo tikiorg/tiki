@@ -8,4 +8,7 @@
 		<br>
 	</div>
 {/section}
+{if !empty($listpages) && (isset($usePagination) and $usePagination ne 'n')}
+	{pagination_links cant=$cant step=$maxArticles offset=$offset}{if isset($urlnext)}{$urlnext}{/if}{/pagination_links}
+{/if}
 {if !empty($container_class)}</div>{/if}

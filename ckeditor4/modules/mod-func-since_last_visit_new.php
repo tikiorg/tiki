@@ -68,7 +68,7 @@ function module_since_last_visit_new_info()
 function module_since_last_visit_new($mod_reference, $params = null)
 {
 	global $smarty, $user;
-	global $commentslib; require_once('lib/comments/commentslib.php'); $commentslib = new Comments();
+
 	include_once('tiki-sefurl.php');
 
 	if (!$user) {
@@ -143,7 +143,7 @@ function module_since_last_visit_new($mod_reference, $params = null)
 
 	$count = 0;
 	while ($res = $result->fetchRow()) {
-		$ret['items']['comments']['list'][$count]['href'] = $commentslib->getHref($res['objectType'], $res['object'], $res['threadId']);
+		$ret['items']['comments']['list'][$count]['href'] = TikiLib::lib('comments')->getHref($res['objectType'], $res['object'], $res['threadId']);
 		switch ($res['objectType']) {
 			case 'article':
 				$perm = 'tiki_p_read_article';
@@ -274,10 +274,10 @@ function module_since_last_visit_new($mod_reference, $params = null)
 		$ret['items']['articles']['cname'] = 'slvn_articles_menu';
 
 		if ($userlib->user_has_permission($user, 'tiki_p_edit_article')) {
-			$query = 'select `articleId`,`title`,`publishDate`,`authorName` from `tiki_articles` where `created`>? and `expireDate`>?';
+			$query = 'select `articleId`,`title`,`publishDate`,`authorName` from `tiki_articles` where `created`>? and `expireDate`>? order by `articleId` desc';
 			$bindvars = array((int) $last, time());
 		} else {
-			$query = 'select `articleId`,`title`,`publishDate`,`authorName` from `tiki_articles` where `publishDate`>? and `publishDate`<=? and `expireDate`>?';
+			$query = 'select `articleId`,`title`,`publishDate`,`authorName` from `tiki_articles` where `publishDate`>? and `publishDate`<=? and `expireDate`>? order by `articleId` desc';
 			$bindvars = array((int) $last,time(),time());
 		}
 		$result = $tikilib->query($query, $bindvars, $resultCount);
@@ -408,7 +408,7 @@ function module_since_last_visit_new($mod_reference, $params = null)
 		$count = 0;
 		while ($res = $result->fetchRow()) {
 			if ($userlib->user_has_perm_on_object($user, $res['galleryId'], 'file gallery', 'tiki_p_view_file_gallery')) {
-				$ret['items']['fileGalleries']['list'][$count]['href']  = 'tiki-list_file_gallery.php?galleryId=' . $res['galleryId'];
+				$ret['items']['fileGalleries']['list'][$count]['href']  = filter_out_sefurl('tiki-list_file_gallery.php?galleryId=' . $res['galleryId'], 'file gallery');
 				$ret['items']['fileGalleries']['list'][$count]['title'] = $tikilib->get_short_datetime($res['created']) . ' ' . tra('by') . ' ' . $res['user'];
 				$ret['items']['fileGalleries']['list'][$count]['label'] = $res['name'];
 				$count++;
@@ -425,7 +425,7 @@ function module_since_last_visit_new($mod_reference, $params = null)
 		$count = 0;
 		while ($res = $result->fetchRow()) {
 			if ($userlib->user_has_perm_on_object($user, $res['galleryId'], 'file gallery', 'tiki_p_view_file_gallery')) {
-				$ret['items']['files']['list'][$count]['href']  = 'tiki-list_file_gallery.php?galleryId=' . $res['galleryId'];
+				$ret['items']['files']['list'][$count]['href']  = filter_out_sefurl('tiki-list_file_gallery.php?galleryId=' . $res['galleryId'], 'file gallery');
 				$ret['items']['files']['list'][$count]['title'] = $tikilib->get_short_datetime($res['created']) .' '. tra('by') .' '. $res['user'];
 				$ret['items']['files']['list'][$count]['label'] = $res['name'] . ' (' . $res['filename'] . ')';
 				$count++;
@@ -565,7 +565,10 @@ function module_since_last_visit_new($mod_reference, $params = null)
 
 				$ret['items']['utrackers']['tid'][$res['trackerId']]['label'] = tra('in') .' '. tra($tracker_name[$res['trackerId']]);
 				$ret['items']['utrackers']['tid'][$res['trackerId']]['cname'] = 'slvn_utracker' . $res['trackerId'] . '_menu';
-				$ret['items']['utrackers']['tid'][$res['trackerId']]['list'][$countb[$res['trackerId']]]['href']  = 'tiki-view_tracker_item.php?itemId=' . $res['itemId'];
+				$ret['items']['utrackers']['tid'][$res['trackerId']]['list'][$countb[$res['trackerId']]]['href']  = filter_out_sefurl(
+						'tiki-view_tracker_item.php?itemId=' . $res['itemId'],
+						'trackeritem'
+					);
 				$ret['items']['utrackers']['tid'][$res['trackerId']]['list'][$countb[$res['trackerId']]]['title'] = $tikilib->get_short_datetime($res['lastModif']);
 
 				// routine to verify field in tracker that's used as label

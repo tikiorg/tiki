@@ -112,9 +112,19 @@ if ($output["data"] == "EMPTY") {
 		$errmsg = tra("You do not have permission to view this section");
 		require_once ('tiki-rss_error.php');
 	}
+	// try to deal with two mutually exclusive params added pre-tiki 11 to hide the "Tracker item: #123456" title
+	// showitemId and noId (showitemId will take precedence)
+	$showItemId = false;									// default to looking nice
+
+	if (isset($_REQUEST['showitemId'])) {
+		$showItemId = $_REQUEST['showitemId'] === 'y';
+	} else if (isset($_REQUEST['noId'])) {
+		$showItemId = $_REQUEST['noId'] === 'n';
+	}
+
 	$tmp = $trklib->list_items($_REQUEST[$id], 0, $prefs['feed_tracker_max'], $sort_mode, $fields, $filterfield, $filtervalue, $status, null, $exactvalue);
 	foreach ($tmp["data"] as $data) {
-		$data[$titleId] = (isset($_REQUEST['showitemId']) && $_REQUEST['showitemId'] == 'n')? '': tra('Tracker item:') . ' #' . $data[$urlparam];
+		$data[$titleId] = $showItemId ? tra('Tracker item:') . ' #' . $data[$urlparam] : '';
 		$data[$descId] = '';
 		$first_text_field = null;
 		$aux_subject = null;
@@ -131,12 +141,17 @@ if ($output["data"] == "EMPTY") {
 						'process' => 'y',
 					)
 				);
-				if ($data2['value'] == '') {
+				if (empty($data2['value'])) {
 					$data2['value'] = '(' . tra('empty') . ')';
 				} else {
 					$data2['value'] = htmlspecialchars_decode($data2['value']);
 				}
-				$data[$descId].= $data2["name"] . ": " . $data2["value"] . "<br />";
+				if ($prefs['feed_tracker_labels'] === 'y') {
+					$data[$descId] .= $data2["name"] . ": ";
+				} else if (preg_match_all('/(<img[^>]*>)/', $data2['value'], $m)) {
+					$data2['value'] = implode('', $m[1]);
+				}
+				$data[$descId] .= $data2["value"] . "<br />";
 				$field_name_check = strtolower($data2["name"]);
 				if ($field_name_check == "subject") {
 					$aux_subject = " - " . $data2["value"];
@@ -150,7 +165,7 @@ if ($output["data"] == "EMPTY") {
 				}
 			}
 		}
-		if (isset($_REQUEST['noId']) && $_REQUEST['noId'] == 'y') {
+		if (!$showItemId) {
 			$data[$titleId] = empty($aux_subject) ? $first_text_field : $aux_subject;
 		} elseif (!isset($aux_subject) && isset($first_text_field)) {
 			$data[$titleId] .= (empty($data[$titleId])?'': ' - ') . $first_text_field;

@@ -50,8 +50,7 @@ window.parent.location = 'tiki-index.php';
 #col1 { width: 580px; }
 #col2, #col3, #header, #footer, #header-shadow, #footer-shadow {display: none;}
 body {
-        background: none;
-        background-color: white;
+    background: white none;
 }
 </style>
 {/literal}

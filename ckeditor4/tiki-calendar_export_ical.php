@@ -144,7 +144,10 @@ if ( ((is_array($calendarIds) && (count($calendarIds) > 0)) or isset($_REQUEST["
 			$ea['Summary']=$event['name'];
 			$ea['dateStart']=$event['start'];
 			$ea['dateEnd']=$event['end'];
-			$ea['Description']= preg_replace('/\n/', "\\n", strip_tags(
+			$ea['Description']= preg_replace(
+				'/\n/',
+				"\\n",
+				strip_tags(
 					TikiLib::lib('parser')->parse_data(
 						$event['description'],
 						array('is_html' => $prefs['calendar_description_is_html'] === 'y')

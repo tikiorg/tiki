@@ -60,10 +60,12 @@
 
 {include file='find.tpl' find_show_num_rows='y'}
 
+<form method="post" action="tiki-assignuser.php{if $assign_user}?assign_user={$assign_user|escape:'url'}{/if}">
 <table class="normal">
 	<tr>
 		<th><a href="tiki-assignuser.php?{if $assign_user}assign_user={$assign_user|escape:url}&amp;{/if}offset={$offset}&amp;maxRecords={$prefs.maxRecords}&amp;sort_mode={if $sort_mode eq 'groupName_desc'}groupName_asc{else}groupName_desc{/if}">{tr}Name{/tr}</a></th>
 		<th><a href="tiki-assignuser.php?{if $assign_user}assign_user={$assign_user|escape:url}&amp;{/if}offset={$offset}&amp;maxRecords={$prefs.maxRecords}&amp;sort_mode={if $sort_mode eq 'groupDesc_desc'}groupDesc_asc{else}groupDesc_desc{/if}">{tr}Description{/tr}</a></th>
+		<th>{tr}Expiration{/tr}</th>
 		<th>{tr}Action{/tr}</th>
 	</tr>
 	{cycle values="even,odd" print=false}
@@ -80,6 +82,11 @@
 					{/if}
 				</td>
 				<td class="text">{tr}{$users[user].groupDesc|escape}{/tr}</td>
+				<td>{if isset($dates[$users[user].groupName]) && !empty($dates[$users[user].groupName]['expire'])}
+					<input type="text" name="new_{$users[user].id}" value="{$dates[$users[user].groupName]['expire']|tiki_short_datetime|escape}" />
+					<input type="hidden" name="old_{$users[user].id}" value="{$dates[$users[user].groupName]['expire']|tiki_short_datetime|escape}" />
+
+				{/if}</td>
 				<td class="action">
 					{if $users[user].what ne 'real'}
 						<a class="link" href="tiki-assignuser.php?{if $offset}offset={$offset}&amp;{/if}maxRecords={$prefs.maxRecords}&amp;sort_mode={$sort_mode}&amp;action=assign&amp;group={$users[user].groupName|escape:url}{if $assign_user}&amp;assign_user={$assign_user|escape:url}{/if}" title="{tr}Assign User to Group{/tr}">{icon _id='add' alt="{tr}Assign{/tr}"}</a>
@@ -91,4 +98,6 @@
 		{/if}
 	{/section}
 </table>
+<input type="submit" name="save" value="{tr}Save{/tr}" />
+</form>
 {pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links}

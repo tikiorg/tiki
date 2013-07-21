@@ -109,8 +109,10 @@ $js
 			if (none) {
 				optionDropDown.attr('disabled',true);
 			}
-
 			optionDropDown.change();
+			if (jqueryTiki.chosen) {
+				optionDropDown.trigger("liszt:updated");
+			}
 		}).change();
 		optionDropDown.change( function() {
 			if (showPreview !== undefined) {

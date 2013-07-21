@@ -22,7 +22,8 @@ define('CHANGELOG_FILENAME', 'changelog.txt');
 define('CHANGELOG', ROOT . '/' . CHANGELOG_FILENAME);
 define('COPYRIGHTS_FILENAME', 'copyright.txt');
 define('COPYRIGHTS', ROOT . '/' . COPYRIGHTS_FILENAME);
-define('SF_TW_MEMBERS_URL', 'http://sourceforge.net/project/memberlist.php?group_id=64258');
+define('SF_TW_MEMBERS_URL', 'http://sourceforge.net/p/tikiwiki/_members');
+define('DEV_TW_MEMBERS_URL', 'http://dev.tiki.org/getTikiUser.php');
 define('README_FILENAME', 'README');
 define('README', ROOT . '/' . README_FILENAME);
 define('LICENSE_FILENAME', 'license.txt');
@@ -979,7 +980,7 @@ function get_contributors_sf_data(&$contributors)
 
 	if (!empty($html) && preg_match('/(<table.*<\/\s*table>)/sim', $html, $matches)) {
 		$usersInfo = array();
-		if (preg_match_all('/<tr[^>]*>' . str_repeat('\s*<td[^>]*>(.*)<\/td>\s*', 4).'<\/\s*tr>/Usim', $matches[0], $usersInfo, PREG_SET_ORDER)) {
+		if (preg_match_all('/<tr[^>]*>' . str_repeat('\s*<td[^>]*>(.*)<\/td>\s*', 3).'<\/\s*tr>/Usim', $matches[0], $usersInfo, PREG_SET_ORDER)) {
 			foreach ($usersInfo as $k => $userInfo) {
 				$userInfo = array_map('trim', array_map('strip_tags', $userInfo));
 				$user = strtolower($userInfo['2']);

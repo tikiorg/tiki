@@ -48,7 +48,8 @@ if ($_REQUEST['objectType'] == 'wiki page') {
 } else {
 	$tikilib->get_perm_object($_REQUEST['objectId'], $_REQUEST['objectType']);
 	if ($_REQUEST['objectType'] == 'tracker') {
-		if ($groupCreatorFieldId = TikiLib::lib('trk')->get_field_id_from_type($_REQUEST['objectId'], 'g', '1%')) {
+		$definition = Tracker_Definition::get($_REQUEST['objectId']);
+		if ($groupCreatorFieldId = $definition->getWriterGroupField()) {
 			$smarty->assign('group_tracker', 'y');
 		}
 	}
@@ -455,48 +456,43 @@ foreach ( $groupNames as $groupName ) {
 		}
 	}
 
-	$js .= <<< JS
-\$('input[name="perm[$groupName][]"]').eachAsync({
-			delay: 10,
-			bulk: 0,
-JS;
+	$js .= "\$('input[name=\"perm[$groupName][]\"]').eachAsync({
+	delay: 10,
+	bulk: 0,
+";
 	if ($i == count($groupNames)-1) {
-		$js .= <<< JS
-
-			end: function () {
+		$js .= "end: function () {
 				\$('#perms_busy').hide();
 			},
-JS;
+";
 	}
-	$js .= <<< JS
-
-			loop: function() { 		// each one of this group
+	$js .= "loop: function() { 		// each one of this group
 
 	if (\$(this).is(':checked')) {
-		\$('input[value="'+\$(this).val()+'"]').					// other checkboxes of same value (perm)
+		\$('input[value=\"'+\$(this).val()+'\"]').					// other checkboxes of same value (perm)
 			filter('$beneficiaries').									// which inherit from this
-			attr('checked',\$(this).is(':checked')).					// check and disable
+			prop('checked',\$(this).is(':checked')).					// check and disable
 			attr('disabled',\$(this).is(':checked'));
 	}
 
 	\$(this).change( function() {									// bind click event
 
 		if (\$(this).is(':checked')) {
-			\$('input[value="'+\$(this).val()+'"]').			// same...
+			\$('input[value=\"'+\$(this).val()+'\"]').			// same...
 				filter('$beneficiaries').
-				attr('checked',true).							// check?
-				attr('disabled',true);						// disable
+				prop('checked',true).							// check?
+				attr('disabled',true);							// disable
 		} else {
-			\$('input[value="'+\$(this).val()+'"]').			// same...
+			\$('input[value=\"'+\$(this).val()+'\"]').			// same...
 				filter('$beneficiaries').
-				attr('checked',false).									// check?
-				attr('disabled',false);								// disable
-}
+				prop('checked',false).							// check?
+				attr('disabled',false);							// disable
+		}
 	});
-			}
+}
 });
 
-JS;
+";
 	$i++;
 }	// end of for $groupNames loop
 

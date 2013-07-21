@@ -375,3 +375,18 @@ table.normal tr:nth-child(2n) td:hover {
 	border: 1px solid #8cacbb;
 	border-collapse: collapse;
 }
+
+/*** Calendar ***/
+td.calheadhighlight {
+	background: #f0c040;
+	border: 1px solid #676767;
+	font-size: 12px;
+}
+
+.caltable td.calhighlight {
+	background: #f0c040;
+}
+
+.calborder {
+	border: 1px solid #aaa;
+}

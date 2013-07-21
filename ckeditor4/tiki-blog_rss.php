@@ -41,7 +41,7 @@ if ($output['data'] == 'EMPTY') {
 	$tmp = $bloglib->get_blog($_REQUEST["$id"]);
 	$title = $prefs['feed_' . $feed . '_title'];
 	$title.= $tmp['title'];
-	$desc.= $prefs['feed_' . $feed . '_desc'];
+	$desc = $prefs['feed_' . $feed . '_desc'];
 	$desc.= $tmp['description'];
 	$dateId = 'created';
 	$authorId = 'user';

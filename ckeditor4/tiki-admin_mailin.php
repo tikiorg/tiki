@@ -40,11 +40,12 @@ if (!isset($_REQUEST['accountId'])) $_REQUEST['accountId'] = 0;
 $smarty->assign('accountId', $_REQUEST['accountId']);
 if (isset($_REQUEST['new_acc'])) {
 	check_ticket('admin-mailin');
-	if (!account_ok($_REQUEST['pop'], $_REQUEST['username'], $_REQUEST['pass'])) $tikifeedback[] = array(
-		'num' => 1,
-		'mes' => sprintf(tra('Mail-in account %s incorrect'), $_REQUEST['account'])
-	);
-	else {
+	if (!account_ok($_REQUEST['pop'], $_REQUEST['username'], $_REQUEST['pass'])) {
+		$tikifeedback[] = array(
+			'num' => 1,
+			'mes' => sprintf(tra('Mail-in account %s incorrect'), $_REQUEST['account'])
+		);
+	} else {
 		$mailinlib->replace_mailin_account(
 			$_REQUEST['accountId'],
 			$_REQUEST['account'],
@@ -58,10 +59,18 @@ if (isset($_REQUEST['new_acc'])) {
 			$_REQUEST['type'],
 			$_REQUEST['active'],
 			$_REQUEST['anonymous'],
+			$_REQUEST['admin'],
 			$_REQUEST['attachments'],
+			$_REQUEST['routing'],
 			$_REQUEST['article_topicId'],
 			$_REQUEST['article_type'],
-			$_REQUEST['discard_after']
+			$_REQUEST['discard_after'],
+			$_REQUEST['show_inlineImages'],
+			$_REQUEST['save_html'],
+			$_REQUEST['categoryId'],
+			$_REQUEST['namespace'],
+			$_REQUEST['respond_email'],
+			$_REQUEST['leave_email']
 		);
 
 		$tikifeedback[] = array(
@@ -89,13 +98,20 @@ if ($_REQUEST['accountId']) {
 	$info['useAuth'] = 'n';
 	$info['port'] = 110;
 	$info['smtpPort'] = 25;
-	$info['type'] = 'article-put';
+	$info['type'] = 'wiki-put';
 	$info['active'] = 'y';
-	$info['anonymous'] = 'y';
-	$info['anonymous'] = 'y';
-	$info['attachments'] = 'n';
+	$info['anonymous'] = 'n';
+	$info['admin'] = 'y';
+	$info['attachments'] = 'y';
+	$info['routing'] = 'y';
 	$info['article_topicId'] = '';
 	$info['article_type'] = '';
+	$info['show_inlineImages'] = 'y';
+	$info['save_html'] = 'y';
+	$info['categoryId'] = 0;
+	$info['namespace'] = '';
+	$info['respond_email'] = 'y';
+	$info['leave_email'] = 'n';
 }
 $smarty->assign('info', $info);
 

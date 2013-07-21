@@ -143,6 +143,8 @@ if (empty($_REQUEST['CR'])) {
 }
 $smarty->assign_by_ref('CR', $_REQUEST['CR']);
 
+$fp = null;
+
 if (!empty($_REQUEST['debug'])) {
 	$fp = fopen($prefs['tmpDir'].'/'.tra('tracker')."_".$_REQUEST['trackerId'].".csv", 'w');
 	echo 'ouput:'.$prefs['tmpDir'].'/'.tra('tracker')."_".$_REQUEST['trackerId'].".csv";

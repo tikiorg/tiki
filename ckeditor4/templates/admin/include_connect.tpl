@@ -28,7 +28,7 @@
 			<legend><strong>{tr}Spread the word{/tr}</strong></legend>
 			<p>
 				{tr}Add the "Powered by" module to your site. {/tr}
-				{button href="tiki-admin_modules.php?textFilter=powered&cookietab=3" _text="{tr}Manage Modules{/tr}"}</a>
+				{button href="tiki-admin_modules.php?textFilter=powered&cookietab=3" _text="{tr}Manage Modules{/tr}"}
 			</p>
 		</fieldset>
 		<fieldset>

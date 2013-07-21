@@ -212,7 +212,7 @@ $headerlib->add_jq_onready(
 	});
 
 	window.checkAll = function() {
-		designer.find(".fieldPicker").find("input").attr("checked", "true");
+		designer.find(".fieldPicker").find("input").prop("checked", "true");
 	};
 
 	window.uncheckAll = function() {

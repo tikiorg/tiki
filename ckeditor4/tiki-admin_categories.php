@@ -381,10 +381,7 @@ if ( $prefs['feature_file_galleries'] == 'y' ) {
 }
 
 if ( $prefs['feature_forums'] == 'y' ) {
-	include_once ('lib/comments/commentslib.php');
-	if (!isset($commentslib)) {
-		$commentslib = new Comments($dbTiki);
-	}
+	$commentslib = TikiLib::lib('comments');
 	$forums = $commentslib->list_forums($offset, -1, 'name_asc', $find_objects);
 }
 

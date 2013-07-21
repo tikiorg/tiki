@@ -19,12 +19,12 @@ p {
 
  /***** Layout (overrides layout.css;
 		also styling of page layout divs)  *****/
-		
-/* Enable header and footer content to widen when middle has wide content. */ 
+
+/* Enable header and footer content to widen when middle has wide content. */
 body.fixed_width .fixedwidth .fixedwidth {
 	padding: 0;
 }
-	 	 	 	
+
 .header_container,
 #col1 {
 	margin-left: auto;
@@ -75,7 +75,7 @@ h1 {
 	background: url(dbldt/h_arrow.png) no-repeat -0px 8px;
 	padding-left: 16px;
 }
-	
+
 h2 {
 	border-radius: 4px !important;
 	background-color: #f2f2f2 !important;
@@ -89,7 +89,7 @@ h2 {
 h3 {
 	font-size: 140%;
 }
-	
+
 h4 {
 	font-size: 120%;
 }
@@ -141,8 +141,11 @@ a.admbox.off,
 
 
 #topbar_modules {
+	padding-left: 20px;
+	margin-left: auto;
+	margin-right: auto;
 	min-height: 35px;
-} 
+}
 
 #topbar_modules .box-search {
 	position: absolute;
@@ -210,12 +213,6 @@ html > body #col3[id] {
 }
 .cssmenu_vert li {
 	margin-left: 0;
-}
-
-#topbar_modules {
-	padding-left: 20px;
-	margin-left: auto;
-	margin-right: auto;
 }
 
 #topbar_modules > div {

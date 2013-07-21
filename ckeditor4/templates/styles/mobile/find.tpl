@@ -25,6 +25,7 @@
 	*		filter_values         : array( filter_fieldX => filter_fieldX_selected_value, ... )
 	* autocomplete						: name of the variable you want for autocomplete of the input field (only for <input type="text" ... >
 	* find_other : If value != '', show an input box label with find_other
+	* find_in :	 popup to eplain on what is the find
 	*
 	* Usage examples : {include file='find.tpl'}
 	*                  {include file='find.tpl' find_show_languages='y' find_show_categories='y' find_show_num_rows='y'} 
@@ -42,12 +43,12 @@
 		{else}
 			{tr}{$whatlabel}{/tr}
 		{/if}
-
-	</label>
 		<input type="text" name="find" id="find" value="{$find|escape}" data-type="search">
 		{if isset($autocomplete)}
 			{jq}$("#find").tiki("autocomplete", "{{$autocomplete}}"){/jq}
 		{/if}
+	</label>
+	{if isset($find_in)}{help url="#" desc="{tr}Find in:{/tr} {$find_in}"}{/if}
 
 <div data-role="collapsible" data-collapsed="true">
 	<h3>{tr}More search options{/tr}</h3>
@@ -62,6 +63,7 @@
 {if !empty($find_show_sub) and $find_show_sub eq 'y'}
 	<label class="findsub">
 		{tr}and all the sub-objects{/tr}
+		<input type="checkbox" name="find_sub" id="find_sub" {if !empty($find_sub) and $find_sub eq 'y'}checked="checked"{/if}>
 	</label>
 {/if}
 
@@ -141,7 +143,8 @@
 				</option>
 			{/foreach}
 		</select>
-		{if $prefs.javascript_enabled eq 'y' && $find_show_categories_multi eq 'y'}<a href="#" onclick="show('category_multiselect_find');hide('category_singleselect_find');">{tr}Multiple select{/tr}</a>{/if}
+		{if $prefs.javascript_enabled eq 'y' && $find_show_categories_multi eq 'y'}<a href="#" onclick="show('category_multiselect_find');hide('category_singleselect_find');javascript:document.getElementById('category_select_find_type').value='y';">{tr}Multiple select{/tr}</a>{/if}
+		<input id="category_select_find_type" name="find_show_categories_multi" value="n" type="hidden">
 	</div>
 	{/if}
 	<div id="category_multiselect_find" style="display: {if $find_show_categories_multi eq 'y' && $findSelectedCategoriesNumber > 1}block{else}none{/if};">
@@ -209,7 +212,7 @@
 {if !empty($show_find_orphans) and $show_find_orphans eq 'y'}
 	<label class="find_orphans" for="find_orphans">
 		   {tr}Orphans{/tr}
-		   <input type="checkbox" name="find_orphans" id="find_orphans" {if $find_orphans eq 'y'}checked="checked"{/if}>
+		   <input type="checkbox" name="find_orphans" id="find_orphans" {if isset($find_orphans) and $find_orphans eq 'y'}checked="checked"{/if}>
 	</label>
 {/if}
 

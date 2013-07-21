@@ -11,6 +11,7 @@
 // $Id$
 
 $in_installer = 1;
+define('TIKI_IN_INSTALLER', 1);
 if (!isset($title)) $title = 'Tiki Installer';
 if (!isset($content)) $content = 'No content specified. Something went wrong.<br/>Please tell your administrator.<br/>If you are the administrator, you may want to check for / file a bug report.';
 if (!isset($dberror)) $dberror = false;

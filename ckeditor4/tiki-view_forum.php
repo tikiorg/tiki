@@ -35,9 +35,7 @@ $auto_query_args = array(
 	'reply_state'
 );
 
-include_once ('lib/comments/commentslib.php');
-
-$commentslib = new Comments($dbTiki);
+$commentslib = TikiLib::lib('comments');
 
 if (!isset($_REQUEST['forumId']) || !($forum_info = $commentslib->get_forum($_REQUEST['forumId']))) {
 	$smarty->assign('errortype', 'no_redirect_login');

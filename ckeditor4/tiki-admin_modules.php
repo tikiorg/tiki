@@ -206,7 +206,7 @@ if (isset($_REQUEST['preview'])) {
 		$info = $modlib->get_user_module($_REQUEST['assign_name']);
 		$smarty->assign_by_ref('user_title', $info['title']);
 		if ($info['parse'] == 'y') {
-			$parse_data = $tikilib->parse_data($info['data']);
+			$parse_data = $tikilib->parse_data($info['data'], array('is_html' => true, 'suppress_icons' => true));
 			$smarty->assign_by_ref('user_data', $parse_data);
 		} else {
 			$smarty->assign_by_ref('user_data', $info['data']);
@@ -216,9 +216,11 @@ if (isset($_REQUEST['preview'])) {
 		} catch (Exception $e) {
 			$smarty->assign(
 				'msg',
-				tr('There is a problem with your custom module "%0": ' . '<br><br><em>' . $e->getMessage() . '</em><br><br>' .
+				tr(
+					'There is a problem with your custom module "%0": ' . '<br><br><em>' . $e->getMessage() . '</em><br><br>' .
 					'<span class="button"><a href="tiki-admin_modules.php?um_edit=' . $_REQUEST['assign_name'] . '&cookietab=2#editcreate">' .
-					tr('Click here to edit the module') . '</a></span>', $_REQUEST['assign_name'])
+					tr('Click here to edit the module') . '</a></span>', $_REQUEST['assign_name']
+				)
 			);
 			$smarty->display('error.tpl');
 			die;
@@ -316,7 +318,7 @@ if (isset($_REQUEST['assign'])) {
 		);
 		$logslib->add_log('adminmodules', 'assigned module ' . $assign_name);
 		$modlib->reorder_modules();
-		header('location: tiki-admin_modules.php');
+		header('location: tiki-admin_modules.php?cookietab=1'); // forcing return to 1st tab
 	} else {
 		$modlib->dispatchValues($_REQUEST['assign_params'], $modinfo['params']);
 		$smarty->assign('assign_info', $modinfo);
@@ -428,8 +430,20 @@ foreach ( $modlib->module_zones as $initial => $zone) {
 			'name' => tra(substr($zone, 0, strpos($zone, '_')))
 			);
 }
-$smarty->assign_by_ref('assigned_modules', $assigned_modules);
-$smarty->assign_by_ref('module_zones', $module_zones);
+
+$assigned_modules = array_map(
+	function ($list) {
+		return array_map(
+			function ($entry) {
+				$entry['params_presentable'] = str_replace('&', '<br>', urldecode($entry['params']));
+				return $entry;
+			}, $list
+		);
+	}, $assigned_modules
+);
+
+$smarty->assign('assigned_modules', $assigned_modules);
+$smarty->assign('module_zone_list', $module_zones);
 
 $prefs['module_zones_top'] = 'fixed';
 $prefs['module_zones_topbar'] = 'fixed';
@@ -461,13 +475,12 @@ if (!empty($_REQUEST['edit_module'])) {	// pick up ajax calls
 	$smarty->display('admin_modules_form.tpl');
 } else {
 	// unfix margins for hidden columns, css previously added in setup/cookies.php
-	if (isset($_SESSION['tiki_cookie_jar']['show_col2']) and $_SESSION['tiki_cookie_jar']['show_col2'] == 'n') {
+	if (getCookie('show_col2') === 'n') {
 		unset($headerlib->css[100][array_search('#c1c2 #wrapper #col1.marginleft { margin-left: 0; }', $headerlib->css[100])]);
 	}
-	if (isset($_SESSION['tiki_cookie_jar']['show_col3']) and $_SESSION['tiki_cookie_jar']['show_col3'] == 'n') {
+	if (getCookie('show_col3') === 'n') {
 		unset($headerlib->css[100][array_search('#c1c2 #wrapper #col1.marginright { margin-right: 0; }', $headerlib->css[100])]);
 	}
-
 
 	$smarty->assign('mid', 'tiki-admin_modules.tpl');
 	$smarty->display('tiki.tpl');

@@ -329,7 +329,8 @@
 									{foreach key=k item=i from=$option_groups}<option value="{$k|escape}" {$i}>{$k|escape}</option>{/foreach}
 								</select>
 								{if $option_groups|@count ge '2'}
-								{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Use Ctrl+Click to select multiple options{/tr}<br>{tr}Selecting 2 groups means that the option will be seen if the user belongs to the 2 groups. If you want the 2 groups to see the option, create 2 options with one group each.{/tr}<br>{tr}If the url is ((PageName)), you do not need to put the groups, the option will be displayed only if the page can be displayed.{/tr}{/remarksbox}
+									{if $prefs.jquery_ui_chosen neq 'y'}{$ctrlMsg='{tr}Use Ctrl+Click to select multiple options{/tr}<br>'}{/if}
+									{remarksbox type="tip" title="{tr}Tip{/tr}"}{$ctrlMsg}{tr}Selecting 2 groups means that the option will be seen if the user belongs to the 2 groups. If you want the 2 groups to see the option, create 2 options with one group each.{/tr}<br>{tr}If the url is ((PageName)), you do not need to put the groups, the option will be displayed only if the page can be displayed.{/tr}{/remarksbox}
 								{/if}
 							</td>
 						</tr>

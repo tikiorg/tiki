@@ -6,7 +6,6 @@
 // $Id$
 
 require_once ('tiki-setup.php');
-include_once ('lib/pear/XML/Server.php');
 include_once ('lib/structures/structlib.php');
 
 //get_strings tra("Send Pages");

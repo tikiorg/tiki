@@ -587,7 +587,11 @@ if (isset($_REQUEST['filterGroup'])) {
 $smarty->assign('filterGroup', $filterGroup);
 
 if (isset($_REQUEST['filterEmail'])) {
+	// Direct user input. Validate email address
 	$filterEmail = $_REQUEST['filterEmail'];
+	if (!validate_email($filterEmail)) {
+		$filterEmail = '';
+	}
 } else {
 	$filterEmail = '';
 }
@@ -730,19 +734,59 @@ if (isset($_REQUEST['user']) and $_REQUEST['user']) {
 	$_REQUEST['user'] = 0;
 }
 
-$users = $userlib->get_users(
-	$offset,
-	$numrows,
-	$sort_mode,
-	$find,
-	$initial,
-	true,
-	$filterGroup,
-	$filterEmail,
-	!empty($_REQUEST['filterEmailNotConfirmed']),
-	!empty($_REQUEST['filterNotValidated']),
-	!empty($_REQUEST['filterNeverLoggedIn'])
-);
+if ($tiki_p_admin == 'y') {
+	$alls = $userlib->get_groups();
+	foreach ($alls['data'] as $g) {
+		$all_groups[] = $g['groupName'];
+	}
+} else {
+	foreach ($userGroups as $g => $t) {
+		$all_groups[] = $g;
+	}
+}
+
+//add tablesorter sorting and filtering
+$tsOn	= $prefs['disableJavascript'] == 'n' && $prefs['feature_jquery_tablesorter'] == 'y'
+		&& $prefs['feature_ajax'] == 'y' ? true : false;
+$smarty->assign('ts', $tsOn);
+$tsAjax = isset($_REQUEST['tsAjax']) && $_REQUEST['tsAjax'] ? true : false;
+
+if ($tsAjax || !$tsOn) {
+	$users = $userlib->get_users(
+		$offset,
+		$numrows,
+		$sort_mode,
+		$find,
+		$initial,
+		true,
+		$filterGroup,
+		$filterEmail,
+		!empty($_REQUEST['filterEmailNotConfirmed']),
+		!empty($_REQUEST['filterNotValidated']),
+		!empty($_REQUEST['filterNeverLoggedIn'])
+	);
+} elseif($tsOn) {
+	$users['cant'] = $userlib->count_users('');
+	$users['data'] = $users['cant'] > 0 ? true : false;
+	//delete anonymous out of group list used for dropdown
+	$ts_groups = array_flip($all_groups);
+	unset($ts_groups['Anonymous']);
+	$ts_groups = array_flip($ts_groups);
+	//set tablesorter code
+	Table_Factory::build(
+		'adminusers',
+		array(
+			 'total' => $users['cant'],
+			 'filters' => array(
+				 'columns' => array(
+					 5 => array(
+						 'options' => $ts_groups
+				 	)
+				)
+			 )
+		)
+	);
+}
 
 if (!empty($group_management_mode) || !empty($set_default_groups_mode) || !empty($email_mode)) {
 	$arraylen = count($users['data']);
@@ -758,17 +802,6 @@ $smarty->assign_by_ref('cant', $users['cant']);
 
 if (isset($_REQUEST['add'])) {
 	$cookietab = '2';
-}
-
-if ($tiki_p_admin == 'y') {
-	$alls = $userlib->get_groups();
-	foreach ($alls['data'] as $g) {
-		$all_groups[] = $g['groupName'];
-	}
-} else {
-	foreach ($userGroups as $g => $t) {
-		$all_groups[] = $g;
-	}
 }
 
 if (count($errors) > 0) {

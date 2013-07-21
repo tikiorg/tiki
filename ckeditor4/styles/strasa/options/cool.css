@@ -795,15 +795,6 @@ body.tiki_blogs .postbody-title,
 
 /***** Calendar *****/
 /* Overrides calendar.css, etc. */
-
-.calfocus {
-	background: #cce5ff;
-}
-
-.calfocuson {
-	font-size: 90%;
-}
-
 .calprio1 a,
 .calprio2 a,
 .calprio3 a,
@@ -826,10 +817,6 @@ body.tiki_blogs .postbody-title,
 	background: #1b3a50;
 }
 
-.calHeadingOn a {
-	color: #06f;
-}
-
 .calbuttonBox {
 	color: #fff;
 	background: #1d9ccf;
@@ -839,18 +826,18 @@ body.tiki_blogs .postbody-title,
 .buttonon a,
 .calbuttonon a,
 .calbuttonoff a {
-	color: #fff;
+	color: #006699;
 }
 
-.caltable .calfocuson,
 .box-data .fc a.today,
 .box-data td a.today {
 	background: #D4D0C8;
 	border: solid 1px #696969;
 }
 
-.caltable .calfocuson a {
-	color: #000;
+.calendarweek td.heading.calHeading a:link,
+.calendarweek td.heading.calHeading a:visited {
+	color: #5ae0ff;
 }
 
 .calinput {
@@ -861,8 +848,8 @@ body.tiki_blogs .postbody-title,
 	background: #F5F5F5;
 }
 
-.days {
-	color: #cce5ff;
+th.days {
+	color: #006699;
 }
 
 .caltable .weeks {
@@ -881,14 +868,6 @@ body.tiki_blogs .postbody-title,
 
 .caltable .even {
 	background: #dcdcdc;
-}
-
-.caldark {
-	background: #223845;
-}
-
-.caldark .calfocus {
-	background: #223845;
 }
 
 /*****  Polls  *****/

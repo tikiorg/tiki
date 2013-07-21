@@ -140,7 +140,8 @@
 				</option>
 			{/foreach}
 		</select>
-		{if $prefs.javascript_enabled eq 'y' && $find_show_categories_multi eq 'y'}<a href="#" onclick="show('category_multiselect_find');hide('category_singleselect_find');">{tr}Multiple select{/tr}</a>{/if}
+		{if $prefs.javascript_enabled eq 'y' && $find_show_categories_multi eq 'y'}<a href="#" onclick="show('category_multiselect_find');hide('category_singleselect_find');javascript:document.getElementById('category_select_find_type').value='y';">{tr}Multiple select{/tr}</a>{/if}
+		<input id="category_select_find_type" name="find_show_categories_multi" value="n" type="hidden">
 	</div>
 	{/if}
 	<div id="category_multiselect_find" style="display: {if $find_show_categories_multi eq 'y' && $findSelectedCategoriesNumber > 1}block{else}none{/if};">

@@ -12,10 +12,10 @@ $inputConfiguration = array(
 	array( 'staticKeyFilters' => array(
 				'date' => 'digits',
 				'maxRecords' => 'digits',
-				'highlight' => 'xss',
+				'highlight' => 'text',
 				'where' => 'word',
-				'find' => 'xss',
-				'words' =>'xss',
+				'find' => 'text',
+				'words' =>'text',
 				'boolean' =>'word',
 		)
 	)
@@ -45,7 +45,7 @@ if (empty($_REQUEST["where"])) {
 $find_where = 'find_' . $where;
 $smarty->assign('where', $where);
 if ($where == 'wikis') {
-	$where_label = 'wiki pages';	
+	$where_label = 'wiki pages';
 } else {
 	$where_label = $where;
 }
@@ -71,9 +71,7 @@ if ($where == 'forums') {
 	$access->check_permission('tiki_p_forum_read');
 	if (!empty($_REQUEST['forumId'])) {
 		$filter['forumId'] = $_REQUEST['forumId'];
-		global $commentslib;
-		include ('lib/comments/commentslib.php');
-		if (!isset($commentslib)) $commentslib = new Comments($dbTiki);
+		$commentslib = TikiLib::lib('comments');
 		$forum_info = $commentslib->get_forum($_REQUEST['forumId']);
 		$where = 'forum';
 		$smarty->assign_by_ref('where_forum', $forum_info['name']);
@@ -124,7 +122,7 @@ if ($prefs['feature_categories'] == 'y') {
 		$selectedCategories = array((int) $categId);
 		$smarty->assign('find_categId', $_REQUEST['categId']);
 	}
-	
+
 	global $categlib;
 	include_once ('lib/categories/categlib.php');
 	$categories = $categlib->getCategories();
@@ -211,6 +209,17 @@ if (($where == 'wikis' || $where == 'articles') && $prefs['feature_multilingual'
 	$languages = $tikilib->list_languages(false, 'y');
 	$smarty->assign_by_ref('languages', $languages);
 }
+
+array_walk(
+	$results['data'],
+	function (& $entry) {
+		if (strpos($entry['href'], '?') !== false) {
+			$entry['href'] .= '&highlight=' . rawurlencode($_REQUEST['words']);
+		} else {
+			$entry['href'] .= '?highlight=' . rawurlencode($_REQUEST['words']);
+		}
+	}
+);
 
 $smarty->assign_by_ref('where_list', $where_list);
 $smarty->assign_by_ref('results', $results["data"]);

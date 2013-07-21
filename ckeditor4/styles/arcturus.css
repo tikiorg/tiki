@@ -305,6 +305,10 @@ input[type="submit"]:hover {
 	background: #ded6c6;
 }
 
+#col2 .box-data .cssmenu_vert ul {
+	padding-left: 0;
+}
+
 /* next two, dropdown background and border */
 .cssmenu_horiz li ul li,
 .cssmenu_vert li ul li {
@@ -526,7 +530,8 @@ tr.odd td,
 td.odd,
 li.odd,
 .oddthumb,
-table.normal tr:nth-child(2n+1) {
+table.normal tr:nth-child(2n+1),
+.tablesorter tr.odd td {
 	font-size: 12px;
 	color: #000;
 	background: #efefef;
@@ -536,7 +541,8 @@ tr.even td,
 td.even,
 li.even,
 .eventhumb,
-table.normal tr:nth-child(2n) {
+table.normal tr:nth-child(2n),
+.tablesorter tr.even td {
 	font-size: 12px;
 	background: #fff;
 	color: #000;
@@ -753,12 +759,6 @@ body.tiki_cms h1 a.pagetitle:hover {border-bottom: 0}
 	border: none;
 }
 
-.caldark {
-	border: 0;
-}
-
-.caldark .calfocus {background: none;}
-
 .caltable .odd,
 .caltable .even {
 	border-color: #aaa;
@@ -772,21 +772,16 @@ body.tiki_cms h1 a.pagetitle:hover {border-bottom: 0}
 	background: #d4d4d4;
 }
 
-.calfocuson {
-	font-size: 100%; 
-	background: #f3e498;
-}
-
-.calfocuson a {
-	font-size: 90%; 
-}
-
-.calHeadingOn, .calHeadingOn a {
-	background: #f3e498;
-}
-
 .box-data .caltable {
 	margin-left: -3px;
+}
+
+.caltable td.calhighlight,
+td.calheadhighlight {
+	font-size: 10px;
+	color: #000;
+	background: #fff;
+	font-weight: bold;
 }
 
 /***** Admin *****/

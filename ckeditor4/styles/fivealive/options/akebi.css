@@ -144,6 +144,7 @@ input[type="submit"]:hover,
 select,
 input[type="text"],
 input[type="password"],
+input[type="search"],
 input[type="file"],
 input#login-pass,
 textarea,
@@ -206,13 +207,15 @@ th.header {
 }
 
 .odd,
-table.normal tr:nth-child(2n+1) {
+table.normal tr:nth-child(2n+1),
+.tablesorter tr.odd td {
 	background: #cbf4f6;
 }
 
 .even,
 table.normal tr:nth-child(2n),
-table.normal tr:nth-child(2n) td {
+table.normal tr:nth-child(2n) td,
+.tablesorter tr.even td {
 	background: #d3f9f9;
 }
 

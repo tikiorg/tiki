@@ -16,7 +16,7 @@ jQuery(document).ready(function(){
 
 	jQuery('#e_submit').click(function(e){
 		e.preventDefault();
-		
+
 		var dataString = dataMain+'&action=e_ref';
 		dataString += '&editreference=editreference';
 		dataString += '&ref_id='+encodeURIComponent(jQuery('#e_ref_id').val());
@@ -76,7 +76,7 @@ jQuery(document).ready(function(){
 
 	jQuery('#a_submit').click(function(e){
 		e.preventDefault();
-		
+
 		var ref_biblio_code = jQuery('#e_ref_biblio_code').val();
 		var ref_author = jQuery('#e_ref_author').val();
 		var ref_title = jQuery('#e_ref_title').val();
@@ -126,9 +126,9 @@ jQuery(document).ready(function(){
 				jQuery('#e_ref_publisher').val('');
 				jQuery('#e_ref_location').val('');
 				jQuery('#a_status').html('{tr}Bibliography saved.{/tr}');
-				
+
 				jQuery('#ref_list').show();
-				
+
 				var ref_id = data["id"];
 				var htm = '<li id="'+ref_id+'" style="border-bottom: 1px dotted #161C17;">';
 				htm += ref_biblio_code + '&nbsp;&nbsp;';
@@ -148,20 +148,20 @@ jQuery(document).ready(function(){
 		  }
 		});
 	});
-	
+
 	jQuery('#e_cancel, #a_cancel').click(function(){
 		jQuery('#ref_edit_block').hide();
 		jQuery('#ref_list').find('li').css('font-weight','normal');
 	});
-	
-	jQuery('a.edit_ref').live('click', function(){
+
+	jQuery('a.edit_ref').on('click', function(){
 		jQuery('#ref_list').find('li').css('font-weight','normal');
 		jQuery(this).parent().css('font-weight','bold');
 	});
-	
+
 	jQuery('#u_lib').click(function(e){
 		e.preventDefault();
-		
+
 		var ref_id = jQuery('#lib_ref').val();
 		var dataString = dataMain+'&action=u_lib';
 		dataString += '&ref_id='+encodeURIComponent(ref_id);
@@ -190,7 +190,7 @@ jQuery(document).ready(function(){
 				var ref_template = escape(data['ref_template']);
 				var ref_publisher = escape(data['ref_publisher']);
 				var ref_location = escape(data['ref_location']);
-				
+
 				var htm = '<li id="'+ref_id+'" style="border-bottom: 1px dotted #161C17;">';
 				htm += ref_biblio_code + '&nbsp;&nbsp;';
 				htm += '<a class="edit_ref" onclick="edit_ref('+ref_id+',\''+ref_biblio_code+'\', \''+ref_author+'\', \''+ref_title+'\', \''+ref_year+'\', \''+ref_part+'\', \''+ref_uri+'\', \''+ref_code+'\', \''+ref_style+'\', \''+ref_template+'\', \''+ref_publisher+'\', \''+ref_location+'\')" href="javascript:;" title="Edit" alt="Edit">' + '<img width="16" height="16" class="icon" title="Edit" alt="Edit" src="img/icons/pencil.png"></a>';
@@ -229,10 +229,10 @@ function add_ref(){
 	jQuery('#e_ref_publisher').val('');
 	jQuery('#e_ref_location').val('');
 }
-	
+
 function add_lib(ref_id, biblio_code, ref_author, ref_title, ref_year, ref_part, ref_uri, ref_code, ref_style, ref_template, ref_publisher, ref_location){
 	jQuery('#ref_list').find('li').css('font-weight','normal');
-	
+
 	var c = confirm('Are you sure you want to add this reference to library?');
 	if(!c){
 		return false;
@@ -274,12 +274,12 @@ function add_lib(ref_id, biblio_code, ref_author, ref_title, ref_year, ref_part,
 	  }
 	});
 }
-	
+
 function edit_ref(ref_id, biblio_code, ref_author, ref_title, ref_year, ref_part, ref_uri, ref_code, ref_style, ref_template, ref_publisher, ref_location){
 	jQuery('#ref_list').find('li').css('font-weight','normal');
 	jQuery('#ref_edit_block').show();
 	jQuery('#e_btns').show();
-	jQuery('#a_btns').hide();	
+	jQuery('#a_btns').hide();
 	jQuery('#e_status').html('');
 
 	jQuery('#e_ref_id').val(ref_id);
@@ -294,13 +294,13 @@ function edit_ref(ref_id, biblio_code, ref_author, ref_title, ref_year, ref_part
 	jQuery('#e_ref_template').val(unescape(ref_template));
 	jQuery('#e_ref_publisher').val(unescape(ref_publisher));
 	jQuery('#e_ref_location').val(unescape(ref_location));
-	
+
 	return false;
 }
 function delete_ref(ref_id){
 
 	var c = confirm('Are you sure you want to delete this bibliography?');
-	
+
 	if(c){
 		var dataString = dataMain+'&action=e_del';
 		dataString += '&ref_id='+encodeURIComponent(ref_id);
@@ -345,7 +345,7 @@ function delete_ref(ref_id){
 				</li>
 			{/section}
 			</ul>
-			
+
 			{if $use_references eq 1}
 				{if $libReferencesCant gt 0}
 					{tr}Library References{/tr}:<br>
@@ -364,7 +364,7 @@ function delete_ref(ref_id){
 			{/if}
 
 		</td>
-		
+
 		<td id="ref_edit_block" style="display:none;">
 			<div>
 				<input type="hidden" name="e_ref_id" id="e_ref_id" value="">

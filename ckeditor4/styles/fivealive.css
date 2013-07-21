@@ -3,7 +3,7 @@
 	Visit http://themes.tiki.org for more information.
 	*
 */
- 
+
 /* Import foundation CSS files. */
 @import url("lite/lite.css");
 @import url("layout/layout.css");
@@ -15,7 +15,7 @@ html {
 }
 
 /***** XHTML Elements (body tag here,
-			others follow Layout) *****/ 
+			others follow Layout) *****/
 body {
 	background-color: #fff;
 	font: 76% Arial, Helvetica, sans-serif;
@@ -99,7 +99,7 @@ body.fixed_width .fixedwidth {
 #middle[id] {
 	height: auto;
 }
- 
+
 #main {
 	text-align: left;
 	background: #fff;
@@ -187,6 +187,8 @@ body.fixed_width .fixedwidth {
 	color: #fbfbfb;
 }
 
+/* for wiki/html mix tiki.org footer - pre-Tiki 11 and/or non wiki paragraph mode */
+
 #footer .box {
 	float:left;
 	text-align: left;
@@ -203,7 +205,7 @@ body.fixed_width .fixedwidth {
 	font-size: 1.2em;
 	margin: 0;
 	margin-bottom: 6px;
-	padding-bottom: 6px; 
+	padding-bottom: 6px;
 }
 
 #footer h3#keepintouch {
@@ -214,6 +216,47 @@ body.fixed_width .fixedwidth {
 	margin-bottom: 0;
 	padding: 0;
 }
+
+/* *.tiki.org footer for Tiki 11+ (when using wiki paragraph formatting */
+
+#twfooter ul {
+	list-style: none;
+	width: 100%;
+	text-align: left;
+	padding: 0;
+	margin: 0 2em 0 0;
+}
+
+#twfooter ul ul li {
+	float: left;
+	clear: left;
+}
+
+#twfooter li {
+	float: left;
+}
+
+#twfooter > ul > li {
+	width: 12%;
+}
+
+#twfooter > ul > li > a,
+#twfooter > ul > li > a:visited {
+	border-bottom: 1px dotted #28aae1;
+	font-size: 1.2em;
+	margin: 0 0 .5em;
+	padding-bottom: .5em;
+	color: #fff;
+	font-weight: bold;
+	display: inline-block;
+}
+
+#twfooter > p {
+	clear: both;
+	text-align: left;
+}
+
+/* end t.o footers */
 
 #rss {
 	text-align: left !important;
@@ -291,10 +334,8 @@ body.fixed_width .fixedwidth {
 }
 
 .highlight,
-.button.highlight a,
-.calfocuson {
+.button.highlight a {
 	background: #fad5e0;
-	
 }
 
 /***** XHTML Elements (other than body tag) ******/
@@ -303,7 +344,7 @@ a:visited {
 	color: #1174a5;
 	text-decoration: none;
 }
- 
+
 a:active, a:hover {
 	color: #26a6dd;
 	text-decoration: none;
@@ -368,7 +409,7 @@ input[type="submit"]:hover,
 #genPass .button:hover {
 	border-width: 1px !important;
 }
-	
+
 .highlight,
 .highlight a {
 	border: 1px solid #9ae8fa;
@@ -377,7 +418,15 @@ input[type="submit"]:hover,
 
 .button.highlight a {
 	background: #d6f3fa;
-	color: #000;
+	color: #0c0c0c;
+}
+
+.button.highlight {
+	border: none;
+}
+
+.button.highlight a:hover {
+	border: 1px solid #000;
 }
 
 select,
@@ -386,6 +435,7 @@ input[type="password"],
 input[type="file"],
 input[type="email"],
 input[type="file"],
+input[type="search"],
 input[type="number"],
 input#login-pass,
 textarea,
@@ -591,9 +641,7 @@ select {
 	right: 10px;
 	bottom: -1px;
 	width: 10em;
-/*	height: 26px;*/
 	line-height: 1;
-	z-index: 1;
 }
 
 .siteloginbar_popup fieldset {
@@ -611,6 +659,10 @@ select {
 	-webkit-border-top-right-radius: 5px;
 	-moz-border-radius-topleft: 5px;
 	-moz-border-radius-topright: 5px;
+}
+
+.siteloginbar_poppedup.cbox {
+	background: transparent;
 }
 .siteloginbar_poppedup .tabcontent {
 	box-shadow: 0 5px 5px -3px rgba(0, 0, 0, .5);
@@ -657,6 +709,16 @@ select {
 .siteloginbar input[type="text"],
 .siteloginbar input[type="password"] {
 	background: #fff;
+}
+
+.siteloginbar_poppedup + .cluetip-close {
+	background: #a9d6eb;
+	border-radius: 5px;
+	box-shadow: 0px 5px 5px -3px rgba(0, 0, 0, 0.506);
+}
+
+.siteloginbar_poppedup + .cluetip-close a {
+	color: #2098CD
 }
 
 /*** CSS menus shadows for all but IE6 ***/
@@ -853,6 +915,10 @@ li.login_link ul li a {
 	text-decoration: none;
 }
 
+#col2 .box-data .cssmenu_vert ul {
+	padding-left: 0;
+}
+
 /* left column width */
 #col2 .cssmenu_vert,
 #col2 .cssmenu_vert li {
@@ -889,7 +955,7 @@ li.login_link ul li a {
 }
 
 .cssmenu_vert li ul li a .sf-sub-indicator {
-	background: url(../lib/jquery/superfish/images/arrows-ffffff.png);
+	background: url(../img/superfish/arrows-ffffff.png);
 }
 
 /***** Icons *****/
@@ -913,7 +979,7 @@ img.icon {
 	border-bottom: 3px solid #74c0e2;
 	font-weight: bold;
 }
-.rbox-title, 
+.rbox-title,
 .rbox-data {
 	border-color: #2098cd;
 	background: #c2eef8;
@@ -969,27 +1035,26 @@ form .normal,
 	border: none;
 }
 
-.caltable .odd,
-.caltable .even,
 .wikicell {
 	border: 2px solid #c2eef8;
 }
 
 .odd,
-table.normal tr:nth-child(2n+1) {
+table.normal tr:nth-child(2n+1),
+.tablesorter tr.odd td {
 	background: #e3f7fb;
 }
 
 .even,
-table.normal tr:nth-child(2n) {
+table.normal tr:nth-child(2n),
+.tablesorter tr.even td {
 	background: #d6f3fa;
 }
 
-	  
+
 th,
 td.heading,
 tr.diffheader,
-.calHeading,
 .weeks,
 th.header {
 	background-color: #1d90c5;
@@ -1000,7 +1065,7 @@ th a,
 th a:visited,
 td.heading a,
 td.heading a:visited,
-.normal th a.link, 
+.normal th a.link,
 .normal th a,
 th.header {
 	color: #fff
@@ -1099,7 +1164,7 @@ a.register_link {
 .statuson {
 	background: white;
 }
-	
+
 legend.heading {
 	background: transparent;
 }
@@ -1117,7 +1182,7 @@ fieldset.admin .adminoptionlabel {
 	font-weight: bold;
 	padding: 1px 8px;
 }
-	
+
 .code {
 	padding: 3px;
 	border: 1px dashed #a9a9a9;
@@ -1236,17 +1301,16 @@ a.dirsublink {
 	color: #fff;
 }
 
-.calfocuson {
-	font-size: 100%; 
-	background: #f3e498;
+.caltable .odd,
+.caltable .even,
+.calborder {
+	border: 2px solid #c2eef8;
 }
 
-.calfocuson a {
-	font-size: 90%; 
-}
-
-.calHeadingOn, .calHeadingOn a {
-	background: #f3e498;
+.caltable td.calhighlight,
+td.calheadhighlight {
+	background: #f9f0f0;
+	text-align: center;
 }
 
 /***** Admin *****/
@@ -1279,7 +1343,7 @@ a.dirsublink {
 /*.cluetip-transparent {
 	top: 168px !important;
 }*/
-  
+
 
 /***** End New (unsorted) *****/
 

@@ -170,7 +170,7 @@
 {/if}
 
 <!--[if lt IE 9]>{* according to http://remysharp.com/2009/01/07/html5-enabling-script/ *}
-	<script src="lib/html5shim/html5.js" type="text/javascript"></script>
+	<script src="vendor/aFarkas/html5shiv/dist/html5shiv.js" type="text/javascript"></script>
 <![endif]-->
 
 {if $headerlib}		{$headerlib->output_headers()}{/if}

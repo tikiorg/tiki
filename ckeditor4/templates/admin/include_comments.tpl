@@ -1,4 +1,4 @@
-{* $Id$ *}
+{* $Id: include_comments.tpl 44059 2012-11-22 16:13:24Z lphuberdeau $ *}
 
 <div class="navbar">
 	{button href="tiki-list_comments.php" _text="{tr}List comments{/tr}"}
@@ -52,6 +52,7 @@
 			<fieldset>
 				<legend>{tr}Inline comments{/tr}</legend>
 					<a class="link" href="{$prefs.helpurl}Inline+comments">{tr}Inline comments{/tr}</a>
+				{preference name=feature_inline_comments}
 
 				{tr}The feature below must be activated for this feature to work.{/tr}
 				{preference name=feature_wiki_paragraph_formatting}

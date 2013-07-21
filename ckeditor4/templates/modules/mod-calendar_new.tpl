@@ -28,6 +28,8 @@
 									{else}
 										{assign var=day_cursor value=$date|tiki_date_format:"%m-%d"}
 									{/if}
+								{elseif $viewmode eq 'day' and (!$cell[w][d].focus)}
+									{$day_cursor = ''}
 								{else}
 									{assign var=day_cursor value=$date|tiki_date_format:"%d"}
 								{/if}
@@ -41,9 +43,9 @@
 							{else}
 								{cycle values="notoddoreven" print=false}
 							{/if}
-							<td class="{cycle advance=false}{if isset($date) and $date eq $today} highlight{/if}{if isset($cell[w][d].items[0])
+							<td class="{if isset($cell[w][d].day) and $date eq $today}calhighlight calborder{else}{cycle advance=false}{/if}{if isset($cell[w][d].items[0])
 								and ((isset($cell[w][d].items[0].modifiable) and $cell[w][d].items[0].modifiable eq "y")
-								|| $cell[w][d].items[0].visible eq 'y')} focus{/if}" width="14%" style="text-align:center; font-size:0.8em;">
+								|| $cell[w][d].items[0].visible eq 'y')} calmodfocus{/if}" width="14%" style="text-align:center; font-size:0.8em;">
 								{if isset($cell[w][d].over)}
 									{assign var=over value=$cell[w][d].over}
 								{elseif isset($cell[w][d].items[0])}

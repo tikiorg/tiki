@@ -77,7 +77,10 @@
 				{preference name=feature_draw}
 				<div class="adminoptionboxchild" id="feature_draw_childcontainer">
 					{preference name=feature_draw_hide_buttons}
-					{preference name=feature_draw_replace_base_image}
+					{preference name=feature_draw_separate_base_image}
+					<div class="adminoptionboxchild" id="feature_draw_separate_base_image_childcontainer">
+						{preference name=feature_draw_in_userfiles}
+					</div>
 				</div>
 
 				{preference name=feature_jcapture}
@@ -185,6 +188,8 @@
 			{preference name='fgal_show_thumbactions'}
 			{preference name='fgal_thumb_max_size'}
 			{preference name='fgal_browse_name_max_length'}
+			{preference name='fgal_image_max_size_x'}
+			{preference name='fgal_image_max_size_y'}
 			{preference name='fgal_list_ratio_hits'}
 			{preference name='fgal_display_properties'}
 			{preference name='fgal_display_replace'}

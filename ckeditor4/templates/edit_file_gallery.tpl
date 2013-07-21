@@ -24,7 +24,7 @@
 								<label for="name">{tr}Name:{/tr}</label>
 							</td>
 							<td>
-								{if $galleryId eq $treeRootId}
+								{if $galleryId eq $treeRootId or $gal_info.type eq 'user'}
 									<b>{tr}{$gal_info.name}{/tr}</b>
 									<input type="hidden" name="name" value="{$gal_info.name|escape}">
 								{else}
@@ -118,6 +118,7 @@ $('#fgal_template').change( function() {
 								<em>{tr}Any user with permission (not only the gallery owner) can upload files{/tr}.</em>
 							</td>
 						</tr>
+						{if $tiki_p_admin_file_galleries eq 'y' or $gal_info.type neq 'user'}
 						<tr>
 							<td>
 								<label for="backlinkPerms">{tr}Perms of the backlinks are checked to view a file{/tr}</label>
@@ -163,7 +164,7 @@ $('#fgal_template').change( function() {
 								{/if}
 							</td>
 						</tr>
-
+						{/if}
 						{if $tiki_p_admin eq 'y' or $tiki_p_admin_file_galleries eq 'y'}
 							<tr>
 								<td><label for="user">{tr}Owner of the gallery:{/tr}</label></td>

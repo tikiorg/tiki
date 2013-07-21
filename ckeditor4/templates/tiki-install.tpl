@@ -187,8 +187,12 @@
 	<div align="center" style="padding:1em">
 		<p>
 			<img src="img/icons/information.png" alt="{tr}Information{/tr}" style="vertical-align: bottom;">
-			{tr}Tiki found an existing database connection in your local.php file.{/tr}<br>
-			<em>{tr _0=$dbname}Database name: &quot;%0&quot;{/tr}</em>
+			{if $dbname}
+				{tr}Tiki found an existing database connection in your local.php file.{/tr}<br>
+				<em>{tr _0=$dbname}Database name: &quot;%0&quot;{/tr}</em>
+			{else}
+				{tr}Tiki found an automatic database connection for your environment.{/tr}
+			{/if}
 		</p>
 		<form action="tiki-install.php" method="post">
 			<input type="hidden" name="install_step" value="4">
@@ -205,7 +209,11 @@
 	<br>
 {section name=n loop=$tikifeedback}
 	<div class="simplebox {if $tikifeedback[n].num > 0} highlight{/if}">
-		<img src="img/icons/{if $tikifeedback[n].num > 0}delete.png" alt="{tr}Error{/tr}"{else}accept.png" alt="{tr}Success{/tr}"{/if} style="vertical-align:middle"> {$tikifeedback[n].mes}
+		{if $tikifeedback[n].num > 0}
+		<img src="img/icons/delete.png" alt="{tr}Error{/tr}" style="vertical-align:middle"> {$tikifeedback[n].mes}
+		{else}
+		<img src="img/icons/accept.png" alt="{tr}Success{/tr}" style="vertical-align:middle"> {$tikifeedback[n].mes}
+		{/if}
 	</div>
 {/section}
 {/if}

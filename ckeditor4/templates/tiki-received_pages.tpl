@@ -146,7 +146,7 @@
 					<td class="text">{$structures[user].receivedFromSite}</td>
 					<td class="text">{$structures[user].receivedFromUser}</td>
 					<td class="action">
-						<a class="link" href="tiki-received_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;accept={$structures[user].receivedPageId}">{icon _id='accept'}</a> 
+						<a class="link" href="tiki-received_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;accept={$structures[user].receivedPageId}">{icon _id='accept'}</a>
 						&nbsp;
 						<a class="link" href="tiki-received_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$structures[user].receivedPageId}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
 					</td>
@@ -178,7 +178,7 @@
 				{/section}
 			{/if}
 		{sectionelse}
-			{norecords _colspan=7}
+			{norecords _colspan=8}
 		{/section}
 		{select_all checkbox_names='checked[]' label="{tr}Select All{/tr}"}
 	</table>

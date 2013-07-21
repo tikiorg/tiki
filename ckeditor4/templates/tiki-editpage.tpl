@@ -1,4 +1,15 @@
 {* $Id$ *}
+{extends 'layout_edit.tpl'}
+
+{block name=title}
+{if $translation_mode eq 'n'}
+	{title}{if isset($hdr) && $prefs.wiki_edit_section eq 'y'}{tr}Edit Section:{/tr}{else}{tr}Edit:{/tr}{/if} {$page}{if $pageAlias ne ''} ({$pageAlias}){/if}{/title}
+{else}
+   {title}{tr}Update '{$page}'{/tr}{/title}
+{/if}
+{/block}
+
+{block name=content}
 {if $page|lower neq 'sandbox' and $prefs.feature_contribution eq 'y' and $prefs.feature_contribution_mandatory eq 'y'}
 	{remarksbox type='tip' title="{tr}Tip{/tr}"}
 		<strong class='mandatory_note'>{tr}Fields marked with a * are mandatory.{/tr}</strong>
@@ -29,11 +40,6 @@
 	}
 	return false;
 });{/jq}
-{/if}
-{if $translation_mode eq 'n'}
-	{title}{if isset($hdr) && $prefs.wiki_edit_section eq 'y'}{tr}Edit Section:{/tr}{else}{tr}Edit:{/tr}{/if} {$page}{if $pageAlias ne ''} ({$pageAlias}){/if}{/title}
-{else}
-   {title}{tr}Update '{$page}'{/tr}{/title}
 {/if}
    
 {if isset($data.draft)}
@@ -174,6 +180,16 @@
 							</div>
 						{/if}
 						{textarea codemirror='true' syntax='tiki'}{$pagedata}{/textarea}
+						{if $prefs.wiki_freetags_edit_position eq 'edit'}
+								{if $prefs.feature_freetags eq 'y' and $tiki_p_freetags_tag eq 'y'}
+									<fieldset>
+										<legend>{tr}Freetags{/tr}</legend>
+										<table>
+											{include file='freetag.tpl'}
+										</table>
+									</fieldset>
+								{/if}
+						{/if}
 						{if $page|lower neq 'sandbox'}
 							<fieldset>
 								<label for="comment">{tr}Describe the change you made:{/tr} {help url='Editing+Wiki+Pages' desc="{tr}Edit comment: Enter some text to describe the changes you are currently making{/tr}"}</label>
@@ -226,6 +242,18 @@
 							{/if}
 						{/tab}
 					{/if}
+					{if $prefs.wiki_freetags_edit_position eq 'freetagstab'}
+						{if $prefs.feature_freetags eq 'y' and $tiki_p_freetags_tag eq 'y'}
+							{tab name="{tr}Freetags{/tr}"}
+								<fieldset>
+									<legend>{tr}Freetags{/tr}</legend>
+									<table>
+										{include file='freetag.tpl'}
+									</table>
+								</fieldset>
+							{/tab}
+						{/if}
+					{/if}
 					{if !empty($showPropertiesTab)}
 						{tab name="{tr}Properties{/tr}"}
 							{if $prefs.feature_wiki_templates eq 'y' and $tiki_p_use_content_templates eq 'y'}
@@ -255,20 +283,18 @@
 								</fieldset>
 							{/if}
 				
-							{if $prefs.feature_wiki_allowhtml eq 'y' and $tiki_p_use_HTML eq 'y'}
-								{if $wysiwyg neq 'y' or $prefs.wysiwyg_htmltowiki eq 'y'}
-									<fieldset>
-										<legend>{tr}Allow HTML:{/tr}</legend>
-										<input type="checkbox" id="allowhtml" name="allowhtml" {if $allowhtml eq 'y'}checked="checked"{/if}>
-									</fieldset>
-									{if $prefs.ajax_autosave eq "y"}{jq}
-$("#allowhtml").change(function() {
+							{if $prefs.feature_wiki_allowhtml eq 'y' and $tiki_p_use_HTML eq 'y' and ($wysiwyg neq 'y' or $prefs.wysiwyg_htmltowiki eq 'y')}
+								<fieldset>
+									<legend>{tr}Allow HTML:{/tr}</legend>
+									<input type="checkbox" name="allowhtml" {if $allowhtml eq 'y'}checked="checked"{/if}>
+								</fieldset>
+								{if $prefs.ajax_autosave eq "y"}{jq}
+$("input[name=allowhtml]").change(function() {
 	auto_save( "editwiki", autoSaveId );
 });
-									{/jq}{/if}
-								{elseif $wysiwyg eq 'y'}
-									<input type="hidden" id="allowhtml" name="allowhtml" value="{if $allowhtml eq 'y'}on{/if}">
-								{/if}
+								{/jq}{/if}
+							{else}
+								<input type="hidden" name="allowhtml" value="{if $allowhtml eq 'y'}on{/if}">
 							{/if}
 							{if $prefs.feature_wiki_import_html eq 'y'}
 								<fieldset>
@@ -339,13 +365,15 @@ $("#allowhtml").change(function() {
 											{include file='addreference.tpl'}
 									</fieldset>
 								{/if}
-								{if $prefs.feature_freetags eq 'y' and $tiki_p_freetags_tag eq 'y'}
-									<fieldset>
-										<legend>{tr}Freetags{/tr}</legend>
-										<table>
-											{include file='freetag.tpl'}
-										</table>
-									</fieldset>
+								{if $prefs.wiki_freetags_edit_position eq 'properties' or $prefs.wiki_freetags_edit_position eq ''}
+									{if $prefs.feature_freetags eq 'y' and $tiki_p_freetags_tag eq 'y'}
+										<fieldset>
+											<legend>{tr}Freetags{/tr}</legend>
+											<table>
+												{include file='freetag.tpl'}
+											</table>
+										</fieldset>
+									{/if}
 								{/if}
 								{if $prefs.feature_wiki_icache eq 'y'}
 									<fieldset>
@@ -508,7 +536,7 @@ $("#allowhtml").change(function() {
 						{/tab}{* end properties tab *}
 					{else}
 						{if $wysiwyg eq 'y'}{* include hidden allowhtml for wysiwyg if the properties tab isn't needed *}
-							<input type="hidden" id="allowhtml" name="allowhtml" value="{if $allowhtml eq 'y'}on{/if}">
+							<input type="hidden" name="allowhtml" value="{if $allowhtml eq 'y'}on{/if}">
 						{/if}
 					{/if}
 				{/tabset}
@@ -532,3 +560,4 @@ $("#allowhtml").change(function() {
 	</table>
 </form>
 {include file='tiki-page_bar.tpl'}
+{/block}

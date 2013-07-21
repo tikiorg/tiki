@@ -17,7 +17,7 @@
 			$('.map-layer-selector').removeClass('map-layer-selector').each(function () {
 				var refreshLayers, map = $(this).closest('.tab, #appframe, body').find('.map-container:first')[0]
 					, baseLayers = $(this.baseLayers)
-					, optionalLayers = $('.optionalLayers', this)
+					, optionalLayers = $('.optionalLayers', tr(this)) /* e.g. tr('Editable') to be translatable via lang/../language.js */
 					;
 
 				if (! map) {
@@ -47,13 +47,13 @@
 						if (thisLayer.isBaseLayer) {
 							baseLayers.append($('<option/>')
 								.attr('value', k)
-								.text(thisLayer.name)
-								.attr('selected', thisLayer === map.map.baseLayer));
+								.text(tr(thisLayer.name))
+								.prop('selected', thisLayer === map.map.baseLayer));
 						} else {
 							var label, checkbox;
 							optionalLayers.append(label = $('<label/>').text(thisLayer.name).prepend(
 								checkbox = $('<input type="checkbox"/>')
-									.attr('checked', thisLayer.getVisibility())));
+									.prop('checked', thisLayer.getVisibility())));
 							checkbox.change(function (e) {
 								thisLayer.setVisibility($(this).is(':checked'));
 							});

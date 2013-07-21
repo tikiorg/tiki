@@ -148,7 +148,7 @@ if ( $prefs['article_paginate'] == 'y' ) {
 }
 if ($prefs["article_custom_attributes"] == 'y') {
 	$t_article_attributes = $artlib->get_article_attributes($article_data["articleId"]);
-	$type_attributes = $artlib->get_article_type_attributes($article_data["type"]);
+	$type_attributes = $artlib->get_article_type_attributes($article_data["type"], 'relationId ASC');
 	$article_attributes = array();
 	foreach ($type_attributes as $attname => $att) {
 		if (in_array($att["itemId"], array_keys($t_article_attributes))) {
@@ -167,7 +167,7 @@ $smarty->assign('show_expdate', $article_data["show_expdate"]);
 $smarty->assign('edit_data', 'y');
 $body = $article_data["body"];
 $heading = $article_data["heading"];
-$smarty->assign('parsed_body', $tikilib->parse_data($body, array('is_html' => 'y')));
+$smarty->assign('parsed_body', $tikilib->parse_data($body, array('is_html' => $artlib->is_html($article_data))));
 $smarty->assign('parsed_heading', $tikilib->parse_data($heading, array('is_html' => 'y')));
 
 if ($prefs['article_related_articles'] == 'y') {

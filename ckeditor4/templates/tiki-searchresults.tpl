@@ -192,7 +192,7 @@
 				{/if}
 			{page_in_structure pagechecked=$results[search].pageName} {* check if page in structure *}
 			{if $page_in_structure} {page_alias pagechecked=$results[search].pageName} {/if}
-			<a href="{$results[search].href}&amp;highlight={$words|escape:url}" class="objectname">{if $page_in_structure and $page_alias ne ''}{$page_alias}{else}{$results[search].pageName|escape}{/if}</a>
+			<a href="{$results[search].href}" class="objectname">{if $page_in_structure and $page_alias ne ''}{$page_alias}{else}{$results[search].pageName|escape}{/if}</a>
 			{if $prefs.feature_search_show_visit_count eq 'y'}
 				<span class="itemhits">({tr}Hits:{/tr} {$results[search].hits|escape})</span>
 			{/if}

@@ -140,7 +140,12 @@ if (isset($_REQUEST['full']) && $_REQUEST['full'] != 'n') {
 	$output = $tikilib->htmldecode($output);
 	preg_match('#(<\?xml.*</svg>)#sm', $output, $output);
 	echo $output[0];
-	echo ("\n");
+	echo "\n";
+} else if (isset($_REQUEST['gtype']) && $_REQUEST['gtype'] == 'pdf') { # this case is needed for mod PluginR to successfully produce pdf versions of the png charts generated. 
+	$output = $smarty->fetch("tiki-show_page_raw.tpl");
+	$output = $tikilib->htmldecode($output);
+	preg_replace('#^%%EOF$(.*)#sm', '%%EOF', $output);
+	echo "\n";
 } else {
 	// otherwise just the contents of the page without body etc
 	$smarty->display("tiki-show_page_raw.tpl");

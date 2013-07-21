@@ -14,11 +14,11 @@
 <h2>{tr}Metrics{/tr}</h2>
 <table class="normal" id="metrics">
 	<tr class="first">
-		<th>{tr}Name{/tr}</td>
-		<th>{tr}Range{/tr}</td>
-		<th>{tr}Data Type{/tr}</td>
-		<th>{tr}Query{/tr}</td>
-		<th>{tr}Action{/tr}</td>
+		<th>{tr}Name{/tr}</th>
+		<th>{tr}Range{/tr}</th>
+		<th>{tr}Data Type{/tr}</th>
+		<th>{tr}Query{/tr}</th>
+		<th>{tr}Action{/tr}</th>
 	</tr>
 	{if !empty($metrics_list)}
 		{cycle print=false values="odd,even"}
@@ -43,9 +43,9 @@
 <h2>{tr}Tabs{/tr}</h2>
 <table class="normal" id="tabs">
 	<tr class="first">
-		<th>{tr}Name{/tr}</td>
-		<th>{tr}Weight{/tr}</td>
-		<th>{tr}Action{/tr}</td>
+		<th>{tr}Name{/tr}</th>
+		<th>{tr}Weight{/tr}</th>
+		<th>{tr}Action{/tr}</th>
 	</tr>
 	{if !empty($tabs_list)}
 		{cycle print=false values="odd,even"}
@@ -67,9 +67,9 @@
 <h2>{tr}Assigned Metrics{/tr}</h2>
 <table class="normal" id="assigned_metrics">
 	<tr class="first">
-		<th>{tr}Metric Name{/tr}</td>
-		<th>{tr}Tab Name{/tr}</td>
-		<th>{tr}Action{/tr}</td>
+		<th>{tr}Metric Name{/tr}</th>
+		<th>{tr}Tab Name{/tr}</th>
+		<th>{tr}Action{/tr}</th>
 	</tr>
 	{if !empty($metrics_assigned_list)}
 		{cycle print=false values="odd,even"}

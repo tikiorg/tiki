@@ -4,12 +4,14 @@
 	{include file='blog_post_postbody_title.tpl'}
 	{include file='blog_post_author_info.tpl'}
 	{include file='blog_post_postbody_content.tpl'}
-	<div class="postfooter">
-		{if $blog_post_context ne 'print'}
-			{include file='blog_post_author_actions.tpl'}
-			{include file='blog_post_actions.tpl'}
-			{include file='blog_post_status.tpl'}
+	{if $blog_post_context ne 'excerpt'}
+		{if $blog_post_context ne 'print'} 
+			<div class="postfooter">
+				{include file='blog_post_author_actions.tpl'}
+				{include file='blog_post_actions.tpl'}
+				{include file='blog_post_status.tpl'}
+			</div>
 		{/if}
-	</div>
-	{include file='blog_post_navigation.tpl'}
+		{include file='blog_post_navigation.tpl'}
+	{/if}
 </div> <!-- postbody -->

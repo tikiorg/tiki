@@ -53,6 +53,7 @@
 						<span id="genPass">
 								{button href="#" _onclick="" _text="{tr}Generate a passcode{/tr}"}
 						</span>
+						{preference name=showRegisterPasscode}
 					</div>
 
 					{if $gd_lib_found neq 'y'}
@@ -98,6 +99,7 @@
 				{preference name=user_trackersync_groups}
 				{preference name=user_trackersync_parentgroup}
 				{preference name=user_trackersync_lang}
+				{preference name=user_tracker_auto_assign_item_field}
 				</div>
 				{preference name=groupTracker}
 				{preference name=email_due}

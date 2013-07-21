@@ -2,11 +2,11 @@
 <table class="normal wikiplugin_trackerstat">
 {cycle values="even,odd" print=false}
 {section name=istat loop=$stats}
-<tr><th colspan="{if $show_bar eq 'y' and $show_percent eq 'y'}4{elseif $show_bar eq 'y' or $show_percent eq 'y'}3{else}2{/if}">{$stats[istat].name|escape}</th>
+<tr><th colspan="{if $show_bar eq 'y' and $show_percent eq 'y' and $show_count eq 'y'}4{elseif $show_bar eq 'y' and $show_percent eq 'y' and $show_count eq 'n'}3{elseif $show_bar eq 'y' and $show_percent eq 'n' and $show_count eq 'y'}3{elseif $show_bar eq 'n' and $show_percent eq 'y' and $show_count eq 'y'}3{elseif $show_bar eq 'n' and $show_percent eq 'n' and $show_count eq 'y'}2{elseif $show_bar eq 'n' and $show_percent eq 'y' and $show_count eq 'n'}2{elseif $show_bar eq 'y' and $show_percent eq 'n' and $show_count eq 'n'}2{else}1{/if}">{$stats[istat].name|escape}</th>
 </tr>
 {foreach from=$stats[istat].values item=val}
 <tr>
-<td class="{cycle advance=false}">{$val.count}</td>
+{if $show_count eq 'y'}<td class="{cycle advance=false}">{$val.count}</td>{/if}
 <td class="{cycle advance=false}{if $val.me} highlight{/if}">
 	{if $show_link eq 'y'}<a href="tiki-view_tracker.php?{$val.href}">{/if}
 	{$val.value|escape}

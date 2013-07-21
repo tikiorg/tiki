@@ -2,7 +2,7 @@
 
 /* GENERAL LAYOUT EXPLANATION
  *
- * BiDi layout modifications relay on the fact that the Tiki application is 
+ * BiDi layout modifications relay on the fact that the Tiki application is
  * enclosed as a whole in tiki-main or tiki-clean. Thus it mirrors the entire
  * output by setting the directionality property of this DIV element.
  * Other modifications include overriding all left text-alignments and
@@ -30,7 +30,7 @@
  */
 
 /* Import RTL Theme specifics CSS files. */
-/* @import url("../greenvalley/rtl/greenvalley_BiDi.css");*/
+/*@import url("../greenvalley/rtl/greenvalley_BiDi.css");*/
 
 /* The following address mainly to fivealive, option blueberry theme which is the
  * default theme for a brand new installation. The theme specific should be set as
@@ -66,7 +66,8 @@ div#tiki-clean {
 }
 
 #c1c2 #wrapper #col1.marginright {
-    margin-left: 200px !important;
+	margin-left: 200px;
+	margin-right: 0;
 }
 
 #col2 {
@@ -93,7 +94,7 @@ ul li div.image {
 /* ===>> This is given as example and used with Tiki <<=== */
 /* ===>>default theme each header should be adapted <<=== */
 
-/** header banner **/
+/** header banner comment or set to none both if you customise theme **/
 #header {
     background: url('../fivealive/options/blueberry/rtl/siteheader_rtl.jpg') 50% 0 no-repeat !important;
 }
@@ -183,13 +184,15 @@ ul.sf-shadow ul {background-image:none}
 }
 
 /***** CSS menu *****/
-/* Menu alignment */ 
+/* Menu alignment */
 .cssmenu_horiz li, .cssmenu_vert li {
     float: right !important;
 }
 
 .cssmenu_horiz a, .cssmenu_vert a, .cssmenu_horiz ul li a {
     padding-right: 0.5em;
+    line-height: 16px;
+    text-decoration: none !important;
 }
 
 /* Hebrew and Arabic are smaller so we reset font size */
@@ -201,11 +204,6 @@ ul.sf-shadow ul {background-image:none}
 /* moving away menu item from indicator and keep text in the center */
 #tiki-top .cssmenu_horiz li a {
 	background-position: 0% 50% !important;
-}
-
-.cssmenu_horiz a, .cssmenu_vert a, .cssmenu_horiz ul li a {
-    line-height: 16px;
-    text-decoration: none !important;
 }
 
 /** Vertical Menu **/
@@ -250,7 +248,7 @@ ul.sf-shadow ul {background-image:none}
 .sf-sub-indicator {
     text-indent: 999em;
 }
-	
+
 /* Submenu alignment */
 
 .cssmenu_horiz li:hover ul,
@@ -265,7 +263,7 @@ ul.sf-shadow ul {background-image:none}
 	left:-13em !important;
 	padding: 0 8px 9px 0;
 	width: 13em !important;
-	background: url(../../lib/jquery/superfish/images/shadow.png) no-repeat bottom right;
+	background: url(../../img/superfish/shadow.png) no-repeat bottom right;
 }
 
 /***** MyTiki User Preferences *****/

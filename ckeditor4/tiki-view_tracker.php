@@ -107,8 +107,8 @@ if ($tracker_info['adminOnlyViewEditItem'] === 'y') {
 }
 
 if ($tiki_p_view_trackers != 'y') {
-	$userCreatorFieldId = $trklib->get_field_id_from_type($_REQUEST['trackerId'], 'u', '1%');
-	$groupCreatorFieldId = $trklib->get_field_id_from_type($_REQUEST['trackerId'], 'g', '1%');
+	$userCreatorFieldId = $writerfield;
+	$groupCreatorFieldId = $writergroupfield;
 	if ($user && !$my and isset($tracker_info['writerCanModify']) and $tracker_info['writerCanModify'] == 'y' and !empty($userCreatorFieldId)) {
 		$my = $user;
 	} elseif ($user && !$ours and isset($tracker_info['writerGroupCanModify']) and $tracker_info['writerGroupCanModify'] == 'y' and !empty($groupCreatorFieldId)) {
@@ -218,11 +218,6 @@ foreach ($xfields['data'] as $i => $current_field) {
 	$fieldIsVisible = $itemObject->canViewField($fid);
 	$fieldIsEditable = $itemObject->canModifyField($fid);
 
-	//exclude fields that should not be listed
-	if ($fieldIsVisible && ($current_field['isTblVisible'] == 'y' or in_array($fid, $popupFields))) {
-		$listfields[$fid] = $current_field;
-	}
-
 	if ($fieldIsVisible || $fieldIsEditable) {
 		$handler = $fieldFactory->getHandler($current_field);
 
@@ -232,6 +227,11 @@ foreach ($xfields['data'] as $i => $current_field) {
 		}
 	}
 
+	//exclude fields that should not be listed
+	if ($fieldIsVisible && ($current_field_ins['isTblVisible'] == 'y' or in_array($fid, $popupFields))) {
+		$listfields[$fid] = $current_field_ins;
+	}
+
 	if (! empty($current_field_ins)) {
 		if ($fieldIsEditable) {
 			$ins_fields['data'][$i] = $current_field_ins;
@@ -239,6 +239,11 @@ foreach ($xfields['data'] as $i => $current_field) {
 		if ($fieldIsVisible) {
 			$fields['data'][$i] = $current_field_ins;
 		}
+	}
+	if ($fieldIsEditable) {
+		$listfields[$fid]['editable'] = true;
+	} else {
+		$listfields[$fid]['editable'] = false;
 	}
 }
 
@@ -358,13 +363,6 @@ if (isset($_REQUEST["save"])) {
 			}
 			$cookietab = "1";
 			$smarty->assign('itemId', '');
-			$mainfield = '';
-			foreach ($ins_fields as $f) {
-				if ($f['isMain'] == 'y' && ! empty($f['value'])) {
-					$mainfield = $f['value'];
-					break;
-				}
-			}
 			if (isset($newItemRate)) {
 				$trackerId = $_REQUEST["trackerId"];
 				$trklib->replace_rating($trackerId, $itemid, $newItemRateField, $user, $newItemRate);
@@ -482,21 +480,10 @@ if ($tracker_info['useAttachments'] == 'y' && $tracker_info['showAttachments'] =
 		$items["data"][$itkey]['hits'] = $res['hits'];
 	}
 }
-foreach ($xfields['data'] as $xfd) {
-	$fid = $xfd["fieldId"];
-	if ($xfd['isSearchable'] == 'y' and !isset($listfields[$fid]) and $itemObject->canViewField($fid)) {
-		$listfields[$fid]['type'] = $xfd["type"];
-		$listfields[$fid]['name'] = $xfd["name"];
-		$listfields[$fid]['options'] = $xfd["options"];
-		$listfields[$fid]['options_array'] = $xfd['options_array'];
-		$listfields[$fid]['isMain'] = $xfd["isMain"];
-		$listfields[$fid]['isTblVisible'] = $xfd["isTblVisible"];
-		$listfields[$fid]['isHidden'] = $xfd["isHidden"];
-		$listfields[$fid]['isSearchable'] = $xfd["isSearchable"];
-		$listfields[$fid]['isMandatory'] = $xfd["isMandatory"];
-		$listfields[$fid]['description'] = $xfd["description"];
-		$listfields[$fid]['visibleBy'] = $xfd['visibleBy'];
-		$listfields[$fid]['editableBy'] = $xfd['editableBy'];
+foreach ($fields['data'] as $fd) {	// add field info for searchable fields not shown in the list
+	$fid = $fd["fieldId"];
+	if ($fd['isSearchable'] == 'y' and !isset($listfields[$fid]) and $itemObject->canViewField($fid)) {
+		$listfields[$fid] = $fd;
 	}
 }
 

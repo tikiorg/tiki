@@ -50,6 +50,7 @@ if (jqueryTiki.no_cookie) {
 {if $prefs.feature_jquery_tooltips eq 'y'}
 	{assign var="closeText" value="{tr}Close{/tr}"}
 	{jq}
+if (jqueryTiki.tooltips) {
 	$('.login_link').cluetip({
 		activation: 'click',
 		arrows: false,
@@ -75,6 +76,7 @@ if (jqueryTiki.no_cookie) {
 			})
 		}
 	});
+}
 	{/jq}
 {/if}
 {if !isset($tpl_module_title)}{assign var=tpl_module_title value="{tr}Log in{/tr}"}{/if}{* Left for performance, since tiki-login_scr.php includes this template directly. *}
@@ -89,8 +91,17 @@ if (jqueryTiki.no_cookie) {
 			<div style="text-align: center;">
 				{button href="tiki-logout.php" _text="{tr}Log out{/tr}"}
 			</div>
-			{if $tiki_p_admin eq 'y'}
-				<form action="{if $prefs.https_login eq 'encouraged' || $prefs.https_login eq 'required' || $prefs.https_login eq 'force_nocheck'}{$base_url_https}{/if}{$prefs.login_url}" method="post"{if $prefs.desactive_login_autocomplete eq 'y'} autocomplete="off"{/if}>
+			{if $login_module.can_revert}
+				<form action="{$login_module.login_url|escape}" method="post">
+					<fieldset>
+						<legend>{tr}Return to Main User{/tr}</legend>
+						<input type="hidden" name="su" value="revert" />
+						<input type="hidden" name="username" value="auto" />
+						<div style="text-align: center"><button type="submit" name="actsu">{tr}Switch{/tr}</button></div>
+					</fieldset>
+				</form>
+			{elseif $tiki_p_admin eq 'y'}
+				<form action="{$login_module.login_url|escape}" method="post"{if $prefs.desactive_login_autocomplete eq 'y'} autocomplete="off"{/if}>
 					<fieldset>
 						<legend>{tr}Switch User{/tr}</legend>
 						<label for="login-switchuser_{$module_logo_instance}">{tr}Username:{/tr}</label>
@@ -149,11 +160,11 @@ if (jqueryTiki.no_cookie) {
 			<div class="siteloginbar_popup">
 				<ul class="clearfix{if $prefs.feature_jquery_tooltips ne 'y'} cssmenu_horiz{/if}">
 					<li id="logout_link_{$module_logo_instance}"><div class="tabmark"><a href="tiki-login.php" class="login_link" onclick="return false;" rel=".siteloginbar_poppedup">{tr}Log in{/tr}</a></div>
-						<ul class="siteloginbar_poppedup">
+						<ul class="siteloginbar_poppedup cbox">
 							<li class="tabcontent">
 								{capture assign="close_tags"}</li></ul></li></ul></div>{$close_tags}{/capture}
 		{/if}
-		<form name="loginbox" id="loginbox-{$module_logo_instance}" action="{if $prefs.https_login eq 'encouraged' || $prefs.https_login eq 'required' || $prefs.https_login eq 'force_nocheck'}{$base_url_https}{/if}{$prefs.login_url}"
+		<form name="loginbox" id="loginbox-{$module_logo_instance}" action="{$login_module.login_url|escape}"
 				method="post" {if $prefs.feature_challenge eq 'y'}onsubmit="doChallengeResponse()"{/if}
 				{if $prefs.desactive_login_autocomplete eq 'y'} autocomplete="off"{/if}> 
 		{if $prefs.feature_challenge eq 'y'}
@@ -266,8 +277,8 @@ function doChallengeResponse() {
 		{/if}
 		{if $prefs.feature_switch_ssl_mode eq 'y' && ($prefs.https_login eq 'allowed' || $prefs.https_login eq 'encouraged')}
 			<div>
-				<a class="linkmodule" href="{$base_url_http}{$prefs.login_url}" title="{tr}Click here to login using the default security protocol{/tr}">{tr}Standard{/tr}</a>
-				<a class="linkmodule" href="{$base_url_https}{$prefs.login_url}" title="{tr}Click here to login using a secure protocol{/tr}">{tr}Secure{/tr}</a>
+				<a class="linkmodule" href="{$base_url_http|escape}{$prefs.login_url|escape}" title="{tr}Click here to login using the default security protocol{/tr}">{tr}Standard{/tr}</a>
+				<a class="linkmodule" href="{$base_url_https|escape}{$prefs.login_url|escape}" title="{tr}Click here to login using a secure protocol{/tr}">{tr}Secure{/tr}</a>
 			</div>
 		{/if}
 		{if $prefs.feature_show_stay_in_ssl_mode eq 'y' && $show_stay_in_ssl_mode eq 'y'}
@@ -305,7 +316,7 @@ function doChallengeResponse() {
 		</fieldset>
 	</form>
 {/if}
-{if $prefs.socialnetworks_facebook_login eq 'y'}
+{if $prefs.socialnetworks_facebook_login eq 'y' and $mode neq "header" and $mode neq "popup"}
 	<div style="text-align: center"><a href="tiki-socialnetworks.php?request_facebook=true"><img src="http://developers.facebook.com/images/devsite/login-button.png"></a></div>
 {/if}
 {if $mode eq "header"}</div>{/if}

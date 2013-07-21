@@ -89,39 +89,18 @@ try {
 		}
 	}
 
-	$sort_mode = '';
-
-	if ($_REQUEST['sort_mode']) {
-		$sort_mode = $_REQUEST['sort_mode'];
-	} else {
-		$sort_mode = 'desc_createdAt';
-	}
+	$sort_mode = $jitRequest->sort_mode->word() ?: 'desc_createdAt';
 
 	$smarty->assign_by_ref('sort_mode', $sort_mode);
 	$sort_mode = preg_replace('/desc_/', '-', $sort_mode);
 	$sort_mode = preg_replace('/asc_/', '+', $sort_mode);
 
-
-	if (isset($_REQUEST['find'])) {
-		$find = $_REQUEST['find'];
-	} else {
-		$find = '';
-	}
+	$find = $jitRequest->find->text();
 	$smarty->assign('find', $find);
 
-	if ($_REQUEST['maxRecords']) {
-		$page_size = $_REQUEST['maxRecords'];
-	} else {
-		$page_size = $prefs['maxRecords'];
-	}
-
-	if ($_REQUEST['offset']) {
-		$offset = $_REQUEST['offset'];
-		$page = ($offset/$page_size) + 1;
-	} else {
-		$offset = 0;
-		$page = 0;
-	}
+	$page_size = $jitRequest->maxRecords->int() ?: $prefs['maxRecords'];
+	$offset = max(0, $jitRequest->offset->int());
+	$page = ($offset/$page_size) + 1;
 
 	if ( $_REQUEST['list'] == 'mix' or !isset($_REQUEST['list']) ) {
 		if ($_REQUEST['view'] != 'browse') {
@@ -165,7 +144,7 @@ try {
 	if ($_REQUEST['list'] == 'media') {
 
 		$kalturaadminlib = TikiLib::lib('kalturaadmin');
-		if ($_REQUEST['view'] != 'browse') {
+		if ($jitRequest->view->alpha() != 'browse') {
 			$kmedialist = $kalturaadminlib->listMedia($sort_mode, $page, $page_size, $find);
 
 			for ($i =0 ; $i < $kmedialist->totalCount; $i++) {
@@ -178,7 +157,7 @@ try {
 		$smarty->assign('klist', $kmedialist->objects);
 		$smarty->assign('cant', $kmedialist->totalCount);
 		$smarty->assign('entryType', 'media');
-		$smarty->assign('view', $_REQUEST['view']);
+		$smarty->assign('view', $jitRequest->view->alpha());
 	}
 
 	$smarty->assign('offset', $offset);

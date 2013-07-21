@@ -83,7 +83,10 @@
 		and (!isset($attach_box) or $attach_box ne 'n') and $editable}
 		<form enctype="multipart/form-data" action="tiki-index.php?page={$page|escape:"url"}" method="post">
 			{if $page_ref_id}
-				<input type="hidden" name="page_ref_id" value="{$page_ref_id}">
+				<input type="hidden" name="page_ref_id" value="{$page_ref_id|escape}">
+			{/if}
+			{if !empty($smarty.request.no_bl)}
+				<input type="hidden" name="no_bl" value="{$smarty.request.no_bl|escape}">
 			{/if}
 			<table class="formcolor">
 				<tr>

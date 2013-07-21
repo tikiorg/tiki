@@ -73,8 +73,11 @@ if ($tikilib->query("SHOW TABLES LIKE 'tiki_preferences'")->numRows() == 0) {
 	exit;
 }
 $tikilib->get_preferences($needed_prefs, true, true);
+$prefs = $systemConfiguration->preference->toArray() + $prefs;
 
-if (isset($prefs['session_protected']) && $prefs['session_protected'] == 'y' && ! isset($_SERVER['HTTPS']) && php_sapi_name() != 'cli') {
+// IIS always sets the $_SERVER['HTTPS'] value (on|off)
+$noSSLActive = !isset($_SERVER['HTTPS']) || (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'off');
+if (isset($prefs['session_protected']) && $prefs['session_protected'] == 'y' && $noSSLActive && php_sapi_name() != 'cli') {
 	header("Location: https://{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}");
 	exit;
 }
@@ -139,6 +142,30 @@ if (isset($_SERVER["REQUEST_URI"])) {
 
 		try {
 			Zend_Session::start();
+
+			/* This portion may seem strange, but it is an extra validation against session
+			 * collisions. An extra cookie is set with an additional random value. When loading
+			 * the session, it makes sure the extra cookie matches the one in the session. Otherwise
+			 * it destroys the session and reloads the page for the user.
+			 *
+			 * Effectively, in the occurence of a collision, both users are kicked out.
+			 * This is an extremely rare occurence that is hard to reproduce by nature.
+			 */ 
+			$extra_cookie_name = session_name() . 'CV';
+			if (isset($_SESSION['extra_validation'])) {
+				$cookie = isset($_COOKIE[$extra_cookie_name]) ? $_COOKIE[$extra_cookie_name] : null;
+
+				if ($cookie !== $_SESSION['extra_validation']) {
+					Zend_Session::destroy();
+					header('Location: ' . $_SERVER['REQUEST_URI']);
+					exit;
+				}
+			} else {
+				$sequence = $tikilib->generate_unique_sequence(16);
+				$_SESSION['extra_validation'] = $sequence;
+				setcookie($extra_cookie_name, $sequence, time() + 365*24*3600, ini_get('session.cookie_path'));
+				unset($sequence);
+			}
 		} catch( Zend_Session_Exception $e ) {
 			// Ignore
 		}
@@ -597,6 +624,5 @@ if (function_exists('mb_internal_encoding')) {
 if (!isset($_SERVER['QUERY_STRING'])) {
 	$_SERVER['QUERY_STRING'] = '';
 }
-$_SERVER['REQUEST_URI'] = $_SERVER['PHP_SELF'] . '?' . $_SERVER['QUERY_STRING'];
 
 $smarty->assign("tikidomain", $tikidomain);

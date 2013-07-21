@@ -79,7 +79,7 @@ if (!$skip) {
 		$access->display_error(NULL, tra('File has been deleted'), 404);
 	}
 
-	if ( $prefs['auth_tokens'] == 'n' || !$is_token_access ) {
+	if ( $prefs['auth_token_access'] != 'y' || !$is_token_access ) {
 		// Check permissions except if the user comes with a valid Token
 
 		if ( !$zip && $tiki_p_admin_file_galleries != 'y' && !$userlib->user_has_perm_on_object($user, $info['galleryId'], 'file gallery', 'tiki_p_download_files') && !($info['backlinkPerms'] == 'y' && !$filegallib->hasOnlyPrivateBacklinks($info['fileId']))) {
@@ -93,7 +93,7 @@ if (!$skip) {
 				$access->display_error('', tra('Permission denied'), 401);
 			}
 		}
-		if ($prefs['feature_use_fgal_for_user_files'] === 'y' && $tiki_p_admin_file_galleries !== 'y') {
+		if ($prefs['feature_use_fgal_for_user_files'] === 'y' && $tiki_p_admin_file_galleries !== 'y' && $prefs['userfiles_private'] === 'y') {
 			$gal_info = $filegallib->get_file_gallery_info($info['galleryId']);
 			if ($gal_info['type'] === 'user' && $gal_info['visible'] !== 'y' && $gal_info['user'] !== $user ) {
 				$access->display_error('', tra('Permission denied'), 401);
@@ -143,7 +143,9 @@ if ( ! isset($_GET['thumbnail']) && ! isset($_GET['icon']) ) {
 
 session_write_close(); // close the session in case of large downloads to enable further browsing
 error_reporting(E_ALL);
-if ( ob_get_level() ) while (@ob_end_clean()); // Be sure output buffering is turned off
+while (ob_get_level()) {
+	ob_end_clean();
+}// Be sure output buffering is turned off
 
 $content_changed = false;
 $content = &$info['data'];
@@ -279,6 +281,8 @@ if ( isset($_GET['preview']) || isset($_GET['thumbnail']) || isset($_GET['displa
 						$icon_y = isset($_GET['y']) ? $_GET['y'] : 0;	
 					}
 		
+					$ext = pathinfo($info['filename']);	// TODO replace with mimelib functions
+					$format = isset($ext['extension']) ? $ext['extension'] : $format;
 					$content = $tmp->icon($format, $icon_x, $icon_y);
 					$format = $tmp->get_icon_default_format();
 					$info['filetype'] = 'image/'.$format;
@@ -331,7 +335,7 @@ if ( isset($_GET['preview']) || isset($_GET['thumbnail']) || isset($_GET['displa
 					// We change the image format if needed
 					if ( isset($_GET['format']) && $image->is_supported($_GET['format']) ) {
 						$image->convert($_GET['format']);
-					} elseif ( isset($_GET['thumbnail']) ) {
+					} elseif ( isset($_GET['thumbnail']) && $image->format != 'svg') {
 						// Or, if no format is explicitely specified and a thumbnail has to be created, we convert the image to the $thumbnail_format
 						if ($image->format == 'png') {
 							$thumbnail_format = 'png';	// preserves transparency
@@ -352,7 +356,10 @@ if ( isset($_GET['preview']) || isset($_GET['thumbnail']) || isset($_GET['displa
 				}
 			} while ( $tryIconFallback );
 		}
-		
+		if (strpos($info['filetype'], 'image/svg') !== false) {
+			$info['filetype'] = 'image/svg+xml';
+			$content = '<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">' . "\n" . $content;
+		}
 		if ( $use_cache && !empty($content) ) {
 			// Remove all existing thumbnails for this file, to avoid taking too much disk space
 			// (only one thumbnail size is handled at the same time)
@@ -368,7 +375,7 @@ $mimelib = TikiLib::lib('mime');
 if ( empty($info['filetype']) || $info['filetype'] == 'application/x-octetstream' || $info['filetype'] == 'application/octet-stream' ) {
 	$info['filetype'] = $mimelib->from_path($info['filename'], $filepath);
 
-} else if (isset($_GET['thumbnail']) && (strpos($info['filetype'], 'image') === false || $content_changed)) {	// use thumb format
+} else if (isset($_GET['thumbnail']) && (strpos($info['filetype'], 'image') === false || ($content_changed && strpos($info['filetype'], 'image/svg') === false))) {	// use thumb format
 	$info['filetype'] = $mimelib->from_content($info['filename'], $content);
 }
 header('Content-type: '.$info['filetype']);

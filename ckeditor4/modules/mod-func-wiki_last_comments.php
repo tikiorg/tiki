@@ -44,6 +44,12 @@ function module_wiki_last_comments_info()
 				'filter' => 'alpha',
 				'default' => 'n',
 			),
+			'language' => array(
+				'name' => tra('Language'),
+				'description' => tra('Comments about objects in this language only.'),
+				'filter' => 'word',
+				'default' => '',
+			),
 		),
 		'common_params' => array('rows', 'nonums')
 	);
@@ -70,19 +76,29 @@ function module_wiki_last_comments($mod_reference, $module_params)
 				case 'article':
 					$join = 'left join `tiki_articles` ta on (tc.`object` = ta.`articleId`)';
 					$get = ', ta.`title` as name';
+					if (!empty($params['language'])) {
+						$where .= ' and ta.`lang`=?';
+						$bindvars[] = $params['language'];
+					}
 					global $tiki_p_admin_cms;
 					if ($tiki_p_admin_cms != 'y') {
-						$where = 'and `approved`!=?';
+						$where .= ' and tc.`approved`!=?';
 						$bindvars[] = 'n';
 					}
 					break;
 
 				case 'wiki page':
-					$join = '';
+					if (empty($params['language'])) {
+						$join = '';
+					} else {
+						$join = 'left join `tiki_pages` tp on (tc.`object` = tp.`pageName`)';
+						$where .= ' and tp.`lang`=?';
+						$bindvars[] = $params['language'];
+					}
 					$get = ', tc.`object` as name';
 					global $tiki_p_admin_wiki;
 					if ($tiki_p_admin_wiki != 'y') {
-						$where = 'and `approved`!=?';
+						$where .= ' and tc.`approved`!=?';
 						$bindvars[] = 'n';
 					}
 					break;

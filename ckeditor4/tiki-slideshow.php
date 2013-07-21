@@ -41,7 +41,7 @@ if (isset($_REQUEST['pdf'])) {
 	
 	define("DOMPDF_ENABLE_REMOTE", true);
 	
-	require_once("lib/jquery.s5/lib/dompdf/dompdf_config.inc.php");
+	require_once("vendor/jquery/jquery-s5/lib/dompdf/dompdf_config.inc.php");
 	
 	if ( isset( $_POST["html"] ) ) {
 		$dompdf = new DOMPDF();
@@ -139,15 +139,15 @@ $smarty->assign_by_ref('lastUser', $info["user"]);
 
 include_once ('tiki-section_options.php');
 
-$headerlib->add_cssfile('lib/jquery.s5/jquery.s5.css');
-$headerlib->add_jsfile('lib/jquery.s5/jquery.s5.js');
+$headerlib->add_cssfile('vendor/jquery/jquery-s5/jquery.s5.css');
+$headerlib->add_jsfile('vendor/jquery/jquery-s5/jquery.s5.js');
 $headerlib->add_jq_onready(
     '//slideshow corrupts s5 and is not needed in s5 at all
 	$("#toc,.cluetip-title").remove();
 	
 	window.s5Settings = (window.s5Settings ? window.s5Settings : {});
 	
-	window.s5Settings.basePath = "lib/jquery.s5/";
+	window.s5Settings.basePath = "vendor/jquery/jquery-s5/";
 
 	$.s5.start($.extend(window.s5Settings, {
 		menu: function() {

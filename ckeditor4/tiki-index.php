@@ -2,7 +2,7 @@
 /**
  * Tiki's entry point.
  *
- * @package TikiWiki
+ * @package Tiki
  * @copyright (c) Copyright 2002-2013 by authors of the Tiki Wiki CMS Groupware Project. All Rights Reserved. See copyright.txt for details and a complete list of authors.
  * @licence Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
  */
@@ -122,7 +122,7 @@ $smarty->assign('structure', $structure);
 
 if ( $prefs['feature_wiki_structure'] == 'y' ) {
 	// Feature checks made in the function for structure language
-	if (!$use_best_language) {
+	if (!$use_best_language && isset($_REQUEST['page'])) {
 		$info = $tikilib->get_page_info($_REQUEST['page']);
 		$langContext = $info['lang'];
 	} else {
@@ -376,9 +376,6 @@ if (isset($_REQUEST['approve'], $_REQUEST['revision']) && $_REQUEST['revision'] 
 
 		if ($perms->wiki_approve) {
 			$flaggedrevisionlib->flag_revision($page, $_REQUEST['revision'], 'moderation', 'OK');
-
-			require_once('lib/search/refresh-functions.php');
-			refresh_index('pages', $page);
 		}
 	}
 	$access->redirect($wikilib->sefurl($page));
@@ -391,7 +388,11 @@ if ($prefs['flaggedrev_approval'] == 'y' && isset($_REQUEST['latest']) && $objec
 	$pageRenderer->forceLatest();
 }
 
-require_once 'lib/cache/pagecache.php';
+if ($prefs['mobile_mode'] === 'y') {
+	$cache_mobile_mode = array('mobile_mode' => $prefs['mobile_mode']);
+} else {
+	$cache_mobile_mode = array();
+}
 
 $pageCache = Tiki_PageCache::create()
 	->disableForRegistered()
@@ -400,7 +401,8 @@ $pageCache = Tiki_PageCache::create()
 	->addValue('role', 'wiki-page-output')
 	->addValue('page', $page)
 	->addValue('locale', $prefs['language'])
-	->addKeys($_REQUEST, array( 'style_mode' ))
+	->addKeys($_GET, array_keys($_GET))
+	->addKeys($cache_mobile_mode, array_keys($cache_mobile_mode))
 	->checkMeta('wiki-page-output-meta-timestamp', array('page' => $page,))
 	->applyCache();
 
@@ -648,15 +650,18 @@ if (!empty($_REQUEST['machine_translate_to_lang'])) {
 TikiLib::events()->trigger(
 	'tiki.wiki.view',
 	array_merge(
-		array('type' => 'wiki', 'object' => $page,),
+		array(
+			'type' => 'wiki page',
+			'object' => $page,
+			'user' => $GLOBALS['user'],
+		),
 		(is_array($info) ? $info : array())
 	)
 );
 
 $smarty->assign('info', $info);
-$smarty->assign('mid', 'tiki-show_page.tpl');
 
-$smarty->display('tiki.tpl');
+$smarty->display('tiki-show_page.tpl');
 
 // xdebug_dump_function_profile(XDEBUG_PROFILER_CPU);
 // debug: print all objects

@@ -25,7 +25,7 @@ require_once 'tiki-setup.php';
 require_once 'lib/toolbars/toolbarslib.php';
 
 $access->check_permission('tiki_p_admin');
-$access->check_feature('javascript_enabled');
+$access->check_feature(array('javascript_enabled', 'feature_jquery_ui'));
 
 $sections = array( 'global' => tra('Global'), 'admin' => tra('Admin'));
 $sections2 = array();

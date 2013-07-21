@@ -55,6 +55,7 @@ if ($_REQUEST["nlId"]) {
 		'allowTxt' => 'n',
 		'allowArticleClip' => 'n',
 		'autoArticleClip' => 'n',
+		'emptyClipBlocksSend' => 'n',
 		'articleClipRange' => $defaultArticleClipRange,
 		'articleClipRangeDays' => $defaultArticleClipRange / 3600 / 24,
 		'articleClipTypes' => array()
@@ -103,6 +104,11 @@ if (isset($_REQUEST["save"])) {
 	} else {
 		$_REQUEST["autoArticleClip"] = 'n';
 	}
+	if (isset($_REQUEST["emptyClipBlocksSend"]) && $_REQUEST["emptyClipBlocksSend"] == 'on') {
+		$_REQUEST["emptyClipBlocksSend"] = 'y';
+	} else {
+		$_REQUEST["emptyClipBlocksSend"] = 'n';
+	}
 	if (isset($_REQUEST["articleClipRangeDays"]) && $_REQUEST["articleClipRangeDays"]) {
 		$articleClipRange = 3600 * 24 * $_REQUEST["articleClipRangeDays"];
 	} else {
@@ -128,7 +134,8 @@ if (isset($_REQUEST["save"])) {
 		$_REQUEST["allowArticleClip"],
 		$_REQUEST["autoArticleClip"],
 		$articleClipRange,
-		$articleClipTypes
+		$articleClipTypes,
+		$_REQUEST["emptyClipBlocksSend"]
 	);
 
 	$info = array(

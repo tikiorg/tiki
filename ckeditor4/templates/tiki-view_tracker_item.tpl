@@ -87,10 +87,10 @@
 					
 						<tr class="field{$cur_field.fieldId}">
 							{* Make adjustments for line breaks *}
-							{if ($cur_field.type eq 't' and $cur_field.options_array[0] == 0) or
-								($cur_field.type eq 'a' and $cur_field.options_array[8] == 0) or
-								($cur_field.type eq 'n' and $cur_field.options_array[0] == 0) or
-								($cur_field.type eq 'b' and $cur_field.options_array[0] == 0) 
+							{if ($cur_field.type eq 't' and $cur_field.options_array[0] eq '0') or
+								($cur_field.type eq 'a' and $cur_field.options_array[8] eq '0') or
+								($cur_field.type eq 'n' and $cur_field.options_array[0] eq '0') or
+								($cur_field.type eq 'b' and $cur_field.options_array[0] eq '0')
 							} 
 								<td colspan="2">
 									<span class="formlabel">{$cur_field.name|escape}</span><br/>

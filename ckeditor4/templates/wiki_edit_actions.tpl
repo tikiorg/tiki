@@ -1,6 +1,7 @@
 {* $Id$ *}
-<input type="hidden" name="no_bl" value="y">
-<input type="submit" class="wikiaction" title="{tr}Preview your changes.{/tr}" name="preview" value="{tr}Preview{/tr}" onclick="needToConfirm=false;">
+<div class="actions">
+	<input type="hidden" name="no_bl" value="y">
+	<input type="submit" class="wikiaction" title="{tr}Preview your changes.{/tr}" name="preview" value="{tr}Preview{/tr}" onclick="needToConfirm=false;">
 {if $prefs.ajax_autosave eq "y"}
 	{jq} $("input[name=preview]").click(function(){
 auto_save_data['editwiki'] = "";
@@ -29,3 +30,4 @@ return false;
 	<input type="submit" class="wikiaction" title="{tr}Cancel the edit, you will lose your changes.{/tr}" name="cancel_edit" value="{tr}Cancel Edit{/tr}" onclick="needToConfirm=false;">
 	{/if}
 {/if}
+</div>

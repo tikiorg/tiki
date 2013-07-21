@@ -12,5 +12,8 @@
 	</a>
 </li>
 {/section}
+{if $showNumberOfPages eq 'y'}
+{tr}Number of result:{/tr}{$listpages|@count}
+{/if}
 </ul>
 {/strip}

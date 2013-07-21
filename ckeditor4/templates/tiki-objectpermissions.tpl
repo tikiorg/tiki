@@ -79,7 +79,7 @@
 				<label for="propagate_category">{tr}Assign or remove permissions on <em>all</em> child categories{/tr}</label>
 			</p>
 			{jq}$("input[name='assign'],input[name='remove']").click(function(){
-if ($("#propagate_category").attr("checked")) {
+if ($("#propagate_category").prop("checked")) {
 	return confirm("{tr}Are you sure you want to affect all child categories?\nThere is no undo.{/tr}");
 } }); {/jq}
 		{/if}
@@ -88,7 +88,7 @@ if ($("#propagate_category").attr("checked")) {
 			<input name="assignstructure" id="assignstructure" type="checkbox">
 			<label for="assignstructure">{tr}Assign or remove permissions on all pages of the sub-structure{/tr}</label>
 			{jq}$("input[name='assign'],input[name='remove']").click(function(){
-if ($("#assignstructure").attr("checked")) {
+if ($("#assignstructure").prop("checked")) {
 	return confirm("{tr}Are you sure you want to affect all pages in this sub-structure?\nThere is no undo.{/tr}");
 } }); {/jq}
 		{/if}
@@ -97,7 +97,10 @@ if ($("#assignstructure").attr("checked")) {
 		<h3>{tr}Permissions{/tr}</h3>
 
 		<div>
-		{treetable _data=$perms _checkbox=$permGroups _checkboxTitles=$groupNames _checkboxColumnIndex=$permGroupCols _valueColumnIndex="permName" _columns="\"label\"=\"{tr}Permission{/tr}\"" _groupColumn='type' _openall='y' _showSelected='y' _columnsContainHtml='y'}
+		{treetable _data=$perms _checkbox=$permGroups _checkboxTitles=$groupNames
+				_checkboxColumnIndex=$permGroupCols _valueColumnIndex="permName"
+				_columns="\"label\"=\"{tr}Permission{/tr}\"" _groupColumn='type' _openall='y'
+				_showSelected='y' _columnsContainHtml='y' class='objectperms'}
 		</div>
 
 		{if ($perms|@count) eq '0'}{remarksbox type="warning" title="{tr}Warning{/tr}"}{tr}You must select at least one feature{/tr}.{/remarksbox}{/if}
@@ -135,7 +138,7 @@ if ($("#assignstructure").attr("checked")) {
 					{tr}These groups are not the groups that have permissions on the object. It is only the groups you can see in the columns of the first tab.{/tr}
 				{/remarksbox}
 			{else}
-				{remarksbox type="warning" title="{tr}Note{/tr}"}
+				{remarksbox type="note" title="{tr}Note{/tr}"}
 					{tr}These groups are not the groups that have permissions on the object. It is only the groups you can see in the columns of the first tab.{/tr}
 				{/remarksbox}
 			{/if}

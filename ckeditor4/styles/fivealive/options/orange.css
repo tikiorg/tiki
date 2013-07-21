@@ -88,8 +88,7 @@ input[type="submit"]:hover,
 }
 
 .highlight,
-.button.highlight a,
-.calfocuson {
+.button.highlight a {
 	border-color: #fac5b1;
 	color: #c74b23;
 	background: #f1f8de;
@@ -147,6 +146,7 @@ input[type="password"],
 input[type="file"],
 input[type="email"],
 input[type="file"],
+input[type="search"],
 input[type="number"],
 input#login-pass,
 textarea,
@@ -203,17 +203,25 @@ th.header {
 
 .caltable .odd,
 .caltable .even,
+.caltable .calborder,
 .wikicell {
 	border: 1px solid #e77d4f;
 }
 
+.caltable td.calhighlight,
+td.calheadhighlight {
+	background: #f1f8de;
+}
+
 .odd,
-table.normal tr:nth-child(2n+1) {
+table.normal tr:nth-child(2n+1),
+.tablesorter tr.odd td {
 	background: #f4d6cc;
 }
 
 .even,
-table.normal tr:nth-child(2n) {
+table.normal tr:nth-child(2n),
+.tablesorter tr.even td {
 	background: #fee3dd;
 }
 

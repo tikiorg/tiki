@@ -105,7 +105,7 @@ if ($del || $dup) {
 }
 
 $types = array('wiki page', 'file gallery', 'tracker', 'forum', 'group');
-include_once ("lib/comments/commentslib.php"); global $commentslib; $commentslib = new Comments($dbTiki);
+$commentslib = TikiLib::lib('comments');
 $all_groups = $userlib->list_all_groups();
 $res = array();
 foreach ($types as $type) {

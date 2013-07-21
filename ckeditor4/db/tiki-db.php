@@ -21,91 +21,74 @@ if (!empty($_REQUEST['lang'])) {
 }
 include_once('lib/init/tra.php');
 
-// Please use the local.php file instead containing these variables
-// If you set sessions to store in the database, you will need a local.php file
-// Otherwise you will be ok.
-//$api_tiki		= 'pear';
-//$api_tiki			= 'pdo';
-$api_tiki			= 'pdo';
-$db_tiki			= 'mysql';
-$dbversion_tiki = '2.0';
-$host_tiki		= 'localhost';
-$user_tiki		= 'root';
-$pass_tiki		= '';
-$dbs_tiki			= 'tiki';
-$tikidomain		= '';
-
-/*
-SVN Developers: Do not change any of the above.
-Instead, create a file, called db/local.php, containing any of
-the variables listed above that are different for your
-development environment.  This will protect you from
-accidentally committing your username/password to SVN!
-
-example of db/local.php
-<?php
-$host_tiki   = 'myhost';
-$user_tiki   = 'myuser';
-$pass_tiki   = 'mypass';
-$dbs_tiki    = 'mytiki';
-$api_tiki    = 'adodb';
-
-** Multi-tiki
-**************************************
-see http://tikiwiki.org/MultiTiki19
-
-Setup of virtual tikis is done using setup.sh script
------------------------------------------------------------
--> Multi-tiki trick for virtualhosting
-
-$tikidomain variable is set to :
-or TIKI_VIRTUAL
-    That is set in apache virtual conf : SetEnv TIKI_VIRTUAL myvirtual
-or SERVER_NAME
-    From apache directive ServerName set for that virtualhost block
-or HTTP_HOST
-    From the real domain name called in the browser
-    (can be ServerAlias from apache conf)
-
-*/
-
-if (!isset($local_php) or !is_file($local_php)) {
-	$local_php = 'db/local.php';
-} else {
-	$local_php = preg_replace(array('/\.\./', '/^db\//'), array('',''), $local_php);
-}
-$tikidomain = '';
-if (is_file('db/virtuals.inc')) {
-	if (isset($_SERVER['TIKI_VIRTUAL']) and is_file('db/'.$_SERVER['TIKI_VIRTUAL'].'/local.php')) {
-		$tikidomain = $_SERVER['TIKI_VIRTUAL'];
-	} elseif (isset($_SERVER['SERVER_NAME']) and is_file('db/'.$_SERVER['SERVER_NAME'].'/local.php')) {
-		$tikidomain = $_SERVER['SERVER_NAME'];
-	} else if (isset($_REQUEST['multi']) && is_file('db/'.$_REQUEST['multi'].'/local.php')) {
-		$tikidomain = $_REQUEST['multi'];
-	} elseif (isset($_SERVER['HTTP_HOST'])) {
-		if (is_file('db/'.$_SERVER['HTTP_HOST'].'/local.php')) {
-			$tikidomain = $_SERVER['HTTP_HOST'];
-		} else if (is_file('db/'.preg_replace('/^www\./', '', $_SERVER['HTTP_HOST']).'/local.php')) {
-			$tikidomain = preg_replace('/^www\./', '', $_SERVER['HTTP_HOST']);
-		}
-	}
-	if (!empty($tikidomain)) {
-		$local_php = "db/$tikidomain/local.php";
-	}
-}
-$tikidomainslash = (!empty($tikidomain) ? $tikidomain . '/' : '');
-
+$local_php = TikiInit::getCredentialsFile();
 $re = false;
-$default_api_tiki = $api_tiki;
-$api_tiki = '';
 if ( file_exists($local_php) ) {
 	$re = include($local_php);
 }
 
+if (! isset($client_charset)) {
+	$client_charset = 'utf8';
+}
+
+$credentials = array(
+	'api_tiki' => empty($api_tiki) ? $default_api_tiki : $api_tiki,
+	'api_tiki_forced' => ! empty($api_tiki),
+	'primary' => false,
+	'shadow' => false,
+);
+
+// Load connection strings from environment variables, as used by Azure and possibly other hosts
+$connectionString = null;
+foreach (array('MYSQLCONNSTR_Tiki', 'MYSQLCONNSTR_DefaultConnection') as $envVar) {
+	if (isset($_SERVER[$envVar])) {
+		$connectionString = $_SERVER[$envVar];
+		continue;
+	}
+}
+
+if ($connectionString && preg_match('/^Database=(?P<dbs>.+);Data Source=(?P<host>.+);User Id=(?P<user>.+);Password=(?P<pass>.+)$/', $connectionString, $parts)) {
+	$parts['charset'] = $client_charset;
+	$parts['socket'] = null;
+
+	$credentials['primary'] = $parts;
+	$re = true;
+} else {
+	if (isset($shadow_host, $shadow_user, $shadow_pass, $shadow_dbs)) {
+		$credentials['shadow'] = array(
+			'host' => $shadow_host,
+			'user' => $shadow_user,
+			'pass' => $shadow_pass,
+			'dbs' => $shadow_dbs,
+			'charset' => $client_charset,
+			'socket' => isset($socket_tiki) ? $socket_tiki : null,
+		);
+	}
+
+	if (isset($host_tiki, $user_tiki, $pass_tiki, $dbs_tiki)) {
+		$credentials['primary'] = array(
+			'host' => $host_tiki,
+			'user' => $user_tiki,
+			'pass' => $pass_tiki,
+			'dbs' => $dbs_tiki,
+			'charset' => $client_charset,
+			'socket' => null,
+		);
+	}
+}
+
+unset($host_map, $db_tiki, $host_tiki, $user_tiki, $pass_tiki, $dbs_tiki, $shadow_user, $shadow_pass, $shadow_host, $shadow_dbs);
+
 global $systemConfiguration;
 $systemConfiguration = new Zend_Config(
 	array(
-		'preference' => array(),
+		'preference' => array(
+			'feature_jison_wiki_parser' => 'n',		// hard code json parser off, as it's more than just "experimental"
+													// Developer Notice:
+													// if you want to help improve this feature then either comment out the line above
+													// or add 'feature_jison_wiki_parser' = 'y' to your tiki.ini file
+													// and enable that in your db/local.php
+		),
 		'rules' => array(),
 	),
 	array('readOnly' => false)
@@ -120,15 +103,8 @@ if (isset ($system_configuration_file)) {
 	$systemConfiguration = $systemConfiguration->merge(new Zend_Config_Ini($system_configuration_file, $system_configuration_identifier));
 }
 
-if ( empty( $api_tiki ) ) {
-	$api_tiki_forced = false;
-	$api_tiki = $default_api_tiki;
-} else {
-	$api_tiki_forced = true;
-}
-
 if ( $re === false ) {
-	if ( ! isset($in_installer) || $in_installer != 1) {
+	if (! defined('TIKI_IN_INSTALLER')) {
 		header('location: tiki-install.php');
 		exit;
 	} else {
@@ -158,15 +134,17 @@ class TikiDb_LegacyErrorHandler implements TikiDb_ErrorHandler
 
 		$msg = $db->getErrorMessage();
 		$q=$query;
-		foreach ($values as $v) {
-			if (is_null($v)) {
-				$v='NULL';
-			} else {
-				$v="'".addslashes($v)."'";
-			}
-			$pos=strpos($q, '?');
-			if ($pos !== false) {
-				$q=substr($q, 0, $pos)."$v".substr($q, $pos+1);
+		if (is_array($values)) {
+			foreach ($values as $v) {
+				if (is_null($v)) {
+					$v = 'NULL';
+				} else {
+					$v = "'" . addslashes($v) . "'";
+				}
+				$pos = strpos($q, '?');
+				if ($pos !== false) {
+					$q = substr($q, 0, $pos) . "$v" . substr($q, $pos + 1);
+				}
 			}
 		}
 
@@ -217,38 +195,9 @@ class TikiDb_LegacyErrorHandler implements TikiDb_ErrorHandler
 	} // }}}
 }
 
-$dbInitializer = 'db/tiki-db-adodb.php';
-if ($api_tiki == 'pdo' && extension_loaded("pdo") && in_array('mysql', PDO::getAvailableDrivers())) {
-	$dbInitializer = 'db/tiki-db-pdo.php';
-}
-
-require $dbInitializer;
-init_connection(TikiDb::get());
-
-if ( isset( $shadow_host, $shadow_user, $shadow_pass, $shadow_dbs ) ) {
-	global $dbMaster, $dbSlave;
-	// Set-up the replication
-	$dbMaster = TikiDb::get();
-
-	$host_tiki = $shadow_host;
-	$user_tiki = $shadow_user;
-	$pass_tiki = $shadow_pass;
-	$dbs_tiki = $shadow_dbs;
-	require $dbInitializer;
-	$dbSlave = TikiDb::get();
-	init_connection($dbSlave);
-
-	$db = new TikiDb_MasterSlaveDispatch($dbMaster, $dbSlave);
-	TikiDb::set($db);
-}
-
-unset($host_map, $db_tiki, $host_tiki, $user_tiki, $pass_tiki, $dbs_tiki, $shadow_user, $shadow_pass, $shadow_host, $shadow_dbs);
-
-/**
- * @param $db
- */
-function init_connection( $db )
-{
+$initializer = new TikiDb_Initializer;
+$initializer->setPreferredConnector($api_tiki);
+$initializer->setInitializeCallback(function ($db) {
 	global $db_table_prefix, $common_users_table_prefix, $db_tiki;
 
 	$db->setServerType($db_tiki);
@@ -261,4 +210,40 @@ function init_connection( $db )
 	if ( isset( $common_users_table_prefix ) ) {
 		$db->setUsersTablePrefix($common_users_table_prefix);
 	}
+});
+
+try {
+	$db = $initializer->getConnection($credentials['primary']);
+} catch (Exception $e) {
+	echo $e;
+	require_once 'lib/init/smarty.php';
+
+	$smarty->assign('msg', $e->getMessage());
+	$smarty->assign('where', 'connection');
+	echo $smarty->fetch('database-connection-error.tpl');
+	exit;
 }
+
+if (! $db && ! defined('TIKI_IN_INSTALLER')) {
+	header('location: tiki-install.php');
+	exit;
+}
+
+TikiDb::set($db);
+
+if ($credentials['shadow']) {
+	global $dbMaster, $dbSlave;
+	// Set-up the replication
+	$dbMaster = $db;
+
+	try {
+		if ($dbSlave = $initializer->getConnection($credentials['shadow'])) {
+			$db = new TikiDb_MasterSlaveDispatch($dbMaster, $dbSlave);
+			TikiDb::set($db);
+		}
+	} catch (Exception $e) {
+		// Just a slave, ignore
+	}
+}
+
+unset($credentials);

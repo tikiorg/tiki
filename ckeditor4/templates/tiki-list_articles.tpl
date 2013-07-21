@@ -37,7 +37,7 @@
 			{/if}
 			{if $prefs.art_list_id eq 'y'}
 				{assign var=numbercol value=$numbercol+1}
-				<th>{tr}Id{/tr}</th>
+				<th>{self_link _sort_arg='sort_mode' _sort_field='articleId'}{tr}Id{/tr}{/self_link}</th>
 			{/if}
 			{if $prefs.art_list_type eq 'y'}
 				{assign var=numbercol value=$numbercol+1}

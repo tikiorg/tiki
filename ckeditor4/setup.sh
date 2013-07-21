@@ -837,7 +837,7 @@ fi
 
 if exists php;
 then
-	php temp/composer.phar install
+	php temp/composer.phar install --prefer-dist
 fi
 
 # part 5 - main program

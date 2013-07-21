@@ -34,7 +34,7 @@ body.fixed_width #fixedwidth {
 body.fixed_width *:first-child+html #c1c2 {
 	margin-left: 0;
 	padding-left: 0}
-	
+
 body.fixed_width #main[id] {
 	margin-bottom:0;
 	margin-top: 0;
@@ -42,8 +42,8 @@ body.fixed_width #main[id] {
 
  /***** Layout (overrides layout.css;
 		also styling of page layout divs)  *****/
-		
-/* Enable header and footer content to widen when middle has wide content. */ 
+
+/* Enable header and footer content to widen when middle has wide content. */
 body.fixed_width .fixedwidth .fixedwidth {
 	width: 100%;
 	padding: 0;
@@ -82,7 +82,7 @@ body.fixed_width .fixedwidth .fixedwidth {
 
 #footer {
 	min-height: 163px}
-	
+
 .footerbgtrap {
 	background: #fff url(eatlon/bottom_bg.png) no-repeat 100% 100%;
 	min-height: 163px;
@@ -106,7 +106,7 @@ a:visited {
 	text-decoration: none;
 	color: #6d819d;
 	border-bottom: 1px solid transparent}
-	
+
 * html a,
 * html a:link,
 * html a:visited {border-bottom: 1px solid #fff}
@@ -169,9 +169,11 @@ input[type=radio] {border: 0}
 input[type="text"],
 input[type="password"],
 input[type="email"],
+input[type="search"],
 input[type="number"] {
 	background-color: #d2d9e3;
-	color: #000}
+	color: #000
+}
 
 input[type="submit"],
 input[type="file"],
@@ -219,7 +221,7 @@ input[type="submit"]:hover,
 	padding: 2px 4px;
 }
 
-/* Needed for Opera (11) 
+/* Needed for Opera (11)
 input[type="reset"],
 input[type="submit"],
 input[type="reset"]:hover,
@@ -248,9 +250,9 @@ tt {font-size: 1.2em}
 }
 
 .header {
-	background: url(eatlon/banner.gif) no-repeat 100% 100%;	
+	background: url(eatlon/banner.gif) no-repeat 100% 100%;
 }
-	
+
 /*#top_modules { */
 /*	min-height: 126px; */
 /*	background: url(eatlon/banner.gif) no-repeat 100% 0} */
@@ -290,7 +292,7 @@ tt {font-size: 1.2em}
 	font-size: 320%;
 	font-weight: 100;
 }
-	
+
 #sitetitle a,
 #sitetitle a:visited {color: #8f8f8f}
 
@@ -370,19 +372,19 @@ input[id="sl-login-pass"] {background: #e1e1e2}
 }
 
 /* left column width */
-#col2 ul.cssmenu_vert {
+#col2 .box-data .cssmenu_vert ul {
 	padding-left: 0;
 }
 
 #col2 .cssmenu_vert,
 #col2 .cssmenu_vert li {
-	width: 160px;
+	width: 150px;
 }
 
 /* offset from left column (matches above) */
 #col2 .cssmenu_vert li:hover ul,
 #col2 .cssmenu_vert li.sfHover ul {
-	left: 160px;
+	left: 150px;
 }
 
 /* return ul ul ... to default */
@@ -400,16 +402,16 @@ input[id="sl-login-pass"] {background: #e1e1e2}
 }
 
 #tiki-top ul.cssmenu_horiz {margin-left: 30px}
-	
+
 #tiki-top .cssmenu_horiz a {
 	padding: 12px 1em;
 	font-weight: bold;
 	color: #fff}
-	
+
 #tiki-top .cssmenu_horiz li.menuSection0 a {
 	padding-right: 2.0em;
 }
-	
+
 .cssmenu_horiz li a:hover,
 .cssmenu_vert ul li a:link,
 .cssmenu_vert ul li a:visited,
@@ -421,7 +423,7 @@ input[id="sl-login-pass"] {background: #e1e1e2}
 	font-weight: normal;
 	padding-top: 3px;
 	padding-bottom: 3px}
-	
+
 .secondary_site_menu li.menuLevel0 a:hover {
 	color: #506887;
 }
@@ -450,7 +452,7 @@ input[id="sl-login-pass"] {background: #e1e1e2}
 }
 
 .cssmenu_vert li ul li a .sf-sub-indicator {
-	background: url(../lib/jquery/superfish/images/arrows-ffffff.png);
+	background: url(../img/superfish/arrows-ffffff.png);
 }
 
 #tiki-top .cssmenu_horiz li a .sf-sub-indicator {top: 1.3em}
@@ -493,10 +495,10 @@ a.flip:hover,
 .box {
 	margin-bottom: 16px;
 	display: block}
-	
+
 #leftcolumn .box,
 #rightcolumn .box {width: 160px}
-	
+
 .wikitext .box {width: 96%}
 
 h3.box-title {
@@ -530,7 +532,7 @@ h3.box-title {
 	border-color: #506887;
 	background: #cecece;
 	color: #000}
-	
+
 .rbox-title {
 	margin-bottom: -.45em;
 }
@@ -550,18 +552,28 @@ h3.box-title {
 	vertical-align: top}
 
 td.odd:hover,
-td.even:hover {border-right: 1px solid #e0e0e0}
+td.even:hover,
+.tablesorter tr.odd td:hover,
+.tablesorter tr.even td:hover {
+	border-right: 1px solid #e0e0e0
+}
 
 .normal td.heading {font-size: 1em}
 
 .normal td.odd:hover,
 .normal td.even:hover,
-.normal tr:hover {background: #f3f3f4}
+.tablesorter tr.odd td:hover,
+.tablesorter tr.even td:hover,
+.normal tr:hover {
+	background: #f3f3f4
+}
 
 .normal td,
 .wikitable td,
 td.odd,
 td.even,
+.tablesorter tr.odd td,
+.tablesorter tr.even td,
 .form,
 .formcolor td,
 .editblogform td {
@@ -582,7 +594,7 @@ td.even,
 	padding: .2em .2em 0;
 	margin:0 0.2em 1px 0;
 	border-bottom: 1px solid #ccc}
-	
+
 .tabs br {
 	display: none;
 }
@@ -695,7 +707,7 @@ textarea.wikiedit {font-size: 1.1em}
 	border: 1px dashed #ADACAF;
 	overflow: auto;
 }
-	
+
 .codecaption {
 	font-size: 90%;
 	padding: 0 10px;
@@ -790,7 +802,7 @@ a.blogt:hover {
 .post .postbody {
 	background: white;
 	font-size: 1em}
-	
+
 * html .post .postbody {font-size: 11px}
 
 .post .postbody .content {
@@ -810,7 +822,7 @@ a.blogt:hover {
 	font-weight: bold}
 
 .postbody-title br.clear {display: none}
-	
+
 .title a.link {
 	color: #29677B;
 	text-decoration: none}
@@ -822,7 +834,7 @@ a.blogt:hover {
 	margin-left: -3px;
 	margin-right: 4px;
 	background: url(eatlon/head_bg.gif) repeat-x}
-	
+
 .post .author_post_info {padding: 2px}
 .post .author_post_info:first-letter {text-transform: uppercase}
 
@@ -917,15 +929,6 @@ div.dirfooter {margin-top: 10px}
 .default td {border: solid 1px #a9a9a9}
 
 /***** Calendar *****/
-.calcontent a.linkmenu,
-.calcontent a.linkmenu:hover {
-	background: none;
-	padding: 0}
-
-.calfocus {
-	font-size: 90%;
-	background: inherit}
-
 .calprio1 a,
 .calprio2 a,
 .calprio3 a,
@@ -947,23 +950,12 @@ div.dirfooter {margin-top: 10px}
 .opaque .box-title {border-bottom: 1px solid black}
 .searchresults {display: inline}
 
-#caltable .calfocuson,
 .box-data .fc a.today,
 .box-data td a.today {
 	background: #d2d9e3;
 	border: 0}
-	
-.caltable .calfocuson {
-	background: #d2d9e3;
-}
-
-#caltable .calfocuson a {color:#000}
-
-#caltable .calfocus a,
-#caltable .calfocuson a {text-decoration:none}
 
 .calinput {background: #9faec2}
-.calfocuson + .calcontent {background: #F5F5F5}
 
 #caltable td {padding: 0}
 
@@ -971,7 +963,7 @@ div.dirfooter {margin-top: 10px}
 .days {
 	background: #9faec2;
 	color: white}
-	
+
 #caltable .weeks {
 	font-weight: bold;
 	padding: 2px;
@@ -1008,32 +1000,14 @@ div.dirfooter {margin-top: 10px}
 	padding: 0;
 }
 
-.caldark {
-	background: #c4cdda;
+/*today focus*/
+.caltable td.calhighlight,
+td.calheadhighlight {
+	background: #fad4e0;
 }
 
-.caldark .calfocus {
-	background: #c4cdda;
-}
-
-* html .caldark {
-	padding: 0;
-}
-
-div#calscreen .calfocuson {
-	background: #d2d9e3;
-}
-
-.calfocuson {
-	font-size: 100%;
-}
-
-.calfocuson a {
-	font-size: 90%;
-}
-
-.calHeadingOn, .calHeadingOn a {
-	background: #d2d9e3;
+.caltable .calborder {
+	border: 1px solid #a9a9a9;
 }
 
 .daterow {

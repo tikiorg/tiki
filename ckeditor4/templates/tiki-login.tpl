@@ -1,3 +1,11 @@
 <div align="center">
-{include file='modules/mod-login_box.tpl' module_logo_instance='tiki-login'}
+{module module=login_box
+	mode="module"
+	show_register="y"
+	show_forgot="y"
+	error=""
+	flip=""
+	decorations=""
+	nobox=""
+	notitle=""}
 </div>

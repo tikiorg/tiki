@@ -27,7 +27,7 @@
 			<div class="admin2cols adminoptionbox clearfix">
 				<label for="assign_position">{tr}Position{/tr}</label>
 				<select id="assign_position" name="assign_position">
-					{foreach from=$module_zones key=code item=zone}
+					{foreach from=$module_zone_list key=code item=zone}
 						<option value="{$code|escape}"{if $code eq $assign_position} selected="selected"{/if}>{$zone.name|escape}</option>
 					{/foreach}
 				</select>

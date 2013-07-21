@@ -89,8 +89,7 @@ span#genPass .button a:hover,
 }
 
 .highlight,
-.button.highlight a,
-.calfocuson {
+.button.highlight a {
 	border-color: #fee194;
 	color: #c74b23;
 	background: #f3fdd0;
@@ -149,6 +148,7 @@ input[type="password"],
 input[type="file"],
 input[type="email"],
 input[type="file"],
+input[type="search"],
 input[type="number"],
 input#login-pass,
 textarea,
@@ -206,17 +206,25 @@ th.header {
 
 .caltable .odd,
 .caltable .even,
+.caltable .calborder,
 .wikicell {
 	border: 1px solid #fcebbc;
 }
 
+.caltable td.calhighlight,
+td.calheadhighlight {
+	background: #f3fdd0;
+}
+
 .odd,
-table.normal tr:nth-child(2n+1) {
+table.normal tr:nth-child(2n+1),
+.tablesorter tr.odd td {
 	background: #fdf1d0;
 }
 
 .even,
-table.normal tr:nth-child(2n) {
+table.normal tr:nth-child(2n),
+.tablesorter tr.even td {
 	background: #fcebbc;
 }
 

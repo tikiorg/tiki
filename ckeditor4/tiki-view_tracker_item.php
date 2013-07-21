@@ -33,6 +33,7 @@ $auto_query_args = array(
 	'initial',
 	'filterfield',
 	'filtervalue',
+	'view',
 	'exactvalue'
 );
 $special = false;
@@ -55,7 +56,8 @@ if (!isset($_REQUEST['trackerId']) && $prefs['userTracker'] == 'y' && !isset($_R
 					'type' => 'u',
 					'value' => $user,
 				);
-				if ($f = $trklib->get_field_id_from_type($_REQUEST['trackerId'], "u", '1%')) {
+				$definition = Tracker_Definition::get($_REQUEST['trackerId']);
+				if ($definition && $f = $definition->getUserField()) {
 					if ($f != $utid['usersFieldId']) {
 						$addit[] = array(
 							'fieldId' => $f,
@@ -64,7 +66,7 @@ if (!isset($_REQUEST['trackerId']) && $prefs['userTracker'] == 'y' && !isset($_R
 						);
 					}
 				}
-				if ($f = $trklib->get_field_id_from_type($_REQUEST['trackerId'], "g", 1)) {
+				if ($definition && $f = $definition->getWriterGroupField()) {
 					$addit[] = array(
 						'fieldId' => $f,
 						'type' => 'g',
@@ -121,7 +123,10 @@ if ($prefs['userTracker'] == 'y' && isset($_REQUEST['view']) && $_REQUEST['view'
 		}
 	}
 	if (!empty($_REQUEST['trackerId']) && empty($fieldId)) {
-		$fieldId = $trklib->get_field_id_from_type($_REQUEST['trackerId'], 'u', '1%');
+		$definition = Tracker_Definition::get($_REQUEST['trackerId']);
+		if ($definition) {
+			$fieldId = $definition->getUserField();
+		}
 	}
 	if (!empty($_REQUEST['trackerId']) && !empty($fieldId)) {
 		$_REQUEST['itemId'] = $trklib->get_item_id($_REQUEST['trackerId'], $fieldId, $_REQUEST['user']);
@@ -145,6 +150,13 @@ if (!isset($_REQUEST["trackerId"]) || !$_REQUEST["trackerId"]) {
 	$smarty->assign('msg', tra("No tracker indicated"));
 	$smarty->display("error.tpl");
 	die;
+}
+
+if ($prefs['feature_score'] == 'y' && isset($_REQUEST["itemId"])) {
+    $item_info = $trklib->get_tracker_item($_REQUEST["itemId"]);
+    $currentItemId = $_REQUEST["itemId"];
+    $tikilib->score_event($user, 'trackeritem_read', $currentItemId);
+    $tikilib->score_event($item_info['createdBy'], 'trackeritem_is_read', "$user:$currentItemId");
 }
 
 $definition = Tracker_Definition::get($_REQUEST['trackerId']);
@@ -293,6 +305,7 @@ if ($tracker_info['adminOnlyViewEditItem'] === 'y') {
 	$access->check_permission('tiki_p_admin_trackers', tra('Admin this tracker'), 'tracker', $tracker_info['trackerId']);
 }
 
+include_once('tiki-sefurl.php');
 
 if (!empty($_REQUEST['moveto']) && $tiki_p_admin_trackers == 'y') { // mo to another tracker fields with same name
 	$perms = Perms::get('tracker', $_REQUEST['moveto']);
@@ -444,8 +457,9 @@ if ($itemObject->canModify()) {
 				unset($_REQUEST['save_return']);
 			}
 		}
-		if (isset($_REQUEST['from'])) {
-			header('Location: tiki-index.php?page=' . urlencode($_REQUEST['from']));
+		if (isset($_REQUEST['save_return']) && isset($_REQUEST['from'])) {
+			$fromUrl = filter_out_sefurl('tiki-index.php?page=' . urlencode($_REQUEST['from']));
+			header("Location: {$fromUrl}");
 			exit;
 		}
 	}
@@ -715,9 +729,14 @@ $smarty->assign('canRemove', $itemObject->canRemove());
 // Display the template
 $smarty->assign('mid', 'tiki-view_tracker_item.tpl');
 
-if (isset($_REQUEST['print'])) {
-	$smarty->display('tiki-print.tpl');
-	$smarty->assign('print', 'y');
-} else {
-	$smarty->display('tiki.tpl');
+try {
+	if (isset($_REQUEST['print'])) {
+		$smarty->display('tiki-print.tpl');
+		$smarty->assign('print', 'y');
+	} else {
+		$smarty->display('tiki.tpl');
+	}
+} catch (SmartyException $e) {
+	$message = tr('This element cannot be displayed appropriately. Template not found (%0). Contact the administrator.', $tracker_info['viewItemPretty']);
+	$access->redirect(smarty_modifier_sefurl($info['trackerId'], 'tracker'), $message);
 }

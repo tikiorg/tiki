@@ -40,7 +40,7 @@
 {/strip}{/capture}
 
 <form enctype="multipart/form-data" name='blogpost' method="post" action="tiki-blog_post.php{$smarty.capture.actionUrlParam}" id ='editpageform'>
-	<input type="hidden" name="wysiwyg" value="{$wysiwyg|escape}">
+	<input type="hidden" name="allowhtml" value="{if $prefs.wysiwyg_htmltowiki eq 'n'}on{/if}">
 	<input type="hidden" name="postId" value="{$postId|escape}">
 
 	<fieldset class="tabcontent">

@@ -15,9 +15,9 @@
 			<table>
 				<tr>
 					<td>{tr}Start:{/tr}</td>
-					<td>{html_select_date time=$startDate prefix="startDate_" end_year="-10" field_order=$prefs.display_field_order}</td>
+					<td>{html_select_date time=$startDate prefix="startDate_" end_year="-10" field_order=$prefs.display_field_order} {html_select_time use_24_hours=true time=$startDate}</td>
 					<td>{tr}End:{/tr}</td>
-					<td>{html_select_date time=$endDate prefix="endDate_" end_year="-10" field_order=$prefs.display_field_order}</td>
+					<td>{html_select_date time=$endDate prefix="endDate_" end_year="-10" field_order=$prefs.display_field_order} {html_select_time use_24_hours=true time=$endDate prefix="end_"}</td>
 				</tr>
 			</table>
 		</fieldset>
@@ -484,7 +484,41 @@
 			</table>
 			{tr}Total number of objects:{/tr} {$smarty.foreach.objectActions.total}
 		{/if}
-
+    
+		{if $showbigbluebutton eq 'y' and $stay_in_big_Times|@count ne 0}
+			<table class="normal">
+				<caption>{tr}Bigbluebutton{/tr}</caption>
+				<tr>
+					<th>{tr}User{/tr}</th>
+					<th>{tr}Object{/tr}</th>
+					<th>{tr}Time in bigbluebutton (in minutes){/tr}</th>
+				</tr>
+				{foreach key=user item=room from=$stay_in_big_Times}
+				  {foreach key=room_name item=values from=$room}
+					{foreach key=inc item=value from=$values}
+					  <tr class="{cycle}">
+						<td>{$user}</td>
+						<td>{$room_name}</td>
+						<td>{$value|default:'0'}</td>
+					  </tr>
+					{/foreach}
+				  {/foreach}
+				{/foreach}
+		        <tr>
+		          <td>
+		          {if $tiki_p_admin eq 'y'}
+		            <form method="post" action="{$smarty.server.PHP_SELF}?{$smarty.server.QUERY_STRING}"/>
+		              <span class="input_submit_container">
+		                <input type="submit" name="export_bbb" value="{tr}Export{/tr}" />
+		              </span>
+		            </form>
+		          {/if}
+		          </td>
+		          <td></td>
+		        </tr>
+			</table>
+		{/if}
+		
 		{if $showCateg eq 'y' and $tiki_p_admin eq 'y'}
 			<table class="normal">
 				<caption>{tr}Number of actions per category{/tr}</caption>

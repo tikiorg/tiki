@@ -34,7 +34,7 @@
 				{preference name=feature_banners}
 				{preference name=feature_categories}
 				{preference name=feature_freetags}
-				{preference name=feature_search}
+				{preference name=feature_search_fulltext}
 			</div>
 
 		</fieldset>
@@ -59,7 +59,10 @@
 				{preference name=feature_draw}
 				<div class="adminoptionboxchild" id="feature_draw_childcontainer">
 					{preference name=feature_draw_hide_buttons}
-					{preference name=feature_draw_replace_base_image}
+					{preference name=feature_draw_separate_base_image}
+					<div class="adminoptionboxchild" id="feature_draw_separate_base_image_childcontainer">
+						{preference name=feature_draw_in_userfiles}
+					</div>
 				</div>
 
 				{preference name=feature_docs}
@@ -80,8 +83,6 @@
 				{preference name=feature_faqs}
 				{preference name=feature_galleries}
 				{preference name=feature_html_pages}	
-				
-				{preference name=feature_jison_wiki_parser}
 				
 				{preference name=feature_htmlfeed}
 				{preference name=feature_forwardlinkprotocol}
@@ -161,6 +162,7 @@
 					<legend> {tr}Experimental:{/tr} {icon _id=bug_error}</legend>
 					{preference name=feature_jquery_carousel}
 					{preference name=feature_jquery_tablesorter}
+					{preference name=jquery_ui_chosen}
 					{preference name=jquery_ui_selectmenu}
 					<div class="adminoptionboxchild" id="jquery_ui_selectmenu_childcontainer">
 						{preference name=jquery_ui_selectmenu_all}
@@ -228,24 +230,6 @@
 					{preference name=smarty_security}
 				</fieldset>
 			</div>
-			
-			<fieldset>
-				<legend>{tr}Event Hooks{/tr}</legend>
-				{remarksbox type=note title="{tr}New Feature{/tr}"}
-					{tr}Please note that this is a relatively new feature that still needs to be deployed all around. Expect more events to be added over time.{/tr}
-				{/remarksbox}
-				<p>{tr}If you need to add behaviors to Tiki, there are several event hooks you can attach to. Here are the events and the inheritance.{/tr}</p>
-				{$headerlib->add_dracula()}
-				<div id="graph-canvas" class="graph-canvas" data-graph-nodes="{$event_graph.nodes|@json_encode|escape}" data-graph-edges="{$event_graph.edges|@json_encode|escape}"></div>
-				<a href="#" id="graph-draw" class="button">{tr}Draw Event Diagram{/tr}</a>
-				{jq}
-				$('#graph-draw').click( function( e ) {
-					$(this).hide();
-					$('#graph-canvas').drawGraph();
-					return false;
-				} );
-				{/jq}
-			</fieldset>
 {/tab}
 
 {/tabset}

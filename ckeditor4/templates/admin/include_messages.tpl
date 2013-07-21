@@ -19,6 +19,7 @@
 		{preference name=messu_archive_size}
 		{preference name=messu_sent_size}
 		{preference name=user_selector_realnames_messu}
+		{preference name=messu_truncate_internal_message}
 
 	</fieldset>
 	<div class="heading input_submit_container" style="text-align: center">
