@@ -15,7 +15,14 @@ class WYSIWYGLib
 
 	function setupInlineEditor($pageName)
 	{
-		global $tikiroot, $prefs;
+		global $tikiroot, $prefs, $user;
+		
+		// Validate user permissions
+		$tikilib = TikiLib::lib('tiki');
+		if(!$tikilib->user_has_perm_on_object($user,$pageName,'wiki page','tiki_p_edit')) {
+			// User has no permission
+			return;
+		}
 
 		if( !empty(self::$ckEditor) ) {
 			// Inline editor is already initialized
