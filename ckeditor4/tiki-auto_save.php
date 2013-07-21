@@ -68,6 +68,14 @@ if (isset($_REQUEST['editor_id'])) {
 			$res = $editlib->parseToWiki(urldecode($_REQUEST['data']));
 		} else if ($_REQUEST['command'] == 'toHtmlFormat') {
 			$res = $editlib->parseToWysiwyg(urldecode($_REQUEST['data']), false, !empty($_REQUEST['allowhtml']) ? $_REQUEST['allowhtml'] : false);
+		} else if ($_REQUEST['command'] == 'inline_save') {
+			$tikilib = TikiLib::lib('tiki');
+			$pageName = $_REQUEST['page'];
+			$edit_data = $_REQUEST['data'];
+			$edit_comment = 'inline editor update';
+			$edit_user = $user;
+			$edit_ip = $_SERVER['REMOTE_ADDR'];
+			$res = $tikilib->update_page($pageName, $edit_data, $edit_comment, $edit_user, $edit_ip); 
 		} else if ($_REQUEST['command'] == 'auto_save') {
 			include_once 'lib/ajax/autosave.php';
 			$data = $_REQUEST['data'];

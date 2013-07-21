@@ -4386,13 +4386,6 @@ form.simple textarea.export {
     background-color: rgba(255, 255, 255, 0.5);
 }
 
-/* Inline CkEditor */
-div[contenteditable="true"]
-{
-    outline-style:solid;
-    outline-color:#aaaa00;    
-}
-
 .ui-selectmenu {
 	position: relative;
 	padding-right: 0 !important;
@@ -4439,4 +4432,13 @@ a.cke_button span.cke_icon {
     width: 16px;
     margin-top: -5px;
 }
+
+
+/* Inline CkEditor */
+div[contenteditable="true"]
+{
+    outline-style:solid;
+    outline-color:#ffdddd;    
+}
+
 /* End of file */

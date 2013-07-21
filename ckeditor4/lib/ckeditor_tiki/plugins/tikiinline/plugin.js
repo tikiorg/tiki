@@ -51,7 +51,6 @@ CKEDITOR.plugins.add('inlinesave',
 		*/
 
 		//var plugs = this.plugin;
-		/*
 		editor.on('page-data', function () {
 			this.document.on('keydown', function (event) {
 				// Do not capture CTRL hotkeys.
@@ -63,7 +62,6 @@ CKEDITOR.plugins.add('inlinesave',
 			editor.on('afterCommandExec', function (event) { asplugin.onSelectionChange(editor); });
 
 		});
-		*/
 		/*
 		editor.on('blur', function (event) {
 			asplugin.doAjaxSave(editor);
@@ -80,7 +78,7 @@ CKEDITOR.plugins.add('inlinesave',
 			var asplugin = this;
 			jQuery.ajax({
 				url: CKEDITOR.config.ajaxSaveTargetUrl,
-				data: 'command=auto_save&referer=' + editor.config.saveSelf + '&editor_id=' + editor.name + '&data=' + tiki_encodeURIComponent(data),
+				data: 'command=inline_save&referer=' + editor.config.saveSelf + '&editor_id=' + editor.name + '&data=' + tiki_encodeURIComponent(data),
 				type: "POST",
 				// good callback
 				success: function (data) {
@@ -133,19 +131,23 @@ CKEDITOR.plugins.add('inlinesave',
 		if (!this.ajaxSaveIsDirty) {
 			this.changeIcon("ajaxSaveDirty.gif");
 
+			/*
+			No auto save for inline saved
 			this.ajaxSaveCounter++;
 
 			if (this.ajaxSaveCounter > CKEDITOR.config.ajaxSaveSensitivity) {
-				if (!asplugin) {
-					asplugin = this;
-					setTimeout(function () {
-						asplugin.doAjaxSave(editor);
-						asplugin = null;
-					});
+			if (!asplugin) {
+			asplugin = this;
+			setTimeout(function () {
+			asplugin.doAjaxSave(editor);
+			asplugin = null;
+			});
 
-					this.ajaxSaveIsDirty = true;
-				}
+			this.ajaxSaveIsDirty = true;
 			}
+			}
+			*/
+			this.ajaxSaveIsDirty = true;
 		}
 		return true;
 	},

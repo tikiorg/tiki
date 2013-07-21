@@ -13,7 +13,7 @@ class WYSIWYGLib
 {
 	static $ckEditor = null;
 
-	function setupInlineEditor()
+	function setupInlineEditor($pageName)
 	{
 		global $tikiroot, $prefs;
 
@@ -22,15 +22,11 @@ class WYSIWYGLib
 			return;
 		}
 		self::$ckEditor = 'ckeditor4';
-		// $ckEditor = 'ckeditor'; ... to revert also fix CKEDITOR.addCss in the plugin.js files
 		
 		global $tikiroot, $prefs;
 		$headerlib = TikiLib::lib('header');
 		
 		$headerlib->add_js_config('window.CKEDITOR_BASEPATH = "'. $tikiroot . 'vendor/ckeditor/ckeditor/";')
-			//// for js debugging - copy _source from ckeditor distribution to libs/ckeditor to use
-			//// note, this breaks ajax page load via wikitopline edit icon
-			//->add_jsfile('lib/ckeditor/ckeditor_source.js');
 			->add_jsfile('vendor/ckeditor/ckeditor/ckeditor.js', 0, true)
 			// ->add_jsfile('vendor/ckeditor/ckeditor/adapters/jquery.js', 0, true)
 			->add_js('window.CKEDITOR.config._TikiRoot = "'.$tikiroot.'";', 1)
@@ -47,7 +43,7 @@ class WYSIWYGLib
 		$dom_id = "page-data";
 		$headerlib->add_js(
 			'// --- config settings for the autosave plugin ---
-window.CKEDITOR.config.ajaxSaveTargetUrl = "'.$tikiroot.'tiki-auto_save.php";	// URL to post to (also used for plugin processing)
+window.CKEDITOR.config.ajaxSaveTargetUrl = "'.$tikiroot.'tiki-auto_save.php?page='.$pageName.'";	
 window.CKEDITOR.config.extraPlugins += (window.CKEDITOR.config.extraPlugins ? ",inlinesave" : "inlinesave" );
 window.CKEDITOR.plugins.addExternal( "inlinesave", "'.$tikiroot.'lib/ckeditor_tiki/plugins/tikiinline/");
 window.CKEDITOR.config.ajaxSaveRefreshTime = 30 ;			// RefreshTime

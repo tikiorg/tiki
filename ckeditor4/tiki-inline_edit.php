@@ -31,7 +31,7 @@ if ($prefs['feature_wysiwyg_inline'] == 'y') {
 		$wysiwyglib->shutdownInlineEditor();
 	} else {
 		$_SESSION['edit_wysiwyg_inline'] = 'y';
-		$wysiwyglib->setupInlineEditor();
+		$wysiwyglib->setupInlineEditor($_REQUEST['page']);
 	}
 } 
 

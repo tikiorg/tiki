@@ -602,7 +602,7 @@ if ($prefs['ajax_inline_edit'] == 'y') {
 // Inline Ckeditor editor
 if (($prefs['feature_wysiwyg_inline'] == 'y')&&(isset($_SESSION['edit_wysiwyg_inline']) && ($_SESSION['edit_wysiwyg_inline'] === 'y'))) {
 	include_once('lib/ckeditor_tiki/wysiwyglib.php');
-	$wysiwyglib->setUpInlineEditor();		// init ckeditor if default editor
+	$wysiwyglib->setUpInlineEditor($_REQUEST['page']);		// init ckeditor if default editor
 }
 
 if (true) {
