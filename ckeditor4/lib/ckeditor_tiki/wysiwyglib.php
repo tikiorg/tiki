@@ -27,12 +27,12 @@ class WYSIWYGLib
 		global $tikiroot, $prefs;
 		$headerlib = TikiLib::lib('header');
 		
-		$headerlib->add_js_config('window.CKEDITOR_BASEPATH = "'. $tikiroot . 'lib/'.self::$ckEditor.'/";')
+		$headerlib->add_js_config('window.CKEDITOR_BASEPATH = "'. $tikiroot . 'vendor/ckeditor/ckeditor/";')
 			//// for js debugging - copy _source from ckeditor distribution to libs/ckeditor to use
 			//// note, this breaks ajax page load via wikitopline edit icon
 			//->add_jsfile('lib/ckeditor/ckeditor_source.js');
-			->add_jsfile('lib/'.self::$ckEditor.'/ckeditor.js', 0, true)
-			->add_jsfile('lib/'.self::$ckEditor.'/adapters/jquery.js', 0, true)
+			->add_jsfile('vendor/ckeditor/ckeditor/ckeditor.js', 0, true)
+			// ->add_jsfile('vendor/ckeditor/ckeditor/adapters/jquery.js', 0, true)
 			->add_js('window.CKEDITOR.config._TikiRoot = "'.$tikiroot.'";', 1)
 			;
 
