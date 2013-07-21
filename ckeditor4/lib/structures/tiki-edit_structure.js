@@ -63,10 +63,10 @@ $(document).ready(function() {
 				})
 				.disableSelection();
 
-		$(".page-alias-input").live("change", function () {
+		$(".page-alias-input").on("change", function () {
 			$(".save_structure a").show("fast").parent().show("fast");
 			tocDirty = true;
-		}).live("click", function () {	// for Firefox
+		}).on("click", function () {	// for Firefox
 			$(this).focus().selection($(this).val().length);
 		});
 

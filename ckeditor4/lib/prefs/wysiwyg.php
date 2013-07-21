@@ -21,25 +21,34 @@ function prefs_wysiwyg_list()
 			'name' => tra('Wysiwyg Editor is displayed by default'),
 			'type' => 'flag',
 			'dependencies' => array(
-				'feature_optional',
+				'wysiwyg_optional',
 			),
-			'default' => 'n',
+			'default' => 'y',
 		),
 		'wysiwyg_memo' => array(
 			'name' => tra('Reopen with the same editor'),
 			'type' => 'flag',
+			'dependencies' => array(
+				'feature_wysiwyg',
+			),
 			'default' => 'y',
 		),
 		'wysiwyg_wiki_parsed' => array(
 			'name' => tra('Content is parsed like wiki page'),
 			'description' => tra('This allows a mixture of wiki and HTML. All wiki syntax is parsed.'),
 			'type' => 'flag',
+			'dependencies' => array(
+				'feature_wysiwyg',
+			),
 			'default' => 'y',
 		),
 		'wysiwyg_wiki_semi_parsed' => array(
 			'name' => tra('Content is partially wiki parsed'),
 			'description' => tra('This also allows a mixture of wiki and HTML. Only some wiki syntax is parsed, such as plugins (not inline character styles etc).'),
 			'type' => 'flag',
+			'dependencies' => array(
+				'feature_wysiwyg',
+			),
 			'default' => 'n',
 			'warning' => tra('Neglected. This feature can have unpredicable results and may be removed in future versions.'),
 			'tags' => array('experimental'),
@@ -56,13 +65,12 @@ function prefs_wysiwyg_list()
 		'wysiwyg_htmltowiki' => array(
 			'name' => tra('Use Wiki syntax in WYSIWYG'),
 			'description' => tra('Allow to keep the wiki syntax with the WYSIWYG editor. Sometimes also known as "Visual Wiki".'),
+			'hint' => tra('Using wiki syntax in wysiwyg mode will limit toolbar to Wiki tools'),
 			'type' => 'flag',
-			'warning' => tra('Experimental. This feature is still under development.'),
 			'dependencies' => array(
-				'ajax_autosave',
+				'feature_wysiwyg',
 			),
-			'tags' => array('experimental'),
-			'default' => 'n',
+			'default' => 'y',
 		),
 		'wysiwyg_fonts' => array(
 			'name' => tra('Font names'),

@@ -5,6 +5,13 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
+// File name: Receive.php
+// Required path: /lib/core/Feed/ForwardLink
+//
+// Programmer: Robert Plummer
+//
+// Purpose: Verify that incoming URI is requesting a ForwardLink destination on this site and redirect accordingly.
+
 Class Feed_ForwardLink_Receive extends Feed_Abstract
 {
 	var $type = "forwardlink";

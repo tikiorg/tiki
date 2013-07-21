@@ -190,11 +190,10 @@ class RankLib extends TikiLib
     function forums_ranking_last_posts($limit, $toponly=false, $forumId='')
 	{
 		global $user;
-		$commentslib = TikiLib::lib('comments');
 		$offset=0;
 		$count = 0;
 		$ret = array();
-		$result = $commentslib->get_all_comments('forum', 0, $limit, 'commentDate_desc', '', '', '', $toponly, $forumId);
+		$result = TikiLib::lib('comments')->get_all_comments('forum', 0, $limit, 'commentDate_desc', '', '', '', $toponly, $forumId);
 		$result['data'] = Perms::filter(array('type' => 'forum'), 'object', $result['data'], array('object' => 'object'), 'forum_read');
 		foreach ($result['data'] as $res) {
 			$aux['name'] = $res['title'];
@@ -223,13 +222,7 @@ class RankLib extends TikiLib
      */
     function forums_ranking_most_read_topics($limit, $forumId='')
 	{
-		global $commentslib;
-		if (! $commentslib) {
-			require_once 'lib/comments/commentslib.php';
-			$commentslib = new Comments;
-		}
-
-		$result = $commentslib->get_all_comments('forum', 0, $limit, 'hits_desc', '', '', '', true, $forumId);
+		$result = TikiLib::lib('comments')->get_all_comments('forum', 0, $limit, 'hits_desc', '', '', '', true, $forumId);
 
 		$ret = array();
 		foreach ($result['data'] as $res) {
@@ -273,14 +266,8 @@ class RankLib extends TikiLib
      */
     function forums_ranking_top_topics($limit)
 	{
-		global $commentslib;
-		if (! $commentslib) {
-			require_once 'lib/comments/commentslib.php';
-			$commentslib = new Comments;
-		}
-
 		$ret = array();
-		$comments = $commentslib->get_forum_topics(null, 0, $limit, 'average_desc');
+		$comments = TikiLib::lib('comments')->get_forum_topics(null, 0, $limit, 'average_desc');
 		foreach ($comments as $res) {
 			$aux = array();
 			$aux['name'] = $res['name'] . ': ' . $res['title'];
@@ -303,13 +290,7 @@ class RankLib extends TikiLib
      */
     function forums_ranking_most_visited_forums($limit)
 	{
-		global $commentslib;
-		if (! $commentslib) {
-			require_once 'lib/comments/commentslib.php';
-			$commentslib = new Comments;
-		}
-
-		$result = $commentslib->list_forums(0, $limit, 'hits_desc');
+		$result = TikiLib::lib('comments')->list_forums(0, $limit, 'hits_desc');
 		$ret = array();
 		$count = 0;
 		foreach ($result['data'] as $res) {
@@ -332,13 +313,7 @@ class RankLib extends TikiLib
      */
     function forums_ranking_most_commented_forum($limit)
 	{
-		global $commentslib;
-		if (! $commentslib) {
-			require_once 'lib/comments/commentslib.php';
-			$commentslib = new Comments;
-		}
-
-		$result = $commentslib->list_forums(0, $limit, 'comments_desc');
+		$result = TikiLib::lib('comments')->list_forums(0, $limit, 'comments_desc');
 		$ret = array();
 		$count = 0;
 		foreach ($result['data'] as $res) {

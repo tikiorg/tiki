@@ -23,11 +23,12 @@ CKEDITOR.plugins.add('tikiwiki',{
 		this.dataFilter = editor.dataProcessor.dataFilter;
 
 		var oldToDataFormat = editor.dataProcessor.toDataFormat ;
-		editor.dataProcessor.toDataFormat 	= function ( html, fixForBody ) { return twplugin.toWikiFormat( editor, oldToDataFormat( html, fixForBody ) ); };
+		editor.dataProcessor.toDataFormat 	= function ( html, fixForBody ) {
+			return twplugin.toWikiFormat( editor, oldToDataFormat.call( editor.dataProcessor, html, fixForBody ) ); };
 		editor.dataProcessor.toHtml			= function ( data, fixForBody ) { return twplugin.toHtmlFormat( editor, data ); };
 
 		// data in the clipboard is html, the input format is expected to be wiki
-		editor.on('paste', function(evt) {evt.editor.insertHtml(twplugin.toWikiFormat( editor, evt.data.html )); evt.stop(); }, editor.element.$);
+		editor.on('paste', function(evt) {evt.editor.insertHtml(twplugin.toWikiFormat( editor, evt.data.dataValue )); evt.stop(); }, editor.element.$);
 
 		// button stuff goes here?
 	},
@@ -67,7 +68,7 @@ CKEDITOR.plugins.add('tikiwiki',{
 		// deal with plugins here?
 		var output = "";
 		var twplugin = this;
-		var isHtml = $("#allowhtml:checked").length || $("#allowhtml[type=hidden]").val();
+		var isHtml = auto_save_allowHtml(editor.element.$.form);
 
 		if (typeof editor.pluginReparsing !== "undefined" && editor.pluginReparsing) {
 			editor.pluginReparsing = false;
@@ -95,8 +96,7 @@ CKEDITOR.plugins.add('tikiwiki',{
 				if (!output) {
 					output = unescape(jQuery(data).find('data').text())
 				}
-				//var fragment = CKEDITOR.htmlParser.fragment.fromHtml( output, false );	// fixForBody?
-				//editor.dataProcessor.htmlFilter.onFragment(fragment);
+				// not working for ckeditor 4?
 				output = twplugin.ckToHtml.call(twplugin, output);
 			},
 			// bad callback - no good info in the params :(

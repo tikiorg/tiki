@@ -20,6 +20,7 @@ function wikiplugin_events_info()
 				'name' => tra('Calendar IDs'),
 				'description' => tra('ID numbers for the site calendars whose events are to be displayed, separated by vertical bars (|)'),
 				'default' => '',
+				'profile_reference' => 'calendar',
 			),
 			'maxdays' => array(
 				'required' => false,

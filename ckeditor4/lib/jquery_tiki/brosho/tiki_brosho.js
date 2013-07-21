@@ -2,26 +2,29 @@
  * tiki brosho code
  */
 
-function toggle_brosho() {
-	$.fn.brosho({                     //call to the brosho plugin
-		stylesheet:         "lib/jquery_tiki/brosho/tiki.brosho.css", //path of custom brosho stylesheet
-		position:           "left",           //initial position of the editor ("top", "bottom", "left", "right")
-		elementHoverClass:  "custom-hover",   //a custom hover class
-		editorOpacity:      0.8                 //full opacity on editor
+function show_brosho() {
+	$.getScript("vendor/jquery/plugins/brosho/brosho/jquery.brosho.js", function () {
+		$('#brosho-wrapper').remove();
+		$.fn.brosho({                     //call to the brosho plugin
+			stylesheet:         "lib/jquery_tiki/brosho/tiki.brosho.css", //path of custom brosho stylesheet
+			position:           "left",           //initial position of the editor ("top", "bottom", "left", "right")
+			elementHoverClass:  "custom-hover",   //a custom hover class
+			editorOpacity:      0.8                 //full opacity on editor
+		});
+		$("#brosho-selector").prepend($("<img src='img/icons/close.png' style='float:right;' />").click(function(){
+			$('#brosho-wrapper, #brosho-overlay-wrapper').remove(); //remove old stuff
+			$('body *').unbind(); //unbind the previous hover event handler on every element within the body
+		}));
+		$("#brosho-controls").append($("<li id='brosho-copy' />").text("Copy to Custom CSS: ").append($("<a href='#'>Copy</a>")).click(function(){
+			$("textarea[name=header_custom_css]").val($("textarea[name=header_custom_css]").val() + "\n" + brosho_get_code());
+		}));
+		$("#brosho-generate, #brosho-position").remove();
+		if ($.ui) {
+			var h = $("#brosho-wrapper").height();
+			$("#brosho-wrapper").resizable({maxHeight:h,minHeight:h}).draggable();
+		}
+		return false;
 	});
-	$("#brosho-selector").prepend($("<img src='img/icons/close.png' style='float:right;' />").click(function(){
-		$('#brosho-wrapper, #brosho-overlay-wrapper').remove(); //remove old stuff
-		$('body *').unbind(); //unbind the previous hover event handler on every element within the body
-	}));
-	$("#brosho-controls").append($("<li id='brosho-copy' />").text("Copy to Custom CSS: ").append($("<a href='#'>Copy</a>")).click(function(){
-		$("textarea[name=header_custom_css]").val($("textarea[name=header_custom_css]").val() + "\n" + brosho_get_code());
-	}));
-	$("#brosho-generate, #brosho-position").remove();
-	if ($.ui) {
-		var h = $("#brosho-wrapper").height();
-		$("#brosho-wrapper").resizable({maxHeight:h,minHeight:h}).draggable();
-	}
-	return false;
 }
 
 function brosho_get_code() {

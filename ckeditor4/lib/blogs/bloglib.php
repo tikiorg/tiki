@@ -500,13 +500,8 @@ class BlogLib extends TikiDb_Bridge
 	)
 	{
 		global $tikilib, $tiki_p_admin, $tiki_p_blog_admin, $tiki_p_blog_post, $user, $prefs;
-		global $commentslib; require_once('lib/comments/commentslib.php');
 
 		$parserlib = TikiLib::lib('parser');
-
-		if (!is_object($commentslib)) {
-			$commentslib = new Comments();
-		}
 
 		$mid = array();
 		$bindvars = array();
@@ -566,7 +561,7 @@ class BlogLib extends TikiDb_Bridge
 		$ret = array();
 
 		while ($res = $result->fetchRow()) {
-			$res["comments"] = $commentslib->count_comments('blog post:' . $res['postId']);
+			$res["comments"] = TikiLib::lib('comments')->count_comments('blog post:' . $res['postId']);
 			$res['pages'] = $this->get_number_of_pages($res['data']);
 			$res['avatar'] = $tikilib->get_user_avatar($res['user']);
 
@@ -1157,6 +1152,55 @@ class BlogLib extends TikiDb_Bridge
 		$query = 'select count(distinct(`user`))  from `tiki_blog_posts`';
 		$nb = $this->getOne($query);
 		return array('data' => $ret, 'count' => $nb);
+	}
+	function mod_blog_posts(&$blogItems, $charCount, $wordBoundary='y', $ellipsis='y', $more='y')
+	{
+		global $smarty;
+
+		/* The function takes an argument asking if the break should occur on a
+		   word boundary. The truncate function asks if words can be broken.
+		   The same question is asked inversely so the supplied parameter needs
+		   to be reversed to remain accurate. */
+		$breakword = ($wordBoundary == 'y') ? false : true;
+
+		$etc = ($ellipsis == 'y') ? ' ... ' : ' ';
+		$numBlogs = count($blogItems["data"]);
+		for ($i=0; $i<$numBlogs; $i++) {
+			$pos = 0;
+			$counter = 'char';
+			$arrString = array();
+			$tally = array( "char" => 0, "tags" => 0 );
+//			preg_match_all("[\s|\w]",$blogItems['data'][$i]['parsed_data'],$arrString);
+			$arrString = $blogItems['data'][$i]['parsed_data'];
+
+			/* We don't want to stop this loop until we've counted sufficient displaying
+			   characters, not just string positions */
+			for ($pos=0; $tally['char']<$charCount; $pos++) {
+				if ($arrString[$pos] == '<' && $counter == 'char') {
+					$counter = 'tags';
+				} elseif ($arrString[$pos] == '>' && $counter == 'tags') {
+					$counter = 'char';
+				}
+				$tally[$counter]++;
+			}
+			$segLength = $charCount + $tally['tags'];
+			$smarty->loadPlugin('smarty_modifier_truncate');
+			$blogItems['data'][$i]['parsed_data'] =
+				smarty_modifier_truncate(
+					$blogItems['data'][$i]['parsed_data'],
+					$segLength,
+					$etc,
+					$breakword
+				);
+
+			if ($more == 'y') {
+				$blogItems['data'][$i]['parsed_data'] .=
+					'<a class="link" href="tiki-view_blog_post.php?postId=' .
+					$blogItems['data'][$i]['postId'] . '"> &#60more&#62</a>';
+			}
+			unset( $arrString );
+		}
+  		return( $blogItems );
 	}
 }
 

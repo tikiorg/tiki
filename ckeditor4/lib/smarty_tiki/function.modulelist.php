@@ -44,9 +44,13 @@ function smarty_function_modulelist($params, $smarty)
 			)
 		);
 	}
-
+	if ($prefs['mobile_feature'] === 'y' && $prefs['mobile_mode'] === 'y') {
+		$mobile = ' data-role="collapsible-set" data-theme="' . $prefs['mobile_theme_modules'] . '"';
+	} else {
+		$mobile = '';
+	}
 	return <<<OUT
-<div class="$class" id="$id"$dir>
+<div class="$class" id="$id"$dir$mobile>
 	$content
 </div>
 OUT;

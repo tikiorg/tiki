@@ -58,8 +58,11 @@ function smarty_function_popup($params, $smarty)
 
 			case 'width':
 			case 'height':
+				$options[$key] = $value;
+				break;
 			case 'sticky':
-				$params[$key] = $value;
+				$options[$key] = !empty($value);
+				$options['mouseOutClose'] = false;
 				break;
 			case 'fullhtml':
 				$options['escapeTitle'] = true;
@@ -87,7 +90,9 @@ function smarty_function_popup($params, $smarty)
 	$body = str_replace('\&#039;', '&#039;', $body);	// unescape previous js escapes
 	$body = str_replace('\&quot;', '&quot;', $body);
 	$body = str_replace('&lt;\/', '&lt;/', $body);
-	$retval = ' class="tips"';
+	if ($options['activation'] !== 'click') {
+		$retval = ' class="tips"';		// adds default ct options including 'hover' activation
+	}
 	if ($title) {
 		$retval .= '" title="' . $title . '"';
 	} else {

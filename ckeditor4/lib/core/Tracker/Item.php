@@ -119,6 +119,10 @@ class Tracker_Item
 	private function canFromSpecialPermissions($operation)
 	{
 		global $user;
+		if (! $this->definition) {
+			return false;
+		}
+
 		if ($this->definition->getConfiguration('writerCan' . $operation, 'n') == 'y' && $user && $this->owner && $user === $this->owner) {
 			return true;
 		}
@@ -410,7 +414,7 @@ class Tracker_Item
 		}
 
 		return array(
-			'itemId' => $this->isNew() ? null : $this->getItemId(),
+			'itemId' => $this->isNew() ? null : $this->info['itemId'],
 			'status' => $this->isNew() ? 'o' : $this->data['status'],
 			'fields' => $out,
 		);

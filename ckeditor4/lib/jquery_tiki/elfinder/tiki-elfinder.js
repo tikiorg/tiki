@@ -19,7 +19,8 @@
 openElFinderDialog = function(element, options) {
 	var $dialog = $('<div/>'), buttons = {};
 	options = options ? options : {};
-	$(this).append($dialog).data('elFinderDialog', $dialog);
+	$(document.body).append($dialog);
+	$(window).data('elFinderDialog', $dialog);	// needed for select handler later
 
 	options = $.extend({
 		title : tr("Browse Files"),
@@ -27,14 +28,20 @@ openElFinderDialog = function(element, options) {
 		height : 520,
 		width: 800,
 		zIndex : 9999,
-		modal: true
+		modal: true,
+		eventOrigin: this
 	}, options);
 
 	buttons[tr('Close')] = function () {
 		$dialog
-			.dialog('close')
-			.dialog('destroy');
+			.dialog('close');
 	};
+
+
+	if (options.eventOrigin) {	// save it for later
+		$("body").data("eventOrigin", options.eventOrigin);	// sadly adding data to the dialog kills elfinder :(
+		delete options.eventOrigin;
+	}
 
 	var elfoptions = initElFinder(options);
 
@@ -53,7 +60,10 @@ openElFinderDialog = function(element, options) {
 			$elf.elfinder(elfoptions).elfinder('instance');
 		},
 		close: function () {
-			$(this).dialog('destroy');
+			$("body").data("eventOrigin", "");
+			$(this).dialog('close')
+				.dialog('destroy')
+				.remove();
 		}
 	});
 
@@ -82,6 +92,16 @@ function initElFinder(options) {
 		}
 	}, options);
 
+	var lang = jqueryTiki.language;
+	if (lang && typeof elFinder.prototype.i18[lang] !== "undefined" && !options.lang) {
+		if (lang == 'cn') {
+			lang = 'zh_CN';
+		} else if (lang == 'pt-br') {
+			lang = 'pt_BR';
+		}
+		options.lang = lang;
+	}
+
 	if (options.defaultGalleryId > 0) {
 		options.rememberLastDir = false;
 		if (!options.deepGallerySearch) {
@@ -93,12 +113,13 @@ function initElFinder(options) {
 	delete options.deepGallerySearch;
 
 
-//	// turn off most elfinder commands as at this stage it will be read-only in tiki (tiki 10)
-//	var remainingCommands = elFinder.prototype._options.commands, idx;
-//	var disabled = ['rm', 'duplicate', 'rename', 'mkdir', 'mkfile', 'upload', 'copy', 'cut', 'paste', 'edit', 'extract', 'archive', 'resize'];
-//	$.each(disabled, function (i, cmd) {
-//		(idx = $.inArray(cmd, remainingCommands)) !== -1 && remainingCommands.splice(idx, 1);
-//	});
+	// turn off some elfinder commands - not many left to do...
+	var remainingCommands = elFinder.prototype._options.commands, idx;
+	var disabled = ['mkfile', 'edit', 'archive', 'resize'];
+	// done 'rm', 'duplicate', 'rename', 'mkdir', 'upload', 'copy', 'cut', 'paste', 'extract',
+	$.each(disabled, function (i, cmd) {
+		(idx = $.inArray(cmd, remainingCommands)) !== -1 && remainingCommands.splice(idx, 1);
+	});
 	return options;
 }
 

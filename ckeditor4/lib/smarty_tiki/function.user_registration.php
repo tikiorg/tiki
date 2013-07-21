@@ -71,21 +71,26 @@ function smarty_function_user_registration($params, $smarty)
 		}
 
 		$smarty->assign('errortype', 'no_redirect_login');
-
+		//result is empty if fields (including antibot) validate and new user is successfully created
+		//no user notification at this stage if user tracker is used
 		$result = $registrationlib->register_new_user($_REQUEST);
 
-		if (is_array($result)) {
-			foreach ($result as $r) {
-				$errorreportlib->report($r->msg);
+		if (empty($result)) {
+			$_REQUEST['valerror'] = false;
+		} else {
+			$_REQUEST['valerror'] = $result;
+			if (is_array($result)) {
+				foreach ($result as $r) {
+					$errorreportlib->report($r->msg);
+				}
+			} elseif (is_a($result, 'RegistrationError')) {
+				$errorreportlib->report($result->msg);
+			} elseif (is_string($result) && $registrationlib->merged_prefs['userTracker'] !== 'y') {	// more to do for usertrackers
+				return $result;
+			} elseif (!empty($result['msg']) && $registrationlib->merged_prefs['userTracker'] !== 'y') {
+				return $result['msg'];
 			}
-		} else if (is_a($result, 'RegistrationError')) {
-			$errorreportlib->report($result->msg);
-		} else if (is_string($result) && $registrationlib->merged_prefs['userTracker'] !== 'y') {	// more to do for usertrackers
-			return $result;
-		} elseif (!empty($result['msg']) && $registrationlib->merged_prefs['userTracker'] !== 'y') {
-			return $result['msg'];
 		}
-
 	}
 	$outputtowiki='';
 	$outputwiki='';
@@ -116,9 +121,9 @@ function smarty_function_user_registration($params, $smarty)
 			}
 			if ($registrationlib->merged_prefs["user_register_prettytracker"] == 'y' && !empty($registrationlib->merged_prefs["user_register_prettytracker_tpl"])) {
 				if (substr($registrationlib->merged_prefs["user_register_prettytracker_tpl"], -4) == ".tpl") {
-					$userTrackerData = wikiplugin_tracker('', array('trackerId' => $re['usersTrackerId'], 'fields' => $re['registrationUsersFieldIds'], 'showdesc' => 'y', 'showmandatory' => 'y', 'embedded' => 'n', 'action' => tra('Register'), 'registration' => 'y', 'tpl' => $re["user_register_prettytracker_tpl"], 'userField' => $re['usersFieldId'], 'outputwiki' => $outputwiki, 'outputtowiki' => $outputtowiki));
+					$userTrackerData = wikiplugin_tracker('', array('trackerId' => $re['usersTrackerId'], 'fields' => $re['registrationUsersFieldIds'], 'showdesc' => 'y', 'showmandatory' => 'y', 'embedded' => 'n', 'action' => tra('Register'), 'registration' => 'y', 'tpl' => $registrationlib->merged_prefs["user_register_prettytracker_tpl"], 'userField' => $re['usersFieldId'], 'outputwiki' => $outputwiki, 'outputtowiki' => $outputtowiki));
 				} else {
-					$userTrackerData = wikiplugin_tracker('', array('trackerId' => $re['usersTrackerId'], 'fields' => $re['registrationUsersFieldIds'], 'showdesc' => 'y', 'showmandatory' => 'y', 'embedded' => 'n', 'action' => tra('Register'), 'registration' => 'y', 'wiki' => $re["user_register_prettytracker_tpl"], 'userField' => $re['usersFieldId'],'outputwiki' => $outputwiki, 'outputtowiki' => $outputtowiki));
+					$userTrackerData = wikiplugin_tracker('', array('trackerId' => $re['usersTrackerId'], 'fields' => $re['registrationUsersFieldIds'], 'showdesc' => 'y', 'showmandatory' => 'y', 'embedded' => 'n', 'action' => tra('Register'), 'registration' => 'y', 'wiki' => $registrationlib->merged_prefs["user_register_prettytracker_tpl"], 'userField' => $re['usersFieldId'],'outputwiki' => $outputwiki, 'outputtowiki' => $outputtowiki));
 				}
 			} else {
 				$userTrackerData = wikiplugin_tracker('', array('trackerId' => $re['usersTrackerId'], 'fields' => $re['registrationUsersFieldIds'], 'showdesc' => 'y', 'showmandatory' => 'y', 'embedded' => 'n', 'action' => tra('Register'), 'registration' => 'y', 'userField' => $re['usersFieldId']));

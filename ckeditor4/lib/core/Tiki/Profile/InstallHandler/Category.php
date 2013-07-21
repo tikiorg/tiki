@@ -20,26 +20,34 @@ class Tiki_Profile_InstallHandler_Category extends Tiki_Profile_InstallHandler
 
 		$data = $this->obj->getData();
 
-		if ( array_key_exists('name', $data) )
+		if ( array_key_exists('name', $data) ) {
 			$this->name = $data['name'];
-		if ( array_key_exists('description', $data) )
+		}
+		if ( array_key_exists('description', $data) ) {
 			$this->description = $data['description'];
-		if ( array_key_exists('parent', $data) )
+		}
+		if ( array_key_exists('parent', $data) ) {
 			$this->parent = $data['parent'];
-		if ( array_key_exists('migrateparent', $data) )
+		}
+		if ( array_key_exists('migrateparent', $data) ) {
 			$this->migrateparent = $data['migrateparent'];
-		if ( array_key_exists('items', $data) && is_array($data['items']) )
-			foreach ( $data['items'] as $pair )
-				if ( is_array($pair) && count($pair) == 2 )
+		}
+		if ( array_key_exists('items', $data) && is_array($data['items']) ) {
+			foreach ( $data['items'] as $pair ) {
+				if ( is_array($pair) && count($pair) == 2 ) {
 					$this->items[] = $pair;
+				}
+			}
+		}
 	}
 
 	function canInstall()
 	{
 		$this->fetchData();
 
-		if ( empty( $this->name ) )
+		if ( empty( $this->name ) ) {
 			return false;
+		}
 
 		return true;
 	}
@@ -75,5 +83,44 @@ class Tiki_Profile_InstallHandler_Category extends Tiki_Profile_InstallHandler
 		}
 
 		return $id;
+	}
+
+	public static function export(Tiki_Profile_Writer $writer, $categId, $deep, $includeObjectCallback)
+	{
+		$categlib = TikiLib::lib('categ');
+		if (! $info = $categlib->get_category($categId)) {
+			return false;
+		}
+
+		$items = array();
+		foreach ($categlib->get_category_objects($categId) as $row) {
+			if ($includeObjectCallback($row['type'], $row['itemId'])) {
+				$items[] = array($row['type'], $writer->getReference($row['type'], $row['itemId']));
+			}
+		}
+
+		$data = array(
+			'name' => $info['name'],
+		);
+
+		if (! empty($info['parentId'])) {
+			$data['parent'] = $writer->getReference('category', $info['parentId']);
+		}
+
+		if (! empty($items)) {
+			$data['items'] = $items;
+		}
+
+		$writer->addObject('category', $categId, $data);
+
+		if ($deep) {
+			$descendants = $categlib->get_category_descendants($categId);
+			array_shift($descendants);
+			foreach ($descendants as $children) {
+				self::export($writer, $children, $deep, $includeObjectCallback);
+			}
+		}
+		
+		return true;
 	}
 }

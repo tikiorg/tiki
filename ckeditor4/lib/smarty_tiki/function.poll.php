@@ -13,17 +13,16 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 
 function smarty_function_poll($params, $smarty)
 {
-	global $polllib, $dbTiki, $commentslib, $prefs;
+	global $polllib, $prefs;
 	global $tiki_p_view_poll_results, $tiki_p_vote_poll;
 	extract($params);
 	// Param = zone
 	if (!is_object($polllib)) {
 		include_once('lib/polls/polllib_shared.php');
 	}
-	include_once('lib/comments/commentslib.php');
 
 	if (isset($rate)) {
-		if (!$tikilib->page_exists($rate)) {
+		if (!TikiLib::lib('tiki')->page_exists($rate)) {
 			return false;
 		}
 	}
@@ -43,8 +42,7 @@ function smarty_function_poll($params, $smarty)
 		if ($menu_info) {
 			$channels = $polllib->list_poll_options($id);
 			if ($prefs['feature_poll_comments'] == 'y') {
-				$commentslib = new Comments($dbTiki);
-				$comments_count = $commentslib->count_comments("poll:" . $menu_info["pollId"]);
+				$comments_count = TikiLib::lib('comments')->count_comments("poll:" . $menu_info["pollId"]);
 			} else
 				$comments_count = 0;
 			$smarty->assign('comments_cant', $comments_count);

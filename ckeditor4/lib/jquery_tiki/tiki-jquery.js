@@ -17,7 +17,7 @@ function escapeJquery(str) {
 function switchCheckboxes (tform, elements_name, state) {
 	// checkboxes need to have the same name elements_name
 	// e.g. <input type="checkbox" name="my_ename[]">, will arrive as Array in php.
-	$(tform).contents().find('input[name="' + escapeJquery(elements_name) + '"]:visible').attr('checked', state).change();
+	$(tform).contents().find('input[name="' + escapeJquery(elements_name) + '"]:visible').prop('checked', state).change();
 }
 
 
@@ -32,11 +32,7 @@ function show(foo, f, section) {
 	} else if ($("#" + foo).hasClass("tabcontent")) {		// different anim prefs for tabs
 		showJQ("#" + foo, jqueryTiki.effect_tabs, jqueryTiki.effect_tabs_speed, jqueryTiki.effect_tabs_direction);
 	} else {
-		if ($.browser.webkit && !jqueryTiki.effect && $("#role_main #" + foo).length) {	// safari/chrome does strange things with default amination in central column
-			showJQ("#" + foo, "slide", jqueryTiki.effect_speed, jqueryTiki.effect_direction);
-		} else {
-			showJQ("#" + foo, jqueryTiki.effect, jqueryTiki.effect_speed, jqueryTiki.effect_direction);
-		}
+		showJQ("#" + foo, jqueryTiki.effect, jqueryTiki.effect_speed, jqueryTiki.effect_direction);
 	}
 	if (f) {setCookie(foo, "o", section);}
 }
@@ -185,7 +181,7 @@ function checkDuplicateRows( button, columnSelector, rowSelector ) {
 			$rows.each(function( ix, el ){
 				if ($el[0] !== el && $("input:checked", el).length === 0) {
 					if (line === $(el).find(columnSelector).text()) {
-						$(":checkbox:first", el).attr("checked", true);
+						$(":checkbox:first", el).prop("checked", true);
 					}
 				}
 			});
@@ -195,13 +191,14 @@ function checkDuplicateRows( button, columnSelector, rowSelector ) {
 
 function setUpClueTips() {
 	var ctOptions = {splitTitle: '|', cluezIndex: 2000, width: -1, fx: {open: 'fadeIn', openSpeed: 'fast'},
-		clickThrough: true, hoverIntent: {sensitivity: 3, interval: 100, timeout: 0}};
+		clickThrough: true, hoverIntent: {sensitivity: 3, interval: 100, timeout: 0}, mouseOutClose: 'both',
+		closeText: '<img width="16" height="16" alt="' + tr('Close') + '" src="img/icons/close.png">'};
 
 	$.cluetip.setup = {insertionType: 'insertBefore', insertionElement: '#fixedwidth'};
 	
-	$('.tips[title!=""]').cluetip($.extend(ctOptions, {}));
-	$('.titletips[title!=""]').cluetip($.extend(ctOptions, {}));
-	$('.tikihelp[title!=""]').cluetip($.extend(ctOptions, {splitTitle: ':'})); // , width: '150px'
+	$('.tips[title!=""]').cluetip(ctOptions);
+	$('.titletips[title!=""]').cluetip(ctOptions);
+	$('.tikihelp[title!=""]').cluetip($.extend({splitTitle: ':'}, ctOptions)); // , width: '150px'
 
 	$('[data-cluetip-options]').each(function () {
 		$(this).cluetip(function () {
@@ -211,7 +208,7 @@ function setUpClueTips() {
 
 	// unused?
 	$('.stickytips').cluetip($.extend(ctOptions, {showTitle: false, sticky: false, local: true, hideLocal: true, activation: 'click', cluetipClass: 'fullhtml'}));
-	
+
 	// repeats for "tiki" buttons as you cannot set the class and title on the same element with that function (it seems?)
 	//$('span.button.tips a').cluetip({splitTitle: '|', showTitle: false, width: '150px', cluezIndex: 400, fx: {open: 'fadeIn', openSpeed: 'fast'}, clickThrough: true});
 	//$('span.button.titletips a').cluetip({splitTitle: '|', cluezIndex: 400, fx: {open: 'fadeIn', openSpeed: 'fast'}, clickThrough: true});
@@ -235,8 +232,8 @@ $(function() { // JQuery's DOM is ready event - before onload
 
 	// superfish setup (CSS menu effects)
 	if (jqueryTiki.superfish) {
-		$('ul.cssmenu_horiz').supersubs({ 
-            minWidth:    11,   // minimum width of sub-menus in em units 
+		$('ul.cssmenu_horiz').supersubs({
+            minWidth:    11,   // minimum width of sub-menus in em units
             maxWidth:    20,   // maximum width of sub-menus in em units 
             extraWidth:  1     // extra width can ensure lines don't sometimes turn over 
                                // due to slight rounding differences and font-family 
@@ -285,7 +282,6 @@ $(function() { // JQuery's DOM is ready event - before onload
 			maxHeight:"95%",
 			maxWidth:"95%",
 			overlayClose: true,
-			title: true,
 			current: jqueryTiki.cboxCurrent
 		});
 		
@@ -416,9 +412,19 @@ $(function() { // JQuery's DOM is ready event - before onload
 		
 	}	// end if (jqueryTiki.colorbox)
 
-	$.applySelectMenus = function() {
-		return $('body').applySelectMenus();
+	$.fn.applyChosen = function () {
+		if (jqueryTiki.chosen) {
+			$("select:not(.allow_single_deselect)").tiki("chosen");
+		}
 	};
+
+	$.applyChosen = function() {
+		return $('body').applyChosen();
+	};
+
+	if (jqueryTiki.chosen) {
+		$.applyChosen();
+	}
 
 	$.fn.applySelectMenus = function () {
 		if (jqueryTiki.selectmenu) {
@@ -443,10 +449,14 @@ $(function() { // JQuery's DOM is ready event - before onload
 		}
 	};
 
+	$.applySelectMenus = function() {
+		return $('body').applySelectMenus();
+	};
+
 	if (jqueryTiki.selectmenu) {
 		$.applySelectMenus();
 	}
-	
+
 	$( function() {
 		$("#keepOpenCbx").click(function() {
 			if (this.checked) {
@@ -457,7 +467,7 @@ $(function() { // JQuery's DOM is ready event - before onload
 		});
 		var keepopen = getCookie("fgalKeepOpen");
 		if (keepopen) {
-			$("#keepOpenCbx").attr("checked", "checked");
+			$("#keepOpenCbx").prop("checked", "checked");
 		} else {
 			$("#keepOpenCbx").removeAttr("checked");
 		}
@@ -475,7 +485,7 @@ $document.bind('pageSearchReady', function() {
 
 // moved from tiki-list_file_gallery.tpl in tiki 6
 function checkClose() {
-	if (!$("#keepOpenCbx").attr("checked")) {
+	if (!$("#keepOpenCbx").prop("checked")) {
 		window.close();
 	} else {
 		window.blur();
@@ -485,19 +495,6 @@ function checkClose() {
 	}
 }
 
-
-/* Autocomplete assistants */
-
-function parseAutoJSON(data) {
-	var parsed = [];
-	return $.map(data, function(row) {
-		return {
-			data: row,
-			value: row,
-			result: row
-		};
-	});
-}
 
 /// jquery ui dialog replacements for popup form code
 /// need to keep the old non-jq version in tiki-js.js as jq-ui is optional (Tiki 4.0)
@@ -679,7 +676,7 @@ function popupPluginForm(area_id, type, index, pageName, pluginArgs, bodyContent
 	var heading = container.find('h3').hide();
 
 	try {
-		if (container.dialog) {
+		if (container.data("ui-dialog")) {
 			container.dialog('destroy');
 		}
 	} catch( e ) {
@@ -799,6 +796,12 @@ function sideBySideDiff() {
 }
 
 function toggleFullScreen(area_id) {
+
+	if ($("input[name=wysiwyg]").val() === "y") {		// quick fix to disable side-by-side translation for wysiwyg
+		$("#diff_versions").height(200).css("overflow", "auto");
+		return;
+	}
+
 	var textarea = $("#" + area_id);
 	
 	//codemirror interation and preservation
@@ -812,7 +815,7 @@ function toggleFullScreen(area_id) {
 	$('.TextArea-fullscreen').add(textarea).css('height', '');
 
 	//removes wiki command buttons (save, cancel, preview) from fullscreen view
-	$('.TextArea-fullscreen .wikiaction').remove();
+	$('.TextArea-fullscreen .actions').remove();
 
 	var textareaParent = textarea.parent().parent().toggleClass('TextArea-fullscreen');
 	$('body').toggleClass('noScroll');
@@ -834,8 +837,8 @@ function toggleFullScreen(area_id) {
 		})
 			.resize();
 
-		//adds wiki command buttons (save, cancel, preview) from fullscreen view
-		$('#role_main input.wikiaction').clone().appendTo('.TextArea-fullscreen');
+		//adds wiki command buttons (save, cancel, preview) to fullscreen view
+		$('#role_main .actions').clone().appendTo('.TextArea-fullscreen');
 	} else {
 		$window.removeData('cm-resize');
 	}
@@ -938,7 +941,7 @@ $.fn.tiki = function(func, type, options) {
 		case "carousel":
 			if (jqueryTiki.carousel) {
 				opts = {
-						imagePath: "lib/jquery/infinitecarousel/images/",
+						imagePath: "vendor/jquery/plugins/infinitecarousel/images/",
 						autoPilot: true
 					};
 				$.extend(opts, options);
@@ -964,19 +967,28 @@ $.fn.tiki = function(func, type, options) {
 							dateFormat: "yy-mm-dd",
 							showButtonPanel: true,
 							altFormat: "@",
+							altFieldTimeOnly: false,
 							onClose: function(dateText, inst) {
 								$.datepicker._updateAlternate(inst);	// make sure the hidden field is up to date
-								var timestamp = parseInt($(inst.settings.altField).val() / 1000, 10);
-								if (!timestamp) {
-									$.datepicker._setDateFromField(inst);	// seems to need reminding when starting empty
-									$.datepicker._updateAlternate(inst);
-									timestamp = parseInt($(inst.settings.altField).val() / 1000, 10);
-								}
-								if (timestamp && inst.settings && inst.settings.timepicker) {	// if it's a datetimepicker add on the time
-									var time = inst.settings.timepicker.hour * 3600 +
-											   inst.settings.timepicker.minute * 60 +
-											   inst.settings.timepicker.second;
-									timestamp += time;
+								var val = $(inst.settings.altField).val(), timestamp;
+								if (func === "datetimepicker") {
+									val = val.substring(0, val.indexOf(" "));
+									timestamp = parseInt(val / 1000, 10);
+									if (!timestamp || isNaN(timestamp)) {
+										$.datepicker._setDateFromField(inst);	// seems to need reminding when starting empty
+										$.datepicker._updateAlternate(inst);
+										val = $(inst.settings.altField).val();
+										val = val.substring(0, val.indexOf(" "));
+										timestamp = parseInt(val / 1000, 10);
+									}
+									if (timestamp && inst.settings && inst.settings.timepicker) {	// if it's a datetimepicker add on the time
+										var time = inst.settings.timepicker.hour * 3600 +
+											inst.settings.timepicker.minute * 60 +
+											inst.settings.timepicker.second;
+										timestamp += time;
+									}
+								} else {
+									timestamp = parseInt(val / 1000, 10);
 								}
 								$(inst.settings.altField).val(timestamp ? timestamp : "");
 							}
@@ -1022,6 +1034,24 @@ $.fn.tiki = function(func, type, options) {
 				});
 			}
 			break;
+		case "chosen":
+			if (jqueryTiki.chosen) {
+				opts = { allow_single_deselect: true };		// allow_single_deselect happens if first item is empty
+				$.extend(opts, options);
+		 		return this.each(function() {
+					var hidden = {};
+					$(this).each(function () {
+						$.merge(hidden, $(this).parents(":hidden:last"));
+					});
+					hidden = $.unique($(hidden));
+					hidden.show();
+					$(this).chosen(opts).on("liszt:ready", function () {
+						var $this = $(this);
+					});
+					hidden.hide();
+				});
+			}
+			break;
 		case "selectmenu":
 			if (jqueryTiki.selectmenu) {
 				opts = {
@@ -1044,35 +1074,42 @@ $.fn.tiki = function(func, type, options) {
 // shared
 
 window.dialogData = [];
-var dialogDiv;
+var $dialogDiv;
 
 function displayDialog( ignored, list, area_id ) {
-	var i, item, el, obj, tit = "";
+	var obj = {
+		width: 210,
+		bgiframe: true,
+		autoOpen: false,
+		zIndex: 10000
+	};
 
-	var $is_cked =  $('#cke_contents_' + area_id).length !== 0;
-
-	if (!dialogDiv) {
-		dialogDiv = document.createElement('div');
-		document.body.appendChild( dialogDiv );
+	if (! $dialogDiv) {
+		$dialogDiv = $('<div/>');
+	} else {
+		try {
+			$dialogDiv.empty();
+			if ($dialogDiv.data("ui-dialog")) {
+				$dialogDiv.dialog('destroy');
+			}
+		} catch( e ) {
+			// IE throws errors destroying a non-existant dialog
+		}
 	}
-	$(dialogDiv).empty();
 	
-	for( i = 0; i < window.dialogData[list].length; i++ ) {
-		item = window.dialogData[list][i];
+	$.each (window.dialogData[list], function (i, item) {
 		if (item.indexOf("<") === 0) {	// form element
-			el = $(item);
-			$(dialogDiv).append( el );
+			$dialogDiv.append(item);
 		} else if (item.indexOf("{") === 0) {
 			try {
-				//obj = JSON.parse(item);	// safer, but need json2.js lib
-				obj = eval("("+item+")");
+				obj = $.extend(obj, eval("("+item+")"));
 			} catch (e) {
 				alert(e.name + ' - ' + e.message);
 			}
 		} else if (item.length > 0) {
-			tit = item;
+			obj.title = item;
 		}
-	}
+	});
 	
 	// Selection will be unavailable after context menu shows up - in IE, lock it now.
 	if ( typeof CKEDITOR !== "undefined" && CKEDITOR.env.ie ) {
@@ -1083,19 +1120,7 @@ function displayDialog( ignored, list, area_id ) {
 		storeTASelection(area_id);
 	}
 	
-	if (!obj) { obj = {}; }
-	if (!obj.width) {obj.width = 210;}
-	obj.bgiframe = true;
-	obj.autoOpen = false;
-	obj.zIndex = 10000;
-	try {
-		if ($(dialogDiv).dialog) {
-			$(dialogDiv).dialog('destroy');
-		}
-	} catch( e ) {
-		// IE throws errors destroying a non-existant dialog
-	}
-	$(dialogDiv).dialog(obj).dialog('option', 'title', tit).dialog('open');
+	$dialogDiv.dialog(obj).dialog('open');
 
 	return false;
 }
@@ -1197,7 +1222,7 @@ function displayPicker( closeTo, list, area_id, isSheet, styleType ) {
 
 
 function dialogSelectElement( area_id, elementStart, elementEnd ) {
-	if ($('#cke_contents_' + area_id).length !== 0) {return;}	// TODO for ckeditor
+	if (typeof CKEDITOR !== 'undefined' && typeof CKEDITOR.instances[area_id] !== 'undefined') {return;}	// TODO for ckeditor
 	
 	var $textarea = $('#' + area_id);
 	var textareaEditor = syntaxHighlighter.get($textarea);
@@ -1300,7 +1325,7 @@ function dialogExternalLinkOpen( area_id ) {
 		$("#tbLinkDesc").val(m[2]);
 		if (m[3]) {
 			if ($("#tbLinkNoCache") && m[3] == "nocache") {
-				$("#tbLinkNoCache").attr("checked", "checked");
+				$("#tbLinkNoCache").prop("checked", "checked");
 			} else {
 				$("#tbLinkRel").val(m[3]);
 			}
@@ -1328,7 +1353,7 @@ function dialogExternalLinkInsert(area_id, dialog) {
 	if ($("#tbLinkRel").val()) {
 		s += "|" + $("#tbLinkRel").val();
 	}
-	if ($("#tbLinkNoCache") && $("#tbLinkNoCache").attr("checked")) {
+	if ($("#tbLinkNoCache") && $("#tbLinkNoCache").prop("checked")) {
 		s += "|nocache";
 	}
 	s += "]";
@@ -1505,7 +1530,7 @@ function dialogFindFind( area_id ) {
 		var s, opt, str, re, p = 0, m;
 		s = findInput.val();
 		opt = "";
-		if ($("#tbFindCase").attr("checked")) {
+		if ($("#tbFindCase").prop("checked")) {
 			opt += "i";
 		}
 		str = ta.val();
@@ -1544,10 +1569,10 @@ function dialogReplaceReplace( area_id ) {
 	var s = findInput.val();
 	var r = $("#tbReplaceReplace").val();
 	var opt = "";
-	if ($("#tbReplaceAll").attr("checked")) {
+	if ($("#tbReplaceAll").prop("checked")) {
 		opt += "g";
 	}
-	if ($("#tbReplaceCase").attr("checked")) {
+	if ($("#tbReplaceCase").prop("checked")) {
 		opt += "i";
 	}
 	var ta = $('#' + area_id);
@@ -1686,11 +1711,20 @@ function dialogReplaceReplace( area_id ) {
 					if (getCookie($('ul:first', this).attr('data-id'), $('ul:first', this).attr('data-prefix')) !== 'o') {
 						$('ul:first', this).css('display', 'none');
 					}
+					var $placeholder = $('span.ui-icon:first', this);
 					if ($('ul:first', this).length) {
 						var dir = $('ul:first', this).css('display') === 'block' ? 's' : 'e';
-						$(this).prepend('<span class="flipper ui-icon ui-icon-triangle-1-' + dir + '" style="float: left;"/>');
+						if ($placeholder.length) {
+							$placeholder.replaceWith('<span class="flipper ui-icon ui-icon-triangle-1-' + dir + '" style="float: left;"/>');
+						} else {
+							$(this).prepend('<span class="flipper ui-icon ui-icon-triangle-1-' + dir + '" style="float: left;"/>');
+						}
 					} else {
-						$(this).prepend('<span style="float:left;width:16px;height:16px;"/>');
+						if ($placeholder.length) {
+							$placeholder.replaceWith('<span style="float:left;width:16px;height:16px;"/>');
+						} else {
+							$(this).prepend('<span style="float:left;width:16px;height:16px;"/>');
+						}
 					}
 				});
 
@@ -1801,7 +1835,7 @@ function dialogReplaceReplace( area_id ) {
 		this.each(function () {
 			var $this = $(this);
 			var width = $this.width();
-			var height = Math.ceil( width * 9 / 16 );
+			var height = $this.height() ? $this.height() : Math.ceil( width * 9 / 16 );
 			var nodes = $this.data('graph-nodes');
 			var edges = $this.data('graph-edges');
 
@@ -2052,9 +2086,10 @@ function dialogReplaceReplace( area_id ) {
 					$dialog.find('form:visible').submit();
 				};
 				buttons[tr('Cancel')] = function () {
-					$dialog
-						.dialog('close')
-						.dialog('destroy');
+					$dialog.dialog('close');
+					if ($dialog.data('ui-dialog')) {
+						$dialog.dialog('destroy');
+					}
 				};
 			}
 
@@ -2067,7 +2102,9 @@ function dialogReplaceReplace( area_id ) {
 					if (options.close) {
 						options.close.apply([], this);
 					}
-					$(this).dialog('destroy').remove();
+					if ($(this).data('ui-dialog')) {
+						$(this).dialog('destroy').remove();
+					}
 				},
 				buttons: buttons,
 				modal: options.modal,
@@ -2083,7 +2120,7 @@ function dialogReplaceReplace( area_id ) {
 		var $dialog = this, controller = options.controller, action = options.action, url;
 
 		if (typeof data === "string") {		// TODO better and refactor
-			data = JSON.parse('{"' + decodeURI(data.replace(/&/g, "\",\"").replace(/=/g,"\":\"")).replace(/[\n\r]/g, "") + '"}');
+			data = JSON.parse('{"' + tiki_decodeURIComponent(data.replace(/&/g, "\",\"").replace(/=/g,"\":\"")).replace(/[\n\r]/g, "") + '"}');
 		}
 		if (data && data.controller) {
 			controller = data.controller;
@@ -2112,10 +2149,14 @@ function dialogReplaceReplace( area_id ) {
 					$dialog.loadService(null, {origin: this});
 					return false;
 				});
+				$dialog.find('.service-dialog').click(function (e) {
+					$dialog.dialog('close');
+					return true;
+				});
 
 				$dialog.find('form .submit').hide();
 
-				$dialog.find('form:not(.no-ajax)').submit(function (e) {
+				$dialog.find('form:not(.no-ajax)').unbind("submit").submit(function (e) {
 					var form = this, act;
 					act = $(form).attr('action');
 		
@@ -2125,6 +2166,10 @@ function dialogReplaceReplace( area_id ) {
 
 					if (typeof $(form).valid === "function") {
 						if (!$(form).valid()) {
+							return false;
+						} else if ($(form).validate().pendingRequest > 0) {
+							$(form).validate();
+							setTimeout(function() {$(form).submit();}, 500);
 							return false;
 						}
 					}
@@ -2139,7 +2184,7 @@ function dialogReplaceReplace( area_id ) {
 							if (data.FORWARD) {
 								$dialog.loadService(data.FORWARD, options);
 							} else {
-								$dialog.dialog('destroy');
+								$dialog.dialog('destroy').remove();
 							}
 
 							if (options.success) {
@@ -2224,6 +2269,10 @@ function dialogReplaceReplace( area_id ) {
 				}
 
 				field = $(this).attr('name');
+
+				if (!field) {	// element without name or id can't show errors
+					return;
+				}
 
 				var parts;
 				if (parts = message.match(/^<!--field\[([^\]]+)\]-->(.*)$/)) {
@@ -2539,6 +2588,9 @@ $.modal = function(msg) {
 //Makes modal over window or object so ajax can load and user can't prevent action
 $.fn.modal = function(msg, s) {
 	var obj = $(this);
+	if (!obj.length) {
+		return;			// happens after search index rebuild in some conditions
+	}
 	var lastModal = obj.attr('lastModal');
 	
 	if (!lastModal) {
@@ -2838,6 +2890,7 @@ $.fn.ajaxEditDraw = function(options) {
 			action: 'edit',
 			fileId: me.data('fileid'),
 			galleryId: me.data('galleryid'),
+			imgParams: me.data('imgparams'),
 			raw: true
 		},
 		modal: true,
@@ -2854,6 +2907,7 @@ $.fn.ajaxEditDraw = function(options) {
 					fileId: me.data('fileid'),
 					galleryId: me.data('galleryid'),
 					name: me.data('name'),
+					imgParams: me.data('imgparams'),
 					data: $('#fileData').val()
 				})
 				.bind('savedDraw', function(e, o) {
@@ -2902,6 +2956,12 @@ $.fn.ajaxEditDraw = function(options) {
 					if (!options.saved) return;
 
 					options.saved(o.fileId);
+
+					me.data('fileid', o.fileId);			// replace fileId on edit button
+					if (o.imgParams && o.imgParams.fileId) {
+						o.imgParams.fileId = o.fileId;
+						me.data('imgparams', o.imgParams);
+					}
 				})
 				.submit(function() {
 					me.drawing.saveDraw();
@@ -2996,12 +3056,15 @@ function delayedExecutor(delay, callback)
 	var timeout;
 
 	return function () {
+		var args = arguments;
 		if (timeout) {
 			clearTimeout(timeout);
 			timeout = null;
 		}
 
-		timeout = setTimeout(callback, delay);
+		timeout = setTimeout(function () {
+			callback.apply(this, args)
+		}, delay);
 	};
 }
 
@@ -3014,6 +3077,11 @@ $(function () {
     // Do final client side adjustment of the sidebars
     /////////////////////////////////////////
     var maincol = 'col1';
+
+    // Leave the sidebars unchanged in the admin modules panel
+    if (document.URL.indexOf('tiki-admin_modules.php') >= 0) {
+        return;
+    }
 
     // Hide left side panel, if no modules are displayed
     var left_mods = document.getElementById('left_modules');
@@ -3181,18 +3249,171 @@ $.openEditHelp = function (num) {
 		opts["height"] = parseInt(edithelp_pos[3],10);
 	}
 
+	var $helpsections = $("#help_sections");
 	try {
-		if ($("#help_sections").dialog) {
-			$("#help_sections").dialog("destroy");
+		if ($helpsections.data("ui-dialog")) {
+			$helpsections.dialog("destroy");
 		}
 	} catch( e ) {
 		// IE throws errors destroying a non-existant dialog
 	}
 
-	var help_sections = $("#help_sections")
+	var help_sections = $helpsections
 		.dialog(opts)
 		.dialog("open")
-		.tabs("select", num);
+		.tabs({ active: num });
 
 	$document.trigger('editHelpOpened', help_sections);
+};
+
+
+// Compatibility to old jquery to resolve a bug in fullcalendar
+$.curCSS = function (element, property) {
+	return $(element).css(property);
+};
+
+/**
+ * Process divs set up by wikiplugin_wysiwyg
+ */
+
+$.fn.wysiwygPlugin = function (execution, page, ckoption) {
+
+	$(this).each(function () {
+		var $this = $(this);
+		var $edit_button = $("<button />")
+			.addClass("edit_button_wp_wysiwyg_" + execution)
+			.text(tr("Edit"))
+			.button()
+			.mouseover(function () {
+				$(this).show();
+				$this.css({
+					backgroundColor: "rgba(128,128,125,0.25)"
+				});
+			});
+		var wp_bgcol = $(this).css("background-color");
+		$(this).mouseover(function () {
+			$(this).css({
+				backgroundColor:  "rgba(128,128,125,0.2)"
+			});
+			var bleft = Math.round($this.offset().left - $this.offsetParent().offset().left + $this.width());
+			var btop = Math.round($this.offset().top - $this.offsetParent().offset().top + $this.height());
+			$edit_button
+				.css({ left: bleft - $edit_button.width() - 10 + "px", top: btop - $edit_button.height() - 12 + "px" })
+				.show();
+		}).mouseout(function () {
+				$(this).css({
+					backgroundColor: wp_bgcol
+				});
+				$edit_button.hide();
+			}).after(
+				$edit_button
+					.css({ position: "absolute", display: "none" })
+					.click(function () {
+						// TODO set modal somehow?
+						//$("body *:not(#" + $(this).attr("id") + ")").css({backgroundColor: "#ddd"});
+
+						$edit_button.hide();
+
+						var ok = true;
+						$(".wp_wysiwyg:not(#wp_wysiwyg_" + execution + ")").each(function () {
+							if (CKEDITOR.instances[$(this).attr("id")]) {
+								if (CKEDITOR.instances[$(this).attr("id")].checkDirty()) {
+									if (confirm(tr("You have unsaved changes in this WYSIWYG section.\nDo you want to save your changes?"))) {
+										CKEDITOR.instances[$(this).attr("id")].focus();
+										ok = false;
+										return;
+									}
+								}
+								CKEDITOR.instances[$(this).attr("id")].destroy();
+							}
+							$(".button_" + $(this).attr("id")).remove();
+						});
+						if (!ok) {
+							return;
+						}
+
+						CKEDITOR.replace($this.attr("id"), ckoption);
+						CKEDITOR.on("instanceReady", function (event) {
+							// close others
+							var editor = event.editor;
+
+							if (editor.element.getId() != "wp_wysiwyg_" + execution) {
+								return;
+							}
+							var editorSelector = "#cke_" + editor.element.getId();
+
+							$(".button_wp_wysiwyg_" + execution).remove();
+
+							$(editorSelector).after(
+									$("<button />")
+										.addClass("button_wp_wysiwyg_" + execution)
+										.text(tr("Cancel"))
+										.button()
+										.click(function () {
+											$(".button_wp_wysiwyg_" + execution).remove();
+											editor.destroy();
+										})
+								).after(
+									$("<button />")
+										.addClass("button_wp_wysiwyg_" + execution)
+										.text(tr("Save"))
+										.button()
+										.click(function (event) {
+											$(editorSelector).modal(tr("Saving..."));
+
+											var data = editor.getData();
+											data = data.replace(/<\/p>\n\n<p/g, "</p>\n<p");	// remove cke4 extra linefeeds
+											data = data.replace(/<\/p>\n$/g, "</p>");
+											var height = $(editor.window.getFrame().$).height(),
+												params = {};
+											if (height) {
+												params["height"] = height + "px";
+											}
+											var options = {
+												page: page,
+												type: "wysiwyg",
+												message: "Modified by WYSIWYG Plugin",
+												index: execution,
+												content: data,
+												params: params
+											};
+
+											$.post("tiki-wikiplugin_edit.php", options, function () {
+												location.reload();
+											});
+											return false;
+										})
+								);
+						});
+					}
+				)
+			);
+	});
+};
+
+$.fn.registerFacet = function () {
+	this.each(function () {
+		var entries = $($(this).data('for')).val()
+			.split(" " + $(this).data('join') + " ")
+			.map(function (value) {
+				return (value.charAt(0) === '"') ? value.substr(1, value.length - 2) : value;
+			});
+
+		$(this)
+			.val(entries)
+			.trigger("liszt:updated") // for chosen
+			.change(function () {
+				var value = $(this).val();
+				if (value) {
+					value = value
+						.map(function (value) {
+							return (-1 === value.indexOf(' ')) ? value : ('"' + value + '"');
+						})
+						.join(" " + $(this).data('join') + " ");
+				}
+				$($(this).data('for')).val(value).change();
+			});
+	});
+
+	return this;
 };

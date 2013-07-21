@@ -52,6 +52,14 @@ function prefs_bigbluebutton_list()
 			'default' => 5*60,
 			'tags' => array('basic'),
 		),
+		'bigbluebutton_dynamic_configuration' => array(
+			'name' => tr('BigBlueButton Dynamic Configuration'),
+			'description' => tr('Uses the advanced options of BigBlueButton to configure the XML per room.'),
+			'keywords' => 'big blue button',
+			'type' => 'flag',
+			'default' => 'n',
+			'tags' => array('advanced', 'experimental'),
+		),
 	);
 }
 

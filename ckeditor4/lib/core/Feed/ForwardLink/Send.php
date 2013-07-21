@@ -5,6 +5,13 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
+// File name: Send.php
+// Required path: /lib/core/Feed/ForwardLink
+//
+// Programmer: Robert Plummer
+//
+// Purpose: Send a textlink to a forwardlink
+
 Class Feed_ForwardLink_Send extends Feed_Abstract
 {
 	var $type = "forwardlink_protocol_send";

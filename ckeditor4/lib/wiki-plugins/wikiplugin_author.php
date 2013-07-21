@@ -20,14 +20,14 @@ function wikiplugin_author_info()
 				'name' => tra('User Name'),
 				'description' => tra('User name of the user who wrote the text.'),
 				'default' => '',
-				'filter' => 'username'
+				'filter' => 'username',
 			),
 			'deleted_by' => array(
 				'required' => false,
 				'name' => tra('Deleted by User'),
 				'description' => tra('User name of the user who deleted the text.'),
 				'default' => '',
-				'filter' => 'username'
+				'filter' => 'username',
 			),
 			'visible'	=> array(
 				'required'	=> false,

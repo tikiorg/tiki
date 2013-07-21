@@ -179,10 +179,10 @@ var showModuleEditForm = function(item, options) {
 				modId = modId[0];
 				var id = $("div:first", item).attr("id");
 				if (id) {
-					modPos = id.match(/.\d+$/);
+					modPos = id.match(/(top|topbar|pagetop|left|right|pagebottom|bottom)(\d+)$/);
 					if (modPos) {
-						modOrd = modPos[0].substring(1, modPos[0].length);
-						modPos = modPos[0].substring(0, 1);
+						modOrd = modPos[2];
+						modPos = modPos[1];
 					}
 				}
 				modStyle = $(item).attr("style");

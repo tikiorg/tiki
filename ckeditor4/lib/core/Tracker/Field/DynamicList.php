@@ -29,21 +29,29 @@ class Tracker_Field_DynamicList extends Tracker_Field_Abstract
 						'name' => tr('Tracker ID'),
 						'description' => tr('Tracker to link with'),
 						'filter' => 'int',
+						'legacy_index' => 0,
+						'profile_reference' => 'tracker',
 					),
 					'filterFieldIdThere' => array(
 						'name' => tr('Field ID (Other tracker)'),
 						'description' => tr('Field ID to link with in the other tracker'),
 						'filter' => 'int',
+						'legacy_index' => 1,
+						'profile_reference' => 'tracker_field',
 					),
 					'filterFieldIdHere' => array(
 						'name' => tr('Field ID (This tracker)'),
 						'description' => tr('Field ID to link with in the current tracker'),
 						'filter' => 'int',
+						'legacy_index' => 2,
+						'profile_reference' => 'tracker_field',
 					),
 					'listFieldIdThere' => array(
 						'name' => tr('Listed Field'),
 						'description' => tr('Field ID to be displayed in the drop list.'),
 						'filter' => 'int',
+						'legacy_index' => 3,
+						'profile_reference' => 'tracker_field',
 					),
 					'statusThere' => array(
 						'name' => tr('Status Filter'),
@@ -57,6 +65,7 @@ class Tracker_Field_DynamicList extends Tracker_Field_Abstract
 							'op' => tr('open, pending'),
 							'pc' => tr('pending, closed'),
 						),
+						'legacy_index' => 4,
 					),
 				),
 			),
@@ -80,31 +89,42 @@ class Tracker_Field_DynamicList extends Tracker_Field_Abstract
 
 		TikiLib::lib('header')->add_jq_onready(
 			'
-$("select[name=ins_' . $this->getOption(2) . ']").change(function(e, val) {
+$("select[name=ins_' . $this->getOption('filterFieldIdHere') . ']").change(function(e, val) {
 	$.getJSON(
 		"tiki-tracker_http_request.php",
 		{
-			trackerIdList: ' . $this->getOption(0) . ',
-			fieldlist: ' . $this->getOption(3) . ',
-			filterfield: ' . $this->getOption(1) . ',
-			status: "' . $this->getOption(4) . '",
+			trackerIdList: ' . $this->getOption('trackerId') . ',
+			fieldlist: ' . $this->getOption('listFieldIdThere') . ',
+			filterfield: ' . $this->getOption('filterFieldIdThere') . ',
+			status: "' . $this->getOption('statusThere') . '",
 			mandatory: "' . $this->getConfiguration('isMandatory') . '",
 			item: $(this).val() // We need the field value for the fieldId filterfield for the item $(this).val
 		},
 		function(data, status) {
 			$ddl = $("select[name=' . $this->getInsertId() . ']");
 			$ddl.empty();
+			var v, l;
 			if (data) {
-				$.each( data, function (i,v) {
+				$.each( data, function (i,data) {
+					if (data && data.length > 1) {
+						v = data[0];
+						l = data[1];
+					} else {
+						v = ""
+						l = "";
+					}
 					$ddl.append(
 						$("<option/>")
-							.attr("value", v)
-							.text(v)
+							.val(v)
+							.text(l)
 					);
 				});
 				if (val) {
 					$ddl.val(val);
 				}
+			}
+			if (jqueryTiki.chosen) {
+				$ddl.trigger("liszt:updated");
 			}
 		}
 	);
@@ -115,5 +135,27 @@ $("select[name=ins_' . $this->getOption(2) . ']").change(function(e, val) {
 		return '<select name="' . $this->getInsertId() . '"></select>';
 
 	}
+
+	public function renderInnerOutput($context = array()) {
+
+		$definition = Tracker_Definition::get($this->getOption('trackerId'));
+		$field = $definition->getField($this->getOption('listFieldIdThere'));
+
+		if ($field['type'] === 'e') {
+			$item = $this->getItemData();
+			$item['ins_' . $this->getOption('listFieldIdThere')] = array($this->getValue());
+			$field['value'] = $this->getValue();
+
+			$handler = TikiLib::lib('trk')->get_field_handler($field, $item);
+
+			$field = array_merge($field, $handler->getFieldData($item));	// get category field to build it's data arrays
+			$handler = TikiLib::lib('trk')->get_field_handler($field, $item);
+
+			return $handler->renderOutput($context);
+		} else {
+			return parent::renderInnerOutput($context);
+		}
+	}
+
 }
 

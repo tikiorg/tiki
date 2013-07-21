@@ -48,6 +48,7 @@ $.fn.replaceDraw = function(o) {
 		$.post('tiki-edit_draw.php', {
 			galleryId: o.galleryId,
 			fileId: o.fileId,
+			imgParams: o.imgParams,
 			name: o.name,
 			data: o.data
 		}, function(fileId) {
@@ -56,6 +57,7 @@ $.fn.replaceDraw = function(o) {
 
 			me.data('fileId', o.fileId);
 			me.data('galleryId', o.galleryId);
+			me.data('imgParams', o.imgParams);
 			me.data('name', o.name);
 
 			$.modal(tr("Saved file id") + o.fileId + '!');
@@ -85,6 +87,7 @@ $.fn.saveDraw = function() {
 			error: error,
 			fileId: me.data('fileId'),
 			galleryId: me.data('galleryId'),
+			imgParams: me.data('imgParams'),
 			name: me.data('name')
 		})
 	});
@@ -140,13 +143,14 @@ $.fn.loadDraw = function(o) {
 		options.push('lang=' + $.lang);
 	}
 
-	var drawFrame = $('<iframe src="lib/svg-edit/svg-editor.html?' + options.join('&') + '" id="svgedit"></iframe>')
+	var drawFrame = $('<iframe src="vendor/svg-edit/svg-edit/svg-editor.html?' + options.join('&') + '" id="svgedit"></iframe>')
 		.appendTo(me)
 		.load(function() {
 			me
 				.data('drawInstance', $.drawInstance)
 				.data('fileId', (o.fileId ? o.fileId : 0))
 				.data('galleryId', (o.galleryId ? o.galleryId : 0))
+				.data('imgParams', (o.imgParams ? o.imgParams : {}))
 				.data('name', (o.name ? o.name : ''))
 				.data('doc', $(drawFrame[0].contentDocument ? drawFrame[0].contentDocument : drawFrame[0].contentWindow.document))
 				.data('canvas', new embedded_svg_edit(drawFrame[0]))
@@ -175,7 +179,7 @@ $.fn.loadDraw = function(o) {
 
 			window.onbeforeunload = function() {
 				try {
-					if ( me.data('window').svgCanvas.undoMgr.getUndoStackSize() > 1 ) {
+					if ( me.data('window') && me.data('window').svgCanvas.undoMgr.getUndoStackSize() > 1 ) {
 						return tr("There are unsaved changes, leave page?");
 					}
 				} catch (e) {}

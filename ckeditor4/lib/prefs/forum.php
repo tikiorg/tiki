@@ -144,6 +144,7 @@ function prefs_forum_list()
 			'filter' => 'digits',
 			'default' => array(),
 			'dependencies' => array('feature_categories'),
+			'profile_reference' => 'category',
 		),
 		'forum_category_selector_in_list' => array(
 			'name' => tr('Include category selector in forum list'),

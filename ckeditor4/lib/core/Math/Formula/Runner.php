@@ -7,7 +7,7 @@
 
 class Math_Formula_Runner
 {
-	private $sources;
+	private $sources = array();
 	private $collected = array();
 	private $element;
 	private $known = array();
@@ -15,7 +15,13 @@ class Math_Formula_Runner
 
 	function __construct( array $sources )
 	{
-		$this->sources = $sources;
+		foreach ($sources as $prefix => $factory) {
+			if (empty($factory)) {
+				$factory = $this->getPrefixFactory($prefix);
+			}
+
+			$this->sources[] = $factory;
+		}
 	}
 
 	function setFormula( $element )
@@ -53,8 +59,25 @@ class Math_Formula_Runner
 			return (double) $data;
 		} elseif ( isset($this->variables[$data]) ) {
 			return $this->variables[$data];
+		} elseif (false !== $value = $this->findVariable(explode('.', $data), $this->variables)) {
+			return $value;
 		} else {
 			throw new Math_Formula_Exception(tr('Variable not found "%0".', $data));
+		}
+	}
+
+	private function findVariable($path, $variables)
+	{
+		if (count($path) === 0) {
+			return $variables;
+		}
+
+		$first = array_shift($path);
+
+		if (isset($variables[$first])) {
+			return $this->findVariable($path, $variables[$first]);
+		} else {
+			return false;
 		}
 	}
 
@@ -90,22 +113,31 @@ class Math_Formula_Runner
 	{
 		$name = $element->getType();
 
-		if ( isset($this->known[$name]) ) {
+		if (isset($this->known[$name])) {
 			return $this->known[$name];
 		}
 
-		$filter = new Zend_Filter_Word_DashToCamelCase;
-		$ucname = $filter->filter(ucfirst($name));
-
-		foreach ( $this->sources as $prefix => $null ) {
-			$class = $prefix . $ucname;
-
-			if ( class_exists($class) ) {
-				return $this->known[$name] = new $class;
+		foreach ( $this->sources as $factory ) {
+			if ($function = $factory($name)) {
+				return $this->known[$name] = $function;
 			}
 		}
 
 		throw new Math_Formula_Runner_Exception(tr('Unknown operation "%0".', $element->getType()));
+	}
+
+	private function getPrefixFactory($prefix)
+	{
+		return function ($functionName) use ($prefix) {
+			$filter = new Zend_Filter_Word_DashToCamelCase;
+			$ucname = $filter->filter(ucfirst($functionName));
+
+			$class = $prefix . $ucname;
+
+			if (class_exists($class)) {
+				return new $class;
+			}
+		};
 	}
 }
 

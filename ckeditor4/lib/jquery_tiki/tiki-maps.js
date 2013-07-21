@@ -122,8 +122,18 @@
 			}
 		}
 
-		return lonlat.lon + ',' + lonlat.lat + ',' + map.getZoom();
+		return formatLocation(lonlat.lat, lonlat.lon, map.getZoom());
 	}
+
+	function formatLocation (lat, lon, zoom)
+	{
+		// Convert , decimal points - where those are used
+		var strLon = '' + lon;
+		strLon.replace(',', '.');
+		var strLat = '' + lat;
+		strLat.replace(',', '.');
+		return strLon + ',' + strLat + ',' + zoom;
+	};
 
 	$.fn.createMap = function () {
 		this.each(function () {
@@ -336,18 +346,7 @@
 
 				if (-1 !== $.inArray('coordinates', desiredControls)) {
 					map.addControl(new OpenLayers.Control.MousePosition({
-						displayProjection: new OpenLayers.Projection("EPSG:4326"),
-						formatOutput: function (lonLat) {
-							var digits = parseInt(this.numDigits);
-							var newHtml =
-								this.prefix +
-								lonLat.lat.toFixed(digits) +
-								this.separator +
-								lonLat.lon.toFixed(digits) +
-								this.suffix;
-
-							return newHtml;
-						}
+						displayProjection: new OpenLayers.Projection("EPSG:4326")
 					}));
 				}
 
@@ -729,7 +728,7 @@
 							canvas.getPosition = function () {
 								var pos =  canvas.panorama.getPosition();
 
-								return pos.lng() + ',' + pos.lat() + ',12';
+								return formatLocation(pos.lat(), pos.lng(), 12);
 							};
 
 							canvas.panorama = new google.maps.StreetViewPanorama(canvas, {
@@ -861,9 +860,25 @@
 								} else if (i.geo_feature) {
 									var format = new OpenLayers.Format.GeoJSON
 										, wkt = new OpenLayers.Format.WKT
-										, features = format.read(i.geo_feature)
+										, features
 										, layer = container.getLayer(layerName)
 										;
+
+									try {
+										features = format.read(i.geo_feature);
+									} catch (e) {
+										// Corrupted feature - display plain marker
+										$(container).addMapMarker({
+											coordinates: $(container).getMapCenter(),
+											content: i.title,
+											type: i.object_type,
+											object: i.object_id,
+											icon: null,
+											layer: layerName,
+											dataSource: i
+										});
+										return;
+									}
 
 									$.each(features, function (k, feature) {
 										var initial;
@@ -1149,7 +1164,7 @@
 						lon = coords[0];
 						lat = coords[1];
 					}
-					field.val(lon + ',' + lat + ',' + map.getZoom()).change();
+					field.val(formatLocation(lat, lon, map.getZoom())).change();
 				});
 
 				var ClickHandler = OpenLayers.Class(OpenLayers.Control, {
@@ -1237,7 +1252,9 @@
 					this.activePopup.myclose = null;
 					f();
 				} else {
-					handler.remove(this.activePopup);
+					try {
+						handler.remove(this.activePopup);
+					} catch (e) {}	// catch error when dialog not initialised
 				}
 
 				this.activePopup = null;
@@ -1397,5 +1414,6 @@
 
 		return this;
 	};
+
 })();
 

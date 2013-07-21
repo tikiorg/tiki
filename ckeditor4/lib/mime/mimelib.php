@@ -68,6 +68,8 @@ class MimeLib
 			if (in_array($extension, array("xlsx", "xltx", "potx", "ppsx", "pptx", "sldx", "docx", "dotx", "xlam", "xlsb"))) {
 				return $this->from_file_extension($filename);
 			}
+		} else if ($type === 'text/html' && $this->get_extension($filename) == 'svg') {
+			$type = 'image/svg+xml';
 		}
 
 		return $type;

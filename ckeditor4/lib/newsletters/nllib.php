@@ -29,7 +29,8 @@ class NlLib extends TikiLib
 			$allowArticleClip = 'y',
 			$autoArticleClip = 'n',
 			$articleClipRange = null,
-			$articleClipTypes = ''
+			$articleClipTypes = '',
+			$emptyClipBlocksSend = 'n'
 	)
 	{
 		if ($nlId) {
@@ -44,7 +45,8 @@ class NlLib extends TikiLib
 								`allowArticleClip`=?,
 								`autoArticleClip`=?,
 								`articleClipRange`=?,
-								`articleClipTypes`=?
+								`articleClipTypes`=?,
+								`emptyClipBlocksSend`=?
 								where `nlId`=?";
 			$result = $this->query(
 				$query,
@@ -61,6 +63,7 @@ class NlLib extends TikiLib
 						$autoArticleClip,
 						$articleClipRange,
 						$articleClipTypes,
+						$emptyClipBlocksSend,
 						(int) $nlId
 				)
 			);
@@ -1106,7 +1109,7 @@ class NlLib extends TikiLib
 			$smarty->assign("nlArticleClipId", $art["articleId"]);
 			$smarty->assign("nlArticleClipTitle", $art["title"]);
 			$smarty->assign("nlArticleClipSubtitle", $art["subtitle"]);
-			$smarty->assign("nlArticleClipParsedheading", $this->parse_data($art["heading"]));
+			$smarty->assign("nlArticleClipParsedheading", $this->parse_data($art["heading"], array('is_html' => $artlib->is_html($art, true))));
 			$smarty->assign("nlArticleClipPublishDate", $art["publishDate"]);
 			$smarty->assign("nlArticleClipAuthorName", $art["authorName"]);
 			$articleClip .= $smarty->fetch("mail/newsletter_articleclip.tpl");
@@ -1228,6 +1231,9 @@ class NlLib extends TikiLib
 				$txtArticleClip = $this->generateTxtVersion($articleClip);
 				$info['datatxt'] = str_replace('~~~articleclip~~~', $txtArticleClip, $info['datatxt']);
 				$html = str_replace('~~~articleclip~~~', $articleClip, $html);
+				if ($articleClip == '<div class="articleclip"></div>' && $nl_info['emptyClipBlocksSend'] == 'y') {
+					return '';
+				}
 			}
 
 			if (stristr($html, '<base') === false) {
@@ -1386,6 +1392,9 @@ class NlLib extends TikiLib
 
 			try {
 				$zmail = $this->get_edition_mail($info['editionId'], $us);
+				if (!$zmail) {
+					continue;
+				}
 				$zmail->send();
 				$sent[] = $email;
 				if ($browser) {

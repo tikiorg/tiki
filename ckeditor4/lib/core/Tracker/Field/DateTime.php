@@ -32,18 +32,21 @@ class Tracker_Field_DateTime extends Tracker_Field_Abstract implements Tracker_F
 							'dt' => tr('Date and Time'),
 							'd' => tr('Date only'),
 						),
+						'legacy_index' => 0,
 					),
 					'startyear' => array(
 						'name' => tr('Start Year'),
 						'description' => tr('Year to allow selecting from'),
 						'example' => '1987',
 						'filter' => 'digits',
+						'legacy_index' => 1,
 					),
 					'endyear' => array(
 						'name' => tr('End Year'),
 						'description' => tr('Year to allow selecting to'),
 						'example' => '2020',
 						'filter' => 'digits',
+						'legacy_index' => 2,
 					),
 					'blankdate' => array(
 						'name' => tr('Default selection'),
@@ -53,6 +56,7 @@ class Tracker_Field_DateTime extends Tracker_Field_Abstract implements Tracker_F
 							'' => tr('Current Date'),
 							'blank' => tr('Blank'),
 						),
+						'legacy_index' => 3,
 					),
 				),
 			),
@@ -63,12 +67,13 @@ class Tracker_Field_DateTime extends Tracker_Field_Abstract implements Tracker_F
 	{
 		$ins_id = $this->getInsertId();
 
+		$value = $this->getValue();
 		$data = array(
-			'value' => $this->getValue($this->getOption(3) == 'blank' ? '' : TikiLib::lib('tiki')->now),
+			'value' => empty($value) ? ($this->getOption('blankdate') == 'blank' ? '' : TikiLib::lib('tiki')->now) : $value,
 		);
 
 		if (isset($requestData[$ins_id.'Month']) || isset($requestData[$ins_id.'Day']) || isset($requestData[$ins_id.'Year']) || isset($requestData[$ins_id.'Hour']) || isset($requestData[$ins_id.'Minute'])) {
-			$data['value'] = TikiLib::lib('trk')->build_date($requestData, $this->getOption(0), $ins_id);
+			$data['value'] = TikiLib::lib('trk')->build_date($requestData, $this->getOption('datetime'), $ins_id);
 			if (empty($data['value']) && (!empty($requestData[$ins_id.'Month']) || !empty($requestData[$ins_id.'Day']) || !empty($requestData[$ins_id.'Year']) || !empty($requestData[$ins_id.'Hour']) || !empty($requestData[$ins_id.'Minute']))) {
 				$data['error'] = 'y';
 			}
@@ -79,6 +84,9 @@ class Tracker_Field_DateTime extends Tracker_Field_Abstract implements Tracker_F
 	
 	function renderInput($context = array())
 	{
+		global $user;
+
+		TikiLib::lib('smarty')->assign('use_24hr_clock', TikiLib::lib('userprefs')->get_user_clock_pref($user));
 		return $this->renderTemplate('trackerinput/datetime.tpl', $context);
 	}
 
@@ -89,11 +97,11 @@ class Tracker_Field_DateTime extends Tracker_Field_Abstract implements Tracker_F
 
 		if ($value) {
 			$date = $tikilib->get_short_date($value);
-			if ($this->getOption(0) == 'd') {
+			if ($this->getOption('datetime') == 'd') {
 				return $date;
 			}
 			
-			if ($this->getOption(0) == 't') {
+			if ($this->getOption('datetime') == 't') {
 				return $tikilib->get_short_time($value);
 			}
 
@@ -137,8 +145,9 @@ class Tracker_Field_DateTime extends Tracker_Field_Abstract implements Tracker_F
 		return $info;
 	}
 
-	function getDocumentPart($baseKey, Search_Type_Factory_Interface $typeFactory)
+	function getDocumentPart(Search_Type_Factory_Interface $typeFactory)
 	{
+		$baseKey = $this->getBaseKey();
 		return array(
 			$baseKey => $typeFactory->timestamp($this->getValue()),
 		);

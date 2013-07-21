@@ -37,7 +37,7 @@ var canTranslateIt = function( e ) {
 var interTransDeepestElement = -1;
 
 $("#intertrans-active").click( function( e ) {
-	if (interTransDone && !$(this).attr("checked")) {
+	if (interTransDone && !$(this).prop("checked")) {
 		history.go(0);
 	}
 });

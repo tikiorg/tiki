@@ -63,6 +63,7 @@ function get_default_prefs()
 			'backlinks_name_len' => '0',
 			'feature_wiki_notepad' => 'n',
 			'feature_wiki_feedback_polls' => array(),
+			'mailin_respond_email' => 'y',
 			'mailin_autocheck' => 'n',
 			'mailin_autocheckFreq' => '0',
 			'mailin_autocheckLast' => 0,
@@ -340,7 +341,8 @@ function initialize_prefs()
 {
 	global $prefs, $user_overrider_prefs, $in_installer, $section, $systemConfiguration;
 
-	if (!empty($in_installer)) {
+
+	if (defined('TIKI_IN_INSTALLER') || defined('TIKI_IN_TEST')) {
 		$prefs = get_default_prefs();
 		return;
 	}

@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2013 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -17,7 +17,7 @@ if (function_exists('pcntl_signal')) {
 	};
 
 	pcntl_signal(SIGTERM, $exit);
-	pcntl_signal(SIGHUP,  $exit);
+	pcntl_signal(SIGHUP, $exit);
 	pcntl_signal(SIGINT, $exit);
 }
 
@@ -42,7 +42,7 @@ if ( ! file_exists('db/local.php') )
 
 require_once('tiki-setup.php');
 
-if( $user = getenv('searchuser') ) {
+if ( $user = getenv('searchuser') ) {
 	echo "Execute with same permissions as user: " . $user . "\n";
 }
 

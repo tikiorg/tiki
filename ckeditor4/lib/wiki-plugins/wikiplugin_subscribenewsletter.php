@@ -22,6 +22,7 @@ function wikiplugin_subscribenewsletter_info()
 				'description' => tra('Identification number (nlId) of the Newsletter that you want to allow the users to subscribe to'),
 				'filter' => 'digits',
 				'default' => '',
+				'profile_reference' => 'newsletter',
 			),
 			'thanks' => array(
 				'required' => false,

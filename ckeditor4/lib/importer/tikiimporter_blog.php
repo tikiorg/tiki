@@ -414,11 +414,7 @@ class TikiImporter_Blog extends TikiImporter
 	 */
 	function insertComments($objId, $objType, $comments)
 	{
-		global $commentslib; require_once('lib/comments/commentslib.php');
-
-		if (!is_object($commentslib)) {
-			$commentslib = new Comments();
-		}
+		$commentslib = TikiLib::lib('comments');
 
 		$objRef = $objType . ':' . $objId;
 

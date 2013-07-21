@@ -19,6 +19,7 @@ function wikiplugin_trackerprefill_info()
 				'name' => tra('Page'),
 				'description' => tra('Tracker Page Name'),
 				'default' => '',
+				'profile_reference' => 'wiki_page',
 			),
 			'label' => array(
 				'required' => false,
@@ -38,6 +39,7 @@ function wikiplugin_trackerprefill_info()
 				'description' => tra('Field ID for the first field'),
 				'filter' => 'digits',
 				'default' => '',
+				'profile_reference' => 'tracker_field',
 			),
 			'value1' => array(
 				'required' => true,
@@ -51,6 +53,7 @@ function wikiplugin_trackerprefill_info()
 				'description' => tra('Field ID for the second field'),
 				'filter' => 'digits',
 				'default' => '',
+				'profile_reference' => 'tracker_field',
 			),
 			'value2' => array(
 				'required' => false,
@@ -64,6 +67,7 @@ function wikiplugin_trackerprefill_info()
 				'description' => tra('Field ID for the third field'),
 				'filter' => 'digits',
 				'default' => '',
+				'profile_reference' => 'tracker_field',
 			),
 			'value3' => array(
 				'required' => false,
@@ -77,6 +81,7 @@ function wikiplugin_trackerprefill_info()
 				'description' => tra('Field ID for the fourth field'),
 				'filter' => 'digits',
 				'default' => '',
+				'profile_reference' => 'tracker_field',
 			),
 			'value4' => array(
 				'required' => false,
@@ -90,6 +95,7 @@ function wikiplugin_trackerprefill_info()
 				'description' => tra('Field ID for the fifth field'),
 				'filter' => 'digits',
 				'default' => '',
+				'profile_reference' => 'tracker_field',
 			),
 			'value5' => array(
 				'required' => false,
@@ -103,6 +109,7 @@ function wikiplugin_trackerprefill_info()
 				'description' => tra('Field ID for the sixth field'),
 				'filter' => 'digits',
 				'default' => '',
+				'profile_reference' => 'tracker_field',
 			),
 			'value6' => array(
 				'required' => false,
@@ -116,6 +123,7 @@ function wikiplugin_trackerprefill_info()
 				'description' => tra('Field ID for the seventh field'),
 				'filter' => 'digits',
 				'default' => '',
+				'profile_reference' => 'tracker_field',
 			),
 			'value7' => array(
 				'required' => false,
@@ -129,6 +137,7 @@ function wikiplugin_trackerprefill_info()
 				'description' => tra('Field ID for the eighth field'),
 				'filter' => 'digits',
 				'default' => '',
+				'profile_reference' => 'tracker_field',
 			),
 			'value8' => array(
 				'required' => false,

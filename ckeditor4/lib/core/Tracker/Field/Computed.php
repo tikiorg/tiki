@@ -30,6 +30,8 @@ class Tracker_Field_Computed extends Tracker_Field_Abstract
 						'description' => tr('The formula to be computed supporting various operators (+ - * / and parenthesis), references to other field made using the field id preceeded by #.'),
 						'example' => '#3*(#4+5)',
 						'filter' => 'text',
+						'legacy_index' => 0,
+						'profile_reference' => array(__CLASS__, 'profileReference'),
 					),
 				),
 			),
@@ -46,7 +48,7 @@ class Tracker_Field_Computed extends Tracker_Field_Abstract
 		} else if ($this->getItemId()) {
 			$fields = $this->getTrackerDefinition()->getFields();
 			$values = $this->getItemData();
-			$option = $this->getOption(0);
+			$option = $this->getOption('formula');
 
 			if ($option) {
 				$calc = preg_replace('/#([0-9]+)/', '$values[\1]', $option);
@@ -57,7 +59,7 @@ class Tracker_Field_Computed extends Tracker_Field_Abstract
 				$trklib = TikiLib::lib('trk');
 
 				$infoComputed = $trklib->get_computed_info(
-					$this->getOption(0),
+					$this->getOption('formula'),
 					$this->getTrackerDefinition()->getConfiguration('trackerId'),
 					$fields
 				);
@@ -99,11 +101,23 @@ class Tracker_Field_Computed extends Tracker_Field_Abstract
 			$fieldId = $field['fieldId'];
 
 			if ($field['type'] == 'C') {
-				$calc = preg_replace('/#([0-9]+)/', '$args[\'values\'][\1]', $field['options'][0]);
+				$calc = preg_replace('/#([0-9]+)/', '$args[\'values\'][\1]', $field['options_array'][0]);
 				eval('$value = '.$calc.';');
 				$args['values'][$fieldId] = $value;
 				$trklib->modify_field($args['itemId'], $fieldId, $value);
 			}
 		}
+	}
+
+	public static function profileReference(Tiki_Profile_Writer $writer, $value)
+	{
+		return preg_replace_callback(
+			'/#([0-9]+)/',
+			function ($args) use ($writer) {
+				return $writer->getReference('tracker_field', $args[1]);
+			},
+			$value
+		);
+
 	}
 }

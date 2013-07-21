@@ -5,6 +5,12 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
+// File name: Metadata.php
+// Required path: /lib/core/Feed/ForwardLink
+//
+// Programmer: Robert Plummer
+//
+// Purpose: Generates list of pages which have ForwardLink connections to a given page.
 
 class Feed_ForwardLink_Metadata
 {

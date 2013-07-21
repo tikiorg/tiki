@@ -63,7 +63,7 @@ class BigBlueButtonLib
      * @param $room
      * @return array
      */
-    public function getAttendees( $room )
+	public function getAttendees( $room, $username=false)
 	{
 		if ( $meeting = $this->getMeeting($room) ) {
 			if ( $dom = $this->performRequest('getMeetingInfo', array('meetingID' => $room, 'password' => $meeting['moderatorPW'])) ) {
@@ -71,7 +71,7 @@ class BigBlueButtonLib
 				$attendees = array();
 
 				foreach ( $dom->getElementsByTagName('attendee') as $node ) {
-					$attendees[] = $this->grabValues($node);
+					$attendees[] = $this->grabValues($node, $username);
 				}
 
 				return $attendees;
@@ -83,7 +83,7 @@ class BigBlueButtonLib
      * @param $node
      * @return array
      */
-    private function grabValues( $node )
+	private function grabValues( $node, $username=false)
 	{
 		$values = array();
 
@@ -92,7 +92,12 @@ class BigBlueButtonLib
 				$values[$n->tagName] = $n->textContent;
 			}
 		}
-
+		if ($username && $values['fullName']) {
+			preg_match('!\(([^\)]+)\)!', $values['fullName'], $match);
+			$values['fullName'] = $match[1];
+		} else {
+			$values['fullName'] = trim(preg_replace('!\(([^\)]+)\)!', '', $values['fullName']));
+		}
 		return $values;
 	}
 
@@ -157,10 +162,57 @@ class BigBlueButtonLib
 		$cachelib->invalidate('bbb_meetinglist');
 	}
 
+	public function configureRoom($meetingName, $configuration)
+	{
+		global $prefs;
+
+		if (empty($configuration) || ! $this->isDynamicConfigurationSupported()) {
+			return null;
+		}
+
+		$baseUrl = $this->getBaseUrl('/client/conf/config.xml');
+		$tikilib = TikiLib::lib('tiki');
+
+		$content = $tikilib->httprequest($baseUrl);
+
+		if (! $content) {
+			return null;
+		}
+
+		$config = new Tiki\BigBlueButton\Configuration($content);
+
+		if (isset($configuration['presentation']['active']) && ! $configuration['presentation']['active']) {
+			$config->removeModule('PresentModule');
+		}
+		$content = $config->getXml();
+
+		$tikilib = TikiLib::lib('tiki');
+		$client = $tikilib->get_http_client($this->getBaseUrl('/bigbluebutton/api/setConfigXML.xml'));
+		$client->setParameterPost(
+			array(
+				'meetingID' => $meetingName,
+				'checksum' => sha1($meetingName . rawurlencode($content) . $prefs['bigbluebutton_server_salt']),
+				'configXML' => rawurlencode($content),
+			)
+		);
+
+		$response = $client->request('POST');
+		$document = $response->getBody();
+
+		$dom = new DOMDocument;
+		$dom->loadXML($document);
+
+		$values = $this->grabValues($dom->documentElement);
+
+		if ($values['returncode'] == 'SUCCESS') {
+			return $values['configToken'];
+		}
+	}
+
     /**
      * @param $room
      */
-    public function joinMeeting( $room )
+    public function joinMeeting( $room, $configToken = null )
 	{
 		$version = $this->getVersion();
 
@@ -168,7 +220,8 @@ class BigBlueButtonLib
 		$password = $this->getAttendeePassword($room);
 
 		if ( $name && $password ) {
-			$this->joinRawMeeting($room, $name, $password);
+			TikiLib::lib('logs')->add_action('Joined Room', $room, 'bigbluebutton');
+			$this->joinRawMeeting($room, $name, $password, $configToken);
 		}
 	}
 
@@ -188,11 +241,12 @@ class BigBlueButtonLib
     /**
      * @return bool|mixed|null|string
      */
-    private function getAttendeeName()
+	private function getAttendeeName()
 	{
 		global $user, $tikilib;
 
 		if ( $realName = $tikilib->get_user_preference($user, 'realName') ) {
+			$realName .= " (". $user . ")";
 			return $realName;
 		} elseif ( $user ) {
 			return $user;
@@ -240,16 +294,19 @@ class BigBlueButtonLib
      * @param $name
      * @param $password
      */
-    public function joinRawMeeting( $room, $name, $password )
+    public function joinRawMeeting( $room, $name, $password, $configToken = null )
 	{
-		$url = $this->buildUrl(
-			'join',
-			array(
-				'meetingID' => $room,
-				'fullName' => $name,
-				'password' => $password,
-			)
+		$parameters = array(
+			'meetingID' => $room,
+			'fullName' => $name,
+			'password' => $password,
 		);
+
+		if ($configToken) {
+			$parameters['configToken'] = $configToken;
+		}
+
+		$url = $this->buildUrl('join', $parameters);
 
 		header('Location: ' . $url);
 		exit;
@@ -285,21 +342,29 @@ class BigBlueButtonLib
      */
     private function buildUrl( $action, array $parameters )
 	{
-		global $prefs;
-
 		if ( $action ) {
 			if ( $checksum = $this->generateChecksum($action, $parameters) ) {
 				$parameters['checksum'] = $checksum;
 			}
 		}
 
-		$base = rtrim($prefs['bigbluebutton_server_location'], '/');
+		$url = $this->getBaseUrl("/bigbluebutton/api/$action");
+		$url .= "?" . http_build_query($parameters, '', '&');
+		return $url;
+	}
 
-		if (parse_url($base, PHP_URL_PATH)) {
-			$url = "$base/api/$action?" . http_build_query($parameters, '', '&');
-		} else {
-			$url = "$base/bigbluebutton/api/$action?" . http_build_query($parameters, '', '&');
+	private function getBaseUrl($path)
+	{
+		global $prefs;
+
+		$base = rtrim($prefs['bigbluebutton_server_location'], '/');
+		$length = strlen('/bigbluebutton');
+		if (substr($base, -$length) === '/bigbluebutton') {
+			$base = substr($base, 0, -$length);
 		}
+
+		$url = "$base$path";
+
 		return $url;
 	}
 
@@ -332,6 +397,15 @@ class BigBlueButtonLib
 	{
 		$version = $this->getVersion();
 		return version_compare($version, '0.8') >= 0;
+	}
+
+    /**
+     * @return bool
+     */
+    private function isDynamicConfigurationSupported()
+	{
+		global $prefs;
+		return $prefs['bigbluebutton_dynamic_configuration'] == 'y';
 	}
 
     /**

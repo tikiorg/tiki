@@ -5,6 +5,13 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
+// File name: Send.php
+// Required path: /lib/core/Feed/ForwardLink
+//
+// Programmer: Robert Plummer
+//
+// Purpose: The base class reused in ForwardLink, TextLink and others
+
 abstract class Feed_Abstract
 {
 	public $name = "";

@@ -6,7 +6,6 @@
 // $Id$
 
 require_once('lib/language/MergeFiles.php');
-require_once('vfsStream/vfsStream.php');
 
 class Language_MergeFilesTest extends TikiTestCase
 {

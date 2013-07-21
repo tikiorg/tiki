@@ -125,15 +125,16 @@ class Services_Category_Controller
 	{
 		$unifiedsearchlib = TikiLib::lib('unifiedsearch');
 
+		$tx = TikiDb::get()->begin();
+
 		foreach ($objects as $object) {
 			$type = $object['type'];
 			$id = $object['id'];
 
 			$this->$function($categId, $type, $id);
-			$unifiedsearchlib->invalidateObject($type, $id);
 		}
 
-		$unifiedsearchlib->processUpdateQueue(count($objects) * 2);
+		$tx->commit();
 
 		$query = new Search_Query;
 		$query->filterCategory((string) $categId);

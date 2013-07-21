@@ -311,14 +311,13 @@ class ThemeControlLib extends TikiLib
 	}
 	function get_theme($type, $objectId, &$tc_theme, &$tc_theme_option)
 	{
-		$tcontrollib = TikiLib::lib('tcontrol');
 		$categlib = TikiLib::lib('categ');
 		// CATEGORIES
 		$tc_categs = $categlib->get_object_categories($type, $objectId);
 		if (count($tc_categs)) {
 			$cat_themes = array();	// collect all the category themes
 			foreach ($tc_categs as $cat) {
-				$ct = $tcontrollib->tc_get_theme_by_categ($cat);
+				$ct = $this->tc_get_theme_by_categ($cat);
 				if (!empty($ct) && !in_array($ct, $cat_themes)) {
 					$cat_themes[] = $ct;
 				
@@ -330,14 +329,14 @@ class ThemeControlLib extends TikiLib
 				}
 			}
 			if (count($cat_themes) == 1) {	// only use category theme if there is exactly one set
-				list($tc_theme, $tc_theme_option) = $tcontrollib->parse_theme_option_string($cat_themes[0]);	
+				list($tc_theme, $tc_theme_option) = $this->parse_theme_option_string($cat_themes[0]);
 			}
 		}
 
 	// OBJECTS - if object has been particularly set, override SECTION or CATEGORIES $tc_theme
 	// if not set, make sure we don't squash whatever $tc_theme may have been
-		if ($obj_theme = $tcontrollib->tc_get_theme_by_object($type, $objectId)) {
-			list($tc_theme, $tc_theme_option) = $tcontrollib->parse_theme_option_string($obj_theme);
+		if ($obj_theme = $this->tc_get_theme_by_object($type, $objectId)) {
+			list($tc_theme, $tc_theme_option) = $this->parse_theme_option_string($obj_theme);
 		}
 	}
 }

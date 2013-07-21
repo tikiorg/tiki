@@ -21,6 +21,7 @@ function wikiplugin_category_info()
 				'filter' => 'digits',
 				'separator' => '+',
 				'default' => '',
+				'profile_reference' => 'category',
 			),
 			'types' => array(
 				'required' => false,

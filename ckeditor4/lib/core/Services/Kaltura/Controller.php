@@ -37,7 +37,7 @@ class Services_Kaltura_Controller
 		$message = null;
 		if ($entries) {
 			if (count($entries) > 1) {
-				$message = tr('You have successfully added %0 new media items', count($items));
+				$message = tr('You have successfully added %0 new media items', count($entries));
 			} else {
 				$message = tr('You have successfully added one new media item');
 			}

@@ -45,10 +45,12 @@ function wikiplugin_comment_info()
 				'description' => tra('Object ID'),
 				'filter' => 'int',
 				'default' => tr('The current wiki page you have added the plugin to'),
+				'profile_reference' => 'type_in_param',
 			),
 		)
 	);
 }
+
 function wikiplugin_comment($data, $params)
 {
 	global $smarty, $page;

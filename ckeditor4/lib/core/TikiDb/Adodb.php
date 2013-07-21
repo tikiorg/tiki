@@ -18,6 +18,13 @@ class TikiDb_Adodb extends TikiDb
 		$this->db=$db;
 	} // }}}
 
+	function __destruct() // {{{
+	{
+		if ($this->db) {
+			$this->db->Close();
+		}
+	} // }}}
+
 	function qstr( $str ) // {{{
 	{
 		return $this->db->quote($str);

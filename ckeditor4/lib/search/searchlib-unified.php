@@ -59,7 +59,7 @@ class UnifiedSearchLib
 			try {
 				$indexer = $this->buildIndexer($this->getIndex());
 				$indexer->update($toProcess);
-			} catch (Zend_Search_Lucene_Exception $e) {
+			} catch (Exception $e) {
 				// Re-queue pulled messages for next update
 				foreach ($toProcess as $message) {
 					$queuelib->push(self::INCREMENT_QUEUE, $message);
@@ -89,26 +89,25 @@ class UnifiedSearchLib
      */
     function rebuildInProgress()
 	{
-		$tempName = $this->getIndexLocation() . '-new';
-		$new_exists = file_exists($this->getIndexLocation() . '-new');
-		$old_exists = file_exists($this->getIndexLocation() . '-old');
+		global $prefs;
+		if ($prefs['unified_engine'] == 'lucene') {
+			$new = $this->getIndex('data-new');
+			$old = $this->getIndex('data-old');
 
-		return $new_exists || $old_exists;
+			return $new->exists() || $old->exists();
+		}
+
+		return false;
 	}
 
 	/**
 	 */
 	function stopRebuild()
 	{
-		$tempName = $this->getIndexLocation() . '-new';
-		$file_exists = file_exists($tempName);
-		if($file_exists) {
-			$this->destroyDirectory($tempName);
-		}
-		$tempName = $this->getIndexLocation() . '-old';
-		$file_exists = file_exists($tempName);
-		if($file_exists) {
-			$this->destroyDirectory($tempName);
+		global $prefs;
+		if ($prefs['unified_engine'] == 'lucene') {
+			$this->getIndex('data-old')->destroy();
+			$this->getIndex('data-new')->destroy();
 		}
 	}
 
@@ -119,29 +118,55 @@ class UnifiedSearchLib
     function rebuild($loggit = false)
 	{
 		global $prefs;
-		$index_location = $this->getIndexLocation();
-		$tempName = $index_location . '-new';
-		$swapName = $index_location . '-old';
+		$errlib = TikiLib::lib('errorreport');
 
-		if ($prefs['unified_engine'] == 'lucene') {
+		switch ($prefs['unified_engine']) {
+		case 'lucene':
+			$index_location = $this->getIndexLocation('data');
+			$tempName = $this->getIndexLocation('data-new');
+			$swapName = $this->getIndexLocation('data-old');
+			
+			if ($this->rebuildInProgress()) {
+				$errlib->report(tr('Rebuild in progress.'));
+				return false;
+			}
+
 			$index = new Search_Index_Lucene($tempName);
-		} else {
+
+			register_shutdown_function(
+				function () use ($index) {
+					if ($index->exists()) {
+						$index->destroy();
+						echo "Abnormal termination. Unless it was killed manually, it likely ran out of memory.\n";
+					}
+				}
+			);
+			break;
+		case 'elastic':
+			$connection = $this->getElasticConnection();
+			$indexName = $prefs['unified_elastic_index_prefix'] . uniqid();
+			$index = new Search_Elastic_Index($connection, $indexName);
+
+			register_shutdown_function(
+				function () use ($indexName, $index) {
+					global $prefs;
+					if ($prefs['unified_elastic_index_current'] !== $indexName) {
+						$index->destroy();
+					}
+				}
+			);
+			break;
+		default:
 			die('Unsupported');
 		}
 
-		$unifiedsearchlib = $this;
-		register_shutdown_function(function () use ($tempName, $unifiedsearchlib) {
-			if (file_exists($tempName)) {
-				$unifiedsearchlib->destroyDirectory($tempName);
-				echo "Abnormal termination. Unless it was killed manually, it likely ran out of memory.\n";
-			}
-		});
 
 		// Build in -new
 		TikiLib::lib('queue')->clear(self::INCREMENT_QUEUE);
 		$tikilib = TikiLib::lib('tiki');
 		$access = TikiLib::lib('access');
 		$access->preventRedirect(true);
+		$index = new Search_Index_TypeAnalysisDecorator($index);
 		$indexer = $this->buildIndexer($index, $loggit);
 		$stat = $tikilib->allocate_extra(
 			'unified_rebuild',
@@ -151,12 +176,15 @@ class UnifiedSearchLib
 		);
 		$access->preventRedirect(false);
 
+		$tikilib->set_preference('unified_identifier_fields', $index->getIdentifierFields());
+
 		// Force destruction to clear locks
 		unset($indexer);
 		unset($index);
 
-		$errlib = TikiLib::lib('errorreport');
-		if ($prefs['unified_engine'] == 'lucene') {
+		$oldIndex = null;
+		switch ($prefs['unified_engine']) {
+		case 'lucene':
 			// Current to -old
 			if (file_exists($index_location)) {
 				if (! rename($index_location, $swapName)) {
@@ -169,16 +197,27 @@ class UnifiedSearchLib
 			}
 
 			// Destroy old
-			$this->destroyDirectory($swapName);
+			$oldIndex = new Search_Index_Lucene($swapName);
+			break;
+		case 'elastic':
+			// Obtain the old index and destroy it after permanently replacing it.
+			$oldIndex = $this->getIndex();
 
-			if (file_exists($swapName)) {
-				$errlib->report(tr('Failed to destroy the old index. Likely a file permission issue.'));
+			$tikilib->set_preference('unified_elastic_index_current', $indexName);
+
+			break;
+		}
+
+		if ($oldIndex) {
+			if (! $oldIndex->destroy()) {
+				$errlib->report(tr('Failed to destroy the old index.'));
 			}
 		}
 
 		// Process the documents updated while we were processing the update
 		$this->processUpdateQueue(1000);
 
+		$tikilib->set_preference('unified_last_rebuild', $tikilib->now);
 		return $stat;
 	}
 
@@ -187,16 +226,38 @@ class UnifiedSearchLib
 	 *
 	 * @return string	path to index directory
 	 */
-	private function getIndexLocation()
+	private function getIndexLocation($indexType = 'data')
 	{
 		global $prefs, $tikidomain;
-		$loc = $prefs['unified_lucene_location'];
-		$temp = $prefs['tmpDir'];
-		if (!empty($tikidomain) && strpos($loc, $tikidomain) === false && strpos($loc, "$temp/") === 0) {
-			$loc = str_replace("$temp/", "$temp/$tikidomain/", $loc);
-		}
+		$mapping = array(
+			'lucene' => array(
+				'data' => $prefs['unified_lucene_location'],
+				'data-old' => $prefs['unified_lucene_location'] . '-old',
+				'data-new' => $prefs['unified_lucene_location'] . '-new',
+				'preference' => $prefs['tmpDir'] . '/unified-preference-index-' . $prefs['language'],
+			),
+			'elastic' => array(
+				'data' => $prefs['unified_elastic_index_current'],
+				'preference' => $prefs['unified_elastic_index_prefix'] . 'pref_' . $prefs['language'],
+			),
+		);
 
-		return $loc;
+		$engine = $prefs['unified_engine'];
+
+		if (isset($mapping[$engine][$indexType])) {
+			$index = $mapping[$engine][$indexType];
+
+			if ($engine == 'lucene' && ! empty($tikidomain)) {
+				$temp = $prefs['tmpDir'];
+				if (strpos($index, $tikidomain) === false && strpos($index, "$temp/") === 0) {
+					$index = str_replace("$temp/", "$temp/$tikidomain/", $index);
+				}
+			}
+
+			return $index;
+		} else {
+			throw new Exception('Internal: Invalid index requested: ' . $indexType);
+		}
 	}
 
     /**
@@ -274,8 +335,19 @@ class UnifiedSearchLib
     private function buildIndexer($index, $loggit = false)
 	{
 		global $prefs;
-		$indexer = new Search_Indexer($index, $loggit);
-		$this->addSources($indexer);
+
+		if (! empty($prefs['unified_excluded_categories'])) {
+			$index = new Search_Index_CategoryFilterDecorator($index, array_filter($prefs['unified_excluded_categories']));
+		}
+
+		$logWriter = null;
+
+		if ($loggit) {
+			$logWriter = new Zend_Log_Writer_Stream($prefs['tmpDir'] . '/Search_Indexer.log', 'w');
+		}
+
+		$indexer = new Search_Indexer($index, $logWriter);
+		$this->addSources($indexer, 'indexing');
 
 		if ($prefs['unified_tokenize_version_numbers'] == 'y') {
 			$indexer->addContentFilter(new Search_ContentFilter_VersionNumber);
@@ -350,6 +422,10 @@ class UnifiedSearchLib
 			$aggregator->addContentSource('user', new Search_ContentSource_UserSource($prefs['user_in_search_result']));
 		}
 
+		if ($prefs['activity_custom_events'] == 'y') {
+			$aggregator->addContentSource('activity', new Search_ContentSource_ActivityStreamSource($aggregator instanceof Search_Indexer ? $aggregator : null));
+		}
+
 		// Global Sources
 		if ($prefs['feature_categories'] == 'y') {
 			$aggregator->addGlobalSource(new Search_GlobalSource_CategorySource);
@@ -378,31 +454,64 @@ class UnifiedSearchLib
     /**
      * @return Search_Index_Lucene
      */
-    function getIndex()
+    function getIndex($indexType = 'data')
 	{
 		global $prefs;
 
-		if ($prefs['unified_engine'] == 'lucene') {
+		switch ($prefs['unified_engine']) {
+		case 'lucene':
 			Zend_Search_Lucene::setTermsPerQueryLimit($prefs['unified_lucene_terms_limit']);
-			$index = new Search_Index_Lucene($this->getIndexLocation(), $prefs['language'], $prefs['unified_lucene_highlight'] == 'y');
+			$index = new Search_Index_Lucene($this->getIndexLocation($indexType), $prefs['language'], $prefs['unified_lucene_highlight'] == 'y');
 			$index->setCache(TikiLib::lib('cache'));
 			$index->setMaxResults($prefs['unified_lucene_max_result']);
 			$index->setResultSetLimit($prefs['unified_lucene_max_resultset_limit']);
 
 			return $index;
+		case 'elastic':
+			$index = $this->getIndexLocation($indexType);
+			if (empty($index)) {
+				return null;
+			}
+
+			$connection = $this->getElasticConnection();
+			$index = new Search_Elastic_Index($connection, $index);
+			return $index;
 		}
+	}
+
+	private function getElasticConnection()
+	{
+		global $prefs;
+		$connection = new Search_Elastic_Connection($prefs['unified_elastic_url']);
+		$connection->startBulk();
+
+		return $connection;
 	}
 
     /**
      * @param string $mode
      * @return Search_Formatter_DataSource_Declarative
      */
-    function getDataSource($mode = 'indexing')
+    function getDataSource($mode = 'formatting')
 	{
+		global $prefs;
+
+		if ($mode === 'formatting' && $prefs['unified_engine'] === 'elastic') {
+			return new Search_Formatter_DataSource_Trusted;
+		}
+
 		$dataSource = new Search_Formatter_DataSource_Declarative;
 		$this->addSources($dataSource, $mode);
 
 		return $dataSource;
+	}
+
+	function getProfileExportHelper()
+	{
+		$helper = new Tiki_Profile_Writer_SearchFieldHelper;
+		$this->addSources($helper, 'indexing'); // Need all fields, so use indexing
+
+		return $helper;
 	}
 
     /**
@@ -427,33 +536,31 @@ class UnifiedSearchLib
 		return new Search_Query_WeightCalculator_Field($weights);
 	}
 
+	function initQuery(Search_Query $query)
+	{
+		global $prefs;
+
+		$query->setWeightCalculator($this->getWeightCalculator());
+		$query->setIdentifierFields($prefs['unified_identifier_fields']);
+
+		if (! Perms::get()->admin) {
+			$query->filterPermissions(Perms::get()->getGroups());
+		}
+
+		$categlib = TikiLib::lib('categ');
+		if ($jail = $categlib->get_jail()) {
+			$query->filterCategory(implode(' or ', $jail), true);
+		}
+	}
+
     /**
      * @param array $filter
      * @return Search_Query
      */
     function buildQuery(array $filter)
 	{
-		$categlib = TikiLib::lib('categ');
-
 		$query = new Search_Query;
-		$query->setWeightCalculator($this->getWeightCalculator());
-
-		if (! Perms::get()->admin) {
-			$query->filterPermissions(Perms::get()->getGroups());
-		}
-		$jail_query = '';
-
-		if ($jail = $categlib->get_jail()) {
-			$i = 0;
-			foreach ($jail as $cat) {
-				$i++;
-				$jail_query .= $cat;
-				if ($i < count($jail)) {
-					$jail_query .= ' or ';
-				}
-			}
-			$query->filterCategory($jail_query, true);
-		}
+		$this->initQuery($query);
 
 		if (isset($filter['type']) && $filter['type']) {
 			$query->filterType($filter['type']);
@@ -469,7 +576,7 @@ class UnifiedSearchLib
 
 		if (isset($filter['content']) && $filter['content']) {
 			$o = TikiLib::lib('tiki')->get_preference('unified_default_content', array('contents'), true);
-			if(count($o) == 1 && empty($o[0])) {
+			if (count($o) == 1 && empty($o[0])) {
 				// Use "contents" field by default, if no default is specified
 				$query->filterContent($filter['content'], array('contents'));
 			} else {
@@ -512,33 +619,28 @@ class UnifiedSearchLib
 		return $query;
 	}
 
-    /**
-	 * Private. Used by a callback, so made public until PHP 5.4.
-	 *
-     * @param $path
-     * @return int
-	 * @private
-     */
-	function destroyDirectory($path)
+	function getFacetProvider()
 	{
-		if (!$path or !is_dir($path)) return 0;
+		global $prefs;
+		$types = $this->getSupportedTypes();
 
-		if ($dir = opendir($path)) {
-			while (false !== ($file = readdir($dir))) {
-				if ($file == '.' || $file == '..') {
-					continue;
-				}
+		$facets = array(
+			Search_Query_Facet_Term::fromField('object_type')
+				->setLabel(tr('Object Type'))
+				->setRenderMap($types),
+		);
 
-				if (is_dir($path . '/' . $file)) {
-					$this->destroyDirectory($path . '/' . $file);
-				} else {
-					unlink($path . '/' . $file);
-				}
-			}
-			closedir($dir);
+		if ($prefs['feature_multilingual'] == 'y') {
+			$facets[] = Search_Query_Facet_Term::fromField('language')
+				->setLabel(tr('Language'))
+				->setRenderMap(TikiLib::lib('tiki')->get_language_map());
 		}
 
-		rmdir($path);
+		$provider = new Search_FacetProvider;
+		$provider->addFacets($facets);
+		$this->addSources($provider);
+
+		return $provider;
 	}
 }
 

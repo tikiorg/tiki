@@ -18,15 +18,18 @@ class Search_Index_Memory implements Search_Index_Interface
 		$this->data[] = $data;
 	}
 
-	function invalidateMultiple(Search_Expr_Interface $query)
+	function endUpdate()
 	{
-		return array();
 	}
 
-	function find(Search_Expr_Interface $query, Search_Query_Order $sortOrder, $resultStart, $resultCount)
+	function invalidateMultiple(array $objectList)
 	{
-		$this->lastQuery = $query;
-		$this->lastOrder = $sortOrder;
+	}
+
+	function find(Search_Query_Interface $query, $resultStart, $resultCount)
+	{
+		$this->lastQuery = $query->getExpr();
+		$this->lastOrder = $query->getSortOrder();
 		$this->lastStart = $resultStart;
 		$this->lastCount = $resultCount;
 		return array();
@@ -39,6 +42,17 @@ class Search_Index_Memory implements Search_Index_Interface
 
 	function optimize()
 	{
+	}
+
+	function destroy()
+	{
+		$this->data = array();
+		return true;
+	}
+	
+	function exists()
+	{
+		return count($this->data) > 0;
 	}
 
 	/**

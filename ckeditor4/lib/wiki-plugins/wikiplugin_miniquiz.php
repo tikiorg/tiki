@@ -20,6 +20,7 @@ function wikiplugin_miniquiz_info()
 				'name' => tra('Tracker ID'),
 				'description' => tra('Numeric value representing the miniquiz tracker ID'),
 				'default' => '',
+				'profile_reference' => 'tracker',
 			),
 		),
 	);

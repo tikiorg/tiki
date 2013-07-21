@@ -32,6 +32,7 @@ function wikiplugin_addrelation_info()
 				'filter' => 'text',
 				'default' => null,
 				'since' => '8.0',
+				'profile_reference' => 'type_colon_object',
 			),
 			'target_object' => array(
 				'required' => false,
@@ -40,6 +41,7 @@ function wikiplugin_addrelation_info()
 				'filter' => 'text',
 				'default' => null,
 				'since' => '8.0',
+				'profile_reference' => 'type_colon_object',
 			),
 			'label_add' => array(
 				'required' => false,

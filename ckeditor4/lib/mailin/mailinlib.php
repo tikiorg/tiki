@@ -42,7 +42,11 @@ class MailinLib extends TikiLib
 		$cant = $this->getOne($query_cant, $bindvars);
 		$ret = array();
 
-		while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+		while ($res = $result->fetchRow('DB_FETCHMODE_ASSOC')) {
+			// Decrypt the password
+			$pwd = $this->decryptPassword($res['pass']);
+			$res['pass'] = $pwd;
+
 			$ret[] = $res;
 		}
 
@@ -77,7 +81,11 @@ class MailinLib extends TikiLib
 		$cant = $this->getOne($query_cant, $bindvars);
 		$ret = array();
 
-		while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+		while ($res = $result->fetchRow('DB_FETCHMODE_ASSOC')) {
+			// Decrypt the password
+			$pwd = $this->decryptPassword($res['pass']);
+			$res['pass'] = $pwd;
+
 			$ret[] = $res;
 		}
 
@@ -100,23 +108,29 @@ class MailinLib extends TikiLib
      * @param $type
      * @param $active
      * @param $anonymous
-     * @param $attachments
+	 * @param $admin
+	 * @param $attachments
      * @param null $article_topicId
      * @param null $article_type
      * @param null $discard_after
-     * @return bool
-     */
-    function replace_mailin_account($accountId, $account, $pop, $port, $username, $pass, $smtp, $useAuth, $smtpPort, $type, $active, $anonymous, $attachments, $article_topicId = NULL, $article_type = NULL, $discard_after=NULL)
+	 * @param null $show_inlineImages
+	*  @param 0 $categoryId
+	* @return bool
+	 */
+	function replace_mailin_account($accountId, $account, $pop, $port, $username, $clearpass, $smtp, $useAuth, $smtpPort, $type, $active, $anonymous, $admin, $attachments, $routing, $article_topicId = NULL, $article_type = NULL, $discard_after=NULL, $show_inlineImages='n', $save_html='y', $categoryId = 0, $namespace='', $respond_email = 'y', $leave_email = 'n')
 	{
+		// Encrypt password
+		$pass = $this->encryptPassword($clearpass);
+		
 		if ($accountId) {
-			$bindvars = array($account,$pop,(int)$port,(int)$smtpPort,$username,$pass,$smtp,$useAuth,$type,$active,$anonymous,$attachments,(int)$article_topicId,$article_type,$discard_after,(int)$accountId);
-			$query = "update `tiki_mailin_accounts` set `account`=?, `pop`=?, `port`=?, `smtpPort`=?, `username`=?, `pass`=?, `smtp`=?, `useAuth`=?, `type`=?, `active`=?, `anonymous`=?, `attachments`=?, `article_topicId`=?, `article_type`=? , `discard_after`=? where `accountId`=?";
+			$bindvars = array($account,$pop,(int)$port,(int)$smtpPort,$username,$pass,$smtp,$useAuth,$type,$active,$anonymous,$admin,$attachments,$routing,(int)$article_topicId,$article_type,$discard_after,$show_inlineImages,$save_html,$categoryId, $namespace, $respond_email, $leave_email, (int)$accountId);
+			$query = "update `tiki_mailin_accounts` set `account`=?, `pop`=?, `port`=?, `smtpPort`=?, `username`=?, `pass`=?, `smtp`=?, `useAuth`=?, `type`=?, `active`=?, `anonymous`=?, `admin`=?, `attachments`=?,  `routing`=?, `article_topicId`=?, `article_type`=? , `discard_after`=?, `show_inlineImages`=?, `save_html`=?, `categoryId`=?, `namespace`=?, `respond_email`=?, `leave_email`=? where `accountId`=?";
 			$result = $this->query($query, $bindvars);
 		} else {
-			$bindvars = array($account,$pop,(int)$port,(int)$smtpPort,$username,$pass,$smtp,$useAuth,$type,$active,$anonymous,$attachments,(int)$article_topicId,$article_type);
-			$query = "delete from `tiki_mailin_accounts` where `account`=? and `pop`=? and `port`=? and `smtpPort`=? and `username`=? and `pass`=? and `smtp`=? and `useAuth`=? and `type`=? and `active`=? and `anonymous`=? and `attachments`=? and `article_topicId`=?, `article_type`=?";
+			$bindvars = array($account,$pop,(int)$port,(int)$smtpPort,$username,$pass,$smtp,$useAuth,$type,$active,$anonymous,$admin,$attachments,$routing,(int)$article_topicId,$article_type, $show_inlineImages, $save_html, $categoryId, $namespace, $respond_email, $leave_email);
+			$query = "delete from `tiki_mailin_accounts` where `account`=? and `pop`=? and `port`=? and `smtpPort`=? and `username`=? and `pass`=? and `smtp`=? and `useAuth`=? and `type`=? and `active`=? and `anonymous`=? and `admin`=? and `attachments`=? and `routing`=? and `article_topicId`=?, `article_type`=?, `show_inlineImages`=?, `save_html`=?, `categoryId`=?, `namespace`=?, `respond_email`=?, `leave_email`=?";
 			$result = $this->query($query, $bindvars, -1, -1, false);
-			$query = "insert into `tiki_mailin_accounts`(`account`,`pop`,`port`,`smtpPort`,`username`,`pass`,`smtp`,`useAuth`,`type`,`active`,`anonymous`,`attachments`,`article_topicId`,`article_type`) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+			$query = "insert into `tiki_mailin_accounts`(`account`,`pop`,`port`,`smtpPort`,`username`,`pass`,`smtp`,`useAuth`,`type`,`active`,`anonymous`,`admin`,`attachments`,`routing`,`article_topicId`,`article_type`,`show_inlineImages`, `save_html`, `categoryId`, `namespace`, `respond_email`, `leave_email`) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 			$result = $this->query($query, $bindvars);
 		}
 		return true;
@@ -144,8 +158,37 @@ class MailinLib extends TikiLib
 		if (!$result->numRows()) {
 			return false;
 		}
-		$res = $result->fetchRow(DB_FETCHMODE_ASSOC);
+		$res = $result->fetchRow('DB_FETCHMODE_ASSOC');
+		
+		// Decrypt the password
+		$pwd = $this->decryptPassword($res['pass']);
+		$res['pass'] = $pwd;
+
 		return $res;
+	}
+	
+	/**
+	 * encryptPassword the email account password
+	 *
+	 * @param string $pwd Password in clear-text
+	 * @return crypt Encoded password
+	 *
+	 */	
+	function encryptPassword($pwd) {
+		$encoded =  base64_encode($pwd);
+		return $encoded;
+	}
+
+	/**
+	 * decryptPassword the email account password
+	 *
+	 * @param crypt $$encrypted Encoded password
+	 * @return string Return clear text password
+	 *
+	 */	
+	function decryptPassword($encoded) {
+		$plaintext =  base64_decode($encoded);
+		return $plaintext;
 	}
 }
 $mailinlib = new MailinLib;

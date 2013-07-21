@@ -68,7 +68,8 @@ class CategLib extends ObjectLib
 	}
 	function get_category_name($categId,$real=false)
 	{
-	    if ( $categId==0 ) return 'Top';
+		if ( $categId === 'orphan') return tr('None');
+	    if ( $categId==0 ) return tr('Top');
 		$query = "select `name`,`parentId` from `tiki_categories` where `categId`=?";
 		$result=$this->query($query, array((int) $categId));
 		$res = $result->fetchRow();
@@ -137,6 +138,16 @@ class CategLib extends ObjectLib
 
 		$this->remove_category_from_watchlists($categId);
 
+		$logslib = TikiLib::lib('logs');
+		$logslib->add_action(
+			'Removed',
+			$categId,
+			'category',
+			array(
+				'name' => $categoryName,
+			)
+		);
+
 		return true;
 	}
 
@@ -181,6 +192,16 @@ class CategLib extends ObjectLib
 			"action"=>"category updated","oldCategoryName"=>$oldCategoryName, "oldCategoryPath"=>$oldCategoryPath,
 			"oldDescription"=>$oldDescription, "oldParentId" => $parentId, "oldParentName" => $oldParentName);
 		$this->notify($values);
+
+		$logslib = TikiLib::lib('logs');
+		$logslib->add_action(
+			'Updated',
+			$categId,
+			'category',
+			array(
+				'name' => $name,
+			)
+		);
 	}
 
 	// Throws an Exception if the category name conflicts
@@ -215,6 +236,17 @@ class CategLib extends ObjectLib
 			"description"=>$description, "parentId" => $parentId, "parentName" => $this->get_category_name($parentId),
 			"action"=>"category created");
 		$this->notify($values);
+
+		$logslib = TikiLib::lib('logs');
+		$logslib->add_action(
+			'Created',
+			$id,
+			'category',
+			array(
+				'name' => $name,
+			)
+		);
+
 		return $id;
 	}
 
@@ -280,7 +312,31 @@ class CategLib extends ObjectLib
 		return $id;
 	}
 
-	function categorize($catObjectId, $categId)
+	/**
+	 * categorizePage will do the required steps to categorize a wiki page
+	 *
+	 * @param mixed $pageName Page to categorize
+	 * @param mixed $categId CategoryId
+	 * @return nothing
+	 *
+	 */	
+	function categorizePage($pageName, $categId, $user = '')
+	{
+		global $objectlib;
+
+		// Categorize the new page
+		$objectId = $objectlib->add_object('wiki page', $pageName);
+
+		$description = NULL;
+		$name = NULL;
+		$href = NULL;
+		$checkHandled = true;
+		$this->add_categorized_object('wiki page', $pageName, $description, $name, $href, $checkHandled);
+
+		$this->categorize($objectId, $categId, $user);
+	}
+
+	function categorize($catObjectId, $categId, $user = '')
 	{
 		global $prefs;
 		if (empty($categId)) {
@@ -297,7 +353,7 @@ class CategLib extends ObjectLib
 		$info = TikiLib::lib('object')->get_object_via_objectid($catObjectId);
 		if ($prefs['feature_actionlog'] == 'y') {
 			global $logslib; include_once('lib/logs/logslib.php');
-			$logslib->add_action('Categorized', $info['itemId'], $info['type'], "categId=$categId");
+			$logslib->add_action('Categorized', $info['itemId'], $info['type'], "categId=$categId", $user);
 		}
 		require_once 'lib/search/refresh-functions.php';
 		refresh_index($info['type'], $info['itemId']);

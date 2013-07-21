@@ -26,7 +26,7 @@ class Tiki_Profile_Installer
 		'webservice' => 'Tiki_Profile_InstallHandler_Webservice',
 		'webservice_template' => 'Tiki_Profile_InstallHandler_WebserviceTemplate',
 		'rss' => 'Tiki_Profile_InstallHandler_Rss',
-		'topic' => 'Tiki_Profile_InstallHandler_Topic',
+		'article_topic' => 'Tiki_Profile_InstallHandler_ArticleTopic',
 		'article_type' => 'Tiki_Profile_InstallHandler_ArticleType',
 		'article' => 'Tiki_Profile_InstallHandler_Article',
 		'forum' => 'Tiki_Profile_InstallHandler_Forum',
@@ -50,6 +50,14 @@ class Tiki_Profile_Installer
 		'wiki_page' => 'wiki page',
 		'file_gallery' => 'fgal',
 		'tracker_item' => 'trackeritem',
+	);
+
+	private static $typeMapInvert = array(
+		'wiki page' => 'wiki_page',
+		'wiki' => 'wiki_page',
+		'fgal' => 'file_gallery',
+		'trackeritem' => 'tracker_item',
+		'tracker item' => 'tracker_item',
 	);
 
 	private $userData = false;
@@ -88,10 +96,25 @@ class Tiki_Profile_Installer
 	
 	public static function convertType( $type ) // {{{
 	{
-		if ( array_key_exists($type, self::$typeMap) )
+		if (isset(self::$typeMap[$type])) {
 			return self::$typeMap[$type];
-		else
+		} else {
 			return $type;
+		}
+	} // }}}
+
+	/**
+	 * Converts a Tiki object type to a profile object type.
+	 */
+	public static function convertTypeInvert( $type ) // {{{
+	{
+		$typeMap = self::$typeMapInvert;
+
+		if (isset($typeMap[$type])) {
+			return $typeMap[$type];
+		} else {
+			return $type;
+		}
 	} // }}}
 
 	public static function convertObject( $type, $id, $contextualizedInfo = array() ) // {{{
@@ -115,9 +138,10 @@ class Tiki_Profile_Installer
 	{
 		global $tikilib;
 
-		$result = $tikilib->query("SELECT DISTINCT `domain`, `profile` FROM `tiki_profile_symbols`");
-		if ( $result ) while ( $row = $result->fetchRow() )
+		$result = $tikilib->fetchAll("SELECT DISTINCT `domain`, `profile` FROM `tiki_profile_symbols`");
+		foreach ($result as $row) {
 			$this->installed[Tiki_Profile::getProfileKeyFor($row['domain'], $row['profile'])] = true;
+		}
 	} // }}}
 
 	function setUserData( $userData ) // {{{

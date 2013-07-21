@@ -21,14 +21,16 @@ function wikiplugin_trackeritemfield_info()
 				'name' => tra('Tracker ID'),
 				'description' => tra('Numeric value representing the tracker ID.'),
 				'filter' => 'digits',
-				'default' => ''
+				'default' => '',
+				'profile_reference' => 'tracker',
 			),
 			'itemId' => array(
 				'required' => false,
 				'name' => tra('Item ID'),
 				'description' => tra('Numeric value representing the item ID. Default is the user tracker item for the current user.'),
 				'filter' => 'digits',
-				'default' => ''
+				'default' => '',
+				'profile_reference' => 'tracker_item',
 			),
 			'fieldId' => array(
 				'required' => false,
@@ -36,6 +38,7 @@ function wikiplugin_trackeritemfield_info()
 				'description' => tra('Numeric value representing the field ID displayed or tested'),
 				'filter' => 'digits',
 				'default' => '',
+				'profile_reference' => 'tracker_field',
 			),
 			'fields' => array(
 				'required' => false,
@@ -43,6 +46,8 @@ function wikiplugin_trackeritemfield_info()
 				'description' => tra('Colon separated list of field IDs. Default is all fields'),
 				'default' => '',
 				'filter' => 'text',
+				'separator' => ':',
+				'profile_reference' => 'tracker_field',
 			),
 			'status' => array(
 				'required' => false,
@@ -58,7 +63,7 @@ function wikiplugin_trackeritemfield_info()
 					array('text' => tra('Open & Pending'), 'value' => 'op'), 
 					array('text' => tra('Open & Closed'), 'value' => 'oc'), 
 					array('text' => tra('Pending & Closed'), 'value' => 'pc'), 
-					array('text' => tra('Open, Pending & Closed'), 'value' => 'opc')
+					array('text' => tra('Open, Pending & Closed'), 'value' => 'opc'),
 				)
 			),
 			'test' => array(
@@ -70,8 +75,8 @@ function wikiplugin_trackeritemfield_info()
 				'options' => array(
 					array('text' => '', 'value' => ''), 
 					array('text' => tra('Yes'), 'value' => 1), 
-					array('text' => tra('No'), 'value' => 0)
-				)
+					array('text' => tra('No'), 'value' => 0),
+				),
 			),
 			'value' => array(
 				'required' => true,
@@ -181,7 +186,6 @@ function wikiplugin_trackeritemfield($data, $params)
 		$all_fields = $trklib->list_tracker_fields($trackerId, 0, -1);
 		$all_fields = $all_fields['data'];
 		if (!empty($fields)) {
-			$fields = explode(':', $fields);
 			foreach ($all_fields as $i=>$fopt) {
 				if (!in_array($fopt['fieldId'], $fields)) {
 					unset($all_fields[$i]);

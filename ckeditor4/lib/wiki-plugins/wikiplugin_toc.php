@@ -28,6 +28,7 @@ function wikiplugin_toc_info()
 				'required' => false,
 				'filter' => 'digits',
 				'default' => '',
+				'profile_reference' => 'structure',
 			),
 			'order' => array(
 				'name' => tra('Order'),
@@ -81,6 +82,7 @@ function wikiplugin_toc_info()
 				'description' => tra('By default, the table of contents for the current page will be displayed. Alternate page may be provided.'),
 				'required' => false,
 				'default' => '',
+				'profile_reference' => 'wiki_page',
 			),
 		),
 	);
@@ -109,7 +111,7 @@ function wikiplugin_toc( $data, $params )
 	if ($prefs['feature_jquery_ui'] === 'y' && $type === 'admin') {
 		TikiLib::lib('header')
 				->add_jsfile('lib/structures/tiki-edit_structure.js')
-				->add_jsfile('lib/jquery/jquery.mjs.nestedSortable.js');
+				->add_jsfile('vendor/jquery/plugins/nestedsortable/jquery.ui.nestedSortable.js');
 
 		$smarty = TikiLib::lib('smarty');
 		$smarty->loadPlugin('smarty_function_button');

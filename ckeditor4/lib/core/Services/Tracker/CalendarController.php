@@ -14,6 +14,8 @@ class Services_Tracker_CalendarController
 
 	function action_list($input)
 	{
+		global $prefs;
+
 		$unifiedsearchlib = TikiLib::lib('unifiedsearch');
 		$index = $unifiedsearchlib->getIndex();
 		$dataSource = $unifiedsearchlib->getDataSource();
@@ -31,6 +33,7 @@ class Services_Tracker_CalendarController
 
 		$query = $unifiedsearchlib->buildQuery(array());
 		$query->filterRange($input->start->int(), $input->end->int(), array($start, $end));
+		$query->setRange(0, $prefs['unified_lucene_max_result']);
 
 		if ($body = $input->filters->none()) {
 			$builder = new Search_Query_WikiBuilder($query);

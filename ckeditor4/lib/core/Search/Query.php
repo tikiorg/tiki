@@ -5,7 +5,7 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-class Search_Query
+class Search_Query implements Search_Query_Interface
 {
 	private $objectList;
 	private $expr;
@@ -13,6 +13,10 @@ class Search_Query
 	private $start = 0;
 	private $count = 50;
 	private $weightCalculator = null;
+	private $identifierFields = null;
+
+	private $subQueries = array();
+	private $facets = array();
 
 	function __construct($query = null)
 	{
@@ -21,6 +25,11 @@ class Search_Query
 		if ($query) {
 			$this->filterContent($query);
 		}
+	}
+
+	function setIdentifierFields(array $fields)
+	{
+		$this->identifierFields = $fields;
 	}
 
 	function addObject($type, $objectId)
@@ -126,7 +135,7 @@ class Search_Query
 
 	function filterInitial($initial, $field = 'title')
 	{
-		$this->addPart(new Search_Expr_Range($initial, substr($initial, 0, -1) . chr(ord(substr($initial, -1)) + 1)), 'plaintext', $field);
+		$this->addPart(new Search_Expr_Initial($initial), 'plaintext', $field);
 	}
 
 	function filterRelation($query, array $invertable = array())
@@ -135,6 +144,17 @@ class Search_Query
 		$replacer = new Search_Query_RelationReplacer($invertable);
 		$query = $query->walk(array($replacer, 'visit'));
 		$this->addPart($query, 'multivalue', 'relations');
+	}
+
+	function filterSimilar($type, $object)
+	{
+		$this->expr->addPart(new Search_Expr_And(array(
+			new Search_Expr_Not(new Search_Expr_And(array(
+				new Search_Expr_Token($type, 'identifier', 'object_type'),
+				new Search_Expr_Token($object, 'identifier', 'object_id'),
+			))),
+			new Search_Expr_MoreLikeThis($type, $object),
+		)));
 	}
 
 	private function addPart($query, $type, $field)
@@ -177,24 +197,36 @@ class Search_Query
 		$this->weightCalculator = $calculator;
 	}
 
-	function search(Search_Index_Interface $index)
+	function getSortOrder()
 	{
 		if ($this->sortOrder) {
-			$sortOrder = $this->sortOrder;
+			return $this->sortOrder;
 		} else {
-			$sortOrder = Search_Query_Order::getDefault();
+			return Search_Query_Order::getDefault();
 		}
+	}
 
+	function search(Search_Index_Interface $index)
+	{
 		if ($this->weightCalculator) {
 			$this->expr->walk(array($this->weightCalculator, 'calculate'));
 		}
 
-		return $index->find($this->expr, $sortOrder, $this->start, $this->count);
+		if ($this->identifierFields) {
+			$fields = $this->identifierFields;
+			$this->expr->walk(function (Search_Expr_Interface $expr) use ($fields) {
+				if (method_exists($expr, 'getField') && in_array($expr->getField(), $fields)) {
+					$expr->setType('identifier');
+				}
+			});
+		}
+
+		return $index->find($this, $this->start, $this->count);
 	}
 
-	function invalidate(Search_Index_Interface $index)
+	function getExpr()
 	{
-		return $index->invalidateMultiple($this->expr);
+		return $this->expr;
 	}
 
 	private function parse($query)
@@ -224,5 +256,32 @@ class Search_Query
 		);
 
 		return $terms;
+	}
+
+	function getSubQuery($name)
+	{
+		if (empty($name)) {
+			return $this;
+		}
+
+		if (! isset($this->subQueries[$name])) {
+			$subquery = new self;
+			$subquery->expr = new Search_Expr_Or(array());
+			$this->expr->addPart($subquery->expr);
+
+			$this->subQueries[$name] = $subquery;
+		}
+
+		return $this->subQueries[$name];
+	}
+
+	function requestFacet(Search_Query_Facet_Interface $facet)
+	{
+		$this->facets[] = $facet;
+	}
+
+	function getFacets()
+	{
+		return $this->facets;
 	}
 }

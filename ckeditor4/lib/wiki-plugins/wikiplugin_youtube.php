@@ -116,9 +116,15 @@ function wikiplugin_youtube($data, $params)
 	}
 
 	$scheme = $tikilib->httpScheme();
+	
+	//Verify if URL is YouTube Short URL
+	$youTubeShortURL = parse_url($params['movie']);
+	if($youTubeShortURL['host'] == 'youtu.be'){
+		$params['movie']= str_replace('/','',$youTubeShortURL['path']);
+	}
 
-	$params['movie'] = $scheme . '://www.youtube.com/v/' . preg_replace('/http(s)?:\/\/(\w+\.)?youtube\.com\/watch\?v=/', '', $params['movie']);
-
+	$params['movie'] = '//www.youtube.com/embed/' . preg_replace('/http(s)?:\/\/(\w+\.)?youtube\.com\/watch\?v=/', '', $params['movie']).'?';
+	
 	// backward compatibility
 	if ($params['allowFullScreen'] == 'y') {
 		$params['allowFullScreen'] = 'true';
@@ -126,10 +132,14 @@ function wikiplugin_youtube($data, $params)
 		$params['allowFullScreen'] = 'false';
 	}
 
-	if (!empty($params['allowFullScreen']) && $params['allowFullScreen'] == 'true') {
-		$params['movie'] .= '?fs=1';
+	if (!empty($params['allowFullScreen'])){
+		if($params['allowFullScreen'] == 'true') {
+			$params['movie'] .= '&fs=1';
+		} else {
+			$params['movie'] .= '&fs=0';
+		}
 	}
-	if (isset($related) && $related == 'n') {
+	if (isset($params['related']) && $params['related'] == 'n') {
 		$params['movie'] .= '&rel=0';
 	}
 	if (!empty($params['border'])) {
@@ -139,10 +149,8 @@ function wikiplugin_youtube($data, $params)
 		$params['movie'] .= '&color2=0x' . $params['background'];
 	}
 
-	$code = $tikilib->embed_flash($params);
-
-	if ( $code === false ) {
-		return tra('Missing parameter movie to the Youtube plugin');
-	}
-	return '~np~' . $code . '~/np~';
+	
+	$iframe = ('<iframe src="'.$params['movie'].'" frameborder="0" width="'.$params['width'].'" height="'.$params['height'].'"></iframe>');
+	
+	return '~np~' . $iframe . '~/np~';
 }

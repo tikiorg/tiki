@@ -7,7 +7,7 @@
 
 class Search_Index_LucenePaginationTest extends PHPUnit_Framework_TestCase
 {
-	private $index;
+	protected $index;
 	private $dir;
 
 	function setUp()
@@ -22,8 +22,7 @@ class Search_Index_LucenePaginationTest extends PHPUnit_Framework_TestCase
 
 	function tearDown()
 	{
-		$dir = escapeshellarg($this->dir);
-		`rm -Rf $dir`;
+		$this->index->destroy();
 	}
 
 	function testNoPagingRequired()
@@ -41,6 +40,7 @@ class Search_Index_LucenePaginationTest extends PHPUnit_Framework_TestCase
 		$this->addDocuments($count);
 
 		$query = new Search_Query;
+		$query->setOrder('object_id_nasc');
 		$query->filterType('article');
 		$query->setRange($from, $perPage);
 

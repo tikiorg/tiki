@@ -20,14 +20,15 @@ function wikiplugin_alink_info()
 				'required' => true,
 				'name' => tra('Anchor Name'),
 				'description' => tra('The anchor name as defined in the ANAME plugin.'),
-				'default' => ''
+				'default' => '',
 			),
 			'pagename' => array(
 				'required' => false,
 				'name' => tra('Page Name'),
 				'description' => tra('The name of the wiki page containing the anchor. If empty, the anchor name will be searched for on the wiki page where the plugin is used.'),
 				'filter' => 'pagename',
-				'default' => ''
+				'default' => '',
+				'profile_reference' => 'wiki_page',
 			),
 		),
 	);

@@ -8,13 +8,16 @@
 abstract class Tracker_Field_Abstract implements Tracker_Field_Interface, Tracker_Field_Indexable
 {
 	private $definition;
+	private $options;
 	private $itemData;
 	private $trackerDefinition;
 
 	function __construct($fieldInfo, $itemData, $trackerDefinition)
 	{
+		$this->options = Tracker_Options::fromSerialized($fieldInfo['options'], $fieldInfo);
+
 		if (! isset($fieldInfo['options_array'])) {
-			$fieldInfo['options_array'] = preg_split('/\s*,\s*/', trim($fieldInfo['options']));
+			$fieldInfo['options_array'] = $this->options->buildOptionsArray();
 		}
 
 		$this->definition = $fieldInfo;
@@ -34,10 +37,14 @@ abstract class Tracker_Field_Abstract implements Tracker_Field_Interface, Tracke
 			$query = array_merge(
 				$_GET,
 				array(
-					'itemId' => $itemId,
 					'show' => 'view',
 				)
 			);
+			unset($query['trackerId']);
+			if (isset($query['page'])) {
+				$query['from'] = $query['page'];
+				unset($query['page']);
+			}
 
 
 			$classList = array('tablename');
@@ -45,15 +52,19 @@ abstract class Tracker_Field_Abstract implements Tracker_Field_Interface, Tracke
 
 			require_once ('lib/smarty_tiki/modifier.sefurl.php');
 			$href = smarty_modifier_sefurl($itemId, 'trackeritem');
-			$href = strpos($href, '?') === false ? $href . '?' : $href;
+			$href .= (strpos($href, '?') === false) ? '?' : '&';
 			$href .= http_build_query($query, '', '&');
 
 			$arguments = array(
 				'class' => implode(' ', $classList),
 				'href' => $href,
 			);
-			if (!empty($context['url']) && strpos($context['url'], 'itemId') !== false) {
-				$context['url'] = preg_replace('/([&|\?])itemId=?[^&]*/', '\\1itemId=' . $itemId, $context['url']);
+			if (!empty($context['url'])) {
+				if (strpos($context['url'], 'itemId') !== false) {
+					$context['url'] = preg_replace('/([&|\?])itemId=?[^&]*/', '\\1itemId=' . $itemId, $context['url']);
+				} elseif (isset($context['reloff']) && strpos($context['url'], 'offset') !== false) {
+					$context['url'] = preg_replace('/([&|\?])tr_offset=?[^&]*/', '\\1tr_offset=' . $context['reloff'], $context['url']);
+				}
 				$arguments['href'] = $context['url'];
 			}
 
@@ -232,6 +243,8 @@ abstract class Tracker_Field_Abstract implements Tracker_Field_Interface, Tracke
 			$value = $this->itemData[$key];
 		} else if (isset($this->definition['value'])) {
 			$value = $this->definition['value'];
+		} else if (isset($this->itemData['fields'][$this->getConfiguration('permName')])) {
+			$value = $this->itemData['fields'][$this->getConfiguration('permName')];
 		} else {
 			$value = null;
 		}
@@ -257,27 +270,13 @@ abstract class Tracker_Field_Abstract implements Tracker_Field_Interface, Tracke
 	 * @param bool $default
 	 * @return mixed
 	 */
-	protected function getOption($number, $default = false)
+	protected function getOption($key, $default = false)
 	{
-		if (! is_numeric($number)) {
-			$factory = new Tracker_Field_Factory($this->definition);
-			$types = $factory->getFieldTypes();
-
-			$type = $this->getConfiguration('type');
-
-			$info = $types[$type];
-			$params = array_keys($info['params']);
-
-			$number = array_search($number, $params);
-
-			if ($number === false) {
-				return $default;
-			}
+		if (is_numeric($key)) {
+			return $this->options->getParamFromIndex($key, $default);
+		} else {
+			return $this->options->getParam($key, $default);
 		}
-
-		return isset($this->definition['options_array'][(int) $number]) ?
-			$this->definition['options_array'][(int) $number] :
-			$default;
 	}
 
 	protected function getTrackerDefinition()
@@ -307,21 +306,31 @@ abstract class Tracker_Field_Abstract implements Tracker_Field_Interface, Tracke
 		return $smarty->fetch($file, $file);
 	}
 
-	function getDocumentPart($baseKey, Search_Type_Factory_Interface $typeFactory)
+	function getDocumentPart(Search_Type_Factory_Interface $typeFactory)
 	{
+		$baseKey = $this->getBaseKey();
 		return array(
 			$baseKey => $typeFactory->sortable($this->getValue()),
 		);
 	}
 
-	function getProvidedFields($baseKey)
+	function getProvidedFields()
 	{
+		$baseKey = $this->getBaseKey();
 		return array($baseKey);
 	}
 
-	function getGlobalFields($baseKey)
+	function getGlobalFields()
 	{
+		$baseKey = $this->getBaseKey();
 		return array($baseKey => true);
+	}
+
+	function getBaseKey()
+	{
+		global $prefs;
+		$indexKey = $prefs['unified_trackerfield_keys'];
+		return 'tracker_field_' . $this->getConfiguration($indexKey);
 	}
 }
 

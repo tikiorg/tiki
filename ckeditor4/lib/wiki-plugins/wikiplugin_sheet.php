@@ -23,7 +23,8 @@ function wikiplugin_sheet_info()
 				'filter' => 'digits',
 				'accepted' => 'Sheet ID number',
 				'default' => '',
-				'since' => ''
+				'since' => '',
+				'profile_reference' => 'sheet',
 			),
 			'url' => array(
 				'required' => false,

@@ -29,16 +29,19 @@ class Tracker_Field_WebService extends Tracker_Field_Abstract
 						'name' => tr('Service Name'),
 						'description' => tr('Webservice name as registered in Tiki.'),
 						'filter' => 'word',
+						'legacy_index' => 0,
 					),
 					'template' => array(
 						'name' => tr('Template Name'),
 						'description' => tr('Template name to use for rendering as registered with the webservice.'),
 						'filter' => 'word',
+						'legacy_index' => 1,
 					),
 					'params' => array(
 						'name' => tr('Parameters'),
 						'description' => tr('URL-encoded list of parameters to send to the webservice. %field_name% can be used in the string to be replaced with the values in the tracker item.'),
 						'filter' => 'url',
+						'legacy_index' => 2,
 					),
 				),
 			),
@@ -58,29 +61,29 @@ class Tracker_Field_WebService extends Tracker_Field_Abstract
 	function renderOutput($context = array())
 	{
 			
-		if (!$this->getOption(0) || !$this->getOption(1)) {
+		if (!$this->getOption('service') || !$this->getOption('template')) {
 			return false;
 		}
 	
 		require_once 'lib/webservicelib.php';
 
-		if (!($webservice = Tiki_Webservice::getService($this->getOption(0)))  ||
-			!($template = $webservice->getTemplate($this->getOption(1))) ) {
+		if (!($webservice = Tiki_Webservice::getService($this->getOption('service')))  ||
+			!($template = $webservice->getTemplate($this->getOption('template'))) ) {
 				return false;
 		}
 
 		$ws_params = array();
 		
-		if ( $this->getOption(2) ) {
-			parse_str($this->getOption(2), $ws_params);
+		if ( $this->getOption('params') ) {
+			parse_str($this->getOption('params'), $ws_params);
 			foreach ($ws_params as $ws_param_name => &$ws_param_value) {
 				if (preg_match('/(.*)%(.*)%(.*)/', $ws_param_value, $matches)) {
-					$ws_param_field_name = $matches[2]; 
+					$ws_param_field_name = $matches[2];
 				}
 				$field = $this->getTrackerDefinition()->getFieldFromName($ws_param_field_name);
 				if ($field) {
 					$value = TikiLib::lib('trk')->get_field_value($field, $this->getItemData());
-					$ws_param_value = preg_replace('/%'. $ws_param_field_name .'%/', $value, $ws_param_value);
+					$ws_params[$ws_param_name] = preg_replace('/%' . $ws_param_field_name . '%/', $value, $ws_param_value);
 				}
 			}
 		}

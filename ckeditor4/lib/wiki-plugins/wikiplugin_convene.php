@@ -29,6 +29,14 @@ function wikiplugin_convene_info()
 				'description' => tra('ID number for the site calendar where to store the date for the events with maximum votes'),
 				'filter' => 'digits',
 				'default' => '',
+				'profile_reference' => 'calendar',
+			),
+			'minvotes' => array(
+				'required' => false,
+				'name' => tra('Minimum Number of votes to show Add-to-Calendar icon'),
+				'description' => tra('Minimum Number of votes needed to show Add-to-Calendar icon, so that new users do not see a potentially confusing icon before the convene has enough information on it'),
+				'filter' => 'digits',
+				'default' => '3',
 			),
 			'dateformat' => array(
 				'required' => false,
@@ -58,6 +66,7 @@ function wikiplugin_convene($data, $params)
 		array(
 			"title" => "Convene",
 			"calendarid" => "1",
+			"minvotes" => "3",
 			"dateformat" => "short"
 		),
 		$params
@@ -200,7 +209,7 @@ function wikiplugin_convene($data, $params)
 		$pic = "";
 		if ($total == $votes[$topVoteStamp]) {
 			$pic .= ($tiki_p_edit != "y" ? "<img src='img/icons/tick.png' class='icon' width='16' height='16' title='" . tr("Selected Date") . "' />" : "");
-			if ($tiki_p_edit == 'y') {
+			if ($tiki_p_edit == 'y' && $votes[$topVoteStamp] >= $minvotes) {
 				$pic .= "<button class='icon ui-widget-header ui-corner-all' onclick='document.location = $(this).find(\"a\").attr(\"href\"); return false;'><a href='tiki-calendar_edit_item.php?todate=$stamp&calendarId=$calendarid' title='" . tr("Add as Calendar Event") . "'><img src='img/icons/calendar_add.png' class='icon' width='16' height='16' /></a></button>";
 			}
 		}
@@ -240,7 +249,7 @@ FORM;
 	$n = '\n';
 	$regexN = '/[\r\n]+/g';
 
-	$headerlib->add_jsfile("lib/jquery/jquery-ui-timepicker-addon.js");
+	$headerlib->add_jsfile("lib/jquery/ui/plugins/jquery-ui-timepicker-addon.js");
 	$headerlib->add_jq_onready(
 <<<JQ
 
@@ -341,7 +350,8 @@ FORM;
 						'<input type="hidden" name="index" value="$i"/>'+
 						'<input type="hidden" name="type" value="convene"/>'+
 						'<input type="hidden" name="params[title]" value="$title"/>'+
-						'<input type="hidden" name="params[dateformat]" value="$dateformat"/>'+
+						'<input type="hidden" name="params[calendarid]" value="$calendarid"/>'+
+						'<input type="hidden" name="params[minvotes]" value="$minvotes"/>'+
 					'</div>'+
 				'</form>')
 				.appendTo('body')

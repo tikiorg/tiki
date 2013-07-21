@@ -7,6 +7,13 @@
 
 function prefs_site_list()
 {
+    $available_layouts = array();
+	foreach (scandir('templates/layouts/') as $layoutName) {
+		if ($layoutName[0] != '.' && $layoutName != 'index.php') {
+			$available_layouts[$layoutName] = ucfirst($layoutName);
+		}   
+	}   
+
 	return array (
 		'site_closed' => array(
 			'name' => tra('Close site (except for those with permission)'),
@@ -111,5 +118,23 @@ function prefs_site_list()
 			'hint' => tra('One per line. Network prefix in CIDR notation (address/mask size), separated by comma with the perspective ID.') . ' ' . tra('Example:') . ' 192.168.12.0/24,12',
 			'default' => '',
 		),
+		'site_google_analytics_account' => array(
+			'name' => tr('Google Analytics Account Number'),
+			'description' => tra('The account number for the site. Your account number from Google looks like UA-XXXXXXX-YY. All you need to enter is XXXXXXX-YY'),
+			'type' => 'text',
+			'size' => 15,
+			'default' => '',
+			'hint' => 'XXXXXXX-YY',
+			'dependencies' => array(
+				'wikiplugin_googleanalytics',
+			),
+		),
+		'site_layout' => array(
+			'name' => tr('Site Layout'),
+			'description' => tr('Changes the overall site layout templates'),
+			'type' => 'list',
+			'default' => 'classic',
+			'options' => $available_layouts,
+		),  
 	);
 }

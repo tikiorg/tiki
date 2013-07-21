@@ -252,10 +252,10 @@ class ImageAbstract
 			$icon_format = $format;
 			$class = 'Image';
 
-			if ( call_user_func(array($class, 'is_supported'), 'svg') ) {
-				$format = 'svg';
-			} elseif ( call_user_func(array($class, 'is_supported'), 'png') ) {
+			if ( call_user_func(array($class, 'is_supported'), 'png') ) {
 				$format = 'png';
+			} elseif ( call_user_func(array($class, 'is_supported'), 'svg') ) {
+				$format = 'svg';
 			} else {
 				return false;
 			}
@@ -266,7 +266,7 @@ class ImageAbstract
 			$name = "lib/images/icons/unknown.$format";
 		}
 
-		if ( ! $keep_original ) {
+		if ( ! $keep_original && $format != 'svg' ) {
 			$icon = new $class($name, true);
 			if ( $format != $icon_format ) {
 				$icon->convert($icon_format);

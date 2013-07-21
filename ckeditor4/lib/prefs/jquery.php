@@ -95,11 +95,22 @@ function prefs_jquery_list($partial = false)
 			),
 			'default' => 'vertical',
 		),
+		'jquery_ui_chosen' => array(
+			'name' => tra('jQuery-ui Chosen Menu'),
+			'description' => tra('Styled replacement for dropdown select menus and multiple select inputs.'),
+			'type' => 'flag',
+			'default' => 'n',
+			'tags' => array('experimental'),
+			'dependencies' => array(
+				'feature_jquery_ui',
+			),
+		),
 		'jquery_ui_selectmenu' => array(
 			'name' => tra('jQuery-ui Select Menu'),
 			'description' => tra('Styled replacement for dropdown select menus.'),
 			'type' => 'flag',
 			'default' => 'n',
+			'warning' => tra('Experimental. This plugin is deprecated in favor of "Chosen".'),
 			'dependencies' => array(
 				'feature_jquery_ui',
 			),
@@ -113,6 +124,23 @@ function prefs_jquery_list($partial = false)
 			'warning' => tra('Experimental. This feature is under development.'),
 			'dependencies' => array(
 				'jquery_ui_selectmenu',
+			),
+		),
+		'jquery_colorbox_theme' => array(
+			'name' => tra('CSS to use in Colorbox (a.k.a. "Shadowbox")'),
+            'description' => tra(''),
+			'type' => 'list',
+			'perspective' => false,
+			'options' => array(
+				'example1' => tra('One'),
+				'example2' => tra('Two'),
+				'example3' => tra('Three'),
+				'example4' => tra('Four'),
+				'example5' => tra('Five'),
+			),
+			'default' => 'example1',
+			'dependencies' => array(
+				'feature_shadowbox',
 			),
 		),
 	);

@@ -26,6 +26,10 @@ class Search_GlobalSource_PermissionSource implements Search_GlobalSource_Interf
 
 	function getData($objectType, $objectId, Search_Type_Factory_Interface $typeFactory, array $data = array())
 	{
+		if (isset($data['allowed_groups'])) {
+			return array();
+		}
+
 		$groups = array();
 
 		if (isset($data['view_permission'])) {

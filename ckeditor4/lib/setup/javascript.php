@@ -74,11 +74,11 @@ if ($prefs['javascript_enabled'] == 'y') {	// we have JavaScript
 	/** Use custom.js in lang dir if there **/
 	$language = $prefs['language'];
 	if (is_file("lang/$language/custom.js")) {
-		TikiLib::lib('header')->add_jsfile("lang/$language/custom.js", 60);	// after styles custom.js
+		TikiLib::lib('header')->add_jsfile("lang/$language/custom.js", 40);	// before styles custom.js
 	}
 
 	if (!empty($tikidomain) && is_file("lang/$language/$tikidomain/custom.js")) {		// Note: lang tikidomain dirs not created automatically
-		TikiLib::lib('header')->add_jsfile("lang/$language/$tikidomain/custom.js", 60);
+		TikiLib::lib('header')->add_jsfile("lang/$language/$tikidomain/custom.js", 40);
 	}
 
 	// setup timezone array
@@ -148,6 +148,7 @@ jqueryTiki.autosave = '.($prefs['ajax_autosave'] == 'y' ? 'true' : 'false') . ';
 jqueryTiki.sefurl = '.($prefs['feature_sefurl'] == 'y' ? 'true' : 'false') . ';
 jqueryTiki.ajax = '.($prefs['feature_ajax'] == 'y' ? 'true' : 'false') . ';
 jqueryTiki.syntaxHighlighter = '.($prefs['feature_syntax_highlighter'] == 'y' ? 'true' : 'false') . ';
+jqueryTiki.chosen = '.($prefs['jquery_ui_chosen'] == 'y' ? 'true' : 'false') . ';
 jqueryTiki.selectmenu = '.($prefs['jquery_ui_selectmenu'] == 'y' ? 'true' : 'false') . ';
 jqueryTiki.selectmenuAll = '.($prefs['jquery_ui_selectmenu_all'] == 'y' ? 'true' : 'false') . ';
 jqueryTiki.mapTileSets = ' . json_encode($tikilib->get_preference('geo_tilesets', array('openstreetmap'), true)) . ';
@@ -161,8 +162,14 @@ jqueryTiki.jcapture = '.($prefs['feature_jcapture'] == 'y' ? 'true' : 'false') .
 //flushed prefs cache after upgrading - i.e. not running the updater
 jqueryTiki.jcaptureFgal = ' . ((int)$prefs['fgal_for_jcapture']) . ';
 jqueryTiki.no_cookie = false;
+jqueryTiki.language = "' . $prefs['language'] . '";
 ';	// NB replace "normal" speeds with int to workaround issue with jQuery 1.4.2
 
+	//Set inline comments on/off
+	if ($prefs['feature_inline_comments'] === 'y') {
+		$js .= 'jqueryTiki.useInlineComment = true;';
+	}
+	
 	if ($prefs['mobile_feature'] === 'y' && $prefs['mobile_mode'] === 'y') {
 		$js .= '
 // overrides for prefs for jq in mobile mode

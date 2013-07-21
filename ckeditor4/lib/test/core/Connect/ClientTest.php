@@ -17,7 +17,7 @@ class Connect_Client_Test extends TikiTestCase
 	 */
 	protected function setUp()
 	{
-		$this->obj = new Connect_Client();
+		$this->obj = new Tiki_Connect_Client();
 	}
 
 	/**

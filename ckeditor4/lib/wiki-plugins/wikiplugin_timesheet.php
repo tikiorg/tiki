@@ -28,9 +28,9 @@ function wikiplugin_timesheet($data, $params)
 	if ( $tiki_p_view_trackers != "y" || $tiki_p_create_tracker_items != "y") return "";
 
 	TikiLib::lib("header")
-		->add_cssfile("lib/jquery/jtrack/css/jtrack.css")
-		->add_jsfile("lib/jquery/jtrack/js/domcached-0.1-jquery.js")
-		->add_jsfile("lib/jquery/jtrack/js/jtrack.js")
+		->add_cssfile("vendor/jquery/jtrack/css/jtrack.css")
+		->add_jsfile("vendor/jquery/jtrack/js/domcached-0.1-jquery.js")
+		->add_jsfile("vendor/jquery/jtrack/js/jtrack.js")
 		->add_jq_onready(
 			"jTask.init();"
 		);

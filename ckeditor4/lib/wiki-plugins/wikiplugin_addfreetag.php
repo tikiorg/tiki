@@ -22,6 +22,7 @@ function wikiplugin_addfreetag_info()
 				'filter' => 'text',
 				'default' => null,
 				'since' => '8.0',
+				'profile_reference' => 'type_colon_object',
 			),
 		),
 	);

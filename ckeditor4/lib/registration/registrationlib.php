@@ -242,96 +242,99 @@ class RegistrationLib extends TikiLib
 
 		$errors = array();
 
-		if (empty($registration['name'])) {
-			$errors[] = new RegistrationError('name', tra('Username is required'));
-		}
+		//do not recheck if already validated
+		if (!isset($registration['valerror']) || $registration['valerror'] !== false) {
 
-		if (empty($registration['pass']) && !isset($_SESSION['openid_url'])) {
-			$errors[] = new RegistrationError('pass', tra('Password is required'));
-		}
+			if (empty($registration['name'])) {
+				$errors[] = new RegistrationError('name', tra('Username is required'));
+			}
 
-		// novalidation is set to yes if a user confirms his email is correct after tiki fails to validate it
-		$novalidation=isset($_REQUEST['novalidation']) ? $registration['novalidation'] : '';
-		if ($novalidation != 'yes' and ($registration['pass'] != $registration['passAgain']) and !isset($_SESSION['openid_url'])) {
-			$errors[] = new RegistrationError('passAgain', tra("The passwords don't match"));
-		}
+			if (empty($registration['pass']) && !isset($_SESSION['openid_url'])) {
+				$errors[] = new RegistrationError('pass', tra('Password is required'));
+			}
 
-		if ($userlib->user_exists($registration['name'])) {
-			$errors[] = new RegistrationError('name', tra('User already exists'));
-		}
+			// novalidation is set to yes if a user confirms his email is correct after tiki fails to validate it
+			$novalidation=isset($_REQUEST['novalidation']) ? $registration['novalidation'] : '';
+			if ($novalidation != 'yes' and ($registration['pass'] != $registration['passAgain']) and !isset($_SESSION['openid_url'])) {
+				$errors[] = new RegistrationError('passAgain', tra("The passwords don't match"));
+			}
 
-		if (!$from_intertiki && $prefs['feature_antibot'] == 'y') {
-			if (!$captchalib->validate($registration)) {
-				$errors[] = new RegistrationError('antibotcode', $captchalib->getErrors());
+			if ($userlib->user_exists($registration['name'])) {
+				$errors[] = new RegistrationError('name', tra('User already exists'));
+			}
+
+			if (!$from_intertiki && $prefs['feature_antibot'] == 'y') {
+				if (!$captchalib->validate($registration)) {
+					$errors[] = new RegistrationError('antibotcode', $captchalib->getErrors());
+				}
+			}
+
+			// VALIDATE NAME HERE
+			$n = strtolower($registration['name']);
+			if ($n == 'admin'
+					|| $n == 'anonymous'
+					|| $n == 'registered'
+					|| $n == strtolower(tra('Anonymous'))
+					|| $n == strtolower(tra('Registered'))
+			) {
+				$errors[] = new RegistrationError('name', tra('Invalid username'));
+			}
+
+			if (strlen($registration['name']) > 200) {
+				$errors[] = new RegistrationError('name', tra('Username is too long'));
+			}
+
+			if ($this->merged_prefs['lowercase_username'] == 'y') {
+				if (preg_match('/[[:upper:]]/', $registration['name'])) {
+					$errors[] = new RegistrationError('name', tra('Username cannot contain uppercase letters'));
+				}
+			}
+
+			if (strlen($registration['name']) < $this->merged_prefs['min_username_length']) {
+				$errors[] = new RegistrationError(
+					'name',
+					tr("Username must be at least %0 characters long", $this->merged_prefs['min_username_length'])
+				);
+			}
+
+			if (strlen($registration['name']) > $this->merged_prefs['max_username_length']) {
+				$errors[] = new RegistrationError(
+					'name',
+					tr("Username cannot contain more than %0 characters", $this->merged_prefs['max_username_length'])
+				);
+			}
+
+			$newPass = $registration['pass'] ? $registration['pass'] : $registration['genepass'];
+			$polerr = $userlib->check_password_policy($newPass);
+
+			if (!isset($_SESSION['openid_url']) && (strlen($polerr) > 0)) {
+				$errors[] = new RegistrationError('pass', $polerr);
+			}
+
+			if (!empty($this->merged_prefs['username_pattern']) && !preg_match($this->merged_prefs['username_pattern'], $registration['name'])) {
+				$errors[] = new RegistrationError('name', tra('Invalid username'));
+			}
+
+			// Check the mode
+			if ($this->local_prefs['useRegisterPasscode'] == 'y') {
+				if ($registration['passcode'] != $prefs['registerPasscode']) {
+					$errors[] = new RegistrationError('passcode', tra('Wrong passcode. You need to know the passcode to register at this site'));
+				}
+			}
+
+			if (count($this->merged_prefs['choosable_groups']) > 0
+					&& $this->merged_prefs['mandatoryChoiceGroups']
+					&& (empty($registration['chosenGroup']) ||
+						$userlib->get_registrationChoice($registration['chosenGroup']) !== 'y')
+			) {
+				$errors[] = new RegistrationError('chosenGroup', tra('You must choose a group'));
+			}
+
+			$email_valid = 'y';
+			if (!validate_email($registration['email'], $this->merged_prefs['validateEmail'])) {
+				$errors[] = new RegistrationError('email', tra('Email not valid. Should be in the format "mailbox@example.com".'));
 			}
 		}
-
-		// VALIDATE NAME HERE
-		$n = strtolower($registration['name']);
-		if ($n == 'admin'
-				|| $n == 'anonymous'
-				|| $n == 'registered'
-				|| $n == strtolower(tra('Anonymous'))
-				|| $n == strtolower(tra('Registered'))
-		) {
-			$errors[] = new RegistrationError('name', tra('Invalid username'));
-		}
-
-		if (strlen($registration['name']) > 200) {
-			$errors[] = new RegistrationError('name', tra('Username is too long'));
-		}
-
-		if ($this->merged_prefs['lowercase_username'] == 'y') {
-			if (preg_match('/[[:upper:]]/', $registration['name'])) {
-				$errors[] = new RegistrationError('name', tra('Username cannot contain uppercase letters'));
-			}
-		}
-
-		if (strlen($registration['name']) < $this->merged_prefs['min_username_length']) {
-			$errors[] = new RegistrationError(
-				'name',
-				tr("Username must be at least %0 characters long", $this->merged_prefs['min_username_length'])
-			);
-		}
-
-		if (strlen($registration['name']) > $this->merged_prefs['max_username_length']) {
-			$errors[] = new RegistrationError(
-				'name',
-				tr("Username cannot contain more than %0 characters", $this->merged_prefs['max_username_length'])
-			);
-		}
-
-		$newPass = $registration['pass'] ? $registration['pass'] : $registration['genepass'];
-		$polerr = $userlib->check_password_policy($newPass);
-
-		if (!isset($_SESSION['openid_url']) && (strlen($polerr) > 0)) {
-			$errors[] = new RegistrationError('pass', $polerr);
-		}
-
-		if (!empty($this->merged_prefs['username_pattern']) && !preg_match($this->merged_prefs['username_pattern'], $registration['name'])) {
-			$errors[] = new RegistrationError('name', tra('Invalid username'));
-		}
-
-		// Check the mode
-		if ($this->local_prefs['useRegisterPasscode'] == 'y') {
-			if ($registration['passcode'] != $prefs['registerPasscode']) {
-				$errors[] = new RegistrationError('passcode', tra('Wrong passcode. You need to know the passcode to register at this site'));
-			}
-		}
-
-		if (count($this->merged_prefs['choosable_groups']) > 0
-				&& $this->merged_prefs['mandatoryChoiceGroups']
-				&& (empty($registration['chosenGroup']) ||
-					$userlib->get_registrationChoice($registration['chosenGroup']) !== 'y')
-		) {
-			$errors[] = new RegistrationError('chosenGroup', tra('You must choose a group'));
-		}
-
-		$email_valid = 'y';
-		if (!validate_email($registration['email'], $this->merged_prefs['validateEmail'])) {
-			$errors[] = new RegistrationError('email', tra('Email not valid. Should be in the format "mailbox@example.com".'));
-		}
-
 		return $errors;
 	}
 
@@ -506,6 +509,7 @@ class RegistrationLib extends TikiLib
 		if ($prefs['login_is_email'] == 'y' && isset($registration['name'])) {
 			$registration['email'] = $registration['name'];
 		}
+		//result is empty if validation (including antibot) is successful
 		$result=$this->local_check_registration($registration, $from_intertiki);
 		if (!empty($result)) {
 			return $result;
@@ -534,7 +538,7 @@ class RegistrationLib extends TikiLib
 				unset($registration['invite']);
 			}
 		}
-
+		//user account created here
 		if ($prefs['feature_intertiki'] == 'y' && !empty($prefs['feature_intertiki_mymaster'])) {
 			// register to main
 			$result=$this->register_new_user_to_intertiki($registration, $from_intertiki);

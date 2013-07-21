@@ -5,7 +5,7 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-class Event_ManagerTest extends PHPUnit_Framework_TestCase
+class Tiki_Event_ManagerTest extends PHPUnit_Framework_TestCase
 {
 	private $called;
 
@@ -16,7 +16,7 @@ class Event_ManagerTest extends PHPUnit_Framework_TestCase
 
 	function testTriggerUnknown()
 	{
-		$manager = new Event_Manager;
+		$manager = new Tiki_Event_Manager;
 		$manager->trigger('tiki.wiki.update');
 
 		$this->assertEquals(0, $this->called);
@@ -24,7 +24,7 @@ class Event_ManagerTest extends PHPUnit_Framework_TestCase
 
 	function testBindAndTrigger()
 	{
-		$manager = new Event_Manager;
+		$manager = new Tiki_Event_Manager;
 		$manager->bind('tiki.wiki.update', array($this, 'callbackAdd'));
 
 		$manager->trigger('tiki.wiki.update');
@@ -34,7 +34,7 @@ class Event_ManagerTest extends PHPUnit_Framework_TestCase
 
 	function testChaining()
 	{
-		$manager = new Event_Manager;
+		$manager = new Tiki_Event_Manager;
 
 		$manager->bind('tiki.wiki.update', 'tiki.wiki.save');
 		$manager->bind('tiki.wiki.save', 'tiki.save');
@@ -50,7 +50,7 @@ class Event_ManagerTest extends PHPUnit_Framework_TestCase
 
 	function testProvideBindingArguments()
 	{
-		$manager = new Event_Manager;
+		$manager = new Tiki_Event_Manager;
 		$manager->bind(
 			'tiki.wiki.update',
 			array($this, 'callbackAdd'),
@@ -70,7 +70,7 @@ class Event_ManagerTest extends PHPUnit_Framework_TestCase
 
 	function testCalltimeArgumentsOverrideBinding()
 	{
-		$manager = new Event_Manager;
+		$manager = new Tiki_Event_Manager;
 
 		$manager->bind('tiki.wiki.update', 'tiki.wiki.save');
 
@@ -85,7 +85,7 @@ class Event_ManagerTest extends PHPUnit_Framework_TestCase
 
 	function testGenerateInheritenceGraph()
 	{
-		$manager = new Event_Manager;
+		$manager = new Tiki_Event_Manager;
 
 		$manager->bind('tiki.wiki.update', 'tiki.wiki.save');
 		$manager->bind('tiki.wiki.save', 'tiki.save');
@@ -116,7 +116,7 @@ class Event_ManagerTest extends PHPUnit_Framework_TestCase
 
 	function testBindWithPriority()
 	{
-		$manager = new Event_Manager;
+		$manager = new Tiki_Event_Manager;
 
 		$manager->bind('tiki.wiki.update', 'tiki.wiki.save');
 		$manager->bind('tiki.wiki.save', 'tiki.save');
@@ -132,7 +132,7 @@ class Event_ManagerTest extends PHPUnit_Framework_TestCase
 
 	function testIndependentTriggers()
 	{
-		$manager = new Event_Manager;
+		$manager = new Tiki_Event_Manager;
 
 		$manager->bind('tiki.wiki.update', 'tiki.wiki.save');
 		$manager->bind('tiki.wiki.save', 'tiki.save');

@@ -21,12 +21,14 @@ function wikiplugin_survey_info()
 				'description' => tra('Id'),
 				'filter' => 'digits',
 				'default' => '',
+				'profile_reference' => 'survey',
 			),
 			'page' => array(
 				'required' => false,
 				'name' => tra('Page'),
 				'description' => tra('Wiki Page to redirect the user after his vote'),
 				'default' => 'tiki-list_surveys.php',
+				'profile_reference' => 'wiki_page',
 			),
 			'lang' => array(
 				'required' => false,

@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2013 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -12,9 +12,7 @@ class Search_ActionStepTest extends PHPUnit_Framework_TestCase
 		$action = $this->getMock('Search_Action_Action');
 		$action->expects($this->any())
 			->method('getValues')
-			->will($this->returnValue(array(
-				'hello' => true,
-			)));
+			->will($this->returnValue(array('hello' => true)));
 
 		$step = new Search_Action_ActionStep($action, array());
 		$this->assertFalse($step->validate(array()));
@@ -26,9 +24,7 @@ class Search_ActionStepTest extends PHPUnit_Framework_TestCase
 		$action = $this->getMock('Search_Action_Action');
 		$action->expects($this->any())
 			->method('getValues')
-			->will($this->returnValue(array(
-				'hello' => false,
-			)));
+			->will($this->returnValue(array('hello' => false)));
 		$action->expects($this->once())
 			->method('validate')
 			->with($this->equalTo(new JitFilter(array('hello' => null))))
@@ -44,9 +40,7 @@ class Search_ActionStepTest extends PHPUnit_Framework_TestCase
 		$action = $this->getMock('Search_Action_Action');
 		$action->expects($this->any())
 			->method('getValues')
-			->will($this->returnValue(array(
-				'hello' => true,
-			)));
+			->will($this->returnValue(array('hello' => true)));
 		$action->expects($this->once())
 			->method('validate')
 			->with($this->equalTo(new JitFilter(array('hello' => 'world'))))
@@ -62,9 +56,7 @@ class Search_ActionStepTest extends PHPUnit_Framework_TestCase
 		$action = $this->getMock('Search_Action_Action');
 		$action->expects($this->any())
 			->method('getValues')
-			->will($this->returnValue(array(
-				'hello' => true,
-			)));
+			->will($this->returnValue(array('hello' => true)));
 		$action->expects($this->once())
 			->method('validate')
 			->with($this->equalTo(new JitFilter(array('hello' => 'world'))))
@@ -80,9 +72,7 @@ class Search_ActionStepTest extends PHPUnit_Framework_TestCase
 		$action = $this->getMock('Search_Action_Action');
 		$action->expects($this->any())
 			->method('getValues')
-			->will($this->returnValue(array(
-				'hello' => true,
-			)));
+			->will($this->returnValue(array('hello' => true)));
 		$action->expects($this->once())
 			->method('validate')
 			->with($this->equalTo(new JitFilter(array('hello' => 'world'))))
@@ -98,9 +88,7 @@ class Search_ActionStepTest extends PHPUnit_Framework_TestCase
 		$action = $this->getMock('Search_Action_Action');
 		$action->expects($this->any())
 			->method('getValues')
-			->will($this->returnValue(array(
-				'hello' => true,
-			)));
+			->will($this->returnValue(array('hello' => true)));
 		$action->expects($this->once())
 			->method('validate')
 			->with($this->equalTo(new JitFilter(array('hello' => 'right'))))
@@ -116,9 +104,7 @@ class Search_ActionStepTest extends PHPUnit_Framework_TestCase
 		$action = $this->getMock('Search_Action_Action');
 		$action->expects($this->any())
 			->method('getValues')
-			->will($this->returnValue(array(
-				'hello' => true,
-			)));
+			->will($this->returnValue(array('hello' => true)));
 
 		$step = new Search_Action_ActionStep($action, array('hello_field_coalesce' => 'foo,bar,test,baz,hello'));
 		$this->assertFalse($step->validate(array()));
@@ -130,9 +116,7 @@ class Search_ActionStepTest extends PHPUnit_Framework_TestCase
 		$action = $this->getMock('Search_Action_Action');
 		$action->expects($this->any())
 			->method('getValues')
-			->will($this->returnValue(array(
-				'hello+' => false,
-			)));
+			->will($this->returnValue(array('hello+' => false)));
 		$action->expects($this->once())
 			->method('validate')
 			->with($this->equalTo(new JitFilter(array('hello' => array()))))
@@ -148,9 +132,7 @@ class Search_ActionStepTest extends PHPUnit_Framework_TestCase
 		$action = $this->getMock('Search_Action_Action');
 		$action->expects($this->any())
 			->method('getValues')
-			->will($this->returnValue(array(
-				'hello+' => false,
-			)));
+			->will($this->returnValue(array('hello+' => false)));
 		$action->expects($this->once())
 			->method('validate')
 			->with($this->equalTo(new JitFilter(array('hello' => array('world')))))
@@ -166,9 +148,7 @@ class Search_ActionStepTest extends PHPUnit_Framework_TestCase
 		$action = $this->getMock('Search_Action_Action');
 		$action->expects($this->any())
 			->method('getValues')
-			->will($this->returnValue(array(
-				'hello+' => false,
-			)));
+			->will($this->returnValue(array('hello+' => false)));
 		$action->expects($this->once())
 			->method('validate')
 			->with($this->equalTo(new JitFilter(array('hello' => array('a', 'b')))))

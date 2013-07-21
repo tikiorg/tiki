@@ -61,6 +61,15 @@ class Search_Query_WikiBuilder
 		$query->filterType($value);
 	}
 
+	function wpquery_filter_nottype($query, $value)
+	{
+		$value = explode(',', $value);
+		$value = array_map(function ($v) {
+			return "NOT \"$v\"";
+		}, $value);
+		$query->filterContent(implode(' AND ', $value), 'object_type');
+	}
+
 	function wpquery_filter_categories($query, $value)
 	{
 		$query->filterCategory($value);
@@ -135,12 +144,52 @@ class Search_Query_WikiBuilder
 		$query->filterTextRange($arguments['from'], $arguments['to'], $value);
 	}
 
+	function wpquery_filter_personalize($query, $type, array $arguments)
+	{
+		global $user;
+		$targetUser = $user;
+
+		if (! $targetUser) {
+			$targetUser = "1"; // Invalid user name, make sure nothing matches
+		}
+
+		$subquery = $query->getSubQuery('personalize');
+
+		$types = array_filter(array_map('trim', explode(',', $type)));
+
+		if (in_array('self', $types)) {
+			$subquery->filterContributors($targetUser);
+			$subquery->filterContent($targetUser, 'user');
+		}
+
+		if (in_array('groups', $types)) {
+			$part = new Search_Expr_Or(array_map(function ($group) {
+				return new Search_Expr_Token($group, 'multivalue', 'user_groups');
+			}, Perms::get()->getGroups()));
+			$subquery->getExpr()->addPart(new Search_Expr_And(array(
+				$part,
+				new Search_Expr_Not(new Search_Expr_Token($targetUser, 'identifier', 'user')),
+			)));
+		}
+	}
+
 	function wpquery_sort_mode($query, $value, array $arguments)
 	{
 		if ($value == 'randommode') {
 			if ( !empty($arguments['modes']) ) {
 				$modes = explode(',', $arguments['modes']);
-				$value = $modes[array_rand($modes)];
+				$value = trim($modes[array_rand($modes)]);
+				// append a direction if not already supplied
+				$last = substr($value, strrpos($value, '_'));
+				$directions = array('_asc', '_desc', '_nasc', '_ndesc');
+				if (!in_array($last, $directions)) {
+					$direction = $directions[array_rand($directions)];
+					if (stripos($value, 'date')) {
+						$value .= $direction;
+					} else {
+						$value .= str_replace('n', '', $direction);
+					}
+				}
 			} else {
 				return;
 			}

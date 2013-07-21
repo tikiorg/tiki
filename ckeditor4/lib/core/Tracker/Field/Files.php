@@ -9,6 +9,8 @@ class Tracker_Field_Files extends Tracker_Field_Abstract
 {
 	public static function getTypes()
 	{
+		global $prefs;
+
 		return array(
 			'FG' => array(
 				'name' => tr('Files'),
@@ -22,16 +24,20 @@ class Tracker_Field_Files extends Tracker_Field_Abstract
 						'name' => tr('Gallery ID'),
 						'description' => tr('File gallery to upload new files into.'),
 						'filter' => 'int',
+						'legacy_index' => 0,
+						'profile_reference' => 'file_gallery',
 					),
 					'filter' => array(
 						'name' => tr('MIME Type Filter'),
 						'description' => tr('Mask for accepted MIME types in the field'),
 						'filter' => 'text',
+						'legacy_index' => 1,
 					),
 					'count' => array(
 						'name' => tr('File Count'),
 						'description' => tr('Maximum number of files to be attached on the field.'),
 						'filter' => 'int',
+						'legacy_index' => 2,
 					),
 					'displayImages' => array(
 						'name' => tr('Display Images'),
@@ -41,16 +47,19 @@ class Tracker_Field_Files extends Tracker_Field_Abstract
 							0 => tr('Links'),
 							1 => tr('Images'),
 						),
+						'legacy_index' => 3,
 					),
 					'imageParams' => array(
 						'name' => tr('Image parameters'),
 						'description' => tr('URL encoded params used as in the {img} plugin. e.g.') . ' "max=400&desc=namedesc&stylebox=block"',
 						'filter' => 'text',
+						'legacy_index' => 4,
 					),
 					'imageParamsForLists' => array(
 						'name' => tr('Image parameters for lists'),
 						'description' => tr('URL encoded params used as in the {img} plugin. e.g.') . ' "thumb=mouseover&rel="',
 						'filter' => 'text',
+						'legacy_index' => 5,
 					),
 					'deepGallerySearch' => array(
 						'name' => tr('Include Child Galleries'),
@@ -60,6 +69,7 @@ class Tracker_Field_Files extends Tracker_Field_Abstract
 							0 => tr('No'),
 							1 => tr('Yes'),
 						),
+						'legacy_index' => 6,
 					),
 					'replace' => array(
 						'name' => tr('Replace Existing File'),
@@ -70,11 +80,21 @@ class Tracker_Field_Files extends Tracker_Field_Abstract
 							'n' => tr('No'),
 							'y' => tr('Yes'),
 						),
+						'legacy_index' => 7,
 					),
 					'browseGalleryId' => array(
 						'name' => tr('Browse Gallery ID'),
 						'description' => tr('File gallery browse files. Use 0 for root file gallery. (requires elFinder feature - experimental)'),
 						'filter' => 'int',
+						'legacy_index' => 8,
+						'profile_reference' => 'file_gallery',
+					),
+					'duplicateGalleryId' => array(
+						'name' => tr('Duplicate Gallery ID'),
+						'description' => tr('File gallery to duplicate files into when copying the tracker item. 0 or empty means do not duplicate (default).'),
+						'filter' => 'int',
+						'legacy_index' => 9,
+						'profile_reference' => 'file_gallery',
 					),
 				),
 			),
@@ -83,9 +103,15 @@ class Tracker_Field_Files extends Tracker_Field_Abstract
 
 	function getFieldData(array $requestData = array())
 	{
+		global $prefs;
+		$filegallib = TikiLib::lib('filegal');
+
 		$galleryId = (int) $this->getOption('galleryId');
 		$count = (int) $this->getOption('count');
 		$deepGallerySearch = (boolean) $this->getOption('deepGallerySearch');
+
+		// to use the user's userfiles gallery enter the fgal_root_user_id which is often (but not always) 2
+		$galleryId = $filegallib->check_user_file_gallery($galleryId);
 
 		$value = '';
 		$ins_id = $this->getInsertId();
@@ -97,16 +123,18 @@ class Tracker_Field_Files extends Tracker_Field_Abstract
 			$fileIds = explode(',', $value);
 
 			// Add manually uploaded files (non-HTML5 browsers only)
-			foreach (array_keys($_FILES[$ins_id]['name']) as $index) {
-				$fileIds[] = $this->handleUpload(
-					$galleryId,
-					array(
-						'name' => $_FILES[$ins_id]['name'][$index],
-						'type' => $_FILES[$ins_id]['type'][$index],
-						'size' => $_FILES[$ins_id]['size'][$index],
-						'tmp_name' => $_FILES[$ins_id]['tmp_name'][$index],
-					)
-				);
+			if (isset($_FILES[$ins_id]['name']) && is_array($_FILES[$ins_id]['name'])) {
+				foreach (array_keys($_FILES[$ins_id]['name']) as $index) {
+					$fileIds[] = $this->handleUpload(
+						$galleryId,
+						array(
+							'name' => $_FILES[$ins_id]['name'][$index],
+							'type' => $_FILES[$ins_id]['type'][$index],
+							'size' => $_FILES[$ins_id]['size'][$index],
+							'tmp_name' => $_FILES[$ins_id]['tmp_name'][$index],
+						)
+					);
+				}
 			}
 
 			// Remove missed uploads
@@ -121,8 +149,13 @@ class Tracker_Field_Files extends Tracker_Field_Abstract
 			$fileInfo = $this->getFileInfo($fileIds);
 			$fileInfo = array_filter($fileInfo, array($this, 'filterFile'));
 
-			// Rebuild the database value
-			$value = implode(',', array_keys($fileInfo));
+			// Rebuild the database value, but preserve the order the files have been attached to the item
+			foreach ($fileIds as & $fileId) {
+				if (!isset($fileInfo[$fileId])) {
+					$fileId = 0;
+				}
+			}
+			$value = implode(',', array_filter($fileIds));
 		} else {
 			$value = $this->getValue();
 
@@ -134,7 +167,7 @@ class Tracker_Field_Files extends Tracker_Field_Abstract
 
 		if ($deepGallerySearch) {
 			$gallery_list = null;
-			TikiLib::lib('filegal')->getGalleryIds($gallery_list, $galleryId, 'list');
+			$filegallib->getGalleryIds($gallery_list, $galleryId, 'list');
 			$gallery_list = implode(' or ', $gallery_list);
 		} else {
 			$gallery_list = $galleryId;
@@ -146,11 +179,20 @@ class Tracker_Field_Files extends Tracker_Field_Abstract
 			$firstfile = 0;
 		}
 
-		$perms = Perms::get('file gallery', $galleryId);
+		$galinfo = $filegallib->get_file_gallery($galleryId);
+		if ($prefs['feature_use_fgal_for_user_files'] !== 'y' || $galinfo['type'] !== 'user') {
+			$perms = Perms::get('file gallery', $galleryId);
+			$canUpload = $perms->upload_files;
+		} else {
+			global $user;
+			$perms = TikiLib::lib('tiki')->get_local_perms($user, $galleryId, 'file gallery', $galinfo, false);		//get_perm_object($galleryId, 'file gallery', $galinfo);
+			$canUpload = $perms['tiki_p_upload_files'] === 'y';
+		}
+
 
 		return array(
 			'galleryId' => $galleryId,
-			'canUpload' => $perms->upload_files,
+			'canUpload' => $canUpload,
 			'limit' => $count,
 			'files' => $fileInfo,
 			'firstfile' => $firstfile,
@@ -189,9 +231,9 @@ class Tracker_Field_Files extends Tracker_Field_Abstract
 				if ($context['list_mode'] === 'y') {
 					$params['thumb'] = $context['list_mode'];
 					$params['rel'] = 'box[' . $this->getInsertId() . ']';
-					$otherParams = $this->getOption(5);
+					$otherParams = $this->getOption('imageParamsForLists');
 				} else {
-					$otherParams = $this->getOption(4);
+					$otherParams = $this->getOption('imageParams');
 				}
 				if ($otherParams) {
 					parse_str($otherParams, $otherParams);
@@ -199,8 +241,10 @@ class Tracker_Field_Files extends Tracker_Field_Abstract
 				}
 
 				include_once('lib/wiki-plugins/wikiplugin_img.php');
-				global $fromTracker;
-				$fromTracker = true;
+				$params['fromFieldId'] = $this->getConfiguration('fieldId');
+				$params['fromItemId'] = $this->getItemId();
+				$item = Tracker_Item::fromInfo($this->getItemData());
+				$params['checkItemPerms'] = $item->canModify() ? 'n' : 'y';
 				$ret = wikiplugin_img('', $params, 0);
 				$ret = preg_replace('/~\/?np~/', '', $ret);
 			} else {
@@ -262,6 +306,35 @@ class Tracker_Field_Files extends Tracker_Field_Abstract
 		return array(
 			'value' => $value,
 		);
+	}
+
+	/**
+	 * called from action_clone_item and duplicates the related files if option duplicateGalleryID is set
+	 */
+	function handleClone()
+	{
+		global $prefs;
+
+		$oldValue = $this->getValue();
+		if ($galleryId = $this->getOption('duplicateGalleryId')) {
+
+			$filegallib = TikiLib::lib('filegal');
+
+			// to use the user's userfiles gallery enter the fgal_root_user_id which is often (but not always) 2
+			$galleryId = $filegallib->check_user_file_gallery($galleryId);
+
+			$newIds = array();
+
+			foreach (array_filter(explode(',', $oldValue)) as $fileId) {
+				$newIds[] = $filegallib->duplicate_file($fileId, $galleryId);
+			}
+
+			return $this->handleSave(implode(',', $newIds), $oldValue);
+		}
+		return array(
+			'value' => $oldValue,
+		);
+
 	}
 
 	function watchCompare($old, $new)

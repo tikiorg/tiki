@@ -21,7 +21,8 @@ function wikiplugin_trackerquerytemplate_info()
 				'required' => true,
 				'name' => tra('Tracker'),
 				'description' => tra('Name of the tracker you want to query.'),
-				'default' => ''
+				'default' => '',
+				'profile_reference' => 'tracker',
 			),
 			'debug' => array(
 				'required' => false,
@@ -61,12 +62,15 @@ function wikiplugin_trackerquerytemplate_info()
 				'name' => tra('Tracker Item Id'),
 				'description' => tra('Item id of tracker item'),
 				'default' => '',
+				'profile_reference' => 'tracker_item',
 			),
 			'itemids' => array(
 				'required' => false,
 				'name' => tra('Tracker Item Ids'),
 				'description' => tra('Item id of tracker items, separated with comma'),
 				'default' => '',
+				'separator' => ',',
+				'profile_reference' => 'tracker_item',
 			),
 			'likefilters' => array(
 				'required' => false,
@@ -114,7 +118,7 @@ function wikiplugin_trackerquerytemplate($data, $params)
 	);
 
 	if (!empty($params['itemids'])) {
-		$itemIds = explode(',', $params['itemids']);
+		$itemIds = $params['itemids'];
 		unset($params['itemids']);
 		$newData = '';
 		foreach($itemIds as $itemId) {

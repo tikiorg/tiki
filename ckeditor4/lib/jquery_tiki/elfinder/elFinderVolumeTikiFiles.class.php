@@ -240,7 +240,10 @@ class elFinderVolumeTikiFiles extends elFinderVolumeDriver
 
 		}
 		$r['ts'] = $row['lastModif'];
-		$r['name'] = $row['name'];
+		$r['name'] = tra(empty($row['name']) ? $row['filename'] : $row['name']);
+		if (empty($r['name'])) {
+			$r['name'] = tra('Unnamed file');
+		}
 		if ($row['parentId'] > 0) {
 			$r['phash'] = $this->encode(
 				($row['parentId'] == $this->options['path'] ? '' : 'd_') . $row['parentId']
@@ -329,14 +332,10 @@ class elFinderVolumeTikiFiles extends elFinderVolumeDriver
 	 **/
 	protected function _joinPath($dir, $name)
 	{
-		if ($fileId = $this->filesTable->fetchOne('fileId',
-				array ('name' => $name, 'galleryId' => $this->pathToId($dir))
-		)) {
+		if ($fileId = $this->filesTable->fetchOne('fileId', array('name' => $name, 'galleryId' => $this->pathToId($dir)))) {
 			return 'f_' . $fileId;
 		} else {
-			if ($galleryId = $this->fileGalleriesTable->fetchOne('galleryId',
-					array ('name' => $name, 'parentId' => $this->pathToId($dir))
-			)) {
+			if ($galleryId = $this->fileGalleriesTable->fetchOne('galleryId', array('name' => $name, 'parentId' => $this->pathToId($dir)))) {
 				return 'd_' . $galleryId;
 			}
 		}
@@ -501,7 +500,37 @@ class elFinderVolumeTikiFiles extends elFinderVolumeDriver
 	 **/
 	protected function _dimensions($path, $mime)
 	{
-		return ($stat = $this->stat($path)) && isset($stat['width']) && isset($stat['height']) ? $stat['width'].'x'.$stat['height'] : '';
+		global $prefs;
+
+		$ar = explode('_', $path);
+		if (count($ar) === 2) {
+			$isgal = $ar[0] === 'd';
+			$path = $ar[1];
+		} else {
+			$isgal = true;
+		}
+		if ($isgal) {
+			return '';
+		} else {
+			$res = $this->filegallib->get_file($path);
+			if ( ! empty($res['path']) ) {
+				$filepath = $prefs['fgal_use_dir'].$res['path'];
+			} else {
+				$filepath = $this->tmpname($path);
+				$fp = $this->tmbPath
+					? @fopen($filepath, 'w+')
+					: @tmpfile();
+
+				if ($fp) {
+					fwrite($fp, $res['data']);
+					fclose($fp);
+				}
+			}
+			$size = getimagesize($filepath);
+			$str = $size[0] . ' x ' . $size[1];
+			// could add more info here?
+			return $str;
+		}
 	}
 
 	/******************** file/dir content *********************/
@@ -545,6 +574,14 @@ class elFinderVolumeTikiFiles extends elFinderVolumeDriver
 				$res['data'] = file_get_contents($filepath);
 			}
 
+			if ($res['data'] === 'REFERENCE') {
+				$attributes = TikiLib::lib('attribute')->get_attributes('file', $res['fileId']);
+				if ($url = $attributes['tiki.content.url']) {
+					$data = $this->filegallib->get_info_from_url($url);
+					$res['data'] = $data['data'];
+				}
+			}
+
 			if ($r = $res['data']) {
 				fwrite($fp, $r);
 				rewind($fp);
@@ -584,6 +621,28 @@ class elFinderVolumeTikiFiles extends elFinderVolumeDriver
 	 **/
 	protected function _mkdir($path, $name)
 	{
+		global $user;
+
+		$parentDirId = $this->pathToId($path);
+		$parentPerms = TikiLib::lib('tiki')->get_perm_object($parentDirId, 'file gallery', TikiLib::lib('filegal')->get_file_gallery_info($parentDirId));
+		if ($parentPerms['tiki_p_admin_file_galleries'] === 'y' || $parentPerms['tiki_p_create_file_galleries'] === 'y') {
+
+			$parent_info = $this->filegallib->get_file_gallery($parentDirId);
+
+			$gal_info = array();		// replace_file_gallery merges with default
+
+			$gal_info['name'] = $name;
+			$gal_info['type'] = $parent_info['type'] === 'user' ? 'user' : 'default';
+			$gal_info['user'] = $user;
+			$gal_info['parentId'] = $parentDirId;
+
+			$result = $this->filegallib->replace_file_gallery($gal_info);
+
+			if ($result) {
+				return 'd_' . $result;
+			}
+		}
+		return false;
 	}
 
 	/**
@@ -621,7 +680,32 @@ class elFinderVolumeTikiFiles extends elFinderVolumeDriver
 	 **/
 	protected function _copy($source, $targetDir, $name)
 	{
-		$this->clearcache();
+		$ar = explode('_', $source);
+		if (count($ar) === 2) {
+			$isgal = $ar[0] === 'd';
+			$source = $ar[1];
+		} else {
+			$isgal = true;
+		}
+		$name = trim(strip_tags($name));
+		if (!$isgal) {
+			$srcId = $this->pathToId($source);
+		} else {
+			return $this->setError(elFinder::ERROR_COPY, $this->_path($source));
+		}
+		$targetDirId = $this->pathToId($targetDir);
+		$targetPerms = TikiLib::lib('tiki')->get_perm_object($targetDirId, 'file gallery', TikiLib::lib('filegal')->get_file_gallery_info($targetDirId));
+
+		$canCopy = ($targetPerms['tiki_p_admin_file_galleries'] === 'y' || $targetPerms['tiki_p_upload_files'] === 'y');
+
+		if ($canCopy) {
+
+			$result = $this->filegallib->duplicate_file($srcId, $targetDirId, $name);
+			if ($result) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	/**
@@ -653,7 +737,7 @@ class elFinderVolumeTikiFiles extends elFinderVolumeDriver
 		if ($srcDirId == $targetDirId) {
 			$targetPerms = $srcPerms;
 		} else {
-			$targetPerms = TikiLib::lib('tiki')->get_perm_object($targetDir, 'file gallery', TikiLib::lib('filegal')->get_file_gallery_info($targetDir));
+			$targetPerms = TikiLib::lib('tiki')->get_perm_object($targetDirId, 'file gallery', TikiLib::lib('filegal')->get_file_gallery_info($targetDirId));
 		}
 		$canMove = ($srcPerms['tiki_p_admin_file_galleries'] === 'y' && $targetPerms['tiki_p_admin_file_galleries'] === 'y') ||
 				($srcPerms['tiki_p_remove_files'] === 'y' && $targetPerms['tiki_p_upload_files'] === 'y');
@@ -719,6 +803,16 @@ class elFinderVolumeTikiFiles extends elFinderVolumeDriver
 	 **/
 	protected function _rmdir($path)
 	{
+		$galleryId = $this->pathToId($path);
+		$gal_info = TikiLib::lib('filegal')->get_file_gallery_info($galleryId);
+		$perms = TikiLib::lib('tiki')->get_perm_object($galleryId, 'file gallery', $gal_info);
+		if ($perms['tiki_p_admin_file_galleries'] === 'y' ||
+				($gal_info['type'] === 'user' && $perms['tiki_p_create_file_galleries'])) {		// users can create and remove their own gals only
+
+			return $this->filegallib->remove_file_gallery($this->pathToId($path), $this->pathToId($path));
+		} else {
+			return false;
+		}
 	}
 
 	/**
@@ -744,13 +838,12 @@ class elFinderVolumeTikiFiles extends elFinderVolumeDriver
 	 * @param  string    $name file name
 	 * @return bool|string
 	 **/
-	protected function _save($fp, $dir, $name, $mime, $w, $h)
+	protected function _save($fp, $dir, $name, $stat)
 	{
 		$this->clearcache();
 
 		$id = $this->_joinPath($dir, $name);
 		rewind($fp);
-		$stat = fstat($fp);
 		$size = $stat['size'];
 
 		$data = '';
@@ -772,7 +865,7 @@ class elFinderVolumeTikiFiles extends elFinderVolumeDriver
 				),
 				$name,
 				$size,
-				$mime,
+				$stat['mime'],
 				$data
 			);
 		}
@@ -810,12 +903,26 @@ class elFinderVolumeTikiFiles extends elFinderVolumeDriver
 
 	/**
 	 * Detect available archivers
+	 * Only support un/zip in tiki filegals so far
 	 *
 	 * @return void
 	 **/
 	protected function _checkArchivers()
 	{
-		return;
+		global $tiki_p_batch_upload_files;
+		if ($tiki_p_batch_upload_files !== 'y') {
+			$this->options['archivers'] = $this->options['archive'] = array();
+			return;
+		}
+		$arcs = array(
+			'create'  => array(),
+			'extract' => array()
+			);
+
+		$arcs['create']['application/zip']  = array('cmd' => 'tikizip', 'argc' => '', 'ext' => 'zip');
+		$arcs['extract']['application/zip'] = array('cmd' => 'tikiunzip', 'argc' => '',  'ext' => 'zip');
+
+		$this->archivers = $arcs;
 	}
 
 	/**
@@ -855,7 +962,58 @@ class elFinderVolumeTikiFiles extends elFinderVolumeDriver
 	 **/
 	protected function _extract($path, $arc)
 	{
-		return false;
+		$ar = explode('_', $path);
+		if (count($ar) === 2) {
+			$isgal = $ar[0] === 'd';
+			$fileId = $ar[1];
+		} else {
+			$isgal = true;
+		}
+		if (!$isgal) {
+			$dirId = $this->options['accessControlData']['parentIds']['files'][$this->pathToId($fileId)];
+		} else {
+			return false;
+		}
+		$perms = TikiLib::lib('tiki')->get_perm_object($dirId, 'file gallery', TikiLib::lib('filegal')->get_file_gallery_info($dirId));
+
+		if ($perms['tiki_p_upload_files'] === 'y' && $perms['tiki_p_batch_upload_files'] === 'y') {
+			global $user, $prefs;
+			$errors = null;
+			$fp = null;
+			$res = $this->filegallib->get_file($fileId);
+			// check max files size
+			if ($this->options['maxArcFilesSize'] > 0 && $this->options['maxArcFilesSize'] < $res['filesize']) {
+				return $this->setError(elFinder::ERROR_ARC_MAXSIZE);
+			}
+			if ( ! empty($res['path']) ) {
+				$filepath = $prefs['fgal_use_dir'].$res['path'];
+				$res['data'] = file_get_contents($filepath);
+			}
+			// write out to a temp file as process_batch_file_upload deletes the filepath file
+			$filepath = $this->tmpname($path);
+			$filepath = str_replace('temp/', 'temp/cache/', $filepath);	// this one has to be in a different place otherwise unzip fails
+			$fp = $this->tmbPath
+				? @fopen($filepath, 'w+')
+				: @tmpfile();
+
+			if ($fp) {
+				fwrite($fp, $res['data']);
+				fclose($fp);
+
+				$this->filegallib->process_batch_file_upload($dirId, $filepath, $user, '', $errors);
+
+				if ($errors) {
+					return $this->setError(elFinder::ERROR_EXTRACT);
+				}
+			}
+		}
+
+		$dirStr = 'd_' . $dirId;
+		$this->clearcache();
+		$this->stat($dirStr);
+		$ret = $this->_scandir($dirStr);
+
+		return $dirStr;
 	}
 
 	/**

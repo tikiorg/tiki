@@ -24,6 +24,7 @@ class Search_Index_Lucene implements Search_Index_Interface
 				Zend_Search_Lucene_Search_QueryParser::setDefaultEncoding('UTF-8');
 		}
 
+		Zend_Search_Lucene_Storage_Directory_Filesystem::setDefaultFilePermissions(0660);
 		$this->directory = $directory;
 		$this->lastModif = file_exists($directory) ? filemtime($directory) : 0;
 
@@ -63,32 +64,86 @@ class Search_Index_Lucene implements Search_Index_Interface
 		$this->getLucene()->addDocument($document);
 	}
 
+	function endUpdate()
+	{
+	}
+
 	function optimize()
 	{
 		$this->getLucene()->optimize();
 	}
 
-	function invalidateMultiple(Search_Expr_Interface $expr)
+	function destroy()
 	{
-		$documents = array();
+		unset($this->lucene);
+
+		return (bool) $this->destroyDirectory($this->directory);
+	}
+
+	function exists()
+	{
+		return file_exists($this->directory);
+	}
+
+    /**
+	 * Private. Used by a callback, so made public until PHP 5.4.
+	 *
+     * @param $path
+     * @return int
+	 * @private
+     */
+	private function destroyDirectory($path)
+	{
+		if (!$path or !is_dir($path)) return false;
+
+		if ($dir = opendir($path)) {
+			while (false !== ($file = readdir($dir))) {
+				if ($file == '.' || $file == '..') {
+					continue;
+				}
+
+				if (is_dir($path . '/' . $file)) {
+					$this->destroyDirectory($path . '/' . $file);
+				} else {
+					unlink($path . '/' . $file);
+				}
+			}
+			closedir($dir);
+		}
+
+		rmdir($path);
+
+		return ! file_exists($path);
+	}
+
+
+	function invalidateMultiple(array $objectList)
+	{
+		$expr = $this->buildExpr($objectList);
 
 		$lucene = $this->getLucene();
 		$query = $this->buildQuery($expr);
 		foreach ($lucene->find($query) as $hit) {
 			$document = $hit->getDocument();
-			$documents[] = array(
-				'object_type' => $document->object_type,
-				'object_id' => $document->object_id,
-			);
 			$lucene->delete($hit->id);
 		}
-
-		return $documents;
 	}
 
-	function find(Search_Expr_Interface $query, Search_Query_Order $sortOrder, $resultStart, $resultCount)
+	private function buildExpr(array $objectList)
 	{
-		$data = $this->internalFind($query, $sortOrder);
+		$query = new Search_Query;
+		foreach ($objectList as $object) {
+			$object = (array) $object;
+			$query->addObject($object['object_type'], $object['object_id']);
+		}
+
+		return $query->getExpr();
+	}
+
+	function find(Search_Query_Interface $query, $resultStart, $resultCount)
+	{
+		$expr = $query->getExpr();
+		$data = $this->internalFind($expr, $query->getSortOrder());
 
 		$result = array_slice($data['result'], $resultStart, $resultCount);
 
@@ -96,7 +151,7 @@ class Search_Index_Lucene implements Search_Index_Interface
 		$resultSet->setEstimate($data['count']);
 
 		if ($this->highlight) {
-			$resultSet->setHighlightHelper(new Search_Index_Lucene_HighlightHelper($query));
+			$resultSet->setHighlightHelper(new Search_Index_Lucene_HighlightHelper($expr));
 		} else {
 			$resultSet->setHighlightHelper(new Search_ResultSet_SnippetHelper);
 		}
@@ -251,12 +306,20 @@ class Search_Index_Lucene implements Search_Index_Interface
 	private function buildQuery($expr)
 	{
 		$query = (string) $expr->walk(array($this, 'walkCallback'));
+
+		// FIX : Depending on the locale, decimals may be rendered as 1,2 instead of 1.2, causing lucene to go crazy
+		$query = preg_replace('/\^(\d+),(\d+)/', '^$1.$2', $query);
 		return Zend_Search_Lucene_Search_QueryParser::parse($query, 'UTF-8');
 	}
 
 	function walkCallback($node, $childNodes)
 	{
 		$term = null;
+
+		if ($node instanceof Search_Expr_Initial) {
+			$initial = $node->getContent();
+			$node = new Search_Expr_Range($initial, substr($initial, 0, -1) . chr(ord(substr($initial, -1)) + 1), $node->getType(), $node->getField());
+		}
 
 		if ($node instanceof Search_Expr_And) {
 			$term = $this->buildCondition($childNodes, true);
@@ -288,9 +351,11 @@ class Search_Index_Lucene implements Search_Index_Interface
 			}
 		} elseif ($node instanceof Search_Expr_Token) {
 			$term = $this->buildTerm($node);
+		} else {
+			throw new Exception(tr('Feature not supported.'));
 		}
 
-		if ($term && method_exists($term, 'getTerm') && (string) $term->getTerm()->text) {
+		if ($term && method_exists($term, 'getBoost')) {
 			$term->setBoost($node->getWeight());
 		}
 
@@ -330,7 +395,7 @@ class Search_Index_Lucene implements Search_Index_Interface
 			$whole = str_replace(array('*', '?', '~', '+'), '', $whole);
 			$whole = str_replace(array('[', ']', '{', '}', '(', ')', ':', '-'), ' ', $whole);
 
-			$parts = explode(' ', $whole);
+			$parts = explode(' ', $this->leftToRight($whole));
 			if (count($parts) === 1) {
 				return new Zend_Search_Lucene_Search_Query_Term(new Zend_Search_Lucene_Index_Term($parts[0], $field), true);
 			} else {
@@ -343,6 +408,11 @@ class Search_Index_Lucene implements Search_Index_Interface
 			$parts = explode(' ', $value->getValue());
 			return new Zend_Search_Lucene_Search_Query_Phrase($parts, array_keys($parts), $field);
 		}
+	}
+
+	private function leftToRight($string)
+	{
+		return $string . "\xE2\x80\x8E";
 	}
 }
 

@@ -251,8 +251,12 @@ function prefs_wiki_list($partial = false)
 			'default' => 'n',
 		),
 		'wiki_edit_minor' => array(
-			'name' => tra('Allow minor edits'),
+			'name' => tra('Allow minor edits of wiki pages'),
 			'type' => 'flag',
+			'description' => tra('Minor edits do not flag new content for translation and do not send watch notifications (unless "Watch minor edits" is enabled).'),			
+			'permission' => array(
+				'textFilter' => 'tiki_p_minor',
+			),		
 			'default' => 'n',
 		),
 		'wiki_comments_displayed_default' => array(
@@ -622,6 +626,17 @@ function prefs_wiki_list($partial = false)
 			'description' => tra('Reject save attempts not providing an edit summary to describe the changes made.'),
 			'type' => 'flag',
 			'default' => 'n',
+		),
+		'wiki_freetags_edit_position' => array(
+			'name' => tra('Choose position of freetags selection'),
+			'description' => tra('If you wish to place freetags selection more prominently than in the properties tab.'),
+			'type' => 'list',
+			'options' => array(
+				'properties' => tra('Properties tab'),
+				'edit' => tra('Edit tab'),
+				'freetagstab' => tra('Freetags tab'),
+			),
+			'default' => 'properties',
 		),
 		'wiki_structure_bar_position' => array(
 			'name' => tra('Structure navigation bar location'),

@@ -63,6 +63,13 @@ if (!empty($_SERVER['SCRIPT_NAME'])) {
 	$base_uri = $base_host;	// maybe better than nothing
 }
 
+if (strpos($base_uri, $tikiroot . 'route.php') !== false && !empty($inclusion)) {
+	$base_uri = $base_url . $inclusion;
+	if (!empty($_GET)) {
+		$base_uri .= '?' . http_build_query($_GET, '', '&');
+	}
+}
+
 global $smarty;
 if (!empty($base_uri) && is_object($smarty)) {
 	$smarty->assign('base_uri', $base_uri);

@@ -17,25 +17,40 @@ class Search_Index_LuceneIncrementalUpdateTest extends PHPUnit_Framework_TestCas
 		$this->dir = dirname(__FILE__) . '/test_index';
 		$this->tearDown();
 
-		$index = new Search_Index_Lucene($this->dir);
+		$index = $this->getIndex();
+		$this->populate($index);
+	}
+
+	protected function getIndex()
+	{
+		return new Search_Index_Lucene($this->dir);
+	}
+
+	protected function populate($index)
+	{
 		$this->addDocument($index, 'wiki page', 'HomePage', 'Hello World');
 		$this->addDocument($index, 'wiki page', 'SomePage', 'No content yet.');
+		$index->endUpdate();
 	}
 
 	function tearDown()
 	{
-		$dir = escapeshellarg($this->dir);
-		`rm -Rf $dir`;
+		$this->getIndex()->destroy();
 	}
 
 	function testAddNewDocument()
 	{
-		$query = new Search_Query;
-		$query->addObject('wiki page', 'NewPage');
-
-		$index = new Search_Index_Lucene($this->dir);
-		$query->invalidate($index);
+		$index = $this->getIndex();
+		$index->invalidateMultiple(
+			array(
+				array(
+					'object_type' => 'wiki page',
+					'object_id' => 'NewPage',
+				),
+			)
+		);
 		$this->addDocument($index, 'wiki page', 'NewPage', 'Testing out');
+		$index->endUpdate();
 
 		$this->assertResultFound('out', $index);
 		$this->assertResultFound('content', $index);
@@ -44,14 +59,36 @@ class Search_Index_LuceneIncrementalUpdateTest extends PHPUnit_Framework_TestCas
 
 	function testReplaceDocument()
 	{
-		$query = new Search_Query;
-		$query->addObject('wiki page', 'SomePage');
-
-		$index = new Search_Index_Lucene($this->dir);
-		$query->invalidate($index);
+		$index = $this->getIndex();
+		$index->invalidateMultiple(
+			array(
+				array(
+					'object_type' => 'wiki page',
+					'object_id' => 'SomePage',
+				),
+			)
+		);
 		$this->addDocument($index, 'wiki page', 'SomePage', 'Foobar');
+		$index->endUpdate();
 
 		$this->assertResultFound('foobar', $index);
+		$this->assertResultFound('content', $index, 0);
+	}
+
+	function testRemoveDocument()
+	{
+		$index = $this->getIndex();
+		$index->invalidateMultiple(
+			array(
+				array(
+					'object_type' => 'wiki page',
+					'object_id' => 'SomePage',
+				),
+			)
+		);
+		$index->endUpdate();
+
+		$this->assertResultFound('foobar', $index, 0);
 		$this->assertResultFound('content', $index, 0);
 	}
 

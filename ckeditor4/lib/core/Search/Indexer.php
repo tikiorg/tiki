@@ -18,17 +18,13 @@ class Search_Indexer
 
 	public $log = null;
 
-	public function __construct(Search_Index_Interface $searchIndex, $loggit = false)
+	public function __construct(Search_Index_Interface $searchIndex, $logWriter = null)
 	{
-		if ($loggit) {
-			// unused externally, set this to true here to enable logging
-			global $prefs;
-			$writer = new Zend_Log_Writer_Stream($prefs['tmpDir'] . '/Search_Indexer.log', 'w');
-		} else {
-			$writer = new Zend_Log_Writer_Null();
+		if (! $logWriter instanceof Zend_Log_Writer_Interface) {
+			$logWriter = new Zend_Log_Writer_Null();
 		}
-		$writer->setFormatter(new Zend_Log_Formatter_Simple(Zend_Log_Formatter_Simple::DEFAULT_FORMAT . ' [%memoryUsage% bytes]' . PHP_EOL));
-		$this->log = new Zend_Log($writer);
+		$logWriter->setFormatter(new Zend_Log_Formatter_Simple(Zend_Log_Formatter_Simple::DEFAULT_FORMAT . ' [%memoryUsage% bytes]' . PHP_EOL));
+		$this->log = new Zend_Log($logWriter);
 
 		$this->searchIndex = $searchIndex;
 	}
@@ -70,39 +66,38 @@ class Search_Indexer
 		return $stat;
 	}
 
-	public function update($searchArgument)
+	public function update(array $objectList)
 	{
-		if (is_array($searchArgument)) {
-			$query = new Search_Query;
-			foreach ($searchArgument as $object) {
-				$obj2array=(array) $object;
-				$query->addObject($obj2array['object_type'], $obj2array['object_id']);
-			}
-
-			$result = $query->invalidate($this->searchIndex);
-			$objectList = $searchArgument;
-		} elseif ($searchArgument instanceof Search_Query) {
-			$objectList = $searchArgument->invalidate($this->searchIndex);
-		}
+		$this->searchIndex->invalidateMultiple($objectList);
 
 		foreach ($objectList as $object) {
-			$obj2array=(array) $object;
-			$this->addDocument($obj2array['object_type'], $obj2array['object_id']);
+			$this->addDocument($object['object_type'], $object['object_id']);
 		}
+
+		$this->searchIndex->endUpdate();
 	}
 
 	private function addDocument($objectType, $objectId)
 	{
-		global $prefs;
-		if (!empty( $prefs['unified_excluded_categories'] )) {
-			$categs = TikiLib::lib('categ')->get_object_categories($objectType, $objectId);
-			if (array_intersect($prefs['unified_excluded_categories'], $categs)) {
-				$this->log("addDocument skipped $objectType $objectId");
-				return 0;
+		$this->log("addDocument $objectType $objectId");
+
+		$data = $this->getDocuments($objectType, $objectId);
+		foreach ($data as $entry) {
+			try {
+				$this->searchIndex->addDocument($entry);
+			} catch (Exception $e) {
+				$msg = tr('Indexing failed while processing "%0" (type %1) with the error "%2"', $objectId, $objectType, $e->getMessage());
+				TikiLib::lib('errorreport')->report($msg);
+				$this->log->err($msg);
 			}
 		}
 
-		$this->log("addDocument $objectType $objectId");
+		return count($data);
+	}
+
+	function getDocuments($objectType, $objectId)
+	{
+		$out = array();
 
 		$typeFactory = $this->searchIndex->getTypeFactory();
 
@@ -117,23 +112,15 @@ class Search_Indexer
 				}
 
 				foreach ($data as $entry) {
-					try {
-						$this->addDocumentFromContentData($objectType, $objectId, $entry, $typeFactory, $globalFields);
-					} catch (Exception $e) {
-						$msg = tr('Indexing failed while processing "%0" (type %1) with the error "%2"', $objectId, $objectType, $e->getMessage());
-						TikiLib::lib('errorreport')->report($msg);
-						$this->log->err($msg);
-					}
+					$out[] = $this->augmentDocument($objectType, $objectId, $entry, $typeFactory, $globalFields);
 				}
-
-				return count($data);
 			}
 		}
 
-		return 0;
+		return $out;
 	}
 
-	private function addDocumentFromContentData($objectType, $objectId, $data, $typeFactory, $globalFields)
+	private function augmentDocument($objectType, $objectId, $data, $typeFactory, $globalFields)
 	{
 		$initialData = $data;
 
@@ -156,7 +143,7 @@ class Search_Indexer
 
 		$data = $this->removeTemporaryKeys($data);
 
-		$this->searchIndex->addDocument($data);
+		return $data;
 	}
 
 	private function applyFilters($data)
@@ -177,9 +164,12 @@ class Search_Indexer
 	private function removeTemporaryKeys($data)
 	{
 		$keys = array_keys($data);
-		$toRemove = array_filter($keys, function ($key) {
-			return $key{0} === '_';
-		});
+		$toRemove = array_filter(
+			$keys,
+			function ($key) {
+				return $key{0} === '_';
+			}
+		);
 
 		foreach ($keys as $key) {
 			if ($key{0} === '_') {

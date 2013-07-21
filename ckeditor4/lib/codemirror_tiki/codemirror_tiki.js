@@ -299,7 +299,7 @@ jQuery.fn.extend({
 					syntaxHighlighter.remove(textarea);
 
 					var editor = syntaxHighlighter.ready(textarea, settings, mode),
-					editorWindow = jQuery(editor.getWrapperElement()).find('.CodeMirror-scroll').andSelf(),
+					editorWindow = jQuery(editor.getWrapperElement()).find('.CodeMirror-scroll').addBack(),
 					scroller = jQuery(editor.getScrollerElement());
 					scroller.scrollTop(scrollTop * (scroller.innerHeight() / textareaHeight))
 
@@ -316,6 +316,9 @@ jQuery.fn.extend({
 					}
 
 					o.trigger('syntaxHighlighterLoaded');
+				}
+				if (settings.theme == "off" && !settings.readOnly && $("textarea", this).data("codeMirrorRelationship") === 0) {
+					$(".cm-remove").click();	// cheap fix to have codemirror available but off by default
 				}
 			}, true);
 		});
@@ -359,7 +362,7 @@ var syntaxHighlighter = {
 			readOnly: settings.readOnly,
 			mode: mode,
 			lineWrapping: settings.lineWrapping,
-			theme: settings.theme
+			theme: settings.theme == "off" ? "default" : settings.theme
 		});
 		
 		if (settings.readOnly) {
@@ -492,26 +495,28 @@ var syntaxHighlighter = {
 					'</a>' +
 				'</div>')
 					.insertAfter(changeButton)
-					.toggle(function(){
-						if ($('.CodeMirror-fullscreen').length) syntaxHighlighter.fullscreen(textarea);
+					.click(function() {
+						if ($(editor.getTextArea()).css("display") == "none") {
+							if ($('.CodeMirror-fullscreen').length) syntaxHighlighter.fullscreen(textarea);
 
-						syntaxHighlighter.remove(textarea);
-						var scroller = $(editor.getScrollerElement()),
-						scrollTop = scroller.scrollTop(),
-						scrollerHeight = scroller.innerHeight();
+							syntaxHighlighter.remove(textarea);
+							var scroller = $(editor.getScrollerElement()),
+							scrollTop = scroller.scrollTop(),
+							scrollerHeight = scroller.innerHeight();
 
-						editor.toTextArea();
+							editor.toTextArea();
 
-						textarea
-							.removeClass('CodeMirrorPrepSize')
-							.show()
-							.removeData('codeMirrorRelationship')
-							.scrollTop(scrollTop * (textarea.innerHeight() / scrollerHeight));
-						changeButton.remove();
-					}, function() {
-						var scrollTop = $('html,body').scrollTop();
-						textarea.flexibleSyntaxHighlighter(settings);
-						$('html,body').scrollTop(scrollTop);
+							textarea
+								.removeClass('CodeMirrorPrepSize')
+								.show()
+								.removeData('codeMirrorRelationship')
+								.scrollTop(scrollTop * (textarea.innerHeight() / scrollerHeight));
+							changeButton.remove();
+						} else {
+							var scrollTop = $('html,body').scrollTop();
+							textarea.flexibleSyntaxHighlighter(settings);
+							$('html,body').scrollTop(scrollTop);
+						}
 					});
 		}
 
@@ -566,10 +571,10 @@ var syntaxHighlighter = {
 		return false;
 	},
 	fullscreen: function(textarea) {
-		$('.CodeMirror-fullscreen').find('.CodeMirror').andSelf().css('height', '');
+		$('.CodeMirror-fullscreen').find('.CodeMirror').addBack().css('height', '');
 		
 		//removes wiki command buttons (save, cancel, preview) from fullscreen view
-		$('.CodeMirror-fullscreen .wikiaction').remove();
+		$('.CodeMirror-fullscreen .actions').remove();
 		
 		textarea.parent().toggleClass('CodeMirror-fullscreen');
 		$('body').toggleClass('noScroll');
@@ -595,7 +600,7 @@ var syntaxHighlighter = {
 			.resize();
 			
 			//adds wiki command buttons (save, cancel, preview) from fullscreen view
-			$('#role_main input.wikiaction').clone().appendTo('.CodeMirror-fullscreen');
+			$('#role_main .actions').clone().appendTo('.CodeMirror-fullscreen');
 		} else {
 			$(window).removeData('cm-resize');
 		}
@@ -786,6 +791,9 @@ $(function() {
 				lineNumbers: true,
 				force: true
 			});
+			if (codeMirrorTheme == "off") {
+				$(".cm-remove").click();	// cheap fix to have codemirror available but off by default
+			}
 	});
 
 	//for plugin html

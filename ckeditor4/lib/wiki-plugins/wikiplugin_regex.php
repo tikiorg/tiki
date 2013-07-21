@@ -21,6 +21,7 @@ function wikiplugin_regex_info()
 				'name' => tra('Page name'),
 				'description' => tra('Name of page containing search and replace expressions separated by two colons. Example of syntax on that page: /search pattern/::replacement text'),
 				'default' => 'pageName',
+				'profile_reference' => 'wiki_page',
 			),
 		),
 	);

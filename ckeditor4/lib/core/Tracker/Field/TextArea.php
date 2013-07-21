@@ -32,31 +32,37 @@ class Tracker_Field_TextArea extends Tracker_Field_Text
 							0 => tr('Disable'),
 							1 => tr('Enable'),
 						),
+						'legacy_index' => 0,
 					),
 					'width' => array(
 						'name' => tr('Width'),
 						'description' => tr('Size of the text area in characters.'),
 						'filter' => 'int',
+						'legacy_index' => 1,
 					),
 					'height' => array(
 						'name' => tr('Height'),
 						'description' => tr('Size of the text area in lines.'),
 						'filter' => 'int',
+						'legacy_index' => 2,
 					),
 					'max' => array(
 						'name' => tr('Character Limit'),
 						'description' => tr('Maximum amount of characters to be stored.'),
 						'filter' => 'int',
+						'legacy_index' => 3,
 					),
 					'listmax' => array(
 						'name' => tr('Display Limit (List)'),
 						'description' => tr('Maximum amount of characters to be displayed in list mode before the value gets truncated.'),
 						'filter' => 'int',
+						'legacy_index' => 4,
 					),
 					'wordmax' => array(
 						'name' => tr('Word Count'),
 						'description' => tr('Limit the length of the text in words.'),
 						'filter' => 'int',
+						'legacy_index' => 5,
 					),
 					'distinct' => array(
 						'name' => tr('Distinct Values'),
@@ -67,6 +73,7 @@ class Tracker_Field_TextArea extends Tracker_Field_Text
 							'n' => tr('No'),
 							'y' => tr('Yes'),
 						),
+						'legacy_index' => 6,
 					),
 					'wysiwyg' => array(
 						'name' => tr('Use WYSIWYG'),
@@ -77,6 +84,7 @@ class Tracker_Field_TextArea extends Tracker_Field_Text
 							'n' => tr('No'),
 							'y' => tr('Yes'),
 						),
+						'legacy_index' => 7,
 					),
 					'samerow' => array(
 						'name' => tr('Same Row'),
@@ -88,6 +96,7 @@ class Tracker_Field_TextArea extends Tracker_Field_Text
 							0 => tr('No'),
 							1 => tr('Yes'),
 						),
+						'legacy_index' => 8,
 					),
 				),
 			),
@@ -96,7 +105,24 @@ class Tracker_Field_TextArea extends Tracker_Field_Text
 
 	function getFieldData(array $requestData = array())
 	{
-		$data = $this->processMultilingual($requestData, $this->getInsertId());
+		$ins_id = $this->getInsertId();
+		$data = $this->processMultilingual($requestData, $ins_id);
+
+		global $user;
+		if (isset($requestData[$ins_id])) {
+			$newvalue = TikiLib::lib('parser')->process_save_plugins(
+				$data['value'],
+				array(
+					'type' => 'trackeritem',
+					'itemId' => $this->getItemId(),
+					'user' => $user,
+				)
+			);
+			if ($newvalue !== $data['value']) {
+				$data['value'] = $newvalue;
+				$data['pvalue'] = $this->attemptParse($newvalue);
+			}
+		}
 
 		return $data;
 	}
@@ -105,23 +131,23 @@ class Tracker_Field_TextArea extends Tracker_Field_Text
 	{
 		static $firstTime = true;
 
-		$cols = $this->getOption(1);
-		$rows = $this->getOption(2);
+		$cols = $this->getOption('width');
+		$rows = $this->getOption('height');
 
 		$data = array(
-			'toolbar' => $this->getOption(0) ? 'y' : 'n',
-			'cols' => ($cols >= 1) ? $cols : 50,
-			'rows' => ($rows >= 1) ? $rows : 15,
+			'toolbar' => $this->getOption('toolbars') ? 'y' : 'n',
+			'cols' => ($cols >= 1) ? $cols : 80,
+			'rows' => ($rows >= 1) ? $rows : 6,
 			'keyup' => '',
 		);
 
-		if ($this->getOption(5)) {
-			$data['keyup'] = "wordCount({$this->getOption(5)}, this, 'cpt_{$this->getConfiguration('fieldId')}', '" . tr('Word Limit Exceeded') . "')";
-		} elseif ($this->getOption(3)) {
-			$data['keyup'] = "charCount({$this->getOption(3)}, this, 'cpt_{$this->getConfiguration('fieldId')}', '" . tr('Character Limit Exceeded') . "')";
+		if ($this->getOption('wordwrap')) {
+			$data['keyup'] = "wordCount({$this->getOption('wordwrap')}, this, 'cpt_{$this->getConfiguration('fieldId')}', '" . tr('Word Limit Exceeded') . "')";
+		} elseif ($this->getOption('max')) {
+			$data['keyup'] = "charCount({$this->getOption('max')}, this, 'cpt_{$this->getConfiguration('fieldId')}', '" . tr('Character Limit Exceeded') . "')";
 		}
 		$data['element_id'] = 'area_' . uniqid();
-		if ($firstTime && $this->getOption(7) === 'y') {	// wysiwyg
+		if ($firstTime && $this->getOption('wysiwyg') === 'y') {	// wysiwyg
 			$is_html = '<input type="hidden" id="allowhtml" value="1" />';
 			$firstTime = false;
 		} else {
@@ -146,7 +172,7 @@ class Tracker_Field_TextArea extends Tracker_Field_Text
 	protected function attemptParse($text)
 	{
 		$parseOptions = array();
-		if ($this->getOption(7) === 'y') {
+		if ($this->getOption('wysiwyg') === 'y') {
 			$parseOptions['is_html'] = true;
 		}
 		return TikiLib::lib('tiki')->parse_data($text, $parseOptions);

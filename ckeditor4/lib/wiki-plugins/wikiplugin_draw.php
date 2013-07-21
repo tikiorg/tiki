@@ -22,7 +22,8 @@ function wikiplugin_draw_info()
 				'filter' => 'digits',
 				'accepted' => ' ID number',
 				'default' => '',
-				'since' => '7.1'
+				'since' => '7.1',
+				'profile_reference' => 'file',
 			),
 			'width' => array(
 				'required' => false,

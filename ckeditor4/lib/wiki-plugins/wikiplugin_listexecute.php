@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2013 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -15,6 +15,7 @@ function wikiplugin_listexecute_info()
 		'body' => tra('List configuration information'),
 		'validate' => 'all',
 		'filter' => 'wikicontent',
+		'profile_reference' => 'search_plugin_content',
 		'icon' => 'img/icons/text_list_bullets.png',
 		'tags' => array( 'advanced' ),
 		'params' => array(
@@ -26,17 +27,20 @@ function wikiplugin_listexecute($data, $params)
 {
 	$unifiedsearchlib = TikiLib::lib('unifiedsearch');
 
-	$alternate = null;
 	$actions = array();
-	
+
 	$factory = new Search_Action_Factory;
-	$factory->register(array(
-		'change_status' => 'Search_Action_ChangeStatusAction',
-		'email' => 'Search_Action_EmailAction',
-	));
+	$factory->register(
+		array(
+			'change_status' => 'Search_Action_ChangeStatusAction',
+			'email' => 'Search_Action_EmailAction',
+			'wiki_approval' => 'Search_Action_WikiApprovalAction',
+			'tracker_item_modify' => 'Search_Action_TrackerItemModify',
+		)
+	);
 
 	$query = new Search_Query;
-	$query->setWeightCalculator($unifiedsearchlib->getWeightCalculator());
+	$unifiedsearchlib->initQuery($query);
 
 	$matches = WikiParser_PluginMatcher::match($data);
 
@@ -53,14 +57,6 @@ function wikiplugin_listexecute($data, $params)
 				$actions[$action->getName()] = $action;
 			}
 		}
-
-		if ($name == 'alternate') {
-			$alternate = $match->getBody();
-		}
-	}
-
-	if (! Perms::get()->admin) {
-		$query->filterPermissions(Perms::get()->getGroups());
 	}
 
 	if (!empty($_REQUEST['sort_mode'])) {
@@ -71,58 +67,57 @@ function wikiplugin_listexecute($data, $params)
 
 	$result = $query->search($index);
 
-	if (count($result)) {
-		$plugin = new Search_Formatter_Plugin_SmartyTemplate('templates/wiki-plugins/wikiplugin_listexecute.tpl');
+	$plugin = new Search_Formatter_Plugin_SmartyTemplate('templates/wiki-plugins/wikiplugin_listexecute.tpl');
 
-		$dataSource = $unifiedsearchlib->getDataSource();
-		$formatter = new Search_Formatter($plugin);
-		$formatter->setDataSource($dataSource);
-		$builder = new Search_Formatter_Builder($formatter);
-		$builder->apply($matches);
+	$paginationArguments = $builder->getPaginationArguments();
 
-		$reportSource = new Search_GlobalSource_Reporting;
+	$dataSource = $unifiedsearchlib->getDataSource();
+	$builder = new Search_Formatter_Builder;
+	$builder->setPaginationArguments($paginationArguments);
+	$builder->apply($matches);
+	$builder->setFormatterPlugin($plugin);
 
-		if (isset($_POST['list_action'], $_POST['objects'])) {
-			$action = $_POST['list_action'];
-			$objects = (array) $_POST['objects'];
+	$formatter = $builder->getFormatter();
+	$formatter->setDataSource($dataSource);
 
-			if (isset($actions[$action])) {
-				$tx = TikiDb::get()->begin();
+	$reportSource = new Search_GlobalSource_Reporting;
 
-				$action = $actions[$action];
-				$plugin->setFields(array_fill_keys($action->getFields(), null));
-				$list = $formatter->getPopulatedList($result);
+	if (isset($_POST['list_action'], $_POST['objects'])) {
+		$action = $_POST['list_action'];
+		$objects = (array) $_POST['objects'];
 
-				foreach ($list as $entry) {
-					$identifier = "{$entry['object_type']}:{$entry['object_id']}";
-					if (in_array($identifier, $objects) || in_array('ALL', $objects)) {
-						$success = $action->execute($entry);
+		if (isset($actions[$action])) {
+			$tx = TikiDb::get()->begin();
 
-						$reportSource->setStatus($entry['object_type'], $entry['object_id'], $success);
-					}
+			$action = $actions[$action];
+			$plugin->setFields(array_fill_keys($action->getFields(), null));
+			$list = $formatter->getPopulatedList($result);
+
+			foreach ($list as $entry) {
+				$identifier = "{$entry['object_type']}:{$entry['object_id']}";
+				if (in_array($identifier, $objects) || in_array('ALL', $objects)) {
+					$success = $action->execute($entry);
+
+					$reportSource->setStatus($entry['object_type'], $entry['object_id'], $success);
 				}
-
-				$tx->commit();
 			}
+
+			$tx->commit();
 		}
-
-		$plugin = new Search_Formatter_Plugin_SmartyTemplate('templates/wiki-plugins/wikiplugin_listexecute.tpl');
-		$plugin->setFields(array('report_status' => null));
-		$plugin->setData(array(
-			'actions' => array_keys($actions),
-		));
-		$dataSource = new Search_Formatter_DataSource_Declarative;
-		$dataSource->addGlobalSource($reportSource);
-
-		$formatter = new Search_Formatter($plugin);
-		$formatter->setDataSource($dataSource);
-		return $formatter->format($result);
-	} elseif (!empty($alternate)) {
-		$out = $alternate;
-	} else {
-		$out = '^' . tra('No results for query.') . '^';
 	}
 
-	return $out;
+	$plugin = new Search_Formatter_Plugin_SmartyTemplate('templates/wiki-plugins/wikiplugin_listexecute.tpl');
+	$plugin->setFields(array('report_status' => null));
+	$plugin->setData(
+		array(
+			'actions' => array_keys($actions),
+		)
+	);
+	$dataSource = new Search_Formatter_DataSource_Declarative;
+	$dataSource->addGlobalSource($reportSource);
+
+	$formatter = new Search_Formatter($plugin);
+	$formatter->setDataSource($dataSource);
+	return $formatter->format($result);
 }
 

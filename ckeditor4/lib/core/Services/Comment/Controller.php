@@ -557,7 +557,11 @@ class Services_Comment_Controller
 
 	private function canEdit(array $comment)
 	{
-		global $prefs, $user;
+		global $prefs, $user, $tiki_p_admin;
+
+		if ($tiki_p_admin == 'y') {
+			return true;
+		}
 
 		if ($prefs['comments_allow_correction'] != 'y') {
 			return false;

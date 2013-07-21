@@ -22,17 +22,20 @@ class Tracker_Field_Action implements Tracker_Field_Interface
 						'name' => tr('Name'),
 						'description' => tr('The title of the button'),
 						'filter' => 'text',
+						'legacy_index' => 0,
 					),
 					'post' => array(
 						'name' => tr('Post'),
 						'description' => tr('The protocol to use at the form: either get or post'),
 						'filter' => 'text',
+						'legacy_index' => 1,
 					),
 					'script' => array(
 						'name' => tr('Script'),
 						'description' => tr('The arbitrary url of the destination of the form'),
 						'filter' => 'text',
 						'example' => 'tiki-index.php',
+						'legacy_index' => 2,
 					),
 					'parameters' => array(
 						'name' => tr('Parameters'),
@@ -40,6 +43,7 @@ class Tracker_Field_Action implements Tracker_Field_Interface
 						'filter' => 'text',
 						'count' => '*',
 						'example' => 'page:fieldname',
+						'legacy_index' => 3,
 					),
 				),
 			),

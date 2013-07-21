@@ -97,6 +97,7 @@ class ScoreLib extends TikiLib
 				if (isset($index[$event_name])) {
 					$event['score']      = $index[$event_name]['score'];
 					$event['expiration'] = $index[$event_name]['expiration'];
+					$event['validObjectIds'] = implode(',', json_decode($index[$event_name]['validObjectIds']));
 				}
 
 				$event_list[] = $event;
@@ -116,8 +117,9 @@ class ScoreLib extends TikiLib
 			$query = "delete from `tiki_score` where `event`=?";
 			$this->query($query, array($event_name));
 
-			$query = "insert into `tiki_score` (`event`,`score`,`expiration`) values (?,?,?)";
-			$this->query($query, array($event_name, (int) $event['score'], $event['expiration']));
+			$event['validObjectIds'] = json_encode(explode(',', $event['validObjectIds']));
+		    $query = "insert into `tiki_score` (`event`,`score`,`expiration`,`validObjectIds`) values (?,?,?,?)";
+			$this->query($query, array($event_name, (int) $event['score'], $event['expiration'], $event['validObjectIds']));
 		}
 	}
 

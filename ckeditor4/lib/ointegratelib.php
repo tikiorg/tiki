@@ -166,9 +166,9 @@ class OIntegrate
 			$out = json_decode($fixed, true);
 			return $out;
 		case 'text/x-yaml':
-			require_once 'Horde/Yaml.php';
-			require_once 'Horde/Yaml/Loader.php';
-			require_once 'Horde/Yaml/Node.php';
+			require_once 'core/Horde/Yaml.php';
+			require_once 'core/Horde/Yaml/Loader.php';
+			require_once 'core/Horde/Yaml/Node.php';
 			return Horde_Yaml::load($data);
 		default:
 			// Attempt anything...

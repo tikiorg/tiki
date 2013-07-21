@@ -310,20 +310,10 @@ function getTASelection( textarea ) {
 	}
 	
 	var ta_id = $(textarea).attr("id"), r, cked, output;
-	if ($('#cke_contents_' + ta_id).length !== 0) {
+	if (cked = typeof CKEDITOR !== 'undefined' ? CKEDITOR.instances[ta_id] : null) {
 		// get selection from ckeditor
-		cked = typeof CKEDITOR !== 'undefined' ? CKEDITOR.instances[ta_id] : null;
-		if (cked) {
-			var sel = cked.getSelection();
-			if (sel && sel.getType() === CKEDITOR.SELECTION_TEXT) {	// why so fiddly?
-				if (CKEDITOR.env.ie) {
-					output = sel.document.$.selection.createRange().text;
-				} else {
-					output = sel.getNative().toString();
-				}
-				return output;
-			}
-		}
+		return cked.getSelection().getSelectedText();
+
 	} else {
 		if (typeof $(textarea).attr("selectionStartSaved") != 'undefined' && $(textarea).attr("selectionStartSaved")) { // forgetful firefox/IE now
 			return textarea.value.substring($(textarea).attr("selectionStartSaved"), $(textarea).attr("selectionEndSaved"));
@@ -339,7 +329,7 @@ function getTASelection( textarea ) {
 var ieFirstTimeInsertKludge = null;
 
 function storeTASelection( area_id ) {
-	if ($('#cke_contents_' + area_id).length === 0) {
+	if (typeof CKEDITOR === 'undefined' || typeof CKEDITOR.instances[area_id] === 'undefined') {
 		var $el = $("#" + area_id);
 		var sel = $el.selection();
 		$el.attr("selectionStartSaved", sel.start)
@@ -427,7 +417,7 @@ function insertAt(elementId, replaceString, blockLevel, perLine, replaceSelectio
 						if (plugin_el.length == 1) { // found descendant plugin
 							com = new CKEDITOR.dom.element(plugin_el[0]);
 						} else {
-							plugin_el = $(com.$).parents(".tiki_plugin"); // try parents
+							plugin_el = $(com.$).parents(".tiki_plugin:last"); // try parents
 							if (plugin_el.length == 1) { // found p plugin
 								com = new CKEDITOR.dom.element(plugin_el[0]);
 							} else { // still not found it? sometimes Fx seems to get the editor body as the selection...
@@ -447,15 +437,12 @@ function insertAt(elementId, replaceString, blockLevel, perLine, replaceSelectio
 						}
 					}
 				}
-				if ($(com.$).hasClass("tiki_plugin")) {
-					$(com.$).replaceWith($("<span class='tiki_plugin'>" + replaceString + "</span>"));
-					cked.reParse();
+				if (com.hasClass("tiki_plugin")) {
+					var html = cked.getData().replace(com.data("syntax"), replaceString);
+					cked.setData(html);
 					return;
 				}
 			}
-			//if (sel.getType() === CKEDITOR.SELECTION_TEXT) {
-				// fall through to insertText as if all else failed
-			//}
 		}
 		// catch all other issues and do the insert wherever ckeditor thinks best,
 		// sadly as the first element sometimes FIXME
@@ -1952,7 +1939,7 @@ function adjustRating(element, data) {
 		$sibs = $("span > a", $(element).parent())
 		$help = $(element).prev().prev();
 	} else {
-		$sibs = $(element).siblings().andSelf();
+		$sibs = $(element).siblings().addBack();
 		$help = $(element).parent().next();
 	}
 

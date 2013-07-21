@@ -15,7 +15,7 @@
  * @package		Tiki
  * @subpackage		Parser
  * @author		Robert Plummer
- * @copyright		Copyright (c) 2002-2012, All Rights Reserved.
+ * @copyright		Copyright (c) 2002-2013, All Rights Reserved.
  * 			See copyright.txt for details and a complete list of authors.
  * @license		LGPL - See license.txt for details.
  * @version		SVN $Rev$
@@ -26,6 +26,7 @@
 
 class ParserLib extends TikiDb_Bridge
 {
+	private $makeTocCount = 0;
 	private $pre_handlers = array();
 	private $pos_handlers = array();
 	private $postedit_handlers = array();
@@ -87,6 +88,7 @@ class ParserLib extends TikiDb_Bridge
 				'ck_editor'=>   false,
 				'namespace' => false,
 				'protect_email' => true,
+				'exclude_plugins' => array(),
 			), empty($option) ? array() : (array) $this->option, (array)$option
 		);
 	}
@@ -418,6 +420,12 @@ class ParserLib extends TikiDb_Bridge
 			//note parent plugin in case of plugins nested in an include - to suppress plugin edit icons below
 			$plugin_parent = isset($plugin_name) ? $plugin_name : false;
 			$plugin_name = $match->getName();
+
+			if (isset($this->option['exclude_plugins']) && in_array($plugin_name, $this->option['exclude_plugins'])) {
+				$match->replaceWith('');
+				continue;
+			}
+
 			//suppress plugin edit icons for plugins within includes since edit doesn't work for these yet
 			$this->option['suppress_icons'] = $plugin_name != 'include' && $plugin_parent && $plugin_parent == 'include' ?
 				true : $this->option['suppress_icons'];
@@ -630,16 +638,18 @@ if ( \$('#$id') ) {
 			return $known[$name] = $class->info();
 		}
 
-		if ( ! $this->plugin_exists($name, true) )
+		if (! $this->plugin_exists($name, true)) {
 			return $known[$name] = false;
+		}
 
 		$func_name_info = "wikiplugin_{$name}_info";
 
 		if ( ! function_exists($func_name_info) ) {
-			if ( $info = WikiPlugin_Negotiator_Wiki_Alias::info($name) )
+			if ($info = WikiPlugin_Negotiator_Wiki_Alias::info($name)) {
 				return $known[$name] = $info['description'];
-			else
+			} else {
 				return $known[$name] = false;
+			}
 		}
 
 		return $known[$name] = $func_name_info();
@@ -1012,9 +1022,11 @@ if ( \$('#$id') ) {
 					$ck_editor_plugin .= $argKey.'="'.implode($sep, $argValue).'" ';	// process array
 					$arg_str .= $argKey.'='.implode($sep, $argValue).'&';
 				} else {
+					/* Should not be needed now that the plugin arguments are decoded
 					if ($name === 'module') {	// failsafe double-quote prevention for module plugin
 						$argValue =  preg_replace('/^&quot;(.*)&quot;$/', '$1', $argValue);
 					}
+					*/
 					$ck_editor_plugin .= $argKey.'="'.$argValue.'" ';
 					$arg_str .= $argKey.'='.$argValue.'&';
 				}
@@ -1042,8 +1054,10 @@ if ( \$('#$id') ) {
 		$arg_str = rtrim($arg_str, '&');
 		$icon = isset($info['icon']) ? $info['icon'] : 'img/icons/wiki_plugin_edit.png';
 
-		// some plugins are just too flakey to do wysiwyg, so show the "source" for them ;(
-		$excluded = array('tracker', 'trackerlist', 'trackerfilter', 'kaltura', 'toc', 'freetagged', 'draw', 'googlemap', 'include', 'module');
+		// some plugins are just too fragile to do wysiwyg, so show the "source" for them ;(
+		$excluded = array('tracker', 'trackerlist', 'trackerfilter', 'kaltura', 'toc', 'freetagged', 'draw', 'googlemap',
+			'include', 'module', 'list', 'custom_search', 'iframe', 'map', 'calendar', 'file', 'files', 'mouseover', 'sort',
+			'slideshow');
 
 		$ignore = null;
 		$enabled = $this->plugin_enabled($name, $ignore);
@@ -1053,8 +1067,9 @@ if ( \$('#$id') ) {
 			// Tiki 7+ adds ~np~ to plugin output so remove them
 			$plugin_result = preg_replace('/~[\/]?np~/ms', '', $plugin_result);
 
+			$oldOptions = $this->option;
 			$plugin_result = $this->parse_data($plugin_result, array('is_html' => false, 'suppress_icons' => true, 'ck_editor' => true, 'noparseplugins' => true));
-
+			$this->setOptions($oldOptions);
 			// reset the noparseplugins option, to allow for proper display in CkEditor
 			$this->option['noparseplugins'] = false;
 
@@ -1062,6 +1077,8 @@ if ( \$('#$id') ) {
 			$plugin_result = preg_replace('/\shref\=/i', ' tiki_href=', $plugin_result);
 			$plugin_result = preg_replace('/\sonclick\=/i', ' tiki_onclick=', $plugin_result);
 			$plugin_result = preg_replace('/<script.*?<\/script>/mi', '', $plugin_result);
+			// remove hidden inputs
+			$plugin_result = preg_replace('/<input.*?type=[\'"]?hidden[\'"]?.*>/mi', '', $plugin_result);
 		}
 		if (!in_array($name, array('html'))) {		// remove <p> and <br>s from non-html
 			$data = str_replace(array('<p>', '</p>', "\t"), '', $data);
@@ -1083,10 +1100,10 @@ if ( \$('#$id') ) {
 			}
 		}
 
-		$ret = '~np~<'.$elem.' class="tiki_plugin" plugin="' . $name . '" style="' . $elem_style . '"' .
-				' syntax="' . htmlentities($ck_editor_plugin, ENT_QUOTES, 'UTF-8') . '"' .
-				' args="' . htmlentities($arg_str, ENT_QUOTES, 'UTF-8') . '"' .
-				' body="' . htmlentities($data, ENT_QUOTES, 'UTF-8') . '">'.	// not <!--{cke_protected}
+		$ret = '~np~<'.$elem.' contenteditable="false" unselectable="on" class="tiki_plugin" data-plugin="' . $name . '" style="' . $elem_style . '"' .
+				' data-syntax="' . htmlentities($ck_editor_plugin, ENT_QUOTES, 'UTF-8') . '"' .
+				' data-args="' . htmlentities($arg_str, ENT_QUOTES, 'UTF-8') . '"' .
+				' data-body="' . htmlentities($data, ENT_QUOTES, 'UTF-8') . '">'.	// not <!--{cke_protected}
 				'<img src="'.$icon.'" width="16" height="16" style="float:left;position:relative;z-index:10001" />' .
 				$plugin_result.'<!-- end tiki_plugin --></'.$elem.'>~/np~';
 
@@ -2219,6 +2236,9 @@ if ( \$('#$id') ) {
 
 			$inComment += substr_count($lineInLowerCase, "<!--");
 			$inComment -= substr_count($lineInLowerCase, "-->");
+			if ($inComment < 0) {	// stop lines containing just --> being detected as comments
+				$inComment = 0;
+			}
 
 			// check if we are inside a ~pre~ block and, if so, ignore
 			// monospaced and do not insert <br />
@@ -2555,15 +2575,16 @@ if ( \$('#$id') ) {
 										}
 									}
 
+									$add_brs = $prefs['feature_wiki_paragraph_formatting_add_br'] === 'y' && !$this->option['is_html'];
 									if ($in_paragraph && ((empty($tline) && !$in_empty_paragraph) || $contains_block)) {
 										// If still in paragraph, on meeting first blank line or end of div or start of div created by plugins; close a paragraph
 										$this->close_blocks($data, $in_paragraph, $listbeg, $divdepth, 1, 0, 0);
-									} elseif (!$in_paragraph && !$contains_block && !$contains_br && (!empty($tline) || $prefs['feature_wiki_paragraph_formatting_add_br'] === 'y')) {
+									} elseif (!$in_paragraph && !$contains_block && !$contains_br && (!empty($tline) || $add_brs)) {
 										// If not in paragraph, first non-blank line; start a paragraph; if not start of div created by plugins
 										$data .= "<p>";
 										$in_paragraph = 1;
-										$in_empty_paragraph = empty($tline) && $prefs['feature_wiki_paragraph_formatting_add_br'] === 'y';
-									} elseif ($in_paragraph && $prefs['feature_wiki_paragraph_formatting_add_br'] == 'y' && !$contains_block) {
+										$in_empty_paragraph = empty($tline) && $add_brs;
+									} elseif ($in_paragraph && $add_brs && !$contains_block) {
 										// A normal in-paragraph line if not close of div created by plugins
 										if (!empty($tline)) {
 											$in_empty_paragraph = false;

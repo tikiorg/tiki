@@ -32,30 +32,35 @@ class Tracker_field_Image extends Tracker_Field_File
 						'description' => tr('Display size in pixels'),
 						'filter' => 'int',
 						'default' => 30,
+						'legacy_index' => 0,
 					),
 					'yListSize' => array(
 						'name' => tr('List image height'),
 						'description' => tr('Display size in pixels'),
 						'filter' => 'int',
 						'default' => 30,
+						'legacy_index' => 1,
 					),
 					'xDetailSize' => array(
 						'name' => tr('Detail image width'),
 						'description' => tr('Display size in pixels'),
 						'filter' => 'int',
 						'default' => 300,
+						'legacy_index' => 2,
 					),
-					'yDefailSize' => array(
+					'yDetailSize' => array(
 						'name' => tr('Detail image height'),
 						'description' => tr('Display size in pixels'),
 						'filter' => 'int',
 						'default' => 300,
+						'legacy_index' => 3,
 					),
 					'uploadLimitScale' => array(
 						'name' => tr('Maximum image size'),
 						'description' => tr('Maximum image width or height in pixels.'),
 						'filter' => 'int',
 						'default' => '1000',
+						'legacy_index' => 4,
 					),
 					'shadowbox' => array(
 						'name' => tr('Shadowbox'),
@@ -66,11 +71,13 @@ class Tracker_field_Image extends Tracker_Field_File
 							'individual' => tr('One box per item'),
 							'group' => tr('Use the same box for all images'),
 						),
+						'legacy_index' => 5,
 					),
 					'imageMissingIcon' => array(
 						'name' => tr('Missing Icon'),
 						'description' => tr('Icon to use when no images have been uploaded.'),
 						'filter' => 'url',
+						'legacy_index' => 6,
 					),
 				),
 			),
@@ -124,7 +131,7 @@ class Tracker_field_Image extends Tracker_Field_File
 		$pre = '';
 		if ( !empty($val) && file_exists($val) ) {
 			$params['file'] = $val;
-			$shadowtype = $this->getOption(5);
+			$shadowtype = $this->getOption('shadowbox');
 			if ($prefs['feature_shadowbox'] == 'y' && !empty($shadowtype)) {
 				switch ($shadowtype) {
 				case 'item':
@@ -139,31 +146,31 @@ class Tracker_field_Image extends Tracker_Field_File
 				}
 				$pre = "<a href=\"$val\" rel=\"shadowbox$rel;type=img\">";
 			}
-			if ( $this->getOption(0) || $this->getOption(1) || $this->getOption(2) || $this->getOption(3)) {
+			if ( $this->getOption('xListSize') || $this->getOption('yListSize') || $this->getOption('xDetailSize') || $this->getOption('yDetailSize')) {
 				$image_size_info = getimagesize($val);
 			}
 			if ($list_mode != 'n') {
-				if ($this->getOption(0) || $this->getOption(1)) {
+				if ($this->getOption('xListSize') || $this->getOption('yListSize')) {
 					list( $params['width'], $params['height']) = $this->get_resize_dimensions(
 						$image_size_info[0],
 						$image_size_info[1],
-						$this->getOption(0),
-						$this->getOption(1)
+						$this->getOption('xListSize'),
+						$this->getOption('yListSize')
 					);
 				}
 			} else {
-				if ($this->getOption(2) || $this->getOption(3)) {
+				if ($this->getOption('xDetailSize') || $this->getOption('yDetailSize')) {
 					list( $params['width'], $params['height']) = $this->get_resize_dimensions(
 						$image_size_info[0],
 						$image_size_info[1],
-						$this->getOption(2),
-						$this->getOption(3)
+						$this->getOption('xDetailSize'),
+						$this->getOption('yDetailSize')
 					);
 				}
 			}
 		} else {
-			if ($this->getOption(6)) {
-				$params['file'] = $this->getOption(6);
+			if ($this->getOption('imageMissingIcon')) {
+				$params['file'] = $this->getOption('imageMissingIcon');
 				$params['alt'] = 'n/a';
 			} else {
 				return '';
@@ -205,7 +212,7 @@ class Tracker_field_Image extends Tracker_Field_File
 			$type = $this->getConfiguration('file_type');
 
 			if ($this->isImageType($type)) {
-				if ($maxSize = $this->getOption(4)) {
+				if ($maxSize = $this->getOption('uploadLimitScale')) {
 					$imagegallib = TikiLib::lib('imagegal');	// TODO: refactor to use Image class directly and remove dependency on imagegals
 					$imagegallib->image = $value;
 					$imagegallib->readimagefromstring();

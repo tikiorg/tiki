@@ -18,12 +18,13 @@ class Tiki_Profile_InstallHandler_Article extends Tiki_Profile_InstallHandler
 			'author' => 'Anonymous',
 			'heading' => '',
 			'publication_date' => time(),
-			'expiration_date' => time() + 3600*24*30,
+			'expiration_date' => time() + 3600*24*365,
 			'type' => 'Article',
 			'topline' => '',
 			'subtitle' => '',
 			'link_to' => '',
 			'language' => 'en',
+			'geolocation' => '',
 		);
 
 		$data = array_merge($defaults, $data);
@@ -43,7 +44,7 @@ class Tiki_Profile_InstallHandler_Article extends Tiki_Profile_InstallHandler
 
 	function _install()
 	{
-		global $artlib;
+		global $artlib, $prefs;
 		$data = $this->getData();
 
 		$this->replaceReferences($data);
@@ -76,6 +77,10 @@ class Tiki_Profile_InstallHandler_Article extends Tiki_Profile_InstallHandler
 			null,
 			$data['language']
 		);
+
+		if ($prefs['geo_locate_article'] == 'y' && ! empty($data['geolocation'])) {
+			TikiLib::lib('geo')->set_coordinates('article', $id, $data['geolocation']);
+		}
 
 		return $id;
 	}

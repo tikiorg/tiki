@@ -19,19 +19,20 @@ function wikiplugin_attach_info()
 				'required' => false,
 				'name' => tra('Name'),
 				'description' => tra('File name of the attached file to link to. Either name, file, id or num can be used to identify a single attachment'),
-				'default' => ''
+				'default' => '',
 			),
 			'file' =>array(
 				'required' => false,
 				'name' => tra('File'),
 				'description' => tra('Same as name'),
-				'default' => ''
+				'default' => '',
 			),
 			'page' => array(
 				'required' => false,
 				'name' => tra('Page'),
 				'description' => tra('Name of the wiki page the file is attached to. If left empty when the plugin is used on a wiki page, this defaults to that wiki page.'),
-				'default' => ''
+				'default' => '',
+				'profile_reference' => 'wiki_page',
 			),
 			'showdesc' => array(
 				'required' => false,
@@ -41,7 +42,7 @@ function wikiplugin_attach_info()
 				'options' => array(
 					array('text' => '', 'value' => ''), 
 					array('text' => tra('Yes'), 'value' => 1), 
-					array('text' => tra('No'), 'value' => 0)
+					array('text' => tra('No'), 'value' => 0),
 				),
 			),
 			'bullets' => array(
@@ -52,7 +53,7 @@ function wikiplugin_attach_info()
 				'options' => array(
 					array('text' => '', 'value' => ''), 
 					array('text' => tra('Yes'), 'value' => 1), 
-					array('text' => tra('No'), 'value' => 0)
+					array('text' => tra('No'), 'value' => 0),
 				),
 			),
 			'image' =>array(
@@ -63,7 +64,7 @@ function wikiplugin_attach_info()
 				'options' => array(
 					array('text' => '', 'value' => ''), 
 					array('text' => tra('Yes'), 'value' => 1), 
-					array('text' => tra('No'), 'value' => 0)
+					array('text' => tra('No'), 'value' => 0),
 				),
 			),
 			'inline' =>array(
@@ -74,7 +75,7 @@ function wikiplugin_attach_info()
 				'options' => array(
 					array('text' => '', 'value' => ''), 
 					array('text' => tra('Yes'), 'value' => 1), 
-					array('text' => tra('No'), 'value' => 0)
+					array('text' => tra('No'), 'value' => 0),
 				),
 			),
 			'all' => array(
@@ -85,14 +86,14 @@ function wikiplugin_attach_info()
 				'options' => array(
 					array('text' => '', 'value' => ''), 
 					array('text' => tra('Yes'), 'value' => 1), 
-					array('text' => tra('No'), 'value' => 0)
+					array('text' => tra('No'), 'value' => 0),
 				),
 			),
 			'num' => array(
 				'required' => false,
 				'name' => tra('Order Number'),
 				'description' => tra('Identifies the attachment to link to by the order of the attachment in the list of attachments to a page instead of by file name or ID. Either name, file, id or num can be used to identify a single attachment.'),
-				'default' => ''
+				'default' => '',
 			),
 			'id' => array(
 				'required' => false,
@@ -107,7 +108,7 @@ function wikiplugin_attach_info()
 				'options' => array(
 					array('text' => '', 'value' => ''), 
 					array('text' => tra('Yes'), 'value' => 1), 
-					array('text' => tra('No'), 'value' => 0)
+					array('text' => tra('No'), 'value' => 0),
 				),
 			),
 			'icon' =>array(
@@ -118,7 +119,7 @@ function wikiplugin_attach_info()
 				'options' => array(
 					array('text' => '', 'value' => ''), 
 					array('text' => tra('Yes'), 'value' => 1), 
-					array('text' => tra('No'), 'value' => 0)
+					array('text' => tra('No'), 'value' => 0),
 				),
 			),
 

@@ -145,7 +145,7 @@ CKEDITOR.on('dialogDefinition', function(ev) {
 		var originalOnShowFunction = dialogDefinition.onShow;
 		
 		dialogDefinition.onShow = function() {	// check for class=wiki and fill tikilink form if so
-			
+
 			originalOnShowFunction.call(this);
 			
 			if (this.getContentElement('advanced','advCSSClasses').getValue() === 'wiki') {
@@ -158,15 +158,8 @@ CKEDITOR.on('dialogDefinition', function(ev) {
 				this.getContentElement('info','tikilinkPage').setValue(page);
 				this.getContentElement('info','tikilinkLabel').setValue(this._.selectedElement.getText());
 			} else {
-				var editor = this.getParentEditor(),
-					selection = editor.getSelection(),
-					r = selection.getRanges(),
-					seltext = "";
-				
-				if (selection.getType() === CKEDITOR.SELECTION_TEXT && !r[0].collapsed) {
-					seltext = getTASelection("#" + editor.name);
-					this.getContentElement('info','tikilinkLabel').setValue(seltext);
-				}
+				var seltext = this.getParentEditor().getSelection().getSelectedText();
+				this.getContentElement('info','tikilinkLabel').setValue(seltext);
 			}
 		};
 	}

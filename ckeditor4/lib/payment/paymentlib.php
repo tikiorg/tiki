@@ -127,11 +127,11 @@ class PaymentLib extends TikiDb_Bridge
 	{
 		global $tikilib, $prefs;
 		$info = $this->fetchAll(
-				'SELECT tpr.*, uu.`login` as `user` FROM `tiki_payment_requests` tpr' .
-				' LEFT JOIN `users_users` uu ON (uu.`userId` = tpr.`userId`)' .
-				' WHERE `paymentRequestId` = ?',
-				array($id)
-			);
+			'SELECT tpr.*, uu.`login` as `user` FROM `tiki_payment_requests` tpr' .
+			' LEFT JOIN `users_users` uu ON (uu.`userId` = tpr.`userId`)' .
+			' WHERE `paymentRequestId` = ?',
+			array($id)
+		);
 		$info = reset($info);
 
 		if ( $info ) {

@@ -20,6 +20,7 @@ function wikiplugin_trackercomments_info()
 				'description' => tra('Numeric value representing the tracker ID'),
 				'filter' => 'digits',
 				'default' => '',
+				'profile_reference' => 'tracker',
 			),
 			'shownbitems' => array(
 				'required' => false,
@@ -27,7 +28,7 @@ function wikiplugin_trackercomments_info()
 				'description' => tra('Determines whether the number of items will be shown (not shown by default)'),
 				'filter' => 'alpha',
 				'default' => '',
-			'options' => array(
+				'options' => array(
 					array('text' => '', 'value' => ''), 
 					array('text' => tra('Yes'), 'value' => 'y'), 
 					array('text' => tra('No'), 'value' => 'n')

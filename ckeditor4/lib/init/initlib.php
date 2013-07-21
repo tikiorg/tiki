@@ -15,12 +15,14 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
   exit;
 }
 
-if (! file_exists('vendor/autoload.php')) {
-	echo "Your Tiki is not completely set-up. Composer has not been run to fetch dependencies. See http://dev.tiki.org/Composer for details.";
+if (! file_exists(__DIR__ . '/../../vendor/autoload.php')) {
+	echo "Your Tiki is not completely installed because Composer has not been run to fetch package dependencies.\n";
+	echo "You need to run 'sh setup.sh' from the command line.\n";
+	echo "See http://dev.tiki.org/Composer for details.\n";
 	exit;
 }
 
-require_once 'vendor/autoload.php';
+require_once __DIR__ . '/../../vendor/autoload.php';
 
 /**
  * performs some checks on the underlying system, before initializing Tiki.
@@ -220,6 +222,89 @@ class TikiInit
 	static function hasIIS_UrlRewriteModule()
 	{
 		return isset($_SERVER['IIS_UrlRewriteModule']) == true;
+	}
+
+	static function getCredentialsFile()
+	{
+		global $default_api_tiki, $api_tiki, $db_tiki, $dbversion_tiki, $host_tiki, $user_tiki, $pass_tiki, $dbs_tiki, $tikidomain, $tikidomainslash;
+		// Please use the local.php file instead containing these variables
+		// If you set sessions to store in the database, you will need a local.php file
+		// Otherwise you will be ok.
+		//$api_tiki		= 'pear';
+		//$api_tiki			= 'pdo';
+		$api_tiki			= 'pdo';
+		$db_tiki			= 'mysql';
+		$dbversion_tiki = '2.0';
+		$host_tiki		= 'localhost';
+		$user_tiki		= 'root';
+		$pass_tiki		= '';
+		$dbs_tiki			= 'tiki';
+		$tikidomain		= '';
+
+		/*
+		SVN Developers: Do not change any of the above.
+		Instead, create a file, called db/local.php, containing any of
+		the variables listed above that are different for your
+		development environment.  This will protect you from
+		accidentally committing your username/password to SVN!
+
+		example of db/local.php
+		<?php
+		$host_tiki   = 'myhost';
+		$user_tiki   = 'myuser';
+		$pass_tiki   = 'mypass';
+		$dbs_tiki    = 'mytiki';
+		$api_tiki    = 'adodb';
+
+		** Multi-tiki
+		**************************************
+		see http://tikiwiki.org/MultiTiki19
+
+		Setup of virtual tikis is done using setup.sh script
+		-----------------------------------------------------------
+		-> Multi-tiki trick for virtualhosting
+
+		$tikidomain variable is set to :
+		or TIKI_VIRTUAL
+			That is set in apache virtual conf : SetEnv TIKI_VIRTUAL myvirtual
+		or SERVER_NAME
+			From apache directive ServerName set for that virtualhost block
+		or HTTP_HOST
+			From the real domain name called in the browser
+			(can be ServerAlias from apache conf)
+
+		*/
+
+		if (!isset($local_php) or !is_file($local_php)) {
+			$local_php = 'db/local.php';
+		} else {
+			$local_php = preg_replace(array('/\.\./', '/^db\//'), array('',''), $local_php);
+		}
+		$tikidomain = '';
+		if (is_file('db/virtuals.inc')) {
+			if (isset($_SERVER['TIKI_VIRTUAL']) and is_file('db/'.$_SERVER['TIKI_VIRTUAL'].'/local.php')) {
+				$tikidomain = $_SERVER['TIKI_VIRTUAL'];
+			} elseif (isset($_SERVER['SERVER_NAME']) and is_file('db/'.$_SERVER['SERVER_NAME'].'/local.php')) {
+				$tikidomain = $_SERVER['SERVER_NAME'];
+			} else if (isset($_REQUEST['multi']) && is_file('db/'.$_REQUEST['multi'].'/local.php')) {
+				$tikidomain = $_REQUEST['multi'];
+			} elseif (isset($_SERVER['HTTP_HOST'])) {
+				if (is_file('db/'.$_SERVER['HTTP_HOST'].'/local.php')) {
+					$tikidomain = $_SERVER['HTTP_HOST'];
+				} else if (is_file('db/'.preg_replace('/^www\./', '', $_SERVER['HTTP_HOST']).'/local.php')) {
+					$tikidomain = preg_replace('/^www\./', '', $_SERVER['HTTP_HOST']);
+				}
+			}
+			if (!empty($tikidomain)) {
+				$local_php = "db/$tikidomain/local.php";
+			}
+		}
+		$tikidomainslash = (!empty($tikidomain) ? $tikidomain . '/' : '');
+
+		$default_api_tiki = $api_tiki;
+		$api_tiki = '';
+
+		return $local_php;
 	}
 }
 

@@ -19,6 +19,7 @@ function wikiplugin_trackercalendar_info()
 				'required' => false,
 				'default' => 0,
 				'filter' => 'int',
+				'profile_reference' => 'tracker',
 			),
 			'begin' => array(
 				'name' => tr('Begin date field'),
@@ -52,8 +53,8 @@ function wikiplugin_trackercalendar($data, $params)
 {
 	static $id = 0;
 	$headerlib = TikiLib::lib('header');
-	$headerlib->add_cssfile('lib/fullcalendar/fullcalendar.css');
-	$headerlib->add_jsfile('lib/fullcalendar/fullcalendar.min.js');
+	$headerlib->add_cssfile('vendor_extra/fullcalendar-resourceviews/fullcalendar/fullcalendar.css');
+	$headerlib->add_jsfile('vendor_extra/fullcalendar-resourceviews/fullcalendar/fullcalendar.min.js');
 
 	$jit = new JitFilter($params);
 	$definition = Tracker_Definition::get($jit->trackerId->int());

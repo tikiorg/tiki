@@ -144,6 +144,10 @@ class WikiLib extends TikiLib
 	// See http://dev.tiki.org/Bad+characters
 	public function contains_badchars($name)
 	{
+		if (preg_match('/^tiki\-(\w+)\-(\w+)$/', $name)) {
+			return true;
+		}
+
 		$badchars = $this->get_badchars();
 		$badchars = preg_quote($badchars, '/');
 		return preg_match("/[$badchars]/", $name);
@@ -186,7 +190,7 @@ class WikiLib extends TikiLib
 
 	// This method renames a wiki page
 	// If you think this is easy you are very very wrong
-	public function wiki_rename_page($oldName, $newName, $renameHomes = true)
+	public function wiki_rename_page($oldName, $newName, $renameHomes = true, $user = '')
 	{
 		global $prefs, $tikilib;
 		// if page already exists, stop here
@@ -241,10 +245,7 @@ class WikiLib extends TikiLib
 				//$data=addslashes(str_replace($oldName,$newName,$info['data']));
 				$data = $info['data'];
 			} elseif ($type == 'forum post' || substr($type, -7) == 'comment') {
-				include_once ('lib/comments/commentslib.php');
-				global $dbTiki;
-				$commentslib = new Comments($dbTiki);
-				$comment_info = $commentslib->get_comment($objectId);
+				$comment_info = TikiLib::lib('comments')->get_comment($objectId);
 				$data = $comment_info['data'];
 			}
 
@@ -316,7 +317,7 @@ class WikiLib extends TikiLib
 		$query = 'update `tiki_objects` set `itemId`=?,`name`=?,`href`=? where `itemId`=? and `type`=?';
 		$this->query($query, array( $newName, $newName, $newcathref, $oldName, 'wiki page'));
 
-		$this->rename_object('wiki page', $oldName, $newName);
+		$this->rename_object('wiki page', $oldName, $newName, $user);
 
 		// update categories if new name has a category default
 		$categlib = TikiLib::lib('categ');
@@ -496,15 +497,15 @@ class WikiLib extends TikiLib
 	{
 		global $prefs;
 
-		$path = $this->getOne("select `path` from `tiki_wiki_attachments` where `attId`=$attId");
+		$path = $this->getOne("select `path` from `tiki_wiki_attachments` where `attId`=?", array($attId));
 
 		/* carefull a same file can be attached in different page */
-		if ($path && $this->getOne("select count(*) from `tiki_wiki_attachments` where `path`='$path'") <= 1) {
+		if ($path && $this->getOne("select count(*) from `tiki_wiki_attachments` where `path`=?", array($path)) <= 1) {
 			@unlink($prefs['w_use_dir'] . $path);
 		}
 
-		$query = "delete from `tiki_wiki_attachments` where `attId`='$attId'";
-		$result = $this->query($query);
+		$query = "delete from `tiki_wiki_attachments` where `attId`=?";
+		$result = $this->query($query, array($attId));
 		if ($prefs['feature_actionlog'] == 'y') {
 			global $logslib; include_once('lib/logs/logslib.php');
 			$logslib->add_action('Removed', $attId, 'wiki page attachment');
@@ -524,6 +525,7 @@ class WikiLib extends TikiLib
 		if ($prefs['feature_score'] == 'y') {
 			$this->score_event($user, 'wiki_attach_file');
 		}
+		$attId = 0;
 		if ($prefs['feature_user_watches'] = 'y') {
 			include_once('lib/notifications/notificationemaillib.php');
 			$query = 'select `attId` from `tiki_wiki_attachments` where `page`=? and `filename`=? and `created`=? and `user`=?';
@@ -536,8 +538,9 @@ class WikiLib extends TikiLib
 				$query = 'select `attId` from `tiki_wiki_attachments` where `page`=? and `filename`=? and `created`=? and `user`=?';
 				$attId = $this->getOne($query, array($page, $name, $now, $user));
 			}
-			$logslib->add_action('Created', $attId, 'wiki page attachment');
+			$logslib->add_action('Created', $attId, 'wiki page attachment', '', $user);
 		}
+		return $attId;
 	}
 
 	public function get_wiki_attach_file($page, $name, $type, $size)
@@ -1000,21 +1003,34 @@ class WikiLib extends TikiLib
 
 		if ($with_help) {
 			global $cachelib, $prefs;
-			$cachetag = 'plugindesc' . $this->get_language() . $area_id . '_js=' . $prefs['javascript_enabled'];
+			$commonKey = '{{{area-id}}}';
+			$cachetag = 'plugindesc' . $this->get_language() . '_js=' . $prefs['javascript_enabled'];
 			if (! $plugins = $cachelib->getSerialized($cachetag) ) {
 				$list = $parserlib->plugin_get_list();
 
 				$plugins = array();
 				foreach ($list as $name) {
-					$pinfo['help'] = $this->get_plugin_description($name, $enabled, $area_id);
+					$pinfo['help'] = $this->get_plugin_description($name, $enabled, $commonKey);
 					$pinfo['name'] = TikiLib::strtoupper($name);
 
 					if ( $enabled ) {
+						$info = $parserlib->plugin_info($name);
+						$pinfo['title'] = $info['name'];
+
 						$plugins[] = $pinfo;
 					}
 				}
+				usort($plugins, function($ar1, $ar2){
+					return strcasecmp($ar1['title'], $ar2['title']);		// sort by translated name
+				});
 				$cachelib->cacheItem($cachetag, serialize($plugins));
 			}
+			array_walk_recursive(
+				$plugins,
+				function (& $item) use ($commonKey, $area_id) {
+					$item = str_replace($commonKey, $area_id, $item);
+				}
+			);
 			return $plugins;
 		} else {
 			// Only used by PluginManager ... what is that anyway?

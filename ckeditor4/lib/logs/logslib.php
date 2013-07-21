@@ -142,6 +142,10 @@ class LogsLib extends TikiLib
 	{
 		global $user, $prefs;
 
+		if (is_array($param)) {
+			$param = http_build_query($param, '', '&');
+		}
+
 		if ($objectType == 'wiki page' && $action != 'Viewed') {
 			$logObject = true; // to have the tiki_my_edit, history and mod-last_modif_pages
 		} else {
@@ -201,7 +205,11 @@ class LogsLib extends TikiLib
 			'proxy_pass'
 		);
 		if ( $logObject ) {
-			$param = substr($param, 0, '200');
+			if (function_exists('mb_strcut')) {
+				$param = mb_strcut($param, 0, 200);
+			} else {
+				$param = substr($param, 0, 200);
+			}
 			if ($logCateg && count($categs) > 0) {
 				foreach ($categs as $categ) {
 					$query = "insert into `tiki_actionlog` " .
@@ -320,10 +328,10 @@ class LogsLib extends TikiLib
 	{
 		$actionlogconf = array();
 		$query = "select * from `tiki_actionlog_conf`" .
-						" where `objectType` like '$type' and `action` like '$action'" .
+						" where `objectType` like ? and `action` like ?" .
 						" order by `objectType` desc, `action` asc"
 						;
-		$result = $this->query($query, array());
+		$result = $this->query($query, array($type, $action));
 
 		while ($res = $result->fetchRow()) {
 			if ( $res['action'] == '%' ) {
@@ -1528,8 +1536,7 @@ class LogsLib extends TikiLib
 					}
 
 					if (!isset($forumNames)) {
-						global $commentslib; include_once('lib/comments/commentslib.php');
-						$objects = $commentslib->list_forums(0, -1, 'name_asc', '');
+						$objects = TikiLib::lib('comments')->list_forums(0, -1, 'name_asc', '');
 						$forumNames = array();
 						foreach ($objects['data'] as $object) {
 							$forumNames[$object['forumId']] = $object['name'];
@@ -1720,6 +1727,73 @@ class LogsLib extends TikiLib
 		$ret = $this->get_more_info($ret);
 
 		return $ret;
+	}
+
+	function get_log_count($objectType, $action)
+	{
+		$query = "SELECT m.user,m.object,m.action
+			FROM tiki_actionlog AS m
+			INNER JOIN (
+			  SELECT MAX(i.lastModif) lastModif, i.user
+			  FROM tiki_actionlog i
+			  where objectType = ?
+			  GROUP BY i.user, i.object
+			) AS j ON (j.lastModif = m.lastModif AND j.user = m.user)";
+		return $this->fetchAll($query, array($objectType));
+	}
+
+	function get_bigblue_login_time($logins, $startDate, $endDate, $actions)
+	{
+		if ($endDate > $this->now) {
+			$endDate = $this->now;
+		}
+			$logTimes = array();
+
+			foreach ($logins as $login) {
+				if ($login['objectType'] == 'bigbluebutton') {
+					if ($login['action'] == 'Joined Room') {
+						if (!isset($logTimes[$login['user']][$login['object']]['starttime'])) {
+							$logTimes[$login['user']][$login['object']]['starttime'] = $login['lastModif'];
+						}
+					}
+
+					if ($login['action'] == 'Left Room') {
+						if (isset($logTimes[$login['user']][$login['object']]['starttime'])) {
+							$logTimes[$login['user']][$login['object']]['total'][] = $login['lastModif'] - $logTimes[$login['user']][$login['object']]['starttime'];
+							unset($logTimes[$login['user']][$login['object']]['starttime']);
+						}
+					}
+				}
+			}
+
+		foreach ($logTimes as $user=>$object) {
+			foreach ($object as $room=>$times) {
+				foreach ($times['total'] as $key => $time) {
+					$nbMin = floor($time/60);
+					$nbHour = floor($nbMin/60);
+					$nbDay = floor($nbHour/24);
+					$log[$user][$room][$key] = floor($time/60);
+				}
+			}
+		}
+		return $log;
+	}
+
+	function export_bbb($actionlogs)
+	{
+		foreach ($actionlogs as $user=>$room) {
+			foreach ($room as $room_name=>$values) {
+				foreach ($values as $value) {
+					$csv.= '"' . $user
+					. '","' . $room_name
+					. '","' . $value
+					.'","'
+					;
+					$csv .= "\"\n";
+				}
+			}
+		}
+		return $csv;
 	}
 }
 

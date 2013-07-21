@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2013 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -9,7 +9,7 @@ function prefs_feature_list($partial = false)
 {
 
 	global $prefs;
-	
+
 	$catree = array('-1' => tra('None'));
 
 	if (! $partial && $prefs['feature_categories'] == 'y') {
@@ -36,10 +36,11 @@ function prefs_feature_list($partial = false)
 				'feature_blogs',
 			),
 			'default' => '-1',
+			'profile_reference' => 'category',
 		),
 		'feature_areas' => array(
 			'name' => tra('Areas'),
-			'warning' => tra('this feature most likely will be replaced - please contact the developer mailing list if you have any question'),
+			'warning' => tra('Experimental'),
 			'description' => tra('Binding categories and perspectives to each other'),
 			'type' => 'flag',
 			'help' => 'Areas',
@@ -99,7 +100,7 @@ function prefs_feature_list($partial = false)
 			'tags' => array('experimental'),
 			'type' => 'flag',
 			'default' => 'n',
-		),	
+		),
 		'feature_trackers' => array(
 			'name' => tra('Trackers'),
 			'description' => tra('Database & form generator'),
@@ -147,7 +148,7 @@ function prefs_feature_list($partial = false)
 			'default' => 'y',
 			'tags' => array('basic'),
 			'admin' => 'fgal',
-			'module' => 'file',			
+			'module' => 'file',
 			'view' => 'tiki-list_file_gallery.php',
 			'permission' => array(
 				'permType' => 'file galleries',
@@ -180,7 +181,7 @@ function prefs_feature_list($partial = false)
 			'default' => 'n',
 			'tags' => array('basic'),
 			'admin' => 'articles',
-			'module' => 'article',			
+			'module' => 'article',
 			'view' => 'tiki-list_articles.php',
 			'permission' => array(
 				'textFilter' => 'article',
@@ -206,7 +207,7 @@ function prefs_feature_list($partial = false)
 			'help' => 'Newsletters',
 			'type' => 'flag',
 			'default' => 'n',
-			'module' => 'newsletter',			
+			'module' => 'newsletter',
 			'tags' => array('basic'),
 			'view' => 'tiki-newsletters.php',
 			'permission' => array(
@@ -221,7 +222,7 @@ function prefs_feature_list($partial = false)
 			'default' => 'n',
 			'tags' => array('basic'),
 			'admin' => 'calendar',
-			'module' => 'calendar',			
+			'module' => 'calendar',
 			'view' => 'tiki-calendar.php?viewlist=list',
 			'permission' => array(
 				'textFilter' => 'calendar',
@@ -236,7 +237,7 @@ function prefs_feature_list($partial = false)
 			'default' => 'n',
 			'view' => 'tiki-list_banners.php',
 			'admin' => 'ads',
-			'module' => 'banner',			
+			'module' => 'banner',
 			'permission' => array(
 				'textFilter' => 'banner',
 			),
@@ -261,17 +262,27 @@ function prefs_feature_list($partial = false)
 			'type' => 'flag',
 			'default' => 'n',
 			'admin' => 'score',
-			'module' => 'score',				
+			'module' => 'score',
+		),
+		'feature_score_expday' => array(
+		  'name' => tra('Expire score older than certain days'),
+		  'description' => tra(''),
+		  'help' => 'Score',
+		  'type' => 'text',
+		  'admin' => 'score',
+		  'module' => 'score',
 		),
 		'feature_search' => array(
-			'name' => tra('Search'),
+			'name' => tra('Unified Search'),
 			'description' => tra('Enables searching for content on the website, using Tiki-managed index.'),
 			'help' => 'Search',
 			'type' => 'flag',
-			'default' => 'y',
-			'tags' => array('basic'),
+			'default' => 'n',
+			'tags' => array('advanced'),
 			'admin' => 'search',
-			'module' => 'search',			
+			'warning' => tra("Unified Search requires more server processing ressources, and that you properly set the server permissions. Also, it's recommended to set a cron job to periodically rebuild the search index."),	
+			'module' => 'search',
+			'view' => 'tiki-searchindex.php',
 			'permission' => array(
 				'textFilter' => 'search',
 			),
@@ -283,7 +294,7 @@ function prefs_feature_list($partial = false)
 			'type' => 'flag',
 			'default' => 'n',
 			'admin' => 'freetags',
-			'module' => 'tag',			
+			'module' => 'tag',
 			'view' => 'tiki-browse_freetags.php',
 			'permission' => array(
 				'permType' => 'freetags',
@@ -325,7 +336,7 @@ function prefs_feature_list($partial = false)
 			'module' => 'faq',
 			'permission' => array(
 				'textFilter' => 'faq',
-			),			
+			),
 		),
 		'feature_surveys' => array(
 			'name' => tra('Surveys'),
@@ -514,8 +525,8 @@ function prefs_feature_list($partial = false)
 			'default' => 'n',
 		),
 		'feature_jscalendar' => array(
-			'name' => tra('JS Calendar'),
-			'description' => tra('JavaScript popup date selector. Will use jQuery UI DatePicker if enabled.'),
+			'name' => tra('Date picker for date selection'),
+			'description' => tra('JavaScript popup date selector. Will use jQuery UI DatePicker.'),
 			'help' => 'JS+Calendar',
 			'type' => 'flag',
 			'default' => 'y',
@@ -606,6 +617,9 @@ function prefs_feature_list($partial = false)
 			'description' => tra('Populate wiki pages and articles by email'),
 			'help' => 'Mail-in',
 			'keywords' => 'inbound email',
+			'dependencies' => array(
+				'feature_wiki',
+				),
 			'type' => 'flag',
 			'default' => 'n',
 			'view' => 'tiki-admin_mailin.php',
@@ -622,7 +636,7 @@ function prefs_feature_list($partial = false)
 			'description' => tra('Print Indexed'),
 			'help' => 'Print+Indexed',
 			'type' => 'flag',
-			'default' => 'n', 
+			'default' => 'n',
 		),
 		'feature_sheet' => array(
 			'name' => tra('Spreadsheet'),
@@ -644,7 +658,7 @@ function prefs_feature_list($partial = false)
 			'type' => 'flag',
 			'keywords' => 'slide slides presentation',
 			'default' => 'n',
-			'tags' => array('basic'),			
+			'tags' => array('basic'),
 		),
 		'feature_slideshow_pdfexport' => array(
 			'name' => tra('Slideshow (jQuery.s5) PDF Export'),
@@ -653,7 +667,7 @@ function prefs_feature_list($partial = false)
 			'type' => 'flag',
 			'keywords' => 'slide slides presentation pdf',
 			'default' => 'n',
-			'tags' => array('experimental'),			
+			'tags' => array('experimental'),
 		),
 		'feature_invoice' => array(
 			'name' => tra('Invoice'),
@@ -663,7 +677,7 @@ function prefs_feature_list($partial = false)
 			'keywords' => 'invoice contractor invoicing',
 			'default' => 'n',
 			'view' => 'tiki-list_invoices.php',
-			'tags' => array('experimental'),			
+			'tags' => array('experimental'),
 		),
 		'feature_wysiwyg' => array(
 			'name' => tra('Wysiwyg editor'),
@@ -675,6 +689,8 @@ function prefs_feature_list($partial = false)
 				'feature_ajax',
 				'ajax_autosave',
 				'feature_wiki_paragraph_formatting',
+				'feature_wiki_paragraph_formatting_add_br',
+				'wysiwyg_wiki_parsed',
 			),
 			'tags' => array('experimental'),
 		),
@@ -705,13 +721,13 @@ function prefs_feature_list($partial = false)
 			'help' => 'Friendship+Network',
 			'type' => 'flag',
 			'default' => 'n',
-		),	
+		),
 		'feature_banning' => array(
 			'name' => tra('Banning system'),
 			'description' => tra('Banning system'),
 			'help' => 'Banning',
 			'type' => 'flag',
-			'keywords' => 'ban kick exclude deny',			
+			'keywords' => 'ban kick exclude deny',
 			'hint' => tra('Deny access to specific users based on username, IP, and date/time range.'),
 			'default' => 'n',
 			'tags' => array('basic'),
@@ -765,7 +781,7 @@ function prefs_feature_list($partial = false)
 			'type' => 'flag',
 			'default' => 'n',
 			'view' => 'tiki-custom_home.php',
-			'tags' => array('advanced'),			
+			'tags' => array('advanced'),
 		),
 		'feature_mytiki' => array(
 			'name' => tra("Display 'MyTiki' in the application menu"),
@@ -816,7 +832,7 @@ function prefs_feature_list($partial = false)
 			'type' => 'flag',
 			'default' => 'n',
 			'tags' => array('basic'),
-			'view' => 'tiki-admin_notifications.php',			
+			'view' => 'tiki-admin_notifications.php',
 		),
 		'feature_group_watches' => array(
 			'name' => tra('Group Watches'),
@@ -876,7 +892,7 @@ function prefs_feature_list($partial = false)
 			'view' => 'messu-mailbox.php',
 			'permission' => array(
 				'textFilter' => 'message',
-			),			
+			),
 		),
 		'feature_userfiles' => array(
 			'name' => tra('User Files'),
@@ -936,7 +952,7 @@ function prefs_feature_list($partial = false)
 			'type' => 'flag',
 			'perspective' => false,
 			'default' => 'y',
-			'tags' => array('basic'),			
+			'tags' => array('basic'),
 		),
 		'feature_ticketlib' => array(
 			'name' => tra('Require confirmation if possible CSRF detected'),
@@ -1030,7 +1046,7 @@ function prefs_feature_list($partial = false)
 			'help' => 'User+Preferences',
 			'type' => 'flag',
 			'default' => 'n',
-			'tags' => array('basic'),			
+			'tags' => array('basic'),
 		),
 		'feature_babelfish' => array(
 			'name' => tra('Yahoo! Babel Fish Translation URLs'),
@@ -1053,7 +1069,7 @@ function prefs_feature_list($partial = false)
 			'help' => 'Smileys',
 			'type' => 'flag',
 			'default' => 'y',
-			'tags' => array('basic'),			
+			'tags' => array('basic'),
 		),
 		'feature_draw' => array(
 			'name' => tra('Draw (SVG-edit)'),
@@ -1062,9 +1078,9 @@ function prefs_feature_list($partial = false)
 			'type' => 'flag',
 			'default' => 'n',
 			'dependencies' => array(
-				'feature_file_galleries',				
+				'feature_file_galleries',
 			),
-			'tags' => array('experimental'),			
+			'tags' => array('experimental'),
 		),
 		'feature_draw_hide_buttons' => array(
 			'name' => tra('Draw (SVG-edit) Hide Buttons'),
@@ -1078,8 +1094,8 @@ function prefs_feature_list($partial = false)
 			'type' => 'textarea',
 			'default' => '',
 		),
-		'feature_draw_replace_base_image' => array(
-			'name' => tra('Replace Base Image'),
+		'feature_draw_separate_base_image' => array(
+			'name' => tra('Separate Base Image'),
 			'description' => tra('Leaves the initially edited image as a separate file and stores the drawing separately'),
 			'help' => 'Draw',
 			'dependencies' => array(
@@ -1088,7 +1104,22 @@ function prefs_feature_list($partial = false)
 			),
 			'tags' => array('experimental'),
 			'type' => 'flag',
-			'default' => 'y',
+			'default' => 'n',
+		),
+		'feature_draw_in_userfiles' => array(
+			'name' => tra('Draw in User File Gallery'),
+			'description' => tra("User's drawings are stored in their user files gallery"),
+			'help' => 'Draw',
+			'dependencies' => array(
+				'feature_draw',
+				'feature_file_galleries',
+				'feature_userfiles',
+				'feature_use_fgal_for_user_files',
+				'feature_draw_separate_base_image',
+			),
+			'tags' => array('experimental'),
+			'type' => 'flag',
+			'default' => 'n',
 		),
 		'feature_docs' => array(
 			'name' => tra('Docs (WebODF)'),
@@ -1097,9 +1128,9 @@ function prefs_feature_list($partial = false)
 			'type' => 'flag',
 			'default' => 'n',
 			'dependencies' => array(
-				'feature_file_galleries',				
+				'feature_file_galleries',
 			),
-			'tags' => array('experimental'),			
+			'tags' => array('experimental'),
 		),
 		'feature_dynamic_content' => array(
 			'name' => tra('Dynamic Content System'),
@@ -1160,7 +1191,7 @@ function prefs_feature_list($partial = false)
 			'warning' => tra('Neglected feature'),
 			'type' => 'flag',
 			'default' => 'n',
-		),	
+		),
 		'feature_antibot' => array(
 			'name' => tra('Anonymous editors must enter anti-bot code (CAPTCHA)'),
             'description' => tra('use CAPTCHA to ensure Anonymous input is from a person'),
@@ -1168,7 +1199,7 @@ function prefs_feature_list($partial = false)
 			'type' => 'flag',
 			'default' => 'y',
 			'tags' => array('basic'),
-		),	
+		),
 		'feature_wiki_protect_email' => array(
 			'name' => tra('Protect email against spam'),
             'description' => tra('protect email against spam submissions'),
@@ -1176,27 +1207,27 @@ function prefs_feature_list($partial = false)
 			'warning' => ! $partial && $prefs['feature_wysiwyg'] === 'y' ? tra('Protect email against spam currently does not operate in pages edited in WYSIWYG mode (Tiki 6.1)') : '',
 			'type' => 'flag',
 			'default' => 'y',
-		),	
+		),
 		'feature_sitead' => array(
 			'name' => tra('Activate'),
             'description' => tra('enable advertising'),
 			'type' => 'flag',
 			'default' => 'y',
-		),	
+		),
 		'feature_poll_anonymous' => array(
 			'name' => tra('Anonymous voting'),
             'description' => tra('allow Anonymous users to participate in voting'),
 			'type' => 'flag',
 			'default' => 'n',
 			'tags' => array('basic'),
-		),	
+		),
 		'feature_poll_revote' => array(
 			'name' => tra('Allow re-voting'),
             'description' => tra('permit multiple votes'),
 			'type' => 'flag',
 			'default' => 'y',
 			'tags' => array('basic'),
-		),	
+		),
 		'feature_poll_comments' => array(
 			'name' => tra('Comments for polls'),
             'description' => tra('permit commenting on Polls'),
@@ -1207,7 +1238,7 @@ function prefs_feature_list($partial = false)
 			'default' => 'n',
 			'admin' => 'comments',
 			'view' => 'tiki-list_comments.php',
-		),	
+		),
 		'feature_faq_comments' => array(
 			'name' => tra('Comments for FAQs'),
             'description' => tra('permit Commenting on FAQs'),
@@ -1217,8 +1248,8 @@ function prefs_feature_list($partial = false)
 			),
 			'default' => 'y',
 			'admin' => 'comments',
-			'view' => 'tiki-list_comments.php',			
-		),	
+			'view' => 'tiki-list_comments.php',
+		),
 		'feature_sefurl' => array(
 			'name' => tra('Search engine friendly URL'),
 			'description' => tra('If you are using Apache, you can copy _htaccess to .htaccess to get Short URLs. On IIS, copy web_config to web.config'),
@@ -1239,21 +1270,21 @@ function prefs_feature_list($partial = false)
 			'type' => 'flag',
 			'perspective' => false,
 			'default' => 'n',
-		),	
+		),
 		'feature_sefurl_title_article' => array(
 			'name' => tra('Display article title in the sefurl'),
             'description' => tra(''),
 			'type' => 'flag',
 			'perspective' => false,
-			'dependencies' => array('feature_sefurl'),				
+			'dependencies' => array('feature_sefurl'),
 			'default' =>'y',
-		),	
+		),
 		'feature_sefurl_title_blog' => array(
 			'name' => tra('Display blog title in the SEFURL'),
             'description' => tra(''),
 			'type' => 'flag',
 			'perspective' => false,
-			'dependencies' => array('feature_sefurl'),			
+			'dependencies' => array('feature_sefurl'),
 			'default' =>'y',
 		),
 		'feature_sefurl_tracker_prefixalias' => array(
@@ -1264,7 +1295,7 @@ function prefs_feature_list($partial = false)
 			'type' => 'flag',
 			'dependencies' => array('feature_sefurl', 'wiki_prefixalias_tokens'),
 			'default' =>'n',
-		),	
+		),
 		'feature_canonical_url' => array(
 			'name' => tra('Canonical URL tag'),
 			'description' => tra('Indicates to search engines which URL to use which prevents duplicate listings'),
@@ -1279,7 +1310,7 @@ function prefs_feature_list($partial = false)
 			'type' => 'flag',
 			'default' => 'n',
 			'tags' => array('basic'),
-		),	
+		),
 		'feature_perspective' => array(
 			'name' => tra('Perspectives'),
 			'description' => tra('Permits to override preferences.'),
@@ -1329,7 +1360,7 @@ function prefs_feature_list($partial = false)
 			'default' => 'n',
 			'tags' => array('basic'),
 			'admin' => 'comments',
-			'view' => 'tiki-list_comments.php',			
+			'view' => 'tiki-list_comments.php',
 		),
 		'feature_cms_templates' => array(
 			'name' => tra('Article content templates'),
@@ -1394,7 +1425,7 @@ function prefs_feature_list($partial = false)
 			'type' => 'flag',
 			'view' => 'tiki-lastchanges.php',
 			'default' => 'y',
-			'tags' => array('basic'),			
+			'tags' => array('basic'),
 		),
 		'feature_listorphanPages' => array(
 			'name' => tra('Orphan pages'),
@@ -1406,13 +1437,15 @@ function prefs_feature_list($partial = false)
 		'feature_search_fulltext' => array(
 			'name' => tra('MySQL Full-Text Search'),
 			'description' => tra('This search uses the MySQL Full-Text Search feature. The indexation is continuously updated.'),
+			'warning' => tra("InnoDB doesn't support Full-Text Search until 5.6, so if this is your case, use Unified Search."),
 			'type' => 'flag',
 			'help' => 'Search',
 			'default' => 'n',
 			'tags' => array('basic'),
 			'dbfeatures' => array('mysql_fulltext'),
 			'admin' => 'search',
-			'module' => 'search',			
+			'view' => 'tiki-searchresults.php',
+			'module' => 'search',
 			'permission' => array(
 				'textFilter' => 'search',
 			),
@@ -1512,7 +1545,7 @@ function prefs_feature_list($partial = false)
 			'default' => 'y',
 			'tags' => array('basic'),
 			'admin' => 'comments',
-			'view' => 'tiki-list_comments.php',			
+			'view' => 'tiki-list_comments.php',
 		),
 		'feature_blog_sharethis' => array(
 			'name' => tra('ShareThis buttons'),
@@ -1700,7 +1733,7 @@ function prefs_feature_list($partial = false)
             'description' => tra(''),
 			'type' => 'flag',
 			'help' => 'View+Templates',
-			'keywords' => tra('template'),			
+			'keywords' => tra('template'),
 			'perspective' => false,
 			'default' => 'n',
 		),
@@ -1709,7 +1742,7 @@ function prefs_feature_list($partial = false)
             'description' => tra(''),
 			'type' => 'flag',
 			'help' => 'Edit+Templates',
-			'keywords' => tra('template'),			
+			'keywords' => tra('template'),
 			'perspective' => false,
 			'dependencies' => array(
 				'feature_view_tpl',
@@ -1818,7 +1851,6 @@ function prefs_feature_list($partial = false)
 		'feature_endbody_code' => array(
 			'name' => tra('Custom code just before the closing </body> tag'),
             'description' => tra(''),
-			'hint' => tra('Example:') . ' ' . "{wiki}{literal}{GOOGLEANALYTICS(account=xxxx) /}{/literal}{/wiki}",
 			'type' => 'textarea',
 			'size' => '6',
 			'filter' => 'rawhtml_unsafe',
@@ -1925,7 +1957,7 @@ function prefs_feature_list($partial = false)
 				'ui-darkness' => 'ui-darkness',
 				'ui-lightness' => 'ui-lightness',
 				'vader' => 'vader',
-			), 
+			),
 			'default' => 'flick',	// theme for UI lib (see http://jqueryui.com/themeroller/ for list & demos - previously ui-darkness)
 		),
 		'feature_jquery_validation' => array(
@@ -1955,11 +1987,11 @@ function prefs_feature_list($partial = false)
             'description' => tra('Media player'),
 			'type' => 'flag',
 			'help' => 'JQuery#Media',
-			'default' => 'n',	
+			'default' => 'n',
 		),
 		'feature_tabs' => array(
 			'name' => tra('Use Tabs'),
-			'description' => tra('Makes pages shorter by splitting the content in different tabs'),			
+			'description' => tra('Makes pages shorter by splitting the content in different tabs'),
 			'type' => 'flag',
 			'default' => 'y',
 			'tags' => array('basic'),
@@ -1967,7 +1999,7 @@ function prefs_feature_list($partial = false)
 		'feature_iepngfix' => array(
 			'name' => tra('IE Image Fix'),
             'description' => tra('Correct PNG images alpha transparency in IE6 (experimental)'),
-			'tags' => array('experimental'),			
+			'tags' => array('experimental'),
 			'type' => 'flag',
 			'default' => 'n',
 		),
@@ -1993,7 +2025,7 @@ function prefs_feature_list($partial = false)
 			'name' => tra('Wiki content templates'),
             'description' => tra('Predefined content for a wiki page'),
 			'type' => 'flag',
-			'keywords' => tra('template'),			
+			'keywords' => tra('template'),
 			'help' => 'Content+Template',
 			'default' => 'n',
 			'view' => 'tiki-admin_content_templates.php',
@@ -2048,7 +2080,7 @@ function prefs_feature_list($partial = false)
 			'default' => 'n',
 			'tags' => array('basic'),
 			'admin' => 'comments',
-			'view' => 'tiki-list_comments.php',			
+			'view' => 'tiki-list_comments.php',
 		),
 		'feature_wiki_pictures' => array(
 			'name' => tra('Pictures'),
@@ -2125,7 +2157,7 @@ function prefs_feature_list($partial = false)
             'description' => tra('enable viewing the source of Wiki pages'),
 			'type' => 'flag',
 			'default' => 'y',
-			'tags' => array('basic'),			
+			'tags' => array('basic'),
 		),
 		'feature_wiki_ratings' => array(
 			'name' => tra('Rating'),
@@ -2251,7 +2283,7 @@ function prefs_feature_list($partial = false)
 			'type' => 'flag',
 			'default' => 'n',
 		),
-	
+
 		'feature_wiki_print' => array(
 			'name' => tra('Print'),
             'description' => tra('enable printing of the Wiki'),
@@ -2598,7 +2630,7 @@ function prefs_feature_list($partial = false)
 			'view' => 'tiki-admin_transitions.php',
 			'permission' => array(
 				'permType' => 'transition',
-			),			
+			),
 		),
 		'feature_watershed' => array(
 			'name' => tra('Ustream Watershed live video streaming'),
@@ -2632,7 +2664,7 @@ function prefs_feature_list($partial = false)
             'description' => tra('Enable this only if the server is behind a load balancer (or reverse proxy), this allow tiki to log the IP of the user, instead of the IP of the proxy server'),
             'type' => 'flag',
 			'default' => 'n',
-			'tags' => array('experimental'),			
+			'tags' => array('experimental'),
         ),
         'feature_accounting' => array(
 			'name' => tra('Accounting'),
@@ -2649,7 +2681,7 @@ function prefs_feature_list($partial = false)
 			'type' => 'flag',
 			'help' => 'Syntax+Highlighter',
 			'keywords' => 'Code Mirror Syntax Highlighter',
-			'default' => 'y',
+			'default' => 'n',
 		),
 		'feature_syntax_highlighter_theme' => array(
 			'name' => tra('Syntax Highlighter (CodeMirror) Theme'),
@@ -2660,16 +2692,17 @@ function prefs_feature_list($partial = false)
 				'feature_syntax_highlighter',
 			),
 			'options' => array(
-				   "default" => "default",
-					"night" => "night",
-					"monokai" => "monokai",
-					"neat" => "neat",
-					"elegant" => "elegant",
-					"cobalt" => "cobalt",
-					"eclipse" => "eclipse",
-					"rubyblue" => "rubyblue",
-					"lesser-dark" => "lesser-dark",
-					"xq-dark" => "xq-dark",
+				'default' => tra('default'),
+				'off' => tra('Off (but switchable)'),
+				"night" => "night",
+				"monokai" => "monokai",
+				"neat" => "neat",
+				"elegant" => "elegant",
+				"cobalt" => "cobalt",
+				"eclipse" => "eclipse",
+				"rubyblue" => "rubyblue",
+				"lesser-dark" => "lesser-dark",
+				"xq-dark" => "xq-dark",
 			),
 			'default' => 'default',
 		),
@@ -2712,7 +2745,7 @@ function prefs_feature_list($partial = false)
 				'permType' => 'blog',
 			),
 			'admin' => 'blogs',
-			'perspective' => false,			
+			'perspective' => false,
 		),
 		'feature_time_sheet' => array(
 			'name' => tra('Time Sheet'),
@@ -2756,6 +2789,35 @@ function prefs_feature_list($partial = false)
 				'auth_token_access',
 				'feature_file_galleries',
 			),
+		),
+		'feature_community_send_mail_join' => array(
+			'name' => tra('Send email notification to group leaders on user join'),
+			'type' => 'flag',
+			'help' => 'User+Preferences',
+			'default' => 'n',
+		),
+		'feature_community_send_mail_leave' => array(
+			'name' => tra('Send email notification to group leaders on user leave'),
+			'type' => 'flag',
+			'help' => 'User+Preferences',
+			'default' => 'n',
+		),
+		'feature_community_Strings_to_ignore' => array(
+			'name' => tra('Strings to ignore to get group basename'),
+			'type' => 'text',
+		),
+		'feature_community_String_to_append' => array(
+			'name' => tra('String to append to the group name to get Group Leaders group'),
+			'type' => 'text',
+		),
+		'feature_inline_comments' => array(
+			'name' => tra('Inline Comments'),
+			'description' => tra('Enable/disable inline comments.'),
+			'dependencies' => array(
+				'feature_wiki_comments',
+			),
+			'type' => 'flag',
+			'default' => 'n',
 		),
 	);
 }

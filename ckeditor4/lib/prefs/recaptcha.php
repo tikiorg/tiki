@@ -19,16 +19,28 @@ function prefs_recaptcha_list()
 		'recaptcha_pubkey' => array(
 			'name' => tra('Public Key'),
             'type' => 'text',
-            'description' => tra('ReCaptcha public key.'),
+            'description' => tra('ReCaptcha public key obtained after registering.'),
         	'size' => 60,
 			'default' => '',
 		),
 		'recaptcha_privkey' => array(
 			'name' => tra('Private Key'),
 			'type' => 'text',
-            'description' => tra('ReCaptcha private key.'),
+            'description' => tra('ReCaptcha private key obtained after registering.'),
 			'size' => 60,
 			'default' => '',
+		),
+		'recaptcha_theme' => array(
+			'name' => tra('ReCaptcha theme'),
+			'type' => 'list',
+			'description' => tra('Choose a theme for the ReCaptcha widget.'),
+			'options' => array(
+				'clean' => tra('Clean'),
+				'blackglass' => tra('Black Glass'),
+				'red' => tra('Red'),
+				'white' => tra('White'),
+			),
+			'default' => 'clean',
 		),
 	);
 }

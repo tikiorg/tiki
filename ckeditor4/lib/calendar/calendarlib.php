@@ -852,7 +852,7 @@ class CalendarLib extends TikiLib
 				$bindvars[] = $calendarId;
 			}
 		}
-		$cond .= " and `end` >= (unix_timestamp(now()) - ?*3600*34)";
+		$cond .= " and `end` >= (unix_timestamp(now()) - ?*3600*24)";
 		$bindvars[] = $priorDays;
 
 

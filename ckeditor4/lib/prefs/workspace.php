@@ -29,6 +29,7 @@ function prefs_workspace_list()
 			'default' => 0,
 			'perspective' => false,
 			'warning' => tr('This value is automatically managed and should not need to be modified manually.'),
+			'profile_reference' => 'category',
 		),
 	);
 }

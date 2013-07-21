@@ -31,12 +31,23 @@ class ModLib extends TikiLib
 		'bottom' => 'bottom_modules',
 	);
 
+	public $cssfiles  = array(
+		'calendar_new'	=> array (
+			'csspath'	=> 'css/calendar.css',
+			'rank'		=> 20,
+		),
+		'action_calendar'	=> array (
+			'csspath'	=> 'css/calendar.css',
+			'rank'		=> 20,
+		),
+	);
+
 	function __construct()
 	{
 		global $prefs;
 
 		if (! empty($prefs['module_zone_available_extra'])) {
-			foreach ((array) $prefs['module_zone_available_extra'] as $name) {
+			foreach (array_filter((array) $prefs['module_zone_available_extra']) as $name) {
 				$this->module_zones[$name] = $name . '_modules';
 			}
 		}
@@ -1445,5 +1456,29 @@ class ModLib extends TikiLib
 	}
 
 }
+
+/**
+ * Function made available in the template files to behave differently depending on if a zone is empty or not.
+ */
+function zone_is_empty($zoneName)
+{
+	$smarty = TikiLib::lib('smarty');
+	$moduleZones = $smarty->getTemplateVars('module_zones');
+
+	$key = $zoneName . '_modules';
+	if (empty($moduleZones[$key])) {
+		return true;
+	}
+
+	foreach ($moduleZones[$key] as $module) {
+		$data = (string) $module['data'];
+		if (! empty($data)) {
+			return false;
+		}
+	}
+
+	return true;
+}
+
 global $modlib;
 $modlib = new ModLib;

@@ -142,7 +142,6 @@ function sendForumEmailNotification(
 
 	if (count($nots)) {
 		include_once('lib/webmail/tikimaillib.php');
-		$mail = new TikiMail();
 		$smarty->assign('mail_forum', $forum_info["name"]);
 		$smarty->assign('mail_title', $title);
 		$smarty->assign('mail_date', $tikilib->now);
@@ -165,6 +164,7 @@ function sendForumEmailNotification(
 		$smarty->assign('topicId', $threadId);
 		$smarty->assign('mail_topic', $topicName);
 		foreach ($nots as $not) {
+			$mail = new TikiMail();
 			$mail->setUser($not['user']);
 			$mail_data = $smarty->fetchLang($not['language'], "mail/user_watch_forum_subject.tpl");
 			$mail->setSubject($mail_data);
@@ -377,7 +377,6 @@ function sendEmailNotification($watches, $dummy, $subjectTpl, $subjectParam, $tx
 	global $smarty, $tikilib;
 	include_once('lib/webmail/tikimaillib.php');
 	$sent = 0;
-	$mail = new TikiMail(null, $from);
 	$smarty->assign('mail_date', $tikilib->now);
 
 	$foo = parse_url($_SERVER["REQUEST_URI"]);
@@ -390,27 +389,68 @@ function sendEmailNotification($watches, $dummy, $subjectTpl, $subjectParam, $tx
 	$smarty->assign('mail_machine_raw', $tikilib->httpPrefix(true). implode('/', $parts));
 	// TODO: mail_machine_site may be required for some sef url with rewrite to sub-directory. To refine. (nkoth)
 	$smarty->assign('mail_machine_site', $tikilib->httpPrefix(true));
-
-	foreach ($watches as $watch) {
-		$smarty->assign('watchId', $watch['watchId']);
-		if ($watch['user']) {
-			$mail->setUser($watch['user']);
-		}
-		if ($subjectTpl) {
-			$mail_data = $smarty->fetchLang($watch['language'], "mail/".$subjectTpl);
-			if ($subjectParam) {
-				$mail_data = sprintf($mail_data, $subjectParam);
+		if ($dummy == 'group_lead_mail') {
+			foreach ($watches as $key=>$value) {
+				trim($subjectParam['gname']);
+				$adurl = "-Admin+-+".urlencode($subjectParam['gname'])."-";
+				$smarty->assign('mail_group', $subjectParam['gname']);
+				$smarty->assign('mail_user', $subjectParam['user']);
+				$smarty->assign('mail_real', $tikilib->get_user_preference($subjectParam['user'], 'realName', ''));
+				$pageLang = isset($subjectParam[$key]['lang']) ? $subjectParam[$key]['lang'] : '';
+				$userid = "user" . $userlib->get_user_id($value);
+				$smarty->assign('mail_remuser', $tikilib->get_user_preference($value, 'realName', ''));
+				$smarty->assign('mail_userid', $userid);
+				$smarty->assign('mail_site', $_SERVER['SERVER_NAME']);
+				$smarty->assign('admin_url', $adurl);
+				$foo = parse_url($_SERVER["REQUEST_URI"]);
+				$machine = $tikilib->httpPrefix(true) . dirname($foo["path"]);
+				if (substr($machine, -1) == '/' ) {
+					$machine = substr($machine, 0, -1);
+				}
+				$smarty->assign('mail_machine', $machine);
+				$mail = new TikiMail(null, $from);
+				if ($key) {
+					$mail->setUser($key);
+				}
+				if ($subjectTpl) {
+					$mail_data = $smarty->fetchLang($pageLang, "mail/".$subjectTpl);
+					if ($subjectParam) {
+						$mail_data = sprintf($mail_data, $subjectParam);
+					}
+					$mail_data = preg_replace('/%[sd]/', '', $mail_data);// partial cleaning if param not supply and %s in text
+					$mail->setSubject($mail_data);
+				} else {
+					$mail->setSubject($subjectParam);
+				}
+				$mail->setHtml($smarty->fetchLang($pageLang, "mail/".$txtTpl));
+				if ($mail->send(array($userlib->get_user_email($key)))) {
+					$sent++;
+				}
 			}
-			$mail_data = preg_replace('/%[sd]/', '', $mail_data);// partial cleaning if param not supply and %s in text
-			$mail->setSubject($mail_data);
 		} else {
-			$mail->setSubject($subjectParam);
+			foreach ($watches as $watch) {
+				$mail = new TikiMail(null, $from);
+
+				$smarty->assign('watchId', $watch['watchId']);
+				if ($watch['user']) {
+					$mail->setUser($watch['user']);
+				}
+				if ($subjectTpl) {
+					$mail_data = $smarty->fetchLang($watch['language'], "mail/".$subjectTpl);
+					if ($subjectParam) {
+						$mail_data = sprintf($mail_data, $subjectParam);
+					}
+					$mail_data = preg_replace('/%[sd]/', '', $mail_data);// partial cleaning if param not supply and %s in text
+					$mail->setSubject($mail_data);
+				} else {
+					$mail->setSubject($subjectParam);
+				}
+				$mail->setText($smarty->fetchLang($watch['language'], "mail/".$txtTpl));
+				if ($mail->send(array($watch['email']))) {
+					$sent++;
+				}
+			}
 		}
-		$mail->setText($smarty->fetchLang($watch['language'], "mail/".$txtTpl));
-		if ($mail->send(array($watch['email']))) {
-			$sent++;
-		}
-	}
 	return $sent;
 }
 
@@ -484,7 +524,6 @@ function sendFileGalleryEmailNotification($event, $galleryId, $galleryName, $nam
 
 	if (count($nots)) {
 		include_once('lib/webmail/tikimaillib.php');
-		$mail = new TikiMail();
 		$smarty->assign('galleryName', $galleryName);
 		$smarty->assign('galleryId', $galleryId);
 		$smarty->assign('fname', $name);
@@ -497,6 +536,7 @@ function sendFileGalleryEmailNotification($event, $galleryId, $galleryName, $nam
 		$smarty->assign('mail_machine', $machine);
 
 		foreach ($nots as $not) {
+			$mail = new TikiMail();
 			$mail->setUser($not['user']);
 			$mail_data = $smarty->fetchLang($not['language'], "mail/user_watch_file_gallery_changed_subject.tpl");
 			$mail->setSubject(sprintf($mail_data, $galleryName));
@@ -572,7 +612,6 @@ function sendCategoryEmailNotification($values)
 
 	if (count($nots)) {
 		include_once('lib/webmail/tikimaillib.php');
-		$mail = new TikiMail();
 
 		$smarty->assign('categoryId', $categoryId);
 		$smarty->assign('categoryName', $categoryName);
@@ -595,6 +634,7 @@ function sendCategoryEmailNotification($values)
 				break;
 			}
 
+			$mail = new TikiMail();
 			$nots_send[$not['user']] = true;
 			$mail->setUser($not['user']);
 
@@ -641,10 +681,17 @@ function sendStructureEmailNotification($params)
 	global $tikilib, $smarty, $prefs;
 	global $structlib; include_once('lib/structures/structlib.php');
 
+	$params['event'] = 'structure_' . $params['action'];
+
 	if ($params['action'] == 'move_up' || $params['action'] == 'move_down') {
 		$nots = $structlib->get_watches('', $params['parent_id'], false);
 	} else {
 		$nots = $structlib->get_watches('', $params['page_ref_id']);
+	}
+
+	if ($prefs['feature_daily_report_watches'] == 'y') {
+		$reportsManager = Reports_Factory::build('Reports_Manager');
+		$reportsManager->addToCache($nots, $params);
 	}
 
 	if (!empty($nots)) {

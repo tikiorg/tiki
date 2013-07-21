@@ -50,6 +50,7 @@ class KalturaLib
 	private function storedKey($key = null)
 	{
 		global $user;
+		$tikilib = TikiLib::lib('tiki');
 		$session = "kaltura_session_{$this->sessionType}_$user";
 
 		if (is_null($key)) {
@@ -158,7 +159,12 @@ class KalturaLib
 		$cachelib = TikiLib::lib('cache');
 
 		if (! $configurations = $cachelib->getSerialized(self::CONFIGURATION_LIST)) {
-			$obj = $this->_getPlayersUiConfs()->objects;
+			try {
+				$obj = $this->_getPlayersUiConfs()->objects;
+			} catch (Exception $e) {
+				TikiLib::lib('errorreport')->report($e->getMessage());
+				return array();
+			}
 			$configurations = array();
 			foreach ($obj as $o) {
 				$configurations[] = get_object_vars($o);
@@ -186,7 +192,7 @@ class KalturaLib
 			// first check if there is an existing one
 			$pager = null;
 			$filter = new KalturaUiConfFilter();
-			$filter->nameLike = 'Tiki.org Standard';
+			$filter->nameLike = 'Tiki.org Standard 2013';
 			$filter->objTypeEqual = KalturaUiConfObjType::CONTRIBUTION_WIZARD;
 			$existing = $client->uiConf->listAction($filter, $pager);
 			if (count($existing->objects) > 0) {
@@ -198,7 +204,7 @@ class KalturaLib
 
 			global $tikipath;
 			$uiConf = new KalturaUiConf();
-			$uiConf->name = 'Tiki.org Standard';
+			$uiConf->name = 'Tiki.org Standard 2013';
 			$uiConf->objType = KalturaUiConfObjType::CONTRIBUTION_WIZARD;
 			$filename = $tikipath . "lib/videogals/standardTikiKcw.xml";
 			$fh = fopen($filename, 'r');
@@ -328,7 +334,7 @@ class KalturaLib
 			$kpager->pageIndex = $page;
 			$kpager->pageSize = $page_size;
 
-			$kfilter = new KalturaMixEntryFilter();
+			$kfilter = new KalturaMediaEntryFilter();
 			$kfilter->orderBy = $sort_mode;
 			$kfilter->nameMultiLikeOr = $find;
 			$kfilter->statusIn = '-1,-2,0,1,2';

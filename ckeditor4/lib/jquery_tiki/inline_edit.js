@@ -34,10 +34,42 @@
 
 			$.post(url, parts.join('&'), 'json')
 				.success(function () {
-					$(containers).removeClass('modified').removeClass('unsaved');
+					$(containers).
+						removeClass('modified').
+						removeClass('unsaved').
+						each( function () {
+							var $input = $("input:first, select:first option:selected", this), newVal, newHtml;
+							if ($input.length) {
+								var html = $.trim($(this).data("saved_html").replace("&nbsp;", " "));
+								var oldVal = $.trim($(this).data("saved_text"));
+								if ($input.is("input[type=checkbox]")) {
+									if ($input.prop("checked")) {
+										newVal = tr("Yes");
+									} else {
+										newVal = tr("No");
+									}
+								} else if ($input.is("input[type=hidden]")) { // js datetime picker
+									newVal = $("#" + $input.attr("id") + "_dptxt").val();
+								} else if ($input.is("option")) {
+									newVal = $input.text();
+								} else {
+									newVal = $input.val();
+								}
+								if (html) {
+									newHtml = html.replace(new RegExp(oldVal.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&")), $.trim(newVal));
+								} else {
+									newHtml = $.trim(newVal);
+								}
+								if (!newHtml) {
+									newHtml = "&nbsp;";
+								}
+								$(this).removeClass("loaded").html(newHtml);
+							}
+						});
 				})
 				.error(function () {
 					$(containers).filter('.modified').addClass('unsaved');
+					$.getJSON($.service('object', 'report_error'));
 				})
 				;
 		});
@@ -48,12 +80,40 @@
 			, url = $(this).data('field-fetch-url')
 			;
 
-		$(container).addClass('loaded');
+		$(container).
+			addClass('loaded').
+			data("saved_html", $(container).html()).
+			data("saved_text", $(container).text());
 
 		if (url) {
 			$.get(url)
 				.success(function (data) {
+					var w = $(container).parent().width();	// td width
 					$(container).html(data);
+					$("input, select", container).each(function () {
+						$(this).keydown(function (e) {
+							if (e.which === 13) {
+								$(this).blur();
+								return false;
+							} else if (e.which === 9) {
+								$(this).blur();
+								if (e.shiftKey) {
+									$(this).parents("td:first").prev().find(".editable-inline:first").click();
+								} else {
+									$(this).parents("td:first").next().find(".editable-inline:first").click();
+								}
+								return false;
+							} else {
+								return true;
+							}
+						}).width(Math.min($(this).width(), w));
+					});
+					if (jqueryTiki.chosen) {
+						var $select = $("select", container);
+						if ($select.length) {
+							$select.tiki("chosen");
+						}
+					}
 				})
 				.error(function () {
 					$(container).addClass('failure');

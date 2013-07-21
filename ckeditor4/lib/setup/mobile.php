@@ -10,7 +10,7 @@ $access->check_script($_SERVER['SCRIPT_NAME'], basename(__FILE__));
 
 if ( !isset($_REQUEST['mobile_mode']) || $_REQUEST['mobile_mode'] === 'y' ) {
 
-	require_once 'lib/mobileesp/mdetect.php';
+	require_once 'vendor_extra/mobileesp/mdetect.php';
 
 	$uagent_info = new uagent_info();
 
@@ -37,22 +37,26 @@ if ( !isset($_REQUEST['mobile_mode']) || $_REQUEST['mobile_mode'] === 'y' ) {
 		$prefs['ajax_autosave'] = 'n';
 		$prefs['change_theme'] = 'n';
 		$prefs['feature_syntax_highlighter'] = 'n';
+		$prefs['jquery_ui_chosen'] = 'n';
 		$prefs['jquery_ui_selectmenu'] = 'n';
 		$prefs['fgal_show_explorer'] = 'n';
 		$prefs['feature_fixed_width'] = 'n';
+		$prefs['fgal_elfinder_feature'] = 'n';
 
+		$headerlib = TikiLib::lib('header');
 		$headerlib->add_js('function sfHover() {alert("not working?");}', 100);	// try and override the css menu func
 
 		if ($prefs['feature_shadowbox'] === 'y') {
 			$headerlib
-				->add_jsfile('lib/jquery/code.photoswipe/lib/klass.min.js')
-				->add_jsfile("lib/jquery/code.photoswipe/code.photoswipe.jquery-3.0.4.js")
-				->add_cssfile('lib/jquery/code.photoswipe/photoswipe.css');
+				->add_jsfile('vendor/jquery/photoswipe/lib/klass.min.js', 'external')
+				->add_jsfile('vendor/jquery/photoswipe/code.photoswipe.jquery-3.0.5.min.js', 'external')
+				->add_cssfile('vendor/jquery/photoswipe/photoswipe.css');
 		}
 
 		// a few requirements
 		$prefs['feature_html_head_base_tag'] = 'y';
-		$prefs['style'] = 'mobile.css'; // set in perspectives but seems to need a nudge here
+		$prefs['site_style'] = 'mobile.css'; // set in perspectives but seems to need a nudge here
+		$prefs['style'] = $prefs['site_style'];
 
 		if (!is_array($prefs['mobile_perspectives'])) {
 			$prefs['mobile_perspectives'] = unserialize($prefs['mobile_perspectives']);

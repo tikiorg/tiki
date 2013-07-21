@@ -22,6 +22,11 @@ function initThemeGenDialog() {    // closure for colorpicker code
 	var colorPickerListItem = null;		// still sort of globals really
 	var tgLivePreviews = [];		// need to know what was clicked from "inside" colorpicker
 
+
+	var getHex = function ( rgb ) {	// RGB values must be integers in the range 0-255
+		return '#' + (0x1000000 + rgb[0]*0x10000 + rgb[1]*0x100 + rgb[2]).toString(16).slice(-6);
+	};
+
 	var opts = {
 		color:'#888',
 		onBeforeShow:function () {
@@ -52,7 +57,7 @@ function initThemeGenDialog() {    // closure for colorpicker code
 				for (var t in m) {
 					for (var i = 0; i < zall.length; i++) {
 						var $el = $(zall[i]);
-						if ($el.length && $el.css(m[t]) && $.Color($el.css(m[t])).toHEX() == c) {
+						if ($el.length && $el.css(m[t]) && getHex($el.css(m[t])) == c) {
 							tgLivePreviews.push([ m[t], $el[0] ]);
 						}
 					}
@@ -102,13 +107,13 @@ function initThemeGenDialog() {    // closure for colorpicker code
 	// checkboxes to select items
 	$(".tgItems :checkbox").click(function (e, flip) {
 		if (flip) {
-			if (!$(this).attr("checked")) { // flip trickery to get trigger to toggle the right classes
+			if (!$(this).prop("checked")) { // flip trickery to get trigger to toggle the right classes
 				$(this).parent().addClass("selected");
 			} else {
 				$(this).parent().removeClass("selected");
 			}
 		} else {
-			if ($(this).attr("checked")) { // flip trickery to get trigger to toggle the right classes
+			if ($(this).prop("checked")) { // flip trickery to get trigger to toggle the right classes
 				$(this).parent().addClass("selected");
 			} else {
 				$(this).parent().removeClass("selected");
@@ -256,7 +261,7 @@ function initThemeGenDialog() {    // closure for colorpicker code
 
 //	// disable for now
 //	$("input[type=checkbox].tgLivePreview", "#tg_section_typography")
-//		.attr("checked", "")
+//		.prop("checked", "")
 //		.attr("disabled", "disabled");
 
 	$("label", "#themegenerator_container").each(function () {    // labels go 100% width in dialog

@@ -235,6 +235,21 @@ class Services_Tracker_Controller
 			);
 			$visibleBy = $input->asArray('visible_by', ',');
 			$editableBy = $input->asArray('editable_by', ',');
+
+			global $prefs;
+			if ($prefs['tracker_change_field_type'] === 'y') {
+				$type = $input->type->text();
+				if ($field['type'] !== $type) {
+					if (!isset($types[$type])) {
+						throw new Services_Exception(tr('Type does not exist'), 400);
+					}
+					$typeInfo = $types[$type]; // update typeInfo and clear out old options if changed type
+					$input->offsetSet('option', new JitFilter(array()));
+				}
+			} else {
+				$type = $field['type'];
+			}
+
 			$this->utilities->updateField(
 				$trackerId,
 				$fieldId,
@@ -252,6 +267,7 @@ class Services_Tracker_Controller
 					'isHidden' => $input->visibility->alpha(),
 					'errorMsg' => $input->error_message->text(),
 					'permName' => $permName,
+					'type' => $type,
 				)
 			);
 		}
@@ -259,7 +275,7 @@ class Services_Tracker_Controller
 		return array(
 			'field' => $field,
 			'info' => $typeInfo,
-			'options' => $this->utilities->parseOptions($field['options_array'], $typeInfo),
+			'options' => $this->utilities->parseOptions($field['options'], $typeInfo),
 			'validation_types' => array(
 				'' => tr('None'),
 				'captcha' => tr('Captcha'),
@@ -269,6 +285,7 @@ class Services_Tracker_Controller
 				'regex' => tr('Regular Expression (Pattern)'),
 				'username' => tr('User Name'),
 			),
+			'types' => $types,
 		);
 	}
 
@@ -509,6 +526,13 @@ class Services_Tracker_Controller
 
 			$id = $this->utilities->insertItem($definition, $itemData);
 
+			foreach ($definition->getFields() as $field) {
+				$handler = $definition->getFieldFactory()->getHandler($field, $itemData);
+				if (method_exists($handler, 'handleClone')) {
+					$handler->handleClone();
+				}
+			}
+
 			$itemObject = Tracker_Item::fromId($id);
 
 			$trklib = TikiLib::lib('trk');
@@ -520,7 +544,20 @@ class Services_Tracker_Controller
 					$data = $childItem->getData();
 					$data['fields'][$info['field']] = $id;
 
-					$new = $this->utilities->insertItem($childItem->getDefinition(), $data);
+					$childDefinition = $childItem->getDefinition();
+
+					// handle specific cloning actions
+
+					foreach ($childDefinition->getFields() as $field) {
+						$handler = $childDefinition->getFieldFactory()->getHandler($field, $data);
+						if (method_exists($handler, 'handleClone')) {
+							$newData = $handler->handleClone();
+							$data['fields'][$field['permName']] = $newData['value'];
+						}
+					}
+
+					$new = $this->utilities->insertItem($childDefinition, $data);
+
 				}
 			}
 
@@ -781,8 +818,6 @@ class Services_Tracker_Controller
 
 	function action_remove_item($input)
 	{
-		$processedFields = array();
-
 		$trackerId = $input->trackerId->int();
 		$definition = Tracker_Definition::get($trackerId);
 
@@ -805,6 +840,36 @@ class Services_Tracker_Controller
 		}
 
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+			$trklib = TikiLib::lib('trk');
+			foreach ($trklib->get_child_items($itemId) as $info) {
+				$childItem = Tracker_Item::fromId($info['itemId']);
+
+				if ($childItem->canRemove()) {
+					$data = $childItem->getData();
+
+					$childDefinition = $childItem->getDefinition();
+
+					// handle specific deleting actions
+					foreach ($childDefinition->getFields() as $field) {
+						$handler = $childDefinition->getFieldFactory()->getHandler($field, $data);
+						if (method_exists($handler, 'handleDelete')) {
+							$handler->handleDelete();
+						}
+					}
+
+					$this->utilities->removeItem($info['itemId']);
+				}
+			}
+
+			foreach ($definition->getFields() as $field) {
+				$itemData = $itemObject->getData();
+				$handler = $definition->getFieldFactory()->getHandler($field, $itemData);
+				if (method_exists($handler, 'handleDelete')) {
+					$handler->handleDelete();
+				}
+			}
+
 			$this->utilities->removeItem($itemId);
 			TikiLib::lib('unifiedsearch')->processUpdateQueue();
 		}
@@ -1096,6 +1161,7 @@ class Services_Tracker_Controller
 				$showCreated = $input->showCreated->int();
 				$showLastModif = $input->showLastModif->int();
 				$keepItemlinkId = $input->keepItemlinkId->int();
+				$keepCountryId = $input->keepCountryId->int();
 				$dateFormatUnixTimestamp = $input->dateFormatUnixTimestamp->int();
 
 				$encoding = $input->encoding->text();
@@ -1179,6 +1245,8 @@ class Services_Tracker_Controller
 					}
 					foreach ($row['field_values'] as $val) {
 						if ( ($keepItemlinkId) && ($val['type'] == 'r') ) {
+							$toDisplay[] = $val['value'];
+						} elseif ( ($keepCountryId) && ($val['type'] == 'y') ) {
 							$toDisplay[] = $val['value'];
 						} elseif ( ($dateFormatUnixTimestamp) && ($val['type'] == 'f') ) {
 							$toDisplay[] = $val['value'];

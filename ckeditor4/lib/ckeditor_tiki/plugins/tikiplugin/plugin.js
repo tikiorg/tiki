@@ -12,7 +12,7 @@
 (function() {
 
 
-	var protectTikiPluginsRegexp = /<(?:div|span)[^>]*syntax="([^"]*)"[\s\S]*?end tiki_plugin -->\s*?<\/(?:div|span)>/mig;
+	var protectTikiPluginsRegexp = /<(?:div|span)[^>]*data-syntax="([^"]*)"[\s\S]*?end tiki_plugin -->\s*?<\/(?:div|span)>/mig;
 
 	CKEDITOR.plugins.add( 'tikiplugin', {
 
@@ -21,7 +21,7 @@
 			var asplugin = this;
 			
 			editor.config.protectedSource.push( protectTikiPluginsRegexp );
-				
+
 			this.command = new CKEDITOR.command( editor , {
 				modes: { wysiwyg:1 },
 				exec: function(editor, data) {	// odd? elem param disappears from doubleclick
@@ -32,21 +32,31 @@
 					}
 					if (data === editor) {
 						r = sel.getRanges();
-						data = r[0].startContainer;
+						data = r[0].getEnclosedNode();
+						if (!data) {
+							data = r[0].getCommonAncestor();
+						}
 					}
-					while (!$(data.$).hasClass("tiki_plugin") && data.$.parentElement) {	// try parents?
-						data = new CKEDITOR.dom.element(data.$.parentElement);
-						if ($(data.$).hasClass("tiki_plugin")) {
+					if (!data.hasClass("tiki_plugin")) {
+						var pluginTemp = $(".tiki_plugin:first", data.$);
+						if (pluginTemp.length) {
+							data = new CKEDITOR.dom.element(pluginTemp[0]);
+						}
+					}
+					while (!data.hasClass("tiki_plugin") && data.getParent()) {	// try parents?
+						data = data.getParent();
+						if (data.hasClass("tiki_plugin")) {
 							break;
 						}
 					}
-					if (!$(data.$).hasClass("tiki_plugin")) {
+					if (!data.hasClass("tiki_plugin")) {
 						// problem here - wrong element sent in?
 						debugger;		// intentionally left in to catch occasional IE edge cases
 						return;
 					}
 					var args = {};
-					var str = $('<div/>').html(data.getAttribute("args")).text();	// decode html entities
+					var str = data.data("args");
+
 					var pairs = str.split("&");
 					for (var i = 0; i < pairs.length; i++) {
 						if (pairs[i].indexOf("=") > -1) {
@@ -54,11 +64,11 @@
 							if (val.match(/^".*"$/)) {								// strip off extra quotes
 								val = val.substring(1, val.length - 1)
 							}
-							args[pairs[i].substring(0, pairs[i].indexOf("="))] = val;
+							args[pairs[i].substring(0, pairs[i].indexOf("="))] = $('<div/>').html(val).text();	// decode html entities;
 						}
 					}
 					sel.selectElement( data );
-					popupPluginForm( editor.name, data.getAttribute("plugin"), 0, '', args, data.getAttribute("body"), '');
+					popupPluginForm( editor.name, data.data("plugin"), 0, '', args, data.data("body"), '');
 				},
 				canUndo: false
 			});
@@ -94,7 +104,7 @@
 				
 				$(".tiki_plugin", editor.document.$).each(function() {
 					var parentPlugin = new CKEDITOR.dom.element(this);
-					$(this).find("*").each(function(){
+					$(this).find("*").addBack().each(function(){
 						$(this).mousedown(function(){
 							var sel = editor.getSelection();
 							if (sel) {
@@ -114,7 +124,8 @@
 						evt.cancel();
 						evt.stop();
 						evt.data.dialog = null;
-						this.plugins.tikiplugin.command.exec(element);
+						//this.plugins.tikiplugin.command.exec(element);
+                        this.execCommand('tikiplugin', element);
 					}
 				});
 			});
@@ -133,80 +144,19 @@
 				});
 			}
 			if (jqueryTiki.autosave) {	// pref check
+				// changed for ckeditor4 - to check?
 				if (typeof editor.plugins["tikiwiki"] === "undefined") {	// also defined in tikiwiki plugin
 					this.ckToHtml = editor.dataProcessor.toHtml;		// reference to original ckeditor dataProcessor
 					editor.dataProcessor.toHtml			= function ( data, fixForBody ) { return asplugin.toHtmlFormat( editor, data, fixForBody ); };
+					this.ckToData = editor.dataProcessor.toDataFormat;
+					editor.dataProcessor.toDataFormat 	= function ( html, fixForBody ) { return asplugin.toHTMLSource( editor, html, fixForBody ); };
 				}
-				this.ckToData = editor.dataProcessor.toDataFormat;
-				editor.dataProcessor.toDataFormat 	= function ( html, fixForBody ) { return asplugin.toHTMLSource( editor, html, fixForBody ); };
 			}
 		},			// end of init()
-		
-		afterInit : function( editor ) {
-			// Register a filter to displaying placeholders after mode change. (taken from pagebreak plugin)
-	
-			var asplugin = this;
 
-			var dataProcessor = editor.dataProcessor,
-				dataFilter = dataProcessor && dataProcessor.dataFilter;
-	
-			if ( dataFilter ) {
-				dataFilter.addRules( {
-					elements : {
-						div : function( element ) {
-							return asplugin.processTikiPlugin( element, 'div', editor);
-						},
-						span : function( element ) {
-							return asplugin.processTikiPlugin( element, 'span', editor);
-						}
-					}
-				});
-			}
-		},
-	
-		requires : [ 'fakeobjects' ],
-		
-		// variation on CKEDITOR.editor.createFakeParserElement set up by fakeobject plugin
-		processTikiPlugin : function ( element, tag, editor ) {
-			var name = element.attributes && element.attributes.plugin;
-			
-			if (name) {	// a tiki plugin
-				var html;
-			
-				var writer = new CKEDITOR.htmlParser.basicWriter();
-				element.writeHtml( writer );
-				html = writer.getHtml();
-				
-				element.attributes._cke_realelement = tiki_encodeURIComponent( html );
-				element.attributes._cke_real_node_type = tag;
-				
-				element.attributes._cke_real_element_type = tag;
-				element.attributes.contenteditable = false;
-				
-				if (name === 'img') {
-					element.attributes._cke_resizable = true;
-				} else {
-					element.attributes._cke_resizable = false;
-				}
-				
-				// Set onclick for the contents
-				for ( var i = 0 ; i < element.children.length ; i++ ) {
-					if ( element.children[ i ].attributes ) {
-						element.children[ i ].attributes.contenteditable = false;
-					} else {
-						// seems to make the whole editor readonly
-						//element.children[ i ].attributes = { contenteditable: false};
-					}
-				}
-
-				return element;
-			}
-			return null;
-		},
-		
 		getPluginParent: function ( element ) {
 			while (element && element.getParent()) {
-				if (element.getAttribute('plugin')) {
+				if (element.data('plugin')) {
 					return element;
 				}
 				element = element.getParent();
@@ -217,7 +167,7 @@
 		toHTMLSource: function( editor, html, fixForBody ) {
 			// de-protect ck_protected comments
 			var output = html;
-			
+
 			output = this.ckToData.call( editor.dataProcessor, output, fixForBody );
 
 			if (typeof editor.plugins["tikiwiki"] === "undefined") {
@@ -255,7 +205,7 @@
 			var output = "";
 			var asplugin = this;
 			var orig_data = $("#editwiki").val();	// just in case
-			var isHtml = $("#allowhtml:checked").length || $("#allowhtml[type=hidden]").val();
+			var isHtml = auto_save_allowHtml(editor.element.$.form);
 
 			ajaxLoadingShow( "cke_contents_" + editor.name);
 			$("#ajaxLoading").show();		// FIXME safari/chrome refuse to show until ajax finished
@@ -280,7 +230,7 @@
 					    output = unescape(jQuery(data).find('data').text());
 					}
 					output = asplugin.ckToHtml.call(editor.dataProcessor, output, fixForBody);
-					if (output.indexOf("</body>") === -1) {
+					if (output.indexOf("</body>") === -1 && output.indexOf("<body") > -1) {
 						output += "</body>"; 	// workaround for cke 3.4 / tiki 6.0 FIXME
 					}
 				},

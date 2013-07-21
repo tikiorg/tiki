@@ -26,11 +26,11 @@ function wikiplugin_button_info()
 			),
 			'_class' => array(
 				'required' => false,
-                                'name' => tra('CSS Class'),
-                                'description' => tra('CSS class for the button'),
-                                'filter' => 'text',
-                                'default' => '',
-                        ),
+				'name' => tra('CSS Class'),
+				'description' => tra('CSS class for the button'),
+				'filter' => 'text',
+				'default' => '',
+			),
 			'_text' => array(
 				'required' => false,
 				'name' => tra('Label'),

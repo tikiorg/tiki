@@ -321,16 +321,16 @@ function wikiplugin_slider($data, $params)
 	global $tikilib, $headerlib;
 	extract($params, EXTR_SKIP);
 
-	$headerlib->add_jsfile('lib/jquery/anythingslider/js/swfobject.js');
-	$headerlib->add_jsfile('lib/jquery/anythingslider/js/jquery.anythingslider.js');
-	$headerlib->add_jsfile('lib/jquery/anythingslider/js/jquery.anythingslider.fx.js');
-	$headerlib->add_jsfile('lib/jquery/anythingslider/js/jquery.anythingslider.video.js');
-	$headerlib->add_cssfile('lib/jquery/anythingslider/css/anythingslider.css');
-	$headerlib->add_cssfile('lib/jquery/anythingslider/css/theme-construction.css');
-	$headerlib->add_cssfile('lib/jquery/anythingslider/css/theme-cs-portfolio.css');
-	$headerlib->add_cssfile('lib/jquery/anythingslider/css/theme-metallic.css');
-	$headerlib->add_cssfile('lib/jquery/anythingslider/css/theme-minimalist-round.css');
-	$headerlib->add_cssfile('lib/jquery/anythingslider/css/theme-minimalist-square.css');
+	$headerlib->add_jsfile('vendor/jquery/plugins/anythingslider/js/swfobject.js');
+	$headerlib->add_jsfile('vendor/jquery/plugins/anythingslider/js/jquery.anythingslider.js');
+	$headerlib->add_jsfile('vendor/jquery/plugins/anythingslider/js/jquery.anythingslider.fx.js');
+	$headerlib->add_jsfile('vendor/jquery/plugins/anythingslider/js/jquery.anythingslider.video.js');
+	$headerlib->add_cssfile('vendor/jquery/plugins/anythingslider/css/anythingslider.css');
+	$headerlib->add_cssfile('vendor/jquery/plugins/anythingslider/css/theme-construction.css');
+	$headerlib->add_cssfile('vendor/jquery/plugins/anythingslider/css/theme-cs-portfolio.css');
+	$headerlib->add_cssfile('vendor/jquery/plugins/anythingslider/css/theme-metallic.css');
+	$headerlib->add_cssfile('vendor/jquery/plugins/anythingslider/css/theme-minimalist-round.css');
+	$headerlib->add_cssfile('vendor/jquery/plugins/anythingslider/css/theme-minimalist-square.css');
 
 	if (isset($theme) && !empty($theme)) {
 		switch (strtolower($theme)) {
@@ -358,7 +358,7 @@ function wikiplugin_slider($data, $params)
 	$headerlib->add_jq_onready(
 		"function formatText(i, p) {
 			var possibleText = $('.tiki-slider-title').eq(i - 1).text();
-			return (possibleText ? possibleText : i);
+			return (possibleText ? possibleText : 'slide_' + i);
 		}
 
 		$('.tiki-slider').anythingSlider({
@@ -412,7 +412,6 @@ function wikiplugin_slider($data, $params)
 		});"
 	);
 
-	$titles = array();
 	if (!empty($titles)) {
 		$titles = $tikilib->parse_data($titles, array('suppress_icons' => true));
 		$titles = explode('|', $titles);
@@ -421,6 +420,7 @@ function wikiplugin_slider($data, $params)
 	$sliderData = array();
 	if (!empty($data)) {
 		$data = $tikilib->parse_data($data, array('suppress_icons' => true));
+		$data = preg_replace('/<p>\/\/\/\/\/\s*<\/p>/', '/////', $data);	// remove surrounding <p> tags on slide boundaries
 		$sliderData = explode('/////', $data);
 	}
 

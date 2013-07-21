@@ -6,8 +6,10 @@
 // $Id$
 
 //this script may only be included - so its better to die if called directly.
-global $access;
-$access->check_script($_SERVER['SCRIPT_NAME'], basename(__FILE__));
+if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) != FALSE) {
+	header('location: index.php');
+	exit;
+}
 
 /**
  * A simple class to switch between Zend_Captcha_Image and
@@ -57,7 +59,7 @@ class Captcha
 				array(
 					'privkey' => $prefs['recaptcha_privkey'],
 					'pubkey' => $prefs['recaptcha_pubkey'],
-					'theme' => 'clean'
+					'theme' => isset($prefs['recaptcha_theme']) ? $prefs['recaptcha_theme'] : 'clean',
 				)
 			);
 
@@ -80,6 +82,7 @@ class Captcha
 		} else {		// implied $type==='dumb'
 			$this->captcha = new Zend_Captcha_Dumb;
 			$this->captcha->setWordlen($prefs['captcha_wordLen']);
+			$this->captcha->setLabel(tra('Please type this word backwards'));
 			$this->type = 'dumb';
 		}
 

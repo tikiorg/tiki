@@ -24,10 +24,10 @@ class TWVersion
 		//   stable   : Represents stable releases.
 		//   unstable : Represents candidate and test/development releases.
 		//   trunk     : Represents next generation development version.
-		$this->branch 	= 'trunk';
+		$this->branch 	= 'stable';
 
 		// Set everything else, including defaults.
-		$this->version 	= '11.0svn';	// needs to have no spaces for releases
+		$this->version 	= '12.0svn';	// needs to have no spaces for releases
 		$this->star	= 'TBA';
 		$this->releases	= array();
 
@@ -71,12 +71,13 @@ class TWVersion
 				18=>'Electra',		// 7.x
 				19=>'Acubens',		// 8.x
 				20=>'Herbig Haro',	// 9.x
-				21=>'Sun'			// 10.x
+				21=>'Sun',			// 10.x
+				22=>'Vega'			// 11.x
 		);
 	}
 
-	// Returns an array of all valid versions of Tiki.
-	function tikiVersions()
+ 	// Returns an array of all valid versions of Tiki.
+ 	function tikiVersions()
 	{
 		// These are all the valid release versions of Tiki.
 		// Newest version goes at the end.
@@ -155,6 +156,8 @@ class TWVersion
 				'6.8',
 				'6.9',
 				'6.10',
+				'6.11',
+				'6.12',
 				'7.0beta1',
 				'7.0beta2',
 				'7.0RC1',
@@ -181,10 +184,17 @@ class TWVersion
 				'9.2',
 				'9.3',
 				'9.4',
+				'9.5',
+				'9.6',
 				'10.0alpha',
 				'10.0beta',
 				'10.0',
 				'10.1',
+				'10.2',
+				'10.3',
+				'10.4',
+				'11.0beta',
+				'11.0',
 			);
 	}
 

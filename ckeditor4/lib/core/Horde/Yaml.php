@@ -6,12 +6,12 @@
  * implementation (http://spyc.sourceforge.net/), and portions are
  * copyright 2005-2006 Chris Wanstrath.
  *
- * @author   Chris Wanstrath (chris@ozmm.org)
- * @author   Chuck Hagenbuch (chuck@horde.org)
- * @author   Mike Naberezny (mike@maintainable.com)
- * @license  http://opensource.org/licenses/bsd-license.php BSD
+ * @author   Chris Wanstrath <chris@ozmm.org>
+ * @author   Chuck Hagenbuch <chuck@horde.org>
+ * @author   Mike Naberezny <mike@maintainable.com>
+ * @license  http://www.horde.org/licenses/bsd BSD
  * @category Horde
- * @package  Horde_Yaml
+ * @package  Yaml
  */
 
 /**
@@ -23,7 +23,7 @@
  * that will be used for parsing.
  *
  * @category Horde
- * @package  Horde_Yaml
+ * @package  Yaml
  */
 class Horde_Yaml
 {
@@ -35,6 +35,15 @@ class Horde_Yaml
      * @var callback
      */
     public static $loadfunc = 'syck_load';
+
+    /**
+     * Callback used for alternate YAML dumper, typically exported
+     * by a faster PHP extension.  This function's first argument
+     * must accept a mixed variable to be dumped.
+     *
+     * @var callback
+     */
+    public static $dumpfunc = 'syck_dump';
 
     /**
      * Whitelist of classes that can be instantiated automatically
@@ -59,7 +68,7 @@ class Horde_Yaml
         }
 
         if (is_callable(self::$loadfunc)) {
-            $array = call_user_func(self::$loadfunc, $yaml);
+            return call_user_func(self::$loadfunc, $yaml);
             return is_array($array) ? $array : array();
         }
 
@@ -115,8 +124,7 @@ class Horde_Yaml
         }
 
         if (is_callable(self::$loadfunc)) {
-            $array = call_user_func(self::$loadfunc, stream_get_contents($stream));
-            return is_array($array) ? $array : array();
+            return call_user_func(self::$loadfunc, stream_get_contents($stream));
         }
 
         $loader = new Horde_Yaml_Loader;
@@ -139,7 +147,11 @@ class Horde_Yaml
      */
     public static function dump($value, $options = array())
     {
-        $dumper = new Horde_Yaml_Dumper;
+        if (is_callable(self::$dumpfunc)) {
+            return call_user_func(self::$dumpfunc, $value);
+        }
+
+        $dumper = new Horde_Yaml_Dumper();
         return $dumper->dump($value, $options);
     }
 

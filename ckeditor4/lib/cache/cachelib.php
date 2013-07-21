@@ -18,7 +18,7 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 
 class Cachelib
 {
-	public $implementation;
+	private $implementation;
 
 	function __construct()
 	{
@@ -29,6 +29,14 @@ class Cachelib
 		} else {
 			$this->implementation = new CacheLibFileSystem;
 		}
+	}
+
+	function replaceImplementation($implementation)
+	{
+		$old = $this->implementation;
+		$this->implementation = $implementation;
+
+		return $old;
 	}
 
 	function cacheItem($key, $data, $type='')
@@ -70,7 +78,7 @@ class Cachelib
 	 */
 	function empty_cache( $dir_names = array('all'), $log_section = 'system' )
 	{
-		global $tikidomain, $logslib, $tikilib;
+		global $tikidomain, $logslib, $tikilib, $prefs;
 
 		if (!is_array($dir_names)) {
 			$dir_names = array($dir_names);
@@ -80,7 +88,17 @@ class Cachelib
 			$this->erase_dir_content("temp/public/$tikidomain");
 			$this->erase_dir_content("temp/cache/$tikidomain");
 			$this->erase_dir_content("modules/cache/$tikidomain");
+
+//***************** bugfix: deleting banner*.* files
+                        $banner=glob("temp/banner*.*");
+			array_map('unlink',$banner);
+
+			$banner=glob("temp/TMPIMG*");
+			array_map('unlink',$banner);
+//*****************
+
 			$this->flush_opcode_cache();
+			$prefs = $this->flush_memcache();
 			$this->invalidate('global_preferences');
 			if (is_object($logslib)) {
 				$logslib->add_log($log_section, 'erased all cache content');
@@ -95,6 +113,10 @@ class Cachelib
 		}
 		if (in_array('temp_cache', $dir_names)) {
 			$this->erase_dir_content("temp/cache/$tikidomain");
+			// Next case is needed to clean also cached data created through mod PluginR
+			if ($prefs['wikiplugin_rr'] == 'y' OR $prefs['wikiplugin_r'] == 'y') {
+				$this->erase_dir_content("temp/cache/$tikidomain/R_*/");
+			}
 			if (is_object($logslib)) {
 				$logslib->add_log($log_section, 'erased temp/cache content');
 			}
@@ -186,10 +208,29 @@ class Cachelib
 		}
 	}
 
+	/**
+	 * Flush memcache if endabled
+	 *
+	 * @return void
+	 */
+	function flush_memcache()
+	{
+		global $prefs;
+
+		if (isset($prefs['memcache_enabled']) && $prefs['memcache_enabled'] == 'y') {
+			$memcachelib = TikiLib::lib("memcache");
+			if ($memcachelib->isEnabled()) {
+				$memcachelib->flush();
+			}
+		}
+		return;
+	}
+
 	function erase_dir_content($path)
 	{
-		global $tikidomain;
+		global $tikidomain, $prefs;
 
+		$path = rtrim($path, '/');
 		if (!$path or !is_dir($path)) return 0;
 		if ($dir = opendir($path)) {
 			// If using multiple Tikis but flushing cache on default install...
@@ -199,9 +240,17 @@ class Cachelib
 				$virtuals = false;
 			}
 
+			// Next case is needed to clean also cached data created through mod PluginR
+			if ((isset($prefs['wikiplugin_rr']) && $prefs['wikiplugin_rr'] == 'y') ||
+				(isset($prefs['wikiplugin_r']) && $prefs['wikiplugin_r'] == 'y')) {
+				$extracheck = '.RData';
+			} else {
+				$extracheck = '';
+			}
 			while (false !== ($file = readdir($dir))) {
 				if (
-							substr($file, 0, 1) == "." or
+							// .RData case needed to clean also cached data created through mod PluginR
+							( substr($file, 0, 1) == "." &&	$file != $extracheck ) or
 							$file == 'CVS' or
 							$file == '.svn' or
 							$file == "index.php" or
@@ -213,7 +262,7 @@ class Cachelib
 
 				if (is_dir($path . "/" . $file)) {
 					$this->erase_dir_content($path . "/" . $file);
-					rmdir($path . "/" . $file);
+					@rmdir($path . "/" . $file);	// dir won't be empty if there are multitiki dirs inside
 				} else {
 					unlink($path . "/" . $file);
 				}
@@ -359,6 +408,34 @@ class CacheLibMemcache
 	function empty_type_cache( $type )
 	{
 		return TikiLib::lib("memcache")->flush();
+	}
+}
+
+class CacheLibNoCache
+{
+	function cacheItem($key, $data, $type='')
+	{
+		return false;
+	}
+
+	function isCached($key, $type='')
+	{
+		return false;
+	}
+
+	function getCached($key, $type='', $lastModif = false)
+	{
+		return false;
+	}
+
+	function invalidate($key, $type='')
+	{
+		return false;
+	}
+
+	function empty_type_cache( $type )
+	{
+		return false;
 	}
 }
 

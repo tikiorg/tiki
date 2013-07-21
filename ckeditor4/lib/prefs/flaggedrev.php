@@ -22,6 +22,7 @@ function prefs_flaggedrev_list()
 			'type' => 'text',
 			'filter' => 'int',
 			'separator' => ';',
+			'profile_reference' => 'category',
 			'dependencies' => array(
 				'feature_categories',
 			),

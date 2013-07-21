@@ -5,6 +5,13 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
+// File name: TextLink.php
+// Required path: /lib/core/Feed
+//
+// Programmer: Robert Plummer
+//
+// Purpose: Adds TextLink UI to page.  Makes it so that sentences wrapped in a textlink are distinguished from the rest of the text in a page for the end user
+
 Class Feed_TextLink extends Feed_Abstract
 {
 	public $type = 'textlink';
