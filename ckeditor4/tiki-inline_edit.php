@@ -1,5 +1,4 @@
 <?php
-
 /**
  * @package tikiwiki
  */
@@ -7,14 +6,14 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: tiki-accounting.php 44444 2013-01-05 21:24:24Z changi67 $
+// $Id$
 
 
-// $section = 'accounting';
+$section = 'wiki page';
 require_once ('tiki-setup.php');
+require_once('lib/ckeditor_tiki/wysiwyglib.php');
 
 if ($prefs['feature_wysiwyg_inline'] == 'y') {
-	include_once('lib/ckeditor_tiki/wysiwyglib.php');
 
 	if ($_SESSION['edit_wysiwyg_inline'] === 'y') {
 		$_SESSION['edit_wysiwyg_inline'] = 'n';
