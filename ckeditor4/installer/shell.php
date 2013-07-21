@@ -52,6 +52,7 @@ $installer = new Installer;
 if ( $_SERVER['argc'] == 2 && $_SERVER['argv'][1] == 'install' )
 	$installer->cleanInstall();
 else {
+	require_once 'tiki-setup.php';
 	$installer->update();
 
 	if (count($installer->installed)) {
@@ -80,11 +81,6 @@ else {
 			}
 		}
 	}
-	
-	# Clear caches, since patches often manipulate the database directly without using the functions normally available outside the installer.
-	# All caches, even though scripts and patches surely don't affect them all.
-	require_once 'lib/cache/cachelib.php';
-	$cachelib->empty_cache();
 }
 	
 # Clear caches, since patches often manipulate the database directly without using the functions normally available outside the installer.
