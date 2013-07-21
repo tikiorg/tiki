@@ -18,7 +18,7 @@ CKEDITOR.plugins.add('inlinesave',
 
 	init: function (editor) {
 
-		asplugin = this; // for closure references later
+		var asplugin = this; // for closure references later
 		this.editor = editor;
 
 		editor.ui.addButton('inlinesave', {
@@ -130,6 +130,7 @@ CKEDITOR.plugins.add('inlinesave',
 
 		if (!this.ajaxSaveIsDirty) {
 			this.changeIcon("ajaxSaveDirty.gif");
+			this.ajaxSaveIsDirty = true;
 
 			/*
 			No auto save for inline saved
@@ -147,7 +148,6 @@ CKEDITOR.plugins.add('inlinesave',
 			}
 			}
 			*/
-			this.ajaxSaveIsDirty = true;
 		}
 		return true;
 	},

@@ -13,16 +13,6 @@
 // $section = 'accounting';
 require_once ('tiki-setup.php');
 
-/*
-global $prefs;
-
-// Activate inline editor	
-if ($prefs['feature_wysiwyg_inline'] == 'y') {
-	include_once('lib/ckeditor_tiki/wysiwyglib.php');
-	$wysiwyglib->setUpInlineEditor();		// init ckeditor if default editor
-}
-*/
-
 if ($prefs['feature_wysiwyg_inline'] == 'y') {
 	include_once('lib/ckeditor_tiki/wysiwyglib.php');
 
