@@ -23,12 +23,19 @@ if ($prefs['feature_wysiwyg_inline'] == 'y') {
 }
 */
 
-if ($_SESSION['edit_wysiwyg_inline'] === 'y') {
-	$_SESSION['edit_wysiwyg_inline'] = 'n';
+if ($prefs['feature_wysiwyg_inline'] == 'y') {
 	include_once('lib/ckeditor_tiki/wysiwyglib.php');
-	$wysiwyglib->shutdownInlineEditor();
-} else {
-	$_SESSION['edit_wysiwyg_inline'] = 'y';
-}
+
+	if ($_SESSION['edit_wysiwyg_inline'] === 'y') {
+		$_SESSION['edit_wysiwyg_inline'] = 'n';
+		$wysiwyglib->shutdownInlineEditor();
+	} else {
+		$_SESSION['edit_wysiwyg_inline'] = 'y';
+		$wysiwyglib->setupInlineEditor();
+	}
+} 
+
+// Return to referrer
 header('Location: '.$_SERVER['HTTP_REFERER']);
+
 

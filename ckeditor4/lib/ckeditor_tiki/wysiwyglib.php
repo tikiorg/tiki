@@ -15,7 +15,9 @@ class WYSIWYGLib
 
 	function setupInlineEditor()
 	{
-		if( !empty($ckEditor) ) {
+		global $tikiroot, $prefs;
+
+		if( !empty(self::$ckEditor) ) {
 			// Inline editor is already initialized
 			return;
 		}
@@ -34,42 +36,29 @@ class WYSIWYGLib
 			->add_js('window.CKEDITOR.config._TikiRoot = "'.$tikiroot.'";', 1)
 			;
 
-			
 		// Inline editing config
 		$headerlib->add_js('window.CKEDITOR.inline( "page-data");', 5)
 			->add_js('window.CKEDITOR.disableAutoInline = true;', 5)
 			->add_js('$("#page-data").attr("contenteditable", true);')
-			->add_js('window.CKEDITOR.config.toolbar = [ [ "Bold", "Italic", "Underline", "-", "Table", "-", "Image", "Link", "button1", "-", "About" ] ];')
+			->add_js('window.CKEDITOR.config.toolbar = [ [ "Bold", "Italic", "Underline", "-", "Table", "-", "Image", "Link", "inlinesave" ] ];')
 			->add_js('window.CKEDITOR.config.skin = "moono";')
 		;
 		
-		return;
-		
-		// Auto save
-		$params = array();
-		$auto_save_referrer = '';
-		$full_page = true;
-		$ckstyle = "";
-		$dom_id = 'page-data';
-
-		if ($auto_save_referrer && $prefs['feature_ajax'] === 'y' &&
-			$prefs['ajax_autosave'] === 'y' && $params['autosave'] == 'y') {
-
-				$headerlib->add_js(
-					'// --- config settings for the autosave plugin ---
-window.CKEDITOR.config.ajaxAutoSaveTargetUrl = "'.$tikiroot.'tiki-auto_save.php";	// URL to post to (also used for plugin processing)
-window.CKEDITOR.config.extraPlugins += (window.CKEDITOR.config.extraPlugins ? ",autosave" : "autosave" );
-window.CKEDITOR.plugins.addExternal( "autosave", "'.$tikiroot.'lib/ckeditor_tiki/plugins/autosave/");
-window.CKEDITOR.config.ajaxAutoSaveRefreshTime = 30 ;			// RefreshTime
+		$dom_id = "page-data";
+		$headerlib->add_js(
+			'// --- config settings for the autosave plugin ---
+window.CKEDITOR.config.ajaxSaveTargetUrl = "'.$tikiroot.'tiki-auto_save.php";	// URL to post to (also used for plugin processing)
+window.CKEDITOR.config.extraPlugins += (window.CKEDITOR.config.extraPlugins ? ",inlinesave" : "inlinesave" );
+window.CKEDITOR.plugins.addExternal( "inlinesave", "'.$tikiroot.'lib/ckeditor_tiki/plugins/tikiinline/");
+window.CKEDITOR.config.ajaxSaveRefreshTime = 30 ;			// RefreshTime
 window.CKEDITOR.config.contentsLangDirection = ' . ($prefs['feature_bidi'] === 'y' ? '"rtl"' : '"ui"') . ';
-window.CKEDITOR.config.ajaxAutoSaveSensitivity = 2 ;			// Sensitivity to key strokes
-register_id("'.$dom_id.'","'.addcslashes($auto_save_referrer, '"').'");	// Register auto_save so it gets removed on submit
-ajaxLoadingShow("'.$dom_id.'");
-', 5
-					);	// before dialog tools init (10)
-		}
-			
+');
+// register_id("'.$dom_id.'","'.addcslashes(($_SERVER["HTTP_REFERER"]), '"').'");	// Register auto_save so it gets removed on submit
+// ajaxLoadingShow("'.$dom_id.'");
+// window.CKEDITOR.config.ajaxSaveSensitivity = 2 ;			// Sensitivity to key strokes
+	
 	}
+
 	function shutdownInlineEditor()
 	{
 		global $tikiroot, $prefs;
