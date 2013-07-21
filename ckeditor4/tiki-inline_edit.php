@@ -23,7 +23,10 @@ if ($prefs['feature_wysiwyg_inline'] == 'y') {
 		$_SESSION['edit_wysiwyg_inline'] = 'y';
 		$wysiwyglib->setupInlineEditor($_REQUEST['page']);
 	}
-} 
+} else {
+	$_SESSION['edit_wysiwyg_inline'] = 'n';
+	$wysiwyglib->shutdownInlineEditor();
+}
 
 // Return to referrer
 header('Location: '.$_SERVER['HTTP_REFERER']);

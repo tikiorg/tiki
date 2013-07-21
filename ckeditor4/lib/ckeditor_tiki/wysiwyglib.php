@@ -128,9 +128,10 @@ ajaxLoadingShow("'.$dom_id.'");
 		$cktools = substr($cktools, 1, strlen($cktools) - 2); // remove surrouding [ & ]
 		$cktools = str_replace(']],[[', '],"/",[', $cktools); // add new row chars - done here so as not to break existing f/ck
 
-		if (is_object(ToolbarCombos)) {
+		$ckeformattags = '';
+		// if (is_object(ToolbarCombos)) {
 			$ckeformattags = ToolbarCombos::getFormatTags('html');
-		}
+		// }
 
 		// js to initiate the editor
 		$ckoptions = '{
