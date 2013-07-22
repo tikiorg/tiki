@@ -421,6 +421,14 @@ if (!empty($multiprint_pages)) {
 		}
 	}
 
+	foreach ($listpages['data'] as & $p) {
+		if ($userlib->object_has_one_permission($p['pageName'], 'wiki page')) {
+			$p['perms_active'] = 'y';
+		} else {
+			$p['perms_active'] = 'n';
+		}
+	}
+
 	$smarty->assign_by_ref('listpages', $listpages['data']);
 	$smarty->assign_by_ref('cant', $listpages['cant']);
 	ask_ticket('list-pages');

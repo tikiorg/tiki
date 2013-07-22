@@ -161,8 +161,14 @@ function smarty_function_icon($params, $smarty)
 	}
 
 	if ( $tag == 'img' ) {
-		if ( ! isset($params['width']) ) $params['width'] = $default_width;
-		if ( ! isset($params['height']) ) $params['height'] = $default_height;
+		$dim = getimagesize($params['file']);
+
+		if ( ! isset($params['width']) ) {
+			$params['width'] = $dim[0] ? $dim[0] : $default_width;
+		}
+		if ( ! isset($params['height']) ) {
+			$params['height'] = $dim[1] ? $dim[1] : $default_height;
+		}
 	}
 
 	if ( $notag ) {
