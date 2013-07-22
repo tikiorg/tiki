@@ -3430,7 +3430,7 @@ class TikiLib extends TikiDb_Bridge
 		$categlib = TikiLib::lib('categ');
 		$category_jails = $categlib->get_jail();
 
-		if ( ! isset( $filter['andCategId'] ) && ! isset( $filter['categId'] ) && ! empty( $category_jails ) ) {
+		if ( ! isset( $filter['andCategId'] ) && ! isset( $filter['categId'] ) && empty( $filter['noCateg'] ) && ! empty( $category_jails ) ) {
 			$filter['categId'] = $category_jails;
 		}
 
@@ -6789,7 +6789,7 @@ JS;
 	public function saveEditorToolbars($new_toolbars = array(), $section='global', $action='add')
 	{
 		global $prefs;
-		$prefName = 'toolbar_' . $section . ($comments ? '_comments' : '');
+		$prefName = 'toolbar_' . $section;
 		$toolbars = explode(',', $prefs[$prefName]);
 		if ($action == 'add') {
 			foreach ($new_toolbars as $key => $value) {
