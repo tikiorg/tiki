@@ -35,7 +35,6 @@ class WYSIWYGLib
 		
 		$headerlib->add_js_config('window.CKEDITOR_BASEPATH = "'. $tikiroot . 'vendor/ckeditor/ckeditor/";')
 			->add_jsfile('vendor/ckeditor/ckeditor/ckeditor.js', 0, true)
-			// ->add_jsfile('vendor/ckeditor/ckeditor/adapters/jquery.js', 0, true)
 			->add_js('window.CKEDITOR.config._TikiRoot = "'.$tikiroot.'";', 1)
 			;
 
@@ -51,6 +50,7 @@ class WYSIWYGLib
 		$headerlib->add_js(
 			'// --- config settings for the autosave plugin ---
 window.CKEDITOR.config.ajaxSaveTargetUrl = "'.$tikiroot.'tiki-auto_save.php?page='.urlencode($pageName).'";	
+window.CKEDITOR.config.extraPlugins = "";
 window.CKEDITOR.config.extraPlugins += (window.CKEDITOR.config.extraPlugins ? ",inlinesave" : "inlinesave" );
 window.CKEDITOR.plugins.addExternal( "inlinesave", "'.$tikiroot.'lib/ckeditor_tiki/plugins/tikiinline/");
 window.CKEDITOR.config.extraPlugins += (window.CKEDITOR.config.extraPlugins ? ",inlinecancel" : "inlinecancel" );
@@ -69,6 +69,10 @@ window.CKEDITOR.config.contentsLangDirection = ' . ($prefs['feature_bidi'] === '
 		global $tikiroot, $prefs;
 		$headerlib = TikiLib::lib('header');
 		$css = '$("#page-data").attr("contenteditable", false);';
+		$css .= 'var instance = CKEDITOR.instances["page-data"];
+				if (instance != null) {
+					instance.destroy();
+				}';
 		$headerlib->add_js($css);
 		self::$ckEditor = '';
 	}
@@ -80,6 +84,8 @@ window.CKEDITOR.config.contentsLangDirection = ' . ($prefs['feature_bidi'] === '
 
 		global $tikiroot, $prefs;
 		$headerlib = TikiLib::lib('header');
+
+		$headerlib->add_js('window.CKEDITOR.config.extraPlugins = "";');
         if ($notallreadyloaded) {
 			$headerlib->add_js_config('window.CKEDITOR_BASEPATH = "'. $tikiroot . 'vendor/ckeditor/ckeditor/";')
 				//// for js debugging - copy _source from ckeditor distribution to libs/ckeditor to use

@@ -26,20 +26,11 @@ CKEDITOR.plugins.add('inlinecancel',
 				// Close the editable area
 				$("#page-data").attr("contenteditable", false);
 
-				//kill all ckeditors
-				for (k in CKEDITOR.instances) {
-					var instance = CKEDITOR.instances[k];
+				//kill inline editor
+				var instance = CKEDITOR.instances['page-data'];
+				if (instance != null) {
 					instance.destroy();
 				}
-
-				/*
-				$("#page-data").removeClass("cke_focus");
-				$("#page-data").removeClass("cke_editable");
-
-				// Hide the toolbar
-				$("#cke_page-data").css("display", 'none');
-				*/
-
 			}
 		}));
 
