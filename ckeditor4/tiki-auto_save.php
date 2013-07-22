@@ -23,7 +23,7 @@ $inputConfiguration = array( array(
 
 require_once('tiki-setup.php');
 
-if ($prefs['feature_ajax'] != 'y' || ($prefs['ajax_autosave'] != 'y')) {
+if ($prefs['feature_ajax'] != 'y' || ($prefs['ajax_autosave'] != 'y' && $prefs['feature_wysiwyg_inline'] != 'y')) {
 	return;
 }
 
@@ -71,11 +71,29 @@ if (isset($_REQUEST['editor_id'])) {
 		} else if ($_REQUEST['command'] == 'inline_save') {
 			$tikilib = TikiLib::lib('tiki');
 			$pageName = $_REQUEST['page'];
-			$edit_data = $_REQUEST['data'];
+			
+			// Check if HTML format is allowed
+			if ($prefs['feature_wysiwyg'] === 'y' && $prefs['wysiwyg_htmltowiki'] !== 'y') {
+				// Save as HTML
+				$edit_data = urldecode($_REQUEST['data']);
+				$is_html= '1';
+			} else {
+				// Convert HTML to wiki and save as wiki
+				$data = $_REQUEST['data'];
+				$edit_data = $editlib->parseToWiki(urldecode($data));
+				$is_html= null;
+			}
+			
 			$edit_comment = 'inline editor update';
 			$edit_user = $user;
 			$edit_ip = $_SERVER['REMOTE_ADDR'];
-			$res = $tikilib->update_page($pageName, $edit_data, $edit_comment, $edit_user, $edit_ip); 
+			$edit_description = null;
+			$edit_minor = 0;
+			$lang='';
+			$wysiwyg='';
+			$hash=null;
+			$saveLastModif=null;
+			$res = $tikilib->update_page($pageName, $edit_data, $edit_comment, $edit_user, $edit_ip, $edit_description, $edit_minor, $lang, $is_html, $hash, $saveLastModif, $wysiwyg); 
 		} else if ($_REQUEST['command'] == 'auto_save') {
 			include_once 'lib/ajax/autosave.php';
 			$data = $_REQUEST['data'];
