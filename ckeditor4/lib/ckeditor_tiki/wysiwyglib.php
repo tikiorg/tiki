@@ -43,14 +43,14 @@ class WYSIWYGLib
 		$headerlib->add_js('window.CKEDITOR.inline( "page-data");', 5)
 			->add_js('window.CKEDITOR.disableAutoInline = true;', 5)
 			->add_js('$("#page-data").attr("contenteditable", true);')
-			->add_js('window.CKEDITOR.config.toolbar = [ [ "Bold", "Italic", "Underline", "-", "Table", "-", "Image", "Link", "inlinesave" ] ];')
+			->add_js('window.CKEDITOR.config.toolbar = [ [ "Bold", "Italic", "Underline", "Strike", "-", "RemoveFormat", "-", "NumberedList", "BulletedList", "Outdent", "Indent", "-", "Table", "Image", "Link", "inlinesave" ] ];')
 			->add_js('window.CKEDITOR.config.skin = "moono";')
 		;
 		
 		$dom_id = "page-data";
 		$headerlib->add_js(
 			'// --- config settings for the autosave plugin ---
-window.CKEDITOR.config.ajaxSaveTargetUrl = "'.$tikiroot.'tiki-auto_save.php?page='.$pageName.'";	
+window.CKEDITOR.config.ajaxSaveTargetUrl = "'.$tikiroot.'tiki-auto_save.php?page='.urlencode($pageName).'";	
 window.CKEDITOR.config.extraPlugins += (window.CKEDITOR.config.extraPlugins ? ",inlinesave" : "inlinesave" );
 window.CKEDITOR.plugins.addExternal( "inlinesave", "'.$tikiroot.'lib/ckeditor_tiki/plugins/tikiinline/");
 window.CKEDITOR.config.ajaxSaveRefreshTime = 30 ;			// RefreshTime

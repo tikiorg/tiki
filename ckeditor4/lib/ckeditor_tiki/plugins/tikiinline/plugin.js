@@ -70,15 +70,19 @@ CKEDITOR.plugins.add('inlinesave',
 	}, // end init
 
 	doAjaxSave: function (editor) {
-//		editor.updateElement(); 		// workaround for a bug in Firefox where the textarea doesn't get updated properly
+		//		editor.updateElement(); 		// workaround for a bug in Firefox where the textarea doesn't get updated properly
 		var data = editor.getData();
 		if (this.ajaxSaveIsDirty && data != "ajax error") {
 			this.changeIcon("loadingSmall.gif");
 
+			var referrer = '';
+			if (editor.config.saveSelf != null) {
+				referrer = editor.config.saveSelf;
+			}
 			var asplugin = this;
 			jQuery.ajax({
 				url: CKEDITOR.config.ajaxSaveTargetUrl,
-				data: 'command=inline_save&referer=' + editor.config.saveSelf + '&editor_id=' + editor.name + '&data=' + tiki_encodeURIComponent(data),
+				data: 'command=inline_save&referer=' + referrer + '&editor_id=' + editor.name + '&data=' + tiki_encodeURIComponent(data),
 				type: "POST",
 				// good callback
 				success: function (data) {
