@@ -39,11 +39,12 @@ class WYSIWYGLib
 			;
 
 		// Inline editing config
+		$skin = $prefs['wysiwyg_toolbar_skin'] != 'default' ? $prefs['wysiwyg_toolbar_skin'] : 'moono';
 		$headerlib->add_js('window.CKEDITOR.inline( "page-data");', 5)
 			->add_js('window.CKEDITOR.disableAutoInline = true;', 5)
 			->add_js('$("#page-data").attr("contenteditable", true);')
 			->add_js('window.CKEDITOR.config.toolbar = [ [ "Bold", "Italic", "Underline", "Strike", "-", "RemoveFormat", "-", "NumberedList", "BulletedList", "Outdent", "Indent", "-", "Table", "Image", "Link", "-", "inlinesave", "inlinecancel" ] ];')
-			->add_js('window.CKEDITOR.config.skin = "moono";')
+			->add_js('window.CKEDITOR.config.skin = "'.$skin.'";')
 		;
 		
 		$dom_id = "page-data";
