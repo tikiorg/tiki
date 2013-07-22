@@ -77,11 +77,13 @@ if (isset($_REQUEST['editor_id'])) {
 				// Save as HTML
 				$edit_data = urldecode($_REQUEST['data']);
 				$is_html= '1';
+				$wysiwyg='y';
 			} else {
 				// Convert HTML to wiki and save as wiki
 				$data = $_REQUEST['data'];
 				$edit_data = $editlib->parseToWiki(urldecode($data));
 				$is_html= null;
+				$wysiwyg='';
 			}
 			
 			$edit_comment = 'inline editor update';
@@ -90,7 +92,6 @@ if (isset($_REQUEST['editor_id'])) {
 			$edit_description = null;
 			$edit_minor = 0;
 			$lang='';
-			$wysiwyg='';
 			$hash=null;
 			$saveLastModif=null;
 			$res = $tikilib->update_page($pageName, $edit_data, $edit_comment, $edit_user, $edit_ip, $edit_description, $edit_minor, $lang, $is_html, $hash, $saveLastModif, $wysiwyg); 
