@@ -3169,8 +3169,30 @@ class Comments extends TikiLib
 		if (!empty($errors)) {
 			return 0;
 		}
-		// Remove HTML tags and empty lines at the end of the posted comment
-		$params['comments_data'] = rtrim(strip_tags($params['comments_data']));
+
+		// Remove HTML tags except between {CODE()}...{CODE} and empty lines at the end of the posted comment
+		$line = preg_split("#(\R)#",$params['comments_data'],-1,PREG_SPLIT_DELIM_CAPTURE);
+		foreach($line as $index => $text){
+			$row = "";
+			$pos = 0;
+			do {
+					$preCODE = strpos($line[$index],"{CODE()}",$pos);
+					if ($preCODE)
+					{
+						$postCODE = strpos($line[$index],"{CODE}",$preCODE);
+						$row .= strip_tags(substr($line[$index],$pos,$preCODE - $pos - 1)).
+							substr($line[$index],$preCODE,$postCODE - $preCODE + 6);
+						$pos = $postCODE + 6;	
+					} else {
+						$row .= strip_tags(substr($line[$index],$pos));	
+						break;			
+					}
+			} while ($pos < strlen($line[$index]));
+			$line[$index] = $row;
+		}
+		$params['comments_data'] = implode("",$line);
+		$params['comments_data'] = rtrim($params['comments_data']);
+		
 		if ($tiki_p_admin_forum != 'y') {// non admin can only post normal
 			$params['comment_topictype'] = 'n';
 			if ($forum_info['topic_summary'] != 'y')
