@@ -43,7 +43,7 @@ class WYSIWYGLib
 		$headerlib->add_js('window.CKEDITOR.inline( "page-data");', 5)
 			->add_js('window.CKEDITOR.disableAutoInline = true;', 5)
 			->add_js('$("#page-data").attr("contenteditable", true);')
-			->add_js('window.CKEDITOR.config.toolbar = [ [ "Bold", "Italic", "Underline", "Strike", "-", "RemoveFormat", "-", "NumberedList", "BulletedList", "Outdent", "Indent", "-", "Table", "Image", "Link", "inlinesave" ] ];')
+			->add_js('window.CKEDITOR.config.toolbar = [ [ "Bold", "Italic", "Underline", "Strike", "-", "RemoveFormat", "-", "NumberedList", "BulletedList", "Outdent", "Indent", "-", "Table", "Image", "Link", "-", "inlinesave", "inlinecancel" ] ];')
 			->add_js('window.CKEDITOR.config.skin = "moono";')
 		;
 		
@@ -53,6 +53,8 @@ class WYSIWYGLib
 window.CKEDITOR.config.ajaxSaveTargetUrl = "'.$tikiroot.'tiki-auto_save.php?page='.urlencode($pageName).'";	
 window.CKEDITOR.config.extraPlugins += (window.CKEDITOR.config.extraPlugins ? ",inlinesave" : "inlinesave" );
 window.CKEDITOR.plugins.addExternal( "inlinesave", "'.$tikiroot.'lib/ckeditor_tiki/plugins/tikiinline/");
+window.CKEDITOR.config.extraPlugins += (window.CKEDITOR.config.extraPlugins ? ",inlinecancel" : "inlinecancel" );
+window.CKEDITOR.plugins.addExternal( "inlinecancel", "'.$tikiroot.'lib/ckeditor_tiki/plugins/inlinecancel/");
 window.CKEDITOR.config.ajaxSaveRefreshTime = 30 ;			// RefreshTime
 window.CKEDITOR.config.contentsLangDirection = ' . ($prefs['feature_bidi'] === 'y' ? '"rtl"' : '"ui"') . ';
 ');
