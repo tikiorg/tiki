@@ -39,18 +39,6 @@ CKEDITOR.plugins.add('inlinesave',
 				}
 			}));
 
-		// preload toolbar loading image
-		/*
-		var tempNode = new Image();
-		tempNode.src = this.path + "images/loadingSmall.gif";
-		*/
-		/*
-		editor.element.$.form.onsubmit = function () {
-			asplugin.onSave(editor);
-		};
-		*/
-
-		//var plugs = this.plugin;
 		editor.on('page-data', function () {
 			this.document.on('keydown', function (event) {
 				// Do not capture CTRL hotkeys.
@@ -70,7 +58,6 @@ CKEDITOR.plugins.add('inlinesave',
 	}, // end init
 
 	doAjaxSave: function (editor) {
-		//		editor.updateElement(); 		// workaround for a bug in Firefox where the textarea doesn't get updated properly
 		var data = editor.getData();
 		if (this.ajaxSaveIsDirty && data != "ajax error") {
 			this.changeIcon("loadingSmall.gif");
@@ -87,14 +74,6 @@ CKEDITOR.plugins.add('inlinesave',
 				// good callback
 				success: function (data) {
 
-					// update AJAX preview if there
-					/*
-					if (parent.window.ajaxPreviewWindow && typeof parent.window.ajaxPreviewWindow.get_new_preview === 'function') {
-						parent.window.ajaxPreviewWindow.get_new_preview();
-					} else {
-						ajax_preview(editor.name, editor.config.autoSaveSelf, true);
-					}
-					*/
 					// reset state
 					asplugin.ajaxSaveIsDirty = false;
 					asplugin.ajaxSaveCounter = 0;
@@ -135,23 +114,6 @@ CKEDITOR.plugins.add('inlinesave',
 		if (!this.ajaxSaveIsDirty) {
 			this.changeIcon("ajaxSaveDirty.gif");
 			this.ajaxSaveIsDirty = true;
-
-			/*
-			No auto save for inline saved
-			this.ajaxSaveCounter++;
-
-			if (this.ajaxSaveCounter > CKEDITOR.config.ajaxSaveSensitivity) {
-			if (!asplugin) {
-			asplugin = this;
-			setTimeout(function () {
-			asplugin.doAjaxSave(editor);
-			asplugin = null;
-			});
-
-			this.ajaxSaveIsDirty = true;
-			}
-			}
-			*/
 		}
 		return true;
 	},
