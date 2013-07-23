@@ -4435,10 +4435,8 @@ a.cke_button span.cke_icon {
 
 
 /* Inline CkEditor */
-div[contenteditable="true"]
-{
-    outline-style:solid;
-    outline-color:#ffdddd;    
+.cke_editable:hover {
+	outline: #ccc dotted 1px;
 }
 
 /* End of file */
