@@ -392,4 +392,18 @@ abstract class TikiDb
 		$versionNr = floatval($version);
 		return $versionNr;
 	}
+
+	function listTables()
+	{
+		$result = $this->query("show tables");
+		$list = array();
+
+		if ($result) {
+			while ($row = $result->fetchRow()) {
+				$list[] = reset($row);
+			}
+		}
+
+		return $list;
+	}
 }
