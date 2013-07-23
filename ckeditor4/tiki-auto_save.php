@@ -71,9 +71,10 @@ if (isset($_REQUEST['editor_id'])) {
 		} else if ($_REQUEST['command'] == 'inline_save') {
 			$tikilib = TikiLib::lib('tiki');
 			$pageName = $_REQUEST['page'];
-			
+			$info = $tikilib->get_page_info($pageName);
+
 			// Check if HTML format is allowed
-			if ($prefs['feature_wysiwyg'] === 'y' && $prefs['wysiwyg_htmltowiki'] !== 'y') {
+			if ($info['is_html']) {
 				// Save as HTML
 				$edit_data = urldecode($_REQUEST['data']);
 				$is_html= '1';
