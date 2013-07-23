@@ -68,9 +68,11 @@ window.CKEDITOR.config.contentsLangDirection = ' . ($prefs['feature_bidi'] === '
 		global $tikiroot, $prefs;
 		$headerlib = TikiLib::lib('header');
 		$js = '$("#page-data > *").attr("contenteditable", false);';
-		$js .= 'var instance = CKEDITOR.instances["page-data"];
-				if (instance != null) {
-					instance.destroy();
+		$js .= 'var instances = CKEDITOR.instances;
+				forEach(ed in instances) {
+					if (ed != null) {
+						ed.destroy();
+					}
 				}';
 		$headerlib->add_js($js);
 		self::$ckEditor = '';

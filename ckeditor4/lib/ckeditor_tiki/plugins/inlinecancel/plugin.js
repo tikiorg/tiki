@@ -26,10 +26,12 @@ CKEDITOR.plugins.add('inlinecancel',
 				// Close the editable area
 				$("#page-data").attr("contenteditable", false);
 
-				//kill inline editor
-				var instance = CKEDITOR.instances['page-data'];
-				if (instance != null) {
-					instance.destroy();
+				//kill all inline editors
+				var instances = CKEDITOR.instances;
+				forEach(ed in instances) {
+					if (ed != null) {
+						ed.destroy();
+					}
 				}
 			}
 		}));
