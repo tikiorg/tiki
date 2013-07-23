@@ -39,6 +39,14 @@ class Search_MySql_Table extends TikiDb_Table
 		}
 	}
 
+	function hasIndex($fieldName, $type)
+	{
+		$this->loadDefinition();
+
+		$indexName = $fieldName . '_' . $type;
+		return isset($this->indexes[$indexName]);
+	}
+
 	function ensureHasIndex($fieldName, $type)
 	{
 		$this->loadDefinition();
@@ -46,7 +54,7 @@ class Search_MySql_Table extends TikiDb_Table
 		$indexName = $fieldName . '_' . $type;
 
 		// Static MySQL limit on 64 indexes per table
-		if (! isset($this->indexes[$fieldName]) && count($this->indexes) < 64) {
+		if (! isset($this->indexes[$indexName]) && count($this->indexes) < 64) {
 			if ($type == 'fulltext') {
 				$this->addFullText($fieldName);
 			} elseif ($type == 'index') {

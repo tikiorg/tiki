@@ -15,6 +15,7 @@ class Search_MySql_Index implements Search_Index_Interface
 
 	function __construct(TikiDb $db, $index)
 	{
+		$this->db = $db;
 		$this->table = new Search_MySql_Table($db, $index);
 		$this->builder = new Search_MySql_QueryBuilder($db);
 	}
@@ -81,33 +82,50 @@ class Search_MySql_Index implements Search_Index_Interface
 
 	function find(Search_Query_Interface $query, $resultStart, $resultCount)
 	{
-		$order = $this->getOrderClause($query);
+		$words = $this->getWords($query->getExpr());
 
 		$condition = $this->builder->build($query->getExpr());
 		$conditions = array(
 			$this->table->expr($condition),
 		);
 
+		$scoreField = null;
 		$indexes = $this->builder->getRequiredIndexes();
 		foreach ($indexes as $index) {
 			$this->table->ensureHasIndex($index['field'], $index['type']);
+
+			if (! $scoreField && $index['type'] == 'fulltext') {
+				$scoreField = $index['field'];
+			}
 		}
 
+		$order = $this->getOrderClause($query, (bool) $scoreField);
+
+		$selectFields = $this->table->all();
+
+		if ($scoreField) {
+			$str = $this->db->qstr(implode(' ', $words));
+			$selectFields['score'] = $this->table->expr("MATCH(`$scoreField`) AGAINST ($str)");
+		}
 		$count = $this->table->fetchCount($conditions);
-		$entries = $this->table->fetchAll($this->table->all(), $conditions, $resultCount, $resultStart, $order);
+		$entries = $this->table->fetchAll($selectFields, $conditions, $resultCount, $resultStart, $order);
 
 		$resultSet = new Search_ResultSet($entries, $count, $resultStart, $resultCount);
-		$resultSet->setHighlightHelper(new Search_MySql_HighlightHelper($query->getExpr()));
+		$resultSet->setHighlightHelper(new Search_MySql_HighlightHelper($words));
 
 		return $resultSet;
 	}
 
-	private function getOrderClause($query)
+	private function getOrderClause($query, $useScore)
 	{
 		$order = $query->getSortOrder();
 
 		if ($order->getField() == Search_Query_Order::FIELD_SCORE) {
-			return null;
+			if ($useScore) {
+				return array('score' => 'DESC');
+			} else {
+				return; // No specific order
+			}
 		}
 
 		if ($order->getMode() == Search_Query_Order::MODE_NUMERIC) {
@@ -115,6 +133,22 @@ class Search_MySql_Index implements Search_Index_Interface
 		} else {
 			return $this->table->expr("`{$order->getField()}` {$order->getOrder()}");
 		}
+	}
+
+	private function getWords($expr)
+	{
+		$words = array();
+		$factory = new Search_Type_Factory_Direct;
+		$expr->walk(function ($node) use (& $words, $factory) {
+			if ($node instanceof Search_Expr_Token) {
+				$word = $node->getValue($factory)->getValue();
+				if (is_string($word)) {
+					$words[] = $word;
+				}
+			}
+		});
+
+		return $words;
 	}
 
 	function getTypeFactory()
