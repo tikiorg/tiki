@@ -35,7 +35,9 @@ CKEDITOR.plugins.add('inlinesave',
 				// button clicked or timer
 				exec: function (elem, editor, data) {
 					myplugin.ajaxSaveIsDirty = true; // force
-					return myplugin.doAjaxSave(editor);
+					var ret = myplugin.doAjaxSave(editor);
+					editor.element.$.blur();	// close editor
+					return  ret;
 				}
 			}));
 
