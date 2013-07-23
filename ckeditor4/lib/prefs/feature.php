@@ -704,6 +704,7 @@ function prefs_feature_list($partial = false)
 				'feature_wysiwyg',
 			),
 			'tags' => array('experimental'),
+			'warning' => tra('experimental'),
 		),
 		'feature_kaltura' => array(
 			'name' => tra('Kaltura Video Management'),
