@@ -13,8 +13,6 @@ CKEDITOR.plugins.add('inlinesave',
 	// declare a status flag so we know if a draft has been saved
 	ajaxSaveDraftSaved: false,
 	// shortcut to my button
-	button: null,
-	editor: null,
 
 	init: function (editor) {
 
@@ -28,7 +26,7 @@ CKEDITOR.plugins.add('inlinesave',
 
 		});
 
-		command = editor.addCommand('inlinesave', new CKEDITOR.command(editor,
+		var command = editor.addCommand('inlinesave', new CKEDITOR.command(editor,
 			{
 				modes: { wysiwyg: 1, source: 1 },
 				canUndo: false,
@@ -73,13 +71,13 @@ CKEDITOR.plugins.add('inlinesave',
 
 
 		if (this.ajaxSaveIsDirty && data != "ajax error") {
-			this.changeIcon("loadingSmall.gif");
+			this.changeIcon("loadingSmall.gif", editor);
 
 			var referrer = '';
 			if (editor.config.saveSelf != null) {
 				referrer = editor.config.saveSelf;
 			}
-			var asplugin = this;
+			var myplugin = this;
 			jQuery.ajax({
 				url: CKEDITOR.config.ajaxSaveTargetUrl,
 				data: 'command=inline_save&referer=' + referrer + '&editor_id=' + editor.name + '&data=' + tiki_encodeURIComponent(data),
@@ -88,20 +86,20 @@ CKEDITOR.plugins.add('inlinesave',
 				success: function (data) {
 
 					// reset state
-					asplugin.ajaxSaveIsDirty = false;
-					asplugin.ajaxSaveCounter = 0;
-					asplugin.ajaxSaveDraftSaved = true;
+					myplugin.ajaxSaveIsDirty = false;
+					myplugin.ajaxSaveCounter = 0;
+					myplugin.ajaxSaveDraftSaved = true;
 					// show
-					asplugin.changeIcon("tick_animated.gif");
+					myplugin.changeIcon("tick_animated.gif", editor);
 					// clear anim
 					setTimeout(function () {
-						asplugin.resetAjaxSaveTool();
+						myplugin.changeIcon("ajaxSaveClean.gif", editor);
 					}, 2000);
 
 				},
 				// bad callback - no good info in the params :(
 				error: function (req, status, error) {
-					asplugin.changeIcon("cross_animated.gif"); // just leave a cross there
+					myplugin.changeIcon("cross_animated.gif", editor); // just leave a cross there
 				}
 			});
 		}
@@ -131,38 +129,13 @@ CKEDITOR.plugins.add('inlinesave',
 		return true;
 	},
 
-	getButton: function () {
-		if (!this.button) {
-			this.button = this.editor.getCommand("inlinesave").uiItems[0];
-		}
-		return this.button;
-	},
-
-	changeIcon: function (fileName) {
-		if (this.getButton()) {
+	changeIcon: function (fileName, editor) {
+		var button = editor.getCommand("inlinesave").uiItems[0];
+		if (button) {
 			// use of jquery - must be a better "ck-way" of doing this
-			var $img = jQuery("#" + this.button._.id + " span:first");
+			var $img = $("#" + button._.id + " span:first");
 			$img.css("background-image", $img.css("background-image").replace(/[^\/]*\.gif/i, fileName));
 		}
-	},
-
-	setMessage: function (errorMessage, errorData) {
-		var message;
-
-		message = errorMessage + (errorData ? ' ' + errorData : '');
-
-		if (this.getButton()) {
-			this.button.label = message; // doesn't seem to...
-		}
-	},
-
-	resetAjaxSaveTool: function () {
-		this.changeIcon("ajaxSaveClean.gif");
-		if (this.getButton()) {
-			this.button.label = "Save";
-		}
 	}
-
-
 
 });
