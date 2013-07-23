@@ -37,7 +37,7 @@ class Search_Index_LuceneTest extends PHPUnit_Framework_TestCase
 				'description' => $typeFactory->plaintext('a description for the page'),
 				'categories' => $typeFactory->multivalue(array(1, 2, 5, 6)),
 				'allowed_groups' => $typeFactory->multivalue(array('Project Lead', 'Editor', 'Admins')),
-				'contents' => $typeFactory->plaintext('a description for the page Hello world!'),
+				'contents' => $typeFactory->plaintext('a description for the page Bonjour world!'),
 				'relations' => $typeFactory->multivalue(
 					array(
 						Search_Query_Relation::token('tiki.content.link', 'wiki page', 'About'),
@@ -58,7 +58,7 @@ class Search_Index_LuceneTest extends PHPUnit_Framework_TestCase
 
 	function testBasicSearch()
 	{
-		$positive = new Search_Query('Hello');
+		$positive = new Search_Query('Bonjour');
 		$negative = new Search_Query('NotInDocument');
 
 		$this->assertContains(array('object_type' => 'wiki page', 'object_id' => 'HomePage'), $this->stripExtra($positive->search($this->index)));
@@ -79,7 +79,7 @@ class Search_Index_LuceneTest extends PHPUnit_Framework_TestCase
 	function testFieldSpecificSearch()
 	{
 		$off = new Search_Query;
-		$off->filterContent('description', 'wiki_content');
+		$off->filterContent('description', 'title');
 		$found = new Search_Query;
 		$found->filterContent('description', 'description');
 
@@ -89,7 +89,7 @@ class Search_Index_LuceneTest extends PHPUnit_Framework_TestCase
 
 	function testWithOrCondition()
 	{
-		$positive = new Search_Query('foobar or hello');
+		$positive = new Search_Query('foobar or bonjour');
 		$negative = new Search_Query('foobar or baz');
 
 		$this->assertGreaterThan(0, count($positive->search($this->index)));
@@ -98,8 +98,8 @@ class Search_Index_LuceneTest extends PHPUnit_Framework_TestCase
 
 	function testWithNotCondition()
 	{
-		$negative = new Search_Query('not world and hello');
-		$positive = new Search_Query('not foobar and hello');
+		$negative = new Search_Query('not world and bonjour');
+		$positive = new Search_Query('not foobar and bonjour');
 
 		$this->assertEquals(0, count($negative->search($this->index)));
 		$this->assertGreaterThan(0, count($positive->search($this->index)));
@@ -148,19 +148,19 @@ class Search_Index_LuceneTest extends PHPUnit_Framework_TestCase
 
 	function testIndexProvidesHighlightHelper()
 	{
-		$query = new Search_Query('foobar or hello');
+		$query = new Search_Query('foobar or Bonjour');
 		$resultSet = $query->search($this->index);
 
 		// Manually adding the content to avoid initializing the entire formatter
 		foreach ($resultSet as & $entry) {
-			$entry['content'] = 'Hello World';
+			$entry['content'] = 'Bonjour World';
 		}
 
 		$plugin = new Search_Formatter_Plugin_WikiTemplate('{display name=highlight}');
 		$formatter = new Search_Formatter($plugin);
 		$output = $formatter->format($resultSet);
 
-		$this->assertContains('<b style="color:black;background-color:#ff66ff">Hello</b>', $output);
+		$this->assertContains('<b style="color:black;background-color:#ff66ff">Bonjour</b>', $output);
 		$this->assertNotContains('<body>', $output);
 	}
 

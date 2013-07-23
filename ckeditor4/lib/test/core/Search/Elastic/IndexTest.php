@@ -33,14 +33,14 @@ class Search_Elastic_IndexTest extends Search_Index_LuceneTest
 
 	function testIndexProvidesHighlightHelper()
 	{
-		$query = new Search_Query('foobar or hello');
+		$query = new Search_Query('foobar or bonjour');
 		$resultSet = $query->search($this->index);
 
 		$plugin = new Search_Formatter_Plugin_WikiTemplate('{display name=highlight}');
 		$formatter = new Search_Formatter($plugin);
 		$output = $formatter->format($resultSet);
 
-		$this->assertContains('<em>Hello</em>', $output);
+		$this->assertContains('<em>Bonjour</em>', $output);
 		$this->assertNotContains('<body>', $output);
 	}
 }

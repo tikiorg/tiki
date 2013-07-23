@@ -7,8 +7,8 @@
 
 class TikiDb_Table
 {
-	private $db;
-	private $tableName;
+	protected $db;
+	protected $tableName;
 
 	function __construct($db, $tableName)
 	{
@@ -392,7 +392,7 @@ class TikiDb_Table
 		return "INSERT$ignore INTO {$this->escapeIdentifier($this->tableName)} ($fieldDefinition) VALUES ($fieldPlaceholders)";
 	}
 
-	private function escapeIdentifier($identifier)
+	protected function escapeIdentifier($identifier)
 	{
 		return "`$identifier`";
 	}

@@ -1,0 +1,110 @@
+<?php
+// (c) Copyright 2002-2013 by authors of the Tiki Wiki CMS Groupware Project
+//
+// All Rights Reserved. See copyright.txt for details and a complete list of authors.
+// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+// $Id$
+
+use Search_Expr_Token as Token;
+use Search_Expr_And as AndX;
+use Search_Expr_Or as OrX;
+use Search_Expr_Not as NotX;
+use Search_Expr_Range as Range;
+use Search_Expr_Initial as Initial;
+use Search_Expr_MoreLikeThis as MoreLikeThis;
+
+class Search_MySql_QueryBuilder
+{
+	private $db;
+	private $factory;
+	private $fieldBuilder;
+
+	function __construct($db)
+	{
+		$this->db = $db;
+		$this->factory = new Search_MySql_TypeFactory;
+		$this->fieldBuilder = new Search_MySql_FieldQueryBuilder;
+	}
+
+	function build(Search_Expr_Interface $expr)
+	{
+		$query = $expr->walk($this);
+
+		return $query;
+	}
+
+	function __invoke($node, $childNodes)
+	{
+		$exception = null;
+
+		$fields = $this->getFields($node);
+
+		try {
+			if (count($fields) == 1 && $this->isFullText($node)) {
+				$query = $this->fieldBuilder->build($node, $this->factory);
+				$str = $this->db->qstr($query);
+				return "MATCH (`{$fields[0]}`) AGAINST ($str IN BOOLEAN MODE)";
+			}
+		} catch (Search_MySql_QueryException $e) {
+			// Try to build the query with the SQL logic when fulltext is not an option
+			$exception = $e;
+		}
+
+		if (count($childNodes) === 1 && ($node instanceof AndX || $node instanceof OrX)) {
+			return reset($childNodes);
+		} elseif ($node instanceof OrX) {
+			return '(' . implode(' OR ', $childNodes) . ')';
+		} elseif ($node instanceof AndX) {
+			return '(' . implode(' AND ', $childNodes) . ')';
+		} elseif ($node instanceof NotX) {
+			return 'NOT (' . reset($childNodes) . ')';
+		} elseif ($node instanceof Token) {
+			$value = $this->getQuoted($node);
+			return "`{$node->getField()}` = $value";
+		} elseif ($node instanceof Initial) {
+			$value = $this->getQuoted($node, '%');
+			return "`{$node->getField()}` LIKE $value";
+		} elseif ($node instanceof Range) {
+			$from = $this->getQuoted($node->getToken('from'));
+			$to = $this->getQuoted($node->getToken('to'));
+			return "`{$node->getField()}` BETWEEN $from AND $to";
+		} else {
+			// Throw initial exception if fallback fails
+			throw $exception ?: new Exception(tr('Feature not supported: ' . get_class($node)));
+		}
+	}
+
+	private function getFields($node)
+	{
+		$fields = array();
+		$node->walk(function ($node) use (& $fields) {
+			if (method_exists($node, 'getField')) {
+				$fields[$node->getField()] = true;
+			}
+		});
+
+		return array_keys($fields);
+	}
+
+	private function isFullText($node)
+	{
+		$fullText = true;
+		$node->walk(function ($node) use (& $fullText) {
+			if ($fullText && method_exists($node, 'getType')) {
+				$type = $node->getType();
+				if ($type != 'sortable' && $type != 'wikitext' && $type != 'plaintext' && $type != 'multivalue') {
+					$fullText = false;
+				}
+			}
+		});
+
+		return $fullText;
+	}
+	
+	private function getQuoted($node, $suffix = '')
+	{
+		$string = $node->getValue($this->factory)->getValue();
+		return $this->db->qstr($string . $suffix);
+	}
+}
+

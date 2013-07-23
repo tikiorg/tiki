@@ -327,16 +327,8 @@ class Installer extends TikiDb_Bridge
      */
     function tableExists( $tableName ) // {{{
 	{
-		$result = $this->query("show tables");
-		if ($result) {
-			$list = array();
-			while ( $row = $result->fetchRow() )
-				$list[] = reset($row);
-
-			return in_array($tableName, $list);
-		} else {
-			return false;
-		}
+		$list = $this->listTables();
+		return in_array($tableName, $list);
 	} // }}}
 
     /**

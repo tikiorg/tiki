@@ -89,6 +89,7 @@ class Search_ResultSet extends ArrayObject
 			     && $key != 'title'
 				 && ! empty($value) // Skip empty
 				 && ! is_array($value) // Skip arrays, multivalues fields are not human readable
+				 && ! preg_match('/token[a-z]{8,}/', $value)
 				 && ! preg_match('/^[\w-]+$/', $value)) { // Skip anything that looks like a single token
 					$text .= "\n$value";
 				}

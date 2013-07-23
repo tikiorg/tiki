@@ -32,20 +32,16 @@ class Search_Elastic_Index implements Search_Index_Interface
 
 	function addDocument(array $data)
 	{
-		$factory = $this->getTypeFactory();
-		$objectType = $data['object_type']->getValue($factory);
-		$objectId = $data['object_id']->getValue($factory);
+		$objectType = $data['object_type']->getValue();
+		$objectId = $data['object_id']->getValue();
 
 		$this->generateMapping($objectType, $data);
 
-		$factory = $this->getTypeFactory();
 		$data = array_map(
-			function ($entry) use ($factory) {
-				return $entry->getValue($factory);
+			function ($entry) {
+				return $entry->getValue();
 			}, $data
 		);
-		$objectType = $data['object_type'];
-		$objectId = $data['object_id'];
 
 		if (! empty($data['hash'])) {
 			$objectId .= "~~{$data['hash']}";
@@ -75,7 +71,9 @@ class Search_Elastic_Index implements Search_Index_Interface
 		$this->providedMappings[$type] = array_merge($this->providedMappings[$type], $mapping);
 		$mapping = array_filter($mapping);
 
-		$this->connection->mapping($this->index, $type, $mapping);
+		if (! empty($mapping)) {
+			$this->connection->mapping($this->index, $type, $mapping);
+		}
 	}
 
 	function endUpdate()
@@ -162,103 +160,6 @@ class Search_Elastic_Index implements Search_Index_Interface
 	function getTypeFactory()
 	{
 		return new Search_Elastic_TypeFactory;
-	}
-
-	private function buildQuery($expr)
-	{
-		$query = $expr->walk(array($this, 'walkCallback'));
-		return $query;
-	}
-
-	function walkCallback($node, $childNodes)
-	{
-		$term = null;
-
-		if ($node instanceof Search_Expr_And) {
-			$term = $this->buildCondition($childNodes, true);
-		} elseif ($node instanceof Search_Expr_Or) {
-			$term = $this->buildCondition($childNodes, null);
-		} elseif ($node instanceof Search_Expr_Not) {
-			$result = new Zend_Search_Lucene_Search_Query_Boolean;
-			$result->addSubquery($childNodes[0], false);
-
-			$term = $result;
-		} elseif ($node instanceof Search_Expr_Range) {
-			$from = $node->getToken('from');
-			$to = $node->getToken('to');
-
-			$from = $this->buildTerm($from);
-			$to = $this->buildTerm($to);
-
-			// Range search not supported for phrases, so revert to normal token matching
-			if (method_exists($from, 'getTerm')) {
-				$range = new Zend_Search_Lucene_Search_Query_Range(
-					$from->getTerm(),
-					$to->getTerm(),
-					true // inclusive
-				);
-
-				$term = $range;
-			} else {
-				$term = $from;
-			}
-		} elseif ($node instanceof Search_Expr_Token) {
-			$term = $this->buildTerm($node);
-		}
-
-		if ($term && method_exists($term, 'getTerm') && (string) $term->getTerm()->text) {
-			$term->setBoost($node->getWeight());
-		}
-
-		return $term;
-	}
-
-	private function buildCondition($childNodes, $required)
-	{
-		$result = new Zend_Search_Lucene_Search_Query_Boolean;
-		foreach ($childNodes as $child) {
-
-			// Detect if child is a NOT, and reformulate on the fly to support the syntax
-			if ($child instanceof Zend_Search_Lucene_Search_Query_Boolean) {
-				$signs = $child->getSigns();
-				if (count($signs) === 1 && $signs[0] === false) {
-					$result->addSubquery(reset($child->getSubqueries()), false);
-					continue;
-				}
-			}
-
-			$result->addSubquery($child, $required);
-		}
-
-		return $result;
-	}
-
-	private function buildTerm($node)
-	{
-		$value = $node->getValue($this->getTypeFactory());
-		$field = $node->getField();
-
-		switch (get_class($value)) {
-		case 'Search_Type_WikiText':
-		case 'Search_Type_PlainText':
-		case 'Search_Type_MultivalueText':
-			$whole = $value->getValue();
-			$whole = str_replace(array('*', '?', '~', '+'), '', $whole);
-			$whole = str_replace(array('[', ']', '{', '}', '(', ')', ':', '-'), ' ', $whole);
-
-			$parts = explode(' ', $whole);
-			if (count($parts) === 1) {
-				return new Zend_Search_Lucene_Search_Query_Term(new Zend_Search_Lucene_Index_Term($parts[0], $field), true);
-			} else {
-				return new Zend_Search_Lucene_Search_Query_Phrase($parts, array_keys($parts), $field);
-			}
-		case 'Search_Type_Timestamp':
-			$parts = explode(' ', $value->getValue());
-			return new Zend_Search_Lucene_Search_Query_Term(new Zend_Search_Lucene_Index_Term($parts[0], $field), true);
-		case 'Search_Type_Whole':
-			$parts = explode(' ', $value->getValue());
-			return new Zend_Search_Lucene_Search_Query_Phrase($parts, array_keys($parts), $field);
-		}
 	}
 
 	private function createDocumentReader()
