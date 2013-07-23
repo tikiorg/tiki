@@ -18,7 +18,7 @@ CKEDITOR.plugins.add('inlinesave',
 
 	init: function (editor) {
 
-		var asplugin = this; // for closure references later
+		var myplugin = this; // for closure references later
 		this.editor = editor;
 
 		editor.ui.addButton('inlinesave', {
@@ -34,8 +34,8 @@ CKEDITOR.plugins.add('inlinesave',
 				canUndo: false,
 				// button clicked or timer
 				exec: function (elem, editor, data) {
-					asplugin.ajaxSaveIsDirty = true; // force
-					return asplugin.doAjaxSave(editor);
+					myplugin.ajaxSaveIsDirty = true; // force
+					return myplugin.doAjaxSave(editor);
 				}
 			}));
 
@@ -43,11 +43,11 @@ CKEDITOR.plugins.add('inlinesave',
 			this.document.on('keydown', function (event) {
 				// Do not capture CTRL hotkeys.
 				if (!event.data.$.ctrlKey && !event.data.$.metaKey) {
-					asplugin.onSelectionChange(editor);
+					myplugin.onSelectionChange(editor);
 				}
 			});
 			// Also check for save changes after toolbar commands.
-			editor.on('afterCommandExec', function (event) { asplugin.onSelectionChange(editor); });
+			editor.on('afterCommandExec', function (event) { myplugin.onSelectionChange(editor); });
 
 		});
 		/*
@@ -58,7 +58,18 @@ CKEDITOR.plugins.add('inlinesave',
 	}, // end init
 
 	doAjaxSave: function (editor) {
-		var data = editor.getData();
+		var data = "", editor2;		// for now send the whole page back for saving
+		$("#page-data > .cke_editable:not(.icon_edit_section)").each(function () {
+			var element = new CKEDITOR.dom.element($(this)[0]);
+			editor2 = element.getEditor();
+			if (editor !== editor2) {
+				data += editor2.element.$.outerHTML;
+			} else {
+				data += editor.element.$.outerHTML;
+			}
+		});
+
+
 		if (this.ajaxSaveIsDirty && data != "ajax error") {
 			this.changeIcon("loadingSmall.gif");
 
