@@ -53,6 +53,8 @@ class Search_MySql_Index implements Search_Index_Interface
 			$this->table->ensureHasField($name, 'VARCHAR(300)', array('index', 'fulltext'));
 		} elseif ($value instanceof Search_Type_PlainText) {
 			$this->table->ensureHasField($name, 'TEXT', array('fulltext'));
+		} elseif ($value instanceof Search_Type_WikiText) {
+			$this->table->ensureHasField($name, 'TEXT', array('fulltext'));
 		} elseif ($value instanceof Search_Type_MultivalueText) {
 			$this->table->ensureHasField($name, 'TEXT', array('fulltext'));
 		} elseif ($value instanceof Search_Type_Timestamp) {
@@ -79,17 +81,34 @@ class Search_MySql_Index implements Search_Index_Interface
 
 	function find(Search_Query_Interface $query, $resultStart, $resultCount)
 	{
+		$order = $this->getOrderClause($query);
+
 		$condition = $this->builder->build($query->getExpr());
 		$conditions = array(
 			$this->table->expr($condition),
 		);
 		$count = $this->table->fetchCount($conditions);
-		$entries = $this->table->fetchAll($this->table->all(), $conditions, $resultCount, $resultStart);
+		$entries = $this->table->fetchAll($this->table->all(), $conditions, $resultCount, $resultStart, $order);
 
 		$resultSet = new Search_ResultSet($entries, $count, $resultStart, $resultCount);
 		$resultSet->setHighlightHelper(new Search_MySql_HighlightHelper($query->getExpr()));
 
 		return $resultSet;
+	}
+
+	private function getOrderClause($query)
+	{
+		$order = $query->getSortOrder();
+
+		if ($order->getField() == Search_Query_Order::FIELD_SCORE) {
+			return null;
+		}
+
+		if ($order->getMode() == Search_Query_Order::MODE_NUMERIC) {
+			return $this->table->expr("CAST(`{$order->getField()}` as SIGNED) {$order->getOrder()}");
+		} else {
+			return $this->table->expr("`{$order->getField()}` {$order->getOrder()}");
+		}
 	}
 
 	function getTypeFactory()

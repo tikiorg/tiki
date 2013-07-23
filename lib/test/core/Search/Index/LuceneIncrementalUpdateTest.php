@@ -49,10 +49,10 @@ class Search_Index_LuceneIncrementalUpdateTest extends PHPUnit_Framework_TestCas
 				),
 			)
 		);
-		$this->addDocument($index, 'wiki page', 'NewPage', 'Testing out');
+		$this->addDocument($index, 'wiki page', 'NewPage', 'Testing search');
 		$index->endUpdate();
 
-		$this->assertResultFound('out', $index);
+		$this->assertResultFound('search', $index);
 		$this->assertResultFound('content', $index);
 		$this->assertResultFound('world', $index);
 	}
