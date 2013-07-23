@@ -24,6 +24,18 @@ class WYSIWYGLib
 			return;
 		}
 
+		// If the page uses flagged revisions, check if the page can be edited.
+		//	Inline edit sessions can cross page boundaries, thus the page attempts to start in inline edit mode 
+		if ($prefs['flaggedrev_approval'] == 'y') {
+			$flaggedrevisionlib = TikiLib::lib('flaggedrevision');
+			if ($flaggedrevisionlib->page_requires_approval($pageName)) {
+				if (!isset($_REQUEST['latest']) || $_REQUEST['latest'] != '1') {
+					// The page cannot be edited
+					return;
+				}
+			}
+		}
+
 		if( !empty(self::$ckEditor) ) {
 			// Inline editor is already initialized
 			return;
@@ -43,7 +55,7 @@ class WYSIWYGLib
 		// the toolbar TODO refactor as duplicated from below
 		$smarty = TikiLib::lib('smarty');
 
-		$info = $tikilib->get_page_info($pageName);
+		$info = $tikilib->get_page_info($pageName, false);	// Don't load page data. 
 		$params = array(
 			'_wysiwyg' => 'y',
 			'area_id' => 'page-data',
