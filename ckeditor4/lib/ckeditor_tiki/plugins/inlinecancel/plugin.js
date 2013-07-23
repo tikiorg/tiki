@@ -24,7 +24,7 @@ CKEDITOR.plugins.add('inlinecancel',
 			// button clicked or timer
 			exec: function (elem, editor, data) {
 				// Close the editable area
-				$("#page-data").attr("contenteditable", false);
+				$("#page-data > *").attr("contenteditable", false);
 
 				//kill all inline editors
 				var instances = CKEDITOR.instances;
