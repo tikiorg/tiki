@@ -39,14 +39,20 @@ class WYSIWYGLib
 
 		// Inline editing config
 		$skin = $prefs['wysiwyg_toolbar_skin'] != 'default' ? $prefs['wysiwyg_toolbar_skin'] : 'moono';
-		$headerlib->add_js('window.CKEDITOR.inlineAll();', 5)
-			->add_js('window.CKEDITOR.disableAutoInline = true;', 5)
-			->add_js('$("#page-data > *").attr("contenteditable", true);')
-//			->add_js('window.CKEDITOR.config.toolbar = [ [ "Bold", "Italic", "Underline", "Strike", "-", "RemoveFormat", "-", "NumberedList", "BulletedList", "Outdent", "Indent", "-", "Table", "Image", "Link", "-", "inlinesave", "inlinecancel" ] ];')
-			->add_js('window.CKEDITOR.config.skin = "'.$skin.'";')
-		;
-		
-		$headerlib->add_js(
+		$headerlib->add_js('', 5)
+			->add_jq_onready('
+// lists dont inline happily so wrap in divs
+$("#page-data > ul, #page-data > ol, #page-data > dl").each(function() {
+		$(this).wrap("<div>");
+});
+// save original data and add contenteditable
+$("#page-data > *").each(function() {
+	$(this).data("inline_original", $(this).html());
+}).attr("contenteditable", true);
+// init inline ckeditors
+window.CKEDITOR.inlineAll();
+')
+		->add_js(
 			'// --- config settings for the autosave plugin ---
 window.CKEDITOR.config.ajaxSaveTargetUrl = "'.$tikiroot.'tiki-auto_save.php?page='.urlencode($pageName).'";	
 window.CKEDITOR.config.extraPlugins = "";
@@ -56,6 +62,8 @@ window.CKEDITOR.config.extraPlugins += (window.CKEDITOR.config.extraPlugins ? ",
 window.CKEDITOR.plugins.addExternal( "inlinecancel", "'.$tikiroot.'lib/ckeditor_tiki/plugins/inlinecancel/");
 window.CKEDITOR.config.ajaxSaveRefreshTime = 30 ;			// RefreshTime
 window.CKEDITOR.config.contentsLangDirection = ' . ($prefs['feature_bidi'] === 'y' ? '"rtl"' : '"ui"') . ';
+window.CKEDITOR.config.skin = "'.$skin.'";
+window.CKEDITOR.disableAutoInline = true;
 ');
 // register_id("'.$dom_id.'","'.addcslashes(($_SERVER["HTTP_REFERER"]), '"').'");	// Register auto_save so it gets removed on submit
 // ajaxLoadingShow("'.$dom_id.'");
