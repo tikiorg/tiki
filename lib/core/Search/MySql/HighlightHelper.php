@@ -17,7 +17,10 @@ class Search_MySql_HighlightHelper implements Zend_Filter_Interface
 		$factory = new Search_Type_Factory_Direct;
 		$query->walk(function ($node) use (& $words, $factory) {
 			if ($node instanceof Search_Expr_Token) {
-				$words[] = $node->getValue($factory)->getValue();
+				$word = $node->getValue($factory)->getValue();
+				if (is_string($word)) {
+					$words[] = $word;
+				}
 			}
 		});
 

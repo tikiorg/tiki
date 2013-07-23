@@ -18,6 +18,7 @@ class Search_MySql_QueryBuilder
 	private $db;
 	private $factory;
 	private $fieldBuilder;
+	private $indexes = array();
 
 	function __construct($db)
 	{
@@ -28,9 +29,15 @@ class Search_MySql_QueryBuilder
 
 	function build(Search_Expr_Interface $expr)
 	{
+		$this->indexes = array();
 		$query = $expr->walk($this);
 
 		return $query;
+	}
+
+	function getRequiredIndexes()
+	{
+		return array_values($this->indexes);
 	}
 
 	function __invoke($node, $childNodes)
@@ -43,6 +50,7 @@ class Search_MySql_QueryBuilder
 			if (count($fields) == 1 && $this->isFullText($node)) {
 				$query = $this->fieldBuilder->build($node, $this->factory);
 				$str = $this->db->qstr($query);
+				$this->requireIndex($fields[0], 'fulltext');
 				return "MATCH (`{$fields[0]}`) AGAINST ($str IN BOOLEAN MODE)";
 			}
 		} catch (Search_MySql_QueryException $e) {
@@ -60,18 +68,26 @@ class Search_MySql_QueryBuilder
 			return 'NOT (' . reset($childNodes) . ')';
 		} elseif ($node instanceof Token) {
 			$value = $this->getQuoted($node);
+			$this->requireIndex($node->getField(), 'index');
 			return "`{$node->getField()}` = $value";
 		} elseif ($node instanceof Initial) {
 			$value = $this->getQuoted($node, '%');
+			$this->requireIndex($node->getField(), 'index');
 			return "`{$node->getField()}` LIKE $value";
 		} elseif ($node instanceof Range) {
 			$from = $this->getQuoted($node->getToken('from'));
 			$to = $this->getQuoted($node->getToken('to'));
+			$this->requireIndex($node->getField(), 'index');
 			return "`{$node->getField()}` BETWEEN $from AND $to";
 		} else {
 			// Throw initial exception if fallback fails
 			throw $exception ?: new Exception(tr('Feature not supported: ' . get_class($node)));
 		}
+	}
+
+	private function requireIndex($field, $type)
+	{
+		$this->indexes[$field . $type] = array('field' => $field, 'type' => $type);
 	}
 
 	private function getFields($node)

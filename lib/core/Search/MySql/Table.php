@@ -8,36 +8,52 @@
 class Search_MySql_Table extends TikiDb_Table
 {
 	private $definition = false;
+	private $indexes = array();
+	private $exists = null;
 
 	function drop()
 	{
 		$table = $this->escapeIdentifier($this->tableName);
 		$this->db->query("DROP TABLE IF EXISTS $table");
 		$this->definition = false;
+		$this->exists = false;
 	}
 
 	function exists()
 	{
-		$tables = $this->db->listTables();
-		return in_array($this->tableName, $tables);
+		if (is_null($this->exists)) {
+			$tables = $this->db->listTables();
+			$this->exists = in_array($this->tableName, $tables);
+		}
+
+		return $this->exists;
 	}
 
-	function ensureHasField($fieldName, $type, array $extra)
+	function ensureHasField($fieldName, $type)
 	{
 		$this->loadDefinition();
 
 		if (! isset($this->definition[$fieldName])) {
 			$this->addField($fieldName, $type);
-			
-			if (in_array('index', $extra)) {
+			$this->definition[$fieldName] = $type;
+		}
+	}
+
+	function ensureHasIndex($fieldName, $type)
+	{
+		$this->loadDefinition();
+
+		$indexName = $fieldName . '_' . $type;
+
+		// Static MySQL limit on 64 indexes per table
+		if (! isset($this->indexes[$fieldName]) && count($this->indexes) < 64) {
+			if ($type == 'fulltext') {
+				$this->addFullText($fieldName);
+			} elseif ($type == 'index') {
 				$this->addIndex($fieldName);
 			}
 
-			if (in_array('fulltext', $extra)) {
-				$this->addFullText($fieldName);
-			}
-
-			$this->definition[$fieldName] = $type;
+			$this->indexes[$indexName] = true;
 		}
 	}
 
@@ -59,6 +75,11 @@ class Search_MySql_Table extends TikiDb_Table
 			$this->definition[$row['Field']] = $row['Type'];
 		}
 
+		$result = $this->db->fetchAll("SHOW INDEXES FROM $table");
+		$this->indexes = array();
+		foreach ($result as $row) {
+			$this->indexes[$row['Key_name']] = true;
+		}
 	}
 
 	private function createTable()
@@ -71,6 +92,7 @@ class Search_MySql_Table extends TikiDb_Table
 			PRIMARY KEY(`id`),
 			INDEX (`object_type`, `object_id`)
 		) ENGINE=MyISAM");
+		$this->exists = true;
 	}
 
 	private function addField($fieldName, $type)
@@ -83,15 +105,17 @@ class Search_MySql_Table extends TikiDb_Table
 	private function addIndex($fieldName)
 	{
 		$table = $this->escapeIdentifier($this->tableName);
+		$indexName = $this->escapeIdentifier($fieldName . '_index');
 		$fieldName = $this->escapeIdentifier($fieldName);
-		$this->db->query("ALTER TABLE $table ADD INDEX ($fieldName)");
+		$this->db->queryError("ALTER TABLE $table ADD INDEX $indexName ($fieldName)", $error);
 	}
 
 	private function addFullText($fieldName)
 	{
 		$table = $this->escapeIdentifier($this->tableName);
+		$indexName = $this->escapeIdentifier($fieldName . '_fulltext');
 		$fieldName = $this->escapeIdentifier($fieldName);
-		$this->db->query("ALTER TABLE $table ADD FULLTEXT INDEX ($fieldName)");
+		$this->db->queryError("ALTER TABLE $table ADD FULLTEXT INDEX $indexName ($fieldName)", $error);
 	}
 }
 

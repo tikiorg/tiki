@@ -48,17 +48,17 @@ class Search_MySql_Index implements Search_Index_Interface
 	private function handleField($name, $value)
 	{
 		if ($value instanceof Search_Type_Whole) {
-			$this->table->ensureHasField($name, 'VARCHAR(200)', array('index'));
+			$this->table->ensureHasField($name, 'VARCHAR(200)');
 		} elseif ($value instanceof Search_Type_PlainShortText) {
-			$this->table->ensureHasField($name, 'VARCHAR(300)', array('index', 'fulltext'));
+			$this->table->ensureHasField($name, 'VARCHAR(300)');
 		} elseif ($value instanceof Search_Type_PlainText) {
-			$this->table->ensureHasField($name, 'TEXT', array('fulltext'));
+			$this->table->ensureHasField($name, 'TEXT');
 		} elseif ($value instanceof Search_Type_WikiText) {
-			$this->table->ensureHasField($name, 'TEXT', array('fulltext'));
+			$this->table->ensureHasField($name, 'TEXT');
 		} elseif ($value instanceof Search_Type_MultivalueText) {
-			$this->table->ensureHasField($name, 'TEXT', array('fulltext'));
+			$this->table->ensureHasField($name, 'TEXT');
 		} elseif ($value instanceof Search_Type_Timestamp) {
-			$this->table->ensureHasField($name, 'DATETIME', array('index'));
+			$this->table->ensureHasField($name, 'DATETIME');
 		} else {
 			throw new Exception('Unsupported type: ' . get_class($value));
 		}
@@ -87,6 +87,12 @@ class Search_MySql_Index implements Search_Index_Interface
 		$conditions = array(
 			$this->table->expr($condition),
 		);
+
+		$indexes = $this->builder->getRequiredIndexes();
+		foreach ($indexes as $index) {
+			$this->table->ensureHasIndex($index['field'], $index['type']);
+		}
+
 		$count = $this->table->fetchCount($conditions);
 		$entries = $this->table->fetchAll($this->table->all(), $conditions, $resultCount, $resultStart, $order);
 

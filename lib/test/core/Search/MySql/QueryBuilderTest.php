@@ -24,202 +24,230 @@ class Search_MySql_QueryBuilderTest extends PHPUnit_Framework_TestCase
 
 	function testSimpleQuery()
 	{
-		$query = $this->builder->build(new Token('Hello', 'plaintext', 'contents', 1.5));
+		$expr = new Token('Hello', 'plaintext', 'contents', 1.5);
 
-		$this->assertEquals("MATCH (`contents`) AGAINST ('Hello' IN BOOLEAN MODE)", $query);
+		$this->assertEquals("MATCH (`contents`) AGAINST ('Hello' IN BOOLEAN MODE)", $this->builder->build($expr));
+		$this->assertEquals(array(
+			array('field' => 'contents', 'type' => 'fulltext'),
+		), $this->builder->getRequiredIndexes($expr));
 	}
 
 	function testSimplePhrase()
 	{
-		$query = $this->builder->build(new Token('Hello World', 'plaintext', 'contents', 1.5));
+		$expr = new Token('Hello World', 'plaintext', 'contents', 1.5);
 
-		$this->assertEquals("MATCH (`contents`) AGAINST ('\\\"Hello World\\\"' IN BOOLEAN MODE)", $query);
+		$this->assertEquals("MATCH (`contents`) AGAINST ('\\\"Hello World\\\"' IN BOOLEAN MODE)", $this->builder->build($expr));
+		$this->assertEquals(array(
+			array('field' => 'contents', 'type' => 'fulltext'),
+		), $this->builder->getRequiredIndexes($expr));
 	}
 
 	function testQueryWithSinglePart()
 	{
-		$query = $this->builder->build(
-			new AndX(
-				array(
-					new Token('Hello', 'plaintext', 'contents', 1.5),
-				)
+		$expr = new AndX(
+			array(
+				new Token('Hello', 'plaintext', 'contents', 1.5),
 			)
 		);
 
-		$this->assertEquals("MATCH (`contents`) AGAINST ('Hello' IN BOOLEAN MODE)", $query);
+		$this->assertEquals("MATCH (`contents`) AGAINST ('Hello' IN BOOLEAN MODE)", $this->builder->build($expr));
+		$this->assertEquals(array(
+			array('field' => 'contents', 'type' => 'fulltext'),
+		), $this->builder->getRequiredIndexes($expr));
 	}
 
 	function testBuildOrQuery()
 	{
-		$query = $this->builder->build(
-			new OrX(
-				array(
-					new Token('Hello', 'plaintext', 'contents', 1.5),
-					new Token('World', 'plaintext', 'contents', 1.0),
-				)
+		$expr = new OrX(
+			array(
+				new Token('Hello', 'plaintext', 'contents', 1.5),
+				new Token('World', 'plaintext', 'contents', 1.0),
 			)
 		);
 
-		$this->assertEquals("MATCH (`contents`) AGAINST ('(Hello World)' IN BOOLEAN MODE)", $query);
+		$this->assertEquals("MATCH (`contents`) AGAINST ('(Hello World)' IN BOOLEAN MODE)", $this->builder->build($expr));
+		$this->assertEquals(array(
+			array('field' => 'contents', 'type' => 'fulltext'),
+		), $this->builder->getRequiredIndexes($expr));
 	}
 
 	function testAndQuery()
 	{
-		$query = $this->builder->build(
-			new AndX(
-				array(
-					new Token('Hello', 'plaintext', 'contents', 1.5),
-					new Token('World', 'plaintext', 'contents', 1.0),
-				)
+		$expr = new AndX(
+			array(
+				new Token('Hello', 'plaintext', 'contents', 1.5),
+				new Token('World', 'plaintext', 'contents', 1.0),
 			)
 		);
 
-		$this->assertEquals("MATCH (`contents`) AGAINST ('(+Hello +World)' IN BOOLEAN MODE)", $query);
+		$this->assertEquals("MATCH (`contents`) AGAINST ('(+Hello +World)' IN BOOLEAN MODE)", $this->builder->build($expr));
+		$this->assertEquals(array(
+			array('field' => 'contents', 'type' => 'fulltext'),
+		), $this->builder->getRequiredIndexes($expr));
 	}
 
 	function testNotBuild()
 	{
-		$query = $this->builder->build(
-			new NotX(
-				new Token('Hello', 'plaintext', 'contents', 1.5)
-			)
+		$expr = new NotX(
+			new Token('Hello', 'plaintext', 'contents', 1.5)
 		);
 
-		$this->assertEquals("MATCH (`contents`) AGAINST ('-Hello' IN BOOLEAN MODE)", $query);
+		$this->assertEquals("MATCH (`contents`) AGAINST ('-Hello' IN BOOLEAN MODE)", $this->builder->build($expr));
+		$this->assertEquals(array(
+			array('field' => 'contents', 'type' => 'fulltext'),
+		), $this->builder->getRequiredIndexes($expr));
 	}
 
 	function testFlattenNot()
 	{
-		$query = $this->builder->build(
-			new AndX(
-				array(
-					new NotX(new Token('Hello', 'plaintext', 'contents', 1.5)),
-					new NotX(new Token('World', 'plaintext', 'contents', 1.5)),
-					new Token('Test', 'plaintext', 'contents', 1.0),
-				)
+		$expr = new AndX(
+			array(
+				new NotX(new Token('Hello', 'plaintext', 'contents', 1.5)),
+				new NotX(new Token('World', 'plaintext', 'contents', 1.5)),
+				new Token('Test', 'plaintext', 'contents', 1.0),
 			)
 		);
 
-		$this->assertEquals("MATCH (`contents`) AGAINST ('(-Hello -World +Test)' IN BOOLEAN MODE)", $query);
+		$this->assertEquals("MATCH (`contents`) AGAINST ('(-Hello -World +Test)' IN BOOLEAN MODE)", $this->builder->build($expr));
+		$this->assertEquals(array(
+			array('field' => 'contents', 'type' => 'fulltext'),
+		), $this->builder->getRequiredIndexes($expr));
 	}
 
 	function testBuildOrQueryDifferentField()
 	{
-		$query = $this->builder->build(
-			new OrX(
-				array(
-					new Token('Hello', 'plaintext', 'foobar', 1.5),
-					new Token('World', 'plaintext', 'baz', 1.0),
-				)
+		$expr = new OrX(
+			array(
+				new Token('Hello', 'plaintext', 'foobar', 1.5),
+				new Token('World', 'plaintext', 'baz', 1.0),
 			)
 		);
 
-		$this->assertEquals("(MATCH (`foobar`) AGAINST ('Hello' IN BOOLEAN MODE) OR MATCH (`baz`) AGAINST ('World' IN BOOLEAN MODE))", $query);
+		$this->assertEquals("(MATCH (`foobar`) AGAINST ('Hello' IN BOOLEAN MODE) OR MATCH (`baz`) AGAINST ('World' IN BOOLEAN MODE))", $this->builder->build($expr));
+		$this->assertEquals(array(
+			array('field' => 'foobar', 'type' => 'fulltext'),
+			array('field' => 'baz', 'type' => 'fulltext'),
+		), $this->builder->getRequiredIndexes($expr));
 	}
 
 	function testAndQueryDifferentField()
 	{
-		$query = $this->builder->build(
-			new AndX(
-				array(
-					new Token('Hello', 'plaintext', 'foobar', 1.5),
-					new Token('World', 'plaintext', 'baz', 1.0),
-				)
+		$expr = new AndX(
+			array(
+				new Token('Hello', 'plaintext', 'foobar', 1.5),
+				new Token('World', 'plaintext', 'baz', 1.0),
 			)
 		);
 
-		$this->assertEquals("(MATCH (`foobar`) AGAINST ('Hello' IN BOOLEAN MODE) AND MATCH (`baz`) AGAINST ('World' IN BOOLEAN MODE))", $query);
+		$this->assertEquals("(MATCH (`foobar`) AGAINST ('Hello' IN BOOLEAN MODE) AND MATCH (`baz`) AGAINST ('World' IN BOOLEAN MODE))", $this->builder->build($expr));
+		$this->assertEquals(array(
+			array('field' => 'foobar', 'type' => 'fulltext'),
+			array('field' => 'baz', 'type' => 'fulltext'),
+		), $this->builder->getRequiredIndexes($expr));
 	}
 
-	function testNotBuildDifferentField()
+	function testNotBuildNotIdentifier()
 	{
-		$query = $this->builder->build(
-			new NotX(
-				new Token('Hello', 'identifier', 'object_id', 1.5)
-			)
+		$expr = new NotX(
+			new Token('Hello', 'identifier', 'object_id', 1.5)
 		);
 
-		$this->assertEquals("NOT (`object_id` = 'Hello')", $query);
+		$this->assertEquals("NOT (`object_id` = 'Hello')", $this->builder->build($expr));
+		$this->assertEquals(array(
+			array('field' => 'object_id', 'type' => 'index'),
+		), $this->builder->getRequiredIndexes($expr));
 	}
 
 	function testFlattenNotDifferentField()
 	{
-		$query = $this->builder->build(
-			new AndX(
-				array(
-					new NotX(new Token('Hello', 'plaintext', 'contents', 1.5)),
-					new NotX(new Token('World', 'plaintext', 'contents', 1.5)),
-					new Token('Test', 'plaintext', 'contents', 1.0),
-				)
+		$expr = new AndX(
+			array(
+				new NotX(new Token('Hello', 'plaintext', 'contents', 1.5)),
+				new NotX(new Token('World', 'plaintext', 'contents', 1.5)),
+				new Token('Test', 'plaintext', 'contents', 1.0),
 			)
 		);
 
-		$this->assertEquals("MATCH (`contents`) AGAINST ('(-Hello -World +Test)' IN BOOLEAN MODE)", $query);
+		$this->assertEquals("MATCH (`contents`) AGAINST ('(-Hello -World +Test)' IN BOOLEAN MODE)", $this->builder->build($expr));
+		$this->assertEquals(array(
+			array('field' => 'contents', 'type' => 'fulltext'),
+		), $this->builder->getRequiredIndexes($expr));
 	}
 
 	function testFilterWithIdentifier()
 	{
-		$query = $this->builder->build(new Token('Some entry', 'identifier', 'username', 1.5));
+		$expr = new Token('Some entry', 'identifier', 'username', 1.5);
 
-		$this->assertEquals("`username` = 'Some entry'", $query);
+		$this->assertEquals("`username` = 'Some entry'", $this->builder->build($expr));
+		$this->assertEquals(array(
+			array('field' => 'username', 'type' => 'index'),
+		), $this->builder->getRequiredIndexes($expr));
 	}
 
 	function testRangeFilter()
 	{
-		$query = $this->builder->build(new Range('Hello', 'World', 'plaintext', 'title', 1.5));
+		$expr = new Range('Hello', 'World', 'plaintext', 'title', 1.5);
 
-		$this->assertEquals("`title` BETWEEN 'Hello' AND 'World'", $query);
+		$this->assertEquals("`title` BETWEEN 'Hello' AND 'World'", $this->builder->build($expr));
+		$this->assertEquals(array(
+			array('field' => 'title', 'type' => 'index'),
+		), $this->builder->getRequiredIndexes($expr));
 	}
 
 	function testInitialMatchFilter()
 	{
-		$query = $this->builder->build(new Initial('Hello', 'plaintext', 'title', 1.5));
+		$expr = new Initial('Hello', 'plaintext', 'title', 1.5);
 
-		$this->assertEquals("`title` LIKE 'Hello%'", $query);
+		$this->assertEquals("`title` LIKE 'Hello%'", $this->builder->build($expr));
+		$this->assertEquals(array(
+			array('field' => 'title', 'type' => 'index'),
+		), $this->builder->getRequiredIndexes($expr));
 	}
 
 	function testNestedOr()
 	{
-		$query = $this->builder->build(
-			new OrX(
-				array(
-					new OrX(
-						array(
-							new Token('Hello', 'plaintext', 'contents', 1.5),
-							new Token('World', 'plaintext', 'contents', 1.0),
-						)
-					),
-					new Token('Test', 'plaintext', 'contents', 1.0),
-				)
+		$expr = new OrX(
+			array(
+				new OrX(
+					array(
+						new Token('Hello', 'plaintext', 'contents', 1.5),
+						new Token('World', 'plaintext', 'contents', 1.0),
+					)
+				),
+				new Token('Test', 'plaintext', 'contents', 1.0),
 			)
 		);
 
-		$this->assertEquals("MATCH (`contents`) AGAINST ('((Hello World) Test)' IN BOOLEAN MODE)", $query);
+		$this->assertEquals("MATCH (`contents`) AGAINST ('((Hello World) Test)' IN BOOLEAN MODE)", $this->builder->build($expr));
+		$this->assertEquals(array(
+			array('field' => 'contents', 'type' => 'fulltext'),
+		), $this->builder->getRequiredIndexes($expr));
 	}
 
 	function testNestedAnd()
 	{
-		$query = $this->builder->build(
-			new AndX(
-				array(
-					new OrX(
-						array(
-							new Token('Hello', 'plaintext', 'contents', 1.5),
-							new Token('World', 'plaintext', 'contents', 1.0),
-						)
-					),
-					new AndX(
-						array(
-							new Token('Hello', 'plaintext', 'contents', 1.5),
-							new Token('World', 'plaintext', 'contents', 1.0),
-						)
-					),
-					new Token('Test', 'plaintext', 'contents', 1.0),
-				)
+		$expr = new AndX(
+			array(
+				new OrX(
+					array(
+						new Token('Hello', 'plaintext', 'contents', 1.5),
+						new Token('World', 'plaintext', 'contents', 1.0),
+					)
+				),
+				new AndX(
+					array(
+						new Token('Hello', 'plaintext', 'contents', 1.5),
+						new Token('World', 'plaintext', 'contents', 1.0),
+					)
+				),
+				new Token('Test', 'plaintext', 'contents', 1.0),
 			)
 		);
 
-		$this->assertEquals("MATCH (`contents`) AGAINST ('(+(Hello World) +(+Hello +World) +Test)' IN BOOLEAN MODE)", $query);
+		$this->assertEquals("MATCH (`contents`) AGAINST ('(+(Hello World) +(+Hello +World) +Test)' IN BOOLEAN MODE)", $this->builder->build($expr));
+		$this->assertEquals(array(
+			array('field' => 'contents', 'type' => 'fulltext'),
+		), $this->builder->getRequiredIndexes($expr));
 	}
 }
 
