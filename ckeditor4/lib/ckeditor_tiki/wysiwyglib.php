@@ -131,9 +131,9 @@ window.CKEDITOR.on("instanceCreated", function( event ) {
 		$headerlib = TikiLib::lib('header');
 		$js = '$("#page-data > *").attr("contenteditable", false);';
 		$js .= 'var instances = CKEDITOR.instances;
-				forEach(ed in instances) {
-					if (ed != null) {
-						ed.destroy();
+				for(var i = 0; i < instances.length; i++) {
+					if (instances[i] != null) {
+						instances[i].destroy();
 					}
 				}';
 		$headerlib->add_js($js);
