@@ -39,6 +39,28 @@ class WYSIWYGLib
 
 		// Inline editing config
 		$skin = $prefs['wysiwyg_toolbar_skin'] != 'default' ? $prefs['wysiwyg_toolbar_skin'] : 'moono';
+
+		// the toolbar TODO refactor as duplicated from below
+		$smarty = TikiLib::lib('smarty');
+
+		$info = $tikilib->get_page_info($pageName);
+		$params = array(
+			'_wysiwyg' => 'y',
+			'area_id' => 'page-data',
+			'comments' => '',
+			'is_html' => $info['is_html'],	// temporary element id
+			'switcheditor' => 'n',
+		);
+
+		$smarty->loadPlugin('smarty_function_toolbars');
+		$cktools = smarty_function_toolbars($params, $smarty);
+		$cktools = json_encode($cktools);
+		$cktools = substr($cktools, 1, strlen($cktools) - 2); // remove surrouding [ & ]
+		$cktools = str_replace(']],[[', '],"/",[', $cktools); // add new row chars - done here so as not to break existing f/ck
+		require_once('lib/toolbars/toolbarslib.php');
+		$ckeformattags = ToolbarCombos::getFormatTags($info['is_html'] ? 'html' : 'wiki');
+
+
 		$headerlib->add_js('', 5)
 			->add_jq_onready('
 // lists dont inline happily so wrap in divs
@@ -62,8 +84,38 @@ window.CKEDITOR.config.extraPlugins += (window.CKEDITOR.config.extraPlugins ? ",
 window.CKEDITOR.plugins.addExternal( "inlinecancel", "'.$tikiroot.'lib/ckeditor_tiki/plugins/inlinecancel/");
 window.CKEDITOR.config.ajaxSaveRefreshTime = 30 ;			// RefreshTime
 window.CKEDITOR.config.contentsLangDirection = ' . ($prefs['feature_bidi'] === 'y' ? '"rtl"' : '"ui"') . ';
+// --- other configs
 window.CKEDITOR.config.skin = "'.$skin.'";
 window.CKEDITOR.disableAutoInline = true;
+window.CKEDITOR.config.toolbar = ' .$cktools.';
+//window.CKEDITOR.config.format_tags = "' . $ckeformattags . '";
+// handle toobals per element
+
+window.CKEDITOR.on("instanceCreated", function( event ) {
+	var editor = event.editor,
+	element = editor.element;
+	// Customize editors for headers and tag list.
+	// These editors dont need features like smileys, templates, iframes etc.
+	if ( element.is( "h1", "h2", "h3", "h4", "h5", "h6" )) {
+		// Customize the editor configurations on "configLoaded" event,
+		// which is fired after the configuration file loading and
+		// execution. This makes it possible to change the
+		// configurations before the editor initialization takes place.
+		editor.on( "configLoaded", function() {
+			// Remove unnecessary plugins to make the editor simpler.
+			editor.config.removePlugins = "colorbutton,find,flash,font," +
+				"forms,iframe,image,newpage,removeformat,scayt," +
+				"smiley,specialchar,stylescombo,templates,wsc";
+			// Rearrange the layout of the toolbar.
+//			editor.config.toolbarGroups = [
+//				{ name: "editing", groups: [ "basicstyles", "links" ] },
+//				{ name: "undo" },
+//				{ name: "clipboard", groups: [ "selection", "clipboard" ] }
+//			];
+		});
+	}
+});
+
 ');
 // register_id("'.$dom_id.'","'.addcslashes(($_SERVER["HTTP_REFERER"]), '"').'");	// Register auto_save so it gets removed on submit
 // ajaxLoadingShow("'.$dom_id.'");
