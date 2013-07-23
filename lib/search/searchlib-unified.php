@@ -156,6 +156,19 @@ class UnifiedSearchLib
 				}
 			);
 			break;
+		case 'mysql':
+			$indexName = 'index_' . uniqid();
+			$index = new Search_MySql_Index(TikiDb::get(), $indexName);
+
+			register_shutdown_function(
+				function () use ($indexName, $index) {
+					global $prefs;
+					if ($prefs['unified_mysql_index_current'] !== $indexName) {
+						$index->destroy();
+					}
+				}
+			);
+			break;
 		default:
 			die('Unsupported');
 		}
@@ -206,6 +219,13 @@ class UnifiedSearchLib
 			$tikilib->set_preference('unified_elastic_index_current', $indexName);
 
 			break;
+		case 'mysql':
+			// Obtain the old index and destroy it after permanently replacing it.
+			$oldIndex = $this->getIndex();
+
+			$tikilib->set_preference('unified_mysql_index_current', $indexName);
+
+			break;
 		}
 
 		if ($oldIndex) {
@@ -239,6 +259,10 @@ class UnifiedSearchLib
 			'elastic' => array(
 				'data' => $prefs['unified_elastic_index_current'],
 				'preference' => $prefs['unified_elastic_index_prefix'] . 'pref_' . $prefs['language'],
+			),
+			'mysql' => array(
+				'data' => $prefs['unified_mysql_index_current'],
+				'preference' => 'index_' . 'pref_' . $prefs['language'],
 			),
 		);
 
@@ -475,6 +499,14 @@ class UnifiedSearchLib
 
 			$connection = $this->getElasticConnection();
 			$index = new Search_Elastic_Index($connection, $index);
+			return $index;
+		case 'mysql':
+			$index = $this->getIndexLocation($indexType);
+			if (empty($index)) {
+				return null;
+			}
+
+			$index = new Search_MySql_Index(TikiDb::get(), $index);
 			return $index;
 		}
 	}

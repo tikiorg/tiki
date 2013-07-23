@@ -47,17 +47,18 @@ class Search_MySql_Table extends TikiDb_Table
 			return;
 		}
 
-		try {
-			$table = $this->escapeIdentifier($this->tableName);
-			$result = $this->db->fetchAll("DESC $table");
-			$this->definition = array();
-			foreach ($result as $row) {
-				$this->definition[$row['Field']] = $row['Type'];
-			}
-		} catch (TikiDb_Exception $e) {
+		if (! $this->exists()) {
 			$this->createTable();
 			$this->loadDefinition();
 		}
+
+		$table = $this->escapeIdentifier($this->tableName);
+		$result = $this->db->fetchAll("DESC $table");
+		$this->definition = array();
+		foreach ($result as $row) {
+			$this->definition[$row['Field']] = $row['Type'];
+		}
+
 	}
 
 	private function createTable()

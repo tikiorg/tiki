@@ -14,6 +14,7 @@ function prefs_unified_list()
 			'type' => 'list',
 			'options' => array(
 				'lucene' => tra('Lucene (PHP Implementation)'),
+				'mysql' => tra('MySQL Full Text Search'),
 				'elastic' => tra('ElasticSearch'),
 			),
 			'default' => 'lucene',
@@ -197,6 +198,15 @@ function prefs_unified_list()
 		),
 		'unified_elastic_index_current' => array(
 			'name' => tra('ElasticSearch Current Index'),
+			'description' => tra('A new index is created upon rebuild and the old one is then destroyed. This setting allows you to see the currently active one.'),
+			'hint' => tra('Do not change this value unless you know what you are doing.'),
+			'type' => 'text',
+			'filter' => 'word',
+			'size' => '20',
+			'default' => '',
+		),
+		'unified_mysql_index_current' => array(
+			'name' => tra('MySQL Full Text Search Current Index'),
 			'description' => tra('A new index is created upon rebuild and the old one is then destroyed. This setting allows you to see the currently active one.'),
 			'hint' => tra('Do not change this value unless you know what you are doing.'),
 			'type' => 'text',
