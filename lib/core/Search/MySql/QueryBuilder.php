@@ -47,11 +47,14 @@ class Search_MySql_QueryBuilder
 		$fields = $this->getFields($node);
 
 		try {
-			if (count($fields) == 1 && $this->isFullText($node)) {
+			if (! $node instanceof NotX && count($fields) == 1 && $this->isFullText($node)) {
 				$query = $this->fieldBuilder->build($node, $this->factory);
 				$str = $this->db->qstr($query);
 				$this->requireIndex($fields[0], 'fulltext');
-				return "MATCH (`{$fields[0]}`) AGAINST ($str IN BOOLEAN MODE)";
+				$type = $this->fieldBuilder->isInverted()
+					? 'NOT MATCH'
+					: 'MATCH';
+				return "$type (`{$fields[0]}`) AGAINST ($str IN BOOLEAN MODE)";
 			}
 		} catch (Search_MySql_QueryException $e) {
 			// Try to build the query with the SQL logic when fulltext is not an option
