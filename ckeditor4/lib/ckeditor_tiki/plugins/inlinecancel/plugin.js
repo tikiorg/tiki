@@ -23,16 +23,10 @@ CKEDITOR.plugins.add('inlinecancel',
 			modes: { wysiwyg: 1, source: 1 },
 			// button clicked or timer
 			exec: function (elem, editor, data) {
-				// Close the editable area
-				$("#page-data > *").attr("contenteditable", false);
-
-				//kill all inline editors
-				var instances = CKEDITOR.instances;
-				forEach(ed in instances) {
-					if (ed != null) {
-						ed.destroy();
-					}
-				}
+				// Close the editable area and restore original contents
+				var el = editor.element.$;
+				el.blur();
+				$(el).html($(el).data("inline_original"));
 			}
 		}));
 
