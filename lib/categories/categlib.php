@@ -986,6 +986,7 @@ class CategLib extends ObjectLib
 		$typetokens = array(
 			"article" => "article",
 			"blog" => "blog",
+			"blog post" => "blog post",
 			"directory" => "directory",
 			"faq" => "faq",
 			"fgal" => "file gallery",
@@ -1005,6 +1006,7 @@ class CategLib extends ObjectLib
 		$typetitles = array(
 			"article" => "Articles",
 			"blog" => "Blogs",
+			"blog post" => "Blog Post",
 			"directory" => "Directories",
 			"faq" => "FAQs",
 			"file gallery" => "File Galleries",
