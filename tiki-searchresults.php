@@ -12,6 +12,7 @@ $inputConfiguration = array(
 				'highlight' => 'xss',
 				'where' => 'word',
 				'find' => 'xss',
+				'searchLang' => 'word',
 				'words' =>'xss',
 				'boolean' =>'word',
 		)
