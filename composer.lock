@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "f9d2785ff858b7453fcca87397619ae6",
+    "hash": "b59e5284e99371c5c72ba40d27e9518d",
     "packages": [
         {
             "name": "aFarkas/html5shiv",
@@ -726,17 +726,11 @@
         },
         {
             "name": "smarty/smarty",
-            "version": "v3.1.13",
+            "version": "v3.1.14",
             "source": {
                 "type": "svn",
                 "url": "http://smarty-php.googlecode.com/svn",
-                "reference": "/tags/v3.1.13/@4699"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://composer.tiki.org/dist/smarty-smarty-v3.1.13-830af7.zip",
-                "reference": "v3.1.13",
-                "shasum": "ea62ab58198626e50c2c246fc476c9a7d15b7577"
+                "reference": "/tags/v3.1.14/@4752"
             },
             "require": {
                 "php": ">=5.2"
@@ -745,7 +739,8 @@
             "autoload": {
                 "classmap": [
                     "distribution/libs/Smarty.class.php",
-                    "distribution/libs/SmartyBC.class.php"
+                    "distribution/libs/SmartyBC.class.php",
+                    "distribution/libs/sysplugins/smarty_security.php"
                 ]
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -771,7 +766,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2013-01-26 12:03:52"
+            "time": "2013-07-02 16:38:47"
         },
         {
             "name": "svg-edit/svg-edit",
