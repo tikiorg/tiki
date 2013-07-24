@@ -5,7 +5,7 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-class Search_MySql_IndexTest extends Search_Index_LuceneTest
+class Search_MySql_SortTest extends Search_Index_LuceneSortTest
 {
 	function setUp()
 	{
@@ -20,6 +20,11 @@ class Search_MySql_IndexTest extends Search_Index_LuceneTest
 		if ($this->index) {
 			$this->index->destroy();
 		}
+	}
+
+	function testWeightImpact()
+	{
+		$this->markTestSkipped('Weighting is not supported by MySQL Full Text Search');
 	}
 }
 

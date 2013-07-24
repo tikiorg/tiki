@@ -15,6 +15,7 @@ class Search_MySql_Index implements Search_Index_Interface
 
 	function __construct(TikiDb $db, $index)
 	{
+		$this->db = $db;
 		$this->table = new Search_MySql_Table($db, $index);
 		$this->builder = new Search_MySql_QueryBuilder($db);
 	}
@@ -48,15 +49,17 @@ class Search_MySql_Index implements Search_Index_Interface
 	private function handleField($name, $value)
 	{
 		if ($value instanceof Search_Type_Whole) {
-			$this->table->ensureHasField($name, 'VARCHAR(200)', array('index'));
+			$this->table->ensureHasField($name, 'VARCHAR(200)');
 		} elseif ($value instanceof Search_Type_PlainShortText) {
-			$this->table->ensureHasField($name, 'VARCHAR(300)', array('index', 'fulltext'));
+			$this->table->ensureHasField($name, 'VARCHAR(300)');
 		} elseif ($value instanceof Search_Type_PlainText) {
-			$this->table->ensureHasField($name, 'TEXT', array('fulltext'));
+			$this->table->ensureHasField($name, 'TEXT');
+		} elseif ($value instanceof Search_Type_WikiText) {
+			$this->table->ensureHasField($name, 'TEXT');
 		} elseif ($value instanceof Search_Type_MultivalueText) {
-			$this->table->ensureHasField($name, 'TEXT', array('fulltext'));
+			$this->table->ensureHasField($name, 'TEXT');
 		} elseif ($value instanceof Search_Type_Timestamp) {
-			$this->table->ensureHasField($name, 'DATETIME', array('index'));
+			$this->table->ensureHasField($name, 'DATETIME');
 		} else {
 			throw new Exception('Unsupported type: ' . get_class($value));
 		}
@@ -79,17 +82,73 @@ class Search_MySql_Index implements Search_Index_Interface
 
 	function find(Search_Query_Interface $query, $resultStart, $resultCount)
 	{
+		$words = $this->getWords($query->getExpr());
+
 		$condition = $this->builder->build($query->getExpr());
 		$conditions = array(
 			$this->table->expr($condition),
 		);
+
+		$scoreField = null;
+		$indexes = $this->builder->getRequiredIndexes();
+		foreach ($indexes as $index) {
+			$this->table->ensureHasIndex($index['field'], $index['type']);
+
+			if (! $scoreField && $index['type'] == 'fulltext') {
+				$scoreField = $index['field'];
+			}
+		}
+
+		$order = $this->getOrderClause($query, (bool) $scoreField);
+
+		$selectFields = $this->table->all();
+
+		if ($scoreField) {
+			$str = $this->db->qstr(implode(' ', $words));
+			$selectFields['score'] = $this->table->expr("MATCH(`$scoreField`) AGAINST ($str)");
+		}
 		$count = $this->table->fetchCount($conditions);
-		$entries = $this->table->fetchAll($this->table->all(), $conditions, $resultCount, $resultStart);
+		$entries = $this->table->fetchAll($selectFields, $conditions, $resultCount, $resultStart, $order);
 
 		$resultSet = new Search_ResultSet($entries, $count, $resultStart, $resultCount);
-		$resultSet->setHighlightHelper(new Search_MySql_HighlightHelper($query->getExpr()));
+		$resultSet->setHighlightHelper(new Search_MySql_HighlightHelper($words));
 
 		return $resultSet;
+	}
+
+	private function getOrderClause($query, $useScore)
+	{
+		$order = $query->getSortOrder();
+
+		if ($order->getField() == Search_Query_Order::FIELD_SCORE) {
+			if ($useScore) {
+				return array('score' => 'DESC');
+			} else {
+				return; // No specific order
+			}
+		}
+
+		if ($order->getMode() == Search_Query_Order::MODE_NUMERIC) {
+			return $this->table->expr("CAST(`{$order->getField()}` as SIGNED) {$order->getOrder()}");
+		} else {
+			return $this->table->expr("`{$order->getField()}` {$order->getOrder()}");
+		}
+	}
+
+	private function getWords($expr)
+	{
+		$words = array();
+		$factory = new Search_Type_Factory_Direct;
+		$expr->walk(function ($node) use (& $words, $factory) {
+			if ($node instanceof Search_Expr_Token) {
+				$word = $node->getValue($factory)->getValue();
+				if (is_string($word)) {
+					$words[] = $word;
+				}
+			}
+		});
+
+		return $words;
 	}
 
 	function getTypeFactory()

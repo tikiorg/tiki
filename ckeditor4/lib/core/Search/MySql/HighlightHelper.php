@@ -11,16 +11,8 @@ class Search_MySql_HighlightHelper implements Zend_Filter_Interface
 	private $replacements = array();
 	private $snippetHelper;
 
-	function __construct(Search_Expr_Interface $query)
+	function __construct(array $words)
 	{
-		$words = array();
-		$factory = new Search_Type_Factory_Direct;
-		$query->walk(function ($node) use (& $words, $factory) {
-			if ($node instanceof Search_Expr_Token) {
-				$words[] = $node->getValue($factory)->getValue();
-			}
-		});
-
 		$this->words = $words;
 		$this->replacements = array_map(function ($word) {
 			return "<b style=\"color:black;background-color:#ff66ff\">$word</b>";
