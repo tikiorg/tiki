@@ -46,10 +46,21 @@ if (!empty($_REQUEST['day']) && !empty($_REQUEST['mon']) && !empty($_REQUEST['ye
 }
 
 $focusdate = $_REQUEST['todate'];
+$focusDay = TikiLib::date_format("%d", $focusdate);
+$focusMonth = TikiLib::date_format("%m", $focusdate);
+$focusYear = TikiLib::date_format("%Y", $focusdate);
+// Validate input
+if(intval($focusDay) <= 0 || !is_numeric($focusDay) || 
+	intval($focusMonth) <= 0 || !is_numeric($focusDay) || 
+	intval($focusYear) <= 0 || !is_numeric($focusDay)) {
+	$smarty->assign('msg', tra('Invalid date format'));
+	$smarty->display('error.tpl');
+	die;
+}
 list($focus_day, $focus_month, $focus_year) = array(
-		TikiLib::date_format("%d", $focusdate),
-		TikiLib::date_format("%m", $focusdate),
-		TikiLib::date_format("%Y", $focusdate)
+		$focusDay,
+		$focusMonth,
+		$focusYear
 );
 
 $focus = array('day'=>$focus_day, 'month'=>$focus_month, 'year'=>$focus_year);

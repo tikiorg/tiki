@@ -29,6 +29,9 @@ class Tiki_Security_Policy extends Smarty_Security
 	 * needs a proper description
 	 * @var array $secure_dir
 	 */
+
+	public $trusted_uri = array();
+
 	public $secure_dir = array(
 		'',
 		'img/',
@@ -64,11 +67,14 @@ class Tiki_Security_Policy extends Smarty_Security
 
 		$functions = array();
 		$modifiers = array();
+		$urls = array();
 		
 		//With phpunit and command line these don't exist yet for some reason
 		if (isset($tikilib) && method_exists($tikilib, "get_preference")) {
 			$functions = array_filter($tikilib->get_preference('smarty_security_functions', array(), true));
 			$modifiers = array_filter($tikilib->get_preference('smarty_security_functions', array(), true));
+			$this->trusted_uri[0] = '#'.$tikilib->get_preference('tiki_cdn','').'$#i';
+			$this->trusted_uri[1] = '#'.$tikilib->get_preference('tiki_cdn_ssl','').'$#i';
 		}
 
 		$functions = (isset($functions) ? $functions : array());
