@@ -15,6 +15,7 @@ $inputConfiguration = array(
 				'highlight' => 'text',
 				'where' => 'word',
 				'find' => 'text',
+				'searchLang' => 'word',
 				'words' =>'text',
 				'boolean' =>'word',
 		)
