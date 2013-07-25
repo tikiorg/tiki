@@ -84,8 +84,11 @@ var enableWysiwygInlineEditing = function () {
 	});
 	// save original data and add contenteditable
 	$("#page-data > *:not(.icon_edit_section)").each(function() {
-		$(this).data("inline_original", $(this).html());
-	}).attr("contenteditable", true);
+		if ($(".editplugin", this).length === 0) {
+			$(this).data("inline_original", $(this).html())
+					.attr("contenteditable", true);
+		}
+	});
 	// init inline ckeditors
 	window.CKEDITOR.inlineAll();
 }
@@ -99,8 +102,8 @@ var disableWyiswygInlineEditing = function() {
 }
 ')
 		->add_js(
-			'// --- config settings for the autosave plugin ---
-window.CKEDITOR.config.ajaxSaveTargetUrl = "'.$tikiroot.'tiki-auto_save.php?page='.urlencode($pageName).'";	
+			'// --- config settings for the inlinesave plugin ---
+window.CKEDITOR.config.ajaxSaveTargetUrl = "'.$tikiroot.'tiki-auto_save.php?page='.urlencode($pageName).'";
 window.CKEDITOR.config.extraPlugins = "";
 window.CKEDITOR.config.extraPlugins += (window.CKEDITOR.config.extraPlugins ? ",inlinesave" : "inlinesave" );
 window.CKEDITOR.plugins.addExternal( "inlinesave", "'.$tikiroot.'lib/ckeditor_tiki/plugins/inlinesave/");
