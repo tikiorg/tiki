@@ -289,5 +289,18 @@ class Search_MySql_QueryBuilderTest extends PHPUnit_Framework_TestCase
 		$this->assertEquals(array(
 		), $this->builder->getRequiredIndexes($expr));
 	}
+
+	function testEmptyAndPart()
+	{
+		$expr = new AndX(array(
+			new Token('Hello', 'identifier', 'object_id', 1.5),
+			new AndX(array()),
+		));
+
+		$this->assertEquals("(`object_id` = 'Hello')", $this->builder->build($expr));
+		$this->assertEquals(array(
+			array('field' => 'object_id', 'type' => 'index'),
+		), $this->builder->getRequiredIndexes($expr));
+	}
 }
 
