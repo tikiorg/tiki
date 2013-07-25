@@ -36,7 +36,7 @@ class Tracker_Options
 			}
 
 			if ($field = $options->getParamDefinitionFromIndex($key)) {
-				if ($field['count'] == '*') {
+				if (isset($field['count']) && $field['count'] == '*') {
 					// Count is last, always
 					$options->setParam($field['key'], array_values(array_slice($parts, $key)));
 					break;
@@ -131,6 +131,8 @@ class Tracker_Options
 		} elseif($default === false && $def = $this->getParamDefinition($key)) {
 			if (isset($def['default'])) {
 				return $def['default'];
+			} elseif ($default === false && isset($def['separator'])) {
+				return array();
 			}
 		}
 
