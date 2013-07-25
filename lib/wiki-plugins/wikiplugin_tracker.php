@@ -363,14 +363,14 @@ function wikiplugin_tracker_name($fieldId, $name, $field_errors)
 
 function wikiplugin_tracker($data, $params)
 {
-	global $tikilib, $userlib, $user, $group, $page, $smarty, $prefs, $trklib, $captchalib;
+	global $tikilib, $userlib, $user, $group, $page, $smarty, $prefs, $captchalib;
 	$parserlib = TikiLib::lib('parser');
+	$trklib = TikiLib::lib('trk');
 
 	static $iTRACKER = 0;
 	++$iTRACKER;
 	if (isset($params['itemId']) && empty($params['itemId']))
 		return;
-	include_once('lib/trackers/trackerlib.php');
 	$default = array('overwrite' => 'n', 'embedded' => 'n', 'showtitle' => 'n', 'showdesc' => 'n', 'sort' => 'n', 'showmandatory'=>'y', 'status' => '', 'registration' => 'n', 'emailformat' => 'text');
 	$params = array_merge($default, $params);
 	$item = array();
@@ -394,7 +394,7 @@ function wikiplugin_tracker($data, $params)
 	} elseif (!empty($trackerId) && !empty($view) && $view == 'user') {// the user item of a tracker
 		$itemId = $trklib->get_user_item($trackerId, $tracker, null, null, strlen($status) == 1 ? $status : '');
 		$usertracker = true;
-	} elseif (!empty($trackerId) && !empty($view) && $view == 'page' && !empty($_REQUEST['page']) && $f = $trackerlib->get_page_field($trackerId)) {// the page item
+	} elseif (!empty($trackerId) && !empty($view) && $view == 'page' && !empty($_REQUEST['page']) && $f = $trklib->get_page_field($trackerId)) {// the page item
 		$itemId = $trklib->get_item_id($trackerId, $f['fieldId'], $_REQUEST['page']);
 	} elseif (!empty($trackerId) && !empty($_REQUEST['view_user'])) {
 		$itemId = $trklib->get_user_item($trackerId, $tracker, $_REQUEST['view_user']);
