@@ -32,6 +32,7 @@
 			{preference name=wysiwyg_wiki_semi_parsed}
 			{preference name=wysiwyg_htmltowiki}
 		</div>
+		{preference name=wysiwyg_inline_editing}
 		{preference name=wysiwyg_toolbar_skin}
 		{preference name="wysiwyg_fonts"}
 

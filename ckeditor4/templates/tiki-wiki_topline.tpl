@@ -47,7 +47,7 @@
 										{/jq}
 										<a title="{tr}View edit icons{/tr}" href="#" id="wiki_plugin_edit_view">{icon _id='wiki_plugin_edit_view' title="{tr}View edit icons{/tr}"}</a>
 									{/if}
-									{if $prefs.feature_wysiwyg_inline eq 'y'}
+									{if $prefs.wysiwyg_inline_editing eq 'y'}
 										{jq}
 											$("#wysiwyg_inline_edit").click( function () {
 												var src = $("#wysiwyg_inline_edit img").attr("src");
