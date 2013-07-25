@@ -28,5 +28,25 @@ class Tracker_OptionsTest extends PHPUnit_Framework_TestCase
 
 		$this->assertEquals(array('1', '2', '3'), $options->buildOptionsArray());
 	}
+
+	function testSeparatorOnEmptyData()
+	{
+		$options = Tracker_Options::fromString('a,,b', array(
+			'params' => array(
+				'a' => array(
+					'legacy_index' => 0,
+				),
+				'b' => array(
+					'legacy_index' => 1,
+					'separator' => '|',
+				),
+				'c' => array(
+					'legacy_index' => 2,
+				),
+			),
+		));
+
+		$this->assertEquals(array(), $options->getParam('b'));
+	}
 }
 

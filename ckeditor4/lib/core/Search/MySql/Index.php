@@ -85,7 +85,7 @@ class Search_MySql_Index implements Search_Index_Interface
 		$words = $this->getWords($query->getExpr());
 
 		$condition = $this->builder->build($query->getExpr());
-		$conditions = array(
+		$conditions = empty($condition) ? array() : array(
 			$this->table->expr($condition),
 		);
 

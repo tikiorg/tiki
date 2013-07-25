@@ -198,16 +198,16 @@ function setUpClueTips() {
 	
 	$('.tips[title!=""]').cluetip(ctOptions);
 	$('.titletips[title!=""]').cluetip(ctOptions);
-	$('.tikihelp[title!=""]').cluetip($.extend({splitTitle: ':'}, ctOptions)); // , width: '150px'
+	$('.tikihelp[title!=""]').cluetip($.extend({}, ctOptions, {splitTitle: ':'})); // , width: '150px'
 
 	$('[data-cluetip-options]').each(function () {
 		$(this).cluetip(function () {
 			return $(this).data("cluetip-body");
-		}, $.extend($(this).data("cluetip-options"), ctOptions));
+		}, $.extend({}, ctOptions, $(this).data("cluetip-options")));
 	});
 
 	// unused?
-	$('.stickytips').cluetip($.extend(ctOptions, {showTitle: false, sticky: false, local: true, hideLocal: true, activation: 'click', cluetipClass: 'fullhtml'}));
+	$('.stickytips').cluetip($.extend({}, ctOptions, {showTitle: false, sticky: false, local: true, hideLocal: true, activation: 'click', cluetipClass: 'fullhtml'}));
 
 	// repeats for "tiki" buttons as you cannot set the class and title on the same element with that function (it seems?)
 	//$('span.button.tips a').cluetip({splitTitle: '|', showTitle: false, width: '150px', cluezIndex: 400, fx: {open: 'fadeIn', openSpeed: 'fast'}, clickThrough: true});
