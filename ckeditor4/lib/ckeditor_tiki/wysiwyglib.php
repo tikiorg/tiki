@@ -19,7 +19,7 @@ class WYSIWYGLib
 		
 		// Validate user permissions
 		$tikilib = TikiLib::lib('tiki');
-		if(!$tikilib->user_has_perm_on_object($user,$pageName,'wiki page','tiki_p_edit')) {
+		if(!$tikilib->user_has_perm_on_object($user,$pageName,'wiki page','edit')) {
 			// User has no permission
 			return;
 		}
@@ -77,16 +77,26 @@ class WYSIWYGLib
 
 		$headerlib->add_js('', 5)
 			->add_jq_onready('
-// lists dont inline happily so wrap in divs
-$("#page-data > ul, #page-data > ol, #page-data > dl").each(function() {
-		$(this).wrap("<div>");
-});
-// save original data and add contenteditable
-$("#page-data > *").each(function() {
-	$(this).data("inline_original", $(this).html());
-}).attr("contenteditable", true);
-// init inline ckeditors
-window.CKEDITOR.inlineAll();
+var enableWysiwygInlineEditing = function () {
+	// lists dont inline happily so wrap in divs
+	$("#page-data > ul, #page-data > ol, #page-data > dl").each(function() {
+			$(this).wrap("<div>");
+	});
+	// save original data and add contenteditable
+	$("#page-data > *:not(.icon_edit_section)").each(function() {
+		$(this).data("inline_original", $(this).html());
+	}).attr("contenteditable", true);
+	// init inline ckeditors
+	window.CKEDITOR.inlineAll();
+}
+var disableWyiswygInlineEditing = function() {
+	$("#page-data > *[contenteditable=true]").attr("contenteditable", false).removeClass("cke_editable");
+	for(var e in  CKEDITOR.instances) {
+		if (CKEDITOR.instances[e] != null) {
+			CKEDITOR.instances[e].destroy();
+		}
+	}
+}
 ')
 		->add_js(
 			'// --- config settings for the autosave plugin ---
@@ -131,28 +141,10 @@ window.CKEDITOR.on("instanceCreated", function( event ) {
 });
 
 ');
-// register_id("'.$dom_id.'","'.addcslashes(($_SERVER["HTTP_REFERER"]), '"').'");	// Register auto_save so it gets removed on submit
-// ajaxLoadingShow("'.$dom_id.'");
-// window.CKEDITOR.config.ajaxSaveSensitivity = 2 ;			// Sensitivity to key strokes
 
 	}
 
-	function shutdownInlineEditor()
-	{
-		global $tikiroot, $prefs;
-		$headerlib = TikiLib::lib('header');
-		$js = '$("#page-data > *").attr("contenteditable", false);';
-		$js .= 'var instances = CKEDITOR.instances;
-				for(var i = 0; i < instances.length; i++) {
-					if (instances[i] != null) {
-						instances[i].destroy();
-					}
-				}';
-		$headerlib->add_js($js);
-		self::$ckEditor = '';
-	}
-	
-	
+
 	function setUpEditor($is_html, $dom_id, $params = array(), $auto_save_referrer = '', $full_page = true)
 	{
         static $notallreadyloaded =true;

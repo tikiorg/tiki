@@ -19,11 +19,6 @@
 						{else}
 							{button _keepall='y' href="tiki-editpage.php" page=$page _class=$thisPageClass _text="{tr}Edit this page{/tr}"}
 						{/if}
-						{if $prefs.feature_wysiwyg_inline eq 'y'}
-							{if isset($page)}
-								{button _keepall='y' page=$page href="tiki-inline_edit.php" _class=$thisPageClass _text="{tr}Inline edit{/tr}"}
-							{/if}
-						{/if}
 					{elseif $tiki_p_wiki_view_latest eq 'y'}
 						<span class="button">
 							{self_link latest=1}

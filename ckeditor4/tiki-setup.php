@@ -600,7 +600,9 @@ if ($prefs['ajax_inline_edit'] == 'y') {
 }
 
 // Inline Ckeditor editor
-if (($prefs['feature_wysiwyg_inline'] == 'y')&&(isset($_SESSION['edit_wysiwyg_inline']) && ($_SESSION['edit_wysiwyg_inline'] === 'y'))) {
+if ($prefs['feature_wysiwyg_inline'] == 'y' && !empty($_REQUEST['page']) &&
+			$tikilib->user_has_perm_on_object($user, $_REQUEST['page'],'wiki page','edit')) {
+
 	include_once('lib/ckeditor_tiki/wysiwyglib.php');
 	$wysiwyglib->setUpInlineEditor($_REQUEST['page']);		// init ckeditor if default editor
 }
