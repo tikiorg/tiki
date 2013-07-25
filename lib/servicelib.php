@@ -71,6 +71,7 @@ class ServiceLib
 			'tracker_todo' => 'Services_Tracker_TodoController',
 			'translation' => 'Services_Language_TranslationController',
 			'user' => 'Services_User_Controller',
+			'vimeo' => 'Services_File_VimeoController',
 			'wiki' => 'Services_Wiki_Controller',
 			'workspace'=>  'Services_Workspace_Controller',
 		);

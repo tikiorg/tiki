@@ -48,7 +48,9 @@ class OAuthLib extends TikiDb_Bridge
 		}
 
 		try {
-			return $client->request();
+			$response = $client->request();
+
+			return $response;
 		} catch (Zend_Http_Exception $e) {
 			return null;
 		}
@@ -103,6 +105,17 @@ class OAuthLib extends TikiDb_Bridge
 
 	private function retrieve_token($provider_key)
 	{
+		$config = $this->get_configuration($provider_key);
+		
+		if (! empty($config['accessToken']) && ! empty($config['accessTokenSecret'])) {
+			$token = new Zend_Oauth_Token_Access;
+			$token->setParams(array(
+				'oauth_token' => $config['accessToken'],
+				'oauth_token_secret' => $config['accessTokenSecret'],
+			));
+
+			return $token;
+		}
 		$tikilib = TikiLib::lib('tiki');
 
 		$token = $tikilib->get_preference('oauth_token_' . $provider_key);
@@ -116,6 +129,21 @@ class OAuthLib extends TikiDb_Bridge
 		$tikilib = TikiLib::lib('tiki');
 
 		switch ($provider_key) {
+		case 'vimeo':
+			return array(
+				'callbackUrl' => $tikilib->tikiUrl(
+					'tiki-ajax_services.php',
+					array('oauth_callback' => $provider_key,)
+				),
+				'siteUrl' => 'https://vimeo.com/oauth',
+				'requestTokenUrl' => 'https://vimeo.com/oauth/request_token',
+				'accessTokenUrl' => 'https://vimeo.com/oauth/access_token',
+				'authorizeUrl' => 'https://vimeo.com/oauth/authorize',
+				'consumerKey' => $prefs['vimeo_consumer_key'],
+				'consumerSecret' => $prefs['vimeo_consumer_secret'],
+				'accessToken' => $prefs['vimeo_access_token'],
+				'accessTokenSecret' => $prefs['vimeo_access_token_secret'],
+			);
 		case 'zotero':
 			return array(
 				'callbackUrl' => $tikilib->tikiUrl(
