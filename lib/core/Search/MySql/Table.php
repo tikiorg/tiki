@@ -107,7 +107,11 @@ class Search_MySql_Table extends TikiDb_Table
 	{
 		$table = $this->escapeIdentifier($this->tableName);
 		$fieldName = $this->escapeIdentifier($fieldName);
-		$this->db->query("ALTER TABLE $table ADD COLUMN $fieldName $type");
+		$this->db->queryError("ALTER TABLE $table ADD COLUMN $fieldName $type", $error);
+
+		if ($error) {
+			throw new Search_MySql_LimitReachedException(tr("Database too large for index type. Limit reached."));
+		}
 	}
 
 	private function addIndex($fieldName)
@@ -116,6 +120,10 @@ class Search_MySql_Table extends TikiDb_Table
 		$indexName = $this->escapeIdentifier($fieldName . '_index');
 		$fieldName = $this->escapeIdentifier($fieldName);
 		$this->db->queryError("ALTER TABLE $table ADD INDEX $indexName ($fieldName)", $error);
+
+		if ($error) {
+			throw new Search_MySql_LimitReachedException(tr("Too many indexes required. Limit reached."));
+		}
 	}
 
 	private function addFullText($fieldName)
@@ -124,6 +132,10 @@ class Search_MySql_Table extends TikiDb_Table
 		$indexName = $this->escapeIdentifier($fieldName . '_fulltext');
 		$fieldName = $this->escapeIdentifier($fieldName);
 		$this->db->queryError("ALTER TABLE $table ADD FULLTEXT INDEX $indexName ($fieldName)", $error);
+
+		if ($error) {
+			throw new Search_MySql_LimitReachedException(tr("Too many indexes required. Limit reached."));
+		}
 	}
 }
 

@@ -5,7 +5,7 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-class Search_MySql_QueryException extends Search_MySql_Exception
+class Search_MySql_LimitReachedException extends Search_MySql_Exception
 {
 }
 
