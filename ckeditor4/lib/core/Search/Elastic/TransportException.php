@@ -5,7 +5,7 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-class Search_Elastic_TransportException extends Exception
+class Search_Elastic_TransportException extends Search_Elastic_Exception
 {
 }
 

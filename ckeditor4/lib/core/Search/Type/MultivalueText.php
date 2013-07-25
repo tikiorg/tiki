@@ -14,6 +14,11 @@ class Search_Type_MultivalueText implements Search_Type_Interface
 		$this->values = $values;
 	}
 
+	function getRawValue()
+	{
+		return $this->values;
+	}
+
 	function getValue()
 	{
 		$strings = array();

@@ -32,7 +32,7 @@ class Search_Index_Memory implements Search_Index_Interface
 		$this->lastOrder = $query->getSortOrder();
 		$this->lastStart = $resultStart;
 		$this->lastCount = $resultCount;
-		return array();
+		return new Search_ResultSet(array(), 0, $resultStart, $resultCount);
 	}
 
 	function getTypeFactory()

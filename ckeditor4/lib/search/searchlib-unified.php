@@ -179,17 +179,26 @@ class UnifiedSearchLib
 		$tikilib = TikiLib::lib('tiki');
 		$access = TikiLib::lib('access');
 		$access->preventRedirect(true);
-		$index = new Search_Index_TypeAnalysisDecorator($index);
-		$indexer = $this->buildIndexer($index, $loggit);
-		$stat = $tikilib->allocate_extra(
-			'unified_rebuild',
-			function () use ($indexer) {
-				return $indexer->rebuild();
-			}
-		);
-		$access->preventRedirect(false);
 
-		$tikilib->set_preference('unified_identifier_fields', $index->getIdentifierFields());
+		try {
+			$index = new Search_Index_TypeAnalysisDecorator($index);
+			$indexer = $this->buildIndexer($index, $loggit);
+			$stat = $tikilib->allocate_extra(
+				'unified_rebuild',
+				function () use ($indexer) {
+					return $indexer->rebuild();
+				}
+			);
+
+			$tikilib->set_preference('unified_identifier_fields', $index->getIdentifierFields());
+		} catch (Exception $e) {
+			$errlib->report(
+				tr('Search index could not be rebuilt.') .
+				'<br />' . $e->getMessage()
+			);
+		}
+
+		$access->preventRedirect(false);
 
 		// Force destruction to clear locks
 		unset($indexer);
@@ -494,7 +503,7 @@ class UnifiedSearchLib
 		case 'elastic':
 			$index = $this->getIndexLocation($indexType);
 			if (empty($index)) {
-				return null;
+				break;
 			}
 
 			$connection = $this->getElasticConnection();
@@ -503,12 +512,18 @@ class UnifiedSearchLib
 		case 'mysql':
 			$index = $this->getIndexLocation($indexType);
 			if (empty($index)) {
-				return null;
+				break;
 			}
 
 			$index = new Search_MySql_Index(TikiDb::get(), $index);
 			return $index;
 		}
+
+		// Do nothing, provide a fake index.
+		$errlib = TikiLib::lib('errorreport');
+		$errlib->report(tr('No index available.'));
+
+		return new Search_Index_Memory;
 	}
 
 	private function getElasticConnection()

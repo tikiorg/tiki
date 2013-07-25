@@ -707,7 +707,7 @@ function wikiplugin_tracker($data, $params)
 				}
 				$cpt = 0;
 				if (isset($fields)) {
-					$fields_plugin = preg_split('/:/', $fields);
+					$fields_plugin = $fields;
 				}
 				if (!isset($itemId) && $tracker['oneUserItem'] == 'y') {
 					$itemId = $trklib->get_user_item($trackerId, $tracker);
@@ -1003,7 +1003,7 @@ function wikiplugin_tracker($data, $params)
 					$values = array($values);
 				}
 				if (isset($fields)) {
-					$fl = preg_split('/:/', $fields);
+					$fl = $fields;
 					for ($j = 0, $count_fl = count($fl); $j < $count_fl; $j++) {
 						for ($i = 0, $count_flds = count($flds['data']); $i < $count_flds; $i++) {
 							if ($flds['data'][$i]['fieldId'] == $fl[$j]) {
@@ -1020,7 +1020,7 @@ function wikiplugin_tracker($data, $params)
 
 			} elseif (!empty($itemId)) {
 				if (isset($fields)) {
-					$fl = preg_split('/:/', $fields);
+					$fl = $fields;
 					$filter = '';
 					foreach ($flds['data'] as $f) {
 						if (in_array($f['fieldId'], $fl))
@@ -1059,7 +1059,7 @@ function wikiplugin_tracker($data, $params)
 
 			// Check that individual fields are in the tracker
 			if (!empty($fields)) {
-				$fl = preg_split('/:/', $fields);
+				$fl = $fields;
 				if ($sort == 'y') {
 					$flds = $trklib->sort_fields($flds, $fl);
 				}
