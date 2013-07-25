@@ -126,7 +126,7 @@ class htmlMimeMail
 		* Set these up
 		*/
 		$this->build_params['html_encoding'] = 'quoted-printable';
-		$this->build_params['text_encoding'] = '7bit';
+		$this->build_params['text_encoding'] = 'quoted-printable';
 		$this->build_params['html_charset'] = 'ISO-8859-1';
 		$this->build_params['text_charset'] = 'ISO-8859-1';
 		$this->build_params['head_charset'] = 'ISO-8859-1';
