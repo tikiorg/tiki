@@ -46,10 +46,14 @@ function tf_export_submit(fm) {
 			<select id="f_{$filter.fieldId}" name="f_{$filter.fieldId}{if $filter.format eq "m"}[]{/if}" {if $filter.format eq "m"} size="5" multiple="multiple"{/if}> 
 			{if $indrop eq 'y'}<option value="">--{$filter.name|tr_if}--</option>{/if}
 			<option value="">{tr}Any{/tr}</option>
+			{$last = ''}
 			{section name=io loop=$filter.opts}
-				<option value="{$filter.opts[io].id}"{if $filter.opts[io].selected eq "y"} selected="selected"{/if}>
-					{$filter.opts[io].name|tr_if|escape}
-				</option>
+				{if $last neq $filter.opts[io].name or $filter.field.type neq 'd'}{* hide repeated entries, used for defaults in other cases *}
+					<option value="{$filter.opts[io].id}"{if $filter.opts[io].selected eq "y"} selected="selected"{/if}>
+						{$filter.opts[io].name|tr_if|escape}
+					</option>
+				{/if}
+				{$last = $filter.opts[io].name}
 			{/section}
 			</select>
 			{if $filter.format eq 'm' and $prefs.jquery_ui_chosen neq 'y'}{remarksbox type='tip' title='{tr}Tip{/tr}'}{tr}Use Ctrl+Click to select multiple options{/tr}{/remarksbox}{/if}
