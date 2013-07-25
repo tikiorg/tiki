@@ -61,7 +61,9 @@ class Search_MySql_QueryBuilder
 			$exception = $e;
 		}
 
-		if (count($childNodes) === 1 && ($node instanceof AndX || $node instanceof OrX)) {
+		if (count($childNodes) === 0 && ($node instanceof AndX || $node instanceof OrX)) {
+			return '';
+		} elseif (count($childNodes) === 1 && ($node instanceof AndX || $node instanceof OrX)) {
 			return reset($childNodes);
 		} elseif ($node instanceof OrX) {
 			return '(' . implode(' OR ', $childNodes) . ')';

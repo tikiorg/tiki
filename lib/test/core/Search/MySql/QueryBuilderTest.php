@@ -279,5 +279,15 @@ class Search_MySql_QueryBuilderTest extends PHPUnit_Framework_TestCase
 			array('field' => 'contents', 'type' => 'fulltext'),
 		), $this->builder->getRequiredIndexes($expr));
 	}
+
+	function testEmptyAnd()
+	{
+		$expr = new AndX(array(
+		));
+
+		$this->assertEquals("", $this->builder->build($expr));
+		$this->assertEquals(array(
+		), $this->builder->getRequiredIndexes($expr));
+	}
 }
 
