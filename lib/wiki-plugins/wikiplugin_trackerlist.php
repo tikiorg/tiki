@@ -792,7 +792,7 @@ function wikiplugin_trackerlist($data, $params)
 		}
 		$userCreatorFieldId = $definition->getAuthorField();
 		$groupCreatorFieldId = $definition->getWriterGroupField();
-		if ($perms['tiki_p_view_trackers'] != 'y' && $tracker_info['writerCanModify'] != 'y' && empty($userCreatorFieldId) && empty($groupCreatorFieldId)) {
+		if ($perms['tiki_p_view_trackers'] != 'y' && ! $definition->isEnabled('writerCanModify') && empty($userCreatorFieldId) && empty($groupCreatorFieldId)) {
 			return;
 		}
 		$smarty->assign_by_ref('perms', $perms);
@@ -936,7 +936,7 @@ function wikiplugin_trackerlist($data, $params)
 		if (!empty($_REQUEST['itemId']) && $tiki_p_tracker_vote_ratings == 'y' && $user) {
 			$hasVoted = false;
 			foreach ($allfields['data'] as $f) {
-				if ($f['type'] == 's' && isset($tracker_info['useRatings']) and $tracker_info['useRatings'] == 'y' && ($f['name'] == 'Rating' || $f['name'] = tra('Rating'))) {
+				if ($f['type'] == 's' && $definition->isEnabled('useRatings') && ($f['name'] == 'Rating' || $f['name'] = tra('Rating'))) {
 					$i = $f['fieldId'];
 					if (isset($_REQUEST["ins_$i"]) && ($_REQUEST["ins_$i"] == 'NULL' || in_array($_REQUEST["ins_$i"], explode(',', $tracker_info['ratingOptions'])))) {
 						$trklib->replace_rating($trackerId, $_REQUEST['itemId'], $i, $user, $_REQUEST["ins_$i"]);
@@ -997,8 +997,6 @@ function wikiplugin_trackerlist($data, $params)
 		} else {
 			$popupfields = array();
 		}
-		if ($t = $trklib->get_tracker_options($trackerId))
-			$tracker_info = array_merge($tracker_info, $t);
 		$smarty->assign_by_ref('tracker_info', $tracker_info);
 
 		//$query_array = array();
@@ -1207,7 +1205,7 @@ function wikiplugin_trackerlist($data, $params)
 					$exactvalue[] = $_REQUEST['tr_user'];
 					$smarty->assign_by_ref('tr_user', $exactvalue);
 				}
-				if ($tracker_info['writerCanModify'] == 'y') {
+				if ($definition->isEnabled('writerCanModify')) {
 					$skip_status_perm_check = true;
 				}
 			}
@@ -1356,7 +1354,7 @@ function wikiplugin_trackerlist($data, $params)
 				}
 			}
 		}
-		if ($tiki_p_admin_trackers != 'y' && $perms['tiki_p_view_trackers'] != 'y' && $tracker_info['writerCanModify'] == 'y' && $user && $userCreatorFieldId) { //patch this should be in list_items
+		if ($tiki_p_admin_trackers != 'y' && $perms['tiki_p_view_trackers'] != 'y' && $definition->isEnabled('writerCanModify') && $user && $userCreatorFieldId) { //patch this should be in list_items
 			if ($filterfield != $userCreatorFieldId || (is_array($filterfield) && !in_array($$userCreatorFieldId, $filterfield))) {
 				if (is_array($filterfield))
 					$filterfield[] = $userCreatorFieldId;
@@ -1419,7 +1417,7 @@ function wikiplugin_trackerlist($data, $params)
 				$filterfield = $allfields["data"][$i]['fieldId'];
 				$filtervalue = $_REQUEST['page'];
 			}
-			if (isset($tracker_info['useRatings']) and $tracker_info['useRatings'] == 'y'
+			if ($definition->isEnabled('useRatings')
 					and $allfields["data"][$i]['type'] == 's' and $allfields["data"][$i]['name'] == 'Rating') {
 				$newItemRateField = $allfields["data"][$i]['fieldId'];
 			}
@@ -1608,12 +1606,12 @@ function wikiplugin_trackerlist($data, $params)
 					$items['data'][$f]['my_rate'] = $tikilib->get_user_vote("tracker.".$trackerId.'.'.$items['data'][$f]['itemId'], $user);
 				}
 			}
-			if ($tracker_info['useComments'] == 'y' && $tracker_info['showComments'] == 'y') {
+			if ($definition->isEnabled('useComments') && $definition->isEnabled('showComments')) {
 				foreach ($items['data'] as $itkey=>$oneitem) {
 					$items['data'][$itkey]['comments'] = $trklib->get_item_nb_comments($items['data'][$itkey]['itemId']);
 				}
 			}
-			if ($tracker_info['useAttachments'] == 'y' && $tracker_info['showAttachments'] == 'y') {
+			if ($definition->isEnabled('useAttachments') && $definition->isEnabled('showAttachments')) {
 				foreach ($items["data"] as $itkey=>$oneitem) {
 					$res = $trklib->get_item_nb_attachments($items["data"][$itkey]['itemId']);
 					$items["data"][$itkey]['attachments']  = $res['attachments'];

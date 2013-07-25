@@ -356,7 +356,7 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 			"{$baseKey}_text" => $typeFactory->sortable($label),
 		);
 
-		$indexRemote = array_filter(explode('|', $this->getOption('indexRemote')));
+		$indexRemote = array_filter($this->getOption('indexRemote'));
 		if (count($indexRemote) && is_numeric($item)) {
 			$utilities = new Services_Tracker_Utilities;
 			$trackerId = $this->getOption('trackerId');
@@ -380,7 +380,7 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 		$fields = array($baseKey, "{$baseKey}_text");
 
 		$trackerId = $this->getOption('trackerId');
-		$indexRemote = array_filter(explode('|', $this->getOption('indexRemote')));
+		$indexRemote = array_filter($this->getOption('indexRemote'));
 
 		if (count($indexRemote)) {
 			if ($definition = Tracker_Definition::get($trackerId)) {
@@ -413,7 +413,7 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 		$parts = array();
 
 		if ($fields = $this->getDisplayFieldsListArray()) {
-			foreach(explode('|', $fields) as $fieldId) {
+			foreach($fields as $fieldId) {
 				if (isset($item[$fieldId])) {
 					$parts[] = $item[$fieldId];
 				}
@@ -578,8 +578,8 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 
 		$usedFields = array_merge(
 			array($this->getOption('fieldId')),
-			explode('|', $this->getOption('indexRemote')),
-			explode('|', $this->getDisplayFieldsListArray())
+			$this->getOption('indexRemote'),
+			$this->getDisplayFieldsListArray()
 		);
 
 		$intersect = array_intersect($usedFields, $modifiedFields);

@@ -18,9 +18,13 @@ class Search_Index_CategoryFilterDecorator extends Search_Index_AbstractIndexDec
 	function addDocument(array $document)
 	{
 		if (isset($document['deep_categories'])) {
-			$categories = $document['deep_categories']->getValue();
+			if (method_exists($document['deep_categories'], 'getRawValue')) {
+				$categories = $document['deep_categories']->getRawValue();
+			} else {
+				$categories = $document['deep_categories']->getValue();
+			}
 
-			if (array_intersect($this->excluded, $categories)) {
+			if (is_array($categories) && array_intersect($this->excluded, $categories)) {
 				return 0;
 			}
 		}
