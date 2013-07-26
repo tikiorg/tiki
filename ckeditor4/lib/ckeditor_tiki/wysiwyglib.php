@@ -84,7 +84,7 @@ var enableWysiwygInlineEditing = function () {
 	});
 	// save original data and add contenteditable
 	$("#page-data > *:not(.icon_edit_section)").each(function() {
-		if ($(".editplugin", this).length === 0 && !$(this).hasClass("tiki_plugin")) {
+		if ($(".tiki_plugin", this).length === 0 && !$(this).hasClass("tiki_plugin")) {
 			$(this).data("inline_original", $(this).html())
 					.attr("contenteditable", true);
 		}
