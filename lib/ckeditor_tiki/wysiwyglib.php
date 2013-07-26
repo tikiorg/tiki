@@ -79,7 +79,7 @@ class WYSIWYGLib
 			->add_jq_onready('
 var enableWysiwygInlineEditing = function () {
 	// lists dont inline happily so wrap in divs
-	$("#page-data > ul, #page-data > ol, #page-data > dl").each(function() {
+	$("#page-data > ul, #page-data > ol, #page-data > dl, #page-data > table").each(function() {
 			$(this).wrap("<div>");
 	});
 	// save original data and add contenteditable
