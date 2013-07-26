@@ -9,13 +9,19 @@
 </iframe>
 {jq}
 	var ticket = {{$ticket.id|json_encode}};
+	var galleryId = {{$galleryId|json_encode}};
 	var $iframe = $('#vimeo' + ticket);
 	var $form = $('#form' + ticket);
 	var $file = $('#form' + ticket + ' input[type=file]');
 	
 	$iframe.on('load', function () {
-		$.post($.service('vimeo', 'complete'), {ticket: ticket, file: $file.val()}, function (data) {
-			alert(data.video);
+		var data = {
+			galleryId: galleryId,
+			ticket: ticket,
+			file: $file.val()
+		};
+		$.post($.service('vimeo', 'complete'), data, function (data) {
+			console.log(data);
 		}, 'json')
 	});
 {/jq}

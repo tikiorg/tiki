@@ -32,6 +32,14 @@ class VimeoLib
 		));
 		return $data['ticket'];
 	}
+
+	function verifyChunks($ticketId)
+	{
+		$data = $this->callMethod('vimeo.videos.upload.verifyChunks', array(
+			'ticket_id' => $ticketId,
+		));
+		return $data['ticket']['chunks'];
+	}
 	
 	function complete($ticketId, $fileName)
 	{

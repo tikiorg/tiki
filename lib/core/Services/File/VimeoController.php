@@ -7,11 +7,12 @@
 
 class Services_File_VimeoController
 {
+	private $utilities;
+
 	function setUp()
 	{
-		global $prefs;
-
 		Services_Exception_Disabled::check('vimeo_upload');
+		$this->utilities = new Services_File_Utilities;
 	}
 
 	function action_authorize()
@@ -21,6 +22,12 @@ class Services_File_VimeoController
 
 	function action_upload($input)
 	{
+		global $prefs;
+
+		$galleryId = $input->galleryId->int() ?: $prefs['vimeo_default_gallery'];
+
+		$this->utilities->checkTargetGallery($galleryId);
+
 		$vimeolib = TikiLib::lib('vimeo');
 
 		if (! $vimeolib->isAuthorized()) {
@@ -33,21 +40,41 @@ class Services_File_VimeoController
 		return array(
 			'available' => $quota['free'],
 			'ticket' => $ticket,
+			'galleryId' => $galleryId,
 		);
 	}
 
 	function action_complete($input)
 	{
+		$galleryId = $input->galleryId->int();
+		$gal_info = $this->utilities->checkTargetGallery($galleryId);
+
 		$ticket = $input->ticket->word();
 		$filename = basename($input->file->text());
 
 		$vimeolib = TikiLib::lib('vimeo');
+		$chunks = $vimeolib->verifyChunks($ticket);
 		$video = $vimeolib->complete($ticket, $filename);
+		$url = 'http://vimeo.com/' . $video;
+
+		$info = array(
+			'expires' => TikiLib::lib('tiki')->now,
+			'etag' => null,
+		);
+
+		$size = $chunks['chunk']['size'];
+
+		// Add placeholder directly without verification, URL will show 404 until processed
+		$filegallib = TikiLib::lib('filegal');
+		$fileId = $this->utilities->uploadFile($gal_info, $filename, $size, 'video/vimeo', 'REFERENCE');
+		$filegallib->attach_file_source($fileId, $url, $info, 1);
 
 		return array(
 			'ticket' => $ticket,
 			'file' => $filename,
 			'video' => $video,
+			'url' => $url,
+			'fileId' => $fileId,
 		);
 	}
 }

@@ -7,7 +7,8 @@
 
 class Services_File_Controller
 {
-	public $defaultGalleryId = 1;
+	private $defaultGalleryId = 1;
+	private $utilities;
 
 	function setUp()
 	{
@@ -17,6 +18,7 @@ class Services_File_Controller
 			throw new Services_Exception_Disabled('feature_file_galleries');
 		}
 		$this->defaultGalleryId = $prefs['fgal_root_id'];
+		$this->utilities = new Services_File_Utilities;
 	}
 
 	function action_upload($input)
@@ -36,9 +38,9 @@ class Services_File_Controller
 		$type = $mimelib->from_content($name, $data);
 
 		if ($fileId) {
-			$this->updateFile($gal_info, $name, $size, $type, $data, $fileId, $asuser);
+			$this->utilities->updateFile($gal_info, $name, $size, $type, $data, $fileId, $asuser);
 		} else {
-			$fileId = $this->uploadFile($gal_info, $name, $size, $type, $data, $asuser);
+			$fileId = $this->utilities->uploadFile($gal_info, $name, $size, $type, $data, $asuser);
 		}
 
 		if ($fileId === false) {
@@ -87,7 +89,7 @@ class Services_File_Controller
 			$info['data'] = 'REFERENCE';
 		}
 
-		$fileId = $this->uploadFile($gal_info, $info['name'], $info['size'], $info['type'], $info['data']);
+		$fileId = $this->utilities->uploadFile($gal_info, $info['name'], $info['size'], $info['type'], $info['data']);
 
 		if ($fileId === false) {
 			throw new Services_Exception(tr('File could not be uploaded. Restrictions apply.'), 406);
@@ -152,47 +154,9 @@ class Services_File_Controller
 
 	private function checkTargetGallery($input)
 	{
-		global $prefs;
+		$galleryId = $input->galleryId->int() ?: $this->defaultGalleryId;
 
-		$galleryId = $input->galleryId->int();
-
-		if (empty($galleryId)) $galleryId = $this->defaultGalleryId;
-
-		if (! $gal_info = $this->getGallery($galleryId)) {
-			throw new Services_Exception(tr('Requested gallery does not exist.'), 404);
-		}
-
-		if ($prefs['feature_use_fgal_for_user_files'] !== 'y' || $gal_info['type'] !== 'user') {
-			$perms = Perms::get('file gallery', $galleryId);
-			$canUpload = $perms->upload_files;
-		} else {
-			global $user;
-			$perms = TikiLib::lib('tiki')->get_local_perms($user, $galleryId, 'file gallery', $gal_info, false);		//get_perm_object($galleryId, 'file gallery', $galinfo);
-			$canUpload = $perms['tiki_p_upload_files'] === 'y';
-		}
-		if (!$canUpload) {
-			throw new Services_Exception(tr('Permission denied.'), 403);
-		}
-
-		return $gal_info;
-	}
-
-	private function getGallery($galleryId)
-	{
-		$filegallib = TikiLib::lib('filegal');
-		return $filegallib->get_file_gallery_info($galleryId);
-	}
-
-	private function uploadFile($gal_info, $name, $size, $type, $data, $asuser = null)
-	{
-		$filegallib = TikiLib::lib('filegal');
-		return $filegallib->upload_single_file($gal_info, $name, $size, $type, $data, $asuser);
-	}
-
-	private function updateFile($gal_info, $name, $size, $type, $data, $fileId, $asuser = null)
-	{
-		$filegallib = TikiLib::lib('filegal');
-		return $filegallib->update_single_file($gal_info, $name, $size, $type, $data, $fileId, $asuser);
+		return $this->utilities->checkTargetGallery($galleryId);
 	}
 }
 
