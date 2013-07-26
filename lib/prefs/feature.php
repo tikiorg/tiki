@@ -692,7 +692,7 @@ function prefs_feature_list($partial = false)
 				'feature_wiki_paragraph_formatting_add_br',
 				'wysiwyg_wiki_parsed',
 			),
-			'tags' => array('experimental'),
+			'tags' => array('basic'),
 		),
 		'feature_kaltura' => array(
 			'name' => tra('Kaltura Video Management'),
