@@ -2181,7 +2181,11 @@ class TikiLib extends TikiDb_Bridge
 		$g_table = '`tiki_file_galleries` as tfg';
 		$f_group_by = '';
 		$orderby = $this->convertSortMode($sort_mode);
-
+		// order by must handle "1", which is the convertSortMode error return
+		if ( $orderby == '1' ) {
+			$orderby = '';
+		}
+		
 		global $categlib; require_once 'lib/categories/categlib.php';
 		$f2g_corresp = array(
 				'0 as `isgal`' => '1 as `isgal`',
