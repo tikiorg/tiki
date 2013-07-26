@@ -287,6 +287,14 @@
 			{preference name=scorm_enabled}
 			{preference name=scorm_tracker}
 		{/tab}
+
+		{tab name="{tr}Vimeo{/tr}"}
+			{preference name=vimeo_upload}
+			{preference name=vimeo_consumer_key}
+			{preference name=vimeo_consumer_secret}
+			{preference name=vimeo_access_token}
+			{preference name=vimeo_access_token_secret}
+		{/tab}
 	{/tabset}
 
 	<div class="input_submit_container clear" style="text-align: center">

@@ -288,6 +288,9 @@ class TikiLib extends TikiDb_Bridge
 			case 'activity':
 				require_once 'lib/activity/activitylib.php';
 				return self::$libraries[$name] = new ActivityLib;
+			case 'vimeo':
+				require_once 'lib/filegals/vimeolib.php';
+				return self::$libraries[$name] = new VimeoLib;
 		}
 	}
 
