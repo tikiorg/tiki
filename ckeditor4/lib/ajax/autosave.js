@@ -18,15 +18,13 @@ function remove_save(editorId, autoSaveId) {
 	}
 	auto_save_submit = true;
 	$.ajax({
-		url: 'tiki-auto_save.php',
+		url: $.service("autosave", "delete"),
 		data: {
-			command: "auto_remove",
 			editor_id: editorId,
-			referer: autoSaveId,
-			data: ""
+			referer: autoSaveId
 		},
 		type: "POST",
-		async: false,	// called on form submit (save or cancel) so should wait 
+		async: false,	// called on form submit (save or cancel) so need to wait otherwise the call gets cancelled
 		// good callback
 		success: function(data) {
 			// act casual?
@@ -48,19 +46,13 @@ function toggle_autosaved(editorId, autoSaveId) {
 	if ($("#"+editorId+"_original").length === 0) {	// no save version already?
 		if (cked) { prefix = 'cke_contents_'; }
 		ajaxLoadingShow(prefix + editorId);
-		$.ajax({
-			url: 'tiki-auto_save.php',
-			data: {
-				command: "auto_get",
+
+		$.getJSON( $.service("autosave", "get"), {
 				editor_id: editorId,
-				referer: autoSaveId,
-				data: ""
+				referer: autoSaveId
 			},
-			async: true,
-			type: "POST",
-			// good callback
-			success: function(data) {
-				output = tiki_decodeURIComponent(jQuery(data).find('data').text());
+			function(data) {
+				output = data.data;
 				// back up current
 				$("#"+editorId).parents("form:first").
 					append($("<input type='hidden' id='"+editorId+"_original' />").val(tiki_encodeURIComponent($("#"+editorId).val())));
@@ -72,14 +64,9 @@ function toggle_autosaved(editorId, autoSaveId) {
 					$("#"+editorId).val(output);
 				}
 				ajaxLoadingHide();
-			},
-			// bad callback - no good info in the params :(
-			error: function(req, status, error) {
-			if (error && auto_save_debug) {
-					alert(tr("Auto Save get returned an error: ") + error);
-				}
 			}
-		});
+		);
+
 	} else {	// toggle back to original
 		syntaxHighlighter.sync($('#' + editorId));
 		
@@ -123,13 +110,13 @@ function auto_save( editorId, autoSaveId ) {
 			auto_save_data[editorId] = data;
 			sending_auto_save = true;
 			$.ajax({
-				url: 'tiki-auto_save.php',
+				url: $.service("autosave", "save"),
 				data: {
-					command: "auto_save",
+//					command: "auto_save",
 					editor_id: editorId,
 					referer: autoSaveId,
-					data: data,
-					allowHtml: allowHtml
+					data: data
+//					allowHtml: allowHtml
 				},
 				type: "POST",
 				// good callback

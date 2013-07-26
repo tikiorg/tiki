@@ -46,6 +46,7 @@ class ServiceLib
 	{
 		return array(
 			'auth_source' => 'Services_AuthSource_Controller',
+			'autosave' => 'Services_AutoSave_Controller',
 			'bigbluebutton' => 'Services_BigBlueButton_Controller',
 			'calendar' => 'Services_Calendar_Controller',
 			'category' => 'Services_Category_Controller',
