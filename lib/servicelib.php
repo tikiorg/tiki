@@ -61,6 +61,7 @@ class ServiceLib
 			'jison'=> 'Services_JisonParser_WikiPlugin',
 			'kaltura'=>  'Services_Kaltura_Controller',
 			'managestream' => 'Services_ActivityStream_ManageController',
+			'oauth' => 'Services_AuthSource_OAuthController',
 			'object' => 'Services_Object_Controller',
 			'rating'=>  'Services_Rating_Controller',
 			'report' => 'Services_Report_Controller',

@@ -11,7 +11,7 @@
 
 				{if ! $zotero_authorized}
 					<p>{tr}We are not autorized to access the group at this time. If you have access to the Zotero group, you can grant this site read access.{/tr}</p>
-					<p><a href="tiki-ajax_services.php?oauth_request=zotero">{tr}Authenticate with Zotero{/tr}</a></p>
+					<p><a href="{service controller=oauth action=request provider=zotero}">{tr}Authenticate with Zotero{/tr}</a></p>
 				{/if}
 			{/remarksbox}
 		</div>

@@ -109,7 +109,7 @@
 				{preference name=zotero_enabled}
 				<div class="adminoptionboxchild" id="zotero_enabled_childcontainer">
 					{if $prefs.zotero_client_key and $prefs.zotero_client_secret and $prefs.zotero_group_id}
-						{remarksbox type=info title="{tr}Configuration completed{/tr}"}<a href="tiki-ajax_services.php?oauth_request=zotero">{tr}Authenticate with Zotero{/tr}</a>{/remarksbox}
+						{remarksbox type=info title="{tr}Configuration completed{/tr}"}<a href="{service controller=oauth action=request provider=zotero}">{tr}Authenticate with Zotero{/tr}</a>{/remarksbox}
 					{/if}
 					{preference name=zotero_client_key}
 					{preference name=zotero_client_secret}

@@ -179,16 +179,6 @@ if ($access->is_serializable_request() && isset($_REQUEST['listonly'])) {
 	} else {
 		$access->output_serialized(array('type' => 'success', 'results' => $references));
 	}
-} elseif (isset($_REQUEST['oauth_request'])) {
-	$oauthlib = TikiLib::lib('oauth');
-
-	$oauthlib->request_token($_REQUEST['oauth_request']);
-	die('Provider not supported.');
-} elseif (isset($_REQUEST['oauth_callback'])) {
-	$oauthlib = TikiLib::lib('oauth');
-
-	$oauthlib->request_access($_REQUEST['oauth_callback']);
-	$access->redirect('');
 } elseif (isset($_REQUEST['geocode']) && $access->is_serializable_request()) {
 	$access->output_serialized(TikiLib::lib('geo')->geocode($_REQUEST['geocode']));
 } else {
