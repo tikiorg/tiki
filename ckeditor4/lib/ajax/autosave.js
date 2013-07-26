@@ -2,8 +2,6 @@
 
 var auto_save_submit = false;
 var sending_auto_save = false;
-var auto_save_timeoutId = 0;
-var auto_save_timeout_interval = 60000;
 var auto_save_debug = false;	// for development use
 
 function remove_save(editorId, autoSaveId) {
@@ -103,10 +101,7 @@ function auto_save( editorId, autoSaveId ) {
 		
 		var data = $textarea.val();
 		var allowHtml = auto_save_allowHtml($textarea.prop("form"));
-		if (auto_save_timeoutId > 0) {
-			clearTimeout(auto_save_timeoutId);	// can be triggered by textarea onChange event
-			auto_save_timeoutId = 0;			// so reset timer
-		}
+
 		if (data !== $textarea.data("original") || $textarea.data("last") !== data || $textarea.data("old_allowhtml") != allowHtml) {
 			$textarea.data("last", data);
 			sending_auto_save = true;
@@ -127,7 +122,6 @@ function auto_save( editorId, autoSaveId ) {
 						ajax_preview( editorId, autoSaveId, true );
 					}
 					$textarea.data("old_allowhtml", allowHtml);
-					auto_save_timeoutId = setTimeout( function () { auto_save( editorId, autoSaveId ); }, auto_save_timeout_interval);
 					sending_auto_save = false;
 				},
 				// bad callback - no good info in the params :(
@@ -139,7 +133,6 @@ function auto_save( editorId, autoSaveId ) {
 				}
 			});
 		} else {	// not changed, reset timeout
-			auto_save_timeoutId = setTimeout( function () { auto_save( editorId, autoSaveId ); }, auto_save_timeout_interval);
 		}
 	}
 }
@@ -147,7 +140,6 @@ function auto_save( editorId, autoSaveId ) {
 function register_id( editorId, autoSaveId ) {
 	var $textarea = $('#' + editorId);
 	syntaxHighlighter.sync($textarea);
-	auto_save_timeoutId = setTimeout( function () { auto_save( editorId, autoSaveId ); }, auto_save_timeout_interval);
 	$textarea.parents('form').submit(function() { remove_save(editorId, autoSaveId); });
 	$textarea.change(function () { auto_save( editorId, autoSaveId ); });
 }

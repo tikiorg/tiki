@@ -30,7 +30,6 @@
 </div>
 {jq} $(".previewBtn").click(function(){
 	if ($('#autosave_preview:visible').length === 0) {
-		auto_save_data['editwiki'] = "";
 		auto_save('editwiki', autoSaveId);
 		if (!ajaxPreviewWindow) {
 			$('#autosave_preview').slideDown('slow', function(){ ajax_preview( 'editwiki', autoSaveId, true );});
