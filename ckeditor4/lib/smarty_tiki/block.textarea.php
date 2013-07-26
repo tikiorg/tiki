@@ -131,8 +131,9 @@ JS
 		}
 	}
 
+	$params['switcheditor'] = isset($params['switcheditor']) ? $params['switcheditor'] : 'y';
 	$smarty->assign('comments', $params['comments']);	// 3 probably removable assigns
-	$smarty->assign('switcheditor', isset($params['switcheditor']) ? $params['switcheditor'] : 'n');
+	$smarty->assign('switcheditor', $params['switcheditor']);
 	$smarty->assign('toolbar_section', $params['section']);
 
 	if ($prefs['feature_ajax'] == 'y' && $prefs['ajax_autosave'] == 'y' && $params['_simple'] == 'n' && $params['autosave'] == 'y') {
