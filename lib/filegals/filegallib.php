@@ -3620,7 +3620,7 @@ class FileGalLib extends TikiLib
 	function upload_single_file($gal_info, $name, $size, $type, $data, $asuser = null)
 	{
 		global $user;
-		if (empty($asuser)) {
+		if (empty($asuser) || ! Perms::get()->admin) {
 			$asuser = $user;
 		}
 		if ($this->convert_from_data($gal_info, $fhash, $data)) {
