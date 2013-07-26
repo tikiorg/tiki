@@ -4438,5 +4438,18 @@ a.cke_button span.cke_icon {
 .cke_editable:hover {
 	outline: #ccc dotted 1px;
 }
+.tiki_plugin {
+	display: inline-block;
+}
+
+.tiki_plugin .plugin_icon {
+	float: left;
+	position: absolute;
+	display: none;
+	opacity: .7;
+}
+
+div.tiki_plugin { width: 100%; }
+
 
 /* End of file */
