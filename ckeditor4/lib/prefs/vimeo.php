@@ -12,7 +12,7 @@ function prefs_vimeo_list()
 			'name' => tr('Vimeo Upload'),
 			'description' => tr('Enables video upload to the Vimeo service. API keys are required and approval must be granted by Vimeo for the upload API.'),
 			'help' => 'Vimeo',
-			'prefs' => array('feature_file_galleries', 'fgal_upload_from_source'),
+			'dependencies' => array('feature_file_galleries', 'fgal_upload_from_source'),
 			'type' => 'flag',
 			'default' => 'n',
 		),
@@ -21,6 +21,7 @@ function prefs_vimeo_list()
 			'description' => tr('API Consumer Key'),
 			'type' => 'text',
 			'size' => 40,
+			'filter' => 'word',
 			'default' => '',
 		),
 		'vimeo_consumer_secret' => array(
@@ -28,6 +29,7 @@ function prefs_vimeo_list()
 			'description' => tr('API Consumer Secret'),
 			'type' => 'text',
 			'size' => 40,
+			'filter' => 'word',
 			'default' => '',
 		),
 		'vimeo_access_token' => array(
@@ -36,6 +38,7 @@ function prefs_vimeo_list()
 			'help' => 'Vimeo',
 			'type' => 'text',
 			'size' => 40,
+			'filter' => 'word',
 			'default' => '',
 		),
 		'vimeo_access_token_secret' => array(
@@ -44,7 +47,18 @@ function prefs_vimeo_list()
 			'help' => 'Vimeo',
 			'type' => 'text',
 			'size' => 40,
+			'filter' => 'word',
 			'default' => '',
+		),
+		'vimeo_default_gallery' => array(
+			'name' => tr('Vimeo Default Gallery'),
+			'description' => tr('ID of the default file gallery in which to store the vimeo reference.'),
+			'help' => 'Vimeo',
+			'type' => 'text',
+			'filter' => 'int',
+			'default' => 1,
+			'size' => 5,
+			'profile_reference' => 'file_gallery',
 		),
 	);
 }

@@ -32,6 +32,14 @@ class VimeoLib
 		));
 		return $data['ticket'];
 	}
+
+	function verifyChunks($ticketId)
+	{
+		$data = $this->callMethod('vimeo.videos.upload.verifyChunks', array(
+			'ticket_id' => $ticketId,
+		));
+		return $data['ticket']['chunks'];
+	}
 	
 	function complete($ticketId, $fileName)
 	{
@@ -40,6 +48,14 @@ class VimeoLib
 			'filename' => $fileName,
 		));
 		return $data['ticket']['video_id'];
+	}
+
+	function setTitle($videoId, $title)
+	{
+		$data = $this->callMethod('vimeo.videos.setTitle', array(
+			'video_id' => $videoId,
+			'title' => $title,
+		));
 	}
 
 	private function callMethod($method, array $arguments = array())
