@@ -73,13 +73,18 @@ class Tiki_Security_Policy extends Smarty_Security
 		if (isset($tikilib) && method_exists($tikilib, "get_preference")) {
 			$functions = array_filter($tikilib->get_preference('smarty_security_functions', array(), true));
 			$modifiers = array_filter($tikilib->get_preference('smarty_security_functions', array(), true));
-			$cdn = $tikilib->get_preference('tiki_cdn','');
-			if(!empty($cdn)) {
-				$this->trusted_uri[] = '#'. preg_quote($cdn) . '$#';
+
+			$tiki_cdn = $tikilib->get_preference('tiki_cdn',array());
+			if(! empty($tiki_cdn)) {
+				foreach(preg_split('/\R/', $tiki_cdn) as $cdn_uri) {
+					$this->trusted_uri[] = '#' . preg_quote($cdn_uri) . '$#';
+				}
 			}
-			$cdn_ssl = $tikilib->get_preference('tiki_cdn_ssl','');
-			if(!empty($cdn_ssl)) {
-				$this->trusted_uri[] = '#'. preg_quote($cdn_ssl) . '$#';
+			$tiki_cdn_ssl = $tikilib->get_preference('tiki_cdn_ssl',array());
+			if(!empty($tiki_cdn_ssl)) {
+				foreach(preg_split('/\R/', $tiki_cdn_ssl) as $cdn_uri) {
+					$this->trusted_uri[] = '#' . preg_quote($cdn_uri) . '$#';
+				}
 			}
 		}
 

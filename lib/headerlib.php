@@ -54,13 +54,13 @@ class HeaderLib
 		$https_mode = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on';
 
 		if ($https_mode && !empty($prefs['tiki_cdn_ssl'])) {
-			$cdn_pref = explode("\n", $prefs['tiki_cdn_ssl']);
+			$cdn_pref = preg_split('/\R/', $prefs['tiki_cdn_ssl']);
 		} elseif (!empty($prefs['tiki_cdn'])) {
-			$cdn_pref = explode("\n", $prefs['tiki_cdn']);
+			$cdn_pref = preg_split('/\R/', $prefs['tiki_cdn']);
 		}
 
 		if ( !empty($cdn_pref) && 'http' != substr($file, 0, 4) && $type !== 'dynamic' ) {
-			$file = $cdn_pref[hexdec(hash("crc32b", $file))%count($cdn_pref)] . $tikiroot . $file;
+			$file = $cdn_pref[hexdec(hash("crc32b", $file)) % count($cdn_pref)] . $tikiroot . $file;
 		}
 
 		return $file;
