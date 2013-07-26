@@ -73,8 +73,12 @@ CKEDITOR.plugins.add( 'autosave',
 			
 			var asplugin = this;
 			jQuery.ajax({
-				url: CKEDITOR.config.ajaxAutoSaveTargetUrl,
-				data: 'command=auto_save&referer=' + editor.config.autoSaveSelf + '&editor_id=' + editor.name + '&data=' + tiki_encodeURIComponent(data),
+				url: $.service("autosave", "save"),
+				data: {
+					referer: editor.config.autoSaveSelf,
+					editor_id: editor.name,
+					data: data
+				},
 				type: "POST",
 				// good callback
 				success: function(data) {
