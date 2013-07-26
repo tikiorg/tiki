@@ -79,5 +79,17 @@ function prefs_wysiwyg_list()
 			'size' => '3',
 			'default' => 'sans serif;serif;monospace;Arial;Century Gothic;Comic Sans MS;Courier New;Tahoma;Times New Roman;Verdana',
 		),
+		'wysiwyg_inline_editing' => array(
+			'name' => tra('Inline Wysiwyg editor'),
+			'description' => tra('Seemless inline editing. Uses CKEditor4.'),
+			'help' => 'Inline Wysiwyg',
+			'type' => 'flag',
+			'default' => 'n',
+			'dependencies' => array(
+				'feature_wysiwyg',
+			),
+			'tags' => array('experimental'),
+			'warning' => tra('experimental'),
+		),
 	);
 }

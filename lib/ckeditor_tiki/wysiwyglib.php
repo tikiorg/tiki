@@ -11,12 +11,151 @@
 
 class WYSIWYGLib
 {
+	static $ckEditor = null;
+
+	function setupInlineEditor($pageName)
+	{
+		global $tikiroot, $prefs, $user;
+		
+		// Validate user permissions
+		$tikilib = TikiLib::lib('tiki');
+		if(!$tikilib->user_has_perm_on_object($user,$pageName,'wiki page','edit')) {
+			// User has no permission
+			return;
+		}
+
+		// If the page uses flagged revisions, check if the page can be edited.
+		//	Inline edit sessions can cross page boundaries, thus the page attempts to start in inline edit mode 
+		if ($prefs['flaggedrev_approval'] == 'y') {
+			$flaggedrevisionlib = TikiLib::lib('flaggedrevision');
+			if ($flaggedrevisionlib->page_requires_approval($pageName)) {
+				if (!isset($_REQUEST['latest']) || $_REQUEST['latest'] != '1') {
+					// The page cannot be edited
+					return;
+				}
+			}
+		}
+
+		if( !empty(self::$ckEditor) ) {
+			// Inline editor is already initialized
+			return;
+		}
+		self::$ckEditor = 'ckeditor4';
+
+		$headerlib = TikiLib::lib('header');
+
+		$headerlib->add_js_config('window.CKEDITOR_BASEPATH = "'. $tikiroot . 'vendor/ckeditor/ckeditor/";')
+			->add_jsfile('vendor/ckeditor/ckeditor/ckeditor.js', 0, true)
+			->add_js('window.CKEDITOR.config._TikiRoot = "'.$tikiroot.'";', 1)
+			;
+
+		// Inline editing config
+		$skin = $prefs['wysiwyg_toolbar_skin'] != 'default' ? $prefs['wysiwyg_toolbar_skin'] : 'moono';
+
+		// the toolbar TODO refactor as duplicated from below
+		$smarty = TikiLib::lib('smarty');
+
+		$info = $tikilib->get_page_info($pageName, false);	// Don't load page data. 
+		$params = array(
+			'_wysiwyg' => 'y',
+			'area_id' => 'page-data',
+			'comments' => '',
+			'is_html' => $info['is_html'],	// temporary element id
+			'switcheditor' => 'n',
+		);
+
+		$smarty->loadPlugin('smarty_function_toolbars');
+		$cktools = smarty_function_toolbars($params, $smarty);
+		$cktools[0][count($cktools[0]) - 1][] = 'inlinesave';
+		$cktools[0][count($cktools[0]) - 1][] = 'inlinecancel';
+		$cktools = json_encode($cktools);
+		$cktools = substr($cktools, 1, strlen($cktools) - 2); // remove surrouding [ & ]
+		$cktools = str_replace(']],[[', '],"/",[', $cktools); // add new row chars - done here so as not to break existing f/ck
+		require_once('lib/toolbars/toolbarslib.php');
+		$ckeformattags = ToolbarCombos::getFormatTags($info['is_html'] ? 'html' : 'wiki');
+
+
+		$headerlib->add_js('', 5)
+			->add_jq_onready('
+var enableWysiwygInlineEditing = function () {
+	// lists dont inline happily so wrap in divs
+	$("#page-data > ul, #page-data > ol, #page-data > dl").each(function() {
+			$(this).wrap("<div>");
+	});
+	// save original data and add contenteditable
+	$("#page-data > *:not(.icon_edit_section)").each(function() {
+		if ($(".editplugin", this).length === 0) {
+			$(this).data("inline_original", $(this).html())
+					.attr("contenteditable", true);
+		}
+	});
+	// init inline ckeditors
+	window.CKEDITOR.inlineAll();
+}
+var disableWyiswygInlineEditing = function() {
+	$("#page-data > *[contenteditable=true]").attr("contenteditable", false).removeClass("cke_editable");
+	for(var e in  CKEDITOR.instances) {
+		if (CKEDITOR.instances[e] != null) {
+			CKEDITOR.instances[e].destroy();
+		}
+	}
+}
+')
+		->add_js(
+			'// --- config settings for the inlinesave plugin ---
+window.CKEDITOR.config.ajaxSaveTargetUrl = "'.$tikiroot.'tiki-auto_save.php?page='.urlencode($pageName).'";
+window.CKEDITOR.config.extraPlugins = "";
+window.CKEDITOR.config.extraPlugins += (window.CKEDITOR.config.extraPlugins ? ",inlinesave" : "inlinesave" );
+window.CKEDITOR.plugins.addExternal( "inlinesave", "'.$tikiroot.'lib/ckeditor_tiki/plugins/inlinesave/");
+window.CKEDITOR.config.extraPlugins += (window.CKEDITOR.config.extraPlugins ? ",inlinecancel" : "inlinecancel" );
+window.CKEDITOR.plugins.addExternal( "inlinecancel", "'.$tikiroot.'lib/ckeditor_tiki/plugins/inlinecancel/");
+window.CKEDITOR.config.ajaxSaveRefreshTime = 30 ;			// RefreshTime
+window.CKEDITOR.config.contentsLangDirection = ' . ($prefs['feature_bidi'] === 'y' ? '"rtl"' : '"ui"') . ';
+// --- other configs
+window.CKEDITOR.config.skin = "'.$skin.'";
+window.CKEDITOR.disableAutoInline = true;
+window.CKEDITOR.config.toolbar = ' .$cktools.';
+//window.CKEDITOR.config.format_tags = "' . $ckeformattags . '";
+// handle toobals per element
+
+window.CKEDITOR.on("instanceCreated", function( event ) {
+	var editor = event.editor,
+	element = editor.element;
+	// Customize editors for headers and tag list.
+	// These editors dont need features like smileys, templates, iframes etc.
+	if ( element.is( "h1", "h2", "h3", "h4", "h5", "h6" )) {
+		// Customize the editor configurations on "configLoaded" event,
+		// which is fired after the configuration file loading and
+		// execution. This makes it possible to change the
+		// configurations before the editor initialization takes place.
+		editor.on( "configLoaded", function() {
+			// Remove unnecessary plugins to make the editor simpler.
+			editor.config.removePlugins = "colorbutton,find,flash,font," +
+				"forms,iframe,image,newpage,removeformat,scayt," +
+				"smiley,specialchar,stylescombo,templates,wsc";
+			// Rearrange the layout of the toolbar.
+//			editor.config.toolbarGroups = [
+//				{ name: "editing", groups: [ "basicstyles", "links" ] },
+//				{ name: "undo" },
+//				{ name: "clipboard", groups: [ "selection", "clipboard" ] }
+//			];
+		});
+	}
+});
+
+');
+
+	}
+
+
 	function setUpEditor($is_html, $dom_id, $params = array(), $auto_save_referrer = '', $full_page = true)
 	{
         static $notallreadyloaded =true;
 
 		global $tikiroot, $prefs;
 		$headerlib = TikiLib::lib('header');
+
+		$headerlib->add_js('window.CKEDITOR.config.extraPlugins = "";');
         if ($notallreadyloaded) {
 			$headerlib->add_js_config('window.CKEDITOR_BASEPATH = "'. $tikiroot . 'vendor/ckeditor/ckeditor/";')
 				//// for js debugging - copy _source from ckeditor distribution to libs/ckeditor to use

@@ -4433,4 +4433,10 @@ a.cke_button span.cke_icon {
     margin-top: -5px;
 }
 
+
+/* Inline CkEditor */
+.cke_editable:hover {
+	outline: #ccc dotted 1px;
+}
+
 /* End of file */

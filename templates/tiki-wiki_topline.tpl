@@ -47,6 +47,25 @@
 										{/jq}
 										<a title="{tr}View edit icons{/tr}" href="#" id="wiki_plugin_edit_view">{icon _id='wiki_plugin_edit_view' title="{tr}View edit icons{/tr}"}</a>
 									{/if}
+									{if $prefs.wysiwyg_inline_editing eq 'y'}
+										{jq}
+											$("#wysiwyg_inline_edit").click( function () {
+												var src = $("#wysiwyg_inline_edit img").attr("src");
+												if (src.indexOf("page.png") > -1) {
+													enableWysiwygInlineEditing();
+													$("#wysiwyg_inline_edit img").attr("src", src.replace("page.png", "page_lightning.png"));
+													setCookieBrowser("wysiwyg_inline_edit", true);
+												} else {
+													disableWyiswygInlineEditing();
+													$("#wysiwyg_inline_edit img").attr("src", src.replace("page_lightning.png", "page.png"));
+													deleteCookie("wysiwyg_inline_edit");
+												}
+												return false;
+											});
+											if (!getCookie("wysiwyg_inline_edit")) {} else { $("#wysiwyg_inline_edit").click(); }
+										{/jq}
+										<a title="{tr}Inline Edit{/tr}" href="#" id="wysiwyg_inline_edit">{icon _id='page' title="{tr}Inline Edit{/tr}"}</a>
+									{/if}
 								{/if}
 							{/if}
 							{if $prefs.feature_morcego eq 'y' && $prefs.wiki_feature_3d eq 'y'}

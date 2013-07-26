@@ -39,7 +39,7 @@ function smarty_function_toolbars($params, $smarty)
 //	if ($params['section'] != 'wiki page' && $params['section'] != 'blogs' && $params['section'] != 'newsletters' && $params['section'] != 'trackers') {
 //		$hidden[] = 'fullscreen';
 //	}
-	if ( (!isset( $params['switcheditor'] ) || $params['switcheditor'] !== 'y') && !in_array($params['section'], array('wiki page', 'blogs', 'newsletters', 'cms', 'webmail'))) {
+	if ( (!isset( $params['switcheditor'] ) && !in_array($params['section'], array('wiki page', 'blogs', 'newsletters', 'cms', 'webmail'))) || $params['switcheditor'] !== 'y') {
 		$hidden[] = 'switcheditor';
 	}
 	
