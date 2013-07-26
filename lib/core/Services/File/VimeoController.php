@@ -50,11 +50,13 @@ class Services_File_VimeoController
 		$gal_info = $this->utilities->checkTargetGallery($galleryId);
 
 		$ticket = $input->ticket->word();
+		$title = $input->title->text();
 		$filename = basename($input->file->text());
 
 		$vimeolib = TikiLib::lib('vimeo');
 		$chunks = $vimeolib->verifyChunks($ticket);
 		$video = $vimeolib->complete($ticket, $filename);
+		$vimeolib->setTitle($video, $title);
 		$url = 'http://vimeo.com/' . $video;
 
 		$info = array(
@@ -66,7 +68,7 @@ class Services_File_VimeoController
 
 		// Add placeholder directly without verification, URL will show 404 until processed
 		$filegallib = TikiLib::lib('filegal');
-		$fileId = $this->utilities->uploadFile($gal_info, $filename, $size, 'video/vimeo', 'REFERENCE');
+		$fileId = $this->utilities->uploadFile($gal_info, $title ?: $filename, $size, 'video/vimeo', 'REFERENCE');
 		$filegallib->attach_file_source($fileId, $url, $info, 1);
 
 		return array(

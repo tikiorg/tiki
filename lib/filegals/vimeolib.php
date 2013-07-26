@@ -50,6 +50,14 @@ class VimeoLib
 		return $data['ticket']['video_id'];
 	}
 
+	function setTitle($videoId, $title)
+	{
+		$data = $this->callMethod('vimeo.videos.setTitle', array(
+			'video_id' => $videoId,
+			'title' => $title,
+		));
+	}
+
 	private function callMethod($method, array $arguments = array())
 	{
 		$response = $this->oauth->do_request('vimeo', array(
