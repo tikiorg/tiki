@@ -75,15 +75,9 @@
 
 			editor.addCommand('tikiplugin', this.command);
 
-			// editor.addCss( for CkEditor 3.x
-			CKEDITOR.addCss('.tiki_plugin'
-							+ '{'
-							+ 'display: inline-block;'
-							+ 'background-color: #eee;'
-							+ 'border: 1px solid #666;'
-							+ '}'
-							+ ' div.tiki_plugin { width: 100%; }'
-						);
+			// override plugin and icon class (make visible and grey)
+			CKEDITOR.addCss('.tiki_plugin .plugin_icon { display: block;}' +
+							'.tiki_plugin { background-color: #eee; border: 1px solid #666;}');
 
 			// If the "menu" plugin is loaded, register the menu items.
 			if (editor.addMenuItems) {
