@@ -654,10 +654,6 @@ div#page-bar table, div#page-bar td, div#page-bar tr {
 	padding: 0;
 }
 
-#page-bar span {
-	float: left;
-}
-
 ul.floatleft {
 	display: block;
 	list-style: none;
