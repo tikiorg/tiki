@@ -53,9 +53,9 @@ class HeaderLib
 
 		$https_mode = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on';
 
-		if ($https_mode) {
+		if ($https_mode && !empty($prefs['tiki_cdn_ssl'])) {
 			$cdn_pref = explode("\n", $prefs['tiki_cdn_ssl']);
-		} elseif (isset($prefs['tiki_cdn'])) {
+		} elseif (!empty($prefs['tiki_cdn'])) {
 			$cdn_pref = explode("\n", $prefs['tiki_cdn']);
 		}
 
