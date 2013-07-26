@@ -266,3 +266,6 @@ ALTER TABLE `tiki_db_status` ENGINE=InnoDB;
 ALTER TABLE `tiki_mail_queue` ENGINE=InnoDB;
 ALTER TABLE `tiki_workspace_templates` ENGINE=InnoDB;
 ALTER TABLE `tiki_user_mailin_struct` ENGINE=InnoDB;
+ALTER TABLE `tiki_activity_stream` ENGINE=InnoDB;
+ALTER TABLE `tiki_activity_stream_mapping` ENGINE=InnoDB;
+ALTER TABLE `tiki_activity_stream_rules` ENGINE=InnoDB;
