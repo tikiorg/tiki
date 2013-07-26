@@ -1,8 +1,5 @@
 // $Id$
 
-var auto_save_id = [];
-var auto_save_refs = [];
-var auto_save_data = [];
 var auto_save_submit = false;
 var sending_auto_save = false;
 var auto_save_timeoutId = 0;
@@ -41,9 +38,10 @@ function remove_save(editorId, autoSaveId) {
 function toggle_autosaved(editorId, autoSaveId) {
 	if (typeof autoSaveId === 'undefined') { autoSaveId = ''; }
 	var output = '', prefix = '';
-	var textareaEditor = syntaxHighlighter.get($('#' + editorId));
+	var $textarea = $('#' + editorId);
+	var textareaEditor = syntaxHighlighter.get($textarea);
 	var cked = typeof CKEDITOR !== 'undefined' ? CKEDITOR.instances[editorId] : null;
-	if ($("#"+editorId+"_original").length === 0) {	// no save version already?
+	if (!$textarea.data("original")) {	// no save version already?
 		if (cked) { prefix = 'cke_contents_'; }
 		ajaxLoadingShow(prefix + editorId);
 
@@ -54,23 +52,22 @@ function toggle_autosaved(editorId, autoSaveId) {
 			function(data) {
 				output = data.data;
 				// back up current
-				$("#"+editorId).parents("form:first").
-					append($("<input type='hidden' id='"+editorId+"_original' />").val(tiki_encodeURIComponent($("#"+editorId).val())));
+				$textarea.data("original", $textarea.val());
 				if (cked) {
 					cked.setData(output);
 				} else if (textareaEditor) {
 					textareaEditor.setValue(output);
 				} else if ($("#"+editorId).length) {	// wiki editor
-					$("#"+editorId).val(output);
+					$textarea.val(output);
 				}
 				ajaxLoadingHide();
 			}
 		);
 
 	} else {	// toggle back to original
-		syntaxHighlighter.sync($('#' + editorId));
+		syntaxHighlighter.sync($textarea);
 		
-		output = tiki_decodeURIComponent($("#"+editorId+"_original").val());
+		output = $textarea.data("original");
 		if (cked) {
 			cked.setData(output);	// cked leaves the original content in the ta
 		} else if (textareaEditor) {
@@ -78,7 +75,7 @@ function toggle_autosaved(editorId, autoSaveId) {
 		} else if ($("#"+editorId).length) {	// wiki editor
 			$("#"+editorId).val(output);
 		}
-		$("#"+editorId+"_original").remove();
+		$textarea.data("original", "");
 	}
 	// swap the messages around (fixed to first textarea only for now)
 	var msg = $(".autosave_message_2:first").text();
@@ -95,28 +92,30 @@ function auto_save_allowHtml(form) {
 }
 
 function auto_save( editorId, autoSaveId ) {
-	if (!autoSaveId) { autoSaveId = auto_save_refs[0]; }
-	if ( !auto_save_submit && editorId && autoSaveId && !sending_auto_save) {
+
+	if (!autoSaveId) { alert(tr("Auto save: No autoSaveId set")) }
+	if (!editorId) { alert(tr("Auto save: No editorId set")) }
+
+	if ( !auto_save_submit && !sending_auto_save) {
+
+		var $textarea = $('#' + editorId);
+		syntaxHighlighter.sync($textarea);
 		
-		syntaxHighlighter.sync($('#' + editorId));
-		
-		var data = $('#' + editorId).val();
-		var allowHtml = auto_save_allowHtml($('#' + editorId).prop("form"));
+		var data = $textarea.val();
+		var allowHtml = auto_save_allowHtml($textarea.prop("form"));
 		if (auto_save_timeoutId > 0) {
 			clearTimeout(auto_save_timeoutId);	// can be triggered by textarea onChange event
 			auto_save_timeoutId = 0;			// so reset timer
 		}
-		if (auto_save_data[editorId] !== data || $('#' + editorId).attr("old_allowhtml") != allowHtml) {
-			auto_save_data[editorId] = data;
+		if (data !== $textarea.data("original") || $textarea.data("last") !== data || $textarea.data("old_allowhtml") != allowHtml) {
+			$textarea.data("last", data);
 			sending_auto_save = true;
 			$.ajax({
 				url: $.service("autosave", "save"),
 				data: {
-//					command: "auto_save",
 					editor_id: editorId,
 					referer: autoSaveId,
 					data: data
-//					allowHtml: allowHtml
 				},
 				type: "POST",
 				// good callback
@@ -127,7 +126,7 @@ function auto_save( editorId, autoSaveId ) {
 					} else {
 						ajax_preview( editorId, autoSaveId, true );
 					}
-					$('#' + editorId).attr("old_allowhtml", allowHtml);
+					$textarea.data("old_allowhtml", allowHtml);
 					auto_save_timeoutId = setTimeout( function () { auto_save( editorId, autoSaveId ); }, auto_save_timeout_interval);
 					sending_auto_save = false;
 				},
@@ -146,13 +145,11 @@ function auto_save( editorId, autoSaveId ) {
 }
 
 function register_id( editorId, autoSaveId ) {
-	auto_save_id[auto_save_id.length] = editorId;
-	auto_save_refs[editorId] = autoSaveId;
-	syntaxHighlighter.sync($('#' + editorId));
-	auto_save_data[editorId] = $('#' + editorId).val();
+	var $textarea = $('#' + editorId);
+	syntaxHighlighter.sync($textarea);
 	auto_save_timeoutId = setTimeout( function () { auto_save( editorId, autoSaveId ); }, auto_save_timeout_interval);
-	$('#' + editorId).parents('form').submit(function() { remove_save(editorId, autoSaveId); });
-	$('#' + editorId).change(function () { auto_save( editorId, autoSaveId ); });
+	$textarea.parents('form').submit(function() { remove_save(editorId, autoSaveId); });
+	$textarea.change(function () { auto_save( editorId, autoSaveId ); });
 }
 
 var ajaxPreviewWindow;
@@ -205,7 +202,7 @@ function ajax_preview(editorId, autoSaveId, inPage) {
 }
 
 $(window).unload(function () {
-	if (auto_save_id.length > 0 && ajaxPreviewWindow && typeof ajaxPreviewWindow.get_new_preview === 'function') {
+	if (ajaxPreviewWindow && typeof ajaxPreviewWindow.get_new_preview === 'function') {
 		ajaxPreviewWindow.close();
 	}
 });
