@@ -32,7 +32,6 @@ class Table_Code_Manager extends Table_Code_Abstract
 		'other' => '',
 		'main' => array(
 			'mainOptions' => '',
-			'headers' => '',
 			'widgetOptions' => '',
 		),
 		'pager' => '',

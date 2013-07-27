@@ -43,9 +43,9 @@ class Table_Plugin
 		$this->params = array(
 			'sortable' => array(
 				'required' => false,
-				'name' => tra('Column Sort'),
+				'name' => tra('Overall Sort Settings'),
 				'description' => tr(
-					'Enter %0y%1 to allow sorting and %0n%1 to disallow (n is the default). Enter type:%0save%1
+					'Enter %0y%1 to allow sorting and %0n%1 to disallow (y is the default). Enter type:%0save%1
 					to allow sorts to be saved between page refreshes. Enter type:%0reset%1;text:***** to allow sorting and
 					show an unsort button with custom text. Enter %0type:savereset%1;text:buttontext to allow the same for saved sorts.',
 					'<b>', '</b>'
@@ -62,6 +62,28 @@ class Table_Plugin
 				),
 				'default' => '',
 				'filter' => 'striptags',
+				'advanced' => true,
+			),
+			'tsortcolumns' => array(
+				'required' => false,
+				'name' => tra('Sort Settings by Column'),
+				'description' => tr(
+					'Set %0type%1 and %0group%1 settings for each column, using the %0|%1 to separate columns. ',
+					'<b>', '</b>')
+				. '<br>' . tr('%0type%1 tells the sorter what type of date is being sorted and choices include:
+					%0text%1, %0digit%1, %0currency%1, %0percent%1, %0usLongDate%1, %0shortDate%1, %0isoDate%1,
+					%0dateFormat-ddmmyyyy%1, %0ipAddress%1, %0url%1, %0time%1.
+					Also handle strings in numeric columns with %0string-min%1 and %0string-max%1. Handle empty cells
+					with %0empty-top%1, %0empty-bottom%1 or %0empty-zero%1.','<b>', '</b>')
+				. '<br>' . tr('%0group%1 creates automatic row headings with the text of the heading determined by
+					the setting as follows: %0letter%1 (first letter), %0word%1 (first word), %0number%1, %0date%1,
+					%0date-year%1, %0date-month%1, %0date-day%1, %0date-week%1, %0date-time%1. %0letter%1 and %0word%1
+					can be extended, e.g., %0word-2%1 shows first 2 words. %0number-10%1 will group rows in blocks of
+					ten.','<b>', '</b>'
+				),
+				'default' => '',
+				'filter' => 'striptags',
+				'advanced' => true,
 			),
 			'tsfilters' => array(
 				'required' => false,
@@ -69,7 +91,7 @@ class Table_Plugin
 				'description' => tr(
 					'Enter %0y%1 for a blank text filter on all columns, or %0n%1 for no filters. Or set custom column filters
 					separated by %0|%1 for each column for the following filter choices and parameters:','<b>', '</b>'
-				)
+					)
 					. '<br> <b>Text - </b>type:text;placeholder:xxxx<br>
 					<b>Dropdown - </b>type:dropdown;placeholder:****;option:****;option:****;option:**** <br>' .
 					tra('(options generated automatically if not set)') . '<br>
@@ -83,6 +105,7 @@ class Table_Plugin
 					),
 				'default' => '',
 				'filter' => 'striptags',
+				'advanced' => true,
 			),
 			'tsfilteroptions' => array(
 				'required' => false,
@@ -94,6 +117,7 @@ class Table_Plugin
 				),
 				'default' => '',
 				'filter' => 'striptags',
+				'advanced' => true,
 			),
 			'tspaginate' => array(
 				'required' => false,
@@ -105,6 +129,7 @@ class Table_Plugin
 					'<b>max</b>:40;<b>expand</b>:60;expand:100;expand:140',
 				'default' => '',
 				'filter' => 'striptags',
+				'advanced' => true,
 			),
 		);
 	}
@@ -116,13 +141,14 @@ class Table_Plugin
 	 * @param null   $id				//html element id for table and surrounding div
 	 * @param string $sortable			//see params above
 	 * @param null   $sortList			//see params above
+	 * @param string $tsortcolumns		//see params above
 	 * @param null   $tsfilters			//see params above
 	 * @param null   $tsfilteroptions	//see params above
 	 * @param null   $tspaginate		//see params above
 	 * @param null   $ajaxurl			//only needed if ajax will be used to pull partial record sets
 	 * @param null   $totalrows			//only needed if ajax will be used to pull partial record sets
 	 */
-	function setSettings ($id = null, $sortable = 'y', $sortList = null, $tsfilters = null,
+	function setSettings ($id = null, $sortable = 'y', $sortList = null, $tsortcolumns = null, $tsfilters = null,
 						 $tsfilteroptions = null, $tspaginate = null, $ajaxurl = null, $totalrows = null)
 	{
 		$s = array();
@@ -147,9 +173,6 @@ class Table_Plugin
 				}
 		}
 
-		//TODO add way for users to set row grouping - turn off for now
-		$s['sort']['group'] = false;
-
 		//sortlist
 		if (!empty($sortList) && $s['sort']['type'] !== false) {
 			$crop = substr($sortList, 1);
@@ -158,22 +181,43 @@ class Table_Plugin
 			if (is_array($slarray)) {
 				foreach ($slarray as $l) {
 					$lpieces = explode(',', $l);
-					switch ($lpieces[1]) {
-						case '0':
-							$dir = 'asc';
-							break;
-						case '1':
-							$dir = 'desc';
-							break;
-						case 'n':
-							$dir = false;
-							break;
+					if (isset($lpieces[1])) {
+						switch ($lpieces[1]) {
+							case '0':
+								$dir = 'asc';
+								break;
+							case '1':
+								$dir = 'desc';
+								break;
+							case 'n':
+								$dir = false;
+								break;
+						}
 					}
 					if (isset($dir)) {
-						$s['sort']['columns'][$lpieces[0]]['type'] = $dir;
+						if ($dir === false) {
+							$s['sort']['columns'][$lpieces[0]]['type'] = $dir;
+						} else {
+							$s['sort']['columns'][$lpieces[0]]['dir'] = $dir;
+						}
 					}
 				}
 			}
+		}
+
+		if (!empty($tsortcolumns)) {
+			$tsc = $this->parseParam($tsortcolumns);
+			if (is_array($tsc)) {
+				foreach ($tsc as $col => $info) {
+					if (isset($s['sort']['columns'][$col])) {
+						$s['sort']['columns'][$col] = $s['sort']['columns'][$col] + $info;
+					} else {
+						$s['sort']['columns'][$col] = $info;
+					}
+				}
+			}
+		} else {
+			$s['sort']['group'] = false;
 		}
 
 		//tsfilters

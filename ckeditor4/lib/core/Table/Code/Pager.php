@@ -27,6 +27,7 @@ class Table_Code_Pager extends Table_Code_Manager
 	{
 		global $prefs;
 		$p = array();
+		//add pager controls
 		if ($this->pager) {
 			$p[] = 'size: ' . $this->s['pager']['max'];
 			$p[] = 'output: \'{startRow} to {endRow} ({totalRows})\'';

@@ -14,7 +14,7 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
 /**
  * Class Table_Code_Other
  *
- *Creates code for the functions needed outside of the main Tablesorter sections
+ *Creates code for standard jQuery functions needed outside of the main Tablesorter functions
  *
  * @package Tiki
  * @subpackage Table
@@ -26,7 +26,6 @@ class Table_Code_Other extends Table_Code_Manager
 	public function setCode()
 	{
 		$jq = array();
-		$code = '';
 		$sr = '';
 		//reset sort button
 		$x = array('reset' => '', 'savereset' => '');
@@ -47,16 +46,6 @@ class Table_Code_Other extends Table_Code_Manager
 			//reset button
 			if ($this->s['filters']['type'] === 'reset') {
 				$html[] = '<button id="' . $f['id'] . '" type="button">' . $f['text'] . '</button>';
-			}
-			//placeholders
-			$cols = isset($f['columns']) ? $f['columns'] : false;
-			if ($cols !== false) {
-				foreach($cols as $col => $colinfo) {
-					if (isset($colinfo['placeholder'])) {
-						$jq[] = '$(\'table#' . $this->id . ' th:eq(' . $col . ')\').data(\'placeholder\', \'' .
-							$colinfo['placeholder'] . '\');';
-					}
-				}
 			}
 		}
 
@@ -110,7 +99,6 @@ class Table_Code_Other extends Table_Code_Manager
 		}
 
 		//bind to ajax event to show processing
-		$bind = '';
 		if ($this->ajax) {
 			$bind = array(
 				'if (e.type === \'ajaxSend\') {',

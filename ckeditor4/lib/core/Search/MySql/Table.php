@@ -11,12 +11,22 @@ class Search_MySql_Table extends TikiDb_Table
 	private $indexes = array();
 	private $exists = null;
 
+	private $buffer = array();
+	private $bufferKey = null;
+
+	function __destruct()
+	{
+		$this->flush();
+	}
+
 	function drop()
 	{
 		$table = $this->escapeIdentifier($this->tableName);
 		$this->db->query("DROP TABLE IF EXISTS $table");
 		$this->definition = false;
 		$this->exists = false;
+
+		$this->emptyBuffer();
 	}
 
 	function exists()
@@ -27,6 +37,17 @@ class Search_MySql_Table extends TikiDb_Table
 		}
 
 		return $this->exists;
+	}
+
+	function insert(array $values, $ignore = false)
+	{
+		$keySet = implode(', ', array_map(array($this, 'escapeIdentifier'), array_keys($values)));
+
+		$valueSet = '(' . implode(', ', array_map(array($this->db, 'qstr'), $values)) . ')';
+
+		$this->addToBuffer($keySet, $valueSet);
+
+		return 0;
 	}
 
 	function ensureHasField($fieldName, $type)
@@ -51,6 +72,10 @@ class Search_MySql_Table extends TikiDb_Table
 	{
 		$this->loadDefinition();
 
+		if (! isset($this->definition[$fieldName])) {
+			throw new Search_MySql_QueryException(tr('Field %0 does not exist in the current index.'));
+		}
+
 		$indexName = $fieldName . '_' . $type;
 
 		// Static MySQL limit on 64 indexes per table
@@ -67,7 +92,7 @@ class Search_MySql_Table extends TikiDb_Table
 
 	private function loadDefinition()
 	{
-		if (! empty($definition)) {
+		if (! empty($this->definition)) {
 			return;
 		}
 
@@ -101,6 +126,8 @@ class Search_MySql_Table extends TikiDb_Table
 			INDEX (`object_type`, `object_id`)
 		) ENGINE=MyISAM");
 		$this->exists = true;
+
+		$this->emptyBuffer();
 	}
 
 	private function addField($fieldName, $type)
@@ -136,6 +163,38 @@ class Search_MySql_Table extends TikiDb_Table
 		if ($error) {
 			throw new Search_MySql_LimitReachedException(tr("Too many indexes required. Limit reached."));
 		}
+	}
+
+	private function emptyBuffer()
+	{
+		$this->bufferKey = null;
+		$this->buffer = array();
+	}
+
+	private function addToBuffer($keySet, $valueSet)
+	{
+		if ($keySet !== $this->bufferKey) {
+			$this->flush();
+		}
+
+		$this->bufferKey = $keySet;
+		$this->buffer[] = $valueSet;
+
+		if (count($this->buffer) == 100) {
+			$this->flush();
+		}
+	}
+
+	function flush()
+	{
+		if (count($this->buffer) == 0) {
+			return;
+		}
+
+		$query = "INSERT INTO {$this->escapeIdentifier($this->tableName)} ({$this->bufferKey}) VALUES " . implode(', ', $this->buffer);
+		$this->db->query($query);
+
+		$this->emptyBuffer();
 	}
 }
 
