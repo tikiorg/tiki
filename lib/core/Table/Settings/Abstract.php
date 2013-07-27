@@ -32,11 +32,22 @@ abstract class Table_Settings_Abstract
 		//TODO choosing themes is not yet implemented
 		'theme' => 'tiki',
 		'total' => '',
-//		'selflinks' => true,					//if smarty self_links need to be removed
+//		'selflinks' => true,				//if smarty self_links need to be removed
 		'sort' => array(
-			'type' => 'reset',						//choices: boolean true, boolean false, save, reset, savereset.
-/*			'columns' => array(					//zero-based column index, used only if column-specific settings
-				0 => true, false, asc, desc,
+			'type' => 'reset',				//choices: boolean true, boolean false, save, reset, savereset.
+/*			'columns' => array(				//zero-based column index, used only if column-specific settings
+				0 => array(
+					'type' => true,			//choices: boolean true, boolean false, text, digit, currency, percent,
+											//usLongDate, shortDate, isoDate, dateFormat-ddmmyyyy, ipAddress, url, time
+											//also string-min (sort strings in a numeric column as large negative number)
+											//empty-top (sorts empty cells to the top)
+					'dir' => 'asc',			//asc for ascending and desc for descending
+					'ajax' => 'login',
+					'group' => 'letter'		//choices: letter (first letter), word (first word), number, date, date-year,
+											//date-month, date-day, date-week, date-time. letter and word can be
+											//extended, e.g., word-2 shows first 2 words. number-10 will group rows
+											//in blocks of ten.
+				),
 			),
 			'multisort' => false,				//multisort on by default - set to false to disable
 */
@@ -252,8 +263,8 @@ abstract class Table_Settings_Abstract
 			$this->s['id'] .= $i;
 		}
 		foreach ($this->ids as $type => $settings) {
-			if ($type == 'pagercontrols' || ($this->s[$type]['type'] !== false
-				&& $this->s[$type]['type'] != 'save' && !isset($this->s[$type]['id'])))
+			if ($type === 'pagercontrols' || ($this->s[$type]['type'] !== false
+				&& $this->s[$type]['type'] !== 'save' && !isset($this->s[$type]['id'])))
 			{
 				$this->s[$type]['id'] = $this->s['id'] . htmlspecialchars($settings['id']);
 			}

@@ -59,7 +59,7 @@ class Table_Code_MainOptions extends Table_Code_Manager
 			}
 		}
 		//filters
-		if ($this->filters && is_array($this->s['filters']['columns'])) {
+		if ($this->filters && isset($this->s['filters']['columns']) && is_array($this->s['filters']['columns'])) {
 			foreach ($this->s['filters']['columns'] as $col => $info) {
 				//set filter to false for no filter
 				if (isset($info['type']) && $info['type'] === false) {
@@ -111,10 +111,12 @@ class Table_Code_MainOptions extends Table_Code_Manager
 		if ($this->sort && is_array($this->s['sort']['columns'])) {
 			$sl = '';
 			foreach ($this->s['sort']['columns'] as $col => $info) {
-				if ($info['type'] === 'asc') {
-					$sl[] = $col . ',' . '0';
-				} elseif($info['type'] === 'desc') {
-					$sl[] = $col . ',' . '1';
+				if (!empty($info['dir'])) {
+					if ($info['dir'] === 'asc') {
+						$sl[] = $col . ',' . '0';
+					} elseif($info['dir'] === 'desc') {
+						$sl[] = $col . ',' . '1';
+					}
 				}
 			}
 			if (is_array($sl)) {

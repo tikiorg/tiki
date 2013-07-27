@@ -85,6 +85,7 @@ function wikiplugin_fancytable($data, $params)
 			$ts->setSettings(
 				'fancytable_' . $iFancytable, $sortable,
 				isset($sortList) ? $sortList : null,
+				isset($tsortcolumns) ? $tsortcolumns : null,
 				isset($tsfilters) ? $tsfilters : null,
 				isset($tsfilteroptions) ? $tsfilteroptions : null,
 				isset($tspaginate) ? $tspaginate : null

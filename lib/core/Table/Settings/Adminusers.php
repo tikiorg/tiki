@@ -31,7 +31,8 @@ class Table_Settings_Adminusers extends Table_Settings_Abstract
 					'type' => false,
 				),
 				1 => array(					//user
-					'type' => 'asc',
+					'type' => true,
+					'dir' => 'asc',
 					'ajax' => 'login',
 					'group' => 'letter'
 				),
