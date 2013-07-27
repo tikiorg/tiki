@@ -67,10 +67,12 @@ class Search_MySql_Index implements Search_Index_Interface
 
 	function endUpdate()
 	{
+		$this->table->flush();
 	}
 
 	function optimize()
 	{
+		$this->table->flush();
 	}
 
 	function invalidateMultiple(array $objectList)
@@ -82,38 +84,45 @@ class Search_MySql_Index implements Search_Index_Interface
 
 	function find(Search_Query_Interface $query, $resultStart, $resultCount)
 	{
-		$words = $this->getWords($query->getExpr());
+		$this->table->flush();
 
-		$condition = $this->builder->build($query->getExpr());
-		$conditions = empty($condition) ? array() : array(
-			$this->table->expr($condition),
-		);
+		try {
+			$words = $this->getWords($query->getExpr());
 
-		$scoreField = null;
-		$indexes = $this->builder->getRequiredIndexes();
-		foreach ($indexes as $index) {
-			$this->table->ensureHasIndex($index['field'], $index['type']);
+			$condition = $this->builder->build($query->getExpr());
+			$conditions = empty($condition) ? array() : array(
+				$this->table->expr($condition),
+			);
 
-			if (! $scoreField && $index['type'] == 'fulltext') {
-				$scoreField = $index['field'];
+			$scoreField = null;
+			$indexes = $this->builder->getRequiredIndexes();
+			foreach ($indexes as $index) {
+				$this->table->ensureHasIndex($index['field'], $index['type']);
+
+				if (! $scoreField && $index['type'] == 'fulltext') {
+					$scoreField = $index['field'];
+				}
 			}
+
+			$order = $this->getOrderClause($query, (bool) $scoreField);
+
+			$selectFields = $this->table->all();
+
+			if ($scoreField) {
+				$str = $this->db->qstr(implode(' ', $words));
+				$selectFields['score'] = $this->table->expr("MATCH(`$scoreField`) AGAINST ($str)");
+			}
+			$count = $this->table->fetchCount($conditions);
+			$entries = $this->table->fetchAll($selectFields, $conditions, $resultCount, $resultStart, $order);
+
+			$resultSet = new Search_ResultSet($entries, $count, $resultStart, $resultCount);
+			$resultSet->setHighlightHelper(new Search_MySql_HighlightHelper($words));
+
+			return $resultSet;
+		} catch (Search_MySql_QueryException $e) {
+			$resultSet = new Search_ResultSet(array(), 0, $resultStart, $resultCount);
+			return $resultSet;
 		}
-
-		$order = $this->getOrderClause($query, (bool) $scoreField);
-
-		$selectFields = $this->table->all();
-
-		if ($scoreField) {
-			$str = $this->db->qstr(implode(' ', $words));
-			$selectFields['score'] = $this->table->expr("MATCH(`$scoreField`) AGAINST ($str)");
-		}
-		$count = $this->table->fetchCount($conditions);
-		$entries = $this->table->fetchAll($selectFields, $conditions, $resultCount, $resultStart, $order);
-
-		$resultSet = new Search_ResultSet($entries, $count, $resultStart, $resultCount);
-		$resultSet->setHighlightHelper(new Search_MySql_HighlightHelper($words));
-
-		return $resultSet;
 	}
 
 	private function getOrderClause($query, $useScore)

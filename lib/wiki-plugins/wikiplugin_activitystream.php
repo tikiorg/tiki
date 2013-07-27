@@ -47,11 +47,15 @@ function wikiplugin_activitystream($data, $params)
 
 	$result = $query->search($index);
 
-	$paginationArguments = $builder->getPaginationArguments();
-	$formatter = new Search_Formatter(new Search_Formatter_Plugin_SmartyTemplate('templates/activity/activitystream.tpl'));
-	$formatter->setDataSource($unifiedsearchlib->getDataSource());
-	$out = $formatter->format($result);
+	try {
+		$paginationArguments = $builder->getPaginationArguments();
+		$formatter = new Search_Formatter(new Search_Formatter_Plugin_SmartyTemplate('templates/activity/activitystream.tpl'));
+		$formatter->setDataSource($unifiedsearchlib->getDataSource());
+		$out = $formatter->format($result);
 
-	return $out;
+		return $out;
+	} catch (SmartyException $e) {
+		return WikiParser_PluginOutput::userError($e->getMessage());
+	}
 }
 

@@ -180,6 +180,7 @@ class UnifiedSearchLib
 		$access = TikiLib::lib('access');
 		$access->preventRedirect(true);
 
+		$stat = array();
 		try {
 			$index = new Search_Index_TypeAnalysisDecorator($index);
 			$indexer = $this->buildIndexer($index, $loggit);
