@@ -14,7 +14,7 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
 /**
  * Class Table_Code_MainOptions
  *
- * For the options within the main section of the Tablesorter jQuery code
+ * For the options within the main section of the Tablesorter jQuery function
  *
  * @package Tiki
  * @subpackage Table
@@ -29,37 +29,54 @@ class Table_Code_MainOptions extends Table_Code_Manager
 	public function setCode()
 	{
 		$mo = array();
-		$orh = array();
+
 		//onRenderHeader option - change html elements before table renders
-		if ((isset($this->s['selflinks']) && $this->s['selflinks']) || !$this->sort
-			|| ($this->sort && is_array($this->s['sort']['columns'])))
-		{
-			$mo[] = 'headerTemplate: \'{content}\'';
-			//remove self-links
-			if (isset($this->s['selflinks']) && $this->s['selflinks']) {
-				$orh[] = '$(this).find(\'a\').replaceWith($(this).find(\'a\').text());';
-			}
-			//no sort on all columns
-			if (!$this->sort) {
-				$orh[] = '$(\'table#' . $this->id . ' th\').addClass(\'sorter-false\');';
-			}
-			//row grouping and sorter settings
-			if ($this->sort && is_array($this->s['sort']['columns'])) {
-				foreach ($this->s['sort']['columns'] as $col => $info) {
-					if (!empty($info['group'])) {
-						$orh[] = '$(\'table#' . $this->id . ' th:eq(' . $col . ')\').addClass(\'group-'
-								. $info['group'] . '\');';
-					}
-					if (!empty($info['type']) && $info['type'] !== true) {
-						$orh[] = '$(\'table#' . $this->id . ' th:eq(' . $col . ')\').addClass(\'sorter-'
-								. $info['type'] . '\');';
-					}
+		$orh = array();
+
+		//remove self-links
+		if (isset($this->s['selflinks']) && $this->s['selflinks']) {
+			$orh[] = '$(this).find(\'a\').replaceWith($(this).find(\'a\').text());';
+		}
+
+		/////handle sorting classes/////
+		//no sort on all columns
+		if (!$this->sort) {
+			$orh[] = '$(\'table#' . $this->id . ' th\').addClass(\'sorter-false\');';
+		//row grouping and sorter settings
+		} elseif ($this->sort && is_array($this->s['sort']['columns'])) {
+			foreach ($this->s['sort']['columns'] as $col => $info) {
+				//row grouping setting
+				if (!empty($info['group'])) {
+					$orh[] = '$(\'table#' . $this->id . ' th:eq(' . $col . ')\').addClass(\'group-'
+							. $info['group'] . '\');';
+				}
+				if (isset($info['type']) && $info['type'] !== true) {
+					//add class for sort data type or for no sort
+					$sclass = $info['type'] === false ? 'false' : $info['type'];
+					$orh[] = '$(\'table#' . $this->id . ' th:eq(' . $col . ')\').addClass(\'sorter-'
+							. $sclass . '\');';
 				}
 			}
-			if (count($orh) > 0) {
-				$mo[] = $this->iterate($orh, 'onRenderHeader: function(index){', $this->nt2 . '}', $this->nt3, '', '');
+		}
+		//filters
+		if ($this->filters && is_array($this->s['filters']['columns'])) {
+			foreach ($this->s['filters']['columns'] as $col => $info) {
+				//set filter to false for no filter
+				if (isset($info['type']) && $info['type'] === false) {
+					$orh[] = '$(\'table#' . $this->id . ' th:eq(' . $col . ')\').addClass(\'filter-false\');';
+				}
+				//add placeholders
+				if (isset($info['placeholder'])) {
+					$orh[] = '$(\'table#' . $this->id . ' th:eq(' . $col . ')\').data(\'placeholder\', \'' .
+						$info['placeholder'] . '\');';
+				}
 			}
 		}
+		if (count($orh) > 0) {
+			array_unshift($mo, 'headerTemplate: \'{content}\'');
+			$mo[] = $this->iterate($orh, 'onRenderHeader: function(index){', $this->nt2 . '}', $this->nt3, '', '');
+		}
+
 
 		//*** widgets ***//
 		//standard ones
