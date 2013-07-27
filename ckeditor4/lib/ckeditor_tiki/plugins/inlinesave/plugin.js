@@ -128,7 +128,6 @@ CKEDITOR.plugins.add('inlinesave',
 					setTimeout(function () {
 						myplugin.changeIcon("ajaxSaveClean.gif", editor);
 					}, 2000);
-					window.enableWysiwygInlineEditing();	// reinit the inlines
 
 					return true;
 				},
