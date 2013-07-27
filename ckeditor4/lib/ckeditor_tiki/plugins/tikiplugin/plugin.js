@@ -205,26 +205,23 @@
 			$("#ajaxLoading").show();		// FIXME safari/chrome refuse to show until ajax finished
 			jQuery.ajax({
 				async: false, // wait for this one
-				url: CKEDITOR.config.ajaxAutoSaveTargetUrl,
+				url: $.service("edit", "tohtml"),
 				type: "POST",
+				dataType: "json",
 				data: {
 					referer: editor.config.autoSaveSelf,
 					editor_id: editor.name,
-					data: tiki_encodeURIComponent(data),
-					command: "toHtmlFormat",
+					data: data,
 					allowhtml: isHtml
 				},
 				// good callback
 				success: function(data) {
 					ajaxLoadingHide();
-					try {
-					    output = tiki_decodeURIComponent(jQuery(data).find('data').text());
-					} catch (err) {
-					    // Maybe it used escape to encode it? Try unescape
-					    output = unescape(jQuery(data).find('data').text());
-					}
+					output = data.data;
+
 					output = asplugin.ckToHtml.call(editor.dataProcessor, output, fixForBody);
 					if (output.indexOf("</body>") === -1 && output.indexOf("<body") > -1) {
+						alert("Is this code still needed? (tikiplugin/plugin.js line 223)");
 						output += "</body>"; 	// workaround for cke 3.4 / tiki 6.0 FIXME
 					}
 				},

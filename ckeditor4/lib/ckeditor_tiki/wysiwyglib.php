@@ -113,6 +113,7 @@ window.CKEDITOR.config.ajaxSaveRefreshTime = 30 ;			// RefreshTime
 window.CKEDITOR.config.contentsLangDirection = ' . ($prefs['feature_bidi'] === 'y' ? '"rtl"' : '"ui"') . ';
 // --- plugins
 window.CKEDITOR.config.ajaxAutoSaveTargetUrl = "'.$tikiroot.'tiki-auto_save.php";	// URL to post to (also used for plugin processing)
+window.CKEDITOR.config.autoSavePage = "' . addcslashes($pageName, '"') . '";		// unique reference for each page
 window.CKEDITOR.config.allowedContent = true;
 // --- other configs
 

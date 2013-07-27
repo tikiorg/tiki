@@ -64,38 +64,38 @@ if (isset($_REQUEST['editor_id'])) {
 		}
 		$res = '';
 
-		if ($_REQUEST['command'] == 'toWikiFormat') {
-			$res = $editlib->parseToWiki(urldecode($_REQUEST['data']));
-		} else if ($_REQUEST['command'] == 'toHtmlFormat') {
-			$res = $editlib->parseToWysiwyg(urldecode($_REQUEST['data']), false, !empty($_REQUEST['allowhtml']) ? $_REQUEST['allowhtml'] : false);
-		} else if ($_REQUEST['command'] == 'inline_save') {
-			$tikilib = TikiLib::lib('tiki');
-			$pageName = $_REQUEST['page'];
-			$info = $tikilib->get_page_info($pageName);
-
-			// Check if HTML format is allowed
-			if ($info['is_html']) {
-				// Save as HTML
-				$edit_data = urldecode($_REQUEST['data']);
-				$is_html= '1';
-				$wysiwyg='y';
-			} else {
-				// Convert HTML to wiki and save as wiki
-				$data = $_REQUEST['data'];
-				$edit_data = $editlib->parseToWiki(urldecode($data));
-				$is_html= null;
-				$wysiwyg='';
-			}
-			
-			$edit_comment = 'inline editor update';
-			$edit_user = $user;
-			$edit_ip = $_SERVER['REMOTE_ADDR'];
-			$edit_description = null;
-			$edit_minor = 0;
-			$lang='';
-			$hash=null;
-			$saveLastModif=null;
-			$res = $tikilib->update_page($pageName, $edit_data, $edit_comment, $edit_user, $edit_ip, $edit_description, $edit_minor, $lang, $is_html, $hash, $saveLastModif, $wysiwyg); 
+//		if ($_REQUEST['command'] == 'toWikiFormat') {
+//			$res = $editlib->parseToWiki(urldecode($_REQUEST['data']));
+//		} else if ($_REQUEST['command'] == 'toHtmlFormat') {
+//			$res = $editlib->parseToWysiwyg(urldecode($_REQUEST['data']), false, !empty($_REQUEST['allowhtml']) ? $_REQUEST['allowhtml'] : false);
+//		} else if ($_REQUEST['command'] == 'inline_save') {
+//			$tikilib = TikiLib::lib('tiki');
+//			$pageName = $_REQUEST['page'];
+//			$info = $tikilib->get_page_info($pageName);
+//
+//			// Check if HTML format is allowed
+//			if ($info['is_html']) {
+//				// Save as HTML
+//				$edit_data = urldecode($_REQUEST['data']);
+//				$is_html= '1';
+//				$wysiwyg='y';
+//			} else {
+//				// Convert HTML to wiki and save as wiki
+//				$data = $_REQUEST['data'];
+//				$edit_data = $editlib->parseToWiki(urldecode($data));
+//				$is_html= null;
+//				$wysiwyg='';
+//			}
+//
+//			$edit_comment = 'inline editor update';
+//			$edit_user = $user;
+//			$edit_ip = $_SERVER['REMOTE_ADDR'];
+//			$edit_description = null;
+//			$edit_minor = 0;
+//			$lang='';
+//			$hash=null;
+//			$saveLastModif=null;
+//			$res = $tikilib->update_page($pageName, $edit_data, $edit_comment, $edit_user, $edit_ip, $edit_description, $edit_minor, $lang, $is_html, $hash, $saveLastModif, $wysiwyg);
 //		} else if ($_REQUEST['command'] == 'auto_save') {
 //			include_once 'lib/ajax/autosave.php';
 //			$data = $_REQUEST['data'];
@@ -106,8 +106,8 @@ if (isset($_REQUEST['editor_id'])) {
 //		} else if ($_REQUEST['command'] == 'auto_get') {
 //			include_once 'lib/ajax/autosave.php';
 //			$res = get_autosave($_REQUEST['editor_id'], $_REQUEST['referer']);
-		}
-		send_ajax_response($_REQUEST['command'], $res);
+//		}
+//		send_ajax_response($_REQUEST['command'], $res);
 	} else if (isset($_REQUEST['autoSaveId'])) {	// wiki page previews
 
 		$autoSaveIdParts = explode(':', $_REQUEST['autoSaveId']);	// user, section, object id

@@ -39,21 +39,17 @@ CKEDITOR.plugins.add('tikiwiki',{
 		//ajaxLoadingShow( "cke_contents_" + editor.name); eats keystrokes
 		jQuery.ajax({
 			async: false,	// wait for this one
-			url: CKEDITOR.config.ajaxAutoSaveTargetUrl,
+			url: $.service("edit", "towiki"),
 			type: "POST",
+			dataType: "json",
 			data: {
 				referer: editor.config.autoSaveSelf,
 				editor_id: editor.name,
-				data: tiki_encodeURIComponent(html),
-				command: "toWikiFormat"
+				data: html
 			},
 			// good callback
 			success: function(data) {
-				try {
-					output = tiki_decodeURIComponent(jQuery(data).find('data').text());
-				} catch (err) {
-					output = unescape(jQuery(data).find('data').text()); // Reintroduced....(decodeURI and decodeURIComponent would break the Wiki Syntax)
-				}
+				output = data.data;
 			},
 			// bad callback - no good info in the params :(
 			error: function(req, status, error) {
@@ -78,25 +74,18 @@ CKEDITOR.plugins.add('tikiwiki',{
 		ajaxLoadingShow( "cke_contents_" + editor.name);
 		jQuery.ajax({
 			async: false,	// wait for this one
-			url: CKEDITOR.config.ajaxAutoSaveTargetUrl,
+			url: $.service("edit", "tohtml"),
 			type: "POST",
+			dataType: "json",
 			data: {
 				referer: editor.config.autoSaveSelf,
 				editor_id: editor.name,
-				data: tiki_encodeURIComponent(data),
-				command: "toHtmlFormat",
+				data: data,
 				allowhtml: isHtml
 			},
 			// good callback
 			success: function(data) {
-				try {
-					output = tiki_decodeURIComponent(jQuery(data).find('data').text());
-				} catch(e) {}
-
-				if (!output) {
-					output = unescape(jQuery(data).find('data').text())
-				}
-				// not working for ckeditor 4?
+				output = data.data;
 				output = twplugin.ckToHtml.call(twplugin, output);
 			},
 			// bad callback - no good info in the params :(
