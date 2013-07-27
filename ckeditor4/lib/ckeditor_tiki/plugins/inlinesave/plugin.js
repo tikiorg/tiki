@@ -88,7 +88,8 @@ CKEDITOR.plugins.add('inlinesave',
 				}
 			}
 
-			data += $el[0].outerHTML.replace(/<a .*class=["']?editplugin["']?.*<\/a>/g, "");	// yuk, strip out the editplugin icons TODO better
+			var elData = $el[0].outerHTML.replace(/<a .*class=["']?editplugin["']?.*<\/a>/g, "");	// yuk, strip out the editplugin icons TODO better
+			data += elData.replace("<p class=\"\"></p>", "");
 
 			// put all the cke stuff back so the editors still work
 			for (i = 0; i < removedAttrs.length; i++) {
