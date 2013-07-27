@@ -11,118 +11,134 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
   exit;
 }
 
-global $prefs, $smarty;
-if ($prefs['feature_ajax'] !== 'y' || $prefs['ajax_autosave'] !== 'y') {
-	return;
-}
-if ( isset($_REQUEST['noautosave']) === true ) {
-	$smarty->assign('noautosave', $_REQUEST['noautosave'] === 'y');
-}
-
-/**
- * @param $id
- * @param string $referer
- * @param bool $only_md5
- * @return string
- */
-function auto_save_name($id, $referer = '', $only_md5 = false)
+class AutoSaveLib
 {
-	global $user;
-	$referer = preg_replace('/(\?|\&)noautosave=y/', '', ensureReferrer($referer));
-	$referer = rawurldecode($referer); // this is needed to ensure consistency whether coming from js or php
-	return ($only_md5 ? '' : 'temp/cache/auto_save-').md5("$user:$referer:$id");
-}
+	function __construct() {
+		global $access;
 
-/**
- * @param $id
- * @param string $referer
- * @param string $action
- */
-function auto_save_log($id, $referer = '', $action = '')
-{
-	global $user;
-	file_put_contents('temp/cache/auto_save-log-'.(auto_save_name($id, $referer, true)), $user.' : '.ensureReferrer($referer)." : $id : $action\n", FILE_APPEND);
-}
-
-/**
- * @param string $id		editor id
- * @param string $data		content to save
- * @param string $referer	textarea specifier (user:section:item)
- * @return number			bytes that were written to the file, or false on failure
- */
-function auto_save($id, $data, $referer = '')
-{
-//	auto_save_log($id, $referer, 'auto_save');
-	$result = file_put_contents(auto_save_name($id, $referer), $data);
-	return $result;
-}
-
-/**
- * @param string $id		editor id
- * @param string $referer	textarea specifier (user:section:item)
- * @return bool				true on success or false on failure
- */
-function remove_save($id, $referer = '')
-{
-	$referer = ensureReferrer($referer);
-//	auto_save_log($id, $referer, 'remove_save');
-	$file_name = auto_save_name($id, $referer);
-	if (file_exists($file_name)) {
-		$result = unlink($file_name);
-	} else {
-		$result = false;
+		$access->check_feature(array('feature_ajax', 'ajax_autosave'));
 	}
-	return $result;
-}
 
-/**
- * @param $id
- * @param string $referer
- * @return bool
- */
-function has_autosave($id, $referer = '')
-{
-	return file_exists(auto_save_name($id, ensureReferrer($referer)));
-}
-
-/**
- * @param $id
- * @param string $referer
- * @return bool|string
- */
-function get_autosave($id, $referer = '')
-{
-	$file_name = auto_save_name($id, $referer);
-	if (file_exists($file_name)) {
-		return file_get_contents($file_name);
-	} else {
-		return '';
+	/**
+	 * Save data into cache file
+	 *
+	 * @param string $id        editor (textarea) id
+	 * @param string $data		content to save
+	 * @param string $referer   user:section:object id
+	 * @return number			bytes that were written to the file, or false on failure
+	 */
+	function auto_save($id, $data, $referer = '')
+	{
+		//	auto_save_log($id, $referer, 'auto_save');
+		$result = file_put_contents($this->auto_save_name($id, $referer), $data);
+		return $result;
 	}
-}
 
-/**
- * @param string $referer
- * @return string
- */
-function ensureReferrer($referer = '')
-{
-	
-	// should be page name, but use URI if not?
-	if (empty($referer)) {
-		global $section,  $user, $tikilib;
-		$referer .= empty($user) ? $tikilib->get_ip_address() : $user;
-		$referer .= ':';
-		if ($section == 'wiki page') {
-			if (isset($_REQUEST['page'])) {
-				$referer .= 'wiki_page:' . rawurlencode($_REQUEST['page']);
-			}
-		} else if ($section == 'blogs') {
-			if (isset($_REQUEST['postId'])) {
-				$referer .= 'blog:' . $_REQUEST['postId'];
-			}
+	/**
+	 * Delete cache file
+	 *
+	 * @param string $id		editor id
+	 * @param string $referer	textarea specifier (user:section:item)
+	 * @return bool				true on success or false on failure
+	 */
+	function remove_save($id, $referer = '')
+	{
+		$referer = $this->ensureReferrer($referer);
+		//	auto_save_log($id, $referer, 'remove_save');
+		$file_name = $this->auto_save_name($id, $referer);
+		if (file_exists($file_name)) {
+			$result = unlink($file_name);
 		} else {
-			$referer .= rawurlencode($_SERVER['REQUEST_URI']);
+			$result = false;
+		}
+		return $result;
+	}
+
+	/**
+	 * Check if cache file exists
+	 *
+	 * @param string $id         editor (textarea) id
+	 * @param string $referer    user:section:object id
+	 * @return bool
+	 */
+	function has_autosave($id, $referer = '')
+	{
+		return file_exists($this->auto_save_name($id, $this->ensureReferrer($referer)));
+	}
+
+	/**
+	 * Get the contents of an autosave cache file
+	 *
+	 * @param string $id         editor (textarea) id
+	 * @param string $referer    user:section:object id
+	 * @return bool|string
+	 */
+	function get_autosave($id, $referer = '')
+	{
+		$file_name = $this->auto_save_name($id, $referer);
+		if (file_exists($file_name)) {
+			return file_get_contents($file_name);
+		} else {
+			return '';
 		}
 	}
-	return $referer;
+
+	/**
+	 * Make sure all types of object get a referrer
+	 *
+	 * @param string $referer
+	 * @return string
+	 */
+	function ensureReferrer($referer = '')
+	{
+
+		// should be page name, but use URI if not?
+		if (empty($referer)) {
+			global $section,  $user, $tikilib;
+			$referer .= empty($user) ? $tikilib->get_ip_address() : $user;
+			$referer .= ':';
+			if ($section == 'wiki page') {
+				if (isset($_REQUEST['page'])) {
+					$referer .= 'wiki_page:' . rawurlencode($_REQUEST['page']);
+				}
+			} else if ($section == 'blogs') {
+				if (isset($_REQUEST['postId'])) {
+					$referer .= 'blog:' . $_REQUEST['postId'];
+				}
+			} else {
+				$referer .= rawurlencode($_SERVER['REQUEST_URI']);
+			}
+		}
+		return $referer;
+	}
+
+	/**
+	 * Get the name for the cache file
+	 *
+	 * @param string $id         editor (textarea) id
+	 * @param string $referer    user:section:object id
+	 * @param bool $only_md5
+	 * @return string
+	 */
+	private function auto_save_name($id, $referer = '', $only_md5 = false)
+	{
+		global $user;
+		$referer = preg_replace('/(\?|\&)noautosave=y/', '', $this->ensureReferrer($referer));
+		$referer = rawurldecode($referer); // this is needed to ensure consistency whether coming from js or php
+		return ($only_md5 ? '' : 'temp/cache/auto_save-').md5("$user:$referer:$id");
+	}
+
+	/**
+	 * Dev routine to save a log of autosave events
+	 *
+	 * @param $id
+	 * @param string $referer
+	 * @param string $action
+	 */
+	private function auto_save_log($id, $referer = '', $action = '')
+	{
+		global $user;
+		file_put_contents('temp/cache/auto_save-log-'.($this->auto_save_name($id, $referer, true)), $user.' : '.$this->ensureReferrer($referer)." : $id : $action\n", FILE_APPEND);
+	}
+
 }

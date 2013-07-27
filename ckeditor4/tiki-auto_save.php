@@ -136,7 +136,7 @@ if (isset($_REQUEST['editor_id'])) {
 				if (!isset($_REQUEST['diff_style'])) {	// use previously set diff_style
 					$_REQUEST['diff_style'] = isset($_COOKIE['preview_diff_style']) ? $_COOKIE['preview_diff_style'] : '';
 				}
-				$data = $editlib->partialParseWysiwygToWiki(get_autosave($_REQUEST['editor_id'], $_REQUEST['autoSaveId']));
+				$data = $editlib->partialParseWysiwygToWiki(TikiLib::lib('autosave')->get_autosave($_REQUEST['editor_id'], $_REQUEST['autoSaveId']));
 				$smarty->assign('diff_style', $_REQUEST['diff_style']);
 				if (!empty($_REQUEST['diff_style'])) {
 					$info = $tikilib->get_page_info($autoSaveIdParts[2]);
@@ -192,9 +192,9 @@ if (isset($_REQUEST['editor_id'])) {
 				);
 				$smarty->assign('headtitle', tra('Preview'));
 				$data = '<div id="c1c2"><div id="wrapper"><div id="col1"><div id="tiki-center" class="wikitext">';
-				if (has_autosave($_REQUEST['editor_id'], $_REQUEST['autoSaveId'])) {
+				if (TikiLib::lib('autosave')->has_autosave($_REQUEST['editor_id'], $_REQUEST['autoSaveId'])) {
 					$parserlib = TikiLib::lib('parser');
-					$data .= $parserlib->parse_data($editlib->partialParseWysiwygToWiki(get_autosave($_REQUEST['editor_id'], $_REQUEST['autoSaveId'])), $options);
+					$data .= $parserlib->parse_data($editlib->partialParseWysiwygToWiki(TikiLib::lib('autosave')->get_autosave($_REQUEST['editor_id'], $_REQUEST['autoSaveId'])), $options);
 				} else {
 					if ($autoSaveIdParts[1] == 'wiki_page') {
 						global $wikilib; include_once('lib/wiki/wikilib.php');
