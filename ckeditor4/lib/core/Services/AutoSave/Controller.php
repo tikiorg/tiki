@@ -13,32 +13,91 @@ class Services_AutoSave_Controller
 		Services_Exception_Disabled::check('ajax_autosave');
 	}
 
+	/**
+	 * Get contents of autosave
+	 *
+	 * @param $input JitFilter    editor_id, referer
+	 * @return array data         string: markup contents
+	 */
+
 	function action_get($input)
 	{
-		include_once 'lib/ajax/autosave.php';
-		$res = get_autosave($input->editor_id->text(), $input->referer->text());
+		$referer = $input->referer->text();
+		$res = '';
+
+		if ($this->checkReferrer($referer)) {
+			include_once 'lib/ajax/autosave.php';
+			$res = get_autosave($input->editor_id->text(), $referer);
+		}
+
 		return array(
 			'data' => $res,
 		);
 	}
+
+	/**
+	 * Save something to a autosave
+	 *
+	 * @param $input JitFilter    editor_id, referer
+	 * @return array              int: chars saved
+	 */
 
 	function action_save($input)
 	{
-		include_once 'lib/ajax/autosave.php';
-		$data = $input->data->none();
-		$res = auto_save($input->editor_id->text(), $data, $input->referer->text());
+		$referer = $input->referer->text();
+		$res = '';
+
+		if ($this->checkReferrer($referer)) {
+			include_once 'lib/ajax/autosave.php';
+			$data = $input->data->none();
+			$res = auto_save($input->editor_id->text(), $data,$referer);
+		}
 
 		return array(
 			'data' => $res,
 		);
 	}
 
+	/**
+	 * Remove autosave (cache file)
+	 *
+	 * @param $input JitFilter	editor_id, referer
+	 * @return array
+	 */
+
 	function action_delete($input)
 	{
-		include_once 'lib/ajax/autosave.php';
-		remove_save($input->editor_id->text(), $input->referer->text());
+		$referer = $input->referer->text();
+
+		if ($this->checkReferrer($referer)) {
+			include_once 'lib/ajax/autosave.php';
+			remove_save($input->editor_id->text(), $referer);
+		}
 
 		return array();
+	}
+
+	/**
+	 * Check if user can and is editing that object
+	 *
+	 * @param $referer string  user:section:object id
+	 * @return bool
+	 */
+
+	private function checkReferrer($referer)
+	{
+		global $page, $user;
+
+		$referer = explode(':', $referer);	// user, section, object id
+		$isok = false;
+
+		if ($referer && count($referer) === 3 && $referer[1] === 'wiki_page') {
+			$page = rawurldecode($referer[2]);	// plugins use global $page for approval
+
+			$isok = Perms::get('wiki page', $page)->edit && $user === TikiLib::lib('tiki')->get_semaphore_user($page);
+		}
+
+		return $isok;
 	}
 }
 
