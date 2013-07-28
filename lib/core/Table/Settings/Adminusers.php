@@ -24,6 +24,7 @@ class Table_Settings_Adminusers extends Table_Settings_Abstract
 {
 	protected $ts = array(
 		'id' => 'usertable',
+		'serverside' => true,
 		'selflinks' => true,
 		'sort' => array(
 			'columns' => array(

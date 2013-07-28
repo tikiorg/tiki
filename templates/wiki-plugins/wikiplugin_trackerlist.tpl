@@ -54,13 +54,14 @@
 {if $displaysheet eq 'true'}
 <div class='trackercontainer' style='height: 250px ! important;'>
 {/if}
-
-<table class="normal wikiplugin_trackerlist"
+		<div id="trackerlist_{$iTRACKERLIST}" {if $tsOn}style="visibility:hidden"{/if}>
+			<table class="normal wikiplugin_trackerlist" id="trackerlist_{$iTRACKERLIST}"
 	{if $displaysheet eq 'true'}title="{$tracker_info.name}" readonly="true"{/if}
 	{if $tableassheet eq 'true'}title="{tr}Tracker - {/tr}{$tracker_info.name}" readonly="true"{/if}
 	>
 
 		{if $showfieldname ne 'n' and empty($tpl)}
+	<thead>
 	<tr>
 
 			{if $checkbox}<th>{$checkbox.title}</th>{/if}
@@ -69,8 +70,8 @@
 			{/if}
 			{if $showitemrank eq 'y'}<th>{tr}Rank{/tr}</th>{/if}
 			{foreach key=jx item=ix from=$fields}
-				{if $ix.isPublic eq 'y' and ($ix.isHidden eq 'n' or $ix.isHidden eq 'c' or $ix.isHidden eq 'p' or $tiki_p_admin_trackers eq 'y') 
-					and $ix.type ne 'x' and $ix.type ne 'h' and in_array($ix.fieldId, $listfields) and ($ix.type ne 'p' or $ix.options_array[0] ne 'password') 
+				{if $ix.isPublic eq 'y' and ($ix.isHidden eq 'n' or $ix.isHidden eq 'c' or $ix.isHidden eq 'p' or $tiki_p_admin_trackers eq 'y')
+					and $ix.type ne 'x' and $ix.type ne 'h' and in_array($ix.fieldId, $listfields) and ($ix.type ne 'p' or $ix.options_array[0] ne 'password')
 					and (empty($ix.visibleBy) or in_array($default_group, $ix.visibleBy) or $tiki_p_admin_trackers eq 'y')}
 					{if $ix.type eq 'l'}
 		<th class="auto field{$ix.fieldId}">{$ix.name|default:"&nbsp;"}</th>
@@ -103,6 +104,7 @@
 			{/if}
 
 	</tr>
+	</thead>
 		{/if}
 	{/if}
 
@@ -118,9 +120,9 @@ the section loop so that the vars are not replaced by nested pretty tracker exec
 			{if ($showstatus ne 'n') and ($tracker_info.showStatus eq 'y' or ($tracker_info.showStatusAdminOnly eq 'y' and $tiki_p_admin_trackers eq 'y'))}<td></td>{/if}
 			{if $showitemrank eq 'y'}<td></td>{/if}
 			{foreach key=jx item=ix from=$fields}
-				{if $ix.isPublic eq 'y' and ($ix.isHidden eq 'n' or $ix.isHidden eq 'c' or $ix.isHidden eq 'p' or $tiki_p_admin_trackers eq 'y') and $ix.type ne 'x' and $ix.type ne 'h' 
-					and in_array($ix.fieldId, $listfields) and ($ix.type ne 'p' or $ix.options_array[0] ne 'password') and (empty($ix.visibleBy) or in_array($default_group, $ix.visibleBy) 
-					or $tiki_p_admin_trackers eq 'y')}	
+				{if $ix.isPublic eq 'y' and ($ix.isHidden eq 'n' or $ix.isHidden eq 'c' or $ix.isHidden eq 'p' or $tiki_p_admin_trackers eq 'y') and $ix.type ne 'x' and $ix.type ne 'h'
+					and in_array($ix.fieldId, $listfields) and ($ix.type ne 'p' or $ix.options_array[0] ne 'password') and (empty($ix.visibleBy) or in_array($default_group, $ix.visibleBy)
+					or $tiki_p_admin_trackers eq 'y')}
 					{if isset($computedFields[$ix.fieldId])}
 						<td class="numeric" style="padding-right:2px">
 						{foreach from=$computedFields[$ix.fieldId] item=computedField name=computedField}
@@ -139,13 +141,14 @@ the section loop so that the vars are not replaced by nested pretty tracker exec
 			{if $tracker_info.useAttachments eq 'y' and $tracker_info.showAttachments eq 'y'}<td></td>{/if}
 		</tr>
 		{/if}
+</tbody>
 </table>
 
 {if $displaysheet eq 'true'}
 </div>
 {/if}
 
-		{if $items|@count eq 0}
+		{if $items|@count eq 0 && !$tsOn}
 			<div class="tracker_error">{tr}No records found{/tr}</div>
 		{elseif $checkbox}
 			{if $checkbox.tpl}{include file="$checkbox.tpl"}{/if}
@@ -185,6 +188,9 @@ $('.exportButton a').click(function() {
 
 	{cycle values="odd,even" print=false}
 	{assign var=itemoff value=0}
+	{if empty($tpl)}
+		<tbody>
+	{/if}
 	{section name=user loop=$items}
 
 {* ------- popup ---- *}
@@ -229,16 +235,16 @@ $('.exportButton a').click(function() {
 {* ------------------------------------ *}
 			{if !isset($list_mode)}{assign var=list_mode value="y"}{/if}
 			{foreach from=$items[user].field_values item=field}
-				{if $field.isPublic eq 'y' and ($field.isHidden eq 'n' or $field.isHidden eq 'c' 
+				{if $field.isPublic eq 'y' and ($field.isHidden eq 'n' or $field.isHidden eq 'c'
 					or $field.isHidden eq 'p' or $tiki_p_admin_trackers eq 'y') and $field.type ne 'x' and $field.type ne 'h'
-					and in_array($field.fieldId, $listfields) and ($field.type ne 'p' or $field.options_array[0] ne 'password') 
+					and in_array($field.fieldId, $listfields) and ($field.type ne 'p' or $field.options_array[0] ne 'password')
 					and (empty($field.visibleBy) or in_array($default_group, $field.visibleBy) or $tiki_p_admin_trackers eq 'y')}
 		<td class={if $field.type eq 'n' or $field.type eq 'q' or $field.type eq 'b'}"numeric"{else}"auto"{/if}
 					{if $field.type eq 'b'} style="padding-right:5px"{/if}>
 					{if $field.isHidden eq 'c' and $fieldr and $tiki_p_admin_trackers ne 'y'}
 					{elseif isset($perms)}
 						{trackeroutput item=$items[user] field=$field list_mode=$list_mode showlinks=$showlinks showpopup=$showpopup url=$url editable=in_array($field.fieldId, $editableFields)
-								tiki_p_view_trackers=$perms.tiki_p_view_trackers tiki_p_modify_tracker_items=$perms.tiki_p_modify_tracker_items tiki_p_modify_tracker_items_pending=$perms.tiki_p_modify_tracker_items_pending 
+								tiki_p_view_trackers=$perms.tiki_p_view_trackers tiki_p_modify_tracker_items=$perms.tiki_p_modify_tracker_items tiki_p_modify_tracker_items_pending=$perms.tiki_p_modify_tracker_items_pending
 								tiki_p_modify_tracker_items_closed=$perms.tiki_p_modify_tracker_items_closed tiki_p_comment_tracker_items=$perms.tiki_p_comment_tracker_items reloff=$itemoff}
 					{else}
 						{trackeroutput item=$items[user] field=$field list_mode=$list_mode reloff=$itemoff showlinks=$showlinks showpopup=$showpopup url=$url editable=in_array($field.fieldId, $editableFields)}
@@ -258,7 +264,7 @@ $('.exportButton a').click(function() {
 		<td style="text-align:center;">{$items[user].comments}</td>
 			{/if}
 			{if $tracker_info.useAttachments eq 'y' and $tracker_info.showAttachments eq 'y'}
-		<td style="text-align:center;"><a href="tiki-view_tracker_item.php?trackerId={$listTrackerId}&amp;itemId={$items[user].itemId}&amp;show=att" 
+		<td style="text-align:center;"><a href="tiki-view_tracker_item.php?trackerId={$listTrackerId}&amp;itemId={$items[user].itemId}&amp;show=att"
 link="{tr}List Attachments{/tr}"><img src="img/icons/folderin.gif" alt="{tr}List Attachments{/tr}"></a>{$items[user].attachments}</td>
 			{/if}
 			{if ($showdelete eq 'y' || $showpenditem eq 'y' || $showopenitem eq 'y' || $showcloseitem eq 'y') && ($tiki_p_admin_trackers eq 'y' or $perms.tiki_p_remove_tracker_items eq 'y' or $perms.tiki_p_remove_tracker_items_pending eq 'y' or $perms.tiki_p_remove_tracker_items_closed eq 'y')}
@@ -288,4 +294,5 @@ link="{tr}List Attachments{/tr}"><img src="img/icons/folderin.gif" alt="{tr}List
 	{/section}
 
 	{$smarty.capture.trackerlist_bottomstuff}
+	</tbody>
 {/strip}

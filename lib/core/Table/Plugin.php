@@ -45,7 +45,7 @@ class Table_Plugin
 				'required' => false,
 				'name' => tra('Overall Sort Settings'),
 				'description' => tr(
-					'Enter %0y%1 to allow sorting and %0n%1 to disallow (y is the default). Enter type:%0save%1
+					'Enter %0y%1 to allow sorting and %0n%1 to disallow (n is the default). Enter type:%0save%1
 					to allow sorts to be saved between page refreshes. Enter type:%0reset%1;text:***** to allow sorting and
 					show an unsort button with custom text. Enter %0type:savereset%1;text:buttontext to allow the same for saved sorts.',
 					'<b>', '</b>'
@@ -68,7 +68,8 @@ class Table_Plugin
 				'required' => false,
 				'name' => tra('Sort Settings by Column'),
 				'description' => tr(
-					'Set %0type%1 and %0group%1 settings for each column, using the %0|%1 to separate columns. ',
+					'Set %0type%1 and %0group%1 settings for each column, using the %0|%1 to separate columns. Note
+					that once %0group%1 is set for one column it will be set for all.',
 					'<b>', '</b>')
 				. '<br>' . tr('%0type%1 tells the sorter what type of date is being sorted and choices include:
 					%0text%1, %0digit%1, %0currency%1, %0percent%1, %0usLongDate%1, %0shortDate%1, %0isoDate%1,
@@ -148,7 +149,7 @@ class Table_Plugin
 	 * @param null   $ajaxurl			//only needed if ajax will be used to pull partial record sets
 	 * @param null   $totalrows			//only needed if ajax will be used to pull partial record sets
 	 */
-	function setSettings ($id = null, $sortable = 'y', $sortList = null, $tsortcolumns = null, $tsfilters = null,
+	function setSettings ($id = null, $sortable = 'n', $sortList = null, $tsortcolumns = null, $tsfilters = null,
 						 $tsfilteroptions = null, $tspaginate = null, $ajaxurl = null, $totalrows = null)
 	{
 		$s = array();
