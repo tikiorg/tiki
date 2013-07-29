@@ -1655,7 +1655,7 @@ function wikiplugin_trackerlist($data, $params)
 					isset($tsfilters) ? $tsfilters : null,
 					isset($tsfilteroptions) ? $tsfilteroptions : null,
 					isset($tspaginate) ? $tspaginate : null,
-					$GLOBALS['requestUri'] . '?{sort:sort}&{filter:filter}',
+					$GLOBALS['requestUri'],
 					$items['cant']
 				);
 				unset($items);

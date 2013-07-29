@@ -149,7 +149,7 @@ class Table_Plugin
 	 * @param null   $ajaxurl			//only needed if ajax will be used to pull partial record sets
 	 * @param null   $totalrows			//only needed if ajax will be used to pull partial record sets
 	 */
-	function setSettings ($id = null, $sortable = 'n', $sortList = null, $tsortcolumns = null, $tsfilters = null,
+	public function setSettings ($id = null, $sortable = 'n', $sortList = null, $tsortcolumns = null, $tsfilters = null,
 						 $tsfilteroptions = null, $tspaginate = null, $ajaxurl = null, $totalrows = null)
 	{
 		$s = array();
@@ -266,7 +266,7 @@ class Table_Plugin
 
 		//ajaxurl
 		if (!empty($ajaxurl)) {
-			$s['ajax']['url'] = $ajaxurl;
+			$s['ajax']['url'] = $this->getAjaxurl($ajaxurl);
 		} else {
 			$s['ajax'] = false;
 		}
@@ -324,6 +324,25 @@ class Table_Plugin
 		} else {
 			return $param;
 		}
+	}
+
+	/**
+	 * Utility to add ajax parameters to URL
+	 *
+	 * @param $ajaxurl
+	 *
+	 * @return string
+	 */
+	private function getAjaxurl($ajaxurl)
+	{
+		$str = '{sort:sort}&{filter:filter}';
+		$url = parse_url($ajaxurl);
+		if (isset($url['query'])) {
+			$query = $url['query'] . '&' . $str;
+		} else {
+			$query = $str;
+		}
+		return $url['path'] . '?' . $query;
 	}
 
 }
