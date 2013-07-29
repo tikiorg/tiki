@@ -116,7 +116,8 @@ class Search_Formatter_Builder
 		}
 
 		if (isset($arguments['pagination'])) {
-			$plugin = new WikiPlugin_List_AppendPagination($plugin, $this->paginationArguments);
+
+			$plugin = new Search_Formatter_AppendPagination($plugin, $this->paginationArguments);
 		}
 
 		$this->formatterPlugin = $plugin;
