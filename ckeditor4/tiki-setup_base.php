@@ -549,6 +549,7 @@ array_unshift(
 			'mobile_mode' => 'alpha',
 			'categ' => 'striptags',
 			'local_tz' => 'text',
+			'preview' => 'text',
 		),
 		'staticKeyFiltersForArrays' => array(
 			'cat_managed' => 'digits',

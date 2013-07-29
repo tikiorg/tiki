@@ -148,19 +148,21 @@ var ajaxPreviewWindow;
 
 function ajax_preview(editorId, autoSaveId, inPage) {
 	if (editorId) {
-		syntaxHighlighter.sync($('#' + editorId));
-		var allowHtml = auto_save_allowHtml($('#' + editorId).prop("form"));
+		var $textarea = $('#' + editorId);
+		var $autosavepreview = $("#autosave_preview");
+		syntaxHighlighter.sync($textarea);
+		var allowHtml = auto_save_allowHtml($textarea.prop("form"));
 		if (!ajaxPreviewWindow) {
 			if (inPage) {
 				var $prvw = $("#autosave_preview:visible");
 				if ($prvw.length) {
-					ajaxLoadingShow($("#autosave_preview .wikitext"));
+					ajaxLoadingShow($autosavepreview);
 					var h = location.search.match(/&hdr=(\d?)/);
 					h = h && h.length ? h[1] : "";
-					$.get("tiki-auto_save.php", {
+					$.get($.service("edit", "preview"), {
 						editor_id: editorId,
 						autoSaveId: autoSaveId,
-						inPage: true,
+						inPage: 1,
 						hdr: h,
 						allowHtml: allowHtml
 					}, function(data) {
@@ -168,21 +170,20 @@ function ajax_preview(editorId, autoSaveId, inPage) {
 						data = data.replace(/\shref/gi, " tiki_href").
 								replace(/\sonclick/gi, " tiki_onclick").
 								replace(/<script[.\s\S]*?<\/script>/mgi, "");
-						$("#autosave_preview .wikitext").html(data);
-						$("#preview_diff_style").val(function(){return getCookie("preview_diff_style","","");});
+						$(".preview_contents", $autosavepreview).html(data);
+						$("#preview_diff_style").val(function(){return getCookie("preview_diff_style","preview","");});
 						ajaxLoadingHide();
 					});
 				}
 			} else {
-				var features = 'menubar=no,toolbar=no,location=no,directories=no,fullscreen=no,titlebar=no,hotkeys=no,status=no,scrollbars=yes,resizable=yes,width=600';
-				ajaxPreviewWindow = window.open('tiki-auto_save.php?editor_id=' + editorId + '&autoSaveId=' + tiki_encodeURIComponent(autoSaveId) + '&allowHtml=' + allowHtml, '_blank', features);
+				initPreviewWindow(editorId, autoSaveId, allowHtml);
 			}
 		} else {
 			if (typeof ajaxPreviewWindow.get_new_preview === 'function') {
 				ajaxPreviewWindow.get_new_preview();
 				ajaxPreviewWindow.focus();
 			} else {
-				ajaxPreviewWindow.open('tiki-auto_save.php?editor_id=' + editorId + '&autoSaveId=' + tiki_encodeURIComponent(autoSaveId));
+				initPreviewWindow(editorId, autoSaveId, allowHtml);
 			}
 		}
 	} else {
@@ -192,6 +193,12 @@ function ajax_preview(editorId, autoSaveId, inPage) {
 	}
 	
 }
+
+function initPreviewWindow (editorId, autoSaveId, allowHtml) {
+	var features = 'menubar=no,toolbar=no,fullscreen=no,titlebar=no,status=no,width=600';
+	var url = $.service("edit", "preview", {editor_id: editorId, autoSaveId: autoSaveId, allowHtml: allowHtml });
+	window.open(url, "_blank", features);
+};
 
 $(window).unload(function () {
 	if (ajaxPreviewWindow && typeof ajaxPreviewWindow.get_new_preview === 'function') {

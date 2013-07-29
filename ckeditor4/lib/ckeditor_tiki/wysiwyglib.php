@@ -103,7 +103,6 @@ var disableWyiswygInlineEditing = function() {
 ')
 		->add_js(
 			'// --- config settings for the inlinesave plugin ---
-window.CKEDITOR.config.ajaxSaveTargetUrl = "'.$tikiroot.'tiki-auto_save.php?page='.urlencode($pageName).'";
 window.CKEDITOR.config.extraPlugins = "";
 window.CKEDITOR.config.extraPlugins += (window.CKEDITOR.config.extraPlugins ? ",inlinesave" : "inlinesave" );
 window.CKEDITOR.plugins.addExternal( "inlinesave", "'.$tikiroot.'lib/ckeditor_tiki/plugins/inlinesave/");
@@ -112,7 +111,6 @@ window.CKEDITOR.plugins.addExternal( "inlinecancel", "'.$tikiroot.'lib/ckeditor_
 window.CKEDITOR.config.ajaxSaveRefreshTime = 30 ;			// RefreshTime
 window.CKEDITOR.config.contentsLangDirection = ' . ($prefs['feature_bidi'] === 'y' ? '"rtl"' : '"ui"') . ';
 // --- plugins
-window.CKEDITOR.config.ajaxAutoSaveTargetUrl = "'.$tikiroot.'tiki-auto_save.php";	// URL to post to (also used for plugin processing)
 window.CKEDITOR.config.autoSavePage = "' . addcslashes($pageName, '"') . '";		// unique reference for each page
 window.CKEDITOR.config.allowedContent = true;
 // --- other configs
@@ -201,7 +199,6 @@ window.CKEDITOR.on("instanceCreated", function( event ) {
 
 			$headerlib->add_js(
 				'// --- config settings for the autosave plugin ---
-window.CKEDITOR.config.ajaxAutoSaveTargetUrl = "'.$tikiroot.'tiki-auto_save.php";	// URL to post to (also used for plugin processing)
 window.CKEDITOR.config.extraPlugins += (window.CKEDITOR.config.extraPlugins ? ",autosave" : "autosave" );
 window.CKEDITOR.plugins.addExternal( "autosave", "'.$tikiroot.'lib/ckeditor_tiki/plugins/autosave/");
 window.CKEDITOR.config.ajaxAutoSaveRefreshTime = 30 ;			// RefreshTime
