@@ -263,7 +263,7 @@ abstract class Table_Settings_Abstract
 			$this->s['id'] .= $i;
 		}
 		foreach ($this->ids as $type => $settings) {
-			if ($type === 'pagercontrols' || ($this->s[$type]['type'] !== false
+			if ($type === 'pagercontrols' || (isset($this->s[$type]['type']) && $this->s[$type]['type'] !== false
 				&& $this->s[$type]['type'] !== 'save' && !isset($this->s[$type]['id'])))
 			{
 				$this->s[$type]['id'] = $this->s['id'] . htmlspecialchars($settings['id']);

@@ -30,15 +30,14 @@ class Table_Code_MainOptions extends Table_Code_Manager
 	{
 		$mo = array();
 
-		//onRenderHeader option - change html elements before table renders
+		/***  onRenderHeader option - change html elements before table renders ***/
 		$orh = array();
-
 		//remove self-links
 		if (isset($this->s['selflinks']) && $this->s['selflinks']) {
 			$orh[] = '$(this).find(\'a\').replaceWith($(this).find(\'a\').text());';
 		}
 
-		/////handle sorting classes/////
+		/* handle sorting classes */
 		//no sort on all columns
 		if (!$this->sort) {
 			$orh[] = '$(\'table#' . $this->id . ' th\').addClass(\'sorter-false\');';
@@ -47,6 +46,7 @@ class Table_Code_MainOptions extends Table_Code_Manager
 			foreach ($this->s['sort']['columns'] as $col => $info) {
 				//row grouping setting
 				if (!empty($info['group'])) {
+					$this->s['sort']['group'] = true;
 					$orh[] = '$(\'table#' . $this->id . ' th:eq(' . $col . ')\').addClass(\'group-'
 							. $info['group'] . '\');';
 				}
@@ -76,16 +76,15 @@ class Table_Code_MainOptions extends Table_Code_Manager
 			array_unshift($mo, 'headerTemplate: \'{content}\'');
 			$mo[] = $this->iterate($orh, 'onRenderHeader: function(index){', $this->nt2 . '}', $this->nt3, '', '');
 		}
+		/***  end onRenderHeader section ***/
 
-
-		//*** widgets ***//
+		/*** widgets ***/
 		//standard ones
 		$w[] = 'zebra';
 		$w[] = 'stickyHeaders';
 		if (!isset($this->s['sort']['group']) || $this->s['sort']['group'] !== false) {
 			$w[] = 'group';
 		}
-
 		//saveSort
 		if (isset($this->s['sort']['type']) && strpos($this->s['sort']['type'], 'save') !== false) {
 			$w[] = 'saveSort';
@@ -97,10 +96,13 @@ class Table_Code_MainOptions extends Table_Code_Manager
 		if (count($w) > 0) {
 			$mo[] = $this->iterate($w, 'widgets : [', ']', '\'', '\'', ',');
 		}
-
+		/*** end widget section ***/
 
 		//Show processing
 		$mo[] = 'showProcessing: true';
+		if ($this->sort && $this->s['serverside'] === true) {
+			$mo[] = 'serverSideSorting: true';
+		}
 
 		//Turn multi-column sort off (on by default by pressing shift-clicking column headers)
 		if (isset($this->s['sort']['multisort']) && $this->s['sort']['multisort'] === false) {
