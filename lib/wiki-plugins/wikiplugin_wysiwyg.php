@@ -70,7 +70,9 @@ function wikiplugin_wysiwyg($data, $params)
 
 		$js = '$("#' . $exec_key . '").wysiwygPlugin("' . $execution . '", "' . $page . '", ' . $ckoption . ')';
 
-		TikiLib::lib('header')->add_jq_onready($js);
+		TikiLib::lib('header')
+			->add_jsfile('lib/ckeditor_tiki/tiki-ckeditor.js')
+			->add_jq_onready($js);
 	}
 	return $html;
 
