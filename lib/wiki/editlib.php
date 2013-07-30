@@ -813,7 +813,7 @@ class EditLib
 	/**
 	 * Converts wysiwyg plugins into wiki.
 	 * Also processes headings by removing surrounding <p> (possibly for wysiwyg_wiki_semi_parsed but not tested)
-	 * Also used by ajax preview in tiki-auto_save.php
+	 * Also used by ajax preview in Services_Edit_Controller
 	 *
 	 * @param string $inData	page data - mostly html but can have a bit of wiki in it
 	 * @return string			html with wiki plugins

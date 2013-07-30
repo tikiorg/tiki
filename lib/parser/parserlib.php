@@ -1067,7 +1067,7 @@ if ( \$('#$id') ) {
 			// Tiki 7+ adds ~np~ to plugin output so remove them
 			$plugin_result = preg_replace('/~[\/]?np~/ms', '', $plugin_result);
 
-			if ($info['format'] !== 'html') {
+			if (!isset($info['format']) || $info['format'] !== 'html') {
 				$oldOptions = $this->option;
 				$plugin_result = $this->parse_data($plugin_result, array('is_html' => false, 'suppress_icons' => true, 'ck_editor' => true, 'noparseplugins' => true));
 				$this->setOptions($oldOptions);
@@ -1075,7 +1075,7 @@ if ( \$('#$id') ) {
 				$this->option['noparseplugins'] = false;
 			}
 
-			if (strpos($_SERVER['SCRIPT_NAME'], 'tiki-index.php') === false) { // remove hrefs and onclicks
+			if ( ! getCookie('wysiwyg_inline_edit', null, false)) { // remove hrefs and onclicks
 				$plugin_result = preg_replace('/\shref\=/i', ' tiki_href=', $plugin_result);
 				$plugin_result = preg_replace('/\sonclick\=/i', ' tiki_onclick=', $plugin_result);
 				$plugin_result = preg_replace('/<script.*?<\/script>/mi', '', $plugin_result);

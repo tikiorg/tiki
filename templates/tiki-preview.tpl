@@ -10,11 +10,11 @@
 		{jq}
 $("#preview_diff_style").change(function(){
 	ajaxLoadingShow($("#autosave_preview .wikitext"));
-	setCookie("preview_diff_style", $(this).val(), "", "session");
-	$.get("tiki-auto_save.php", {
+	setCookie("preview_diff_style", $(this).val(), "preview", "session");
+	$.get($.service("edit", "preview"), {
 		editor_id: 'editwiki',
 		autoSaveId: autoSaveId,
-		inPage: true,
+		inPage: 1,
 		{{if isset($smarty.request.hdr)}hdr: {$smarty.request.hdr},{/if}}
 		diff_style: $(this).val()
 	}, function(data) {
@@ -42,12 +42,13 @@ $("#autosave_preview>div").height(getCookie("wiki", "preview", ""));
 <small>{$description}</small>
 {/if}
 <div align="center" class="attention" style="font-weight:bold">{tr}Note: Remember that this is only a preview, and has not yet been saved!{/tr}</div>
-<div  class="wikitext">
+<div class="preview_contents"><div  class="wikitext">
 {$parsed}
 </div>
 {if $has_footnote and isset($parsed_footnote)}
 <div  class="wikitext">{$parsed_footnote}</div>
 {/if}
+</div>
 {if $prefs.ajax_autosave eq "y"}
 </div><span id="autosave_preview_grippy" class="ui-resizable-handle ui-resizable-s"> </span>
 {/if}

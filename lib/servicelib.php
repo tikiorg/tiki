@@ -46,6 +46,7 @@ class ServiceLib
 	{
 		return array(
 			'auth_source' => 'Services_AuthSource_Controller',
+			'autosave' => 'Services_AutoSave_Controller',
 			'bigbluebutton' => 'Services_BigBlueButton_Controller',
 			'calendar' => 'Services_Calendar_Controller',
 			'category' => 'Services_Category_Controller',
@@ -54,6 +55,7 @@ class ServiceLib
 			'connect' => 'Services_Connect_Client',
 			'contenttemplate'=>  'Services_ContentTemplate_Controller',
 			'draw' => 'Services_Draw_Controller',
+			'edit' => 'Services_Edit_Controller',
 			'favorite' => 'Services_Favorite_Controller',
 			'file_finder' => 'Services_File_FinderController',
 			'file' => 'Services_File_Controller',

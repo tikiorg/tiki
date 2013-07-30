@@ -116,7 +116,7 @@
 		{/remarksbox}
 	{/if}
 	
-	<div id="page-data">
+	<div id="page-data" class="clearfix">
 		{if isset($pageLang) and ($pageLang eq 'ar' or $pageLang eq 'he')}
 			<div style="direction:RTL; unicode-bidi:embed; text-align: right; {if $pageLang eq 'ar'}font-size: large;{/if}">
 				{$parsed}

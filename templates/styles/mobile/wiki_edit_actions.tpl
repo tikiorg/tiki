@@ -4,7 +4,6 @@
 <input type="submit" class="wikiaction" title="{tr}Preview your changes.{/tr}" name="preview" value="{tr}Preview{/tr}" onclick="needToConfirm=false;">
 {if $prefs.ajax_autosave eq "y"}
 	{jq} $("input[name=preview]").click(function(){
-auto_save_data['editwiki'] = "";
 auto_save('editwiki', autoSaveId);
 if (!ajaxPreviewWindow) {
 	$('#autosave_preview').slideDown('slow', function(){ ajax_preview( 'editwiki', autoSaveId, true );});
