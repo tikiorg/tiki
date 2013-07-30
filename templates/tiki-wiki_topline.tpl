@@ -52,8 +52,9 @@
 											$("#wysiwyg_inline_edit").click( function () {
 												var src = $("#wysiwyg_inline_edit img").attr("src");
 												if (src.indexOf("page.png") > -1) {
-													enableWysiwygInlineEditing();
-													$("#wysiwyg_inline_edit img").attr("src", src.replace("page.png", "page_lightning.png"));
+													if (enableWysiwygInlineEditing()) {
+														$("#wysiwyg_inline_edit img").attr("src", src.replace("page.png", "page_lightning.png"));
+													}
 												} else {
 													disableWyiswygInlineEditing();
 													$("#wysiwyg_inline_edit img").attr("src", src.replace("page_lightning.png", "page.png"));
