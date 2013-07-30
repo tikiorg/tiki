@@ -100,7 +100,7 @@ class Services_Search_CustomSearchController
 				}
 
 				$filter = 'content'; //default
-				if (isset($config['filter'])) {
+				if (isset($config['_filter']) || $name == 'categories' || $name == 'daterange') {
 					if ($config['_filter'] == 'language') {
 						$filter = 'language';
 					} elseif ($config['_filter'] == 'type') {
