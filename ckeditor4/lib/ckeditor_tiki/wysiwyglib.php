@@ -75,49 +75,8 @@ class WYSIWYGLib
 		$ckeformattags = ToolbarCombos::getFormatTags($info['is_html'] ? 'html' : 'wiki');
 
 
-		$headerlib->add_js('', 5)
-			->add_jq_onready('
-var enableWysiwygInlineEditing = function () {
-	ajaxLoadingShow("page-data");
-	setCookie("wysiwyg_inline_edit", 1, "preview");
-	$.getJSON($.service("wiki", "get_page", {page: window.CKEDITOR.config.autoSavePage}), function (data) {
-		if (data && data.data) {
-			$("#page-data").html(data.data);
-			// lists dont inline happily so wrap in divs
-			$("#page-data > ul, #page-data > ol, #page-data > dl, #page-data > table").each(function() {
-					$(this).wrap("<div>");
-			});
-			// save original data and add contenteditable
-			$("#page-data > *:not(.icon_edit_section)").each(function() {
-				if ($(".tiki_plugin", this).length === 0 && !$(this).hasClass("tiki_plugin")) {
-					$(this).data("inline_original", $(this).html())
-							.attr("contenteditable", true);
-				}
-			});
-			// init inline ckeditors
-			window.CKEDITOR.inlineAll();
-		}
-		ajaxLoadingHide();
-	});
-}
-var disableWyiswygInlineEditing = function() {
-	ajaxLoadingShow("page-data");
-	setCookie("wysiwyg_inline_edit", "", "preview");
-	$.getJSON($.service("wiki", "get_page", {page: window.CKEDITOR.config.autoSavePage}), function (data) {
-		if (data && data.data) {
-			$("#page-data").html(data.data);
-			$("#page-data > *[contenteditable=true]").attr("contenteditable", false).removeClass("cke_editable");
-			for(var e in  CKEDITOR.instances) {
-				if (CKEDITOR.instances[e] != null) {
-					CKEDITOR.instances[e].destroy();
-				}
-			}
-		}
-		ajaxLoadingHide();
-	});
-}
-')
-		->add_js(
+		$headerlib->add_jsfile('lib/ckeditor_tiki/tiki-ckeditor.js')
+			->add_js(
 			'// --- config settings for the inlinesave plugin ---
 window.CKEDITOR.config.extraPlugins = "";
 window.CKEDITOR.config.extraPlugins += (window.CKEDITOR.config.extraPlugins ? ",inlinesave" : "inlinesave" );
@@ -135,32 +94,6 @@ window.CKEDITOR.config.skin = "'.$skin.'";
 window.CKEDITOR.disableAutoInline = true;
 window.CKEDITOR.config.toolbar = ' .$cktools.';
 //window.CKEDITOR.config.format_tags = "' . $ckeformattags . '";
-// handle toobals per element
-
-window.CKEDITOR.on("instanceCreated", function( event ) {
-	var editor = event.editor,
-	element = editor.element;
-	// Customize editors for headers and tag list.
-	// These editors dont need features like smileys, templates, iframes etc.
-	if ( element.is( "h1", "h2", "h3", "h4", "h5", "h6" )) {
-		// Customize the editor configurations on "configLoaded" event,
-		// which is fired after the configuration file loading and
-		// execution. This makes it possible to change the
-		// configurations before the editor initialization takes place.
-		editor.on( "configLoaded", function() {
-			// Remove unnecessary plugins to make the editor simpler.
-			editor.config.removePlugins = "colorbutton,find,flash,font," +
-				"forms,iframe,image,newpage,removeformat,scayt," +
-				"smiley,specialchar,stylescombo,templates,wsc";
-			// Rearrange the layout of the toolbar.
-//			editor.config.toolbarGroups = [
-//				{ name: "editing", groups: [ "basicstyles", "links" ] },
-//				{ name: "undo" },
-//				{ name: "clipboard", groups: [ "selection", "clipboard" ] }
-//			];
-		});
-	}
-});
 
 ');
 		$headerlib->add_jsfile('lib/ckeditor_tiki/tikilink_dialog.js');
