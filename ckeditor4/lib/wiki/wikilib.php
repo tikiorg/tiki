@@ -438,6 +438,10 @@ class WikiLib extends TikiLib
 			$parse_options['suppress_icons'] = true;
 		}
 
+		if ($prefs['wysiwyg_inline_editing'] === 'y' && getCookie('wysiwyg_inline_edit', "preview", false)) {
+			$parse_options['ck_editor'] = true;
+		}
+
 		$wiki_cache = ($prefs['feature_wiki_icache'] == 'y' && !is_null($info['wiki_cache'])) ? $info['wiki_cache'] : $prefs['wiki_cache'];
 
 		if ($wiki_cache > 0 && empty($_REQUEST['offset']) && empty($_REQUEST['itemId']) && (empty($user) || $prefs['wiki_cache'] == 0) ) {

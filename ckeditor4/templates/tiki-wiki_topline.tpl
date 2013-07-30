@@ -54,15 +54,13 @@
 												if (src.indexOf("page.png") > -1) {
 													enableWysiwygInlineEditing();
 													$("#wysiwyg_inline_edit img").attr("src", src.replace("page.png", "page_lightning.png"));
-													setCookieBrowser("wysiwyg_inline_edit", true);
 												} else {
 													disableWyiswygInlineEditing();
 													$("#wysiwyg_inline_edit img").attr("src", src.replace("page_lightning.png", "page.png"));
-													deleteCookie("wysiwyg_inline_edit");
 												}
 												return false;
 											});
-											if (!getCookie("wysiwyg_inline_edit")) {} else { $("#wysiwyg_inline_edit").click(); }
+											if (!getCookie("wysiwyg_inline_edit", "preview")) {} else { $("#wysiwyg_inline_edit").click(); }
 										{/jq}
 										<a title="{tr}Inline Edit{/tr}" href="#" id="wysiwyg_inline_edit">{icon _id='page' title="{tr}Inline Edit{/tr}"}</a>
 									{/if}

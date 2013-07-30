@@ -1075,12 +1075,13 @@ if ( \$('#$id') ) {
 				$this->option['noparseplugins'] = false;
 			}
 
-			// remove hrefs and onclicks
-			$plugin_result = preg_replace('/\shref\=/i', ' tiki_href=', $plugin_result);
-			$plugin_result = preg_replace('/\sonclick\=/i', ' tiki_onclick=', $plugin_result);
-			$plugin_result = preg_replace('/<script.*?<\/script>/mi', '', $plugin_result);
-			// remove hidden inputs
-			$plugin_result = preg_replace('/<input.*?type=[\'"]?hidden[\'"]?.*>/mi', '', $plugin_result);
+			if ( ! getCookie('wysiwyg_inline_edit', null, false)) { // remove hrefs and onclicks
+				$plugin_result = preg_replace('/\shref\=/i', ' tiki_href=', $plugin_result);
+				$plugin_result = preg_replace('/\sonclick\=/i', ' tiki_onclick=', $plugin_result);
+				$plugin_result = preg_replace('/<script.*?<\/script>/mi', '', $plugin_result);
+				// remove hidden inputs
+				$plugin_result = preg_replace('/<input.*?type=[\'"]?hidden[\'"]?.*>/mi', '', $plugin_result);
+			}
 		}
 		if (!in_array($name, array('html'))) {		// remove <p> and <br>s from non-html
 			$data = str_replace(array('<p>', '</p>', "\t"), '', $data);
@@ -1487,7 +1488,7 @@ if ( \$('#$id') ) {
 		}
 
 		$old_wysiwyg_parsing = null;
-		if ($this->option['ck_editor']) {
+		if ($this->option['ck_editor'] && $this->isEditMode) {
 			$headerlib = TikiLib::lib('header');
 			$old_wysiwyg_parsing = $headerlib->wysiwyg_parsing;
 			$headerlib->wysiwyg_parsing = true;
