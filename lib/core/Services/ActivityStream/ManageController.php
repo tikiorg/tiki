@@ -166,6 +166,7 @@ $customArguments
 	private function getEventTypes()
 	{
 		$graph = TikiLib::events()->getEventGraph();
+		sort($graph['nodes']);
 		return $graph['nodes'];
 	}
 
