@@ -39,7 +39,7 @@
 
 	{if $shownbitems eq 'y'}<div class="nbitems">{tr}Items found:{/tr} {$count_item}</div>{/if}
 
-	{if $cant_pages > 1 or $tr_initial or $showinitials eq 'y'}
+	{if ($cant_pages > 1 && !tsOn) or $tr_initial or $showinitials eq 'y'}
 		{initials_filter_links _initial='tr_initial'}
 	{/if}
 
