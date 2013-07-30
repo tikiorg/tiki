@@ -760,10 +760,7 @@ function sendCommentNotification($type, $id, $title, $content, $commentId=null)
 		$watches = array_merge($watches, $watches2);
 	}
 
-	if ( ($type != 'wiki'
-	      || $prefs['wiki_watch_editor'] != 'y'
-	      || $prefs['user_wiki_watch_editor'] != 'y'
-		 ) && $prefs['user_comment_watch_editor'] != "y") {
+	if ( ($type != 'wiki'|| $prefs['wiki_watch_editor'] != 'y') {
 		for ($i = count($watches) - 1; $i >=0; --$i)
 			if ($watches[$i]['user'] == $user) {
 				unset($watches[$i]);
