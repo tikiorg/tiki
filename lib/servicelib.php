@@ -18,6 +18,11 @@ class ServiceLib
 		return $this->broker;
 	}
 
+	function internal($controller, $action, $request = array())
+	{
+		return $this->getBroker()->internal($controller, $action, $request);
+	}
+
 	function getUrl($params)
 	{
 		global $prefs;
@@ -69,6 +74,7 @@ class ServiceLib
 			'report' => 'Services_Report_Controller',
 			'tracker_calendar' => 'Services_Tracker_CalendarController',
 			'search_customsearch' => 'Services_Search_CustomSearchController',
+			'social' => 'Services_User_SocialController',
 			'tracker' => 'Services_Tracker_Controller',
 			'tracker_sync' => 'Services_Tracker_SyncController',
 			'tracker_todo' => 'Services_Tracker_TodoController',

@@ -113,6 +113,7 @@
 							{if $prefs.feature_fullscreen != 'y' or $smarty.session.fullscreen != 'y'}
 								{if  $prefs.feature_right_column eq 'fixed' or ($prefs.feature_right_column ne 'n' && ! zone_is_empty('right') && $show_columns.right_modules ne 'n') or (isset($module_pref_errors) and $module_pref_errors)}
 									<div class="clearfix" id="col3"{if $prefs.feature_right_column eq 'user'} style="display:{if isset($cookie.show_col3) and $cookie.show_col3 ne 'y'} none{elseif isset($ie6)} block{else} table-cell{/if};"{/if}{if $prefs.feature_bidi eq 'y'} dir="rtl"{/if}>
+										{block name=zone_right}
 										{modulelist zone=right class="content modules"}
 										{if $module_pref_errors}
 											<div class="content modules">
@@ -130,6 +131,7 @@
 												{/remarksbox}
 											</div>
 										{/if}
+										{/block}
 									</div>
 									<br style="clear:both" />
 								{/if}

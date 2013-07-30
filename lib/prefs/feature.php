@@ -706,7 +706,11 @@ function prefs_feature_list($partial = false)
 		'feature_friends' => array(
 			'name' => tra('Friendship Network'),
 			'description' => tra('Users can identify other users as their friends'),
-			'warning' => tra('Neglected feature'),
+			'dependencies' => array(
+				'feature_search',
+				'activity_custom_events',
+				'user_in_search_result',
+			),
 			'help' => 'Friendship+Network',
 			'type' => 'flag',
 			'default' => 'n',

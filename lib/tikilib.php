@@ -291,6 +291,9 @@ class TikiLib extends TikiDb_Bridge
 			case 'vimeo':
 				require_once 'lib/filegals/vimeolib.php';
 				return self::$libraries[$name] = new VimeoLib;
+			case 'social':
+				require_once 'lib/user/sociallib.php';
+				return self::$libraries[$name] = new SocialLib;
 			case 'autosave':
 				require_once 'lib/ajax/autosave.php';
 				return self::$libraries[$name] = new AutoSaveLib();

@@ -43,6 +43,15 @@ class Services_Broker
 		}
 	}
 
+	function internal($controller, $action, $request = array())
+	{
+		if (! $request instanceof JitFilter) {
+			$request = new JitFilter($request);
+		}
+
+		return $this->attemptProcess($controller, $action, $request);
+	}
+
 	private function attemptProcess($controller, $action, $request)
 	{
 		if (isset($this->controllerMap[$controller])) {

@@ -4,3 +4,7 @@
 {/block}
 {block name=content}
 {/block}
+
+{block name=zone_right}
+	{module module=friend_list}
+{/block}

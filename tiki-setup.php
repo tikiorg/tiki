@@ -595,6 +595,10 @@ if ($prefs['feature_sefurl'] != 'y') {
 	);
 }
 
+if ($prefs['feature_friends'] == 'y') {
+	$headerlib->add_jsfile('lib/jquery_tiki/social.js');
+}
+
 if ($prefs['ajax_inline_edit'] == 'y') {
 	$headerlib->add_jsfile('lib/jquery_tiki/inline_edit.js');
 }

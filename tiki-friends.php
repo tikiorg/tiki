@@ -9,7 +9,6 @@
 // $Id$
 
 require_once('tiki-setup.php');
-include_once('lib/messu/messulib.php');
 
 $access->check_user($user);
 $access->check_feature('feature_friends');
