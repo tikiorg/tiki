@@ -139,15 +139,27 @@ function tiki_setup_events()
 	$events->bind('tiki.file.create', 'tiki.file.save');
 	$events->bind('tiki.file.save', 'tiki.save');
 
+	$events->bind('tiki.forumpost.create', 'tiki.forumpost.save');
+	$events->bind('tiki.forumpost.reply', 'tiki.forumpost.save');
+	$events->bind('tiki.forumpost.update', 'tiki.forumpost.save');
+	$events->bind('tiki.forumpost.save', 'tiki.save');
+
+	$events->bind('tiki.comment.post', 'tiki.comment.save');
+	$events->bind('tiki.comment.reply', 'tiki.comment.save');
+	$events->bind('tiki.comment.update', 'tiki.comment.save');
+	$events->bind('tiki.comment.save', 'tiki.save');
+
 	$events->bind('tiki.user.update', 'tiki.user.save');
 	$events->bind('tiki.user.create', 'tiki.user.save');
 }
 
 function tiki_save_refresh_index($args)
 {
-	require_once('lib/search/refresh-functions.php');
-	$isBulk = isset($args['bulk_import']) && $args['bulk_import'];
-	refresh_index($args['type'], $args['object'], ! $isBulk);
+	if (! isset($args['index_handled'])) {
+		require_once('lib/search/refresh-functions.php');
+		$isBulk = isset($args['bulk_import']) && $args['bulk_import'];
+		refresh_index($args['type'], $args['object'], ! $isBulk);
+	}
 }
 
 

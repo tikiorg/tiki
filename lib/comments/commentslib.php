@@ -2453,11 +2453,11 @@ class Comments extends TikiLib
 	}
 
     /**
-     * @param $data
-     * @param $objectType
-     * @param $threadId
+	 * @param $data
+	 * @param $objectType
+	 * @param $threadId
      */
-    function update_comment_links($data, $objectType, $threadId)
+	function update_comment_links($data, $objectType, $threadId)
 	{
 		if ($objectType == 'forum') {
 			$type = 'forum post'; // this must correspond to that used in tiki_objects
@@ -2502,16 +2502,15 @@ class Comments extends TikiLib
 
 		// if exactly same title and data comment does not already exist, and is not the current thread
 		if (empty($existingThread) || in_array($threadId, $existingThread)) {
-			$object = explode(":", $objectId, 2);
+			$comment = $this->get_comment($threadId);
 			if ($prefs['feature_actionlog'] == 'y') {
-				$comment= $this->get_comment($threadId);
 				include_once('lib/diff/difflib.php');
 				$bytes = diff2($comment['data'], $data, 'bytes');
 				global $logslib; include_once('lib/logs/logslib.php');
-				if ($object[0] == 'forum')
-					$logslib->add_action('Updated', $object[1], $object[0], "comments_parentId=$threadId&amp;$bytes#threadId$threadId", '', '', '', '', $contributions);
+				if ($comment['objectType'] == 'forum')
+					$logslib->add_action('Updated', $comment['object'], $comment['objectType'], "comments_parentId=$threadId&amp;$bytes#threadId$threadId", '', '', '', '', $contributions);
 				else
-					$logslib->add_action('Updated', $object[1], 'comment', "type=".$object[0]."&amp;$bytes#threadId$threadId", '', '', '', '', $contributions);
+					$logslib->add_action('Updated', $comment['object'], 'comment', "type=".$comment['objectType']."&amp;$bytes#threadId$threadId", '', '', '', '', $contributions);
 			}
 			$comments->update(
 				array(
@@ -2530,14 +2529,29 @@ class Comments extends TikiLib
 				$contributionlib->assign_contributions($contributions, $threadId, 'comment', $title, '', '');
 			}
 
-			$type = $this->update_index($object[0], $threadId);
-			$href = $this->getHref($object[0], $object[1], $threadId);
-			global $tikilib;
-			$tikilib->object_post_save(
-				array('type'=>$type, 'object'=>$threadId, 'description'=>'', 'href'=>$href, 'name'=>$title),
-				array('content' => $data)
-			);
-			$this->update_comment_links($data, $object[0], $threadId);
+			$this->update_comment_links($data, $comment['objectType'], $threadId);
+			$type = $this->update_index($comment['objectType'], $threadId);
+			if ($type == 'forum post') {
+				TikiLib::events()->trigger('tiki.forumpost.update', array(
+					'type' => $type,
+					'object' => $threadId,
+					'forum' => $comment['object'],
+					'user' => $GLOBALS['user'],
+					'title' => $title,
+					'content' => $data,
+					'index_handled' => true,
+				));
+			} else {
+				TikiLib::events()->trigger('tiki.comment.update', array(
+					'type' => $comment['objectType'],
+					'object' => $comment['object'],
+					'title' => $title,
+					'comment' => $threadId,
+					'user' => $GLOBALS['user'],
+					'content' => $data,
+					'index_handled' => true,
+				));
+			}
 		} // end hash check
 	}
 
@@ -2729,11 +2743,35 @@ class Comments extends TikiLib
 			$contributionlib->assign_contributions($contributions, $threadId, 'comment', $title, '', '');
 		}
 
-		$type = $this->update_index($object[0], $threadId, $parentId);
-		$href = $this->getHref($object[0], $object[1], $threadId);
-		global $tikilib;
-		$tikilib->object_post_save(array('type'=>$type, 'object'=>$threadId, 'description'=>'', 'href'=>$href, 'name'=>$title), array('content' => $data));
 		$this->update_comment_links($data, $object[0], $threadId);
+		$type = $this->update_index($object[0], $threadId, $parentId);
+		$finalEvent = 'tiki.comment.post';
+
+		if ($type == 'forum post') {
+			$finalEvent = $parentId ? 'tiki.forumpost.reply' : 'tiki.forumpost.create';
+
+			TikiLib::events()->trigger($finalEvent, array(
+				'type' => $type,
+				'object' => $threadId,
+				'forum' => $object[1],
+				'user' => $GLOBALS['user'],
+				'title' => $title,
+				'content' => $data,
+				'index_handled' => true,
+			));
+		} else {
+			$finalEvent = $parentId ? 'tiki.comment.reply' : 'tiki.comment.post';
+
+			TikiLib::events()->trigger($finalEvent, array(
+				'type' => $object[0],
+				'object' => $object[1],
+				'user' => $GLOBALS['user'],
+				'title' => $title,
+				'content' => $data,
+				'index_handled' => true,
+			));
+		}
+
 
 		return $threadId;
 		//return $return_result;
@@ -2892,10 +2930,12 @@ class Comments extends TikiLib
 			$this->remove_thread_attachment($att['attId']);
 		}
 
+		$tx = $this->begin();
 		// Update search index after deletion is done
 		foreach ($result as $res) {
 			$this->update_index($res['objectType'], $res['threadId']);
 		}
+		$tx->commit();
 
 		return true;
 	}
