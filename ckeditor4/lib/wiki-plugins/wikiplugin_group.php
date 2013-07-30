@@ -44,6 +44,7 @@ function wikiplugin_group_info()
 
 function wikiplugin_group($data, $params)
 {
+	// TODO : Re-implement friend filter
 	global $user, $prefs, $tikilib, $smarty, $groupPluginReturnAll;
 	$dataelse = '';
 	if (strrpos($data, '{ELSE}')) {
@@ -55,16 +56,13 @@ function wikiplugin_group($data, $params)
 		return $data.$dataelse;
 	}
 
-	if (!empty($params['friends']) && $prefs['feature_friends'] == 'y') {
-		$friends = explode('|', $params['friends']);
-	}
 	if (!empty($params['groups'])) {
 		$groups = explode('|', $params['groups']);
 	}
 	if (!empty($params['notgroups'])) {
 		$notgroups = explode('|', $params['notgroups']);
 	}
-	if (empty($friends) && empty($groups) && empty($notgroups)) {
+	if (empty($groups) && empty($notgroups)) {
 		return '';
 	}
 
@@ -79,18 +77,6 @@ function wikiplugin_group($data, $params)
 		}
 	}
 
-	if (!empty($friends)) {
-		$ok = false;
-
-		foreach ($friends as $key=>$friend) {
-		    if ($tikilib->verify_friendship($user, $friend)) {
-			    $ok = true;
-			    break;
-		    }
-		}
-		if (!$ok)
-			return $dataelse;
-	}
 	if (!empty($groups)) {
 		$ok = false;
 

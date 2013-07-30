@@ -151,45 +151,6 @@
 
 				</div>
 			</div>
-
-			{if $prefs.feature_friends eq 'y' && $user ne $userwatch && $user}
-				<div class="cbox-data">
-					{if $friend}
-						<div class="clearfix">
-							<div class="">
-								{icon _id='user'}
-								<a class="link" href="tiki-friends.php">{tr}This user is your friend !{/tr}</a>
-							</div>
-						</div>
-					{elseif $friend_pending}
-						<div class="clearfix">
-							<div class="">
-								{icon _id='user_delete'} {tr}The user requested friendship with you{/tr}<br>
-								<a class="link" href="tiki-friends.php?accept={$userinfo.login}">{tr}Accept friendship from this user{/tr}</a><br>
-								<a class="link" href="tiki-friends.php?refuse={$userinfo.login}">{tr}Refuse friendship from this user{/tr}</a>
-							</div>
-						</div>
-					{elseif $friend_waiting}
-						<div class="clearfix">
-							<div class="">{icon _id='user_delete'} {tr}Currently waiting for user approval{/tr} <br>
-								<a class="link" href="tiki-friends.php?cancel_waiting_friendship={$userinfo.login}">
-									{tr}Cancel friendship request towards this user{/tr}
-								</a>
-							</div>
-						</div>
-					{else}
-						<div class="clearfix">
-							<div class="">
-								{icon _id='user_delete'}
-								<a class="link" href="tiki-friends.php?request_friendship={$userinfo.login}">
-									{tr}Request friendship from this user{/tr}
-								</a>
-							</div>
-						</div>
-					{/if}
-				</div>
-			{/if}
-
 		</div>
 	</div>
 {else}{* infoPublic eq 'n' *}

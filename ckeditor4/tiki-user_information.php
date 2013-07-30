@@ -39,11 +39,6 @@ $smarty->assign('userwatch', $userwatch);
 $customfields = array();
 $customfields = $registrationlib->get_customfields($userwatch);
 $smarty->assign_by_ref('customfields', $customfields);
-if ($prefs['feature_friends'] == 'y') {
-	$smarty->assign('friend', $tikilib->verify_friendship($userwatch, $user));
-	$smarty->assign('friend_pending', $tikilib->verify_friendship_request($userwatch, $user));
-	$smarty->assign('friend_waiting', $tikilib->verify_friendship_request($user, $userwatch));
-}
 $smarty->assign('infoPublic', 'y');
 if ($tiki_p_admin != 'y') {
 	$user_information = $tikilib->get_user_preference($userwatch, 'user_information', 'public');

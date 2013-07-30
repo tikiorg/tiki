@@ -43,9 +43,9 @@
 			"type": "package",
 			"package": {
 				"name": "ckeditor/ckeditor",
-				"version": "4.1",
+				"version": "4.2",
 				"dist": {
-					"url": "https://github.com/ckeditor/ckeditor-releases/archive/4.1/full.zip",
+					"url": "https://github.com/ckeditor/ckeditor-releases/archive/4.2/full.zip",
 					"type": "zip"
 				}
 			}
@@ -65,9 +65,9 @@
 			"type": "package",
 			"package": {
 				"name": "ckeditor/ckeditor/skins/kama",
-				"version": "4.1",
+				"version": "4.2",
 				"dist": {
-					"url": "http://download.ckeditor.com/kama/releases/kama_4.1.zip",
+					"url": "http://download.ckeditor.com/kama/releases/kama_4.2.zip",
 					"type": "zip"
 				}
 			}
@@ -87,9 +87,9 @@
 			"type": "package",
 			"package": {
 				"name": "ckeditor/ckeditor/plugins/divarea",
-				"version": "4.1",
+				"version": "4.2",
 				"dist": {
-					"url": "http://download.ckeditor.com/divarea/releases/divarea_4.1.zip",
+					"url": "http://download.ckeditor.com/divarea/releases/divarea_4.2.zip",
 					"type": "zip"
 				}
 			}
