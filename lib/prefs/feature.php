@@ -2486,16 +2486,6 @@ function prefs_feature_list($partial = false)
 			'type' => 'flag',
 			'default' => 'y',
 		),
-		'feature_community_mouseover_friends' => array(
-			'name' => tra('Number of friends'),
-            'description' => tra(''),
-			'type' => 'flag',
-			'help' => 'Friendship+Network',
-			'dependencies' => array(
-				'feature_friends',
-			),
-			'default' => 'y',
-		),
 		'feature_community_mouseover_score' => array(
 			'name' => tra('Score'),
             'description' => tra(''),

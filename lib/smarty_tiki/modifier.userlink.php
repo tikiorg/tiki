@@ -38,9 +38,7 @@ function smarty_modifier_userlink($other_user, $class='link', $idletime='not_set
 										$prefs['feature_community_mouseover'] == 'y' &&
 										$userlib->get_user_preference($user, 'show_mouseover_user_info', 'y') == 'y';
 
-	$show_friends = $prefs['feature_friends'] == 'y' && $tikilib->verify_friendship($user, $other_user);
-
-	if ( $show_mouseover || $show_friends ) {
+	if ( $show_mouseover ) {
 		$cacheItem = 'userlink.' . $user . '.' . $other_user . $fullname . $max_length;
 	} else {
 		$cacheItem = 'userlink.' . $other_user . $fullname . $max_length;
@@ -66,10 +64,6 @@ function smarty_modifier_userlink($other_user, $class='link', $idletime='not_set
 	}
 
 	$friend = '';
-
-	if ($show_friends) {
-		$friend = '&nbsp;<img src="img/icons/ico_friend.gif" width="7" height="10" alt="'.tra('Friend').'" />&nbsp;';
-	}
 
 	if ( $fullname != '' ) {
 		$ou = $fullname;

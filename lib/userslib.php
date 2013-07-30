@@ -2135,10 +2135,8 @@ class UsersLib extends TikiLib
 			$this->query('update `messu_messages` set `user`=? where `user`=?', array($to, $from));
 			$this->query('update `messu_messages` set `user_from`=? where `user_from`=?', array($to, $from));
 			$this->query('update `tiki_newsletter_subscriptions` set `email`=? where `email`=? and `isUser`=?', array($to, $from, 'y'));
-			$this->query('update `tiki_friends` set `user`=? where `user`=?', array($to, $from));
-			$this->query('update `tiki_friends` set `friend`=? where `friend`=?', array($to, $from));
-			$this->query('update `tiki_friendship_requests` set `userFrom`=? where `userFrom`=?', array($to, $from));
-			$this->query('update `tiki_friendship_requests` set `userTo`=? where `userTo`=?', array($to, $from));
+			$this->query('update `tiki_object_relations` set `source_itemId`=? where source_type="user" `source_itemId`=?', array($to, $from));
+			$this->query('update `tiki_object_relations` set `target_itemId`=? where target_type="user" `target_itemId`=?', array($to, $from));
 			$this->query('update `tiki_freetagged_objects` set `user`=? where `user`=?', array($to, $from));
 
 			$this->query(
@@ -6508,118 +6506,6 @@ class UsersLib extends TikiLib
 
 		return $this->fetchAll($query, $bindvals, $max, 0);
 	}
-
-	// Friends methods
-	function request_friendship($user, $friend)
-	{
-		if (empty($user) || empty($friend) || $user == $friend) {
-			return false;
-		}
-
-		$query = 'delete from `tiki_friendship_requests` where `userFrom`=? and `userTo`=?';
-		$this->query($query, array($user, $friend));
-
-		$query = 'insert into `tiki_friendship_requests` (`userFrom`, `userTo`) values (?, ?)';
-		$result = $this->query($query, array($user, $friend));
-
-		if (!$result)
-			return false;
-
-		return true;
-	}
-
-	function accept_friendship($user, $friend)
-	{
-		$exists = $this->getOne(
-			'select count(*) from `tiki_friendship_requests` where `userTo`=? and `userFrom`=?',
-			array($user, $friend)
-		);
-
-		if (!$exists)
-			return false;
-
-		if (empty($user) || empty($friend)) {
-			return false;
-		}
-
-		$query = 'delete from `tiki_friends` where `user`=? and `friend`=?';
-		$this->query($query, array($user, $friend));
-		$this->query($query, array($friend, $user));
-
-		$query = 'insert into `tiki_friends` (`user`, `friend`) values (?,?)';
-		$this->query($query, array($user, $friend));
-		$this->query($query, array($friend, $user));
-
-		$query = 'delete from `tiki_friendship_requests` where `userFrom`=? and `userTo`=?';
-		$this->query($query, array($user, $friend));
-		$this->query($query, array($friend, $user));
-
-		$this->score_event($user, 'friend_new', $friend);
-		$this->score_event($friend, 'friend_new', $user);
-
-		global $cachelib;
-		$cachelib->invalidate('friends_count_'.$user);
-		$cachelib->invalidate('friends_count_'.$friend);
-
-		return true;
-	}
-
-	function refuse_friendship($user, $friend)
-	{
-		$exists = $this->getOne(
-			'select count(*) from `tiki_friendship_requests` where `userTo`=? and `userFrom`=?',
-			array($user, $friend)
-		);
-
-		if (!$exists)
-			return false;
-
-		$query = 'delete from `tiki_friendship_requests` where `userFrom`=? and `userTo`=?';
-		$this->query($query, array($user, $friend));
-		$this->query($query, array($friend, $user));
-
-		return true;
-	}
-
-	function list_pending_friendship_requests($user)
-	{
-
-		$query = 'select * from `tiki_friendship_requests` where `userTo`=? order by tstamp';
-		$result = $this->query($query, array($user));
-
-		$requests = array();
-		while ($res = $result->fetchRow('DB_FETCHMODE_ASSOC')) {
-			$requests[$res['userFrom']] = $res['tstamp'];
-		}
-
-		return $requests;
-	}
-
-	function list_waiting_friendship_requests($user)
-	{
-		$query = 'select * from `tiki_friendship_requests` where `userFrom`=? order by tstamp';
-		$result = $this->query($query, array($user));
-
-		$requests = array();
-		while ($res = $result->fetchRow('DB_FETCHMODE_ASSOC')) {
-			$requests[$res['userTo']] = $res['tstamp'];
-		}
-
-		return $requests;
-	}
-
-	function break_friendship($user, $friend)
-	{
-
-		$query = 'delete from `tiki_friends` where `user`=? and `friend`=?';
-		$this->query($query, array($user, $friend));
-		$this->query($query, array($friend, $user));
-
-		global $cachelib;
-		$cachelib->invalidate('friends_count_'.$user);
-		$cachelib->invalidate('friends_count_'.$friend);
-	}
-
 
 	// Case-sensitivity regression only. used for patching
 	function get_object_case_permissions($objectId, $objectType)

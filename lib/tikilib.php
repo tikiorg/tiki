@@ -2499,109 +2499,6 @@ class TikiLib extends TikiDb_Bridge
 		$semaphores->delete(array('semName' => $semName,'timestamp' => (int) $lock,'objectType' => $objectType));
 	}
 
-	// FRIENDS METHODS //
-	/**
-	 * @param $user
-	 * @param int $offset
-	 * @param $maxRecords
-	 * @param string $sort_mode
-	 * @param string $find
-	 * @return array
-	 */
-	function list_user_friends($user, $offset = 0, $maxRecords = -1, $sort_mode = 'login_asc', $find = '')
-	{
-		$sort_mode = $this->convertSortMode($sort_mode);
-
-		if ($find) {
-			$findesc = '%'.$find.'%';
-			$mid=" and (u.`login` like ? or p.`value` like ?) ";
-			$bindvars=array($user,$findesc,$findesc);
-		} else {
-			$mid='';
-			$bindvars=array($user);
-		}
-
-		// TODO: same as list_users
-		$query = "select u.*, p.`value` as realName from `tiki_friends` as f, `users_users` as u left join `tiki_user_preferences` p on u.`login`=p.`user` and p.`prefName` = 'realName' where u.`login`=f.`friend` and f.`user`=? and f.`user` <> f.`friend` $mid order by $sort_mode";
-		$query_cant = "select count(*) from `tiki_friends` as f, `users_users` as u left join `tiki_user_preferences` p on u.`login`=p.`user` and p.`prefName` = 'realName' where u.`login`=f.`friend` and f.`user`=? $mid";
-		$result = $this->fetchAll($query, $bindvars, $maxRecords, $offset);
-		$cant = $this->getOne($query_cant, $bindvars);
-		$ret = Array();
-		foreach ( $result as $res ) {
-			$res['realname'] = $this->get_user_preference($res['login'], 'realName');
-			$ret[] = $res;
-		}
-		$retval = Array();
-		$retval["data"] = $ret;
-		$retval["cant"] = $cant;
-		return $retval;
-
-	}
-
-	/**
-	 * @param $user
-	 * @return mixed
-	 */
-	function list_online_friends($user)
-	{
-		$this->update_session();
-
-		$bindvars = array($user);
-
-		// TODO: same as list_users
-		$query = "select u.*, p.`value` as realName from `tiki_friends` as f, `users_users` as u, `tiki_sessions` s left join `tiki_user_preferences` p on u.`login`=p.`user` and p.`prefName` = 'realName' where u.`login`=f.`friend` and s.`user`=u.`login` and f.`user`=? and f.`user` <> f.`friend`";
-
-		return  $this->fetchAll($query, $bindvars);
-	}
-
-
-	/**
-	 * @param $user
-	 * @param $friend
-	 * @return int
-	 */
-	function verify_friendship($user, $friend)
-	{
-		if ($user == $friend) {
-			return 0;
-		}
-
-		return $this->table('tiki_friends')->fetchCount(array('user' => $user, 'friend' => $friend));
-	}
-
-	// Check if there's already a friendship request from userwatched to userwatching
-	/**
-	 * @param $userwatched
-	 * @param $userwatching
-	 * @return int
-	 */
-	function verify_friendship_request($userwatched, $userwatching)
-	{
-		if ($userwatched == $userwatching) {
-			return 0;
-		}
-
-		return $this->table('tiki_friendship_requests')->fetchCount(array('userTo' => $userwatching, 'userFrom' => $userwatched));
-	}
-
-	/**
-	 * @param $user
-	 * @return bool|string
-	 */
-	function get_friends_count($user)
-	{
-		$cachelib = TikiLib::lib('cache');
-		$cacheKey = 'friends_count_'.$user;
-
-		if ($cachelib->isCached($cacheKey)) {
-			return $cachelib->getCached($cacheKey);
-		} else {
-			$count = $this->table('tiki_friends')->fetchCount(array('user' => $user));
-			$cachelib->cacheItem($cacheKey, $count);
-			return $count;
-		}
-	}
-
 	/**
 	 * @param int $offset
 	 * @param $maxRecords
@@ -2616,9 +2513,6 @@ class TikiLib extends TikiDb_Bridge
 		$userprefslib = TikiLib::lib('userprefs');
 
 		$bindvars = array();
-		if ($prefs['feature_friends'] == 'y' && !$include_prefs) {
-			$bindvars[] = $user;
-		}
 		if ( $find ) {
 			$findesc = '%'.$find.'%';
 			$mid = 'where (`login` like ? or p1.`value` like ?)';
@@ -2673,12 +2567,7 @@ class TikiLib extends TikiDb_Bridge
 
 		if ( $sort_mode != '' ) $sort_mode = 'order by '.$sort_mode;
 
-		// Need to use a subquery to avoid bad results when using a limit and an offset, with at least MySQL
-		if ($prefs['feature_friends'] == 'y' && !$include_prefs) {
-			$query = "select * from (select u.* $pref_field, f.`friend` from `users_users` u $pref_join $find_join left join `tiki_friends` as f on (u.`login` = f.`friend` and f.`user`=?) $pref_where $sort_mode) as tab";
-		} else {
-			$query = "select u.* $pref_field  from `users_users` u $pref_join $find_join $pref_where $sort_mode";
-		}
+		$query = "select u.* $pref_field  from `users_users` u $pref_join $find_join $pref_where $sort_mode";
 
 		$query_cant = "select count(distinct u.`login`) from `users_users` u $find_join_cant $mid_cant";
 		$result = $this->fetchAll($query, $bindvars, $maxRecords, $offset);
@@ -2686,10 +2575,9 @@ class TikiLib extends TikiDb_Bridge
 
 		$ret = array();
 		foreach ( $result as $res ) {
-			if ($prefs['feature_friends'] == 'y') {
-				$res['friend'] = !empty($res['friend'] );
+			if ( $include_prefs ) {
+				$res['preferences'] = $userprefslib->get_userprefs($res['login']);
 			}
-			if ( $include_prefs ) $res['preferences'] = $userprefslib->get_userprefs($res['login']);
 			$ret[] = $res;
 		}
 

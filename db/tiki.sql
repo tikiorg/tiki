@@ -2789,21 +2789,6 @@ CREATE TABLE `tiki_translated_objects` (
   KEY `traId` ( `traId` )
 ) ENGINE=MyISAM AUTO_INCREMENT=1;
 
-DROP TABLE IF EXISTS `tiki_friends`;
-CREATE TABLE `tiki_friends` (
-  `user` varchar(200) NOT NULL default '',
-  `friend` varchar(200) NOT NULL default '',
-  PRIMARY KEY (`user`(120),friend(120))
-) ENGINE=MyISAM;
-
-DROP TABLE IF EXISTS `tiki_friendship_requests`;
-CREATE TABLE `tiki_friendship_requests` (
-  `userFrom` varchar(200) NOT NULL default '',
-  `userTo` varchar(200) NOT NULL default '',
-  `tstamp` timestamp NOT NULL,
-  PRIMARY KEY (`userFrom`(120),`userTo`(120))
-) ENGINE=MyISAM;
-
 DROP TABLE IF EXISTS `tiki_score`;
 CREATE TABLE `tiki_score` (
   event varchar(40) NOT NULL default '',
