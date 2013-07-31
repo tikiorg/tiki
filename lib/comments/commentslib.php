@@ -2535,7 +2535,7 @@ class Comments extends TikiLib
 				TikiLib::events()->trigger('tiki.forumpost.update', array(
 					'type' => $type,
 					'object' => $threadId,
-					'forum' => $comment['object'],
+					'forum_id' => $comment['object'],
 					'user' => $GLOBALS['user'],
 					'title' => $title,
 					'content' => $data,
@@ -2753,7 +2753,7 @@ class Comments extends TikiLib
 			TikiLib::events()->trigger($finalEvent, array(
 				'type' => $type,
 				'object' => $threadId,
-				'forum' => $object[1],
+				'forum_id' => $object[1],
 				'user' => $GLOBALS['user'],
 				'title' => $title,
 				'content' => $data,
