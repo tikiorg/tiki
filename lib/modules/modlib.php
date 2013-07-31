@@ -345,6 +345,7 @@ class ModLib extends TikiLib
 	/* @param module_info = info of a module
 	 * @param user_groups = list of groups of a user
 	 * @param user = the user
+	 * @return string 'y' = ok, 'n' = not ok
 	 */
 	function check_groups($module_info, $user, $user_groups)
 	{
@@ -358,7 +359,11 @@ class ModLib extends TikiLib
 			$pass = 'n';
 		} elseif ($tiki_p_admin != 'y' && $prefs['modallgroups'] != 'y') {
 			if ($module_info['groups']) {
-				$module_groups = unserialize($module_info['groups']);
+				if (!is_array($module_info['groups'])) {
+					$module_groups = unserialize($module_info['groups']);
+				} else {
+					$module_groups = $module_info['groups'];
+				}
 			} else {
 				$module_groups = array();
 			}
