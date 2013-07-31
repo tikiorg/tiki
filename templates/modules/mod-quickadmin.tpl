@@ -5,7 +5,7 @@
 		<div id="quickadmin" style="text-align: left; padding-left: 12px;">
 			<ul class="cssmenu_horiz clearfix" style="display: inline-block;line-height: 30px;">
 				<li>
-					<a>&nbsp;</a>
+					{icon _id=arrow_down title="{tr}Recent preferences{/tr}" href="#"}
 					<ul class="recent-prefs">
 						<li style="line-height: 2em;"><em>{tr}Recent:{/tr}</em></li>
 						{foreach $recent_prefs as $p}
