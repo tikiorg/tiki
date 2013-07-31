@@ -97,7 +97,12 @@ class ScoreLib extends TikiLib
 				if (isset($index[$event_name])) {
 					$event['score']      = $index[$event_name]['score'];
 					$event['expiration'] = $index[$event_name]['expiration'];
-					$event['validObjectIds'] = implode(',', json_decode($index[$event_name]['validObjectIds']));
+					$temp = json_decode($index[$event_name]['validObjectIds'], true);
+					if (!empty($temp)){
+						$event['validObjectIds'] = implode(',', json_decode($index[$event_name]['validObjectIds'], true));
+					} else {
+						$event['validObjectIds'] = 0;
+					}
 				}
 
 				$event_list[] = $event;
