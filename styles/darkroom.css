@@ -388,7 +388,6 @@ body.fixed_width .fixedwidth .fixedwidth {
 	background: #474747;
 }
 
-
 .siteloginbar_popup .pass a:hover,
 .siteloginbar_popup .register a:hover,
 #logout_link_1 a:hover {
@@ -579,6 +578,19 @@ a.flip:hover,
 
 .cssmenu_vert a {
 	padding: 3px 2px 3px 8px;
+}
+
+.box-quickadmin .sf-arrows .sf-with-ul:after {
+	border-color: #888 transparent transparent; /* IE8 */
+	border-color: rgba(255,255,255,.5) transparent transparent;
+}
+.box-quickadmin .cssmenu_horiz li {
+    background-color: transparent;
+}
+
+.box-quickadmin .cssmenu_horiz ul li {
+    background-color: #474747;
+    padding-left: 1em;
 }
 
 /* left column width */
