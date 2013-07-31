@@ -189,14 +189,14 @@ class Tracker_Options
 	private function getLegacySort()
 	{
 		$out = array();
-		foreach ($this->info['params'] as $key => $info) {
-			if (isset($info['legacy_index'])) {
-				$out[$key] = $info['legacy_index'];
+		if (isset($this->info) && !empty($this->info['params'])) {
+			foreach ($this->info['params'] as $key => $info) {
+				if (isset($info['legacy_index'])) {
+					$out[$key] = $info['legacy_index'];
+				}
 			}
+			asort($out);
 		}
-
-		asort($out);
-
 		return array_keys($out);
 	}
 }
