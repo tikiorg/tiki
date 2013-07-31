@@ -4238,7 +4238,7 @@ class TrackerLib extends TikiLib
 			$the_data .= '-[Status]-: ';
 			$statusTypes = $this->status_types();
 			if (isset($oldStatus) && $oldStatus != $newStatus) {
-				$the_data .= $statusTypes[$oldStatus]['label'] . ' -> ';
+				$the_data .= isset($statusTypes[$oldStatus]['label'] ) ? $statusTypes[$oldStatus]['label'] . ' -> ' : '';
 			}
 
 			if (!empty($newStatus)) {
@@ -4539,8 +4539,8 @@ class TrackerLib extends TikiLib
 		global $user, $group;
 		$trackerId = $args['trackerId'];
 		$itemId = $args['object'];
-		$new_itemId = $args['new_itemId'];
-		$tracker_info = $args['tracker_info'];
+		$new_itemId = isset($args['new_itemId']) ? $args['new_itemId'] : '';
+		$tracker_info = isset($args['tracker_info']) ? $args['tracker_info'] : '';
 		$definition = Tracker_Definition::get($trackerId);
 
 		if ($definition->isEnabled('autoCreateGroup')) {
@@ -4604,7 +4604,7 @@ class TrackerLib extends TikiLib
 
 		foreach ($definition->getFields() as $field) {
 			$fieldId = $field['fieldId'];
-			$value = $args['values'][$fieldId];
+			$value = isset($args['values'][$fieldId]) ? $args['values'][$fieldId] : '';
 			if ($field['type'] == 'k' && $value != '' && !empty($field['options'][2])) {
 				if (!$this->page_exists($value)) {
 					$IP = $this->get_ip_address();
