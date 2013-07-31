@@ -205,6 +205,16 @@ ul.sf-shadow ul.sf-shadow-off {
 .box-data ul.cssmenu_vert li ul {
 	overflow: visible !important;
 }
+.box-quickadmin .sf-arrows .sf-with-ul:after {
+	border-color: #888 transparent transparent; /* IE8 */
+	border-color: rgba(0,0,0,.5) transparent transparent;
+}
+.box-quickadmin .sf-arrows > li > .sf-with-ul:focus:after,
+.box-quickadmin .sf-arrows > li:hover > .sf-with-ul:after,
+.box-quickadmin .sf-arrows > .sfHover > .sf-with-ul:after {
+	border-color: #333 transparent transparent; /* IE8 */
+	border-color: rgba(0,0,0,.8) transparent transparent;
+}
 
 /*** adding a parent div.sf-navbar to .cssmenu_horiz to create an all-horizontal nav-bar menu ***/
 .navbar .cssmenu_horiz {
