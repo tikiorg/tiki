@@ -39,11 +39,13 @@
 
 	{if $shownbitems eq 'y'}<div class="nbitems">{tr}Items found:{/tr} {$count_item}</div>{/if}
 
-	{if ($cant_pages > 1 && !tsOn) or $tr_initial or $showinitials eq 'y'}
+	{if (isset($cant_pages) && $cant_pages > 1 && !tsOn) or $tr_initial or $showinitials eq 'y'}
 		{initials_filter_links _initial='tr_initial'}
 	{/if}
 
-	{if $checkbox && $items|@count gt 0 && empty($tpl)}<form method="post" action="{if empty($checkbox.action)}#{else}{$checkbox.action}{/if}">{/if}
+	{if isset($checkbox) && $checkbox && $items|@count gt 0 && empty($tpl)}
+		<form method="post" action="{if empty($checkbox.action)}#{else}{$checkbox.action}{/if}">
+	{/if}
 
 	{if $trackerlistmapview}
 		{wikiplugin _name="googlemap" name=$trackerlistmapname type="objectlist" width="400" height="400"}{/wikiplugin}
@@ -51,20 +53,20 @@
 
 	{if empty($tpl)}
 
-{if $displaysheet eq 'true'}
+{if isset($displaysheet) && $displaysheet eq 'true'}
 <div class='trackercontainer' style='height: 250px ! important;'>
 {/if}
 		<div id="trackerlist_{$iTRACKERLIST}" {if $tsOn}style="visibility:hidden"{/if}>
 			<table class="normal wikiplugin_trackerlist" id="trackerlist_{$iTRACKERLIST}"
-	{if $displaysheet eq 'true'}title="{$tracker_info.name}" readonly="true"{/if}
-	{if $tableassheet eq 'true'}title="{tr}Tracker - {/tr}{$tracker_info.name}" readonly="true"{/if}
+	{if isset($displaysheet) && $displaysheet eq 'true'}title="{$tracker_info.name}" readonly="true"{/if}
+	{if isset($tableassheet) && $tableassheet eq 'true'}title="{tr}Tracker - {/tr}{$tracker_info.name}" readonly="true"{/if}
 	>
 
 		{if $showfieldname ne 'n' and empty($tpl)}
 	<thead>
 	<tr>
 
-			{if $checkbox}<th>{$checkbox.title}</th>{/if}
+			{if isset($checkbox) && $checkbox}<th>{$checkbox.title}</th>{/if}
 			{if ($showstatus ne 'n') and ($tracker_info.showStatus eq 'y' or ($tracker_info.showStatusAdminOnly eq 'y' and $tiki_p_admin_trackers eq 'y'))}
 		<th class="auto" style="width:20px;">&nbsp;</th>
 			{/if}
@@ -144,13 +146,13 @@ the section loop so that the vars are not replaced by nested pretty tracker exec
 </tbody>
 </table>
 
-{if $displaysheet eq 'true'}
+{if isset($displaysheet) && $displaysheet eq 'true'}
 </div>
 {/if}
 
 		{if $items|@count eq 0 && !$tsOn}
 			<div class="tracker_error">{tr}No records found{/tr}</div>
-		{elseif $checkbox}
+		{elseif isset($checkbox) && $checkbox}
 			{if $checkbox.tpl}{include file="$checkbox.tpl"}{/if}
 			{if !empty($checkbox.submit) and !empty($checkbox.title)}
 				<br>
