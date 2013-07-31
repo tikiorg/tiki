@@ -210,7 +210,7 @@ tt {font-size: 110%}
 	float: none !important;
 }
 
-#top_modules #sitetitle {
+#top_modules .sitetitle {
 	display: block;
 	margin: 0 auto;
 	padding-top: 30px;
@@ -222,11 +222,11 @@ tt {font-size: 110%}
 	letter-spacing: 8px;
 }
 
-#top_modules #sitetitle a {
+#top_modules .sitetitle a {
 	color: #FE9B27;
 }
 
-#top_modules #sitesubtitle {
+#top_modules .sitesubtitle {
 	font-size: 13px;
 	font-weight: bold;
 	letter-spacing: 1px;

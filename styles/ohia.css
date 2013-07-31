@@ -230,22 +230,22 @@ label {margin: 0 2px}
 	padding-left: 30px;
 }
 
-#sitetitle,
-#sitesubtitle {
+.sitetitle,
+.sitesubtitle {
 	color: #f4f4f4;
 	font-weight: bold;
 	padding-left: 50px}
 
-#sitetitle a,
-#sitetitle a:visited {color: #f4f4f4}
+.sitetitle a,
+.sitetitle a:visited {color: #f4f4f4}
 
-#sitetitle {
+.sitetitle {
 	display: block;
 	font-size: 28px;
 	margin-top: 20px;
 	margin-bottom: 2px}
 
-#sitesubtitle {
+.sitesubtitle {
 	display: block;
 	margin-top: 3px;
 	padding-top: 6px}

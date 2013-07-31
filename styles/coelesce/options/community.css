@@ -1,12 +1,12 @@
 /* community option - released under LPGL license. For more information, visit http://themes.tiki.org. */
 
-#sitetitles {
+.sitetitles {
 	margin-left: 10px;
 	height: auto;
 	line-height: 60px;
 }
 
-#sitetitle {
+.sitetitle {
 	display: block;
 	margin: 0;
 }
@@ -16,17 +16,17 @@ input#fuser {
 	display: inline;
 }
 
-#sitesubtitle {
+.sitesubtitle {
 	margin-left: 20px;
 	font-size: 25px !important;
 	font-weight: bold;
 }
 
-#sitelogo {
+.sitelogo {
 	padding: 0;
 }
 
-#sitelogo img {
+.sitelogo img {
 	margin: 0;
 }
 

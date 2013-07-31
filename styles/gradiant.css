@@ -305,13 +305,13 @@ tt, code, kbd, samp {
     line-height: inherit;
 }
 
-#sitelogo {
+.sitelogo {
 	display: block;
 	height: 15em;
 	position: relative;
 	padding-left: 10px;
 }
-#sitelogo a {
+.sitelogo a {
 	background: rgba(5,5,5,.05);
 	border-radius: 100em / 5em;
 	box-shadow: 0 0 .6em .4em rgba(5,5,5,.05);
@@ -322,7 +322,7 @@ tt, code, kbd, samp {
 	width: 18em;
 	height: .6em;
 }
-#sitelogo img {
+.sitelogo img {
 	position: absolute;
 	top: -13em;
 	left: -1em;
@@ -373,7 +373,7 @@ tt, code, kbd, samp {
 #editwiki_toolbar div {
 	border-radius: 0;
 }
-#sitetitle a {
+.sitetitle a {
 	font: normal bold 4em "Segoe UI", "Lucida Grande", sans-serif;
 	padding: 0 .5em;
 	-webkit-background-clip: text;
@@ -387,11 +387,11 @@ tt, code, kbd, samp {
 	-webkit-transition: all .5s ease;
 	transition: all .5s ease;
 }
-#sitetitle a:hover {
+.sitetitle a:hover {
 	color: #fff;
 	text-shadow: #fff 0 0 6em, rgba(255,255,255,.7) .2em .2em .6em, #fff 0 -.1em 1em, rgba(255,255,255,.7) -.2em 0 .6em;
 }
-#sitesubtitle {
+.sitesubtitle {
 	-webkit-background-clip: text;
 	-moz-background-clip: text;
 	background-clip: text;

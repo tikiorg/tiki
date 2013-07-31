@@ -131,13 +131,13 @@ input[type=submit]:active,
 	font-weight: bold;
 }
 
-#sitetitle,
-#sitesubtitle {
+.sitetitle,
+.sitesubtitle {
 	color: #fff;
 }
 
-#sitetitle a,
-#sitetitle a:visited {color: #fff}
+.sitetitle a,
+.sitetitle a:visited {color: #fff}
 
 #tiki-top ul.cssmenu_horiz {
 	background: #FF8C26;

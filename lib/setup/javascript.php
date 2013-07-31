@@ -225,7 +225,7 @@ var syntaxHighlighter = {
 			 *
 			 */
 			if (($fixoncss = $prefs['iepngfix_selectors']) == '') {
-				$fixoncss = '#sitelogo a img';
+				$fixoncss = '.sitelogo a img';
 			}
 			if (($fixondom = $prefs['iepngfix_elements']) != '') {
 				$fixondom = "DD_belatedPNG.fixPng($fixondom); // list of HTMLDomElements to fix separated by commas (default is none)";

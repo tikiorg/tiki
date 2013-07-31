@@ -276,32 +276,32 @@ tt {font-size: 1.2em}
 	margin-left: 10px;
 }
 
-#sitelogo a,
-#sitelogo a:visited,
-#sitelogo a:hover {border-bottom: 0}
+.sitelogo a,
+.sitelogo a:visited,
+.sitelogo a:hover {border-bottom: 0}
 
 .floatright img {margin-right: 10px}
 
-#sitetitles {
+.sitetitles {
 	margin: 10% 20px;
 	padding-left: 15px;
 }
 
-#sitetitle {
+.sitetitle {
 	font-family: georgia, serif;
 	font-size: 320%;
 	font-weight: 100;
 }
 
-#sitetitle a,
-#sitetitle a:visited {color: #8f8f8f}
+.sitetitle a,
+.sitetitle a:visited {color: #8f8f8f}
 
-#sitetitle a:hover {
+.sitetitle a:hover {
 	color: #8f8f8f;
 	text-decoration: none;
 }
 
-#sitesubtitle {
+.sitesubtitle {
 	font-size: 1em;
 	font-style: italic;
 	font-weight: 100;

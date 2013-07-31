@@ -30,11 +30,11 @@ input[type=submit]:hover {
 	font-size: 1em;
 }
 
-#sitetitle {
+.sitetitle {
 	margin-bottom: 0;
 }
 
-#sitesubtitle {
+.sitesubtitle {
 	margin: 10px 0 5px 0;
 }
 

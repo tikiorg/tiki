@@ -36,8 +36,8 @@ hr {
 	background: url(plum/siteheader.jpg) -250px 0 no-repeat;
 }
 
-#sitetitle,
-#sitesubtitle {
+.sitetitle,
+.sitesubtitle {
 	text-shadow: #7a04b5 3px 2px 0;
 }
 

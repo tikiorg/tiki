@@ -179,13 +179,13 @@ ul.jumplinks a:active {
 }
 
 /* #header text selectors, if needed */
-#sitetitles {
+.sitetitles {
 	color: #fff;
 }
 
-#sitetitle a,
-#sitetitle a:link,
-#sitetitle a:hover {
+.sitetitle a,
+.sitetitle a:link,
+.sitetitle a:hover {
 	color: #fff;
 }
 

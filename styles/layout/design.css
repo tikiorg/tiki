@@ -165,8 +165,8 @@ img {
 	clear: none;
 }
 
-#sitetitle,
-#sitesubtitle {
+.sitetitle,
+.sitesubtitle {
 	line-height: 1;
 }
 
@@ -2776,7 +2776,7 @@ input[type=radio] {
 }
 
 
-#sitelogo img {
+.sitelogo img {
 	margin-top: 10px;
 }
 

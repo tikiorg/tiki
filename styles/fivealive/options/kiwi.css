@@ -38,8 +38,8 @@ hr {
 	background: url(kiwi/siteheader.png) -250px 0 no-repeat;
 }
 
-#sitetitle,
-#sitesubtitle {
+.sitetitle,
+.sitesubtitle {
 	text-shadow: #648637 3px 2px 0;
 }
 

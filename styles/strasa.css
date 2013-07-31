@@ -441,7 +441,7 @@ body.fixed_width .fixedwidth .fixedwidth {
 	margin: 10px;
 }
 
-#sitelogo {
+.sitelogo {
 	padding: 8px 0 0 0;
 	overflow: hidden;
 }
@@ -528,7 +528,7 @@ body.fixed_width .fixedwidth .fixedwidth {
 	color: #000 !important;
 }
 
-#top_modules #sitetitles {
+#top_modules .sitetitles {
 	color: #fff;
 	display: inline;
 	height: 97px;
@@ -538,26 +538,26 @@ body.fixed_width .fixedwidth .fixedwidth {
 	vertical-align: bottom;
 }
 
-#sitetitle,
-#sitesubtitle {
+.sitetitle,
+.sitesubtitle {
 	font-family: Helvetica, sans-serif;
 	font-weight: bold;
 }
 
-#top_modules #sitetitle {
+#top_modules .sitetitle {
 	font-size: 220%;
 	display: inline;
 	letter-spacing: -0.05em;
 }
 
-#top_modules #sitetitle a,
-#top_modules #sitetitle a:link,
-#top_modules #sitetitle a:hover {
+#top_modules .sitetitle a,
+#top_modules .sitetitle a:link,
+#top_modules .sitetitle a:hover {
 	color: #fff;
 	text-decoration: none;
 }
 
-#top_modules #sitesubtitle {
+#top_modules .sitesubtitle {
 	font-size: 110%;
 	display: inline;
 	margin-left: 0.2em;

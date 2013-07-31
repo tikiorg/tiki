@@ -221,7 +221,7 @@ body.fixed_width .fixedwidth .fixedwidth {
 	margin: 10px;
 }
 
-#top_modules #sitetitles {
+#top_modules .sitetitles {
 	margin-left: 20px;
 	line-height: normal;
 	margin-top: 10%;
@@ -229,17 +229,17 @@ body.fixed_width .fixedwidth .fixedwidth {
 	padding-left: 15px;
 }
 
-#sitetitle {
+.sitetitle {
 	font-size: 2.4em;
 }
 
-#sitesubtitle {
+.sitesubtitle {
 	font-size: 1.6em;
 }
 
-#sitetitle a,
-#sitetitle a:link,
-#sitetitle a:visited {
+.sitetitle a,
+.sitetitle a:link,
+.sitetitle a:visited {
 	color: #000;
 }
 

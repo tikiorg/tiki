@@ -37,8 +37,8 @@ hr {
 	background: url(lemon/siteheader.png) -250px 0 no-repeat;
 }
 
-#sitetitle,
-#sitesubtitle {
+.sitetitle,
+.sitesubtitle {
 	text-shadow: #c85a28 3px 2px 0;
 }
 

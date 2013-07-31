@@ -237,27 +237,27 @@ body.fixed_width .fixedwidth .fixedwidth {
 	height: 100%;
 }
 
-#top_modules #sitetitles {
+#top_modules .sitetitles {
 	margin: 10% 10px 10% 23px;
 	height: 100%;
 }
 
-#sitetitle,
-#sitesubtitle {
+.sitetitle,
+.sitesubtitle {
 	display: inline-block;
 }
 
-#sitetitle {
+.sitetitle {
 	font: bold 24px helvetica,arial,sans-serif;
 }
 
-#sitetitle a,
-#sitetitle a:visited {
+.sitetitle a,
+.sitetitle a:visited {
 	color: #fff;
 	text-decoration: none;
 }
 
-#sitesubtitle {
+.sitesubtitle {
 	color: #91bef5;
 	font-style: italic;
 	font-size: 1em;

@@ -110,16 +110,16 @@ input[type=submit]:active,
 
 /***** Site Header & Identity *****/
 
-#sitetitle,
-#sitesubtitle {
+.sitetitle,
+.sitesubtitle {
     color: #666;
     font-weight: bold;
     padding-left: 50px}
 
-#sitetitle a,
-#sitetitle a:visited {color: #666}
+.sitetitle a,
+.sitetitle a:visited {color: #666}
 
-#sitetitle {
+.sitetitle {
     margin-top: 30px;
 }
 
@@ -134,7 +134,7 @@ input[type=submit]:active,
     padding-left: 0;
 }
 
-#sitelogo img {
+.sitelogo img {
     margin-top: 0;
 }
 

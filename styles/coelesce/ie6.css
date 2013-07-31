@@ -34,16 +34,16 @@ h1 {
 	margin-top: -18px;
 }
 
-#sitetitles {
+.sitetitles {
 	display: inline;
 	margin-top: 6px;
 }
 
-#sitetitle {
+.sitetitle {
 	height: 34px;
 }
 
-#sitesubtitle {
+.sitesubtitle {
 	font-size: 14px;
 	height: 18px;
 }

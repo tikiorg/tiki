@@ -297,10 +297,10 @@ body.fixed_width .fixedwidth .fixedwidth {
 }
 
 
-#sitelogo {
+.sitelogo {
 	margin-top: 0;
 }
-#sitelogo img {
+.sitelogo img {
 	padding: 0 10px;
 }
 
@@ -353,11 +353,11 @@ body.fixed_width .fixedwidth .fixedwidth {
 	height: 100%;
 }
 
-#top_modules #sitetitles {
+#top_modules .sitetitles {
 	margin: 3% 20px 2% 20px;
 }
 
-#sitetitle {
+.sitetitle {
 	font-size: 2.2em;
 	text-shadow: 0 0 10px #fff;/* text-shadow; CSS3 valid property, values are <offset x> <offset y> <blur> and <color>; ex: 0 0 10px #fff */
 	font-weight: bold;
@@ -365,19 +365,19 @@ body.fixed_width .fixedwidth .fixedwidth {
 	margin: 0;
 }
 
-#sitetitle a,
-#sitetitle a:link,
-#sitetitle a:visited {
+.sitetitle a,
+.sitetitle a:link,
+.sitetitle a:visited {
 	color: #052653;
 	text-decoration: none;
 }
 
-#customcodewith_ad #sitetitle,
-#customcodewith_ad #sitesubtitle {
+#customcodewith_ad .sitetitle,
+#customcodewith_ad .sitesubtitle {
 	max-width: 300px;
 }
 
-#sitesubtitle {
+.sitesubtitle {
 	color: #fff;
 	font-size: 1.3em;
 	line-height: 1.5;

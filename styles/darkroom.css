@@ -331,12 +331,12 @@ body.fixed_width .fixedwidth .fixedwidth {
 	height: 100%;
 }
 
-#sitelogo {
+.sitelogo {
 	margin: auto !important;
 	padding: 1em;
 }
 
-#top_modules #sitetitles {
+#top_modules .sitetitles {
 	margin: 10% 20px;
 	padding-left: 20px;
 }
@@ -345,18 +345,18 @@ body.fixed_width .fixedwidth .fixedwidth {
 	margin-right: 40px;
 }
 
-#sitetitle,
-#sitesubtitle {
+.sitetitle,
+.sitesubtitle {
 	color: #a7a7a7;
 	font-weight: 400;
 	letter-spacing: -2px;
 }
 
-#sitetitle {
+.sitetitle {
 	font-size: 2.4em;
 }
 
-#sitesubtitle {
+.sitesubtitle {
 	font-size: 1.6em;
 }
 

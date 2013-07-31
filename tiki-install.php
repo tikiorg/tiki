@@ -132,7 +132,7 @@ function createPage($title, $content)
 				<div class="clearfix fixedwidth header_fixedwidth">
 					<header id="header" class="header">
 						<div class="content clearfix modules" id="top_modules" style="display: table; width: 990px;">
-							<div id="sitelogo">
+							<div class="sitelogo">
 								<img alt="Site Logo" src="img/tiki/Tiki_WCG.png" style="margin-bottom: 10px;" />
 							</div>
 						</div>

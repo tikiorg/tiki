@@ -1602,13 +1602,13 @@ function createPage($title, $content)
 				<div class="clearfix fixedwidth header_fixedwidth">
 					<header id="header" class="header">
 					<div class="content clearfix modules" id="top_modules" style="min-height: 168px;">
-						<div id="sitelogo" style="float: left">
+						<div class="sitelogo" style="float: left">
 END;
 echo tikiLogo();
 							echo <<< END
 						</div>
-						<div id="sitetitles" style="float: left;">
-							<div id="sitetitle" style="font-size: 42px;">$title</div>
+						<div class="sitetitles" style="float: left;">
+							<div class="sitetitle" style="font-size: 42px;">$title</div>
 						</div>
 					</div>
 					</header>

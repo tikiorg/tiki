@@ -218,25 +218,25 @@ input[type="submit"]:hover {
 	height: 100%;
 }
 
-#top_modules #sitetitles {
+#top_modules .sitetitles {
 	margin: 10% 20px;
 	padding-left: 20px;
 }
 
-#sitetitles {
+.sitetitles {
 	font-weight: bold;
 }
 
-#sitetitle {
+.sitetitle {
 	font-size: 2.4em;
 }
 
-#sitetitle a,
-#sitetitle a:hover {
+.sitetitle a,
+.sitetitle a:hover {
 	text-decoration: none;
 }
 
-#sitesubtitle {
+.sitesubtitle {
 	font-size: 1.2em;
 	margin-top: 10px;
 }

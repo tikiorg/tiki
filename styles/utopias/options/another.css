@@ -72,7 +72,7 @@ div#sitead {}
 
 #tiki-top {}
 
-div#sitetitles {
+div.sitetitles {
 	color:#555;
 	left:330px;
 	top:-45px;

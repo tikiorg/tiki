@@ -20,9 +20,9 @@ hr {
 
 /** Look & Feel (Site Identity) **/
 
-#sitetitles { color: #fff; }
+.sitetitles { color: #fff; }
 
-#sitetitle a {
+.sitetitle a {
 	color: #fff;
 }
 

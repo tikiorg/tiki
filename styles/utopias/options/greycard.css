@@ -202,7 +202,7 @@ div#sitead {}
 	font-size: .8em;
 }
 
-div#sitetitles {
+div.sitetitles {
 	color:#555;
 	left:330px;
 	top:-45px;

@@ -203,7 +203,7 @@ div#sitead {}
 	width: 7em;
 }
 
-div#sitetitles {
+div.sitetitles {
 	color:#555;
 	left:330px;
 	top:-45px;

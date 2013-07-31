@@ -4,14 +4,14 @@
 			<div class="header_fixedwidth fixedwidth">
 				<header class="header" id="header">
 					<div class="content clearfix modules" id="top_modules" style="min-height: 168px;">
-						<div id="sitelogo" style="float: left">
+						<div class="sitelogo" style="float: left">
 							<img alt="{tr}Tiki Wiki CMS Groupware{/tr}" src="{if isset($ie6)}img/tiki/tikisitelogo.gif{else}img/tiki/Tiki_WCG.png{/if}">
 						</div>
-						<div id="sitetitles" style="float: left;">
-							<div id="sitetitle" style="font-size: 42px;">
+						<div class="sitetitles" style="float: left;">
+							<div class="sitetitle" style="font-size: 42px;">
 								{tr}Tiki installer{/tr}
 							</div>
-							<div id="sitesubtitle" style="font-size: 30px; margin-top: 16px;">
+							<div class="sitesubtitle" style="font-size: 30px; margin-top: 16px;">
 								{$tiki_version_name} <a title="{tr}Help{/tr}" href="http://doc.tiki.org/Installation" target="help"><img style="border:none" src='img/icons/help.png' alt="{tr}Help{/tr}"></a>
 							</div>
 						</div>

@@ -253,7 +253,7 @@ body.cke_show_borders {
 	height: 100%;
 }
 
-#top_modules #sitetitles {
+#top_modules .sitetitles {
 	margin-left: 20px;
 	line-height: normal;
 	margin-top: 10%;
@@ -261,11 +261,11 @@ body.cke_show_borders {
 	padding-left: 20px;
 }
 
-#sitetitle {
+.sitetitle {
 	font-size: 2.4em;
 }
 
-#sitesubtitle {font-size: 1.6em}
+.sitesubtitle {font-size: 1.6em}
 
 #topbar_modules .box-search {
 	float: none;

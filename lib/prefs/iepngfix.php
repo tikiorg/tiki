@@ -14,7 +14,7 @@ function prefs_iepngfix_list()
 			'type' => 'text',
 			'size' => '30',
 			'hint' => tra('Separate multiple elements with a comma (,)'),
-			'default' => '#sitelogo a img',
+			'default' => '.sitelogo a img',
 		),
 		'iepngfix_elements' => array(
 			'name' => tra('HTMLDomElements to be fixed'),

@@ -38,8 +38,8 @@ hr {
 	background: url(grape/siteheader.png) -250px 0 no-repeat;
 }
 
-#sitetitle,
-#sitesubtitle {
+.sitetitle,
+.sitesubtitle {
 	text-shadow: #781437 3px 2px 0;
 }
 

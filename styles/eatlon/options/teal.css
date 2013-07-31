@@ -253,11 +253,11 @@ tt {font-size: 1.2em}
 }
 
 
-#sitelogo a,
-#sitelogo a:visited,
-#sitelogo a:hover {border-bottom: 0}
+.sitelogo a,
+.sitelogo a:visited,
+.sitelogo a:hover {border-bottom: 0}
 
-#sitelogo img { margin-top: 0; }
+.sitelogo img { margin-top: 0; }
 
 #top_modules .siteloginbar_popup {
 	position: absolute;
@@ -279,32 +279,32 @@ input[id="sl-login-pass"] {background: #e1e1e2}
 	color: #008080;
 }
 
-#sitetitles {
+.sitetitles {
 	position: relative;
 	top: 33px;
 	color: #fff;
 	margin: 0;
 }
 
-#sitetitle,
-#sitesubtitle {margin-left: 30px}
+.sitetitle,
+.sitesubtitle {margin-left: 30px}
 
-#sitetitle {
+.sitetitle {
 	font-family: georgia, serif;
 	font-size: 320%;
 	font-weight: 100;
 	margin-top: 40px;
 }
 
-#sitetitle a,
-#sitetitle a:visited {color: #8f8f8f}
+.sitetitle a,
+.sitetitle a:visited {color: #8f8f8f}
 
-#sitetitle a:hover {
+.sitetitle a:hover {
 	color: #8f8f8f;
 	text-decoration: none;
 }
 
-#sitesubtitle {
+.sitesubtitle {
 	font-size: 1em;
 	font-style: italic;
 	font-weight: 100;

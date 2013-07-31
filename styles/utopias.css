@@ -157,21 +157,21 @@ input[type=submit]:hover,
 	margin: .5em .5em 0;
 }
 
-#sitelogo {
+.sitelogo {
 	min-height: 100px;
 	padding: 0;
 }
 
-#sitelogo img {
+.sitelogo img {
 	margin: 0;
 }
 
-#sitetitles {
+.sitetitles {
 	color: #888;
 	padding: 2em 1em 1em;
 }
 
-#sitetitle {
+.sitetitle {
 	font-size: 3em;
 }
 

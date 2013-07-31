@@ -111,7 +111,7 @@ ul li div.image {
 
 /** Logo Box **/
 
-#sitelogo {
+.sitelogo {
 	float: right !important;
 }
 
