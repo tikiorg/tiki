@@ -4440,12 +4440,13 @@ a.cke_button span.cke_icon {
 }
 .tiki_plugin {
 	display: inline-block;
+	background-color: #f8f8f8;
+	border: 1px solid #eee;
 }
 
 .tiki_plugin .plugin_icon {
 	float: left;
 	position: absolute;
-	display: none;
 	opacity: .7;
 }
 
