@@ -26,6 +26,7 @@ class Table_Settings_PluginTrackerlist extends Table_Settings_Abstract {
 		),
 		'ajax' => array(
 			'custom' => false,		//url sort and filter params manipulated on the server side for this plugin
+			'offset' => 'tr_offset'
 		)
 	);
 }

@@ -109,6 +109,7 @@ class Table_Settings_Adminusers extends Table_Settings_Abstract
 		),
 		'ajax' => array(
 			'url' => 'tiki-adminusers.php?{sort:sort}&{filter:filter}',
+			'offset' => 'offset'
 		)
 	);
 

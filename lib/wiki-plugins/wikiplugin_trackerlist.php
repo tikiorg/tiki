@@ -1670,7 +1670,7 @@ function wikiplugin_trackerlist($data, $params)
 				return;
 			}
 
-			if ($items['cant'] == 1 && isset($goIfOne) && ($goIfOne == 'y' || $goIfOne == 1)) {
+			if (isset($items['cant']) && $items['cant'] == 1 && isset($goIfOne) && ($goIfOne == 'y' || $goIfOne == 1)) {
 				header('Location: tiki-view_tracker_item.php?itemId='.$items['data'][0]['itemId'].'&amp;trackerId='.$items['data'][0]['trackerId']);
 				die;
 			}

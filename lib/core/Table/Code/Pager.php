@@ -56,26 +56,32 @@ class Table_Code_Pager extends Table_Code_Manager
 			if (!isset($this->s['ajax']['custom']) || $this->s['ajax']['custom'] !== false) {
 				$ca = array(
 					'var vars = {}, hashes, hash, sort, sorts, filters, params = [], dir, newurl, offset = true;',
+					//parse out url parameters
 					'hashes = url.slice(url.indexOf(\'?\') + 1).split(\'&\');',
 					'for(var i = 0; i < hashes.length; i++) {',
 					'	hash = hashes[i].split(\'=\');',
 					'	vars[hash[0]] = hash[1];',
 					'}',
+					//map of columns keys to sort and filter server side parameters
 					'sort = ' . json_encode($this->s['ajax']['sort']) . ';',
 					'filters = ' . json_encode($this->s['ajax']['filters']) . ';',
 					'$.each(vars, function(key, value) {',
+						//handle sort parameters
 					'	if (key in sort) {',
 					'		if (value == 0){',
 					'			dir = \'_asc\';',
 					'		} else {',
 					'			dir = \'_desc\';',
 					'		}',
+							//if sorts is not yet defined
 					'		if (typeof sorts === \'undefined\') {',
 					'			sorts = sort[key] + dir;',
+							//allows for multiple comma-separated sort parameters
 					'		} else {',
 					'			sorts += \',\' + sort[key] + dir;',
 					'		}',
 					'	}',
+						//handle filter parameters
 					'	if (key in filters) {',
 					'		if (filters[key][value]){',
 					'			params.push(filters[key][value]);',
@@ -92,7 +98,7 @@ class Table_Code_Pager extends Table_Code_Manager
 					'if (offset == false) {',
 					'	offset = \'\';',
 					'} else {',
-					'	offset = \'&offset=\' + (this.page * this.size);',
+					'	offset = \'&' . $this->s['ajax']['offset'] . '=\' + (this.page * this.size);',
 					'}',
 					'newurl = newurl + \'?numrows=\' + this.size + offset + \'&tsAjax=true\';',
 					'$.each(params, function(key, value) {',
@@ -101,7 +107,9 @@ class Table_Code_Pager extends Table_Code_Manager
 					'return newurl;'
 				);
 			} else {
-				$ca = array('return url + \'&tsAjax=true\';');
+				$ca = array(
+					'return url + \'&tsAjax=true&' . $this->s['ajax']['offset'] . '=\' + (this.page * this.size);'
+				);
 			}
 			if (count($ca) > 0) {
 				$p[] = $this->iterate($ca, 'customAjaxUrl: function(table, url) {',  $this->nt2 . '}',

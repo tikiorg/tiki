@@ -100,7 +100,7 @@ class Table_Code_MainOptions extends Table_Code_Manager
 
 		//Show processing
 		$mo[] = 'showProcessing: true';
-		if ($this->sort && $this->s['serverside'] === true) {
+		if ($this->sort && isset($this->s['serverside']) && $this->s['serverside'] === true) {
 			$mo[] = 'serverSideSorting: true';
 		}
 
