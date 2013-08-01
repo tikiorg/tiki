@@ -39,7 +39,8 @@ class Search_Formatter_ValueFormatter_Categorylist extends Search_Formatter_Valu
 		$smarty->loadPlugin('smarty_function_object_link');
 
 		$arr = TikiLib::lib('categ')->getCategories();
-
+		$list = '';
+		
 		foreach ($arr as $arx) {
 			$myArr[$arx['categId']] = Array('parentId' => $arx['parentId'],'name' => $arx['name']);
 		}
