@@ -332,6 +332,12 @@ a.admbox.off img {
 	text-align: right;
 }
 
+.pref_search_results {
+	max-height: 20em;
+	overflow: auto;
+
+}
+
 /* end from ui-revamp branch */
 
 /* tiki 7 modules revamp */
