@@ -21,8 +21,8 @@
 		{if $tiki_p_admin_calendar eq 'y'}
 			{button href="tiki-admin_calendars.php" _text="{tr}Admin Calendars{/tr}"}
 		{/if}
-		{if $prefs.calendar_fullcalendar neq 'y' or  not $edit}
-			{if $prefs.calendar_export_item == 'y'}
+		{if $prefs.calendar_fullcalendar neq 'y' or not $edit}
+			{if $prefs.calendar_export_item == 'y' and $tiki_p_view_calendar eq 'y'}
 				{button href='tiki-calendar_export_ical.php? export=y&calendarItem='|cat:$id _text='{tr}Export Event as iCal{/tr}'}
 			{/if}
 		{/if}
