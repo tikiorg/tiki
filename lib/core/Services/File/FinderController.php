@@ -94,7 +94,7 @@ class Services_File_FinderController
 
 		$opts['roots'][] = array_merge(		// normal file gals
 			array(
-				'path' => $this->fileController->defaultGalleryId,		// should be $prefs['fgal_root_id']?
+				'path' => $prefs['fgal_root_id'],		// should be a function?
 			),
 			$rootDefaults
 		);
