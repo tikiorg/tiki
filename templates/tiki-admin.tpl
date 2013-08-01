@@ -86,9 +86,11 @@
 <fieldset>
 <legend>{tr}Preferences Search Results{/tr}</legend>
 	<form method="post" action="">
-		{foreach from=$lm_searchresults item=prefName}
-			{preference name=$prefName get_pages="y"}
-		{/foreach}
+		<div class="pref_search_results box">
+			{foreach from=$lm_searchresults item=prefName}
+				{preference name=$prefName get_pages="y"}
+			{/foreach}
+		</div>
 		<input type="submit" value="{tr}Change{/tr}" class="clear">
 		<input type="hidden" name="lm_criteria" value="{$lm_criteria|escape}">
 	</form>

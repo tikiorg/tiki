@@ -115,6 +115,12 @@ function prefs_calendar_list()
 			'type' => 'flag',
 			'default' => 'n',
 		),
+		'calendar_export_item' => array(
+			'name' => tra('Show Export Calendar Item Button'),
+            'description' => tra('Allow exporting a single calendar event as an iCal file'),
+			'type' => 'flag',
+			'default' => 'n',
+		),
 		'calendar_fullcalendar' => array(
 			'name' => tra('Use FullCalendar to display Calendars'),
             'description' => tra(''),
