@@ -487,4 +487,6 @@ $mimetypes = array(
 	"dotx" => "application/vnd.openxmlformats-officedocument.wordprocessingml.template",
 	"xlam" => "application/vnd.ms-excel.addin.macroEnabled.12",
 	"xlsb" => "application/vnd.ms-excel.sheet.binary.macroEnabled.12",
+
+	'vimeo' => 'video/vimeo'
 );
