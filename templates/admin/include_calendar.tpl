@@ -58,6 +58,7 @@
 		{preference name=calendar_timespan}
 		{preference name=feature_cal_manual_time}
 		{preference name=calendar_export}
+		{preference name=calendar_export_item}
 		{preference name=calendar_addtogooglecal}
 		{preference name=calendar_fullcalendar}
 

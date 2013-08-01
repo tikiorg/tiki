@@ -21,6 +21,11 @@
 		{if $tiki_p_admin_calendar eq 'y'}
 			{button href="tiki-admin_calendars.php" _text="{tr}Admin Calendars{/tr}"}
 		{/if}
+		{if $prefs.calendar_fullcalendar neq 'y' or  not $edit}
+			{if $prefs.calendar_export_item == 'y'}
+				{button href='tiki-calendar_export_ical.php? export=y&calendarItem='|cat:$id _text='{tr}Export Event as iCal{/tr}'}
+			{/if}
+		{/if}
 	</div>
 	
 	<div class="wikitext">
@@ -1100,6 +1105,13 @@
 							&nbsp;
 							<input type="submit" onclick="needToConfirm=false;document.location='tiki-calendar_edit_item.php?recurrenceId={$recurrence.id}&amp;delete=y';return false;" value="{tr}Delete Recurrent events{/tr}">
 						{/if}
+						&nbsp;
+						{if $prefs.calendar_fullcalendar eq 'y'}
+							{if $prefs.calendar_export_item == 'y'}
+								{button href='tiki-calendar_export_ical.php? export=y&calendarItem='|cat:$id _text='{tr}Export Event as iCal{/tr}'}
+							{/if}
+						{/if}
+						&nbsp;
 						&nbsp;
 						<input type="submit" onclick="needToConfirm=false;document.location='{$referer|escape:'html'}';return false;" value="{tr}Cancel{/tr}">
 					</td>
