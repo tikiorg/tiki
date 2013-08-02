@@ -116,6 +116,7 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 							'exact' => tr('Exact Match'),
 							'partial' => tr('Field here is part of field there'),
 							'domain' => tr('Match domain, used for URL fields'),
+							'crossSelect' => tr('Cross select. Load all matching items in the remote tracker'),	
 						),
 						'legacy_index' => 10,
 					),
@@ -280,7 +281,35 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 
 		$data['selectMultipleValues'] = (bool) $this->getOption('selectMultipleValues');
 
-		if ($preselection = $this->getPreselection()) {
+		// 'crossSelect' overrides the preselection reference, which is enabled, when a cross reference Item Link <-> Item Link
+		//	When selecting a value another item link can provide the relation, then the cross link can point to several records having the same linked value.
+		//	Example Contact and Report links to a Company. Report also links to Contact. When selecting Contact, Only Contacts in the same company as the Report is linked to, should be made visible.
+		//	When 'crossSelect' is enabled
+		//		1) The dropdown list is no longer disabled (else disabled) 
+		//		2) All rows in the remote tracker matching the criterea are displayed in the dropdown list (else only 1 row is displayed)
+		$method = $this->getOption('preSelectFieldMethod');
+		if ($method == 'crossSelect') {
+			$data['crossSelect'] = 'y';
+		} else {
+			$data['crossSelect'] = 'n';
+		}
+
+		// Prepare for 'crossSelect' 		
+		$linkValue = false;		// Value which links the tracker items
+		if ($data['crossSelect'] === 'y') {		
+			// Check if itemId is set / used.
+			// If not, it must be set here 
+			$itemData = $this->getItemData();
+			if (empty($itemData['itemId'])) {
+				if (!empty($_REQUEST['itemId'])) {
+					$linkValue = $_REQUEST['itemId'];
+				}
+			} else {
+				$linkValue = $itemData['itemId'];
+			}
+		}		
+
+		if ($preselection = $this->getPreselection($linkValue)) {
 			$data['preselection'] = $preselection;
 		} else {
 			$data['preselection'] = '';
@@ -288,6 +317,14 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 
 		$data['filter'] = $this->buildFilter();
 
+		if ($data['crossSelect'] === 'y') {	
+			$fullList = $data['list'];
+			if (!empty($preselection) && is_array($preselection)) {
+				$data['remoteData'] = array_intersect_key($fullList, array_flip($preselection));
+			} else {
+				$data['remoteData'] = $fullList;
+			}
+		}
 		return $this->renderTemplate('trackerinput/itemlink.tpl', $context, $data);
 	}
 
@@ -521,7 +558,7 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 		return implode(',', $parts);
 	}
 
-	private function getPreselection()
+	private function getPreselection($linkValue = false)
 	{
 		$trklib = TikiLib::lib('trk');
 
@@ -554,7 +591,17 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 			$partial = false;
 		}
 
-		return $trklib->get_item_id($remoteTrackerId, $remoteField, $localValue, $partial);
+		// If $linkValue is specified, it means get_all_item_id should be called,
+		//	which can match a set of linked values. Not just 1
+		if (!empty($linkValue)) {
+			// get_all_item_id always collects all matching links. $partial is ignored
+			//	Use the local value in the search, when it's available
+			$value = empty($localValue) ? $linkValue : $localValue;
+			$data = $trklib->get_all_item_id($remoteTrackerId, $remoteField, $value);
+		} else {
+			$data = $trklib->get_item_id($remoteTrackerId, $remoteField, $localValue, $partial);
+		}
+		return $data;
 	}
 
 	function handleSave($value, $oldValue)
@@ -563,6 +610,8 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 		// of options to string before saving the field value in the db
 		if ($this->getOption('selectMultipleValues')) {
 			$value = implode(',', $value);
+		} else {
+			$value = (int) $value;
 		}
 
 		return array(
