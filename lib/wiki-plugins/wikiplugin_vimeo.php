@@ -125,12 +125,11 @@ $(".vimeo.dialog").click(function () {
 				};
 				$.post("tiki-wikiplugin_edit.php", params, function() {
 					$dialog.dialog("destroy").remove();
-					location.reload();		// AJAX get_page got tangled up in Chosen TODO later
-//					$.getJSON($.service("wiki", "get_page", {page:' . json_encode($page) . '}), function (data) {
-//						if (data && data.data) {
-//							$("#page-data").html(data.data);
-//						}
-//					});
+					$.get($.service("wiki", "get_page", {page:' . json_encode($page) . '}), function (data) {
+						if (data) {
+							$("#page-data").html(data);
+						}
+					});
 				});
 
 			});

@@ -41,7 +41,7 @@ class Services_Wiki_Controller
 	{
 		$canBeRefreshed = false;
 		$data = TikiLib::lib('wiki')->get_parse($input->page->text(), $canBeRefreshed);
-		return array('data' => $data, 'canBeRefreshed' => $canBeRefreshed);
+		return array('data' => $data);
 	}
 }
 
