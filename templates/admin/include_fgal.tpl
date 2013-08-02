@@ -38,19 +38,6 @@
 				{preference name=feature_file_galleries visible="always"}
 			</fieldset>
 			
-			<fieldset class="admin">
-				<legend>{tr}Plugins{/tr}</legend>
-				{preference name=wikiplugin_files}
-				{preference name=wikiplugin_file}
-				{preference name=wikiplugin_img}
-				{preference name=wikiplugin_carousel}
-				{preference name=wikiplugin_galleriffic}
-				{preference name=wikiplugin_colorbox}
-				{preference name=wikiplugin_draw}
-				{preference name=wikiplugin_annotation}				
-				{preference name=wikiplugin_flash}				
-			</fieldset>
-
 			{preference name=home_file_gallery}
 			{preference name='fgal_use_db'}
 			<div class="adminoptionboxchild fgal_use_db_childcontainer n">
@@ -72,25 +59,6 @@
 					<a class="link" href="tiki-admin.php?page=comments">{tr}Manage comment settings{/tr}</a>
 				</div>
 				{preference name='fgal_display_zip_option'}
-				{preference name='feature_webdav'}
-				
-				{preference name=feature_draw}
-				<div class="adminoptionboxchild" id="feature_draw_childcontainer">
-					{preference name=feature_draw_hide_buttons}
-					{preference name=feature_draw_separate_base_image}
-					<div class="adminoptionboxchild" id="feature_draw_separate_base_image_childcontainer">
-						{preference name=feature_draw_in_userfiles}
-					</div>
-				</div>
-
-				{preference name=feature_jcapture}
-				<div class="adminoptionboxchild" id="feature_jcapture_childcontainer">
-					{preference name=fgal_for_jcapture}
-				</div>
-
-
-				{preference name=feature_docs}				
-
 				{preference name='fgal_limit_hits_per_file'}
 				{preference name='fgal_prevent_negative_score'}
 
@@ -131,7 +99,6 @@
 					{preference name='fgal_source_show_refresh'}
 				</div>
 				{preference name='tiki_check_file_content'}
-				{preference name='fgal_elfinder_feature'}
 			</fieldset>
 
 			<fieldset>
@@ -156,7 +123,22 @@
 			</fieldset>
 		{/tab}
 
-		{tab name="{tr}Gallery Listings{/tr}"}
+		{tab name="{tr}Plugins{/tr}"}
+			<fieldset class="admin">
+				<legend>{tr}Plugins{/tr}</legend>
+				{preference name=wikiplugin_files}
+				{preference name=wikiplugin_file}
+				{preference name=wikiplugin_img}
+				{preference name=wikiplugin_carousel}
+				{preference name=wikiplugin_galleriffic}
+				{preference name=wikiplugin_colorbox}
+				{preference name=wikiplugin_draw}
+				{preference name=wikiplugin_annotation}
+				{preference name=wikiplugin_flash}
+			</fieldset>
+		{/tab}
+
+		{tab name="{tr}Listings{/tr}"}
 			{remarksbox title="Note"}
 				{tr}Changing these settings will <em>not</em> affect existing file galleries. These changes will apply <em>only</em> to new file galleries{/tr}.
 			{/remarksbox}
@@ -204,7 +186,7 @@
 		{/tab}
 
 		{if $section eq 'admin'}
-			{tab name="{tr}Admin Gallery Listings{/tr}"}
+			{tab name="{tr}Admin Listings{/tr}"}
 				<fieldset>
 					<legend>{tr}Select which items to display when admin galleries: {/tr}</legend>
 					<table class="admin">
@@ -283,20 +265,55 @@
 				</div>
 			</div>
 		{/tab}
-		{tab name="{tr}SCORM{/tr}"}
-			{preference name=scorm_enabled}
-			{preference name=scorm_tracker}
-		{/tab}
+		{tab name="{tr}Enhancements{/tr}"}
 
-		{tab name="{tr}Vimeo{/tr}"}
-			{preference name=vimeo_upload}
-			<div class="adminoptionboxchild" id="vimeo_upload_childcontainer">
-				{preference name=vimeo_default_gallery}
-				{preference name=vimeo_consumer_key}
-				{preference name=vimeo_consumer_secret}
-				{preference name=vimeo_access_token}
-				{preference name=vimeo_access_token_secret}
-			</div>
+			<fieldset>
+				<legend>{tr}Access{/tr}</legend>
+				{preference name='feature_webdav'}
+				{preference name='fgal_elfinder_feature'}
+				{preference name='feature_docs'}
+			</fieldset>
+
+			<fieldset>
+				<legend>{tr}Draw{/tr}</legend>
+				{preference name=feature_draw}
+				<div class="adminoptionboxchild" id="feature_draw_childcontainer">
+					{preference name=feature_draw_hide_buttons}
+					{preference name=feature_draw_separate_base_image}
+					<div class="adminoptionboxchild" id="feature_draw_separate_base_image_childcontainer">
+						{preference name=feature_draw_in_userfiles}
+					</div>
+				</div>
+			</fieldset>
+
+			<fieldset>
+				<legend>{tr}Capture{/tr}</legend>
+				{preference name=feature_jcapture}
+				<div class="adminoptionboxchild" id="feature_jcapture_childcontainer">
+					{preference name=fgal_for_jcapture}
+				</div>
+			</fieldset>
+
+			<fieldset>
+				<legend>{tr}SCORM{/tr}</legend>
+				{preference name=scorm_enabled}
+				<div class="adminoptionboxchild" id="scorm_enabled_childcontainer">
+					{preference name=scorm_tracker}
+				</div>
+			</fieldset>
+
+			<fieldset>
+				<legend>{tr}Vimeo{/tr}</legend>
+				{preference name=vimeo_upload}
+				<div class="adminoptionboxchild" id="vimeo_upload_childcontainer">
+					{preference name=vimeo_default_gallery}
+					{preference name=vimeo_consumer_key}
+					{preference name=vimeo_consumer_secret}
+					{preference name=vimeo_access_token}
+					{preference name=vimeo_access_token_secret}
+				</div>
+			</fieldset>
+
 		{/tab}
 	{/tabset}
 
