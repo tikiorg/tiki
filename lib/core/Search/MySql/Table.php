@@ -156,7 +156,7 @@ class Search_MySql_Table extends TikiDb_Table
 		$escapedIndex = $this->escapeIdentifier($indexName);
 		$escapedField = $this->escapeIdentifier($fieldName);
 
-		if ($currentType == 'TEXT') {
+		if ($currentType == 'TEXT' || $currentType == 'text') {
 			$this->schemaBuffer->push("MODIFY COLUMN $escapedField VARCHAR(300)");
 			$this->definition[$fieldName] = 'VARCHAR(300)';
 		}
