@@ -538,7 +538,7 @@ class UnifiedSearchLib
 
     /**
      * @param string $mode
-     * @return Search_Formatter_DataSource_Declarative
+     * @return Search_Formatter_DataSource_Interface
      */
     function getDataSource($mode = 'formatting')
 	{
@@ -550,6 +550,14 @@ class UnifiedSearchLib
 
 		$dataSource = new Search_Formatter_DataSource_Declarative;
 		$this->addSources($dataSource, $mode);
+
+		if ($mode === 'formatting' && $prefs['unified_engine'] === 'mysql') {
+			$dataSource->setPrefilter(function ($fields, $entry) {
+				return array_filter($fields, function ($field) use ($entry) {
+					return preg_match('/token[a-z]{20,}/', $entry[$field]);
+				});
+			});
+		}
 
 		return $dataSource;
 	}
