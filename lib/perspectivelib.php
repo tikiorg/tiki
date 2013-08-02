@@ -163,7 +163,7 @@ class PerspectiveLib
 	{
 		global $prefs, $url_scheme, $tikiroot;
 
-		if ( $this->perspective_exists($perspective) || ($prefs['feature_areas'] === 'y' && $perspective === 0)) {
+		if ( $this->get_perspective($perspective) || ($prefs['feature_areas'] === 'y' && $perspective === 0)) {
 			if ($prefs['multidomain_switchdomain'] == 'y') {
 				foreach ( $this->get_domain_map() as $domain => $persp ) {
 					if ( $persp == $perspective && isset($_SERVER['HTTP_HOST']) && $domain != $_SERVER['HTTP_HOST'] ) {
