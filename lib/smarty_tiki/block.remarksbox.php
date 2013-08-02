@@ -38,10 +38,10 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 function smarty_block_remarksbox($params, $content, $smarty, &$repeat)
 {
 	global $prefs;
-	
-	if ( $repeat ) return;
+	static $instance = 0;
 
-	//extract($params);
+	if ( $repeat ) return '';
+	$instance++;
 
 	$params = array_merge(array(
 		'type' => 'tip',
@@ -79,8 +79,24 @@ function smarty_block_remarksbox($params, $content, $smarty, &$repeat)
 	} else {
 		$params['close'] = $params['close'] === 'y';
 	}
+	$md5 = 'rbox-' . md5(serialize(array($params, $instance,  $_SERVER['REQUEST_URI'])));
 
+	if (getCookie($md5, 'rbox')) {
+		return '';
+	}
+
+	if ($params['close']) {
+		TikiLib::lib('header')->add_jq_onready('$("#' . $md5 . '").click( function () {$("#' . $md5 . '").fadeOut();
+	if (getCookie("rbox") || confirm("' . tra('Do you want to hide this remarks box forever? (can actually be reset in tiki-user_preferences.php)') . '")) {
+		setCookie("'. $md5 . '", "y", "rbox");		// advisory alert on first use
+	}
+	return false;
+});');
+	}
+
+	$smarty->assign('rbox_guid', $md5);
 	$smarty->assign('rbox_params', $params);
+	$smarty->assign('rbox_instance', $instance);
 	$smarty->assign('remarksbox_content', $content);
 	return $smarty->fetch('remarksbox.tpl');
 }

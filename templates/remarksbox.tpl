@@ -1,9 +1,9 @@
 {* $Id$ *}
 {strip}
 	{* Simple remarks box used by Smarty entity block.remarksbox.php & wikiplugin_remarksbox.php *}
-	<div class="clearfix rbox {$rbox_params.type}">
-		{if $rbox_params.close eq 'y' and $rbox_params.type ne 'errors' and $rbox_params.type ne 'confirm'}
-			{icon _id='close' class='rbox-close' onclick='$(this).parent().fadeOut(); return false;'}
+	<div class="clearfix rbox {$rbox_params.type}" id="{$rbox_guid}">
+		{if $rbox_params.close and $rbox_params.type ne 'errors' and $rbox_params.type ne 'confirm'}
+			{icon _id='close' class='rbox-close' onclick=$rbox_close_click}
 		{/if}
 		{if $rbox_params.title ne ''}
 			<div class="rbox-title">

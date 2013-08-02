@@ -550,6 +550,7 @@ array_unshift(
 			'categ' => 'striptags',
 			'local_tz' => 'text',
 			'preview' => 'text',
+			'rbox' => 'text',
 		),
 		'staticKeyFiltersForArrays' => array(
 			'cat_managed' => 'digits',
