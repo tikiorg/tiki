@@ -554,7 +554,9 @@ class UnifiedSearchLib
 		if ($mode === 'formatting' && $prefs['unified_engine'] === 'mysql') {
 			$dataSource->setPrefilter(function ($fields, $entry) {
 				return array_filter($fields, function ($field) use ($entry) {
-					return preg_match('/token[a-z]{20,}/', $entry[$field]);
+					if (! empty($entry[$field])) {
+						return preg_match('/token[a-z]{20,}/', $entry[$field]);
+					}
 				});
 			});
 		}
