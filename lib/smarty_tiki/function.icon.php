@@ -160,7 +160,7 @@ function smarty_function_icon($params, $smarty)
 		$params['file'] = '/'.$params['file'];
 	}
 
-	if ( $tag == 'img' ) {
+	if ( $tag == 'img' && is_readable($params['file']) ) {
 		$dim = getimagesize($params['file']);
 
 		if ( ! isset($params['width']) ) {
