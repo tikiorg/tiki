@@ -9,6 +9,8 @@ require_once('lib/wiki-plugins/wikiplugin_flash.php');
 
 function wikiplugin_vimeo_info()
 {
+	global $prefs;
+
 	return array(
 		'name' => tra('Vimeo'),
 		'documentation' => 'PluginVimeo',
@@ -18,9 +20,9 @@ function wikiplugin_vimeo_info()
 		'introduced' => 6.1,
 		'params' => array(
 			'url' => array(
-				'required' => true,
+				'required' => $prefs['vimeo_upload'] !== 'y',
 				'name' => tra('URL'),
-				'description' => tra('Entire URL to the Vimeo video. Example: http://vimeo.com/3319966'),
+				'description' => tra('Entire URL to the Vimeo video. Example: http://vimeo.com/3319966 or leave blank to upload one.'),
 				'filter' => 'url',
 				'default' => '',
 			),
@@ -71,10 +73,73 @@ function wikiplugin_vimeo_info()
 
 function wikiplugin_vimeo($data, $params)
 {
+	static $instance = 0;
+	$instance++;
+
 	if (isset($params['url'])) {
 		$params['vimeo'] = $params['url'];
 		unset($params['url']);
+		return wikiplugin_flash($data, $params);
+	} else {
+
+		global $access, $page;
+		$access->check_feature('vimeo_upload');
+
+		// set up for an upload
+		$smarty = TikiLib::lib('smarty');
+		$smarty->loadPlugin('smarty_function_button');
+		$smarty->loadPlugin('smarty_function_service');
+		$html = smarty_function_button(array(
+			'_keepall' => 'y',
+			'_class' => 'vimeo dialog',
+			'href' => smarty_function_service(
+				array(
+					'controller' => 'vimeo',
+					'action' => 'upload',
+				),
+				$smarty
+			),
+			'_text' => tra('Upload Video'),
+		), $smarty);
+
+		TikiLib::lib('header')->add_jq_onready('
+$(".vimeo.dialog").click(function () {
+	var link = this;
+	$(this).serviceDialog({
+		title: tr("Upload Video"),
+		data: {
+			controller: "vimeo",
+			action: "upload"
+		},
+		load: function(data) {
+			var $dialog = $(".vimeo_upload").parents(".ui-dialog-content");		// odd its the content, not the outer div
+			$(".vimeo_upload").on("vimeo_uploaded", function(event, data) {
+				var params = {
+					page: ' . json_encode($page) . ',
+					content: "",
+					index: ' . $instance . ',
+					type: "vimeo",
+					params: {
+						url: data.url
+					}
+				};
+				$.post("tiki-wikiplugin_edit.php", params, function() {
+					$dialog.dialog("destroy").remove();
+					location.reload();		// AJAX get_page got tangled up in Chosen TODO later
+//					$.getJSON($.service("wiki", "get_page", {page:' . json_encode($page) . '}), function (data) {
+//						if (data && data.data) {
+//							$("#page-data").html(data.data);
+//						}
+//					});
+				});
+
+			});
+		}
+	});
+	return false;
+});');
+
+		return $html;
 	}
-	
-	return wikiplugin_flash($data, $params);
+
 }

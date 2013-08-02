@@ -1,5 +1,7 @@
-<p>{tr _0=$available/1024/1024}Available space: %0 megabytes{/tr}</p>
-<form class="simple" id="form{$ticket.id|escape}" target="vimeo{$ticket.id|escape}" method="post" action="{$ticket.endpoint|escape}" enctype="multipart/form-data" data-verify-action="{service controller=vimeo action=complete}">
+<p>{tr _0=$available}Available space: %0 megabytes{/tr}</p>
+<form class="simple no-ajax vimeo_upload" id="form{$ticket.id|escape}" target="vimeo{$ticket.id|escape}"
+			method="post" action="{$ticket.endpoint|escape}" enctype="multipart/form-data"
+			data-verify-action="{service controller=vimeo action=complete}">
 	<label>
 		{tr}Title{/tr}
 		<input type="text" name="title" required/>
@@ -19,9 +21,9 @@
 	var galleryId = {{$galleryId|json_encode}};
 	var $iframe = $('#vimeo' + ticket);
 	var $form = $('#form' + ticket);
-	var $file = $('#form' + ticket + ' input[type=file]');
-	var $title = $('#form' + ticket + ' input[name=title]');
-	
+	var $file = $('input[type=file]', $form);
+	var $title = $('input[name=title]', $form);
+
 	$iframe.on('load', function () {
 		var data = {
 			title: $title.val(),
@@ -29,7 +31,10 @@
 			ticket: ticket,
 			file: $file.val()
 		};
-		$.post($.service('vimeo', 'complete'), data, function (data) {
-		}, 'json')
+		if (data.file) {
+			$.post($.service('vimeo', 'complete'), data, function(data) {
+				$(".vimeo_upload").trigger("vimeo_uploaded", [data]);
+			}, 'json');
+		}
 	});
 {/jq}

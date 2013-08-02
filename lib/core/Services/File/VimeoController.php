@@ -43,7 +43,7 @@ class Services_File_VimeoController
 		$ticket = $vimeolib->getTicket();
 
 		return array(
-			'available' => $quota['free'],
+			'available' => round($quota['free'] / 1024 / 1024, 1),
 			'ticket' => $ticket,
 			'galleryId' => $galleryId,
 		);
