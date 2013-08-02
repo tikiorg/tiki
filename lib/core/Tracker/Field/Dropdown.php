@@ -150,13 +150,20 @@ class Tracker_Field_Dropdown extends Tracker_Field_Abstract implements Tracker_F
 
 	private function getPossibilities()
 	{
-		$options = $this->getConfiguration('options_array');
-		$out = array();
-		foreach ($options as $value) {
-			$out[$this->getValuePortion($value)] = $this->getLabelPortion($value);
+		static $localCache = array();
+
+		$string = $this->getConfiguration('options');
+		if (! isset($localCache[$string])) {
+			$options = $this->getConfiguration('options_array');
+			$out = array();
+			foreach ($options as $value) {
+				$out[$this->getValuePortion($value)] = $this->getLabelPortion($value);
+			}
+
+			$localCache[$string] = $out;
 		}
 
-		return $out;
+		return $localCache[$string];
 	}
 	
 	private function getDefaultValue()
