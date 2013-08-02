@@ -41,43 +41,46 @@ function smarty_block_remarksbox($params, $content, $smarty, &$repeat)
 	
 	if ( $repeat ) return;
 
-	extract($params);
-	if (!isset($type))  $type = 'tip';
-	if (!isset($title)) $title = '';
-	if (!isset($close)) $close = 'y';
-	if (!isset($width)) $width = '';
-	
-	if (isset($highlight) && $highlight == 'y') {
-		$highlightClass = ' highlight';
+	//extract($params);
+
+	$params = array_merge(array(
+		'type' => 'tip',
+		'title' => '',
+		'close' => 'y',
+		'width' => '',
+		'highlight' => 'n',
+		'icon' => '',
+	), $params);
+
+	if ($params['highlight'] === 'y') {
+		$params['highlight'] = ' highlight';
 	} else {
-		$highlightClass = '';
+		$params['highlight'] = '';
 	}
-	if (!isset($icon) || $icon=='') {
-		if ($type=='tip') {//get_strings tra('tip')
-			$icon='book_open';
-		} else if ($type=='comment') {//get_strings tra('comment')
-			$icon='comments';
-		} else if ($type=='warning' || $type == 'confirm') {//get_strings tra('warning') tra('confirm')
-			$icon='exclamation';
-		} else if ($type=='note') {//get_strings tra('note')
-			$icon='information';
-		} else if ($type == 'errors') {//get_strings tra('errors')
-			$icon = 'delete';
+
+	if ($params['icon'] ==='') {
+		if ($params['type']=='tip') {//get_strings tra('tip')
+			$params['icon']='book_open';
+		} else if ($params['type']=='comment') {//get_strings tra('comment')
+			$params['icon']='comments';
+		} else if ($params['type']=='warning' || $params['type'] == 'confirm') {//get_strings tra('warning') tra('confirm')
+			$params['icon']='exclamation';
+		} else if ($params['type']=='note') {//get_strings tra('note')
+			$params['icon']='information';
+		} else if ($params['type'] == 'errors') {//get_strings tra('errors')
+			$params['icon'] = 'delete';
 		} else {//get_strings tra('information')
-			$icon = 'information';
+			$params['icon'] = 'information';
 		}
 	}
-	
+
 	if ($prefs['javascript_enabled'] != 'y') {
-		$close = false;
+		$params['close'] = false;
+	} else {
+		$params['close'] = $params['close'] === 'y';
 	}
-	
-	$smarty->assign('remarksbox_title', $title);
-	$smarty->assign('remarksbox_type', $type);
-	$smarty->assign('remarksbox_highlight', $highlightClass);
-	$smarty->assign('remarksbox_icon', $icon);
-	$smarty->assign('remarksbox_close', $close);
-	$smarty->assign('remarksbox_width', $width);
-	$smarty->assignByRef('remarksbox_content', $content);
+
+	$smarty->assign('rbox_params', $params);
+	$smarty->assign('remarksbox_content', $content);
 	return $smarty->fetch('remarksbox.tpl');
 }
