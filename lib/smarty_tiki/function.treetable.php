@@ -185,8 +185,8 @@ function smarty_function_treetable($params, $smarty)
 		$html .= smarty_function_listfilter(
 			array(
 				'id' => $id.'_filter',
-				'selectors' => "#$id tbody tr:not(.parent)",
-				'parentSelector' => "#$id tbody .parent",
+				'selectors' => "#$id tbody tr",
+				'parentSelector' => "#$id .collapsed, #$id .expanded",
 				'exclude' => ".subHeader"
 			),
 			$smarty
