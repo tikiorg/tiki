@@ -394,16 +394,7 @@ class PreferencesLib
 	private function getFileData( $file, $partial = false )
 	{
 		if ( ! isset( $this->files[$file] ) ) {
-   			$inc_file = __DIR__ . "/prefs/{$file}.php";
-			if (file_exists($inc_file)) {
-				require_once $inc_file;
-				$function = "prefs_{$file}_list";
-				if ( function_exists($function) ) {
-					$this->files[$file] = $function($partial);
-				} else {
-					$this->files[$file] = array();
-				}
-			}
+   			$this->realLoad($file, $partial);
 		}
 
 		$ret = array();
@@ -416,6 +407,20 @@ class PreferencesLib
 		}
 
 		return $ret;
+	}
+
+	private function realLoad($file, $partial)
+	{
+		$inc_file = __DIR__ . "/prefs/{$file}.php";
+		if (file_exists($inc_file)) {
+			require_once $inc_file;
+			$function = "prefs_{$file}_list";
+			if ( function_exists($function) ) {
+				$this->files[$file] = $function($partial);
+			} else {
+				$this->files[$file] = array();
+			}
+		}
 	}
 
 	private function getDependencies( $dependencies )
