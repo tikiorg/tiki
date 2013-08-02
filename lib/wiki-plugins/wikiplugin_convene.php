@@ -340,21 +340,30 @@ FORM;
 				this.save();
 			},
 			save: function() {
-				$.modal(tr("Loading..."));
+				$("#page-data").modal(tr("Loading..."));
 
-				$('<form id="conveneSave$i" method="post" action="tiki-wikiplugin_edit.php">'+
-					'<div>'+
-						'<input type="hidden" name="page" value="$page"/>'+
-						'<input type="hidden" name="content" value="' + $.trim(this.data) + '"/>'+
-						'<input type="hidden" name="index" value="$i"/>'+
-						'<input type="hidden" name="type" value="convene"/>'+
-						'<input type="hidden" name="params[title]" value="$title"/>'+
-						'<input type="hidden" name="params[calendarid]" value="$calendarid"/>'+
-						'<input type="hidden" name="params[minvotes]" value="$minvotes"/>'+
-					'</div>'+
-				'</form>')
-				.appendTo('body')
-				.submit();
+				var params = {
+					page: "$page",
+					content: $.trim(this.data),
+					index: $i,
+					type: "convene",
+					params: {
+						title: "$title",
+						calendarid: $calendarid,
+						minvotes: $minvotes
+					}
+				};
+				$.post("tiki-wikiplugin_edit.php", params, function() {
+					$.get($.service("wiki", "get_page", {page: "$page"}), function (data) {
+						if (data) {
+							var newForm = $("#pluginConvene$i", data);
+							$("#pluginConvene$i", "#page-data").replaceWith(newForm);
+						}
+						initConvene$i();
+						$("#page-data").modal();
+					});
+
+				});
 			}
 		}, $conveneData);
 
@@ -392,137 +401,140 @@ FORM;
 			});
 		}
 
-		$('.conveneAddDate$i').click(function() {
-			var dialogOptions = {
-				modal: true,
-				title: tr("Add Date"),
-				buttons: {}
-			};
+		var initConvene$i = function () {
+			$('.conveneAddDate$i').click(function() {
+				var dialogOptions = {
+					modal: true,
+					title: tr("Add Date"),
+					buttons: {}
+				};
 
-			dialogOptions.buttons[tr("Add")] = function() {
-				convene$i.addDate(o.find('input:first').val());
-				o.dialog('close');
-			}
+				dialogOptions.buttons[tr("Add")] = function() {
+					convene$i.addDate(o.find('input:first').val());
+					o.dialog('close');
+				}
 
-			var o = $('<div><input type="text" style="width: 100%;" /></div>')
-				.dialog(dialogOptions);
+				var o = $('<div><input type="text" style="width: 100%;" /></div>')
+					.dialog(dialogOptions);
 
-			o.find('input:first')
-				.datetimepicker()
-				.focus();
-			return false;
-		});
-
-		$('.conveneDeleteDate$i')
-			.click(function() {
-				convene$i.deleteDate($(this).data("date"));
+				o.find('input:first')
+					.datetimepicker()
+					.focus();
 				return false;
 			});
 
-		$('.conveneDeleteUser$i')
-			.click(function() {
-				convene$i.deleteUser($(this).data("user"));
-				return false;
-			});
-
-		$('.conveneUpdateUser$i').toggle(function() {
-			$('.conveneUpdateUser$i').not(this).hide();
-			$('.conveneDeleteUser$i').hide();
-			$('.conveneDeleteDate$i').hide();
-			$('.conveneMain$i').hide();
-			$(this).parent().parent()
-				.addClass('ui-state-highlight')
-				.find('td').not(':first')
-				.addClass('conveneTd$i')
-				.removeClass('ui-state-default')
-				.addClass('ui-state-highlight');
-
-			$(this).find('img').attr('src', 'img/icons/accept.png');
-			var parent = $(this).parent().parent();
-			parent.find('.vote').hide();
-			parent.find('input').each(function() {
-				$('<select>' +
-					'<option value="">' + tr('Unconfirmed') + '</option>' +
-				    '<option value="-1">' + tr('Not ok') + '</option>' +
-				    '<option value="1">' + tr('Ok') + '</option>' +
-				'</select>')
-					.val($(this).val())
-					.insertAfter(this)
-					.change(function() {
-						var cl = '';
-
-						switch($(this).val() * 1) {
-							case 1:     cl = 'convene-ok';break;
-							case -1:    cl = 'convene-no';break;
-							default:    cl = 'convene-unconfirmed';
-						}
-
-						$(this)
-							.parent()
-							.removeClass('convene-no convene-ok convene-unconfirmed')
-							.addClass(cl);
-
-						convene$i.updateUsers = true;
-					});
-			});
-		}, function () {
-			$('.conveneUpdateUser$i').show();
-			$('.conveneDeleteUser$i').show();
-			$('.conveneDeleteDate$i').show();
-			$(this).parent().parent()
-				.removeClass('ui-state-highlight')
-				.find('.conveneTd$i')
-				.removeClass('ui-state-highlight')
-				.addClass('ui-state-default');
-
-			$('.conveneMain$i').show();
-			$(this).find('img').attr('src', 'img/icons/pencil.png');
-			var parent = $(this).parent().parent();
-			parent.find('select').each(function(i) {
-				parent.find('input.conveneUserVote$i').eq(i).val( $(this).val() );
-
-				$(this).remove();
-			});
-
-			if (convene$i.updateUsers) {
-				convene$i.updateUsersVotes();
-			}
-		});
-
-		$('.conveneAddUser$i')
-			.click(function() {
-				if (!$(this).data('clicked')) {
-					$(this)
-						.data('initval', $(this).val())
-						.val('')
-						.data('clicked', true);
-				}
-			})
-			.blur(function() {
-				if (!$(this).val()) {
-					$(this)
-						.val($(this).data('initval'))
-						.data('clicked', '');
-
-				}
-			})
-			.keydown(function(e) {
-				var user = $(this).val();
-
-				if (e.which == 13) {//enter
-					convene$i.addUser(user);
+			$('.conveneDeleteDate$i')
+				.click(function() {
+					convene$i.deleteDate($(this).data("date"));
 					return false;
+				});
+
+			$('.conveneDeleteUser$i')
+				.click(function() {
+					convene$i.deleteUser($(this).data("user"));
+					return false;
+				});
+
+			$('.conveneUpdateUser$i').toggle(function() {
+				$('.conveneUpdateUser$i').not(this).hide();
+				$('.conveneDeleteUser$i').hide();
+				$('.conveneDeleteDate$i').hide();
+				$('.conveneMain$i').hide();
+				$(this).parent().parent()
+					.addClass('ui-state-highlight')
+					.find('td').not(':first')
+					.addClass('conveneTd$i')
+					.removeClass('ui-state-default')
+					.addClass('ui-state-highlight');
+
+				$(this).find('img').attr('src', 'img/icons/accept.png');
+				var parent = $(this).parent().parent();
+				parent.find('.vote').hide();
+				parent.find('input').each(function() {
+					$('<select>' +
+						'<option value="">' + tr('Unconfirmed') + '</option>' +
+						'<option value="-1">' + tr('Not ok') + '</option>' +
+						'<option value="1">' + tr('Ok') + '</option>' +
+					'</select>')
+						.val($(this).val())
+						.insertAfter(this)
+						.change(function() {
+							var cl = '';
+
+							switch($(this).val() * 1) {
+								case 1:     cl = 'convene-ok';break;
+								case -1:    cl = 'convene-no';break;
+								default:    cl = 'convene-unconfirmed';
+							}
+
+							$(this)
+								.parent()
+								.removeClass('convene-no convene-ok convene-unconfirmed')
+								.addClass(cl);
+
+							convene$i.updateUsers = true;
+						});
+				});
+			}, function () {
+				$('.conveneUpdateUser$i').show();
+				$('.conveneDeleteUser$i').show();
+				$('.conveneDeleteDate$i').show();
+				$(this).parent().parent()
+					.removeClass('ui-state-highlight')
+					.find('.conveneTd$i')
+					.removeClass('ui-state-highlight')
+					.addClass('ui-state-default');
+
+				$('.conveneMain$i').show();
+				$(this).find('img').attr('src', 'img/icons/pencil.png');
+				var parent = $(this).parent().parent();
+				parent.find('select').each(function(i) {
+					parent.find('input.conveneUserVote$i').eq(i).val( $(this).val() );
+
+					$(this).remove();
+				});
+
+				if (convene$i.updateUsers) {
+					convene$i.updateUsersVotes();
 				}
-			})
-			.autocomplete({
-				source: $existingUsers
 			});
 
-			$('.conveneAddUserButton$i').click(function() {
-				convene$i.addUser($('.conveneAddUser$i').val());
-			});
+			$('.conveneAddUser$i')
+				.click(function() {
+					if (!$(this).data('clicked')) {
+						$(this)
+							.data('initval', $(this).val())
+							.val('')
+							.data('clicked', true);
+					}
+				})
+				.blur(function() {
+					if (!$(this).val()) {
+						$(this)
+							.val($(this).data('initval'))
+							.data('clicked', '');
 
-		$('#pluginConvene$i .icon').css('cursor', 'pointer');
+					}
+				})
+				.keydown(function(e) {
+					var user = $(this).val();
+
+					if (e.which == 13) {//enter
+						convene$i.addUser(user);
+						return false;
+					}
+				})
+				.autocomplete({
+					source: $existingUsers
+				});
+
+				$('.conveneAddUserButton$i').click(function() {
+					convene$i.addUser($('.conveneAddUser$i').val());
+				});
+
+			$('#pluginConvene$i .icon').css('cursor', 'pointer');
+		};
+		initConvene$i();
 JQ
 );
 
