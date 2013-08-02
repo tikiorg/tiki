@@ -38,7 +38,7 @@ class Search_MySql_LargeDatasetTest extends PHPUnit_Framework_TestCase
 			'object_id' => $typeFactory->identifier('test'),
 		);
 
-		for ($i = 0; 500 > $i; ++$i) {
+		for ($i = 0; 1500 > $i; ++$i) {
 			$document['identifier_' . $i] = $typeFactory->identifier('test');
 			$document['sortable_' . $i] = $typeFactory->sortable('test');
 			$document['plaintext_' . $i] = $typeFactory->plaintext('test');
@@ -59,7 +59,7 @@ class Search_MySql_LargeDatasetTest extends PHPUnit_Framework_TestCase
 		);
 
 		$query = new Search_Query;
-		for ($i = 0; 100 > $i; ++$i) {
+		for ($i = 0; 1000 > $i; ++$i) {
 			$document['field_' . $i] = $typeFactory->sortable('test');
 			$query->filterInitial('test', 'field_' . $i);
 		}

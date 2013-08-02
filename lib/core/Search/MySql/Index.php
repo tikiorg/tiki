@@ -49,9 +49,9 @@ class Search_MySql_Index implements Search_Index_Interface
 	private function handleField($name, $value)
 	{
 		if ($value instanceof Search_Type_Whole) {
-			$this->table->ensureHasField($name, 'VARCHAR(200)');
+			$this->table->ensureHasField($name, 'TEXT');
 		} elseif ($value instanceof Search_Type_PlainShortText) {
-			$this->table->ensureHasField($name, 'VARCHAR(300)');
+			$this->table->ensureHasField($name, 'TEXT');
 		} elseif ($value instanceof Search_Type_PlainText) {
 			$this->table->ensureHasField($name, 'TEXT');
 		} elseif ($value instanceof Search_Type_WikiText) {
@@ -84,8 +84,6 @@ class Search_MySql_Index implements Search_Index_Interface
 
 	function find(Search_Query_Interface $query, $resultStart, $resultCount)
 	{
-		$this->table->flush();
-
 		try {
 			$words = $this->getWords($query->getExpr());
 
@@ -103,6 +101,8 @@ class Search_MySql_Index implements Search_Index_Interface
 					$scoreField = $index['field'];
 				}
 			}
+
+			$this->table->flush();
 
 			$order = $this->getOrderClause($query, (bool) $scoreField);
 

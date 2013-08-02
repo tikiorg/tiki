@@ -11,8 +11,17 @@ class Search_MySql_Table extends TikiDb_Table
 	private $indexes = array();
 	private $exists = null;
 
-	private $buffer = array();
-	private $bufferKey = null;
+	private $schemaBuffer;
+	private $dataBuffer;
+
+	function __construct($db, $table)
+	{
+		parent::__construct($db, $table);
+
+		$table = $this->escapeIdentifier($this->tableName);
+		$this->schemaBuffer = new Search_MySql_QueryBuffer($db, 2000, "ALTER TABLE $table ");
+		$this->dataBuffer = new Search_MySql_QueryBuffer($db, 100, '-- '); // Null Object, replaced later
+	}
 
 	function __destruct()
 	{
@@ -134,67 +143,54 @@ class Search_MySql_Table extends TikiDb_Table
 	{
 		$table = $this->escapeIdentifier($this->tableName);
 		$fieldName = $this->escapeIdentifier($fieldName);
-		$this->db->queryError("ALTER TABLE $table ADD COLUMN $fieldName $type", $error);
-
-		if ($error) {
-			throw new Search_MySql_LimitReachedException(tr("Database too large for index type. Limit reached."));
-		}
+		$this->schemaBuffer->push("ADD COLUMN $fieldName $type");
 	}
 
 	private function addIndex($fieldName)
 	{
-		$table = $this->escapeIdentifier($this->tableName);
-		$indexName = $this->escapeIdentifier($fieldName . '_index');
-		$fieldName = $this->escapeIdentifier($fieldName);
-		$this->db->queryError("ALTER TABLE $table ADD INDEX $indexName ($fieldName)", $error);
+		$currentType = $this->definition[$fieldName];
+		$alterType = null;
 
-		if ($error) {
-			throw new Search_MySql_LimitReachedException(tr("Too many indexes required. Limit reached."));
+		$indexName = $fieldName . '_index';
+		$table = $this->escapeIdentifier($this->tableName);
+		$escapedIndex = $this->escapeIdentifier($indexName);
+		$escapedField = $this->escapeIdentifier($fieldName);
+
+		if ($currentType == 'TEXT') {
+			$this->schemaBuffer->push("MODIFY COLUMN $escapedField VARCHAR(300)");
+			$this->definition[$fieldName] = 'VARCHAR(300)';
 		}
+
+		$this->schemaBuffer->push("ADD INDEX $escapedIndex ($escapedField)");
 	}
 
 	private function addFullText($fieldName)
 	{
+		$indexName = $fieldName . '_fulltext';
 		$table = $this->escapeIdentifier($this->tableName);
-		$indexName = $this->escapeIdentifier($fieldName . '_fulltext');
-		$fieldName = $this->escapeIdentifier($fieldName);
-		$this->db->queryError("ALTER TABLE $table ADD FULLTEXT INDEX $indexName ($fieldName)", $error);
-
-		if ($error) {
-			throw new Search_MySql_LimitReachedException(tr("Too many indexes required. Limit reached."));
-		}
+		$escapedIndex = $this->escapeIdentifier($indexName);
+		$escapedField = $this->escapeIdentifier($fieldName);
+		$this->schemaBuffer->push("ADD FULLTEXT INDEX $escapedIndex ($escapedField)");
 	}
 
 	private function emptyBuffer()
 	{
-		$this->bufferKey = null;
-		$this->buffer = array();
+		$this->schemaBuffer->clear();
+		$this->dataBuffer->clear();
 	}
 
 	private function addToBuffer($keySet, $valueSet)
 	{
-		if ($keySet !== $this->bufferKey) {
-			$this->flush();
-		}
+		$this->schemaBuffer->flush();
 
-		$this->bufferKey = $keySet;
-		$this->buffer[] = $valueSet;
-
-		if (count($this->buffer) == 100) {
-			$this->flush();
-		}
+		$this->dataBuffer->setPrefix("INSERT INTO {$this->escapeIdentifier($this->tableName)} ($keySet) VALUES ");
+		$this->dataBuffer->push($valueSet);
 	}
 
 	function flush()
 	{
-		if (count($this->buffer) == 0) {
-			return;
-		}
-
-		$query = "INSERT INTO {$this->escapeIdentifier($this->tableName)} ({$this->bufferKey}) VALUES " . implode(', ', $this->buffer);
-		$this->db->query($query);
-
-		$this->emptyBuffer();
+		$this->schemaBuffer->flush();
+		$this->dataBuffer->flush();
 	}
 }
 
