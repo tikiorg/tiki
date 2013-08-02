@@ -57,7 +57,7 @@ function smarty_block_filter($params, $content, $smarty, &$repeat)
 	$smarty->assign('sort_modes', $sort_modes);
 
 	// Categories
-	if ($prefs['feature_categories'] == 'y') {
+	if ($prefs['feature_categories'] == 'y' && $prefs['search_show_category_filter'] == 'y') {
 		$smarty->assign('filter_deep', isset($filter['deep']));
 		$smarty->assign('filter_categories', isset($filter['categories']) ? $filter['categories'] : '');
 		$smarty->assign('filter_categmap', json_encode(TikiDb::get()->fetchMap('SELECT categId, name FROM tiki_categories')));
