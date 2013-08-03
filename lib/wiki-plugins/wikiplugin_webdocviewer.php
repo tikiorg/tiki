@@ -59,7 +59,7 @@ function wikiplugin_webdocviewer($data, $params)
 	} else if(isset($params['url'])){
 		$url = $params['url'];
 	}
-	print($url);
+	
 	if(isset($url)){
 		$iframe = ('<iframe src="http://docs.google.com/viewer?embedded=true&url='.$url.'" width="'.$params['width'].'" height="'.$params['height'].'" style="border: none;"></iframe>');
 		return '~np~' . $iframe . '~/np~';
