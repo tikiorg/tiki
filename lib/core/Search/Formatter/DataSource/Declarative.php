@@ -126,8 +126,11 @@ class Search_Formatter_DataSource_Declarative implements Search_Formatter_DataSo
 
 	private function handlePrefilter(array $fields, $entry)
 	{
-		$callback = $this->prefilter;
-		return $callback($fields, $entry);
+		if ($callback = $this->prefilter) {
+			return $callback($fields, $entry);
+		} else {
+			return $fields;
+		}
 	}
 }
 

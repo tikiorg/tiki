@@ -8,25 +8,9 @@
 /**
  * @group unit
  */
-class Search_Index_LuceneTypeAnalyzerTest extends PHPUnit_Framework_TestCase
+abstract class Search_Index_TypeAnalyzerTest extends PHPUnit_Framework_TestCase
 {
-	private $dir;
-
-	function setUp()
-	{
-		$this->dir = dirname(__FILE__) . '/test_index';
-		$this->tearDown();
-	}
-
-	protected function getIndex()
-	{
-		return new Search_Index_Lucene($this->dir);
-	}
-
-	function tearDown()
-	{
-		$this->getIndex()->destroy();
-	}
+	protected abstract function getIndex();
 
 	function testIdentifierTypes()
 	{

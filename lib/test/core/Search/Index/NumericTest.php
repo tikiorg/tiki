@@ -1,19 +1,8 @@
 <?php
 
-class Search_Index_LuceneNumericTest extends PHPUnit_Framework_TestCase
+abstract class Search_Index_NumericTest extends PHPUnit_Framework_TestCase
 {
 	protected $index;
-
-	function setUp()
-	{
-		$this->dir = dirname(__FILE__) . '/test_index';
-		$this->tearDown();
-
-		$index = new Search_Index_Lucene($this->dir);
-
-		$this->populate($index);
-		$this->index = $index;
-	}
 
 	protected function populate($index)
 	{
@@ -29,11 +18,6 @@ class Search_Index_LuceneNumericTest extends PHPUnit_Framework_TestCase
 				),
 			)
 		);
-	}
-
-	function tearDown()
-	{
-		$this->index->destroy();
 	}
 
 	function testMatchVersion()

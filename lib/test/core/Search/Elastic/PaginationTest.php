@@ -5,7 +5,7 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-class Search_Elastic_PaginationTest extends Search_Index_LucenePaginationTest
+class Search_Elastic_PaginationTest extends Search_Index_PaginationTest
 {
 	function setUp()
 	{

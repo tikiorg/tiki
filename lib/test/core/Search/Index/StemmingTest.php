@@ -8,26 +8,9 @@
 /**
  * @group unit
  */
-class Search_Index_LuceneStemmingTest extends PHPUnit_Framework_TestCase
+abstract class Search_Index_StemmingTest extends PHPUnit_Framework_TestCase
 {
-	private $dir;
 	protected $index;
-
-	function setUp()
-	{
-		$this->dir = dirname(__FILE__) . '/test_index';
-		$this->tearDown();
-
-		$index = new Search_Index_Lucene($this->dir, 'en');
-		$this->populate($index);
-
-		$this->index = $index;
-	}
-
-	function tearDown()
-	{
-		$this->index->destroy();
-	}
 
 	protected function populate($index)
 	{

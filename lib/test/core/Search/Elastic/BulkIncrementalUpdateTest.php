@@ -5,7 +5,7 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-class Search_Elastic_BulkIncrementalUpdateTest extends Search_Index_LuceneIncrementalUpdateTest
+class Search_Elastic_BulkIncrementalUpdateTest extends Search_Index_IncrementalUpdateTest
 {
 	protected $index;
 

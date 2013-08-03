@@ -5,21 +5,22 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-class Search_MySql_IncrementalUpdateTest extends Search_Index_IncrementalUpdateTest
+/**
+ * @group unit
+ */
+class Search_Lucene_StemmingTest extends Search_Index_StemmingTest
 {
-	protected $index;
+	private $dir;
 
 	function setUp()
 	{
-		$this->index = $this->getIndex();
-		$this->index->destroy();
+		$this->dir = dirname(__FILE__) . '/test_index';
+		$this->tearDown();
 
-		$this->populate($this->index);
-	}
+		$index = new Search_Lucene_Index($this->dir, 'en');
+		$this->populate($index);
 
-	protected function getIndex()
-	{
-		return new Search_MySql_Index(TikiDb::get(), 'test_index');
+		$this->index = $index;
 	}
 
 	function tearDown()

@@ -131,7 +131,7 @@ class UnifiedSearchLib
 				return false;
 			}
 
-			$index = new Search_Index_Lucene($tempName);
+			$index = new Search_Lucene_Index($tempName);
 
 			register_shutdown_function(
 				function () use ($index) {
@@ -220,7 +220,7 @@ class UnifiedSearchLib
 			}
 
 			// Destroy old
-			$oldIndex = new Search_Index_Lucene($swapName);
+			$oldIndex = new Search_Lucene_Index($swapName);
 			break;
 		case 'elastic':
 			// Obtain the old index and destroy it after permanently replacing it.
@@ -486,7 +486,7 @@ class UnifiedSearchLib
 	}
 
     /**
-     * @return Search_Index_Lucene
+     * @return Search_Index_Interface
      */
     function getIndex($indexType = 'data')
 	{
@@ -495,7 +495,7 @@ class UnifiedSearchLib
 		switch ($prefs['unified_engine']) {
 		case 'lucene':
 			Zend_Search_Lucene::setTermsPerQueryLimit($prefs['unified_lucene_terms_limit']);
-			$index = new Search_Index_Lucene($this->getIndexLocation($indexType), $prefs['language'], $prefs['unified_lucene_highlight'] == 'y');
+			$index = new Search_Lucene_Index($this->getIndexLocation($indexType), $prefs['language'], $prefs['unified_lucene_highlight'] == 'y');
 			$index->setCache(TikiLib::lib('cache'));
 			$index->setMaxResults($prefs['unified_lucene_max_result']);
 			$index->setResultSetLimit($prefs['unified_lucene_max_resultset_limit']);

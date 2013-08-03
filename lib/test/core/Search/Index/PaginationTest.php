@@ -5,25 +5,9 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-class Search_Index_LucenePaginationTest extends PHPUnit_Framework_TestCase
+abstract class Search_Index_PaginationTest extends PHPUnit_Framework_TestCase
 {
 	protected $index;
-	private $dir;
-
-	function setUp()
-	{
-		$this->dir = dirname(__FILE__) . '/test_index';
-		$this->tearDown();
-
-		$index = new Search_Index_Lucene($this->dir);
-
-		$this->index = $index;
-	}
-
-	function tearDown()
-	{
-		$this->index->destroy();
-	}
 
 	function testNoPagingRequired()
 	{

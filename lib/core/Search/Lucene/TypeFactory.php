@@ -5,7 +5,7 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-class Search_Type_Factory_Lucene implements Search_Type_Factory_Interface
+class Search_Lucene_TypeFactory implements Search_Type_Factory_Interface
 {
 	function plaintext($value)
 	{

@@ -5,14 +5,18 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-class Search_MySql_IndexTest extends Search_Index_LuceneTest
+class Search_Lucene_PaginationTest extends Search_Index_PaginationTest
 {
+	private $dir;
+
 	function setUp()
 	{
-		$this->index = new Search_MySql_Index(TikiDb::get(), 'test_index');
-		$this->index->destroy();
+		$this->dir = dirname(__FILE__) . '/test_index';
+		$this->tearDown();
 
-		$this->populate($this->index);
+		$index = new Search_Lucene_Index($this->dir);
+
+		$this->index = $index;
 	}
 
 	function tearDown()

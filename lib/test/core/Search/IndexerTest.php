@@ -12,7 +12,7 @@ class Search_IndexerTest extends PHPUnit_Framework_TestCase
 {
 	function testWithoutContentSource()
 	{
-		$index = new Search_Index_Memory(new Search_Type_Factory_Lucene);
+		$index = new Search_Index_Memory();
 
 		$indexer = new Search_Indexer($index);
 		$indexer->rebuild();
@@ -142,7 +142,7 @@ class Search_IndexerTest extends PHPUnit_Framework_TestCase
 		$dir = dirname(__FILE__) . '/test_index';
 		$edir = escapeshellarg($dir);
 		`rm -Rf $edir`;
-		$index = new Search_Index_Lucene($dir);
+		$index = new Search_Lucene_Index($dir);
 		$indexer = new Search_Indexer($index);
 		$indexer->addContentSource('wiki page', $initialSource);
 		$indexer->rebuild();

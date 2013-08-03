@@ -5,7 +5,7 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-class Search_Index_Lucene implements Search_Index_Interface
+class Search_Lucene_Index implements Search_Index_Interface
 {
 	private $lucene;
 	private $highlight = true;
@@ -151,7 +151,7 @@ class Search_Index_Lucene implements Search_Index_Interface
 		$resultSet->setEstimate($data['count']);
 
 		if ($this->highlight) {
-			$resultSet->setHighlightHelper(new Search_Index_Lucene_HighlightHelper($expr));
+			$resultSet->setHighlightHelper(new Search_Lucene_HighlightHelper($expr));
 		} else {
 			$resultSet->setHighlightHelper(new Search_ResultSet_SnippetHelper);
 		}
@@ -280,7 +280,7 @@ class Search_Index_Lucene implements Search_Index_Interface
 
 	function getTypeFactory()
 	{
-		return new Search_Type_Factory_Lucene;
+		return new Search_Lucene_TypeFactory;
 	}
 
 	private function generateDocument($data)
@@ -413,27 +413,6 @@ class Search_Index_Lucene implements Search_Index_Interface
 	private function leftToRight($string)
 	{
 		return $string . "\xE2\x80\x8E";
-	}
-}
-
-class Search_Index_Lucene_HighlightHelper implements Zend_Filter_Interface
-{
-	private $query;
-	private $snippetHelper;
-
-	function __construct($query)
-	{
-		$qstr = $query->__toString();									// query needs the object_type field removing for highlighting
-		$qstr = preg_replace('/\+?\(\(object_type.*?\)\)/', '', $qstr);	// this is the only way i can find to remove a term form a query
-		$query = Zend_Search_Lucene_Search_QueryParser::parse($qstr, 'UTF-8');	// rebuild
-		$this->query = $query;
-		$this->snippetHelper = new Search_ResultSet_SnippetHelper;
-	}
-
-	function filter($content)
-	{
-		$content = $this->snippetHelper->filter($content);
-		return trim(strip_tags($this->query->highlightMatches($content, 'UTF-8'), '<b><i><em><strong><pre><code><span>'));
 	}
 }
 

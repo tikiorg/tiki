@@ -5,7 +5,7 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id: BulkIncrementalUpdateTest.php 45866 2013-05-06 20:30:16Z lphuberdeau $
 
-class Search_Elastic_TypeAnalyzerTest extends Search_Index_LuceneTypeAnalyzerTest
+class Search_Elastic_TypeAnalyzerTest extends Search_Index_TypeAnalyzerTest
 {
 	protected $index;
 

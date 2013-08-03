@@ -8,31 +8,15 @@
 /**
  * @group unit
  */
-class Search_Index_LuceneSortTest extends PHPUnit_Framework_TestCase
+abstract class Search_Index_SortTest extends PHPUnit_Framework_TestCase
 {
-	private $dir;
 	protected $index;
-
-	function setUp()
-	{
-		$this->dir = dirname(__FILE__) . '/test_index';
-		$this->tearDown();
-
-		$this->index = new Search_Index_Lucene($this->dir);
-
-		$this->populate($this->index);
-	}
 
 	protected function populate($index)
 	{
 		$this->add($index, 'A', '1', 'Hello', 'foobar');
 		$this->add($index, 'B', '10', 'foobar', 'Hello');
 		$this->add($index, 'C', '2', 'Baz', 'Baz');
-	}
-
-	function tearDown()
-	{
-		$this->index->destroy();
 	}
 
 	function sortCases()

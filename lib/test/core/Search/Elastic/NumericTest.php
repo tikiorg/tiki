@@ -1,6 +1,6 @@
 <?php
 
-class Search_Elastic_NumericTest extends Search_Index_LuceneNumericTest
+class Search_Elastic_NumericTest extends Search_Index_NumericTest
 {
 	function setUp()
 	{

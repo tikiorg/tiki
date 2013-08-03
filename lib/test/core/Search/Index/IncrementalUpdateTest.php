@@ -8,34 +8,15 @@
 /**
  * @group unit
  */
-class Search_Index_LuceneIncrementalUpdateTest extends PHPUnit_Framework_TestCase
+abstract class Search_Index_IncrementalUpdateTest extends PHPUnit_Framework_TestCase
 {
-	private $dir;
-
-	function setUp()
-	{
-		$this->dir = dirname(__FILE__) . '/test_index';
-		$this->tearDown();
-
-		$index = $this->getIndex();
-		$this->populate($index);
-	}
-
-	protected function getIndex()
-	{
-		return new Search_Index_Lucene($this->dir);
-	}
+	protected abstract function getIndex();
 
 	protected function populate($index)
 	{
 		$this->addDocument($index, 'wiki page', 'HomePage', 'Hello World');
 		$this->addDocument($index, 'wiki page', 'SomePage', 'No content yet.');
 		$index->endUpdate();
-	}
-
-	function tearDown()
-	{
-		$this->getIndex()->destroy();
 	}
 
 	function testAddNewDocument()

@@ -5,7 +5,7 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-class Search_Elastic_IndexTest extends Search_Index_LuceneTest
+class Search_Elastic_BaseTest extends Search_Index_BaseTest
 {
 	function setUp()
 	{
