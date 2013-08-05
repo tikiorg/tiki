@@ -1,4 +1,4 @@
-<h5 class="showactive{$field.fieldId}" {if $field.status neq 'ACTIV'}style="display: none;"{/if}>This bug has been demonstrated on show.tiki.org</h5>
+<h5 id="showtikiorg{$field.fieldId}" class="showactive{$field.fieldId}" {if $field.status neq 'ACTIV'}style="display: none;"{/if}>This bug has been demonstrated on show.tiki.org</h5>
 <h5 class="shownone{$field.fieldId}" {if $field.status neq 'NONE'}style="display: none;"{/if}>Please demonstrate your bug on show.tiki.org</h5>
 {if !$field.id}
 {remarksbox type="info" title="Bug needs to be created first" close="n"}
