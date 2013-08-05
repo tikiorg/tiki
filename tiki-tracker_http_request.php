@@ -47,14 +47,18 @@ for ($index = 0, $count_arrayTrackerId = count($arrayTrackerId); $index < $count
 	}
 	if (!empty($_GET['item'])) { // we want the value of field filterfield for item 
 		$filtervalue = $trklib-> get_item_value($arrayTrackerId[$index], $arrayItem[$index], $arrayFilterfield[$index]);
+
 		if (!$filtervalue) {
 			$otherField = $trklib->get_tracker_field($arrayFilterfield[$index]);
 			if ($otherField['type'] == 'r') {		// filterFieldIdThere is itemlink, so get the filtervalue from what that links to
 				$filtervalue = $trklib-> get_item_value($otherField['options_array'][0], $arrayItem[$index], $otherField['options_array'][1]);
+			} else if ($otherField['type'] == 'u') {
+				$exactvalue = $arrayItem[$index]; 
 			}
 		}
 	}
-	if ($filtervalue) {
+
+	if ($filtervalue || !empty($exactvalue)) {
 		$xfields = $trklib->list_tracker_fields($arrayTrackerId[$index], 0, -1, 'name_asc', '');
 		foreach ($xfields["data"] as $idfi => $val) {
 			if ($xfields["data"][$idfi]["fieldId"] == $arrayFieldlist[$index]) {
@@ -73,7 +77,12 @@ for ($index = 0, $count_arrayTrackerId = count($arrayTrackerId); $index < $count
 		$listfields[$fid]['isTblVisible'] = $xfields["data"][$dfid]["isTblVisible"];
 		$listfields[$fid]['isHidden'] = $xfields["data"][$dfid]["isHidden"];
 		$listfields[$fid]['isSearchable'] = $xfields["data"][$dfid]["isSearchable"];
-		$items = $trklib->list_items($arrayTrackerId[$index], 0, -1, $sort_mode, $listfields, $arrayFilterfield[$index], $filtervalue, $arrayStatus[$index]);
+
+		if ($filtervalue) {
+			$items = $trklib->list_items($arrayTrackerId[$index], 0, -1, $sort_mode, $listfields, $arrayFilterfield[$index], $filtervalue, $arrayStatus[$index]);
+		} elseif (!empty($exactvalue)) {
+			$items = $trklib->list_items($arrayTrackerId[$index], 0, -1, $sort_mode, $listfields, $arrayFilterfield[$index], $filtervalue, $arrayStatus[$index], '', $exactvalue);
+		}
 
 		if ($arrayMandatory[$index] != 'y') {
 			$json_return[] = array('', '');
@@ -86,11 +95,13 @@ for ($index = 0, $count_arrayTrackerId = count($arrayTrackerId); $index < $count
 				$label = $trklib->get_field_handler($field, $item)->renderOutput();
 				$label = str_replace('<br/>', ',', $label);				// categories can be many so replace html
 				$json_return[] = array($field['value'], $label);
+			} else if ($field['type'] == 'r') {
+				$label = $trklib->get_field_handler($field, $item)->renderOutput();
+				$json_return[] = array($field['value'], $label);
 			} else {
 				$json_return[] = array($field['value'], $field['value']);
 			}
 		}
-
 	}
 }
 global $access; include_once 'lib/tikiaccesslib.php';
