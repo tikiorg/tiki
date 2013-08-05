@@ -74,6 +74,7 @@ class ServiceLib
 			'report' => 'Services_Report_Controller',
 			'tracker_calendar' => 'Services_Tracker_CalendarController',
 			'search_customsearch' => 'Services_Search_CustomSearchController',
+			'showtikiorg' => 'Services_ShowTikiOrg_Controller',
 			'social' => 'Services_User_SocialController',
 			'tracker' => 'Services_Tracker_Controller',
 			'tracker_sync' => 'Services_Tracker_SyncController',
