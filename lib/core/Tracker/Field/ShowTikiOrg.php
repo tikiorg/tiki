@@ -102,6 +102,9 @@ class Tracker_Field_ShowTikiOrg extends Tracker_Field_Abstract
 
 		$item = TikiLib::lib('trk')->get_tracker_item($id);
 		$creator = $item['createdBy'];
+		if (!$creator) {
+			$creator = TikiLib::lib('trk')->get_item_creator($item['trackerId'], $id);
+		}
 
 		if ($this->getOption('fixedUserId') > 0) {
 			$userid = $this->getOption('fixedUserId');
@@ -109,7 +112,7 @@ class Tracker_Field_ShowTikiOrg extends Tracker_Field_Abstract
 			$userid = TikiLib::lib('tiki')->get_user_id($creator);
 		}
 
-		if (!$userid) {
+		if (!$userid || !$creator) {
 			return $ret;
 		} else {
 			$ret['userid'] = $userid;
