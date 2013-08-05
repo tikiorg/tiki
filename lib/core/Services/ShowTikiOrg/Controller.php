@@ -25,6 +25,14 @@ class Services_ShowTikiOrg_Controller
 
 		$field = TikiLib::lib('trk')->get_tracker_field($fieldId);
 		$options = json_decode($field['options']);
+		if (!is_object($options) && is_array($field['options_array'])) {
+			// Support Tiki 11
+			$options = new stdClass();
+			$options->domain = $field['options_array'][0];
+			$options->remoteShellUser = $field['options_array'][1];
+			$options->publicKey = $field['options_array'][2];
+			$options->privateKey = $field['options_array'][3];
+		}
 		$domain = $options->domain;
 
 		$conn = ssh2_connect($domain, 22);
@@ -36,7 +44,7 @@ class Services_ShowTikiOrg_Controller
                 );
 
                 if (!$conntry) {
-			$ret['status'] = 'DISCONNECTED';
+			$ret['status'] = 'DISCO';
                         return $ret;
                 }
 

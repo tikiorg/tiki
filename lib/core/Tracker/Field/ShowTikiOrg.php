@@ -65,7 +65,7 @@ class Tracker_Field_ShowTikiOrg extends Tracker_Field_Abstract
 		$ret = array(
 			'id' => 0,
 			'userid' => 0,
-			'status' => 'DISCONNECTED',
+			'status' => 'DISCO',
 			'username' => '',
 			'debugmode' => $this->getOption('debugMode'),
 			'canDestroy' => false,		
@@ -118,7 +118,7 @@ class Tracker_Field_ShowTikiOrg extends Tracker_Field_Abstract
 		);
 
 		if (!$conntry) {
-			$ret['status'] = 'DISCONNECTED';
+			$ret['status'] = 'DISCO';
 			return $ret;
 		}
 
