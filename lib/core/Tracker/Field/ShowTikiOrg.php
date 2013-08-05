@@ -52,6 +52,13 @@ class Tracker_Field_ShowTikiOrg extends Tracker_Field_Abstract
                                                         0 => tr('No'),
                                                         1 => tr('Yes'),
                                                 ),
+						'legacy_index' => 4,
+					),
+					'fixedUserId' => array(
+						'name' => tr('Fixed user id'),
+						'description' => tr('Set fixed user id instead of using user id of creator of tracker item'),
+						'filter' => 'int',
+						'legacy_index' => 5,
 					),
 				),
 			),
@@ -96,7 +103,12 @@ class Tracker_Field_ShowTikiOrg extends Tracker_Field_Abstract
 		$item = TikiLib::lib('trk')->get_tracker_item($id);
 		$creator = $item['createdBy'];
 
-		$userid = TikiLib::lib('tiki')->get_user_id($creator);
+		if ($this->getOption('fixedUserId') > 0) {
+			$userid = $this->getOption('fixedUserId');
+		} else { 
+			$userid = TikiLib::lib('tiki')->get_user_id($creator);
+		}
+
 		if (!$userid) {
 			return $ret;
 		} else {
