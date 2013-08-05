@@ -7,7 +7,7 @@
 {else}
 <div class="showsnapshot{$field.fieldId}" style="display: none;">
 {remarksbox type="error" title="Show.tiki.org snapshot creation is in progress" close="n"}
-<p>Show.tiki.org snapshot creation is in progress... Please monitor <a href="{$field.snapshoturl|escape}" target="_blank">{$field.snapshoturl|escape}</a> for progress.</p> 
+<p>Show.tiki.org snapshot creation is in progress... Please monitor <a href="{$field.snapshoturl|escape}" target="_blank">{$field.snapshoturl|escape}</a> for progress. <strong>Note that if you get a popup asking for a username/password, please just enter "show" and "show".</strong></p> 
 {/remarksbox}
 </div>
 <div class="showdestroy{$field.fieldId}" style="display: none;">
@@ -61,11 +61,11 @@ Version: <select name="svntag">
 </div>
 <div class="showactive{$field.fieldId}" {if $field.status neq 'ACTIV'}style="display: none;"{/if}>
 {remarksbox type="info" title="Accessing the Tiki instance that demonstrates this bug" close="n"}
-<p>The URL for the show.tiki.org instance that demonstrates this bug is at: <a href="{$field.showurl|escape}" target="_blank">{$field.showurl|escape}</a></p>
+<p>The URL for the show.tiki.org instance that demonstrates this bug is at: <a href="{$field.showurl|escape}" target="_blank">{$field.showurl|escape}</a>. <strong>Note that if you get a popup asking for a username/password, please just enter "show" and "show". This is different from the initial login and password for a new Tiki which is "admin" and "admin".</strong></p>
 {/remarksbox}
 {remarksbox type="info" title="Snapshots" close="n"}
 <p>Snapshots are database dumps of the configuration that developers can download for debugging. Once you have reproduced your bug on the show.tiki.org instance, create a snapshot that can then be downloaded by developers for further investigation.</p>
-<p>Snapshots can be accessed at: <a href="{$field.snapshoturl|escape}" target="_blank">{$field.snapshoturl|escape}</a></p>
+<p>Snapshots can be accessed at: <a href="{$field.snapshoturl|escape}" target="_blank">{$field.snapshoturl|escape}</a>. <strong>Note that if you get a popup asking for a username/password, please just enter "show" and "show".</strong></p>
 {button href="#showtikiorg{$field.fieldId}" _onclick="showtikiorg_process('snapshot');"  _text="{tr}Create new snapshot{/tr}"}
 {/remarksbox}
 {if $field.canDestroy}
