@@ -1,0 +1,234 @@
+#!/bin/bash
+
+setup()
+{
+		export LC_ALL=C
+		MY_PATH="`dirname \"$0\"`"
+		MY_PATH="`( cd \"$MY_PATH\" && pwd )`"
+		. $MY_PATH/tim-common
+}
+
+usage()
+{
+cat << EOF
+TIM - Tiki Instance Manager
+usage: $0 -c <command> -u <user> -t <svn tag> -i <instance id>
+
+OPTIONS:
+   -h      Show this message
+   -c      Command (one of: create, destroy, snapshot)
+   -i      id of instance
+   -u      username on Tiki.org 
+   -U      userid on Tiki.org 
+   -t      SVN Tag (Tiki version)
+   -p      Subdirectory path
+EOF
+}
+
+while getopts “hc:i:t:u:U:p:” OPTION
+do
+	case $OPTION in
+		h)
+			usage
+			exit 1
+			;;
+		c)
+			# SSH always passes -c, so we catch it
+			# maybe we can use it later
+			COMMAND=$(echo "$OPTARG" | tr A-Z a-z | sed -e 's/[^a-z]//g')
+			;;
+		i)
+			ID=$(echo "$OPTARG" | sed -e 's/[^0-9]//g')
+			;;
+		t)
+			SVNTAG=$(echo "$OPTARG" | sed -e 's/[^a-zA-Z0-9.]//g')
+			;;
+		u)
+			TUSER=$(echo "$OPTARG" | tr A-Z a-z | sed -e 's/[^a-z]//g')
+			if [[ $TUSER == "" ]] ; then TUSER="user"; fi
+			;;
+		U)
+			TUSERID=$(echo "$OPTARG" | sed -e 's/[^0-9]//g')
+			;;
+		p)
+			TPATH="$OPTARG"
+			;;
+		?)
+			usage
+			exit
+			;;
+	esac
+done
+
+if [[ -z $COMMAND ]]
+then
+	usage
+	exit 1
+fi
+
+setup
+
+debug()
+{
+	echo "COMMAND: $COMMAND"
+	echo "SVNTAG: $SVNTAG"
+	echo "TUSER: $TUSER"
+	echo "TUSERID: $TUSERID"
+	echo "TPATH: $TPATH"
+	echo "ID: $ID"
+}
+
+destroy()
+{
+	mysql -e "DROP DATABASE $DB;" && echo "DATABASE $DB suppressed" || echo "ERROR: database $DB not suppressed"
+	rm -r $INSTANCE_DIR && echo "FILES in $INSTANCE_DIR suppressed" || echo "ERROR: FILES in $INSTANCE_DIR not suppressed"
+	rm $LOCKSDIR/lock_${TUSERID}_${ID} && echo "LOCK file removed" || echo "ERROR: LOCK file could not be removed"
+}
+
+upgrade()
+{
+	cd $INSTANCE_DIR
+	svn up
+}
+
+info()
+{
+	cd $WEBROOT
+	if [[ -z $TUSERID ]] && [[ -z $ID ]]
+	then
+		echo "INFO: List of all user IDs with currently live sites"
+		cd $WEBROOT; for i in *-*-*; do echo $i| cut -d'-' -f2; done | sort -n | uniq
+	elif [[ ! -z $TUSERID ]] && [[ -z $ID ]]
+	then
+		echo "INFO: List of active sites for userID $TUSERID "
+		for site in *-${TUSERID}-*; do echo $site ; done | sort -n 
+	else
+		echo "INFO: Status of subdomain "
+		if [[ $(ls -d -1 *-${TUSERID}-${ID} 2>/dev/null | wc -l ) == 0 ]]
+		then 
+			echo "STATUS: NONE"
+		elif [[ $(ls -d -1 *-${TUSERID}-${ID} 2>/dev/null | wc -l ) == 1 ]]
+		then 
+			SUBDOMAIN=$(ls -d -1 *-${TUSERID}-${ID})
+			if [[ -e $LOCKSDIR/lock_${TUSERID}_${ID} ]]
+			then
+				echo "STATUS: BUILDING"
+			else
+				echo "STATUS: ACTIVE"
+			fi
+			if [[ ! -z $TUSER ]] && [[ "${SUBDOMAIN}" != "$TUSER-$TUSERID-$ID" ]]
+			then
+				echo "WARNING: The subdomain found ( ${SUBDOMAIN} ) does not match the subdomain queried ( $TUSER-$TUSERID-$ID )"
+			fi
+			echo "SITE: ${SUBDOMAIN}.show.tikiwiki.org "
+		elif [[ $(ls -d -1 *-${TUSERID}-${ID} 2>/dev/null | wc -l ) > 1 ]]
+		then 
+			SUBDOMAIN=$(ls -d -1 *-${TUSERID}-${ID})
+			if [[ ! -z $TUSER ]] && [[ -d "$TUSER-$TUSERID-$ID" ]]
+			then
+				if [[ -e $LOCKSDIR/lock_${TUSERID}_${ID} ]]
+				then
+					BEINGBUILT=$(/bin/cat "${LOCKSDIR}/lock_${TUSERID}_${ID}")
+					if [[ "${BEINGBUILT}" == "${TUSER}" ]]
+					then
+						echo "STATUS: BUILDING"
+					else
+						echo "STATUS: ACTIVE"
+					fi
+				else
+					echo "STATUS: ACTIVE"
+				fi
+				echo "WARNING: There are more than one site matching *-${TUSERID}-${ID}."
+				echo "SITE: ${TUSER}-${TUSERID}-${ID}.show.tikiwiki.org "
+			else
+				echo "FAIL: There are more than one site matching *-${TUSERID}-${ID}. Please provide the -u username parameter to select among the following."
+				echo "${SUBDOMAIN}"
+				exit 1
+			fi
+		fi
+	fi
+}
+
+# Commands white-listing, so we do not pass any remotely provided command
+# Also, more flexibility for handling different commands differently (like create is too long)
+case ${COMMAND} in
+	create)
+		# TODO: Check INSTANCE_DIR not exists
+		# TODO: Find next ID and use that instead of -i
+		# TODO: Make use of userId (option -U)
+		if [[ -z $TUSERID ]] || [[ -z $SVNTAG ]]
+		then
+			echo "FAIL: Missing parameters"
+			usage
+			exit 1
+		fi
+		if [[ -z $TUSER ]]
+		then
+			TUSER="user"
+		fi
+		echo "START: ${COMMAND}"
+		echo "SITE: ${SUBDOMAIN}.show.tikiwiki.org "
+		echo "LOG: http://${SUBDOMAIN}.show.tikiwiki.org/install_log.txt (available after a delay)"
+		mkdir $INSTANCE_DIR || echo "FAIL: $INSTANCE_DIR not created"
+		# This is simply too long for synchronous feedback
+		nohup $PREFIX/tim-create -t "$SVNTAG" -u "$TUSER" -U "$TUSERID" -i "$ID" 1>$INSTANCE_DIR/install_log.txt 2>&1 &
+		exit 0
+		;;
+	destroy)
+		# TODO: Check INSTANCE_DIR exists
+		if [[ -z $TUSERID ]] || [[ -z $ID ]]
+		then
+			usage
+			exit 1
+		fi
+		echo "START: ${COMMAND}"
+		echo "SITE: ${SUBDOMAIN}.show.tikiwiki.org "
+		${COMMAND}
+		exit 0
+		;;
+	debug)
+		echo "START: ${COMMAND}"
+		${COMMAND}
+		exit 0
+		;;
+	date)
+		echo "START: ${COMMAND}"
+		${COMMAND}
+		exit 0
+		;;
+	info)
+		echo "START: ${COMMAND}"
+		${COMMAND}
+		exit 0
+		;;
+	snapshot)
+		if [[ -z $TUSERID ]] || [[ -z $ID ]]
+		then
+			usage
+			exit 1
+		fi
+		if [[ ! -e "$INSTANCE_DIR" ]] ; then echo "FAIL: $INSTANCE_DIR not found. It is not possible to snapshot a non-existing website."; exit 0; fi
+		echo "START: ${COMMAND}"
+		echo "LOG: http://${SUBDOMAIN}.show.tikiwiki.org/last_snapshot_log.txt (available after a delay)"
+		#${COMMAND}
+		nohup $PREFIX/tim-snapshot -u $TUSER -U $TUSERID -i $ID 1>$INSTANCE_DIR/last_snapshot_log.txt 2>&1 &
+		# TODO: Show links
+		exit 0
+		;;
+	upgrade)
+		if [[ -z $TUSERID ]] || [[ -z $ID ]]
+		then
+			usage
+			exit 1
+		fi
+		echo "START: ${COMMAND}"
+		${COMMAND}
+		exit 0
+		;;
+	*)
+		echo "Command unknown/forbidden"
+		exit 1
+		;;
+esac
+
+exit 1

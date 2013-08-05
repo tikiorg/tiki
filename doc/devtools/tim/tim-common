@@ -1,0 +1,16 @@
+# Set defaults
+WEBROOT='/var/www'
+SVN_CACHE='/usr/local/src/tiki'
+LOCKSDIR='/var/local/tim/'
+PREFIX='/usr/local/sbin/'
+
+# Get possible config files
+if [[ -f /opt/tim/tim.conf ]]; then . /opt/tim/tim.conf ;fi
+if [[ -f /usr/local/etc/tim.conf ]]; then . /usr/local/etc/tim.conf ;fi
+if [[ -f /etc/tim.conf ]]; then . /etc/tim.conf ;fi
+if [[ -f ~/.tim.conf ]]; then . ~/.tim.conf ;fi
+
+# Set our common variables
+SUBDOMAIN=$TUSER-$TUSERID-$ID
+DB=${TUSER}_${TUSERID}_${ID}
+INSTANCE_DIR=$WEBROOT/$SUBDOMAIN

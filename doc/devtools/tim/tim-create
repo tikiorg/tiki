@@ -1,0 +1,122 @@
+#!/bin/bash
+
+setup()
+{
+		export LC_ALL=C
+		MY_PATH="`dirname \"$0\"`"
+		MY_PATH="`( cd \"$MY_PATH\" && pwd )`"
+		. $MY_PATH/tim-common
+}
+
+usage()
+{
+cat << EOF
+TIM-create - Tiki Instance Creator
+usage: $0 -u <user> -t <svn tag> -i <instance id>
+
+OPTIONS:
+   -h      Show this message
+   -i      id of instance
+   -u      username on Tiki.org 
+   -U      userid on Tiki.org 
+   -t      SVN Tag (Tiki version)
+   -p      Subdirectory path
+EOF
+}
+
+while getopts “hc:i:t:u:U:p:” OPTION
+do
+	case $OPTION in
+		h)
+			usage
+			exit 1
+			;;
+		i)
+			ID=$OPTARG
+			;;
+		t)
+			SVNTAG=$OPTARG
+			;;
+		u)
+			TUSER=$OPTARG
+			;;
+		U)
+			TUSERID=$OPTARG
+			;;
+		p)
+			TPATH=$OPTARG
+			;;
+		?)
+			usage
+			exit
+			;;
+	esac
+done
+
+if [[ -z $SVNTAG ]] || [[ -z $TUSER ]] || [[ -z $ID ]]
+then
+	usage
+	exit 1
+fi
+
+setup
+
+debug()
+{
+	echo "COMMAND: $COMMAND"
+	echo "SVNTAG: $SVNTAG"
+	echo "TUSER: $TUSER"
+	echo "ID: $ID"
+}
+
+create()
+{
+	if [[ -e $LOCKSDIR/lock_${TUSERID}_${ID} ]] ; then echo "FAIL: Lock file already exists. Another install is being performed"; exit 1; fi
+	#TODO: remove stale locks
+	echo "${TUSER}" > "${LOCKSDIR}/lock_${TUSERID}_${ID}" || (echo "FAIL: Failed to create lock file ${LOCKSDIR}/lock_${TUSERID}_${ID}"; exit 1)
+
+	# Trunk cache gets updated via cron every now and then
+	# we lock it, so we don't install from a broken tarball
+	while [[ -e $SVN_CACHE/$SVNTAG.lock ]];
+	do
+		sleep 5
+	done
+
+	tar -C $INSTANCE_DIR -xzf $SVN_CACHE/$SVNTAG.tar.gz
+
+	if [[ 'trunk' -eq $SVNTAG ]]
+	then
+		cd $INSTANCE_DIR
+		svn up
+	fi
+
+	chown -R ctrl.www-data $INSTANCE_DIR
+	cd $INSTANCE_DIR
+	sh setup.sh -u ctrl -g www-data -n fix
+
+	mysql -e "CREATE DATABASE $DB;"
+	mysql -e "GRANT ALL ON $DB.* TO tiki@localhost IDENTIFIED BY 'password';"
+	mysql $DB < $INSTANCE_DIR/db/tiki.sql
+
+	cat > $INSTANCE_DIR/db/local.php <<EOF
+	<?php
+	\$db_tiki='mysql';
+	\$dbversion_tiki='9.0';
+	\$host_tiki='localhost';
+	\$user_tiki='tiki';
+	\$pass_tiki='password';
+	\$dbs_tiki='$DB';
+	\$client_charset='utf8';
+	// Want configurations managed at the system level or restrict some preferences? http://doc.tiki.org/System+Configuration
+	//\$system_configuration_file = 'db/tiki.ini';
+	//\$system_configuration_identifier = 'staging';
+EOF
+
+	chown ctrl.www-data $INSTANCE_DIR/db/local.php
+	/bin/rm $LOCKSDIR/lock_${TUSERID}_${ID} || (echo "FAIL: Failed to suppress lock file $LOCKSDIR/lock_${TUSERID}_${ID}"; exit 1)
+}
+
+echo "CREATION START - watch ${SUBDOMAIN}.show.tikiwiki.org "
+create
+echo "CREATION END - results in <a href='http://${SUBDOMAIN}.show.tikiwiki.org/install_log.txt'>http://${SUBDOMAIN}.show.tikiwiki.org/install_log.txt</a> (available after a delay)"
+exit 0
