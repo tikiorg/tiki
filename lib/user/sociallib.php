@@ -8,15 +8,75 @@
 class SocialLib
 {
 	private $relationlib;
+	private $networkType;
 
 	function __construct()
 	{
+		global $prefs;
 		$this->relationlib = TikiLib::lib('relation');
+		$this->networkType = $prefs['social_network_type'] ?: 'follow';
 	}
 
 	function listFriends($user)
 	{
-		$relations = $this->relationlib->get_relations_from('user', $user, 'tiki.friend.follow');
+		return $this->getRelations('follow', $user);
+	}
+
+	function listRequests($user)
+	{
+		return $this->getRelations('request.invert', $user);
+	}
+
+	function addFriend($user, $newFriend)
+	{
+		if ($this->networkType == 'follow') {
+			$this->addRelation('follow', $user, $newFriend);
+		} elseif($this->networkType == 'follow_approval') {
+			$request = $this->getRelation('request.invert', $user, $newFriend);
+
+			if ($request) {
+				// If there was a pending request by the other side, remove the request
+				// and approve both directions.
+				$this->relationlib->remove_relation($request);
+				$this->addRelation('follow', $user, $newFriend);
+				$this->addRelation('follow.invert', $user, $newFriend);
+			} else {
+				// New request
+				$this->addRelation('request', $user, $newFriend);
+			}
+		}
+	}
+
+	function approveFriend($user, $newFriend)
+	{
+		$request = $this->getRelation('request.invert', $user, $newFriend);
+
+		if ($request) {
+			// If there was a pending request by the other side, remove the request
+			// and add them as follower
+			$this->relationlib->remove_relation($request);
+			$this->addRelation('follow.invert', $user, $newFriend);
+		}
+	}
+	function removeFriend($user, $oldFriend)
+	{
+		$follow = $this->getRelation('follow', $user, $oldFriend);;
+		$request = $this->getRelation('request.invert', $user, $oldFriend);;
+
+		if ($follow) {
+			$this->relationlib->remove_relation($follow);
+			return true;
+		} elseif ($request) {
+			$this->relationlib->remove_relation($request);
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	private function getRelations($type, $from)
+	{
+		$relations = $this->relationlib->get_relations_from('user', $from, 'tiki.friend.' . $type);
 		
 		return array_map(function ($relation) {
 			return array(
@@ -25,21 +85,14 @@ class SocialLib
 		}, $relations);
 	}
 
-	function addFriend($user, $newFriend)
+	private function addRelation($type, $from, $to)
 	{
-		$this->relationlib->add_relation('tiki.friend.follow', 'user', $user, 'user', $newFriend);
+		return $this->relationlib->add_relation('tiki.friend.' . $type, 'user', $from, 'user', $to);
 	}
 
-	function removeFriend($user, $oldFriend)
+	private function getRelation($type, $from, $to)
 	{
-		$relation = $this->relationlib->get_relation_id('tiki.friend.follow', 'user', $user, 'user', $oldFriend);
-
-		if ($relation) {
-			$this->relationlib->remove_relation($relation);
-			return true;
-		} else {
-			return false;
-		}
+		return $this->relationlib->get_relation_id('tiki.friend.' . $type, 'user', $from, 'user', $to);
 	}
 }
 

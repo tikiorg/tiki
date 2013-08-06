@@ -167,17 +167,16 @@
 
 		{tab name="{tr}Friendship Network{/tr}"}
 			{preference name=feature_friends}
+			{preference name=social_network_type}
 			<div class="adminoptionboxchild" id="feature_friends_childcontainer">
-				<div class="adminoptionbox">
-					<div class="adminoptionlabel">
-						{tr}Select which items to display when listing users{/tr}.
-					</div>
-				</div>
-				{preference name=user_list_order}
-				{preference name=feature_community_list_name}
-				{preference name=feature_community_list_score}
-				{preference name=feature_community_list_country}
-				{preference name=feature_community_list_distance}
+				<fieldset>
+					<legend>{tr}Select which items to display when listing users{/tr}</legend>
+					{preference name=user_list_order}
+					{preference name=feature_community_list_name}
+					{preference name=feature_community_list_score}
+					{preference name=feature_community_list_country}
+					{preference name=feature_community_list_distance}
+				</fieldset>
 			</div>
 
 		{/tab}

@@ -11,7 +11,12 @@ class Services_User_SocialController
 
 	function setUp()
 	{
+		global $user;
 		Services_Exception_Disabled::check('feature_friends');
+
+		if (! $user) {
+			throw new Services_Exception_Denied(tr('Must be registered'));
+		}
 
 		$this->lib = TikiLib::lib('social');
 	}
@@ -20,9 +25,11 @@ class Services_User_SocialController
 	{
 		global $user;
 		$friends = $this->lib->listFriends($user);
+		$requests = $this->lib->listRequests($user);
 
 		return array(
 			'friends' => $friends,
+			'requests' => $requests,
 		);
 	}
 
@@ -30,14 +37,36 @@ class Services_User_SocialController
 	{
 		global $user;
 
+		$username = $input->username->email();
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-			if ($username = $input->username->email()) {
+			if ($username) {
 				$this->lib->addFriend($user, $username);
 			}
 		}
 
 		return array(
 			'title' => tr('Add Friend'),
+			'username' => $username,
+		);
+	}
+
+	function action_approve_friend($input)
+	{
+		global $user;
+
+		$username = $input->friend->email();
+		$status = null;
+		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+			if ($username) {
+				$this->lib->approveFriend($user, $username);
+				$status = 'DONE';
+			}
+		}
+
+		return array(
+			'title' => tr('Approve Friend'),
+			'username' => $username,
+			'status' => $status,
 		);
 	}
 
