@@ -71,6 +71,7 @@ class Search_ContentSource_UserSource implements Search_ContentSource_Interface
 			'user_country' => $typeFactory->sortable($detail['preferences']['country']),
 			'geo_located' => $typeFactory->identifier(empty($loc) ? 'n' : 'y'),
 			'geo_location' => $typeFactory->identifier($loc),
+			'_extra_groups' => array('Registered'), // Add all registered to allowed groups
 		);
 
 		$data = array_merge($data, $this->getTrackerFieldsForUser($objectId, $typeFactory));
