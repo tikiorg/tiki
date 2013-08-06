@@ -218,7 +218,7 @@ function wikiplugin_trackerfilter($data, $params)
 			return $filters;
 		}
 	}
-	if (($displayList == 'y' || isset($_REQUEST['filter']) || isset($_REQUEST['tr_offset']) || isset($_REQUEST['tr_sort_mode'])) &&
+	if (($displayList == 'y' || isset($_REQUEST['filter']) || isset($_REQUEST["tr_offset$iTRACKERLIST"]) || isset($_REQUEST['tr_sort_mode'])) &&
 				(!isset($_REQUEST['iTrackerFilter']) || $_REQUEST['iTrackerFilter'] == $iTrackerFilter)) {
 
 		$ffs = array();

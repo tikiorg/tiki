@@ -172,7 +172,7 @@ the section loop so that the vars are not replaced by nested pretty tracker exec
 		{button class='more' href="$moreUrl" _text="{tr}More...{/tr}"}
 	</div>
 	{elseif $showpagination ne 'n'}
-		{pagination_links cant=$count_item step=$max offset=$tr_offset offset_arg=$offset_arg}
+		{pagination_links cant=$count_item step=$max offset=${$offset_arg} offset_arg=$offset_arg}
 		{/pagination_links}
 	{/if}
 	{if $export eq 'y' && ($tiki_p_admin_trackers eq 'y' || $perms.tiki_p_export_tracker eq 'y')}

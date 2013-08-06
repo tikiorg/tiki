@@ -794,7 +794,7 @@ function wikiplugin_trackerlist($data, $params)
 	} else {
 
 		global $auto_query_args;
-		$auto_query_args_local = array('trackerId', 'tr_initial',"tr_sort_mode$iTRACKERLIST",'tr_user', 'filterfield', 'filtervalue', 'exactvalue', 'itemId');
+		$auto_query_args_local = array('trackerId', 'tr_initial',"tr_sort_mode$iTRACKERLIST",'tr_user', 'filterfield', 'filtervalue', 'exactvalue', 'itemId', "tr_offset$iTRACKERLIST");
 		$auto_query_args = empty($auto_query_args)? $auto_query_args_local: array_merge($auto_query_args, $auto_query_args_local);
 		$smarty->assign('listTrackerId', $trackerId);
 		$definition = Tracker_Definition::get($trackerId);
@@ -1226,15 +1226,14 @@ function wikiplugin_trackerlist($data, $params)
 			$max = $prefs['maxRecords'];
 		}
 
-		if (isset($_REQUEST['tr_offset']) && (!isset($forceoffset) || $forceoffset == 'n')) {
-			$tr_offset = $_REQUEST['tr_offset'];
+		if (isset($_REQUEST["tr_offset$iTRACKERLIST"]) && (!isset($forceoffset) || $forceoffset == 'n')) {
+			$tr_offset = $_REQUEST["tr_offset$iTRACKERLIST"];
 		} else if (isset($offset) && $offset >= 0) {
 			$tr_offset = $offset;
 		} else {
 			$tr_offset = 0;
 		}
-		$smarty->assign_by_ref('tr_offset', $tr_offset);
-
+		$smarty->assign_by_ref("tr_offset$iTRACKERLIST", $tr_offset);
 
 		$tr_initial = '';
 		if ($showinitials == 'y') {
@@ -1788,12 +1787,12 @@ function wikiplugin_trackerlist($data, $params)
 				$smarty->assign('max', 1);
 				$smarty->assign('count_item', $_REQUEST['cant']);
 				$smarty->assign('offset_arg', 'reloff');
-				$smarty->assign('tr_offset', $_REQUEST['reloff']);
+				$smarty->assign("tr_offset$iTRACKERLIST", $_REQUEST['reloff']);
 			} else {
 				$smarty->assign_by_ref('max', $max);
 				$smarty->assign_by_ref('item_count', $items['cant']);
 				$smarty->assign_by_ref('count_item', $items['cant']);
-				$smarty->assign('offset_arg', 'tr_offset');
+				$smarty->assign('offset_arg', "tr_offset$iTRACKERLIST");
 			}
 			$smarty->assign_by_ref('items', $items["data"]);
 			$smarty->assign('daformat', $tikilib->get_long_date_format()." ".tra("at")." %H:%M");
