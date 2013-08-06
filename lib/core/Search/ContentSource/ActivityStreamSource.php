@@ -4,19 +4,24 @@
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
-error_reporting(E_ALL);
 
 class Search_ContentSource_ActivityStreamSource implements Search_ContentSource_Interface
 {
 	private $lib;
 	private $userlib;
+	private $sociallib;
 	private $source;
 
 	function __construct($source = null)
 	{
+		global $prefs;
 		$this->lib = TikiLib::lib('activity');
 		$this->userlib = TikiLib::lib('user');
 		$this->source = $source;
+
+		if ($prefs['feature_friends'] == 'y') {
+			$this->sociallib = TikiLib::lib('social');
+		}
 	}
 
 	function getDocuments()
@@ -26,6 +31,8 @@ class Search_ContentSource_ActivityStreamSource implements Search_ContentSource_
 
 	function getDocument($objectId, Search_Type_Factory_Interface $typeFactory)
 	{
+		global $prefs;
+
 		if (! $info = $this->lib->getActivity($objectId, $typeFactory)) {
 			return false;
 		}
@@ -64,6 +71,11 @@ class Search_ContentSource_ActivityStreamSource implements Search_ContentSource_
 			$groups = $this->userlib->get_user_groups_inclusion($info['arguments']['user']);
 			unset($groups['Anonymous'], $groups['Registered']);
 			$document['user_groups'] = $typeFactory->multivalue(array_keys($groups));
+
+			if ($this->sociallib) {
+				$followers = $this->getFollowers($info['arguments']['user']);
+				$document['user_followers'] = $typeFactory->multivalue($followers);
+			}
 		}
 
 		return $document;
@@ -79,6 +91,20 @@ class Search_ContentSource_ActivityStreamSource implements Search_ContentSource_
 	{
 		return array(
 		);
+	}
+
+	private function getFollowers($user)
+	{
+		static $localCache = array();
+
+		if (! isset($localCache[$user])) {
+			$list = $this->sociallib->listFollowers($user);
+			$localCache[$user] = array_map(function ($entry) {
+				return $entry['user'];
+			}, $list);
+		}
+
+		return $localCache[$user];
 	}
 }
 

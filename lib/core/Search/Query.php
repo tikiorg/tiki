@@ -64,19 +64,24 @@ class Search_Query implements Search_Query_Interface
 		}
 	}
 
+	function filterMultivalue($query, $field)
+	{
+		$this->addPart($query, 'multivalue', $field);
+	}
+
 	function filterContributors($query)
 	{
-		$this->addPart($query, 'multivalue', 'contributors');
+		$this->filterMultivalue($query, 'contributors');
 	}
 
 	function filterCategory($query, $deep = false)
 	{
-		$this->addPart($query, 'multivalue', $deep ? 'deep_categories' : 'categories');
+		$this->filterMultivalue($query, $deep ? 'deep_categories' : 'categories');
 	}
 
 	function filterTags($query)
 	{
-		$this->addPart($query, 'multivalue', 'freetags');
+		$this->filterMultivalue($query, 'freetags');
 	}
 
 	function filterLanguage($query)

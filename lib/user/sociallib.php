@@ -22,6 +22,11 @@ class SocialLib
 		return $this->getRelations('follow', $user);
 	}
 
+	function listFollowers($user)
+	{
+		return $this->getRelations('follow.invert', $user);
+	}
+
 	function listRequests($user)
 	{
 		return $this->getRelations('request.invert', $user);

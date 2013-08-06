@@ -171,6 +171,10 @@ class Search_Query_WikiBuilder
 				new Search_Expr_Not(new Search_Expr_Token($targetUser, 'identifier', 'user')),
 			)));
 		}
+
+		if (in_array('follow', $types)) {
+			$subquery->filterMultivalue($targetUser, 'user_followers');
+		}
 	}
 
 	function wpquery_sort_mode($query, $value, array $arguments)

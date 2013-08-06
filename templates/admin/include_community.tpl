@@ -51,6 +51,52 @@
 				{preference name=feature_invite}
 			</div>
 		{/tab}
+		{tab name="{tr}Social Network{/tr}"}
+			<fieldset class="admin">
+				<legend>{tr}Friendship and Followers{/tr}</legend>
+				{preference name=feature_friends}
+				<div class="adminoptionboxchild" id="feature_friends_childcontainer">
+					{preference name=social_network_type}
+					<fieldset>
+						<legend>{tr}Select which items to display when listing users{/tr}</legend>
+						{preference name=user_list_order}
+						{preference name=feature_community_list_name}
+						{preference name=feature_community_list_score}
+						{preference name=feature_community_list_country}
+						{preference name=feature_community_list_distance}
+					</fieldset>
+				</div>
+			</fieldset>
+
+			<fieldset class="admin">
+				<legend>{tr}Activity Stream{/tr}</legend>
+				{preference name=activity_custom_events visible="always"}
+
+				<div class="adminoptionboxchild" id="activity_custom_events_childcontainer">				
+					
+					{$headerlib->add_dracula()}
+					{$headerlib->add_jsfile('lib/jquery_tiki/activity.js', 'external')}
+					<div id="graph-canvas" class="graph-canvas" data-graph-nodes="{$event_graph.nodes|@json_encode|escape}" data-graph-edges="{$event_graph.edges|@json_encode|escape}"></div>
+					<div><button href="#" id="graph-draw" class="button">{tr}Draw Event Diagram{/tr}</button></div>
+					<div><button href="{service controller=managestream action=list}" id="show-rules">{tr}Show Rules{/tr}</button></div>
+					{jq}
+					$('#graph-draw').click(function(e) {
+						$('#graph-canvas')
+							.empty()
+							.css('width', $window.width() - 50)
+							.css('height', $window.height() - 130)
+							.dialog({
+								title: "Events",
+								width: $window.width() - 20,
+								height: $window.height() - 100
+							})
+							.drawGraph();
+						return false;
+					});
+					{/jq}
+				</div>
+			</fieldset>
+		{/tab}
 		
 		{tab name="{tr}Plugins{/tr}"}
 			{preference name=wikiplugin_author}
@@ -163,22 +209,6 @@
 				{preference name=users_prefs_mytiki_forum_replies}
 				{preference name=users_prefs_mytiki_items}
 			</fieldset>
-		{/tab}
-
-		{tab name="{tr}Friendship Network{/tr}"}
-			{preference name=feature_friends}
-			{preference name=social_network_type}
-			<div class="adminoptionboxchild" id="feature_friends_childcontainer">
-				<fieldset>
-					<legend>{tr}Select which items to display when listing users{/tr}</legend>
-					{preference name=user_list_order}
-					{preference name=feature_community_list_name}
-					{preference name=feature_community_list_score}
-					{preference name=feature_community_list_country}
-					{preference name=feature_community_list_distance}
-				</fieldset>
-			</div>
-
 		{/tab}
 		{tab name="{tr}BigBlueButton{/tr}"}
 			{preference name=bigbluebutton_feature}

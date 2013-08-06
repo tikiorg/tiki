@@ -18,8 +18,6 @@ if (isset($_REQUEST['socialnetwork'])) {
 }
 ask_ticket('admin-inc-socialnetworks');
 
-$smarty->assign('event_graph', TikiLib::events()->getEventGraph());
-
 $url = $socialnetworkslib->getURL();
 $url = substr($url, 0, strrpos($url, '/') + 1);
 $smarty->assign('url', $url);
