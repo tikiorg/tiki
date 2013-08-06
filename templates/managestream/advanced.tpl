@@ -21,7 +21,7 @@
 		<textarea name="rule">{$rule.rule|escape}</textarea>
 	</label>
 	<div class="submit">
-		<input type="hidden" name="id" value="{$rule.ruleId|escape}"/>
+		<input type="hidden" name="ruleId" value="{$rule.ruleId|escape}"/>
 		<input type="submit" value="{tr}Save{/tr}"/>
 	</div>
 </form>

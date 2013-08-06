@@ -7,7 +7,7 @@
 		<pre>{$rule.rule|escape}</pre>
 		<div class="submit">
 			<input type="submit" value="{tr}Delete{/tr}"/>
-			<input type="hidden" name="id" value="{$rule.ruleId|escape}"/>
+			<input type="hidden" name="ruleId" value="{$rule.ruleId|escape}"/>
 		</div>
 	</form>
 {/if}

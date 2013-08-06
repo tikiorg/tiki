@@ -30,7 +30,7 @@ class Services_ActivityStream_ManageController
 
 	function action_delete(JitRequest $request)
 	{
-		$id = $request->id->int();
+		$id = $request->ruleId->int();
 		$rule = $this->getRule($id);
 
 		$removed = false;
@@ -48,7 +48,7 @@ class Services_ActivityStream_ManageController
 
 	function action_sample(JitFilter $request)
 	{
-		$id = $request->id->int();
+		$id = $request->ruleId->int();
 
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			$event = $request->event->attribute_type();
@@ -70,7 +70,7 @@ class Services_ActivityStream_ManageController
 	
 	function action_record(JitFilter $request)
 	{
-		$id = $request->id->int();
+		$id = $request->ruleId->int();
 
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			$id = $this->lib->replaceRule($id, array(
@@ -89,7 +89,7 @@ class Services_ActivityStream_ManageController
 	
 	function action_tracker_filter(JitFilter $request)
 	{
-		$id = $request->id->int();
+		$id = $request->ruleId->int();
 
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			$tracker = $request->tracker->int();
@@ -136,7 +136,7 @@ $customArguments
 
 	function action_advanced(JitFilter $request)
 	{
-		$id = $request->id->int();
+		$id = $request->ruleId->int();
 
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			$id = $this->lib->replaceRule($id, array(
