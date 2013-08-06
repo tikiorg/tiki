@@ -74,7 +74,7 @@ function smarty_block_remarksbox($params, $content, $smarty, &$repeat)
 		}
 	}
 
-	if ($prefs['javascript_enabled'] != 'y') {
+	if ($prefs['javascript_enabled'] != 'y' || $params['type'] === 'errors' || $params['type'] === 'confirm') {
 		$params['close'] = false;
 	} else {
 		$params['close'] = $params['close'] === 'y';
