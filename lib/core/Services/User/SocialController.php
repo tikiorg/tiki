@@ -40,5 +40,28 @@ class Services_User_SocialController
 			'title' => tr('Add Friend'),
 		);
 	}
+
+	function action_remove_friend($input)
+	{
+		global $user;
+
+		$status = null;
+		$username = $input->friend->email();
+
+		if (! $username) {
+			throw new Services_Exception_MissingValue('friend');
+		}
+
+		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+			$this->lib->removeFriend($user, $username);
+			$status = 'DONE';
+		}
+
+		return array(
+			'title' => tr('Remove Friend'),
+			'status' => $status,
+			'friend' => $username,
+		);
+	}
 }
 

@@ -12,6 +12,13 @@
  */
 class RelationLib extends TikiDb_Bridge
 {
+	private $table;
+
+	function __construct()
+	{
+		$this->table = $this->table('tiki_object_relations');
+	}
+
 	/**
 	 * Obtains the list of relations with a given object as the source.
 	 * Optionally, the relation searched for can be specified. If the
@@ -23,21 +30,20 @@ class RelationLib extends TikiDb_Bridge
 			return $this->get_relations_to($type, $object, substr($relation, 0, -7));
 		}
 
-		$cond = array('source_type = ?', 'source_itemId = ?');
-		$vars = array($type, $object);
-
-		if ( $orderby != '' ) {
-			// Note that you can pass any valid string such as 'relationId ASC'
-			$orderby = " ORDER BY $orderby ";
-		}
-
-		$this->apply_relation_condition($relation, $cond, $vars);
-
-		return $this->fetchAll(
-			'SELECT `relationId`, `relation`, `target_type` `type`, `target_itemId` `itemId` FROM `tiki_object_relations` WHERE ' .
-			implode(' AND ', $cond) . $orderby, 
-			$vars
+		$cond = array(
+			'source_type' => $type,
+			'source_itemId' => $object
 		);
+
+		$fields = array(
+			'relationId',
+			'relation',
+			'type' => 'target_type',
+			'itemId' => 'target_itemId',
+		);
+
+		$cond = $this->apply_relation_condition($relation, $cond);
+		return $this->table->fetchAll($fields, $cond, -1, -1, $orderBy);
 	}
 
     /**
@@ -46,35 +52,35 @@ class RelationLib extends TikiDb_Bridge
      * @param null $relation
      * @return mixed
      */
-    function get_relations_to( $type, $object, $relation = null )
+    function get_relations_to( $type, $object, $relation = null, $orderBy = '')
 	{
 		if ( substr($relation, -7) === '.invert' ) {
-			return $this->get_relations_from($type, $object, substr($relation, 0, -7));
+			return $this->get_relations_from($type, $object, substr($relation, 0, -7), $orderBy);
 		}
 
-		$cond = array('target_type = ?', 'target_itemId = ?');
-		$vars = array($type, $object);
-
-		$this->apply_relation_condition($relation, $cond, $vars);
-
-		return $this->fetchAll(
-			'SELECT `relationId`, `relation`, `source_type` `type`, `source_itemId` `itemId` FROM `tiki_object_relations` WHERE ' .
-			implode(' AND ', $cond),
-			$vars
+		$cond = array(
+			'target_type' => $type,
+			'target_itemId' => $object
 		);
+
+		$fields = array(
+			'relationId',
+			'relation',
+			'type' => 'source_type',
+			'itemId' => 'source_itemId',
+		);
+
+		$cond = $this->apply_relation_condition($relation, $cond);
+		return $this->table->fetchAll($fields, $cond, -1, -1, $orderBy);
 	}
 
 	/**
 	 * The relation must contain at least two dots and only lowercase letters.
-	 */
-
-	/**
 	 * NAMESPACE management and relation naming.
 	 * Please see http://dev.tiki.org/Object+Attributes+and+Relations for guidelines on
 	 * relation naming, and document new tiki.*.* names that you add.
 	 * (also grep "add_relation" just in case there are undocumented names already used)
 	 */
-
 	function add_relation( $relation, $src_type, $src_object, $target_type, $target_object )
 	{
 		$relation = TikiFilter::get('attribute_type')->filter($relation);
@@ -84,21 +90,15 @@ class RelationLib extends TikiDb_Bridge
 		}
 
 		if ( $relation ) {
-			$data = array($relation, $src_type, $src_object, $target_type, $target_object);
-
-			$this->query(
-				'DELETE FROM `tiki_object_relations`' .
-				' WHERE `relation` = ? AND `source_type` = ? AND `source_itemId` = ? AND `target_type` = ? AND `target_itemId` = ?',
-				$data
-			);
-
-			$this->query(
-				'INSERT INTO `tiki_object_relations` (`relation`, `source_type`, `source_itemId`, `target_type`, `target_itemId`)' .
-				' VALUES(?,?,?,?,?)',
-				$data
-			);
-
-			return $this->lastInsertId();
+			if (! $id = $this->get_relation_id($relation, $src_type, $src_object, $target_type, $target_object)) {
+				$id = $this->table->insert(array(
+					'relation' => $relation,
+					'source_type' => $src_type,
+					'source_itemId' => $src_object,
+					'target_type' => $target_type,
+					'target_itemId' => $target_object,
+				));
+			}
 		} else {
 			return 0;
 		}
@@ -122,13 +122,13 @@ class RelationLib extends TikiDb_Bridge
 
 		$id = 0;
 		if ( $relation ) {
-			$data = array($relation, $src_type, $src_object, $target_type, $target_object);
-
-			$id = $this->getOne(
-				'SELECT `relationId` FROM `tiki_object_relations`' .
-				' WHERE `relation` = ? AND `source_type` = ? AND `source_itemId` = ? AND `target_type` = ? AND `target_itemId` = ?',
-				$data
-			);
+			$id = $this->table->fetchOne('relationId', array(
+				'relation' => $relation,
+				'source_type' => $src_type,
+				'source_itemId' => $src_object,
+				'target_type' => $target_type,
+				'target_itemId' => $target_object,
+			));
 		}
 		return $id;
 	}
@@ -139,8 +139,9 @@ class RelationLib extends TikiDb_Bridge
      */
     function get_relation( $id )
 	{
-		$result = $this->fetchAll('SELECT * FROM `tiki_object_relations` WHERE `relationId` = ?', array( $id ));
-		return reset($result);
+		return $this->table->fetchFullRow(array(
+			'relationId' => $id,
+		));
 	}
 
     /**
@@ -148,8 +149,13 @@ class RelationLib extends TikiDb_Bridge
      */
     function remove_relation( $id )
 	{
-		$this->fetchAll('DELETE FROM `tiki_object_relations` WHERE `relationId` = ?', array( $id ));
-		$this->fetchAll('DELETE FROM `tiki_object_attributes` WHERE type = "relation" and `itemId` = ?', array( $id ));
+		$this->table->delete(array(
+			'relationId' => $id,
+		));
+		$this->table('tiki_object_attributes')->deleteMultiple(array(
+			'type' => 'relation',
+			'itemId' => $id,
+		));
 	}
 
     /**
@@ -157,7 +163,7 @@ class RelationLib extends TikiDb_Bridge
      * @param $cond
      * @param $vars
      */
-    private function apply_relation_condition( $relation, & $cond, & $vars )
+    private function apply_relation_condition( $relation, $cond )
 	{
 		$relation = TikiFilter::get('attribute_type')->filter($relation);
 
@@ -166,9 +172,10 @@ class RelationLib extends TikiDb_Bridge
 				$relation .= '%';
 			}
 
-			$cond[] = 'relation LIKE ?';
-			$vars[] = $relation;
+			$cond['relation'] = $this->table->like($relation);
 		}
+
+		return $cond;
 	}
 }
 

@@ -29,5 +29,17 @@ class SocialLib
 	{
 		$this->relationlib->add_relation('tiki.friend.follow', 'user', $user, 'user', $newFriend);
 	}
+
+	function removeFriend($user, $oldFriend)
+	{
+		$relation = $this->relationlib->get_relation_id('tiki.friend.follow', 'user', $user, 'user', $oldFriend);
+
+		if ($relation) {
+			$this->relationlib->remove_relation($relation);
+			return true;
+		} else {
+			return false;
+		}
+	}
 }
 
