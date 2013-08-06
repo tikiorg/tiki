@@ -31,12 +31,15 @@ class SocialLib
 	{
 		if ($this->networkType == 'follow') {
 			$this->addRelation('follow', $user, $newFriend);
-		} elseif($this->networkType == 'follow_approval') {
+		} elseif($this->networkType == 'follow_approval' || $this->networkType == 'friend') {
 			$request = $this->getRelation('request.invert', $user, $newFriend);
+			$follow = $this->getRelation('follow.invert', $user, $newFriend);
 
-			if ($request) {
-				// If there was a pending request by the other side, remove the request
+			if ($request || $follow) {
+				// If there was a pending request by the other side (or pre-approved), remove the request
 				// and approve both directions.
+
+				// Re-add or empty-delete are not an issue
 				$this->relationlib->remove_relation($request);
 				$this->addRelation('follow', $user, $newFriend);
 				$this->addRelation('follow.invert', $user, $newFriend);
@@ -49,6 +52,10 @@ class SocialLib
 
 	function approveFriend($user, $newFriend)
 	{
+		if ($this->networkType != 'follow_approval') {
+			return false;
+		}
+
 		$request = $this->getRelation('request.invert', $user, $newFriend);
 
 		if ($request) {
@@ -56,15 +63,26 @@ class SocialLib
 			// and add them as follower
 			$this->relationlib->remove_relation($request);
 			$this->addRelation('follow.invert', $user, $newFriend);
+
+			return true;
 		}
+
+		return false;
 	}
+
 	function removeFriend($user, $oldFriend)
 	{
 		$follow = $this->getRelation('follow', $user, $oldFriend);;
+		$followInvert = $this->getRelation('follow.invert', $user, $oldFriend);;
 		$request = $this->getRelation('request.invert', $user, $oldFriend);;
 
 		if ($follow) {
 			$this->relationlib->remove_relation($follow);
+
+			if ($this->networkType == 'friend') {
+				// Friendship breakups are bidirectional, not follow ones
+				$this->relationlib->remove_relation($followInvert);
+			}
 			return true;
 		} elseif ($request) {
 			$this->relationlib->remove_relation($request);

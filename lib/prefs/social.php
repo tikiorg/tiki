@@ -14,6 +14,7 @@ function prefs_social_list()
 			'type' => 'list',
 			'options' => array(
 				'follow' => tr('Follow (as in Twitter)'),
+				'friend' => tr('Friend (as in Facebook)'),
 				'follow_approval' => tr('Followers need approval'),
 			),
 			'default' => 'follow',
