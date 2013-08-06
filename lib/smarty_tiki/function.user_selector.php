@@ -59,8 +59,19 @@ function smarty_function_user_selector($params, $smarty)
 	}
 	
 	$groupNames = array();
-	if (!empty($params['groupIds'])) {
+	if (is_array($params['groupIds'])) {
+		foreach ($params['groupIds'] as $k => $groupId) {
+			if ($groupId <= 0) {
+				unset($params['groupIds'][$k]);
+			}
+		}
+		if (!empty($params['groupIds'])) {
+			$groupIds = $params['groupIds'];
+		}	
+	} elseif (!empty($params['groupIds'])) {
 		$groupIds = explode('|', $params['groupIds']);
+	}
+	if (!empty($groupIds)) {
 		foreach ($groupIds as $groupId) {
 			$group_info = $userlib->get_groupId_info($groupId);
 			$groupNames[] = $group_info['groupName'];
