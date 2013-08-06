@@ -85,6 +85,7 @@ function module_logo($mod_reference, & $module_params)
 		'alt_attr'     => $prefs['sitelogo_alt'],
 		'link'         => './',
 		'sitetitle'    => $prefs['sitetitle'],
+		'sitesubtitle' => $prefs['sitesubtitle'],
 		'class_image'  => 'sitelogo',
 		'class_titles' => 'sitetitles',
 	), $module_params);
