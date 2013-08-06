@@ -8,7 +8,7 @@
 				</a>
 			{/if}
 		</div>
-		{if !empty($module_params.sitetitle) or !empty($module_params.sitetitle)}
+		{if !empty($module_params.sitetitle) or !empty($module_params.sitesubtitle)}
 			<div id="sitetitles" class="floatleft">
 				<div id="sitetitle">
 					{if !empty($module_params.sitetitle)}
