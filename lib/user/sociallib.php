@@ -34,8 +34,22 @@ class SocialLib
 
 	function addFriend($user, $newFriend)
 	{
+		$tx = TikiDb::get()->begin();
+
 		if ($this->networkType == 'follow') {
 			$this->addRelation('follow', $user, $newFriend);
+			TikiLib::events()->trigger('tiki.user.follow.add', array(
+				'type' => 'user',
+				'object' => $user,
+				'user' => $user,
+				'follow_id' => $newFriend,
+			));
+			TikiLib::events()->trigger('tiki.user.follow.incoming', array(
+				'type' => 'user',
+				'object' => $newFriend,
+				'user' => $newFriend,
+				'follow_id' => $user,
+			));
 		} elseif($this->networkType == 'follow_approval' || $this->networkType == 'friend') {
 			$request = $this->getRelation('request.invert', $user, $newFriend);
 			$follow = $this->getRelation('follow.invert', $user, $newFriend);
@@ -48,11 +62,27 @@ class SocialLib
 				$this->relationlib->remove_relation($request);
 				$this->addRelation('follow', $user, $newFriend);
 				$this->addRelation('follow.invert', $user, $newFriend);
+
+				$event = ($this->networkType == 'friend') ? 'tiki.user.friend.add' : 'tiki.user.follow.add';
+				TikiLib::events()->trigger($event, array(
+					'type' => 'user',
+					'object' => $user,
+					'user' => $user,
+					'follow_id' => $newFriend,
+				));
+				TikiLib::events()->trigger($event, array(
+					'type' => 'user',
+					'object' => $newFriend,
+					'user' => $newFriend,
+					'follow_id' => $user,
+				));
 			} else {
 				// New request
 				$this->addRelation('request', $user, $newFriend);
 			}
 		}
+
+		$tx->commit();
 	}
 
 	function approveFriend($user, $newFriend)
@@ -64,10 +94,27 @@ class SocialLib
 		$request = $this->getRelation('request.invert', $user, $newFriend);
 
 		if ($request) {
+			$tx = TikiDb::get()->begin();
+
 			// If there was a pending request by the other side, remove the request
 			// and add them as follower
 			$this->relationlib->remove_relation($request);
 			$this->addRelation('follow.invert', $user, $newFriend);
+
+			TikiLib::events()->trigger('tiki.user.follow.add', array(
+				'type' => 'user',
+				'object' => $newFriend,
+				'user' => $newFriend,
+				'follow_id' => $user,
+			));
+			TikiLib::events()->trigger('tiki.user.follow.incoming', array(
+				'type' => 'user',
+				'object' => $user,
+				'user' => $user,
+				'follow_id' => $newFriend,
+			));
+
+			$tx->commit();
 
 			return true;
 		}
