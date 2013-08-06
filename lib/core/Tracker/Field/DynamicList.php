@@ -89,7 +89,7 @@ class Tracker_Field_DynamicList extends Tracker_Field_Abstract
 
 		TikiLib::lib('header')->add_jq_onready(
 			'
-$("select[name=ins_' . $this->getOption('filterFieldIdHere') . ']").change(function(e, val) {
+$("input[name=ins_' . $this->getOption('filterFieldIdHere') . '], select[name=ins_' . $this->getOption('filterFieldIdHere') . ']").change(function(e, val) {
 	$.getJSON(
 		"tiki-tracker_http_request.php",
 		{
@@ -126,6 +126,7 @@ $("select[name=ins_' . $this->getOption('filterFieldIdHere') . ']").change(funct
 			if (jqueryTiki.chosen) {
 				$ddl.trigger("liszt:updated");
 			}
+			$ddl.trigger("change");
 		}
 	);
 }).trigger("change", ["' . $this->getConfiguration('value') . '"]);
