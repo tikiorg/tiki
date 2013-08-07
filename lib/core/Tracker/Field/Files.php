@@ -39,24 +39,24 @@ class Tracker_Field_Files extends Tracker_Field_Abstract
 						'filter' => 'int',
 						'legacy_index' => 2,
 					),
-					'displayImages' => array(
-						'name' => tr('Display Images'),
-						'description' => tr('Show files as images or object links'),
-						'filter' => 'int',
+					'displayMode' => array(
+						'name' => tr('Display Mode'),
+						'description' => tr('Show files as object links or via a wiki plugins (img so far)'),
+						'filter' => 'word',
 						'options' => array(
-							0 => tr('Links'),
-							1 => tr('Images'),
+							'' => tr('Links'),
+							'img' => tr('Images'),
 						),
 						'legacy_index' => 3,
 					),
-					'imageParams' => array(
-						'name' => tr('Image parameters'),
+					'displayParams' => array(
+						'name' => tr('Display parameters'),
 						'description' => tr('URL encoded params used as in the {img} plugin. e.g.') . ' "max=400&desc=namedesc&stylebox=block"',
 						'filter' => 'text',
 						'legacy_index' => 4,
 					),
-					'imageParamsForLists' => array(
-						'name' => tr('Image parameters for lists'),
+					'displayParamsForLists' => array(
+						'name' => tr('Display parameters for lists'),
 						'description' => tr('URL encoded params used as in the {img} plugin. e.g.') . ' "thumb=mouseover&rel="',
 						'filter' => 'text',
 						'legacy_index' => 5,
@@ -173,7 +173,7 @@ class Tracker_Field_Files extends Tracker_Field_Abstract
 			$gallery_list = $galleryId;
 		}
 
-		if ($this->getOption('displayImages') == 'y' && $fileIds) {
+		if ($this->getOption('displayMode') == 'img' && $fileIds) {
 			$firstfile = $fileIds[0];
 		} else {
 			$firstfile = 0;
@@ -224,7 +224,7 @@ class Tracker_Field_Files extends Tracker_Field_Abstract
 
 		$ret = '';
 		if (!empty($value)) {
-			if ($this->getOption('displayImages')) { // images
+			if ($this->getOption('displayMode')) { // images etc
 				$params = array(
 					'fileId' => $value,
 				);
@@ -411,7 +411,7 @@ class Tracker_Field_Files extends Tracker_Field_Abstract
 
 		$fileIds = $this->getConfiguration('files');
 
-		if ($this->getOption('displayImages') == 'y' && is_array($fileIds) && count($fileIds) > 0) {
+		if ($this->getOption('displayMode') == 'img' && is_array($fileIds) && count($fileIds) > 0) {
 			return $filegallib->update_single_file($gal_info, $file['name'], $file['size'], $file['type'], file_get_contents($file['tmp_name']), $fileIds[0]);
 		} else {
 			return $filegallib->upload_single_file($gal_info, $file['name'], $file['size'], $file['type'], file_get_contents($file['tmp_name']));
