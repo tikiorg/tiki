@@ -81,7 +81,7 @@ function smarty_block_remarksbox($params, $content, $smarty, &$repeat)
 	}
 	$md5 = 'rbox-' . md5(serialize(array($params, $instance,  $_SERVER['REQUEST_URI'])));
 
-	if (getCookie($md5, 'rbox')) {
+	if (function_exists('getCookie') && getCookie($md5, 'rbox')) {
 		return '';
 	}
 
