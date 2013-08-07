@@ -34,6 +34,15 @@ class SocialLib
 
 	function addFriend($user, $newFriend)
 	{
+		if ($user == $newFriend) {
+			return false;
+		}
+
+		$userlib = TikiLib::lib('user');
+		if (! $userlib->user_exists($user) || ! $userlib->user_exists($newFriend)) {
+			return false;
+		}
+
 		$tx = TikiDb::get()->begin();
 
 		$hash = $this->createHash($user, $newFriend);
@@ -89,6 +98,8 @@ class SocialLib
 		}
 
 		$tx->commit();
+
+		return true;
 	}
 
 	function approveFriend($user, $newFriend)
