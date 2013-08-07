@@ -46,7 +46,9 @@ function wikiplugin_activitystream($data, $params)
 	}
 
 	$result = $query->search($index);
-	$result->groupBy('aggregate', array('user'));
+
+	$resultBuilder = new Search_ResultSet_WikiBuilder($result);
+	$resultBuilder->apply($matches);
 
 	try {
 		$paginationArguments = $builder->getPaginationArguments();
