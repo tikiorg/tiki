@@ -70,9 +70,18 @@
 
 			<fieldset class="admin">
 				<legend>{tr}Activity Stream{/tr}</legend>
+				{preference name=activity_basic_events visible="always"}
+
+				<div class="adminoptionboxchild" id="activity_basic_events_childcontainer">
+					{preference name=activity_basic_tracker_create}
+					{preference name=activity_basic_tracker_update}
+					{preference name=activity_basic_user_follow_add}
+					{preference name=activity_basic_user_follow_incoming}
+					{preference name=activity_basic_user_friend_add}
+				</div>
 				{preference name=activity_custom_events visible="always"}
 
-				<div class="adminoptionboxchild" id="activity_custom_events_childcontainer">				
+				<div class="adminoptionboxchild" id="activity_custom_events_childcontainer">
 					
 					{$headerlib->add_dracula()}
 					{$headerlib->add_jsfile('lib/jquery_tiki/activity.js', 'external')}

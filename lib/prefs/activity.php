@@ -8,10 +8,57 @@
 function prefs_activity_list()
 {
 	return array(
+		'activity_basic_events' => array(
+			'name' => tr('Record Basic Events'),
+			'description' => tr('Enable recording of basic internal Tiki events. This is primarily an entry level options. Using custom events is strongly encouraged.'),
+			'help' => 'Activity+Stream',
+			'type' => 'flag',
+			'default' => 'n',
+		),
+		'activity_basic_tracker_update' => array(
+			'name' => tr('Record tracker item update'),
+			'description' => tr('Enable recording of basic internal Tiki events.'),
+			'dependencies' => array('activity_basic_events', 'feature_trackers'),
+			'help' => 'Activity+Stream',
+			'type' => 'flag',
+			'default' => 'n',
+		),
+		'activity_basic_tracker_create' => array(
+			'name' => tr('Record tracker item creation'),
+			'description' => tr('Enable recording of basic internal Tiki events.'),
+			'dependencies' => array('activity_basic_events', 'feature_trackers'),
+			'help' => 'Activity+Stream',
+			'type' => 'flag',
+			'default' => 'n',
+		),
+		'activity_basic_user_follow_add' => array(
+			'name' => tr('Record user following users'),
+			'description' => tr('Enable recording of basic internal Tiki events.'),
+			'dependencies' => array('activity_basic_events', 'feature_friends'),
+			'help' => 'Activity+Stream',
+			'type' => 'flag',
+			'default' => 'n',
+		),
+		'activity_basic_user_follow_incoming' => array(
+			'name' => tr('Record user being followed by users'),
+			'description' => tr('Enable recording of basic internal Tiki events.'),
+			'dependencies' => array('activity_basic_events', 'feature_friends'),
+			'help' => 'Activity+Stream',
+			'type' => 'flag',
+			'default' => 'n',
+		),
+		'activity_basic_user_friend_add' => array(
+			'name' => tr('Record user adding new friend'),
+			'description' => tr('Enable recording of basic internal Tiki events.'),
+			'dependencies' => array('activity_basic_events', 'feature_friends'),
+			'help' => 'Activity+Stream',
+			'type' => 'flag',
+			'default' => 'n',
+		),
 		'activity_custom_events' => array(
 			'name' => tr('Custom Activities'),
 			'description' => tr('Allows to define custom behaviors on top of internal events.'),
-			'help' => 'Custom+Activity',
+			'help' => 'Activity+Stream',
 			'type' => 'flag',
 			'default' => 'n',
 		),

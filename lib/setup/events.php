@@ -121,8 +121,12 @@ function tiki_setup_events()
 
 	$events->bind('tiki.save', $defer('tiki', 'plugin_post_save_actions'));
 
+	if ($prefs['activity_basic_events'] == 'y') {
+		TikiLib::lib('activity')->bindBasicEvents($events);
+	}
+
 	if ($prefs['activity_custom_events'] == 'y') {
-		TikiLib::lib('activity')->bindEvents($events);
+		TikiLib::lib('activity')->bindCustomEvents($events);
 	}
 
 	// Chain events

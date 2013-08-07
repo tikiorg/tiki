@@ -65,7 +65,33 @@ class ActivityLib
 		TikiLib::lib('unifiedsearch')->invalidateObject('activity', $id);
 	}
 
-	function bindEvents(Tiki_Event_Manager $manager)
+	function bindBasicEvents(Tiki_Event_Manager $manager)
+	{
+		global $prefs;
+		$map = array(
+			'activity_basic_tracker_create' => 'tiki.trackeritem.create',
+			'activity_basic_tracker_update' => 'tiki.trackeritem.update',
+			'activity_basic_user_follow_add' => 'tiki.user.follow.add',
+			'activity_basic_user_follow_incoming' => 'tiki.user.follow.incoming',
+			'activity_basic_user_friend_add' => 'tiki.user.friend.add',
+		);
+
+		foreach ($map as $preference => $event) {
+			if ($prefs[$preference] == 'y') {
+				$this->bindEventRecord($manager, $event);
+			}
+		}
+	}
+
+	private function bindEventRecord($manager, $event)
+	{
+		$self = $this;
+		$manager->bind($event, function ($args) use ($self, $event) {
+			$self->recordEvent($event, $args);
+		});
+	}
+
+	function bindCustomEvents(Tiki_Event_Manager $manager)
 	{
 		$self = $this;
 		$runner = new Math_Formula_Runner(
