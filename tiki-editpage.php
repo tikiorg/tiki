@@ -373,7 +373,8 @@ if (isset($_FILES['userfile1']) && is_uploaded_file($_FILES['userfile1']['tmp_na
 	}
 	fclose($fp);
 	$name = $_FILES['userfile1']['name'];
-	$output = mime::decode($data);
+	$mimelib = new mime();
+	$output = $mimelib->decode($data);
 	$parts = array();
 	parse_output($output, $parts, 0);
 	$last_part = '';

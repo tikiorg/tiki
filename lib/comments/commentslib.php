@@ -381,7 +381,8 @@ class Comments extends TikiLib
 			$full = $pop3->getMsg($i);
 			$message = $pop3->getBody($i);
 
-			$output = mime::decode($full);
+			$mimelib = new mime();
+			$output = $mimelib->decode($full);
 			//unset ($parts);
 			//$this->parse_output($output, $parts, 0);
 
