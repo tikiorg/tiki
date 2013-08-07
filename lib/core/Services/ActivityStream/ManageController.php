@@ -121,7 +121,7 @@ $customArguments
 				$parameters .= '(' . $element->getType() . ' ' . $element[0] . ')' . PHP_EOL;
 			}
 		} else {
-			$parameters = "(user args.user)\n(type args.type)\n(object args.object)\n";
+			$parameters = "(user args.user)\n(type args.type)\n(object args.object)\n(aggregate args.aggregate)\n";
 		}
 
 		return array(
