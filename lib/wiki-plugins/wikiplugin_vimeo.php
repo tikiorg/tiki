@@ -68,12 +68,21 @@ function wikiplugin_vimeo_info()
 				'default' => '',
 				'advanced' => true				
 			),
+			'fileId' => array(
+				'required' => false,
+				'name' => tra('File ID'),
+				'description' => tra('Numeric ID of a Vimeo file in a File Gallery (or list separated by commas or |).'),
+				'filter' => 'striptags',
+				'default' => '',
+				'advanced' => true
+			),
 		),
 	);
 }
 
 function wikiplugin_vimeo($data, $params)
 {
+	global $prefs;
 	static $instance = 0;
 	$instance++;
 
@@ -81,6 +90,19 @@ function wikiplugin_vimeo($data, $params)
 		$params['vimeo'] = $params['url'];
 		unset($params['url']);
 		return wikiplugin_flash($data, $params);
+	} else if(isset($params['fileId']) && $prefs['vimeo_upload'] === 'y') {
+		$fileIds = preg_split('/\D+/', $params['fileId'], -1, PREG_SPLIT_NO_EMPTY);
+		unset($params['fileId']);
+
+		$out = '';
+		foreach($fileIds as $fileId) {
+		$attributelib = TikiLib::lib('attribute');
+			$attributes = $attributelib->get_attributes('file', $fileId);
+			$params['vimeo'] = $attributes['tiki.content.url'];
+			$out .=  wikiplugin_flash($data, $params);
+		}
+
+		return $out;
 	} else {
 
 		global $access, $page;

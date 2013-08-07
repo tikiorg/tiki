@@ -11,7 +11,7 @@ class Tracker_Field_Files extends Tracker_Field_Abstract
 	{
 		global $prefs;
 
-		return array(
+		$options = array(
 			'FG' => array(
 				'name' => tr('Files'),
 				'description' => tr('Attached and upload files stored in the file galleries to the tracker item.'),
@@ -99,6 +99,11 @@ class Tracker_Field_Files extends Tracker_Field_Abstract
 				),
 			),
 		);
+		if ($prefs['vimeo_upload'] === 'y') {
+			$options['FG']['params']['displayMode']['description'] = tr('Show files as object links or via a wiki plugins (img, vimeo)');
+			$options['FG']['params']['displayMode']['options']['vimeo'] = tr('Vimeo');
+		}
+		return $options;
 	}
 
 	function getFieldData(array $requestData = array())
@@ -229,23 +234,34 @@ class Tracker_Field_Files extends Tracker_Field_Abstract
 					'fileId' => $value,
 				);
 				if ($context['list_mode'] === 'y') {
-					$params['thumb'] = $context['list_mode'];
-					$params['rel'] = 'box[' . $this->getInsertId() . ']';
-					$otherParams = $this->getOption('imageParamsForLists');
+					$otherParams = $this->getOption('displayParamsForLists');
 				} else {
-					$otherParams = $this->getOption('imageParams');
+					$otherParams = $this->getOption('displayParams');
 				}
 				if ($otherParams) {
 					parse_str($otherParams, $otherParams);
 					$params = array_merge($params, $otherParams);
 				}
-
-				include_once('lib/wiki-plugins/wikiplugin_img.php');
 				$params['fromFieldId'] = $this->getConfiguration('fieldId');
 				$params['fromItemId'] = $this->getItemId();
 				$item = Tracker_Item::fromInfo($this->getItemData());
 				$params['checkItemPerms'] = $item->canModify() ? 'n' : 'y';
-				$ret = wikiplugin_img('', $params, 0);
+
+				if ($this->getOption('displayMode') == 'img') { // img
+
+					if ($context['list_mode'] === 'y') {
+						$params['thumb'] = $context['list_mode'];
+						$params['rel'] = 'box[' . $this->getInsertId() . ']';
+					}
+					include_once('lib/wiki-plugins/wikiplugin_img.php');
+					$ret = wikiplugin_img('', $params);
+
+				} else if ($this->getOption('displayMode') == 'vimeo') {	// Vimeo videos stored as filegal REMOTEs
+
+					include_once('lib/wiki-plugins/wikiplugin_vimeo.php');
+					$ret = wikiplugin_vimeo('', $params);
+
+				}
 				$ret = preg_replace('/~\/?np~/', '', $ret);
 			} else {
 				$smarty = TikiLib::lib('smarty');
