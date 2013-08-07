@@ -2788,10 +2788,12 @@ function prefs_feature_list($partial = false)
 		'feature_community_Strings_to_ignore' => array(
 			'name' => tra('Strings to ignore to get group basename'),
 			'type' => 'text',
+			'default' => '',
 		),
 		'feature_community_String_to_append' => array(
 			'name' => tra('String to append to the group name to get Group Leaders group'),
 			'type' => 'text',
+			'default' => '',
 		),
 		'feature_inline_comments' => array(
 			'name' => tra('Inline Comments'),
