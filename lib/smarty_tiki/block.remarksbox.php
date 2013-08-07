@@ -86,12 +86,15 @@ function smarty_block_remarksbox($params, $content, $smarty, &$repeat)
 	}
 
 	if ($params['close']) {
-		TikiLib::lib('header')->add_jq_onready('$("#' . $md5 . '").click( function () {$("#' . $md5 . '").fadeOut();
-	if (getCookie("rbox") || confirm("' . tra('Do you want to hide this remarks box forever? (can actually be reset in tiki-user_preferences.php)') . '")) {
-		setCookie("'. $md5 . '", "y", "rbox");		// advisory alert on first use
-	}
-	return false;
-});');
+		TikiLib::lib('header')->add_jq_onready('
+		$("#' . $md5 . ' .rbox-close").click( function () {
+			if (/*getCookie("rbox") ||*/ confirm("' . tra('Do you want to permanently hide this remarks box? (can actually be reset on User Preferences screen (tiki-user_preferences.php))') . '")) {
+				$("#' . $md5 . '").fadeOut();
+				setCookie("'. $md5 . '", "y", "rbox");		// advisory alert on first use
+			}
+			return false;
+		});
+		');
 	}
 
 	$smarty->assign('rbox_guid', $md5);
