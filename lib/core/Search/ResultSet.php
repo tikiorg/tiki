@@ -124,5 +124,30 @@ class Search_ResultSet extends ArrayObject
 	{
 		$this->filters[$facet->getName()] = $facet;
 	}
+
+	function groupBy($field, array $collect = array())
+	{
+		$out = array();
+		foreach ($this as $entry) {
+			if (! isset($entry[$field])) {
+				$out[] = $entry;
+			} else {
+				$value = $entry[$field];
+				if (! isset($out[$value])) {
+					$entry[$field] = array_fill_keys($collect, array());
+					$out[$value] = $entry;
+				}
+
+				foreach ($collect as $key) {
+					if (isset($entry[$key])) {
+						$out[$value][$field][$key][] = $entry[$key];
+						$out[$value][$field][$key] = array_unique($out[$value][$field][$key]);
+					}
+				}
+			}
+		}
+
+		$this->exchangeArray($out);
+	}
 }
 

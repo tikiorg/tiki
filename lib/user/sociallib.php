@@ -36,6 +36,8 @@ class SocialLib
 	{
 		$tx = TikiDb::get()->begin();
 
+		$hash = $this->createHash($user, $newFriend);
+
 		if ($this->networkType == 'follow') {
 			$this->addRelation('follow', $user, $newFriend);
 			TikiLib::events()->trigger('tiki.user.follow.add', array(
@@ -43,12 +45,14 @@ class SocialLib
 				'object' => $user,
 				'user' => $user,
 				'follow_id' => $newFriend,
+				'aggregate' => $hash,
 			));
 			TikiLib::events()->trigger('tiki.user.follow.incoming', array(
 				'type' => 'user',
 				'object' => $newFriend,
 				'user' => $newFriend,
 				'follow_id' => $user,
+				'aggregate' => $hash,
 			));
 		} elseif($this->networkType == 'follow_approval' || $this->networkType == 'friend') {
 			$request = $this->getRelation('request.invert', $user, $newFriend);
@@ -69,12 +73,14 @@ class SocialLib
 					'object' => $user,
 					'user' => $user,
 					'follow_id' => $newFriend,
+					'aggregate' => $hash,
 				));
 				TikiLib::events()->trigger($event, array(
 					'type' => 'user',
 					'object' => $newFriend,
 					'user' => $newFriend,
 					'follow_id' => $user,
+					'aggregate' => $hash,
 				));
 			} else {
 				// New request
@@ -163,6 +169,18 @@ class SocialLib
 	private function getRelation($type, $from, $to)
 	{
 		return $this->relationlib->get_relation_id('tiki.friend.' . $type, 'user', $from, 'user', $to);
+	}
+
+	private function createHash($a, $b)
+	{
+		// Hashing needs constant user ordering, so sort
+		if ($a > $b) {
+			$t = $b;
+			$b = $a;
+			$a = $t;
+		}
+
+		return sha1("friendrelation/$a/$b");
 	}
 }
 

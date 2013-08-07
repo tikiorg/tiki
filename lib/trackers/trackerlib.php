@@ -1613,6 +1613,7 @@ class TrackerLib extends TikiLib
 				'values' => $fil,
 				'old_values' => $old_values,
 				'bulk_import' => $bulk_import,
+				'aggregate' => sha1("trackeritem/$currentItemId"),
 			)
 		);
 

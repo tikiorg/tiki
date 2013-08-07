@@ -32,6 +32,20 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 
 function smarty_modifier_userlink($other_user, $class='link', $idletime='not_set', $fullname='', $max_length=0, $popup='y')
 {
+	if (is_array($other_user)) {
+
+		if (count($other_user) > 1) {
+			$other_user = array_map(function ($username, $class, $idletime, $popup) {
+				return smarty_modifier_userlink($username, $class, $idletime, '', 0, $popup);
+			}, $other_user);
+
+			$last = array_pop($other_user);
+			return tr('%0 and %1', implode(', ', $other_user), $last);
+		} else {
+			$other_user = reset($other_user);
+		}
+	}
+
 	global $tikilib, $userlib, $cachelib, $user, $prefs, $userprefslib, $smarty;
 
 	$show_mouseover = $popup != 'n' &&
