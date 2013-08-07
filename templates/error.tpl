@@ -10,6 +10,7 @@ close();
  * no_redirect_login: error antibot, system...
  * login: error login
  * Usually available variables : $errortitle, $msg, $errortype
+ * If $commenttype is 'note' and $msg is set, the $msg will be shown in a nicer non-treatening remarksbox
  *}
 {if !isset($errortype)}{assign var='errortype' value=''}{/if}
 {capture assign=mid_data}
@@ -58,6 +59,10 @@ close();
 					{include file='tiki-searchindex.tpl' searchNoResults="true" searchStyle="menu" searchOrientation="horiz" words="$page" filter=$filter}
 				{/if}
 			{/if}
+		{elseif $commenttype eq "note" and isset($msg)}
+			{remarksbox type='note' title=$title}
+				{$msg}
+			{/remarksbox}
 		{else}
 			{if isset($token_error)}
 				{remarksbox type='errors' title="{tr}Token Error{/tr}"}
