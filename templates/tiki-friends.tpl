@@ -6,6 +6,7 @@
 	{wikiplugin _name=activitystream}
 		{literal}
 		{filter personalize=follow}
+		{group}
 		{/literal}
 	{/wikiplugin}
 {/block}
