@@ -3035,6 +3035,15 @@ class TrackerLib extends TikiLib
 			$field = $definition->getField($t);
 			$handler = $this->get_field_handler($field);
 			$data = $handler->getFieldData();
+			$datalist = $data['list'];
+			if (!empty($parent_categs_only)) {
+				foreach ($datalist as $k => $entry) {
+					$parentId = TikiLib::lib('categ')->get_category_parent($entry['categId']);
+					if (!in_array($parentId, $parent_categs_only)) {
+						unset($datalist[$k]);
+					}
+				}
+			}
 
 			$managed_categories = array_merge(
 				$managed_categories,
@@ -3042,7 +3051,7 @@ class TrackerLib extends TikiLib
 					function ($entry) {
 						return $entry['categId'];
 					},
-					$data['list']
+					$datalist
 				)
 			);
 		}
@@ -4641,14 +4650,18 @@ class TrackerLib extends TikiLib
 	{
 		$definition = Tracker_Definition::get($args['trackerId']);
 		$ins_categs = array();
+		$parent_categs_only = array();
 
 		foreach ($definition->getCategorizedFields() as $fieldId) {
 			if (isset($args['values'][$fieldId])) {
 				$ins_categs = array_merge($ins_categs, array_filter(explode(',', $args['values'][$fieldId])));
+				$field = $definition->getField($fieldId);
+				$options = json_decode($field['options']);
+				$parent_categs_only[] = $options->parentId;
 			}
 		}
 
-		$this->categorized_item($args['trackerId'], $args['object'], "item {$args['object']}", $ins_categs);
+		$this->categorized_item($args['trackerId'], $args['object'], "item {$args['object']}", $ins_categs, $parent_categs_only);
 	}
 
 	public function field_render_value( $params )
