@@ -68,7 +68,7 @@ if (count($filter)) {
 		$access->output_serialized(
 			$results,
 			array(
-				'feedTitle' => tr('%0: Results for "%1"', $prefs['sitetitle'], $request['filter']['content']),
+				'feedTitle' => tr('%0: Results for "%1"', $prefs['sitetitle'], isset($filter['content']) ? $filter['content'] : ''),
 				'feedDescription' => tr('Search Results'),
 				'entryTitleKey' => 'title',
 				'entryUrlKey' => 'url',
