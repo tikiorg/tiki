@@ -100,7 +100,7 @@ class Services_File_FinderController
 		);
 		$startRoot = 0;
 
-		if (!empty($user) && $prefs['feature_use_fgal_for_user_files'] == 'y') {
+		if (!empty($user) && $prefs['feature_userfiles'] == 'y' && $prefs['feature_use_fgal_for_user_files'] == 'y') {
 
 			if ($startGallery && $startGallery == $prefs['fgal_root_user_id'] && ! Perms::get('file gallery', $startGallery)->admin_trackers) {
 				$startGallery = (int) TikiLib::lib('filegal')->get_user_file_gallery();
