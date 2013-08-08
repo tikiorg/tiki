@@ -54,6 +54,16 @@ class Tracker_Field_UserSelector extends Tracker_Field_Abstract implements Track
 						'filter' => 'int',
 						'legacy_index' => 2,
 					),
+					'showRealname' => array(
+						'name' => tr('Show real name if possible'),
+						'description' => tr('Show real name if possible'),
+						'filter' => 'int',
+						'options' => array(
+							0 => tr('No'),
+							1 => tr('Yes'),
+						),
+						'default' => 0,
+					),
 				),
 			),
 		);
@@ -122,8 +132,13 @@ class Tracker_Field_UserSelector extends Tracker_Field_Abstract implements Track
 				$smarty
 			);
 		} else {
-			$smarty->loadPlugin('smarty_modifier_username');
-			return smarty_modifier_username($value) . '<input type="hidden" name="' . $this->getInsertId() . '" value="' . $value . '">';
+			if ($this->getOption('showRealname')) {
+				$smarty->loadPlugin('smarty_modifier_username');
+				$out = smarty_modifier_username($value);
+			} else {
+				$out = $value; 
+			}	
+			return $out . '<input type="hidden" name="' . $this->getInsertId() . '" value="' . $value . '">';
 		}
 	}
 
@@ -133,8 +148,12 @@ class Tracker_Field_UserSelector extends Tracker_Field_Abstract implements Track
 		if (empty($value)) {
 			return '';
 		} else {
-			TikiLib::lib('smarty')->loadPlugin('smarty_modifier_username');
-			return smarty_modifier_username($value);
+			if ($this->getOption('showRealname')) {
+				TikiLib::lib('smarty')->loadPlugin('smarty_modifier_username');
+				return smarty_modifier_username($value);
+			} else {
+				return $value;
+			}
 		}
 	}
 
