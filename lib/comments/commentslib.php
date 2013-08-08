@@ -825,6 +825,9 @@ class Comments extends TikiLib
 		if (strpos($sort_mode, 'commentDate') !== false) {
 			$sort_mode = str_replace('commentDate', 'a.commentDate', $sort_mode);
 		}
+		if (strpos($sort_mode, 'smiley') !== false) {
+			$sort_mode = str_replace('smiley', 'a.smiley', $sort_mode);
+		}
 
 		if (strpos($sort_mode, 'hits') !== false) {
 			$sort_mode = str_replace('hits', 'a.hits', $sort_mode);
