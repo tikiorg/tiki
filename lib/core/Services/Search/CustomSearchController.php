@@ -31,7 +31,7 @@ class Services_Search_CustomSearchController
 		$cachelib = TikiLib::lib('cache');
 		$definition = $input->definition->word();
 		if (empty($definition) || ! $definition = $cachelib->getSerialized($definition, 'customsearch')) {
-			throw new Services_Exception(tra('Search expired.'));
+			throw new Services_Exception(tra('Unfortunately, the search cache has expired. Please reload the page to start over.'));
 		}
 
 		$query = $definition['query'];
