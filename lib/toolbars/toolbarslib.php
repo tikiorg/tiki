@@ -1412,9 +1412,35 @@ class ToolbarFileGallery extends Toolbar
 
 	function getSyntax( $areaId )
 	{
-		global $smarty;
-		$smarty->loadPlugin('smarty_function_filegal_manager_url');
-		return 'openFgalsWindow(\''.htmlentities(smarty_function_filegal_manager_url(array('area_id'=>$areaId), $smarty)).'\', true);';
+		global $prefs;
+		if ($prefs['fgal_elfinder_feature'] !== 'y') {
+			$smarty = TikiLib::lib('smarty');
+			$smarty->loadPlugin('smarty_function_filegal_manager_url');
+			return 'openFgalsWindow(\''.htmlentities(smarty_function_filegal_manager_url(array('area_id'=>$areaId), $smarty)).'\', true);';
+		} else {
+			TikiLib::lib('header')->add_jq_onready('window.handleFinderInsertAt = function (file, elfinder, area_id) {
+	$.getJSON($.service("file_finder", "finder"), { cmd: "tikiFileFromHash", hash: file.hash },
+		function (data) {
+			window.insertAt(area_id, data.wiki_syntax);
+			$(window).data("elFinderDialog").dialog("close");
+			$($(window).data("elFinderDialog")).remove();
+			$(window).data("elFinderDialog", null);
+			return false;
+		}
+	);
+};');
+			return 'openElFinderDialog(
+				this,
+				{
+					defaultGalleryId: ' . $prefs['home_file_gallery'] . ',
+					deepGallerySearch: true,
+					getFileCallback: function(file,elfinder) {
+							window.handleFinderInsertAt(file,elfinder,\''.$areaId.'\');
+						},
+					eventOrigin:this
+				}
+			);';
+		}
 	}
 
 	function getWikiHtml( $areaId ) // {{{
