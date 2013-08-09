@@ -24,10 +24,10 @@ class RelationLib extends TikiDb_Bridge
 	 * Optionally, the relation searched for can be specified. If the
 	 * relation ends with a dot, it will be used as a wildcard.
 	 */
-	function get_relations_from( $type, $object, $relation = null, $orderby = '', $max = -1 )
+	function get_relations_from( $type, $object, $relation = null, $orderBy = '', $max = -1 )
 	{
 		if ( substr($relation, -7) === '.invert' ) {
-			return $this->get_relations_to($type, $object, substr($relation, 0, -7), $orderby, $max);
+			return $this->get_relations_to($type, $object, substr($relation, 0, -7), $orderBy, $max);
 		}
 
 		$cond = array(
