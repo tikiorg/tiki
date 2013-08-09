@@ -24,10 +24,10 @@ class RelationLib extends TikiDb_Bridge
 	 * Optionally, the relation searched for can be specified. If the
 	 * relation ends with a dot, it will be used as a wildcard.
 	 */
-	function get_relations_from( $type, $object, $relation = null, $orderby = '' )
+	function get_relations_from( $type, $object, $relation = null, $orderby = '', $max = -1 )
 	{
 		if ( substr($relation, -7) === '.invert' ) {
-			return $this->get_relations_to($type, $object, substr($relation, 0, -7));
+			return $this->get_relations_to($type, $object, substr($relation, 0, -7), $orderby, $max);
 		}
 
 		$cond = array(
@@ -43,7 +43,7 @@ class RelationLib extends TikiDb_Bridge
 		);
 
 		$cond = $this->apply_relation_condition($relation, $cond);
-		return $this->table->fetchAll($fields, $cond, -1, -1, $orderBy);
+		return $this->table->fetchAll($fields, $cond, $max, -1, $orderBy);
 	}
 
     /**
@@ -52,10 +52,10 @@ class RelationLib extends TikiDb_Bridge
      * @param null $relation
      * @return mixed
      */
-    function get_relations_to( $type, $object, $relation = null, $orderBy = '')
+    function get_relations_to( $type, $object, $relation = null, $orderBy = '', $max = -1)
 	{
 		if ( substr($relation, -7) === '.invert' ) {
-			return $this->get_relations_from($type, $object, substr($relation, 0, -7), $orderBy);
+			return $this->get_relations_from($type, $object, substr($relation, 0, -7), $orderBy, $max);
 		}
 
 		$cond = array(
@@ -71,7 +71,7 @@ class RelationLib extends TikiDb_Bridge
 		);
 
 		$cond = $this->apply_relation_condition($relation, $cond);
-		return $this->table->fetchAll($fields, $cond, -1, -1, $orderBy);
+		return $this->table->fetchAll($fields, $cond, $max, -1, $orderBy);
 	}
 
 	/**
