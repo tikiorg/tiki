@@ -54,7 +54,8 @@ if (count($filter)) {
 		$dataSource = $unifiedsearchlib->getDataSource('formatting');
 		$results = $dataSource->getInformation($results, $fetchFields);
 
-		require_once 'lib/smarty_tiki/function.object_link.php';
+		$smarty->loadPlugin('smarty_function_object_link');
+		$smarty->loadPlugin('smarty_modifier_sefurl');
 		foreach ($results as &$res) {
 			$res['link'] = smarty_function_object_link(
 				array(
@@ -64,6 +65,10 @@ if (count($filter)) {
 				),
 				$smarty
 			);
+			if (empty($res['url'])) {
+				$res['url'] = smarty_modifier_sefurl($res['object_id'], $res['object_type'], '', '', 'y', $res['title']);
+			}
+			$res = array_filter($res, function ($v) { return !is_null($v); });	// strip out null values
 		}
 		$access->output_serialized(
 			$results,
@@ -183,6 +188,6 @@ function tiki_searchindex_get_results($filter, $offset, $maxRecords)
 		TikiLib::lib('errorreport')->report($e->getMessage());
 	}
 
-	return new Search_ResultSet(array());
+	return new Search_ResultSet(array(), 0, 0, -1);
 }
 

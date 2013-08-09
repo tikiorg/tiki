@@ -158,6 +158,8 @@ abstract class Toolbar
 					'sheetfind',
 					'sheetrefresh',
 					'sheetclose',
+
+					'objectlink',
 				),
 				$plugins
 			)
@@ -1083,6 +1085,31 @@ class ToolbarDialog extends Toolbar
 						'{"open": function () { dialogInternalLinkOpen(area_id); },
 						"buttons": { "Cancel": function() { dialogSharedClose(area_id,this); },'.
 									'"Insert": function() { dialogInternalLinkInsert(area_id,this); }}}'
+					);
+
+			break;
+		case 'objectlink':
+			$types = TikiLib::lib('unifiedsearch')->getSupportedTypes();
+			$options = '';
+			foreach ($types as $type => $title) {
+				$options .= '<option value="' . $type . '">' . $title . '</option>';
+			}
+			$label = tra('Object Link');
+			$icon = tra('img/icons/page_link.png');
+			$wysiwyg = 'Object Link';
+			$list = array('Object Link',
+						'<label for="tbOLinkDesc">Show this text</label>',
+						'<input type="text" id="tbOLinkDesc" />',
+						'<label for="tbOLinkObjectType">Types of object</label>',
+						'<select id="tbOLinkObjectType" class="ui-widget-content ui-corner-all" style="width: 98%">' .
+							'<option value="">' . tra('All') . '</option>' .
+							$options .
+						'</select>',
+						'<label for="tbOLinkObjectSelector">Link to this object</label>',
+						'<input type="text" id="tbOLinkObjectSelector" class="ui-widget-content ui-corner-all" style="width: 98%" />',
+						'{"open": function () { dialogObjectLinkOpen(area_id); },
+						"buttons": { "Cancel": function() { dialogSharedClose(area_id,this); },'.
+									'"Insert": function() { dialogObjectLinkInsert(area_id,this); }}}'
 					);
 
 			break;
