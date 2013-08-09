@@ -66,7 +66,8 @@ if (count($filter)) {
 				$smarty
 			);
 			if (empty($res['url'])) {
-				$res['url'] = smarty_modifier_sefurl($res['object_id'], $res['object_type'], '', '', 'y', $res['title']);
+				$appendTitle = $res['object_type'] === 'article' || $res['object_type'] === 'blog' || $res['object_type'] === 'bogpost';
+				$res['url'] = smarty_modifier_sefurl($res['object_id'], $res['object_type'], '', '', $appendTitle ? 'y' : 'n', $res['title']);
 			}
 			$res = array_filter($res, function ($v) { return !is_null($v); });	// strip out null values
 		}
