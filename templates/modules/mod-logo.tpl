@@ -13,11 +13,11 @@
 				<div class="sitetitle">
 					{if !empty($module_params.sitetitle)}
 						<a href="{$module_params.link}"{if $prefs.mobile_mode eq "y"} rel="external"{/if}>
-							{$module_params.sitetitle|escape}
+							{tr}{$module_params.sitetitle|escape}{/tr}
 						</a>
 					{/if}
 				</div>
-				<div class="sitesubtitle">{if !empty($module_params.sitesubtitle)}{$module_params.sitesubtitle|escape}{/if}</div>
+				<div class="sitesubtitle">{if !empty($module_params.sitesubtitle)}{tr}{$module_params.sitesubtitle|escape}{/tr}{/if}</div>
 			</div>
 		{/if}
 	{/tikimodule}
