@@ -206,7 +206,10 @@ class WikiLib extends TikiLib
 			throw new Exception("Bad characters", 1);
 		}
 
-		$tmpName = "TmP".$newName."TmP";
+		// The pre- and post-tags are eating away the max usable page name length
+		//	Use ~ instead of Tmp. Shorter
+		// $tmpName = "TmP".$newName."TmP";
+		$tmpName = "~".$newName."~";
 
 		// 1st rename the page in tiki_pages, using a tmpname inbetween for
 		// rename pages like ThisTestpage to ThisTestPage

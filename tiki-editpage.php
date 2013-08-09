@@ -125,12 +125,10 @@ if (empty($_REQUEST["page"])) {
 }
 
 // The max pagename length is 160 characters ( tiki_pages.pageName varchar(160) ).
-//	However, wiki_rename_page stores a page in the format: $tmpName = "TmP".$newName."TmP";
-//	So, actual max page name length is 160 - 6 = 154
+//	However, wiki_rename_page stores a page in the format: $tmpName = "~".$newName."~";
+//	So, actual max page name length is 160 - 2 = 158
 //	Strip excess characters (silently) and proceed.
-//	Notes: The pagename length is pretty short. Maybe 255 chars would be better?
-//	Changing it also involves changing/checking other tables, e.g. tiki_history and tiki_objects. arildb
-$max_pagename_length = 154;
+$max_pagename_length = 158;
 if(strlen($_REQUEST["page"]) > $max_pagename_length) {
 	$_REQUEST["page"] = substr($_REQUEST["page"], 0, $max_pagename_length);
 }
