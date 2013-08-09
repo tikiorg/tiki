@@ -117,7 +117,7 @@ function smarty_modifier_sefurl($source, $type='wiki', $with_next = '', $all_lan
 			break;
 
 		case 'forumthread':
-		case 'forum post':	// unused?
+		case 'forum post':	// used in unified search getSupportedTypes()
 			$href = $sefurl ? "forumthread$source" : 'tiki-view_forum_thread.php?comments_parentId='.$source;
 			break;
 
