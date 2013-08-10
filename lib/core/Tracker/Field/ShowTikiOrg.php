@@ -81,6 +81,11 @@ class Tracker_Field_ShowTikiOrg extends Tracker_Field_Abstract
 			'snapshoturl' => '',
 		);
 
+		if (!function_exists('ssh2_connect')) {
+			$ret['status'] = 'NOSSH';
+			return $ret;
+		}
+
 		$id = $this->getItemId();
 		if (!$id) {
 			return $ret;

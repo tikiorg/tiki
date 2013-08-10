@@ -1,6 +1,10 @@
 <h5 id="showtikiorg{$field.fieldId}" class="showactive{$field.fieldId}" {if $field.status neq 'ACTIV'}style="display: none;"{/if}>This bug has been demonstrated on show.tiki.org</h5>
 <h5 class="shownone{$field.fieldId}" {if $field.status neq 'NONE'}style="display: none;"{/if}>Please demonstrate your bug on show.tiki.org</h5>
-{if !$field.id}
+{if $field.status == 'NOSSH'}
+{remarksbox type="error" title="SSH2 extension not installed" close="n"}
+<p>SSH2 extension for PHP needs to be installed for show.tiki.org feature to work</p>
+{/remarksbox}
+{elseif !$field.id}
 {remarksbox type="info" title="Bug needs to be created first" close="n"}
 <p>You will be able to demonstrate your bug on a show.tiki.org instance once it has been created.</p>
 {/remarksbox}
