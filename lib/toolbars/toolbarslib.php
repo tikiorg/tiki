@@ -1228,12 +1228,7 @@ class ToolbarDialog extends Toolbar
 
 	static private function setupJs()
 	{
-
-		static $dialogAdded = false;
-
-		if ( ! $dialogAdded ) {
-			$dialogAdded = true;
-		}
+		TikiLib::lib('header')->add_jsfile('lib/jquery_tiki/tiki-toolbars.js');
 	}
 
 	function getWikiHtml( $areaId ) // {{{
