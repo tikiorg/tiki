@@ -79,6 +79,7 @@ class Tracker_Field_ShowTikiOrg extends Tracker_Field_Abstract
 			'debugoutput' => '',
 			'showurl' => '',
 			'snapshoturl' => '',
+			'value' => 'none', // this is required to show the field, otherwise it gets hidden if tracker is set to doNotShowEmptyField
 		);
 
 		if (!function_exists('ssh2_connect')) {
@@ -161,6 +162,9 @@ class Tracker_Field_ShowTikiOrg extends Tracker_Field_Abstract
 			$site = substr($site, 0, strpos($site, ' '));
 			$ret['showurl'] = $site;
 			$ret['snapshoturl'] = $site . '/snapshots/';
+			if ($site) {
+				$ret['value'] = 'active ' . substr($site, 0, strpos($site, '.')); // the 'active' is useful for filtering on
+			}
 		}	
 
 		$cachelib->cacheItem($cacheKey, serialize($ret));

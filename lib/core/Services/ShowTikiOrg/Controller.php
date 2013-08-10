@@ -67,6 +67,17 @@ class Services_ShowTikiOrg_Controller
 			$site = substr($site, 0, strpos($site, ' '));
 	         	$ret['showurl'] = $site;
 			$ret['snapshoturl'] = $site . '/snapshots/';
+			if ($site && $ret['status'] == 'ACTIV') {
+				$value = 'active ' . substr($site, 0, strpos($site, '.')); // the 'active' is useful for filtering on
+				TikiLib::lib('trk')->modify_field($id, $fieldId, $value);
+				require_once('lib/search/refresh-functions.php');
+				refresh_index('trackeritem', $id);
+			} elseif ($ret['status'] == 'NONE') {
+				$value = 'none';
+				TikiLib::lib('trk')->modify_field($id, $fieldId, $value);
+				require_once('lib/search/refresh-functions.php');
+				refresh_index('trackeritem', $id);
+			}
 		}
 
 		if (!empty($command)) {
