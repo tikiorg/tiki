@@ -35,6 +35,12 @@ function wikiplugin_cookieconsent_info()
 				'description' => tra('CSS class for above.'),
 				'default' => '',
 			),
+			'consent_error_class' => array(
+				'required' => false,
+				'name' => tra('cookie no consent message CSS class'),
+				'description' => tra('CSS class for no consent message.'),
+				'default' => '',
+			),	
 		)
 	);
 }
@@ -56,13 +62,23 @@ function wikiplugin_cookieconsent( $body, $params )
 	$params = array_merge($defaults, $params);
 
 	if ($feature_no_cookie) {
+		$tag1 = $tag2 = '';
+		if ($params['element']) {
+			if ($params['consent_error_class']) {
+				$tag1 = "<{$params['element']} class=\"{$params['consent_error_class']}\">";
+			} else {
+				$tag1 = "<{$params['element']}>";
+			}
+			$tag2 = "<{$params['element']}>";
+		}
 		$body = $params['no_consent_message'];
+	return $tag1 . $body . $tag2;
 	}
 
 	$tag1 = $tag2 = '';
 	if ($params['element']) {
 		if ($params['element_class']) {
-			$tag1 = "<{$params['element']} class=\"{$params['element_class']}\"}>";
+			$tag1 = "<{$params['element']} class=\"{$params['element_class']}\">";
 		} else {
 			$tag1 = "<{$params['element']}>";
 		}
