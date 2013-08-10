@@ -428,12 +428,11 @@ abstract class Toolbar
 
 	protected function setupCKEditorTool($js, $name, $label = '', $icon = '')
 	{
-		global $headerlib;
 		if (empty($label)) {
 			$label = $name;
 		}
 		$label = addcslashes($label, "'");
-		$headerlib->add_js(
+		TikiLib::lib('header')->add_js(
 <<< JS
 if (typeof window.CKEDITOR !== "undefined" && !window.CKEDITOR.plugins.get("{$name}")) {
 	window.CKEDITOR.config.extraPlugins += (window.CKEDITOR.config.extraPlugins ? ',{$name}' : '{$name}' );
@@ -1251,39 +1250,13 @@ class ToolbarDialog extends Toolbar
 
 	function getWysiwygToken( $areaId ) // {{{
 	{
-		if (!empty($this->wysiwyg) && $this->name == 'tikilink') {	// TODO remove when ckeditor can handle tikilinks
+		if (!empty($this->wysiwyg) && $this->name == 'tikilink') {
 
-			global $headerlib;
-			$headerlib->add_js("window.dialogData[$this->index] = " . json_encode($this->list) . ";", 1 + $this->index);
-			$label = addcslashes($this->label, "'");
-			$headerlib->add_js(
-<<< JS
-if (typeof window.CKEDITOR !== "undefined" && !window.CKEDITOR.plugins.get("{$this->name}")) {
-	window.CKEDITOR.config.extraPlugins += (window.CKEDITOR.config.extraPlugins ? ',{$this->name}' : '{$this->name}' );
-	window.CKEDITOR.plugins.add( '{$this->name}', {
-		init : function( editor ) {
-			var command = editor.addCommand( '{$this->name}', new window.CKEDITOR.command( editor , {
-				modes: { wysiwyg:1 },
-				exec: function(elem, editor, data) {
-				    CurrentEditorName=editor.name;
-					{$this->getSyntax( $areaId )};
-				},
-				canUndo: false
-			}));
-			editor.ui.addButton( '{$this->name}', {
-				label : '{$label}',
-				command : '{$this->name}',
-				icon: editor.config._TikiRoot + '{$this->icon}'
-			});
-
-		}
-	});
-}
-JS
-				,
-				10
+			TikiLib::lib('header')->add_js(
+				"window.dialogData[$this->index] = " . json_encode($this->list) . ";",
+				1 + $this->index
 			);
-
+			$this->setupCKEditorTool($this->getSyntax( $areaId ), $this->name, $this->label, $this->icon);
 		}
 		return $this->wysiwyg;
 	} // }}}
@@ -1384,36 +1357,8 @@ class ToolbarHelptool extends Toolbar
 
 		$name = 'tikihelp';
 
-		global $headerlib;
-		$label = addcslashes($this->label, "'");
-		$headerlib->add_js(
-<<< JS
-if (typeof window.CKEDITOR !== "undefined" && !window.CKEDITOR.plugins.get("{$name}")) {
-	window.CKEDITOR.config.extraPlugins += (window.CKEDITOR.config.extraPlugins ? ',{$name}' : '{$name}' );
-	window.CKEDITOR.plugins.add( '{$name}', {
-		init : function( editor ) {
-			var command = editor.addCommand( '{$name}', new window.CKEDITOR.command( editor , {
-				modes: { wysiwyg:1 },
-				exec: function(elem, editor, data) {
-				    CurrentEditorName=editor.name;
-					$.openEditHelp();
-					return false;
-				},
-				canUndo: false
-			}));
-			editor.ui.addButton( '{$name}', {
-				label : '{$label}',
-				command : '{$name}',
-				icon: editor.config._TikiRoot + '{$this->icon}'
-			});
+		$this->setupCKEditorTool('$.openEditHelp();', $name, $this->label, $this->icon);
 
-		}
-	});
-}
-JS
-,
-			10
-		);
 		return $name;
 	}
 
@@ -1545,35 +1490,10 @@ class ToolbarSwitchEditor extends Toolbar
 		if (!empty($this->wysiwyg)) {
 			$this->name = $this->wysiwyg;	// temp
 
-		if ($prefs['feature_wysiwyg'] == 'y' && $prefs['wysiwyg_optional'] == 'y') {
-			global $headerlib;
-			$label = addcslashes($this->label, "'");
-			$headerlib->add_js(
-<<< JS
-if (typeof window.CKEDITOR !== "undefined" && !window.CKEDITOR.plugins.get("{$this->name}")) {
-	window.CKEDITOR.config.extraPlugins += (window.CKEDITOR.config.extraPlugins ? ',{$this->name}' : '{$this->name}' );
-	window.CKEDITOR.plugins.add( '{$this->name}', {
-		init : function( editor ) {
-			var command = editor.addCommand( '{$this->name}', new window.CKEDITOR.command( editor , {
-				modes: { wysiwyg:1 },
-				exec: function(elem, editor, data) {
-				    CurrentEditorName=editor.name;
-					switchEditor('wiki', $('#$areaId').parents('form')[0]);
-				},
-				canUndo: false
-			}));
-			editor.ui.addButton( '{$this->name}', {
-				label : '{$label}',
-				command : '{$this->name}',
-				icon: editor.config._TikiRoot + '{$this->icon}'
-			});
-		}
-	});
-}
-JS
-				, 10
-			);
-		}
+			if ($prefs['feature_wysiwyg'] == 'y' && $prefs['wysiwyg_optional'] == 'y') {
+				$js = "switchEditor('wiki', $('#$areaId').parents('form')[0]);";
+				$this->setupCKEditorTool($js, $this->name, $this->label, $this->icon);
+			}
 
 		}
 		return $this->wysiwyg;
