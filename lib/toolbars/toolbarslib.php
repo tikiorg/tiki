@@ -1250,13 +1250,13 @@ class ToolbarDialog extends Toolbar
 
 	function getWysiwygToken( $areaId ) // {{{
 	{
-		if (!empty($this->wysiwyg) && $this->name == 'tikilink') {
+		if (!empty($this->wysiwyg)) {
 
 			TikiLib::lib('header')->add_js(
 				"window.dialogData[$this->index] = " . json_encode($this->list) . ";",
 				1 + $this->index
 			);
-			$this->setupCKEditorTool($this->getSyntax( $areaId ), $this->name, $this->label, $this->icon);
+			$this->setupCKEditorTool($this->getSyntax( $areaId ), $this->wysiwyg, $this->label, $this->icon);
 		}
 		return $this->wysiwyg;
 	} // }}}
@@ -1267,7 +1267,14 @@ class ToolbarDialog extends Toolbar
 			case 'tikilink':
 				$this->wysiwyg = 'tikilink';
 				break;
+			case 'objectlink':
+				$this->wysiwyg = 'objectlink';
+				break;
+			case 'table':
+				$this->wysiwyg = 'tikitable';
+				break;
 			default:
+				return $this->wysiwyg;
 		}
 
 		return $this->getWysiwygToken($areaId);
