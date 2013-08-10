@@ -62,7 +62,12 @@ class Services_ShowTikiOrg_Controller
                         $ret['status'] = 'FAIL';
                 } else {
                         $ret['status'] = $status;
-                }
+			$sitepos = strpos($infooutput, 'SITE: ');
+			$site = substr($infooutput, $sitepos + 6);
+			$site = substr($site, 0, strpos($site, ' '));
+	         	$ret['showurl'] = $site;
+			$ret['snapshoturl'] = $site . '/snapshots/';
+		}
 
 		if (!empty($command)) {
 			if ($command == 'destroy' && !TikiLib::lib('user')->user_has_permission($user, 'tiki_p_admin') && $user != $creator) {

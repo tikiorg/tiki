@@ -156,10 +156,12 @@ class Tracker_Field_ShowTikiOrg extends Tracker_Field_Abstract
 			$ret['status'] = 'FAIL';
 		} else {
 			$ret['status'] = $status;
+			$sitepos = strpos($infooutput, 'SITE: ');
+			$site = substr($infooutput, $sitepos + 6);
+			$site = substr($site, 0, strpos($site, ' '));
+			$ret['showurl'] = $site;
+			$ret['snapshoturl'] = $site . '/snapshots/';
 		}	
-
-		$ret['showurl'] = 'http://' . $ret['username'] . '-' . $ret['userid'] . '-' . $ret['id'] . '.' . $this->getOption('domain');
-		$ret['snapshoturl'] = $ret['showurl'] . '/snapshots/';
 
 		$cachelib->cacheItem($cacheKey, serialize($ret));
 
