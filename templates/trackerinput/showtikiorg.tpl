@@ -1,4 +1,4 @@
-<h5 id="showtikiorg{$field.fieldId}_{$item.itemId}" class="showactive{$field.fieldId}_{$item.itemId}" {if $field.status neq 'ACTIV'}style="display: none;"{/if}>This bug has been demonstrated on show.tiki.org</h5>
+<h5 id="showtikiorg{$field.fieldId}_{$item.itemId}{if isset($context.list_mode)}_view{/if}" class="showactive{$field.fieldId}_{$item.itemId}" {if $field.status neq 'ACTIV'}style="display: none;"{/if}>This bug has been demonstrated on show.tiki.org</h5>
 <h5 class="shownone{$field.fieldId}_{$item.itemId}" {if $field.status neq 'NONE'}style="display: none;"{/if}>Please demonstrate your bug on show.tiki.org</h5>
 {if $field.status == 'NOSSH'}
 {remarksbox type="error" title="SSH2 extension not installed" close="n"}
@@ -61,7 +61,7 @@ Version: <select name="svntag">
 <option>6.1</option>
 <option>6.0</option>
 </select>
-{button href="#showtikiorg{$field.fieldId}_{$item.itemId}" _onclick="showtikiorg_process{$field.fieldId}_{$item.itemId}('create');"  _text="{tr}Create show.tiki.org instance{/tr}"}
+{button href="#showtikiorg{$field.fieldId}_{$item.itemId}{if isset($context.list_mode)}_view{/if}" _onclick="showtikiorg_process{$field.fieldId}_{$item.itemId}('create');"  _text="{tr}Create show.tiki.org instance{/tr}"}
 </div>
 <div class="showactive{$field.fieldId}_{$item.itemId}" {if $field.status neq 'ACTIV'}style="display: none;"{/if}>
 {remarksbox type="info" title="Accessing the Tiki instance that demonstrates this bug" close="n"}
@@ -70,17 +70,17 @@ Version: <select name="svntag">
 {remarksbox type="info" title="Snapshots" close="n"}
 <p>Snapshots are database dumps of the configuration that developers can download for debugging. Once you have reproduced your bug on the show.tiki.org instance, create a snapshot that can then be downloaded by developers for further investigation.</p>
 <p>Snapshots can be accessed at: <a class="snapshoturl{$field.fieldId}_{$item.itemId}" href="http://{$field.snapshoturl|escape}" target="_blank">http://{$field.snapshoturl|escape}</a>. <strong>Note that if you get a popup asking for a username/password, please just enter "show" and "show".</strong></p>
-{button href="#showtikiorg{$field.fieldId}_{$item.itemId}" _onclick="showtikiorg_process{$field.fieldId}_{$item.itemId}('snapshot');"  _text="{tr}Create new snapshot{/tr}"}
+{button href="#showtikiorg{$field.fieldId}_{$item.itemId}{if isset($context.list_mode)}_view{/if}" _onclick="showtikiorg_process{$field.fieldId}_{$item.itemId}('snapshot');"  _text="{tr}Create new snapshot{/tr}"}
 {/remarksbox}
 {if $field.canDestroy}
-{button href="#showtikiorg{$field.fieldId}_{$item.itemId}" _onclick="showtikiorg_process{$field.fieldId}_{$item.itemId}('destroy');"  _text="{tr}Destroy this show.tiki.org instance{/tr}"}
+{button href="#showtikiorg{$field.fieldId}_{$item.itemId}{if isset($context.list_mode)}_view{/if}" _onclick="showtikiorg_process{$field.fieldId}_{$item.itemId}('destroy');"  _text="{tr}Destroy this show.tiki.org instance{/tr}"}
 {/if}
 </div>
 
 {if $field.debugmode}
 {remarksbox type="info" title="Debug Mode Information" close="n"}
-<div id="showdebugoutput{$field.fieldId}_{$item.itemId}">-{$field.status|escape}- {$field.debugoutput|escape}</div>
-{button href="#showtikiorg{$field.fieldId}_{$item.itemId}" _onclick="showtikiorg_process{$field.fieldId}_{$item.itemId}('info');"  _text="{tr}Get instance information and refresh cache{/tr}"}
+<div class="showdebugoutput{$field.fieldId}_{$item.itemId}">-{$field.status|escape}- {$field.debugoutput|escape}</div>
+{button href="#showtikiorg{$field.fieldId}_{$item.itemId}{if isset($context.list_mode)}_view{/if}" _onclick="showtikiorg_process{$field.fieldId}_{$item.itemId}('info');"  _text="{tr}Get instance information and refresh cache{/tr}"}
 {/remarksbox}
 {/if}
 {jq notonready=true}
@@ -101,7 +101,7 @@ function showtikiorg_process{{$field.fieldId}}_{{$item.itemId}}(action) {
 		type: 'POST',
 		success:  function(data) {
 			var debugoutput = data.debugoutput;
-			$('#showdebugoutput{{$field.fieldId}}_{{$item.itemId}}').html(data.debugoutput);
+			$('.showdebugoutput{{$field.fieldId}}_{{$item.itemId}}').html(data.debugoutput);
 			if (data.status == 'DISCO') {
 				$('.showdisconnected{{$field.fieldId}}_{{$item.itemId}}').show();
 				$('.showfail{{$field.fieldId}}_{{$item.itemId}}').hide();
