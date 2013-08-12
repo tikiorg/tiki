@@ -26,8 +26,8 @@ function wikiplugin_cookieconsent_info()
 			'element' => array(
 				'required' => false,
 				'name' => tra('Containing Element'),
-				'description' => tra('DOM element to contain everything (DIV, SPAN etc). Default to empty for no container.'),
-				'default' => '',
+				'description' => tra('DOM element to contain everything (DIV, SPAN etc). Default to "div", set to "none" for no container.'),
+				'default' => 'div',
 			),
 			'element_class' => array(
 				'required' => false,
@@ -35,11 +35,11 @@ function wikiplugin_cookieconsent_info()
 				'description' => tra('CSS class for above.'),
 				'default' => '',
 			),
-			'consent_error_class' => array(
+			'no_consent_class' => array(
 				'required' => false,
-				'name' => tra('cookie no consent message CSS class'),
-				'description' => tra('CSS class for no consent message.'),
-				'default' => '',
+				'name' => tra('No Consent CSS Class'),
+				'description' => tra('CSS class for no consent message. Default "wp-cookie-consent-required"'),
+				'default' => 'wp-cookie-consent-required',
 			),	
 		)
 	);
@@ -61,28 +61,20 @@ function wikiplugin_cookieconsent( $body, $params )
 	}
 	$params = array_merge($defaults, $params);
 
+	$class = $params['element_class'];
+
 	if ($feature_no_cookie) {
-		$tag1 = $tag2 = '';
-		if ($params['element']) {
-			if ($params['consent_error_class']) {
-				$tag1 = "<{$params['element']} class=\"{$params['consent_error_class']}\">";
-			} else {
-				$tag1 = "<{$params['element']}>";
-			}
-			$tag2 = "<{$params['element']}>";
-		}
 		$body = $params['no_consent_message'];
-	return $tag1 . $body . $tag2;
+		$class .= ($class ? ' ' : '') . $params['no_consent_class'];
 	}
 
 	$tag1 = $tag2 = '';
-	if ($params['element']) {
-		if ($params['element_class']) {
-			$tag1 = "<{$params['element']} class=\"{$params['element_class']}\">";
-		} else {
-			$tag1 = "<{$params['element']}>";
+	if ($params['element'] && $params['element'] !== 'none') {
+		if ($class) {
+			$class = " class=\"{$class}\"";
 		}
-		$tag2 = "<{$params['element']}>";
+		$tag1 = "<{$params['element']}$class>";
+		$tag2 = "</{$params['element']}>";
 	}
 
 	return $tag1 . $body . $tag2;

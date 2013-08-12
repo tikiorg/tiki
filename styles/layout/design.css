@@ -3344,6 +3344,11 @@ body.tiki_wiki #comments {
 	-moz-border-radius: 2px;
 
 }
+
+.wp-cookie-consent-required {
+	color: #c00;
+}
+
 /* end plugins */
 
 .magnify {
