@@ -18,8 +18,8 @@ class ProfileInstallCommand extends Command
 	protected function configure()
 	{
 		$this
-			->setName('profile:install')
-			->setDescription('Install a profile')
+			->setName('profile:apply')
+			->setDescription('Apply a profile')
 			->addArgument(
 				'profile',
 				InputArgument::REQUIRED,
@@ -35,7 +35,7 @@ class ProfileInstallCommand extends Command
 				'force',
 				null,
 				InputOption::VALUE_NONE,
-				'Re-apply profiles when already installed.'
+				'Re-apply profiles when already applied.'
 			)
 			;
 	}
@@ -67,7 +67,7 @@ class ProfileInstallCommand extends Command
 			$transaction = $tikilib->begin();
 			if ($installer->install($profile)) {
 				$transaction->commit();
-				$output->writeln('Profile installed.');
+				$output->writeln('Profile applied.');
 			} else {
 				$output->writeln("<error>Installation failed:</error>");
 
@@ -76,7 +76,7 @@ class ProfileInstallCommand extends Command
 				}
 			}
 		} else {
-			$output->writeln('<info>Profile was already installed. Nothing happened.</info>');
+			$output->writeln('<info>Profile was already applied. Nothing happened.</info>');
 		}
 	}
 }

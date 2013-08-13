@@ -73,7 +73,7 @@ if (is_file($local_php) && ! $installer->requiresUpdate()) {
 	$console->add(new Tiki\Command\UnavailableCommand('index:optimize'));
 	$console->add(new Tiki\Command\UnavailableCommand('index:catch-up'));
 	$console->add(new Tiki\Command\UnavailableCommand('profile:forget'));
-	$console->add(new Tiki\Command\UnavailableCommand('profile:install'));
+	$console->add(new Tiki\Command\UnavailableCommand('profile:apply'));
 	$console->add(new Tiki\Command\UnavailableCommand('profile:export:init'));
 }
 
