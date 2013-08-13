@@ -76,7 +76,7 @@ snapshot()
 	else
 		echo "SNAPSHOTS_DIR: http://${SUBDOMAIN}.show.tikiwiki.org/snapshots"
 	fi 
-	DATE=`date +%Y-%m-%d-%H-%M`
+	DATE=`date -u +%Y-%m-%d-%H-%M`
 	mysqldump $DB | gzip -c - > $INSTANCE_DIR/snapshots/${SUBDOMAIN}_${DATE}.sql.gz
 	#mysqldump -Qqf --skip-extended-insert $DB | gzip -c - > $INSTANCE_DIR/snapshots/${SUBDOMAIN}_${DATE}.sql.gz
 	echo "DUMPDB: http://${SUBDOMAIN}.show.tikiwiki.org/snapshots/${SUBDOMAIN}_${DATE}.sql.gz"
