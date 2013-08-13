@@ -99,7 +99,7 @@ class Tracker_Field_Files extends Tracker_Field_Abstract
 				),
 			),
 		);
-		if ($prefs['vimeo_upload'] === 'y') {
+		if (isset($prefs['vimeo_upload']) && $prefs['vimeo_upload'] === 'y') {
 			$options['FG']['params']['displayMode']['description'] = tr('Show files as object links or via a wiki plugins (img, vimeo)');
 			$options['FG']['params']['displayMode']['options']['vimeo'] = tr('Vimeo');
 		}
