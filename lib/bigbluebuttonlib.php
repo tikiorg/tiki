@@ -170,10 +170,7 @@ class BigBlueButtonLib
 			return null;
 		}
 
-		$baseUrl = $this->getBaseUrl('/client/conf/config.xml');
-		$tikilib = TikiLib::lib('tiki');
-
-		$content = $tikilib->httprequest($baseUrl);
+		$content = $this->performRequest('getDefaultConfigXML', array('random' => '1'), false);
 
 		if (! $content) {
 			return null;
@@ -186,13 +183,18 @@ class BigBlueButtonLib
 		}
 		$content = $config->getXml();
 
+		$parameters = array(
+			'meetingID' => $meetingName,
+			'configXML' => rawurlencode($content),
+		);
 		$tikilib = TikiLib::lib('tiki');
-		$client = $tikilib->get_http_client($this->getBaseUrl('/bigbluebutton/api/setConfigXML.xml'));
+		$checksum = $this->generateChecksum('setConfigXML', $parameters);
+		$client = $tikilib->get_http_client($this->getBaseUrl('/api/setConfigXML.xml') . '?');
 		$client->setParameterPost(
 			array(
 				'meetingID' => $meetingName,
-				'checksum' => sha1($meetingName . rawurlencode($content) . $prefs['bigbluebutton_server_salt']),
 				'configXML' => rawurlencode($content),
+				'checksum' => $checksum,
 			)
 		);
 
@@ -317,7 +319,7 @@ class BigBlueButtonLib
      * @param array $parameters
      * @return DOMDocument
      */
-    private function performRequest( $action, array $parameters )
+    private function performRequest( $action, array $parameters, $checkSuccess = true )
 	{
 		global $tikilib;
 
@@ -327,6 +329,10 @@ class BigBlueButtonLib
 			$dom = new DOMDocument;
 			if ( $dom->loadXML($result) ) {
 				$nodes = $dom->getElementsByTagName('returncode');
+
+				if ( ! $checkSuccess ) {
+					return $dom;
+				}
 
 				if ( $nodes->length > 0 && ($returnCode = $nodes->item(0)) && $returnCode->textContent == 'SUCCESS' ) {
 					return $dom;
@@ -348,7 +354,7 @@ class BigBlueButtonLib
 			}
 		}
 
-		$url = $this->getBaseUrl("/bigbluebutton/api/$action");
+		$url = $this->getBaseUrl("/api/$action");
 		$url .= "?" . http_build_query($parameters, '', '&');
 		return $url;
 	}
@@ -358,9 +364,8 @@ class BigBlueButtonLib
 		global $prefs;
 
 		$base = rtrim($prefs['bigbluebutton_server_location'], '/');
-		$length = strlen('/bigbluebutton');
-		if (substr($base, -$length) === '/bigbluebutton') {
-			$base = substr($base, 0, -$length);
+		if (false === strpos($base, '/bigbluebutton')) {
+			$base .= '/bigbluebutton';
 		}
 
 		$url = "$base$path";

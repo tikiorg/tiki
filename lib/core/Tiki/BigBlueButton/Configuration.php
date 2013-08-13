@@ -8,8 +8,12 @@ class Configuration
 
 	function __construct($xmlString)
 	{
-		$this->dom = new \DOMDocument;
-		$this->dom->loadXML($xmlString);;
+		if ($xmlString instanceof \DOMDocument) {
+			$this->dom = $xmlString;
+		} else {
+			$this->dom = new \DOMDocument;
+			$this->dom->loadXML($xmlString);;
+		}
 	}
 	
 	function getXml()
