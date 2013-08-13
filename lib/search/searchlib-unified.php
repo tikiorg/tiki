@@ -544,21 +544,26 @@ class UnifiedSearchLib
 	{
 		global $prefs;
 
-		if ($mode === 'formatting' && $prefs['unified_engine'] === 'elastic') {
-			return new Search_Formatter_DataSource_Trusted;
-		}
-
 		$dataSource = new Search_Formatter_DataSource_Declarative;
+
 		$this->addSources($dataSource, $mode);
 
-		if ($mode === 'formatting' && $prefs['unified_engine'] === 'mysql') {
-			$dataSource->setPrefilter(function ($fields, $entry) {
-				return array_filter($fields, function ($field) use ($entry) {
-					if (! empty($entry[$field])) {
-						return preg_match('/token[a-z]{20,}/', $entry[$field]);
-					}
+		if ($mode === 'formatting') {
+			if ($prefs['unified_engine'] === 'mysql') {
+				$dataSource->setPrefilter(function ($fields, $entry) {
+					return array_filter($fields, function ($field) use ($entry) {
+						if (! empty($entry[$field])) {
+							return preg_match('/token[a-z]{20,}/', $entry[$field]);
+						}
+					});
 				});
-			});
+			} elseif ($prefs['unified_engine'] === 'elastic') {
+				$dataSource->setPrefilter(function ($fields, $entry) {
+					return array_filter($fields, function ($field) use ($entry) {
+						return ! isset($entry[$field]);
+					});
+				});
+			}
 		}
 
 		return $dataSource;
