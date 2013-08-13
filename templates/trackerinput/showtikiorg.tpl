@@ -41,14 +41,20 @@
 Version: <select name="svntag">
 <option selected="selected">trunk</option>
 <option>11.0</option>
+<option>10.4</option>
+<option>10.3</option>
 <option>10.2</option>
 <option>10.1</option>
 <option>10.0</option>
+<option>9.6</option>
+<option>9.5</option>
 <option>9.4</option>
 <option>9.3</option>
 <option>9.2</option>
 <option>9.1</option>
 <option>9.0</option>
+<option>6.12</option>
+<option>6.11</option>
 <option>6.10</option>
 <option>6.9</option>
 <option>6.8</option>
