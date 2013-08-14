@@ -1135,7 +1135,7 @@ if ( function_exists('apache_get_version')) {
 			}
 		} else {
 			$apache_properties['RewriteBase'] = array(
-				'setting' => $rewritebase,
+				'setting' => tra('Not found'),
 				'fitness' => tra('info') ,
 				'message' => tra('You haven\'t activated .htaccess. So this check is useless. If you want to use Search Engine Friendly URLs, you will have to activate .htaccess by copying _htaccess into its place (or a symlink if supported by your Operating System). Then come back to have a look at this check again.')
 			);
