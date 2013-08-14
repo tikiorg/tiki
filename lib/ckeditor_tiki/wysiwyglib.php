@@ -30,6 +30,7 @@ class WYSIWYGLib
 				window.CKEDITOR.plugins.addExternal( "tikiplugin", "'.$tikiroot.'lib/ckeditor_tiki/plugins/tikiplugin/");',
 				5
 			);
+			$headerlib->add_css('.ui-front {z-index: 9999;}');	// so the plugin edit dialogs show up
 		}
 		if ($notallreadyloaded && !$is_html && $full_page) {
 			$headerlib->add_js(
