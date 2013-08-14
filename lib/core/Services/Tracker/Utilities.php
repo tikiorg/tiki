@@ -364,7 +364,7 @@ isTblVisible = {$field['isTblVisible']}
 isSearchable = {$field['isSearchable']}
 isPublic = {$field['isPublic']}
 isHidden = {$field['isHidden']}
-sMandatory = {$field['isMandatory']}
+isMandatory = {$field['isMandatory']}
 description = {$field['description']}
 descriptionIsParsed = {$field['descriptionIsParsed']}
 
