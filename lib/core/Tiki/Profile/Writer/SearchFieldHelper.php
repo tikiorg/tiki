@@ -11,14 +11,19 @@ class Tiki_Profile_Writer_SearchFieldHelper
 
 	function addGlobalSource(Search_GlobalSource_Interface $source)
 	{
-		if ($source instanceof Tiki_Profile_Writer_ReferenceProvider) {
-			$this->mapping = array_merge($this->mapping, $source->getReferenceMap());
-		}
+		$this->addProvider($source);
 	}
 
 	function addContentSource($objectType, Search_ContentSource_Interface $source)
 	{
-		$this->addGlobalSource($source);
+		$this->addProvider($source);
+	}
+
+	private function addProvider($source)
+	{
+		if ($source instanceof Tiki_Profile_Writer_ReferenceProvider) {
+			$this->mapping = array_merge($this->mapping, $source->getReferenceMap());
+		}
 	}
 
 	function getTypeForField($field)
