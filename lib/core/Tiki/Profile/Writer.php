@@ -197,7 +197,7 @@ class Tiki_Profile_Writer
 	function getReference($type, $id, array $parameters = array())
 	{
 		// If we are provided with an anonymous function to handle special cases
-		if (is_callable($type)) {
+		if ($type instanceof Closure) {
 			return call_user_func($type, $this, $id, $parameters);
 		} elseif (method_exists('Tiki_Profile_Writer_Helper', $type)) {
 			return Tiki_Profile_Writer_Helper::$type($this, $id, $parameters);
