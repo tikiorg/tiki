@@ -2376,6 +2376,10 @@ class UsersLib extends TikiLib
 	function get_group_users($group, $offset = 0, $max = -1, $what = 'login', $sort_mode = 'login_asc')
 	{
 		$w = $what=='*'? 'uu.*, ug.`created`, ug.`expire` ': "uu.`$what`";
+
+		if (strpos($sort_mode, 'created_') !== false) {
+			$sort_mode = 'ug.' . $sort_mode;	// avoid ambiguity of created column
+		}
 		$query = "select $w from `users_users` uu, `users_usergroups` ug where uu.`userId`=ug.`userId` and `groupName`=? order by " .
 						$this->convertSortMode($sort_mode);
 
