@@ -7,6 +7,7 @@
 
 use Symfony\Component\Console\Input\ArgvInput;
 
+define('TIKI_CONSOLE', 1);
 declare(ticks = 1); // how often to check for signals
 
 if (function_exists('pcntl_signal')) {

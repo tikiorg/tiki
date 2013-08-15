@@ -201,7 +201,10 @@ $initializer->setInitializeCallback(function ($db) {
 	global $db_table_prefix, $common_users_table_prefix, $db_tiki;
 
 	$db->setServerType($db_tiki);
-	$db->setErrorHandler(new TikiDb_LegacyErrorHandler);
+
+	if (! defined('TIKI_CONSOLE')) {
+		$db->setErrorHandler(new TikiDb_LegacyErrorHandler);
+	}
 
 	if ( isset( $db_table_prefix ) ) {
 		$db->setTablePrefix($db_table_prefix);
