@@ -113,6 +113,13 @@ create()
 EOF
 
 	chown ctrl.www-data $INSTANCE_DIR/db/local.php
+
+	if [[ -f $INSTANCE_DIR/installer/shell.php ]]
+	then
+		cd $INSTANCE_DIR
+		/usr/bin/php installer/shell.php install
+	fi
+
 	/bin/rm $LOCKSDIR/lock_${TUSERID}_${ID} || (echo "FAIL: Failed to suppress lock file $LOCKSDIR/lock_${TUSERID}_${ID}"; exit 1)
 }
 
