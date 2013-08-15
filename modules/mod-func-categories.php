@@ -25,27 +25,29 @@ function module_categories_info()
 			'type' => array(
 				'name' => tra('Object type filter'),
 				'description' => tra('Object type filter to apply when accessing a linked category. Example values:') . ' wiki page, article, faq, blog, image gallery, image, file gallery, tracker, trackerItem, quiz, poll, survey, sheet',
-				'filter' => 'striptags'
+				'filter' => 'striptags',
 			),
 			'deep' => array(
 				'name' => tra('Deep'),
 				'description' => tra('Show subcategories objects when accessing a linked category. Possible values: on (default), off.'),
-				'filter' => 'word'
+				'filter' => 'word',
 			),
 			'categId' => array(
 				'name' => tra('Category ID'),
 				'description' => tra('Limits displayed categories to a subtree of categories starting with the category with the given ID. Example value: 11. Default: 0 (don\'t limit display).'),
-				'filter' => 'int'
+				'filter' => 'int',
+				'profile_reference' => 'category',
 			),
 			'categParentIds' => array(
 				'name' => tra('Show these categories and their children'),
 				'description' => tra('Show only these categories and the immediate child categories of these in the order the parameter specifies. Example values: 3,5,6.'),
-				'filter' => 'striptags'
+				'filter' => 'striptags',
+				'profile_reference' => 'category',
 			),
 			'selflink' => array(
 				'name' => tra('Category links to a page named as the category'),
 				'description' => 'y|n .'.tra('If y, category links to a page named as the category'),
-				'filter' => 'alpha'
+				'filter' => 'alpha',
 			),
 		),
 	);

@@ -24,12 +24,13 @@ function module_calendar_new_info()
 		'params' => array(
 			'calIds' => array(
 				'name' => tra('Calendars filter'),
-				'description' => tra('If set to a list of calendar identifiers, restricts the events to those in the identified calendars. Identifiers are separated by vertical bars ("|"), commas (",") or colons (":"). Example values: "13", "4,7", "31:49". Not set by default.')
+				'description' => tra('If set to a list of calendar identifiers, restricts the events to those in the identified calendars. Identifiers are separated by vertical bars ("|"), commas (",") or colons (":"). Example values: "13", "4,7", "31:49". Not set by default.'),
+				'profile_reference' => 'calendar',
 			),
 			'month_delta' => array(
 				'name' => tra('Displayed month (relative)'),
 				'description' => tra('Distance in month to the month to display. A distance of -1 would display the previous month. Setting this option implies a calendar view type with a month time span. Example values: 2, 0, -2, -12.'),
-				'filter' => 'int'
+				'filter' => 'int',
 			),
 			'viewlist' => array(
 				'name' => tra('View type'),
@@ -73,7 +74,7 @@ function module_calendar_new_info()
 				'name' => tra('View navigation bar'),
 				'description' => 'y|n|partial',
 				'filter' => 'word',
-				'default' => 'y'
+				'default' => 'y',
 			)
 		)
 	);

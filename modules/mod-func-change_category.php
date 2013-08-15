@@ -25,11 +25,12 @@ function module_change_category_info()
 			'id' => array(
 				'name' => tra('Category identifier'),
 				'description' => tra('Changes the root of the displayed categories from default "TOP" to the category with the given identifier.') . " " . tra('Note that the root category is not displayed.') . " " . tra('Example value: 13.') . " " . tra('Defaults to 0 (root).'),
-				'filter' => 'int'
+				'filter' => 'int',
+				'profile_reference' => 'category',
 			),
 			'notop' => array(
 				'name' => tra('No top'),
-				'description' => tra('In non-detailed view, disallow uncategorizing. Example value: 1.') . " " . tra('Not set by default.')
+				'description' => tra('In non-detailed view, disallow uncategorizing. Example value: 1.') . " " . tra('Not set by default.'),
 			),
 			'path' => array(
 				'name' => tra('Display path'),

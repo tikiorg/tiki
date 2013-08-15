@@ -24,12 +24,12 @@ function module_directory_top_sites_info()
 			'desc' => array(
 				'name' => tra('Show description'),
 				'description' => tra('If set to "y", the description of the directory site appears.') . " " . tr('Default: "n".'),
-				'filter' => 'word'
+				'filter' => 'word',
 			),
 			'maxdesc' => array (
 				'name' => tra('Maximum length of description'),
 				'description' => tra('If desc = "y", use maxdesc to set the maximum length of the directory site (in characters). Leave blank to set no maximum (show the entire description).') . " " . tr('Default: blank.'),
-				'filter' => 'int'
+				'filter' => 'int',
 			)
 		),
 		'common_params' => array('nonums')

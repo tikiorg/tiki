@@ -26,7 +26,9 @@ function module_last_podcasts_info()
 				'required' => false,
 				'name' => tra('File galleries IDs'),
 				'description' => tra('List of IDs of file galleries of type "Podcast (Audio)". Identifiers are separated by a colon (":"). If none, all file galleries will be scanned.') . ' ' . tra('Example value:') . ' 1:3. ',
-				'filter' => 'int'
+				'filter' => 'int',
+				'separator' => ':',
+				'profile_reference' => 'file_gallery',
 			),
 			'width' => array(
 				'required' => false,
@@ -54,14 +56,14 @@ function module_last_podcasts_info()
 				'name' => tra('Bottom Link URL Text'),
 				'description' => tra('Text for link if Bottom Link URL is set.'),
 				'default' => tra('More Podcasts'),
-				'filter' => 'striptags'
+				'filter' => 'striptags',
 			),
 			'verbose' => array(
 				'required' => false,
 				'name' => tra('Verbose'),
 				'description' => 'y|n ' . tra('Display description of podcast below player if "y", and on title mouseover if "n".'),
 				'default' => 'y',
-				'filter' => 'striptags'
+				'filter' => 'striptags',
 			)
 		)
 	);
@@ -78,11 +80,10 @@ function module_last_podcasts($mod_reference, $module_params)
 	$filegallib = TikiLib::lib('filegal');
 
 	if (isset($module_params['galleryId'])) {
-		if (strstr($module_params['galleryId'], ':')) {
-			$mediafiles = $filegallib->get_files(0, $mod_reference["rows"], 'created_desc', '', explode(':', $module_params['galleryId']));
-		} else {
-			$mediafiles = $filegallib->get_files(0, $mod_reference["rows"], 'created_desc', '', $module_params['galleryId']);
+		if (is_string($module_params['galleryId'])) {
+			$module_params['galleryId'] = explode(':', $module_params['galleryId']);
 		}
+		$mediafiles = $filegallib->get_files(0, $mod_reference["rows"], 'created_desc', '', $module_params['galleryId']);
 	} else {
 		$mediafiles = $filegallib->list_files(0, $mod_reference["rows"], 'created_desc', '');
 	}

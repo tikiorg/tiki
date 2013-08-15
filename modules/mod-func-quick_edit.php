@@ -45,7 +45,8 @@ function module_quick_edit_info()
 			),
 			'addcategId' => array(
 				'name' => tra('Category to preselect'),
-				'description' => tra('If set, pages created through the module have this category prechecked to be categorized in.') . ' ' . tra('Not set by default.')
+				'description' => tra('If set, pages created through the module have this category prechecked to be categorized in.') . ' ' . tra('Not set by default.'),
+				'profile_reference' => 'category',
 			),
 			'customTip' => array(
 				'name' => tra('Tip to be shown'),

@@ -24,12 +24,14 @@ function module_last_tracker_comments_info()
 			'trackerId' => array(
 				'name' => tra('Tracker identifier'),
 				'description' => tra('If set to a tracker identifier, only displays the comments on the given tracker.') . " " . tra('Example value: 13.') . " " . tr('Not set by default.'),
-				'filter' => 'int'
+				'filter' => 'int',
+				'profile_reference' => 'tracker',
 			),
 			'itemId' => array(
 				'name' => tra('Item identifier'),
 				'description' => tra('If set to an item identifier, only displays the comments on the given item.') . " " . tra('Example value: 13.') . " " . tr('Not set by default.'),
-				'filter' => 'int'
+				'filter' => 'int',
+				'profile_reference' => 'tracker_item',
 			)
 		),
 		'common_params' => array('rows', 'nonums')

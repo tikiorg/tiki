@@ -25,27 +25,29 @@ function module_last_tracker_items_info()
 				'name' => tra('Tracker identifier'),
 				'description' => tra('Identifier of the tracker from which items are listed.') . " " . tra('Example value: 13.'),
 				'filter' => 'int',
-				'required' => true
+				'required' => true,
+				'profile_reference' => 'tracker',
 			),
 			'fieldId' => array(
 				'name' => tra('Field identifier'),
 				'description' => tra('Identifier of the field from which values are listed. If Field name is set, this parameter is ignored.') . " " . tra('Example value: 13.'),
-				'filter' => 'int'
+				'filter' => 'int',
+				'profile_reference' => 'tracker_field',
 			),
 			'name' => array(
 				'name' => tra('Field name'),
 				'description' => tra('Name of the field from which values are listed.') . " " . tra('Example value: age.'),
-				'filter' => 'striptags'
+				'filter' => 'striptags',
 			),
 			'sort_mode' => array(
 				'name' => tra('Sort'),
 				'description' => tra('Specifies how the items should be sorted.') . " " . tra('Possible values include created and created_asc (equivalent), created_desc, status, lastModif, createdBy and lastModifBy. Unless "_desc" is specified, the sort is ascending. "created" sorts on item creation date. "lastModif" sorts on the last modification date of items. "lastModif_desc" sorts in descending order of last modification date.')  . ' ' . tra('Default value:') . " created_desc",
-				'filter' => 'striptags'
+				'filter' => 'striptags',
 			),
 			'status' => array(
 				'name' => tra('Status filter'),
 				'description' => tra('If set, limits the listed items to those with the given statuses. Values are combinations of "o" (open), "p" (pending) and "c" (closed). Possible values:') . ' opc, oc, op, pc, o, p or c. ' . tra('Default value:') . ' opc',
-				'filter' => 'word'
+				'filter' => 'word',
 			)
 		),
 		'common_params' => array('rows', 'nonums')

@@ -75,4 +75,54 @@ class Tiki_Profile_InstallHandler_Module extends Tiki_Profile_InstallHandler
 	{
 		return str_replace('_modules', '', $zone_id);
 	}
+
+	public static function export(Tiki\Profile\Writer $writer, $moduleId)
+	{
+		$modlib = TikiLib::lib('mod');
+
+		if (! $info = $modlib->get_assigned_module($moduleId)) {
+			return false;
+		}
+
+		$spec = $modlib->get_module_info($info['name']);
+		TikiLib::parse_str($info['params'], $module_params);
+
+		foreach ($module_params as $param => & $value) {
+			if (isset($spec['params'][$param])) {
+				$def = $spec['params'][$param];
+
+				if (isset($def['profile_reference'])) {
+					$value = self::handleValueExport($writer, $def, $value);
+				}
+			}
+		}
+
+		$info['params'] = $module_params;
+
+		$data = array(
+			'name' => $info['name'],
+			'position' => $info['position'],
+			'order' => $info['ord'],
+			'cache' => $info['cache_time'],
+			'rows' => $info['rows'],
+			'groups' => unserialize($info['groups']),
+			'params' => $info['params'],
+		);
+
+		if ($custom = $modlib->get_user_module($info['name'])) {
+			$data['custom'] = $custom['data'];
+			$data['parse'] = $custom['parse'];
+		}
+
+		$writer->addObject('module', $moduleId, $data);
+
+		return true;
+	}
+
+	private static function handleValueExport($writer, $def, $value)
+	{
+		$value = $writer->getReference($def['profile_reference'], $value);
+
+		return $value;
+	}
 }

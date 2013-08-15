@@ -25,6 +25,7 @@ function module_quick_search_info()
 				'description' => tra('Limit search results to a specific category. Enter the comma separated list of category IDs to include in the selector. Single category will display no controls.'),
 				'filter' => 'digits',
 				'separator' => ',',
+				'profile_reference' => 'category',
 			),
 		),
 		'common_params' => array('rows'),

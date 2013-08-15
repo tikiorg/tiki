@@ -24,11 +24,13 @@ function module_menu_info()
 				'name' => tra('Menu'),
 				'description' => tra('Identifier of a menu (from tiki-admin_menus.php)'),
 				'filter' => 'int',
+				'profile_reference' => 'menu',
 			),
 			'structureId' => array(
 				'name' => tra('Structure'),
 				'description' => tra('Identifier of a structure of wiki pages (name or number from tiki-admin_structures.php)'),
 				'filter' => 'text',
+				'profile_reference' => 'structure',
 			),
 			'type' => array(
 				'name' => tra('Type'),

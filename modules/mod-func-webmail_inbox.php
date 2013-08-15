@@ -39,42 +39,50 @@ function module_webmail_inbox_info()
 			'trackerId' => array(
 				'name' => tra('Tracker Id'),
 				'description' => tra('GroupMail: Tracker Id (to store GroupMail activity)'),
-				'filter' => 'int'
+				'filter' => 'int',
+				'profile_reference' => 'tracker',
 			),
 			'fromFId' => array(
 				'name' => tra('From Field Id'),
 				'description' => tra('GroupMail: From Field (Id of field in tracker to store email From header)'),
-				'filter' => 'int'
+				'filter' => 'int',
+				'profile_reference' => 'tracker_field',
 			),
 			'subjectFId' => array(
 				'name' => tra('Subject Field Id'),
 				'description' => tra('GroupMail: Subject Field (Id of field in tracker to store email Subject header)'),
-				'filter' => 'int'
+				'filter' => 'int',
+				'profile_reference' => 'tracker_field',
 			),
 			'messageFId' => array(
 				'name' => tra('Message Field Id'),
 				'description' => tra('GroupMail: Message Field (Id of field in tracker to store email message identifier)'),
-				'filter' => 'int'
+				'filter' => 'int',
+				'profile_reference' => 'tracker_field',
 			),
 			'contentFId' => array(
 				'name' => tra('Content Field Id'),
 				'description' => tra('GroupMail: Content Field (Id of field in tracker to store email message body content)'),
-				'filter' => 'int'
+				'filter' => 'int',
+				'profile_reference' => 'tracker_field',
 			),
 			'accountFId' => array(
 				'name' => tra('Account Field Id'),
 				'description' => tra('GroupMail: Account Field (Id of field in tracker to store Webmail account name)'),
-				'filter' => 'int'
+				'filter' => 'int',
+				'profile_reference' => 'tracker_field',
 			),
 			'datetimeFId' => array(
 				'name' => tra('DateTime Field Id'),
 				'description' => tra('GroupMail: Date Time Field (Id of field in tracker to store email sent timestamp)'),
-				'filter' => 'int'
+				'filter' => 'int',
+				'profile_reference' => 'tracker_field',
 			),
 			'operatorFId' => array(
 				'name' => tra('Operator Field Id'),
 				'description' => tra('GroupMail: Operator Field (Id of field in tracker to store operator name (username))'),
-				'filter' => 'int'
+				'filter' => 'int',
+				'profile_reference' => 'tracker_field',
 			),
 			'maxlen' => array(
 				'name' => tra('Maximum length'),

@@ -23,11 +23,12 @@ function module_last_blog_posts_info()
 		'params' => array(
 			'nodate' => array(
 				'name' => tra('No date'),
-				'description' => tra('If set to "y", the date of posts is not displayed in the module box.') . " " . tra('Default: "n".')
+				'description' => tra('If set to "y", the date of posts is not displayed in the module box.') . " " . tra('Default: "n".'),
 			),
 			'blogid' => array(
 				'name' => tra('Blog identifier'),
-				'description' => tra('If set to a blog identifier, restricts the blog posts to those in the identified blog.') . " " . tra('Example value: 13.') . " " . tra('Not set by default.')
+				'description' => tra('If set to a blog identifier, restricts the blog posts to those in the identified blog.') . " " . tra('Example value: 13.') . " " . tra('Not set by default.'),
+				'profile_reference' => 'blog',
 			)
 		),
 		'common_params' => array('nonums', 'rows')

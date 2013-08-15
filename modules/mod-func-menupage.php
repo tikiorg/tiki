@@ -25,6 +25,7 @@ function module_menupage_info()
 				'description' => tra('Page to display in the menu. Example value: HomePage.'),
 				'filter' => 'pagename',
 				'required' => true,
+				'profile_reference' => 'wiki_page',
 			),
 			'use_namespace' => array(
 				'name' => tra('Use default namespace'),

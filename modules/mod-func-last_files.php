@@ -24,7 +24,9 @@ function module_last_files_info()
 			'galleryId' => array(
 				'name' => tra('Gallery identifiers'),
 				'description' => tra('If set to a set of file gallery identifiers, restricts the files to those in the identified galleries. The value is a colon-separated sequence of integers.') . " " . tra('Example value: 13, 2:13, 1:2:3:5:6.') . " " . tra('Not set by default.'),
-				'filter' => 'int'
+				'filter' => 'int',
+				'separator' => ':',
+				'profile_reference' => 'file_gallery',
 			),),
 		'common_params' => array('nonums', 'rows')
 	);
@@ -39,11 +41,10 @@ function module_last_files($mod_reference, $module_params)
 	global $smarty;
 	$filegallib = TikiLib::lib('filegal');
 	if (isset($module_params["galleryId"])) {
-		if (strstr($module_params['galleryId'], ':')) {
-			$ranking = $filegallib->get_files(0, $mod_reference["rows"], 'created_desc', '', explode(':', $module_params['galleryId']));
-		} else {
-			$ranking = $filegallib->get_files(0, $mod_reference["rows"], 'created_desc', '', $module_params["galleryId"]);
+		if (is_string($module_params['galleryId'])) {
+			$module_params['galleryId'] = explode(':', $module_params['galleryId']);
 		}
+		$ranking = $filegallib->get_files(0, $mod_reference["rows"], 'created_desc', '', $module_params["galleryId"]);
 	} else {
 		global $prefs;
 		$ranking = $filegallib->get_files(0, $mod_reference["rows"], 'created_desc', '', $prefs['fgal_root_id'], false, false, false, true, false, false, false, true);

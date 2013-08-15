@@ -26,17 +26,18 @@ function module_last_category_objects_info()
 				'description' => tra('Identifier of the category from which objects are listed. Objects merely in child categories will not be displayed.') .
 								" " . tra('Example value: 13.'),
 				'filter' => 'int',
-				'required' => true
+				'required' => true,
+				'profile_reference' => 'category',
 			),
 			'maxlen' => array(
 				'name' => tra('Maximum length'),
 				'description' => tra('Maximum number of characters in object names allowed before truncating.'),
-				'filter' => 'int'
+				'filter' => 'int',
 			),
 			'type' => array(
 				'name' => tra('Object type filter'),
 				'description' => tra('Type of the objects to list. Example values:') . ' *, wiki page, article, faq, blog, image gallery, image, file gallery, tracker, trackerItem, quiz, poll, survey, sheet. ' . tra('Default value:') . ' wiki page',
-				'filter' => 'striptags'
+				'filter' => 'striptags',
 			)
 		),
 		'common_params' => array('rows')

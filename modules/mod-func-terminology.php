@@ -25,7 +25,8 @@ function module_terminology_info()
 				'name' => tra('Root category'),
 				'description' => tra('All terms will automatically be put in that category. ')
 												. tra('Note that the category must already exist. ')
-												. tra('Defaults to \'Term\'')
+												. tra('Defaults to \'Term\''),
+				'profile_reference' => 'category',
 			),
 		)
 	);

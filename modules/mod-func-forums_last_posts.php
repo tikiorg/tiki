@@ -23,12 +23,13 @@ function module_forums_last_posts_info()
 		'params' => array(
 			'topics' => array(
 				'name' => tra('Topics only'),
-				'description' => tra('If set to "y", only displays topics.') . " " . tr('Not set by default.')
+				'description' => tra('If set to "y", only displays topics.') . " " . tr('Not set by default.'),
 				),
 			'forumId' => array(
 				'name' => tra('List of forum identifiers'),
 				'description' => tra('If set to a list of forum identifiers, restricts the posts to those in the identified forums. Identifiers are separated by colons (":").') . " " . tra('Example values:') . '"13", "31:49". ' . tra('Not set by default.'),
-				'separator' => ':'
+				'separator' => ':',
+				'profile_reference' => 'forum',
 			),
 			'date' => array(
 				'name' => tra('Show date'),
