@@ -27,7 +27,7 @@ class TWVersion
 		$this->branch 	= 'stable';
 
 		// Set everything else, including defaults.
-		$this->version 	= '11.0';	// needs to have no spaces for releases
+		$this->version 	= 'SVN pre 11.1';	// needs to have no spaces for releases
 		$this->star	= 'TBA';
 		$this->releases	= array();
 
