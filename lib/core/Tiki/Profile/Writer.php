@@ -209,7 +209,7 @@ class Tiki_Profile_Writer
 		if (is_array($id)) {
 			$parent = $this;
 			return array_map(
-				function ($value) use ($type, $parent) {
+				function ($value) use ($type, $parent, $parameters) {
 					return $parent->getReference($type, $value, $parameters);
 				},
 				$id
