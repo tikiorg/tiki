@@ -35,7 +35,7 @@ class Tiki_Profile_Writer_Helper
 		$matches = WikiParser_PluginMatcher::match($content);
 
 		// Handle known parameters for plugins
-		$justReplace = false;
+		$justReplaced = false;
 		foreach ($matches as $match) {
 			if ($justReplaced) {
 				$justReplaced = false;
@@ -110,7 +110,7 @@ class Tiki_Profile_Writer_Helper
 		$argumentParser = new WikiParser_PluginArgumentParser;
 		$matches = WikiParser_PluginMatcher::match($content);
 
-		$justReplace = false;
+		$justReplaced = false;
 		foreach ($matches as $match) {
 			if ($justReplaced) {
 				$justReplaced = false;
