@@ -27,9 +27,14 @@ class SocialLib
 		return $this->getRelations('follow.invert', $user);
 	}
 
-	function listRequests($user)
+	function listIncomingRequests($user)
 	{
 		return $this->getRelations('request.invert', $user);
+	}
+
+	function listOutgoingRequests($user)
+	{
+		return $this->getRelations('request', $user);
 	}
 
 	function addFriend($user, $newFriend)
@@ -141,9 +146,10 @@ class SocialLib
 
 	function removeFriend($user, $oldFriend)
 	{
-		$follow = $this->getRelation('follow', $user, $oldFriend);;
-		$followInvert = $this->getRelation('follow.invert', $user, $oldFriend);;
-		$request = $this->getRelation('request.invert', $user, $oldFriend);;
+		$follow = $this->getRelation('follow', $user, $oldFriend);
+		$followInvert = $this->getRelation('follow.invert', $user, $oldFriend);
+		$request = $this->getRelation('request', $user, $oldFriend);
+		$requestInvert = $this->getRelation('request.invert', $user, $oldFriend);
 
 		if ($follow) {
 			$this->relationlib->remove_relation($follow);
@@ -153,8 +159,9 @@ class SocialLib
 				$this->relationlib->remove_relation($followInvert);
 			}
 			return true;
-		} elseif ($request) {
+		} elseif ($request || $requestInvert) {
 			$this->relationlib->remove_relation($request);
+			$this->relationlib->remove_relation($requestInvert);
 			return true;
 		} else {
 			return false;

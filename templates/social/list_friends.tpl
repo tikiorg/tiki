@@ -1,3 +1,4 @@
+<div class="friend-container">
 <ul class="friend-list">
 	{foreach from=$friends item=friend}
 		<li class="clear">
@@ -8,10 +9,10 @@
 		<li>{tr}You do not have friends.{/tr}</li>
 	{/foreach}
 </ul>
-{if $requests|count > 0}
-	<p>{tr}Pending requests:{/tr}
+{if $incoming|count > 0}
+	<p>{tr}Incoming requests:{/tr}
 	<ul class="request-list">
-		{foreach from=$requests item=candidate}
+		{foreach from=$incoming item=candidate}
 			<li class="clear">
 				{$candidate.user|userlink}
 				<a class="floatright remove-friend" href="{service controller=social action=remove_friend friend=$candidate.user}" data-confirm="{tr _0=$candidate.user}Do you really want to remove %0?{/tr}">{icon _id=cross alt="{tr}Reject{/tr}"}</a>
@@ -23,4 +24,16 @@
 		{/foreach}
 	</ul>
 {/if}
+{if $outgoing|count > 0}
+	<p>{tr}Still waiting for approval:{/tr}
+	<ul class="request-list">
+		{foreach from=$outgoing item=candidate}
+			<li class="clear">
+				{$candidate.user|userlink}
+				<a class="floatright remove-friend" href="{service controller=social action=remove_friend friend=$candidate.user}" data-confirm="{tr _0=$candidate.user}Do you really want to cancel request for %0?{/tr}">{icon _id=cross alt="{tr}Cancel{/tr}"}</a>
+			</li>
+		{/foreach}
+	</ul>
+{/if}
 <button class="add-friend">{tr}Add Friend{/tr}</button>
+</div>

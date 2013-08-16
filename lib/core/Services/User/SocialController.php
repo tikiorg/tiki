@@ -25,11 +25,13 @@ class Services_User_SocialController
 	{
 		global $user;
 		$friends = $this->lib->listFriends($user);
-		$requests = $this->lib->listRequests($user);
+		$incoming = $this->lib->listIncomingRequests($user);
+		$outgoing = $this->lib->listOutgoingRequests($user);
 
 		return array(
 			'friends' => $friends,
-			'requests' => $requests,
+			'incoming' => $incoming,
+			'outgoing' => $outgoing,
 		);
 	}
 
