@@ -10,7 +10,7 @@ require_once ('tiki-setup.php');
 if (!empty($tikiMonitorRestriction)) {
 	if (is_array($tikiMonitorRestriction)) {
 		if (isset($_SERVER['HTTP_X_FORWARDED_FOR']) && !empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
-			$aListIp = explode(' ', $_SERVER['HTTP_X_FORWARDED_FOR']);
+			$aListIp = explode(',', $_SERVER['HTTP_X_FORWARDED_FOR']);
 			$sIpToCheck = $aListIp[0];
 		} elseif (isset($_SERVER['REMOTE_ADDR']) && !empty($_SERVER['REMOTE_ADDR'])) {
 			$sIpToCheck = $_SERVER['REMOTE_ADDR'];
