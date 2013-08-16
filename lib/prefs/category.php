@@ -120,7 +120,7 @@ function prefs_category_list()
             'description' => tra(''),
 			'type' => 'flag',
 			'default' => 'y',
-			),
+		),
 		'category_morelikethis_mincommon_max' => array(
 			'name' => tra('Maximum of objects more like this, otherwise use the default max records'),
             'description' => tra(''),
@@ -128,7 +128,16 @@ function prefs_category_list()
 			'size' => 3,
 			'filter' => 'int',
 			'default' => 0,
-			),
+		),
+		'category_custom_facets' => array(
+			'name' => tr('Generate custom facets from categories'),
+			'description' => tr('Comma separated list of category IDs.'),
+			'type' => 'text',
+			'size' => 15,
+			'filter' => 'int',
+			'separator' => ',',
+			'default' => '',
+		),
 	);
 }
 

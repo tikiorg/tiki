@@ -162,6 +162,7 @@ $("#log-rebuild").click(function(){
 
 		{tab name="{tr}Search Results{/tr}"}
 			{preference name=search_use_facets}
+			{preference name=category_custom_facets}
 			
 			<fieldset>
 				<legend>{tr}Select the items to display on the search results page:{/tr}</legend>

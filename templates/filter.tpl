@@ -102,7 +102,7 @@
 
 {{if $prefs.feature_categories eq 'y'}}
 		var categoryInput = $('.category-wizard', this).fancy_filter('init', {
-			map: {{$filter_categmap}}
+			map: {{$filter_categmap|json_encode}}
 		});
 
 		var categoryPicker = $('.category-picker', this).dialog({

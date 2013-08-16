@@ -1761,5 +1761,12 @@ class CategLib extends ObjectLib
 		$ret = array_unique($ret);
 		return $ret;
 	}
+	
+	function getCustomFacets()
+	{
+		$list = array_filter(array_map('intval', $this->get_preference('category_custom_facets', array(), true)));
+
+		return $list;
+	}
 }
 $categlib = new CategLib;

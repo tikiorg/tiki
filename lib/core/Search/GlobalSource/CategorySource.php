@@ -17,7 +17,7 @@ class Search_GlobalSource_CategorySource implements Search_GlobalSource_Interfac
 
 	function getFacets()
 	{
-		return array(
+		$facets = array(
 			Search_Query_Facet_Term::fromField('deep_categories')
 				->setLabel(tr('Category Tree'))
 				->setRenderCallback(array($this->categlib, 'get_category_name')),
@@ -25,19 +25,42 @@ class Search_GlobalSource_CategorySource implements Search_GlobalSource_Interfac
 				->setLabel(tr('Categories'))
 				->setRenderCallback(array($this->categlib, 'get_category_name')),
 		);
+
+		foreach ($this->categlib->getCustomFacets() as $categId) {
+			$facets[] = Search_Query_Facet_Term::fromField("categories_under_{$categId}")
+				->setLabel($this->categlib->get_category_name($categId))
+				->setRenderCallback(array($this->categlib, 'get_category_name'));
+			$facets[] = Search_Query_Facet_Term::fromField("deep_categories_under_{$categId}")
+				->setLabel(tr('%0 (Tree)', $this->categlib->get_category_name($categId)))
+				->setRenderCallback(array($this->categlib, 'get_category_name'));
+		}
+
+		return $facets;
 	}
 
 	function getReferenceMap()
 	{
-		return array(
+		$list = array(
 			'categories' => 'category',
 			'deep_categories' => 'category',
 		);
+		foreach ($this->categlib->getCustomFacets() as $categId) {
+			$list["categories_under_{$categId}"] = 'category';
+			$list["deep_categories_under_{$categId}"] = 'category';
+		}
+
+		return $list;
 	}
 
 	function getProvidedFields()
 	{
-		return array('categories', 'deep_categories');
+		$list = array('categories', 'deep_categories');
+		foreach ($this->categlib->getCustomFacets() as $categId) {
+			$list[] = "categories_under_{$categId}";
+			$list[] = "deep_categories_under_{$categId}";
+		}
+
+		return $list;
 	}
 
 	function getGlobalFields()
@@ -69,10 +92,25 @@ class Search_GlobalSource_CategorySource implements Search_GlobalSource_Interfac
 			$deepcategories = $this->getWithParent($categories);
 		}
 
-		return array(
+		$out = array(
 			'categories' => $typeFactory->multivalue($categories),
 			'deep_categories' => $typeFactory->multivalue($deepcategories),
 		);
+
+		$self = $this;
+		foreach ($this->categlib->getCustomFacets() as $rootId) {
+			$filtered = array_filter($categories, function ($category) use ($self, $rootId) {
+				return $category != $rootId && $self->hasParent($category, $rootId);
+			});
+			$deepfiltered = array_filter($deepcategories, function ($category) use ($self, $rootId) {
+				return $category != $rootId && $self->hasParent($category, $rootId);
+			});
+
+			$out["categories_under_{$rootId}"] = $typeFactory->multivalue($filtered);
+			$out["deep_categories_under_{$rootId}"] = $typeFactory->multivalue($deepfiltered);
+		}
+
+		return $out;
 	}
 
 	private function getWithParent($categories)
@@ -94,6 +132,16 @@ class Search_GlobalSource_CategorySource implements Search_GlobalSource_Interfac
 		}
 
 		return $this->parentCategories[$categId];
+	}
+
+	function hasParent($category, $parent)
+	{
+		if ($category == 'orphan') {
+			return false;
+		}
+
+		$parents = $this->getParents($category);
+		return in_array($parent, $parents);
 	}
 }
 
