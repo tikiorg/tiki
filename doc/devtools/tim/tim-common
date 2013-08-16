@@ -11,6 +11,7 @@ if [[ -f /etc/tim.conf ]]; then . /etc/tim.conf ;fi
 if [[ -f ~/.tim.conf ]]; then . ~/.tim.conf ;fi
 
 # Set our common variables
+if [[ -z $TUSER ]] || [[ "$TUSER" == "" ]]; then TUSER="user"; fi
 SUBDOMAIN=$TUSER-$TUSERID-$ID
 DB=${TUSER}_${TUSERID}_${ID}
 INSTANCE_DIR=$WEBROOT/$SUBDOMAIN
