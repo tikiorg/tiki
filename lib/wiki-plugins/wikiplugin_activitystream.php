@@ -37,6 +37,7 @@ function wikiplugin_activitystream($data, $params)
 	$matches = WikiParser_PluginMatcher::match($data);
 
 	$builder = new Search_Query_WikiBuilder($query);
+	$builder->enableAggregate();
 	$builder->apply($matches);
 
 	$query->setOrder('modification_date_desc');
@@ -47,11 +48,13 @@ function wikiplugin_activitystream($data, $params)
 
 	$result = $query->search($index);
 
+	$paginationArguments = $builder->getPaginationArguments();
+
 	$resultBuilder = new Search_ResultSet_WikiBuilder($result);
+	$resultBuilder->setPaginationArguments($paginationArguments);
 	$resultBuilder->apply($matches);
 
 	try {
-		$paginationArguments = $builder->getPaginationArguments();
 		$formatter = new Search_Formatter(new Search_Formatter_Plugin_SmartyTemplate('templates/activity/activitystream.tpl'));
 		$formatter->setDataSource($unifiedsearchlib->getDataSource());
 		$out = $formatter->format($result);

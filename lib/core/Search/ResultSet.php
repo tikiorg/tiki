@@ -64,6 +64,13 @@ class Search_ResultSet extends ArrayObject
 		return $this->maxRecords;
 	}
 
+	function setMaxResults($max)
+	{
+		$current = $this->exchangeArray();
+		$this->maxRecords = $max;
+		$this->exchangeArray(array_slice($current, 0, $max));
+	}
+
 	function getOffset()
 	{
 		return $this->offset;

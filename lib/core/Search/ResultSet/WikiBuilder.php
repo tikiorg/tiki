@@ -8,10 +8,16 @@
 class Search_ResultSet_WikiBuilder
 {
 	private $result;
+	private $paginationArguments;
 
 	function __construct(Search_ResultSet $result)
 	{
 		$this->result = $result;
+	}
+
+	function setPaginationArguments($paginationArguments)
+	{
+		$this->paginationArguments = $paginationArguments;
 	}
 
 	function apply(WikiParser_PluginMatcher $matches)
@@ -27,6 +33,10 @@ class Search_ResultSet_WikiBuilder
 				$collect = isset($arguments['collect']) ? explode(',', $arguments['collect']) : array('user');
 				$this->result->groupBy($field, $collect);
 			}
+		}
+
+		if ($this->paginationArguments) {
+			$this->result->setMaxResults($this->paginationArguments['max']);
 		}
 	}
 }

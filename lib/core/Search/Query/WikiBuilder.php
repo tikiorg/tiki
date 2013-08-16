@@ -9,6 +9,8 @@ class Search_Query_WikiBuilder
 {
 	private $query;
 	private $paginationArguments;
+	private $aggregate = false;
+	private $boost = 1;
 
 	function __construct(Search_Query $query)
 	{
@@ -17,6 +19,15 @@ class Search_Query_WikiBuilder
 			'offset_arg' => 'offset',
 			'max' => 50,
 		);
+	}
+
+	/**
+	 * Only boost max page on aggregate when the calling code
+	 * handles the resultset properly.
+	 */
+	function enableAggregate()
+	{
+		$this->aggregate = true;
 	}
 
 	function apply(WikiParser_PluginMatcher $matches)
@@ -39,9 +50,9 @@ class Search_Query_WikiBuilder
 		$offsetArg = $this->paginationArguments['offset_arg'];
 		$maxRecords = $this->paginationArguments['max'];
 		if (isset($_REQUEST[$offsetArg])) {
-			$this->query->setRange($_REQUEST[$offsetArg], $maxRecords);
+			$this->query->setRange($_REQUEST[$offsetArg], $maxRecords * $this->boost);
 		} else {
-			$this->query->setRange(0, $maxRecords);
+			$this->query->setRange(0, $maxRecords * $this->boost);
 		}
 	}
 
@@ -219,6 +230,13 @@ class Search_Query_WikiBuilder
 	function wpquery_pagination_max($query, $value)
 	{
 		$this->paginationArguments['max'] = (int) $value;
+	}
+
+	function wpquery_group_boost($query, $value)
+	{
+		if ($this->aggregate) {
+			$this->boost *= max(1, intval($value));
+		}
 	}
 }
 
