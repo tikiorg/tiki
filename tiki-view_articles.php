@@ -113,7 +113,10 @@ $topics = $artlib->list_topics();
 $smarty->assign_by_ref('topics', $topics);
 $temp_max = count($listpages["data"]);
 for ($i = 0; $i < $temp_max; $i++) {
-	$listpages["data"][$i]["parsed_heading"] = $tikilib->parse_data($listpages["data"][$i]["heading"]);
+	$listpages["data"][$i]["parsed_heading"] = $tikilib->parse_data($listpages["data"][$i]["heading"], array(
+		'min_one_paragraph' => true,
+		'is_html' => $artlib->is_html($listpages["data"][$i], true),
+	));
 	$comments_prefix_var = 'article:';
 	$comments_object_var = $listpages["data"][$i]["articleId"];
 	$comments_objectId = $comments_prefix_var . $comments_object_var;
