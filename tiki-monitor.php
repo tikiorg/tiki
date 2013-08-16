@@ -6,7 +6,20 @@
 // $Id$
 
 require_once ('tiki-setup.php');
-
+//TODO Use a pref to handle the list
+if (!empty($tikiMonitorRestriction)) {
+	if (is_array($tikiMonitorRestriction)) {
+		if (isset($_SERVER['HTTP_X_FORWARDED_FOR']) && !empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+			$aListIp = explode(' ', $_SERVER['HTTP_X_FORWARDED_FOR']);
+			if (!in_array($aListIp[0], $tikiMonitorRestriction)) {
+				header('location: index.php');
+			}
+		}
+	} else {
+		echo tra("\$tikiMonitorRestriction need to be an array");
+		exit;
+	}
+}
 $opcode_cache = null;
 $stat_flag = null;
 $opcode_stats = array(
@@ -81,17 +94,17 @@ if ( function_exists('apc_sma_info') && ini_get('apc.enabled') ) {
 		'hit_miss' => 0,
 		'hit_total' => 0,
 		);
-	
+
 	$info = wincache_ocache_fileinfo();
 	$opcode_stats['hit_hit'] = $info['total_hit_count'];
 	$opcode_stats['hit_miss'] = $info['total_miss_count'];
 	$opcode_stats['hit_total'] = $info['total_hit_count'] + $info['total_miss_count'];
-	
+
 	$memory = wincache_ocache_meminfo();
 	$opcode_stats['memory_avail'] = $memory['memory_free'];
 	$opcode_stats['memory_total'] = $memory['memory_total'];
 	$opcode_stats['memory_used'] = $memory['memory_total'] - $memory['memory_free'];
-	
+
 	$opcode_stats['memory_used'] /= $opcode_stats['memory_total'];
 	$opcode_stats['memory_avail'] /= $opcode_stats['memory_total'];
 	$opcode_stats['hit_hit'] /= $opcode_stats['hit_total'];
