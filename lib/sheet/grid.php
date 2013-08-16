@@ -323,7 +323,6 @@ class TikiSheet
 		global $prefs, $sheetlib;
 
 		$filegallib = TikiLib::lib("filegal");
-		$fileInfo = $filegallib->get_file_info( $fileId );
 
 		$handler = new TikiSheetOutputHandler(null, ($this->parseValues == 'y' && $_REQUEST['parse'] != 'n'));
 

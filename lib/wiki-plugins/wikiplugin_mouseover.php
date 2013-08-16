@@ -270,7 +270,7 @@ function wikiplugin_mouseover( $data, $params )
 	
 	$bgcolor   =  isset($params['bgcolor'])   ? ("background-color: " . $params['bgcolor'] . ';') : '';
 	$textcolor =  isset($params['textcolor']) ? ("color:" . $params['textcolor'] . ';') : '';
-	$class     = !isset( $params['class'] )   ? 'class="plugin-mouseover"' : 'class="'.$params['class'].'"';
+	$class     = !isset( $params['class'] )   ? 'class="plugin-mouseover"' : 'class="plugin-mouseover '.$params['class'].'"';
 	
 	$html = "~np~<$tag id=\"$id-link\" href=\"$url\">$label</$tag>".
 		"<span id=\"$id\" $class style=\"width: {$width}px; " . (isset($params['height']) ? "height: {$height}px; " : "") ."{$bgcolor} {$textcolor} {$padding} \">$text</span>~/np~";

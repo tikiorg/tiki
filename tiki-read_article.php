@@ -168,8 +168,11 @@ $smarty->assign('edit_data', 'y');
 $body = $article_data["body"];
 $heading = $article_data["heading"];
 $smarty->assign('parsed_body', $tikilib->parse_data($body, array('is_html' => $artlib->is_html($article_data))));
-$smarty->assign('parsed_heading', $tikilib->parse_data($heading, array('is_html' => 'y')));
-
+$smarty->assign('parsed_heading', $tikilib->parse_data($heading, array(
+		'min_one_paragraph' => true,
+		'is_html' => $artlib->is_html($article_data, true),
+	))
+);
 if ($prefs['article_related_articles'] == 'y') {
 	$article_data['related_articles'] = $artlib->get_related_articles($article_data['articleId']);
 	if (isset($article_data['related_articles']) && !empty($article_data['related_articles'])) {

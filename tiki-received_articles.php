@@ -114,7 +114,11 @@ $smarty->assign('body', $info["body"]);
 $smarty->assign('type', $info["type"]);
 $smarty->assign('rating', $info["rating"]);
 // Assign parsed
-$smarty->assign('parsed_heading', $tikilib->parse_data($info["heading"]));
+$smarty->assign('parsed_heading', $tikilib->parse_data($info["heading"], array(
+		'min_one_paragraph' => true,
+		'is_html' => $artlib->is_html($info, true),
+	))
+);
 $smarty->assign('parsed_body', $tikilib->parse_data($info["body"], array('is_html' => $artlib->is_html($info))));
 if (isset($_REQUEST["remove"])) {
 	$access->check_authenticity();
