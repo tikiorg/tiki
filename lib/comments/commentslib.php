@@ -2757,6 +2757,7 @@ class Comments extends TikiLib
 			TikiLib::events()->trigger($finalEvent, array(
 				'type' => $type,
 				'object' => $threadId,
+				'parent_id' => $parentId,
 				'forum_id' => $object[1],
 				'user' => $GLOBALS['user'],
 				'title' => $title,
