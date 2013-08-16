@@ -5,5 +5,5 @@
 	{tr _0=$activity.aggregate.user|userlink _1=$activity.event_date|tiki_short_datetime}Until %1, the item was modified by %0{/tr}
 	</small>
 {else}
-	<small>{tr _0=$activity.user|userlink _1=$activity.event_date|tiki_short_datetime}By %0 (%1){/tr}</small>
+	<small>{tr _0=$activity.user|userlink _1=$activity.modification_date|tiki_short_datetime}By %0 (%1){/tr}</small>
 {/if}
