@@ -1,11 +1,12 @@
-<?PHP
+#!/usr/bin/php
+<?php
 $message = '';
 $err_state = 0;
 
 function help() {
 	echo <<<EOHELP
 
-Tiki monitoring for Nagios/Icinga
+Tiki monitoring for Nagios/Icinga/Shinken
 
 Syntax:
 php check_tiki.php -u <URL> [-c <check>] [--bccwarn <percent> --bcccrit <percent>] [--sirwarn <seconds> --sircrit <seconds>] [--user <user> --pass <password>]
@@ -42,24 +43,23 @@ function get_opts() {
 }
 
 function get_data($options) {
-        $crl = curl_init();
-        $timeout = 5;
-        curl_setopt ($crl, CURLOPT_URL,$options['u']);
-        curl_setopt ($crl, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt ($crl, CURLOPT_CONNECTTIMEOUT, $timeout);
+	$crl = curl_init();
+	$timeout = 5;
+	curl_setopt ($crl, CURLOPT_URL,$options['u']);
+	curl_setopt ($crl, CURLOPT_RETURNTRANSFER, 1);
+	curl_setopt ($crl, CURLOPT_CONNECTTIMEOUT, $timeout);
 	if (!empty($options['user'])) {
 		curl_setopt ($crl, CURLOPT_USERPWD, $options['user'] . ":" . $options['pass']);
 	}
-        $ret = curl_exec($crl);
-        curl_close($crl);
+	$ret = curl_exec($crl);
+	curl_close($crl);
 	$ret = json_decode($ret);
 	$ret = get_object_vars($ret);
-        return $ret;
+	return $ret;
 }
 
 function update_err_state($new_state, $new_message) {
-	global $err_state;
-	global $message;
+	global $err_state, $message;
 	$err_state = max($new_state, $err_state);
 	if (empty($message)) {
 		$message = "$new_message";
@@ -84,15 +84,24 @@ function report() {
 			$message = "TIKI UNKNOWN - " .$message;
 			break;
 	}
-	fwrite(STDOUT, $message);
+	fwrite(STDOUT, $message.PHP_EOL);
 	exit($err_state);
 }
 
-
+function displayError($message) {
+	echo $message.PHP_EOL;
+	exit(3);
+}
 function check_bcc($data, $options) {
 	global $message;
+	if (empty($options['bccwarn']) or empty($options['bcccrit'])) {
+		displayError("--bccwarn and --bcccrit need to be set");
+	}
 	$warn = $options['bccwarn'];
 	$crit = $options['bcccrit'];
+	if ( $warn > $crit ) {
+		displayError("--bcccrit needs to be bigger than --bccwarn");
+	}
 	$OPCodeCache = $data['OPCodeCache'];
 	if (is_null($OPCodeCache))
 	{
@@ -106,7 +115,7 @@ function check_bcc($data, $options) {
 			update_err_state(2,"OpCodeCache: $OPCodeCache $mem_used% mem used");
 		} elseif ($mem_used < $warn) {
 			update_err_state(0,"OpCodeCache: $OPCodeCache $mem_used% mem used");
-		}		
+		}
 	}
 }
 
@@ -122,23 +131,21 @@ function check_db($data, $options) {
 
 function check_searchindex($data, $options) {
 	if (empty($options['sirwarn']) or empty($options['sircrit'])) {
-		echo "--sircrit and --sirwarn need to be set";
-		exit(3);
+		displayError("--sircrit and --sirwarn need to be set");
 	}
 	$warn = $options['sirwarn'];
 	$crit = $options['sircrit'];
 	if ( $warn > $crit ) {
-		echo "--sircrit neds to be bigger than --sirwarn";
-		exit(3);
+		displayError("--sircrit needs to be bigger than --sirwarn");
 	}
-
+	$iCurrentEpoch = date('U');
 	if (empty($data['SearchIndexRebuildLast'])) {
 		update_err_state(3, "Search Index never built");
-	} elseif ($data['SearchIndexRebuildLast'] < (date('U') - $crit)) {
+	} elseif ($data['SearchIndexRebuildLast'] < ($iCurrentEpoch - $crit)) {
 		update_err_state(1, "Search Index older than $crit sec");
-	} elseif ($data['SearchIndexRebuildLast'] < (date('U') - $warn)) {
+	} elseif ($data['SearchIndexRebuildLast'] < ($iCurrentEpoch - $warn)) {
 		update_err_state(1, "Search Index older than $warn sec");
-	} elseif ($data['SearchIndexRebuildLast'] > (date('U') - $warn)) {
+	} elseif ($data['SearchIndexRebuildLast'] > ($iCurrentEpoch - $warn)) {
 		update_err_state(0, "Search Index is fresh");
 	} else {
 		update_err_state(3, "Search index state unknown");
@@ -150,7 +157,7 @@ if (empty($options) or isset($options['h'])) {
 	help();
 	exit(1);
 }
-	
+
 $data = get_data($options);
 if (isset($options['c'])) {
 	$check = 'check_'.$options['c'];
@@ -160,6 +167,4 @@ if (isset($options['c'])) {
 	check_db($data, $options);
 	check_searchindex($data, $options);
 }
-
-report()
-?>
+report();
