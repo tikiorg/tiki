@@ -11,9 +11,14 @@ if (!empty($tikiMonitorRestriction)) {
 	if (is_array($tikiMonitorRestriction)) {
 		if (isset($_SERVER['HTTP_X_FORWARDED_FOR']) && !empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
 			$aListIp = explode(' ', $_SERVER['HTTP_X_FORWARDED_FOR']);
-			if (!in_array($aListIp[0], $tikiMonitorRestriction)) {
-				header('location: index.php');
-			}
+			$sIpToCheck = $aListIp[0];
+		} elseif (isset($_SERVER['REMOTE_ADDR']) && !empty($_SERVER['REMOTE_ADDR'])) {
+			$sIpToCheck = $_SERVER['REMOTE_ADDR'];
+		} else {
+			$sIpToCheck = null;
+		}
+		if (in_array($sIpToCheck, $tikiMonitorRestriction) === false) {
+			header('location: index.php');
 		}
 	} else {
 		echo tra("\$tikiMonitorRestriction need to be an array");
