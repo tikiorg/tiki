@@ -96,7 +96,6 @@ create()
 
 	mysql -e "CREATE DATABASE $DB;"
 	mysql -e "GRANT ALL ON $DB.* TO tiki@localhost IDENTIFIED BY 'password';"
-	mysql $DB < $INSTANCE_DIR/db/tiki.sql
 
 	cat > $INSTANCE_DIR/db/local.php <<EOF
 	<?php
@@ -118,6 +117,8 @@ EOF
 	then
 		cd $INSTANCE_DIR
 		/usr/bin/php installer/shell.php install
+	else
+		mysql $DB < $INSTANCE_DIR/db/tiki.sql
 	fi
 
 	/bin/rm $LOCKSDIR/lock_${TUSERID}_${ID} || (echo "FAIL: Failed to suppress lock file $LOCKSDIR/lock_${TUSERID}_${ID}"; exit 1)
