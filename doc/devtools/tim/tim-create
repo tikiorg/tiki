@@ -98,17 +98,17 @@ create()
 	mysql -e "GRANT ALL ON $DB.* TO tiki@localhost IDENTIFIED BY 'password';"
 
 	cat > $INSTANCE_DIR/db/local.php <<EOF
-	<?php
-	\$db_tiki='mysql';
-	\$dbversion_tiki='9.0';
-	\$host_tiki='localhost';
-	\$user_tiki='tiki';
-	\$pass_tiki='password';
-	\$dbs_tiki='$DB';
-	\$client_charset='utf8';
-	// Want configurations managed at the system level or restrict some preferences? http://doc.tiki.org/System+Configuration
-	//\$system_configuration_file = 'db/tiki.ini';
-	//\$system_configuration_identifier = 'staging';
+<?php
+\$db_tiki='mysql';
+\$dbversion_tiki='9.0';
+\$host_tiki='localhost';
+\$user_tiki='tiki';
+\$pass_tiki='password';
+\$dbs_tiki='$DB';
+\$client_charset='utf8';
+// Want configurations managed at the system level or restrict some preferences? http://doc.tiki.org/System+Configuration
+//\$system_configuration_file = 'db/tiki.ini';
+//\$system_configuration_identifier = 'staging';
 EOF
 
 	chown ctrl.www-data $INSTANCE_DIR/db/local.php
