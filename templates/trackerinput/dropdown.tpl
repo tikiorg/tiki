@@ -28,23 +28,26 @@
 	</select>
 
 	{if $field.type eq 'D'}
-		<br>
+		&nbsp;
 		<label>
 			{tr}Other:{/tr}
 			<input type="text" class="group_{$field.ins_id|escape}" name="other_{$field.ins_id}" value="{if !isset($field.possibilities[$field.value])}{$field.value|escape}{/if}">
 		</label>
-		{if !isset($field.possibilities[$field.value]) && $field.value}
-			{jq}
-			if (!$('select[name="{{$field.ins_id|escape}}"] > [selected]').length) {
-				$('select[name="{{$field.ins_id|escape}}"]').val('other');
-			}
-			$('select[name="{{$field.ins_id|escape}}"]').change(function() {
-				if ($('select[name="{{$field.ins_id|escape}}"]').val() != 'other') {
-					$('input[name="other_{{$field.ins_id|escape}}"]').val('');
-				}
-			});
-			{/jq}
-		{/if}
+		{jq}
+if (!$('select[name="{{$field.ins_id|escape}}"] > [selected]').length) {
+	$('select[name="{{$field.ins_id|escape}}"]').val('{tr}other{/tr}').trigger('liszt:updated');
+}
+$('select[name="{{$field.ins_id|escape}}"]').change(function() {
+	if ($('select[name="{{$field.ins_id|escape}}"]').val() != '{tr}other{/tr}') {
+		$('input[name="other_{{$field.ins_id|escape}}"]').val('');
+	}
+});
+$('input[name="other_{{$field.ins_id|escape}}"]').change(function(){
+	if ($(this).val()) {
+		$('select[name="{{$field.ins_id|escape}}"]').val(tr('other')).trigger('liszt:updated');
+	}
+});
+		{/jq}
 	{/if}
 
 {/if}
