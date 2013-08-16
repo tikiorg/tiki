@@ -40,7 +40,9 @@ class Services_User_SocialController
 		$username = $input->username->email();
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			if ($username) {
-				$this->lib->addFriend($user, $username);
+				if (! $this->lib->addFriend($user, $username)) {
+					throw new Services_Exception_FieldError('username', tr('User not found.'));
+				}
 			}
 		}
 

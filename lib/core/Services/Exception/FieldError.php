@@ -5,11 +5,11 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-class Services_Exception_MissingValue extends Services_Exception_FieldError
+class Services_Exception_FieldError extends Services_Exception
 {
-	function __construct($field)
+	function __construct($field, $message)
 	{
-		parent::__construct($field, tr('Field Required'));
+		parent::__construct("<!--field[$field]-->" . $message, 409);
 	}
 }
 
