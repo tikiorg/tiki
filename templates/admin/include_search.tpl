@@ -47,7 +47,7 @@
 				{/if}
 
 				{preference name=feature_search visible="always"}
-				<div class="adminoptionboxchild" id="feature_search_childcontainer">				
+				<div class="adminoptionboxchild" id="feature_search_childcontainer">
 					{preference name=feature_search_stats}
 					{preference name=user_in_search_result}
 					{preference name="unified_incremental_update"}
@@ -81,6 +81,12 @@
 
 					{preference name=unified_excluded_categories}
 					{preference name=unified_excluded_plugins}
+
+					{preference name=unified_exclude_all_plugins}
+					<div class="adminoptionboxchild" id="unified_exclude_all_plugins_childcontainer">
+						{preference name=unified_included_plugins}
+					</div>
+
 					{preference name=unified_forum_deepindexing}
 
 					{preference name=unified_tokenize_version_numbers}

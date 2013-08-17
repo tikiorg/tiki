@@ -89,6 +89,7 @@ class ParserLib extends TikiDb_Bridge
 				'namespace' => false,
 				'protect_email' => true,
 				'exclude_plugins' => array(),
+				'exclude_all_plugins' => array(),
 			), empty($option) ? array() : (array) $this->option, (array)$option
 		);
 	}
@@ -421,7 +422,12 @@ class ParserLib extends TikiDb_Bridge
 			$plugin_parent = isset($plugin_name) ? $plugin_name : false;
 			$plugin_name = $match->getName();
 
-			if (isset($this->option['exclude_plugins']) && in_array($plugin_name, $this->option['exclude_plugins'])) {
+			if ((!isset($this->option['exclude_all_plugins']) || !$this->option['exclude_all_plugins']) && isset($this->option['exclude_plugins']) && in_array($plugin_name, $this->option['exclude_plugins'])) {
+				$match->replaceWith('');
+				continue;
+			}
+
+			if (isset($this->option['exclude_all_plugins']) && $this->option['exclude_all_plugins'] && (!isset($this->option['include_plugins']) || !in_array($plugin_name, $this->option['include_plugins']))) {
 				$match->replaceWith('');
 				continue;
 			}

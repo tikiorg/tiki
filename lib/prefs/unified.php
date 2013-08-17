@@ -180,6 +180,23 @@ function prefs_unified_list()
 			'separator' => ',',
 			'default' => array(),
 		),
+		'unified_exclude_all_plugins' => array(
+			'name' => tra('Exclude all plugins'),
+			'description' => tra('If enabled, indexing will exclude all plugins.'),
+			'type' => 'flag',
+			'default' => 'n',
+		),
+		'unified_included_plugins' => array(
+			'name' => tra('Except included plugins'),
+			'description' => tra('List of plugin names to force include while indexing, when excluding all.'),
+			'type' => 'text',
+			'filter' => 'word',
+			'separator' => ',',
+			'dependencies' => array(
+				'unified_exclude_all_plugins',
+			),
+			'default' => array(),
+		),
 		'unified_elastic_url' => array(
 			'name' => tra('ElasticSearch URL'),
 			'description' => tra('URL of any node in the cluster.'),

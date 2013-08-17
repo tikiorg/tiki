@@ -22,6 +22,8 @@ class Search_Type_WikiText implements Search_Type_Interface
 				'parsetoc' => false,
 				'indexing' => true,
 				'exclude_plugins' => $prefs['unified_excluded_plugins'],
+				'exclude_all_plugins' => $prefs['unified_exclude_all_plugins'],
+				'include_plugins' => $prefs['unified_included_plugins'],
 			)
 		);
 
