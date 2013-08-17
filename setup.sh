@@ -803,43 +803,6 @@ tiki_setup_default() {
 	done
 }
 
-# Set-up and execute composer to obtain dependencies
-exists()
-{
-	if type $1 &>/dev/null
-	then
-		return 0
-	else
-		return 1
-	fi
-}
-
-if [ ! -f temp/composer.phar ];
-then
-    if exists curl;
-	then
-		curl -s https://getcomposer.org/installer | php -- --install-dir=temp
-	else
-		php -r "eval('?>'.file_get_contents('https://getcomposer.org/installer'));" -- --install-dir=temp
-	fi
-else
-	php temp/composer.phar self-update
-fi
-
-if [ ! -f temp/composer.phar ];
-then
-	echo "We have failed to obtain the composer executable."
-	echo "NB: Maybe you are behing a proxy, just export https_proxy variable and relaunch setup.sh"
-	echo "1) Download it from http://getcomposer.org"
-	echo "2) Store it in temp/"
-	exit
-fi
-
-if exists php;
-then
-	php temp/composer.phar install --prefer-dist
-fi
-
 # part 5 - main program
 # ---------------------
 
@@ -890,6 +853,54 @@ case ${COMMAND} in
 	#*)		echo ${HINT_FOR_USER} ;;
 	*)		hint_for_users ;;
 esac
+
+# Set-up and execute composer to obtain dependencies
+exists()
+{
+	if type $1 &>/dev/null
+	then
+		return 0
+	else
+		return 1
+	fi
+}
+
+if [ ! -f temp/composer.phar ];
+then
+    if exists curl;
+	then
+		curl -s https://getcomposer.org/installer | php -- --install-dir=temp
+	else
+		php -r "eval('?>'.file_get_contents('https://getcomposer.org/installer'));" -- --install-dir=temp
+	fi
+else
+	php temp/composer.phar self-update
+fi
+
+if [ ! -f temp/composer.phar ];
+then
+	echo "We have failed to obtain the composer executable."
+	echo "NB: Maybe you are behing a proxy, just export https_proxy variable and relaunch setup.sh"
+	echo "1) Download it from http://getcomposer.org"
+	echo "2) Store it in temp/"
+	exit
+fi
+
+N=0
+if exists php;
+then
+	until php temp/composer.phar install --prefer-dist
+	do
+		if [ $N -eq 7 ];
+		then
+			exit 2
+		else
+			echo "Composer failed, retrying in 5 seconds, for a few times. Hit Ctrl-C to cancel."
+			sleep 5
+		fi
+		((N++))
+	done
+fi
 
 exit 0
 
