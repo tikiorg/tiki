@@ -341,6 +341,7 @@ class SearchLib extends TikiLib
 		);
 
 		if (!empty($lang)) {
+			$lang = addslashes($lang);
 			$search_wikis_comments['filter'] .= " AND p.`lang`='$lang'";
 		}
 
@@ -373,6 +374,7 @@ class SearchLib extends TikiLib
 			'objectKey' => 'p.`pageName`',
 		);
 		if (!empty($lang)) {
+			$lang = addslashes($lang);
 			$search_wikis['filter'] = " p.`lang`='$lang'";
 		}
 		$search_wikis['href'] = $prefs['feature_sefurl'] == 'y'? '%s': 'tiki-index.php?page=%s';
@@ -639,6 +641,7 @@ class SearchLib extends TikiLib
 		);
 
 		if (!empty($lang)) {
+			$lang = addslashes($lang);
 			$search_articles['filter'] = " a.`lang`='$lang'";
 		}
 
