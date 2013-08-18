@@ -844,7 +844,7 @@ composer()
 		do
 			if [ $N -eq 7 ];
 			then
-				exit 1
+				exit;
 			else
 				echo "Composer failed, retrying in 5 seconds, for a few times. Hit Ctrl-C to cancel."
 				sleep 5
@@ -852,6 +852,7 @@ composer()
 			((N++))
 		done
 	fi
+	exit
 }
 
 # part 5 - main program
