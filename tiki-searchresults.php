@@ -18,6 +18,11 @@ $inputConfiguration = array(
 				'searchLang' => 'word',
 				'words' =>'text',
 				'boolean' =>'word',
+				'forumId' => 'digits',
+                                'name' => 'word',
+                                'galleryId' => 'digits',
+                                'categId' => 'digits',
+                                'offset' => 'digits',
 		)
 	)
 );
