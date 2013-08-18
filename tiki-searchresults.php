@@ -15,6 +15,11 @@ $inputConfiguration = array(
 				'words' =>'xss',
 				'searchLang' => 'word',
 				'boolean' =>'word',
+				'forumId' => 'digits',
+				'name' => 'word',
+				'galleryId' => 'digits',
+				'categId' => 'digits',
+				'offset' => 'digits',
 		)
 	)
 );
