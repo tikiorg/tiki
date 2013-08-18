@@ -758,7 +758,7 @@ tiki_setup_default_menu() {
  7 pain                                  8 morepain
  9 risky                                 a insane
 
- q quit                                  x exit
+ q quit                                  x exit and run composer
 
 There are some other commands recommended for advanced users only.
 More documentation about this: http://doc.tiki.org/Permission+Check
@@ -796,8 +796,8 @@ tiki_setup_default() {
 			o)	WHAT='x'; command_open ;;
 			q)	exit ;;
 			Q)	exit ;;
-			x)	exit ;;
-			X)	exit ;;
+			x)	composer ;;
+			X)	composer ;;
 			*)	WHAT='x'; echo 'no such command' ;;
 		esac
 	done
@@ -814,42 +814,45 @@ exists()
 	fi
 }
 
-if [ ! -f temp/composer.phar ];
-then
-    if exists curl;
+composer()
+{
+	if [ ! -f temp/composer.phar ];
 	then
-		curl -s https://getcomposer.org/installer | php -- --install-dir=temp
-	else
-		php -r "eval('?>'.file_get_contents('https://getcomposer.org/installer'));" -- --install-dir=temp
-	fi
-else
-	php temp/composer.phar self-update
-fi
-
-if [ ! -f temp/composer.phar ];
-then
-	echo "We have failed to obtain the composer executable."
-	echo "NB: Maybe you are behing a proxy, just export https_proxy variable and relaunch setup.sh"
-	echo "1) Download it from http://getcomposer.org"
-	echo "2) Store it in temp/"
-	exit
-fi
-
-N=0
-if exists php;
-then
-	until php temp/composer.phar install --prefer-dist
-	do
-		if [ $N -eq 7 ];
+		if exists curl;
 		then
-			exit 2
+			curl -s https://getcomposer.org/installer | php -- --install-dir=temp
 		else
-			echo "Composer failed, retrying in 5 seconds, for a few times. Hit Ctrl-C to cancel."
-			sleep 5
+			php -r "eval('?>'.file_get_contents('https://getcomposer.org/installer'));" -- --install-dir=temp
 		fi
-		((N++))
-	done
-fi
+	else
+		php temp/composer.phar self-update
+	fi
+
+	if [ ! -f temp/composer.phar ];
+	then
+		echo "We have failed to obtain the composer executable."
+		echo "NB: Maybe you are behing a proxy, just export https_proxy variable and relaunch setup.sh"
+		echo "1) Download it from http://getcomposer.org"
+		echo "2) Store it in temp/"
+		exit
+	fi
+
+	N=0
+	if exists php;
+	then
+		until php temp/composer.phar install --prefer-dist
+		do
+			if [ $N -eq 7 ];
+			then
+				exit 1
+			else
+				echo "Composer failed, retrying in 5 seconds, for a few times. Hit Ctrl-C to cancel."
+				sleep 5
+			fi
+			((N++))
+		done
+	fi
+}
 
 # part 5 - main program
 # ---------------------
