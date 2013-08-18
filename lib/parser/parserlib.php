@@ -89,7 +89,8 @@ class ParserLib extends TikiDb_Bridge
 				'namespace' => false,
 				'protect_email' => true,
 				'exclude_plugins' => array(),
-				'exclude_all_plugins' => array(),
+				'exclude_all_plugins' => false,
+				'include_plugins' => array(),
 			), empty($option) ? array() : (array) $this->option, (array)$option
 		);
 	}
