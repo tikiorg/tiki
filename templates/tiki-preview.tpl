@@ -32,7 +32,7 @@ $('#autosave_preview').resizable({
 	handles:{'s':'#autosave_preview_grippy'},
 	alsoResize:'#autosave_preview>div',
 	resize: function(event, ui) {
-		setCookie("wiki", $('#autosave_preview').height(), "preview");
+		setCookie("wiki", $('#autosave_preview').height(), "preview", "session");
 	}
 }).height(getCookie("wiki", "preview", ""));
 $("#autosave_preview>div").height(getCookie("wiki", "preview", ""));
