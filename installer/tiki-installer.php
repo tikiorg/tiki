@@ -645,8 +645,10 @@ if ($virtuals) {
 }
 if (!empty($multi)) {
 	$local = "db/$multi/local.php";
+	$preconfiguration = "db/$multi/preconfiguration.php";
 } else {
-	$local = 'db/local.php';
+	$local = "db/local.php";
+	$preconfiguration = 'db/preconfiguration.php';
 }
 
 $tikidomain = $multi;
@@ -774,6 +776,15 @@ if ( file_exists($local) ) {
 				write_local_php($db_tiki, $host_tiki, $user_tiki, $pass_tiki, $dbs_tiki, $client_charset, ($api_tiki_forced ? $api_tiki : ''), $dbversion_tiki);
 			}
 		}
+	}
+} else {
+	// If there is no local.php we check if there is a db/preconfiguration.php preconfiguration file with database connection values which we can prefill the installer with
+	if ( file_exists($preconfiguration) ) {
+		include $preconfiguration;
+		if ( isset($host_tiki_preconfig) ) $smarty->assign('preconfighost', $host_tiki_preconfig);
+		if ( isset($user_tiki_preconfig) ) $smarty->assign('preconfiguser', $user_tiki_preconfig);
+		if ( isset($pass_tiki_preconfig) ) $smarty->assign('preconfigpass', $pass_tiki_preconfig);
+		if ( isset($dbs_tiki_preconfig) ) $smarty->assign('preconfigname', $dbs_tiki_preconfig);
 	}
 }
 
