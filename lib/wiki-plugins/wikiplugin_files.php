@@ -38,7 +38,7 @@ function wikiplugin_files_info()
 			'fileId' => array(
 				'required' => false,
 				'name' => tra('File ID'),
-				'description' => tra('To list only specified files, enter their file IDs separated by colon'),
+				'description' => tra('To list only specified files, enter their file IDs separated by colon. If File IDs are specified here then the Gallery ID field above should be empty.'),
 				'type' => 'fileId',
 				'area' => 'fgal_picker_id',
 				'default' => '',

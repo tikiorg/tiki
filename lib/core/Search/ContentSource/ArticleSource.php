@@ -47,7 +47,7 @@ class Search_ContentSource_ArticleSource implements Search_ContentSource_Interfa
 			'article_subtitle' => $typeFactory->wikitext($article['subtitle']),
 			'article_author' => $typeFactory->plaintext($article['authorName']),
 
-			'view_permission' => $typeFactory->identifier('tiki_p_read_article'),
+			'view_permission' => ($article['ispublished'] == 'y') ? $typeFactory->identifier('tiki_p_read_article') : $typeFactory->identifier('tiki_p_edit_article'),
 			'parent_object_type' => $typeFactory->identifier('topic'),
 			'parent_object_id' => $typeFactory->identifier($article['topicId']),
 			'parent_view_permission' => $typeFactory->identifier('tiki_p_read_topic'),
