@@ -392,6 +392,7 @@ yet_unused_permission_default() {
 
 yet_unused_permission_exceptions() {
 	${CHMOD} o-rwx db/local.php
+	${CHMOD} o-rwx db/preconfiguration.php
 }
 
 # part 4.2 - several command options as fix, open, ...
