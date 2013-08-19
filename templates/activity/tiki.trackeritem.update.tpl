@@ -1,9 +1,3 @@
-<h6>{tr}Tracker Item Modified{/tr}</h6>
-<p>{object_link type=$activity.type id=$activity.object} in {object_link type=tracker id=$activity.trackerId}</p>
-{if $activity.aggregate.user|count > 1}
-	<small>
-	{tr _0=$activity.aggregate.user|userlink _1=$activity.event_date|tiki_short_datetime}Until %1, the item was modified by %0{/tr}
-	</small>
-{else}
-	<small>{tr _0=$activity.user|userlink _1=$activity.modification_date|tiki_short_datetime}By %0 (%1){/tr}</small>
-{/if}
+{activityframe activity=$activity heading="{tr _0=$activity.aggregate.user|userlink}%0 modified a tracker item{/tr}"}
+	<p>{object_link type=$activity.type id=$activity.object} in {object_link type=tracker id=$activity.trackerId}</p>
+{/activityframe}

@@ -34,7 +34,7 @@ class Search_GlobalSource_CommentSource implements Search_GlobalSource_Interface
 			$comment_count = $this->commentslib->count_comments("$objectType:$objectId");
 		}
 		return array(
-			'comment_count' => $typeFactory->sortable($comment_count),
+			'comment_count' => $typeFactory->numeric($comment_count),
 		);
 	}
 }

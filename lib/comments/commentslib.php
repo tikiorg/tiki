@@ -2748,6 +2748,7 @@ class Comments extends TikiLib
 		}
 
 		$this->update_comment_links($data, $object[0], $threadId);
+		$tx = $this->begin();
 		$type = $this->update_index($object[0], $threadId, $parentId);
 		$finalEvent = 'tiki.comment.post';
 
@@ -2773,10 +2774,10 @@ class Comments extends TikiLib
 				'user' => $GLOBALS['user'],
 				'title' => $title,
 				'content' => $data,
-				'index_handled' => true,
 			));
 		}
 
+		$tx->commit();
 
 		return $threadId;
 		//return $return_result;
@@ -2939,6 +2940,7 @@ class Comments extends TikiLib
 		// Update search index after deletion is done
 		foreach ($result as $res) {
 			$this->update_index($res['objectType'], $res['threadId']);
+			refresh_index($res['objectType'], $res['object']);
 		}
 		$tx->commit();
 
