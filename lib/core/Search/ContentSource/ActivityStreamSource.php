@@ -78,13 +78,18 @@ class Search_ContentSource_ActivityStreamSource implements Search_ContentSource_
 			}
 		}
 
+		if ($this->sociallib) {
+			$list = $this->sociallib->getLikes('activity', $objectId);
+			$document['like_list'] = $typeFactory->multivalue($list);
+		}
+
 		return $document;
 	}
 
 	function getProvidedFields()
 	{
 		$mapping = $this->lib->getMapping();
-		return array_merge(array('event_type', 'modification_date'), array_keys($mapping));
+		return array_merge(array('event_type', 'modification_date', 'like_list'), array_keys($mapping));
 	}
 
 	function getGlobalFields()

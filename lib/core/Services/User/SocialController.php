@@ -96,5 +96,27 @@ class Services_User_SocialController
 			'friend' => $username,
 		);
 	}
+
+	function action_like($input)
+	{
+		global $user;
+
+		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+			$this->lib->addLike($user, $input->type->text(), $input->id->none());
+		}
+
+		return array();
+	}
+
+	function action_unlike($input)
+	{
+		global $user;
+
+		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+			$this->lib->removeLike($user, $input->type->text(), $input->id->none());
+		}
+
+		return array();
+	}
 }
 

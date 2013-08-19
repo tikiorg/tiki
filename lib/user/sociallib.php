@@ -200,5 +200,53 @@ class SocialLib
 
 		return sha1("friendrelation/$a/$b");
 	}
+
+	function addLike($user, $type, $id)
+	{
+		$like = $this->getLike($user, $type, $id);
+
+		if (! $like) {
+			$this->relationlib->add_relation('tiki.social.like', 'user', $user, $type, $id);
+			TikiLib::events()->trigger('tiki.social.like.add', array(
+				'type' => $type,
+				'object' => $id,
+				'user' => $user,
+			));
+			return true;
+		}
+		
+		return false;
+	}
+
+	function removeLike($user, $type, $id)
+	{
+		$like = $this->getLike($user, $type, $id);
+
+		if ($like) {
+			$this->relationlib->remove_relation($like);
+			TikiLib::events()->trigger('tiki.social.like.remove', array(
+				'type' => $type,
+				'object' => $id,
+				'user' => $user,
+			));
+			return true;
+		}
+
+		return false;
+	}
+
+	function getLikes($type, $id)
+	{
+		$relations = $this->relationlib->get_relations_to($type, $id, 'tiki.social.like');
+
+		return array_map(function ($relation) {
+			return  $relation['itemId'];
+		}, $relations);
+	}
+
+	private function getLike($user, $type, $id)
+	{
+		return $this->relationlib->get_relation_id('tiki.social.like', 'user', $user, $type, $id);
+	}
 }
 

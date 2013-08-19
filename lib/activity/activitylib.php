@@ -125,7 +125,7 @@ class ActivityLib
 		return $this->streamTable()->fetchColumn('activityId', array());
 	}
 
-	function getActivity($id, $typeFactory)
+	function getActivity($id)
 	{
 		$info = $this->streamTable()->fetchFullRow(array(
 			'activityId' => $id,

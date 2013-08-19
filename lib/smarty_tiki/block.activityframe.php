@@ -15,12 +15,18 @@ function smarty_block_activityframe($params, $content, $smarty, &$repeat)
 {
 	if ( $repeat ) return;
 
+	$likes = isset($params['activity']['like_list']) ? $params['activity']['like_list'] : array();
+	if (! is_array($likes)) {
+		$params['activity']['like_list'] = $likes = array();
+	}
+	$smarty = TikiLib::lib('smarty');
 	$smarty->assign('activityframe', array(
 		'content' => $content,
 		'activity' => $params['activity'],
 		'heading' => $params['heading'],
+		'like' => in_array($GLOBALS['user'], $likes),
 	));
-	$out = $smarty->fetch('activityframe.tpl');
+	$out = $smarty->fetch('activity/activityframe.tpl');
 
 	return $out;
 }

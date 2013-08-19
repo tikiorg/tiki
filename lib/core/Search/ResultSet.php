@@ -66,7 +66,7 @@ class Search_ResultSet extends ArrayObject
 
 	function setMaxResults($max)
 	{
-		$current = $this->exchangeArray();
+		$current = $this->exchangeArray(array());
 		$this->maxRecords = $max;
 		$this->exchangeArray(array_slice($current, 0, $max));
 	}

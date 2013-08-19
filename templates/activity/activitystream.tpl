@@ -1,6 +1,6 @@
 <ol>
 	{foreach from=$results item=activity}
-		<li>{include file="`$activity.event_type`.tpl"}</li>
+		<li>{activity info=$activity}</li>
 	{foreachelse}
 		<li>{tr}No activity for you.{/tr}</li>
 	{/foreach}

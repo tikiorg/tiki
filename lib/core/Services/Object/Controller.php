@@ -15,6 +15,10 @@ class Services_Object_Controller
 			$supported[] = 'trackeritem';
 		}
 
+		if ($prefs['activity_basic_events'] == 'y' || $prefs['activity_custom_events'] == 'y') {
+			$supported[] = 'activity';
+		}
+
 		return $supported;
 	}
 
@@ -29,6 +33,7 @@ class Services_Object_Controller
 			'type' => $type,
 			'object' => $input->object->none(),
 			'content' => $this->{'infobox_' . $type}($input),
+			'plain' => $input->plain->int(),
 		);
 	}
 
@@ -67,6 +72,21 @@ class Services_Object_Controller
 		return $smarty->fetch('object/infobox/trackeritem.tpl');
 	}
 
+	private function infobox_activity($input)
+	{
+		$itemId = $input->object->int();
+		$lib = TikiLib::lib('activity');
+		$info = $lib->getActivity($itemId);
+
+		if (! $info) {
+			throw new Services_Exception_NotFound;
+		}
+
+		$smarty = TikiLib::lib('smarty');
+		$smarty->assign('activity', $itemId);
+		return $smarty->fetch('object/infobox/activity.tpl');
+	}
+
 	/**
 	 * Generic function to allow consistently formatted errors from javascript using ErrorReportLib
 	 *
@@ -77,6 +97,5 @@ class Services_Object_Controller
 		TikiLib::lib('errorreport')->report($input->message->text());
 		TikiLib::lib('errorreport')->send_headers();
 	}
-
 }
 

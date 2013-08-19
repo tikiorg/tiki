@@ -2553,7 +2553,6 @@ class Comments extends TikiLib
 					'comment' => $threadId,
 					'user' => $GLOBALS['user'],
 					'content' => $data,
-					'index_handled' => true,
 				));
 			}
 		} // end hash check

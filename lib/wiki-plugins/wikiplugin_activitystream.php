@@ -55,7 +55,9 @@ function wikiplugin_activitystream($data, $params)
 	$resultBuilder->apply($matches);
 
 	try {
-		$formatter = new Search_Formatter(new Search_Formatter_Plugin_SmartyTemplate('templates/activity/activitystream.tpl'));
+		$plugin = new Search_Formatter_Plugin_SmartyTemplate('templates/activity/activitystream.tpl');
+		$plugin->setFields(array('like_list' => true));
+		$formatter = new Search_Formatter($plugin);
 		$formatter->setDataSource($unifiedsearchlib->getDataSource());
 		$out = $formatter->format($result);
 

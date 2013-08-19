@@ -99,6 +99,7 @@ function tiki_setup_events()
 	if ($prefs['feature_search'] == 'y' && $prefs['unified_incremental_update'] == 'y') {
 		$events->bindPriority(100, 'tiki.save', 'tiki_save_refresh_index');
 		$events->bindPriority(100, 'tiki.user.save', 'tiki_save_refresh_index');
+		$events->bindPriority(100, 'tiki.social.like', 'tiki_save_refresh_index');
 	}
 
 	if ($prefs['feature_file_galleries'] == 'y') {
@@ -159,6 +160,9 @@ function tiki_setup_events()
 	$events->bind('tiki.user.follow.add', 'tiki.user.network');
 	$events->bind('tiki.user.follow.incoming', 'tiki.user.network');
 	$events->bind('tiki.user.friend.add', 'tiki.user.network');
+
+	$events->bind('tiki.social.like.add', 'tiki.social.like');
+	$events->bind('tiki.social.like.remove', 'tiki.social.like');
 }
 
 function tiki_save_refresh_index($args)
