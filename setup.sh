@@ -518,6 +518,10 @@ what to answer, just press enter to each question (to use default value)"
 #	chmod 664 robots.txt tiki-install.php
 
 	echo " done."
+
+	if [ -n "$OPT_NOTINTERACTIVE" ]; then
+		composer
+	fi
 }
 
 command_nothing() {
@@ -543,6 +547,10 @@ command_open() {
 	chmod -R a=rwX .
 
 	echo " done"
+
+	if [ -n "$OPT_NOTINTERACTIVE" ]; then
+		composer
+	fi
 }
 
 permission_via_php_check() {
