@@ -1039,7 +1039,7 @@ class ToolbarPicker extends Toolbar
 	function getWikiHtml( $areaId ) // {{{
 	{
 		global $headerlib, $prefs;
-		$headerlib->add_js("window.pickerData['$this->name'] = " . str_replace('\/', '/', json_encode($this->list)) . ";");
+		$headerlib->add_js("if (! window.pickerData) { window.pickerData = {}; } window.pickerData['$this->name'] = " . str_replace('\/', '/', json_encode($this->list)) . ";");
 
 		return $this->getSelfLink(
 			$this->getSyntax($areaId),
@@ -1234,7 +1234,7 @@ class ToolbarDialog extends Toolbar
 	function getWikiHtml( $areaId ) // {{{
 	{
 		global $headerlib;
-		$headerlib->add_js("window.dialogData[$this->index] = " . json_encode($this->list) . ";", 1 + $this->index);
+		$headerlib->add_js("if (! window.dialogData) { window.dialogData = {}; } window.dialogData[$this->index] = " . json_encode($this->list) . ";", 1 + $this->index);
 
 		return $this->getSelfLink(
 			$this->getSyntax($areaId),
