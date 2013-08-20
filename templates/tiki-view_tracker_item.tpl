@@ -83,7 +83,7 @@
 				{foreach from=$fields key=ix item=cur_field}
 					{if !($tracker_info.doNotShowEmptyField eq 'y' and empty($cur_field.value) and empty($cur_field.cat) and empty($cur_field.links) and
 							$cur_field.type ne 's' and $cur_field.type ne 'STARS' and $cur_field.type ne 'h' and $cur_field.type ne 'l' and $cur_field.type ne 'W') and
-							($cur_field.options_array[0] ne 'password')}
+							!($cur_field.options_array[0] eq 'password' and $cur_field.type eq 'p')}
 					
 						<tr class="field{$cur_field.fieldId}">
 							{* Make adjustments for line breaks *}
