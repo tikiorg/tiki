@@ -26,7 +26,7 @@ function wikiplugin_category_info()
 			'types' => array(
 				'required' => false,
 				'name' => tra('Types'),
-				'description' => tra('List of object types to include in the list separated by plus signs. ex: article+blog+faq+fgal<br />+forum+igal+newsletter<br />+event+poll+quiz+survey<br />+tracker+wiki+img'),
+				'description' => tra('List of object types to include in the list separated by plus signs. ex: article+blog+blog post+faq+fgal<br />+forum+igal+newsletter<br />+event+poll+quiz+survey<br />+tracker+wiki+img'),
 				'filter' => 'text',
 				'default' => '*',
 			),
