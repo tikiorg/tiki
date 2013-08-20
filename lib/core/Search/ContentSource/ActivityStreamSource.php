@@ -8,7 +8,6 @@
 class Search_ContentSource_ActivityStreamSource implements Search_ContentSource_Interface
 {
 	private $lib;
-	private $userlib;
 	private $sociallib;
 	private $source;
 
@@ -16,12 +15,8 @@ class Search_ContentSource_ActivityStreamSource implements Search_ContentSource_
 	{
 		global $prefs;
 		$this->lib = TikiLib::lib('activity');
-		$this->userlib = TikiLib::lib('user');
 		$this->source = $source;
-
-		if ($prefs['feature_friends'] == 'y') {
-			$this->sociallib = TikiLib::lib('social');
-		}
+		$this->sociallib = TikiLib::lib('social');
 	}
 
 	function getDocuments()
@@ -67,21 +62,8 @@ class Search_ContentSource_ActivityStreamSource implements Search_ContentSource_
 			}
 		}
 
-		if (! empty($info['arguments']['user'])) {
-			$groups = $this->userlib->get_user_groups_inclusion($info['arguments']['user']);
-			unset($groups['Anonymous'], $groups['Registered']);
-			$document['user_groups'] = $typeFactory->multivalue(array_keys($groups));
-
-			if ($this->sociallib) {
-				$followers = $this->getFollowers($info['arguments']['user']);
-				$document['user_followers'] = $typeFactory->multivalue($followers);
-			}
-		}
-
-		if ($this->sociallib) {
-			$list = $this->sociallib->getLikes('activity', $objectId);
-			$document['like_list'] = $typeFactory->multivalue($list);
-		}
+		$list = $this->sociallib->getLikes('activity', $objectId);
+		$document['like_list'] = $typeFactory->multivalue($list);
 
 		return $document;
 	}
@@ -96,20 +78,6 @@ class Search_ContentSource_ActivityStreamSource implements Search_ContentSource_
 	{
 		return array(
 		);
-	}
-
-	private function getFollowers($user)
-	{
-		static $localCache = array();
-
-		if (! isset($localCache[$user])) {
-			$list = $this->sociallib->listFollowers($user);
-			$localCache[$user] = array_map(function ($entry) {
-				return $entry['user'];
-			}, $list);
-		}
-
-		return $localCache[$user];
 	}
 }
 

@@ -479,6 +479,10 @@ class UnifiedSearchLib
 			$aggregator->addGlobalSource(new Search_GlobalSource_VisitsSource);
 		}
 
+		if ($prefs['feature_friends'] === 'y') {
+			$aggregator->addGlobalSource(new Search_GlobalSource_SocialSource);
+		}
+
 		if ($mode == 'indexing') {
 			$aggregator->addGlobalSource(new Search_GlobalSource_PermissionSource(Perms::getInstance()));
 			$aggregator->addGlobalSource(new Search_GlobalSource_RelationSource);
