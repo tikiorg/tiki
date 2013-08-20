@@ -15,6 +15,7 @@ function wikiplugin_flash_info()
 		'extraparams' => true,
 		'tags' => array( 'basic' ),		
 		'icon' => 'img/icons/mime/swf.png',
+		'format' => 'html',
 		'params' => array(
 			'type' => array(
 				'required' => true,
@@ -145,5 +146,5 @@ function wikiplugin_flash($data, $params)
 	if ( $code === false ) {
 		return tra('Missing parameter movie to the plugin flash');
 	}
-	return "~np~$code~/np~";
+	return $code;
 }
