@@ -18,6 +18,7 @@ function wikiplugin_vimeo_info()
 		'prefs' => array( 'wikiplugin_vimeo' ),
 		'icon' => 'img/icons/vimeo.png',
 		'introduced' => 6.1,
+		'format' => 'html',
 		'params' => array(
 			'url' => array(
 				'required' => $prefs['vimeo_upload'] !== 'y',
@@ -76,6 +77,22 @@ function wikiplugin_vimeo_info()
 				'default' => '',
 				'advanced' => true
 			),
+			'fromFieldId' => array(
+				'required' => false,
+				'name' => tra('Field ID'),
+				'description' => tra('Numeric ID of a Tracker Files field, using Vimeo displayMode.'),
+				'filter' => 'int',
+				'default' => 0,
+				'advanced' => true
+			),
+			'fromItemId' => array(
+				'required' => false,
+				'name' => tra('Item ID'),
+				'description' => tra('Numeric ID of a Tracker item, using Vimeo displayMode.'),
+				'filter' => 'int',
+				'default' => 0,
+				'advanced' => true
+			),
 		),
 	);
 }
@@ -90,7 +107,7 @@ function wikiplugin_vimeo($data, $params)
 		$params['vimeo'] = $params['url'];
 		unset($params['url']);
 		return wikiplugin_flash($data, $params);
-	} else if(isset($params['fileId']) && $prefs['vimeo_upload'] === 'y') {
+	} else if(isset($params['fileId'])) {
 		$fileIds = preg_split('/\D+/', $params['fileId'], -1, PREG_SPLIT_NO_EMPTY);
 		unset($params['fileId']);
 
@@ -105,11 +122,17 @@ function wikiplugin_vimeo($data, $params)
 		return $out;
 	} else {
 
-		global $access, $page;
-		$access->check_feature('vimeo_upload');
+		global $page;
+		$smarty = TikiLib::lib('smarty');
+		if ($prefs['vimeo_upload'] !== 'y') {
+			$smarty->loadPlugin('smarty_block_remarksbox');
+			$repeat = false;
+			return smarty_block_remarksbox(
+				array('type' => 'error', 'title' => tra('Feature required')),
+				tra('Feature "vimeo_upload" is required to be able to add videos here.'), $smarty, $repeat);
+		}
 
 		// set up for an upload
-		$smarty = TikiLib::lib('smarty');
 		$smarty->loadPlugin('smarty_function_button');
 		$smarty->loadPlugin('smarty_function_service');
 		$html = smarty_function_button(array(
@@ -125,18 +148,23 @@ function wikiplugin_vimeo($data, $params)
 			'_text' => tra('Upload Video'),
 		), $smarty);
 
-		TikiLib::lib('header')->add_jq_onready('
+		$js = '
 $(".vimeo.dialog").click(function () {
 	var link = this;
 	$(this).serviceDialog({
 		title: tr("Upload Video"),
 		data: {
 			controller: "vimeo",
-			action: "upload"
+			action: "upload"' .
+			(!empty($params['fromFieldId']) ? ',fieldId:' . $params['fromFieldId'] : '') .
+			(!empty($params['fromItemId']) ? ',itemId:' . $params['fromItemId'] : '') . '
 		},
 		load: function(data) {
 			var $dialog = $(".vimeo_upload").parents(".ui-dialog-content");		// odd its the content, not the outer div
-			$(".vimeo_upload").on("vimeo_uploaded", function(event, data) {
+			$(".vimeo_upload").on("vimeo_uploaded", function(event, data) {';
+
+		if (empty($params['fromFieldId'])) {
+			$js .= '
 				var params = {
 					page: ' . json_encode($page) . ',
 					content: "",
@@ -153,13 +181,20 @@ $(".vimeo.dialog").click(function () {
 							$("#page-data").html(data);
 						}
 					});
-				});
+				});';
+		} else {
+			$js .= '
+				$dialog.dialog("destroy").remove();
+				handleVimeoFile(link, data);
+';
+		}
 
-			});
+		$js .= '	});
 		}
 	});
 	return false;
-});');
+});';
+		TikiLib::lib('header')->add_jq_onready($js);
 
 		return $html;
 	}

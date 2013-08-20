@@ -7,8 +7,12 @@
 <ol class="tracker-item-files current-list">
 	{foreach from=$field.files item=info}
 		<li data-file-id="{$info.fileId|escape}">
-			{if $field.options_array[3]}
+			{if $prefs.vimeo_upload eq 'y' and $field.options_map.displayMode eq 'vimeo'}
+				<img src="img/icons/vimeo.png" width="16" height="16">
+			{elseif $field.options_map.displayMode eq 'img'}
 				<img src="tiki-download_file.php?fileId={$info.fileId|escape}&display&height=24" height="24">
+			{else}
+				<img src="tiki-download_file.php?fileId={$info.fileId|escape}&icon" width="32" height="32">
 			{/if}
 			{$info.name|escape}
 			<label>
@@ -19,11 +23,18 @@
 </ol>
 <input class="input" type="text" name="{$field.ins_id|escape}" value="{$field.value|escape}">
 {if $field.canUpload}
-	<fieldset id="{$field.ins_id|escape}-drop" class="file-drop">
-		<legend>{tr}Upload files{/tr}</legend>
-		<p style="display:none;">{tr}Drop files from your desktop here or browse for them{/tr}</p>
-		<input class="ignore" type="file" name="{$field.ins_id|escape}[]" accept="{$field.filter|escape}" multiple="multiple">
-	</fieldset>
+	{if $field.options_map.displayMode eq 'vimeo'}
+		<fieldset>
+			<legend>{tr}Upload files{/tr}</legend>
+			{wikiplugin _name='vimeo' fromFieldId=$field.fieldId|escape fromItemId=$item.itemId|escape}{/wikiplugin}
+		</fieldset>
+	{else}
+		<fieldset id="{$field.ins_id|escape}-drop" class="file-drop">
+			<legend>{tr}Upload files{/tr}</legend>
+			<p style="display:none;">{tr}Drop files from your desktop here or browse for them{/tr}</p>
+			<input class="ignore" type="file" name="{$field.ins_id|escape}[]" accept="{$field.filter|escape}" multiple="multiple">
+		</fieldset>
+	{/if}
 {/if}
 {if $prefs.fgal_tracker_existing_search eq 'y'}
 	<fieldset>
@@ -129,7 +140,7 @@ var handleFiles = function (files) {
 };
 
 $files.find('input').hide();
-$files.find('img').click(function () {
+$files.find('img.icon').click(function () {
 	var fileId = $(this).closest('li').data('file-id');
 	$field.input_csv('delete', ',', fileId);
 	$(this).closest('li').remove();
@@ -308,6 +319,29 @@ window.handleFinderFile = function (file, elfinder) {
 			return false;
 		}
 	});
+};
+handleVimeoFile = function (link, data) {
+	var fileId = data.fileId, li = $('<li/>');
+
+	var eventOrigin = link;
+	if (eventOrigin) {
+		var $ff = $(eventOrigin).parents(".files-field");
+		$field = $(".input", $ff);
+		$files = $(".current-list", $ff);
+	}
+
+	li.text(data.file);
+
+	$field.input_csv('add', ',', fileId);
+
+	li.prepend($('<img src="img/icons/vimeo.png" height="16">'));
+	li.append($('<label>{{icon _id=cross}}</label>'));
+	li.find('img.icon').click(function () {
+		$field.input_csv('delete', ',', fileId);
+		$(this).closest('li').remove();
+	});
+
+	$files.append(li);
 };
 });
 {/jq}

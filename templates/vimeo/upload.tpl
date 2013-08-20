@@ -19,6 +19,8 @@
 {jq}
 	var ticket = {{$ticket.id|json_encode}};
 	var galleryId = {{$galleryId|json_encode}};
+	var fieldId = {{$fieldId|json_encode}};
+	var itemId = {{$itemId|json_encode}};
 	var $iframe = $('#vimeo' + ticket);
 	var $form = $('#form' + ticket);
 	var $file = $('input[type=file]', $form);
@@ -29,7 +31,9 @@
 			title: $title.val(),
 			galleryId: galleryId,
 			ticket: ticket,
-			file: $file.val()
+			file: $file.val(),
+			fieldId: fieldId,
+			itemId: itemId
 		};
 		if (data.file) {
 			$.post($.service('vimeo', 'complete'), data, function(data) {

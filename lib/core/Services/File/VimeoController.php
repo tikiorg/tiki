@@ -30,6 +30,8 @@ class Services_File_VimeoController
 		global $prefs;
 
 		$galleryId = $input->galleryId->int() ?: $prefs['vimeo_default_gallery'];
+		$fieldId = $input->fromFieldId->int();
+		$itemId = $input->fromItemId->int();
 
 		$this->utilities->checkTargetGallery($galleryId);
 
@@ -46,6 +48,8 @@ class Services_File_VimeoController
 			'available' => round($quota['free'] / 1024 / 1024, 1),
 			'ticket' => $ticket,
 			'galleryId' => $galleryId,
+			'fieldId' => $fieldId,
+			'itemId' => $itemId,
 		);
 	}
 
