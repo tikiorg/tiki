@@ -13,7 +13,7 @@
 			title="{$modLastModif[ix].lastModif|tiki_short_datetime}{if $prefs.wiki_authors_style ne 'lastmodif'}, {tr}by{/tr} {$modLastModif[ix].user|username}{/if}{if (strlen($modLastModif[ix].pageName) > $maxlen) && ($maxlen > 0)}, {$modLastModif[ix].pageName|escape}{/if}">
 			{if $maxlen > 0}{* 0 is default value for maxlen eq to 'no truncate' *}
 				{if $namespaceoption eq 'n'}
-					{$data=$prefs.namespace_separator|explode:$modLastModif[ix].pageName}}
+					{$data=$prefs.namespace_separator|explode:$modLastModif[ix].pageName}
 					{if empty($data['1'])}
 						{$pagename=$data['0']}
 					{else}
