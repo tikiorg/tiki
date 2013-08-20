@@ -2732,6 +2732,10 @@ input {
 	display: block;
 }
 
+.ui-button, .ui-button:hover {
+    padding: 0;
+}
+
 /* highlight on interface text to draw attention; also
 highlight on "button" links, e.g. if there are some comments it highlights the "button" link in #page-bar under the content of the wiki pages */
 .searchresults blockquote em,
