@@ -68,6 +68,52 @@ function wikiplugin_trackerfilter_info()
 				'default' => '',
 				'advanced' => true,
 			),
+			'export_status' => array(
+				'required' => false,
+				'name' => tra('Export status field'),
+				'description' => tra('Export the status field if the Export CSV option is used'),
+				'advanced' => true,
+				'filter' => 'alpha',
+				'default' => 'n',
+				'options' => array(
+					array('text' => '', 'value' => ''),
+					array('text' => tra('Yes'), 'value' => 'y'),
+					array('text' => tra('No'), 'value' => 'n')
+				)
+			),					
+			'export_created' => array(
+				'required' => false,
+				'name' => tra('Export created date field'),
+				'description' => tra('Export the created date field if the Export CSV option is used'),
+				'advanced' => true,
+				'filter' => 'alpha',
+				'default' => 'n',
+				'options' => array(
+					array('text' => '', 'value' => ''),
+					array('text' => tra('Yes'), 'value' => 'y'),
+					array('text' => tra('No'), 'value' => 'n')
+				)
+			),					
+			'export_modif' => array(
+				'required' => false,
+				'name' => tra('Export modified date field'),
+				'description' => tra('Export the modified date field if the Export CSV option is used'),
+				'advanced' => true,
+				'filter' => 'alpha',
+				'default' => 'n',
+				'options' => array(
+					array('text' => '', 'value' => ''),
+					array('text' => tra('Yes'), 'value' => 'y'),
+					array('text' => tra('No'), 'value' => 'n')
+				)
+			),					
+			'export_charset' => array(
+				'required' => false,
+				'name' => tra('Export character set'),
+				'description' => tra('Character set to be used if the Export CSV option is used'),
+				'default' => 'UTF-8',
+				'advanced' => true,
+			),					
 			'googlemapButtons' => array(
 				'required' => false,
 				'name' => tra('Google Map Buttons'),
