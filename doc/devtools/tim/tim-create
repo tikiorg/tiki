@@ -100,7 +100,7 @@ create()
 	cat > $INSTANCE_DIR/db/local.php <<EOF
 <?php
 \$db_tiki='mysql';
-\$dbversion_tiki='9.0';
+\$dbversion_tiki='${SVNTAG}';
 \$host_tiki='localhost';
 \$user_tiki='tiki';
 \$pass_tiki='password';
