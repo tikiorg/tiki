@@ -84,7 +84,7 @@ create()
 
 	tar -C $INSTANCE_DIR -xzf $SVN_CACHE/$SVNTAG.tar.gz
 
-	if [[ 'trunk' -eq $SVNTAG ]]
+	if [[ 'trunk' == "${SVNTAG}" ]]
 	then
 		cd $INSTANCE_DIR
 		svn up
