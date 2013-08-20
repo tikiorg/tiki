@@ -82,7 +82,10 @@ destroy()
 {
 	mysql -e "DROP DATABASE $DB;" && echo "DATABASE $DB suppressed" || echo "ERROR: database $DB not suppressed"
 	rm -r $INSTANCE_DIR && echo "FILES in $INSTANCE_DIR suppressed" || echo "ERROR: FILES in $INSTANCE_DIR not suppressed"
-	rm $LOCKSDIR/lock_${TUSERID}_${ID} && echo "LOCK file removed" || echo "ERROR: LOCK file could not be removed"
+	if [[ -f $LOCKSDIR/lock_${TUSERID}_${ID} ]] 
+	then
+		rm $LOCKSDIR/lock_${TUSERID}_${ID} && echo "LOCK file removed" || echo "ERROR: LOCK file could not be removed"
+	fi
 }
 
 upgrade()
@@ -184,21 +187,25 @@ case ${COMMAND} in
 		echo "START: ${COMMAND}"
 		echo "SITE: ${SUBDOMAIN}.show.tikiwiki.org "
 		${COMMAND}
+		echo "END: ${COMMAND}"
 		exit 0
 		;;
 	debug)
 		echo "START: ${COMMAND}"
 		${COMMAND}
+		echo "END: ${COMMAND}"
 		exit 0
 		;;
 	date)
 		echo "START: ${COMMAND}"
 		${COMMAND}
+		echo "END: ${COMMAND}"
 		exit 0
 		;;
 	info)
 		echo "START: ${COMMAND}"
 		${COMMAND}
+		echo "END: ${COMMAND}"
 		exit 0
 		;;
 	snapshot)
