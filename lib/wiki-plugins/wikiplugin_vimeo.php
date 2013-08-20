@@ -132,6 +132,35 @@ function wikiplugin_vimeo($data, $params)
 				tra('Feature "vimeo_upload" is required to be able to add videos here.'), $smarty, $repeat);
 		}
 
+		// old perms access to get "special" gallery perms to handle user gals etc
+		$perms = TikiLib::lib('tiki')->get_perm_object(
+			$prefs['vimeo_default_gallery'],
+			'file gallery',
+			TikiLib::lib('filegal')->get_file_gallery_info($prefs['vimeo_default_gallery']),
+			false
+		);
+		if ($perms['tiki_p_upload_files'] !== 'y' ) {
+
+			return '';		//$permMessage = tra('You do not have permsission to add files here.');
+
+		} else if (!empty($params['fromFieldId'])) {
+
+			$fieldInfo = TikiLib::lib('trk')->get_tracker_field($params['fromFieldId']);
+			if (empty($params['fromItemId'])) {
+				$item = Tracker_Item::newItem($fieldInfo['trackerId']);
+			} else {
+				$item = Tracker_Item::fromId($params['fromItemId']);
+			}
+			if (!$item->canModify()) {
+				return '';		//$permMessage = tra('You do not have permsission modify this tracker item.');
+			}
+		} else if ($page) {
+			$pagePerms = Perms::get(array( 'type' => 'wiki page', 'object' => $page ))->edit;
+			if (!$pagePerms) {
+				return '';		//$permMessage = tra('You do not have permsission modify this page.');
+			}
+		}
+
 		// set up for an upload
 		$smarty->loadPlugin('smarty_function_button');
 		$smarty->loadPlugin('smarty_function_service');
