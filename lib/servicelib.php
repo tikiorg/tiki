@@ -61,7 +61,7 @@ class ServiceLib
 			'contenttemplate'=>  'Services_ContentTemplate_Controller',
 			'draw' => 'Services_Draw_Controller',
 			'edit' => 'Services_Edit_Controller',
-			'favorite' => 'Services_Favorite_Controller',
+			'favorite' => 'Services_User_FavoriteController',
 			'file_finder' => 'Services_File_FinderController',
 			'file' => 'Services_File_Controller',
 			'jcapture' => 'Services_JCapture_Controller',
