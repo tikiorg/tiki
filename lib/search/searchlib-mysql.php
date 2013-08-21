@@ -307,6 +307,7 @@ class SearchLib extends TikiLib
 			'objectKey' => 'p.`pageName`',
 		);
 		if (!empty($lang)) {
+			$lang = addslashes($lang);
 			$search_wikis_comments['filter'] .= " AND p.`lang`='$lang'";
 		}
 		$search_wikis_comments['href'] = $prefs['feature_sefurl'] == 'y'? '%s#comments': 'tiki-index.php?page=%s#comments';
@@ -327,6 +328,7 @@ class SearchLib extends TikiLib
 			'objectKey' => 'p.`pageName`',
 		);
 		if (!empty($lang)) {
+			$lang = addslashes($lang);
 			$search_wikis['filter'] = " p.`lang`='$lang'";
 		}
 		$search_wikis['href'] = $prefs['feature_sefurl'] == 'y'? '%s': 'tiki-index.php?page=%s';
@@ -571,6 +573,7 @@ class SearchLib extends TikiLib
 		);
 
 		if (!empty($lang)) {
+			$lang = addslashes($lang);
 			$search_articles['filter'] = " a.`lang`='$lang'";
 		}
 		$res = $this->_find($search_articles, $words, $offset, $maxRecords, $fulltext, $filter, $boolean, tra('Article'), $searchDate, $categId);
