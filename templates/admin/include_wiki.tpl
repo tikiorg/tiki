@@ -328,7 +328,12 @@
 		</div>
 
 		{preference name=wiki_auto_toc}
-		{preference name=wiki_inline_auto_toc}
+		<div class="adminoptionbox clearfix" id="wiki_auto_toc_childcontainer">
+			<fieldset>
+				<legend>{tr}Auto TOC options{/tr}</legend>
+					{preference name=wiki_inline_auto_toc}
+			</fieldset>
+		</div>
 	{/tab}
 
 	{tab name="{tr}Flagged Revision{/tr}"}
