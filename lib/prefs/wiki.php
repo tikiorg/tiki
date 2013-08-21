@@ -710,7 +710,7 @@ function prefs_wiki_list($partial = false)
 			'default' => 'n',
 		),
 		'wiki_inline_auto_toc' => array(
-			'name' => tr('Wiki inline auto-toc'),
+			'name' => tr('Add inline auto-toc'),
 			'description' => tr('Automatically add an inline Table of Contents for wiki pages.'),
 			'type' => 'flag',
 			'default' => 'n',
