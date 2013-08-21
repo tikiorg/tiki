@@ -86,8 +86,10 @@ class Tracker_Field_Factory
 			'infoMap' => $this->infoMap,
 		);
 
-		$cachelib->cacheItem($cacheKey, serialize($data));
-		$this->setPreCacheTypeMap($data);
+		if (defined('TIKI_PREFS_DEFINED')) {
+			$cachelib->cacheItem($cacheKey, serialize($data));
+			$this->setPreCacheTypeMap($data);
+		}
 	}
 
 	function compareName($a, $b)
