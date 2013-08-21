@@ -1082,7 +1082,7 @@ if ( \$('#$id') ) {
 				$this->option['noparseplugins'] = false;
 			}
 
-			if ( ! getCookie('wysiwyg_inline_edit', null, false)) { // remove hrefs and onclicks
+			if ( ! getCookie('wysiwyg_inline_edit', 'preview', false)) { // remove hrefs and onclicks
 				$plugin_result = preg_replace('/\shref\=/i', ' tiki_href=', $plugin_result);
 				$plugin_result = preg_replace('/\sonclick\=/i', ' tiki_onclick=', $plugin_result);
 				$plugin_result = preg_replace('/<script.*?<\/script>/mi', '', $plugin_result);
