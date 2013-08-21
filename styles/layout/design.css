@@ -4463,14 +4463,24 @@ div.tiki_plugin { width: 100%; }
 
 /* Auto TOC */
 div#outerToc {
-	    position:fixed;
-	    top:0px;
-	    margin-left:25%;
-	    background:#E0E0E0;
-	    display:none;
-	    padding:10px;
-	    border-radius:0px 0px 5px 5px;
-	    z-index:5;
+	position:fixed;
+	top:0px;
+	left: 75%;
+	background:#E0E0E0;
+	display:none;
+	border-radius:0px 0px 5px 5px;
+	z-index:5;
+	padding:5px;
+	margin:5px;
 }
+div#outerToc-static 
+{
+    float: right;
+    border: 1px solid;
+    border-collapse: collapse;
+	padding:5px;
+	margin:5px;
+}
+
 
 /* End of file */

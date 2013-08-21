@@ -704,10 +704,19 @@ function prefs_wiki_list($partial = false)
 			'default' => '...page...',
 		),
 		'wiki_auto_toc' => array(
-			'name' => tr('Wiki Auto-TOC'),
+			'name' => tr('Wiki auto-toc'),
 			'description' => tr('Automatic Table of Contents generation for wiki pages.'),
 			'type' => 'flag',
 			'default' => 'n',
+		),
+		'wiki_inline_auto_toc' => array(
+			'name' => tr('Wiki inline auto-toc'),
+			'description' => tr('Automatically add an inline Table of Contents for wiki pages.'),
+			'type' => 'flag',
+			'default' => 'n',
+			'dependencies' => array(
+				'wiki_auto_toc',
+			),
 		),
 	);
 }

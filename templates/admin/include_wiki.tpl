@@ -328,6 +328,7 @@
 		</div>
 
 		{preference name=wiki_auto_toc}
+		{preference name=wiki_inline_auto_toc}
 	{/tab}
 
 	{tab name="{tr}Flagged Revision{/tr}"}
