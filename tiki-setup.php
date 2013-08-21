@@ -674,4 +674,9 @@ if ($prefs['openpgp_gpg_pgpmimemail'] == 'y') {
 // ******************************************************************** //
 //////////////////////////////////////////////////////////////////////////
 
+$isAutoTocActive = isset($prefs['wiki_auto_toc']) ? $prefs['wiki_auto_toc'] === 'y' : false;
+if ($isAutoTocActive) {
+	$headerlib->add_jsfile('lib/jquery_tiki/autoToc.js');
+}
+
 $headerlib->lockMinifiedJs();

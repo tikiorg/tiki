@@ -326,6 +326,8 @@
 				{preference name=wiki_pagename_strip}
 			</fieldset>
 		</div>
+
+		{preference name=wiki_auto_toc}
 	{/tab}
 
 	{tab name="{tr}Flagged Revision{/tr}"}

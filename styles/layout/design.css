@@ -4461,5 +4461,16 @@ a.cke_button span.cke_icon {
 
 div.tiki_plugin { width: 100%; }
 
+/* Auto TOC */
+div#outerToc {
+	    position:fixed;
+	    top:0px;
+	    margin-left:25%;
+	    background:#E0E0E0;
+	    display:none;
+	    padding:10px;
+	    border-radius:0px 0px 5px 5px;
+	    z-index:5;
+}
 
 /* End of file */

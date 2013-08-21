@@ -703,5 +703,11 @@ function prefs_wiki_list($partial = false)
 			'type' => 'text',
 			'default' => '...page...',
 		),
+		'wiki_auto_toc' => array(
+			'name' => tr('Wiki Auto-TOC'),
+			'description' => tr('Automatic Table of Contents generation for wiki pages.'),
+			'type' => 'flag',
+			'default' => 'n',
+		),
 	);
 }
