@@ -27,7 +27,7 @@ class TWVersion
 		$this->branch 	= 'stable';
 
 		// Set everything else, including defaults.
-		$this->version 	= 'SVN pre 11.1';	// needs to have no spaces for releases
+		$this->version 	= '11.1svn';	// needs to have no spaces and use the format X.YabcZ see tikiVersions fn below for examples
 		$this->star	= 'TBA';
 		$this->releases	= array();
 
