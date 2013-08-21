@@ -1253,6 +1253,33 @@ class WikiLib extends TikiLib
 		return $ret;
 	}
 
+	/*
+	*	get_page_auto_toc
+	*	Get the auto generated TOC setting for the page
+	*	@return 
+	*		+1 page_auto_toc is explicitly set to true
+	*		0  page_auto_toc is not set for page. Use global setting
+	*		-1 page_auto_toc is explicitly set to false
+	*/
+	public function get_page_auto_toc($pageName)
+	{
+		$attributes = TikiLib::lib('attribute')->get_attributes('wiki page', $pageName);
+		$rc = 0;
+		if (!isset($attributes['tiki.wiki.autotoc'])) {
+			return 0; 
+		}
+		$value = intval($attributes['tiki.wiki.autotoc']);
+		if($value > 0)
+			return 1;
+		else
+			return -1;
+	}
+
+	public function set_page_auto_toc($pageName, $isAutoToc)
+	{
+		TikiLib::lib('attribute')->set_attribute('wiki page', $pageName, 'tiki.wiki.autotoc', $isAutoToc);
+	}
+
 	public function get_without_namespace($pageName)
 	{
 		global $prefs;

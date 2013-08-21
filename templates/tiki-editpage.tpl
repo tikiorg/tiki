@@ -517,6 +517,16 @@ $("input[name=allowhtml]").change(function() {
 								<div class="map-container" data-target-field="geolocation" style="height: 250px; width: 250px;"></div>
 								<input type="hidden" name="geolocation" value="{$geolocation_string}">
 							{/if}
+							{if $prefs.wiki_auto_toc eq 'y'}
+								<fieldset>
+									<legend>{tr}Page display options{/tr}</legend>
+									Auto TOC <select name="pageAutoToc"> 
+									<option value="0" {if $pageAutoToc == 0}selected{/if}></option>
+									{* <option value="1" {if $pageAutoToc == 1}selected{/if}>On</option> *}
+									<option value="-1" {if $pageAutoToc == -1}selected{/if}>Off</option>
+									</select>
+								</fieldset>
+							{/if}
 							{if $prefs.namespace_enabled eq 'y'}
 								<fieldset>
 									<legend>{tr}Namespace{/tr}</legend>

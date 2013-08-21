@@ -1292,6 +1292,12 @@ if (
 		TikiLib::lib('geo')->set_coordinates('wiki page', $page, $_REQUEST['geolocation']);
 	}
 
+	if ($prefs['wiki_auto_toc'] == 'y' && isset($_REQUEST['pageAutoToc'])) {
+		$isAutoTocActive = intval($_REQUEST['pageAutoToc']);
+		$isAutoTocActive = $isAutoTocActive == 0 ? null : $isAutoTocActive;
+		$wikilib->set_page_auto_toc($page, $isAutoTocActive);
+	}
+
 	if ($prefs['namespace_enabled'] == 'y' && isset($_REQUEST['explicit_namespace'])) {
 		$wikilib->set_explicit_namespace($page, $_REQUEST['explicit_namespace']);
 	}
@@ -1474,6 +1480,7 @@ if ( $prefs['feature_multilingual'] === 'y' ) {
 }
 
 $smarty->assign('explicit_namespace', $wikilib->get_explicit_namespace($page));
+$smarty->assign('pageAutoToc', $wikilib->get_page_auto_toc($page));
 
 // setup properties tab visibility
 if (($prefs['feature_wiki_templates'] === 'y' && $tiki_p_use_content_templates === 'y') ||

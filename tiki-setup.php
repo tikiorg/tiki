@@ -674,16 +674,28 @@ if ($prefs['openpgp_gpg_pgpmimemail'] == 'y') {
 // ******************************************************************** //
 //////////////////////////////////////////////////////////////////////////
 
+// Determine the auto TOC setting
 $isAutoTocActive = isset($prefs['wiki_auto_toc']) ? $prefs['wiki_auto_toc'] === 'y' : false;
-if ($isAutoTocActive) {
-	$headerlib->add_jsfile('lib/jquery_tiki/autoToc.js');
-	
-	$isAddInlineToc = isset($prefs['wiki_inline_auto_toc']) ? $prefs['wiki_inline_auto_toc'] === 'y' : false;
-	if ($isAddInlineToc) {
-		$headerlib->add_css('div#outerToc-static {display: block;}');
-	} else {
-		$headerlib->add_css('div#outerToc-static {display: none;}');
+if($isAutoTocActive) {
+	$currPage = isset($_REQUEST['page']) ? $_REQUEST['page'] : '';
+	if(!empty($currPage)) {
+		$wikilib = TikiLib::lib('wiki');
+		$isPageAutoToc = $wikilib->get_page_auto_toc($currPage);
+		if($isPageAutoToc != 0) {
+			// Use page specific setting
+			$isAutoTocActive = $isPageAutoToc > 0 ? true : false;
+		}
+	}
+	// Add Auto TOC if enabled
+	if ($isAutoTocActive) {
+		$headerlib->add_jsfile('lib/jquery_tiki/autoToc.js');
+		$isAddInlineToc = isset($prefs['wiki_inline_auto_toc']) ? $prefs['wiki_inline_auto_toc'] === 'y' : false;
+		if ($isAddInlineToc) {
+			$headerlib->add_css('div#outerToc-static {display: block;}');
+		} else {
+			$headerlib->add_css('div#outerToc-static {display: none;}');
+		}
 	}
 }
-
+	
 $headerlib->lockMinifiedJs();
