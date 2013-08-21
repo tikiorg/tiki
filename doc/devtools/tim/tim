@@ -21,12 +21,13 @@ OPTIONS:
    -u      username on Tiki.org 
    -U      userid on Tiki.org 
    -t      SVN Tag (Tiki version)
+   -s      subcommand (with command info) (one of: versions)
    -p      admin password (simple passwords only)
    -P      Subdirectory path
 EOF
 }
 
-while getopts “hc:i:t:u:U:p:” OPTION
+while getopts “hc:i:t:u:U:p:P:s:” OPTION
 do
 	case $OPTION in
 		h)
@@ -53,6 +54,9 @@ do
 			;;
 		p)
 			APASSWORD=$(echo "$OPTARG" | sed -e 's/[^a-zA-Z0-9.]//g')
+			;;
+		s)
+			SUBCOMMAND=$(echo "$OPTARG" | tr A-Z a-z | sed -e 's/[^a-z]//g')
 			;;
 		P)
 			TPATH="$OPTARG"
@@ -130,57 +134,72 @@ upgrade()
 
 info()
 {
-	cd $WEBROOT
-	if [[ -z $TUSERID ]] && [[ -z $ID ]]
+	if [[ ! -z "${SUBCOMMAND}" ]]
 	then
-		echo "INFO: List of all user IDs with currently live sites"
-		cd $WEBROOT; for i in *-*-*; do echo $i| cut -d'-' -f2; done | sort -n | uniq
-	elif [[ ! -z $TUSERID ]] && [[ -z $ID ]]
-	then
-		echo "INFO: List of active sites for userID $TUSERID "
-		for site in *-${TUSERID}-*; do echo $site ; done | sort -n 
+		case $SUBCOMMAND in
+			versions)
+				echo "INFO: List of available versions"
+				cd $SVN_CACHE
+				VERSIONSLIST=$(ls *.tar.gz | sed -e 's/\.tar\.gz//' | sort -n -r | uniq)
+				echo $VERSIONSLIST
+				;;
+			*)
+				echo echo "Sub command unknown/forbidden"
+				;;
+		esac
 	else
-		echo "INFO: Status of subdomain "
-		if [[ $(ls -d -1 *-${TUSERID}-${ID} 2>/dev/null | wc -l ) == 0 ]]
-		then 
-			echo "STATUS: NONE"
-		elif [[ $(ls -d -1 *-${TUSERID}-${ID} 2>/dev/null | wc -l ) == 1 ]]
-		then 
-			SUBDOMAIN=$(ls -d -1 *-${TUSERID}-${ID})
-			if [[ -e $LOCKSDIR/lock_${TUSERID}_${ID} ]]
-			then
-				echo "STATUS: BUILDING"
-			else
-				echo "STATUS: ACTIVE"
-			fi
-			if [[ ! -z $TUSER ]] && [[ "${SUBDOMAIN}" != "$TUSER-$TUSERID-$ID" ]]
-			then
-				echo "WARNING: The subdomain found ( ${SUBDOMAIN} ) does not match the subdomain queried ( $TUSER-$TUSERID-$ID )"
-			fi
-			echo "SITE: ${SUBDOMAIN}.show.tikiwiki.org "
-		elif [[ $(ls -d -1 *-${TUSERID}-${ID} 2>/dev/null | wc -l ) > 1 ]]
-		then 
-			SUBDOMAIN=$(ls -d -1 *-${TUSERID}-${ID})
-			if [[ ! -z $TUSER ]] && [[ -d "$TUSER-$TUSERID-$ID" ]]
-			then
+		cd $WEBROOT
+		if [[ -z $TUSERID ]] && [[ -z $ID ]]
+		then
+			echo "INFO: List of all user IDs with currently live sites"
+			cd $WEBROOT; for i in *-*-*; do echo $i| cut -d'-' -f2; done | sort -n | uniq
+		elif [[ ! -z $TUSERID ]] && [[ -z $ID ]]
+		then
+			echo "INFO: List of active sites for userID $TUSERID "
+			for site in *-${TUSERID}-*; do echo $site ; done | sort -n 
+		else
+			echo "INFO: Status of subdomain "
+			if [[ $(ls -d -1 *-${TUSERID}-${ID} 2>/dev/null | wc -l ) == 0 ]]
+			then 
+				echo "STATUS: NONE"
+			elif [[ $(ls -d -1 *-${TUSERID}-${ID} 2>/dev/null | wc -l ) == 1 ]]
+			then 
+				SUBDOMAIN=$(ls -d -1 *-${TUSERID}-${ID})
 				if [[ -e $LOCKSDIR/lock_${TUSERID}_${ID} ]]
 				then
-					BEINGBUILT=$(/bin/cat "${LOCKSDIR}/lock_${TUSERID}_${ID}")
-					if [[ "${BEINGBUILT}" == "${TUSER}" ]]
-					then
-						echo "STATUS: BUILDING"
-					else
-						echo "STATUS: ACTIVE"
-					fi
+					echo "STATUS: BUILDING"
 				else
 					echo "STATUS: ACTIVE"
 				fi
-				echo "WARNING: There are more than one site matching *-${TUSERID}-${ID}."
-				echo "SITE: ${TUSER}-${TUSERID}-${ID}.show.tikiwiki.org "
-			else
-				echo "FAIL: There are more than one site matching *-${TUSERID}-${ID}. Please provide the -u username parameter to select among the following."
-				echo "${SUBDOMAIN}"
-				exit 1
+				if [[ ! -z $TUSER ]] && [[ "${SUBDOMAIN}" != "$TUSER-$TUSERID-$ID" ]]
+				then
+					echo "WARNING: The subdomain found ( ${SUBDOMAIN} ) does not match the subdomain queried ( $TUSER-$TUSERID-$ID )"
+				fi
+				echo "SITE: ${SUBDOMAIN}.show.tikiwiki.org "
+			elif [[ $(ls -d -1 *-${TUSERID}-${ID} 2>/dev/null | wc -l ) > 1 ]]
+			then 
+				SUBDOMAIN=$(ls -d -1 *-${TUSERID}-${ID})
+				if [[ ! -z $TUSER ]] && [[ -d "$TUSER-$TUSERID-$ID" ]]
+				then
+					if [[ -e $LOCKSDIR/lock_${TUSERID}_${ID} ]]
+					then
+						BEINGBUILT=$(/bin/cat "${LOCKSDIR}/lock_${TUSERID}_${ID}")
+						if [[ "${BEINGBUILT}" == "${TUSER}" ]]
+						then
+							echo "STATUS: BUILDING"
+						else
+							echo "STATUS: ACTIVE"
+						fi
+					else
+						echo "STATUS: ACTIVE"
+					fi
+					echo "WARNING: There are more than one site matching *-${TUSERID}-${ID}."
+					echo "SITE: ${TUSER}-${TUSERID}-${ID}.show.tikiwiki.org "
+				else
+					echo "FAIL: There are more than one site matching *-${TUSERID}-${ID}. Please provide the -u username parameter to select among the following."
+					echo "${SUBDOMAIN}"
+					exit 1
+				fi
 			fi
 		fi
 	fi
