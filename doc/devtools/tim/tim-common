@@ -15,3 +15,4 @@ if [[ -z $TUSER ]] || [[ "$TUSER" == "" ]]; then TUSER="user"; fi
 SUBDOMAIN=$TUSER-$TUSERID-$ID
 DB=${TUSER}_${TUSERID}_${ID}
 INSTANCE_DIR=$WEBROOT/$SUBDOMAIN
+if [[ -f ${INSTANCE_DIR}/db/local.php ]]; then DB_DETECTED=$(grep "^\$dbs_tiki" ${INSTANCE_DIR}/db/local.php | cut -d"'" -f2| tail -n 1); fi

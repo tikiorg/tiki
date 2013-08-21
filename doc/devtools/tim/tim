@@ -16,12 +16,13 @@ usage: $0 -c <command> -u <user> -t <svn tag> -i <instance id>
 
 OPTIONS:
    -h      Show this message
-   -c      Command (one of: create, destroy, snapshot)
+   -c      Command (one of: create, destroy, snapshot, debug, info, upgrade, reset)
    -i      id of instance
    -u      username on Tiki.org 
    -U      userid on Tiki.org 
    -t      SVN Tag (Tiki version)
-   -p      Subdirectory path
+   -p      admin password (simple passwords only)
+   -P      Subdirectory path
 EOF
 }
 
@@ -51,6 +52,9 @@ do
 			TUSERID=$(echo "$OPTARG" | sed -e 's/[^0-9]//g')
 			;;
 		p)
+			APASSWORD=$(echo "$OPTARG" | sed -e 's/[^a-zA-Z0-9.]//g')
+			;;
+		P)
 			TPATH="$OPTARG"
 			;;
 		?)
@@ -86,6 +90,36 @@ destroy()
 	then
 		rm $LOCKSDIR/lock_${TUSERID}_${ID} && echo "LOCK file removed" || echo "ERROR: LOCK file could not be removed"
 	fi
+}
+
+reset()
+{
+	# Use detected database name unless there is none, then use expected
+	# If detected and expected don't match, display warning
+	# If none, display error and abort
+	if [[ "$DB_DETECTED" != "$DB" ]]
+	then
+		echo -n "WARNING: Detected database (${DB_DETECTED}) does not match expected database (${DB})."
+		if [[ ! -z "${DB_DETECTED}" ]]
+		then
+			DB_RESET="${DB_DETECTED}"
+			echo " Using detected database."
+		else
+			DB_RESET="${DB}"
+			echo " Using expected database."
+		fi
+	else
+		if [[ -z "${DB_DETECTED}" ]]
+		then
+			echo "ERROR: Coud not find database to reset"
+			return 1
+		else
+			DB_RESET="${DB_DETECTED}"
+		fi
+	fi
+	[[ -z $DB_DETECTED ]] && echo "WARNING: Could not detect database for instance"
+	if [[ -z "${APASSWORD}" ]]; then APASSWORD="12345"; fi
+	mysql -e "UPDATE users_users SET password='admin', hash= md5('${APASSWORD}') WHERE login='admin';" $DB_DETECTED && echo "SUCCESS: Admin password reset to ${APASSWORD} in database ${DB_DETECTED}" || echo "ERROR: admin password not reset in database ${DB_DETECTED}"
 }
 
 upgrade()
@@ -203,6 +237,18 @@ case ${COMMAND} in
 		exit 0
 		;;
 	info)
+		echo "START: ${COMMAND}"
+		${COMMAND}
+		echo "END: ${COMMAND}"
+		exit 0
+		;;
+	reset)
+		if [[ -z $TUSERID ]] || [[ -z $ID ]]
+		then
+			usage
+			exit 1
+		fi
+		if [[ ! -e "$INSTANCE_DIR" ]] ; then echo "FAIL: $INSTANCE_DIR not found. It is not possible to reset a non-existing website."; exit 0; fi
 		echo "START: ${COMMAND}"
 		${COMMAND}
 		echo "END: ${COMMAND}"
