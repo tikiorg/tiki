@@ -153,13 +153,21 @@ class Search_Query implements Search_Query_Interface
 
 	function filterSimilar($type, $object)
 	{
-		$this->expr->addPart(new Search_Expr_And(array(
-			new Search_Expr_Not(new Search_Expr_And(array(
-				new Search_Expr_Token($type, 'identifier', 'object_type'),
-				new Search_Expr_Token($object, 'identifier', 'object_id'),
-			))),
-			new Search_Expr_MoreLikeThis($type, $object),
-		)));
+		$this->expr->addPart(
+			new Search_Expr_And(
+				array(
+					new Search_Expr_Not(
+						new Search_Expr_And(
+							array(
+								new Search_Expr_Token($type, 'identifier', 'object_type'),
+								new Search_Expr_Token($object, 'identifier', 'object_id'),
+							)
+						)
+					),
+					new Search_Expr_MoreLikeThis($type, $object),
+				)
+			)
+		);
 	}
 
 	private function addPart($query, $type, $field)
@@ -219,11 +227,13 @@ class Search_Query implements Search_Query_Interface
 
 		if ($this->identifierFields) {
 			$fields = $this->identifierFields;
-			$this->expr->walk(function (Search_Expr_Interface $expr) use ($fields) {
-				if (method_exists($expr, 'getField') && in_array($expr->getField(), $fields)) {
-					$expr->setType('identifier');
+			$this->expr->walk(
+				function (Search_Expr_Interface $expr) use ($fields) {
+					if (method_exists($expr, 'getField') && in_array($expr->getField(), $fields)) {
+						$expr->setType('identifier');
+					}
 				}
-			});
+			);
 		}
 
 		return $index->find($this, $this->start, $this->count);

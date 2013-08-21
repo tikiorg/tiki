@@ -52,12 +52,15 @@ class Services_ActivityStream_ManageController
 
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			$event = $request->event->attribute_type();
-			$id = $this->lib->replaceRule($id, array(
-				'rule' => "(event-sample (str $event) event args)",
-				'ruleType' => 'sample',
-				'notes' => $request->notes->text(),
-				'eventType' => $event,
-			));
+			$id = $this->lib->replaceRule(
+				$id,
+				array(
+					'rule' => "(event-sample (str $event) event args)",
+					'ruleType' => 'sample',
+					'notes' => $request->notes->text(),
+					'eventType' => $event,
+				)
+			);
 		}
 
 		$rule = $this->getRule($id);
@@ -67,18 +70,21 @@ class Services_ActivityStream_ManageController
 			'eventTypes' => $this->getEventTypes(),
 		);
 	}
-	
+
 	function action_record(JitFilter $request)
 	{
 		$id = $request->ruleId->int();
 
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-			$id = $this->lib->replaceRule($id, array(
-				'rule' => '(event-record event args)',
-				'ruleType' => 'record',
-				'notes' => $request->notes->text(),
-				'eventType' => $request->event->attribute_type(),
-			));
+			$id = $this->lib->replaceRule(
+				$id,
+				array(
+					'rule' => '(event-record event args)',
+					'ruleType' => 'record',
+					'notes' => $request->notes->text(),
+					'eventType' => $request->event->attribute_type(),
+				)
+			);
 		}
 
 		return array(
@@ -86,7 +92,7 @@ class Services_ActivityStream_ManageController
 			'eventTypes' => $this->getEventTypes(),
 		);
 	}
-	
+
 	function action_tracker_filter(JitFilter $request)
 	{
 		$id = $request->ruleId->int();
@@ -96,16 +102,19 @@ class Services_ActivityStream_ManageController
 			$targetEvent = $request->targetEvent->attribute_type();
 			$customArguments = $request->parameters->text();
 
-			$id = $this->lib->replaceRule($id, array(
-				'rule' => "
+			$id = $this->lib->replaceRule(
+				$id,
+				array(
+					'rule' => "
 (if (equals args.trackerId $tracker) (event-trigger $targetEvent (map
 $customArguments
 )))
 ",
-				'ruleType' => 'tracker_filter',
-				'notes' => $request->notes->text(),
-				'eventType' => $request->sourceEvent->attribute_type(),
-			));
+					'ruleType' => 'tracker_filter',
+					'notes' => $request->notes->text(),
+					'eventType' => $request->sourceEvent->attribute_type(),
+				)
+			);
 		}
 
 		$rule = $this->getRule($id);
@@ -139,12 +148,15 @@ $customArguments
 		$id = $request->ruleId->int();
 
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-			$id = $this->lib->replaceRule($id, array(
-				'rule' => $request->rule->text(),
-				'ruleType' => 'advanced',
-				'notes' => $request->notes->text(),
-				'eventType' => $request->event->attribute_type(),
-			));
+			$id = $this->lib->replaceRule(
+				$id,
+				array(
+					'rule' => $request->rule->text(),
+					'ruleType' => 'advanced',
+					'notes' => $request->notes->text(),
+					'eventType' => $request->event->attribute_type(),
+				)
+			);
 		}
 
 		return array(
@@ -152,7 +164,7 @@ $customArguments
 			'eventTypes' => $this->getEventTypes(),
 		);
 	}
-	
+
 	private function getRuleTypes()
 	{
 		return array(

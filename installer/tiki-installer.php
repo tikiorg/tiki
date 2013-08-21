@@ -447,21 +447,25 @@ function initTikiDB( &$api, &$driver, $host, $user, $pass, $dbname, $client_char
 {
 	$initializer = new TikiDb_Initializer;
 	$initializer->setPreferredConnector($driver);
-	$initializer->setInitializeCallback(function ($db) {
-		$db->setServerType('pdo');
-		$db->setErrorHandler(new InstallerDatabaseErrorHandler);
-	});
+	$initializer->setInitializeCallback(
+		function ($db) {
+			$db->setServerType('pdo');
+			$db->setErrorHandler(new InstallerDatabaseErrorHandler);
+		}
+	);
 
 	global $tikifeedback;
 	$dbcon = false;
 	try {
-		$dbTiki = $initializer->getConnection(array(
-			'host' => $host,
-			'user' => $user,
-			'pass' => $pass,
-			'dbs' => $dbname,
-			'charset' => $client_charset,
-		));
+		$dbTiki = $initializer->getConnection(
+			array(
+				'host' => $host,
+				'user' => $user,
+				'pass' => $pass,
+				'dbs' => $dbname,
+				'charset' => $client_charset,
+			)
+		);
 	} catch (Exception $e) {
 		$tikifeedback[] = array( 'num' => 1, 'mes' => $e->getMessage() );
 	}
@@ -487,13 +491,15 @@ function initTikiDB( &$api, &$driver, $host, $user, $pass, $dbname, $client_char
 		}
 
 		try {
-			$dbTiki = $initializer->getConnection(array(
-				'host' => $host,
-				'user' => $user,
-				'pass' => $pass,
-				'dbs' => $dbname,
-				'charset' => $client_charset,
-			));
+			$dbTiki = $initializer->getConnection(
+				array(
+					'host' => $host,
+					'user' => $user,
+					'pass' => $pass,
+					'dbs' => $dbname,
+					'charset' => $client_charset,
+				)
+			);
 			$dbcon = ! empty($dbTiki);
 		} catch (Exception $e) {
 			$tikifeedback[] = array( 'num' => 1, 'mes' => $e->getMessage() );

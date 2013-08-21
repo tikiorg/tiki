@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2013 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -48,13 +48,13 @@ function wikiplugin_vimeo_info()
 				'description' => tra('Quality of the video'),
 				'filter' => 'alpha',
     			'options' => array(
-					array('text' => '', 'value' => ''), 
-					array('text' => tra('High'), 'value' => 'high'), 
-					array('text' => tra('Medium'), 'value' => 'medium'), 
-					array('text' => tra('Low'), 'value' => 'low'), 
+					array('text' => '', 'value' => ''),
+					array('text' => tra('High'), 'value' => 'high'),
+					array('text' => tra('Medium'), 'value' => 'medium'),
+					array('text' => tra('Low'), 'value' => 'low'),
 				),
 				'default' => 'high',
-				'advanced' => true				
+				'advanced' => true
 			),
 			'allowFullScreen' => array(
 				'required' => false,
@@ -62,12 +62,12 @@ function wikiplugin_vimeo_info()
 				'description' => tra('Expand to full screen'),
 				'filter' => 'alpha',
     			'options' => array(
-					array('text' => '', 'value' => ''), 
-					array('text' => tra('Yes'), 'value' => 'true'), 
-					array('text' => tra('No'), 'value' => 'false'), 
+					array('text' => '', 'value' => ''),
+					array('text' => tra('Yes'), 'value' => 'true'),
+					array('text' => tra('No'), 'value' => 'false'),
 				),
 				'default' => '',
-				'advanced' => true				
+				'advanced' => true
 			),
 			'fileId' => array(
 				'required' => false,
@@ -107,12 +107,12 @@ function wikiplugin_vimeo($data, $params)
 		$params['vimeo'] = $params['url'];
 		unset($params['url']);
 		return wikiplugin_flash($data, $params);
-	} else if(isset($params['fileId'])) {
+	} elseif (isset($params['fileId'])) {
 		$fileIds = preg_split('/\D+/', $params['fileId'], -1, PREG_SPLIT_NO_EMPTY);
 		unset($params['fileId']);
 
 		$out = '';
-		foreach($fileIds as $fileId) {
+		foreach ($fileIds as $fileId) {
 		$attributelib = TikiLib::lib('attribute');
 			$attributes = $attributelib->get_attributes('file', $fileId);
 			$params['vimeo'] = $attributes['tiki.content.url'];
@@ -129,7 +129,8 @@ function wikiplugin_vimeo($data, $params)
 			$repeat = false;
 			return smarty_block_remarksbox(
 				array('type' => 'error', 'title' => tra('Feature required')),
-				tra('Feature "vimeo_upload" is required to be able to add videos here.'), $smarty, $repeat);
+				tra('Feature "vimeo_upload" is required to be able to add videos here.'), $smarty, $repeat
+			);
 		}
 
 		// old perms access to get "special" gallery perms to handle user gals etc
@@ -164,18 +165,20 @@ function wikiplugin_vimeo($data, $params)
 		// set up for an upload
 		$smarty->loadPlugin('smarty_function_button');
 		$smarty->loadPlugin('smarty_function_service');
-		$html = smarty_function_button(array(
-			'_keepall' => 'y',
-			'_class' => 'vimeo dialog',
-			'href' => smarty_function_service(
-				array(
-					'controller' => 'vimeo',
-					'action' => 'upload',
+		$html = smarty_function_button(
+			array(
+				'_keepall' => 'y',
+				'_class' => 'vimeo dialog',
+				'href' => smarty_function_service(
+					array(
+						'controller' => 'vimeo',
+						'action' => 'upload',
+					),
+					$smarty
 				),
-				$smarty
-			),
-			'_text' => tra('Upload Video'),
-		), $smarty);
+				'_text' => tra('Upload Video'),
+			), $smarty
+		);
 
 		$js = '
 $(".vimeo.dialog").click(function () {

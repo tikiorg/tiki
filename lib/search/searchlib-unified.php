@@ -125,7 +125,7 @@ class UnifiedSearchLib
 			$index_location = $this->getIndexLocation('data');
 			$tempName = $this->getIndexLocation('data-new');
 			$swapName = $this->getIndexLocation('data-old');
-			
+
 			if ($this->rebuildInProgress()) {
 				$errlib->report(tr('Rebuild in progress.'));
 				return false;
@@ -554,19 +554,29 @@ class UnifiedSearchLib
 
 		if ($mode === 'formatting') {
 			if ($prefs['unified_engine'] === 'mysql') {
-				$dataSource->setPrefilter(function ($fields, $entry) {
-					return array_filter($fields, function ($field) use ($entry) {
-						if (! empty($entry[$field])) {
-							return preg_match('/token[a-z]{20,}/', $entry[$field]);
-						}
-					});
-				});
+				$dataSource->setPrefilter(
+					function ($fields, $entry) {
+						return array_filter(
+							$fields,
+							function ($field) use ($entry) {
+								if (! empty($entry[$field])) {
+									return preg_match('/token[a-z]{20,}/', $entry[$field]);
+								}
+							}
+						);
+					}
+				);
 			} elseif ($prefs['unified_engine'] === 'elastic') {
-				$dataSource->setPrefilter(function ($fields, $entry) {
-					return array_filter($fields, function ($field) use ($entry) {
-						return ! isset($entry[$field]);
-					});
-				});
+				$dataSource->setPrefilter(
+					function ($fields, $entry) {
+						return array_filter(
+							$fields,
+							function ($field) use ($entry) {
+								return ! isset($entry[$field]);
+							}
+						);
+					}
+				);
 			}
 		}
 

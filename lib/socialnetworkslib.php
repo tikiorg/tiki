@@ -295,13 +295,15 @@ class SocialNetworksLib extends LogsLib
 		$this->options['callbackUrl'] = $this->getURL();
 		$this->options['consumerKey'] = $prefs['socialnetworks_twitter_consumer_key'];
 		$this->options['consumerSecret'] = $prefs['socialnetworks_twitter_consumer_secret'];
-		$twitter = new Zend_Service_Twitter(array(
-			'oauthOptions' => array(
-				'consumerKey' => $prefs['socialnetworks_twitter_consumer_key'],
-				'consumerSecret' => $prefs['socialnetworks_twitter_consumer_secret'],
-			),
-			'accessToken' => $token
-		));
+		$twitter = new Zend_Service_Twitter(
+			array(
+				'oauthOptions' => array(
+					'consumerKey' => $prefs['socialnetworks_twitter_consumer_key'],
+					'consumerSecret' => $prefs['socialnetworks_twitter_consumer_secret'],
+				),
+				'accessToken' => $token
+			)
+		);
 
 		try {
 			$response = $twitter->statusesUpdate($message);
@@ -339,13 +341,15 @@ class SocialNetworksLib extends LogsLib
 		$this->options['callbackUrl'] = $this->getURL();
 		$this->options['consumerKey'] = $prefs['socialnetworks_twitter_consumer_key'];
 		$this->options['consumerSecret'] = $prefs['socialnetworks_twitter_consumer_secret'];
-		$twitter = new Zend_Service_Twitter(array(
-			'oauthOptions' => array(
-				'consumerKey' => $prefs['socialnetworks_twitter_consumer_key'],
-				'consumerSecret' => $prefs['socialnetworks_twitter_consumer_secret'],
-			),
-			'accessToken' => $token
-		));
+		$twitter = new Zend_Service_Twitter(
+			array(
+				'oauthOptions' => array(
+					'consumerKey' => $prefs['socialnetworks_twitter_consumer_key'],
+					'consumerSecret' => $prefs['socialnetworks_twitter_consumer_secret'],
+				),
+				'accessToken' => $token
+			)
+		);
 		try {
 			$response = $twitter->statusesDestroy($id);
 		} catch(Zend_Http_Client_Exception $e)	{
@@ -572,14 +576,16 @@ class SocialNetworksLib extends LogsLib
 
 		$token = unserialize($token);
 
-		$twitter = new Zend_Service_Twitter(array(
-			'oauthOptions' => array(
-				'consumerKey' => $prefs['socialnetworks_twitter_consumer_key'],
-				'consumerSecret' => $prefs['socialnetworks_twitter_consumer_secret'],
-			),
-			'accessToken' => $token
-		));
-		
+		$twitter = new Zend_Service_Twitter(
+			array(
+				'oauthOptions' => array(
+					'consumerKey' => $prefs['socialnetworks_twitter_consumer_key'],
+					'consumerSecret' => $prefs['socialnetworks_twitter_consumer_secret'],
+				),
+				'accessToken' => $token
+			)
+		);
+
 		if ($timelineType=='friends') {
 			$response = $twitter->statusesHomeTimeline();
 		} else {

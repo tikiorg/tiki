@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2013 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -75,9 +75,12 @@ class Search_Query_WikiBuilder
 	function wpquery_filter_nottype($query, $value)
 	{
 		$value = explode(',', $value);
-		$value = array_map(function ($v) {
-			return "NOT \"$v\"";
-		}, $value);
+		$value = array_map(
+			function ($v) {
+				return "NOT \"$v\"";
+			},
+			$value
+		);
 		$query->filterContent(implode(' AND ', $value), 'object_type');
 	}
 
@@ -143,8 +146,8 @@ class Search_Query_WikiBuilder
 		}
 		if (! isset($arguments['from'], $arguments['to'])) {
 			TikiLib::lib('errorreport')->report(tr('Missing from or to for range filter.'));
-		} 
-		$query->filterRange($arguments['from'], $arguments['to'], $value); 
+		}
+		$query->filterRange($arguments['from'], $arguments['to'], $value);
 	}
 
 	function wpquery_filter_textrange($query, $value, array $arguments)
@@ -174,13 +177,24 @@ class Search_Query_WikiBuilder
 		}
 
 		if (in_array('groups', $types)) {
-			$part = new Search_Expr_Or(array_map(function ($group) {
-				return new Search_Expr_Token($group, 'multivalue', 'user_groups');
-			}, Perms::get()->getGroups()));
-			$subquery->getExpr()->addPart(new Search_Expr_And(array(
-				$part,
-				new Search_Expr_Not(new Search_Expr_Token($targetUser, 'identifier', 'user')),
-			)));
+			$part = new Search_Expr_Or(
+				array_map(
+					function ($group) {
+						return new Search_Expr_Token($group, 'multivalue', 'user_groups');
+					},
+					Perms::get()->getGroups()
+				)
+			);
+			$subquery->getExpr()->addPart(
+				new Search_Expr_And(
+					array(
+						$part,
+						new Search_Expr_Not(
+							new Search_Expr_Token($targetUser, 'identifier', 'user')
+						),
+					)
+				)
+			);
 		}
 
 		if (in_array('follow', $types)) {

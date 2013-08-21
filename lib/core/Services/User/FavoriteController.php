@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2013 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -19,7 +19,7 @@ class Services_User_FavoriteController
 	function action_list($input)
 	{
 		global $user;
-		
+
 		if (! $user) {
 			return array();
 		}
@@ -63,21 +63,27 @@ class Services_User_FavoriteController
 
 				$this->handleScore($type, $object);
 
-				TikiLib::events()->trigger('tiki.social.favorite.add', array(
-					'type' => $type,
-					'object' => $object,
-					'user' => $user,
-				));
+				TikiLib::events()->trigger(
+					'tiki.social.favorite.add',
+					array(
+						'type' => $type,
+						'object' => $object,
+						'user' => $user,
+					)
+				);
 			}
 		} else {
 			if ($relationId) {
 				$relationlib->remove_relation($relationId);
 				unset($relations[$relationId]);
-				TikiLib::events()->trigger('tiki.social.favorite.remove', array(
-					'type' => $type,
-					'object' => $object,
-					'user' => $user,
-				));
+				TikiLib::events()->trigger(
+					'tiki.social.favorite.remove',
+					array(
+						'type' => $type,
+						'object' => $object,
+						'user' => $user,
+					)
+				);
 			}
 		}
 
@@ -97,7 +103,8 @@ class Services_User_FavoriteController
 		}
 	}
 
-	private function handleScore($type, $object) {
+	private function handleScore($type, $object)
+	{
 		global $user, $prefs;
 
 		if ($prefs['feature_score'] != 'y') {
@@ -112,7 +119,7 @@ class Services_User_FavoriteController
 			$forum_info = $commentslib->get_forum($forum_id);
 			$thread_info = $commentslib->get_comment($object, null, $forum_info);
 			$item_user = $thread_info['userName'];
-		} elseif($type == 'article') {
+		} elseif ($type == 'article') {
 			$artlib = TikiLib::lib('art');
 			$res = $artlib->get_article($object);
 			$item_user = $res['author'];

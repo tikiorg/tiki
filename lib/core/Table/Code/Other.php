@@ -65,12 +65,24 @@ class Table_Code_Other extends Table_Code_Manager
 				$opt[] = $sel . ' value="' . $option . '">' . $option;
 			}
 			if (isset($opt)) {
-				$div[] = $this->iterate($opt, '<select class="pagesize">', '</select>', '<option',
-					'</option>', '');
+				$div[] = $this->iterate(
+					$opt,
+					'<select class="pagesize">',
+					'</select>',
+					'<option',
+					'</option>',
+					''
+				);
 			}
 			//put all pager controls in a div
-			$html[] = $this->iterate($div, '<div id="' . $this->s['pagercontrols']['id'] . '" class="tablesorter-pager">',
-				'</div>', '', '', '') ;
+			$html[] = $this->iterate(
+				$div,
+				'<div id="' . $this->s['pagercontrols']['id'] . '" class="tablesorter-pager">',
+				'</div>',
+				'',
+				'',
+				''
+			);
 		}
 
 		//TODO - doesn't work with ajax. Don't set tables to 'disable' until fixed. Bug #353 reported at https://github.com/Mottie/tablesorter/issues
@@ -108,8 +120,14 @@ class Table_Code_Other extends Table_Code_Manager
 				'	$(\'table#' . $this->id . ' tbody\').css(\'opacity\', 1);',
 				'}'
 			);
-			$jq[] = $this->iterate($bind, '$(document).bind(\'ajaxSend ajaxComplete\', function(e){',
-				$this->nt . '});', $this->nt2, '', '');
+			$jq[] = $this->iterate(
+				$bind,
+				'$(document).bind(\'ajaxSend ajaxComplete\', function(e){',
+				$this->nt . '});',
+				$this->nt2,
+				'',
+				''
+			);
 		}
 		if (count($jq) > 0) {
 			$code = $this->iterate($jq, '', '', $this->nt, '', '');

@@ -75,12 +75,12 @@ class Table_Plugin
 					%0text%1, %0digit%1, %0currency%1, %0percent%1, %0usLongDate%1, %0shortDate%1, %0isoDate%1,
 					%0dateFormat-ddmmyyyy%1, %0ipAddress%1, %0url%1, %0time%1.
 					Also handle strings in numeric columns with %0string-min%1 and %0string-max%1. Handle empty cells
-					with %0empty-top%1, %0empty-bottom%1 or %0empty-zero%1.','<b>', '</b>')
+					with %0empty-top%1, %0empty-bottom%1 or %0empty-zero%1.', '<b>', '</b>')
 				. '<br>' . tr('%0group%1 creates automatic row headings with the text of the heading determined by
 					the setting as follows: %0letter%1 (first letter), %0word%1 (first word), %0number%1, %0date%1,
 					%0date-year%1, %0date-month%1, %0date-day%1, %0date-week%1, %0date-time%1. %0letter%1 and %0word%1
 					can be extended, e.g., %0word-2%1 shows first 2 words. %0number-10%1 will group rows in blocks of
-					ten.','<b>', '</b>'
+					ten.', '<b>', '</b>'
 				),
 				'default' => '',
 				'filter' => 'striptags',
@@ -91,8 +91,8 @@ class Table_Plugin
 				'name' => tra('Column Filters'),
 				'description' => tr(
 					'Enter %0y%1 for a blank text filter on all columns, or %0n%1 for no filters. Or set custom column filters
-					separated by %0|%1 for each column for the following filter choices and parameters:','<b>', '</b>'
-					)
+					separated by %0|%1 for each column for the following filter choices and parameters:', '<b>', '</b>'
+				)
 					. '<br> <b>Text - </b>type:text;placeholder:xxxx<br>
 					<b>Dropdown - </b>type:dropdown;placeholder:****;option:****;option:****;option:**** <br>' .
 					tra('(options generated automatically if not set)') . '<br>

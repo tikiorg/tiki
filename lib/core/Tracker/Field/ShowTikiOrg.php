@@ -75,7 +75,7 @@ class Tracker_Field_ShowTikiOrg extends Tracker_Field_Abstract
 			'status' => 'DISCO',
 			'username' => '',
 			'debugmode' => $this->getOption('debugMode'),
-			'canDestroy' => false,		
+			'canDestroy' => false,
 			'debugoutput' => '',
 			'showurl' => '',
 			'snapshoturl' => '',
@@ -100,11 +100,11 @@ class Tracker_Field_ShowTikiOrg extends Tracker_Field_Abstract
 		$cacheKey = 'STO-' . $this->getOption('domain') . '-' . $this->getConfiguration('fieldId') . "-" . $id;
 		if ($data = $cachelib->getSerialized($cacheKey)) {
 			$creator = TikiLib::lib('tiki')->get_user_login($data['userid']);
-      			if (TikiLib::lib('user')->user_has_permission($user, 'tiki_p_admin') || $user == $creator) {
+			if (TikiLib::lib('user')->user_has_permission($user, 'tiki_p_admin') || $user == $creator) {
 				$data['canDestroy'] = true;
 			}
 			return $data;
-                }
+		}
 
 		$item = TikiLib::lib('trk')->get_tracker_item($id);
 		$creator = $item['createdBy'];
@@ -114,7 +114,7 @@ class Tracker_Field_ShowTikiOrg extends Tracker_Field_Abstract
 
 		if ($this->getOption('fixedUserId') > 0) {
 			$userid = $this->getOption('fixedUserId');
-		} else { 
+		} else {
 			$userid = TikiLib::lib('tiki')->get_user_id($creator);
 		}
 
@@ -146,10 +146,10 @@ class Tracker_Field_ShowTikiOrg extends Tracker_Field_Abstract
 		$infostring = "info -i $id -U $userid";
 		$infostream = ssh2_exec($conn, $infostring);
 
-		stream_set_blocking( $infostream, TRUE );
-		$infooutput = stream_get_contents( $infostream );
+		stream_set_blocking($infostream, TRUE);
+		$infooutput = stream_get_contents($infostream);
 		$ret['debugoutput'] = $infostring . " " . $infooutput;
-		
+
 		$statuspos = strpos($infooutput, 'STATUS: ');
 		$status = substr($infooutput, $statuspos + 8, 5);
 		$status = trim($status);
@@ -165,7 +165,7 @@ class Tracker_Field_ShowTikiOrg extends Tracker_Field_Abstract
 			if ($site) {
 				$ret['value'] = 'active ' . substr($site, 0, strpos($site, '.')); // the 'active' is useful for filtering on
 			}
-		}	
+		}
 
 		$cachelib->cacheItem($cacheKey, serialize($ret));
 
@@ -177,14 +177,13 @@ class Tracker_Field_ShowTikiOrg extends Tracker_Field_Abstract
 		return $ret;
 	}
 
-	function renderInput($context = array()) {		
+	function renderInput($context = array())
+	{
 		return $this->renderTemplate('trackerinput/showtikiorg.tpl', $context);
 	}
 
-	function renderOutput($context = array()) {
+	function renderOutput($context = array())
+	{
 		return $this->renderTemplate('trackerinput/showtikiorg.tpl', $context);
 	}
-
-
 }
-
