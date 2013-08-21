@@ -19,18 +19,28 @@ class VimeoLib
 		return $this->oauth->is_authorized('vimeo');
 	}
 
+	/**
+	 * Gets array of space and uploads left for the Vimeo account in ['user'] or an error in ['err']
+	 *
+	 * @return array
+	 */
 	function getQuota()
 	{
 		$data = $this->callMethod('vimeo.videos.upload.getQuota');
-		return $data['user']['upload_space'];
+		return $data;
 	}
 
+	/**
+	 * Gets an upload ticket in  ['ticket'] or an error in ['err']
+	 *
+	 * @return array
+	 */
 	function getTicket()
 	{
 		$data = $this->callMethod('vimeo.videos.upload.getTicket', array(
 			'upload_method' => 'post',
 		));
-		return $data['ticket'];
+		return $data;
 	}
 
 	function verifyChunks($ticketId)

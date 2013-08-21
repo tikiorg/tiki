@@ -27,7 +27,7 @@ class Services_File_VimeoController
 
 	function action_upload($input)
 	{
-		global $prefs;
+		global $prefs, $tiki_p_admin;
 
 		$galleryId = $input->galleryId->int() ?: $prefs['vimeo_default_gallery'];
 		$fieldId = $input->fromFieldId->int();
@@ -44,12 +44,39 @@ class Services_File_VimeoController
 		$quota = $vimeolib->getQuota();
 		$ticket = $vimeolib->getTicket();
 
+		$errMsg = '';
+		$availableMB = 0;
+		$availableSD = 0;
+		$availableHD = 0;
+
+		if ($ticket['stat'] !== 'ok') {
+			$errMsg = tra($ticket['err']['msg']);				// get_strings tra('Uploads exceeded')
+			if ($tiki_p_admin === 'y') {
+				$errMsg .= '<br>' . tra($ticket['err']['expl']); // get_strings tra('The user has exceeded the daily number of uploads allowed.')
+			}
+		} else if ($quota['stat'] !== 'ok') {
+			$errMsg = tra($quota['err']['msg']);				// get_strings tra('Permission Denied') tra('Invalid signature')
+																// get_strings tra('Invalid consumer key')
+			if ($tiki_p_admin === 'y') {
+				$errMsg .= '<br>' . tra($quota['err']['expl']);	// get_strings tra('The oauth_token passed was either not valid or has expired.')
+																// get_strings tra('The oauth_signature passed was not valid.')
+																// get_strings tra('The consumer key passed was not valid.')
+			}
+		} else {
+			$availableMB = round($quota['user']['upload_space']['free'] / 1024 / 1024, 1);
+			$availableSD = $quota['user']['sd_quota'];
+			$availableHD = $quota['user']['hd_quota'];
+		}
+
 		return array(
-			'available' => round($quota['free'] / 1024 / 1024, 1),
-			'ticket' => $ticket,
+			'availableMB' => $availableMB,
+			'availableSD' => $availableSD,
+			'availableHD' => $availableHD,
+			'ticket' => $ticket['ticket'],
 			'galleryId' => $galleryId,
 			'fieldId' => $fieldId,
 			'itemId' => $itemId,
+			'errMsg' => $errMsg,
 		);
 	}
 
