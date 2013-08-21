@@ -192,7 +192,7 @@ $(".vimeo.dialog").click(function () {
 			var $dialog = $(".vimeo_upload").parents(".ui-dialog-content");		// odd its the content, not the outer div
 			$(".vimeo_upload").on("vimeo_uploaded", function(event, data) {';
 
-		if (empty($params['fromFieldId'])) {
+		if (!empty($page)) {
 			$js .= '
 				var params = {
 					page: ' . json_encode($page) . ',

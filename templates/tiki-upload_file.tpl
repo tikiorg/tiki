@@ -583,6 +583,23 @@
 				return false;
 			});
 		{/jq}
+		{if $prefs.vimeo_upload eq 'y'}
+			<fieldset>
+				<h3>{tr}Upload Video{/tr}</h3>
+				{wikiplugin _name='vimeo'}{/wikiplugin}
+			</fieldset>
+			{jq}
+var handleVimeoFile = function (link, data) {
+	if (data != undefined) {
+	$("#form").hide();
+	$("#progress").append(
+		$("<p> {tr}Video file uploaded:{/tr} " + data.file + "</p>")
+			.prepend($("<img src='img/icons/vimeo.png' width='16' height='16'>"))
+		);
+	}
+}
+			{/jq}
+		{/if}
 	{/if}
 
 {/if}
