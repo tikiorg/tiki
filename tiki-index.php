@@ -186,6 +186,17 @@ if (!empty($page_ref_id)) {
 $page = $_REQUEST['page'];
 $smarty->assign_by_ref('page', $page);
 
+// Inline Ckeditor editor
+if ($prefs['wysiwyg_inline_editing'] == 'y' && $page &&
+			$tikilib->user_has_perm_on_object($user, $_REQUEST['page'],'wiki page','edit')) {
+
+	include_once('lib/ckeditor_tiki/wysiwyglib.php');
+	$wysiwyglib->setUpInlineEditor($_REQUEST['page']);		// init ckeditor
+
+} else if (getCookie('wysiwyg_inline_edit', 'preview')) {
+	setCookieSection('wysiwyg_inline_edit', 0, 'preview');	// kill cookie if pref off or no perms
+}
+
 #Propagate the fullscreen parameter to templates
 if ( isset($_REQUEST['fullscreen']) ) {
 	$fullscreen = $_REQUEST['fullscreen'];

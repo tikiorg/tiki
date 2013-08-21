@@ -597,14 +597,6 @@ if ($prefs['ajax_inline_edit'] == 'y') {
 	$headerlib->add_jsfile('lib/jquery_tiki/inline_edit.js');
 }
 
-// Inline Ckeditor editor
-if ($prefs['wysiwyg_inline_editing'] == 'y' && !empty($_REQUEST['page']) &&
-			$tikilib->user_has_perm_on_object($user, $_REQUEST['page'],'wiki page','edit') &&
-			strpos($_SERVER['SCRIPT_NAME'], 'tiki-editpage.php') === false &&
-			strpos($_SERVER['SCRIPT_NAME'], 'tiki-pagehistory.php') === false) {
-	include_once('lib/ckeditor_tiki/wysiwyglib.php');
-	$wysiwyglib->setUpInlineEditor($_REQUEST['page']);		// init ckeditor if default editor
-}
 
 if (true) {
 	// Before being clever and moving this close to where you think it's needed (again),

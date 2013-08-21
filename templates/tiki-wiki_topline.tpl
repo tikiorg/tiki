@@ -61,7 +61,7 @@
 												}
 												return false;
 											});
-											if (!getCookie("wysiwyg_inline_edit", "preview")) {} else { $("#wysiwyg_inline_edit").click(); }
+											if (getCookie("wysiwyg_inline_edit", "preview")) { $("#wysiwyg_inline_edit").click(); }
 										{/jq}
 										<a title="{tr}Inline Edit{/tr}" href="#" id="wysiwyg_inline_edit">{icon _id='page' title="{tr}Inline Edit{/tr}"}</a>
 									{/if}
