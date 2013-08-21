@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2013 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -37,46 +37,64 @@ class VimeoLib
 	 */
 	function getTicket()
 	{
-		$data = $this->callMethod('vimeo.videos.upload.getTicket', array(
-			'upload_method' => 'post',
-		));
+		$data = $this->callMethod(
+			'vimeo.videos.upload.getTicket',
+			array(
+				'upload_method' => 'post',
+			)
+		);
 		return $data;
 	}
 
 	function verifyChunks($ticketId)
 	{
-		$data = $this->callMethod('vimeo.videos.upload.verifyChunks', array(
-			'ticket_id' => $ticketId,
-		));
+		$data = $this->callMethod(
+			'vimeo.videos.upload.verifyChunks',
+			array(
+				'ticket_id' => $ticketId,
+			)
+		);
 		return $data['ticket']['chunks'];
 	}
-	
+
 	function complete($ticketId, $fileName)
 	{
-		$data = $this->callMethod('vimeo.videos.upload.complete', array(
-			'ticket_id' => $ticketId,
-			'filename' => $fileName,
-		));
+		$data = $this->callMethod(
+			'vimeo.videos.upload.complete',
+			array(
+				'ticket_id' => $ticketId,
+				'filename' => $fileName,
+			)
+		);
 		return $data['ticket']['video_id'];
 	}
 
 	function setTitle($videoId, $title)
 	{
-		$data = $this->callMethod('vimeo.videos.setTitle', array(
-			'video_id' => $videoId,
-			'title' => $title,
-		));
+		$data = $this->callMethod(
+			'vimeo.videos.setTitle',
+			array(
+				'video_id' => $videoId,
+				'title' => $title,
+			)
+		);
 	}
 
 	private function callMethod($method, array $arguments = array())
 	{
-		$response = $this->oauth->do_request('vimeo', array(
-			'url' => 'https://vimeo.com/api/rest/v2',
-			'post' => array_merge($arguments, array(
-				'method' => $method,
-				'format' => 'json',
-			)),
-		));
+		$response = $this->oauth->do_request(
+			'vimeo',
+			array(
+				'url' => 'https://vimeo.com/api/rest/v2',
+				'post' => array_merge(
+					$arguments,
+					array(
+						'method' => $method,
+						'format' => 'json',
+					)
+				),
+			)
+		);
 
 		return json_decode($response->getBody(), true);
 	}

@@ -2536,24 +2536,30 @@ class Comments extends TikiLib
 			$this->update_comment_links($data, $comment['objectType'], $threadId);
 			$type = $this->update_index($comment['objectType'], $threadId);
 			if ($type == 'forum post') {
-				TikiLib::events()->trigger('tiki.forumpost.update', array(
-					'type' => $type,
-					'object' => $threadId,
-					'forum_id' => $comment['object'],
-					'user' => $GLOBALS['user'],
-					'title' => $title,
-					'content' => $data,
-					'index_handled' => true,
-				));
+				TikiLib::events()->trigger(
+					'tiki.forumpost.update',
+					array(
+						'type' => $type,
+						'object' => $threadId,
+						'forum_id' => $comment['object'],
+						'user' => $GLOBALS['user'],
+						'title' => $title,
+						'content' => $data,
+						'index_handled' => true,
+					)
+				);
 			} else {
-				TikiLib::events()->trigger('tiki.comment.update', array(
-					'type' => $comment['objectType'],
-					'object' => $comment['object'],
-					'title' => $title,
-					'comment' => $threadId,
-					'user' => $GLOBALS['user'],
-					'content' => $data,
-				));
+				TikiLib::events()->trigger(
+					'tiki.comment.update',
+					array(
+						'type' => $comment['objectType'],
+						'object' => $comment['object'],
+						'title' => $title,
+						'comment' => $threadId,
+						'user' => $GLOBALS['user'],
+						'content' => $data,
+					)
+				);
 			}
 		} // end hash check
 	}
@@ -2754,26 +2760,32 @@ class Comments extends TikiLib
 		if ($type == 'forum post') {
 			$finalEvent = $parentId ? 'tiki.forumpost.reply' : 'tiki.forumpost.create';
 
-			TikiLib::events()->trigger($finalEvent, array(
-				'type' => $type,
-				'object' => $threadId,
-				'parent_id' => $parentId,
-				'forum_id' => $object[1],
-				'user' => $GLOBALS['user'],
-				'title' => $title,
-				'content' => $data,
-				'index_handled' => true,
-			));
+			TikiLib::events()->trigger(
+				$finalEvent,
+				array(
+					'type' => $type,
+					'object' => $threadId,
+					'parent_id' => $parentId,
+					'forum_id' => $object[1],
+					'user' => $GLOBALS['user'],
+					'title' => $title,
+					'content' => $data,
+					'index_handled' => true,
+				)
+			);
 		} else {
 			$finalEvent = $parentId ? 'tiki.comment.reply' : 'tiki.comment.post';
 
-			TikiLib::events()->trigger($finalEvent, array(
-				'type' => $object[0],
-				'object' => $object[1],
-				'user' => $GLOBALS['user'],
-				'title' => $title,
-				'content' => $data,
-			));
+			TikiLib::events()->trigger(
+				$finalEvent,
+				array(
+					'type' => $object[0],
+					'object' => $object[1],
+					'user' => $GLOBALS['user'],
+					'title' => $title,
+					'content' => $data,
+				)
+			);
 		}
 
 		$tx->commit();
@@ -3217,28 +3229,27 @@ class Comments extends TikiLib
 		}
 
 		// Remove HTML tags except between {CODE()}...{CODE} and empty lines at the end of the posted comment
-		$line = preg_split("#(\R)#",$params['comments_data'],-1,PREG_SPLIT_DELIM_CAPTURE);
-		foreach($line as $index => $text){
+		$line = preg_split("#(\R)#", $params['comments_data'], -1, PREG_SPLIT_DELIM_CAPTURE);
+		foreach ($line as $index => $text) {
 			$row = "";
 			$pos = 0;
 			do {
-					$preCODE = strpos($line[$index],"{CODE()}",$pos);
-					if ($preCODE)
-					{
-						$postCODE = strpos($line[$index],"{CODE}",$preCODE);
-						$row .= strip_tags(substr($line[$index],$pos,$preCODE - $pos - 1)).
-							substr($line[$index],$preCODE,$postCODE - $preCODE + 6);
-						$pos = $postCODE + 6;	
+					$preCODE = strpos($line[$index], "{CODE()}", $pos);
+					if ($preCODE) {
+						$postCODE = strpos($line[$index], "{CODE}", $preCODE);
+						$row .= strip_tags(substr($line[$index], $pos, $preCODE - $pos - 1)).
+							substr($line[$index], $preCODE, $postCODE - $preCODE + 6);
+						$pos = $postCODE + 6;
 					} else {
-						$row .= strip_tags(substr($line[$index],$pos));	
-						break;			
+						$row .= strip_tags(substr($line[$index], $pos));
+						break;
 					}
 			} while ($pos < strlen($line[$index]));
 			$line[$index] = $row;
 		}
-		$params['comments_data'] = implode("",$line);
+		$params['comments_data'] = implode("", $line);
 		$params['comments_data'] = rtrim($params['comments_data']);
-		
+
 		if ($tiki_p_admin_forum != 'y') {// non admin can only post normal
 			$params['comment_topictype'] = 'n';
 			if ($forum_info['topic_summary'] != 'y')

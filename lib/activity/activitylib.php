@@ -11,40 +11,51 @@ class ActivityLib
 
 	function getRules()
 	{
-		return $this->rulesTable()->fetchAll(array(
-			'ruleId',
-			'eventType',
-			'ruleType',
-			'rule',
-			'notes',
-		), array());
+		return $this->rulesTable()->fetchAll(
+			array(
+				'ruleId',
+				'eventType',
+				'ruleType',
+				'rule',
+				'notes',
+			),
+			array()
+		);
 	}
 
 	function getRule($id)
 	{
-		return $this->rulesTable()->fetchRow(array(
-			'ruleId',
-			'eventType',
-			'ruleType',
-			'rule',
-			'notes',
-		), array(
-			'ruleId' => $id,
-		));
+		return $this->rulesTable()->fetchRow(
+			array(
+				'ruleId',
+				'eventType',
+				'ruleType',
+				'rule',
+				'notes',
+			),
+			array(
+				'ruleId' => $id,
+			)
+		);
 	}
 
 	function replaceRule($id, array $data)
 	{
-		return $this->rulesTable()->insertOrUpdate($data, array(
-			'ruleId' => $id,
-		));
+		return $this->rulesTable()->insertOrUpdate(
+			$data,
+			array(
+				'ruleId' => $id,
+			)
+		);
 	}
 
 	function deleteRule($id)
 	{
-		return $this->rulesTable()->delete(array(
-			'ruleId' => $id,
-		));
+		return $this->rulesTable()->delete(
+			array(
+				'ruleId' => $id,
+			)
+		);
 	}
 
 	function recordEvent($event, $arguments)
@@ -56,11 +67,13 @@ class ActivityLib
 			$this->guessMapping($unknown);
 		}
 
-		$id = $this->streamTable()->insert(array(
-			'eventType' => $event,
-			'eventDate' => TikiLib::lib('tiki')->now,
-			'arguments' => json_encode($arguments),
-		));
+		$id = $this->streamTable()->insert(
+			array(
+				'eventType' => $event,
+				'eventDate' => TikiLib::lib('tiki')->now,
+				'arguments' => json_encode($arguments),
+			)
+		);
 
 		TikiLib::lib('unifiedsearch')->invalidateObject('activity', $id);
 	}
@@ -86,9 +99,12 @@ class ActivityLib
 	private function bindEventRecord($manager, $event)
 	{
 		$self = $this;
-		$manager->bind($event, function ($args) use ($self, $event) {
-			$self->recordEvent($event, $args);
-		});
+		$manager->bind(
+			$event,
+			function ($args) use ($self, $event) {
+				$self->recordEvent($event, $args);
+			}
+		);
 	}
 
 	function bindCustomEvents(Tiki_Event_Manager $manager)
@@ -116,7 +132,7 @@ class ActivityLib
 		foreach ($this->getRules() as $rule) {
 			$customizer->addRule($rule['eventType'], $rule['rule']);
 		}
-		
+
 		$customizer->bind($manager, $runner);
 	}
 
@@ -127,9 +143,11 @@ class ActivityLib
 
 	function getActivity($id)
 	{
-		$info = $this->streamTable()->fetchFullRow(array(
-			'activityId' => $id,
-		));
+		$info = $this->streamTable()->fetchFullRow(
+			array(
+				'activityId' => $id,
+			)
+		);
 
 		if ($info) {
 			$info['arguments'] = json_decode($info['arguments'], true);
@@ -184,13 +202,15 @@ class ActivityLib
 
 		$mapper = new Search_Type_Analyzer;
 		$mappingTable = $this->mappingTable();
-		
+
 		foreach ($arguments as $key => $value) {
 			$type = $mapper->findType($key, $value);
-			$mappingTable->insert(array(
-				'field_name' => $key,
-				'field_type' => $type,
-			));
+			$mappingTable->insert(
+				array(
+					'field_name' => $key,
+					'field_type' => $type,
+				)
+			);
 			$this->mapping[$key] = $type;
 		}
 	}

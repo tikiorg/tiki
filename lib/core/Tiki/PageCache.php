@@ -112,36 +112,36 @@ class Tiki_PageCache
 				if ( $cachedOutput && $cachedOutput['output'] ) {
 					$headerlib = TikiLib::lib('header');
 					if (is_array($cachedOutput['jsiles'])) {
-						foreach($cachedOutput['jsiles'] as $rank => $files) {
-							foreach($files as $file) {
+						foreach ($cachedOutput['jsiles'] as $rank => $files) {
+							foreach ($files as $file) {
 								$headerlib->add_jsfile($file, $rank);
 							}
 						}
 					}
 					if (is_array($cachedOutput['js'])) {
-						foreach($cachedOutput['js'] as $rank => $js) {
-							foreach($js as $j) {
+						foreach ($cachedOutput['js'] as $rank => $js) {
+							foreach ($js as $j) {
 								$headerlib->add_js($j, $rank);
 							}
 						}
 					}
 					if (is_array($cachedOutput['jq_onready'])) {
-						foreach($cachedOutput['jq_onready'] as $rank => $js) {
-							foreach($js as $j) {
+						foreach ($cachedOutput['jq_onready'] as $rank => $js) {
+							foreach ($js as $j) {
 								$headerlib->add_jq_onready($j, $rank);
 							}
 						}
 					}
 					if (is_array($cachedOutput['css'])) {
-						foreach($cachedOutput['css'] as $rank => $css) {
-							foreach($css as $c) {
+						foreach ($cachedOutput['css'] as $rank => $css) {
+							foreach ($css as $c) {
 								$headerlib->add_css($c, $rank);
 							}
 						}
 					}
 					if (is_array($cachedOutput['cssfile'])) {
-						foreach($cachedOutput['cssfile'] as $rank => $css) {
-							foreach($css as $c) {
+						foreach ($cachedOutput['cssfile'] as $rank => $css) {
+							foreach ($css as $c) {
 								$headerlib->add_cssfile($c, $rank);
 							}
 						}
@@ -154,7 +154,7 @@ class Tiki_PageCache
 				}
 
 				// save state of headerlib
-				$this->headerLibCopy = unserialize( serialize( TikiLib::lib('header') ) );
+				$this->headerLibCopy = unserialize(serialize(TikiLib::lib('header')));
 
 				// Start caching, automatically gather at destruction
 				ob_start();
@@ -174,11 +174,11 @@ class Tiki_PageCache
 
 			if ($this->headerLibCopy) {
 				$headerlib = TikiLib::lib('header');
-				$cachedOutput['jsiles']     = array_diff($headerlib->jsfiles,    $this->headerLibCopy->jsfiles);
+				$cachedOutput['jsiles']     = array_diff($headerlib->jsfiles, $this->headerLibCopy->jsfiles);
 				$cachedOutput['jq_onready'] = array_diff($headerlib->jq_onready, $this->headerLibCopy->jq_onready);
-				$cachedOutput['js']         = array_diff($headerlib->js,         $this->headerLibCopy->js);
-				$cachedOutput['css']        = array_diff($headerlib->css,        $this->headerLibCopy->css);
-				$cachedOutput['cssfiles']   = array_diff($headerlib->cssfiles,   $this->headerLibCopy->cssfiles);
+				$cachedOutput['js']         = array_diff($headerlib->js, $this->headerLibCopy->js);
+				$cachedOutput['css']        = array_diff($headerlib->css, $this->headerLibCopy->css);
+				$cachedOutput['cssfiles']   = array_diff($headerlib->cssfiles, $this->headerLibCopy->cssfiles);
 			}
 
 			if ( $cachedOutput['output'] ) {

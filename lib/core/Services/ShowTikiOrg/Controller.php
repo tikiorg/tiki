@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2013 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -36,36 +36,36 @@ class Services_ShowTikiOrg_Controller
 		$domain = $options->domain;
 
 		$conn = ssh2_connect($domain, 22);
-                $conntry = ssh2_auth_pubkey_file(
-                        $conn,
-                        $options->remoteShellUser,
-                        $options->publicKey,
-                        $options->privateKey
-                );
+		$conntry = ssh2_auth_pubkey_file(
+			$conn,
+			$options->remoteShellUser,
+			$options->publicKey,
+			$options->privateKey
+		);
 
-                if (!$conntry) {
+		if (!$conntry) {
 			$ret['status'] = 'DISCO';
-                        return $ret;
-                }
+			return $ret;
+		}
 
-                $infostring = "info -i $id -U $userid";
-                $infostream = ssh2_exec($conn, $infostring);
+		$infostring = "info -i $id -U $userid";
+		$infostream = ssh2_exec($conn, $infostring);
 
-                stream_set_blocking( $infostream, TRUE );
-                $infooutput = stream_get_contents( $infostream );
-                $ret['debugoutput'] = $infooutput;
+		stream_set_blocking($infostream, TRUE);
+		$infooutput = stream_get_contents($infostream);
+		$ret['debugoutput'] = $infooutput;
 
-                $statuspos = strpos($infooutput, 'STATUS: ');
-                $status = substr($infooutput, $statuspos + 8, 5);
+		$statuspos = strpos($infooutput, 'STATUS: ');
+		$status = substr($infooutput, $statuspos + 8, 5);
 		$status = trim($status);
-                if (!$status || $status == 'FAIL') {
-                        $ret['status'] = 'FAIL';
-                } else {
-                        $ret['status'] = $status;
+		if (!$status || $status == 'FAIL') {
+			$ret['status'] = 'FAIL';
+		} else {
+			$ret['status'] = $status;
 			$sitepos = strpos($infooutput, 'SITE: ');
 			$site = substr($infooutput, $sitepos + 6);
 			$site = substr($site, 0, strpos($site, ' '));
-	         	$ret['showurl'] = $site;
+		 	$ret['showurl'] = $site;
 			$ret['snapshoturl'] = $site . '/snapshots/';
 			if ($site && $ret['status'] == 'ACTIV') {
 				$value = 'active ' . substr($site, 0, strpos($site, '.')); // the 'active' is useful for filtering on
@@ -77,7 +77,7 @@ class Services_ShowTikiOrg_Controller
 				TikiLib::lib('trk')->modify_field($id, $fieldId, $value);
 				require_once('lib/search/refresh-functions.php');
 				refresh_index('trackeritem', $id);
-			}
+		 	}
 		}
 
 		if (!empty($command)) {
@@ -92,9 +92,9 @@ class Services_ShowTikiOrg_Controller
 			}
 
 			$stream = ssh2_exec($conn, $fullstring);
-			stream_set_blocking( $stream, TRUE );
-			$output = stream_get_contents( $stream );
-			fclose( $stream );
+			stream_set_blocking($stream, TRUE);
+			$output = stream_get_contents($stream);
+			fclose($stream);
 			$ret['debugoutput'] = $fullstring . "\n" . $output;
 
 			if ($command == 'snapshot') {
@@ -111,7 +111,7 @@ class Services_ShowTikiOrg_Controller
 		$cachelib = TikiLib::lib('cache');
 		$cacheKey = 'STO-' . $options->domain . '-' . $fieldId . "-" . $id;
 		$cachelib->invalidate($cacheKey);
-	
+
 		return $ret;
 	}
 }

@@ -3,7 +3,8 @@
 $message = '';
 $err_state = 0;
 
-function help() {
+function help()
+{
 	echo <<<EOHELP
 
 Tiki monitoring for Nagios/Icinga/Shinken
@@ -28,7 +29,8 @@ php check_tiki.php -u <URL> [-c <check>] [--bccwarn <percent> --bcccrit <percent
 EOHELP;
 }
 
-function get_opts() {
+function get_opts()
+{
 	$short_opts = "u:c:h::";
 	$long_opts = array(
 		"bccwarn:",
@@ -42,14 +44,15 @@ function get_opts() {
 	return($options);
 }
 
-function get_data($options) {
+function get_data($options)
+{
 	$crl = curl_init();
 	$timeout = 5;
-	curl_setopt ($crl, CURLOPT_URL,$options['u']);
-	curl_setopt ($crl, CURLOPT_RETURNTRANSFER, 1);
-	curl_setopt ($crl, CURLOPT_CONNECTTIMEOUT, $timeout);
+	curl_setopt($crl, CURLOPT_URL, $options['u']);
+	curl_setopt($crl, CURLOPT_RETURNTRANSFER, 1);
+	curl_setopt($crl, CURLOPT_CONNECTTIMEOUT, $timeout);
 	if (!empty($options['user'])) {
-		curl_setopt ($crl, CURLOPT_USERPWD, $options['user'] . ":" . $options['pass']);
+		curl_setopt($crl, CURLOPT_USERPWD, $options['user'] . ":" . $options['pass']);
 	}
 	$ret = curl_exec($crl);
 	curl_close($crl);
@@ -58,7 +61,8 @@ function get_data($options) {
 	return $ret;
 }
 
-function update_err_state($new_state, $new_message) {
+function update_err_state($new_state, $new_message)
+{
 	global $err_state, $message;
 	$err_state = max($new_state, $err_state);
 	if (empty($message)) {
@@ -68,7 +72,8 @@ function update_err_state($new_state, $new_message) {
 	}
 }
 
-function report() {
+function report()
+{
 	global $message, $err_state;
 	switch($err_state) {
 		case 0:
@@ -88,11 +93,13 @@ function report() {
 	exit($err_state);
 }
 
-function displayError($message) {
+function displayError($message)
+{
 	echo $message.PHP_EOL;
 	exit(3);
 }
-function check_bcc($data, $options) {
+function check_bcc($data, $options)
+{
 	global $message;
 	if (empty($options['bccwarn']) or empty($options['bcccrit'])) {
 		displayError("--bccwarn and --bcccrit need to be set");
@@ -103,23 +110,23 @@ function check_bcc($data, $options) {
 		displayError("--bcccrit needs to be bigger than --bccwarn");
 	}
 	$OPCodeCache = $data['OPCodeCache'];
-	if (is_null($OPCodeCache))
-	{
-		update_err_state(3,"OpCodeCache: None");
+	if (is_null($OPCodeCache)) {
+		update_err_state(3, "OpCodeCache: None");
 	} else {
 		$OPCodeStats = get_object_vars($data['OpCodeStats']);
 		$mem_used = $OPCodeStats['memory_used'] * 100;
 		if ($mem_used > $crit) {
-			update_err_state(1,"OpCodeCache: $OPCodeCache $mem_used% mem used" );
+			update_err_state(1, "OpCodeCache: $OPCodeCache $mem_used% mem used");
 		} elseif ($mem_used > $warn) {
-			update_err_state(2,"OpCodeCache: $OPCodeCache $mem_used% mem used");
+			update_err_state(2, "OpCodeCache: $OPCodeCache $mem_used% mem used");
 		} elseif ($mem_used < $warn) {
-			update_err_state(0,"OpCodeCache: $OPCodeCache $mem_used% mem used");
+			update_err_state(0, "OpCodeCache: $OPCodeCache $mem_used% mem used");
 		}
 	}
 }
 
-function check_db($data, $options) {
+function check_db($data, $options)
+{
 	if ($data['DbRequiresUpdate'] === true) {
 		update_err_state(2, "DB UPDATE NEEDED");
 	} elseif ($data['DbRequiresUpdate'] === false) {
@@ -129,7 +136,8 @@ function check_db($data, $options) {
 	}
 }
 
-function check_searchindex($data, $options) {
+function check_searchindex($data, $options)
+{
 	if (empty($options['sirwarn']) or empty($options['sircrit'])) {
 		displayError("--sircrit and --sirwarn need to be set");
 	}

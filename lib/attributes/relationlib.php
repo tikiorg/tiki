@@ -46,13 +46,13 @@ class RelationLib extends TikiDb_Bridge
 		return $this->table->fetchAll($fields, $cond, $max, -1, $orderBy);
 	}
 
-    /**
-     * @param $type
-     * @param $object
-     * @param null $relation
-     * @return mixed
-     */
-    function get_relations_to( $type, $object, $relation = null, $orderBy = '', $max = -1)
+	/**
+	 * @param $type
+	 * @param $object
+	 * @param null $relation
+	 * @return mixed
+	 */
+	function get_relations_to( $type, $object, $relation = null, $orderBy = '', $max = -1)
 	{
 		if ( substr($relation, -7) === '.invert' ) {
 			return $this->get_relations_from($type, $object, substr($relation, 0, -7), $orderBy, $max);
@@ -91,28 +91,30 @@ class RelationLib extends TikiDb_Bridge
 
 		if ( $relation ) {
 			if (! $id = $this->get_relation_id($relation, $src_type, $src_object, $target_type, $target_object)) {
-				$id = $this->table->insert(array(
-					'relation' => $relation,
-					'source_type' => $src_type,
-					'source_itemId' => $src_object,
-					'target_type' => $target_type,
-					'target_itemId' => $target_object,
-				));
+				$id = $this->table->insert(
+					array(
+						'relation' => $relation,
+						'source_type' => $src_type,
+						'source_itemId' => $src_object,
+						'target_type' => $target_type,
+						'target_itemId' => $target_object,
+					)
+				);
 			}
 		} else {
 			return 0;
 		}
 	}
 
-    /**
-     * @param $relation
-     * @param $src_type
-     * @param $src_object
-     * @param $target_type
-     * @param $target_object
-     * @return int
-     */
-    function get_relation_id( $relation, $src_type, $src_object, $target_type, $target_object )
+	/**
+	 * @param $relation
+	 * @param $src_type
+	 * @param $src_object
+	 * @param $target_type
+	 * @param $target_object
+	 * @return int
+	 */
+	function get_relation_id( $relation, $src_type, $src_object, $target_type, $target_object )
 	{
 		$relation = TikiFilter::get('attribute_type')->filter($relation);
 
@@ -122,48 +124,57 @@ class RelationLib extends TikiDb_Bridge
 
 		$id = 0;
 		if ( $relation ) {
-			$id = $this->table->fetchOne('relationId', array(
-				'relation' => $relation,
-				'source_type' => $src_type,
-				'source_itemId' => $src_object,
-				'target_type' => $target_type,
-				'target_itemId' => $target_object,
-			));
+			$id = $this->table->fetchOne(
+				'relationId',
+				array(
+					'relation' => $relation,
+					'source_type' => $src_type,
+					'source_itemId' => $src_object,
+					'target_type' => $target_type,
+					'target_itemId' => $target_object,
+				)
+			);
 		}
 		return $id;
 	}
 
-    /**
-     * @param $id
-     * @return mixed
-     */
-    function get_relation( $id )
+	/**
+	 * @param $id
+	 * @return mixed
+	 */
+	function get_relation( $id )
 	{
-		return $this->table->fetchFullRow(array(
-			'relationId' => $id,
-		));
+		return $this->table->fetchFullRow(
+			array(
+				'relationId' => $id,
+			)
+		);
 	}
 
-    /**
-     * @param $id
-     */
-    function remove_relation( $id )
+	/**
+	 * @param $id
+	 */
+	function remove_relation( $id )
 	{
-		$this->table->delete(array(
-			'relationId' => $id,
-		));
-		$this->table('tiki_object_attributes')->deleteMultiple(array(
-			'type' => 'relation',
-			'itemId' => $id,
-		));
+		$this->table->delete(
+			array(
+				'relationId' => $id,
+			)
+		);
+		$this->table('tiki_object_attributes')->deleteMultiple(
+			array(
+				'type' => 'relation',
+				'itemId' => $id,
+			)
+		);
 	}
 
-    /**
-     * @param $relation
-     * @param $cond
-     * @param $vars
-     */
-    private function apply_relation_condition( $relation, $cond )
+	/**
+	 * @param $relation
+	 * @param $cond
+	 * @param $vars
+	 */
+	private function apply_relation_condition( $relation, $cond )
 	{
 		$relation = TikiFilter::get('attribute_type')->filter($relation);
 
