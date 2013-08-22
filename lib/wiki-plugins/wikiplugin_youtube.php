@@ -122,9 +122,15 @@ function wikiplugin_youtube($data, $params)
 	if ($youTubeShortURL['host'] == 'youtu.be') {
 		$params['movie']= str_replace('/', '', $youTubeShortURL['path']);
 	}
+	if (preg_match('/http(?:s)?:\/\/(?:\w+\.)?youtube\.com\/watch\?v=(\w+)/', $params['movie'], $matches) ) {
+		$params['movie'] = $matches[1];
+	} elseif (preg_match('/^(\w+)$/', $params['movie'], $matches)){
+		$params['movie'] = $params['movie'];
+	} else {
+		return '^' . tra('Invalid YouTube URL provided');
+	}
 
-	$params['movie'] = '//www.youtube.com/embed/' . preg_replace('/http(s)?:\/\/(\w+\.)?youtube\.com\/watch\?v=/', '', $params['movie']).'?';
-
+	$params['movie'] = '//www.youtube.com/embed/' . $params['movie'] . '?';
 	// backward compatibility
 	if ($params['allowFullScreen'] == 'y') {
 		$params['allowFullScreen'] = 'true';
