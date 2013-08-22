@@ -92,6 +92,7 @@
 											<div id="role_main">
 												{block name=title}No title specified{/block}
 												{block name=content}No content specified{/block}
+												{block name=show_content}{/block}{* Help separate the page content from the whole page. Must be defined at root to work. AB *}
 											</div>
 											{if $prefs.module_zones_pagebottom eq 'fixed' or ($prefs.module_zones_pagebottom ne 'n' && ! zone_is_empty('pagebottom'))}
 												{modulelist zone=pagebottom}
