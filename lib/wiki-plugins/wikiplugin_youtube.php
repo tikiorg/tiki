@@ -125,7 +125,7 @@ function wikiplugin_youtube($data, $params)
 		return '^' . tra('Invalid YouTube URL provided');
 	}
 
-	$params['movie'] = $scheme . '://www.youtube.com/embed/' . $params['movie'] . '?';
+	$params['movie'] = $scheme . '://www.youtube.com/v/' . $params['movie'] . '?';
 	// backward compatibility
 	if ($params['allowFullScreen'] == 'y') {
 		$params['allowFullScreen'] = 'true';
