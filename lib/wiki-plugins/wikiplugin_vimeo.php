@@ -207,6 +207,7 @@ $(".vimeo.dialog").click(function () {
 					}
 				};
 				$.post("tiki-wikiplugin_edit.php", params, function() {
+					$("input[type=file]", $dialog).val("");		// webkit reloads the dialog as it destroys it for some reason
 					$dialog.dialog("destroy").remove();
 					$.get($.service("wiki", "get_page", {page:' . json_encode($page) . '}), function (data) {
 						if (data) {

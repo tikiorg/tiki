@@ -42,20 +42,28 @@
 
 	$form.submit(function(){
 		$(this).modal(tr("Uploading..."));
+		return true;
 	});
 
 	$iframe.on('load', function () {
-		var data = {
-			title: $title.val(),
-			galleryId: galleryId,
-			ticket: ticket,
-			file: $file.val(),
-			fieldId: fieldId,
-			itemId: itemId
-		};
-		if (data.file) {
-			$.post($.service('vimeo', 'complete'), data, function(data) {
-				$(".vimeo_upload").trigger("vimeo_uploaded", [data]);
+		if ($file.val()) {
+			var updata = {
+				title: $title.val(),
+				galleryId: galleryId,
+				ticket: ticket,
+				file: $file.val(),
+				fieldId: fieldId,
+				itemId: itemId
+			};
+			if (updata.file.indexOf("C:\\fakepath\\") === 0) {
+				updata.file = updata.file.substr(12);	// webkit fakepath?
+			}
+			$.post($.service('vimeo', 'complete'), updata, function(data) {
+				if (data.err) {
+					alert("Upload Error:\n" + data.err);
+				} else {
+					$(".vimeo_upload").trigger("vimeo_uploaded", [data]);
+				}
 				$form.modal();
 			}, 'json');
 		}
