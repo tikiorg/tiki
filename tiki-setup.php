@@ -713,6 +713,7 @@ if ($isHideTitlePerPage) {
 	}
 	if ($isHideTitle) {
 		$headerlib->add_css('.pagetitle {display: none;}');
+		$headerlib->add_css('.titletop {display: none;}');
 	}
 }
 	
