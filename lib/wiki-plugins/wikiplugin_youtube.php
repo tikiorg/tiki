@@ -22,6 +22,18 @@ function wikiplugin_youtube_info()
 				'filter' => 'url',
 				'default' => '',
 			),
+			'privacyEnhanced' => array(
+				'required' => false,
+				'name' => tra('Privacy-Enhanced'),
+				'description' => tra('Enable privacy-enhanced mode'),
+				'default' => '',
+				'filter' => 'alpha',
+    			'options' => array(
+					array('text' => '', 'value' => ''),
+					array('text' => tra('Yes'), 'value' => 'y'),
+					array('text' => tra('No'), 'value' => 'n'),
+				),
+			),
 			'width' => array(
 				'required' => false,
 				'name' => tra('Width'),
@@ -122,6 +134,7 @@ function wikiplugin_youtube($data, $params)
 	if ($youTubeShortURL['host'] == 'youtu.be') {
 		$params['movie']= str_replace('/', '', $youTubeShortURL['path']);
 	}
+
 	if (preg_match('/http(?:s)?:\/\/(?:\w+\.)?youtube\.com\/watch\?v=(\w+)/', $params['movie'], $matches) ) {
 		$params['movie'] = $matches[1];
 	} elseif (preg_match('/^(\w+)$/', $params['movie'], $matches)){
@@ -130,7 +143,13 @@ function wikiplugin_youtube($data, $params)
 		return '^' . tra('Invalid YouTube URL provided');
 	}
 
-	$params['movie'] = '//www.youtube.com/embed/' . $params['movie'] . '?';
+	if ($params['privacyEnhanced'] == 'y') {
+		$fqdn = 'www.youtube-nocookie.com';
+	} else {
+		$fqdn = 'www.youtube.com';
+	}
+
+	$params['movie'] = '//'.$fqdn.'/embed/' . $params['movie'] . '?';
 	// backward compatibility
 	if ($params['allowFullScreen'] == 'y') {
 		$params['allowFullScreen'] = 'true';
