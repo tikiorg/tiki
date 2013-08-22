@@ -2587,7 +2587,7 @@ class Comments extends TikiLib
 	function post_new_comment($objectId, $parentId, $userName,
 		$title, $data, &$message_id, $in_reply_to = '', $type = 'n',
 		$summary = '', $smiley = '', $contributions = '', $anonymous_name = '',
-		$postDate = '', $anonymous_email = '', $anonymous_website = ''
+		$postDate = '', $anonymous_email = '', $anonymous_website = '', $parent_comment_info = ''
 	)
 	{
 		global $user;
@@ -2759,6 +2759,11 @@ class Comments extends TikiLib
 
 		if ($type == 'forum post') {
 			$finalEvent = $parentId ? 'tiki.forumpost.reply' : 'tiki.forumpost.create';
+			if ($parent_comment_info) {
+				$parent_title = $parent_comment_info['title'];
+			} else {
+				$parent_title = '';
+			}
 
 			TikiLib::events()->trigger(
 				$finalEvent,
@@ -2769,6 +2774,7 @@ class Comments extends TikiLib
 					'forum_id' => $object[1],
 					'user' => $GLOBALS['user'],
 					'title' => $title,
+					'parent_title' => $parent_title,
 					'content' => $data,
 					'index_handled' => true,
 				)
@@ -3325,7 +3331,8 @@ class Comments extends TikiLib
 						$params['comment_topictype'],
 						$params['comment_topicsummary'],
 						$params['comment_topicsmiley'],
-						isset($params['contributions']) ? $params['contributions']: '',	$params['anonymous_name']
+						isset($params['contributions']) ? $params['contributions']: '',	$params['anonymous_name'],
+						'', $params['anonymous_email'], '', $parent_comment_info;
 					);
 					// The thread *WAS* successfully created.
 
