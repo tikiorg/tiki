@@ -19,12 +19,17 @@ function smarty_block_activityframe($params, $content, $smarty, &$repeat)
 	if (! is_array($likes)) {
 		$params['activity']['like_list'] = $likes = array();
 	}
+	$userGroups = TikiLib::lib('user')->get_user_groups($GLOBALS['user']);
+	$choiceGroups = TikiLib::lib('user')->get_groups_userchoice(); 
+	$sharedGroups = array_intersect($params['activity']['user_groups'], $userGroups, $choiceGroups);
+
 	$smarty = TikiLib::lib('smarty');
 	$smarty->assign('activityframe', array(
 		'content' => $content,
 		'activity' => $params['activity'],
 		'heading' => $params['heading'],
 		'like' => in_array($GLOBALS['user'], $likes),
+		'sharedgroups' => $sharedGroups,
 	));
 	$out = $smarty->fetch('activity/activityframe.tpl');
 

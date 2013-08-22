@@ -1,5 +1,14 @@
 <div class="activity" data-id="{$activityframe.activity.object_id|escape}">
 	<strong style="vertical-align: middle;">{$activityframe.activity.user|avatarize} {$activityframe.heading}</strong>
+	{if in_array($user, $activityframe.activity.user_followers)}
+	This user is your friend!
+	{/if}
+	{if $activityframe.sharedgroups and $user != $activityframe.activity.user}
+	You share the following groups with this user:
+	{foreach $activityframe.sharedgroups as $s_grp}
+	{$s_grp|escape}{if !$s_grp@last}, {/if}
+	{/foreach}
+	{/if}
 	<div class="content">{$activityframe.content}</div>
 	<div class="footer">
 		<span class="floatright">

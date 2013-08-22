@@ -1887,6 +1887,15 @@ class UsersLib extends TikiLib
 		$result = $this->query($query, array($userid));
 	}
 
+	function get_groups_userchoice() {
+		$ret = array();
+		$groups = $this->get_groups(0, -1, '', '', '', 'n', '', 'y');
+		foreach ($groups['data'] as $g) {
+			$ret[] = $g['groupName'];
+		}
+		return $ret;
+        }
+
 	function get_groups($offset = 0, $maxRecords = -1, $sort_mode = 'groupName_asc', $find = '', $initial = '', $details="y", $inGroups='', $userChoice='')
 	{
 
