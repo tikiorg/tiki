@@ -38,7 +38,7 @@ class Tiki_Event_Customizer_Executor implements Tiki_Event_EdgeProvider
 		$out = array();
 
 		foreach ($this->ruleSet->getRules() as $rule) {
-			$out += $this->findTrigger($rule);
+			$out = array_merge($out, $this->findTrigger($rule));
 		}
 
 		return $out;
@@ -52,7 +52,7 @@ class Tiki_Event_Customizer_Executor implements Tiki_Event_EdgeProvider
 			$out = array();
 			foreach ($element as $child) {
 				if ($child instanceof Math_Formula_Element) {
-					$out += $this->findTrigger($child);
+					$out = array_merge($out, $this->findTrigger($child));
 				}
 			}
 
