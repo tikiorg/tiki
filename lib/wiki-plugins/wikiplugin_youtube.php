@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2013 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -13,7 +13,7 @@ function wikiplugin_youtube_info()
 		'description' => tra('Display a YouTube video'),
 		'prefs' => array( 'wikiplugin_youtube' ),
 		'icon' => 'img/icons/youtube.png',
-		'tags' => array( 'basic' ),		
+		'tags' => array( 'basic' ),
 		'params' => array(
 			'movie' => array(
 				'required' => true,
@@ -43,12 +43,12 @@ function wikiplugin_youtube_info()
 				'default' => 'high',
 				'filter' => 'alpha',
     			'options' => array(
-					array('text' => '', 'value' => ''), 
-					array('text' => tra('High'), 'value' => 'high'), 
-					array('text' => tra('Medium'), 'value' => 'medium'), 
-					array('text' => tra('Low'), 'value' => 'low'), 
-				),  
-				'advanced' => true				
+					array('text' => '', 'value' => ''),
+					array('text' => tra('High'), 'value' => 'high'),
+					array('text' => tra('Medium'), 'value' => 'medium'),
+					array('text' => tra('Low'), 'value' => 'low'),
+				),
+				'advanced' => true
 			),
 			'allowFullScreen' => array(
 				'required' => false,
@@ -57,11 +57,11 @@ function wikiplugin_youtube_info()
 				'default' => '',
 				'filter' => 'alpha',
      			'options' => array(
-					array('text' => '', 'value' => ''), 
-					array('text' => tra('Yes'), 'value' => 'y'), 
-					array('text' => tra('No'), 'value' => 'n'), 
+					array('text' => '', 'value' => ''),
+					array('text' => tra('Yes'), 'value' => 'y'),
+					array('text' => tra('No'), 'value' => 'n'),
  				),
- 				'advanced' => true			
+ 				'advanced' => true
 			),
 			'related' => array(
 				'required' => false,
@@ -71,11 +71,11 @@ function wikiplugin_youtube_info()
 				'default' => '',
 				'filter' => 'alpha',
     			'options' => array(
-					array('text' => '', 'value' => ''), 
-					array('text' => tra('Yes'), 'value' => 'y'), 
-					array('text' => tra('No'), 'value' => 'n'), 
+					array('text' => '', 'value' => ''),
+					array('text' => tra('Yes'), 'value' => 'y'),
+					array('text' => tra('No'), 'value' => 'n'),
 				),
-				'advanced' => true				
+				'advanced' => true
 			),
 			'background' => array(
 				'required' => false,
@@ -85,7 +85,7 @@ function wikiplugin_youtube_info()
 				'since' => 6.1,
 				'filter' => 'striptags',
 				'default' => '',
-				'advanced' => true				
+				'advanced' => true
 			),
 			'border' => array(
 				'required' => false,
@@ -95,7 +95,7 @@ function wikiplugin_youtube_info()
 				'since' => 6.1,
 				'filter' => 'striptags',
 				'default' => '',
-				'advanced' => true				
+				'advanced' => true
 			),
 		),
 	);
@@ -104,7 +104,7 @@ function wikiplugin_youtube_info()
 function wikiplugin_youtube($data, $params)
 {
 	global $tikilib;
-	
+
  	$plugininfo = wikiplugin_youtube_info();
  	foreach ($plugininfo['params'] as $key => $param) {
  		$default["$key"] = $param['default'];
@@ -117,8 +117,15 @@ function wikiplugin_youtube($data, $params)
 
 	$scheme = $tikilib->httpScheme();
 
-	$params['movie'] = $scheme . '://www.youtube.com/v/' . preg_replace('/http(s)?:\/\/(\w+\.)?youtube\.com\/watch\?v=/', '', $params['movie']);
+	if (preg_match('/http(?:s)?:\/\/(?:\w+\.)?youtube\.com\/watch\?v=(\w+)/', $params['movie'], $matches) ) {
+		$params['movie'] = $matches[1];
+	} elseif (preg_match('/^(\w+)$/', $params['movie'], $matches)){
+		$params['movie'] = $params['movie'];
+	} else {
+		return '^' . tra('Invalid YouTube URL provided');
+	}
 
+	$params['movie'] = $scheme . '://www.youtube.com/embed/' . $params['movie'] . '?';
 	// backward compatibility
 	if ($params['allowFullScreen'] == 'y') {
 		$params['allowFullScreen'] = 'true';
