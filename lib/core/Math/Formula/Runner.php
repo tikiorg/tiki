@@ -75,7 +75,11 @@ class Math_Formula_Runner
 		$first = array_shift($path);
 
 		if (isset($variables[$first])) {
-			return $this->findVariable($path, $variables[$first]);
+			if (count($path == 1)) {
+				return $variables[$first];
+			} else {
+				return $this->findVariable($path, $variables[$first]);
+			}
 		} else {
 			return false;
 		}
