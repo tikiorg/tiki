@@ -334,6 +334,8 @@
 					{preference name=wiki_inline_auto_toc}
 			</fieldset>
 		</div>
+
+		{preference name=wiki_page_hide_title}
 	{/tab}
 
 	{tab name="{tr}Flagged Revision{/tr}"}

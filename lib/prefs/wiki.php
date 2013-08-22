@@ -718,5 +718,12 @@ function prefs_wiki_list($partial = false)
 				'wiki_auto_toc',
 			),
 		),
+		'wiki_page_hide_title' => array(
+			'name' => tr('Hide title per wiki page'),
+			'description' => tr('Allow the title to be hidden for individual wiki pages'),
+			'type' => 'flag',
+			'default' => 'n',
+			'dependencies' => array(),
+		),
 	);
 }

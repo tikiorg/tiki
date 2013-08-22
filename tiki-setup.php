@@ -697,5 +697,23 @@ if($isAutoTocActive) {
 		}
 	}
 }
+
+// Hide title per page
+$isHideTitlePerPage = isset($prefs['wiki_page_hide_title']) ? $prefs['wiki_page_hide_title'] === 'y' : false;
+if ($isHideTitlePerPage) {
+	$isHideTitle = false;
+	$currPage = isset($_REQUEST['page']) ? $_REQUEST['page'] : '';
+	if(!empty($currPage)) {
+		$wikilib = TikiLib::lib('wiki');
+		$isPageHideTitle = $wikilib->get_page_hide_title($currPage);
+		if($isPageHideTitle != 0) {
+			// Use page specific setting
+			$isHideTitle = $isPageHideTitle < 0 ? true : false;
+		}
+	}
+	if ($isHideTitle) {
+		$headerlib->add_css('.pagetitle {display: none;}');
+	}
+}
 	
 $headerlib->lockMinifiedJs();

@@ -520,11 +520,23 @@ $("input[name=allowhtml]").change(function() {
 							{if $prefs.wiki_auto_toc eq 'y'}
 								<fieldset>
 									<legend>{tr}Page display options{/tr}</legend>
-									Auto TOC <select name="pageAutoToc"> 
+									<ul>
+									
+									<li>{tr}Automatic Table of Contents generation{/tr} <select name="pageAutoToc"> 
 									<option value="0" {if $pageAutoToc == 0}selected{/if}></option>
 									{* <option value="1" {if $pageAutoToc == 1}selected{/if}>On</option> *}
 									<option value="-1" {if $pageAutoToc == -1}selected{/if}>Off</option>
 									</select>
+									</li>
+
+									<li>{tr}Show page title{/tr} <select name="page_hide_title"> 
+									<option value="0" {if $page_hide_title == 0}selected{/if}></option>
+									{* <option value="1" {if $page_hide_title == 1}selected{/if}>On</option> *}
+									<option value="-1" {if $page_hide_title == -1}selected{/if}>Off</option>
+									</select>
+									</li>
+									
+									</ul>
 								</fieldset>
 							{/if}
 							{if $prefs.namespace_enabled eq 'y'}

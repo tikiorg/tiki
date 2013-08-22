@@ -1298,6 +1298,12 @@ if (
 		$wikilib->set_page_auto_toc($page, $isAutoTocActive);
 	}
 
+	if ($prefs['wiki_page_hide_title'] == 'y' && isset($_REQUEST['page_hide_title'])) {
+		$isHideTitle = intval($_REQUEST['page_hide_title']);
+		$isHideTitle = $isHideTitle == 0 ? null : $isHideTitle;
+		$wikilib->set_page_hide_title($page, $isHideTitle);
+	}
+
 	if ($prefs['namespace_enabled'] == 'y' && isset($_REQUEST['explicit_namespace'])) {
 		$wikilib->set_explicit_namespace($page, $_REQUEST['explicit_namespace']);
 	}
@@ -1481,6 +1487,7 @@ if ( $prefs['feature_multilingual'] === 'y' ) {
 
 $smarty->assign('explicit_namespace', $wikilib->get_explicit_namespace($page));
 $smarty->assign('pageAutoToc', $wikilib->get_page_auto_toc($page));
+$smarty->assign('page_hide_title', $wikilib->get_page_hide_title($page));
 
 // setup properties tab visibility
 if (($prefs['feature_wiki_templates'] === 'y' && $tiki_p_use_content_templates === 'y') ||

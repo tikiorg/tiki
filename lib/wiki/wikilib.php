@@ -1280,6 +1280,35 @@ class WikiLib extends TikiLib
 		TikiLib::lib('attribute')->set_attribute('wiki page', $pageName, 'tiki.wiki.autotoc', $isAutoToc);
 	}
 
+
+
+	/*
+	*	get_page_hide_title
+	*	Allow the title to be hidden for individual wiki pages
+	*	@return 
+	*		+1 page_hide_title is explicitly set to true
+	*		0  page_hide_title is not set for page. Use global setting
+	*		-1 page_hide_title is explicitly set to false
+	*/
+	public function get_page_hide_title($pageName)
+	{
+		$attributes = TikiLib::lib('attribute')->get_attributes('wiki page', $pageName);
+		$rc = 0;
+		if (!isset($attributes['tiki.wiki.page_hide_title'])) {
+			return 0; 
+		}
+		$value = intval($attributes['tiki.wiki.page_hide_title']);
+		if($value > 0)
+			return 1;
+		else
+			return -1;
+	}
+
+	public function set_page_hide_title($pageName, $isHideTitle)
+	{
+		TikiLib::lib('attribute')->set_attribute('wiki page', $pageName, 'tiki.wiki.page_hide_title', $isHideTitle);
+	}
+
 	public function get_without_namespace($pageName)
 	{
 		global $prefs;
