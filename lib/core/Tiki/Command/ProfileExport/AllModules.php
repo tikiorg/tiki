@@ -18,8 +18,7 @@ class AllModules extends ObjectWriter
 	{
 		$this
 			->setName('profile:export:all-modules')
-			->setDescription('Export all module definitions')
-			;
+			->setDescription('Export all module definitions');
 
 		parent::configure();
 	}
@@ -27,13 +26,13 @@ class AllModules extends ObjectWriter
 	protected function execute(InputInterface $input, OutputInterface $output)
 	{
 		$writer = $this->getProfileWriter($input);
-		
+
 		$list = \TikiDb::get()->table('tiki_modules')->fetchColumn('moduleId', array());
 
 		foreach ($list as $moduleId) {
 			\Tiki_Profile_InstallHandler_Module::export($writer, $moduleId);
 		}
-		
+
 		$writer->save();
 	}
 }

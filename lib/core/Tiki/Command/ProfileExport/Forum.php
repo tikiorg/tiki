@@ -23,8 +23,7 @@ class Forum extends ObjectWriter
 				'forum',
 				InputArgument::REQUIRED,
 				'Forum ID'
-			)
-			;
+			);
 
 		parent::configure();
 	}
@@ -34,9 +33,9 @@ class Forum extends ObjectWriter
 		$forumId = $input->getArgument('forum');
 
 		$writer = $this->getProfileWriter($input);
-		
+
 		$result = \Tiki_Profile_InstallHandler_Forum::export($writer, $forumId);
-		
+
 		if ($result) {
 			$writer->save();
 		} else {

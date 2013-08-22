@@ -27,8 +27,7 @@ abstract class ObjectWriter extends Command
 				null,
 				InputOption::VALUE_REQUIRED,
 				'Re-apply profiles when already installed.'
-			)
-			;
+			);
 	}
 
 	protected function getProfileWriter(InputInterface $input)

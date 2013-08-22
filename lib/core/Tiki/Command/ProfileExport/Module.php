@@ -23,8 +23,7 @@ class Module extends ObjectWriter
 				'module',
 				InputArgument::REQUIRED,
 				'Module ID'
-			)
-			;
+			);
 
 		parent::configure();
 	}
@@ -34,9 +33,9 @@ class Module extends ObjectWriter
 		$moduleId = $input->getArgument('module');
 
 		$writer = $this->getProfileWriter($input);
-		
+
 		$result = \Tiki_Profile_InstallHandler_Module::export($writer, $moduleId);
-		
+
 		if ($result) {
 			$writer->save();
 		} else {

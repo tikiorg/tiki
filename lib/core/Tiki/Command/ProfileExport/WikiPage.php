@@ -23,8 +23,7 @@ class WikiPage extends ObjectWriter
 				'page',
 				InputArgument::REQUIRED,
 				'Page name'
-			)
-			;
+			);
 
 		parent::configure();
 	}

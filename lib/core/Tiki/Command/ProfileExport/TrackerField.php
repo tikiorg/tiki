@@ -23,8 +23,7 @@ class TrackerField extends ObjectWriter
 				'tracker-field',
 				InputArgument::REQUIRED,
 				'Tracker field ID'
-			)
-			;
+			);
 
 		parent::configure();
 	}
@@ -34,9 +33,9 @@ class TrackerField extends ObjectWriter
 		$fieldId = $input->getArgument('tracker-field');
 
 		$writer = $this->getProfileWriter($input);
-		
+
 		$result = \Tiki_Profile_InstallHandler_TrackerField::export($writer, $fieldId);
-		
+
 		if ($result) {
 			$writer->save();
 		} else {

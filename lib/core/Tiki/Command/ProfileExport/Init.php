@@ -24,8 +24,7 @@ class Init extends Command
 				'profile',
 				InputArgument::REQUIRED,
 				'Profile name'
-			)
-			;
+			);
 	}
 
 	protected function execute(InputInterface $input, OutputInterface $output)

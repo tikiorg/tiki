@@ -34,8 +34,7 @@ class IncludeProfile extends ObjectWriter
 				null,
 				InputOption::VALUE_NONE,
 				'Include the repository path in the reference'
-			)
-			;
+			);
 	}
 
 	protected function execute(InputInterface $input, OutputInterface $output)

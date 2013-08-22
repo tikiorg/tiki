@@ -23,8 +23,7 @@ class Preference extends ObjectWriter
 				'name',
 				InputArgument::REQUIRED,
 				'Preference name'
-			)
-			;
+			);
 	}
 
 	protected function execute(InputInterface $input, OutputInterface $output)
@@ -32,10 +31,10 @@ class Preference extends ObjectWriter
 		$preference = $input->getArgument('name');
 
 		$writer = $this->getProfileWriter($input);
-		
+
 		$prefslib = \TikiLib::lib('prefs');
 		$result = $prefslib->exportPreference($writer, $preference);
-		
+
 		if ($result) {
 			$writer->save();
 		} else {

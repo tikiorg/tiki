@@ -41,8 +41,7 @@ class Category extends ObjectWriter
 				null,
 				InputOption::VALUE_NONE,
 				'Include references to all objects associated to the category'
-			)
-			;
+			);
 
 		parent::configure();
 	}
