@@ -804,8 +804,7 @@ if (!empty($prefs['calendar_fullcalendar']) && $prefs['calendar_fullcalendar'] =
 	$smarty->assign('minHourOfDay', $minHourOfDay);
 	$smarty->assign('maxHourOfDay', $maxHourOfDay);
 	if ($prefs['feature_wysiwyg'] == 'y' && $prefs['wysiwyg_default'] == 'y') {
-		include_once('lib/ckeditor_tiki/wysiwyglib.php');
-		$wysiwyglib->setUpEditor(false, 'editwiki');		// init ckeditor if default editor
+		TikiLib::lib('wysiwyg')->setUpEditor(false, 'editwiki');		// init ckeditor if default editor
 	}
 }
 

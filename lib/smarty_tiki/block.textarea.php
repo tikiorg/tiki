@@ -168,8 +168,9 @@ JS
 	if ( $params['_wysiwyg'] == 'y' && $params['_simple'] == 'n') {
 		// TODO cope with wysiwyg and simple
 
+		$wysiwyglib = TikiLib::lib('wysiwyg');
+
 		if ($prefs['feature_jison_wiki_parser'] == 'y') {
-			global $wysiwyglib; include_once('lib/ckeditor_tiki/wysiwyglib.php');
 			$html .= $wysiwyglib->setUpJisonEditor($params['_is_html'], $as_id, $params, $auto_save_referrer);
             if (!$included) $html .= '<input name="jisonWyisywg" type="hidden" value="true" />';
 			$html .= '<div class="wikiedit ui-widget-content" name="'.$params['name'].'" id="'.$as_id.'">' . ($content) . '</div>';
@@ -179,7 +180,6 @@ JS
 				$params['name'] = 'edit';
 			}
 
-			global $wysiwyglib; include_once('lib/ckeditor_tiki/wysiwyglib.php');
 			$ckoptions = $wysiwyglib->setUpEditor($params['_is_html'], $as_id, $params, $auto_save_referrer);
 
 			if (!$included) {

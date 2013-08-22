@@ -40,8 +40,6 @@ function wikiplugin_wysiwyg_info()
 
 function wikiplugin_wysiwyg($data, $params)
 {
-	global $wysiwyglib; include_once('lib/ckeditor_tiki/wysiwyglib.php');
-
 	// TODO refactor: defaults for plugins?
 	$defaults = array();
 	$plugininfo = wikiplugin_wysiwyg_info();
@@ -64,7 +62,7 @@ function wikiplugin_wysiwyg($data, $params)
 		$params['_wysiwyg'] = 'y';
 		$params['is_html'] = true;
 		//$params['comments'] = true;
-		$ckoption = $wysiwyglib->setUpEditor(true, $exec_key, $params, '', false);
+		$ckoption = TikiLib::lib('wysiwyg')->setUpEditor(true, $exec_key, $params, '', false);
 
 		$html = "<div id='$exec_key' class='{$class}'$style>" . $html . '</div>';
 

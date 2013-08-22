@@ -297,6 +297,9 @@ class TikiLib extends TikiDb_Bridge
 			case 'autosave':
 				require_once 'lib/ajax/autosave.php';
 				return self::$libraries[$name] = new AutoSaveLib();
+			case 'wysiwyg':
+				require_once 'lib/ckeditor_tiki/wysiwyglib.php';
+				return self::$libraries[$name] = new WYSIWYGLib();
 		}
 	}
 
