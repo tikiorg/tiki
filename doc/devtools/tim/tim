@@ -140,8 +140,8 @@ info()
 			versions)
 				echo "INFO: List of available versions"
 				cd $SVN_CACHE
-				VERSIONSLIST=$(ls *.tar.gz | sed -e 's/\.tar\.gz//' | sort -n -r | uniq)
-				echo $VERSIONSLIST
+				VERSIONSLIST=$(ls *.tar.gz | sed -e 's/\.tar\.gz//' | sort -V -r | uniq)
+				echo "LIST: "${VERSIONSLIST}
 				;;
 			*)
 				echo echo "Sub command unknown/forbidden"
