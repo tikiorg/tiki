@@ -68,18 +68,14 @@ class Math_Formula_Runner
 
 	private function findVariable($path, $variables)
 	{
-		if (count($path) === 0) {
+		if (!count($path)) {
 			return $variables;
 		}
 
 		$first = array_shift($path);
 
 		if (isset($variables[$first])) {
-			if (!count($path)) {
-				return $variables[$first];
-			} else {
-				return $this->findVariable($path, $variables[$first]);
-			}
+			return $this->findVariable($path, $variables[$first]);
 		} else {
 			return false;
 		}
