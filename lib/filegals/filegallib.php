@@ -3419,9 +3419,11 @@ class FileGalLib extends TikiLib
 
 	private function getTitleFromFilename($title)
 	{
-		$title = preg_replace('/\.(:\w*|!zip)$/', '', $title); // remove extension
-		$title = preg_replace('/[\-_]+/', ' ', $title); // turn _ etc into spaces
-		$title = ucwords($title);
+		if (strpos($title, '.zip') !== strlen($title) - 4) {
+			$title = preg_replace('/\.[^\.]*$/', '', $title); // remove extension
+			$title = preg_replace('/[\-_]+/', ' ', $title); // turn _ etc into spaces
+			$title = ucwords($title);
+		}
 		return $title;
 	}
 
