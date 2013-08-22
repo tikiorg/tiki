@@ -36,7 +36,10 @@ class Search_GlobalSource_SocialSource implements Search_GlobalSource_Interface
 
 		foreach ($this->getUsers($data) as $user) {
 			$groups = array_merge($groups, $this->userlib->get_user_groups_inclusion($user));
-			$followers += $this->getFollowers($user);
+			$userfollowers = $this->getFollowers($user);
+			if (is_array($userfollowers)) {
+				$followers += $this->getFollowers($user);
+			}
 		}
 
 		unset($groups['Anonymous'], $groups['Registered']);
