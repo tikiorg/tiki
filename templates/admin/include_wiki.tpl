@@ -78,6 +78,16 @@
 				{preference name=wiki_topline_position}
 				{preference name=page_bar_position}
 				{preference name=wiki_encourage_contribution}
+
+				{preference name=wiki_auto_toc}
+				<div class="adminoptionbox clearfix" id="wiki_auto_toc_childcontainer">
+					<fieldset>
+						<legend>{tr}Auto TOC options{/tr}</legend>
+							{preference name=wiki_inline_auto_toc}
+					</fieldset>
+				</div>
+
+				{preference name=wiki_page_hide_title}
 			</fieldset>
 
 			<fieldset>
@@ -326,16 +336,6 @@
 				{preference name=wiki_pagename_strip}
 			</fieldset>
 		</div>
-
-		{preference name=wiki_auto_toc}
-		<div class="adminoptionbox clearfix" id="wiki_auto_toc_childcontainer">
-			<fieldset>
-				<legend>{tr}Auto TOC options{/tr}</legend>
-					{preference name=wiki_inline_auto_toc}
-			</fieldset>
-		</div>
-
-		{preference name=wiki_page_hide_title}
 	{/tab}
 
 	{tab name="{tr}Flagged Revision{/tr}"}
