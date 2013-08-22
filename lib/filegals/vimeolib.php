@@ -66,7 +66,7 @@ class VimeoLib
 				'filename' => $fileName,
 			)
 		);
-		return $data['ticket']['video_id'];
+		return $data;
 	}
 
 	function setTitle($videoId, $title)
