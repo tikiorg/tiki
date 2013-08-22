@@ -3332,7 +3332,7 @@ class Comments extends TikiLib
 						$params['comment_topicsummary'],
 						$params['comment_topicsmiley'],
 						isset($params['contributions']) ? $params['contributions']: '',	$params['anonymous_name'],
-						'', $params['anonymous_email'], '', $parent_comment_info;
+						'', $params['anonymous_email'], '', $parent_comment_info
 					);
 					// The thread *WAS* successfully created.
 
